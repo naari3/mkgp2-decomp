@@ -1464,7 +1464,7 @@ config.libs = [
             Object(Matching, "game/PlayStats_Accumulate.c"),
             Object(Matching, "game/PlayStats_Counters.c"),
             Object(Matching, "game/PlayStats_Session.c"),
-            Object(NonMatching, "game/PlayStats_CopyStatsBlock.c", mw_version="GC/2.6"),
+            Object(Matching, "game/PlayStats_CopyStatsBlock.c", mw_version="GC/2.6"),
             Object(Matching, "game/clCGameDemoWC_Stubs.c"),
             Object(Matching, "game/clCGameDemoWC/Dtor.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clCGameDemoWC/Render.c", extab_padding=b"\x00\x00"),
