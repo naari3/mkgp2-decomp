@@ -140,7 +140,7 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
     NameCode *open, *close, *p, *next;
     NameBool found, invalid;
     int word, i, j, k, part, position, length, count, boundary_count;
-    unsigned int group, pair;
+    unsigned int group;
     wcscpy(buf, name);
     buf[5] = 0;
     CHECK_WORD(buf);
@@ -163,27 +163,27 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
             if (strcmp(banned[word], second) == 0) return 1;
         }
     }
-    for (pair = 0; pair < 12; pair++) {
+    for (group = 0; group < 12; group++) {
         boundary_set = katakana;
         boundary_count = 81;
-        if ((int)pair >= 11) { boundary_set = lower; boundary_count = 26; }
-        else if ((int)pair >= 10) { boundary_set = upper; boundary_count = 26; }
-        else if ((int)pair >= 5) { boundary_set = hiragana; boundary_count = 81; }
-        open = (NameCode *)strstr(buf, lbl_8040E450[pair].open);
+        if ((int)group >= 11) { boundary_set = lower; boundary_count = 26; }
+        else if ((int)group >= 10) { boundary_set = upper; boundary_count = 26; }
+        else if ((int)group >= 5) { boundary_set = hiragana; boundary_count = 81; }
+        open = (NameCode *)strstr(buf, lbl_8040E450[group].open);
         if (open) {
             next = open;
             while (next) {
-                next = (NameCode *)strstr(open + 1, lbl_8040E450[pair].open);
+                next = (NameCode *)strstr(open + 1, lbl_8040E450[group].open);
                 if (next) open = next;
             }
             DebugPrintf(base - 0x7954);
             if (open != buf && contains_at(open - 1, boundary_set, boundary_count) == 1) break;
             DebugPrintf(base - 0x7948);
-            close = (NameCode *)strstr(open, lbl_8040E450[pair].close);
+            close = (NameCode *)strstr(open, lbl_8040E450[group].close);
             if (close) {
                 /* The original guard tests byte-address + 1, then reads a code unit. */
                 if ((char *)close + 1 && contains_at(close + 1, boundary_set, boundary_count) == 1) break;
-                DebugPrintf(base - 0x793c, pair, open, close);
+                DebugPrintf(base - 0x793c, group, open, close);
                 invalid = 0;
                 for (p = open + 1; *p != *close; p++) {
                     single[0] = *p; single[1] = 0;
