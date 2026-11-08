@@ -1261,16 +1261,16 @@ static s32 __THPHuffDecode(THPFileInfo* info, u8 tabIndex)
 static s32 __THPHuffDecodeTab(THPFileInfo* info, THPHuffmanTab* h)
 {
     s32 code;
-    s32 l;
+    s32 cnt;
 
-    l = 1;
+    cnt = 1;
     code = __THPGetBit(info);
-    while (code > h->maxCode[l]) {
+    while (code > h->maxCode[cnt]) {
         code <<= 1;
         code |= __THPGetBit(info);
-        l++;
+        cnt++;
     }
-    return (h->Vij + h->valPtr[l])[code];
+    return h->Vij[(s32)(code + h->valPtr[cnt])];
 }
 
 void fn_8029A6F4(register u8* dst, register u8* y, register u8* u, register u8* v, u32 n)
