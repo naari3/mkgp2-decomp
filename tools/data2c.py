@@ -67,7 +67,7 @@ def load(sec, lo, hi):
             if cur is None: continue
             m = OBJ.match(line)
             if m: cur['name'] = m.group(1).strip('"'); cur['bind'] = m.group(2); continue
-            t = line.strip()
+            t = line.split(' # ')[0].strip()
             if t.startswith('.endobj'): objs.append(cur); cur = None; continue
             if t.startswith('.string '): cur['items'].append(('s', parse_string(t[8:].strip()[1:-1]) + b'\0'))
             elif t.startswith('.4byte '): cur['items'] += [('4', v.strip()) for v in t[7:].split(',')]
@@ -76,8 +76,11 @@ def load(sec, lo, hi):
             elif t.startswith('.float '): cur['items'] += [('4', '0x%08X' % struct.unpack('>I', struct.pack('>f', float(v)))[0]) for v in t[7:].split(',')]
             elif t.startswith('.double '): cur['items'] += [('8', v.strip()) for v in t[8:].split(',')]
             elif t.startswith('.skip '): cur['items'] += [('1', '0')] * int(t[6:], 0)
-    objs.sort(key=lambda o: o['addr'])
-    return objs
+    # stale asm files from older splits can repeat an object: keep one per address
+    uniq = {}
+    for o in objs:
+        uniq.setdefault(o['addr'], o)
+    return sorted(uniq.values(), key=lambda o: o['addr'])
 
 
 def isnum(v):
@@ -129,6 +132,11 @@ def main():
                 w = {'1': 1, '2': 2, '4': 4, '8': 8}[k]
                 bs += (int(v, 0) & ((1 << (8 * w)) - 1)).to_bytes(w, 'big')
             if len(bs) != sz: sys.exit(f'{n}: parsed {len(bs)} bytes, size {sz:#x}')
+            if sz % 4 == 0 and o['addr'] % 4 == 0:
+                vals = ', '.join('0x%08X' % int.from_bytes(bs[i:i + 4], 'big') for i in range(0, sz, 4))
+                out.append(f'{st}{const}unsigned int {n}[{sz // 4}] = {{ {vals} }};')
+                seen.add(n)
+                continue
             vals = ', '.join('0x%02X' % x for x in bs)
             out.append(f'{st}{const}unsigned char {n}[{sz}] = {{ {vals} }};')
         seen.add(n)

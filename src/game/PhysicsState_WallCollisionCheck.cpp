@@ -34,9 +34,10 @@ extern "C" void PhysicsState_WallCollisionCheck(char *self)
     original.m[12] = PH_F(self, 0x4C);
     original.m[13] = PH_F(self, 0x50);
     original.m[14] = PH_F(self, 0x54);
+    PhysicsCollisionVec endpoint;
+    PhysicsCollisionVec *ep = &endpoint;
     unsigned char applied = 0;
     for (int corner = 0; corner < 4; ++corner) {
-        PhysicsCollisionVec endpoint;
         PhysicsCollisionVec scaled(lbl_803BDD28[corner]);
         PhysicsCollisionVec correction;
         PhysicsCollisionVec normal;
@@ -46,7 +47,7 @@ extern "C" void PhysicsState_WallCollisionCheck(char *self)
         endpoint.x = original.m[12] + (original.m[0] * scaled.x + scaled.y * original.m[4] + scaled.z * original.m[8]);
         endpoint.y = original.m[13] + (original.m[1] * scaled.x + scaled.y * original.m[5] + scaled.z * original.m[9]);
         endpoint.z = original.m[14] + (original.m[2] * scaled.x + scaled.y * original.m[6] + scaled.z * original.m[10]);
-        if (Terrain_RaycastWall(self + 0x4C, &endpoint, &correction, &normal)) {
+        if (Terrain_RaycastWall(self + 0x4C, ep, &correction, &normal)) {
             correction.x -= endpoint.x;
             correction.y -= endpoint.y;
             correction.z -= endpoint.z;

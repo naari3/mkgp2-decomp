@@ -150,6 +150,8 @@ static inline TaRecord *SelectTaRecord(int round, int reversed, int cup)
     return record;
 }
 
+#pragma push
+#pragma opt_propagation off
 extern "C" int TaMode_FrameUpdate(RaceScene *self)
 {
     InputPlayer *pad = InputMgr_GetPlayer(GetInputManager(), 0);
@@ -388,3 +390,5 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
     if (!lbl_806D0051 && pad->Pressed(0x400) == 1) return 2;
     return -2;
 }
+#pragma pop
+

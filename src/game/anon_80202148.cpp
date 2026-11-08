@@ -4,7 +4,14 @@
 
 #define GAME_FLOWFADERF_DEFAULT_CTOR_OUT_OF_LINE
 #include "game/FlowCountdown.h"
-
+/* --- owned .rodata 0x803C0300..0x803C038A (tools/own_data.py) --- */
+#pragma force_active on
+extern "C" const unsigned int lbl_803C0300[22] = { 0x000008A9, 0x000008A9, 0x000008AA, 0x000008AB, 0x000008AC, 0x000008AD, 0x000008AE, 0x000008AF, 0x000008B0, 0x000008B1, 0x000008B2, 0x000008B3, 0x000008B4, 0x000008B5, 0x000008B6, 0x000008B7, 0x000008B8, 0x000008B9, 0x000008BA, 0x000008BB, 0x000008BC, 0x00001ADB };
+extern "C" const char lbl_803C0358[] = "clMnLabel";
+extern "C" const char lbl_803C0364[] = "clYTaskInterface";
+extern "C" const char lbl_803C0378[] = "clMnTaskInterface";
+#pragma force_active reset
+extern "C" 
 FlowFaderF::FlowFaderF() : x(lbl_806DA880), y(lbl_806DA880), z(lbl_806DA880) {}
 
 /* Reuse the original RTTI records through the CW cast runtime. */
@@ -39,7 +46,6 @@ extern const float lbl_806DA900;
 extern const float lbl_806DA904;
 extern const float lbl_806DA908;
 extern const float lbl_806DA90C;
-extern int lbl_803C0300[22];
 extern FlowSceneList *lbl_806D19E0;
 extern int lbl_806D19E4;
 extern int g_ccClass;
