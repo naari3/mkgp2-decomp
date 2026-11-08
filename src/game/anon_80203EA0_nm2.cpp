@@ -31,6 +31,8 @@ static inline ListIter RemoveTask(DoublyLinkedList *entries, ListIter it) {
  * Erase result through a memory temp (0x8 -> 0x10 -> it at 0x14) after the
  * call; here RemoveTask's by-value parameter takes slot 0x10 before it. */
 #pragma opt_propagation off
+#pragma push
+#pragma optimization_level 3
 void SceneListImpl::Draw() {
     ListNode *end = entries.End();
     ListIter it;
@@ -58,3 +60,5 @@ void SceneListImpl::Draw() {
         }
     }
 }
+#pragma pop
+
