@@ -22,7 +22,7 @@ extern void OSFreeToHeap(int, void *);
 extern unsigned int ARInit(unsigned int *, unsigned int);
 extern void ARQInit(void);
 extern void AIInit(void *);
-extern void DVDLoad_WaitIfSamePage(unsigned int);
+extern int DVDLoad_WaitIfSamePage(unsigned int);
 extern void DVDLoad_RecordOpStart(unsigned int);
 extern void *memset(void *, int, unsigned long);
 extern void fn_801952EC(void);
@@ -43,7 +43,7 @@ static inline int ReadSoundFile(DVDFileInfo *file, void *data, unsigned int size
     return result;
 }
 
-static inline void *LoadSoundFile(const char *strings, unsigned int offset) {
+static inline void LoadSoundFile(const char *strings, unsigned int offset, void **output) {
     DVDFileInfo file;
     unsigned int size;
     int result;
@@ -67,7 +67,7 @@ static inline void *LoadSoundFile(const char *strings, unsigned int offset) {
             } else DVDClose(&file);
         }
     }
-    return data;
+    *output = data;
 }
 static inline void PrepareEffects(SND_AUX_REVERBHI *reverb, SND_AUX_CHORUS *chorus) {
         reverb->tempDisableFX = 0;
@@ -111,13 +111,13 @@ void ClSound_InitSoundSystem(void) {
         AIInit(0);
         sndSetHooks((SND_HOOKS *)hooks);
         sndInit(64, 0, 64, 1, 0, 0xc00000);
-        lbl_806D16B4 = LoadSoundFile(strings, 0x3fac);
+        LoadSoundFile(strings, 0x3fac, &lbl_806D16B4);
         if (!lbl_806D16B4) goto fail;
-        lbl_806D16B8 = LoadSoundFile(strings, 0x4044);
+        LoadSoundFile(strings, 0x4044, &lbl_806D16B8);
         if (!lbl_806D16B8) goto fail;
-        lbl_806D16BC = LoadSoundFile(strings, 0x4054);
+        LoadSoundFile(strings, 0x4054, &lbl_806D16BC);
         if (!lbl_806D16BC) goto fail;
-        samples = LoadSoundFile(strings, 0x4064);
+        LoadSoundFile(strings, 0x4064, &samples);
         if (!samples) goto fail;
         for (i = 0; i < 22; i++) {
             int group = ((const int *)(strings + 0x3fc))[i];
@@ -152,4 +152,3 @@ fail:
     }
 }
 #pragma pop
-
