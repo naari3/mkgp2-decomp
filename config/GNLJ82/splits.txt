@@ -2765,6 +2765,11 @@ game/CardSave_Tick_CaptureAndStart.c:
 	extabindex  start:0x80022010 end:0x8002201C
 	.text       start:0x800937D4 end:0x80093C28
 
+game/card_save_trigger.c:
+	extab       start:0x800094A0 end:0x800094A8
+	extabindex  start:0x8002201C end:0x80022028
+	.text       start:0x80093C28 end:0x8009450C
+
 game/CardPrintJob_TickFontTransfer.c:
 	extab       start:0x800094A8 end:0x800094B0
 	extabindex  start:0x80022028 end:0x80022034
@@ -2797,10 +2802,25 @@ game/Sci2Card_WriteTrackData.c:
 	extabindex  start:0x80022070 end:0x80022094
 	.text       start:0x80095C5C end:0x80096034
 
+game/card_rw_state_machine_short.c:
+	extab       start:0x800094F0 end:0x800094F8
+	extabindex  start:0x80022094 end:0x800220A0
+	.text       start:0x80096034 end:0x80096A5C
+
+game/card_rw_state_machine.c:
+	extab       start:0x800094F8 end:0x80009500
+	extabindex  start:0x800220A0 end:0x800220AC
+	.text       start:0x80096A5C end:0x8009755C
+
 game/CardReadCommand.c:
 	extab       start:0x80009500 end:0x80009518
 	extabindex  start:0x800220AC end:0x800220D0
 	.text       start:0x8009755C end:0x800976C0
+
+game/card_read_state_machine.c:
+	extab       start:0x80009518 end:0x80009520
+	extabindex  start:0x800220D0 end:0x800220DC
+	.text       start:0x800976C0 end:0x80098320
 
 game/CardReadCommandUnused.c:
 	extab       start:0x80009520 end:0x80009528

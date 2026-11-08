@@ -13236,5 +13236,21 @@
   "src/game/ItemSelectAllowed.c": {
     "@124": "lbl_803DC504",
     "@125": "lbl_803DC518"
+  },
+  "src/game/card_save_trigger.c": {
+    "extab_card_save_trigger": "@etb_800094A0",
+    "extabindex_card_save_trigger": "@eti_8002201C"
+  },
+  "src/game/card_rw_state_machine_short.c": {
+    "extab_card_rw_state_machine_short": "@etb_800094F0",
+    "extabindex_card_rw_state_machine_short": "@eti_80022094"
+  },
+  "src/game/card_rw_state_machine.c": {
+    "extab_card_rw_state_machine": "@etb_800094F8",
+    "extabindex_card_rw_state_machine": "@eti_800220A0"
+  },
+  "src/game/card_read_state_machine.c": {
+    "extab_card_read_state_machine": "@etb_80009518",
+    "extabindex_card_read_state_machine": "@eti_800220D0"
   }
 }
