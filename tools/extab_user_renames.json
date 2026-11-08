@@ -344,10 +344,6 @@
     "@77": "@etb_80007DF8",
     "@78": "@eti_80020DB0"
   },
-  "src/game/NokoNokoChallenge.c": {
-    "extab_NokoNokoChallenge_CalcResultText": "@etb_8000BCE4",
-    "extabindex_NokoNokoChallenge_CalcResultText": "@eti_80024758"
-  },
   "src/game/SyncSlot.c": {
     "@22": "@etb_80008D84",
     "@23": "@eti_80021884"
