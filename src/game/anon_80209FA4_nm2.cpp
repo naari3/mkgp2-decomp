@@ -233,7 +233,7 @@ extern const float lbl_806DABF0;
 extern "C" float fn_8020A6CC(const Tween *__restrict self) {
     int t = self->b;
     int n = self->a;
-    float value;
+    double value;
     if ((short)t <= 0) {
         value = self->from;
     } else if (t >= n) {
