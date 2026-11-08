@@ -1,5 +1,5 @@
 /*
- * NonMatching draft for 0x80039780..0x80039A34 (90.23122%).
+ * NonMatching draft for 0x80039780..0x80039A34 (91.97%).
  * Player button accesses are volatile, including the edge helper reads.
  * The polling loops match; the entry snapshot scheduling and edge-block
  * registers still differ. This draft emits 700 bytes versus target 692.
@@ -19,17 +19,17 @@ extern int fn_8028A740(int node, unsigned char channel);
 extern int fn_8028AC1C(int node, unsigned char counter);
 extern int fn_80293580(void);
 
-static inline unsigned short PressedButtons(volatile unsigned short *p)
+static inline int PressedButtons(volatile unsigned short *p)
 {
-    unsigned short current = p[CURRENT];
-    unsigned short previous = p[PREVIOUS];
+    int current = p[CURRENT];
+    int previous = p[PREVIOUS];
     return current & ~previous;
 }
 
-static inline unsigned short ReleasedButtons(volatile unsigned short *p)
+static inline int ReleasedButtons(volatile unsigned short *p)
 {
-    unsigned short previous = p[PREVIOUS];
-    unsigned short current = p[CURRENT];
+    int previous = p[PREVIOUS];
+    int current = p[CURRENT];
     return previous & ~current;
 }
 
@@ -48,11 +48,10 @@ int JvsInput_PollAndUpdate(void)
     counterIndex = 0;
     g_jvsPlayerButtons[PREVIOUS] = g_jvsPlayerButtons[CURRENT];
     operatorEdges = g_jvsOperatorBits;
+    operatorBits = (unsigned char)~raw << 8;
     operatorEdges[PREVIOUS] = operatorEdges[CURRENT];
     g_jvsPlayerButtons[PLAYER_STRIDE + PREVIOUS] = g_jvsPlayerButtons[PLAYER_STRIDE + CURRENT];
     g_jvsPlayerButtons[2 * PLAYER_STRIDE + PREVIOUS] = g_jvsPlayerButtons[2 * PLAYER_STRIDE + CURRENT];
-    operatorBits = ~raw;
-    operatorBits = (unsigned char)operatorBits << 8;
     g_jvsPlayerButtons[3 * PLAYER_STRIDE + PREVIOUS] = g_jvsPlayerButtons[3 * PLAYER_STRIDE + CURRENT];
     node = fn_8028B0B4();
     for (;;) {
