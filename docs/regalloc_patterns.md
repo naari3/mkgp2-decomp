@@ -335,6 +335,11 @@ global` taking another dead register, fn_8017DF00), the local's name is
 propagated away and its declaration position does nothing (120 orders
 tried).
 
+`tools/retname_sweep.py` automates this for every near-miss TU: each static
+inline whose `return` contains a call gets a named `__ret` at every
+declaration position, scored over the whole TU. It reproduces a6d0090; its
+first full run (11-08, 30 TUs) found no other hit, so the shape is rare.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
@@ -345,4 +350,15 @@ tried).
 - Quad-ctor FPR coloring: fn_801F8404/fn_801F8728 (the fn_801F7F50 recipe
   f4d48738 plus `fabs(h)` before `fabs(w)` leaves pure f-register coloring),
   wip/audit.
-- Loop offset r30 vs r26: fn_8018DAD0. base/slot r27/r28: PCBCheck_ProcessLinks.
+- Loop offset r30 vs r26: fn_8018DAD0.
+- Table base vs loop walker, copy direction reversed (11-08 diagnosis):
+  ClRomTable_PurgeAll, fn_801E96BC, PCBCheck_ProcessLinks. The final registers
+  per role are the same; the target materialises the base (`addi rB, sym@l`)
+  and copies it into the walker (`mr rW, rB`), ours materialises the walker
+  and copies it into the base. A minimal test (`base = tbl; for (i) { rec =
+  &base[i]; ... f(rec, base); }`) always gives ours; walker forms, `&tbl[i]`,
+  const base, scoped/inline loops, all opt_* pragmas: no change.
+- Inline loop counter vs a colour computed before the loop, swapped saved
+  registers: Menu801F0CC0 fn_801F1EE0, fn_801F2400, fn_801F20A0 (the colour is
+  `MenuRGBA`/`WithAlpha` inline output). Decl orders, named inline results,
+  open-coded vs SetColorRange loops: no change.

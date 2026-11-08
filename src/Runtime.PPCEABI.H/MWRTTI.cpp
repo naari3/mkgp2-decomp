@@ -64,8 +64,8 @@ extern "C" void* __dynamic_cast(void* ptr, long vtoffset, const std::type_info* 
 		}
 		if ((bases = (const RTTIBaseDesc*)vtab->type->tbase) != NULL) {
 			for (; bases->type != NULL; bases++) {
-				long offset = bases->offset;
-				if (offset & AMBIGUOUS_BASE) {
+				if (bases->offset & AMBIGUOUS_BASE) {
+					long offset = bases->offset;
 					count = *(long*)(bases + 1);
 					if (vtab->offset + (offset & ~AMBIGUOUS_BASE) == 0 && __rtti_strcmp(bases->type->tname, totype->tname) == 0) {
 						const RTTIBaseDesc* sub = (const RTTIBaseDesc*)((char*)bases + 0xC);
@@ -79,7 +79,7 @@ extern "C" void* __dynamic_cast(void* ptr, long vtoffset, const std::type_info* 
 					bases = (const RTTIBaseDesc*)((char*)bases + 0xC);
 					bases += count - 1;
 				} else if (__rtti_strcmp(bases->type->tname, totype->tname) == 0) {
-					return (char*)ptr + offset;
+					return (char*)ptr + bases->offset;
 				}
 			}
 		}

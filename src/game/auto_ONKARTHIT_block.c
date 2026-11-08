@@ -1208,7 +1208,7 @@ int ItemEffect_SelectAndDispatch_Wrap(ItemEffectTable *self, int itemId, void *i
 int ItemEffect_SelectAndDispatch(ItemEffectTable *self, int itemId, void *itemObj, int arg4);
 int ItemEffect_GenericHandler(ItemEffectTable *self, int itemId, void *itemObj, int arg4);
 int ItemEffect_OnHit(ItemEffectTable *self, const ItemEffectDesc *desc, int itemId, void *itemObj, int arg4);
-int ItemEffect_Dispatch(ItemEffectLane *lane, KartItemOpsView *owner, int kind, void *effectState, void *mediaReq, const ItemEffectDesc *desc, int itemId, void *itemObj, int arg4, float intensity);
+void ItemEffect_Dispatch(ItemEffectLane *lane, KartItemOpsView *owner, unsigned char kind, void *effectState, void *mediaReq, const ItemEffectDesc *desc, int itemId, void *itemObj, int arg4, float intensity);
 void KartItem_TickActiveEffectsTwoLane(ItemEffectTable *self);
 void KartItem_TickStatusEffectsByFlag(ItemEffectTable *self);
 int ItemEffectDesc_OnApply_BoostLandingSE(const ItemEffectDesc *desc, KartItemOpsView *owner, void *effectState, void *mediaReq, void *itemObj, unsigned char kind, unsigned char isPrimary);
@@ -7499,369 +7499,206 @@ int ItemEffect_OnHit(ItemEffectTable *self, const ItemEffectDesc *desc, int item
 }
 #pragma exceptions reset
 
-asm int ItemEffect_Dispatch(ItemEffectLane *lane, KartItemOpsView *owner, int kind, void *effectState, void *mediaReq, const ItemEffectDesc *desc, int itemId, void *itemObj, int arg4, float intensity) { /* 0x80050410 size:0x53C */
-    nofralloc
-    stwu r1, -0xa0(r1)
-    mflr r0
-    stw r0, 0xa4(r1)
-    stfd f31, 0x90(r1)
-    psq_st f31, 0x98(r1), 0, 0
-    stfd f30, 0x80(r1)
-    psq_st f30, 0x88(r1), 0, 0
-    stmw r27, 0x6c(r1)
-    mr r27, r3
-    lwz r0, 0xa8(r1)
-    stw r9, 0x0(r3)
-    mr r28, r4
-    cmpwi r0, 0x0
-    mr r29, r5
-    stw r10, 0xc(r3)
-    mr r30, r6
-    mr r31, r7
-    stw r8, 0x8(r3)
-    bge ItemEffect_Dispatch_L_8005046C
-    lwz r3, 0x8(r27)
-    lwz r0, 0x10(r3)
-    stw r0, 0x4(r27)
-    b ItemEffect_Dispatch_L_80050470
-    ItemEffect_Dispatch_L_8005046C:
-    stw r0, 0x4(r27)
-    ItemEffect_Dispatch_L_80050470:
-    lwz r3, 0x8(r27)
-    lbz r0, 0x14(r3)
-    cmplwi r0, 0x1
-    bne ItemEffect_Dispatch_L_800505BC
-    lwz r4, 0xc(r27)
-    cmplwi r4, 0x0
-    beq ItemEffect_Dispatch_L_80050590
-    lwz r3, 0x28(r28)
-    lfs f3, 0xa4(r4)
-    lfs f10, 0x68(r3)
-    lfs f9, 0x6c(r3)
-    stfs f10, 0x30(r1)
-    lfs f10, 0x88(r3)
-    stfs f9, 0x34(r1)
-    lfs f9, 0x8c(r3)
-    frsp f0, f10
-    lfs f13, 0x58(r3)
-    lfs f8, 0x70(r3)
-    frsp f2, f9
-    lfs f12, 0x5c(r3)
-    frsp f4, f13
-    lfs f1, 0xa0(r4)
-    fsubs f31, f3, f2
-    stfs f8, 0x38(r1)
-    lfs f8, 0x90(r3)
-    fsubs f5, f1, f0
-    frsp f3, f12
-    lfs f7, 0x60(r3)
-    stfs f7, 0x28(r1)
-    frsp f6, f8
-    lfs f7, 0xa8(r4)
-    fmuls f1, f5, f4
-    fmuls f0, f31, f3
-    lfs f2, 0x28(r1)
-    fsubs f30, f7, f6
-    lfs f11, 0x64(r3)
-    fadds f0, f1, f0
-    lfs f6, 0x74(r3)
-    fmuls f1, f30, f2
-    stfs f13, 0x20(r1)
-    lfs f13, 0x78(r3)
-    stfs f12, 0x24(r1)
-    fadds f1, f1, f0
-    lfs f0, lbl_806D26EC(r2)
-    stfs f11, 0x2c(r1)
-    lfs f12, 0x7c(r3)
-    stfs f6, 0x3c(r1)
-    fcmpo cr0, f1, f0
-    lfs f7, 0x80(r3)
-    lfs f11, 0x84(r3)
-    lfs f6, 0x94(r3)
-    stfs f13, 0x40(r1)
-    stfs f12, 0x44(r1)
-    stfs f7, 0x48(r1)
-    stfs f11, 0x4c(r1)
-    stfs f10, 0x50(r1)
-    stfs f9, 0x54(r1)
-    stfs f8, 0x58(r1)
-    stfs f6, 0x5c(r1)
-    stfs f5, 0x14(r1)
-    stfs f31, 0x18(r1)
-    stfs f30, 0x1c(r1)
-    stfs f4, 0x8(r1)
-    stfs f3, 0xc(r1)
-    stfs f2, 0x10(r1)
-    bge ItemEffect_Dispatch_L_80050584
-    lfs f0, lbl_806D26E4(r2)
-    stfs f0, 0x14(r27)
-    b ItemEffect_Dispatch_L_80050594
-    ItemEffect_Dispatch_L_80050584:
-    lfs f0, lbl_806D26FC(r2)
-    stfs f0, 0x14(r27)
-    b ItemEffect_Dispatch_L_80050594
-    ItemEffect_Dispatch_L_80050590:
-    stfs f1, 0x14(r27)
-    ItemEffect_Dispatch_L_80050594:
-    lfs f1, 0x14(r27)
-    lfs f0, lbl_806D26EC(r2)
-    fcmpo cr0, f1, f0
-    ble ItemEffect_Dispatch_L_800505B0
-    li r0, 0x1
-    stw r0, 0x10(r27)
-    b ItemEffect_Dispatch_L_800505CC
-    ItemEffect_Dispatch_L_800505B0:
-    li r0, 0x2
-    stw r0, 0x10(r27)
-    b ItemEffect_Dispatch_L_800505CC
-    ItemEffect_Dispatch_L_800505BC:
-    li r0, 0x0
-    lfs f0, lbl_806D26FC(r2)
-    stw r0, 0x10(r27)
-    stfs f0, 0x14(r27)
-    ItemEffect_Dispatch_L_800505CC:
-    lwz r3, 0x8(r27)
-    lbz r0, 0x8(r3)
-    cmplwi r0, 0x1
-    bne ItemEffect_Dispatch_L_80050680
-    lbz r0, 0x20(r28)
-    cmplwi r0, 0x0
-    beq ItemEffect_Dispatch_L_800505FC
-    bl StrPcb_GetInstance
-    lfs f1, lbl_806D26E4(r2)
-    li r4, 0xc
-    li r5, 0x2
-    bl StrPcb_SetTimer3034_38
-    ItemEffect_Dispatch_L_800505FC:
-    lwz r4, 0x28(r28)
-    lfs f1, lbl_806D2718(r2)
-    lfs f0, 0x17c(r4)
-    fmuls f0, f0, f1
-    stfs f0, 0x17c(r4)
-    lfs f0, 0x180(r4)
-    fmuls f0, f0, f1
-    stfs f0, 0x180(r4)
-    lfs f0, 0x184(r4)
-    fmuls f0, f0, f1
-    stfs f0, 0x184(r4)
-    lwz r0, 0x8(r4)
-    lfs f0, 0xc(r4)
-    mulli r0, r0, 0x18
-    lwz r3, 0x24(r4)
-    fmuls f0, f1, f0
-    add r3, r3, r0
-    lfs f1, 0x8(r3)
-    fcmpo cr0, f0, f1
-    ble ItemEffect_Dispatch_L_80050650
-    fmr f0, f1
-    ItemEffect_Dispatch_L_80050650:
-    stfs f0, 0xc(r4)
-    lwz r0, 0xd0(r28)
-    cmpwi r0, 0x0
-    bgt ItemEffect_Dispatch_L_80050694
-    lfs f1, lbl_806D26EC(r2)
-    lwz r3, 0x28(r28)
-    fmr f2, f1
-    fmr f3, f1
-    bl fn_8019A9BC
-    li r0, 0x2d
-    stw r0, 0xd0(r28)
-    b ItemEffect_Dispatch_L_80050694
-    ItemEffect_Dispatch_L_80050680:
-    lwz r0, 0xd0(r28)
-    cmpwi r0, 0x0
-    bgt ItemEffect_Dispatch_L_80050694
-    li r0, 0x2d
-    stw r0, 0xd0(r28)
-    ItemEffect_Dispatch_L_80050694:
-    lwz r0, 0x4(r27)
-    cmpwi r0, 0x0
-    blt ItemEffect_Dispatch_L_800508BC
-    lwz r0, 0x0(r27)
-    cmpwi r0, 0x0
-    blt ItemEffect_Dispatch_L_800508BC
-    lwz r4, 0x8(r27)
-    lfs f0, 0x14(r27)
-    lwz r5, 0x18(r4)
-    cmpwi r5, 0x0
-    beq ItemEffect_Dispatch_L_800507B8
-    clrlwi. r0, r29, 24
-    beq ItemEffect_Dispatch_L_800507B8
-    lfs f1, 0x20(r4)
-    cmplwi r5, 0x9
-    fmuls f2, f1, f0
-    bgt ItemEffect_Dispatch_L_800507B8
-    lis r3, jumptable_803F7640@ha
-    slwi r0, r5, 2
-    addi r3, r3, jumptable_803F7640@l
-    lwzx r0, r3, r0
-    mtctr r0
-    bctr
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    bl EffectSteering_InitForLock
-    b ItemEffect_Dispatch_L_800507B8
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    lfs f3, 0x24(r4)
-    bl EffectSteering_InitForVibrate
-    b ItemEffect_Dispatch_L_800507B8
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    bl EffectSteering_InitForVibrate_Sub
-    b ItemEffect_Dispatch_L_800507B8
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    lfs f3, 0x24(r4)
-    bl EffectSteering_InitForViscosity_Uniform
-    b ItemEffect_Dispatch_L_800507B8
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    lfs f3, 0x24(r4)
-    lfs f4, 0x28(r4)
-    lfs f5, 0x2c(r4)
-    lfs f6, 0x30(r4)
-    bl EffectSteering_InitForViscosity
-    b ItemEffect_Dispatch_L_800507B8
-    fctiwz f0, f1
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    stfd f0, 0x60(r1)
-    lwz r4, 0x64(r1)
-    bl EffectSteering_InitForSplit
-    b ItemEffect_Dispatch_L_800507B8
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    lfs f3, 0x24(r4)
-    lfs f4, 0x28(r4)
-    bl EffectSteering_InitForShake
-    b ItemEffect_Dispatch_L_800507B8
-    fmr f2, f1
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    bl EffectSteering_InitForScale
-    b ItemEffect_Dispatch_L_800507B8
-    fctiwz f0, f1
-    lfs f1, 0x1c(r4)
-    mr r3, r30
-    stfd f0, 0x60(r1)
-    lwz r4, 0x64(r1)
-    bl EffectSteering_InitForDelay
-    ItemEffect_Dispatch_L_800507B8:
-    lwz r4, 0x8(r27)
-    lwz r0, 0x34(r4)
-    cmpwi r0, 0x0
-    beq ItemEffect_Dispatch_L_80050804
-    cmpwi r0, 0x2
-    beq ItemEffect_Dispatch_L_800507F4
-    bge ItemEffect_Dispatch_L_80050804
-    cmpwi r0, 0x1
-    bge ItemEffect_Dispatch_L_800507E0
-    b ItemEffect_Dispatch_L_80050804
-    ItemEffect_Dispatch_L_800507E0:
-    lfs f1, 0x38(r4)
-    mr r3, r31
-    lfs f2, 0x3c(r4)
-    bl EffectSpeed_ApplySpeedScale
-    b ItemEffect_Dispatch_L_80050804
-    ItemEffect_Dispatch_L_800507F4:
-    lfs f1, 0x38(r4)
-    mr r3, r31
-    lfs f2, 0x3c(r4)
-    bl InterpolationStep
-    ItemEffect_Dispatch_L_80050804:
-    lwz r3, 0x8(r27)
-    lwz r4, 0x40(r3)
-    cmpwi r4, 0x0
-    beq ItemEffect_Dispatch_L_8005088C
-    clrlwi. r0, r29, 24
-    beq ItemEffect_Dispatch_L_8005088C
-    cmpwi r4, 0x2
-    lfs f1, 0x44(r3)
-    beq ItemEffect_Dispatch_L_80050874
-    bge ItemEffect_Dispatch_L_80050838
-    cmpwi r4, 0x1
-    bge ItemEffect_Dispatch_L_80050858
-    b ItemEffect_Dispatch_L_8005088C
-    ItemEffect_Dispatch_L_80050838:
-    cmpwi r4, 0x4
-    bge ItemEffect_Dispatch_L_8005088C
-    lwz r3, 0x38(r28)
-    bl ShadowBillboard_TriggerSpinFlash
-    lwz r3, 0x34(r28)
-    lfs f1, lbl_806D2700(r2)
-    bl TornadoEffect_SetColorY
-    b ItemEffect_Dispatch_L_8005088C
-    ItemEffect_Dispatch_L_80050858:
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne ItemEffect_Dispatch_L_80050868
-    li r3, 0x0
-    ItemEffect_Dispatch_L_80050868:
-    li r4, 0x1
-    bl CameraEffect_Apply
-    b ItemEffect_Dispatch_L_8005088C
-    ItemEffect_Dispatch_L_80050874:
-    lwz r3, lbl_806D109C(r13)
-    cmplwi r3, 0x0
-    bne ItemEffect_Dispatch_L_80050884
-    li r3, 0x0
-    ItemEffect_Dispatch_L_80050884:
-    li r4, 0x3
-    bl CameraEffect_Apply
-    ItemEffect_Dispatch_L_8005088C:
-    lwz r3, 0x8(r27)
-    lwz r7, 0xc(r27)
-    lwz r12, 0x50(r3)
-    cmplwi r12, 0x0
-    beq ItemEffect_Dispatch_L_800508BC
-    mr r4, r28
-    mr r5, r30
-    mr r6, r31
-    mr r8, r29
-    li r9, 0x1
-    mtctr r12
-    bctrl
-    ItemEffect_Dispatch_L_800508BC:
-    lwz r3, 0x8(r27)
-    lwz r5, 0xc(r27)
-    lwz r0, 0x48(r3)
-    cmpwi r0, 0x0
-    beq ItemEffect_Dispatch_L_80050928
-    cmplwi r5, 0x0
-    beq ItemEffect_Dispatch_L_80050928
-    cmpwi r0, 0x1
-    beq ItemEffect_Dispatch_L_800508E4
-    b ItemEffect_Dispatch_L_80050928
-    ItemEffect_Dispatch_L_800508E4:
-    lwz r6, 0x28(r28)
-    mr r3, r28
-    lfs f0, lbl_806D26EC(r2)
-    li r4, 0x1
-    stfs f0, 0x17c(r6)
-    stfs f0, 0x180(r6)
-    stfs f0, 0x184(r6)
-    stfs f0, 0x194(r6)
-    stfs f0, 0x198(r6)
-    stfs f0, 0x19c(r6)
-    stfs f0, 0x1ac(r6)
-    stfs f0, 0x1b0(r6)
-    stfs f0, 0x1b4(r6)
-    lfs f1, 0xa0(r5)
-    lfs f2, 0xa4(r5)
-    lfs f3, 0xa8(r5)
-    bl KartItem_ApplyImpactImpulseAndRumble
-    ItemEffect_Dispatch_L_80050928:
-    psq_l f31, 0x98(r1), 0, 0
-    lfd f31, 0x90(r1)
-    psq_l f30, 0x88(r1), 0, 0
-    lfd f30, 0x80(r1)
-    lmw r27, 0x6c(r1)
-    lwz r0, 0xa4(r1)
-    mtlr r0
-    addi r1, r1, 0xa0
-    blr
+
+#pragma exceptions off
+void ItemEffect_Dispatch(ItemEffectLane *lane_, KartItemOpsView *owner, unsigned char kind, void *effectState, void *mediaReq, const ItemEffectDesc *desc, int itemId, void *itemObj, int arg4, float intensity) { /* 0x80050410 size:0x53C */
+    ItemEffectLaneRun *lane = (ItemEffectLaneRun *)lane_;
+
+    lane->itemId = itemId;
+    lane->itemObj = itemObj;
+    lane->desc = desc;
+    if (arg4 < 0) {
+        lane->timer = lane->desc->duration10;
+    } else {
+        lane->timer = arg4;
+    }
+    if (lane->desc->kind14 == 1) {
+        if (lane->itemObj != 0) {
+            ItemObjectPosView *o = (ItemObjectPosView *)lane->itemObj;
+            float mtx[16];
+            float d[3];
+            float dir[3];
+            float *t = owner->movement->transform;
+            int i;
+            for (i = 0; i < 16; i++) mtx[i] = t[i];
+            {
+                float *q = mtx;
+                float *pd = d;
+                float *pr = dir;
+                {
+                    float dy = o->posY - q[13];
+                    float dx = o->posX - q[12];
+                    float dz = o->posZ - q[14];
+                    pd[0] = dx; pd[1] = dy; pd[2] = dz;
+                }
+                pr[0] = q[0]; pr[1] = q[1]; pr[2] = q[2];
+                {
+                    float t0 = pd[0] * pr[0];
+                    float t1 = pd[1] * pr[1];
+                    float sum = t0 + t1;
+                    float t2 = pd[2] * pr[2];
+                    if (t2 + sum < lbl_806D26EC) {
+                        lane->blend = lbl_806D26E4;
+                    } else {
+                        lane->blend = lbl_806D26FC;
+                    }
+                }
+            }
+        } else {
+            lane->blend = intensity;
+        }
+        if (lane->blend > lbl_806D26EC) {
+            lane->mode = 1;
+        } else {
+            lane->mode = 2;
+        }
+    } else {
+        lane->mode = 0;
+        lane->blend = lbl_806D26FC;
+    }
+
+    if (lane->desc->strPcbKind8 == 1) {
+        KartMovementSpeedView *mov;
+        float sp;
+
+        if (owner->strPcbGate20 != 0) {
+            StrPcb_SetTimer3034_38(StrPcb_GetInstance(), 0xc, 2, lbl_806D26E4);
+        }
+        mov = owner->movement;
+        mov->velX = mov->velX * lbl_806D2718;
+        mov->velY = mov->velY * lbl_806D2718;
+        mov->velZ = mov->velZ * lbl_806D2718;
+        {
+            float ref;
+            sp = lbl_806D2718 * mov->speed;
+            ref = mov->table[mov->tableIdx].refSpeed;
+            if (sp > ref) sp = ref;
+            mov->speed = sp;
+        }
+        if (owner->aiTimerD0 <= 0) {
+            fn_8019A9BC(owner->movement, lbl_806D26EC, lbl_806D26EC, lbl_806D26EC);
+            owner->aiTimerD0 = 0x2d;
+        }
+    } else {
+        if (owner->aiTimerD0 <= 0) {
+            owner->aiTimerD0 = 0x2d;
+        }
+    }
+
+    if (lane->timer >= 0 && lane->itemId >= 0) {
+        const ItemEffectDesc *d2;
+        float blendv;
+        int steer;
+
+        d2 = lane->desc;
+        blendv = lane->blend;
+        steer = d2->steerKind18;
+        if (steer != 0 && kind != 0) {
+            float sc20 = d2->steerScale20;
+            float prod = sc20 * blendv;
+            switch (steer) {
+            case 1:
+                EffectSteering_InitForLock(effectState, d2->steerParam1c, prod);
+                break;
+            case 2:
+                EffectSteering_InitForVibrate(effectState, d2->steerParam1c, prod, d2->steerParam24);
+                break;
+            case 3:
+                EffectSteering_InitForVibrate_Sub(effectState, d2->steerParam1c, prod);
+                break;
+            case 4:
+                EffectSteering_InitForViscosity_Uniform(effectState, d2->steerParam1c, prod, d2->steerParam24);
+                break;
+            case 5:
+                EffectSteering_InitForViscosity(effectState, d2->steerParam1c, prod, d2->steerParam24, d2->steerParam28, d2->steerParam2c, d2->steerParam30);
+                break;
+            case 6:
+                EffectSteering_InitForSplit(effectState, (int)sc20, d2->steerParam1c);
+                break;
+            case 7:
+                EffectSteering_InitForShake(effectState, d2->steerParam1c, prod, d2->steerParam24, d2->steerParam28);
+                break;
+            case 8:
+                EffectSteering_InitForScale(effectState, d2->steerParam1c, sc20);
+                break;
+            case 9:
+                EffectSteering_InitForDelay(effectState, (int)sc20, d2->steerParam1c);
+                break;
+            }
+        }
+        d2 = lane->desc;
+        if (d2->speedKind34 != 0) {
+            switch (d2->speedKind34) {
+            case 1:
+                EffectSpeed_ApplySpeedScale(mediaReq, d2->speedParam38, d2->speedParam3c);
+                break;
+            case 2:
+                InterpolationStep(mediaReq, d2->speedParam38, d2->speedParam3c);
+                break;
+            }
+        }
+        {
+            const ItemEffectDesc *d4 = lane->desc;
+            int camk = d4->camKind40;
+            if (camk != 0 && kind != 0) {
+                float f44 = d4->camParam44;
+                switch (camk) {
+                case 3:
+                    ShadowBillboard_TriggerSpinFlash(owner->billboard);
+                    TornadoEffect_SetColorY(owner->effectObj, lbl_806D2700);
+                    break;
+                case 1: {
+                    void *cam;
+                    if ((cam = (void *)lbl_806D109C) == 0) {
+                        cam = 0;
+                    }
+                    CameraEffect_Apply(cam, 1, f44);
+                    break;
+                }
+                case 2: {
+                    void *cam;
+                    if ((cam = (void *)lbl_806D109C) == 0) {
+                        cam = 0;
+                    }
+                    CameraEffect_Apply(cam, 3, f44);
+                    break;
+                }
+                }
+            }
+        }
+        {
+            const ItemEffectDesc *d5 = lane->desc;
+            void *io = lane->itemObj;
+            ItemEffectApplyFn fnp = d5->onApply50;
+            if (fnp != 0) {
+                fnp(d5, owner, effectState, mediaReq, io, kind, 1);
+            }
+        }
+    }
+    {
+        const ItemEffectDesc *d6 = lane->desc;
+        void *io2 = lane->itemObj;
+        if (d6->impactKind48 != 0 && io2 != 0) {
+            switch (d6->impactKind48) {
+            case 1: {
+                KartMovementSpeedView *mv2 = owner->movement;
+                mv2->velX = lbl_806D26EC;
+                mv2->velY = lbl_806D26EC;
+                mv2->velZ = lbl_806D26EC;
+                mv2->impact194 = lbl_806D26EC;
+                mv2->impact198 = lbl_806D26EC;
+                mv2->impact19c = lbl_806D26EC;
+                mv2->impact1ac = lbl_806D26EC;
+                mv2->impact1b0 = lbl_806D26EC;
+                mv2->impact1b4 = lbl_806D26EC;
+                KartItem_ApplyImpactImpulseAndRumble(owner, 1, ((ItemObjectPosView *)io2)->posX, ((ItemObjectPosView *)io2)->posY, ((ItemObjectPosView *)io2)->posZ);
+                break;
+            }
+            }
+        }
+    }
 }
+#pragma exceptions reset
 
 #pragma exceptions off
 void KartItem_TickActiveEffectsTwoLane(ItemEffectTable *self) { /* 0x8005094C size:0x3A4 */

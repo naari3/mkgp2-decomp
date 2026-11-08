@@ -171,7 +171,9 @@ struct SpriteHandle {
     char pad1D[3];
     int baseResId;
     signed char tevMode;
-    char pad25[3];
+    char pad25;
+    unsigned char posMode;
+    char pad27;
     float sizeX;
     float sizeY;
     char pad30[4];
@@ -180,13 +182,17 @@ struct SpriteHandle {
     float texH;
     float posX;
     float posY;
-    char pad48;
+    unsigned char clipFlags;
     unsigned char hasUV;
     char pad4A[2];
     float uv[6];
     unsigned int color[4];
     unsigned char flip;
-    char pad75[0x88 - 0x75];
+    char pad75[3];
+    int uvMode;
+    int uvA;
+    int uvB;
+    int uvC;
     float corner[4][2];
     float texUV[2][2];
     unsigned char hasTex2;
@@ -198,7 +204,9 @@ struct SpriteHandle {
     unsigned char activeFlag;
     unsigned char visible;
     signed char dirty;
-    char padDB[0xE4 - 0xDB];
+    char padDB;
+    int fDC;
+    int fE0;
 };
 
 
@@ -226,7 +234,7 @@ void GXSetCurrentMtx(unsigned int);
 void GXSetProjection(float (*)[4], int);
 extern float g_glyphClipMaxX;
 extern float g_glyphClipMaxY;
-extern float g_glyphClipMinXY;
+extern const float g_glyphClipMinXY;
 extern unsigned char lbl_806D14F1;
 extern unsigned int lbl_806D14F4;
 extern unsigned int lbl_806D14F8;
@@ -251,7 +259,7 @@ void ResourceTable_GetOffsetXY(int id, float *x, float *y);
 void ResourceTable_GetSizeXY(int id, float *x, float *y);
 int ResourceTable_GetSlotIndex(int id);
 TEXDescriptor *TEXGetPaletteEntry(void *pal, unsigned int idx);
-extern unsigned int lbl_806D6D88;
+extern const float lbl_806D6D88;
 extern unsigned int lbl_806D6D90;
 extern ResEntry lbl_806573E8[600];
 unsigned int OSGetTick(void);
@@ -273,8 +281,8 @@ void fn_801F6494(void);
 extern unsigned char lbl_806D14FD;
 float LUT_Cosine(float);
 float LUT_Sine(float);
-extern void ResourceTable_GetFlagsByte();
-extern void ResourceTable_GetScaleXY();
+signed char ResourceTable_GetFlagsByte(int id);
+void ResourceTable_GetScaleXY(int id, float *x, float *y);
 extern unsigned int lbl_80332528[];
 void *memset(void *p, int c, unsigned long n);
 void __destroy_arr(void *, void *, unsigned long, unsigned long);
@@ -300,14 +308,14 @@ void SpriteHandle_RecomputeCull(int h);
 void SpriteLayer_SetResource(int h, int id);
 void fn_8011F870(unsigned int mask);
 void fn_8011F994(int type);
-asm int SpriteHandle_CreateEx(int a, int b, int c);
+int SpriteHandle_CreateEx(ResCtrl *a, int b, unsigned char c);
 void fn_8012094C(void);
 int fn_80120A08(int id);
 unsigned char PreloadResource(int id);
 void SpriteHandlePool_GC(void);
 void fn_80121210(void);
 void fn_801213EC(void);
-asm void fn_801217E8(SpriteHandle *s);
+void fn_801217E8(SpriteHandle *s);
 int Stub_NoOp_80121c34(int x);
 unsigned char fn_80121C38(ResCtrl *r);
 void fn_80121E10(ResCtrl *r);
@@ -352,9 +360,6 @@ __declspec(section ".extab_user") static const unsigned char extab_PreloadResour
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_80121210 = { 0x180A0000, 0x0000005C, 0x00060010, 0x00000000, 0x82000008, (void *)&__dt__11ScopedTimerFv };
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_801217E8[8] = {
-    0x18, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 
@@ -397,9 +402,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801217E8 = {
-    (void *)&fn_801217E8, 0x0000044C, (void *)extab_fn_801217E8
-};
 
 
 
@@ -871,958 +873,284 @@ extern "C" void fn_8011FAB8(void) {
 }
 
 extern "C" int SpriteHandle_CreateDefault(int a, int b) {
-    return SpriteHandle_CreateEx(a, b, 1);
+    return SpriteHandle_CreateEx((ResCtrl *)a, b, 1);
 }
 
 extern "C" unsigned char fn_8011FAFC(int a, int b) {
-    return SpriteHandle_CreateEx(a, b, 0) != 0;
+    return SpriteHandle_CreateEx((ResCtrl *)a, b, 0) != 0;
 }
 
-extern "C" asm int SpriteHandle_CreateEx(int a, int b, int c) { /* 0x8011FB2C size:0xDB4 */
-    nofralloc
-    stwu r1, -0x90(r1)
-    mflr r0
-    stw r0, 0x94(r1)
-    stfd f31, 0x80(r1)
-    psq_st f31, 0x88(r1), 0, 0
-    stfd f30, 0x70(r1)
-    psq_st f30, 0x78(r1), 0, 0
-    stmw r23, 0x4c(r1)
-    li r0, 0x0
-    mr r23, r3
-    stw r0, 0x18(r1)
-    mr r24, r4
-    mr r25, r5
-    bl OSGetTick
-    li r0, 0xd
-    stw r3, 0x1c(r1)
-    stw r0, 0x14(r1)
-    bl OSGetTick
-    lwz r4, lbl_806D1500(r13)
-    stw r3, 0x10(r1)
-    lwz r3, 0x4(r4)
-    lwz r0, 0x0(r4)
-    cmpw r3, r0
-    blt SpriteHandle_CreateEx_L_8011FC58
-    bl OSGetTick
-    lis r5, 0x8000
-    lis r4, 0x431c
-    lwz r5, 0xf8(r5)
-    lis r0, 0x4330
-    subi r6, r4, 0x217d
-    lwz r7, 0x10(r1)
-    srwi r4, r5, 2
-    stw r0, 0x30(r1)
-    mulhwu r0, r6, r4
-    subf r3, r7, r3
-    lfd f2, lbl_806D6D90(r2)
-    slwi r4, r3, 3
-    lfs f0, lbl_806D6D98(r2)
-    lwz r3, 0x14(r1)
-    srwi r0, r0, 15
-    divwu r0, r4, r0
-    stw r0, 0x34(r1)
-    lfd f1, 0x30(r1)
-    fsubs f1, f1, f2
-    fdivs f1, f1, f0
-    bl Profiler_RecordFrame
-    bl OSGetTick
-    lis r4, 0x8000
-    lis r6, 0x431c
-    lwz r0, 0xf8(r4)
-    lis r5, 0x4330
-    lwz r7, 0x1c(r1)
-    lis r4, lbl_80657208@ha
-    srwi r0, r0, 2
-    subi r6, r6, 0x217d
-    mulhwu r6, r6, r0
-    subf r3, r7, r3
-    lwz r0, 0x18(r1)
-    addi r4, r4, lbl_80657208@l
-    slwi r7, r3, 3
-    stw r5, 0x38(r1)
-    srwi r3, r6, 15
-    slwi r0, r0, 2
-    divwu r5, r7, r3
-    lfd f3, lbl_806D6D90(r2)
-    lfs f1, lbl_806D6D9C(r2)
-    li r3, 0x0
-    lfsx f0, r4, r0
-    stw r5, 0x3c(r1)
-    lfd f2, 0x38(r1)
-    fsubs f2, f2, f3
-    fdivs f1, f2, f1
-    fadds f0, f0, f1
-    stfsx f0, r4, r0
-    b SpriteHandle_CreateEx_L_801208BC
-    SpriteHandle_CreateEx_L_8011FC58:
-    cmplwi r23, 0x0
-    bne SpriteHandle_CreateEx_L_8011FD2C
-    bl OSGetTick
-    lis r5, 0x8000
-    lis r4, 0x431c
-    lwz r5, 0xf8(r5)
-    lis r0, 0x4330
-    subi r6, r4, 0x217d
-    lwz r7, 0x10(r1)
-    srwi r4, r5, 2
-    stw r0, 0x38(r1)
-    mulhwu r0, r6, r4
-    subf r3, r7, r3
-    lfd f2, lbl_806D6D90(r2)
-    slwi r4, r3, 3
-    lfs f0, lbl_806D6D98(r2)
-    lwz r3, 0x14(r1)
-    srwi r0, r0, 15
-    divwu r0, r4, r0
-    stw r0, 0x3c(r1)
-    lfd f1, 0x38(r1)
-    fsubs f1, f1, f2
-    fdivs f1, f1, f0
-    bl Profiler_RecordFrame
-    bl OSGetTick
-    lis r4, 0x8000
-    lis r6, 0x431c
-    lwz r0, 0xf8(r4)
-    lis r5, 0x4330
-    lwz r7, 0x1c(r1)
-    lis r4, lbl_80657208@ha
-    srwi r0, r0, 2
-    subi r6, r6, 0x217d
-    mulhwu r6, r6, r0
-    subf r3, r7, r3
-    lwz r0, 0x18(r1)
-    addi r4, r4, lbl_80657208@l
-    slwi r7, r3, 3
-    stw r5, 0x30(r1)
-    srwi r3, r6, 15
-    slwi r0, r0, 2
-    divwu r5, r7, r3
-    lfd f3, lbl_806D6D90(r2)
-    lfs f1, lbl_806D6D9C(r2)
-    li r3, 0x0
-    lfsx f0, r4, r0
-    stw r5, 0x34(r1)
-    lfd f2, 0x30(r1)
-    fsubs f2, f2, f3
-    fdivs f1, f2, f1
-    fadds f0, f0, f1
-    stfsx f0, r4, r0
-    b SpriteHandle_CreateEx_L_801208BC
-    SpriteHandle_CreateEx_L_8011FD2C:
-    clrlwi. r0, r25, 24
-    bne SpriteHandle_CreateEx_L_8011FE10
-    mr r3, r23
-    bl fn_80121C38
-    clrlwi. r0, r3, 24
-    bne SpriteHandle_CreateEx_L_8011FE10
-    bl OSGetTick
-    lis r5, 0x8000
-    lis r4, 0x431c
-    lwz r5, 0xf8(r5)
-    lis r0, 0x4330
-    subi r6, r4, 0x217d
-    lwz r7, 0x10(r1)
-    srwi r4, r5, 2
-    stw r0, 0x38(r1)
-    mulhwu r0, r6, r4
-    subf r3, r7, r3
-    lfd f2, lbl_806D6D90(r2)
-    slwi r4, r3, 3
-    lfs f0, lbl_806D6D98(r2)
-    lwz r3, 0x14(r1)
-    srwi r0, r0, 15
-    divwu r0, r4, r0
-    stw r0, 0x3c(r1)
-    lfd f1, 0x38(r1)
-    fsubs f1, f1, f2
-    fdivs f1, f1, f0
-    bl Profiler_RecordFrame
-    bl OSGetTick
-    lis r4, 0x8000
-    lis r6, 0x431c
-    lwz r0, 0xf8(r4)
-    lis r5, 0x4330
-    lwz r7, 0x1c(r1)
-    lis r4, lbl_80657208@ha
-    srwi r0, r0, 2
-    subi r6, r6, 0x217d
-    mulhwu r6, r6, r0
-    subf r3, r7, r3
-    lwz r0, 0x18(r1)
-    addi r4, r4, lbl_80657208@l
-    slwi r7, r3, 3
-    stw r5, 0x30(r1)
-    srwi r3, r6, 15
-    slwi r0, r0, 2
-    divwu r5, r7, r3
-    lfd f3, lbl_806D6D90(r2)
-    lfs f1, lbl_806D6D9C(r2)
-    li r3, 0x0
-    lfsx f0, r4, r0
-    stw r5, 0x34(r1)
-    lfd f2, 0x30(r1)
-    fsubs f2, f2, f3
-    fdivs f1, f2, f1
-    fadds f0, f0, f1
-    stfsx f0, r4, r0
-    b SpriteHandle_CreateEx_L_801208BC
-    SpriteHandle_CreateEx_L_8011FE10:
-    lwz r0, 0x8(r23)
-    lwz r3, 0x0(r23)
-    cmpwi r0, 0x2
-    mr r30, r3
-    mr r29, r3
-    bne SpriteHandle_CreateEx_L_8011FE30
-    li r30, 0x1b8c
-    li r29, 0x1b8c
-    SpriteHandle_CreateEx_L_8011FE30:
-    mr r3, r29
-    bl IsValidResourceId
-    clrlwi. r0, r3, 24
-    bne SpriteHandle_CreateEx_L_8011FF0C
-    bl OSGetTick
-    lis r5, 0x8000
-    lis r4, 0x431c
-    lwz r5, 0xf8(r5)
-    lis r0, 0x4330
-    subi r6, r4, 0x217d
-    lwz r7, 0x10(r1)
-    srwi r4, r5, 2
-    stw r0, 0x38(r1)
-    mulhwu r0, r6, r4
-    subf r3, r7, r3
-    lfd f2, lbl_806D6D90(r2)
-    slwi r4, r3, 3
-    lfs f0, lbl_806D6D98(r2)
-    lwz r3, 0x14(r1)
-    srwi r0, r0, 15
-    divwu r0, r4, r0
-    stw r0, 0x3c(r1)
-    lfd f1, 0x38(r1)
-    fsubs f1, f1, f2
-    fdivs f1, f1, f0
-    bl Profiler_RecordFrame
-    bl OSGetTick
-    lis r4, 0x8000
-    lis r6, 0x431c
-    lwz r0, 0xf8(r4)
-    lis r5, 0x4330
-    lwz r7, 0x1c(r1)
-    lis r4, lbl_80657208@ha
-    srwi r0, r0, 2
-    subi r6, r6, 0x217d
-    mulhwu r6, r6, r0
-    subf r3, r7, r3
-    lwz r0, 0x18(r1)
-    addi r4, r4, lbl_80657208@l
-    slwi r7, r3, 3
-    stw r5, 0x30(r1)
-    srwi r3, r6, 15
-    slwi r0, r0, 2
-    divwu r5, r7, r3
-    lfd f3, lbl_806D6D90(r2)
-    lfs f1, lbl_806D6D9C(r2)
-    li r3, 0x0
-    lfsx f0, r4, r0
-    stw r5, 0x34(r1)
-    lfd f2, 0x30(r1)
-    fsubs f2, f2, f3
-    fdivs f1, f2, f1
-    fadds f0, f0, f1
-    stfsx f0, r4, r0
-    b SpriteHandle_CreateEx_L_801208BC
-    SpriteHandle_CreateEx_L_8011FF0C:
-    mr r3, r29
-    bl ResourceTable_GetGroupKey
-    mr r3, r30
-    bl ResourceTable_GetGroupKey
-    lis r4, lbl_806573E8@ha
-    li r0, 0x258
-    addi r31, r4, lbl_806573E8@l
-    li r4, 0x0
-    mr r5, r31
-    mtctr r0
-    SpriteHandle_CreateEx_L_8011FF34:
-    lwz r0, 0x4(r5)
-    cmpw r3, r0
-    bne SpriteHandle_CreateEx_L_8011FF54
-    mulli r4, r4, 0x1c
-    lis r3, lbl_806573E8@ha
-    addi r0, r3, lbl_806573E8@l
-    add r0, r0, r4
-    b SpriteHandle_CreateEx_L_8011FF64
-    SpriteHandle_CreateEx_L_8011FF54:
-    addi r5, r5, 0x1c
-    addi r4, r4, 0x1
-    bdnz SpriteHandle_CreateEx_L_8011FF34
-    li r0, 0x0
-    SpriteHandle_CreateEx_L_8011FF64:
-    cmplwi r0, 0x0
-    mr r28, r0
-    bne SpriteHandle_CreateEx_L_80120098
-    mr r3, r30
-    bl PreloadResource
-    clrlwi. r0, r3, 24
-    bne SpriteHandle_CreateEx_L_8012004C
-    bl OSGetTick
-    lis r5, 0x8000
-    lis r4, 0x431c
-    lwz r5, 0xf8(r5)
-    lis r0, 0x4330
-    subi r6, r4, 0x217d
-    lwz r7, 0x10(r1)
-    srwi r4, r5, 2
-    stw r0, 0x38(r1)
-    mulhwu r0, r6, r4
-    subf r3, r7, r3
-    lfd f2, lbl_806D6D90(r2)
-    slwi r4, r3, 3
-    lfs f0, lbl_806D6D98(r2)
-    lwz r3, 0x14(r1)
-    srwi r0, r0, 15
-    divwu r0, r4, r0
-    stw r0, 0x3c(r1)
-    lfd f1, 0x38(r1)
-    fsubs f1, f1, f2
-    fdivs f1, f1, f0
-    bl Profiler_RecordFrame
-    bl OSGetTick
-    lis r4, 0x8000
-    lis r6, 0x431c
-    lwz r0, 0xf8(r4)
-    lis r5, 0x4330
-    lwz r7, 0x1c(r1)
-    lis r4, lbl_80657208@ha
-    srwi r0, r0, 2
-    subi r6, r6, 0x217d
-    mulhwu r6, r6, r0
-    subf r3, r7, r3
-    lwz r0, 0x18(r1)
-    addi r4, r4, lbl_80657208@l
-    slwi r7, r3, 3
-    stw r5, 0x30(r1)
-    srwi r3, r6, 15
-    slwi r0, r0, 2
-    divwu r5, r7, r3
-    lfd f3, lbl_806D6D90(r2)
-    lfs f1, lbl_806D6D9C(r2)
-    li r3, 0x0
-    lfsx f0, r4, r0
-    stw r5, 0x34(r1)
-    lfd f2, 0x30(r1)
-    fsubs f2, f2, f3
-    fdivs f1, f2, f1
-    fadds f0, f0, f1
-    stfsx f0, r4, r0
-    b SpriteHandle_CreateEx_L_801208BC
-    SpriteHandle_CreateEx_L_8012004C:
-    mr r3, r30
-    bl ResourceTable_GetGroupKey
-    li r0, 0x258
-    mr r5, r31
-    li r4, 0x0
-    mtctr r0
-    SpriteHandle_CreateEx_L_80120064:
-    lwz r0, 0x4(r5)
-    cmpw r3, r0
-    bne SpriteHandle_CreateEx_L_80120084
-    mulli r4, r4, 0x1c
-    lis r3, lbl_806573E8@ha
-    addi r0, r3, lbl_806573E8@l
-    add r0, r0, r4
-    b SpriteHandle_CreateEx_L_80120094
-    SpriteHandle_CreateEx_L_80120084:
-    addi r5, r5, 0x1c
-    addi r4, r4, 0x1
-    bdnz SpriteHandle_CreateEx_L_80120064
-    li r0, 0x0
-    SpriteHandle_CreateEx_L_80120094:
-    mr r28, r0
-    SpriteHandle_CreateEx_L_80120098:
-    lwz r5, lbl_806D1500(r13)
-    lwz r3, 0x0(r5)
-    lwz r0, 0x4(r5)
-    cmpw r3, r0
-    bgt SpriteHandle_CreateEx_L_801200B4
-    li r4, 0x0
-    b SpriteHandle_CreateEx_L_8012014C
-    SpriteHandle_CreateEx_L_801200B4:
-    lwz r4, 0xc(r5)
-    lwz r3, 0x4(r4)
-    cmplwi r3, 0x0
-    beq SpriteHandle_CreateEx_L_801200CC
-    lwz r0, 0x8(r4)
-    stw r0, 0x8(r3)
-    SpriteHandle_CreateEx_L_801200CC:
-    lwz r3, 0x8(r4)
-    cmplwi r3, 0x0
-    beq SpriteHandle_CreateEx_L_801200E0
-    lwz r0, 0x4(r4)
-    stw r0, 0x4(r3)
-    SpriteHandle_CreateEx_L_801200E0:
-    lwz r0, 0xc(r5)
-    cmplw r0, r4
-    bne SpriteHandle_CreateEx_L_801200F4
-    lwz r0, 0x8(r4)
-    stw r0, 0xc(r5)
-    SpriteHandle_CreateEx_L_801200F4:
-    lwz r0, 0x10(r5)
-    cmplw r0, r4
-    bne SpriteHandle_CreateEx_L_80120108
-    lwz r0, 0x4(r4)
-    stw r0, 0x10(r5)
-    SpriteHandle_CreateEx_L_80120108:
-    li r0, 0x0
-    stw r0, 0x4(r4)
-    stw r0, 0x8(r4)
-    lwz r3, 0x18(r5)
-    cmplwi r3, 0x0
-    beq SpriteHandle_CreateEx_L_80120124
-    stw r4, 0x8(r3)
-    SpriteHandle_CreateEx_L_80120124:
-    lwz r0, 0x18(r5)
-    stw r0, 0x4(r4)
-    lwz r0, 0x14(r5)
-    cmplwi r0, 0x0
-    bne SpriteHandle_CreateEx_L_8012013C
-    stw r4, 0x14(r5)
-    SpriteHandle_CreateEx_L_8012013C:
-    stw r4, 0x18(r5)
-    lwz r3, 0x4(r5)
-    addi r0, r3, 0x1
-    stw r0, 0x4(r5)
-    SpriteHandle_CreateEx_L_8012014C:
-    lwz r27, 0x0(r4)
-    lis r3, g_SpriteHandlePool@ha
-    addi r6, r3, g_SpriteHandlePool@l
-    li r5, 0x1
-    mulli r7, r27, 0xe4
-    li r4, -0x1
-    li r0, 0x0
-    mr r3, r29
-    add r26, r6, r7
-    stb r5, 0x0(r26)
-    stw r24, 0x4(r26)
-    stw r4, 0x8(r26)
-    stb r25, 0xc(r26)
-    stw r0, 0xdc(r26)
-    stw r0, 0xe0(r26)
-    stw r29, 0x20(r26)
-    stw r30, 0x10(r26)
-    bl ResourceTable_GetSlotIndex
-    mr r0, r3
-    lwz r3, 0x8(r28)
-    mr r30, r0
-    mr r4, r30
-    bl TEXGetPaletteEntry
-    lwz r4, 0x10(r28)
-    slwi r0, r30, 5
-    add r0, r4, r0
-    stw r0, 0x14(r26)
-    lwz r0, 0x4(r3)
-    cmplwi r0, 0x0
-    beq SpriteHandle_CreateEx_L_801201D8
-    mulli r0, r30, 0xc
-    lwz r3, 0x14(r28)
-    add r0, r3, r0
-    stw r0, 0x18(r26)
-    b SpriteHandle_CreateEx_L_801201E0
-    SpriteHandle_CreateEx_L_801201D8:
-    li r0, 0x0
-    stw r0, 0x18(r26)
-    SpriteHandle_CreateEx_L_801201E0:
-    lwz r3, 0x18(r28)
-    lbzx r0, r3, r30
-    stb r0, 0x1c(r26)
-    lwz r0, 0x8(r23)
-    stb r0, 0x24(r26)
-    lwz r3, 0xc(r23)
-    neg r0, r3
-    or r0, r0, r3
-    srwi r0, r0, 31
-    stb r0, 0x25(r26)
-    lbz r0, 0x10(r23)
-    stb r0, 0x26(r26)
-    lfs f0, 0x14(r23)
-    stfs f0, 0x28(r26)
-    lfs f0, 0x18(r23)
-    stfs f0, 0x2c(r26)
-    lfs f0, 0x1c(r23)
-    stfs f0, 0x30(r26)
-    lfs f0, 0x28(r23)
-    stfs f0, 0x34(r26)
-    lbz r0, 0x24(r26)
-    cmpwi r0, 0x2
-    bne SpriteHandle_CreateEx_L_80120250
-    lfs f0, 0x20(r23)
-    stfs f0, 0x38(r26)
-    lfs f0, 0x24(r23)
-    stfs f0, 0x3c(r26)
-    b SpriteHandle_CreateEx_L_80120260
-    SpriteHandle_CreateEx_L_80120250:
-    mr r3, r29
-    addi r4, r26, 0x38
-    addi r5, r26, 0x3c
-    bl ResourceTable_GetSizeXY
-    SpriteHandle_CreateEx_L_80120260:
-    lfs f0, 0x2c(r23)
-    li r0, 0x0
-    stfs f0, 0x40(r26)
-    lfs f0, 0x30(r23)
-    stfs f0, 0x44(r26)
-    lwz r3, 0x34(r23)
-    stw r3, 0x64(r26)
-    lwz r3, 0x38(r23)
-    stw r3, 0x68(r26)
-    lwz r3, 0x3c(r23)
-    stw r3, 0x6c(r26)
-    lwz r3, 0x40(r23)
-    stw r3, 0x70(r26)
-    stb r0, 0x74(r26)
-    lbz r0, 0x44(r23)
-    cmplwi r0, 0x0
-    beq SpriteHandle_CreateEx_L_801202B0
-    lbz r0, 0x74(r26)
-    ori r0, r0, 0x1
-    stb r0, 0x74(r26)
-    SpriteHandle_CreateEx_L_801202B0:
-    lbz r0, 0x45(r23)
-    cmplwi r0, 0x0
-    beq SpriteHandle_CreateEx_L_801202C8
-    lbz r0, 0x74(r26)
-    ori r0, r0, 0x2
-    stb r0, 0x74(r26)
-    SpriteHandle_CreateEx_L_801202C8:
-    li r0, 0x0
-    lfs f1, lbl_806D6D8C(r2)
-    stb r0, 0x49(r26)
-    lfs f0, g_glyphClipMinXY(r2)
-    stfs f1, 0x4c(r26)
-    stfs f0, 0x50(r26)
-    stfs f0, 0x54(r26)
-    stfs f0, 0x58(r26)
-    stfs f1, 0x5c(r26)
-    stfs f0, 0x60(r26)
-    lwz r0, 0x48(r23)
-    cmpwi r0, 0x1
-    bne SpriteHandle_CreateEx_L_80120318
-    li r0, 0x1
-    stw r0, 0x78(r26)
-    lwz r0, 0x4c(r23)
-    stw r0, 0x7c(r26)
-    lwz r0, 0x50(r23)
-    stw r0, 0x80(r26)
-    b SpriteHandle_CreateEx_L_80120328
-    SpriteHandle_CreateEx_L_80120318:
-    li r0, 0x2
-    stw r0, 0x78(r26)
-    lwz r0, 0x54(r23)
-    stw r0, 0x84(r26)
-    SpriteHandle_CreateEx_L_80120328:
-    mr r3, r26
-    bl fn_801217E8
-    lbz r0, 0x24(r26)
-    cmpwi r0, 0x2
-    beq SpriteHandle_CreateEx_L_80120438
-    mr r3, r29
-    bl ResourceTable_GetSlotIndex
-    mr r0, r3
-    lwz r3, 0x8(r28)
-    mr r4, r0
-    bl TEXGetPaletteEntry
-    lwz r5, 0x0(r3)
-    lis r6, 0x4330
-    stw r6, 0x38(r1)
-    mr r3, r29
-    lhz r7, 0x2(r5)
-    addi r4, r26, 0xa8
-    lhz r0, 0x0(r5)
-    addi r5, r26, 0xac
-    stw r7, 0x3c(r1)
-    lfd f1, lbl_806D6D90(r2)
-    lfd f0, 0x38(r1)
-    stw r0, 0x34(r1)
-    fsubs f31, f0, f1
-    stw r6, 0x30(r1)
-    lfd f0, 0x30(r1)
-    fsubs f30, f0, f1
-    bl ResourceTable_GetOffsetXY
-    lfs f2, lbl_806D6D8C(r2)
-    lfs f0, 0xa8(r26)
-    fdivs f3, f2, f31
-    lfs f1, lbl_806D6D88(r2)
-    fadds f0, f0, f1
-    fdivs f4, f2, f30
-    stfs f0, 0xa8(r26)
-    lfs f0, 0xac(r26)
-    fadds f0, f0, f1
-    stfs f0, 0xac(r26)
-    lfs f0, 0xa8(r26)
-    fmuls f0, f3, f0
-    stfs f0, 0xa8(r26)
-    lfs f0, 0xac(r26)
-    fmuls f0, f4, f0
-    stfs f0, 0xac(r26)
-    lfs f1, 0x38(r26)
-    lfs f0, 0xa8(r26)
-    fsubs f1, f1, f2
-    fmadds f0, f3, f1, f0
-    stfs f0, 0xb0(r26)
-    lfs f1, 0x3c(r26)
-    lfs f0, 0xac(r26)
-    fsubs f1, f1, f2
-    fmadds f0, f4, f1, f0
-    stfs f0, 0xb4(r26)
-    lbz r0, 0x74(r26)
-    clrlwi. r0, r0, 31
-    beq SpriteHandle_CreateEx_L_8012041C
-    lfs f1, 0xa8(r26)
-    lfs f0, 0xb0(r26)
-    stfs f0, 0xa8(r26)
-    stfs f1, 0xb0(r26)
-    SpriteHandle_CreateEx_L_8012041C:
-    lbz r0, 0x74(r26)
-    rlwinm. r0, r0, 0, 30, 30
-    beq SpriteHandle_CreateEx_L_80120438
-    lfs f1, 0xac(r26)
-    lfs f0, 0xb4(r26)
-    stfs f0, 0xac(r26)
-    stfs f1, 0xb4(r26)
-    SpriteHandle_CreateEx_L_80120438:
-    lwz r0, 0x4(r23)
-    cmpwi r0, -0x1
-    bne SpriteHandle_CreateEx_L_80120450
-    mr r3, r29
-    bl ResourceTable_GetChainNextId
-    stw r3, 0x4(r23)
-    SpriteHandle_CreateEx_L_80120450:
-    li r0, 0x0
-    stb r0, 0xb8(r26)
-    lbz r0, 0x24(r26)
-    cmpwi r0, 0x2
-    beq SpriteHandle_CreateEx_L_8012067C
-    lwz r30, 0x4(r23)
-    cmpwi r30, -0x1
-    beq SpriteHandle_CreateEx_L_8012067C
-    mr r3, r30
-    bl ResourceTable_GetGroupKey
-    li r0, 0x258
-    mr r5, r31
-    li r4, 0x0
-    mtctr r0
-    SpriteHandle_CreateEx_L_80120488:
-    lwz r0, 0x4(r5)
-    cmpw r3, r0
-    bne SpriteHandle_CreateEx_L_801204A8
-    mulli r4, r4, 0x1c
-    lis r3, lbl_806573E8@ha
-    addi r0, r3, lbl_806573E8@l
-    add r0, r0, r4
-    b SpriteHandle_CreateEx_L_801204B8
-    SpriteHandle_CreateEx_L_801204A8:
-    addi r5, r5, 0x1c
-    addi r4, r4, 0x1
-    bdnz SpriteHandle_CreateEx_L_80120488
-    li r0, 0x0
-    SpriteHandle_CreateEx_L_801204B8:
-    cmplwi r0, 0x0
-    mr r29, r0
-    bne SpriteHandle_CreateEx_L_80120514
-    mr r3, r30
-    bl PreloadResource
-    mr r3, r30
-    bl ResourceTable_GetGroupKey
-    li r0, 0x258
-    li r4, 0x0
-    mtctr r0
-    SpriteHandle_CreateEx_L_801204E0:
-    lwz r0, 0x4(r31)
-    cmpw r3, r0
-    bne SpriteHandle_CreateEx_L_80120500
-    mulli r4, r4, 0x1c
-    lis r3, lbl_806573E8@ha
-    addi r0, r3, lbl_806573E8@l
-    add r0, r0, r4
-    b SpriteHandle_CreateEx_L_80120510
-    SpriteHandle_CreateEx_L_80120500:
-    addi r31, r31, 0x1c
-    addi r4, r4, 0x1
-    bdnz SpriteHandle_CreateEx_L_801204E0
-    li r0, 0x0
-    SpriteHandle_CreateEx_L_80120510:
-    mr r29, r0
-    SpriteHandle_CreateEx_L_80120514:
-    cmplwi r29, 0x0
-    beq SpriteHandle_CreateEx_L_8012067C
-    li r0, 0x1
-    mr r3, r30
-    stb r0, 0xb8(r26)
-    stw r30, 0xbc(r26)
-    bl ResourceTable_GetSlotIndex
-    mr r0, r3
-    lwz r3, 0x8(r29)
-    mr r31, r0
-    mr r4, r31
-    bl TEXGetPaletteEntry
-    lwz r4, 0x10(r29)
-    slwi r0, r31, 5
-    mr r28, r3
-    add r0, r4, r0
-    stw r0, 0xc0(r26)
-    lwz r0, 0x4(r3)
-    cmplwi r0, 0x0
-    beq SpriteHandle_CreateEx_L_80120578
-    mulli r0, r31, 0xc
-    lwz r3, 0x14(r29)
-    add r0, r3, r0
-    stw r0, 0xc4(r26)
-    b SpriteHandle_CreateEx_L_80120580
-    SpriteHandle_CreateEx_L_80120578:
-    li r0, 0x0
-    stw r0, 0xc4(r26)
-    SpriteHandle_CreateEx_L_80120580:
-    mr r3, r30
-    addi r4, r1, 0xc
-    addi r5, r1, 0x8
-    bl ResourceTable_GetSizeXY
-    lwz r7, 0x0(r28)
-    lis r6, 0x4330
-    stw r6, 0x38(r1)
-    addi r5, r1, 0x24
-    lhz r4, 0x2(r7)
-    mr r3, r30
-    lhz r0, 0x0(r7)
-    stw r4, 0x3c(r1)
-    addi r4, r1, 0x20
-    lfd f1, lbl_806D6D90(r2)
-    lfd f0, 0x38(r1)
-    stw r0, 0x34(r1)
-    fsubs f30, f0, f1
-    stw r6, 0x30(r1)
-    lfd f0, 0x30(r1)
-    fsubs f31, f0, f1
-    bl ResourceTable_GetOffsetXY
-    lfs f4, lbl_806D6D8C(r2)
-    lfs f1, 0xc(r1)
-    fdivs f6, f4, f30
-    lfs f0, 0x8(r1)
-    lfs f3, 0x20(r1)
-    lfs f5, lbl_806D6D88(r2)
-    lfs f2, 0x24(r1)
-    fadds f3, f3, f5
-    fadds f2, f2, f5
-    fdivs f5, f4, f31
-    stfs f3, 0x20(r1)
-    stfs f2, 0x24(r1)
-    fmuls f3, f6, f3
-    fmuls f2, f5, f2
-    fsubs f1, f1, f4
-    fsubs f0, f0, f4
-    stfs f3, 0x20(r1)
-    fmadds f1, f6, f1, f3
-    stfs f2, 0x24(r1)
-    fmadds f0, f5, f0, f2
-    stfs f1, 0x28(r1)
-    stfs f0, 0x2c(r1)
-    lbz r0, 0x44(r23)
-    cmplwi r0, 0x0
-    beq SpriteHandle_CreateEx_L_80120640
-    stfs f1, 0x20(r1)
-    stfs f3, 0x28(r1)
-    SpriteHandle_CreateEx_L_80120640:
-    lbz r0, 0x45(r23)
-    cmplwi r0, 0x0
-    beq SpriteHandle_CreateEx_L_8012065C
-    lfs f1, 0x24(r1)
-    lfs f0, 0x2c(r1)
-    stfs f0, 0x24(r1)
-    stfs f1, 0x2c(r1)
-    SpriteHandle_CreateEx_L_8012065C:
-    lfs f1, 0x20(r1)
-    lfs f0, 0x24(r1)
-    stfs f1, 0xc8(r26)
-    lfs f1, 0x28(r1)
-    stfs f0, 0xcc(r26)
-    lfs f0, 0x2c(r1)
-    stfs f1, 0xd0(r26)
-    stfs f0, 0xd4(r26)
-    SpriteHandle_CreateEx_L_8012067C:
-    li r3, 0x1
-    clrlwi. r0, r25, 24
-    stb r3, 0xd8(r26)
-    bne SpriteHandle_CreateEx_L_80120694
-    stb r3, 0xd9(r26)
-    b SpriteHandle_CreateEx_L_801207E0
-    SpriteHandle_CreateEx_L_80120694:
-    lfs f3, 0x88(r26)
-    lfs f4, 0x8c(r26)
-    fmr f2, f3
-    fmr f1, f4
-    fmr f0, f3
-    fcmpo cr0, f3, f3
-    fcmpo cr0, f2, f0
-    bge SpriteHandle_CreateEx_L_801206B8
-    fmr f2, f0
-    SpriteHandle_CreateEx_L_801206B8:
-    lfs f0, 0x8c(r26)
-    fcmpo cr0, f0, f4
-    bge SpriteHandle_CreateEx_L_801206C8
-    fmr f4, f0
-    SpriteHandle_CreateEx_L_801206C8:
-    fcmpo cr0, f1, f0
-    bge SpriteHandle_CreateEx_L_801206D4
-    fmr f1, f0
-    SpriteHandle_CreateEx_L_801206D4:
-    addi r3, r26, 0x8
-    lfs f0, 0x90(r26)
-    fcmpo cr0, f0, f3
-    bge SpriteHandle_CreateEx_L_801206E8
-    fmr f3, f0
-    SpriteHandle_CreateEx_L_801206E8:
-    fcmpo cr0, f2, f0
-    bge SpriteHandle_CreateEx_L_801206F4
-    fmr f2, f0
-    SpriteHandle_CreateEx_L_801206F4:
-    lfs f0, 0x8c(r3)
-    fcmpo cr0, f0, f4
-    bge SpriteHandle_CreateEx_L_80120704
-    fmr f4, f0
-    SpriteHandle_CreateEx_L_80120704:
-    fcmpo cr0, f1, f0
-    bge SpriteHandle_CreateEx_L_80120710
-    fmr f1, f0
-    SpriteHandle_CreateEx_L_80120710:
-    lfs f0, 0x90(r3)
-    addi r3, r3, 0x8
-    fcmpo cr0, f0, f3
-    bge SpriteHandle_CreateEx_L_80120724
-    fmr f3, f0
-    SpriteHandle_CreateEx_L_80120724:
-    fcmpo cr0, f2, f0
-    bge SpriteHandle_CreateEx_L_80120730
-    fmr f2, f0
-    SpriteHandle_CreateEx_L_80120730:
-    lfs f0, 0x8c(r3)
-    fcmpo cr0, f0, f4
-    bge SpriteHandle_CreateEx_L_80120740
-    fmr f4, f0
-    SpriteHandle_CreateEx_L_80120740:
-    fcmpo cr0, f1, f0
-    bge SpriteHandle_CreateEx_L_8012074C
-    fmr f1, f0
-    SpriteHandle_CreateEx_L_8012074C:
-    lfs f0, 0x90(r3)
-    addi r3, r3, 0x8
-    fcmpo cr0, f0, f3
-    bge SpriteHandle_CreateEx_L_80120760
-    fmr f3, f0
-    SpriteHandle_CreateEx_L_80120760:
-    fcmpo cr0, f2, f0
-    bge SpriteHandle_CreateEx_L_8012076C
-    fmr f2, f0
-    SpriteHandle_CreateEx_L_8012076C:
-    lfs f0, 0x8c(r3)
-    fcmpo cr0, f0, f4
-    bge SpriteHandle_CreateEx_L_8012077C
-    fmr f4, f0
-    SpriteHandle_CreateEx_L_8012077C:
-    fcmpo cr0, f1, f0
-    bge SpriteHandle_CreateEx_L_80120788
-    fmr f1, f0
-    SpriteHandle_CreateEx_L_80120788:
-    lfs f0, g_glyphClipMaxX(r2)
-    li r0, 0x1
-    stb r0, 0xd9(r26)
-    fcmpo cr0, f0, f3
-    bge SpriteHandle_CreateEx_L_801207A4
-    li r0, 0x0
-    stb r0, 0xd9(r26)
-    SpriteHandle_CreateEx_L_801207A4:
-    lfs f0, g_glyphClipMinXY(r2)
-    fcmpo cr0, f2, f0
-    bge SpriteHandle_CreateEx_L_801207B8
-    li r0, 0x0
-    stb r0, 0xd9(r26)
-    SpriteHandle_CreateEx_L_801207B8:
-    lfs f0, g_glyphClipMaxY(r2)
-    fcmpo cr0, f0, f4
-    bge SpriteHandle_CreateEx_L_801207CC
-    li r0, 0x0
-    stb r0, 0xd9(r26)
-    SpriteHandle_CreateEx_L_801207CC:
-    lfs f0, g_glyphClipMinXY(r2)
-    fcmpo cr0, f1, f0
-    bge SpriteHandle_CreateEx_L_801207E0
-    li r0, 0x0
-    stb r0, 0xd9(r26)
-    SpriteHandle_CreateEx_L_801207E0:
-    mulli r3, r24, 0x1f4
-    li r0, 0x0
-    stb r0, 0xda(r26)
-    addi r31, r3, 0x1
-    add r31, r27, r31
-    bl OSGetTick
-    lis r5, 0x8000
-    lis r4, 0x431c
-    lwz r5, 0xf8(r5)
-    lis r0, 0x4330
-    subi r6, r4, 0x217d
-    lwz r7, 0x10(r1)
-    srwi r4, r5, 2
-    stw r0, 0x38(r1)
-    mulhwu r0, r6, r4
-    subf r3, r7, r3
-    lfd f2, lbl_806D6D90(r2)
-    slwi r4, r3, 3
-    lfs f0, lbl_806D6D98(r2)
-    lwz r3, 0x14(r1)
-    srwi r0, r0, 15
-    divwu r0, r4, r0
-    stw r0, 0x3c(r1)
-    lfd f1, 0x38(r1)
-    fsubs f1, f1, f2
-    fdivs f1, f1, f0
-    bl Profiler_RecordFrame
-    bl OSGetTick
-    lis r4, 0x8000
-    lis r6, 0x431c
-    lwz r0, 0xf8(r4)
-    lis r5, 0x4330
-    lwz r7, 0x1c(r1)
-    lis r4, lbl_80657208@ha
-    srwi r0, r0, 2
-    subi r6, r6, 0x217d
-    mulhwu r6, r6, r0
-    subf r3, r7, r3
-    lwz r0, 0x18(r1)
-    addi r4, r4, lbl_80657208@l
-    slwi r7, r3, 3
-    stw r5, 0x30(r1)
-    srwi r3, r6, 15
-    slwi r0, r0, 2
-    divwu r5, r7, r3
-    lfd f3, lbl_806D6D90(r2)
-    lfs f1, lbl_806D6D9C(r2)
-    mr r3, r31
-    lfsx f0, r4, r0
-    stw r5, 0x34(r1)
-    lfd f2, 0x30(r1)
-    fsubs f2, f2, f3
-    fdivs f1, f2, f1
-    fadds f0, f0, f1
-    stfsx f0, r4, r0
-    SpriteHandle_CreateEx_L_801208BC:
-    psq_l f31, 0x88(r1), 0, 0
-    lfd f31, 0x80(r1)
-    psq_l f30, 0x78(r1), 0, 0
-    lfd f30, 0x70(r1)
-    lmw r23, 0x4c(r1)
-    lwz r0, 0x94(r1)
-    mtlr r0
-    addi r1, r1, 0x90
-    blr
+class AccumTimer {
+public:
+    inline AccumTimer(int slot) {
+        m_slot = slot;
+        m_startTick = OSGetTick();
+    }
+    inline ~AccumTimer() {
+        lbl_80657208[m_slot] += (float)(((OSGetTick() - m_startTick) * 8) /
+            ((*(unsigned int *)0x800000F8 / 4) / 125000)) / lbl_806D6D9C;
+    }
+
+private:
+    volatile int m_slot;
+    unsigned int m_startTick;
+};
+
+inline SpriteNode *SpriteList_Alloc(SpriteList *l) {
+    if (l->capacity <= l->count) {
+        return 0;
+    }
+    SpriteNode *n = l->freeHead;
+    if (n->prev != 0) {
+        n->prev->next = n->next;
+    }
+    if (n->next != 0) {
+        n->next->prev = n->prev;
+    }
+    if (l->freeHead == n) {
+        l->freeHead = n->next;
+    }
+    if (l->freeTail == n) {
+        l->freeTail = n->prev;
+    }
+    n->prev = 0;
+    n->next = 0;
+    if (l->tail != 0) {
+        l->tail->next = n;
+    }
+    n->prev = l->tail;
+    if (l->head == 0) {
+        l->head = n;
+    }
+    l->tail = n;
+    l->count++;
+    return n;
 }
+
+static inline int MakeHandleId(int type, int idx) {
+    return type * 500 + idx + 1;
+}
+
+/* exceptions off: the extab entry above (actions for the two timers) stays manual. */
+#pragma exceptions off
+#pragma use_lmw_stmw on
+extern "C" int SpriteHandle_CreateEx(ResCtrl *a, int b, unsigned char c) {
+    AccumTimer total(0);
+    ScopedTimer timer(0xD);
+    if (lbl_806D1500->count >= lbl_806D1500->capacity) {
+        return 0;
+    }
+    if (a == 0) {
+        return 0;
+    }
+    if (!c && !fn_80121C38(a)) {
+        return 0;
+    }
+    int id = a->id;
+    int resId = id;
+    int baseId = id;
+    if (a->f8 == 2) {
+        resId = 0x1B8C;
+        baseId = 0x1B8C;
+    }
+    if (!IsValidResourceId(baseId)) {
+        return 0;
+    }
+    ResourceTable_GetGroupKey(baseId);
+    ResEntry *e = FindResEntry(resId);
+    if (e == 0) {
+        if (!PreloadResource(resId)) {
+            return 0;
+        }
+        e = FindResEntry(resId);
+    }
+    SpriteNode *node = SpriteList_Alloc(lbl_806D1500);
+    int index = node->index;
+    SpriteHandle *h = &g_SpriteHandlePool[index];
+    h->active = 1;
+    h->type = b;
+    h->next = -1;
+    h->keep = c;
+    h->fDC = 0;
+    h->fE0 = 0;
+    h->baseResId = baseId;
+    h->resId = resId;
+    int slot = ResourceTable_GetSlotIndex(baseId);
+    TEXDescriptor *d = TEXGetPaletteEntry(e->palette, slot);
+    h->texObj = &e->data0[slot];
+    if (d->clut != 0) {
+        h->tlut = &e->data1[slot];
+    } else {
+        h->tlut = 0;
+    }
+    h->texFmt = e->data2[slot];
+    h->tevMode = a->f8;
+    h->pad25 = a->fC != 0;
+    h->posMode = a->f10;
+    h->sizeX = a->f14;
+    h->sizeY = a->f18;
+    *(float *)h->pad30 = a->f1C;
+    h->rot = a->f28;
+    if (h->tevMode == 2) {
+        h->texW = a->f20;
+        h->texH = a->f24;
+    } else {
+        ResourceTable_GetSizeXY(baseId, &h->texW, &h->texH);
+    }
+    h->posX = a->f2C;
+    h->posY = a->f30;
+    h->color[0] = ((unsigned int *)a->slots)[0];
+    h->color[1] = ((unsigned int *)a->slots)[1];
+    h->color[2] = ((unsigned int *)a->slots)[2];
+    h->color[3] = ((unsigned int *)a->slots)[3];
+    h->flip = 0;
+    if (a->f44) {
+        h->flip |= 1;
+    }
+    if (a->f45) {
+        h->flip |= 2;
+    }
+    h->hasUV = 0;
+    h->uv[0] = lbl_806D6D8C;
+    h->uv[1] = g_glyphClipMinXY;
+    h->uv[2] = g_glyphClipMinXY;
+    h->uv[3] = g_glyphClipMinXY;
+    h->uv[4] = lbl_806D6D8C;
+    h->uv[5] = g_glyphClipMinXY;
+    if (a->f48 == 1) {
+        h->uvMode = 1;
+        h->uvA = a->f4C;
+        h->uvB = a->f50;
+    } else {
+        h->uvMode = 2;
+        h->uvC = a->f54;
+    }
+    fn_801217E8(h);
+    if (h->tevMode != 2) {
+        int slot0 = ResourceTable_GetSlotIndex(baseId);
+        TEXDescriptor *d0 = TEXGetPaletteEntry(e->palette, slot0);
+        float tw = d0->tex->width;
+        float th = d0->tex->height;
+        ResourceTable_GetOffsetXY(baseId, &h->texUV[0][0], &h->texUV[0][1]);
+        float iw = lbl_806D6D8C / tw;
+        float ih = lbl_806D6D8C / th;
+        h->texUV[0][0] += lbl_806D6D88;
+        h->texUV[0][1] += lbl_806D6D88;
+        h->texUV[0][0] = iw * h->texUV[0][0];
+        h->texUV[0][1] = ih * h->texUV[0][1];
+        h->texUV[1][0] = iw * (h->texW - lbl_806D6D8C) + h->texUV[0][0];
+        h->texUV[1][1] = ih * (h->texH - lbl_806D6D8C) + h->texUV[0][1];
+        if (h->flip & 1) {
+            float t = h->texUV[0][0];
+            h->texUV[0][0] = h->texUV[1][0];
+            h->texUV[1][0] = t;
+        }
+        if (h->flip & 2) {
+            float t = h->texUV[0][1];
+            h->texUV[0][1] = h->texUV[1][1];
+            h->texUV[1][1] = t;
+        }
+    }
+    if (a->prev == -1) {
+        a->prev = ResourceTable_GetChainNextId(baseId);
+    }
+    h->hasTex2 = 0;
+    if (h->tevMode != 2) {
+        resId = a->prev;
+        if (resId != -1) {
+            ResEntry *e2 = FindResEntry(resId);
+            if (e2 == 0) {
+                PreloadResource(resId);
+                e2 = FindResEntry(resId);
+            }
+            if (e2 != 0) {
+                float w2;
+                float h2;
+                float uv[2][2];
+                h->hasTex2 = 1;
+                h->resId2 = resId;
+                int slot2 = ResourceTable_GetSlotIndex(resId);
+                TEXDescriptor *d2 = TEXGetPaletteEntry(e2->palette, slot2);
+                h->texObj2 = &e2->data0[slot2];
+                if (d2->clut != 0) {
+                    h->tlut2 = &e2->data1[slot2];
+                } else {
+                    h->tlut2 = 0;
+                }
+                ResourceTable_GetSizeXY(resId, &w2, &h2);
+                float tw2 = d2->tex->width;
+                float th2 = d2->tex->height;
+                ResourceTable_GetOffsetXY(resId, &uv[0][0], &uv[0][1]);
+                float iw2 = lbl_806D6D8C / tw2;
+                float ih2 = lbl_806D6D8C / th2;
+                uv[0][0] += lbl_806D6D88;
+                uv[0][1] += lbl_806D6D88;
+                uv[0][0] = iw2 * uv[0][0];
+                uv[0][1] = ih2 * uv[0][1];
+                uv[1][0] = iw2 * (w2 - lbl_806D6D8C) + uv[0][0];
+                uv[1][1] = ih2 * (h2 - lbl_806D6D8C) + uv[0][1];
+                if (a->f44) {
+                    float t = uv[0][0];
+                    uv[0][0] = uv[1][0];
+                    uv[1][0] = t;
+                }
+                if (a->f45) {
+                    float t = uv[0][1];
+                    uv[0][1] = uv[1][1];
+                    uv[1][1] = t;
+                }
+                h->uv2[0] = uv[0][0];
+                h->uv2[1] = uv[0][1];
+                h->uv2[2] = uv[1][0];
+                h->uv2[3] = uv[1][1];
+            }
+        }
+    }
+    h->activeFlag = 1;
+    if (!c) {
+        h->visible = 1;
+    } else {
+        float maxY;
+        float maxX;
+        float minX = h->corner[0][0];
+        float minY = h->corner[0][1];
+        maxX = minX;
+        maxY = minY;
+        for (int i = 0; i < 4; i++) {
+            float x = h->corner[i][0];
+            if (x < minX) {
+                minX = x;
+            }
+            if (maxX < x) {
+                maxX = x;
+            }
+            float y = h->corner[i][1];
+            if (y < minY) {
+                minY = y;
+            }
+            if (maxY < y) {
+                maxY = y;
+            }
+        }
+        h->visible = 1;
+        if (g_glyphClipMaxX < minX) {
+            h->visible = 0;
+        }
+        if (maxX < g_glyphClipMinXY) {
+            h->visible = 0;
+        }
+        if (g_glyphClipMaxY < minY) {
+            h->visible = 0;
+        }
+        if (maxY < g_glyphClipMinXY) {
+            h->visible = 0;
+        }
+    }
+    h->dirty = 0;
+    return MakeHandleId(b, index);
+}
+#pragma use_lmw_stmw reset
+#pragma exceptions reset
 
 extern "C" void fn_801208E0(int id, float *x, float *y) {
     if (!IsValidResourceId(id)) {
@@ -1981,294 +1309,63 @@ extern "C" void fn_801213EC(void) {
 }
 #pragma use_lmw_stmw reset
 
-extern "C" asm void fn_801217E8(SpriteHandle *s) { /* 0x801217E8 size:0x44C */
-    nofralloc
-    stwu r1, -0x100(r1)
-    mflr r0
-    stw r0, 0x104(r1)
-    stfd f31, 0xf0(r1)
-    psq_st f31, 0xf8(r1), 0, 0
-    stfd f30, 0xe0(r1)
-    psq_st f30, 0xe8(r1), 0, 0
-    stfd f29, 0xd0(r1)
-    psq_st f29, 0xd8(r1), 0, 0
-    stw r31, 0xcc(r1)
-    stw r30, 0xc8(r1)
-    stw r29, 0xc4(r1)
-    mr r29, r3
-    lis r4, lbl_80332528@ha
-    lwz r3, 0x10(r3)
-    addi r30, r4, lbl_80332528@l
-    addi r4, r1, 0xc
-    addi r5, r1, 0x8
-    bl ResourceTable_GetScaleXY
-    lwz r3, 0x10(r29)
-    bl ResourceTable_GetFlagsByte
-    li r0, 0x0
-    lfs f0, g_glyphClipMinXY(r2)
-    stb r0, 0x48(r29)
-    mr r31, r3
-    lfs f1, 0x40(r29)
-    fcmpo cr0, f1, f0
-    bge fn_801217E8_L_80121864
-    lbz r0, 0x48(r29)
-    ori r0, r0, 0x1
-    stb r0, 0x48(r29)
-    fn_801217E8_L_80121864:
-    lfs f1, 0x44(r29)
-    lfs f0, g_glyphClipMinXY(r2)
-    fcmpo cr0, f1, f0
-    bge fn_801217E8_L_80121880
-    lbz r0, 0x48(r29)
-    ori r0, r0, 0x2
-    stb r0, 0x48(r29)
-    fn_801217E8_L_80121880:
-    lfs f1, 0x40(r29)
-    lfs f0, 0x44(r29)
-    fabs f1, f1
-    lfs f5, 0x38(r29)
-    fabs f0, f0
-    lfs f2, 0x3c(r29)
-    lfs f6, 0xc(r1)
-    frsp f4, f1
-    frsp f0, f0
-    lfs f3, 0x8(r1)
-    lfs f1, 0x34(r29)
-    fmuls f4, f5, f4
-    fmuls f0, f2, f0
-    fmuls f30, f6, f4
-    fmuls f29, f3, f0
-    bl LUT_Cosine
-    fmr f31, f1
-    lfs f1, 0x34(r29)
-    bl LUT_Sine
-    extsb r0, r31
-    cmpwi r0, 0x9
-    bne fn_801217E8_L_801219C4
-    lwz r10, 0x0(r30)
-    li r0, 0x4
-    lwz r9, 0x4(r30)
-    mr r12, r29
-    lwz r8, 0x8(r30)
-    addi r11, r1, 0x50
-    lwz r7, 0xc(r30)
-    lwz r6, 0x10(r30)
-    lwz r5, 0x14(r30)
-    lwz r4, 0x18(r30)
-    lwz r3, 0x1c(r30)
-    stw r10, 0x50(r1)
-    stw r9, 0x54(r1)
-    stw r8, 0x58(r1)
-    stw r7, 0x5c(r1)
-    stw r6, 0x60(r1)
-    stw r5, 0x64(r1)
-    stw r4, 0x68(r1)
-    stw r3, 0x6c(r1)
-    mtctr r0
-    fn_801217E8_L_80121928:
-    lfs f0, 0x4(r11)
-    lfs f2, 0x0(r11)
-    fmuls f0, f29, f0
-    fmuls f3, f30, f2
-    fmuls f2, f31, f0
-    fmuls f0, f1, f0
-    fmsubs f2, f1, f3, f2
-    fmadds f0, f31, f3, f0
-    stfs f2, 0x88(r12)
-    stfs f0, 0x8c(r12)
-    lbz r0, 0x26(r29)
-    cmplwi r0, 0x1
-    bne fn_801217E8_L_80121980
-    lfs f2, 0x88(r12)
-    lfs f0, 0x28(r29)
-    fadds f0, f2, f0
-    stfs f0, 0x88(r12)
-    lfs f2, 0x8c(r12)
-    lfs f0, 0x2c(r29)
-    fadds f0, f2, f0
-    stfs f0, 0x8c(r12)
-    b fn_801217E8_L_801219B4
-    fn_801217E8_L_80121980:
-    lfs f2, 0x38(r29)
-    lfs f4, lbl_806D6D88(r2)
-    lfs f0, 0x28(r29)
-    lfs f3, 0x88(r12)
-    fmadds f0, f2, f4, f0
-    fadds f0, f3, f0
-    stfs f0, 0x88(r12)
-    lfs f2, 0x3c(r29)
-    lfs f0, 0x2c(r29)
-    lfs f3, 0x8c(r12)
-    fmadds f0, f2, f4, f0
-    fadds f0, f3, f0
-    stfs f0, 0x8c(r12)
-    fn_801217E8_L_801219B4:
-    addi r11, r11, 0x8
-    addi r12, r12, 0x8
-    bdnz fn_801217E8_L_80121928
-    b fn_801217E8_L_80121C00
-    fn_801217E8_L_801219C4:
-    lbz r0, 0x49(r29)
-    cmplwi r0, 0x0
-    beq fn_801217E8_L_80121AC0
-    lwz r10, 0x20(r30)
-    li r0, 0x2
-    lwz r9, 0x24(r30)
-    mr r12, r29
-    lwz r8, 0x28(r30)
-    addi r11, r1, 0x30
-    lwz r7, 0x2c(r30)
-    lwz r6, 0x30(r30)
-    lwz r5, 0x34(r30)
-    lwz r4, 0x38(r30)
-    lwz r3, 0x3c(r30)
-    stw r10, 0x30(r1)
-    stw r9, 0x34(r1)
-    stw r8, 0x38(r1)
-    stw r7, 0x3c(r1)
-    stw r6, 0x40(r1)
-    stw r5, 0x44(r1)
-    stw r4, 0x48(r1)
-    stw r3, 0x4c(r1)
-    mtctr r0
-    fn_801217E8_L_80121A20:
-    lfs f3, 0x4(r11)
-    lfs f4, 0x0(r11)
-    fmuls f6, f29, f3
-    lfs f0, 0x50(r29)
-    fmuls f5, f30, f4
-    lfs f1, 0x4c(r29)
-    lfs f2, 0x54(r29)
-    fmuls f0, f6, f0
-    lfs f3, 0xc(r11)
-    lfs f4, 0x8(r11)
-    addi r11, r11, 0x10
-    fmadds f0, f5, f1, f0
-    fadds f0, f2, f0
-    stfs f0, 0x88(r12)
-    lfs f0, 0x5c(r29)
-    lfs f1, 0x58(r29)
-    fmuls f0, f6, f0
-    lfs f2, 0x60(r29)
-    fmuls f6, f29, f3
-    fmadds f0, f5, f1, f0
-    fmuls f5, f30, f4
-    fadds f0, f2, f0
-    stfs f0, 0x8c(r12)
-    lfs f0, 0x50(r29)
-    lfs f1, 0x4c(r29)
-    fmuls f0, f6, f0
-    lfs f2, 0x54(r29)
-    fmadds f0, f5, f1, f0
-    fadds f0, f2, f0
-    stfs f0, 0x90(r12)
-    lfs f0, 0x5c(r29)
-    lfs f1, 0x58(r29)
-    fmuls f0, f6, f0
-    lfs f2, 0x60(r29)
-    fmadds f0, f5, f1, f0
-    fadds f0, f2, f0
-    stfs f0, 0x94(r12)
-    addi r12, r12, 0x10
-    bdnz fn_801217E8_L_80121A20
-    b fn_801217E8_L_80121C00
-    fn_801217E8_L_80121AC0:
-    lwz r12, 0x40(r30)
-    li r0, 0x9
-    lwz r11, 0x44(r30)
-    addi r5, r1, 0x6c
-    lwz r10, 0x48(r30)
-    addi r4, r30, 0x5c
-    lwz r9, 0x4c(r30)
-    lwz r8, 0x50(r30)
-    lwz r7, 0x54(r30)
-    lwz r6, 0x58(r30)
-    lwz r3, 0x5c(r30)
-    stw r12, 0x10(r1)
-    stw r11, 0x14(r1)
-    stw r10, 0x18(r1)
-    stw r9, 0x1c(r1)
-    stw r8, 0x20(r1)
-    stw r7, 0x24(r1)
-    stw r6, 0x28(r1)
-    stw r3, 0x2c(r1)
-    mtctr r0
-    fn_801217E8_L_80121B10:
-    lwz r3, 0x4(r4)
-    lwzu r0, 0x8(r4)
-    stw r3, 0x4(r5)
-    stwu r0, 0x8(r5)
-    bdnz fn_801217E8_L_80121B10
-    extsb r0, r31
-    addi r6, r1, 0x70
-    slwi r3, r0, 3
-    mr r5, r29
-    li r0, 0x2
-    addi r4, r1, 0x10
-    add r6, r6, r3
-    mtctr r0
-    fn_801217E8_L_80121B44:
-    lfs f3, 0x4(r4)
-    lfs f4, 0x0(r4)
-    fmuls f6, f29, f3
-    lfs f0, 0x4(r6)
-    fmuls f5, f30, f4
-    lfs f2, 0x0(r6)
-    lfs f3, 0xc(r4)
-    fmadds f6, f29, f0, f6
-    fmadds f5, f30, f2, f5
-    lfs f4, 0x8(r4)
-    addi r4, r4, 0x10
-    fmuls f2, f6, f31
-    fmuls f0, f6, f1
-    fmuls f6, f29, f3
-    fmsubs f2, f5, f1, f2
-    fmadds f0, f5, f31, f0
-    fmuls f5, f30, f4
-    stfs f2, 0x88(r5)
-    stfs f0, 0x8c(r5)
-    lfs f2, 0x88(r5)
-    lfs f0, 0x28(r29)
-    fadds f0, f2, f0
-    stfs f0, 0x88(r5)
-    lfs f2, 0x8c(r5)
-    lfs f0, 0x2c(r29)
-    fadds f0, f2, f0
-    stfs f0, 0x8c(r5)
-    lfs f0, 0x4(r6)
-    lfs f2, 0x0(r6)
-    fmadds f6, f29, f0, f6
-    fmadds f5, f30, f2, f5
-    fmuls f2, f6, f31
-    fmuls f0, f6, f1
-    fmsubs f2, f5, f1, f2
-    fmadds f0, f5, f31, f0
-    stfs f2, 0x90(r5)
-    stfs f0, 0x94(r5)
-    lfs f2, 0x90(r5)
-    lfs f0, 0x28(r29)
-    fadds f0, f2, f0
-    stfs f0, 0x90(r5)
-    lfs f2, 0x94(r5)
-    lfs f0, 0x2c(r29)
-    fadds f0, f2, f0
-    stfs f0, 0x94(r5)
-    addi r5, r5, 0x10
-    bdnz fn_801217E8_L_80121B44
-    fn_801217E8_L_80121C00:
-    psq_l f31, 0xf8(r1), 0, 0
-    lfd f31, 0xf0(r1)
-    psq_l f30, 0xe8(r1), 0, 0
-    lfd f30, 0xe0(r1)
-    psq_l f29, 0xd8(r1), 0, 0
-    lfd f29, 0xd0(r1)
-    lwz r31, 0xcc(r1)
-    lwz r30, 0xc8(r1)
-    lwz r0, 0x104(r1)
-    lwz r29, 0xc4(r1)
-    mtlr r0
-    addi r1, r1, 0x100
-    blr
+extern "C" void fn_801217E8(SpriteHandle *s) {
+    float sx;
+    float sy;
+    int i;
+    ResourceTable_GetScaleXY(s->resId, &sx, &sy);
+    signed char kind = ResourceTable_GetFlagsByte(s->resId);
+    s->clipFlags = 0;
+    if (s->posX < g_glyphClipMinXY) {
+        s->clipFlags |= 1;
+    }
+    if (s->posY < g_glyphClipMinXY) {
+        s->clipFlags |= 2;
+    }
+    float w = sx * (s->texW * (float)__fabs(s->posX));
+    float h = sy * (s->texH * (float)__fabs(s->posY));
+    float cs = LUT_Cosine(s->rot);
+    float sn = LUT_Sine(s->rot);
+    if (kind == 9) {
+        float c9[4][2] = { { -0.5f, 0.5f }, { -0.5f, -0.5f }, { 0.5f, -0.5f }, { 0.5f, 0.5f } };
+        for (i = 0; i < 4; i++) {
+            s->corner[i][0] = sn * (w * c9[i][0]) - cs * (h * c9[i][1]);
+            s->corner[i][1] = cs * (w * c9[i][0]) + sn * (h * c9[i][1]);
+            if (s->posMode == 1) {
+                s->corner[i][0] += s->sizeX;
+                s->corner[i][1] += s->sizeY;
+            } else {
+                s->corner[i][0] += s->texW * lbl_806D6D88 + s->sizeX;
+                s->corner[i][1] += s->texH * lbl_806D6D88 + s->sizeY;
+            }
+        }
+    } else if (s->hasUV) {
+        float cm[4][2] = { { -0.5f, 0.5f }, { -0.5f, -0.5f }, { 0.5f, -0.5f }, { 0.5f, 0.5f } };
+        for (i = 0; i < 4; i++) {
+            float xx = w * cm[i][0];
+            float yy = h * cm[i][1];
+            s->corner[i][0] = xx * s->uv[0] + yy * s->uv[1] + s->uv[2];
+            s->corner[i][1] = xx * s->uv[3] + yy * s->uv[4] + s->uv[5];
+        }
+    } else {
+        float cb[4][2] = { { 0.0f, 1.0f }, { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f } };
+        float off[9][2] = {
+            { 0.0f, 0.0f }, { -0.5f, 0.0f }, { -1.0f, 0.0f },
+            { 0.0f, -0.5f }, { -0.5f, -0.5f }, { -1.0f, -0.5f },
+            { 0.0f, -1.0f }, { -0.5f, -1.0f }, { -1.0f, -1.0f },
+        };
+        float *o = off[kind];
+        for (i = 0; i < 4; i++) {
+            float xx = w * cb[i][0];
+            float yy = h * cb[i][1];
+            xx += w * o[0];
+            yy += h * o[1];
+            s->corner[i][0] = xx * sn - yy * cs;
+            s->corner[i][1] = xx * cs + yy * sn;
+            s->corner[i][0] += s->sizeX;
+            s->corner[i][1] += s->sizeY;
+        }
+    }
 }
 
 

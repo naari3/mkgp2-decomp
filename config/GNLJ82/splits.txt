@@ -1132,7 +1132,7 @@ game/auto_ONKARTHIT_block.c:
 	extabindex  start:0x800201EC end:0x8002057C
 	.text       start:0x8004A238 end:0x80052F20
 	.rodata     start:0x802EBA18 end:0x802EDB20
-	.data       start:0x803F7668 end:0x803F7690
+	.data       start:0x803F7640 end:0x803F7690
 
 game/ItemStateGuard_PruneIfDeadAndReport.cpp:
 	extab       start:0x8000718C end:0x80007194
@@ -5946,6 +5946,7 @@ game/SpriteHandle.cpp:
 	extabindex  start:0x800245CC end:0x8002474C
 	.text       start:0x8011EB1C end:0x801223E8
 	.ctors      start:0x802E8904 end:0x802E8908
+	.rodata     start:0x80332528 end:0x803325D0
 	.bss        start:0x80657228 end:0x80677C38
 
 game/auto_801223E8_block.c:

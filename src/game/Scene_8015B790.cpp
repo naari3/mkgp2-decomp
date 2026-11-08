@@ -70,6 +70,8 @@ extern "C" const char lbl_8036828C[] = "clSceneInterface";
 static const char viewerFormat[] = "COURCE %03d";
 
 #pragma exceptions on
+#pragma push
+#pragma fp_contract off
 extern "C" void fn_8015B790() {
     if (InputMgr_GetPlayer(GetInputManager(),0)->right() > lbl_806D85E8) {
         if (lbl_806D159C < 0) lbl_806D159C = 0;
@@ -129,4 +131,6 @@ extern "C" void fn_8015B790() {
         if (camera) HSD_CObjSetEyePosition(camera, &lbl_80677CD8);
     }
 }
+#pragma pop
+
 #pragma exceptions reset
