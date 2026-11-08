@@ -1,8 +1,8 @@
 /*
  * Statistics block copy, 0x8008DE60..0x8008E33C (GC/2.6).
- * The copy is three runs of pair copies; it is 98.64%: the scheduler
- * delays the 0x19C load past the 0x198 store and hoists the 0x1A4 load
- * above the 0x1A0 store, unlike the target.
+ * The copy is three runs of struct copies. MWCC schedules each group of
+ * 26 copy statements as one region, so the middle run ends with a single
+ * 16-byte record copy (0x194..0x1A4) rather than a pair and two words.
  */
 
 typedef struct PlayStatsPair {
@@ -10,12 +10,19 @@ typedef struct PlayStatsPair {
     unsigned int b;
 } PlayStatsPair;
 
+/* Four-word record that closes the middle run (0x194..0x1A4). */
+typedef struct PlayStatsQuad {
+    unsigned int a;
+    unsigned int b;
+    unsigned int c;
+    unsigned int d;
+} PlayStatsQuad;
+
 typedef struct PlayStatsBlock {
     PlayStatsPair p0[26];
     unsigned int w1;
-    PlayStatsPair p2[25];
-    unsigned int w3;
-    unsigned int w4;
+    PlayStatsPair p2[24];
+    PlayStatsQuad tail;
     PlayStatsPair p5[25];
 } PlayStatsBlock;
 
@@ -83,9 +90,7 @@ void PlayStats_CopyStatsBlock(PlayStatsBlock *dst, const PlayStatsBlock *src)
     dst->p2[21] = src->p2[21];
     dst->p2[22] = src->p2[22];
     dst->p2[23] = src->p2[23];
-    dst->p2[24] = src->p2[24];
-    dst->w3 = src->w3;
-    dst->w4 = src->w4;
+    dst->tail = src->tail;
     dst->p5[0] = src->p5[0];
     dst->p5[1] = src->p5[1];
     dst->p5[2] = src->p5[2];
