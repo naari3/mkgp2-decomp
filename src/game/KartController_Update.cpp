@@ -2,6 +2,11 @@
 #pragma use_lmw_stmw on
 #pragma inline_max_size(10000)
 #pragma inline_max_total_size(100000)
+static inline void TransformOffset(const KCMatrix *matrix, KCVec *offset) {
+    float mtx[12];
+    Mtx4x4_TransposeTo4x3(matrix,mtx);
+    PSMTXMultVec(mtx,offset,offset);
+}
 extern "C" void KartController_Update(AIKart *self) {
     const char *data=lbl_803BD320;
     if (!self->path) return;
@@ -15,7 +20,7 @@ extern "C" void KartController_Update(AIKart *self) {
     void *aux=self->aux.p;
     float scale=fn_801DF310(self->steering.p);
     scale=fn_801DEC44(aux)*scale;
-    if(scale<1.0f) PhysicsState_SetSpeedImmediate(self->run.p,self->f90*scale,self->f8c*scale);
+    if(scale<lbl_806DA390) PhysicsState_SetSpeedImmediate(self->run.p,self->f90*scale,self->f8c*scale);
     else PhysicsState_AccelInterpolate(self->run.p,self->f90*scale,self->f8c*scale);
     void *physics=self->run.p;
     PhysicsState_SetField90(physics,fn_801DEC54(self->aux.p));
@@ -57,13 +62,13 @@ extern "C" void KartController_Update(AIKart *self) {
     mat.m[3][0]=self->position.x; mat.m[3][1]=self->position.y; mat.m[3][2]=self->position.z;
     mat.multiply(fn_801DF3A0(self->steering.p));
     KCMatrix scaled;
-    scaled.m[0][0]=scaled.m[1][1]=scaled.m[2][2]=1.2f;
+    scaled.m[0][0]=scaled.m[1][1]=scaled.m[2][2]=lbl_806DA3B8;
     scaled.multiply(&mat);
     mat=scaled;
     KCVec rotation,bounds,center,velocity;
-    velocity.x=(self->position.x-self->previous.x)*0.5f;
-    velocity.y=(self->position.y-self->previous.y)*0.5f;
-    velocity.z=(self->position.z-self->previous.z)*0.5f;
+    velocity.x=(self->position.x-self->previous.x)*lbl_806DA38C;
+    velocity.y=(self->position.y-self->previous.y)*lbl_806DA38C;
+    velocity.z=(self->position.z-self->previous.z)*lbl_806DA38C;
     PSMTXMultVec(KartDriver_GetKartRootMtx(self->driver.p),data+0x438,&center);
     PSVECAdd(&center,&velocity,&center);
     bounds=*(KCVec *)(data+0x3fc);
@@ -79,8 +84,8 @@ extern "C" void KartController_Update(AIKart *self) {
     float angular=PhysicsState_GetAngularVelocity(self->run.p);
     RenderObj_ItemStateMachine_Timed(self->driver.p,0,angular,speed);
     void *tornado=self->tornado.p;
-    TornadoEffect_SetScalePairB0BC(tornado,0.0f,1.0f);
-    KCVec normal,right,left;
+    TornadoEffect_SetScalePairB0BC(tornado,lbl_806DA388,lbl_806DA390);
+    KCVec offset,normal,right,left;
     float ground;
     int color,c0=0,c1=0;
     const float *coords=(const float *)(data+0x408);
@@ -90,15 +95,12 @@ extern "C" void KartController_Update(AIKart *self) {
     right.x=mat.m[3][0]+(coords[8]*mat.m[2][0]+(mat.m[0][0]*coords[6]+coords[7]*mat.m[1][0]));
     right.y=mat.m[3][1]+(coords[8]*mat.m[2][1]+(mat.m[0][1]*coords[6]+coords[7]*mat.m[1][1]));
     right.z=mat.m[3][2]+(coords[8]*mat.m[2][2]+(coords[6]*mat.m[0][2]+coords[7]*mat.m[1][2]));
-    if(Terrain_GetGroundHeightWithPenetration(&left,&ground,&normal,&color,10.0f)) c0=color;
-    if(Terrain_GetGroundHeightWithPenetration(&right,&ground,&normal,&color,10.0f)) c1=color;
+    if(Terrain_GetGroundHeightWithPenetration(&left,&ground,&normal,&color,lbl_806DA394)) c0=color;
+    if(Terrain_GetGroundHeightWithPenetration(&right,&ground,&normal,&color,lbl_806DA394)) c1=color;
     TornadoEffect_SetColorPairC8CC(tornado,c0,c1);
-    KCVec offset;
     const KCVec *offsetData=(const KCVec *)(data+0x444);
     offset.x=offsetData->x; offset.y=offsetData->y; offset.z=offsetData->z;
-    float mtx[12];
-    Mtx4x4_TransposeTo4x3(&mat,mtx);
-    PSMTXMultVec(mtx,&offset,&offset);
+    TransformOffset(&mat,&offset);
     TornadoEffect_SetMatrixRow0_5c(tornado,offset.x,offset.y,offset.z);
     TornadoEffect_SetMatrix1c(tornado,&mat);
     TornadoEffect_Tick(self->tornado.p,6);
@@ -106,11 +108,11 @@ extern "C" void KartController_Update(AIKart *self) {
     AI_UpdateItemEffects(self);
     ItemEffectBus_TickTornadoCooldown(bus);
     if(fn_801DE6E0(GetEnemyParam())) {
-        void *pathpos=(char *)self->pathId+0x14;
-        float s=PhysicsState_GetSpeed(self->run.p)/1000.0f/10.0f;
+        void *pathpos=(char *)self->kartId+0x14;
+        float s=PhysicsState_GetSpeed(self->run.p)/lbl_806DA3BC/lbl_806DA394;
         int a=fn_801EC700(self->run.p);
         int b=fn_801EC698(self->run.p);
-        OverlayText(1,1,pathpos,data+0x480,self->pathId,a,b,s);
+        OverlayText(1,1,pathpos,data+0x480,self->kartId,a,b,s);
     }
 }
 #pragma use_lmw_stmw reset

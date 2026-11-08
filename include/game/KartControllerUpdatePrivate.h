@@ -1,27 +1,40 @@
 #ifndef KART_CONTROLLER_UPDATE_PRIVATE_H
 #define KART_CONTROLLER_UPDATE_PRIVATE_H
 #include "game/AIKartInitPrivate.h"
+extern "C" {
+extern const float lbl_806DA388, lbl_806DA38C, lbl_806DA390;
+extern const float lbl_806DA394, lbl_806DA3B8, lbl_806DA3BC;
+}
 struct KCVec { float x,y,z; };
 struct KCMatrix {
     float m[4][4];
     KCMatrix() {
-        m[0][0]=m[1][1]=m[2][2]=m[3][3]=0.0f;
-        m[0][1]=m[0][2]=m[0][3]=m[1][0]=m[1][2]=m[1][3]=0.0f;
-        m[2][0]=m[2][1]=m[2][3]=m[3][0]=m[3][1]=m[3][2]=0.0f;
-        m[3][3]=m[2][2]=m[1][1]=m[0][0]=1.0f;
+        m[0][0]=m[1][1]=m[2][2]=m[3][3]=lbl_806DA388;
+        m[0][1]=m[0][2]=m[0][3]=m[1][0]=m[1][2]=m[1][3]=lbl_806DA388;
+        m[2][0]=m[2][1]=m[2][3]=m[3][0]=m[3][1]=m[3][2]=lbl_806DA388;
+        m[3][3]=m[2][2]=m[1][1]=m[0][0]=lbl_806DA390;
     }
-    void multiply(const KCMatrix *b) {
+    KCMatrix &multiply(const KCMatrix *b) {
         float out[16];
+        const float *row=&m[0][0];
+        const float *column;
+        float *output=out;
+        const float *right=&b->m[0][0];
+        int n=0;
         for (int i=0; i<4; ++i) {
-            for(int j=0;j<4;++j) {
-                float v=m[i][0]*b->m[0][j];
-                v=m[i][1]*b->m[1][j]+v;
-                v=m[i][2]*b->m[2][j]+v;
-                v=m[i][3]*b->m[3][j]+v;
-                out[i*4+j]=v;
+            column=right;
+            for(int j=0;j<4;++j,++column) {
+                float v=row[0]*column[0];
+                v+=row[1]*column[4];
+                v+=row[2]*column[8];
+                v+=row[3]*column[12];
+                output[n+j]=v;
             }
+            row+=4;
+            n+=4;
         }
         for(int i=0;i<16;++i) (&m[0][0])[i]=out[i];
+        return *this;
     }
 };
 struct KCDispatch {
