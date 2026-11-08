@@ -6161,6 +6161,7 @@ game/csAnim.c:
 	extab       start:0x8000D328 end:0x8000D360
 	extabindex  start:0x80024CB0 end:0x80024D04
 	.text       start:0x8013AB74 end:0x8013BA78
+	.rodata     start:0x8035C678 end:0x8035C6B8
 
 game/csAnim_Reset.c:
 	.text       start:0x8013BA78 end:0x8013BA90
