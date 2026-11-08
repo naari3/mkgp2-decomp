@@ -3,6 +3,8 @@ static inline void DrawPositionDepth7F50(float x, float y, const DrawDesc801F *d
     float z = description->z;
     DrawPositionDepth801F(x, y, z);
 }
+#pragma push
+#pragma opt_common_subs off
 extern "C" void fn_801F7F50(DrawNode801F *self) {
     DrawQuad7F50 quad(self->description);
     GXBegin(128, 0, 4);
@@ -34,3 +36,4 @@ extern "C" void fn_801F7F50(DrawNode801F *self) {
         DrawUV801F(self->description->u1, self->description->v0);
     }
 }
+#pragma pop
