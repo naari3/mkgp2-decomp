@@ -1,8 +1,8 @@
 /* EffectVfx29_30_Item4SubFlame_Tick (0x800BF174): flame jet (resource 0x1D
  * or 0x1E) on the kart root while the linked item is in state 4. Its height
  * follows a 5-key piecewise-linear curve over the frame counter.
- * NonMatching: segment bases still fold into curve-relative displacements
- * instead of the target's separate r4 cursor for segments 1..3. */
+ * NonMatching: curve-selection GPRs differ; the final segment updates the
+ * curve base instead of materializing the target's separate r4 cursor. */
 #include "game/DrawEffectAccess.h"
 
 typedef struct FlameCurve {
@@ -18,8 +18,9 @@ extern const float lbl_806D5344; /* 100.0 */
 extern void Mtx44_Scale_PerAxis(float dst[4][4], float src[4][4], float sx, float sy, float sz);
 
 /* A two-row window: the value row is five floats after the key row. */
-static inline void FlameCurve_Segment(float k0, float (*k)[5], float t, float *out)
+static inline void FlameCurve_Segment(float (*k)[5], float t, float *out)
 {
+    float k0 = k[0][0];
     if (k0 <= t && t < k[0][1]) {
         *out = (t - k0) * ((k[1][1] - k[1][0]) / (k[0][1] - k0)) + k[1][0];
     }
@@ -32,10 +33,10 @@ static inline float FlameCurve_Eval(FlameCurve *curve, float t)
     if (curve->keys[4] <= t) {
         result = curve->values[4];
     } else {
-        FlameCurve_Segment(curve->keys[0], (float (*)[5])&curve->keys[0], t, &result);
-        FlameCurve_Segment(curve->keys[1], (float (*)[5])&curve->keys[1], t, &result);
-        FlameCurve_Segment(curve->keys[2], (float (*)[5])&curve->keys[2], t, &result);
-        FlameCurve_Segment(curve->keys[3], (float (*)[5])&curve->keys[3], t, &result);
+        FlameCurve_Segment((float (*)[5])curve, t, &result);
+        FlameCurve_Segment((float (*)[5])((char *)curve + 1 * sizeof(float)), t, &result);
+        FlameCurve_Segment((float (*)[5])((char *)curve + 2 * sizeof(float)), t, &result);
+        FlameCurve_Segment((float (*)[5])((char *)curve + 3 * sizeof(float)), t, &result);
     }
     return result;
 }
@@ -100,7 +101,7 @@ void EffectVfx29_30_Item4SubFlame_Tick(unsigned char *self)
         float height = FlameCurve_Eval(&lbl_8041A224[I(0x10)], F(0x150));
 
         height /= lbl_806D5344;
-        if (!height) {
+        if (height == lbl_806D51C0) {
             U8(0x28) = 0;
             return;
         }
