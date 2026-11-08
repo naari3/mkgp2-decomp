@@ -10592,8 +10592,8 @@
   },
   "src/game/kartmove/fn_8019C15C.cpp": {
     "__dt__7InitVecFv": "dtor_80036E40",
-    "@116": "@etb_800126F8",
-    "@117": "@eti_80027440"
+    "@118": "@etb_800126F8",
+    "@119": "@eti_80027440"
   },
   "src/game/kartmove/fn_8019A9BC.cpp": {
     "__dt__12MovementQuatFv": "dtor_800524CC"

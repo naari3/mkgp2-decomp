@@ -33,7 +33,7 @@ extern "C" void fn_8019C15C(MovementInit *k) {
     lift = zero;
     k->v1a0.x = zero; k->v1a0.y = zero; k->v1a0.z = zero;
     uy = k->orientation.m[1][1]; uz = k->orientation.m[1][2]; ux = k->orientation.m[1][0];
-    up.y = uy; up.x = ux; up.z = uz;
+    up.x = ux; up.y = uy; up.z = uz;
     unsigned char inverted;
     if (up.y < lbl_806D96D0) inverted = 1;
     else inverted = 0;
