@@ -206,7 +206,7 @@ extern "C" void fn_801D1684(CourseBanner *self) {
         unsigned int color = 0xFFFFFF00;
         int alpha = FadeAlpha(self->timer);
         self->main.SetColor((alpha >> 1) & 0x7F);
-        color = __rlwimi(color, alpha, 0, 24, 31);
+        color = ((color) & 0xFFFFFF00 | (unsigned char)(alpha));
         self->labels[0].SetColor(color);
         self->labels[1].SetColor(color);
         if (self->timer >= 5) { self->timer = 0; self->state = 1; }
@@ -216,7 +216,7 @@ extern "C" void fn_801D1684(CourseBanner *self) {
         unsigned int color = 0xFFFFFF00;
         int alpha = FadeOutAlpha(self->timer);
         self->main.SetColor((alpha >> 1) & 0x7F);
-        color = __rlwimi(color, alpha, 0, 24, 31);
+        color = ((color) & 0xFFFFFF00 | (unsigned char)(alpha));
         self->labels[0].SetColor(color);
         self->labels[1].SetColor(color);
         if (self->timer >= 5) { self->timer = 0; self->state = 3; }
