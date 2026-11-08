@@ -17,6 +17,8 @@ static inline void DrawPanelItem(ItemPanel *self,float x,float y,float scale) {
         }
     }
 }
+#pragma push
+#pragma opt_lifetimes off
 extern "C" void fn_80243C70(ItemPanel *self) {
     unsigned char saved=self->enabled;
     unsigned char visible=saved;
@@ -69,3 +71,4 @@ extern "C" void fn_80243C70(ItemPanel *self) {
     DrawPanelItem(self,x,px,scale);
     if (PanelSuppressed(self->kart)==1) self->enabled=saved;
 }
+#pragma pop
