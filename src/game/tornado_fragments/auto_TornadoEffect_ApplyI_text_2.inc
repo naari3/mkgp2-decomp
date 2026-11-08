@@ -5,7 +5,6 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void TornadoEffect_ApplyItemVisual_Primary();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806D10A8;
@@ -25,17 +24,6 @@ extern unsigned int jumptable_803F98F4[];
 
 
 /* --- asm function bodies (.text order = fn address order) --- */
-static inline void TE_SetVisualState2(void *e, int r, int flag)
-{
-    if (r == 0) {
-        return;
-    }
-    if ((unsigned char)flag == 1) {
-        TE_S32(e, 0x134) = 0;
-    }
-    TE_S32(e, 0x128) = r;
-}
-
 #pragma use_lmw_stmw on
 void TornadoEffect_ApplyItemVisual_Compact(void *e, int item, int flag)
 {
