@@ -417,8 +417,11 @@ def one(p, obj, fn, size, dm, a):
 
 def cmd_run(a):
     os.makedirs(OUT, exist_ok=True)
-    n = 0
+    n = 0; t_end = time.time() + a.hours * 3600 if a.hours else None
+    stop_on = set((a.stop_on or '').split(','))
     while not stopped():
+        if t_end and time.time() > t_end:
+            log('time budget used up'); return
         if git('status', '--porcelain', '--untracked-files=no').stdout.strip():
             sys.exit('working tree dirty; refusing to run')
         if sync_main():
@@ -458,6 +461,8 @@ def cmd_run(a):
         log(f'  -> {o} {r.get("info", "")}')
         n += 1
         if a.limit and n >= a.limit: return
+        if o in stop_on:
+            log(f'stop-on {o}'); return
     log('stop switch present')
 
 
@@ -481,6 +486,8 @@ def main():
     p.add_argument('-j', '--jobs', type=int, default=os.cpu_count() or 4)
     p.add_argument('--only'); p.add_argument('--no-push', action='store_true'); p.add_argument('--no-perm', action='store_true')
     p.add_argument('--claims', default=f'{OUT}/claims.txt')
+    p.add_argument('--hours', type=float, help='do not start a new fn after this many hours')
+    p.add_argument('--stop-on', help='comma list of outcomes that end the run, e.g. landed,perm_match')
     p.add_argument('--shard', help='K/N (0-based): only fns with sha1(name) %% N == K; one shard per thread')
     p.add_argument('--branch', default=sh(['git', 'branch', '--show-current']).stdout.strip())
     p.add_argument('--session', default=os.environ.get('AUTOPIPE_SESSION', ''))
