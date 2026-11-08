@@ -3,7 +3,6 @@
 #include "sysdolphin/baselib/jobj.h"
 struct SwitchVec { float x,y,z; };
 extern "C" {
-extern const char lbl_80371E98[];
 extern const float lbl_806D8E98, lbl_806D8E9C, lbl_806D8EA0;
 extern int g_cupId, g_longRoundFlag;
 HSD_JObj *ResolveJointByName(void *, const char *);
@@ -19,13 +18,13 @@ struct SwitchNode {
     HSD_JObj *shown,*hidden;
     SwitchVec center;
     float radius, value;
-    SwitchNode(HSD_JObj *a,HSD_JObj *b,const char *messages) {
+    SwitchNode(HSD_JObj *a,HSD_JObj *b) {
         next=0;shown=0;hidden=0;
         center.x=lbl_806D8E98;center.y=lbl_806D8E98;center.z=lbl_806D8E98;radius=lbl_806D8E98;value=lbl_806D8E98;
         if (!a || !b) return;
         shown=a;hidden=b;
-        SwitchVec lo=*(const SwitchVec *)messages;
-        SwitchVec hi=*(const SwitchVec *)(messages+12);
+        SwitchVec lo={0.0f,0.0f,0.0f};
+        SwitchVec hi={0.0f,0.0f,0.0f};
         HSD_JObjClearFlags(shown,0x10);
         HSD_JObjClearFlags(hidden,0x10);
         if (!fn_801847DC(b,&lo,&hi)) return;

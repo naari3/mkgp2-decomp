@@ -11439,7 +11439,13 @@
     "__ct__10SwitchListFPv": "fn_8017A68C",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
-    "switchConstants": "lbl_80371E98"
+    "switchConstants": "lbl_80371E98",
+    "@4": "global:lbl_80371E98",
+    "@5": "lbl_80371EA4",
+    "jungleHigh": "lbl_80371EB0",
+    "jungleLow": "lbl_80371ECC",
+    "seahouseHigh": "lbl_80371EE8",
+    "seahouseLow": "lbl_80371F08"
   },
   "src/game/CourseEnvironment.cpp": {
     "__nw__FUl": "Alloc",
