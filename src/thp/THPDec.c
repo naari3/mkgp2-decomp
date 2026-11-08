@@ -1939,6 +1939,8 @@ void fn_8029BCF0(THPDecHandle* handle, u8* dst, u8 alpha)
 #pragma push
 #pragma opt_propagation off
 #pragma opt_lifetimes off
+/* The goto shape puts the p-- latch before the marker test like the target;
+ * left: a dead `b` loop-entry jump and two scheduling swaps (80.9%). */
 static s32 __THPGetBit(THPFileInfo* info)
 {
     u8* p;
@@ -1948,37 +1950,35 @@ static s32 __THPGetBit(THPFileInfo* info)
     cnt = info->cnt;
     if (cnt == 33) {
         p = info->file;
-        info->cnt = 26;
         b = *p;
-        if (b != 0xFF) {
+        info->cnt = 26;
+        if (b == 0xFF) goto check;
+        info->file = p + 1;
+        info->currByte = b;
+        b = (b >> 7) & 1;
+        goto done;
+    again:
+        p--;
+    check:
+        if (p[1] != 0) {
+            b = p[2];
+            p += 3;
+            if (b == 0xFF) goto again;
             info->currByte = b;
             b = (b >> 7) & 1;
-            info->file = p + 1;
+            info->file = p;
         } else {
-            for (;;) {
-                if (p[1] == 0) {
-                    p += 2;
-                    info->currByte = b;
-                    b = (b >> 7) & 1;
-                    info->file = p;
-                    break;
-                }
-                b = p[2];
-                p += 3;
-                if (b != 0xFF) {
-                    info->currByte = b;
-                    b = (b >> 7) & 1;
-                    info->file = p;
-                    break;
-                }
-                p--;
-            }
+            p += 2;
+            info->currByte = b;
+            b = (b >> 7) & 1;
+            info->file = p;
         }
     } else {
         b = info->currByte;
         info->cnt = cnt + 1;
         b = __rlwnm(b, cnt, 31, 31);
     }
+done:
     return b;
 }
 #pragma pop
