@@ -1934,3 +1934,8 @@ c21_u125 unlocks RaceDigitLap fn_80246988 (496B),99.90323->100. Two TU-local sta
 Source: Codex worker c21_u138_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c21_u138 TryArmInit: C7Vec v=self->pos; Normalize(&v) replaces default construction plus NormalizeCopy. Exactly six source rows at +2F0/+2F4/+2FC/+304/+308/+310 restore target Y/Z registers; 93.89051->93.98783, same1636B, extab98.4375/index95 unchanged after add-only @214/@215 bridges. Scalar six-arg Dot invariant. Explicit quaternion products95.277374 / scalar helper95.357666 but1620B, one fewer saved FPR/frameA0 vsB0 and worse ownedEH, so only archived. Offdiagonal-only94.3236/1616B; diagnostic CSE-off86.72019/1588B, none retained. Final service fallback DOL SHA1 exact; native gain0.
+
+## c21_p19_20261108
+Source: Codex worker c21_p19_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c21_p19: fn_80170B5C stack-frame residual was a semantic type-size error: GrowFace was opaque 0x48 but fn_80184F24 emits DListQuadInfo (four Vec vertices, flags, two floats = 0x3C), and fn_801234F8 advances input by 0x3C. Reusing canonical DListQuadInfo fixes frame 0xB0 -> target0xA0 and all six frame operands. Include extractor declarations with C linkage and add own GrowAnim(DListQuadInfo*, int) bridge. Text99.05778 ->99.08444; only offset initializer mr r30,r29 vs li r30,0 remains. Owned EH/rodata100. Singleton NM, no safe B cut. Coordinator full build target SHA-1 OK; zero native gain.

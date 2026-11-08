@@ -1,7 +1,6 @@
-/* Native reconstruction of fn_80170B5C; retained as NonMatching.
- * Left: the frame is 0x10 bigger (0xb0 vs 0xa0, linked to the
- * `if (++used>=count) break;` exit), plus the prologue order and
- * `mr r30, r29` vs `li r30, 0`. */
+/* Native reconstruction of the clKPTrap (GrowSet) constructor.
+ * NonMatching: the entry-offset initialization is li r30, 0 rather
+ * than the target mr r30, r29. */
 #include "game/Scene_80170B5C_private.h"
 
 extern "C" {
@@ -16,7 +15,7 @@ GrowDObj *HSD_JObjGetDObj(GrowJoint *);
 int fn_80184F24(GrowJoint *, void *, GrowFace *, int);
 int fn_80183A5C(void *);
 int fn_80185630(GrowJoint *, void *, void *, int);
-void __assert(char *, int, char *);
+void __assert(const char *, int, const char *);
 }
 
 /* .rodata 0x8036E220..0x8036E728 is this file's (clKPTrap). The ctor

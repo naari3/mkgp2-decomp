@@ -12028,6 +12028,7 @@
     "__dt__16CourseMarkerBaseFv": "dtor_8016A270",
     "__ct__10clNormal3DFPvi": "clNormal3D_Construct",
     "__ct__8GrowAnimFP8GrowFacei": "fn_80123BB4",
+    "__ct__8GrowAnimFP13DListQuadInfoi": "fn_80123BB4",
     "__ct__7GrowSubFv": "fn_8016FA50",
     "@124": "@etb_80010774",
     "@125": "@eti_80026414"
