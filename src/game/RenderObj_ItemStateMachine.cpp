@@ -414,17 +414,9 @@ extern "C" int RenderObj_ItemStateMachine(RenderItemState *obj, int arg, float s
             float dot = Vec3_Dot(&camera, &forward);
             if (dot > lbl_806D262C) dot = lbl_806D262C;
             if (dot < lbl_806D2630) dot = lbl_806D2630;
-            double absolute = __fabs(dot);
-            float magnitude = (float)absolute;
-            dot = lbl_806D2634 * dot;
-            magnitude = lbl_806D2638 * magnitude;
-            int y;
-            int x;
-            x = (int)dot;
-            y = (int)magnitude;
             RenderOverlay *overlay = obj->overlay;
-            overlay->x = (float)(x + 310);
-            overlay->y = (float)(y + 180);
+            overlay->x = (float)((int)(lbl_806D2634 * dot) + 310);
+            overlay->y = (float)((int)(lbl_806D2638 * (float)__fabs(dot)) + 180);
         }
         fn_80245704(obj->overlay);
     }

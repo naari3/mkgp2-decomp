@@ -698,7 +698,7 @@ config.libs = [
             Object(Matching, "game/VfxSlotMgrShutdown.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/VfxSlotMgr.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartDriver_RenderTimed.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/RenderObj_ItemStateMachine.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/RenderObj_ItemStateMachine.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/RenderObj_ItemStateMachine_Timed.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/KartDriver_SetJointPosY_Slot3d.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/KartDriver_SetJointPosY_Slot3c.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
