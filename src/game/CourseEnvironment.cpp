@@ -239,6 +239,8 @@ void *CourseEnvironment_ResolveJointInSlot0(CourseEnvironmentView *self, const c
     return 0;
 }
 
+#pragma push
+#pragma opt_dead_assignments off
 int CourseScene_Load(CourseEnvironmentView *self, int course) {
     const char *strings = lbl_802EAF10;
     CourseEnvironmentView *slotOwner;
@@ -446,6 +448,8 @@ int CourseScene_Load(CourseEnvironmentView *self, int course) {
     ShadowAreaMgr_GetOrCreate(CourseVariantTableLookup());
     return 1;
 }
+#pragma pop
+
 
 void CourseEnvironment_ZeroInit(CourseEnvironmentView *self) {
     self->objects = 0; self->secondaryModel = 0;
