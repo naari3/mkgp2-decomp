@@ -38,7 +38,12 @@ extern "C" int ShadowAreaMgr_BuildFromArchive(ShadowAreaMgr *self, void *archive
 
 #pragma use_lmw_stmw reset
 
-static inline u8 ShadowAreaEntry_Contains(ShadowAreaEntry *self, const Vec3f &p)
+static inline const Vec3f &ShadowAreaMgr_GetEdgePoint(ShadowAreaMgr *mgr, int entry, int edge)
+{
+    return mgr->entries[entry].edges[edge].point;
+}
+
+static inline u8 ShadowAreaEntry_Contains(ShadowAreaMgr *mgr, int index, ShadowAreaEntry *self, const Vec3f &p)
 {
     int i;
 
@@ -47,7 +52,7 @@ static inline u8 ShadowAreaEntry_Contains(ShadowAreaEntry *self, const Vec3f &p)
     }
     for (i = 0; i < 6; i++) {
         Vec3f d;
-        d.Sub(p, self->edges[i].point);
+        d.Sub(p, ShadowAreaMgr_GetEdgePoint(mgr, index, i));
         if (d.Dot(self->edges[i].normal) < 0.0f) {
             return FALSE;
         }
@@ -63,7 +68,7 @@ extern "C" int ShadowAreaMgr_QueryPoint(ShadowAreaMgr *self, float x, float y, f
     i = self->count;
     while (i > 0) {
         i--;
-        if (ShadowAreaEntry_Contains(&self->entries[i], p) == TRUE) {
+        if (ShadowAreaEntry_Contains(self, i, &self->entries[i], p) == TRUE) {
             return 1;
         }
     }
