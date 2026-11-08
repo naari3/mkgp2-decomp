@@ -7,7 +7,7 @@
 /* refine if the real prototype matters for header consumers. */
 extern void ClRomTable_PurgeAll();
 extern void CourseEnvironment_Dtor();
-extern void GetRaceContextPtr();
+extern void *GetRaceContextPtr();
 extern void ItemObjectManager_Reset();
 extern void LakituStart_Dtor();
 extern void MemoryManager_TimedFree();
