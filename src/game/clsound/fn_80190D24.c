@@ -21,25 +21,28 @@ static inline void ResetVoice(ClSoundVoice* voice) {
     voice->category=255;
     voice->flags=0;
 }
-static inline void SwapQueued(int index) {
-    ClSoundQueue* a = &lbl_80677F40[index];
-    ClSoundQueue* b = &lbl_80677F40[index-1];
-    ClSoundQueue tmp = *a;
-    a->id = b->id;
-    a->state = b->state;
-    a->delay = b->delay;
-    *b = tmp;
-}
 static inline void RemoveQueued(unsigned int id) {
     int i;
     for (i=0;i<37;i++) {
         if (lbl_80677F40[i].id == -1) break;
         if (id == lbl_80677F40[i].id) {
+            ClSoundQueue *q;
+            ClSoundQueue *e;
             lbl_80677F40[i].state=3;
             lbl_80677F40[i].delay=0;
-            for (;i>0;i--) {
-                if (lbl_80677F40[i-1].state == 3) break;
-                SwapQueued(i);
+            q=lbl_80677F40;
+            e=&q[i];
+            for (;i>0;e--) {
+                ClSoundQueue tmp;
+                int k;
+                if (e[-1].state == 3) break;
+                k=i-1;
+                tmp=*e;
+                i--;
+                e->id=q[k].id;
+                e->state=q[k].state;
+                e->delay=q[k].delay;
+                q[k]=tmp;
             }
             break;
         }
