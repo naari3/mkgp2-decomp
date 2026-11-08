@@ -25,16 +25,18 @@ extern const float lbl_806D316C;
 #pragma exceptions on
 int PCBComm_UpdateSyncPhase1(void)
 {
-    SlotView *slots = lbl_805A6154;
-    SlotView *slot = slots;
-    char *phases = g_pcbSyncPhasePerPcb;
-    char *phase = phases;
+    SlotView *slots;
+    SlotView *slot;
+    char *phase;
+    char *phases;
     int roleCount = 0;
     int sceneCount = 0;
     int first = -1;
     unsigned char truncate = 0;
     unsigned char reset = 0;
     int i;
+    slot = slots = lbl_805A6154;
+    phase = phases = g_pcbSyncPhasePerPcb;
     for (i = 0; i < 4;) {
         unsigned int role;
         if (((slot->header.word >> 15) & 0xFF) == 8) ++sceneCount;
@@ -63,11 +65,10 @@ int PCBComm_UpdateSyncPhase1(void)
         ++i;
     }
     if (sceneCount > 0 && roleCount == sceneCount) {
-        int hostRole = first + 2;
         unsigned char *out = g_pcbSyncTable;
         for (i = 0; i < 4; ++i, ++slots, ++out) {
             if (roleCount >= 2) {
-                if (slots->header.bytes.role.role == 1) out[4] = hostRole;
+                if (slots->header.bytes.role.role == 1) out[4] = first + 2;
             } else {
                 if (slots->header.bytes.role.role == 1) out[4] = 0;
             }

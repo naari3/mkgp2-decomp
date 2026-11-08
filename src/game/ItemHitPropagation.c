@@ -8,6 +8,12 @@ typedef struct HitDriver {
     unsigned char pad_00[0x304];
     HitEffectBus *effects;
 } HitDriver;
+/* The classifier reads the effect bus through the kart object's own layout;
+ * using a separate type keeps its load from being CSE'd with driver->effects. */
+typedef struct HitKartObject {
+    unsigned char pad_00[0x304];
+    HitEffectBus *effects;
+} HitKartObject;
 typedef struct HitRaceSlot {
     int kind;
     unsigned char pad_04[0xB0];
@@ -59,9 +65,9 @@ static inline unsigned char HitEffect_HasProtected(const HitEffectBus *effects)
     return result;
 }
 
-static inline int HitDriver_Classify(const HitDriver *driver)
+static inline int HitDriver_Classify(const HitKartObject *kart)
 {
-    const HitEffectBus *effects = driver->effects;
+    const HitEffectBus *effects = kart->effects;
     if (HitEffect_HasProtected(effects)) {
         return 2;
     }
@@ -95,7 +101,7 @@ void Item_PropagateHitToAllDrivers(HitItem *item, HitDriver *excluded)
             if (excluded != 0 && excluded == driver) {
                 continue;
             }
-            classification = HitDriver_Classify(driver);
+            classification = HitDriver_Classify((const HitKartObject *)driver);
             switch (classification) {
             case 1:
                 ItemHit_Dispatch(item, 0, &item->position, driver);
@@ -104,6 +110,8 @@ void Item_PropagateHitToAllDrivers(HitItem *item, HitDriver *excluded)
                 if (driver->effects != 0) {
                     ItemEffectBus_OrMask(driver->effects, 0x8000000000000000ULL);
                 }
+                break;
+            case 3:
                 break;
             default:
                 break;
@@ -141,7 +149,7 @@ void Item_PropagateHitToDriversInRadius(HitItem *item, HitDriver *excluded)
             origin = position;
             Mtx44_TransformVec3(&position, &matrix, &origin);
             if (fn_800D3184(&item->position, &position) < radius) {
-                classification = HitDriver_Classify(driver);
+                classification = HitDriver_Classify((const HitKartObject *)driver);
                 switch (classification) {
                 case 1:
                     ItemHit_Dispatch(item, 0, &position, driver);
@@ -150,6 +158,8 @@ void Item_PropagateHitToDriversInRadius(HitItem *item, HitDriver *excluded)
                     if (driver->effects != 0) {
                         ItemEffectBus_OrMask(driver->effects, 0x8000000000000000ULL);
                     }
+                    break;
+                case 3:
                     break;
                 default:
                     break;
