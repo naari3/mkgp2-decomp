@@ -65,19 +65,31 @@ static inline void TransformOffset(const KCMatrix *matrix, KCVec *offset) {
     Mtx4x4_TransposeTo4x3(matrix,mtx);
     PSMTXMultVec(mtx,offset,offset);
 }
-static inline void TransformPoint(const KCMatrix &matrix, const KCVec &point, KCVec &result) {
-    float x=point.y*matrix.m[1][0];
-    float y=point.y*matrix.m[1][1];
-    float z=point.y*matrix.m[1][2];
-    x+=matrix.m[0][0]*point.x;
-    y+=matrix.m[0][1]*point.x;
-    z+=point.x*matrix.m[0][2];
-    x+=point.z*matrix.m[2][0];
-    y+=point.z*matrix.m[2][1];
-    z+=point.z*matrix.m[2][2];
-    result.x=matrix.m[3][0]+x;
-    result.y=matrix.m[3][1]+y;
-    result.z=matrix.m[3][2]+z;
+static inline void TransformPoints(const KCMatrix &matrix, const KCVec &a, const KCVec &b, KCVec &left, KCVec &right) {
+    float lx=a.y*matrix.m[1][0];
+    float ly=a.y*matrix.m[1][1];
+    float lz=a.y*matrix.m[1][2];
+    float rx=b.y*matrix.m[1][0];
+    float ry=b.y*matrix.m[1][1];
+    float rz=b.y*matrix.m[1][2];
+    lx+=matrix.m[0][0]*a.x;
+    ly+=matrix.m[0][1]*a.x;
+    lz+=a.x*matrix.m[0][2];
+    rx+=matrix.m[0][0]*b.x;
+    ry+=matrix.m[0][1]*b.x;
+    rz+=b.x*matrix.m[0][2];
+    lx+=a.z*matrix.m[2][0];
+    ly+=a.z*matrix.m[2][1];
+    lz+=a.z*matrix.m[2][2];
+    rx+=b.z*matrix.m[2][0];
+    ry+=b.z*matrix.m[2][1];
+    rz+=b.z*matrix.m[2][2];
+    left.x=matrix.m[3][0]+lx;
+    left.y=matrix.m[3][1]+ly;
+    left.z=matrix.m[3][2]+lz;
+    right.x=matrix.m[3][0]+rx;
+    right.y=matrix.m[3][1]+ry;
+    right.z=matrix.m[3][2]+rz;
 }
 extern "C" void KartController_Update(AIKart *self) {
     if (!self->path) return;
@@ -125,16 +137,16 @@ extern "C" void KartController_Update(AIKart *self) {
     ItemEffectBus_SnapshotAndFullReset(bus);
     ((KCDispatch *)self)->collision(PhysicsState_GetCollisionKartIdx(self->run.p));
     KCMatrix mat;
-    mat.multiply(fn_801DF3A8(self->steering.p));
-    mat.multiply(fn_801DEC6C(self->aux.p));
-    mat.multiply(PhysicsState_GetOrientMatrixPtr(self->run.p));
+    mat *= *fn_801DF3A8(self->steering.p);
+    mat *= *fn_801DEC6C(self->aux.p);
+    mat *= *PhysicsState_GetOrientMatrixPtr(self->run.p);
     AIPosition *pos=PhysicsState_GetPositionPtr(self->run.p);
     self->position.x=pos->x; self->position.y=pos->y; self->position.z=pos->z;
-    mat.m[3][0]=self->position.x; mat.m[3][1]=self->position.y; mat.m[3][2]=self->position.z;
-    mat.multiply(fn_801DF3A0(self->steering.p));
+    mat.setTranslation(self->position);
+    mat *= *fn_801DF3A0(self->steering.p);
     KCMatrix scaled;
-    scaled.m[0][0]=scaled.m[1][1]=scaled.m[2][2]=lbl_806DA3B8;
-    scaled.multiply(&mat);
+    scaled.m[2][2]=scaled.m[1][1]=scaled.m[0][0]=lbl_806DA3B8;
+    scaled *= mat;
     mat=scaled;
     KCVec rotation,bounds,center,velocity;
     velocity.x=(self->position.x-self->previous.x)*lbl_806DA38C;
@@ -160,8 +172,7 @@ extern "C" void KartController_Update(AIKart *self) {
     float ground;
     int color,c0=0,c1=0;
     const KCVec *coords=lbl_803BD728;
-    TransformPoint(mat,coords[3],left);
-    TransformPoint(mat,coords[2],right);
+    TransformPoints(mat,coords[3],coords[2],left,right);
     if(Terrain_GetGroundHeightWithPenetration(&left,&ground,&normal,&color,lbl_806DA394)) c0=color;
     if(Terrain_GetGroundHeightWithPenetration(&right,&ground,&normal,&color,lbl_806DA394)) c1=color;
     TornadoEffect_SetColorPairC8CC(tornado,c0,c1);

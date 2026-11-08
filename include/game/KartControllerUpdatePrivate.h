@@ -9,17 +9,21 @@ struct KCVec { float x,y,z; };
 struct KCMatrix {
     float m[4][4];
     KCMatrix() {
-        m[0][0]=m[1][1]=m[2][2]=m[3][3]=lbl_806DA388;
-        m[0][1]=m[0][2]=m[0][3]=m[1][0]=m[1][2]=m[1][3]=lbl_806DA388;
-        m[2][0]=m[2][1]=m[2][3]=m[3][0]=m[3][1]=m[3][2]=lbl_806DA388;
-        m[3][3]=m[2][2]=m[1][1]=m[0][0]=lbl_806DA390;
+        m[3][3]=m[2][2]=m[1][1]=m[0][0]=lbl_806DA388;
+        m[1][3]=m[1][2]=m[1][0]=m[0][3]=m[0][2]=m[0][1]=lbl_806DA388;
+        m[3][2]=m[3][1]=m[3][0]=m[2][3]=m[2][1]=m[2][0]=lbl_806DA388;
+        m[0][0]=m[1][1]=m[2][2]=m[3][3]=lbl_806DA390;
     }
-    KCMatrix &multiply(const KCMatrix *b) {
+    void setTranslation(const AIPosition &position) {
+        float z=position.z, y=position.y, x=position.x;
+        m[3][0]=x; m[3][1]=y; m[3][2]=z;
+    }
+    KCMatrix &operator*=(const KCMatrix &b) {
         float out[16];
         const float *row=&m[0][0];
         const float *column;
         float *output=out;
-        const float *right=&b->m[0][0];
+        const float *right=&b.m[0][0];
         int n=0;
         for (int i=0; i<4; ++i) {
             column=right;

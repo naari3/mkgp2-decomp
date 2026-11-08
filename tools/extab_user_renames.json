@@ -12950,7 +12950,9 @@
     "@637": "@eti_80027458"
   },
   "src/game/KartController_Update.cpp": {
-    "__dt__10AIPositionFv": "dtor_80036E40"
+    "__dt__10AIPositionFv": "dtor_80036E40",
+    "@276": "@etb_80016558",
+    "@277": "@eti_800288E0"
   },
   "src/game/ItemEffectImpact_TryArmInit.cpp": {
     "__dt__5C7VecFv": "dtor_80036E40",
