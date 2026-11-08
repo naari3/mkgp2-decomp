@@ -1,0 +1,2756 @@
+
+/* sdata symbols referenced from asm */
+extern unsigned char lbl_806D83D8[4];
+extern unsigned char lbl_806D83E4[5];
+extern unsigned char lbl_806D83F0[8];
+extern unsigned char lbl_806D8438[3];
+extern unsigned char lbl_806D8440[5];
+extern unsigned char lbl_806D8450[4];
+extern unsigned char lbl_806D8468[5];
+extern unsigned char lbl_806D8474[5];
+extern unsigned char lbl_806D847C[4];
+extern unsigned char lbl_806D8480[4];
+extern unsigned char lbl_806D8498[8];
+extern unsigned char lbl_806D84A4[8];
+extern unsigned char lbl_806D84AC[4];
+extern unsigned char lbl_806D84D8[4];
+/*
+ * 0x80157940..0x8015A6E4: list helpers and the scene updates that use them.
+ */
+#pragma cplusplus on
+
+struct ListNode {
+    ListNode *prev;
+    ListNode *next;
+};
+
+struct ListIter {
+    ListNode *n;
+};
+
+struct List {
+    int size;
+    ListNode head;
+};
+
+struct DataBuf {
+    int pad0;
+    void *data;
+};
+
+class DrawObj {
+public:
+    virtual void v8();
+    virtual void vC();
+    virtual void v10();
+    virtual void Draw();
+};
+
+struct DrawScene {
+    char pad0[4];
+    unsigned char hidden;
+    char pad5[3];
+    unsigned char state;
+    char pad9[0x2c - 9];
+    DrawObj *a;
+    DrawObj *b;
+};
+
+struct InputView {
+    char pad[0x14];
+    int dir;
+};
+
+struct MenuTarget {
+    char pad0[0xc];
+    unsigned char sel;
+    char padD[0xa8 - 0xd];
+    unsigned char unlocked[60];
+    char padE4[0x19d - 0xe4];
+    unsigned char flag;
+};
+
+struct InputPlayer {
+    virtual void v8();
+    virtual void vC();
+    virtual void v10();
+    virtual void v14();
+    virtual void v18();
+    virtual float Stick();
+    virtual unsigned char Pressed(int mask);
+};
+
+struct WidgetBase {
+    char pad0[0x14];
+};
+
+class Widget : public WidgetBase {
+public:
+    virtual void v8();
+    virtual void vC();
+    virtual void v10();
+    virtual void Update();
+    virtual void Draw();
+};
+
+struct OptionMenu {
+    char pad0[4];
+    unsigned char done;
+    char pad5[3];
+    unsigned char started;
+    char pad9[3];
+    int state;
+    float timer;
+    int page;
+    int nextPage;
+    unsigned char stickHeld;
+    unsigned char toggleEnabled;
+    char pad1E[2];
+    MenuTarget *target;
+    char pad24[4];
+    int timeout;
+    DrawObj *bg;
+    DrawObj *frame;
+    Widget *w34;
+    Widget *w38;
+    Widget *w3C;
+    Widget *w40;
+    float blink;
+    char pad48[4];
+    bool toggle;
+    char pad4D[3];
+    float fade50;
+    float fade54;
+    unsigned char sel;
+    char pad59[3];
+    float blink2;
+    int count;
+    int value;
+    char pad68[4];
+    int rule;
+    unsigned char flags[6];
+    char pad76[2];
+    unsigned short wins;
+    unsigned short losses;
+    signed char digitsA[3];
+    signed char digitsB[3];
+    char pad82[2];
+    int scroll;
+    int scrollTimer;
+    float time[6];
+    int course[6];
+    int mode[6];
+    int isNew[6];
+    int kind[6];
+};
+
+/* TOP-END */
+
+extern "C" {
+void MemoryManager_TimedFree(void *p);
+extern void Alloc();
+extern void __throw();
+extern void fn_801F7DAC();
+void HSD_StateInvalidate(int state);
+void fn_8011F994(int i);
+void fn_8013D940(int i);
+void *GetInputManager(void);
+InputPlayer *InputMgr_GetPlayer(void *mgr, int index);
+void RumbleUpdate(void);
+void SetRumbleMode(int a, int b, int c);
+void SetSyncTarget(int id);
+int WeatherSystem_PickVariant(int sel);
+void clStream_setVolume(int ch, int vol);
+void fn_8015A6E4(OptionMenu *self, int layer, float x, float y, float alpha);
+void fn_801678FC(int layer, float r, float g, float b, float a);
+void fn_801698B4(int layer, int id, int flag, float x, float y);
+unsigned char fn_8019083C(int ch);
+int fn_801932F8(void);
+void fn_801FE27C(int t);
+void fn_801FE348(void);
+void fn_801FE390(void);
+void fn_801FEF18(void *obj, int t);
+extern const float lbl_806D8390;
+extern const float lbl_806D8394;
+extern const float lbl_806D8398;
+extern const float lbl_806D839C;
+extern const float lbl_806D83A0;
+extern const float lbl_806D83A4;
+extern const float lbl_806D83A8;
+extern const float lbl_806D83AC;
+extern const float lbl_806D83B0;
+extern const float lbl_806D83B4;
+extern const float lbl_806D83B8;
+extern const float lbl_806D83BC;
+extern const float lbl_806D83C0;
+void fn_801FE36C(void);
+extern struct InputView *g_pInputState;
+extern const float lbl_806D83C4;
+extern const float lbl_806D83C8;
+const char *GetTextureByIdAndLang(int id, int lang);
+int fn_80167744(int digit, float v);
+void fn_80168798(int layer, const void *s, float x, float y, float a, ...);
+void fn_80168D84(int layer, const void *s, float x, float y, float a, ...);
+void fn_80169334(int layer, int id, int f, float x, float y, float sx, float sy, float a);
+void fn_801695E0(int layer, int id, int f, float x, float y, float a);
+int isJapanese(void);
+extern const float lbl_806D83CC;
+extern const float lbl_806D83D0;
+extern const float lbl_806D83D4;
+extern const float lbl_806D83DC;
+extern const float lbl_806D83E0;
+extern const float lbl_806D83EC;
+extern const float lbl_806D83F8;
+extern const float lbl_806D83FC;
+extern const float lbl_806D8400;
+extern const float lbl_806D8404;
+extern const float lbl_806D8408;
+extern const float lbl_806D840C;
+extern const float lbl_806D8410;
+extern const float lbl_806D8414;
+extern const float lbl_806D8418;
+extern const float lbl_806D841C;
+extern const float lbl_806D8420;
+extern const float lbl_806D8424;
+extern const float lbl_806D8428;
+extern const float lbl_806D842C;
+extern const float lbl_806D8430;
+extern const float lbl_806D8434;
+extern const float lbl_806D843C;
+extern unsigned int lbl_806D8448;
+void fn_80168404(int layer, const void *s, float x, float y, float sx, float sy, float a, ...);
+extern const float lbl_806D8454;
+extern const float lbl_806D8458;
+extern const float lbl_806D845C;
+extern const float lbl_806D8460;
+extern const float lbl_806D8464;
+extern const float lbl_806D8470;
+extern const float lbl_806D8484;
+extern const float lbl_806D8488;
+extern const float lbl_806D848C;
+extern const float lbl_806D8490;
+extern const float lbl_806D8494;
+extern const float lbl_806D84A0;
+extern const float lbl_806D84B0;
+extern const float lbl_806D84B4;
+extern const float lbl_806D84B8;
+extern const float lbl_806D84BC;
+extern const float lbl_806D84C0;
+extern const float lbl_806D84C4;
+extern const float lbl_806D84C8;
+extern const float lbl_806D84CC;
+extern const float lbl_806D84D0;
+extern const float lbl_806D84D4;
+extern void Item_GetDescriptorField0();
+extern void Item_GetDescriptorField8();
+extern void Item_GetDescriptorFieldC();
+extern void PlayerData_GetUnlockedItemIdByIndex_U8();
+extern void fn_8013BEC8();
+extern void fn_80168B90();
+extern void fn_8016918C();
+extern void fn_8023D938();
+extern void fn_8023DAA8();
+extern const float lbl_806D84DC;
+extern const float lbl_806D84E0;
+extern const float lbl_806D84E4;
+extern const float lbl_806D84E8;
+extern const float lbl_806D84EC;
+extern const float lbl_806D84F0;
+extern const float lbl_806D84F4;
+extern const float lbl_806D84F8;
+extern const float lbl_806D84FC;
+extern const float lbl_806D8500;
+extern const float lbl_806D8504;
+extern const float lbl_806D8508;
+extern const float lbl_806D850C;
+extern const float lbl_806D8510;
+extern const float lbl_806D8514;
+extern const float lbl_806D8518;
+extern const float lbl_806D851C;
+extern const float lbl_806D8520;
+extern const float lbl_806D8524;
+extern const float lbl_806D8528;
+extern const float lbl_806D852C;
+extern const float lbl_806D8530;
+extern const float lbl_806D8534;
+extern const float lbl_806D8538;
+extern const float lbl_806D853C;
+extern const float lbl_806D8540;
+extern const float lbl_806D8544;
+extern const float lbl_806D8548;
+extern const float lbl_806D854C;
+extern const float lbl_806D8550;
+extern const float lbl_806D8554;
+extern const float lbl_806D8558;
+extern const float lbl_806D855C;
+extern const float lbl_806D8560;
+extern const float lbl_806D8564;
+extern const float lbl_806D8568;
+extern const float lbl_806D856C;
+extern const float lbl_806D8570;
+void fn_80157940(void);
+void fn_801579F0(ListIter *ret, List *l, ListIter *it);
+void fn_80157A68(void);
+void fn_80157B20(List *l);
+void fn_80157B38(void);
+void fn_80157BE8(ListIter *ret, List *l, ListIter *it);
+void fn_80157C60(void);
+void fn_80157D18(List *l);
+void fn_80157D30(void);
+asm void fn_80157DE0(void);
+void fn_80157EA8(List *l);
+DataBuf *dtor_80157EC0(DataBuf *self, short flag);
+void fn_80157F1C(DrawScene *self);
+void fn_80157FB4(OptionMenu *self);
+void fn_801589BC(OptionMenu *self, int mode);
+asm void fn_80158CE4(OptionMenu *self, int layer, float x, float y, float alpha);
+void fn_8015915C(OptionMenu *self, int layer, float x, float y, float alpha);
+asm void fn_801596D4(OptionMenu *self, int layer, float x, float y, float alpha);
+asm void fn_80159BD0(OptionMenu *self, int layer, float x, float y, float alpha);
+
+extern void fn_8013C26C();
+extern void fn_8013C4A4();
+extern void fn_8013C5FC();
+extern void fn_8013C674();
+extern void fn_8013C6EC();
+extern void fn_8013C7B0();
+extern void fn_8013C91C();
+extern void fn_8013DAC8();
+extern void fn_80167C60();
+extern void get_title_name_global();
+extern unsigned int lbl_806D10A0;
+extern unsigned int lbl_806D8578;
+extern unsigned int lbl_806D857C;
+extern unsigned int lbl_806D8580;
+extern unsigned int lbl_806D8584;
+extern unsigned int lbl_806D8588;
+extern unsigned int lbl_806D858C;
+extern unsigned int lbl_806D8590;
+extern unsigned int lbl_806D8594;
+extern unsigned int lbl_806D8598;
+extern unsigned int lbl_806D85A0;
+extern unsigned int lbl_806D85A4;
+extern unsigned int lbl_806D85A8;
+extern unsigned int lbl_806D85AC;
+extern unsigned int lbl_806D85B0;
+extern unsigned int lbl_806D85B4;
+extern unsigned int lbl_806D85B8;
+extern unsigned int lbl_806D85BC;
+extern unsigned int lbl_806D85C0;
+extern unsigned int lbl_806D85C4;
+extern unsigned int lbl_806D85C8;
+extern unsigned int lbl_806D85CC;
+
+#pragma section R ".extab_user"
+
+
+
+
+
+
+__declspec(section ".extab_user") static const unsigned char extab_fn_80158CE4[8] = {
+    0x32, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
+__declspec(section ".extab_user") static const unsigned char extab_fn_8015915C[8] = {
+    0x32, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
+__declspec(section ".extab_user") static const unsigned char extab_fn_801596D4[8] = {
+    0x62, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
+__declspec(section ".extab_user") static const unsigned char extab_fn_80159BD0[8] = {
+    0x4A, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
+__declspec(section ".extab_user") static const unsigned char extab_fn_8015A6E4[8] = {
+    0x2A, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
+#pragma section R ".extabindex_user"
+
+
+
+
+
+
+__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80158CE4 = {
+    (void *)&fn_80158CE4, 0x00000478, (void *)extab_fn_80158CE4
+};
+
+__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8015915C = {
+    (void *)&fn_8015915C, 0x00000578, (void *)extab_fn_8015915C
+};
+
+__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801596D4 = {
+    (void *)&fn_801596D4, 0x000004FC, (void *)extab_fn_801596D4
+};
+
+__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80159BD0 = {
+    (void *)&fn_80159BD0, 0x00000B14, (void *)extab_fn_80159BD0
+};
+
+__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8015A6E4 = {
+    (void *)&fn_8015A6E4, 0x00000758, (void *)extab_fn_8015A6E4
+};
+
+}
+
+#pragma push
+#pragma force_active on
+/* ---- formerly OptionMenuDraw.cpp: the TU .rodata 0x803678D8..0x80367F68 ---- */
+// Shared curve, color and layout tables, followed by the scene text pool.
+extern "C" const float lbl_803678D8[255] = {
+    1.0f, 0.699999988f, 0.899999976f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f,
+    66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f, 66.6666718f, 5000.0f,
+    66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f,
+    66.6666718f, 3000.0f, 66.6666718f, 4000.0f, 66.6666718f, 5000.0f, 66.6666718f, 0.0f,
+    0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f,
+    66.6666718f, 4000.0f, 66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f,
+    66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f,
+    66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f, 66.6666718f, 5000.0f,
+    66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f,
+    66.6666718f, 3000.0f, 66.6666718f, 4000.0f, 66.6666718f, 5000.0f, 66.6666718f, 0.0f,
+    0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f,
+    66.6666718f, 4000.0f, 66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f,
+    66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f,
+    66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f, 66.6666718f, 5000.0f,
+    66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f,
+    66.6666718f, 3000.0f, 66.6666718f, 4000.0f, 66.6666718f, 5000.0f, 66.6666718f, 0.0f,
+    0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f,
+    66.6666718f, 4000.0f, 66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f,
+    66.6666718f, 1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
+    66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 83.3333359f, 1000.0f,
+    83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f, 83.3333359f, 5000.0f,
+    83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f, 1000.0f, 83.3333359f, 2000.0f,
+    83.3333359f, 3000.0f, 83.3333359f, 4000.0f, 83.3333359f, 5000.0f, 83.3333359f, 0.0f,
+    0.0f, 500.0f, 83.3333359f, 1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f,
+    83.3333359f, 4000.0f, 83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f,
+    83.3333359f, 1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
+    83.3333359f, 5000.0f, 83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f, 1000.0f,
+    83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f, 83.3333359f, 5000.0f,
+    83.3333359f, 0.0f, 0.0f, 500.0f, 83.3333359f, 1000.0f, 83.3333359f, 2000.0f,
+    83.3333359f, 3000.0f, 83.3333359f, 4000.0f, 83.3333359f, 5000.0f, 83.3333359f,
+};
+
+static const unsigned int optionColors[42] = {
+    96, 255, 0, 200, 64, 0, 0, 96,
+    255, 0, 96, 255, 0, 96, 255, 0,
+    96, 255, 0, 96, 255, 0, 96, 255,
+    0, 96, 255, 0, 96, 255, 0, 96,
+    255, 0, 96, 255, 0, 96, 255, 0,
+    96, 255,
+};
+
+static const float optionPositions[5] = {
+    -153.0f, -105.0f, -59.0f, -15.0f, 32.0f,
+};
+
+static const float optionLayoutPositions[10] = {
+    -17.0f, 69.0f, 155.0f, 241.0f, 337.0f, -17.0f, 49.0f, 135.0f,
+    221.0f, 307.0f,
+};
+
+static const int optionThresholds[17] = {
+    3, 5, 7, 10, 15, 20, 25, 30,
+    35, 40, 45, 50, 60, 70, 80, 90,
+    100,
+};
+
+extern "C" const char lbl_80367DFC[] = "clCSSceneCardBrowse";
+
+extern "C" const char lbl_80367E10[] = "clSceneInterface";
+
+extern "C" const char lbl_80367E24[] = "Time attack record";
+
+extern "C" const char lbl_80367E38[] = "\203^\203C\203\200\203A\203^\203b\203N\201@\203f\201[\203^";
+
+static const char optionText578[] = "Versus race result";
+
+static const char optionText58C[] = "\221\316\220\355\220\254\220\321\201@\203f\201[\203^";
+
+static const char optionText5A0[] = "Versus Race count %03d";
+
+static const char optionText5B8[] = "Number of Wins %03d";
+
+static const char optionText5CC[] = "\221\316\220\355\203\214\201[\203X\220\224";
+
+static const char optionText5DC[] = "\227D\217\237\211\361\220\224";
+
+static const char optionText5E8[] = "Grand Prix mode";
+
+static const char optionText5F8[] = "\203O\203\211\203\223\203v\203\212\203\202\201[\203h\201@\203f\201[\203^";
+
+static const char optionText614[] = "Number of item(s) received %02d/%d";
+
+static const char optionText638[] = "\203A\203C\203e\203\200\212l\223\276\220\224%02d";
+
+static const char optionText64C[] = "\201^%d\214\302\222\206";
+
+static const char optionText658[] = "\212\356\226{\203f\201[\203^";
+
+static const char optionText664[] = "\211\271\227\312\202\360\225\317\215X\202\305\202\253\202\334\202\267\201B";
+
+static const char optionText67C[] = "clCSPartsInerface";
+#pragma pop
+
+static inline InputView *input_state(void)
+{
+    if (0 == g_pInputState) {
+        return 0;
+    }
+    return g_pInputState;
+}
+
+
+
+extern "C" void fn_80157EA8(List *l)
+{
+    ListNode *h = &l->head;
+    l->size = 0;
+    h->next = h;
+    h->prev = h;
+}
+
+extern "C" DataBuf *dtor_80157EC0(DataBuf *self, short flag)
+{
+    if (self) {
+        if (self->data) {
+            MemoryManager_TimedFree(self->data);
+        }
+        if (flag > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
+}
+
+extern "C" void fn_80157F1C(DrawScene *self)
+{
+    if (self->hidden == 0 && self->state == 1) {
+        self->a->Draw();
+        self->b->Draw();
+        HSD_StateInvalidate(-1);
+        for (int i = 0; i < 8; i++) {
+            fn_8013D940(i);
+            fn_8011F994(i);
+        }
+        HSD_StateInvalidate(-1);
+    }
+}
+
+static inline InputPlayer *player0(void)
+{
+    return InputMgr_GetPlayer(GetInputManager(), 0);
+}
+
+static inline void DrawPage(OptionMenu *self, int page, int layer, float x, float y, float alpha)
+{
+    switch (page) {
+    case 0:
+        { fn_8015A6E4(self, layer, x, y, alpha); }
+        break;
+    case 1:
+        { fn_80159BD0(self, layer, x, y, alpha); }
+        break;
+    case 2:
+        { fn_801596D4(self, layer, x, y, alpha); }
+        break;
+    case 3:
+        { fn_8015915C(self, layer, x, y, alpha); }
+        break;
+    case 4:
+        { fn_80158CE4(self, layer, x, y, alpha); }
+        break;
+    }
+}
+
+extern "C" void fn_80157FB4(OptionMenu *self)
+{
+    float t;
+
+    if (self->done != 0) {
+        return;
+    }
+    fn_801FE27C(self->timeout);
+    fn_801FEF18(self->bg, self->timeout);
+    if (self->timeout != 0) {
+        self->timeout--;
+    }
+    if (player0()->Stick() > lbl_806D8390) {
+        if (self->stickHeld == 0) {
+            self->stickHeld = 1;
+            self->toggleEnabled = 1;
+        } else {
+            self->toggleEnabled = 0;
+        }
+    } else {
+        self->stickHeld = 0;
+        self->toggleEnabled = 0;
+    }
+    if (self->state == 1) {
+        if (self->timeout == 0 || player0()->Pressed(0x100) || player0()->Pressed(0x2000)) {
+            SetRumbleMode(0, 4, 10);
+            fn_801FE348();
+            SetSyncTarget(14);
+            self->state = 8;
+        } else if (player0()->Pressed(0x400)) {
+            fn_801FE390();
+            self->nextPage = self->page + 1;
+            if (self->nextPage >= 5) {
+                self->nextPage = 0;
+            }
+            self->state = 2;
+            self->timer = lbl_806D8394;
+            switch (self->nextPage) {
+            case 0: {
+                self->blink = lbl_806D8394;
+                self->fade50 = lbl_806D8398;
+                self->fade54 = lbl_806D839C;
+                unsigned char v = self->sel;
+                if (fn_8019083C(1)) {
+                    clStream_setVolume(1, WeatherSystem_PickVariant(v));
+                }
+                break;
+            }
+            case 1:
+                self->blink2 = lbl_806D8394;
+                int k;
+                self->count = self->value = k = 0;
+                for (; k < 60; k++) {
+                    if (self->target->unlocked[k]) {
+                        self->count++;
+                        if (self->value < 0) {
+                            self->value = k;
+                        }
+                    }
+                }
+                if (fn_8019083C(1)) {
+                    clStream_setVolume(1, fn_801932F8());
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                self->scroll = -1;
+                self->scrollTimer = 0;
+                break;
+            case 4:
+                break;
+            }
+        }
+    }
+    fn_801698B4(0, 0x640, 0, lbl_806D83A0, lbl_806D83A4);
+    fn_801698B4(0, 0x63f, 0, lbl_806D83A8, lbl_806D83AC);
+    self->bg->v10();
+    self->frame->v10();
+    self->w34->Update();
+    self->w34->Draw();
+    self->w38->Update();
+    self->w3C->Update();
+    self->w40->Update();
+    switch (self->state) {
+    case 0:
+        self->timer += lbl_806D83B0;
+        t = self->timer / lbl_806D83B4;
+        DrawPage(self, self->page, 1, lbl_806D8394, lbl_806D8394, lbl_806D83B0);
+        fn_801678FC(2, lbl_806D8394, lbl_806D8394, lbl_806D8394, lbl_806D83B0 - t);
+        if (self->timer >= lbl_806D83B4) {
+            self->state = 1;
+            self->timer = lbl_806D8394;
+        }
+        break;
+    case 1:
+        fn_801589BC(self, self->page);
+        DrawPage(self, self->page, 1, lbl_806D8394, lbl_806D8394, lbl_806D83B0);
+        break;
+    case 2:
+        self->timer += lbl_806D83B0;
+        t = self->timer / lbl_806D83B8;
+        DrawPage(self, self->nextPage, 1, lbl_806D8394, lbl_806D8394, t);
+        fn_801698B4(1, 0x63f, 0, lbl_806D83A8 - lbl_806D83BC * t, lbl_806D83AC);
+        DrawPage(self, self->page, 2, lbl_806D83C0 * t, lbl_806D8394, lbl_806D83B0);
+        if (self->timer >= lbl_806D83B8) {
+            self->page = self->nextPage;
+            self->state = 1;
+            self->timer = lbl_806D8394;
+        }
+        break;
+    case 8:
+        DrawPage(self, self->page, 1, lbl_806D8394, lbl_806D8394, lbl_806D83B0);
+        self->state = 9;
+        self->timer = lbl_806D8394;
+        break;
+    case 9:
+        self->timer += lbl_806D83B0;
+        t = self->timer / lbl_806D83B4;
+        DrawPage(self, self->page, 1, lbl_806D8394, lbl_806D8394, lbl_806D83B0);
+        fn_801678FC(2, lbl_806D8394, lbl_806D8394, lbl_806D8394, t);
+        if (self->timer >= lbl_806D83B4) {
+            self->done = 1;
+        }
+        break;
+    }
+    RumbleUpdate();
+    if (self->started == 0) {
+        self->started = 1;
+    }
+}
+
+extern "C" void fn_801589BC(OptionMenu *self, int mode) {
+    switch (mode) {
+    case 0:
+        if (input_state()) {
+            int dir = input_state()->dir;
+            if (dir == 1) {
+                if (self->sel < 4) {
+                    fn_801FE36C();
+                    self->sel++;
+                    self->target->sel = self->sel;
+                    self->fade50 = lbl_806D8394;
+                    self->fade54 = lbl_806D8394;
+                    unsigned char v = self->sel;
+                    if (fn_8019083C(1)) clStream_setVolume(1, WeatherSystem_PickVariant(v));
+                }
+            } else if (dir == -1) {
+                if (self->sel != 0) {
+                    fn_801FE36C();
+                    self->sel--;
+                    self->target->sel = self->sel;
+                    self->fade50 = lbl_806D8394;
+                    self->fade54 = lbl_806D8394;
+                    unsigned char v = self->sel;
+                    if (fn_8019083C(1)) clStream_setVolume(1, WeatherSystem_PickVariant(v));
+                }
+            }
+        }
+        if (self->toggleEnabled) {
+            fn_801FE36C();
+            self->toggle = !self->toggle;
+            self->target->flag = self->toggle;
+        }
+        if (self->fade50 < lbl_806D8398) self->fade50 += lbl_806D83B0;
+        if (self->fade54 < lbl_806D839C) self->fade54 += lbl_806D83B0;
+        if ((self->blink += lbl_806D83B0) >= lbl_806D83C4) self->blink = lbl_806D8394;
+        break;
+    case 1:
+        if (input_state()) {
+            int dir = input_state()->dir;
+            if (dir == 1) {
+                fn_801FE36C();
+                self->value++;
+                if (self->value >= 60) self->value = 0;
+                self->blink2 = lbl_806D8394;
+            } else if (dir == -1) {
+                fn_801FE36C();
+                self->value--;
+                if (self->value < 0) self->value = 59;
+                self->blink2 = lbl_806D8394;
+            }
+        }
+        if ((self->blink2 += lbl_806D83B0) >= lbl_806D83C8) self->blink2 = lbl_806D8394;
+        break;
+    case 2:
+        break;
+    case 3:
+        if (self->scroll < 0) {
+            if (self->scrollTimer > 0) self->scrollTimer--;
+            else { self->scroll = 0; self->scrollTimer = 0; }
+        } else if (++self->scrollTimer >= 4) {
+            if (++self->scroll < 31) self->scrollTimer = 0;
+            else { self->scroll = -1; self->scrollTimer = 120; }
+        }
+        break;
+    case 4:
+        break;
+    }
+}
+
+extern "C" asm void fn_80158CE4(OptionMenu *self, int layer, float x, float y, float alpha) { /* 0x80158CE4 size:0x478 */
+    nofralloc
+    stwu r1, -0xe0(r1)
+    mflr r0
+    stw r0, 0xe4(r1)
+    stfd f31, 0xd0(r1)
+    psq_st f31, 0xd8(r1), 0, 0
+    stfd f30, 0xc0(r1)
+    psq_st f30, 0xc8(r1), 0, 0
+    stfd f29, 0xb0(r1)
+    psq_st f29, 0xb8(r1), 0, 0
+    stfd f28, 0xa0(r1)
+    psq_st f28, 0xa8(r1), 0, 0
+    stfd f27, 0x90(r1)
+    psq_st f27, 0x98(r1), 0, 0
+    stfd f26, 0x80(r1)
+    psq_st f26, 0x88(r1), 0, 0
+    stfd f25, 0x70(r1)
+    psq_st f25, 0x78(r1), 0, 0
+    stfd f24, 0x60(r1)
+    psq_st f24, 0x68(r1), 0, 0
+    stfd f23, 0x50(r1)
+    psq_st f23, 0x58(r1), 0, 0
+    stfd f22, 0x40(r1)
+    psq_st f22, 0x48(r1), 0, 0
+    stfd f21, 0x30(r1)
+    psq_st f21, 0x38(r1), 0, 0
+    stmw r26, 0x18(r1)
+    fmr f23, f1
+    mr r26, r3
+    fmr f22, f2
+    mr r31, r4
+    fmr f24, f3
+    bl isJapanese
+    cmpwi r3, 0x1
+    bne fn_80158CE4_L_80158DE0
+    lfs f0, lbl_806D83D0(r2)
+    lis r3, lbl_80367E24@ha
+    lfs f1, lbl_806D83CC(r2)
+    addi r4, r3, lbl_80367E24@l
+    fadds f21, f0, f22
+    mr r3, r31
+    fmr f3, f24
+    fadds f1, f1, f23
+    fmr f2, f21
+    creqv 6, 6, 6
+    bl fn_80168D84
+    lfs f0, lbl_806D83D4(r2)
+    fmr f2, f21
+    fmr f3, f24
+    mr r3, r31
+    fadds f1, f0, f23
+    la r4, lbl_806D83D8(r2)  /* lbl_806D83D8 */
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f1, lbl_806D83DC(r2)
+    fmr f3, f24
+    lfs f0, lbl_806D83E0(r2)
+    mr r3, r31
+    fadds f1, f1, f23
+    la r4, lbl_806D83E4(r2)  /* lbl_806D83E4 */
+    fadds f2, f0, f22
+    creqv 6, 6, 6
+    bl fn_80168D84
+    b fn_80158CE4_L_80158E50
+    fn_80158CE4_L_80158DE0:
+    lfs f0, lbl_806D83D0(r2)
+    lis r3, lbl_80367E38@ha
+    lfs f1, lbl_806D83CC(r2)
+    addi r4, r3, lbl_80367E38@l
+    fadds f21, f0, f22
+    mr r3, r31
+    fmr f3, f24
+    fadds f1, f1, f23
+    fmr f2, f21
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f0, lbl_806D83EC(r2)
+    fmr f2, f21
+    fmr f3, f24
+    mr r3, r31
+    fadds f1, f0, f23
+    la r4, lbl_806D83D8(r2)  /* lbl_806D83D8 */
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f1, lbl_806D83DC(r2)
+    fmr f3, f24
+    lfs f0, lbl_806D83E0(r2)
+    mr r3, r31
+    fadds f1, f1, f23
+    la r4, lbl_806D83F0(r2)  /* lbl_806D83F0 */
+    fadds f2, f0, f22
+    creqv 6, 6, 6
+    bl fn_80168D84
+    fn_80158CE4_L_80158E50:
+    lfs f1, lbl_806D83F8(r2)
+    mr r28, r26
+    lfs f0, lbl_806D83FC(r2)
+    li r27, 0x0
+    fadds f27, f1, f23
+    lfs f28, lbl_806D8398(r2)
+    fadds f26, f0, f22
+    lfs f29, lbl_806D8400(r2)
+    lfd f30, lbl_806D8448(r2)
+    lis r29, 0x4330
+    lfs f31, lbl_806D8394(r2)
+    fn_80158CE4_L_80158E7C:
+    xoris r0, r27, 0x8000
+    lfs f3, lbl_806D8404(r2)
+    stw r0, 0xc(r1)
+    fmr f2, f26
+    fmr f4, f3
+    mr r3, r31
+    stw r29, 0x8(r1)
+    fmr f5, f24
+    li r4, 0x7db
+    lfd f0, 0x8(r1)
+    li r5, 0x0
+    fsubs f0, f0, f30
+    fmadds f0, f29, f0, f27
+    fadds f25, f28, f0
+    fmr f1, f25
+    bl fn_80169334
+    lfs f0, 0x8c(r28)
+    fcmpo cr0, f0, f31
+    ble fn_80158CE4_L_80159098
+    lfs f1, lbl_806D8408(r2)
+    fmr f3, f24
+    lfs f0, lbl_806D840C(r2)
+    mr r3, r31
+    fsubs f1, f25, f1
+    li r4, 0x7dc
+    fsubs f2, f26, f0
+    li r5, 0x0
+    bl fn_801695E0
+    lfs f1, lbl_806D8410(r2)
+    fmr f3, f24
+    lfs f0, lbl_806D840C(r2)
+    mr r3, r31
+    fadds f1, f1, f25
+    addi r4, r27, 0x7dd
+    fsubs f2, f26, f0
+    li r5, 0x0
+    bl fn_801695E0
+    lfs f1, lbl_806D83B0(r2)
+    fmr f5, f24
+    lfs f0, lbl_806D83B8(r2)
+    mr r3, r31
+    lfs f3, lbl_806D8414(r2)
+    fsubs f1, f25, f1
+    lwz r4, 0xa4(r28)
+    fmr f4, f3
+    li r5, 0x0
+    fsubs f2, f26, f0
+    addi r4, r4, 0x76c
+    bl fn_80169334
+    lwz r0, 0xec(r28)
+    cmpwi r0, 0x2
+    bne fn_80158CE4_L_80158F78
+    lfs f1, lbl_806D83B4(r2)
+    fmr f5, f24
+    lfs f0, lbl_806D8418(r2)
+    mr r3, r31
+    lfs f3, lbl_806D841C(r2)
+    fadds f1, f1, f25
+    fsubs f2, f26, f0
+    fmr f4, f3
+    li r4, 0x7b0
+    li r5, 0x0
+    bl fn_80169334
+    fn_80158CE4_L_80158F78:
+    lfs f1, lbl_806D83B0(r2)
+    fmr f3, f24
+    lfs f0, lbl_806D83B8(r2)
+    mr r3, r31
+    lwz r0, 0xa4(r28)
+    fsubs f1, f25, f1
+    lwz r4, 0xbc(r28)
+    slwi r0, r0, 1
+    fadds f2, f0, f26
+    add r4, r0, r4
+    li r5, 0x0
+    addi r4, r4, 0x7e4
+    bl fn_801695E0
+    lwz r0, 0xd4(r28)
+    cmpwi r0, 0x0
+    beq fn_80158CE4_L_80159028
+    bl isJapanese
+    cmpwi r3, 0x1
+    bne fn_80158CE4_L_80158FF8
+    li r3, 0x39
+    li r4, -0x1
+    bl GetTextureByIdAndLang
+    lfs f1, lbl_806D8420(r2)
+    mr r4, r3
+    lfs f0, lbl_806D8424(r2)
+    fmr f3, f24
+    fsubs f1, f25, f1
+    mr r3, r31
+    fadds f2, f0, f26
+    creqv 6, 6, 6
+    bl fn_80168D84
+    b fn_80158CE4_L_80159028
+    fn_80158CE4_L_80158FF8:
+    li r3, 0x39
+    li r4, -0x1
+    bl GetTextureByIdAndLang
+    lfs f1, lbl_806D8428(r2)
+    mr r4, r3
+    lfs f0, lbl_806D8424(r2)
+    fmr f3, f24
+    fsubs f1, f25, f1
+    mr r3, r31
+    fadds f2, f0, f26
+    creqv 6, 6, 6
+    bl fn_80168D84
+    fn_80158CE4_L_80159028:
+    lfs f1, lbl_806D842C(r2)
+    li r26, 0x0
+    lfs f0, lbl_806D8424(r2)
+    lis r30, 0x4330
+    fadds f21, f1, f26
+    lfs f22, lbl_806D8428(r2)
+    fsubs f25, f25, f0
+    lfd f23, lbl_806D8448(r2)
+    fn_80158CE4_L_80159048:
+    lfs f1, 0x8c(r28)
+    subfic r3, r26, 0x7
+    bl fn_80167744
+    xoris r0, r26, 0x8000
+    mr r4, r3
+    stw r0, 0xc(r1)
+    fmr f2, f21
+    fmr f3, f24
+    mr r3, r31
+    stw r30, 0x8(r1)
+    addi r4, r4, 0x1ecd
+    li r5, 0x0
+    lfd f0, 0x8(r1)
+    fsubs f0, f0, f23
+    fmadds f1, f22, f0, f25
+    bl fn_801695E0
+    addi r26, r26, 0x1
+    cmpwi r26, 0x8
+    blt fn_80158CE4_L_80159048
+    b fn_80158CE4_L_801590E0
+    fn_80158CE4_L_80159098:
+    lfs f1, lbl_806D8430(r2)
+    fmr f3, f24
+    lfs f0, lbl_806D8434(r2)
+    mr r3, r31
+    fsubs f1, f25, f1
+    la r4, lbl_806D8438(r2)  /* lbl_806D8438 */
+    fsubs f2, f26, f0
+    creqv 6, 6, 6
+    bl fn_80168D84
+    lfs f1, lbl_806D843C(r2)
+    fmr f3, f24
+    lfs f0, lbl_806D8428(r2)
+    mr r3, r31
+    fsubs f1, f25, f1
+    la r4, lbl_806D8440(r2)  /* lbl_806D8440 */
+    fadds f2, f0, f26
+    creqv 6, 6, 6
+    bl fn_80168D84
+    fn_80158CE4_L_801590E0:
+    addi r27, r27, 0x1
+    addi r28, r28, 0x4
+    cmpwi r27, 0x4
+    blt fn_80158CE4_L_80158E7C
+    psq_l f31, 0xd8(r1), 0, 0
+    lfd f31, 0xd0(r1)
+    psq_l f30, 0xc8(r1), 0, 0
+    lfd f30, 0xc0(r1)
+    psq_l f29, 0xb8(r1), 0, 0
+    lfd f29, 0xb0(r1)
+    psq_l f28, 0xa8(r1), 0, 0
+    lfd f28, 0xa0(r1)
+    psq_l f27, 0x98(r1), 0, 0
+    lfd f27, 0x90(r1)
+    psq_l f26, 0x88(r1), 0, 0
+    lfd f26, 0x80(r1)
+    psq_l f25, 0x78(r1), 0, 0
+    lfd f25, 0x70(r1)
+    psq_l f24, 0x68(r1), 0, 0
+    lfd f24, 0x60(r1)
+    psq_l f23, 0x58(r1), 0, 0
+    lfd f23, 0x50(r1)
+    psq_l f22, 0x48(r1), 0, 0
+    lfd f22, 0x40(r1)
+    psq_l f21, 0x38(r1), 0, 0
+    lfd f21, 0x30(r1)
+    lmw r26, 0x18(r1)
+    lwz r0, 0xe4(r1)
+    mtlr r0
+    addi r1, r1, 0xe0
+    blr
+}
+
+extern "C" void fn_8015915C(OptionMenu *self, int layer, float x, float y, float alpha)
+{
+    float rowY;
+    int id;
+    int i;
+    float baseX;
+
+    if (isJapanese() == 1) {
+        fn_80168D84(layer, optionText578, lbl_806D83CC + x, rowY = y + lbl_806D83D0, alpha);
+        fn_80168798(layer, lbl_806D8450, lbl_806D83D4 + x, rowY, alpha);
+        { fn_80168D84(layer, lbl_806D83E4, lbl_806D83DC + x, lbl_806D83E0 + y, alpha); }
+    } else {
+        fn_80168798(layer, optionText58C, lbl_806D83CC + x, rowY = lbl_806D83D0 + y, alpha);
+        fn_80168798(layer, lbl_806D8450, lbl_806D83EC + x, rowY, alpha);
+        fn_80168D84(layer, lbl_806D83F0, lbl_806D83DC + x, lbl_806D83E0 + y, alpha);
+    }
+    rowY = y + lbl_806D8454;
+    baseX = lbl_806D8458 + x;
+    for (i = 0; i < 3; ++i) {
+        { fn_801695E0(layer, self->digitsA[i] + 0x3F7, 0, lbl_806D845C * i + baseX, rowY, alpha); }
+    }
+    baseX = lbl_806D83D4 + x;
+    for (i = 0; 3 > i; i++) {
+        { fn_801695E0(layer, self->digitsB[i] + 0x3F7, 0, lbl_806D845C * i + baseX, rowY, alpha); }
+    }
+    if (isJapanese() == 1) {
+        fn_80168798(layer, lbl_806D8468, lbl_806D8460 + x, rowY = lbl_806D8464 + y, alpha);
+        fn_80168798(layer, lbl_806D8474, lbl_806D8470 + x, rowY, alpha);
+    } else {
+        fn_80168798(layer, lbl_806D847C, lbl_806D8460 + x, rowY = lbl_806D8464 + y, alpha);
+        { fn_80168798(layer, lbl_806D8480, x + lbl_806D8470, rowY, alpha); }
+    }
+    register float colX = lbl_806D83CC + x;
+    { rowY = lbl_806D8484 + y; }
+    for (i = 0; i < 100; i++) {
+        register int col = i % 20;
+        float px;
+        px = colX * lbl_806D83B4 + col;
+        register long row = i / 20;
+        id = 0x647;
+        register float py = rowY * lbl_806D8424 + row;
+        if (i < self->wins) {
+            int k;
+            { k = col + row; }
+            { id = 0x654; }
+            if (k <= self->scroll) {
+                unsigned int _t467;
+                { _t467 = self->scroll; }
+                int _t774;
+                _t774 = _t467;
+                long _t308;
+                register int _t986 = self->scrollTimer;
+                long _t423;
+                _t308 = _t774;
+                register int _t359 = _t986;
+                _t423 = _t359;
+                register int v = ((_t308 - k) * 4 + _t423) / 4;
+                if (6 > v) {
+                    id = v + 0x654;
+                }
+            }
+        } else {
+            if (1 & row) {
+                { id = 0x649; }
+            }
+            const int *p;
+            p = optionThresholds;
+            for (int j = 0; j < 17; j++, p++) {
+                if (i + 1 == *p) {
+                    id--;
+                    if ((i + 1) % 10 == 0) {
+                        id = i / 10 + 0x64A;
+                    }
+                    break;
+                }
+            }
+        }
+        fn_801695E0(layer, id, 0, px, py, alpha);
+    }
+    if (isJapanese() == 1) {
+        fn_80168404(layer, optionText5A0, lbl_806D8488 + x, rowY = lbl_806D848C + y, lbl_806D8390, lbl_806D83B0, alpha,
+                    self->wins + self->losses);
+        unsigned int _t658;
+        register int _t909 = self->wins;
+        _t658 = _t909;
+        unsigned int _t426;
+        register unsigned int _t674 = _t658;
+        _t426 = _t674;
+        { long _t430 = _t426;
+        fn_80168404(layer, optionText5B8, lbl_806D8490 + x, rowY, lbl_806D8390, lbl_806D83B0, alpha, _t430); }
+    } else {
+        unsigned int _t973;
+        fn_80168798(layer, optionText5CC, lbl_806D8488 + x, rowY = lbl_806D848C + y, alpha);
+        unsigned int _t997;
+        register unsigned int _t490 = self->losses;
+        _t997 = _t490;
+        register unsigned int _t140 = _t997;
+        register int _t620 = _t140;
+        register unsigned int _t153 = _t620;
+        register int _t175 = self->wins;
+        _t973 = _t175;
+        fn_80168798(layer, lbl_806D8498, lbl_806D8494 + x, rowY, alpha, _t973 + _t153);
+        fn_80168798(layer, optionText5DC, lbl_806D8490 + x, rowY, alpha);
+        register unsigned int _t675 = self->wins;
+        register int _t262 = _t675;
+        register int _t163 = _t262;
+        { fn_80168798(layer, lbl_806D84A4, lbl_806D84A0 + x, rowY, alpha, _t163); }
+    }
+}
+
+extern "C" asm void fn_801596D4(OptionMenu *self, int layer, float x, float y, float alpha) { /* 0x801596D4 size:0x4FC */
+    nofralloc
+    stwu r1, -0xe0(r1)
+    mflr r0
+    stw r0, 0xe4(r1)
+    stfd f31, 0xd0(r1)
+    psq_st f31, 0xd8(r1), 0, 0
+    stfd f30, 0xc0(r1)
+    psq_st f30, 0xc8(r1), 0, 0
+    stfd f29, 0xb0(r1)
+    psq_st f29, 0xb8(r1), 0, 0
+    stfd f28, 0xa0(r1)
+    psq_st f28, 0xa8(r1), 0, 0
+    stfd f27, 0x90(r1)
+    psq_st f27, 0x98(r1), 0, 0
+    stfd f26, 0x80(r1)
+    psq_st f26, 0x88(r1), 0, 0
+    stfd f25, 0x70(r1)
+    psq_st f25, 0x78(r1), 0, 0
+    stfd f24, 0x60(r1)
+    psq_st f24, 0x68(r1), 0, 0
+    stfd f23, 0x50(r1)
+    psq_st f23, 0x58(r1), 0, 0
+    stfd f22, 0x40(r1)
+    psq_st f22, 0x48(r1), 0, 0
+    stmw r20, 0x10(r1)
+    fmr f23, f1
+    lis r5, lbl_803678D8@ha
+    fmr f22, f2
+    mr r20, r3
+    fmr f26, f3
+    mr r21, r4
+    addi r30, r5, lbl_803678D8@l
+    bl isJapanese
+    cmpwi r3, 0x1
+    bne fn_801596D4_L_801597CC
+    lfs f0, lbl_806D83D0(r2)
+    fmr f3, f26
+    lfs f1, lbl_806D83CC(r2)
+    mr r3, r21
+    fadds f24, f0, f22
+    addi r4, r30, 0x5e8
+    fadds f1, f1, f23
+    fmr f2, f24
+    creqv 6, 6, 6
+    bl fn_80168D84
+    lfs f0, lbl_806D83D4(r2)
+    fmr f2, f24
+    fmr f3, f26
+    mr r3, r21
+    fadds f1, f0, f23
+    la r4, lbl_806D84AC(r2)  /* lbl_806D84AC */
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f1, lbl_806D83DC(r2)
+    fmr f3, f26
+    lfs f0, lbl_806D83E0(r2)
+    mr r3, r21
+    fadds f1, f1, f23
+    la r4, lbl_806D83E4(r2)  /* lbl_806D83E4 */
+    fadds f2, f0, f22
+    creqv 6, 6, 6
+    bl fn_80168D84
+    b fn_801596D4_L_80159838
+    fn_801596D4_L_801597CC:
+    lfs f0, lbl_806D83D0(r2)
+    fmr f3, f26
+    lfs f1, lbl_806D83CC(r2)
+    mr r3, r21
+    fadds f24, f0, f22
+    addi r4, r30, 0x5f8
+    fadds f1, f1, f23
+    fmr f2, f24
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f0, lbl_806D83EC(r2)
+    fmr f2, f24
+    fmr f3, f26
+    mr r3, r21
+    fadds f1, f0, f23
+    la r4, lbl_806D84AC(r2)  /* lbl_806D84AC */
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f1, lbl_806D83DC(r2)
+    fmr f3, f26
+    lfs f0, lbl_806D83E0(r2)
+    mr r3, r21
+    fadds f1, f1, f23
+    la r4, lbl_806D83F0(r2)  /* lbl_806D83F0 */
+    fadds f2, f0, f22
+    creqv 6, 6, 6
+    bl fn_80168D84
+    fn_801596D4_L_80159838:
+    lfs f1, lbl_806D84B0(r2)
+    addi r27, r30, 0x4b8
+    lfs f0, lbl_806D84B4(r2)
+    addi r26, r30, 0x4cc
+    fadds f29, f1, f23
+    lfs f30, lbl_806D842C(r2)
+    fadds f28, f0, f22
+    lfd f31, lbl_806D8448(r2)
+    lfs f24, lbl_806D84CC(r2)
+    li r24, 0x1
+    lfs f25, lbl_806D84D0(r2)
+    li r23, 0x0
+    lis r31, 0x4330
+    fn_801596D4_L_8015986C:
+    xoris r0, r23, 0x8000
+    addi r25, r23, 0x70
+    stw r0, 0xc(r1)
+    lbzx r3, r20, r25
+    stw r31, 0x8(r1)
+    clrlwi r0, r3, 27
+    lfd f0, 0x8(r1)
+    cmpwi r0, 0x1f
+    fsubs f0, f0, f31
+    fmadds f27, f30, f0, f28
+    bne fn_801596D4_L_801598D8
+    fmr f1, f29
+    mr r3, r21
+    fmr f2, f27
+    li r4, 0x665
+    fmr f3, f26
+    li r5, 0x0
+    bl fn_801695E0
+    lfs f0, lbl_806D84B8(r2)
+    fmr f2, f27
+    fmr f3, f26
+    mr r3, r21
+    fadds f1, f0, f29
+    li r4, 0x666
+    li r5, 0x0
+    bl fn_801695E0
+    b fn_801596D4_L_8015992C
+    fn_801596D4_L_801598D8:
+    cmpwi r23, 0x5
+    bge fn_801596D4_L_801598F0
+    clrlwi r0, r3, 28
+    cmpwi r0, 0xf
+    beq fn_801596D4_L_801598F0
+    li r24, 0x0
+    fn_801596D4_L_801598F0:
+    fmr f1, f29
+    mr r3, r21
+    fmr f2, f27
+    li r4, 0x667
+    fmr f3, f26
+    li r5, 0x0
+    bl fn_801695E0
+    lfs f0, lbl_806D84B8(r2)
+    fmr f2, f27
+    fmr f3, f26
+    mr r3, r21
+    fadds f1, f0, f29
+    li r4, 0x668
+    li r5, 0x0
+    bl fn_801695E0
+    fn_801596D4_L_8015992C:
+    cmpwi r23, 0x5
+    bne fn_801596D4_L_80159964
+    clrlwi. r0, r24, 24
+    bne fn_801596D4_L_80159964
+    lfs f1, lbl_806D84BC(r2)
+    fmr f3, f26
+    lfs f0, lbl_806D84C0(r2)
+    mr r3, r21
+    fsubs f1, f29, f1
+    li r4, 0x66f
+    fsubs f2, f27, f0
+    li r5, 0x0
+    bl fn_801695E0
+    b fn_801596D4_L_801599BC
+    fn_801596D4_L_80159964:
+    lfs f1, lbl_806D84BC(r2)
+    fmr f3, f26
+    lfs f0, lbl_806D84C0(r2)
+    mr r3, r21
+    fsubs f1, f29, f1
+    addi r4, r23, 0x669
+    fsubs f2, f27, f0
+    li r5, 0x0
+    bl fn_801695E0
+    lwz r0, 0x6c(r20)
+    clrlwi r0, r0, 31
+    cmpwi r0, 0x1
+    bne fn_801596D4_L_801599BC
+    lfs f1, lbl_806D84C4(r2)
+    fmr f3, f26
+    lfs f0, lbl_806D84C8(r2)
+    mr r3, r21
+    fsubs f1, f29, f1
+    li r4, 0x670
+    fadds f2, f0, f27
+    li r5, 0x0
+    bl fn_801695E0
+    fn_801596D4_L_801599BC:
+    fadds f23, f24, f27
+    addi r29, r30, 0x4b8
+    fadds f22, f25, f27
+    addi r28, r30, 0x4cc
+    li r22, 0x0
+    fn_801596D4_L_801599D0:
+    cmpwi r23, 0x5
+    bne fn_801596D4_L_80159A04
+    clrlwi. r0, r24, 24
+    bne fn_801596D4_L_80159A04
+    lfs f0, 0x0(r29)
+    fmr f2, f23
+    fmr f3, f26
+    mr r3, r21
+    fadds f1, f29, f0
+    addi r4, r22, 0x65a
+    li r5, 0x0
+    bl fn_801695E0
+    b fn_801596D4_L_80159A9C
+    fn_801596D4_L_80159A04:
+    cmpwi r22, 0x1
+    blt fn_801596D4_L_80159A24
+    subi r0, r22, 0x1
+    li r3, 0x1
+    lbzx r4, r20, r25
+    slw r0, r3, r0
+    and. r0, r4, r0
+    beq fn_801596D4_L_80159A48
+    fn_801596D4_L_80159A24:
+    lfs f0, 0x0(r29)
+    fmr f2, f23
+    fmr f3, f26
+    mr r3, r21
+    fadds f1, f29, f0
+    addi r4, r22, 0x65f
+    li r5, 0x0
+    bl fn_801695E0
+    b fn_801596D4_L_80159A68
+    fn_801596D4_L_80159A48:
+    lfs f0, 0x0(r29)
+    fmr f2, f23
+    fmr f3, f26
+    mr r3, r21
+    fadds f1, f29, f0
+    addi r4, r22, 0x65a
+    li r5, 0x0
+    bl fn_801695E0
+    fn_801596D4_L_80159A68:
+    li r0, 0x1
+    lbzx r3, r20, r25
+    slw r0, r0, r22
+    and. r0, r3, r0
+    beq fn_801596D4_L_80159A9C
+    lfs f0, 0x0(r28)
+    fmr f2, f22
+    fmr f3, f26
+    mr r3, r21
+    fadds f1, f29, f0
+    li r4, 0x664
+    li r5, 0x0
+    bl fn_801695E0
+    fn_801596D4_L_80159A9C:
+    addi r22, r22, 0x1
+    addi r28, r28, 0x4
+    cmpwi r22, 0x4
+    addi r29, r29, 0x4
+    blt fn_801596D4_L_801599D0
+    lwz r0, 0x6c(r20)
+    cmpwi r0, 0x2
+    bge fn_801596D4_L_80159B40
+    lbzx r0, r20, r25
+    clrlwi r0, r0, 28
+    cmpwi r0, 0xf
+    bne fn_801596D4_L_80159B1C
+    lfs f0, 0x10(r27)
+    fmr f2, f23
+    fmr f3, f26
+    mr r3, r21
+    fadds f1, f29, f0
+    li r4, 0x663
+    li r5, 0x0
+    bl fn_801695E0
+    lbzx r0, r20, r25
+    rlwinm. r0, r0, 0, 27, 27
+    beq fn_801596D4_L_80159B60
+    lfs f0, 0x10(r26)
+    fmr f2, f22
+    fmr f3, f26
+    mr r3, r21
+    fadds f1, f29, f0
+    li r4, 0x664
+    li r5, 0x0
+    bl fn_801695E0
+    b fn_801596D4_L_80159B60
+    fn_801596D4_L_80159B1C:
+    lfs f0, 0x10(r27)
+    fmr f2, f23
+    fmr f3, f26
+    mr r3, r21
+    fadds f1, f29, f0
+    li r4, 0x65e
+    li r5, 0x0
+    bl fn_801695E0
+    b fn_801596D4_L_80159B60
+    fn_801596D4_L_80159B40:
+    lfs f0, lbl_806D84D4(r2)
+    fmr f2, f27
+    fmr f3, f26
+    mr r3, r21
+    fadds f1, f0, f29
+    li r4, 0x680
+    li r5, 0x0
+    bl fn_801695E0
+    fn_801596D4_L_80159B60:
+    addi r23, r23, 0x1
+    cmpwi r23, 0x6
+    blt fn_801596D4_L_8015986C
+    psq_l f31, 0xd8(r1), 0, 0
+    lfd f31, 0xd0(r1)
+    psq_l f30, 0xc8(r1), 0, 0
+    lfd f30, 0xc0(r1)
+    psq_l f29, 0xb8(r1), 0, 0
+    lfd f29, 0xb0(r1)
+    psq_l f28, 0xa8(r1), 0, 0
+    lfd f28, 0xa0(r1)
+    psq_l f27, 0x98(r1), 0, 0
+    lfd f27, 0x90(r1)
+    psq_l f26, 0x88(r1), 0, 0
+    lfd f26, 0x80(r1)
+    psq_l f25, 0x78(r1), 0, 0
+    lfd f25, 0x70(r1)
+    psq_l f24, 0x68(r1), 0, 0
+    lfd f24, 0x60(r1)
+    psq_l f23, 0x58(r1), 0, 0
+    lfd f23, 0x50(r1)
+    psq_l f22, 0x48(r1), 0, 0
+    lfd f22, 0x40(r1)
+    lmw r20, 0x10(r1)
+    lwz r0, 0xe4(r1)
+    mtlr r0
+    addi r1, r1, 0xe0
+    blr
+}
+
+extern "C" asm void fn_80159BD0(OptionMenu *self, int layer, float x, float y, float alpha) { /* 0x80159BD0 size:0xB14 */
+    nofralloc
+    stwu r1, -0xf0(r1)
+    mflr r0
+    stw r0, 0xf4(r1)
+    stfd f31, 0xe0(r1)
+    psq_st f31, 0xe8(r1), 0, 0
+    stfd f30, 0xd0(r1)
+    psq_st f30, 0xd8(r1), 0, 0
+    stfd f29, 0xc0(r1)
+    psq_st f29, 0xc8(r1), 0, 0
+    stfd f28, 0xb0(r1)
+    psq_st f28, 0xb8(r1), 0, 0
+    stfd f27, 0xa0(r1)
+    psq_st f27, 0xa8(r1), 0, 0
+    stfd f26, 0x90(r1)
+    psq_st f26, 0x98(r1), 0, 0
+    stfd f25, 0x80(r1)
+    psq_st f25, 0x88(r1), 0, 0
+    stfd f24, 0x70(r1)
+    psq_st f24, 0x78(r1), 0, 0
+    stfd f23, 0x60(r1)
+    psq_st f23, 0x68(r1), 0, 0
+    stfd f22, 0x50(r1)
+    psq_st f22, 0x58(r1), 0, 0
+    stfd f21, 0x40(r1)
+    psq_st f21, 0x48(r1), 0, 0
+    stmw r23, 0x1c(r1)
+    fmr f24, f1
+    lis r5, lbl_803678D8@ha
+    fmr f25, f2
+    mr r30, r3
+    fmr f26, f3
+    mr r31, r4
+    addi r23, r5, lbl_803678D8@l
+    bl isJapanese
+    cmpwi r3, 0x1
+    bne fn_80159BD0_L_80159CD8
+    lfs f0, lbl_806D83D0(r2)
+    fmr f3, f26
+    lfs f1, lbl_806D83CC(r2)
+    mr r3, r31
+    fadds f27, f0, f25
+    lwz r5, 0x60(r30)
+    fadds f1, f1, f24
+    addi r4, r23, 0x614
+    li r6, 0x3c
+    fmr f2, f27
+    creqv 6, 6, 6
+    bl fn_80168D84
+    lfs f0, lbl_806D83D4(r2)
+    fmr f2, f27
+    fmr f3, f26
+    mr r3, r31
+    fadds f1, f0, f24
+    la r4, lbl_806D84D8(r2)  /* lbl_806D84D8 */
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f1, lbl_806D83DC(r2)
+    fmr f3, f26
+    lfs f0, lbl_806D83E0(r2)
+    mr r3, r31
+    fadds f1, f1, f24
+    la r4, lbl_806D83E4(r2)  /* lbl_806D83E4 */
+    fadds f2, f0, f25
+    creqv 6, 6, 6
+    bl fn_80168D84
+    b fn_80159BD0_L_80159D78
+    fn_80159BD0_L_80159CD8:
+    lfs f0, lbl_806D83D0(r2)
+    fmr f3, f26
+    lfs f1, lbl_806D83CC(r2)
+    mr r3, r31
+    fadds f27, f0, f25
+    lwz r5, 0x60(r30)
+    fadds f1, f1, f24
+    addi r4, r23, 0x638
+    fmr f2, f27
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f1, lbl_806D84DC(r2)
+    fmr f3, f26
+    lfs f0, lbl_806D83E0(r2)
+    mr r3, r31
+    fadds f2, f1, f24
+    lfs f1, lbl_806D84E0(r2)
+    fadds f28, f0, f25
+    addi r4, r23, 0x64c
+    li r5, 0x3c
+    fsubs f1, f2, f1
+    fmr f2, f28
+    creqv 6, 6, 6
+    bl fn_80168D84
+    lfs f0, lbl_806D83EC(r2)
+    fmr f2, f27
+    fmr f3, f26
+    mr r3, r31
+    fadds f1, f0, f24
+    la r4, lbl_806D84D8(r2)  /* lbl_806D84D8 */
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f0, lbl_806D83DC(r2)
+    fmr f2, f28
+    fmr f3, f26
+    mr r3, r31
+    fadds f1, f0, f24
+    la r4, lbl_806D83F0(r2)  /* lbl_806D83F0 */
+    creqv 6, 6, 6
+    bl fn_80168D84
+    fn_80159BD0_L_80159D78:
+    lis r3, 0x2aab
+    lwz r0, 0x64(r30)
+    subi r3, r3, 0x5555
+    lfs f29, lbl_806D84F0(r2)
+    mulhw r0, r3, r0
+    lfd f28, lbl_806D8448(r2)
+    lfs f27, lbl_806D84EC(r2)
+    li r24, 0x0
+    lfs f31, lbl_806D84E8(r2)
+    li r26, 0x0
+    srawi r0, r0, 1
+    lfs f30, lbl_806D84E4(r2)
+    srwi r3, r0, 31
+    lis r28, 0x4330
+    add r23, r0, r3
+    fn_80159BD0_L_80159DB4:
+    xoris r0, r24, 0x8000
+    stw r28, 0x8(r1)
+    mr r27, r26
+    li r25, 0x0
+    stw r0, 0xc(r1)
+    lfd f0, 0x8(r1)
+    fsubs f0, f0, f28
+    fmadds f0, f31, f0, f30
+    fadds f23, f25, f0
+    fn_80159BD0_L_80159DD8:
+    xoris r0, r25, 0x8000
+    stw r28, 0x8(r1)
+    fmr f2, f23
+    mr r3, r31
+    stw r0, 0xc(r1)
+    fmr f3, f26
+    li r4, 0x7cf
+    li r5, 0x0
+    lfd f0, 0x8(r1)
+    fsubs f0, f0, f28
+    fmadds f0, f29, f0, f27
+    fadds f22, f24, f0
+    fmr f1, f22
+    bl fn_801695E0
+    mr r3, r27
+    bl PlayerData_GetUnlockedItemIdByIndex_U8
+    clrlwi r3, r3, 24
+    li r0, 0x9f
+    srawi r5, r3, 31
+    cmpw r24, r23
+    srwi r4, r0, 31
+    subfc r0, r0, r3
+    adde r0, r5, r4
+    clrlwi r29, r0, 24
+    bne fn_80159BD0_L_80159EF4
+    lwz r0, 0x64(r30)
+    cmpw r0, r27
+    beq fn_80159BD0_L_80159FC0
+    lwz r4, 0x20(r30)
+    addi r0, r27, 0xa8
+    lbzx r0, r4, r0
+    cmplwi r0, 0x0
+    beq fn_80159BD0_L_80159EC0
+    li r4, 0x0
+    bl Item_GetDescriptorField0
+    lfs f3, lbl_806D84F4(r2)
+    mr r4, r3
+    fmr f1, f22
+    mr r3, r31
+    fmr f2, f23
+    li r5, 0x0
+    fmr f4, f3
+    fmr f5, f26
+    bl fn_80169334
+    cmplwi r29, 0x0
+    beq fn_80159BD0_L_80159FC0
+    lfs f1, lbl_806D83B8(r2)
+    fmr f5, f26
+    lfs f0, lbl_806D84F8(r2)
+    mr r3, r31
+    lfs f3, lbl_806D84F4(r2)
+    fadds f1, f1, f22
+    fsubs f2, f23, f0
+    fmr f4, f3
+    li r4, 0x7c5
+    li r5, 0x0
+    bl fn_80169334
+    b fn_80159BD0_L_80159FC0
+    fn_80159BD0_L_80159EC0:
+    li r3, 0x0
+    li r4, 0x0
+    bl Item_GetDescriptorField0
+    lfs f3, lbl_806D84F4(r2)
+    mr r4, r3
+    fmr f1, f22
+    mr r3, r31
+    fmr f2, f23
+    li r5, 0x0
+    fmr f4, f3
+    fmr f5, f26
+    bl fn_80169334
+    b fn_80159BD0_L_80159FC0
+    fn_80159BD0_L_80159EF4:
+    lwz r4, 0x20(r30)
+    addi r0, r27, 0xa8
+    lbzx r0, r4, r0
+    cmplwi r0, 0x0
+    beq fn_80159BD0_L_80159F84
+    li r4, 0x0
+    bl Item_GetDescriptorField0
+    lfs f5, lbl_806D8414(r2)
+    mr r4, r3
+    lfs f3, lbl_806D84F4(r2)
+    fmr f1, f22
+    fmr f2, f23
+    mr r3, r31
+    fmr f4, f3
+    li r5, 0x0
+    fmr f6, f5
+    fmr f7, f5
+    fmr f8, f26
+    bl fn_8016918C
+    cmplwi r29, 0x0
+    beq fn_80159BD0_L_80159FC0
+    lfs f5, lbl_806D8414(r2)
+    fmr f8, f26
+    lfs f1, lbl_806D83B8(r2)
+    mr r3, r31
+    lfs f0, lbl_806D84F8(r2)
+    fmr f6, f5
+    lfs f3, lbl_806D84F4(r2)
+    fmr f7, f5
+    li r4, 0x7c5
+    fmr f4, f3
+    li r5, 0x0
+    fadds f1, f1, f22
+    fsubs f2, f23, f0
+    bl fn_8016918C
+    b fn_80159BD0_L_80159FC0
+    fn_80159BD0_L_80159F84:
+    li r3, 0x0
+    li r4, 0x0
+    bl Item_GetDescriptorField0
+    lfs f5, lbl_806D8414(r2)
+    mr r4, r3
+    lfs f3, lbl_806D84F4(r2)
+    fmr f1, f22
+    fmr f2, f23
+    mr r3, r31
+    fmr f4, f3
+    li r5, 0x0
+    fmr f6, f5
+    fmr f7, f5
+    fmr f8, f26
+    bl fn_8016918C
+    fn_80159BD0_L_80159FC0:
+    addi r25, r25, 0x1
+    addi r27, r27, 0x1
+    cmpwi r25, 0xc
+    blt fn_80159BD0_L_80159DD8
+    addi r24, r24, 0x1
+    addi r26, r26, 0xc
+    cmpwi r24, 0x5
+    blt fn_80159BD0_L_80159DB4
+    li r27, 0x0
+    lfs f29, lbl_806D84E8(r2)
+    lfd f28, lbl_806D8448(r2)
+    mr r26, r27
+    lfs f27, lbl_806D84E4(r2)
+    lis r24, 0x4330
+    fn_80159BD0_L_80159FF8:
+    xoris r0, r27, 0x8000
+    stw r24, 0x8(r1)
+    mr r25, r26
+    li r28, 0x0
+    stw r0, 0xc(r1)
+    lfd f0, 0x8(r1)
+    fsubs f0, f0, f28
+    fmadds f30, f29, f0, f27
+    fn_80159BD0_L_8015A018:
+    lwz r0, 0x64(r30)
+    cmpw r0, r25
+    beq fn_80159BD0_L_8015A0E4
+    lwz r3, 0x20(r30)
+    addi r0, r25, 0xa8
+    lbzx r0, r3, r0
+    cmplwi r0, 0x0
+    beq fn_80159BD0_L_8015A0E4
+    mr r3, r25
+    bl PlayerData_GetUnlockedItemIdByIndex_U8
+    lwz r0, 0x68(r30)
+    clrlwi r3, r3, 24
+    cmpw r0, r3
+    bne fn_80159BD0_L_8015A0E4
+    xoris r3, r28, 0x8000
+    lis r0, 0x4330
+    stw r3, 0xc(r1)
+    cmpw r27, r23
+    lfd f2, lbl_806D8448(r2)
+    stw r0, 0x8(r1)
+    lfs f3, lbl_806D84F0(r2)
+    lfd f1, 0x8(r1)
+    lfs f0, lbl_806D84EC(r2)
+    fsubs f1, f1, f2
+    fmadds f0, f3, f1, f0
+    bne fn_80159BD0_L_8015A0B4
+    lfs f5, lbl_806D83B0(r2)
+    fmr f8, f26
+    lfs f3, lbl_806D84F4(r2)
+    fadds f1, f24, f0
+    fmr f6, f5
+    mr r3, r31
+    fmr f4, f3
+    fmr f7, f5
+    li r4, 0x7d3
+    fadds f2, f25, f30
+    li r5, 0x0
+    bl fn_8016918C
+    b fn_80159BD0_L_8015A0E4
+    fn_80159BD0_L_8015A0B4:
+    lfs f5, lbl_806D8414(r2)
+    fmr f8, f26
+    lfs f3, lbl_806D84F4(r2)
+    fadds f1, f24, f0
+    fmr f6, f5
+    mr r3, r31
+    fmr f4, f3
+    fmr f7, f5
+    li r4, 0x7d3
+    fadds f2, f25, f30
+    li r5, 0x0
+    bl fn_8016918C
+    fn_80159BD0_L_8015A0E4:
+    addi r28, r28, 0x1
+    addi r25, r25, 0x1
+    cmpwi r28, 0xc
+    blt fn_80159BD0_L_8015A018
+    addi r27, r27, 0x1
+    addi r26, r26, 0xc
+    cmpwi r27, 0x5
+    blt fn_80159BD0_L_80159FF8
+    lfs f1, lbl_806D84FC(r2)
+    fmr f3, f26
+    lfs f0, lbl_806D8490(r2)
+    mr r3, r31
+    fadds f30, f1, f24
+    li r4, 0x641
+    fadds f31, f0, f25
+    li r5, 0x0
+    fmr f1, f30
+    fmr f2, f31
+    bl fn_801695E0
+    lwz r3, 0x64(r30)
+    cmpwi r3, 0x0
+    blt fn_80159BD0_L_8015A678
+    bl PlayerData_GetUnlockedItemIdByIndex_U8
+    lis r4, 0x2aab
+    lwz r7, 0x64(r30)
+    subi r0, r4, 0x5555
+    clrlwi r23, r3, 24
+    mulhw r5, r0, r7
+    lis r0, 0x4330
+    li r3, 0x9f
+    stw r0, 0x8(r1)
+    srawi r6, r23, 31
+    lfd f5, lbl_806D8448(r2)
+    srwi r4, r3, 31
+    subfc r3, r3, r23
+    adde r6, r6, r4
+    stw r0, 0x10(r1)
+    srawi r3, r5, 1
+    lfs f6, lbl_806D84F0(r2)
+    srwi r4, r3, 31
+    srawi r0, r5, 1
+    add r3, r3, r4
+    lfs f3, lbl_806D84EC(r2)
+    mulli r5, r3, 0xc
+    srwi r4, r0, 31
+    lfs f2, lbl_806D84E8(r2)
+    mr r3, r23
+    add r0, r0, r4
+    lfs f0, lbl_806D84E4(r2)
+    subf r4, r5, r7
+    xoris r0, r0, 0x8000
+    xoris r4, r4, 0x8000
+    stw r0, 0x14(r1)
+    clrlwi r29, r6, 24
+    stw r4, 0xc(r1)
+    lfd f1, 0x10(r1)
+    lfd f4, 0x8(r1)
+    fsubs f1, f1, f5
+    fsubs f4, f4, f5
+    fmadds f28, f2, f1, f0
+    fmadds f29, f6, f4, f3
+    bl Item_GetDescriptorFieldC
+    mr r24, r3
+    mr r3, r23
+    bl Item_GetDescriptorField8
+    cmpwi r24, 0x0
+    li r0, -0x1
+    blt fn_80159BD0_L_8015A1F8
+    addi r0, r24, 0x4f3
+    fn_80159BD0_L_8015A1F8:
+    mr r25, r0
+    bl fn_8013BEC8
+    cmpwi r31, 0x0
+    lwz r4, 0x40(r30)
+    mr r24, r3
+    blt fn_80159BD0_L_8015A21C
+    cmpwi r31, 0x8
+    bge fn_80159BD0_L_8015A21C
+    stw r31, 0x0(r4)
+    fn_80159BD0_L_8015A21C:
+    lfs f1, lbl_806D8500(r2)
+    lfs f0, lbl_806D8504(r2)
+    fadds f1, f1, f24
+    lwz r3, 0x40(r30)
+    fadds f0, f0, f25
+    stfs f1, 0x8(r3)
+    stfs f0, 0xc(r3)
+    lwz r3, 0x40(r30)
+    stfs f26, 0x10(r3)
+    lwz r3, 0x40(r30)
+    lwz r12, 0x14(r3)
+    lwz r12, 0x18(r12)
+    mtctr r12
+    bctrl
+    lfs f4, 0x5c(r30)
+    lfs f3, lbl_806D8428(r2)
+    fcmpo cr0, f4, f3
+    bge fn_80159BD0_L_8015A28C
+    lfs f1, lbl_806D8508(r2)
+    lfs f0, lbl_806D850C(r2)
+    fmuls f1, f1, f4
+    lfs f2, lbl_806D84F4(r2)
+    fmuls f0, f0, f4
+    fdivs f1, f1, f3
+    fdivs f0, f0, f3
+    fadds f27, f2, f1
+    fadds f21, f2, f0
+    b fn_80159BD0_L_8015A3EC
+    fn_80159BD0_L_8015A28C:
+    lfs f0, lbl_806D8408(r2)
+    fcmpo cr0, f4, f0
+    bge fn_80159BD0_L_8015A2C4
+    fsubs f5, f4, f3
+    lfs f1, lbl_806D8514(r2)
+    lfs f0, lbl_806D8520(r2)
+    lfs f3, lbl_806D8518(r2)
+    fmuls f4, f1, f5
+    lfs f2, lbl_806D8510(r2)
+    fmuls f1, f0, f5
+    lfs f0, lbl_806D851C(r2)
+    fmadds f27, f4, f3, f2
+    fnmsubs f21, f1, f3, f0
+    b fn_80159BD0_L_8015A3EC
+    fn_80159BD0_L_8015A2C4:
+    lfs f1, lbl_806D843C(r2)
+    fcmpo cr0, f4, f1
+    bge fn_80159BD0_L_8015A2FC
+    fsubs f5, f4, f0
+    lfs f1, lbl_806D8514(r2)
+    lfs f0, lbl_806D8520(r2)
+    lfs f3, lbl_806D8518(r2)
+    fmuls f4, f1, f5
+    lfs f2, lbl_806D8524(r2)
+    fmuls f1, f0, f5
+    lfs f0, lbl_806D8510(r2)
+    fnmsubs f27, f4, f3, f2
+    fmadds f21, f1, f3, f0
+    b fn_80159BD0_L_8015A3EC
+    fn_80159BD0_L_8015A2FC:
+    lfs f0, lbl_806D8528(r2)
+    fcmpo cr0, f4, f0
+    bge fn_80159BD0_L_8015A33C
+    fsubs f5, f4, f1
+    lfs f1, lbl_806D8508(r2)
+    lfs f0, lbl_806D852C(r2)
+    lfs f3, lbl_806D8430(r2)
+    fmuls f2, f1, f5
+    lfs f4, lbl_806D8510(r2)
+    fmuls f0, f0, f5
+    lfs f1, lbl_806D851C(r2)
+    fdivs f2, f2, f3
+    fdivs f0, f0, f3
+    fsubs f27, f4, f2
+    fsubs f21, f1, f0
+    b fn_80159BD0_L_8015A3EC
+    fn_80159BD0_L_8015A33C:
+    lfs f1, lbl_806D83B4(r2)
+    fcmpo cr0, f4, f1
+    bge fn_80159BD0_L_8015A37C
+    fsubs f5, f4, f0
+    lfs f1, lbl_806D8530(r2)
+    lfs f0, lbl_806D852C(r2)
+    lfs f3, lbl_806D8430(r2)
+    fmuls f2, f1, f5
+    lfs f4, lbl_806D84F4(r2)
+    fmuls f0, f0, f5
+    lfs f1, lbl_806D8534(r2)
+    fdivs f2, f2, f3
+    fdivs f0, f0, f3
+    fsubs f27, f4, f2
+    fsubs f21, f1, f0
+    b fn_80159BD0_L_8015A3EC
+    fn_80159BD0_L_8015A37C:
+    lfs f0, lbl_806D8538(r2)
+    fcmpo cr0, f4, f0
+    bge fn_80159BD0_L_8015A3BC
+    fsubs f5, f4, f1
+    lfs f1, lbl_806D8540(r2)
+    lfs f0, lbl_806D8548(r2)
+    lfs f3, lbl_806D8544(r2)
+    fmuls f2, f1, f5
+    lfs f4, lbl_806D853C(r2)
+    fmuls f0, f0, f5
+    lfs f1, lbl_806D8524(r2)
+    fdivs f2, f2, f3
+    fdivs f0, f0, f3
+    fadds f27, f4, f2
+    fsubs f21, f1, f0
+    b fn_80159BD0_L_8015A3EC
+    fn_80159BD0_L_8015A3BC:
+    fsubs f5, f4, f0
+    lfs f1, lbl_806D8514(r2)
+    lfs f0, lbl_806D8558(r2)
+    lfs f3, lbl_806D8550(r2)
+    fmuls f2, f1, f5
+    lfs f4, lbl_806D854C(r2)
+    fmuls f0, f0, f5
+    lfs f1, lbl_806D8554(r2)
+    fdivs f2, f2, f3
+    fdivs f0, f0, f3
+    fadds f27, f4, f2
+    fadds f21, f1, f0
+    fn_80159BD0_L_8015A3EC:
+    fadds f23, f24, f29
+    mr r3, r31
+    fadds f22, f25, f28
+    li r4, 0x7cf
+    fmr f3, f27
+    li r5, 0x0
+    fmr f1, f23
+    fmr f2, f22
+    fmr f4, f21
+    fmr f5, f26
+    bl fn_80169334
+    lwz r3, 0x20(r30)
+    lwz r0, 0x64(r30)
+    add r3, r3, r0
+    lbz r0, 0xa8(r3)
+    cmplwi r0, 0x0
+    beq fn_80159BD0_L_8015A648
+    mr r3, r23
+    li r4, 0x0
+    bl Item_GetDescriptorField0
+    fmr f1, f23
+    mr r4, r3
+    fmr f2, f22
+    mr r3, r31
+    fmr f3, f27
+    li r5, 0x0
+    fmr f4, f21
+    fmr f5, f26
+    bl fn_80169334
+    cmplwi r29, 0x0
+    beq fn_80159BD0_L_8015A494
+    lfs f1, lbl_806D855C(r2)
+    fmr f3, f27
+    lfs f0, lbl_806D8408(r2)
+    fmr f4, f21
+    fmr f5, f26
+    mr r3, r31
+    fmadds f1, f1, f27, f23
+    fnmsubs f2, f0, f21, f22
+    li r4, 0x7c5
+    li r5, 0x0
+    bl fn_80169334
+    fn_80159BD0_L_8015A494:
+    lwz r0, 0x68(r30)
+    cmpw r0, r23
+    bne fn_80159BD0_L_8015A4C4
+    fmr f1, f23
+    mr r3, r31
+    fmr f2, f22
+    li r4, 0x7d3
+    fmr f3, f27
+    li r5, 0x0
+    fmr f4, f21
+    fmr f5, f26
+    bl fn_80169334
+    fn_80159BD0_L_8015A4C4:
+    lfs f1, lbl_806D8560(r2)
+    fmr f3, f26
+    lfs f0, lbl_806D83B0(r2)
+    mr r3, r31
+    fsubs f1, f30, f1
+    mr r4, r25
+    fadds f2, f0, f31
+    li r5, 0x0
+    bl fn_801695E0
+    mr r3, r23
+    li r4, 0x0
+    bl Item_GetDescriptorField0
+    lfs f1, lbl_806D8564(r2)
+    mr r4, r3
+    lfs f0, lbl_806D8434(r2)
+    fmr f3, f26
+    fsubs f1, f30, f1
+    mr r3, r31
+    fadds f2, f0, f31
+    li r5, 0x0
+    bl fn_801695E0
+    cmplwi r29, 0x0
+    beq fn_80159BD0_L_8015A544
+    lfs f1, lbl_806D855C(r2)
+    fmr f3, f26
+    lfs f0, lbl_806D8430(r2)
+    mr r3, r31
+    fsubs f1, f30, f1
+    li r4, 0x7c5
+    fsubs f2, f31, f0
+    li r5, 0x0
+    bl fn_801695E0
+    fn_80159BD0_L_8015A544:
+    cmplwi r24, 0x0
+    beq fn_80159BD0_L_8015A58C
+    mr r3, r23
+    bl fn_8023DAA8
+    lfs f1, lbl_806D8568(r2)
+    mr r4, r3
+    lfs f2, lbl_806D856C(r2)
+    mr r3, r31
+    lfs f0, 0xc(r24)
+    fsubs f1, f30, f1
+    fsubs f2, f31, f2
+    lfs f3, 0x0(r24)
+    fmuls f6, f0, f26
+    lfs f4, 0x4(r24)
+    lfs f5, 0x8(r24)
+    creqv 6, 6, 6
+    bl fn_80168B90
+    b fn_80159BD0_L_8015A5B8
+    fn_80159BD0_L_8015A58C:
+    mr r3, r23
+    bl fn_8023DAA8
+    lfs f1, lbl_806D8568(r2)
+    mr r4, r3
+    lfs f0, lbl_806D856C(r2)
+    fmr f3, f26
+    fsubs f1, f30, f1
+    mr r3, r31
+    fsubs f2, f31, f0
+    creqv 6, 6, 6
+    bl fn_80168D84
+    fn_80159BD0_L_8015A5B8:
+    mr r3, r23
+    li r4, 0x0
+    bl fn_8023D938
+    lfs f1, lbl_806D8544(r2)
+    mr r4, r3
+    lfs f0, lbl_806D839C(r2)
+    fmr f3, f26
+    fadds f22, f1, f30
+    mr r3, r31
+    fsubs f2, f31, f0
+    fmr f1, f22
+    creqv 6, 6, 6
+    bl fn_80168D84
+    mr r3, r23
+    li r4, 0x1
+    bl fn_8023D938
+    lfs f0, lbl_806D8550(r2)
+    mr r4, r3
+    fmr f1, f22
+    mr r3, r31
+    fmr f3, f26
+    fsubs f2, f31, f0
+    creqv 6, 6, 6
+    bl fn_80168D84
+    mr r3, r23
+    li r4, 0x2
+    bl fn_8023D938
+    lfs f0, lbl_806D8570(r2)
+    mr r4, r3
+    fmr f1, f22
+    mr r3, r31
+    fmr f3, f26
+    fadds f2, f0, f31
+    creqv 6, 6, 6
+    bl fn_80168D84
+    b fn_80159BD0_L_8015A678
+    fn_80159BD0_L_8015A648:
+    li r3, 0x0
+    li r4, 0x0
+    bl Item_GetDescriptorField0
+    fmr f1, f23
+    mr r4, r3
+    fmr f2, f22
+    mr r3, r31
+    fmr f3, f27
+    li r5, 0x0
+    fmr f4, f21
+    fmr f5, f26
+    bl fn_80169334
+    fn_80159BD0_L_8015A678:
+    psq_l f31, 0xe8(r1), 0, 0
+    lfd f31, 0xe0(r1)
+    psq_l f30, 0xd8(r1), 0, 0
+    lfd f30, 0xd0(r1)
+    psq_l f29, 0xc8(r1), 0, 0
+    lfd f29, 0xc0(r1)
+    psq_l f28, 0xb8(r1), 0, 0
+    lfd f28, 0xb0(r1)
+    psq_l f27, 0xa8(r1), 0, 0
+    lfd f27, 0xa0(r1)
+    psq_l f26, 0x98(r1), 0, 0
+    lfd f26, 0x90(r1)
+    psq_l f25, 0x88(r1), 0, 0
+    lfd f25, 0x80(r1)
+    psq_l f24, 0x78(r1), 0, 0
+    lfd f24, 0x70(r1)
+    psq_l f23, 0x68(r1), 0, 0
+    lfd f23, 0x60(r1)
+    psq_l f22, 0x58(r1), 0, 0
+    lfd f22, 0x50(r1)
+    psq_l f21, 0x48(r1), 0, 0
+    lfd f21, 0x40(r1)
+    lmw r23, 0x1c(r1)
+    lwz r0, 0xf4(r1)
+    mtlr r0
+    addi r1, r1, 0xf0
+    blr
+}
+
+/* ---- formerly OptionMenuDraw.cpp ---- */
+extern "C" asm void fn_8015A6E4(OptionMenu *, int, float, float, float) { /* 0x8015A6E4 size:0x758 */
+    nofralloc
+    stwu r1, -0xa0(r1)
+    mflr r0
+    stw r0, 0xa4(r1)
+    stfd f31, 0x90(r1)
+    psq_st f31, 0x98(r1), 0, 0
+    stfd f30, 0x80(r1)
+    psq_st f30, 0x88(r1), 0, 0
+    stfd f29, 0x70(r1)
+    psq_st f29, 0x78(r1), 0, 0
+    stfd f28, 0x60(r1)
+    psq_st f28, 0x68(r1), 0, 0
+    stfd f27, 0x50(r1)
+    psq_st f27, 0x58(r1), 0, 0
+    stfd f26, 0x40(r1)
+    psq_st f26, 0x48(r1), 0, 0
+    stfd f25, 0x30(r1)
+    psq_st f25, 0x38(r1), 0, 0
+    stfd f24, 0x20(r1)
+    psq_st f24, 0x28(r1), 0, 0
+    stmw r27, 0xc(r1)
+    fmr f25, f1
+    lis r5, lbl_803678D8@ha
+    fmr f26, f2
+    mr r29, r3
+    fmr f27, f3
+    mr r30, r4
+    addi r31, r5, lbl_803678D8@l
+    bl isJapanese
+    cmpwi r3, 0x1
+    bne fn_8015A6E4_L_8015A7A8
+    lfs f1, lbl_806D83D4(r2)
+    fmr f3, f27
+    lfs f0, lbl_806D83D0(r2)
+    mr r3, r30
+    fadds f1, f1, f25
+    addi r4, r2, -0x1CEC  /* lbl_806D8574 */
+    fadds f2, f0, f26
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f1, lbl_806D83DC(r2)
+    fmr f3, f27
+    lfs f0, lbl_806D83E0(r2)
+    mr r3, r30
+    fadds f1, f1, f25
+    addi r4, r2, -0x1E7C  /* lbl_806D83E4 */
+    fadds f2, f0, f26
+    creqv 6, 6, 6
+    bl fn_80168D84
+    b fn_8015A6E4_L_8015A814
+    fn_8015A6E4_L_8015A7A8:
+    lfs f0, lbl_806D83D0(r2)
+    fmr f3, f27
+    lfs f1, lbl_806D83CC(r2)
+    mr r3, r30
+    fadds f30, f0, f26
+    addi r4, r31, 0x658
+    fadds f1, f1, f25
+    fmr f2, f30
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f0, lbl_806D83EC(r2)
+    fmr f2, f30
+    fmr f3, f27
+    mr r3, r30
+    fadds f1, f0, f25
+    addi r4, r2, -0x1CEC  /* lbl_806D8574 */
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f1, lbl_806D83DC(r2)
+    fmr f3, f27
+    lfs f0, lbl_806D83E0(r2)
+    mr r3, r30
+    fadds f1, f1, f25
+    addi r4, r2, -0x1E70  /* lbl_806D83F0 */
+    fadds f2, f0, f26
+    creqv 6, 6, 6
+    bl fn_80168D84
+    fn_8015A6E4_L_8015A814:
+    li r3, 0x46
+    li r4, -0x1
+    bl GetTextureByIdAndLang
+    lfs f0, lbl_806D8578(r2)
+    mr r4, r3
+    lfs f1, lbl_806D83B4(r2)
+    fmr f3, f27
+    fadds f30, f0, f26
+    mr r3, r30
+    fadds f1, f1, f25
+    fmr f2, f30
+    creqv 6, 6, 6
+    bl fn_80168D84
+    lwz r3, 0x48(r29)
+    li r4, -0x1
+    bl fn_8013C26C
+    lfs f0, lbl_806D8454(r2)
+    mr r4, r3
+    lfs f1, lbl_806D84E8(r2)
+    fmr f3, f27
+    fadds f31, f0, f26
+    mr r3, r30
+    fadds f1, f1, f25
+    fmr f2, f31
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f1, lbl_806D857C(r2)
+    lfs f0, lbl_806D8580(r2)
+    fadds f1, f1, f25
+    lwz r3, 0x24(r29)
+    fadds f2, f0, f26
+    bl fn_8013C7B0
+    lwz r3, 0x24(r29)
+    lfs f1, lbl_806D8584(r2)
+    bl fn_8013C5FC
+    lwz r3, 0x24(r29)
+    lfs f1, lbl_806D8588(r2)
+    bl fn_8013C674
+    lfs f1, lbl_806D858C(r2)
+    lwz r3, 0x24(r29)
+    fmr f2, f1
+    fmr f3, f1
+    bl fn_8013C6EC
+    fmr f1, f27
+    lwz r3, 0x24(r29)
+    bl fn_8013C4A4
+    lwz r3, 0x24(r29)
+    bl fn_8013C91C
+    lwz r3, 0x24(r29)
+    mr r4, r30
+    bl fn_8013DAC8
+    li r3, 0x44
+    li r4, -0x1
+    bl GetTextureByIdAndLang
+    lfs f0, lbl_806D8590(r2)
+    fmr f2, f30
+    mr r4, r3
+    fmr f3, f27
+    fadds f30, f0, f25
+    mr r3, r30
+    fmr f1, f30
+    creqv 6, 6, 6
+    bl fn_80168D84
+    lfs f1, lbl_806D83D4(r2)
+    fmr f3, f27
+    lfs f0, lbl_806D8594(r2)
+    mr r3, r30
+    fadds f24, f1, f25
+    lwz r4, 0x20(r29)
+    fadds f2, f0, f26
+    fmr f1, f24
+    creqv 6, 6, 6
+    bl fn_80167C60
+    li r3, 0x45
+    li r4, -0x1
+    bl GetTextureByIdAndLang
+    lfs f0, lbl_806D8598(r2)
+    mr r4, r3
+    fmr f1, f30
+    mr r3, r30
+    fmr f3, f27
+    fadds f2, f0, f26
+    creqv 6, 6, 6
+    bl fn_80168D84
+    lwz r3, lbl_806D10A0(r13)
+    cmplwi r3, 0x0
+    bne fn_8015A6E4_L_8015A974
+    li r3, 0x0
+    fn_8015A6E4_L_8015A974:
+    cmplwi r3, 0x0
+    addi r27, r2, -0x1CC4  /* lbl_806D859C */
+    beq fn_8015A6E4_L_8015A988
+    bl get_title_name_global
+    mr r27, r3
+    fn_8015A6E4_L_8015A988:
+    bl isJapanese
+    cmpwi r3, 0x1
+    bne fn_8015A6E4_L_8015A9BC
+    lfs f3, lbl_806D83B0(r2)
+    fmr f1, f24
+    fmr f2, f31
+    mr r3, r30
+    fmr f4, f3
+    mr r4, r27
+    fmr f5, f27
+    creqv 6, 6, 6
+    bl fn_80168404
+    b fn_8015A6E4_L_8015A9E0
+    fn_8015A6E4_L_8015A9BC:
+    fmr f1, f24
+    lfs f3, lbl_806D85A0(r2)
+    fmr f2, f31
+    lfs f4, lbl_806D83B0(r2)
+    fmr f5, f27
+    mr r3, r30
+    mr r4, r27
+    creqv 6, 6, 6
+    bl fn_80168404
+    fn_8015A6E4_L_8015A9E0:
+    li r3, 0x48
+    li r4, -0x1
+    bl GetTextureByIdAndLang
+    lfs f0, lbl_806D85A4(r2)
+    mr r4, r3
+    fmr f1, f30
+    mr r3, r30
+    fmr f3, f27
+    fadds f2, f0, f26
+    creqv 6, 6, 6
+    bl fn_80168D84
+    lwz r5, 0x20(r29)
+    li r3, 0x49
+    li r4, -0x1
+    lbz r0, 0x198(r5)
+    extsb r5, r0
+    subi r6, r5, 0x1
+    srwi r5, r6, 31
+    subi r0, r5, 0x1
+    and r28, r6, r0
+    bl GetTextureByIdAndLang
+    lfs f0, lbl_806D85A8(r2)
+    mr r4, r3
+    fmr f1, f24
+    mr r3, r30
+    fmr f3, f27
+    mr r5, r28
+    fadds f2, f0, f26
+    creqv 6, 6, 6
+    bl fn_80168798
+    lfs f1, lbl_806D85AC(r2)
+    fmr f3, f27
+    lfs f0, lbl_806D85B0(r2)
+    mr r3, r30
+    fadds f31, f1, f25
+    li r4, 0x643
+    fadds f2, f0, f26
+    li r5, 0x0
+    fmr f1, f31
+    bl fn_801695E0
+    lbz r0, 0x4c(r29)
+    cmplwi r0, 0x0
+    beq fn_8015A6E4_L_8015AAD8
+    lfs f0, lbl_806D85B8(r2)
+    fmr f3, f27
+    lfs f1, lbl_806D85B4(r2)
+    mr r3, r30
+    fadds f24, f0, f26
+    li r4, 0x67d
+    fadds f1, f1, f25
+    li r5, 0x0
+    fmr f2, f24
+    bl fn_801695E0
+    lfs f0, lbl_806D85BC(r2)
+    fmr f2, f24
+    fmr f3, f27
+    mr r3, r30
+    fadds f1, f0, f25
+    li r4, 0x67c
+    li r5, 0x0
+    bl fn_801695E0
+    b fn_8015A6E4_L_8015AB20
+    fn_8015A6E4_L_8015AAD8:
+    lfs f0, lbl_806D85B8(r2)
+    fmr f3, f27
+    lfs f1, lbl_806D85B4(r2)
+    mr r3, r30
+    fadds f24, f0, f26
+    li r4, 0x67b
+    fadds f1, f1, f25
+    li r5, 0x0
+    fmr f2, f24
+    bl fn_801695E0
+    lfs f0, lbl_806D85BC(r2)
+    fmr f2, f24
+    fmr f3, f27
+    mr r3, r30
+    fadds f1, f0, f25
+    li r4, 0x67e
+    li r5, 0x0
+    bl fn_801695E0
+    fn_8015A6E4_L_8015AB20:
+    cmpwi r30, 0x0
+    lwz r3, 0x38(r29)
+    blt fn_8015A6E4_L_8015AB38
+    cmpwi r30, 0x8
+    bge fn_8015A6E4_L_8015AB38
+    stw r30, 0x0(r3)
+    fn_8015A6E4_L_8015AB38:
+    lfs f1, lbl_806D85C0(r2)
+    lfs f0, lbl_806D85C4(r2)
+    fadds f1, f1, f25
+    lwz r3, 0x38(r29)
+    fadds f0, f0, f26
+    stfs f1, 0x8(r3)
+    stfs f0, 0xc(r3)
+    lwz r3, 0x38(r29)
+    stfs f27, 0x10(r3)
+    lwz r3, 0x38(r29)
+    lwz r12, 0x14(r3)
+    lwz r12, 0x18(r12)
+    mtctr r12
+    bctrl
+    lfs f0, lbl_806D8504(r2)
+    fmr f1, f31
+    fmr f3, f27
+    mr r3, r30
+    fadds f24, f0, f26
+    li r4, 0x642
+    li r5, 0x0
+    fmr f2, f24
+    bl fn_801695E0
+    lfs f0, lbl_806D8410(r2)
+    addi r28, r31, 0x4a4
+    li r27, 0x0
+    fadds f30, f0, f24
+    fn_8015A6E4_L_8015ABA4:
+    lbz r0, 0x58(r29)
+    cmpw r0, r27
+    bne fn_8015A6E4_L_8015ABD4
+    lfs f0, 0x0(r28)
+    fmr f2, f30
+    fmr f3, f27
+    mr r3, r30
+    fadds f1, f31, f0
+    addi r4, r27, 0x676
+    li r5, 0x0
+    bl fn_801695E0
+    b fn_8015A6E4_L_8015ABF4
+    fn_8015A6E4_L_8015ABD4:
+    lfs f0, 0x0(r28)
+    fmr f2, f30
+    fmr f3, f27
+    mr r3, r30
+    fadds f1, f31, f0
+    addi r4, r27, 0x671
+    li r5, 0x0
+    bl fn_801695E0
+    fn_8015A6E4_L_8015ABF4:
+    addi r27, r27, 0x1
+    addi r28, r28, 0x4
+    cmpwi r27, 0x5
+    blt fn_8015A6E4_L_8015ABA4
+    lfs f1, 0x50(r29)
+    lfs f0, lbl_806D8398(r2)
+    fcmpo cr0, f1, f0
+    bge fn_8015A6E4_L_8015AC50
+    li r3, 0x4b
+    li r4, -0x1
+    bl GetTextureByIdAndLang
+    lfs f0, lbl_806D85C8(r2)
+    mr r4, r3
+    lfs f4, lbl_806D8394(r2)
+    fmr f2, f24
+    fmr f6, f27
+    lfs f3, lbl_806D83B0(r2)
+    fmr f5, f4
+    mr r3, r30
+    fadds f1, f0, f25
+    creqv 6, 6, 6
+    bl fn_80168B90
+    b fn_8015A6E4_L_8015AC7C
+    fn_8015A6E4_L_8015AC50:
+    bl isJapanese
+    cmpwi r3, 0x0
+    bne fn_8015A6E4_L_8015AC7C
+    lfs f0, lbl_806D85C8(r2)
+    fmr f2, f24
+    fmr f3, f27
+    mr r3, r30
+    fadds f1, f0, f25
+    addi r4, r31, 0x664
+    creqv 6, 6, 6
+    bl fn_80168D84
+    fn_8015A6E4_L_8015AC7C:
+    cmpwi r30, 0x0
+    lwz r3, 0x3c(r29)
+    blt fn_8015A6E4_L_8015AC94
+    cmpwi r30, 0x8
+    bge fn_8015A6E4_L_8015AC94
+    stw r30, 0x0(r3)
+    fn_8015A6E4_L_8015AC94:
+    lfs f1, lbl_806D85CC(r2)
+    lfs f0, lbl_806D83D4(r2)
+    fadds f1, f1, f25
+    lwz r3, 0x3c(r29)
+    fadds f0, f0, f26
+    stfs f1, 0x8(r3)
+    stfs f0, 0xc(r3)
+    lwz r3, 0x3c(r29)
+    stfs f27, 0x10(r3)
+    lwz r3, 0x3c(r29)
+    lwz r12, 0x14(r3)
+    lwz r12, 0x18(r12)
+    mtctr r12
+    bctrl
+    lfs f3, 0x54(r29)
+    lfs f0, lbl_806D839C(r2)
+    fcmpo cr0, f3, f0
+    bge fn_8015A6E4_L_8015ADE8
+    lfs f2, lbl_806D8428(r2)
+    fcmpo cr0, f3, f2
+    bge fn_8015A6E4_L_8015AD00
+    lfs f1, lbl_806D8414(r2)
+    fdivs f28, f3, f2
+    fmuls f0, f1, f3
+    fdivs f0, f0, f2
+    fadds f29, f1, f0
+    b fn_8015A6E4_L_8015AD20
+    fn_8015A6E4_L_8015AD00:
+    lfs f0, lbl_806D855C(r2)
+    fcmpo cr0, f3, f0
+    bge fn_8015A6E4_L_8015AD20
+    fsubs f0, f3, f2
+    lfs f1, lbl_806D83B0(r2)
+    fdivs f0, f0, f2
+    fadds f29, f1, f0
+    fsubs f28, f1, f0
+    fn_8015A6E4_L_8015AD20:
+    lbz r0, 0x58(r29)
+    addi r4, r31, 0x4a4
+    fmr f2, f30
+    mr r3, r30
+    slwi r0, r0, 2
+    fmr f3, f29
+    lfsx f0, r4, r0
+    fmr f4, f29
+    fadds f1, f31, f0
+    li r4, 0x67f
+    fmuls f5, f28, f27
+    li r5, 0x0
+    bl fn_80169334
+    lfs f2, 0x54(r29)
+    lfs f0, lbl_806D8418(r2)
+    fcmpo cr0, f2, f0
+    ble fn_8015A6E4_L_8015ADE8
+    lfs f1, lbl_806D83B8(r2)
+    fcmpo cr0, f2, f1
+    bge fn_8015A6E4_L_8015AD90
+    fsubs f3, f2, f0
+    lfs f2, lbl_806D8414(r2)
+    lfs f0, lbl_806D8428(r2)
+    fmuls f1, f2, f3
+    fdivs f28, f3, f0
+    fdivs f0, f1, f0
+    fadds f29, f2, f0
+    b fn_8015A6E4_L_8015ADB4
+    fn_8015A6E4_L_8015AD90:
+    lfs f0, lbl_806D839C(r2)
+    fcmpo cr0, f2, f0
+    bge fn_8015A6E4_L_8015ADB4
+    fsubs f1, f2, f1
+    lfs f0, lbl_806D8428(r2)
+    lfs f2, lbl_806D83B0(r2)
+    fdivs f0, f1, f0
+    fadds f29, f2, f0
+    fsubs f28, f2, f0
+    fn_8015A6E4_L_8015ADB4:
+    lbz r0, 0x58(r29)
+    addi r4, r31, 0x4a4
+    fmr f2, f30
+    mr r3, r30
+    slwi r0, r0, 2
+    fmr f3, f29
+    lfsx f0, r4, r0
+    fmr f4, f29
+    fadds f1, f31, f0
+    li r4, 0x67f
+    fmuls f5, f28, f27
+    li r5, 0x0
+    bl fn_80169334
+    fn_8015A6E4_L_8015ADE8:
+    psq_l f31, 0x98(r1), 0, 0
+    lfd f31, 0x90(r1)
+    psq_l f30, 0x88(r1), 0, 0
+    lfd f30, 0x80(r1)
+    psq_l f29, 0x78(r1), 0, 0
+    lfd f29, 0x70(r1)
+    psq_l f28, 0x68(r1), 0, 0
+    lfd f28, 0x60(r1)
+    psq_l f27, 0x58(r1), 0, 0
+    lfd f27, 0x50(r1)
+    psq_l f26, 0x48(r1), 0, 0
+    lfd f26, 0x40(r1)
+    psq_l f25, 0x38(r1), 0, 0
+    lfd f25, 0x30(r1)
+    psq_l f24, 0x28(r1), 0, 0
+    lfd f24, 0x20(r1)
+    lmw r27, 0xc(r1)
+    lwz r0, 0xa4(r1)
+    mtlr r0
+    addi r1, r1, 0xa0
+    blr
+}
+

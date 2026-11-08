@@ -27,6 +27,9 @@ all of these.
 
 | Function | TU | % | What is left | Tried / WIP |
 | --- | --- | --- | --- | --- |
+| `CourseData_LoadPathTable` | game/CourseData_LoadPathTable | 99.7 | File-table path only: target keeps `file` in r26 and `size` in r25, ours r25/r24 (one reg lower). Indexing base[i] and `alternate == 0` fixed the rest (c30cc43) | mid 11-08: merging LoadFileData into LoadFileTable, size/file/count decl orders, pragmasweep: no gain |
+| `fn_801D4DC0` | game/fn_801D4DC0 | 96.5 | raw r29 / sum r30 swapped. `const char *const` pool base fixed the address CSE (c8b2293); no merge needed | mid 11-08: decl perms, sum=0 placement, &=255 forms, loop forms, pragmasweep, cperm 15 min; opt_lifetimes off fixes raw but splits sum |
+| `DoublyLinkedList_PushBefore` | game/clItemBoxManager_nm1 | 95.0 | Target saves SP for the try (`stw r1, 0x24(r31)`) inside the placement-new null-check body; ours before the `beq` (79b9674 fixed the regs) | mid 11-08: try/if/slot variants, GC 1.3..2.7, pragmasweep: no gain |
 | `fn_8013DA00` | game/PreviewModel | 98.4 (C++ draft; asm in tree) | Same body as fn_8013D940 (regalloc_patterns §15) looped over the 8 lists. Target: list pointer r29 (lbl loaded straight into it), end r30, counter r31; ours rotates them (list r30, counter r29, end r31). Tried p/pointer/lp++ loops, inline helpers, e-pointer forms, pragmas, cperm ~15 min | R4 11-08 |
 | `acBind`, `acConnect` | triforce/acsocket_nm5, nm4 | 96.8 | Target keeps the offset as `addi r24, r5, 0x0` (bufOff+0 copy) then `add r24, r0, r24`; ours folds to one add. Same family: acAccept (`addi r28, r4, 0` / `addi r29, r4, 4`) | mid 11-08: acBind 3 lines with `*off = k->bufAddr + *off` (wip/acsocket_bind/acBind_3lines.diff); BufDev/SockAddr/n-local variants, pragmas, GC 1.2.5n/2.0p1/2.5/3.0a*, cperm 12 min: no gain |
 | `fn_80292D18`, `fn_80292AD8` | triforce/acsocket_nm7, nm6 | 96.3 / 93.4 | `off + (len + 0x1F)`: target `addi r0, len, 0x1f; add r0, off, r0`, ours reassociates to `(off+len)+0x1f`; plus a late `mr r27, r4` copy of p | mid 11-08: temp `size = len + 0x1F` first, casts, `0x1FU`, operand orders: no change |
@@ -200,6 +203,25 @@ it marks a TU rodata start.
 | `fn_801661FC` (onmokoworks #2796) | game/Scene_801661FC | 98.71 | Owning .rodata 0x80369D78..0x8036A308 (strings split out of lbl_8036A24C / lbl_8036A1BC) gives `...rodata.0` addressing identical to target but the remaining diff is the self/base register pair (target self r29, base r31; ours r31/r30). Pure regalloc. | |
 | `card_rw_state_machine*`, `card_read_state_machine`, `card_save_trigger`, `CardSave_Tick_CaptureAndStart` | game/card_* | asm | Base lbl_80598A60 is one big backup-data object in .bss (0x6A20) that dtk split; not a pool, fix the symbol sizes instead. | |
 
+## R2 wind-down 2026-11-08 11:45
+
+- **fn_801661FC** (game/Scene_801661FC, 98.71): the TU now owns .rodata
+  0x80369D78..0x8036A390 (own_data.py), and its debug strings are
+  `#pragma readonly_strings on` literals, so MWCC makes its own `...rodata.0`
+  anchor like the target does. The register order is still wrong: the target
+  has anchor r31, p r30, this r29, and we get this r31, anchor r30, p r29.
+  Changing the compiler (1.3..2.7) and every declaration order did not help.
+  A short cperm run reached 99.25 with a temp for `this->repeat`, `next`
+  declared later and `float step;` declared before it is assigned. That WIP
+  is /mnt/project-files/wip/r2/Scene_801661FC_cperm_9925.cpp (not
+  naturalized). The rodata layout is: float table, class-name strings
+  (sdata-referenced), Scene_801660EC strings, these strings, "clCSPartsTitleTest",
+  Scene_80166BE8 strings, "clCSPartsSpriteTest", Scene_801670FC string. So the
+  original TU most likely spans Scene_801660EC..Scene_801670FC.
+- Parked with notes in the queue (cperm/declsweep/pragmasweep gave 0):
+  fn_801BAA88 leftovers (Nb80425), fn_80222968 (N139eab),
+  VoiceEvent_PushRace (N6e2d04), fn_801E9E74 (N5f265a).
+
 ## Control-flow / branch shape
 
 | Function | TU | % | What is left | Tried / WIP |
@@ -289,7 +311,6 @@ None of these landed. They are listed so the next try skips what failed.
 | Function | TU | % | What is left | Tried |
 | --- | --- | --- | --- | --- |
 | `fn_80184928` | game/dlistutil/fn_80184928 | 98.19 | Only saved-register numbering differs. Target: jobj r21, pobj r19, out r20; ours swaps jobj and out. Best decl order cut the diff from 216 to 160 lines (WIP: /mnt/project-files/wip/dlistutil_fn_80184928/fn_80184928_decl160.c). | 395 of 3000 random orders of the 14 locals (stopped at wind-down). Next: finish that sweep, then dependency-respecting statement-order sweeps (that matched TextRenderer_DrawEntry, bc31b3a). |
-| `fn_801217E8` | game/SpriteHandle (still asm) | asm | The C version is at DIFF 58: the flags==9 and hasUV branches match. In the offset-table branch the target reloads `o[0]/o[1]` per corner after the previous corner's stores (may-alias), and ours hoists them. Small prologue order diff. When landing, add `.rodata 0x80332528..0x803325D0` to the splits. WIP: /mnt/project-files/wip/spritehandle_fn_801217E8/. | o declared in the loop, `(*o)[2]`, pointer cast, `off[flags]` index, corner pointer, in-place add, product order (fmadds h,o1,(h*q) = `h*o[1] + h*q[k][1]`), 8 opt pragmas |
 | `fn_8021C070` (TimeAttackResult ctor) | game/anon_8021BC44_nm1 | 96.3 | 1) The Blink ctor sprite args need literals (394.0f/1.0f/0.0f) for the FPR load order, which means owning .sdata2 806DB018..806DB188. The first-use order there is not monotonic. 2) `e->reverse`: target does bool(int(rev==1)) (extra neg/or/srwi). 3) Digit loop counter: `int res;` declared before the loop helps. | ~15 forms of the reverse store (inline int/bool helpers, ternary, `!!`, casts, bool params) |
 | `fn_8021DAB8` (DrawResult) | game/anon_8021BC44_nm1 | 98.9 | The `s_courseRes[g_cupId - 1][g_longRoundFlag]` index add lands in r3 vs target r4, plus the lfs f2 scheduling. | temporaries, pointer and row forms, 1D cast, opt_common_subs off, pragmasweep (no change) |
 | `ItemEffect_Projectile` | game/auto_ONKARTHIT_block (asm) | 98.9 (C draft) | Stack order solved (MWCC places locals in ascending size; d padded to 16B). Left: FPR number of the 2nd sqrt sum (target f7, ours f4) + one load order. | decl-order sweep 1100 perms, sum-var reuse, copy reorder. WIP `/mnt/project-files/wip/onkarthit_ap4/ItemEffect_Projectile_98.9pct.c` (exceptions off, keep manual extab) |
@@ -314,3 +335,22 @@ KartItem_Dtor (8c7b244) and fn_80164614 (5b467cc) landed. These did not.
 | `CarObject_Init` | game/auto_ONKARTHIT_block | 99.4 (native C++ ctor; asm still in tree) | Three argument-load orders: TornadoEffect args (`lfs f2`/`li r4,1` come before `lwz r6`/`lbz r7` in the target), KartEffectFadeTransit args (target loads camera r6 first), and the 0x4c inline payload ctor's arg registers (target st r5, sp r6, act r7, loaded in that order). Model: `class CarObject : CarResponder, CarWarpResponder` with declared-only virtuals (`__vt__9CarObject` -> lbl_803F75F8), Holder members from tagged `new`, and a CarList singleton base ctor that sets g_carObjectList. The compiler extab relocs already line up with the target. | WIP /mnt/project-files/wip/onkarthit_ap2/CarObject_Init_99.4.diff (includes renames). Tried get()/.p, literal/extern/`*(const float*)` 0.0f, param types (uchar/bool/int), 6 payload param orders, throw() on holder ctor/get, pragmas |
 | `fn_80227B98` (clDNBress ctor) | game/DNBress_nm3 | 98.7 | Prologue `lis` order (target vtable, data, strings; ours strings first) and an r26/r27 swap between the strings base and the `new` temps. | local decl orders (5), strings as a macro (82%) |
 | `fn_801AECF4` | game/sprite/fn_801AECF4 | 98.5 | Goal_Line index: the target puts tables+0x4c6 in its own register early, adds cc*512 after the scaled inner index, and loads rev/cup/long first. Also an `lwz 8/12(r30)` order diff near +0x4f0. | 2D/3D/4D array casts (98.4-98.66), operand order, cperm 18 min (score 137 -> 127) |
+
+## R1 wind-down 2026-11-08 11:50 (SceneList_80157EA8 option menu)
+OptionMenuDraw.cpp was merged into SceneList_80157EA8.cpp (dbc2a11) so the option-menu page drawers can read its .rodata pool through the section anchor; the rodata is kept under `#pragma force_active` while some readers are still asm. fn_801596D4 landed (0d77eab). The C++ drafts for the next two are in /mnt/project-files/wip/scenelist_optionmenu/fn_80158CE4_fn_8015915C_r1.cpp; drop them in for the asm bodies and remove each one's manual extab_/extabindex_ entries and renames.
+- fn_80158CE4 (time-attack page, 34 diff lines): the structure matches. Float args that the target reloads per call must be literals (0.85f, 0.5f, 0.4f). What's left: y and rowY swap f21/f22, and the `course*2 + mode + 0x7E4` id is scheduled earlier than in the target (four operand orders tried).
+- fn_8015915C (versus-record page, 74 diff lines): the structure matches, and the strings and optionThresholds go through the anchor. What's left: rowY gets f25/f26 where the target uses f24 for every block, loop-3 colX/rowY are swapped, and in the digit loops xoris/addi use r0/r3 swapped. cperm ran 10 min with no gain; this TU is slow to permute (~3000 lines).
+- fn_80159BD0 (0xB14) and fn_8015A6E4 (C draft 99.91%, in notes/r1/OptionMenuDraw_cdraft.cpp) are still asm.
+
+## asm-A wind-down 2026-11-08 11:50
+- `AI_SystemDtor` (game/AI_SystemDtor, 99.53 after 62a185a2): writing `driver = 0` before `kartId = -1` in ResetRecord gives the target constant registers (0 in r4, -1 in r3). What's left: the scheduler then puts the `driver` store before the `kartId` store, where the target stores -1 first (8 lines). The cperm best (statement order and block scopes changed) is /mnt/project-files/wip/asm-a/AI_SystemDtor_cperm23.cpp and is not verified as a % gain.
+- `Terrain_FindTriangleAtPosition` (98.41): the only real diff is that triCount is loaded into r0 where the target uses r4 (`lwz r4,4(r4); mtctr r4`). The 0.0f literal diff is only @N naming, since the TU owns 0x806D2384. Tried with no gain: pragmasweep all k2, every decl order, cell-pointer, countdown and inline-loop forms, and cperm 36k iterations.
+- `Menu801F0CC0` fn_801F1664/fn_801F1C58 (12/16 lines): the target keeps the table offsets unfolded (`addi r4,r31,0x128; addi r4,r4,0x90`). Inline helpers and struct-member address forms all fold. fn_801F1EE0/2400 hit the color/loop-counter swap (regalloc_patterns "Still open"). cperm 13k with no gain.
+- `NokoNoko_801287F8` NokoNokoChallenge_Update: 3 instructions from matching. The patch is /mnt/project-files/wip/asm-a/nokonoko_update_3insn.patch (it includes the extab_order/renames changes). Every holding-variable coloring attempt failed (decls, types, scopes, inline, 24k cperm).
+
+## gaveup-retry wind-down 2026-11-08 11:50
+
+| Function | TU | State | What is left | Tried |
+| --- | --- | --- | --- | --- |
+| `CoinSystem_UpdateAll` | game/CoinSystem_UpdateAll | asm (C draft 99.91%) | /mnt/project-files/wip/coin_updateall/CoinSystem_UpdateAll_34lines.diff (applies on main 11-08) owns the switch jumptable .data 0x8048E4B8..0x8048E4E4. extab, extabindex and .data are 100%. Left: one saved FPR (target f28, ours f30) and one saved GPR (r28/r29) for the per-coin sparkle pointer. | all 24 decl orders of the float locals s/range/k/t: no change |
+| `fn_8013AE20` (clCSAnim::update) | game/csAnim | asm (C draft 92.5%) | The TU owns its panic strings since fac53ae2 (.rodata 0x8035C678..0x8035C6B8). That changed nothing for the C draft, because the strings are only on the OSPanic path. Drafts: /mnt/project-files/wip/csanim/ (92.5 and cperm188). | rodata ownership, global vs static strings |

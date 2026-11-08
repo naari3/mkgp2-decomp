@@ -305,7 +305,7 @@ void fn_80157FB4(OptionMenu *self);
 void fn_801589BC(OptionMenu *self, int mode);
 asm void fn_80158CE4(OptionMenu *self, int layer, float x, float y, float alpha);
 asm void fn_8015915C(OptionMenu *self, int layer, float x, float y, float alpha);
-asm void fn_801596D4(OptionMenu *self, int layer, float x, float y, float alpha);
+void fn_801596D4(OptionMenu *self, int layer, float x, float y, float alpha);
 asm void fn_80159BD0(OptionMenu *self, int layer, float x, float y, float alpha);
 
 extern void fn_8013C26C();
@@ -356,10 +356,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_8015915C[8
     0x32, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_801596D4[8] = {
-    0x62, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-
 __declspec(section ".extab_user") static const unsigned char extab_fn_80159BD0[8] = {
     0x4A, 0xCA, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -381,10 +377,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8015915C = {
     (void *)&fn_8015915C, 0x00000578, (void *)extab_fn_8015915C
-};
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801596D4 = {
-    (void *)&fn_801596D4, 0x000004FC, (void *)extab_fn_801596D4
 };
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80159BD0 = {
@@ -449,9 +441,12 @@ static const float optionPositions[5] = {
     -153.0f, -105.0f, -59.0f, -15.0f, 32.0f,
 };
 
-static const float optionLayoutPositions[10] = {
-    -17.0f, 69.0f, 155.0f, 241.0f, 337.0f, -17.0f, 49.0f, 135.0f,
-    221.0f, 307.0f,
+static const float optionIconX[5] = {
+    -17.0f, 69.0f, 155.0f, 241.0f, 337.0f,
+};
+
+static const float optionMarkX[5] = {
+    -17.0f, 49.0f, 135.0f, 221.0f, 307.0f,
 };
 
 static const int optionThresholds[17] = {
@@ -1436,344 +1431,71 @@ extern "C" asm void fn_8015915C(OptionMenu *self, int layer, float x, float y, f
     blr
 }
 
-extern "C" asm void fn_801596D4(OptionMenu *self, int layer, float x, float y, float alpha) { /* 0x801596D4 size:0x4FC */
-    nofralloc
-    stwu r1, -0xe0(r1)
-    mflr r0
-    stw r0, 0xe4(r1)
-    stfd f31, 0xd0(r1)
-    psq_st f31, 0xd8(r1), 0, 0
-    stfd f30, 0xc0(r1)
-    psq_st f30, 0xc8(r1), 0, 0
-    stfd f29, 0xb0(r1)
-    psq_st f29, 0xb8(r1), 0, 0
-    stfd f28, 0xa0(r1)
-    psq_st f28, 0xa8(r1), 0, 0
-    stfd f27, 0x90(r1)
-    psq_st f27, 0x98(r1), 0, 0
-    stfd f26, 0x80(r1)
-    psq_st f26, 0x88(r1), 0, 0
-    stfd f25, 0x70(r1)
-    psq_st f25, 0x78(r1), 0, 0
-    stfd f24, 0x60(r1)
-    psq_st f24, 0x68(r1), 0, 0
-    stfd f23, 0x50(r1)
-    psq_st f23, 0x58(r1), 0, 0
-    stfd f22, 0x40(r1)
-    psq_st f22, 0x48(r1), 0, 0
-    stmw r20, 0x10(r1)
-    fmr f23, f1
-    lis r5, lbl_803678D8@ha
-    fmr f22, f2
-    mr r20, r3
-    fmr f26, f3
-    mr r21, r4
-    addi r30, r5, lbl_803678D8@l
-    bl isJapanese
-    cmpwi r3, 0x1
-    bne fn_801596D4_L_801597CC
-    lfs f0, lbl_806D83D0(r2)
-    fmr f3, f26
-    lfs f1, lbl_806D83CC(r2)
-    mr r3, r21
-    fadds f24, f0, f22
-    addi r4, r30, 0x5e8
-    fadds f1, f1, f23
-    fmr f2, f24
-    creqv 6, 6, 6
-    bl fn_80168D84
-    lfs f0, lbl_806D83D4(r2)
-    fmr f2, f24
-    fmr f3, f26
-    mr r3, r21
-    fadds f1, f0, f23
-    la r4, lbl_806D84AC(r2)  /* lbl_806D84AC */
-    creqv 6, 6, 6
-    bl fn_80168798
-    lfs f1, lbl_806D83DC(r2)
-    fmr f3, f26
-    lfs f0, lbl_806D83E0(r2)
-    mr r3, r21
-    fadds f1, f1, f23
-    la r4, lbl_806D83E4(r2)  /* lbl_806D83E4 */
-    fadds f2, f0, f22
-    creqv 6, 6, 6
-    bl fn_80168D84
-    b fn_801596D4_L_80159838
-    fn_801596D4_L_801597CC:
-    lfs f0, lbl_806D83D0(r2)
-    fmr f3, f26
-    lfs f1, lbl_806D83CC(r2)
-    mr r3, r21
-    fadds f24, f0, f22
-    addi r4, r30, 0x5f8
-    fadds f1, f1, f23
-    fmr f2, f24
-    creqv 6, 6, 6
-    bl fn_80168798
-    lfs f0, lbl_806D83EC(r2)
-    fmr f2, f24
-    fmr f3, f26
-    mr r3, r21
-    fadds f1, f0, f23
-    la r4, lbl_806D84AC(r2)  /* lbl_806D84AC */
-    creqv 6, 6, 6
-    bl fn_80168798
-    lfs f1, lbl_806D83DC(r2)
-    fmr f3, f26
-    lfs f0, lbl_806D83E0(r2)
-    mr r3, r21
-    fadds f1, f1, f23
-    la r4, lbl_806D83F0(r2)  /* lbl_806D83F0 */
-    fadds f2, f0, f22
-    creqv 6, 6, 6
-    bl fn_80168D84
-    fn_801596D4_L_80159838:
-    lfs f1, lbl_806D84B0(r2)
-    addi r27, r30, 0x4b8
-    lfs f0, lbl_806D84B4(r2)
-    addi r26, r30, 0x4cc
-    fadds f29, f1, f23
-    lfs f30, lbl_806D842C(r2)
-    fadds f28, f0, f22
-    lfd f31, lbl_806D8448(r2)
-    lfs f24, lbl_806D84CC(r2)
-    li r24, 0x1
-    lfs f25, lbl_806D84D0(r2)
-    li r23, 0x0
-    lis r31, 0x4330
-    fn_801596D4_L_8015986C:
-    xoris r0, r23, 0x8000
-    addi r25, r23, 0x70
-    stw r0, 0xc(r1)
-    lbzx r3, r20, r25
-    stw r31, 0x8(r1)
-    clrlwi r0, r3, 27
-    lfd f0, 0x8(r1)
-    cmpwi r0, 0x1f
-    fsubs f0, f0, f31
-    fmadds f27, f30, f0, f28
-    bne fn_801596D4_L_801598D8
-    fmr f1, f29
-    mr r3, r21
-    fmr f2, f27
-    li r4, 0x665
-    fmr f3, f26
-    li r5, 0x0
-    bl fn_801695E0
-    lfs f0, lbl_806D84B8(r2)
-    fmr f2, f27
-    fmr f3, f26
-    mr r3, r21
-    fadds f1, f0, f29
-    li r4, 0x666
-    li r5, 0x0
-    bl fn_801695E0
-    b fn_801596D4_L_8015992C
-    fn_801596D4_L_801598D8:
-    cmpwi r23, 0x5
-    bge fn_801596D4_L_801598F0
-    clrlwi r0, r3, 28
-    cmpwi r0, 0xf
-    beq fn_801596D4_L_801598F0
-    li r24, 0x0
-    fn_801596D4_L_801598F0:
-    fmr f1, f29
-    mr r3, r21
-    fmr f2, f27
-    li r4, 0x667
-    fmr f3, f26
-    li r5, 0x0
-    bl fn_801695E0
-    lfs f0, lbl_806D84B8(r2)
-    fmr f2, f27
-    fmr f3, f26
-    mr r3, r21
-    fadds f1, f0, f29
-    li r4, 0x668
-    li r5, 0x0
-    bl fn_801695E0
-    fn_801596D4_L_8015992C:
-    cmpwi r23, 0x5
-    bne fn_801596D4_L_80159964
-    clrlwi. r0, r24, 24
-    bne fn_801596D4_L_80159964
-    lfs f1, lbl_806D84BC(r2)
-    fmr f3, f26
-    lfs f0, lbl_806D84C0(r2)
-    mr r3, r21
-    fsubs f1, f29, f1
-    li r4, 0x66f
-    fsubs f2, f27, f0
-    li r5, 0x0
-    bl fn_801695E0
-    b fn_801596D4_L_801599BC
-    fn_801596D4_L_80159964:
-    lfs f1, lbl_806D84BC(r2)
-    fmr f3, f26
-    lfs f0, lbl_806D84C0(r2)
-    mr r3, r21
-    fsubs f1, f29, f1
-    addi r4, r23, 0x669
-    fsubs f2, f27, f0
-    li r5, 0x0
-    bl fn_801695E0
-    lwz r0, 0x6c(r20)
-    clrlwi r0, r0, 31
-    cmpwi r0, 0x1
-    bne fn_801596D4_L_801599BC
-    lfs f1, lbl_806D84C4(r2)
-    fmr f3, f26
-    lfs f0, lbl_806D84C8(r2)
-    mr r3, r21
-    fsubs f1, f29, f1
-    li r4, 0x670
-    fadds f2, f0, f27
-    li r5, 0x0
-    bl fn_801695E0
-    fn_801596D4_L_801599BC:
-    fadds f23, f24, f27
-    addi r29, r30, 0x4b8
-    fadds f22, f25, f27
-    addi r28, r30, 0x4cc
-    li r22, 0x0
-    fn_801596D4_L_801599D0:
-    cmpwi r23, 0x5
-    bne fn_801596D4_L_80159A04
-    clrlwi. r0, r24, 24
-    bne fn_801596D4_L_80159A04
-    lfs f0, 0x0(r29)
-    fmr f2, f23
-    fmr f3, f26
-    mr r3, r21
-    fadds f1, f29, f0
-    addi r4, r22, 0x65a
-    li r5, 0x0
-    bl fn_801695E0
-    b fn_801596D4_L_80159A9C
-    fn_801596D4_L_80159A04:
-    cmpwi r22, 0x1
-    blt fn_801596D4_L_80159A24
-    subi r0, r22, 0x1
-    li r3, 0x1
-    lbzx r4, r20, r25
-    slw r0, r3, r0
-    and. r0, r4, r0
-    beq fn_801596D4_L_80159A48
-    fn_801596D4_L_80159A24:
-    lfs f0, 0x0(r29)
-    fmr f2, f23
-    fmr f3, f26
-    mr r3, r21
-    fadds f1, f29, f0
-    addi r4, r22, 0x65f
-    li r5, 0x0
-    bl fn_801695E0
-    b fn_801596D4_L_80159A68
-    fn_801596D4_L_80159A48:
-    lfs f0, 0x0(r29)
-    fmr f2, f23
-    fmr f3, f26
-    mr r3, r21
-    fadds f1, f29, f0
-    addi r4, r22, 0x65a
-    li r5, 0x0
-    bl fn_801695E0
-    fn_801596D4_L_80159A68:
-    li r0, 0x1
-    lbzx r3, r20, r25
-    slw r0, r0, r22
-    and. r0, r3, r0
-    beq fn_801596D4_L_80159A9C
-    lfs f0, 0x0(r28)
-    fmr f2, f22
-    fmr f3, f26
-    mr r3, r21
-    fadds f1, f29, f0
-    li r4, 0x664
-    li r5, 0x0
-    bl fn_801695E0
-    fn_801596D4_L_80159A9C:
-    addi r22, r22, 0x1
-    addi r28, r28, 0x4
-    cmpwi r22, 0x4
-    addi r29, r29, 0x4
-    blt fn_801596D4_L_801599D0
-    lwz r0, 0x6c(r20)
-    cmpwi r0, 0x2
-    bge fn_801596D4_L_80159B40
-    lbzx r0, r20, r25
-    clrlwi r0, r0, 28
-    cmpwi r0, 0xf
-    bne fn_801596D4_L_80159B1C
-    lfs f0, 0x10(r27)
-    fmr f2, f23
-    fmr f3, f26
-    mr r3, r21
-    fadds f1, f29, f0
-    li r4, 0x663
-    li r5, 0x0
-    bl fn_801695E0
-    lbzx r0, r20, r25
-    rlwinm. r0, r0, 0, 27, 27
-    beq fn_801596D4_L_80159B60
-    lfs f0, 0x10(r26)
-    fmr f2, f22
-    fmr f3, f26
-    mr r3, r21
-    fadds f1, f29, f0
-    li r4, 0x664
-    li r5, 0x0
-    bl fn_801695E0
-    b fn_801596D4_L_80159B60
-    fn_801596D4_L_80159B1C:
-    lfs f0, 0x10(r27)
-    fmr f2, f23
-    fmr f3, f26
-    mr r3, r21
-    fadds f1, f29, f0
-    li r4, 0x65e
-    li r5, 0x0
-    bl fn_801695E0
-    b fn_801596D4_L_80159B60
-    fn_801596D4_L_80159B40:
-    lfs f0, lbl_806D84D4(r2)
-    fmr f2, f27
-    fmr f3, f26
-    mr r3, r21
-    fadds f1, f0, f29
-    li r4, 0x680
-    li r5, 0x0
-    bl fn_801695E0
-    fn_801596D4_L_80159B60:
-    addi r23, r23, 0x1
-    cmpwi r23, 0x6
-    blt fn_801596D4_L_8015986C
-    psq_l f31, 0xd8(r1), 0, 0
-    lfd f31, 0xd0(r1)
-    psq_l f30, 0xc8(r1), 0, 0
-    lfd f30, 0xc0(r1)
-    psq_l f29, 0xb8(r1), 0, 0
-    lfd f29, 0xb0(r1)
-    psq_l f28, 0xa8(r1), 0, 0
-    lfd f28, 0xa0(r1)
-    psq_l f27, 0x98(r1), 0, 0
-    lfd f27, 0x90(r1)
-    psq_l f26, 0x88(r1), 0, 0
-    lfd f26, 0x80(r1)
-    psq_l f25, 0x78(r1), 0, 0
-    lfd f25, 0x70(r1)
-    psq_l f24, 0x68(r1), 0, 0
-    lfd f24, 0x60(r1)
-    psq_l f23, 0x58(r1), 0, 0
-    lfd f23, 0x50(r1)
-    psq_l f22, 0x48(r1), 0, 0
-    lfd f22, 0x40(r1)
-    lmw r20, 0x10(r1)
-    lwz r0, 0xe4(r1)
-    mtlr r0
-    addi r1, r1, 0xe0
-    blr
+extern "C" void fn_801596D4(OptionMenu *self, int layer, float x, float y, float alpha)
+{
+    float rowY;
+
+    if (isJapanese() == 1) {
+        fn_80168D84(layer, optionText5E8, lbl_806D83CC + x, rowY = lbl_806D83D0 + y, alpha);
+        fn_80168798(layer, lbl_806D84AC, lbl_806D83D4 + x, rowY, alpha);
+        fn_80168D84(layer, lbl_806D83E4, lbl_806D83DC + x, lbl_806D83E0 + y, alpha);
+    } else {
+        fn_80168798(layer, optionText5F8, lbl_806D83CC + x, rowY = lbl_806D83D0 + y, alpha);
+        fn_80168798(layer, lbl_806D84AC, lbl_806D83EC + x, rowY, alpha);
+        fn_80168D84(layer, lbl_806D83F0, lbl_806D83DC + x, lbl_806D83E0 + y, alpha);
+    }
+    float colX = lbl_806D84B0 + x;
+    float baseY = lbl_806D84B4 + y;
+    unsigned char allSet = 1;
+    for (int i = 0; i < 6; i++) {
+        float lineY = lbl_806D842C * i + baseY;
+        if ((self->flags[i] & 0x1F) == 0x1F) {
+            fn_801695E0(layer, 0x665, 0, colX, lineY, alpha);
+            fn_801695E0(layer, 0x666, 0, lbl_806D84B8 + colX, lineY, alpha);
+        } else {
+            if (i < 5 && (self->flags[i] & 0xF) != 0xF) {
+                allSet = 0;
+            }
+            fn_801695E0(layer, 0x667, 0, colX, lineY, alpha);
+            fn_801695E0(layer, 0x668, 0, lbl_806D84B8 + colX, lineY, alpha);
+        }
+        if (i == 5 && !allSet) {
+            fn_801695E0(layer, 0x66F, 0, colX - lbl_806D84BC, lineY - lbl_806D84C0, alpha);
+        } else {
+            fn_801695E0(layer, i + 0x669, 0, colX - lbl_806D84BC, lineY - lbl_806D84C0, alpha);
+            if ((self->rule & 1) == 1) {
+                fn_801695E0(layer, 0x670, 0, colX - lbl_806D84C4, lbl_806D84C8 + lineY, alpha);
+            }
+        }
+        float iconY = lbl_806D84CC + lineY;
+        float markY = lbl_806D84D0 + lineY;
+        for (int j = 0; j < 4; j++) {
+            if (i == 5 && !allSet) {
+                fn_801695E0(layer, j + 0x65A, 0, colX + optionIconX[j], iconY, alpha);
+            } else {
+                if (j < 1 || (self->flags[i] & (1 << (j - 1)))) {
+                    fn_801695E0(layer, j + 0x65F, 0, colX + optionIconX[j], iconY, alpha);
+                } else {
+                    fn_801695E0(layer, j + 0x65A, 0, colX + optionIconX[j], iconY, alpha);
+                }
+                if (self->flags[i] & (1 << j)) {
+                    fn_801695E0(layer, 0x664, 0, colX + optionMarkX[j], markY, alpha);
+                }
+            }
+        }
+        if (self->rule < 2) {
+            if ((self->flags[i] & 0xF) == 0xF) {
+                fn_801695E0(layer, 0x663, 0, colX + optionIconX[4], iconY, alpha);
+                if (self->flags[i] & 0x10) {
+                    fn_801695E0(layer, 0x664, 0, colX + optionMarkX[4], markY, alpha);
+                }
+            } else {
+                fn_801695E0(layer, 0x65E, 0, colX + optionIconX[4], iconY, alpha);
+            }
+        } else {
+            fn_801695E0(layer, 0x680, 0, lbl_806D84D4 + colX, lineY, alpha);
+        }
+    }
 }
 
 extern "C" asm void fn_80159BD0(OptionMenu *self, int layer, float x, float y, float alpha) { /* 0x80159BD0 size:0xB14 */

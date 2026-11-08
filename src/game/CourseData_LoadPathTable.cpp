@@ -77,10 +77,9 @@ inline unsigned char CourseLookup::LoadMemory(const void *source, unsigned long 
     }
     DebugPrintf(countFormat, count);
     values = (int *)FUN_8003b120(count * sizeof(int));
-    cursor = base;
-    for (int i = 0; i < count; ++cursor, ++i) {
-        *cursor = (unsigned long)base + *cursor;
-        values[i] = Path_CountWaypointsAndSnapGround((void *)*cursor);
+    for (int i = 0; i < count; ++i) {
+        base[i] = (unsigned long)base + base[i];
+        values[i] = Path_CountWaypointsAndSnapGround((void *)base[i]);
     }
     return 1;
 }
@@ -108,17 +107,15 @@ static inline void LoadFileData(CourseLookup *self, const char *file) {
         FUN_8007dfe4(file, self->keys, size, 0, 0);
         unsigned long *base = (unsigned long *)self->keys;
         int count = 0;
-        unsigned long *cursor = base;
-        while (*cursor) {
-            DebugPrintf(lineFormat, *cursor);
-            ++cursor; ++count;
+        while (base[count]) {
+            DebugPrintf(lineFormat, base[count]);
+            ++count;
         }
         DebugPrintf(countFormat, count);
         self->values = (int *)FUN_8003b120(count * sizeof(int));
-        cursor = base;
-        for (int i = 0; i < count; ++cursor, ++i) {
-            *cursor = (unsigned long)base + *cursor;
-            self->values[i] = Path_CountWaypointsAndSnapGround((void *)*cursor);
+        for (int i = 0; i < count; ++i) {
+            base[i] = (unsigned long)base + base[i];
+            self->values[i] = Path_CountWaypointsAndSnapGround((void *)base[i]);
         }
     }
 }
@@ -126,7 +123,7 @@ static inline void LoadFileData(CourseLookup *self, const char *file) {
 static inline void LoadFileTable(CourseLookup *self, int course, int variant, int alternate, const char *pool) {
 
     const char *file;
-    if (!alternate) file = pathFiles[course][variant][0];
+    if (alternate == 0) file = pathFiles[course][variant][0];
     else file = pathFiles[course][variant][1];
     LoadFileData(self, file);
 }

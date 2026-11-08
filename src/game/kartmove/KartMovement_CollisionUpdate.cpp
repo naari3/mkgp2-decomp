@@ -79,6 +79,8 @@ static inline void RemoveNormal(Vec3& v, const Vec3& n) {
     v.x -= n.x*dot; v.y -= n.y*dot; v.z -= n.z*dot;
 }
 
+#pragma push
+#pragma opt_strength_reduction off
 extern "C" void KartMovement_CollisionUpdate(KartCollisionState* k) {
     CollisionVec previous(k->prevPos.x, k->prevPos.y, k->prevPos.z);
     Vec3 point, normal;
@@ -178,3 +180,5 @@ extern "C" void KartMovement_CollisionUpdate(KartCollisionState* k) {
         }
     } while (collided && retries < 16);
 }
+#pragma pop
+
