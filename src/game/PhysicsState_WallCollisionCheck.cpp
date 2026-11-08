@@ -17,6 +17,8 @@ static inline float CollisionLength(float squared)
     return squared;
 }
 
+#pragma push
+#pragma opt_common_subs off
 extern "C" void PhysicsState_WallCollisionCheck(char *self)
 {
     float hitPosition[3];
@@ -74,3 +76,4 @@ extern "C" void PhysicsState_WallCollisionCheck(char *self)
         }
     }
 }
+#pragma pop
