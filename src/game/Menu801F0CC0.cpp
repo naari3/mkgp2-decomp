@@ -8,6 +8,20 @@ static inline unsigned int WithAlpha(unsigned int color, unsigned char alpha) {
     return __rlwimi(color, alpha, 0, 24, 31);
 }
 
+/* Loops in a static inline: only an inlined loop gets the target's
+ * `mr rOff, rI` strength-reduction init (see fn_801F230C). */
+static inline void SetColorRange(Menu801F *self, int from, int to, unsigned int c) {
+    for (int i = from; i < to; i++) fn_801F6E98(&self->sprites[i], c);
+}
+static inline void DrawRange(Menu801F *self, int from, int to, float z) {
+    for (int i = from; i < to; i++) fn_801F7B74(self->context, &self->sprites[i], z);
+}
+static inline void SetColor2(Menu801F *self, int a, int b, int x, int y, unsigned int c) {
+    SetColorRange(self, a, b, c);
+    SetColorRange(self, x, y, c);
+}
+
+
 // Shared option artwork; inlined by both input handlers.
 static inline void SetOption(Menu801F *self, char *table) {
     if (self->option == 0) {
@@ -49,16 +63,8 @@ extern "C" void fn_801F0D04(Menu801F *self) {
 extern "C" void fn_801F0E3C(Menu801F *self) {
     int offset;
     int i;
-    {
-        i = 26;
-        offset = 0xf08;
-        for (; i < 32; ++i, offset += 0x94) fn_801F7B74(self->context, (MenuSprite801F *)((char *)self->sprites + offset), lbl_806DA550);
-    }
-    {
-        i = 32;
-        offset = 0x1280;
-        for (; i < 35; ++i, offset += 0x94) fn_801F7B74(self->context, (MenuSprite801F *)((char *)self->sprites + offset), lbl_806DA550);
-    }
+    DrawRange(self, 26, 32, lbl_806DA550);
+    DrawRange(self, 32, 35, lbl_806DA550);
 }
 
 extern "C" void fn_801F0ECC(Menu801F *self) {
@@ -78,16 +84,8 @@ extern "C" void fn_801F0ECC(Menu801F *self) {
     fn_801F6D58(&self->sprites[34], &((MenuRect801F *)(table + 0x320))[self->level], 0, 0);
     if (input->Pressed(2) == 1) {
         fn_8020A7CC(self->fade.p, 0, 255, 22);
-        {
-            i = 6;
-            offset = 0x378;
-            for (; i < 12; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFF00);
-        }
-        {
-            i = 19;
-            offset = 0xafc;
-            for (; i < 26; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFF00);
-        }
+        SetColorRange(self, 6, 12, 0xFFFFFF00);
+        SetColorRange(self, 19, 26, 0xFFFFFF00);
         self->state = 10;
     }
     if (input->Pressed(0x100) == 1) {
@@ -99,76 +97,28 @@ extern "C" void fn_801F0ECC(Menu801F *self) {
 extern "C" void fn_801F115C(Menu801F *self) {
     int offset;
     int i;
-    {
-        i = 6;
-        offset = 0x378;
-        for (; i < 12; ++i, offset += 0x94) fn_801F7B74(self->context, (MenuSprite801F *)((char *)self->sprites + offset), lbl_806DA550);
-    }
-    {
-        i = 19;
-        offset = 0xafc;
-        for (; i < 26; ++i, offset += 0x94) fn_801F7B74(self->context, (MenuSprite801F *)((char *)self->sprites + offset), lbl_806DA550);
-    }
-    {
-        i = 26;
-        offset = 0xf08;
-        for (; i < 32; ++i, offset += 0x94) fn_801F7B74(self->context, (MenuSprite801F *)((char *)self->sprites + offset), lbl_806DA550);
-    }
-    {
-        i = 32;
-        offset = 0x1280;
-        for (; i < 35; ++i, offset += 0x94) fn_801F7B74(self->context, (MenuSprite801F *)((char *)self->sprites + offset), lbl_806DA550);
-    }
+    DrawRange(self, 6, 12, lbl_806DA550);
+    DrawRange(self, 19, 26, lbl_806DA550);
+    DrawRange(self, 26, 32, lbl_806DA550);
+    DrawRange(self, 32, 35, lbl_806DA550);
 }
 
 extern "C" void fn_801F1244(Menu801F *self) {
     unsigned char v = fn_8020A788(self->fade.p);
     unsigned int c = 0xFFFFFF00;
     c = WithAlpha(c, v);
-    {
-        int i = 6;
-        int offset = 0x378;
-        for (; i < 12; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
-    }
-    {
-        int i = 19;
-        int offset = 0xafc;
-        for (; i < 26; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
-    }
+    SetColorRange(self, 6, 12, c);
+    SetColorRange(self, 19, 26, c);
     unsigned int d = 0xFFFFFF00;
     d = WithAlpha(d, (unsigned char)(255 - v));
-    {
-        int i = 26;
-        int offset = 0xf08;
-        for (; i < 32; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), d);
-    }
-    {
-        int i = 32;
-        int offset = 0x1280;
-        for (; i < 35; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), d);
-    }
+    SetColorRange(self, 26, 32, d);
+    SetColorRange(self, 32, 35, d);
     self->fade.p->Step();
     if (self->fade.p->Done()) {
-        {
-            int i = 6;
-            int offset = 0x378;
-            for (; i < 12; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFFFF);
-        }
-        {
-            int i = 19;
-            int offset = 0xafc;
-            for (; i < 26; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFFFF);
-        }
-        {
-            int i = 26;
-            int offset = 0xf08;
-            for (; i < 32; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFF00);
-        }
-        {
-            int i = 32;
-            int offset = 0x1280;
-            for (; i < 35; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFF00);
-        }
+        SetColorRange(self, 6, 12, 0xFFFFFFFF);
+        SetColorRange(self, 19, 26, 0xFFFFFFFF);
+        SetColorRange(self, 26, 32, 0xFFFFFF00);
+        SetColorRange(self, 32, 35, 0xFFFFFF00);
         self->state = 8;
     }
 }
@@ -177,50 +127,18 @@ extern "C" void fn_801F140C(Menu801F *self) {
     unsigned char v = fn_8020A788(self->fade.p);
     unsigned int c = 0xFFFFFF00;
     c = WithAlpha(c, (unsigned char)(255 - v));
-    {
-        int i = 6;
-        int offset = 0x378;
-        for (; i < 12; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
-    }
-    {
-        int i = 19;
-        int offset = 0xafc;
-        for (; i < 26; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
-    }
+    SetColorRange(self, 6, 12, c);
+    SetColorRange(self, 19, 26, c);
     unsigned int d = 0xFFFFFF00;
     d = WithAlpha(d, v);
-    {
-        int i = 26;
-        int offset = 0xf08;
-        for (; i < 32; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), d);
-    }
-    {
-        int i = 32;
-        int offset = 0x1280;
-        for (; i < 35; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), d);
-    }
+    SetColorRange(self, 26, 32, d);
+    SetColorRange(self, 32, 35, d);
     self->fade.p->Step();
     if (self->fade.p->Done()) {
-        {
-            int i = 6;
-            int offset = 0x378;
-            for (; i < 12; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFF00);
-        }
-        {
-            int i = 19;
-            int offset = 0xafc;
-            for (; i < 26; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFF00);
-        }
-        {
-            int i = 26;
-            int offset = 0xf08;
-            for (; i < 32; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFFFF);
-        }
-        {
-            int i = 32;
-            int offset = 0x1280;
-            for (; i < 35; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFFFF);
-        }
+        SetColorRange(self, 6, 12, 0xFFFFFF00);
+        SetColorRange(self, 19, 26, 0xFFFFFF00);
+        SetColorRange(self, 26, 32, 0xFFFFFFFF);
+        SetColorRange(self, 32, 35, 0xFFFFFFFF);
         self->state = 11;
     }
 }
@@ -228,16 +146,8 @@ extern "C" void fn_801F140C(Menu801F *self) {
 extern "C" void fn_801F15D4(Menu801F *self) {
     int offset;
     int i;
-    {
-        i = 6;
-        offset = 0x378;
-        for (; i < 12; ++i, offset += 0x94) fn_801F7B74(self->context, (MenuSprite801F *)((char *)self->sprites + offset), lbl_806DA550);
-    }
-    {
-        i = 19;
-        offset = 0xafc;
-        for (; i < 26; ++i, offset += 0x94) fn_801F7B74(self->context, (MenuSprite801F *)((char *)self->sprites + offset), lbl_806DA550);
-    }
+    DrawRange(self, 6, 12, lbl_806DA550);
+    DrawRange(self, 19, 26, lbl_806DA550);
 }
 
 extern "C" void fn_801F1664(Menu801F *self) {
@@ -250,25 +160,13 @@ extern "C" void fn_801F1664(Menu801F *self) {
     SetOption(self, table);
     if (input->Pressed(2) == 1) {
         fn_8020A7CC(self->fade.p, 0, 255, 22);
-        {
-            i = 12;
-            offset = 0x6f0;
-            for (; i < 19; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFF00);
-        }
+        SetColorRange(self, 12, 19, 0xFFFFFF00);
         self->state = 7;
     }
     if (input->Pressed(0x100) == 1) {
         fn_8020A7CC(self->fade.p, 0, 255, 22);
-        {
-            i = 26;
-            offset = 0xf08;
-            for (; i < 32; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFF00);
-        }
-        {
-            i = 32;
-            offset = 0x1280;
-            for (; i < 35; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFF00);
-        }
+        SetColorRange(self, 26, 32, 0xFFFFFF00);
+        SetColorRange(self, 32, 35, 0xFFFFFF00);
         self->state = 9;
     }
 }
@@ -276,44 +174,20 @@ extern "C" void fn_801F1664(Menu801F *self) {
 extern "C" void fn_801F190C(Menu801F *self) {
     int offset;
     int i;
-    {
-        i = 6;
-        offset = 0x378;
-        for (; i < 12; ++i, offset += 0x94) fn_801F7B74(self->context, (MenuSprite801F *)((char *)self->sprites + offset), lbl_806DA550);
-    }
-    {
-        i = 19;
-        offset = 0xafc;
-        for (; i < 26; ++i, offset += 0x94) fn_801F7B74(self->context, (MenuSprite801F *)((char *)self->sprites + offset), lbl_806DA550);
-    }
-    {
-        i = 12;
-        offset = 0x6f0;
-        for (; i < 19; ++i, offset += 0x94) fn_801F7B74(self->context, (MenuSprite801F *)((char *)self->sprites + offset), lbl_806DA550);
-    }
+    DrawRange(self, 6, 12, lbl_806DA550);
+    DrawRange(self, 19, 26, lbl_806DA550);
+    DrawRange(self, 12, 19, lbl_806DA550);
 }
 
 extern "C" void fn_801F19C8(Menu801F *self) {
     unsigned char v = fn_8020A788(self->fade.p);
     unsigned int c = WithAlpha(0xFFFFFF00, v);
-    {
-        int i = 12;
-        int offset = 0x6f0;
-        for (; i < 19; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
-    }
+    SetColorRange(self, 12, 19, c);
     unsigned int d = WithAlpha(0xFFFFFF00, (unsigned char)(255 - v));
-    {
-        int i = 19;
-        int offset = 0xafc;
-        for (; i < 26; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), d);
-    }
+    SetColorRange(self, 19, 26, d);
     self->fade.p->Step();
     if (self->fade.p->Done()) {
-        {
-            int i = 12;
-            int offset = 0x6f0;
-            for (; i < 26; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFFFF);
-        }
+        SetColorRange(self, 12, 26, 0xFFFFFFFF);
         self->state = 5;
     }
 }
@@ -321,24 +195,12 @@ extern "C" void fn_801F19C8(Menu801F *self) {
 extern "C" void fn_801F1AC8(Menu801F *self) {
     unsigned char v = fn_8020A788(self->fade.p);
     unsigned int c = WithAlpha(0xFFFFFF00, (unsigned char)(255 - v));
-    {
-        int i = 12;
-        int offset = 0x6f0;
-        for (; i < 19; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
-    }
+    SetColorRange(self, 12, 19, c);
     unsigned int d = WithAlpha(0xFFFFFF00, v);
-    {
-        int i = 19;
-        int offset = 0xafc;
-        for (; i < 26; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), d);
-    }
+    SetColorRange(self, 19, 26, d);
     self->fade.p->Step();
     if (self->fade.p->Done()) {
-        {
-            int i = 12;
-            int offset = 0x6f0;
-            for (; i < 26; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFFFF);
-        }
+        SetColorRange(self, 12, 26, 0xFFFFFFFF);
         self->state = 8;
     }
 }
@@ -346,16 +208,8 @@ extern "C" void fn_801F1AC8(Menu801F *self) {
 extern "C" void fn_801F1BC8(Menu801F *self) {
     int offset;
     int i;
-    {
-        i = 6;
-        offset = 0x378;
-        for (; i < 12; ++i, offset += 0x94) fn_801F7B74(self->context, (MenuSprite801F *)((char *)self->sprites + offset), lbl_806DA550);
-    }
-    {
-        i = 12;
-        offset = 0x6f0;
-        for (; i < 19; ++i, offset += 0x94) fn_801F7B74(self->context, (MenuSprite801F *)((char *)self->sprites + offset), lbl_806DA550);
-    }
+    DrawRange(self, 6, 12, lbl_806DA550);
+    DrawRange(self, 12, 19, lbl_806DA550);
 }
 
 extern "C" void fn_801F1C58(Menu801F *self) {
@@ -368,20 +222,12 @@ extern "C" void fn_801F1C58(Menu801F *self) {
     fn_801F6F7C(&self->sprites[18], &((MenuRect801F *)(table + 0x108))[self->selection], lbl_806DA568);
     if (input->Pressed(2) == 1) {
         fn_8020A7CC(self->fade.p, 255, 0, 22);
-        {
-            i = 0;
-            offset = 0x0;
-            for (; i < 6; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFF00);
-        }
+        SetColorRange(self, 0, 6, 0xFFFFFF00);
         self->state = 3;
     }
     if (input->Pressed(0x100) == 1) {
         fn_8020A7CC(self->fade.p, 0, 255, 22);
-        {
-            i = 19;
-            offset = 0xafc;
-            for (; i < 26; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFF00);
-        }
+        SetColorRange(self, 19, 26, 0xFFFFFF00);
         SetOption(self, table);
         self->state = 6;
     }
@@ -410,49 +256,21 @@ extern "C" void fn_801F1EE0(Menu801F *self) {
 extern "C" void fn_801F1FE4(Menu801F *self) {
     int offset;
     int i;
-    {
-        i = 6;
-        offset = 0x378;
-        for (; i < 12; ++i, offset += 0x94) fn_801F7B74(self->context, (MenuSprite801F *)((char *)self->sprites + offset), lbl_806DA550);
-    }
-    {
-        i = 12;
-        offset = 0x6f0;
-        for (; i < 19; ++i, offset += 0x94) fn_801F7B74(self->context, (MenuSprite801F *)((char *)self->sprites + offset), lbl_806DA550);
-    }
-    {
-        i = 0;
-        offset = 0x0;
-        for (; i < 6; ++i, offset += 0x94) fn_801F7B74(self->context, (MenuSprite801F *)((char *)self->sprites + offset), lbl_806DA550);
-    }
+    DrawRange(self, 6, 12, lbl_806DA550);
+    DrawRange(self, 12, 19, lbl_806DA550);
+    DrawRange(self, 0, 6, lbl_806DA550);
 }
 
 extern "C" void fn_801F20A0(Menu801F *self) {
     unsigned char v = fn_8020A788(self->fade.p);
     unsigned int c = WithAlpha(0xFFFFFF00, (unsigned char)(255 - v));
-    {
-        int i = 0;
-        int offset = 0x0;
-        for (; i < 6; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
-    }
+    SetColorRange(self, 0, 6, c);
     unsigned int d = WithAlpha(0xFFFFFF00, v);
-    {
-        int i = 12;
-        int offset = 0x6f0;
-        for (; i < 19; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), d);
-    }
+    SetColorRange(self, 12, 19, d);
     self->fade.p->Step();
     if (self->fade.p->Done()) {
-        {
-            int i = 0;
-            int offset = 0x0;
-            for (; i < 6; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFF00);
-        }
-        {
-            int i = 12;
-            int offset = 0x6f0;
-            for (; i < 19; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFFFF);
-        }
+        SetColorRange(self, 0, 6, 0xFFFFFF00);
+        SetColorRange(self, 12, 19, 0xFFFFFFFF);
         self->state = 1;
     }
 }
@@ -460,29 +278,13 @@ extern "C" void fn_801F20A0(Menu801F *self) {
 extern "C" void fn_801F21C8(Menu801F *self) {
     unsigned char v = fn_8020A788(self->fade.p);
     unsigned int c = WithAlpha(0xFFFFFF00, v);
-    {
-        int i = 0;
-        int offset = 0x0;
-        for (; i < 6; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
-    }
+    SetColorRange(self, 0, 6, c);
     unsigned int d = WithAlpha(0xFFFFFF00, (unsigned char)(255 - v));
-    {
-        int i = 12;
-        int offset = 0x6f0;
-        for (; i < 19; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), d);
-    }
+    SetColorRange(self, 12, 19, d);
     self->fade.p->Step();
     if (self->fade.p->Done()) {
-        {
-            int i = 0;
-            int offset = 0x0;
-            for (; i < 6; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFF00);
-        }
-        {
-            int i = 12;
-            int offset = 0x6f0;
-            for (; i < 19; ++i, offset += 0x94) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), 0xFFFFFFFF);
-        }
+        SetColorRange(self, 0, 6, 0xFFFFFF00);
+        SetColorRange(self, 12, 19, 0xFFFFFFFF);
         StrPcb_RunAndWaitIdle(StrPcb_GetInstance());
         StrPcb_ResetCommands_Neutral(StrPcb_GetInstance(), 1);
         self->state = 5;
