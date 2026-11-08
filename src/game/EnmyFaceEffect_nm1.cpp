@@ -33,19 +33,12 @@ struct Vec3 {
 
 struct Vec3c : Vec3 {
     Vec3c() {}
+    Vec3c(float a, float b, float c) { x = a; y = b; z = c; }
     Vec3c(const Vec3 &v) : Vec3(v) {}
     Vec3c(const Vec3c &v) : Vec3(v) {}
     ~Vec3c() {}
     void RotationMatrix(Mtx rot) const;
 };
-
-static inline Vec3 MakeVec3(float x, float y, float z) {
-    Vec3 v;
-    v.x = x;
-    v.y = y;
-    v.z = z;
-    return v;
-}
 
 struct KartStatus {
     int i0;
@@ -90,9 +83,9 @@ extern const char lbl_803DAE70[];
 
 extern const unsigned int lbl_803DAB54[156] = {0x00000C68, 0x00000C69, 0x00000C66, 0x00000C67, 0x00000C63, 0x00000C65, 0x00000C64, 0x00000C6A, 0x00000C6B, 0x00000C28, 0x00000C49, 0x00000C32, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0xC1F80000, 0x00000000, 0x00000000, 0x41F80000, 0x00000000, 0x00000000, 0x41F80000, 0x42180000, 0x00000000, 0xC1F80000, 0x42180000, 0x00000000, 0xC1F80000, 0xC2180000, 0x00000000, 0x41F80000, 0xC2180000, 0x00000000, 0x41F80000, 0x00000000, 0x00000000, 0xC1F80000, 0x00000000, 0x00000000, 0xC20E9999, 0x00000000, 0x00000000, 0x420E9999, 0x00000000, 0x00000000, 0x420E9999, 0x420E9999, 0x00000000, 0xC20E9999, 0x420E9999, 0x00000000, 0xC20E9999, 0xC20E9999, 0x00000000, 0x420E9999, 0xC20E9999, 0x00000000, 0x420E9999, 0x00000000, 0x00000000, 0xC20E9999, 0x00000000, 0x00000000, 0xC20E9999, 0x00000000, 0x00000000, 0x420E9999, 0x00000000, 0x00000000, 0x420E9999, 0x422B8247, 0x00000000, 0xC20E9999, 0x422B8247, 0x00000000, 0xC20E9999, 0xC1B7048E, 0x00000000, 0x420E9999, 0xC1B7048E, 0x00000000, 0x420E9999, 0x00000000, 0x00000000, 0xC20E9999, 0x00000000, 0x00000000, 0xC20E9999, 0x00000000, 0x00000000, 0x420E9999, 0x00000000, 0x00000000, 0x420E9999, 0x422CB456, 0x00000000, 0xC20E9999, 0x422CB456, 0x00000000, 0xC20E9999, 0xC22CB456, 0x00000000, 0x420E9999, 0xC22CB456, 0x00000000, 0x420E9999, 0x00000000, 0x00000000, 0xC20E9999, 0x00000000, 0x00000000, 0xC24ACF13, 0x00000000, 0x00000000, 0x424ACF13, 0x00000000, 0x00000000, 0x424ACF13, 0x424ACF13, 0x00000000, 0xC24ACF13, 0x424ACF13, 0x00000000, 0xC24ACF13, 0xC24ACF13, 0x00000000, 0x424ACF13, 0xC24ACF13, 0x00000000, 0x424ACF13, 0x00000000, 0x00000000, 0xC24ACF13, 0x00000000, 0x00000000, 0xC1F80000, 0x41A00000, 0x00000000, 0x41F80000, 0x41A00000, 0x00000000, 0x41F80000, 0x42740000, 0x00000000, 0xC1F80000, 0x42740000, 0x00000000};
 extern const unsigned int lbl_803DADC4[31] = {0x636C4546, 0x61636550, 0x6F6C7900, 0x43616E27, 0x74204C6F, 0x61642046, 0x696C6521, 0x21202D20, 0x456E6D79, 0x46616365, 0x45666665, 0x63742E63, 0x70702C26, 0x640A0000, 0x636C5370, 0x724D616E, 0x61676572, 0x3A3A5365, 0x74546578, 0x74757265, 0x20457272, 0x6F722121, 0x202D2069, 0x6D616D75, 0x72612F45, 0x6E6D7946, 0x61636545, 0x66666563, 0x742E6370, 0x702C2025, 0x64000000};
-extern const char lbl_803DAE40[0x1C] = "it_j_00_rakugaki_pen.dat";
-extern const char lbl_803DAE5C[0x14] = "it_v_02_pencil.dat";
-extern const char lbl_803DAE70[0x18] = "clEFacePolyEffect";
+extern const char lbl_803DAE40[0x19] = "it_j_00_rakugaki_pen.dat";
+extern const char lbl_803DAE5C[0x13] = "it_v_02_pencil.dat";
+extern const char lbl_803DAE70[0x12] = "clEFacePolyEffect";
 
 struct PalSlot {
     unsigned char free;
@@ -100,8 +93,8 @@ struct PalSlot {
     void *pal;
 };
 
-static Vec3c sPosA = MakeVec3(0.0f, 0.0f, 0.0f);
-static Vec3c sPosB = MakeVec3(0.0f, 13.0f, 15.0f);
+static Vec3c sPosA = Vec3c(0.0f, 0.0f, 0.0f);
+static Vec3c sPosB = Vec3c(0.0f, 13.0f, 15.0f);
 static void *sBuffers[12];
 static void *sPalettes[12];
 static PalSlot sPalSlots[10];
@@ -185,7 +178,7 @@ static inline void MakeMtxPivot(Mtx out, Mtx pivot, float s, const Vec3 &p, cons
 
 class clEFacePolyEffect {
 public:
-    virtual ~clEFacePolyEffect() {}
+    virtual ~clEFacePolyEffect();
 
     int timer;
     int state;
@@ -1005,3 +998,5 @@ void clEFacePolyEffect::Start(int item) {
     }
     }
 }
+
+clEFacePolyEffect::~clEFacePolyEffect() {}
