@@ -60,6 +60,9 @@ static inline void groundedAngle(float &a) {
     while (lbl_806DA488 <= a) a-=lbl_806DA484;
     while (a < lbl_806DA48C) a+=lbl_806DA484;
 }
+static inline float groundedTargetSpeed(float angle, float maximum, float minimum) {
+    return (maximum-minimum)/lbl_806DA4FC*(lbl_806DA4FC-angle)+minimum;
+}
 /* The singleton accessor keeps its null fallback in the target. */
 static inline void *courseData() {
     return SINGLETON_INSTANCE(g_courseData);
@@ -149,9 +152,10 @@ extern "C" void KartPhysics_GroundedMovement(GroundedMovementState *self) {
                         int j=fn_801DBA34(self->follower)%n;
                         PhysicsPlainVec point=*(const PhysicsPlainVec *)(constants+0x468);
                         /* Target reads +0x10 for this z, across the record boundary. */
-                        point.x=candidate[j].x;
-                        point.y=candidate[j].y;
-                        point.z=candidate[j+1].metadata;
+                        GroundedWaypoint *record=candidate+j;
+                        point.x=record->x;
+                        point.y=record->y;
+                        point.z=record[1].metadata;
                         float distance=fn_800D3184(&other,&point);
                         PhysicsPlainVec delta=*(const PhysicsPlainVec *)(constants+0x474);
                         delta.set(point.x-start.x,point.y-start.y,point.z-start.z);
@@ -192,7 +196,7 @@ extern "C" void KartPhysics_GroundedMovement(GroundedMovementState *self) {
     groundedAngle(bend);
     float angle=(float)__fabs(lbl_806DA490*bend);
     if (lbl_806DA4FC<=angle) angle=lbl_806DA4FC;
-    float target=(self->maximumSpeed-self->minimumSpeed)/lbl_806DA4FC*(lbl_806DA4FC-angle)+self->minimumSpeed;
+    float target=groundedTargetSpeed(angle,self->maximumSpeed,self->minimumSpeed);
     float delta=target-self->speed;
     float limit=lbl_806D1930;
     if (limit<=delta) delta=limit;
