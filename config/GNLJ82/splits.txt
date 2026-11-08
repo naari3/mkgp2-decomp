@@ -12103,11 +12103,17 @@ game/FlowCardCheck.cpp:
 	.text       start:0x80232884 end:0x80232924
 
 game/FlowCardCheck_nm1.cpp:
-	extab       start:0x8001C3D4 end:0x8001C704
-	extabindex  start:0x8002AAB8 end:0x8002AC14
-	.text       start:0x80232924 end:0x802379E8
+	extab       start:0x8001C3D4 end:0x8001C46C
+	extabindex  start:0x8002AAB8 end:0x8002AAC4
+	.text       start:0x80232924 end:0x80232E64
+	.data       start:0x804EE3D4 end:0x804EE3F4
+
+game/FlowCardCheck_nm2.cpp:
+	extab       start:0x8001C46C end:0x8001C704
+	extabindex  start:0x8002AAC4 end:0x8002AC14
+	.text       start:0x80232E64 end:0x802379E8
 	.rodata     start:0x803DB6E0 end:0x803DC0C0
-	.data       start:0x804EE3A8 end:0x804EE520
+	.data       start:0x804EE3F4 end:0x804EE520
 	.sdata      start:0x806D0650 end:0x806D0728
 
 game/FlowCardCheck_hooks.cpp:
