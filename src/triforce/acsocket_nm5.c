@@ -43,12 +43,12 @@ s32 acBind(s32 s, const void* addr, s32 len) {
 }
 
 static inline s32 Accept(s32 s, void* addr, u32* len) {
-    OSSemaphore* sem;
-    AcSock* k = SOCK(s);
-    u32 addrOff;
     u32 lenOff;
+    u32 addrOff;
+    AcSock* k = SOCK(s);
+    OSSemaphore* sem;
     u32 v;
-    u32 b;
+    u8* b;
 
     if ((addr == NULL || len == NULL) && (addr != NULL || len != NULL)) {
         return -4;
@@ -68,10 +68,10 @@ static inline s32 Accept(s32 s, void* addr, u32* len) {
         lenOff = 0;
     } else {
         v = *len;
-        b = k->bufAddr;
-        lenOff = b + State.bufOff;
+        b = (u8*)k->bufAddr;
+        lenOff = (u32)(b + State.bufOff);
         *(u32*)Buf = BSWAP32(v);
-        addrOff = b + (State.bufOff + 4);
+        addrOff = (u32)((b + 4) + State.bufOff);
         memset(Buf + 4, 0, 0x40);
         fn_8028D530(Buf, k->bufAddr + State.bufOff, 0x60);
     }
