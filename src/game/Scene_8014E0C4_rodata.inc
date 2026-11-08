@@ -33,212 +33,14 @@ struct R_80364368 {
     const void *p27;
     const void *p28;
 };
-struct R_803667A8 {
-    unsigned int w0[40];
-    const void *p1;
-    unsigned int w2[2];
-    const void *p3;
-    unsigned int w4[2];
-    const void *p5;
-    unsigned int w6[2];
-    const void *p7;
-    unsigned int w8[2];
-    const void *p9;
-    unsigned int w10[2];
-    const void *p11;
-    unsigned int w12[2];
-    const void *p13;
-    unsigned int w14[2];
-    const void *p15;
-    unsigned int w16[2];
-    const void *p17;
-    unsigned int w18[2];
-    const void *p19;
-    unsigned int w20[2];
-    const void *p21;
-    unsigned int w22[2];
-    const void *p23;
-    unsigned int w24[2];
-    const void *p25;
-    unsigned int w26[2];
-    const void *p27;
-    unsigned int w28[2];
-    const void *p29;
-    unsigned int w30[2];
-    const void *p31;
-    unsigned int w32[2];
-    const void *p33;
-    unsigned int w34[2];
-    const void *p35;
-    unsigned int w36[2];
-    const void *p37;
-    unsigned int w38[2];
-    const void *p39;
-    unsigned int w40[2];
-    const void *p41;
-    unsigned int w42[2];
-    const void *p43;
-    unsigned int w44[2];
-    const void *p45;
-    unsigned int w46[2];
-    const void *p47;
-    unsigned int w48[2];
-    const void *p49;
-    unsigned int w50[2];
-    const void *p51;
-    unsigned int w52[5];
-    const void *p53;
-    unsigned int w54[2];
-    const void *p55;
-    unsigned int w56[2];
-    const void *p57;
-    unsigned int w58[2];
-    const void *p59;
-    unsigned int w60[2];
-    const void *p61;
-    unsigned int w62[2];
-    const void *p63;
-    unsigned int w64[2];
-    const void *p65;
-    unsigned int w66[2];
-    const void *p67;
-    unsigned int w68[2];
-    const void *p69;
-    unsigned int w70[2];
-    const void *p71;
-    unsigned int w72[2];
-    const void *p73;
-    unsigned int w74[2];
-    const void *p75;
-    unsigned int w76[2];
-    const void *p77;
-    unsigned int w78[2];
-    const void *p79;
-    unsigned int w80[2];
-    const void *p81;
-    unsigned int w82[2];
-    const void *p83;
-    unsigned int w84[2];
-    const void *p85;
-    unsigned int w86[5];
-    const void *p87;
-    unsigned int w88[2];
-    const void *p89;
-    unsigned int w90[2];
-    const void *p91;
-    unsigned int w92[2];
-    const void *p93;
-    unsigned int w94[2];
-    const void *p95;
-    unsigned int w96[2];
-    const void *p97;
-    unsigned int w98[2];
-    const void *p99;
-    unsigned int w100[2];
-    const void *p101;
-    unsigned int w102[2];
-    const void *p103;
-    unsigned int w104[2];
-    const void *p105;
-    unsigned int w106[2];
-    const void *p107;
-    unsigned int w108[2];
-    const void *p109;
-    unsigned int w110[2];
-    const void *p111;
-    unsigned int w112[2];
-    const void *p113;
-    unsigned int w114[2];
-    const void *p115;
-    unsigned int w116[2];
-    const void *p117;
-    unsigned int w118[2];
-    const void *p119;
-    unsigned int w120[2];
-    const void *p121;
-    unsigned int w122[2];
-    const void *p123;
-    unsigned int w124[2];
-    const void *p125;
-    unsigned int w126[2];
-    const void *p127;
-    unsigned int w128[2];
-    const void *p129;
-    unsigned int w130[2];
-    const void *p131;
-    unsigned int w132[2];
-    const void *p133;
-    unsigned int w134[2];
-    const void *p135;
-    unsigned int w136[2];
-    const void *p137;
-    unsigned int w138[2];
-    const void *p139;
-    unsigned int w140[2];
-    const void *p141;
-    unsigned int w142[2];
-    const void *p143;
-    unsigned int w144[2];
-    const void *p145;
-    unsigned int w146[5];
-    const void *p147;
-    unsigned int w148[2];
-    const void *p149;
-    unsigned int w150[2];
-    const void *p151;
-    unsigned int w152[2];
-    const void *p153;
-    unsigned int w154[2];
-    const void *p155;
-    unsigned int w156[2];
-    const void *p157;
-    unsigned int w158[2];
-    const void *p159;
-    unsigned int w160[2];
-    const void *p161;
-    unsigned int w162[2];
-    const void *p163;
-    unsigned int w164[2];
-    const void *p165;
-    unsigned int w166[2];
-    const void *p167;
-    unsigned int w168[2];
-    const void *p169;
-    unsigned int w170[2];
-    const void *p171;
-    unsigned int w172[2];
-    const void *p173;
-    unsigned int w174[2];
-    const void *p175;
-    unsigned int w176[2];
-    const void *p177;
-    unsigned int w178[2];
-    const void *p179;
-    unsigned int w180[2];
-    const void *p181;
-    unsigned int w182[2];
-    const void *p183;
-    unsigned int w184[2];
-    const void *p185;
-    unsigned int w186[2];
-    const void *p187;
-    unsigned int w188[2];
-    const void *p189;
-    unsigned int w190[2];
-    const void *p191;
-    unsigned int w192[2];
-    const void *p193;
-    unsigned int w194[2];
-    const void *p195;
-    unsigned int w196[2];
-    const void *p197;
-    unsigned int w198[2];
-    const void *p199;
-    unsigned int w200[2];
-    const void *p201;
-    unsigned int w202[2];
-    const void *p203;
-    unsigned int w204[5];
+struct DemoPhase {
+    float time;
+    unsigned int id;
+};
+struct DemoScriptEntry {
+    const void *data;
+    unsigned int id;
+    unsigned int type;
 };
 struct Vec3R {
     float x, y, z;
@@ -870,212 +672,128 @@ static const unsigned int lbl_803666E0[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-static const R_803667A8 lbl_803667A8 = {
-    {0x44AF0000, 0x43C70000, 0x43C60000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x44AF8000, 0x43C70000, 0x43C60000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44B0E000, 0x43C70000, 0x43C60000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000},
-    lbl_80364C50,
-    {0x00000000, 0x00000000},
-    lbl_80364C50,
-    {0x00000002, 0x00000001},
-    lbl_80364CC8,
-    {0x00000001, 0x00000000},
-    lbl_80364CC8,
-    {0x00000003, 0x00000001},
-    lbl_80364D40,
-    {0x00000004, 0x00000000},
-    lbl_80364D40,
-    {0x00000006, 0x00000001},
-    lbl_80364E08,
-    {0x00000005, 0x00000000},
-    lbl_80364E08,
-    {0x00000007, 0x00000001},
-    lbl_80365128,
-    {0x0000000C, 0x00000000},
-    lbl_803652B8,
-    {0x0000000A, 0x00000000},
-    lbl_80365380,
-    {0x0000000A, 0x00000003},
-    lbl_80365448,
-    {0x00000009, 0x00000000},
-    lbl_80365510,
-    {0x00000009, 0x00000003},
-    lbl_803655D8,
-    {0x00000008, 0x00000000},
-    lbl_803656A0,
-    {0x00000008, 0x00000003},
-    lbl_80365768,
-    {0x0000000B, 0x00000000},
-    lbl_80365830,
-    {0x0000000B, 0x00000003},
-    lbl_803658F8,
-    {0x0000000D, 0x00000000},
-    lbl_80365EE8,
-    {0x00000010, 0x00000000},
-    lbl_80365F60,
-    {0x00000013, 0x00000000},
-    lbl_80365D80,
-    {0x00000011, 0x00000000},
-    lbl_80365E20,
-    {0x00000012, 0x00000001},
-    lbl_80366578,
-    {0x0000000E, 0x00000000},
-    lbl_80366640,
-    {0x0000000E, 0x00000003},
-    lbl_803666E0,
-    {0x0000000F, 0x00000000},
-    &lbl_803667A8,
-    {0x0000000F, 0x00000003, 0x00000000, 0x00000000, 0x00000000},
-    lbl_80364C50,
-    {0x00000000, 0x00000000},
-    lbl_80364C50,
-    {0x00000002, 0x00000001},
-    lbl_80364CC8,
-    {0x00000001, 0x00000000},
-    lbl_80364CC8,
-    {0x00000003, 0x00000001},
-    lbl_80364D40,
-    {0x00000004, 0x00000000},
-    lbl_80364D40,
-    {0x00000006, 0x00000001},
-    lbl_80364E08,
-    {0x00000005, 0x00000000},
-    lbl_80364E08,
-    {0x00000007, 0x00000001},
-    lbl_80365128,
-    {0x0000000C, 0x00000000},
-    lbl_803652B8,
-    {0x0000000A, 0x00000000},
-    lbl_80365380,
-    {0x0000000A, 0x00000003},
-    lbl_80365448,
-    {0x00000009, 0x00000000},
-    lbl_80365510,
-    {0x00000009, 0x00000003},
-    lbl_803655D8,
-    {0x00000008, 0x00000000},
-    lbl_803656A0,
-    {0x00000008, 0x00000003},
-    lbl_80365768,
-    {0x0000000B, 0x00000000},
-    lbl_80365830,
-    {0x0000000B, 0x00000003, 0x00000000, 0x00000000, 0x00000000},
-    lbl_80364C50,
-    {0x00000026, 0x00000000},
-    lbl_80364C50,
-    {0x0000002B, 0x00000001},
-    lbl_80364CC8,
-    {0x00000027, 0x00000000},
-    lbl_80364CC8,
-    {0x0000002C, 0x00000001},
-    lbl_80364ED0,
-    {0x00000028, 0x00000000},
-    lbl_80364ED0,
-    {0x0000002D, 0x00000001},
-    lbl_80364F98,
-    {0x00000029, 0x00000000},
-    lbl_80364F98,
-    {0x0000002E, 0x00000001},
-    lbl_80365060,
-    {0x0000002A, 0x00000000},
-    lbl_80365060,
-    {0x0000002F, 0x00000001},
-    lbl_803651F0,
-    {0x00000030, 0x00000000},
-    lbl_803652B8,
-    {0x00000033, 0x00000000},
-    lbl_80365380,
-    {0x00000033, 0x00000003},
-    lbl_80365448,
-    {0x00000032, 0x00000000},
-    lbl_80365510,
-    {0x00000032, 0x00000003},
-    lbl_803655D8,
-    {0x00000031, 0x00000000},
-    lbl_803656A0,
-    {0x00000031, 0x00000003},
-    lbl_80365768,
-    {0x00000034, 0x00000000},
-    lbl_80365830,
-    {0x00000034, 0x00000003},
-    lbl_803659C0,
-    {0x00000035, 0x00000000},
-    lbl_80365AB0,
-    {0x00000036, 0x00000000},
-    lbl_80365BA0,
-    {0x00000037, 0x00000000},
-    lbl_80365C90,
-    {0x00000038, 0x00000000},
-    lbl_80365FD8,
-    {0x00000039, 0x00000000},
-    lbl_803661B8,
-    {0x0000003A, 0x00000000},
-    lbl_80366398,
-    {0x0000003B, 0x00000000},
-    lbl_80366578,
-    {0x0000003C, 0x00000000},
-    lbl_80366640,
-    {0x0000003C, 0x00000003},
-    lbl_803666E0,
-    {0x0000003D, 0x00000000},
-    &lbl_803667A8,
-    {0x0000003D, 0x00000003, 0x00000000, 0x00000000, 0x00000000},
-    lbl_80364C50,
-    {0x00000026, 0x00000000},
-    lbl_80364C50,
-    {0x0000002B, 0x00000001},
-    lbl_80364CC8,
-    {0x00000027, 0x00000000},
-    lbl_80364CC8,
-    {0x0000002C, 0x00000001},
-    lbl_80364ED0,
-    {0x00000028, 0x00000000},
-    lbl_80364ED0,
-    {0x0000002D, 0x00000001},
-    lbl_80364F98,
-    {0x00000029, 0x00000000},
-    lbl_80364F98,
-    {0x0000002E, 0x00000001},
-    lbl_80365060,
-    {0x0000002A, 0x00000000},
-    lbl_80365060,
-    {0x0000002F, 0x00000001},
-    lbl_803652B8,
-    {0x00000033, 0x00000000},
-    lbl_80365380,
-    {0x00000033, 0x00000003},
-    lbl_80365448,
-    {0x00000032, 0x00000000},
-    lbl_80365510,
-    {0x00000032, 0x00000003},
-    lbl_803655D8,
-    {0x00000031, 0x00000000},
-    lbl_803656A0,
-    {0x00000031, 0x00000003},
-    lbl_80365768,
-    {0x00000034, 0x00000000},
-    lbl_80365830,
-    {0x00000034, 0x00000003},
-    lbl_803659C0,
-    {0x00000035, 0x00000000},
-    lbl_80365AB0,
-    {0x00000036, 0x00000000},
-    lbl_80365BA0,
-    {0x00000037, 0x00000000},
-    lbl_80365C90,
-    {0x00000038, 0x00000000},
-    lbl_80365FD8,
-    {0x00000039, 0x00000000},
-    lbl_803661B8,
-    {0x0000003A, 0x00000000},
-    lbl_80366398,
-    {0x0000003B, 0x00000000},
-    lbl_80366578,
-    {0x0000003C, 0x00000000},
-    lbl_80366640,
-    {0x0000003C, 0x00000003},
-    lbl_803666E0,
-    {0x0000003D, 0x00000000},
-    &lbl_803667A8,
-    {0x0000003D, 0x00000003, 0x00000000, 0x00000000, 0x00000000},
+static const unsigned int lbl_803667A8[40] = {
+    0x44AF0000, 0x43C70000, 0x43C60000, 0x3F800000, 0x3F800000, 0x00000000,
+    0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x44AF8000, 0x43C70000,
+    0x43C60000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
+    0x3F800000, 0x3F800000, 0x44B0E000, 0x43C70000, 0x43C60000, 0x3F800000,
+    0x3F800000, 0x00000000, 0x3F800000, 0x3F800000, 0x3F800000, 0x00000000,
+    0xBF800000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+};
+static const DemoScriptEntry lbl_80366848[27] = {
+    {lbl_80364C50, 0x00000000, 0x00000000},
+    {lbl_80364C50, 0x00000002, 0x00000001},
+    {lbl_80364CC8, 0x00000001, 0x00000000},
+    {lbl_80364CC8, 0x00000003, 0x00000001},
+    {lbl_80364D40, 0x00000004, 0x00000000},
+    {lbl_80364D40, 0x00000006, 0x00000001},
+    {lbl_80364E08, 0x00000005, 0x00000000},
+    {lbl_80364E08, 0x00000007, 0x00000001},
+    {lbl_80365128, 0x0000000C, 0x00000000},
+    {lbl_803652B8, 0x0000000A, 0x00000000},
+    {lbl_80365380, 0x0000000A, 0x00000003},
+    {lbl_80365448, 0x00000009, 0x00000000},
+    {lbl_80365510, 0x00000009, 0x00000003},
+    {lbl_803655D8, 0x00000008, 0x00000000},
+    {lbl_803656A0, 0x00000008, 0x00000003},
+    {lbl_80365768, 0x0000000B, 0x00000000},
+    {lbl_80365830, 0x0000000B, 0x00000003},
+    {lbl_803658F8, 0x0000000D, 0x00000000},
+    {lbl_80365EE8, 0x00000010, 0x00000000},
+    {lbl_80365F60, 0x00000013, 0x00000000},
+    {lbl_80365D80, 0x00000011, 0x00000000},
+    {lbl_80365E20, 0x00000012, 0x00000001},
+    {lbl_80366578, 0x0000000E, 0x00000000},
+    {lbl_80366640, 0x0000000E, 0x00000003},
+    {lbl_803666E0, 0x0000000F, 0x00000000},
+    {lbl_803667A8, 0x0000000F, 0x00000003},
+    {0, 0x00000000, 0x00000000},
+};
+static const DemoScriptEntry lbl_8036698C[18] = {
+    {lbl_80364C50, 0x00000000, 0x00000000},
+    {lbl_80364C50, 0x00000002, 0x00000001},
+    {lbl_80364CC8, 0x00000001, 0x00000000},
+    {lbl_80364CC8, 0x00000003, 0x00000001},
+    {lbl_80364D40, 0x00000004, 0x00000000},
+    {lbl_80364D40, 0x00000006, 0x00000001},
+    {lbl_80364E08, 0x00000005, 0x00000000},
+    {lbl_80364E08, 0x00000007, 0x00000001},
+    {lbl_80365128, 0x0000000C, 0x00000000},
+    {lbl_803652B8, 0x0000000A, 0x00000000},
+    {lbl_80365380, 0x0000000A, 0x00000003},
+    {lbl_80365448, 0x00000009, 0x00000000},
+    {lbl_80365510, 0x00000009, 0x00000003},
+    {lbl_803655D8, 0x00000008, 0x00000000},
+    {lbl_803656A0, 0x00000008, 0x00000003},
+    {lbl_80365768, 0x0000000B, 0x00000000},
+    {lbl_80365830, 0x0000000B, 0x00000003},
+    {0, 0x00000000, 0x00000000},
+};
+static const DemoScriptEntry lbl_80366A64[31] = {
+    {lbl_80364C50, 0x00000026, 0x00000000},
+    {lbl_80364C50, 0x0000002B, 0x00000001},
+    {lbl_80364CC8, 0x00000027, 0x00000000},
+    {lbl_80364CC8, 0x0000002C, 0x00000001},
+    {lbl_80364ED0, 0x00000028, 0x00000000},
+    {lbl_80364ED0, 0x0000002D, 0x00000001},
+    {lbl_80364F98, 0x00000029, 0x00000000},
+    {lbl_80364F98, 0x0000002E, 0x00000001},
+    {lbl_80365060, 0x0000002A, 0x00000000},
+    {lbl_80365060, 0x0000002F, 0x00000001},
+    {lbl_803651F0, 0x00000030, 0x00000000},
+    {lbl_803652B8, 0x00000033, 0x00000000},
+    {lbl_80365380, 0x00000033, 0x00000003},
+    {lbl_80365448, 0x00000032, 0x00000000},
+    {lbl_80365510, 0x00000032, 0x00000003},
+    {lbl_803655D8, 0x00000031, 0x00000000},
+    {lbl_803656A0, 0x00000031, 0x00000003},
+    {lbl_80365768, 0x00000034, 0x00000000},
+    {lbl_80365830, 0x00000034, 0x00000003},
+    {lbl_803659C0, 0x00000035, 0x00000000},
+    {lbl_80365AB0, 0x00000036, 0x00000000},
+    {lbl_80365BA0, 0x00000037, 0x00000000},
+    {lbl_80365C90, 0x00000038, 0x00000000},
+    {lbl_80365FD8, 0x00000039, 0x00000000},
+    {lbl_803661B8, 0x0000003A, 0x00000000},
+    {lbl_80366398, 0x0000003B, 0x00000000},
+    {lbl_80366578, 0x0000003C, 0x00000000},
+    {lbl_80366640, 0x0000003C, 0x00000003},
+    {lbl_803666E0, 0x0000003D, 0x00000000},
+    {lbl_803667A8, 0x0000003D, 0x00000003},
+    {0, 0x00000000, 0x00000000},
+};
+static const DemoScriptEntry lbl_80366BD8[30] = {
+    {lbl_80364C50, 0x00000026, 0x00000000},
+    {lbl_80364C50, 0x0000002B, 0x00000001},
+    {lbl_80364CC8, 0x00000027, 0x00000000},
+    {lbl_80364CC8, 0x0000002C, 0x00000001},
+    {lbl_80364ED0, 0x00000028, 0x00000000},
+    {lbl_80364ED0, 0x0000002D, 0x00000001},
+    {lbl_80364F98, 0x00000029, 0x00000000},
+    {lbl_80364F98, 0x0000002E, 0x00000001},
+    {lbl_80365060, 0x0000002A, 0x00000000},
+    {lbl_80365060, 0x0000002F, 0x00000001},
+    {lbl_803652B8, 0x00000033, 0x00000000},
+    {lbl_80365380, 0x00000033, 0x00000003},
+    {lbl_80365448, 0x00000032, 0x00000000},
+    {lbl_80365510, 0x00000032, 0x00000003},
+    {lbl_803655D8, 0x00000031, 0x00000000},
+    {lbl_803656A0, 0x00000031, 0x00000003},
+    {lbl_80365768, 0x00000034, 0x00000000},
+    {lbl_80365830, 0x00000034, 0x00000003},
+    {lbl_803659C0, 0x00000035, 0x00000000},
+    {lbl_80365AB0, 0x00000036, 0x00000000},
+    {lbl_80365BA0, 0x00000037, 0x00000000},
+    {lbl_80365C90, 0x00000038, 0x00000000},
+    {lbl_80365FD8, 0x00000039, 0x00000000},
+    {lbl_803661B8, 0x0000003A, 0x00000000},
+    {lbl_80366398, 0x0000003B, 0x00000000},
+    {lbl_80366578, 0x0000003C, 0x00000000},
+    {lbl_80366640, 0x0000003C, 0x00000003},
+    {lbl_803666E0, 0x0000003D, 0x00000000},
+    {lbl_803667A8, 0x0000003D, 0x00000003},
+    {0, 0x00000000, 0x00000000},
 };
 static const unsigned int lbl_80366D40[40] = {
     0xC2807454, 0x00000000, 0xBFC2233A, 0x00000000, 0xC241E666, 0x00000000, 0xC186F41F, 0x00000000, 0xC200FAE1, 0x00000000, 0xBFC2233A, 0x00000000, 0xC178999A, 0x00000000, 0xC186F41F, 0x00000000, 0x3E5BF488, 0x00000000, 0xBFC2233A, 0x00000000, 0x41838EBF, 0x00000000, 0xC186F41F, 0x00000000, 0x420A629C, 0x00000000, 0xBFC2233A, 0x00000000, 0x424964F7, 0x00000000, 0xC186F41F, 0x00000000, 0x42852831, 0x00000000, 0xBFC2233A, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000002,
@@ -1107,15 +825,25 @@ static const unsigned int lbl_80366E34[3] = {
 static const unsigned int lbl_80366E40[3] = {
     0x00000000, 0x00000000, 0x00000000,
 };
-static const unsigned int lbl_80366E4C[41] = {
-    0x41A00000, 0x41F00000, 0x43A00000, 0x42200000, 0x440C0000, 0x41A00000,
-    0x41200000, 0x43DC0000, 0x44110000, 0x43E10000, 0x40C00000, 0x41000000,
-    0x41200000, 0x40A00000, 0x40E00000, 0x43480000, 0x00000000, 0x42C80000,
-    0x00000001, 0x42F00000, 0x00000002, 0x42700000, 0x00000003, 0x42700000,
-    0x00000004, 0x42700000, 0x00000005, 0x43700000, 0x00000006, 0x43960000,
-    0x00000007, 0x43340000, 0x00000008, 0x43700000, 0x00000009, 0x444E5F73,
-    0x74616469, 0x756D5F73, 0x686F7274, 0x5F612E64, 0x61740000,
+static const float lbl_80366E4C[10] = {
+    20.0f, 30.0f, 320.0f, 40.0f, 560.0f, 20.0f, 10.0f, 440.0f, 580.0f, 450.0f,
 };
+static const float lbl_80366E74[5] = {
+    6.0f, 8.0f, 10.0f, 5.0f, 7.0f,
+};
+static const DemoPhase lbl_80366E88[10] = {
+    {200.0f, 0},
+    {100.0f, 1},
+    {120.0f, 2},
+    {60.0f, 3},
+    {60.0f, 4},
+    {60.0f, 5},
+    {240.0f, 6},
+    {300.0f, 7},
+    {180.0f, 8},
+    {240.0f, 9},
+};
+static const char lbl_80366ED8[] = "DN_stadium_short_a.dat";
 static const CourseModeInfo lbl_80366EF0[21] = {
     {0x1, -1, 0, 0, {0, 0}, 0x0, 0x0, lbl_806D7F78},
     {0x78, 0xD, 1, 0, {0, 0}, 0x0, 0x0, lbl_806D7F80},
@@ -1212,12 +940,8 @@ static const char lbl_80367568[] = "halation.dat";
 static const char lbl_80367578[] = "MR_highway_sun_joint";
 static const char lbl_80367590[] = "cream_l.dat";
 static const char lbl_8036759C[] = "eff_plate_cream_s.dat";
-static const unsigned int lbl_803675B4[4] = {
-    0x4D41494E, 0x20204244, 0x20494420, 0x25730000,
-};
-static const unsigned int lbl_803675C4[4] = {
-    0x4D454449, 0x41204244, 0x20494420, 0x25730000,
-};
+static const char lbl_803675B4[] = "MAIN  BD ID %s";
+static const char lbl_803675C4[] = "MEDIA BD ID %s";
 static const unsigned int lbl_803675D4[21] = {
     0x655F6174, 0x5F73705F, 0x6E696E74, 0x656E646F, 0x2E74706C, 0x00000000,
     0x61745F73, 0x705F6E69, 0x6E74656E, 0x646F5F6A, 0x2E74706C, 0x00000000,

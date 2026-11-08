@@ -5494,8 +5494,6 @@
   "src/game/Scene_8014E0C4.cpp": {
     "extab_fn_8014E0C4": "@etb_8000E8F4",
     "extabindex_fn_8014E0C4": "@eti_800255BC",
-    "extab_fn_8014E118": "@etb_8000E90C",
-    "extabindex_fn_8014E118": "@eti_800255C8",
     "extab_fn_8014E618": "@etb_8000EA88",
     "extabindex_fn_8014E618": "@eti_800255D4",
     "extab_fn_8014E804": "@etb_8000EA90",
@@ -5671,7 +5669,16 @@
     "__ct__8SprListCFv": "fn_80157D18",
     "__dt__8SprListCFv": "dtor_80157850",
     "__ct__9LayerListFv": "fn_80157820",
-    "__dt__9LayerListFv": "fn_8014E04C"
+    "__dt__9LayerListFv": "fn_8014E04C",
+    "__ct__12DemoScene1C0Fi": "fn_8014E118",
+    "__vt__12DemoScene1C0": "lbl_8048FED8",
+    "__ct__8HalationFPCcPvff": "fn_80171CD0",
+    "__ct__9DemoLightFv": "fn_80140874",
+    "__ct__10CreamModelFPCci": "fn_8013D800",
+    "__ct__6BdTextFv": "fn_80149214",
+    "__dt__6BdTextFv": "dtor_800869D0",
+    "__nwa__FUl": "FUN_8003b120",
+    "__dla__FPv": "MemoryManager_Free"
   },
   "src/game/RaceHud_80147470.cpp": {
     "extab_fn_80147470": "@etb_8000DF44",
