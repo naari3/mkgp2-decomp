@@ -1,4 +1,4 @@
-/* Native reconstruction of fn_8016FE44; retained as NonMatching. */
+/* Native reconstruction of fn_8016FE44. */
 #include "game/Scene_8016FE44_private.h"
 
 extern "C" {
@@ -32,13 +32,7 @@ static inline RenderJoint *Next(RenderJoint *j) {
 static inline void Check(RenderJoint *j, int line) {
     if (!j) __assert(lbl_806D8C98, line, lbl_806D8CA0);
 }
-static inline float Clamp01(float f) {
-    float lo = 0.0f;
-    if (f < lo) return lo;
-    float hi = 1.0f;
-    if (f > hi) return hi;
-    return f;
-}
+#define Clamp01(value) ((value) < 0.0f ? 0.0f : ((value) > 1.0f ? 1.0f : (value)))
 static inline void ApplyTransform(SparkRender *s, RenderJoint *j) {
     Check(j, 0x3F1);
     Object_SetJObjPositionX(s->modelB, j->x);
