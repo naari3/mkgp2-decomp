@@ -30,6 +30,10 @@ void fn_8017EFFC(unsigned int);
 void DMAChannelManager_Init();
 void fn_801D7610(void *,int);
 }
+static inline Menu *CreateListMenu(const char *name) {
+    Menu *result=fn_801816AC(name);
+    return result;
+}
 static inline void AddBankNames(Menu *m) {
     for (int i=0;i<9;i++) fn_801804CC(m,lbl_80491768[i]);
 }
@@ -75,6 +79,7 @@ static inline bool ListStreamFiles(Menu *&m,const char *s) {
 }
 extern "C" int fn_8017F538(unsigned int msg,void *,int cursor,int,unsigned int sub) {
     const char *s=lbl_80376220;
+    int numberIndex;
     Menu *menu;
     switch(msg) {
     case 0:
@@ -92,11 +97,11 @@ extern "C" int fn_8017F538(unsigned int msg,void *,int cursor,int,unsigned int s
                 break;
             }
             case 2: {
-                Menu *m=fn_801816AC(s+0x978);
+                Menu *m=CreateListMenu(s+0x978);
                 fn_801805AC(m,(void *)fn_8017EB58);
                 char text[16];
-                for (int i=0;i<21;i++) {
-                    sprintf(text,lbl_806D91CC,i);
+                for (numberIndex=0;numberIndex<21;numberIndex++) {
+                    sprintf(text,lbl_806D91CC,numberIndex);
                     fn_801804CC(m,text);
                 }
                 break;
