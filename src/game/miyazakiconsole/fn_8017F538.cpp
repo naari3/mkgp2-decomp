@@ -46,8 +46,8 @@ static inline void AddSoundKinds(Menu *m,const char *s) {
     fn_801804CC(m,s+0xb50);
     fn_801804CC(m,lbl_806D9228);
 }
-static inline bool ListStreamFiles(const char *s) {
-    Menu *m=fn_801816AC(s+0x7d0);
+static inline bool ListStreamFiles(Menu *&m,const char *s) {
+    m=fn_801816AC(s+0x7d0);
     if (m==0) return false;
     fn_801805AC(m,(void *)fn_8017D660);
     fn_80180458(m);
@@ -158,7 +158,10 @@ extern "C" int fn_8017F538(unsigned int msg,void *,int cursor,int,unsigned int s
             lbl_806D1630=0;
             lbl_806D1634=0;
             lbl_806D1638=0;
-            if (ListStreamFiles(s)) DMAChannelManager_Init();
+            {
+                Menu *streamMenu;
+                if (ListStreamFiles(streamMenu,s)) DMAChannelManager_Init();
+            }
             break;
         case 4: {
             g_characterId=sub;
