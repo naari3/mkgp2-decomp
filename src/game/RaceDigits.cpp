@@ -30,6 +30,8 @@ DigitPanel::DigitPanel(int layer_) : layer(layer_),state(-1),variant(0),
     SpriteHandle_SetActiveFlag(sprites[0],0);
 }
 
+#pragma push
+#pragma optimization_level 3 /* found by tools/pragmasweep.py --objdiff */
 DigitHud::DigitHud(int mode_, int layer_) : layer(layer_),state(-1),mode(mode_),
     offset(220.0f),scale(1.0f),slide(new FlowFaderF(0.0f)),field30(0) {
     PreloadResource(0xB53); PreloadResource(0xBD3);
@@ -67,6 +69,8 @@ DigitHud::DigitHud(int mode_, int layer_) : layer(layer_),state(-1),mode(mode_),
     SetDigitPanelPosition(others[0].p,lbl_804EE9E0[variant][1]);
     slide.p->Set(220.0f,0.0f,7);
 }
+#pragma pop
+
 
 void DigitPanel::Update() {
     switch(state) {
