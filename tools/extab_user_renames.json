@@ -5654,7 +5654,13 @@
     "__ct__15SceneCacheModelFPCci": "SceneModel_Init",
     "insert__14SceneCacheListFRC14SceneCacheIterRC15SceneCacheEntry": "fn_80157A68",
     "extab_fn_8014E04C": "@etb_8000E8CC",
-    "extabindex_fn_8014E04C": "@eti_800255B0"
+    "extabindex_fn_8014E04C": "@eti_800255B0",
+    "__ct__10RaceSceneCFUci": "fn_80151F08",
+    "__ct__10RaceCameraFfifiPv": "Camera_Create",
+    "__ct__10RaceDriverFv": "KartDriver_New_Empty",
+    "__ct__11RaceTornadoFiP10RaceDriveriifff": "TornadoEffect_Ctor",
+    "__ct__16RaceInputManagerFv": "InputManager_Init",
+    "__vt__10RaceSceneC": "lbl_80490010"
   },
   "src/game/RaceHud_80147470.cpp": {
     "extab_fn_80147470": "@etb_8000DF44",

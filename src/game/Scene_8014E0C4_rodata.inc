@@ -246,7 +246,8 @@ struct Vec3R {
 struct RaceKartDescR {
     unsigned int character;
     const void *joint;
-    unsigned int enabled;
+    unsigned char enabled;
+    unsigned char f9;
 };
 /* Most of these are reached only through pool offsets in the asm
  * functions, so keep the linker from stripping them. */
@@ -1147,17 +1148,17 @@ static const char lbl_803671AC[] = "chara_kinopio_null_joint";
 static const char lbl_803671C8[] = "chara_mamechi_null_joint";
 static const char lbl_803671E4[] = "chara_waluigi_null_joint";
 static const RaceKartDescR lbl_80367200[11] = {
-    {0x00000000, lbl_803670E8, 0x01010000},
-    {0x00000003, lbl_80367100, 0x01010000},
-    {0x00000006, lbl_80367118, 0x01010000},
-    {0x00000008, lbl_80367130, 0x01010000},
-    {0x0000000A, lbl_80367148, 0x01010000},
-    {0x00000007, lbl_80367164, 0x01000000},
-    {0x00000002, lbl_8036717C, 0x00010000},
-    {0x00000001, lbl_80367194, 0x00010000},
-    {0x00000005, lbl_803671AC, 0x00010000},
-    {0x0000000C, lbl_803671C8, 0x00010000},
-    {0x0000000B, lbl_803671E4, 0x00010000},
+    {0x00000000, lbl_803670E8, 1, 1},
+    {0x00000003, lbl_80367100, 1, 1},
+    {0x00000006, lbl_80367118, 1, 1},
+    {0x00000008, lbl_80367130, 1, 1},
+    {0x0000000A, lbl_80367148, 1, 1},
+    {0x00000007, lbl_80367164, 1, 0},
+    {0x00000002, lbl_8036717C, 0, 1},
+    {0x00000001, lbl_80367194, 0, 1},
+    {0x00000005, lbl_803671AC, 0, 1},
+    {0x0000000C, lbl_803671C8, 0, 1},
+    {0x0000000B, lbl_803671E4, 0, 1},
 };
 static const int lbl_80367284[48] = {
     0x000000D3, 0x00000139, 0x000000D4, 0x000000D7, 0x000000D8, 0x000000D6, 0x000000D1, 0x000000CF, 0x000000CE, 0x0000012D, 0x000000D0, 0x0000012C, 0x0000012E, 0x0000012F, 0x00000130, 0x000000D2, 0x00000131, 0x00000132, 0x00000133, 0x00000134, 0x00000135, 0x00000136, 0x00000137, 0x00000138, 0x000000D3, 0x00000139, 0x000000D4, 0x000000D7, 0x000000D8, 0x000000D6, 0x000000D1, 0x000000CF, 0x000000CE, 0x0000012D, 0x000000D0, 0x0000012C, 0x0000012E, 0x0000012F, 0x00000130, 0x000000D2, 0x00000131, 0x00000132, 0x00000133, 0x00000134, 0x00000135, 0x00000136, 0x00000137, 0x00000138,
