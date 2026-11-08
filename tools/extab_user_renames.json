@@ -13381,6 +13381,8 @@
     "__dt__9GXChannelFv": "dtor_8007D9C4"
   },
   "src/game/EnmyFaceEffect_nm1.cpp": {
+    "@357": "@etb_8001C0B4",
+    "@358": "@eti_8002A914",
     "@677": "jumptable_804EE14C",
     "@725": "jumptable_804EE18C",
     "__nwa__FUl": "FUN_8003b120",

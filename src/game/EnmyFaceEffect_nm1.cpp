@@ -27,6 +27,9 @@ int fn_801DB8F0(void);
 int fn_801DB890(int ctx, int item);
 }
 
+extern const float lbl_806DB668;
+extern const float lbl_806DB66C;
+
 struct Vec3 {
     float x, y, z;
 };
@@ -37,7 +40,7 @@ struct Vec3c : Vec3 {
     Vec3c(const Vec3 &v) : Vec3(v) {}
     Vec3c(const Vec3c &v) : Vec3(v) {}
     ~Vec3c() {}
-    void RotationMatrix(Mtx rot) const;
+    void RotationMatrix(Mtx rot);
 };
 
 struct KartStatus {
@@ -121,10 +124,10 @@ static inline void RotMtx(Mtx rot, float rx, float ry, float rz) {
     rot[0][1] = cz;
 }
 
-inline void Vec3c::RotationMatrix(Mtx rot) const {
+inline void Vec3c::RotationMatrix(Mtx rot) {
     float rz = z;
-    float rx = x;
     float ry = y;
+    float rx = x;
     float sx = Sinf_LUT_Wrap(rx);
     float cx = Cosf_LUT_Wrap(rx);
     float sy = Sinf_LUT_Wrap(ry);
@@ -155,7 +158,7 @@ static inline void MakeMtx(Mtx out, float s, const Vec3 &p, const Vec3 &r) {
     PSMTXConcat(tr, out, out);
 }
 
-static inline void MakeMtxVec(Mtx out, float s, const Vec3c &p, const Vec3c &r) {
+static inline void MakeMtxVec(Mtx out, float s, const Vec3c &p, Vec3c &r) {
     Mtx tr, sc, rot;
     PSMTXIdentity(rot);
     PSMTXScale(sc, s, s, s);
@@ -554,8 +557,8 @@ void clEFacePolyEffect::UpdStar() {
         break;
     case 1:
         pos.y += speed;
-        speed -= 0.4f;
-        if (pos.y < 1.2f) {
+        speed -= lbl_806DB668;
+        if (pos.y < lbl_806DB66C) {
             speed = -speed;
         }
         if (--timer < 0) {
