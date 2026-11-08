@@ -238,7 +238,7 @@ struct R_803667A8 {
     const void *p201;
     unsigned int w202[2];
     const void *p203;
-    unsigned int w204[45];
+    unsigned int w204[5];
 };
 struct Vec3R {
     float x, y, z;
@@ -401,7 +401,7 @@ extern const char lbl_8036447C[] = "e_at_sp_comment.tpl";
 extern const char lbl_80364490[] = "e_at_sp_comment2.tpl";
 extern const char lbl_803644A8[] = "e_at_sp_tech01.tpl";
 extern const char lbl_803644BC[] = "e_at_sp_namcam.tpl";
-extern const SprEntry lbl_803644D0[80] = {
+static const SprEntry lbl_803644D0[80] = {
     {0x0, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 512.0f, 96.0f},
     {0x0, {0x00, 0x00, 0x00, 0x00, 0x42, 0xC0, 0x00, 0x00}, 512.0f, 96.0f},
     {0x0, {0x00, 0x00, 0x00, 0x00, 0x43, 0x90, 0x00, 0x00}, 512.0f, 96.0f},
@@ -1075,7 +1075,10 @@ static const R_803667A8 lbl_803667A8 = {
     lbl_803666E0,
     {0x0000003D, 0x00000000},
     &lbl_803667A8,
-    {0x0000003D, 0x00000003, 0x00000000, 0x00000000, 0x00000000, 0xC2807454, 0x00000000, 0xBFC2233A, 0x00000000, 0xC241E666, 0x00000000, 0xC186F41F, 0x00000000, 0xC200FAE1, 0x00000000, 0xBFC2233A, 0x00000000, 0xC178999A, 0x00000000, 0xC186F41F, 0x00000000, 0x3E5BF488, 0x00000000, 0xBFC2233A, 0x00000000, 0x41838EBF, 0x00000000, 0xC186F41F, 0x00000000, 0x420A629C, 0x00000000, 0xBFC2233A, 0x00000000, 0x424964F7, 0x00000000, 0xC186F41F, 0x00000000, 0x42852831, 0x00000000, 0xBFC2233A, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000002},
+    {0x0000003D, 0x00000003, 0x00000000, 0x00000000, 0x00000000},
+};
+static const unsigned int lbl_80366D40[40] = {
+    0xC2807454, 0x00000000, 0xBFC2233A, 0x00000000, 0xC241E666, 0x00000000, 0xC186F41F, 0x00000000, 0xC200FAE1, 0x00000000, 0xBFC2233A, 0x00000000, 0xC178999A, 0x00000000, 0xC186F41F, 0x00000000, 0x3E5BF488, 0x00000000, 0xBFC2233A, 0x00000000, 0x41838EBF, 0x00000000, 0xC186F41F, 0x00000000, 0x420A629C, 0x00000000, 0xBFC2233A, 0x00000000, 0x424964F7, 0x00000000, 0xC186F41F, 0x00000000, 0x42852831, 0x00000000, 0xBFC2233A, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000002,
 };
 static const unsigned int lbl_80366DE0[3] = {
     0x00000000, 0x00000000, 0x3F800000,
@@ -1200,14 +1203,15 @@ extern const AttractEntry lbl_80367488[12] = {
     {16, 0, 0},
 };
 extern const char lbl_80367518[] = "clCSSceneAttract";
-extern const unsigned int lbl_8036752C[34] = {
-    0x636C5363, 0x656E6549, 0x6E746572, 0x66616365, 0x00000000, 0x646B5F64,
-    0x656D6F5F, 0x6D61702E, 0x64617400, 0x4D525F68, 0x69676877, 0x61795F44,
-    0x454D4F5F, 0x412E6461, 0x74000000, 0x68616C61, 0x74696F6E, 0x2E646174,
-    0x00000000, 0x4D525F68, 0x69676877, 0x61795F73, 0x756E5F6A, 0x6F696E74,
-    0x00000000, 0x63726561, 0x6D5F6C2E, 0x64617400, 0x6566665F, 0x706C6174,
-    0x655F6372, 0x65616D5F, 0x732E6461, 0x74000000,
+extern const unsigned int lbl_8036752C[5] = {
+    0x636C5363, 0x656E6549, 0x6E746572, 0x66616365, 0x00000000,
 };
+static const char lbl_80367540[] = "dk_demo_map.dat";
+static const char lbl_80367550[] = "MR_highway_DEMO_A.dat";
+static const char lbl_80367568[] = "halation.dat";
+static const char lbl_80367578[] = "MR_highway_sun_joint";
+static const char lbl_80367590[] = "cream_l.dat";
+static const char lbl_8036759C[] = "eff_plate_cream_s.dat";
 static const unsigned int lbl_803675B4[4] = {
     0x4D41494E, 0x20204244, 0x20494420, 0x25730000,
 };
