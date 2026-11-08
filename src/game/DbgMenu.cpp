@@ -2174,9 +2174,8 @@ extern "C" void DbgScene_PreloadResourceTree(ResNode *tree)
          offset += sizeof(ResNode), node = (ResNode *)((char *)tree + offset)) {
         switch (node->type) {
         case 0: {
-            int *ids = (int *)node->data;
             count = 0;
-            while (ids[count] != -1 && ((ResIdAlt *)ids)[count].id != -2) {
+            while (((int *)node->data)[count] != -1 && ((ResIdAlt *)node->data)[count].id != -2) {
                 count++;
             }
             break;
