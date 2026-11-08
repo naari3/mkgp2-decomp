@@ -1,4 +1,7 @@
-#include "game/AIFramePrivate.h"
+#include "game/AIFramePairPrivate.h"
+static inline FramePairRecord *FramePairs() {
+    return reinterpret_cast<FramePairRecord *>(lbl_806793D8);
+}
 static inline void FrameVecSubtract(Vec *v, const Vec *p) {
     v->x -= p->x; v->y -= p->y; v->z -= p->z;
 }
@@ -8,16 +11,16 @@ static inline float FrameVecSquare(const Vec *v) {
 }
 static inline void FrameUpdatePairs(AISpeedRender *player, float px, float py, float pz) {
     AISpeedRender *driver;
-    AIPairRecord *p;
+    FramePairRecord *p;
     int i;
     for (i=0;i<8;++i) {
-        p=&lbl_806793D8[i];
+        p=&FramePairs()[i];
     if (p && p->driver) {
         driver = (AISpeedRender *)p->driver;
         float *mtx = KartDriver_GetKartRootMtx(driver);
         float z, y, x;
         x=mtx[3]; y=mtx[7]; z=mtx[11];
-        p->field08 = (void *)(driver->rank - player->rank);
+        p->rankDifference = driver->rank - player->rank;
         p->waypoint = Waypoint_FindNearest(g_pathSystem, 0, x,y,z,lbl_806DA3E8);
         p->nearestKart = -1;
         p->nearestDriver = 0;
@@ -26,7 +29,7 @@ static inline void FrameUpdatePairs(AISpeedRender *player, float px, float py, f
         p->distanceSquared *= lbl_806DA3F0;
         Vec pos; pos.x=x;pos.y=y;pos.z=z;
         for (int j=0;j<8;++j) {
-            AIPairRecord *other = &lbl_806793D8[j];
+            FramePairRecord *other = &FramePairs()[j];
             if (p != other && other->driver) {
                 float *m = KartDriver_GetKartRootMtx(other->driver);
                 Vec v;
@@ -42,14 +45,14 @@ static inline void FrameUpdatePairs(AISpeedRender *player, float px, float py, f
         }
         float dz=z-pz;
         float dx=x-px;
-        PlayerDistance(p)=dx*dx+dz*dz;
+        p->playerDistance=dx*dx+dz*dz;
     }
     }
 }
-static inline void UpdateFlags(AIFrameOwner *self, AISpeedRender *player, int waypoint, AIPairRecord *pairs) {
+static inline void UpdateFlags(AIFrameOwner *self, AISpeedRender *player, int waypoint, FramePairRecord *pairs) {
     AISpeedRender *driver;
-    AIPairRecord *p;
-    AIPairRecord *cursor;
+    FramePairRecord *p;
+    FramePairRecord *cursor;
     int i;
     self->flag18 = 0;
     if (player->rank == 0) {
@@ -117,13 +120,13 @@ extern "C" void AI_UpdatePerFrameState(AIFrameOwner *self) {
     FrameUpdatePairs(player,px,py,pz);
     int waypoint;
     if (self->selectedKart < 0) waypoint=Waypoint_FindNearest(g_pathSystem,0,px,py,pz,lbl_806DA3E8);
-    else waypoint=lbl_806793D8[self->selectedKart].waypoint;
+    else waypoint=FramePairs()[self->selectedKart].waypoint;
     {
         int nearest=-1;
         AIFramePosition pos(mtx[3],mtx[7],mtx[11]);
         distance=lbl_806DA414;
         for (int i=0;i<8;++i) {
-            AIPairRecord *p=&lbl_806793D8[i];
+            FramePairRecord *p=&FramePairs()[i];
             if (p && p->driver && p->driver != player && p->field1C >= 0) {
                 float *m=KartDriver_GetKartRootMtx(p->driver);
                 float y=m[7],x=m[3],z=m[11];
@@ -134,7 +137,7 @@ extern "C" void AI_UpdatePerFrameState(AIFrameOwner *self) {
             }
         }
         if (nearest >= 0) {
-            AIPairRecord *p=&lbl_806793D8[nearest];
+            FramePairRecord *p=&FramePairs()[nearest];
             int round=g_roundIndex,cup=g_cupId;
             struct Tuning { char pad[0x18];float duration; };
             Tuning *t=(Tuning *)GetKartTuningGPSpeedParams(GetEnemyParam(),cup,round,nearest);
@@ -142,13 +145,13 @@ extern "C" void AI_UpdatePerFrameState(AIFrameOwner *self) {
             p->field20=distance;
         } else {
             for (int i=0;i<8;++i) {
-                AIPairRecord *p=&lbl_806793D8[i];
+                FramePairRecord *p=&FramePairs()[i];
                 if (p->field1C > 0) p->field1C=0;
                 p->field20=lbl_806DA3F4;
             }
         }
     }
-    UpdateFlags(self,player,waypoint,lbl_806793D8);
+    UpdateFlags(self,player,waypoint,FramePairs());
     int mode=fn_801DCCE4();
     if (mode >= 0) {
         int count=0;
@@ -156,31 +159,31 @@ extern "C" void AI_UpdatePerFrameState(AIFrameOwner *self) {
         float radius2=radius*radius;
         int state[8];
         for (int i=0;i<8;++i) {
-            AIPairRecord *p=&lbl_806793D8[i];
+            FramePairRecord *p=&FramePairs()[i];
             state[i]=0;
             if (p && p->driver) {
-                unsigned char old=InSpeedRange(p);
+                unsigned char old=p->inSpeedRange;
                 float bonus=p->speedBonus;
                 p->speedBonus=lbl_806DA3F4;
-                InSpeedRange(p)=0;
-                if (PlayerDistance(p) < radius2) {
+                p->inSpeedRange=0;
+                if (p->playerDistance < radius2) {
                     ++count;
                     if (!old) state[i]=2; else state[i]=1;
                     if (lbl_806DA3F4 != bonus) state[i]=2;
-                    InSpeedRange(p)=1;
+                    p->inSpeedRange=1;
                 }
             }
         }
         if (count > fn_801DCC94(mode)) {
             float bonus=fn_801DCC6C(mode);
             for (int i=0;i<8;++i) {
-                AIPairRecord *p=&lbl_806793D8[i];
+                FramePairRecord *p=&FramePairs()[i];
                 if (p && state[i]==2) p->speedBonus=bonus;
             }
         }
     } else {
         for (int i=0;i<8;++i) {
-            AIPairRecord *p=&lbl_806793D8[i];
+            FramePairRecord *p=&FramePairs()[i];
             if (p) p->speedBonus=lbl_806DA3F4;
         }
     }
