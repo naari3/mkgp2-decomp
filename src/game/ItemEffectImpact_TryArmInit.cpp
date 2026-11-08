@@ -32,8 +32,8 @@ extern "C" void ItemEffectImpact_TryArmInit(ImpactArmState* __restrict self, C7V
     #pragma fp_contract reset
     up.x*=dot; up.y*=dot; up.z*=dot;
     self->pos.x-=up.x; self->pos.y-=up.y; self->pos.z-=up.z;
-    C7Vec v;
-    NormalizeCopy(&v,&self->pos);
+    C7Vec v=self->pos;
+    Normalize(&v);
     C7Vec axis=up;
     axis.x=v.y*up.z-v.z*up.y;
     axis.y=v.z*up.x-v.x*up.z;
