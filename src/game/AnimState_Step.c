@@ -1,10 +1,12 @@
 /* AnimState (0x800AE854..0x800AF088): keyframed parameter tracks.
- * NonMatching: Step 99.907%, Init 98.719% (objdiff, 2026-11-08).
- * Integer-address entry indexing preserves the original base/offset webs.
- * Step's instruction operands match; its remaining differences are zero-
- * template relocations. Init retains an extra zero load before clearing.
- * The reversed template order prevents a separate Step/Init TU split.
+ * NonMatching: Step 100%, Init 98.867% (objdiff, 2026-11-08).
+ * The counter initializer below emits Init's templates before Step's,
+ * preserving the original .sbss2 order without changing the instructions.
+ * Init still emits an extra zero load before clearing its track state.
+ * Opposite text/template orders prevent splitting Step into a separate TU.
  */
+#include "game/AnimState_Step_private.h"
+
 typedef struct Vec { float x, y, z; } Vec;
 
 typedef struct AnimEntry {
@@ -29,6 +31,16 @@ typedef struct AnimState {
 } AnimState;
 
 extern float BuildOrientationFromYaw(float yaw);
+
+static inline void AnimState_InitCounters(AnimCounter *a, AnimCounter *b, AnimCounter *c)
+{
+    AnimCounter av = {{0}};
+    AnimCounter bv = {{0}};
+    AnimCounter cv = {{0}};
+    *a = av;
+    *b = bv;
+    *c = cv;
+}
 
 static inline void AnimState_Apply(AnimState *s, AnimEntry *e, char type,
                                    signed char key, float t, signed char *a,
@@ -214,9 +226,8 @@ void AnimState_Init(AnimState *s, AnimEntry *entries)
         s->state[i] = 0;
     }
     if (entries != 0) {
-        signed char a[3] = {0};
-        signed char b[3] = {0};
-        signed char c[3] = {0};
+        AnimCounter a, b, c;
+        AnimState_InitCounters(&a, &b, &c);
 
         n = 0;
         j = 0;
@@ -236,31 +247,31 @@ void AnimState_Init(AnimState *s, AnimEntry *entries)
                 s->value44 = *(int *)e->data;
                 break;
             case 2:
-                s->a[a[0]++].x = *(float *)e->data;
+                s->a[a.v[0]++].x = *(float *)e->data;
                 break;
             case 3:
-                s->a[a[1]++].y = *(float *)e->data;
+                s->a[a.v[1]++].y = *(float *)e->data;
                 break;
             case 4:
-                s->a[a[2]++].z = *(float *)e->data;
+                s->a[a.v[2]++].z = *(float *)e->data;
                 break;
             case 5:
-                s->b[b[0]++].x = *(float *)e->data;
+                s->b[b.v[0]++].x = *(float *)e->data;
                 break;
             case 6:
-                s->b[b[1]++].y = *(float *)e->data;
+                s->b[b.v[1]++].y = *(float *)e->data;
                 break;
             case 7:
-                s->b[b[2]++].z = *(float *)e->data;
+                s->b[b.v[2]++].z = *(float *)e->data;
                 break;
             case 8:
-                s->c[c[0]++].x = *(float *)e->data;
+                s->c[c.v[0]++].x = *(float *)e->data;
                 break;
             case 9:
-                s->c[c[1]++].y = *(float *)e->data;
+                s->c[c.v[1]++].y = *(float *)e->data;
                 break;
             case 10:
-                s->c[c[2]++].z = *(float *)e->data;
+                s->c[c.v[2]++].z = *(float *)e->data;
                 break;
             case 11:
                 s->d[j++] = *(float *)e->data;
