@@ -1177,18 +1177,20 @@ static void __THPDecodeBlock(THPFileInfo* info, u8 c, THPCoeff* block)
     s32 r;
     s32 v;
     s16 diff;
+    u8 dcTab;
 
     __dcbz(block, 0);
+    dcTab = info->components[c].DCTableSelector << 1;
     __dcbz(block, 32);
-    s = __THPHuffDecode(info, info->components[c].DCTableSelector << 1);
+    k = __THPHuffDecode(info, dcTab);
     __dcbz(block, 64);
     diff = 0;
     __dcbz(block, 96);
     ac = &info->huffmanTabs[(u8) ((info->components[c].ACTableSelector << 1) + 1)];
-    if (s != 0) {
-        diff = __THPReceive(info, s);
-        if (__cntlzw(diff) > 32 - s) {
-            diff += (-1 << s) + 1;
+    if (k != 0) {
+        diff = __THPReceive(info, k);
+        if (__cntlzw(diff) > 32 - k) {
+            diff += (-1 << k) + 1;
         }
     }
     block[0] = info->components[c].predDC += diff;
