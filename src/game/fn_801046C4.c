@@ -49,8 +49,10 @@ static inline unsigned char Bus_TestFlag(ItemEffectBus *bus, ItemEffectMask mask
 
 static inline float LerpF(float a, float b, float t)
 {
-    b = a * (1.0f - t) + t * b;
-    return b;
+    b = t * b;
+    t = 1.0f - t;
+    t = a * t + b;
+    return t;
 }
 
 void fn_801046C4(unsigned char *self, unsigned char *w)
