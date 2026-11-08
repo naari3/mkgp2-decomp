@@ -1,6 +1,8 @@
 #include <triforce/ambackup_private.h>
 
 #pragma opt_common_subs off
+#pragma push
+#pragma opt_propagation off
 s32 BackupReadRecord(u32 chan, void* data, BackupEntry* e) {
     u8* buffer;
     BOOL* valid;
@@ -70,4 +72,6 @@ s32 BackupReadRecord(u32 chan, void* data, BackupEntry* e) {
     }
     return !ok[0];
 }
+#pragma pop
+
 #pragma opt_common_subs reset

@@ -5,7 +5,8 @@
 onmokoworks released most claims, so these patches were applied on main and
 are kept here only for reference: fn_80246DE4.patch (RaceDigits linked as
 Matching, eb5bf52), amnet_nm2_rest.patch and merge/cobj_lobj_merge.patch
-(b40edd9). Do not apply them again.
+(b40edd9), THPDec_GetBit.patch, TExp2TevDesc.patch, BackupReadRecord.patch,
+JointTracks_fn_80240378.patch (partial gains, 2026-11-08). Do not apply them again.
 
 ## Landed 2026-11-08 (asm->C (A) thread)
 

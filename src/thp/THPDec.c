@@ -1936,6 +1936,9 @@ void fn_8029BCF0(THPDecHandle* handle, u8* dst, u8 alpha)
     __THPGQRRestore(info);
 }
 
+#pragma push
+#pragma opt_propagation off
+#pragma opt_lifetimes off
 static s32 __THPGetBit(THPFileInfo* info)
 {
     u8* p;
@@ -1978,4 +1981,6 @@ static s32 __THPGetBit(THPFileInfo* info)
     }
     return b;
 }
+#pragma pop
+
 
