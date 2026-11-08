@@ -18,7 +18,7 @@ extern unsigned int lbl_802EDC30[];
 typedef struct { float x, y, z; } TornadoSpawnPos;
 typedef struct { float a0, a1, a2, a3, b0, b1, b2, b3, c0, c1, c2, c3, d0, d1, d2, d3; } TornadoMtx16;
 #define TE_SPAWN_POS (*(const TornadoSpawnPos *)lbl_802EDC30)
-void DrawEffect_SetBytePairD4D5(void *, int, int);
+void DrawEffect_SetBytePairD4D5(void *, signed char, signed char);
 void DrawEffect_SetByte10C(void *, int);
 unsigned int Terrain_ApplyCup2FlagPatch(unsigned int);
 int Terrain_FlagsToTypeId(unsigned int);
