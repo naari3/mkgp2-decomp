@@ -727,12 +727,9 @@ extern unsigned int lbl_806D8240;
 extern unsigned int lbl_806D8244;
 extern void fn_801F6790(void *p);
 void fn_80140810(void *p, int flag);
-extern void __destroy_arr();
+extern void __destroy_arr(void *, void *, unsigned long, unsigned long);
 void fn_80157940(struct LIter *ret, void *list, struct LIter *b, struct LIter *e);
-extern void fn_801579F0();
 void fn_80157B38(struct LIter *ret, void *list, struct LIter *b, struct LIter *e);
-void fn_80157BE8(void *ret, void *list, void *pos);
-void fn_801F7CD8(void *res, int flag);
 extern void ItemEffectBus_ApplyItemEventClear();
 extern void ItemEffectBus_ApplyItemEventSet();
 extern void TornadoEffect_ApplyItemVisual_Primary();
@@ -1110,7 +1107,8 @@ unsigned char fn_80153BEC(StateObj *o);
 void fn_80153C00(TexFadePanel *self);
 void fn_80153ED0(VObj *p);
 CourseScene *fn_80153F08(CourseScene *self, short flag);
-asm void fn_801540E0(void *o, int flag);
+struct ObjListSetFull;
+ObjListSetFull *fn_801540E0(ObjListSetFull *o, short flag);
 asm void fn_80154304(void);
 void fn_80154FB0(struct SprScene *self, unsigned int layer, unsigned int id, unsigned int flags, float x, float y, float sx, float sy, float rot, float r, float g, float b, float a);
 unsigned char fn_80155398(StateObj *o);
@@ -1189,9 +1187,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_801540E0[8] = {
-    0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; void *f11; unsigned int f12; void *f13; unsigned int f14; void *f15; unsigned int f16; void *f17; } extab_fn_80154304 = { 0x384A0000, 0x000006EC, 0x00000030, 0x00000700, 0x00000028, 0x0000070C, 0x00000030, 0x00000720, 0x00000038, 0x00000000, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8A800019, (void *)&MemoryManager_TimedFree, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8A800019, (void *)&MemoryManager_TimedFree };
 
@@ -1278,9 +1273,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801540E0 = {
-    (void *)&fn_801540E0, 0x00000224, (void *)extab_fn_801540E0
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80154304 = {
     (void *)&fn_80154304, 0x00000CAC, (void *)&extab_fn_80154304
@@ -5609,7 +5601,7 @@ extern "C" CourseScene *fn_80153F08(CourseScene *self, short flag) {
         if (self->pair != 0) {
             delete self->pair;
         }
-        fn_801540E0(self->list, 1);
+        fn_801540E0((ObjListSetFull *)self->list, 1);
         __destroy_new_array(self->arr, dtor_800869D0);
         self->arr = 0;
         delete lbl_806D10AC;
@@ -5627,161 +5619,107 @@ extern "C" CourseScene *fn_80153F08(CourseScene *self, short flag) {
     return self;
 }
 
-extern "C" asm void fn_801540E0(void *o, int flag) { /* 0x801540E0 size:0x224 */
-    nofralloc
-    stwu r1, -0x50(r1)
-    mflr r0
-    stw r0, 0x54(r1)
-    stw r31, 0x4c(r1)
-    mr r31, r4
-    stw r30, 0x48(r1)
-    mr. r30, r3
-    stw r29, 0x44(r1)
-    stw r28, 0x40(r1)
-    beq fn_801540E0_L_801542E0
-    li r29, 0x0
-    mr r28, r30
-    fn_801540E0_L_80154110:
-    addi r4, r28, 0x18
-    addi r3, r1, 0x20
-    addi r0, r4, 0x4
-    addi r5, r1, 0x24
-    stw r0, 0x28(r1)
-    addi r6, r1, 0x28
-    lwz r0, 0x20(r28)
-    stw r0, 0x24(r1)
-    bl fn_80157D30
-    addi r29, r29, 0x1
-    addi r28, r28, 0xc
-    cmpwi r29, 0x2
-    blt fn_801540E0_L_80154110
-    b fn_801540E0_L_80154178
-    fn_801540E0_L_80154148:
-    lwz r3, 0x14(r30)
-    lwz r3, 0x10(r3)
-    cmplwi r3, 0x0
-    beq fn_801540E0_L_80154160
-    li r4, 0x1
-    bl fn_801F7CD8
-    fn_801540E0_L_80154160:
-    lwz r0, 0x14(r30)
-    addi r3, r1, 0x34
-    addi r4, r30, 0xc
-    addi r5, r1, 0x38
-    stw r0, 0x38(r1)
-    bl fn_80157BE8
-    fn_801540E0_L_80154178:
-    lwz r0, 0xc(r30)
-    cmplwi r0, 0x0
-    bne fn_801540E0_L_80154148
-    b fn_801540E0_L_8015423C
-    fn_801540E0_L_80154188:
-    lwz r4, 0x8(r30)
-    lwz r3, 0x10(r4)
-    cmplwi r3, 0x0
-    beq fn_801540E0_L_80154224
-    lwz r0, 0x8(r4)
-    srwi r0, r0, 29
-    cmpwi r0, 0x2
-    beq fn_801540E0_L_801541F4
-    bge fn_801540E0_L_801541BC
-    cmpwi r0, 0x0
-    beq fn_801540E0_L_801541C8
-    bge fn_801540E0_L_801541D4
-    b fn_801540E0_L_80154220
-    fn_801540E0_L_801541BC:
-    cmpwi r0, 0x4
-    bge fn_801540E0_L_80154220
-    b fn_801540E0_L_80154214
-    fn_801540E0_L_801541C8:
-    li r4, 0x1
-    bl Object_DtorWithGXSync
-    b fn_801540E0_L_80154224
-    fn_801540E0_L_801541D4:
-    cmplwi r3, 0x0
-    beq fn_801540E0_L_80154224
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    b fn_801540E0_L_80154224
-    fn_801540E0_L_801541F4:
-    cmplwi r3, 0x0
-    beq fn_801540E0_L_80154224
-    lwz r12, 0x0(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    b fn_801540E0_L_80154224
-    fn_801540E0_L_80154214:
-    li r4, 0x1
-    bl LObjList_Destroy
-    b fn_801540E0_L_80154224
-    fn_801540E0_L_80154220:
-    bl MemoryManager_TimedFree
-    fn_801540E0_L_80154224:
-    lwz r0, 0x8(r30)
-    mr r4, r30
-    addi r3, r1, 0x2c
-    addi r5, r1, 0x30
-    stw r0, 0x30(r1)
-    bl fn_801579F0
-    fn_801540E0_L_8015423C:
-    lwz r0, 0x0(r30)
-    cmplwi r0, 0x0
-    bne fn_801540E0_L_80154188
-    lis r4, fn_8014E04C@ha
-    addi r3, r30, 0x18
-    addi r4, r4, fn_8014E04C@l
-    li r5, 0xc
-    li r6, 0x2
-    bl __destroy_arr
-    addic. r0, r30, 0xc
-    beq fn_801540E0_L_8015429C
-    addic. r0, r30, 0xc
-    beq fn_801540E0_L_8015429C
-    addic. r0, r30, 0xc
-    beq fn_801540E0_L_8015429C
-    addi r7, r30, 0x10
-    addi r3, r1, 0x14
-    stw r7, 0x1c(r1)
-    addi r4, r30, 0xc
-    addi r5, r1, 0x18
-    addi r6, r1, 0x1c
-    lwz r0, 0x14(r30)
-    stw r0, 0x18(r1)
-    bl fn_80157B38
-    fn_801540E0_L_8015429C:
-    cmplwi r30, 0x0
-    beq fn_801540E0_L_801542D0
-    beq fn_801540E0_L_801542D0
-    beq fn_801540E0_L_801542D0
-    addi r0, r30, 0x4
-    mr r4, r30
-    stw r0, 0x10(r1)
-    addi r3, r1, 0x8
-    addi r5, r1, 0xc
-    addi r6, r1, 0x10
-    lwz r0, 0x8(r30)
-    stw r0, 0xc(r1)
-    bl fn_80157940
-    fn_801540E0_L_801542D0:
-    extsh. r0, r31
-    ble fn_801540E0_L_801542E0
-    mr r3, r30
-    bl MemoryManager_TimedFree
-    fn_801540E0_L_801542E0:
-    lwz r0, 0x54(r1)
-    mr r3, r30
-    lwz r31, 0x4c(r1)
-    lwz r30, 0x48(r1)
-    lwz r29, 0x44(r1)
-    lwz r28, 0x40(r1)
-    mtlr r0
-    addi r1, r1, 0x50
-    blr
+struct ObjNode {
+    ObjNode *prev;
+    ObjNode *next;
+    unsigned int flags;
+    int pad;
+    void *obj;
+};
+
+struct ObjListSetFull {
+    ListHead objs;
+    ListHead models;
+    SetSubList sub[2];
+};
+
+extern "C" void fn_801579F0(LIter *ret, void *list, LIter *pos);
+extern "C" void fn_80157BE8(void *ret, void *list, void *pos);
+extern "C" void fn_801F7CD8(void *obj, int flag);
+
+static inline void ModelsDtor1(ListHead *l) {
+    if (l != 0) {
+        LIter r;
+        LIter b;
+        LIter e;
+        LNode **a = &l->f4;
+        e.n = (LNode *)a;
+        b.n = a[1];
+        fn_80157B38(&r, l, &b, &e);
+    }
+}
+static inline void ModelsDtor2(ListHead *l) { if (l != 0) ModelsDtor1(l); }
+static inline void ModelsDtor3(ListHead *l) { if (l != 0) ModelsDtor2(l); }
+static inline void ObjsDtor1(ListHead *l) {
+    if (l != 0) {
+        LIter r;
+        LIter b;
+        LIter e;
+        e.n = (LNode *)&l->f4;
+        b.n = l->head;
+        fn_80157940(&r, l, &b, &e);
+    }
+}
+static inline void ObjsDtor2(ListHead *l) { if (l != 0) ObjsDtor1(l); }
+static inline void ObjsDtor3(ListHead *l) { if (l != 0) ObjsDtor2(l); }
+extern "C" ObjListSetFull *fn_801540E0(ObjListSetFull *o, short flag) {
+    if (o != 0) {
+        int i;
+        ObjListSetFull *c;
+        for (i = 0, c = o; i < 2; i++) {
+            SetSubList *l = &c->sub[0];
+            l->clear();
+            c = (ObjListSetFull *)((char *)c + sizeof(SetSubList));
+        }
+        while ((unsigned int)o->models.count != 0) {
+            ObjNode *n = (ObjNode *)o->models.head;
+            if (n->obj != 0) {
+                fn_801F7CD8(n->obj, 1);
+            }
+            {
+                LIter p;
+                LIter r;
+                p.n = o->models.head;
+                fn_80157BE8(&r, &o->models, &p);
+            }
+        }
+        while ((unsigned int)o->objs.count != 0) {
+            ObjNode *n = (ObjNode *)o->objs.head;
+            void *obj = n->obj;
+            if (obj != 0) {
+                switch (n->flags >> 29) {
+                case 0:
+                    Object_DtorWithGXSync(obj, 1);
+                    break;
+                case 1:
+                    delete (VObj *)obj;
+                    break;
+                case 2:
+                    delete (VObj *)obj;
+                    break;
+                case 3:
+                    LObjList_Destroy(obj, 1);
+                    break;
+                default:
+                    MemoryManager_TimedFree(obj);
+                    break;
+                }
+            }
+            {
+                LIter p;
+                LIter r;
+                p.n = o->objs.head;
+                fn_801579F0(&r, &o->objs, &p);
+            }
+        }
+        __destroy_arr(o->sub, fn_8014E04C, 0xc, 2);
+        ModelsDtor3(&o->models);
+        ObjsDtor3(&o->objs);
+        if (flag > 0) {
+            MemoryManager_TimedFree(o);
+        }
+    }
+    return o;
 }
 
 extern "C" asm void fn_80154304(void) { /* 0x80154304 size:0xCAC */
@@ -6913,7 +6851,7 @@ extern "C" CoursePanel *fn_80155774(CoursePanel *self, short flag) {
         if (self->obj14 != 0) {
             Object_DtorWithGXSync(self->obj14, 1);
         }
-        fn_801540E0(self->obj4C, 1);
+        fn_801540E0((ObjListSetFull *)self->obj4C, 1);
         delete lbl_806D10D0;
         lbl_806D10D0 = 0;
         fn_8013A6F8();
