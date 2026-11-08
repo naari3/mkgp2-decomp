@@ -108,7 +108,7 @@ void DisplayContext_Flush(void *);
 void fn_8011F994(int);
 void fn_801DB68C(void *,int);
 extern void (*lbl_806D2238)();
-extern const char lbl_802E8F48[];
+
 extern BootState lbl_80594080;
 extern BootConfig lbl_80598A60;
 extern BootHooks lbl_806CED28;
@@ -125,10 +125,65 @@ extern void *lbl_806D0F90, *lbl_806D1880, *lbl_806D12DC;
 extern char *lbl_806D0FC8;
 extern unsigned int lbl_806D0FCC, lbl_806D0FD0, lbl_806D0FD4;
 extern const char lbl_806D2290[4];
-extern const char lbl_802E8F5C[], lbl_802E8F80[], lbl_802E8F8C[];
-extern const char lbl_802E8FB0[], lbl_802E8FD4[], lbl_802E8FF8[];
-extern const char lbl_802E901C[], lbl_802E9040[];
+
 }
+
+#pragma force_active on
+static const char lbl_802E8F48[0x14] = "             NOTICE";
+static const char lbl_802E8F5C[0x22] = " THIS GAME IS FOR USE EXCLUSIVELY";
+static const char lbl_802E8F80[0xA] = "IN JAPAN.";
+static const char lbl_802E8F8C[0x22] = " THE SALE,EXPORT,USE OR OPERATION";
+static const char lbl_802E8FB0[0x22] = "OF THIS GAME OUTSIDE OF JAPAN MAY";
+static const char lbl_802E8FD4[0x21] = "BE  A VIOLATION OF INTERNATIONAL";
+static const char lbl_802E8FF8[0x22] = "COPYRIGHT, TRADEMARK AND/OR OTHER";
+static const char lbl_802E901C[0x22] = "RELATED LAWS SUBJECTING THE VIOL-";
+static const char lbl_802E9040[0x19] = "ATOR TO LEGAL PENALTIES.";
+static const float lbl_802E905C[4][3] = {{0.0f,0.0f,-300.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f},{1.0f,0.7f,0.9f}};
+static const float lbl_802E908C[18][7][2] = {
+    {{0.0f,0.0f},{500.0f,66.66667f},{1000.0f,66.66667f},{2000.0f,66.66667f},{3000.0f,66.66667f},{4000.0f,66.66667f},{5000.0f,66.66667f}},
+    {{0.0f,0.0f},{500.0f,66.66667f},{1000.0f,66.66667f},{2000.0f,66.66667f},{3000.0f,66.66667f},{4000.0f,66.66667f},{5000.0f,66.66667f}},
+    {{0.0f,0.0f},{500.0f,66.66667f},{1000.0f,66.66667f},{2000.0f,66.66667f},{3000.0f,66.66667f},{4000.0f,66.66667f},{5000.0f,66.66667f}},
+    {{0.0f,0.0f},{500.0f,66.66667f},{1000.0f,66.66667f},{2000.0f,66.66667f},{3000.0f,66.66667f},{4000.0f,66.66667f},{5000.0f,66.66667f}},
+    {{0.0f,0.0f},{500.0f,66.66667f},{1000.0f,66.66667f},{2000.0f,66.66667f},{3000.0f,66.66667f},{4000.0f,66.66667f},{5000.0f,66.66667f}},
+    {{0.0f,0.0f},{500.0f,66.66667f},{1000.0f,66.66667f},{2000.0f,66.66667f},{3000.0f,66.66667f},{4000.0f,66.66667f},{5000.0f,66.66667f}},
+    {{0.0f,0.0f},{500.0f,66.66667f},{1000.0f,66.66667f},{2000.0f,66.66667f},{3000.0f,66.66667f},{4000.0f,66.66667f},{5000.0f,66.66667f}},
+    {{0.0f,0.0f},{500.0f,66.66667f},{1000.0f,66.66667f},{2000.0f,66.66667f},{3000.0f,66.66667f},{4000.0f,66.66667f},{5000.0f,66.66667f}},
+    {{0.0f,0.0f},{500.0f,66.66667f},{1000.0f,66.66667f},{2000.0f,66.66667f},{3000.0f,66.66667f},{4000.0f,66.66667f},{5000.0f,66.66667f}},
+    {{0.0f,0.0f},{500.0f,66.66667f},{1000.0f,66.66667f},{2000.0f,66.66667f},{3000.0f,66.66667f},{4000.0f,66.66667f},{5000.0f,66.66667f}},
+    {{0.0f,0.0f},{500.0f,66.66667f},{1000.0f,66.66667f},{2000.0f,66.66667f},{3000.0f,66.66667f},{4000.0f,66.66667f},{5000.0f,66.66667f}},
+    {{0.0f,0.0f},{500.0f,66.66667f},{1000.0f,66.66667f},{2000.0f,66.66667f},{3000.0f,66.66667f},{4000.0f,66.66667f},{5000.0f,66.66667f}},
+    {{0.0f,0.0f},{500.0f,83.333336f},{1000.0f,83.333336f},{2000.0f,83.333336f},{3000.0f,83.333336f},{4000.0f,83.333336f},{5000.0f,83.333336f}},
+    {{0.0f,0.0f},{500.0f,83.333336f},{1000.0f,83.333336f},{2000.0f,83.333336f},{3000.0f,83.333336f},{4000.0f,83.333336f},{5000.0f,83.333336f}},
+    {{0.0f,0.0f},{500.0f,83.333336f},{1000.0f,83.333336f},{2000.0f,83.333336f},{3000.0f,83.333336f},{4000.0f,83.333336f},{5000.0f,83.333336f}},
+    {{0.0f,0.0f},{500.0f,83.333336f},{1000.0f,83.333336f},{2000.0f,83.333336f},{3000.0f,83.333336f},{4000.0f,83.333336f},{5000.0f,83.333336f}},
+    {{0.0f,0.0f},{500.0f,83.333336f},{1000.0f,83.333336f},{2000.0f,83.333336f},{3000.0f,83.333336f},{4000.0f,83.333336f},{5000.0f,83.333336f}},
+    {{0.0f,0.0f},{500.0f,83.333336f},{1000.0f,83.333336f},{2000.0f,83.333336f},{3000.0f,83.333336f},{4000.0f,83.333336f},{5000.0f,83.333336f}}
+};
+static const char lbl_802E947C[0x9] = "50cc URA";
+static const char lbl_802E9488[0xA] = "100cc URA";
+static const char lbl_802E9494[0xA] = "150cc URA";
+static const char lbl_802E94A0[0xC] = "take RANDOM";
+static const char lbl_802E94AC[0xA] = "take GOLD";
+static const char lbl_802E94B8[0xE] = "LOCATION TEST";
+static const char lbl_802E94C8[0xC] = "DONKEY KONG";
+static const char lbl_802E94D4[0xB] = "Ms.PAC-MAN";
+static const char lbl_802E94E0[0xE] = "Take Standard";
+static const char lbl_802E94F0[0x9] = "Take All";
+static const unsigned char lbl_802E94FC[0x10] = {1,42,0,10,1,1,1,1,2,1,1,1,1,1,1,1};
+static const char lbl_802E950C[0x2C] = "clLibrary::backupBuffer error align no 32b\n";
+static const char lbl_802E9538[0x30] = "clLibrary::backupBuffer error buffer size over\n";
+static const char lbl_802E9568[0xF] = "MAIN  BD ID %s";
+static const char lbl_802E9578[0xF] = "MEDIA BD ID %s";
+static const char lbl_802E9588[0x10] = "wake test mode\n";
+static const char lbl_802E9598[0x11] = "enter test mode\n";
+static const char lbl_802E95AC[0x11] = "no device check\n";
+static const char lbl_802E95C0[0x1C] = "wakeup:: jump to test mode\n";
+static const char lbl_802E95DC[0x18] = "dvd location adrs %08x\n";
+static const char lbl_802E95F4[0x26] = "------------------------------------\n";
+static const char lbl_802E961C[0x18] = "all   %d[kb] %f[Mb] %s\n";
+static const char lbl_802E9634[0xE] = "max   %d[kb]\n";
+static const char lbl_802E9644[0xA] = "block %d\n";
+#pragma force_active reset
 
 static const char *lbl_803F5670[10] = {
     lbl_802E8F48, lbl_806D2290, lbl_802E8F5C, lbl_802E8F80,
@@ -212,15 +267,15 @@ static inline void RefreshBootState() {
     lbl_80594080=*src;
     timer->lastTick=OSGetTick();
 }
-static inline void CopyFrame(const char *text) {
+static inline void CopyFrame() {
     if (lbl_806CED30==1) {
         ScopedTimer timer(21);
         if ((unsigned int)lbl_804FE080 & 31) {
-            DebugPrintf(text+0x5C4);
+            DebugPrintf(lbl_802E950C);
             return;
         }
         if (GXGetTexBufferSize(640,480,4,0,0)>0x96000) {
-            DebugPrintf(text+0x5F0);
+            DebugPrintf(lbl_802E9538);
             return;
         }
         GXSetTexCopySrc(0,0,640,480);
@@ -231,10 +286,10 @@ static inline void CopyFrame(const char *text) {
 static inline void SetBootColor(BootColor color) {
     HSD_VIData.color=color;
 }
-static inline void FinishFrame(const char *text) {
+static inline void FinishFrame() {
     if (lbl_806D0F8E==1) {
-        OverlayText(1,12,28,text+0x620,&lbl_80594080.f18);
-        OverlayText(1,12,29,text+0x630,&lbl_80594080.f2C);
+        OverlayText(1,12,28,lbl_802E9568,&lbl_80594080.f18);
+        OverlayText(1,12,29,lbl_802E9578,&lbl_80594080.f2C);
     }
     GXDrawDone();
     fn_8018F14C();
@@ -291,7 +346,6 @@ static inline int IsServiceBoot(unsigned int mode) {
 
 extern "C" void BootDispatcher(unsigned char *serviceMode)
 {
-    const char *text=lbl_802E8F48;
     lbl_806D2238=BootStateStruct_RefreshIfDue;
     PPCMthid0(PPCMfhid0()|0x200);
     *serviceMode=0;
@@ -300,7 +354,7 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
     unsigned int bootInfo[64];
     fn_80287FDC(bootInfo);
     int isService=IsServiceBoot(bootInfo[0]);
-    if (isService==1) { DebugPrintf(text+0x640); service=1; }
+    if (isService==1) { DebugPrintf(lbl_802E9588); service=1; }
     BootError error;
     memset(&error,0,24);
     error.code[0]=99;
@@ -380,7 +434,7 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
     StrPcb_DrainInputBuffer(StrPcb_GetInstance());
     if (service==1) {
         *serviceMode=1;
-        DebugPrintf(text+0x650);
+        DebugPrintf(lbl_802E9598);
         fn_801213EC();
         return;
     }
@@ -390,7 +444,7 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
         vblank_flag=0;
         lbl_806D0F99=1;
         lbl_806D0FA0=0;
-        DebugPrintf(text+0x664);
+        DebugPrintf(lbl_802E95AC);
     } else lbl_806D0FA0=1;
     fn_801213EC();
     if (lbl_806D0FA0==1) {
@@ -405,11 +459,11 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
             CardTaskManager_RenderOverlay(lbl_806D0F90);
             fn_802D47E8(); SpriteHandlePool_GC();
             if (lbl_806CED28.end) lbl_806CED28.end->Tick();
-            CopyFrame(text);
-            FinishFrame(text);
+            CopyFrame();
+            FinishFrame();
             state=CardTaskManager_Tick(lbl_806D0F90);
             if (ServiceButton_Handler()==1) {
-                DebugPrintf(text+0x678);
+                DebugPrintf(lbl_802E95C0);
                 state=3;
             }
         }
@@ -418,7 +472,7 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
     CardTaskManager_Dtor(lbl_806D0F90,1);
     lbl_806D0F90=0;
     fn_80121210();
-    DebugPrintf(text+0x694,DVDGetFSTLocation());
+    DebugPrintf(lbl_802E95DC,DVDGetFSTLocation());
     for (;;) {
         BootState state=*fn_80293BBC();
         if (((unsigned char *)&state)[0x14] && ((unsigned char *)&state)[0x15]) break;
@@ -435,9 +489,9 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
         BootPCBCheck_Display();
         fn_802D47E8(); SpriteHandlePool_GC();
         if (lbl_806CED28.end) lbl_806CED28.end->Tick();
-        CopyFrame(text);
+        CopyFrame();
         Timer_Decrement(); PCBComm_Process(1,1);
-        FinishFrame(text);
+        FinishFrame();
         if (ServiceButton_Handler()==1) Shutdown();
     }
     BootNotice_CheckEnterCondition();
@@ -451,9 +505,9 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
             for (int i=0;i<8;++i) fn_8011F994(i);
             fn_802D47E8(); SpriteHandlePool_GC();
             if (lbl_806CED28.end) lbl_806CED28.end->Tick();
-            CopyFrame(text);
+            CopyFrame();
             Timer_Decrement(); PCBComm_Process(1,1);
-            FinishFrame(text);
+            FinishFrame();
         }
     }
 }

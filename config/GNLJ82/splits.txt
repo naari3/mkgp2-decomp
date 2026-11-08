@@ -95,6 +95,7 @@ game/BootDispatcher.cpp:
 	extab       start:0x80005788 end:0x80005858
 	extabindex  start:0x8001F484 end:0x8001F490
 	.text       start:0x8002DD58 end:0x8002F640
+	.rodata     start:0x802E8F48 end:0x802E9650
 	.data       start:0x803F5670 end:0x803F5698
 
 game/HeapStats.c:
