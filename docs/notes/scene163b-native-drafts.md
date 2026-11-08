@@ -18,3 +18,8 @@ c18_u87: Owner-approved real TU constant pool ownership resolves the c3 pooled-a
 Source: Codex worker c19_u37_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c19_u37: baseline/final98.6315 invariant after correcting DVD start/length to canonical unsigned32 and ItemSelect_GetSlotItemId return to actual int. Mutable table definition changes cached-character code but moves 96B into data (132B total), text96.489296/2636B, rodata93.50474; discarded. DVD buffer declaration before size is invariant. Three approaches exhausted below99; single-function TU remainsNM, no native gain. Only private-header semantic type corrections retained; complete final objdiff JSON equals baseline.
+
+## c20_u26_20261108
+Source: Codex worker c20_u26_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c20_u26: fn_80164614 98.6315 -> 98.66208% by fixing a real missing argument: canonical DVDLoad_WaitIfSamePage(unsigned int offset) must receive file.start. Old declaration was void(void). Corrected to int(unsigned int), plus RecordOpStart unsigned offset. This recovers exact target DVD bounds scratch lwz r4,length / lwz r3,start / subi r25,r4,1 / add r25,r3,r25 / bl wait. Whole race-init inline helper is invariant; direct enemy global arguments regress97.133026 because MWCC puts GetEnemyParam before global loads. Retained minimal semantic fix, all other section scores unchanged. Still2620/2616B and one function; NM, native gain0, full fallback DOL SHA1 exact.
