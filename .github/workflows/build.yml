@@ -71,24 +71,94 @@ jobs:
                   for t in ("dtk", "objdiff", "sjiswrap", "wibo")}
           for t, v in tags.items():
               print(f"{t}={v}")
-          print("key=" + "-".join(f"{t}{v}" for t, v in tags.items()))
           EOF
 
-      - name: Cache tools
-        id: tools-cache
-        uses: actions/cache@v4
+      # One cache entry per tool, saved right after its own download, so a
+      # run that gets some tools before the CDN gives up still keeps them
+      # (downloads continue on error; Build fails if a tool is still missing).
+      - name: Restore dtk
+        id: cache-dtk
+        uses: actions/cache/restore@v4
         with:
-          path: ci-tools
-          key: tools-${{ runner.os }}-${{ steps.tools.outputs.key }}
+          path: ci-tools/dtk
+          key: tool-${{ runner.os }}-dtk-${{ steps.tools.outputs.dtk }}
 
-      - name: Download tools
-        if: steps.tools-cache.outputs.cache-hit != 'true'
+      - name: Download dtk
+        if: steps.cache-dtk.outputs.cache-hit != 'true'
+        continue-on-error: true
         run: |
           mkdir -p ci-tools
           python tools/download_tool.py dtk ci-tools/dtk --tag ${{ steps.tools.outputs.dtk }}
+
+      - name: Save dtk
+        if: steps.cache-dtk.outputs.cache-hit != 'true' && hashFiles('ci-tools/dtk') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: ci-tools/dtk
+          key: tool-${{ runner.os }}-dtk-${{ steps.tools.outputs.dtk }}
+
+      - name: Restore objdiff-cli
+        id: cache-objdiff
+        uses: actions/cache/restore@v4
+        with:
+          path: ci-tools/objdiff-cli
+          key: tool-${{ runner.os }}-objdiff-cli-${{ steps.tools.outputs.objdiff }}
+
+      - name: Download objdiff-cli
+        if: steps.cache-objdiff.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: |
+          mkdir -p ci-tools
           python tools/download_tool.py objdiff-cli ci-tools/objdiff-cli --tag ${{ steps.tools.outputs.objdiff }}
+
+      - name: Save objdiff-cli
+        if: steps.cache-objdiff.outputs.cache-hit != 'true' && hashFiles('ci-tools/objdiff-cli') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: ci-tools/objdiff-cli
+          key: tool-${{ runner.os }}-objdiff-cli-${{ steps.tools.outputs.objdiff }}
+
+      - name: Restore sjiswrap
+        id: cache-sjiswrap
+        uses: actions/cache/restore@v4
+        with:
+          path: ci-tools/sjiswrap.exe
+          key: tool-${{ runner.os }}-sjiswrap-${{ steps.tools.outputs.sjiswrap }}
+
+      - name: Download sjiswrap
+        if: steps.cache-sjiswrap.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: |
+          mkdir -p ci-tools
           python tools/download_tool.py sjiswrap ci-tools/sjiswrap.exe --tag ${{ steps.tools.outputs.sjiswrap }}
+
+      - name: Save sjiswrap
+        if: steps.cache-sjiswrap.outputs.cache-hit != 'true' && hashFiles('ci-tools/sjiswrap.exe') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: ci-tools/sjiswrap.exe
+          key: tool-${{ runner.os }}-sjiswrap-${{ steps.tools.outputs.sjiswrap }}
+
+      - name: Restore wibo
+        id: cache-wibo
+        uses: actions/cache/restore@v4
+        with:
+          path: ci-tools/wibo
+          key: tool-${{ runner.os }}-wibo-${{ steps.tools.outputs.wibo }}
+
+      - name: Download wibo
+        if: steps.cache-wibo.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: |
+          mkdir -p ci-tools
           python tools/download_tool.py wibo ci-tools/wibo --tag ${{ steps.tools.outputs.wibo }}
+
+      - name: Save wibo
+        if: steps.cache-wibo.outputs.cache-hit != 'true' && hashFiles('ci-tools/wibo') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: ci-tools/wibo
+          key: tool-${{ runner.os }}-wibo-${{ steps.tools.outputs.wibo }}
 
       - name: Build
         run: |

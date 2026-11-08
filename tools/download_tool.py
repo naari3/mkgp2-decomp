@@ -112,10 +112,14 @@ def download(url, response, output) -> None:
                 os.chmod(os.path.join(root, name), 0o755)
         output.touch(mode=0o755)  # Update dir modtime
     else:
-        with open(output, "wb") as f:
+        # Write to a temp file first so an interrupted transfer never leaves
+        # a truncated binary at the final path (CI caches that path).
+        part = output.with_name(output.name + ".part")
+        with open(part, "wb") as f:
             shutil.copyfileobj(response, f)
-        st = os.stat(output)
-        os.chmod(output, st.st_mode | stat.S_IEXEC)
+        st = os.stat(part)
+        os.chmod(part, st.st_mode | stat.S_IEXEC)
+        os.replace(part, output)
 
 
 RETRY_DELAYS = (5, 15, 30, 60, 120)
