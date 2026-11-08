@@ -21,8 +21,8 @@ void fn_801DB8BC();
 void MemoryManager_TimedFree(void *);
 }
 static inline void ResetRecord(AIPairRecord *p) {
-    p->kartId = -1;
     p->driver = 0;
+    p->kartId = -1;
     p->field08 = 0;
     p->waypoint = 0;
     p->field1C = 0;
