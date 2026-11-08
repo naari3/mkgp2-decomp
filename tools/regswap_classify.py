@@ -330,6 +330,18 @@ def write_md(rows, path, mn):
             rm = ' remat' if r.get('remat') else ''
             w(f"| {r['fn']} | {r['pct']} | {r['diff_lines']}{rm} | {r['shape']} | {r['where']} | {r['value']} | {r['mapping']} | {r['src'][4:]}{tag} |")
         w('')
+    per_tu = collections.defaultdict(list)
+    for r in rows:
+        if r['kind'] != 'error': per_tu[r.get('src', '')].append(r)
+    many = sorted(((k, v) for k, v in per_tu.items() if len(v) >= 3), key=lambda t: -len(t[1]))
+    if many:
+        w('## TUs with three or more near misses\n')
+        w('A shared cause (compiler version, pragma, a common inline) is likely; fix one, rerun the rest.\n')
+        w('| TU | count | functions |\n|---|---|---|')
+        for k, v in many:
+            tag = ' [claimed]' if v[0].get('claim') and v[0]['claim'] != 'naari3' else ''
+            w(f"| {k[4:]}{tag} | {len(v)} | {', '.join(r['fn'] for r in sorted(v, key=lambda r: -r['pct']))} |")
+        w('')
     err = [r for r in rows if r['kind'] == 'error']
     if err:
         w('## Not diffed (objdiff gave no symbol)\n')

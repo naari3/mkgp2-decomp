@@ -4,8 +4,10 @@ static inline unsigned int MenuRGBA(unsigned int r, unsigned int g, unsigned int
     return (r << 24) | ((g & 255) << 16) | ((b & 255) << 8) | (a & 255);
 }
 
+/* GC/2.6: `0xFFFFFF00 | alpha` gives the target's li -0x100 + rlwimi / or
+ * (regalloc_patterns §11); 1.3.2 needs __rlwimi and colors it differently. */
 static inline unsigned int WithAlpha(unsigned int color, unsigned char alpha) {
-    return __rlwimi(color, alpha, 0, 24, 31);
+    return color | alpha;
 }
 
 /* Loops in a static inline: only an inlined loop gets the target's
