@@ -5,7 +5,8 @@
  * model without changing the queue views consumed by other TUs. */
 #include "game/SteeringRingInsertPrivate.h"
 
-inline void *operator new(unsigned long, void *p) { return p; }
+inline void *operator new(unsigned long size, void *p) { return p; }
+inline void operator delete(void *memory, void *place) {}
 
 struct SteeringQueueValue {
     int first, second;
@@ -68,7 +69,10 @@ struct QueueRingConstIter {
 };
 
 /* The range-assign dispatch passes an empty iterator-category tag in r6. */
-struct QueueAssignTag {};
+struct QueueInputTag {};
+struct QueueForwardTag : QueueInputTag {};
+struct QueueBidirectionalTag : QueueForwardTag {};
+struct QueueAssignTag : QueueBidirectionalTag {};
 
 struct QueueAssignIter {
     SteeringRing *ring;
