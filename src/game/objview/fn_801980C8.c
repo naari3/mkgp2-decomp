@@ -89,7 +89,11 @@ static inline void Spawn(Owner *o, Particle *p, Joint *j) {
     p->zAxis.y = j->m[1][2];
     p->zAxis.z = -j->m[2][2];
     p->scale = lbl_806D9678 + NextScale(o);
-    p->growth = lbl_806D967C * NextScale(o) + lbl_806D967C;
+    {
+        float r = NextScale(o);
+        float k = lbl_806D967C;
+        p->growth = k * r + k;
+    }
     p->alpha = lbl_806D9678;
     p->velocity.x = lbl_806D9680 * NextVelocity(o) - lbl_806D9684;
     p->velocity.y = lbl_806D9684 * NextVelocity(o) - lbl_806D9678;
@@ -108,6 +112,8 @@ static inline void UpdateParticle(Particle *p) {
                 }
             }
 }
+#pragma push
+#pragma opt_dead_assignments off
 void fn_801980C8(Owner *o) {
     Particle *p;
     int i;
@@ -125,10 +131,8 @@ void fn_801980C8(Owner *o) {
             Vec3_Subtract(&eye, &pos, &diff);
             distance = PSVECSquareMag(&diff);
             if (nearestDist < lbl_806D965C || distance < nearestDist) {
-                float z, y, x;
                 nearestDist = distance;
-                x = pos.x; y = pos.y; z = pos.z;
-                nearest.x = x; nearest.y = y; nearest.z = z;
+                nearest.x = pos.x; nearest.y = pos.y; nearest.z = pos.z;
             }
             if (entry->scrollJoint != 0) fn_80182B50(entry->scrollJoint, lbl_806D965C, lbl_806D9660);
             if (entry->delay != 0) {
@@ -148,3 +152,4 @@ void fn_801980C8(Owner *o) {
         }
     }
 }
+#pragma pop
