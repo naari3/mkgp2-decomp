@@ -1,6 +1,4 @@
-/* Communication buffer pool, shared by the PCB send/receive helpers.
- * The final buffer is the two 0x1C-byte sync slots used by SyncSlot.c.
- * C++ data declarations retain the original order of the BSS objects. */
+/* Only storage accessed by PCBCheck_RecvLinkData is modeled here. */
 typedef struct PcbRecvFlags {
     unsigned char local : 1;
     unsigned char reserved6 : 2;
@@ -19,16 +17,7 @@ typedef struct PcbRecvSlot {
     signed char readIndex, writeIndex;
     unsigned char padA3A[2];
 } PcbRecvSlot;
-#pragma cplusplus on
-unsigned char lbl_805A5EC0[0x204];
-unsigned char lbl_805A60C4[0x54];
-unsigned char g_pcbSyncTable[0x1C];
-unsigned char lbl_805A6134[0x20];
-PcbRecvSlot lbl_805A6154[4];
-unsigned char lbl_805A8A44[4][0x45];
-unsigned char g_ringBufferBase[64][0xDC];
-unsigned char lbl_805AC258[2][0x1C];
-#pragma cplusplus reset
+extern unsigned char lbl_805A5EC0[];
 extern unsigned char g_pcbCommEnabled, g_isCommHost;
 extern int g_ringReadIdx, lbl_806D11A0;
 extern void* memcpy(void*, const void*, unsigned long);
@@ -40,6 +29,7 @@ extern unsigned char* GetDisplayContext(int);
 
 int PCBCheck_RecvLinkData(unsigned char advanceRead)
 {
+    unsigned char* base = lbl_805A5EC0;
     PcbRecvSlot* slot;
     unsigned char* output;
     unsigned char* status;
@@ -50,13 +40,14 @@ int PCBCheck_RecvLinkData(unsigned char advanceRead)
     if (g_pcbCommEnabled == 0) {
         return 0;
     }
-    slot = lbl_805A6154;
-    output = g_ringBufferBase[0];
-    status = lbl_805A8A44[0];
-    localSample = lbl_805A60C4 + 0x2C;
+    localSample = base + 0x204;
+    slot = (PcbRecvSlot*)(base + 0x294);
+    output = base + 0x2C98;
+    status = base + 0x2B84;
+    localSample = ((PcbRecvSlot *)localSample)->samples[0];
     for (i = 0; i < 4; ++i, output += 0x28, status += 0x45, ++slot) {
         if (slot->flags.local == 1) {
-            memcpy(slot, lbl_805A60C4, 0x2C);
+            memcpy(slot, base + 0x204, 0x2C);
             memcpy(slot->samples[slot->writeIndex], localSample, 0x28);
             slot->readIndex = (slot->readIndex + 1) % 64;
             slot->writeIndex = (slot->writeIndex + 1) % 64;
@@ -77,7 +68,7 @@ int PCBCheck_RecvLinkData(unsigned char advanceRead)
                                 slot->writeIndex = (slot->writeIndex + 1) % 64;
                             }
                             if (type == 2) {
-                                memcpy(g_ringBufferBase[lbl_806D11A0], payload, 0xDC);
+                                memcpy(((unsigned char (*)[0xDC])(base + 0x2C98))[lbl_806D11A0], payload, 0xDC);
                                 lbl_806D11A0 = (lbl_806D11A0 + 1) % 64;
                             }
                             if (type == 3) {
@@ -86,10 +77,10 @@ int PCBCheck_RecvLinkData(unsigned char advanceRead)
                                 memcpy(context + *(int*)packet * 0x200, packet + 4, 0x200);
                             }
                             if (type == 4) {
-                                memcpy(lbl_805AC258, payload, 0x1C);
+                                memcpy(base + 0x6398, payload, 0x1C);
                             }
                             if (type == 5) {
-                                memcpy(g_pcbSyncTable, payload, 0x1C);
+                                memcpy(base + 0x258, payload, 0x1C);
                             }
                             if (type == 6) {
                                 memcpy(status, payload, 0x45);

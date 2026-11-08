@@ -16,6 +16,9 @@ import os
 import platform
 import shutil
 import stat
+import sys
+import time
+import urllib.error
 import urllib.request
 import zipfile
 from typing import Callable, Dict
@@ -109,10 +112,43 @@ def download(url, response, output) -> None:
                 os.chmod(os.path.join(root, name), 0o755)
         output.touch(mode=0o755)  # Update dir modtime
     else:
-        with open(output, "wb") as f:
+        # Write to a temp file first so an interrupted transfer never leaves
+        # a truncated binary at the final path (CI caches that path).
+        part = output.with_name(output.name + ".part")
+        with open(part, "wb") as f:
             shutil.copyfileobj(response, f)
-        st = os.stat(output)
-        os.chmod(output, st.st_mode | stat.S_IEXEC)
+        st = os.stat(part)
+        os.chmod(part, st.st_mode | stat.S_IEXEC)
+        os.replace(part, output)
+
+
+RETRY_DELAYS = (5, 15, 30, 60, 120)
+
+
+def download_with_retry(req, url: str, output: Path, context=None) -> None:
+    # GitHub release downloads intermittently return 502/503/504 (CI on main
+    # failed for ~1h on 2026-11-08 with "504 Gateway Time-out"). Retry
+    # transient server/network errors with backoff before giving up.
+    for attempt in range(len(RETRY_DELAYS) + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=120, context=context) as response:
+                download(url, response, output)
+            return
+        except urllib.error.HTTPError as e:
+            if e.code < 500 and e.code != 429:
+                raise
+            err: Exception = e
+        except urllib.error.URLError as e:
+            if "CERTIFICATE_VERIFY_FAILED" in str(e):
+                raise
+            err = e
+        except (TimeoutError, ConnectionError) as e:
+            err = e
+        if attempt == len(RETRY_DELAYS):
+            raise err
+        delay = RETRY_DELAYS[attempt]
+        print(f"Download failed ({err}); retrying in {delay}s", file=sys.stderr)
+        time.sleep(delay)
 
 
 def main() -> None:
@@ -128,8 +164,7 @@ def main() -> None:
     print(f"Downloading {url} to {output}")
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     try:
-        with urllib.request.urlopen(req) as response:
-            download(url, response, output)
+        download_with_retry(req, url, output)
     except urllib.error.URLError as e:
         if str(e).find("CERTIFICATE_VERIFY_FAILED") == -1:
             raise e
@@ -142,10 +177,9 @@ def main() -> None:
             )
             return
 
-        with urllib.request.urlopen(
-            req, context=ssl.create_default_context(cafile=certifi.where())
-        ) as response:
-            download(url, response, output)
+        download_with_retry(
+            req, url, output, ssl.create_default_context(cafile=certifi.where())
+        )
 
 
 if __name__ == "__main__":

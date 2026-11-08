@@ -56,10 +56,116 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.version }}-${{ github.sha }}
           restore-keys: ${{ runner.os }}-${{ matrix.version }}-
 
+      # Tool binaries (dtk, objdiff-cli, sjiswrap, wibo) come from GitHub
+      # Releases, whose asset CDN intermittently returns 504 for long
+      # stretches (main CI was red 2026-11-08 08:43-09:40Z). Cache them under
+      # a key made of the pinned tags so normal runs never download, and pass
+      # explicit paths to configure.py so ninja doesn't schedule TOOL rules.
+      - name: Tool versions
+        id: tools
+        run: |
+          python - >> "$GITHUB_OUTPUT" <<'EOF'
+          import re
+          s = open("configure.py").read()
+          tags = {t: re.search(rf'config\.{t}_tag = "([^"]+)"', s).group(1)
+                  for t in ("dtk", "objdiff", "sjiswrap", "wibo")}
+          for t, v in tags.items():
+              print(f"{t}={v}")
+          EOF
+
+      # One cache entry per tool, saved right after its own download, so a
+      # run that gets some tools before the CDN gives up still keeps them
+      # (downloads continue on error; Build fails if a tool is still missing).
+      - name: Restore dtk
+        id: cache-dtk
+        uses: actions/cache/restore@v4
+        with:
+          path: ci-tools/dtk
+          key: tool-${{ runner.os }}-dtk-${{ steps.tools.outputs.dtk }}
+
+      - name: Download dtk
+        if: steps.cache-dtk.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: |
+          mkdir -p ci-tools
+          python tools/download_tool.py dtk ci-tools/dtk --tag ${{ steps.tools.outputs.dtk }}
+
+      - name: Save dtk
+        if: steps.cache-dtk.outputs.cache-hit != 'true' && hashFiles('ci-tools/dtk') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: ci-tools/dtk
+          key: tool-${{ runner.os }}-dtk-${{ steps.tools.outputs.dtk }}
+
+      - name: Restore objdiff-cli
+        id: cache-objdiff
+        uses: actions/cache/restore@v4
+        with:
+          path: ci-tools/objdiff-cli
+          key: tool-${{ runner.os }}-objdiff-cli-${{ steps.tools.outputs.objdiff }}
+
+      - name: Download objdiff-cli
+        if: steps.cache-objdiff.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: |
+          mkdir -p ci-tools
+          python tools/download_tool.py objdiff-cli ci-tools/objdiff-cli --tag ${{ steps.tools.outputs.objdiff }}
+
+      - name: Save objdiff-cli
+        if: steps.cache-objdiff.outputs.cache-hit != 'true' && hashFiles('ci-tools/objdiff-cli') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: ci-tools/objdiff-cli
+          key: tool-${{ runner.os }}-objdiff-cli-${{ steps.tools.outputs.objdiff }}
+
+      - name: Restore sjiswrap
+        id: cache-sjiswrap
+        uses: actions/cache/restore@v4
+        with:
+          path: ci-tools/sjiswrap.exe
+          key: tool-${{ runner.os }}-sjiswrap-${{ steps.tools.outputs.sjiswrap }}
+
+      - name: Download sjiswrap
+        if: steps.cache-sjiswrap.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: |
+          mkdir -p ci-tools
+          python tools/download_tool.py sjiswrap ci-tools/sjiswrap.exe --tag ${{ steps.tools.outputs.sjiswrap }}
+
+      - name: Save sjiswrap
+        if: steps.cache-sjiswrap.outputs.cache-hit != 'true' && hashFiles('ci-tools/sjiswrap.exe') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: ci-tools/sjiswrap.exe
+          key: tool-${{ runner.os }}-sjiswrap-${{ steps.tools.outputs.sjiswrap }}
+
+      - name: Restore wibo
+        id: cache-wibo
+        uses: actions/cache/restore@v4
+        with:
+          path: ci-tools/wibo
+          key: tool-${{ runner.os }}-wibo-${{ steps.tools.outputs.wibo }}
+
+      - name: Download wibo
+        if: steps.cache-wibo.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: |
+          mkdir -p ci-tools
+          python tools/download_tool.py wibo ci-tools/wibo --tag ${{ steps.tools.outputs.wibo }}
+
+      - name: Save wibo
+        if: steps.cache-wibo.outputs.cache-hit != 'true' && hashFiles('ci-tools/wibo') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: ci-tools/wibo
+          key: tool-${{ runner.os }}-wibo-${{ steps.tools.outputs.wibo }}
+
       - name: Build
         run: |
           python configure.py --map --version ${{ matrix.version }} \
-              --binutils /binutils --compilers /compilers
+              --binutils /binutils --compilers /compilers \
+              --dtk ci-tools/dtk --objdiff ci-tools/objdiff-cli \
+              --sjiswrap ci-tools/sjiswrap.exe --wrapper ci-tools/wibo
           ninja all_source progress build/${{ matrix.version }}/report.json
 
       - name: Upload map

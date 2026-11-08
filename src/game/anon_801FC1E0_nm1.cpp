@@ -151,9 +151,8 @@ extern "C" void fn_801FCBCC(CardFlowScene *self) {
         if (CardSave_Tick()) {
             switch (fn_801FDA78(Sci2Card_GetPrintErrorCode())) {
             case 0:
-                { int duration = lbl_806D19C8[0];
                 self->subState = 6;
-                fn_8020A7CC(self->fader, 0, duration, (short)duration); }
+                fn_8020A7CC(self->fader, 0, lbl_806D19C8[0], (short)lbl_806D19C8[0]);
                 break;
             case 6: case 7:
                 fn_80203E4C();
@@ -196,9 +195,8 @@ extern "C" void fn_801FCD9C(CardFlowScene *self) {
     switch (self->subState) {
     case 0:
         if (fn_80203E30() == -1) {
-            int duration = lbl_806D19C8[0];
             self->subState = 1;
-            fn_8020A7CC(self->fader, 0, duration, (short)duration);
+            fn_8020A7CC(self->fader, 0, lbl_806D19C8[0], (short)lbl_806D19C8[0]);
             if (lbl_806D19C0 == 1) fn_80203F5C(20);
             else fn_80203F5C(1);
             card_eject_init();

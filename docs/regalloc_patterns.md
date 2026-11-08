@@ -210,6 +210,40 @@ Same function: `double d = __fabs(x); a = d;` gave the target's separate
 fabs/frsp registers, and `T t; ...; t = tmpl;` (assigned after the decls, not
 an initializer) fixed the register order of a struct template copy.
 
+## 13. "First access folded, the rest through a pointer": a static object behind the section anchor (diagnosed, 11-08)
+
+Target shape (CSPartsHolders fn_8014D038, anchor `lbl_80362D90` in r31):
+
+    addi r3, r31, 0xef4        ; &rot materialised
+    lfs  f29, 0xef4(r31)       ; first field folded onto the anchor
+    lfs  f30, 0x4(r3)          ; the rest through r3
+    lfs  f31, 0x8(r3)
+
+This is what MWCC emits for a compiler-local object (a `static` /
+`static const` local, a string, a literal table) reached through the
+section anchor. The object's address gets its own register, and peephole
+folds only the first load into an anchor displacement. A minimal test
+reproduces it exactly (GC/1.3.2, `#pragma readonly_strings on`, two
+`static const` Vec3 tables plus two strings in one function, the rot reads
+loop-invariant). Without the anchor the same code gives `lfsu f29, rot@l(r3)`
+followed by `4(r3)` and `8(r3)`.
+
+Our sources reach these objects as `(T *)((char *)lbl_pool + off)`, which is
+`base + constant` to the optimizer, so every access folds onto the base
+register. No pragma, compiler version, pointer temp, const, inline or
+struct-copy shape changes that. Checked on fn_8014D038 (11-08): const pool +
+local base gets the base reuse and the hoisting right, but stays at 59 lines.
+
+Fix: let the TU own the pooled section and define the objects as real
+`static const` locals in source order, so the anchor and its offsets come
+from the compiler (see [[mwcc-rodata-anchor-rule]] in memory and §5 of
+matching_rules). For CSPartsHolders that means the pool `lbl_80362D90`
+(.rodata, 0xF00 bytes) shared by RaceHud_80147470 .. CSPartsHolders
+(.text 0x80147470..0x8014D540). It is a multi-TU merge, not attempted yet.
+The same diagnosis covers PCBCheck_RecvLinkData, Item4SubFlame and
+KartFx_BoostExhaustRayTick (KartFx's struct copy from `resources->colors` is a
+copy from a static object), all onmokoworks-claimed.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,

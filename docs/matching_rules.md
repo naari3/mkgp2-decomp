@@ -191,6 +191,18 @@ without those flags ninja tries to download tools and fails.
 - When the compiler emits functions with extab in a different order than the
   target, add the TU to `tools/extab_order.json`. `reorder_extab.py` silently
   skips an entry whose function set does not equal the real extabindex rows.
+- **Merging TUs that mix manual and automatic extab** (asm functions or C
+  functions with `.extab_user` entries next to non-leaf C/C++ functions that
+  get automatic extab) is not blocked: the object then has two
+  extab/extabindex pairs, and `reorder_extab.py` interleaves them once the
+  merged TU's key in `tools/extab_order.json` lists every function that has an
+  extabindex row, in target order. Also: rename the automatic `@N` extab and
+  extabindex symbols to the target `@etb_`/`@eti_` names in the TU's
+  `tools/extab_user_renames.json` key; wrap a C++ part in
+  `#pragma cplusplus on` / `#pragma cplusplus off` (not `reset`); and put
+  `#pragma exceptions off` / `reset` around a C function that keeps a manual
+  entry, or it gets an automatic one too. Worked example: the
+  VSMode/BtMode merge (`src/game/VSMode_FrameUpdate.c`, 122d9dbc).
 - A weak inline destructor that the compiler emits into a TU may be appended
   to that TU's own `tools/extab_order.json` key; new rename pairs may be
   added inside a TU's own `tools/extab_user_renames.json` key. Do not edit
@@ -218,7 +230,33 @@ roughly in the order worth trying:
    permuter for C++ (`cperm.py`, kept outside the repo, ask if you want it).
    In practice it rarely moved the last register swaps here; new source ideas
    did.
+8. Two shapes that closed 2-line diffs on 2026-11-08:
+   - Loop step order (target bumps the pointer before the count): walk with
+     a separate index, `int count = 0, i = 0; while (t[i].name) { i++; count++; }`
+     (CollisionFile_Load).
+   - Globals used as call arguments but kept in saved registers (target
+     `lwz r29,g; mr r4,r29`, ours `lwz r4,g; mr r29,r4`): declare the locals
+     without initializers and assign them inside the first call,
+     `f(p, cup = g_cupId, round = g_roundIndex)` (AI_CalcGPTargetSpeed).
+   - An inline member that returns a class by value (`list->end()`) can make
+     MWCC emit the function after the ones that follow it. Build the
+     iterator directly instead (`Iter pos(&list->anchor)`, Scene_8014E0C4).
+   - A load scheduled across a store in the target (`li r0,N; lwz rX,g;
+     stw r0,field`, ours keeps the load after the store) means MWCC knew the
+     two could not alias. Write the natural order (store, then the load) and
+     give the compiler that knowledge: `__restrict` on the pointer params
+     (RankLog_OnMatchEnd), or a `const` view of a global that the TU only
+     reads (fn_801FCBCC/fn_801FCD9C; mark the const as fakematch if the
+     global is written elsewhere).
+   - Byte stores of a shifted word that put `clrlwi`/`extrwi` in a different
+     slot: write the mask, `PUT((v >> 8) & 0xFF)` (jvsio fn_80282CDC).
 
 When you stop, record the function in `docs/gave_up.md` with the current %,
 the remaining diff in one line, and where the WIP lives, so the next person
 starts from there instead of from zero.
+9. Stack slot order (GC/2.6, ItemEffect_Projectile draft, 2026-11-08): local
+   aggregates get frame slots in ASCENDING SIZE order, and declaration order
+   only breaks ties. So if the target has a 12-byte vector above two 12-byte
+   scratch arrays, no declaration order will reproduce it. The vector has to be
+   bigger, e.g. 16 bytes with a pad member. Two adjacent int fields copied with
+   `lwz,lwz,stw,stw` are one 8-byte struct copy.

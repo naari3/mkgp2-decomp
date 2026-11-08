@@ -400,14 +400,14 @@ void RankLog_OnPlayerDefeated(void *self, int slot)
     }
 }
 
-void RankLog_OnMatchEnd(void *self, int slot, KartResult *a, KartResult *b)
+void RankLog_OnMatchEnd(void *self, int slot, KartResult *__restrict a, KartResult *__restrict b)
 {
     if (IsLocalSlot(slot) == 1) {
         int ka;
         int kb;
+        g_matchCount++;
         ka = a->kind;
         kb = b->kind;
-        g_matchCount++;
         if (ka != 3 && ka != 9 && (kb == 3 || kb == 9)) {
             g_undefeatedStreak++;
         }

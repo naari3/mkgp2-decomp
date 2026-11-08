@@ -35,6 +35,9 @@ int lbl_804EC71C[14] = {
 };
 }
 
+#pragma push
+#pragma opt_common_subs off
+#pragma opt_propagation off
 int fn_80209AC4(int a, int b) {
     if (!CardOK()) {
         return 0;
@@ -48,8 +51,8 @@ int fn_80209AC4(int a, int b) {
     int result = 0;
     int row = a - 1;
     int cc = g_ccClass == 2 ? 2 : 0;
-    int group = b >= 4 ? 1 : 0;
-    switch (cc + group) {
+    cc += b >= 4 ? 1 : 0;
+    switch (cc) {
     case 0:
         if (fn_801D5B8C(&g_playerData, g_ccClass, a, b) == 1) {
             result = lbl_806D02DC;
@@ -77,6 +80,8 @@ int fn_80209AC4(int a, int b) {
     lbl_806D02E0 = result;
     return result;
 }
+#pragma pop
+
 
 static inline void FillSpecialItems(int *list) {
     int i;
