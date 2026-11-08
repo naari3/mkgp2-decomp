@@ -52,10 +52,17 @@ struct TaskNode {
     PopupTask *task;
 };
 
-struct TaskIter {
+struct TaskIterBase {
     TaskNode *node;
+    TaskIterBase() {}
+    TaskIterBase(TaskNode *n) : node(n) {}
+    PopupTask *operator->() const { return node->task; }
+    TaskIterBase &operator++() { node = node->next; return *this; }
+};
+
+struct TaskIter : TaskIterBase {
     TaskIter() {}
-    TaskIter(TaskNode *n) : node(n) {}
+    TaskIter(TaskNode *n) : TaskIterBase(n) {}
     TaskIter &operator=(TaskIter o) {
         node = o.node;
         return *this;

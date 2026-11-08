@@ -5,14 +5,14 @@ void TaskListImpl::Draw() {
     TaskIter it;
     it.node = entries.first;
     while (it.node != end) {
-        if (it.node->task->CanDraw()) {
-            it.node->task->Draw();
+        if (it->CanDraw()) {
+            it->Draw();
         }
-        if (it.node->task->field0C >= 2) {
-            it.node->task->Finish();
+        if (it->field0C >= 2) {
+            it->Finish();
             it = Remove(it);
         } else {
-            it.node = it.node->next;
+            ++it;
         }
     }
 }
