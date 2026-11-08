@@ -1578,6 +1578,7 @@ game/clMiyoshiCardCreate.c:
 	extabindex  start:0x80020DBC end:0x80020DEC
 	.text       start:0x80061054 end:0x8006178C
 	.rodata     start:0x802EE028 end:0x802EE320
+	.data       start:0x803F9E18 end:0x803F9F2C
 
 game/dtor_8006178C.c:
 	extab       start:0x80007E74 end:0x80007E84
