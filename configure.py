@@ -734,7 +734,7 @@ config.libs = [
             Object(Matching, "game/RaceContextArray.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/RaceContextArrayInit.cpp", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/1.3.2"),
             Object(Matching, "game/EffectSmokeRing3.cpp", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
-            Object(NonMatching, "game/EffectCompoundRing.cpp", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
+            Object(Matching, "game/EffectCompoundRing.cpp", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
             Object(Matching, "game/EffectKartAura.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/EffectKartAuraCompound.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-i src/game"]),
             Object(Matching, "game/CommBroadcast.c"),
