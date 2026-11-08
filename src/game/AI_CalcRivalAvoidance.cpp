@@ -23,17 +23,17 @@ static inline float rivalSegmentYaw(const RivalWaypoint *a, const RivalWaypoint 
     float angle=(float)atan2(b->x-a->x,b->z-a->z);
     return angle;
 }
-static inline float reduceRivalAngle(float angle, float turn, float bound) {
+static inline float reduceRivalAngle(float angle, float bound, float turn) {
     while(bound<=angle) angle-=turn;
     return angle;
 }
-static inline float raiseRivalAngle(float angle, float turn, float bound) {
+static inline float raiseRivalAngle(float angle, float bound, float turn) {
     while(angle<bound) angle+=turn;
     return angle;
 }
 static inline float normalizeRivalAngle(float angle) {
-    angle=reduceRivalAngle(angle,lbl_806DA484,lbl_806DA488);
-    return raiseRivalAngle(angle,lbl_806DA484,lbl_806DA48C);
+    angle=reduceRivalAngle(angle,lbl_806DA488,lbl_806DA484);
+    return raiseRivalAngle(angle,lbl_806DA48C,lbl_806DA484);
 }
 static inline unsigned char findRival(RivalAvoidanceState *self,RivalAvoidanceCandidate &candidate) {
     AIPairRecord *tracking=&lbl_806793D8[self->kartId];
@@ -56,6 +56,13 @@ static inline unsigned char findRival(RivalAvoidanceState *self,RivalAvoidanceCa
     }
     return 0;
 }
+static inline float rivalAvoidanceAmount(float distance, float lower) {
+    float amount=distance-lower;
+    amount=lbl_806DA4E8-amount;
+    amount=amount/lbl_806DA4E8;
+    amount=amount+lbl_806DA4EC;
+    return lbl_806D1938*amount;
+}
 extern "C" float AI_CalcRivalAvoidance(RivalAvoidanceState *self) {
     const char *constants=lbl_803BD920;
     RivalPathEntry *entry=PathManager_GetEntrySubStruct(g_pathSystem,self->pathId);
@@ -66,7 +73,7 @@ extern "C" float AI_CalcRivalAvoidance(RivalAvoidanceState *self) {
     if(!found) return lbl_806DA42C;
     if(lbl_806DA4E0<candidate.distance || candidate.distance<lbl_806DA4E4) return lbl_806DA42C;
     self->avoiding=1;
-    float amount=lbl_806D1938*((lbl_806DA4E8-(candidate.distance-lbl_806DA4E4))/lbl_806DA4E8+lbl_806DA4EC);
+    float amount=rivalAvoidanceAmount(candidate.distance,lbl_806DA4E4);
     if(!lbl_806D1950) { lbl_806D194C=lbl_806DA4F0*lbl_806D1934; lbl_806D1950=1; }
     if(!lbl_806D1958) { lbl_806D1954=-lbl_806D194C; lbl_806D1958=1; }
     if(candidate.angle>lbl_806D194C) return -amount;
