@@ -67,8 +67,11 @@ typedef struct CSAnim CSAnim;
 
 extern const int lbl_806D7480;
 extern const int lbl_806D7498;
-extern char lbl_8035C678[];
-extern char lbl_8035C684[];
+/* .rodata 0x8035C678..0x8035C6B8 (owned; referenced by the asm fn_8013AE20) */
+#pragma force_active on
+const char lbl_8035C678[] = "csAnim.cpp";
+const char lbl_8035C684[] = "clCSAnim::update() : ACT_JUMP    not found LABEL\n";
+#pragma force_active reset
 extern const int lbl_806D7484;
 extern const int lbl_806D7488;
 extern const int lbl_806D7490;
