@@ -183,7 +183,11 @@ struct CoinFlowScene : FlowScene {
 extern "C" {
 extern unsigned char lbl_806D19C0;
 extern int lbl_806D19C4;
-extern int lbl_806D19C8[2];
+/* fakematch: natural decl is `extern int lbl_806D19C8[2];` (written by
+ * anon_801FD320.cpp). The const view lets the scheduler hoist the fade
+ * duration load above the `subState = N` store, as in the target
+ * (fn_801FCBCC, fn_801FCD9C). */
+extern const int lbl_806D19C8[2];
 extern unsigned char g_playerData[];
 extern int g_currentSceneState;
 void fn_80203F5C(int);
