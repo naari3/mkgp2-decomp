@@ -12,7 +12,7 @@ void fn_80192348(unsigned int);
 void SoundMgr_Play(unsigned int);
 void fn_8019190C(unsigned int, unsigned char);
 void fn_801915F4(unsigned int, unsigned short);
-unsigned int fn_801915DC(unsigned int);
+unsigned char fn_801915DC(int);
 void fn_801814C8();
 void fn_801920D4();
 void fn_8017FF10(int, int, const char *, ...);
