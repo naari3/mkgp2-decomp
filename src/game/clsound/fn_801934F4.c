@@ -1,5 +1,4 @@
 #pragma opt_dead_assignments off
-#pragma peephole off
 typedef struct SoundEvent { unsigned int id; int state; int countdown; } SoundEvent;
 extern unsigned char ClSound_Initialized;
 extern SoundEvent lbl_80677F40[37];
