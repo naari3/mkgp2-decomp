@@ -56,10 +56,46 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.version }}-${{ github.sha }}
           restore-keys: ${{ runner.os }}-${{ matrix.version }}-
 
+      # Tool binaries (dtk, objdiff-cli, sjiswrap, wibo) come from GitHub
+      # Releases, whose asset CDN intermittently returns 504 for long
+      # stretches (main CI was red 2026-11-08 08:43-09:40Z). Cache them under
+      # a key made of the pinned tags so normal runs never download, and pass
+      # explicit paths to configure.py so ninja doesn't schedule TOOL rules.
+      - name: Tool versions
+        id: tools
+        run: |
+          python - >> "$GITHUB_OUTPUT" <<'EOF'
+          import re
+          s = open("configure.py").read()
+          tags = {t: re.search(rf'config\.{t}_tag = "([^"]+)"', s).group(1)
+                  for t in ("dtk", "objdiff", "sjiswrap", "wibo")}
+          for t, v in tags.items():
+              print(f"{t}={v}")
+          print("key=" + "-".join(f"{t}{v}" for t, v in tags.items()))
+          EOF
+
+      - name: Cache tools
+        id: tools-cache
+        uses: actions/cache@v4
+        with:
+          path: ci-tools
+          key: tools-${{ runner.os }}-${{ steps.tools.outputs.key }}
+
+      - name: Download tools
+        if: steps.tools-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ci-tools
+          python tools/download_tool.py dtk ci-tools/dtk --tag ${{ steps.tools.outputs.dtk }}
+          python tools/download_tool.py objdiff-cli ci-tools/objdiff-cli --tag ${{ steps.tools.outputs.objdiff }}
+          python tools/download_tool.py sjiswrap ci-tools/sjiswrap.exe --tag ${{ steps.tools.outputs.sjiswrap }}
+          python tools/download_tool.py wibo ci-tools/wibo --tag ${{ steps.tools.outputs.wibo }}
+
       - name: Build
         run: |
           python configure.py --map --version ${{ matrix.version }} \
-              --binutils /binutils --compilers /compilers
+              --binutils /binutils --compilers /compilers \
+              --dtk ci-tools/dtk --objdiff ci-tools/objdiff-cli \
+              --sjiswrap ci-tools/sjiswrap.exe --wrapper ci-tools/wibo
           ninja all_source progress build/${{ matrix.version }}/report.json
 
       - name: Upload map
