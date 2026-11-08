@@ -1,4 +1,13 @@
-#include "game/SpriteVoiceGoalPrivate.h"
+#include "game/MidRaceVoicePrivate.h"
+
+extern unsigned char VoiceQueue_Push(short, short, unsigned char, unsigned char);
+extern int g_goalFanfareVariant, g_goalFanfarePlayerIndex;
+extern int g_lastPlayerIndexCrossingCheckpoint, lbl_806D17BC;
+extern unsigned char g_goalFanfareSubState;
+extern OSTime g_goalFanfareStartTimeHi;
+extern const float lbl_806D9804, lbl_806D9810;
+extern void *g_raceRankingPathObject;
+extern int Race_CompareKartProgress(void *, int, int);
 
 static inline short Goal_SelectFirst(short *tables, int character, int id) {
     short *normal = tables;
@@ -26,20 +35,20 @@ static inline short Goal_SelectOther(short *tables, int character, int id) {
 }
 
 
-static inline void *Goal_ProgressOffset(int offset) {
-    VoiceProgressKart **karts = (VoiceProgressKart **)((char *)g_raceEntryArray + 0x44);
-    VoiceProgressKart *kart = *(VoiceProgressKart **)((char *)karts + offset);
-    return kart->progress;
+static inline int Goal_ParticipantOffset(int offset) {
+    MidRaceKart **karts = (MidRaceKart **)((char *)g_raceEntryArray + 0x44);
+    MidRaceKart *kart = *(MidRaceKart **)((char *)karts + offset);
+    return kart->participantIndex;
 }
 
-static inline void *Goal_Progress(int index) {
-    VoiceProgressKart **karts = (VoiceProgressKart **)((char *)g_raceEntryArray + 0x44);
-    VoiceProgressKart *kart = *(VoiceProgressKart **)((char *)karts + index * sizeof(SpriteVoiceRaceEntry));
-    return kart->progress;
+static inline int Goal_Participant(int index) {
+    MidRaceKart **karts = (MidRaceKart **)((char *)g_raceEntryArray + 0x44);
+    MidRaceKart *kart = *(MidRaceKart **)((char *)karts + index * sizeof(SpriteVoiceRaceEntry));
+    return kart->participantIndex;
 }
 
 void fn_801A4F38(void) {
-    short *tables = lbl_80496C38;
+    short *tables = lbl_80496C38.f0;
     SpriteVoiceRaceEntry *entry;
     int player, comparison;
     int playerOffset;
@@ -58,8 +67,8 @@ void fn_801A4F38(void) {
     g_voiceLastTime = OSGetTime();
     if (g_goalFanfareVariant == 1) {
         if (Race_CompareKartProgress(g_raceRankingPathObject,
-            Goal_Progress(g_lastPlayerIndexCrossingCheckpoint),
-            Goal_Progress(g_goalFanfarePlayerIndex)) <= 0) {
+            Goal_Participant(g_lastPlayerIndexCrossingCheckpoint),
+            Goal_Participant(g_goalFanfarePlayerIndex)) <= 0) {
             VoiceQueue_Push(0x238, -2, 0, 1);
             VoiceQueue_Push(Goal_SelectFirst(tables, g_raceEntryArray[g_lastPlayerIndexCrossingCheckpoint].character,
                 g_raceEntryArray[g_lastPlayerIndexCrossingCheckpoint].id), -2, 0, 1);
@@ -68,18 +77,18 @@ void fn_801A4F38(void) {
                 g_raceEntryArray[g_goalFanfarePlayerIndex].id), -2, 0, 1);
             VoiceQueue_Push(0x23F, -2, 0, 1);
         } else {
-            entry = VoiceGoal_Find(0);
+            entry = RaceVoice_FindByRank(0);
             VoiceQueue_Push(Goal_SelectFirst(tables, entry->character, entry->id), -2, 0, 1);
             VoiceQueue_Push(0x240, -2, 0, 1);
             VoiceQueue_Push(0x280, -2, 0, 1);
-            entry = VoiceGoal_Find(1);
-            if (entry && *(unsigned char *)&entry->f31)
+            entry = RaceVoice_FindByRank(1);
+            if (entry && entry->participant)
                 VoiceQueue_Push(Goal_SelectOther(tables, entry->character, entry->id), -2, 0, 1);
-            entry = VoiceGoal_Find(2);
-            if (entry && *(unsigned char *)&entry->f31)
+            entry = RaceVoice_FindByRank(2);
+            if (entry && entry->participant)
                 VoiceQueue_Push(Goal_SelectOther(tables, entry->character, entry->id), -2, 0, 1);
-            entry = VoiceGoal_Find(3);
-            if (entry && *(unsigned char *)&entry->f31)
+            entry = RaceVoice_FindByRank(3);
+            if (entry && entry->participant)
                 VoiceQueue_Push(Goal_SelectOther(tables, entry->character, entry->id), -2, 0, 1);
             VoiceQueue_Push(0x241, -2, 0, 1);
         }
@@ -101,7 +110,7 @@ void fn_801A4F38(void) {
         VoiceQueue_Push(0x23A, -2, 0, 1);
     } else {
         if (player == 0) {
-            entry = VoiceGoal_Find(1);
+            entry = RaceVoice_FindByRank(1);
             if (entry && entry->distance <= 0) {
                 VoiceQueue_Push(0x238, -2, 0, 1);
                 VoiceQueue_Push(Goal_SelectFirst(tables, g_raceEntryArray[g_goalFanfarePlayerIndex].character,
@@ -119,8 +128,8 @@ void fn_801A4F38(void) {
             else VoiceQueue_Push(0x23D, -2, 0, 1);
         } else if (g_gameMode != 2) {
             comparison = Race_CompareKartProgress(g_raceRankingPathObject,
-                Goal_Progress(g_lastPlayerIndexCrossingCheckpoint),
-                Goal_ProgressOffset(playerOffset));
+                Goal_Participant(g_lastPlayerIndexCrossingCheckpoint),
+                Goal_ParticipantOffset(playerOffset));
             if (player != 0 && comparison <= 0) {
                 VoiceQueue_Push(0x238, -2, 0, 1);
                 VoiceQueue_Push(Goal_SelectFirst(tables, g_raceEntryArray[g_lastPlayerIndexCrossingCheckpoint].character,
@@ -130,7 +139,7 @@ void fn_801A4F38(void) {
                     g_raceEntryArray[g_goalFanfarePlayerIndex].id), -2, 0, 1);
                 VoiceQueue_Push(0x23F, -2, 0, 1);
             } else if (player == 1 || player == 2) {
-                VoiceGoal_Find(player + 1);
+                RaceVoice_FindByRank(player + 1);
                 VoiceQueue_Push(Goal_SelectFirst(tables, g_raceEntryArray[g_goalFanfarePlayerIndex].character,
                     g_raceEntryArray[g_goalFanfarePlayerIndex].id), -2, 0, 1);
                 VoiceQueue_Push(0x240, -2, 0, 1);
