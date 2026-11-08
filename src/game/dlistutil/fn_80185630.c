@@ -8,19 +8,26 @@ static inline float (*FaceMatrix(HSD_JObj *jobj))[4] {
 
 /* Extract world-space faces, reversing winding and alternating strip parity. */
 int fn_80185630(HSD_JObj *jobj, DListPObj *pobj, DListFace *faces, int capacity) {
+    DListFace *out;
+    unsigned int size;
+    DListVec v[4];
+    DListFace *face;
+    int primitive;
+    int n;
+    int collected;
+    int needed;
+    int parity;
+    unsigned char *end;
     unsigned char *p;
     int count;
-    DListFace *face, *out;
-    DListVec v[4];
-    int primitive, n, needed, parity, i, collected;
-    unsigned int size;
-    unsigned char *end, *display;
+    unsigned char *display;
+    int i;
     if (!jobj || !pobj) return 0;
     if (!faces || capacity <= 0) return 0;
-    count = 0;
     display = pobj->display;
     p = display;
     end = display + pobj->n_display * 32;
+    count = 0;
     fn_801866DC(pobj->verts);
     if (lbl_806D1678 == 0) return 0;
     out = faces;
@@ -48,8 +55,8 @@ int fn_80185630(HSD_JObj *jobj, DListPObj *pobj, DListFace *faces, int capacity)
                     PSMTXMultVec(FaceMatrix(jobj), &v[0], &face->v[2]);
                     PSMTXMultVec(FaceMatrix(jobj), &v[1], &face->v[1]);
                     PSMTXMultVec(FaceMatrix(jobj), &v[2], &face->v[0]);
-                    face->count = 3;
                     collected = 0;
+                    face->count = 3;
                     break;
                 case 0x98:
                     if (parity == 0) {
@@ -74,13 +81,13 @@ int fn_80185630(HSD_JObj *jobj, DListPObj *pobj, DListFace *faces, int capacity)
                     PSMTXMultVec(FaceMatrix(jobj), &v[1], &face->v[2]);
                     PSMTXMultVec(FaceMatrix(jobj), &v[2], &face->v[1]);
                     PSMTXMultVec(FaceMatrix(jobj), &v[3], &face->v[0]);
-                    face->count = 4;
                     collected = 0;
+                    face->count = 4;
                     break;
                 }
-                ++count;
                 ++out;
                 ++face;
+                ++count;
                 if (count >= capacity) return count;
             }
             p += lbl_806D1678;
