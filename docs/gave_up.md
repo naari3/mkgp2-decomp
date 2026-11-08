@@ -325,3 +325,10 @@ OptionMenuDraw.cpp was merged into SceneList_80157EA8.cpp (dbc2a11) so the optio
 - `Terrain_FindTriangleAtPosition` (98.41): the only real diff is that triCount is loaded into r0 where the target uses r4 (`lwz r4,4(r4); mtctr r4`). The 0.0f literal diff is only @N naming, since the TU owns 0x806D2384. Tried with no gain: pragmasweep all k2, every decl order, cell-pointer, countdown and inline-loop forms, and cperm 36k iterations.
 - `Menu801F0CC0` fn_801F1664/fn_801F1C58 (12/16 lines): the target keeps the table offsets unfolded (`addi r4,r31,0x128; addi r4,r4,0x90`). Inline helpers and struct-member address forms all fold. fn_801F1EE0/2400 hit the color/loop-counter swap (regalloc_patterns "Still open"). cperm 13k with no gain.
 - `NokoNoko_801287F8` NokoNokoChallenge_Update: 3 instructions from matching. The patch is /mnt/project-files/wip/asm-a/nokonoko_update_3insn.patch (it includes the extab_order/renames changes). Every holding-variable coloring attempt failed (decls, types, scopes, inline, 24k cperm).
+
+## gaveup-retry wind-down 2026-11-08 11:50
+
+| Function | TU | State | What is left | Tried |
+| --- | --- | --- | --- | --- |
+| `CoinSystem_UpdateAll` | game/CoinSystem_UpdateAll | asm (C draft 99.91%) | /mnt/project-files/wip/coin_updateall/CoinSystem_UpdateAll_34lines.diff (applies on main 11-08) owns the switch jumptable .data 0x8048E4B8..0x8048E4E4. extab, extabindex and .data are 100%. Left: one saved FPR (target f28, ours f30) and one saved GPR (r28/r29) for the per-coin sparkle pointer. | all 24 decl orders of the float locals s/range/k/t: no change |
+| `fn_8013AE20` (clCSAnim::update) | game/csAnim | asm (C draft 92.5%) | The TU owns its panic strings since fac53ae2 (.rodata 0x8035C678..0x8035C6B8). That changed nothing for the C draft, because the strings are only on the OSPanic path. Drafts: /mnt/project-files/wip/csanim/ (92.5 and cperm188). | rodata ownership, global vs static strings |
