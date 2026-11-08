@@ -6,7 +6,7 @@ CW only does that for objects the same TU defines, so the pool should be owned b
 function's TU. UNOWNED: no TU owns the range (give it to the TU, KartPreview 489e672c).
 OTHER: another TU owns it (merge the function into that TU, or fix the owner).
 
-Counts: OTHER 30, OTHER+MIXED 2, OWN-SELF 45, OWN-SELF+MIXED 2, UNOWNED 70, UNOWNED+MIXED 1
+Counts: OTHER 30, OTHER+MIXED 2, OWN-SELF 47, OWN-SELF+MIXED 2, UNOWNED 66, UNOWNED+MIXED 1
 
 | class | function | TU | % | sec | base | span | objs | owner | other users | claim |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -47,7 +47,6 @@ Counts: OTHER 30, OTHER+MIXED 2, OWN-SELF 45, OWN-SELF+MIXED 2, UNOWNED 70, UNOW
 | UNOWNED | `CourseScene_Load` | game/CourseEnvironment.cpp | 99.00 | .rodata | `lbl_802EAF10` | 802EAF10..802EB4D0 | 2 | - |  | onmokoworks |
 | UNOWNED | `ItemEffect_TryStartByCategory` | game/auto_ONKARTHIT_block.c | asm | .rodata | `lbl_802EBA18` | 802EBA18..802ED94C | 4 | - |  | naari3 |
 | UNOWNED | `CarObjectManager_RunKartKartCollisionSweep` | game/auto_ONKARTHIT_block.c | asm | .rodata | `lbl_802EBA18` | 802EBA18..802EBE64 | 2 | - |  | naari3 |
-| UNOWNED | `clMiyoshiCardCreate_Draw` | game/clMiyoshiCardCreate.c | asm | .rodata | `lbl_802EE028` | 802EE028..802EE320 | 2 | - |  |  |
 | UNOWNED | `CardCreate_Page` | game/CardCreate_Page.cpp | 93.44 | .rodata | `lbl_8030E598` | 8030E598..80310A0C | 2 | - | game/BackupMemoryInitialize_Page.cpp, game/CameraTest_Page.cpp, game/CardDataCheck_UI.cpp, game/CardDataTransfer_UI.cpp … | onmokoworks |
 | UNOWNED | `FlashFadeOverlay_Draw` | game/FlashFadeOverlay_Draw.c | 99.65 | .rodata | `lbl_8030E598` | 8030E598..8030EA38 | 2 | - | game/BackupMemoryInitialize_Page.cpp, game/CameraTest_Page.cpp, game/CardCreate_Page.cpp, game/CardDataCheck_UI.cpp … | onmokoworks |
 | UNOWNED | `CardTaskManager_RenderOverlay` | game/CardTaskManager_RenderOverlay.c | asm | .rodata | `lbl_80312850` | 80312850..80312DEC | 2 | - | game/CardTaskChecks.cpp |  |
@@ -60,7 +59,6 @@ Counts: OTHER 30, OTHER+MIXED 2, OWN-SELF 45, OWN-SELF+MIXED 2, UNOWNED 70, UNOW
 | UNOWNED | `get_title_name_global` | game/RankLog.c | 96.21 | .rodata | `lbl_80324B98` | 80324B98..80326CB0 | 3 | - |  | onmokoworks |
 | UNOWNED | `DetermineTitle` | game/RankLog.c | 98.47 | .rodata | `lbl_80324B98` | 80324B98..80326CB0 | 2 | - |  | onmokoworks |
 | UNOWNED | `fn_801661FC` | game/Scene_801661FC.cpp | 98.71 | .rodata | `lbl_80369D78` | 80369D78..8036A308 | 2 | - | game/Scene_80166BE8.cpp | onmokoworks |
-| UNOWNED | `fn_80170B5C` | game/Scene_80170B5C.cpp | 97.10 | .rodata | `lbl_8036E220` | 8036E220..8036E728 | 2 | - |  |  |
 | UNOWNED | `ClSound_InitSoundSystem` | game/clsound/ClSound_InitSoundSystem.c | 99.75 | .rodata | `lbl_80379100` | 80379100..8037D178 | 2 | - | game/clsound/ClSound_PlayBgmStream.c | onmokoworks |
 | UNOWNED | `fn_801A6538` | game/sprite/fn_801A6538.c | 97.86 | .rodata | `lbl_803810A8` | 803810A8..80383CF8 | 2 | - |  | onmokoworks |
 | UNOWNED | `KartController_Update` | game/KartController_Update.cpp | 89.93 | .rodata | `lbl_803BD320` | 803BD320..803BD7C8 | 2 | - |  | onmokoworks |
@@ -73,7 +71,6 @@ Counts: OTHER 30, OTHER+MIXED 2, OWN-SELF 45, OWN-SELF+MIXED 2, UNOWNED 70, UNOW
 | UNOWNED | `CourseScene_Load` | game/CourseEnvironment.cpp | 99.00 | .data | `lbl_803F5CE8` | 803F5CE8..803F7494 | 3 | - |  | onmokoworks |
 | UNOWNED | `CarObject_Init` | game/auto_ONKARTHIT_block.c | asm | .data | `lbl_803F76A8` | 803F76A8..803F76C4 | 2 | - |  | naari3 |
 | UNOWNED | `SoundDriver_GetOrCreate` | game/clItemBoxManager_nm1.cpp | 99.42 | .data | `lbl_803F9CE4` | 803F9CE4..803F9D00 | 2 | - | game/clItemBoxManager.cpp | onmokoworks |
-| UNOWNED | `clMiyoshiCardCreate_Draw` | game/clMiyoshiCardCreate.c | asm | .data | `lbl_803F9E18` | 803F9E18..803F9EE0 | 2 | - |  |  |
 | UNOWNED | `RaceContext_InitDefaults` | game/RaceContext_InitDefaults.c | asm | .data | `lbl_8040E4D0` | 8040E4D0..8040E4E8 | 2 | - | game/RaceContext_Dtor.c |  |
 | UNOWNED | `fn_801F32BC` | game/NamCamFlow.cpp | 97.38 | .data | `lbl_80419DE0` | 80419DE0..80419DFC | 2 | - | game/AdvanceCardCtor.cpp, game/CountdownOwner.cpp, game/FAllDisp.cpp, game/HitMessageOverlay_Init.c … | onmokoworks |
 | UNOWNED | `fn_801502AC` | game/Scene_8014E0C4.cpp | asm | .data | `lbl_80419EF8` | 80419EF8..80419F20 | 2 | - | game/CGameCoin_8012BF5C.cpp, game/ChallengeDemoObj.cpp, game/ChallengeDemoShell.cpp, game/ChallengeDemoTornado.cpp … | naari3 |
@@ -101,7 +98,6 @@ Counts: OTHER 30, OTHER+MIXED 2, OWN-SELF 45, OWN-SELF+MIXED 2, UNOWNED 70, UNOW
 | UNOWNED | `BootDispatcher` | game/BootDispatcher.cpp | 98.89 | .bss | `lbl_80598A60` | 80598A60..8059F480 | 4 | - | game/Backup_ClearAll.c, game/Backup_ClearBookkeeping.c, game/Backup_ClearHiScores.c, game/Backup_GetMinutesSinceBoot.c … | onmokoworks |
 | UNOWNED | `card_force_backup_now` | game/CardForceBackup.c | 84.16 | .bss | `lbl_80598A60` | 80598A60..8059F480 | 2 | - | game/Backup_ClearAll.c, game/Backup_ClearBookkeeping.c, game/Backup_ClearHiScores.c, game/Backup_GetMinutesSinceBoot.c … | onmokoworks |
 | UNOWNED | `VoiceSystem_Init` | game/VoiceSystem_Init.c | 89.32 | .bss | `lbl_80598A60` | 80598A60..80598AA4 | 2 | - | game/Backup_ClearAll.c, game/Backup_ClearBookkeeping.c, game/Backup_ClearHiScores.c, game/Backup_GetMinutesSinceBoot.c … | onmokoworks |
-| UNOWNED | `fn_80151234` | game/Scene_8014E0C4.cpp | asm | .bss | `lbl_80598A60` | 80598A60..80598AA4 | 2 | - | game/Backup_ClearAll.c, game/Backup_ClearBookkeeping.c, game/Backup_ClearHiScores.c, game/Backup_GetMinutesSinceBoot.c … | naari3 |
 | UNOWNED | `fn_801F2BC8` | game/NamCamFlow.cpp | 99.64 | .bss | `lbl_80598A60` | 80598A60..80598AB0 | 3 | - | game/Backup_ClearAll.c, game/Backup_ClearBookkeeping.c, game/Backup_ClearHiScores.c, game/Backup_GetMinutesSinceBoot.c … | onmokoworks |
 | UNOWNED | `fn_801F43F8` | game/NamCamFlow.cpp | 99.75 | .bss | `lbl_80598A60` | 80598A60..80598AB0 | 3 | - | game/Backup_ClearAll.c, game/Backup_ClearBookkeeping.c, game/Backup_ClearHiScores.c, game/Backup_GetMinutesSinceBoot.c … | onmokoworks |
 | UNOWNED | `PCBComm_SendToAllPeers` | game/PCBCommSendPeers.c | 92.40 | .bss | `lbl_805A5EC0` | 805A5EC0..805AC260 | 7 | - | game/PCBCheckRecv.c, game/PCBCommCompute.c, game/PCBCommLifecycle.cpp | onmokoworks |
@@ -113,6 +109,7 @@ Counts: OTHER 30, OTHER+MIXED 2, OWN-SELF 45, OWN-SELF+MIXED 2, UNOWNED 70, UNOW
 | UNOWNED | `fn_801B9928` | game/fn_801B9928.cpp | 93.74 | .bss | `lbl_80679280` | 80679280..806792B8 | 2 | - | game/fn_801B7EF8.c, game/fn_801B8BD8.cpp, game/fn_801B9740.cpp | onmokoworks |
 | UNOWNED | `fn_801B7EF8` | game/fn_801B7EF8.c | 91.87 | .bss | `lbl_80679280` | 80679280..806792B8 | 2 | - | game/fn_801B8BD8.cpp, game/fn_801B9740.cpp, game/fn_801B9928.cpp | onmokoworks |
 | UNOWNED+MIXED | `fn_801D4DC0` | game/fn_801D4DC0.cpp | 92.18 | .rodata | `lbl_8039C718` | 8039C718..8039E508 | 4 | - | game/PlayerData_Construct.c, game/card_pack.cpp, game/card_unpack.cpp, game/fn_801D4FF4.cpp … | onmokoworks |
+| OWN-SELF | `clMiyoshiCardCreate_Draw` | game/clMiyoshiCardCreate.c | asm | .rodata | `lbl_802EE028` | 802EE028..802EE319 | 12 | game/clMiyoshiCardCreate.c |  |  |
 | OWN-SELF | `Card_VerifyChecksum` | game/Card_VerifyChecksum.c | 96.21 | .rodata | `lbl_80315378` | 80315378..803175A0 | 7 | game/Card_VerifyChecksum.c | game/CardSaveData_Parser.c, game/CardUnpackLegacy.cpp | onmokoworks |
 | OWN-SELF | `CourseData_LoadPathTable` | game/CourseData_LoadPathTable.cpp | 94.76 | .rodata | `lbl_803285C0` | 803285C0..80328B7B | 7 | game/CourseData_LoadPathTable.cpp |  | onmokoworks |
 | OWN-SELF | `EffectVfx10_KartTrail_Tick` | game/EffectVfx10_KartTrail_Tick.c | 99.82 | .rodata | `lbl_80329E20` | 80329E20..8032A424 | 4 | game/EffectVfx10_KartTrail_Tick.c | game/DrawEffect_Cb_BurstSpawner_30Frame.c, game/KartFxBoost.cpp, game/KartFxDispatchD.cpp, game/KartFxExhaustRay.cpp … | onmokoworks |
@@ -124,11 +121,11 @@ Counts: OTHER 30, OTHER+MIXED 2, OWN-SELF 45, OWN-SELF+MIXED 2, UNOWNED 70, UNOW
 | OWN-SELF | `fn_8014E804` | game/Scene_8014E0C4.cpp | asm | .rodata | `lbl_80363D30` | 80363D30..80367768 | 3 | game/Scene_8014E0C4.cpp | game/SceneFactory_8014D540.cpp | naari3 |
 | OWN-SELF | `fn_801500F4` | game/Scene_8014E0C4.cpp | asm | .rodata | `lbl_80363D30` | 80363D30..80367768 | 3 | game/Scene_8014E0C4.cpp | game/SceneFactory_8014D540.cpp | naari3 |
 | OWN-SELF | `fn_801502AC` | game/Scene_8014E0C4.cpp | asm | .rodata | `lbl_80363D30` | 80363D30..80367768 | 4 | game/Scene_8014E0C4.cpp | game/SceneFactory_8014D540.cpp | naari3 |
-| OWN-SELF | `fn_80151234` | game/Scene_8014E0C4.cpp | asm | .rodata | `lbl_80363D30` | 80363D30..80367438 | 3 | game/Scene_8014E0C4.cpp | game/SceneFactory_8014D540.cpp | naari3 |
 | OWN-SELF | `fn_80154304` | game/Scene_8014E0C4.cpp | asm | .rodata | `lbl_80363D30` | 80363D30..80367768 | 4 | game/Scene_8014E0C4.cpp | game/SceneFactory_8014D540.cpp | naari3 |
 | OWN-SELF | `fn_8015A6E4` | game/OptionMenuDraw.cpp | 99.91 | .rodata | `lbl_803678D8` | 803678D8..80367F51 | 4 | game/OptionMenuDraw.cpp | game/SceneList_80157EA8.cpp | onmokoworks |
 | OWN-SELF | `fn_8015B790` | game/Scene_8015B790.cpp | 98.50 | .rodata | `lbl_80367F68` | 80367F68..803682AC | 4 | game/Scene_8015B790.cpp | game/Scene_8015BE44.cpp | onmokoworks |
 | OWN-SELF | `fn_80164614` | game/Scene_80164614.cpp | 98.66 | .rodata | `lbl_80369798` | 80369798..80369D4A | 6 | game/Scene_80164614.cpp |  | onmokoworks |
+| OWN-SELF | `fn_80170B5C` | game/Scene_80170B5C.cpp | 99.06 | .rodata | `lbl_8036E220` | 8036E220..8036E723 | 6 | game/Scene_80170B5C.cpp |  |  |
 | OWN-SELF | `fn_8017EFFC` | game/miyazakiconsole/fn_8017EC90.cpp | 99.90 | .rodata | `lbl_80376220` | 80376220..80376E10 | 3 | game/miyazakiconsole/fn_8017EC90.cpp | game/mapobject/fn_8017CE1C.cpp, game/mapobject/fn_8017D660.cpp, game/mapobject/fn_8017DF00.cpp, game/miyazakiconsole/fn_8017F538.cpp … | onmokoworks |
 | OWN-SELF | `fn_80187410` | game/objview/fn_80187410.cpp | 99.81 | .rodata | `lbl_80377030` | 80377030..803772DA | 6 | game/objview/fn_80187410.cpp |  | onmokoworks |
 | OWN-SELF | `fn_8018B31C` | game/bitread/fn_8018B31C.c | 91.27 | .rodata | `lbl_80377BC0` | 80377BC0..80377E60 | 3 | game/bitread/fn_8018B31C.c |  | onmokoworks |
@@ -145,6 +142,7 @@ Counts: OTHER 30, OTHER+MIXED 2, OWN-SELF 45, OWN-SELF+MIXED 2, UNOWNED 70, UNOW
 | OWN-SELF | `IsItemSelectAllowed` | game/ItemSelectAllowed.c | 95.72 | .rodata | `lbl_803DC378` | 803DC378..803DC52B | 4 | game/ItemSelectAllowed.c |  | onmokoworks |
 | OWN-SELF | `fn_8023DCEC` | game/ItemSelectChildSpriteDraw.cpp | 95.23 | .rodata | `lbl_803E5878` | 803E5878..803E5CB4 | 4 | game/ItemSelectChildSpriteDraw.cpp |  | onmokoworks |
 | OWN-SELF | `fn_8028D8CC` | triforce/amnet_setup_nm.c | 99.97 | .rodata | `lbl_803F2798` | 803F2798..803F27E8 | 3 | triforce/amnet_setup_nm.c |  |  |
+| OWN-SELF | `clMiyoshiCardCreate_Draw` | game/clMiyoshiCardCreate.c | asm | .data | `lbl_803F9E18` | 803F9E18..803F9EB0 | 5 | game/clMiyoshiCardCreate.c |  |  |
 | OWN-SELF | `clFlowRound_Update` | game/clFlowRound.c | asm | .data | `lbl_8049AE70` | 8049AE70..8049AFA0 | 2 | game/clFlowRound.c | game/fn_801C9288.cpp |  |
 | OWN-SELF | `fn_80209C88` | game/anon_80209330_nm2.cpp | 97.26 | .data | `lbl_804EC568` | 804EC568..804EC754 | 3 | game/anon_80209330_nm2.cpp |  | onmokoworks |
 | OWN-SELF | `SetCourseParams` | game/SetCourseParams.c | 95.44 | .bss | `lbl_805AC600` | 805AC600..805B2580 | 3 | game/SetCourseParams.c | game/RaceContext_InitDefaults.c, game/RaceData_8009BEF4.c, game/RaceFlow_ResetState_FullColdInit.c, game/VSMode_SeedRandomItemSequence.c | onmokoworks |
