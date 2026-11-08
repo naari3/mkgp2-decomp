@@ -340,6 +340,19 @@ inline whose `return` contains a call gets a named `__ret` at every
 declaration position, scored over the whole TU. It reproduces a6d0090; its
 first full run (11-08, 30 TUs) found no other hit, so the shape is rare.
 
+## 17. Integer type of a local moves its register (11-08)
+
+`int`, `long` and `unsigned int` are different IR types to MWCC, so changing
+only the declared type of a local can move it between r0 and r4 or between
+saved registers with the same instructions emitted. fn_801D1684: `int alpha
+= FadeAlpha(...)` -> `unsigned int` (or `long`) gave 99.16 -> 100 (R6 had
+already matched it another way, db6559f). Also ItemSelectState_Init (clamp
+as `long`, fba4ebd7). `tools/typesweep.py --tu SRC` tries every same-width
+type for each integer local, greedily, TU-wide no-regression. Partial run
+over the census (11-08, ~20 TUs before wind-down): RankLog DetermineTitle
+`int i` -> `long` 98.95 -> 99.34 only. `tools/stmtsweep.py` (statement-order
+sweep, R5's bc31b3a technique) is written but not validated yet.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
