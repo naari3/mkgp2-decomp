@@ -48,9 +48,10 @@ float AI_CalcLapSpeedBonus(int kart, int lapsArg, int difference, int rankArg) {
         }
     } else {
         if (!FindBonus(g_ccClass, kAILapBonusRules_NonRaceCommon, round, kart, laps, difference, rank, &bonus)) {
+            const char *course = (const char *)kAILapBonusRuleTable_NonRace + g_ccClass * 128 + (cup - 1) * 16;
             int section = round;
             if (section >= 4) section -= 4;
-            FindBonus(g_ccClass, *(const AILapRule *const *)((const char *)kAILapBonusRuleTable_NonRace + g_ccClass * 128 + (cup - 1) * 16 + section * 4), round, kart, laps, difference, rank, &bonus);
+            FindBonus(g_ccClass, *(const AILapRule *const *)(course + section * 4), round, kart, laps, difference, rank, &bonus);
         }
     }
     return bonus;
