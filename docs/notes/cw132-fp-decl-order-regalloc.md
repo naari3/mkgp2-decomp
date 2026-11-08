@@ -433,3 +433,8 @@ c20_u48 AI_CalcGPTargetSpeed99.89011->99.91758: static inline GPDistanceBonus(se
 Source: Codex worker c20_u73_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c20_u73 FlashFadeOverlay_Draw80070EA8 improves99.60821->99.64552 at1072B/EH8/index12 exact sizes, EH/index100: replace u1=uscale*u1 and v1=vscale*v1 with compound *=. One scratch home becomes exact;12 FP rows remain8007119C..711F8. Inline scaled-sum accumulator99.38433 (offset accumulation invariant); upper endpoint aggregate99.55224; C range-return factory87.02612/1104B with stack returns; selective16/12 literals99.55224; center-to-minus um/vm reuse99.08582. No pragmas/flags/data/split edits retained. Singleton NonMatching, zero native gain; no A/B rescue. Prior c12/c17/c19 archive handoffs and patches read.
+
+## c20_u93_20261108
+Source: Codex worker c20_u93_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c20_u93 fn_80243464: explicit normalization-range parameter reused for offset/range quotient fixes denominator-home f6, 99.45238->99.5. Factor and bias parameters then fix scale final add/store, 99.59524 retained at 840B/EH8/index12, EH100. In-place reference helper baseline-invariant; shared affine helper99.28571 (x-only99.166664); DistanceRatio range reuse invariant99.5; isolated x width accumulator99.28571. Twelve FPR rows remain, x f4 vs targetf2 and ratio f0 vsf1 plus constants/complement. No singleton or base-register pool site; singleton NM, no rescue cut. Full coordinator fallback-linked SHA1 exact. Avoid repeating these six hypotheses; snapshots/JSON under build/w.
