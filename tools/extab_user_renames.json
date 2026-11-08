@@ -10821,7 +10821,8 @@
     "__vt__Q23std11logic_error": "lbl_803F5700",
     "__vt__Q23std12length_error": "lbl_803F56F0",
     "@436": "@etb_8001632C",
-    "@437": "@eti_800287A8"
+    "@437": "@eti_800287A8",
+    "@450": "extern:lbl_803BD228"
   },
   "src/game/anon_8021F088_nm_80221C94_nm1.cpp": {
     "__nw__FUl": "Alloc",

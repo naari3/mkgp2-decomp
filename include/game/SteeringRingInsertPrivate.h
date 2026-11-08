@@ -48,6 +48,10 @@ struct SteeringRingIter {
     unsigned long index;
     int *ptr;
     SteeringRingIter(SteeringRing *r, unsigned long i, int *p) : ring(r), index(i), ptr(p) {}
+#ifdef STEERING_RING_INSERT_OPERATORS
+    SteeringRingIter operator+(unsigned long n) const;
+    SteeringRingIter &operator+=(unsigned long n);
+#endif
     SteeringRingIter &operator++();
     SteeringRingIter &operator--();
     int &operator*() { return *ptr; }
