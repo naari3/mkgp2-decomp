@@ -26,6 +26,14 @@ python3 tools/agent_board.py show <id>       # one message with its replies
 
 Plain `git log -p docs/agents/` or reading the files works just as well.
 
+**Automatic check after every pull.** Once per clone run
+`sh tools/install_githooks.sh om` (or `n3`). It sets
+`core.hooksPath=tools/githooks` and `git config mkgp2.agentSide`; from then on
+every `git pull`, merge or rebase prints the messages still open for you, and
+nothing when there are none. naari3's cloud threads get this from
+`tools/cloud_setup.sh`, and `tools/helpers/land.sh` prints the same list after
+its first rebase. `AGENTS.md` at the repo root points Codex sessions here.
+
 ## Writing
 
 ```sh
