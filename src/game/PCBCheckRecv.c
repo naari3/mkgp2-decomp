@@ -14,7 +14,7 @@
  * `&lbl_805AC258[1]` stays a two-step `addi base,0x6398; addi +0x1c`
  * (mweppc AddPropagation.c refuses to fold a displacement into an add whose
  * alias is a non-local Object).
- * NonMatching: PCBComm_Process (99.2%, see docs/gave_up.md). */
+ * NonMatching: PCBComm_Process (99.3%, see docs/gave_up.md). */
 typedef struct PcbRecvFlags {
     unsigned char local : 1;
     unsigned char reserved6 : 2;
@@ -2571,7 +2571,6 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
     Slot *slots;
     signed char *phases;
     Sync *sync;
-    Slot *slot;
     int i;
     u8 update = 0;
     u32 tick = OSGetTick();
@@ -2582,12 +2581,13 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
     }
     ScopedTimer timer(38);
     if (update) {
+        u32 address;
         u8 accepted = 0;
         if (g_pcbCommEnabled != 0 && g_pcbListener != 0 &&
             TCPListen_Poll(g_pcbListener, 0) == 1) {
             slots = g_slots;
-            slot = slots;
-            u32 address = *(u32 *)(g_pcbListener->bytes + 0x34);
+            address = *(u32 *)(g_pcbListener->bytes + 0x34);
+            Slot *slot = slots;
             for (i = 0; i < 4; ++i, ++slot) {
                 if (slot->flags.bits.local != 1 && address == PcbIdToIp_GetCached(SlotId(slot))) {
                     int off = i * sizeof(Slot);
