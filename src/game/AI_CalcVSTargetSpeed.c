@@ -7,37 +7,48 @@ extern void AI_UseItem(void *, void *);
 static inline void VSSetSpeed(void *ctrl, float max, float min) {
     KartController_SetTargetSpeed(ctrl, 10.0f * (1000.0f * max), 10.0f * (1000.0f * min));
 }
-static inline void VSInitialSpeed(int kart) {
-    void *ctrl = Read_U32[kart];
-    int cup = g_cupId;
-    int round = g_roundIndex;
-    float max = GetBaseSpeedMax(GetEnemyParam(), cup, round);
-    float min = GetBaseSpeedMin(GetEnemyParam(), cup, round);
-    float scale = fn_801DE7B8()[kart];
-    max *= scale;
-    min *= scale;
-    VSSetSpeed(ctrl, max, min);
-}
-static inline float DistanceBonus(AISpeedOwner *self, void *ctrl, int kart) {
-    int rank = KartController_GetRenderObj(ctrl)->rank;
-    return AI_CalcDistanceSpeedBonus(kart, CarObject_GetRenderObj(self->car)->rank, rank);
-}
-static inline void NormalSpeed(AISpeedOwner *self, int kart) {
+/* fakematch (decl order + shared offset): both branches live in one inline so
+ * that the start-of-race branch's `kart * 4` is numbered between the
+ * locals of the normal branch (target keeps it in r27), and the locals
+ * are declared in the order the allocator colours them, last declared
+ * first (regalloc_patterns 70). Natural code is two helpers,
+ * `ctrl = Read_U32[kart]` and `scale = fn_801DE7B8()[kart]`. */
+static inline void Speed(AISpeedOwner *self, int kart) {
         int round;
         float min;
         AIPairRecord *record;
         void *param;
         float bonus;
-        void *ctrl = Read_U32[kart];
+        void *ctrl;
+        int off;
         int lap;
         int rank;
         float max;
         int cup;
+        int rank1;
+        void *ictrl;
+        int icup;
+        int iround;
+        if (self->frame < lbl_806D1920) {
+        float imax, imin, scale;
+        off = kart * 4;
+        ictrl = *(void **)((char *)Read_U32 + off);
+        icup = g_cupId;
+        iround = g_roundIndex;
+        imax = GetBaseSpeedMax(GetEnemyParam(), icup, iround);
+        imin = GetBaseSpeedMin(GetEnemyParam(), icup, iround);
+        scale = *(float *)((char *)fn_801DE7B8() + off);
+        imax *= scale;
+        imin *= scale;
+        VSSetSpeed(ictrl, imax, imin);
+        } else {
+        ctrl = Read_U32[kart];
         record = &lbl_806793D8[kart];
         param = GetEnemyParam();
         max = GetBaseSpeedMax(param, cup = g_cupId, round = g_roundIndex);
         min = GetBaseSpeedMin(param, cup, round);
-        bonus = DistanceBonus(self, ctrl, kart);
+        { rank1 = KartController_GetRenderObj(ctrl)->rank;
+        bonus = AI_CalcDistanceSpeedBonus(kart, CarObject_GetRenderObj(self->car)->rank, rank1); }
         max += bonus; min += bonus;
         rank = KartController_GetRenderObj(ctrl)->rank;
         lap = KartController_GetRenderObj(ctrl)->lap;
@@ -49,8 +60,8 @@ static inline void NormalSpeed(AISpeedOwner *self, int kart) {
         bonus = record->speedBonus;
         max += bonus; min += bonus;
         KartController_SetTargetSpeed(ctrl, 10.0f * (1000.0f * max), 10.0f * (1000.0f * min));
+        }
 }
 void AI_CalcVSTargetSpeed(AISpeedOwner *self, int kart) {
- if (self->frame < lbl_806D1920) VSInitialSpeed(kart);
- else NormalSpeed(self, kart);
+ Speed(self, kart);
 }
