@@ -57,6 +57,16 @@ static inline float QuantizeSteering(float value) {
     return (float)(int)(lbl_806D9750 * value) * lbl_806D9754;
 }
 
+static inline void ProjectSubtract(Vec3 &v, const Vec3 &b) {
+    for (int i = 0; i < 3; ++i) (&v.x)[i] -= (&b.x)[i];
+}
+static inline void ProjectScale(Vec3 &v, float scale) {
+    for (int i = 0; i < 3; ++i) (&v.x)[i] *= scale;
+}
+static inline void ProjectAdd(Vec3 &v, const Vec3 &b) {
+    for (int i = 0; i < 3; ++i) (&v.x)[i] += (&b.x)[i];
+}
+
 extern "C" void KartMovement_PhysicsStep(MovementInit *k, unsigned char active,
                                          float steering, float throttle, float brake) {
     float force;
@@ -315,14 +325,15 @@ extern "C" void KartMovement_PhysicsStep(MovementInit *k, unsigned char active,
     KartMovement_CollisionUpdate(k);
     k->field244 = collision;
     for (int i = 0; i < 16; ++i) ((float *)&k->previous)[i] = ((float *)&k->orientation)[i];
-    float offset = lbl_806D96D0*lbl_806D97A8;
+    float offset = lbl_806D96D0;
+    offset *= lbl_806D97A8;
     k->previous.m[3][1] = k->previous.m[3][1] - offset;
     {
     InitVec delta(k->pos.x, k->pos.y, k->pos.z);
-    Sub(delta, k->v298);
+    ProjectSubtract(delta, k->v298);
     InitVec projected(k->v2b0.x, k->v2b0.y, k->v2b0.z);
-    Scale(projected, -Dot(delta, k->v2b0));
-    Add(projected, k->pos);
+    ProjectScale(projected, -Dot(delta, k->v2b0));
+    ProjectAdd(projected, k->pos);
     Copy(k->v298, projected);
     }
     float lift = fn_8019EA08(&k->v2a4);
