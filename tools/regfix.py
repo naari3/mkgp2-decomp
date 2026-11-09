@@ -2033,7 +2033,27 @@ def anchor_hints(unit, fn):
     sym = next((x for x in syms if x.get("instructions") and (x["name"] == fn or x["name"].startswith(fn + "__"))), None)
     if not sym:
         return []
-    anchors, out, seen = set(), [], set()
+    import bisect
+    starts, size_of, addr_of = {}, {}, {}
+    for l in (ROOT / "config/GNLJ82/symbols.txt").read_text().splitlines():
+        m = re.match(r"(\S+) = \.(\w+):0x([0-9A-Fa-f]+);(.*)", l)
+        if m and m.group(2) not in ("text", "init"):
+            m = re.match(r"(\S+) = \.\w+:0x([0-9A-Fa-f]+);(.*)", l)
+            ad = int(m.group(2), 16)
+            sz = re.search(r"size:0x([0-9A-Fa-f]+)", m.group(3))
+            starts[ad] = m.group(1)
+            addr_of[m.group(1)] = ad
+            size_of[ad] = int(sz.group(1), 16) if sz else 0
+    order = sorted(starts)
+
+    def src_splits(addr):
+        # the source already defines an object at this address (the target
+        # symbol table is just coarser than ours)
+        r = subprocess.run(["git", "grep", "-lE", f"_{addr:08X}\\b", "--", "src", "include"],
+                           capture_output=True, text=True, cwd=ROOT)
+        return bool(r.stdout.strip())
+
+    anchors, out, seen = {}, [], set()
     for row in sym["instructions"]:
         ins = row.get("instruction")
         if not ins:
@@ -2042,20 +2062,32 @@ def anchor_hints(unit, fn):
         rel = ins.get("relocation") or {}
         dst = ar[0] if ar and rc.REG.match(ar[0]) else None
         if mn == "addi" and len(ar) == 3 and rel.get("type_name") == "R_PPC_ADDR16_LO":
-            anchors.add(dst)
+            # the relocation's target_symbol does not index this symbol list;
+            # take the name from the formatted operand
+            m = re.search(r",\s*([^\s,@+]+)(?:\+(0x[0-9a-fA-F]+|\d+))?@l", ins.get("formatted", ""))
+            nm = m.group(1) if m else None
+            if nm in addr_of:
+                anchors[dst] = addr_of[nm] + (int(m.group(2), 0) if m.group(2) else 0)
+            else:
+                anchors.pop(dst, None)
             continue
         if mn in ("addis", "mr") and len(ar) >= 2 and ar[1] in anchors:
-            anchors.add(dst)
+            anchors[dst] = anchors[ar[1]]
             continue
         if mn == "addi" and len(ar) == 3 and ar[1] in anchors and dst != ar[1] and rel.get("type_name") == "R_PPC_NONE":
-            add = int(rel.get("addend") or 0)
-            t = rel.get("target_symbol")
-            if add and t is not None and t < len(syms) and (t, add) not in seen \
-                    and not syms[t]["name"].startswith("["):
-                seen.add((t, add))
-                out.append((ins["formatted"], syms[t]["name"], add))
+            # objdiff's pooled-reference guess can name the wrong base symbol
+            # (mapeffect fn_80179F60), so resolve the address ourselves
+            try:
+                addr = anchors[ar[1]] + int(ar[2], 0)
+            except ValueError:
+                addr = None
+            if addr is not None and addr not in starts and addr not in seen:
+                seen.add(addr)
+                i = bisect.bisect_right(order, addr) - 1
+                if i >= 0 and addr < order[i] + max(size_of[order[i]], 1) and not src_splits(addr):
+                    out.append((ins["formatted"], starts[order[i]], addr - order[i]))
         if dst and not mn.startswith(("st", "cmp", "b")):
-            anchors.discard(dst)
+            anchors.pop(dst, None)
     return out
 
 
