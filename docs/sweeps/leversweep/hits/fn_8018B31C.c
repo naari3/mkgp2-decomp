@@ -79,8 +79,6 @@ void fn_8018B31C(const unsigned short *name, int item, int ccClass,
                  int character, int kart, int cup, int longRound, unsigned int flags,
                  unsigned char a, unsigned char b, unsigned char c,
                  unsigned char saveBackup, float time) {
-    int value_;
-    int i_;
     unsigned int seed;
     int i;
     unsigned char rotation;
@@ -127,20 +125,16 @@ void fn_8018B31C(const unsigned short *name, int item, int ccClass,
     rotation = seed % 5;
     {
     unsigned char *p = lbl_80677EE8;
-    for (i = 1; i < 24; i++) {
+    { int i; for (i = 1; i < 24; i++) {
         unsigned short value = p[i] << rotation;
         p[i] = (value | ((value & 0x3E0) >> 5)) & 31;
-    }
+    } }
     }
     WriteField(23, rotation);
     WriteField(24, schedule);
 
     checksum = PackedChecksum();
-    value_ = checksum >> 2;
-    for (i_ = 0; i_ < 2 && i_ + 0 < 125; i_++) {
-    lbl_80677EE8[(0 + i_) / 5] &= ~(1 << (4 - (0 + i_) % 5));
-    lbl_80677EE8[(0 + i_) / 5] |= ((value_ >> (2 - (i_ + 1))) & 1) << (4 - (0 + i_) % 5);
-    }
+    WriteBits(0, 2, checksum >> 2);
     WriteBits(123, 2, checksum);
     EncodeText(lbl_80677F04);
     lbl_806D1698 = 1;
