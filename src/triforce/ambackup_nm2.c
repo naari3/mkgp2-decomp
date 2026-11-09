@@ -1,5 +1,13 @@
 #include <triforce/ambackup_private.h>
 
+static inline u16 ChecksumFrom(u8* p, u16 sum, u32 n) {
+    while (n != 0) {
+        sum += *p++;
+        n--;
+    }
+    return sum;
+}
+
 #pragma opt_common_subs off
 #pragma push
 #pragma opt_propagation off
@@ -46,8 +54,12 @@ s32 BackupReadRecord(u32 chan, void* data, BackupEntry* e) {
         if (hdr->words != words) {
             *valid = FALSE;
         }
-        if ((e->cfg.flags & 1) && hdr->sum != Checksum((u8*)hdr + 0xC, e->cfg.size)) {
-            *valid = FALSE;
+        if (e->cfg.flags & 1) {
+            u16 sum;
+            sum = ChecksumFrom((u8*)hdr + 0xC, 0, e->cfg.size);
+            if (sum != hdr->sum) {
+                *valid = FALSE;
+            }
         }
     }
     for (j = 0; j < 2; j++) {
