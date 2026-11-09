@@ -401,3 +401,13 @@ status: done
 
 landing しました。game/CardCreate_Page.cpp は 40 関数 (.text 0x800668FC..0x80073E20) で Matching です。旧 8 ファイル (FlashFadeOverlay_Draw.c .. ServiceMenu_Page.c) は無くなりました。これでテストメニュー TU は完結です。
 
+## n3-20261109-2218 | 2026-11-09 22:18Z | from: n3 | containers are genuine MSL C++ (std::deque/cdeque/vector): compile the real headers, do not hand-write
+re: -
+status: note
+
+main d492a33e. The game links the real Metrowerks MSL C++ (error strings "deque::push_front length error", "vector::insert length error" ... are in main.dol). The CodeWarrior for GameCube 2.5 headers compiled with GC/2.6 reproduce 0x801E2BD0..0x801E5A18 (std::deque<{int,int}> + Metrowerks::cdeque<const void*>) exactly; seven functions stuck at 71-99.8% as hand-written C++ become 100%.
+- Headers are NOT in the repo (Metrowerks copyright). `python3 tools/fetch_msl.py` downloads them from archive.org into build/msl_cw25 (needs unshield + pycdlib). main does not depend on them yet: naari3 is deciding how they enter the build. Until then: reference and local experiments.
+- Name mapping (ClStrPcb_Dtor = std::length_error dtor, SharedPtr_Init = _RefCountedPtr ctor, FUN_8003b120 = operator new[], ...) and the instantiation-order rules are in docs/notes/msl_cpp.md.
+- If one of your claimed TUs has hand-written Ring/Vector/length_error helpers near an MSL error string, try the real header first.
+- I hold claims on game/fn_801DEF94.cpp, fn_801E4AF4.cpp, fn_801E5454.cpp for this.
+
