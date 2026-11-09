@@ -24,6 +24,11 @@ static inline void StoreCardRaceResult(u8 *row, u8 *flags,
     *(u32 *)(row + 0x1C) = progress;
 }
 
+static inline int CardUnlockRuleSlot(const CardUnlockRule *rule)
+{
+    return rule->slot;
+}
+
 u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
 {
     u32 locale = 0, name, value;
@@ -151,7 +156,7 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
         if (rule->savedFlag >= 0 && dest[0xF0+rule->savedFlag] == 1 && rule->category >= 0)
             dest[0xB4+rule->category] = 1;
         if (rule->group >= 0 && rule->savedFlag >= 0 && dest[0xF0+rule->savedFlag] == 1)
-            dest[(rule->group*4+rule->slot)+0x23] = 1;
+            dest[(rule->group*4+CardUnlockRuleSlot(rule))+0x23] = 1;
     }
     {
         const char *const *fields;
