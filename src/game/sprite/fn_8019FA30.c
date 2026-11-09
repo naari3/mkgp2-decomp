@@ -48,7 +48,8 @@ void fn_8019FA30(SpriteAnim *s, SpriteAnimFrame *frames, float *matrix,
         int resource = -1, child = -1, last = 0, index = 0;
         float composed[6];
         float newAlpha;
-        short rr, gg, bb, aa;
+        short rr, gg, bb;
+        int aa;
         for (f = frames;; f++, index++) {
             if (f->layer == sorted[layerIndex]) {
                 if (f->time > s->time) break;
@@ -64,7 +65,7 @@ void fn_8019FA30(SpriteAnim *s, SpriteAnimFrame *frames, float *matrix,
         SpriteAnim_Concat(composed, matrix, f->matrix);
         newAlpha = alpha * f->alpha;
         rr = red + f->redOffset; gg = green + f->greenOffset;
-        bb = blue + f->blueOffset; aa = opacity + f->alphaOffset;
+        bb = blue + f->blueOffset; aa = (short)(opacity + f->alphaOffset);
         if (resource != -1) {
             SpriteAnim_DrawResources(s, &frames[resource], composed, rr, gg, bb, aa,
                                      f->red, f->green, f->blue, newAlpha);
