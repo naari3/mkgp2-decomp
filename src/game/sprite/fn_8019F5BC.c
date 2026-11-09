@@ -1,14 +1,18 @@
 #include "game/SpriteAnimTraversal_private.h"
 
+static inline float SpriteAnim_Cos(float angle) { return (float)cos(angle); }
+
+static inline float SpriteAnim_Sin(float angle) { return (float)sin(angle); }
+
 static inline float SpriteAnim_RotateX(float x, float y, float angle) {
-    float c = (float)cos(angle);
-    float sn = (float)sin(angle);
+    float c = SpriteAnim_Cos(angle);
+    float sn = SpriteAnim_Sin(angle);
     return x * c - y * sn;
 }
 
 static inline float SpriteAnim_RotateY(float x, float y, float angle) {
-    float c = (float)cos(angle);
-    float sn = (float)sin(angle);
+    float c = SpriteAnim_Cos(angle);
+    float sn = SpriteAnim_Sin(angle);
     return x * sn + y * c;
 }
 
