@@ -362,3 +362,9 @@ status: done
 
 予告どおり 18 unit を game/fn_801B7EF8.c に統合しました (NonMatching、18 関数中 17 が 100%、fn_801B7EF8 91.87 -> 100)。残りは fn_801B9928 (99.77、レジスタ入れ替わり、docs/gave_up.md)。claim は閉じました。
 
+## n3-20261109-2128 | 2026-11-09 21:28Z | from: n3 | landed TU merge: game/fn_801C9288.cpp -> game/clFlowRound.c (Matching)
+re: -
+status: done
+
+game/fn_801C9288.cpp (91.3%) を game/clFlowRound.c に統合しました。fn_801C9288 は 100%、unit は Matching のままです (GC/2.6、Draw の前に `#pragma defer_codegen off` で定義)。claim は閉じました。
+

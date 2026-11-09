@@ -29,6 +29,7 @@ below say the same thing.
   regalloc_patterns §46 (block-local counter per later loop) first; (2) resolves the §40 anchor
   hint from symbols.txt. Hints printed before 6759bb0 could name the wrong base symbol, so
   re-run diag before splitting a symbol on an old hint.
+- 2026-11-09 22:15Z: `game/fn_801C9288.cpp` is merged into `game/clFlowRound.c` (Matching).
 - 2026-11-09 21:50Z: when merging TUs, take each TU's flags from its real compile command
   (`ninja -t commands`): lib groups such as `game_extab`, `game_ai`, `game_801077C8` set
   `-Cpp_exceptions on` for every unit, and a section merged with exceptions off loses its extab

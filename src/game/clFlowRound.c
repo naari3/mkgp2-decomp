@@ -143,7 +143,7 @@ void Sprite_SetAnimParam(void *spr, int a, int b);
 void fn_801A0550(void *spr);
 void fn_801B8540(int);
 void fn_801B85DC(int, int, int);
-void fn_801C9288(clFlowRound *self, int i, int flag);
+int fn_801C9288(clFlowRound *self, int i, int flag);
 extern int g_ccClass;
 extern int g_cupId;
 extern InputState *g_pInputState;
@@ -258,6 +258,232 @@ static inline InputState *input_state(void) {
         return 0;
     }
     return state;
+}
+
+
+/* fn_801C9288: sets one round tile's state and (re)creates its sprite. It reads the TU's
+ * .data tables through the section anchor, so it lives here, ahead of Draw. */
+namespace tile {
+struct Spr {
+    char opaque[0xC];
+    float x, y, sx, sy;
+    void Position(float px, float py) { x = px; y = py; }
+    void Scale(float s) { sx = s; sy = s; }
+};
+struct Slot { int state, variant, timer, frame; Spr *sprite; };
+struct Owner { char opaque[0x2C]; Slot slots[5]; };
+}
+extern "C" {
+void Sprite_SetupAnim(void *spr, int id, int a, int b);
+void fn_8019FF6C(void *spr, int flag);
+extern const float lbl_806D9D40;
+#pragma defer_codegen off
+/* fakematch (pragma): the target loads the offset constant again for the negated arm
+ * (`lfs f31,C; ... lfs f0,C; fneg f31,f0`); natural code has no pragma and CSEs the load. */
+#pragma push
+#pragma opt_common_subs off
+int fn_801C9288(::clFlowRound *self_, int index, int state) {
+    tile::Owner *self = (tile::Owner *)self_;
+    tile::Slot *slot = &self->slots[index];
+    if (state == 1) { if (slot->state != 0) return 0; }
+    else { if (slot->state == 0) return 0; }
+    slot->state = state;
+    slot->timer = 0;
+    slot->frame = 0;
+    switch (state) {
+    case 1: {
+        int anim;
+        RoundResPair *param;
+        RoundPos *pos;
+        pos = &lbl_8049AE70[index];
+        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        anim = s_roundAnim[slot->variant];
+        float offset = lbl_806D9D38;
+        if (index == 2 || index == 4) offset = -lbl_806D9D38;
+        if (!slot->sprite) slot->sprite = (tile::Spr *)new ::Sprite(anim, 0, 0);
+        else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
+        switch (slot->variant) {
+        case 0:
+            Sprite_SetAnimParam(slot->sprite, 0x1951, pos->id0);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 1:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 2:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        }
+        Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->a);
+        fn_801A0550(slot->sprite);
+        slot->sprite->Position(pos->x, pos->y + offset);
+        slot->sprite->Scale(lbl_806D9D3C);
+        break;
+    }
+    case 2: {
+        int anim;
+        RoundResPair *param;
+        RoundPos *pos;
+        pos = &lbl_8049AE70[index];
+        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        anim = s_roundAnim[15 + slot->variant];
+        float offset = lbl_806D9D38;
+        if (index == 2 || index == 4) offset = -lbl_806D9D38;
+        if (!slot->sprite) slot->sprite = (tile::Spr *)new ::Sprite(anim, 0, 0);
+        else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
+        switch (slot->variant) {
+        case 0:
+            Sprite_SetAnimParam(slot->sprite, 0x1951, pos->id0);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 1:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 2:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        }
+        Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->a);
+        fn_801A0550(slot->sprite);
+        slot->sprite->Position(pos->x, pos->y + offset);
+        slot->sprite->Scale(lbl_806D9D3C);
+        fn_8019FF6C(slot->sprite, 1);
+        break;
+    }
+    case 3: {
+        int anim;
+        RoundResPair *param;
+        RoundPos *pos;
+        pos = &lbl_8049AE70[index];
+        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        anim = s_roundAnim[12 + slot->variant];
+        float offset = lbl_806D9D38;
+        if (index == 2 || index == 4) offset = -lbl_806D9D38;
+        if (!slot->sprite) slot->sprite = (tile::Spr *)new ::Sprite(anim, 0, 0);
+        else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
+        switch (slot->variant) {
+        case 0:
+            Sprite_SetAnimParam(slot->sprite, 0x1951, pos->id0);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 1:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 2:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        }
+        Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->a);
+        fn_801A0550(slot->sprite);
+        slot->sprite->Position(pos->x, pos->y + offset);
+        slot->sprite->Scale(lbl_806D9D3C);
+        break;
+    }
+    case 4: {
+        int anim;
+        RoundResPair *param;
+        RoundPos *pos;
+        pos = &lbl_8049AE70[index];
+        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        anim = s_roundAnim[9 + slot->variant];
+        float offset = lbl_806D9D40;
+        if (index == 2 || index == 4) offset = -lbl_806D9D40;
+        if (!slot->sprite) slot->sprite = (tile::Spr *)new ::Sprite(anim, 0, 0);
+        else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
+        switch (slot->variant) {
+        case 0:
+            Sprite_SetAnimParam(slot->sprite, 0x1951, pos->id0);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 1:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 2:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        }
+        Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->a);
+        fn_801A0550(slot->sprite);
+        slot->sprite->Position(pos->x, pos->y + offset);
+        slot->sprite->Scale(lbl_806D9D28);
+        fn_8019FF6C(slot->sprite, 1);
+        break;
+    }
+    case 5: {
+        int anim;
+        RoundResPair *param;
+        RoundPos *pos;
+        pos = &lbl_8049AE70[index];
+        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        anim = s_roundAnim[6 + slot->variant];
+        float offset = lbl_806D9D40;
+        if (index == 2 || index == 4) offset = -lbl_806D9D40;
+        if (!slot->sprite) slot->sprite = (tile::Spr *)new ::Sprite(anim, 0, 0);
+        else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
+        switch (slot->variant) {
+        case 0:
+            Sprite_SetAnimParam(slot->sprite, 0x1951, pos->id0);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 1:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 2:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        }
+        Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->a);
+        fn_801A0550(slot->sprite);
+        slot->sprite->Position(pos->x, pos->y + offset);
+        slot->sprite->Scale(lbl_806D9D28);
+        break;
+    }
+    case 6: {
+        int anim;
+        RoundResPair *param;
+        RoundPos *pos;
+        pos = &lbl_8049AE70[index];
+        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        anim = s_roundAnim[3 + slot->variant];
+        float offset = lbl_806D9D38;
+        if (index == 2 || index == 4) offset = -lbl_806D9D38;
+        if (!slot->sprite) slot->sprite = (tile::Spr *)new ::Sprite(anim, 0, 0);
+        else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
+        switch (slot->variant) {
+        case 0:
+            Sprite_SetAnimParam(slot->sprite, 0x1951, pos->id0);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 1:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 2:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        }
+        Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->a);
+        fn_801A0550(slot->sprite);
+        slot->sprite->Position(pos->x, pos->y + offset);
+        slot->sprite->Scale(lbl_806D9D3C);
+        break;
+    }
+    }
+    return 1;
+}
+#pragma pop
+#pragma defer_codegen reset
 }
 
 /* Draw is generated in place; with -inline deferred the rest of the TU is

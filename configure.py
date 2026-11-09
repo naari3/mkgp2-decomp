@@ -2449,7 +2449,6 @@ config.libs = [
             Object(Matching, "game/fn_801CE1EC.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801C5C34.cpp", extab_padding=b""),
             Object(Matching, "game/CupTile_StateChange.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/fn_801C9288.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801F6790.c"),
             Object(Matching, "game/fn_801DC29C.cpp", extab_padding=b""),
             Object(Matching, "game/dtor_801F6B44.cpp", extab_padding=b""),
