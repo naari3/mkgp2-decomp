@@ -112,7 +112,7 @@ def apply(tu, sec, lo, hi):
         ext = ''.join('extern %s %s[];\n' % ('char', n) for n in need[0].split(', ')
                       if not re.search(r'\b%s\b' % re.escape(n), s))
     if cpp:
-        body = re.sub(r'^(?!static|#|extern|\s|})', 'extern "C" ', body, flags=re.M)
+        body = re.sub(r'^(?!static|#|extern|\s|}|/|$)', 'extern "C" ', body, flags=re.M)
         ext = re.sub(r'^extern ', 'extern "C" ', ext, flags=re.M)
     for n in names:
         s = re.sub(r'^[ \t]*extern\s+[^;\n(]*\b%s\s*(\[[^\]]*\])*\s*;[ \t]*\n' % re.escape(n), '', s, flags=re.M)

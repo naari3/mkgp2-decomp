@@ -30,7 +30,7 @@ extern clNormal3D *lbl_806D15D0;
 extern HSD_JObj *lbl_806D15D4;
 extern clNormal3D *lbl_80491224[3];
 extern const char *lbl_80491218[3];
-extern char lbl_8036D960[];
+extern const char lbl_8036D960[];
 extern char lbl_80495988[];
 extern const float lbl_806D8C28, lbl_806D8C30, lbl_806D8C74;
 void HSD_JObjSetFlagsAll(HSD_JObj *, unsigned int);

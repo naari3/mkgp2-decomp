@@ -6915,6 +6915,7 @@ game/mapeffect/EffectFA_Ctor.cpp:
 	extab       start:0x80010680 end:0x800106A8
 	extabindex  start:0x80026390 end:0x8002639C
 	.text       start:0x8016FA50 end:0x8016FC14
+	.rodata     start:0x8036D960 end:0x8036DD8C
 
 game/Scene_8016FC14.cpp:
 	extab       start:0x800106A8 end:0x800106B0
@@ -8859,6 +8860,7 @@ game/fn_801B70EC.cpp:
 	extab       start:0x80012BA8 end:0x80012BB0
 	extabindex  start:0x80027824 end:0x80027830
 	.text       start:0x801B70EC end:0x801B739C
+	.rodata     start:0x803993A0 end:0x8039979C
 
 game/fn_801B739C.cpp:
 	extab       start:0x80012BB0 end:0x80012BB8
@@ -11439,6 +11441,7 @@ game/CoinChallengeInit.cpp:
 	extab       start:0x8001A1AC end:0x8001A300
 	extabindex  start:0x80029FCC end:0x80029FD8
 	.text       start:0x80214DB8 end:0x802151C8
+	.data       start:0x804ECC20 end:0x804EDA78
 
 game/anon_802151C8.cpp:
 	extab       start:0x8001A300 end:0x8001A318
