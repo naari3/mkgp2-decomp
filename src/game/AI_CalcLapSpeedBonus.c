@@ -54,7 +54,10 @@ float AI_CalcLapSpeedBonus(int kart, int lapsArg, int difference, int rankArg) {
             int section = round;
             courseOffset = ccOffset + courseOffset;
             if (section >= 4) section -= 4;
-            FindBonus(g_ccClass, *(const AILapRule *const *)(courseBase + (courseOffset + section * 4)), round, kart, laps, difference, rank, &bonus);
+            {
+                signed char cc = g_ccClass;
+                FindBonus(cc, *(const AILapRule *const *)(courseBase + (courseOffset + section * 4)), round, kart, laps, difference, rank, &bonus);
+            }
         }
     }
     return bonus;
