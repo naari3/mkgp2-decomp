@@ -1,11 +1,11 @@
 /* Sci2Card link state machine, 0x80076BBC..0x8007723C.
- * NonMatching: 99.38% text, exact extab (objdiff, 2026-11-08).
+ * NonMatching: 99.72356% text, exact extab (objdiff, 2026-11-10).
  * Pass the shared string-pool base through the inlined send helpers so CW
  * retains one base in r31. The raw sender consumes its caller-owned cursor.
- * State 1 sends through a local cursor copy of m_txBuf (asm-A 11-08).
- * Remaining differences: the state-3 ENQ pointer copy (target builds the
- * data pointer in r3 on both paths, then mr r30) and the checksum
- * loop-count copy (target subic. r0 then mr r3,r0).
+ * State 1 sends through a local cursor copy of m_txBuf.
+ * Receive consumes Tick's checksum counter by reference, retaining the
+ * target's separate trip-count copy. The remaining difference is the
+ * state-3 ENQ pointer copy (target builds data in r3, then mr r30,r3).
  */
 
 extern "C" {
@@ -258,7 +258,7 @@ public:
         return 2;
     }
 
-    inline int Receive()
+    inline int Receive(int &i)
     {
         int count;
         unsigned char c;
@@ -267,7 +267,6 @@ public:
         unsigned char *q;
         int sum;
         int len;
-        int i;
 
         if (Available(&count) == 0 && count > 0) {
             while (RecvByte(&c) == 0) {
@@ -329,6 +328,7 @@ extern "C" void Sci2Card_Tick(Sci2Card *card)
     unsigned char c;
     unsigned char enq;
     int r;
+    int i;
 
     if (card->m_state == 0 || card->m_state == 5) {
         return;
@@ -373,7 +373,7 @@ extern "C" void Sci2Card_Tick(Sci2Card *card)
         card->SetState(4);
         break;
     case 4:
-        r = card->Receive();
+        r = card->Receive(i);
         if (r == 2) {
             if (!(card->m_status[1] == 0x30 && card->m_status[2] == 0x33)) {
                 card->SetState(0);
