@@ -27,7 +27,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           submodules: recursive
@@ -47,7 +47,7 @@ jobs:
         run: python -m unittest discover -s tools -p 'test_operations.py' -v
 
       - name: Cache build
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             build
@@ -78,7 +78,7 @@ jobs:
       # (downloads continue on error; Build fails if a tool is still missing).
       - name: Restore dtk
         id: cache-dtk
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ci-tools/dtk
           key: tool-${{ runner.os }}-dtk-${{ steps.tools.outputs.dtk }}
@@ -92,14 +92,14 @@ jobs:
 
       - name: Save dtk
         if: steps.cache-dtk.outputs.cache-hit != 'true' && hashFiles('ci-tools/dtk') != ''
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: ci-tools/dtk
           key: tool-${{ runner.os }}-dtk-${{ steps.tools.outputs.dtk }}
 
       - name: Restore objdiff-cli
         id: cache-objdiff
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ci-tools/objdiff-cli
           key: tool-${{ runner.os }}-objdiff-cli-${{ steps.tools.outputs.objdiff }}
@@ -113,14 +113,14 @@ jobs:
 
       - name: Save objdiff-cli
         if: steps.cache-objdiff.outputs.cache-hit != 'true' && hashFiles('ci-tools/objdiff-cli') != ''
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: ci-tools/objdiff-cli
           key: tool-${{ runner.os }}-objdiff-cli-${{ steps.tools.outputs.objdiff }}
 
       - name: Restore sjiswrap
         id: cache-sjiswrap
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ci-tools/sjiswrap.exe
           key: tool-${{ runner.os }}-sjiswrap-${{ steps.tools.outputs.sjiswrap }}
@@ -134,14 +134,14 @@ jobs:
 
       - name: Save sjiswrap
         if: steps.cache-sjiswrap.outputs.cache-hit != 'true' && hashFiles('ci-tools/sjiswrap.exe') != ''
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: ci-tools/sjiswrap.exe
           key: tool-${{ runner.os }}-sjiswrap-${{ steps.tools.outputs.sjiswrap }}
 
       - name: Restore wibo
         id: cache-wibo
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: ci-tools/wibo
           key: tool-${{ runner.os }}-wibo-${{ steps.tools.outputs.wibo }}
@@ -155,7 +155,7 @@ jobs:
 
       - name: Save wibo
         if: steps.cache-wibo.outputs.cache-hit != 'true' && hashFiles('ci-tools/wibo') != ''
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: ci-tools/wibo
           key: tool-${{ runner.os }}-wibo-${{ steps.tools.outputs.wibo }}
@@ -169,7 +169,7 @@ jobs:
           ninja all_source progress build/${{ matrix.version }}/report.json
 
       - name: Upload map
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.version }}_maps
           path: build/${{ matrix.version }}/**/*.MAP
@@ -177,7 +177,7 @@ jobs:
       # decomp.dev pulls this artifact via workflow_run webhook.
       # The artifact name MUST end with `_report` and contain report.json.
       - name: Upload report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.version }}_report
           path: build/${{ matrix.version }}/report.json
@@ -229,7 +229,7 @@ jobs:
 
       - name: Upload Pages artifact
         if: github.ref == 'refs/heads/main' && matrix.version == 'GNLJ82'
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: site
 
@@ -251,4 +251,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
