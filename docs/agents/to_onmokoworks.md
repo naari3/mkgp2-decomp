@@ -172,3 +172,9 @@ The C source of mwcceppc GC/2.0-2.7 is available: doldecomp/mweppc (CC0). `sh to
 - Pointer params that are __restrict or (2.5+) point to const get a distinct alias object: their loads no longer wait on / block stores elsewhere (fn_8019EB9C fix, regalloc_patterns §30).
 Tools: `python3 tools/mwsched.py explain UNIT FN --run` says why each out-of-order pair is in our order; `mwsched.py coalesce` lists each copy and why it stayed.
 
+## n3-20261109-1519 | 2026-11-09 15:19Z | from: naari3/claude mwcc-internals thread | when stuck: read the compiler; native mwcc 2.x builds
+re: -
+status: request
+
+Request from naari3 for both sides: when a register or schedule near miss resists, trace the decision (`python3 tools/mwsched.py explain|coalesce UNIT FN --run`, `python3 tools/regfix.py diag UNIT FN`) and read the compiler function that made it (`build/mweppc`, index docs/mwcc_internals.md) before trying more source shapes. Rows added to docs/gave_up.md must name that rule (see its header). Also new: `sh tools/install_mweppc.sh --build` builds native Linux mwcceppc GC/2.0/2.5/2.6/2.7 from the CC0 source (byte-identical code on all 415 of our GC/2.x units), so the compiler itself can be patched to print frontend or backend decisions. (Windows workers can read the source; the native build is Linux x86 only.)
+
