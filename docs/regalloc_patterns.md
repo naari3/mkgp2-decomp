@@ -1282,3 +1282,40 @@ Also: when an asm function with a manual `.extab_user` entry becomes C++ with a
 destructible local, delete its manual extab/extabindex entries (the compiler emits them;
 keeping both grows main.dol by 0x14).
 Rule name in hits.jsonl: `inline-own-local-direct-load`.
+
+## 52. Loop-invariant `&member` hoisted by the backend takes the newest saved register: name it as a local of the inline (SoundDriver_GetOrCreate, 11-09)
+
+Diff: two saved registers swapped between a loop cursor and a hoisted
+address (`mr r31,r28; addi r30,r29,4` in the target, r30/r31 the other way
+round in ours). mwtrace shows the address (`&list.head`, written inline as
+`insert(end(), v)`) is a *backend* temp (`ADDI r53!,r36,4`, off=-1, moved to
+the preheader after code generation). Backend temps are numbered above every
+IRO temp and named local, so it is coloured first and takes r31.
+
+Fix: give the address a name inside the inline, so it is an inline local
+(numbered with the IRO temps, below the caller's cursor):
+
+```cpp
+void push_back(const T &v) { Node *n = (Node *)&head; insert(iterator(n), v); }
+```
+
+`iterator e = end(); insert(e, v)` and a `ListHead *` local do NOT work (the
+first changes the stack temps, the second stays a backend temp); the local
+must have the exact type the iterator constructor takes.
+
+## 53. List walker / sentinel saved registers swapped: `begin()` as `iterator(((Node *)&head)->next)` instead of `++end()` (clItemBoxManager_Dtor, 11-09)
+
+Diff: `for (it = l.begin(); it != l.end(); ++it)` gives walker r28 / sentinel
+r29, the target has walker r29 / sentinel r28 (`addi r28,r30,0x14;
+lwz r29,0x18(r30)`). With `begin() { return ++end(); }` the walker starts as
+a copy of the sentinel temp, so the sentinel is the later-numbered value and
+is coloured first. Loading `head.next` directly in `begin()` makes the walker
+independent of the sentinel:
+
+```cpp
+iterator begin() { return iterator(((Node *)&head)->next); }
+```
+
+Same family as section 52 (who names / creates the `&head` value decides the
+saved register). Naming the sentinel in `end()` alone made it worse (50 lines).
+

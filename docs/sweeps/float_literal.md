@@ -1,0 +1,63 @@
+# float literal sweep
+
+`python3 tools/float_literal_sweep.py`: extern float/double constants replaced by literals.
+Score = objdiff score of the function (lower is better, 0 = match).
+
+| unit | fn | % | symbols | base | literal |
+|---|---|---|---|---|---|
+| game/kartmove/carobject | `KartMovement_Init` | 92.18 | 1 | 782 | 739 |
+| game/FlowCardCheck_nm2 | `fn_80233310` | 98.32 | 22 | 190 | 190 |
+| game/FlowCardCheck_nm2 | `fn_80234840` | 95.73 | 22 | 427 | 427 |
+| game/ItemSelectState | `fn_802386E0` | 97.46 | 1 | 260 | 260 |
+| game/RankLog | `get_title_name` | 98.38 | 2 | 162 | 162 |
+| game/RankLog | `get_title_name_global` | 98.09 | 2 | 191 | 191 |
+| game/Sci2Card_Tick | `Sci2Card_Tick` | 99.46 | 2 | 54 | 54 |
+| game/SpecialFaceMesh_Raycast | `SpecialFaceMesh_Raycast` | 92.24 | 2 | 776 | 776 |
+| game/fn_801DEF94 | `fn_801E1870` | 79.84 | 1 | 2029 | 2029 |
+| game/fn_801DEF94 | `fn_801E2FD4` | 71.24 | 1 | 2894 | 2894 |
+| game/fn_801DEF94 | `fn_801E32C8` | 92.67 | 1 | 733 | 733 |
+| game/fn_801DEF94 | `fn_801E35FC` | 95.35 | 1 | 465 | 465 |
+| game/fn_801DEF94 | `fn_801E36A8` | 92.85 | 1 | 715 | 715 |
+| game/fn_801DEF94 | `fn_801E435C` | 99.48 | 1 | 52 | 52 |
+| game/kartmove/KartMovement_CollisionUpdate | `KartMovement_CollisionUpdate` | 96.96 | 1 | 305 | 305 |
+| game/resultscene/resultscene | `fn_8015DEBC` | 99.62 | 9 | 61 | 61 |
+| game/kartmove/KartMovement_PhysicsStep | `KartMovement_PhysicsStep` | 97.85 | 1 | 215 | 216 |
+| game/kartmove/KartMovement_RotateByYaw | `KartMovement_RotateByYaw` | 96.12 | 1 | 388 | 389 |
+| sysdolphin/baselib/lobj_nm1 | `HSD_LObjSetupInit` | 99.07 | 1 | 107 | 108 |
+| game/AI_CalcRivalAvoidance | `AI_CalcRivalAvoidance` | 97.26 | 1 | 279 | 281 |
+| game/FlowCardCheck_nm2 | `fn_802353EC` | 99.80 | 22 | 25 | 27 |
+| game/KartFxExhaustRay | `EffectVfx10_KartTrail_Tick` | 99.82 | 1 | 44 | 46 |
+| game/Object_DriveAnimAndSkin | `Object_DriveAnimAndSkin` | 99.56 | 1 | 50 | 52 |
+| game/anon_8021BC44_nm1 | `fn_8021DAB8` | 98.88 | 46 | 168 | 170 |
+| game/FlowCardCheck_nm2 | `fn_80234F70` | 99.91 | 22 | 25 | 28 |
+| game/anon_8021F088_nm_80220A54_nm1 | `fn_80221104` | 98.90 | 1 | 116 | 120 |
+| game/AI_SystemDtor | `AI_SystemDtor` | 99.53 | 1 | 86 | 91 |
+| game/PCBCommBroadcast | `PCBComm_BuildBroadcastSlot` | 89.29 | 1 | 1094 | 1099 |
+| game/SpecialFaceMesh_Raycast | `SpecialFace_RaycastSegment` | 96.16 | 2 | 392 | 398 |
+| game/clNormal3D_Exec | `clNormal3D_Exec` | 99.13 | 2 | 92 | 99 |
+| game/fn_801BAA88 | `fn_801BE170` | 99.68 | 40 | 34 | 41 |
+| game/anon_80216568 | `CalcEarnedCoins` | 98.53 | 2 | 147 | 155 |
+| game/Terrain_GetGroundHeight | `Terrain_GetGroundHeightWithPenetration` | 98.91 | 4 | 119 | 128 |
+| game/Terrain_WallEdgeTest | `Terrain_WallEdgeTest` | 99.42 | 3 | 68 | 77 |
+| game/Normal3DScale | `clNormal3D_SetScale` | 99.80 | 2 | 27 | 38 |
+| game/EffectItemChainIndicator_Tick | `EffectItemChainIndicator_Tick` | 99.70 | 9 | 33 | 46 |
+| game/anon_80218F40_nm1_tail | `fn_80219538` | 99.95 | 3 | 15 | 30 |
+| game/fn_801E96BC | `fn_801E96BC` | 99.85 | 3 | 15 | 31 |
+| game/anon_8021F088_nm_80221C94_nm1_nm1 | `fn_80222968` | 98.79 | 11 | 123 | 140 |
+| game/anon_8021BC44_nm1 | `fn_8021C070` | 96.27 | 46 | 380 | 399 |
+| game/FlowCardCheck_nm2 | `fn_80236CDC` | 98.64 | 22 | 160 | 180 |
+| game/fn_801BAA88 | `fn_801C0568` | 99.86 | 40 | 14 | 34 |
+| game/resultscene/resultscene_nm1 | `result_screen_update` | 99.93 | 18 | 10 | 33 |
+| game/anon_8020314C_nm2 | `fn_80203C24` | 99.73 | 7 | 27 | 53 |
+| game/anon_802253EC_nm1 | `fn_80225C2C` | 94.65 | 11 | 543 | 574 |
+| game/fn_801BAA88 | `fn_801BF644` | 99.69 | 40 | 31 | 66 |
+| game/anon_8020314C_nm1 | `fn_80203224` | 99.75 | 12 | 35 | 72 |
+| game/DNStartDino | `fn_80229998` | 91.34 | 9 | 998 | 1038 |
+| game/anon_8021BC44_nm1 | `fn_8021C778` | 99.60 | 46 | 41 | 86 |
+| game/EffectVfx29_30_Item4SubFlame_Tick | `EffectVfx29_30_Item4SubFlame_Tick` | 99.42 | 3 | 76 | 144 |
+| game/sprite/fn_801A0004 | `fn_801A0004` | 95.92 | 2 | 408 | 724 |
+| game/SetCourseParams | `RaceFlow_ResetState_FullColdInit` | 95.06 | 2 | 497 | 1000000 |
+| game/PCBCheckRecv | `PCBComm_Process` | 95.81 | 10 | 458 | 1000000 |
+| game/SetCourseParams | `SetCourseParams` | 95.44 | 2 | 456 | 1000000 |
+| game/kartmove/fn_8019C6B4 | `fn_8019C6B4` | 97.49 | 2 | 255 | 1000000 |
+| game/kartmove/fn_8019A9BC | `fn_8019A9BC` | 98.11 | 1 | 189 | 1000000 |
