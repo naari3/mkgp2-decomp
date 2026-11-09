@@ -1352,7 +1352,17 @@
     "__dt__14Holder80052CC4Fv": "dtor_80052CC4",
     "__dt__13Owned80052CC4Fv": "CarObject_Dtor",
     "__dt__14Holder80052D40Fv": "dtor_80052D40",
-    "__dt__13Owned80052D40Fv": "AudioChannel_DtorWithSeStop"
+    "__dt__13Owned80052D40Fv": "AudioChannel_DtorWithSeStop",
+    "__vt__Q23std9exception": "lbl_803F5710",
+    "__vt__Q23std11logic_error": "lbl_803F5700",
+    "__vt__Q23std12length_error": "lbl_803F56F0",
+    "__ct__5ClStrFPv": "SharedPtr_Init",
+    "__dt__Q23std12length_errorFv": "ClStrPcb_Dtor",
+    "__dt__5ClStrFv": "dtor_80038E30",
+    "__dt__Q23std9exceptionFv": "dtor_80038DD4",
+    "@1746": "lbl_802EDAA4",
+    "@1748": "@etb_8000715C",
+    "@1749": "@eti_8002048C"
   },
   "src/game/clFlowItem.c": {
     "__ct__10clFlowItemFv": "clFlowItem_Init",

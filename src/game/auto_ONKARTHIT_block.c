@@ -1439,16 +1439,7 @@ static const char lbl_802EDA20[51] = "clCarObject::clBodyDamageEffector result i
 const char lbl_802EDA54[26] = "teSingleton<clCollPlayer>";
 const char lbl_802EDA70[13] = "clCollPlayer";
 static const char lbl_802EDA80[34] = "vector::construction length error";
-static const unsigned int lbl_802EDAA4[31] = {
-    0x21737464, 0x3A3A6578, 0x63657074, 0x696F6E21,
-    0x21737464, 0x3A3A6C6F, 0x6769635F, 0x6572726F,
-    0x72212173, 0x74643A3A, 0x6C656E67, 0x74685F65,
-    0x72726F72, 0x21210000, 0x7374643A, 0x3A6C656E,
-    0x6774685F, 0x6572726F, 0x72000000, 0x7374643A,
-    0x3A657863, 0x65707469, 0x6F6E0000, 0x7374643A,
-    0x3A6C6F67, 0x69635F65, 0x72726F72, 0x00000000,
-    0x65786365, 0x7074696F, 0x6E000000,
-};
+
 
 int ItemEffect_TryStartByCategory_Wrap(ItemStateBlock *self, int itemId, void *arg);
 int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *arg);
@@ -1466,7 +1457,7 @@ CarObjectManager *CarObjectManager_Dtor(CarObjectManager *self, short flag);
 Bitset *dtor_80052200(Bitset *self, short flag);
 unsigned char Bitset_TestBit(Bitset *self, unsigned long idx);
 void Bitset_SetBit(Bitset *self, unsigned long idx, unsigned char val);
-asm void Bitset_Init(Bitset *self, unsigned long n, const unsigned char *pval);
+void Bitset_Init(Bitset *self, unsigned long n, const unsigned char *pval);
 unsigned long Bitset_MaxSize(void);
 asm void fn_8005249C(void);
 asm void KartItem_TryDropCoinsAndPlaySE_AdjThunk(void);
@@ -1695,7 +1686,6 @@ __declspec(section ".extab_user") static const unsigned char extab_StlList_Erase
     0x20, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 /* extab_StlList_InsertBefore: auto-emitted */
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; void *f8; unsigned int f9; unsigned int f10; void *f11; } extab_Bitset_Init = { 0x28080000, 0x00000054, 0x00050024, 0x00000078, 0x00000018, 0x00000000, 0x0780001B, 0x00000000, (void *)&dtor_80038E30, 0x8680001C, 0x00000000, (void *)&dtor_80038DD4 };
 
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
 #pragma section R ".extabindex_user"
@@ -1854,9 +1844,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_80052200 = {
     (void *)&dtor_80052200, 0x0000005C, (void *)extab_dtor_80052200
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_Bitset_Init = {
-    (void *)&Bitset_Init, 0x000001C4, (void *)&extab_Bitset_Init
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_800524CC = {
     (void *)&dtor_800524CC, 0x0000003C, (void *)extab_dtor_800524CC
@@ -8930,132 +8917,65 @@ void Bitset_SetBit(Bitset *self, unsigned long idx, unsigned char val) { /* 0x80
 }
 #pragma exceptions reset
 
-/* parked at 81% (2 probes): approach-B exceptions-off class. Structure fully decoded
- * (throw length_error inline + cap math + auto-unrolled word fill); blockers: (1) the
- * exception-object this/str pointer webs (target r28/r27 callee-saved + stmw r27) are
- * remat'd to sp-relative addi by CW with exceptions off, (2) param web order n=r31/pval=r30
- * flips. See HANDOFF appendix C for the 81% paste-ready C. */
-asm void Bitset_Init(Bitset *self, unsigned long n, const unsigned char *pval) { /* 0x800522D0 size:0x1C4 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stmw r27, 0x1c(r1)
-    mr r29, r3
-    mr r31, r4
-    mr r30, r5
-    bl Bitset_MaxSize
-    cmplw r31, r3
-    ble Bitset_Init_L_8005236C
-    lis r3, lbl_803F5710@ha
-    addi r28, r1, 0x8
-    addi r0, r3, lbl_803F5710@l
-    lis r4, lbl_803F5700@ha
-    stw r0, 0x8(r1)
-    addi r0, r4, lbl_803F5700@l
-    lis r3, lbl_802EDA80@ha
-    addi r27, r28, 0x4
-    stw r0, 0x8(r1)
-    addi r3, r3, lbl_802EDA80@l
-    bl strlen
-    addi r3, r3, 0x1
-    bl FUN_8003b120
-    mr r4, r3
-    mr r3, r27
-    bl SharedPtr_Init
-    lis r4, lbl_802EDA80@ha
-    lwz r3, 0x0(r27)
-    addi r4, r4, lbl_802EDA80@l
-    bl strcpy
-    lis r4, lbl_803F56F0@ha
-    lis r3, lbl_802EDAA4@ha
-    addi r0, r4, lbl_803F56F0@l
-    lis r4, ClStrPcb_Dtor@ha
-    stw r0, 0x8(r1)
-    addi r5, r4, ClStrPcb_Dtor@l
-    addi r3, r3, lbl_802EDAA4@l
-    mr r4, r28
-    bl __throw
-    Bitset_Init_L_8005236C:
-    cmplwi r31, 0x0
-    beq Bitset_Init_L_80052480
-    subi r0, r31, 0x1
-    stw r31, 0x4(r29)
-    clrlwi r3, r0, 27
-    addi r0, r31, 0x20
-    addi r3, r3, 0x1
-    subf r0, r3, r0
-    stw r0, 0x0(r29)
-    lwz r3, 0x0(r29)
-    subi r0, r3, 0x1
-    srwi r3, r0, 5
-    addi r31, r3, 0x1
-    slwi r3, r31, 2
-    bl Alloc
-    lbz r5, 0x0(r30)
-    cmplwi r31, 0x0
-    stw r3, 0x8(r29)
-    li r0, -0x1
-    neg r4, r5
-    li r3, 0x0
-    or r4, r4, r5
-    srawi r4, r4, 31
-    and r11, r0, r4
-    ble Bitset_Init_L_80052480
-    cmplwi r31, 0x8
-    subi r4, r31, 0x8
-    ble Bitset_Init_L_8005245C
-    addi r0, r4, 0x7
-    li r12, 0x0
-    srwi r0, r0, 3
-    mtctr r0
-    cmplwi r4, 0x0
-    ble Bitset_Init_L_8005245C
-    Bitset_Init_L_800523F4:
-    lwz r4, 0x8(r29)
-    addi r9, r12, 0x4
-    addi r8, r12, 0x8
-    addi r7, r12, 0xc
-    stwx r11, r4, r12
-    addi r6, r12, 0x10
-    addi r5, r12, 0x14
-    addi r4, r12, 0x18
-    lwz r10, 0x8(r29)
-    addi r0, r12, 0x1c
-    addi r12, r12, 0x20
-    addi r3, r3, 0x8
-    stwx r11, r10, r9
-    lwz r9, 0x8(r29)
-    stwx r11, r9, r8
-    lwz r8, 0x8(r29)
-    stwx r11, r8, r7
-    lwz r7, 0x8(r29)
-    stwx r11, r7, r6
-    lwz r6, 0x8(r29)
-    stwx r11, r6, r5
-    lwz r5, 0x8(r29)
-    stwx r11, r5, r4
-    lwz r4, 0x8(r29)
-    stwx r11, r4, r0
-    bdnz Bitset_Init_L_800523F4
-    Bitset_Init_L_8005245C:
-    subf r0, r3, r31
-    slwi r4, r3, 2
-    mtctr r0
-    cmplw r3, r31
-    bge Bitset_Init_L_80052480
-    Bitset_Init_L_80052470:
-    lwz r3, 0x8(r29)
-    stwx r11, r3, r4
-    addi r4, r4, 0x4
-    bdnz Bitset_Init_L_80052470
-    Bitset_Init_L_80052480:
-    lmw r27, 0x1c(r1)
-    lwz r0, 0x34(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+/* The exception hierarchy and string member generate Bitset_Init's cleanup
+ * actions. Read-only exception names replace the corresponding raw pool data. */
+#pragma readonly_strings on
+#pragma cplusplus on
+namespace std {
+struct exception {
+    exception() {}
+    virtual ~exception();
+};
 }
+struct ClStr {
+    char *ptr;
+    unsigned long *refs;
+    ClStr(void *p);
+    ~ClStr();
+};
+namespace std {
+struct BitsetString {
+    ClStr value;
+    BitsetString(const char *s) : value(FUN_8003b120(strlen(s) + 1)) {
+        strcpy(value.ptr, s);
+    }
+    ~BitsetString();
+};
+struct logic_error : exception {
+    BitsetString message;
+    logic_error(const char *s) : message(s) {}
+    virtual ~logic_error();
+};
+struct length_error : logic_error {
+    length_error(const char *s) : logic_error(s) {}
+    virtual ~length_error();
+};
+}
+
+/* A boolean bitset initializes every storage word to the same bit value. */
+static inline unsigned long Bitset_FillWord(unsigned char value) {
+    return value ? 0xFFFFFFFF : 0;
+}
+
+extern "C" void Bitset_Init(Bitset *self, unsigned long n, const unsigned char *pval) {
+    if (n > Bitset_MaxSize()) throw std::length_error((const char *)lbl_802EDA80);
+    if (n != 0) {
+        self->size = n;
+        self->cap = n + 32 - (((n - 1) & 31) + 1);
+        unsigned long words = (self->cap - 1) / 32 + 1;
+        self->data = (unsigned long *)Alloc(words * sizeof(unsigned long));
+        unsigned long fill = Bitset_FillWord(*pval);
+        for (unsigned long i = 0; i < words; i++) self->data[i] = fill;
+    }
+}
+#pragma cplusplus off
+#pragma readonly_strings reset
+static const char lbl_802EDADC[18] = "std::length_error";
+static const char lbl_802EDAF0[15] = "std::exception";
+static const char lbl_802EDB00[17] = "std::logic_error";
+static const char lbl_802EDB14[10] = "exception";
+
+
 
 #pragma exceptions off
 unsigned long Bitset_MaxSize(void) { /* 0x80052494 size:0x8 */
