@@ -25,6 +25,17 @@ Logging a fix in the rewrite-rule catalog (tools/patterns/, docs/asm_to_source.m
 3. `python3 -I tools/rewrite_rules.py check --fix` repairs hits whose commit is not on main
    and adds landed hits to their rule's evidence; commit tools/patterns/ afterwards.
 
+Register-only near miss, first steps (2026-11-09; automatic rewrite search found 0 new
+matches over 51 fns, the wins came from diagnosis + a hand rewrite):
+1. `python3 tools/regfix.py diag UNIT FN` -> which vregs are off, on which source lines, and
+   the allocator edits that would give the target (named local vs temp, numbering order).
+2. `python3 tools/regfix.py probe UNIT FN` -> one compile per lever that landed before
+   (each opt_* pragma, un-naming same-value locals with/without each pragma, each inline
+   expansion) plus the decl-order solver on every structural lever. "same" everywhere means
+   the fix is a source-shape change the levers do not cover; read the diag and rewrite by hand.
+3. `python3 tools/regfix.py fix UNIT FN` still runs the catalog moves (inline[ / boolnorm /
+   expand-void / unname / pragma-*) with the solver; worth one run, not a sweep.
+
 Helper scripts in tools/helpers/ (run from the repo root; see tools/README.md):
 - `b.sh` full configure+build, prints SHA-1 result and matched function counts
 - `runs.py LO HI` list runs of still-unsplit (auto_*) functions in an address range, with sizes and EH-action flags

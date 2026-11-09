@@ -97,7 +97,7 @@ def main():
             log = p.stdout + p.stderr
         except subprocess.TimeoutExpired:
             log = "timeout"
-        res = " ".join(l for l in log.splitlines() if re.search(r"MATCH via|best:|start:", l))
+        res = " ".join(l for l in log.splitlines() if re.search(r"MATCH via|best:|start:|fewest", l))
         row = {"unit": unit, "fn": fn, "secs": int(time.time() - t0),
                "outcome": "already" if "already matching" in log else "MATCH" if "MATCH via" in log else "nomatch", "res": res or log[-300:]}
         with open(out, "a") as f:

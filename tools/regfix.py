@@ -666,7 +666,7 @@ def diagnose(unit, fn, out: Path, rerun=True, quiet=False, depth=2):
                         src_lines=open(src, errors="replace").read().splitlines())
 
 
-def run_dbg(unit, fn, out, timeout=300):
+def run_dbg(unit, fn, out, timeout=int(os.environ.get("REGFIX_DBG_TIMEOUT", "900"))):
     import pragmasweep as ps
     fn = ps.Unit(unit).compiled_name(fn)
     cmd, note = md.compile_command(unit, out / "dbg.o")
@@ -895,7 +895,7 @@ class Evaluator:
             argv = md.debugger_argv(cmd, self.sym, d)
             if argv:
                 pre = ["unshare", "-n", *NETNS] if self.netns else []
-                r = md.sh(pre + argv, cwd=ROOT, timeout=400)
+                r = md.sh(pre + argv, cwd=ROOT, timeout=int(os.environ.get("REGFIX_DBG_TIMEOUT", "900")))
                 (d / "run.log").write_text(r.stdout + r.stderr)
         finally:
             try:
@@ -1560,6 +1560,7 @@ def fix(a, rep0):
         return done(*h0)
     beam = [(m0, s0, sw.init, text0, r0)]
     best = beam[0]
+    bestl = (s0, sw.init)      # fewest diff lines seen (may differ from the metric-best)
     seen = {hashlib.sha1(text0.encode()).hexdigest()}
     log = open(TMPDIR / f"{a.fn}.log.jsonl", "a")
     for rnd in range(a.rounds):
@@ -1620,6 +1621,9 @@ def fix(a, rep0):
             if h1:
                 return done(*h1)
         pool = list(beam)
+        for k in range(len(new)):
+            if sc[k] < bestl[0]:
+                bestl = (sc[k], new[k][0])
         for k, (m, rep) in zip(pick, res):
             pool.append((m, sc[k], new[k][0], new[k][1], rep))
             log.write(json.dumps({"fn": a.fn, "score": sc[k], "metric": m, "hist": list(new[k][0].hist)}) + "\n")
@@ -1642,6 +1646,12 @@ def fix(a, rep0):
     out.write_text(("#pragma push\n" + "".join(f"#pragma {p}\n" for p in pp) if pp else "")
                    + sw.func_text(best[2]) + ("\n#pragma pop\n" if pp else ""))
     print(f"[regfix] best: {best[1]} diff lines, metric {best[0]}; definition written to {out}")
+    if bestl[0] < best[1]:
+        o2 = TMPDIR / f"{a.fn}.fewest{sw.u.ext}"
+        pp = prag(bestl[1])
+        o2.write_text(("#pragma push\n" + "".join(f"#pragma {p}\n" for p in pp) if pp else "")
+                      + sw.func_text(bestl[1]) + ("\n#pragma pop\n" if pp else ""))
+        print(f"[regfix] fewest diff lines: {bestl[0]} via {' | '.join(bestl[1].hist)}; written to {o2}")
     return best
 
 
@@ -1760,6 +1770,95 @@ def cmd_batch(a):
         list(ex.map(one, todo))
 
 
+PROBE_PRAGMAS = ["opt_propagation off", "opt_strength_reduction off", "opt_common_subs off",
+                 "opt_lifetimes off", "opt_dead_assignments off", "opt_loop_invariants off"]
+
+
+def cmd_probe(a):
+    """One compile per lever that hand landings used on register-only diffs, so
+    the person rewriting sees which levers move the registers at all:
+    each pragma, un-naming locals (+ each pragma), each void-inline expansion,
+    each inline-call expansion, and the decl-order solver's proposal."""
+    import shapesweep as ss
+    import pragmasweep as ps
+    from concurrent.futures import ThreadPoolExecutor
+    sw = ss.Sweep(argparse.Namespace(unit=a.unit, fn=a.fn, demangled=None, start=a.start, start_tu=a.start_tu,
+                                     pragma=a.pragma, cc=a.cc, moves=None))
+
+    def rend(st, prag=()):
+        old = sw.a.pragma
+        sw.a.pragma = list(old or []) + [p for p in prag if p not in (old or [])]
+        try:
+            return sw.render(st)
+        finally:
+            sw.a.pragma = old
+    base = sw.init
+    variants = [("start", base, ())]
+    for p in PROBE_PRAGMAS:
+        variants.append((f"#pragma {p}", base, (p,)))
+    un = [(l, f) for l, f, _ in unname_moves(base, sw)]
+    for l, f in un:
+        if l.startswith("unname-all") or len(un) == 1:
+            st = f()
+            variants.append((l, st, ()))
+            for p in PROBE_PRAGMAS[:4]:
+                variants.append((f"{l} + #pragma {p}", st, (p,)))
+    for l, f, _ in expand_moves(base, sw, void_inlines(sw.text[:sw.d[0]])):
+        variants.append((l, f(), ()))
+    for l, f, _ in ss.moves(base, sw.ctx, {"expand"}):
+        if l.startswith("expand"):
+            try:
+                st = f()
+            except Exception:
+                continue
+            if st is not None:
+                variants.append((l, st, ()))
+    texts = [rend(st, pr) for _, st, pr in variants]
+    # __restrict on pointer parameters (fn_8019EB9C fa1d62e, rule restrict-input-ptrs):
+    # the scheduler keeps a load after a store only when they may alias
+    ptrs = [n for n, t in _param_decls(sw.sig).items() if "*" in t and "__restrict" not in t]
+    head0 = sw.head
+    sets = [(n,) for n in ptrs] + ([tuple(ptrs)] if len(ptrs) > 1 else [])
+    if 2 < len(ptrs) <= 4:
+        sets += list(itertools.combinations(ptrs, 2))
+    for ns in sets:
+        h = head0
+        for n in ns:
+            h = re.sub(r'\*\s*' + re.escape(n) + r'\b(?=\s*[,)\[])', '*__restrict ' + n, h, count=1)
+        if h == head0:
+            continue
+        sw.head = h
+        try:
+            variants.append((f"__restrict {','.join(ns)}", base, ()))
+            texts.append(rend(base))
+        finally:
+            sw.head = head0
+    with ThreadPoolExecutor(a.jobs, initializer=ps._init_worker) as ex:
+        sc = list(ex.map(lambda t: sw.score(t, ps.worker_id()), texts))
+    s0 = sc[0]
+    print(f"{a.fn}: start {s0} diff lines; one compile per lever (lower is better, 0 = match)")
+    for (l, _, _), x in sorted(zip(variants, sc), key=lambda r: r[1]):
+        mark = "MATCH" if x == 0 else ("better" if x < s0 else ("same" if x == s0 else "worse"))
+        print(f"  {x:>6}  {mark:<6}  {l}")
+    if not a.no_dbg:
+        ev = Evaluator(sw, sw.sym or a.fn, 1, a.fn)
+        # the solver on the start and on every structural lever: those often
+        # only pay off after re-ordering the declarations
+        best = [r for r in zip(variants, sc, texts) if not r[0][0].startswith("#pragma")][:8]
+        for (l, st, pr), x, t in best:
+            if x >= 10**6 or x == 0:
+                continue
+            m, rep = ev.diag(t, f"probe{abs(hash(l)) % 1000}", top_decls(st))
+            dor = rep.get("decl_order") if rep else None
+            if dor:
+                s2 = apply_decl_order(st, dor)
+                if s2 is not None:
+                    y = sw.score(rend(s2, pr), 0)
+                    print(f"  decl-order solver on [{l}]: {dor} -> {y} diff lines")
+                    continue
+            print(f"  decl-order solver on [{l}]: no order (metric {m})")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -1783,6 +1882,15 @@ def main():
             p.add_argument("--no-inline", action="store_true", help="no extract-to-static-inline moves")
             p.add_argument("--minutes", type=float, default=0)
             p.add_argument("-j", "--jobs", type=int, default=4)
+    pr = sub.add_parser("probe", help="one compile per known lever (pragmas, unname, inline expansion, decl order)")
+    pr.add_argument("unit")
+    pr.add_argument("fn")
+    pr.add_argument("--start")
+    pr.add_argument("--start-tu")
+    pr.add_argument("--pragma", action="append")
+    pr.add_argument("--cc")
+    pr.add_argument("--no-dbg", action="store_true", help="skip the decl-order solver (needs mwccdbg)")
+    pr.add_argument("-j", "--jobs", type=int, default=4)
     b = sub.add_parser("batch")
     b.add_argument("list", help="file of `unit fn` lines")
     sweeps = ROOT / "docs" / "sweeps"   # in the repo: commit results/hits
@@ -1795,6 +1903,8 @@ def main():
     a = ap.parse_args()
     if a.cmd == "batch":
         return cmd_batch(a)
+    if a.cmd == "probe":
+        return cmd_probe(a)
     out = md.DBG_DIR / "out" / a.fn
     out.mkdir(parents=True, exist_ok=True)
     if a.cmd == "diag" and (a.start or a.start_tu):

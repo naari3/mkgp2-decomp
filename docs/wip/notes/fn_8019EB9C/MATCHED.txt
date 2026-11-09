@@ -1,0 +1,1 @@
+MATCHED 2026-11-09 (regalloc_patterns 30): __restrict on a and v, straight stores, no pragma. Files here are the earlier fakematch attempts.

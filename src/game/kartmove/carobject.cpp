@@ -144,15 +144,13 @@ float fn_8019EA8C(Vec3 *v) {
 float SpeedCurve_LookupFromProgress(SpeedCurve *s, float t);
 float SpeedCurve_LookupFromSpeed(SpeedCurve *s, float t);
 
-static inline float TransformComponent(const float *column, float x, float y, float z) {
-    return column[12] + (z * column[8] + (column[0] * x + y * column[4]));
-}
-
-void fn_8019EB9C(Matrix44 *a, Vec3 *out, const Vec3 *v) {
-    float x = TransformComponent(&a->m[0][0], v->x, v->y, v->z);
-    float y = TransformComponent(&a->m[0][1], v->x, v->y, v->z);
-    float z = TransformComponent(&a->m[0][2], v->x, v->y, v->z);
-    out->x = x; out->y = y; out->z = z;
+void fn_8019EB9C(const Matrix44 *__restrict a, Vec3 *out, const Vec3 *__restrict v) {
+    float vx = v->x;
+    float vy = v->y;
+    float vz = v->z;
+    out->x = a->m[0][0] * vx + vy * a->m[1][0] + vz * a->m[2][0] + a->m[3][0];
+    out->y = a->m[0][1] * vx + vy * a->m[1][1] + vz * a->m[2][1] + a->m[3][1];
+    out->z = vx * a->m[0][2] + vy * a->m[1][2] + vz * a->m[2][2] + a->m[3][2];
 }
 
 struct Mtx44S {
