@@ -1425,6 +1425,15 @@ takes the lowest saved register already handed out before it opens a new one.
 - Moving the whole pickup test into an inline also fixed the GPR but its
   float local became a late temp (f30 again) and its Vec moved on the stack.
 
+Same rule, volatile registers (KartItem_ApplyImpactReflectAndDampVelocity, 11-09): an inline
+`bool IsReflectLane(Lane *lane)` called as `IsReflectLane(self->secondary)` gave lane r6 / result
+flag r5, target lane r5 / flag r6. `mwccdbg --all` showed the flag (inline return temp) with a
+higher vreg than the lane (argument temp), so the flag was coloured first and took the lower
+register. Wrapping the call as `inline bool IsReflectItem(Self *self) { return
+IsReflectLane(GetSecondary(self)); }` creates the getter's return temp after the wrapper's result
+temp: the lane is coloured first and gets r5. A getter at the call site without the wrapper, a
+getter inside the loop inline, an id getter and an in-body flag did not work.
+
 ## 57. `addi rBase,..; mr rWalker,rBase` versus `addi rWalker,..; mr rBase,rWalker`: the base must be a split-off lifetime range (fn_801E96BC, 11-09)
 
 Diff: only the direction of the copy between a table base (`base = table;`,
@@ -1451,4 +1460,3 @@ and does not count; an inline parameter is constant-propagated and the address
 is rematerialised in the loop; a named walker gives `addi r0; mr; mr`.
 When a diff is exactly this copy direction, look for a variable the original
 may have reused (same register in two unrelated places in the target).
-
