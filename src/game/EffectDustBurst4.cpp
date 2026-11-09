@@ -26,7 +26,11 @@ void Vec3_Subtract_DestFirst(DustVec *, const DustVec *, const DustVec *);
 float Vec3_Magnitude_Wrapper(const DustVec *);
 void Vec3_Scale(DustVec *, const DustVec *, float);
 void Vec3_Add_DestFirst(DustVec *, const DustVec *, const DustVec *);
-void VfxSlot_SetPositionFromVec(void *, DustVec);
+void VfxSlot_SetPositionFromVec(void *, const DustVec *);
+/* The slot API takes a pointer; this value adapter owns the caller copy. */
+static inline void SetPosition(void *slot, DustVec position) {
+    VfxSlot_SetPositionFromVec(slot, &position);
+}
 void VfxSlot_SetScaleUniform(void *, float);
 
 static inline void UpdateChildren(DustEffect *self, DustGroup *group, DustVec &delta, DustGroup *&cursor, DustCurve *curve, const DustVec *globalPosition) {
@@ -62,7 +66,7 @@ static inline void UpdateChildren(DustEffect *self, DustGroup *group, DustVec &d
                     Vec3_Add_DestFirst(&cursor->children[0]->position,&self->position,&delta);
                 }
             }
-            VfxSlot_SetPositionFromVec(cursor->children[0]->slot,cursor->children[0]->position);
+            SetPosition(cursor->children[0]->slot,cursor->children[0]->position);
             VfxSlot_SetScaleUniform(cursor->children[0]->slot,cursor->children[0]->scale);
         }
     }

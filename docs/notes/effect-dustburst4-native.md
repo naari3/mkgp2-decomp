@@ -30,3 +30,8 @@ c20_u112 fresh direct CLI97.96729/856B; assignment report98.43 uses different me
 Source: Codex worker c21_u97_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c21_u97: baseline/final direct CLI97.96729/856B,extab/index100. Classified mixed/reg+sched/multi/prologue/param,54 rows. H1 indexed children+curves97.71028; caller-only indexing97.96729 retained (natural in-bounds array access, removes shifted DustGroup walks in init/free; score-invariant, initialization r29/r30 homes differ). H2 literal floats0/.5/1/11/12 gives97.92056; H3 direct indexed active loop without helper97.42991. All856B/EH100. Three approaches exhausted, no new matching gain. No singleton/shared-neighbour-pool mismatch; B impossible for singleton. Coordinator full fallback DOL SHA1ea30f3b1 exact.
+
+## c22_u126_20261109
+Source: Codex worker c22_u126_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c22_u126: baseline/final CLI97.96729/856B,EH/index100. H1 true child-array pointer cursor96.42523 (regression); H2 first-interval reciprocal-first expression97.73364 (start f2,ratio f2; regression); H3 canonical pointer VfxSlot_SetPositionFromVec API plus inline by-value SetPosition adapter97.96729, entirely instruction-invariant, retained for prototype correctness. No pooled-data ownership pattern: separate curve/global-position bases. Same54-row mixed reg+sched residual; singleton prevents B, staysNM. Full coordinator fallback SHA1ea30f3b1 exact,0 native gain.
