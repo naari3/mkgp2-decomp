@@ -225,3 +225,77 @@ chain; `const Matrix44 *__restrict a` removes those edges.
 GC/2.6 breakpoint addresses used by the tracer: scheduleblock 0x507D80 (DAG
 ready 0x507E34, pick 0x507E9B), coalescenodes move check 0x57BB83,
 colorinstructions 0x508610, simplifygraph 0x5089B0, colorgraph 0x508890.
+
+## GC/1.x backend (1.0 .. 1.2.5n): an older generation, not covered by mweppc
+
+The compilers split into two generations by their source files (the
+`__FILE__` strings of the asserts in each exe):
+
+- **GC/1.0, 1.1, 1.1p1, 1.2.5, 1.2.5n**: 99 files. No `Alias.c`,
+  `Arguments.c`, `InterferenceGraph.c`, `RegisterInfo.c`, `PCodeInfo.c`,
+  `IroPointerAnalysis*.c`, `IroLinearForm.c`, `IroUnrollLoop.c`; `Registers.c`
+  and `StackFrameEABI.c` instead. Code generation, the opcode numbering
+  (`PC_STW` = 49, `PC_ADDI` = 63, ...) and the machine models (latency tables)
+  are the same as 2.x.
+- **GC/1.3, 1.3.2, 1.3.2r** have the same 112 files as GC/2.0..2.7, which is
+  why the 2.6 stand-in fits our 1.3.2 units.
+
+So for 1.2.5 units, Alias.c / `__restrict` / const-pointer reasoning from the
+sections above does not apply. What we know of 1.2.5 (Ghidra, see
+`tools/mwcc1x/README.md`; addresses in GC/1.2.5 `mwcceppc.exe`):
+
+| 2.x name | 1.2.5 | Notes |
+| --- | --- | --- |
+| `scheduleinstructions` | 0x4CCAE0 | picks the machine table, schedules every block with > 2 instructions whose "scheduled" flag (block +0x2E bit 8) is clear, then sets it |
+| `scheduleblock` | 0x4CCBF0 | same list scheduler as 2.x (DAG built bottom-up, appended in pick order) |
+| `selectinstruction` | 0x4CCDC0 | same keys as 2.x: critical, then uncovers more, then higher, then (pre-RA only) opcode rank, then original order |
+| `findsuccessors` | 0x4CCF10 | register edges via 0x4CD7C0, memory edges below, calls/side effects serialise |
+| `addsuccessor` | 0x4CD910 | edge latency = producer latency, or 0 for WAR/WAW when the model renames |
+| memory, pointer access | 0x4CD2F0 | see the rule below |
+| memory, named object | 0x4CD4A0 / 0x4CD650 | the second one for flag 0x20000 accesses |
+| `insertpcodeafter/before`, `deletepcode` | 0x49CF90 / 0x49CFD0 / 0x49D010 | clear the scheduled flag, as in 2.x |
+| 604 / 750 / ... machine tables | 0x5763F8 (604, 4-issue), 0x577640 (750), 0x574D70 (default) | latency table of the 604 at 0x576418, 6 bytes per opcode, same values as MachineSimulation604.c |
+
+Driver (0x4351C0, the CodeGen.c function that calls 0x4CCAE0 twice): the
+pre-RA pass runs only when the scheduling mode byte is 2, the post-RA pass
+when it is non-zero. `#pragma scheduling off` turns both off.
+
+**Memory dependences in 1.2.5 (no alias analysis).** Every load/store is
+either a *named-object* access (its displacement operand carries an Object:
+a global, or a local off r1) or a *pointer* access (displacement only, flag
+0x40, the 2.x `fIsPtrOp`). The scheduler keeps one list of loads and one of
+stores and adds an edge when:
+
+- pointer access vs pointer access: **always**, whatever the base register
+  or offsets (two stores through `info`, through two different parameters, an
+  int and a float field: all ordered);
+- named object vs the same object: always (no offset/size check, so
+  `G.a` and `G.b` are ordered);
+- named object vs a different named object: never;
+- pointer access vs named object: unless the object is a local whose
+  address is never taken.
+
+Consequence: in a 1.2.5 unit, a target that puts an independent
+instruction *before* the first of two stores through the same pointer (e.g.
+`addi rP; stw b,0x410(r3); ...; stw rP,0x400(r3)`) cannot come from either
+scheduler pass: with the store->store edge (latency 3) the first store is
+always higher than the `addi`. That block was not scheduled at all, i.e. it is
+code-generation order: the unit (or a `#pragma scheduling off` region) was
+compiled unscheduled. `__THPGetBit` (thp/THPDec, 80.9 -> 100 %) was exactly
+this; see regalloc_patterns §33.
+
+**Other 1.x passes seen with the debugger.** `tools/mwccdbg.py` maps 1.2.5 to
+GC/1.1 (same file set, and for `__THPGetBit` the same code). Its dumps show
+the 1.x pass order: initial code, copy propagation, pre-RA scheduling,
+peephole-forward, register allocation, prologue/epilogue, peephole, post-RA
+scheduling. Two 1.x behaviours that matter for matching:
+
+- copy propagation removes a copy whenever it can propagate to all of its
+  uses (an inline argument copy, `c = b`, a local `THPFileInfo *i = info`);
+  a copy survives only if one of its uses is reached by another definition
+  or comes after the source is redefined;
+- peephole-forward (like 2.x `adjustforward`) sinks an in-place
+  `addi rX,rX,imm` to just before the block's branch (or the next use of
+  rX), and since that clears the scheduled flag the block is scheduled again
+  post-RA. Writing the add out of place (`q = p + 3`, coalesced into the
+  same register later) keeps it where the source put it.

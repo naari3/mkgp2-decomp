@@ -1940,52 +1940,57 @@ void fn_8029BCF0(THPDecHandle* handle, u8* dst, u8 alpha)
 
 #pragma push
 #pragma optimization_level 2
-#pragma scheduling 604
+#pragma scheduling off
 #pragma opt_propagation off
-#pragma opt_lifetimes off
-/* -O2 drops the dead loop-preheader `b` that -O4 leaves; the 604 scheduler model
- * gives the target stw cnt / li / addi slots. Left (4 lines): the fast and zero-byte
- * tails store currByte before computing the pointer. See docs/gave_up.md. */
+/* Unscheduled: GC/1.2.5's scheduler always orders two stores through a pointer
+ * (no offset check, docs/mwcc_internals.md "GC/1.x backend"), so the target's
+ * addi-before-stw tails are code-generation order. The separate q/n pointers keep
+ * the adds out of place so peephole-forward does not sink them to the branch. */
 static s32 __THPGetBit(THPFileInfo* info)
 {
     u8* p;
+    u8* q;
+    u8* n;
     u32 b;
-    u32 r;
     s32 cnt;
+    s32 t;
 
     cnt = info->cnt;
     if (cnt == 33) {
         p = info->file;
+        t = 26;
         b = *p;
-        info->cnt = 26;
+        info->cnt = t;
         if (b == 0xFF) goto check;
+        n = p + 1;
         info->currByte = b;
-        r = (b >> 7) & 1;
-        info->file = p + 1;
+        b = (b >> 7) & 1;
+        info->file = n;
         goto done;
     again:
-        p--;
+        p = q - 1;
     check:
         if (p[1] != 0) {
             b = p[2];
-            p += 3;
+            q = p + 3;
             if (b == 0xFF) goto again;
             info->currByte = b;
-            r = (b >> 7) & 1;
-            info->file = p;
+            b = (b >> 7) & 1;
+            info->file = q;
         } else {
             p += 2;
             info->currByte = b;
-            r = (b >> 7) & 1;
+            b = (b >> 7) & 1;
             info->file = p;
         }
     } else {
         b = info->currByte;
-        info->cnt = cnt + 1;
-        r = __rlwnm(b, cnt, 31, 31);
+        t = cnt + 1;
+        info->cnt = t;
+        b = __rlwnm(b, cnt, 31, 31);
     }
 done:
-    return r;
+    return b;
 }
 #pragma pop
 

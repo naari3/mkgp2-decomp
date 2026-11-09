@@ -623,6 +623,24 @@ them all off one section anchor. Ten files (0x802386E0..0x8023B1A8) went into
 - the rodata split grows to the strings the ctor uses (0x803DC318), with the
   two class-name strings kept as named globals because sdata refers to them.
 
+## 33. GC/1.2.5: an independent op before the first of two pointer stores means the block is unscheduled (__THPGetBit, 11-09)
+
+GC/1.2.5 has no alias analysis: its scheduler orders any two accesses
+through pointers, whatever the offsets (docs/mwcc_internals.md, "GC/1.x
+backend"). With the store->store edge the first store is always higher than an
+`addi` that only feeds the second store, so neither scheduling pass can put
+the `addi` first. The target block is code-generation order.
+
+`__THPGetBit` (80.9 -> 100 %): `#pragma scheduling off` (with
+`optimization_level 2`, `opt_propagation off`), then source order gives every
+block: `t = 26` before `b = *p` for `li` before `lbz`, `n = p + 1` before the
+stores for `addi` first, and an out-of-place `q = p + 3` in the loop, because
+peephole-forward sinks an in-place `p += 3` below the `cmplwi`.
+
+**Check:** 1.2.5 unit, target order that the 604/750 model cannot give (an
+`addi`/`li` ahead of a ready store to the same pointer): try
+`#pragma scheduling off` and write the statements in target order.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
