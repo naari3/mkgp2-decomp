@@ -445,6 +445,19 @@ inline LoadFileTable right after `const char *file;` and passing it as
 into LoadFileTable" attempts were circling. Rule:
 `inline-local-to-outer-ref`.
 
+## 23. Compute a value before the local that holds it is declared (PtrVec_InsertFill, 11-09)
+
+`regfix diag` wanted the copy-loop walker temp of an inline
+(`FaceCopyBackward(position, end, end + n)`) numbered just above the named
+locals, and decl-order/naming the `end + n` argument did nothing (copy
+propagation). Computing `tail` from the expression BEFORE declaring `end`,
+`unsigned int tail = (s->data + s->count) - position;` then
+`SpecialFaceNative **end = s->data + s->count;`, makes the address a CSE temp
+created earlier, and the copy loop's registers swap into place: 99.55 -> 100.
+Statement order of two uses of one expression decides which of them owns
+the CSE temp; try it when a named local is "propagated away". Rule:
+`stmt-order` (evidence added).
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,

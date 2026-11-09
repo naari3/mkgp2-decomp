@@ -154,8 +154,8 @@ extern "C" void PtrVec_InsertFill(void *storage, SpecialFaceNative **position,
         unsigned int size = s->count + n;
         if (size <= s->capacity) {
             SpecialFaceNative **source = value;
+            unsigned int tail = (s->data + s->count) - position;
             SpecialFaceNative **end = s->data + s->count;
-            unsigned int tail = end - position;
             if (end - (tail - n) <= value && value < end) source += n;
             if (tail != 0) {
                 FaceCopyBackward(position, end, end + n);
