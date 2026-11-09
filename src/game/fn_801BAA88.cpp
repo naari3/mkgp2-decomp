@@ -729,8 +729,8 @@ CardEntry::CardEntry(unsigned char items)
     int xOffset;
     int scaleOffset;
     int spacingOffset;
-    const float *pX;
     const float *pScale;
+    const float *pX;
     const float *pSp;
     scaleOffset = isJapanese() * sizeof(float);
     pScale = (const float *)((const char *)lbl_806D9A0C + scaleOffset);
@@ -757,10 +757,11 @@ CardEntry::CardEntry(unsigned char items)
     if (isJapanese() == 1) {
         static const char *quote = "\x27";
         n = new TextNode(*pX - lbl_806D9ACC, lbl_806D9AE8, quote);
+        PtrVec<FadeObj *> *list = &nodes;
         n->layer = 4;
         n->tracks[0].Set(lbl_806D9A74, lbl_806D9A34, lbl_806D9AC0);
         n->scale = *pScale;
-        nodes.push_back(n);
+        list->push_back(n);
     }
 
     n = new TextNode(*pX, lbl_806D9AEC, GetTextureByIdAndLang(0x89, -1));
@@ -2018,8 +2019,11 @@ struct KeyBoard {
     int saveRow;
     bool Navigate();
     void SelectGroupOf(int col) {
-        for (unsigned long i = 0; i < groups.count; i++) {
-            KeyGroup *g = &groups.data[i];
+        KeyGroup *g;
+        unsigned long i = 0;
+        unsigned long offset = 0;
+        for (; i < groups.count; i++, offset += sizeof(KeyGroup)) {
+            g = (KeyGroup *)((char *)groups.data + offset);
             if (g->HasCol(col) == 1) {
                 group = i;
                 return;
@@ -2065,7 +2069,8 @@ struct KeyBoard {
 };
 
 static inline unsigned int ReadNameCharacter(const void *buffer, unsigned long i) {
-    return ((const unsigned short *)buffer)[i + 1];
+    int offset = (i + 1) * sizeof(unsigned short);
+    return *(const unsigned short *)((const char *)buffer + offset);
 }
 
 struct NameBuf {

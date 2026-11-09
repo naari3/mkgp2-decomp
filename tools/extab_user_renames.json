@@ -2947,7 +2947,13 @@
     "@3152": "lbl_8039A498",
     "@3183": "lbl_8039A50C",
     "@3151": "lbl_8039A498",
-    "@3182": "lbl_8039A50C"
+    "@3182": "lbl_8039A50C",
+    "@592": "lbl_806D9AE4",
+    "@760": "jumptable_8049A98C",
+    "@1050": "jumptable_8049A948",
+    "@1260": "jumptable_8049A9B0",
+    "@3153": "lbl_8039A498",
+    "@3184": "lbl_8039A50C"
   },
   "src/game/fn_801DEF94.cpp": {
     "__ct__8SteerMgrFP7KartRefPv": "SteeringMgr_Init",
