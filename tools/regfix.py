@@ -2253,6 +2253,36 @@ def saved_order_hint(rep):
     return out
 
 
+def neighbour_hint(rep):
+    """For each off vreg: its neighbours with their registers, and what would
+    have to hold the register ours took for the target register to be the
+    first free one. -> [text lines]"""
+    out = []
+    for rc, c in rep.get("classes", {}).items():
+        g, w, bad = c.get("g"), c.get("w"), c.get("bad")
+        if not g or not bad or len(bad) > 8:
+            continue
+        ph, order = g.colour()
+        pos = {v: i for i, v in enumerate(order)}
+        nm = lambda v: g.names.get(v) or "temp"
+        for v in bad:
+            nb = sorted(g.nb[v], key=lambda x: pos.get(x, 1 << 30))
+            before = [x for x in nb if pos.get(x, 1 << 30) < pos.get(v, -1)]
+            after = [x for x in nb if x not in before]
+            out.append(f"  {v}({nm(v)}) {ph.get(v)} -> want {w.get(v)}; coloured #{pos.get(v)} of {len(order)}; "
+                       f"neighbours coloured before it: "
+                       + (", ".join(f"{x}({nm(x)})={ph.get(x)}" for x in before[:10]) or "none")
+                       + "; after it: " + (", ".join(f"{x}({nm(x)})={ph.get(x)}" for x in after[:10]) or "none"))
+            holders = [x for x in after if ph.get(x) == w.get(v)] + [x for x in before if ph.get(x) == w.get(v)]
+            if holders:
+                out.append(f"      the wanted {w.get(v)} is held by neighbour(s) " + ", ".join(f"{x}({nm(x)})" for x in holders[:4])
+                           + ": they must be coloured after it or stop interfering")
+            elif ph.get(v) != w.get(v):
+                out.append(f"      no neighbour holds {ph.get(v)} before it: in the target some vreg already in {ph.get(v)} "
+                           f"interferes with it (a longer live range next to it, or it is the same vreg as a later value)")
+    return out
+
+
 def shape_hints(a, rep, src_text):
     """Cheap source-shape hints for patterns landed 11-09 (regalloc_patterns 52-54,
     float literals). -> [text]"""
@@ -2385,6 +2415,14 @@ def print_levers(a, rep, src_text, d, ext):
               "`u8var = (int)x`, or a copy that coalesced) and write the source so it is never emitted "
               "(`u8var = x`). If the pre-RA schedule is already wrong, change the dependences instead "
               "(statement order, docs/mwcc_internals.md scheduler notes).")
+    try:
+        nh = neighbour_hint(rep)
+    except Exception as e:  # noqa: BLE001 - advice only
+        nh = []
+        print(f"[regfix] neighbour hint: {e}")
+    if nh:
+        print("\n== off vregs and their neighbours (colouring order, registers ours) ==")
+        print("\n".join(nh))
     try:
         so = saved_order_hint(rep)
     except Exception as e:  # noqa: BLE001 - advice only
