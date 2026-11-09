@@ -767,6 +767,46 @@ named x/z locals). The inline results are temps that are not fused, and their
 numbering gives the target order. An inline `sq(float v)` or named locals as
 arguments stay 3 lines off.
 
+## 40. `addi rX,anchor,N` marks the start of a real object: split the pool there and index the object directly (Voice merge, 11-09)
+
+MWCC never folds a constant offset into the address of an anchored object.
+With the pool anchor in r31:
+
+- `&obj[i]` where `obj` starts at anchor+N gives `addi rX,r31,N` followed by
+  the index arithmetic.
+- `(char *)base_obj + CONST` (a pointer into a bigger object, or a struct of
+  the whole pool) gives two `addi`, or folds CONST into the load displacement.
+
+So every distinct N in the target's `addi rX,r31,N` is the first byte of an
+object of the original source. Read them off the target before writing the
+pool: in the race voice unit that gave 0x80497BC4 (`addi r3,r31,3980`) and
+0x804975C4 (`addi r8,r31,2444`) inside what looked like one 0xE00 float
+table, and the item map at 0x80497DC4. An `addi rX,r31,N; lbz D(rX)` pair
+with a large D is the opposite sign: a constant element index of the object
+at N, not another object.
+
+Once the objects are split and typed, the natural expression matches and
+the Advance-pointer style inline helpers written to imitate the base+offset
+form can go:
+
+```c
+return &lbl_80497BC4[(g_cupId - 1) * 16 + g_longRoundFlag * 8 + g_reverseRoundFlag * 4];
+```
+
+Related details from the same three functions (fn_801AC208, fn_801AECF4,
+fn_801B1D5C):
+
+- A single named static used in a function is not anchored (it gets its own
+  `lis/addi`), so convert every pool use of the function at once; converting
+  one use makes the diff worse first.
+- `&(&obj[a * 128])[b]` keeps `a*128*4` and `b*4` as two shifts added
+  separately (`slwi r5,r9,9` + `slwi r3,r3,2`); `&obj[a * 128 + b]` merges
+  them into one index.
+- A table pointer kept in a saved register across a call, copied for the
+  first search loop (`mr r4,r29`) and walked in place by the second
+  (`addi r29,r29,6`): a block local `VoiceItemMap *maps = table; int item = v;`
+  passed by value to the first inline and by address (`&maps`) to the second.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,

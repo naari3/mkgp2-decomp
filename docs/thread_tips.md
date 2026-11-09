@@ -520,3 +520,10 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   base vtable store in the ctor body, avoiding IRO CSE temps, pool-owner TU merges.
 - Do not run bare `python3 configure.py`: it regenerates build.ninja with the compiler download
   rule (blocked host). Use `--binutils build/binutils --compilers build/compilers --wrapper build/tools/wibo`.
+
+### tools/merge_tus.py: merging a run of over-split C TUs (2026-11-09, race voice unit)
+- `python3 tools/merge_tus.py plan --first ADDR --last ADDR` lists the TUs and flag differences; `apply` writes one source (each TU preprocessed with its own flags, identifiers suffixed `_pN`), and rewrites splits.txt, configure.py, extab_user_renames.json and extab_order.json; `prune-renames` after the first ninja. The docstring has the details.
+- The 53 race voice TUs (0x801A1798..0x801B70EC) are now `game/sprite/fn_801A1798.c`. The merged text is preprocessed output: tidy a section only when you work on it, and keep the `_pN` suffix on names that differ between sections.
+- After a merge, read the target's `addi rX,anchor,N` offsets to find the real object boundaries of the pool (regalloc_patterns 40) before touching the functions. tools/data2c.py emits the pool objects (now also `.string16` and mixed word/relocation objects).
+- Editing symbols.txt triggers a full resplit (more than 2 minutes): run ninja with a long timeout.
+- Rebase conflicts in the two extab json files are per-TU keys: take origin/main and re-apply only your TU's key.

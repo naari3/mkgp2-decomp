@@ -70,6 +70,8 @@ def load(sec, lo, hi):
             t = line.split(' # ')[0].strip()
             if t.startswith('.endobj'): objs.append(cur); cur = None; continue
             if t.startswith('.string '): cur['items'].append(('s', parse_string(t[8:].strip()[1:-1]) + b'\0'))
+            elif t.startswith('.string16 '):  # dtk data:wstring: UTF-16BE + 0 terminator
+                cur['items'] += [('2', str(ord(c))) for c in parse_string(t[10:].strip()[1:-1]).decode('latin-1')] + [('2', '0')]
             elif t.startswith('.4byte '): cur['items'] += [('4', v.strip()) for v in t[7:].split(',')]
             elif t.startswith('.2byte '): cur['items'] += [('2', v.strip()) for v in t[7:].split(',')]
             elif t.startswith('.byte '): cur['items'] += [('1', v.strip()) for v in t[6:].split(',')]
@@ -81,6 +83,26 @@ def load(sec, lo, hi):
     for o in objs:
         uniq.setdefault(o['addr'], o)
     return sorted(uniq.values(), key=lambda o: o['addr'])
+
+
+def as_words(items):
+    """Regroup an item list into 4-byte words; None if a relocation is not word-aligned."""
+    words, buf = [], bytearray()
+    for k, v in items:
+        if k == 's': buf += v
+        elif isnum(v):
+            w = {'1': 1, '2': 2, '4': 4, '8': 8}[k]
+            buf += (int(v, 0) & ((1 << (8 * w)) - 1)).to_bytes(w, 'big')
+        else:
+            if k != '4' or len(buf) % 4: return None
+            words += [('4', '0x%08X' % int.from_bytes(buf[i:i + 4], 'big')) for i in range(0, len(buf), 4)]
+            buf = bytearray(); words.append(('4', v)); continue
+        while len(buf) >= 4 and len(buf) % 4 == 0:
+            words += [('4', '0x%08X' % int.from_bytes(buf[i:i + 4], 'big')) for i in range(0, len(buf), 4)]
+            buf = bytearray()
+    if len(buf) % 4: return None
+    words += [('4', '0x%08X' % int.from_bytes(buf[i:i + 4], 'big')) for i in range(0, len(buf), 4)]
+    return words
 
 
 def isnum(v):
@@ -207,6 +229,23 @@ def main():
                 out.append(d); seen.add(n); continue
         if kinds == {'s'} and len(it) == 1 and len(it[0][1]) == sz:
             out.append(f'{st}{const}char {n}[] = {c_string(it[0][1][:-1])};')
+        elif kinds - {'s'} and not all(isnum(v) for k, v in it if k != 's') and sz % 4 == 0 and o['addr'] % 4 == 0 \
+                and (words := as_words(it)) is not None and len(words) * 4 == sz:
+            # mixed bytes + relocations (e.g. a struct of byte tables and pointers): one void * word array
+            it = words
+            el = []
+            for _, v in it:
+                if isnum(v): el.append('(void *)0x%X' % (int(v, 0) & 0xFFFFFFFF)); continue
+                m = re.match(r'^"?([^"+\-]+)"?(?:([+\-])(0x[0-9a-fA-F]+|\d+))?$', v)
+                sym, sign, off = m.group(1), m.group(2), m.group(3)
+                if sym in defined and sym not in seen and sym != n:
+                    if defined[sym]['bind'] == 'local':
+                        sys.exit(f'forward ref to local {sym} from {n}: reorder by hand')
+                    fwd.append(sym)
+                elif sym not in defined: ext.add(sym)
+                el.append(f'(void *)&{sym}' if not off else f'(void *)((char *)&{sym} {sign} {off})')
+            body = ',\n    '.join(el)
+            out.append(f'{st}{const}void *{const}{n}[{len(it)}] = {{\n    {body}\n}};')
         elif kinds == {'4'} and sz == 4 * len(it):
             if all(isnum(v) for _, v in it):
                 vals = ', '.join('0x%08X' % (int(v, 0) & 0xFFFFFFFF) for _, v in it)
