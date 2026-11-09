@@ -113,7 +113,7 @@ CoursePlayerInput *InputMgr_GetPlayer(void *, int);
 void SetScreenBrightness(float);
 void SetRumbleMode(int, int, int);
 CourseParams *GetCourseSelectEntry(int);
-void SetCourseParams(int, int, int, int);
+int SetCourseParams(int, int, int, int);
 void SetSyncTarget(int);
 unsigned char IsSyncReached();
 unsigned char *SyncSlot_GetRecv();
