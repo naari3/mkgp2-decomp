@@ -4,16 +4,14 @@ extern signed long long OSGetTime(void);
 
 const unsigned char lbl_80377BC0[32] = "ztj6bkc9nh5v1sa2uwx47epymd08fgr3";
 const unsigned char lbl_80377BE0[32] = {8, 8, 8, 8, 8, 4, 1, 2, 3, 1, 1, 4, 3, 4, 4, 4, 4, 1, 8, 8, 8, 3, 6, 3, 3, 2, 2, 2, 0, 0, 0, 0};
-const CardFieldTables lbl_80377C00 = {
-    {27, 82, 15, 41, 52, 90, 36, 2, 49, 23, 106, 70, 12, 107, 102, 37, 111, 35, 4, 60, 94, 24, 76, 120, 117, 115, 68, 74, 0, 0, 0, 0},
-    {
+const unsigned char lbl_80377C00[32] = {27, 82, 15, 41, 52, 90, 36, 2, 49, 23, 106, 70, 12, 107, 102, 37, 111, 35, 4, 60, 94, 24, 76, 120, 117, 115, 68, 74, 0, 0, 0, 0};
+const int lbl_80377C20[6][12][2] = {
         {{2, 5}, {8, 6}, {18, 1}, {16, 7}, {21, 17}, {3, 14}, {-1, -1}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}},
         {{7, 1}, {16, 19}, {3, 15}, {22, 11}, {5, 18}, {2, 14}, {8, 4}, {20, 13}, {-1, -1}, {0, 0}, {0, 0}, {0, 0}},
         {{5, 1}, {11, 20}, {10, 17}, {14, 21}, {7, 16}, {2, 15}, {8, 18}, {19, 13}, {-1, -1}, {0, 0}, {0, 0}, {0, 0}},
         {{7, 17}, {16, 10}, {3, 20}, {8, 22}, {6, 12}, {-1, -1}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}},
         {{7, 16}, {18, 21}, {3, 20}, {5, 19}, {1, 4}, {9, 14}, {6, 10}, {17, 15}, {-1, -1}, {0, 0}, {0, 0}, {0, 0}},
         {{16, 10}, {12, 1}, {9, 11}, {5, 17}, {4, 18}, {6, 21}, {2, 14}, {20, 13}, {-1, -1}, {0, 0}, {0, 0}, {0, 0}},
-    }
 };
 unsigned char lbl_80677EE8[28];
 unsigned char lbl_80677F04[28];
@@ -29,7 +27,7 @@ static inline void WriteBits(int start, int n, int value) {
 }
 
 static inline void WriteField(int field, int value) {
-    WriteBits(lbl_80377C00.offsets[field], lbl_80377BE0[field], value);
+    WriteBits(lbl_80377C00[field], lbl_80377BE0[field], value);
 }
 
 static inline unsigned char ReadBits(int start, int n) {
@@ -71,21 +69,14 @@ static inline void EncodeText(unsigned char *dst) {
 }
 
 static inline void ClearPacked(void) {
-    int i;
+    unsigned int i;
     for (i = 0; i < 25; i++) lbl_80677EE8[i] = 0;
-}
-
-static inline void EncodeName(const unsigned short *name) {
-    int i;
-    for (i = 0; i < 5 && i < 5; i++) {
-        WriteField(i, (unsigned char)wchar_to_card_char(name + i));
-    }
 }
 
 #pragma exceptions on
 #pragma use_lmw_stmw on
 void fn_8018B31C(const unsigned short *name, int item, int ccClass,
-                 int character, int kart, int cup, int longRound, int flags,
+                 int character, int kart, int cup, int longRound, unsigned int flags,
                  unsigned char a, unsigned char b, unsigned char c,
                  unsigned char saveBackup, float time) {
     unsigned int seed;
@@ -98,7 +89,7 @@ void fn_8018B31C(const unsigned short *name, int item, int ccClass,
     int encodedClass = ccClass >= 2 ? ccClass - 1 : ccClass;
     seed = (unsigned int)(1000.0f * (float)OSTicksToMilliseconds(OSGetTime()));
     ClearPacked();
-    EncodeName(name);
+    for (i = 0; i < 5 && i < 5; i++) WriteField(i, (unsigned char)wchar_to_card_char(name + i));
     WriteField(5, (unsigned char)item);
     WriteField(6, (unsigned char)(character - 1));
     WriteField(7, (unsigned char)encodedClass);
@@ -124,7 +115,7 @@ void fn_8018B31C(const unsigned short *name, int item, int ccClass,
     WriteField(29, (unsigned char)(seed & 0xC00));
 
     schedule = seed % 6;
-    swap = lbl_80377C00.swaps[schedule];
+    swap = lbl_80377C20[schedule];
     while ((*swap)[0] != -1) {
         unsigned char tmp = lbl_80677EE8[(*swap)[0]];
         lbl_80677EE8[(*swap)[0]] = lbl_80677EE8[(*swap)[1]];
@@ -132,9 +123,12 @@ void fn_8018B31C(const unsigned short *name, int item, int ccClass,
         swap++;
     }
     rotation = seed % 5;
+    {
+    unsigned char *p = lbl_80677EE8;
     for (i = 1; i < 24; i++) {
-        unsigned short value = lbl_80677EE8[i] << rotation;
-        lbl_80677EE8[i] = (value | ((value & 0x3E0) >> 5)) & 31;
+        unsigned short value = p[i] << rotation;
+        p[i] = (value | ((value & 0x3E0) >> 5)) & 31;
+    }
     }
     WriteField(23, rotation);
     WriteField(24, schedule);
