@@ -104,7 +104,9 @@ def done_keys():
     for p in glob.glob(f'{OUT}/results*.jsonl'):
         for l in open(p):
             try:
-                r = json.loads(l); d[(r['obj'], r['fn'])] = r.get('pct')
+                r = json.loads(l)
+                if r.get('outcome') == 'held': continue   # never tried: retry when free
+                d[(r['obj'], r['fn'])] = r.get('pct')
             except ValueError:
                 pass
     return d
