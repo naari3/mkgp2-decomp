@@ -83,6 +83,26 @@ def load_jsonl(p: Path) -> list[dict]:
     return out
 
 
+def canonical_rules(rid) -> list:
+    """Map tool-specific ids to catalog ids: regfix logs 'regfix-declorder' and
+    'regfix-<shapesweep move kinds>'."""
+    if not isinstance(rid, str) or not rid.startswith("regfix-"):
+        return [rid]
+    rest = rid[len("regfix-"):]
+    if rest == "declorder":
+        return ["decl-order"]
+    rs = rules_for_moves([m.strip() for m in re.split(r"[,+]", rest) if m.strip()])
+    return rs or [rid]
+
+
+def load_hits() -> list[dict]:
+    out = []
+    for h in load_hits():
+        for rid in canonical_rules(h.get("rule_id")):
+            out.append(dict(h, rule_id=rid))
+    return out
+
+
 def load_rules():
     return load_jsonl(RULES)
 
@@ -199,7 +219,7 @@ def rule_weights():
     w = collections.Counter()
     for e in load_jsonl(EVIDENCE):
         w[e.get("rule")] += 1
-    for h in load_jsonl(HITS):
+    for h in load_hits():
         w[h.get("rule_id")] += {"landed": 3, "match": 3, "improved": 1}.get(h.get("outcome"), 0)
     return w
 
@@ -239,7 +259,7 @@ def cmd_coverage(a):
         for s, r, alt in m:
             per_rule[r["id"]].append((f, s, alt))
     ev = collections.Counter(e.get("rule") for e in load_jsonl(EVIDENCE))
-    hits = collections.Counter(h.get("rule_id") for h in load_jsonl(HITS))
+    hits = collections.Counter(h.get("rule_id") for h in load_hits())
     covered = sum(1 for p, m in per_fn.values() if m)
     specific = sum(1 for p, m in per_fn.values() if any(set(alt) - {"census"} for _, _, alt in m))
     lines = [
@@ -560,7 +580,7 @@ def cmd_report(a):
         L.append(f"| {d} | {sum(c.values())} | {c['first']} | {c['reuse']} | {c['new']} |")
     L += ["", f"({sum(1 for e in ev if not dates.get(e.get('commit')))} evidence rows have no commit date.)", ""]
     # rule outcomes from the hits log
-    hits = load_jsonl(HITS)
+    hits = load_hits()
     L += ["## Rule applications (hits log)", ""]
     if not hits:
         L += [f"No applications recorded yet in `{HITS}`. shapesweep batch, autopipe and regfix append there; "
