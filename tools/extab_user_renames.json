@@ -11796,7 +11796,12 @@
     "@890": "@eti_80028D30",
     "@945": "@etb_800173B8",
     "@946": "@eti_80028DB4",
-    "@884": "jumptable_804E531C"
+    "@884": "jumptable_804E531C",
+    "__dt__10NamCamRootFv": "dtor_8007D0D4",
+    "__nwa__10NamCamTextFUl": "FUN_8003b120",
+    "__dla__10NamCamTextFPv": "MemoryManager_Free",
+    "__ct__10NamCamTextFv": "fn_80149214",
+    "__dt__10NamCamTextFv": "dtor_800869D0"
   },
   "src/game/MenuModeLane.cpp": {
     "__ct__12MenuModeBaseFv": "fn_801F5B54",

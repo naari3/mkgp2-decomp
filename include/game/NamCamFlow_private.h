@@ -120,11 +120,18 @@ struct NamCamBase : NamCamRoot {
     NamCamBase(int player);
     ~NamCamBase();
 };
+/* Text arrays use the UI allocator's untimed array cleanup. */
+struct NamCamText : TextManager {
+    static void *operator new[](unsigned long);
+    static void operator delete[](void *) throw();
+    NamCamText();
+    ~NamCamText();
+};
 struct NamCamScene : NamCamBase {
     virtual void _keyScene();
     int state;
     NamCamListHolder list;
-    TextManager *text;
+    NamCamText *text;
     NamCamScene(int player, int mode);
     ~NamCamScene();
 };

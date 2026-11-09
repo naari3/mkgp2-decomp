@@ -1,5 +1,6 @@
 /* Native reconstruction of the indivisible 801F2B70 EH group.
- * Several methods remain non-exact; keep NonMatching. */
+ * Several methods remain non-exact; keep NonMatching.
+ * The root cleanup uses dtor_8007D0D4 via the per-TU EH name bridge. */
 #include "game/NamCamFlow_private.h"
 #include "game/NamCamFlow_layout_private.h"
 
@@ -166,7 +167,8 @@ NamCamCaptureHolder::~NamCamCaptureHolder() throw() { delete p; }
 NamCamBase::~NamCamBase() {}
 NamCamScene::~NamCamScene() {
     fn_801F4D3C(list.p);
-    delete[] text;
+    /* Normal array destruction uses the global array-delete runtime. */
+    ::delete[] text;
     fn_80120A08(0x50B);
     fn_80120A08(0x50C);
     fn_80120A08(0x68C);
@@ -222,7 +224,7 @@ NamCamScene::NamCamScene(int whichPlayer, int mode) : NamCamBase(whichPlayer),
         PreloadResource(kNamCamModes[whichPlayer][1]);
         PreloadResource(kNamCamIcons[whichPlayer][1]);
     }
-    text = new TextManager[3];
+    text = new NamCamText[3];
     text->visible = 1;
     fn_801F93EC(text, lbl_806DA570[0], lbl_806DA570[1]);
     if (Sci2Card_GetByteFlag1224()) fn_801F9014(text, g_playerData);
