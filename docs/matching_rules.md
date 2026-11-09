@@ -27,6 +27,10 @@ below say the same thing.
 - 2026-11-09 22:55Z (n3 structure): TU merge, 4 -> 1: CoinChallengeRender /
   CoinChallengeUpdate / anon_80214B3C / CoinChallengeInit are now
   `game/CoinChallenge.cpp` (clCGameYI, GC/2.6 `-inline deferred -RTTI on -rostr`).
+- 2026-11-09 23:55Z (n3 regfix): `tools/regfix.py diag` prints, when a saved
+  register is off, the colouring sequence of all saved-register vregs and the
+  sequence the target implies (who opens r31, r30, ... first), plus a
+  declaration order for inline locals (regalloc_patterns §70)
 - 2026-11-09 23:40Z (n3 regfix): `tools/regfix.py diag` hint for
   regalloc_patterns §69: a run of 2-6 differing instructions that is a pure
   reordering (same registers) points at a block scheduled twice (dead

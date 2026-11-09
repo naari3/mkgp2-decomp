@@ -2212,6 +2212,47 @@ def reorder_hint(a, d):
     return out
 
 
+def saved_order_hint(rep):
+    """regalloc_patterns 70: the colouring sequence of the vregs that hold or
+    want a saved register, and the sequence the target implies (a saved
+    candidate takes the lowest free register already in use, else opens the
+    next one from r31/f31 down, so the FIRST vreg wanting each register must be
+    coloured in descending register order). -> [text lines]"""
+    out = []
+    for rc, c in rep.get("classes", {}).items():
+        g, w, bad = c.get("g"), c.get("w"), c.get("bad")
+        if not g or not bad:
+            continue
+        ph, order = g.colour()
+        issaved = lambda r: bool(r) and re.fullmatch(r"[rf]\d+", str(r)) and num(str(r)) >= 14
+        if not any(issaved(ph.get(v)) or issaved(w.get(v)) for v in bad):
+            continue
+        rows = [v for v in order if issaved(ph.get(v)) or issaved(w.get(v))]
+        if len(rows) < 2 or len(rows) > 40:
+            continue
+        nm = lambda v: g.names.get(v) or "temp"
+        out.append(f"  {rc.upper()} colouring sequence now (first coloured first): "
+                   + ", ".join(f"{v}({nm(v)}) {ph.get(v)}" + (f"->want {w[v]}" if v in w and w[v] != ph.get(v) else "")
+                               for v in rows))
+        first = {}
+        for v in rows:                      # keep ours as the tie-break inside one register
+            t = w.get(v, ph.get(v))
+            if issaved(t):
+                first.setdefault(t, []).append(v)
+        seq = [v for r in sorted(first, key=lambda r: -num(r)) for v in first[r][:1]]
+        rest = [v for v in rows if v not in seq]
+        out.append(f"  {rc.upper()} sequence the target implies for the register openers: "
+                   + ", ".join(f"{v}({nm(v)}) {w.get(v, ph.get(v))}" for v in seq)
+                   + (f"; reusers (must come after the opener of their register, while it is free): "
+                      + ", ".join(f"{v}({nm(v)}) {w.get(v, ph.get(v))}" for v in rest) if rest else ""))
+        named = [nm(v) for v in seq if nm(v) != "temp" and not nm(v).startswith("@")]
+        if len(named) >= 3:
+            out.append(f"  if these are locals of ONE inlined function (coloured from the last declared), declare them "
+                       f"in this order: {', '.join(reversed(named))}; for function-level locals check with the "
+                       f"declaration-order solver above.")
+    return out
+
+
 def shape_hints(a, rep, src_text):
     """Cheap source-shape hints for patterns landed 11-09 (regalloc_patterns 52-54,
     float literals). -> [text]"""
@@ -2344,6 +2385,18 @@ def print_levers(a, rep, src_text, d, ext):
               "`u8var = (int)x`, or a copy that coalesced) and write the source so it is never emitted "
               "(`u8var = x`). If the pre-RA schedule is already wrong, change the dependences instead "
               "(statement order, docs/mwcc_internals.md scheduler notes).")
+    try:
+        so = saved_order_hint(rep)
+    except Exception as e:  # noqa: BLE001 - advice only
+        so = []
+        print(f"[regfix] saved order hint: {e}")
+    if so:
+        print("\n== saved registers: colouring sequence vs the one the target implies (regalloc_patterns 70) ==")
+        print("\n".join(so))
+        print("  A saved candidate takes the lowest free saved register already in use, else opens the next one from "
+              "r31 down. Inline locals are numbered in reverse declaration order; block locals inside the inline come "
+              "before them; two inlines never interleave, so a vreg coloured BETWEEN locals of another inline means "
+              "both belong to one inline (merge the branches into one inline with if/else).")
     try:
         sh = shape_hints(a, rep, src_text)
     except Exception as e:  # noqa: BLE001 - advice only
