@@ -7,21 +7,15 @@ void fn_8023F1C8(void *); void fn_801FE390(); void fn_801FE348();
 void Sprite_AdvanceAnim(RefillSprite *, float); void SpriteHandle_RecomputeCull(int);
 }
 static inline void SetTextAlpha(ItemSelectPresentation *self, int alpha) {
-    unsigned int title = (unsigned char)alpha;
-    title |= 0xe0202000;
-    unsigned int color = __rlwimi(0xffffff00, alpha, 0, 24, 31);
-    *(unsigned int *)(self->texts[0][0]->data + 0x20) = title;
-    *(unsigned int *)(self->texts[0][1]->data + 0x20) = color;
-    *(unsigned int *)(self->texts[0][2]->data + 0x20) = color;
-    *(unsigned int *)(self->texts[0][3]->data + 0x20) = color;
-    *(unsigned int *)(self->texts[1][0]->data + 0x20) = title;
-    *(unsigned int *)(self->texts[1][1]->data + 0x20) = color;
-    *(unsigned int *)(self->texts[1][2]->data + 0x20) = color;
-    *(unsigned int *)(self->texts[1][3]->data + 0x20) = color;
-    *(unsigned int *)(self->texts[2][0]->data + 0x20) = title;
-    *(unsigned int *)(self->texts[2][1]->data + 0x20) = color;
-    *(unsigned int *)(self->texts[2][2]->data + 0x20) = color;
-    *(unsigned int *)(self->texts[2][3]->data + 0x20) = color;
+    unsigned char a = alpha;
+    unsigned int color = 0xffffff00 | a;
+    unsigned int title = 0xe0202000 | a;
+    for (int i = 0; i < 3; i++) {
+        *(unsigned int *)(self->texts[i][0]->data + 0x20) = title;
+        *(unsigned int *)(self->texts[i][1]->data + 0x20) = color;
+        *(unsigned int *)(self->texts[i][2]->data + 0x20) = color;
+        *(unsigned int *)(self->texts[i][3]->data + 0x20) = color;
+    }
 }
 extern "C" void fn_8023A148(ItemSelectPresentation *self) {
     PresentationInput *input = SINGLETON_INSTANCE(g_pInputState);
