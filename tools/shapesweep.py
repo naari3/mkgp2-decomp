@@ -49,7 +49,7 @@ from concurrent.futures import ThreadPoolExecutor
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import pragmasweep as ps  # noqa: E402
 
-TMP = '/tmp/shapesweep'
+TMP = os.path.join(__import__('tempfile').gettempdir(), 'shapesweep')
 
 # --------------------------------------------------------------------------
 # tokenizer / parser / printer for C expressions
@@ -1085,14 +1085,14 @@ def dbg_analyze(u, text, sym, fn, cc):
     try:
         o = os.path.join(out, 'ours')
         os.makedirs(o, exist_ok=True)
-        c = re.sub(r'GC/[^/]+/mwcceppc', f'GC/{cc}/mwcceppc', u.cmd)
-        c = re.sub(r'-c \S+ -o \S+', f'-c {sp} -o {o}', c)
+        c = ps.swap_cc(u.cmd, cc)
+        c = re.sub(r'-c \S+ -o \S+', lambda _: f'-c {sp} -o {o}', c)
         subprocess.run(c, shell=True, capture_output=True)
         objs = [os.path.join(o, x) for x in os.listdir(o) if x.endswith('.o')]
         if not objs:
             return (0, 999, None)
         ours = max(objs, key=os.path.getmtime)
-        toks = shlex.split(u.cmd)
+        toks = shlex.split(u.cmd.replace('\\', '/'))  # posix shlex eats Windows backslashes
         i = next(k for k, t in enumerate(toks) if t.endswith('mwcceppc.exe'))
         toks = toks[i:]
         m = re.search(r'GC/([^/]+)/mwcceppc\.exe', toks[0])

@@ -16,7 +16,7 @@ census rows carry a claim (see tools/regswap_classify.py --claims).
 """
 import argparse, json, re, subprocess, sys
 
-OBJDIFF = 'build/tools/objdiff-cli'
+OBJDIFF = os.path.normpath('build/tools/objdiff-cli' + ('.exe' if os.name == 'nt' else ''))
 
 
 def tu_scores(unit, obj_rel):

@@ -853,7 +853,7 @@ class Evaluator:
         open(sp, "w").write(text)
         try:
             # our object with the production compiler
-            c = re.sub(r"GC/[^/]+/mwcceppc", f"GC/{self.sw.cc}/mwcceppc", self.u.cmd)
+            c = self.ps.swap_cc(self.u.cmd, self.sw.cc)
             ours = (d / "ours.o").as_posix()
             c = re.sub(r"-c \S+ -o \S+", lambda m: f"-c {sp} -o {ours}", c)
             subprocess.run(c, shell=True, cwd=ROOT, capture_output=True)

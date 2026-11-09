@@ -59,9 +59,7 @@ def main():
         sys.exit(f"gdb not found ({gdb}); install it or set MWCCDBG_GDB")
     if "PY_OK" not in r.stdout:
         sys.exit(f"{gdb} has no Python support")
-    if native and "i686" not in r.stdout and "i386" not in r.stdout:
-        print(f"WARNING: {gdb} does not look like a 32-bit x86 build; mwcceppc.exe is 32-bit "
-              "(MSYS2: mingw-w64-i686-gdb)")
+    # MSYS2's mingw64 gdb (x86_64) also works: it debugs the 32-bit mwcceppc.exe through WOW64
     print(f"ok ({'native gdb' if native else 'retrowin32'}): python3 tools/mwccdbg.py <unit> <fn>")
 
 

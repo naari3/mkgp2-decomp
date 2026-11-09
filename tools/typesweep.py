@@ -17,7 +17,7 @@ match rises and no function drops. Run from the repo root after a build.
 """
 import argparse, json, re, subprocess
 
-OBJDIFF = 'build/tools/objdiff-cli'
+OBJDIFF = os.path.normpath('build/tools/objdiff-cli' + ('.exe' if os.name == 'nt' else ''))
 W32 = ['int', 'long', 'unsigned int', 'unsigned long']
 W16 = ['short', 'unsigned short', 'int']
 W8 = ['unsigned char', 'signed char', 'int', 'unsigned int']
