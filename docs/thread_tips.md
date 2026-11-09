@@ -634,3 +634,9 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
 - leversweep `--pairs 3` over the 99.x set + gave_up rows (11-10): 134 functions, 514 pair variants, 0 matches; 4
   functions had a pair as their best asm-line score, none of them a better objdiff percentage. Table:
   docs/sweeps/leversweep_pairs/summary.md.
+
+- ExplosionTumble_Init 94.86 -> 97.91 (11-10): the fn_8019A9BC recipe transfers to other kart-movement
+  TUs (cos in the caller as a named local, classic product order, NormalizeCopy reading y and x before
+  the struct copy). Naming the quaternion components as locals `x, z, y, w` in the matrix inline gave
+  the last few points; the tail's saved FPR order (w=f29 in the target) did not move with any
+  declaration order.
