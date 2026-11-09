@@ -601,6 +601,7 @@
     "__dt__15TDrawEntryOwnerFv": "TransparentDraw_DestroyEntry"
   },
   "src/game/clMiyoshiCardCreate.c": {
+    "__ct__14MiyoshiDisplayFv": "DisplayContext_Init",
     "__ct__11MiyoshiBaseFv": "GameMode_BaseInit",
     "__dt__11MiyoshiBaseFv": "dtor_8002CDF4",
     "__dt__11MiyoshiModeFv": "clMiyoshiCardCreate_Dtor",
