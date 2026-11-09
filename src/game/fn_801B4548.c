@@ -2,6 +2,25 @@
 
 extern const float lbl_806D9838;
 
+static inline void AdvanceItemVoiceMap801B(VoiceItemMap **map, int index) {
+    *map += index;
+}
+
+static inline short ItemVoiceAttack801B(VoiceItemMap *maps, int item) {
+    VoiceItemMap *map = maps;
+    int i = 0;
+    while (map->item != -1) {
+        if (item == map->item) {
+            VoiceItemMap *match = maps;
+            AdvanceItemVoiceMap801B(&match, i);
+            return match->attack;
+        }
+        map++;
+        i++;
+    }
+    return -1;
+}
+
 static inline float ItemVoiceLength801B(VoiceItemData *data, short voice) {
     return lbl_806D9838 + (data->clips[0x1C5].length + data->clips[voice].length);
 }
@@ -72,9 +91,9 @@ int fn_801B4548(int kart, int item) {
 
     if (kart == g_taMinLapPlayerIndex && (signed char)ItemClass_GetFlagByte1(item) == 7) {
         nearest = FindNearestVoiceKart801B();
-        if (nearest != -1 && ItemVoice(data, item, 0) != -1) {
+        if (nearest != -1 && ItemVoiceAttack801B(data->maps, item) != -1) {
             if (VoiceQueue_Push(ITEM_ENTRY_VOICE801B(&g_raceEntryArray[g_taMinLapPlayerIndex]), 7, 1, 1)) {
-                VoiceQueue_Push(ItemVoice(data, item, 0), 7, 1, 1);
+                VoiceQueue_Push(ItemVoiceAttack801B(data->maps, item), 7, 1, 1);
                 VoiceQueue_Push(0x1D6, 7, 1, 1);
                 g_bgmStateId = 7;
                 now = OSGetTime();
@@ -98,7 +117,7 @@ int fn_801B4548(int kart, int item) {
                 if (VoiceQueue_Push(voice, 11, 1, 1)) {
                     variant = g_voiceTickCounter % 3;
                     if (variant == 0) {
-                        VoiceQueue_Push(ItemVoice(data, item, 0), 11, 1, 1);
+                        VoiceQueue_Push(ItemVoiceAttack801B(data->maps, item), 11, 1, 1);
                         VoiceQueue_Push(0x1C5, 11, 1, 1);
                     } else if (variant == 1) VoiceQueue_Push(0x17B, 11, 1, 1);
                     else VoiceQueue_Push(0x17C, 11, 1, 1);
@@ -133,7 +152,7 @@ int fn_801B4548(int kart, int item) {
             if (VoiceQueue_Push(ITEM_ENTRY_VOICE801B(&g_raceEntryArray[kart]), 11, 1, 1)) {
                 variant = g_voiceTickCounter % 3;
                 if (variant == 0) {
-                    VoiceQueue_Push(ItemVoice(data, item, 0), 11, 1, 1);
+                    VoiceQueue_Push(ItemVoiceAttack801B(data->maps, item), 11, 1, 1);
                     VoiceQueue_Push(0x204, 11, 1, 1);
                 } else if (variant == 1) VoiceQueue_Push(0x205, 11, 1, 1);
                 else VoiceQueue_Push(0x206, 11, 1, 1);
@@ -182,7 +201,7 @@ int fn_801B4548(int kart, int item) {
         VoiceQueue_Push(ITEM_ENTRY_VOICE801B(&g_raceEntryArray[kart]), 22, 0, 1);
         variant = g_voiceTickCounter % 3;
         if (variant == 0) {
-            VoiceQueue_Push(ItemVoice(data, item, 0), 22, 0, 0);
+            VoiceQueue_Push(ItemVoiceAttack801B(data->maps, item), 22, 0, 0);
             VoiceQueue_Push(0x204, 22, 0, 0);
         } else if (variant == 1) VoiceQueue_Push(0x205, 22, 0, 0);
         else VoiceQueue_Push(0x206, 22, 0, 0);
