@@ -1,13 +1,10 @@
 #include "game/objview/emitter_private.h"
-#pragma push
-#pragma opt_dead_assignments off
 extern "C" void fn_8018E538(ViewEmitter *o) {
     ViewMatrixParticle *p;
     ViewBillboardParticle *q;
     int i;
     Mtx *view;
     Vec3f pos;
-    q = 0;
     if (o->count == 0) return;
     view = CObj_GetProjMatrix_Cached(GetCourseScene3D());
     for (i = 0; i < o->count; i++) {
@@ -27,7 +24,7 @@ extern "C" void fn_8018E538(ViewEmitter *o) {
     }
     GXChannel ch(Archive_GetRootJObj(o->billboard), HSD_JObjGetDObj(Archive_GetRootJObj(o->billboard)), 0x40000000, 1);
     Mtx m;
-    for (i = 0; i < 60; i++) {
+    { int i; for (i = 0; i < 60; i++) {
         q = &o->particles[i];
         if (!(q->age < lbl_806D9440) && fn_801379F0(&q->pos, lbl_806D9448)) {
             PSMTXScale(m, q->scale, q->scale, q->scale);
@@ -38,8 +35,7 @@ extern "C" void fn_8018E538(ViewEmitter *o) {
             Object_SetColorAlphaOnly(o->billboard, 0, q->alpha);
             GXChannel_PushTransform(&ch, m);
         }
-    }
+    } }
 }
-#pragma pop
 
 

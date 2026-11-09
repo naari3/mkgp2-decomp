@@ -24,6 +24,14 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-09 22:00Z (n3 regfix): `regfix.py diag` now (1) prints a section "loop counters shared by
+  several loops" when a saved GPR is off and a function-level counter drives >= 2 `for` loops: try
+  regalloc_patterns §46 (block-local counter per later loop) first; (2) resolves the §40 anchor
+  hint from symbols.txt. Hints printed before 6759bb0 could name the wrong base symbol, so
+  re-run diag before splitting a symbol on an old hint.
+- 2026-11-09 21:15Z: test-menu pages UI_PageDispatcher..CardCreate_Page (13 units) are one TU,
+  `game/CardCreate_Page.cpp`; the 23 pages after it belong to the same TU and are not merged yet
+  (`docs/gave_up.md`, board n3-20261109-2053).
 - 2026-11-09 21:10Z (n3 regfix): two things for `regfix.py diag` users. (1) The
   allocator model changed (r31 frame pointer, spilling functions, inline asm):
   old dumps are stale, rerun diag before trusting an earlier diagnosis; on

@@ -3169,5 +3169,20 @@
     "Sci2Card_BuildItemGetReceiptLine",
     "Sci2Card_PopulateRankRowByMode",
     "Sci2Card_RegisterReceiptBuffersCleanup"
+  ],
+  "src/game/CardCreate_Page.cpp": [
+    "UI_PageDispatcher",
+    "SystemInfo_UI",
+    "BackupMemoryInitialize_Page",
+    "NetDiag_QualityPage",
+    "NetDiag_CounterPage",
+    "Stats_PacketStats_UI",
+    "NetDiag_PacketPage",
+    "Stats_Display_UI",
+    "NetDiag_PacketRatioPage",
+    "OperationTime_Page",
+    "ClockSetting_Page",
+    "CabinetSetting_Page",
+    "CardCreate_Page"
   ]
 }

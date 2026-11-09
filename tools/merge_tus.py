@@ -104,6 +104,9 @@ def plan(a):
 C_KEYWORDS = set('''auto break case char const continue default do double else enum extern float for goto if
 inline int long register restrict return short signed sizeof static struct switch typedef union unsigned void
 volatile while asm _Bool defined section nofralloc'''.split())
+CPP_KEYWORDS = set('''bool catch class const_cast delete dynamic_cast explicit false friend mutable namespace new
+operator private protected public reinterpret_cast static_cast template this throw true try typeid typename
+using virtual wchar_t'''.split())
 
 TOKEN = re.compile(r'''
     (?P<str>"(?:\\.|[^"\\\n])*") |
@@ -141,7 +144,7 @@ def preprocess(name):
 def top_level(toks):
     """Yield (start, end, kind) token ranges of top-level declarations:
     'fn' for a function definition (ends at its '}'), 'decl' otherwise."""
-    depth = paren = 0
+    depth = paren = linkage = 0
     start = 0
     is_fn = False
     for i, (k, t) in enumerate(toks):
@@ -154,9 +157,18 @@ def top_level(toks):
         elif t == '{':
             if depth == 0 and paren == 0:
                 sig = [x[1] for x in toks[start:i] if x[0] != 'ws']
+                if sig == ['extern', '"C"']:
+                    # linkage block: its declarations are top-level ones
+                    linkage += 1
+                    start = i + 1
+                    continue
                 is_fn = bool(sig) and sig[-1] == ')' and '=' not in sig
             depth += 1
         elif t == '}':
+            if depth == 0 and linkage:
+                linkage -= 1
+                start = i + 1
+                continue
             depth -= 1
             if depth == 0 and is_fn:
                 yield start, i + 1, 'fn'
@@ -167,7 +179,8 @@ def top_level(toks):
             start = i + 1
 
 
-def rename_section(text, suffix, pool_names, renames):
+def rename_section(text, suffix, pool_names, renames, cpp=False):
+    kw = C_KEYWORDS | CPP_KEYWORDS  # also for .c: some switch with #pragma cplusplus on
     toks = [(m.lastgroup, m.group()) for m in TOKEN.finditer(text)]
     keep, decls, drop, insert = set(), {}, set(), {}
     asm_body, declared = set(), set()
@@ -221,7 +234,7 @@ def rename_section(text, suffix, pool_names, renames):
     for idx, (k, t) in enumerate(toks):
         if idx in insert:
             sub = {}
-            out.append(rename_section(' '.join(insert[idx]), suffix, set(), sub))
+            out.append(rename_section(' '.join(insert[idx]), suffix, set(), sub, cpp))
             renames.update(sub)
         if idx in drop:
             if k == 'ws' and '\n' in t:
@@ -235,7 +248,7 @@ def rename_section(text, suffix, pool_names, renames):
         if line_start and t == '#':
             directive = True
         line_start = False
-        if directive or k != 'id' or t in C_KEYWORDS or t.startswith('__') or t in keep \
+        if directive or k != 'id' or t in kw or t.startswith('__') or t in keep \
                 or (idx in asm_body and t not in declared):
             out.append(t)
         elif t in pool_names:
@@ -275,20 +288,23 @@ def apply(a):
         sys.exit('--into must be one of the merged TUs')
     base_flags, info = None, []
     for b in tus:
-        if not b['name'].endswith('.c'):
-            sys.exit(f"{b['name']}: only C TUs are handled")
         _, flags = object_line(cfg, b['name'])
-        rest = sorted(f for f in flags if f not in ('-Cpp_exceptions on', '-Cpp_exceptions off',
-                                                       '-use_lmw_stmw on', '-use_lmw_stmw off'))
+        cpp = b['name'].endswith('.cpp') or '-lang=c++' in flags
+        # -i only matters for preprocessing, which runs with each TU's own command
+        rest = sorted(f for f in flags if f not in ('-Cpp_exceptions on', '-Cpp_exceptions off', '-lang=c++',
+                                                       '-use_lmw_stmw on', '-use_lmw_stmw off')
+                      and not f.startswith('-i '))
         if base_flags is None:
             base_flags = rest
         elif rest != base_flags:
             sys.exit(f"{b['name']}: flags {rest} differ from {base_flags}; not handled")
-        info.append((b, '-Cpp_exceptions on' in flags, '-use_lmw_stmw on' in flags))
+        info.append((b, '-Cpp_exceptions on' in flags, '-use_lmw_stmw on' in flags, cpp))
 
     pool_src = Path(a.pool).read_text() if a.pool else ''
     pool_names = set(re.findall(r'^(?:static\s+)?(?:const\s+)?[\w\s\*]+?\b(\w+)\s*(?:\[[^\]]*\])*\s*=', pool_src, re.M))
-    pool_src = re.sub(r'^(?!static|extern|#|\s|\}|$)', 'static ', pool_src, flags=re.M)
+    if not a.pool_global:
+        pool_src = re.sub(r'^(?!static|extern|#|\s|\}|$)', 'static ', pool_src, flags=re.M)
+    mixed = len({i[3] for i in info}) > 1 or into.endswith('.cpp') != info[0][3]
 
     renames = {}
     end = max(s[2] for s in tus[-1]['secs'] if s[0] == '.text')
@@ -296,13 +312,16 @@ def apply(a):
            ' * Each section is the preprocessed original TU with its names suffixed _pN',
            ' * (tools/extab_user_renames.json maps the symbols back). */']
     if pool_src:
-        out += ['/* ==== pool (tools/data2c.py) ==== */', pool_src.rstrip(), '']
-    for n, (b, exc, lmw) in enumerate(info):
-        sec = rename_section(preprocess(b['name']), f'_p{n}', pool_names, renames)
+        out += ['/* ==== pool (tools/data2c.py) ==== */'] + (['#pragma cplusplus off'] if mixed else []) \
+            + [pool_src.rstrip()] + (['#pragma cplusplus reset'] if mixed else []) + ['']
+    for n, (b, exc, lmw, cpp) in enumerate(info):
+        sec = rename_section(preprocess(b['name']), f'_p{n}', pool_names, renames, cpp)
         out += [f"/* ==== {b['name']} ({text_start(b):#x}) ==== */",
                 f'#pragma exceptions {"on" if exc else "off"}',
-                f'#pragma use_lmw_stmw {"on" if lmw else "off"}',
-                sec.strip(), '#pragma use_lmw_stmw reset', '#pragma exceptions reset', '']
+                f'#pragma use_lmw_stmw {"on" if lmw else "off"}'] \
+            + ([f'#pragma cplusplus {"on" if cpp else "off"}'] if mixed else []) \
+            + [sec.strip()] + (['#pragma cplusplus reset'] if mixed else []) \
+            + ['#pragma use_lmw_stmw reset', '#pragma exceptions reset', '']
     (ROOT / 'src' / into).write_text('\n'.join(out) + '\n', encoding='latin-1')
 
     merged = {}
@@ -382,6 +401,8 @@ def main():
             p.add_argument('--into')
             p.add_argument('--pool')
             p.add_argument('--pool-sec', action='append')
+            p.add_argument('--pool-global', action='store_true',
+                           help='keep the scope data2c gave the pool objects (default: all static)')
     p = sp.add_parser('prune-renames')
     p.add_argument('--tu', required=True)
     a = ap.parse_args()

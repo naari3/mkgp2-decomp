@@ -4,10 +4,7 @@ Near misses where the target forms `addi rX, <anchor>, N` for an N that our buil
 
 | fn | TU | % | anchor reg | target-only offsets | ours-only offsets |
 | --- | --- | --- | --- | --- | --- |
-| `fn_801BDB60` | game/fn_801BAA88 | 99.41 | r3 | 0x28 |  |
-| `Race_PerFrameTickAndAudio` | game/sprite/fn_801A1798 | 96.41 | r30 | 0x180 | 0x1d4 |
 | `ranking_display` | game/ranking_display | 96.10 | r30 | 0x34 |  |
 | `fn_801E32C8` | game/fn_801DEF94 | 92.67 | r31 | 0x24 | 0x34, 0x6c |
 | `fn_801B7EF8` | game/fn_801B7EF8 | 91.87 | r31 | 0xc, 0x1c |  |
 | `fn_8022BFA8` | game/EnemyFaceDraw | 88.04 | r31 | 0x444 |  |
-| `Sci2Card_BuildRetryReceiptLine` | game/Sci2Card_BuildRetryReceiptLine | 87.84 | r30 | 0x468 |  |
