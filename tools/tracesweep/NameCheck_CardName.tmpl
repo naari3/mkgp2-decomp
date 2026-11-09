@@ -1,0 +1,75 @@
+// unit: game/NameCheck_CardName
+// fn: NameCheck_CardName
+// want: T.vmatch(r'^LHZX r\d+!,r(\d+),') is not None and T.vmatch(r'^LHZX r\d+!,r(\d+),') > T.vmatch(r'^LHZ r(\d+)!,r\d+,0$', 0)
+// note: want = the conversion-table pointer is numbered after the in-loop lhz of cursor[i] (target colours it first).
+// note: 11-09: 9.2k variants, want only with opt_strength_reduction off (177+ lines). No extern-based shape works:
+// note: a mock TU that owns the tables as static rodata (addressed through the section anchor) gives the target
+// note: registers exactly, so the fix is rodata pool ownership (0x80318270.., NameCheck_* + RaceData_8009BEF4 TUs).
+#define NC_TBL(off) ((const unsigned short *)(base + (off)))
+static inline const unsigned short *NC_Tbl2(const char *b, int off) { const unsigned short *t = (const unsigned short *)(b + off); return t; }
+static inline int NC_Eq(unsigned short a, unsigned short b) { return a == b; }
+static inline int NC_EqI(int a, int b) { return a == b; }
+static inline unsigned short NC_Id(unsigned short a) { return a; }
+static inline unsigned short NC_Ld(const unsigned short *p) { return *p; }
+static inline unsigned short NC_Get(const unsigned short *t, int j) { return t[j]; }
+{{prag: | #pragma push
+#pragma opt_loop_invariants off | #pragma push
+#pragma opt_strength_reduction off | #pragma push
+#pragma opt_common_subs off | #pragma push
+#pragma opt_propagation off | #pragma push
+#pragma opt_lifetimes off | #pragma push
+#pragma opt_loop_invariants off
+#pragma opt_strength_reduction off}}
+unsigned char NameCheck_CardName(const unsigned short *name)
+{
+    const char *base = lbl_80318270 + 0x10000;
+    unsigned short buf[6];
+    const unsigned short *converted;
+    unsigned short *cursor;
+    int leading;
+    int i;
+    int j;
+    {{cdecl: unsigned short c; | int c; | unsigned int c;}}
+    if (wcslen(name) > 5) {
+        DebugPrintf(base - 0x79a8, wcslen(name));
+        return 0;
+    }
+    wcscpy(buf, name);
+    buf[5] = 0;
+    cursor = buf;
+    for (leading = 0; leading < 5; leading++) {
+        if (buf[leading] != 0x8140) break;
+    }
+    if (leading > 0) {
+        for (i = leading; i < 6; i++) buf[i - leading] = buf[i];
+    }
+    for (i = 4; i >= 0; i--) {
+        if (buf[i] != 0x8140 && buf[i] != 0) break;
+        buf[i] = 0;
+    }
+    if (NameCheck_ScanBannedWords(buf) == 1) return 1;
+    {{set: converted = NameCheck_ConversionTable(base, -0x7b48); | | converted = NC_TBL(-0x7b48); | converted = NC_Tbl2(base, -0x7b48); | }}
+    for (i = 0; i < 5; i++) {
+        {{inner: | converted = NameCheck_ConversionTable(base, -0x7b48); | | | converted = NameCheck_ConversionTable(base, -0x7b48);}}
+        {{loop: for (j = 0; j < 81; j++) { | j = 0; do { | for (j = 0; j < 81; ++j) { }}
+            {{cv: if ({{cmp: cursor[i] == ((const unsigned short *)(base - 0x7bec))[j] | NC_Eq(cursor[i], ((const unsigned short *)(base - 0x7bec))[j]) | NC_EqI(cursor[i], ((const unsigned short *)(base - 0x7bec))[j]) | NC_Id(cursor[i]) == ((const unsigned short *)(base - 0x7bec))[j] | NC_Ld(&cursor[i]) == ((const unsigned short *)(base - 0x7bec))[j] | ((const unsigned short *)(base - 0x7bec))[j] == cursor[i] }}) { | if ((c = cursor[i]) == ((const unsigned short *)(base - 0x7bec))[j]) { | c = cursor[i]; if (c == ((const unsigned short *)(base - 0x7bec))[j]) { }}
+                cursor[i] = {{tbl: converted[j] | NameCheck_ConversionTable(base, -0x7b48)[j] | NC_TBL(-0x7b48)[j] | *(converted + j) | NC_Get(NameCheck_ConversionTable(base, -0x7b48), j) | NC_Get(converted, j) }};
+                break;
+            }
+        {{loop: } | } while (++j < 81); | } }}
+    }
+    if (NameCheck_ScanBannedWords(buf) == 1) return 1;
+    {{set: converted = NameCheck_ConversionTable(base, -0x7c20); | | converted = NC_TBL(-0x7c20); | converted = NC_Tbl2(base, -0x7c20); | }}
+    for (i = 0; i < 5; i++) {
+        {{inner: | converted = NameCheck_ConversionTable(base, -0x7c20); | | | converted = NameCheck_ConversionTable(base, -0x7c20);}}
+        {{loop: for (j = 0; j < 26; j++) { | j = 0; do { | for (j = 0; j < 26; ++j) { }}
+            {{cv: if ({{cmp: *cursor == ((const unsigned short *)(base - 0x7c54))[j] | NC_Eq(*cursor, ((const unsigned short *)(base - 0x7c54))[j]) | NC_EqI(*cursor, ((const unsigned short *)(base - 0x7c54))[j]) | NC_Id(*cursor) == ((const unsigned short *)(base - 0x7c54))[j] | NC_Ld(&*cursor) == ((const unsigned short *)(base - 0x7c54))[j] | ((const unsigned short *)(base - 0x7c54))[j] == *cursor }}) { | if ((c = *cursor) == ((const unsigned short *)(base - 0x7c54))[j]) { | c = *cursor; if (c == ((const unsigned short *)(base - 0x7c54))[j]) { }}
+                *cursor = {{tbl: converted[j] | NameCheck_ConversionTable(base, -0x7c20)[j] | NC_TBL(-0x7c20)[j] | *(converted + j) | NC_Get(NameCheck_ConversionTable(base, -0x7c20), j) | NC_Get(converted, j) }};
+                break;
+            }
+        {{loop: } | } while (++j < 26); | } }}
+        cursor++;
+    }
+    return NameCheck_ScanBannedWords(buf) == 1;
+}
+{{prag: | #pragma pop | #pragma pop | #pragma pop | #pragma pop | #pragma pop | #pragma pop}}

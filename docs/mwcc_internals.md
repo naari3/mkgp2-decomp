@@ -133,15 +133,35 @@ copy propagation and dead-store removal (TitleCheck_NewClearedRecord_Race; a
 code). Only DLOCALs not live across a call, not volatile and not address-taken
 are split (`usedAtCall`, `noregister`).
 
-Open cases with the same root cause, no source shape found yet (11-09):
+A def range does not need a use: `IRO_SplitLifetimes` collects ranges from the
+def list, so a DEAD store still forms a range if it is still there. Dead stores
+are removed by `IRO_UseDef(copts.deadstore, ...)` in the loop just before the
+split, so under `#pragma opt_dead_assignments off` a dead `int mode = 0;` keeps
+an earliest range and loop 1 becomes a `SplitOffRange` temp
+(TitleCheck_NewClearedRecord_Race: 28 -> 6 lines, tools/tracesweep/).
+
+Open cases with the same root cause, no source shape found yet (11-09;
+templates and results for each in tools/tracesweep/*.tmpl):
 
 - clFlowCourse_Dtor: `extra` (named, or IRO CSE `@110`) must be numbered after
   the backend temps of `selected % 2`. A `?:` would give a codegen result
   register, but `gen_COND` turns `c ? 4 : 0` with a comparison condition into
   a branchless select (`TOC_use_isel`, InstrSelection.c `gen_COND`), +1 insn.
-- EffectVfx10_KartTrail_Tick: `item` (named local, r33) must be numbered
-  after the pool anchor, which is a toc object (class 5). Only a backend temp
-  can be, and `item` lives across calls and joins.
+  `gen_COND`'s one-branch path (`COND_has_const` 1 or 2: exactly one arm is a
+  non-zero `EINTCONST`) allocates the result register first and emits
+  `li 4; cmp; bne; li 0` as in the target. With `reverse ? 4 : zero`, `zero`
+  a local = 0, the whole block matches, but only under `opt_propagation off`
+  (otherwise `zero` folds to 0 = case 6, `andc` select), and that pragma
+  breaks both delete loops (IV pointer init not folded). Needs a zero arm that
+  is not a constant after IRO.
+- EffectVfx10_KartTrail_Tick: correction 11-09 (tracesweep): the anchor is
+  the backend temp r44 (`addi r44, r43, ...rodata.0`), and COLOR shows r44,
+  `item` (r33) and `self` (r32) coloured before every other vreg. They are
+  pushed in a later simplify pass because their degree is >= K, so their order
+  is decided by the remaining degree in that pass (ascending number among the
+  ones that drop below K together), not by numbering alone. The target pushes
+  self, anchor, then item: `item` must still have degree >= K when the pass
+  visits it.
 - NameCheck_CardName: the table pointers are `LinearizeExpr1` temps (`@60`,
   `@61`) and must be numbered after the `lhz` of `cursor[i]`; written directly
   in the loop, the pointer folds into the load (`add` + `lhz -31560(r3)`).
@@ -151,6 +171,12 @@ Open cases with the same root cause, no source shape found yet (11-09):
   for a hoisted invariant (it keeps its codegen number). So `converted` can
   be "late" only as a codegen temp computed in the loop after the `lhz` that
   does not fold into the load's displacement; no such shape found yet.
+  Solved in principle 11-09: with the tables declared as `static const` rodata
+  objects of the TU (addressed through the section anchor), a mock TU gives
+  `subi r4, r31, 0x7b48` / `lhz r5` exactly: the anchor-relative address is
+  generated at its use in the loop (after the lhz) and hoisted by the backend.
+  The real fix is rodata ownership: the pool at 0x80318270 (anchor + 0x10000)
+  spans NameCheck_CardName, NameCheck_ScanBanned and RaceData_8009BEF4.
 
 ## Coalescing (`coalescenodes`)
 
@@ -286,6 +312,16 @@ chain; `const Matrix44 *__restrict a` removes those edges.
   2437 of our 2470 GC/1.3.2 units; float-heavy math units differ). The patch
   only writes the trace file; the patched compilers still give identical code
   on all our GC/2.x units.
+
+- `python3 tools/tracesweep.py run UNIT FN TEMPLATE [--want EXPR] [--probe EXPR]`:
+  a permuter over a hand-written template (choice points `{{a | b}}`, linked
+  `{{name: ...}}`, decl-order permutations `{{%name: a | b | c}}`), compiled with
+  the native traced compiler and ranked first by a predicate over this trace
+  (`T.vreg/kind/reg/creator`, `T.vmatch(regex, post=True)` on PCode), then by
+  diff lines; the top ones are re-scored with the real compiler and objdiff.
+  ~0.02-0.1 s a variant on 4 cores (9k NameCheck variants in 50 s). Write the
+  mechanism as `--want`, then put the idioms you suspect in the template.
+  `selftest` replays landed fixes (fn_801EE36C, fn_8019EB9C).
 
 - `python3 tools/mwccdbg.py UNIT FN [--trace]` dumps the PCode after each
   pass and the colouring; `--trace` (GC/2.6 stand-in) also records, inside the

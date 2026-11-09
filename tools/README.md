@@ -34,6 +34,7 @@ Rough order to try; each one writes nothing to the repo unless `--apply`.
 | `mwsched.py` | nothing; says why the scheduler kept an instruction pair in our order (dependence chain or pick key), logs every pick and every coalescer move | `explain|log|coalesce UNIT FN [--run]`; needs `mwccdbg.py --trace` (tools/mwccdbg_trace.py, GC/2.6 breakpoints); docs/mwcc_internals.md |
 | `install_mweppc.sh` | `build/mweppc`: CC0 C source of mwcceppc GC/2.0-2.7 at a pinned commit (`--build` needs archive.org) | run by cloud_setup.sh; index in docs/mwcc_internals.md |
 | `mwtrace.py` | nothing; prints the native trace-patched compiler's decisions for one function (vreg numbering, coalescing, colouring order, scheduler DAG and picks) in ~0.1 s | `UNIT FN [--only VREG,COALESCE,COLOR,SNODE,SPICK]`; needs `install_mweppc.sh --build` |
+| `tracesweep.py` | source shapes from a template with choice points (`{{a \| b}}`, linked `{{name: ..}}`, permutations `{{%name: ..}}`), compiled with the native traced mweppc (~0.02-0.1 s each, parallel) | ranks by a `--want` predicate over the trace (the known mechanism, e.g. "loop 1's `mode` is a temp") before diff lines, `--probe` logs a value per variant, top `--confirm` re-scored with the real compiler + objdiff; `selftest` replays landed fixes; templates in `tracesweep/` |
 
 ## Data / TU boundaries
 

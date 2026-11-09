@@ -1,0 +1,52 @@
+// unit: game/clFlowCourse
+// fn: clFlowCourse_Dtor
+// want: re.search(r'ADD r\d+!,r\d+,r3\nSTW r\d+,r0,0\(g_roundIndex', T.post_text) is not None
+// note: want = `extra` (value 4/0) in r3: a backend register allocated by gen_COND after the `% 2` expansion.
+// note: 11-09: `selected % 2 + (reverse ? 4 : zero)` with a non-constant zero takes gen_COND's one-branch path
+// note: (COND_has_const 1/2: li 4; cmp; bne; li 0) and the whole block matches, but `zero` only stays
+// note: non-constant under opt_propagation off, which breaks both delete loops (98.14%). Need a zero that IRO
+// note: does not fold and that is not IS_INT_CONST at codegen.
+static inline int CF_Extra(int r) { return r ? 4 : 0; }
+static inline int CF_Extra2(int r) { if (r) return 4; return 0; }
+static inline int CF_Extra3(int r) { int e = 4; if (r == 0) e = 0; return e; }
+{{prag: | #pragma push
+#pragma opt_propagation off | #pragma push
+#pragma opt_common_subs off | #pragma push
+#pragma opt_lifetimes off }}
+CourseFlow::~CourseFlow() {
+    fn_80169C44();
+    if (SINGLETON_INSTANCE(g_pInputState)) {
+        InputState *input = SINGLETON_INSTANCE(g_pInputState);
+        input->enabled = 0;
+        input->held = 0;
+        input->edge = 0;
+    }
+    SetScreenBrightness(lbl_806D9EF8);
+    if (g_gameMode == 2) {
+        lbl_806CF12C = selected;
+        g_cupId = CourseCup(selected / 2);
+        SetReverseRoundFlag(reverse);
+        int zero = 0;
+        {{form: g_roundIndex = selected % 2 + ({{cond: reverse | reverse != 0 | reverse == 0 | !reverse | 0 != reverse | reverse > 0 | (bool)reverse}} ? {{e1: 4 | 0}} : {{e2: 0 | zero |  (short)0 | (char)0 | reverse - reverse | reverse & 0 | 0 * reverse | (int)0.0f | (int)false | !1 | (reverse ^ reverse) | (int)(void *)0 | 4 - 4 | reverse * 0}}); | int round = selected % 2;
+        g_roundIndex = round + ({{cond}} ? {{e1}} : {{e2}}); | int extra = ({{cond}} ? {{e1}} : {{e2}});
+        g_roundIndex = selected % 2 + extra; }}
+        g_longRoundFlag = selected % 2;
+    }
+    for (int i = 0; i < 4; i++) delete icons[i];
+    delete banner;
+    delete field138;
+    delete field13C;
+    delete pulse;
+    delete map;
+    delete field12C;
+    delete field130;
+    delete left;
+    delete right;
+    delete fieldC4;
+    delete fieldBC;
+    delete fieldC0;
+    for (int i = 0; i < 18; i++) delete slots[i].sprite;
+    fn_801B87D8();
+    fn_801A1678();
+}
+{{prag: | #pragma pop | #pragma pop | #pragma pop }}
