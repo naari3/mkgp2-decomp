@@ -2408,7 +2408,7 @@ config.libs = [
             Object(Matching, "game/fn_801E9594.cpp"),
             Object(Matching, "game/fn_801E81D8.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/AI_DecideAndUseItem_PairTracking.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-proc 750"]),
-            Object(NonMatching, "game/fn_801E9E74.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/fn_801E9E74.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/AI_CalcGPTargetSpeed.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/AI_PerKartUpdate.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801E96BC.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),

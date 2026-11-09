@@ -1611,3 +1611,26 @@ height = FlameCurve_Evaluate(lbl_8041A224 + idx, F(0x150));
 
 Lesson: when a row in gave_up lists "loop tried" and "expression tried"
 separately, try the combination before giving up.
+
+## 63. Two loop-long FPRs swapped (hoisted stack float vs hoisted constant), then volatile pairs in an unrolled classify loop (fn_801E9E74, 11-09)
+
+Three separate swaps, each with its own cause in the trace:
+
+1. `lfs f30,0x28(r1); lfs f31,zero` vs ours f31/f30. Both values live across
+   the whole loop with degree >= K. `position.z` was an IRO hoist temp
+   (`@121`, low vreg); the zero was hoisted by the BACKEND (highest vreg). In
+   the first simplify sweep the low temp is skipped and the backend temp is
+   pushed (its neighbours in between are already gone), so the low temp is
+   pushed last and coloured first. Fix: both as named locals, the one that
+   needs the higher register declared FIRST, and passed into the inline:
+   `float zero; float pz; ... pz = position.z; zero = lbl_806DA3F4;`
+   (a named zero alone flips the load order instead).
+2. `range` (named, coloured after the inline's `previous`) f2 vs f1: compute
+   it in a small inline so it becomes a frontend inline temp:
+   `static inline float GetRangeSq(void) { float range = fn(); range *= range; return range; }`.
+   A `Square(float v) { return v * v; }` helper does not do it.
+3. Strength-reduction walkers for `&base[i]` and `&states[i]` r4/r5 swapped:
+   they are numbered in creation order and the inline touches `*result`
+   first. Assigning the record to the existing function-level local first
+   (`record = &base[i]; ClassifyRecord(record, ...)`) creates its walker
+   first. Swapping the inline's parameter order has no effect.
