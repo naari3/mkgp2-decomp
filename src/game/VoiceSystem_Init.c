@@ -10,6 +10,7 @@ int VoiceSystem_Init(void) {
     RaceVoiceData *data = &lbl_80496C38;
     OSTime now;
     int volume;
+    int cup;
     float duration;
     int i;
     if (g_voiceSystemInitDone == 1) return 0;
@@ -24,6 +25,7 @@ int VoiceSystem_Init(void) {
     now = OSGetTime();
     duration = (float)(lbl_80598A60.duration * 2);
     volume = g_playerData.audible ? 255 : 0;
+    cup = g_cupId;
     g_voiceStreamStartTime = 0;
     g_voiceStreamLastPollTime = 0;
     g_goalFanfareVariant = 0;
@@ -84,13 +86,13 @@ int VoiceSystem_Init(void) {
     state->speaker[1] = 0;
     state->speaker[0] = -1;
     ((unsigned char *)state->speaker)[8] = 0;
-    if (g_cupId == 2 && g_longRoundFlag == 1)
+    if (cup == 2 && g_longRoundFlag == 1)
         g_voiceCupLongRoundTable = (RaceVoiceCourseLine *)((char *)data + 0x334C);
-    if (g_cupId == 4 && g_longRoundFlag == 1)
+    if (cup == 4 && g_longRoundFlag == 1)
         g_voiceCupLongRoundTable = (RaceVoiceCourseLine *)((char *)data + 0x3360);
-    if (g_cupId == 5 && g_longRoundFlag == 1)
+    if (cup == 5 && g_longRoundFlag == 1)
         g_voiceCupLongRoundTable = (RaceVoiceCourseLine *)((char *)data + 0x33D8);
-    if (g_cupId == 6 && g_longRoundFlag == 1)
+    if (cup == 6 && g_longRoundFlag == 1)
         g_voiceCupLongRoundTable = (RaceVoiceCourseLine *)((char *)data + 0x3400);
     for (i = 0; i < 8; i++) {
         RaceVoiceEntry *entry = (RaceVoiceEntry *)((unsigned int)state + 0x190) + i;
