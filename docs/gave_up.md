@@ -75,7 +75,7 @@ all of these.
 | `fn_80162D90` | game/Scene_80162D90 | 99.82 | register swap | |
 | `fn_8017CE1C` | game/mapobject/fn_8017CE1C | 99.98 | register swap | |
 | `fn_8017EFFC` | game/miyazakiconsole/fn_8017EFFC | 97.79 | register swap | |
-| `fn_8017BCF8` | game/mapobject/fn_8017BCF8 | 99.28 | f0/f1 swap | |
+| `fn_8017BCF8` | game/mapobject/fn_8017BCF8 | 99.28 | f0/f1 swap | hand 11-09: only the first two inlined Point() copies differ: target uses r4 (path) + f1, ours r3 (index) + f0, i.e. in the ctor something keeps r3/f0 busy there; the same LoadSegment in Update (fn_8017BF90, matched) uses r3/f0. shared zero local (no change), heading store moved before/after LoadSegment (95.3/97.7) |
 | `fn_801BDEB4` | game/fn_801BAA88 | 99.71 | ResCtrl t0/t1/t2 store order vs `li` registers | |
 | `fn_8028A3EC` | triforce/amcoin_nm2 | 99.49 | r0/r3 swap: target loads src[4..7] via r3 and tmp.coinSetting (0xe(r1)) into r0 | R5 2026-11-08: pragmasweep --set all (1.3 + pragmas breaks the flags block), `if (src[3])`/`CoinTable[src[3]]` (18 lines), store orders, ptr temps, freePlay forms, 15-min cperm ; hand 11-09: regfix diag says the tmp.coinSetting reload must be a backend temp created after the src[4..7] loads (it is a frontend CSE temp @188); cond/index rewrites, opt_* pragmas, regfix fix 5 rounds: no gain |
 | `fn_80286864` | triforce/random_nm1 | 84.8 | target shares `ret`'s `li r31, 0` with the zero high word of the inlined u64 range; we emit a separate `li r8, 0` | ret/range variants; 10+20 min permuter |
