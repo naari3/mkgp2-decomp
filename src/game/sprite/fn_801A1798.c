@@ -664,7 +664,7 @@ typedef struct VoiceClip {
     void *path;
 } VoiceClip;
 
-static VoiceClip g_voicePlayCountTable[642] = {
+VoiceClip g_voicePlayCountTable[642] = {
     { 0, { 0, 0, 0 }, 1.42f, (void *)lbl_803814A4 },
     { 0, { 0, 0, 0 }, 1.46f, (void *)lbl_803814B4 },
     { 0, { 0, 0, 0 }, 1.72f, (void *)lbl_803814C4 },
@@ -1308,7 +1308,10 @@ static VoiceClip g_voicePlayCountTable[642] = {
     { 0, { 0, 0, 0 }, 0.228f, (void *)lbl_80383C68 },
     { 0, { 0, 0, 0 }, 0.632f, (void *)lbl_80383C74 },
 };
-static unsigned int lbl_80499F84[55] = { 0x01000000, 0xC58771E5, 0xC50C427F, 0xC58E4075, 0xC50E850A, 0x00000000, 0x46108749, 0xC464C2B0, 0x4611FAE0, 0xC4D3D75C, 0x00000000, 0x45F8B2E7, 0xC5017CEE, 0x45F9583B, 0xC4A1BA35, 0x00000000, 0x46010BA4, 0xC54253CF, 0x45ED9504, 0xC55CA0B4, 0x00000000, 0x45E9133F, 0xC58C2BA2, 0x45FAE33D, 0xC5771B54, 0x00000000, 0x46146507, 0xC5ABA154, 0x460BBC49, 0xC5BCCE6D, 0x01000000, 0x460EB399, 0xC5DC7F23, 0x461647CA, 0xC5C961B6, 0x00000000, 0x454607BA, 0xC514B09C, 0x4525C298, 0xC518CA19, 0x01000000, 0x45479046, 0x44C7486A, 0x4526F317, 0x44C8A0A4, 0x00000000, 0x4538A51B, 0xC499A13F, 0x455632A8, 0xC45B577D, 0x01000000, 0x455C423D, 0x443C6375, 0x457D35F0, 0x443F0E25 };
+unsigned int lbl_80499F84[5] = { 0x01000000, 0xC58771E5, 0xC50C427F, 0xC58E4075, 0xC50E850A };
+unsigned int lbl_80499F98[30] = { 0x00000000, 0x46108749, 0xC464C2B0, 0x4611FAE0, 0xC4D3D75C, 0x00000000, 0x45F8B2E7, 0xC5017CEE, 0x45F9583B, 0xC4A1BA35, 0x00000000, 0x46010BA4, 0xC54253CF, 0x45ED9504, 0xC55CA0B4, 0x00000000, 0x45E9133F, 0xC58C2BA2, 0x45FAE33D, 0xC5771B54, 0x00000000, 0x46146507, 0xC5ABA154, 0x460BBC49, 0xC5BCCE6D, 0x01000000, 0x460EB399, 0xC5DC7F23, 0x461647CA, 0xC5C961B6 };
+unsigned int lbl_8049A010[10] = { 0x00000000, 0x454607BA, 0xC514B09C, 0x4525C298, 0xC518CA19, 0x01000000, 0x45479046, 0x44C7486A, 0x4526F317, 0x44C8A0A4 };
+unsigned int lbl_8049A038[10] = { 0x00000000, 0x4538A51B, 0xC499A13F, 0x455632A8, 0xC45B577D, 0x01000000, 0x455C423D, 0x443C6375, 0x457D35F0, 0x443F0E25 };
 
 
 /* ==== game/sprite/fn_801A1798.c (0x801a1798) ==== */
@@ -9402,25 +9405,19 @@ int i_p52;
 for (i_p52 = 0; i_p52 < 0x282; i_p52++) clips_p52[i_p52].playCount = 0;
 }
 int VoiceSystem_Init(void) {
-VoiceInitBss_p52 *state_p52 = (VoiceInitBss_p52 *)g_voiceQueue_p52;
-RaceVoiceData_p52 *data_p52 = &(*(RaceVoiceData_p52 *)&lbl_80496C38);
 OSTime_p52 now_p52;
-int volume_p52;
 int cup_p52;
-float duration_p52;
 int i_p52;
 if (g_voiceSystemInitDone_p52 == 1) return 0;
 for (i_p52 = 0; i_p52 < 64; i_p52++) {
-state_p52->queue_p52[i_p52].id_p52 = 0;
-state_p52->queue_p52[i_p52].priority_p52 = -1;
-state_p52->queue_p52[i_p52].flag_p52 = 0;
+((VoiceQueueEntry_p52 *)g_voiceQueue_p12)[i_p52].id_p52 = 0;
+((VoiceQueueEntry_p52 *)g_voiceQueue_p12)[i_p52].priority_p52 = -1;
+((VoiceQueueEntry_p52 *)g_voiceQueue_p12)[i_p52].flag_p52 = 0;
 }
 g_voiceQueueHead_p52 = 0;
 g_voiceQueueTail_p52 = 0;
 g_voiceLastTime_p52 = OSGetTime_p52();
 now_p52 = OSGetTime_p52();
-duration_p52 = (float)(lbl_80598A60_p52.duration_p52 * 2);
-volume_p52 = g_playerData_p52.audible_p52 ? 255 : 0;
 cup_p52 = g_cupId_p52;
 g_voiceStreamStartTime_p52 = 0;
 g_voiceStreamLastPollTime_p52 = 0;
@@ -9435,6 +9432,7 @@ lbl_806D1776_p52 = 0;
 lbl_806D1777_p52 = 0;
 lbl_806D177C_p52 = 0;
 g_raceRankingPathObject_p52 = 0;
+((int *)&g_raceCurrentSpeakerId_p12)[1] = 0;
 lbl_806D178F_p52 = 0;
 lbl_806D1730_p52 = 0;
 g_goalTriggerCheckpoint_p52 = 1;
@@ -9450,7 +9448,8 @@ g_currentVoiceDispatchId_p52 = -1;
 g_currentVoiceSubId_p52 = -1;
 g_currentRaceEventPlayer_p52 = -1;
 g_currentTAVoiceId_p52 = -1;
-g_voiceStreamVolume_p52 = volume_p52;
+g_voiceStreamVolume_p52 = g_playerData_p52.audible_p52 ? 255 : 0;
+((int *)&g_raceCurrentSpeakerId_p12)[0] = -1;
 lbl_806D1778_p52 = 0;
 lbl_806D1788_p52 = lbl_806D97F4_p52;
 g_voiceTickTimeHi_p52 = now_p52;
@@ -9461,6 +9460,7 @@ lbl_806D17D8_p52 = now_p52;
 g_voiceStreamTime_p52 = now_p52;
 lbl_806D1798_p52 = now_p52;
 g_bgmStateTimeHi_p52 = now_p52;
+((unsigned char *)&g_raceCurrentSpeakerId_p12)[8] = 0;
 g_voiceSystemInitDone_p52 = 1;
 g_voiceRaceStartLatched_p52 = 0;
 lbl_806CFD36_p52 = 0;
@@ -9475,23 +9475,20 @@ g_goalFanfareTriggered_p52 = 0;
 lbl_806D178D_p52 = 0;
 lbl_806D178E_p52 = 0;
 lbl_806D17B4_p52 = 0;
-lbl_806D1750_p52 = (int)now_p52;
+lbl_806D1750_p52 = now_p52;
 g_voiceTickCounter_p52 = (int)now_p52;
-lbl_806D1790_p52 = duration_p52;
+lbl_806D1790_p52 = (float)(lbl_80598A60_p52.duration_p52 * 2);
 g_voiceCupLongRoundTable_p52 = 0;
-state_p52->speaker_p52[1] = 0;
-state_p52->speaker_p52[0] = -1;
-((unsigned char *)state_p52->speaker_p52)[8] = 0;
 if (cup_p52 == 2 && g_longRoundFlag_p52 == 1)
-g_voiceCupLongRoundTable_p52 = (RaceVoiceCourseLine_p52 *)((char *)data_p52 + 0x334C);
+g_voiceCupLongRoundTable_p52 = (RaceVoiceCourseLine_p52 *)((char *)lbl_80499F84);
 if (cup_p52 == 4 && g_longRoundFlag_p52 == 1)
-g_voiceCupLongRoundTable_p52 = (RaceVoiceCourseLine_p52 *)((char *)data_p52 + 0x3360);
+g_voiceCupLongRoundTable_p52 = (RaceVoiceCourseLine_p52 *)((char *)lbl_80499F98);
 if (cup_p52 == 5 && g_longRoundFlag_p52 == 1)
-g_voiceCupLongRoundTable_p52 = (RaceVoiceCourseLine_p52 *)((char *)data_p52 + 0x33D8);
+g_voiceCupLongRoundTable_p52 = (RaceVoiceCourseLine_p52 *)((char *)lbl_8049A010);
 if (cup_p52 == 6 && g_longRoundFlag_p52 == 1)
-g_voiceCupLongRoundTable_p52 = (RaceVoiceCourseLine_p52 *)((char *)data_p52 + 0x3400);
+g_voiceCupLongRoundTable_p52 = (RaceVoiceCourseLine_p52 *)((char *)lbl_8049A038);
 for (i_p52 = 0; i_p52 < 8; i_p52++) {
-RaceVoiceEntry_p52 *entry_p52 = (RaceVoiceEntry_p52 *)((unsigned int)state_p52 + 0x190) + i_p52;
+RaceVoiceEntry_p52 *entry_p52 = (RaceVoiceEntry_p52 *)g_raceEntryArray_p12 + i_p52;
 entry_p52->id_p52 = -1;
 entry_p52->character_p52 = -1;
 entry_p52->rank_p52 = 0;
@@ -9519,7 +9516,7 @@ entry_p52->pad02_p52[1] = 0;
 entry_p52->pad02_p52[0] = 0;
 entry_p52->f64_p52 = 0;
 }
-VoiceSystem_ClearPlayCounts_p52((VoiceClip *)((unsigned int)data_p52 + 0x1534));
+{ int j_p52; for (j_p52 = 0; j_p52 < 0x282; j_p52++) g_voicePlayCountTable[j_p52].playCount = 0; }
 return 1;
 }
 #pragma use_lmw_stmw reset

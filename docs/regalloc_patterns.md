@@ -1774,3 +1774,45 @@ first (`int dst = x + y * 20;` before `src`), 17 -> 0.
 
 Rule of thumb: counters in the highest volatile registers = plain locals;
 counters in the lowest = an inline's locals.
+
+
+## 69. Dead truncation makes a block get scheduled twice (VoiceSystem_Init)
+
+Symptom: two independent instructions swapped inside one long straight-line
+block (here `lfd f0,8(r1)` / `or r0,r0,r6`), everything else identical.
+`python3 tools/mwsched.py log UNIT FN` shows the pre-RA schedule of that block
+already equals the target, and the post-RA pass (`scheduleinstructions(TRUE)`,
+Scheduler.c) schedules it again with one instruction fewer and flips the pair
+(`selectinstruction`: `or` uncovers 2 successors against 1 for the load). A
+block is only scheduled again when its `fScheduled` flag was cleared, i.e.
+something was deleted or inserted in it after the first pass (see
+mwcc_internals "Post-RA scheduling: which blocks are scheduled twice").
+
+Find the instruction the pre-RA block has and the post-RA block lacks. Here it
+was `rlwinm r139,r4,0,24,31`, the dead `(unsigned char)` truncation produced by
+
+```c
+lbl_806D1750 = (int)now;      /* s64 -> int -> u8: emits rlwinm, deleted later */
+```
+
+Writing the conversion in one step emits no rlwinm, so nothing is deleted, the
+block keeps its first schedule, and the function matches:
+
+```c
+lbl_806D1750 = now;           /* s64 -> u8 directly (also `(unsigned char)now`) */
+```
+
+`(unsigned int)now`, `(char)now` and a `*(char *)&` store all keep the dead
+instruction. General form: when the post-RA schedule is the wrong one, remove
+whatever dies in that block (dead truncations/extensions from chained casts,
+copies that coalesce) rather than trying to change the dependences.
+
+Two companion levers from the same function (54 -> 4 -> 2 -> 0 diff lines):
+
+- Anchor addressing (§40) only appears when the function names enough distinct
+  defined objects of the section. A base-pointer local plus offsets
+  (`data + 0x1534`) gives per-symbol `lis/addi`. Split the pool object into its
+  real pieces (symbols.txt and source) and name each piece directly.
+- A loop counter that must be `li rN,0` rather than a copy of an existing zero
+  register needs its own block-local variable (`{ int j; for (j = 0; ...) }`,
+  see §46), not the reused function-level `i` and not an inline.

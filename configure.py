@@ -2189,7 +2189,7 @@ config.libs = [
             Object(Matching, "game/CSSceneGetTitle_8014ADB4.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/SceneList_80157940.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/fn_80157DE0.cpp", extab_padding=b"\x02\x55", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
-            Object(Matching, "game/SceneList_80157EA8.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/SceneList_80157EA8.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/RankPanel_80144430.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/RankPanelBase_801461B0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/LapSelect_80146410.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
@@ -2565,8 +2565,6 @@ config.libs = [
         "progress_category": "game",
         "objects": [
             Object(Matching, "game/Scene_80163554.cpp"),
-            Object(Matching, "game/Scene_8015AE3C.cpp"),
-            Object(Matching, "game/Scene_8015AFCC.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene_8015B698.cpp"),
             Object(Matching, "game/Scene_8015B70C.cpp"),
             Object(Matching, "game/Scene_8015B790.cpp"),
