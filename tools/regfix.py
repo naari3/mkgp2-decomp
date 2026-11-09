@@ -1029,7 +1029,28 @@ def fix(a, rep0):
     print(f"[regfix] parallel debugger: {'yes (native gdb)' if md.NATIVE else 'yes (netns)' if ev.par else 'no (unshare failed)'}", flush=True)
     allowed = set(ss.REG_ONLY_MOVES) | {"expand", "swap"}
     t0 = time.time()
-    text0 = sw.render(sw.init)
+    PROP = "opt_propagation off"
+
+    def rend(st):
+        """render; states with .prop_off get `#pragma opt_propagation off` (named
+        locals survive instead of being propagated away: the temp->local rewrites
+        mostly need it)."""
+        if getattr(st, "prop_off", False) and PROP not in (a.pragma or []):
+            old = sw.a.pragma
+            sw.a.pragma = list(old or []) + [PROP]
+            try:
+                return sw.render(st)
+            finally:
+                sw.a.pragma = old
+        return sw.render(st)
+
+    def prop_move(st):
+        def f():
+            s2 = st.clone()
+            s2.prop_off = True
+            return s2
+        return ("propoff", f, None)
+    text0 = rend(sw.init)
     s0 = sw.score(text0, 0)
     m0, r0 = ev.diag(text0, 0, top_decls(sw.init))
     print(f"[regfix] start: {s0} diff lines, metric {m0}", flush=True)
@@ -1041,7 +1062,8 @@ def fix(a, rep0):
         if s2 is None:
             return None
         s2.hist = st.hist + ("declorder " + ",".join(rep["decl_order"]),)
-        t = sw.render(s2)
+        s2.prop_off = getattr(st, "prop_off", False)
+        t = rend(s2)
         sc = sw.score(t, 0)
         print(f"[regfix] decl-order solver proposes {rep['decl_order']}: {sc} diff lines", flush=True)
         return (s2, t) if sc == 0 else None
@@ -1065,8 +1087,9 @@ def fix(a, rep0):
             lines, names = focus_of(rep)
             sl = sw.stmt_lines(st)
             foc = {i for i, l in enumerate(sl) if l in lines}
-            for label, f, si in itertools.chain(decl_moves(st, names), ss.moves(st, sw.ctx, allowed)):
-                pri = 0 if (si in foc or label.startswith("declmove")) else 1
+            extra = [] if getattr(st, "prop_off", False) or PROP in (a.pragma or []) else [prop_move(st)]
+            for label, f, si in itertools.chain(extra, decl_moves(st, names), ss.moves(st, sw.ctx, allowed)):
+                pri = 0 if (si in foc or label.startswith(("declmove", "propoff"))) else 1
                 if pri == 1 and a.focus_only:
                     continue
                 cands.append((pri, len(cands), st, label, f))
@@ -1082,7 +1105,8 @@ def fix(a, rep0):
             if s2 is None:
                 continue
             s2.hist = st.hist + (label,)
-            txt = sw.render(s2)
+            s2.prop_off = getattr(st, "prop_off", False) or label == "propoff"
+            txt = rend(s2)
             h = hashlib.sha1(txt.encode()).hexdigest()
             if h in seen:
                 continue
@@ -1125,7 +1149,8 @@ def fix(a, rep0):
         if a.minutes and time.time() - t0 > a.minutes * 60:
             break
     out = TMPDIR / f"{a.fn}.best{sw.u.ext}"
-    out.write_text(sw.func_text(best[2]))
+    out.write_text(("#pragma push\n#pragma " + PROP + "\n" if getattr(best[2], "prop_off", False) else "")
+                   + sw.func_text(best[2]) + ("\n#pragma pop\n" if getattr(best[2], "prop_off", False) else ""))
     print(f"[regfix] best: {best[1]} diff lines, metric {best[0]}; definition written to {out}")
     return best
 
