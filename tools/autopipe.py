@@ -137,6 +137,8 @@ def q_claim(fn, obj, pct):
     if mine is None:
         text = f'{fn} | {obj} | {pct:.2f} | autopipe'
         mine = 'N' + Q.hashlib.sha1(text.encode()).hexdigest()[:6]
+        if mine in st and st[mine]['status'] in ('done', 'parked'):   # a rerun (new stage): fresh item
+            mine = 'N' + Q.hashlib.sha1((text + datetime.now().isoformat()).encode()).hexdigest()[:6]
         if mine not in st:
             Q.append(WHO, 'add', mine, text=text)
     Q.append(WHO, 'take', mine)
