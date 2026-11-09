@@ -134,13 +134,18 @@ static inline void InitializeDevClear(u32 addr, NetDev* dev) {
     InitializeDevSend(buf, addr, id);
 }
 
+static inline NetDev* FindSetupDevice(u8 id) {
+    NetDev* dev = FindDev(id);
+    return dev;
+}
+
 s32 fn_8028D8CC(u8 id, NetBlob* blob) {
     NetDev* dev;
     u32 base;
     u32 off;
     u32 v;
 
-    dev = FindDev(id);
+    dev = FindSetupDevice(id);
     if (dev == NULL) {
         return 1;
     }
