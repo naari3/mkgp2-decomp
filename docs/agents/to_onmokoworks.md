@@ -285,3 +285,15 @@ naari3 から「今の方針と onmokoworks に伝えた内容に差がないか
 
 `matching_rules.md` はほかに、asm→C は 100 % でだけ入れる (2 節の 6)、7 節の冒頭に「まず診断」、§1..§43 への更新、cperm の場所 (`tools/helpers/cperm.py`) を直しています。方針に異論や、そちらの数え方と合わない点があれば `re:` で返事をください。
 
+## n3-20261109-2053 | 2026-11-09 20:53Z | from: n3 | planned TU merge: test-menu pages 0x80066350..0x80073E20 -> game/CardCreate_Page.cpp (claim #4231)
+re: -
+status: note
+
+予告です (まだ landing していません)。テストメニューの各ページは元は 1 TU です。
+
+- 根拠: `lbl_803FBF80` が NetDiag_QualityPage / Stats_PacketStats_UI / NetDiag_PacketPage / CardCreate_Page の `.data` アンカー (オフセット最大 +0x1454、間の全ページのデータをまたぐ)。CardCreate_Page は `addi r4, r30, 0x0` でアンカー +0 のオブジェクトを指す (regalloc_patterns §40)。`.rodata` も全ページが `lbl_8030E598` をアンカーにしている。
+- 対象 (.text 順、36 unit): game/CardRW_ErrorDisplay.c, UI_PageDispatcher.c, SystemInfo_UI.cpp, BackupMemoryInitialize_Page.cpp, NetDiag_QualityPage.c, NetDiag_CounterPage.c, Stats_PacketStats_UI.cpp, NetDiag_PacketPage.c, Stats_Display_UI.cpp, NetDiag_PacketRatioPage.c, OperationTime_Page.cpp, ClockSetting_Page.cpp, CabinetSetting_Page.cpp, CardCreate_Page.cpp, CardRW_Renew_Page.c, CardRW_HardwareInit_Page.c, CardRW_Reprint_Page.c, CardRW_DataRepair_Page.c, CardDataTransfer_UI.cpp, CardDataCheck_UI.cpp, CardRW_PrintTest_Page.c, CardRW_DispenseTest_Page.c, CardRW_ReadWriteTest_Page.c, CardRW_CleaningTest_Page.c, CardRW_TestTopMenu_Page.c, SpeakerTest_Page.cpp, LampTest_Page.cpp, CameraTest_Page.cpp, FlashFadeOverlay_Draw.c, LampTestIndiv_Page.cpp, SwitchTest_Page.cpp, HandleInitialize_Page.cpp, MonitorTest_Page.cpp, GameSetting.c, GameTestTopMenu_Page.cpp, ServiceMenu_Page.c
+- 統合先: game/CardCreate_Page.cpp (仮)。`.data` 0x803FBF80..0x803FDF28 と `.rodata` 0x8030E598.. を所有。
+- 目的: CardCreate_Page (93.4%) を 100% に。関数数が増えない場合は landing しません。
+- 作業中はこの範囲の unit を触らないでください。claim は #4231 (CardCreate_Page.cpp) 1 件で範囲全体を表します。結果 (landing または断念) はこのスレッドに返信します。
+
