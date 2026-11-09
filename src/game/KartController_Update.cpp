@@ -139,9 +139,10 @@ extern "C" void KartController_Update(AIKart *self) {
     ItemEffectBus_SnapshotAndFullReset(bus);
     ((KCDispatch *)self)->collision(PhysicsState_GetCollisionKartIdx(self->run.p));
     KCMatrix mat;
-    mat *= *fn_801DF3A8(self->steering.p);
-    mat *= *fn_801DEC6C(self->aux.p);
-    mat *= *PhysicsState_GetOrientMatrixPtr(self->run.p);
+    KCMatrix *mp=&mat; /* &mat stays in r29 across the three multiplies (regalloc_patterns 14) */
+    *mp *= *fn_801DF3A8(self->steering.p);
+    *mp *= *fn_801DEC6C(self->aux.p);
+    *mp *= *PhysicsState_GetOrientMatrixPtr(self->run.p);
     AIPosition *pos=PhysicsState_GetPositionPtr(self->run.p);
     self->position.x=pos->x; self->position.y=pos->y; self->position.z=pos->z;
     mat.setTranslation(self->position);
