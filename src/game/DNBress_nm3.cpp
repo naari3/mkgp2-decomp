@@ -80,6 +80,12 @@ struct clMapEffectParts {
 };
 
 struct clDNBress;
+// CodeWarrior's non-virtual member-function dispatch record.
+struct MemberFn {
+    int thisAdjustment;
+    int virtualOffset;
+    void (*function)();
+};
 typedef void (clDNBress::*SpawnFn)();
 typedef void (clDNBress::*UpdFn)(Particle *p);
 
@@ -146,8 +152,6 @@ extern const float lbl_803D0260[3];
 extern const float lbl_803D026C[3];
 extern const float lbl_803D0278[4];
 extern const Vec3f lbl_803D02A0[2];
-extern float lbl_804EDF80[2][3];
-extern FireFuncs lbl_804EDF98[2];
 extern float lbl_80495A94[48];
 extern const char lbl_803D01BC[];
 extern const char lbl_803D01CC[];
@@ -266,12 +270,52 @@ static inline bool InRect(float x, float z, const float *r) {
     return 1;
 }
 
+// Original writable spawn extents, member dispatch records, RTTI and vtable.
+struct DNBressTypeInfo {
+    const char *name;
+    const void *bases;
+    unsigned int flags;
+};
+struct DNBressDispatch {
+    const char *type;
+    unsigned int offset;
+    void (*slots[5])();
+};
+extern "C" {
+extern const char lbl_806D058C[];
+extern const char lbl_806D0594[];
+void fn_80227AA4();
+void fn_80226B20();
+void fn_80226954();
+void fn_8016A26C();
+void fn_80227318();
+void fn_802271A4();
+void fn_8022760C();
+void fn_80227490();
+#pragma force_active on
+static float lbl_804EDF80[2][3] = {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}};
+static struct FireRecords { MemberFn spawn; MemberFn upd; } lbl_804EDF98[2] = {
+    {{0, -1, fn_80227318}, {0, -1, fn_802271A4}},
+    {{0, -1, fn_8022760C}, {0, -1, fn_80227490}}
+};
+static DNBressTypeInfo lbl_804EDFC8 = {lbl_806D058C, 0, 0};
+static DNBressDispatch lbl_804EDFD4 = {
+    lbl_806D0594, 0,
+    {fn_80227AA4, fn_80226B20, fn_80226954, fn_8016A26C, 0}
+};
+#pragma force_active reset
+}
+
+static inline const char *DNBressStrings() {
+    const char *strings = lbl_803C6ED0 + 0x10000;
+    return strings;
+}
+
 clDNBress::clDNBress() {
-    // One data base supplies both the vtable and the member-function tables.
     const char *data = (const char *)lbl_804EDF80;
     const FireFuncs *fireFuncs = (const FireFuncs *)(data + 0x18);
     // The original unit addresses its shared strings from one retained base.
-    const char *strings = lbl_803C6ED0 + 0x10000;
+    const char *strings = DNBressStrings();
     vtable = data + 0x54;
     type = 0;
     xc = 0;

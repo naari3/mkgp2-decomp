@@ -9522,6 +9522,10 @@
     "__dt__16clMapEffectPartsFv": "dtor_8016A270"
   },
   "src/game/DNBress_nm3.cpp": {
+    "lbl_804EDF80": "global:lbl_804EDF80",
+    "lbl_804EDF98": "global:lbl_804EDF98",
+    "lbl_804EDFC8": "global:lbl_804EDFC8",
+    "lbl_804EDFD4": "global:lbl_804EDFD4",
     "__nwa__FUl": "FUN_8003b120",
     "__dla__FPv": "MemoryManager_Free",
     "__nw__FUl": "Alloc",
