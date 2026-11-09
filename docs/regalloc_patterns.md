@@ -483,6 +483,27 @@ inline that is called from another inline (or as an argument of one), so its
 temps are created one level deeper than the later inline's. If a level-1
 inline puts it too early, go one level deeper. Rule `nested-inline-level`.
 
+## 25. Hand-expanded recursion: write the real recursive functions, set the inline depth (fn_801893BC, 11-09)
+
+fn_801891C4 (Hide), fn_80189394 (HideList) and fn_801893BC (Visible) were three
+TUs: Hide written as seven hand-nested loops ending in calls to HideList and to
+itself, Visible as Visible1..3 + Hide0..6 inlines (98.64, saved-register swaps
+that no decl order fixed). They are one TU of three short natural functions
+(`Visible: if (visible) { list; for c: Visible(c); } else Hide(box);`,
+`Hide: HideList(box); for c: Hide(c);`). MWCC auto-inlines the self and
+cross calls; `#pragma inline_depth(7)` gives exactly the target's expansion
+depth (6 gave one level less, the default one more), and `-inline deferred`
+lets Hide inline HideList defined after it and emits the functions in reverse
+source order (source Visible, HideList, Hide -> text Hide, HideList, Visible).
+All three 100 % with the natural code.
+
+**Check:** an unmatched function whose body repeats the same block N times with
+deeper and deeper pointers and ends in calls to itself or to a neighbouring
+function that holds the same block: write the recursion, sweep
+`#pragma inline_depth(N)` (count `bl` targets against the target), and try
+`-inline deferred` if the out-of-line copies must come before their caller.
+Rule `recursive-auto-inline`.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
