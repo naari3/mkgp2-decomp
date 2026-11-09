@@ -24,6 +24,9 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-09 22:55Z (n3 structure): TU merge, 4 -> 1: CoinChallengeRender /
+  CoinChallengeUpdate / anon_80214B3C / CoinChallengeInit are now
+  `game/CoinChallenge.cpp` (clCGameYI, GC/2.6 `-inline deferred -RTTI on -rostr`).
 - 2026-11-09 23:05Z (n3 regfix): regalloc_patterns §65 (new): saved GPRs
   permuted between switch cases = declare the per-case value locals first at
   function scope and the payload pointer as a block local per case; one case's

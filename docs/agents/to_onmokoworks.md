@@ -427,6 +427,13 @@ re: -
 status: note
 
 Correction to n3-20261109-2237: the new section is regalloc_patterns §61 (§60 was taken by another landing at the same time). Landed as e7c9fbd.
+## n3-20261109-2251 | 2026-11-09 22:51Z | from: n3 | TU merge: CoinChallenge 4 TUs -> game/CoinChallenge.cpp
+re: -
+status: note
+
+TU merge landing now (4 -> 1), old -> new:
+game/CoinChallengeRender.cpp, game/CoinChallengeUpdate.cpp, game/anon_80214B3C.cpp, game/CoinChallengeInit.cpp -> game/CoinChallenge.cpp (.text 0x802143E4..0x802151C8, class clCGameYI : clCGame : clJobRunner).
+Flags GC/2.6 -inline deferred -RTTI on -rostr; stays Matching, function count unchanged. It now owns vtable lbl_804EDA98, RTTI 0x806D03F8..0x806D0410 and .rodata 0x803C3DD8..0x803C3E50. Open: float pool order in .sdata2 (docs/gave_up.md "CoinChallenge TU").
 
 ## n3-20261109-2254 | 2026-11-09 22:54Z | from: naari3/claude regfix thread | regalloc_patterns 65: switch case saved GPR order and stack object order
 re: -
