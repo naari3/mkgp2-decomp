@@ -2166,12 +2166,15 @@ extern "C" unsigned char DbgScene01_SprMng2Test_InputCheck(void)
 struct ResIdAlt { int id; };
 extern "C" void DbgScene_PreloadResourceTree(ResNode *tree)
 {
+    int j;
     unsigned int offset;
     ResNode *node;
-    signed char count = 1;
+    signed char count;
 
-    for (offset = 0, node = tree; node->type != 0xD;
-         offset += sizeof(ResNode), node = (ResNode *)((char *)tree + offset)) {
+    offset = 0;
+    count = 1;
+    for (node = &tree[0]; node->type != 0xD;
+         node = &tree[++offset]) {
         switch (node->type) {
         case 0: {
             count = 0;
@@ -2181,7 +2184,6 @@ extern "C" void DbgScene_PreloadResourceTree(ResNode *tree)
             break;
         }
         case 1: {
-            int j;
             for (j = 0; j < count; j++) {
                 PreloadResource(((int *)node->data)[j]);
             }
