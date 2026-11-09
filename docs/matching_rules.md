@@ -24,6 +24,11 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-09 23:50Z (n3 technique): regalloc_patterns §74: when only the
+  evaluation order of one call's arguments differs (target computes the float
+  args before an int arg), redeclare the callee with the float parameters
+  first (`namespace alt { extern "C" ... }`). Int and float argument registers
+  are numbered separately, so the guessed prototype order is a free lever.
 - 2026-11-09 23:35Z (n3 structure): TU merge, 3 -> 1: game/EnemyFaceDraw.cpp +
   game/fn_8022CDE4.c + game/EnmyFaceEffect.cpp -> game/EnmyFaceEffect.cpp
   (.text 0x8022BFA8..0x802300C8, .rodata from 0x803DA710). The unit is
