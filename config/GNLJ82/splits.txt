@@ -7620,17 +7620,9 @@ game/NokoNoko_Init.c:
 	.text       start:0x80188E9C end:0x801891C4
 
 game/nokonoko/fn_801891C4.c:
-	extab       start:0x80011DAC end:0x80011DB4
-	extabindex  start:0x80026DD4 end:0x80026DE0
-	.text       start:0x801891C4 end:0x80189394
-
-game/nokonoko/fn_80189394.c:
-	.text       start:0x80189394 end:0x801893BC
-
-game/nokonoko/fn_801893BC.c:
-	extab       start:0x80011DB4 end:0x80011DBC
-	extabindex  start:0x80026DE0 end:0x80026DEC
-	.text       start:0x801893BC end:0x80189808
+	extab       start:0x80011DAC end:0x80011DBC
+	extabindex  start:0x80026DD4 end:0x80026DEC
+	.text       start:0x801891C4 end:0x80189808
 
 game/bbox/fn_80189808.cpp:
 	extab       start:0x80011DBC end:0x80011DD4
