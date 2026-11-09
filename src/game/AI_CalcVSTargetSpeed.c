@@ -33,13 +33,13 @@ static inline float DistanceBonus(AISpeedOwner *self, void *ctrl, int kart) {
 }
 static inline void NormalSpeed(AISpeedOwner *self, int kart) {
         float min;
-        void *param;
+        int round;
         AIPairRecord *record;
         void *ctrl = Read_U32[kart];
-        int round;
-        int cup;
-        float bonus;
         float max;
+        void *param;
+        float bonus;
+        int cup;
         record = &lbl_806793D8[kart];
         param = GetEnemyParam();
         max = GetBaseSpeedMax(param, cup = g_cupId, round = g_roundIndex);
