@@ -433,6 +433,17 @@ pointer is not reused: 100 % (310a051).
 **Check:** a hand-unrolled run of stores to `a[0..N]` where the target
 re-loads an element pointer that ours keeps from an earlier statement. Rule
 `rolled-loop-blocks-cse`.
+## 22. An inline local created too late: declare it one level up, pass by reference (CourseData_LoadPathTable, 11-09)
+
+`regfix diag`: "create temp @71 (size, a local of the inner inline
+LoadFileData) after temp @51 (its `file` parameter)". Frontend temps are
+numbered in reverse creation order, so `size` had to be created before the
+inner inline was expanded. Declaring `unsigned long size;` in the outer
+inline LoadFileTable right after `const char *file;` and passing it as
+`unsigned long &size` to LoadFileData gave 99.70 -> 100 (declared before
+`file` it did nothing). This is the shape the earlier "merge LoadFileData
+into LoadFileTable" attempts were circling. Rule:
+`inline-local-to-outer-ref`.
 
 ## Still open (same shape, no fix found yet)
 

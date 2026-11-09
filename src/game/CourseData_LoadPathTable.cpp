@@ -99,9 +99,9 @@ static inline unsigned char LoadMemoryTable(CourseLookup *self, int course, int 
     return self->LoadMemory(source, size, pool);
 }
 
-static inline void LoadFileData(CourseLookup *self, const char *file) {
+static inline void LoadFileData(CourseLookup *self, const char *file, unsigned long &size) {
     if (file) {
-        unsigned long size = (FUN_8007e344(file) + 31) & ~31;
+        size = (FUN_8007e344(file) + 31) & ~31;
         self->keys = FUN_8003b120(size);
         DebugPrintf(fileFormat, file, size);
         FUN_8007dfe4(file, self->keys, size, 0, 0);
@@ -123,9 +123,10 @@ static inline void LoadFileData(CourseLookup *self, const char *file) {
 static inline void LoadFileTable(CourseLookup *self, int course, int variant, int alternate, const char *pool) {
 
     const char *file;
+    unsigned long size;
     if (alternate == 0) file = pathFiles[course][variant][0];
     else file = pathFiles[course][variant][1];
-    LoadFileData(self, file);
+    LoadFileData(self, file, size);
 }
 
 CourseLookup::CourseLookup(int course, int variant, int alternate) : keys(0) {
