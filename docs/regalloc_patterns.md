@@ -1522,3 +1522,28 @@ lane = f->lane;
 ... if (*(int *)((char *)f + 4) != 1) { f->lane = 1; f->needsSearch = 1; }   /* fakematch */
 ... if (f->lane == 2) lane = f->lane - 1; else lane = f->lane + 1;
 ```
+
+## 60. Loop with `add rP,rBase,rOff` per iteration: the byte offset is a named variable added in the INTEGER domain (ItemObject_Tick_Kind29_LightAttachment, 11-09)
+
+Diff: three volatile registers rotated in a keyframe loop (target base r3,
+`t[]` walker r4 = `mr r4,r3`, byte offset r5; ours offset r3, base r4, walker
+r5). mwtrace: with `(char *)c + i * sizeof(float)` the offset is a temp the
+BACKEND creates after code generation (`LI r90,0 ... ADDI r90,r90,4`), so it
+has the highest vreg and is coloured first.
+
+The target's offset is coloured last, so it is a named local. But every
+pointer form (`(char *)c + off`, `&c->x[i]`, `i * 4`, unsigned `i`) is strength
+reduced by IRO into a second walker (no `add`, 36 lines). Adding it as an
+integer keeps both the named offset and the per-iteration `add`:
+
+```c
+int off;
+...
+off = 0;
+for (i = 0; i < 4; i++, off += 4) {
+    if (c->t[i] <= t && t <= c->t[i + 1]) {
+        ScaleCurve *segment = (ScaleCurve *)((unsigned long)c + off);
+```
+
+`(int)c + off` and an `unsigned long off` do not work (walker again); it has
+to be `int off` added to `(unsigned long)c`.
