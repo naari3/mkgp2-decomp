@@ -1339,6 +1339,11 @@ def cmd_batch(a):
         rec['t'] = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
         with open(res_path, 'a') as f:
             f.write(json.dumps(rec) + '\n')
+        try:  # per-rule attempt/hit log for tools/rewrite_rules.py report
+            import rewrite_rules
+            rewrite_rules.record_shapesweep(rec, a.moves.split(',') if a.moves else ALL_MOVES)
+        except Exception:
+            pass
         try:
             if rec.get('best') == 0 or rec.get('skipped') or rec.get('error'):
                 ap.q_close(qid, 'release', '')

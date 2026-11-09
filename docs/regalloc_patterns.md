@@ -11,6 +11,10 @@ the function against `build/GNLJ82/asm/<tu>.s` (objdiff or a dtk disasm diff).
 `tools/regswap_classify.py` (output docs/reports/regswap_census.md) groups the
 current near misses by the shape of their register diff; start there to find
 functions that share a shape with one already fixed.
+The same patterns are kept machine-readable in `tools/patterns/rules.jsonl`
+(`tools/rewrite_rules.py suggest UNIT FN` ranks them for one function; see
+docs/asm_to_source.md), and `tools/asmgrep.py like UNIT FN --from --to` shows
+how matched functions wrote the same target shape.
 `tools/pragmasweep.py` already automates patterns 1 and 4 (compiler x pragma x
 decl order); try it first, then go down this list by hand.
 

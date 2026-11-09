@@ -26,6 +26,8 @@ Rough order to try; each one writes nothing to the repo unless `--apply`.
 | `autopipe.py` | runs pragmasweep -> decl order -> permuter unattended | needs naari3's out-of-repo `cperm.py` / `queue.py` (see below) |
 | `regswap_classify.py` | nothing; groups near misses by diff shape | picks targets; output `docs/reports/regswap_census.md` |
 | `regfix.py` | diagnoses register-only diffs by re-running MWCC's allocator offline on mwccdbg dumps; solves the local declaration order exactly (all orders simulated, no compile); `fix` = focused shapesweep moves + that solver | `diag UNIT FN [--start-tu F]`, `fix UNIT FN`; needs mwccdbg install; parallel via `unshare -n` (`netns_lo.py`) |
+| `asmgrep.py` | nothing; finds matched functions whose target asm has a given shape and prints their source (`like`, `find`, `similar`, `idioms`) | docs/asm_to_source.md |
+| `rewrite_rules.py` | nothing; matches `patterns/rules.jsonl` (target shape -> source rewrite) against near misses, logs rule hits, convergence report | docs/asm_to_source.md |
 | `mwccdbg.py` | nothing; shows why a register went where it did | mwcc-debugger wrapper; `mwcc_dump.py` is the older private-mwcc variant |
 
 ## Data / TU boundaries

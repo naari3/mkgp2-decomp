@@ -1,0 +1,323 @@
+{
+ "idioms": [
+  {
+   "id": "bool-eq-zero",
+   "pattern": [
+    "cntlzw $a, *",
+    "...2",
+    "srwi *, $a, 5"
+   ],
+   "source": "`x == 0` / `!x` as a value (bool result)"
+  },
+  {
+   "id": "bool-ne-zero-neg-or",
+   "pattern": [
+    "neg $a, $x",
+    "...2",
+    "or $b, $a, $x",
+    "...2",
+    "srwi *, $b, 31"
+   ],
+   "source": "`x != 0` as a value through `(-x | x) >> 31`",
+   "refs": [
+    "setup/TIPS.md"
+   ]
+  },
+  {
+   "id": "bool-le-zero",
+   "pattern": [
+    "li $o, 1",
+    "...3",
+    "cntlzw *, *",
+    "rlwnm *, $o, *, *, *"
+   ],
+   "source": "`return x <= 0;` (bool)",
+   "refs": [
+    "setup/TIPS.md #9"
+   ]
+  },
+  {
+   "id": "sign-div-pow2",
+   "pattern": [
+    "srawi $a, $x, #",
+    "...2",
+    "addze *, $a"
+   ],
+   "source": "signed `x / 2^n`"
+  },
+  {
+   "id": "magic-div",
+   "pattern": [
+    "mulhw $a, *, *",
+    "...3",
+    "srawi *, *, #",
+    "...3",
+    "srwi *, *, 31"
+   ],
+   "source": "signed division by a non-power-of-2 constant"
+  },
+  {
+   "id": "magic-divu",
+   "pattern": [
+    "mulhwu $a, *, *",
+    "...3",
+    "srwi *, $a, #"
+   ],
+   "source": "unsigned division by a constant"
+  },
+  {
+   "id": "int-to-float",
+   "pattern": [
+    "xoris $a, *, 0x8000",
+    "...4",
+    "stw $a, #(r1)",
+    "...4",
+    "lfd $d, #(r1)",
+    "...4",
+    "fsubs *, $d, *"
+   ],
+   "source": "`(float)int_value` (magic-double conversion)"
+  },
+  {
+   "id": "uint-to-float",
+   "pattern": [
+    "stw $x, #(r1)",
+    "...4",
+    "lfd $d, #(r1)",
+    "...4",
+    "fsubs *, $d, *"
+   ],
+   "source": "`(float)unsigned_value`"
+  },
+  {
+   "id": "float-to-int",
+   "pattern": [
+    "fctiwz $f, *",
+    "...3",
+    "stfd $f, #(r1)",
+    "...3",
+    "lwz *, #(r1)"
+   ],
+   "source": "`(int)float_value`"
+  },
+  {
+   "id": "u8-clamp-insert",
+   "pattern": [
+    "li $c, -0x100",
+    "...8",
+    "rlwimi $c, *, 0, 24, 31"
+   ],
+   "source": "`0xFFFFFF00 | (u8)a` colour (GC/2.x colours the constant in rN, 1.3.2 in r0)",
+   "refs": [
+    "docs/regalloc_patterns.md#11"
+   ]
+  },
+  {
+   "id": "bitfield-insert",
+   "pattern": [
+    "rlwimi *, *, #, #, #"
+   ],
+   "source": "bitfield store / `(a & ~m) | (b << s & m)`"
+  },
+  {
+   "id": "extract-byte",
+   "pattern": [
+    "extrwi *, *, 8, #"
+   ],
+   "source": "`(x >> s) & 0xFF`"
+  },
+  {
+   "id": "clrlwi-u8",
+   "pattern": [
+    "clrlwi *, *, 24"
+   ],
+   "source": "`(u8)x` / `x & 0xFF` used as a value"
+  },
+  {
+   "id": "sign-ext-s16",
+   "pattern": [
+    "extsh *, *"
+   ],
+   "source": "`(s16)x` (short load or cast)"
+  },
+  {
+   "id": "sign-ext-s8",
+   "pattern": [
+    "extsb *, *"
+   ],
+   "source": "`(s8)x`"
+  },
+  {
+   "id": "fmadds",
+   "pattern": [
+    "fmadds $d, *, *, *"
+   ],
+   "source": "`a*b + c` (fused; contract on)"
+  },
+  {
+   "id": "fmsubs",
+   "pattern": [
+    "fmsubs $d, *, *, *"
+   ],
+   "source": "`a*b - c`"
+  },
+  {
+   "id": "fnmsubs",
+   "pattern": [
+    "fnmsubs $d, *, *, *"
+   ],
+   "source": "`c - a*b`"
+  },
+  {
+   "id": "fabs",
+   "pattern": [
+    "fabs *, *"
+   ],
+   "source": "`__fabs(x)` / `fabsf`"
+  },
+  {
+   "id": "frsp-after-call",
+   "pattern": [
+    "bl SYM",
+    "frsp *, f1"
+   ],
+   "source": "double-returning call (sin/cos/sqrt from MSL) assigned to a float"
+  },
+  {
+   "id": "fres-recip",
+   "pattern": [
+    "fres *, *"
+   ],
+   "source": "`__fres` reciprocal estimate"
+  },
+  {
+   "id": "frsqrte",
+   "pattern": [
+    "frsqrte *, *"
+   ],
+   "source": "`__frsqrte` (inline sqrt via Newton steps)"
+  },
+  {
+   "id": "matrix-vec-translate",
+   "pattern": [
+    "fmadds $a, *, *, $a",
+    "...4",
+    "lfs $t, 0x30($m)",
+    "...4",
+    "fadds $a, $t, $a"
+   ],
+   "source": "vector x 4x4 matrix with translation: `m[3][0] + (z*m[2][0] + (x*m[0][0] + y*m[1][0]))`",
+   "refs": [
+    "tools/patterns/rules.jsonl matrix-vec-translate"
+   ]
+  },
+  {
+   "id": "psq-load",
+   "pattern": [
+    "psq_l *, *, *, *, *"
+   ],
+   "source": "paired-single load (psq_l): inline asm or PSMTX/PSVEC lib, or a `__psq_l` intrinsic"
+  },
+  {
+   "id": "lmw-stmw",
+   "pattern": [
+    "stmw *, #(r1)"
+   ],
+   "source": "`-use_lmw_stmw on` TU (saves r(n)..r31 in one instruction)"
+  },
+  {
+   "id": "ctr-loop",
+   "pattern": [
+    "mtctr *",
+    "...20",
+    "bdnz *"
+   ],
+   "source": "counted loop with an invariant trip count (`for (i = 0; i < N; i++)`)",
+   "gap": 20
+  },
+  {
+   "id": "switch-table",
+   "pattern": [
+    "slwi $a, *, 2",
+    "...3",
+    "lwzx $b, *, $a",
+    "mtctr $b",
+    "bctr"
+   ],
+   "source": "`switch` with a jump table (TU must own the .data table)",
+   "refs": [
+    "setup/TIPS.md gotcha 2"
+   ]
+  },
+  {
+   "id": "virtual-call",
+   "pattern": [
+    "lwz $v, #($o)",
+    "...4",
+    "lwz $f, #($v)",
+    "...4",
+    "(mtctr|mtlr) $f",
+    "...4",
+    "(bctrl|blrl)"
+   ],
+   "source": "C++ virtual call `obj->Method()`"
+  },
+  {
+   "id": "fnptr-call",
+   "pattern": [
+    "(mtctr|mtlr) $f",
+    "...4",
+    "(bctrl|blrl)"
+   ],
+   "source": "call through a function pointer (`blrl` / `bctrl`)"
+  },
+  {
+   "id": "anchor-zero-offset",
+   "pattern": [
+    "addi $b, $a, 0x0"
+   ],
+   "source": "pool-anchored object at offset 0 (TU owns the pool; often an extra temp) or GC/1.2.5n `&p->first_member`",
+   "refs": [
+    "setup/TIPS.md section-anchor"
+   ]
+  },
+  {
+   "id": "load-update",
+   "pattern": [
+    "lwzu *, *, *"
+   ],
+   "source": "pointer walk `*++p` / strength-reduced loop over an array (load with update)"
+  },
+  {
+   "id": "stfsu-walker",
+   "pattern": [
+    "stfsu *, *, *"
+   ],
+   "source": "store-with-update float walker in an unrolled/strength-reduced loop"
+  },
+  {
+   "id": "dcbz-memset",
+   "pattern": [
+    "dcbz *, *"
+   ],
+   "source": "`__dcbz` / memset-like clear of 32-byte blocks"
+  },
+  {
+   "id": "tail-branch",
+   "pattern": [
+    "b SYM"
+   ],
+   "source": "tail call `return f(...)` with no frame"
+  },
+  {
+   "id": "cond-move-isel",
+   "pattern": [
+    "li $r, #",
+    "...2",
+    "b(eq|ne|lt|gt|le|ge) *",
+    "li $r, #"
+   ],
+   "source": "`r = c ? A : B;` with constants (load-default then branch)"
+  }
+ ]
+}
