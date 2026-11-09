@@ -211,6 +211,7 @@ Defaults per lib block in `configure.py`: game `GC/1.3.2`, Dolphin SDK
 | Loads hoisted over stores / interleaved `lfs; lwz; lfs` before stores | `GC/2.6` |
 | `x \| ~0xFF` as `li rN, -0x100; or` (1.3.2 gives `oris/ori`); `li -0x100; rlwimi` colour inserts | `GC/2.6` |
 | `stmw`/`lmw` prologues instead of `_savegpr` calls | `GC/2.6` + `-use_lmw_stmw on` |
+| Everything matches except one `mr` and one `lfs` swapped in a loop preheader (`mr r29,r28; lfs f30; mr r27,r31` in the target, `mr; mr; lfs` from 1.3/1.3.2/1.3.2r) | `GC/2.0` or later (RivalRun.c uses `GC/2.6`). `for v in 1.3.2 2.0 2.6` on the unit's ninja command line is a 5 second probe |
 | Target does not auto-inline earlier-defined functions | add `-inline noauto` |
 | Leaf with `addi rX, rY, 0` for an offset-0 member (no `mr`) | `GC/1.2.5n` |
 | Some byte-compare / extab-order shapes (StrPcb) | `GC/1.3` (then check `tools/extab_order.json`) |

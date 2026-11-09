@@ -1718,3 +1718,59 @@ contain the return type, callers that ignore the value are unchanged).
 Where to look: any `rX` vs r3 swap for a short-lived temp in the tail of a
 `void` function, on a path that can reach the exit without a call; also
 `li r3,N`-free tails where a value seems to be kept away from r3.
+
+## 67. `li rA,0; ... mr rB,rA` for two variables that both start at zero: they are locals of an INLINED function (RivalRun_UpdatePathFollower, 11-10)
+
+Target (search loop preheader): `li r28,0; stb r28,0(r30); mr r29,r28` for
+`best = 0; i = 0`. Written as two locals of the function itself we always got
+`li r28,0; li r29,0`, whatever the statements (`i = best`, `pf->flag = best`,
+shared constant local).
+
+Why (GlobalOptimizer.c `optimizelevel4`, ValueNumbering.c `isCSEop`):
+constant propagation turns every `mr x,y` whose `y` has the single reaching
+definition `li` back into an `li`. The later *aggressive* value numbering pass
+does merge two equal `li`, but only when the destination register is a
+compiler temporary (`>= first_fe_temporary_register`), never a named local of
+the function being compiled. Locals of an inlined function are such
+temporaries. So a surviving `li; mr` pair for two same-valued variables says
+the variables live in an inline.
+
+What else the two inlines (`RR_FindNearest(pts, count, pos)`,
+`RR_Follow(pf, pts, last, pos, &rel)`) fixed, in the order the diff shrank
+(124 -> 0 lines):
+
+- Arguments copied into an inline are coalesced copies that still raise the
+  interference degree of the outer locals: `pts` reaches degree >= 29 and is
+  coloured before `pf` (r31 / r30 as in the target).
+- Inline locals are numbered above the outer named locals, last declared =
+  coloured first: declare the floats of each helper in reverse of the wanted
+  f31, f30, ... order.
+- `count - 1` passed as the argument (not `last = count - 1` inside the helper)
+  puts `last` in r29.
+- A stack object declared in the outer function and passed by pointer
+  (`RRVec3 rel`) sits above the helper's own stack objects (d at 8(r1), rel at
+  20(r1)).
+- The table row read through an inline getter (`RR_Routes(pf->lane)[pf->route].pts`)
+  becomes a late temp, which fixes a volatile r4/r5 swap (same idea as §56).
+- The last two lines were the compiler version, not the source: see
+  matching_rules §4 (preheader `mr`/`lfs` order, GC/2.0 or later).
+
+Rule name in hits.jsonl: `li-cse-inline-locals`.
+
+## 68. Loop counters take the LAST volatile registers in the target: the loop is not inside an inline (clFlowCCBattle::Update, 11-09)
+
+Diff: a 5x20 grid shift loop with five volatile registers rotated. Target
+y=r9, x=r10, walkers r6/r7/r8; ours x=r6, y=r7, walkers above.
+
+Reading: in the target the two counters are coloured after every temp, so
+they are named locals of the function (lowest virtual registers). In ours
+the loop lived in a `static inline ShiftBattleGrid(page)`, which turns its
+locals into frontend inline temps (highest numbers, coloured first).
+
+Fix: write the loop straight into the function body (66 -> 17 lines). The
+remaining walker swap (dst `x + y*20` vs src `x + (y-1)*20`) follows
+creation order of the strength-reduction temps: name the destination index
+first (`int dst = x + y * 20;` before `src`), 17 -> 0.
+
+Rule of thumb: counters in the highest volatile registers = plain locals;
+counters in the lowest = an inline's locals.

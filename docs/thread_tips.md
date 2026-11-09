@@ -628,3 +628,9 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
 - `leversweep.py fn|batch --pairs N` (11-10, regalloc_patterns 62): after the single-lever pass, 3-way merges the best N
   variants per lever that changed the diff with those of every other lever (non-overlapping edits only) and scores the
   pairs. Results of the 99.x run: docs/sweeps/leversweep_pairs/.
+- leversweep lever `void-to-int` (11-10, regalloc_patterns 66): `void f()` -> `int f()` / `unsigned char f()` with no
+  return statement (TU prototypes rewritten; a header prototype makes the variant fail, change the header by hand).
+  Run over every 99.x near miss + gave_up row with a void definition: 63 void functions fired, 0 better; 17 could not be tested because a header declares them.
+- leversweep `--pairs 3` over the 99.x set + gave_up rows (11-10): 134 functions, 514 pair variants, 0 matches; 4
+  functions had a pair as their best asm-line score, none of them a better objdiff percentage. Table:
+  docs/sweeps/leversweep_pairs/summary.md.

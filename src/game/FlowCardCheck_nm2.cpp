@@ -174,20 +174,6 @@ void clFlowCCBattle::Draw() {
     }
 }
 
-static inline void ShiftBattleGrid(clFlowCCBattle *page) {
-    for (int y = 4; y >= 0; y--) {
-        for (int x = 19; x >= 0; x--) {
-            int src = 100;
-            if (y > 0) {
-                src = x + (y - 1) * 20;
-            } else if (x > 0) {
-                src = (x - 1) + y * 20;
-            }
-            page->grid[x + y * 20] = page->grid[src];
-        }
-    }
-}
-
 int clFlowCCBattle::Update() {
     InputPlayer &pl = *InputMgr_GetPlayer(GetInputManager(), 0);
     UpdateSlide();
@@ -216,7 +202,18 @@ int clFlowCCBattle::Update() {
             grid[100] = 0.0165f * blink;
         }
     }
-    ShiftBattleGrid(this);
+    for (int y = 4; y >= 0; y--) {
+        for (int x = 19; x >= 0; x--) {
+            int dst = x + y * 20;
+            int src = 100;
+            if (y > 0) {
+                src = x + (y - 1) * 20;
+            } else if (x > 0) {
+                src = (x - 1) + y * 20;
+            }
+            grid[dst] = grid[src];
+        }
+    }
     for (int i = 0; i < 3; i++) {
         if (grp[i] != 0) {
             Sprite_AdvanceAnim(*grp[i], 0.0165f);

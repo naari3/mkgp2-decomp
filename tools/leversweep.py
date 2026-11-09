@@ -1280,6 +1280,31 @@ def gen_chain(fx):
     return fx.scoped(f)
 
 
+@lever('void-to-int', 'nonvoid-no-return', 'auto', 'b61e1de',
+       'a `void` function declared `int` with no return statement: r3 stays live to the exit, so late temps '
+       'avoid r3 (regalloc_patterns 66). Prototypes in the TU are rewritten too; a header prototype makes the '
+       'variant fail to compile (then change the header by hand)')
+def gen_voidint(fx):
+    if not fx.head:
+        return []
+    ms = list(re.finditer(r'\bvoid(\s+)((?:\w+::)*~?\w+)(\s*\()', fx.head))
+    if not ms:
+        return []
+    m = ms[-1]
+    if re.search(r'\breturn\s+[^;]', strip_comments(fx.body)):
+        return []
+    short = m.group(2).split('::')[-1]
+    out = []
+    for ty in ('int', 'unsigned char'):
+        head = fx.head[:m.start()] + ty + fx.head[m.start() + 4:]
+        t = fx.with_body(fx.body, head=head)
+        if not t:
+            continue
+        t = re.sub(r'\bvoid(\s+(?:\w+::)*' + re.escape(short) + r'\s*\()', ty + r'\1', t)
+        out.append((f'void -> {ty}, no return statement', t))
+    return out
+
+
 # --------------------------------------------------------------------------
 # runner
 
