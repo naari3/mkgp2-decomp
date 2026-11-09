@@ -3,7 +3,7 @@
 the compiler's decisions for one function. No emulator, no gdb, ~0.1 s, and
 any number can run in parallel.
 
-    python3 tools/mwtrace.py UNIT FN [--only VREG,COALESCE,COLOR,IGNODE,PCODE,SBLOCK,SNODE,SPICK] [-o trace.txt]
+    python3 tools/mwtrace.py UNIT FN [--only VREG,COALESCE,COLOR,IGNODE,PCODE,SBLOCK,SNODE,SPICK,SSKIP] [-o trace.txt]
 
 Needs `sh tools/install_mweppc.sh --build` (cloud_setup.sh runs it). The unit's
 exact production command line is taken from `ninja -t commands`; GC/1.x and
@@ -19,11 +19,20 @@ Trace lines (tools/mweppc_trace/trace.patch; FN = mangled link name):
         2 pushed, 4 coalesced, 8 coalesced-into). nb lists machine regs too and
         still counts coalesced nodes. cost is 0 unless colouring needed a spill
         (estimatespillcosts runs lazily).
-  PCODE pre|post B<block> <srcoffset> <insn>                  all PCode right before / after
+  PCODE pre|post B<block> <srcline> <insn>                    all PCode right before / after
         colorinstructions (post = physical regs, coalesced moves gone, before
-        prologue/epilogue and the post-RA scheduler); srcoffset -1 = none
-  SBLOCK pre-RA|post-RA critical=<n>, then SNODE i lat height latest preds off insn succ=i:lat,...
-  SPICK cycle.slot insn crit unc height rank                  scheduler picks
+        prologue/epilogue and the post-RA scheduler); srcline = PCode sourceoffset
+        (a line number of the file; -1 = none)
+  SBLOCK pre-RA|post-RA critical=<n> B<block>                 one per scheduled block
+  SNODE i lat= height= latest= preds= off=<srcline> insn succ=i:lat,...  the block's DAG
+  SPICK cycle.slot insn crit unc height rank node=<i> ready=<i:earliest:latest:height:unc>,...
+        scheduler picks; ready = every node with no unscheduled pred (pick included)
+  SSKIP pre-RA|post-RA B<block> count=<n> flags=0x.. <already-scheduled|too-short|prolog/epilog>
+        blocks the scheduler skipped. A block keeps its pre-RA order only while no
+        PCode is inserted into / deleted from it (PCode.c clears fScheduled).
+What-if knob: MWCC_TRACE_RESCHED=all|<n>[,<n>] makes the post-RA scheduler
+schedule those blocks again (as if regalloc had changed them); used by
+`tools/mwsched.py resched`. Unset, the patched compiler's output is unchanged.
 Opcodes print in upper case; registers end in "!" when written. Before regalloc
 registers are virtual (r32+/f32+), as in mwccdbg dumps.
 """
@@ -65,14 +74,16 @@ def command(unit: str):
     return [str(exe)] + args, ver, nv
 
 
-def trace(unit: str, fn: str, obj_out: str | None = None) -> tuple[list[str], str]:
+def trace(unit: str, fn: str, obj_out: str | None = None, env: dict | None = None) -> tuple[list[str], str]:
+    """env: extra variables, e.g. {"MWCC_TRACE_RESCHED": "18"} (what-if: the post-RA
+    scheduler schedules block B18 again, as if regalloc had changed it)."""
     cmd, ver, nv = command(unit)
     with tempfile.TemporaryDirectory() as d:
         o = cmd.index("-o")
         cmd[o + 1] = obj_out or os.path.join(d, "out.o")
         tf = os.path.join(d, "trace.txt")
-        env = dict(os.environ, MWCC_TRACE=tf, MWCC_TRACE_FN=fn)
-        r = subprocess.run(cmd, cwd=ROOT, env=env, capture_output=True, text=True)
+        e = dict(os.environ, MWCC_TRACE=tf, MWCC_TRACE_FN=fn, **(env or {}))
+        r = subprocess.run(cmd, cwd=ROOT, env=e, capture_output=True, text=True)
         if r.returncode:
             sys.exit(r.stdout + r.stderr)
         lines = Path(tf).read_text().splitlines() if os.path.exists(tf) else []

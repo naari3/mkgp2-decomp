@@ -279,7 +279,7 @@ index b6fc696..d5440d4 100644
                          deletepcode(instr);
                          continue;
 diff --git a/src/compiler/backend/Scheduler.c b/src/compiler/backend/Scheduler.c
-index 524e350..46e2357 100644
+index 524e350..b9b3c97 100644
 --- a/src/compiler/backend/Scheduler.c
 +++ b/src/compiler/backend/Scheduler.c
 @@ -6,6 +6,7 @@
@@ -290,15 +290,66 @@ index 524e350..46e2357 100644
  
  #pragma pack(2)
  typedef struct DGNode {
-@@ -479,6 +480,28 @@ static void scheduleblock(PCodeBlock* block) {
+@@ -458,6 +459,40 @@ static void holdoffsuccessors(DGNode* node, UInt16 counter) {
+     }
+ }
+ 
++static DGNode** mwtrace_nodes;
++static int mwtrace_nnodes;
++static int mwtrace_node_index(DGNode* n) {
++    int i;
++    for (i = 0; i < mwtrace_nnodes; i++) {
++        if (mwtrace_nodes[i] == n) {
++            return i;
++        }
++    }
++    return -1;
++}
++
++static int mwtrace_resched(int index) {
++    const char* e = getenv("MWCC_TRACE_RESCHED");
++    if (!e || !*e) {
++        return 0;
++    }
++    if (!strcmp(e, "all")) {
++        return 1;
++    }
++    while (*e) {
++        if (atoi(e) == index) {
++            return 1;
++        }
++        while (*e && *e != ',') {
++            e++;
++        }
++        if (*e == ',') {
++            e++;
++        }
++    }
++    return 0;
++}
++
+ static void scheduleblock(PCodeBlock* block) {
+     DGNode* node;
+     UInt16 counter;
+@@ -479,6 +514,38 @@ static void scheduleblock(PCodeBlock* block) {
      }
  
      computedeadlines(head);
++    mwtrace_nnodes = 0;
 +    if (mwtrace_out()) {
 +        DGNode* n;
 +        DGSuccessor* s;
 +        int k = 0;
-+        MWTRACE("SBLOCK %s critical=%d\n", coloring ? "pre-RA" : "post-RA", criticalpath);
++        for (n = head; n; n = n->next) {
++            k++;
++        }
++        free(mwtrace_nodes);
++        mwtrace_nodes = (DGNode**)malloc(sizeof(DGNode*) * (k + 1));
++        for (n = head; n; n = n->next) {
++            mwtrace_nodes[mwtrace_nnodes++] = n;
++        }
++        k = 0;
++        MWTRACE("SBLOCK %s critical=%d B%d\n", coloring ? "pre-RA" : "post-RA", criticalpath, (int)block->blockIndex);
 +        for (n = head; n; n = n->next) {
 +            MWTRACE("SNODE %d lat=%d height=%d latest=%d preds=%d off=%ld ", k, n->latency, n->height, n->latest,
 +                n->predCount, (long)n->instr->sourceoffset);
@@ -319,16 +370,46 @@ index 524e350..46e2357 100644
      block->firstPCode = block->lastPCode = NULL;
      block->pcodeCount = 0;
  
-@@ -494,6 +517,12 @@ static void scheduleblock(PCodeBlock* block) {
+@@ -494,6 +561,20 @@ static void scheduleblock(PCodeBlock* block) {
              if (!node) {
                  break;
              }
 +            if (mwtrace_out()) {
++                DGNode* n;
 +                MWTRACE("SPICK %d.%d ", counter, i);
 +                mwtrace_insn(mwtrace_out(), node->instr);
-+                MWTRACE(" crit=%d unc=%d height=%d rank=%d\n", node->latest <= counter, uncovering(node), node->height,
-+                    opcodeinfo[node->instr->op].rank);
++                MWTRACE(" crit=%d unc=%d height=%d rank=%d node=%d ready=", node->latest <= counter, uncovering(node),
++                    node->height, opcodeinfo[node->instr->op].rank, mwtrace_node_index(node));
++                for (n = head; n; n = n->next) {
++                    if (n->predCount == 0) {
++                        MWTRACE("%d:%d:%d:%d:%d,", mwtrace_node_index(n), n->earliest, n->latest, n->height,
++                            uncovering(n));
++                    }
++                }
++                MWTRACE("\n");
 +            }
  
              instr = node->instr;
              if (node->successors) {
+@@ -542,11 +623,21 @@ void scheduleinstructions(Boolean includePrologEpilog) {
+     gather_alias_info();
+ 
+     for (block = pcbasicblocks; block; block = block->nextBlock) {
++        /* what-if knob, trace builds only: MWCC_TRACE_RESCHED=all|<n>[,<n>...] makes the
++           post-RA pass schedule those blocks again as if regalloc had changed them */
++        if (includePrologEpilog && mwtrace_resched(block->blockIndex)) {
++            block->flags &= ~fScheduled;
++        }
+         if (block->pcodeCount > 2 &&
+             (includePrologEpilog || !(block->flags & (fIsProlog | fIsEpilogue))) &&
+             !(block->flags & fScheduled)) {
+             scheduleblock(block);
+             block->flags |= fScheduled;
++        } else if (block->pcodeCount > 0 && mwtrace_out()) {
++            MWTRACE("SSKIP %s B%d count=%d flags=0x%x%s\n", includePrologEpilog ? "post-RA" : "pre-RA",
++                (int)block->blockIndex, (int)block->pcodeCount, (unsigned)block->flags,
++                (block->flags & fScheduled) ? " already-scheduled"
++                : block->pcodeCount <= 2 ? " too-short" : " prolog/epilog");
+         }
+     }
+ }

@@ -191,3 +191,49 @@ ours: li      r3,4  before  stw     r5,4(r8)   (lines 148, 134)
 ours: li      r0,-1  before  stw     r5,0(r8)   (lines 151, 133)
    -> cycle 3: both ready, #55 wins on uncovering: #55 {'critical': True, 'uncovering': 1, 'height': 3, 'rank': 4} vs #3 {'critical': True, 'uncovering': 0, 'height': 2, 'rank': 1}
 ```
+
+## Native re-run, post-RA aware (2026-11-09, later)
+
+Same 32 functions through the native trace build (`mwsched.py explain`, which now explains each block from
+the schedule that was emitted, post-RA when a block was scheduled twice) and `mwsched.py resched`
+(re-schedule one block after regalloc, compare with the target). "stand-in" = whether native GC/2.6 gives
+the same code as our real build for this function.
+
+| fn | stand-in | reasons (phase:kind) | note |
+|---|---|---|---|
+| `fn_80227B98` | differs | - |  |
+| `Effect_DustBurst4_Update` | same | post-RA:not-ready:latency, post-RA:order, post-RA:critical |  |
+| `EffectItemChainIndicator_Tick` | same | pre-RA:rank |  |
+| `fn_80245E6C` | same | pre-RA:uncovering | resched: MATCH if B31 re-scheduled post-RA |
+| `SpriteGroup_CreateOrInit` | same | pre-RA:not-ready:latency, pre-RA:not-ready:preds, pre-RA:dependence:memory |  |
+| `Terrain_WallEdgeTest` | same | - | register diff, not a pure reorder |
+| `CalcEarnedCoins` | same | - | register diff, not a pure reorder |
+| `fn_801C0568` | same | post-RA:not-ready:latency, post-RA:order, post-RA:critical |  |
+| `fn_801D7610` | same | - | resched: MATCH if last block B18 re-scheduled post-RA (epilogue) |
+| `fn_80243074` | same | pre-RA:order |  |
+| `fn_8028CB64` | same | post-RA:not-ready:latency |  |
+| `fn_802854B0` | differs | pre-RA:dependence:RAW |  |
+| `CardData_InitDefaults` | same | - | resched: MATCH if last block B18 re-scheduled post-RA (epilogue) |
+| `fn_8018F8A8` | same | pre-RA:rank x2 |  |
+| `VoiceEvent_PushRace` | same | pre-RA:order, pre-RA:unit-busy |  |
+| `Card_VerifyChecksum` | same | - | register/prologue diff (save of r29), not a pure reorder |
+| `fn_8022ACE4` | differs | - |  |
+| `Terrain_GetGroundHeightWithPenetration` | same | - | lfs pairs not inside one scheduled block (pairing failed) |
+| `fn_801D4DC0` | same | - | register/prologue diff (save of r29), not a pure reorder |
+| `fn_801AC208` | same | - | addi moved across blocks / register diff (no pair inside one block) |
+| `BackupReadRecord` | same | post-RA:not-ready:latency, post-RA:dependence:WAR, post-RA:height, post-RA:order |  |
+| `CardSaveData_Parser` | same | - | register diff (r30 vs r24), not a pure reorder |
+| `KartPhysics_ApplyCollisionForce` | same | pre-RA:uncovering x3, pre-RA:not-ready:latency |  |
+| `TaMode_FrameUpdate` | same | post-RA:dependence:WAR, post-RA:critical x3, post-RA:order |  |
+| `fn_801AECF4` | same | post-RA:height |  |
+| `AI_SystemDtor` | same | pre-RA:dependence:memory x4 |  |
+| `GabyouItem_Tick_HeldAndHoming_2Eto31` | differs | - |  |
+| `fn_802386E0` | same | pre-RA:order, pre-RA:dependence:RAW x2, post-RA:not-ready:latency, post-RA:unit-busy, post-RA:critical |  |
+| `fn_802867B8` | differs | - |  |
+| `SetCourseParams` | same | pre-RA:uncovering x9, pre-RA:critical, pre-RA:order |  |
+| `fn_8028D8CC` | same | post-RA:not-ready:latency x2, post-RA:not-ready:preds x5, post-RA:unit-busy, pre-RA:critical x2, pre-RA:rank, post-RA:dependence:WAR |  |
+| `fn_80172948` | same | post-RA:critical, post-RA:not-ready:latency x9, post-RA:not-ready:preds x5, post-RA:dependence:RAW, post-RA:height x4, post-RA:uncovering x3, post-RA:dependence:WAR |  |
+
+Post-RA reasons (blocks scheduled again after regalloc) are new: the first run only read pre-RA
+blocks. Across all 183 near misses at 90-99.99% (report.json), re-scheduling the last block or every block after regalloc turns exactly three into matches:
+fn_801D7610, CardData_InitDefaults, fn_80245E6C (docs/gave_up.md rows updated).

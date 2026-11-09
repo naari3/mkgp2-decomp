@@ -10,9 +10,15 @@ docs/mwcc_internals.md for the algorithms. This module reads those files.
     python3 tools/mwsched.py explain UNIT FN [--run] instruction pairs ours vs target in the
                                                      other order, and why the scheduler kept ours
     python3 tools/mwsched.py coalesce UNIT FN [--run] every move and why it was / was not merged
+    python3 tools/mwsched.py resched UNIT FN         which blocks give the target order if the
+                                                     post-RA scheduler re-schedules them (native)
 
---run (re)runs the traced debugger first (needs a build of UNIT); otherwise the
-dumps in build/mwccdbg/out/FN are used.
+log/explain use the native trace-patched compiler (tools/mwtrace.py, ~0.1 s)
+when build/mweppc is built, and the emitted schedule of each block: a block
+scheduled again after regalloc (post-RA, see docs/mwcc_internals.md) is
+explained from its post-RA DAG. --gdb uses the mwcc-debugger dumps in
+build/mwccdbg/out/FN instead (--run reruns the traced debugger); coalesce
+always does (mwtrace.py --only COALESCE is the native equivalent).
 
 Programmatic (tools/regfix.py diag):
     explain_schedule(out_dir, ours_obj, tgt_obj, fn) -> [{"ours": (a, b), "target": (b, a),
@@ -107,7 +113,71 @@ def picks_by_block(blk):
     return out
 
 
+_SNODE = re.compile(r"SNODE (\d+) lat=(\d+) height=(\d+) latest=(\d+) preds=(\d+) off=(-?\d+) (.*?) succ=(.*)$")
+_SPICK = re.compile(r"SPICK (\d+)\.(\d+) .* node=(-?\d+) ready=(.*)$")
+
+
+def native_insn(t: str) -> str:
+    """mwtrace "STW r0!,r1,_" -> "stw r0,r1" (the PCode text mwccdbg dumps)."""
+    op, _, rest = t.partition(" ")
+    parts = [x.rstrip("!") for x in rest.split(",") if x and x != "_"]
+    if op in ("BL", "BLR", "BCTR", "BCTRL", "BLRL", "B"):
+        parts = parts[:1] if op in ("BL", "B") else []   # drop the implicit clobber list
+    parts = [re.sub(r"^c(\d)$", r"cr\1", x) for x in parts if not re.fullmatch(r"s\d+", x)]
+    return op.lower() + (" " + ",".join(parts) if parts else "")
+
+
+def load_native(unit: str, fn: str):
+    """Same shape as sched.json, from tools/mwtrace.py (native trace-patched compiler).
+    "line" is the PCode sourceoffset, which is the source line number."""
+    import mwtrace
+    lines, _ = mwtrace.trace(unit, fn)
+    blocks, cur = [], None
+    for l in lines:
+        if l.startswith("SBLOCK "):
+            f = l.split()
+            cur = {"phase": f[1], "criticalpath": int(f[2].split("=")[1]),
+                   "block": f[3] if len(f) > 3 else len(blocks), "issue_width": 2, "nodes": [], "picks": []}
+            blocks.append(cur)
+        elif l.startswith("SNODE ") and cur is not None:
+            m = _SNODE.match(l)
+            i, lat, h, latest, preds, off, insn, succ = m.groups()
+            cur["nodes"].append({"i": int(i), "insn": native_insn(insn), "line": int(off), "rank": 0,
+                                 "latency": int(lat), "height": int(h), "latest": int(latest),
+                                 "preds": int(preds),
+                                 "succ": [[int(a), int(b)] for a, b in (x.split(":") for x in succ.split(",") if x)]})
+        elif l.startswith("SPICK ") and cur is not None:
+            m = _SPICK.match(l)
+            if not m:
+                continue
+            cyc, slot, nd, ready = m.groups()
+            rk = re.search(r" rank=(\d+)", l)
+            if int(nd) >= 0 and rk:
+                cur["nodes"][int(nd)]["rank"] = int(rk.group(1))
+            cur["picks"].append({"cycle": int(cyc), "slot": int(slot), "pick": int(nd),
+                                 "ready": [[int(v) for v in x.split(":")] for x in ready.split(",") if x]})
+    for b in blocks:                      # ready lists list nodes; ranks of nodes known only once picked
+        for p in b["picks"]:
+            p["ready"].sort(key=lambda c: c[0])
+    return {"blocks": blocks} if blocks else None
+
+
+def final_blocks(d):
+    """[(index in d["blocks"], blk)] for the schedule that was emitted: a block scheduled
+    again after regalloc (post-RA) replaces its pre-RA schedule. Block order = first
+    appearance (pcbasicblocks order)."""
+    last, order = {}, []
+    for bi, blk in enumerate(d["blocks"]):
+        k = blk.get("block", bi)
+        if k not in last:
+            order.append(k)
+        last[k] = bi
+    return [(last[k], d["blocks"][last[k]]) for k in order]
+
+
 def load(out_dir):
+    if isinstance(out_dir, dict):
+        return out_dir
     f = Path(out_dir) / "sched.json"
     if not f.exists():
         return None
@@ -190,9 +260,7 @@ def obj_norm(ins: str) -> str:
 def map_nodes_to_ours(d, ours):
     """{(block, node): index in our object} via the scheduled pick order."""
     seq = []                                   # (block, node) in emitted order
-    for bi, blk in enumerate(d["blocks"]):
-        if blk["phase"] != "pre-RA":
-            continue
+    for bi, blk in final_blocks(d):
         for _, _, pk, _, _ in picks_by_block(blk):
             seq.append((bi, pk))
     A = [pcode_norm(d["blocks"][b]["nodes"][n]["insn"]).split("|")[0] for b, n in seq]
@@ -285,7 +353,7 @@ def explain_schedule(out_dir, ours_obj, tgt_obj, fn):
                 kind = "dependence:" + kinds[0].split()[0]
             else:
                 reason, kind = pick_reason(blk, na[1], nb[1])
-            out.append({"ours": (ours[a], ours[b]), "target": (tgt[pos_t[b]], tgt[pos_t[a]]),
+            out.append({"ours": (ours[a], ours[b]), "target": (tgt[pos_t[b]], tgt[pos_t[a]]), "phase": blk["phase"],
                         "nodes": (na[1], nb[1]), "reason": reason, "kind": kind,
                         "line": (A["line"], B["line"])})
     return out
@@ -318,6 +386,40 @@ def pick_reason(blk, a, b):
 
 
 # ---------------------------------------------------------------------------
+# what-if: re-schedule a block after regalloc
+
+def resched(unit: str, fn: str) -> list[str]:
+    """For every block the post-RA pass skipped because it kept its pre-RA schedule,
+    compile with MWCC_TRACE_RESCHED=<block> and compare FN with the target.
+    A block that matches (or gets closer) only when re-scheduled after regalloc
+    means: in the original source, regalloc or a later pass inserted or deleted an
+    instruction in that block (docs/mwcc_internals.md, 'Post-RA scheduler')."""
+    import tempfile
+    import mwtrace
+    tgt = md.objdump_fn(ROOT / f"build/{md.VERSION}/obj/{unit}.o", fn)
+
+    def score(env):
+        with tempfile.TemporaryDirectory() as d:
+            lines, _ = mwtrace.trace(unit, fn, os.path.join(d, "o.o"), env)
+            ours = md.objdump_fn(Path(d) / "o.o", fn)
+        sm = difflib.SequenceMatcher(None, ours, tgt, autojunk=False)
+        return lines, sum(max(i2 - i1, j2 - j1) for t, i1, i2, j1, j2 in sm.get_opcodes() if t != "equal")
+
+    lines, base = score(None)
+    out = [f"{fn}: {base} differing lines as compiled (native stand-in)"]
+    blocks = [int(m) for m in re.findall(r"SSKIP post-RA B(\d+) count=\d+ flags=\S+ already-scheduled",
+                                          "\n".join(lines))]
+    for b in blocks + ["all"]:
+        _, n = score({"MWCC_TRACE_RESCHED": str(b)})
+        if n != base:
+            out.append(f"  re-schedule {'B' if b != 'all' else ''}{b} after regalloc: {n} differing lines"
+                       + ("  <- MATCH" if n == 0 else ""))
+    if len(out) == 1:
+        out.append("  no block changes the result when re-scheduled after regalloc")
+    return out
+
+
+# ---------------------------------------------------------------------------
 # coalescing
 
 def fmt_coalesce(out_dir) -> str:
@@ -340,29 +442,44 @@ def fmt_coalesce(out_dir) -> str:
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("cmd", choices=["log", "explain", "coalesce"])
+    ap.add_argument("cmd", choices=["log", "explain", "coalesce", "resched"])
     ap.add_argument("unit")
     ap.add_argument("fn")
-    ap.add_argument("--run", action="store_true")
+    ap.add_argument("--run", action="store_true", help="(gdb mode) rerun the traced debugger")
+    ap.add_argument("--gdb", action="store_true",
+                    help="use the mwcc-debugger trace (real exe under retrowin32) instead of the native build")
     a = ap.parse_args()
     out = md.DBG_DIR / "out" / a.fn
-    if a.run or not (out / "sched.json").exists():
-        cmd, note = md.compile_command(a.unit, out / "dbg.o")
+    if a.cmd == "resched":
         md.sh(["ninja", f"build/{md.VERSION}/src/{a.unit}.o"], cwd=ROOT)
-        if not md.run_debugger(cmd, a.fn, out, 300, trace=True):
-            sys.exit(f"debugger failed; see {out}/run.log")
+        print("\n".join(resched(a.unit, a.fn)))
+        return
+    native = not a.gdb and a.cmd != "coalesce" and (ROOT / "build/mweppc/build/GC_2_6/native/mwcceppc").exists()
+    if native:
+        md.sh(["ninja", f"build/{md.VERSION}/src/{a.unit}.o"], cwd=ROOT)
+        d = load_native(a.unit, a.fn)
+        if d is None:
+            sys.exit(f"no scheduler trace for {a.fn}; check the mangled name")
+    else:
+        if a.run or not (out / "sched.json").exists():
+            cmd, note = md.compile_command(a.unit, out / "dbg.o")
+            md.sh(["ninja", f"build/{md.VERSION}/src/{a.unit}.o"], cwd=ROOT)
+            if not md.run_debugger(cmd, a.fn, out, 300, trace=True):
+                sys.exit(f"debugger failed; see {out}/run.log")
+        d = out
     if a.cmd == "log":
-        d = load(out)
+        d = load(d)
         print(fmt_log(d) if d else "no sched.json")
     elif a.cmd == "coalesce":
         print(fmt_coalesce(out))
     else:
-        res = explain_schedule(out, ROOT / f"build/{md.VERSION}/src/{a.unit}.o",
+        res = explain_schedule(d, ROOT / f"build/{md.VERSION}/src/{a.unit}.o",
                                ROOT / f"build/{md.VERSION}/obj/{a.unit}.o", a.fn)
         if not res:
             print("no schedule-order differences found (or no trace)")
         for r in res:
-            print(f"ours: {r['ours'][0]}  before  {r['ours'][1]}   (lines {r['line'][0]}, {r['line'][1]})")
+            where = "lines"
+            print(f"ours: {r['ours'][0]}  before  {r['ours'][1]}   ({r['phase']}, {where} {r['line'][0]}, {r['line'][1]})")
             print(f"   -> {r['reason']}")
 
 

@@ -144,6 +144,39 @@ So statement order is only the last tiebreak. To move an instruction, change
 the DAG: add or remove a dependence (a shared variable gives a WAR edge, a
 memory edge disappears with `__restrict`/const), or change what it uncovers.
 
+### Post-RA scheduling: which blocks are scheduled twice
+
+`scheduleinstructions(TRUE)` (after colouring, prologue/epilogue and the final
+`peepholemergeblocks(TRUE)`) schedules every block with more than 2
+instructions whose `fScheduled` flag is clear. `deletepcode`,
+`insertpcodebefore` and `insertpcodeafter` clear it; `appendpcode` does not.
+So a block is scheduled a second time, now with physical registers (WAR/WAW
+on real registers, no opcode-rank key), when after the pre-RA pass:
+
+- a copy in it disappeared: coalesced (`coalescenodes`) or coloured into the
+  same register and deleted as `mr rX,rX` (Coloring.c, after `colorgraph`);
+- regalloc removed dead code in it (`InterferenceGraph.c`) or spill code was
+  inserted;
+- post-colouring value numbering (`removecommonsubexpressions(func, 1)`)
+  removed a redundant instruction;
+- the final block merge deleted its trailing `b` to the next block.
+
+The epilogue: `peepholemergeblocks(TRUE)` moves the restore loads
+(`lwz r31..`, `lwz r0,lr`, `mtlr`) out of the epilogue block into the last
+block with `appendpcode` (up to the `addi r1`, a side effect). If that last block
+kept its pre-RA flag, the restores stay in generation order (`lwz r31`,
+`lwz r30`, `lwz r0`); if it is re-scheduled, `lwz r0` moves up for the `mtlr`.
+An epilogue that differs only in where `lwz r0` sits therefore says: in the
+original, something in the last block was deleted or inserted by regalloc.
+
+`python3 tools/mwsched.py resched UNIT FN` tests this for every block: it
+recompiles with the trace build's what-if knob `MWCC_TRACE_RESCHED=<block>`
+and reports blocks whose post-RA re-scheduling gives the target. On
+2026-11-09, of 183 near misses at 90-99.99%, three match with the last block or all blocks re-scheduled:
+fn_801D7610 and CardData_InitDefaults (last block / epilogue) and fn_80245E6C
+(block B31). The source fix is then to make regalloc change that block, e.g.
+with a copy that coalesces or ends up in the same register.
+
 ## Alias analysis and `__restrict`
 
 `gather_alias_info` gives every load/store an alias: a single object, part of
@@ -168,7 +201,8 @@ chain; `const Matrix44 *__restrict a` removes those edges.
   (COLOR, plus IGNODE for every vreg incl. coalesced ones), the PCode right
   before and after register allocation (PCODE pre|post), scheduler DAG
   (SBLOCK/SNODE) and picks with their keys (SPICK). Line formats are in the
-  docstring of tools/mwtrace.py.
+  docstring of tools/mwtrace.py. SSKIP lists blocks the scheduler skipped and
+  why (already-scheduled / too-short / prolog-epilog).
   ~0.1 s, no gdb, parallel-safe; GC/1.x units use the 2.6 build (same code for
   2437 of our 2470 GC/1.3.2 units; float-heavy math units differ). The patch
   only writes the trace file; the patched compilers still give identical code
@@ -178,11 +212,14 @@ chain; `const Matrix44 *__restrict a` removes those edges.
   pass and the colouring; `--trace` (GC/2.6 stand-in) also records, inside the
   real compiler, the scheduler DAG and every pick (`sched.json`) and every move
   the coalescer saw (`coalesce.json`) via tools/mwccdbg_trace.py.
-- `python3 tools/mwsched.py explain UNIT FN [--run]`: for each pair of
-  instructions in the other order than the target, the dependence chain or the
-  pick key (critical / uncovering / height / rank / order / not ready / unit
-  busy) that decided it. `log` prints the DAG and every pick; `coalesce` lists
-  every move with its outcome (phys / temp / named roots).
+- `python3 tools/mwsched.py explain UNIT FN`: uses the native trace when
+  build/mweppc is built (`--gdb` for the debugger dumps) and explains each
+  block from the schedule that was emitted (its post-RA one if it was
+  scheduled twice). For each pair of instructions in the other order than the
+  target it gives the dependence chain or the pick key (critical / uncovering /
+  height / rank / order / not ready / unit busy) that decided it. `log` prints
+  the DAG and every pick; `coalesce` lists every move with its outcome (phys /
+  temp / named roots); `resched` is the post-RA what-if above.
 - `python3 tools/regfix.py diag|probe UNIT FN`: register-only near misses.
 
 GC/2.6 breakpoint addresses used by the tracer: scheduleblock 0x507D80 (DAG
