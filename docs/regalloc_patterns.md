@@ -866,6 +866,79 @@ clFlowRound_Update went from 243 differing lines to 0 with these, no pragma:
 Diagnostic used: `#pragma opt_lifetimes off` cut the diff 243 -> 82, which showed that one more level-1 node
 interfering with `self` was all that was missing. The pragma is not in the final source.
 
+## 44. A base-address local survives only with two uses, and the first copy of an unrolled loop picks it up (Race_PerFrameTickAndAudio, 11-09)
+
+Target, inside an inlined helper followed by a fully unrolled 8-way search:
+
+```
+addi r5,r30,400        ; base = &g_raceEntryArray (anchor + 400)
+mulli r0,r0,104
+add  r4,r5,r0          ; &base[idx]
+...                    ; first unrolled copy
+mulli r0,r3,104
+add  r3,r5,r0          ; reuses r5
+...                    ; copies 2..8
+addi r3,r30,400        ; fresh address every time
+add  r3,r3,r0
+```
+
+Rules read off the experiments (mweppc frontend, IroPropagate + CSE):
+
+- `base = &g; entry = &base[idx];` with ONE use of `base` in the block is propagated away: the base
+  address is folded into `entry` and the first copy gets its own `addi` (one instruction too many).
+- With TWO uses of `base` the assignment stays a real variable, and a later direct `&g[...]` in the
+  same extended block is replaced by that variable. Only the first unrolled copy is in that block,
+  so copies 2..8 keep the fresh `addi`.
+- The natural source is "no cached element pointer": `if (!base[idx].kart->finished) { if (base[idx].rank != 0)`.
+  CSE builds the element pointer itself (r4), and `base` has two uses.
+- A base passed into the search inline as a parameter is used by all eight copies (no `addi` at all).
+  A base assigned before an earlier branch (other block) also survives, but its `addi` sits before
+  that branch.
+
+Other levers the same function needed, all register-only symptoms:
+
+- **Inner search loop indexed, not walked.** `for (j...) if (entries[j].id != -1 && entries[j].rank == ...)`
+  instead of a named `other++` pointer: the walking pointer becomes a strength-reduction temp that is
+  coloured before the hoisted `&entry->rank` temp and the counter (target r5/r6/r7 vs ours r7/r5/r6).
+- **Walk the base local itself in the last loop.** `for (k = 0; k < 8; entries++, k++) { entry = entries; ... }`
+  when the target's last loop steps the register that held the base all function long. A copy
+  (`entry = entries` before the loop) coalesces to the same register but leaves the base local with a
+  lower cost than the section anchor, and the two swap r30/r31 everywhere.
+- **Block-scoped counter for a `li rN,0` that ours turns into `mr rN,rZero`.** The last loop's counter
+  as its own `{ int k; for (k = 0; ...) }` keeps its own `li`; the shared function-level `i` was
+  value-numbered to the zero already held for the stores before the loop (rule `split-loop-counter`).
+- **Increment order** `entry++, i++` vs `i++, entry++` swaps the two `addi` of one unrolled copy.
+- **`signed char` lvalue for `extsb` from the raw byte**: field typed `signed char`, or
+  `*(signed char *)&g_var`; an inline getter or a cast of an `unsigned char` read gets CSE'd differently.
+- **Duplicated `li rX,1` for a result flag**: the if/else chain is an inline with `return 1` / `return 0`.
+
+## 45. Locals of an inlined function are numbered in FORWARD declaration order (fn_80179F60, 11-09)
+
+Symptom: instructions identical, only the registers of values loaded inside an
+inlined helper rotate (here four `lfs` in `InQuad`: q[1] f6 / q[3] f9 / pos.z
+f10 / q[5] f12, target f12 / f6 / f9 / f10), and `regfix diag` finds no
+depth-2 edit. With the loads written inline in the call expressions they are
+CSE temps whose numbers you cannot steer.
+
+Fix: give every loaded value a named local in the inline, declare them all
+WITHOUT initialisers at the top, and assign each at its first use (so no load
+moves). The declaration order then sets the vreg numbers, and for the locals
+of an inlined function the order is forward: first declared = lowest number =
+coloured last (the caller's own locals are the other way round: last declared
+= lowest). Read the wanted colouring order off the target: the value that
+holds the lowest free register is coloured first, so it is declared LAST.
+
+```cpp
+static unsigned char InQuad(const float *q, const Vec3f *p) {
+    float z0, x3, z3, x2, z2, pz, px, x1, z1, x0;   // target colours x0, z1, x1, px, pz, z2, x2, ..., z0
+    x0 = q[0]; px = p->x; z0 = q[1]; z1 = q[3]; x1 = q[2]; pz = p->z;
+    if ((QuadCross(x1 - x0, pz - z0, z1 - z0, px - x0) <= 0.0f) == 0) return 0;
+    z2 = q[5]; x2 = q[4];
+    ...
+```
+
+fn_80179F60 99.15 -> 100 (15 FPR vregs, three inlined copies at once).
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
@@ -1072,4 +1145,25 @@ No codegen pragmas, asm or fakematches were used (onmokoworks's workers are not 
 | `DrawEffect_KartDustRing_Update` | game/DrawEffect_KartDustRing_Update.c | 98.11 | Resolved: external aggregate pointer materialization added mr r30,r4 and used mr instead of addi r4,r30,0 for tier 1. | Integration visibility correction within the same approach: static vectors caused unresolved neighboring ItemHitBurst/ItemHitOriented references in request 1; exporting the vectors preserves 100% text/EH/index/data... | 6668a75d |
 | `Effect_TwoChildRotate_FromPhase150` | game/EffectRotatePair.cpp | 97.30 | Resolved: FP scratch identities in alpha clamp/phase wrap; addi group and lbz enable scheduling at +0x40/+0x44. | Enable belongs to the group view at +0xC4 (parent +0x190); express access through group, restoring addi-before-lbz, 100%. | 3fc53253 |
 | `fn_8022B278` | game/EnemyFace_nm1.cpp | 97.26 | Resolved GPR partition: target textures/palettes/resources/tluts r31/r30/r29/r28, outer i r27, count n r26, inner k r25. Initial indexed inline helper... | Keep natural textures/palettes/resources/tluts increment order: 100.0%, all owned sections exact. | c928fb29 |
+
+## 46. A loop counter reused by later loops takes the newest saved register: give the later loops block-local counters (TitleCheck_NewClearedRecord_Race, 11-09)
+
+Symptom: register-only diff; the FIRST loop of a variable sits in the lowest saved register
+(ours `li r24,0`, target `li r28,0`), and the same low register is the counter of later,
+unrelated loops (`i` in loops 4 and 5).
+
+Why: `IRO_SplitLifetimes` keeps the name only on the earliest range of a variable; every later
+range is a `SplitOffRange` temp, and temps are coloured before all named locals. `colorgraph`
+gives a node the lowest free saved register already handed out, else a new one (r31 downward).
+With one function-level `i` for loops 4 and 5, the loop-5 range is a temp, is coloured early and
+is the first to allocate r24; the named loop-1 `mode`, coloured late, then finds r24 free and takes
+it. In the target r24 does not exist yet when `mode` is coloured, so it takes r28 (r25..r27 are held
+by j/cur/prev, which must be coloured before it).
+
+Fix: each later loop gets its own block-scoped counter (`{ int i; for (i = 0; ...) }`): a
+single-range named local declared later than everything else, so it is coloured last and is the one
+that allocates the new register. Declare the first loop's counter AFTER the locals whose registers it
+must not take (`int j; int cur; int prev; int mode;`). 12 lines -> 0. Diagnose with
+`tools/mwtrace.py --only COLOR,VREG`: find which node first allocates the low register and whether
+it is a temp (`@9xx` from SplitOffRange) or a named local.
 

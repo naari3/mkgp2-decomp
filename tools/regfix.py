@@ -873,6 +873,11 @@ def diagnose(unit, fn, out: Path, rerun=True, quiet=False, depth=2, sched=False)
         print_schedule(sched_src, ROOT / f"build/{md.VERSION}/src/{unit}.o", ROOT / f"build/{md.VERSION}/obj/{unit}.o",
                        ps.Unit(unit).compiled_name(fn), open(src, errors="replace").read().splitlines())
         print_coalesce(out, open(src, errors="replace").read().splitlines())
+    ver = unit_mw_version(unit)
+    if not quiet and ver and re.match(r"GC/1\.[0-2](\.|$)", ver):
+        print(f"WARNING: {unit} builds with {ver} (old backend); the trace comes from a newer stand-in "
+              "compiler, so vreg numbers and proposals below may not hold in the real build "
+              "(THPDec fn_80299D58: proposed decl order changed nothing). See tools/mwcc1x.")
     return diagnose_dir(out, ROOT / f"build/{md.VERSION}/src/{unit}.o",
                         ROOT / f"build/{md.VERSION}/obj/{unit}.o", fn, quiet, depth,
                         src_lines=open(src, errors="replace").read().splitlines())
@@ -962,6 +967,16 @@ def show_context(P, bad, sites, info, src_lines, maxl=12):
                 shown.add(j)
                 mark = "*" if O[j] != T[j] else " "
                 P(f"    {mark}{j * 4:>5x}  {O[j]:<32} | {T[j]}")
+
+
+def unit_mw_version(unit):
+    """mw_version of the unit's compile edge in build.ninja (None if not found)."""
+    try:
+        txt = (ROOT / "build.ninja").read_text(errors="replace")
+    except OSError:
+        return None
+    m = re.search(r"^build build/[^/]+/src/" + re.escape(unit) + r"\.o:.*?^  mw_version = (\S+)", txt, re.M | re.S)
+    return m.group(1) if m else None
 
 
 def diagnose_dir(out: Path, ours_obj, tgt_obj, fn, quiet=False, depth=2, src_lines=None):
