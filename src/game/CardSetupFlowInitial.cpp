@@ -7,7 +7,7 @@ int Sci2Card_GetUnpackStatusCode();
 extern unsigned char g_playerData[0x1DC];
 extern int lbl_806D19B8;
 FlowTask *fn_801FC1E0(int);
-void fn_8024AD8C(CardSetupFlow *__restrict self) {
+void fn_8024AD8C(CardSetupFlow *self) {
     if (!Sci2Card_GetByteFlag1224()) {
         if (ServiceValue_Get()) {
             self->state = 2;

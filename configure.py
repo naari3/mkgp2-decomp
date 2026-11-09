@@ -784,7 +784,7 @@ config.libs = [
             Object(Matching, "game/CardSetupFlowSelect.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/CardSetupFlowName.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/CardSetupFlowReceipt.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
-            Object(NonMatching, "game/CardSetupFlowInitial.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
+            Object(Matching, "game/CardSetupFlowInitial.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/CardSetupFlowUpdate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
             Object(Matching, "game/CardSetupFlowResult.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-i src/game"]),
             Object(Matching, "game/CardPrintFlowUpdate.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),
