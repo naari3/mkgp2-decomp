@@ -2064,7 +2064,7 @@ struct KeyBoard {
     }
 };
 
-static inline unsigned short ReadNameCharacter(const void *buffer, int i) {
+static inline unsigned int ReadNameCharacter(const void *buffer, unsigned long i) {
     return ((const unsigned short *)buffer)[i + 1];
 }
 
@@ -2072,7 +2072,7 @@ struct NameBuf {
     unsigned short c[8];
     int pos;
     bool Add(unsigned short ch);
-    unsigned short Get(int i) { return ReadNameCharacter(this, i); }
+    unsigned int Get(unsigned long i) { return ReadNameCharacter(this, i); }
     void Back() {
         if (pos > 0) {
             c[pos + 1] = 0x8162;
@@ -2679,7 +2679,7 @@ static inline void DrawKeyGroup(KeyBoard &board, int g) {
     } else {
         res = g + 0x190D;
     }
-    int sel = board.group == g ? 1 : 0;
+    int sel = g == board.group ? 1 : 0;
     KeyGroup &kg = board.groups.at(g);
     int n = (bool)sel == true ? 1 : 0;
     {
@@ -2711,7 +2711,7 @@ void NameEntry::Draw() {
     DrawKeys();
     for (int i = 0; i < 5; i++) {
         ResCtrl rc;
-        unsigned short ch = name.Get(i);
+        unsigned int ch = name.Get(i);
         if (ch == 0x8140) {
             rc.resId = 0x2AF7;
         } else if (ch != 0x8162) {
