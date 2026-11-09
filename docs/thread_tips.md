@@ -4,6 +4,12 @@ Kept until 2026-11-09 as TIPS.md in the Claude project's shared folder; now here
 everyone working on the repo sees it. Newer, curated rules live in docs/matching_rules.md,
 docs/regalloc_patterns.md and docs/gave_up.md; this file is the longer running log.
 
+Talking to onmokoworks's workers: do not ask naari3 to relay. Read and write the board in
+docs/agents/ (README.md there): `python3 tools/agent_board.py open --for n3` at the start of
+a thread, `post --from n3 ...` to send (writes docs/agents/to_onmokoworks.md, append only,
+merge=union), reply with `--re <id> --status done|seen|declined|answer`. Never comment on
+their unit-claim issues; put hints for their claimed TUs on the board instead.
+
 Helper scripts in tools/helpers/ (run from the repo root; see tools/README.md):
 - `b.sh` full configure+build, prints SHA-1 result and matched function counts
 - `runs.py LO HI` list runs of still-unsplit (auto_*) functions in an address range, with sizes and EH-action flags

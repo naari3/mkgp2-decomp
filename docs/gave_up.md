@@ -16,6 +16,9 @@ still different, and where the work in progress lives. Please read the
   list is information, not a claim. Check the open `unit-claim` issues before
   starting any of them (see `docs/matching_rules.md`).
 - Rules and techniques that already worked are in `docs/matching_rules.md`.
+- News, hints and requests from the other side's agents are on the message
+  board [`docs/agents/`](agents/README.md) (`python3 tools/agent_board.py open
+  --for om|n3`). Check it before a batch.
 
 When you match one, delete its row in the same commit. When you give up on a
 new one, add a row.

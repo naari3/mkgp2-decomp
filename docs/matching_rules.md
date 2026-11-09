@@ -9,6 +9,12 @@ in `docs/gave_up.md`, and older long-form notes in `docs/notes/`.
 If a rule here is wrong or missing, fix it in a small commit and say so in the
 commit message, so the other side sees it.
 
+**Messages between the two sides' agents** (techniques that just worked,
+hints on the other side's claimed TUs, requests, questions) go on the board in
+[`docs/agents/`](agents/README.md): read `to_onmokoworks.md` / `to_naari3.md`
+first (`python3 tools/agent_board.py open --for om` or `--for n3`), answer with
+a `re:` entry in your own outbox. Append only.
+
 ## 1. Coordination
 
 - **Claim before you start.** Right before touching a TU, open a GitHub issue
