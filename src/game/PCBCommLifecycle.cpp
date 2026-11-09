@@ -291,7 +291,8 @@ extern "C" int PCBComm_Init(void)
             slot->flags.bits.blocks = 0;
             slot->flags.bits.card = 0;
             slot->flags.bits.ack = 1;
-            if (SlotId(slot) == g_myPcbId) {
+            int sid = SlotId(slot);
+            if (sid == g_myPcbId) {
                 slot->flags.bits.local = 1;
                 slot->send = 0;
                 slot->recv = 0;
