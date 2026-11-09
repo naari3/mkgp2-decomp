@@ -5,12 +5,15 @@
 # miss; the index of where to look is docs/mwcc_internals.md.
 #
 #   sh tools/install_mweppc.sh          clone/update build/mweppc at the pinned commit
-#   sh tools/install_mweppc.sh --build  also try to build the GC/2.6 clang/native compiler
+#   sh tools/install_mweppc.sh --build  also build native Linux compilers
+#        build/mweppc/build/GC_{2_0,2_5,2_6,2_7}/native/mwcceppc (~75 s each, x86 Linux)
 #
 # The source alone needs only github.com. Building needs clang, lld, llvm, uv
-# AND archive.org (it downloads the CodeWarrior Pro 5 MSL runtime); the cloud
-# containers' network policy blocks archive.org, so --build only works where it
-# is reachable (a local machine, or an environment that allows it).
+# and archive.org (it downloads the CodeWarrior Pro 5 MSL runtime; allowed in
+# the project's cloud environment since 2026-11-09). On 2026-11-09 the native
+# compilers produced byte-identical .text for all 415 of our GC/2.0-2.7 units
+# (only the known 2 extab padding bytes differ in 16), so they can stand in for
+# wibo + mwcceppc.exe, with the source free to patch for logging.
 set -e
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 DIR="$ROOT/build/mweppc"
@@ -27,10 +30,11 @@ echo "mweppc source at build/mweppc ($COMMIT); start with docs/mwcc_internals.md
 if [ "$1" = "--build" ]; then
   cd "$DIR"
   uv sync
-  .venv/bin/python configure.py --version GC_2_6
-  ninja build/GC_2_6/native/mwcceppc || {
+  .venv/bin/python configure.py
+  ninja build/GC_2_0/native/mwcceppc build/GC_2_5/native/mwcceppc \
+        build/GC_2_6/native/mwcceppc build/GC_2_7/native/mwcceppc || {
     echo "mweppc build failed (archive.org reachable? see the header of this script)" >&2
     exit 1
   }
-  echo "built build/mweppc/build/GC_2_6/native/mwcceppc"
+  echo "built build/mweppc/build/GC_2_*/native/mwcceppc"
 fi

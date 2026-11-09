@@ -29,6 +29,8 @@ Compiler source (2026-11-09): `build/mweppc` (tools/install_mweppc.sh, run by cl
 C source of mwcceppc GC/2.0-2.7. Read docs/mwcc_internals.md before diagnosing; it has the exact
 coalescing rule (named<->named / named<->temp copies never merge), the scheduler's pick keys and the
 __restrict / const-pointer alias rule. Order diffs: `python3 tools/mwsched.py explain UNIT FN --run`.
+When stuck: trace (mwsched explain/coalesce, regfix diag), read the deciding function in build/mweppc,
+then change the input it reads. gave_up.md rows must cite the compiler rule (see its header).
 
 Register-only near miss, first steps (2026-11-09; automatic rewrite search found 0 new
 matches over 51 fns, the wins came from diagnosis + a hand rewrite):

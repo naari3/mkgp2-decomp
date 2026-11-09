@@ -13,8 +13,13 @@ proven equivalent function by function. `sh tools/install_mweppc.sh` puts it in
 differences are `#if VERSION ...` blocks; we mostly use GC/2.6 (our GC/1.3.2
 units are close but not covered: the debugger maps 1.3..2.7 to 2.6).
 
-Building it (`tools/install_mweppc.sh --build`) needs archive.org for the
-CodeWarrior MSL runtime; cloud containers cannot reach it. Reading needs nothing.
+`tools/install_mweppc.sh --build` (cloud_setup.sh runs it) also builds native
+Linux compilers `build/mweppc/build/GC_{2_0,2_5,2_6,2_7}/native/mwcceppc`
+(needs archive.org for the MSL runtime; the project's cloud environment allows
+it). Checked 2026-11-09: byte-identical code for all 415 of our GC/2.0-2.7
+units against the original exe under wibo (16 objects differ only in the 2
+extab padding bytes decomp-toolkit fixes). Same command-line flags, no wibo,
+and the source can be patched to print any decision (frontend included).
 
 ## Where to look (paths under build/mweppc/src/compiler/)
 
