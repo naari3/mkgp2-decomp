@@ -176,6 +176,60 @@ def main():
         if not find(out, "regalloc-"):
             sys.exit(f"debugger produced no regalloc dump; see {out}/run.log")
 
+    rows, info = analyze_dumps(out, ROOT / f"build/{VERSION}/src/{a.unit}.o",
+                               ROOT / f"build/{VERSION}/obj/{a.unit}.o", a.fn, a.rc)
+    if rows is None:
+        sys.exit(info)
+    print(f"{a.fn}: {info['ours']} insns ours / {info['tgt']} target, {info['nstruct']} opcode diffs")
+    for rc in (["gpr", "fpr"] if a.rc == "both" else [a.rc]):
+        rr = [r for r in rows if r["class"] == rc]
+        if not rr:
+            continue
+        print(f"\n== {rc.upper()} colouring order ({len(rr)} vregs; first = coloured first) ==")
+        print(f"{'#':>3} {'vreg':>5} {'ours':>4} {'want':>4}  def (line, PCode)    blockers")
+        first = True
+        for r in rr:
+            if not (a.all or r["bad"]):
+                continue
+            mark = "  <-- first" if r["bad"] and first else ""
+            if r["bad"]:
+                first = False
+            print(f"{r['pos']:>3} {r['vreg']:>5} {r['ours']:>4} {r['want']:>4}  {r['where']:<40} {r['block']}{mark}")
+        if first:
+            print("   (no mismatching vregs in this class)")
+    print(f"\ndumps: {out}")
+
+
+def run_debugger(cmd: list[str], fn: str, out: Path, timeout=300) -> bool:
+    """Run mwcc-debugger with an explicit compiler command line; dumps into out."""
+    emu = DBG_DIR / "retrowin32"
+    script = DBG_DIR / "mwcc-debugger" / "mwcc_debugger.py"
+    if not emu.exists() or not script.exists():
+        return False
+    out.mkdir(parents=True, exist_ok=True)
+    for f in out.glob("*.txt"):
+        f.unlink(missing_ok=True)
+    r = sh([sys.executable, "-I", str(script), "-e", str(emu), "-a", shlex.join(cmd),
+            fn, str(out)], cwd=ROOT, timeout=timeout)
+    (out / "run.log").write_text(r.stdout + r.stderr)
+    return find(out, "regalloc-") is not None
+
+
+def analyze(cmd: list[str], fn: str, ours_obj, tgt_obj, out_dir, timeout=300, rc="both"):
+    """Programmatic entry (tools/shapesweep.py): run the debugger on cmd and
+    return the vreg rows (see analyze_dumps), or None."""
+    out = Path(out_dir)
+    if not run_debugger(cmd, fn, out, timeout):
+        return None
+    rows, _ = analyze_dumps(out, Path(ours_obj), Path(tgt_obj), fn, rc)
+    return rows
+
+
+def analyze_dumps(out: Path, ours_obj: Path, tgt_obj: Path, fn: str, rc="both"):
+    """Rows [{class, pos, vreg, ours, want, bad, where, block}] in colouring
+    order, plus info; (None, message) on failure."""
+    if not find(out, "before-regalloc") or not find(out, "after-regalloc"):
+        return None, f"debugger produced no regalloc dump; see {out}/run.log"
     pre = parse_pcode(find(out, "before-regalloc"))
     post = parse_pcode(find(out, "after-regalloc"))
     final = parse_pcode(find(out, "after-scheduling", last=True))
@@ -200,15 +254,15 @@ def main():
 
     # the debugger quits before the object is written, so our side comes from
     # the build tree (rebuilt above, so source edits are picked up).
-    ours = objdump_fn(ROOT / f"build/{VERSION}/src/{a.unit}.o", a.fn)
-    tgt = objdump_fn(ROOT / f"build/{VERSION}/obj/{a.unit}.o", a.fn)
+    ours = objdump_fn(ours_obj, fn)
+    tgt = objdump_fn(tgt_obj, fn)
     if not ours or not tgt:
-        sys.exit("function not found in our or target object (build first)")
+        return None, "function not found in our or target object (build first)"
     if len(final) != len(ours):
-        print(f"[mwccdbg] warning: PCode has {len(final)} insns, our .o {len(ours)};"
+        warn(f"[mwccdbg] warning: PCode has {len(final)} insns, our .o {len(ours)};"
               " GC stand-in may differ from the production compiler", file=sys.stderr)
     if len(ours) != len(tgt):
-        print(f"[mwccdbg] warning: ours {len(ours)} vs target {len(tgt)} insns;"
+        warn(f"[mwccdbg] warning: ours {len(ours)} vs target {len(tgt)} insns;"
               " mapping is only meaningful for register-only diffs", file=sys.stderr)
     nstruct = sum(1 for o, t in zip(ours, tgt) if o.split()[0] != t.split()[0])
 
@@ -229,37 +283,31 @@ def main():
             want[v][t] += 1
             where.setdefault(v, f"{pv[0]:>4}  {pv[1]} {pv[2]}")
 
-    classes = ["gpr", "fpr"] if a.rc == "both" else [a.rc]
-    print(f"{a.fn}: {len(ours)} insns ours / {len(tgt)} target, {nstruct} opcode diffs")
-    for rc in classes:
-        f = find(out, f"regalloc-{rc}-pass-1-assigned")
+    rows = []
+    for c in (["gpr", "fpr"] if rc == "both" else [rc]):
+        f = find(out, f"regalloc-{c}-pass-1-assigned")
         if not f:
             continue
         order = parse_assigned(f)
         phys = {v: p for v, p, _ in order}
         pos = {v: i for i, (v, _, _) in enumerate(order)}
-        print(f"\n== {rc.upper()} colouring order ({len(order)} vregs; first = coloured first) ==")
-        print(f"{'#':>3} {'vreg':>5} {'ours':>4} {'want':>4}  def (line, PCode)    blockers")
-        first = True
         for n, (v, p, nb) in enumerate(order):
             w = want.get(v)
             wv = max(w, key=w.get) if w else "?"
             bad = w is not None and wv != p
-            if not (a.all or bad):
-                continue
             block = ""
             if bad:
                 hold = [x for x in nb if phys.get(x) == wv and pos[x] < n]
                 block = ("taken by " + ",".join(hold)) if hold else f"{p} was lowest free here (target: {p} busy or coloured in another order)"
                 if len(w) > 1:
                     block += f"  (target varies: {w})"
-            mark = "  <-- first" if bad and first else ""
-            if bad:
-                first = False
-            print(f"{n:>3} {v:>5} {p:>4} {wv:>4}  {where.get(v, ''):<40} {block}{mark}")
-        if first:
-            print("   (no mismatching vregs in this class)")
-    print(f"\ndumps: {out}")
+            rows.append({"class": c, "pos": n, "vreg": v, "ours": p, "want": wv, "bad": bad,
+                         "where": where.get(v, ""), "block": block})
+    return rows, {"ours": len(ours), "tgt": len(tgt), "nstruct": nstruct}
+
+
+def warn(msg):
+    print(msg, file=sys.stderr)
 
 
 if __name__ == "__main__":
