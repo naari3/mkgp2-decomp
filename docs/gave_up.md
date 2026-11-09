@@ -400,6 +400,7 @@ the remaining candidates (~175 KB in Matching TUs). What blocked the rest:
 | `fn_80299D58` | thp/THPDec | 99.01 | asm register vars: ws r24/itmp0 r26 swapped and f27/f31 (cc4 vs bias) swapped through the whole body | n3 11-09: all 119 f32 decl perms (best 140/142 lines), all 105 pairwise swaps of 15 GPR register-var decls: no gain; regfix diag says model mismatch (asm register vars) |
 | `fn_8028C1B8` | triforce/amnet_nm3 | 98.37 | 16 GPR vregs off: base temp r30/r31, `ch` wants r31 (ours r24), pkt/addr/dev temps rotated | n3 11-09: regfix diag (95k edits, none at depth 2: temp structure differs); ch as param / u8, separate ALIGN32 buf local, addr inline: 156 -> 157..170 lines |
 | `fn_80233310` (clFlowCCBattle::Update) | game/FlowCardCheck_nm2 | 98.32 | Same r3-avoidance as CalcEarnedCoins after InputMgr_GetPlayer (target keeps r3 free through the inlined IsIdle/UpdateSlide: r5/r4 vs our r4/r3), then knock-on regs | n3 11-09: pl dropped / pointer / volatile / moved after UpdateSlide: no gain (144 lines) |
+| `fn_8023DCEC` | game/ItemSelectChildSpriteDraw | 99.54 | one temp: DrawOverlay's `overlay` (self->overlay) r24 vs target r26 (target reuses DrawEffect's loop counter reg, ours the position pointer's) | n3 11-09: regfix diag (no depth-2 edit) + fix 2 rounds; overlay as param / outer local / GetOverlay nested inline / decl swaps / pulse init / DrawEffect i and position decls: 112 -> 112..176 lines |
 
 ## Pool-merge sweep 2026-11-09 (data ownership / §13 thread)
 
