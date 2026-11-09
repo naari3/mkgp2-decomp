@@ -1,4 +1,4 @@
-#include "game/objview/path186_private.h"
+#include "game/objview/fn_80187410_private.h"
 extern "C" {
 extern int g_courseVariantIdx;
 void *FUN_8003b120(unsigned long);
@@ -60,12 +60,12 @@ struct Path186Base {
 };
 struct Path186View : Path186Base {
     clNormal3D *object;
-    Path186 *paths;
+    AirShipPathState *paths;
     float rotation, phase, phase2;
     Path186View();
     virtual ~Path186View();
 };
-static inline Vec3f *CyclicPoint(Path186 *path, int count, int index) {
+static inline Vec3f *CyclicPoint(AirShipPathState *path, int count, int index) {
     if (index >= count) index -= count;
     return &path->points[index];
 }
@@ -92,28 +92,29 @@ Path186View::Path186View() {
     }
     if (!name) return;
     object = new clNormal3D(name, 0);
-    paths = (Path186 *)FUN_8003b120(0xa8);
+    paths = (AirShipPathState *)FUN_8003b120(0xa8);
     def = lbl_803771DC;
-    for (i = 0, offset = 0; i < 2; i++, offset += sizeof(Path186), def++) {
-        (*(Path186 *)((char *)paths + offset)).joint[0] = ResolveJointByName(object, def->joint[0]);
-        (*(Path186 *)((char *)paths + offset)).joint[1] = ResolveJointByName(object, def->joint[1]);
-        (*(Path186 *)((char *)paths + offset)).joint[2] = ResolveJointByName(object, def->joint[2]);
-        (*(Path186 *)((char *)paths + offset)).joint[3] = ResolveJointByName(object, def->joint[3]);
-        (*(Path186 *)((char *)paths + offset)).points = def->points;
-        (*(Path186 *)((char *)paths + offset)).count = def->count;
-        (*(Path186 *)((char *)paths + offset)).index = 0;
-        (*(Path186 *)((char *)paths + offset)).time = 0.0f;
-        Path186 *p = &(*(Path186 *)((char *)paths + offset));
-        { Vec3f *v = CyclicPoint(p, p->count, p->index); p->a.x = v->x; p->a.y = v->y; p->a.z = v->z; }
-        { Vec3f *v = CyclicPoint(p, p->count, p->index+1); p->b.x = v->x; p->b.y = v->y; p->b.z = v->z; }
-        { Vec3f *v = CyclicPoint(p, p->count, p->index+2); p->c.x = v->x; p->c.y = v->y; p->c.z = v->z; }
-        p->a.x = 0.5f * (p->a.x+p->b.x);
-        p->a.y = 0.5f * (p->a.y+p->b.y);
-        p->a.z = 0.5f * (p->a.z+p->b.z);
-        p->c.x = 0.5f * (p->b.x+p->c.x);
-        p->c.y = 0.5f * (p->b.y+p->c.y);
-        p->c.z = 0.5f * (p->b.z+p->c.z);
-        CopyPoint(&(*(Path186 *)((char *)paths + offset)).position, &(*(Path186 *)((char *)paths + offset)).a);
-        (*(Path186 *)((char *)paths + offset)).yaw = 0.0f;
+    for (i = 0, offset = 0; i < 2; i++, offset += sizeof(AirShipPathState), def++) {
+        (*(AirShipPathState *)((char *)paths + offset)).joint[0] = ResolveJointByName(object, def->joint[0]);
+        (*(AirShipPathState *)((char *)paths + offset)).joint[1] = ResolveJointByName(object, def->joint[1]);
+        (*(AirShipPathState *)((char *)paths + offset)).joint[2] = ResolveJointByName(object, def->joint[2]);
+        (*(AirShipPathState *)((char *)paths + offset)).joint[3] = ResolveJointByName(object, def->joint[3]);
+        (*(AirShipPathState *)((char *)paths + offset)).points = def->points;
+        (*(AirShipPathState *)((char *)paths + offset)).count = def->count;
+        (*(AirShipPathState *)((char *)paths + offset)).index = 0;
+        (*(AirShipPathState *)((char *)paths + offset)).time = 0.0f;
+        AirShipPathState *p = &(*(AirShipPathState *)((char *)paths + offset));
+        for (int control = 0; control < 3; control++) {
+            Vec3f *v = CyclicPoint(p, p->count, p->index + control);
+            CopyPoint(&p->control[control], v);
+        }
+        p->control[0].x = 0.5f * (p->control[0].x+p->control[1].x);
+        p->control[0].y = 0.5f * (p->control[0].y+p->control[1].y);
+        p->control[0].z = 0.5f * (p->control[0].z+p->control[1].z);
+        p->control[2].x = 0.5f * (p->control[1].x+p->control[2].x);
+        p->control[2].y = 0.5f * (p->control[1].y+p->control[2].y);
+        p->control[2].z = 0.5f * (p->control[1].z+p->control[2].z);
+        CopyPoint(&(*(AirShipPathState *)((char *)paths + offset)).position, &(*(AirShipPathState *)((char *)paths + offset)).control[0]);
+        (*(AirShipPathState *)((char *)paths + offset)).yaw = 0.0f;
     }
 }
