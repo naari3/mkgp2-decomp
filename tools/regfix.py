@@ -1938,6 +1938,42 @@ def fix(a, rep0):
     return best
 
 
+def emit_tracesweep(a, rep, src_text, d: Path, ext):
+    """diag -> tracesweep template + --want (tools/diag2sweep.py); --run runs it."""
+    import diag2sweep as d2s
+    import pragmasweep as ps
+    tf = Path(d) / "trace.txt"
+    if not rep or rep.get("not_reg_only"):
+        print("\n== tracesweep: not a register-only diff, nothing generated ==")
+        return None
+    if not tf.exists():
+        print("\n== tracesweep: needs the native trace (sh tools/install_mweppc.sh --build) ==")
+        return None
+    u = ps.Unit(a.unit)
+    g = d2s.generate(src_text, a.fn, rep, tf.read_text(errors="replace").splitlines(),
+                     lambda t, f: ps.find_def(t, f, mangled=u.compiled_name(f)), ext in (".cpp", ".cp", ".cc"))
+    if not g:
+        print("\n== tracesweep: no diag solution / definition found, nothing generated ==")
+        return None
+    TMPDIR.mkdir(parents=True, exist_ok=True)
+    path = TMPDIR / f"{a.fn}.diag.tmpl"
+    head = f"// unit: {a.unit}\n// fn: {a.fn}\n" + (f"// want: {g['want']}\n" if g["want"] else "")
+    head += "".join(f"// note: {n}\n" for n in g["notes"])
+    path.write_text(head + g["template"])
+    print(f"\n== tracesweep template (diag lines {g['lines']}): {path} ==")
+    for n in g["notes"]:
+        print("   " + n)
+    print(f"   want: {g['want']}")
+    print(f"   run: python3 tools/tracesweep.py run {a.unit} {a.fn} {path}")
+    if getattr(a, "run", False):
+        import tracesweep as ts
+        res, axes = ts.run(a.unit, a.fn, ts.strip_header(path.read_text()), g["want"], a.jobs,
+                           sample=a.sample, confirm=3, show=10, log_name=f"{a.fn}.diag",
+                           base_text=src_text if getattr(a, "start_tu", None) else None)
+        g["best"] = res[0] if res else None
+    return g
+
+
 def suggest_rules(unit, fn, n=4):
     """Top rewrite rules from the shared catalog (tools/rewrite_rules.py, catalog thread)."""
     rr = ROOT / "tools" / "rewrite_rules.py"
@@ -2179,6 +2215,12 @@ def main():
         p.add_argument("--start-tu", help="full TU source to start from")
         p.add_argument("--pragma", action="append")
         p.add_argument("--cc")
+        if name == "diag":
+            p.add_argument("--tracesweep", action="store_true",
+                           help="write a tracesweep template + --want from the diag solutions (tools/diag2sweep.py)")
+            p.add_argument("--run", action="store_true", help="with --tracesweep: run it (native compiles)")
+            p.add_argument("--sample", type=int, default=3000, help="with --run: max variants")
+            p.add_argument("-j", "--jobs", type=int, default=os.cpu_count() or 4)
         p.add_argument("--sched", action="store_true",
                        help="trace the real scheduler too and explain order differences (GC/2.6; tools/mwsched.py)")
         if name == "fix":
@@ -2239,11 +2281,17 @@ def main():
             print_schedule(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{sw.u.obj}.o", sw.sym or a.fn,
                            sw.render(sw.init).splitlines())
             print_coalesce(d, sw.render(sw.init).splitlines())
-        diagnose_dir(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{sw.u.obj}.o", a.fn, depth=a.depth,
-                     src_lines=sw.render(sw.init).splitlines())
+        rep = diagnose_dir(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{sw.u.obj}.o", a.fn, depth=a.depth,
+                           src_lines=sw.render(sw.init).splitlines())
+        if a.tracesweep:
+            emit_tracesweep(a, rep, sw.render(sw.init), d, sw.u.ext)
     elif a.cmd == "diag":
-        diagnose(a.unit, a.fn, out, rerun=not a.no_run, depth=a.depth, sched=a.sched)
+        rep = diagnose(a.unit, a.fn, out, rerun=not a.no_run, depth=a.depth, sched=a.sched)
         suggest_rules(a.unit, a.fn)
+        if a.tracesweep:
+            import pragmasweep as ps
+            u = ps.Unit(a.unit)
+            emit_tracesweep(a, rep, open(u.src, errors="replace").read(), out, u.ext)
     else:
         fix(a, None)
 
