@@ -363,12 +363,22 @@ def parse_stmt(s, types):
     return {'k': 'expr', 'e': parse_expr(s, types)}
 
 
+IFLINE = re.compile(r'^\s*if\s*\((.*)\)\s*(\{?)\s*$')
+
+
 def parse_body(body, types):
     """List of statements: dicts with 'ind' and either parsed fields or 'raw'."""
     out = []
     for line in body.split('\n'):
         ind = line[:len(line) - len(line.lstrip())]
         st = line.strip()
+        m = IFLINE.match(line)
+        if m and '//' not in st and '/*' not in st:
+            try:
+                out.append({'k': 'if', 'ind': ind, 'e': parse_expr(m.group(1), types), 'tail': m.group(2)})
+                continue
+            except SyntaxError:
+                pass
         if (not st or CTRL.match(line) or '//' in st or '/*' in st or not st.endswith(';')
                 or '{' in st or '}' in st):
             out.append({'k': 'raw', 'text': line})
@@ -395,6 +405,8 @@ def render_stmt(s):
     k = s['k']
     if k == 'raw':
         return s['text']
+    if k == 'if':
+        return s['ind'] + 'if (' + pr(s['e']) + ')' + (' ' + s['tail'] if s['tail'] else '')
     if k == 'ret':
         return s['ind'] + 'return' + (' ' + pr(s['e']) if s['e'] else '') + ';'
     if k == 'expr':
@@ -407,7 +419,7 @@ def render_stmt(s):
 
 def stmt_exprs(s):
     """(container, index) slots holding the statement's expression roots."""
-    if s['k'] in ('ret', 'expr') and s['e'] is not None:
+    if s['k'] in ('ret', 'expr', 'if') and s['e'] is not None:
         return [(s, 'e')]
     if s['k'] == 'decl':
         return [(v, 3) for v in s['vars'] if v[3] is not None]
@@ -689,10 +701,8 @@ def decl_front(st):
 
 
 def first_ind(st):
-    for s in st.stmts:
-        if s['k'] != 'raw':
-            return s['ind']
-    return '    '
+    inds = [s['ind'] for s in st.stmts if s['k'] != 'raw']
+    return min(inds, key=len) if inds else '    '
 
 
 class Ctx:
@@ -756,7 +766,8 @@ def _moves(st, ctx, allowed):
                 replace_at(slot(s2, si, xi), path, N('call', None, [N('atom', t=name), nn]))
                 return s2
             yield (f'id {pr(n)[:40]}', f, si, xi, path)
-        if tn and n.k != 'atom' and not cond and 'hoist' in allowed and path != ():
+        lit_or_global = n.k == 'atom' and (re.match(r'^[\d.]', n.t) or (n.t not in env and re.match(r'^[A-Za-z_]\w*$', n.t)))
+        if tn and (n.k != 'atom' or lit_or_global) and not cond and 'hoist' in allowed and path != ():
             for where in ('front', 'back'):
                 def f(si=si, xi=xi, path=path, tn=tn, where=where, base=None):
                     s2 = (base or st).clone()
@@ -1161,7 +1172,7 @@ def cmd_batch(a):
         keep = set(a.only.split(','))
         cands = [c for c in cands if c[2] in keep]
     for pct, obj, fn, size, dm in cands:
-        if (obj, fn) in done and not a.only:
+        if (obj, fn) in done and not a.only and not a.retry:
             continue
         src = next((f'src/{obj}{e}' for e in ('.c', '.cpp', '.cp') if os.path.exists(f'src/{obj}{e}')), None)
         if not src or src in claimed or obj in claimed:
@@ -1220,6 +1231,7 @@ def main():
         bp.add_argument('--min-pct', type=float, default=99.0)
         bp.add_argument('--max-size', type=int, default=2000)
         bp.add_argument('--only', help='comma list of fns')
+        bp.add_argument('--retry', action='store_true', help='ignore earlier results')
         bp.add_argument('--claims', help='file of claimed TU paths (src/... or obj) to skip')
         bp.add_argument('--out', default='/mnt/project-files/setup/shapesweep')
         for k, v in (('--beam', 6), ('--rounds', 8), ('--sample', 200), ('--max-depth', 8), ('--patience', 2),
