@@ -1610,7 +1610,7 @@ config.libs = [
             Object(NonMatching, "game/PCBCommCompute.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/PCBCheckProcess.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/GetTextureByIdAndLang.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/AssocTree_FreeAll.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/AssocTree_FreeAll.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/AssocTree.c"),
             Object(Matching, "game/ItemDisplay_Stop.c"),
             Object(Matching, "game/ItemDisplay_Destroy.c"),
