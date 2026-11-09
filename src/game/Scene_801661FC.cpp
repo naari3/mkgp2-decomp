@@ -26,9 +26,9 @@ void fn_8013D59C(ParamModel *, float, float, float);
 void fn_8013D608(ParamModel *, float, float, float);
 void fn_8013D4B0(ParamModel *, float);
 void fn_8013DAC8(ParamModel *, int);
-void fn_80168A4C(int, char *, float, float, ...);
-int Item_GetDescriptorField8(int);
-int Item_GetDescriptorFieldC(int);
+void fn_80168A4C(int, const char *, float, float, ...);
+unsigned int Item_GetDescriptorField8(unsigned int);
+unsigned int Item_GetDescriptorFieldC(unsigned int);
 float *fn_8013BEC8(int);
 int fn_8013BF70(int, int);
 int Item_GetDescriptorField0(int, int);
@@ -36,11 +36,20 @@ char *fn_8023DAA8(int);
 char *fn_8023D938(int, int);
 void fn_8016918C(int, int, float,float,float,float,float,float,float,float,int);
 void fn_80169468(int, int, float,float,float,float,float,float,int);
-void fn_801685A4(int, char *, float,float,float,float,float,float,...);
-void fn_801681E8(int, char *, float,float,float,float,...);
-void fn_80168B90(int, char *, float,float,float,float,float,float,...);
+void fn_801685A4(int, const char *, float,float,float,float,float,float,...);
+void fn_801681E8(int, const char *, float,float,float,float,...);
+void fn_80168B90(int, const char *, float,float,float,float,float,float,...);
 }
 #pragma readonly_strings on
+static const char itemNumberFormat[] = "\203A\203C\203e\203\200\202m\202n %03d";
+static const char translateXFormat[] = "\202s\202w\201F%f";
+static const char translateYFormat[] = "\202s\202x\201F%f";
+static const char translateZFormat[] = "\202s\202y\201F%f";
+static const char rotateXFormat[] = "\202q\202w\201F%f";
+static const char rotateYFormat[] = "\202q\202x\201F%f";
+static const char rotateZFormat[] = "\202q\202y\201F%f";
+static const char scaleFormat[] = "\202r\201@\201F%f";
+static const char newItemMessage[] = "\220V\202\265\202\242\203A\203C\203e\203\200\202\360\212l\223\276\202\265\202\334\202\265\202\275\201I\201I";
 void ParamEditScene::Update() {
     ParamValues *p;
     int next;
@@ -123,14 +132,14 @@ void ParamEditScene::Update() {
         float scale = 0.02f * p->v[6];
         fn_8013D608(this->model, scale, scale, scale);
         fn_80168A4C(this->text, lbl_806D8958, 70.0f, 24.0f * (this->cursor + 1) + 50.0f);
-        fn_80168A4C(this->text, "\203A\203C\203e\203\200\202m\202n %03d", 100.0f, 50.0f, this->item);
-        fn_80168A4C(this->text, "\202s\202w\201F%f", 100.0f, 74.0f, p->v[0]);
-        fn_80168A4C(this->text, "\202s\202x\201F%f", 100.0f, 98.0f, p->v[1]);
-        fn_80168A4C(this->text, "\202s\202y\201F%f", 100.0f, 122.0f, p->v[2]);
-        fn_80168A4C(this->text, "\202q\202w\201F%f", 100.0f, 146.0f, p->v[3]);
-        fn_80168A4C(this->text, "\202q\202x\201F%f", 100.0f, 170.0f, p->v[4]);
-        fn_80168A4C(this->text, "\202q\202y\201F%f", 100.0f, 194.0f, p->v[5]);
-        fn_80168A4C(this->text, "\202r\201@\201F%f", 100.0f, 218.0f, p->v[6]);
+        fn_80168A4C(this->text, itemNumberFormat, 100.0f, 50.0f, this->item);
+        fn_80168A4C(this->text, translateXFormat, 100.0f, 74.0f, p->v[0]);
+        fn_80168A4C(this->text, translateYFormat, 100.0f, 98.0f, p->v[1]);
+        fn_80168A4C(this->text, translateZFormat, 100.0f, 122.0f, p->v[2]);
+        fn_80168A4C(this->text, rotateXFormat, 100.0f, 146.0f, p->v[3]);
+        fn_80168A4C(this->text, rotateYFormat, 100.0f, 170.0f, p->v[4]);
+        fn_80168A4C(this->text, rotateZFormat, 100.0f, 194.0f, p->v[5]);
+        fn_80168A4C(this->text, scaleFormat, 100.0f, 218.0f, p->v[6]);
         field8 = Item_GetDescriptorField8(this->item);
         fieldC = Item_GetDescriptorFieldC(this->item);
         if (field8 < 0) icon8 = -1;
@@ -145,7 +154,7 @@ void ParamEditScene::Update() {
         fn_80169468(this->text, iconC, 313.0f, 389.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0);
         icon = Item_GetDescriptorField0(this->item, 0);
         fn_80169468(this->text, icon, 377.0f, 395.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0);
-        fn_801685A4(this->text, "\220V\202\265\202\242\203A\203C\203e\203\200\202\360\212l\223\276\202\265\202\334\202\265\202\275\201I\201I", 206.0f, 319.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+        fn_801685A4(this->text, newItemMessage, 206.0f, 319.0f, 1.0f, 1.0f, 1.0f, 1.0f);
         if (params) {
             char *name = fn_8023DAA8(this->item);
             fn_801681E8(this->text, name, 224.0f, 362.0f, 0.66f, 0.66f, params[0], params[1], params[2], params[3]);
