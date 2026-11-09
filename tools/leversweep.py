@@ -812,6 +812,236 @@ def inline_rewrites(body, inl):
     return out
 
 
+# ---- mul-fuse (§39, d38113c): products through an inline helper do not fuse into fmadds; and the reverse
+
+OPND = r'(?:' + ID + r'(?:\s*(?:\.|->)\s*' + ID + r'|\s*\[[^\[\]]*\])*|\d+\.\d*[fF]?)'
+PROD_RE = re.compile(r'(?<![\w.>\]\)*/])(' + OPND + r')\s*\*\s*(' + OPND + r')(?!\s*[\w\[(*/.]|\s*->)')
+TYPEWORDS = SCALARS | {'const', 'struct', 'void', 'static', 'volatile', 'register', 'Vec', 'Mtx', 'class'}
+
+
+def mul_sites(b):
+    """products `A * B` of simple operands inside a statement that also adds/subtracts."""
+    sb = strip_comments(b)
+    if len(sb) != len(b):
+        return []
+    out = []
+    for m in PROD_RE.finditer(sb):
+        if m.group(1).split('.')[0].split('-')[0].strip() in TYPEWORDS | CKW:
+            continue
+        s0 = max(sb.rfind(';', 0, m.start()), sb.rfind('{', 0, m.start()), sb.rfind('}', 0, m.start())) + 1
+        s1 = sb.find(';', m.end())
+        stmt = sb[s0:s1 if s1 >= 0 else len(sb)]
+        if not re.search(r'[^+\-eE(,=*/<>!&|?:]\s*[+\-]', stmt):
+            continue
+        if re.match(r'\s*(?:' + ID + r'\s+)+\**\s*$', sb[s0:m.start()] + m.group(1) + ' ') and '=' not in sb[s0:m.start()]:
+            continue  # `T *x;` declaration
+        out.append((m.start(), m.end(), m.group(1), m.group(2), s0))
+    return out
+
+
+@lever('mul-fuse', 'inline-mul-blocks-fmadd', 'auto', 'd38113c (§39)',
+       'fmadds/fmsubs on one side, fmuls + fadds on the other: route products through an inline mul(a, b) '
+       '(blocks fusing, changes FPR numbering), or the reverse: paste inline mul helpers / single-use product '
+       'locals back so they fuse')
+def gen_mul(fx):
+    if not fx.win('fmadd', 'fmsub', 'fnmadd', 'fnmsub', 'fmul'):
+        return []
+    single = any(x in ('fmuls', 'fmadds', 'fmsubs', 'fnmsubs', 'fnmadds', 'fadds', 'fsubs')
+                 for x in (fx.diag or {}).get('window', []))
+    ft = 'float' if single or not fx.win('fmul', 'fmadd', 'fmsub') else 'double'
+    hname = 'mul__lv'
+    helper = f'static inline {ft} {hname}({ft} a, {ft} b) {{ return a * b; }}\n'
+
+    def unfuse(b):
+        sites = mul_sites(b)
+        if not sites:
+            return []
+        def apply(sel):
+            nb, last = '', 0
+            for (a, e, x, y, _) in sites:
+                if (a, e) in sel:
+                    nb += b[last:a] + f'{hname}({x}, {y})'
+                    last = e
+            return nb + b[last:]
+        res = [('mul inline: all products', apply({(a, e) for a, e, *_ in sites}))]
+        by_stmt = {}
+        for a, e, x, y, s0 in sites:
+            by_stmt.setdefault(s0, []).append((a, e))
+        if len(by_stmt) > 1:
+            for s0, l in list(by_stmt.items())[:10]:
+                res.append((f'mul inline: stmt@{s0}', apply(set(l))))
+        if len(sites) > 1:
+            for a, e, x, y, _ in sites[:12]:
+                res.append((f'mul inline: {x}*{y}@{a}', apply({(a, e)})))
+        for s0, l in list(by_stmt.items())[:6]:
+            if len(l) > 1:  # everything but one product of the statement
+                for skip in l[:4]:
+                    res.append((f'mul inline: stmt@{s0} except @{skip[0]}', apply(set(l) - {skip})))
+        return res
+
+    out = [(lab, helper + t) for lab, t in fx.scoped(unfuse)]
+
+    # reverse 1: TU inline helpers that are a bare product -> written out
+    mulinl = []
+    for name, (ips, ret, ib) in (tu_inlines(fx) or {}).items():
+        mm = re.match(r'\s*return\s+(' + ID + r')\s*\*\s*(' + ID + r')\s*;\s*$', strip_comments(ib).strip())
+        if mm and len(ips) in (1, 2) and {mm.group(1), mm.group(2)} <= {param_name(q) for q in ips}:
+            mulinl.append((name, [param_name(q) for q in ips], mm.group(1), mm.group(2)))
+
+    def fuse_inl(b):
+        res = []
+        for name, pn, x, y in mulinl:
+            def f(args, pn=pn, x=x, y=y):
+                if len(args) != len(pn) or not all(is_simple(a) for a in args):
+                    return None
+                mp = dict(zip(pn, args))
+                return f'({mp[x]} * {mp[y]})'
+            nb = rewrite_calls(b, name, f)
+            if nb and nb != b:
+                res.append((f'fuse: write {name}() out', nb))
+        return res
+
+    # reverse 2: `t = A * B;` with t read once afterwards -> substitute the product
+    def fuse_local(b):
+        sb = strip_comments(b)
+        if len(sb) != len(b):
+            return []
+        res, allsub = [], b
+        for m in re.finditer(r'(?m)^([ \t]*)(?:(?:float|double|f32|f64)\s+)?(' + ID + r')\s*=\s*(' + OPND
+                             + r'\s*\*\s*' + OPND + r')\s*;[ \t]*\n', sb):
+            v, prod = m.group(2), m.group(3)
+            uses = [u for u in re.finditer(r'(?<![\w.>])' + re.escape(v) + r'\b(?!\s*(?:=[^=]|\())', sb)
+                    if not m.start() <= u.start() < m.end()]
+            if len(uses) != 1 or uses[0].start() < m.end():
+                continue
+            if re.search(r'(?<![\w.>])' + re.escape(v) + r'\s*(?:[-+*/]?=[^=]|\+\+|--)', sb[m.end():]):
+                continue
+            u = uses[0]
+            keepdecl = f'{m.group(1)}{m.group(0).split(v)[0].strip()} {v};\n' if m.group(0).strip().startswith(
+                ('float', 'double', 'f32', 'f64')) else ''
+            nb = b[:m.start()] + keepdecl + b[m.end():u.start()] + f'({prod})' + b[u.end():]
+            res.append((f'fuse: {v} -> ({prod})', nb))
+        if len(res) > 1:
+            # all at once, back to front so offsets hold
+            nb = b
+            for lab, _ in reversed(res):
+                v = lab.split()[1]
+                one = [x for x in fuse_local_one(nb, v)]
+                if one:
+                    nb = one[0]
+            if nb != b:
+                res.append(('fuse: all single-use product locals', nb))
+        return res[:14]
+
+    def fuse_local_one(b, v):
+        m = re.search(r'(?m)^([ \t]*)(?:(float|double|f32|f64)\s+)?' + re.escape(v) + r'\s*=\s*(' + OPND
+                      + r'\s*\*\s*' + OPND + r')\s*;[ \t]*\n', b)
+        if not m:
+            return []
+        u = re.search(r'(?<![\w.>])' + re.escape(v) + r'\b(?!\s*(?:=[^=]|\())', b[m.end():])
+        if not u:
+            return []
+        keep = f'{m.group(1)}{m.group(2)} {v};\n' if m.group(2) else ''
+        k = m.end()
+        return [b[:m.start()] + keep + b[k:k + u.start()] + f'({m.group(3)})' + b[k + u.end():]]
+
+    out += fx.scoped(fuse_inl)
+    out += fx.scoped(fuse_local)
+    # the pragma half, both directions (the pragma of the function an inline lands in decides)
+    out.append(('fp_contract off', fx.with_body(fx.body, pragmas=('fp_contract off',))))
+    out.append(('fp_contract on', fx.with_body(fx.body, pragmas=('fp_contract on',))))
+    return [(l, t) for l, t in out if t]
+
+
+# ---- local-array-init (5eca6fc): block-local array initialiser <-> copy from a named const object
+
+TU_CONST_RE = re.compile(r'(?m)^(?:static\s+)?const\s+((?:unsigned\s+|signed\s+|struct\s+)?' + ID + r'(?:\s*\*)?)\s+('
+                         + ID + r')\s*\[\s*(\w*)\s*\]\s*=\s*(\{[^{};]*\})\s*;')
+LOCAL_ARR_RE = re.compile(r'(?m)^([ \t]*)(?:static\s+)?(const\s+)?((?:unsigned\s+|signed\s+|struct\s+)?' + ID
+                          + r'(?:\s*\*)?)\s+(' + ID + r')\s*\[\s*(\w*)\s*\]\s*=\s*(\{[^{};]*\})\s*;[ \t]*\n')
+
+
+@lever('local-array-init', 'local-array-init', 'auto', '5eca6fc',
+       'a table reached through a named const object vs an anonymous init blob: turn a TU-level const array '
+       'into a block-local array initialiser at its use (function top / nested block), or the reverse '
+       '(local initialiser -> static const table, direct use or struct copy)')
+def gen_arrinit(fx):
+    if not fx.win('lwz', 'stw', 'lis', 'addi', 'lbz', 'stb', 'lhz', 'lha', 'sth', 'lfs', 'stfs'):
+        return []
+    out = []
+    consts = [(m.group(1).strip(), m.group(2), m.group(3), m.group(4)) for m in TU_CONST_RE.finditer(fx.text)]
+
+    def to_local(b):
+        res = []
+        sb = strip_comments(b)
+        for ty, name, n, init in consts:
+            us = [u.start() for u in re.finditer(r'(?<![\w.>])' + re.escape(name) + r'\b', sb)]
+            if not us or len(sb) != len(b):
+                continue
+            ln = name + '_l'
+            while re.search(r'\b' + ln + r'\b', b):
+                ln += '_'
+            decl = f'{ty} {ln}[{n}] = {init};'
+            nb = sub_ident(b, name, ln)
+            for cq in ('', 'const '):
+                res.append((f'{name} -> {cq}local array at top', '\n    ' + cq + decl + nb))
+                # nested block from the statement of the first use to the end of the scope
+                s0, d = 0, 0
+                for k in range(us[0] - 1, -1, -1):  # start of the top-level statement holding the use
+                    ch = sb[k]
+                    if ch in ')]}':
+                        d += 1
+                    elif ch in '([{':
+                        d = max(d - 1, 0)  # the use itself may sit inside parentheses
+                    elif ch == ';' and d == 0:
+                        s0 = k + 1
+                        break
+                    if d == 0 and ch == '}' and sb.count('{', 0, k + 1) == sb.count('}', 0, k + 1):
+                        s0 = k + 1
+                        break
+                if sb.count('{', 0, s0) == sb.count('}', 0, s0) and s0 > 0:
+                    res.append((f'{name} -> {cq}local array in a nested block',
+                                b[:s0] + '\n    {\n    ' + cq + decl + sub_ident(b[s0:], name, ln).rstrip()
+                                + '\n    }\n'))
+                    e1 = sb.find(';', us[-1])
+                    while e1 >= 0 and sb.count('{', s0, e1) != sb.count('}', s0, e1):
+                        e1 = sb.find('}', e1 + 1)
+                    if 0 <= e1 < len(sb.rstrip()) - 1:
+                        res.append((f'{name} -> {cq}local array in a block closed after the last use',
+                                    b[:s0] + '\n    {\n    ' + cq + decl + sub_ident(b[s0:e1 + 1], name, ln)
+                                    + '\n    }' + b[e1 + 1:]))
+        return res
+
+    out += fx.scoped(to_local)
+
+    # reverse: local `T a[N] = {...};` -> TU const
+    for sname, s0, s1 in fx.scopes():
+        b = fx.text[s0:s1]
+        for m in LOCAL_ARR_RE.finditer(b):
+            ind, cq, ty, name, n, init = m.groups()
+            if re.search(r'[A-Za-z_]\w*\s*[\[(.]|->', re.sub(r'0[xX][0-9a-fA-F]+|\d+\.?\d*[fFuUlL]*', '', init)) \
+                    and not re.fullmatch(r'[\s{},\w.+\-]*', init):
+                continue  # non-constant initialiser
+            rest = b[:m.start()] + '\x00' + b[m.end():]
+            if re.search(r'(?<![\w.>])' + re.escape(name) + r'\s*\[[^\]]*\]\s*(?:[-+*/|&^]?=[^=]|\+\+|--)', rest):
+                continue  # written
+            cn = name + '__lvc'
+            lab0 = name if sname == fx.fn else f'[{sname}] {name}'
+            ins = func_start(fx.text, min(fx.d[1], s0) if fx.d[1] else s0)
+            def build(prelude, nb):
+                return fx.text[:ins] + prelude + fx.text[ins:s0] + nb + fx.text[s1:]
+            for st in ('static ', ''):
+                nb = sub_ident(rest, name, cn).replace('\x00', '')
+                out.append((f'{lab0} -> {st}const table, direct', build(f'{st}const {ty} {cn}[{n}] = {init};\n', nb)))
+            cnt = n or str(init.count(',') + 1)
+            sdef = f'struct {cn}_s {{ {ty} a[{cnt}]; }};\nstatic const struct {cn}_s {cn} = {{ {init} }};\n'
+            nb = sub_ident(rest, name, name + '.a').replace('\x00', f'{ind}struct {cn}_s {name} = {cn};\n')
+            out.append((f'{lab0} -> struct copy from a const table', build(sdef, nb)))
+            nb = sub_ident(rest, name, name + '.a').replace('\x00', f'{ind}struct {cn}_s {name};\n{ind}{name} = {cn};\n')
+            out.append((f'{lab0} -> struct assignment from a const table', build(sdef, nb)))
+    return [(l, t) for l, t in out if t]
+
+
 # ---- try-scope-inside-if (11f056f)
 
 TRY_RE = re.compile(r'try\s*\{\s*([^{};]*?\b(' + ID + r')\s*=\s*new\s*\([^;]*;)\s*if\s*\(\s*\2\s*\)\s*([^{};]+;)\s*\}'
@@ -1079,6 +1309,12 @@ SELFTEST = [
     ('game/PCBCheckRecv', 'PCBComm_ComputeSyncState', '025713e~1', 'index-for-walk'),
     ('game/fn_801BAA88', 'fn_801C1964', '11f056f~1', 'try-scope-inside-if'),
     ('game/AI_CalcVSTargetSpeed', 'AI_CalcVSTargetSpeed', '963b6e1~1', 'inline-to-named-locals'),
+    ('game/JumpDistanceMode_Update', 'JumpDistanceMode_Update',
+     [('JD_mul(d.x, d.x) + JD_mul(d.z, d.z)', 'd.x * d.x + d.z * d.z')], 'mul-fuse'),
+    ('game/clFlowKart_Init', 'clFlowKart_UpdateDisplay',
+     [('    int arr[5] = {0x16B4, 0x16B3, 0x16B2, 0x16B1, 0x16B0};\n', ''),
+      ('static inline void HideParams(', 'static const int arr[5] = {0x16B4, 0x16B3, 0x16B2, 0x16B1, 0x16B0};\n'
+       'static inline void HideParams(')], 'local-array-init'),
 ]
 
 
@@ -1086,15 +1322,22 @@ def cmd_selftest(a):
     ok = True
     for unit, fn, rev, lv in SELFTEST:
         src = next(f'src/{unit}{e}' for e in ('.c', '.cpp') if os.path.exists(f'src/{unit}{e}'))
-        old = subprocess.run(['git', 'show', f'{rev}:{src}'], capture_output=True, text=True)
-        if old.returncode:
-            print('skip', fn, '(rev not in this clone: git fetch --deepen)')
-            continue
         cur = open(src).read()
+        if isinstance(rev, list):  # pre-image = the current source with the fix undone
+            pre = cur
+            for x, y in rev:
+                assert x in pre, (fn, x)
+                pre = pre.replace(x, y, 1)
+        else:
+            old = subprocess.run(['git', 'show', f'{rev}:{src}'], capture_output=True, text=True)
+            if old.returncode:
+                print('skip', fn, '(rev not in this clone: git fetch --deepen)')
+                continue
+            pre = old.stdout
         try:
-            open(src, 'w').write(old.stdout)
+            open(src, 'w').write(pre)
             fx = Fx(unit, fn)
-            fx.diag = {'kind': 'reg+sched', 'window': ['stw', 'lwz', 'lfs', 'addi', 'mr', 'neg', 'b']}
+            fx.diag = {'kind': 'reg+sched', 'window': ['stw', 'lwz', 'lfs', 'addi', 'mr', 'neg', 'b', 'fmuls', 'fmadds']}
             vs = LEVERS[lv]['gen'](fx)
             base = fx.u.compile_score(fx.text, fn, fx.cc, 'st')
             best = min((fx.u.compile_score(t, fn, fx.cc, f'st{i}'), l) for i, (l, t) in enumerate(vs)) if vs else None

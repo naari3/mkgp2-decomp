@@ -871,9 +871,7 @@ static inline unsigned char CharaCardState(PlayerData *pd, int group, const int 
 }
 
 void clFlowCCCharaItem::Select(int delta) {
-    Sprite **group;
-    int id_;
-    unsigned char special_;
+    float kCharaY_l[3] = {146.0f, 208.0f, 271.0f};
     if (delta != 0 && field20 != 0) {
         int oldGroup = field24;
         unsigned char special = 0;
@@ -924,35 +922,14 @@ void clFlowCCCharaItem::Select(int delta) {
         resId = res;
         paramId = newParam;
         float x = slots[field24 % 2][field28];
-        float y = kCharaY[field24 / 2];
+        float y = kCharaY_l[field24 / 2];
         { Sprite *sprite = *grp[8]; sprite->x = x; sprite->y = y; }
         { Sprite *sprite = *grp[9]; sprite->x = x; sprite->y = y; }
         { Sprite *sprite = *grp[10]; sprite->x = x; sprite->y = y; }
         if (oldGroup != field24) {
             SpriteAnimParamBlock_Reload(grp[oldGroup + 2], 0x15E);
             SpriteAnimParamBlock_Reload(grp[field24 + 2], 0x15F);
-            group = grp[oldGroup + 2];
-            id_ = kCharaGroups[which][oldGroup];
-            special_ = 0;
-            if ((which == 1 && oldGroup == 5) || id_ < 0) special_ = 1;
-            if (!special_) {
-            for (int j = 0; j < 5; j++) {
-            int res = 0x1422;
-            int unlocked = fn_8023D844(id_, j + 1);
-            if (pd->unlocked[unlocked] == 1) res = (short)Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(pd, unlocked), 0);
-            SpriteAnimParamBlock_SetAnimParamCached(group, kCharaParams[j], res);
-            }
-            } else {
-            int res = 0x1422;
-            if (pd->unlocked[fn_8023D844(0, 0)] == 1) res = 0x140A;
-            SpriteAnimParamBlock_SetAnimParamCached(group, 0x13B9, res);
-            SpriteAnimParamBlock_SetAnimParamCached(group, 0x13BA, 0x1ECD);
-            SpriteAnimParamBlock_SetAnimParamCached(group, 0x13BB, 0x1ECD);
-            SpriteAnimParamBlock_SetAnimParamCached(group, 0x13BC, 0x1ECD);
-            SpriteAnimParamBlock_SetAnimParamCached(group, 0x13BD, 0x1ECD);
-            }
-            SpriteAnimParamBlock_SetAnimParamCached(group, 0x1D23, kCharaFrames[which][oldGroup][0]);
-            SpriteAnimParamBlock_SetAnimParamCached(group, 0x1D24, kCharaFrames[which][oldGroup][1]);
+            SetCharaGroupForPlayer(grp[oldGroup + 2], which, oldGroup, pd);
             SetCharaGroupForPlayer(grp[field24 + 2], which, field24, pd);
         }
     }

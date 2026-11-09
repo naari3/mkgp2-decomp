@@ -512,6 +512,10 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
 - Levers work per scope: the function body and every TU inline it calls (3 levels deep).
 - Result of the first batch: 1 match (PCBCheck_ProcessLinks, dead-def-split, a5a84ae), about 30
   line-count improvements, of which only 8 raise objdiff %. Fewer diff lines often LOWERS objdiff %.
+- Added 19:50: `mul-fuse` (§39, both directions: products through an inline mul helper, or helpers /
+  single-use product locals written back so they fuse, plus fp_contract on/off) and `local-array-init`
+  (5eca6fc, both directions; only tables defined in the TU, extern tables would need their values).
+  Batch over 169 near misses: 0 matches, 1 small objdiff gain (ExplosionTumble_Init).
 - Not automated (need a decision a regex cannot make): rolled loop + unroll budget (which loop),
   base vtable store in the ctor body, avoiding IRO CSE temps, pool-owner TU merges.
 - Do not run bare `python3 configure.py`: it regenerates build.ninja with the compiler download
