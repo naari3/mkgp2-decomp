@@ -38,6 +38,9 @@ matches over 51 fns, the wins came from diagnosis + a hand rewrite):
    (each opt_* pragma, un-naming same-value locals with/without each pragma, each inline
    expansion) plus the decl-order solver on every structural lever. "same" everywhere means
    the fix is a source-shape change the levers do not cover; read the diag and rewrite by hand.
+   Instruction-ORDER diffs (same opcodes, different order): `regfix diag UNIT FN --sched`
+   traces the real GC/2.6 scheduler (tools/mwsched.py) and says why ours picked A before B
+   (dependence / uncovering / height ...), with the source lines.
 3. `python3 tools/regfix.py fix UNIT FN` still runs the catalog moves (inline[ / boolnorm /
    expand-void / unname / pragma-*) with the solver; worth one run, not a sweep.
 
