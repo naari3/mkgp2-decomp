@@ -84,9 +84,12 @@ A change can land on `main` (directly or by PR) when all of these hold:
   `-Cpp_exceptions on` / C++ objects with destructors generate extab.
 - **Asm that is asm in the original stays asm.** Dolphin SDK
   (`PPCArch`, `OSContext`, `OSCache`, `OSInterrupt`, PS `mtx`/`vec`), TRK
-  `targimpl`, MusyX `sndSqrt`/`sndCos`/reverb/chorus, `HSD_SaveContext`,
-  `HSD_MtxInverseConcat` are hand-written asm in the original sources. Do not
-  count them as "remaining work".
+  `targimpl`, MusyX `sndSqrt`/`sndCos`/reverb/chorus, `HSD_SaveContext` are
+  hand-written asm in the original sources. Do not count them as "remaining
+  work". The full check against reference decomps (2026-11-09, 90 of the 91
+  SDK/library asm functions) is in `docs/agents/asm_fn_split_20261109.md`.
+  `HSD_MtxInverseConcat` was compiled C (MWCC prologue, C in melee) and is C
+  now.
 - Inline-asm bodies with hard-coded small-data addresses
   (`addi r3, r13, -0x7AE8`) must use relocations instead (`la r3, sym(r13)`,
   `sym@ha` / `sym@l`), with the symbol declared with a size

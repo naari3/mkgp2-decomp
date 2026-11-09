@@ -1,6 +1,9 @@
 #include "mkgp2_names.h"
 
+/* the shared melee header declares the older void version */
+#define HSD_MtxInverseConcat HSD_MtxInverseConcat_melee
 #include "mtx.h"
+#undef HSD_MtxInverseConcat
 
 #include <math.h>
 
@@ -44,286 +47,11 @@ static inline f32 HSD_CalcDeterminantMatrix3x4(Mtx m)
 }
 
 
-#ifdef MUST_MATCH
-asm void HSD_MtxInverseConcat(Mtx inv, Mtx src, Mtx dest)
-{
-    nofralloc
-    stwu r1, -0xd0(r1)
-    mflr r0
-    stw r0, 0xd4(r1)
-    stfd f31, 0xc0(r1)
-    psq_st f31, 0xc8(r1), 0, 0
-    stfd f30, 0xb0(r1)
-    psq_st f30, 0xb8(r1), 0, 0
-    stfd f29, 0xa0(r1)
-    psq_st f29, 0xa8(r1), 0, 0
-    stfd f28, 0x90(r1)
-    psq_st f28, 0x98(r1), 0, 0
-    stfd f27, 0x80(r1)
-    psq_st f27, 0x88(r1), 0, 0
-    stfd f26, 0x70(r1)
-    psq_st f26, 0x78(r1), 0, 0
-    stfd f25, 0x60(r1)
-    psq_st f25, 0x68(r1), 0, 0
-    stfd f24, 0x50(r1)
-    psq_st f24, 0x58(r1), 0, 0
-    stfd f23, 0x40(r1)
-    psq_st f23, 0x48(r1), 0, 0
-    lfs f7, 0x18(r3)
-    lfs f23, 0x4(r3)
-    lfs f3, 0x10(r3)
-    fmuls f8, f23, f7
-    lfs f24, 0x20(r3)
-    lfs f1, 0x14(r3)
-    fmuls f10, f3, f23
-    lfs f6, 0x0(r3)
-    lfs f2, 0x8(r3)
-    fmuls f11, f6, f1
-    lfs f4, 0x28(r3)
-    fmuls f9, f24, f8
-    lfs f5, 0x24(r3)
-    fmuls f0, f2, f3
-    lfs f12, lbl_806DCD88(r2)
-    fmadds f13, f4, f11, f9
-    fmuls f9, f24, f1
-    fmuls f29, f6, f5
-    fmadds f13, f5, f0, f13
-    fnmsubs f13, f2, f9, f13
-    fnmsubs f13, f4, f10, f13
-    fnmsubs f25, f7, f29, f13
-    fcmpu cr0, f12, f25
-    bne HSD_MtxInverseConcat_L_802D62A4
-    li r3, 0x0
-    b HSD_MtxInverseConcat_L_802D65C0
-HSD_MtxInverseConcat_L_802D62A4:
-    lfs f13, lbl_806DCD8C(r2)
-    fmuls f28, f5, f7
-    fmuls f27, f5, f2
-    lfs f12, 0x1c(r3)
-    fdivs f30, f13, f25
-    lfs f13, 0xc(r3)
-    lfs f31, 0x2c(r3)
-    cmplw r3, r5
-    fmuls f26, f24, f7
-    fmuls f25, f24, f2
-    fnmsubs f24, f24, f23, f29
-    fmsubs f29, f1, f4, f28
-    fnmsubs f28, f23, f4, f27
-    fnmsubs f27, f3, f4, f26
-    fmsubs f26, f6, f4, f25
-    fmsubs f25, f3, f5, f9
-    fneg f24, f24
-    fmuls f3, f30, f29
-    fmuls f4, f30, f28
-    fmuls f5, f30, f27
-    fmuls f9, f30, f26
-    fmuls f29, f30, f25
-    fmuls f28, f30, f24
-    fnmsubs f26, f1, f2, f8
-    fnmsubs f25, f6, f7, f0
-    fsubs f24, f11, f10
-    fneg f10, f3
-    fmuls f1, f4, f12
-    fneg f8, f5
-    fmuls f2, f9, f12
-    fneg f7, f29
-    fmuls f6, f28, f12
-    fmuls f0, f30, f26
-    fmsubs f11, f10, f13, f1
-    fmuls f1, f30, f25
-    fmsubs f10, f8, f13, f2
-    fmuls f2, f30, f24
-    fmsubs f8, f7, f13, f6
-    fnmsubs f6, f0, f31, f11
-    fnmsubs f7, f1, f31, f10
-    fnmsubs f8, f2, f31, f8
-    beq HSD_MtxInverseConcat_L_802D6354
-    cmplw r4, r5
-    bne HSD_MtxInverseConcat_L_802D6460
-HSD_MtxInverseConcat_L_802D6354:
-    lfs f10, 0x10(r4)
-    addi r3, r1, 0x8
-    lfs f13, 0x0(r4)
-    fmuls f12, f4, f10
-    lfs f24, 0x20(r4)
-    fmuls f11, f9, f10
-    fmuls f10, f28, f10
-    fmadds f12, f3, f13, f12
-    fmadds f11, f5, f13, f11
-    fmadds f10, f29, f13, f10
-    fmadds f13, f0, f24, f12
-    fmadds f31, f1, f24, f11
-    fmadds f12, f2, f24, f10
-    stfs f13, 0x8(r1)
-    lfs f10, 0x14(r4)
-    lfs f24, 0x4(r4)
-    fmuls f13, f4, f10
-    lfs f25, 0x24(r4)
-    fmuls f11, f9, f10
-    fmuls f10, f28, f10
-    fmadds f13, f3, f24, f13
-    fmadds f11, f5, f24, f11
-    fmadds f10, f29, f24, f10
-    fmadds f13, f0, f25, f13
-    fmadds f30, f1, f25, f11
-    fmadds f11, f2, f25, f10
-    stfs f13, 0xc(r1)
-    lfs f10, 0x18(r4)
-    lfs f25, 0x8(r4)
-    fmuls f24, f4, f10
-    lfs f26, 0x28(r4)
-    fmuls f13, f9, f10
-    fmuls f10, f28, f10
-    fmadds f24, f3, f25, f24
-    fmadds f13, f5, f25, f13
-    fmadds f10, f29, f25, f10
-    fmadds f24, f0, f26, f24
-    fmadds f13, f1, f26, f13
-    fmadds f10, f2, f26, f10
-    stfs f24, 0x10(r1)
-    lfs f26, 0x1c(r4)
-    lfs f25, 0xc(r4)
-    fmuls f27, f4, f26
-    lfs f24, 0x2c(r4)
-    fmuls f9, f9, f26
-    mr r4, r5
-    fmuls f4, f28, f26
-    stfs f31, 0x18(r1)
-    fmadds f28, f3, f25, f27
-    stfs f30, 0x1c(r1)
-    fmadds f5, f5, f25, f9
-    fmadds f3, f29, f25, f4
-    stfs f13, 0x20(r1)
-    fmadds f4, f0, f24, f28
-    fmadds f1, f1, f24, f5
-    stfs f12, 0x28(r1)
-    fmadds f0, f2, f24, f3
-    fadds f2, f6, f4
-    stfs f11, 0x2c(r1)
-    fadds f1, f7, f1
-    fadds f0, f8, f0
-    stfs f10, 0x30(r1)
-    stfs f2, 0x14(r1)
-    stfs f1, 0x24(r1)
-    stfs f0, 0x34(r1)
-    bl PSMTXCopy
-    b HSD_MtxInverseConcat_L_802D65BC
-HSD_MtxInverseConcat_L_802D6460:
-    lfs f10, 0x10(r4)
-    lfs f11, 0x0(r4)
-    fmuls f10, f4, f10
-    lfs f12, 0x20(r4)
-    fmadds f10, f3, f11, f10
-    fmadds f10, f0, f12, f10
-    stfs f10, 0x0(r5)
-    lfs f10, 0x14(r4)
-    lfs f11, 0x4(r4)
-    fmuls f10, f4, f10
-    lfs f12, 0x24(r4)
-    fmadds f10, f3, f11, f10
-    fmadds f10, f0, f12, f10
-    stfs f10, 0x4(r5)
-    lfs f10, 0x18(r4)
-    lfs f11, 0x8(r4)
-    fmuls f10, f4, f10
-    lfs f12, 0x28(r4)
-    fmadds f10, f3, f11, f10
-    fmadds f10, f0, f12, f10
-    stfs f10, 0x8(r5)
-    lfs f10, 0x1c(r4)
-    lfs f11, 0xc(r4)
-    fmuls f4, f4, f10
-    lfs f10, 0x2c(r4)
-    fmadds f3, f3, f11, f4
-    fmadds f0, f0, f10, f3
-    fadds f0, f6, f0
-    stfs f0, 0xc(r5)
-    lfs f0, 0x10(r4)
-    lfs f3, 0x0(r4)
-    fmuls f0, f9, f0
-    lfs f4, 0x20(r4)
-    fmadds f0, f5, f3, f0
-    fmadds f0, f1, f4, f0
-    stfs f0, 0x10(r5)
-    lfs f0, 0x14(r4)
-    lfs f3, 0x4(r4)
-    fmuls f0, f9, f0
-    lfs f4, 0x24(r4)
-    fmadds f0, f5, f3, f0
-    fmadds f0, f1, f4, f0
-    stfs f0, 0x14(r5)
-    lfs f0, 0x18(r4)
-    lfs f3, 0x8(r4)
-    fmuls f0, f9, f0
-    lfs f4, 0x28(r4)
-    fmadds f0, f5, f3, f0
-    fmadds f0, f1, f4, f0
-    stfs f0, 0x18(r5)
-    lfs f0, 0x1c(r4)
-    lfs f3, 0xc(r4)
-    fmuls f0, f9, f0
-    lfs f4, 0x2c(r4)
-    fmadds f0, f5, f3, f0
-    fmadds f0, f1, f4, f0
-    fadds f0, f7, f0
-    stfs f0, 0x1c(r5)
-    lfs f0, 0x10(r4)
-    lfs f1, 0x0(r4)
-    fmuls f0, f28, f0
-    lfs f3, 0x20(r4)
-    fmadds f0, f29, f1, f0
-    fmadds f0, f2, f3, f0
-    stfs f0, 0x20(r5)
-    lfs f0, 0x14(r4)
-    lfs f1, 0x4(r4)
-    fmuls f0, f28, f0
-    lfs f3, 0x24(r4)
-    fmadds f0, f29, f1, f0
-    fmadds f0, f2, f3, f0
-    stfs f0, 0x24(r5)
-    lfs f0, 0x18(r4)
-    lfs f1, 0x8(r4)
-    fmuls f0, f28, f0
-    lfs f3, 0x28(r4)
-    fmadds f0, f29, f1, f0
-    fmadds f0, f2, f3, f0
-    stfs f0, 0x28(r5)
-    lfs f0, 0x1c(r4)
-    lfs f1, 0xc(r4)
-    fmuls f0, f28, f0
-    lfs f3, 0x2c(r4)
-    fmadds f0, f29, f1, f0
-    fmadds f0, f2, f3, f0
-    fadds f0, f8, f0
-    stfs f0, 0x2c(r5)
-HSD_MtxInverseConcat_L_802D65BC:
-    li r3, 0x1
-HSD_MtxInverseConcat_L_802D65C0:
-    psq_l f31, 0xc8(r1), 0, 0
-    lfd f31, 0xc0(r1)
-    psq_l f30, 0xb8(r1), 0, 0
-    lfd f30, 0xb0(r1)
-    psq_l f29, 0xa8(r1), 0, 0
-    lfd f29, 0xa0(r1)
-    psq_l f28, 0x98(r1), 0, 0
-    lfd f28, 0x90(r1)
-    psq_l f27, 0x88(r1), 0, 0
-    lfd f27, 0x80(r1)
-    psq_l f26, 0x78(r1), 0, 0
-    lfd f26, 0x70(r1)
-    psq_l f25, 0x68(r1), 0, 0
-    lfd f25, 0x60(r1)
-    psq_l f24, 0x58(r1), 0, 0
-    lfd f24, 0x50(r1)
-    psq_l f23, 0x48(r1), 0, 0
-    lwz r0, 0xd4(r1)
-    lfd f23, 0x40(r1)
-    mtlr r0
-    addi r1, r1, 0xd0
-    blr
-}
-#else
-void HSD_MtxInverseConcat(Mtx inv, Mtx src, Mtx dest)
+/* mkgp2's HSD returns whether the matrix was invertible and tests det == 0
+ * (melee's version is void and uses an epsilon). The determinant is written
+ * out here: calling HSD_CalcDeterminantMatrix3x4 colors one FPR differently
+ * (f22 gets used). */
+int HSD_MtxInverseConcat(Mtx inv, Mtx src, Mtx dest)
 {
     Mtx m;
     f32 det;
@@ -339,89 +67,85 @@ void HSD_MtxInverseConcat(Mtx inv, Mtx src, Mtx dest)
     f32 temp10;
     f32 temp11;
     f32 temp12;
-    f32 new_var; ///< @todo try to get rid of this
 
-    det = HSD_CalcDeterminantMatrix3x4(inv);
-
-    if (fabsf_bitwise(det) < EPSILON) {
-        if (src != dest) {
-            MTXCopy(src, dest);
-        }
-    } else {
-        det = 1.0f / det;
-        temp1 = ((inv[1][1] * inv[2][2]) - (inv[2][1] * inv[1][2])) * det;
-        temp2 = (-((inv[0][1] * inv[2][2]) - (inv[2][1] * inv[0][2]))) * det;
-        new_var = inv[1][1];
-        temp3 = (-((inv[1][0] * inv[2][2]) - (inv[2][0] * inv[1][2]))) * det;
-        temp7 = ((inv[0][1] * inv[1][2]) - (new_var * inv[0][2])) * det;
-        temp4 = ((inv[0][0] * inv[2][2]) - (inv[2][0] * inv[0][2])) * det;
-        temp8 = (-((inv[0][0] * inv[1][2]) - (inv[1][0] * inv[0][2]))) * det;
-        temp5 = ((inv[1][0] * inv[2][1]) - (inv[2][0] * new_var)) * det;
-        temp6 = (-((inv[0][0] * inv[2][1]) - (inv[2][0] * inv[0][1]))) * det;
-        temp9 = ((inv[0][0] * inv[1][1]) - (inv[1][0] * inv[0][1])) * det;
-        temp10 = -((temp7 * inv[2][3]) -
-                   (((-temp1) * inv[0][3]) - (temp2 * inv[1][3])));
-        temp11 = -((temp8 * inv[2][3]) -
-                   (((-temp3) * inv[0][3]) - (temp4 * inv[1][3])));
-        temp12 = -((temp9 * inv[2][3]) -
-                   (((-temp5) * (new_var = inv[0][3])) - (temp6 * inv[1][3])));
-
-        if (inv == dest || src == dest) {
-            m[0][0] =
-                temp7 * src[2][0] + (temp1 * src[0][0] + temp2 * src[1][0]);
-            m[0][1] =
-                temp7 * src[2][1] + (temp1 * src[0][1] + temp2 * src[1][1]);
-            m[0][2] =
-                temp7 * src[2][2] + (temp1 * src[0][2] + temp2 * src[1][2]);
-            m[0][3] = temp7 * src[2][3] +
-                      (temp1 * src[0][3] + temp2 * src[1][3]) + temp10;
-            m[1][0] =
-                temp8 * src[2][0] + (temp3 * src[0][0] + temp4 * src[1][0]);
-            m[1][1] =
-                temp8 * src[2][1] + (temp3 * src[0][1] + temp4 * src[1][1]);
-            m[1][2] =
-                temp8 * src[2][2] + (temp3 * src[0][2] + temp4 * src[1][2]);
-            m[1][3] = temp8 * src[2][3] +
-                      (temp3 * src[0][3] + temp4 * src[1][3]) + temp11;
-            m[2][0] =
-                temp9 * src[2][0] + (temp5 * src[0][0] + temp6 * src[1][0]);
-            m[2][1] =
-                temp9 * src[2][1] + (temp5 * src[0][1] + temp6 * src[1][1]);
-            m[2][2] =
-                temp9 * src[2][2] + (temp5 * src[0][2] + temp6 * src[1][2]);
-            m[2][3] = temp9 * src[2][3] +
-                      (temp5 * src[0][3] + temp6 * src[1][3]) + temp12;
-
-            MTXCopy(m, dest);
-        } else {
-            dest[0][0] =
-                temp7 * src[2][0] + (temp1 * src[0][0] + temp2 * src[1][0]);
-            dest[0][1] =
-                temp7 * src[2][1] + (temp1 * src[0][1] + temp2 * src[1][1]);
-            dest[0][2] =
-                temp7 * src[2][2] + (temp1 * src[0][2] + temp2 * src[1][2]);
-            dest[0][3] = temp7 * src[2][3] +
-                         (temp1 * src[0][3] + temp2 * src[1][3]) + temp10;
-            dest[1][0] =
-                temp8 * src[2][0] + (temp3 * src[0][0] + temp4 * src[1][0]);
-            dest[1][1] =
-                temp8 * src[2][1] + (temp3 * src[0][1] + temp4 * src[1][1]);
-            dest[1][2] =
-                temp8 * src[2][2] + (temp3 * src[0][2] + temp4 * src[1][2]);
-            dest[1][3] = temp8 * src[2][3] +
-                         (temp3 * src[0][3] + temp4 * src[1][3]) + temp11;
-            dest[2][0] =
-                temp9 * src[2][0] + (temp5 * src[0][0] + temp6 * src[1][0]);
-            dest[2][1] =
-                temp9 * src[2][1] + (temp5 * src[0][1] + temp6 * src[1][1]);
-            dest[2][2] =
-                temp9 * src[2][2] + (temp5 * src[0][2] + temp6 * src[1][2]);
-            dest[2][3] = temp9 * src[2][3] +
-                         (temp5 * src[0][3] + temp6 * src[1][3]) + temp12;
-        }
+    det = inv[0][0] * inv[1][1] * inv[2][2] + inv[0][1] * inv[1][2] * inv[2][0] +
+          inv[0][2] * inv[1][0] * inv[2][1] - inv[2][0] * inv[1][1] * inv[0][2] -
+          inv[1][0] * inv[0][1] * inv[2][2] - inv[0][0] * inv[2][1] * inv[1][2];
+    if (det == 0.0f) {
+        return 0;
     }
+    det = 1.0f / det;
+    temp1 = ((inv[1][1] * inv[2][2]) - (inv[2][1] * inv[1][2])) * det;
+    temp2 = (-((inv[0][1] * inv[2][2]) - (inv[2][1] * inv[0][2]))) * det;
+    temp3 = (-((inv[1][0] * inv[2][2]) - (inv[2][0] * inv[1][2]))) * det;
+    temp7 = ((inv[0][1] * inv[1][2]) - (inv[1][1] * inv[0][2])) * det;
+    temp4 = ((inv[0][0] * inv[2][2]) - (inv[2][0] * inv[0][2])) * det;
+    temp8 = (-((inv[0][0] * inv[1][2]) - (inv[1][0] * inv[0][2]))) * det;
+    temp5 = ((inv[1][0] * inv[2][1]) - (inv[2][0] * inv[1][1])) * det;
+    temp6 = (-((inv[0][0] * inv[2][1]) - (inv[2][0] * inv[0][1]))) * det;
+    temp9 = ((inv[0][0] * inv[1][1]) - (inv[1][0] * inv[0][1])) * det;
+    temp10 = -((temp7 * inv[2][3]) -
+               (((-temp1) * inv[0][3]) - (temp2 * inv[1][3])));
+    temp11 = -((temp8 * inv[2][3]) -
+               (((-temp3) * inv[0][3]) - (temp4 * inv[1][3])));
+    temp12 = -((temp9 * inv[2][3]) -
+               (((-temp5) * inv[0][3]) - (temp6 * inv[1][3])));
+
+    if (inv == dest || src == dest) {
+        m[0][0] =
+            temp7 * src[2][0] + (temp1 * src[0][0] + temp2 * src[1][0]);
+        m[0][1] =
+            temp7 * src[2][1] + (temp1 * src[0][1] + temp2 * src[1][1]);
+        m[0][2] =
+            temp7 * src[2][2] + (temp1 * src[0][2] + temp2 * src[1][2]);
+        m[0][3] = temp7 * src[2][3] +
+                  (temp1 * src[0][3] + temp2 * src[1][3]) + temp10;
+        m[1][0] =
+            temp8 * src[2][0] + (temp3 * src[0][0] + temp4 * src[1][0]);
+        m[1][1] =
+            temp8 * src[2][1] + (temp3 * src[0][1] + temp4 * src[1][1]);
+        m[1][2] =
+            temp8 * src[2][2] + (temp3 * src[0][2] + temp4 * src[1][2]);
+        m[1][3] = temp8 * src[2][3] +
+                  (temp3 * src[0][3] + temp4 * src[1][3]) + temp11;
+        m[2][0] =
+            temp9 * src[2][0] + (temp5 * src[0][0] + temp6 * src[1][0]);
+        m[2][1] =
+            temp9 * src[2][1] + (temp5 * src[0][1] + temp6 * src[1][1]);
+        m[2][2] =
+            temp9 * src[2][2] + (temp5 * src[0][2] + temp6 * src[1][2]);
+        m[2][3] = temp9 * src[2][3] +
+                  (temp5 * src[0][3] + temp6 * src[1][3]) + temp12;
+
+        PSMTXCopy(m, dest);
+    } else {
+        dest[0][0] =
+            temp7 * src[2][0] + (temp1 * src[0][0] + temp2 * src[1][0]);
+        dest[0][1] =
+            temp7 * src[2][1] + (temp1 * src[0][1] + temp2 * src[1][1]);
+        dest[0][2] =
+            temp7 * src[2][2] + (temp1 * src[0][2] + temp2 * src[1][2]);
+        dest[0][3] = temp7 * src[2][3] +
+                     (temp1 * src[0][3] + temp2 * src[1][3]) + temp10;
+        dest[1][0] =
+            temp8 * src[2][0] + (temp3 * src[0][0] + temp4 * src[1][0]);
+        dest[1][1] =
+            temp8 * src[2][1] + (temp3 * src[0][1] + temp4 * src[1][1]);
+        dest[1][2] =
+            temp8 * src[2][2] + (temp3 * src[0][2] + temp4 * src[1][2]);
+        dest[1][3] = temp8 * src[2][3] +
+                     (temp3 * src[0][3] + temp4 * src[1][3]) + temp11;
+        dest[2][0] =
+            temp9 * src[2][0] + (temp5 * src[0][0] + temp6 * src[1][0]);
+        dest[2][1] =
+            temp9 * src[2][1] + (temp5 * src[0][1] + temp6 * src[1][1]);
+        dest[2][2] =
+            temp9 * src[2][2] + (temp5 * src[0][2] + temp6 * src[1][2]);
+        dest[2][3] = temp9 * src[2][3] +
+                     (temp5 * src[0][3] + temp6 * src[1][3]) + temp12;
+    }
+    return 1;
 }
-#endif
 
 
 static inline f32 mk_asinf(f32 x) { return asin(x); }

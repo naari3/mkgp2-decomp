@@ -15,6 +15,26 @@ on the agent board (`to_onmokoworks.md`, n3-20261109 proposal):
 Regenerate: `python3 tools/scan_asm_fns.py --json` (the lists below were
 made from it; card group = the five `card_*` / `CardSave_*` TUs).
 
+## Group A checked against reference decomps (n3, 2026-11-09)
+
+Every group A function was looked up in doldecomp/dolsdk2004, doldecomp/mkdd,
+doldecomp/melee, AxioDL/musyx and projectPiki/pikmin2 (TRK `targimpl.c`).
+
+- **89 functions are `asm` in the references too** (the SDK itself for
+  `__start`/`__ppc_eabi_init`, PPCArch, db, OS, OSAlarm, OSCache, OSContext,
+  OSExec, OSInterrupt, OSMemory, OSReset, OSSync, OSTime, PS mtx/mtxvec/mtx44/vec,
+  ai; TRK targimpl; MusyX snd_service/reverb/chorus). They stay asm and are
+  done. One caveat: `Run` (OSExec) is asm in dolsdk2004 and in melee's
+  OSReboot.c.
+- **`HSD_SaveContext`** has no reference (melee calls `OSSaveContext`
+  instead), but its body is `mtsprg`/`mfspr GQRn`/`stmw r0` and a tail
+  branch, which MWCC cannot emit from C. Stays asm, done.
+- **`HSD_MtxInverseConcat`** was compiled C (MWCC prologue with
+  `stfd`/`psq_st` saves; C in melee). mkgp2's version returns int and tests
+  `det == 0`. Converted to C at 100 % (main.dol OK).
+
+So group A has no C work left.
+
 ## A. SDK / libraries (Dolphin OS/PPC/mtx, TRK, init, MusyX, HSD): 91 functions, 10028 bytes
 
 | address | size | TU (src/) | function |
