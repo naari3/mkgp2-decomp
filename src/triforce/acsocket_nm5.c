@@ -1,21 +1,24 @@
 #include "triforce/acsocket_private.h"
 
-static inline u8* GetSocketBuffer(s32 n, u32* off) {
-    *off = State.bufOff + n;
+static inline u8* GetSocketBuffer(s32 n, u8** off) {
+    *off = (u8*)State.bufOff + n;
     return BufPtr(n);
 }
 
-static inline u8* ClearBindBuffer(AcSock* k, u32* off) {
-    u8* buf = GetSocketBuffer(0, off);
-    *off += k->bufAddr;
-    memset(buf, 0, 0x40);
-    return buf;
+/* Clear CPU staging storage and return its board-side byte address. */
+static inline u8* ClearBindBuffer(AcSock* k, u8** buf) {
+    u32 base = k->bufAddr;
+    u8* off;
+    *buf = GetSocketBuffer(0, &off);
+    off += base;
+    memset(*buf, 0, 0x40);
+    return off;
 }
 
 s32 acBind(s32 s, const void* addr, s32 len) {
     OSSemaphore* sem;
     AcSock* k = SOCK(s);
-    u32 off;
+    u8* off;
     u8* buf;
 
     if (addr == NULL || len > 0x40) {
@@ -31,11 +34,11 @@ s32 acBind(s32 s, const void* addr, s32 len) {
     k->result = 0;
     memset(&k->addrOff, 0, 0x10);
     OSSignalSemaphore(sem);
-    buf = ClearBindBuffer(k, &off);
+    off = ClearBindBuffer(k, &buf);
     memcpy(buf, addr, len);
     fn_8028D530(Buf, k->bufAddr + State.bufOff, 0x40);
     k->cmd = 2;
-    k->result = fn_80290644(s, State.devBase + off, len);
+    k->result = fn_80290644(s, State.devBase + (u32)off, len);
     OSWaitSemaphore(sem);
     k->ready = 1;
     OSSignalSemaphore(sem);
