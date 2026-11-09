@@ -35,36 +35,15 @@ int lbl_804EC71C[14] = {
 };
 }
 
-static inline void FillSpecialItems(int *list) {
-    int i;
-    const int *cols;
-    int k;
-    const int *rows;
-    const int *items;
-    PlayerData *pd;
-    pd = &g_playerData;
-    items = specialItems;
-    cols = specialCols;
-    rows = specialRows;
-    k = 0;
-    for (i = 0; i < 4; i++) {
-        if (!fn_801D6F30(pd, items[i], 0) &&
-            fn_801D5B8C(pd, 0, rows[i], cols[i]) &&
-            fn_801D5B8C(pd, 1, rows[i], cols[i])) {
-            list[k++] = items[i];
-        }
-    }
-}
-
 void fn_80209C88(void) {
     char buf[0x45];
     void *cards[4] = {0, 0, 0, 0};
     cards[0] = buf;
     card_pack(&g_playerData, buf, 1);
     lbl_806D02D8 = CardSnapshot_ResolveCommonItems(cards);
-    int list[4] = {0, 0, 0, 0};
     int result = -1;
     PlayerData *pd = &g_playerData;
+    int list[4] = {0, 0, 0, 0};
     const int *tbl;
     int n;
     int round = g_roundIndex;
@@ -80,7 +59,26 @@ void fn_80209C88(void) {
         tbl = lbl_804EC71C;
         n = 14;
     } else {
-        FillSpecialItems(list);
+        {
+            PlayerData *pd;
+            const int *cols;
+            int k;
+            const int *rows;
+            const int *items;
+            int i;
+            pd = &g_playerData;
+            items = specialItems;
+            cols = specialCols;
+            rows = specialRows;
+            k = 0;
+            for (i = 0; i < 4; i++) {
+                if (!fn_801D6F30(pd, items[i], 0) &&
+                    fn_801D5B8C(pd, 0, rows[i], cols[i]) &&
+                    fn_801D5B8C(pd, 1, rows[i], cols[i])) {
+                    list[k++] = items[i];
+                }
+            }
+        }
         tbl = list;
         n = 4;
     }
