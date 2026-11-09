@@ -59,7 +59,7 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
     bitpack_read_field_by_name(pack, lbl_806D3468, &value, 0); dest[0xC] = value;
     bitpack_read_field_by_name(pack, lbl_806D3470, &value, 0); dest[0x17B] = value;
     bitpack_read_field_by_name(pack, pool + 0x1DAC, &value, 0); dest[0x17C] = value;
-    bitpack_read_field_by_name(pack, pool + 0x20BC, &value, 0); dest[0x17C] |= (value & 1) << 3;
+    bitpack_read_field_by_name(pack, pool + 0x20BC, &value, 0); dest[0x17C] |= (value << 3) & 8;
     bitpack_read_field_by_name(pack, lbl_806D3478, &value, 0); dest[0xD] = value;
     bitpack_read_field_by_name(pack, pool + 0x1DC8, &value, 0); dest[0xE] = value;
     bitpack_read_field_by_name(pack, lbl_806D3480, &value, 0); *(u32 *)(dest+0x40) = value;
@@ -77,8 +77,7 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
     row = dest;
     fields = (const char *const *)(pool + 0x20DC);
     for (group = 0; group < 6; row += 4, group++, fields++) {
-        cursor = row;
-        for (i = 0; i < 4; i++, cursor++) {
+        for (i = 0, cursor = row; i < 4; i++, cursor++) {
             bitpack_read_field_by_name(pack, *fields, &cupRank, i);
             cursor[0xF] = cupRank;
         }
@@ -90,8 +89,7 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
         unsigned int group;
         u8 *cursor;
         const char *const *fields;
-    row = dest;
-    for (i = 0; i < 4; i++, row += 4) {
+    for (i = 0, row = dest; i < 4; i++, row += 4) {
         bitpack_read_field_by_name(pack, pool + 0x1F04, &rank, i);
         bitpack_read_field_by_name(pack, pool + 0x1F10, &wins, i);
         bitpack_read_field_by_name(pack, pool + 0x1F1C, &cleared, i);
