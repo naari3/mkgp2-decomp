@@ -2,9 +2,6 @@
 
 /* Rotating comment lists.  They are the initialisers of the voice module's
  * local arrays and live inside its .rodata block at 0x803810A8. */
-typedef struct VoiceList6 { short v[6]; } VoiceList6;
-typedef struct VoiceList5 { short v[5]; } VoiceList5;
-typedef struct VoiceList10 { short v[10]; } VoiceList10;
 typedef struct VoiceList3 { short v[3]; } VoiceList3;
 /* Voice module constants, in original section order. */
 #pragma force_active on
@@ -655,10 +652,6 @@ const char lbl_80383C68[12] = "muon_08.dsp";
 const char lbl_80383C74[12] = "muon_10.dsp";
 const int kVoiceFinalLapCheckpointByTotalLaps[8] = {-1, -1, -1, 1, 2, 3, 4, 4};
 const int kVoiceMidRaceCheckpointByTotalLaps[8] = {-1, -1, 0, 1, 2, -1, 3, 4};
-static const VoiceList6 leadFar = {{609, 610, 611, 381, 382, 383}};
-static const VoiceList5 leadNear = {{612, 613, 614, 384, 385}};
-static const VoiceList5 leadClose = {{615, 616, 617, 386, 620}};
-static const VoiceList10 chasing = {{618, 275, 619, 620, 621, 387, 388, 389, 390, 391}};
 #pragma force_active reset
 extern const VoiceList3 lbl_806D97E8;
 
@@ -674,7 +667,17 @@ extern const float lbl_806D9818, lbl_806D981C, lbl_806D9820;
 
 
 #define SINCE(t) ((float)OSTicksToMilliseconds(now - (t)) / 1000.0f)
-#define CLIP_PLAYED(id) (clips[id].playCount)
+#define CLIP_PLAYED(id) RaceVoice_ClipPlayed(clips, (id))
+
+static inline void RaceVoice_AdvanceClip(VoiceClip **clip, int id) {
+    *clip += id;
+}
+
+static inline unsigned char RaceVoice_ClipPlayed(VoiceClip *clips, int id) {
+    VoiceClip *clip = clips;
+    RaceVoice_AdvanceClip(&clip, id);
+    return clip->playCount;
+}
 
 static inline short RaceVoice_DriverCharacter(RaceVoiceData *data, RaceVoiceDriver *driver) {
     int id;
@@ -686,6 +689,16 @@ static inline short RaceVoice_DriverCharacter(RaceVoiceData *data, RaceVoiceDriv
 
 static inline void *RaceVoice_Item(int playerIndex) {
     return g_raceEntryArray[playerIndex].item;
+}
+
+static inline void RaceVoice_AdvanceGoalLine(float **line) {
+    *line += (g_cupId - 1) * 16 + g_longRoundFlag * 8 + g_reverseRoundFlag * 4;
+}
+
+static inline float *RaceVoice_GoalLine(float *lines) {
+    float *line = lines;
+    RaceVoice_AdvanceGoalLine(&line);
+    return line;
 }
 
 /* Character voice of every kart that is spinning out. */
@@ -706,18 +719,15 @@ static inline unsigned char RaceVoice_PushSpinning(RaceVoiceData *data) {
 
 /* Announcer update: spin-outs, rival hits, goal line, course lines,
  * overtakes, item hits, boost and the rotating mid-race comments.
- * NonMatching (~98%): the .rodata pool is defined above in section order.
- * The shared .data pool still uses an extern aggregate: MWCC folds the
- * clip-table (+0x1534) and goal-line (+0xF8C) offsets into the index, with
- * residual register allocation differences.  The time divisor is a
+ * NonMatching (~99%): the .rodata pool is defined in section order.
+ * Cursor helpers preserve the goal-line and clip-table base additions.
+ * The chasing loop still hoists its clip base, and some saved registers
+ * and copy temporaries differ from the target.  The time divisor is a
  * literal so each check reloads it without preserving f31 across calls. */
-#pragma push
-#pragma optimization_level 3
 void fn_801A6538(void) {
     RaceVoiceData *data = &lbl_80496C38;
     OSTime now = OSGetTime();
     unsigned char pushed;
-    int i;
     int count;
     RaceVoiceEntry *entry;
     RaceVoiceEntry *first;
@@ -725,14 +735,6 @@ void fn_801A6538(void) {
     float timer;
     short voice;
     VoiceClip *clips;
-    VoiceList10 chaseCur;
-    VoiceList10 chaseList;
-    VoiceList6 farCur;
-    VoiceList5 nearCur;
-    VoiceList5 closeCur;
-    VoiceList6 farList;
-    VoiceList5 nearList;
-    VoiceList5 closeList;
     VoiceList3 backCur;
     VoiceList3 backList;
 
@@ -748,11 +750,14 @@ void fn_801A6538(void) {
 
     if (SINCE(g_voiceTickTimeHi) >= lbl_806D9818) {
         count = 0;
-        for (i = 0; i < 8; i++) {
-            if (g_raceEntryArray[i].rival != 0 &&
-                (g_taMinLapPlayerIndex == i || g_taMinLapPlayerIndex == g_raceEntryArray[i].rival->playerIndex)) {
-                lbl_806D1734[i] = 1;
-                count = 1;
+        {
+            int i;
+            for (i = 0; i < 8; i++) {
+                if (g_raceEntryArray[i].rival != 0 &&
+                    (g_taMinLapPlayerIndex == i || g_taMinLapPlayerIndex == g_raceEntryArray[i].rival->playerIndex)) {
+                    lbl_806D1734[i] = 1;
+                    count = 1;
+                }
             }
         }
         if (SINCE(lbl_806D1728) <= lbl_806D9818) {
@@ -762,15 +767,21 @@ void fn_801A6538(void) {
         } else {
             lbl_806D1728 = now;
             lbl_806D1730 = 0;
-            for (i = 0; i < 8; i++) {
-                lbl_806D1734[i] = 0;
+            {
+                int i;
+                for (i = 0; i < 8; i++) {
+                    lbl_806D1734[i] = 0;
+                }
             }
         }
         if (lbl_806D1730 >= 4) {
             count = 0;
-            for (i = 0; i < 8; i++) {
-                if (lbl_806D1734[i]) {
-                    count++;
+            {
+                int i;
+                for (i = 0; i < 8; i++) {
+                    if (lbl_806D1734[i]) {
+                        count++;
+                    }
                 }
             }
             if (count != 0 && !RaceVoice_Queued(0x11)) {
@@ -799,9 +810,12 @@ void fn_801A6538(void) {
                     else VoiceQueue_Push(0x1FC, 0x11, 1, 1);
                     break;
                 default:
-                    for (i = 0; i < 8; i++) {
-                        if (lbl_806D1734[i]) {
-                            VoiceQueue_Push(ENTRY_VOICE(&g_raceEntryArray[i]), 0x11, 1, 1);
+                    {
+                        int i;
+                        for (i = 0; i < 8; i++) {
+                            if (lbl_806D1734[i]) {
+                                VoiceQueue_Push(ENTRY_VOICE(&g_raceEntryArray[i]), 0x11, 1, 1);
+                            }
                         }
                     }
                     if (g_voiceTickCounter % 4 == 0) VoiceQueue_Push(0x1F4, 0x11, 1, 1);
@@ -811,8 +825,11 @@ void fn_801A6538(void) {
                     break;
                 }
             }
-            for (i = 0; i < 8; i++) {
-                lbl_806D1734[i] = 0;
+            {
+                int i;
+                for (i = 0; i < 8; i++) {
+                    lbl_806D1734[i] = 0;
+                }
             }
             lbl_806D1728 = now;
             lbl_806D1730++;
@@ -826,7 +843,7 @@ void fn_801A6538(void) {
     if (!lbl_806D1760) {
         entry = RaceVoice_FindByRank(1);
         if (entry->participant &&
-            fn_801A1BD0(data->goalLines + ((g_cupId - 1) * 16 + g_longRoundFlag * 8 + g_reverseRoundFlag * 4),
+            fn_801A1BD0(RaceVoice_GoalLine(data->goalLines),
                         entry)) {
             lbl_806D1760 = 1;
             if (!entry->silent && VoiceQueue_Push(ENTRY_VOICE(entry), 0x12, 0, 1)) {
@@ -837,29 +854,35 @@ void fn_801A6538(void) {
     }
 
     if (g_voiceCupLongRoundTable != 0 && !KartItem_GetByte_f4(g_raceEntryArray[g_taMinLapPlayerIndex].item)) {
-        for (i = 0;; i++) {
-            if (fn_801A1BD0(g_voiceCupLongRoundTable[i].line, &g_raceEntryArray[g_taMinLapPlayerIndex]) &&
-                VoiceQueue_Push(ENTRY_VOICE(&g_raceEntryArray[g_taMinLapPlayerIndex]), 0x13, 0, 1)) {
-                if (g_voiceTickCounter % 2 == 0) VoiceQueue_Push(0x1FE, 0x12, 0, 0);
-                else VoiceQueue_Push(0x1FF, 0x12, 0, 0);
-                break;
-            }
-            if (g_voiceCupLongRoundTable[i].last == 1) {
-                break;
+        {
+            int i;
+            for (i = 0;; i++) {
+                if (fn_801A1BD0(g_voiceCupLongRoundTable[i].line, &g_raceEntryArray[g_taMinLapPlayerIndex]) &&
+                    VoiceQueue_Push(ENTRY_VOICE(&g_raceEntryArray[g_taMinLapPlayerIndex]), 0x13, 0, 1)) {
+                    if (g_voiceTickCounter % 2 == 0) VoiceQueue_Push(0x1FE, 0x12, 0, 0);
+                    else VoiceQueue_Push(0x1FF, 0x12, 0, 0);
+                    break;
+                }
+                if (g_voiceCupLongRoundTable[i].last == 1) {
+                    break;
+                }
             }
         }
     }
 
     pushed = 0;
-    for (i = 0; i < 8; i++) {
-        entry = &g_raceEntryArray[i];
-        if (entry->overtaken) {
-            if (!pushed) {
-                VoiceQueue_Push(0x1CD, 0x14, 0, 1);
+    {
+        int i;
+        for (i = 0; i < 8; i++) {
+            entry = &g_raceEntryArray[i];
+            if (entry->overtaken) {
+                if (!pushed) {
+                    VoiceQueue_Push(0x1CD, 0x14, 0, 1);
+                }
+                VoiceQueue_Push(ENTRY_VOICE(entry), 0x14, 0, 0);
+                pushed = 1;
+                entry->overtaken = 0;
             }
-            VoiceQueue_Push(ENTRY_VOICE(entry), 0x14, 0, 0);
-            pushed = 1;
-            entry->overtaken = 0;
         }
     }
     if (pushed) {
@@ -867,30 +890,33 @@ void fn_801A6538(void) {
         return;
     }
 
-    for (i = 0; i < 8; i++) {
-        entry = &g_raceEntryArray[i];
-        pushed = 0;
-        if (entry->participant) {
-            cond = 0;
-            if (g_gameMode == 2) {
-                if (entry->player >= 2 && entry->hits >= 2) cond = 1;
-            } else {
-                if (entry->player >= 3 && entry->hits >= 2) cond = 1;
+    {
+        int i;
+        for (i = 0; i < 8; i++) {
+            entry = &g_raceEntryArray[i];
+            pushed = 0;
+            if (entry->participant) {
+                cond = 0;
+                if (g_gameMode == 2) {
+                    if (entry->player >= 2 && entry->hits >= 2) cond = 1;
+                } else {
+                    if (entry->player >= 3 && entry->hits >= 2) cond = 1;
+                }
+                if (cond) {
+                    VoiceQueue_Push(ENTRY_VOICE(entry), 0x1D, 0, 1);
+                    entry->hits = 0;
+                    pushed = 1;
+                }
             }
-            if (cond) {
-                VoiceQueue_Push(ENTRY_VOICE(entry), 0x1D, 0, 1);
-                entry->hits = 0;
-                pushed = 1;
+            if (pushed) {
+                if (g_voiceTickCounter % 6 == 0) VoiceQueue_Push(0x254, 0x1D, 0, 0);
+                else if (g_voiceTickCounter % 6 == 1) VoiceQueue_Push(0x255, 0x1D, 0, 0);
+                else if (g_voiceTickCounter % 6 == 2) VoiceQueue_Push(0x256, 0x1D, 0, 0);
+                else if (g_voiceTickCounter % 6 == 3) VoiceQueue_Push(0x257, 0x1D, 0, 0);
+                else if (g_voiceTickCounter % 6 == 4) VoiceQueue_Push(0x258, 0x1D, 0, 0);
+                else VoiceQueue_Push(0x259, 0x1D, 0, 0);
+                return;
             }
-        }
-        if (pushed) {
-            if (g_voiceTickCounter % 6 == 0) VoiceQueue_Push(0x254, 0x1D, 0, 0);
-            else if (g_voiceTickCounter % 6 == 1) VoiceQueue_Push(0x255, 0x1D, 0, 0);
-            else if (g_voiceTickCounter % 6 == 2) VoiceQueue_Push(0x256, 0x1D, 0, 0);
-            else if (g_voiceTickCounter % 6 == 3) VoiceQueue_Push(0x257, 0x1D, 0, 0);
-            else if (g_voiceTickCounter % 6 == 4) VoiceQueue_Push(0x258, 0x1D, 0, 0);
-            else VoiceQueue_Push(0x259, 0x1D, 0, 0);
-            return;
         }
     }
 
@@ -929,37 +955,71 @@ void fn_801A6538(void) {
         case 0:
             first = RaceVoice_FindByRank(1);
             if (first == 0 || first->distance >= 7) {
-                farList = leadFar;
-                for (i = 0; i < 6; i++) {
-                    clips = data->clips;
-                    farCur = farList;
-                    voice = farCur.v[(lbl_806D1750 + i) % 6];
-                    if (!CLIP_PLAYED(voice)) {
-                        VoiceQueue_Push(ENTRY_VOICE(entry), 0x1F, 0, 1);
-                        pushed = VoiceQueue_Push(voice, 0x1F, 0, 0);
-                        break;
+                {
+                    int i;
+                    for (i = 0; i < 6; i++) {
+                        short farCur[6] = {609, 610, 611, 381, 382, 383};
+                        clips = data->clips;
+                        voice = farCur[(lbl_806D1750 + i) % 6];
+                        if (!CLIP_PLAYED(voice)) {
+                            VoiceQueue_Push(ENTRY_VOICE(entry), 0x1F, 0, 1);
+                            pushed = VoiceQueue_Push(voice, 0x1F, 0, 0);
+                            break;
+                        }
                     }
                 }
             } else if (first->distance >= 2) {
-                nearList = leadNear;
-                for (i = 0; i < 5; i++) {
-                    clips = data->clips;
-                    nearCur = nearList;
-                    voice = nearCur.v[(lbl_806D1750 + i) % 5];
-                    if (!CLIP_PLAYED(voice)) {
-                        VoiceQueue_Push(ENTRY_VOICE(entry), 0x1F, 0, 1);
-                        pushed = VoiceQueue_Push(voice, 0x1F, 0, 0);
-                        break;
+                {
+                    int i;
+                    for (i = 0; i < 5; i++) {
+                        short nearCur[5] = {612, 613, 614, 384, 385};
+                        clips = data->clips;
+                        voice = nearCur[(lbl_806D1750 + i) % 5];
+                        if (!CLIP_PLAYED(voice)) {
+                            VoiceQueue_Push(ENTRY_VOICE(entry), 0x1F, 0, 1);
+                            pushed = VoiceQueue_Push(voice, 0x1F, 0, 0);
+                            break;
+                        }
                     }
                 }
             } else {
-                closeList = leadClose;
-                for (i = 0; i < 5; i++) {
+                {
+                    int i;
+                    for (i = 0; i < 5; i++) {
+                        short closeCur[5] = {615, 616, 617, 386, 620};
+                        clips = data->clips;
+                        voice = closeCur[(lbl_806D1750 + i) % 5];
+                        if (!CLIP_PLAYED(voice)) {
+                            if (voice == 0x267 || voice == 0x268) {
+                                VoiceQueue_Push(ENTRY_VOICE(entry), 0x1F, 0, 1);
+                                pushed = VoiceQueue_Push(voice, 0x1F, 0, 0);
+                            } else {
+                                pushed = VoiceQueue_Push(voice, 0x1F, 0, 1);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            break;
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+            {
+                int i;
+                for (i = 0; i < 10; i++) {
+                    short chaseCur[10] = {618, 275, 619, 620, 621, 387, 388, 389, 390, 391};
                     clips = data->clips;
-                    closeCur = closeList;
-                    voice = closeCur.v[(lbl_806D1750 + i) % 5];
-                    if (!CLIP_PLAYED(voice)) {
-                        if (voice == 0x267 || voice == 0x268) {
+                    voice = chaseCur[(lbl_806D1750 + i) % 10];
+                    if (voice == 0x113) {
+                        if (!CLIP_PLAYED(voice + entry->player)) {
+                            VoiceQueue_Push(ENTRY_VOICE(entry), 0x1F, 0, 1);
+                            pushed = VoiceQueue_Push(voice + entry->player, 0x1F, 0, 0);
+                            break;
+                        }
+                    } else if (!CLIP_PLAYED(voice)) {
+                        if ((unsigned short)(voice - 0x26A) <= 1 || voice == 0x186 || voice == 0x187) {
                             VoiceQueue_Push(ENTRY_VOICE(entry), 0x1F, 0, 1);
                             pushed = VoiceQueue_Push(voice, 0x1F, 0, 0);
                         } else {
@@ -970,49 +1030,26 @@ void fn_801A6538(void) {
                 }
             }
             break;
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-            chaseList = chasing;
-            for (i = 0; i < 10; i++) {
-                clips = data->clips;
-                chaseCur = chaseList;
-                voice = chaseCur.v[(lbl_806D1750 + i) % 10];
-                if (voice == 0x113) {
-                    if (!CLIP_PLAYED(voice + entry->player)) {
-                        VoiceQueue_Push(ENTRY_VOICE(entry), 0x1F, 0, 1);
-                        pushed = VoiceQueue_Push(voice + entry->player, 0x1F, 0, 0);
-                        break;
-                    }
-                } else if (!CLIP_PLAYED(voice)) {
-                    if ((unsigned short)(voice - 0x26A) <= 1 || voice == 0x186 || voice == 0x187) {
-                        VoiceQueue_Push(ENTRY_VOICE(entry), 0x1F, 0, 1);
-                        pushed = VoiceQueue_Push(voice, 0x1F, 0, 0);
-                    } else {
-                        pushed = VoiceQueue_Push(voice, 0x1F, 0, 1);
-                    }
-                    break;
-                }
-            }
-            break;
         default:
             backList = lbl_806D97E8;
-            for (i = 0; i < 3; i++) {
-                clips = data->clips;
-                backCur = backList;
-                voice = backCur.v[(lbl_806D1750 + i) % 3];
-                if (!CLIP_PLAYED(voice)) {
-                    if (voice == 0x26E || voice == 0x26F) {
-                        VoiceQueue_Push(ENTRY_VOICE(entry), 0x1F, 0, 1);
-                        if (voice == 0x26F) {
-                            VoiceQueue_Push(0x118, 0x1F, 0, 0);
+            {
+                int i;
+                for (i = 0; i < 3; i++) {
+                    clips = data->clips;
+                    backCur = backList;
+                    voice = backCur.v[(lbl_806D1750 + i) % 3];
+                    if (!CLIP_PLAYED(voice)) {
+                        if (voice == 0x26E || voice == 0x26F) {
+                            VoiceQueue_Push(ENTRY_VOICE(entry), 0x1F, 0, 1);
+                            if (voice == 0x26F) {
+                                VoiceQueue_Push(0x118, 0x1F, 0, 0);
+                            }
+                            pushed = VoiceQueue_Push(voice, 0x1F, 0, 0);
+                        } else {
+                            pushed = VoiceQueue_Push(voice, 0x1F, 0, 1);
                         }
-                        pushed = VoiceQueue_Push(voice, 0x1F, 0, 0);
-                    } else {
-                        pushed = VoiceQueue_Push(voice, 0x1F, 0, 1);
+                        break;
                     }
-                    break;
                 }
             }
             break;
@@ -1023,5 +1060,4 @@ void fn_801A6538(void) {
         }
     }
 }
-#pragma pop
 
