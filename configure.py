@@ -1772,7 +1772,7 @@ config.libs = [
             Object(Matching, "game/KartMovement_Reset.c"),
             Object(Matching, "game/KartReaction.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/LakituStart.c"),
-            Object(NonMatching, "game/LakituStart_UpdateCountdown.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/LakituStart_UpdateCountdown.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ObjectChain_RenderInZRange.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/LakituStart_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Object_RenderJObjIfWithinRange.c", extra_cflags=["-Cpp_exceptions on"]),

@@ -64,7 +64,6 @@ extern "C" int LakituStart_UpdateCountdown(LakituStart *self) {
     void *cam = GetCourseScene3D();
     if (cam) {
         Vec3f offset, result;
-        float height;
         Vec3f eye, at, dir;
         CObj_LoadProjMatrix(cam, &eye);
         CObj_ApplyScissor(cam, &at);
@@ -73,8 +72,9 @@ extern "C" int LakituStart_UpdateCountdown(LakituStart *self) {
         Vec3_Normalize(&dir, &dir);
         offset.x = lbl_806CEDC0 + self->x;
         offset.z = lbl_806CEDC8 + self->z;
-        const float dx = dir.x;
         const float dy = dir.y;
+        const float dx = dir.x;
+        float height;
         height = lbl_806CEDC4 + self->y;
         result.x = dx * offset.z + (-dir.z * offset.x + eye.x);
         SetX(Archive_GetRootJObj(self->model), result.x);
