@@ -468,3 +468,8 @@ c21_u153 fn8019A9BC94.162964->98.0/1080B: reuse fn801ED798-style AccumulateProdu
 Source: Codex worker c21_u189_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c21_u189 fn_8019ADF4: scalar ForceDot boundary invariant87.533745. ForceScale(volatile Vec3*,float) with own x/y/z locals fixes all9 normalize FPR rows87.90184. ApplyHorizontalForce containing unchanged dot/reflection/impulse addition further improves88.11656,652B, EH/index100. Keep both helpers; initial scheduler/FPR homes, second/third root spill swap and remaining reflection homes persist. No flags/ranges/data changes; singleton remainsNM, full fallback-linked DOL SHA1 exact, gain0.
+
+## c22_u78_20261109
+Source: Codex worker c22_u78_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c22_u78 PhysicsStep96.47633->96.48397: SteeringMagnitude(float) inline with double magnitude=__fabs(value); return(float)magnitude fixes exactly fabs@8019D810 and frsp@8019D814; all other primary instructions equal baseline. Global Abs double local regresses96.46488 by changing other Abs sites; caller double local changes callee-saved homes and collides conversion constant with old EH alias. New helper conversion@639 safely maps lbl806D97B0; append own @640/@641->primary etb/eti restores EH96.23288/index95. Delta all-components-before-Set96.46794 fails reloads; previous matrix CopyMatrix inline invariant96.48397. Still5212vs5240B; singleton no B cut or data pool. Honest NonMatching; full coordinator DOL SHA1ea30f3b1 exact, zero native gain.

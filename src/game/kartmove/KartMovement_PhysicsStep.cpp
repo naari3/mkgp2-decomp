@@ -48,6 +48,11 @@ static inline float Dot(const Vec3 &a, const Vec3 &b) {
 static inline float Abs(float v) { return __fabs(v); }
 static inline void Clear(Vec3 &v) { v.x = lbl_806D96D0; v.y = lbl_806D96D0; v.z = lbl_806D96D0; }
 
+static inline float SteeringMagnitude(float value) {
+    double magnitude = __fabs(value);
+    return (float)magnitude;
+}
+
 static inline float QuantizeSteering(float value) {
     return (float)(int)(lbl_806D9750 * value) * lbl_806D9754;
 }
@@ -205,7 +210,7 @@ extern "C" void KartMovement_PhysicsStep(MovementInit *k, unsigned char active,
     {
         InitVec velocity(k->v17c.x, k->v17c.y, k->v17c.z);
         Scale(velocity, lbl_806D9780);
-        float angle = Abs(lbl_806D9760*k->pad1c4);
+        float angle = SteeringMagnitude(lbl_806D9760*k->pad1c4);
         float speed = fn_8019EA08(&velocity);
         if (angle > lbl_806D96D0 && speed > lbl_806D96D0) {
             float delta = (float)(lbl_806D96F8*(float)asin(speed/(brake/LUT_Cosine((float)(lbl_806D96F0*angle)))));
