@@ -13034,7 +13034,9 @@
     "@216": "@etb_80007204",
     "@217": "@eti_800205F4",
     "@214": "@etb_80007204",
-    "@215": "@eti_800205F4"
+    "@215": "@eti_800205F4",
+    "@227": "@etb_80007204",
+    "@228": "@eti_800205F4"
   },
   "src/game/EffectSpeed_Init.cpp": {
     "__ct__14SpeedInitOwnerFPv": "EffectSpeed_Init",

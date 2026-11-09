@@ -16,6 +16,24 @@ static inline void ArmNormalizeCopy(C7Vec* v, const C7Vec* src) {
     else {float inv=lbl_806D27FC/length;v->x*=inv;v->y*=inv;v->z*=inv;}
 }
 
+// Axis normalization uses zero consistently for the degenerate-vector checks.
+static inline float ArmAxisRoot(float x) {
+    volatile float y;
+    if(x>0.0f) {
+        double guess=__frsqrte(x);
+        guess=lbl_806D2808*guess*(lbl_806D2810-x*(guess*guess));
+        guess=lbl_806D2808*guess*(lbl_806D2810-x*(guess*guess));
+        guess=lbl_806D2808*guess*(lbl_806D2810-x*(guess*guess));
+        y=(float)(x*guess); return y;
+    }
+    return x;
+}
+static inline void ArmAxisNormalize(C7Vec* v) {
+    float length=ArmAxisRoot(v->z*v->z+(v->x*v->x+v->y*v->y));
+    if(length<=0.0f) { v->z=0.0f; v->y=0.0f; v->x=0.0f; }
+    else { float inv=lbl_806D27FC/length; v->x*=inv; v->y*=inv; v->z*=inv; }
+}
+
 extern "C" void ItemEffectImpact_TryArmInit(ImpactArmState* __restrict self, C7Vec* __restrict velocity, ImpactArmMatrix* __restrict pose, int timer) {
     self->Reset();
     self->pos=*velocity;
@@ -39,7 +57,7 @@ extern "C" void ItemEffectImpact_TryArmInit(ImpactArmState* __restrict self, C7V
     axis.y=v.z*up.x-v.x*up.z;
     axis.z=v.x*up.y-v.y*up.x;
     float length2=axis.z*axis.z+(axis.x*axis.x+axis.y*axis.y);
-    if(length2>lbl_806D27F8) { Normalize(&axis); self->axis=axis; }
+    if(length2>0.0f) { ArmAxisNormalize(&axis); self->axis=axis; }
     else { float z=self->start.m[0][2], y=self->start.m[0][1], x=self->start.m[0][0]; self->axis.x=x; self->axis.y=y; self->axis.z=z; }
     ImpactArmQuat q;
     q.w=lbl_806D27F8; q.z=lbl_806D27F8; q.y=lbl_806D27F8; q.x=lbl_806D27F8;
