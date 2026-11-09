@@ -2184,6 +2184,34 @@ def li_mr_hint(a, d):
     return out
 
 
+def reorder_hint(a, d):
+    """Runs of differing instructions that are a pure reordering of the same
+    instructions (same registers): regalloc_patterns 69. -> [(index, ours, target)]"""
+    import pragmasweep as ps
+    u = ps.Unit(a.unit)
+    sym = u.compiled_name(a.fn)
+    oo = Path(d) / "ours.o"
+    if not oo.exists():
+        oo = ROOT / f"build/{md.VERSION}/src/{u.obj}.o"
+    ours, tgt = _listings(oo, ROOT / f"build/{md.VERSION}/obj/{u.obj}.o", sym, a.fn)
+    if len(ours) != len(tgt) or not ours:
+        return []
+    norm = lambda x: re.sub(r"\s+", " ", x.strip())
+    ours, tgt = [norm(x) for x in ours], [norm(x) for x in tgt]
+    out, i, n = [], 0, len(ours)
+    while i < n:
+        if ours[i] == tgt[i]:
+            i += 1
+            continue
+        j = i
+        while j < n and ours[j] != tgt[j]:
+            j += 1
+        if 2 <= j - i <= 6 and sorted(ours[i:j]) == sorted(tgt[i:j]):
+            out.append((i, "; ".join(ours[i:j]), "; ".join(tgt[i:j])))
+        i = j
+    return out
+
+
 def shape_hints(a, rep, src_text):
     """Cheap source-shape hints for patterns landed 11-09 (regalloc_patterns 52-54,
     float literals). -> [text]"""
@@ -2300,6 +2328,22 @@ def print_levers(a, rep, src_text, d, ext):
         if any(k == "mr-li" for *_, k in lm):
             print("  Ours copies where the target loads the constant twice: the two variables are named locals of the "
                   "function itself in the original, not locals of an inline.")
+    try:
+        ro = reorder_hint(a, d)
+    except Exception as e:  # noqa: BLE001 - advice only
+        ro = []
+        print(f"[regfix] reorder hint: {e}")
+    if ro:
+        print("\n== same instructions in another order (rule dead-truncation-reschedules-block, regalloc_patterns 69) ==")
+        for i, o, t in ro[:6]:
+            print(f"  insn {i}: ours `{o}` | target `{t}`")
+        print(f"  Registers are equal, only the schedule differs. Run `python3 tools/mwsched.py log {a.unit} {a.fn}`: if "
+              "the pre-RA schedule of the block already equals the target, the block was scheduled a second time "
+              "after register allocation because an instruction in it was deleted. Find the instruction the pre-RA "
+              "block has and the final code lacks (typically a dead `rlwinm`/`extsb` from a chained cast such as "
+              "`u8var = (int)x`, or a copy that coalesced) and write the source so it is never emitted "
+              "(`u8var = x`). If the pre-RA schedule is already wrong, change the dependences instead "
+              "(statement order, docs/mwcc_internals.md scheduler notes).")
     try:
         sh = shape_hints(a, rep, src_text)
     except Exception as e:  # noqa: BLE001 - advice only

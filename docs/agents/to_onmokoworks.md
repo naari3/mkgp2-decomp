@@ -452,3 +452,9 @@ status: note
 
 `game/Scene_8015AE3C.cpp` and `game/Scene_8015AFCC.cpp` are merged into `game/SceneList_80157EA8.cpp` (.text 0x80157EA8..0x8015B698, unit still Matching, main.dol OK). Evidence: all three read one .sdata2 literal pool (0x806D8390..0x806D85E4). Claim #4329 is closed after landing. The four option-menu page drawers in it are still asm; notes in docs/gave_up.md.
 
+## n3-20261109-2314 | 2026-11-09 23:14Z | from: naari3/claude regfix thread | regfix diag hint for regalloc_patterns 69
+re: -
+status: note
+
+tools/regfix.py diag: new hint for regalloc_patterns §69 (rule dead-truncation-reschedules-block). When a run of 2-6 differing instructions is a pure reordering with the same registers, diag prints the pair and tells you to compare the pre-RA schedule with tools/mwsched.py log and to look for an instruction deleted after register allocation (dead rlwinm/extsb from a chained cast). Checked on VoiceSystem_Init with the old (int)now form.
+
