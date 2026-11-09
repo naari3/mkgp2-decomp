@@ -159,11 +159,54 @@ def strip_fns(text: str, fn: str, keep_bodies: bool = False):
     return out, kept
 
 
+def make_pretend(hidden: str, visible: str) -> str:
+    """PERM_PRETEND typedefs for the type names `visible` uses from `hidden`."""
+    simple = {}   # name -> one-line typedef copied as is (scalars, arrays, fn ptrs)
+    structs = set()
+    for m in re.finditer(r"\btypedef\b([^;{}]*)(\{)?", hidden):
+        if m.group(2):  # typedef struct {...} A, *B;
+            k, d = m.end(), 1
+            while d and k < len(hidden):
+                d += {"{": 1, "}": -1}.get(hidden[k], 0)
+                k += 1
+            e = hidden.find(";", k)
+            for decl in hidden[k:e].split(","):
+                nm = re.search(r"(\w+)\s*$", decl.strip())
+                if nm and "*" not in decl:
+                    structs.add(nm.group(1))
+        else:
+            e = hidden.find(";", m.end() - 1)
+            body = hidden[m.start():e + 1]
+            if re.match(r"typedef\s+(struct|union|class|enum)\s+\w+\s+\**\w+\s*;", body):
+                structs.add(re.search(r"(\w+)\s*;", body).group(1))
+                continue
+            nm = re.search(r"\(\s*\*\s*(\w+)\s*\)", body) or re.search(r"(\w+)\s*(?:\[[^;]*\])?\s*;", body)
+            if nm and "\n" not in body.strip():
+                simple[nm.group(1)] = re.sub(r"\s+", " ", body)
+    structs |= set(re.findall(r"\b(?:class|struct|union)\s+(\w+)\s*[{:]", hidden))
+    out, seen = [], set()
+
+    def need(n):
+        return n not in seen and re.search(r"\b%s\b" % re.escape(n), visible)
+
+    # simple typedefs may refer to other typedef names: emit in source order
+    for n, line in simple.items():
+        if need(n):
+            for dep in re.findall(r"\w+", line):
+                if dep in simple and dep not in seen and dep != n:
+                    out.append(f"PERM_PRETEND({simple[dep]})\n"); seen.add(dep)
+            out.append(f"PERM_PRETEND({line})\n"); seen.add(n)
+    for n in sorted(structs):
+        if need(n) and n not in simple:
+            out.append(f"PERM_PRETEND(typedef struct {n} {n};)\n"); seen.add(n)
+    return "".join(out)
+
+
 def _insert_pretend(parts, pretend):
     out = []
     done = False
     for p in parts:
-        if not done and not p.startswith("PERM_IGNORE("):
+        if not done and not p.startswith("PERM_IGNORE(\n"):
             out.append(pretend)
             done = True
         out.append(p)
@@ -178,6 +221,8 @@ def main():
     ap.add_argument("--out")
     ap.add_argument("--cc", help="override compiler version, e.g. 2.6")
     ap.add_argument("--base", help="use this (already preprocessed) base.c instead")
+    ap.add_argument("--parse-all", action="store_true",
+                    help="C: give pycparser the whole TU instead of PERM_IGNORE + PERM_PRETEND")
     ap.add_argument("--check", action="store_true", help="compile base.c once and diff vs target")
     ap.add_argument("--show-inlines", action="store_true",
                     help="C++: leave inline helpers visible to the permuter (they must be C-parsable)")
@@ -211,10 +256,14 @@ def main():
             chunks = [("k" if (k == "k" and re.search(r"\b%s\s*\(" % re.escape(a.fn), c.split("{")[0])) else ("o" if k == "k" else k), c) for k, c in chunks]
         if a.fn not in kept:
             sys.exit(f"{a.fn} not found in {src}")
-        if cxx:
-            # pycparser can't read C++: hide everything but the kept fns.
+        if cxx or not a.parse_all:
+            # pycparser can't read C++, and misparses some C headers too
+            # (e.g. `sizeof(T) + sizeof(U)` printed back as a cast): hide
+            # everything but the kept fns.
             parts = []
             buf = []
+            chunks = [(k, re.sub(r'\bextern\s+"C"\s+', 'PERM_IGNORE(extern "C") ', c) if k == "k" else c)
+                      for k, c in chunks]
             for k, c in chunks:
                 if k == "k":
                     if buf:
@@ -227,14 +276,11 @@ def main():
                 parts.append("PERM_IGNORE(\n" + "".join(buf) + "\n)\n")
             hidden = "".join(c for k, c in chunks if k != "k")
             visible = "".join(c for k, c in chunks if k == "k")
-            names = set(re.findall(r"\b(?:struct|class|union|enum)\s+(\w+)", hidden))
-            names |= set(re.findall(r"typedef[^;{}]*?(\w+)\s*;", hidden))
-            names |= set(re.findall(r"typedef\s+(?:struct|union|enum)\s*\w*\s*\{.*?\}\s*(\w+)\s*;", hidden, re.S))
-            used = sorted(n for n in names if re.search(r"\b%s\b" % n, visible))
-            pretend = "".join(f"PERM_PRETEND(typedef struct {n} {n};)\n" for n in used)
-            base = ("/* C++ TU: PERM_IGNORE hides C++ from pycparser; PERM_PRETEND typedefs\n"
+            pretend = make_pretend(hidden, visible)
+            base = ("/* PERM_IGNORE hides the rest of the TU from pycparser; PERM_PRETEND typedefs\n"
                     " * make the visible fn parsable. Edit if parsing fails. */\n"
                     + _insert_pretend(parts, pretend))
+            base = re.sub(r"__declspec\s*\(\s*\w+\s*\)", "", base) if not cxx else base
         else:
             base = "".join(c for _, c in chunks)
             base = re.sub(r"__declspec\s*\(\s*\w+\s*\)", "", base)
@@ -244,7 +290,7 @@ def main():
     wibo = [str(REPO / t) if (REPO / t).exists() else t for t in cmd]
     cs = ["#!/bin/bash", "# usage: compile.sh in.c -o out.o",           'IN="$(realpath "$1")"; OUT="$(realpath "$3")"; T="$(mktemp --suffix=.o)"',
           f"cd '{REPO}'",
-          shlex.join(wibo) + ' -c "$IN" -o "$T" >/dev/null || { rm -f "$T"; exit 1; }']
+          shlex.join(wibo) + '  -c "$IN" -o "$T" || { rm -f "$T"; exit 1; }']
     if cxx:
         cs.append(f"SYM=$({REPO}/build/binutils/powerpc-eabi-nm \"$T\" | awk '$3 ~ /^{a.fn}__/ {{print $3; exit}}')")
         cs.append(f'[ -n "$SYM" ] && {REPO}/build/binutils/powerpc-eabi-objcopy --redefine-sym "$SYM={a.fn}" "$T"')
