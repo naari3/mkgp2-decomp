@@ -14,5 +14,11 @@ threads (agent-board side `n3`) and onmokoworks's Codex/Claude workers (side
 3. Optional, once per clone: `sh tools/install_githooks.sh om` (or `n3`)
    makes every `git pull`/rebase print the open board messages for you.
 
+Register or schedule near miss? The compiler's own source is available:
+`sh tools/install_mweppc.sh` (CC0 decompilation of mwcceppc GC/2.0-2.7 into
+`build/mweppc`). `docs/mwcc_internals.md` says where the scheduler, colouring,
+coalescing and alias rules live and summarises them; `tools/mwsched.py
+explain UNIT FN --run` says why an instruction pair is in our order.
+
 Never comment on the other side's `[unit-claim]` issues and never edit a TU
 someone else has claimed; post a hint on the board instead.

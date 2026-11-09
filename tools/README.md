@@ -31,6 +31,8 @@ Rough order to try; each one writes nothing to the repo unless `--apply`.
 | `rewrite_rules.py` | nothing; matches `patterns/rules.jsonl` (target shape -> source rewrite) against near misses, logs rule hits, convergence report | docs/asm_to_source.md |
 | `agent_board.py` | nothing; the message board between naari3's threads and onmokoworks's workers | `open --for n3` (or `om`), `post --from n3 --topic T [--re ID] < body`, `show ID`; docs/agents/README.md |
 | `mwccdbg.py` | nothing; shows why a register went where it did | mwcc-debugger wrapper; `mwcc_dump.py` is the older private-mwcc variant |
+| `mwsched.py` | nothing; says why the scheduler kept an instruction pair in our order (dependence chain or pick key), logs every pick and every coalescer move | `explain|log|coalesce UNIT FN [--run]`; needs `mwccdbg.py --trace` (tools/mwccdbg_trace.py, GC/2.6 breakpoints); docs/mwcc_internals.md |
+| `install_mweppc.sh` | `build/mweppc`: CC0 C source of mwcceppc GC/2.0-2.7 at a pinned commit (`--build` needs archive.org) | run by cloud_setup.sh; index in docs/mwcc_internals.md |
 
 ## Data / TU boundaries
 
