@@ -10630,30 +10630,10 @@ game/fn_801F7F50.cpp:
 	.text       start:0x801F7F50 end:0x801F8214
 
 game/dtor_801F8214.cpp:
-	extab       start:0x80017630 end:0x80017640
-	extabindex  start:0x80029018 end:0x80029030
-	.text       start:0x801F8214 end:0x801F8404
+	extab       start:0x80017630 end:0x80017680
+	extabindex  start:0x80029018 end:0x80029060
+	.text       start:0x801F8214 end:0x801F89F0
 	.rodata     start:0x803BEDC0 end:0x803BF020
-
-game/fn_801F8404.cpp:
-	extab       start:0x80017640 end:0x80017658
-	extabindex  start:0x80029030 end:0x8002903C
-	.text       start:0x801F8404 end:0x801F8668
-
-game/fn_801F8668.c:
-	extab       start:0x80017658 end:0x80017660
-	extabindex  start:0x8002903C end:0x80029048
-	.text       start:0x801F8668 end:0x801F8728
-
-game/fn_801F8728.cpp:
-	extab       start:0x80017660 end:0x80017678
-	extabindex  start:0x80029048 end:0x80029054
-	.text       start:0x801F8728 end:0x801F894C
-
-game/fn_801F894C.c:
-	extab       start:0x80017678 end:0x80017680
-	extabindex  start:0x80029054 end:0x80029060
-	.text       start:0x801F894C end:0x801F89F0
 
 game/fn_801F89F0.c:
 	extab       start:0x80017680 end:0x80017688

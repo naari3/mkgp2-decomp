@@ -1,4 +1,81 @@
-// Shared GX format pool and the contiguous quad cleanup / mixed setup methods.
+// Shared GX format pool, the quad cleanup / setup methods and the quad emitters
+// (one TU: every function reaches the pool through the section anchor).
+#include "game/DrawQuad801F.h"
+
+struct DrawQuadS {
+    float x0,y0,x1,y1,x2,y2,x3,y3;
+    DrawQuadS(DrawDesc801F *d) {
+        float w, h, top, left, sinPart, wx, dx, right, bottom, cosPart, dy, centerX, centerY;
+        w = d->width * d->scaleX;
+        h = d->height * d->scaleY;
+        double height = __fabs(h);
+        double width = __fabs(w);
+        w = width;
+        h = height;
+        if (lbl_806DA718 == d->angle) {
+            dx = lbl_806DA718;
+            sinPart = dx;
+            cosPart = lbl_806DA734;
+        } else {
+            float sine = 0.5f * d->anchorX;
+            cosPart = 0.5f * d->anchorY;
+            sinPart = w * sine;
+            dx = h * sine;
+        }
+        dy = h * cosPart;
+        wx = w * cosPart;
+        centerX = d->x;
+        centerY = d->y;
+        left = centerX - dx;
+        top = centerY - dy;
+        right = centerX + dx;
+        bottom = centerY + dy;
+        x0 = wx + left;
+        y0 = top - sinPart;
+        x1 = wx + right;
+        y1 = bottom - sinPart;
+        x2 = right - wx;
+        y2 = sinPart + bottom;
+        x3 = left - wx;
+        y3 = sinPart + top;
+    }
+    // fn_801F8728 form (the tag only selects the overload).
+    DrawQuadS(DrawDesc801F *d, int) {
+        float w, h, top, left, sinPart, wx, dx, right, bottom, cosPart, dy;
+        w = d->width * d->scaleX;
+        h = d->height * d->scaleY;
+        double width = __fabs(w);
+        double height = __fabs(h);
+        w = width;
+        h = height;
+        if (lbl_806DA718 == d->angle) {
+            dx = lbl_806DA718;
+            sinPart = dx;
+            cosPart = lbl_806DA734;
+        } else {
+            float sine = 0.5f * d->anchorX;
+            cosPart = 0.5f * d->anchorY;
+            sinPart = w * sine;
+            dx = h * sine;
+        }
+        dy = h * cosPart;
+        wx = w * cosPart;
+        left = d->x - dx;
+        top = d->y - dy;
+        right = d->x + dx;
+        bottom = d->y + dy;
+        x0 = wx + left;
+        y0 = top - sinPart;
+        x1 = wx + right;
+        y1 = bottom - sinPart;
+        x2 = right - wx;
+        y2 = sinPart + bottom;
+        x3 = left - wx;
+        y3 = sinPart + top;
+    }
+    ~DrawQuadS();
+};
+
 extern "C" {
 #pragma force_active on
 // GX descriptor pairs and four-word vertex attribute formats share this pool.
@@ -32,20 +109,15 @@ static const DrawFormatS56 mixDepthS56[8] = {
     };
 #pragma force_active reset
 
-void MemoryManager_TimedFree(void *);
 void GXSetNumTexGens(int); void GXSetNumChans(int); void GXSetNumTevStages(int);
 void GXSetTexCoordGen2(int,int,int,int,int,int);
 void GXSetTevOrder(int,int,int,int); void GXSetTevOp(int,int);
 void GXSetTevColorIn(int,int,int,int,int); void GXSetTevColorOp(int,int,int,int,int,int);
 void GXSetTevAlphaIn(int,int,int,int,int); void GXSetTevAlphaOp(int,int,int,int,int,int);
 void GXClearVtxDesc(); void GXSetVtxDescv(const void *); void GXSetVtxAttrFmtv(int,const void *);
-struct DrawNode801F {
-    void *vtable; void *description; unsigned char depth; unsigned char pad[3]; int mode;
-};
-void *dtor_801F8214(void *self, short flag) {
-    if (self != 0 && flag > 0) MemoryManager_TimedFree(self);
-    return self;
 }
+DrawQuadS::~DrawQuadS() {}
+extern "C" {
 
 void fn_801F8250(DrawNode801F *self) {
     int offset;
@@ -79,5 +151,105 @@ void fn_801F8250(DrawNode801F *self) {
         GXSetVtxAttrFmtv(0,&mixFlatS56[offset]);
     }
 }
+
+
+static inline void DrawPositionDepth8404(float x, float y, const DrawDesc801F *description) {
+    float z = description->z;
+    DrawPositionDepth801F(x, y, z);
+}
+void fn_801F8404(DrawNode801F *self) {
+    DrawQuadS quad(self->description);
+    GXBegin(128,0,4);
+    if (!self->depth) {
+        DrawPosition801F(quad.x0,quad.y0);
+        DrawUV801F(self->description->u0,self->description->v0);
+        DrawPosition801F(quad.x1,quad.y1);
+        DrawUV801F(self->description->u0,self->description->v1);
+        DrawPosition801F(quad.x2,quad.y2);
+        DrawUV801F(self->description->u1,self->description->v1);
+        DrawPosition801F(quad.x3,quad.y3);
+        DrawUV801F(self->description->u1,self->description->v0);
+    } else {
+        DrawPositionDepth8404(quad.x0,quad.y0,self->description);
+        DrawUV801F(self->description->u0,self->description->v0);
+        DrawPositionDepth8404(quad.x1,quad.y1,self->description);
+        DrawUV801F(self->description->u0,self->description->v1);
+        DrawPositionDepth8404(quad.x2,quad.y2,self->description);
+        DrawUV801F(self->description->u1,self->description->v1);
+        DrawPositionDepth8404(quad.x3,quad.y3,self->description);
+        DrawUV801F(self->description->u1,self->description->v0);
+    }
+}
+
+
+#pragma exceptions on
+void fn_801F8668(DrawNode801F *self) {
+    const unsigned char *tables = (const unsigned char *)lbl_803BEDC0;
+    GXSetNumTexGens(1);
+    GXSetTexCoordGen2(0, 1, 4, 60, 0, 125);
+    GXSetNumChans(0);
+    GXSetNumTevStages(1);
+    GXSetTevOrder(0, 0, 7, 255);
+    GXSetTevOp(0, 3);
+    GXClearVtxDesc();
+    GXSetVtxDescv((const void *)(tables + 0xA0));
+    if (self->depth) {
+        GXSetVtxAttrFmtv(0, (const void *)(tables + 0x100));
+    } else {
+        GXSetVtxAttrFmtv(0, (const void *)(tables + 0xC0));
+    }
+}
+#pragma exceptions reset
+
+
+static inline void DrawPositionDepth8728(float x, float y, const DrawDesc801F *description) {
+    float z = description->z;
+    DrawPositionDepth801F(x, y, z);
+}
+#pragma push
+#pragma opt_common_subs off
+void fn_801F8728(DrawNode801F *self) {
+    DrawQuadS quad(self->description, 0);
+    GXBegin(128,0,4);
+    if (!self->depth) {
+        DrawPosition801F(quad.x0,quad.y0);
+        DrawColor801F(self->description->colors[0]);
+        DrawPosition801F(quad.x1,quad.y1);
+        DrawColor801F(self->description->colors[1]);
+        DrawPosition801F(quad.x2,quad.y2);
+        DrawColor801F(self->description->colors[2]);
+        DrawPosition801F(quad.x3,quad.y3);
+        DrawColor801F(self->description->colors[3]);
+    } else {
+        DrawPositionDepth8728(quad.x0,quad.y0,self->description);
+        DrawColor801F(self->description->colors[0]);
+        DrawPositionDepth8728(quad.x1,quad.y1,self->description);
+        DrawColor801F(self->description->colors[1]);
+        DrawPositionDepth8728(quad.x2,quad.y2,self->description);
+        DrawColor801F(self->description->colors[2]);
+        DrawPositionDepth8728(quad.x3,quad.y3,self->description);
+        DrawColor801F(self->description->colors[3]);
+    }
+}
+#pragma pop
+
+
+
+#pragma exceptions on
+void fn_801F894C(DrawNode801F *self) {
+    GXSetNumTexGens(0);
+    GXSetNumChans(1);
+    GXSetNumTevStages(1);
+    GXSetTevOrder(0, 255, 255, 4);
+    GXSetTevOp(0, 4);
+    GXClearVtxDesc();
+    GXSetVtxDescv(lbl_803BEDC0);
+    if (self->depth) {
+        GXSetVtxAttrFmtv(0, colorDepthS56);
+    } else {
+        GXSetVtxAttrFmtv(0, colorFlatS56);
+    }
+}
+#pragma exceptions reset
 
 }
