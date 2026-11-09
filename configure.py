@@ -2520,7 +2520,7 @@ config.libs = [
             Object(Matching, "game/RaceHudDestroy.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/RaceHudSceneCtor.cpp", extab_padding=b"\xC6\x02", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/DisplayBuffersReset.c", extra_cflags=["-lang=c++"]),
-            Object(NonMatching, "game/OverlayViewSetup.cpp"),
+            Object(Matching, "game/OverlayViewSetup.cpp"),
             Object(Matching, "game/PaletteBufferCtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801F27B4.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/NamCamFlow.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
