@@ -3,7 +3,7 @@
 the compiler's decisions for one function. No emulator, no gdb, ~0.1 s, and
 any number can run in parallel.
 
-    python3 tools/mwtrace.py UNIT FN [--only VREG,COALESCE,COLOR,SBLOCK,SNODE,SPICK] [-o trace.txt]
+    python3 tools/mwtrace.py UNIT FN [--only VREG,COALESCE,COLOR,IGNODE,PCODE,SBLOCK,SNODE,SPICK] [-o trace.txt]
 
 Needs `sh tools/install_mweppc.sh --build` (cloud_setup.sh runs it). The unit's
 exact production command line is taken from `ninja -t commands`; GC/1.x and
@@ -13,7 +13,15 @@ code for 2437 of our 2470 1.3.2 units on 2026-11-09; float-heavy units differ).
 Trace lines (tools/mweppc_trace/trace.patch; FN = mangled link name):
   VREG <exception|argument|local|temp|toc> r<n>|f<n> <name>  vreg numbering
   COALESCE r|f <dst root> <- <src root> first_temp=.. last_temp=.. <same|interfere|named|merge> off=<src offset> <insn>
-  COLOR r|f <vreg> -> <reg> nb=<neighbours>                   in colouring order
+  COLOR r|f <vreg> -> <reg> [spilled] cost=<c> name=<var|-> nb=<neighbours>   in colouring order
+  IGNODE r|f <vreg> -> <reg> flags=<f> cost=<c> name=<var|-> nb=<neighbours>
+        every vreg after colouring, coalesced ones included (flags: 1 spilled,
+        2 pushed, 4 coalesced, 8 coalesced-into). nb lists machine regs too and
+        still counts coalesced nodes. cost is 0 unless colouring needed a spill
+        (estimatespillcosts runs lazily).
+  PCODE pre|post B<block> <srcoffset> <insn>                  all PCode right before / after
+        colorinstructions (post = physical regs, coalesced moves gone, before
+        prologue/epilogue and the post-RA scheduler); srcoffset -1 = none
   SBLOCK pre-RA|post-RA critical=<n>, then SNODE i lat height latest preds off insn succ=i:lat,...
   SPICK cycle.slot insn crit unc height rank                  scheduler picks
 Opcodes print in upper case; registers end in "!" when written. Before regalloc

@@ -1,9 +1,9 @@
 diff --git a/include/compiler/MwTrace.h b/include/compiler/MwTrace.h
 new file mode 100644
-index 0000000..6e554d6
+index 0000000..cf0b695
 --- /dev/null
 +++ b/include/compiler/MwTrace.h
-@@ -0,0 +1,84 @@
+@@ -0,0 +1,103 @@
 +/* Decision trace for the native mweppc build (tools/install_mweppc.sh --build).
 + * Not part of upstream mweppc; tools/mweppc_trace/trace.patch adds the calls.
 + * MWCC_TRACE=<file> appends one line per decision; MWCC_TRACE_FN=<linkname>
@@ -87,9 +87,28 @@ index 0000000..6e554d6
 +    }
 +}
 +
++
++/* every block's PCode, one insn per line: "PCODE <tag> B<block> <srcoffset> <insn>" */
++static void mwtrace_pcode(const char* tag) {
++    FILE* f = mwtrace_out();
++    PCodeBlock* b;
++    PCode* pc;
++    if (!f) {
++        return;
++    }
++    for (b = pcbasicblocks; b; b = b->nextBlock) {
++        for (pc = b->firstPCode; pc; pc = pc->nextPCode) {
++            fprintf(f, "PCODE %s B%d %ld ", tag, (int)b->blockIndex, (long)pc->sourceoffset);
++            mwtrace_insn(f, pc);
++            fputc('\n', f);
++        }
++    }
++    fflush(f);
++}
++
 +#endif
 diff --git a/src/compiler/backend/CodeGen.c b/src/compiler/backend/CodeGen.c
-index d0696ab..4d28d2c 100644
+index d0696ab..dd308f5 100644
 --- a/src/compiler/backend/CodeGen.c
 +++ b/src/compiler/backend/CodeGen.c
 @@ -50,6 +50,16 @@
@@ -158,8 +177,18 @@ index d0696ab..4d28d2c 100644
      has_varargs = has_vararglist(func);
      init_endian();
      init_stack_globals(func);
+@@ -1490,7 +1507,9 @@ void CodeGen_Generator(
+         }
+     }
+ 
++    mwtrace_pcode("pre");
+     colorinstructions(func);
++    mwtrace_pcode("post");
+     if (copts.debuglisting) {
+         pclistblocks(CMangler_GetLinkName(func)->name, "AFTER REGISTER COLORING");
+     }
 diff --git a/src/compiler/backend/Coloring.c b/src/compiler/backend/Coloring.c
-index 822c848..f979ba0 100644
+index 822c848..5e5985f 100644
 --- a/src/compiler/backend/Coloring.c
 +++ b/src/compiler/backend/Coloring.c
 @@ -12,6 +12,7 @@
@@ -170,13 +199,14 @@ index 822c848..f979ba0 100644
  
  RegClass coloring_class;
  static short used_regs_before_coloring;
-@@ -211,6 +212,14 @@ static int colorgraph(IGNode* node) {
+@@ -211,6 +212,15 @@ static int colorgraph(IGNode* node) {
              }
          }
  
 +        if (mwtrace_out()) {
-+            MWTRACE("COLOR %c %d -> %d%s nb=", coloring_class == RegClass_FPR ? 'f' : 'r', node->reg, node->color,
-+                (node->flags & fSpilled) ? " spilled" : "");
++            MWTRACE("COLOR %c %d -> %d%s cost=%d name=%s nb=", coloring_class == RegClass_FPR ? 'f' : 'r', node->reg,
++                node->color, (node->flags & fSpilled) ? " spilled" : "", node->spillCost,
++                (node->spillTemporary && node->spillTemporary->name) ? node->spillTemporary->name->name : "-");
 +            for (i = 0; i < node->arraySize; i++) {
 +                MWTRACE("%s%d", i ? "," : "", node->array[i]);
 +            }
@@ -185,6 +215,27 @@ index 822c848..f979ba0 100644
          node = node->next;
      }
  
+@@ -296,6 +306,20 @@ void colorinstructions(Object* proc) {
+                 buildinterferencegraph(proc);
+                 markspecialregisters(rclass);
+                 spilled = !colorgraph(simplifygraph());
++                if (mwtrace_out()) {
++                    UInt32 k;
++                    int j;
++                    for (k = n_real_registers[rclass]; k < (UInt32)used_virtual_registers[rclass]; k++) {
++                        IGNode* g = interferencegraph[k];
++                        MWTRACE("IGNODE %c %d -> %d flags=%d cost=%d name=%s nb=", rclass == RegClass_FPR ? 'f' : 'r',
++                            g->reg, g->color, g->flags, g->spillCost,
++                            (g->spillTemporary && g->spillTemporary->name) ? g->spillTemporary->name->name : "-");
++                        for (j = 0; j < g->arraySize; j++) {
++                            MWTRACE("%s%d", j ? "," : "", g->array[j]);
++                        }
++                        MWTRACE("\n");
++                    }
++                }
+ 
+                 if (spilled) {
+                     insertspillcode();
 diff --git a/src/compiler/backend/InterferenceGraph.c b/src/compiler/backend/InterferenceGraph.c
 index b6fc696..d5440d4 100644
 --- a/src/compiler/backend/InterferenceGraph.c

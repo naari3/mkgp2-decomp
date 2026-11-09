@@ -53,9 +53,14 @@ and the source can be patched to print any decision (frontend included).
    liveness, dead code removal, interference, **coalescing**, simplify, colour;
    spill and repeat if needed.
 6. Post-colouring value numbering, frame sizes, prologue/epilogue, peephole.
-7. **Post-RA scheduler** `scheduleinstructions(TRUE)`: only blocks NOT already
-   scheduled in step 4, so in practice the prologue/epilogue and blocks created
-   later. The order of ordinary code is decided once, before registers exist.
+7. **Post-RA scheduler** `scheduleinstructions(TRUE)`: every block whose
+   `fScheduled` flag is clear. `deletepcode`, `insertpcodebefore` and
+   `insertpcodeafter` (PCode.c) clear it, so besides the prologue/epilogue any
+   block that lost a coalesced `mr`, got spill code or was changed by peephole
+   is scheduled AGAIN, now with real registers (no opcode-rank key, and WAR/WAW
+   on machine registers). Only blocks left untouched since step 4 keep their
+   pre-RA order. Example: the fn_801D7610 epilogue `lwz r30`/`lwz r0` order.
+   The SBLOCK lines of mwtrace say which pass scheduled each block.
 
 ## Vreg numbering
 
@@ -160,7 +165,10 @@ chain; `const Matrix44 *__restrict a` removes those edges.
   native mweppc build patched with tools/mweppc_trace/trace.patch and prints
   every decision for FN: vreg numbering (VREG), each copy the coalescer saw
   (COALESCE ... same|interfere|named|merge), colouring order with neighbours
-  (COLOR), scheduler DAG (SBLOCK/SNODE) and picks with their keys (SPICK).
+  (COLOR, plus IGNODE for every vreg incl. coalesced ones), the PCode right
+  before and after register allocation (PCODE pre|post), scheduler DAG
+  (SBLOCK/SNODE) and picks with their keys (SPICK). Line formats are in the
+  docstring of tools/mwtrace.py.
   ~0.1 s, no gdb, parallel-safe; GC/1.x units use the 2.6 build (same code for
   2437 of our 2470 GC/1.3.2 units; float-heavy math units differ). The patch
   only writes the trace file; the patched compilers still give identical code
