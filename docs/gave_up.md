@@ -505,3 +505,22 @@ docs/sweeps/shapesweep/):
 
 Lesson: both hits were "hoist a constant or a comparison into a local". On register-only
 diffs, the inline-argument-order moves alone did not reach 100 in this pass.
+
+## asm->C++ attempt 2026-11-09 21:40 (non-register near-miss thread)
+
+- `fn_80148A44` (HudResSet ctor, game/RaceHud_80147470.cpp, still asm): C++ version reaches
+  462/462 instructions, 12 register-only lines off. Source: `docs/wip/HudResSet_ctor_fn_80148A44_99.4.patch`
+  (typed member arrays `HRes res[11]; HText texts[3]; ResTrio tail;` on a `HudResState` base give the
+  `__construct_array` calls and the partial-construction extab; renames in extab_user_renames.json).
+  Levers that worked: `short v = expr; if (q == 0) v = 0x1ECD;`, a 4-iteration `SetColors` inline loop
+  (keeps the outer 11-loop rolled), `lbl[idx - 1].a` written out each time, sum order
+  `len1 + m + len2 + 1`, named `extern const float` pool constants.
+  Remaining diff, compiler rule: in the block before the colour loop the hoisted `li c,-256` has no
+  DAG predecessor, so the pre-RA scheduler picks it in the idle slot right after `srwi` (sign temp of
+  `param % 10`); it then interferes with that temp and the temp, the `3` constant and the loop offset
+  each move up one register (r6/r7/r8, target r5/r6/r7). The target has `li r5,-256` after the `mulli`,
+  sharing r5 with the sign temp: in the original the `li` was not schedulable before the `add`
+  (separate preheader block until after regalloc, or a dependence removed later, then post-RA
+  rescheduling with a WAR edge on r5). Not found: inline wrapper for the loop, label/do-while(0)/
+  while/goto loop forms, statement reorders of the digit stores, literal vs parameter colour,
+  GC/2.0-2.7 (same code), pragmasweep k=2 + decl order, leversweep, tracesweep, `mwsched resched`.
