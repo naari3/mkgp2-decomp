@@ -1028,6 +1028,8 @@ game/CourseEnvironment.cpp:
 	extab       start:0x800066E8 end:0x80006848
 	extabindex  start:0x80020030 end:0x800200D8
 	.text       start:0x80046D84 end:0x8004893C
+	.rodata     start:0x802EAF10 end:0x802EB03C
+	.data       start:0x803F5CE8 end:0x803F60B4
 
 game/TrampolineTo_801ba110.c:
 	extab       start:0x80006848 end:0x80006850
@@ -2940,6 +2942,7 @@ game/VSMode_SeedRandomItemSequence.c:
 game/RaceData_8009BEF4.c:
 	.text       start:0x8009BEF4 end:0x8009CBFC
 	.rodata     start:0x8031B7C0 end:0x8032061C
+	.data       start:0x8040E1C4 end:0x8040E450
 
 game/SetCourseParams.c:
 	extab       start:0x800095A8 end:0x800095B0
@@ -5291,6 +5294,7 @@ game/GabyouItemUpdate.cpp:
 	extab       start:0x8000B694 end:0x8000B69C
 	extabindex  start:0x80023EF4 end:0x80023F00
 	.text       start:0x800F33DC end:0x800F38F8
+	.rodata     start:0x8032F598 end:0x8032F994
 	.data       start:0x80421710 end:0x80421738
 
 game/KartImpactRingItem_Update.c:

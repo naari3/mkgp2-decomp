@@ -3861,6 +3861,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # .comment section is dropped and .data alignment pinned to 4. Text/data bytes
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
+    "game/RaceData_8009BEF4",
     "game/MenuScene_Dispatch",
     "game/RaceDigitUpdate",
     "game/objview/MapWaterEffect_Init",
