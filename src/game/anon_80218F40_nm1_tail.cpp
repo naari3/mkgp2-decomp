@@ -16,7 +16,8 @@ static inline void WorldToMap(MinimapHud *h, float *ppx, float *ppz) {
     float &px = *ppx;
     float &pz = *ppz;
     const MapInfo *mi = &lbl_803C4C10[CupIndex()][h->variant];
-    float ang = mi->rot * lbl_806DAF54;
+    float rot = mi->rot;
+    float ang = lbl_806DAF54 * rot;
     ang += h->scale;
     float rx;
     float rz;
@@ -48,6 +49,11 @@ static inline void SetMarkerVisible(int sprite, int battleCup, bool sameTeam) {
     SpriteHandle_SetActiveFlag(sprite, visible);
 }
 
+/* fakematch (pragma): the target multiplies `K * rot` with rot evaluated FIRST
+ * (lower virtual register). That needs `rot` to stay a named local, and the
+ * frontend only keeps it with propagation off (regalloc_patterns 64). */
+#pragma push
+#pragma opt_propagation off
 void MinimapHud::UpdateMarkers() {
     float px = lbl_806DAF44;
     float pz = lbl_806DAF44;
@@ -106,4 +112,5 @@ void MinimapHud::UpdateMarkers() {
         }
     }
 }
+#pragma pop
 

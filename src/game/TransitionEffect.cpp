@@ -357,10 +357,19 @@ static inline void ScreenRotatedCamera(Mtx view, const Vec *camera, int index, f
     C_MTXLookAt(view, &eye, &up, &target);
     GXLoadPosMtxImm(view, 0);
 }
+static inline void ScreenFlashSetup(const Vec *camera)
+{
+    Mtx44 projection3;
+    Mtx view3;
+    ScreenProjection(projection3);
+    ScreenCamera(view3, camera, 9, 1.5707963705062866);
+}
 extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass)
 {
     const Vec *camera = lbl_80311CA0;
-    void *payload;
+    unsigned int a1;
+    unsigned int r, g, b, a;
+    unsigned int r5, g5, b5, a5;
     /* Keep each pass's escaped matrices in the target stack order. */
     Mtx view1;
     Mtx44 projection1;
@@ -370,8 +379,6 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
     Mtx44 projection4;
     Mtx view5;
     Mtx44 projection5;
-    Mtx view3;
-    Mtx44 projection3;
     ScopedTimer timer(0x2C);
     if (self->mode != pass) return;
     if (self->mode != 3) {
@@ -381,6 +388,7 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
     switch (pass) {
     case 0: break;
     case 1: {
+        void *payload;
         payload = self->fade;
         if (((TransitionFade *)payload)->delay <= 0.0f && ((TransitionFade *)payload)->remaining <= 0.0f) break;
         GXSetZMode(GX_DISABLE, GX_ALWAYS, GX_ENABLE);
@@ -398,22 +406,23 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
         GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
         GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_SET);
         ScreenVertexFormat(true);
-        unsigned int a = (int)Saturate_Double(2e+02f * ((TransitionFade *)payload)->remaining, 0.0f, 2e+02f);
+        a1 = (int)Saturate_Double(2e+02f * ((TransitionFade *)payload)->remaining, 0.0f, 2e+02f);
         GXBegin(GX_QUADS, GX_VTXFMT0, 4);
         float y1, t1, x1, t0, y0, x0;
         x0 = -320.0f; y0 = -240.0f; t0 = 0.0f; x1 = 320.0f; t1 = 1.0f; y1 = 240.0f;
-        ScreenPosition(x0, y0); ScreenColor(255,255,255,a);
+        ScreenPosition(x0, y0); ScreenColor(255,255,255,a1);
         ScreenPosition(t0, t0);
-        ScreenPosition(x1, y0); ScreenColor(255,255,255,a);
+        ScreenPosition(x1, y0); ScreenColor(255,255,255,a1);
         ScreenPosition(t1, t0);
-        ScreenPosition(x1, y1); ScreenColor(255,255,255,a);
+        ScreenPosition(x1, y1); ScreenColor(255,255,255,a1);
         ScreenPosition(t1, t1);
-        ScreenPosition(x0, y1); ScreenColor(255,255,255,a);
+        ScreenPosition(x0, y1); ScreenColor(255,255,255,a1);
         ScreenPosition(t0, t1);
         RestoreScreenChannel();
         break;
     }
     case 2: {
+        void *payload;
         payload = self->iris;
         if (((TransitionIris *)payload)->remaining <= 0.0f && ((TransitionIris *)payload)->closing == 1) break;
         GXSetZMode(GX_DISABLE, GX_ALWAYS, GX_ENABLE);
@@ -438,19 +447,19 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
         break;
     }
     case 3: {
+        void *payload;
         payload = self->flash;
         if (!((TransitionFlash *)payload)->active) break;
         GXSetZMode(GX_DISABLE, GX_ALWAYS, GX_ENABLE);
         GXSetZCompLoc(GX_FALSE);
         GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         GXSetCullMode(GX_CULL_BACK);
-        ScreenProjection(projection3);
-        ScreenCamera(view3, camera, 9, 1.5707963705062866);
+        ScreenFlashSetup(camera);
         ScreenFlatMaterial(GX_BL_INVSRCALPHA);
-        unsigned int r = (int)Saturate_Double(255.0f * ((TransitionFlash *)payload)->r, 0.0f, 255.0f);
-        unsigned int g = (int)Saturate_Double(255.0f * ((TransitionFlash *)payload)->g, 0.0f, 255.0f);
-        unsigned int b = (int)Saturate_Double(255.0f * ((TransitionFlash *)payload)->b, 0.0f, 255.0f);
-        unsigned int a = (int)Saturate_Double(255.0f * ((TransitionFlash *)payload)->alpha, 0.0f, 255.0f);
+        r = (int)Saturate_Double(255.0f * ((TransitionFlash *)payload)->r, 0.0f, 255.0f);
+        g = (int)Saturate_Double(255.0f * ((TransitionFlash *)payload)->g, 0.0f, 255.0f);
+        b = (int)Saturate_Double(255.0f * ((TransitionFlash *)payload)->b, 0.0f, 255.0f);
+        a = (int)Saturate_Double(255.0f * ((TransitionFlash *)payload)->alpha, 0.0f, 255.0f);
         ScreenFlatQuad(r,g,b,a);
         RestoreScreenChannel();
         break;
@@ -471,6 +480,7 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
         break;
     }
     case 5: {
+        void *payload;
         payload = self->quad;
         if (!((TransitionQuad *)payload)->active) break;
         GXSetZMode(GX_DISABLE, GX_ALWAYS, GX_ENABLE);
@@ -480,11 +490,11 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
         ScreenProjection(projection5);
         ScreenCamera(view5, camera, 9, 1.5707963705062866);
         ScreenFlatMaterial(GX_BL_INVSRCALPHA);
-        unsigned int r = (int)Saturate_Double(255.0f * ((TransitionQuad *)payload)->r, 0.0f, 255.0f);
-        unsigned int g = (int)Saturate_Double(255.0f * ((TransitionQuad *)payload)->g, 0.0f, 255.0f);
-        unsigned int b = (int)Saturate_Double(255.0f * ((TransitionQuad *)payload)->b, 0.0f, 255.0f);
-        unsigned int a = (int)Saturate_Double(255.0f * ((TransitionQuad *)payload)->alpha, 0.0f, 255.0f);
-        ScreenFlatQuad(r,g,b,a);
+        r5 = (int)Saturate_Double(255.0f * ((TransitionQuad *)payload)->r, 0.0f, 255.0f);
+        g5 = (int)Saturate_Double(255.0f * ((TransitionQuad *)payload)->g, 0.0f, 255.0f);
+        b5 = (int)Saturate_Double(255.0f * ((TransitionQuad *)payload)->b, 0.0f, 255.0f);
+        a5 = (int)Saturate_Double(255.0f * ((TransitionQuad *)payload)->alpha, 0.0f, 255.0f);
+        ScreenFlatQuad(r5,g5,b5,a5);
         RestoreScreenChannel();
         break;
     }

@@ -1634,3 +1634,87 @@ Three separate swaps, each with its own cause in the trace:
    first. Assigning the record to the existing function-level local first
    (`record = &base[i]; ClassifyRecord(record, ...)`) creates its walker
    first. Swapping the inline's parameter order has no effect.
+
+## 64. One-line `fmuls fD,fA,fB` operand swap where swapping the source operands also swaps the registers (fn_80219538, 11-09)
+
+Diff: target `lfs f2,K; ...; lfs f3,0x10(r22); fmuls f31,f2,f3`, ours
+`fmuls f31,f3,f2`. Writing `K * mi->rot` instead of `mi->rot * K` flips the
+instruction AND the registers (3 lines), because the backend evaluates the
+left operand first and the first-evaluated value has the lower virtual
+register (coloured later, higher FPR). Literal constants, `*=` forms and
+inline helpers (`Mul(a, b)`, `DegToRad(deg)`) all behave the same: first
+operand = first evaluated.
+
+The target has the SECOND operand in the lower vreg, so `rot` already was
+in a register when the multiply was generated: a named local that survived.
+
+```c
+float rot = mi->rot;
+float ang = lbl_806DAF54 * rot;
+```
+
+The frontend propagates the single-use local straight back into the
+expression, so this needs `#pragma opt_propagation off` around the function
+(`opt_dead_assignments off` works too). Marked fakematch.
+
+## 65. Saved GPRs of a switch permuted between cases, and one case's stack objects in the wrong place: declaration order of the value locals vs block-local payload pointers; the case's setup in its own nested inline (TransitionEffect_RenderPass, 11-09)
+
+Symptom 1: a `switch` whose cases each keep a payload pointer and a few
+colour values across calls; all instructions equal, only r27/r29/r31 permuted
+between cases. The colourer handles higher vregs first and gives each the
+lowest free saved register already handed out, else a new one from r31 down.
+Named locals are numbered by source position, so the one declared EARLIER is
+coloured first. The target coloured the values before the payload pointers.
+Fix: declare every case's value locals at function scope, first, each case
+with its own names (`unsigned int a1; unsigned int r, g, b, a; unsigned int
+r5, g5, b5, a5;`), assign them in the cases, and make the pointer a block
+local in each case (`case 3: { void *payload; payload = self->flash; ...`).
+One function-scope `payload` shared by all cases gives the permuted registers.
+
+Symptom 2: the same function with the matrices/Vecs of one case at the wrong
+stack offsets (the target had case 3's objects lowest although it is in the
+middle of the source). Stack objects are laid out in creation order, first
+created = highest address, and inline locals are created level by level. Put
+that case's setup into its own inline that owns the objects, so they are
+created one level later than everything else:
+
+```c
+static inline void ScreenFlashSetup(const Vec *camera)
+{
+    Mtx44 projection3;
+    Mtx view3;
+    ScreenProjection(projection3);
+    ScreenCamera(view3, camera, 9, 1.5707963705062866);
+}
+```
+
+The order of the two declarations inside it matters too. Wrapping the whole
+case in an inline does not work: it is over the inline size limit and
+`#pragma always_inline on` does not change that.
+
+## 66. A temp avoids r3 for no visible reason near the END of a function: the function returns non-void and has no return statement (clFlowCC*::Update, 11-09)
+
+Diff: the last loop of the function,
+
+```
+target: lwz r4,0x58(r28); cmplwi r4,0; beq skip; lwz r3,0(r4); bl Sprite_AdvanceAnim
+ours:   lwz r3,0x58(r28); cmplwi r3,0; beq skip; lwz r3,0(r3); bl ...
+```
+
+The temp has three neighbours and r3 looks free, yet the target does not
+use it. The same source loop gives r3 in sibling functions where more
+calls follow the loop, and r4 where the loop is the last statement.
+
+Cause: the function is declared with a return value (`virtual int Update()`)
+and falls off the end. The epilogue then USES r3, so r3 is live from its
+last definition to the exit. On the path that skips the call (`beq skip`)
+r3 is live across the temp, they interfere, and the temp gets r4. With
+unconditional calls after the loop r3 is redefined and nothing shows.
+
+Fix: declare the function with the non-void return type and no `return`.
+For a virtual, change the base and every override (mangled names do not
+contain the return type, callers that ignore the value are unchanged).
+
+Where to look: any `rX` vs r3 swap for a short-lived temp in the tail of a
+`void` function, on a path that can reach the exit without a call; also
+`li r3,N`-free tails where a value seems to be kept away from r3.

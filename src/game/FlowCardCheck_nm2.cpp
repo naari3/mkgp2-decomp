@@ -188,7 +188,7 @@ static inline void ShiftBattleGrid(clFlowCCBattle *page) {
     }
 }
 
-void clFlowCCBattle::Update() {
+int clFlowCCBattle::Update() {
     InputPlayer &pl = *InputMgr_GetPlayer(GetInputManager(), 0);
     UpdateSlide();
     if (IsIdle() != 1) {
@@ -332,7 +332,7 @@ void clFlowCCGP::Draw() {
     fn_8011FAFC(&rc, 4);
 }
 
-void clFlowCCGP::Update() {
+int clFlowCCGP::Update() {
     PlayerData *pd = &g_playerData;
     InputPlayer *pl = InputMgr_GetPlayer(GetInputManager(), 0);
     UpdateSlide();
@@ -670,7 +670,7 @@ void clFlowCCItem::Select(int delta) {
     }
 }
 
-void clFlowCCCharaItem::Update() {
+int clFlowCCCharaItem::Update() {
     InputPlayer *pl = InputMgr_GetPlayer(GetInputManager(), 0);
     UpdateSlide();
     if (IsIdle() == 1) {
@@ -704,7 +704,7 @@ static inline void ProcessItemInput(clFlowCCItem *page) {
     if (delta != 0) fn_801FE36C();
 }
 
-void clFlowCCItem::Update() {
+int clFlowCCItem::Update() {
     InputPlayer *pl = InputMgr_GetPlayer(GetInputManager(), 0);
     UpdateSlide();
     if (IsIdle() == 1) {
@@ -1026,7 +1026,7 @@ static inline void PositionOffsetText(TextMgr *text, const Vec2 &position, float
     fn_801F93EC(text, x + slide, position.y);
 }
 
-void clFlowCCDate::Update() {
+int clFlowCCDate::Update() {
     InputPlayer *pl = InputMgr_GetPlayer(GetInputManager(), 0);
     UpdateSlide();
     if (IsIdle() == 1) {

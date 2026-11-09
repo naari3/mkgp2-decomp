@@ -10392,26 +10392,14 @@ game/JumpDistanceMode_InitTimerDisplay.c:
 game/JumpDistanceMode_CopyKartMovement.c:
 	.text       start:0x80213D58 end:0x802143E4
 
-game/CoinChallengeRender.cpp:
-	extab       start:0x8001A194 end:0x8001A19C
-	extabindex  start:0x80029FA8 end:0x80029FB4
-	.text       start:0x802143E4 end:0x80214594
-
-game/CoinChallengeUpdate.cpp:
-	extab       start:0x8001A19C end:0x8001A1A4
-	extabindex  start:0x80029FB4 end:0x80029FC0
-	.text       start:0x80214594 end:0x80214B3C
-
-game/anon_80214B3C.cpp:
-	extab       start:0x8001A1A4 end:0x8001A1AC
-	extabindex  start:0x80029FC0 end:0x80029FCC
-	.text       start:0x80214B3C end:0x80214DB8
-
-game/CoinChallengeInit.cpp:
-	extab       start:0x8001A1AC end:0x8001A300
-	extabindex  start:0x80029FCC end:0x80029FD8
-	.text       start:0x80214DB8 end:0x802151C8
-	.data       start:0x804ECC20 end:0x804EDA78
+game/CoinChallenge.cpp:
+	extab       start:0x8001A194 end:0x8001A300
+	extabindex  start:0x80029FA8 end:0x80029FD8
+	.text       start:0x802143E4 end:0x802151C8
+	.rodata     start:0x803C3DD8 end:0x803C3E50
+	.data       start:0x804ECC20 end:0x804EDAB0
+	.sdata      start:0x806D03F8 end:0x806D0410
+	.sdata2     start:0x806DAE18 end:0x806DAE20
 
 game/anon_802151C8.cpp:
 	extab       start:0x8001A300 end:0x8001A318

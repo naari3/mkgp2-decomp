@@ -215,7 +215,7 @@ public:
 
     clFlowCCBattle();
     virtual ~clFlowCCBattle();
-    virtual void Update();
+    virtual int Update();
     virtual void Draw();
     virtual void Unk14();
     virtual void SlideIn();
@@ -232,7 +232,7 @@ public:
 
     clFlowCCGP(int cc);
     virtual ~clFlowCCGP();
-    virtual void Update();
+    virtual int Update();
     virtual void Draw();
     virtual void Unk14();
     virtual void SlideIn();
@@ -251,7 +251,7 @@ public:
     void Select(int delta);
     clFlowCCCharaItem(int which);
     virtual ~clFlowCCCharaItem();
-    virtual void Update();
+    virtual int Update();
     virtual void Draw();
     virtual void Unk14();
     virtual void SlideIn();
@@ -274,7 +274,7 @@ public:
     void Select(int delta);
     clFlowCCItem();
     virtual ~clFlowCCItem();
-    virtual void Update();
+    virtual int Update();
     virtual void Draw();
     virtual void Unk14();
     virtual void SlideIn();
@@ -292,7 +292,7 @@ public:
 
     clFlowCCDate();
     virtual ~clFlowCCDate();
-    virtual void Update();
+    virtual int Update();
     virtual void Draw();
     virtual void Unk14();
     virtual void SlideIn();

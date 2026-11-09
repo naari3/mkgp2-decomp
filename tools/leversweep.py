@@ -1283,7 +1283,24 @@ def gen_chain(fx):
 # --------------------------------------------------------------------------
 # runner
 
-def run_fn(unit, fn, levers=None, jobs=4, demangled=None, show=False, log=None):
+def merge_variants(base, a, b):
+    """3-way merge of two whole-TU variants of `base` (line based). None when their edits overlap."""
+    import difflib
+    bl, al, bbl = base.split('\n'), a.split('\n'), b.split('\n')
+    ea = [o for o in difflib.SequenceMatcher(None, bl, al, autojunk=False).get_opcodes() if o[0] != 'equal']
+    eb = [o for o in difflib.SequenceMatcher(None, bl, bbl, autojunk=False).get_opcodes() if o[0] != 'equal']
+    for _, i1, i2, _, _ in ea:
+        for _, k1, k2, _, _ in eb:
+            if i1 < k2 + 1 and k1 < i2 + 1:  # overlapping or touching base ranges
+                return None
+    edits = [(i1, i2, al[j1:j2]) for _, i1, i2, j1, j2 in ea] + [(i1, i2, bbl[j1:j2]) for _, i1, i2, j1, j2 in eb]
+    out = bl[:]
+    for i1, i2, new in sorted(edits, reverse=True):
+        out[i1:i2] = new
+    return '\n'.join(out)
+
+
+def run_fn(unit, fn, levers=None, jobs=4, demangled=None, show=False, log=None, pairs=0):
     fx = Fx(unit, fn, demangled)
     fx.diagnose()
     base = fx.u.compile_score(fx.text, fn, fx.cc, 'b')
@@ -1316,6 +1333,31 @@ def run_fn(unit, fn, levers=None, jobs=4, demangled=None, show=False, log=None):
     with ThreadPoolExecutor(jobs) as ex:
         scored = list(ex.map(score, enumerate(uniq)))
     scored.sort(key=lambda x: x[3])
+    if pairs:
+        # regalloc_patterns 62: levers that fail alone can match together. Combine variants of
+        # DIFFERENT levers that each changed the diff (score != base), best `pairs` per lever.
+        top = {}
+        for name, lab, t, sc in scored:
+            if sc != base and sc < FAIL and len(top.setdefault(name, [])) < pairs:
+                top[name].append((lab, t))
+        names = sorted(top)
+        combos = []
+        for x in range(len(names)):
+            for y in range(x + 1, len(names)):
+                for la, ta in top[names[x]]:
+                    for lb, tb in top[names[y]]:
+                        m = merge_variants(fx.text, ta, tb)
+                        if m and hash(m) not in seen:
+                            seen.add(hash(m))
+                            combos.append((names[x] + '+' + names[y], la + ' & ' + lb, m))
+        res['pairs'] = len(combos)
+        if combos:
+            def score2(i_c):
+                i, (name, lab, t) = i_c
+                return name, lab, t, fx.u.compile_score(t, fn, fx.cc, f'p{i % jobs}_{os.getpid()}_{i}')
+            with ThreadPoolExecutor(jobs) as ex:
+                scored += list(ex.map(score2, enumerate(combos)))
+            scored.sort(key=lambda x: x[3])
     per = {}
     for name, lab, t, s in scored:
         if name not in per or s < per[name][1]:
@@ -1395,7 +1437,7 @@ def cmd_batch(a):
             break
         t1 = time.time()
         try:
-            r = run_fn(obj, fn, lv, a.jobs, dm, log=a.out)
+            r = run_fn(obj, fn, lv, a.jobs, dm, log=a.out, pairs=a.pairs)
         except SystemExit as e:
             r = dict(obj=obj, fn=fn, error=str(e))
         except Exception as e:
@@ -1581,6 +1623,7 @@ def main():
     f.add_argument('--demangled')
     f.add_argument('-j', '--jobs', type=int, default=4)
     f.add_argument('--show', action='store_true')
+    f.add_argument('--pairs', type=int, default=0, help='also try pairs of variants from different levers (best N per lever that changed the diff)')
     f.add_argument('--out', default=None)
     b = sp.add_parser('batch')
     b.add_argument('--min', type=float, default=90)
@@ -1588,6 +1631,7 @@ def main():
     b.add_argument('--levers')
     b.add_argument('--only')
     b.add_argument('--retry', action='store_true')
+    b.add_argument('--pairs', type=int, default=0)
     b.add_argument('--hours', type=float, default=0)
     b.add_argument('-j', '--jobs', type=int, default=4)
     b.add_argument('--out', default='docs/sweeps/leversweep')
@@ -1605,7 +1649,7 @@ def main():
         for n, rule, cls, c, why in NOT_AUTOMATED:
             print(f'{n:24} {cls:5} rule={rule:22} {c:18} {why}')
     elif a.cmd == 'fn':
-        r = run_fn(a.unit, a.fn, set(a.levers.split(',')) if a.levers else None, a.jobs, a.demangled, a.show, a.out)
+        r = run_fn(a.unit, a.fn, set(a.levers.split(',')) if a.levers else None, a.jobs, a.demangled, a.show, a.out, pairs=a.pairs)
         print(json.dumps(r, indent=1))
     elif a.cmd == 'batch':
         cmd_batch(a)

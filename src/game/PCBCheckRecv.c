@@ -14,7 +14,7 @@
  * `&lbl_805AC258[1]` stays a two-step `addi base,0x6398; addi +0x1c`
  * (mweppc AddPropagation.c refuses to fold a displacement into an add whose
  * alias is a non-local Object).
- * NonMatching: PCBComm_Process (96.1%, see docs/gave_up.md). */
+ * NonMatching: PCBComm_Process (99.2%, see docs/gave_up.md). */
 typedef struct PcbRecvFlags {
     unsigned char local : 1;
     unsigned char reserved6 : 2;
@@ -2568,6 +2568,11 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
 {
     if (g_pcbCommEnabled == 0) return 0;
     if (lbl_806D1191 == 1) return 0;
+    Slot *slots;
+    signed char *phases;
+    Sync *sync;
+    Slot *slot;
+    int i;
     u8 update = 0;
     u32 tick = OSGetTick();
     if (g_gameMode == 2 ||
@@ -2580,16 +2585,18 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
         u8 accepted = 0;
         if (g_pcbCommEnabled != 0 && g_pcbListener != 0 &&
             TCPListen_Poll(g_pcbListener, 0) == 1) {
-            Slot *slots = g_slots;
-            Slot *slot = slots;
-            int i;
+            slots = g_slots;
+            slot = slots;
             u32 address = *(u32 *)(g_pcbListener->bytes + 0x34);
             for (i = 0; i < 4; ++i, ++slot) {
                 if (slot->flags.bits.local != 1 && address == PcbIdToIp_GetCached(SlotId(slot))) {
-                    if (g_slots[i].recv != 0) TCPConn_Close(g_slots[i].recv);
-                    g_slots[i].recv = g_in[i];
+                    int off = i * sizeof(Slot);
+                    Slot *sel = (Slot *)((u8 *)g_slots + off);
+                    sel = (Slot *)&sel->recv;
+                    if (*(LifecycleConn **)sel != 0) TCPConn_Close(*(LifecycleConn **)sel);
+                    *(LifecycleConn **)sel = g_in[i];
                     int socket = PcbListener_TakeAcceptedSocket(g_pcbListener);
-                    TCPConn_Init(g_slots[i].recv, g_slots[i].flags.ids.id, socket, 1);
+                    TCPConn_Init(*(LifecycleConn **)sel, ((SlotFlags *)((u8 *)g_slots + 0xa34 + i * sizeof(Slot)))->ids.id, socket, 1);
                     accepted = 1;
                     break;
                 }
@@ -2603,10 +2610,9 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
         }
         PCBCheck_ProcessLinks();
         if (g_pcbSyncReady != 0) {
-            Slot *slots = g_slots;
-            Sync *sync = &g_pcbSyncTable;
-            signed char *phases = g_pcbSyncPhasePerPcb;
-            int i;
+            slots = g_slots;
+            sync = &g_pcbSyncTable;
+            phases = g_pcbSyncPhasePerPcb;
             for (i = 0; i < 4; ++i) {
                 sync->scenes[i] = (slots[i].header.word >> 15) & 255;
                 sync->roles[i] = slots[i].header.bytes.role.role;
@@ -2642,7 +2648,7 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
     }
     PCBCheck_RecvLinkData(receive);
     if (update && g_isCommHost == 1) {
-        CopyHostSnapshot(g_snaps[0], 1);
+        for (int n = 0; n < 1; n++) CopyHostSnapshot(g_snaps[0], n + 1);
     }
     return 1;
 }
