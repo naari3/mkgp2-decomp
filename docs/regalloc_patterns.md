@@ -1691,3 +1691,30 @@ static inline void ScreenFlashSetup(const Vec *camera)
 The order of the two declarations inside it matters too. Wrapping the whole
 case in an inline does not work: it is over the inline size limit and
 `#pragma always_inline on` does not change that.
+
+## 66. A temp avoids r3 for no visible reason near the END of a function: the function returns non-void and has no return statement (clFlowCC*::Update, 11-09)
+
+Diff: the last loop of the function,
+
+```
+target: lwz r4,0x58(r28); cmplwi r4,0; beq skip; lwz r3,0(r4); bl Sprite_AdvanceAnim
+ours:   lwz r3,0x58(r28); cmplwi r3,0; beq skip; lwz r3,0(r3); bl ...
+```
+
+The temp has three neighbours and r3 looks free, yet the target does not
+use it. The same source loop gives r3 in sibling functions where more
+calls follow the loop, and r4 where the loop is the last statement.
+
+Cause: the function is declared with a return value (`virtual int Update()`)
+and falls off the end. The epilogue then USES r3, so r3 is live from its
+last definition to the exit. On the path that skips the call (`beq skip`)
+r3 is live across the temp, they interfere, and the temp gets r4. With
+unconditional calls after the loop r3 is redefined and nothing shows.
+
+Fix: declare the function with the non-void return type and no `return`.
+For a virtual, change the base and every override (mangled names do not
+contain the return type, callers that ignore the value are unchanged).
+
+Where to look: any `rX` vs r3 swap for a short-lived temp in the tail of a
+`void` function, on a path that can reach the exit without a call; also
+`li r3,N`-free tails where a value seems to be kept away from r3.
