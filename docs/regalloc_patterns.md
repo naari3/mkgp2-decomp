@@ -49,6 +49,11 @@ a declaration moves which variable gets r31/r30/... (or f31/f30).
   ItemSelectState_Init (clamp declared first, as `long`) fba4ebd7,
   fn_801F7F50 f4d48738 (11 floats reordered), fn_8020615C (row offset local
   declared before oy) 2d1f58a7.
+- LakituStart_UpdateCountdown (FPR, 11-09): `const float dy = dir.y;` declared
+  BEFORE `const float dx = dir.x;`, and `float height` declared after both
+  (it had been at the top of the block). Swapping only dx/dy, or only moving
+  height, each still left 2 FPRs swapped; it needed both at once, so sweep the
+  float locals together (regfix's dump failed on this C++ TU).
 
 **Check:** sweep every permutation of the locals that sit in the swapped
 registers (`declsweep.py`, or a 5040-order sweep for 7 locals). Locals of an
