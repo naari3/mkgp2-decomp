@@ -243,8 +243,13 @@ def find_def(text, fn, demangled=None, mangled=None):
     if demangled and '::' in demangled:
         q = demangled.split('(')[0]
         pats.append(re.escape(q).replace(r'\:\:', r'\s*::\s*') + r'\s*\([^;{]*\)[^;{]*\{')
+    cspans = [(c.start(), c.end()) for c in re.finditer(r'/\*.*?\*/|//[^\n]*|"(?:\\.|[^"\\\n])*"', text, re.S)]
+
+    def in_comment(i):
+        return any(a <= i < b for a, b in cspans)
     for p in pats:
-        m = re.search(p, text)
+        m = next((x for x in re.finditer(p, text)
+                  if not in_comment(x.start()) and not re.search(r'/\*|\*/', x.group(0))), None)
         if m:
             ls = text.rfind('\n', 0, m.start()) + 1
             j = m.end(); depth = 1
