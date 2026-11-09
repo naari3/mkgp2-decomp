@@ -14,8 +14,8 @@ static inline void Normalize(CollisionVec& v) {
     float x = v.x, y = v.y, z = v.z;
     float len = LengthSquared(v);
     KART_SPEED_ROOT(len);
-    if (len <= lbl_806D96D0) {
-        v.z = lbl_806D96D0; v.y = lbl_806D96D0; v.x = lbl_806D96D0;
+    if (len <= 0.0f) {
+        v.z = 0.0f; v.y = 0.0f; v.x = 0.0f;
     } else {
         float scale = lbl_806D96D4 / len;
         x = v.x; y = v.y; z = v.z;
