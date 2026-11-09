@@ -1750,7 +1750,7 @@ config.libs = [
             Object(Matching, "game/Matrix4Multiply.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/PCBCommBroadcast.c", extra_cflags=["-lang=c++", "-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/CardTaskManager_Tick.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
-            Object(NonMatching, "game/CardCreate_Page.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/CardCreate_Page.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CoinSystem_RemoveCoins.c"),
             Object(Matching, "game/DVDLoad_Stats.c"),
             Object(Matching, "game/DVDLoad_ReadFileTimed.c", extra_cflags=["-use_lmw_stmw on"]),
