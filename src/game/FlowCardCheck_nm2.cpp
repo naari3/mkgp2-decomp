@@ -970,7 +970,8 @@ clFlowCCCharaItem::clFlowCCCharaItem(int which) : which(which), field20(0), fiel
         Sprite **sprites = grp[group];
         SetCharaGroup(sprites, this->which, i);
     }
-    for (int i = 0; i < 8; i++) text[i] = new TextMgr();
+    int i;
+    for (i = 0; i < 8; i++) text[i] = new TextMgr();
     text[0]->visible = 1; text[1]->visible = 1;
     text[2]->visible = 0; text[3]->visible = 0; text[4]->visible = 0;
     text[5]->visible = 0; text[6]->visible = 0; text[7]->visible = 0;
@@ -1011,13 +1012,11 @@ clFlowCCCharaItem::clFlowCCCharaItem(int which) : which(which), field20(0), fiel
         fn_801F93EC(text[0], lbl_806DB780.x, lbl_806DB780.y);
         text[1]->scale = lbl_806DB830;
     }
-    for (int i = 0; i < 8; i++) fn_801F8E90(text[i]);
+    for (i = 0; i < 8; i++) fn_801F8E90(text[i]);
     field28 = -1;
     Select(1);
 }
 
-#pragma push
-#pragma opt_lifetimes off
 void clFlowCCDate::Update() {
     InputPlayer *pl = InputMgr_GetPlayer(GetInputManager(), 0);
     UpdateSlide();
@@ -1040,23 +1039,23 @@ void clFlowCCDate::Update() {
         if (changed) fn_801FE390();
         if (pl->v5() <= lbl_806DB854) field1E = 0;
         int delta = input_state()->pageInput;
-        changed = 0;
+        unsigned char pageChanged = 0;
         if (delta < 0 && field1D == 0) {
             field1D = 1;
-            changed = 1;
+            pageChanged = 1;
             SpriteAnimParamBlock_SetAnimParamCached(grp[4], 0x15F6, 0x15F8);
             SpriteAnimParamBlock_SetAnimParamCached(grp[5], 0x15F9, 0x15F7);
             SpriteAnimParamBlock_SetAnimParamCached(grp[4], 0x1ECD, 0x15D2);
             SpriteAnimParamBlock_SetAnimParamCached(grp[5], 0x15D2, 0x1ECD);
         } else if (delta > 0 && field1D == 1) {
             field1D = 0;
-            changed = 1;
+            pageChanged = 1;
             SpriteAnimParamBlock_SetAnimParamCached(grp[4], 0x15F8, 0x15F6);
             SpriteAnimParamBlock_SetAnimParamCached(grp[5], 0x15F7, 0x15F9);
             SpriteAnimParamBlock_SetAnimParamCached(grp[4], 0x15D2, 0x1ECD);
             SpriteAnimParamBlock_SetAnimParamCached(grp[5], 0x1ECD, 0x15D2);
         }
-        if (changed) { fn_801FE390(); field20 = 120; }
+        if (pageChanged) { fn_801FE390(); field20 = 120; }
     } else {
         for (int i = 0; i < 6; i++) {
             Sprite **group = grp[i];
@@ -1094,7 +1093,6 @@ void clFlowCCDate::Update() {
     }
     if (indicator != 0) fn_8023CDA8(indicator);
 }
-#pragma pop
 
 
 clFlowCCDate::clFlowCCDate() : field1C(1), field1D(1), field1E(0), field20(0), indicator(0) {
