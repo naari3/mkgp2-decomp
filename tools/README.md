@@ -26,6 +26,7 @@ Rough order to try; each one writes nothing to the repo unless `--apply`.
 | `autopipe.py` | runs pragmasweep -> decl order -> permuter unattended | uses `helpers/cperm.py` / `helpers/workqueue.py`; logs to `docs/sweeps/autopipe*/` |
 | `regswap_classify.py` | nothing; groups near misses by diff shape | picks targets; output `docs/reports/regswap_census.md` |
 | `regfix.py` | diagnoses register-only diffs by re-running MWCC's allocator offline on mwccdbg dumps; solves the local declaration order exactly (all orders simulated, no compile); `fix` = focused shapesweep moves + that solver | `diag UNIT FN [--start-tu F]`, `fix UNIT FN`; needs mwccdbg install; parallel via `unshare -n` (`netns_lo.py`) |
+| `regfix_fixbatch.py` | sharded `regfix fix` run over the frozen list `docs/sweeps/regfix/fix_inline_candidates.txt` (51 unclaimed reg-only fns, 11/09): shard K/N = list index i with i % N == K-1; rows to `docs/sweeps/regfix/fix_inline_shardK.jsonl` (restartable) | `--shard K/4 [--claims FILE] [--list]` |
 | `asmgrep.py` | nothing; finds matched functions whose target asm has a given shape and prints their source (`like`, `find`, `similar`, `idioms`) | docs/asm_to_source.md |
 | `rewrite_rules.py` | nothing; matches `patterns/rules.jsonl` (target shape -> source rewrite) against near misses, logs rule hits, convergence report | docs/asm_to_source.md |
 | `agent_board.py` | nothing; the message board between naari3's threads and onmokoworks's workers | `open --for n3` (or `om`), `post --from n3 --topic T [--re ID] < body`, `show ID`; docs/agents/README.md |
