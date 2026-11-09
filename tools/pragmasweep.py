@@ -116,6 +116,8 @@ class Unit:
         self.renames = json.load(open('tools/extab_user_renames.json')).get(self.src, {}) if os.path.exists('tools/extab_user_renames.json') else {}
 
     def compiled_name(self, fn):
+        # a definition under the target name itself wins over a stale rename entry
+        if re.search(r'^[^\n;{}]*\b' + re.escape(fn) + r'\s*\([^;{]*\)\s*\{', self.text, re.M): return fn
         for k, v in self.renames.items():
             if v == fn: return k
         # renames are sometimes filed under another TU's key (moved code)
