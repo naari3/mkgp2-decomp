@@ -12385,7 +12385,10 @@
     "Init__12RankingPanelFiiiiUciPCciPCciP12RankingWorldP13RankingLightsfff": "fn_801D286C",
     "@212": "extern:lbl_806D9FB8",
     "@215": "@etb_80014EEC",
-    "@216": "@eti_80027FF8"
+    "@216": "@eti_80027FF8",
+    "@223": "extern:lbl_806D9FB8",
+    "@226": "@etb_80014EEC",
+    "@227": "@eti_80027FF8"
   },
   "game/fn_801D4FF4.cpp": {
     "__nw__FUl": "Alloc",

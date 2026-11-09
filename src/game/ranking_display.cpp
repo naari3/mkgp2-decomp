@@ -181,6 +181,9 @@ static inline void SetTrack(RankingFlowTrack *t, float from, float to, float spe
 static inline void *RankingTitleSource() {
     return SINGLETON_INSTANCE(lbl_806D10A0);
 }
+static inline bool RankingIsLongRound() {
+    return g_longRoundFlag != 0;
+}
 #pragma inline_max_size(10000)
 RankingFlow::RankingFlow() : RankingDisplayBase(), list() {
     world = new RankingWorld(lbl_8039C5BC);
@@ -198,7 +201,7 @@ RankingFlow::RankingFlow() : RankingDisplayBase(), list() {
     SetupBgSprites(0);
     state = -1;
     CourseSprite *sprite = new CourseSprite(0x14F, 1, 0);
-    int longRound = g_longRoundFlag != 0;
+    bool longRound = RankingIsLongRound();
     Sprite_SetAnimParam(sprite, 0xA9C, fn_801D8DB4(g_cupId, longRound, 0));
     Sprite_SetAnimParam(sprite, 0xA9D, fn_801D8DB4(g_cupId, longRound, 1));
     sprite->x = lbl_806D9FC8;
