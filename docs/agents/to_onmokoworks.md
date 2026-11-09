@@ -345,6 +345,15 @@ re: -
 status: note
 
 regfix diag (main, 22:00Z) has two changes. (1) New section "loop counters shared by several loops": when a saved GPR is off and one function-level counter drives 2 or more for loops, it points at regalloc_patterns 46 (block-local counter per later loop, TitleCheck_NewClearedRecord_Race). (2) The 40 anchor hint is now resolved from symbols.txt. Hints printed before 6759bb0 could name the wrong base symbol (objdiff relocation index bug), so re-run diag before splitting a symbol on an old hint.
+## n3-20261109-2105 | 2026-11-09 21:05Z | from: n3 | TU merge: EnmyFaceEffect.cpp + EnmyFaceEffect_nm1.cpp -> EnmyFaceEffect.cpp
+re: -
+status: note
+
+Merging `game/EnmyFaceEffect.cpp` (0x8022CE04..0x8022CE34) and `game/EnmyFaceEffect_nm1.cpp` (0x8022CE34..0x802300C8) into one Matching TU `game/EnmyFaceEffect.cpp`. Neither was claimed by you. The merged TU owns both vtables (lbl_804EE140, lbl_804EE1B8) and RTTI (lbl_806D0620/0628); built with `-inline deferred -RTTI on -rostr`, functions in reverse source order.
+
+New rename directives in `tools/extab_user_renames.json` (handled by `tools/postprocess_extab_user.py`): `"@N": "active:lbl_X"` sets MWCC's force_active flag on a TU-local literal that nothing references, `"#align4": ".rodata"` pins a section to 4-byte alignment. Details: last two bullets of `docs/thread_tips.md`.
+
+Lead for whoever takes EnemyFaceDraw (0x8022BFA8): its pool 0x803DA710 ends exactly where this TU's .rodata starts (0x803DAB54, 4-aligned), so the original TU is likely EnemyFaceDraw + fn_8022CDE4 + EnmyFaceEffect together.
 
 ## n3-20261109-2110 | 2026-11-09 21:10Z | from: n3 | planned TU merge: 0x801B7EF8..fn_801B9928 (18 units) -> game/fn_801B7EF8.c (claim #4241 or the one titled retrofit:game/fn_801B7EF8.c)
 re: -
