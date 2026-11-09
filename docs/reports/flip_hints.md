@@ -1,6 +1,6 @@
 # Flip hints for onmokoworks-claimed TUs at 100% (2026-11-07)
 
-Read-only diagnosis by naari3's thread B of the 21 TUs that docs/claim_audit.md lists as "all functions 100%". Nothing in these TUs or their issues was changed on main. Each fix below was applied on a throwaway local branch, and all four applied together give a clean build (`rm -rf build/GNLJ82/src`) with `main.dol: OK`. Ready-to-apply patches are in `/mnt/project-files/wip/flip_hints/<TU>.patch` (`git apply`).
+Read-only diagnosis by naari3's thread B of the 21 TUs that docs/reports/claim_audit.md lists as "all functions 100%". Nothing in these TUs or their issues was changed on main. Each fix below was applied on a throwaway local branch, and all four applied together give a clean build (`rm -rf build/GNLJ82/src`) with `main.dol: OK`. Ready-to-apply patches are in `/mnt/project-files/wip/flip_hints/<TU>.patch` (`git apply`).
 
 ## Already Matching (17): only the claim is still open
 

@@ -252,7 +252,7 @@ shim in `MemoryManager_TimedFree`.
 
 ## Related
 
-- `docs/per_fn_matching_strategy.md` §14.1 (Approach A / B for extab handling) — basic patterns, doesn't cover this case
+- `docs/archive/per_fn_matching_strategy.md` §14.1 (Approach A / B for extab handling) — basic patterns, doesn't cover this case
 - `docs/notes/pragma-exceptions-on-enable-direction.md` — per-fn opt-in for auto-emit
 - `docs/notes/sdata-deleting-dtor-idiom.md` — `if (this) if (this) { ... }` doubled-guard CW C++ pattern
 - `src/game/dtor_801FEA70.c` — has similar `SPECIFICATION + ACTIVECATCHBLOCK + fn_8027248C` (`__terminate`) cleanup pattern, also asm_fn retreat

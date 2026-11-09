@@ -8,7 +8,7 @@ near-exact in both, and the remaining residue in both fns is the documented sour
 fp-register-identity tie-break family, NOT class 2. Best states: Dispatch 86.34% -> 97.07%
 (7 builds), ApplyImpactImpulse 83.66% -> 94.24% (6 builds). Both reverted to asm_fn,
 SHA-1 green. Paste-ready C in the batch HANDOFF appendix
-(docs/drafts/Class2_validation_nearmatches.handoff.md).
+(docs/archive/drafts/Class2_validation_nearmatches.handoff.md).
 
 ## Observations (facts, build-by-build)
 

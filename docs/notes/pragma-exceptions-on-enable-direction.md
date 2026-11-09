@@ -1,6 +1,6 @@
 # `#pragma exceptions on` as enable-direction (Approach B inverse)
 
-`docs/per_fn_matching_strategy.md` §14.1 documents Approach B as using
+`docs/archive/per_fn_matching_strategy.md` §14.1 documents Approach B as using
 `#pragma exceptions off / reset` to SUPPRESS CW's auto-emit of
 extab/extabindex inside a lib compiled with `-Cpp_exceptions on`.
 

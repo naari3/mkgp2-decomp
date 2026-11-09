@@ -3,8 +3,8 @@
 並列 decomp 体制で main から `Agent` tool 経由で起動される sub-agent (worker) の制約、HANDOFF.md 仕様、作業手順をここで規定する。
 
 関連:
-- `docs/orchestrator_role.md` — main agent の責務
-- `docs/orchestrator_state_schema.md` — state.json schema
+- `docs/archive/orchestrator_role.md` — main agent の責務
+- `docs/archive/orchestrator_state_schema.md` — state.json schema
 - `~/.kimi-code/skills/mkgp2-match/SKILL.md` — 1 関数を matching に持っていく workflow
 
 ## 性格と寿命
@@ -39,8 +39,8 @@
 worktree に入ったら、必ず以下の順で読む:
 
 ```
-docs/orchestrator_state_schema.md   (自分が属する batch 構造の理解)
-docs/sub_agent_role.md              (この文書)
+docs/archive/orchestrator_state_schema.md   (自分が属する batch 構造の理解)
+docs/archive/sub_agent_role.md              (この文書)
 ~/.kimi-code/skills/mkgp2-match/SKILL.md  (matching workflow)
 ```
 
@@ -162,7 +162,7 @@ main は HANDOFF.md の **```json ブロック** を parse する。stdlib `json
 ### Field 仕様
 
 - `batch_id`: 必須。main が dispatch 時に渡した値そのまま
-- `results[]`: 必須。担当関数 1 件ずつ。`status` は `matched` / `asm_fn` / `nonmatching` / `skipped` / `failed` のいずれか (`asm_fn` の詳細: `docs/per_fn_matching_strategy.md`)
+- `results[]`: 必須。担当関数 1 件ずつ。`status` は `matched` / `asm_fn` / `nonmatching` / `skipped` / `failed` のいずれか (`asm_fn` の詳細: `docs/archive/per_fn_matching_strategy.md`)
 - `results[].src_path`: 推奨は **`src/` prefix なし** (configure.py / splits.txt 都合と整合、`init/debug_bba.c` 形式)。`src/init/debug_bba.c` 形式でも main の `merge_promote.py` は worktree 内に該当 file がある側を自動採用するので両方動く。混在を避けるため新規 batch では `src/` 無しを推奨
 - `configure_py.add_objects[]`: option。空配列なら main は configure.py を編集しない。`object` は `Object(...)` の Python リテラル文字列そのまま。**`add_libs[]` は現状未対応** — 新規 lib block 追加が必要な場合は HANDOFF の自由記述部分か `user_attention` で明示し、main が手で configure.py を編集する (sub が worktree で編集した lib block は main が参照できる)
 - `splits_txt.add_entries[]`: option
@@ -190,7 +190,7 @@ main の parse 実装は `tools/parse_handoff.py`。stdlib `json` のみ依存�
 | `blocked_reason` | null | optional (なぜ asm に逃げたか 1 文書ければ将来 retry の手がかり) | null/optional | **必須** (なぜ skipped か 1-2 文) | **必須** |
 | commit 動作 | ✓ `orch/<batch_id>` に 1 commit | ✓ matched と同 commit に含む | ✓ 1 commit (NonMatching として) | × no commit | × no commit |
 
-`asm_fn` の詳細 (退避判定、asm body の書き方、bundle 内 partial matching の仕様) は `docs/per_fn_matching_strategy.md`。
+`asm_fn` の詳細 (退避判定、asm body の書き方、bundle 内 partial matching の仕様) は `docs/archive/per_fn_matching_strategy.md`。
 
 特に重要 (iter 0 baseline で曖昧と判明した点):
 
@@ -217,7 +217,7 @@ main の parse 実装は `tools/parse_handoff.py`。stdlib `json` のみ依存�
 
 | 選択 | 条件 | HANDOFF.md `results[].status` |
 |---|---|---|
-| **asm function 退避** | bundle 内の他関数の matching 進捗を守りたい / extab group 制約で TU 分割不可 / 1 関数だけ複雑 | `asm_fn` + C TU 内に `asm void fn() { nofralloc ... blr }` で inline (`docs/per_fn_matching_strategy.md`) |
+| **asm function 退避** | bundle 内の他関数の matching 進捗を守りたい / extab group 制約で TU 分割不可 / 1 関数だけ複雑 | `asm_fn` + C TU 内に `asm void fn() { nofralloc ... blr }` で inline (`docs/archive/per_fn_matching_strategy.md`) |
 | **NonMatching 隔離** | 80% 以上の fuzzy match を達成、C ソースに価値あり、TU 全体を C で書く方針 | `nonmatching` + `Object(NonMatching, ...)` を提案 |
 | **skipped** | Ghidra 情報不足 / 構造体未解明 / 外部依存未解決 | `skipped` + `blocked_reason` に理由 |
 | **failed** | 上記いずれにも該当しない (例: 環境問題で build さえ通らない) | `failed` + `blocked_reason` に詳細 |

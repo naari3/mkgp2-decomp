@@ -43,4 +43,4 @@ Sibling idiom for C++ scoped objects: `if (this) if (this)` (§14.3, deleting-de
 
 ## Suggested catalog placement
 
-Add as new row to docs/per_fn_matching_strategy.md §10.6 (bundle promote idioms) or §14.3 (successful idioms). The pattern is reusable for any sub-agent encountering a 12-byte dead block after a literal-equality compare.
+Add as new row to docs/archive/per_fn_matching_strategy.md §10.6 (bundle promote idioms) or §14.3 (successful idioms). The pattern is reusable for any sub-agent encountering a 12-byte dead block after a literal-equality compare.

@@ -9,7 +9,7 @@
  * The Ghidra decompile shows only 4 args, but the real callee consumes
  * r3-r10 plus a stack byte at 0xB(r1). Writing the wrapper with the wider
  * prototype is required to make CW issue `mr r5, r6` register shuffling
- * (per docs/per_fn_matching_strategy.md §18 -- 3-arg pass-through forwarding).
+ * (per docs/archive/per_fn_matching_strategy.md §18 -- 3-arg pass-through forwarding).
  *
  * extab/extabindex entries are auto-emitted by CW under #pragma exceptions on
  * (same approach as ItemDisplay_Destroy).

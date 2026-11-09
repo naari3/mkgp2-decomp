@@ -419,7 +419,7 @@ static inline void DrawSprites6(Menu801F *self) {
     for (int i = 0; i < 6; i++) fn_801F7B74(self->context, &self->sprites[i], lbl_806DA550);
 }
 /* The loop sits in an inline helper: only an inlined loop gets the target's
- * `mr rOff, rI` strength-reduction init (see docs/per_fn_matching_strategy.md). */
+ * `mr rOff, rI` strength-reduction init (see docs/archive/per_fn_matching_strategy.md). */
 static inline void DrawFirstSprites(Menu801F *self) {
     for (int i = 0; i < 6; i++) fn_801F7B74(self->context, &self->sprites[i], lbl_806DA550);
 }

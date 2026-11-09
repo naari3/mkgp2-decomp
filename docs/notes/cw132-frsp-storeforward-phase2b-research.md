@@ -132,7 +132,7 @@ for-loop and keep constant-index named-local read-backs.
 
 ## Application outlook (class-2 sites)
 
-- ItemEffect_Dispatch 0x80050410 (86.34% draft in docs/drafts/ItemEffect_Dispatch_86pct.handoff.md):
+- ItemEffect_Dispatch 0x80050410 (86.34% draft in docs/archive/drafts/ItemEffect_Dispatch_86pct.handoff.md):
   replace the `volatile DispatchDotScratch s` + 22 explicit source-order stores with
   a plain struct + `for (i = 0; i < 16; i++) s.mtx[i] = mov->transform[i];` + the
   f35 consume block (named locals dir0..2/dx/dy/dz, d stores then dir stores,

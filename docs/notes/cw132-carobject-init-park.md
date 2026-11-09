@@ -2,7 +2,7 @@
 
 14 builds, asm body restored (build green). Best state 98.23% / 28 diff rows of 498 insns,
 sizes 1976 vs target 1980 (one structural -1 insn at the WarpAutoRun site). Paste-ready full
-diff in the batch HANDOFF appendix (docs/drafts/CarObject_Init_98pct.handoff.md).
+diff in the batch HANDOFF appendix (docs/archive/drafts/CarObject_Init_98pct.handoff.md).
 
 ## Confirmed transfers (matched on first/second build, zero residue in their regions)
 - ScopedTimer Phase 2d recipe transfers as-is to the sp+0x14/0x18 flavor: volatile-id ctor

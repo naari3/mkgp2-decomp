@@ -1,6 +1,6 @@
 # Class-1 recipe: batch-4 verification (2026-06-11, batch_promote_phase1_class1batch4)
 
-KartItem_PerFrameStep 0x8004C320 site 0x8004C8CC: u64 family (mask 0x10000000ULL, hi=0), plain if/else recipe over direct bus->flags byte-exact from first build (register-for-register incl. r4 zero-web coalesce). **Ledger: 14/14 u64-family sites across 4 batches.** Fn itself parked at 97.87% on the fp-scratch later-first-use->lower-reg numbering family (NOT class-1; paste-ready C + 91-row residue in docs/drafts/KartItem_PerFrameStep_98pct.handoff.md).
+KartItem_PerFrameStep 0x8004C320 site 0x8004C8CC: u64 family (mask 0x10000000ULL, hi=0), plain if/else recipe over direct bus->flags byte-exact from first build (register-for-register incl. r4 zero-web coalesce). **Ledger: 14/14 u64-family sites across 4 batches.** Fn itself parked at 97.87% on the fp-scratch later-first-use->lower-reg numbering family (NOT class-1; paste-ready C + 91-row residue in docs/archive/drafts/KartItem_PerFrameStep_98pct.handoff.md).
 
 New verified idioms (full detail in the HANDOFF):
 

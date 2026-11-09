@@ -27,7 +27,7 @@ mkgp2-decomp で `__check_pad3` を初めて matched したときに確立した
 ### 1. 対象関数を選ぶ
 
 - `config/GNLJ82/symbols.txt` から候補を選ぶ。小さい (~0x40-0x100 bytes)、placeholder 名 (`fn_XXX`) または既に named だが matching 0% のもの
-- 候補メモは `TODO.md` の「Matching に着手」節
+- 現在の進め方 (claim、完了条件、受け入れ基準) は `docs/matching_rules.md`、他の人が諦めた関数は `docs/gave_up.md`、レジスタ割当の直し方は `docs/regalloc_patterns.md`
 - 最初は `.init` セクション、または解析メモが充実している関数から
 - **着手前に担当範囲を claim すること** (`CONTRIBUTING.md` の分担ルール参照)。extab group をまたぐ範囲は分割できない (§7.5 制約 D)
 
@@ -172,7 +172,7 @@ grep -E '^\.fn ' build/GNLJ82/asm/auto_<addr>_text.s
 
 mkgp2 では現状 269 個の multi-fn group (合計 4877 関数、~64% の named function) が存在。最大 937 関数 group も存在し、現実的 single-batch matching は不可能なので、その場合は別戦略 (incremental NonMatching 隔離など) に切り替える。
 
-オーケストレータ運用では `tools/build_extab_map.py` で `.orchestrator/extab_groups.json` を生成し、`fn_to_group` テーブルから seed 関数が属する group を引いて bundle を構築する。
+(旧オーケストレータ運用の `tools/build_extab_map.py` は 2026-11-09 に削除。git 履歴と `docs/archive/` 参照。)
 
 ### 8. configure.py に lib + Matching object を登録
 
@@ -360,7 +360,7 @@ key / degree / coalesce flag / home reg を `tmp/dump/<base>.colorer.log` に
 
 ### 10.5. 撤退判定と asm function 退避
 
-C で matching に持っていけない関数は、`asm void fn() { nofralloc ... blr }` で C TU 内に inline 化する逃げ道がある。byte-identical 保証されるので bundle 全体の進捗を守れる。詳細は `docs/per_fn_matching_strategy.md`。
+C で matching に持っていけない関数は、`asm void fn() { nofralloc ... blr }` で C TU 内に inline 化する逃げ道がある。byte-identical 保証されるので bundle 全体の進捗を守れる。詳細は `docs/archive/per_fn_matching_strategy.md`。
 
 #### 撤退判定の閾値
 
@@ -419,7 +419,7 @@ dtk reversed extab group bundle (`auto_*_text.s` 由来の複数関数を 1 TU �
 
 bundle 全関数を asm_fn にすると decomp 価値ゼロなので、その場合は素直に `Object(NonMatching, ...)` に倒した方が configure.py が短い (HANDOFF.md `results[].status` を全件 `nonmatching` にする)。
 
-HANDOFF.md schema は `docs/sub_agent_role.md` の status マトリクス参照。`asm_fn` 行を見ること。
+HANDOFF.md schema は `docs/archive/sub_agent_role.md` の status マトリクス参照。`asm_fn` 行を見ること。
 
 #### extab 持ち関数を asm_fn 退避する場合 (手動 extab emit 必須)
 
@@ -458,7 +458,7 @@ Object(Matching, "<lib>/<file>.c", extab_padding=b"\x00\x00"),
 
 例外: extab を持たない関数 (例: `isJapanese`、3 instr の小関数) は asm_fn 退避単独で OK。tool は extabindex に entry の無い fn は自動でスキップして emit する。
 
-reference 実装: `src/game/HeapStats.c` (6-fn 全 asm_fn の Hybrid 構成)、`docs/per_fn_matching_strategy.md` §12 (Phase 1b verify outcome、採用手法 6 点)、`docs/large_extab_group_strategy.md`。
+reference 実装: `src/game/HeapStats.c` (6-fn 全 asm_fn の Hybrid 構成)、`docs/archive/per_fn_matching_strategy.md` §12 (Phase 1b verify outcome、採用手法 6 点)、`docs/archive/large_extab_group_strategy.md`。
 
 #### bundle 内 fn promote の extab handling (asm_fn → matched 昇格時)
 
@@ -467,7 +467,7 @@ asm_fn の bundle を 1 fn ずつ matched に promote するとき、CW は plai
 - **Approach A**: 該当 fn の `extab_<fn>` / `extabindex_<fn>` 手動 emit を **削除** (CW 自動 emit に任せる) — 例: `dtor_800A9CC8` (commit cbc8d65)
 - **Approach B**: C body を `#pragma exceptions off` / `#pragma exceptions reset` で囲み auto-emit を **抑制** + 手動 emit を keep — 例: `dtor_800A9D2C` (commit 6e98202)
 
-詳細・選択基準・mix の動作性は `docs/per_fn_matching_strategy.md` §14.1。
+詳細・選択基準・mix の動作性は `docs/archive/per_fn_matching_strategy.md` §14.1。
 
 ### 10.6 bundle promote で実証済の idiom 集 (auto_800A8F4C main wave、2026-05-18)
 
@@ -477,7 +477,7 @@ asm_fn の bundle を 1 fn ずつ matched に promote するとき、CW は plai
 | 7-float-arg force | `void X(void *self, float f1, float f2, float f3, float f4, float vx, float vy, float vz);` (先頭 4 unused) | `stfs f5, ...; stfs f6, ...; stfs f7, ...` | leaf 関数で f5-f7 を出したいとき (引数 signature を膨らませて codegen を誘導) |
 | 2-entry sda21 pointer array | `extern void *lbl_XXX[2];` + `return lbl_XXX[(u8)id != 0];` | `li r3, lbl_XXX@sda21; neg r0, r4; or r0, r0, r4; rlwinm r0, r0, 3, 29, 29; lwzx r3, r3, r0` | sdata 上の小さい instance array、`(arg != 0) ? 1 : 0` indexing |
 
-詳細・コミット参照・hard-block patterns (CW DSE / frame-spill / register-allocator quirk / `_savegpr_25` vs inline `stmw` 等の **再現不能 idiom 9 件**) は `docs/per_fn_matching_strategy.md` §14.2-§14.3。
+詳細・コミット参照・hard-block patterns (CW DSE / frame-spill / register-allocator quirk / `_savegpr_25` vs inline `stmw` 等の **再現不能 idiom 9 件**) は `docs/archive/per_fn_matching_strategy.md` §14.2-§14.3。
 
 ### 11. Ghidra 側 rename 同期 (重要)
 
@@ -503,8 +503,8 @@ commit message に対象関数 / address / size / 動作内容 / SHA-1 verify �
 
 ## 定型: extab action 持ち関数は最初から C++ で書く (2026-07-19 確立)
 
-着手前に対象関数の extab を確認する (`python tools/scan_extab_actions.py --all | grep <fn>`
-か dtk asm の extab dump)。**entry が 8 byte 超 = EH action 持ち** なら、その関数は
+着手前に対象関数の extab を確認する (`build/GNLJ82/asm/` の `@etb_` / `@eti_`
+の extab dump)。**entry が 8 byte 超 = EH action 持ち** なら、その関数は
 実 C++ 構文 (ctor / new 式 / dtor 持ち local) で compile されている。plain C +
 manual extab で寄せると register-identity park に嵌まりやすいので、**最初から
 本物の C++ で書く**:
@@ -522,7 +522,7 @@ manual extab で寄せると register-identity park に嵌まりやすいので�
 - 多 fn TU で auto/manual extab が混在する場合は `tools/extab_order.json` に
   TU の emit 順を宣言する (reorder_extab.py が並びを担保、ONKARTHIT で実証済み)。
   宣言済み TU なら per-fn 変換が可能。手順 6 step は
-  `docs/large_tu_cpp_conversion.md` Phase 3
+  `docs/archive/large_tu_cpp_conversion.md` Phase 3
 - `#pragma cplusplus on/off` で .c 内に C++ island を作れる (TU 丸ごと
   -lang=c++ 不要)。TU に `-Cpp_exceptions on` flag が無いと extab action が
   emit されない点に注意
@@ -533,7 +533,7 @@ manual extab で寄せると register-identity park に嵌まりやすいので�
   文で書くと plain DELETEPOINTER になり cond flag (`li rN, 0/1`) が出ない。
   さらに COND action は dtor pointer 直前に CW junk `C7 02` を持つので
   `extab_padding=b"Ç" * <pad site 数>` が必要 (padding は pad site 順に
-  消費される byte stream)。詳細: `docs/per_fn_matching_strategy.md` §19
+  消費される byte stream)。詳細: `docs/archive/per_fn_matching_strategy.md` §19
 - 別 TU 所有の dtor を DESTROYLOCAL が参照する stack local は「inline 空 dtor
   + weak copy を redefine-sym で既存名に rename → link で破棄」で解決
   (ResCtrl / ScopedTimer 型)。weak copy の extab entry は extab_order.json の
@@ -553,15 +553,15 @@ manual extab で寄せると register-identity park に嵌まりやすいので�
 repo 内 (誰でも見える):
 
 - `CONTRIBUTING.md` — 分担ルール (claim 方式) と PR 要件
-- `docs/per_fn_matching_strategy.md` — asm_fn 退避 / bundle promote / hard-block patterns の戦略集
-- `docs/large_extab_group_strategy.md` — 大 extab group の扱い
+- `docs/archive/per_fn_matching_strategy.md` — asm_fn 退避 / bundle promote / hard-block patterns の戦略集
+- `docs/archive/large_extab_group_strategy.md` — 大 extab group の扱い
 - `docs/notes/mkgp2-init-mixed-cw.md` — `.init` section に CW 1.0 と CW 2.7 が混在している (TU 単位で違う) ことの根拠と内訳
 - `docs/notes/mkgp2-hsd-uses-cw-1.3.2.md` — HSD lib が CW 1.3.2 で build されている根拠 (prologue 順序)
 - `docs/notes/hsd-sdata2-shared-pool.md` — HSD lib の `.sdata2` が shared pool TU (`_hsd_consts.c`) に集約され、各 TU から UND 参照する構造。`tools/postprocess_sdata2.py` が anonymous local → named UND を post-process する
 - `docs/notes/melee-local-build.md` — melee (SSBM v1.2) のローカル build レシピ。CW 1.2.5n vs 1.3.2 の比較や HSD lib の構造確認に
 - `docs/notes/dtk-ppceabi-overrides-symbols.md` — dtk PPCEABI heuristic が SDK 名を上書きする現象
-- `ONBOARDING.md` — セッション kickoff 用のプロジェクト概要 (maintainer ローカルパス前提の記述を含む)
-- `TODO.md` — 次手リスト (live)
+- `docs/matching_rules.md` — 両陣営共通の claim / 完了条件 / 受け入れ基準 (正本)
+- `docs/regalloc_patterns.md`, `docs/gave_up.md` — レジスタ割当の修正例、諦めた関数の一覧
 
 maintainer (naari3) 環境のみ (user scope、repo 外):
 

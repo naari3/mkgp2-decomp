@@ -2,7 +2,7 @@
 
 Read-only diagnosis by naari3's thread B. The input was the 324 onmokoworks-claimed
 functions below 100%. Functions that R5's pragmasweep already solves (0 diff lines in
-docs/pragmasweep_results.md) were skipped. Nothing in these TUs or their issues was
+docs/reports/pragmasweep_results.md) were skipped. Nothing in these TUs or their issues was
 changed on main.
 
 The candidates below were picked because their objdiff diff is (mostly) a pool or
@@ -16,7 +16,7 @@ same TU, so the fix is always one of two things:
 * The TU is merged with the neighbour TU that already owns the data, because the
   original was one file.
 
-Patches are in `docs/onmoko_patches/merge/` (`git apply`).
+Patches are in `docs/archive/onmoko_patches/merge/` (`git apply`).
 
 ## Verified
 

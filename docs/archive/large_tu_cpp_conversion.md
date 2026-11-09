@@ -5,8 +5,8 @@ KartTireFX.c / auto_800A8F4C_block.c) を C++ 昇格するための手順設計�
 
 関連:
 - `docs/notes/cpp-ctor-retrofit-mangled-bridge.md` — per-fn retrofit のレシピと制約
-- `docs/large_extab_group_strategy.md` — reversed extab group bundle の背景
-- `docs/unit_first_strategy.md` §4.6 — retrofit レーンの運用
+- `docs/archive/large_extab_group_strategy.md` — reversed extab group bundle の背景
+- `docs/archive/unit_first_strategy.md` §4.6 — retrofit レーンの運用
 
 ## 前提事実 (検証済み)
 

@@ -13,7 +13,7 @@ addressing, TIPS "Pooled-data lis" / "Section-anchor addressing"), so:
 Only functions that are still NonMatching (<100% in report.json) or written
 as inline asm (tools/scan_asm_fns.py) are listed.
 
-Usage (after ninja): python3 tools/pool_audit.py [--claims FILE] [--md docs/pool_audit.md] [--all]
+Usage (after ninja): python3 tools/pool_audit.py [--claims FILE] [--md docs/reports/pool_audit.md] [--all]
 """
 import argparse, bisect, collections, os, re, sys
 
@@ -101,7 +101,7 @@ def asm_fns():
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('--claims'); ap.add_argument('--md', default='docs/pool_audit.md')
+    ap.add_argument('--claims'); ap.add_argument('--md', default='docs/reports/pool_audit.md')
     ap.add_argument('--all', action='store_true', help='also list matched functions')
     a = ap.parse_args()
     claims = T.load_claims(a.claims, False) if a.claims else ()
