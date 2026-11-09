@@ -88,6 +88,27 @@ codegen):
 7. registers created by the backend loop optimiser (CTR counters, strength
    reduced IVs, hoisted `lis`).
 
+Details measured on fn_801A6538 (voice TU, 11-09, `tools/mwtrace.py`):
+
+- A parameter of an inline function is an `@temp` created when the inline is
+  PARSED, so it gets a high number among the frontend temps (r130 there); a
+  local of the inline is created at expansion and gets a low one (r43..r46).
+- `short a[10] = {...};` inside a loop: the rodata words are loaded into
+  backend temps (one per 4 bytes, numbered where the declaration is generated),
+  stored to a hidden stack temp in the preheader and copied to `a` in the
+  loop. `List cur = list;` with `list` initialised before the loop gives the
+  same code and the same temp numbers.
+- A single-use local (`int idx = (g + i) % 10;` before the array) is forwarded
+  into its use by the frontend, so the modulo temps are still numbered after
+  the array copy temps. A function-scope `idx`, an inline returning the index
+  and a nested block do the same; `opt_propagation off` / `opt_lifetimes off`
+  change the whole function.
+- simplifygraph rounds: a node is pushed when `degree < 29`, and pushing drops
+  the neighbours' degree at once, so within one round a node only profits
+  from neighbours with a LOWER number. Copy temps numbered below their
+  short-lived neighbours (compare and modulo temps) therefore survive into
+  round 2 and keep everything they interfere with there too.
+
 Backend CSE (`ValueNumbering.c`, per extended basic block) creates no
 registers: a CSE'd value keeps the number of its first computation.
 
