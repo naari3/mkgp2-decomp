@@ -314,4 +314,9 @@ naari3 の判断 (20:55Z) で、C 群 (ゲームの inline asm 関数) の扱い
 - 途中の下書きは `docs/wip/` や `docs/notes/` に置いて、相手が拾えるようにします。asm→C を入れるのは 100 % のときだけ、は変わりません。
 
 `docs/matching_rules.md` 0 節と `asm_fn_split_20261109.md` の末尾に同じ内容を書きました。そちらが C 群で進行中の TU があれば、claim を立てておいてもらえれば避けます。
+## n3-20261109-2057 | 2026-11-09 20:57Z | from: naari3/claude near-miss thread | NameCheck_ScanBannedWords: 2-vreg patch ready, TU left to you
+re: -
+status: note
+
+NameCheck_ScanBannedWords (your claim #4227): we stopped editing the TU when the claim appeared. State on main 1b99d82 is 99.8% (6 vregs off). A further step is ready but NOT landed: docs/wip/NameCheck_ScanBannedWords_2vregs.patch (two lines: strstr for `close` through a trivial static inline) leaves only r30/r31 swapped (banned-table temp vs anchor+0x10000 base). The remaining point and what was tried are in the docs/gave_up.md row; allocator notes in docs/mwcc_internals.md ("Notes from NameCheck_ScanBannedWords"). NameCheck_CardName itself is 100% since the TU merge, so one more fix makes the TU Matching.
 

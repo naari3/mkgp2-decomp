@@ -1,0 +1,19 @@
+--- a/src/game/NameCheck_CardName.c
++++ b/src/game/NameCheck_CardName.c
+@@ -3238,6 +3238,7 @@
+     return 0;
+ }
+ 
++static inline NameCode *find_code(NameCode *s, const void *t) { return (NameCode *)strstr(s, t); }
+ static inline NameBool contains_at(const NameCode *p, const NameCode *set, int count)
+ {
+     NameBool found;
+@@ -3416,7 +3417,7 @@
+             DebugPrintf(sMsgHead);
+             if (open != buf && contains_at(open - 1, boundary_set, boundary_count) == 1) break;
+             DebugPrintf(sMsgBack);
+-            close = (NameCode *)strstr(open, lbl_8040E450[group].close);
++            close = find_code(open, lbl_8040E450[group].close);
+             if (close) {
+                 /* The original guard tests byte-address + 1, then reads a code unit. */
+                 if ((char *)close + 1 && contains_at(close + 1, boundary_set, boundary_count) == 1) break;
