@@ -27,9 +27,8 @@ const char lbl_806DC934[] = "GCAM";
 /* ---- amnet_nm2_rest.c ---- */
 
 static inline void ProbeTraceAdd(u8 op, u8 dir, void* buf, u32 addr, u32 size) {
-    u32 n = lbl_806D1E44++;
-    u32 i = n & 7;
-    lbl_806937C0[i].seq = n;
+    u32 i = lbl_806D1E44 & 7;
+    lbl_806937C0[i].seq = lbl_806D1E44++;
     lbl_806937C0[i].op = op;
     lbl_806937C0[i].dir = dir;
     lbl_806937C0[i].buf = buf;
@@ -134,6 +133,21 @@ static inline void InitializeDevClear(u32 addr, NetDev* dev) {
     InitializeDevSend(buf, addr, id);
 }
 
+static inline void InitializeDevCommand(NetDev* dev) {
+    u8 raw[0x40];
+    void* buf;
+    u32 addr;
+    u8 id;
+    buf = ALIGN32(raw);
+    addr = dev->cmdAddr;
+    id = dev->id;
+    memset(buf, 0, 0x20);
+    if ((lbl_806937C0[0].flags & 2) && id == 0xA9) {
+        ProbeTraceAdd('C', 'L', buf, addr, 0x20);
+    }
+    InitializeDevSend(buf, addr, id);
+}
+
 static inline NetDev* FindSetupDevice(u8 id) {
     NetDev* dev = FindDev(id);
     return dev;
@@ -182,7 +196,7 @@ s32 fn_8028D8CC(u8 id, NetBlob* blob) {
             dev->flags |= 0xD;
             dev->cmdAddr = off + 0x900000;
             dev->statAddr = off + 0x900020;
-            InitializeDevClear(dev->cmdAddr, dev);
+            InitializeDevCommand(dev);
             InitializeDevClear(dev->statAddr, dev);
             memcpy(lbl_80699140.cfgA, lbl_803F2798, sizeof(lbl_80699140.cfgA));
             lbl_80699140.cfgA[0] += off;
