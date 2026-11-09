@@ -167,7 +167,7 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
     ItemObjectManager_PerFrameUpdate(GetRaceContextPtr());
     if (lbl_806D13B4) fn_8023E324(lbl_806D13B4, __ptmf_test(taMemberFunction) != 0);
     if (g_raceEnded != 1) {
-        long long now = OSGetTime();
+        unsigned long long now = OSGetTime();
         steer = QuantizeInput(pad->Steer());
         accel = QuantizeInput(pad->Brake());
         brake = accel;
@@ -178,7 +178,7 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
             } else if (steer < 0.1f && accel < 0.1f) {
                 if (!lbl_806D13B8) {
                     long long prev = ((long long)lbl_806D13C0 << 32) | lbl_806D13C4;
-                    long long ms = (now - prev) / ((*(unsigned int *)0x800000f8 / 4) / 1000);
+                    long long ms = (long long)(now - prev) / ((*(unsigned int *)0x800000f8 / 4) / 1000);
                     if ((float)ms / 1000.0f >= 4.0f) lbl_806D13B8 = 1;
                 }
                 if (lbl_806D13B8) steer = 1.0f;
