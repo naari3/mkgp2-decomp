@@ -45,9 +45,7 @@ static inline void initializeMatrix(ViewEmitter *o, void *scene, int index) {
     o->matrices[index].matrix[2][3] = joint->matrix[2][3];
     o->delay = (int)(30.0f + 30.0f * variation(o));
 }
-static inline void updateMatrices(ViewEmitter *o) {
-    int i;
-    unsigned int matrixOffset;
+static inline void updateMatrices(ViewEmitter *o, int &i, unsigned int &matrixOffset) {
     ViewBillboardParticle *q;
     ViewMatrixParticle *p;
     for (i = 0, matrixOffset = 0; i < o->count; matrixOffset += sizeof(ViewMatrixParticle), i++) {
@@ -81,6 +79,8 @@ static inline void updateBillboards(ViewEmitter *o) {
 }
 extern "C" void fn_8018E6FC(ViewEmitter *o) {
     int index;
+    int matrixIndex;
+    unsigned int matrixOffset;
     void *scene;
     if (o->count == 0) return;
     if (o->delay > 0) o->delay--;
@@ -93,7 +93,7 @@ extern "C" void fn_8018E6FC(ViewEmitter *o) {
             initializeMatrix(o, scene, index);
         }
     }
-    updateMatrices(o);
+    updateMatrices(o, matrixIndex, matrixOffset);
     updateBillboards(o);
 }
 
