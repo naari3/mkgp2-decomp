@@ -563,16 +563,6 @@
       "dtor_80036E40"
     ]
   },
-  "src/game/RaceContext_EnsureSingleton.c": {
-    "extab": [
-      "dtor_8009DCE0",
-      "RaceContext_EnsureSingleton"
-    ],
-    "extabindex": [
-      "RaceContext_EnsureSingleton",
-      "dtor_8009DCE0"
-    ]
-  },
   "src/game/clFlowItem.c": {
     "extab": [
       "clFlowItem_Draw",
@@ -3085,6 +3075,38 @@
       "PCBComm_Init",
       "dtor_800869D0",
       "__dt__11ScopedTimerFv"
+    ]
+  },
+  "src/game/SetCourseParams.c": {
+    "extab": [
+      "RankSlot_AppendOrUpdate",
+      "VSMode_SeedRandomItemSequence",
+      "SetCourseParams",
+      "PlayerData_ApplyItemUnlockById",
+      "PlayerData_GetUnlockedItemIdByIndex_U8",
+      "PlayerData_ResetForFlow",
+      "RaceFlow_ResetState_FullColdInit",
+      "ProcessSystemTick",
+      "RaceContext_Dtor",
+      "RaceContext_InitDefaults",
+      "dtor_8009DCE0",
+      "RaceContext_EnsureSingleton",
+      "KartDriverArray_StaticCtor"
+    ],
+    "extabindex": [
+      "RankSlot_AppendOrUpdate",
+      "VSMode_SeedRandomItemSequence",
+      "SetCourseParams",
+      "PlayerData_ApplyItemUnlockById",
+      "PlayerData_GetUnlockedItemIdByIndex_U8",
+      "PlayerData_ResetForFlow",
+      "RaceFlow_ResetState_FullColdInit",
+      "ProcessSystemTick",
+      "RaceContext_Dtor",
+      "RaceContext_InitDefaults",
+      "RaceContext_EnsureSingleton",
+      "dtor_8009DCE0",
+      "KartDriverArray_StaticCtor"
     ]
   }
 }

@@ -2806,74 +2806,13 @@ game/RaceScene_GetPerspFovyForCup.c:
 	.text       start:0x8009B9D0 end:0x8009BAC4
 	.data       start:0x80401118 end:0x8040DE94
 
-game/RaceSys_8009BAC4.c:
-	.text       start:0x8009BAC4 end:0x8009BD04
-
-game/RankSlot_AppendOrUpdate.c:
-	extab       start:0x80009598 end:0x800095A0
-	extabindex  start:0x80022190 end:0x8002219C
-	.text       start:0x8009BD04 end:0x8009BDC0
-
-game/VSMode_SeedRandomItemSequence.c:
-	extab       start:0x800095A0 end:0x800095A8
-	extabindex  start:0x8002219C end:0x800221A8
-	.text       start:0x8009BDC0 end:0x8009BEF4
-
-game/RaceData_8009BEF4.c:
-	.text       start:0x8009BEF4 end:0x8009CBFC
-	.data       start:0x8040E1C4 end:0x8040E450
-
 game/SetCourseParams.c:
-	extab       start:0x800095A8 end:0x800095B0
-	extabindex  start:0x800221A8 end:0x800221B4
-	.text       start:0x8009CBFC end:0x8009CFDC
-	.bss        start:0x805AC600 end:0x805D2AA8
-
-game/PlayerData_ApplyItemUnlockById.c:
-	extab       start:0x800095B0 end:0x800095B8
-	extabindex  start:0x800221B4 end:0x800221C0
-	.text       start:0x8009CFDC end:0x8009D00C
-
-game/PlayerData_GetUnlockedItemIdByIndex_U8.c:
-	extab       start:0x800095B8 end:0x800095C0
-	extabindex  start:0x800221C0 end:0x800221CC
-	.text       start:0x8009D00C end:0x8009D03C
-
-game/PlayerData_ResetForFlow.c:
-	extab       start:0x800095C0 end:0x800095C8
-	extabindex  start:0x800221CC end:0x800221D8
-	.text       start:0x8009D03C end:0x8009D07C
-
-game/RaceFlow_ResetState_FullColdInit.c:
-	extab       start:0x800095C8 end:0x800095D0
-	extabindex  start:0x800221D8 end:0x800221E4
-	.text       start:0x8009D07C end:0x8009D5F8
-
-game/ProcessSystemTick.c:
-	extab       start:0x800095D0 end:0x800095D8
-	extabindex  start:0x800221E4 end:0x800221F0
-	.text       start:0x8009D5F8 end:0x8009D638
-
-game/RaceContext_Dtor.c:
-	extab       start:0x800095D8 end:0x800095E0
-	extabindex  start:0x800221F0 end:0x800221FC
-	.text       start:0x8009D638 end:0x8009D6CC
-
-game/RaceContext_InitDefaults.c:
-	extab       start:0x800095E0 end:0x800095FC
-	extabindex  start:0x800221FC end:0x80022208
-	.text       start:0x8009D6CC end:0x8009DC80
-
-game/RaceContext_EnsureSingleton.c:
-	extab       start:0x800095FC end:0x8000961C
-	extabindex  start:0x80022208 end:0x80022220
-	.text       start:0x8009DC80 end:0x8009DD28
-
-game/KartDriverArray_StaticCtor.c:
-	extab       start:0x8000961C end:0x80009624
-	extabindex  start:0x80022220 end:0x8002222C
-	.text       start:0x8009DD28 end:0x8009DD64
+	extab       start:0x80009598 end:0x80009624
+	extabindex  start:0x80022190 end:0x8002222C
+	.text       start:0x8009BAC4 end:0x8009DD64
 	.ctors      start:0x802E88FC end:0x802E8900
+	.data       start:0x8040E1C4 end:0x8040E450
+	.bss        start:0x805AC600 end:0x805D2AA8
 
 game/RaceScene_RenderFrame.cpp:
 	extab       start:0x80009624 end:0x8000962C

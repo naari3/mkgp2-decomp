@@ -565,9 +565,6 @@ config.libs = [
             Object(Matching, "game/FlowDispatcher_ScopedTimer.c", extab_padding=b"\x00\x00", extra_cflags=["-lang=c++"]),
             Object(Matching, "game/HeapStats.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/AnimStatePool.c", extab_padding=b""),
-            Object(Matching, "game/RaceContext_Dtor.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/RaceContext_InitDefaults.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/RaceContext_EnsureSingleton.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/CoinSystem_UpdateAll.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CoinSystem_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/CardTaskManager_RenderOverlay.c", extab_padding=b"\x00\x00"),
@@ -642,7 +639,6 @@ config.libs = [
             Object(Matching, "game/SoundMgr_StopSE_OrSpecial.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/SoundMgr_CountActiveSEInstances.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/SoundMgr_PlaySE_Positional.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/VSMode_SeedRandomItemSequence.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/VSMode_FrameUpdate.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clFlowKart_SetupTextLayout.cpp", extab_padding=b""),
             Object(Matching, "game/clFlowKart_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
@@ -1132,11 +1128,6 @@ config.libs = [
             Object(Matching, "game/PreloadItemResources.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/PreloadEffectResources.c", extra_cflags=["-Cpp_exceptions on"]),
             # group2 batch (0x8009B98C..0x801077C8)
-            Object(Matching, "game/RankSlot_AppendOrUpdate.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(Matching, "game/PlayerData_ApplyItemUnlockById.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(Matching, "game/PlayerData_GetUnlockedItemIdByIndex_U8.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(Matching, "game/PlayerData_ResetForFlow.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(Matching, "game/KartDriverArray_StaticCtor.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/ISE_ScaleColumnDirectionByMagnitude.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/Unknown_DeleteIfFlag_800a5188.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/VSModeIntro.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-rostr", "-inline deferred"]),  #g2
@@ -1288,8 +1279,6 @@ config.libs = [
             Object(Matching, "game/EffectVfx84_85_BoostChargeRing_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/RaceSys_8009B98C.c"),  #g2
             Object(Matching, "game/RaceScene_GetPerspFovyForCup.c"),  #g2
-            Object(Matching, "game/RaceSys_8009BAC4.c"),  #g2
-            Object(Matching, "game/RaceData_8009BEF4.c"),  #g2
             Object(Matching, "game/GameMode_TitleSelect.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(NonMatching, "game/RankLog.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(NonMatching, "game/DbgMenu.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], extab_padding=b""),  #g2
@@ -1355,7 +1344,7 @@ config.libs = [
             Object(Matching, "game/fn_80105EB4.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/fn_8010670C.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/fn_80107040.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(NonMatching, "game/SetCourseParams.c", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),  #g2
+            Object(NonMatching, "game/SetCourseParams.c", extab_padding=b""),
             Object(Matching, "game/AnimState_Step.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/ItemCollision_Check.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/ItemHit_Dispatch.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
@@ -1364,7 +1353,6 @@ config.libs = [
             Object(Matching, "game/EffectVfx55_HornBlastTrio_Tick.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/HitMessageOverlay_FrameUpdate.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),  #g2
             Object(Matching, "game/KartPair3ArmUpdate.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
-            Object(NonMatching, "game/RaceFlow_ResetState_FullColdInit.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/RaceScene_RenderPass.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/RaceScene_RenderFrame.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/RaceScene_Dtor.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
@@ -1607,7 +1595,6 @@ config.libs = [
             Object(Matching, "game/GX_BeginDraw.c"),
             Object(Matching, "game/GX_EndDraw.c", extra_cflags=["-sdata 16"]),
             Object(Matching, "game/TexMgr_Apply.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/ProcessSystemTick.c"),
             Object(Matching, "game/Effect.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartFx.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/KartFxDustPiece.cpp", extra_cflags=["-Cpp_exceptions on"]),
@@ -3786,7 +3773,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # .comment section is dropped and .data alignment pinned to 4. Text/data bytes
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
-    "game/RaceData_8009BEF4",
+    "game/SetCourseParams",
     "game/MenuScene_Dispatch",
     "game/RaceDigitUpdate",
     "game/objview/MapWaterEffect_Init",
