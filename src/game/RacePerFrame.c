@@ -49,7 +49,8 @@ int Race_PerFrameTickAndAudio(void) {
     scalar = g_voiceLapTimerScalar;
     minRank = 10;
     minIndex = -1;
-    for (i = 0, entry = entries; i < 8; entry++, i++) {
+    entry = entries;
+    for (i = 0; i < 8; i++, entry++) {
         if (entry->id != -1) {
             entry->checkpoint = scalar - entry->kart->lap;
             entry->player = entry->kart->rank;
