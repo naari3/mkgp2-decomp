@@ -8,12 +8,14 @@ static inline u8* GetConnectBuffer(s32 n, u8*& off) {
     return BufPtr(n);
 }
 
-static inline u8* ClearConnectBuffer(AcSock* k, u8*& off) {
+/* Clear the CPU staging area and return its corresponding board address. */
+static inline u8* ClearConnectBuffer(AcSock* k, u8*& buf) {
     u32 base = k->bufAddr;
-    u8* buf = GetConnectBuffer(0, off);
+    u8* off;
+    buf = GetConnectBuffer(0, off);
     off += base;
     memset(buf, 0, 0x40);
-    return buf;
+    return off;
 }
 
 extern "C" s32 acConnect(s32 s, const void* addr, s32 len) {
@@ -35,7 +37,7 @@ extern "C" s32 acConnect(s32 s, const void* addr, s32 len) {
     k->result = 0;
     memset(&k->addrOff, 0, 0x10);
     OSSignalSemaphore(sem);
-    buf = ClearConnectBuffer(k, off);
+    off = ClearConnectBuffer(k, buf);
     memcpy(buf, addr, len);
     fn_8028D530(Buf, k->bufAddr + State.bufOff, 0x40);
     k->cmd = 4;

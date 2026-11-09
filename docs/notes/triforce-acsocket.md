@@ -68,3 +68,8 @@ c21_u187: acAccept89.90991 ->94.675674 via byte-pointer board arithmetic (b+4)+S
 Source: Codex worker c21_u191_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c21_u191: initializer fn_80293070 81.98131 ->82.71028 by complete-body static inline InitSockets plus exported ABI wrapper. InitSocket ready parameter is byte-invariant81.98131; H2 GC/2.0 and2.6 both82.71028, production1.3.2 retained. Source432 versus target428: ready1 and limit63 remain rematerialized inside CTR16, State/index/comparison/multiply scratch homes and scheduling differ. regswap_classify reports r0/reg+other/multi/after_call/load,81 differing aligned rows. No pool ownership residual, single function prevents B. No flag/range/header/data edits or native gain; existing fallback DOL SHA1 exact.
+
+## c22_u161_20261109
+Source: Codex worker c22_u161_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c22_u161: acConnect97.043015 ->97.849464 by returning board pointer from ClearConnectBuffer and passing CPU staging pointer as reference output. Restores argument/State saved homes, reduces six-cycle22 diff rows to CPU/board r24/r25 swap8 rows; still368 vs target372B, missing runtime bufOff addi-zero. Proper pointer base + integer displacement probe96.344086; combined stage/copy/DMA helper invariant97.043015; directed buf-before-off decl refinement invariant97.849464. Best H3 retained. No pool ownership cause, missing functions, data/range/config changes or native gain. Exact object compile/postprocess verified; fallback baseline hash exact, no service request. All probes build/w/c22_u161.
