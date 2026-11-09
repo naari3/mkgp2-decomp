@@ -353,6 +353,29 @@ over the census (11-08, ~20 TUs before wind-down): RankLog DetermineTitle
 `int i` -> `long` 98.95 -> 99.34 only. `tools/stmtsweep.py` (statement-order
 sweep, R5's bc31b3a technique) is written but not validated yet.
 
+## 18. Solve the declaration order instead of sweeping it (tools/regfix.py, 11-09)
+
+Sweeping orders by compiling (pattern 2, ~1 s each) cannot cover 9! orders,
+but the order only changes vreg NUMBERS, never the interference graph, so
+`tools/regfix.py` re-runs MWCC's allocator offline on the mwcc-debugger dump
+for every order (Rust, ~4 us each) and returns the one that gives the target.
+Numbering rules it relies on (MWCC 2.6 dumps): named locals get the lowest
+numbers in REVERSE declaration order (first declared = highest = coloured
+first within a simplify level); frontend temps `@N` (inline params/locals/
+returns, CSE) come next, higher `@` = lower number; backend temps last, in
+codegen order. Parameters are not movable.
+- Sci2Card_BuildItemGetReceiptLine 394b90b: the diagnosis said "ordinary must
+  be numbered above the inline temp of `remaining`", impossible for a local vs
+  a temp, so `remaining` is computed without the inline (it survives as a
+  local) and the solver picks the order (inits become assignments).
+- THPDec fn_8029B54C 0494e71: `hs, vs` first; 400 sampled orders had missed it.
+
+**Check:** `python3 -I tools/regfix.py diag UNIT FN` prints the vregs that are
+off, the colouring order that would fix them translated to source terms, any
+one-step graph edits that would (drop/add a live-range overlap, keep a
+machine register busy, swap creation order) and a solved declaration order.
+`fix` adds a focused move search with the solver run on every variant.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,

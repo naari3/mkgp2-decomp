@@ -127,12 +127,24 @@ class Graph:
             perm[v] = (sum(1 for x in n if num(x) < 32 or x not in S), fixed)
         names = {v: (allv.get(v) or asg[v])["name"] for v in order}
         g = cls(rc, order, {v: num(v) for v in order}, nb, perm, names, {v: asg[v]["phys"] for v in order})
+        g.params = set()
+        vf = out / "variables.txt"
+        if vf.exists():
+            sec = None
+            for l in vf.read_text().splitlines():
+                if l.endswith(":") and not l.startswith(" "):
+                    sec = l[:-1]
+                    continue
+                m = re.search(r"([rf]\d+) ->\s+\S+\s+(\S+)\s*$", l)
+                if m and sec == "arguments":
+                    g.params.add(m.group(2))
         g.real_order = order
         g.allv = allv
         return g
 
     def copy(self):
         g = Graph(self.rc, self.nodes, self.key, self.nb, self.perm, self.names, self.phys)
+        g.params = getattr(self, "params", set())
         return g
 
     # --- the model ---
@@ -440,7 +452,7 @@ def solve_order(g: Graph, w, maxn=8, limit=4):
     return res[:limit]
 
 
-def solve_decl(classes, maxn=8, tlimit=120):
+def solve_decl(classes, maxn=8, tlimit=120, only=None):
     """Declaration-order solver. Named function locals are numbered in reverse
     declaration order (per register class), and the order changes nothing else
     in the graph, so every order can be simulated without compiling.
@@ -451,7 +463,7 @@ def solve_decl(classes, maxn=8, tlimit=120):
     t0 = time.time()
     locs, info = [], {}
     for rc, (g, w) in classes.items():
-        L = [v for v in g.nodes if vkind(g, v) == "local"]
+        L = decl_locals(g, only)
         info[rc] = (g, w, L, sorted(g.key[v] for v in L))
         locs += [g.names[v] for v in L]
     if not any(mismatch(g.colour()[0], w) for g, w, _, _ in info.values()):
@@ -482,7 +494,7 @@ def solve_decl(classes, maxn=8, tlimit=120):
         fixed += [n for n in names if n in focus][cap:]
     else:
         fixed, free = [], list(names)
-    rs_ok, rs_res = rs_solve_decl(names, free, [(g, w) for g, w, _, _ in info.values()], cap, tlimit) \
+    rs_ok, rs_res = rs_solve_decl(names, free, [(g, w, L) for g, w, L, _ in info.values()], cap, tlimit) \
         if use_rs else (False, None)
     if rs_ok:
         return rs_res
@@ -533,7 +545,9 @@ def sim_input(classes, names=None):
     out, idxs, nid = [], [], {}
     for n in names or []:
         nid.setdefault(n, len(nid))
-    for g, w in classes:
+    for c in classes:
+        g, w = c[0], c[1]
+        locs = set(c[2]) if len(c) > 2 else set(decl_locals(g))
         out.append(f"class {g.rc}")
         nodes = list(g.nodes)
         ix = {v: i for i, v in enumerate(nodes)}
@@ -545,7 +559,7 @@ def sim_input(classes, names=None):
                 mask |= 1 << num(r)
             wv = num(w[v]) if v in w and w[v] != "spill" else -1
             out.append(f"node {ix[v]} {g.key[v]} {n} {mask} {wv} " + " ".join(str(ix[x]) for x in g.nb[v] if x in ix))
-            if vkind(g, v) == "local":
+            if v in locs:
                 out.append(f"local {ix[v]} {nid.setdefault(g.names[v], len(nid))}")
     return out, idxs, nid
 
@@ -661,7 +675,20 @@ def vkind(g: Graph, v):
     nm = g.names.get(v, "")
     if nm.startswith("@"):
         return "ftemp"
+    if nm and nm in getattr(g, "params", ()):
+        return "param"
     return "local" if nm else "btemp"
+
+
+def decl_locals(g: Graph, only=None):
+    """vregs of named locals whose declaration the solver may move: not
+    parameters, one vreg per name (no inline/block duplicates), and in `only`
+    (the names declared in the function's leading block) when given."""
+    L = [v for v in g.nodes if vkind(g, v) == "local"]
+    cnt = {}
+    for v in L:
+        cnt[g.names[v]] = cnt.get(g.names[v], 0) + 1
+    return [v for v in L if cnt[g.names[v]] == 1 and (only is None or g.names[v] in only)]
 
 
 def advice(g: Graph, x, y):
@@ -805,13 +832,13 @@ class Evaluator:
         toks = [t for t in toks if t != "-MMD"]
         return toks
 
-    def diag(self, text, slot):
+    def diag(self, text, slot, only=None):
         """(metric tuple, report dict) for a TU text."""
         h = hashlib.sha1(text.encode()).hexdigest()
         if h in self.cache:
             return self.cache[h]
         d = self.run(text, slot)
-        res = analyze_dir(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{self.u.obj}.o", self.fn)
+        res = analyze_dir(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{self.u.obj}.o", self.fn, only=only)
         self.cache[h] = res
         return res
 
@@ -849,7 +876,13 @@ class Evaluator:
         return d
 
 
-def analyze_dir(out, ours_obj, tgt_obj, fn, depth=1):
+def top_decls(st):
+    import shapesweep as ss
+    a, b = ss.decl_front(st)
+    return {v[0] for d in st.stmts[a:b] for v in d["vars"]}
+
+
+def analyze_dir(out, ours_obj, tgt_obj, fn, depth=1, only=None):
     """metric = (opcode diffs, mismatching vregs, flips needed, 0/1 graph edit known), plus report."""
     if not md.find(out, "before-regalloc"):
         return (99, 999, 99, 1), None
@@ -881,7 +914,8 @@ def analyze_dir(out, ours_obj, tgt_obj, fn, depth=1):
             edit = 1
     rep["decl_order"] = None
     if nbad and not info["opcode_diffs"]:
-        rep["decl_order"] = solve_decl({rc: (c["g"], c["w"]) for rc, c in rep["classes"].items()}, tlimit=40)
+        rep["decl_order"] = solve_decl({rc: (c["g"], c["w"]) for rc, c in rep["classes"].items()}, tlimit=40,
+                                       only=only)
     return (info["opcode_diffs"], nbad, flips, edit), rep
 
 
@@ -968,7 +1002,7 @@ def fix(a, rep0):
     t0 = time.time()
     text0 = sw.render(sw.init)
     s0 = sw.score(text0, 0)
-    m0, r0 = ev.diag(text0, 0)
+    m0, r0 = ev.diag(text0, 0, top_decls(sw.init))
     print(f"[regfix] start: {s0} diff lines, metric {m0}", flush=True)
 
     def try_decl(st, rep):
@@ -1037,7 +1071,7 @@ def fix(a, rep0):
         lim = min(sc) + a.slack
         pick = [i for i in order if sc[i] <= lim][:a.dbg]
         with ThreadPoolExecutor(a.jobs if ev.par else 1) as ex:
-            res = list(ex.map(lambda k: ev.diag(new[pick[k]][1], k), range(len(pick))))
+            res = list(ex.map(lambda k: ev.diag(new[pick[k]][1], k, top_decls(new[pick[k]][0])), range(len(pick))))
         for k, (m, rep) in zip(pick, res):
             h1 = try_decl(new[k][0], rep)
             if h1:
@@ -1115,7 +1149,7 @@ def cmd_batch(a):
             if s0 == 0:
                 row["outcome"] = "already"
             else:
-                m, r = ev.diag(text, f"b{slot}")
+                m, r = ev.diag(text, f"b{slot}", top_decls(sw.init))
                 row["metric"] = m
                 if r:
                     row["bad"] = {rc: c["bad"] for rc, c in r["classes"].items()}

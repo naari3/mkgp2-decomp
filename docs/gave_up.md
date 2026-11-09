@@ -47,7 +47,6 @@ all of these.
 | `fn_801913B0` | game/clsound/fn_801913B0 .. fn_80192F04 (19 C TUs, .text 0x801913B0..0x801933D0) | 98.47 (99.46 merged) | Target `addi r4, r30, 0x0` = section-anchored listener base, so it needs the 19-TU merge that owns .data 0x80495F20..0x80495F48. Merge v2 (gaveup-retry 11-08 09:25Z) gets every other function, .data, extab and extabindex to 100%: the three listener objects are `static` and read directly, the far branch is `volume=0; surround=pan=64;`, callers call fn_801913B0 through an extern alias (`#define fn_801913B0 fn_801913B0_extN`, renamed back in the json; a cast macro gives mtctr/bctrl, a direct call gets inlined), and tools/extab_order.json orders the mixed extab. Left: one r5/r6 swap (surround value vs `&lbl_80678378[index]`), decl orders/pragmas/12-min cperm gave nothing. | `/mnt/project-files/wip/clsound_merge/` (README_v2.txt, merge_v2.diff) |
 | `clFlowCourse_Init` | game/fn_801CE800 .. game/clFlowCourse (6 TUs, .text 0x801CE800..0x801D1800) | 98.22 | Ctor addresses .data 0x8049B1E0 (+0x1A8 cup names, +0x1D4 vtable) from one anchored base. Needs the 6-TU merge (2 C + 4 C++, lmw on for 3 of them) owning .data 0x8049B1E0..0x8049B4A8; the objects get different types in each part, and lbl_8049B3A8/3B4 are the CourseBase/CourseFlow vtables (`__vt__10CourseFlow` -> lbl_8049B3B4 rename already exists). Not attempted (time). | |
 | `fn_8024D3D4` (ContinueSceneTick) | game/ContinueSceneTick | 99.87 | r28/r29 swapped between credits and alternate | ~20 variants |
-| `fn_8029B54C` | thp/THPDec | 99.97 | vs (`0x41b - 0x6f2`) computed into r23 then masked into r26; target subf straight into r26 | R5 11-08: hs/vs types (u8/u16/u32/s32 x2), swap order, `(u8)` casts, decl-order sweep 400 + single pragmas: all stay at 4 lines |
 | `__THPGetBit` | thp/THPDec | 80.9 | -O2 drops the dead loop-entry `b`; li/lbz order and fast-path store order remain | R5 11-08: `#pragma optimization_level 2` (put it before the opt_* offs, it resets them) = 6 lines, + scheduling/peephole off = 4; loop shapes, statement perms, every cc: no match |
 | `ClRomTable_PurgeAll` | game/ClRomTable_PurgeAll | 99.70 | r27/r29 swap | 8 loop shapes; 40 min permuter |
 | `fn_801F1EE0`, `fn_801F2400`, `fn_801F230C` | game/fn_801F27B4 (Menu801F0CC0 merged 11-09) | 99.54 / 99.48 / 97.60 | target does `mr rX, r_i` copy of the induction var at loop start; not reproducible so far | decl orders, scoped `i` |
@@ -426,7 +425,7 @@ getter / setter shapes; `batch` mode). Hits per pass:
 Stopped after two zero-hit passes. Best partial results (not landed, sources in
 /mnt/project-files/setup/shapesweep/):
 
-- `Sci2Card_BuildItemGetReceiptLine` 98.80 -> 99.47: wrap `fn_801D5DE8(player) - count`
+- `Sci2Card_BuildItemGetReceiptLine` 98.80 -> 99.47: wrap `fn_801D5DE8(player) - count` (SOLVED 11-09 394b90b by tools/regfix.py: no inline + solved decl order)
   in a two-level inline. 7 rows are left: `ordinary` (target r25) and `remaining` (target r23) are swapped.
   Decl order (2000 orders) and statement order make no difference. File: Sci2Card_BuildItemGetReceiptLine_99.47.c
 - `fn_8021DAB8` 100 -> 8 diff lines: `Id(isJapanese())` on both calls plus a layered helper on `3.0f * x14`. File: fn_8021DAB8_8lines.cpp
