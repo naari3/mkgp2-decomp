@@ -125,6 +125,14 @@ static inline void SelectRoleCards(PeerSlot* peer, CardRow* card,
     }
 }
 
+static inline void MarkUsedCharacters(PeerSlot* peer, u8* used, int role)
+{
+    int i;
+    for (i = 0; i < 4; ++i, ++peer)
+        if (peer->first.bytes.header.role == role)
+            used[(peer->character >> 4) & 15] = 1;
+}
+
 int PCBComm_ComputeSyncState(void)
 {
     int trackVotes[16];
@@ -189,7 +197,8 @@ int PCBComm_ComputeSyncState(void)
         for (; positionCount < 4 - RoleCount(storage->sync, role); ++positionCount)
             usedPositions[positionCount] = 1;
         for (i = 0; i < 4; ++i) {
-            if (firstPeer[i].first.bytes.header.role == g_localPcbRole) {
+            int peerRole = firstPeer[i].first.bytes.header.role;
+            if (peerRole == g_localPcbRole) {
                 int position;
                 do { position = rand() % 4; }
                 while (usedPositions[position] != 0);
@@ -199,11 +208,7 @@ int PCBComm_ComputeSyncState(void)
         }
         characterCount = 0;
         for (i = 0; i < 13; ++i) usedCharacters[i] = 0;
-        role = g_localPcbRole;
-        peer = firstPeer;
-        for (i = 0; i < 4; ++i, ++peer)
-            if (peer->first.bytes.header.role == role)
-                usedCharacters[(peer->character >> 4) & 15] = 1;
+        MarkUsedCharacters(firstPeer, usedCharacters, g_localPcbRole);
         do {
             int character = rand() % 13;
             if (usedCharacters[character] == 0) {
