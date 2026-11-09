@@ -53,15 +53,17 @@ impl Class {
                 }
             }
             if !prog {
-                // MWCC pushes the cheapest spill candidate: lowest cost/degree, ties -> lowest key
+                // MWCC (Coloring.c simplifygraph) pushes the cheapest spill candidate:
+                // lowest (float)cost/(float)degree; candidates are scanned from the
+                // highest number down with a strict <, so ties go to the HIGHEST key
                 let mut v = usize::MAX;
-                let mut best = f64::INFINITY;
-                for &u in sorted.iter() {
+                let mut best = f32::INFINITY;
+                for &u in sorted.iter().rev() {
                     if removed[u] {
                         continue;
                     }
-                    let c = self.cost.get(u).copied().unwrap_or(0.0) / (deg[u].max(1) as f64);
-                    if c < best {
+                    let c = (self.cost.get(u).copied().unwrap_or(0.0) as f32) / (deg[u].max(1) as f32);
+                    if v == usize::MAX || c < best {
                         best = c;
                         v = u;
                     }

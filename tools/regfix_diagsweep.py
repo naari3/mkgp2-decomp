@@ -82,18 +82,23 @@ def main():
     ap.add_argument("--sample", type=int, default=1500)
     ap.add_argument("-j", "--jobs", type=int, default=4)
     ap.add_argument("--list", action="store_true")
+    ap.add_argument("--only", help="file: one function name per line (rerun a subset)")
+    ap.add_argument("--tag", default="", help="suffix of the output file, e.g. .v2")
     a = ap.parse_args()
     claims = set()
     if a.claims:
         claims = {l.strip() for l in open(a.claims) if l.strip()}
     k, n = (int(x) for x in a.shard.split("/"))
     cs = [c for i, c in enumerate(candidates(claims, a.min)) if i % n == k - 1]
+    if a.only:
+        only = {l.strip() for l in open(a.only) if l.strip()}
+        cs = [c for c in cs if c[1] in only]
     if a.list:
         for c in cs:
             print(*c)
         print(len(cs), "functions", file=sys.stderr)
         return
-    out = OUT / f"diagsweep_shard{k}.jsonl"
+    out = OUT / f"diagsweep_shard{k}{a.tag}.jsonl"
     done = set()
     if out.exists():
         done = {json.loads(l)["fn"] for l in open(out) if l.strip()}

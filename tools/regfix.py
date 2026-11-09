@@ -50,6 +50,7 @@ tools/mwccdbg.py):
 from __future__ import annotations
 
 import argparse
+import struct
 import glob
 import subprocess
 import hashlib
@@ -99,6 +100,10 @@ def parse_dump(path: Path):
         if m:
             cur["nb"] = m.group(1).split()
     return out, order
+
+
+def _f32(x):
+    return struct.unpack("f", struct.pack("f", float(x)))[0]
 
 
 class Graph:
@@ -170,11 +175,19 @@ class Graph:
                     for x in self.nb[v]:
                         deg[x] -= 1
             if not prog:
-                # stuck: MWCC (mweppc Coloring.c) pushes the cheapest spill
-                # candidate, lowest cost/degree; ties -> lowest number
+                # stuck: MWCC (mweppc Coloring.c simplifygraph) pushes the cheapest
+                # spill candidate, lowest (float)cost/(float)degree. The candidate
+                # list is built by prepending in ascending order and compared with
+                # a strict <, so ties go to the HIGHEST number (fn_8019F5BC)
                 cost = getattr(self, "cost", {})
-                v = min((v for v in nodes if v not in removed),
-                        key=lambda v: (cost.get(v, 0) / max(deg[v], 1), self.key[v]))
+                best, bs = None, None
+                for u in reversed(nodes):
+                    if u in removed:
+                        continue
+                    sc = _f32(_f32(cost.get(u, 0)) / _f32(max(deg[u], 1)))
+                    if bs is None or sc < bs:
+                        best, bs = u, sc
+                v = best
                 removed.add(v)
                 push.append(v)
                 for x in self.nb[v]:
@@ -382,8 +395,16 @@ class Edit:
         if self.kind == "phantom":
             return f"give {d(self.a)} {self.extra:+d} neighbour(s) (an extra coalesced copy, e.g. `t = x;`), moving it one simplify level"
         if self.kind == "name":
-            return (f"hold {d(self.a)} in a NAMED local (named locals get the lowest vreg numbers, so it is "
-                    f"pushed in simplify sweep 1; rule low-numbered-neighbours-sweep1)")
+            da = d(self.a)
+            note = ""
+            if re.search(r"`(?:lis|addi|addis) r\d+,(?:r\d+,)?-?\w*\(\w+\)`", da):
+                # Card_VerifyChecksum (gave_up 6d14fee): `const T *p = lbl;` is copy-propagated away
+                note = (" NOTE: this temp is an ADDRESS CONSTANT; a plain pointer local holding it is removed by "
+                        "copy propagation and nothing changes. The local survives only if it is modified "
+                        "(walking pointer / assigned on two paths) or with `#pragma opt_propagation off` around "
+                        "the function; otherwise prefer another solution in this list")
+            return (f"hold {da} in a NAMED local (named locals get the lowest vreg numbers, so it is "
+                    f"pushed in simplify sweep 1; rule low-numbered-neighbours-sweep1)" + note)
         if self.kind == "lownb":
             return (f"add {self.extra} named local(s) declared FIRST (lowest vreg numbers) that are live while "
                     f"{d(self.a)} is live (e.g. keep a value used across its range in a named local): they are "
