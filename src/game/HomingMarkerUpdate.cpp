@@ -1,5 +1,5 @@
 /* Homing-target marker animation. Constants and colors are owned by adjacent TUs. */
-static inline float Interpolate(float from, float to, float t) {
+static inline float Interpolate(const float &from, const float &to, float t) {
     return t * (to - from) + from;
 }
 
@@ -126,9 +126,10 @@ extern const float lbl_806D8E10;
 
 static inline float Clamp(float v) { return fn_80173F5C(v, C8D90, C8D94); }
 static inline float Pulse(float v) {
-    float t = fn_80173F7C(v, C8D90, C8DA4);
-    if (t >= C8DB4) return C8D94 - (t - C8DB4) / C8DB4;
-    return t / C8DB4;
+    v = fn_80173F7C(v, C8D90, C8DA4);
+    if (v >= C8DB4) v = C8D94 - (v - C8DB4) / C8DB4;
+    else v /= C8DB4;
+    return v;
 }
 extern "C" void fn_80172948(Marker *self) {
     if (self->state == -1) return;
