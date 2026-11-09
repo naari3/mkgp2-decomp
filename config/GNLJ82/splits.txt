@@ -11152,15 +11152,13 @@ game/fn_80226640.c:
 	.text       start:0x80226640 end:0x8022664C
 	.ctors      start:0x802E8944 end:0x802E8948
 
-game/fn_8022664C.c:
-	extab       start:0x8001BA2C end:0x8001BA34
-	extabindex  start:0x8002A680 end:0x8002A68C
-	.text       start:0x8022664C end:0x80226670
-
 game/anon_80226670.cpp:
-	extab       start:0x8001BA34 end:0x8001BA88
-	extabindex  start:0x8002A68C end:0x8002A6BC
-	.text       start:0x80226670 end:0x80226954
+	extab       start:0x8001BA2C end:0x8001BA88
+	extabindex  start:0x8002A680 end:0x8002A6BC
+	.text       start:0x8022664C end:0x80226954
+	.rodata     start:0x803C6EA8 end:0x803C6ED0
+	.data       start:0x804EDF58 end:0x804EDF80
+	.sdata      start:0x806D0530 end:0x806D0540
 
 game/DNBress.cpp:
 	extab       start:0x8001BA88 end:0x8001BAA8

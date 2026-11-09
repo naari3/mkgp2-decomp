@@ -545,3 +545,11 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
 - After a merge, read the target's `addi rX,anchor,N` offsets to find the real object boundaries of the pool (regalloc_patterns 40) before touching the functions. tools/data2c.py emits the pool objects (now also `.string16` and mixed word/relocation objects).
 - Editing symbols.txt triggers a full resplit (more than 2 minutes): run ninja with a long timeout.
 - Rebase conflicts in the two extab json files are per-TU keys: take origin/main and re-apply only your TU's key.
+- regfix model (11-09 late): three more allocator rules, all local dumps (276) now
+  reproduce. (a) r31 reserved as frame pointer (it shows up as a neighbour) = 28
+  free GPRs, not 29 (fn_801E4AF4). (b) a function that spills is coloured twice;
+  the dumps now hold the LAST pass, and spill temporaries of that pass are never
+  the stuck-simplify pick (`regalloc-*-meta.txt`, fn_8018B31C). (c) inline asm that
+  names machine registers retains them: fewer free registers, detected from spill
+  costs being present (THPDec fn_80299D58). Old dumps: delete
+  `build/mwccdbg/out/FN` or rerun diag to regenerate.

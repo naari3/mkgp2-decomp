@@ -1,18 +1,18 @@
 diff --git a/config/GNLJ82/splits.txt b/config/GNLJ82/splits.txt
-index 5bebc12..e12d2ed 100644
+index 589b845e..e08b4273 100644
 --- a/config/GNLJ82/splits.txt
 +++ b/config/GNLJ82/splits.txt
-@@ -6320,7 +6320,7 @@ game/Scene_8014E0C4.cpp:
+@@ -6112,7 +6112,7 @@ game/Scene_8014E0C4.cpp:
  	extabindex  start:0x8002555C end:0x800258B0
  	.text       start:0x8014D540 end:0x80157940
  	.rodata     start:0x80363D30 end:0x803678D8
--	.data       start:0x8048FDB0 end:0x8048FDCC
-+	.data       start:0x8048FDB0 end:0x8048FE08
+-	.data       start:0x8048F178 end:0x8048FDCC
++	.data       start:0x8048F178 end:0x8048FE08
  
  game/SceneList_80157940.cpp:
  	extab       start:0x8000F0DC end:0x8000F114
 diff --git a/src/game/Scene_8014E0C4.cpp b/src/game/Scene_8014E0C4.cpp
-index c8b0a78..b76f19d 100644
+index 7ad70094..cdd46e11 100644
 --- a/src/game/Scene_8014E0C4.cpp
 +++ b/src/game/Scene_8014E0C4.cpp
 @@ -406,35 +406,34 @@ void GXDrawDone(void);
@@ -60,25 +60,25 @@ index c8b0a78..b76f19d 100644
  unsigned char Sprite_AdvanceAnim(void *s, float dt);
  extern const float lbl_806D8060;
  extern unsigned int lbl_806D8098;
-@@ -1072,7 +1071,7 @@ struct RaceScene {
+@@ -1067,7 +1066,7 @@ struct RaceScene {
+ 
  void *fn_8014E0C4(int a);
- asm void fn_8014E118(void *self, int a);
  void fn_8014E618(AttractPanel *self);
 -asm void fn_8014E804(void);
 +void fn_8014E804(struct StatusView *self);
  void fn_8014F164(CreditPanel *self);
  DemoPanel *fn_8014F2DC(DemoPanel *self, short flag);
  void fn_8014F3D8(void *self);
-@@ -1153,7 +1152,6 @@ ListHead *dtor_801578C8(ListHead *self, short flag);
- __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; unsigned int f29; unsigned int f30; unsigned int f31; unsigned int f32; unsigned int f33; unsigned int f34; unsigned int f35; unsigned int f36; unsigned int f37; unsigned int f38; unsigned int f39; unsigned int f40; unsigned int f41; unsigned int f42; unsigned int f43; unsigned int f44; void *f45; unsigned int f46; unsigned int f47; void *f48; unsigned int f49; void *f50; unsigned int f51; unsigned int f52; void *f53; unsigned int f54; void *f55; unsigned int f56; unsigned int f57; void *f58; unsigned int f59; void *f60; unsigned int f61; unsigned int f62; void *f63; unsigned int f64; void *f65; unsigned int f66; unsigned int f67; void *f68; unsigned int f69; void *f70; unsigned int f71; void *f72; unsigned int f73; unsigned int f74; void *f75; unsigned int f76; void *f77; unsigned int f78; unsigned int f79; void *f80; unsigned int f81; unsigned int f82; void *f83; unsigned int f84; unsigned int f85; void *f86; unsigned int f87; unsigned int f88; void *f89; unsigned int f90; void *f91; unsigned int f92; unsigned int f93; void *f94; } extab_fn_8014E118 = { 0x400A0000, 0x0000003C, 0x003D00B8, 0x0000013C, 0x000000B0, 0x00000168, 0x000200B8, 0x0000019C, 0x000000C4, 0x000001B8, 0x000C00B8, 0x000001FC, 0x000000D8, 0x00000208, 0x000000B8, 0x0000021C, 0x000600EC, 0x00000240, 0x000400B8, 0x0000025C, 0x00000100, 0x000002A4, 0x000000B8, 0x000002B4, 0x0000011C, 0x000002C8, 0x00000114, 0x000002D4, 0x0000011C, 0x000002E8, 0x00000130, 0x000003A8, 0x0009013C, 0x000003EC, 0x000E00B8, 0x00000430, 0x00000168, 0x00000438, 0x0000015C, 0x00000458, 0x00000150, 0x00000464, 0x002100B8, 0x00000000, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801577D4, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801577D4, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801577D4, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801577D4, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801577D4, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801577D4, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x0100011C, 0x0A80001D, (void *)&MemoryManager_Free, 0x8680001E, 0x00000000, (void *)&dtor_801577D4, 0x07800018, 0x0000000C, (void *)&dtor_80157850, 0x07800018, 0x00000000, (void *)&dtor_801578C8, 0x0A800018, (void *)&MemoryManager_TimedFree, 0x8680001E, 0x00000000, (void *)&dtor_801577D4 };
+@@ -1146,7 +1145,6 @@ ListHead *dtor_801578C8(ListHead *self, short flag);
+ 
  
  
 -__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; unsigned int f29; unsigned int f30; unsigned int f31; unsigned int f32; unsigned int f33; unsigned int f34; unsigned int f35; unsigned int f36; unsigned int f37; unsigned int f38; unsigned int f39; unsigned int f40; unsigned int f41; unsigned int f42; unsigned int f43; unsigned int f44; unsigned int f45; unsigned int f46; unsigned int f47; unsigned int f48; unsigned int f49; unsigned int f50; unsigned int f51; unsigned int f52; unsigned int f53; unsigned int f54; unsigned int f55; void *f56; unsigned int f57; unsigned int f58; void *f59; unsigned int f60; void *f61; unsigned int f62; unsigned int f63; void *f64; unsigned int f65; unsigned int f66; void *f67; unsigned int f68; void *f69; unsigned int f70; unsigned int f71; void *f72; unsigned int f73; void *f74; unsigned int f75; void *f76; unsigned int f77; unsigned int f78; void *f79; unsigned int f80; void *f81; unsigned int f82; void *f83; unsigned int f84; unsigned int f85; void *f86; unsigned int f87; unsigned int f88; void *f89; unsigned int f90; void *f91; unsigned int f92; void *f93; unsigned int f94; unsigned int f95; void *f96; unsigned int f97; unsigned int f98; void *f99; unsigned int f100; void *f101; unsigned int f102; void *f103; unsigned int f104; void *f105; unsigned int f106; void *f107; unsigned int f108; void *f109; unsigned int f110; void *f111; unsigned int f112; void *f113; unsigned int f114; void *f115; unsigned int f116; void *f117; } extab_fn_8014E804 = { 0x180A0000, 0x00000248, 0x000000E4, 0x00000260, 0x001700D8, 0x000002FC, 0x00000104, 0x00000314, 0x000D00F8, 0x00000430, 0x00000118, 0x00000498, 0x00120134, 0x000004F8, 0x0000012C, 0x00000508, 0x00000134, 0x00000520, 0x00000148, 0x00000540, 0x00050134, 0x000005B4, 0x0011015C, 0x00000610, 0x00000154, 0x00000620, 0x0000015C, 0x00000638, 0x00000170, 0x00000658, 0x0005015C, 0x000006C0, 0x000E0184, 0x0000071C, 0x0000017C, 0x0000072C, 0x00130184, 0x000007DC, 0x00000198, 0x00000808, 0x000001A0, 0x00000850, 0x000001A8, 0x00000874, 0x000001B0, 0x000008A0, 0x000001B8, 0x000008C4, 0x000001C0, 0x000008E8, 0x000001C8, 0x0000090C, 0x000001D0, 0x00000000, 0x0780001D, 0x00000034, (void *)&dtor_80080330, 0x0680001D, 0x00000000, (void *)&dtor_801577D4, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x0780001D, 0x00000034, (void *)&dtor_80080330, 0x0680001D, 0x00000000, (void *)&dtor_801577D4, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x0680001D, 0x00000000, (void *)&dtor_801577D4, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0680001E, 0x00000000, (void *)&dtor_801577D4, 0x8A80001E, (void *)&MemoryManager_TimedFree, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x01000134, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0680001E, 0x00000000, (void *)&dtor_801577D4, 0x8A80001E, (void *)&MemoryManager_TimedFree, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0100015C, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0680001E, 0x00000000, (void *)&dtor_801577D4, 0x8A80001E, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree };
  
  
  
-@@ -1226,9 +1224,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned
- };
+@@ -1212,9 +1210,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
+ 
  
  
 -__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014E804 = {
@@ -87,8 +87,8 @@ index c8b0a78..b76f19d 100644
  
  
  
-@@ -1580,12 +1575,15 @@ struct Scene50 {
-     char pad[0x50];
+@@ -1906,12 +1901,15 @@ public:
+     DemoScene();
  };
  
 +#pragma push
@@ -97,15 +97,15 @@ index c8b0a78..b76f19d 100644
  {
      Frame_PostDrawOverlay();
      Frame_UpdatePerFrameState();
-     return new Scene50;
+     return new DemoScene;
  }
 +#pragma pop
  
- extern "C" asm void fn_8014D88C(void *p) { /* 0x8014D88C size:0x4D0 */
-     nofralloc
-@@ -2160,11 +2158,14 @@ extern "C" List *fn_8014E04C(List *self, short flag)
- #pragma use_lmw_stmw reset
- /* ---- Scene_8014E0C4 ---- */
+ DemoScene::DemoScene()
+ {
+@@ -2315,11 +2313,14 @@ public:
+     DemoScene1C0(int a);
+ };
  
 +#pragma push
 +#pragma auto_inline off
@@ -116,9 +116,9 @@ index c8b0a78..b76f19d 100644
  }
 +#pragma pop
  
- extern "C" asm void fn_8014E118(void *self, int a) { /* 0x8014E118 size:0x500 */
-     nofralloc
-@@ -2541,660 +2542,335 @@ extern "C" void fn_8014E618(AttractPanel *self) {
+ #pragma push
+ #pragma use_lmw_stmw on
+@@ -2445,660 +2446,335 @@ extern "C" void fn_8014E618(AttractPanel *self) {
      }
  }
  
@@ -1108,9 +1108,9 @@ index c8b0a78..b76f19d 100644
  }
  
  extern "C" void fn_8014F164(CreditPanel *self) {
-@@ -3511,20 +3187,6 @@ public:
-     virtual ~SceneBase();
- };
+@@ -3409,20 +3085,6 @@ extern "C" void fn_8014F8FC(NamCamPanel *self) {
+ }
+ 
  
 -class SceneSprite {
 -public:
@@ -1130,15 +1130,15 @@ index c8b0a78..b76f19d 100644
  class NamCamC {
  public:
 diff --git a/tools/extab_user_renames.json b/tools/extab_user_renames.json
-index 165cbf2..4be7c87 100644
+index 7560a9df..c4325f7c 100644
 --- a/tools/extab_user_renames.json
 +++ b/tools/extab_user_renames.json
-@@ -5284,7 +5284,12 @@
-     "__ct__15SceneCacheModelFPCci": "SceneModel_Init",
-     "insert__14SceneCacheListFRC14SceneCacheIterRC15SceneCacheEntry": "fn_80157A68",
-     "extab_fn_8014E04C": "@etb_8000E8CC",
--    "extabindex_fn_8014E04C": "@eti_800255B0"
-+    "extabindex_fn_8014E04C": "@eti_800255B0",
+@@ -5738,7 +5738,12 @@
+     "__vt__10TextPanelC": "lbl_8048FFE8",
+     "__ct__11TextManagerFv": "fn_80149214",
+     "__dt__11TextManagerFv": "dtor_800869D0",
+-    "@47": "lbl_80367368"
++    "@47": "lbl_80367368",
 +    "__vt__15StatusLogoScene": "lbl_8048FE8C",
 +    "__vt__17StatusNoticeScene": "lbl_8048FE64",
 +    "__vt__15CourseDemoScene": "lbl_8048FE3C",
