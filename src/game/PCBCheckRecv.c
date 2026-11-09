@@ -14,7 +14,7 @@
  * `&lbl_805AC258[1]` stays a two-step `addi base,0x6398; addi +0x1c`
  * (mweppc AddPropagation.c refuses to fold a displacement into an add whose
  * alias is a non-local Object).
- * NonMatching: PCBComm_Process (99.3%, see docs/gave_up.md). */
+ * NonMatching: PCBComm_Process (99.95%, see docs/gave_up.md). */
 typedef struct PcbRecvFlags {
     unsigned char local : 1;
     unsigned char reserved6 : 2;
@@ -2411,7 +2411,10 @@ static inline void ResetScratch(Slot *slot, int index) {
 }
 
 static inline void CopyHostSnapshot(u8 *snapshots, int next) {
-    memcpy(snapshots, snapshots + next * 0x1C, 0x1C);
+    u8 *src = snapshots;
+    u8 *dst = src;
+    src += next * 0x1C;
+    memcpy(dst, src, 0x1C);
 }
 #undef OSGetTick
 #undef OSGetTime
@@ -2583,6 +2586,7 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
     if (update) {
         u32 address;
         u8 accepted = 0;
+        int off;
         if (g_pcbCommEnabled != 0 && g_pcbListener != 0 &&
             TCPListen_Poll(g_pcbListener, 0) == 1) {
             slots = g_slots;
@@ -2590,13 +2594,12 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
             Slot *slot = slots;
             for (i = 0; i < 4; ++i, ++slot) {
                 if (slot->flags.bits.local != 1 && address == PcbIdToIp_GetCached(SlotId(slot))) {
-                    int off = i * sizeof(Slot);
-                    Slot *sel = (Slot *)((u8 *)g_slots + off);
-                    sel = (Slot *)&sel->recv;
+                    off = i * sizeof(Slot);
+                    Slot *sel = (Slot *)((u8 *)&g_slots[0].recv + off);
                     if (*(LifecycleConn **)sel != 0) TCPConn_Close(*(LifecycleConn **)sel);
                     *(LifecycleConn **)sel = g_in[i];
                     int socket = PcbListener_TakeAcceptedSocket(g_pcbListener);
-                    TCPConn_Init(*(LifecycleConn **)sel, ((SlotFlags *)((u8 *)g_slots + 0xa34 + i * sizeof(Slot)))->ids.id, socket, 1);
+                    TCPConn_Init(*(LifecycleConn **)sel, ((SlotFlags *)((u8 *)g_slots + 0xa34 + off))->ids.id, socket, 1);
                     accepted = 1;
                     break;
                 }
@@ -2632,8 +2635,7 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
             g_pcbSyncTable.ready = 1;
             Slot *cursor = slots;
             for (i = 0; i < 4; ++i, ++cursor) {
-                u32 scene = (cursor->header.word >> 15) & 255;
-                if (scene != 0 && scene < 7 && cursor->header.bytes.role.role == 0 && scene == 3) {
+                if (((cursor->header.word >> 15) & 255) != 0 && ((cursor->header.word >> 15) & 255) < 7 && cursor->header.bytes.role.role == 0 && ((cursor->header.word >> 15) & 255) == 3) {
                     g_pcbSyncTable.ready = 0;
                     break;
                 }
