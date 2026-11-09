@@ -616,3 +616,12 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
 - Empty counted loop that the target keeps (`li r0,12; mtctr; bdnz` with no body, fn_8019C6B4): write it counting DOWN,
   `for (int i = 12; i > 0; i--) {}` (or `i != 12`, `while (n--)`). The `i < 12; i++` form is deleted by IRO, the others
   survive to the backend, which turns them into the bare ctr loop.
+- PCBComm_Process 95.8 -> 99.22 (11-10), recipes: (1) `li rX,1; mulli rX,rX,SIZE` (a constant index that was not
+  folded) = the statement sits in a one-trip loop whose counter feeds the index with an offset:
+  `for (n = 0; n < 1; n++) f(base, n + 1);` (`g[n]` alone folds; `n - 1` gives `li 0; mulli`); (2) `add rP,base,off;
+  lwzu rV,FIELD(rP)` = a pointer local that is reassigned to the field address (`sel = base + off; sel = (T *)&sel->field;`),
+  a fresh `T **p = &sel->field` folds into `lwzx`; (3) `addi rB,anchor,OBJ; addi r0,off,FIELD; lhzx` = the field offset
+  written before the index: `(u8 *)obj + FIELD + i * sizeof(T)`; `obj + (off + FIELD)` folds FIELD into the anchor offset;
+  (4) saved registers of locals that live in two blocks: declare them once at function top, before the first
+  initialised local (`update`), in the order of the target's registers (r30 first). Tool: scratch `opd.py`-style scoring
+  (diff with registers masked) finds the instruction shape first; objdiff score only after the shape is right.
