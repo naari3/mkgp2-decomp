@@ -48,9 +48,18 @@ static inline void Multiply(Matrix44 *a, const Matrix44 *b) {
 extern const double lbl_806D96F0;
 
 static inline void TransformVector(InitVec *v, const Matrix44 *m) {
-    float rx = m->m[3][0] + (v->z*m->m[2][0] + (m->m[0][0]*v->x + v->y*m->m[1][0]));
-    float ry = m->m[3][1] + (v->z*m->m[2][1] + (m->m[0][1]*v->x + v->y*m->m[1][1]));
-    float rz = m->m[3][2] + (v->z*m->m[2][2] + (v->x*m->m[0][2] + v->y*m->m[1][2]));
+    float rx = v->y*m->m[1][0];
+    rx += m->m[0][0]*v->x;
+    rx += v->z*m->m[2][0];
+    rx = m->m[3][0] + rx;
+    float ry = v->y*m->m[1][1];
+    ry += m->m[0][1]*v->x;
+    ry += v->z*m->m[2][1];
+    ry = m->m[3][1] + ry;
+    float rz = v->y*m->m[1][2];
+    rz += v->x*m->m[0][2];
+    rz += v->z*m->m[2][2];
+    rz = m->m[3][2] + rz;
     v->x = rx; v->y = ry; v->z = rz;
 }
 

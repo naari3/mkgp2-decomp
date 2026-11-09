@@ -189,3 +189,8 @@ c21_u148 RotateByYaw80199BBC: canonical EnemyRun-style row/column pointer loop w
 Source: Codex worker c21_u168_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c21_u168 fn8019C6B4 improves86.737144->96.18/native1360->1388 vs target1400. Float quaternion getters invariant. Inferred double-valued component getters narrowed to float locals recover missing3 frsp and frame120/f26-f31 saves,94.42; target-directed w,z,y,x declaration94.56286. Paired operands inside original2D inner loop give96.18 and target loop FP homes. Whole row/column pointer+Dot87.28571 loses parent-base folding. Remaining FP homes, matrix index/output GPR cycle, missing li/mtctr/bdnz12 loop; EH83.92857/index45.833336. Untested future hypothesis: empty12 loop may represent real nontrivial array-member cleanup. No external ABI/layout/config/split changes. Three approaches exhausted; singleton cannot B, no pool/singleton A. Full fallback DOL SHA1exact/nativegain0.
+
+## c22_u137_20261109
+Source: Codex worker c22_u137_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c22_u137: explicit float accumulators for vector transform (y*m1; += m0*x; += z*m2; translation+sum) improve RotateByYaw93.51669->94.49385, text2292->2276, frame180->170, remove f29 save; extab75->87.5 and index91.66667->100. Caller-owned rotation parameter and free reference-returning operator*= are byte-invariant on this new baseline. Next retry should target early saved rotation-row pointer r30 and matrix-member base folding; no data-pool issue. Single non-exact function remains NonMatching; full fallback DOL SHA-1 exact.
