@@ -1460,3 +1460,25 @@ and does not count; an inline parameter is constant-propagated and the address
 is rematerialised in the loop; a named walker gives `addi r0; mr; mr`.
 When a diff is exactly this copy direction, look for a variable the original
 may have reused (same register in two unrelated places in the target).
+
+## 58. Volatile FPRs of an int-to-float divide chain: read the creation order off the registers and write it as one expression (fn_8015DEBC, 11-09)
+
+Symptom (99.62, 6 volatile FPR rows): `t = 1 - (float)n / 15; ssc = 0.035 * t` written as
+separate statements gives `0.035 -> f0, bias -> f1, 15.0 -> f2, 1.0 -> f3, diff -> f4`; the target
+has `15.0 -> f0, double -> f1, bias/diff -> f2, 1.0 -> f3, 0.035 -> f4`.
+
+Volatile temps are coloured highest virtual register first and take the lowest free register, so the
+register numbers give the creation order backwards: here 0.035 was created FIRST and 15.0 LAST.
+That is the evaluation order of one expression, left operand first:
+
+```c
+float t;
+float ssc = 0.035f * (t = 1.0f - (float)e->subs[j].n / 15.0f);
+```
+
+(0.035, then 1.0, then the conversion bias and stack double, then 15.0.) Splitting the statements
+(§26) had fixed the saved pair but put the constants in statement order. Float literals, not
+`extern const float`, are needed for this to work. Rule: when only volatile registers differ in a
+straight-line float computation, sort the temps by target register number descending; that is the
+order in which the source must create them.
+
