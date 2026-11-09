@@ -656,6 +656,38 @@ ones, order kept) took fn_80283154 from 730 to 412 diff lines (97.03 ->
 rename the loops' counters one by one and keep the ones that help. Rule
 `split-loop-counter`.
 
+## 35. A long-lived temp coloured too early because it is pushed in the 2nd simplify sweep: give it low-numbered neighbours (fn_8023AC14, 11-09)
+
+Simplify (mweppc Coloring.c `simplifygraph`) walks the vregs in ascending
+number and repeats the sweep until nothing changes; a node pushed in a later
+sweep is coloured BEFORE every node of an earlier sweep. A temp that is live
+across several calls (all 12 volatile GPRs + every temp of the region as
+neighbours) can sit just above K=29 when its sweep-1 turn comes; only
+neighbours with a LOWER vreg number that were already pushed in that sweep
+lower its degree. It is then pushed in sweep 2, coloured early, and hands out
+a saved register (r27) before an unrelated sweep-1 temp elsewhere in the
+function is coloured, so that temp takes r27 instead of r28.
+
+`fn_8023AC14`: the phase==40 `player` (g_playerData, live across four
+fn_8019FF8C/fn_801F93EC pairs) had degree 30 at its visit, so it took r27
+before ChoiceAdvanceRow's `resource` (`li r28,5154`). Two source changes in
+that block each add one low-numbered (named-local) neighbour that is pushed
+before it, so it goes in sweep 1 and resource keeps r28; the code is identical:
+- read `row` / `column` into named locals of the function and pass them to the
+  ChoiceItem inline (the column local is pushable, the row one coalesces to r4);
+- load `self->groups[0]` for the 2nd..4th calls through one named
+  `RefillGroup *group` (assigned 3 times; frontend range splitting makes the
+  later assignments a low-numbered @temp). Using it for the 1st call too swaps
+  the r3/r4 of the first `lwz`/`lis` (the named var is coloured after the lis
+  temp).
+
+**Check:** `mwtrace --only IGNODE,COLOR`: the vreg that takes the wrong saved
+register is coloured long before its number would say (sweep 2), its degree
+is K+1 or K+2, and few of its neighbours have lower numbers. Add named locals
+(numbered below the temps) in its live range that are themselves cheap to
+push; re-run until it is pushed in sweep 1. A quick simulator of the sweep
+order on the IGNODE dump tells how many neighbours must go.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
