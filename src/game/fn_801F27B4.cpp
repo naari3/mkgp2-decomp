@@ -234,8 +234,6 @@ extern "C" void fn_801F115C(Menu801F *self) {
     DrawRange(self, 32, 35, lbl_806DA550);
 }
 
-#pragma push
-#pragma opt_propagation off
 extern "C" void fn_801F1244(Menu801F *self) {
     int i;
     int offset;
@@ -255,7 +253,6 @@ extern "C" void fn_801F1244(Menu801F *self) {
         self->state = 8;
     }
 }
-#pragma pop
 
 
 extern "C" void fn_801F140C(Menu801F *self) {
