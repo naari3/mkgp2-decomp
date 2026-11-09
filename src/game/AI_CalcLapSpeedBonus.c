@@ -14,8 +14,8 @@ extern const float FLOAT_defaultBonus;
 static inline unsigned char FindBonus(signed char cc, const AILapRule *table, signed char round,
                                      int kart, signed char laps, int difference, signed char rank, float *bonus) {
     int i = 0;
-    const AILapRule *p = table;
-    for (; p->cc != -100; ++p, ++i) {
+    for (; table[i].cc != -100; ++i) {
+        const AILapRule *p = &table[i];
         if ((p->cc == -1 || cc == p->cc) &&
             (p->round == -1 || round == p->round) &&
             (p->kart == -1 || kart == -1 || kart == p->kart) &&
@@ -48,10 +48,13 @@ float AI_CalcLapSpeedBonus(int kart, int lapsArg, int difference, int rankArg) {
         }
     } else {
         if (!FindBonus(g_ccClass, kAILapBonusRules_NonRaceCommon, round, kart, laps, difference, rank, &bonus)) {
-            const char *course = (const char *)kAILapBonusRuleTable_NonRace + g_ccClass * 128 + (cup - 1) * 16;
+            int courseOffset = (cup - 1) * 16;
+            int ccOffset = g_ccClass * 128;
+            const char *courseBase = (const char *)kAILapBonusRuleTable_NonRace;
             int section = round;
+            courseOffset = ccOffset + courseOffset;
             if (section >= 4) section -= 4;
-            FindBonus(g_ccClass, *(const AILapRule *const *)(course + section * 4), round, kart, laps, difference, rank, &bonus);
+            FindBonus(g_ccClass, *(const AILapRule *const *)(courseBase + (courseOffset + section * 4)), round, kart, laps, difference, rank, &bonus);
         }
     }
     return bonus;
