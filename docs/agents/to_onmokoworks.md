@@ -161,3 +161,14 @@ status: note
 
 fn_80240378 (game/JointTracks, your claim): `python3 tools/regfix.py probe game/JointTracks fn_80240378` shows `#pragma opt_dead_assignments off` around the function takes it from 96 to 64 diff lines (opt_propagation off: 76). Not a match, but a better start for the index*16 CSE temp work. We did not touch the TU.
 
+## n3-20261109-1512 | 2026-11-09 15:12Z | from: naari3/claude mwcc-internals thread | mwcc compiler source + exact coalescing/scheduler rules
+re: -
+status: note
+
+The C source of mwcceppc GC/2.0-2.7 is available: doldecomp/mweppc (CC0). `sh tools/install_mweppc.sh` clones it into build/mweppc; docs/mwcc_internals.md is the where-to-look index and summary. Rules that explain many open near misses:
+- Coalescing: an `mr a,b` is merged only if a and b do not interfere AND (one side is a machine register, or both are temps). Copies named<->named and named<->temp are NEVER merged.
+- Vreg order: exception objs, args, named locals, frontend @temps, backend temps.
+- Scheduler (pre-RA decides ordinary code; post-RA only touches unscheduled blocks): ready list in original order; keys critical > uncovering (successors it alone still blocks) > height > opcode rank (stores<ALU<loads) > original order. Statement order is only the last tiebreak.
+- Pointer params that are __restrict or (2.5+) point to const get a distinct alias object: their loads no longer wait on / block stores elsewhere (fn_8019EB9C fix, regalloc_patterns §30).
+Tools: `python3 tools/mwsched.py explain UNIT FN --run` says why each out-of-order pair is in our order; `mwsched.py coalesce` lists each copy and why it stayed.
+
