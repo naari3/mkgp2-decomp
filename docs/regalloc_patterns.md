@@ -1895,3 +1895,14 @@ declaration order, first declared first. A single-use dummy first range
 and then the next range becomes the named one, so the function needs
 `#pragma opt_propagation off`. The dummy ranges cost nothing (r0 / r3).
 
+Three in a row (ClRomTable_PurgeAll, 11-09): target colours walker, path,
+table (r29, r28, r27) and has `addi table; mr walker,table`. Named `table`
+never merges with the address temp, and a named walker is coloured last.
+All three as second ranges, declared `e, path, table`, with a chain of zero
+dummies that folds into the existing `li count,0`:
+`e = 0; path = (const char *)e; table = (ClRomEntry *)path; count = (int)table;
+table = lbl; for (i = 0, e = table; ...) { path = e->path; ... }` under
+`#pragma opt_propagation off`. The `table[i]` form fails under that pragma
+(walker init becomes `slwi; add` because `i = 0` is not propagated), so the
+walker has to be explicit.
+

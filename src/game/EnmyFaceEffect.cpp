@@ -85,9 +85,70 @@ struct clNormal3D {
     ~clNormal3D();
 };
 
-extern const unsigned int lbl_803DAB54[];
+/* Shared float table of a common header: every TU that includes it carries a
+ * copy at the start of its .rodata (here 0x803DA710, never referenced). */
+#pragma force_active on
+extern const unsigned int lbl_803DA710[0x111] = {0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x4119999A, 0x4119999A, 0x41400000, 0x40E66667, 0x00000000, 0x4119999A, 0xC0E66667, 0x00000000, 0x4119999A, 0x40E66667, 0x00000000, 0xC119999A, 0xC0E66667, 0x00000000, 0xC119999A};
+#pragma force_active reset
 
-extern const unsigned int lbl_803DAB54[156] = {0x00000C68, 0x00000C69, 0x00000C66, 0x00000C67, 0x00000C63, 0x00000C65, 0x00000C64, 0x00000C6A, 0x00000C6B, 0x00000C28, 0x00000C49, 0x00000C32, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0xC1F80000, 0x00000000, 0x00000000, 0x41F80000, 0x00000000, 0x00000000, 0x41F80000, 0x42180000, 0x00000000, 0xC1F80000, 0x42180000, 0x00000000, 0xC1F80000, 0xC2180000, 0x00000000, 0x41F80000, 0xC2180000, 0x00000000, 0x41F80000, 0x00000000, 0x00000000, 0xC1F80000, 0x00000000, 0x00000000, 0xC20E9999, 0x00000000, 0x00000000, 0x420E9999, 0x00000000, 0x00000000, 0x420E9999, 0x420E9999, 0x00000000, 0xC20E9999, 0x420E9999, 0x00000000, 0xC20E9999, 0xC20E9999, 0x00000000, 0x420E9999, 0xC20E9999, 0x00000000, 0x420E9999, 0x00000000, 0x00000000, 0xC20E9999, 0x00000000, 0x00000000, 0xC20E9999, 0x00000000, 0x00000000, 0x420E9999, 0x00000000, 0x00000000, 0x420E9999, 0x422B8247, 0x00000000, 0xC20E9999, 0x422B8247, 0x00000000, 0xC20E9999, 0xC1B7048E, 0x00000000, 0x420E9999, 0xC1B7048E, 0x00000000, 0x420E9999, 0x00000000, 0x00000000, 0xC20E9999, 0x00000000, 0x00000000, 0xC20E9999, 0x00000000, 0x00000000, 0x420E9999, 0x00000000, 0x00000000, 0x420E9999, 0x422CB456, 0x00000000, 0xC20E9999, 0x422CB456, 0x00000000, 0xC20E9999, 0xC22CB456, 0x00000000, 0x420E9999, 0xC22CB456, 0x00000000, 0x420E9999, 0x00000000, 0x00000000, 0xC20E9999, 0x00000000, 0x00000000, 0xC24ACF13, 0x00000000, 0x00000000, 0x424ACF13, 0x00000000, 0x00000000, 0x424ACF13, 0x424ACF13, 0x00000000, 0xC24ACF13, 0x424ACF13, 0x00000000, 0xC24ACF13, 0xC24ACF13, 0x00000000, 0x424ACF13, 0xC24ACF13, 0x00000000, 0x424ACF13, 0x00000000, 0x00000000, 0xC24ACF13, 0x00000000, 0x00000000, 0xC1F80000, 0x41A00000, 0x00000000, 0x41F80000, 0x41A00000, 0x00000000, 0x41F80000, 0x42740000, 0x00000000, 0xC1F80000, 0x42740000, 0x00000000};
+/* Sprite ids: [0..8] item faces, [9] 0xC28, [10] 0xC49, [11] 0xC32. */
+static const int sFaceSprites[24] = {0xC68, 0xC69, 0xC66, 0xC67, 0xC63, 0xC65, 0xC64, 0xC6A, 0xC6B, 0xC28, 0xC49, 0xC32, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
+/* Quads: two rows of four corners each (upper half, lower half). */
+static const Vec3 sQuadNormal[16] = {
+    {-31.0f, 0.0f, 0.0f},
+    {31.0f, 0.0f, 0.0f},
+    {31.0f, 38.0f, 0.0f},
+    {-31.0f, 38.0f, 0.0f},
+    {-31.0f, -38.0f, 0.0f},
+    {31.0f, -38.0f, 0.0f},
+    {31.0f, 0.0f, 0.0f},
+    {-31.0f, 0.0f, 0.0f},
+    {-35.649998f, 0.0f, 0.0f},
+    {35.649998f, 0.0f, 0.0f},
+    {35.649998f, 35.649998f, 0.0f},
+    {-35.649998f, 35.649998f, 0.0f},
+    {-35.649998f, -35.649998f, 0.0f},
+    {35.649998f, -35.649998f, 0.0f},
+    {35.649998f, 0.0f, 0.0f},
+    {-35.649998f, 0.0f, 0.0f}
+};
+static const Vec3 sQuadStandard[8] = {
+    {-35.649998f, 0.0f, 0.0f},
+    {35.649998f, 0.0f, 0.0f},
+    {35.649998f, 42.877224f, 0.0f},
+    {-35.649998f, 42.877224f, 0.0f},
+    {-35.649998f, -22.877224f, 0.0f},
+    {35.649998f, -22.877224f, 0.0f},
+    {35.649998f, 0.0f, 0.0f},
+    {-35.649998f, 0.0f, 0.0f}
+};
+static const Vec3 sQuadRight[8] = {
+    {-35.649998f, 0.0f, 0.0f},
+    {35.649998f, 0.0f, 0.0f},
+    {35.649998f, 43.17611f, 0.0f},
+    {-35.649998f, 43.17611f, 0.0f},
+    {-35.649998f, -43.17611f, 0.0f},
+    {35.649998f, -43.17611f, 0.0f},
+    {35.649998f, 0.0f, 0.0f},
+    {-35.649998f, 0.0f, 0.0f}
+};
+static const Vec3 sQuadWide[8] = {
+    {-50.70222f, 0.0f, 0.0f},
+    {50.70222f, 0.0f, 0.0f},
+    {50.70222f, 50.70222f, 0.0f},
+    {-50.70222f, 50.70222f, 0.0f},
+    {-50.70222f, -50.70222f, 0.0f},
+    {50.70222f, -50.70222f, 0.0f},
+    {50.70222f, 0.0f, 0.0f},
+    {-50.70222f, 0.0f, 0.0f}
+};
+static const Vec3 sQuadTop[4] = {
+    {-31.0f, 2e+01f, 0.0f},
+    {31.0f, 2e+01f, 0.0f},
+    {31.0f, 61.0f, 0.0f},
+    {-31.0f, 61.0f, 0.0f}
+};
+
 
 struct PalSlot {
     unsigned char free;
@@ -968,16 +1029,6 @@ clEFacePoly::clEFacePoly(KartRender *o, int a, int b, int c) {
     }
 }
 
-/*
- * Never called, so the linker strips the code, but its two format strings
- * stay in .rodata between the clEFacePoly RTTI name and the model names.
- * The real body is unknown.
- */
-static void ReportLoadErrors(int line) {
-    OSReport("Can't Load File!! - EnmyFaceEffect.cpp,&d\n", line);
-    OSReport("clSprManager::SetTexture Error!! - imamura/EnmyFaceEffect.cpp, %d", line);
-}
-
 #pragma push
 #pragma opt_lifetimes off
 clEFacePoly::~clEFacePoly() {
@@ -989,7 +1040,7 @@ clEFacePoly::~clEFacePoly() {
         }
     }
     for (i = 0; i < 12; i++) {
-        fn_80120A08(lbl_803DAB54[12]);
+        fn_80120A08(sFaceSprites[12]);
     }
     if (effect) {
         delete effect;
@@ -1020,4 +1071,282 @@ void clEFacePoly::Update() {
     if (owner) {
         effect->Update();
     }
+}
+
+/* ---- drawing (was EnemyFaceDraw.cpp / fn_8022CDE4.c); -inline deferred
+ * emits the functions below first. ---- */
+typedef Vec3 FaceDrawVec;
+typedef Mtx FaceMtx;
+struct FaceVecView {
+    /* Preserve the vector as a whole when copying between component views. */
+    union { FaceDrawVec value; float components[3]; };
+    FaceVecView() {}
+    ~FaceVecView() {}
+};
+struct FaceDrawKart { char pad[0x23c]; int state; };
+struct FaceDrawSub {
+    char pad00[0x40];
+    FaceMtx m[2];
+    char padA0[0x10];
+    FaceMtx animMtx;
+    int anim;
+    unsigned char finished;
+    char padE5[3];
+    float alpha;
+    int overlay;
+    FaceVecView offset;
+};
+struct FaceDrawModel {
+    char pad00[4];
+    unsigned char variant;
+    char pad05[3];
+    int face, left, right;
+    float x, y, z, scale;
+    char pad24[4];
+    FaceDrawKart *kart;
+    FaceDrawSub *sub;
+    void *models[2];
+    int timer;
+};
+union FaceDrawPipe { float f32; unsigned int u32; };
+volatile FaceDrawPipe GXWGFifo : 0xCC008000;
+#define FIFO GXWGFifo
+extern "C" {
+extern const float lbl_806D6DE4, lbl_806D6DE8;
+extern const float lbl_806DB5E0, lbl_806DB5E8, lbl_806DB5EC, lbl_806DB5F0, lbl_806DB5F4;
+void GXSetCullMode(int); void GXClearVtxDesc();
+void GXSetVtxDesc(int,int); void GXSetVtxAttrFmt(int,int,int,int,int);
+void GXSetNumChans(int); void GXSetChanCtrl(int,int,int,int,int,int,int);
+void GXSetNumTevStages(int); void GXSetBlendMode(int,int,int,int);
+void GXSetTevOrder(int,int,int,int); void GXSetTevOp(int,int);
+void GXSetNumTexGens(int); void GXSetTexCoordGen2(int,int,int,int,int,int);
+void GXSetCurrentMtx(int); void GXLoadPosMtxImm(FaceMtx,int);
+void GXBegin(int,int,int); void HSD_StateInvalidate(int);
+void *GetCourseScene3D(); void HSD_CObjGetViewingMtx(void *,FaceMtx);
+float (*CObj_GetProjMatrix_Cached(void *))[4];
+void CObj_LoadProjMatrix(void *,FaceDrawVec *);
+void PSMTXScale(FaceMtx,float,float,float); void PSMTXTrans(FaceMtx,float,float,float);
+void PSMTXCopy(const float (*)[4],FaceMtx);
+void PSMTXConcat(const float (*)[4],const float (*)[4],FaceMtx);
+void PSMTXMultVec(const float (*)[4],const FaceDrawVec *,FaceDrawVec *);
+void Vec3_Normalize(FaceDrawVec *,FaceDrawVec *);
+unsigned char fn_8011D890(int,float *,float *);
+void DebugPrintf(const char *,...);
+void Object_SetAnimBinding(void *,FaceMtx,int);
+void Object_SetField8_AndDirty(void *,float);
+void clNormal3D_Exec(void *); void Object_DriveAnimMatrix(void *);
+void Object_RenderJObjTree(void *,int);
+}
+
+static inline void FillFaceUV(float *uv, const float *rect) {
+    float mid = lbl_806DB5EC * (rect[3] - rect[1]) + rect[1];
+    uv[0]=rect[0]; uv[1]=mid; uv[2]=rect[2]; uv[3]=mid;
+    uv[4]=rect[2]; uv[5]=rect[1]; uv[6]=rect[0]; uv[7]=rect[1];
+    uv[8]=rect[0]; uv[9]=rect[3]; uv[10]=rect[2]; uv[11]=rect[3];
+    uv[12]=rect[2]; uv[13]=mid; uv[14]=rect[0]; uv[15]=mid;
+}
+
+/* Keep each vertex attribute write together; snapshot displacement after GXBegin. */
+static inline void WriteFaceVertex(FaceDrawVec *p, float *uv, float x, float z, unsigned int color) {
+    FIFO.f32=x+p->x; FIFO.f32=p->y; FIFO.f32=z+p->z;
+    FIFO.u32=color; FIFO.f32=uv[0]; FIFO.f32=uv[1];
+}
+static inline void WriteFaceVertexPlain(FaceDrawVec *p, float *uv, unsigned int color) {
+    FIFO.f32=p->x; FIFO.f32=p->y; FIFO.f32=p->z;
+    FIFO.u32=color; FIFO.f32=uv[0]; FIFO.f32=uv[1];
+}
+static inline void DrawFaceQuad(FaceDrawVec *p, float *uv, FaceDrawVec *offset, unsigned int color) {
+    GXBegin(0x80,0,4);
+    float x=offset->x, z=offset->z;
+    WriteFaceVertex(p,uv,x,z,color);
+    WriteFaceVertex(p+1,uv+2,x,z,color);
+    WriteFaceVertex(p+2,uv+4,x,z,color);
+    WriteFaceVertex(p+3,uv+6,x,z,color);
+}
+static inline void DrawFaceQuadCached(FaceDrawVec *p, float *uv, FaceDrawVec *offset, unsigned int color) {
+    DrawFaceQuad(p,uv,offset,color);
+}
+static inline void DrawFaceQuadPlain(FaceDrawVec *p, float *uv, FaceDrawVec *offset, unsigned int color) {
+    GXBegin(0x80,0,4);
+    WriteFaceVertexPlain(p,uv,color);
+    WriteFaceVertexPlain(p+1,uv+2,color);
+    WriteFaceVertexPlain(p+2,uv+4,color);
+    WriteFaceVertexPlain(p+3,uv+6,color);
+}
+
+extern "C" void fn_8022BFA8(FaceDrawModel *self);
+extern "C" void fn_8022CDE4(FaceDrawModel *self) {
+    fn_8022BFA8(self);
+}
+
+extern "C" void fn_8022BFA8(FaceDrawModel *self) {
+    FaceDrawVec vertices[8];
+    FaceMtx world[2], view, temporary, scale, translation, projection;
+    float uv[16];
+    FaceMtx copy;
+    float rect[4];
+    FaceDrawVec offset, eye;
+    FaceDrawVec *out, *q, *draw;
+    const FaceDrawVec *src, *p;
+    FaceMtx *matrix;
+    float *tex;
+    int i, j;
+    if (!self->kart) return;
+    if (self->scale <= lbl_806DB5E0) {
+        if (self->sub->anim == 0) {
+            if (++self->timer >= 160) self->sub->finished=1;
+        } else if (self->sub->anim == 1) {
+            if (++self->timer >= 360) self->sub->finished=1;
+        }
+        return;
+    }
+    GXSetCullMode(0); GXClearVtxDesc();
+    GXSetVtxDesc(9,1); GXSetVtxAttrFmt(0,9,1,4,0);
+    GXSetVtxDesc(11,1); GXSetVtxAttrFmt(0,11,0,5,0);
+    GXSetVtxDesc(13,1); GXSetVtxAttrFmt(0,13,1,4,0);
+    GXSetNumChans(1); GXSetChanCtrl(4,0,1,1,0,0,2);
+    GXSetNumTevStages(1); GXSetBlendMode(1,4,5,0);
+    GXSetTevOrder(0,0,0,4); GXSetTevOp(0,0);
+    GXSetNumTexGens(1); GXSetTexCoordGen2(0,1,4,0x3c,0,0x7d);
+    GXSetCurrentMtx(0);
+    HSD_CObjGetViewingMtx(*(void **)((char *)GetCourseScene3D()+4),view);
+    GXLoadPosMtxImm(view,0);
+    PSMTXScale(scale,self->scale*lbl_806D6DE4,self->scale*lbl_806D6DE8,self->scale);
+    PSMTXTrans(translation,self->x,self->y,self->z);
+    PSMTXCopy(CObj_GetProjMatrix_Cached(GetCourseScene3D()),projection);
+    projection[2][3]=lbl_806DB5E0; projection[1][3]=lbl_806DB5E0; projection[0][3]=lbl_806DB5E0;
+    PSMTXConcat(projection,scale,scale);
+    PSMTXConcat(scale,self->sub->m[0],world[0]);
+    PSMTXConcat(translation,world[0],world[0]);
+    PSMTXConcat(scale,self->sub->m[1],world[1]);
+    PSMTXConcat(translation,world[1],world[1]);
+    offset.z=lbl_806DB5E0; offset.y=lbl_806DB5E0; offset.x=lbl_806DB5E0;
+    void *scene=GetCourseScene3D();
+    if (scene) {
+        CObj_LoadProjMatrix(scene,&eye);
+        offset.x=eye.x-self->x; offset.z=eye.z-self->z;
+        Vec3_Normalize(&offset,&offset);
+        offset.x*=lbl_806DB5E8; offset.z*=lbl_806DB5E8;
+    }
+    if (self->left>0) {
+        draw=vertices;
+        out=draw;
+        src=sQuadNormal;
+        matrix=world;
+        for (i=0;i<2;++i) {
+            q=out;
+            p=src;
+            for (j=0;j<4;++j) { PSMTXMultVec(*matrix,p,q); ++p; ++q; }
+            src+=4; ++matrix; out+=4;
+        }
+        if (!fn_8011D890(self->left,rect,0)) {
+            DebugPrintf("clSprManager::SetTexture Error!! - imamura/EnmyFaceEffect.cpp, %d",0x5e2);
+            HSD_StateInvalidate(0x7e); return;
+        }
+        FillFaceUV(uv,rect);
+        tex=uv;
+        for (i=0;i<2;++i) { DrawFaceQuadPlain(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
+    }
+    if (self->right>0) {
+        draw=vertices;
+        out=draw;
+        src=sQuadRight;
+        matrix=world;
+        for (i=0;i<2;++i) {
+            q=out;
+            p=src;
+            for (j=0;j<4;++j) { PSMTXMultVec(*matrix,p,q); ++p; ++q; }
+            src+=4; ++matrix; out+=4;
+        }
+        fn_8011D890(self->right,rect,0);
+        FillFaceUV(uv,rect);
+        tex=uv;
+        for (i=0;i<2;++i) { DrawFaceQuad(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
+    }
+    FaceDrawVec *vertexBase=vertices;
+    float *uvBase;
+    const FaceDrawVec *alternateBase=sQuadWide;
+    const FaceDrawVec *normal=sQuadNormal;
+    const FaceDrawVec *alternate=alternateBase;
+    const FaceDrawVec *standard=sQuadStandard;
+    out=vertexBase;
+    matrix=world;
+    for (i=0;i<2;++i) {
+        q=out;
+        const FaceDrawVec *n=normal, *a=alternate, *s=standard;
+        for (j=0;j<4;++j) {
+            if (self->left<0) PSMTXMultVec(*matrix,n,q);
+            else if (self->variant==1) PSMTXMultVec(*matrix,a,q);
+            else PSMTXMultVec(*matrix,s,q);
+            ++n; ++a; ++s; ++q;
+        }
+        normal+=4; alternate+=4; standard+=4; ++matrix; out+=4;
+    }
+    fn_8011D890(self->face,rect,0);
+    uvBase=uv;
+    FillFaceUV(uvBase,rect); offset.x+=offset.x; offset.z+=offset.z;
+    draw=vertexBase;
+    tex=uvBase;
+    for (i=0;i<2;++i) { DrawFaceQuad(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
+    if (self->kart->state==0) {
+        p=sQuadTop;
+        q=vertexBase;
+        for (i=0;i<4;++i) { PSMTXMultVec(world[0],p,q); ++p; ++q; }
+        fn_8011D890(sFaceSprites[9],rect,0);
+        uvBase[0]=rect[0]; uvBase[1]=rect[3]; uvBase[2]=rect[2]; uvBase[3]=rect[3];
+        uvBase[4]=rect[2]; uvBase[5]=rect[1]; uvBase[6]=rect[0]; uvBase[7]=rect[1];
+        offset.x+=offset.x; offset.z+=offset.z;
+        DrawFaceQuad(vertexBase,uvBase,&offset,0xffffffff);
+    }
+    int overlay=self->sub->overlay;
+    if (overlay!=-1) {
+        FaceDrawVec *dstRow=vertexBase;
+        for (i=0;i<2;++i) {
+            PSMTXCopy(self->sub->m[i],copy);
+            FaceVecView localOffset;
+            localOffset=self->sub->offset;
+            copy[0][3]+=localOffset.value.x; copy[1][3]+=localOffset.value.y; copy[2][3]+=localOffset.value.z;
+            PSMTXConcat(scale,copy,temporary);
+            PSMTXConcat(translation,temporary,temporary);
+            q=dstRow;
+            p=alternateBase;
+            for (j=0;j<4;++j) { PSMTXMultVec(temporary,p,q); ++p; ++q; }
+            dstRow+=4; alternateBase+=4;
+        }
+        fn_8011D890(sFaceSprites[overlay],rect,0);
+        offset.x+=offset.x; offset.z+=offset.z;
+        FillFaceUV(uvBase,rect);
+        unsigned int color=0xffffff00;
+        color=(color&~0xff)|((int)(lbl_806DB5F0*self->sub->alpha)&0xff);
+        for (i=0;i<2;++i) { DrawFaceQuadCached(vertexBase,uvBase,&offset,color); uvBase+=8; vertexBase+=4; }
+    }
+    HSD_StateInvalidate(0x7e); GXSetCullMode(2);
+    int anim=self->sub->anim;
+    if (anim!=-1) {
+        float frame=++self->timer;
+        if (anim==0) frame+=lbl_806DB5F4;
+        PSMTXConcat(projection,self->sub->animMtx,temporary);
+        PSMTXConcat(translation,temporary,temporary);
+        Object_SetAnimBinding(self->models[anim],temporary,0);
+        Object_SetField8_AndDirty(self->models[anim],frame);
+        if (anim==0) {
+            clNormal3D_Exec(self->models[anim]);
+            if (self->timer>=160) self->sub->finished=1;
+        } else if (anim==1) {
+            clNormal3D_Exec(self->models[anim]);
+            if (self->timer>=360) self->sub->finished=1;
+        }
+        Object_DriveAnimMatrix(self->models[anim]);
+        Object_RenderJObjTree(self->models[anim],7);
+    }
+}
+
+/*
+ * Never called, so the linker strips the code, but its format string
+ * stays in .rodata between the clEFacePoly RTTI name and the model names.
+ * The real body is unknown; it follows the draw function in the source
+ * (its string precedes the draw function's).
+ */
+static void ReportLoadErrors(int line) {
+    OSReport("Can't Load File!! - EnmyFaceEffect.cpp,&d\n", line);
 }
