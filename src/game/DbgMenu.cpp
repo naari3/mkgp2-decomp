@@ -119,19 +119,28 @@ typedef struct SceneItem {
     int flags;
 } SceneItem;
 
+/* Sprite request block. The ctor is out of line (ResCtrl_Init); the empty
+ * inline dtor (weak copy = dtor_80082960) only shows up as destroy-local
+ * actions in the exception tables. */
 typedef struct ResCtrl {
+    ResCtrl();
+    ~ResCtrl() {}
     int id;
-    unsigned char pad4[0xC];
+    int unk4;
+    int mode;
+    int unkC;
     unsigned char flag10;
     unsigned char pad11[3];
     float x;
     float y;
     float z;
-    unsigned char pad20[8];
+    float width;
+    float height;
     float w28;
     unsigned char pad2C[4];
     float w;
-    unsigned char pad34[0x24];
+    int colors[4];
+    unsigned char pad44[0x14];
 } ResCtrl;
 
 typedef struct ScrollEntry {
@@ -168,7 +177,6 @@ extern PaletteEntry *TEXGetPaletteEntry(void *pal, int i);
 extern void TEXBindPaletteEntry_CI(void *pal, void *rgb, void *ci, int color, int i);
 extern void TEXBindPaletteEntry_RGB(void *pal, void *rgb, int i);
 extern void *FUN_8003b120(unsigned long size);
-extern void ResCtrl_Init(ResCtrl *r);
 extern void fn_80121E10(ResCtrl *r);
 extern int SpriteHandle_CreateDefault(ResCtrl *r, int type);
 extern void fn_8011FAFC(ResCtrl *r, int type);
@@ -360,22 +368,7 @@ typedef struct TexPalEntry {
     void *ci;
 } TexPalEntry;
 
-typedef struct ResCtrlFull {
-    int id;
-    int unk4;
-    int mode;
-    int unkC;
-    unsigned char flag10;
-    unsigned char pad11[3];
-    float x;
-    float y;
-    float z;
-    float width;
-    float height;
-    unsigned char pad28[0xC];
-    int colors[4];
-    unsigned char pad44[0x14];
-} ResCtrlFull;
+typedef ResCtrl ResCtrlFull;
 
 extern "C" {
 extern void GXSetBlendMode(int a, int b, int c, int d);
@@ -536,6 +529,7 @@ static inline InputPlayer *Pad0_unused(void)
     return InputMgr_GetPlayer(GetInputManager(), 0);
 }
 
+/* Only reached through the vtable lbl_8041C9D4, which this TU does not own yet. */
 extern "C" void DbgMenu_TickSubScene(DbgMenu *self)
 {
     if (self->sub != 0) {
@@ -573,18 +567,6 @@ extern "C" int DbgMenu_HandleInput(DbgMenu *self)
     return -2;
 }
 
-extern "C" SceneWords *DbgScene00_SpriteViewer_Ctor(void)
-{
-    SceneWords *p = (SceneWords *)Alloc(0xC);
-    if (p != 0) {
-        GameMode_BaseInit(p);
-        p->vt = lbl_8041C99C;
-        p->w4 = 8;
-        p->w8 = 0;
-    }
-    return p;
-}
-
 void *operator new(unsigned long);
 void operator delete(void *);
 
@@ -596,6 +578,44 @@ public:
     virtual ~MenuSceneBase();
 };
 
+/* Base of the sprite viewer: out-of-line ctor (GameMode_BaseInit), no dtor. */
+class GameModeBase {
+    virtual void Key();
+public:
+    GameModeBase();
+};
+
+class SpriteViewerScene : public GameModeBase {
+    virtual void Key2();
+    int w4;
+    int w8;
+public:
+    SpriteViewerScene() {
+        w4 = 8;
+        w8 = 0;
+    }
+};
+
+extern "C" SceneWords *DbgScene00_SpriteViewer_Ctor(void)
+{
+    return (SceneWords *)new SpriteViewerScene;
+}
+
+class MenuJointView {
+    char opaque[0x44];
+public:
+    MenuJointView(int, int);
+};
+class MenuInputManager {
+    char opaque[0x37C];
+public:
+    MenuInputManager();
+};
+class MenuScene3D {
+    char opaque[0x3084];
+public:
+    MenuScene3D(char *);
+};
 class MenuNormalModel {
     char opaque[0x5C];
 public:
@@ -631,44 +651,62 @@ extern "C" SceneHdr *DbgScene01_SprMng2Test_Ctor(void)
     return (SceneHdr *)new SpriteTestScene;
 }
 
-extern "C" SceneF2 *DbgScene02_MapViewer_Ctor(void)
-{
-    SceneF2 *p = (SceneF2 *)Alloc(0xC);
-    if (p != 0) {
-        SceneBase_Init(p);
-        p->vt = lbl_8041CB74;
-        p->x = 320.0f;
-        p->y = 240.0f;
+class MapViewerScene : public MenuSceneBase {
+    virtual void Key2();
+    float x;
+    float y;
+public:
+    MapViewerScene() {
+        x = 320.0f;
+        y = 240.0f;
         fn_8002CFB8(0xFF, 0xFF, 0xFF, 0);
         fn_8002CFB8(0x64, 0x64, 0x64, 0);
     }
-    return p;
+};
+
+extern "C" SceneF2 *DbgScene02_MapViewer_Ctor(void)
+{
+    return (SceneF2 *)new MapViewerScene;
 }
 
-extern "C" SceneTpl *DbgScene03_TplTest_Ctor(void)
-{
-    SceneTpl *p = (SceneTpl *)Alloc(0xB0);
-    if (p != 0) {
-        SceneBase_Init(p);
-        p->vt = lbl_8041CB54;
+class TplTestScene : public MenuSceneBase {
+    virtual void Key2();
+    int w4;
+    int w8;
+    unsigned char padC[0x24];
+    int w30;
+    int w34;
+    int w38;
+    int w3C;
+    int w40;
+    unsigned char pad44[0x60];
+    int wA4;
+    int wA8;
+    int wAC;
+public:
+    TplTestScene() {
         DrawManager_GetOrCreate();
         fn_80121210();
         DMAChannelManager_Init();
         SoundChannels_ClearAll();
         ItemObjectManager_Init();
         CourseObjectManager_Init();
-        p->w4 = 0;
-        p->w8 = 0;
-        p->w30 = 0;
-        p->w34 = 1;
-        p->w38 = 0;
-        p->w3C = 0;
-        p->w40 = 0;
-        p->wA4 = 0;
-        p->wA8 = 0;
-        p->wAC = 0;
+        w4 = 0;
+        w8 = 0;
+        w30 = 0;
+        w34 = 1;
+        w38 = 0;
+        w3C = 0;
+        w40 = 0;
+        wA4 = 0;
+        wA8 = 0;
+        wAC = 0;
     }
-    return p;
+};
+
+extern "C" SceneTpl *DbgScene03_TplTest_Ctor(void)
+{
+    return (SceneTpl *)new TplTestScene;
 }
 
 inline void PaletteSet::NextColor(void)
@@ -713,13 +751,15 @@ extern "C" SceneHdr *DbgScene04_AnmTest_Ctor(void)
     return (SceneHdr *)new AnmTestScene;
 }
 
+class ParticleTestScene : public MenuSceneBase {
+    virtual void Key2();
+public:
+    ParticleTestScene();
+};
+
 extern "C" DbgScene *DbgScene05_TplTest2_Ctor(void)
 {
-    void *p = Alloc(4);
-    if (p != 0) {
-        DbgScene05_TplTest2_Reset((SceneHdr *)p);
-    }
-    return (DbgScene *)p;
+    return (DbgScene *)new ParticleTestScene;
 }
 
 class PaletteTestScene : public MenuSceneBase {
@@ -741,7 +781,6 @@ class ScreenEffScene : public MenuSceneBase {
 public:
     ScreenEffScene() {
         ResCtrl r;
-        ResCtrl_Init(&r);
         fn_80121E10(&r);
         r.id = 0x868;
         r.flag10 = 1;
@@ -1031,7 +1070,6 @@ extern "C" unsigned char TestMenuScrollList_Update(SpritePair *self)
     if (pad->IsPressed(1) == 1) {
         for (i = 0; i < lbl_806CF32C; i++) {
             ResCtrl r;
-            ResCtrl_Init(&r);
             fn_80121E10(&r);
             r.id = lbl_8041C8C0[i].id;
             r.flag10 = 1;
@@ -1160,11 +1198,7 @@ extern "C" unsigned char TestMenuJointBrowser_Update(SceneJoint *self)
         self->sel = (self->sel + 0x22) % 0x22;
         OverlayText(2, 0, 0, lbl_806D5874, t.e[self->sel].name);
         if (pad->IsHeld(1)) {
-            void *m = Alloc(0x44);
-            if (m != 0) {
-                fn_8014D540(m, t.e[self->sel].a, t.e[self->sel].b);
-            }
-            self->view = (DbgModel *)m;
+            self->view = (DbgModel *)new MenuJointView(t.e[self->sel].a, t.e[self->sel].b);
         }
     } else if (fn_8014D4F0(self->view)) {
         delete self->view;
@@ -1280,10 +1314,8 @@ extern "C" SceneHdr *TestMenuModelText_Dtor(SceneHdr *self, short flag)
 
 extern "C" void TestMenuModelText_Render(void)
 {
-    ResCtrl r;
-
     DbgScene_Setup2D();
-    ResCtrl_Init(&r);
+    ResCtrl r;
     fn_80121E10(&r);
     r.flag10 = 1;
     r.x = 0.0f;
@@ -1375,7 +1407,6 @@ static inline void Particle_UpdatePool(char *state_, Particle *e_)
             e->done = AnimState_Step(e->anim);
             if (e->handle == 0 && e->id != -1) {
                 ResCtrl r;
-                ResCtrl_Init(&r);
                 fn_80121E10(&r);
                 r.id = e->id;
                 e->handle = (int)SpriteHandle_CreateDefault(&r, e->type);
@@ -1414,12 +1445,6 @@ static inline void ResetParticlePool(void)
     }
 }
 
-class ParticleTestScene : public MenuSceneBase {
-    virtual void Key2();
-public:
-    ParticleTestScene();
-};
-
 ParticleTestScene::ParticleTestScene()
 {
     ResetParticlePool();
@@ -1456,7 +1481,6 @@ static inline void Vtx(float *p, float *t)
 
 extern "C" void DbgScene04_AnmTest_Draw(void)
 {
-    ResCtrlFull r;
     float pos[4][2];
     float uv[4][2];
     TexPalEntry *e0;
@@ -1466,21 +1490,23 @@ extern "C" void DbgScene04_AnmTest_Draw(void)
     int i;
     PaletteSet *set;
 
-    ResCtrl_Init((ResCtrl *)&r);
-    fn_80121E10((ResCtrl *)&r);
-    r.mode = 2;
-    r.flag10 = 0;
-    r.x = 0.0f;
-    r.y = 0.0f;
-    r.z = 1.0f;
-    r.width = 640.0f;
-    r.height = 480.0f;
-    r.colors[0] = -1;
-    r.colors[1] = -1;
-    r.colors[2] = -1;
-    r.colors[3] = -1;
-    fn_8011FAFC((ResCtrl *)&r, 0);
-    fn_8011FAB8();
+    {
+        ResCtrl r;
+        fn_80121E10(&r);
+        r.mode = 2;
+        r.flag10 = 0;
+        r.x = 0.0f;
+        r.y = 0.0f;
+        r.z = 1.0f;
+        r.width = 640.0f;
+        r.height = 480.0f;
+        r.colors[0] = -1;
+        r.colors[1] = -1;
+        r.colors[2] = -1;
+        r.colors[3] = -1;
+        fn_8011FAFC(&r, 0);
+        fn_8011FAB8();
+    }
     DbgScene_Setup2D();
     GXSetBlendMode(1, 4, 5, 0xF);
     GXSetNumTexGens(2);
@@ -1654,21 +1680,12 @@ extern "C" void DbgScene03_TplTest_UpdateCamera(TplScene *self)
     int row;
 
     if (self->inited == 0) {
-        void *m;
         g_cupId = self->cup;
         g_longRoundFlag = self->lr;
         SetReverseRoundFlag(self->rev);
         g_courseVariantIdx = self->variant;
-        m = Alloc(0x37C);
-        if (m != 0) {
-            InputManager_Init(m);
-        }
-        self->env = m;
-        m = Alloc(0x3084);
-        if (m != 0) {
-            Scene3D_Init(m, GetKartModelNameEntry(0, -1)->name);
-        }
-        self->scene = (Scene3D *)m;
+        self->env = new MenuInputManager;
+        self->scene = (Scene3D *)new MenuScene3D(GetKartModelNameEntry(0, -1)->name);
         GetStartPosition(0, &self->pos.x, &self->pos.y, &self->pos.z);
         self->pos.y += lbl_806D58E0;
         self->yaw = lbl_806D58E4 * GetCourseStartYaw();
@@ -1676,11 +1693,7 @@ extern "C" void DbgScene03_TplTest_UpdateCamera(TplScene *self)
         self->dist = 100.0f;
         OrbitOffset(&self->target, self, self->dist);
         Vec3_Add_DestFirst(&self->target, &self->pos, &self->target);
-        m = Alloc(0x5C);
-        if (m != 0) {
-            clNormal3D_Construct(m, (char *)lbl_8041AC24[0x46], 1);
-        }
-        self->obj = m;
+        self->obj = new MenuNormalModel((char *)lbl_8041AC24[0x46], 1);
         self->mode = 0;
         Vec3_Copy(&self->c, &self->target);
         Vec3_Copy(&self->a, &self->pos);
@@ -2057,12 +2070,10 @@ extern "C" void DbgScene02_MapViewer_SetupBlit(void)
 
 extern "C" unsigned char DbgScene02_MapViewer_InputCheck(void)
 {
-    ResCtrl r;
-
     if (Pad0()->IsHeld(0x400) == 1) {
         return 1;
     }
-    ResCtrl_Init(&r);
+    ResCtrl r;
     fn_80121E10(&r);
     r.id = 0xBFF;
     r.flag10 = 1;
@@ -2104,7 +2115,6 @@ extern "C" unsigned char DbgScene01_SprMng2Test_InputCheck(void)
 {
     InputPlayer *pad = Pad0();
     int prev;
-    ResCtrl r;
 
     if (pad->IsHeld(0x400) == 1) {
         return 1;
@@ -2147,7 +2157,7 @@ extern "C" unsigned char DbgScene01_SprMng2Test_InputCheck(void)
     if (prev != lbl_806D14C4) {
         fn_80120A08(prev);
     }
-    ResCtrl_Init(&r);
+    ResCtrl r;
     fn_80121E10(&r);
     r.id = lbl_806D14C4;
     r.flag10 = 1;
