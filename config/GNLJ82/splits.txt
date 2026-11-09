@@ -10629,9 +10629,14 @@ game/fn_801F7F50.cpp:
 	.text       start:0x801F7F50 end:0x801F8214
 
 game/dtor_801F8214.cpp:
-	extab       start:0x80017630 end:0x80017680
-	extabindex  start:0x80029018 end:0x80029060
-	.text       start:0x801F8214 end:0x801F89F0
+	extab       start:0x80017630 end:0x80017638
+	extabindex  start:0x80029018 end:0x80029024
+	.text       start:0x801F8214 end:0x801F8250
+
+game/dtor_801F8214_nm1.cpp:
+	extab       start:0x80017638 end:0x80017680
+	extabindex  start:0x80029024 end:0x80029060
+	.text       start:0x801F8250 end:0x801F89F0
 	.rodata     start:0x803BEDC0 end:0x803BF020
 
 game/fn_801F89F0.c:

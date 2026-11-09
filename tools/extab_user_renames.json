@@ -12445,7 +12445,9 @@
     "mixFlatS56": "lbl_803BEF20",
     "mixDepthS56": "lbl_803BEFA0",
     "__dl__FPv": "MemoryManager_TimedFree",
-    "__dt__9DrawQuadSFv": "dtor_801F8214"
+    "__dt__9DrawQuadSFv": "dtor_801F8214",
+    "@30": "@etb_80017630",
+    "@31": "@eti_80029018"
   },
   "src/game/fn_801F7604.cpp": {
     "__dt__12ColorDrawS56Fv": "dtor_801F7AD0",
@@ -14174,5 +14176,27 @@
     "__dla__FPv": "MemoryManager_Free",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/dtor_801F8214_nm1.cpp": {
+    "colorFlatS56": "lbl_803BEDE0",
+    "colorDepthS56": "lbl_803BEE20",
+    "texDescS56": "lbl_803BEE60",
+    "texFlatS56": "lbl_803BEE80",
+    "texDepthS56": "lbl_803BEEC0",
+    "mixDescS56": "lbl_803BEF00",
+    "mixFlatS56": "lbl_803BEF20",
+    "mixDepthS56": "lbl_803BEFA0",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__17DrawQuadLocal8214Fv": "dtor_801F8214",
+    "@41": "@etb_80017638",
+    "@42": "@eti_80029024",
+    "@156": "@etb_80017640",
+    "@157": "@eti_80029030",
+    "@169": "@etb_80017658",
+    "@170": "@eti_8002903C",
+    "@258": "@etb_80017660",
+    "@259": "@eti_80029048",
+    "@267": "@etb_80017678",
+    "@268": "@eti_80029054"
   }
 }
