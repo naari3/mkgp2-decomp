@@ -1537,7 +1537,7 @@ config.libs = [
             Object(Matching, "game/clItemBox_ResetTimer_IsPickedUp.c"),
             Object(Matching, "game/clItemBox.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-inline deferred"]),
             Object(Matching, "game/clItemBox_FactoryCreate.cpp", mw_version="GC/2.7", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/clItemBoxManager.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/clItemBoxManager.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/clItemBoxManager_ListDtors.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/clItemBoxManager_nm1.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.0"),
             Object(Matching, "game/MJObj_ColorFloat.c", extab_padding=b""),
