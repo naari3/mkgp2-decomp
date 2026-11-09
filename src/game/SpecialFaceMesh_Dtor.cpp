@@ -1,14 +1,12 @@
 #include "game/SpecialFaceMeshPrivate.h"
 
+/* opt_strength_reduction off: the target's byte offset into faces.data is
+ * the frontend index temp, coloured above the hoisted dtor address. */
+#pragma opt_strength_reduction off
 SpecialFaceMeshNative::~SpecialFaceMeshNative() {
     vptr = lbl_803FE0AC;
-    unsigned int offset;
-    SpecialFaceNative *face;
-    unsigned int i;
-    i = 0;
-    offset = 0;
-    for (; i < faces.count; i++, offset += sizeof(*faces.data)) {
-        face = *(SpecialFaceNative **)((unsigned char *)faces.data + offset);
-        delete face;
+    for (unsigned int i = 0; i < faces.count; i++) {
+        delete faces.data[i];
     }
 }
+#pragma opt_strength_reduction reset
