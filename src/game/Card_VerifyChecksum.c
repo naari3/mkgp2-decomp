@@ -16,6 +16,7 @@ int Card_VerifyChecksum(void *unused, u8 *raw)
     u32 signature;
     u32 version;
     u32 sum;
+    int j;
     int i;
     const signed char *expected;
     bitpack_init(pack, lbl_803FED40, 3, raw, 0);
@@ -33,8 +34,8 @@ int Card_VerifyChecksum(void *unused, u8 *raw)
     }
     DebugPrintf(lbl_80317588);
     expected = lbl_806D34A4;
-    for (i = 0; i < 3; i++, expected++) {
-        bitpack_read_field_by_name(pack, lbl_803170FC, &signature, i);
+    for (j = 0; j < 3; j++, expected++) {
+        bitpack_read_field_by_name(pack, lbl_803170FC, &signature, j);
         DebugPrintf(lbl_806D34A8, signature);
         if (*expected != signature) return -1;
     }
