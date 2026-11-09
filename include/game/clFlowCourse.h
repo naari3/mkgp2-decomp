@@ -38,9 +38,16 @@ struct CourseBanner {
 };
 
 struct CourseBase {
+#ifdef CLFLOWCOURSE_REAL_VTABLE
+    /* The merged course TU (clFlowCourse.cpp) emits the real vtable and RTTI;
+     * it renames CourseBase/CourseFlow to clFlowProcess/clFlowCourse. */
+    CourseBase();
+    virtual ~CourseBase();
+#else
     virtual void _keyBase();
     CourseBase();
     ~CourseBase();
+#endif
 };
 
 struct CourseSlot { CourseSprite *sprite; int field4; };
@@ -61,9 +68,16 @@ struct CourseFlow : CourseBase {
     CourseBanner *banner;
     int selected;
     unsigned char field15C, field15D;
+#ifdef CLFLOWCOURSE_REAL_VTABLE
+    CourseFlow();
+    virtual ~CourseFlow();
+    virtual int Update();
+    virtual void Draw();
+#else
     virtual void _keyCourse();
     CourseFlow();
     ~CourseFlow();
+#endif
 };
 
 extern "C" int fn_801D161C(int);
