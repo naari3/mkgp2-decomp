@@ -450,9 +450,13 @@ def solve_order(g: Graph, w, maxn=8, limit=4):
         F = F[:maxn]
     slots = [i for i, v in enumerate(order) if v in F]
     res = []
-    for perm in itertools.permutations(F):
+    t_end = time.time() + float(os.environ.get("REGFIX_SOLVE_SECS", "20"))
+    for k, perm in enumerate(itertools.permutations(F)):
         if list(perm) == F:
             continue
+        if k % 256 == 0 and time.time() > t_end:
+            print(f"  (order search stopped after {float(os.environ.get("REGFIX_SOLVE_SECS", "20")):.0f} s, REGFIX_SOLVE_SECS)", file=sys.stderr)
+            break
         o2 = list(order)
         for i, v in zip(slots, perm):
             o2[i] = v
@@ -639,7 +643,11 @@ def solve(g: Graph, w, depth=2, beam=12, limit=8):
     base = len(mismatch(ph, w))
     sols, scored = [], []
     E = candidate_edits(g, w, ph)
+    t_end = time.time() + float(os.environ.get("REGFIX_SOLVE_SECS", "20"))
     for e in E:
+        if time.time() > t_end:
+            print(f"  (edit search stopped after {float(os.environ.get("REGFIX_SOLVE_SECS", "20")):.0f} s, REGFIX_SOLVE_SECS)", file=sys.stderr)
+            return base, sols[:limit], len(E)
         g2 = e.apply(g)
         p2, _ = g2.colour()
         m = len(mismatch(p2, w))
@@ -656,6 +664,8 @@ def solve(g: Graph, w, depth=2, beam=12, limit=8):
         for e2 in candidate_edits(g1, w, p1):
             if e2.key() == e.key():
                 continue
+            if time.time() > t_end:
+                return base, sols, len(E) + tried
             tried += 1
             g2 = e2.apply(g1)
             p2, _ = g2.colour()
