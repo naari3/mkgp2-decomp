@@ -503,6 +503,7 @@ def cmd_run(a):
     os.makedirs(OUT, exist_ok=True)
     n = 0; t_end = time.time() + a.hours * 3600 if a.hours else None
     stop_on = set((a.stop_on or '').split(','))
+    held_now = {}
     while not stopped():
         if t_end and time.time() > t_end:
             log('time budget used up'); return
@@ -511,6 +512,7 @@ def cmd_run(a):
         if sync_main():
             log('origin/main moved; rebuilding report'); build_report()
         cl = claims(a.claims); seen = done_keys()
+        seen.update({k: v for k, v in held_now.items()})   # held this run: don't spin on them
         todo = [c for c in candidates(a) if c[1] not in cl and (c[1], c[2]) not in seen or
                 (c[1] not in cl and seen.get((c[1], c[2])) is not None and abs(seen[(c[1], c[2])] - c[0]) > 0.01)]
         if a.only: todo = [c for c in todo if c[2] in a.only.split(',')]
@@ -524,6 +526,7 @@ def cmd_run(a):
         qid = q_claim(fn, obj, p)
         if not qid:
             log('  held by another thread; skipping')
+            held_now[(obj, fn)] = p
             record({'obj': obj, 'fn': fn, 'pct': p, 'outcome': 'held'}); continue
         try:
             r = one(p, obj, fn, size, dm, a)
