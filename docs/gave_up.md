@@ -23,6 +23,16 @@ still different, and where the work in progress lives. Please read the
 When you match one, delete its row in the same commit. When you give up on a
 new one, add a row.
 
+**Before parking a register or scheduling near miss, find the compiler rule.**
+Run `python3 tools/mwsched.py explain UNIT FN --run` (order), `mwsched.py
+coalesce` (kept `mr`/`fmr` copies) and `python3 tools/regfix.py diag UNIT FN`
+(register numbers), then read the deciding function in the compiler source
+(`build/mweppc`, index in [mwcc_internals.md](mwcc_internals.md)). A new row
+must name that rule, e.g. "kept: named<->temp copy never coalesces
+(InterferenceGraph.c coalescenodes)" or "z3 wins on uncovering, stfs x has
+may_alias preds (Scheduler.c selectinstruction)". "Tried N variants" alone is
+not a reason to park.
+
 ## Register allocation / scheduling only
 
 The code shape is right; what is left is which register gets which value, or

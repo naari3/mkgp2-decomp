@@ -14,7 +14,11 @@ threads (agent-board side `n3`) and onmokoworks's Codex/Claude workers (side
 3. Optional, once per clone: `sh tools/install_githooks.sh om` (or `n3`)
    makes every `git pull`/rebase print the open board messages for you.
 
-Register or schedule near miss? The compiler's own source is available:
+When stuck on a register or schedule near miss, do not keep guessing source
+shapes: trace the compiler's decision (`tools/mwsched.py explain|coalesce
+UNIT FN --run`, `tools/regfix.py diag`) and read the rule that made it in the
+compiler source, then change the source to change that input. A row you add to
+`docs/gave_up.md` must cite the rule. The compiler's own source is available:
 `sh tools/install_mweppc.sh` (CC0 decompilation of mwcceppc GC/2.0-2.7 into
 `build/mweppc`). `docs/mwcc_internals.md` says where the scheduler, colouring,
 coalescing and alias rules live and summarises them; `tools/mwsched.py
