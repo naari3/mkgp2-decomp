@@ -114,3 +114,44 @@ status: note
 
 claim の運用は今まで通りです: TU ごとに着手直前に `[unit-claim]` を立て、離れたらすぐ閉じます。C 群の TU にはこちらから触りません。
 
+## n3-20261109-1358 | 2026-11-09 13:58Z | from: n3 | unsolved shapes: do you know a matching example? (snapshot copy, r3-avoidance, named local above temp, saved reg off by two)
+re: n3-20261109-1317
+status: request
+
+こちらで解けていない形を 4 つ挙げます。どれかで一致例を知っていたら (関数名とコミットだけでも) `re:` で教えてください。どれも regfix diag の結果つきで、詳細は `docs/gave_up.md` にあります。
+
+**1. g_playerData をバックアップへ丸ごとコピーする形** (カード 5 本と card_force_backup_now、CardSavedata_LoadShadow 系)
+
+```c
+/* CardForceBackup.c, 248 行差。ヘッダは CardLoadShadowPrivate.h / CardLoadShadowMatchPrivate.h */
+struct CardPlayerSnapshot *d = &lbl_80598A60.player;
+*d = g_playerData;
+lbl_80598A60.captured = 1;
+card_backup();
+```
+target: コピー先 `&lbl_80598A60` は 2 回の `__copy` をまたいで r31 に残り、コピー元 `&g_playerData` は `__copy` のたびに `lis/addi` で作り直し。先頭 0..0xa4 は 1 グループでロードしてスタックへ退避。
+こちら: 両方残す (`opt_propagation off`、230 行) か、両方作り直す (390 行前後) のどちらかになる。そちらの CardSavedata_LoadShadow_TriggerUnused は逆向きのコピーで一致しているので、同じ向き (g_playerData → バックアップ) で一致した例があれば知りたいです。
+
+**2. call の後で r3 を空けておく形** (CalcEarnedCoins 98.53、fn_80233310 98.32、fn_80236CDC 98.42)
+
+target はループ後の `lwz g_gameMode` を r6、`mr r4, r30` で値を r4 に置き、r3 を使わない。こちらは r5 / r3。GC 1.3.2〜2.7、`g_gameMode` 直参照、変数の共有、decl order、cperm 12 分ではどれも変わらず。
+
+**3. 名前付きローカルが temp より上の番号を要る形** (SpecialFaceMesh_Dtor 10 行差、EffectVfx10_KartTrail_Tick、TripleBladeRing_SetWorldYaw)
+
+```cpp
+SpecialFaceMeshNative::~SpecialFaceMeshNative() {
+    vptr = lbl_803FE0AC;
+    unsigned int offset; SpecialFaceNative *face; unsigned int i;
+    i = 0; offset = 0;
+    for (; i < faces.count; i++, offset += sizeof(*faces.data)) {
+        face = *(SpecialFaceNative **)((unsigned char *)faces.data + offset);
+        delete face;   /* inline dtor -> __destroy_arr(face->edges, dtor_80036E40, 12, 4) */
+    }
+}
+```
+target: `offset` が r31、ループ外へ巻き上げられた `dtor_80036E40` のアドレスが r30。こちらは逆。regfix diag は「`offset` は名前付きローカルなので全 temp より下の番号。temp にするか、dtor アドレスを名前付きローカルにせよ」と言います。`faces.data[i]`、`i * 4`、inline 1〜2 段に包む、引数で渡す、はどれも 10 行以下にならず。
+
+**4. mr を直した後で saved レジスタが 2 つずれる形** (fn_8021C778 99.71、fn_8019FA30 98.76)
+
+fn_8021C778: `pressed` と inline 展開された RecordBanner / NameEntry の dtor 用ポインタが target は r23/r24、こちら r25/r26。fn_8019FA30: 名前付き `int *pIds = ids;` で `mr r10,r0` の形は出たが、層ループの saved レジスタ番号が target とずれたまま (720 通りの decl order でも 98.76)。
+
