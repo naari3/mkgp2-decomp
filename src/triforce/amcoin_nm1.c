@@ -18,10 +18,7 @@ static inline u32 GetCoinMul(s32 i) {
 }
 
 static inline u32 GetCoinStatsIndex(u32 chute, u32 index) {
-    if (chute == 2) {
-        index += 2;
-    }
-    return index;
+    return chute == 2 ? index + 2 : index;
 }
 
 static inline void AddCoinStats(u32 buttons, u32 idx, s32 coins, s32 credits) {
