@@ -873,10 +873,15 @@ static inline int CurrentNameScore(void)
             }
         }
     }
-    for (j = 1; j < 9; j++) {
-        for (k = 0; k < 2; k++) {
-            if (fn_801D59F8(&g_playerData, j, k) == 1) {
-                score += 4;
+    {
+        long cup;
+        int variant;
+
+        for (cup = 1; cup < 9; cup++) {
+            for (variant = 0; variant < 2; variant++) {
+                if (fn_801D59F8(&g_playerData, cup, variant) == 1) {
+                    score += 4;
+                }
             }
         }
     }
@@ -884,9 +889,13 @@ static inline int CurrentNameScore(void)
     return score;
 }
 
+static inline int CurrentPlayerNameId(int chara)
+{
+    return DetermineNameId(CurrentNameScore(), chara);
+}
+
 void DetermineTitle(unsigned char mode)
 {
-    int chara;
     unsigned char skip;
     TitleCheckFn *checks = 0;
     int count = 0;
@@ -901,8 +910,7 @@ void DetermineTitle(unsigned char mode)
         g_nameId = 0;
         return;
     }
-    chara = g_characterId;
-    g_nameId = DetermineNameId(CurrentNameScore(), chara);
+    g_nameId = CurrentPlayerNameId(g_characterId);
     if (mode == 1) {
         return;
     }
