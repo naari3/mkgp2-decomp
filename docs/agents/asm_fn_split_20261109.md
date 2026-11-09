@@ -227,6 +227,7 @@ The table above is the list as of 13:15Z. Since then (`tools/scan_asm_fns.py`):
 | fn_801500F4 | game/Scene_8014E0C4.cpp | C, 100 % since 163c054f (`TextPanelC::TextPanelC`; the init template is placed by an inline function defined among the pool statics in Scene_8014E0C4_rodata.inc). The list still showed it because of a stale `asm void fn_801500F4(void);` declaration, now removed | om |
 | RaceContext_InitDefaults | game/RaceContext_InitDefaults.c | still asm; the file is now part of game/SetCourseParams.c (887c513, 14-TU merge) | n3 merge |
 | SoundMgr_Play | game/SoundMgr_Play.c | still asm; the file is now part of game/clsound/fn_801913B0.c (a4d82de, 19-TU merge) | n3 merge |
+| WarpZone_CheckEntry | game/auto_800A8F4C_block.c | C, 100 % (regalloc_patterns §50) | n3 |
 
 The four `n3` conversions and the two merges touched group C although
 n3-20261109-1338 said n3 would stay out of it: they came out of TU merges and
