@@ -4,7 +4,7 @@
 #include "game/PhysicsCollisionPrivate.h"
 #include "game/PhysicsWallMatrixPrivate.h"
 
-static inline float CollisionLength(float squared)
+static inline void CollisionLength(float &squared)
 {
     if (squared > 0.0f) {
         double estimate = __frsqrte(squared);
@@ -12,9 +12,8 @@ static inline float CollisionLength(float squared)
         estimate = lbl_806DA458 * estimate * (lbl_806DA460 - squared * (estimate * estimate));
         estimate = lbl_806DA458 * estimate * (lbl_806DA460 - squared * (estimate * estimate));
         volatile float rounded = squared * estimate;
-        return rounded;
+        squared = rounded;
     }
-    return squared;
 }
 
 extern "C" void PhysicsState_WallCollisionCheck(char *self)
@@ -29,9 +28,7 @@ extern "C" void PhysicsState_WallCollisionCheck(char *self)
     }
     PhysicsWallMatrix original(*(PhysicsWallMatrix *)(self + 0xE4));
     original.applyYaw(PH_F(self, 0x84));
-    original.m[12] = PH_F(self, 0x4C);
-    original.m[13] = PH_F(self, 0x50);
-    original.m[14] = PH_F(self, 0x54);
+    original.setTranslation(PH_F(self, 0x4C), PH_F(self, 0x50), PH_F(self, 0x54));
     PhysicsCollisionVec endpoint;
     PhysicsCollisionVec *ep = &endpoint;
     unsigned char applied = 0;
@@ -53,14 +50,13 @@ extern "C" void PhysicsState_WallCollisionCheck(char *self)
             PH_F(self, 0x4C) += correction.x;
             PH_F(self, 0x50) += correction.y;
             PH_F(self, 0x54) += correction.z;
-            original.m[12] = PH_F(self, 0x4C);
-            original.m[13] = PH_F(self, 0x50);
-            original.m[14] = PH_F(self, 0x54);
+            original.setTranslation(PH_F(self, 0x4C), PH_F(self, 0x50), PH_F(self, 0x54));
             if (!applied) {
                 float xx = correction.x * correction.x;
                 float yy = correction.y * correction.y;
                 float zz = correction.z * correction.z;
-                float length = CollisionLength(zz + (xx + yy));
+                float length = zz + (xx + yy);
+                CollisionLength(length);
                 float force = length;
                 if (lbl_806DA49C < length) force = lbl_806DA49C;
                 if (corner < 2) force *= lbl_806DA4A0;

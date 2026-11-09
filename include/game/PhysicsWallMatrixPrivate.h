@@ -7,6 +7,11 @@
 struct PhysicsWallMatrix {
     float m[16];
     PhysicsWallMatrix() {}
+    void setTranslation(float x, float y, float z) {
+        m[12] = x;
+        m[13] = y;
+        m[14] = z;
+    }
     PhysicsWallMatrix(const PhysicsWallMatrix &other) {
         for (int i = 0; i < 16; ++i) m[i] = other.m[i];
     }
