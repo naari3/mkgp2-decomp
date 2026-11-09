@@ -22,6 +22,7 @@ Rough order to try; each one writes nothing to the repo unless `--apply`.
 | `typesweep.py` | integer types of locals | §17 |
 | `retname_sweep.py` | named return value inside inlines | §16 |
 | `shapesweep.py` | source shape (inline wrappers, temporaries, hoists) | when the above are exhausted |
+| `permuter/mkperm.py` | sets up upstream decomp-permuter (random AST mutations) for one fn | C and C++ free fns; see `permuter/README.md` |
 | `autopipe.py` | runs pragmasweep -> decl order -> permuter unattended | needs naari3's out-of-repo `cperm.py` / `queue.py` (see below) |
 | `regswap_classify.py` | nothing; groups near misses by diff shape | picks targets; output `docs/reports/regswap_census.md` |
 | `mwccdbg.py` | nothing; shows why a register went where it did | mwcc-debugger wrapper; `mwcc_dump.py` is the older private-mwcc variant |
