@@ -257,6 +257,24 @@ without those flags ninja tries to download tools and fails.
   clCSOrgKartModel (`src/game/anon_8021A7C8.cpp`: pure-virtual slots are
   0 in the vtable; string literals in the deferred ctor land after the RTTI
   names, file-scope named arrays before them; owns the RTTI .sdata).
+- **Where a weak inline copy lands is TU-boundary evidence.** A weak copy
+  that is referenced by address only (an inline destructor named in an extab
+  cleanup) is not generated where it is used: it waits on a LIFO export list
+  (mweppc `frontend/CInline.c` `cinline_exportlist`, flushed by
+  `CParser_GlobalCleanup` -> `CInline_GenerateDeferredFuncs`). Measured with
+  toy files on GC/1.3.2: the list is flushed at the next declaration of ANY
+  kind that is not a function definition (class/struct/union definition,
+  typedef, forward or `extern` declaration, a `static inline` definition,
+  `#pragma cplusplus on/off`). Function definitions, `#pragma push/pop`,
+  `#pragma exceptions`, `#define`/`#undef` do not flush. With only function
+  definitions after the use, the copies come at the very end of the TU, last
+  used first. So: a weak dtor several functions after its only user means
+  those functions are the same TU as the user and no declaration separates
+  them (headers first, then code). Worked example: `dtor_800869D0`
+  (`FKTex::~FKTex() {}`) is used by `DrawLinkErrorOverlay` but sits after
+  `PCBComm_Init`; merging 24 TUs into `src/game/PCBCheckRecv.c` with every
+  C++ declaration hoisted above `DrawLinkErrorOverlay` reproduces it (and
+  PCBComm_Init went 96.97 -> 100 from the shared .bss anchor alone).
 - Mangled names: map them to the project's names through
   `tools/extab_user_renames.json`, never by editing symbols to mangled names.
 
