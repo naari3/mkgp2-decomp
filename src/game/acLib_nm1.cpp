@@ -14,7 +14,7 @@ extern "C" int fn_80255154(int board, int id) {
     unsigned int *cnt;
     int i;
     int prev;
-    int cur;
+    long cur;
 
     board = (unsigned char)board;
     if (fn_8028AA40(board, &a, &b)) {
@@ -56,19 +56,14 @@ extern "C" int fn_80255154(int board, int id) {
             int k = cur;
             int n = 7;
             int j;
-            if (cur < 0) {
-                k = 7;
-            }
-            if (lbl_80679E34[k] & mask) {
-                n--;
-            }
-            for (j = 0; j < 6; j++) {
-                if (--k < 0) {
+            for (j = 0; j < 7; j++) {
+                if (k < 0) {
                     k = 7;
                 }
                 if (lbl_80679E34[k] & mask) {
                     n--;
                 }
+                k--;
             }
             if (n <= 0) {
                 cnt[i] = 8;
