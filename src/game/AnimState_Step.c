@@ -1,9 +1,8 @@
 /* AnimState (0x800AE854..0x800AF088): keyframed parameter tracks.
- * NonMatching: Step 100%, Init 98.867% (objdiff, 2026-11-08).
- * The counter initializer below emits Init's templates before Step's,
- * preserving the original .sbss2 order without changing the instructions.
- * Init still emits an extra zero load before clearing its track state.
- * Opposite text/template orders prevent splitting Step into a separate TU.
+ * Step, Init and all owned sections match (objdiff, 2026-11-09).
+ * The counter initializer emits Init's templates before Step's. The entry
+ * walker keeps its stream offset separate from the caller's track/scalar
+ * counters, preserving the original zero sharing and counter initialization.
  */
 #include "game/AnimState_Step_private.h"
 
@@ -208,15 +207,74 @@ int AnimState_Step(AnimState *s)
     return res != 0;
 }
 
+static inline void AnimState_InitEntries(AnimState *s, AnimEntry *entries,
+                                         signed char *n, signed char *j)
+{
+    AnimEntry *e;
+    int k;
+    AnimCounter c, b, a;
+
+    k = 0;
+    AnimState_InitCounters(&a, &b, &c);
+
+    e = entries;
+    while (e->type != 13) {
+        switch ((signed char)e->type) {
+        case 0:
+            for (s->keyCount[*n] = 0;
+                 ((int *)e->data)[s->keyCount[*n]] != -1 && ((int *)e->data)[s->keyCount[*n]] != -2;
+                 s->keyCount[*n]++) {
+            }
+            s->lastKey[*n] = ((int *)e->data)[s->keyCount[*n]];
+            s->state[*n] = 1;
+            (*n)++;
+            break;
+        case 1:
+            s->value44 = *(int *)e->data;
+            break;
+        case 2:
+            s->a[a.v[0]++].x = *(float *)e->data;
+            break;
+        case 3:
+            s->a[a.v[1]++].y = *(float *)e->data;
+            break;
+        case 4:
+            s->a[a.v[2]++].z = *(float *)e->data;
+            break;
+        case 5:
+            s->b[b.v[0]++].x = *(float *)e->data;
+            break;
+        case 6:
+            s->b[b.v[1]++].y = *(float *)e->data;
+            break;
+        case 7:
+            s->b[b.v[2]++].z = *(float *)e->data;
+            break;
+        case 8:
+            s->c[c.v[0]++].x = *(float *)e->data;
+            break;
+        case 9:
+            s->c[c.v[1]++].y = *(float *)e->data;
+            break;
+        case 10:
+            s->c[c.v[2]++].z = *(float *)e->data;
+            break;
+        case 11:
+            s->d[(*j)++] = *(float *)e->data;
+            break;
+        case 12:
+            s->value4 = (int)e->data;
+            break;
+        }
+        k += sizeof(AnimEntry);
+        e = (AnimEntry *)((unsigned int)entries + k);
+    }
+}
+
 void AnimState_Init(AnimState *s, AnimEntry *entries)
 {
     int i;
-    int k;
-    AnimEntry *e;
-    signed char n;
-    signed char j;
 
-    k = 0;
     s->entries = entries;
     s->value4 = 0;
     for (i = 0; i < 8; i++) {
@@ -226,62 +284,8 @@ void AnimState_Init(AnimState *s, AnimEntry *entries)
         s->state[i] = 0;
     }
     if (entries != 0) {
-        AnimCounter a, b, c;
-        AnimState_InitCounters(&a, &b, &c);
-
-        n = 0;
-        j = 0;
-        e = entries;
-        while (e->type != 13) {
-            switch ((signed char)e->type) {
-            case 0:
-                for (s->keyCount[n] = 0;
-                     ((int *)e->data)[s->keyCount[n]] != -1 && ((int *)e->data)[s->keyCount[n]] != -2;
-                     s->keyCount[n]++) {
-                }
-                s->lastKey[n] = ((int *)e->data)[s->keyCount[n]];
-                s->state[n] = 1;
-                n++;
-                break;
-            case 1:
-                s->value44 = *(int *)e->data;
-                break;
-            case 2:
-                s->a[a.v[0]++].x = *(float *)e->data;
-                break;
-            case 3:
-                s->a[a.v[1]++].y = *(float *)e->data;
-                break;
-            case 4:
-                s->a[a.v[2]++].z = *(float *)e->data;
-                break;
-            case 5:
-                s->b[b.v[0]++].x = *(float *)e->data;
-                break;
-            case 6:
-                s->b[b.v[1]++].y = *(float *)e->data;
-                break;
-            case 7:
-                s->b[b.v[2]++].z = *(float *)e->data;
-                break;
-            case 8:
-                s->c[c.v[0]++].x = *(float *)e->data;
-                break;
-            case 9:
-                s->c[c.v[1]++].y = *(float *)e->data;
-                break;
-            case 10:
-                s->c[c.v[2]++].z = *(float *)e->data;
-                break;
-            case 11:
-                s->d[j++] = *(float *)e->data;
-                break;
-            case 12:
-                s->value4 = (int)e->data;
-                break;
-            }
-            k += sizeof(AnimEntry);
-            e = (AnimEntry *)((unsigned int)entries + k);
-        }
+        signed char n = 0;
+        signed char j = 0;
+        AnimState_InitEntries(s, entries, &n, &j);
     }
 }
