@@ -284,12 +284,14 @@ extern "C" void KartPhysics_GroundedMovement(GroundedMovementState *self) {
     Vec3_Add_DestFirst(&current,&current,&offset);
     PhysicsPlainVec toward=*(const PhysicsPlainVec *)(constants+0x4b0);
     toward.set(current.x-self->position.x,current.y-self->position.y,current.z-self->position.z);
-    float heading=(float)atan2(toward.x,toward.z)-self->yaw;
+    float forward=toward.z;
+    float heading=(float)atan2(toward.x,forward)-self->yaw;
     groundedAngle(heading);
-    float distance=toward.x*toward.x+toward.z*toward.z;
+    float distance=toward.x*toward.x;
+    distance=forward*forward+distance;
     groundedSqrt(distance);
     float side=toward.x*LUT_Sine(heading);
-    side=toward.z*LUT_Cosine(heading)-side;
+    side=forward*LUT_Cosine(heading)-side;
     Vec3_Copy(&self->targetPosition,&current);
     int advanced=0;
     if (distance<lbl_806DA508 || (side<=lbl_806DA42C && distance<lbl_806DA50C)) {
