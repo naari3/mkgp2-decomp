@@ -42,7 +42,8 @@ static inline void Multiply(Matrix44 *a, const Matrix44 *b) {
         }
         n += 4;
     }
-    for (int i = 0; i < 16; i++) ((float *)a)[i] = output[i];
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++) a->m[i][j] = result.m[i][j];
 }
 
 extern const double lbl_806D96F0;
