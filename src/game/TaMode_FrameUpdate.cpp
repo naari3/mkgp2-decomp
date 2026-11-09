@@ -336,7 +336,6 @@ static inline void HsdRef_Unref(HsdRefObj *o)
 
 }
 TaMode::TaMode() {
-    const char *data = (const char *)&tafu::BATTLE;
     float startX, startY;
     HSD_RandSeedPtr = &lbl_806D13CC;
     *HSD_RandSeedPtr = lbl_806D1110;
@@ -447,7 +446,7 @@ TaMode::TaMode() {
     ai = 0;
     flag38 = 0;
     /* Cups are one-based; one cup contains six (class, round) records. */
-    const RaceParams *params = &((TaModeRaceTables *)&tafu::BATTLE)->cups[g_cupId][g_ccClass][g_longRoundFlag];
+    const RaceParams *params = (const RaceParams *)&tafu::BATTLE; params += g_cupId * 6; params += g_ccClass * 2; params += g_longRoundFlag;
     g_bestLapTime = lbl_806D4830;
     g_currentLapTime = lbl_806D4830;
     g_totalRaceTime = lbl_806D4830;
