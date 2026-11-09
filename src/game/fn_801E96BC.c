@@ -52,9 +52,15 @@ void fn_801E96BC(AISystemState *self) {
     int i;
     AIVec p;
     AIVec pos;
-    int cap = lbl_806D1920;
+    /* fakematch (hand): natural code is `int cap = lbl_806D1920; ... base = lbl_806793D8;`.
+     * The target computes the table address straight into base's register and
+     * copies it to the record walker (`addi r28; mr r29,r28`). That needs base
+     * to be the SECOND lifetime range of a variable (a split-off temp, which
+     * coalesces with the address temp); a variable with one range is a named
+     * local and gets `addi r29; mr r28,r29`. regalloc_patterns 57. */
+    base = (AIPairRecord *)lbl_806D1920;
     self->frame++;
-    if (cap < self->frame) self->frame = cap;
+    if ((int)base < self->frame) self->frame = (int)base;
     base = lbl_806793D8;
     for (i = 0; i < 8; ++i) {
         record = &base[i];

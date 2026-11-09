@@ -1424,3 +1424,39 @@ takes the lowest saved register already handed out before it opens a new one.
   target which case uses which.
 - Moving the whole pickup test into an inline also fixed the GPR but its
   float local became a late temp (f30 again) and its Vec moved on the stack.
+
+Same rule, volatile registers (KartItem_ApplyImpactReflectAndDampVelocity, 11-09): an inline
+`bool IsReflectLane(Lane *lane)` called as `IsReflectLane(self->secondary)` gave lane r6 / result
+flag r5, target lane r5 / flag r6. `mwccdbg --all` showed the flag (inline return temp) with a
+higher vreg than the lane (argument temp), so the flag was coloured first and took the lower
+register. Wrapping the call as `inline bool IsReflectItem(Self *self) { return
+IsReflectLane(GetSecondary(self)); }` creates the getter's return temp after the wrapper's result
+temp: the lane is coloured first and gets r5. A getter at the call site without the wrapper, a
+getter inside the loop inline, an id getter and an in-body flag did not work.
+
+## 57. `addi rBase,..; mr rWalker,rBase` versus `addi rWalker,..; mr rBase,rWalker`: the base must be a split-off lifetime range (fn_801E96BC, 11-09)
+
+Diff: only the direction of the copy between a table base (`base = table;`,
+kept for an inner loop) and the strength-reduced walker of `&base[i]`.
+mwtrace (ours): `ADDI r54,..; MR base,r54; MR walker,r54`. The copy into the
+NAMED local `base` is never coalesced, the walker temp merges with r54, so the
+address lands in the walker. The target needs `base` itself to merge with the
+address temp; then `MR walker,base` stays because the two interfere.
+
+Only vregs in the temp range coalesce. A variable's FIRST lifetime range is
+the named local; every later range is a SplitOffRange temp (mwcc_internals,
+IRO_SplitLifetimes). So `base` has to be the second range of a variable that
+was used for something else earlier:
+
+```c
+base = (AIPairRecord *)lbl_806D1920;            /* first range: the cap */
+self->frame++;
+if ((int)base < self->frame) self->frame = (int)base;
+base = lbl_806793D8;                            /* second range: a temp */
+```
+
+A dead first assignment (`base = 0;` / the same assignment twice) is removed
+and does not count; an inline parameter is constant-propagated and the address
+is rematerialised in the loop; a named walker gives `addi r0; mr; mr`.
+When a diff is exactly this copy direction, look for a variable the original
+may have reused (same register in two unrelated places in the target).
