@@ -30,7 +30,7 @@ unsigned char fn_8019F5BC(SpriteAnim *s, SpriteAnimFrame *frames,
     SpriteAnimFrame *scan;
     short red, green, blue, opacity;
     for (i = 0; i < 120; i++) { ids[i] = -1; sorted[i] = -1; }
-    nextId = ids;
+    nextId = &ids[count]; /* not `ids`: target copies the CSE-d ids address into nextId */
     for (scan = frames;; scan++) {
         for (i = 0; i < count; i++) { if (ids[i] == scan->layer) break; }
         if (i == count) { *nextId++ = scan->layer; count++; }
