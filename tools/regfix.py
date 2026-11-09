@@ -1259,6 +1259,139 @@ def boolnorm_moves(st, focus):
             yield (f"boolnorm {name}#{k}", f, None)
 
 
+# --------------------------------------------------------------------------
+# rule one-named-local-per-def (tools/patterns/rules.jsonl), machine form:
+# expand a `VoidInline(args);` statement in place. The inline's locals become
+# caller locals (same name + type: reuse; otherwise one fresh named local per
+# expansion: c, c2, ...), initialisers become assignments in place, params are
+# substituted by the arguments. The decl-order solver then orders the new
+# named locals.
+
+VOID_INL = re.compile(r'(?:static\s+)?inline\s+void\s+([A-Za-z_]\w*)\s*\(([^)]*)\)\s*\{')
+
+
+def void_inlines(text):
+    import shapesweep as ss
+    out = {}
+    for m in VOID_INL.finditer(text):
+        b = m.end()
+        e = ss.brace_end(text, b)
+        body = text[b:e - 1]
+        if re.search(r'\breturn\b', body):
+            continue
+        params = []
+        for p in ss.split_top(m.group(2), ','):
+            p = p.strip()
+            if not p or p == 'void':
+                continue
+            mm = re.match(r'(.*?)([A-Za-z_]\w*)\s*$', p, re.S)
+            if not mm:
+                params = None
+                break
+            params.append((mm.group(1).strip(), mm.group(2)))
+        if params is not None:
+            out[m.group(1)] = (params, body)
+    return out
+
+
+def _subst(text, mp):
+    if not mp:
+        return text
+    pat = re.compile(r'(?<![\w.])(?<!->)\b(' + '|'.join(map(re.escape, mp)) + r')\b')
+    parts = re.split(r'("(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\')', text)
+    return ''.join(p if k % 2 else pat.sub(lambda m: mp[m.group(1)], p) for k, p in enumerate(parts))
+
+
+def expand_moves(st, sw, VI):
+    import shapesweep as ss
+    if not VI:
+        return
+    L = [ss.render_stmt(s) for s in st.stmts]
+    for si, t in enumerate(L):
+        m = re.match(r'^(\s*)([A-Za-z_]\w*)\s*\((.*)\);\s*$', t)
+        if not m or m.group(2) not in VI:
+            continue
+        for share in ("loop", "all", "none"):
+            f = _mk_expand(st, sw, L, si, m, VI[m.group(2)], share)
+            if f:
+                yield (f"expand-void {m.group(2)}@{si} share={share}", f, si)
+
+
+def _mk_expand(st, sw, L, si, m, inl, share):
+    import shapesweep as ss
+    params, body = inl
+    args = [x.strip() for x in ss.split_top(m.group(3), ',')] if m.group(3).strip() else []
+    if len(args) != len(params):
+        return None
+    ind = m.group(1)
+    callers = {}           # caller local name -> type text
+    for s in st.stmts:
+        if s['k'] == 'decl':
+            for v in s['vars']:
+                callers[v[0]] = (s['ty'] + ' ' + v[1]).strip()
+    for ty, nm in _param_decls(sw.sig).items():
+        callers[ty] = nm
+    used = set(_ids('\n'.join(L)))
+    mp = {}
+    for (pty, pn), arg in zip(params, args):
+        mp[pn] = arg if re.fullmatch(r'[\w.\->]+|-?\d+[uUlL]*|0x[0-9a-fA-F]+[uUlL]*', arg) else f"({arg})"
+    blines = [l for l in body.split('\n') if l.strip()]
+    bst = ss.parse_body('\n'.join(blines), sw.ti.types)
+    loopv = {x for l in blines if re.match(r'\s*for\s*\(', l) for x in _ids(l)}
+    new_decls, out = [], []
+    ren = {}
+    # top-level declarations of the inline body (first indentation level)
+    base = min((len(s.get('ind', '')) for s in bst if s['k'] != 'raw'), default=0)
+    for s in bst:
+        if s['k'] == 'decl' and len(s['ind']) == base:
+            for name, stars, arr, init in s['vars']:
+                ty = (s['ty'] + ' ' + stars).strip()
+                ok = share == "all" or (share == "loop" and name in loopv)
+                if ok and name in callers and callers[name].replace(' ', '') == ty.replace(' ', '') and not arr:
+                    nn = name
+                else:
+                    nn, k = name, 2
+                    while nn in used or nn in callers:
+                        nn = f"{name}{k}"
+                        k += 1
+                    new_decls.append({'k': 'decl', 'ind': st.stmts[0].get('ind', '    ') if st.stmts else '    ',
+                                      'ty': s['ty'], 'vars': [[nn, stars, arr, None]]})
+                    used.add(nn)
+                if nn != name:
+                    ren[name] = nn
+                if init is not None:
+                    out.append(('asg', nn, ss.pr(init)))
+            continue
+        out.append(('stmt', s))
+    mp2 = dict(mp)
+    mp2.update(ren)
+    lines = []
+    for kind, *x in out:
+        if kind == 'asg':
+            lines.append(f"{ind}{x[0]} = {_subst(x[1], mp2)};")
+        else:
+            s = x[0]
+            t = ss.render_stmt(s)
+            t = t[base:] if t[:base].strip() == '' else t.lstrip()
+            lines.append(ind + _subst(t, mp2))
+
+    def f():
+        s2 = st.clone()
+        a, b = __import__('shapesweep').decl_front(s2)
+        txt = '\n'.join(ss.render_stmt(x) for x in s2.stmts[:si]) + '\n' + '\n'.join(lines) + '\n' + \
+            '\n'.join(ss.render_stmt(x) for x in s2.stmts[si + 1:])
+        nb = ss.parse_body(txt, sw.ti.types)
+        a2, b2 = ss.decl_front(State_like(nb))
+        s2.stmts = nb[:b2] + new_decls + nb[b2:]
+        return s2
+    return f
+
+
+class State_like:
+    def __init__(self, stmts):
+        self.stmts = stmts
+
+
 def apply_decl_order(st, order):
     """New State with the leading declarations in `order` (names first declared
     first; others keep their place in front). Initialisers become assignments
@@ -1315,6 +1448,7 @@ def fix(a, rep0):
             s2.prop_off = True
             return s2
         return ("propoff", f, None)
+    VI = void_inlines(sw.text[:sw.d[0]])
     text0 = rend(sw.init)
     s0 = sw.score(text0, 0)
     m0, r0 = ev.diag(text0, 0, top_decls(sw.init))
@@ -1354,9 +1488,10 @@ def fix(a, rep0):
             foc = {i for i, l in enumerate(sl) if l in lines}
             extra = [] if getattr(st, "prop_off", False) or PROP in (a.pragma or []) else [prop_move(st)]
             ext = extract_moves(st, sw, names, a.fn, focus=foc) if not a.no_inline else ()
-            for label, f, si in itertools.chain(extra, ext, boolnorm_moves(st, foc), decl_moves(st, names),
+            for label, f, si in itertools.chain(extra, ext, expand_moves(st, sw, VI), boolnorm_moves(st, foc),
+                                                decl_moves(st, names),
                                                 ss.moves(st, sw.ctx, allowed)):
-                pri = 0 if (si in foc or label.startswith(("declmove", "propoff", "inline", "boolnorm"))) else 1
+                pri = 0 if (si in foc or label.startswith(("declmove", "propoff", "inline", "boolnorm", "expand-void"))) else 1
                 if pri == 1 and a.focus_only:
                     continue
                 cands.append((pri, len(cands), st, label, f))
@@ -1391,6 +1526,10 @@ def fix(a, rep0):
         order = sorted(range(len(new)), key=lambda i: sc[i])
         lim = min(sc) + a.slack
         pick = [i for i in order if sc[i] <= lim][:a.dbg]
+        # catalog-rule rewrites usually only pay off after the decl-order
+        # solver: always diagnose a few of them whatever their score
+        RULE = ("expand", "inline[", "boolnorm")
+        pick += [i for i in order if i not in pick and new[i][0].hist[-1].startswith(RULE)][:a.dbg]
         with ThreadPoolExecutor(a.jobs if ev.par else 1) as ex:
             res = list(ex.map(lambda k: ev.diag(new[pick[k]][1], k, top_decls(new[pick[k]][0])), range(len(pick))))
         for k, (m, rep) in zip(pick, res):
@@ -1443,6 +1582,7 @@ def log_hit(fn, unit, hist, before):
         return
     kinds = {h.split()[0] for h in hist}
     rule = ("inline-matched-sibling" if any(k.startswith("inline[") for k in kinds) else
+            "one-named-local-per-def" if kinds & {"expand-void", "expand"} else
             "regfix-declorder" if "declorder" in kinds else "regfix-" + "+".join(sorted(kinds)))
     try:
         rewrite_rules.record_hit(fn, unit, rule, "regfix", before, 0, note=" | ".join(hist)[:300])
