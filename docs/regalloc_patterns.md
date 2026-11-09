@@ -1757,3 +1757,20 @@ What else the two inlines (`RR_FindNearest(pts, count, pos)`,
 
 Rule name in hits.jsonl: `li-cse-inline-locals`.
 
+## 68. Loop counters take the LAST volatile registers in the target: the loop is not inside an inline (clFlowCCBattle::Update, 11-09)
+
+Diff: a 5x20 grid shift loop with five volatile registers rotated. Target
+y=r9, x=r10, walkers r6/r7/r8; ours x=r6, y=r7, walkers above.
+
+Reading: in the target the two counters are coloured after every temp, so
+they are named locals of the function (lowest virtual registers). In ours
+the loop lived in a `static inline ShiftBattleGrid(page)`, which turns its
+locals into frontend inline temps (highest numbers, coloured first).
+
+Fix: write the loop straight into the function body (66 -> 17 lines). The
+remaining walker swap (dst `x + y*20` vs src `x + (y-1)*20`) follows
+creation order of the strength-reduction temps: name the destination index
+first (`int dst = x + y * 20;` before `src`), 17 -> 0.
+
+Rule of thumb: counters in the highest volatile registers = plain locals;
+counters in the lowest = an inline's locals.
