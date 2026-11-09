@@ -640,3 +640,8 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   the struct copy). Naming the quaternion components as locals `x, z, y, w` in the matrix inline gave
   the last few points; the tail's saved FPR order (w=f29 in the target) did not move with any
   declaration order.
+- PCBComm_Process 99.22 -> 99.31 (11-10): read the target's saved-register sharing to get the colouring
+  order (here `off` shares r24 with `accepted`, whose 0 value is dead inside the accept block, so
+  `accepted` was coloured before `off`), then move declarations until mwtrace COLOR lines show that
+  order. A walking pointer declared as a block local after the other block locals went last as wanted.
+  Open: a frontend CSE temp cannot be numbered below a named local with any lever known so far.
