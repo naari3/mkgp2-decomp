@@ -1584,3 +1584,30 @@ Side effects of going to literals in the rest of the TU, and their fixes:
   f3,f2,f1,f0:
   `float y1, x1, y0, x0; x0 = -320.0f; y0 = -240.0f; x1 = 320.0f; y1 = 240.0f;`
 - The TU must own the constants: add its `.sdata2` range to `config/GNLJ82/splits.txt`.
+
+## 62. Hand-unrolled segment calls with base/cursor registers swapped: write the real loop AND pass the base as an expression (EffectVfx29_30_Item4SubFlame_Tick, 11-09)
+
+Diff: four copies of a piecewise-linear segment test; target base r3 and
+`addi r4,r3,4*n` cursors, ours base r4 and cursors r3. Each lever alone fails:
+
+- named outer `FlameCurve *curve` + hand-unrolled calls: curve is coloured
+  last, r3/r4 swapped (99.42);
+- curve passed as an expression + hand-unrolled calls: base r3, but the dead
+  base merges into the last cursor (`lfsu f2,0xc(r3)`);
+- named outer curve + real loop: strength-reduced `lfsu` walk (95%).
+
+Both together match: with the base as a temp expression the compiler fully
+unrolls the constant 4-trip loop itself and keeps one base with `addi`
+cursors, the last one included.
+
+```c
+for (i = 0; i < 4; i++) {
+    FlameCurve_Segment((float (*)[5])((char *)curve + i * sizeof(float)), t, &height);
+}
+...
+int idx = I(0x10);
+height = FlameCurve_Evaluate(lbl_8041A224 + idx, F(0x150));
+```
+
+Lesson: when a row in gave_up lists "loop tried" and "expression tried"
+separately, try the combination before giving up.
