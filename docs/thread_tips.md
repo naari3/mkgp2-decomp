@@ -56,6 +56,19 @@ matches over 51 fns, the wins came from diagnosis + a hand rewrite):
    Instruction-ORDER diffs (same opcodes, different order): `regfix diag UNIT FN --sched`
    traces the real GC/2.6 scheduler (tools/mwsched.py) and says why ours picked A before B
    (dependence / uncovering / height ...), with the source lines.
+   The diag output also ends with two lever sections: source levers that landed by hand
+   (inline-wrapper-named-locals, indexed-vs-walking-pointer, base-init-in-body) and the
+   leversweep levers whose triggers fire (rule ids, with the `leversweep.py fn` command).
+   `regfix diag UNIT FN --tracesweep [--run]` writes a tracesweep template whose axes are the
+   diagnosed lines (hoist into a named local, call with named locals, walking -> indexed)
+   and whose `// want:` predicate is the diag conclusion. Batch over gave_up rows:
+   `tools/regfix_diagsweep.py` (11-09: 163 fns, 0 new matches, 3 improved; results in
+   docs/sweeps/regfix/diagsweep_shard*.jsonl). So: use it for one function, not as a sweep.
+   diag also prints target `addi rX,anchor,N` whose address lands inside a symbol (rule
+   anchor-addi-object-boundary, regalloc_patterns 40): split the symbol there.
+   Not register-only? `python3 tools/nonreg_classify.py LIST` says what the other diff is
+   (length:copy/address/extend/load/branch/mixed, order, opcode, stack, symbol);
+   counts for the 11-09 gave_up rows are in docs/nonreg_census.md.
 3. `python3 tools/regfix.py fix UNIT FN` still runs the catalog moves (inline[ / boolnorm /
    expand-void / unname / pragma-*) with the solver; worth one run, not a sweep.
 
