@@ -5702,11 +5702,10 @@ g_voiceQueue_p18[g_voiceQueueHead_p18].flag_p18 = flag_p18;
 g_voiceQueueHead_p18++;
 return 1;
 }
-static inline float RaceEvent_QueueTime_p18(short *tables_p18) {
+static inline float RaceEvent_QueueTime_p18(VoiceClip *clips_p18) {
 float time_p18 = 0.0f;
 int i_p18;
 if (g_voiceQueueHead_p18 != 0) {
-RaceEventVoiceClip_p18 *clips_p18 = (RaceEventVoiceClip_p18 *)((char *)tables_p18 + 0x1534);
 for (i_p18 = g_voiceQueueTail_p18; i_p18 < g_voiceQueueHead_p18; i_p18++)
 time_p18 += clips_p18[g_voiceQueue_p18[i_p18].id_p18].length;
 time_p18 -= (float)((g_voiceStreamLastPollTime_p18 - g_voiceStreamStartTime_p18) / (((*(unsigned long *)0x800000F8) / 4) / 1000)) / 1000.0f;
@@ -5721,10 +5720,10 @@ if (g_voiceQueue_p18[i_p18].id_p18 == id_p18) return 1;
 }
 return 0;
 }
-static inline short RaceEvent_Select_p18(int character_p18, int id_p18, short *tables_p18) {
-short *normal_p18 = tables_p18 + 14;
-short *special_p18 = tables_p18 + 94;
+static inline short RaceEvent_Select_p18(int character_p18, int id_p18) {
 short voice_p18 = 0x43;
+short *normal_p18 = lbl_80496C54;
+short *special_p18 = lbl_80496CF4;
 if (character_p18 > -1 && character_p18 < 13) {
 if (g_gameMode_p18 == 2) {
 if (id_p18 >= 0 && id_p18 <= 3) voice_p18 = special_p18[character_p18 + id_p18 * 13];
@@ -5734,7 +5733,6 @@ else voice_p18 = normal_p18[character_p18];
 return voice_p18;
 }
 unsigned char VoiceEvent_PushRace(void) {
-short *tables_p18 = lbl_80496C38;
 OSTime_p18 now_p18;
 int i_p18;
 if (g_currentRaceEventPlayer_p18 == -1) return 0;
@@ -5744,16 +5742,16 @@ g_currentRaceEventPlayer_p18 = -1;
 return 0;
 }
 if (g_raceEntryArray_p18[g_currentRaceEventPlayer_p18].state_p18 == 2) {
-if (RaceEvent_QueueTime_p18(tables_p18) < 3.0f) {
-RaceEvent_Push_p18((RaceEvent_Select_p18((&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->character_p18, (&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->id_p18, tables_p18)), -1, 0, 1) ;
+if (RaceEvent_QueueTime_p18(g_voicePlayCountTable) < 3.0f) {
+RaceEvent_Push_p18((RaceEvent_Select_p18((&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->character_p18, (&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->id_p18)), -1, 0, 1) ;
 RaceEvent_Push_p18((0x24B), -1, 0, 1) ;
 }
 lbl_806D17D0_p18 = now_p18;
 return 1;
 }
 if (g_raceEntryArray_p18[g_currentRaceEventPlayer_p18].state_p18 == 3) {
-if (RaceEvent_QueueTime_p18(tables_p18) < 3.0f) {
-RaceEvent_Push_p18((RaceEvent_Select_p18((&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->character_p18, (&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->id_p18, tables_p18)), -1, 0, 1) ;
+if (RaceEvent_QueueTime_p18(g_voicePlayCountTable) < 3.0f) {
+RaceEvent_Push_p18((RaceEvent_Select_p18((&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->character_p18, (&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->id_p18)), -1, 0, 1) ;
 RaceEvent_Push_p18((0x24C), -1, 0, 1) ;
 }
 lbl_806D17D0_p18 = now_p18;
@@ -5761,9 +5759,9 @@ return 1;
 }
 for (i_p18 = 0; i_p18 < 8; i_p18++) {
 if (*(int *)((char *)&g_raceEntryArray_p18[i_p18] + 0x28) == g_currentRaceEventPlayer_p18) {
-if (RaceEvent_QueueTime_p18(tables_p18) < 3.0f) {
+if (RaceEvent_QueueTime_p18(g_voicePlayCountTable) < 3.0f) {
 if ((float)((now_p18 - lbl_806D17D8_p18) / (((*(unsigned long *)0x800000F8) / 4) / 1000)) / 1000.0f >= lbl_806D9828_p18) {
-RaceEvent_Push_p18((RaceEvent_Select_p18((&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->character_p18, (&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->id_p18, tables_p18)), -1, 0, 1) ;
+RaceEvent_Push_p18((RaceEvent_Select_p18((&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->character_p18, (&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->id_p18)), -1, 0, 1) ;
 RaceEvent_Push_p18((0x24D), -1, 0, 1) ;
 lbl_806D17D8_p18 = now_p18;
 }
@@ -5776,8 +5774,8 @@ for (i_p18 = 0; i_p18 < 8; i_p18++) {
 if (g_raceEntryArray_p18[i_p18].state_p18 == 5 &&
 *(unsigned int *)((char *)&g_raceEntryArray_p18[i_p18] + 0x10) ==
 *(unsigned int *)((char *)&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18] + 0x44)) {
-if (RaceEvent_QueueTime_p18(tables_p18) < 3.0f) {
-RaceEvent_Push_p18((RaceEvent_Select_p18((&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->character_p18, (&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->id_p18, tables_p18)), -1, 0, 1) ;
+if (RaceEvent_QueueTime_p18(g_voicePlayCountTable) < 3.0f) {
+RaceEvent_Push_p18((RaceEvent_Select_p18((&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->character_p18, (&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->id_p18)), -1, 0, 1) ;
 RaceEvent_Push_p18((0x24E), -1, 0, 1) ;
 }
 lbl_806D17D0_p18 = now_p18;
@@ -5785,16 +5783,16 @@ return 1;
 }
 }
 if (g_raceEntryArray_p18[g_currentRaceEventPlayer_p18].present_p18 && g_raceEntryArray_p18[g_currentRaceEventPlayer_p18].kind_p18 != 0x99) {
-if (RaceEvent_QueueTime_p18(tables_p18) < 3.0f) {
-RaceEvent_Push_p18((RaceEvent_Select_p18((&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->character_p18, (&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->id_p18, tables_p18)), -1, 0, 1) ;
+if (RaceEvent_QueueTime_p18(g_voicePlayCountTable) < 3.0f) {
+RaceEvent_Push_p18((RaceEvent_Select_p18((&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->character_p18, (&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->id_p18)), -1, 0, 1) ;
 RaceEvent_Push_p18((0x24F), -1, 0, 1) ;
 }
 lbl_806D17D0_p18 = now_p18;
 return 1;
 }
 if (g_raceEntryArray_p18[g_currentRaceEventPlayer_p18].f60_p18 && !RaceEvent_Queued_p18(0x250)) {
-if (RaceEvent_QueueTime_p18(tables_p18) < 3.0f) {
-RaceEvent_Push_p18((RaceEvent_Select_p18((&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->character_p18, (&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->id_p18, tables_p18)), -1, 0, 1) ;
+if (RaceEvent_QueueTime_p18(g_voicePlayCountTable) < 3.0f) {
+RaceEvent_Push_p18((RaceEvent_Select_p18((&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->character_p18, (&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->id_p18)), -1, 0, 1) ;
 RaceEvent_Push_p18((0x250), -1, 0, 1) ;
 }
 lbl_806D17D0_p18 = now_p18;
@@ -5802,8 +5800,8 @@ return 1;
 }
 if ((float)((now_p18 - lbl_806D17D0_p18) / (((*(unsigned long *)0x800000F8) / 4) / 1000)) / 1000.0f >= lbl_806D982C_p18) {
 if (!RaceEvent_Queued_p18(0x251) && !RaceEvent_Queued_p18(0x252) && !RaceEvent_Queued_p18(0x253)) {
-if (RaceEvent_QueueTime_p18(tables_p18) < 3.0f) {
-RaceEvent_Push_p18((RaceEvent_Select_p18((&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->character_p18, (&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->id_p18, tables_p18)), -1, 0, 1) ;
+if (RaceEvent_QueueTime_p18(g_voicePlayCountTable) < 3.0f) {
+RaceEvent_Push_p18((RaceEvent_Select_p18((&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->character_p18, (&g_raceEntryArray_p18[g_currentRaceEventPlayer_p18])->id_p18)), -1, 0, 1) ;
 if (g_voiceTickCounter_p18 % 3 == 0) RaceEvent_Push_p18((0x251), -1, 0, 1) ;
 else if (g_voiceTickCounter_p18 % 3 == 1) RaceEvent_Push_p18((0x252), -1, 0, 1) ;
 else RaceEvent_Push_p18((0x253), -1, 0, 1) ;
