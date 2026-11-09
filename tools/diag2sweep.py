@@ -195,22 +195,36 @@ def inline_variant(name, ret, params, body):
         if not m:
             continue
         ptype, pn = m.group(1).strip(), m.group(2)
-        reads = re.findall(r'\b' + pn + r'\s*->\s*(\w+)(?!\s*(?:=(?!=)|\+\+|--|[-+*/|&^]=|\[|\.|->))', body)
+        reads = re.findall(r'\b' + pn + r'\s*->\s*(\w+)\b(?!\s*(?:=(?!=)|\+\+|--|[-+*/|&^]=|\[|\.|->|\())', body)
         if not reads or re.search(r'\b' + pn + r'\b(?!\s*->)', body):
             continue                 # p used as a whole: keep it
+        if re.search(r'&\s*' + pn + r'\s*->', body):
+            continue                 # address of a field taken: not a value read
         if re.search(r'\b' + pn + r'\s*->\s*\w+\s*(=(?!=)|\+\+|--|[-+*/|&^]=)', body):
             continue                 # written through: not a pure reader
         fields, b2, newp = [], body, []
         for f in dict.fromkeys(reads):
-            lm = re.search(r'(?m)^\s*([\w\s\*]+?)\s+(\w+)\s*=\s*' + pn + r'\s*->\s*' + f + r'\s*;[ \t]*\n', b2)
+            lm = re.search(r'(?m)^[ \t]*([A-Za-z_][\w \t\*]*?)[ \t]*\b(\w+)[ \t]*=[ \t]*' + pn + r'\s*->\s*' + f + r'\s*;[ \t]*\n', b2)
+            am = dm = None
+            if not lm:               # `T x; ... x = p->f;`: the declaration is separate
+                am = re.search(r'(?m)^[ \t]*(\w+)[ \t]*=[ \t]*' + pn + r'\s*->\s*' + f + r'\s*;[ \t]*\n', b2)
+                if am:
+                    dm = re.search(r'(?m)^[ \t]*([A-Za-z_][\w \t\*]*?)[ \t]*\b' + am.group(1) + r'[ \t]*;[ \t]*\n', b2)
             if lm and not re.search(r'\b' + pn + r'\s*->\s*' + f + r'\b', b2[:lm.start()] + b2[lm.end():]):
                 b2 = b2[:lm.start()] + b2[lm.end():]
                 fields.append((f, lm.group(1).strip(), lm.group(2)))
+            elif am and dm and dm.group(1).strip() not in ('return', 'goto') and \
+                    not re.search(r'\b' + pn + r'\s*->\s*' + f + r'\b', b2[:am.start()] + b2[am.end():]):
+                for mm in sorted((am, dm), key=lambda x: -x.start()):
+                    b2 = b2[:mm.start()] + b2[mm.end():]
+                fields.append((f, dm.group(1).strip(), am.group(1)))
             else:
                 pname = f + '__nl'
                 b2 = re.sub(r'\b' + pn + r'\s*->\s*' + f + r'\b', pname, b2)
                 fields.append((f, f'__typeof__((({ptype})0)->{f})', pname))
             newp.append(f'{fields[-1][1]} {fields[-1][2]}')
+        if re.search(r'\b' + pn + r'\b', b2):
+            continue                 # an access we do not rewrite (p->arr[i], p->a.b) is left
         rest = [q for k, q in enumerate(ps) if k != pi]
         helper = f'static inline {ret} {name}__nl({", ".join(rest + newp) or "void"}) {{{b2}}}\n'
         return helper, pi, fields
@@ -323,7 +337,8 @@ def build_template(src, fn_span, lines, cpp, max_axes=6):
         notes.append(f'{h}: hold `{expr}` in a named local ({len(pos)} occurrence(s) on the diagnosed lines)')
     for k, (s, e, nm, args, pi, fields, helper) in enumerate(calls[:2]):
         c = f'c{k}'
-        helpers.append(helper)
+        if helper not in helpers:
+            helpers.append(helper)
         A = args[pi]
         rest = [x for i, x in enumerate(args) if i != pi]
         names = [f'nl{k}_{f}' for f, _, _ in fields]
