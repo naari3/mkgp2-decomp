@@ -23,20 +23,21 @@ static inline void SetRefillPosition(RefillSprite *sprite, float x, float y) {
     sprite->x = x;
     sprite->y = y;
 }
-#pragma push
-#pragma opt_propagation off
+static inline int ChoiceColumn(const RefillChoice *choice) {
+    return choice->column;
+}
 extern "C" void fn_802386E0(ItemSelectState *self) {
     void *playerData = g_playerData;
     const RefillLayout *layout = &lbl_803DC0C0;
     const int *resources = layout->resources;
-    const float *ys = layout->y;
     const float *xs = layout->x;
+    const float *ys = layout->y;
     while (self->field14c < 3) {
         int slot = self->field14c;
         CompleteChoice((RefillChoice *)self->iconArray, slot, layout, resources, g_playerData);
         RefillChoice *choice;
         choice = (RefillChoice *)self->iconArray;
-        int column = choice->column;
+        int column = ChoiceColumn(choice);
         int row = choice->row;
         int *slots = (int *)self;
         slots[self->field14c * 3 + 0x57] = column;
@@ -55,5 +56,4 @@ extern "C" void fn_802386E0(ItemSelectState *self) {
         ++self->field14c;
     }
 }
-#pragma pop
 
