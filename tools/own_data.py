@@ -9,7 +9,8 @@ apply: generates the objects with tools/data2c.py (force_active), inserts them a
 last top-level #include / extern-"C"-free preamble line of the TU source, deletes
 single-name `extern ... NAME[...];` declarations of the defined names (they would clash
 with the const definitions), and adds `SEC start:LO end:HI` to the TU's splits.txt block.
-Always verify with a clean build (main.dol OK) and a report diff: C functions that now see
+Refuses a range that a function of another TU reaches through its section anchor
+(pool_audit.pool_rows; --force overrides). Always verify with a clean build (main.dol OK) and a report diff: C functions that now see
 defined objects can switch to section-anchor addressing and regress.
 """
 import argparse, json, os, re, subprocess, sys
@@ -90,7 +91,35 @@ def decl_types(tu, names):
     return out
 
 
-def apply(tu, sec, lo, hi):
+_POOLS = None
+
+
+def pool_conflicts(tu, sec, lo, hi):
+    """Functions of OTHER TUs whose target code reaches into [lo, hi) through a pooled
+    base (tools/pool_audit.py, matched functions included). Their TU must own that pool
+    (the section anchor is TU-local), so giving the range to `tu` is wrong: merge instead.
+    RaceData_8009BEF4 once got 0x8031B7C0..0x8032061C this way while NameCheck_CardName
+    and NameCheck_ScanBanned addressed it from their anchor (fixed 2d609dd)."""
+    global _POOLS
+    if _POOLS is None:
+        sys.path.insert(0, os.path.join(ROOT, 'tools'))
+        import tu_audit as T
+        import pool_audit as P
+        m = T.Model(open(SPLITS).read(), ())
+        _POOLS = P.pool_rows(m, all_fns=True)
+    want = tu if tu.startswith('game/') or '/' in tu else tu
+    return sorted({(r['fn'], r['tu'], r['span']) for r in _POOLS
+                   if r['sec'] == sec and r['span'][0] < hi and lo < r['span'][1]
+                   and r['tu'] != want})
+
+
+def apply(tu, sec, lo, hi, force=False):
+    clash = pool_conflicts(tu, sec, lo, hi)
+    if clash and not force:
+        for fn, t, (a, b) in clash:
+            print('pool conflict: %s (%s) reaches %s %08X..%08X from its section anchor' % (fn, t, sec, a, b))
+        raise SystemExit('own_data: not applied; the range belongs to the pool of another TU (merge that '
+                         'TU instead, or --force if the pool row is wrong)')
     pre = subprocess.run([sys.executable, os.path.join(ROOT, 'tools', 'data2c.py'), sec, '0x%X' % lo, '0x%X' % hi],
                          capture_output=True, text=True)
     allnames = re.findall(r'^(?:static )?(?:const )?[\w ]*?\**\s*(?:const )?(\w+)\[\d*\] =', pre.stdout, re.M)
@@ -131,6 +160,7 @@ def main():
     sp = ap.add_subparsers(dest='cmd', required=True)
     l = sp.add_parser('list'); l.add_argument('--min', default='0x40'); l.add_argument('--claims'); l.add_argument('--json')
     a = sp.add_parser('apply'); a.add_argument('tu'); a.add_argument('sec'); a.add_argument('lo'); a.add_argument('hi')
+    a.add_argument('--force', action='store_true', help='apply even when another TU pools the range')
     a2 = ap
     x = ap.parse_args()
     if x.cmd == 'list':
@@ -139,9 +169,11 @@ def main():
             json.dump(c, open(x.json, 'w'), indent=1)
         print(len(c), 'runs', sum(r['hi'] - r['lo'] for r in c), 'bytes')
         for r in c[:80]:
-            print('%-55s %-7s %08X %08X %6X %s' % (r['tu'], r['sec'], r['lo'], r['hi'], r['hi'] - r['lo'], r['claim']))
+            pc = pool_conflicts(r['tu'], r['sec'], r['lo'], r['hi'])
+            print('%-55s %-7s %08X %08X %6X %s%s' % (r['tu'], r['sec'], r['lo'], r['hi'], r['hi'] - r['lo'], r['claim'],
+                  ('  POOLED BY ' + ', '.join(sorted({t for _, t, _ in pc}))) if pc else ''))
     elif x.cmd == 'apply':
-        apply(x.tu, x.sec, int(x.lo, 16), int(x.hi, 16))
+        apply(x.tu, x.sec, int(x.lo, 16), int(x.hi, 16), x.force)
 
 
 if __name__ == '__main__':

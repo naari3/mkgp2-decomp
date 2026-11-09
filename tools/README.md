@@ -39,8 +39,8 @@ Rough order to try; each one writes nothing to the repo unless `--apply`.
 ## Data / TU boundaries
 
 `tu_audit.py` (merge/split/own proposals -> `docs/reports/tu_boundary_audit.md`),
-`pool_audit.py` (pooled-data ownership -> `docs/reports/pool_audit.md`),
-`own_data.py` + `data2c.py` (give a data run to the TU that uses it),
+`pool_audit.py` (pooled-data ownership -> `docs/reports/pool_audit.md`; follows addis-split bases; OTHER/UNOWNED rows of near misses are real ownership bugs even when the diff looks reg-only),
+`own_data.py` + `data2c.py` (give a data run to the TU that uses it; refuses ranges another TU uses as an anchor pool unless --force),
 `extab_renumber.py`, `scan_asm_fns.py`, `extract_fn_asm.py`.
 
 ## Other

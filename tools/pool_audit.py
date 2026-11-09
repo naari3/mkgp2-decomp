@@ -34,9 +34,16 @@ def ival(s):
     return int(s, 16) if s.lstrip('-').startswith('0x') else int(s)
 
 
+ADDIS = re.compile(r'^(r\d+),(r\d+),(-?0x[0-9a-fA-F]+|-?\d+)$')
+
+
 def scan_fn(lines):
-    """-> {base symbol: set(offsets)} for pooled bases in one function body."""
-    ha, base = {}, {}           # reg -> sym (lis), reg -> sym (full address)
+    """-> {base symbol: set(offsets)} for pooled bases in one function body.
+    A base register is (symbol, delta): `addis rY, rB, hi` on a base gives
+    (symbol, delta + hi << 16), the form MWCC uses when a TU's pool reaches
+    past 32K (NameCheck_CardName: anchor + 0x10000, then `subi r4, r31, 0x7b48`).
+    `addi rY, rB, off` on a base also stays a base (an interior pointer)."""
+    ha, base = {}, {}           # reg -> sym (lis), reg -> (sym, delta)
     out = collections.defaultdict(set)
     for op, args in lines:
         a = args.replace(' ', '')
@@ -46,24 +53,34 @@ def scan_fn(lines):
             ha[m.group(1)] = m.group(2).strip('"'); base.pop(m.group(1), None); continue
         m = LO.match(a) if op == 'addi' else None
         if m and m.group(2) in ha:
-            base[m.group(1)] = ha[m.group(2)].strip('"')
-            if m.group(1) != m.group(2): pass
+            base[m.group(1)] = (ha[m.group(2)].strip('"'), 0)
             continue
         m = SDA.match(a) if op == 'addi' else None
         if m:
-            base[m.group(1)] = m.group(3).strip('"'); continue
+            base[m.group(1)] = (m.group(3).strip('"'), 0); continue
+        m = ADDIS.match(a) if op == 'addis' else None
+        if m and m.group(2) in base:
+            sym, d = base[m.group(2)]
+            base[m.group(1)] = (sym, d + (ival(m.group(3)) << 16)); continue
         # uses
-        if op == 'addi' and len(ops) == 3 and ops[1] in base:
-            try: out[base[ops[1]]].add(ival(ops[2]))
+        if op in ('addi', 'subi') and len(ops) == 3 and ops[1] in base:
+            try:
+                sym, d = base[ops[1]]
+                off = ival(ops[2]) * (-1 if op == 'subi' else 1)
+                out[sym].add(d + off)
+                if ops[0] != ops[1]:
+                    base[ops[0]] = (sym, d + off)
+                    continue
             except ValueError: pass
-        for d, r in DISP.findall(a):
-            if r in base: out[base[r]].add(ival(d))
+        elif op == 'mr' and len(ops) == 2 and ops[1] in base:
+            base[ops[0]] = base[ops[1]]; continue
+        for dd, r in DISP.findall(a):
+            if r in base: out[base[r][0]].add(base[r][1] + ival(dd))
         if op.endswith('x') and len(ops) == 3 and (ops[1] in base or ops[2] in base) and op[:1] in 'lsa':
-            out[base[ops[1] if ops[1] in base else ops[2]]].add('x')
+            out[base[ops[1] if ops[1] in base else ops[2]][0]].add('x')
         # invalidate written register
         if ops and not op.startswith(NOWRITE) and re.fullmatch(r'r\d+', ops[0]):
-            if not (op == 'addi' and len(ops) == 3 and ops[1] in base and ops[0] == ops[1] and False):
-                base.pop(ops[0], None); ha.pop(ops[0], None)
+            base.pop(ops[0], None); ha.pop(ops[0], None)
         if op.startswith('bl'):  # volatile regs die at calls
             for r in [r for r in base if int(r[1:]) <= 12]: base.pop(r)
             for r in [r for r in ha if int(r[1:]) <= 12]: ha.pop(r)
@@ -99,13 +116,8 @@ def asm_fns():
         return set()
 
 
-def main():
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('--claims'); ap.add_argument('--md', default='docs/reports/pool_audit.md')
-    ap.add_argument('--all', action='store_true', help='also list matched functions')
-    a = ap.parse_args()
-    claims = T.load_claims(a.claims, False) if a.claims else ()
-    m = T.Model(open(os.path.join(T.ROOT, 'config', T.VER, 'splits.txt')).read(), claims)
+def pool_rows(m, all_fns=False):
+    """Every (function, pooled base) row; all_fns=False keeps NonMatching/asm functions only."""
     bodies = parse_bodies()
     asmset = asm_fns()
     # symbol table sorted per section for "which object is base+off"
@@ -130,7 +142,7 @@ def main():
         pct = rep.get(fa)
         is_asm = name in asmset or u['auto']
         nonm = pct is not None and pct < 100.0
-        if not (a.all or is_asm or nonm): continue
+        if not (all_fns or is_asm or nonm): continue
         for bsym, offs in scan_fn(body).items():
             ba = m.byname.get(bsym)
             bo = m.objs.get(ba) if ba is not None else None
@@ -158,6 +170,17 @@ def main():
                              owner=(m.units[own]['name'] if own is not None else '-'),
                              claim=', '.join(dict.fromkeys(c for c in (m.claim_of(uid), m.claim_of(own) if own is not None else None) if c)),
                              users=sorted(m.units[x]['name'] for x in users if x is not None)))
+    return rows
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument('--claims'); ap.add_argument('--md', default='docs/reports/pool_audit.md')
+    ap.add_argument('--all', action='store_true', help='also list matched functions')
+    a = ap.parse_args()
+    claims = T.load_claims(a.claims, False) if a.claims else ()
+    m = T.Model(open(os.path.join(T.ROOT, 'config', T.VER, 'splits.txt')).read(), claims)
+    rows = pool_rows(m, a.all)
     rows.sort(key=lambda r: (r['cls'].startswith('OWN-SELF'), r['cls'], r['span'][0]))
     try:
         dcls = T.classify_diffs(m)
@@ -179,7 +202,7 @@ def main():
         d = dcls.get(r['fa'])
         r['diff'] = f"{d[0]} ({d[1]})" if d else ('asm' if r['asm'] else '')
         if r['fix'] and d and d[0] in ('reg', 'sched'):
-            r['fix'] += '; NOTE diff is only ' + ('register allocation' if d[0] == 'reg' else 'scheduling') + ', ownership alone will not match it'
+            r['fix'] += '; diff is only ' + ('register allocation' if d[0] == 'reg' else 'scheduling') + ' (ownership can still fix it: anchor addresses are generated at their use, which renumbers vregs; NameCheck_CardName 2d609dd)'
     def cl(who):
         return who or ''
     cnt = collections.Counter(r['cls'] for r in rows)
