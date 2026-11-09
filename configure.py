@@ -1693,7 +1693,7 @@ config.libs = [
             Object(Matching, "game/Rand_RangeIntMax.c"),
             Object(Matching, "game/RaceScene_PlayerSlots.c"),
             Object(Matching, "game/RivalRun_PathFollowerInit.c"),
-            Object(Matching, "game/RivalRun.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/RivalRun.c", mw_version="GC/2.6", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/EggItem.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/GabyouItem.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/GabyouItemFlight.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
