@@ -30,15 +30,15 @@ static inline short Goal_Select(short *tables, int character, int id) {
     }
     return voice;
 }
-static inline void Goal_AdvanceRound(int *offset) {
-    *offset = g_longRoundFlag * 8 + *offset;
+static inline void Goal_RoundOffset(int *offset, int reverse) {
+    *offset = g_longRoundFlag * 8 + reverse * 4;
 }
 static inline void Goal_AdvanceClass(int *offset) {
     *offset += g_ccClass * 512;
 }
 static inline int Goal_CourseOffset(int reverse) {
-    int offset = reverse * 4;
-    Goal_AdvanceRound(&offset);
+    int offset;
+    Goal_RoundOffset(&offset, reverse);
     return (g_cupId - 1) * 16 + offset;
 }
 static inline void Goal_AdvanceLine(float **line) {
