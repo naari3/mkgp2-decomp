@@ -2648,7 +2648,7 @@ config.libs = [
             Object(Matching, "game/Scene_8015AFCC.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene_8015B698.cpp"),
             Object(Matching, "game/Scene_8015B70C.cpp"),
-            Object(NonMatching, "game/Scene_8015B790.cpp"),
+            Object(Matching, "game/Scene_8015B790.cpp"),
             Object(Matching, "game/Scene_8015BCC4.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene_8015BC08.cpp"),
             Object(Matching, "game/Scene_8015BE0C.cpp"),

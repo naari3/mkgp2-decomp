@@ -9,7 +9,7 @@ extern void *lbl_806D158C;
 extern ViewerVec lbl_80677CD8;
 void fn_8015BCC4(const char *, float);
 void fn_80168EFC(int, float, float, const char *, ...);
-void fn_80169040(void *, int, float,float,float,float,float,float,unsigned int);
+void fn_80169040(void *, float,float,float,float,float,float,int,unsigned int);
 void Object_SetJObjPositionX(void *, float);
 void Object_SetJObjField40(void *, float);
 void HSD_CObjSetEyePosition(void *, const ViewerVec *);
@@ -71,7 +71,7 @@ static const char viewerFormat[] = "COURCE %03d";
 
 #pragma exceptions on
 #pragma push
-#pragma fp_contract off
+static inline float ViewerMul(float a, float b) { return a * b; }
 extern "C" void fn_8015B790() {
     if (InputMgr_GetPlayer(GetInputManager(),0)->right() > lbl_806D85E8) {
         if (lbl_806D159C < 0) lbl_806D159C = 0;
@@ -106,7 +106,7 @@ extern "C" void fn_8015B790() {
     float step = lbl_806D85EC;
     if (lbl_806D15A0 == 1 || lbl_806D15A0 == 20) { const float *steps = viewerSteps; step = steps[lbl_806D1598]; }
     if (lbl_806D15A0 == -1 || lbl_806D15A0 == -20) { const float *steps = viewerSteps; step = -steps[lbl_806D1598]; }
-    if (InputMgr_GetPlayer(GetInputManager(),0)->held(0x2000)) step *= lbl_806D85F8;
+    if (InputMgr_GetPlayer(GetInputManager(),0)->held(0x2000)) step = ViewerMul(step, lbl_806D85F8);
     if (lbl_806D85EC != step) {
         switch (lbl_806D1598) {
         case 0: lbl_806D15A4 += step; break;
@@ -123,10 +123,14 @@ extern "C" void fn_8015B790() {
     {
         Object_SetJObjPositionX(lbl_806D158C, lbl_806D15A4);
         Object_SetJObjField40(lbl_806D158C, lbl_806D15A8);
-        const ModelEntry *models = lbl_80368074;
-        const ModelEntry *entry = &models[lbl_806D1594];
+        /* fakematch (hand): natural code is `entry = &lbl_80368074[lbl_806D1594]`.
+           The target keeps the scaled index in the entry register and adds the
+           table base to it, so the offset has to be a named value first. */
+        int off = lbl_806D1594 * 36;
+        off += (int)lbl_80368074;
+        const ModelEntry *entry = (const ModelEntry *)off;
         float size = lbl_806D8628 * entry->iconScale;
-        fn_80169040(0, entry->icon, lbl_806D862C, lbl_806D8630, size,size, lbl_806D8634 * -entry->iconY, lbl_806D8638,0);
+        fn_80169040(0, lbl_806D862C, lbl_806D8630, size,size, lbl_806D8634 * -entry->iconY, lbl_806D8638, entry->icon, 0);
         void *camera = lbl_806D1588->camera;
         if (camera) HSD_CObjSetEyePosition(camera, &lbl_80677CD8);
     }

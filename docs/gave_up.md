@@ -359,7 +359,6 @@ Rows above also carry a HINT note where one applied.
 
 | Function | TU | Pragma | Probe result |
 | --- | --- | --- | --- |
-| `fn_8015B790` | game/Scene_8015B790 | `opt_propagation off` | length fixed, 34 diff lines |
 | `TaMode_Init` | game/TaMode_FrameUpdate (merged 11-09) | `opt_propagation off` | obsolete: merged TU now 98.76 without it |
 
 ## Parked 2026-11-07 22:10 (mid-range thread)
