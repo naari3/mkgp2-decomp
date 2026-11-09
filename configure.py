@@ -2967,7 +2967,7 @@ config.libs = [
             Object(Matching, "game/clstream/ClStream_FillChunk.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/resultscene/resultscene.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/resultscene/resultscene_init.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
-            Object(NonMatching, "game/resultscene/resultscene_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+            Object(NonMatching, "game/resultscene/resultscene_nm1.cpp", extab_padding=b"\xc7\x02" * 2, extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/kartmove/carobject.cpp", mw_version="GC/2.6", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/sprite/fn_801A1798.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/kartmove/DebugOverlay_KartPhysics.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-str reuse,readonly"]),

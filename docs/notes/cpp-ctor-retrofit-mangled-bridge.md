@@ -2169,3 +2169,8 @@ c25_u30: CalcEarnedCoins 98.534485 -> 99.80604 with ONLY return type void -> int
 Source: Codex worker c25_u38_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 12 fn / 1876 B.
 
 c25_u38: clItemBoxManager_nm1 freshly compiles all12 bodies100 at646e8b00 (pattern52 already present). Promotion needed22 own EH aliases plus18-entry order incl7 discardable weak dtors. First Matching link permuted functions despite100 objdiff. Deferred,auto + reverse ordinary definitions/helpers first fixes strong order; explicit void* ListImpl remove_if/erase/insert/ctor specializations and out-of-line private base dtor put retained tail Remove/Erase/Insert/Init/dtor in target order. No data/split edits. Owned text1876/EH204/index132 all100; final source-linked main.elf all12 addresses/sizes exact, DOL SHA1ea30f3b1 exact.
+
+## c25_u48_20261110
+Source: Codex worker c25_u48_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 452 B.
+
+c25_u48: resultscene_nm1 all25 symbols present; result_screen_update unchanged direct99.90323 after six bounded source probes (see handoff). Reverted all source. Added50 @etb/@eti aliases plus SceneBase dtor bridge, own extab/index order with7 extra weak dtors last, and extab_padding C702 twice (stream, not once). Owned852B EH now differs only register byte8000F6F1:1D vs target1E; all25 owned index rows exact, other24 functions remain100. Every24 internal cut crosses reversed EH ordering; no B rescue. Full coordinator build SHA1ea30f3b1 exact; native gain0.
