@@ -605,3 +605,11 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   (`k->yaw += angle`) before the first inline call.
 - leversweep lever `chain-assign-split` (11-10): `a = b = c = K;` as separate statements in both orders. Fired on 7 near
   misses, 2 small gains, 0 matches.
+- fn_8019A9BC 98.11 -> 100 (11-10), FPR-only diff with more live floats than volatile registers. Read the target's
+  saved registers as "coloured last = lowest number": (1) float literals (constants become shared temps);
+  (2) statements whose loads/constants sit in LOW volatile registers were created LATE: `QuatMatrix(&rotation, &q)`
+  moved above the block that saves `position` and zeroes the translation (189 -> 104); (3) the nine quaternion
+  products are declared in the classic order `xx yy zz xy xz yz wx wy wz` (the fmuls order in the asm is the
+  scheduler's, not the source's; the saved/volatile split gives the decl order) (104 -> 43); (4) the value in the
+  LAST saved register (`w`, f25) is a function-level named local, not an inline local: `float c = (float)cos(..); q.w = c;`
+  in the caller (43 -> 0).
