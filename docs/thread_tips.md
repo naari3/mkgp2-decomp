@@ -66,6 +66,9 @@ matches over 51 fns, the wins came from diagnosis + a hand rewrite):
    docs/sweeps/regfix/diagsweep_shard*.jsonl). So: use it for one function, not as a sweep.
    diag also prints target `addi rX,anchor,N` whose address lands inside a symbol (rule
    anchor-addi-object-boundary, regalloc_patterns 40): split the symbol there.
+   (since 11-09 22:00Z the address is resolved from symbols.txt; before that the hint could name
+   the wrong base symbol), and function-level counters that drive >= 2 `for` loops when a saved
+   GPR is off (rule later-loops-block-local-counter, regalloc_patterns 46).
    Not register-only? `python3 tools/nonreg_classify.py LIST` says what the other diff is
    (length:copy/address/extend/load/branch/mixed, order, opcode, stack, symbol);
    counts for the 11-09 gave_up rows are in docs/nonreg_census.md.

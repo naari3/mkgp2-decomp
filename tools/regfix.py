@@ -2091,6 +2091,38 @@ def anchor_hints(unit, fn):
     return out
 
 
+def shared_loop_counters(a, rep, src_text):
+    """Function-level locals that are the counter of >= 2 `for` loops, when a
+    saved GPR is off (docs/regalloc_patterns.md 46). -> [(name, loops)]"""
+    c = rep.get("classes", {}).get("gpr")
+    if not c or not c.get("bad"):
+        return []
+
+    def regno(x):
+        m = re.search(r"(\d+)$", str(x))
+        return int(m.group(1)) if m else -1
+    g, w = c["g"], c["w"]
+    if not any(regno(g.phys.get(v)) >= 14 or regno(w.get(v)) >= 14 for v in c["bad"]):
+        return []
+    import pragmasweep as ps
+    u = ps.Unit(a.unit)
+    span = ps.find_def(src_text, a.fn, mangled=u.compiled_name(a.fn))
+    if not span:
+        return []
+    body = src_text[span[1]:span[2]]
+    cnt = {}
+    for m in re.finditer(r"\bfor\s*\(\s*([A-Za-z_]\w*)\s*=[^=]", body):
+        cnt[m.group(1)] = cnt.get(m.group(1), 0) + 1
+    out = []
+    for nm, n in cnt.items():
+        # declared once in the function (a block-local redeclaration per loop is the fix already)
+        decls = len(re.findall(r"\b(?:int|long|short|char|unsigned|u8|u16|u32|s8|s16|s32|size_t)\s+(?:\w+\s*,\s*)*"
+                               + re.escape(nm) + r"\s*[;,=]", body))
+        if n >= 2 and decls <= 1:
+            out.append((nm, n))
+    return out
+
+
 def print_levers(a, rep, src_text, d, ext):
     """Hand-landed source levers whose shape fits (tools/diag2sweep.levers)."""
     try:
@@ -2104,6 +2136,19 @@ def print_levers(a, rep, src_text, d, ext):
             print(f"  target `{txt}` = {nm}+0x{add:x}: MWCC never folds a constant into an anchored object's address, "
                   f"so an object of the original source starts there. Split {nm} at +0x{add:x} in symbols.txt and "
                   f"index the new object directly.")
+    try:
+        sl = shared_loop_counters(a, rep, src_text)
+    except Exception as e:  # noqa: BLE001 - advice only
+        sl = []
+        print(f"[regfix] shared loop counter hint: {e}")
+    if sl:
+        print("\n== loop counters shared by several loops (rule later-loops-block-local-counter, regalloc_patterns 46) ==")
+        for nm, n in sl:
+            print(f"  `{nm}` drives {n} loops and a saved register is off: only its earliest range keeps the name; the "
+                  f"later ranges are SplitOffRange temps, coloured before every named local, so they allocate the new "
+                  f"(lowest) saved register early. Give each later loop its own block-local counter "
+                  f"(`{{ int {nm}; for ({nm} = ...) }}`) and declare the first loop's counter after the locals whose "
+                  f"registers it must not take.")
     try:
         import diag2sweep as d2s
         import pragmasweep as ps
