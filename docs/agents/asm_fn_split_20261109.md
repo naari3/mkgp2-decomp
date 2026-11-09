@@ -208,3 +208,27 @@ So group A has no C work left.
 | 801D7920 | 560 | game/clFlowKart_UpdateDisplay.c | clFlowKart_UpdateDisplay |
 | 80211E6C | 1680 | game/JumpDistanceMode_Update.c | JumpDistanceMode_Update |
 
+
+## Status of group C at 2026-11-09 20:50Z (main 8e38341)
+
+The table above is the list as of 13:15Z. Since then (`tools/scan_asm_fns.py`):
+
+| function | was in | now | by |
+|---|---|---|---|
+| ShadowBillboard_Tick | game/ShadowBillboard.c | C, 100 % (52a998d) | om |
+| NokoNokoChallenge_Update | game/NokoNoko_801287F8.cpp | C, 100 % (45398a4) | om |
+| clMiyoshiCardCreate_Draw | game/clMiyoshiCardCreate.c | C, 100 % (ce9aa1f) | om |
+| Bitset_Init | game/auto_ONKARTHIT_block.c | C, 100 % (8a5f463) | om |
+| JumpDistanceMode_Update | game/JumpDistanceMode_Update.c | C, 100 % (d38113c) | n3 |
+| clFlowKart_UpdateDisplay | game/clFlowKart_UpdateDisplay.c | C, 100 %, inside the merged game/clFlowKart_Init.c (5eca6fc) | n3 |
+| clFlowRound_Update | game/clFlowRound.c | C, 100 % (3f6d3c7) | n3 |
+| fn_801502AC | game/Scene_8014E0C4.cpp | C, 100 % (cf30eee) | n3 |
+| RaceContext_InitDefaults | game/RaceContext_InitDefaults.c | still asm; the file is now part of game/SetCourseParams.c (887c513, 14-TU merge) | n3 merge |
+| SoundMgr_Play | game/SoundMgr_Play.c | still asm; the file is now part of game/clsound/fn_801913B0.c (a4d82de, 19-TU merge) | n3 merge |
+
+The four `n3` conversions and the two merges touched group C although
+n3-20261109-1338 said n3 would stay out of it: they came out of TU merges and
+hand threads working by address range. None of the TUs had an open claim.
+See n3-20261109-2050 on the board. 52 group C functions are unchanged
+(same TU, still asm); the corrections in om-20261109-1608 (fn_80157DE0 /
+SceneList_80157EA8 rows, fn_8015A6E4 is NonMatching) still apply.
