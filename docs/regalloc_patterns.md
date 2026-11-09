@@ -641,6 +641,21 @@ peephole-forward sinks an in-place `p += 3` below the `cmplwi`.
 `addi`/`li` ahead of a ready store to the same pointer): try
 `#pragma scheduling off` and write the statements in target order.
 
+## 34. One counter reused by many loops in a big switch: give each loop its own variable (jvsio fn_80283154, 11-09)
+
+MWCC does not split a named local into separate webs: `int j` used by ten
+independent loops across a large packet switch is one vreg (mwccdbg: `li r49,0`
+coloured first, "target varies {r6, r7, r5}"), so it holds one register for the
+whole function and pushes everything else around. The target gives the loops
+different registers, i.e. separate variables in the original. A greedy search
+over which loops get their own counter (declared together after the shared
+ones, order kept) took fn_80283154 from 730 to 412 diff lines (97.03 ->
+97.93); splitting the other five loops made it worse.
+
+**Check:** mwccdbg shows one loop counter coloured first with "target varies":
+rename the loops' counters one by one and keep the ones that help. Rule
+`split-loop-counter`.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
