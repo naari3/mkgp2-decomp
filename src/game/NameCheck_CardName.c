@@ -3434,7 +3434,7 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
                 }
                 if (invalid == 1) break;
                 {
-                    NameCode *p;
+                    NameCode *p; int j;
                     for (p = open + 1; *p != *close; p++) {
                         for (j = 0; (unsigned int)j < 5; j++) {
                             if (strncmp(p, lbl_8040E4B0[j], 2) == 0) return 1;
@@ -3556,10 +3556,7 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
             }
             if ((unsigned int)j >= 25) k++;
         }
-        {
-            int word;
-            CHECK_WORD(buf);
-        }
+        CHECK_WORD_V(k, buf);
     }
     CHECK_PARTS(0);
     return 0;
