@@ -1,4 +1,4 @@
-/* NonMatching: projection reload and cross/quaternion FPR scheduling differ. */
+/* NonMatching (98.05): quaternion-to-matrix block colours 4 saved FPRs, target 5 (x/z/w + yy/xx saved). */
 #include "game/ItemEffectImpactArmPrivate.h"
 
 // Scalar length arguments preserve the matrix-row evaluation boundary.
@@ -45,7 +45,8 @@ extern "C" void ItemEffectImpact_TryArmInit(ImpactArmState* __restrict self, C7V
     C7Vec up;
     ArmNormalizeCopy(&up,(C7Vec*)&self->start.m[1][0]);
     #pragma fp_contract off
-    float dx=up.x*self->pos.x, dy=up.y*self->pos.y, dz=up.z*self->pos.z;
+    const C7Vec* p=&self->pos;
+    float dx=up.x*p->x, dy=up.y*p->y, dz=up.z*p->z;
     float dot=dz+(dx+dy);
     #pragma fp_contract reset
     up.x*=dot; up.y*=dot; up.z*=dot;
@@ -53,30 +54,30 @@ extern "C" void ItemEffectImpact_TryArmInit(ImpactArmState* __restrict self, C7V
     C7Vec v=self->pos;
     Normalize(&v);
     C7Vec axis=up;
-    axis.x=v.y*up.z-v.z*up.y;
     axis.y=v.z*up.x-v.x*up.z;
     axis.z=v.x*up.y-v.y*up.x;
+    axis.x=v.y*up.z-v.z*up.y;
     float length2=axis.z*axis.z+(axis.x*axis.x+axis.y*axis.y);
     if(length2>0.0f) { ArmAxisNormalize(&axis); self->axis=axis; }
-    else { float z=self->start.m[0][2], y=self->start.m[0][1], x=self->start.m[0][0]; self->axis.x=x; self->axis.y=y; self->axis.z=z; }
+    else { float x=self->start.m[0][0], y=self->start.m[0][1], z=self->start.m[0][2]; self->axis.x=x; self->axis.y=y; self->axis.z=z; }
     ImpactArmQuat q;
     q.w=lbl_806D27F8; q.z=lbl_806D27F8; q.y=lbl_806D27F8; q.x=lbl_806D27F8;
-    float ax,ay,az;
+    float ay,ax,az;
     az=self->axis.z; ay=self->axis.y; ax=self->axis.x;
     float sine=(float)sin(lbl_806D2828);
     q.x=ax*sine; q.y=ay*sine; q.z=az*sine;
     q.w=(float)cos(lbl_806D2828);
     float x=q.x,y=q.y,z=q.z,w=q.w;
-    float two=lbl_806D281C, one=lbl_806D27FC;
-    self->rotation.m[0][0]=one-two*(y*y+z*z);
-    self->rotation.m[1][0]=two*(x*y-w*z);
-    self->rotation.m[2][0]=two*(x*z+w*y);
-    self->rotation.m[0][1]=two*(x*y+w*z);
-    self->rotation.m[1][1]=one-two*(x*x+z*z);
-    self->rotation.m[2][1]=two*(y*z-w*x);
-    self->rotation.m[0][2]=two*(x*z-w*y);
-    self->rotation.m[1][2]=two*(y*z+w*x);
-    self->rotation.m[2][2]=one-two*(x*x+y*y);
+    float yz=y*z, wx=w*x, wy=w*y, xz=x*z, xy=x*y, xx=x*x, wz=w*z, yy=y*y, zz=z*z;
+    self->rotation.m[0][0]=lbl_806D27FC-lbl_806D281C*(yy+zz);
+    self->rotation.m[1][0]=lbl_806D281C*(xy-wz);
+    self->rotation.m[2][0]=lbl_806D281C*(xz+wy);
+    self->rotation.m[0][1]=lbl_806D281C*(xy+wz);
+    self->rotation.m[1][1]=lbl_806D27FC-lbl_806D281C*(xx+zz);
+    self->rotation.m[2][1]=lbl_806D281C*(yz-wx);
+    self->rotation.m[0][2]=lbl_806D281C*(xz-wy);
+    self->rotation.m[1][2]=lbl_806D281C*(yz+wx);
+    self->rotation.m[2][2]=lbl_806D27FC-lbl_806D281C*(xx+yy);
     self->elapsed=lbl_806D27F8;
     self->flags=0;
     self->pos.x*=lbl_806D2824;

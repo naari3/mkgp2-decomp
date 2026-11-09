@@ -1,4 +1,4 @@
-/* NonMatching: 93.695854% text, exact 1736-byte primary size.
+/* NonMatching: 94.86% text, exact 1736-byte primary size.
  * In-place roots and rounded quaternion products preserve target arithmetic.
  * Vector loads, projection reloads and FPR allocation still differ. */
 #include "game/C7ItemCtorPrivate.h"
@@ -91,7 +91,7 @@ extern "C" void ExplosionTumble_Init(C7Tumble* __restrict self, C7Vec* __restric
     NormalizeCopy(&v,velocity);
     C7Vec up;
     NormalizeCopy(&up,(C7Vec*)&self->start.m[1][0]);
-    Scale(&up,Dot(&up,&v));
+    {const C7Vec* p=&v; float x=up.x*p->x, y=up.y*p->y, z=up.z*p->z; float dot=z+(x+y); Scale(&up,dot);}
     Subtract(&v,&up);
     Normalize(&v);
     C7Vec axis=v;
@@ -100,7 +100,7 @@ extern "C" void ExplosionTumble_Init(C7Tumble* __restrict self, C7Vec* __restric
     axis.z=up.x*v.y-up.y*v.x;
     float length2=axis.z*axis.z+(axis.x*axis.x+axis.y*axis.y);
     if(length2>lbl_806D27F8) { Normalize(&axis); self->axis=axis; }
-    else { self->axis.x=self->start.m[0][0]; self->axis.y=self->start.m[0][1]; self->axis.z=self->start.m[0][2]; }
+    else { float x=self->start.m[0][0], y=self->start.m[0][1], z=self->start.m[0][2]; self->axis.x=x; self->axis.y=y; self->axis.z=z; }
     C7Quat q;
     q.w=lbl_806D27F8; q.z=lbl_806D27F8; q.y=lbl_806D27F8; q.x=lbl_806D27F8;
     AxisAngle(&q,self->axis.x,self->axis.y,self->axis.z);

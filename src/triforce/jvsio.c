@@ -345,6 +345,8 @@ void fn_80283154(void) {
     int command;
     u8 status[16];
     int i, j, k, pos, count;
+    /* separate counters per loop: one shared j is a single web in the colouring (mwccdbg) */
+    int nameLen, rx1, rx0, idByte, sumIdx;
     int bank;
     u8 node, commandIndex;
     u8 sum;
@@ -364,7 +366,7 @@ void fn_80283154(void) {
         case 0x10:
             tx.unk12A = tx.packet[i][2]; tx.unk12B = tx.packet[i][3]; break;
         case 0x11:
-            for (j = 0; j < 16; j++) tx.unk11A[j] = tx.packet[i][j + 2];
+            for (idByte = 0; idByte < 16; idByte++) tx.unk11A[idByte] = tx.packet[i][idByte + 2];
             break;
         case 0x14:
             tx.analog[0] = (tx.packet[i][2] << 8) | tx.packet[i][3];
@@ -385,19 +387,19 @@ void fn_80283154(void) {
         case 0x24:
             R[1].unkD = tx.packet[i][2]; R[1].unkE = tx.packet[i][3]; R[1].unkF = tx.packet[i][4]; break;
         case 0x31:
-            for (j = 0; j < tx.packet[i][1]; j++) {
+            for (rx0 = 0; rx0 < tx.packet[i][1]; rx0++) {
                 if (R[0].wr + 1 == R[0].rd + (R[0].rd == 0) * R[0].size) R[0].state = 1;
                 else if (R[0].state == 0) {
-                    R[0].buf[R[0].wr++] = tx.packet[i][j + 2];
+                    R[0].buf[R[0].wr++] = tx.packet[i][rx0 + 2];
                     if (R[0].wr >= R[0].size) R[0].wr = 0;
                 }
             }
             break;
         case 0x32:
-            for (j = 0; j < tx.packet[i][1]; j++) {
+            for (rx1 = 0; rx1 < tx.packet[i][1]; rx1++) {
                 if (R[1].wr + 1 == R[1].rd + (R[1].rd == 0) * R[1].size) R[1].state = 1;
                 else if (R[1].state == 0) {
-                    R[1].buf[R[1].wr++] = tx.packet[i][j + 2];
+                    R[1].buf[R[1].wr++] = tx.packet[i][rx1 + 2];
                     if (R[1].wr >= R[1].size) R[1].wr = 0;
                 }
             }
@@ -424,13 +426,13 @@ void fn_80283154(void) {
             if (status[node] != 5) break;
             pos = 2;
             if (cmd.req[bank][node].response[1] == 1 || cmd.req[bank][node].response[1] == 2) {
-                for (j = 0; j < cmd.req[bank][node].n; j++) {
-                    cmd.req[bank][node].reply[j] = &cmd.req[bank][node].response[pos];
-                    if (cmd.req[bank][node].rlen[j] & 0x80) {
-                        while (pos <= cmd.req[bank][node].response[0] && cmd.req[bank][node].response[pos] != 0) pos -= (s8)cmd.req[bank][node].rlen[j];
+                for (sumIdx = 0; sumIdx < cmd.req[bank][node].n; sumIdx++) {
+                    cmd.req[bank][node].reply[sumIdx] = &cmd.req[bank][node].response[pos];
+                    if (cmd.req[bank][node].rlen[sumIdx] & 0x80) {
+                        while (pos <= cmd.req[bank][node].response[0] && cmd.req[bank][node].response[pos] != 0) pos -= (s8)cmd.req[bank][node].rlen[sumIdx];
                         pos++;
                     } else if (cmd.req[bank][node].rlen[pos] != 0 && cmd.req[bank][node].response[pos] == 2) pos++;
-                    else pos += cmd.req[bank][node].rlen[j];
+                    else pos += cmd.req[bank][node].rlen[sumIdx];
                 }
                 if (node == 0) {
                     if (cmd.req[bank][node].cmd[0] == 0xF1 && cmd.req[bank][node].reply[0][0] == 1) cmd.nodeCount = cmd.unk108;
@@ -446,8 +448,8 @@ void fn_80283154(void) {
                         case 0x21: cmd.node[node].unkB0 = p + 1; break;
                         case 0x22: cmd.node[node].unkB4 = p + 1; break;
                         case 0x23: cmd.node[node].unkB8 = p + 1; break;
-                        case 0x25: cmd.node[node].unkBC = p[1]; break;
                         case 0x24: cmd.node[node].unkC0 = p + 1; break;
+                        case 0x25: cmd.node[node].unkBC = p[1]; break;
                         case 0x26: cmd.node[node].unkC4 = p + 1; break;
                         case 0x10:
                             out = &cmd.node[node].unk0;
@@ -458,11 +460,11 @@ void fn_80283154(void) {
                         case 0x13: cmd.node[node].unkA8 = p[1]; break;
                         case 0x14:
                             out = cmd.node[node].unk65;
-                            for (j = 1; j <= 0x40 && p[j] != 0;) {
-                                *out++ = p[j++]; *out++ = p[j++]; *out++ = p[j++]; *out++ = p[j++];
+                            for (nameLen = 1; nameLen <= 0x40 && p[nameLen] != 0;) {
+                                *out++ = p[nameLen++]; *out++ = p[nameLen++]; *out++ = p[nameLen++]; *out++ = p[nameLen++];
                             }
                             *out = 0;
-                            for (k = 0; k < j - 1; k += 4) {
+                            for (k = 0; k < nameLen - 1; k += 4) {
                                 out = cmd.node[node].unk65;
                                 switch (out[k]) {
                                 case 1: cmd.node[node].unkCC = out[k+1]; cmd.node[node].unkCD = out[k+2]; break;

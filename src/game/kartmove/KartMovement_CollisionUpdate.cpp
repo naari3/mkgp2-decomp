@@ -14,8 +14,8 @@ static inline void Normalize(CollisionVec& v) {
     float x = v.x, y = v.y, z = v.z;
     float len = LengthSquared(v);
     KART_SPEED_ROOT(len);
-    if (len <= lbl_806D96D0) {
-        v.z = lbl_806D96D0; v.y = lbl_806D96D0; v.x = lbl_806D96D0;
+    if (len <= 0.0f) {
+        v.z = 0.0f; v.y = 0.0f; v.x = 0.0f;
     } else {
         float scale = lbl_806D96D4 / len;
         x = v.x; y = v.y; z = v.z;
@@ -97,18 +97,20 @@ extern "C" void KartMovement_CollisionUpdate(KartCollisionState* k) {
     float scale = lbl_806D9718 * (lbl_806D96D4 - len);
     up.x *= scale; up.y *= scale; up.z *= scale;
     unsigned char collided;
+    CollisionVec contact;
+    CollisionVec *cp = &contact;
     do {
         collided = 0;
         for (int corner = 0; corner < 4; ++corner) {
-            CollisionVec hitPoint, hitNormal, contact;
+            CollisionVec hitPoint, hitNormal;
             CollisionMatrix transform;
             for (int j = 0; j < 16; ++j) transform.m[j] = k->matrix[j];
             transform.Scale(k->scale);
             const Vec3* local = &k->params->probes[corner];
-            transform.Transform(*local, contact);
-            if (Terrain_RaycastWall(&k->pos, &contact, &hitPoint, &hitNormal) != 1) continue;
+            transform.Transform(*local, *cp);
+            if (Terrain_RaycastWall(&k->pos, cp, &hitPoint, &hitNormal) != 1) continue;
             k->wallPoint.x = hitPoint.x; k->wallPoint.y = hitPoint.y; k->wallPoint.z = hitPoint.z;
-            hitPoint.x -= contact.x; hitPoint.y -= contact.y; hitPoint.z -= contact.z;
+            hitPoint.x -= cp->x; hitPoint.y -= cp->y; hitPoint.z -= cp->z;
             hitPoint.y = lbl_806D96D0;
             k->pos.x += hitPoint.x; k->pos.y += hitPoint.y; k->pos.z += hitPoint.z;
             k->matrix[12] = k->pos.x; k->matrix[14] = k->pos.z;
@@ -131,8 +133,8 @@ extern "C" void KartMovement_CollisionUpdate(KartCollisionState* k) {
                 k->velocity.y = identity.m[13] + (vz*identity.m[9] + (identity.m[1]*vx + vy*identity.m[5]));
                 k->velocity.z = identity.m[14] + (vz*identity.m[10] + (vx*identity.m[2] + vy*identity.m[6]));
                 float groundHeight;
-                if (Terrain_GetGroundHeightWithPenetration(&contact, &groundHeight, 0, 0, lbl_806D96D4) == 1) {
-                    float height = groundHeight - contact.y;
+                if (Terrain_GetGroundHeightWithPenetration(cp, &groundHeight, 0, 0, lbl_806D96D4) == 1) {
+                    float height = groundHeight - cp->y;
                     if (height > lbl_806D9720 && height < lbl_806D9718 && k->groundSpeed > lbl_806D9724) {
                         float speed = lbl_806D9728*k->speed;
                         float maxSpeed = k->speedTable[k->speedClass].maxSpeed;

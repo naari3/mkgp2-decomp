@@ -108,16 +108,38 @@ index 0000000..cf0b695
 +
 +#endif
 diff --git a/src/compiler/backend/CodeGen.c b/src/compiler/backend/CodeGen.c
-index d0696ab..dd308f5 100644
+index d0696ab..2a1f4a5 100644
 --- a/src/compiler/backend/CodeGen.c
 +++ b/src/compiler/backend/CodeGen.c
-@@ -50,6 +50,16 @@
+@@ -50,6 +50,38 @@
  #include "driver/CCompiler.h"
  #include <stdio.h>
  #include <string.h>
 +#include "compiler/MwTrace.h"
 +
 +char* mwtrace_fn;
++
++/* @temps are created by the frontend / IR optimiser before CodeGen_Generator
++   names the function, so they are buffered and written with its FN line. */
++void* mwtrace_temp_outer;
++static char* mwtrace_tbuf;
++static size_t mwtrace_tlen, mwtrace_tcap;
++void mwtrace_tempnew(const char* name, void* caller) {
++    char line[96];
++    int n;
++    void* outer = mwtrace_temp_outer;
++    mwtrace_temp_outer = NULL;
++    if (!getenv("MWCC_TRACE")) {
++        return;
++    }
++    n = snprintf(line, sizeof(line), "TEMPNEW %s caller=%p outer=%p\n", name, caller, outer);
++    if (mwtrace_tlen + n + 1 > mwtrace_tcap) {
++        mwtrace_tcap = (mwtrace_tcap + n + 1) * 2;
++        mwtrace_tbuf = (char*)realloc(mwtrace_tbuf, mwtrace_tcap);
++    }
++    memcpy(mwtrace_tbuf + mwtrace_tlen, line, n + 1);
++    mwtrace_tlen += n;
++}
 +
 +static void mwtrace_vreg(const char* kind, Object* obj) {
 +    VarInfo* vi = Registers_GetVarInfo(obj);
@@ -128,7 +150,7 @@ index d0696ab..dd308f5 100644
  
  static Macro powcM;
  static Macro __powcM;
-@@ -300,6 +310,7 @@ static void allocate_local_vregs(void) {
+@@ -300,6 +332,7 @@ static void allocate_local_vregs(void) {
          if (vi->used && !vi->noregister) {
              if (!OBJ_GET_TARGET_VOLATILE(obj) && !vi->reg) {
                  assign_register_by_type(obj);
@@ -136,7 +158,7 @@ index d0696ab..dd308f5 100644
              }
          }
      }
-@@ -313,6 +324,7 @@ static void allocate_local_vregs(void) {
+@@ -313,6 +346,7 @@ static void allocate_local_vregs(void) {
          if (vi->used && !vi->noregister) {
              if (!OBJ_GET_TARGET_VOLATILE(obj) && !vi->reg) {
                  assign_register_by_type(obj);
@@ -144,7 +166,7 @@ index d0696ab..dd308f5 100644
              }
          }
      }
-@@ -325,6 +337,7 @@ static void allocate_local_vregs(void) {
+@@ -325,6 +359,7 @@ static void allocate_local_vregs(void) {
              if (vi->used && !vi->noregister) {
                  if (!OBJ_GET_TARGET_VOLATILE(obj) && !vi->reg) {
                      assign_register_by_type(obj);
@@ -152,7 +174,7 @@ index d0696ab..dd308f5 100644
                  }
              }
          }
-@@ -340,6 +353,7 @@ static void allocate_local_vregs(void) {
+@@ -340,6 +375,7 @@ static void allocate_local_vregs(void) {
              if (vi->used && !vi->noregister) {
                  if (!OBJ_GET_TARGET_VOLATILE(obj) && !vi->reg) {
                      assign_register_by_type(obj);
@@ -160,7 +182,7 @@ index d0696ab..dd308f5 100644
                  }
              }
          }
-@@ -351,6 +365,7 @@ static void allocate_local_vregs(void) {
+@@ -351,6 +387,7 @@ static void allocate_local_vregs(void) {
  
          if (!vi->reg && vi->used && vi->usage > 1) {
              assign_register_by_type(obj);
@@ -168,7 +190,7 @@ index d0696ab..dd308f5 100644
          }
      }
  }
-@@ -1291,6 +1306,8 @@ void CodeGen_Generator(
+@@ -1291,6 +1328,8 @@ void CodeGen_Generator(
      }
  
      gFunction = func;
@@ -177,7 +199,18 @@ index d0696ab..dd308f5 100644
      has_varargs = has_vararglist(func);
      init_endian();
      init_stack_globals(func);
-@@ -1490,7 +1507,9 @@ void CodeGen_Generator(
+@@ -1337,6 +1376,10 @@ void CodeGen_Generator(
+     pcbranch(prologue, entryBlock->labels);
+ 
+     init_frame_sizes(has_varargs);
++    if (mwtrace_tlen) {
++        MWTRACE("%s", mwtrace_tbuf);
++    }
++    mwtrace_tlen = 0;
+     allocate_locals();
+     process_arguments(move_assigned_argument, has_varargs);
+ 
+@@ -1490,7 +1533,9 @@ void CodeGen_Generator(
          }
      }
  
@@ -186,6 +219,14 @@ index d0696ab..dd308f5 100644
 +    mwtrace_pcode("post");
      if (copts.debuglisting) {
          pclistblocks(CMangler_GetLinkName(func)->name, "AFTER REGISTER COLORING");
+     }
+@@ -1556,6 +1601,7 @@ void CodeGen_Generator(
+         CodeGen_reportheapinfo(FALSE, CMangler_GetLinkName(func)->name, "finished");
+     }
+ 
++    mwtrace_tlen = 0; /* backend temporaries of this function are not frontend @temps of the next */
+     if (saveheaperror) {
+         setheaperror(saveheaperror);
      }
 diff --git a/src/compiler/backend/Coloring.c b/src/compiler/backend/Coloring.c
 index 822c848..5e5985f 100644
@@ -412,4 +453,63 @@ index 524e350..b9b3c97 100644
 +                : block->pcodeCount <= 2 ? " too-short" : " prolog/epilog");
          }
      }
+ }
+diff --git a/src/compiler/frontend/CFunc.c b/src/compiler/frontend/CFunc.c
+index 6f1b69c..7056647 100644
+--- a/src/compiler/frontend/CFunc.c
++++ b/src/compiler/frontend/CFunc.c
+@@ -560,8 +560,15 @@ void CheckCLabels(void) {
+     }
+ }
+ 
+-Object* create_temp_object(Type* type) {
+-    Object* object = CParser_NewLocalDataObject(NULL, TRUE);
++/* mwtrace (tools/mweppc_trace): who created each @temp; output-neutral */
++extern void mwtrace_tempnew(const char* name, void* caller);
++extern void* mwtrace_temp_outer;
++__attribute__((noinline)) Object* create_temp_object(Type* type) {
++    Object* object;
++    if (!mwtrace_temp_outer) {
++        mwtrace_temp_outer = __builtin_return_address(0);
++    }
++    object = CParser_NewLocalDataObject(NULL, TRUE);
+     object->name = CParser_GetUniqueName();
+     object->type = type;
+     CFunc_SetupLocalVarInfo(object);
+diff --git a/src/compiler/frontend/CParser.c b/src/compiler/frontend/CParser.c
+index c1cacc5..ebe1a21 100644
+--- a/src/compiler/frontend/CParser.c
++++ b/src/compiler/frontend/CParser.c
+@@ -618,10 +618,14 @@ void CParser_SetUniqueID(SInt32 id) {
+     uniqueid = id;
+ }
+ 
+-HashNameNode* CParser_GetUniqueName(void) {
++/* mwtrace (tools/mweppc_trace): who created each @temp; output-neutral */
++extern void mwtrace_tempnew(const char* name, void* caller);
++extern void* mwtrace_temp_outer;
++__attribute__((noinline)) HashNameNode* CParser_GetUniqueName(void) {
+     char buf[16];
+     buf[0] = '@';
+     CParser_PrintUniqueID(buf + 1);
++    mwtrace_tempnew(buf, __builtin_return_address(0));
+     return GetHashNameNodeExport(buf);
+ }
+ 
+diff --git a/src/compiler/optimizer/IroUtil.c b/src/compiler/optimizer/IroUtil.c
+index 9cae5dd..e12b4bd 100644
+--- a/src/compiler/optimizer/IroUtil.c
++++ b/src/compiler/optimizer/IroUtil.c
+@@ -1062,7 +1062,11 @@ void IRO_ReplaceReferenceWithNode(IROLinear* nd, IROLinear* replacement) {
+     }
+ }
+ 
+-VarRecord* IRO_GetTemp(IROExpr* expr) {
++/* mwtrace (tools/mweppc_trace): who created each @temp; output-neutral */
++extern void mwtrace_tempnew(const char* name, void* caller);
++extern void* mwtrace_temp_outer;
++__attribute__((noinline)) VarRecord* IRO_GetTemp(IROExpr* expr) {
++    mwtrace_temp_outer = __builtin_return_address(0);
+     expr->temp = create_temp_object(expr->linear->rtype);
+     return IRO_FindVar(expr->temp, TRUE, TRUE);
  }

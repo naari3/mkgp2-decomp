@@ -280,8 +280,8 @@ object before the loop and passing it through a pointer variable:
     PhysicsCollisionVec *ep = &endpoint;
     for (...) { ...; Terrain_RaycastWall(self + 0x4C, ep, &hit, &n); }
 
-The same shape probably explains KartMovement_CollisionUpdate (`&contact` in
-r31, an onmokoworks claim). It did not help for `&rotation` inside the
+The same shape explains KartMovement_CollisionUpdate (`&contact` in r31):
+applied 11-09, 951 -> 688 diff lines and the target's stmw r19. It did not help for `&rotation` inside the
 inlined `applyYaw`: a pointer local in an inline function gets propagated.
 
 ## 15. Target keeps a list iterator in a stack slot (07fd50d, 11-08)
@@ -506,7 +506,7 @@ Also fn_801826F8 (mobjclass JObj walk, 4-TU C++ merge, inline_depth(3), d9220c1)
 
 ## 26. A named local re-assigned later becomes a temp: one named local per assignment (fn_801F140C, 11-09)
 
-MWCC splits a named local into webs. Only the first web keeps the named-local vreg number (low, coloured last); every later assignment of the same variable gets a frontend temp number. In fn_801F1244/fn_801F140C the target colours both fade colours (`0xFFFFFF00 | v`, then `0xFFFFFF00 | (u8)(255 - v)`) into the same register below the loop counter/offset, but with one `c` assigned twice the second colour was a temp coloured first (27 lines off). Fix: give each assignment its own named local (`c`, `c2`) and let the decl-order solver pick the order (`c, c2, offset, i, v`).
+The backend never splits a named local into webs (§34), but the frontend IR optimiser can take a later assignment away from it: in fn_801F140C regfix diag showed the second colour as a frontend temp (`@358`, defined by the `or`) feeding the loops directly, while `c` kept only the first value. So the second value got a temp number (high, coloured early) instead of the named-local number (low, coloured last). In fn_801F1244/fn_801F140C the target colours both fade colours (`0xFFFFFF00 | v`, then `0xFFFFFF00 | (u8)(255 - v)`) into the same register below the loop counter/offset, but with one `c` assigned twice the second colour was a temp coloured first (27 lines off). Fix: give each assignment its own named local (`c`, `c2`) and let the decl-order solver pick the order (`c, c2, offset, i, v`).
 
 The same family: a local whose value comes straight from an inline return (`c = MenuRGBA(v, v, v, 255)`) is copy-propagated away and the colour stays an inline temp. Write the expression in place (`c = (v << 24) | ((v & 255) << 16) | ((v & 255) << 8) | 255`) so `c` survives as a named local, then sweep the decl order (fn_801F2400, fn_801F1EE0: `c, offset, i`).
 
@@ -641,6 +641,53 @@ peephole-forward sinks an in-place `p += 3` below the `cmplwi`.
 `addi`/`li` ahead of a ready store to the same pointer): try
 `#pragma scheduling off` and write the statements in target order.
 
+## 34. One counter reused by many loops in a big switch: give each loop its own variable (jvsio fn_80283154, 11-09)
+
+MWCC does not split a named local into separate webs: `int j` used by ten
+independent loops across a large packet switch is one vreg (mwccdbg: `li r49,0`
+coloured first, "target varies {r6, r7, r5}"), so it holds one register for the
+whole function and pushes everything else around. The target gives the loops
+different registers, i.e. separate variables in the original. A greedy search
+over which loops get their own counter (declared together after the shared
+ones, order kept) took fn_80283154 from 730 to 412 diff lines (97.03 ->
+97.93); splitting the other five loops made it worse.
+
+**Check:** mwccdbg shows one loop counter coloured first with "target varies":
+rename the loops' counters one by one and keep the ones that help. Rule
+`split-loop-counter`.
+
+## 35. A long-lived temp coloured too early because it is pushed in the 2nd simplify sweep: give it low-numbered neighbours (fn_8023AC14, 11-09)
+
+Simplify (mweppc Coloring.c `simplifygraph`) walks the vregs in ascending
+number and repeats the sweep until nothing changes; a node pushed in a later
+sweep is coloured BEFORE every node of an earlier sweep. A temp that is live
+across several calls (all 12 volatile GPRs + every temp of the region as
+neighbours) can sit just above K=29 when its sweep-1 turn comes; only
+neighbours with a LOWER vreg number that were already pushed in that sweep
+lower its degree. It is then pushed in sweep 2, coloured early, and hands out
+a saved register (r27) before an unrelated sweep-1 temp elsewhere in the
+function is coloured, so that temp takes r27 instead of r28.
+
+`fn_8023AC14`: the phase==40 `player` (g_playerData, live across four
+fn_8019FF8C/fn_801F93EC pairs) had degree 30 at its visit, so it took r27
+before ChoiceAdvanceRow's `resource` (`li r28,5154`). Two source changes in
+that block each add one low-numbered (named-local) neighbour that is pushed
+before it, so it goes in sweep 1 and resource keeps r28; the code is identical:
+- read `row` / `column` into named locals of the function and pass them to the
+  ChoiceItem inline (the column local is pushable, the row one coalesces to r4);
+- load `self->groups[0]` for the 2nd..4th calls through one named
+  `RefillGroup *group` (assigned 3 times; frontend range splitting makes the
+  later assignments a low-numbered @temp). Using it for the 1st call too swaps
+  the r3/r4 of the first `lwz`/`lis` (the named var is coloured after the lis
+  temp).
+
+**Check:** `mwtrace --only IGNODE,COLOR`: the vreg that takes the wrong saved
+register is coloured long before its number would say (sweep 2), its degree
+is K+1 or K+2, and few of its neighbours have lower numbers. Add named locals
+(numbered below the temps) in its live range that are themselves cheap to
+push; re-run until it is pushed in sweep 1. A quick simulator of the sweep
+order on the IGNODE dump tells how many neighbours must go.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
@@ -648,9 +695,6 @@ peephole-forward sinks an in-place `p += 3` below the `cmplwi`.
 - Value and table pointer swapped r4/r5 in two lookup loops:
   NameCheck_CardName. Tried 120 decl orders, temps, cmp swap, pragmasweep and
   20 minutes of cperm.
-- Quad-ctor FPR coloring: fn_801F8404/fn_801F8728 (the fn_801F7F50 recipe
-  f4d48738 plus `fabs(h)` before `fabs(w)` leaves pure f-register coloring),
-  wip/audit.
 - Table base vs loop walker, copy direction reversed (11-08 diagnosis):
   ClRomTable_PurgeAll, fn_801E96BC, PCBCheck_ProcessLinks. The final registers
   per role are the same; the target materialises the base (`addi rB, sym@l`)

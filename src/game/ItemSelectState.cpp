@@ -850,6 +850,14 @@ static inline int ChoiceAdvanceRow(RefillChoice *self) {
     self->resource = resource;
     return 1;
 }
+// ChoiceItem with the cursor read into locals by the caller (fn_8023AC14 phase 40).
+static inline int ChoiceItemRC(int row, int column) {
+    int character = g_characterId;
+    if (character < 0) character = 0;
+    if (character >= 13) character = 0;
+    if (column >= 10) return fn_8023D844(character, row);
+    return lbl_803DC180[row][column];
+}
 extern "C" void fn_8023AC14(RefillChoice *self) {
     if (!self->active) return;
     if (self->count >= 3) return;
@@ -879,16 +887,24 @@ extern "C" void fn_8023AC14(RefillChoice *self) {
             if (self->phase == 40) {
                 unsigned char *player = ChoicePlayerData();
                 ChoicePoint pos;
+                // `group` (named, low vreg) and the named row/column locals are pushed
+                // before `player` in the first simplify sweep, so `player` is coloured
+                // after ChoiceAdvanceRow's `resource` and resource keeps r28.
+                RefillGroup *group;
                 fn_8019FF8C(self->groups[0]->sprite, 0x1ecd, &pos);
                 fn_801F93EC(self->text[0], pos.x, pos.y);
-                fn_8019FF8C(self->groups[0]->sprite, 0x1ecf, &pos);
+                group = self->groups[0];
+                fn_8019FF8C(group->sprite, 0x1ecf, &pos);
                 fn_801F93EC(self->text[1], pos.x, pos.y);
-                fn_8019FF8C(self->groups[0]->sprite, 0x1ed1, &pos);
+                group = self->groups[0];
+                fn_8019FF8C(group->sprite, 0x1ed1, &pos);
                 fn_801F93EC(self->text[2], pos.x, pos.y);
-                fn_8019FF8C(self->groups[0]->sprite, 0x1ed3, &pos);
+                group = self->groups[0];
+                fn_8019FF8C(group->sprite, 0x1ed3, &pos);
                 fn_801F93EC(self->text[3], pos.x, pos.y);
-                int descriptor = PlayerData_ResolveUnlockedIdByIndex(player,
-                    ChoiceItem(self));
+                int row = self->row;
+                int column = self->column;
+                int descriptor = PlayerData_ResolveUnlockedIdByIndex(player, ChoiceItemRC(row, column));
                 TexMgr_SetTexture(self->text[0], fn_8023DAA8(descriptor));
                 TexMgr_SetTexture(self->text[1], Item_GetLocalizedAsset(descriptor, 0));
                 TexMgr_SetTexture(self->text[2], Item_GetLocalizedAsset(descriptor, 1));
