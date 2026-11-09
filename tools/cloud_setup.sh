@@ -44,3 +44,5 @@ chmod +x build/tools/* build/binutils/*
 # 4) configure + full build + SHA-1 check (first run splits for ~100s)
 python3 configure.py --binutils build/binutils --compilers build/compilers --wrapper build/tools/wibo
 ninja all_source progress build/GNLJ82/report.json build/GNLJ82/ok
+# 5) git hooks: show open agent-board messages (docs/agents/) after every pull/rebase
+sh tools/install_githooks.sh n3 || true

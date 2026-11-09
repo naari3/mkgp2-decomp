@@ -1,0 +1,6 @@
+#!/bin/sh
+# Same as post-merge, for git pull --rebase / git rebase.
+[ "$1" = "rebase" ] || exit 0
+cd "$(git rev-parse --show-toplevel)" 2>/dev/null || exit 0
+python3 tools/agent_board.py open --quiet 2>/dev/null || true
+exit 0

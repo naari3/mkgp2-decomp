@@ -4,6 +4,9 @@ and onmokoworks's Codex/Claude workers (docs/agents/, see its README.md).
 
   python3 tools/agent_board.py post --from n3 --topic "..." [--re ID] [--status S] < body.md
   python3 tools/agent_board.py open --for om      # messages to you with no reply yet
+  python3 tools/agent_board.py open --quiet       # side from git config mkgp2.agentSide;
+                                                  # prints nothing when nothing is open
+                                                  # (used by tools/githooks, land.sh, SessionStart)
   python3 tools/agent_board.py show ID            # one message and its replies
 
 Sides: n3 = naari3's threads (writes to_onmokoworks.md),
@@ -11,7 +14,7 @@ Sides: n3 = naari3's threads (writes to_onmokoworks.md),
 Files are append-only (merge=union in .gitattributes): never edit or delete
 an earlier entry; answer with a new entry that has `re: <id>`.
 """
-import argparse, datetime, os, re, sys
+import argparse, datetime, os, re, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BOARD = os.path.join(ROOT, "docs", "agents")
@@ -70,7 +73,24 @@ def cmd_post(a):
     print(f"{mid} -> docs/agents/{OUTBOX[a.sender]}")
 
 
+def default_side():
+    side = os.environ.get("MKGP2_AGENT_SIDE", "")
+    if not side:
+        try:
+            side = subprocess.run(["git", "config", "--get", "mkgp2.agentSide"], cwd=ROOT,
+                                  capture_output=True, text=True).stdout.strip()
+        except OSError:
+            side = ""
+    return side if side in OUTBOX else ""
+
+
 def cmd_open(a):
+    if not a.reader:
+        a.reader = default_side()
+    if not a.reader:
+        if not a.quiet:
+            sys.exit("say --for n3|om (or: git config mkgp2.agentSide n3|om)")
+        return
     other = "om" if a.reader == "n3" else "n3"
     inbox = parse(os.path.join(BOARD, OUTBOX[other]))
     replies = parse(os.path.join(BOARD, OUTBOX[a.reader]))
@@ -79,14 +99,19 @@ def cmd_open(a):
         for i in r["re"]:
             answered.setdefault(i, []).append(r)
     n = 0
+    rows = []
     for m in inbox:
         rs = answered.get(m["id"], [])
         last = rs[-1]["status"] if rs else ""
         closed = last in ("done", "declined", "answer") or (last == "seen" and m["status"] not in ("request", "question"))
         if a.all or not closed:
             n += 1
-            print(f"{m['id']} | {m['head']} | {m['status'] or '-'} | your last reply: {last or 'none'}")
-    if not n:
+            rows.append(f"  {m['id']} | {m['head']} | {m['status'] or '-'} | your last reply: {last or 'none'}")
+    if n:
+        print(f"agent board: {n} open message(s) for {a.reader} in docs/agents/{OUTBOX[other]}"
+              f" (python3 tools/agent_board.py show <id>; answer with post --from {a.reader} --re <id>)")
+        print("\n".join(rows))
+    elif not a.quiet:
         print("nothing open")
 
 
@@ -112,8 +137,9 @@ def main():
     q.add_argument("--status", choices=STATUSES)
     q.set_defaults(f=cmd_post)
     q = sp.add_parser("open", help="messages to you that have no done/declined/answer reply")
-    q.add_argument("--for", dest="reader", choices=OUTBOX, required=True)
+    q.add_argument("--for", dest="reader", choices=OUTBOX, help="default: $MKGP2_AGENT_SIDE or git config mkgp2.agentSide")
     q.add_argument("--all", action="store_true")
+    q.add_argument("--quiet", action="store_true", help="print nothing when nothing is open (or no side is set)")
     q.set_defaults(f=cmd_open)
     q = sp.add_parser("show", help="print one message and its replies")
     q.add_argument("id")

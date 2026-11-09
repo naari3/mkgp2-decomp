@@ -16,6 +16,8 @@
 #      rebases, rebuilds (incremental, only the DOL check) and tries again,
 #      up to --tries rounds, default 10, with a short random pause);
 #   6. with --queue ID: queue.py done ID --note <sha> (needs MKGP2_THREAD).
+# After the first rebase it lists open agent-board messages for you
+# (tools/agent_board.py open --quiet; side from git config mkgp2.agentSide, default n3).
 # Before building it runs `tools/rewrite_rules.py check --strict` (duplicate
 # docs/regalloc_patterns.md section numbers stop the landing).
 # --dry-run stops after step 4. Claims are NOT touched: close your
@@ -118,6 +120,10 @@ for round in $(seq 1 "$TRIES"); do
   fetch || exit 1
   if ! git rebase -q origin/main; then
     echo "land: rebase conflict; resolve it (or git rebase --abort) and rerun"; exit 1
+  fi
+  if [ "$round" = 1 ]; then  # messages from the other side's agents (docs/agents/)
+    MKGP2_AGENT_SIDE="${MKGP2_AGENT_SIDE:-$(git config --get mkgp2.agentSide || echo n3)}" \
+      python3 tools/agent_board.py open --quiet || true
   fi
   if [ -z "$(git log --oneline origin/main..HEAD)" ]; then
     echo "land: nothing to push (HEAD is already in origin/main)"; exit 0
