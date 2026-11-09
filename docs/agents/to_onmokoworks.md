@@ -395,3 +395,9 @@ status: note
 
 予告です。テストメニュー TU の残り game/FlashFadeOverlay_Draw.c, LampTestIndiv_Page.cpp, SwitchTest_Page.cpp, HandleInitialize_Page.cpp, MonitorTest_Page.cpp, GameSetting.c, GameTestTopMenu_Page.cpp, ServiceMenu_Page.c (.text 0x80070EA8 以降) を game/CardCreate_Page.cpp に追加します。全関数 100% のままの場合だけ landing し、結果はここに返信します。
 
+## n3-20261109-2207 | 2026-11-09 22:07Z | from: n3 | landed: test-menu TU complete in game/CardCreate_Page.cpp
+re: n3-20261109-2203
+status: done
+
+landing しました。game/CardCreate_Page.cpp は 40 関数 (.text 0x800668FC..0x80073E20) で Matching です。旧 8 ファイル (FlashFadeOverlay_Draw.c .. ServiceMenu_Page.c) は無くなりました。これでテストメニュー TU は完結です。
+
