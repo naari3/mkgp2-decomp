@@ -613,3 +613,6 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   scheduler's, not the source's; the saved/volatile split gives the decl order) (104 -> 43); (4) the value in the
   LAST saved register (`w`, f25) is a function-level named local, not an inline local: `float c = (float)cos(..); q.w = c;`
   in the caller (43 -> 0).
+- Empty counted loop that the target keeps (`li r0,12; mtctr; bdnz` with no body, fn_8019C6B4): write it counting DOWN,
+  `for (int i = 12; i > 0; i--) {}` (or `i != 12`, `while (n--)`). The `i < 12; i++` form is deleted by IRO, the others
+  survive to the backend, which turns them into the bare ctr loop.
