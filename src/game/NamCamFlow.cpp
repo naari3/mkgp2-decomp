@@ -42,8 +42,10 @@ extern "C" void fn_801F3198(NamCamFlow *self) {
 
 extern "C" void fn_801F38DC(VObject *p) { delete p; }
 
-#pragma push
-#pragma opt_propagation off
+static inline void NamCamAddCountdown(FlowSceneList *list, int id, int number) {
+    fn_801F4DF0(list, new NamCamCountdown(id, number), 0);
+}
+
 extern "C" void fn_801F32BC(NamCamFlow *self) {
     NamCamPlayerInput *input = InputMgr_GetPlayer(GetInputManager(), 0);
     if (!self->camera) {
@@ -60,14 +62,14 @@ extern "C" void fn_801F32BC(NamCamFlow *self) {
     int id = 6;
     do {
         if (self->timer == time) {
-            fn_801F4DF0(self->list, new NamCamCountdown(id, number), 0);
+            NamCamAddCountdown(self->list, id, number);
             FlowTask *task = fn_801F4DC0(self->list, id);
             if (task) {
                 NamCamCountdown *counter = (NamCamCountdown *)fn_80271340(task, 0, lbl_806D0028, lbl_806D0020, 0);
                 counter->x = lbl_806DA5CC;
                 counter->y = lbl_806DA5D0;
             }
-            fn_801F4DF0(self->list, new NamCamCountdown(id + 1, number), 0);
+            NamCamAddCountdown(self->list, id + 1, number);
             task = fn_801F4DC0(self->list, id + 1);
             if (task) {
                 NamCamCountdown *counter = (NamCamCountdown *)fn_80271340(task, 0, lbl_806D0028, lbl_806D0020, 0);
@@ -93,7 +95,6 @@ extern "C" void fn_801F32BC(NamCamFlow *self) {
         fn_801F4D3C(self->list);
     }
 }
-#pragma pop
 
 
 extern "C" void fn_801F36D0(NamCamFlow *self) {
