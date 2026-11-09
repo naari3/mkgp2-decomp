@@ -1956,6 +1956,35 @@ def print_levers(a, rep, src_text, d, ext):
         for rid, text in lv:
             print(f"  [{rid}] {text}")
         print("  (try them together with:  regfix diag ... --tracesweep --run)")
+    # levers of tools/leversweep.py (levers thread): its own source + diff triggers,
+    # on the built object, so not with --start-tu
+    if not getattr(a, "start_tu", None) and (ROOT / "tools" / "leversweep.py").exists():
+        try:
+            import leversweep as lsw
+            cwd = os.getcwd()
+            os.chdir(ROOT)
+            try:
+                fx = lsw.Fx(a.unit, a.fn)
+                fx.diagnose()
+                fired = []
+                for name, l in lsw.LEVERS.items():
+                    try:
+                        n = sum(1 for _, t in l["gen"](fx) if t)
+                    except Exception:  # noqa: BLE001
+                        n = 0
+                    if n:
+                        fired.append((name, l, n))
+            finally:
+                os.chdir(cwd)
+            if fired:
+                print("\n== leversweep levers whose triggers fire (rule ids in tools/patterns/rules.jsonl) ==")
+                for name, l, n in fired:
+                    print(f"  [{l['rule']}] {name}: {n} variant(s). {l['desc']}")
+                    lv.append((l["rule"], l["desc"]))
+                print(f"  run: python3 tools/leversweep.py fn {a.unit} {a.fn} --levers "
+                      + ",".join(n for n, _, _ in fired) + " --show")
+        except Exception as e:  # noqa: BLE001 - advice only
+            print(f"[regfix] leversweep levers: {e}")
     return lv
 
 

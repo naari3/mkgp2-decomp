@@ -509,9 +509,7 @@ def generate(src_text, fn, rep, trace_lines, find_def, cpp):
         c = rep.get('classes', {}).get(rc)
         if c:
             sols += c.get('solutions', [])
-    if not sols:
-        return None
-    want, lines, kinds = want_expr(sols, pre)
+    want, lines, kinds = want_expr(sols, pre) if sols else (None, set(), set())
     for rc in ('gpr', 'fpr'):          # the mismatching vregs' lines too
         c = rep.get('classes', {}).get(rc)
         for v in (c or {}).get('bad', []):
@@ -524,4 +522,16 @@ def generate(src_text, fn, rep, trace_lines, find_def, cpp):
     helpers, t, notes = build_template(src_text, span, lines, cpp)
     if t is None:
         return None
-    return {'template': ''.join(helpers) + t, 'want': want, 'notes': notes, 'lines': sorted(lines)}
+    wide = False
+    if '{{' not in t:
+        # nothing to vary on the diagnosed lines (or diag has no solution):
+        # put the lever axes on every line of the body, scored by diff alone
+        # when there is no predicate
+        lo = src_text.count('\n', 0, src_text.index('{', span[0])) + 1
+        hi = src_text.count('\n', 0, span[2]) + 1
+        h2, t2, n2 = build_template(src_text, span, set(range(lo, hi + 1)), cpp, max_axes=8)
+        if t2 is not None and '{{' in t2:
+            helpers, t, notes, wide = h2, t2, n2 + ['axes widened to the whole body (none on the diagnosed lines)'], True
+            lines = set(range(lo, hi + 1))
+    return {'template': ''.join(helpers) + t, 'want': want, 'notes': notes,
+            'lines': sorted(lines) if not wide else [lo, hi], 'wide': wide}
