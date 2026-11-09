@@ -1906,3 +1906,22 @@ table = lbl; for (i = 0, e = table; ...) { path = e->path; ... }` under
 (walker init becomes `slwi; add` because `i = 0` is not propagated), so the
 walker has to be explicit.
 
+## 73. Pointer local vs shared loop counter in the SECOND loop: make the pointer a CSE temp (fn_8018E538, 11-10)
+
+Two loops share `int i`; in the second loop the target has the element
+pointer in r30 and `i` in r29, ours the reverse. Trace: the second range of
+`i` is a split-off temp (created after every IRO temp), and a named pointer
+`q` is always coloured after it. Split temps are created in the order of
+their defining statements, so `q` cannot be made an earlier split temp
+(`i = 0` always precedes the loop body). What works: spell the element out
+once more next to the named pointer,
+`q = &o->particles[i]; if (!(o->particles[i].age < x) && f(&q->pos, ...))`.
+IRO_CommonSubs then holds the address in a CSE temp, `q` is propagated into
+it, and CSE temps are numbered above split temps. Keeping the shared `i`
+matters: only a multi-def counter keeps the `li rI,0; mr rIV,rI` IV init (a
+fresh single-def `j` propagates to `li rIV,0`).
+
+Side effect on the FIRST loop: named locals take the lowest free saved
+register already in use (see 70), and r29 was opened by the split temp, so
+whichever of `p` / `i` is coloured first now gets r29. Declare `i` before
+`p` to give `i` r29 and `p` r30.

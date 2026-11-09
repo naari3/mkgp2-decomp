@@ -1,8 +1,8 @@
 #include "game/objview/emitter_private.h"
 extern "C" void fn_8018E538(ViewEmitter *o) {
+    int i;
     ViewMatrixParticle *p;
     ViewBillboardParticle *q;
-    int i;
     Mtx *view;
     Vec3f pos;
     if (o->count == 0) return;
@@ -26,7 +26,10 @@ extern "C" void fn_8018E538(ViewEmitter *o) {
     Mtx m;
     for (i = 0; i < 60; i++) {
         q = &o->particles[i];
-        if (!(q->age < lbl_806D9440) && fn_801379F0(&q->pos, lbl_806D9448)) {
+        /* regalloc_patterns 73: the age test spells the element out again, so
+         * the address becomes a CSE temp that is coloured before the split
+         * temp of the shared counter (q r30, i r29). */
+        if (!(o->particles[i].age < lbl_806D9440) && fn_801379F0(&q->pos, lbl_806D9448)) {
             PSMTXScale(m, q->scale, q->scale, q->scale);
             PSMTXConcat(m, *view, m);
             m[0][3] = q->pos.x;
