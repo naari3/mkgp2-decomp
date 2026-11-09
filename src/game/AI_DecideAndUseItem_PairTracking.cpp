@@ -22,8 +22,6 @@ static inline void Decrement(int timer, int &result) {
 void AI_DecideAndUseItem_PairTracking(AISpeedOwner *self, int kart) {
     PairItemController *ctrl = (PairItemController *)Read_U32[kart];
     AIPairRecord *record = &lbl_806793D8[kart];
-    int use;
-    void *target;
     int decisionValue;
     Decrement(ctrl->hitTimer, decisionValue);
     ctrl->hitTimer = decisionValue;
@@ -33,7 +31,9 @@ void AI_DecideAndUseItem_PairTracking(AISpeedOwner *self, int kart) {
         ctrl->itemTimer = timer;
         if (decisionValue <= 0) {
             int laps = g_totalLaps - KartController_GetRenderObj(ctrl)->lap;
+            int use;
             int difference = AI_GetLapDifference(ctrl);
+            void *target;
             decisionValue = KartController_GetRenderObj(ctrl)->rank;
             use = 0;
             target = KartController_GetRenderObj(ctrl);
