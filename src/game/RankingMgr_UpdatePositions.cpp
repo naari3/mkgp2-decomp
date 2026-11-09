@@ -28,7 +28,7 @@ static inline void *FindFirst() {
  * Read_U32 walker in r26, coloured in that order, and loads the walker
  * straight into its register. A named walker leaves `addi r0; mr r26,r0`
  * (named <- temp copies never coalesce), so both must be later lifetime
- * ranges of reused variables (SplitOffRange temps, regalloc_patterns 57).
+ * ranges of reused variables (SplitOffRange temps, regalloc_patterns 57, 72).
  * The dummy first ranges hold g_gameMode and IsRaceStarted(); propagation
  * is off so they are not folded away. Split temps are created per variable,
  * first declared first. Natural code: `RankingThinkBox *box = self->box;`
