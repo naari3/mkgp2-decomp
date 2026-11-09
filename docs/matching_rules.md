@@ -229,6 +229,9 @@ without those flags ninja tries to download tools and fails.
   Also make an inline base dtor out of line (`~Base();` + the
   `__dt__...` rename) when the target keeps it as an undefined reference;
   an emitted weak copy gave `internal linker error: ELF_linker.c 1993`.
+  (Not always: the merged clCSOrgKartModel TU emits a weak copy of the
+  inline base dtor `dtor_8013DCBC` for the ctor's extab cleanups, and the
+  link drops it, main.dol OK. Try the plain build first.)
 - A weak inline destructor that the compiler emits into a TU may be appended
   to that TU's own `tools/extab_order.json` key; new rename pairs may be
   added inside a TU's own `tools/extab_user_renames.json` key. Do not edit
@@ -250,7 +253,10 @@ without those flags ninja tries to download tools and fails.
   `-inline deferred,auto` and `-RTTI on`, and put
   `#pragma readonly_strings on` at the end so the RTTI name strings go to
   .rodata (behind the named strings) instead of in front of the vtable in
-  .data. Worked example: TaMode (`src/game/TaMode_FrameUpdate.cpp`).
+  .data. Worked examples: TaMode (`src/game/TaMode_FrameUpdate.cpp`),
+  clCSOrgKartModel (`src/game/anon_8021A7C8.cpp`: pure-virtual slots are
+  0 in the vtable; string literals in the deferred ctor land after the RTTI
+  names, file-scope named arrays before them; owns the RTTI .sdata).
 - Mangled names: map them to the project's names through
   `tools/extab_user_renames.json`, never by editing symbols to mangled names.
 

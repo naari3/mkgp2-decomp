@@ -714,6 +714,23 @@ body, after the locals that load the other bases:
 `lis`/`addi` to its symbol and compare the registers; `mwtrace` PCODE pre
 shows the vreg numbers per symbol and COLOR shows who is coloured first.
 
+## 37. Call arguments scheduled in the wrong order: the prototype interleaves int and float parameters differently (fn_8021ABFC, 11-09)
+
+`call_function` (optimizer/FunctionCalls.c) generates the arguments in
+PARAMETER order (calls first), and the pre-RA scheduler breaks ties by that
+order. PowerPC assigns int and float registers independently, so
+`f(Obj *, void *anim, float t, ...)` and `f(Obj *, float t, void *anim, ...)`
+put the values in the same registers (r3, r4, f1, ...) but load them in a
+different order. In the clCSOrgKartModel ctor the target loads `anims[0]`
+(r4) after the 30.0f literal (f1); with `(n, anim, t, ...)` ours loads it
+before. Literals, locals, inline wrappers, pragmas and -O4,s all left the 4
+lines; declaring `clNormal3D_SetScale(clNormal3D *, float frame, void *anim,
+float, float, float)` matched at once.
+
+**Check:** only argument loads of ONE call change places, and the moved pair is
+an int and a float argument. Swap their order in the prototype (keeping each
+class's order) and at every call site in the TU.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
