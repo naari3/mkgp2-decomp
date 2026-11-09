@@ -1,8 +1,8 @@
 /* EffectVfx29_30_Item4SubFlame_Tick (0x800BF174): flame jet (resource 0x1D
  * or 0x1E) on the kart root while the linked item is in state 4. Its height
  * follows a 5-key piecewise-linear curve over the frame counter.
- * NonMatching: curve-selection and base/cursor GPR homes differ, as do
- * the frame and lower-value FPR homes. Instruction count is exact. */
+ * NonMatching: curve base and segment cursor use exchanged GPR homes.
+ * Instruction count, floating-point operations and owned EH are exact. */
 #include "game/DrawEffectAccess.h"
 
 typedef struct FlameCurve {
@@ -24,6 +24,21 @@ static inline void FlameCurve_Segment(float (*k)[5], float t, float *out)
     if (k0 <= t && t < k[0][1]) {
         *out = (t - k0) * ((k[1][1] - k[1][0]) / (k[0][1] - k0)) + k[1][0];
     }
+}
+
+static inline float FlameCurve_Evaluate(FlameCurve *curve, float t)
+{
+    float height;
+
+    if (curve->keys[4] <= t) {
+        height = curve->values[4];
+    } else {
+        FlameCurve_Segment((float (*)[5])curve, t, &height);
+        FlameCurve_Segment((float (*)[5])((char *)curve + 1 * sizeof(float)), t, &height);
+        FlameCurve_Segment((float (*)[5])((char *)curve + 2 * sizeof(float)), t, &height);
+        FlameCurve_Segment((float (*)[5])((char *)curve + 3 * sizeof(float)), t, &height);
+    }
+    return height;
 }
 
 void EffectVfx29_30_Item4SubFlame_Tick(unsigned char *self)
@@ -83,18 +98,11 @@ void EffectVfx29_30_Item4SubFlame_Tick(unsigned char *self)
     }
 
     if (S8(0x28)) {
-        FlameCurve *curve = &lbl_8041A224[I(0x10)];
-        float t = F(0x150);
+        FlameCurve *curve = lbl_8041A224;
         float height;
 
-        if (curve->keys[4] <= t) {
-            height = curve->values[4];
-        } else {
-            FlameCurve_Segment((float (*)[5])curve, t, &height);
-            FlameCurve_Segment((float (*)[5])((char *)curve + 1 * sizeof(float)), t, &height);
-            FlameCurve_Segment((float (*)[5])((char *)curve + 2 * sizeof(float)), t, &height);
-            FlameCurve_Segment((float (*)[5])((char *)curve + 3 * sizeof(float)), t, &height);
-        }
+        curve += I(0x10);
+        height = FlameCurve_Evaluate(curve, F(0x150));
 
         height /= lbl_806D5344;
         if (height == lbl_806D51C0) {
