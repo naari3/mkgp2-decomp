@@ -1,3 +1,5 @@
+#ifndef GAME_ITEMSELECTSTATE_H
+#define GAME_ITEMSELECTSTATE_H
 typedef unsigned int u32;
 struct IconValue { char opaque[4]; ~IconValue() {} };
 extern "C" void SpriteAnimHandle_Destroy(void *, int);
@@ -24,3 +26,4 @@ struct ItemSelectState {
     ItemSelectState();
     ~ItemSelectState();
 };
+#endif

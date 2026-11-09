@@ -586,6 +586,43 @@ thread): ready list walked in original order; critical first, then more
 uncovered successors, then height, then opcode rank, then original order.
 Rule `restrict-input-ptrs`.
 
+## 31. A load stuck behind stack stores: the pointer runs past the end of a sized array (ItemSelectState ctor, 11-09)
+
+`optimizer/Alias.c make_alias` returns no alias (so the access becomes
+worst case) when the offset is past `object->type->size`, unless the object
+is an array of unknown size (`extern char x[]`). A pointer built as
+`(char *)lbl_803DC0C0 + 0x1dc` into a defined `const int lbl_803DC0C0[15][3]`
+(size 0xB4) therefore "may alias" every store to an address-taken local, and
+the scheduler keeps its load after them. The same source matched as a
+split TU only because there the object was `extern char lbl_803DC0C0[]`.
+
+Fix: address the object that really holds the data (`choiceY`,
+`lbl_803DC180`, the message strings as `static const char[]` defined in
+pool order). Inside the pool-owning TU every one of them comes off the same
+section anchor, which is the target's single base register. String
+literals go to .data, so rodata strings in a pool are named static arrays.
+
+**Check:** a load that the target hoists above stores to a stack struct, while
+yours waits for them, and the pointer is "base symbol + offset beyond that
+symbol's size": point it at the real object instead. Rule `alias-in-range`.
+
+## 32. Over-split TUs that share one .rodata pool: merge them into the pool owner (item select, 11-09)
+
+fn_80238D9C (item select update, ~95 %) and the ctor only match with the
+grid tables and strings defined in the same TU, because the target reaches
+them all off one section anchor. Ten files (0x802386E0..0x8023B1A8) went into
+`game/ItemSelectState.cpp`. What had to change on the way:
+
+- one compiler (GC/2.6) for all; every matched part still matched there;
+- one copy of each struct and `extern "C"` prototype (the split headers had
+  conflicting `fn_801F93EC` argument orders and `TextManager` layouts);
+- `#pragma auto_inline off` around `fn_8023AA0C`: once it is defined in the
+  same TU, -inline auto inlines it into `fn_8023AC14`;
+- `extab_padding=b""` on the merged Object, or the extab rename step
+  (tools/extab_user_renames.json) does not run at all;
+- the rodata split grows to the strings the ctor uses (0x803DC318), with the
+  two class-name strings kept as named globals because sdata refers to them.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,

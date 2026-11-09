@@ -104,10 +104,6 @@
     "clFlowRound_Init",
     "dtor_80082960"
   ],
-  "src/game/ItemSelectState_Init.cpp": [
-    "ItemSelectState_Init",
-    "dtor_80082960"
-  ],
   "src/game/clFlowCup.c": [
     "clFlowCup_Draw",
     "clFlowCup_Update",

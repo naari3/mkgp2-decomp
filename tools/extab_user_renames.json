@@ -3372,16 +3372,6 @@
     "__dl__FPv": "MemoryManager_TimedFree",
     "__ct__15DebrisResponderF9DebrisVec9DebrisVec": "clItemBoxResponder_SpawnDebris"
   },
-  "src/game/ItemSelectState_Dtor.cpp": {
-    "__dt__15ItemSelectStateFv": "ItemSelectState_Dtor"
-  },
-  "src/game/ItemSelectState_Init.cpp": {
-    "__ct__15ItemSelectStateFv": "ItemSelectState_Init",
-    "__ct__11TextManagerFv": "TexMgr_Init",
-    "__ct__8IconPackFv": "fn_8023B1A8",
-    "__ct__7ResCtrlFv": "ResCtrl_Init",
-    "__dt__7ResCtrlFv": "dtor_80082960"
-  },
   "src/game/CourseObjectManager_Init.cpp": {
     "__ct__18cLNormal3DWrap_MgrFv": "cLNormal3DWrap_Mgr_Ctor"
   },
@@ -7301,12 +7291,6 @@
     "__ct__12CourseSpriteFiii": "Sprite_InitWithAnim",
     "__ct__12CourseSpriteFiiffffff": "Sprite_CreateWithParams",
     "__dt__12CourseSpriteFv": "Sprite_Destroy"
-  },
-  "src/game/ItemSelectSetup.cpp": {
-    "__ct__11TextManagerFv": "TexMgr_Init"
-  },
-  "src/game/ItemSelectUpdate.cpp": {
-    "__ct__15RefillSingletonFv": "fn_802325FC"
   },
   "src/game/FlowPanelCtor.cpp": {
     "__ct__9FlowPanelFv": "fn_801DA06C",
@@ -13097,13 +13081,6 @@
     "@153": "@etb_80008028",
     "@154": "@eti_80020F48"
   },
-  "src/game/ItemGridState_Init.cpp": {
-    "__ct__7ResCtrlFv": "ResCtrl_Init",
-    "__dt__7ResCtrlFv": "dtor_80082960",
-    "__ct__11TextManagerFv": "TexMgr_Init",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
-  },
   "src/game/HudResultFlow.cpp": {
     "__ct__7HudRootFv": "fn_8024932C",
     "__dt__7HudRootFv": "dtor_80249274",
@@ -14323,5 +14300,16 @@
     "@259": "@eti_80029048",
     "@267": "@etb_80017678",
     "@268": "@eti_80029054"
+  },
+  "src/game/ItemSelectState.cpp": {
+    "__ct__11TextManagerFv": "TexMgr_Init",
+    "__ct__15RefillSingletonFv": "fn_802325FC",
+    "__dt__15ItemSelectStateFv": "ItemSelectState_Dtor",
+    "__ct__15ItemSelectStateFv": "ItemSelectState_Init",
+    "__ct__8IconPackFv": "fn_8023B1A8",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }
