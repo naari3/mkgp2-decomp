@@ -17,9 +17,10 @@ void fn_801FE300();
 void fn_801FE324();
 void fn_80232284(RefillSingleton *, float);
 void fn_8023AC14(RefillChoice *);
-unsigned char Sprite_AdvanceAnim(RefillSprite *, float);
+int Sprite_AdvanceAnim(RefillSprite *, float);
 void SpriteHandle_RecomputeCull(int);
 }
+static inline int ChoiceColumn(const RefillChoice *choice) { return choice->column; }
 static inline int GridItem(const int (*items)[10], int column, int row) {
     int character = g_characterId;
     if (character < 0) character = 0;
@@ -54,14 +55,23 @@ static inline RefillSingleton *GetRefillSingleton() {
 static inline RefillSprite *GroupSprite(void *group) { return ((RefillGroup *)group)->sprite; }
 static inline void UpdateSprites(ItemSelectState *self) {
     int i;
-    ItemSelectState *cursor;
-    for (i = 0, cursor = self; i < 9; ++i, cursor = (ItemSelectState *)((char *)cursor + 4)) {
-        if (cursor->groups[0]) Sprite_AdvanceAnim(GroupSprite(cursor->groups[0]), lbl_806DB8A8);
+    for (i = 0; i < 9; ++i) {
+        if (self->groups[i]) Sprite_AdvanceAnim(GroupSprite(self->groups[i]), lbl_806DB8A8);
     }
-    for (i = 0, cursor = self; i < 66; ++i, cursor = (ItemSelectState *)((char *)cursor + 4))
-        SpriteHandle_RecomputeCull(cursor->itemSprites[0]);
-    for (i = 0, cursor = self; i < 5; ++i, cursor = (ItemSelectState *)((char *)cursor + 4))
-        SpriteHandle_RecomputeCull(cursor->sprites[0]);
+    for (i = 0; i < 66; ++i)
+        SpriteHandle_RecomputeCull(self->itemSprites[i]);
+    for (i = 0; i < 5; ++i)
+        SpriteHandle_RecomputeCull(self->sprites[i]);
+}
+static inline void ApplyFade(ItemSelectState *self, float fade) {
+    int alpha = 255.0f * fade;
+    SpriteHandle_SetCornerAlpha(self->sprites[1], alpha);
+    SpriteHandle_SetCornerAlpha(self->sprites[2], alpha);
+    SpriteHandle_SetActiveFlag(self->sprites[1], 1);
+    SpriteHandle_SetActiveFlag(self->sprites[2], 1);
+    unsigned int color = -256;
+    color = (color & ~0xffU) | (alpha & 0xff);
+    *(unsigned int *)(self->auxBuffer->data + 0x20) = color;
 }
 extern "C" void fn_80238D9C(ItemSelectState *self) {
     int row;
@@ -77,14 +87,7 @@ extern "C" void fn_80238D9C(ItemSelectState *self) {
         if (self->resultCode >= 8 && self->resultCode <= 15) {
             float fade = (self->resultCode - 8) / 7.0f;
             if (fade < 0.0f) fade = 0.0f;
-            int alpha = 255.0f * fade;
-            SpriteHandle_SetCornerAlpha(self->sprites[1], alpha);
-            SpriteHandle_SetCornerAlpha(self->sprites[2], alpha);
-            SpriteHandle_SetActiveFlag(self->sprites[1], 1);
-            SpriteHandle_SetActiveFlag(self->sprites[2], 1);
-            unsigned int color = -256;
-            color = (color & ~0xffU) | (alpha & 0xff);
-            *(unsigned int *)(self->auxBuffer->data + 0x20) = color;
+            ApplyFade(self, fade);
         }
         if (self->resultCode < 25) {
             const float *ys = layout->y;
@@ -131,7 +134,7 @@ extern "C" void fn_80238D9C(ItemSelectState *self) {
         if (input->held == 1) {
             RefillChoice *choice = (RefillChoice *)self->iconArray;
             if (choice->selected == 0 && choice->done == 1) {
-                i = choice->column;
+                i = ChoiceColumn(choice);
                 row = choice->row;
                 struct SlotsView { char padding[0x15c]; int slots[3][3]; };
                 SlotsView *view = (SlotsView *)self;
