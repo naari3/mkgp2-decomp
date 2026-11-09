@@ -1,4 +1,7 @@
 #include "game/anon_8021BC44Types.h"
+
+// Integer and floating-point arguments occupy independent ABI register banks.
+void DrawResultSprite(int layer, float x, float y, float alpha, int resource, int flags);
 #include "src/game/anon_8021BC44_nm1_rodata.inc"
 
 TimeAttackResult::TimeAttackResult()
@@ -111,9 +114,9 @@ void TimeAttackResult::Draw() {
 }
 
 static inline void StripNameSpaces(unsigned short *buf) {
-    for (int i = 0; i < 5; i++) {
-        if (buf[i] == 0x8162) {
-            buf[i] = 0;
+    for (int i = 0; i < 5; i++, buf++) {
+        if (*buf == 0x8162) {
+            *buf = 0;
         }
     }
 }
@@ -227,8 +230,9 @@ void TimeAttackResult::Update() {
         if (entry->Done() == 1) {
             unsigned short buf[5];
             wcsncpy(buf, entry->name, 5);
-            StripNameSpaces(buf);
-            name.c[0] = buf[0];
+            unsigned short *p = buf;
+            StripNameSpaces(p);
+            name.c[0] = *p;
             name.c[1] = buf[1];
             name.c[2] = buf[2];
             name.c[3] = buf[3];
@@ -529,8 +533,8 @@ void TimeAttackResult::DrawResult(float alpha) {
     float k;
     float pulse = 1.0f - LUT_Sin12Bit(3.0f * x14);
     fn_80169334(1, 0x152F, 0, 320.0f, 154.0f, 1.25f, 1.0f, alpha);
-    fn_801695E0(1, s_courseRes[g_cupId - 1][g_longRoundFlag], 0, lbl_806DB158, lbl_806DB0A4, alpha);
-    fn_801695E0(1, 0x1530, 0, 173.0f, 132.0f, alpha);
+    DrawResultSprite(1, lbl_806DB158, lbl_806DB0A4, alpha, s_courseRes[g_cupId - 1][g_longRoundFlag], 0);
+    DrawResultSprite(1, 173.0f, 132.0f, alpha, 0x1530, 0);
     for (int i = 0; i < 9; i++) {
         if (0.0f == k) {
             digits[i]->m0C();
@@ -591,9 +595,9 @@ void TimeAttackResult::DrawResult(float alpha) {
         }
     }
     if (rank == 0) {
-        fn_801695E0(1, 0x153D, 0, 298.0f, 363.0f, alpha);
-        fn_801695E0(1, 0x153E, 0, 504.0f, 363.0f, alpha);
-        fn_801695E0(1, 0x153F, 0, 320.0f, 362.0f, alpha);
+        DrawResultSprite(1, 298.0f, 363.0f, alpha, 0x153D, 0);
+        DrawResultSprite(1, 504.0f, 363.0f, alpha, 0x153E, 0);
+        DrawResultSprite(1, 320.0f, 362.0f, alpha, 0x153F, 0);
     }
 }
 

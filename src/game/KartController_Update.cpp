@@ -65,7 +65,15 @@ static inline void TransformOffset(const KCMatrix *matrix, KCVec *offset) {
     Mtx4x4_TransposeTo4x3(matrix,mtx);
     PSMTXMultVec(mtx,offset,offset);
 }
-static inline void TransformPoints(const KCMatrix &matrix, const KCVec &a, const KCVec &b, KCVec &left, KCVec &right) {
+static inline void *UpdateTerrainColors(AIKart *self, const KCMatrix &mat, KCVec &left, KCVec &right, KCVec &normal, float &ground, int &color) {
+    void *tornado=self->tornado.p;
+    TornadoEffect_SetScalePairB0BC(tornado,lbl_806DA388,lbl_806DA390);
+    int c0,c1; // Inline locals permit the shared zero to coalesce.
+    c0=0; c1=0;
+    const KCVec *coords=lbl_803BD728;
+    const KCMatrix &matrix=mat;
+    const KCVec &a=coords[3], &b=coords[2];
+
     float ax=a.x, ay=a.y, az=a.z;
     float bx=b.x, by=b.y, bz=b.z;
     float lx=ay*matrix.m[1][0];
@@ -92,6 +100,11 @@ static inline void TransformPoints(const KCMatrix &matrix, const KCVec &a, const
     right.x=matrix.m[3][0]+rx;
     right.y=matrix.m[3][1]+ry;
     right.z=matrix.m[3][2]+rz;
+
+    if(Terrain_GetGroundHeightWithPenetration(&left,&ground,&normal,&color,lbl_806DA394)) c0=color;
+    if(Terrain_GetGroundHeightWithPenetration(&right,&ground,&normal,&color,lbl_806DA394)) c1=color;
+    TornadoEffect_SetColorPairC8CC(tornado,c0,c1);
+    return tornado;
 }
 extern "C" void KartController_Update(AIKart *self) {
     if (!self->path) return;
@@ -169,16 +182,10 @@ extern "C" void KartController_Update(AIKart *self) {
     float speed=PhysicsState_GetSpeed(self->run.p);
     float angular=PhysicsState_GetAngularVelocity(self->run.p);
     RenderObj_ItemStateMachine_Timed(self->driver.p,0,angular,speed);
-    void *tornado=self->tornado.p;
-    TornadoEffect_SetScalePairB0BC(tornado,lbl_806DA388,lbl_806DA390);
     KCVec offset,normal,right,left;
     float ground;
-    int color,c0=0,c1=0;
-    const KCVec *coords=lbl_803BD728;
-    TransformPoints(mat,coords[3],coords[2],left,right);
-    if(Terrain_GetGroundHeightWithPenetration(&left,&ground,&normal,&color,lbl_806DA394)) c0=color;
-    if(Terrain_GetGroundHeightWithPenetration(&right,&ground,&normal,&color,lbl_806DA394)) c1=color;
-    TornadoEffect_SetColorPairC8CC(tornado,c0,c1);
+    int color;
+    void *tornado=UpdateTerrainColors(self,mat,left,right,normal,ground,color);
     const KCVec *offsetData=&lbl_803BD764;
     offset.x=offsetData->x; offset.y=offsetData->y; offset.z=offsetData->z;
     TransformOffset(&mat,&offset);

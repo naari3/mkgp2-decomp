@@ -13506,6 +13506,7 @@
     "extabindex_card_save_trigger": "@eti_8002201C"
   },
   "src/game/anon_8021BC44_nm1.cpp": {
+    "DrawResultSprite__Fifffii": "fn_801695E0",
     "__dt__7ResCtrlFv": "dtor_80082960",
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__nwa__FUl": "FUN_8003b120",
