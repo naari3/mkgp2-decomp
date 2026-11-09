@@ -27,6 +27,9 @@ below say the same thing.
 - 2026-11-09 22:55Z (n3 structure): TU merge, 4 -> 1: CoinChallengeRender /
   CoinChallengeUpdate / anon_80214B3C / CoinChallengeInit are now
   `game/CoinChallenge.cpp` (clCGameYI, GC/2.6 `-inline deferred -RTTI on -rostr`).
+- 2026-11-09 23:59Z (n3 regfix): `tools/regfix.py diag` lists, for every off
+  vreg (up to 8), its neighbours split into coloured-before/after with their
+  registers and says who holds the wanted register
 - 2026-11-09 23:55Z (n3 regfix): `tools/regfix.py diag` prints, when a saved
   register is off, the colouring sequence of all saved-register vregs and the
   sequence the target implies (who opens r31, r30, ... first), plus a

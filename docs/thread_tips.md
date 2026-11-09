@@ -645,3 +645,10 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   `accepted` was coloured before `off`), then move declarations until mwtrace COLOR lines show that
   order. A walking pointer declared as a block local after the other block locals went last as wanted.
   Open: a frontend CSE temp cannot be numbered below a named local with any lever known so far.
+- PCBComm_Process 99.31 -> 99.95 (11-10): three small recipes.
+  (a) A CSE temp that must colour after a named local: make it a named block local declared right
+  after that local, and write every use so that nothing folds: `(u8 *)&arr[0].field + off` gives
+  `addi r0,base; add rX,r0,off` + displacement, `(u8 *)arr + K + off` gives `addi r4,base; addi r0,off,K; lhzx`.
+  (b) r4/r5 swapped between an address temp and a value used three times: drop the value's named
+  local and repeat the expression (the CSE temp colours before the address temp).
+  (c) `addi r4,base; mr r3,r4; add r4,r4,n` for memcpy(dst, base + n): `src = base; dst = src; src += n;`.
