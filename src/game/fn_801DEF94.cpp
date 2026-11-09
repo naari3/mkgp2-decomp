@@ -1196,7 +1196,25 @@ static inline SteeringQueueIter QueueIterAt(const SteeringQueue *s, unsigned lon
 }
 
 extern "C" SteeringQueueIter fn_801E35FC(SteeringQueue *s, unsigned long i) {
-    return QueueIterAt(s, i);
+    SteeringRing *map = (SteeringRing *)&s->blocks;
+    unsigned long blockIndex = 0;
+    SteeringQueueValue *ptr;
+    int *block = s->blocks.data + s->blocks.head;
+    unsigned long size = s->blockSize;
+    SteeringQueueValue *base;
+    if (i < size) {
+        if (s->blocks.count == 0) base = 0; else base = (SteeringQueueValue *)*block;
+        ptr = base + i;
+    } else {
+        blockIndex = i / size;
+        unsigned long j = map->head + blockIndex;
+        unsigned long capacity = map->capacity;
+        if (j >= capacity) j -= capacity;
+        block = map->data + j;
+        base = (SteeringQueueValue *)*block;
+        ptr = base + i % size;
+    }
+    return SteeringQueueIter(map, blockIndex, block, ptr, base + size, i);
 }
 
 static inline const unsigned long &QueueMinRef(const unsigned long &a, const unsigned long &b) {
