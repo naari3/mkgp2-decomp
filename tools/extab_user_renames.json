@@ -277,18 +277,6 @@
     "extab_TexMgr_Apply": "@etb_800176C8",
     "extabindex_TexMgr_Apply": "@eti_800290B4"
   },
-  "src/game/dtor_801FE870.c": {
-    "extab_dtor_801FE870": "@etb_80017D70",
-    "extab_fn_801FE4D0": "@etb_80017D78",
-    "extab_fn_801FE554": "@etb_80017D80",
-    "extab_fn_801FE588": "@etb_80017D88",
-    "extab_fn_801FE5C8": "@etb_80017D90",
-    "extabindex_fn_801FE4D0": "@eti_80029450",
-    "extabindex_fn_801FE554": "@eti_8002945C",
-    "extabindex_fn_801FE588": "@eti_80029468",
-    "extabindex_fn_801FE5C8": "@eti_80029474",
-    "extabindex_dtor_801FE870": "@eti_80029480"
-  },
   "src/game/dtor_801FEA70.c": {
     "__dt__16Lifetime801FEA70Fv": "dtor_801FEA70",
     "__vt__16Lifetime801FEA70": "lbl_804EC1C8",
@@ -382,10 +370,6 @@
     "__ct__10clNormal3DFPvi": "clNormal3D_Construct",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
-  },
-  "src/game/ItemHolder_Init.c": {
-    "extab_ItemHolder_Init": "@etb_80016A98",
-    "extabindex_ItemHolder_Init": "@eti_8002897C"
   },
   "src/game/TCPConn_AllocTxBuffer.c": {
     "@19": "@etb_80008E9C",
@@ -2398,10 +2382,6 @@
   "src/game/clFlowKart_HandleConfirm.c": {
     "extab_clFlowKart_HandleConfirm": "@etb_8001536C",
     "extabindex_clFlowKart_HandleConfirm": "@eti_8002813C"
-  },
-  "src/game/clFlowKart_SetupTextLayout.c": {
-    "extab_clFlowKart_SetupTextLayout": "@etb_80015520",
-    "extabindex_clFlowKart_SetupTextLayout": "@eti_800281CC"
   },
   "src/game/clFlowKart_UpdateDisplay.c": {
     "extab_clFlowKart_UpdateDisplay": "@etb_80015334",
@@ -4579,12 +4559,6 @@
     "__dt__Q23std9exceptionFv": "dtor_80038DD4",
     "what__Q23std9exceptionCFv": "fn_80038E1C",
     "__vt__Q23std9exception": "lbl_803F5710"
-  },
-  "src/game/Sci2Card_Init.cpp": {
-    "__ct__8Sci2CardFv": "Sci2Card_Init"
-  },
-  "src/game/Sci2Card_Lifetime.cpp": {
-    "__ct__8Sci2CardFv": "Sci2Card_Init"
   },
   "src/game/CSPartsResultRank.c": {
     "__dt__19clCSPartsResultRankFv": "fn_8014388C",
@@ -13794,10 +13768,6 @@
     "DrawCredits__12YesNoButtonLFv": "fn_8020615C",
     "@116": "@etb_80019024",
     "@117": "@eti_80029930"
-  },
-  "src/sysdolphin/baselib/lobj_vector_nm.c": {
-    "@294": "global:HSD_LObj_803B94A0_803F2BB8",
-    "@295": "global:HSD_LObj_803B94AC_803F2BC4"
   },
   "src/game/CSSceneGetTitle_8014ADB4.cpp": {
     "extab_fn_8014ADB4": "@etb_8000E380",
