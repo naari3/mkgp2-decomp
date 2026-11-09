@@ -95,7 +95,7 @@ all of these.
 | `fn_8015E608` | game/resultscene/resultscene | 99.21 | `li -0x100` register in the `rlwimi` alpha insert | |
 | `fn_8015DEBC` | game/resultscene/resultscene | 99.62 | `fdivs` temporaries | |
 | `result_screen_update` | game/resultscene/resultscene | 99.93 | input pointer r29 vs `ItemMsg` new-temp r30 swapped | third params of fn_80160588/fn_801618CC are `bool` |
-| `fn_8019EB9C` | game/kartmove/carobject | 85.29 | FP register homes; decl-order permutations plateau at 44 lines | |
+| `fn_8019EB9C` | game/kartmove/carobject | 85.29 | FP register homes only. Instruction selection/order now exact once z uses `v.x*m[2]` (same as `CollisionMatrix::Transform` in KartMovement_CollisionUpdate.cpp); target homes vx/vy/vz=f6/f7/f8 and accumulates x/y/z in place in f4/f2/f0 | 2026-11-09: ~1600 random source shapes (locals, accumulate forms, component order, pragmas) plateau at 30 diff lines; every GC compiler 1.0..3.0a5 tried, none better. Best: /mnt/project-files/notes/fn_8019EB9C/best_30lines.cpp |
 
 ## onmokoworks Codex near misses (>= 99%)
 
