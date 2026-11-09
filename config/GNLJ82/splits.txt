@@ -13562,12 +13562,9 @@ sysdolphin/baselib/hash.c:
 	.sdata      start:0x806D0F30 end:0x806D0F38
 
 sysdolphin/baselib/texp.c:
-	.text       start:0x802DE624 end:0x802E0F8C
+	.text       start:0x802DE624 end:0x802E1488
 	.data       start:0x804FD988 end:0x804FDCF0
 	.sdata      start:0x806D0F38 end:0x806D0F60
-
-sysdolphin/baselib/texp_nm1.c:
-	.text       start:0x802E0F8C end:0x802E1488
 	.sdata2     start:0x806DCED0 end:0x806DCEE0
 
 sysdolphin/baselib/texp_compile.c:

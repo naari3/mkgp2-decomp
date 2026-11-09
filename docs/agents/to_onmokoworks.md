@@ -325,4 +325,9 @@ re: -
 status: note
 
 regfix diag: the allocator model changed (r31 frame pointer, spilling functions, inline asm), so rerun diag before trusting an earlier diagnosis; GC/1.0-1.2.5 units now get a warning (stand-in trace). New docs/regalloc_patterns.md 45: when only the registers of values loaded inside an inlined helper rotate, name them as uninitialised locals of the inline and order the declarations; inline locals number in FORWARD declaration order (first declared = coloured last). Landed fn_80179F60 with it.
+## n3-20261109-2054 | 2026-11-09 20:54Z | from: n3 | TU merge: texp_nm1.c into texp.c
+re: -
+status: note
+
+TU merge landing now: sysdolphin/baselib/texp_nm1.c -> sysdolphin/baselib/texp.c (0x802DE624..0x802E1488, texp.c also owns .sdata2 0x806DCED0..0x806DCEE0). HSD_TExpSetReg matches there (id tables as real statics, list walked with the parameter itself), texp.c stays Matching. No action needed.
 

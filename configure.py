@@ -487,7 +487,6 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/archive.c"),
             Object(Matching, "sysdolphin/baselib/hash.c"),
             Object(Matching, "sysdolphin/baselib/texp.c"),
-            Object(NonMatching, "sysdolphin/baselib/texp_nm1.c"),
             Object(Matching, "sysdolphin/baselib/texp_compile.c"),
             Object(Matching, "sysdolphin/baselib/texpdag.c"),
             Object(Matching, "sysdolphin/baselib/texpdag_nm1.c"),
