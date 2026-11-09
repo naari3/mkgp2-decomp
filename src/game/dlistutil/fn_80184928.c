@@ -22,8 +22,15 @@ static inline unsigned char ReadQuadPosition(unsigned char *p, Vec *out) {
     return 0;
 }
 
-#pragma push
-#pragma opt_lifetimes off
+static inline int ReadPrimitive(unsigned char **cursor, int *primitive) {
+    unsigned char *header = *cursor;
+    int vertex_count;
+    *primitive = header[0] & 0xf8;
+    vertex_count = *(unsigned short *)(header + 1);
+    *cursor = header + 3;
+    return vertex_count;
+}
+
 int fn_80184928(HSD_JObj *jobj, DListPObj *pobj, DListQuad *out) {
     Vec pos[4];
     int n;
@@ -53,9 +60,7 @@ int fn_80184928(HSD_JObj *jobj, DListPObj *pobj, DListQuad *out) {
     while (p < end) {
         size = DListCmdSize(p);
         if (size) { p += size; continue; }
-        primitive = *p & 0xf8;
-        n = *(unsigned short *)(p + 1);
-        p += 3;
+        n = ReadPrimitive(&p, &primitive);
         if (primitive != 0x80 && primitive != 0x98) {
             p += lbl_806D1678 * n;
             continue;
@@ -114,5 +119,4 @@ int fn_80184928(HSD_JObj *jobj, DListPObj *pobj, DListQuad *out) {
     }
     return 0;
 }
-#pragma pop
 
