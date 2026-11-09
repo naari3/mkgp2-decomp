@@ -502,7 +502,7 @@ deeper and deeper pointers and ends in calls to itself or to a neighbouring
 function that holds the same block: write the recursion, sweep
 `#pragma inline_depth(N)` (count `bl` targets against the target), and try
 `-inline deferred` if the out-of-line copies must come before their caller.
-Rule `recursive-auto-inline`.
+Also fn_801826F8 (mobjclass JObj walk, 4-TU C++ merge, inline_depth(3), d9220c1). Rule `recursive-auto-inline`.
 
 ## Still open (same shape, no fix found yet)
 

@@ -1,5 +1,16 @@
 {
   "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && MKGP2_AGENT_SIDE=\"${MKGP2_AGENT_SIDE:-$(git config --get mkgp2.agentSide || echo n3)}\" python3 tools/agent_board.py open --quiet || true",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [
