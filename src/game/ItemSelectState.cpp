@@ -728,14 +728,16 @@ struct GridInitState {
 #pragma use_lmw_stmw on
 static inline void InitializeGridItem(GridInitState *self, unsigned char *player, int *ids, int i) {
     int id;
+    unsigned char found;
     if(fn_8023D860(*(int *)(player+0x18c+i*4))==1) {
         int character=g_characterId;
         id=fn_8023D844(character,fn_8023D7A8(*(int *)(player+0x18c+i*4)));
         if(player[id+0xa8]==0) {
-            for(int j=0;j<3;++j) {
-                unsigned char found;
+            int j;
+            const int *p=lbl_803DC174;
+            for(j=0;j<3;++p,++j) {
                 int candidate;
-                candidate=lbl_803DC174[j];
+                candidate=*p;
                 found=0;
                 for (int k=0;k<3;++k) {
                     if (candidate==ids[k]) { found=1; break; }
