@@ -1854,3 +1854,32 @@ needed there.
   unless the file has `#pragma opt_propagation off`; then cup/round stay
   locals at their declared position.
 
+
+## 71. Inline RETURN TYPE as a lever: u8 flag coloured one slot off, and `li r0,-1 / addi r0,n,K / mr rX,r0` (fn_80159BD0, option menu item page, 11-09)
+
+fn_80159BD0 (game/SceneList_80157EA8, 0xB14) went 97.2 -> 100 % with literal
+floats. The draft cannot land until the TU owns its .sdata2 (see gave_up.md),
+it is kept in docs/wip/notes/r1/fn_80159BD0_match_literals.cpp. Levers, each
+worth 0.1 to 1 %:
+
+- `unsigned char special` read after several calls: assign it from an inline
+  that returns **int** (`static inline int Item_IsSpecial(int id) { return
+  id >= 0x9f; }`). The u8 truncation then happens at the assignment and the
+  flag is coloured before the int-to-float conversion constant (r29 vs r28).
+  The same inline returning `unsigned char` swaps the two; `bool` and no
+  inline are worse.
+- Target `li r0,-1; blt; addi r0,n,0x4f3; mr r25,r0` (value built in r0, then
+  copied to the saved register): the inline returns **unsigned int** and is
+  assigned to an `int` local, or the caller uses a block temp
+  (`int t; if (n < 0) t = -1; else t = n + 0x4f3; spr = t;`). Ternary,
+  if/return and an int-returning inline all coalesce the copy away.
+- Function-level loop ints in the order `idx, j, i, page` (reverse of the
+  natural order) give the loop GPRs.
+- Block-level floats: the declaration order decides the saved FPRs and even
+  HOW MANY are saved (frame 0xe0 vs 0xf0). Declare all of them at the top of
+  the block and reorder (§70 rule: last declared colours first, lowest free
+  used register). A temp only used as a call argument can be assigned inside
+  the call (`f(..., tx = K + px, ...)`).
+- A product used only inside the innermost `if` is written there; the
+  compiler hoists it itself. Hoisting it by hand changes the FPR.
+- `d / 4.0f`, not `d * 0.25f`, when the target loads 0.25 late.
