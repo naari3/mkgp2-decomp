@@ -306,7 +306,7 @@ def analyze_dumps(out: Path, ours_obj: Path, tgt_obj: Path, fn: str, rc="both"):
     return rows, {"ours": len(ours), "tgt": len(tgt), "nstruct": nstruct}
 
 
-def warn(msg):
+def warn(msg, **_):
     print(msg, file=sys.stderr)
 
 
