@@ -40,13 +40,6 @@ static inline void WorldToMap(MinimapHud *h, float *ppx, float *ppz) {
     pz = h->y + rz;
 }
 
-static inline int IsBattleCup() {
-    if (g_cupId == 7) {
-        return 1;
-    }
-    return 0;
-}
-
 static inline void SetMarkerVisible(int sprite, int battleCup, bool sameTeam) {
     int visible = 0;
     if (battleCup || sameTeam) {
@@ -67,7 +60,11 @@ void MinimapHud::UpdateMarkers() {
     int i;
     int slot;
     me = GetDisplayBufferIndex();
-    cup7 = IsBattleCup();
+    if (g_cupId == 7) {
+        cup7 = 1;
+    } else {
+        cup7 = 0;
+    }
     myTeam = self->team;
     for (i = 7, orderOffset = 7 * sizeof(int); i >= 0; i--, orderOffset -= sizeof(int)) {
         if (*(int *)((char *)order + orderOffset) == -1) {
