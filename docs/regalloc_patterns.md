@@ -807,6 +807,29 @@ fn_801B1D5C):
   (`addi r29,r29,6`): a block local `VoiceItemMap *maps = table; int item = v;`
   passed by value to the first inline and by address (`&maps`) to the second.
 
+## 41. A per-slot pointer that must be numbered below the `this`/self parameter: compute it inside a static inline taking (self, index) (fn_801502AC, 11-09)
+
+Target keeps `self` in r27 and `slot = (char *)self + mode * 4` in r26; a named
+local in the function itself gives the swap (slot r27, self r26), in every
+declaration order. `regfix.py diag` says "create slot after r32 (temp)": the
+slot must sit among the inline-expansion temps, below the parameters.
+
+Fix: move the block that uses the slot into a `static inline` that takes the
+ORIGINAL arguments and computes the slot itself:
+
+```cpp
+static inline void LoadCam_(RaceScene *self, int mode, const char *path) {
+    RaceScene *slot = (RaceScene *)((char *)self + mode * 4);
+    if (slot->objs[0] == 0) { ... }
+}
+```
+
+Passing the computed slot as the inline's argument does not work: the argument
+expression is propagated and the accesses turn into `lwzx/stwx`. Also in this
+function: `lwzu r0,4(rN)` on a table field comes from using
+`table[mode].id` directly at every use (CSE pointer temp), not from a named
+pointer local. Rule: `shared-local-into-inline`.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,

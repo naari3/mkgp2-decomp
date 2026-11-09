@@ -1086,7 +1086,7 @@ void fn_8014FEC4(VObj *p);
 void fn_8014FEFC(TextPanelB *self);
 void fn_80150004(TextPanel *self);
 asm void fn_801500F4(void);
-asm void fn_801502AC(void);
+extern "C" void fn_801502AC(RaceScene *self, int mode);
 unsigned char fn_80150924(unsigned char *o);
 RaceScene *fn_8015092C(RaceScene *self, short flag);
 void fn_80150BE4(VObj *p);
@@ -1164,7 +1164,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; void *f9; unsigned int f10; void *f11; unsigned int f12; void *f13; } extab_fn_801502AC = { 0x380A0000, 0x0000006C, 0x00000020, 0x00000198, 0x00000028, 0x000001C8, 0x00000030, 0x00000000, 0x8A800019, (void *)&MemoryManager_TimedFree, 0x8A80001A, (void *)&MemoryManager_TimedFree, 0x8A800019, (void *)&MemoryManager_TimedFree };
 
 
 
@@ -1233,9 +1232,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801502AC = {
-    (void *)&fn_801502AC, 0x00000370, (void *)&extab_fn_801502AC
-};
 
 
 
@@ -3646,244 +3642,71 @@ TextPanelC::TextPanelC(int which, int st) {
 }
 #pragma use_lmw_stmw reset
 
-extern "C" asm void fn_801502AC(void) { /* 0x801502AC size:0x370 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    lis r5, lbl_80363D30@ha
-    stw r0, 0x34(r1)
-    mulli r0, r4, 0x18
-    stmw r25, 0x14(r1)
-    addi r31, r5, lbl_80363D30@l
-    mr r27, r3
-    addi r3, r31, 0x31c0
-    add r29, r3, r0
-    lwzu r0, 0x4(r29)
-    cmpwi r0, -0x1
-    beq fn_801502AC_L_80150608
-    slwi r30, r4, 2
-    slwi r4, r0, 2
-    add r26, r27, r30
-    addi r3, r31, 0x638
-    lwz r0, 0x28(r26)
-    lwzx r28, r3, r4
-    cmplwi r0, 0x0
-    bne fn_801502AC_L_80150418
-    li r3, 0x3090
-    bl Alloc
-    mr. r25, r3
-    beq fn_801502AC_L_80150334
-    mr r4, r28
-    bl Scene3D_Init
-    lis r3, lbl_80419EF8@ha
-    lfs f1, lbl_806D806C(r2)
-    addi r0, r3, lbl_80419EF8@l
-    lfs f0, lbl_806D8064(r2)
-    stw r0, 0x0(r25)
-    stfs f1, 0x3088(r25)
-    stfs f0, 0x308c(r25)
-    fn_801502AC_L_80150334:
-    stw r25, 0x28(r26)
-    lwz r25, 0x28(r26)
-    cmplwi r25, 0x0
-    beq fn_801502AC_L_801503C4
-    lwz r0, 0x4(r25)
-    cmplwi r0, 0x0
-    beq fn_801502AC_L_801503C4
-    li r0, 0x1
-    lfs f1, lbl_806D8064(r2)
-    stb r0, 0x3084(r25)
-    lfs f0, lbl_806D8068(r2)
-    stfs f1, 0x308c(r25)
-    stfs f0, 0x3088(r25)
-    lwz r3, 0x2c(r25)
-    cmplwi r3, 0x0
-    bne fn_801502AC_L_8015037C
-    li r4, 0x0
-    b fn_801502AC_L_801503A8
-    fn_801502AC_L_8015037C:
-    lwz r3, 0x4(r3)
-    cmplwi r3, 0x0
-    bne fn_801502AC_L_80150390
-    li r4, 0x0
-    b fn_801502AC_L_801503A8
-    fn_801502AC_L_80150390:
-    lwz r3, 0x4(r3)
-    cmplwi r3, 0x0
-    bne fn_801502AC_L_801503A4
-    li r4, 0x0
-    b fn_801502AC_L_801503A8
-    fn_801502AC_L_801503A4:
-    lwz r4, 0x0(r3)
-    fn_801502AC_L_801503A8:
-    lwz r3, 0x4(r25)
-    bl HSD_CObjAddAnim
-    lwz r3, 0x4(r25)
-    lfs f1, 0x308c(r25)
-    bl HSD_CObjReqAnim
-    lwz r3, 0x4(r25)
-    bl HSD_CObjAnim
-    fn_801502AC_L_801503C4:
-    lwz r25, 0x28(r26)
-    cmplwi r25, 0x0
-    beq fn_801502AC_L_80150418
-    lfs f0, lbl_806D806C(r2)
-    lfs f1, 0x3088(r25)
-    fcmpu cr0, f0, f1
-    beq fn_801502AC_L_80150418
-    lbz r0, 0x3084(r25)
-    cmplwi r0, 0x0
-    beq fn_801502AC_L_801503F8
-    li r0, 0x0
-    stb r0, 0x3084(r25)
-    b fn_801502AC_L_80150404
-    fn_801502AC_L_801503F8:
-    lfs f0, 0x308c(r25)
-    fadds f0, f0, f1
-    stfs f0, 0x308c(r25)
-    fn_801502AC_L_80150404:
-    lwz r3, 0x4(r25)
-    lfs f1, 0x308c(r25)
-    bl HSD_CObjReqAnim
-    lwz r3, 0x4(r25)
-    bl HSD_CObjAnim
-    fn_801502AC_L_80150418:
-    add r25, r27, r30
-    lwz r0, 0x7c(r25)
-    cmplwi r0, 0x0
-    bne fn_801502AC_L_80150448
-    li r3, 0x28
-    bl Alloc
-    mr. r26, r3
-    beq fn_801502AC_L_80150444
-    mr r4, r28
-    li r5, 0x1
-    bl SceneModel_Init
-    fn_801502AC_L_80150444:
-    stw r26, 0x7c(r25)
-    fn_801502AC_L_80150448:
-    add r30, r27, r30
-    lwz r0, 0xd0(r30)
-    cmplwi r0, 0x0
-    bne fn_801502AC_L_80150608
-    li r3, 0x5c
-    bl Alloc
-    mr. r25, r3
-    beq fn_801502AC_L_80150474
-    mr r4, r28
-    li r5, 0x0
-    bl clNormal3D_Construct
-    fn_801502AC_L_80150474:
-    stw r25, 0xd0(r30)
-    lwz r3, 0xd0(r30)
-    cmplwi r3, 0x0
-    beq fn_801502AC_L_8015049C
-    lfs f1, lbl_806D8064(r2)
-    li r4, 0x0
-    lfs f2, lbl_806D8068(r2)
-    fmr f3, f1
-    fmr f4, f1
-    bl clNormal3D_SetScale
-    fn_801502AC_L_8015049C:
-    lwz r3, 0xd0(r30)
-    cmplwi r3, 0x0
-    beq fn_801502AC_L_801504AC
-    bl clNormal3D_Exec
-    fn_801502AC_L_801504AC:
-    lwz r0, 0x0(r29)
-    cmpwi r0, 0x15
-    bne fn_801502AC_L_80150608
-    lwz r3, 0xd0(r30)
-    addi r4, r31, 0x3938
-    bl ResolveJointByName
-    mr r4, r3
-    lwz r3, 0xd0(r30)
-    li r5, 0x10
-    bl JObj_Hide
-    lwz r3, 0xd0(r30)
-    addi r4, r31, 0x394c
-    bl ResolveJointByName
-    mr r4, r3
-    lwz r3, 0xd0(r30)
-    li r5, 0x10
-    bl JObj_Hide
-    lwz r3, 0xd0(r30)
-    addi r4, r31, 0x3960
-    bl ResolveJointByName
-    mr r4, r3
-    lwz r3, 0xd0(r30)
-    li r5, 0x10
-    bl JObj_Hide
-    lwz r3, 0xd0(r30)
-    addi r4, r31, 0x3974
-    bl ResolveJointByName
-    mr r4, r3
-    lwz r3, 0xd0(r30)
-    li r5, 0x10
-    bl JObj_Hide
-    lwz r3, 0xd0(r30)
-    addi r4, r31, 0x3988
-    bl ResolveJointByName
-    mr r4, r3
-    lwz r3, 0xd0(r30)
-    li r5, 0x10
-    bl JObj_Hide
-    lwz r3, 0xd0(r30)
-    addi r4, r31, 0x399c
-    bl ResolveJointByName
-    mr r4, r3
-    lwz r3, 0xd0(r30)
-    li r5, 0x10
-    bl JObj_Hide
-    lwz r3, 0xd0(r30)
-    addi r4, r31, 0x39b0
-    bl ResolveJointByName
-    mr r4, r3
-    lwz r3, 0xd0(r30)
-    li r5, 0x10
-    bl JObj_Hide
-    lwz r3, 0xd0(r30)
-    addi r4, r31, 0x39c4
-    bl ResolveJointByName
-    mr r4, r3
-    lwz r3, 0xd0(r30)
-    li r5, 0x10
-    bl JObj_Hide
-    lwz r3, 0xd0(r30)
-    addi r4, r31, 0x39d8
-    bl ResolveJointByName
-    mr r4, r3
-    lwz r3, 0xd0(r30)
-    li r5, 0x10
-    bl JObj_Hide
-    lwz r3, 0xd0(r30)
-    addi r4, r31, 0x39ec
-    bl ResolveJointByName
-    mr r4, r3
-    lwz r3, 0xd0(r30)
-    li r5, 0x10
-    bl JObj_Hide
-    lwz r3, 0xd0(r30)
-    addi r4, r31, 0x3a00
-    bl ResolveJointByName
-    mr r4, r3
-    lwz r3, 0xd0(r30)
-    li r5, 0x10
-    bl JObj_Hide
-    lwz r3, 0xd0(r30)
-    addi r4, r31, 0x3a14
-    bl ResolveJointByName
-    mr r4, r3
-    lwz r3, 0xd0(r30)
-    li r5, 0x10
-    bl JObj_Hide
-    fn_801502AC_L_80150608:
-    lmw r25, 0x14(r1)
-    lwz r0, 0x34(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+struct RaceSceneAnimCam : SceneCacheAnimScene {
+    RaceSceneAnimCam(const char *path) : SceneCacheAnimScene(path) {}
+    void step() {
+        if (-1.0f != speed) {
+            if (active) {
+                active = 0;
+            } else {
+                frame += speed;
+            }
+            HSD_CObjReqAnim(camera, frame);
+            HSD_CObjAnim(camera);
+        }
+    }
+};
+typedef void (*JObjHideFn)(void *, void *, int);
+
+#pragma use_lmw_stmw on
+static inline void LoadCam_(RaceScene *self, int mode, const char *path) {
+    RaceScene *slot = (RaceScene *)((char *)self + mode * 4);
+    if (slot->objs[0] == 0) {
+        slot->objs[0] = (RaceCam *)new SceneCacheAnimScene(path);
+        if (slot->objs[0] != 0) {
+            ((SceneCacheAnimScene *)slot->objs[0])->start();
+        }
+        if (slot->objs[0] != 0) {
+            ((RaceSceneAnimCam *)slot->objs[0])->step();
+        }
+    }
 }
+extern "C" void fn_801502AC(RaceScene *self, int mode) {
+    const char *path;
+
+    if (lbl_80366EF0[mode].id == -1) {
+        return;
+    }
+    path = ((const char *const *)&lbl_80364368)[lbl_80366EF0[mode].id];
+    LoadCam_(self, mode, path);
+    if (self->lists[mode] == 0) {
+        self->lists[mode] = new SceneCacheModel(path, 1);
+    }
+    if (self->models[mode] == 0) {
+        self->models[mode] = new SceneCacheNormal(path, 0);
+        if (self->models[mode] != 0) {
+            clNormal3D_SetScale(self->models[mode], 0, 0.0f, 1.0f, 0.0f, 0.0f);
+        }
+        if (self->models[mode] != 0) {
+            clNormal3D_Exec(self->models[mode]);
+        }
+        if (lbl_80366EF0[mode].id == 0x15) {
+            ((JObjHideFn)JObj_Hide)(self->models[mode], ResolveJointByName(self->models[mode], (char *)lbl_80367668), 0x10);
+            ((JObjHideFn)JObj_Hide)(self->models[mode], ResolveJointByName(self->models[mode], (char *)lbl_8036767C), 0x10);
+            ((JObjHideFn)JObj_Hide)(self->models[mode], ResolveJointByName(self->models[mode], (char *)lbl_80367690), 0x10);
+            ((JObjHideFn)JObj_Hide)(self->models[mode], ResolveJointByName(self->models[mode], (char *)lbl_803676A4), 0x10);
+            ((JObjHideFn)JObj_Hide)(self->models[mode], ResolveJointByName(self->models[mode], (char *)lbl_803676B8), 0x10);
+            ((JObjHideFn)JObj_Hide)(self->models[mode], ResolveJointByName(self->models[mode], (char *)lbl_803676CC), 0x10);
+            ((JObjHideFn)JObj_Hide)(self->models[mode], ResolveJointByName(self->models[mode], (char *)lbl_803676E0), 0x10);
+            ((JObjHideFn)JObj_Hide)(self->models[mode], ResolveJointByName(self->models[mode], (char *)lbl_803676F4), 0x10);
+            ((JObjHideFn)JObj_Hide)(self->models[mode], ResolveJointByName(self->models[mode], (char *)lbl_80367708), 0x10);
+            ((JObjHideFn)JObj_Hide)(self->models[mode], ResolveJointByName(self->models[mode], (char *)lbl_8036771C), 0x10);
+            ((JObjHideFn)JObj_Hide)(self->models[mode], ResolveJointByName(self->models[mode], (char *)lbl_80367730), 0x10);
+            ((JObjHideFn)JObj_Hide)(self->models[mode], ResolveJointByName(self->models[mode], (char *)lbl_80367744), 0x10);
+        }
+    }
+}
+#pragma use_lmw_stmw reset
 
 
 class VObjModel : public VObj {
