@@ -106,7 +106,7 @@ void fn_801E9E74(AISpeedOwner *self) {
                 ClassifyRecord(record, range, &count, &states[i]);
             if (count > fn_801DCC94(setting)) {
                 float bonus = fn_801DCC6C(setting);
-                for (i = 0; i < 8; ++i, ++base) {
+                for (i = 0; i < 8; ++base, ++i) {
                     if (base && states[i] == 2) base->speedBonus = bonus;
                 }
             }

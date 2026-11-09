@@ -1536,3 +1536,8 @@ c20_u148 fn_801826F8 improves97.748344->98.013245 at604B/EH8/index12 exact. Decl
 Source: Codex worker c21_u131_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c21_u131: fn801826F8 inherited opt_lifetimes-off source scores98.1457; removing forbidden per-function optimization gives advertised clean98.013245/604B with EH8/index12 both100. Classifier saved/reg_only/multi,56 rows, mappingr27->r29 r28->r30 r29->r27 r30->r31 r31->r28. Tiny Drawables accessor with named HSD_JObjGetDObj result is byte-invariant; const void* source contract is also byte-invariant. Both reverted and stop after two no-information experiments. Only retained edit removes inherited pragma; no new native gain. No global/pool site, no possible B partition. Full fallback DOL SHA-1 exact.
+
+## c22_u110_20261109
+Source: Codex worker c22_u110_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c22_u110 fn801E9E74 improves98.61724->98.69655/1164B by ordering bonus-loop step ++base,++i. This fixes final pointer/state/index instruction scheduling; retained one-line draft improvement. Doing the same in classifier regresses combined98.60345, so omitted. Returning classification state instead of output pointer regresses88.92414/1124B through branch/store folding. HorizontalDistanceSquared static inline regresses95.441376/1148B: player-Z no longer loop-hoisted, saved FPR count and frame shrink. Both rejected. Array address is a standalone symbol, no shared-pool offset residual; no A/B rescue. EH100/index91.66667 unchanged, no flag/range/header edits, native gain0.
