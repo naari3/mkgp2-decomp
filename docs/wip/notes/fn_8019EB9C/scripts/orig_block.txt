@@ -1,0 +1,11 @@
+static inline float TransformComponent(const float *column, float x, float y, float z) {
+    return column[12] + (z * column[8] + (column[0] * x + y * column[4]));
+}
+
+void fn_8019EB9C(Matrix44 *a, Vec3 *out, const Vec3 *v) {
+    float x = TransformComponent(&a->m[0][0], v->x, v->y, v->z);
+    float y = TransformComponent(&a->m[0][1], v->x, v->y, v->z);
+    float z = TransformComponent(&a->m[0][2], v->x, v->y, v->z);
+    out->x = x; out->y = y; out->z = z;
+}
+
