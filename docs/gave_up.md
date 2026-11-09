@@ -91,6 +91,7 @@ all of these.
 | `CollisionFile_Load` | game/CollisionFile_Load | 97.6 | 4 lines with GC/1.3 + `opt_propagation off` (6f5099a): the table offset starts as `mr r3, r6` (copy of count) in the target, `slwi r3, r6, 3` here, and the second member store goes through r3 | ~60 variants (offset/pointer/`i = count` loops, store orders), 3 permuter runs of 15 min (78k iters) |
 | `fn_8024AD8C` | game/CardSetupFlowInitial | 95.88 | `lwz lbl_806D1AB0` scheduling | |
 | `fn_8022BBC8` | game/EnemyFace_nm3 | 98.72 | scheduling | |
+| `fn_8022ACE4` | game/EnemyFace | 98.61 | regalloc+other | inline-matched-sibling tried: verbatim TireSprite_Load (EnemyFace_nm1, 100%) body as the inline -> 98 diff lines vs 60 baseline; sibling shape does not carry over (n3 11-09) |
 | `clFlowCourse_Dtor` | game/clFlowCourse | 99.62 | `selected % 2` register swap | |
 | `fn_801D1684` + `clFlowCourse_Update`/`Dtor` (TU merge) | game/clFlowCourse | 98.21 / 99.70 / 99.62 | R2's merge patch (docs/wip/r2/clFlowCourse_merge.patch) gives 6/9 at 100% incl. Init. The rest share one swap: the `0xFFFFFF00` color constant for the `rlwimi` alpha insert gets r0 here but r4/r5 in the target (same as `fn_8015E608`). The merge is not landed because NonMatching would unlink 4 matched TUs | R6: ~20 expr/decl/inline variants (u8 alpha, mask-or form, pointer, loop), pragmasweep --set all (68 to 65) |
 | `fn_8015E608` | game/resultscene/resultscene | 99.21 | `li -0x100` register in the `rlwimi` alpha insert | |
