@@ -11300,6 +11300,7 @@ game/JointTracks.cpp:
 	extab       start:0x8001CF04 end:0x8001CF80
 	extabindex  start:0x8002B004 end:0x8002B07C
 	.text       start:0x802400A4 end:0x80241B84
+	.rodata     start:0x803E5D38 end:0x803EEE58
 	.sdata2     start:0x806DBDF8 end:0x806DBE00
 
 game/fn_80241B84.c:
