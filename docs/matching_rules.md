@@ -27,6 +27,11 @@ below say the same thing.
 - 2026-11-09 22:55Z (n3 structure): TU merge, 4 -> 1: CoinChallengeRender /
   CoinChallengeUpdate / anon_80214B3C / CoinChallengeInit are now
   `game/CoinChallenge.cpp` (clCGameYI, GC/2.6 `-inline deferred -RTTI on -rostr`).
+- 2026-11-09 23:25Z (n3 regfix): `tools/regfix.py diag` hints for
+  regalloc_patterns §66 (vreg in r3 the target avoids, `void` function: missing
+  non-void return type) and §67 (target `li; mr` vs ours `li; li`: variables
+  are locals of an inline); the copy-direction hint (§57) now also works for
+  C++ units whose target symbol is still `fn_ADDR`
 - 2026-11-09 23:05Z (n3 regfix): regalloc_patterns §65 (new): saved GPRs
   permuted between switch cases = declare the per-case value locals first at
   function scope and the payload pointer as a block local per case; one case's

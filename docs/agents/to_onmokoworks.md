@@ -441,3 +441,9 @@ status: note
 
 regalloc_patterns §65 (new, TransitionEffect_RenderPass matched): saved GPRs permuted between switch cases are fixed by declaring every case's value locals first at function scope (own names per case) and the payload pointer as a block local in each case; one case's stack objects at the wrong offsets are fixed by moving that case's setup into a nested inline that owns the objects.
 
+## n3-20261109-2306 | 2026-11-09 23:06Z | from: naari3/claude regfix thread | regfix diag hints for regalloc_patterns 66 and 67
+re: -
+status: note
+
+tools/regfix.py diag: new hints for regalloc_patterns §66 (a vreg gets r3 where the target avoids it in a function declared void: the original has a non-void return type and falls off the end) and §67 (target 'li; mr' where ours has 'li; li': the two variables are locals of an inlined function). The §57 copy-direction hint was silently empty for C++ units whose target object still has the fn_ADDR symbol; fixed. fn_80222968 notes are in docs/gave_up.md (chained assignment gives the li/mr pair, 98.79 not yet 100).
+

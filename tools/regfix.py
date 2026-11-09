@@ -2123,6 +2123,18 @@ def shared_loop_counters(a, rep, src_text):
     return out
 
 
+def _listings(ours_obj, tgt_obj, sym, fn):
+    """objdump text of the function in both objects; the target object may
+    still carry the fn_ADDR name where ours has the mangled one."""
+    def one(o):
+        for n in (sym, fn):
+            l = [str(x) for x in md.objdump_fn(o, n)]
+            if l:
+                return l
+        return []
+    return one(ours_obj), one(tgt_obj)
+
+
 def copy_direction_hint(a, d):
     """`addi rA,..; mr rB,rA` (ours) against `addi rB,..; mr rA,rB` (target):
     regalloc_patterns 57. -> [(index, ours pair, target pair)]"""
@@ -2132,9 +2144,8 @@ def copy_direction_hint(a, d):
     oo = Path(d) / "ours.o"
     if not oo.exists():
         oo = ROOT / f"build/{md.VERSION}/src/{u.obj}.o"
-    ours = [str(x) for x in md.objdump_fn(oo, sym)]
-    tgt = [str(x) for x in md.objdump_fn(ROOT / f"build/{md.VERSION}/obj/{u.obj}.o", sym)]
-    if len(ours) != len(tgt):
+    ours, tgt = _listings(oo, ROOT / f"build/{md.VERSION}/obj/{u.obj}.o", sym, a.fn)
+    if len(ours) != len(tgt) or not ours:
         return []
 
     def pair(x, y):
@@ -2148,6 +2159,28 @@ def copy_direction_hint(a, d):
         po, pt = pair(ours[i], ours[i + 1]), pair(tgt[i], tgt[i + 1])
         if po and pt and po[0] == pt[1] and po[1] == pt[0] and po[0] != po[1]:
             out.append((i, f"{ours[i].strip()}; {ours[i + 1].strip()}", f"{tgt[i].strip()}; {tgt[i + 1].strip()}"))
+    return out
+
+
+def li_mr_hint(a, d):
+    """Target `li rA,N; ... mr rB,rA` where ours has two `li` (or the reverse):
+    regalloc_patterns 67. -> [(index, ours insn, target insn)]"""
+    import pragmasweep as ps
+    u = ps.Unit(a.unit)
+    sym = u.compiled_name(a.fn)
+    oo = Path(d) / "ours.o"
+    if not oo.exists():
+        oo = ROOT / f"build/{md.VERSION}/src/{u.obj}.o"
+    ours, tgt = _listings(oo, ROOT / f"build/{md.VERSION}/obj/{u.obj}.o", sym, a.fn)
+    if len(ours) != len(tgt) or not ours:
+        return []
+    li, mr = r"\s*li\s+(r\d+),(-?\w+)\s*$", r"\s*mr\s+(r\d+),(r\d+)\s*$"
+    out = []
+    for i, (x, y) in enumerate(zip(ours, tgt)):
+        for p1, p2, kind in ((li, mr, "li-mr"), (mr, li, "mr-li")):
+            m1, m2 = re.match(p1, x), re.match(p2, y)
+            if m1 and m2 and m1.group(1) == m2.group(1):
+                out.append((i, x.strip(), y.strip(), kind))
     return out
 
 
@@ -2197,6 +2230,14 @@ def shape_hints(a, rep, src_text):
             out.append("volatile GPRs are off in a function that returns a value: if the target avoids r3 after a call "
                        "until the epilogue, the original left that block with a valueless `return;` (r3 stays live to the "
                        "exit); regalloc_patterns 54.")
+        off3 = any(re.search(r"(?<!\d)3$", str(g.phys.get(v))) and not re.search(r"(?<!\d)3$", str(w.get(v)))
+                   for v in cl["gpr"]["bad"])
+        if off3 and re.search(r"\bvoid\s+[\w:~]*\s*$", head.split("(")[0]):
+            out.append("a vreg gets r3 where the target avoids it, in a function declared `void`: if this is near the "
+                       "end of the function on a path that reaches the exit without a call, the original returns a "
+                       "value (e.g. `virtual int Update()`) and falls off the end, so r3 stays live to the epilogue. "
+                       "Declare the non-void return type with no `return` (base and every override for a virtual); "
+                       "regalloc_patterns 66.")
         if any(n >= 14 for n in nums) and re.search(r"\bend\s*\(\s*\)|\bbegin\s*\(\s*\)|\bsentinel\b|&\s*\w+(?:->|\.)head\b", src_text):
             out.append("saved GPRs are off around a list walk: the sentinel `&head` hoisted by the backend takes the newest "
                        "saved register. Name it as a local of the inline (regalloc_patterns 52) or build begin() as "
@@ -2241,6 +2282,24 @@ def print_levers(a, rep, src_text, d, ext):
             print(f"  insn {i}: ours `{o}` | target `{t}`. A copy into a NAMED local is never coalesced, so the address "
                   f"lands in the temp. The target's base is a split-off range: make the base the SECOND use of a "
                   f"variable that held something else earlier (look for the same register in two unrelated places).")
+    try:
+        lm = li_mr_hint(a, d)
+    except Exception as e:  # noqa: BLE001 - advice only
+        lm = []
+        print(f"[regfix] li/mr hint: {e}")
+    if lm:
+        print("\n== constant loaded twice vs loaded once and copied (regalloc_patterns 67) ==")
+        for i, o, t, kind in lm[:6]:
+            print(f"  insn {i}: ours `{o}` | target `{t}`")
+        if any(k == "li-mr" for *_, k in lm):
+            print("  The target keeps `li; mr` for two variables with the same constant. Constant propagation turns the "
+                  "copy back into `li` for named locals of the function; equal `li` are merged again only for compiler "
+                  "temporaries, and locals of an INLINED function are such temporaries. Move the two variables (and the "
+                  "code using them) into a static inline. A chained assignment `d = c = N` with both modified in place "
+                  "also gives the pair (fn_80222968 note in docs/gave_up.md).")
+        if any(k == "mr-li" for *_, k in lm):
+            print("  Ours copies where the target loads the constant twice: the two variables are named locals of the "
+                  "function itself in the original, not locals of an inline.")
     try:
         sh = shape_hints(a, rep, src_text)
     except Exception as e:  # noqa: BLE001 - advice only
