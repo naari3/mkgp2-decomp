@@ -111,8 +111,9 @@ static inline LifecycleConn **Outgoing(Storage *storage) { return storage->outgo
 static inline void SetSlotId(Slot *slot, int id) {
     slot->flags.ids.id = id;
 }
-static inline void ClearPackets(u8 *cursor) {
+static inline void ClearPackets(Slot *slot) {
     int count = 0;
+    u8 *cursor = (u8 *)slot;
     do {
         memset(cursor + 0x2C, 0, 0x28);
         ++count;
@@ -132,7 +133,7 @@ static inline void ResetScratch(Slot *slot, int index) {
         if (slot->flags.bits.local == 1) { slot->read = 0; slot->write = 2; }
         else { slot->read = 0; slot->write = 1; }
         memset(slot, 0, 0x2C);
-        ClearPackets((u8 *)slot);
+        ClearPackets(slot);
     }
 }
 
@@ -253,8 +254,6 @@ extern "C" int PcbComm_Shutdown(void)
     return 1;
 }
 
-#pragma push
-#pragma opt_dead_assignments off
 extern "C" int PCBComm_Init(void)
 {
     Storage *storage = &lbl_805A5EC0;
@@ -312,7 +311,6 @@ extern "C" int PCBComm_Init(void)
     memset(&storage->sync, 0, 0x1C);
     return 1;
 }
-#pragma pop
 
 
 PCBComm::~PCBComm() {}
