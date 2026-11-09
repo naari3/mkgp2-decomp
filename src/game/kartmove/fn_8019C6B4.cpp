@@ -9,11 +9,11 @@ extern "C" double cos(double);
 
 
 static inline void Identity(Matrix44 *a) {
-    a->m[3][3] = a->m[2][2] = a->m[1][1] = a->m[0][0] = lbl_806D96D0;
-    a->m[1][0] = a->m[0][3] = a->m[0][2] = a->m[0][1] = lbl_806D96D0;
-    a->m[2][1] = a->m[2][0] = a->m[1][3] = a->m[1][2] = lbl_806D96D0;
-    a->m[3][2] = a->m[3][1] = a->m[3][0] = a->m[2][3] = lbl_806D96D0;
-    a->m[0][0] = a->m[1][1] = a->m[2][2] = a->m[3][3] = lbl_806D96D4;
+    a->m[3][3] = a->m[2][2] = a->m[1][1] = a->m[0][0] = 0.0f;
+    a->m[1][0] = a->m[0][3] = a->m[0][2] = a->m[0][1] = 0.0f;
+    a->m[2][1] = a->m[2][0] = a->m[1][3] = a->m[1][2] = 0.0f;
+    a->m[3][2] = a->m[3][1] = a->m[3][0] = a->m[2][3] = 0.0f;
+    a->m[0][0] = a->m[1][1] = a->m[2][2] = a->m[3][3] = 1.0f;
 }
 
 static inline double QuatX(const MovementQuat *q) { return q->x; }
@@ -36,15 +36,15 @@ static inline void QuatMatrix(Matrix44 *m, MovementQuat *q) {
     float wy = w*y;
     float yz = y*z;
     float wx = w*x;
-    m->m[0][0] = lbl_806D96D4 - lbl_806D9708*(yy+zz);
-    m->m[1][0] = lbl_806D9708*(xy-wz);
-    m->m[2][0] = lbl_806D9708*(xz+wy);
-    m->m[0][1] = lbl_806D9708*(xy+wz);
-    m->m[1][1] = lbl_806D96D4 - lbl_806D9708*(xx+zz);
-    m->m[2][1] = lbl_806D9708*(yz-wx);
-    m->m[0][2] = lbl_806D9708*(xz-wy);
-    m->m[1][2] = lbl_806D9708*(yz+wx);
-    m->m[2][2] = lbl_806D96D4 - lbl_806D9708*(xx+yy);
+    m->m[0][0] = 1.0f - 2.0f*(yy+zz);
+    m->m[1][0] = 2.0f*(xy-wz);
+    m->m[2][0] = 2.0f*(xz+wy);
+    m->m[0][1] = 2.0f*(xy+wz);
+    m->m[1][1] = 1.0f - 2.0f*(xx+zz);
+    m->m[2][1] = 2.0f*(yz-wx);
+    m->m[0][2] = 2.0f*(xz-wy);
+    m->m[1][2] = 2.0f*(yz+wx);
+    m->m[2][2] = 1.0f - 2.0f*(xx+yy);
 }
 
 static inline void Multiply(Matrix44 *a, const Matrix44 *b) {
