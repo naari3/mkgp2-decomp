@@ -34,4 +34,7 @@ def _patched(cmd, *a, **k):
 gdb.execute = _patched
 _execute("set pagination off")
 _execute("set confirm off")
-runpy.run_path(MWCCDBG_SCRIPT, run_name="__main__")  # noqa: F821 (set with -ex)
+# run_path executes in a fresh namespace, so hand over the globals that
+# mwcc_debugger.py's gdb half reads (FUNCTION_NAME, OUTPUT_DIR; set with -ex).
+runpy.run_path(MWCCDBG_SCRIPT, run_name="__main__",  # noqa: F821
+               init_globals={"FUNCTION_NAME": FUNCTION_NAME, "OUTPUT_DIR": OUTPUT_DIR})  # noqa: F821

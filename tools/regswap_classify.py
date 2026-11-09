@@ -29,7 +29,7 @@ than naari3 are marked [claimed].
 import argparse, collections, json, os, re, subprocess, sys
 from concurrent.futures import ThreadPoolExecutor
 
-OBJDIFF = 'build/tools/objdiff-cli'
+OBJDIFF = os.path.normpath('build/tools/objdiff-cli' + ('.exe' if os.name == 'nt' else ''))
 REG = re.compile(r'^(r|f)(\d+)$')
 BRANCH_CALL = {'bl', 'bla'}
 STORE_FIRST = re.compile(r'^(st|cmp|tw|dcb|icb|mt|b)')  # first operand is not a destination

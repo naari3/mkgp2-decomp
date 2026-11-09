@@ -29,7 +29,7 @@ Status 11-08: rediscovers TextRenderer_DrawEntry (99.54 -> 100 in 73 builds).
 """
 import argparse, itertools, json, re, subprocess, sys
 
-OBJDIFF = 'build/tools/objdiff-cli'
+OBJDIFF = os.path.normpath('build/tools/objdiff-cli' + ('.exe' if os.name == 'nt' else ''))
 CTRL = re.compile(r'^\s*(if|else|for|while|do|switch|case|default|return|break|continue|goto|\{|\}|#|//|/\*)')
 TYPE_START = re.compile(r'^\s*(const\s+|static\s+|unsigned\s+|signed\s+|struct\s+|volatile\s+)*'
                         r'(int|long|short|char|float|double|void|u8|u16|u32|s8|s16|s32|f32|f64|bool|[A-Z]\w*)\b[\s\*&]+\w+\s*(=|;|\[|,)')

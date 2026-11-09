@@ -48,7 +48,18 @@ PRAGMAS_EXT = ['optimization_level 3', 'optimization_level 2', 'optimization_lev
                'opt_propagation off']
 PRAGMA_SETS = {'default': PRAGMAS, 'extended': PRAGMAS_EXT, 'all': list(dict.fromkeys(PRAGMAS + PRAGMAS_EXT))}
 CCS = ['1.2.5n', '1.3', '1.3.2', '2.0', '2.6', '2.7']
-TMP = '/tmp/pragmasweep'
+TMP = os.path.join(__import__('tempfile').gettempdir(), 'pragmasweep')
+# build/tools binaries; on Windows CreateProcess needs the .exe suffix and backslashes
+DTK = os.path.normpath('build/tools/dtk' + ('.exe' if os.name == 'nt' else ''))
+OBJDIFF_CLI = os.path.normpath('build/tools/objdiff-cli' + ('.exe' if os.name == 'nt' else ''))
+_GC = re.compile(r'GC([\\/])[^\\/]+([\\/])mwcceppc')
+
+
+def swap_cc(cmd, cc):
+    """cmd with its compiler switched to GC/<cc>, keeping the path separator
+    (ninja writes backslashes on Windows, and cmd.exe needs them in the exe path)."""
+    return _GC.sub(lambda m: f'GC{m[1]}{cc}{m[2]}mwcceppc', cmd)
+
 OBJDIFF = False  # --objdiff: score = (100 - objdiff match %) * 100 instead of diff lines
 
 import threading
@@ -95,8 +106,10 @@ class Unit:
         parts = lines[-1].split(' && ')
         self.cmd = parts[0].replace(' -MMD', '')
         # postprocess steps (extab renames etc.) so objdiff can pair symbols
-        self.post = [x for x in parts[1:] if f'build/GNLJ82/src/{obj}.o' in x]
-        m = re.search(r'GC/([^/]+)/mwcceppc', self.cmd)
+        # (the object path is normalised to forward slashes so callers can .replace() it)
+        op = f'build/GNLJ82/src/{obj}.o'
+        self.post = [x.replace(op.replace('/', '\\'), op) for x in parts[1:] if op in x.replace('\\', '/')]
+        m = re.search(r'GC[\\/]([^\\/]+)[\\/]mwcceppc', self.cmd)
         self.cc = m.group(1) if m else None
         self.text = open(self.src).read()
         self.ext = os.path.splitext(self.src)[1]
@@ -119,11 +132,11 @@ class Unit:
         if not T: return None
         d = f'{TMP}/guess{os.getpid()}'; os.makedirs(d, exist_ok=True)
         for f in glob.glob(d + '/*'): os.remove(f)
-        c = re.sub(r'-c \S+ -o \S+', f'-c {self.src} -o {d}', self.cmd)
+        c = re.sub(r'-c \S+ -o \S+', lambda _: f'-c {self.src} -o {d}', self.cmd)
         subprocess.run(c, shell=True, capture_output=True, text=True)
         o = glob.glob(d + '/*.o')
         if not o: return None
-        subprocess.run(['build/tools/dtk', 'elf', 'disasm', o[0], d + '/m.s'], capture_output=True)
+        subprocess.run([DTK, 'elf', 'disasm', o[0], d + '/m.s'], capture_output=True)
         names = re.findall(r'^\.fn (\S+?),', open(d + '/m.s', errors='replace').read(), re.M)
         best = (0.0, None)
         for n in names:
@@ -156,8 +169,8 @@ class Unit:
         for f in glob.glob(d + '/*.o') + glob.glob(d + '/.*.o'): os.remove(f)
         sp = os.path.join(os.path.dirname(os.path.abspath(self.src)), f'.psweep_{os.getpid()}_w{wk}{self.ext}')
         open(sp, 'w').write(text)
-        c = re.sub(r'GC/[^/]+/mwcceppc', f'GC/{cc}/mwcceppc', self.cmd)
-        c = re.sub(r'-c \S+ -o \S+', f'-c {sp} -o {d}', c)
+        c = swap_cc(self.cmd, cc)
+        c = re.sub(r'-c \S+ -o \S+', lambda _: f'-c {sp} -o {d}', c)
         subprocess.run(c, shell=True, capture_output=True, text=True)
         os.remove(sp)
         o = glob.glob(d + '/*.o') + glob.glob(d + '/.*.o')
@@ -169,7 +182,7 @@ class Unit:
                            capture_output=True)
         if OBJDIFF:
             return self.objdiff_score(o[0], fn)
-        subprocess.run(['build/tools/dtk', 'elf', 'disasm', o[0], d + '/m.s'], capture_output=True)
+        subprocess.run([DTK, 'elf', 'disasm', o[0], d + '/m.s'], capture_output=True)
         T = target_body(fn)
         B = norm_body(d + '/m.s', fn) or norm_body(d + '/m.s', self.compiled_name(fn))
         if not B or T is None: return 10**6
@@ -178,7 +191,7 @@ class Unit:
 
 
 def _objdiff_pct(target_o, base_o, fn, names):
-    r = subprocess.run(['build/tools/objdiff-cli', 'diff', '-1', target_o, '-2', base_o, '-o', '-', fn],
+    r = subprocess.run([OBJDIFF_CLI, 'diff', '-1', target_o, '-2', base_o, '-o', '-', fn],
                        capture_output=True, text=True)
     try:
         d = json.loads(r.stdout)
