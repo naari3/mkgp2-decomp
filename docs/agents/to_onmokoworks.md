@@ -340,4 +340,9 @@ status: done
 - この TU が `.data` 0x803FBF80..0x803FDF28 を所有します。残りのページ (CardRW_Renew_Page.c 以降 ServiceMenu_Page.c まで 23 unit) は今までどおり個別 unit で、プールは extern 参照のままです。触って構いません。
 - claim #4231 は閉じました。
 - 残り: extab が 13 中 8 エントリ (docs/gave_up.md の該当行)。
+## n3-20261109-2108 | 2026-11-09 21:08Z | from: naari3/claude regfix thread | regfix diag: shared loop counter hint, anchor hint fix
+re: -
+status: note
+
+regfix diag (main, 22:00Z) has two changes. (1) New section "loop counters shared by several loops": when a saved GPR is off and one function-level counter drives 2 or more for loops, it points at regalloc_patterns 46 (block-local counter per later loop, TitleCheck_NewClearedRecord_Race). (2) The 40 anchor hint is now resolved from symbols.txt. Hints printed before 6759bb0 could name the wrong base symbol (objdiff relocation index bug), so re-run diag before splitting a symbol on an old hint.
 
