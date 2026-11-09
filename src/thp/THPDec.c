@@ -1939,14 +1939,18 @@ void fn_8029BCF0(THPDecHandle* handle, u8* dst, u8 alpha)
 }
 
 #pragma push
+#pragma optimization_level 2
+#pragma scheduling 604
 #pragma opt_propagation off
 #pragma opt_lifetimes off
-/* The goto shape puts the p-- latch before the marker test like the target;
- * left: a dead `b` loop-entry jump and two scheduling swaps (80.9%). */
+/* -O2 drops the dead loop-preheader `b` that -O4 leaves; the 604 scheduler model
+ * gives the target stw cnt / li / addi slots. Left (4 lines): the fast and zero-byte
+ * tails store currByte before computing the pointer. See docs/gave_up.md. */
 static s32 __THPGetBit(THPFileInfo* info)
 {
     u8* p;
     u32 b;
+    u32 r;
     s32 cnt;
 
     cnt = info->cnt;
@@ -1955,9 +1959,9 @@ static s32 __THPGetBit(THPFileInfo* info)
         b = *p;
         info->cnt = 26;
         if (b == 0xFF) goto check;
-        info->file = p + 1;
         info->currByte = b;
-        b = (b >> 7) & 1;
+        r = (b >> 7) & 1;
+        info->file = p + 1;
         goto done;
     again:
         p--;
@@ -1967,21 +1971,21 @@ static s32 __THPGetBit(THPFileInfo* info)
             p += 3;
             if (b == 0xFF) goto again;
             info->currByte = b;
-            b = (b >> 7) & 1;
+            r = (b >> 7) & 1;
             info->file = p;
         } else {
             p += 2;
             info->currByte = b;
-            b = (b >> 7) & 1;
+            r = (b >> 7) & 1;
             info->file = p;
         }
     } else {
         b = info->currByte;
         info->cnt = cnt + 1;
-        b = __rlwnm(b, cnt, 31, 31);
+        r = __rlwnm(b, cnt, 31, 31);
     }
 done:
-    return b;
+    return r;
 }
 #pragma pop
 
