@@ -1,4 +1,4 @@
-/* Native reconstruction of 0x8022BFA8; retained NonMatching (86.15038%). */
+/* Native reconstruction of 0x8022BFA8; retained NonMatching (86.82437%). */
 #include "game/EnemyFaceDraw_private.h"
 union FaceDrawPipe { float f32; unsigned int u32; };
 #define FIFO (*(volatile FaceDrawPipe *)0xCC008000)
@@ -117,7 +117,8 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
         offset.x*=lbl_806DB5E8; offset.z*=lbl_806DB5E8;
     }
     if (self->left>0) {
-        out=vertices;
+        draw=vertices;
+        out=draw;
         src=(const FaceDrawVec *)(data+0x4a4);
         matrix=world;
         for (i=0;i<2;++i) {
@@ -131,12 +132,12 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
             HSD_StateInvalidate(0x7e); return;
         }
         FillFaceUV(uv,rect);
-        draw=vertices;
         tex=uv;
         for (i=0;i<2;++i) { DrawFaceQuadPlain(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
     }
     if (self->right>0) {
-        out=vertices;
+        draw=vertices;
+        out=draw;
         src=(const FaceDrawVec *)(data+0x5c4);
         matrix=world;
         for (i=0;i<2;++i) {
@@ -147,7 +148,6 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
         }
         fn_8011D890(self->right,rect,0);
         FillFaceUV(uv,rect);
-        draw=vertices;
         tex=uv;
         for (i=0;i<2;++i) { DrawFaceQuad(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
     }
