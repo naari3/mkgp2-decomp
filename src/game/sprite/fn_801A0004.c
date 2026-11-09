@@ -1,9 +1,17 @@
 #include "game/SpriteAnimTraversal_private.h"
 
+static inline float SpriteAnim_Cos(float angle) {
+    return (float)cos(angle);
+}
+
+static inline float SpriteAnim_Sin(float angle) {
+    return (float)sin(angle);
+}
+
 static inline void SpriteAnim_Rotate(float *matrix, float angle) {
     float transform[6];
-    float c = (float)cos(angle);
-    float sn = (float)sin(angle);
+    float c = SpriteAnim_Cos(angle);
+    float sn = SpriteAnim_Sin(angle);
     transform[0] = c; transform[1] = sn; transform[2] = lbl_806D97D8;
     transform[3] = -sn; transform[4] = c; transform[5] = lbl_806D97D8;
     SpriteAnim_Concat(matrix, matrix, transform);
