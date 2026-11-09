@@ -2,6 +2,11 @@
 #pragma fp_contract off
 static inline void SetPosition(RivalMarker *p, float x, float y) { p->x = x; p->y = y; }
 
+static inline float AddOffset(float value, float offset) {
+    value = value + offset;
+    return value;
+}
+
 static inline float ScaleFromOffset(float offset, float range, float factor, float bias) {
     range = offset / range;
     range = 1.0f - range;
@@ -42,7 +47,7 @@ extern "C" void fn_80243464(RivalMarkerHud *self) {
                 float ratio = (120.0f - (otherDistance - playerDistance)) / 120.0f;
                 float x = 261.0f * ratio;
                 float scale = ScaleFromOffset((float)(delta[i] - 1), 29.0f, 0.6f, 0.4f);
-                x = x + 46.0f;
+                x = AddOffset(x, 46.0f);
                 self->markers[i]->scale = scale;
                 if (delta[i] <= 30 && delta[i] >= 1 && x >= 46.0f && x <= 568.0f && self->karts[i]->active != 0) active = 1;
                 SetPosition(self->markers[i], x, y);
