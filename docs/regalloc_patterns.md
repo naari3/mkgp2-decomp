@@ -380,6 +380,39 @@ one-step graph edits that would (drop/add a live-range overlap, keep a
 machine register busy, swap creation order) and a solved declaration order.
 `fix` adds a focused move search with the solver run on every variant.
 
+## 19. A shared caller local across switch cases: one inline helper per case (fn_8017F538, 11-09)
+
+`regfix diag` said "'menu' is a named local, numbered below every temp: turn
+it into a temp". The function used ONE function-scope `Menu *menu` for three
+cases (`menu = Create(...); if (menu != 0) <loop>`), so it was numbered below
+the loop's walker temp in every declaration order. Moving each case body
+(create + null check + loop) into its own `static inline` with a local
+`Menu *m` (and the loop `int i` inside the inline) gave the target colouring
+order; a fourth case with the same shape needed the same treatment, and the
+last two named locals (`id`, `menu`) then only needed `id` moved to function
+scope before `menu`. Partial wraps (only the null check + loop, or the
+created pointer passed as an inline argument) put the menu ABOVE the loop
+counter instead: the create call has to be inside the inline, after which the
+inline locals are numbered in the right order by themselves.
+Rule: `shared-local-into-inline` in tools/patterns/rules.jsonl.
+
+## 20. Part of the function is an already-matched function's body: inline it (fn_8024D3D4, 11-09)
+
+ContinueSceneTick fn_8024D3D4 (99.87, `credits`/`alternate` in r28/r29
+swapped) ends with exactly the code of `CoinCounter::Draw`
+(ContinueScene_nm1, already 100 %). regfix diag said "'credits' is a named
+local, numbered below every temp: turn it into a temp (inline helper ...)".
+Copying Draw's body verbatim into a `static inline` (the caller's string base
+passed as a parameter) made `credits` an inline temp and matched the function
+(d857cd3). Earlier attempts that only moved the caller's own code into a
+helper, or changed decl order/types, did not move it: the sibling's exact
+statement shape (`idx = x ? 1 : 0;`, `if (done != 1) { ... }`) mattered.
+
+**Check:** look for a matched function whose whole body appears inside the
+near miss: `tools/asmgrep.py similar UNIT FN --src`, or grep the near miss's
+distinctive globals/strings in `src/` and read the matched hits. Rule
+`inline-matched-sibling` in tools/patterns/rules.jsonl.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,

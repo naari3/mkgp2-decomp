@@ -10,6 +10,28 @@ void fn_80160588(CoinPopupDetail *, int, int);
 void fn_8024D874(ContinueScene *);
 void fn_8024D7F4(ContinueScene *);
 void fn_8024D764(ContinueScene *);
+static inline void CounterDraw(CoinCounter *c, const char *base) {
+    char buf[0x80];
+    int idx;
+    int credits = CreditMgr_GetCreditCount(c->slot);
+    fn_801D9B70(c->window, GetInput()->held == 1);
+    if (c->done != 1) {
+        idx = lbl_80598A60[0x27] ? 1 : 0;
+        if (isJapanese() == 0) {
+            sprintf(buf, lbl_806D0970[idx], credits);
+            fn_801D8DF8(c->window, buf, 1);
+            fn_801D8DF8(c->window, base + 0x984, 2);
+        } else {
+            sprintf(buf, base + 0x998, credits);
+            fn_801D8DF8(c->window, base + 0x768, 1);
+            fn_801D8DF8(c->window, buf, 2);
+        }
+        if (credits <= 0 || c->window->state == 0) {
+            fn_801D919C(c->window);
+            c->done = 1;
+        }
+    }
+}
 void fn_8024D3D4(ContinueScene *self) {
     const char *strings = lbl_803EFEA0;
     InputState *in = GetInput();
@@ -65,26 +87,6 @@ void fn_8024D3D4(ContinueScene *self) {
             fn_80160588(self->detail, in->dir, 0);
         }
     }
-    CoinCounter *counter = self->counter;
-    int alternate;
-    int credits = CreditMgr_GetCreditCount(counter->slot);
-    in = GetInput();
-    fn_801D9B70(counter->window, in->held == 1);
-    if (counter->done == 1) return;
-    alternate = lbl_80598A60[0x27] != 0;
-    char text[0x80];
-    if (!isJapanese()) {
-        sprintf(text, lbl_806D0970[alternate], credits);
-        fn_801D8DF8(counter->window, text, 1);
-        fn_801D8DF8(counter->window, strings + 0x984, 2);
-    } else {
-        sprintf(text, strings + 0x998, credits);
-        fn_801D8DF8(counter->window, strings + 0x768, 1);
-        fn_801D8DF8(counter->window, text, 2);
-    }
-    if (credits <= 0 || counter->window->state == 0) {
-        fn_801D919C(counter->window);
-        counter->done = 1;
-    }
+    CounterDraw(self->counter, strings);
 }
 }
