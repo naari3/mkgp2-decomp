@@ -24,6 +24,12 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-09 22:20Z (n3 structure): the game's containers are the genuine
+  Metrowerks MSL C++ (`std::deque`, `cdeque`, `vector`, `length_error`); the
+  CW GC 2.5 headers compiled with GC/2.6 match exactly. Headers are not in
+  the repo (`tools/fetch_msl.py` downloads them to `build/msl_cw25`); main
+  does not depend on them yet (naari3 decides). Details and the name mapping:
+  `docs/notes/msl_cpp.md`.
 - 2026-11-09 21:55Z (n3 structure): TU merge `game/EnmyFaceEffect.cpp` +
   `game/EnmyFaceEffect_nm1.cpp` -> `game/EnmyFaceEffect.cpp` landed (2ce236c2,
   Matching, owns both vtables/RTTI; board n3-20261109-2105). New rename
