@@ -830,6 +830,23 @@ function: `lwzu r0,4(rN)` on a table field comes from using
 `table[mode].id` directly at every use (CSE pointer temp), not from a named
 pointer local. Rule: `shared-local-into-inline`.
 
+## 41. `slwi; addi rI,rI,OFF; lhzx rBase,rI` (member offset added to the index): add the offset after the index (fn_801BDB60, AI_CalcLapSpeedBonus, 11-09)
+
+Target folds a constant into the index register and loads indexed; ours forms
+`add rP,rBase,rI; lhz OFF(rP)`. Every member/array spelling (`name.c[i + 1]`,
+inline getters, `base + (idx + OFF)` with parentheses or an int local) gives
+ours: the frontend folds or reassociates them the same way. What gives the
+target is the constant added LAST, without parentheses:
+
+```c
+ch = *(unsigned short *)((char *)this + (i + 1) * 2 + 0x28);   /* (this + index) + offset */
+bonus = ((const float *)table)[i * 5 + 4];                    /* float view: element index carries the offset */
+```
+
+Both are fakematch-marked: the natural source is not known. Found by
+`leversweep.py detect` (the addi is not an anchor here; the detect heuristic
+also catches this shape).
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,

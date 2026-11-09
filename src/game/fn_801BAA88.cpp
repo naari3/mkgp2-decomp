@@ -2718,7 +2718,10 @@ void NameEntry::Draw() {
     DrawKeys();
     for (int i = 0; i < 5; i++) {
         ResCtrl rc;
-        unsigned int ch = name.Get(i);
+        /* fakematch (hand): the target adds the member offset after the index
+         * (`slwi; addi 0x28; lhzx`), i.e. (this + index) + offsetof(name).
+         * natural: unsigned int ch = name.Get(i); */
+        unsigned int ch = *(unsigned short *)((char *)this + (i + 1) * 2 + 0x28);
         if (ch == 0x8140) {
             rc.resId = 0x2AF7;
         } else if (ch != 0x8162) {
