@@ -396,6 +396,23 @@ counter instead: the create call has to be inside the inline, after which the
 inline locals are numbered in the right order by themselves.
 Rule: `shared-local-into-inline` in tools/patterns/rules.jsonl.
 
+## 20. Part of the function is an already-matched function's body: inline it (fn_8024D3D4, 11-09)
+
+ContinueSceneTick fn_8024D3D4 (99.87, `credits`/`alternate` in r28/r29
+swapped) ends with exactly the code of `CoinCounter::Draw`
+(ContinueScene_nm1, already 100 %). regfix diag said "'credits' is a named
+local, numbered below every temp: turn it into a temp (inline helper ...)".
+Copying Draw's body verbatim into a `static inline` (the caller's string base
+passed as a parameter) made `credits` an inline temp and matched the function
+(d857cd3). Earlier attempts that only moved the caller's own code into a
+helper, or changed decl order/types, did not move it: the sibling's exact
+statement shape (`idx = x ? 1 : 0;`, `if (done != 1) { ... }`) mattered.
+
+**Check:** look for a matched function whose whole body appears inside the
+near miss: `tools/asmgrep.py similar UNIT FN --src`, or grep the near miss's
+distinctive globals/strings in `src/` and read the matched hits. Rule
+`inline-matched-sibling` in tools/patterns/rules.jsonl.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
