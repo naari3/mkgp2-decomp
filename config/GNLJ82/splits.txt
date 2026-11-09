@@ -5986,6 +5986,7 @@ game/NokoNokoChallenge_GetCoinDivisor.c:
 	extab       start:0x8000BCF4 end:0x8000BCFC
 	extabindex  start:0x80024770 end:0x8002477C
 	.text       start:0x80122E80 end:0x80122FD8
+	.data       start:0x8048DFB8 end:0x8048E138
 
 game/MiniGameBase.cpp:
 	extab       start:0x8000BCFC end:0x8000BD04
