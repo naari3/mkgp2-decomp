@@ -1,18 +1,30 @@
 #include "game/ItemGridInitPrivate.h"
 #pragma use_lmw_stmw on
-static inline int GridFallbackCandidate(int index) {
-    return lbl_803DC174[index];
-}
-static inline void CreateGridTexts(GridInitState *self) {
-    for (int row=0;row<3;++row) {
-        for (int col=0;col<4;++col) {
-            self->texts[row][col]=new TextManager;
-            TexMgr_SetTexture(self->texts[row][col],lbl_806DB8F8);
-            self->texts[row][col]->scale=lbl_806DB8A0;
+static inline void InitializeGridItem(GridInitState *self, unsigned char *player, int *ids, int i) {
+    int id;
+    if(fn_8023D860(*(int *)(player+0x18c+i*4))==1) {
+        int character=g_characterId;
+        id=fn_8023D844(character,fn_8023D7A8(*(int *)(player+0x18c+i*4)));
+        if(player[id+0xa8]==0) {
+            for(int j=0;j<3;++j) {
+                unsigned char found;
+                int candidate;
+                candidate=lbl_803DC174[j];
+                found=0;
+                for (int k=0;k<3;++k) {
+                    if (candidate==ids[k]) { found=1; break; }
+                }
+                if (!found) {id=lbl_803DC174[j];break;}
+            }
         }
-    }
+    } else id=*(int *)(player+0x18c+i*4);
+    ids[i]=id;
+    self->itemIndices[i]=id;
+    self->resources[i]=Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(player,id),0);
 }
 extern "C" GridInitState *ItemGridState_Init(GridInitState *self) {
+    int row;
+    int col;
     self->selected=0;
     self->phase=0;
     self->done=0;
@@ -27,30 +39,21 @@ extern "C" GridInitState *ItemGridState_Init(GridInitState *self) {
     self->handle=SpriteHandle_CreateDefault(&resource,6);
     SpriteHandle_SetActiveFlag(self->handle,0);
     SpriteHandle_RecomputeCull(self->handle);
-    CreateGridTexts(self);
+
+    for (row=0;row<3;++row) {
+        for (col=0;col<4;++col) {
+            self->texts[row][col]=new TextManager;
+            TexMgr_SetTexture(self->texts[row][col],lbl_806DB8F8);
+            self->texts[row][col]->scale=lbl_806DB8A0;
+        }
+    }
+
     int ids[3];
     int i;
     unsigned char *player=g_playerData;
     ids[0]=*(int *)(player+0x18c); ids[1]=*(int *)(player+0x190); ids[2]=*(int *)(player+0x194);
     for(i=0;i<3;++i) {
-        int id;
-        if(fn_8023D860(*(int *)(player+0x18c+i*4))==1) {
-            int character=g_characterId;
-            id=fn_8023D844(character,fn_8023D7A8(*(int *)(player+0x18c+i*4)));
-            if(player[id+0xa8]==0) {
-                for(int j=0;j<3;++j) {
-                    int candidate=GridFallbackCandidate(j);
-                    unsigned char found=0;
-                    for (int k=0;k<3;++k) {
-                        if (candidate==ids[k]) { found=1; break; }
-                    }
-                    if (!found) {id=GridFallbackCandidate(j);break;}
-                }
-            }
-        } else id=*(int *)(player+0x18c+i*4);
-        ids[i]=id;
-        self->itemIndices[i]=id;
-        self->resources[i]=Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(player,id),0);
+        InitializeGridItem(self,player,ids,i);
     }
     return self;
 }
