@@ -18,6 +18,7 @@
 {"fn": "fn_8029B54C", "commit": "0494e71", "rule": "decl-order", "source": "rules.jsonl"}
 {"fn": "fn_8015AFCC", "commit": "192e1cee", "rule": "decl-order", "source": "rules.jsonl"}
 {"fn": "PlayerData_Construct", "commit": "22a15504", "rule": "decl-order", "source": "rules.jsonl"}
+{"fn": "LakituStart_UpdateCountdown", "commit": "82cafce", "rule": "decl-order", "source": "rules.jsonl"}
 {"fn": "__THPDecodeBlock", "commit": "dca6dee8", "rule": "temp-to-local", "source": "rules.jsonl"}
 {"fn": "CardEntry ctor", "commit": "7ee5ac5a", "rule": "temp-to-local", "source": "rules.jsonl"}
 {"fn": "GameBoot_Init", "commit": "7fb6aea5", "rule": "temp-to-local", "source": "rules.jsonl"}
@@ -46,9 +47,12 @@
 {"fn": "Menu801F0CC0", "commit": "2ed893f", "rule": "loop-into-inline", "source": "rules.jsonl"}
 {"fn": "clFlowItem_Draw", "commit": "a9587bac", "rule": "loop-into-inline", "source": "rules.jsonl"}
 {"fn": "PowItem_TickActive", "commit": "e7d2a980", "rule": "loop-into-inline", "source": "rules.jsonl"}
+{"fn": "fn_8017F538", "commit": "4dc831b", "rule": "shared-local-into-inline", "source": "rules.jsonl"}
+{"fn": "CourseData_LoadPathTable", "commit": "96412fd", "rule": "inline-local-to-outer-ref", "source": "rules.jsonl"}
 {"fn": "PhysicsState_WallCollisionCheck", "commit": "4d79eae", "rule": "ref-local-across-loop", "source": "rules.jsonl"}
 {"fn": "fn_8013D940", "commit": "07fd50d", "rule": "iterator-on-stack", "source": "rules.jsonl"}
 {"fn": "TextRenderer_DrawEntry", "commit": "783ff7e", "rule": "stmt-order", "source": "rules.jsonl"}
+{"fn": "PtrVec_InsertFill", "commit": "99318d8", "rule": "stmt-order", "source": "rules.jsonl"}
 {"fn": "fn_8019C15C", "commit": "b853d71e", "rule": "expr-operand-order", "source": "rules.jsonl"}
 {"fn": "fn_80220A54", "commit": "2bca5fd5", "rule": "expr-operand-order", "source": "rules.jsonl"}
 {"fn": "SpeedCurve_UpdateSpeedCap", "commit": "4b96aa3c", "rule": "expr-operand-order", "source": "rules.jsonl"}
@@ -67,6 +71,11 @@
 {"fn": "StrPcb_Init", "commit": "2238dacb", "rule": "data-ownership", "source": "rules.jsonl"}
 {"fn": "HSD_SetupChannelMode", "commit": "71c13d3b", "rule": "data-ownership", "source": "rules.jsonl"}
 {"fn": "KartFx_BoostExhaustRayTick", "commit": null, "rule": "data-ownership", "source": "rules.jsonl"}
+{"fn": "fn_8024D3D4", "commit": "d857cd3", "rule": "inline-matched-sibling", "source": "rules.jsonl"}
+{"fn": "DoublyLinkedList_RemoveByKey", "commit": "b27f188", "rule": "inline-matched-sibling", "source": "rules.jsonl"}
+{"fn": "AssocTree_FreeAll", "commit": "eb9631d", "rule": "inline-matched-sibling", "source": "rules.jsonl"}
+{"fn": "fn_8023A148", "commit": "be6dc44c", "rule": "rolled-loop-blocks-cse", "source": "rules.jsonl"}
+{"fn": "fn_8018DAD0", "commit": "481aa1ed", "rule": "nested-inline-level", "source": "rules.jsonl"}
 {"fn": "PathManager_UpdateAll", "unit": "game/PathManager_UpdateAll.c", "from_pct": "99.95", "commit": "761816ab", "rule": "lifetime-block-reuse", "source": "regalloc_patterns.md onmokoworks table", "residual": "None: all 13 baseline feedback GPR rows resolved; all instructions, relocations, text size and owned EH/index exact.", "fix": "H3 accumulator reuse inside distance helper: declare dx,dy,dz and reuse dy for squared-distance/Newton/result instead of separate distance. Nested boundaries preserve pointer scheduling; 100%, text5908/EH8/index12...."}
 {"fn": "fn_8015AFCC", "unit": "game/Scene_8015AFCC.cpp", "from_pct": "99.93", "commit": "192e1cee", "rule": "lifetime-block-reuse", "source": "regalloc_patterns.md onmokoworks table", "residual": "Resolved all five first-preload-loop register differences at 8015B320/324/32C/334/338: target r29 versus initial source r28.", "fix": "Declare the existing function-scope index i before itemId, retaining every expression, loop and call: 100.0%; retained. Plain local declaration ordering fixes r29 without changing other instructions or EH."}
 {"fn": "PlayerData_Construct", "unit": "game/PlayerData_Construct.c", "from_pct": "99.92", "commit": "22a15504", "rule": "lifetime-block-reuse", "source": "regalloc_patterns.md onmokoworks table", "residual": "Resolved: mileage counter r21 instead of target r19 at 801D7568/7570/75F0/75F4.", "fix": "3. Directed declaration order: declare maximum before mileage in that dedicated block; 100%, counter becomes r19 and maximum r18. All other instructions and owned sections remain exact."}
