@@ -946,16 +946,20 @@ static inline float QuadCross(float edgeX, float posZ, float edgeZ, float posX) 
 }
 
 static unsigned char InQuad(const float *q, const Vec3f *p) {
-    if ((QuadCross(q[2] - q[0], p->z - q[1], q[3] - q[1], p->x - q[0]) <= 0.0f) == 0) {
+    float z0, x3, z3, x2, z2, pz, px, x1, z1, x0;
+    x0 = q[0]; px = p->x; z0 = q[1]; z1 = q[3]; x1 = q[2]; pz = p->z;
+    if ((QuadCross(x1 - x0, pz - z0, z1 - z0, px - x0) <= 0.0f) == 0) {
         return 0;
     }
-    if ((QuadCross(q[4] - q[2], p->z - q[3], q[5] - q[3], p->x - q[2]) <= 0.0f) == 0) {
+    z2 = q[5]; x2 = q[4];
+    if ((QuadCross(x2 - x1, pz - z1, z2 - z1, px - x1) <= 0.0f) == 0) {
         return 0;
     }
-    if ((QuadCross(q[6] - q[4], p->z - q[5], q[7] - q[5], p->x - q[4]) <= 0.0f) == 0) {
+    z3 = q[7]; x3 = q[6];
+    if ((QuadCross(x3 - x2, pz - z2, z3 - z2, px - x2) <= 0.0f) == 0) {
         return 0;
     }
-    if ((QuadCross(q[0] - q[6], p->z - q[7], q[1] - q[7], p->x - q[6]) <= 0.0f) == 0) {
+    if ((QuadCross(x0 - x3, pz - z3, z0 - z3, px - x3) <= 0.0f) == 0) {
         return 0;
     }
     return 1;

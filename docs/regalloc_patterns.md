@@ -912,6 +912,33 @@ Other levers the same function needed, all register-only symptoms:
   `*(signed char *)&g_var`; an inline getter or a cast of an `unsigned char` read gets CSE'd differently.
 - **Duplicated `li rX,1` for a result flag**: the if/else chain is an inline with `return 1` / `return 0`.
 
+## 45. Locals of an inlined function are numbered in FORWARD declaration order (fn_80179F60, 11-09)
+
+Symptom: instructions identical, only the registers of values loaded inside an
+inlined helper rotate (here four `lfs` in `InQuad`: q[1] f6 / q[3] f9 / pos.z
+f10 / q[5] f12, target f12 / f6 / f9 / f10), and `regfix diag` finds no
+depth-2 edit. With the loads written inline in the call expressions they are
+CSE temps whose numbers you cannot steer.
+
+Fix: give every loaded value a named local in the inline, declare them all
+WITHOUT initialisers at the top, and assign each at its first use (so no load
+moves). The declaration order then sets the vreg numbers, and for the locals
+of an inlined function the order is forward: first declared = lowest number =
+coloured last (the caller's own locals are the other way round: last declared
+= lowest). Read the wanted colouring order off the target: the value that
+holds the lowest free register is coloured first, so it is declared LAST.
+
+```cpp
+static unsigned char InQuad(const float *q, const Vec3f *p) {
+    float z0, x3, z3, x2, z2, pz, px, x1, z1, x0;   // target colours x0, z1, x1, px, pz, z2, x2, ..., z0
+    x0 = q[0]; px = p->x; z0 = q[1]; z1 = q[3]; x1 = q[2]; pz = p->z;
+    if ((QuadCross(x1 - x0, pz - z0, z1 - z0, px - x0) <= 0.0f) == 0) return 0;
+    z2 = q[5]; x2 = q[4];
+    ...
+```
+
+fn_80179F60 99.15 -> 100 (15 FPR vregs, three inlined copies at once).
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
