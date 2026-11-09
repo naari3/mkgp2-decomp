@@ -12,7 +12,7 @@ extern int fn_801DCCE4(void);
 extern float fn_801DCCBC(void);
 extern int fn_801DCC94(int);
 extern float fn_801DCC6C(int);
-static inline void UpdateRecord(AIPairRecord *record, AIPairRecord *base, Vec3 *player) {
+static inline void UpdateRecord(AIPairRecord *record, AIPairRecord *base, Vec3 *player, float pz) {
     if (record && record->driver) {
         float *m = KartDriver_GetKartRootMtx(record->driver);
         float z, y, x;
@@ -45,7 +45,7 @@ static inline void UpdateRecord(AIPairRecord *record, AIPairRecord *base, Vec3 *
             }
         }
         {
-            float dz = z - player->z;
+            float dz = z - pz;
             float dx = x - player->x;
             *(float *)&record->field2C = dx * dx + dz * dz;
         }
@@ -73,12 +73,15 @@ static inline void ResetRecord(AIPairRecord *record) {
         *(unsigned char *)&record->field30 = 0;
     }
 }
+static inline float GetRangeSq(void) { float range = fn_801DCCBC(); range *= range; return range; }
 void fn_801E9E74(AISpeedOwner *self) {
     AISpeedRender *player;
     Vec3 position;
     AIPairRecord *base;
     AIPairRecord *record;
     int i;
+    float zero;
+    float pz;
     /* fakematch (hand): natural code is `int limit = lbl_806D1920;`. base must be the
      * second lifetime range of a variable so the table address lands in its
      * register (regalloc_patterns 57, same as fn_801E96BC). */
@@ -94,20 +97,23 @@ void fn_801E9E74(AISpeedOwner *self) {
         position.y = lbl_806DA3F4;
     }
     base = lbl_806793D8;
+    pz = position.z;
+    zero = lbl_806DA3F4;
     for (i = 0; i < 8; ++i) {
         record = &base[i];
-        record->speedBonus = lbl_806DA3F4;
-        UpdateRecord(record, base, &position);
+        record->speedBonus = zero;
+        UpdateRecord(record, base, &position, pz);
     }
     {
         int setting = fn_801DCCE4();
         if (setting >= 0) {
             int states[8];
             int count = 0;
-            float range = fn_801DCCBC();
-            range *= range;
-            for (i = 0; i < 8; ++i)
-                ClassifyRecord(&base[i], range, &count, &states[i]);
+            float range = GetRangeSq();
+            for (i = 0; i < 8; ++i) {
+                record = &base[i];
+                ClassifyRecord(record, range, &count, &states[i]);
+            }
             if (count > fn_801DCC94(setting)) {
                 float bonus = fn_801DCC6C(setting);
                 for (i = 0; i < 8; ++base, ++i) {
