@@ -34,6 +34,12 @@ target's registers:
    (pragmasweep scoring). With --search the rewrites seed a shapesweep beam
    search restricted to the diagnosed lines.
 
+The allocator model and the declaration-order solver also exist in Rust
+(tools/regfix_sim, built automatically into build/regfix_sim on first use;
+~4 us per simulated allocation vs ~220 us in Python, so 9! orders take ~1.5 s
+and up to RS_MAXN=11 locals are permuted exhaustively). REGFIX_PY=1 forces
+the Python model; both give identical colourings (checked on every dump).
+
 Usage (repo root, after a build and bash /mnt/project-files/setup/mwccdbg/install.sh):
     python3 -I tools/regfix.py diag game/Sci2Card_BuildItemGetReceiptLine Sci2Card_BuildItemGetReceiptLine
     python3 -I tools/regfix.py fix  game/Sci2Card_BuildItemGetReceiptLine Sci2Card_BuildItemGetReceiptLine [--start F] [--search]
@@ -42,6 +48,7 @@ Usage (repo root, after a build and bash /mnt/project-files/setup/mwccdbg/instal
 from __future__ import annotations
 
 import argparse
+import glob
 import hashlib
 import itertools
 import shlex
@@ -57,6 +64,7 @@ import mwccdbg as md  # noqa: E402
 
 ROOT = md.ROOT
 K_FREE = {"gpr": 29, "fpr": 32}
+RS_MAXN = 11      # locals permuted exhaustively by the Rust solver
 
 
 # ---------------------------------------------------------------------------
@@ -227,6 +235,21 @@ def want_map(out: Path, ours_obj: Path, tgt_obj: Path, fn: str):
     tgt = md.objdump_fn(tgt_obj, fn)
     info = {"ours": len(ours), "tgt": len(tgt), "final": len(final),
             "opcode_diffs": sum(1 for o, t in zip(ours, tgt) if o.split()[0] != t.split()[0])}
+    if len(final) != len(ours):
+        # stand-in compiler output differs a little: map PCode positions to our
+        # object by opcode sequence (PCode cmp == objdump cmpw etc. are normalised)
+        import difflib
+
+        def op(x):
+            x = x.replace(".", "")
+            return {"cmp": "cmpw", "cmpi": "cmpwi", "cmpl": "cmplw", "cmpli": "cmplwi"}.get(x, x)
+        A = [op(f[1]) for f in final]
+        B = [op(o.split()[0]) for o in ours]
+        m = {}
+        for blk in difflib.SequenceMatcher(None, A, B, autojunk=False).get_matching_blocks():
+            for t in range(blk.size):
+                m[blk.a + t] = blk.b + t
+        idx = [m.get(k) if k is not None else None for k in idx]
     want, sites = {}, {}
     for (pv, pp), k in zip(pair, idx):
         for v in md.pc_regs(*pv[1:]):
@@ -439,7 +462,9 @@ def solve_decl(classes, maxn=8, tlimit=120):
         for v in sorted(L, key=lambda v: -g.key[v]):
             if g.names[v] not in names:
                 names.append(g.names[v])
-    if len(names) > maxn:
+    use_rs = sim_bin() is not None
+    cap = RS_MAXN if use_rs else maxn
+    if len(names) > cap:
         focus = set()
         for rc, (g, w, L, nums) in info.items():
             ph = g.colour()[0]
@@ -450,10 +475,14 @@ def solve_decl(classes, maxn=8, tlimit=120):
                 if v in bad or any(ph.get(v) == w.get(b) for b in bad) or lv[v] in blv:
                     focus.add(g.names[v])
         fixed = [n for n in names if n not in focus]
-        free = [n for n in names if n in focus][:maxn]
-        fixed += [n for n in names if n in focus][maxn:]
+        free = [n for n in names if n in focus][:cap]
+        fixed += [n for n in names if n in focus][cap:]
     else:
         fixed, free = [], list(names)
+    rs_ok, rs_res = rs_solve_decl(names, free, [(g, w) for g, w, _, _ in info.values()], cap, tlimit) \
+        if use_rs else (False, None)
+    if rs_ok:
+        return rs_res
     slots = [i for i, n in enumerate(names) if n in free]
     for perm in itertools.permutations(free):
         if time.time() - t0 > tlimit:
@@ -473,6 +502,79 @@ def solve_decl(classes, maxn=8, tlimit=120):
         if ok:
             return order if order != names else None
     return None
+
+
+# ---------------------------------------------------------------------------
+# Rust hot path (tools/regfix_sim): same model, ~100x faster
+
+SIM_DIR = ROOT / "tools" / "regfix_sim"
+SIM_BIN = ROOT / "build" / "regfix_sim" / "release" / "regfix_sim"
+
+
+def sim_bin():
+    """Path of the Rust simulator (built on first use), or None (then Python is used)."""
+    if os.environ.get("REGFIX_PY"):
+        return None
+    src = max(p.stat().st_mtime for p in SIM_DIR.rglob("*") if p.is_file() and "target" not in p.parts)
+    if not SIM_BIN.exists() or SIM_BIN.stat().st_mtime < src:
+        r = md.sh(["cargo", "build", "--release", "-q", "--manifest-path", str(SIM_DIR / "Cargo.toml")],
+                  env={**os.environ, "CARGO_TARGET_DIR": str(ROOT / "build" / "regfix_sim")})
+        if r.returncode != 0 or not SIM_BIN.exists():
+            print("[regfix] cargo build failed, using the Python model:\n" + r.stderr[-800:], file=sys.stderr)
+            return None
+    return SIM_BIN
+
+
+def sim_input(classes, names=None):
+    """classes: [(Graph, want)] -> protocol text and per-class node lists."""
+    out, idxs, nid = [], [], {}
+    for n in names or []:
+        nid.setdefault(n, len(nid))
+    for g, w in classes:
+        out.append(f"class {g.rc}")
+        nodes = list(g.nodes)
+        ix = {v: i for i, v in enumerate(nodes)}
+        idxs.append(nodes)
+        for v in nodes:
+            n, fixed = g.perm[v]
+            mask = 0
+            for r in fixed:
+                mask |= 1 << num(r)
+            wv = num(w[v]) if v in w and w[v] != "spill" else -1
+            out.append(f"node {ix[v]} {g.key[v]} {n} {mask} {wv} " + " ".join(str(ix[x]) for x in g.nb[v] if x in ix))
+            if vkind(g, v) == "local":
+                out.append(f"local {ix[v]} {nid.setdefault(g.names[v], len(nid))}")
+    return out, idxs, nid
+
+
+def rs_colour(g: Graph):
+    b = sim_bin()
+    if not b:
+        return None
+    txt, idxs, _ = sim_input([(g, {})])
+    r = md.sh([str(b)], input="task colour\n" + "\n".join(txt) + "\n")
+    t = r.stdout.split()[1:]
+    nodes = idxs[0]
+    order = [nodes[int(t[i])] for i in range(0, len(t), 2)]
+    pref = "r" if g.rc == "gpr" else "f"
+    ph = {nodes[int(t[i])]: (pref + t[i + 1] if t[i + 1] != "99" else "spill") for i in range(0, len(t), 2)}
+    return ph, order
+
+
+def rs_solve_decl(names, free, classes, maxn, tlimit):
+    b = sim_bin()
+    if not b:
+        return False, None
+    txt, _, nid = sim_input(classes, names)
+    inv = {i: n for n, i in nid.items()}
+    head = [f"task decl", f"maxn {maxn}", f"tlimit {tlimit}",
+            "names " + " ".join(str(nid[n]) for n in names), "free " + " ".join(str(nid[n]) for n in free)]
+    r = md.sh([str(b)], input="\n".join(head + txt) + "\n")
+    for l in r.stdout.splitlines():
+        if l.startswith("decl "):
+            t = l.split()[1:]
+            return True, (None if t == ["none"] else [inv[int(x)] for x in t])
+    return False, None
 
 
 def levels(g: Graph):
@@ -685,6 +787,7 @@ class Evaluator:
         oi = toks.index("-o")
         toks[oi + 1] = out_o
         toks[oi:oi] = ["-sym", "on"]
+        toks = [t for t in toks if t != "-MMD"]
         return toks
 
     def diag(self, text, slot):
@@ -713,6 +816,9 @@ class Evaluator:
             md.sh(["bash", "-c", c], cwd=ROOT)
             for x in self.u.post:
                 md.sh(["bash", "-c", x.replace(f"build/GNLJ82/src/{self.u.obj}.o", f"{d}/ours.o")], cwd=ROOT)
+            if self.u.renames:
+                md.sh(["llvm-objcopy"] + [f"--redefine-sym={k}={v}" for k, v in self.u.renames.items()]
+                      + [f"{d}/ours.o"], cwd=ROOT)
             cmd = self.toks(sp, str(d / "dbg.o"))
             script = md.DBG_DIR / "mwcc-debugger" / "mwcc_debugger.py"
             pre = ["unshare", "-n", *NETNS] if self.par else []
@@ -944,6 +1050,90 @@ def fix(a, rep0):
     return best
 
 
+def cmd_batch(a):
+    """diag every `unit fn` line of a.list (current sources; --best-dir FILEs
+    named FN_* are used as start TUs), run the decl-order solver, and verify
+    proposals by compiling. One jsonl row per fn in a.out."""
+    import shapesweep as ss
+    import pragmasweep as ps
+    from concurrent.futures import ThreadPoolExecutor
+    rows = [l.split() for l in open(a.list) if l.strip() and not l.startswith("#")]
+    claims = set()
+    if a.claims:
+        claims = {l.strip().replace("src/", "").rsplit(".", 1)[0] for l in open(a.claims) if l.strip()}
+    rep = json.load(open(ROOT / f"build/{md.VERSION}/report.json"))
+    pct = {}
+    for u in rep["units"]:
+        for f in u.get("functions", []):
+            pct[f["name"]] = f.get("fuzzy_match_percent", 0)
+    done = set()
+    if os.path.exists(a.out) and not a.retry:
+        done = {json.loads(l)["fn"] for l in open(a.out) if l.strip()}
+    todo = [(u, f) for u, f in rows if f not in done and u not in claims and pct.get(f, 0) < 100]
+    print(f"[regfix batch] {len(todo)} functions", flush=True)
+    outf = open(a.out, "a")
+    import threading
+    lock = threading.Lock()
+    slots = iter(range(10**6))
+
+    def one(item):
+        unit, fn = item
+        slot = next(slots)
+        row = {"unit": unit, "fn": fn, "pct": pct.get(fn)}
+        try:
+            start = None
+            if a.best_dir:
+                c = sorted(glob.glob(os.path.join(a.best_dir, fn + "_*")))
+                start = c[0] if c else None
+            cc = None
+            if start:
+                m = re.search(r"_GC([\d.]+[a-z]?)\.c", start)
+                cc = m.group(1) if m else None
+            with lock:
+                sw = ss.Sweep(argparse.Namespace(unit=unit, fn=fn, demangled=None, start=None, start_tu=start,
+                                                 pragma=None, cc=cc, moves=None))
+            ev = Evaluator(sw, sw.sym or fn, 1, fn)
+            text = sw.render(sw.init)
+            s0 = sw.score(text, slot % 8)
+            row.update(start=start, score=s0)
+            if s0 == 0:
+                row["outcome"] = "already"
+            else:
+                m, r = ev.diag(text, f"b{slot}")
+                row["metric"] = m
+                if r:
+                    row["bad"] = {rc: c["bad"] for rc, c in r["classes"].items()}
+                    row["decl_order"] = r.get("decl_order")
+                    hits = []
+                    for rc, c in r["classes"].items():
+                        for es, _ in c.get("sols", []):
+                            hits.append([e.text(c["g"], r["sites"]) for e in es])
+                    row["edits"] = hits[:3]
+                    if r.get("decl_order"):
+                        st = apply_decl_order(sw.init, r["decl_order"])
+                        if st is not None:
+                            t2 = sw.render(st)
+                            s2 = sw.score(t2, slot % 8)
+                            row["decl_score"] = s2
+                            if s2 == 0:
+                                p = Path(a.hits) / f"{fn}{sw.u.ext}"
+                                p.parent.mkdir(parents=True, exist_ok=True)
+                                p.write_text(t2)
+                                row["outcome"] = "MATCH"
+                                row["file"] = str(p)
+                row.setdefault("outcome", "nomatch")
+        except BaseException as e:
+            row["outcome"] = f"error: {type(e).__name__}: {e}"[:200]
+        with lock:
+            outf.write(json.dumps(row) + "\n")
+            outf.flush()
+            print(f"[regfix batch] {fn}: {row['outcome']} score={row.get('score')} metric={row.get('metric')} "
+                  f"decl={row.get('decl_order') is not None} decl_score={row.get('decl_score')}", flush=True)
+        return row
+    with ThreadPoolExecutor(a.jobs, initializer=ps._init_worker) as ex:
+        list(ex.map(one, todo))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -966,7 +1156,17 @@ def main():
             p.add_argument("--focus-only", action="store_true", help="only moves on diagnosed lines/locals")
             p.add_argument("--minutes", type=float, default=0)
             p.add_argument("-j", "--jobs", type=int, default=4)
+    b = sub.add_parser("batch")
+    b.add_argument("list", help="file of `unit fn` lines")
+    b.add_argument("--best-dir", default="/mnt/project-files/setup/autopipe99/best")
+    b.add_argument("--claims")
+    b.add_argument("--out", default="/mnt/project-files/setup/regfix/results.jsonl")
+    b.add_argument("--hits", default="/mnt/project-files/setup/regfix/hits")
+    b.add_argument("--retry", action="store_true")
+    b.add_argument("-j", "--jobs", type=int, default=4)
     a = ap.parse_args()
+    if a.cmd == "batch":
+        return cmd_batch(a)
     out = md.DBG_DIR / "out" / a.fn
     out.mkdir(parents=True, exist_ok=True)
     if a.cmd == "diag" and (a.start or a.start_tu):
