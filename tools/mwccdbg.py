@@ -44,7 +44,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DBG_DIR = ROOT / "build" / "mwccdbg"
-OBJDUMP = ROOT / "build" / "binutils" / "powerpc-eabi-objdump"
+EXE = ".exe" if os.name == "nt" else ""
+OBJDUMP = ROOT / "build" / "binutils" / f"powerpc-eabi-objdump{EXE}"
+# Native mode (default on Windows): gdb runs mwcceppc.exe directly through
+# tools/mwccdbg_native.py instead of retrowin32's gdb stub. Needs a 32-bit
+# x86 gdb with Python (MSYS2: pacman -S mingw-w64-i686-gdb), path in
+# MWCCDBG_GDB or on PATH. No fixed gdb port, so runs can go in parallel.
+NATIVE = os.environ.get("MWCCDBG_NATIVE", "1" if os.name == "nt" else "0") == "1"
+GDB = os.environ.get("MWCCDBG_GDB", "gdb")
 VERSION = "GNLJ82"
 
 TO_SUPPORTED = {
@@ -66,7 +73,7 @@ def compile_command(unit: str, out_obj: Path) -> tuple[list[str], str]:
     line = [l for l in r.stdout.splitlines() if "mwcceppc.exe" in l]
     if not line:
         sys.exit(f"no mwcceppc command for {obj} (is the unit name right?)")
-    toks = shlex.split(line[-1].split("&&")[0])
+    toks = shlex.split(line[-1].split("&&")[0].replace("\\", "/"))
     i = next(k for k, t in enumerate(toks) if t.endswith("mwcceppc.exe"))
     toks = toks[i:]
     m = re.search(r"GC/([^/]+)/mwcceppc\.exe", toks[0])
@@ -163,17 +170,12 @@ def main():
     emu = DBG_DIR / "retrowin32"
     script = DBG_DIR / "mwcc-debugger" / "mwcc_debugger.py"
     if not a.no_run:
-        if not emu.exists() or not script.exists():
-            sys.exit("run bash /mnt/project-files/setup/mwccdbg/install.sh first")
+        if not script.exists() or (not NATIVE and not emu.exists()):
+            sys.exit("install first: python3 tools/mwccdbg_install.py")
         cmd, note = compile_command(a.unit, out / "dbg.o")
-        print(f"[mwccdbg] {note}", file=sys.stderr)
+        print(f"[mwccdbg] {note}{' (native gdb)' if NATIVE else ''}", file=sys.stderr)
         sh(["ninja", f"build/{VERSION}/src/{a.unit}.o"], cwd=ROOT)
-        for f in out.glob("*.txt"):
-            f.unlink(missing_ok=True)
-        r = sh([sys.executable, "-I", str(script), "-e", str(emu), "-a", shlex.join(cmd),
-                a.fn, str(out)], cwd=ROOT, timeout=a.timeout)
-        (out / "run.log").write_text(r.stdout + r.stderr)
-        if not find(out, "regalloc-"):
+        if not run_debugger(cmd, a.fn, out, a.timeout):
             sys.exit(f"debugger produced no regalloc dump; see {out}/run.log")
 
     rows, info = analyze_dumps(out, ROOT / f"build/{VERSION}/src/{a.unit}.o",
@@ -200,17 +202,32 @@ def main():
     print(f"\ndumps: {out}")
 
 
+def debugger_argv(cmd: list[str], fn: str, out: Path) -> list[str] | None:
+    """argv that dumps fn's compiler state into out (native gdb or retrowin32)."""
+    script = DBG_DIR / "mwcc-debugger" / "mwcc_debugger.py"
+    if not script.exists():
+        return None
+    if NATIVE:
+        setup = (f'py FUNCTION_NAME = "{fn}"; OUTPUT_DIR = "{Path(out).resolve().as_posix()}"; '
+                 f'MWCCDBG_SCRIPT = "{script.resolve().as_posix()}"')
+        exe = str((ROOT / cmd[0]).resolve()) if not os.path.isabs(cmd[0]) else cmd[0]
+        return [GDB, "-batch", "-nx", "-ex", setup, "-x", str(ROOT / "tools" / "mwccdbg_native.py"),
+                "--args", exe, *cmd[1:]]
+    emu = DBG_DIR / f"retrowin32{EXE}"
+    if not emu.exists():
+        return None
+    return [sys.executable, "-I", str(script), "-e", str(emu), "-a", shlex.join(cmd), fn, str(out)]
+
+
 def run_debugger(cmd: list[str], fn: str, out: Path, timeout=300) -> bool:
     """Run mwcc-debugger with an explicit compiler command line; dumps into out."""
-    emu = DBG_DIR / "retrowin32"
-    script = DBG_DIR / "mwcc-debugger" / "mwcc_debugger.py"
-    if not emu.exists() or not script.exists():
+    argv = debugger_argv(cmd, fn, out)
+    if not argv:
         return False
     out.mkdir(parents=True, exist_ok=True)
     for f in out.glob("*.txt"):
         f.unlink(missing_ok=True)
-    r = sh([sys.executable, "-I", str(script), "-e", str(emu), "-a", shlex.join(cmd),
-            fn, str(out)], cwd=ROOT, timeout=timeout)
+    r = sh(argv, cwd=ROOT, timeout=timeout)
     (out / "run.log").write_text(r.stdout + r.stderr)
     return find(out, "regalloc-") is not None
 
