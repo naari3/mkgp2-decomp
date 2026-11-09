@@ -1,7 +1,7 @@
 #ifndef GAME_CLITEMBOXMANAGER_UNLOCK_PRIVATE_H
 #define GAME_CLITEMBOXMANAGER_UNLOCK_PRIVATE_H
 
-#include "game/clItemBoxManagerPrivate.h"
+#include "game/clItemBoxManagerNm1Private.h"
 
 /* Keep ownership of an allocated node until insertion commits. */
 template <> struct NodeHolder<void *> {

@@ -170,6 +170,14 @@ template <class T> template <class Pred> void ListImpl<T>::remove_if(Pred pred)
     }
 }
 
+template <class T>
+inline ListValueCopy<T>::ListValueCopy(const T &v, NodeHolder<T> &h) try : value(v)
+{
+}
+catch (...) {
+    operator delete(h.release());
+}
+
 #pragma auto_inline off
 template <class T> ListIter<T> ListImpl<T>::erase(const iterator &first_, const iterator &last_)
 {
@@ -194,18 +202,14 @@ template <class T> ListIter<T> ListImpl<T>::erase(const iterator &first_, const 
 template <class T> ListIter<T> ListImpl<T>::insert(const iterator &pos, const T &v)
 {
     NodeHolder<T> h(&head, (Node *)operator new(sizeof(Node)));
-    try {
-        new (&h.p->value) T(v);
-        Node *n = h.release();
-        pos.node->prev->next = n;
-        n->prev = pos.node->prev;
-        pos.node->prev = n;
-        n->next = pos.node;
-        size++;
-        return iterator(n);
-    } catch (...) {
-        operator delete(h.release());
-    }
+    new (&h.p->value) ListValueCopy<T>(v, h);
+    Node *n = h.release();
+    pos.node->prev->next = n;
+    n->prev = pos.node->prev;
+    pos.node->prev = n;
+    n->next = pos.node;
+    size++;
+    return iterator(n);
 }
 
 template <class T> ListImpl<T>::ListImpl()
