@@ -3356,5 +3356,47 @@
     "MenuScene_Dispatch",
     "fn_801B9740",
     "fn_801B9928"
-  ]
+  ],
+  "src/game/clItemBoxManager_nm1.cpp": {
+    "extab": [
+      "dtor_8005FF74",
+      "clItemBoxManager_UnregisterResponder",
+      "clItemBoxManager_RegisterResponder",
+      "clItemBoxManager_Draw_Inner",
+      "clItemBoxManager_Draw",
+      "clItemBoxManager_Update_Inner",
+      "clItemBoxManager_Update",
+      "SoundDriver_GetOrCreate",
+      "DoublyLinkedList_RemoveByKey",
+      "DoublyLinkedList_EraseRange",
+      "DoublyLinkedList_PushBefore",
+      "__dt__11ScopedTimerFv",
+      "dtor_80036E40",
+      "__dt__14NodeHolder<Pv>Fv",
+      "dtor_8005F778",
+      "dtor_8005F7F0",
+      "__dt__12ListBase<Pv>Fv",
+      "__dt__12ListImpl<Pv>Fv"
+    ],
+    "extabindex": [
+      "clItemBoxManager_UnregisterResponder",
+      "clItemBoxManager_RegisterResponder",
+      "clItemBoxManager_Draw_Inner",
+      "clItemBoxManager_Draw",
+      "clItemBoxManager_Update_Inner",
+      "clItemBoxManager_Update",
+      "SoundDriver_GetOrCreate",
+      "DoublyLinkedList_RemoveByKey",
+      "DoublyLinkedList_EraseRange",
+      "DoublyLinkedList_PushBefore",
+      "dtor_8005FF74",
+      "__dt__11ScopedTimerFv",
+      "dtor_80036E40",
+      "__dt__14NodeHolder<Pv>Fv",
+      "dtor_8005F778",
+      "dtor_8005F7F0",
+      "__dt__12ListBase<Pv>Fv",
+      "__dt__12ListImpl<Pv>Fv"
+    ]
+  }
 }

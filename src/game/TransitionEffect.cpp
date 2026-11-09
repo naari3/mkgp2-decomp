@@ -26,9 +26,6 @@ public:
     }
 };
 
-/* Matches with opt_common_subs off for this function (the target keeps the
- * flash flag store and its local in one register only this way). */
-#pragma opt_common_subs off
 extern "C" void TransitionEffect_Tick(TransitionEffectView *self)
 {
     ScopedTimer timer(0x2B);
@@ -118,7 +115,6 @@ extern "C" void TransitionEffect_Tick(TransitionEffectView *self)
     if (!fadeActive && !irisActive && !shakeActive && !(unsigned char)flashActive && !quadActive && !rouletteActive)
         self->mode = 0;
 }
-#pragma opt_common_subs reset
 
 extern "C" {
 void *Alloc(unsigned long);
@@ -647,7 +643,7 @@ extern "C" int CameraEffect_Apply(TransitionEffectView *self, int mode, float du
             p->remaining = duration;
         } else {
             p->remaining = duration;
-            p->speed = lbl_806D3058;
+            p->speed = -0.01f;
             p->fade = 0.0f;
             p->elapsed = 0.0f;
             p->phase = 0;

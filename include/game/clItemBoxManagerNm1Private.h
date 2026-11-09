@@ -138,7 +138,7 @@ struct BoxList : ListBase<void *> {
 
 struct clItemBoxManagerBase {
     virtual void Key();
-    virtual ~clItemBoxManagerBase() {}
+    virtual ~clItemBoxManagerBase();
     clItemBoxManagerBase();
 };
 
