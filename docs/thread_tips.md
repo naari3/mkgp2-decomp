@@ -25,6 +25,11 @@ Logging a fix in the rewrite-rule catalog (tools/patterns/, docs/asm_to_source.m
 3. `python3 -I tools/rewrite_rules.py check --fix` repairs hits whose commit is not on main
    and adds landed hits to their rule's evidence; commit tools/patterns/ afterwards.
 
+Compiler source (2026-11-09): `build/mweppc` (tools/install_mweppc.sh, run by cloud_setup.sh) is the
+C source of mwcceppc GC/2.0-2.7. Read docs/mwcc_internals.md before diagnosing; it has the exact
+coalescing rule (named<->named / named<->temp copies never merge), the scheduler's pick keys and the
+__restrict / const-pointer alias rule. Order diffs: `python3 tools/mwsched.py explain UNIT FN --run`.
+
 Register-only near miss, first steps (2026-11-09; automatic rewrite search found 0 new
 matches over 51 fns, the wins came from diagnosis + a hand rewrite):
 1. `python3 tools/regfix.py diag UNIT FN` -> which vregs are off, on which source lines, and
@@ -33,6 +38,9 @@ matches over 51 fns, the wins came from diagnosis + a hand rewrite):
    (each opt_* pragma, un-naming same-value locals with/without each pragma, each inline
    expansion) plus the decl-order solver on every structural lever. "same" everywhere means
    the fix is a source-shape change the levers do not cover; read the diag and rewrite by hand.
+   Instruction-ORDER diffs (same opcodes, different order): `regfix diag UNIT FN --sched`
+   traces the real GC/2.6 scheduler (tools/mwsched.py) and says why ours picked A before B
+   (dependence / uncovering / height ...), with the source lines.
 3. `python3 tools/regfix.py fix UNIT FN` still runs the catalog moves (inline[ / boolnorm /
    expand-void / unname / pragma-*) with the solver; worth one run, not a sweep.
 

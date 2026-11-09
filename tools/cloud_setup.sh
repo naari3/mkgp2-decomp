@@ -44,5 +44,7 @@ chmod +x build/tools/* build/binutils/*
 # 4) configure + full build + SHA-1 check (first run splits for ~100s)
 python3 configure.py --binutils build/binutils --compilers build/compilers --wrapper build/tools/wibo
 ninja all_source progress build/GNLJ82/report.json build/GNLJ82/ok
-# 5) git hooks: show open agent-board messages (docs/agents/) after every pull/rebase
+# 5) compiler source (CC0 decompilation of GC/2.0-2.7 mwcceppc, read-only reference; docs/mwcc_internals.md)
+sh tools/install_mweppc.sh || true
+# 6) git hooks: show open agent-board messages (docs/agents/) after every pull/rebase
 sh tools/install_githooks.sh n3 || true

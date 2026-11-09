@@ -163,6 +163,9 @@ def main():
     ap.add_argument("--all", action="store_true", help="list every vreg, not only mismatches")
     ap.add_argument("--no-run", action="store_true", help="reuse existing dumps")
     ap.add_argument("--timeout", type=int, default=300)
+    ap.add_argument("--trace", action="store_true",
+                    help="also record scheduler/coalescer decisions (sched.json, coalesce.json; "
+                         "read them with tools/mwsched.py)")
     a = ap.parse_args()
 
     out = DBG_DIR / "out" / a.fn
@@ -175,7 +178,7 @@ def main():
         cmd, note = compile_command(a.unit, out / "dbg.o")
         print(f"[mwccdbg] {note}{' (native gdb)' if NATIVE else ''}", file=sys.stderr)
         sh(["ninja", f"build/{VERSION}/src/{a.unit}.o"], cwd=ROOT)
-        if not run_debugger(cmd, a.fn, out, a.timeout):
+        if not run_debugger(cmd, a.fn, out, a.timeout, a.trace):
             sys.exit(f"debugger produced no regalloc dump; see {out}/run.log")
 
     rows, info = analyze_dumps(out, ROOT / f"build/{VERSION}/src/{a.unit}.o",
@@ -202,11 +205,21 @@ def main():
     print(f"\ndumps: {out}")
 
 
-def debugger_argv(cmd: list[str], fn: str, out: Path) -> list[str] | None:
-    """argv that dumps fn's compiler state into out (native gdb or retrowin32)."""
+def debugger_argv(cmd: list[str], fn: str, out: Path, trace=False) -> list[str] | None:
+    """argv that dumps fn's compiler state into out (native gdb or retrowin32).
+    trace=True loads tools/mwccdbg_trace.py, which also records the scheduler's
+    and coalescer's decisions (sched.json, coalesce.json; GC/2.6 only)."""
     script = DBG_DIR / "mwcc-debugger" / "mwcc_debugger.py"
     if not script.exists():
         return None
+    if trace:
+        setup = (f'py FUNCTION_NAME = "{fn}"; OUTPUT_DIR = "{Path(out).resolve().as_posix()}"; '
+                 f'MWCCDBG_SCRIPT = "{script.resolve().as_posix()}"; MWCCDBG_NATIVE = "{1 if NATIVE else 0}"')
+        g = [GDB, "-batch", "-nx", "-ex", setup, "-x", str(ROOT / "tools" / "mwccdbg_trace.py")]
+        if NATIVE:
+            exe = str((ROOT / cmd[0]).resolve()) if not os.path.isabs(cmd[0]) else cmd[0]
+            return g + ["--args", exe, *cmd[1:]]
+        return g
     if NATIVE:
         setup = (f'py FUNCTION_NAME = "{fn}"; OUTPUT_DIR = "{Path(out).resolve().as_posix()}"; '
                  f'MWCCDBG_SCRIPT = "{script.resolve().as_posix()}"')
@@ -219,14 +232,27 @@ def debugger_argv(cmd: list[str], fn: str, out: Path) -> list[str] | None:
     return [sys.executable, "-I", str(script), "-e", str(emu), "-a", shlex.join(cmd), fn, str(out)]
 
 
-def run_debugger(cmd: list[str], fn: str, out: Path, timeout=300) -> bool:
+def run_debugger(cmd: list[str], fn: str, out: Path, timeout=300, trace=False) -> bool:
     """Run mwcc-debugger with an explicit compiler command line; dumps into out."""
-    argv = debugger_argv(cmd, fn, out)
+    argv = debugger_argv(cmd, fn, out, trace)
     if not argv:
         return False
     out.mkdir(parents=True, exist_ok=True)
-    for f in out.glob("*.txt"):
+    for f in [*out.glob("*.txt"), *out.glob("*.json")]:
         f.unlink(missing_ok=True)
+    if trace and not NATIVE:
+        # retrowin32 gdb stub on the fixed port 9001; our gdb script connects to it
+        emu = subprocess.Popen([str(DBG_DIR / f"retrowin32{EXE}"), "--gdb-stub", *cmd], cwd=ROOT,
+                               stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        try:
+            r = sh(argv, cwd=ROOT, timeout=timeout)
+        finally:
+            try:
+                emu.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                emu.kill()
+        (out / "run.log").write_text(r.stdout + r.stderr + (emu.stdout.read() if emu.stdout else ""))
+        return find(out, "regalloc-") is not None
     r = sh(argv, cwd=ROOT, timeout=timeout)
     (out / "run.log").write_text(r.stdout + r.stderr)
     return find(out, "regalloc-") is not None

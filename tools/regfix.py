@@ -656,22 +656,85 @@ def solve(g: Graph, w, depth=2, beam=12, limit=8):
 # ---------------------------------------------------------------------------
 # driver
 
-def diagnose(unit, fn, out: Path, rerun=True, quiet=False, depth=2):
+def print_schedule(out, ours_obj, tgt_obj, fn, src_lines=None):
+    """Scheduling-order differences explained from the traced real scheduler
+    (tools/mwsched.py, RE thread e1e979c): why ours keeps A before B."""
+    try:
+        import mwsched
+    except ImportError:
+        return
+    if not (Path(out) / "sched.json").exists():
+        print("\n== schedule: no trace (run diag with --sched; GC/2.6 only) ==")
+        return
+    try:
+        res = mwsched.explain_schedule(out, ours_obj, tgt_obj, fn)
+    except Exception as e:
+        print(f"\n== schedule: explain failed: {e} ==")
+        return
+    print(f"\n== schedule: {len(res)} order differences ==")
+    for r in res[:20]:
+        la, lb = r.get("line") or (None, None)
+        print(f"  ours {r['ours'][0]}  before  {r['ours'][1]}   [{r.get('kind', '')}]")
+        print(f"     -> {r['reason']}")
+        for l in (la, lb):
+            if src_lines and isinstance(l, int) and 0 < l <= len(src_lines):
+                print(f"     {l:>5} | {src_lines[l - 1].rstrip()[:110]}")
+    if any(str(r.get("kind", "")).startswith(("dependence:memory", "priority:uncovering")) for r in res):
+        print("  hint: memory edges (may-alias load/store pairs) decide these picks, directly or through "
+              "'uncovering': try `regfix probe` (__restrict on pointer params) or load into a local before the store")
+
+
+def print_coalesce(out, src_lines=None):
+    """Copies the coalescer refused only because a named variable is involved
+    (coalesce.json from the traced run, rules in docs/mwcc_internals.md): making
+    that variable a temp (inline it / unname it / compute it in an inline) lets
+    the copy merge, and the merged web takes the LOWER number."""
+    f = Path(out) / "coalesce.json"
+    if not f.exists():
+        return
+    d = json.loads(f.read_text())
+    rows = []
+    for r in d.get("rounds", []):
+        ft, lt, nr = r["first_temp"], r["last_temp"], r["n_real"]
+        p = r["class"][0]
+
+        def kind(x):
+            return "phys" if x < nr else ("temp" if ft <= x <= lt else "named")
+        for m in r["moves"]:
+            if m["outcome"].startswith("both virtual"):
+                a, b = m["dst_root"], m["src_root"]
+                named = [x for x in (a, b) if kind(x) == "named"]
+                rows.append((m["line"], m["insn"], f"{p}{a}({kind(a)}) <- {p}{b}({kind(b)})",
+                             ", ".join(f"{p}{x}" for x in named), min(a, b)))
+    print(f"\n== coalescing: {len(rows)} copies kept only because a named variable is involved ==")
+    for line, insn, what, named, low in rows[:20]:
+        print(f"  line {line:>4}  {insn:<18} {what}: make {named} a temp to merge (merged web = {low})")
+        if src_lines and isinstance(line, int) and 0 < line <= len(src_lines):
+            print(f"           | {src_lines[line - 1].rstrip()[:110]}")
+    if rows:
+        print("  (copies marked 'interfere' in `tools/mwsched.py coalesce` need a liveness change instead)")
+
+
+def diagnose(unit, fn, out: Path, rerun=True, quiet=False, depth=2, sched=False):
     if rerun:
-        run_dbg(unit, fn, out)
+        run_dbg(unit, fn, out, trace=sched)
     import pragmasweep as ps
     src = ps.Unit(unit).src
+    if sched:
+        print_schedule(out, ROOT / f"build/{md.VERSION}/src/{unit}.o", ROOT / f"build/{md.VERSION}/obj/{unit}.o",
+                       ps.Unit(unit).compiled_name(fn), open(src, errors="replace").read().splitlines())
+        print_coalesce(out, open(src, errors="replace").read().splitlines())
     return diagnose_dir(out, ROOT / f"build/{md.VERSION}/src/{unit}.o",
                         ROOT / f"build/{md.VERSION}/obj/{unit}.o", fn, quiet, depth,
                         src_lines=open(src, errors="replace").read().splitlines())
 
 
-def run_dbg(unit, fn, out, timeout=int(os.environ.get("REGFIX_DBG_TIMEOUT", "900"))):
+def run_dbg(unit, fn, out, timeout=int(os.environ.get("REGFIX_DBG_TIMEOUT", "900")), trace=False):
     import pragmasweep as ps
     fn = ps.Unit(unit).compiled_name(fn)
     cmd, note = md.compile_command(unit, out / "dbg.o")
     md.sh(["ninja", f"build/{md.VERSION}/src/{unit}.o"], cwd=ROOT)
-    if not md.run_debugger(cmd, fn, out, timeout):
+    if not md.run_debugger(cmd, fn, out, timeout, trace=trace):
         sys.exit(f"mwcc-debugger failed; see {out}/run.log")
     return note
 
@@ -1872,6 +1935,8 @@ def main():
         p.add_argument("--start-tu", help="full TU source to start from")
         p.add_argument("--pragma", action="append")
         p.add_argument("--cc")
+        p.add_argument("--sched", action="store_true",
+                       help="trace the real scheduler too and explain order differences (GC/2.6; tools/mwsched.py)")
         if name == "fix":
             p.add_argument("--rounds", type=int, default=8)
             p.add_argument("--beam", type=int, default=4)
@@ -1914,10 +1979,23 @@ def main():
         ev = Evaluator(sw, sw.sym or a.fn, 1, a.fn)
         d = ev.run(sw.render(sw.init), "diag")
         print(f"[regfix] score {sw.score(sw.render(sw.init), 0)} diff lines")
+        if a.sched:
+            # traced rerun of the same source (fixed gdb port: not in the netns pool)
+            tsrc = Path(sw.u.src).with_name(f".regfix_sched_{os.getpid()}{sw.u.ext}")
+            tsrc.write_text(sw.render(sw.init))
+            try:
+                cmd, _ = md.compile_command(a.unit, d / "dbg.o")
+                cmd = [str(tsrc) if c.replace("\\", "/").endswith(sw.u.src.replace("\\", "/")) else c for c in cmd]
+                md.run_debugger(cmd, sw.sym or a.fn, d, int(os.environ.get("REGFIX_DBG_TIMEOUT", "900")), trace=True)
+            finally:
+                tsrc.unlink(missing_ok=True)
+            print_schedule(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{sw.u.obj}.o", sw.sym or a.fn,
+                           sw.render(sw.init).splitlines())
+            print_coalesce(d, sw.render(sw.init).splitlines())
         diagnose_dir(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{sw.u.obj}.o", a.fn, depth=a.depth,
                      src_lines=sw.render(sw.init).splitlines())
     elif a.cmd == "diag":
-        diagnose(a.unit, a.fn, out, rerun=not a.no_run, depth=a.depth)
+        diagnose(a.unit, a.fn, out, rerun=not a.no_run, depth=a.depth, sched=a.sched)
         suggest_rules(a.unit, a.fn)
     else:
         fix(a, None)
