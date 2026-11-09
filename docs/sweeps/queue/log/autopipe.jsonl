@@ -1,0 +1,48 @@
+{"t": "2026-11-08T05:57:36.185953Z", "who": "autopipe", "op": "add", "id": "N4f8c02", "text": "fn_801D7610 | game/fn_801D7610 | 99.94 | autopipe"}
+{"t": "2026-11-08T05:57:36.187057Z", "who": "autopipe", "op": "take", "id": "N4f8c02"}
+{"t": "2026-11-08T05:58:56.951010Z", "who": "autopipe", "op": "park", "id": "N4f8c02", "note": "autopipe: pragma/decl best 6 (base 6, GC/1.3.2 -), perm best 10"}
+{"t": "2026-11-08T05:59:31.269161Z", "who": "autopipe", "op": "add", "id": "Ndd4589", "text": "fn_801D1890 | game/fn_801D1890 | 99.99 | autopipe"}
+{"t": "2026-11-08T05:59:31.269938Z", "who": "autopipe", "op": "take", "id": "Ndd4589"}
+{"t": "2026-11-08T06:00:15.705948Z", "who": "autopipe", "op": "park", "id": "Ndd4589", "note": "autopipe: pragma/decl best 4 (base 4, GC/1.3.2 -), perm best None"}
+{"t": "2026-11-08T06:00:16.293086Z", "who": "autopipe", "op": "take", "id": "N841b92"}
+{"t": "2026-11-08T06:02:31.745270Z", "who": "autopipe", "op": "take", "id": "N841b92"}
+{"t": "2026-11-08T06:09:13.899392Z", "who": "autopipe", "op": "park", "id": "N841b92", "note": "autopipe: pragma/decl best 4 (base 4, GC/1.3.2 -), perm best 2"}
+{"t": "2026-11-08T06:09:19.458862Z", "who": "autopipe", "op": "add", "id": "Nc68c1c", "text": "SwitchTest_Page | game/SwitchTest_Page | 99.91 | autopipe"}
+{"t": "2026-11-08T06:09:19.459802Z", "who": "autopipe", "op": "take", "id": "Nc68c1c"}
+{"t": "2026-11-08T06:15:41.399922Z", "who": "autopipe", "op": "park", "id": "Nc68c1c", "note": "autopipe: pragma/decl best 38 (base 38, GC/1.3.2 -), perm best 6"}
+{"t": "2026-11-08T06:15:47.341483Z", "who": "autopipe", "op": "take", "id": "Q023"}
+{"t": "2026-11-08T06:22:32.329621Z", "who": "autopipe", "op": "park", "id": "Q023", "note": "autopipe: pragma/decl best 75 (base 75, GC/1.3.2 -), perm best 10"}
+{"t": "2026-11-08T06:22:37.310198Z", "who": "autopipe", "op": "add", "id": "N2af564", "text": "AI_CalcGPTargetSpeed | game/AI_CalcGPTargetSpeed | 99.89 | autopipe"}
+{"t": "2026-11-08T06:22:37.310866Z", "who": "autopipe", "op": "take", "id": "N2af564"}
+{"t": "2026-11-08T06:29:01.143588Z", "who": "autopipe", "op": "park", "id": "N2af564", "note": "autopipe: pragma/decl best 45 (base 45, GC/1.3.2 -), perm best 4"}
+{"t": "2026-11-08T06:30:57.193956Z", "who": "autopipe", "op": "take", "id": "Q010"}
+{"t": "2026-11-08T06:37:17.151446Z", "who": "autopipe", "op": "park", "id": "Q010", "note": "autopipe: pragma/decl best 14 (base 14, GC/1.3.2 -), perm best 3"}
+{"t": "2026-11-08T06:37:21.979896Z", "who": "autopipe", "op": "add", "id": "N7952c6", "text": "fn_801E96BC | game/fn_801E96BC | 99.85 | autopipe"}
+{"t": "2026-11-08T06:37:21.980545Z", "who": "autopipe", "op": "take", "id": "N7952c6"}
+{"t": "2026-11-08T06:43:44.012982Z", "who": "autopipe", "op": "park", "id": "N7952c6", "note": "autopipe: pragma/decl best 15 (base 15, GC/1.3.2 -), perm best 2"}
+{"t": "2026-11-08T06:43:48.342412Z", "who": "autopipe", "op": "take", "id": "N99951f"}
+{"t": "2026-11-08T06:50:55.849096Z", "who": "autopipe", "op": "park", "id": "N99951f", "note": "autopipe: pragma/decl best 38 (base 38, GC/1.3.2 -), perm best 20"}
+{"t": "2026-11-08T06:53:11.182730Z", "who": "autopipe", "op": "take", "id": "Q083"}
+{"t": "2026-11-08T07:00:03.087244Z", "who": "autopipe", "op": "park", "id": "Q083", "note": "autopipe: pragma/decl best 17 (base 17, GC/1.3.2 -), perm best 21"}
+{"t": "2026-11-08T07:02:17.667349Z", "who": "autopipe", "op": "take", "id": "Q084"}
+{"t": "2026-11-08T07:08:39.549729Z", "who": "autopipe", "op": "park", "id": "Q084", "note": "autopipe: pragma/decl best 53 (base 53, GC/1.3.2 -), perm best 8"}
+{"t": "2026-11-08T07:10:55.813645Z", "who": "autopipe", "op": "take", "id": "Q086"}
+{"t": "2026-11-08T07:17:31.388771Z", "who": "autopipe", "op": "park", "id": "Q086", "note": "autopipe: pragma/decl best 44 (base 44, GC/1.3.2 -), perm best 10"}
+{"t": "2026-11-08T07:19:41.637013Z", "who": "autopipe", "op": "take", "id": "Q098"}
+{"t": "2026-11-08T07:26:59.320364Z", "who": "autopipe", "op": "park", "id": "Q098", "note": "autopipe: pragma/decl best 18 (base 18, GC/1.3.2 -), perm best 16"}
+{"t": "2026-11-08T07:27:05.461968Z", "who": "autopipe", "op": "add", "id": "Nce0107", "text": "AI_CalcGPTargetSpeed | game/AI_CalcGPTargetSpeed | 99.92 | autopipe"}
+{"t": "2026-11-08T07:27:05.462650Z", "who": "autopipe", "op": "take", "id": "Nce0107"}
+{"t": "2026-11-08T07:33:27.897763Z", "who": "autopipe", "op": "park", "id": "Nce0107", "note": "autopipe: pragma/decl best 43 (base 43, GC/1.3.2 -), perm best 4"}
+{"t": "2026-11-08T07:35:36.202508Z", "who": "autopipe", "op": "add", "id": "N054c6a", "text": "KartFx_Slot5C_TripleStreakTick | game/KartFxBoost | 99.82 | autopipe"}
+{"t": "2026-11-08T07:35:36.203666Z", "who": "autopipe", "op": "take", "id": "N054c6a"}
+{"t": "2026-11-08T07:41:57.365786Z", "who": "autopipe", "op": "park", "id": "N054c6a", "note": "autopipe: pragma/decl best 18 (base 18, GC/1.3.2 -), perm best 17"}
+{"t": "2026-11-08T07:44:08.535978Z", "who": "autopipe", "op": "add", "id": "Na65ee8", "text": "fn_80271340 | Runtime.PPCEABI.H/MWRTTI | 99.77 | autopipe"}
+{"t": "2026-11-08T07:44:08.536653Z", "who": "autopipe", "op": "take", "id": "Na65ee8"}
+{"t": "2026-11-08T07:50:45.601218Z", "who": "autopipe", "op": "park", "id": "Na65ee8", "note": "autopipe: pragma/decl best 29 (base 29, GC/2.6 -), perm best 7"}
+{"t": "2026-11-08T07:50:50.264686Z", "who": "autopipe", "op": "add", "id": "N16c165", "text": "ItemObject_Tick_Kind29_LightAttachment | game/ItemObject_Tick_Kind29_LightAttachment | 99.73 | autopipe"}
+{"t": "2026-11-08T07:50:50.265604Z", "who": "autopipe", "op": "take", "id": "N16c165"}
+{"t": "2026-11-08T07:57:12.102657Z", "who": "autopipe", "op": "park", "id": "N16c165", "note": "autopipe: pragma/decl best 53 (base 53, GC/1.3.2 -), perm best 16"}
+{"t": "2026-11-08T07:57:18.442206Z", "who": "autopipe", "op": "take", "id": "N1f05c0"}
+{"t": "2026-11-08T07:59:54.090873Z", "who": "autopipe", "op": "release", "id": "N1f05c0", "note": ""}
+{"t": "2026-11-08T08:00:29.473409Z", "who": "autopipe", "op": "take", "id": "Q183"}
+{"t": "2026-11-08T08:03:51.066793Z", "who": "autopipe", "op": "park", "id": "Q183", "note": "autopipe 11-08: already C (99.13%), not asm any more; whole-fn GPR colouring (table/count/cursor r27-r30 swapped in every loop). Inline/explicit block combos best 90 vs 92 (objdiff x100), not worth it"}

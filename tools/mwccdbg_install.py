@@ -22,7 +22,8 @@ ROOT = Path(__file__).resolve().parent.parent
 D = ROOT / "build" / "mwccdbg"
 DBG_COMMIT = "bad9cea"
 RW_COMMIT = "11dbea5a"
-SHARE = Path("/mnt/project-files/setup/mwccdbg/retrowin32")
+# optional prebuilt cache (saves the ~4 min cargo build); MKGP2_SHARE overrides the folder
+SHARE = Path(os.environ.get("MKGP2_SHARE", "/mnt/project-files")) / "setup" / "mwccdbg" / "retrowin32"
 
 
 def run(*a, **k):

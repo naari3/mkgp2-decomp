@@ -1,0 +1,1 @@
+11-08 08:10 mid: regalloc_patterns pass: elem ref/ptr/obbs local, byte-offset form, break+check, pragmas (lifetimes/cse/prop/LI/dead/SR/sched/O3), mw_version 1.2.5n..2.7, loop written in CheckEntry, WarpVec passed in: best still 24 lines (offset IV r7 vs elem r4 swap; target offset r4, elem r7).

@@ -1,0 +1,87 @@
+{"t": "2026-11-08T06:09:15.429887Z", "who": "autopipe4", "op": "take", "id": "Q003"}
+{"t": "2026-11-08T06:17:07.475440Z", "who": "autopipe4", "op": "park", "id": "Q003", "note": "autopipe: pragma/decl best 3 (base None, GC/1.2.5n -), perm best 2"}
+{"t": "2026-11-08T06:17:13.834337Z", "who": "autopipe4", "op": "add", "id": "N86efed", "text": "PCBCheck_ProcessLinks | game/PCBCheckProcess | 99.96 | autopipe"}
+{"t": "2026-11-08T06:17:13.834969Z", "who": "autopipe4", "op": "take", "id": "N86efed"}
+{"t": "2026-11-08T06:23:36.852848Z", "who": "autopipe4", "op": "park", "id": "N86efed", "note": "autopipe: pragma/decl best 4 (base 4, GC/1.3.2 -), perm best 2"}
+{"t": "2026-11-08T06:23:50.068852Z", "who": "autopipe4", "op": "add", "id": "N11ba09", "text": "LakituStart_UpdateCountdown | game/LakituStart_UpdateCountdown | 99.95 | autopipe"}
+{"t": "2026-11-08T06:23:50.069476Z", "who": "autopipe4", "op": "take", "id": "N11ba09"}
+{"t": "2026-11-08T06:30:14.089180Z", "who": "autopipe4", "op": "park", "id": "N11ba09", "note": "autopipe: pragma/decl best 5 (base 5, GC/1.3.2 -), perm best 5"}
+{"t": "2026-11-08T06:31:59.378932Z", "who": "autopipe4", "op": "take", "id": "N4f8c02"}
+{"t": "2026-11-08T06:32:15.216655Z", "who": "autopipe4", "op": "take", "id": "Q058"}
+{"t": "2026-11-08T06:39:55.934347Z", "who": "autopipe4", "op": "park", "id": "Q058", "note": "autopipe: pragma/decl best 10 (base 10, GC/1.3.2 -), perm best 53"}
+{"t": "2026-11-08T06:40:00.828758Z", "who": "autopipe4", "op": "add", "id": "N679c36", "text": "fn_80246988 | game/RaceDigitLap | 99.90 | autopipe"}
+{"t": "2026-11-08T06:40:00.829307Z", "who": "autopipe4", "op": "take", "id": "N679c36"}
+{"t": "2026-11-08T06:46:40.682623Z", "who": "autopipe4", "op": "park", "id": "N679c36", "note": "autopipe: pragma/decl best 18 (base 18, GC/2.6 -), perm best 4"}
+{"t": "2026-11-08T06:46:44.961590Z", "who": "autopipe4", "op": "take", "id": "Q082"}
+{"t": "2026-11-08T06:53:28.425246Z", "who": "autopipe4", "op": "park", "id": "Q082", "note": "autopipe: pragma/decl best 15 (base 15, GC/1.3.2 -), perm best 15"}
+{"t": "2026-11-08T06:55:34.252252Z", "who": "autopipe4", "op": "add", "id": "N341617", "text": "fn_80187410 | game/objview/fn_80187410 | 99.81 | autopipe"}
+{"t": "2026-11-08T06:55:34.252664Z", "who": "autopipe4", "op": "take", "id": "N341617"}
+{"t": "2026-11-08T07:02:15.826101Z", "who": "autopipe4", "op": "park", "id": "N341617", "note": "autopipe: pragma/decl best 26 (base 26, GC/1.3.2 -), perm best 6"}
+{"t": "2026-11-08T07:02:22.514048Z", "who": "autopipe4", "op": "add", "id": "Nd2e5d7", "text": "fn_8016AB58 | game/mapeffect/Jungle16ACtor | 99.79 | autopipe"}
+{"t": "2026-11-08T07:02:22.514718Z", "who": "autopipe4", "op": "take", "id": "Nd2e5d7"}
+{"t": "2026-11-08T07:09:03.859887Z", "who": "autopipe4", "op": "park", "id": "Nd2e5d7", "note": "autopipe: pragma/decl best 21 (base 21, GC/1.3.2 -), perm best 4"}
+{"t": "2026-11-08T07:11:08.031663Z", "who": "autopipe4", "op": "take", "id": "N950f1c"}
+{"t": "2026-11-08T07:17:51.291094Z", "who": "autopipe4", "op": "park", "id": "N950f1c", "note": "autopipe: pragma/decl best 25 (base 25, GC/1.3.2 -), perm best 18"}
+{"t": "2026-11-08T07:19:58.426926Z", "who": "autopipe4", "op": "add", "id": "N8bf2b3", "text": "fn_801F2BC8 | game/NamCamFlow | 99.64 | autopipe"}
+{"t": "2026-11-08T07:19:58.427686Z", "who": "autopipe4", "op": "take", "id": "N8bf2b3"}
+{"t": "2026-11-08T07:27:01.429964Z", "who": "autopipe4", "op": "park", "id": "N8bf2b3", "note": "autopipe: pragma/decl best 36 (base 36, GC/1.3.2 -), perm best 81"}
+{"t": "2026-11-08T07:27:07.455076Z", "who": "autopipe4", "op": "add", "id": "Nd0457d", "text": "clFlowCourse_Dtor | game/clFlowCourse | 99.62 | autopipe"}
+{"t": "2026-11-08T07:27:07.456175Z", "who": "autopipe4", "op": "take", "id": "Nd0457d"}
+{"t": "2026-11-08T07:33:55.929819Z", "who": "autopipe4", "op": "park", "id": "Nd0457d", "note": "autopipe: pragma/decl best 38 (base 38, GC/1.3.2 -), perm best 8"}
+{"t": "2026-11-08T07:35:59.492571Z", "who": "autopipe4", "op": "take", "id": "N9b0141"}
+{"t": "2026-11-08T07:42:40.751537Z", "who": "autopipe4", "op": "park", "id": "N9b0141", "note": "autopipe: pragma/decl best 49 (base 49, GC/2.6 -), perm best 38"}
+{"t": "2026-11-08T07:44:51.314692Z", "who": "autopipe4", "op": "add", "id": "Nbfe192", "text": "PhysicsState_KartCollisionCheck | game/PhysicsState_KartCollisionCheck | 99.39 | autopipe"}
+{"t": "2026-11-08T07:44:51.315419Z", "who": "autopipe4", "op": "take", "id": "Nbfe192"}
+{"t": "2026-11-08T07:51:35.155924Z", "who": "autopipe4", "op": "park", "id": "Nbfe192", "note": "autopipe: pragma/decl best 86 (base 86, GC/1.3.2 -), perm best 19"}
+{"t": "2026-11-08T07:51:40.027454Z", "who": "autopipe4", "op": "take", "id": "Q203"}
+{"t": "2026-11-08T07:58:21.480884Z", "who": "autopipe4", "op": "park", "id": "Q203", "note": "autopipe: pragma/decl best 62 (base 62, GC/1.3.2 -), perm best 25"}
+{"t": "2026-11-08T08:01:47.236624Z", "who": "autopipe4", "op": "add", "id": "N6049e0", "text": "Bitset_Init, ItemEffect_SelectAndDispatch/Dispatch/TryStartByCategory/Trap/Projectile, CarObject_*, KartItem_* (except ApplyImpactReflect, see Q182) | game/auto_ONKARTHIT_block |  | Still inline asm; claim #3044"}
+{"t": "2026-11-08T08:01:51.750717Z", "who": "autopipe4", "op": "take", "id": "N6049e0"}
+{"t": "2026-11-08T08:39:00.160873Z", "who": "autopipe4", "op": "park", "id": "N6049e0", "note": "autopipe4 11-08: SelectAndDispatch done 13a4f1b (inline-return remap + real virtual call). Trap C draft 74% wip/onkarthit_ap4 (frsp via 16-loop copy works; vel block needs hop-2 copy w->v + pointer reads for frsp; remaining = scheduling; 5-param ItemEffectDamp_TryArm; manual extab kept), cperm 25min no gain. Rest untouched."}
+{"t": "2026-11-08T08:46:31.831065Z", "who": "autopipe4", "op": "take", "id": "Neaf8c5"}
+{"t": "2026-11-08T08:47:49.673060Z", "who": "autopipe4", "op": "park", "id": "Neaf8c5", "note": "autopipe4 11-08: target hoists li 1/li 0x3f before mtctr and shares the 1 with alignTx/Rx stores (i r8, base r7); ours rematerializes them per loop. Tried for-64 (not unrolled, 10-19%), SOCK(i)-> direct (86.1, but loses k pointer addi r9,+0x3c), chain assigns, i placement/types, do-while: no gain."}
+{"t": "2026-11-08T08:48:04.485922Z", "who": "autopipe4", "op": "take", "id": "N7b679f"}
+{"t": "2026-11-08T08:52:50.273242Z", "who": "autopipe4", "op": "park", "id": "N7b679f", "note": "autopipe4 11-08: 98.41 after &Coin.sem inline (20ba94c). Rest = GPR numbering cascade (Coin base r24 vs r25, inline AddCoinStats invariants). declsweep 800 (with/without hoist), inline AddCoinStats/GetCoinMul decl perms, scoping d/bits, st->Coin: no gain."}
+{"t": "2026-11-08T08:52:55.886282Z", "who": "autopipe4", "op": "take", "id": "N78c72f"}
+{"t": "2026-11-08T08:53:36.417429Z", "who": "autopipe4", "op": "park", "id": "N78c72f", "note": "autopipe4 11-08: now 98.01; diff = inline jvsFailReplies loop vars (target i r8 j r9, ours r3/r4 with temps in r5-r9). swap i/j decl, int res, tx.result direct, split c decl: no gain (inline is shared with another fn)."}
+{"t": "2026-11-08T08:54:29.307271Z", "who": "autopipe4", "op": "add", "id": "N9d9b8a", "text": "fn_8028CB64 | triforce/amnet_nm3 | 96.55 | autopipe4 11-08: only out(r29)/kind(r30) callee swap; decl perms, PollKind inline, index inline, *out direct: no gain"}
+{"t": "2026-11-08T08:55:38.805794Z", "who": "autopipe4", "op": "take", "id": "N913e46"}
+{"t": "2026-11-08T08:57:52.673020Z", "who": "autopipe4", "op": "park", "id": "N913e46", "note": "autopipe4 11-08: 97.40 (4a65614: size + 0xC + align - 1, buffer after words). Left: fn_8028812C arg scheduling (target extrwi mode before lbl@l/e->addr; mode/len locals, buffer var worse) + Checksum vs hdr->sum cmplw operand order (shared inline in ambackup_private.h; swapping != sides no effect)."}
+{"t": "2026-11-08T08:58:30.381964Z", "who": "autopipe4", "op": "take", "id": "N945253"}
+{"t": "2026-11-08T08:59:25.203696Z", "who": "autopipe4", "op": "park", "id": "N945253", "note": "autopipe4 11-08: target loop guard is cmplwi n,0 + ble (ours beq) and keeps n in one reg for the unrolled remainder (ours mr r3,r6 copy); n/mulli temp r5/r6 swap. Tried s32 n (cmpwi, 95.6), while(n--), n!=0, up-count i (66%), dst end ptr, count local: no gain."}
+{"t": "2026-11-08T08:59:39.095526Z", "who": "autopipe4", "op": "take", "id": "N53b9e9"}
+{"t": "2026-11-08T09:01:15.931026Z", "who": "autopipe4", "op": "park", "id": "N53b9e9", "note": "autopipe4 11-08: big Codex-style body; moving payload= after the 0x40 check +0.2 only (not landed). Target computes packetLength/packetStatus addis lazily but loads lbz 1(r3)/3(r3) directly and reuses the switch operand for command; pointer-var placement/direct-field variants, !(a||b) for the status=3 test: no gain. Needs a cleaner rewrite of the default case."}
+{"t": "2026-11-08T09:01:23.028160Z", "who": "autopipe4", "op": "add", "id": "Na8b7f4", "text": "ItemEffect_Projectile (asm->C) | game/auto_ONKARTHIT_block |  | autopipe4 11-08 claim #3044"}
+{"t": "2026-11-08T09:01:27.277730Z", "who": "autopipe4", "op": "take", "id": "Na8b7f4"}
+{"t": "2026-11-08T09:07:04.452547Z", "who": "autopipe4", "op": "park", "id": "Na8b7f4", "note": "C 95.4% wip/onkarthit_ap4/ItemEffect_Projectile_95pct.c (exceptions off, manual extab kept); only stack layout off: target d@0x28 above w/w2@0x10/0x1c (compiler temps?). Struct-return inline (pD) gets layout but lwz copy"}
+{"t": "2026-11-08T09:11:15.838488Z", "who": "autopipe4", "op": "park", "id": "Q031", "note": "now 98.97 (16 lines): r4/r6 swap result-bswap vs arg0 load; pragmasweep --set all, declsweep --hoist, src ptr/loop/inline bswap all no gain (autopipe4 11-08 09:15)"}
+{"t": "2026-11-08T09:12:33.158349Z", "who": "autopipe4", "op": "park", "id": "Q047", "note": "96.76: target off=bufOff via 'addi rX,r5,0' then add rX,bufAddr,rX; pragmasweep --set all no gain; *off=bufAddr+*off / local o / n*0x40 / &((u8*)bufOff)[n] no gain (autopipe4 11-08)"}
+{"t": "2026-11-08T09:13:08.413341Z", "who": "autopipe4", "op": "park", "id": "Q048", "note": "89.5: same unfolded 'addi rX,bufOff,0'/'addi rY,bufOff,4' then add b+off as acBind; AcceptBuf struct member addr 89.9, o0/o4 locals 88.3; not solved (autopipe4 11-08)"}
+{"t": "2026-11-08T09:13:38.840907Z", "who": "autopipe4", "op": "park", "id": "Q049", "note": "93.4: target computes len+0x1F then off+that (and keeps p=src copy in r7); temp local/casts/reorder all reassociate to off+len first (autopipe4 11-08)"}
+{"t": "2026-11-08T09:41:43.225583Z", "who": "autopipe4", "op": "add", "id": "Nb53c48", "text": "ItemEffect_Projectile (asm->C draft 98.9%) | game/auto_ONKARTHIT_block | 98.9 | autopipe4 11-08: wip/onkarthit_ap4/ItemEffect_Projectile_98.9pct.c (exceptions off, keep manual extab). Solved: stack order = ascending size (d padded to 16B so it sits above w/w2), vel loads go through vx/vy/vz, tail is an 8-byte struct copy. Left: FPR numbering of the 2nd sqrt sum (target f7) + one load order; decl sweep 600 perms"}
+{"t": "2026-11-08T09:42:14.760232Z", "who": "autopipe4", "op": "take", "id": "Nb53c48"}
+{"t": "2026-11-08T09:48:23.507176Z", "who": "autopipe4", "op": "park", "id": "Nb53c48", "note": "98.95 plateau: 2nd sqrt sum colored f4 (target f7, i.e. it interferes with vx..vz); 1st-sum reuse of vx gives f4 but swaps 0xb8/0xbc loads; 1100 random decl orders + sum-var reuse + copy reorder no gain"}
+{"t": "2026-11-08T09:48:27.531994Z", "who": "autopipe4", "op": "add", "id": "Nf959c9", "text": "ItemEffect_Trap (asm->C draft 74%) | game/auto_ONKARTHIT_block | 74 | wip/onkarthit_ap4/ItemEffect_Trap_74pct.c; retry with stack-order-by-size rule"}
+{"t": "2026-11-08T09:48:33.214902Z", "who": "autopipe4", "op": "take", "id": "Nf959c9"}
+{"t": "2026-11-08T09:57:54.185755Z", "who": "autopipe4", "op": "park", "id": "Nf959c9", "note": "98.5 wip/onkarthit_ap4/ItemEffect_Trap_98.5pct.c (needs 5-param ItemEffectDamp_TryArm proto). First block exact (scalar dx/dy/dz then stores, ptr reads, split arrays by size). Left: 2nd-block FPR (k f3 vs f7) + tail r3/r4/r5 coloring; decl perms + load-order sweeps no gain"}
+{"t": "2026-11-08T09:58:07.087403Z", "who": "autopipe4", "op": "add", "id": "Nacc6f6", "text": "ItemEffect_TryStartByCategory (asm->C) | game/auto_ONKARTHIT_block | | autopipe4 own claim #3044"}
+{"t": "2026-11-08T09:58:13.784914Z", "who": "autopipe4", "op": "take", "id": "Nacc6f6"}
+{"t": "2026-11-08T10:00:07.661213Z", "who": "autopipe4", "op": "park", "id": "Nacc6f6", "note": "GC/2.6 93.0 (wip/onkarthit_ap4/ItemEffect_TryStartByCategory_93pct.c; 8-byte pair copy helps). Residue = 'addi r0,r31,0x1f18; add; lwz 4/8' = section-anchor addressing of TU-owned static tables (see mwcc-rodata-anchor-rule): needs the lbl_802EBA18 blob split into TU-owned objects; every pointer/inline/cast form folds K into the displacement"}
+{"t": "2026-11-08T10:53:42.984665Z", "who": "autopipe4", "op": "done", "id": "Nacc6f6", "note": "f64ed37", "force": true}
+{"t": "2026-11-08T10:57:52.007507Z", "who": "autopipe4", "op": "add", "id": "N9f6aaf", "text": "fn_8029B54C / __THPGetBit | thp/THPDec | 99.97 / 81 | autopipe4 11-08: B54C hs subf goes via temp r23 (decl sweep 3000, u8 cast, order swaps: no); GetBit goto-shape 81%, for/while rewrites worse (75/63)"}
+{"t": "2026-11-08T10:58:18.206333Z", "who": "autopipe4", "op": "add", "id": "N8397c7", "text": "ItemEffect_Dispatch (asm->C) | game/auto_ONKARTHIT_block | 86 | autopipe4: retry kind14 frsp block with the Trap first-block recipe"}
+{"t": "2026-11-08T10:58:22.404716Z", "who": "autopipe4", "op": "take", "id": "N8397c7"}
+{"t": "2026-11-08T11:08:56.651740Z", "who": "autopipe4", "op": "done", "id": "N8397c7", "note": "d09daa2", "force": true}
+{"t": "2026-11-08T11:23:35.789423Z", "who": "autopipe4", "op": "add", "id": "N860b3b", "text": "KartItem_ApplyImpactImpulseAndRumble (asm->C draft 92.4%) | game/auto_ONKARTHIT_block | 92.4 | wip/onkarthit_ap4/KartItem_ApplyImpactImpulseAndRumble_92.4pct.c (C, exceptions off, keep manual extab)"}
+{"t": "2026-11-08T11:23:35.898550Z", "who": "autopipe4", "op": "add", "id": "Nd0811d", "text": "KartItem_ApplyImpactReflectAndDampVelocity (asm->C draft 99.83%) | game/auto_ONKARTHIT_block | 99.83 | wip/onkarthit_ap4/KartItem_ApplyImpactReflectAndDampVelocity_99.83pct.c; needs int(self,float*,float*,float*) prototype"}
+{"t": "2026-11-08T11:23:43.112372Z", "who": "autopipe4", "op": "take", "id": "N860b3b"}
+{"t": "2026-11-08T11:23:58.427511Z", "who": "autopipe4", "op": "park", "id": "N860b3b", "note": "autopipe4 11-08: 92.4 plateau. Same family as Dispatch/Trap: 16-loop copy + scalar dx/dy/dz, r/w written through pointers (frame 0xa0 ok), literal 1.0f gives the reloads, non-fused dot via t0/t1/sum/t2. Left: FPR numbering of 1st block, clamp-sqrt sum colored f2 (target f4, same as Projectile), proj block reloads d twice (target), HasFlag branch shape. C++ pragma / Vec-len inlines no change."}
+{"t": "2026-11-08T11:23:58.560343Z", "who": "autopipe4", "op": "take", "id": "Nd0811d"}
+{"t": "2026-11-08T11:24:13.985869Z", "who": "autopipe4", "op": "park", "id": "Nd0811d", "note": "autopipe4 11-08: still 99.83 after rodata ownership (lbl_802ED9E4 now static const). Only sec r5 / ret flag r6 swapped. Tried: id/sec/self params, goto-flag forms, in-body flag, call-site forms, 12 single pragmas: no gain."}
+{"t": "2026-11-08T11:35:53.369061Z", "who": "autopipe4", "op": "add", "id": "N6f3577", "text": "fn_8028D8CC near-miss | triforce/amnet_setup_nm | 99.97 | case 0x29 tail: kind=2 const r4/base r5 swapped (target), then memset arg li order"}
+{"t": "2026-11-08T11:35:53.444257Z", "who": "autopipe4", "op": "take", "id": "N6f3577"}
+{"t": "2026-11-08T11:36:08.853520Z", "who": "autopipe4", "op": "park", "id": "N6f3577", "note": "autopipe4 11-08: hwFlags temp/u16 cast/SetupDev inline/dev alias/stmt reorder no gain; cperm 37k iters (fn + InitializeDevClear + ReadDeviceWordImpl) best unchanged"}
+{"t": "2026-11-08T11:36:22.289325Z", "who": "autopipe4", "op": "take", "id": "N8aaa3f"}
+{"t": "2026-11-08T11:36:47.679205Z", "who": "autopipe4", "op": "release", "id": "N8aaa3f", "note": ""}
+{"t": "2026-11-08T11:36:47.771557Z", "who": "autopipe4", "op": "take", "id": "N7ed6a7"}
+{"t": "2026-11-08T11:37:37.331216Z", "who": "autopipe4", "op": "park", "id": "N7ed6a7", "note": "autopipe4 11-08: not a split problem. fn_801E2FD4 (71%) inlines SharedPtr_Init with its own try/catch (target calls it, frame 0x90 vs 0x70); fn_801E32C8 (91.7) is STL deque iterator temp stack layout (copies at 0x34..0x3c vs 0x6c..), fn_801E36A8 85. Needs C++ STL-model rework, not .rodata ownership."}

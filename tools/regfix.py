@@ -280,6 +280,8 @@ def want_map(out: Path, ours_obj: Path, tgt_obj: Path, fn: str):
             if num(v) >= 32:
                 want.setdefault(v, {}).setdefault(t, 0)
                 want[v][t] += 1
+                info.setdefault("at", {}).setdefault(v, []).append(k)
+    info["ours_asm"], info["tgt_asm"] = ours, tgt
     return want, sites, info
 
 
@@ -657,8 +659,11 @@ def solve(g: Graph, w, depth=2, beam=12, limit=8):
 def diagnose(unit, fn, out: Path, rerun=True, quiet=False, depth=2):
     if rerun:
         run_dbg(unit, fn, out)
+    import pragmasweep as ps
+    src = ps.Unit(unit).src
     return diagnose_dir(out, ROOT / f"build/{md.VERSION}/src/{unit}.o",
-                        ROOT / f"build/{md.VERSION}/obj/{unit}.o", fn, quiet, depth)
+                        ROOT / f"build/{md.VERSION}/obj/{unit}.o", fn, quiet, depth,
+                        src_lines=open(src, errors="replace").read().splitlines())
 
 
 def run_dbg(unit, fn, out, timeout=300):
@@ -717,7 +722,30 @@ def advice(g: Graph, x, y):
     return f"frontend temp {nx} must become a backend temp (e.g. no inline / no CSE) or {y} a frontend temp"
 
 
-def diagnose_dir(out: Path, ours_obj, tgt_obj, fn, quiet=False, depth=2):
+def show_context(P, bad, sites, info, src_lines, maxl=12):
+    """Source lines and our/target instructions around the mismatching vregs
+    (for hand work: what to rewrite, and what the target does there)."""
+    lines = sorted({int(x[0]) for v in bad for x in sites.get(v, []) if x[0].isdigit()})
+    if src_lines and lines:
+        P("  source lines involved:")
+        for ln in lines[:maxl]:
+            if 0 < ln <= len(src_lines):
+                P(f"    {ln:>5} | {src_lines[ln - 1].rstrip()}")
+    ks = sorted({k for v in bad for k in info.get("at", {}).get(v, [])})
+    O, T = info.get("ours_asm", []), info.get("tgt_asm", [])
+    if ks:
+        P("  instructions (ours | target), * = differs:")
+        shown = set()
+        for k in ks[:maxl]:
+            for j in range(max(0, k - 1), min(len(O), k + 2)):
+                if j in shown or j >= len(T):
+                    continue
+                shown.add(j)
+                mark = "*" if O[j] != T[j] else " "
+                P(f"    {mark}{j * 4:>5x}  {O[j]:<32} | {T[j]}")
+
+
+def diagnose_dir(out: Path, ours_obj, tgt_obj, fn, quiet=False, depth=2, src_lines=None):
     want, sites, info = want_map(out, Path(ours_obj), Path(tgt_obj), fn)
     rep = {"fn": fn, "info": info, "classes": {}}
     P = (lambda *a: None) if quiet else print
@@ -740,6 +768,7 @@ def diagnose_dir(out: Path, ours_obj, tgt_obj, fn, quiet=False, depth=2):
         pos = {v: i for i, v in enumerate(g.real_order)}
         for v in sorted(bad, key=lambda v: pos[v]):
             P(f"  #{pos[v]:<3} {describe(g, v, sites)}: {g.phys[v]} -> want {w[v]}")
+        show_context(P, bad, sites, info, src_lines)
         if not model_ok:
             P("  (model mismatch: solutions below are unreliable)")
         lv = levels(g)
@@ -1000,7 +1029,28 @@ def fix(a, rep0):
     print(f"[regfix] parallel debugger: {'yes (native gdb)' if md.NATIVE else 'yes (netns)' if ev.par else 'no (unshare failed)'}", flush=True)
     allowed = set(ss.REG_ONLY_MOVES) | {"expand", "swap"}
     t0 = time.time()
-    text0 = sw.render(sw.init)
+    PROP = "opt_propagation off"
+
+    def rend(st):
+        """render; states with .prop_off get `#pragma opt_propagation off` (named
+        locals survive instead of being propagated away: the temp->local rewrites
+        mostly need it)."""
+        if getattr(st, "prop_off", False) and PROP not in (a.pragma or []):
+            old = sw.a.pragma
+            sw.a.pragma = list(old or []) + [PROP]
+            try:
+                return sw.render(st)
+            finally:
+                sw.a.pragma = old
+        return sw.render(st)
+
+    def prop_move(st):
+        def f():
+            s2 = st.clone()
+            s2.prop_off = True
+            return s2
+        return ("propoff", f, None)
+    text0 = rend(sw.init)
     s0 = sw.score(text0, 0)
     m0, r0 = ev.diag(text0, 0, top_decls(sw.init))
     print(f"[regfix] start: {s0} diff lines, metric {m0}", flush=True)
@@ -1012,7 +1062,8 @@ def fix(a, rep0):
         if s2 is None:
             return None
         s2.hist = st.hist + ("declorder " + ",".join(rep["decl_order"]),)
-        t = sw.render(s2)
+        s2.prop_off = getattr(st, "prop_off", False)
+        t = rend(s2)
         sc = sw.score(t, 0)
         print(f"[regfix] decl-order solver proposes {rep['decl_order']}: {sc} diff lines", flush=True)
         return (s2, t) if sc == 0 else None
@@ -1036,8 +1087,9 @@ def fix(a, rep0):
             lines, names = focus_of(rep)
             sl = sw.stmt_lines(st)
             foc = {i for i, l in enumerate(sl) if l in lines}
-            for label, f, si in itertools.chain(decl_moves(st, names), ss.moves(st, sw.ctx, allowed)):
-                pri = 0 if (si in foc or label.startswith("declmove")) else 1
+            extra = [] if getattr(st, "prop_off", False) or PROP in (a.pragma or []) else [prop_move(st)]
+            for label, f, si in itertools.chain(extra, decl_moves(st, names), ss.moves(st, sw.ctx, allowed)):
+                pri = 0 if (si in foc or label.startswith(("declmove", "propoff"))) else 1
                 if pri == 1 and a.focus_only:
                     continue
                 cands.append((pri, len(cands), st, label, f))
@@ -1053,7 +1105,8 @@ def fix(a, rep0):
             if s2 is None:
                 continue
             s2.hist = st.hist + (label,)
-            txt = sw.render(s2)
+            s2.prop_off = getattr(st, "prop_off", False) or label == "propoff"
+            txt = rend(s2)
             h = hashlib.sha1(txt.encode()).hexdigest()
             if h in seen:
                 continue
@@ -1096,7 +1149,8 @@ def fix(a, rep0):
         if a.minutes and time.time() - t0 > a.minutes * 60:
             break
     out = TMPDIR / f"{a.fn}.best{sw.u.ext}"
-    out.write_text(sw.func_text(best[2]))
+    out.write_text(("#pragma push\n#pragma " + PROP + "\n" if getattr(best[2], "prop_off", False) else "")
+                   + sw.func_text(best[2]) + ("\n#pragma pop\n" if getattr(best[2], "prop_off", False) else ""))
     print(f"[regfix] best: {best[1]} diff lines, metric {best[0]}; definition written to {out}")
     return best
 
@@ -1237,11 +1291,11 @@ def main():
             p.add_argument("-j", "--jobs", type=int, default=4)
     b = sub.add_parser("batch")
     b.add_argument("list", help="file of `unit fn` lines")
-    shared = "/mnt/project-files/setup" if os.path.isdir("/mnt/project-files/setup") else str(TMPDIR)
-    b.add_argument("--best-dir", default=f"{shared}/autopipe99/best")
+    sweeps = ROOT / "docs" / "sweeps"   # in the repo: commit results/hits
+    b.add_argument("--best-dir", default=str(sweeps / "autopipe99" / "best"))
     b.add_argument("--claims")
-    b.add_argument("--out", default=f"{shared}/regfix/results.jsonl")
-    b.add_argument("--hits", default=f"{shared}/regfix/hits")
+    b.add_argument("--out", default=str(sweeps / "regfix" / "results.jsonl"))
+    b.add_argument("--hits", default=str(sweeps / "regfix" / "hits"))
     b.add_argument("--retry", action="store_true")
     b.add_argument("-j", "--jobs", type=int, default=4)
     a = ap.parse_args()
@@ -1256,7 +1310,8 @@ def main():
         ev = Evaluator(sw, sw.sym or a.fn, 1, a.fn)
         d = ev.run(sw.render(sw.init), "diag")
         print(f"[regfix] score {sw.score(sw.render(sw.init), 0)} diff lines")
-        diagnose_dir(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{sw.u.obj}.o", a.fn, depth=a.depth)
+        diagnose_dir(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{sw.u.obj}.o", a.fn, depth=a.depth,
+                     src_lines=sw.render(sw.init).splitlines())
     elif a.cmd == "diag":
         diagnose(a.unit, a.fn, out, rerun=not a.no_run, depth=a.depth)
         suggest_rules(a.unit, a.fn)

@@ -1,0 +1,51 @@
+{"t": "2026-11-08T06:09:42.849598Z", "who": "autopipe3", "op": "take", "id": "Ndd4589"}
+{"t": "2026-11-08T06:09:58.803135Z", "who": "autopipe3", "op": "add", "id": "N12bd96", "text": "fn_8018DAD0 | game/objview/fn_8018DAD0 | 99.94 | autopipe"}
+{"t": "2026-11-08T06:09:58.803809Z", "who": "autopipe3", "op": "take", "id": "N12bd96"}
+{"t": "2026-11-08T06:16:39.315495Z", "who": "autopipe3", "op": "park", "id": "N12bd96", "note": "autopipe: pragma/decl best 6 (base 6, GC/1.3.2 -), perm best 3"}
+{"t": "2026-11-08T06:16:45.443448Z", "who": "autopipe3", "op": "add", "id": "N430d48", "text": "fn_801EE36C | game/fn_801EE36C | 99.91 | autopipe"}
+{"t": "2026-11-08T06:16:45.444005Z", "who": "autopipe3", "op": "take", "id": "N430d48"}
+{"t": "2026-11-08T06:23:27.555438Z", "who": "autopipe3", "op": "park", "id": "N430d48", "note": "autopipe: pragma/decl best 43 (base 43, GC/1.3.2 -), perm best 5"}
+{"t": "2026-11-08T06:24:00.124139Z", "who": "autopipe3", "op": "take", "id": "Q077"}
+{"t": "2026-11-08T06:30:51.682518Z", "who": "autopipe3", "op": "park", "id": "Q077", "note": "autopipe: pragma/decl best 17 (base 17, GC/1.3.2 -), perm best 9"}
+{"t": "2026-11-08T06:32:48.848552Z", "who": "autopipe3", "op": "add", "id": "Nfc7e74", "text": "ItemObject_Tick_Kind2d_ChainShellPair | game/ItemObject_Tick_Kind2d_ChainShellPair | 99.89 | autopipe"}
+{"t": "2026-11-08T06:32:48.849393Z", "who": "autopipe3", "op": "take", "id": "Nfc7e74"}
+{"t": "2026-11-08T06:39:15.173326Z", "who": "autopipe3", "op": "park", "id": "Nfc7e74", "note": "autopipe: pragma/decl best 35 (base 35, GC/1.3.2 -), perm best 8"}
+{"t": "2026-11-08T06:39:19.730786Z", "who": "autopipe3", "op": "take", "id": "Q001"}
+{"t": "2026-11-08T06:46:02.158235Z", "who": "autopipe3", "op": "park", "id": "Q001", "note": "autopipe: pragma/decl best 13 (base 13, GC/1.3.2 -), perm best 6"}
+{"t": "2026-11-08T06:46:07.771192Z", "who": "autopipe3", "op": "add", "id": "N4af03a", "text": "fn_801F7F50 | game/fn_801F7F50 | 99.92 | autopipe"}
+{"t": "2026-11-08T06:46:07.772221Z", "who": "autopipe3", "op": "take", "id": "N4af03a"}
+{"t": "2026-11-08T06:52:50.488313Z", "who": "autopipe3", "op": "park", "id": "N4af03a", "note": "autopipe: pragma/decl best 8 (base 8, GC/2.6 -), perm best 6"}
+{"t": "2026-11-08T06:55:05.339636Z", "who": "autopipe3", "op": "take", "id": "Q094"}
+{"t": "2026-11-08T07:01:28.424741Z", "who": "autopipe3", "op": "park", "id": "Q094", "note": "autopipe: pragma/decl best 27 (base 27, GC/1.3.2 -), perm best 11"}
+{"t": "2026-11-08T07:03:50.059434Z", "who": "autopipe3", "op": "take", "id": "Q096"}
+{"t": "2026-11-08T07:10:13.300362Z", "who": "autopipe3", "op": "park", "id": "Q096", "note": "autopipe: pragma/decl best 20 (base 20, GC/1.3.2 -), perm best 12"}
+{"t": "2026-11-08T07:12:33.772749Z", "who": "autopipe3", "op": "add", "id": "Ne43715", "text": "fn_8023A148 | game/fn_8023A148 | 99.79 | autopipe"}
+{"t": "2026-11-08T07:12:33.773339Z", "who": "autopipe3", "op": "take", "id": "Ne43715"}
+{"t": "2026-11-08T07:18:58.269469Z", "who": "autopipe3", "op": "park", "id": "Ne43715", "note": "autopipe: pragma/decl best 39 (base 39, GC/1.3.2 -), perm best 77"}
+{"t": "2026-11-08T07:21:22.884357Z", "who": "autopipe3", "op": "add", "id": "N8745cc", "text": "fn_8018F1E0 | game/objview/fn_8018F1E0 | 99.77 | autopipe"}
+{"t": "2026-11-08T07:21:22.885573Z", "who": "autopipe3", "op": "take", "id": "N8745cc"}
+{"t": "2026-11-08T07:28:06.299451Z", "who": "autopipe3", "op": "park", "id": "N8745cc", "note": "autopipe: pragma/decl best 68 (base 68, GC/1.3.2 -), perm best 8"}
+{"t": "2026-11-08T07:30:26.284950Z", "who": "autopipe3", "op": "take", "id": "Q052"}
+{"t": "2026-11-08T07:37:08.315358Z", "who": "autopipe3", "op": "park", "id": "Q052", "note": "autopipe: pragma/decl best 26 (base 26, GC/1.3 -), perm best 10"}
+{"t": "2026-11-08T07:39:30.506464Z", "who": "autopipe3", "op": "take", "id": "Q119"}
+{"t": "2026-11-08T07:45:51.613524Z", "who": "autopipe3", "op": "park", "id": "Q119", "note": "autopipe: pragma/decl best 42 (base 42, GC/1.3.2 -), perm best 8"}
+{"t": "2026-11-08T07:48:10.615200Z", "who": "autopipe3", "op": "take", "id": "Q004"}
+{"t": "2026-11-08T07:54:30.331320Z", "who": "autopipe3", "op": "park", "id": "Q004", "note": "autopipe: pragma/decl best 30 (base 30, GC/1.3.2 -), perm best 2"}
+{"t": "2026-11-08T07:54:37.441250Z", "who": "autopipe3", "op": "take", "id": "Q057"}
+{"t": "2026-11-08T07:59:52.782555Z", "who": "autopipe3", "op": "park", "id": "Q057", "note": "autopipe3: stopped mid-run (reallocation), stage1 best 61 no gain"}
+{"t": "2026-11-08T08:00:40.136805Z", "who": "autopipe3", "op": "release", "id": "Q186", "note": ""}
+{"t": "2026-11-08T08:29:39.888612Z", "who": "autopipe3", "op": "add", "id": "Ndcf0ed", "text": "fn_8013CC24 (KartPreview ctor, C++ retry) | game/KartPreview | 99.27 | autopipe3: real C++ ctor KPCtor : KPBase (~KPBase -> dtor_8013DCBC, new KPNormal3D -> clNormal3D_Construct), auto EH matches, DOL differs only in 4 insns: after the anims loop target schedules lfs f1(lbl_806D76EC) before lwz r4,0x14(r28) in clNormal3D_SetScale(obj10, anims14[0], 30, 0,0,0). cperm 31k iters, pragmasweep all, ~20 arg/loop forms: no. wip/kartpreview_ctor/"}
+{"t": "2026-11-08T08:29:49.792755Z", "who": "autopipe3", "op": "take", "id": "Ndcf0ed"}
+{"t": "2026-11-08T08:30:05.108337Z", "who": "autopipe3", "op": "park", "id": "Ndcf0ed", "note": "autopipe3 11-08 08:30: 4 insns left (arg load order), see item text"}
+{"t": "2026-11-08T08:30:46.365857Z", "who": "autopipe3", "op": "add", "id": "Nf7781b", "text": "RaceContext_InitDefaults | game/RaceContext_InitDefaults |  | Still inline asm; #if 0 C++ draft in the file (88.2%)"}
+{"t": "2026-11-08T08:35:35.321033Z", "who": "autopipe3", "op": "take", "id": "Nf7781b"}
+{"t": "2026-11-08T08:35:50.616147Z", "who": "autopipe3", "op": "park", "id": "Nf7781b", "note": "autopipe3 11-08 09:00: enabled the #if 0 C++ draft as real ctor (renames __ct__11RaceContextFv/__dt__15RaceContextBaseFv/__vt__ in wip/racecontext_init/renames.diff, + use_lmw_stmw). 614 -> 574 diff lines with slots = ((RaceSlot *)lbl_805AC600). Target keeps loop IV pointers (r6 slots, r3 counts) in the fully unrolled 8x loop AND reloads g_cupId/g_longRoundFlag after the stores (alias kill); ours folds both. short/u8 index or pointer IVs give the reload but stop full unroll; volatile gives 480 (load hoisted). wip/racecontext_init/"}
+{"t": "2026-11-08T09:33:52.001983Z", "who": "autopipe3", "op": "add", "id": "Nfc3a3f", "text": "CoinSystem_UpdateAll | game/CoinSystem_UpdateAll | 99.8 | Still inline asm (0xC9C). autopipe3 11-08: full C draft wip/coin_updateall/CoinSystem_UpdateAll_34lines.diff (incl. splits .data 0x8048E4B8..E4E4 for the jumptable). Float LITERALS (not lbl_ externs) were the big win (140 -> 34). Left: FPR/GPR coloring only: target puts loop1 range + case2/3 t in f28 (ours f30) and the spark-slot base in r28 (ours r29). declsweep 2000, cperm 25k, scoping t/range, pragmasweep all: no."}
+{"t": "2026-11-08T09:33:52.089889Z", "who": "autopipe3", "op": "take", "id": "Nfc3a3f"}
+{"t": "2026-11-08T09:34:07.491023Z", "who": "autopipe3", "op": "park", "id": "Nfc3a3f", "note": "autopipe3 11-08 09:40: 34 diff lines, coloring only (see text)"}
+{"t": "2026-11-08T10:13:43.487988Z", "who": "autopipe3", "op": "add", "id": "Ne46836", "text": "KartDriver_InitFull | game/KartDriver_InitFull | asm | autopipe3 11-08: whole-file C++ draft wip/kartdriver_initfull/KartDriver_InitFull_c_draft.c = 148 diff lines (bl names normalized; needs -use_lmw_stmw on). Remaining: .data 0x803F5928 tables are reached anchor-style (addi base,off; add idx) = compiler-local statics -> needs the 31-TU merge RenderObj_UseItem..KartDriver_InitFull (see gave_up). Also characterId/character r27/r28 swap."}
+{"t": "2026-11-08T10:13:49.829275Z", "who": "autopipe3", "op": "take", "id": "Ne46836"}
+{"t": "2026-11-08T10:14:05.112062Z", "who": "autopipe3", "op": "park", "id": "Ne46836", "note": "autopipe3 11-08: blocked on .data anchor (31-TU merge needed); draft 148 lines in wip/kartdriver_initfull"}
+{"t": "2026-11-08T11:28:03.131383Z", "who": "autopipe3", "op": "add", "id": "N6f18f9", "text": "clCab::Update (VolumeCalibration_Tick) | game/VolumeCalibration | asm | autopipe3 11-08: draft in file comment = 42 lines, only 'this' stays in r3 for first stw/lwz in target (ours moves to r30 first). self-copy, range helper, jvs pointer, pragmasweep --set all (all cc): no change"}
+{"t": "2026-11-08T11:28:08.924915Z", "who": "autopipe3", "op": "take", "id": "N6f18f9"}
+{"t": "2026-11-08T11:28:24.311329Z", "who": "autopipe3", "op": "park", "id": "N6f18f9", "note": "autopipe3 11-08: this-in-r3 head; see text"}

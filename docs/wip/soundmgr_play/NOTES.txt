@@ -1,0 +1,1 @@
+11-08 07:40 mid: retried with docs/regalloc_patterns.md: pragmas (propagation/cse/lifetimes/SR/dead_assign) all worse; FindPlaying arg/slots placement variants 290-555; msweep decls 120 iters no gain. Structural diff 4 lines (one add scheduled before subfic), regs scrambled function-wide (288). Not landed.

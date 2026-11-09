@@ -1,0 +1,31 @@
+diff --git a/tools/extab_user_renames.json b/tools/extab_user_renames.json
+index 5af618b..4eae202 100644
+--- a/tools/extab_user_renames.json
++++ b/tools/extab_user_renames.json
+@@ -13073,13 +13073,23 @@
+     "extabindex_fn_8014BF80": "@eti_800254A8",
+     "extab_fn_8014C308": "@etb_8000E3B0",
+     "extabindex_fn_8014C308": "@eti_800254B4",
+-    "extab_fn_8014C53C": "@etb_8000E3B8",
+-    "extabindex_fn_8014C53C": "@eti_800254C0",
+     "__nw__FUl": "Alloc",
+     "__dl__FPv": "MemoryManager_TimedFree",
+     "__ct__11TextManagerFv": "TexMgr_Init",
+     "__ct__7ResCtrlFv": "ResCtrl_Init",
+-    "__dt__11TextManagerFv": "dtor_800869D0"
++    "__dt__11TextManagerFv": "dtor_800869D0",
++    "__ct__5Obj48Fi": "fn_80142964",
++    "__ct__5Obj28Fv": "fn_8014403C",
++    "__ct__5Obj1CFv": "fn_80146260",
++    "__ct__5Obj24Fv": "fn_80140874",
++    "__ct__5Obj44Fv": "fn_8013FF6C",
++    "__ct__6Obj284Fv": "fn_80140FEC",
++    "__ct__9GetSpriteFiii": "Sprite_InitWithAnim",
++    "__ct__4VObjFPCvUc": "fn_8013D800",
++    "__vt__9SceneBase": "lbl_803FE0C8",
++    "__vt__17clCSSceneGetTitle": "lbl_8048F118",
++    "__dt__9SceneBaseFv": "dtor_8007D0D4",
++    "__ct__17clCSSceneGetTitleFv": "fn_8014C53C"
+   },
+   "src/game/fn_801F27B4.cpp": {
+     "__sinit_fn_801F27B4_cpp": "global:fn_801F27B4",

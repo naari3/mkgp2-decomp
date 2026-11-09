@@ -44,7 +44,7 @@ fn_80192F04, fn_80193134, WeatherSystem_PickVariant, fn_801932F8, and Fog. Two s
    `extab_padding=b"\x00\x00"` and fn_80192F04 has none. Check extab with
    extab_order.json.
 2. Later, fold the 0x801913B0..0x80192F04 TUs into it, once SoundMgr_Play is C.
-   SoundMgr_Play is still asm; see /mnt/project-files/wip/soundmgr_play_280lines.c.
+   SoundMgr_Play is still asm; see docs/wip/soundmgr_play_280lines.c.
 
 ## Plans only (not verified)
 
@@ -92,7 +92,7 @@ The unsplit range is several original TUs' pools. Two of them have section ancho
     TU's tools/extab_order.json list.
 * **0x80363D30..0x803678D8, anchor lbl_80363D30 (Scene_8014E0C4): parked.** Defining the
   pool inside Scene_8014E0C4.cpp (WIP:
-  /mnt/project-files/wip/asm-a/Scene_8014E0C4_pool_wip.cpp + Scene_pool_splits.patch)
+  docs/wip/asm-a/Scene_8014E0C4_pool_wip.cpp + Scene_pool_splits.patch)
   builds the layout correctly.
   - Typed objects (`AttractEntry lbl_80367488[12]`, `CourseModeInfo lbl_80366EF0[21]`,
     `SprEntry lbl_803644D0[81]`) keep fn_8014E618, fn_80150C1C and fn_80154FB0 matching.

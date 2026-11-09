@@ -1,0 +1,18 @@
+# index score src obj fn cc  (scores 41..150, unclaimed, at main 0dd14be; --list THIS --shard K/4 runs index % 4 == K, K=0..3)
+0 41 src/triforce/random_nm1.c triforce/random_nm1 fn_802867B8 -
+1 42 src/game/WarpDashMgr_Init.cpp game/WarpDashMgr_Init WarpDashMgr_Init -
+2 43 src/triforce/acsocket_nm5.c triforce/acsocket_nm5 acBind -
+3 44 src/game/clItemBoxManager_StepTable.cpp game/clItemBoxManager_StepTable clItemBoxManager_InitStateTable -
+4 48 src/game/ShadowAreaMgr.cpp game/ShadowAreaMgr ShadowAreaEntry_ComputeEdgeNormals -
+5 49 src/game/anon_80224ECC_nm1.cpp game/anon_80224ECC_nm1 fn_80225124 -
+6 50 src/game/EffectKartAuraCompound.cpp game/EffectKartAuraCompound Effect_KartAuraCompound_Update -
+7 64 src/triforce/ambackup_nm1.c triforce/ambackup_nm1 BackupWriteRecord 1.3
+8 79 src/game/CollisionFile_Load.c game/CollisionFile_Load CollisionFile_Load 1.3
+9 82 src/triforce/amsrv_nm1.c triforce/amsrv_nm1 fn_80291134 -
+10 83 src/game/ShadowAreaMgr.cpp game/ShadowAreaMgr ShadowAreaMgr_QueryPoint -
+11 84 src/triforce/random_nm1.c triforce/random_nm1 fn_80286864 -
+12 95 src/game/fn_801F9B64.cpp game/fn_801F9B64 fn_801F9B64 -
+13 96 src/triforce/acsocket_nm5.c triforce/acsocket_nm5 acAccept -
+14 105 src/game/PCBCommSendPeers.c game/PCBCommSendPeers PCBComm_SendToAllPeers -
+15 106 src/game/RaceScene_GetPerspFovyForCup.c game/RaceScene_GetPerspFovyForCup RaceScene_GetPerspFovyForCup -
+16 118 src/game/fn_801ECA14.c game/fn_801ECA14 fn_801ECA14 1.2.5n

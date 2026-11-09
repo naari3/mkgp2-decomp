@@ -1,0 +1,35 @@
+diff --git a/config/GNLJ82/splits.txt b/config/GNLJ82/splits.txt
+index 802ddde..a7cff6d 100644
+--- a/config/GNLJ82/splits.txt
++++ b/config/GNLJ82/splits.txt
+@@ -9127,15 +9127,10 @@ game/clFlowCup.c:
+ 	.text       start:0x801C7360 end:0x801C9288
+ 	.data       start:0x8049AD58 end:0x8049AE70
+ 
+-game/fn_801C9288.cpp:
+-	extab       start:0x8001457C end:0x800145E4
+-	extabindex  start:0x80027E30 end:0x80027E3C
+-	.text       start:0x801C9288 end:0x801C9C28
+-
+ game/clFlowRound.c:
+-	extab       start:0x800145E4 end:0x80014720
+-	extabindex  start:0x80027E3C end:0x80027E6C
+-	.text       start:0x801C9C28 end:0x801CB620
++	extab       start:0x8001457C end:0x80014720
++	extabindex  start:0x80027E30 end:0x80027E6C
++	.text       start:0x801C9288 end:0x801CB620
+ 	.rodata     start:0x8039B308 end:0x8039B3C8
+ 	.data       start:0x8049AE70 end:0x8049AFD0
+ 	.sdata      start:0x806CFDF0 end:0x806CFE08
+diff --git a/configure.py b/configure.py
+index 02da77a..3ae6435 100644
+--- a/configure.py
++++ b/configure.py
+@@ -2619,7 +2619,6 @@ config.libs = [
+             Object(Matching, "game/fn_801CE1EC.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on"]),
+             Object(Matching, "game/fn_801C5C34.cpp", extab_padding=b""),
+             Object(Matching, "game/CupTile_StateChange.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+-            Object(NonMatching, "game/fn_801C9288.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+             Object(Matching, "game/fn_801F6790.c"),
+             Object(Matching, "game/fn_801DC29C.cpp", extab_padding=b""),
+             Object(Matching, "game/dtor_801F6B44.cpp", extab_padding=b""),

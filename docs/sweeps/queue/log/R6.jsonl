@@ -1,0 +1,195 @@
+{"t": "2026-11-08T05:17:54.681261Z", "who": "R6", "op": "add", "id": "N469324", "text": "HSD_TExpSetReg | sysdolphin/baselib/texp_nm1 | 96.4 | li/addi entry order inside texp.c; out of TU the pool offsets fold (see gave_up)"}
+{"t": "2026-11-08T05:18:08.411717Z", "who": "R6", "op": "park", "id": "N469324", "note": "li/addi entry order; in-TU 99.6% but texp.c must link; see gave_up"}
+{"t": "2026-11-08T05:18:23.102653Z", "who": "R6", "op": "take", "id": "Q137"}
+{"t": "2026-11-08T05:19:43.564347Z", "who": "R6", "op": "park", "id": "Q137", "note": "R6 11-08: 16 HSD_LObjGetActiveBy*/GetNbActive combos, global-const vs literal light-vector forms, pragmasweep --set all + 150 decl: best is still regalloc + unfolded &ldir!=NULL"}
+{"t": "2026-11-08T05:19:59.638786Z", "who": "R6", "op": "take", "id": "Q207"}
+{"t": "2026-11-08T05:29:02.099148Z", "who": "R6", "op": "park", "id": "Q207", "note": "R6: merge WIP applied cleanly (6/9 100%); fn_801D1684/Update/Dtor all have same swap: 0xFFFFFF00 color const gets r0 in ours vs r4/r5 in target (rlwimi). Tried ~20 expr/decl/inline variants + pragmasweep (68->65, no fix). Landing as NonMatching would unlink 4 matched TUs, so not landed."}
+{"t": "2026-11-08T05:29:23.095892Z", "who": "R6", "op": "park", "id": "Q055", "note": "dup of Q207 (parked by R6, see gave_up clFlowCourse merge row)"}
+{"t": "2026-11-08T05:29:31.957250Z", "who": "R6", "op": "take", "id": "Q029"}
+{"t": "2026-11-08T05:33:29.422942Z", "who": "R6", "op": "park", "id": "Q029", "note": "R6: 17 lines left (GC/1.2.5n): target reuses ret's li r31,0 as the u64 hi-zero in the 64-bit mul and ends with mullw r0 + mr r4,r0 before __shr2u; ours has a separate li 0. ~20 variants (ret forms, u64 temps, RandRange forms, ret-as-min, hi-or tricks), pragmasweep --set all 48->46. Sibling fn_802867B8 also off by an adde schedule."}
+{"t": "2026-11-08T05:33:39.912914Z", "who": "R6", "op": "park", "id": "Q109", "note": "dup of Q207 clFlowCourse merge (R6 parked, gave_up row)"}
+{"t": "2026-11-08T05:33:41.490446Z", "who": "R6", "op": "take", "id": "Q164"}
+{"t": "2026-11-08T05:35:08.200465Z", "who": "R6", "op": "park", "id": "Q164", "note": "R6: now ~94% (comment in source); only FPR colouring + stack slot order left: target slots ab 0x50, cd 0x44, ac 0x38, bd 0x2c, fwd 0x20 while compute order stays ac,ab,cd,bd; cross product scheduled before out[] stores. Tried 24 mid decl perms, value vs ref temps, inline mids: base (128 diff lines) best."}
+{"t": "2026-11-08T05:35:20.364735Z", "who": "R6", "op": "take", "id": "Q144"}
+{"t": "2026-11-08T05:39:45.147584Z", "who": "R6", "op": "park", "id": "Q144", "note": "R6: pool already owned; only raw/sum colour swap left (target raw r29, sum r30). Local copy p for the sum loop fixes the prologue/loop (49->27 lines) but adds mr r5 and swaps i/expected in the signature loop; decl perms, loop forms, helper inline, separate j, pragmasweep --set all --decl: none match."}
+{"t": "2026-11-08T05:40:02.377070Z", "who": "R6", "op": "done", "id": "Q150", "note": "31d2770 (already landed by another thread)"}
+{"t": "2026-11-08T05:47:30.681740Z", "who": "R6", "op": "add", "id": "Nec90d7", "text": "__THPGetBit | thp/THPDec | 80.9 | R6 710d1d7: goto loop shape; left a dead loop-entry b and 2 sched swaps (scheduling off pragma fixes some)"}
+{"t": "2026-11-08T05:47:30.737011Z", "who": "R6", "op": "add", "id": "N37621b", "text": "__THPDecodeBlock | thp/THPDec | 92.1 | R6: GPR colouring only (target info r28 block r29 c*0x30 r31); decl sweep + pragmasweep best opt level 3 (no match)"}
+{"t": "2026-11-08T05:47:30.791508Z", "who": "R6", "op": "add", "id": "N7904fe", "text": "fn_80299D58 | thp/THPDec | 99.0 | R6: asm register vars; cc4 gets f31/bias f27 (target f27/f31) whatever the decl order (120 perms), ws/itmp0 r26/r24 swapped"}
+{"t": "2026-11-08T05:48:00.301675Z", "who": "R6", "op": "add", "id": "N41ceb8", "text": "fn_801F43F8 | game/NamCamFlow | 99.75 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:00.360789Z", "who": "R6", "op": "add", "id": "N950f1c", "text": "ClSound_InitSoundSystem | game/clsound/ClSound_InitSoundSystem | 99.53 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:00.424790Z", "who": "R6", "op": "add", "id": "N324658", "text": "PhysicsState_KartCollisionCheck | game/PhysicsState_KartCollisionCheck | 99.36 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:00.488112Z", "who": "R6", "op": "add", "id": "N8a448e", "text": "fn_80185630 | game/dlistutil/fn_80185630 | 98.95 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:00.551233Z", "who": "R6", "op": "add", "id": "Na59f4e", "text": "fn_8018F8A8 | game/objview/fn_8018F8A8 | 98.91 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:00.603607Z", "who": "R6", "op": "add", "id": "N73b855", "text": "fn_8018E6FC | game/objview/fn_8018E6FC | 98.89 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:00.658229Z", "who": "R6", "op": "add", "id": "N2e6a4f", "text": "AI_CalcVSTargetSpeed | game/AI_CalcVSTargetSpeed | 98.85 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:00.730479Z", "who": "R6", "op": "add", "id": "Ned0944", "text": "TextRenderer_DrawEntry | game/TextRenderer_DrawEntry | 98.85 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:00.786672Z", "who": "R6", "op": "add", "id": "N139eab", "text": "fn_80222968 | game/anon_8021F088_nm_80221C94_nm1_nm1 | 98.79 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:00.838512Z", "who": "R6", "op": "add", "id": "Na29cd0", "text": "fn_80227B98 | game/DNBress_nm3 | 98.78 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:00.892591Z", "who": "R6", "op": "add", "id": "N864b5e", "text": "fn_80240378 | game/JointTracks | 98.75 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:00.944213Z", "who": "R6", "op": "add", "id": "N38627e", "text": "TripleBladeRing_SetWorldYaw | game/TripleBladeRing_SetWorldYaw | 98.71 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:00.998386Z", "who": "R6", "op": "add", "id": "Nfd786e", "text": "fn_801661FC | game/Scene_801661FC | 98.71 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:01.055171Z", "who": "R6", "op": "add", "id": "N6e2d04", "text": "VoiceEvent_PushRace | game/sprite/VoiceEvent_PushRace | 98.67 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:01.108900Z", "who": "R6", "op": "add", "id": "Nd36a56", "text": "fn_801AECF4 | game/sprite/fn_801AECF4 | 98.64 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:01.159385Z", "who": "R6", "op": "add", "id": "N25bac6", "text": "fn_801893BC | game/nokonoko/fn_801893BC | 98.64 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:01.211257Z", "who": "R6", "op": "add", "id": "N665c65", "text": "fn_80164614 | game/Scene_80164614 | 98.63 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:01.264998Z", "who": "R6", "op": "add", "id": "N5f265a", "text": "fn_801E9E74 | game/fn_801E9E74 | 98.62 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:01.318964Z", "who": "R6", "op": "add", "id": "N4ba121", "text": "CalcEarnedCoins | game/anon_80216568 | 98.53 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:01.378541Z", "who": "R6", "op": "add", "id": "N8aaa3f", "text": "fn_801913B0 | game/clsound/fn_801913B0 | 98.47 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:01.433236Z", "who": "R6", "op": "add", "id": "N71aee4", "text": "Effect_DustBurst4_Update | game/EffectDustBurst4 | 98.43 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:01.488231Z", "who": "R6", "op": "add", "id": "N0630d3", "text": "Terrain_FindTriangleAtPosition | game/Terrain_FindTriangleAtPosition | 98.41 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:01.547808Z", "who": "R6", "op": "add", "id": "Nb2d720", "text": "fn_8017A68C | game/mapobject/fn_8017A68C | 98.40 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:01.602831Z", "who": "R6", "op": "add", "id": "Nf55765", "text": "KartPhysics_ApplyCollisionForce | game/KartPhysics_ApplyCollisionForce | 98.33 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:01.679686Z", "who": "R6", "op": "add", "id": "Nc8eead", "text": "fn_801F1AC8 | game/Menu801F0CC0 | 98.28 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:01.749755Z", "who": "R6", "op": "add", "id": "N861a34", "text": "fn_80236CDC | game/FlowCardCheck_nm1 | 98.22 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:01.812857Z", "who": "R6", "op": "add", "id": "N1d333c", "text": "AI_SystemDtor | game/AI_SystemDtor | 98.22 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:01.869782Z", "who": "R6", "op": "add", "id": "N913520", "text": "fn_80184928 | game/dlistutil/fn_80184928 | 98.19 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:01.932560Z", "who": "R6", "op": "add", "id": "N1f05c0", "text": "fn_801AC208 | game/sprite/fn_801AC208 | 98.18 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:01.994536Z", "who": "R6", "op": "add", "id": "Ncab780", "text": "fn_801F20A0 | game/Menu801F0CC0 | 98.15 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:02.048397Z", "who": "R6", "op": "add", "id": "Nf28a3e", "text": "fn_801A4F38 | game/sprite/fn_801A4F38 | 98.13 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:02.102134Z", "who": "R6", "op": "add", "id": "Nf8c5ef", "text": "fn_801B1D5C | game/fn_801B1D5C | 98.12 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:02.161320Z", "who": "R6", "op": "add", "id": "N580dd0", "text": "Terrain_WallEdgeTest | game/Terrain_WallEdgeTest | 98.09 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:02.221568Z", "who": "R6", "op": "add", "id": "N01c415", "text": "fn_801ED798 | game/fn_801ED798 | 97.94 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:02.276317Z", "who": "R6", "op": "add", "id": "N96fc34", "text": "fn_8023D2B8 | game/ItemAliasSpriteDraw | 97.93 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:02.332709Z", "who": "R6", "op": "add", "id": "N69e85d", "text": "fn_801681E8 | game/misc3d/fn_801681E8 | 97.88 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:02.391434Z", "who": "R6", "op": "add", "id": "Nd4cc93", "text": "fn_801A6538 | game/sprite/fn_801A6538 | 97.86 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:02.443796Z", "who": "R6", "op": "add", "id": "N6c03df", "text": "fn_80221104 | game/anon_8021F088_nm_80220A54_nm1 | 97.77 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:02.495027Z", "who": "R6", "op": "add", "id": "Ne43cc0", "text": "CardSaveData_Parser | game/CardSaveData_Parser | 97.76 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:02.545940Z", "who": "R6", "op": "add", "id": "Nda3599", "text": "fn_801F140C | game/Menu801F0CC0 | 97.76 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:02.598462Z", "who": "R6", "op": "add", "id": "N069e9c", "text": "fn_801826F8 | game/mobjclass/fn_801826F8 | 97.75 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:02.655037Z", "who": "R6", "op": "add", "id": "N17ab94", "text": "fn_80168B90 | game/misc3d/fn_80168B90 | 97.71 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:02.719503Z", "who": "R6", "op": "add", "id": "N364142", "text": "fn_801685A4 | game/misc3d/fn_801685A4 | 97.71 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:02.772929Z", "who": "R6", "op": "add", "id": "Nc9b01d", "text": "EffectVfx29_30_Item4SubFlame_Tick | game/EffectVfx29_30_Item4SubFlame_Tick | 97.69 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:02.830974Z", "who": "R6", "op": "add", "id": "N1b69c8", "text": "Terrain_GetGroundHeight | game/Terrain_GetGroundHeight | 97.69 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:02.883985Z", "who": "R6", "op": "add", "id": "Nb1f4ec", "text": "fn_80179F60 | game/mapeffect/mapeffect_nm1 | 97.69 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:02.936864Z", "who": "R6", "op": "add", "id": "N1d2c58", "text": "DoublyLinkedList_RemoveByKey | game/clItemBoxManager_nm1 | 97.65 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.002116Z", "who": "R6", "op": "add", "id": "N7b679f", "text": "fn_802895E4 | triforce/amcoin_nm1 | 97.61 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.067348Z", "who": "R6", "op": "add", "id": "Nf54222", "text": "PCBCheck_RecvLinkData | game/PCBCheckRecv | 97.57 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.128669Z", "who": "R6", "op": "add", "id": "Ncf08dd", "text": "fn_8019FA30 | game/sprite/fn_8019FA30 | 97.44 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.187300Z", "who": "R6", "op": "add", "id": "Ncefd14", "text": "AI_UpdatePerFrameState | game/AI_UpdatePerFrameState | 97.43 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.255357Z", "who": "R6", "op": "add", "id": "Nf7ad17", "text": "fn_80209C88 | game/anon_80209330_nm2 | 97.26 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.315813Z", "who": "R6", "op": "add", "id": "Na07383", "text": "fn_8022ACE4 | game/EnemyFace | 97.24 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.371735Z", "who": "R6", "op": "add", "id": "N2fdf8c", "text": "fn_80209AC4 | game/anon_80209330_nm2 | 97.20 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.428388Z", "who": "R6", "op": "add", "id": "Na85a7b", "text": "AI_DecideAndUseItem_PairTracking | game/AI_DecideAndUseItem_PairTracking | 97.17 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.485855Z", "who": "R6", "op": "add", "id": "N469c0d", "text": "fn_80170B5C | game/Scene_80170B5C | 97.10 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.545559Z", "who": "R6", "op": "add", "id": "N4a65b7", "text": "fn_801B4548 | game/fn_801B4548 | 96.82 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.599893Z", "who": "R6", "op": "add", "id": "Nff0a9c", "text": "fn_802351F4 | game/FlowCardCheck_nm1 | 96.79 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.655419Z", "who": "R6", "op": "add", "id": "N5dd53c", "text": "fn_801F1244 | game/Menu801F0CC0 | 96.54 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.705964Z", "who": "R6", "op": "add", "id": "N78c72f", "text": "fn_80282F54 | triforce/jvsio | 96.52 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.764652Z", "who": "R6", "op": "add", "id": "Nf48db0", "text": "PtrVec_InsertFill | game/SpecialFaceMesh_Raycast | 96.52 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.816639Z", "who": "R6", "op": "add", "id": "Ncae6c9", "text": "fn_801FCBCC | game/anon_801FC1E0_nm1 | 96.50 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.868015Z", "who": "R6", "op": "add", "id": "N67f960", "text": "KartMovement_PhysicsStep | game/kartmove/KartMovement_PhysicsStep | 96.43 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.923658Z", "who": "R6", "op": "add", "id": "Na81f70", "text": "fn_801FCD9C | game/anon_801FC1E0_nm1 | 96.34 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:03.975779Z", "who": "R6", "op": "add", "id": "N6b2938", "text": "fn_80236554 | game/FlowCardCheck_nm1 | 96.27 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.027722Z", "who": "R6", "op": "add", "id": "N2b5a2d", "text": "fn_801D286C | game/anon_801D286C | 96.25 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.083343Z", "who": "R6", "op": "add", "id": "N945253", "text": "fn_8028AAC0 | triforce/amjvs_nm3 | 96.15 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.135434Z", "who": "R6", "op": "add", "id": "N4f36cb", "text": "AI_CalcRivalAvoidance | game/AI_CalcRivalAvoidance | 96.13 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.201360Z", "who": "R6", "op": "add", "id": "N0a380c", "text": "fn_801F1664 | game/Menu801F0CC0 | 96.04 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.257628Z", "who": "R6", "op": "add", "id": "N30458b", "text": "Race_PerFrameTickAndAudio | game/RacePerFrame | 96.03 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.317330Z", "who": "R6", "op": "add", "id": "N2e1337", "text": "fn_801F19C8 | game/Menu801F0CC0 | 96.02 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.380415Z", "who": "R6", "op": "add", "id": "N99f091", "text": "Terrain_GetGroundHeightWithPenetration | game/Terrain_GetGroundHeight | 95.97 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.435785Z", "who": "R6", "op": "add", "id": "N6c9729", "text": "fn_802854B0 | triforce/jvsio | 95.92 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.491294Z", "who": "R6", "op": "add", "id": "N2eefd8", "text": "fn_8019F5BC | game/sprite/fn_8019F5BC | 95.77 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.550363Z", "who": "R6", "op": "add", "id": "Ndcffba", "text": "KartPhysics_GroundedMovement | game/KartPhysics_GroundedMovement | 95.73 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.606725Z", "who": "R6", "op": "add", "id": "N214e14", "text": "IsItemSelectAllowed | game/ItemSelectAllowed | 95.72 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.661045Z", "who": "R6", "op": "add", "id": "Ne04bd7", "text": "PCBComm_Init | game/PCBCommLifecycle | 95.68 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.712004Z", "who": "R6", "op": "add", "id": "Na82b52", "text": "NameCheck_ScanBannedWords | game/NameCheck_ScanBanned | 95.46 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.762272Z", "who": "R6", "op": "add", "id": "Na3cc97", "text": "SpecialFace_RaycastSegment | game/SpecialFaceMesh_Raycast | 95.43 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.813382Z", "who": "R6", "op": "add", "id": "N3b665c", "text": "fn_8023DCEC | game/ItemSelectChildSpriteDraw | 95.23 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.865497Z", "who": "R6", "op": "add", "id": "N1b2a9c", "text": "DoublyLinkedList_EraseRange | game/clItemBoxManager_nm1 | 95.23 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.920475Z", "who": "R6", "op": "add", "id": "N785cf7", "text": "fn_802386E0 | game/ItemSelectRefill | 94.82 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:04.979474Z", "who": "R6", "op": "add", "id": "Nffda4b", "text": "CourseData_LoadPathTable | game/CourseData_LoadPathTable | 94.76 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:05.221136Z", "who": "R6", "op": "add", "id": "N01c7ef", "text": "fn_80225C2C | game/anon_802253EC_nm1 | 94.65 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:05.351742Z", "who": "R6", "op": "add", "id": "Nc00d50", "text": "AI_CalcLapSpeedBonus | game/AI_CalcLapSpeedBonus | 94.53 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:05.404059Z", "who": "R6", "op": "add", "id": "Nd04cd7", "text": "fn_801A0004 | game/sprite/fn_801A0004 | 94.40 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:05.454679Z", "who": "R6", "op": "add", "id": "Nf1d8a8", "text": "fn_80209338 | game/anon_80209330_nm1 | 94.38 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:05.505522Z", "who": "R6", "op": "add", "id": "N38020f", "text": "fn_8019A9BC | game/kartmove/fn_8019A9BC | 94.16 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:05.560106Z", "who": "R6", "op": "add", "id": "N12852a", "text": "ItemEffectImpact_TryArmInit | game/ItemEffectImpact_TryArmInit | 93.90 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:05.615014Z", "who": "R6", "op": "add", "id": "Nfc9d46", "text": "fn_801B9928 | game/fn_801B9928 | 93.74 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:05.688446Z", "who": "R6", "op": "add", "id": "N50f3d1", "text": "DoublyLinkedList_PushBefore | game/clItemBoxManager_nm1 | 93.67 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:05.766882Z", "who": "R6", "op": "add", "id": "Nd733d5", "text": "CardCreate_Page | game/CardCreate_Page | 93.44 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:05.838182Z", "who": "R6", "op": "add", "id": "N5f65a1", "text": "fn_801F1C58 | game/Menu801F0CC0 | 93.30 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:05.897322Z", "who": "R6", "op": "add", "id": "N53b9e9", "text": "fn_80283154 | triforce/jvsio | 92.98 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:05.958459Z", "who": "R6", "op": "add", "id": "Na9d65b", "text": "fn_80235FA4 | game/FlowCardCheck_nm1 | 92.88 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:06.020160Z", "who": "R6", "op": "add", "id": "N534750", "text": "PtrVec_Reserve | game/SpecialFaceMesh_Raycast | 92.74 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:06.075255Z", "who": "R6", "op": "add", "id": "N827526", "text": "fn_801F6178 | game/MenuModeLane | 92.73 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:06.131547Z", "who": "R6", "op": "add", "id": "N6e553b", "text": "PCBComm_Process | game/PCBCommLifecycle | 92.49 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:06.185083Z", "who": "R6", "op": "add", "id": "Nbe28ec", "text": "SpecialFaceMesh_Raycast | game/SpecialFaceMesh_Raycast | 92.24 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:06.242204Z", "who": "R6", "op": "add", "id": "Nbdafff", "text": "fn_801C1964 | game/fn_801BAA88 | 92.22 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:06.302267Z", "who": "R6", "op": "add", "id": "Nf83532", "text": "PCBComm_ComputeSyncState | game/PCBCommCompute | 92.15 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:06.360613Z", "who": "R6", "op": "add", "id": "N3e70ed", "text": "fn_801B7EF8 | game/fn_801B7EF8 | 91.87 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:06.431437Z", "who": "R6", "op": "add", "id": "N76b772", "text": "fn_801E435C | game/fn_801DEF94 | 91.68 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:06.491567Z", "who": "R6", "op": "add", "id": "N00bf8d", "text": "fn_80229998 | game/DNStartDino | 91.34 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:06.558312Z", "who": "R6", "op": "add", "id": "N264a62", "text": "fn_8018B31C | game/bitread/fn_8018B31C | 91.26 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:06.619264Z", "who": "R6", "op": "add", "id": "Ndf399e", "text": "Sci2Card_BuildItemGetReceiptLine | game/Sci2Card_BuildItemGetReceiptLine | 91.11 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:06.680688Z", "who": "R6", "op": "add", "id": "N913e46", "text": "BackupReadRecord | triforce/ambackup_nm2 | 90.98 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:06.736019Z", "who": "R6", "op": "add", "id": "N3a25ee", "text": "fn_80238D9C | game/ItemSelectUpdate | 90.69 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:06.790740Z", "who": "R6", "op": "add", "id": "N5d36a5", "text": "fn_80282CDC | triforce/jvsio | 90.69 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:06.845459Z", "who": "R6", "op": "add", "id": "N397ff3", "text": "fn_80172948 | game/HomingMarkerUpdate | 90.68 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:06.899342Z", "who": "R6", "op": "add", "id": "N47843c", "text": "fn_801D92D0 | game/fn_801D92D0 | 90.39 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:06.965117Z", "who": "R6", "op": "add", "id": "N0b50cb", "text": "fn_801D8E28 | game/fn_801D8E28 | 90.10 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:07.024152Z", "who": "R6", "op": "add", "id": "Nf8494a", "text": "RaceFlow_ResetState_FullColdInit | game/RaceFlow_ResetState_FullColdInit | 90.00 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:07.077781Z", "who": "R6", "op": "add", "id": "N1326b6", "text": "ExplosionTumble_Init | game/ExplosionTumble_Init | 89.99 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:07.135354Z", "who": "R6", "op": "add", "id": "N6ad1b5", "text": "VoiceSystem_Init | game/VoiceSystem_Init | 89.32 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:07.190396Z", "who": "R6", "op": "add", "id": "Nac8a0e", "text": "KartMovement_CollisionUpdate | game/kartmove/KartMovement_CollisionUpdate | 88.15 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:07.243124Z", "who": "R6", "op": "add", "id": "N0218db", "text": "Sci2Card_BuildRetryReceiptLine | game/Sci2Card_BuildRetryReceiptLine | 87.84 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:07.295910Z", "who": "R6", "op": "add", "id": "Nff7f63", "text": "fn_8019C6B4 | game/kartmove/fn_8019C6B4 | 86.74 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:07.349378Z", "who": "R6", "op": "add", "id": "N65564b", "text": "fn_8022BFA8 | game/EnemyFaceDraw | 85.49 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:07.405887Z", "who": "R6", "op": "add", "id": "N812a75", "text": "card_force_backup_now | game/CardForceBackup | 84.16 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:07.461260Z", "who": "R6", "op": "add", "id": "Neaf8c5", "text": "fn_80293070 | triforce/acsocket_nm8 | 81.98 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:07.514632Z", "who": "R6", "op": "add", "id": "N8b6d7e", "text": "KartMovement_RotateByYaw | game/kartmove/KartMovement_RotateByYaw | 81.74 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:07.567385Z", "who": "R6", "op": "add", "id": "Nc46130", "text": "fn_801E1870 | game/fn_801DEF94 | 79.67 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:07.618908Z", "who": "R6", "op": "add", "id": "N75e07d", "text": "RankLog_InitStartRace | game/RankLog | 68.35 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:07.670356Z", "who": "R6", "op": "add", "id": "Nc4de76", "text": "PhysicsState_WallCollisionCheck | game/PhysicsState_WallCollisionCheck | 63.36 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:07.723401Z", "who": "R6", "op": "add", "id": "Nc9bd36", "text": "card_read_state_machine | auto_card_read_state_mach_text | 0.00 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:07.778117Z", "who": "R6", "op": "add", "id": "Ndd96bb", "text": "card_rw_state_machine | auto_card_rw_state_machin_text_1 | 0.00 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:07.837812Z", "who": "R6", "op": "add", "id": "N276ff6", "text": "card_rw_state_machine_short | auto_card_rw_state_machin_text | 0.00 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:48:07.889690Z", "who": "R6", "op": "add", "id": "N8a0f74", "text": "card_save_trigger | auto_card_save_trigger_text | 0.00 | unqueued near miss (R6 report sweep 11-08)"}
+{"t": "2026-11-08T05:49:56.292548Z", "who": "R6", "op": "park", "id": "N41ceb8", "note": "R6: only GPR colouring in the final quad (target x-hw in r30, y in r11; ours y in r29). Tried decl/type (int vs short) variants, precomputed corners, direct globals, pragmasweep --set all --decl 60: none."}
+{"t": "2026-11-08T05:50:13.033222Z", "who": "R6", "op": "take", "id": "Nc4de76"}
+{"t": "2026-11-08T05:52:09.442150Z", "who": "R6", "op": "park", "id": "Nc4de76", "note": "R6: target has no out-of-line ~PhysicsCollisionVec (use a trivial local vec type: fixes fn order, 442->430 insns); target corner loop reloads original.m[] from the stack each iteration (2 saved FPRs) while ours hoists them (10 FPRs), and *this=rotation is a word copy. pragmasweep best 778->564 metric, no match."}
+{"t": "2026-11-08T05:53:14.869958Z", "who": "R6", "op": "take", "id": "N5d36a5"}
+{"t": "2026-11-08T05:53:30.130664Z", "who": "R6", "op": "park", "id": "N5d36a5", "note": "R6: 4 lines: target materialises the PUT(0) zero early as li r8,0 and reuses r8 for v&0xFF; casts, byte locals, zero var, early return all fail. fn_80282F54 in same TU is GPR colouring only."}
+{"t": "2026-11-08T05:55:56.469112Z", "who": "R6", "op": "take", "id": "Na81f70"}
+{"t": "2026-11-08T05:56:11.713700Z", "who": "R6", "op": "park", "id": "Na81f70", "note": "R6: 3-line schedule only: target li r0,<state>; lwz lbl_806D19C8; stw subState; li r4,0 (ours lwz first, li r4 before stw). Tried state-store/duration orders, short temps, direct globals, pragmasweep (all versions 4)."}
+{"t": "2026-11-08T05:56:11.838237Z", "who": "R6", "op": "take", "id": "Ncae6c9"}
+{"t": "2026-11-08T05:56:27.154351Z", "who": "R6", "op": "park", "id": "Ncae6c9", "note": "R6: 3-line schedule only: target li r0,<state>; lwz lbl_806D19C8; stw subState; li r4,0 (ours lwz first, li r4 before stw). Tried state-store/duration orders, short temps, direct globals, pragmasweep (all versions 4)."}
+{"t": "2026-11-08T05:58:49.518080Z", "who": "R6", "op": "take", "id": "Nc8eead"}
+{"t": "2026-11-08T05:59:04.855027Z", "who": "R6", "op": "park", "id": "Nc8eead", "note": "R6: second range colour is li r0,-0x100 + or r30,r27,r0 in the target (rlwimi folded to or because v is the clrlwi'd copy); every C form gives rlwimi or oris/ori. pragmasweep none."}
+{"t": "2026-11-08T06:02:21.244929Z", "who": "R6", "op": "take", "id": "N324658"}
+{"t": "2026-11-08T06:02:36.513088Z", "who": "R6", "op": "park", "id": "N324658", "note": "R6: 4 real lines (rest are ctor/dtor symbol names): target 'immune' shares li r5,0 with the zero high mask of the u64 test and branches bne/b/li; ours separate li. A helper inline returning u8 gives the sharing but not the bne/b shape (15). ~15 condition forms tried."}
+{"t": "2026-11-08T06:05:00.163430Z", "who": "R6", "op": "take", "id": "N6ed4e9"}
+{"t": "2026-11-08T06:08:46.342539Z", "who": "R6", "op": "park", "id": "N6ed4e9", "note": "R6: .sdata2 806DA570..806DA600 is not first-use literal order (magic double 5A0 is first used by fn_801F43F8, the last fn, but sits before 5A8..5F8; arrays 570/578 first). .data 804E52C0..804E53B0 includes shared vtables/RTTI (804E533C used by ~25 TUs) and .sdata 806D0018..38 are RTTI objects, so owning needs the class layout. Not attempted further."}
+{"t": "2026-11-08T06:10:01.417612Z", "who": "R6", "op": "take", "id": "N6c9729"}
+{"t": "2026-11-08T06:10:16.856638Z", "who": "R6", "op": "park", "id": "N6c9729", "note": "R6: 4 lines: entry schedule of the &cmd.len/&tx.len address CSEs (target lhz;addi tx;lhz;addi cmd). Condition operand orders and temps worse; pragmasweep none."}
+{"t": "2026-11-08T06:15:04.451510Z", "who": "R6", "op": "take", "id": "Na59f4e"}
+{"t": "2026-11-08T06:15:19.755282Z", "who": "R6", "op": "park", "id": "Na59f4e", "note": "R6 87bd041: loop increments i,h,cur,sz fixed; left: mr r31,r27 (cur=n) is scheduled first in ours, after the two addi in the target (all init placements tried)."}
+{"t": "2026-11-08T06:15:47.630907Z", "who": "R6", "op": "done", "id": "Q189", "note": "already 100% on main (flipcheck)"}
+{"t": "2026-11-08T06:18:47.165997Z", "who": "R6", "op": "take", "id": "Q173"}
+{"t": "2026-11-08T06:24:07.756602Z", "who": "R6", "op": "park", "id": "Q173", "note": "R6 11-08: 12 lines. names should be a compiler temp (TU static anchor base+0xC); needs rodata merge. See gave_up + wip v2"}
+{"t": "2026-11-08T06:26:36.292129Z", "who": "R6", "op": "take", "id": "Q196"}
+{"t": "2026-11-08T06:32:28.513626Z", "who": "R6", "op": "park", "id": "Q196", "note": "R6 11-08: li r4 vs r0 still; many inline/C++ forms tried (see gave_up)"}
+{"t": "2026-11-08T06:52:59.716003Z", "who": "R6", "op": "done", "id": "Nc9bd36", "note": "7aedc14: split into asm TU (C still blocked by snapshot copy)"}
+{"t": "2026-11-08T06:52:59.791474Z", "who": "R6", "op": "done", "id": "Ndd96bb", "note": "7aedc14: split into asm TU (C still blocked by snapshot copy)"}
+{"t": "2026-11-08T06:52:59.868689Z", "who": "R6", "op": "done", "id": "N276ff6", "note": "7aedc14: split into asm TU (C still blocked by snapshot copy)"}
+{"t": "2026-11-08T06:52:59.943526Z", "who": "R6", "op": "done", "id": "N8a0f74", "note": "7aedc14: split into asm TU (C still blocked by snapshot copy)"}
+{"t": "2026-11-08T06:53:55.958438Z", "who": "R6", "op": "take", "id": "Q190"}
+{"t": "2026-11-08T06:57:18.486378Z", "who": "R6", "op": "park", "id": "Q190", "note": "R6 11-08: shape fixable but then course load scheduled early (9 lines); see gave_up"}
+{"t": "2026-11-08T07:00:10.534922Z", "who": "R6", "op": "done", "id": "Q095", "note": "already 100% on main (flipcheck)"}
+{"t": "2026-11-08T07:00:19.967641Z", "who": "R6", "op": "take", "id": "Q175"}
+{"t": "2026-11-08T07:02:59.278214Z", "who": "R6", "op": "done", "id": "Q175", "note": "d7c4990 asm->C matched (anchor-pointer begin trick)"}
+{"t": "2026-11-08T07:05:24.269231Z", "who": "R6", "op": "take", "id": "Q177"}
+{"t": "2026-11-08T07:05:39.538847Z", "who": "R6", "op": "park", "id": "Q177", "note": "R6 11-08: case 8 table needs .data pool ownership; forms/pragmas tried (gave_up)"}
+{"t": "2026-11-08T07:20:32.160800Z", "who": "R6", "op": "take", "id": "N363474"}
+{"t": "2026-11-08T07:22:49.861618Z", "who": "R6", "op": "done", "id": "N363474", "note": "47fb24a"}
+{"t": "2026-11-08T08:24:29.861885Z", "who": "R6", "op": "add", "id": "N4501ae", "text": "TornadoEffect_ComposeRenderMatrix (asm, 0xA84) | game/TornadoEffect | asm | R6 11-08: C draft (3 inlined 4x4 matmuls + identity + Z-rot + flag tests) at /mnt/project-files/wip/TornadoEffect_ComposeRenderMatrix_draft.inc, mcmp 550/673. Matmul needs ctr=2 serial f8 form (got it with s=a0*b0; s+=... j-loop) but a-row vs b register roles are swapped, the t index is strength-reduced (target (n+j)<<2), and _savegpr vs stmw. Tail (flags/sin/vec add) is nearly right"}
+{"t": "2026-11-08T08:38:17.256295Z", "who": "R6", "op": "park", "id": "Q118", "note": "R6 11-08: explicit Alloc(0x230)+TexMgr_Init(t) with decl order 'int col, row;' (inline helper) gets 9 mcmp lines (from 14); only the loop GPRs are left: row ptr r30/inner r29/t r26 vs target r26/r24/r29. Draft at /mnt/project-files/wip/ItemGridState_Init_alloc_draft.cpp; pragmasweep gave nothing"}
+{"t": "2026-11-08T10:00:57.622691Z", "who": "R6", "op": "add", "id": "N5c602e", "text": "TornadoEffect_ComposeRenderMatrix (asm, 0xA84) v7 | game/TornadoEffect | asm | R6 11-08: v7 draft at /mnt/project-files/wip/TornadoEffect_ComposeRenderMatrix_v7.inc is 251/673 in mcmp; matmuls, stmw and literals match. Left: target keeps &a in r30 so the nonvolatile registers shift by one, scale/identity interleaving, column+1 base, and the tail vec lfs/stack stores. Details in gave_up.md. Supersedes N4501ae."}
+{"t": "2026-11-08T10:00:57.688265Z", "who": "R6", "op": "done", "id": "N4501ae", "note": "superseded by v7 entry (251/673)"}
+{"t": "2026-11-08T10:01:32.614442Z", "who": "R6", "op": "take", "id": "N1f1846"}
+{"t": "2026-11-08T10:04:02.689159Z", "who": "R6", "op": "release", "id": "N1f1846", "note": "R6 switched back to ComposeRenderMatrix (§14)"}
+{"t": "2026-11-08T10:04:02.770602Z", "who": "R6", "op": "take", "id": "N5c602e"}
+{"t": "2026-11-08T10:06:31.339160Z", "who": "R6", "op": "park", "id": "N5c602e", "note": "R6 10:10: §14 applied (TEMtx *ap=&a for mul3 row, rp=&r for mul2 row) -> 203/673, wip/TornadoEffect_ComposeRenderMatrix_v8.inc. Left: target coalesces the inline row walker with the &r/&a pointer (we copy mr r7,r19 / mr r19,r30), r19=&r set before cos, scale/identity scheduling, tail vec lfs+stack stores"}
+{"t": "2026-11-08T10:16:53.498414Z", "who": "R6", "op": "take", "id": "N1f1846"}
+{"t": "2026-11-08T10:20:43.290614Z", "who": "R6", "op": "park", "id": "N1f1846", "note": "R6 10:30: pragmasweep --set all on get_title_name/DetermineTitle/TitleCheck = no gain. get_title_name: target hoists title*12 (mulli r28) before the inline TitleStr range check and keeps tbl r27 + off r28 (mr r0,r27; add r3,r0,r28); tried TitleStr(tbl,title), tbl+title, local e, explicit if-chain, single-return inline - none reproduce it. Others are pure reg-number shifts."}
+{"t": "2026-11-08T11:16:01.978323Z", "who": "R6", "op": "add", "id": "N1c60f2", "text": "fn_801F8728 (99.90% after fc25ed4) | game/fn_801F8728 | 99.90 | R6 11-08: opt_common_subs off (fc25ed4) fixes all but the w/h FPR coloring; with fabs(h) before fabs(w) in DrawQuad8728MatchPrivate.h the w/h load order matches too (99.78, only frsp f5/f6 swapped). Decl order, h/w statement order, float temps: no change. Try opt_common_subs off on fn_801F8404 too."}

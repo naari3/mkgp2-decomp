@@ -1,0 +1,70 @@
+R5 (08:40Z) working: result_screen_update (resultscene)
+asm-A (08:41Z) working: PCBCheck_ProcessLinks (game/PCBCheckProcess)
+R5 (08:50Z) working: misc3d fn_801681E8/fn_80168B90/fn_801685A4 (color pack); result_screen_update no gain
+mid (08:58Z) dropped ClRomTable_PurgeAll (>=97% band belongs to others)
+mid (09:00Z) working: 90-97% band; fn_8020A6CC (anon_80209FA4_nm2)
+mid (09:12Z) fn_8020A6CC no gain (best 11 lines: value=from; value+=...). now triforce/random_nm1 fn_802867B8/fn_80286864
+R1 (08:47Z) working: fn_801D1890 (game/fn_801D1890), then >=97% list in 0x80180000..0x80200000 top-down
+R5 LANDED d2ec3b9: fn_801681E8, fn_801685A4, fn_80168B90 (misc3d, PackColor u8 inline)
+R1 (08:49Z) fn_801D1890: 6->4 lines (only ret-temp stack slots 8/16 swapped), no match; draft notes/r1/fn_801D1890_4lines.diff. next fn_801D7610
+R2 f0c51ac] game/clFlowCourse.cpp (#2778): GC/2.6 + natural colour -> fn_801D1684 98.21->99.16
+[R2 f0c51ac] game/clFlowCourse_Update.cpp (#2756): GC/2.6 + natural colour -> 99.67->99.78
+[R2] tried, not landed: fn_8023A148 GC/2.6 99.79->99.72; ItemSelectChoiceUpdate, GpPleaseInit, Menu801F0CC0: no change on GC/2.6
+R1 (08:49Z) fn_801D7610: 2-line epilogue order (lwz r0 between r31/r30), compilers/pragmas/tail perms no gain. next objview/fn_8018DAD0
+asm-A (08:58Z) LANDED 3b48c8fc: Effect_CompoundRing_PlaceChildren (game/EffectCompoundRing, onmoko #2857) -> TU Matching
+R1 (08:50Z) fn_8018DAD0: loop offset reg r26 vs r30 in inlined UpdateParticles; decl/inline/pragma variants no gain
+mid (08:58Z) LANDED 57a92b8: DoublyLinkedList_EraseRange (game/clItemBoxManager_nm1, onmoko #2963) via GC/2.0
+[R2] NamCamFlow (#2814): GC/2.6 + natural colour no change, not landed
+mid (09:03Z) working: fn_80204218 SceneListImpl::Draw (anon_80203EA0_nm2)
+2026-11-08T08:52:50Z autopipe4 triforce/amcoin_nm1 fn_802895E4 97.6->98.4 (not matched) 20ba94c
+asm-A (08:53Z) partial (not landed): Sci2Card_Tick 25->11 diff lines via case-1 local p copy; patch wip/asm-a/sci2card_tick_11line.patch. Left: ENQ data->p copy (mr r30,r3) and checksum loop count copy. Tried/no gain: PCBCheck_ProcessLinks (cperm), Terrain_FindTriangleAtPosition (opt_loop_invariants off fixes struct but regs worse), SpecialFaceMesh_Dtor, CardData_InitDefaults (pragmasweep)
+mid (08:57Z) fn_80204218 no gain (stack temp 0x10 chain; tried RemoveTask ref/value/result/next variants, optlevel)
+mid (08:59Z) working: acBind (triforce/acsocket_nm5)
+R1 (08:55Z) LANDED fdae2b8 (push ff8fbff): CollisionFile_Load (game/CollisionFile_Load) -> TU Matching (separate index in CountCollisionTypes loop)
+mid (08:56Z) acBind 3 lines left (+0 copy addi r24,r5,0); now acConnect (acsocket_nm4)
+mid (09:00Z) acConnect same +0-copy wall as acBind (also tried GC 1.2.5n/2.0p1/2.5/3.0a*). now SpriteGroup_CreateOrInit
+2026-11-08T08:57:08Z R4 0c823a7 KartMovement_CollisionUpdate (#2908 TU) 88.1->95.4% EnemyRun matmul form; still NonMatching
+mid (09:03Z) working: SpriteGroup_CreateOrInit (SpriteGroupCreate)
+2026-11-08T08:57:52Z autopipe4 triforce/ambackup_nm2 BackupReadRecord 91.0->97.4 (not matched) 4a65614
+mid (09:08Z) SpriteGroup_CreateOrInit no gain (lwz *resource vs stw sprite=0 scheduling; int/int*/restrict ctor variants)
+mid (08:59Z) working: fn_80292D18 (triforce/acsocket_nm7)
+mid (09:00Z) fn_80292D18 no gain; working: fn_801FCBCC/fn_801FCD9C (anon_801FC1E0_nm1)
+2026-11-08T09:01Z R6 f25ea3e game/anon_8020314C_nm2.cpp fn_80203C24: 98.85% -> 99.73% (push/pop opt_common_subs off around the fn; still not 100%: r5/r6 swap between &lbl_806D0250 and OpenMsgPopup's bool)
+asm-A (09:05Z) improved (not matched) 11c25db6: Terrain_WallEdgeTest 98.09->99.42 (loop index 1+k+index); left: prologue seg-copy volatile regs (cperm 7min none)
+asm-A (09:11Z) improved (not matched) 4b68bf21: PCBCheck_RecvLinkData 97.57->98.30 (local sample via slot layout); left: +0x2c not folded in target (addi r27 base+0x204 then +0x2c)
+mid (09:13Z) LANDED 5b9855e: fn_801FCBCC, fn_801FCD9C (game/anon_801FC1E0_nm1, onmoko) via const view of lbl_806D19C8 (fakematch; TU all 100 but Matching flip fails link)
+asm-A (09:22Z): EffectVfx29_30_Item4SubFlame_Tick / KartFx_BoostExhaustRayTick: same unfolded-pointer pattern, no fix (see TIPS 'Open pattern'); ItemObject_Tick_Kind2d: reg alloc only
+2026-11-08T09:13Z R6 af1dd52 game/anon_80209330_nm2.cpp fn_80209AC4 97.20% -> 99.65% (push/pop opt_common_subs off + opt_propagation off)
+2026-11-08T09:13Z R6 af1dd52 game/EnemyFace.cpp fn_8022ACE4 97.24% -> 98.58% (push/pop opt_lifetimes off)
+2026-11-08T09:13Z R6 af1dd52 game/FlowCardCheck_nm1.cpp fn_80236CDC 98.26% -> 98.56% (push/pop opt_lifetimes off)
+mid (09:14Z) working: RankLog_OnMatchEnd (game/RankLog)
+2026-11-08T09:17Z R6 2c4ee41 game/anon_80209330_nm2.cpp fn_80209AC4 -> 100% (cc += b >= 4 ? 1 : 0; switch (cc), on top of af1dd52's pragmas)
+mid (09:17Z) LANDED: RankLog_OnMatchEnd (game/RankLog, onmoko #2898) via __restrict a/b + g_matchCount++ first
+mid (09:18Z) working: fn_802554DC (game/acLib)
+mid (09:18Z) fn_802554DC no gain (struct copy stwu vs addi base); working fn_802854B0 (triforce/jvsio)
+R1 (09:19Z) no gain (permuter 7min each + hand variants): fn_801934F4, fn_8018F8A8, fn_801C64DC, fn_801E96BC, fn_801AC208, RankingMgr_UpdatePositions
+mid (09:19Z) fn_801F6178 no gain (li rN vs lwz arg scheduling; compilers 1.3..2.7 no help)
+mid (09:19Z) fn_801F1664: rodata anchor/pool diff (needs TU merge, skip)
+mid (09:19Z) working: fn_80282CDC (triforce/jvsio)
+[autopipe2 / thread "Run autopipe shard 2"] 08:40-09:30Z: LANDED NOTHING.
+- Scope: onmokoworks-claimed TUs < 0x80180000 (TUs touched by onmokoworks in last 30 min skipped). No inline-asm functions exist there, so swept the 82 near-miss fns with pragmasweep --objdiff --set all --k 2: 0 matches.
+- Best pragma gains (not matches): CourseScene_Load opt_dead_assignments off 99.00->99.84 (left: zone offset r26 vs object walker r28 swap; decl order no effect); TaMode_FrameUpdate opt_propagation off; PCBCheck_RecvLinkData opt_propagation+opt_lifetimes off; TaMode_Init opt_common_subs+opt_propagation off.
+- Hand tries without success: PCBCheck_ProcessLinks (99.96, base/slot r27/r28 swap), LakituStart_UpdateCountdown (99.95, dir.x/dir.y f27/f28 swap).
+R1 (09:21Z) LANDED 42b56e7 (push 2a9e3bd): AI_CalcGPTargetSpeed (game/AI_CalcGPTargetSpeed) -> TU Matching (cup/round assigned inside the GetBaseSpeedMax call args)
+mid (09:22Z) LANDED: fn_80282CDC (triforce/jvsio, onmoko #2832) via PUT((v>>n) & 0xFF)
+mid (09:23Z) working: fn_802854B0 (triforce/jvsio)
+mid (09:23Z) fn_802854B0: only addi order of &cmd.len/&tx.len left (6 lines), left for R6 sweep (>=95); now DoublyLinkedList_PushBefore
+mid (09:23Z) PushBefore: n/p reg swap + stw r1 EH placement, decl order no effect; now fn_80292AD8 (acsocket_nm6)
+mid (09:24Z) fn_80292AD8 same reassoc wall as nm7; working fn_8028CB64 (triforce/amnet_nm3)
+R1 (09:24Z) no gain: fn_801E9CBC/AI_PerKartUpdate (ItemList regs), fn_801A7D0C (8 lines best via local entry ptr; target keeps separate addi +64), fn_801F894C (needs TU to own lbl_803BEDC0 pool)
+R1 (09:25Z) fn_80187410 CyclicPoint mulli reg (16 lines) no gain. R1 stops takeover; total landed 2 (CollisionFile_Load, AI_CalcGPTargetSpeed)
+R1 (09:26Z) PhysicsState_KartCollisionCheck: immune-flag 'bne;b;li 1' shape, 14 variants no gain
+2026-11-08 09:26Z gaveup-retry: clsound #2924 fn_801913B0 19-TU merge tried, NOT landed (99.46%, 1 reg swap). WIP docs/wip/clsound_merge/README_v2.txt
+2026-11-08T09:33:57Z R4 303ba85 fn_801934F4 (clsound) MATCHED by dropping #pragma peephole off; TU -> Matching
+mid (09:34Z) STOPPED touching onmoko TUs. Landed this window: DoublyLinkedList_EraseRange, fn_801FCBCC, fn_801FCD9C, RankLog_OnMatchEnd, fn_80282CDC (5 fns). Attempts logged in docs/gave_up.md (944c711)
+2026-11-08T09:2xZ R4 d791d7c resultscene.cpp (#2764 TU) fn_8015CD74 99.38->99.58 (opt_common_subs off around fn); still NonMatching
+2026-11-08T09:49Z R6 NOT LANDED (window closing), pragmasweep --objdiff --set all wins for onmokoworks to apply (best sources in docs/wip/onmoko_pragma_hints/):
+  game/clFlowCourse_Update.cpp clFlowCourse_Update: score 25 -> 12 with push/pop opt_dead_assignments off around the fn
+  game/TaMode_FrameUpdate.cpp TaMode_FrameUpdate: 66 -> 51 with opt_propagation off
+  game/resultscene/resultscene.cpp fn_8015CD74: 65 -> 45 with opt_common_subs off
+  Swept 61 of the 164 onmoko-TU near-misses >=95% (highest % first); the other 58 had no pragma gain.

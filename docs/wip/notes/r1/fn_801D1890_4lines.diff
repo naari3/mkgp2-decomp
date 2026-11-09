@@ -1,0 +1,11 @@
+--- a/src/game/fn_801D1890.cpp	2026-11-08 08:47:35.903196282 +0000
++++ b/src/game/fn_801D1890.cpp	2026-11-08 08:47:54.987526323 +0000
+@@ -94,7 +94,7 @@
+             self->timer = 0;
+             RankingAnim *fade = new RankingFade;
+             RankingStartFade(fade);
+-            RankingInsertFade(&self->list, RankingFlowIter(end), fade);
++            DoublyLinkedList_PushBefore(&self->list, &RankingFlowIter(end), &fade);
+         }
+         if (self->phase == 1) {
+             if ((float)self->timer > lbl_806D9FB4) {

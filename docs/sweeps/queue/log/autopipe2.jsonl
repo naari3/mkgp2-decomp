@@ -1,0 +1,57 @@
+{"t": "2026-11-08T06:05:00.610021Z", "who": "autopipe2", "op": "take", "id": "Q200"}
+{"t": "2026-11-08T06:11:40.990710Z", "who": "autopipe2", "op": "park", "id": "Q200", "note": "autopipe: pragma/decl best 27 (base 27, GC/1.3.2 -), perm best 16"}
+{"t": "2026-11-08T06:11:46.779814Z", "who": "autopipe2", "op": "add", "id": "N46e452", "text": "fn_801C64DC | game/clFlowFigure_Unlocks | 99.94 | autopipe"}
+{"t": "2026-11-08T06:11:46.780653Z", "who": "autopipe2", "op": "take", "id": "N46e452"}
+{"t": "2026-11-08T06:18:06.974516Z", "who": "autopipe2", "op": "park", "id": "N46e452", "note": "autopipe: pragma/decl best 6 (base 6, GC/1.3.2 -), perm best 2"}
+{"t": "2026-11-08T06:19:58.004990Z", "who": "autopipe2", "op": "add", "id": "Nfa594f", "text": "fn_801F7604 | game/fn_801F7604 | 99.93 | autopipe"}
+{"t": "2026-11-08T06:19:58.005745Z", "who": "autopipe2", "op": "take", "id": "Nfa594f"}
+{"t": "2026-11-08T06:23:54.044538Z", "who": "autopipe2", "op": "release", "id": "Nfa594f", "note": ""}
+{"t": "2026-11-08T06:24:02.601071Z", "who": "autopipe2", "op": "take", "id": "Nfa594f"}
+{"t": "2026-11-08T06:30:44.862677Z", "who": "autopipe2", "op": "park", "id": "Nfa594f", "note": "autopipe: pragma/decl best 25 (base 25, GC/2.6 -), perm best 4"}
+{"t": "2026-11-08T06:30:50.943833Z", "who": "autopipe2", "op": "take", "id": "Na4d605"}
+{"t": "2026-11-08T06:37:11.750247Z", "who": "autopipe2", "op": "park", "id": "Na4d605", "note": "autopipe: pragma/decl best 8 (base 8, GC/1.3.2 -), perm best 10"}
+{"t": "2026-11-08T06:37:16.006087Z", "who": "autopipe2", "op": "take", "id": "Q074"}
+{"t": "2026-11-08T06:43:39.856406Z", "who": "autopipe2", "op": "park", "id": "Q074", "note": "autopipe: pragma/decl best 12 (base 12, GC/1.3.2 -), perm best 7"}
+{"t": "2026-11-08T06:43:44.179449Z", "who": "autopipe2", "op": "take", "id": "Q081"}
+{"t": "2026-11-08T06:50:24.161984Z", "who": "autopipe2", "op": "park", "id": "Q081", "note": "autopipe: pragma/decl best 15 (base 15, GC/1.3.2 -), perm best 10"}
+{"t": "2026-11-08T06:51:53.192716Z", "who": "autopipe2", "op": "take", "id": "Q021"}
+{"t": "2026-11-08T06:58:30.467760Z", "who": "autopipe2", "op": "park", "id": "Q021", "note": "autopipe: pragma/decl best 18 (base 18, GC/1.3.2 -), perm best 6"}
+{"t": "2026-11-08T07:00:03.705553Z", "who": "autopipe2", "op": "add", "id": "Nf91650", "text": "fn_8022D9E4 | game/EnmyFaceEffect_nm1 | 99.81 | autopipe"}
+{"t": "2026-11-08T07:00:03.706257Z", "who": "autopipe2", "op": "take", "id": "Nf91650"}
+{"t": "2026-11-08T07:07:12.236821Z", "who": "autopipe2", "op": "park", "id": "Nf91650", "note": "autopipe: pragma/decl best 41 (base 41, GC/2.6 -), perm best 18"}
+{"t": "2026-11-08T07:08:49.156084Z", "who": "autopipe2", "op": "take", "id": "N81153d"}
+{"t": "2026-11-08T07:16:32.994475Z", "who": "autopipe2", "op": "park", "id": "N81153d", "note": "autopipe: pragma/decl best 25 (base 25, GC/2.6 -), perm best 3"}
+{"t": "2026-11-08T07:18:07.117370Z", "who": "autopipe2", "op": "add", "id": "N2fcc1c", "text": "AI_PerKartUpdate | game/AI_PerKartUpdate | 99.80 | autopipe"}
+{"t": "2026-11-08T07:18:07.118424Z", "who": "autopipe2", "op": "take", "id": "N2fcc1c"}
+{"t": "2026-11-08T07:24:26.406584Z", "who": "autopipe2", "op": "park", "id": "N2fcc1c", "note": "autopipe: pragma/decl best 20 (base 20, GC/1.3.2 -), perm best 3"}
+{"t": "2026-11-08T07:26:06.053757Z", "who": "autopipe2", "op": "add", "id": "N85f6b9", "text": "fn_801F43F8 | game/NamCamFlow | 99.75 | autopipe"}
+{"t": "2026-11-08T07:26:06.054679Z", "who": "autopipe2", "op": "take", "id": "N85f6b9"}
+{"t": "2026-11-08T07:33:12.982030Z", "who": "autopipe2", "op": "park", "id": "N85f6b9", "note": "autopipe: pragma/decl best 38 (base 38, GC/1.3.2 -), perm best 12"}
+{"t": "2026-11-08T07:34:51.536078Z", "who": "autopipe2", "op": "add", "id": "Ndaa7d7", "text": "fn_8017F538 | game/miyazakiconsole/fn_8017F538 | 99.89 | autopipe"}
+{"t": "2026-11-08T07:34:51.536907Z", "who": "autopipe2", "op": "take", "id": "Ndaa7d7"}
+{"t": "2026-11-08T07:41:31.206489Z", "who": "autopipe2", "op": "park", "id": "Ndaa7d7", "note": "autopipe: pragma/decl best 11 (base 11, GC/1.3.2 -), perm best 7"}
+{"t": "2026-11-08T07:43:09.239796Z", "who": "autopipe2", "op": "take", "id": "Q205"}
+{"t": "2026-11-08T07:50:01.957353Z", "who": "autopipe2", "op": "park", "id": "Q205", "note": "autopipe: pragma/decl best 30 (base 30, GC/1.3.2 -), perm best 16"}
+{"t": "2026-11-08T07:50:06.050587Z", "who": "autopipe2", "op": "add", "id": "Nd4bb6c", "text": "FlashFadeOverlay_Draw | game/FlashFadeOverlay_Draw | 99.65 | autopipe"}
+{"t": "2026-11-08T07:50:06.051739Z", "who": "autopipe2", "op": "take", "id": "Nd4bb6c"}
+{"t": "2026-11-08T07:56:33.304325Z", "who": "autopipe2", "op": "park", "id": "Nd4bb6c", "note": "autopipe: pragma/decl best 35 (base 35, GC/1.3.2 -), perm best 12"}
+{"t": "2026-11-08T07:56:39.511012Z", "who": "autopipe2", "op": "add", "id": "N0e2fcd", "text": "fn_801A7D0C | game/sprite/fn_801A7D0C | 99.63 | autopipe"}
+{"t": "2026-11-08T07:56:39.511689Z", "who": "autopipe2", "op": "take", "id": "N0e2fcd"}
+{"t": "2026-11-08T07:59:51.692886Z", "who": "autopipe2", "op": "release", "id": "N0e2fcd", "note": ""}
+{"t": "2026-11-08T08:38:38.855041Z", "who": "autopipe2", "op": "add", "id": "N0c574f", "text": "fn_8013AE20 (csAnim per-frame key anim) | game/csAnim | 92.5 | asm->C draft /mnt/project-files/wip/csanim/csAnim_fn_8013AE20_92.5.c (autopipe2 11-08): control flow + prologue (f25-f31) match; left = FPR alloc/scheduling in case-4 color pack and the interp (lerp) block. Needs locals for lerps + visible=1 after them; statement order sweeps only 88->92.5"}
+{"t": "2026-11-08T09:31:33.597454Z", "who": "autopipe2", "op": "add", "id": "N3a595d", "text": "Bitset_Init, KartItem_Dtor, CarObject_MainUpdate/Init/HandleItemEffect | game/auto_ONKARTHIT_block | asm | asm->C (autopipe2 11-08)"}
+{"t": "2026-11-08T09:31:39.567902Z", "who": "autopipe2", "op": "take", "id": "N3a595d"}
+{"t": "2026-11-08T09:58:01.559469Z", "who": "autopipe2", "op": "park", "id": "N3a595d", "note": "autopipe2 11-08: Bitset_Init C++ (std::length_error throw, renames like Scene_8016219C) 98.6%, only r11/r12 swap fill vs loop offset (wip/onkarthit_ap2/Bitset_Init_98.6.diff; pragma/decl/10k cperm no gain). KartItem_ApplyImpactImpulseAndRumble 92.9% (wip/onkarthit_ap2/ApplyImpactImpulseAndRumble_92.9.diff): 16-float loop copy of transform gives the frsp, ImpVec objects d/r/w at 0x2c/0x20/0x14 give the frame; left = second dot not fused + flags r4/r5 + FPR numbering. KartItem_Dtor/CarObject_Init need full C++ member-auto_ptr class model (16 weak dtors 0x80052744..D40 + big extab), not started."}
+{"t": "2026-11-08T10:01:47.882829Z", "who": "autopipe2", "op": "add", "id": "N53b0ee", "text": "KartItem_Dtor + CarObject_Init C++ class rebuild (native EH) | game/auto_ONKARTHIT_block | asm | asm->C (autopipe2 11-08)"}
+{"t": "2026-11-08T10:01:51.652130Z", "who": "autopipe2", "op": "take", "id": "N53b0ee"}
+{"t": "2026-11-08T10:28:11.514885Z", "who": "autopipe2", "op": "park", "id": "N53b0ee", "note": "autopipe2 11-08: KartItem_Dtor landed 8c7b244. CarObject_Init native C++ ctor at 99.4% (wip/onkarthit_ap2/CarObject_Init_99.4.diff incl. renames json): class CarObject : CarResponder, CarWarpResponder with virtuals (vtable __vt__9CarObject -> lbl_803F75F8, not emitted), Holder members from tagged new, CarList singleton base ctor sets g_carObjectList. Left = 3 scheduler-order spots (tornado arg li r4/lfs f2, fade arg r6 first, blend4c inline-ctor arg regs). Tried get()/.p, literals, param types, pragmas: no change."}
+{"t": "2026-11-08T10:30:01.003777Z", "who": "autopipe2", "op": "take", "id": "N665c65"}
+{"t": "2026-11-08T11:00:16.362552Z", "who": "autopipe2", "op": "done", "id": "N665c65", "note": "5b467cc"}
+{"t": "2026-11-08T11:00:44.268213Z", "who": "autopipe2", "op": "take", "id": "Na29cd0"}
+{"t": "2026-11-08T11:02:04.631724Z", "who": "autopipe2", "op": "park", "id": "Na29cd0", "note": "autopipe2 11-08: only prologue lis order (vtable/data/strings) + r26/r27 swap strings-base vs new temp. Local decl orders, no-local macro: no gain."}
+{"t": "2026-11-08T11:02:13.703454Z", "who": "autopipe2", "op": "take", "id": "Nd36a56"}
+{"t": "2026-11-08T11:22:16.408882Z", "who": "autopipe2", "op": "park", "id": "Nd36a56", "note": "autopipe2 11-08: Goal_Line index: target folds tables+0x4c6 into its own base early and does cc*512 + idx*4 after; loads rev,cup,long first. 2D/3D array forms 98.4-98.66; 18-min cperm 137->127 score. Second diff near +0x4f0 (lwz 8/12(r30) order)."}
+{"t": "2026-11-08T11:22:16.492111Z", "who": "autopipe2", "op": "take", "id": "N52fbe0"}
+{"t": "2026-11-08T11:23:58.735804Z", "who": "autopipe2", "op": "park", "id": "N52fbe0", "note": "autopipe2 11-08: target slots conv1@24 fctiwzA@32 conv2@40 fctiwzB@48 final@48 (no reuse); comma expr, uchar locals, FadeAlpha inline, separate clamp floats, double 255.0: none."}
+{"t": "2026-11-08T11:23:58.827066Z", "who": "autopipe2", "op": "take", "id": "N0e2fcd"}
+{"t": "2026-11-08T11:43:23.332477Z", "who": "autopipe2", "op": "park", "id": "N0e2fcd", "note": "autopipe2 11-08 wind-down: see gave_up.md (fn_801A7D0C row)"}

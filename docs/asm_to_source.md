@@ -47,7 +47,7 @@ whole function stays readable.
 - `tools/patterns/evidence.jsonl`: functions each rule fixed. Generated
   (`import-evidence`) from the rules plus the onmokoworks Codex table in
   [regalloc_patterns.md](regalloc_patterns.md); re-run when the table grows.
-- `/mnt/project-files/setup/patterns/hits.jsonl` (shared, append-only): every
+- `tools/patterns/hits.jsonl` (shared, append-only): every
   application of a rule with outcome attempt / improved / match / landed.
   shapesweep's batch mode and autopipe append automatically, regfix appends
   its own, and anything else can call

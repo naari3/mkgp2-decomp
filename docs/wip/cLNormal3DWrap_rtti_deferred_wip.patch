@@ -1,0 +1,44 @@
+diff --git a/config/GNLJ82/splits.txt b/config/GNLJ82/splits.txt
+index f773618..4c9dd4e 100644
+--- a/config/GNLJ82/splits.txt
++++ b/config/GNLJ82/splits.txt
+@@ -2504,6 +2504,9 @@ game/cLNormal3DWrap.cpp:
+ 	extab       start:0x80008F34 end:0x80008FE4
+ 	extabindex  start:0x80021A64 end:0x80021ADC
+ 	.text       start:0x80088C84 end:0x80089834
++	.rodata     start:0x80312810 end:0x80312850
++	.data       start:0x803FE458 end:0x803FE480
++	.sdata      start:0x806CEFD0 end:0x806CEFE0
+ 
+ game/AssocTree_FreeAll.c:
+ 	extab       start:0x80008FE4 end:0x80008FEC
+diff --git a/configure.py b/configure.py
+index af2872a..cb9d3bb 100644
+--- a/configure.py
++++ b/configure.py
+@@ -2212,7 +2212,7 @@ config.libs = [
+             Object(Matching, "game/EffectSpeedAction_MueScale_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),
+             Object(Matching, "game/clNormal3D_Construct.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+             Object(Matching, "game/cLNormal3DWrap_Mgr_GetPeakActiveCount.c"),
+-            Object(NonMatching, "game/cLNormal3DWrap.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
++            Object(Matching, "game/cLNormal3DWrap.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-inline noauto,deferred"]),
+             Object(Matching, "game/FreeMediaBuffers.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
+             # Phase 3a-small: 11-fn dtk reversed-extab group bundle (no extab
+             # entries, just .text). All 11 fns initially asm_fn; promote to
+diff --git a/tools/extab_user_renames.json b/tools/extab_user_renames.json
+index 7c439a6..71873d3 100644
+--- a/tools/extab_user_renames.json
++++ b/tools/extab_user_renames.json
+@@ -3804,7 +3804,11 @@
+     "__dt__10clNormal3DFv": "Object_DtorWithGXSync",
+     "__dt__31clNodeManager<Pc,P10clNormal3D>Fv": "dtor_800897B8",
+     "__nwa__FUl": "FUN_8003b120",
+-    "__dla__FPv": "MemoryManager_Free"
++    "__dla__FPv": "MemoryManager_Free",
++    "__vt__21clNormal3DNodeManager": "lbl_803FE464",
++    "__vt__31clNodeManager<Pc,P10clNormal3D>": "lbl_803FE470",
++    "__RTTI__21clNormal3DNodeManager": "lbl_806CEFD8",
++    "__RTTI__31clNodeManager<Pc,P10clNormal3D>": "lbl_806CEFD0"
+   },
+   "src/game/ContinueScene.cpp": {
+     "__ct__11CoinCounterFi": "fn_8024E2A4",

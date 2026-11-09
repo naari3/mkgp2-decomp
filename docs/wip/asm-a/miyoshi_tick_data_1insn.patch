@@ -1,0 +1,386 @@
+diff --git a/config/GNLJ82/splits.txt b/config/GNLJ82/splits.txt
+index 9e3f610f..010ec2e1 100644
+--- a/config/GNLJ82/splits.txt
++++ b/config/GNLJ82/splits.txt
+@@ -1576,6 +1576,7 @@ game/clMiyoshiCardCreate.c:
+ 	extab       start:0x80007E10 end:0x80007E74
+ 	extabindex  start:0x80020DBC end:0x80020DEC
+ 	.text       start:0x80061054 end:0x8006178C
++	.data       start:0x803F9E18 end:0x803F9F2C
+ 
+ game/dtor_8006178C.c:
+ 	extab       start:0x80007E74 end:0x80007E84
+diff --git a/src/game/clMiyoshiCardCreate.c b/src/game/clMiyoshiCardCreate.c
+index 0ae53a19..d45b9402 100644
+--- a/src/game/clMiyoshiCardCreate.c
++++ b/src/game/clMiyoshiCardCreate.c
+@@ -6,6 +6,58 @@ extern unsigned char lbl_806CEED8[8];
+ extern unsigned char lbl_806CEED0[8];
+ extern unsigned char lbl_806CEEC8[8];
+ extern unsigned char lbl_806CEEC0[8];
++extern void card_eject_init(void);
++extern void card_eject_state_machine(void);
++extern void card_send_cleaning_cmd_init(void);
++extern void card_cleaning_state_machine(void);
++extern void card_send_read_cmd_init_dup_unused(void);
++extern void card_read_state_machine(void);
++extern void Sci2Card_WriteTrackData_StartFlow(void);
++extern void Sci2Card_WriteTrackData_PollState(void);
++/* .data 0x803F9E18..0x803F9F2C: menu label tables, kart ids, the card
++ * flow table, the MiyoshiMode type info / vtable; Tick's switch table
++ * follows. */
++extern char lbl_802EE028[];
++extern char lbl_802EE034[];
++extern char lbl_802EE040[];
++extern char lbl_802EE074[];
++extern char lbl_802EE080[];
++extern char lbl_806D2A28[];
++extern char lbl_806D2A2C[];
++extern char lbl_806D2A34[];
++extern char lbl_806D2A3C[];
++extern char lbl_806D2A54[];
++extern char lbl_806D2A5C[];
++extern char lbl_806D2A64[];
++extern char lbl_806D2A6C[];
++extern char lbl_806D2A74[];
++extern char lbl_806D2A7C[];
++extern char lbl_806D2A84[];
++extern char lbl_806D2A8C[];
++extern char lbl_806D2A94[];
++extern char lbl_806D2A9C[];
++extern char lbl_806D2AA4[];
++extern char lbl_806D2B38[], lbl_806D2B40[], lbl_806D2B48[], lbl_806D2B50[];
++extern char lbl_806CEEE0[], lbl_806CEEE8[];
++int clMiyoshiCardCreate_Tick(void *);
++void clMiyoshiCardCreate_Draw(void);
++void __dt__11MiyoshiModeFv(void); /* ~MiyoshiMode, renamed clMiyoshiCardCreate_Dtor */
++/* labels: cc classes (3x3), characters (13), karts (17) as {name pointers} */
++const char *lbl_803F9E18[22] = {
++    lbl_806D2A28, lbl_806D2A2C, lbl_802EE028, lbl_806D2A28, lbl_806D2A34, lbl_802EE034, lbl_806D2A28, lbl_806D2A3C, lbl_802EE040, lbl_806D2A54, lbl_806D2A5C, lbl_806D2A64, lbl_806D2A6C, lbl_806D2A74, lbl_806D2A7C, lbl_802EE074, lbl_806D2A84, lbl_806D2A8C, lbl_802EE080, lbl_806D2A94, lbl_806D2A9C, lbl_806D2AA4
++};
++/* kart id table (16) followed by the card flow table {init, poll, name} x4 */
++void *lbl_803F9E70[28] = {
++    (void *)0x00, (void *)0x04, (void *)0x09, (void *)0x0E, (void *)0x13, (void *)0x18, (void *)0x1D, (void *)0x22,
++    (void *)0x27, (void *)0x2C, (void *)0x31, (void *)0x3B, (void *)0x45, (void *)0x4F, (void *)0x59, (void *)0x63,
++    (void *)card_eject_init, (void *)card_eject_state_machine, lbl_806D2B38,
++    (void *)card_send_cleaning_cmd_init, (void *)card_cleaning_state_machine, lbl_806D2B40,
++    (void *)card_send_read_cmd_init_dup_unused, (void *)card_read_state_machine, lbl_806D2B48,
++    (void *)Sci2Card_WriteTrackData_StartFlow, (void *)Sci2Card_WriteTrackData_PollState, lbl_806D2B50
++};
++void *lbl_803F9EE0[3] = { lbl_806CEEE0, 0, 0 };
++/* MiyoshiMode vtable (lbl_803F9EEC; referenced as __vt__ by the ctor/dtor) */
++void *__vt__11MiyoshiMode[5] = { lbl_806CEEE8, 0, (void *)clMiyoshiCardCreate_Tick, (void *)clMiyoshiCardCreate_Draw, (void *)__dt__11MiyoshiModeFv };
+ /* Only observed lifetime/layout: 4B mode, 44B state, 216B display context. */
+ #pragma cplusplus on
+ void *operator new(unsigned long);
+@@ -115,8 +167,7 @@ extern unsigned int lbl_806D2B58;
+ /* --- extern decls: large-data refs (@ha/@l pairs) --- */
+ /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
+ /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
+-extern unsigned int lbl_802EE028[];
+-extern unsigned int lbl_803F9E18[];
++extern char lbl_802EE028[];
+ 
+ /* --- function index (1 fns, .text 0x80061054..0x80061394) ---
+  * [  0] 0x80061054 size:0x340   global clMiyoshiCardCreate_Draw
+@@ -363,8 +414,8 @@ asm void clMiyoshiCardCreate_Draw(void) { /* 0x80061054 size:0x340 */
+ 
+ 
+ #pragma cplusplus on
+-#if 0
+-/* Tick complete draft: 97.87%; generated jump-table data is outside this TU. */
++#pragma cplusplus on
++/* clMiyoshiCardCreate_Tick @ 0x80061394: the card-create debug menu. */
+ /* Virtual slot +0x20 is InputObj_IsPressed (r3 self, r4 mask, normalized byte). */
+ struct MiyoshiInput {
+     virtual void destroy(short);
+@@ -385,7 +436,6 @@ unsigned char card_rw_state_machine();
+ unsigned char CardSave_Tick();
+ void card_rw_kick_state_machine();
+ extern unsigned int g_playerData[];
+-extern int lbl_803F9E70[];
+ }
+ extern "C" int clMiyoshiCardCreate_Tick(void *) {
+     MiyoshiInput *input=InputMgr_GetPlayer(GetInputManager(),0);
+@@ -410,7 +460,7 @@ extern "C" int clMiyoshiCardCreate_Tick(void *) {
+                 int points;
+                 if(state->points<=0) points=0; else points=state->points*100-1;
+                 PlayerData_Construct(g_playerData,state->character,state->cc0,state->cc1,state->cc2,
+-                    state->flag0,state->flag1,state->flag2,lbl_803F9E70[state->kart],points,state->flag3);
++                    state->flag0,state->flag1,state->flag2,(int)lbl_803F9E70[state->kart],points,state->flag3);
+                 card_save_trigger(0); state->status=1; break;
+             }
+         }
+@@ -424,245 +474,7 @@ extern "C" int clMiyoshiCardCreate_Tick(void *) {
+     if(state->status==3) result=-4; else result=-2;
+     return result;
+ }
+-#endif
+ #pragma cplusplus off
+-/* === extracted from auto_clMiyoshiCardCreate_text_1 === */
+-/* Copy into the TU between forward decls and function bodies; */
+-/* keep emit order = target section layout (do not sort). */
+-
+-/* --- extern decls: branch callees (bl/b targets) --- */
+-/* Open prototype (`extern void Foo();`) accepts any call signature; */
+-/* refine if the real prototype matters for header consumers. */
+-extern void CardSave_Tick();
+-extern void GetInputManager();
+-extern void InputMgr_GetPlayer();
+-extern void PlayerData_Construct();
+-extern void WrapInRange();
+-extern void card_rw_kick_state_machine();
+-extern void card_rw_state_machine();
+-extern void card_save_trigger();
+-
+-/* --- extern decls: sda21-referenced data --- */
+-
+-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
+-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
+-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
+-extern unsigned int g_playerData[];
+-extern unsigned int jumptable_803F9F00[];
+-extern unsigned int lbl_803F9E70[];
+-
+-/* --- function index (1 fns, .text 0x80061394..0x80061668) ---
+- * [  0] 0x80061394 size:0x2D4   global clMiyoshiCardCreate_Tick
+- */
+-
+-/* --- forward decls --- */
+-asm void clMiyoshiCardCreate_Tick(void);
+-
+-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
+-#pragma section R ".extab_user"
+-__declspec(section ".extab_user") static const unsigned char extab_clMiyoshiCardCreate_Tick[8] = {
+-    0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+-};
+-
+-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
+-#pragma section R ".extabindex_user"
+-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_clMiyoshiCardCreate_Tick = {
+-    (void *)&clMiyoshiCardCreate_Tick, 0x000002D4, (void *)extab_clMiyoshiCardCreate_Tick
+-};
+-
+-/* --- asm function bodies (.text order = fn address order) --- */
+-asm void clMiyoshiCardCreate_Tick(void) { /* 0x80061394 size:0x2D4 */
+-    nofralloc
+-    stwu r1, -0x20(r1)
+-    mflr r0
+-    stw r0, 0x24(r1)
+-    stw r31, 0x1c(r1)
+-    stw r30, 0x18(r1)
+-    bl GetInputManager
+-    li r4, 0x0
+-    bl InputMgr_GetPlayer
+-    lwz r12, 0x0(r3)
+-    mr r31, r3
+-    li r4, 0x1
+-    lwz r12, 0x20(r12)
+-    mtctr r12
+-    bctrl
+-    mr r30, r3
+-    mr r3, r31
+-    lwz r12, 0x0(r31)
+-    li r4, 0x80
+-    lwz r12, 0x20(r12)
+-    mtctr r12
+-    bctrl
+-    lwz r31, lbl_806D10D8(r13)
+-    lwz r0, 0x0(r31)
+-    cmpwi r0, 0x0
+-    bne clMiyoshiCardCreate_Tick_L_800615E4
+-    clrlwi r0, r3, 24
+-    cmplwi r0, 0x1
+-    bne clMiyoshiCardCreate_Tick_L_80061420
+-    lwz r3, 0x4(r31)
+-    li r4, 0x0
+-    li r5, 0xa
+-    addi r3, r3, 0x1
+-    bl WrapInRange
+-    stw r3, 0x4(r31)
+-    b clMiyoshiCardCreate_Tick_L_8006162C
+-    clMiyoshiCardCreate_Tick_L_80061420:
+-    clrlwi r0, r30, 24
+-    cmplwi r0, 0x1
+-    bne clMiyoshiCardCreate_Tick_L_8006162C
+-    lwz r0, 0x4(r31)
+-    cmplwi r0, 0xa
+-    bgt clMiyoshiCardCreate_Tick_L_8006162C
+-    lis r3, jumptable_803F9F00@ha
+-    slwi r0, r0, 2
+-    addi r3, r3, jumptable_803F9F00@l
+-    lwzx r0, r3, r0
+-    mtctr r0
+-    bctr
+-    lwz r3, 0xc(r31)
+-    li r4, 0x0
+-    li r5, 0xc
+-    addi r3, r3, 0x1
+-    bl WrapInRange
+-    stw r3, 0xc(r31)
+-    b clMiyoshiCardCreate_Tick_L_8006162C
+-    lwz r3, 0x10(r31)
+-    li r4, 0x0
+-    li r5, 0x2
+-    addi r3, r3, 0x1
+-    bl WrapInRange
+-    stw r3, 0x10(r31)
+-    b clMiyoshiCardCreate_Tick_L_8006162C
+-    lwz r3, 0x14(r31)
+-    li r4, 0x0
+-    li r5, 0x2
+-    addi r3, r3, 0x1
+-    bl WrapInRange
+-    stw r3, 0x14(r31)
+-    b clMiyoshiCardCreate_Tick_L_8006162C
+-    lwz r3, 0x18(r31)
+-    li r4, 0x0
+-    li r5, 0x2
+-    addi r3, r3, 0x1
+-    bl WrapInRange
+-    stw r3, 0x18(r31)
+-    b clMiyoshiCardCreate_Tick_L_8006162C
+-    lbz r4, 0x1c(r31)
+-    subfic r3, r4, 0x1
+-    subi r0, r4, 0x1
+-    or r0, r3, r0
+-    srwi r0, r0, 31
+-    stb r0, 0x1c(r31)
+-    b clMiyoshiCardCreate_Tick_L_8006162C
+-    lbz r4, 0x1d(r31)
+-    subfic r3, r4, 0x1
+-    subi r0, r4, 0x1
+-    or r0, r3, r0
+-    srwi r0, r0, 31
+-    stb r0, 0x1d(r31)
+-    b clMiyoshiCardCreate_Tick_L_8006162C
+-    lbz r4, 0x1e(r31)
+-    subfic r3, r4, 0x1
+-    subi r0, r4, 0x1
+-    or r0, r3, r0
+-    srwi r0, r0, 31
+-    stb r0, 0x1e(r31)
+-    b clMiyoshiCardCreate_Tick_L_8006162C
+-    lwz r3, 0x20(r31)
+-    li r4, 0x0
+-    li r5, 0x10
+-    addi r3, r3, 0x1
+-    bl WrapInRange
+-    stw r3, 0x20(r31)
+-    b clMiyoshiCardCreate_Tick_L_8006162C
+-    lwz r3, 0x24(r31)
+-    li r4, 0x0
+-    li r5, 0x28
+-    addi r3, r3, 0x1
+-    bl WrapInRange
+-    stw r3, 0x24(r31)
+-    b clMiyoshiCardCreate_Tick_L_8006162C
+-    lbz r4, 0x28(r31)
+-    subfic r3, r4, 0x1
+-    subi r0, r4, 0x1
+-    or r0, r3, r0
+-    srwi r0, r0, 31
+-    stb r0, 0x28(r31)
+-    b clMiyoshiCardCreate_Tick_L_8006162C
+-    lwz r0, 0x24(r31)
+-    cmpwi r0, 0x0
+-    bgt clMiyoshiCardCreate_Tick_L_8006157C
+-    li r5, 0x0
+-    b clMiyoshiCardCreate_Tick_L_80061584
+-    clMiyoshiCardCreate_Tick_L_8006157C:
+-    mulli r3, r0, 0x64
+-    subi r5, r3, 0x1
+-    clMiyoshiCardCreate_Tick_L_80061584:
+-    lwz r0, 0x20(r31)
+-    lis r4, lbl_803F9E70@ha
+-    lis r3, g_playerData@ha
+-    slwi r0, r0, 2
+-    addi r4, r4, lbl_803F9E70@l
+-    lwzx r0, r4, r0
+-    addi r3, r3, g_playerData@l
+-    stw r0, 0x8(r1)
+-    stw r5, 0xc(r1)
+-    lbz r0, 0x28(r31)
+-    stw r0, 0x10(r1)
+-    lwz r4, 0xc(r31)
+-    lwz r5, 0x10(r31)
+-    lwz r6, 0x14(r31)
+-    lwz r7, 0x18(r31)
+-    lbz r8, 0x1c(r31)
+-    lbz r9, 0x1d(r31)
+-    lbz r10, 0x1e(r31)
+-    bl PlayerData_Construct
+-    li r3, 0x0
+-    bl card_save_trigger
+-    li r0, 0x1
+-    stw r0, 0x0(r31)
+-    b clMiyoshiCardCreate_Tick_L_8006162C
+-    clMiyoshiCardCreate_Tick_L_800615E4:
+-    cmpwi r0, 0x1
+-    bne clMiyoshiCardCreate_Tick_L_8006160C
+-    bl CardSave_Tick
+-    clrlwi r0, r3, 24
+-    cmplwi r0, 0x1
+-    bne clMiyoshiCardCreate_Tick_L_8006162C
+-    li r0, 0x2
+-    stw r0, 0x0(r31)
+-    bl card_rw_kick_state_machine
+-    b clMiyoshiCardCreate_Tick_L_8006162C
+-    clMiyoshiCardCreate_Tick_L_8006160C:
+-    cmpwi r0, 0x2
+-    bne clMiyoshiCardCreate_Tick_L_8006162C
+-    bl card_rw_state_machine
+-    clrlwi r0, r3, 24
+-    cmplwi r0, 0x1
+-    bne clMiyoshiCardCreate_Tick_L_8006162C
+-    li r0, 0x3
+-    stw r0, 0x0(r31)
+-    clMiyoshiCardCreate_Tick_L_8006162C:
+-    lwz r3, 0x8(r31)
+-    addi r0, r3, 0x1
+-    stw r0, 0x8(r31)
+-    lwz r0, 0x0(r31)
+-    cmpwi r0, 0x3
+-    bne clMiyoshiCardCreate_Tick_L_8006164C
+-    li r3, -0x4
+-    b clMiyoshiCardCreate_Tick_L_80061650
+-    clMiyoshiCardCreate_Tick_L_8006164C:
+-    li r3, -0x2
+-    clMiyoshiCardCreate_Tick_L_80061650:
+-    lwz r0, 0x24(r1)
+-    lwz r31, 0x1c(r1)
+-    lwz r30, 0x18(r1)
+-    mtlr r0
+-    addi r1, r1, 0x20
+-    blr
+-}
+ 
+ 
+ 
+@@ -679,5 +491,5 @@ MiyoshiMode::~MiyoshiMode() {
+ }
+ extern "C" MiyoshiMode *clMiyoshiCardCreate_Ctor() { return new MiyoshiMode; }
+ #pragma cplusplus off
+-
+-
++
++
+diff --git a/tools/extab_user_renames.json b/tools/extab_user_renames.json
+index 783cb856..b05203b3 100644
+--- a/tools/extab_user_renames.json
++++ b/tools/extab_user_renames.json
+@@ -630,7 +630,13 @@
+     "extab_clMiyoshiCardCreate_Dtor": "@etb_80007E40",
+     "extabindex_clMiyoshiCardCreate_Dtor": "@eti_80020DD4",
+     "extab_clMiyoshiCardCreate_Ctor": "@etb_80007E48",
+-    "extabindex_clMiyoshiCardCreate_Ctor": "@eti_80020DE0"
++    "extabindex_clMiyoshiCardCreate_Ctor": "@eti_80020DE0",
++    "@55": "@etb_80007E38",
++    "@56": "@eti_80020DC8",
++    "@66": "@etb_80007E40",
++    "@67": "@eti_80020DD4",
++    "@80": "@etb_80007E48",
++    "@81": "@eti_80020DE0"
+   },
+   "src/game/BiribiriLand.c": {
+     "extab_BiribiriLand_Render": "@etb_8000CE64",

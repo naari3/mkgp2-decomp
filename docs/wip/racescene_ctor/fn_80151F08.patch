@@ -1,0 +1,826 @@
+diff --git a/src/game/Scene_8014E0C4.cpp b/src/game/Scene_8014E0C4.cpp
+index 8777e0e..db771ce 100644
+--- a/src/game/Scene_8014E0C4.cpp
++++ b/src/game/Scene_8014E0C4.cpp
+@@ -342,11 +342,11 @@ extern void CourseObjectManager_Init();
+ extern void DrawManager_GetOrCreate();
+ void *FUN_8003b120(int size);
+ extern void ItemObjectManager_Init();
+-extern void KartDriver_Init();
++extern void KartDriver_Init(void *drv, int a, int kart, float (*mtx)[4], int slot, int b, int c);
+ extern void KartDriver_New_Empty();
+ void MemoryManager_Free(void *p);
+ extern void Object_ReleaseAnimResource();
+-extern void PSMTXIdentity();
++extern void PSMTXIdentity(float (*m)[4]);
+ extern void PreloadEffectResources();
+ extern void PreloadItemResources();
+ void *ResolveJointByName(void *root, char *name);
+@@ -374,8 +374,8 @@ extern void fn_80293BBC();
+ int isJapanese(void);
+ extern unsigned int g_kartStartSlot;
+ extern unsigned int lbl_806D7F68;
+-extern unsigned int lbl_806D8064;
+-extern unsigned int lbl_806D8068;
++extern const float lbl_806D8064;
++extern const float lbl_806D8068;
+ extern unsigned int lbl_806D8070;
+ extern unsigned int lbl_806D8074;
+ extern unsigned int lbl_806D8078;
+@@ -629,15 +629,15 @@ extern unsigned int lbl_806D8180;
+ extern unsigned int lbl_80419FB8[];
+ extern void Camera_Create();
+ extern void DMAChannelManager_Init();
+-extern void FileLoader_Open();
+-extern void GetCourseDataPtr();
+-extern void HSD_LObjLoadDesc();
++extern void FileLoader_Open(void *path);
++extern void *GetCourseDataPtr();
++extern void *HSD_LObjLoadDesc(void *desc);
+ extern void InputManager_Init();
+ extern void fn_8013DBF8();
+ extern unsigned int g_courseVariantIdx;
+ extern unsigned int g_longRoundFlag;
+-extern unsigned int lbl_806D80C0;
+-extern unsigned int lbl_806D8184;
++extern const float lbl_806D80C0;
++extern const float lbl_806D8184;
+ extern unsigned int lbl_8041BC00[];
+ extern char *lbl_8048F178[];
+ extern void C_MTXLookAt(float m[3][4], const struct Vec3f *eye, const struct Vec3f *up, const struct Vec3f *target);
+@@ -1085,7 +1085,7 @@ RaceScene *fn_8015092C(RaceScene *self, short flag);
+ void fn_80150BE4(VObj *p);
+ void fn_80150C1C(RaceScene *self);
+ asm void fn_80151234(void);
+-asm void fn_80151F08(void);
++extern "C" void fn_80151F08();
+ void DrawColoredQuad(int r, int g, int b, int a, float x, float y, float w, float h);
+ void fn_80152930(VObj *p);
+ Base *fn_80152968(Base *self, short flag);
+@@ -1168,7 +1168,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
+ 
+ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_80151234 = { 0x408A0000, 0x000004B4, 0x00000010, 0x00000000, 0x8A800018, (void *)&MemoryManager_TimedFree };
+ 
+-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; void *f21; unsigned int f22; unsigned int f23; void *f24; unsigned int f25; void *f26; unsigned int f27; unsigned int f28; void *f29; unsigned int f30; void *f31; unsigned int f32; unsigned int f33; void *f34; unsigned int f35; void *f36; unsigned int f37; unsigned int f38; void *f39; } extab_fn_80151F08 = { 0x384A0000, 0x00000048, 0x00F70058, 0x00000430, 0x00000050, 0x00000438, 0x00040058, 0x00000468, 0x00000064, 0x00000478, 0x001C0058, 0x000004F4, 0x00000078, 0x00000528, 0x00020058, 0x0000055C, 0x0000008C, 0x00000574, 0x008A0058, 0x00000000, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001A, 0x00000000, (void *)&dtor_801577D4, 0x0A80001B, (void *)&MemoryManager_TimedFree, 0x8680001A, 0x00000000, (void *)&dtor_801577D4, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x8680001A, 0x00000000, (void *)&dtor_801577D4, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x8680001A, 0x00000000, (void *)&dtor_801577D4 };
+ 
+ 
+ 
+@@ -1252,9 +1251,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned
+     (void *)&fn_80151234, 0x00000CD4, (void *)&extab_fn_80151234
+ };
+ 
+-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80151F08 = {
+-    (void *)&fn_80151F08, 0x000007BC, (void *)&extab_fn_80151F08
+-};
+ 
+ 
+ 
+@@ -4539,531 +4535,204 @@ extern "C" asm void fn_80151234(void) { /* 0x80151234 size:0xCD4 */
+     blr
+ }
+ 
+-extern "C" asm void fn_80151F08(void) { /* 0x80151F08 size:0x7BC */
+-    nofralloc
+-    stwu r1, -0x40(r1)
+-    mflr r0
+-    stw r0, 0x44(r1)
+-    stfd f31, 0x30(r1)
+-    psq_st f31, 0x38(r1), 0, 0
+-    stmw r25, 0x14(r1)
+-    lis r7, lbl_8048FF80@ha
+-    lis r6, lbl_80490010@ha
+-    mr r26, r3
+-    lis r8, lbl_8048F178@ha
+-    addi r3, r7, lbl_8048FF80@l
+-    addi r0, r6, lbl_80490010@l
+-    stw r3, 0x0(r26)
+-    mr r27, r4
+-    mr r29, r5
+-    addi r28, r8, lbl_8048F178@l
+-    stw r0, 0x0(r26)
+-    bl DrawManager_GetOrCreate
+-    bl fn_80121210
+-    bl DMAChannelManager_Init
+-    bl SoundChannels_ClearAll
+-    bl ItemObjectManager_Init
+-    bl CourseObjectManager_Init
+-    bl fn_80169E20
+-    cmpwi r3, 0x2
+-    beq fn_80151F08_L_80151FB8
+-    bge fn_80151F08_L_80151FCC
+-    cmpwi r3, 0x1
+-    bge fn_80151F08_L_80151F80
+-    b fn_80151F08_L_80151FCC
+-    fn_80151F08_L_80151F80:
+-    bl IsCardValid
+-    clrlwi r0, r3, 24
+-    cmplwi r0, 0x1
+-    bne fn_80151F08_L_80151FA4
+-    addi r3, r28, 0x444
+-    li r0, 0x33
+-    stw r3, 0x578(r26)
+-    stw r0, 0x57c(r26)
+-    b fn_80151F08_L_80151FDC
+-    fn_80151F08_L_80151FA4:
+-    addi r3, r28, 0x840
+-    li r0, 0x2e
+-    stw r3, 0x578(r26)
+-    stw r0, 0x57c(r26)
+-    b fn_80151F08_L_80151FDC
+-    fn_80151F08_L_80151FB8:
+-    addi r3, r28, 0x840
+-    li r0, 0x2e
+-    stw r3, 0x578(r26)
+-    stw r0, 0x57c(r26)
+-    b fn_80151F08_L_80151FDC
+-    fn_80151F08_L_80151FCC:
+-    addi r3, r28, 0x48
+-    li r0, 0x33
+-    stw r3, 0x578(r26)
+-    stw r0, 0x57c(r26)
+-    fn_80151F08_L_80151FDC:
+-    cmpwi r29, -0x1
+-    bge fn_80151F08_L_80151FE8
+-    li r29, -0x1
+-    fn_80151F08_L_80151FE8:
+-    cmpwi r29, 0x14
+-    ble fn_80151F08_L_80151FF4
+-    li r29, 0x14
+-    fn_80151F08_L_80151FF4:
+-    li r0, -0x1
+-    cmpwi r29, 0x0
+-    stw r0, 0xc(r26)
+-    li r0, 0x0
+-    stb r0, 0x10(r26)
+-    bge fn_80151F08_L_80152018
+-    stw r0, 0x4(r26)
+-    stw r0, 0x8(r26)
+-    b fn_80151F08_L_80152024
+-    fn_80151F08_L_80152018:
+-    li r0, 0x1
+-    stw r0, 0x4(r26)
+-    stw r29, 0x8(r26)
+-    fn_80151F08_L_80152024:
+-    li r4, 0x0
+-    li r6, 0xa
+-    stw r4, 0x18(r26)
+-    li r3, -0x1
+-    subfic r0, r6, 0xb
+-    slwi r5, r6, 2
+-    stb r27, 0x11(r26)
+-    stw r3, 0x14(r26)
+-    stw r4, 0x1c(r26)
+-    stw r4, 0x20(r26)
+-    stw r4, 0x24(r26)
+-    stw r4, 0x28(r26)
+-    stw r4, 0x2c(r26)
+-    stw r4, 0x30(r26)
+-    stw r4, 0x34(r26)
+-    stw r4, 0x38(r26)
+-    stw r4, 0x3c(r26)
+-    stw r4, 0x40(r26)
+-    stw r4, 0x44(r26)
+-    stw r4, 0x48(r26)
+-    stw r4, 0x4c(r26)
+-    stw r4, 0x50(r26)
+-    stw r4, 0x54(r26)
+-    stw r4, 0x58(r26)
+-    stw r4, 0x5c(r26)
+-    stw r4, 0x60(r26)
+-    stw r4, 0x64(r26)
+-    stw r4, 0x68(r26)
+-    stw r4, 0x6c(r26)
+-    stw r4, 0x70(r26)
+-    stw r4, 0x74(r26)
+-    stw r4, 0x78(r26)
+-    stw r4, 0x7c(r26)
+-    stw r4, 0x80(r26)
+-    stw r4, 0x84(r26)
+-    stw r4, 0x88(r26)
+-    stw r4, 0x8c(r26)
+-    stw r4, 0x90(r26)
+-    stw r4, 0x94(r26)
+-    stw r4, 0x98(r26)
+-    stw r4, 0x9c(r26)
+-    stw r4, 0xa0(r26)
+-    stw r4, 0xa4(r26)
+-    stw r4, 0xa8(r26)
+-    stw r4, 0xac(r26)
+-    stw r4, 0xb0(r26)
+-    stw r4, 0xb4(r26)
+-    stw r4, 0xb8(r26)
+-    stw r4, 0xbc(r26)
+-    stw r4, 0xc0(r26)
+-    stw r4, 0xc4(r26)
+-    stw r4, 0xc8(r26)
+-    stw r4, 0xcc(r26)
+-    stw r4, 0xd0(r26)
+-    stw r4, 0xd4(r26)
+-    stw r4, 0xd8(r26)
+-    stw r4, 0xdc(r26)
+-    stw r4, 0xe0(r26)
+-    stw r4, 0xe4(r26)
+-    stw r4, 0xe8(r26)
+-    stw r4, 0xec(r26)
+-    stw r4, 0xf0(r26)
+-    stw r4, 0xf4(r26)
+-    stw r4, 0xf8(r26)
+-    stw r4, 0xfc(r26)
+-    stw r4, 0x100(r26)
+-    stw r4, 0x104(r26)
+-    stw r4, 0x108(r26)
+-    stw r4, 0x10c(r26)
+-    stw r4, 0x110(r26)
+-    stw r4, 0x114(r26)
+-    stw r4, 0x118(r26)
+-    stw r4, 0x11c(r26)
+-    stw r4, 0x120(r26)
+-    stw r4, 0x124(r26)
+-    stw r4, 0x128(r26)
+-    stw r4, 0x12c(r26)
+-    stw r4, 0x130(r26)
+-    stw r4, 0x134(r26)
+-    stw r4, 0x138(r26)
+-    stw r4, 0x13c(r26)
+-    stw r4, 0x140(r26)
+-    stw r4, 0x144(r26)
+-    stw r4, 0x148(r26)
+-    mtctr r0
+-    cmpwi r6, 0xb
+-    bge fn_80151F08_L_80152190
+-    fn_80151F08_L_80152180:
+-    addi r0, r5, 0x124
+-    addi r5, r5, 0x4
+-    stwx r4, r26, r0
+-    bdnz fn_80151F08_L_80152180
+-    fn_80151F08_L_80152190:
+-    li r3, 0x0
+-    li r5, 0xa
+-    stw r3, 0x150(r26)
+-    subfic r0, r5, 0xb
+-    slwi r4, r5, 2
+-    stw r3, 0x154(r26)
+-    stw r3, 0x158(r26)
+-    stw r3, 0x15c(r26)
+-    stw r3, 0x160(r26)
+-    stw r3, 0x164(r26)
+-    stw r3, 0x168(r26)
+-    stw r3, 0x16c(r26)
+-    stw r3, 0x170(r26)
+-    stw r3, 0x174(r26)
+-    mtctr r0
+-    cmpwi r5, 0xb
+-    bge fn_80151F08_L_801521E4
+-    fn_80151F08_L_801521D4:
+-    addi r0, r4, 0x150
+-    addi r4, r4, 0x4
+-    stwx r3, r26, r0
+-    bdnz fn_80151F08_L_801521D4
+-    fn_80151F08_L_801521E4:
+-    li r0, 0x3
+-    li r10, 0x0
+-    mtctr r0
+-    fn_80151F08_L_801521F0:
+-    addi r9, r10, 0x3f0
+-    li r11, 0x0
+-    stwx r11, r26, r9
+-    addi r8, r10, 0x3f4
+-    addi r7, r10, 0x3f8
+-    addi r6, r10, 0x3fc
+-    stwx r11, r26, r8
+-    addi r5, r10, 0x400
+-    addi r4, r10, 0x404
+-    addi r3, r10, 0x408
+-    stwx r11, r26, r7
+-    addi r0, r10, 0x40c
+-    addi r9, r10, 0x410
+-    addi r8, r10, 0x414
+-    stwx r11, r26, r6
+-    addi r7, r10, 0x418
+-    addi r6, r10, 0x41c
+-    stwx r11, r26, r5
+-    addi r5, r10, 0x420
+-    stwx r11, r26, r4
+-    addi r4, r10, 0x424
+-    stwx r11, r26, r3
+-    addi r3, r10, 0x428
+-    stwx r11, r26, r0
+-    addi r0, r10, 0x42c
+-    addi r10, r10, 0x40
+-    stwx r11, r26, r9
+-    stwx r11, r26, r8
+-    stwx r11, r26, r7
+-    stwx r11, r26, r6
+-    stwx r11, r26, r5
+-    stwx r11, r26, r4
+-    stwx r11, r26, r3
+-    stwx r11, r26, r0
+-    bdnz fn_80151F08_L_801521F0
+-    li r0, 0x3
+-    mtctr r0
+-    fn_80151F08_L_80152284:
+-    addi r9, r11, 0x4b0
+-    li r10, 0x0
+-    stwx r10, r26, r9
+-    addi r8, r11, 0x4b4
+-    addi r7, r11, 0x4b8
+-    addi r6, r11, 0x4bc
+-    stwx r10, r26, r8
+-    addi r5, r11, 0x4c0
+-    addi r4, r11, 0x4c4
+-    addi r3, r11, 0x4c8
+-    stwx r10, r26, r7
+-    addi r0, r11, 0x4cc
+-    addi r9, r11, 0x4d0
+-    addi r8, r11, 0x4d4
+-    stwx r10, r26, r6
+-    addi r7, r11, 0x4d8
+-    addi r6, r11, 0x4dc
+-    stwx r10, r26, r5
+-    addi r5, r11, 0x4e0
+-    stwx r10, r26, r4
+-    addi r4, r11, 0x4e4
+-    stwx r10, r26, r3
+-    addi r3, r11, 0x4e8
+-    stwx r10, r26, r0
+-    addi r0, r11, 0x4ec
+-    addi r11, r11, 0x40
+-    stwx r10, r26, r9
+-    stwx r10, r26, r8
+-    stwx r10, r26, r7
+-    stwx r10, r26, r6
+-    stwx r10, r26, r5
+-    stwx r10, r26, r4
+-    stwx r10, r26, r3
+-    stwx r10, r26, r0
+-    bdnz fn_80151F08_L_80152284
+-    li r3, 0x8
+-    li r0, 0x1
+-    stw r3, g_cupId(r13)
+-    li r3, 0x37c
+-    stw r0, g_longRoundFlag(r13)
+-    stw r10, g_courseVariantIdx(r13)
+-    bl Alloc
+-    mr. r27, r3
+-    beq fn_80151F08_L_80152338
+-    bl InputManager_Init
+-    fn_80151F08_L_80152338:
+-    stw r27, 0x1c(r26)
+-    bl GetCourseDataPtr
+-    bl HSD_LObjLoadDesc
+-    stw r3, 0x24(r26)
+-    li r3, 0x2c
+-    bl Alloc
+-    mr. r27, r3
+-    beq fn_80151F08_L_80152370
+-    lfs f1, lbl_806D80C0(r2)
+-    li r4, 0x200
+-    lfs f2, lbl_806D8184(r2)
+-    li r5, 0x200
+-    lwz r6, 0x24(r26)
+-    bl Camera_Create
+-    fn_80151F08_L_80152370:
+-    stw r27, 0x20(r26)
+-    li r3, 0x0
+-    lwz r4, 0x20(r26)
+-    bl SetActiveCamera
+-    lwz r0, 0x20(r26)
+-    li r27, 0x0
+-    lis r3, lbl_80367200@ha
+-    lfs f31, lbl_806D8064(r2)
+-    stw r0, g_raceCamera(r13)
+-    addi r28, r3, lbl_80367200@l
+-    mr r31, r27
+-    mr r30, r27
+-    mr r29, r27
+-    fn_80151F08_L_801523A4:
+-    addi r0, r31, 0x124
+-    li r5, 0x0
+-    stwx r5, r26, r0
+-    addi r4, r31, 0x150
+-    addi r3, r30, 0x17c
+-    addi r0, r27, 0x38c
+-    stwx r5, r26, r4
+-    add r3, r26, r3
+-    stbx r5, r26, r0
+-    bl PSMTXIdentity
+-    addi r3, r29, 0x398
+-    lbz r0, 0x8(r28)
+-    stfsx f31, r26, r3
+-    addi r3, r29, 0x39c
+-    cmplwi r0, 0x0
+-    stfsx f31, r26, r3
+-    beq fn_80151F08_L_80152490
+-    li r3, 0x384
+-    bl Alloc
+-    mr. r25, r3
+-    beq fn_80151F08_L_801523FC
+-    bl KartDriver_New_Empty
+-    fn_80151F08_L_801523FC:
+-    addi r0, r31, 0x124
+-    stwx r25, r26, r0
+-    lwzx r3, r26, r0
+-    cmplwi r3, 0x0
+-    beq fn_80151F08_L_80152430
+-    addi r6, r30, 0x17c
+-    lwz r5, 0x0(r28)
+-    mr r7, r27
+-    li r4, 0x0
+-    add r6, r26, r6
+-    li r8, 0x0
+-    li r9, 0x0
+-    bl KartDriver_Init
+-    fn_80151F08_L_80152430:
+-    li r3, 0x154
+-    bl Alloc
+-    mr. r25, r3
+-    beq fn_80151F08_L_80152464
+-    lfs f1, lbl_806D8064(r2)
+-    addi r0, r31, 0x124
+-    lwzx r5, r26, r0
+-    li r4, 0x0
+-    fmr f2, f1
+-    lwz r6, 0x0(r28)
+-    fmr f3, f1
+-    li r7, 0x1
+-    bl TornadoEffect_Ctor
+-    fn_80151F08_L_80152464:
+-    addi r0, r31, 0x150
+-    lfs f1, lbl_806D8064(r2)
+-    stwx r25, r26, r0
+-    lfs f2, lbl_806D8068(r2)
+-    lwzx r3, r26, r0
+-    bl TireEffect_ResetSpin
+-    cmpwi r27, 0x0
+-    bne fn_80151F08_L_80152490
+-    addi r0, r31, 0x124
+-    lwzx r0, r26, r0
+-    stw r0, g_playerRenderObj(r13)
+-    fn_80151F08_L_80152490:
+-    addi r27, r27, 0x1
+-    addi r30, r30, 0x30
+-    cmpwi r27, 0xb
+-    addi r29, r29, 0x8
+-    addi r28, r28, 0xc
+-    addi r31, r31, 0x4
+-    blt fn_80151F08_L_801523A4
+-    li r0, 0x6
+-    li r28, 0x0
+-    mtctr r0
+-    fn_80151F08_L_801524B8:
+-    addi r0, r28, 0x3f0
+-    li r3, 0x0
+-    stwx r3, r26, r0
+-    addi r0, r28, 0x4b0
+-    addi r5, r28, 0x3f4
+-    addi r4, r28, 0x4b4
+-    stwx r3, r26, r0
+-    addi r0, r28, 0x3f8
+-    addi r27, r28, 0x4b8
+-    addi r12, r28, 0x3fc
+-    stwx r3, r26, r5
+-    addi r11, r28, 0x4bc
+-    addi r10, r28, 0x400
+-    addi r9, r28, 0x4c0
+-    stwx r3, r26, r4
+-    addi r8, r28, 0x404
+-    addi r7, r28, 0x4c4
+-    addi r6, r28, 0x408
+-    stwx r3, r26, r0
+-    addi r5, r28, 0x4c8
+-    addi r4, r28, 0x40c
+-    addi r0, r28, 0x4cc
+-    stwx r3, r26, r27
+-    addi r28, r28, 0x20
+-    stwx r3, r26, r12
+-    stwx r3, r26, r11
+-    stwx r3, r26, r10
+-    stwx r3, r26, r9
+-    stwx r3, r26, r8
+-    stwx r3, r26, r7
+-    stwx r3, r26, r6
+-    stwx r3, r26, r5
+-    stwx r3, r26, r4
+-    stwx r3, r26, r0
+-    bdnz fn_80151F08_L_801524B8
+-    li r0, 0x3
+-    mtctr r0
+-    fn_80151F08_L_8015254C:
+-    addi r0, r3, 0x28
+-    li r31, 0x0
+-    stwx r31, r26, r0
+-    addi r0, r3, 0x7c
+-    addi r7, r3, 0xd0
+-    addi r6, r3, 0x2c
+-    stwx r31, r26, r0
+-    addi r5, r3, 0x80
+-    addi r4, r3, 0xd4
+-    addi r0, r3, 0x30
+-    stwx r31, r26, r7
+-    addi r30, r3, 0x84
+-    addi r29, r3, 0xd8
+-    addi r28, r3, 0x34
+-    stwx r31, r26, r6
+-    addi r27, r3, 0x88
+-    addi r12, r3, 0xdc
+-    addi r11, r3, 0x38
+-    stwx r31, r26, r5
+-    addi r10, r3, 0x8c
+-    addi r9, r3, 0xe0
+-    addi r8, r3, 0x3c
+-    stwx r31, r26, r4
+-    addi r7, r3, 0x90
+-    addi r6, r3, 0xe4
+-    addi r5, r3, 0x40
+-    stwx r31, r26, r0
+-    addi r4, r3, 0x94
+-    addi r0, r3, 0xe8
+-    addi r3, r3, 0x1c
+-    stwx r31, r26, r30
+-    stwx r31, r26, r29
+-    stwx r31, r26, r28
+-    stwx r31, r26, r27
+-    stwx r31, r26, r12
+-    stwx r31, r26, r11
+-    stwx r31, r26, r10
+-    stwx r31, r26, r9
+-    stwx r31, r26, r8
+-    stwx r31, r26, r7
+-    stwx r31, r26, r6
+-    stwx r31, r26, r5
+-    stwx r31, r26, r4
+-    stwx r31, r26, r0
+-    bdnz fn_80151F08_L_8015254C
+-    lwz r4, 0x8(r26)
+-    mr r3, r26
+-    bl fn_801502AC
+-    lis r3, lbl_8041BC00@ha
+-    addi r3, r3, lbl_8041BC00@l
+-    lwz r3, 0xba4(r3)
+-    bl FileLoader_Open
+-    lis r3, lbl_8041BC00@ha
+-    addi r3, r3, lbl_8041BC00@l
+-    lwz r3, 0xbb8(r3)
+-    bl FileLoader_Open
+-    li r28, 0x0
+-    mr r27, r28
+-    b fn_80151F08_L_80152684
+-    fn_80151F08_L_80152638:
+-    lwz r0, 0x578(r26)
+-    add r5, r0, r27
+-    lwz r4, 0x8(r5)
+-    cmpwi r4, 0x4
+-    beq fn_80151F08_L_80152660
+-    subi r0, r4, 0x5
+-    cmplwi r0, 0x2
+-    ble fn_80151F08_L_80152660
+-    cmpwi r4, 0x8
+-    bne fn_80151F08_L_8015267C
+-    fn_80151F08_L_80152660:
+-    lwz r3, 0x0(r5)
+-    lwz r0, 0x8(r26)
+-    cmpw r3, r0
+-    bge fn_80151F08_L_8015267C
+-    lwz r5, 0xc(r5)
+-    mr r3, r26
+-    bl fn_8015061C
+-    fn_80151F08_L_8015267C:
+-    addi r27, r27, 0x14
+-    addi r28, r28, 0x1
+-    fn_80151F08_L_80152684:
+-    lwz r0, 0x57c(r26)
+-    cmpw r28, r0
+-    blt fn_80151F08_L_80152638
+-    li r3, -0x1
+-    li r0, 0x0
+-    stw r3, 0x570(r26)
+-    stw r0, 0x574(r26)
+-    bl fn_8013DBF8
+-    mr r3, r26
+-    psq_l f31, 0x38(r1), 0, 0
+-    lfd f31, 0x30(r1)
+-    lmw r25, 0x14(r1)
+-    lwz r0, 0x44(r1)
+-    mtlr r0
+-    addi r1, r1, 0x40
+-    blr
++struct RaceScriptEntry {
++    int start;
++    int f4;
++    int type;
++    int arg;
++    int f10;
++};
++
++struct RaceKartDesc {
++    int character;
++    const void *joint;
++    unsigned char enabled;
++    char pad9[3];
++};
++
++class RaceInputManager {
++public:
++    char data[0x37C];
++    RaceInputManager();
++};
++
++class RaceCamera {
++public:
++    char data[0x2C];
++    RaceCamera(float a, int w, float b, int h, void *lights);
++};
++
++class RaceDriver {
++public:
++    char data[0x384];
++    RaceDriver();
++};
++
++class RaceTornado {
++public:
++    char data[0x154];
++    RaceTornado(int a, RaceDriver *drv, int character, int b, float x, float y, float z);
++};
++
++class RaceSceneC : public SceneBase {
++public:
++    virtual void _keyRaceSceneC();
++    RaceSceneC(unsigned char card, int mode);
++    int started;
++    int mode;
++    int cardSlot;
++    unsigned char flag10;
++    unsigned char card;
++    char pad12[2];
++    int sel;
++    int f18;
++    RaceInputManager *input;
++    RaceCamera *camera;
++    void *lights;
++    void *objs[21];
++    void *lists[21];
++    void *models[21];
++    RaceDriver *drivers[11];
++    RaceTornado *effects[11];
++    float mtx[11][3][4];
++    unsigned char active[11];
++    char pad397;
++    RaceUV uv[11];
++    void *sprites[48];
++    int spriteOn[48];
++    int f570;
++    void *f574;
++    RaceScriptEntry *script;
++    int scriptCount;
++};
++
++#pragma use_lmw_stmw on
++RaceSceneC::RaceSceneC(unsigned char card, int mode) {
++    char *scripts;
++    int i;
++
++    DrawManager_GetOrCreate();
++    fn_80121210();
++    DMAChannelManager_Init();
++    SoundChannels_ClearAll();
++    ItemObjectManager_Init();
++    CourseObjectManager_Init();
++    scripts = (char *)lbl_8048F178;
++    switch (fn_80169E20()) {
++    case 1:
++        if (IsCardValid() == 1) {
++            script = (RaceScriptEntry *)(scripts + 0x444);
++            scriptCount = 0x33;
++        } else {
++            script = (RaceScriptEntry *)(scripts + 0x840);
++            scriptCount = 0x2E;
++        }
++        break;
++    case 2:
++        script = (RaceScriptEntry *)(scripts + 0x840);
++        scriptCount = 0x2E;
++        break;
++    default:
++        script = (RaceScriptEntry *)(scripts + 0x48);
++        scriptCount = 0x33;
++        break;
++    }
++    if (mode < -1) {
++        mode = -1;
++    }
++    if (mode > 20) {
++        mode = 20;
++    }
++    cardSlot = -1;
++    flag10 = 0;
++    if (mode < 0) {
++        started = 0;
++        this->mode = 0;
++    } else {
++        started = 1;
++        this->mode = mode;
++    }
++    f18 = 0;
++    this->card = card;
++    sel = -1;
++    input = 0;
++    camera = 0;
++    lights = 0;
++    for (i = 0; i < 21; i++) {
++        objs[i] = 0;
++    }
++    for (i = 0; i < 21; i++) {
++        lists[i] = 0;
++    }
++    for (i = 0; i < 21; i++) {
++        models[i] = 0;
++    }
++    for (i = 0; i < 11; i++) {
++        drivers[i] = 0;
++    }
++    for (i = 0; i < 11; i++) {
++        effects[i] = 0;
++    }
++    for (i = 0; i < 48; i++) {
++        sprites[i] = 0;
++    }
++    for (i = 0; i < 48; i++) {
++        spriteOn[i] = 0;
++    }
++    g_cupId = 8;
++    g_longRoundFlag = 1;
++    g_courseVariantIdx = 0;
++    input = new RaceInputManager;
++    lights = HSD_LObjLoadDesc(GetCourseDataPtr());
++    camera = new RaceCamera(lbl_806D80C0, 0x200, lbl_806D8184, 0x200, lights);
++    SetActiveCamera(0, (int)camera);
++    g_raceCamera = camera;
++    {
++        scripts = (char *)&lbl_80367200;
++        for (i = 0; i < 11; i++, scripts += sizeof(RaceKartDesc)) {
++            drivers[i] = 0;
++            effects[i] = 0;
++            active[i] = 0;
++            PSMTXIdentity(mtx[i]);
++            uv[i].u = lbl_806D8064;
++            uv[i].v = lbl_806D8064;
++            if (((RaceKartDesc *)scripts)->enabled) {
++                drivers[i] = new RaceDriver;
++                if (drivers[i] != 0) {
++                    KartDriver_Init(drivers[i], 0, ((RaceKartDesc *)scripts)->character, mtx[i], i, 0, 0);
++                }
++                effects[i] = new RaceTornado(0, drivers[i], ((RaceKartDesc *)scripts)->character, 1, lbl_806D8064, lbl_806D8064, lbl_806D8064);
++                TireEffect_ResetSpin(effects[i], lbl_806D8064, lbl_806D8068);
++                if (i == 0) {
++                    g_playerRenderObj = (unsigned int)drivers[i];
++                }
++            }
++        }
++    }
++    for (i = 0; i < 48; i++) {
++        sprites[i] = 0;
++        spriteOn[i] = 0;
++    }
++    for (i = 0; i < 21; i++) {
++        objs[i] = 0;
++        lists[i] = 0;
++        models[i] = 0;
++    }
++    ((void (*)(RaceSceneC *, int))fn_801502AC)(this, this->mode);
++    FileLoader_Open(((void **)lbl_8041BC00)[0xBA4 / 4]);
++    FileLoader_Open(((void **)lbl_8041BC00)[0xBB8 / 4]);
++    for (i = 0; i < scriptCount; i++) {
++        RaceScriptEntry *e = &script[i];
++        int type = e->type;
++        if (type == 4 || (unsigned int)(type - 5) <= 2 || type == 8) {
++            if (e->start < this->mode) {
++                ((void (*)(RaceSceneC *, int, int))fn_8015061C)(this, type, e->arg);
++            }
++        }
++    }
++    f570 = -1;
++    f574 = 0;
++    fn_8013DBF8();
+ }
+ 
+ #pragma use_lmw_stmw on
+diff --git a/tools/extab_user_renames.json b/tools/extab_user_renames.json
+index d0f2fcc..219e519 100644
+--- a/tools/extab_user_renames.json
++++ b/tools/extab_user_renames.json
+@@ -5259,7 +5259,13 @@
+     "__ct__11StatusSceneFv": "fn_8014F3D8",
+     "__vt__9ModeScene": "lbl_803FE0C8",
+     "__vt__11StatusScene": "lbl_8048FD98",
+-    "__dt__9ModeSceneFv": "dtor_8007D0D4"
++    "__dt__9ModeSceneFv": "dtor_8007D0D4",
++    "__ct__10RaceSceneCFUci": "fn_80151F08",
++    "__ct__10RaceCameraFfifiPv": "Camera_Create",
++    "__ct__10RaceDriverFv": "KartDriver_New_Empty",
++    "__ct__11RaceTornadoFiP10RaceDriveriifff": "TornadoEffect_Ctor",
++    "__ct__16RaceInputManagerFv": "InputManager_Init",
++    "__vt__10RaceSceneC": "lbl_80490010"
+   },
+   "src/game/RaceHud_80147470.cpp": {
+     "extab_fn_80147470": "@etb_8000DF44",

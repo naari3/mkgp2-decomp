@@ -20,7 +20,7 @@
    ],
    "source": "`x != 0` as a value through `(-x | x) >> 31`",
    "refs": [
-    "setup/TIPS.md"
+    "docs/thread_tips.md"
    ]
   },
   {
@@ -33,7 +33,7 @@
    ],
    "source": "`return x <= 0;` (bool)",
    "refs": [
-    "setup/TIPS.md #9"
+    "docs/thread_tips.md #9"
    ]
   },
   {
@@ -246,7 +246,7 @@
    ],
    "source": "`switch` with a jump table (TU must own the .data table)",
    "refs": [
-    "setup/TIPS.md gotcha 2"
+    "docs/thread_tips.md gotcha 2"
    ]
   },
   {
@@ -278,7 +278,7 @@
    ],
    "source": "pool-anchored object at offset 0 (TU owns the pool; often an extra temp) or GC/1.2.5n `&p->first_member`",
    "refs": [
-    "setup/TIPS.md section-anchor"
+    "docs/thread_tips.md section-anchor"
    ]
   },
   {

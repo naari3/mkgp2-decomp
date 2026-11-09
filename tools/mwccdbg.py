@@ -20,7 +20,7 @@ This wrapper:
      colouring is greedy, so everything after it can be a knock-on effect.
 
 Setup (once per container, about 4 minutes):
-    bash /mnt/project-files/setup/mwccdbg/install.sh
+    python3 tools/mwccdbg_install.py
 which builds retrowin32 and clones mwcc-debugger into build/mwccdbg/.
 
 Usage:

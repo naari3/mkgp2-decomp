@@ -1,0 +1,64 @@
+{"t": "2026-11-08T05:14:27.591725Z", "who": "mid", "op": "park", "id": "Q212", "note": "bee822a 88.2->93.5; target keeps byte-offset IV (r23) separate + stmw r16, mwcc strength-reduces to pointer; offset decl/type variants no gain"}
+{"t": "2026-11-08T05:14:27.649235Z", "who": "mid", "op": "take", "id": "Q211"}
+{"t": "2026-11-08T05:16:33.932942Z", "who": "mid", "op": "park", "id": "Q211", "note": "target uses 2 IVs (point via mgr-relative base r5, normal via entry r6, unroll x2 w/ addi r4,r6,0x148); edge ptr/ref/by-value p/member Dot/mgr-relative point variants + pragmasweep --set all: no gain"}
+{"t": "2026-11-08T05:16:33.983351Z", "who": "mid", "op": "take", "id": "Q210"}
+{"t": "2026-11-08T05:17:12.619420Z", "who": "mid", "op": "park", "id": "Q210", "note": "long bitfield rlwimi chain, scheduling/reg order only; pragmasweep --set all (incl 2.x) no gain"}
+{"t": "2026-11-08T05:17:12.669570Z", "who": "mid", "op": "take", "id": "Q209"}
+{"t": "2026-11-08T05:23:28.430628Z", "who": "mid", "op": "park", "id": "Q209", "note": "fca9d5d 91.5->92.0; left: operatorBits via mr r30 at entry, tail op stores scheduled earlier than target (volatile/operatorEdges variants worse)"}
+{"t": "2026-11-08T05:23:37.144915Z", "who": "mid", "op": "take", "id": "N43cf4a"}
+{"t": "2026-11-08T05:25:03.649538Z", "who": "mid", "op": "park", "id": "N43cf4a", "note": "OWN not needed for literals (postprocess_sdata2 already renames); fn_8015DEBC FPR coloring f1/f2/f0 swap: literal/extern/decl variants no gain"}
+{"t": "2026-11-08T05:25:03.716531Z", "who": "mid", "op": "take", "id": "Q208"}
+{"t": "2026-11-08T05:26:41.221805Z", "who": "mid", "op": "park", "id": "Q208", "note": "only adde (u64 range hi) scheduled before 3rd LCG step instead of after; range/Next/product forms + pragmasweep: no gain"}
+{"t": "2026-11-08T05:26:41.282842Z", "who": "mid", "op": "take", "id": "Q202"}
+{"t": "2026-11-08T05:28:00.878151Z", "who": "mid", "op": "park", "id": "Q202", "note": "k=0 li must be CSE'd with zero stores (target r5); =k / reorder / volatile / pragmasweep all: no gain"}
+{"t": "2026-11-08T05:28:00.947428Z", "who": "mid", "op": "take", "id": "Q201"}
+{"t": "2026-11-08T05:29:12.373354Z", "who": "mid", "op": "park", "id": "Q201", "note": "child/i/index decl placement, int i,j, base var, child per-block: no gain (child r28 vs r26 rotation)"}
+{"t": "2026-11-08T05:30:13.499942Z", "who": "mid", "op": "park", "id": "Q071", "note": "offset local r28 vs r29 (target); offset/table/switch/ref variants: no gain"}
+{"t": "2026-11-08T05:30:56.030484Z", "who": "mid", "op": "take", "id": "Q196"}
+{"t": "2026-11-08T05:31:51.468461Z", "who": "mid", "op": "release", "id": "Q196", "note": ""}
+{"t": "2026-11-08T05:32:42.286283Z", "who": "mid", "op": "take", "id": "Q037"}
+{"t": "2026-11-08T05:47:28.921742Z", "who": "mid", "op": "done", "id": "Q037", "note": "5154888"}
+{"t": "2026-11-08T05:49:14.919438Z", "who": "mid", "op": "take", "id": "Q045"}
+{"t": "2026-11-08T05:54:27.952509Z", "who": "mid", "op": "park", "id": "Q045", "note": "590a109 85.3->97.6 (pointer params keep px/pz in memory, literals, myTeam== first); left: GPR numbering i/offset/pid, sin/ang FPR f30/f31, cup7 extrwi vs srwi; decl perms/pragmasweep no gain"}
+{"t": "2026-11-08T05:54:33.769235Z", "who": "mid", "op": "take", "id": "Q158"}
+{"t": "2026-11-08T05:56:22.816894Z", "who": "mid", "op": "park", "id": "Q158", "note": "target: lwz count, lwz a->kind, addi, lwz b->kind, stw. Reordering ++ before/between loads gets closer in lines but objdiff % drops (91.9); pragmasweep none"}
+{"t": "2026-11-08T05:56:22.875145Z", "who": "mid", "op": "take", "id": "Q149"}
+{"t": "2026-11-08T05:57:01.513453Z", "who": "mid", "op": "park", "id": "Q149", "note": "r4 sched2 diff no longer applies (QueueIterAt refactor); needs N7ed6a7 TU split for the pool first"}
+{"t": "2026-11-08T05:57:01.592213Z", "who": "mid", "op": "take", "id": "Q160"}
+{"t": "2026-11-08T05:57:54.963478Z", "who": "mid", "op": "park", "id": "Q160", "note": "GC/2.6 schedule; target field22 bool conv is neg/or/srwi31 on an int 0/1 (not folded) and config loaded once; IsSpecialMovementMode return-type variants no change"}
+{"t": "2026-11-08T05:58:25.473003Z", "who": "mid", "op": "take", "id": "Q191"}
+{"t": "2026-11-08T05:59:06.474668Z", "who": "mid", "op": "park", "id": "Q191", "note": "entry index regs r0/r4 swapped + lwz icon sched; entry/models/index forms no change"}
+{"t": "2026-11-08T06:00:22.971295Z", "who": "mid", "op": "take", "id": "Q125"}
+{"t": "2026-11-08T06:00:38.225543Z", "who": "mid", "op": "park", "id": "Q125", "note": "it/end r28/r29 swap (end reused by inlined ~ListImpl); loop/iterator/end-local forms + pragmasweep: no gain"}
+{"t": "2026-11-08T06:01:56.131491Z", "who": "mid", "op": "take", "id": "Q078"}
+{"t": "2026-11-08T06:03:23.466133Z", "who": "mid", "op": "park", "id": "Q078", "note": "c/i r31/r30 swap in child loop; block-scoped c/i, for-init forms, 120 decl orders, pragmasweep: no change"}
+{"t": "2026-11-08T06:03:48.347461Z", "who": "mid", "op": "take", "id": "Q009"}
+{"t": "2026-11-08T06:04:27.661715Z", "who": "mid", "op": "park", "id": "Q009", "note": "hoisted dtor-fn address r30 vs offset r31 swapped; index/offset/decl forms: no change"}
+{"t": "2026-11-08T06:06:55.883711Z", "who": "mid", "op": "add", "id": "Ndbf058", "text": "PCBComm module merge (SendToAllPeers, ComputeSyncState, BuildBroadcastSlot, Process, PCBCheck*) | game/PCBComm* ~0x8008299C..0x800862xx | 88-99.9 | .bss 805A5EC0..805AC290 is one TU-owned pool; SendToAllPeers matches once the objects are defined in its TU. Plan+proof: /mnt/project-files/wip/pcbcomm_pool/README.md. Needs whole-module merge on a branch"}
+{"t": "2026-11-08T06:07:17.896523Z", "who": "mid", "op": "take", "id": "Ndbf058"}
+{"t": "2026-11-08T06:09:20.787812Z", "who": "mid", "op": "park", "id": "Ndbf058", "note": "blocked: onmokoworks claims PCBCommCompute #2896, PCBCheckRecv #2865, PCBCheckProcess #2807. Pool proof in /mnt/project-files/wip/pcbcomm_pool (SendToAllPeers 100%, ComputeSyncState 92.2->94.9 with real objects)"}
+{"t": "2026-11-08T06:09:34.772118Z", "who": "mid", "op": "take", "id": "Q038"}
+{"t": "2026-11-08T06:12:20.710347Z", "who": "mid", "op": "park", "id": "Q038", "note": "mid: only li r3/stw/lwz scheduling order; tried int/int*/ref ctors, *resource arg, sprite=0 in body, volatile, temp; pragmasweep all 441 (no gain)"}
+{"t": "2026-11-08T06:12:38.467819Z", "who": "mid", "op": "take", "id": "N2e6a4f"}
+{"t": "2026-11-08T06:17:19.032602Z", "who": "mid", "op": "park", "id": "N2e6a4f", "note": "onmokoworks claimed #2935 mid-work. Hint: opt_propagation off + NormalSpeed decl order -> 99.51 (diff in /mnt/project-files/wip/AI_CalcVSTargetSpeed_9951.diff)"}
+{"t": "2026-11-08T06:17:34.323342Z", "who": "mid", "op": "take", "id": "N469c0d"}
+{"t": "2026-11-08T06:21:49.263455Z", "who": "mid", "op": "park", "id": "N469c0d", "note": "mid: frame 0xb0 vs 0xa0 comes from the break + stack Vec3 pos together (removing either -> 0xa0). Tried goto/return/nested-if/decl orders/types/scopes/Vec3 copy forms/class copy ops/GrowSub throw(): no fix"}
+{"t": "2026-11-08T06:22:06.664382Z", "who": "mid", "op": "take", "id": "N9199a9"}
+{"t": "2026-11-08T06:22:48.804280Z", "who": "mid", "op": "park", "id": "N9199a9", "note": "mid: merge only fixes the lfd label; BootDispatcher has ~1500 diff lines besides (bitfield tests extrwi. vs cmplwi, stack-struct base regs r29/r30 vs r31 offsets, srwi vs extrwi). Needs a full rework first"}
+{"t": "2026-11-08T06:23:00.804583Z", "who": "mid", "op": "take", "id": "Q152"}
+{"t": "2026-11-08T06:25:23.770981Z", "who": "mid", "op": "park", "id": "Q152", "note": "mid 11-08: only the final 'add r0,..; mr r3,r0' (float: fmadds f0; fmr f1,f0) left. Tried cc 1.2.5n/1.3/1.3.2/2.0/2.7/3.0, if/else-value, ternary, inline wrappers, value=from first, long/unsigned, int/short t"}
+{"t": "2026-11-08T06:26:05.751633Z", "who": "mid", "op": "take", "id": "Q170"}
+{"t": "2026-11-08T06:29:36.911237Z", "who": "mid", "op": "park", "id": "Q170", "note": "mid 11-08: C draft in /mnt/project-files/wip/warpzone (remove manual extab/extabindex, wrap in cplusplus on). Calling extern FindContainingOBB inline: only mgr r7 vs elem r6 swap; local helper with obbs[i]: mgr ok but offset IV r7/elem r4 swap. pragmas/loop/index forms tried"}
+{"t": "2026-11-08T06:44:13.372351Z", "who": "mid", "op": "add", "id": "N7c9abf", "text": "HudFlow24Ctor fn_80245C1C flip | game/HudFlow24Ctor | 100 text | mid 11-08: flip fails (defines .data 804EE7C8..854 that auto_07_804EE760_data owns). Giving it a .data split -> dtk link-order cycle (HudSelectionUpdate .data 804EE854 after). The vtables in .data 804EE760..870 belong to ItemUseEffect*/ItemListHud*/HudSelection*/HudFlow24 (.text ~0x802437AC..0x80245E50): one original TU, needs a big merge"}
+{"t": "2026-11-08T06:44:38.914102Z", "who": "mid", "op": "take", "id": "Q167"}
+{"t": "2026-11-08T06:54:19.067078Z", "who": "mid", "op": "park", "id": "Q167", "note": "mid 11-08: full C draft /mnt/project-files/wip/soundmgr_play/SoundMgr_Play_c_draft.c (replaces the asm + manual extab; #pragma exceptions on). Structure matches except li -1/li 0x80 order and one add order (8 lines ignoring reg names); 288 lines with regs (variant r7 vs r8, FindPlaying iter/slots copy direction, Stop i/e regs). Decl sweeps, cc 2.x, pragmas (opt level 3 best 276) tried"}
+{"t": "2026-11-08T06:54:55.198247Z", "who": "mid", "op": "take", "id": "Q188"}
+{"t": "2026-11-08T06:59:37.368516Z", "who": "mid", "op": "park", "id": "Q188", "note": "mid 11-08: enabled the Codex draft as C++ in the .c (wip/spawndebris/SpawnDebris_cpp_draft.diff incl. renames). Key fixes: ~SpawnVec() {} INLINE (extab still names the weak copy -> rename __dt__8SpawnVecFv to dtor_80036E40) so pos stays in FPRs (frsp copies like target): 282 -> 127 diff lines, all GPR/FPR numbering (pos/dir/b FPR order, params r29/r30/r31). Order sweeps of the decls: no gain"}
+{"t": "2026-11-08T07:00:07.760501Z", "who": "mid", "op": "take", "id": "Q168"}
+{"t": "2026-11-08T07:01:40.241897Z", "who": "mid", "op": "release", "id": "Q168", "note": ""}
+{"t": "2026-11-08T07:14:12.633147Z", "who": "mid", "op": "take", "id": "Q182"}
+{"t": "2026-11-08T07:38:30.484943Z", "who": "mid", "op": "park", "id": "Q182", "note": "mid 11-08: ApplyImpactReflectAndDampVelocity C draft 1 reg swap left (wip/kartitem); other KartItem_* still asm"}
+{"t": "2026-11-08T07:39:03.565670Z", "who": "mid", "op": "take", "id": "Q187"}
+{"t": "2026-11-08T08:40:21.097175Z", "who": "mid", "op": "park", "id": "Q187", "note": "C Tick at 14 difflines; one FPR swap (rad/c) in flag18 RotX; draft+notes in wip/shadowbillboard_tick"}
+{"t": "2026-11-08T11:00:56.558177Z", "who": "mid", "op": "park", "id": "N50f3d1", "note": "mid: 95.0 after 79b9674 (pos.node uses). Left: target saves SP for the try (stw r1,0x24) inside the placement-new null-check body; ours before beq. try/if/slot variants, GC 1.3-2.7, pragmasweep: no gain. Siblings SoundDriver_GetOrCreate (entry/end reg swap) and RemoveByKey (i/j reg swap) also unmoved by decl/loop forms + pragmasweep"}
+{"t": "2026-11-08T11:29:12.121635Z", "who": "mid", "op": "park", "id": "Ne74320", "note": "mid: 96.49 after c8b2293 (const pool base, no merge needed: anchor is the named lbl_8039C718). Left: raw r29 / sum r30 swapped (sum/raw decl perms, sum=0 placement, &=255 forms, loop forms, pragmasweep, cperm 15 min: no gain; opt_lifetimes off fixes raw but splits sum)"}

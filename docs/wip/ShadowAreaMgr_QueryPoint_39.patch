@@ -1,0 +1,57 @@
+diff --git a/src/game/ShadowAreaMgr.cpp b/src/game/ShadowAreaMgr.cpp
+index f9f4893..4a82724 100644
+--- a/src/game/ShadowAreaMgr.cpp
++++ b/src/game/ShadowAreaMgr.cpp
+@@ -56,6 +56,43 @@ static inline u8 ShadowAreaEntry_Contains(ShadowAreaEntry *self, const Vec3f &p)
+     return TRUE;
+ }
+ 
++static inline u8 ShadowAreaEntry_Contains2(ShadowAreaMgr *m, int k, const Vec3f &p)
++{
++    int i;
++    ShadowAreaEntry *self;
++    if (!m->entries[k].valid) return FALSE;
++    self = &m->entries[k];
++    for (i = 0; i < 6; i++) {
++        Vec3f d;
++        const Vec3f &nm = self->edges[i].normal;
++        d.Sub(p, m->entries[k].edges[i].point);
++        if (d.Dot(nm) < 0.0f) return FALSE;
++    }
++    return TRUE;
++}
++static inline u8 ShadowAreaEntry_Contains3(ShadowAreaMgr *m, int k, const Vec3f &p)
++{
++    int i;
++    ShadowAreaEntry *self = &m->entries[k];
++    if (!m->entries[k].valid) return FALSE;
++    for (i = 0; i < 6; i++) {
++        Vec3f d;
++        d.Sub(p, self->edges[i].point);
++        if (d.Dot(m->entries[k].edges[i].normal) < 0.0f) return FALSE;
++    }
++    return TRUE;
++}
++static inline u8 ShadowAreaEntry_Contains4(ShadowAreaMgr *m, ShadowAreaEntry *self, int k, const Vec3f &p)
++{
++    int i;
++    if (!m->entries[k].valid) return FALSE;
++    for (i = 0; i < 6; i++) {
++        Vec3f d;
++        d.Sub(p, m->entries[k].edges[i].point);
++        if (d.Dot(self->edges[i].normal) < 0.0f) return FALSE;
++    }
++    return TRUE;
++}
+ extern "C" int ShadowAreaMgr_QueryPoint(ShadowAreaMgr *self, float x, float y, float z)
+ {
+     Vec3f p(x, y, z);
+@@ -64,7 +101,7 @@ extern "C" int ShadowAreaMgr_QueryPoint(ShadowAreaMgr *self, float x, float y, f
+     i = self->count;
+     while (i > 0) {
+         i--;
+-        if (ShadowAreaEntry_Contains(&self->entries[i], p) == TRUE) {
++        if (ShadowAreaEntry_Contains2(self, i, p) == TRUE) {
+             return 1;
+         }
+     }

@@ -1,0 +1,15 @@
+JObjInfoInit ERR [Errno 2] No such file or directory: 'src/sysdolphin/baselib/jobj_info.c'
+ClRomTable_PurgeAll base 2 best 2 ['opt_dead_assignments off']
+__THPHuffDecode base 2 best 2 ['opt_dead_assignments off']
+__THPHuffDecodeTab base 2 best 2 ['opt_common_subs off']
+AI_PerKartUpdate base 3 best 3 ['opt_common_subs off']
+fn_8029B54C base 2 best 2 ['opt_common_subs off']
+TestMenuJointBrowser_Update base 0 best 0 ['opt_common_subs off'] MATCH
+fn_801F230C base 3 best 3 ['opt_common_subs off']
+fn_801F1EE0 base 5 best 5 ['opt_common_subs off']
+SpecialFaceMesh_Dtor base 5 best 5 ['opt_common_subs off']
+fn_801F2400 base 5 best 5 ['opt_common_subs off']
+fn_8020A788 base 6 best 6 ['opt_common_subs off']
+fn_80271340 ERR cannot find definition of fn_80271340 (['fn_80271340('])
+fn_8028A934 base 6 best 6 ['opt_common_subs off']
+ItemSelectState_Dtor base 0 best 0 ['opt_dead_assignments off'] MATCH

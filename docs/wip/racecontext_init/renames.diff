@@ -1,0 +1,19 @@
+diff --git a/tools/extab_user_renames.json b/tools/extab_user_renames.json
+index 0d67e17..375b0c8 100644
+--- a/tools/extab_user_renames.json
++++ b/tools/extab_user_renames.json
+@@ -1594,8 +1594,12 @@
+     "extabindex_RaceContext_Dtor": "@eti_800221F0"
+   },
+   "src/game/RaceContext_InitDefaults.c": {
+-    "extab_RaceContext_InitDefaults": "@etb_800095E0",
+-    "extabindex_RaceContext_InitDefaults": "@eti_800221FC"
++    "__ct__11RaceContextFv": "RaceContext_InitDefaults",
++    "__dt__15RaceContextBaseFv": "dtor_8009DCE0",
++    "__vt__11RaceContext": "lbl_8040E4D0",
++    "__vt__15RaceContextBase": "lbl_8040E4DC",
++    "@75": "@etb_800095E0",
++    "@76": "@eti_800221FC"
+   },
+   "src/game/RaceContext_EnsureSingleton.c": {
+     "__nw__FUl": "Alloc",

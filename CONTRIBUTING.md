@@ -47,6 +47,7 @@ claim・完了条件・受け入れ基準の正本は [`docs/matching_rules.md`]
 - 手順: [`.claude/skills/mkgp2-match/SKILL.md`](.claude/skills/mkgp2-match/SKILL.md)
 - レジスタ割当だけが合わないとき: [`docs/regalloc_patterns.md`](docs/regalloc_patterns.md)
 - 他の人がすでに試して諦めた関数と WIP の場所: [`docs/gave_up.md`](docs/gave_up.md)
+- WIP の下書き・調査メモ: [`docs/wip/`](docs/wip/)、自動スイープの記録と best ソース: [`docs/sweeps/`](docs/sweeps/)、スレッド向けの長い tips ログ: [`docs/thread_tips.md`](docs/thread_tips.md)
 - 自動 sweep ツール (pragmasweep / stmtsweep / typesweep / shapesweep など):
   [`tools/README.md`](tools/README.md)
 - 再現性のある観察 (CW の codegen 癖、dtk の挙動等) は `docs/notes/` に追記する

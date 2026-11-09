@@ -1,0 +1,62 @@
+{"t": "2026-11-08T05:10:15.185468Z", "who": "R2", "op": "done", "id": "Q076", "note": "0ffcf8b"}
+{"t": "2026-11-08T05:10:15.235193Z", "who": "R2", "op": "park", "id": "Q075", "note": "last block previous.x f2 vs f10; add-order/ctor/temp forms fail"}
+{"t": "2026-11-08T05:10:15.281867Z", "who": "R2", "op": "park", "id": "Q034", "note": "1db61ae 98.17; g_playerData base r0+mr r28, resource r27 vs r28; decl sweeps fail"}
+{"t": "2026-11-08T05:10:15.331304Z", "who": "R2", "op": "take", "id": "Q093"}
+{"t": "2026-11-08T05:10:58.549821Z", "who": "R2", "op": "park", "id": "Q093", "note": "CyclicPoint: target mulli into index reg r3 + points in r4; inline param perms, index/ptr forms fail"}
+{"t": "2026-11-08T05:11:02.612283Z", "who": "R2", "op": "take", "id": "Q066"}
+{"t": "2026-11-08T05:13:38.458318Z", "who": "R2", "op": "done", "id": "Q066", "note": "33e605b"}
+{"t": "2026-11-08T05:14:33.082567Z", "who": "R2", "op": "park", "id": "Q080", "note": "panel lwz scheduled before dir load; press/dir/panel temp forms fail"}
+{"t": "2026-11-08T05:14:33.138748Z", "who": "R2", "op": "take", "id": "Q110"}
+{"t": "2026-11-08T05:15:00.028133Z", "who": "R2", "op": "park", "id": "Q110", "note": "r23 vs r25 flag reg + extra .L blocks (branch shape); not a quick one"}
+{"t": "2026-11-08T05:15:00.095988Z", "who": "R2", "op": "take", "id": "Q079"}
+{"t": "2026-11-08T05:15:40.032839Z", "who": "R2", "op": "park", "id": "Q079", "note": "GPInitialSpeed cup/round should load straight into r29/r25; inline param orders, decl orders fail"}
+{"t": "2026-11-08T05:15:40.082988Z", "who": "R2", "op": "take", "id": "Q099"}
+{"t": "2026-11-08T05:16:49.420548Z", "who": "R2", "op": "park", "id": "Q099", "note": "MorphBlend a/dst ptr regs r4/r5 swapped; decl perms, inline param perms, index forms fail"}
+{"t": "2026-11-08T05:16:49.492221Z", "who": "R2", "op": "take", "id": "Q108"}
+{"t": "2026-11-08T05:18:03.618499Z", "who": "R2", "op": "park", "id": "Q108", "note": "Countdown_Item: target adds +0x40 to the pooled base before lwzx; cast/ptr/inline-param forms fail"}
+{"t": "2026-11-08T05:18:13.965428Z", "who": "R2", "op": "take", "id": "Q072"}
+{"t": "2026-11-08T05:30:35.290348Z", "who": "R2", "op": "done", "id": "Q072", "note": "b853d71"}
+{"t": "2026-11-08T05:30:48.676606Z", "who": "R2", "op": "take", "id": "Q033"}
+{"t": "2026-11-08T05:33:20.628044Z", "who": "R2", "op": "park", "id": "Q033", "note": "R2 11-08: 0xffffff00 rlwimi color vs title r0/r4 swap (same quirk as clFlowCourse/fn_801BDEB4); 14 forms (decl order, |, loop, row helper, uchar param) no gain"}
+{"t": "2026-11-08T05:33:20.684241Z", "who": "R2", "op": "take", "id": "Q014"}
+{"t": "2026-11-08T05:34:48.073801Z", "who": "R2", "op": "park", "id": "Q014", "note": "R2 11-08: 15 more forms (inline split, short types, add var) + pragmasweep k2 --set all (best 6 = base) no gain"}
+{"t": "2026-11-08T05:34:48.145478Z", "who": "R2", "op": "take", "id": "Q020"}
+{"t": "2026-11-08T05:36:34.238585Z", "who": "R2", "op": "park", "id": "Q020", "note": "R2 11-08: 72 float decl orders + literal/extern + init-order variants all 99.46 (no change)"}
+{"t": "2026-11-08T05:36:34.312665Z", "who": "R2", "op": "take", "id": "Q054"}
+{"t": "2026-11-08T05:37:59.124770Z", "who": "R2", "op": "park", "id": "Q054", "note": "R2 11-08: -1 const in r4 vs target r0 (param p load first into r4). ctor init-list order/body assigns, chained -1, const int& param: no gain"}
+{"t": "2026-11-08T05:38:10.113109Z", "who": "R2", "op": "take", "id": "Q107"}
+{"t": "2026-11-08T05:46:54.646374Z", "who": "R2", "op": "release", "id": "Q107", "note": ""}
+{"t": "2026-11-08T05:46:54.732276Z", "who": "R2", "op": "take", "id": "Q136"}
+{"t": "2026-11-08T05:47:10.025537Z", "who": "R2", "op": "done", "id": "Q136", "note": "d235bdf"}
+{"t": "2026-11-08T05:47:10.089986Z", "who": "R2", "op": "take", "id": "Q107"}
+{"t": "2026-11-08T06:33:49.708885Z", "who": "R2", "op": "park", "id": "Q107", "note": "R2 7ee5ac5 now 99.79: only li r0/r3 for layer=4 in last TextNode block left; cperm 20 min x2 stuck"}
+{"t": "2026-11-08T06:33:49.783345Z", "who": "R2", "op": "take", "id": "Q116"}
+{"t": "2026-11-08T06:34:05.024719Z", "who": "R2", "op": "park", "id": "Q116", "note": "R2 d235bdf 99.49: SelectGroupOf offset r3 vs group ptr r5 swap; KeyGroup* local, HasCol forms, cperm no gain"}
+{"t": "2026-11-08T06:35:14.230413Z", "who": "R2", "op": "take", "id": "N66bbb1"}
+{"t": "2026-11-08T06:37:06.815692Z", "who": "R2", "op": "park", "id": "N66bbb1", "note": "R2 11-08: skipped. Owning .rodata 2.7KB of tables + 0x13C sdata2 is large; fuzzy label diffs (lfd 806D9A50 vs AE4, quote string) are just postprocess_sdata2 offset mapping, they vanish once the TU layout matches. Real blockers listed in Q107/Q116."}
+{"t": "2026-11-08T06:39:33.038173Z", "who": "R2", "op": "take", "id": "Q166"}
+{"t": "2026-11-08T06:39:54.703873Z", "who": "R2", "op": "done", "id": "Q166", "note": "98c4671"}
+{"t": "2026-11-08T06:41:35.773589Z", "who": "R2", "op": "take", "id": "Nbdafff"}
+{"t": "2026-11-08T06:42:39.920228Z", "who": "R2", "op": "park", "id": "Nbdafff", "note": "R2 11-08: KeyGroup copy in init(): target load-ahead word copy (r0/r3 alternating), ours lwz,lwz,stw,stw block-copy pairs; placement-new copy ctor forms no gain. Likely needs a different KeyGroup member layout/op="}
+{"t": "2026-11-08T06:43:08.059713Z", "who": "R2", "op": "take", "id": "Q165"}
+{"t": "2026-11-08T07:00:40.680348Z", "who": "R2", "op": "park", "id": "Q165", "note": "R2 11-08: 99.97 (2 instrs: x/z load order at XZ sqrt) with 'float xx = d.x*d.x; float z = d.z; float zz = z*z;' -> wip/r2/JumpDistanceMode_Update_9997.cpp (build with -lang=c++ -Cpp_exceptions on -use_lmw_stmw on). 40 more forms + cperm 15 min: no match"}
+{"t": "2026-11-08T07:01:54.519572Z", "who": "R2", "op": "take", "id": "Q169"}
+{"t": "2026-11-08T07:04:32.402891Z", "who": "R2", "op": "park", "id": "Q169", "note": "R2 11-08: wip3 in its own TU (C++, use_lmw_stmw, rename __ct__8FKSpriteFiffi->fn_801A08B8) = 4 lines: only need1/need2[kart] addressing (target addi base,0x3fc; lwzx). File-wide opt_propagation off fixes it but breaks the loops (85.9). Index/pointer/offset forms, pragmasweep k2: no. Needs the pooled-rodata TU merge. wip/r2/clFlowKart_UpdateDisplay_4line.cpp"}
+{"t": "2026-11-08T07:05:11.857079Z", "who": "R2", "op": "take", "id": "Q168"}
+{"t": "2026-11-08T07:06:21.371004Z", "who": "R2", "op": "park", "id": "Q168", "note": "R2 11-08: integrated wip = 98.42 (self r26/pool r31 vs target r31/r30). self copy / wrapper forms: no change"}
+{"t": "2026-11-08T07:06:56.052254Z", "who": "R2", "op": "take", "id": "N6bb463"}
+{"t": "2026-11-08T07:08:27.161710Z", "who": "R2", "op": "park", "id": "N6bb463", "note": "R2 11-08: + single-exit var, return-assign, extra temp, u32/long long, member form (TU has no rename hook): no"}
+{"t": "2026-11-08T07:32:06.548589Z", "who": "R2", "op": "done", "id": "Q026", "note": "ae58acb"}
+{"t": "2026-11-08T07:32:13.103623Z", "who": "R2", "op": "release", "id": "Q026", "note": ""}
+{"t": "2026-11-08T07:32:13.252850Z", "who": "R2", "op": "done", "id": "Q026", "note": "ae58acb"}
+{"t": "2026-11-08T10:10:38.872388Z", "who": "R2", "op": "add", "id": "Nb80425", "text": "game/fn_801BAA88.cpp (GC/2.6) leftovers: fn_801BC2EC 99.79 (layer=4 store sched in quote TextNode block, cperm 20m 0), fn_801C0568 99.86 (held/dir/panel load order; short dir fixes order but adds extsh), fn_801BE170 99.49 (SelectGroupOf inline IV r3/r5 swap, cperm 20m 0), fn_801BF644 98.27, fn_801BDB60 93.31, fn_801C1964 97.40 (EH stw r1 sched)"}
+{"t": "2026-11-08T10:10:59.208347Z", "who": "R2", "op": "take", "id": "N8a448e"}
+{"t": "2026-11-08T10:36:54.045067Z", "who": "R2", "op": "park", "id": "N8a448e", "note": "99.70 after declsweep+cperm (landed); left out/face vs &v[1]/&v[2] temp numbering; pragmasweep all = no gain"}
+{"t": "2026-11-08T10:37:20.859827Z", "who": "R2", "op": "take", "id": "N139eab"}
+{"t": "2026-11-08T10:53:45.874756Z", "who": "R2", "op": "park", "id": "N139eab", "note": "R2: li -0x100 constant CSE (target mr r5,r4) + 0x4330 store sched; natural | form worse (98.51), cperm 15m 0"}
+{"t": "2026-11-08T10:54:01.111311Z", "who": "R2", "op": "take", "id": "Nfd786e"}
+{"t": "2026-11-08T10:55:39.839587Z", "who": "R2", "op": "park", "id": "Nfd786e", "note": "R2: needs rodata ownership: target anchors pool lbl_80369D78 (unowned auto_06 rodata, shared w/ Scene_80166BE8, strings at +0x504..) in r31, self r29; explicit 'char *strings' user var gets r30. Needs TU merge 801661FC..80166BE8 owning .rodata (regalloc_patterns 13)"}
+{"t": "2026-11-08T10:55:39.927513Z", "who": "R2", "op": "take", "id": "N6e2d04"}
+{"t": "2026-11-08T11:12:55.854762Z", "who": "R2", "op": "park", "id": "N6e2d04", "note": "R2: QueueTime inline loop regs (tail r6/clips r4 in target) + lbl_806D17CC split symbol; decl order/pragmasweep all/cperm 15m (inline moved into .c) = 0"}
+{"t": "2026-11-08T11:13:17.487880Z", "who": "R2", "op": "take", "id": "N5f265a"}
+{"t": "2026-11-08T11:29:39.626962Z", "who": "R2", "op": "park", "id": "N5f265a", "note": "R2: base/record r31 copy + f30/f31 swap (const lbl_806DA3F4 vs position.x); declsweep, 5 variants, cperm 15m 185k iters = 0"}

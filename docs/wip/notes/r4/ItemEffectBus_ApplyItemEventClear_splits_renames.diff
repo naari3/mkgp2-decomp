@@ -1,0 +1,26 @@
+diff --git a/config/GNLJ82/splits.txt b/config/GNLJ82/splits.txt
+index a4c90b6..38b5d2a 100644
+--- a/config/GNLJ82/splits.txt
++++ b/config/GNLJ82/splits.txt
+@@ -2685,7 +2685,7 @@ game/ItemEffectBus.c:
+ 	extab       start:0x800093C0 end:0x80009428
+ 	extabindex  start:0x80021ECC end:0x80021F68
+ 	.text       start:0x8009107C end:0x80091FD4
+-	.data       start:0x803FF968 end:0x803FFDF0
++	.data       start:0x803FF4E0 end:0x803FFDF0
+ 
+ game/Sci2Card_PollAndAdvanceState.c:
+ 	extab       start:0x80009428 end:0x80009430
+diff --git a/tools/extab_user_renames.json b/tools/extab_user_renames.json
+index a813c04..a492dc8 100644
+--- a/tools/extab_user_renames.json
++++ b/tools/extab_user_renames.json
+@@ -203,8 +203,6 @@
+     "extabindex_ItemEffectBus_ClearByTable8": "@eti_80021EE4",
+     "extab_ItemEffectBus_RegisterBonkPosition": "@etb_800093D8",
+     "extabindex_ItemEffectBus_RegisterBonkPosition": "@eti_80021EF0",
+-    "extab_ItemEffectBus_ApplyItemEventClear": "@etb_800093E0",
+-    "extabindex_ItemEffectBus_ApplyItemEventClear": "@eti_80021EFC",
+     "extab_ItemEffectBus_ApplyItemEventSet": "@etb_800093E8",
+     "extabindex_ItemEffectBus_ApplyItemEventSet": "@eti_80021F08",
+     "extab_ItemEffectBus_ArmTornadoAndQuery": "@etb_800093F0",

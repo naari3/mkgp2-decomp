@@ -1,0 +1,40 @@
+diff --git a/src/game/RankLog.c b/src/game/RankLog.c
+index 54275c8..1968942 100644
+--- a/src/game/RankLog.c
++++ b/src/game/RankLog.c
+@@ -846,10 +846,10 @@ TitleTracker *TitleTracker_GetOrCreateSingleton(void)
+ 
+ static inline int DetermineCurrentNameId(void)
+ {
+-    int k;
++    int score;
+     int chara;
++    int k;
+     int j;
+-    int score;
+     int i;
+     score = 0;
+     chara = g_characterId;
+@@ -876,12 +876,17 @@ static inline int DetermineCurrentNameId(void)
+ void DetermineTitle(unsigned char mode)
+ {
+     unsigned char skip;
+-    TitleCheckFn *checks = 0;
+-    int count = 0;
+-    TitleCheckFn pre = 0;
++    TitleCheckFn *checks;
+     int i;
+-    unsigned char *tbl = (unsigned char *)lbl_80411458;
+-    unsigned char *pool = lbl_80324B98;
++    unsigned char *tbl;
++    int count;
++    unsigned char *pool;
++    TitleCheckFn pre;
++    checks = 0;
++    count = 0;
++    pre = 0;
++    tbl = (unsigned char *)lbl_80411458;
++    pool = lbl_80324B98;
+ 
+     if (lbl_80598A60.mode == 2 || (lbl_80598A60.mode == 1 && lbl_80598A60.flag24 == 0)) {
+         g_stagingTitleId = 0;

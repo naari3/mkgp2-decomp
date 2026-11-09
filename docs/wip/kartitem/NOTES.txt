@@ -1,0 +1,1 @@
+11-08 08:40 mid: KartItem_ApplyImpactReflectAndDampVelocity C draft (ApplyImpactReflect_c_draft.diff): 10 diff lines = one swap, target sec ptr r5 / inline return flag r6, ours reversed. Keys that fixed the rest: inline takes ItemSecondaryLane*, sqrt expanded in place on sq, only k=lbl_806D2714 as a local. cperm 26k iters: no gain.

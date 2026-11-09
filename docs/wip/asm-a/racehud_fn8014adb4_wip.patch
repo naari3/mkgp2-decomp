@@ -1,0 +1,397 @@
+diff --git a/src/game/RaceHud_80147470.cpp b/src/game/RaceHud_80147470.cpp
+index 288922d..4640fec 100644
+--- a/src/game/RaceHud_80147470.cpp
++++ b/src/game/RaceHud_80147470.cpp
+@@ -421,16 +421,16 @@ extern unsigned int lbl_806D7E14;
+ extern unsigned int lbl_806D7E18;
+ extern unsigned int lbl_806D7E1C;
+ extern char lbl_803628A8[];
+-extern void HSD_StateInvalidate();
+-extern void fn_8011FAB8();
+-extern void fn_8013D940();
+-extern void fn_8014095C();
+-extern void fn_80167F24();
++extern void HSD_StateInvalidate(int n);
++extern void fn_8011FAB8(void);
++extern void fn_8013D940(int i);
++extern void fn_8014095C(void *p);
++extern void fn_80167F24(int layer, const unsigned short *s, float x, float y, ...);
+ void fn_80169334(void *obj, int id, int flag, float x, float y, float sx, float sy, float a);
+-extern void fn_801A0004();
+-extern void fn_80231644();
+-extern void fn_802317E0();
+-extern void fn_80231B74();
++extern void fn_801A0004(void *spr);
++extern unsigned char fn_80231644(int *a, int *b, int *c, int chr, int kart);
++extern unsigned char fn_802317E0(int *a, int *b, int *c, int chr, int kart, int special);
++extern unsigned char fn_80231B74(int id);
+ extern const float lbl_806D7E28;
+ extern const float lbl_806D7E2C;
+ extern const float lbl_806D7E30;
+@@ -584,7 +584,8 @@ HudPanel *fn_8014A890(HudPanel *self, short flag);
+ struct StrPanel *fn_8014A8FC(struct StrPanel *self, short flag);
+ void fn_8014AC48(void *self);
+ void fn_8014AD7C(VObj *p);
+-asm void fn_8014ADB4(void);
++struct RankBoard;
++void fn_8014ADB4(RankBoard *self);
+ asm void fn_8014BBE4(struct ResultPanel *self, float alpha);
+ void fn_8014BF80(struct ResultPanel *self, float alpha);
+ struct ResultPanel *fn_8014C308(struct ResultPanel *self, short flag);
+@@ -3527,242 +3528,121 @@ extern "C" void fn_8014AD7C(VObj *p) {
+     delete p;
+ }
+ 
+-extern "C" asm void fn_8014ADB4(void) { /* 0x8014ADB4 size:0x364 */
+-    nofralloc
+-    stwu r1, -0x50(r1)
+-    mflr r0
+-    stw r0, 0x54(r1)
+-    stfd f31, 0x40(r1)
+-    psq_st f31, 0x48(r1), 0, 0
+-    stmw r24, 0x20(r1)
+-    mr r29, r3
+-    lis r3, lbl_80362D90@ha
+-    lbz r0, 0x4(r29)
+-    addi r31, r3, lbl_80362D90@l
+-    cmplwi r0, 0x0
+-    bne fn_8014ADB4_L_8014B0FC
+-    lwz r0, 0x24(r29)
+-    cmpwi r0, 0x3
+-    ble fn_8014ADB4_L_8014B014
+-    lfs f2, 0x60(r29)
+-    lfs f1, lbl_806D7E28(r2)
+-    lfs f0, lbl_806D7E2C(r2)
+-    fadds f1, f2, f1
+-    stfs f1, 0x60(r29)
+-    lfs f1, 0x60(r29)
+-    fcmpo cr0, f1, f0
+-    ble fn_8014ADB4_L_8014AE14
+-    stfs f0, 0x60(r29)
+-    fn_8014ADB4_L_8014AE14:
+-    li r30, 0x0
+-    li r27, 0x0
+-    fn_8014ADB4_L_8014AE1C:
+-    mr r3, r30
+-    bl RankSlot_GetByIndex
+-    mr. r28, r3
+-    beq fn_8014ADB4_L_8014B004
+-    lwz r24, 0x14(r28)
+-    cmpwi r24, 0x0
+-    blt fn_8014ADB4_L_8014B004
+-    cmpwi r24, 0xd
+-    bge fn_8014ADB4_L_8014B004
+-    lwz r0, 0x10(r28)
+-    cmpwi r0, 0x0
+-    blt fn_8014ADB4_L_8014B004
+-    cmpwi r0, 0x3
+-    bgt fn_8014ADB4_L_8014B004
+-    lwz r0, g_gameMode(r13)
+-    li r4, 0x2b00
+-    li r3, 0x1ecd
+-    stw r4, 0x10(r1)
+-    cmpwi r0, 0x0
+-    stw r3, 0xc(r1)
+-    bne fn_8014ADB4_L_8014AE90
+-    lwz r6, 0x10(r28)
+-    addi r3, r1, 0x10
+-    lwz r7, 0x14(r28)
+-    addi r4, r1, 0xc
+-    addi r5, r1, 0x8
+-    li r8, 0x0
+-    bl fn_802317E0
+-    b fn_8014ADB4_L_8014AEA8
+-    fn_8014ADB4_L_8014AE90:
+-    lwz r6, 0x10(r28)
+-    addi r3, r1, 0x10
+-    lwz r7, 0x14(r28)
+-    addi r4, r1, 0xc
+-    addi r5, r1, 0x8
+-    bl fn_80231644
+-    fn_8014ADB4_L_8014AEA8:
+-    clrlwi r0, r3, 24
+-    cmplwi r0, 0x1
+-    bne fn_8014ADB4_L_8014AFD8
+-    mulli r24, r24, 0x30
+-    addi r0, r31, 0x4b0
+-    lfs f3, lbl_806D6DE4(r2)
+-    li r3, 0x0
+-    lfs f4, lbl_806D6DE8(r2)
+-    li r5, 0x0
+-    add r26, r24, r27
+-    lfs f5, 0x60(r29)
+-    add r26, r0, r26
+-    lwz r4, 0x10(r1)
+-    addi r25, r26, 0x4
+-    lfs f1, 0x0(r26)
+-    lfs f2, 0x4(r26)
+-    bl fn_80169334
+-    lfs f31, lbl_806D7E30(r2)
+-    lwz r3, 0xc(r1)
+-    bl fn_80231B74
+-    clrlwi. r0, r3, 24
+-    bne fn_8014ADB4_L_8014AF04
+-    lfs f31, lbl_806D7E34(r2)
+-    fn_8014ADB4_L_8014AF04:
+-    lfs f0, 0x0(r25)
+-    li r3, 0x0
+-    lfs f3, lbl_806D7E38(r2)
+-    li r5, 0x0
+-    fadds f2, f31, f0
+-    lfs f1, 0x0(r26)
+-    fmr f4, f3
+-    lfs f5, 0x60(r29)
+-    lwz r4, 0xc(r1)
+-    bl fn_80169334
+-    cmpwi r30, 0x3
+-    bge fn_8014ADB4_L_8014AF5C
+-    lfs f3, lbl_806D7E2C(r2)
+-    addi r4, r30, 0x14db
+-    lfs f1, 0x0(r26)
+-    li r3, 0x0
+-    fmr f4, f3
+-    lfs f2, 0x0(r25)
+-    lfs f5, 0x60(r29)
+-    li r5, 0x0
+-    bl fn_80169334
+-    b fn_8014ADB4_L_8014AFAC
+-    fn_8014ADB4_L_8014AF5C:
+-    lfs f3, lbl_806D7E2C(r2)
+-    li r3, 0x0
+-    lfs f1, 0x0(r26)
+-    li r4, 0x14de
+-    fmr f4, f3
+-    lfs f2, 0x0(r25)
+-    lfs f5, 0x60(r29)
+-    li r5, 0x0
+-    bl fn_80169334
+-    lfs f3, lbl_806D7E2C(r2)
+-    addi r4, r30, 0x14dc
+-    lfs f2, 0x0(r25)
+-    li r3, 0x0
+-    lfs f0, lbl_806D7E3C(r2)
+-    fmr f4, f3
+-    lfs f1, 0x0(r26)
+-    li r5, 0x0
+-    fsubs f2, f2, f0
+-    lfs f5, 0x60(r29)
+-    bl fn_80169334
+-    fn_8014ADB4_L_8014AFAC:
+-    addi r0, r31, 0x720
+-    add r3, r24, r27
+-    add r3, r0, r3
+-    lfs f3, 0x60(r29)
+-    lfs f1, 0x0(r3)
+-    addi r4, r28, 0x2
+-    lfs f2, 0x4(r3)
+-    li r3, 0x0
+-    creqv 6, 6, 6
+-    bl fn_80167F24
+-    b fn_8014ADB4_L_8014B004
+-    fn_8014ADB4_L_8014AFD8:
+-    mulli r5, r24, 0x30
+-    addi r0, r31, 0xc00
+-    lfs f3, 0x60(r29)
+-    addi r4, r28, 0x2
+-    li r3, 0x0
+-    add r5, r5, r27
+-    add r5, r0, r5
+-    lfs f1, 0x0(r5)
+-    lfs f2, 0x4(r5)
+-    creqv 6, 6, 6
+-    bl fn_80167F24
+-    fn_8014ADB4_L_8014B004:
+-    addi r30, r30, 0x1
+-    addi r27, r27, 0x8
+-    cmpwi r30, 0x6
+-    blt fn_8014ADB4_L_8014AE1C
+-    fn_8014ADB4_L_8014B014:
+-    lfs f1, lbl_806D7E30(r2)
+-    li r3, 0x0
+-    lfs f4, 0x5c(r29)
+-    fmr f2, f1
+-    fmr f3, f1
+-    bl fn_801678FC
+-    lbz r0, 0x20(r29)
+-    cmplwi r0, 0x1
+-    bne fn_8014ADB4_L_8014B0FC
+-    lwz r3, 0x8(r29)
+-    lwz r12, 0x14(r3)
+-    lwz r12, 0x1c(r12)
+-    mtctr r12
+-    bctrl
+-    lwz r3, 0x14(r29)
+-    bl fn_8014017C
+-    lwz r0, 0x24(r29)
+-    cmpwi r0, 0xb
+-    blt fn_8014ADB4_L_8014B078
+-    cmpwi r0, 0xd
+-    bgt fn_8014ADB4_L_8014B078
+-    lwz r3, 0x50(r29)
+-    cmplwi r3, 0x0
+-    beq fn_8014ADB4_L_8014B078
+-    bl fn_8014095C
+-    fn_8014ADB4_L_8014B078:
+-    lwz r0, 0x24(r29)
+-    cmpwi r0, 0x5
+-    blt fn_8014ADB4_L_8014B090
+-    cmpwi r0, 0x7
+-    bgt fn_8014ADB4_L_8014B090
+-    bl fn_8011FAB8
+-    fn_8014ADB4_L_8014B090:
+-    lwz r0, 0x24(r29)
+-    cmpwi r0, 0xe
+-    blt fn_8014ADB4_L_8014B0CC
+-    cmpwi r0, 0x10
+-    bgt fn_8014ADB4_L_8014B0CC
+-    lwz r3, 0x44(r29)
+-    lwz r12, 0x14(r3)
+-    lwz r12, 0x18(r12)
+-    mtctr r12
+-    bctrl
+-    lwz r3, 0x44(r29)
+-    lwz r12, 0x14(r3)
+-    lwz r12, 0x1c(r12)
+-    mtctr r12
+-    bctrl
+-    fn_8014ADB4_L_8014B0CC:
+-    lwz r3, 0x64(r29)
+-    cmplwi r3, 0x0
+-    beq fn_8014ADB4_L_8014B0DC
+-    bl fn_801A0004
+-    fn_8014ADB4_L_8014B0DC:
+-    li r24, 0x0
+-    fn_8014ADB4_L_8014B0E0:
+-    mr r3, r24
+-    bl fn_8013D940
+-    addi r24, r24, 0x1
+-    cmpwi r24, 0x8
+-    blt fn_8014ADB4_L_8014B0E0
+-    li r3, -0x1
+-    bl HSD_StateInvalidate
+-    fn_8014ADB4_L_8014B0FC:
+-    psq_l f31, 0x48(r1), 0, 0
+-    lfd f31, 0x40(r1)
+-    lmw r24, 0x20(r1)
+-    lwz r0, 0x54(r1)
+-    mtlr r0
+-    addi r1, r1, 0x50
+-    blr
++struct RankVec2 {
++    float x, y;
++};
++
++/* Rank board shown after the race: per-slot character portrait, voice
++ * label and place number, laid out from this area's pooled tables. */
++struct RankBoard {
++    char pad0[4];
++    unsigned char hidden;   /* 0x04 */
++    char pad5[3];
++    VObj14 *f08;            /* 0x08 */
++    char padC[8];
++    void *f14;              /* 0x14 */
++    char pad18[8];
++    unsigned char f20;      /* 0x20 */
++    char pad21[3];
++    int state;              /* 0x24 */
++    char pad28[0x1C];
++    VObj14 *f44;            /* 0x44 */
++    char pad48[8];
++    void *f50;              /* 0x50 */
++    char pad54[8];
++    float alpha;            /* 0x5C */
++    float t;                /* 0x60 */
++    void *f64;              /* 0x64 */
++};
++
++#pragma use_lmw_stmw on
++extern "C" void fn_8014ADB4(RankBoard *self)
++{
++    char *pool = (char *)lbl_80362D90;
++    int i;
++
++    if (self->hidden) {
++        return;
++    }
++    if (self->state > 3) {
++        self->t += lbl_806D7E28;
++        if (self->t > lbl_806D7E2C) {
++            self->t = lbl_806D7E2C;
++        }
++        for (i = 0; i < 6; i++) {
++            HudRankSlot *slot = RankSlot_GetByIndex(i);
++            int kart;
++            int portrait;
++            int voice;
++            int extra;
++            unsigned char ok;
++
++            if (slot == 0) {
++                continue;
++            }
++            kart = slot->kart;
++            if (kart < 0 || kart >= 13) {
++                continue;
++            }
++            if (slot->chr < 0 || slot->chr > 3) {
++                continue;
++            }
++            portrait = 0x2B00;
++            voice = 0x1ECD;
++            if (g_gameMode == 0) {
++                ok = fn_802317E0(&portrait, &voice, &extra, slot->chr, slot->kart, 0);
++            } else {
++                ok = fn_80231644(&portrait, &voice, &extra, slot->chr, slot->kart);
++            }
++            if (ok == 1) {
++                RankVec2 *p = &((RankVec2 (*)[6])(pool + 0x4B0))[kart][i];
++                RankVec2 *q;
++                float dy;
++
++                fn_80169334(0, portrait, 0, p->x, p->y, lbl_806D6DE4, lbl_806D6DE8, self->t);
++                dy = lbl_806D7E30;
++                if (!fn_80231B74(voice)) {
++                    dy = *(float *)&lbl_806D7E34;
++                }
++                fn_80169334(0, voice, 0, p->x, dy + p->y, *(float *)&lbl_806D7E38, *(float *)&lbl_806D7E38, self->t);
++                if (i < 3) {
++                    fn_80169334(0, i + 0x14DB, 0, p->x, p->y, lbl_806D7E2C, lbl_806D7E2C, self->t);
++                } else {
++                    fn_80169334(0, 0x14DE, 0, p->x, p->y, lbl_806D7E2C, lbl_806D7E2C, self->t);
++                    fn_80169334(0, i + 0x14DC, 0, p->x, p->y - *(float *)&lbl_806D7E3C, lbl_806D7E2C, lbl_806D7E2C, self->t);
++                }
++                q = &((RankVec2 (*)[6])(pool + 0x720))[kart][i];
++                fn_80167F24(0, slot->name, q->x, q->y, self->t);
++            } else {
++                RankVec2 *q = &((RankVec2 (*)[6])(pool + 0xC00))[kart][i];
++                fn_80167F24(0, slot->name, q->x, q->y, self->t);
++            }
++        }
++    }
++    fn_801678FC(0, lbl_806D7E30, lbl_806D7E30, lbl_806D7E30, self->alpha);
++    if (self->f20 == 1) {
++        self->f08->v1C();
++        fn_8014017C(self->f14);
++        if (self->state >= 11 && self->state <= 13 && self->f50 != 0) {
++            fn_8014095C(self->f50);
++        }
++        if (self->state >= 5 && self->state <= 7) {
++            fn_8011FAB8();
++        }
++        if (self->state >= 14 && self->state <= 16) {
++            self->f44->v18();
++            self->f44->v1C();
++        }
++        if (self->f64 != 0) {
++            fn_801A0004(self->f64);
++        }
++        for (i = 0; i < 8; i++) {
++            fn_8013D940(i);
++        }
++        HSD_StateInvalidate(-1);
++    }
+ }
++#pragma use_lmw_stmw reset
+ 
+ extern "C" void fn_8014B118(ResultPanel *self) {
+     unsigned char hit;

@@ -1,0 +1,13 @@
+diff --git a/src/triforce/acsocket_nm5.c b/src/triforce/acsocket_nm5.c
+index eca8c86..248f034 100644
+--- a/src/triforce/acsocket_nm5.c
++++ b/src/triforce/acsocket_nm5.c
+@@ -7,7 +7,7 @@ static inline u8* GetSocketBuffer(s32 n, u32* off) {
+ 
+ static inline u8* ClearBindBuffer(AcSock* k, u32* off) {
+     u8* buf = GetSocketBuffer(0, off);
+-    *off += k->bufAddr;
++    *off = k->bufAddr + *off;
+     memset(buf, 0, 0x40);
+     return buf;
+ }

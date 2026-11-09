@@ -1,0 +1,34 @@
+{"obj": "game/anon_8020314C_nm1", "fn": "fn_80203224", "pct": 99.75309, "size": 972, "start_tu": null, "start": 2, "best": 2, "moves": [], "secs": 21, "t": "2026-11-09T07:03:31Z"}
+{"obj": "game/Sci2Card_Tick", "fn": "Sci2Card_Tick", "pct": 99.45914, "size": 1664, "start_tu": null, "start": 10, "best": 10, "moves": [], "secs": 21, "t": "2026-11-09T07:04:08Z"}
+{"obj": "game/PhysicsState_KartCollisionCheck", "fn": "PhysicsState_KartCollisionCheck", "pct": 99.38663, "size": 1376, "start_tu": null, "start": 6, "best": 6, "moves": [], "secs": 28, "t": "2026-11-09T07:04:52Z"}
+{"obj": "game/DNBress_nm3", "fn": "fn_80227B98", "pct": 99.16988, "size": 1036, "start_tu": null, "start": 8, "best": 8, "moves": [], "secs": 22, "t": "2026-11-09T07:05:30Z"}
+{"obj": "game/clNormal3D_Exec", "fn": "clNormal3D_Exec", "pct": 99.132324, "size": 1844, "start_tu": null, "start": 124, "best": 124, "moves": [], "secs": 1, "t": "2026-11-09T07:05:47Z"}
+{"obj": "game/Scene_80170B5C", "fn": "fn_80170B5C", "pct": 99.08444, "size": 900, "start_tu": null, "start": 2, "best": 2, "moves": [], "secs": 20, "t": "2026-11-09T07:06:23Z"}
+{"obj": "game/objview/fn_8018F8A8", "fn": "fn_8018F8A8", "pct": 99.05213, "size": 844, "start_tu": null, "start": 2, "best": 2, "moves": [], "secs": 20, "t": "2026-11-09T07:06:58Z"}
+{"obj": "game/EffectVfx29_30_Item4SubFlame_Tick", "fn": "EffectVfx29_30_Item4SubFlame_Tick", "pct": 99.05093, "size": 864, "start_tu": null, "start": 130, "best": 130, "moves": [], "secs": 0, "t": "2026-11-09T07:07:14Z"}
+{"obj": "game/objview/fn_8018E6FC", "fn": "fn_8018E6FC", "pct": 99.01786, "size": 1568, "start_tu": null, "start": 176, "best": 176, "moves": [], "secs": 13, "t": "2026-11-09T07:07:43Z"}
+{"obj": "game/Terrain_GetGroundHeight", "fn": "Terrain_GetGroundHeight", "pct": 98.97591, "size": 996, "start_tu": null, "error": "definition not found", "secs": 0, "t": "2026-11-09T07:07:59Z"}
+{"obj": "game/clsound/fn_801913B0", "fn": "fn_801913B0", "pct": 98.94964, "size": 556, "start_tu": null, "start": 30, "best": 30, "moves": [], "secs": 0, "t": "2026-11-09T07:08:14Z"}
+{"obj": "game/HudFlow20Update", "fn": "fn_80245E6C", "pct": 98.91892, "size": 740, "start_tu": null, "start": 2, "best": 2, "moves": [], "secs": 18, "t": "2026-11-09T07:08:48Z"}
+{"obj": "game/anon_8021BC44_nm1", "fn": "fn_8021DAB8", "pct": 98.88172, "size": 1488, "start_tu": null, "start": 100, "best": 8, "moves": ["wrap-lay x10 - 125.0f", "id LUT_Sin12Bit(3.0f * x14)", "wrap-fwd SubL_f(x10, 125.0f) / 25.0f"], "secs": 74, "t": "2026-11-09T07:10:19Z"}
+{"obj": "game/AnimState_Step", "fn": "AnimState_Init", "pct": 98.867, "size": 812, "start_tu": null, "start": 6, "best": 6, "moves": [], "secs": 2, "t": "2026-11-09T07:10:37Z"}
+{"obj": "game/Scene_8015B790", "fn": "fn_8015B790", "pct": 98.79371, "size": 1144, "start_tu": null, "start": 29, "best": 21, "moves": ["swap lbl_806D8604 * (lbl_806D1598 + 1)"], "secs": 9, "t": "2026-11-09T07:11:02Z"}
+{"obj": "game/anon_8021F088_nm_80221C94_nm1_nm1", "fn": "fn_80222968", "pct": 98.78723, "size": 1880, "start_tu": null, "start": 26, "best": 26, "moves": [], "secs": 30, "t": "2026-11-09T07:11:47Z"}
+{"obj": "game/fn_801E9E74", "fn": "fn_801E9E74", "pct": 98.61724, "size": 1160, "start_tu": null, "start": 161, "best": 161, "moves": [], "secs": 5, "t": "2026-11-09T07:12:08Z"}
+{"obj": "game/EnemyFace", "fn": "fn_8022ACE4", "pct": 98.61484, "size": 1132, "start_tu": null, "start": 60, "best": 48, "moves": ["accum1 tv", "hoist-front 4", "sym-id p->vy[0] x2", "id u + uv[0]"], "secs": 73, "t": "2026-11-09T07:13:37Z"}
+{"obj": "game/FlowCardCheck_nm2", "fn": "fn_80236CDC", "pct": 98.558136, "size": 1548, "start_tu": null, "start": 182, "best": 174, "moves": ["wrap-fwd lbl_806DB858 + x"], "secs": 68, "t": "2026-11-09T07:15:01Z"}
+{"obj": "game/KartPhysics_ApplyCollisionForce", "fn": "KartPhysics_ApplyCollisionForce", "pct": 98.44196, "size": 896, "start_tu": null, "start": 70, "best": 50, "moves": ["id self->push.x", "wrap-loc scale * scale * 0.009f", "wrap-fwd self->position.x - self->previous.x"], "secs": 49, "t": "2026-11-09T07:16:07Z"}
+{"obj": "game/clFlowCourse", "fn": "clFlowCourse_Init", "pct": 98.41037, "size": 1852, "start_tu": null, "start": 38, "best": 28, "moves": ["id data->resources[i].id"], "secs": 36, "t": "2026-11-09T07:16:58Z"}
+{"obj": "sysdolphin/baselib/texp_nm1", "fn": "HSD_TExpSetReg", "pct": 98.36677, "size": 1276, "start_tu": null, "start": 47, "best": 47, "moves": [], "secs": 24, "t": "2026-11-09T07:17:38Z"}
+{"obj": "game/PhysicsState_WallCollisionCheck", "fn": "PhysicsState_WallCollisionCheck", "pct": 98.11449, "size": 1712, "start_tu": null, "start": 118, "best": 90, "moves": ["hoist-back zz + (xx + yy)"], "secs": 39, "t": "2026-11-09T07:18:34Z"}
+{"obj": "game/CardSetupFlowInitial", "fn": "fn_8024AD8C", "pct": 97.96954, "size": 788, "start_tu": null, "start": 4, "best": 4, "moves": [], "secs": 17, "t": "2026-11-09T07:19:06Z"}
+{"obj": "game/CardSaveData_Parser", "fn": "CardSaveData_Parser", "pct": 97.96137, "size": 1864, "start_tu": null, "start": 100, "best": 96, "moves": ["id rule->slot"], "secs": 21, "t": "2026-11-09T07:19:43Z"}
+{"obj": "triforce/acsocket_nm2", "fn": "acModifyMyIPaddr", "pct": 97.88461, "size": 312, "start_tu": null, "start": 5, "best": 5, "moves": [], "secs": 11, "t": "2026-11-09T07:20:10Z"}
+{"obj": "game/Terrain_GetGroundHeight", "fn": "Terrain_GetGroundHeightWithPenetration", "pct": 97.44898, "size": 1176, "start_tu": null, "start": 4, "best": 4, "moves": [], "secs": 23, "t": "2026-11-09T07:20:49Z"}
+{"obj": "game/sprite/fn_8019FA30", "fn": "fn_8019FA30", "pct": 97.44361, "size": 1064, "start_tu": null, "start": 132, "best": 132, "moves": [], "secs": 20, "t": "2026-11-09T07:21:25Z"}
+{"obj": "game/anon_80209330_nm1", "fn": "fn_80209338", "pct": 97.44076, "size": 844, "start_tu": null, "start": 0, "best": 0, "moves": [], "secs": 2, "t": "2026-11-09T07:21:42Z"}
+{"obj": "triforce/ambackup_nm2", "fn": "BackupReadRecord", "pct": 97.39521, "size": 668, "start_tu": null, "start": 16, "best": 16, "moves": [], "secs": 14, "t": "2026-11-09T07:22:12Z"}
+{"obj": "triforce/acsocket_nm3", "fn": "acInetAddr", "pct": 97.26028, "size": 292, "start_tu": null, "start": 13, "best": 13, "moves": [], "secs": 0, "t": "2026-11-09T07:22:28Z"}
+{"obj": "game/anon_80209330_nm2_tail", "fn": "fn_80209C88", "pct": 97.25628, "size": 796, "start_tu": null, "start": 27, "best": 27, "moves": [], "secs": 13, "t": "2026-11-09T07:22:57Z"}
+{"obj": "triforce/acsocket_nm4", "fn": "acConnect", "pct": 97.043015, "size": 372, "start_tu": null, "start": 13, "best": 13, "moves": [], "secs": 12, "t": "2026-11-09T07:23:25Z"}
+{"obj": "game/AI_CalcRivalAvoidance", "fn": "AI_CalcRivalAvoidance", "pct": 97.00318, "size": 1256, "start_tu": null, "start": 122, "best": 74, "moves": ["sym-wrap-loc distance * c x2", "id Waypoint_FindNearest(path, 0, candidate."], "secs": 54, "t": "2026-11-09T07:24:35Z"}

@@ -6,7 +6,7 @@ unless grind mode is on, so a normal interactive Claude Code session in this
 repo is not affected. Grind mode is on when either:
   - the environment variable MKGP2_GRIND=1 is set for the Claude process, or
   - the git-ignored marker file `.grind` exists in the repo root
-    (`bash /mnt/project-files/setup/setup.sh` creates it for cloud threads,
+    (`bash tools/cloud_setup.sh` creates it for cloud threads,
     because env vars exported by setup.sh do not reach the Claude process).
 
 When grind mode is on, the hook blocks the stop and tells Claude to take the
@@ -27,8 +27,9 @@ import os
 import re
 import sys
 
-QUEUE = os.environ.get("MKGP2_GRIND_QUEUE", "/mnt/project-files/setup/queue.md")
-STOP_FILE = os.environ.get("MKGP2_GRIND_STOP", "/mnt/project-files/setup/GRIND_STOP")
+_SHARE = os.environ.get("MKGP2_SHARE", "/mnt/project-files")   # live queue state only
+QUEUE = os.environ.get("MKGP2_GRIND_QUEUE", f"{_SHARE}/setup/queue.md")
+STOP_FILE = os.environ.get("MKGP2_GRIND_STOP", f"{_SHARE}/setup/GRIND_STOP")
 STATE_DIR = os.environ.get("MKGP2_GRIND_STATE", "/tmp/mkgp2_grind")
 OPEN_RE = re.compile(r"^- \[ \] ")
 
@@ -101,8 +102,8 @@ def main():
             common
             + f"Take the next open item in your range ({len(items)} open) ONLY via the helper "
             "(never edit queue.md by hand; it is a generated view and hand edits are lost): "
-            "`python3 /mnt/project-files/setup/tools/queue.py take [ID] [--grep RE] --who <your thread name>`, "
-            "then `queue.py done ID --note <commit>` or `queue.py park ID --note \"<reason>\"`, "
+            "`python3 -I tools/helpers/workqueue.py take [ID] [--grep RE] --who <your thread name>`, "
+            "then `workqueue.py done ID --note <commit>` or `workqueue.py park ID --note \"<reason>\"`, "
             "and take the next one. Next open item: " + items[0][:300]
         )
     else:
@@ -112,7 +113,7 @@ def main():
             "`python3 tools/pragmasweep.py fn <TU> <FN> --set all` (or `batch --min 90`) on the "
             "near misses and docs/gave_up.md rows in your range that nobody claims, try "
             "TU merges/splits for pooled-base rows, and add any new candidates you find to the "
-            "queue with `queue.py add \"fn | TU | % | note\" --who <name>`."
+            "queue with `workqueue.py add \"fn | TU | % | note\" --who <name>`."
         )
     json.dump({"decision": "block", "reason": reason}, sys.stdout)
     return 0

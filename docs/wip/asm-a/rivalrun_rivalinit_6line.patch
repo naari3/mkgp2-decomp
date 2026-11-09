@@ -1,0 +1,369 @@
+diff --git a/src/game/RivalRun.c b/src/game/RivalRun.c
+index 87fd667..5590873 100644
+--- a/src/game/RivalRun.c
++++ b/src/game/RivalRun.c
+@@ -187,7 +187,7 @@ extern void ChallengeGoalCamera_Update();
+ extern void CourseEnvironment_UpdateAndCullZones_Timed();
+ extern void Fog_UpdateFromCourseScene3D();
+ extern void GetInputManager();
+-extern void GetRaceContextPtr();
++extern void *GetRaceContextPtr();
+ extern void HUD_FrameUpdate();
+ extern void InputMgr_GetPlayer();
+ extern unsigned char IsRaceStarted(void);
+@@ -904,14 +904,14 @@ asm void RivalRun_UpdatePathFollower(void) { /* 0x80135EFC size:0x24C */
+ /* refine if the real prototype matters for header consumers. */
+ extern void CarObject_ApplyDriftBoost();
+ extern void *CarObject_GetRenderObj(void *car);
+-extern void GetRaceContextPtr();
++extern void *GetRaceContextPtr();
+ extern unsigned char IsRaceStarted(void);
+ extern float *KartDriver_GetKartRootMtx(void *render);
+ extern void KartItem_CancelAndQueueDefault();
+ extern void KartItem_CancelIfNotForced();
+ extern void KartMovement_EquipItem();
+ extern void OSGetTick();
+-extern void RaceContextSlot_GetIfAlive();
++extern void *RaceContextSlot_GetIfAlive();
+ extern void RenderObj_UseItem();
+ extern void RivalRun_CalcPathDistance();
+ extern void Terrain_RaycastWall();
+@@ -1729,7 +1729,7 @@ asm void RivalRun_CalcPathDistance(void) { /* 0x801367F4 size:0x3B4 */
+ /* refine if the real prototype matters for header consumers. */
+ extern void ClRomTable_PurgeAll();
+ extern void CourseEnvironment_Dtor();
+-extern void GetRaceContextPtr();
++extern void *GetRaceContextPtr();
+ extern void ItemObjectManager_Reset();
+ extern void LakituStart_Dtor();
+ extern void MemoryManager_TimedFree();
+@@ -1886,7 +1886,7 @@ extern void GetCourseDataPtr();
+ extern float GetCourseStartYaw(void);
+ extern int GetDisplayBufferIndex(void);
+ extern int *GetKartModelNameEntry(int chara, int arg);
+-extern void GetRaceContextPtr();
++extern void *GetRaceContextPtr();
+ extern void GetStartPosition(int idx, float *x, float *y, float *z);
+ extern void HUD_RegisterOverlay(void *hud, int id, int arg);
+ extern void ItemObjectManager_Init();
+@@ -1958,9 +1958,26 @@ struct RIPathManager {
+     RIPathManager(int key, void *car, void *render, float *x, float *y, float *z);
+ };
+ struct RICollChecker { char data[0x18]; RICollChecker(); };
++struct RIFollower;
++struct RIRivalInfo;
+ struct RIRival {
+-    char pad0[0x50];
+-    void *render;
++    RIRivalInfo *info;      /* 0x00 */
++    RICarObject *car;       /* 0x04 */
++    RRVec3 pos;             /* 0x08 */
++    RIPathManager *path;    /* 0x14 */
++    int pathSlot;           /* 0x18 */
++    int raceSlot;           /* 0x1C */
++    RIFollower *follower;   /* 0x20 */
++    int laneCooldown;       /* 0x24 */
++    RRVec3 aim;             /* 0x28 */
++    int driftDir;           /* 0x34 */
++    unsigned char fast;     /* 0x38 */
++    int holdFrames;         /* 0x3C */
++    int itemCooldown;       /* 0x40 */
++    int item;               /* 0x44 */
++    int aimFrames;          /* 0x48 */
++    float accelScale;       /* 0x4C */
++    void *render;           /* 0x50 */
+     RIRival(RIPathManager *path, int arg, void *course);
+ };
+ struct RILakituStart { char data[0x58]; RILakituStart(const void *data, int arg, float x, float y, float z); };
+@@ -2095,211 +2112,81 @@ RivalRun::RivalRun() {
+ #pragma exceptions reset
+ #pragma cplusplus reset
+ 
+-/* === extracted from auto_RivalRun_RivalInit_text === */
+-/* Copy into the TU between forward decls and function bodies; */
+-/* keep emit order = target section layout (do not sort). */
+-
+-/* --- extern decls: branch callees (bl/b targets) --- */
+-/* Open prototype (`extern void Foo();`) accepts any call signature; */
+-/* refine if the real prototype matters for header consumers. */
+-extern void Alloc();
++/* === RivalRun_RivalInit: RIRival ctor (0x8013732C) === */
+ extern void *CarObject_GetRenderObj(void *car);
+-extern void CarObject_Init();
+-extern void CarObject_SetPosition();
+ extern float GetCourseStartYaw(void);
+-extern void GetRaceContextPtr();
+-extern void GetStartPosition();
+ extern void ItemEffectBus_OrMask(void *bus, unsigned long long mask);
+-extern void PathManager_RegisterCarObject();
+-extern void RaceContextSlot_GetIfAlive();
+-extern void RivalRun_PathFollowerInit();
+-
+-/* --- extern decls: sda21-referenced data --- */
++extern int PathManager_RegisterCarObject(void *path, float *x, float *y, float *z, void *car, void *render, int a);
++extern void *RaceContextSlot_GetIfAlive(void *ctx, int idx);
+ extern unsigned int g_ccClass;
+ extern const float lbl_806D738C;
+ 
+-/* --- function index (1 fns, .text 0x8013732C..0x80137588) ---
+- * [  0] 0x8013732C size:0x25C   global RivalRun_RivalInit
+- */
++#pragma cplusplus on
++struct RIFollower {
++    char data[0x2C];
++    RIFollower(RRVec3 *pos);
++};
+ 
+-/* --- forward decls --- */
+-asm void RivalRun_RivalInit(void);
++struct RIRivalCar : RICarObject {
++    RIRivalCar(RRVec3 *pos, int cc, int lod)
++        : RICarObject(6, 0, cc, 0, 0, lod, 0, 0, pos->x, pos->z, GetCourseStartYaw()) {}
++};
+ 
+-/* --- extern decls: extab symbolic refs (dtors / typeids) --- */
+-extern void MemoryManager_TimedFree();
++struct RIRivalInfo {
++    int holdFrames;    /* 0x00 */
++    float speed;       /* 0x04 */
++    char pad8[0xC];
++    int itemCooldown;  /* 0x14 */
++};
+ 
+-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
+-#pragma section R ".extab_user"
+-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; void *f9; unsigned int f10; void *f11; unsigned int f12; void *f13; } extab_RivalRun_RivalInit = { 0x200A0000, 0x0000006C, 0x000E0020, 0x000000C4, 0x000E0028, 0x00000178, 0x00000030, 0x00000000, 0x8A80001C, (void *)&MemoryManager_TimedFree, 0x8A80001C, (void *)&MemoryManager_TimedFree, 0x8A80001C, (void *)&MemoryManager_TimedFree };
+ 
+-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
+-#pragma section R ".extabindex_user"
+-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_RivalRun_RivalInit = {
+-    (void *)&RivalRun_RivalInit, 0x0000025C, (void *)&extab_RivalRun_RivalInit
+-};
++#pragma exceptions on
++RIRival::RIRival(RIPathManager *p, int startSlot, void *course) {
++    int i;
+ 
+-/* --- asm function bodies (.text order = fn address order) --- */
+-asm void RivalRun_RivalInit(void) { /* 0x8013732C size:0x25C */
+-    nofralloc
+-    stwu r1, -0x20(r1)
+-    mflr r0
+-    stw r0, 0x24(r1)
+-    li r0, 0x0
+-    stw r31, 0x1c(r1)
+-    mr r31, r6
+-    stw r30, 0x18(r1)
+-    mr r30, r3
+-    addi r6, r30, 0x10
+-    stw r29, 0x14(r1)
+-    stw r28, 0x10(r1)
+-    stw r31, 0x0(r3)
+-    mr r3, r5
+-    addi r5, r30, 0xc
+-    stw r0, 0x4(r30)
+-    stw r4, 0x14(r30)
+-    addi r4, r30, 0x8
+-    bl GetStartPosition
+-    lwz r0, g_ccClass(r13)
+-    cmpwi r0, 0x2
+-    bne RivalRun_RivalInit_L_801373D8
+-    li r3, 0x118
+-    bl Alloc
+-    mr. r28, r3
+-    beq RivalRun_RivalInit_L_801373D0
+-    lwz r29, g_ccClass(r13)
+-    bl GetCourseStartYaw
+-    li r0, 0x0
+-    fmr f3, f1
+-    stw r0, 0x8(r1)
+-    mr r3, r28
+-    mr r6, r29
+-    li r4, 0x6
+-    lfs f1, 0x8(r30)
+-    lfs f2, 0x10(r30)
+-    li r5, 0x0
+-    li r7, 0x0
+-    li r8, 0x0
+-    li r9, 0x5
+-    li r10, 0x0
+-    bl CarObject_Init
+-    RivalRun_RivalInit_L_801373D0:
+-    stw r28, 0x4(r30)
+-    b RivalRun_RivalInit_L_8013742C
+-    RivalRun_RivalInit_L_801373D8:
+-    li r3, 0x118
+-    bl Alloc
+-    mr. r28, r3
+-    beq RivalRun_RivalInit_L_80137428
+-    lwz r29, g_ccClass(r13)
+-    bl GetCourseStartYaw
+-    li r0, 0x0
+-    fmr f3, f1
+-    stw r0, 0x8(r1)
+-    mr r3, r28
+-    mr r6, r29
+-    li r4, 0x6
+-    lfs f1, 0x8(r30)
+-    lfs f2, 0x10(r30)
+-    li r5, 0x0
+-    li r7, 0x0
+-    li r8, 0x0
+-    li r9, -0x1
+-    li r10, 0x0
+-    bl CarObject_Init
+-    RivalRun_RivalInit_L_80137428:
+-    stw r28, 0x4(r30)
+-    RivalRun_RivalInit_L_8013742C:
+-    lwz r3, 0x4(r30)
+-    addi r4, r30, 0x8
+-    bl CarObject_SetPosition
+-    lwz r3, 0x4(r30)
+-    bl CarObject_GetRenderObj
+-    lwz r3, 0x304(r3)
+-    li r6, 0x0
+-    lis r5, 0x80
+-    bl ItemEffectBus_OrMask
+-    li r0, -0x1
+-    stw r0, 0x18(r30)
+-    lwz r3, 0x4(r30)
+-    bl CarObject_GetRenderObj
+-    mr r8, r3
+-    lwz r3, 0x14(r30)
+-    lwz r7, 0x4(r30)
+-    addi r4, r30, 0x8
+-    addi r5, r30, 0xc
+-    addi r6, r30, 0x10
+-    li r9, -0x1
+-    bl PathManager_RegisterCarObject
+-    stw r3, 0x18(r30)
+-    li r0, 0x0
+-    li r3, 0x2c
+-    stw r0, 0x1c(r30)
+-    bl Alloc
+-    mr. r28, r3
+-    beq RivalRun_RivalInit_L_801374A4
+-    addi r4, r30, 0x8
+-    bl RivalRun_PathFollowerInit
+-    RivalRun_RivalInit_L_801374A4:
+-    stw r28, 0x20(r30)
+-    li r3, 0x0
+-    lfs f0, lbl_806D738C(r2)
+-    li r0, 0xb4
+-    stw r3, 0x24(r30)
+-    li r28, 0x0
+-    stfs f0, 0x28(r30)
+-    stfs f0, 0x2c(r30)
+-    stfs f0, 0x30(r30)
+-    stw r3, 0x34(r30)
+-    stb r3, 0x38(r30)
+-    stw r3, 0x3c(r30)
+-    stw r0, 0x40(r30)
+-    stw r3, 0x44(r30)
+-    stfs f0, 0x4c(r30)
+-    stw r3, 0x50(r30)
+-    RivalRun_RivalInit_L_801374E4:
+-    bl GetRaceContextPtr
+-    mr r4, r28
+-    bl RaceContextSlot_GetIfAlive
+-    mr. r29, r3
+-    beq RivalRun_RivalInit_L_80137514
+-    lwz r3, 0x4(r30)
+-    bl CarObject_GetRenderObj
+-    lwz r0, 0xb4(r29)
+-    cmplw r0, r3
+-    bne RivalRun_RivalInit_L_80137514
+-    stw r28, 0x1c(r30)
+-    b RivalRun_RivalInit_L_80137520
+-    RivalRun_RivalInit_L_80137514:
+-    addi r28, r28, 0x1
+-    cmpwi r28, 0x80
+-    blt RivalRun_RivalInit_L_801374E4
+-    RivalRun_RivalInit_L_80137520:
+-    lwz r3, 0x0(r30)
+-    cmplwi r3, 0x0
+-    beq RivalRun_RivalInit_L_80137564
+-    lwz r0, 0x0(r3)
+-    lfs f1, 0x4(r31)
+-    stw r0, 0x3c(r30)
+-    lfs f0, lbl_806D738C(r2)
+-    lwz r3, 0x0(r30)
+-    fcmpo cr0, f1, f0
+-    lwz r0, 0x14(r3)
+-    stw r0, 0x40(r30)
+-    ble RivalRun_RivalInit_L_8013755C
+-    li r0, 0x1
+-    stb r0, 0x38(r30)
+-    b RivalRun_RivalInit_L_80137564
+-    RivalRun_RivalInit_L_8013755C:
+-    li r0, 0x0
+-    stb r0, 0x38(r30)
+-    RivalRun_RivalInit_L_80137564:
+-    lwz r0, 0x24(r1)
+-    mr r3, r30
+-    lwz r31, 0x1c(r1)
+-    lwz r30, 0x18(r1)
+-    lwz r29, 0x14(r1)
+-    lwz r28, 0x10(r1)
+-    mtlr r0
+-    addi r1, r1, 0x20
+-    blr
++    info = (RIRivalInfo *)course;
++    car = 0;
++    path = p;
++    GetStartPosition(startSlot, &pos.x, &pos.y, &pos.z);
++    if ((int)g_ccClass == 2) {
++        car = new RIRivalCar(&pos, RIGetCC(), 5);
++    } else {
++        car = new RIRivalCar(&pos, RIGetCC(), -1);
++    }
++    CarObject_SetPosition(car, &pos);
++    ItemEffectBus_OrMask(*(void **)((char *)CarObject_GetRenderObj(car) + 0x304), 0x0080000000000000ULL);
++    pathSlot = -1;
++    pathSlot = PathManager_RegisterCarObject(
++        path, &pos.x, &pos.y, &pos.z, car, CarObject_GetRenderObj(car), -1);
++    raceSlot = 0;
++    follower = new RIFollower(&pos);
++    laneCooldown = 0;
++    aim.x = lbl_806D738C;
++    aim.y = lbl_806D738C;
++    aim.z = lbl_806D738C;
++    driftDir = 0;
++    fast = 0;
++    holdFrames = 0;
++    itemCooldown = 180;
++    item = 0;
++    accelScale = lbl_806D738C;
++    render = 0;
++    for (i = 0; i < 0x80; i++) {
++        void *slot = RaceContextSlot_GetIfAlive(GetRaceContextPtr(), i);
++        if (slot != 0 && *(void **)((char *)slot + 0xB4) == CarObject_GetRenderObj(car)) {
++            raceSlot = i;
++            break;
++        }
++    }
++    if (info != 0) {
++        holdFrames = info->holdFrames;
++        itemCooldown = info->itemCooldown;
++        if (((RIRivalInfo *)course)->speed > lbl_806D738C) {
++            fast = 1;
++        } else {
++            fast = 0;
++        }
++    }
+ }
++#pragma exceptions reset
++#pragma cplusplus reset
+diff --git a/tools/extab_user_renames.json b/tools/extab_user_renames.json
+index 618b3cd..d0e0361 100644
+--- a/tools/extab_user_renames.json
++++ b/tools/extab_user_renames.json
+@@ -1404,7 +1404,8 @@
+     "__ct__5RIHUDFP13RIPathManager": "HUD_Init",
+     "__ct__15RIWeatherSystemFi": "WeatherSystem_Init",
+     "__nw__FUl": "Alloc",
+-    "__dl__FPv": "MemoryManager_TimedFree"
++    "__dl__FPv": "MemoryManager_TimedFree",
++    "__ct__10RIFollowerFP6RRVec3": "RivalRun_PathFollowerInit"
+   },
+   "src/game/EggItem.c": {
+     "extab_EggItem_OnGroundDriftTick_3B3C": "@etb_8000B5DC",

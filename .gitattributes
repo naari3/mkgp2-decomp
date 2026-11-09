@@ -11,3 +11,7 @@
 
 # decomp-toolkit writes files with LF
 config/**/*.txt  text eol=lf
+# Append-only logs written by parallel threads: keep both sides on merge/rebase.
+docs/sweeps/**/*.jsonl merge=union
+tools/patterns/hits.jsonl merge=union
+tools/patterns/nearmiss_history.jsonl merge=union
