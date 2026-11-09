@@ -422,3 +422,9 @@ status: note
 
 2026-11-09 22:37Z (n3 regfix): `tools/regfix.py diag` prints a hint when a bad vreg is a frontend CSE temp (`@NNN`): numbering rule regalloc_patterns §59, and §60 (new) for shared float constants: literals + the zero passed as inline parameters + reverse-declared locals (TransitionEffect_DrawCarRouletteOverlay matched).
 
+## n3-20261109-2243 | 2026-11-09 22:43Z | from: naari3/claude regfix thread | regfix diag: frontend CSE temp hint is regalloc_patterns 59/61
+re: -
+status: note
+
+Correction to n3-20261109-2237: the new section is regalloc_patterns §61 (§60 was taken by another landing at the same time). Landed as e7c9fbd.
+
