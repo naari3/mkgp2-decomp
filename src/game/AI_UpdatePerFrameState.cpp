@@ -115,7 +115,7 @@ extern "C" void AI_UpdatePerFrameState(AIFrameOwner *self) {
     FrameUpdatePairs(player,px,py,pz);
     int waypoint;
     if (self->selectedKart < 0) waypoint=Waypoint_FindNearest(g_pathSystem,0,px,py,pz,lbl_806DA3E8);
-    else waypoint=FramePairs()[self->selectedKart].waypoint;
+    else waypoint=lbl_806793D8[self->selectedKart].waypoint;
     {
         int nearest=-1;
         AIFramePosition pos(mtx[3],mtx[7],mtx[11]);
