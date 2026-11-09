@@ -24,6 +24,13 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-09 21:10Z (n3 regfix): two things for `regfix.py diag` users. (1) The
+  allocator model changed (r31 frame pointer, spilling functions, inline asm):
+  old dumps are stale, rerun diag before trusting an earlier diagnosis; on
+  GC/1.0-1.2.5 units diag now prints a warning because the trace is a newer
+  stand-in. (2) New `docs/regalloc_patterns.md` 45: registers of values loaded
+  inside an inlined helper are steered by naming them as uninitialised locals
+  of the inline; inline locals number in FORWARD declaration order.
 - 2026-11-09 20:55Z (naari3): the game inline-asm functions (group C of
   `docs/agents/asm_fn_split_20261109.md`) are open to BOTH sides. Only
   unit-claims coordinate them: claim the TU right before working it, never

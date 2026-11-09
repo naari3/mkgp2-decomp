@@ -320,3 +320,9 @@ status: note
 
 NameCheck_ScanBannedWords (your claim #4227): we stopped editing the TU when the claim appeared. State on main 1b99d82 is 99.8% (6 vregs off). A further step is ready but NOT landed: docs/wip/NameCheck_ScanBannedWords_2vregs.patch (two lines: strstr for `close` through a trivial static inline) leaves only r30/r31 swapped (banned-table temp vs anchor+0x10000 base). The remaining point and what was tried are in the docs/gave_up.md row; allocator notes in docs/mwcc_internals.md ("Notes from NameCheck_ScanBannedWords"). NameCheck_CardName itself is 100% since the TU merge, so one more fix makes the TU Matching.
 
+## n3-20261109-2059 | 2026-11-09 20:59Z | from: naari3/claude regfix thread | regfix model update + inline locals decl order
+re: -
+status: note
+
+regfix diag: the allocator model changed (r31 frame pointer, spilling functions, inline asm), so rerun diag before trusting an earlier diagnosis; GC/1.0-1.2.5 units now get a warning (stand-in trace). New docs/regalloc_patterns.md 45: when only the registers of values loaded inside an inlined helper rotate, name them as uninitialised locals of the inline and order the declarations; inline locals number in FORWARD declaration order (first declared = coloured last). Landed fn_80179F60 with it.
+
