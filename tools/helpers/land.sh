@@ -16,6 +16,8 @@
 #      rebases, rebuilds (incremental, only the DOL check) and tries again,
 #      up to --tries rounds, default 10, with a short random pause);
 #   6. with --queue ID: queue.py done ID --note <sha> (needs MKGP2_THREAD).
+# Before building it runs `tools/rewrite_rules.py check --strict` (duplicate
+# docs/regalloc_patterns.md section numbers stop the landing).
 # --dry-run stops after step 4. Claims are NOT touched: close your
 # [unit-claim] issue with the GitHub MCP tool yourself after it says LANDED.
 set -u
@@ -120,6 +122,11 @@ for round in $(seq 1 "$TRIES"); do
   if [ -z "$(git log --oneline origin/main..HEAD)" ]; then
     echo "land: nothing to push (HEAD is already in origin/main)"; exit 0
   fi
+  # catalog consistency after the rebase: parallel threads must not take the
+  # same docs/regalloc_patterns.md section number (fails); other findings warn
+  if [ -f tools/rewrite_rules.py ]; then
+    python3 -I tools/rewrite_rules.py check --strict || { echo "land: fix the section numbering above and rerun"; exit 1; }
+  fi
   build || exit 1
   echo "land: main.dol OK on $(git rev-parse --short HEAD) (rebased on $(git rev-parse --short origin/main))"
   git log --oneline origin/main..HEAD
@@ -138,6 +145,9 @@ for round in $(seq 1 "$TRIES"); do
       python3 -I "$(dirname "$(readlink -f "$0")")/workqueue.py" done "$QUEUE" --note "$SHA"
     fi
     echo "reminder: close your [unit-claim] issue if you are leaving this TU"
+    echo "reminder: log the rule NOW that the commit is on main (the id is resolved from main):"
+    echo "  python3 -I tools/rewrite_rules.py record --fn FN --unit UNIT --rule RULE_ID --outcome landed --commit $SHA"
+    echo "  (new rule? add it to tools/patterns/rules.jsonl first; then commit tools/patterns/ and land again)"
     exit 0
   fi
   echo "land: push rejected (main moved); rebasing again (round $round/$TRIES)"

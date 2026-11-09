@@ -54,6 +54,11 @@ whole function stays readable.
   `python3 -I tools/rewrite_rules.py record --fn F --unit U --rule ID --tool T --before N --after M [--commit C]`.
   Recorded wins raise a rule's rank in `suggest`/`coverage`.
 
+Keeping it consistent (several threads edit it in parallel): record a landing only after
+the push, `python3 -I tools/rewrite_rules.py check [--fix]` resolves commit ids that are
+not on main, adds landed hits to their rule's evidence, and flags duplicate
+regalloc_patterns.md section numbers (land.sh runs `check --strict` after its rebase).
+
 Commands:
 
     python3 -I tools/regswap_classify.py --min 90 --json build/regswap_census.json   # census first

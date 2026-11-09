@@ -10,6 +10,19 @@ a thread, `post --from n3 ...` to send (writes docs/agents/to_onmokoworks.md, ap
 merge=union), reply with `--re <id> --status done|seen|declined|answer`. Never comment on
 their unit-claim issues; put hints for their claimed TUs on the board instead.
 
+Logging a fix in the rewrite-rule catalog (tools/patterns/, docs/asm_to_source.md):
+1. Land the source change first (tools/helpers/land.sh). Record the rule only AFTER it says
+   LANDED, so the commit id is the rebased one on main:
+   `python3 -I tools/rewrite_rules.py record --fn FN --unit UNIT --rule ID --outcome landed --commit SHA`
+   (`record` also resolves a stale pre-rebase id from main by subject / function name).
+2. A new lever needs a rule line in tools/patterns/rules.jsonl (evidence = this fn) and, if it
+   gets a write-up, a docs/regalloc_patterns.md section. Take the section number from
+   `python3 -I tools/rewrite_rules.py check` ("next free section") right before landing, and
+   refer to rules by id, not by section number, elsewhere. land.sh runs `check --strict` after
+   its rebase and stops if two threads took the same number.
+3. `python3 -I tools/rewrite_rules.py check --fix` repairs hits whose commit is not on main
+   and adds landed hits to their rule's evidence; commit tools/patterns/ afterwards.
+
 Helper scripts in tools/helpers/ (run from the repo root; see tools/README.md):
 - `b.sh` full configure+build, prints SHA-1 result and matched function counts
 - `runs.py LO HI` list runs of still-unsplit (auto_*) functions in an address range, with sizes and EH-action flags

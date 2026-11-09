@@ -39,6 +39,8 @@ Commands
   python3 -I tools/rewrite_rules.py record --fn FN --unit UNIT --rule ID --tool T
                                      [--before S --after S] [--commit C] [--note N]
   python3 -I tools/rewrite_rules.py report [--md OUT]   convergence: what is left, reuse vs new, outcomes
+  python3 -I tools/rewrite_rules.py check [--fix] [--strict]   after landing: commit ids on main,
+                                     hit -> rule evidence, unique regalloc_patterns section numbers
   python3 -I tools/rewrite_rules.py import-evidence
   python3 -I tools/rewrite_rules.py backfill   past fixes + autopipe/shapesweep/regfix logs -> hits_backfill.jsonl
 
@@ -99,10 +101,17 @@ def canonical_rules(rid) -> list:
 
 
 def load_hits() -> list[dict]:
+    live = load_jsonl(HITS)
+    landed = {(h.get("fn"), r) for h in live if h.get("outcome") == "landed"
+              for r in canonical_rules(h.get("rule_id"))}
     out = []
-    for h in load_jsonl(BACKFILL) + load_jsonl(HITS):
-        for rid in canonical_rules(h.get("rule_id")):
-            out.append(dict(h, rule_id=rid))
+    for src, rows in (("backfill", load_jsonl(BACKFILL)), ("live", live)):
+        for h in rows:
+            for rid in canonical_rules(h.get("rule_id")):
+                # a landing logged live is also in evidence -> backfill: count it once
+                if src == "backfill" and h.get("tool") == "history" and (h.get("fn"), rid) in landed:
+                    continue
+                out.append(dict(h, rule_id=rid))
     return out
 
 
@@ -475,10 +484,118 @@ def cmd_backfill(a):
 
 
 def cmd_record(a):
-    if record_hit(a.fn, a.unit, a.rule, a.tool, a.before, a.after, a.commit, a.note, a.outcome):
+    commit = a.commit
+    if a.outcome == "landed" or commit:
+        r = resolve_commit(a.fn, commit)
+        if r:
+            commit = r
+        elif commit:
+            print(f"warning: {commit} is not on origin/main yet; record AFTER pushing, or run "
+                  f"`rewrite_rules.py check --fix` later to resolve it", file=sys.stderr)
+    if record_hit(a.fn, a.unit, a.rule, a.tool, a.before, a.after, commit, a.note, a.outcome):
         print(f"recorded in {HITS}")
     else:
         sys.exit(f"could not write {HITS}")
+
+
+def _git(*args, inp=None) -> str:
+    import subprocess
+    r = subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True, input=inp)
+    return r.stdout.strip() if r.returncode == 0 else ""
+
+
+def on_main(commit: str, ref="origin/main") -> bool:
+    import subprocess
+    if not commit or not re.fullmatch(r"[0-9a-f]{7,40}", commit):
+        return False
+    return subprocess.run(["git", "merge-base", "--is-ancestor", commit, ref], cwd=ROOT,
+                          capture_output=True).returncode == 0
+
+
+def resolve_commit(fn: str, commit: str | None, ref="origin/main") -> str | None:
+    """The commit on main that landed fn. A hit logged before `git rebase`
+    carries the pre-rebase id; find the rebased commit by its subject, else the
+    newest commit on main that touches src/ and names fn in its subject."""
+    if commit and on_main(commit, ref):
+        return _git("rev-parse", "--short=8", commit) or commit
+    subj = _git("log", "-1", "--format=%s", commit) if commit and re.fullmatch(r"[0-9a-f]{7,40}", commit) else ""
+    if subj:
+        for l in _git("log", ref, "--since=30.days", "--format=%h\t%s", "--", "src").splitlines():
+            h, _, s2 = l.partition("\t")
+            if s2 == subj:
+                return h
+    if fn:
+        for l in _git("log", ref, "--since=30.days", "--format=%h\t%s", "-F", f"--grep={fn}", "--", "src").splitlines():
+            h, _, s2 = l.partition("\t")
+            if fn in s2:
+                return h
+    return None
+
+
+SECTION = re.compile(r"^## (\d+)\. ", re.M)
+
+
+def cmd_check(a):
+    """Consistency of the catalog after parallel threads edited it:
+    landed hits must point at commits on origin/main and be in their rule's
+    evidence; rule ids must exist; regalloc_patterns.md section numbers must be
+    unique. --fix repairs the first two (rewrites hits.jsonl / rules.jsonl)."""
+    problems, fixed, fatal = [], 0, False
+    rules = load_rules()
+    ids = {r["id"]: r for r in rules}
+    hits = load_jsonl(HITS)
+    changed_hits = changed_rules = False
+    for h in hits:
+        rid = h.get("rule_id")
+        cats = [c for c in canonical_rules(rid) if c in ids]
+        if not cats:
+            problems.append(f"hit {h.get('fn')}: unknown rule id {rid!r} (add the rule to rules.jsonl)")
+        if h.get("outcome") != "landed":
+            continue
+        c = h.get("landed_commit")
+        if not on_main(c):
+            r = resolve_commit(h.get("fn"), c)
+            if r and a.fix:
+                h["landed_commit"] = r; changed_hits = True; fixed += 1
+            problems.append(f"hit {h.get('fn')}: landed_commit {c} is not on origin/main"
+                            + (f" -> {r}" if r else " (no commit on main names this function)"))
+        for cid in cats:
+            ev = ids[cid].setdefault("evidence", [])
+            if not any(e.get("fn") == h.get("fn") for e in ev):
+                problems.append(f"hit {h.get('fn')}: not in the evidence of rule {cid}")
+                if a.fix:
+                    ev.append({"fn": h.get("fn"), "commit": h.get("landed_commit")}); changed_rules = True; fixed += 1
+    for r in rules:
+        for e in r.get("evidence", []):
+            c = e.get("commit")
+            if c and re.fullmatch(r"[0-9a-f]{7,40}", c) and not on_main(c):
+                rc = resolve_commit(e.get("fn"), c)
+                problems.append(f"rule {r['id']}: evidence {e.get('fn')} commit {c} is not on origin/main"
+                                + (f" -> {rc}" if rc else ""))
+                if rc and a.fix:
+                    e["commit"] = rc; changed_rules = True; fixed += 1
+    doc = (ROOT / "docs" / "regalloc_patterns.md").read_text()
+    nums = [int(n) for n in SECTION.findall(doc)]
+    dup = sorted({n for n in nums if nums.count(n) > 1})
+    if dup:
+        fatal = True
+        problems.append(f"docs/regalloc_patterns.md: duplicate section number(s) {dup}; renumber the newer one "
+                        f"to {max(nums) + 1} and update its refs (rules.jsonl refs, docs/agents/*)")
+    for r in rules:
+        for ref in r.get("refs", []):
+            m = re.match(r"docs/regalloc_patterns\.md#(\d+)$", ref)
+            if m and int(m.group(1)) not in nums:
+                problems.append(f"rule {r['id']}: ref {ref} names no section")
+    if changed_hits:
+        HITS.write_text("".join(json.dumps(x, ensure_ascii=False) + "\n" for x in hits))
+    if changed_rules:
+        RULES.write_text("".join(json.dumps(x, ensure_ascii=False) + "\n" for x in rules))
+    for p in problems:
+        print("check: " + p)
+    print(f"check: {len(problems)} problem(s), {fixed} fixed; next free regalloc_patterns section: "
+          f"{max(nums) + 1 if nums else 1}")
+    if fatal and a.strict:
+        sys.exit(1)
 
 
 def _commit_dates(commits):
@@ -738,11 +855,14 @@ def main():
     rp = sub.add_parser("report", help="convergence report: what is left, reuse vs new, rule outcomes")
     rp.add_argument("--md"); rp.add_argument("--census", default=str(CENSUS))
     rp.add_argument("--no-snapshot", action="store_true", help="do not append to nearmiss_history.jsonl")
+    ck = sub.add_parser("check", help="catalog consistency (commit ids on main, evidence, section numbers)")
+    ck.add_argument("--fix", action="store_true")
+    ck.add_argument("--strict", action="store_true", help="exit 1 on duplicate regalloc_patterns sections")
     sub.add_parser("import-evidence")
     sub.add_parser("backfill", help="rebuild hits_backfill.jsonl from past fixes and sweep result logs")
     a = ap.parse_args()
     {"coverage": cmd_coverage, "suggest": cmd_suggest, "record": cmd_record, "report": cmd_report,
-     "import-evidence": cmd_import_evidence, "backfill": cmd_backfill}[a.cmd](a)
+     "import-evidence": cmd_import_evidence, "backfill": cmd_backfill, "check": cmd_check}[a.cmd](a)
 
 
 if __name__ == "__main__":

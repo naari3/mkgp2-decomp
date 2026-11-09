@@ -458,7 +458,7 @@ Statement order of two uses of one expression decides which of them owns
 the CSE temp; try it when a named local is "propagated away". Rule:
 `stmt-order` (evidence added).
 
-## 22. A local must be coloured just before a later inline's temps: read it through a nested inline (fn_8018DAD0, 11-09)
+## 24. A local must be coloured just before a later inline's temps: read it through a nested inline (fn_8018DAD0, 11-09)
 
 Inline locals and parameters become frontend temps (`@N`) when the inline is
 expanded, and MWCC expands inlines level by level: every inline called

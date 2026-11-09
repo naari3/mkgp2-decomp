@@ -18,8 +18,12 @@ rewrite by hand" gave 5 functions at 100 % in about an hour:
 | LakituStart_UpdateCountdown | 82cafce | float local declaration order | §18 |
 | fn_8023A148 | be6dc44 | hand-unrolled stores written back as a loop | §21 |
 | CourseData_LoadPathTable | 96412fd | declare an inner inline's local in the outer inline, pass by reference | §22 |
+| PtrVec_InsertFill | 99318d8 | compute the value before declaring the local that holds it | §23 |
+| fn_8018DAD0 | 481aa1e | read the value through a nested inline so it is coloured just before the later inline's temps | §24 |
+| DoublyLinkedList_RemoveByKey | b27f188 | reuse the matched StlList_RemoveByValueField shape | §20 |
+| AssocTree_FreeAll | eb9631d | reuse the STLContainer_DisposeRecursive inline shape | §20 |
 
-None of the structural ones (§19-§22) are in the brute-force candidate set.
+None of the structural ones (§19-§24) are in the brute-force candidate set.
 Suggested loop for a Codex worker on a register-only near miss:
 
 1. `python3 tools/regfix.py diag <unit> <fn>` (unit as in configure.py without
@@ -32,7 +36,7 @@ Suggested loop for a Codex worker on a register-only near miss:
    `python3 tools/asmgrep.py like <unit> <fn> --from 0x.. --to 0x.. --src`
    for one window. Run `python3 tools/asmgrep.py index` once first.
 3. Pick one rewrite from `tools/patterns/rules.jsonl` /
-   `docs/regalloc_patterns.md` (§18-§22 are today's) that explains the
+   `docs/regalloc_patterns.md` (§18-§24 are today's) that explains the
    diagnosis, apply it, rebuild, repeat from 1.
 4. On a hit, log it: `python3 tools/rewrite_rules.py record --fn <fn>
    --unit <unit> --rule <rule id> --tool "regfix diag + hand" --before <old %>
