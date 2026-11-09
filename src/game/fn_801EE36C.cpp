@@ -1,6 +1,9 @@
-/* Native candidate: 99.9135% text. Remaining differences are five
- * FP register operands in the transit interpolation.
- * The primary EH payload is exact; the extra weak Vec destructor is unowned. */
+/* fn_801EE36C matches. The transit block computes the scale before delta and
+ * reads previous.x for the position through a float pointer: that keeps the
+ * IR optimiser from CSE-ing previous.x into a frontend @temp (numbered before
+ * every backend temp), so the backend load is numbered after the 0.0125f
+ * constant and coloured first (docs/mwcc_internals.md, "Vreg numbering").
+ * The extra weak Vec destructor is unowned. */
 #include "game/PhysicsGroundPrivate.h"
 
 extern "C" {
@@ -72,12 +75,13 @@ extern "C" void fn_801EE36C(PhysicsGroundState *self)
         }
     }
     if (self->transitTimer > 0) {
+        float s = 0.0125f * (float)self->transitTimer + 1.0f;
         CollisionVec delta(self->position.x, self->position.y, self->position.z);
         delta.x -= self->previous.x;
         delta.y -= self->previous.y;
         delta.z -= self->previous.z;
-        ScaleTransit(delta, 0.0125f * (float)self->transitTimer + 1.0f);
-        self->position.x = delta.x + self->previous.x;
+        ScaleTransit(delta, s);
+        self->position.x = delta.x + ((float*)&self->previous)[0];
         self->position.y = delta.y + self->previous.y;
         self->position.z = delta.z + self->previous.z;
         --self->transitTimer;
