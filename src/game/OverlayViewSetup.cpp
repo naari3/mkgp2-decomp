@@ -1,15 +1,21 @@
 /* Overlay projection and camera setup (fn_801F6588).
- *
- * This TU owns .bss 0x80679698..0x806796F0 (view rect, rotation, view
- * matrix); the target addresses all three from one pooled base in r31.
- * The rotation temporary has a dtor, which keeps it in memory at sp+0x2C.
- * NonMatching (99.46%): only the FPR homes of c/d (target f7/f6) versus
- * the converted rotation.c/d (target f10/f9) are swapped. */
-struct RotData { float a,b,c,d;
-    RotData &operator=(const RotData &r) { a=r.a; b=r.b; c=r.c; d=r.d; return *this; } };
+ * Owns the view rectangle, rotation and matrix .bss pool at
+ * 0x80679698..0x806796F0, addressed from one section base.
+ * The indexed rotation assignment retains the local snapshot; subsequent
+ * coefficient reads produce the target single-precision rounding.
+ * NonMatching: origin and rounded-coefficient FPR homes remain exchanged.
+ * Primary text is 520 bytes; owned EH, EH index and .bss are exact. */
+struct RotData {
+    float values[4];
+    RotData &operator=(const RotData &r) {
+        for (int i=0; i<4; ++i) values[i]=r.values[i];
+        return *this;
+    }
+};
 struct OverlayRotation : RotData {
-    OverlayRotation(float a_,float b_,double c_,double d_) { a=a_; b=b_; c=c_; d=d_; }
-    ~OverlayRotation() {}
+    OverlayRotation(float a_,float b_,float c_,float d_) {
+        values[0]=a_; values[1]=b_; values[2]=c_; values[3]=d_;
+    }
 };
 typedef struct OverlayView {
     unsigned short x,y,width,height;
@@ -54,10 +60,10 @@ extern "C" void fn_801F6588(unsigned int mode) {
         a=lbl_806DA6C0; b=lbl_806DA6EC; c=lbl_806DA6D8; d=lbl_806DA6CC;
         OverlayRotation rotation(c,d,a,b);
         float target[3]; float up[3]; float eye[3];
-        lbl_806796B0.a=c; lbl_806796B0.b=d; lbl_806796B0.c=a; lbl_806796B0.d=b;
+        lbl_806796B0=rotation;
         up[0]=a; up[1]=lbl_806DA6EC; up[2]=lbl_806DA6C0;
-        eye[0]=c-rotation.c*dy-rotation.d*dx;
-        eye[1]=d+rotation.c*dx-rotation.d*dy;
+        eye[0]=c-lbl_806796B0.values[2]*dy-lbl_806796B0.values[3]*dx;
+        eye[1]=d+lbl_806796B0.values[2]*dx-lbl_806796B0.values[3]*dy;
         eye[2]=lbl_806DA6F0;
         target[0]=eye[0]; target[1]=eye[1]; target[2]=a;
         C_MTXLookAt(lbl_806796C0,eye,up,target);
