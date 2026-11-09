@@ -568,3 +568,9 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
 - `python3 tools/fmt_args_detect.py [--all] [--md docs/sweeps/fmt_args.md]` (rule debug-format-arg-count, regalloc_patterns 49): compares the `%` conversions of each varargs call's format string (read from the DOL through the literal, `lbl_X`, or `pool + 0xNN`) with the arguments passed. 11-09: 0 mismatches inside near-miss functions; `--all` lists 26 in matched code (mostly calls whose first `%` string is not the format, plus `"%s retry %d"` with one argument in FileLoader_LoadBin/Open, harmless there).
 - fn_801C9288 merged into game/clFlowRound.c (11-09, Matching): a near miss that sits right before its data owner's TU is worth retrying after the owner's compiler/flags were corrected. On GC/1.3.2 as its own TU it was 91.3% and the 11-08 merge draft 89.7%; inside the TU on its real flags (GC/2.6, -inline deferred, defined ahead of Draw under `#pragma defer_codegen off`) the same source gave 96.8%, and the rest was a declaration-order sweep of the three case-block locals (`int anim; param; pos;`, assigned pos, param, anim) plus `opt_common_subs off` for the reloaded offset constant. The callers in the TU kept calling it (no auto-inline).
 
+- merge_tus.py `--suffix-base N` + `--pool-external` (11-09): extend an already merged TU. Run `apply` on the
+  new range into a scratch unit with the same pool file, then append its sections to the merged file, join the two
+  splits.txt blocks and the two entries in extab_user_renames.json / extab_order.json, drop the scratch Object line,
+  build, `prune-renames`, build. Pool tables indexed as `table[i].field` need the real element type at the
+  definition (hoist the section's struct above the pool); `(*(T (*)[])&lbl)[i]` over a `void *[]` definition
+  gives `addi r0,r3,0 / slwi r3,r4,3` instead of `addi r3,r3,0 / slwi r0,r0,3`.

@@ -29,6 +29,9 @@ below say the same thing.
   regalloc_patterns §46 (block-local counter per later loop) first; (2) resolves the §40 anchor
   hint from symbols.txt. Hints printed before 6759bb0 could name the wrong base symbol, so
   re-run diag before splitting a symbol on an old hint.
+- 2026-11-09 22:45Z: 14 more test-menu units (`CardRW_Renew_Page.c` .. `CameraTest_Page.cpp`, .text 0x8006B32C..0x80070EA8)
+  are appended to `game/CardCreate_Page.cpp` (27 units, still Matching). The 9 remaining pages from
+  `FlashFadeOverlay_Draw.c` on stay split until their two near misses match.
 - 2026-11-09 22:15Z: `game/fn_801C9288.cpp` is merged into `game/clFlowRound.c` (Matching).
 - 2026-11-09 21:50Z: when merging TUs, take each TU's flags from its real compile command
   (`ninja -t commands`): lib groups such as `game_extab`, `game_ai`, `game_801077C8` set

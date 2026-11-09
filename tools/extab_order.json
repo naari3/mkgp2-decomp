@@ -3184,7 +3184,21 @@
     "OperationTime_Page",
     "ClockSetting_Page",
     "CabinetSetting_Page",
-    "CardCreate_Page"
+    "CardCreate_Page",
+    "CardRW_Renew_Page",
+    "CardRW_HardwareInit_Page",
+    "CardRW_Reprint_Page",
+    "CardRW_DataRepair_Page",
+    "CardDataTransfer_UI",
+    "CardDataCheck_UI",
+    "CardRW_PrintTest_Page",
+    "CardRW_DispenseTest_Page",
+    "CardRW_ReadWriteTest_Page",
+    "CardRW_CleaningTest_Page",
+    "CardRW_TestTopMenu_Page",
+    "SpeakerTest_Page",
+    "LampTest_Page",
+    "CameraTest_Page"
   ],
   "src/game/fn_801B7EF8.c": [
     "fn_801B7EF8",
