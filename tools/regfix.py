@@ -147,7 +147,7 @@ class Graph:
         return g
 
     def copy(self):
-        g = Graph(self.rc, self.nodes, self.key, self.nb, self.perm, self.names, self.phys)
+        g = Graph(self.rc, self.nodes, self.key, self.nb, self.perm, dict(self.names), self.phys)
         g.params = getattr(self, "params", set())
         g.cost = getattr(self, "cost", {})
         return g
@@ -336,6 +336,18 @@ class Edit:
         elif self.kind == "phantom":      # extra permanent neighbour(s)
             n, f = g.perm[self.a]
             g.perm[self.a] = (n + self.extra, f)
+        elif self.kind == "name":         # temp a becomes a named local: lowest numbers
+            g.key[self.a] = min(g.key.values()) - 0.5
+        elif self.kind == "lownb":        # n new named locals numbered first, live across a
+            lo = min(g.key.values()) if g.key else 32
+            for k in range(self.extra):
+                x = f"{g.rc[0]}_new{k}_{self.a}"
+                g.nodes.append(x)
+                g.key[x] = lo - 1 - k
+                g.nb[x] = {self.a}
+                g.nb[self.a].add(x)
+                g.perm[x] = (0, set())
+                g.names[x] = f"new{k}"
         elif self.kind == "forbid":       # a machine register live across a
             n, f = g.perm[self.a]
             g.perm[self.a] = (n + 1, f | {self.extra})
@@ -369,6 +381,14 @@ class Edit:
             return f"make {d(self.a)} live across {d(self.b)}"
         if self.kind == "phantom":
             return f"give {d(self.a)} {self.extra:+d} neighbour(s) (an extra coalesced copy, e.g. `t = x;`), moving it one simplify level"
+        if self.kind == "name":
+            return (f"hold {d(self.a)} in a NAMED local (named locals get the lowest vreg numbers, so it is "
+                    f"pushed in simplify sweep 1; rule low-numbered-neighbours-sweep1)")
+        if self.kind == "lownb":
+            return (f"add {self.extra} named local(s) declared FIRST (lowest vreg numbers) that are live while "
+                    f"{d(self.a)} is live (e.g. keep a value used across its range in a named local): they are "
+                    f"pushed early in simplify sweep 1 and drop its degree below K, so it is pushed in sweep 1 "
+                    f"too (rule low-numbered-neighbours-sweep1)")
         if self.kind == "forbid":
             return (f"keep {self.extra} busy while {d(self.a)} is live (e.g. the argument/return value in "
                     f"{self.extra} is set before it, or it is computed after a call)")
@@ -419,6 +439,8 @@ def candidate_edits(g: Graph, w, ph):
             E.append(Edit("forbid", a, None, ph[a]))
         for n in (1, 2, -1):
             E.append(Edit("phantom", a, None, n))
+        for n in (1, 2, 3):
+            E.append(Edit("lownb", a, None, n))
     # dedupe renumbers that do not move a in the order
     seen, out = set(), []
     for e in E:
@@ -654,10 +676,27 @@ def solve(g: Graph, w, depth=2, beam=12, limit=8):
         if m == 0:
             sols.append(([e], g2))
         scored.append((m, e))
-    if sols or depth < 2:
+    if depth < 2:
         return base, sols[:limit], len(E)
-    scored.sort(key=lambda x: x[0])
+    # temps next to the focus turned into named locals, two at a time (fn_8023AC14 8f0fdc0)
+    foc = set(mismatch(ph, w))
+    near = {x for v in foc for x in g.nb[v]} | foc
+    N = sorted(g.nodes, key=lambda v: (v not in near, g.key[v]))     # neighbours of the focus first
+    N = [x for x in N if not (g.names.get(x) and not g.names[x].startswith("@"))]
     tried = 0
+    for x, y in itertools.combinations(N, 2):
+        if time.time() > t_end:
+            break
+        tried += 1
+        es = [Edit("name", x), Edit("name", y)]
+        g2 = es[1].apply(es[0].apply(g))
+        if not mismatch(g2.colour()[0], w):
+            sols.append((es, g2))
+            if len(sols) >= limit + 2:
+                break
+    if sols:
+        return base, sols[:limit + 2], len(E) + tried
+    scored.sort(key=lambda x: x[0])
     for m, e in scored[:beam]:
         g1 = e.apply(g)
         p1, _ = g1.colour()
