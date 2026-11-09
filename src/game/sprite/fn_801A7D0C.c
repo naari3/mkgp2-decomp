@@ -38,8 +38,14 @@ static inline unsigned char Countdown_Push(short id, short priority, unsigned ch
     return 1;
 }
 
+static inline void Countdown_ItemColumn(void ***cursor) {
+    *cursor = &((CountdownRaceItemEntry *)*cursor)->item;
+}
+
 static inline void *Countdown_Item(int index) {
-    return ((CountdownRaceItemEntry *)g_raceEntryArray)[index].item;
+    void **cursor = (void **)g_raceEntryArray;
+    Countdown_ItemColumn(&cursor);
+    return cursor[index * (sizeof(CountdownRaceItemEntry) / sizeof(void *))];
 }
 
 void fn_801A7D0C(void) {

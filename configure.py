@@ -3098,7 +3098,7 @@ config.libs = [
             Object(NonMatching, "game/sprite/VoiceEvent_PushRace.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/sprite/fn_801AECF4.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/sprite/fn_801ACC18.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/sprite/fn_801A7D0C.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/sprite/fn_801A7D0C.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/misc3d/fn_8016E8B8.c"),
             Object(Matching, "game/misc3d/fn_80169E10.c"),
             Object(Matching, "game/misc3d/fn_80169E20.c"),
