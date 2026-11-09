@@ -1959,8 +1959,61 @@ def fix(a, rep0):
     return best
 
 
+def anchor_hints(unit, fn):
+    """Target `addi rX,anchor,N` whose address is not the start of a symbol
+    (docs/regalloc_patterns.md 40, rule anchor-addi-object-boundary).
+    -> [(insn text, symbol, addend)]"""
+    import regswap_classify as rc
+    units = {u["name"]: u for u in json.loads((ROOT / "objdiff.json").read_text())["units"]}
+    u = units.get(unit) or next((v for k, v in units.items() if k.endswith("/" + unit)), None)
+    if not u or "base_path" not in u:
+        return []
+    r = subprocess.run([rc.OBJDIFF, "diff", "-1", str(ROOT / u["target_path"]), "-2", str(ROOT / u["base_path"]),
+                        "-o", "-", fn], capture_output=True, text=True, timeout=120, cwd=ROOT)
+    left = json.loads(r.stdout).get("left", {})
+    syms = left.get("symbols", [])
+    sym = next((x for x in syms if x.get("instructions") and (x["name"] == fn or x["name"].startswith(fn + "__"))), None)
+    if not sym:
+        return []
+    anchors, out, seen = set(), [], set()
+    for row in sym["instructions"]:
+        ins = row.get("instruction")
+        if not ins:
+            continue
+        mn, ar = rc.ops(ins)
+        rel = ins.get("relocation") or {}
+        dst = ar[0] if ar and rc.REG.match(ar[0]) else None
+        if mn == "addi" and len(ar) == 3 and rel.get("type_name") == "R_PPC_ADDR16_LO":
+            anchors.add(dst)
+            continue
+        if mn in ("addis", "mr") and len(ar) >= 2 and ar[1] in anchors:
+            anchors.add(dst)
+            continue
+        if mn == "addi" and len(ar) == 3 and ar[1] in anchors and dst != ar[1] and rel.get("type_name") == "R_PPC_NONE":
+            add = int(rel.get("addend") or 0)
+            t = rel.get("target_symbol")
+            if add and t is not None and t < len(syms) and (t, add) not in seen \
+                    and not syms[t]["name"].startswith("["):
+                seen.add((t, add))
+                out.append((ins["formatted"], syms[t]["name"], add))
+        if dst and not mn.startswith(("st", "cmp", "b")):
+            anchors.discard(dst)
+    return out
+
+
 def print_levers(a, rep, src_text, d, ext):
     """Hand-landed source levers whose shape fits (tools/diag2sweep.levers)."""
+    try:
+        ah = anchor_hints(a.unit, a.fn)
+    except Exception as e:  # noqa: BLE001 - advice only
+        ah = []
+        print(f"[regfix] anchor hint: {e}")
+    if ah:
+        print("\n== anchor offsets that land inside a symbol (rule anchor-addi-object-boundary, regalloc_patterns 40) ==")
+        for txt, nm, add in ah[:12]:
+            print(f"  target `{txt}` = {nm}+0x{add:x}: MWCC never folds a constant into an anchored object's address, "
+                  f"so an object of the original source starts there. Split {nm} at +0x{add:x} in symbols.txt and "
+                  f"index the new object directly.")
     try:
         import diag2sweep as d2s
         import pragmasweep as ps
