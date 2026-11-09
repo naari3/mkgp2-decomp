@@ -340,6 +340,12 @@ static inline void Shutdown() {
     fn_80287EE4(0,tail);
 }
 
+#pragma cplusplus off
+static inline int BootOptionDisabled(unsigned char option) {
+    return option == 0;
+}
+#pragma cplusplus reset
+
 static inline int IsServiceBoot(unsigned int mode) {
     return (unsigned char)(mode == 1);
 }
@@ -402,9 +408,9 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
     lbl_806D0F94=enabled;
     if (!enabled) lbl_806D0F98=1;
     vblank_flag=1;
-    int disabled=config->cardDisabled==0;
+    int disabled=BootOptionDisabled(config->cardDisabled);
     lbl_806D0F98=enabled ? disabled : 1;
-    lbl_806D0F99=(int)(config->otherDisabled==0);
+    lbl_806D0F99=BootOptionDisabled(config->otherDisabled);
     InputMgr_Init();
     StrPcb_EnsureInstance();
     JvsInput_SetSteeringCalibration(calibration->steering);
