@@ -8,7 +8,6 @@ static inline float (*FaceMatrix(HSD_JObj *jobj))[4] {
 
 /* Extract world-space faces, reversing winding and alternating strip parity. */
 int fn_80185630(HSD_JObj *jobj, DListPObj *pobj, DListFace *faces, int capacity) {
-    DListFace *out;
     unsigned int size;
     DListVec v[4];
     DListFace *face;
@@ -30,7 +29,6 @@ int fn_80185630(HSD_JObj *jobj, DListPObj *pobj, DListFace *faces, int capacity)
     count = 0;
     fn_801866DC(pobj->verts);
     if (lbl_806D1678 == 0) return 0;
-    out = faces;
     while (p < end) {
         size = CmdSize(p);
         if (size) { p += size; continue; }
@@ -44,12 +42,12 @@ int fn_80185630(HSD_JObj *jobj, DListPObj *pobj, DListFace *faces, int capacity)
         default: needed = 0; break;
         }
         if (n < needed || needed == 0) { p += lbl_806D1678 * n; continue; }
-        face = out;
         collected = 0;
         parity = 0;
         for (i = 0; i < n; ++i) {
             ReadPosition(p, &v[collected++]);
             if (collected >= needed) {
+                face = &faces[count];
                 switch (primitive) {
                 case 0x90:
                     PSMTXMultVec(FaceMatrix(jobj), &v[0], &face->v[2]);
@@ -85,8 +83,6 @@ int fn_80185630(HSD_JObj *jobj, DListPObj *pobj, DListFace *faces, int capacity)
                     face->count = 4;
                     break;
                 }
-                ++out;
-                ++face;
                 ++count;
                 if (count >= capacity) return count;
             }

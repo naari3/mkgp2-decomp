@@ -63,3 +63,8 @@ c19_u45 fn_80184F24: replacing independent int offset, casted out+offset, and of
 Source: Codex worker c20_u66_20261108 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c20_u66 fn_80184928: target-derived declaration ordering (size/primitive/half after persistent locals) improves98.18538->98.28982, exact1532B/extab8/index12. dst/table base becomes target r21, quad cursor r21->r20; 99->92 formatted differing rows. Float-component reader is instruction-identical; reuse command-size/vertex-count n regresses98.133156. Retain H2 NonMatching. Residual GPR partition, three stack-versus-pointer coordinate accesses, quad-reader scratch registers and quad induction scheduling. No singleton/pool rescue or B subset. Full fallback DOL SHA1 exact.
+
+## c22_u79_20261109
+Source: Codex worker c22_u79_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 2488 B.
+
+c22_u79 fn_80185630: 99.702576->100% by computing face=&faces[count] inside collected>=needed, removing independent out and ++out/++face. Unlike c20 outer-primitive indexing, completion-site indexing lets MWCC synthesize both target induction webs and fixes all34 GPR/scheduling rows. Text2488/extab8/index12 exact; sole TU promoted Matching. Actual main.elf source edge and symbol80185630/2488 verified; coordinator source-linked DOL SHA-1 ea30f3b1 exact; +1 native/2488B. Primitive-loop inline helper outlined and regressed22.180065 before successful H2. No pool, split, header or EH bridge changes.
