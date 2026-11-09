@@ -352,7 +352,7 @@ int fn_8019F1C4(CurveKeyKV *p, int n, float t, float *out) {
 
 }
 
-static inline int IsSpecialMovementMode() { return g_gameMode == 2; }
+static inline int IsSpecialMovementMode() { return g_gameMode == 2 ? 1 : 0; }
 
 inline CarTrivial::CarTrivial() {}
 
@@ -362,7 +362,7 @@ inline MovementState::MovementState(float a, float b) : scale(a), value(b) {
     vector.z = 0.0f;
 }
 
-inline MovementSettings::MovementSettings(int a, int b, int special) {
+inline MovementSettings::MovementSettings(int a, int b, bool special) {
     field22 = special;
     field24 = a;
     field28 = b;
