@@ -13081,9 +13081,19 @@ game/ItemViewer.cpp:
 	.data       start:0x804F2134 end:0x804F2160
 
 game/acLib.cpp:
-	extab       start:0x8001F218 end:0x8001F240
-	extabindex  start:0x8002BAB4 end:0x8002BAF0
-	.text       start:0x80255000 end:0x802557C0
+	extab       start:0x8001F218 end:0x8001F220
+	extabindex  start:0x8002BAB4 end:0x8002BAC0
+	.text       start:0x80255000 end:0x80255154
+
+game/acLib_nm1.cpp:
+	extab       start:0x8001F220 end:0x8001F228
+	extabindex  start:0x8002BAC0 end:0x8002BACC
+	.text       start:0x80255154 end:0x802554DC
+
+game/acLib_tail.cpp:
+	extab       start:0x8001F228 end:0x8001F240
+	extabindex  start:0x8002BACC end:0x8002BAF0
+	.text       start:0x802554DC end:0x802557C0
 	.bss        start:0x80679E28 end:0x80679F00
 	.sbss       start:0x806D1AD0 end:0x806D1AD8
 
