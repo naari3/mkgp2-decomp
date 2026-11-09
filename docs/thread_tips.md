@@ -595,3 +595,13 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   through the unsuffixed entry, e.g. `__ct__15ServiceMenu_p34Fi` -> `ServiceMenu_Init`); (2) `__declspec(weak)` gets suffixed
   (`weak_p27`): strip it; (3) a section that switches to `#pragma cplusplus off` half way needs `struct T_pN` in the pool casts.
 - The containers in the game are the real Metrowerks MSL C++ (`std::deque`, `Metrowerks::cdeque`, `std::vector`, `std::length_error`); the genuine CW GC 2.5 headers compiled with GC/2.6 reproduce them exactly (7 stuck deque functions at once). Do not hand-write them: `python3 tools/fetch_msl.py`, name mapping and instantiation-order rules in `docs/notes/msl_cpp.md`.
+- KartMovement_RotateByYaw 100% (11-10), matrix/vector inline shapes worth porting to other kartmove near misses:
+  (1) vector transform: copy the input first and store straight into the vector, one expression per component with the
+  translation on the left, `float x = v->x, y = v->y, z = v->z; v->x = m->m[3][0] + (z*m->m[2][0] + (m->m[0][0]*x + y*m->m[1][0]));`
+  (named `rx/ry/rz` accumulators with `+=` statements gave 26 FPR vregs off; matrix loads are CSE'd over two inlined
+  calls, so every numbering detail shows); (2) Identity = 2-D zero loop + `a->m[0][0] = a->m[1][1] = a->m[2][2] = a->m[3][3] = 1.0f;`;
+  (3) Multiply with `Matrix44 product; float *out = (float *)product.m; int j; int index; int i; float value;` and
+  `out[index+j] = value` / `index += 4`; (4) `float c, s;` declared before `double radians`; (5) the member update
+  (`k->yaw += angle`) before the first inline call.
+- leversweep lever `chain-assign-split` (11-10): `a = b = c = K;` as separate statements in both orders. Fired on 7 near
+  misses, 2 small gains, 0 matches.
