@@ -364,7 +364,9 @@ def prune_renames(a):
     rj = json.loads(RENAMES.read_text())
     key = 'src/' + a.tu
     before = len(rj[key])
-    rj[key] = {k: v for k, v in rj[key].items() if not re.search(r'_p\d+$', k) or k in syms}
+    # keep v-in-syms too: once the renames are applied the object no longer has the _pN names,
+    # so a second prune would otherwise drop every rename that is in use.
+    rj[key] = {k: v for k, v in rj[key].items() if not re.search(r'_p\d+$', k) or k in syms or v in syms}
     RENAMES.write_text(json.dumps(rj, indent=2, ensure_ascii=False) + '\n')
     print(f'{key}: {before} -> {len(rj[key])} renames')
 
