@@ -25,7 +25,7 @@ usage (repo root, after a normal build):
   python3 tools/autopipe.py status
   python3 tools/autopipe.py land-hit FN      (after `run --hold` saved a hit and the TU is claimed)
 
-Stage 2b (stmt): tools/stmtsweep.py on the TU's own setting and on the best
+Stage 2b (stmt): tools/stmtsweep.py -> tools/typesweep.py --fn -> stmtsweep again, on the TU's own setting and on the best
 stage-1/2 setting (after decl order), --no-stmt to skip. For the >=99% sweep:
   AUTOPIPE_DIR=/mnt/project-files/setup/autopipe99 python3 tools/autopipe.py run \
       --min 99 --no-perm --hold --stop-on hit --claims FILE
@@ -209,6 +209,12 @@ def stage_sweep(u, d, fn, a):
     return res, None
 
 
+def stmtsweep_scores(obj):
+    import importlib
+    if 'stmtsweep' not in sys.modules: importlib.import_module('stmtsweep')
+    return sys.modules['stmtsweep'].scores(obj)
+
+
 def stage_stmt(u, d, fn, setting, a):
     """Stage 2b: tools/stmtsweep.py (dependency-safe statement orders) on top of a
     stage-1/2 setting. Works on the real source + ninja (one build at a time);
@@ -224,18 +230,32 @@ def stage_stmt(u, d, fn, setting, a):
         if cc != u.cc:
             if not set_cc(u.obj, cc): return None, None
             configure()
-        cmd = ['python3', '-I', 'tools/stmtsweep.py', '--tu', u.src, '--fn', fn, '--max', str(a.stmt_max), '--apply']
-        if body != fn: cmd += ['--body', body]
-        try:
-            r = subprocess.run(cmd, capture_output=True, text=True, timeout=a.stmt_minutes * 60, cwd=ROOT)
-            outp = r.stdout + r.stderr
-        except subprocess.TimeoutExpired as e:
-            outp = (e.stdout or b'').decode() if isinstance(e.stdout, bytes) else (e.stdout or '')
-        mm = re.search(r'^final \S+ ([\d.]+)', outp, re.M)
-        res = open(u.src).read() if mm else None
-        log(f'  stmt [{cc} {",".join(p) or "-"}{" decl" if o else ""}] '
-            + (mm.group(1) if mm else 'no result: ' + ' | '.join(outp.strip().splitlines()[-2:])))
-        return (float(mm.group(1)) if mm else None), res
+        scmd = ['python3', '-I', 'tools/stmtsweep.py', '--tu', u.src, '--fn', fn, '--max', str(a.stmt_max), '--apply']
+        if body != fn: scmd += ['--body', body]
+        tcmd = ['python3', '-I', 'tools/typesweep.py', '--tu', u.src, '--fn', fn, '--apply']
+        t_end = time.time() + a.stmt_minutes * 60
+        steps = [('stmt', scmd)] + ([] if a.no_type else [('type', tcmd), ('stmt', scmd)])
+        trail = []
+        for i, (name, cmd) in enumerate(steps):
+            left = t_end - time.time()
+            if left < 10: break
+            try:
+                r = subprocess.run(cmd, capture_output=True, text=True, timeout=left, cwd=ROOT)
+                outp = r.stdout + r.stderr
+            except subprocess.TimeoutExpired:
+                outp = ''
+            if name == 'type':
+                mm = re.search(r': (\d+) change', outp)
+                trail.append(f'type+{mm.group(1) if mm else "?"}')
+                if not mm or mm.group(1) == '0': break   # nothing changed: a 2nd stmt pass is pointless
+            else:
+                trail.append('stmt')
+        sc = stmtsweep_scores(u.obj) or {}
+        key = next((k for k in sc if k == fn or k.startswith(fn + '__')), None)
+        pct = sc.get(key) if key else None
+        res = open(u.src).read() if pct is not None else None
+        log(f'  {"+".join(trail)} [{cc} {",".join(p) or "-"}{" decl" if o else ""}] {pct}')
+        return pct, res
     finally:
         open(u.src, 'w').write(u.text); open('configure.py', 'w').write(orig_cfg)
         if cc != u.cc: configure()
@@ -444,6 +464,9 @@ def one(p, obj, fn, size, dm, a):
             tried.append((st[1], st[2], st[3]))
             pct, t = stage_stmt(u, d, fn, st, a)
             if pct is not None: r.setdefault('stmt', []).append(pct)
+            if pct is not None and pct > max([p] + r.get('stmt', [])[:-1]) + 0.01 and pct < 100:
+                os.makedirs(f'{OUT}/best', exist_ok=True)   # improved near miss: keep for hand work
+                open(f'{OUT}/best/{fn}_{pct:.2f}_GC{st[1]}{u.ext}', 'w').write(t)
             if pct is not None and pct >= 100:
                 best, how, text = st, 'stmt', t; break
     if how:
@@ -561,7 +584,8 @@ def main():
     p.add_argument('--only'); p.add_argument('--no-push', action='store_true'); p.add_argument('--no-perm', action='store_true')
     p.add_argument('--no-stmt', action='store_true', help='skip the statement-order stage')
     p.add_argument('--stmt-max', type=int, default=400, help='stmtsweep --max (orders per run / hill-climb builds)')
-    p.add_argument('--stmt-minutes', type=float, default=15)
+    p.add_argument('--stmt-minutes', type=float, default=15, help='budget for stmt -> type -> stmt per setting')
+    p.add_argument('--no-type', action='store_true', help='skip typesweep (§17 int/long/unsigned) inside the stmt stage')
     p.add_argument('--hold', action='store_true', help='do not land a stage-1/2/stmt hit: save it to OUT/hits/ '
                    '(outcome "hit") so the TU can be claimed first, then run `land-hit FN`')
     p.add_argument('--claims', default=f'{OUT}/claims.txt')
