@@ -516,6 +516,26 @@ How to spot it: `regfix.py diag` asks for "temp @N must be numbered after <named
 
 `if (lbl_806DA718 == d->angle) { dx = lbl_806DA718; ...}` inside an inline ctor: common-subexpression elimination turns the two loads into one temp that is created late (high @, low vreg number), so it was coloured after `h` and got f10 where the target has f4 (8 lines). Reading it into an inline local right before the test (`float zero = lbl_806DA718; if (zero == d->angle) { dx = zero; ...}`) creates the temp at that point; the remaining w/h swap was the decl order `float h, w, ...` (inline locals: decl order sets @ order). regfix diag says "swap the creation order of temp @A (the `lfs` of the constant) and @B". Same TU: fn_801F8728 matched by reusing the matched sibling's quad class (DrawQuad7F50 from fn_801F7F50) instead of a hand-made copy.
 
+## 28. A loop offset coloured below a hoisted constant: index the array and turn strength reduction off (SpecialFaceMesh_Dtor, 11-09)
+
+SpecialFaceMesh_Dtor (99.46, parked since 11-07 after 40 min of permuter):
+target keeps the byte offset of a `delete data[i]` loop in r31 and the
+hoisted `__destroy_arr` dtor address in r30; ours the other way round.
+`regfix diag` on the original `offset` variable said "'offset' is a named
+local, numbered below every temp"; written as `faces.data[i]` it said
+"frontend temp @47 must become a backend temp". Pointer walkers, `i * 4`,
+inline wrappers at level 1 and 2 did not help. `#pragma
+opt_strength_reduction off` around the natural loop
+(`for (unsigned int i = 0; i < faces.count; i++) delete faces.data[i];`)
+gives 100 %: the offset is then the backend's index temp, created after the
+hoisted dtor address.
+
+**Check:** a loop over `p[i]` whose byte-offset register is swapped with a
+loop-invariant value (a function or table address hoisted out of the loop),
+and diag naming the offset as a named local or a frontend temp: index the
+array directly and try `opt_strength_reduction off` before anything else.
+Rule `pragma-opt-off`.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
