@@ -54,24 +54,31 @@ def lit(sym, ty):
         if b[:4] == b'\x43\x30\x00\x00': return None   # int->float bias, never a source literal
     return '(%s)' % t if t.startswith('-') else t
 
-DECL = re.compile(r'^[ \t]*extern\s+(?:"C"\s+)?(?:const\s+)?(float|double|f32|f64)\s+(?:const\s+)?(lbl_\w+)\s*;[^\n]*\n', re.M)
+DECL = re.compile(r'^[ \t]*extern\s+(?:"C"\s+)?(?:const\s+)?(float|double|f32|f64)\s+(?:const\s+)?(lbl_\w+(?:\s*,\s*lbl_\w+)*)\s*;[^\n]*\n', re.M)
 
 def rewrite(text):
-    """-> (new text, number of symbols replaced)."""
+    """-> (new text, number of symbols replaced).  The extern lines stay (unused externs are harmless)."""
     decls = {}
     src = text
     for h in re.findall(r'#include "([^"]+)"', text):
         p = os.path.join('include', h)
         if os.path.exists(p): src += open(p, errors='replace').read()
-    for m in DECL.finditer(src): decls[m.group(2)] = m.group(1)
+    for m in DECL.finditer(src):
+        for sym in re.findall(r'lbl_\w+', m.group(2)): decls[sym] = m.group(1)
+    keep = [m.span() for m in DECL.finditer(text)]
+    def sub_outside(pat, rep, t):
+        out = []; pos = 0
+        for a, b in [m.span() for m in DECL.finditer(t)]:
+            out.append(re.sub(pat, rep, t[pos:a])); out.append(t[a:b]); pos = b
+        out.append(re.sub(pat, rep, t[pos:]))
+        return ''.join(out)
     n = 0
     for sym, ty in decls.items():
         v = lit(sym, ty)
         if v is None: continue
-        body = DECL.sub(lambda m: '' if m.group(2) == sym else m.group(0), text)
-        new = re.sub(r'(?<![\w&])%s\b(?!\s*\[)' % sym, v, body)
-        if re.search(r'&\s*%s\b|\b%s\s*\[' % (sym, sym), body): continue   # address taken / array use
-        if new != body: n += 1
+        if re.search(r'&\s*%s\b|\b%s\s*\[' % (sym, sym), text): continue   # address taken / array use
+        new = sub_outside(r'\b%s\b' % sym, lambda m: v, text)
+        if new != text: n += 1
         text = new
     return text, n
 
