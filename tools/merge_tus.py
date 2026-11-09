@@ -103,7 +103,7 @@ def plan(a):
 
 C_KEYWORDS = set('''auto break case char const continue default do double else enum extern float for goto if
 inline int long register restrict return short signed sizeof static struct switch typedef union unsigned void
-volatile while asm _Bool defined'''.split())
+volatile while asm _Bool defined section nofralloc'''.split())
 
 TOKEN = re.compile(r'''
     (?P<str>"(?:\\.|[^"\\\n])*") |
@@ -119,10 +119,22 @@ def preprocess(name):
     cmd = subprocess.run(['ninja', '-t', 'commands', f'build/GNLJ82/src/{Path(name).with_suffix("")}.o'],
                          cwd=ROOT, capture_output=True, text=True).stdout.strip().splitlines()[-1]
     cmd = re.sub(r' -o \S+', '', cmd.split(' && ')[0].replace(' -MMD', '')).replace(' -c ', ' -E ')
-    r = subprocess.run(cmd, shell=True, cwd=ROOT, capture_output=True)
+    # MWCC -E drops `#pragma` lines (section, exceptions, cplusplus, force_active ...).
+    # Preprocess a copy whose pragmas are hidden in a marker and put them back afterwards.
+    src = ROOT / 'src' / name
+    tmp = src.with_name('__merge_tmp_' + src.name)
+    raw = src.read_bytes().decode('latin-1')
+    tmp.write_bytes(re.sub(r'^[ \t]*#[ \t]*pragma\b(.*)$', r'__merge_pragma__ \1 __merge_pragma_end__',
+                           raw, flags=re.M).encode('latin-1'))
+    try:
+        r = subprocess.run(cmd.replace(f'src/{name}', f'src/{tmp.relative_to(ROOT / "src")}'),
+                           shell=True, cwd=ROOT, capture_output=True)
+    finally:
+        tmp.unlink()
     if r.returncode:
         sys.exit(f'{name}: preprocessing failed\n' + r.stderr.decode('latin-1')[-2000:])
     text = r.stdout.decode('latin-1')
+    text = re.sub(r'__merge_pragma__\s*(.*?)\s*__merge_pragma_end__', r'\n#pragma \1\n', text)
     return '\n'.join(l for l in text.splitlines() if not l.startswith('/* #line'))
 
 
@@ -158,6 +170,7 @@ def top_level(toks):
 def rename_section(text, suffix, pool_names, renames):
     toks = [(m.lastgroup, m.group()) for m in TOKEN.finditer(text)]
     keep, decls, drop, insert = set(), {}, set(), {}
+    asm_body, declared = set(), set()
     for s, e, kind in top_level(toks):
         sig = [x for x in toks[s:e] if x[0] != 'ws']
         words = [x[1] for x in sig]
@@ -165,7 +178,14 @@ def rename_section(text, suffix, pool_names, renames):
             j = words.index('(')
             if 'static' not in words[:j] and j and sig[j - 1][0] == 'id':
                 keep.add(words[j - 1])
+            if 'asm' in words[:j]:
+                # asm body: mnemonics, registers and local labels are not C identifiers
+                b = next(i for i in range(s, e) if toks[i][1] == '{')
+                asm_body.update(range(b, e))
+            else:
+                declared.update(w for k, w in sig[:j] if k == 'id')
             continue
+        declared.update(w for k, w in sig if k == 'id')
         if not words or words[0] != 'extern' or '(' in words or not any(w in pool_names for w in words):
             continue
         # split `extern T a[2], *b;` into declarators; pool ones are dropped
@@ -215,7 +235,8 @@ def rename_section(text, suffix, pool_names, renames):
         if line_start and t == '#':
             directive = True
         line_start = False
-        if directive or k != 'id' or t in C_KEYWORDS or t.startswith('__') or t in keep:
+        if directive or k != 'id' or t in C_KEYWORDS or t.startswith('__') or t in keep \
+                or (idx in asm_body and t not in declared):
             out.append(t)
         elif t in pool_names:
             if t in decls:
