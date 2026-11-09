@@ -676,7 +676,7 @@ def print_schedule(out, ours_obj, tgt_obj, fn, src_lines=None):
         import mwsched
     except ImportError:
         return
-    if not (Path(out) / "sched.json").exists():
+    if not isinstance(out, dict) and not (Path(out) / "sched.json").exists():
         print("\n== schedule: no trace (run diag with --sched; GC/2.6 only) ==")
         return
     try:
@@ -703,10 +703,23 @@ def print_coalesce(out, src_lines=None):
     that variable a temp (inline it / unname it / compute it in an inline) lets
     the copy merge, and the merged web takes the LOWER number."""
     f = Path(out) / "coalesce.json"
-    if not f.exists():
-        return
-    d = json.loads(f.read_text())
     rows = []
+    tf = Path(out) / "trace.txt"
+    if not f.exists() and tf.exists():
+        for l in tf.read_text().splitlines():
+            m = re.match(r"COALESCE ([rf]) (\d+) <- (\d+) .*?\bnamed\b(?: off=(-?\d+))?\s*(.*)$", l)
+            if m:
+                p, a, b = m.group(1), int(m.group(2)), int(m.group(3))
+                line = int(m.group(4)) if m.group(4) else -1
+                rows.append((line, m.group(5)[:18], f"{p}{a} <- {p}{b}", "the named one of " + f"{p}{a}/{p}{b}",
+                             min(a, b)))
+        f = None
+    if f is None:
+        d = {"rounds": []}
+    elif not f.exists():
+        return
+    else:
+        d = json.loads(f.read_text())
     for r in d.get("rounds", []):
         ft, lt, nr = r["first_temp"], r["last_temp"], r["n_real"]
         p = r["class"][0]
@@ -730,7 +743,7 @@ def print_coalesce(out, src_lines=None):
 
 def diagnose(unit, fn, out: Path, rerun=True, quiet=False, depth=2, sched=False):
     if rerun:
-        run_dbg(unit, fn, out, trace=sched)
+        run_dbg(unit, fn, out, trace=sched and not native_ok())
     import pragmasweep as ps
     src = ps.Unit(unit).src
     if native_ok():
@@ -748,7 +761,11 @@ def diagnose(unit, fn, out: Path, rerun=True, quiet=False, depth=2, sched=False)
         except Exception as e:
             print(f"(resched probe failed: {e})")
     if sched:
-        print_schedule(out, ROOT / f"build/{md.VERSION}/src/{unit}.o", ROOT / f"build/{md.VERSION}/obj/{unit}.o",
+        sched_src = out
+        if native_ok():
+            import mwsched
+            sched_src = mwsched.load_native(unit, ps.Unit(unit).compiled_name(fn))
+        print_schedule(sched_src, ROOT / f"build/{md.VERSION}/src/{unit}.o", ROOT / f"build/{md.VERSION}/obj/{unit}.o",
                        ps.Unit(unit).compiled_name(fn), open(src, errors="replace").read().splitlines())
         print_coalesce(out, open(src, errors="replace").read().splitlines())
     return diagnose_dir(out, ROOT / f"build/{md.VERSION}/src/{unit}.o",
