@@ -3304,7 +3304,7 @@ static inline int extract_two(const NameCode *buf, NameCode *out, int position,
     }
 
 #define SPLIT_PARTS(WITH_SYMBOLS) \
-    for (j = 0; j < 5; j++) memset(parts[j], 0, 10); \
+    for (word = 0; word < 5; word++) memset(parts[word], 0, 10); \
     position = 0; \
     for (part = 0; part < 5; part++) { \
         length = 0; \
@@ -3338,18 +3338,18 @@ static inline int extract_two(const NameCode *buf, NameCode *out, int position,
         if (strcmp(sBannedWords[W], (WORD)) == 0) return 1; \
     }
 
-#define CHECK_PARTS(WITH_SYMBOLS) { NameBool found; int i, k, j, position, length, part; \
+#define CHECK_PARTS(WITH_SYMBOLS) { NameBool found; int position, length, part; \
     SPLIT_PARTS(WITH_SYMBOLS); \
     PRINT_PARTS(); \
     for (i = 0; i < 5; i++) { \
         memset(first, 0, 12); \
         strcpy(first, parts[i]); \
         DebugPrintf(lbl_806D4750, first); \
-        CHECK_WORD_V(j, first); \
+        CHECK_WORD(first); \
         for (k = i + 1; k < 5; k++) { \
             strcat(first, parts[k]); \
             DebugPrintf(lbl_806D4750, first); \
-            CHECK_WORD_V(j, first); \
+            CHECK_WORD(first); \
         } \
     } \
 }
@@ -3435,8 +3435,8 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
                 {
                     NameCode *p;
                     for (p = open + 1; *p != *close; p++) {
-                        for (i = 0; (unsigned int)i < 5; i++) {
-                            if (strncmp(p, lbl_8040E4B0[i], 2) == 0) return 1;
+                        for (j = 0; (unsigned int)j < 5; j++) {
+                            if (strncmp(p, lbl_8040E4B0[j], 2) == 0) return 1;
                         }
                     }
                 }
@@ -3446,7 +3446,7 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
     }
     open = (NameCode *)strstr(buf, lbl_806D4754);
     if (open) {
-        NameCode *p; int count; NameBool prefix_found; const NameCode *q; NameBool found; int j, i; const NameCode *set; int bcount;
+        NameCode *p; int count; NameBool prefix_found; const NameCode *q; NameBool found; int j; const NameCode *set; int bcount;
         count = 0; prefix_found = 0;
         for (p = buf; *p != *open; p++) {
             for (j = 0; j < 3; j++) {
@@ -3479,7 +3479,7 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
     open = (NameCode *)strstr(buf, lbl_806D4758);
     DebugPrintf(lbl_806D4760, open);
     if (open) {
-        NameCode *p; int count; NameBool prefix_found; const NameCode *q; NameBool found; int j, i; const NameCode *set; int bcount;
+        NameCode *p; int count; NameBool prefix_found; const NameCode *q; NameBool found; int j; const NameCode *set; int bcount;
         count = 0; prefix_found = 0;
         for (p = buf; *p != *open; p++) {
             for (j = 0; j < 3; j++) {

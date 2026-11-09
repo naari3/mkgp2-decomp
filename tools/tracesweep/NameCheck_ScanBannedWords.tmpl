@@ -16,22 +16,36 @@
         if (length > 0) continue; \
         if (WITH_SYMBOLS) { COLLECT_RUN(symbols, 25); } \
     }
-
 #define CP_WORD(W, WORD) for (W = 0; W < 1067; W++) { if (strcmp(sBannedWords[W], (WORD)) == 0) return 1; }
-#undef CHECK_PARTS
-#define CHECK_PARTS(WITH_SYMBOLS) { {{decl: NameBool found; int i; int k; int j; int word; | NameBool found; int i; int k; int word; int j; | NameBool found; int i; int j; int k; int word; | NameBool found; int i; int j; int word; int k; | NameBool found; int i; int word; int k; int j; | NameBool found; int i; int word; int j; int k; | NameBool found; int k; int i; int j; int word; | NameBool found; int k; int i; int word; int j; | NameBool found; int k; int j; int i; int word; | NameBool found; int k; int j; int word; int i; | NameBool found; int k; int word; int i; int j; | NameBool found; int k; int word; int j; int i; | NameBool found; int j; int i; int k; int word; | NameBool found; int j; int i; int word; int k; | NameBool found; int j; int k; int i; int word; | NameBool found; int j; int k; int word; int i; | NameBool found; int j; int word; int i; int k; | NameBool found; int j; int word; int k; int i; | NameBool found; int word; int i; int k; int j; | NameBool found; int word; int i; int j; int k; | NameBool found; int word; int k; int i; int j; | NameBool found; int word; int k; int j; int i; | NameBool found; int word; int j; int i; int k; | NameBool found; int word; int j; int k; int i; | int i; NameBool found; int k; int j; int word; | int i; NameBool found; int k; int word; int j; | int i; NameBool found; int j; int k; int word; | int i; NameBool found; int j; int word; int k; | int i; NameBool found; int word; int k; int j; | int i; NameBool found; int word; int j; int k; | int i; int k; NameBool found; int j; int word; | int i; int k; NameBool found; int word; int j; | int i; int k; int j; NameBool found; int word; | int i; int k; int j; int word; NameBool found; | int i; int k; int word; NameBool found; int j; | int i; int k; int word; int j; NameBool found; | int i; int j; NameBool found; int k; int word; | int i; int j; NameBool found; int word; int k; | int i; int j; int k; NameBool found; int word; | int i; int j; int k; int word; NameBool found; | int i; int j; int word; NameBool found; int k; | int i; int j; int word; int k; NameBool found; | int i; int word; NameBool found; int k; int j; | int i; int word; NameBool found; int j; int k; | int i; int word; int k; NameBool found; int j; | int i; int word; int k; int j; NameBool found; | int i; int word; int j; NameBool found; int k; | int i; int word; int j; int k; NameBool found; | int k; NameBool found; int i; int j; int word; | int k; NameBool found; int i; int word; int j; | int k; NameBool found; int j; int i; int word; | int k; NameBool found; int j; int word; int i; | int k; NameBool found; int word; int i; int j; | int k; NameBool found; int word; int j; int i; | int k; int i; NameBool found; int j; int word; | int k; int i; NameBool found; int word; int j; | int k; int i; int j; NameBool found; int word; | int k; int i; int j; int word; NameBool found; | int k; int i; int word; NameBool found; int j; | int k; int i; int word; int j; NameBool found; | int k; int j; NameBool found; int i; int word; | int k; int j; NameBool found; int word; int i; | int k; int j; int i; NameBool found; int word; | int k; int j; int i; int word; NameBool found; | int k; int j; int word; NameBool found; int i; | int k; int j; int word; int i; NameBool found; | int k; int word; NameBool found; int i; int j; | int k; int word; NameBool found; int j; int i; | int k; int word; int i; NameBool found; int j; | int k; int word; int i; int j; NameBool found; | int k; int word; int j; NameBool found; int i; | int k; int word; int j; int i; NameBool found; | int j; NameBool found; int i; int k; int word; | int j; NameBool found; int i; int word; int k; | int j; NameBool found; int k; int i; int word; | int j; NameBool found; int k; int word; int i; | int j; NameBool found; int word; int i; int k; | int j; NameBool found; int word; int k; int i; | int j; int i; NameBool found; int k; int word; | int j; int i; NameBool found; int word; int k; | int j; int i; int k; NameBool found; int word; | int j; int i; int k; int word; NameBool found; | int j; int i; int word; NameBool found; int k; | int j; int i; int word; int k; NameBool found; | int j; int k; NameBool found; int i; int word; | int j; int k; NameBool found; int word; int i; | int j; int k; int i; NameBool found; int word; | int j; int k; int i; int word; NameBool found; | int j; int k; int word; NameBool found; int i; | int j; int k; int word; int i; NameBool found; | int j; int word; NameBool found; int i; int k; | int j; int word; NameBool found; int k; int i; | int j; int word; int i; NameBool found; int k; | int j; int word; int i; int k; NameBool found; | int j; int word; int k; NameBool found; int i; | int j; int word; int k; int i; NameBool found; | int word; NameBool found; int i; int k; int j; | int word; NameBool found; int i; int j; int k; | int word; NameBool found; int k; int i; int j; | int word; NameBool found; int k; int j; int i; | int word; NameBool found; int j; int i; int k; | int word; NameBool found; int j; int k; int i; | int word; int i; NameBool found; int k; int j; | int word; int i; NameBool found; int j; int k; | int word; int i; int k; NameBool found; int j; | int word; int i; int k; int j; NameBool found; | int word; int i; int j; NameBool found; int k; | int word; int i; int j; int k; NameBool found; | int word; int k; NameBool found; int i; int j; | int word; int k; NameBool found; int j; int i; | int word; int k; int i; NameBool found; int j; | int word; int k; int i; int j; NameBool found; | int word; int k; int j; NameBool found; int i; | int word; int k; int j; int i; NameBool found; | int word; int j; NameBool found; int i; int k; | int word; int j; NameBool found; int k; int i; | int word; int j; int i; NameBool found; int k; | int word; int j; int i; int k; NameBool found; | int word; int j; int k; NameBool found; int i; | int word; int j; int k; int i; NameBool found;}} int position, length, part; \
-    for ({{mv: i | k | j | word | part}} = 0; {{mv}} < 5; {{mv}}++) memset(parts[{{mv}}], 0, 10); \
+#define CHECK_PARTSA(WITH_SYMBOLS) { NameBool found; int position, length, part; \
+    for ({{mvA: word | i | j | k}} = 0; {{mvA: word | i | j | k}} < 5; {{mvA: word | i | j | k}}++) memset(parts[{{mvA: word | i | j | k}}], 0, 10); \
     SPLIT2(WITH_SYMBOLS); \
     PRINT_PARTS(); \
-    for ({{c: i | i | i | i | j | j | j | k | k | k}} = 0; {{c: i | i | i | i | j | j | j | k | k | k}} < 5; {{c: i | i | i | i | j | j | j | k | k | k}}++) { \
+    for ({{cA: i | i | i | i | i | i | j | j | j | j | j | j | k | k | k | k | k | k | word | word | word | word | word | word}} = 0; {{cA: i | i | i | i | i | i | j | j | j | j | j | j | k | k | k | k | k | k | word | word | word | word | word | word}} < 5; {{cA: i | i | i | i | i | i | j | j | j | j | j | j | k | k | k | k | k | k | word | word | word | word | word | word}}++) { \
         memset(first, 0, 12); \
-        strcpy(first, parts[{{c: i | i | i | i | j | j | j | k | k | k}}]); \
+        strcpy(first, parts[{{cA: i | i | i | i | i | i | j | j | j | j | j | j | k | k | k | k | k | k | word | word | word | word | word | word}}]); \
         DebugPrintf(lbl_806D4750, first); \
-        CP_WORD({{c: word | j | word | k | word | i | word | word | word | i}}, first); \
-        for ({{c: k | k | j | j | k | k | i | i | j | j}} = {{c: i | i | i | i | j | j | j | k | k | k}} + 1; {{c: k | k | j | j | k | k | i | i | j | j}} < 5; {{c: k | k | j | j | k | k | i | i | j | j}}++) { \
-            strcat(first, parts[{{c: k | k | j | j | k | k | i | i | j | j}}]); \
+        CP_WORD({{cA: k | word | j | word | j | k | k | word | i | word | i | k | j | word | i | word | i | j | j | k | i | k | i | j}}, first); \
+        for ({{cA: j | j | k | k | word | word | i | i | k | k | word | word | i | i | j | j | word | word | i | i | j | j | k | k}} = {{cA: i | i | i | i | i | i | j | j | j | j | j | j | k | k | k | k | k | k | word | word | word | word | word | word}} + 1; {{cA: j | j | k | k | word | word | i | i | k | k | word | word | i | i | j | j | word | word | i | i | j | j | k | k}} < 5; {{cA: j | j | k | k | word | word | i | i | k | k | word | word | i | i | j | j | word | word | i | i | j | j | k | k}}++) { \
+            strcat(first, parts[{{cA: j | j | k | k | word | word | i | i | k | k | word | word | i | i | j | j | word | word | i | i | j | j | k | k}}]); \
             DebugPrintf(lbl_806D4750, first); \
-            CP_WORD({{c: word | j | word | k | word | i | word | word | word | i}}, first); \
+            CP_WORD({{cA: k | word | j | word | j | k | k | word | i | word | i | k | j | word | i | word | i | j | j | k | i | k | i | j}}, first); \
+        } \
+    } \
+}
+#define CHECK_PARTSB(WITH_SYMBOLS) { NameBool found; int position, length, part; \
+    for ({{mvB: word | i | j | k}} = 0; {{mvB: word | i | j | k}} < 5; {{mvB: word | i | j | k}}++) memset(parts[{{mvB: word | i | j | k}}], 0, 10); \
+    SPLIT2(WITH_SYMBOLS); \
+    PRINT_PARTS(); \
+    for ({{cB: i | i | i | i | i | i | j | j | j | j | j | j | k | k | k | k | k | k | word | word | word | word | word | word}} = 0; {{cB: i | i | i | i | i | i | j | j | j | j | j | j | k | k | k | k | k | k | word | word | word | word | word | word}} < 5; {{cB: i | i | i | i | i | i | j | j | j | j | j | j | k | k | k | k | k | k | word | word | word | word | word | word}}++) { \
+        memset(first, 0, 12); \
+        strcpy(first, parts[{{cB: i | i | i | i | i | i | j | j | j | j | j | j | k | k | k | k | k | k | word | word | word | word | word | word}}]); \
+        DebugPrintf(lbl_806D4750, first); \
+        CP_WORD({{cB: k | word | j | word | j | k | k | word | i | word | i | k | j | word | i | word | i | j | j | k | i | k | i | j}}, first); \
+        for ({{cB: j | j | k | k | word | word | i | i | k | k | word | word | i | i | j | j | word | word | i | i | j | j | k | k}} = {{cB: i | i | i | i | i | i | j | j | j | j | j | j | k | k | k | k | k | k | word | word | word | word | word | word}} + 1; {{cB: j | j | k | k | word | word | i | i | k | k | word | word | i | i | j | j | word | word | i | i | j | j | k | k}} < 5; {{cB: j | j | k | k | word | word | i | i | k | k | word | word | i | i | j | j | word | word | i | i | j | j | k | k}}++) { \
+            strcat(first, parts[{{cB: j | j | k | k | word | word | i | i | k | k | word | word | i | i | j | j | word | word | i | i | j | j | k | k}}]); \
+            DebugPrintf(lbl_806D4750, first); \
+            CP_WORD({{cB: k | word | j | word | j | k | k | word | i | word | i | k | j | word | i | word | i | j | j | k | i | k | i | j}}, first); \
         } \
     } \
 }
@@ -71,9 +85,12 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
         }
         DebugPrintf(sMsgFirst, group, first);
         DebugPrintf(sMsgSecond, group, second);
-        for (word = 0; word < 1067; word++) {
-            if (strcmp(sBannedWords[word], first) == 0) return 1;
-            if (strcmp(sBannedWords[word], second) == 0) return 1;
+        {
+            int word;
+            for (word = 0; word < 1067; word++) {
+                if (strcmp(sBannedWords[word], first) == 0) return 1;
+                if (strcmp(sBannedWords[word], second) == 0) return 1;
+            }
         }
     }
     for (group = 0; group < 12; group++) {
@@ -108,9 +125,12 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
                     if (!found) { invalid = 1; break; }
                 }
                 if (invalid == 1) break;
-                for (p = open + 1; *p != *close; p++) {
-                    for (i = 0; (unsigned int)i < 5; i++) {
-                        if (strncmp(p, lbl_8040E4B0[i], 2) == 0) return 1;
+                {
+                    NameCode *p;
+                    for (p = open + 1; *p != *close; p++) {
+                        for (j = 0; (unsigned int)j < 5; j++) {
+                            if (strncmp(p, lbl_8040E4B0[j], 2) == 0) return 1;
+                        }
                     }
                 }
                 break;
@@ -119,7 +139,7 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
     }
     open = (NameCode *)strstr(buf, lbl_806D4754);
     if (open) {
-        NameCode *p; int count; NameBool prefix_found; const NameCode *q; NameBool found; int j, i; const NameCode *set; int bcount;
+        NameCode *p; int count; NameBool prefix_found; const NameCode *q; NameBool found; int j; const NameCode *set; int bcount;
         count = 0; prefix_found = 0;
         for (p = buf; *p != *open; p++) {
             for (j = 0; j < 3; j++) {
@@ -152,7 +172,7 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
     open = (NameCode *)strstr(buf, lbl_806D4758);
     DebugPrintf(lbl_806D4760, open);
     if (open) {
-        NameCode *p; int count; NameBool prefix_found; const NameCode *q; NameBool found; int j, i; const NameCode *set; int bcount;
+        NameCode *p; int count; NameBool prefix_found; const NameCode *q; NameBool found; int j; const NameCode *set; int bcount;
         count = 0; prefix_found = 0;
         for (p = buf; *p != *open; p++) {
             for (j = 0; j < 3; j++) {
@@ -183,7 +203,7 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
             if (!found) return 1;
         }
     }
-    CHECK_PARTS(1);
+    CHECK_PARTSA(1);
     found = 0;
     for (i = 0; i < 5; i++) {
         for (j = 0; j < 81; j++) {
@@ -228,9 +248,12 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
             }
             if ((unsigned int)j >= 25) i++;
         }
-        CHECK_WORD(buf);
+        {
+            int word;
+            CHECK_WORD(buf);
+        }
     }
-    CHECK_PARTS(0);
+    CHECK_PARTSB(0);
     return 0;
 }
 #pragma exceptions reset
