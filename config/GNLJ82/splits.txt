@@ -7040,20 +7040,12 @@ game/mapobject/fn_801752A8.c:
 	.text       start:0x801752A8 end:0x801752C0
 
 game/mapeffect/mapeffect.cpp:
-	extab       start:0x80010B10 end:0x800117E0
-	extabindex  start:0x800265DC end:0x800267D4
-	.text       start:0x801752C0 end:0x80179650
-	.rodata     start:0x80370870 end:0x80371DC8
-	.data       start:0x804914B8 end:0x804915DC
-	.sdata      start:0x806CFAD0 end:0x806CFB10
-
-game/mapeffect/mapeffect_nm1.cpp:
-	extab       start:0x800117E0 end:0x80011878
-	extabindex  start:0x800267D4 end:0x800268B8
-	.text       start:0x80179650 end:0x8017A52C
-	.rodata     start:0x80371DC8 end:0x80371E98
-	.data       start:0x804915DC end:0x804916C8
-	.sdata      start:0x806CFB10 end:0x806CFB50
+	extab       start:0x80010B10 end:0x80011878
+	extabindex  start:0x800265DC end:0x800268B8
+	.text       start:0x801752C0 end:0x8017A52C
+	.rodata     start:0x80370870 end:0x80371E98
+	.data       start:0x804914B8 end:0x804916C8
+	.sdata      start:0x806CFAD0 end:0x806CFB50
 
 game/mapobject/DistanceSwitchUpdate.cpp:
 	extab       start:0x80011878 end:0x80011880
