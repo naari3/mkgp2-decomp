@@ -13,6 +13,12 @@ struct MovementSettings {
     MovementSettings(int, int, int);
 };
 
+struct MovementState {
+    CarTrivial vector;
+    float scale, value;
+    MovementState(float, float);
+};
+
 struct CarMovementInit {
     void *owner;
     unsigned char *config;
@@ -23,8 +29,8 @@ struct CarMovementInit {
     InitVec pos, prev;
     Matrix44 orientation, previous, matrixD8, matrix118;
     InitVec v158, v164, v170, v17c, v188, v194, v1a0;
-    CarTrivial v1ac;
-    float field1b8, field1bc, field1c0, pad1c4, yaw;
+    MovementState state;
+    float field1c0, pad1c4, yaw;
     float field1cc, field1d0, pad1d4;
     float field1d8, field1dc, field1e0, field1e4, field1e8;
     InitVec v1ec, v1f8;

@@ -32,15 +32,19 @@ static inline void MatrixIdentity(Matrix44 *a) {
     a->m[0][0] = a->m[1][1] = a->m[2][2] = a->m[3][3] = lbl_806D96D4;
 }
 
+static inline void AccumulateProduct(float &value, float right, float left) {
+    value += left * right;
+}
+
 static inline void MatrixMultiply(Matrix44 *a, const Matrix44 *b) {
     float out[16];
     int k = 0;
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
             float sum = a->m[i][0] * b->m[0][j];
-            sum = a->m[i][1] * b->m[1][j] + sum;
-            sum = a->m[i][2] * b->m[2][j] + sum;
-            sum = a->m[i][3] * b->m[3][j] + sum;
+            AccumulateProduct(sum, b->m[1][j], a->m[i][1]);
+            AccumulateProduct(sum, b->m[2][j], a->m[i][2]);
+            AccumulateProduct(sum, b->m[3][j], a->m[i][3]);
             out[k + j] = sum;
         }
         k += 4;
@@ -140,14 +144,14 @@ float fn_8019EA8C(Vec3 *v) {
 float SpeedCurve_LookupFromProgress(SpeedCurve *s, float t);
 float SpeedCurve_LookupFromSpeed(SpeedCurve *s, float t);
 
-static inline float TransformComponent(const float *column, const Vec3 *v) {
-    return column[12] + (v->z * column[8] + (column[0] * v->x + v->y * column[4]));
+static inline float TransformComponent(const float *column, float x, float y, float z) {
+    return column[12] + (z * column[8] + (column[0] * x + y * column[4]));
 }
 
 void fn_8019EB9C(Matrix44 *a, Vec3 *out, const Vec3 *v) {
-    float x = TransformComponent(&a->m[0][0], v);
-    float y = TransformComponent(&a->m[0][1], v);
-    float z = TransformComponent(&a->m[0][2], v);
+    float x = TransformComponent(&a->m[0][0], v->x, v->y, v->z);
+    float y = TransformComponent(&a->m[0][1], v->x, v->y, v->z);
+    float z = TransformComponent(&a->m[0][2], v->x, v->y, v->z);
     out->x = x; out->y = y; out->z = z;
 }
 
@@ -352,7 +356,13 @@ int fn_8019F1C4(CurveKeyKV *p, int n, float t, float *out) {
 
 static inline int IsSpecialMovementMode() { return g_gameMode == 2; }
 
-inline CarTrivial::CarTrivial() : x(lbl_806D96D0), y(lbl_806D96D0), z(lbl_806D96D0) {}
+inline CarTrivial::CarTrivial() {}
+
+inline MovementState::MovementState(float a, float b) : scale(a), value(b) {
+    vector.x = lbl_806D96D0;
+    vector.y = lbl_806D96D0;
+    vector.z = lbl_806D96D0;
+}
 
 inline MovementSettings::MovementSettings(int a, int b, int special) {
     field22 = special;
@@ -370,7 +380,7 @@ inline MovementSettings::MovementSettings(int a, int b, int special) {
 
 CarMovementInit::CarMovementInit(void *o, unsigned char *cfg, void *context, float x, float z, float angle)
     : owner(o), config(cfg), settings(*(int *)(config + 0xf0), *(int *)(config + 0xf4), IsSpecialMovementMode()),
-      field1b8(lbl_806D971C), field1bc(lbl_806D97CC)
+      state(lbl_806D971C, lbl_806D97CC)
 {
     field320 = context;
     field38 = *(float *)(config + 0x28);
