@@ -1678,15 +1678,15 @@ void THPDecDecode(THPDecHandle* handle, void* tileY, void* tileU, void* tileV)
 
 void fn_8029B54C(THPDecHandle* handle, u8* dst, u32 width, u32 height)
 {
+    u8 hs;
+    u8 vs;
     u32 j;
     u32 ystride;
     u32 uvstride;
     u32 w;
-    u8* d;
-    u8 vs;
     u32 h;
     u32 i;
-    u8 hs;
+    u8* d;
     u8* y;
     THPFileInfo* info;
     u8* u;

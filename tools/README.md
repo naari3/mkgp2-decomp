@@ -25,6 +25,7 @@ Rough order to try; each one writes nothing to the repo unless `--apply`.
 | `permuter/mkperm.py` | sets up upstream decomp-permuter (random AST mutations) for one fn | C and C++ free fns; see `permuter/README.md` |
 | `autopipe.py` | runs pragmasweep -> decl order -> permuter unattended | needs naari3's out-of-repo `cperm.py` / `queue.py` (see below) |
 | `regswap_classify.py` | nothing; groups near misses by diff shape | picks targets; output `docs/reports/regswap_census.md` |
+| `regfix.py` | diagnoses register-only diffs by re-running MWCC's allocator offline on mwccdbg dumps; solves the local declaration order exactly (all orders simulated, no compile); `fix` = focused shapesweep moves + that solver | `diag UNIT FN [--start-tu F]`, `fix UNIT FN`; needs mwccdbg install; parallel via `unshare -n` (`netns_lo.py`) |
 | `mwccdbg.py` | nothing; shows why a register went where it did | mwcc-debugger wrapper; `mwcc_dump.py` is the older private-mwcc variant |
 
 ## Data / TU boundaries
