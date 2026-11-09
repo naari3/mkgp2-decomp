@@ -1088,7 +1088,7 @@ config.libs = [
             Object(Matching, "game/Frame.c", extab_padding=b"\x00\x00", extra_cflags=["-lang=c++"]),
             Object(Matching, "game/TransparentDraw.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/TripleBladeRing.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/TripleBladeRing_SetWorldYaw.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/TripleBladeRing_SetWorldYaw.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/TripleBladeRing_Update.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Vec3_ScaleXZ.c"),
             Object(Matching, "game/TornadoEffect.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-i src/game"]),

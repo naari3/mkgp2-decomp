@@ -1,23 +1,15 @@
 /*
- * TripleBladeRing_SetWorldYaw (0x800B3ED4 size:0x1C0) - NonMatching, 99.33%
+ * TripleBladeRing_SetWorldYaw (0x800B3ED4 size:0x1C0)
  *
  * Per-frame pose setter: copies the kart world matrix into self->mtx,
  * stores the yaw, derives the world position, and advances the master
  * phase + sin phase + 3 staggered per-arm blade phases (wrap-normalize
  * against sdata2 limits, staggers from rodata lbl_803292D4).
  *
- * NonMatching: FP scratch register identities differ from the target.
- * A counted three-arm loop is fully unrolled by CW 1.3.2 and places the
- * working value in f0, improving 97.72321% to 98.70536% (c19_u238).
- * Instruction order, count, stack layout, and EH remain exact.
- * A separate master wrap local and the decl order amp, limit, one (best of
- * a full 720-order sweep) give 99.33%. Remaining differences:
- *   master: target phase=f2, wrap limit=f1; source phase=f1, limit=f2
- *   arms: target one=f1, stagger=f4; source stagger=f1, one=f4
- * Compound master assignments and a cached-argument inline arm helper
- * were allocation-invariant. Prior probes and compiler observations:
- * docs/notes/cw132-fp-scratch-web-order-levers.md and
- * docs/notes/cw132-const-float-hoist-vs-reload.md.
+ * The constants are read directly (no named locals) and the function is
+ * built with opt_common_subs off: the target's FPR homes come from the
+ * backend's constant temps, not from frontend CSE temps
+ * (regalloc_patterns §29).
  */
 
 #include "game/TripleBladeRing.h"
@@ -35,14 +27,11 @@ extern const float lbl_806D5134;
 extern const float lbl_806D5138;
 extern const float lbl_806D513C;
 
+#pragma opt_common_subs off
 void TripleBladeRing_SetWorldYaw(TripleBladeRing *self, float yaw, void *worldMtx)
 {
-    float amp;
-    float limit;
-    float one;
     float stag[3];
     int i;
-    float wrap;
 
     if (self != 0) {
         Mtx_TransposeToMtx44(self->mtx, worldMtx);
@@ -50,8 +39,8 @@ void TripleBladeRing_SetWorldYaw(TripleBladeRing *self, float yaw, void *worldMt
         Mtx44_GetTranslation_ColMajor(&self->pos, self->mtx);
 
         self->phase0 = self->phase0 + lbl_806D5028;
-        if ((wrap = lbl_806D5134) < self->phase0) {
-            self->phase0 = self->phase0 - wrap;
+        if (lbl_806D5134 < self->phase0) {
+            self->phase0 = self->phase0 - lbl_806D5134;
         }
 
         self->phaseSin = self->phase0;
@@ -62,17 +51,15 @@ void TripleBladeRing_SetWorldYaw(TripleBladeRing *self, float yaw, void *worldMt
         self->phaseSin = (float)sin(lbl_806D5138 * self->phaseSin);
 
         *(TBRVec3 *)stag = lbl_803292D4;
-        limit = lbl_806D513C;
-        amp = lbl_806D507C;
-        one = lbl_806D5028;
 
         for (i = 0; i < 3; ++i) {
             self->phases[i] = self->phase0 + stag[i];
-            while (limit < self->phases[i]) {
-                self->phases[i] -= limit;
+            while (lbl_806D513C < self->phases[i]) {
+                self->phases[i] -= lbl_806D513C;
             }
-            self->phases[i] = self->phases[i] / limit;
-            self->phases[i] = amp * (one - self->phases[i]);
+            self->phases[i] = self->phases[i] / lbl_806D513C;
+            self->phases[i] = lbl_806D507C * (lbl_806D5028 - self->phases[i]);
         }
     }
 }
+#pragma opt_common_subs reset

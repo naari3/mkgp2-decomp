@@ -536,6 +536,26 @@ and diag naming the offset as a named local or a frontend temp: index the
 array directly and try `opt_strength_reduction off` before anything else.
 Rule `pragma-opt-off`.
 
+## 29. Constants held in FPRs across an unrolled loop: read them directly and turn CSE off (TripleBladeRing_SetWorldYaw, 11-09)
+
+TripleBladeRing_SetWorldYaw (99.33 after a 720-order decl sweep and 15 min
+of cperm): the wrap limits and `1.0f` are loaded once and kept in f1..f4
+across a fully unrolled three-arm loop, and two pairs of FPR homes were
+swapped. The source had named locals `amp`, `limit`, `one`, `wrap` for the
+constants. `regfix diag` called each of them "a named local, numbered below
+every temp". With the locals dropped (read `lbl_806D513C` etc. directly) it
+said the constant loads were frontend CSE temps (`@25`, `@29`) that "must
+become backend temps (no CSE)". `#pragma opt_common_subs off` around the
+function then gives 100 %: the loads are still hoisted, but by the backend,
+so they are numbered after the phase/stagger loads.
+
+**Check:** FPR swaps between hoisted `extern const float` values and loads
+from `self`, where diag names the constants as named locals or as frontend
+temps: drop the locals, then try `opt_common_subs off`. Together with §28
+(`opt_strength_reduction off` for a loop offset), whenever diag says
+"frontend temp @N must become a backend temp", try turning off the pass that
+made @N. Rule `pragma-opt-off`.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
