@@ -97,7 +97,7 @@ def canonical_rules(rid) -> list:
 
 def load_hits() -> list[dict]:
     out = []
-    for h in load_hits():
+    for h in load_jsonl(HITS):
         for rid in canonical_rules(h.get("rule_id")):
             out.append(dict(h, rule_id=rid))
     return out
