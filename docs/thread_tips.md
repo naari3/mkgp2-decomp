@@ -583,3 +583,9 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   differently (14 FPR operand rows here). tools/postprocess_sdata2.py renames the anonymous literal symbols to the
   target's `lbl_` names, so literals need no .sdata2 split. With literals the natural shape matched:
   `u0 = k * (16.0f - u); pu = k * (16.0f + u); u1 = 1.0f - pu;` (a named product local stops the fnmsubs fusion).
+- tools/float_literal_sweep.py (11-09): blanket `extern float` -> literal over 56 near misses: 1 better
+  (KartMovement_Init 782 -> 739), 0 matches, most slightly worse, because those bodies were shaped around the extern
+  loads (named `one`/`scale` locals, split statements). The literal is a precondition, not the fix: on
+  FlashFadeOverlay_Draw the plain swap changed nothing (44 diff lines), the match came from rewriting the block in
+  its natural form afterwards (statement groups in 6 orders x named/unnamed product, scored with objdiff).
+  Use `float_literal_sweep.py UNIT FN` to get the literal text, then reshape by hand. Table: docs/sweeps/float_literal.md.
