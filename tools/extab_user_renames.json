@@ -13354,6 +13354,8 @@
     "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/anon_80209FA4_nm2.cpp": {
+    "@32": "@etb_80019420",
+    "@33": "@eti_80029B1C",
     "Value__5TweenFv": "fn_8020A6CC",
     "@56": "@etb_80019420",
     "@57": "@eti_80029B1C",
