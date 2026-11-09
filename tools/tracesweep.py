@@ -51,6 +51,8 @@ function's definition in a scratch copy of the TU; src/ is never written.
     T.defs(r'LHZ')            vregs written by pre-RA PCode lines matching the regex
     T.vdef(r'^LHZ ', k=0)     vreg written by the k-th matching pre-RA line (None if none)
     T.pdef(r'-31560', k=0)    machine register written by the k-th matching post-RA line
+    T.num(r'^LWZ ', k=0)      vreg number written by the k-th matching pre-RA line (10**6 if none)
+    T.named(r'^LWZ ', k=0)    that line writes a named local (or a temp MR'd into one)
     T.pre                     [(block, srcline, insn)] PCode before regalloc
     T.order                   vregs in colouring order (first coloured first)
     T.pre_text / T.post_text  the PCode as one string, for multi-line re.search
@@ -268,6 +270,23 @@ class Trace:
         m = re.search(r'\br(\d+)!', hits[k])
         return int(m.group(1)) if m else None
 
+    def num(self, pat, k=0):
+        """vreg number written by the k-th pre-RA line matching pat (10**6 if absent)."""
+        v = self.vdef(pat, k)
+        return 10 ** 6 if v is None else v
+
+    def named(self, pat, k=0):
+        """True if the k-th pre-RA line matching pat writes a named local, or a
+        temp that is copied straight into one (`MR rL!,rV`)."""
+        v = self.vdef(pat, k)
+        if v is None:
+            return False
+        if self.kinds.get(v) == 'local':
+            return True
+        rx = re.compile(r'^MR r(\d+)!,r%d\b' % v)
+        return any(self.kinds.get(int(m.group(1))) == 'local'
+                   for _, _, insn in self.pre for m in [rx.search(insn)] if m)
+
     def pdef(self, pat, k=0):
         """machine register written by the k-th post-RA PCode line matching pat."""
         rx = re.compile(pat)
@@ -313,8 +332,10 @@ class Trace:
 # compiling
 
 class Sweep:
-    def __init__(self, unit, fn, keep_going=False):
+    def __init__(self, unit, fn, keep_going=False, base_text=None):
         self.u = ps.Unit(unit)
+        if base_text is not None:      # replay from another TU text (regfix diag --start-tu)
+            self.u.text = base_text
         self.unit = unit
         self.fn = fn
         d, self.cname = self.u.resolve(fn)
@@ -392,8 +413,8 @@ def evaluate(want, T):
 
 
 def run(unit, fn, template_text, want=None, jobs=8, sample=0, seed=0, confirm=3, show=15, quiet=False,
-        log_name=None, probe=None):
-    sw = Sweep(unit, fn)
+        log_name=None, probe=None, base_text=None):
+    sw = Sweep(unit, fn, base_text=base_text)
     pieces, axes = parse_template(template_text)
     plist, total = picks(axes, sample, seed)
     if not quiet:
