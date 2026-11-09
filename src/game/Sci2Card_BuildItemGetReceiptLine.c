@@ -57,6 +57,11 @@ static inline unsigned char Receipt_IsSpecialItem(int item)
     }
     return 0;
 }
+static inline int Receipt_RemainingItems(ReceiptPlayer *player, int count)
+{
+    int capacity = fn_801D5DE8(player);
+    return capacity - count;
+}
 char *Sci2Card_BuildItemGetReceiptLine(void)
 {
     const char *hundreds;
@@ -65,8 +70,8 @@ char *Sci2Card_BuildItemGetReceiptLine(void)
     ReceiptPlayer *player = &g_playerData;
     unsigned char extra;
     int count = fn_801D5E80(player);
-    unsigned char ordinary;
     unsigned char special;
+    unsigned char ordinary;
     int remaining;
     if (count >= fn_801D5DE8(&g_playerData)) {
         if (isJapanese() == 0) return (char *)receiptEnglish[6];
@@ -75,7 +80,7 @@ char *Sci2Card_BuildItemGetReceiptLine(void)
     extra = fn_801D5F40(player);
     ordinary = 0;
     special = 0;
-    remaining = fn_801D5DE8(player) - count;
+    remaining = Receipt_RemainingItems(player, count);
     if (player->item != 0x7F) {
         int itemClass = Receipt_ItemClass(g_playerData.item);
         if (itemClass >= 0 && itemClass <= 1) ordinary = 1;
