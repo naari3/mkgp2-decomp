@@ -47,7 +47,9 @@ extern "C" void QuadFrame_FromCornerPtrs(Vec *a,Vec *b,Vec *c,Vec *d,float *out,
     const Vec &ab=mid(a,b);
     const Vec &cd=mid(c,d);
     const Vec &bd=mid(b,d);
-    Vec &fwd=norm(ab-cd);
+    /* Bind the temporary directly to extend its lifetime through the frame calculation. */
+    const Vec &forwardDelta=ab-cd;
+    Vec &fwd=norm(forwardDelta);
     const Vec &right=bd-ac;
     out[6]=fwd.x;out[7]=fwd.y;out[8]=fwd.z;
     norm(right);
