@@ -1932,11 +1932,13 @@ template <class T> void KeyVecBase<T>::init(unsigned long n, T v) {
     T *end = data + n;
     T *p = data;
     for (; p < end; p++) {
-        try {
-            T *q = new (p) T;
-            if (q) *q = v;
-        } catch (...) {
-            throw;
+        T *q = new (p) T;
+        if (q) {
+            try {
+                *q = v;
+            } catch (...) {
+                throw;
+            }
         }
         count++;
     }
