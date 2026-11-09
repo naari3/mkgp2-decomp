@@ -7396,24 +7396,6 @@
     "__vt__11Path186Base": "lbl_80490FE0",
     "__vt__11Path186View": "lbl_80495BBC"
   },
-  "src/game/fn_801F8404.cpp": {
-    "__dt__12DrawQuad801FFv": "dtor_801F8214",
-    "__dt__12DrawQuad8404Fv": "dtor_801F8214",
-    "@121": "@etb_80017640",
-    "@122": "@eti_80029030",
-    "@127": "@etb_80017640",
-    "@128": "@eti_80029030",
-    "__dt__12DrawQuad7F50Fv": "dtor_801F8214",
-    "@137": "@etb_80017640",
-    "@138": "@eti_80029030"
-  },
-  "src/game/fn_801F8728.cpp": {
-    "__dt__12DrawQuad801FFv": "dtor_801F8214",
-    "__dt__12DrawQuad8728Fv": "dtor_801F8214",
-    "__dt__12DrawQuad7F50Fv": "dtor_801F8214",
-    "@121": "@etb_80017660",
-    "@122": "@eti_80029048"
-  },
   "src/game/fn_801F8A34.cpp": {
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__dt__7ResCtrlFv": "dtor_80082960",
@@ -12481,7 +12463,9 @@
     "texDepthS56": "lbl_803BEEC0",
     "mixDescS56": "lbl_803BEF00",
     "mixFlatS56": "lbl_803BEF20",
-    "mixDepthS56": "lbl_803BEFA0"
+    "mixDepthS56": "lbl_803BEFA0",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dt__9DrawQuadSFv": "dtor_801F8214"
   },
   "src/game/fn_801F7604.cpp": {
     "__dt__12ColorDrawS56Fv": "dtor_801F7AD0",
