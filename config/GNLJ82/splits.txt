@@ -3080,22 +3080,11 @@ game/BtMode_RenderFrame.c:
 	.text       start:0x800A28D4 end:0x800A2B90
 
 game/TaMode_FrameUpdate.cpp:
-	extab       start:0x80009A68 end:0x80009A70
-	extabindex  start:0x8002231C end:0x80022328
-	.text       start:0x800A2B90 end:0x800A38F8
-	.data       start:0x8040EA58 end:0x8040F0A4
-
-game/TaMode_Dtor.cpp:
-	extab       start:0x80009A70 end:0x80009A78
-	extabindex  start:0x80022328 end:0x80022334
-	.text       start:0x800A38F8 end:0x800A3C38
-
-game/TaMode_Init.cpp:
-	extab       start:0x80009A78 end:0x80009C5C
-	extabindex  start:0x80022334 end:0x80022340
-	.text       start:0x800A3C38 end:0x800A4578
+	extab       start:0x80009A68 end:0x80009C5C
+	extabindex  start:0x8002231C end:0x80022340
+	.text       start:0x800A2B90 end:0x800A4578
 	.rodata     start:0x80321980 end:0x80322120
-	.data       start:0x8040F0C4 end:0x8040F0E8
+	.data       start:0x8040EA58 end:0x8040F0E8
 
 game/RaceContextSlotGet.c:
 	.text       start:0x800A4578 end:0x800A45B8

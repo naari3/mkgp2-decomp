@@ -10,7 +10,9 @@ typedef struct RaceParams {
 
 struct GameModeBase {
     GameModeBase() {}
-    virtual ~GameModeBase();
+    virtual ~GameModeBase() {}
+    virtual int FrameUpdate() = 0;
+    virtual void Render() = 0;
 };
 
 struct EnvironmentMgr {
@@ -107,6 +109,8 @@ struct TaMode : GameModeBase {
 
     TaMode();
     virtual ~TaMode();
+    virtual int FrameUpdate();
+    virtual void Render();
 };
 
 extern "C" {

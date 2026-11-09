@@ -220,6 +220,23 @@ without those flags ninja tries to download tools and fails.
   added inside a TU's own `tools/extab_user_renames.json` key. Do not edit
   other TUs' keys, even to "clean up" (one of our workers did; it was
   reverted).
+- **Ctor stores the vtable as `addi rX, anchor, OFF`** (vtable reached
+  through the .data section anchor, with base list + vtable sitting right
+  before the ctor's jumptable in .data): the TU was built with
+  `-inline deferred` and `-RTTI on`. Source rule (mweppc
+  `frontend/CParser.c` `CParser_GlobalCleanup`): the class action that
+  declares the vtable (`CClass_ClassAction`, queued when the key function is
+  defined) runs only at end of file, then the deferred functions are
+  generated. Only under deferred codegen is the vtable already declared
+  when the ctor is generated, so `GetDataPoolRoot` (`backend/BE_symbol.c`)
+  gives it the anchor. Without deferral the ctor is generated during parsing
+  and gets `lis/addi __vt__X`. Recipe: write the functions in REVERSE address
+  order (deferred emits LIFO), real C++ class with the key virtual dtor
+  defined in the TU, base class's vtable external or its dtor inline, add
+  `-inline deferred,auto` and `-RTTI on`, and put
+  `#pragma readonly_strings on` at the end so the RTTI name strings go to
+  .rodata (behind the named strings) instead of in front of the vtable in
+  .data. Worked example: TaMode (`src/game/TaMode_FrameUpdate.cpp`).
 - Mangled names: map them to the project's names through
   `tools/extab_user_renames.json`, never by editing symbols to mangled names.
 

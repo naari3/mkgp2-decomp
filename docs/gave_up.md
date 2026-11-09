@@ -336,7 +336,7 @@ Rows above also carry a HINT note where one applied.
 | Function | TU | Pragma | Probe result |
 | --- | --- | --- | --- |
 | `fn_8015B790` | game/Scene_8015B790 | `opt_propagation off` | length fixed, 34 diff lines |
-| `TaMode_Init` | game/TaMode_Init | `opt_propagation off` | length fixed, 158 diff lines |
+| `TaMode_Init` | game/TaMode_FrameUpdate (merged 11-09) | `opt_propagation off` | obsolete: merged TU now 98.76 without it |
 
 ## Parked 2026-11-07 22:10 (mid-range thread)
 
@@ -454,7 +454,7 @@ Landed: b788065 (dtor_801F8214 owns the 801F8214..801F89F0 group, fn_801F894C 10
 
 | Unit(s) | Finding |
 |---|---|
-| clFlowCourse.cpp (`clFlowCourse_Init` 98.41, `clFlowCourse_Dtor` 99.62) | Target loads the .data anchor `lbl_8049B1E0` at entry and stores the vtable as `addi r0, r30, 0x1D4` (vtable 0x8049B3B4 = anchor + 0x1D4). Probes (GC/1.2.5, 1.3.2, 2.0, 2.6): MWCC NEVER addresses a vtable through the section anchor, also not a weak or unnamed-namespace one; and the anchor itself only appears once the fn touches 3 defined internal objects (2 are not enough). So the target vtable at 0x8049B3B4 must be an ordinary data object (manual table), not a compiler vtable. The data 0x8049B1E0..0x8049B4A8 (pool, typeinfo 3A8, vtable 3B4, then the jumptables of fn_801CE800 / fn_801CEB78 / clFlowCourse_Update / clFlowCourse) says 0x801CE800..0x801D1800 was one TU, with fn_801CE918/EB78/Update reaching 1E0/348/388 by their own symbols (declared extern before the definitions). Not merged: the vtable anchor is not reproducible with real C++. |
+| clFlowCourse.cpp (`clFlowCourse_Init` 98.41, `clFlowCourse_Dtor` 99.62) | Target loads the .data anchor `lbl_8049B1E0` at entry and stores the vtable as `addi r0, r30, 0x1D4` (vtable 0x8049B3B4 = anchor + 0x1D4). Probes (GC/1.2.5, 1.3.2, 2.0, 2.6): MWCC NEVER addresses a vtable through the section anchor, also not a weak or unnamed-namespace one; and the anchor itself only appears once the fn touches 3 defined internal objects (2 are not enough). So the target vtable at 0x8049B3B4 must be an ordinary data object (manual table), not a compiler vtable. The data 0x8049B1E0..0x8049B4A8 (pool, typeinfo 3A8, vtable 3B4, then the jumptables of fn_801CE800 / fn_801CEB78 / clFlowCourse_Update / clFlowCourse) says 0x801CE800..0x801D1800 was one TU, with fn_801CE918/EB78/Update reaching 1E0/348/388 by their own symbols (declared extern before the definitions). Not merged. **Correction 11-09 (TaMode):** the vtable anchor IS reproducible with real C++ under `-inline deferred` + `-RTTI on` (class action runs before deferred codegen; see matching_rules §6), so this merge is worth retrying. |
 
 own_data batches (same thread): batch 1+2 tried the 39 largest candidates that were onmokoworks-claimed on 11/08
 (landed 1c704c9, 2dd34c8, 82b1ef1, fc2a159, 4686689, +14 KB). Left, with the reason:
