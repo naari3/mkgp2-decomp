@@ -24,8 +24,10 @@ void CardRegister_Session_Tick(void)
     }
     if (++lbl_806CF0DC == 5) {
         int saved = lbl_806D1214;
+        int flag;
 
-        Receipt_StartFlow(0, lbl_806CF0D4 != 1, 0);
+        flag = lbl_806CF0D4 != 1;
+        Receipt_StartFlow(0, flag, 0);
         lbl_806D1214 = saved;
         lbl_806D1250 = 0;
     } else if (lbl_806CF0DC > 5) {
