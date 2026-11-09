@@ -1403,3 +1403,24 @@ the shared `for (i = 0; it[i].text; i++)` loop became `mulli` of a zero
 index); write those loops as an explicit pointer walk (`it++, i++`) in a
 local copy. opt_lifetimes / opt_dead_assignments off do not help.
 
+
+## 56. Optimizer temp takes the wrong already-used saved register: load a pointer local through an inline getter; and share float locals across switch cases (CoinSystem_UpdateAll, 11-09)
+
+Rule observed with tools/mwccdbg.py `--all`: named locals get the lowest
+vreg numbers (reverse declaration order), optimizer temps (CSE of
+`&c->sparks[i]`, hoisted values) come next, inline return/parameter temps
+last. Colouring runs from the highest vreg down, and a saved-register node
+takes the lowest saved register already handed out before it opens a new one.
+
+- GPR: target kept `c + i*16` in r28 (the register of `flags` from an earlier
+  loop), ours in r29 (register of `p`). `flags` was a named local, so it was
+  coloured AFTER the temp and opened r28 too late. `flags = CoinKart_GetFlags(kart);`
+  (static inline returning `kart->flags`) turns the value into a late temp,
+  coloured before the CSE temp. Declaration order of `flags` has no effect.
+- FPR: target reused one saved FPR for "range" in loop 1, "t" in cases 2/3
+  and one of the homing targets in cases 7/10 (x in one case, y in the other).
+  Separate locals (`range`, `t`, `tx`, `ty`) gave f30 instead of f28. Two
+  function-level floats `a`, `b` reused for all of them match; read from the
+  target which case uses which.
+- Moving the whole pickup test into an inline also fixed the GPR but its
+  float local became a late temp (f30 again) and its Vec moved on the stack.

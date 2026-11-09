@@ -413,7 +413,6 @@ OptionMenuDraw.cpp was merged into SceneList_80157EA8.cpp (dbc2a11) so the optio
 
 | Function | TU | State | What is left | Tried |
 | --- | --- | --- | --- | --- |
-| `CoinSystem_UpdateAll` | game/CoinSystem_UpdateAll | asm (C draft 99.91%) | docs/wip/coin_updateall/CoinSystem_UpdateAll_34lines.diff (applies on main 11-08) owns the switch jumptable .data 0x8048E4B8..0x8048E4E4. extab, extabindex and .data are 100%. Left: one saved FPR (target f28, ours f30) and one saved GPR (r28/r29) for the per-coin sparkle pointer. | all 24 decl orders of the float locals s/range/k/t: no change |
 | `fn_8013AE20` (clCSAnim::update) | game/csAnim | asm (C draft 92.5%) | The TU owns its panic strings since fac53ae2 (.rodata 0x8035C678..0x8035C6B8). That changed nothing for the C draft, because the strings are only on the OSPanic path. Drafts: docs/wip/csanim/ (92.5 and cperm188). | rodata ownership, global vs static strings |
 
 ## Data-ownership wind-down 2026-11-08 12:30 (pool audit thread)
