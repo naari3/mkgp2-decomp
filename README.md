@@ -27,7 +27,7 @@ decomp.dev への登録はまだ行っていない。登録手順は `docs/githu
 
 ## Status
 
-Bring-up. Early matching in progress — see the dashboards above for live numbers.
+Late-stage matching: most of the DOL links from matched C/C++; the remaining work is near-miss functions and data ownership. See the dashboard above for live numbers.
 
 | | Value |
 | --- | --- |
@@ -68,8 +68,9 @@ config/GNLJ82/        # config.yml, symbols.txt, splits.txt (committed)
 orig/GNLJ82/sys/      # main.dol lives here locally (gitignored)
 build/                # all build output (gitignored)
 src/  include/        # C/C++ source as it is decompiled
-tools/                # shared dtk-template Python helpers
-docs/                 # decomp-toolkit documentation
+tools/                # build helpers + matching/sweep tools (tools/README.md)
+docs/                 # matching_rules.md, gave_up.md, regalloc_patterns.md, notes/,
+                      # reports/ (generated audits), archive/ (old strategies)
 ```
 
 ## Related projects
@@ -81,9 +82,9 @@ docs/                 # decomp-toolkit documentation
 
 ## Contributing
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md) (mostly in Japanese) — how to set up,
-claim a function range via an issue, and what a PR must include. The matching
-workflow itself is documented in
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) (mostly in Japanese). The shared rules
+for claiming a TU and for what may land on `main` are in
+[`docs/matching_rules.md`](docs/matching_rules.md); the matching workflow is in
 [`.claude/skills/mkgp2-match/SKILL.md`](.claude/skills/mkgp2-match/SKILL.md).
 
 ## License

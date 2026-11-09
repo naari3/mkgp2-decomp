@@ -22,7 +22,7 @@ Signals
   CC     prologue style that disagrees with the TU's configured mw_version.
 
 Usage
-  python3 tools/tu_audit.py                      # writes docs/tu_boundary_audit.md
+  python3 tools/tu_audit.py                      # writes docs/reports/tu_boundary_audit.md
   python3 tools/tu_audit.py --claims claims.txt  # flag claimed TUs (one path per line,
                                                  # or `[unit-claim] retrofit:<path>` titles)
   python3 tools/tu_audit.py --fetch-claims       # claims via `gh api` (explicit pages)
@@ -1003,7 +1003,7 @@ def main():
     ap.add_argument("--rev", help="audit splits.txt from this git revision")
     ap.add_argument("--claims", help="file with claimed TU paths / unit-claim issue titles")
     ap.add_argument("--fetch-claims", action="store_true", help="fetch open unit-claim issues with gh api")
-    ap.add_argument("--out", default=os.path.join(ROOT, "docs", "tu_boundary_audit.md"))
+    ap.add_argument("--out", default=os.path.join(ROOT, "docs", "reports", "tu_boundary_audit.md"))
     ap.add_argument("--json", help="also write all proposals as JSON")
     ap.add_argument("--top", type=int, default=60)
     ap.add_argument("--no-validate", action="store_true", help="skip the past-wins check in the report")

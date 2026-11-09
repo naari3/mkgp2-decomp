@@ -100,7 +100,7 @@ skipped                   ← user が手動 skip
 | `pending` | 並列 decomp 対象、まだ batch 未 assign |
 | `in_progress` | 現在 sub が作業中 |
 | `matched` | `Object(Matching, ...)` で declared 済み、C で書かれて 100% match |
-| `asm_fn` | C TU 内に `asm void fn() { nofralloc ... blr }` として inline 化。`Object(Matching, ...)` 経由で byte-identical。C 化価値ゼロ (後日 retry 可能)。詳細: `docs/per_fn_matching_strategy.md` |
+| `asm_fn` | C TU 内に `asm void fn() { nofralloc ... blr }` として inline 化。`Object(Matching, ...)` 経由で byte-identical。C 化価値ゼロ (後日 retry 可能)。詳細: `docs/archive/per_fn_matching_strategy.md` |
 | `nonmatching` | `Object(NonMatching, ...)` で隔離済み |
 | `interrupted` | sub の kill / crash で中断、recovery 待ち |
 | `blocked` | 失敗が積み重なって blocked。user 介入待ち |
@@ -281,6 +281,6 @@ event 種別: `session_start`, `session_end`, `sync`, `dispatch`, `notify`, `mer
 
 ## 関連 docs
 
-- `docs/orchestrator_role.md` — main agent の責務と cycle 手順
-- `docs/sub_agent_role.md` — sub-agent の制約と HANDOFF.md 仕様
-- `docs/orchestrator_ops.md` — user 向け運用手順 (start / drain / kill / status)
+- `docs/archive/orchestrator_role.md` — main agent の責務と cycle 手順
+- `docs/archive/sub_agent_role.md` — sub-agent の制約と HANDOFF.md 仕様
+- `docs/archive/orchestrator_ops.md` — user 向け運用手順 (start / drain / kill / status)

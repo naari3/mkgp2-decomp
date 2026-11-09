@@ -2,9 +2,9 @@
 // Ghidra MCP の run_script_inline に body をそのまま渡して実行する
 // (inline script は GhidraScript context の Java として実行される)。
 // 出力:
-//   tools/_ghidra_dump_functions.json  ... {"functions":[{name,address,isThunk,isExternal}]}
-//   tools/_ghidra_dump_globals.txt     ... "name @ addr [Kind] (DataType)" 行 (list_globals 互換)
-// 後段: python tools/_build_ghidra_dump.py -> tools/ghidra_symbol_dump.json
+//   tools/oneshot/_ghidra_dump_functions.json  ... {"functions":[{name,address,isThunk,isExternal}]}
+//   tools/oneshot/_ghidra_dump_globals.txt     ... "name @ addr [Kind] (DataType)" 行 (list_globals 互換)
+// 後段: python tools/oneshot/_build_ghidra_dump.py -> tools/ghidra_symbol_dump.json
 
 String outDir = "C:/Users/naari/src/github.com/naari3/mkgp2-decomp/tools";
 

@@ -1,6 +1,6 @@
 # Large extab-group strategy (Phase 3)
 
-> **Status: DRAFT (2026-05-18)**. Phase 1b verify 成功 + `tools/extract_fn_asm.py` 完成。本 doc の核 (mega-bundle pattern = TU 内全関数を asm_fn で scaffold) の前提と tool 整備の両方が成立 (詳細: `docs/per_fn_matching_strategy.md` §12, §13)。
+> **Status: DRAFT (2026-05-18)**. Phase 1b verify 成功 + `tools/extract_fn_asm.py` 完成。本 doc の核 (mega-bundle pattern = TU 内全関数を asm_fn で scaffold) の前提と tool 整備の両方が成立 (詳細: `docs/archive/per_fn_matching_strategy.md` §12, §13)。
 >
 > 完了:
 > 1. `tools/extract_fn_asm.py` — group 全関数の asm body + 手動 extab/extabindex emit + per-TU renames snippet を 1 発生成、mwcc inline asm の制約 (sda21 / crclr / `.L_*` / extern) も全て tool が吸収
@@ -14,11 +14,11 @@
 >
 > 計測後の refine 想定箇所: Section 2.2 (Phase 3b mega-bundle pattern の役割分担)、Section 3.1 (`batch_type` enum 候補に `scaffold_only` 追加するか)、Section 5 (Phase 順)。
 
-`docs/per_fn_matching_strategy.md` Phase 3 の詳細展開。**>10 fn の dtk reversed-extab group** にどう取り組むかの設計。
+`docs/archive/per_fn_matching_strategy.md` Phase 3 の詳細展開。**>10 fn の dtk reversed-extab group** にどう取り組むかの設計。
 
 関連:
-- `docs/per_fn_matching_strategy.md` — Phase 1 で導入した per-fn asm_fn 退避 (この doc の前提)
-- `docs/orchestrator_state_schema.md` — state schema (拡張点を本 doc で提案)
+- `docs/archive/per_fn_matching_strategy.md` — Phase 1 で導入した per-fn asm_fn 退避 (この doc の前提)
+- `docs/archive/orchestrator_state_schema.md` — state schema (拡張点を本 doc で提案)
 - `tools/build_extab_map.py` — extab group 識別 (.orchestrator/extab_groups.json 生成)
 - `tools/setup_worktree.py` — worktree scaffold (この doc で大 TU 対応を要する場合 patch)
 
@@ -174,7 +174,7 @@ mega_scaffold 完了の判定は `state.batches` 内に該当 group の mega_sca
 
 ### 4.1 `tools/extract_fn_asm.py` (実装済み 2026-05-18、commit `634b412`)
 
-実装は当初設計より広い: 1 group 単位で asm body + 手動 extab/extabindex emit + per-TU renames snippet を 1 発生成し、mwcc inline asm の制約も全て tool 側で吸収する。詳細: `docs/per_fn_matching_strategy.md` §13。
+実装は当初設計より広い: 1 group 単位で asm body + 手動 extab/extabindex emit + per-TU renames snippet を 1 発生成し、mwcc inline asm の制約も全て tool 側で吸収する。詳細: `docs/archive/per_fn_matching_strategy.md` §13。
 
 ```sh
 python tools/extract_fn_asm.py <group_id> \

@@ -1255,7 +1255,7 @@ build 状態: OnKartHit は asm_fn で byte-identical 維持 (SHA-1 OK)。EF は
 ## clFlowItem Draw/Update: closed-class の再出現 2 例 (2026-07-19, unit-first claim #32)
 
 台帳追記 (どちらも既知 class の再確認。詳細な probe 経緯は
-`docs/per_fn_matching_strategy.md` §19.5、C body は src/game/clFlowItem.c の #if 0):
+`docs/archive/per_fn_matching_strategy.md` §19.5、C body は src/game/clFlowItem.c の #if 0):
 
 - **clFlowItem_Draw** (asm_fn park, C 96.6% / 命令列完全一致):
   strength-reduction walker web が死にゆく base pointer (icons/grid) の register に

@@ -4,7 +4,7 @@
 "Matched" in dtk report.json counts every function inside an
 `Object(Matching, ...)` TU — including functions written as
 `asm void fn() { nofralloc ... }` (byte-identical but zero decomp value,
-see docs/per_fn_matching_strategy.md). This module recovers the
+see docs/archive/per_fn_matching_strategy.md). This module recovers the
 distinction from repo-tracked sources only, so it works both locally and
 in CI:
 

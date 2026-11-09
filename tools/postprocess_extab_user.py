@@ -247,7 +247,7 @@ def main() -> int:
     patch_memorymanager_timedfree_extab(obj)
     # Mixed auto/manual extab TUs: consolidate entries into fn-address order
     # (no-op for single-pair or already-sorted objects). See
-    # tools/reorder_extab.py and docs/large_tu_cpp_conversion.md Phase 1.
+    # tools/reorder_extab.py and docs/archive/large_tu_cpp_conversion.md Phase 1.
     subprocess.check_call([
         sys.executable,
         str(Path(__file__).resolve().parent / "reorder_extab.py"),

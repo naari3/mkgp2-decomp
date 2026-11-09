@@ -8,8 +8,8 @@ matching の対象選定を「サイズ順 / 単発 fn つまみ食い」では�
 関連:
 - `tools/plan_units.py` — unit ランキングを出す read-only レポート (本 doc の実装)
 - `.kimi-code/skills/mkgp2-orch/SKILL.md` — orchestrator の編成ルール (unit-first 節)
-- `docs/per_fn_matching_strategy.md` — unit 内の難関 fn を asm_fn 退避する手順
-- `docs/large_extab_group_strategy.md` — extab group >6 の扱い
+- `docs/archive/per_fn_matching_strategy.md` — unit 内の難関 fn を asm_fn 退避する手順
+- `docs/archive/large_extab_group_strategy.md` — extab group >6 の扱い
 
 ## 1. なぜ unit-first か
 
@@ -29,7 +29,7 @@ matching の対象選定を「サイズ順 / 単発 fn つまみ食い」では�
 |---|---|---|
 | `runs` | **1** (許容 2〜3) | member が 1 連続 address range に並ぶ = 1 TU 1 split で切れる。dtk splits は連続 range が前提 |
 | `frgn` (foreign) | **0** (許容 数個) | span 内の他クラスタ関数。あると TU に同居させるか split を割るかの判断が増える |
-| `ex>6` | **0** | extab group >6 の member は escalation 対象 (`docs/large_extab_group_strategy.md`) |
+| `ex>6` | **0** | extab group >6 の member は escalation 対象 (`docs/archive/large_extab_group_strategy.md`) |
 | `exX` (extab_cross) | **0** | extab group が unit 外の fn を含む = bundle 制約が unit 境界を跨ぐ blocker |
 | `medB` (pending median) | 小さいほど楽 | 立ち上がりは median の小さい unit から |
 
@@ -40,7 +40,7 @@ Jyugemu、Tachometer、TaRecord、LapBannerScene、ServiceMenu 等。
 ランキングの sort key は `plan_units.py` の `rank_key()` にある通り
 (exX blocker → ex>6 → runs → foreign → median)。**どの unit を選ぶかの
 最終判断はツールに入れない** — ランキングは材料で、pick は agent / 人の判断
-(`docs/orchestrator_ops.md` の plan_batches.py 禁止則と同じ原則)。
+(`docs/archive/orchestrator_ops.md` の plan_batches.py 禁止則と同じ原則)。
 
 ## 3. unit として不成立なクラスタ (手を出さない)
 
@@ -85,7 +85,7 @@ placeholder 名の関数も `pending` (旧 `excluded`)。名前 prefix が無い
 4. `src/game/<Name>.c` を 1 TU として splits.txt に 1 entry 追加
    (span 全体を 1 range で。foreign fn が居る場合はここで同居/分割を判断)
 5. unit 内の fn を size 昇順に matching (setter/getter → 中物 → 大物)
-6. 難関 fn は asm_fn 退避 (`docs/per_fn_matching_strategy.md`) して
+6. 難関 fn は asm_fn 退避 (`docs/archive/per_fn_matching_strategy.md`) して
    unit 完了を優先、後日 promote
 7. `python configure.py && ninja build/GNLJ82/ok` で SHA-1 verify → commit
 8. 次の unit へ。着手順の推奨は毎回 `plan_units.py` を引き直す

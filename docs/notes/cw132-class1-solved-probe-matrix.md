@@ -181,7 +181,7 @@ opt_unroll_instr_count, opt_pointer_analysis_mode, processor, function_align`
 
 ## Action items for Phase 1 (class-1 salvage)
 
-1. Update docs/per_fn_matching_strategy.md 14.2 KartItem_OnKartHit row:
+1. Update docs/archive/per_fn_matching_strategy.md 14.2 KartItem_OnKartHit row:
    class 1 SOLVED via `== 0` arm-order form; record probeE/probeH recipes and
    that compiler rev / pragmas are ruled out (negatives above).
 2. Apply recipe to the 19 sites / 9 fns (OnKartHit x7, CarObject_OnItemHit,

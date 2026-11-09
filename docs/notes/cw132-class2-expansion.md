@@ -4,7 +4,7 @@ Batch: KartItem_OnKartHit 0x8004A238, KartItem_Tick 0x8004BAAC, ItemEffect_Trap 
 ItemEffect_Projectile 0x80051A70 (TU src/game/auto_ONKARTHIT_block.c, -use_lmw_stmw on).
 Result: 4/4 parked (96.38% / 98.83% / 85.34% / 88.40%), all residue register-identity or
 instruction-selection-identity. Paste-ready bodies + reapply diff in the batch HANDOFF appendix
-(docs/drafts/Class2_expansion_nearmatches.handoff.md; the Appendix-A TU header diff is
+(docs/archive/drafts/Class2_expansion_nearmatches.handoff.md; the Appendix-A TU header diff is
 already merged to main).
 
 ## Observations (facts, reproduced in builds)

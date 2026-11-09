@@ -13,7 +13,7 @@ Output: C source fragments that reproduce the same `.text` / `extab` /
   - `#pragma section R ".extab_user"` + `#pragma section R ".extabindex_user"`
   - `tools/postprocess_extab_user.py` (section + symbol rename via llvm-objcopy)
   - `Object(Matching, ..., extab_padding=b"\x00\x00")` build rule
-See `docs/per_fn_matching_strategy.md` §12 and `src/game/HeapStats.c`.
+See `docs/archive/per_fn_matching_strategy.md` §12 and `src/game/HeapStats.c`.
 
 Sections emitted in target layout order (extab / extabindex inside the asm
 file are not necessarily in fn address order — they're whatever order the
@@ -66,7 +66,7 @@ FN_RE = re.compile(r'^\.fn\s+(\S+)\s*,\s*(\S+)\s*$')
 ENDFN_RE = re.compile(r'^\.endfn\s+(\S+)\s*$')
 BYTE4_RE = re.compile(r'^\s*\.4byte\s+(.+)\s*$')
 
-# mwcc inline-asm syntax fixups (docs/per_fn_matching_strategy.md §11)
+# mwcc inline-asm syntax fixups (docs/archive/per_fn_matching_strategy.md §11)
 SDA21_RE = re.compile(r'\b([A-Za-z_][A-Za-z0-9_]*)@sda21\(r0\)')
 # `li rD, sym@sda21` -> mwcc rejects this form; rewrite to `addi rD, 0, sym@sda21`
 # (mwcc accepts the addi form and emits the sda21 reloc).

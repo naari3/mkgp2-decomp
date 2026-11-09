@@ -14,7 +14,7 @@ One function:
   source to /tmp/pragmasweep/<FN>.best.<ext>.
 
 All near misses:
-  python3 tools/pragmasweep.py batch [--min 90] [--max-size 2000] [--md docs/pragmasweep_results.md]
+  python3 tools/pragmasweep.py batch [--min 90] [--max-size 2000] [--md docs/reports/pragmasweep_results.md]
   Sweeps every function below 100% in a NonMatching TU with fuzzy >= --min,
   and writes a Markdown table (original vs best diff lines, best setting,
   who claims the TU). Resumable: results are cached in /tmp/pragmasweep/cache.json.
@@ -399,7 +399,7 @@ def main():
     p.add_argument('--max-size', type=int, default=2000)
     p.add_argument('--k', type=int, default=2); p.add_argument('--decl', type=int, default=0)
     p.add_argument('-j', '--jobs', type=int, default=os.cpu_count() or 4)
-    p.add_argument('--md', default='docs/pragmasweep_results.md')
+    p.add_argument('--md', default='docs/reports/pragmasweep_results.md')
     p.add_argument('--set', choices=sorted(PRAGMA_SETS), default='default', help='pragma set to sweep')
     for q in sp.choices.values():
         q.add_argument('--objdiff', action='store_true',

@@ -63,7 +63,7 @@ vcall r6-vs-r12、fp f3/f5 の swap) が全て。partition が直れば下流は
 
 1. `python tools/setup_worktree.py batch_fable_onkarthit_recheck2` (または好きな batch id) で worktree 作成。
    ※ Opus セッションが作った `batch_fable_onkarthit_recheck` worktree は撤去済み。自分で作り直す。
-2. 96.38% の出発 C body: `docs/drafts/Class2_expansion_nearmatches.handoff.md` の Appendix B。
+2. 96.38% の出発 C body: `docs/archive/drafts/Class2_expansion_nearmatches.handoff.md` の Appendix B。
    これを `src/game/auto_ONKARTHIT_block.c` の OnKartHit asm body と差し替えて出発点にする。
 3. 測定: `tools/compiler_probe/measure_fns.py` + `rowdiff.py` で OnKartHit の per-row diff を見る
    (asm 出発点との差を最小化)。フル検証は `python configure.py && ninja build/GNLJ82/ok` で

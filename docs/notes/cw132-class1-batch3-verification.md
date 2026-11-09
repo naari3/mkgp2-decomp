@@ -27,7 +27,7 @@ KartItem_Tick site (0x8004C26C): u64 family confirmed (and/and/xor/xor/or. on bu
 
 Final residue: 23 instructions in the color-pulse block, instruction content 100% identical, fp scratch register PERMUTATION only. Target numbers the 3 const/temp web clusters bottom-up (later-first-use -> lower reg); CW emits the top-down permutation. 8 negative probes: named const hoists (copy-propagated), volatile-cast load, assignment-in-expression, addend-first fmadds spelling, compound +=, fn-top vs block decl scoping, static inline wrap helper, prototyped vs K&R float callees (byte-neutral), exceptions on/off (identical -> NOT approach-B class). Strongest new observation: the IDENTICAL source shape (`a = a + C; if (a > C2) a = a - C2;`) produced target-style bottom-up numbering at one site (matched) but top-down at the other - the flip correlates with a multi-block const web coexisting with downstream same-block fp code. Allocator-internal; no source lever found.
 
-Paste-ready C (>99% by content, fp renames only) at docs/drafts/KartItem_TickStatusEffectsByFlag_99pct.handoff.md. Prereqs: retype lbl_806D27B4/B8/BC/C0/C4 + lbl_806D2768 -> const float; fn_802DCA04 -> float(void); fn_8027E9E8 -> double(double).
+Paste-ready C (>99% by content, fp renames only) at docs/archive/drafts/KartItem_TickStatusEffectsByFlag_99pct.handoff.md. Prereqs: retype lbl_806D27B4/B8/BC/C0/C4 + lbl_806D2768 -> const float; fn_802DCA04 -> float(void); fn_8027E9E8 -> double(double).
 
 ## fn 2 park: KartItem_Tick 0x8004BAAC precan (0 probes, classes already closed)
 

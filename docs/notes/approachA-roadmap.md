@@ -5,7 +5,7 @@ EH scaffolding 関数 (KartItem_Dtor 0x8004E2B0 ほか) を C で promote する
 各 phase は前 phase の結果に依存する。観察 (事実) と仮説 (推論) を分けて時系列で追記すること。
 結論が覆った場合も古い項目を消さず「訂正」を追記する。
 
-背景: docs/per_fn_matching_strategy.md 14.1 (extab approach A/B, mix-failure rule) /
+背景: docs/archive/per_fn_matching_strategy.md 14.1 (extab approach A/B, mix-failure rule) /
 docs/notes/exceptions-on-eh-scaffolding-unpromotable.md (EH class, unlock 条件)
 
 ## Phase 一覧

@@ -104,7 +104,7 @@ Residual diff rows at best: Dispatch 53 (all fp reg identity + cascade), ApplyIm
 
 ```c
 /* ItemEffect_Dispatch 0x80050410 - BEST (build 5, 97.07%). Replaces the volatile
- * scratch block of docs/drafts/ItemEffect_Dispatch_86pct.handoff.md appendix C.
+ * scratch block of docs/archive/drafts/ItemEffect_Dispatch_86pct.handoff.md appendix C.
  * Forward decl: void ItemEffect_Dispatch(ItemEffectLaneRun *lane, KartItemOpsView *owner,
  * unsigned char kind, void *effectState, void *mediaReq, const ItemEffectDesc *desc,
  * int itemId, void *itemObj, int arg4, float intensity);

@@ -4,7 +4,7 @@
 > English are welcome too.
 
 mkgp2-decomp への貢献手順。matching workflow の技術的な本体は
-[`.kimi-code/skills/mkgp2-match/SKILL.md`](.kimi-code/skills/mkgp2-match/SKILL.md)
+[`.claude/skills/mkgp2-match/SKILL.md`](.claude/skills/mkgp2-match/SKILL.md)
 にある (Claude Code なら project skill として自動ロードされる。人間もそのまま
 手順書として読める)。この文書は「環境を作る」「担当を決める」「PR を出す」の
 運用ルールに絞る。
@@ -30,66 +30,33 @@ export 済み。Ghidra の Data Type Manager → 「Open File Archive」で開�
 program に適用すれば maintainer 側と同じ型が使える。Ghidra decompiler の生出力を repo に commit しないこと
 (commit するのは自分で書いた matched C source のみ)。
 
-## 2. 担当範囲を claim する
+## 2. 担当を claim する
 
-`config/GNLJ82/symbols.txt` / `splits.txt` / `configure.py` は全員が触る
-集中管理ファイルで、同じ領域を 2 人が触るとほぼ確実に conflict する。
-着手前に GitHub issue で担当範囲を宣言すること。
+claim・完了条件・受け入れ基準の正本は [`docs/matching_rules.md`](docs/matching_rules.md)
+(naari3 側の Claude スレッドと onmokoworks 側の worker の共通ルール)。要点:
 
-claim の単位は **unit** (struct/class に相当する関数クラスタ、2026-07-19〜)。
-選定基準と手順の正本は [`docs/unit_first_strategy.md`](docs/unit_first_strategy.md)。
-
-```
-python tools/plan_units.py --claims        # ランキング + claim 状況
-python tools/claim_unit.py claim <Unit>    # claim (issue 自動作成、label unit-claim)
-python tools/claim_unit.py done <Unit>     # 完食したら close
-python tools/claim_unit.py release <Unit>  # 手放すとき close
-```
-
-- open issue = claim 中。**他者の open claim には手を出さない**
-- `runs=1 / frgn=0 / ex>6=0 / exX=0` に近い unit から選ぶと安全
-  (ランキングがその順に並ぶ)
-- 背景の制約 (ランキングの列が encode しているもの):
-  - **address-contiguous な範囲** が 1 TU の前提 (dtk splits)
-  - **reversed extab group はまたげない / 割れない**。`.fn` が 2 つ以上ある
-    `build/GNLJ82/asm/auto_*_text*.s` は全関数一括 match が必要
-    (SKILL.md §7.5 制約 D、map は `python tools/build_extab_map.py`)
-- unit に当てはまらない単発をやりたい場合は従来どおり issue を手で立てて
-  address 範囲 (例 `0x8002F640..0x8002FA00`) と関数名を書く
-
-小さく始めたい場合は、ランキング上位の小さい unit (`medB` が小さいもの) が向いている。
+- TU に着手する直前に issue を立てる: タイトル `[unit-claim] retrofit:<configure.py のパス>`、
+  ラベル `unit-claim`、担当者は自分。gh / API / MCP どれで立ててもよい
+- その TU から離れたら (取り込み済み・成果なし・中止のどれでも) すぐ閉じる。
+  開いている claim は今作業している数までに抑える
+- 立てる前に開いている `unit-claim` を全件 (ページ指定で) 確認し、
+  他人の claim がある TU には merge や rename 経由でも手を出さない
 
 ## 3. matching する
 
-[`.kimi-code/skills/mkgp2-match/SKILL.md`](.kimi-code/skills/mkgp2-match/SKILL.md)
-の手順に従う。要点だけ:
+- 手順: [`.claude/skills/mkgp2-match/SKILL.md`](.claude/skills/mkgp2-match/SKILL.md)
+- レジスタ割当だけが合わないとき: [`docs/regalloc_patterns.md`](docs/regalloc_patterns.md)
+- 他の人がすでに試して諦めた関数と WIP の場所: [`docs/gave_up.md`](docs/gave_up.md)
+- 自動 sweep ツール (pragmasweep / stmtsweep / typesweep / shapesweep など):
+  [`tools/README.md`](tools/README.md)
+- 再現性のある観察 (CW の codegen 癖、dtk の挙動等) は `docs/notes/` に追記する
 
-- 1 関数が C で 100% に届かないときは asm_fn 退避 / NonMatching 隔離という
-  規約された逃げ道がある (SKILL.md §10.5)。途中状態 (89% 等) にも commit
-  する価値はある
-- 新規命名は `symbols.txt` に入れる。maintainer 側 Ghidra project への同期は
-  maintainer が行うので気にしなくてよい
-- 再現性のある観察 (CW の codegen 癖、dtk の挙動等) は `docs/notes/` に
-  追記する。時系列で追記し、観察 (事実) と仮説 (推論) を分けて書く。
-  後で覆った結論も消さず「訂正」を追記する
+## 4. main に入れる
 
-## 4. PR を出す
-
-要件:
-
-- `python configure.py && ninja` で `build/GNLJ82/main.dol: OK` (SHA-1 一致)
-- build 末尾 `PROGRESS` の matched functions 数が **増えている** こと。
-  SHA-1 OK でも自分の `.o` が link されていない「偽 match」があり得る
-  (SKILL.md §9)。PR 本文に着手前後の数値を書く
-- 変更は claim した範囲に閉じる。典型的な構成:
-  `src/<lib>/<file>.c` + `configure.py` + `config/GNLJ82/splits.txt` +
-  `config/GNLJ82/symbols.txt`
-- `config/GNLJ82/build.sha1` は変更しない (target は元 binary 固定)
-- ゲームアセット / `main.dol` / Ghidra decompiler 生出力を含めない
-- commit message に対象関数 / address / size / SHA-1 verify 通過を明記
-
-CI (GitHub Actions) でも build + SHA-1 verify が走る。green にしてから
-review を求めること。
+`docs/matching_rules.md` §2 のとおり: `origin/main` に rebase し、
+`rm -f build/GNLJ82/main.dol && ninja` で `build/GNLJ82/main.dol: OK` を確認してから
+push (直接 push でも PR でもよい)。fakematch は §3 の形式でマークする。
+`config/GNLJ82/build.sha1`、ゲームアセット、`main.dol`、Ghidra decompiler の生出力は commit しない。
 
 ## License
 

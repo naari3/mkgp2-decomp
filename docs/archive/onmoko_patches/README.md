@@ -46,10 +46,10 @@ Each patch was applied **alone** to a throwaway checkout of main, then built fro
 
 **All together:** every patch except the two obsolete ones and fn_8028EAA8.patch, applied in alphabetical order (top dir, then merge/), clean build gives main.dol OK and 7264 matched functions (**+13**). That equals the sum of the single-patch gains, so no two patches interfere. The patches with "new blank line at EOF" warnings (card_unpack_v1, fn_80243C70, fn_8028EAA8, amnet_nm2_rest) still apply cleanly.
 
-These patches come from the zero-diff hits in docs/pragmasweep_results.md
+These patches come from the zero-diff hits in docs/reports/pragmasweep_results.md
 (tools/pragmasweep.py). They were verified by R5 on a throwaway branch off main
 ce0e1c8, 2026-11-07. The TU sources on main are untouched: the
-TUs are claimed by onmokoworks, so the owner applies them (`git apply docs/onmoko_patches/<name>.patch`).
+TUs are claimed by onmokoworks, so the owner applies them (`git apply docs/archive/onmoko_patches/<name>.patch`).
 
 Verification: all five source patches applied together, then a clean build
 (`rm -rf build/GNLJ82/src build/GNLJ82/ok`, ninja). main.dol SHA OK and every
@@ -80,7 +80,7 @@ Not needed any more: STLContainer_DisposeRecursive and fn_801987C4 are already
 
 ## Matching-flip patches for TUs already at 100% (thread B, 2026-11-07)
 
-From docs/flip_hints.md. Verified on a throwaway branch off main: all four applied together, clean build, main.dol OK (+13 functions).
+From docs/reports/flip_hints.md. Verified on a throwaway branch off main: all four applied together, clean build, main.dol OK (+13 functions).
 
 | Patch | TU | Issue | Blocker | Fix |
 | --- | --- | --- | --- | --- |
@@ -91,7 +91,7 @@ From docs/flip_hints.md. Verified on a throwaway branch off main: all four appli
 
 ## Pool / TU-merge patches (thread B, 2026-11-07)
 
-See docs/merge_plans.md for the full list of plans. Files are in `merge/`.
+See docs/reports/merge_plans.md for the full list of plans. Files are in `merge/`.
 
 | Patch | Function | Kind | Result |
 | --- | --- | --- | --- |
@@ -106,7 +106,7 @@ See docs/merge_plans.md for the full list of plans. Files are in `merge/`.
 
 Every below-100% function in an onmokoworks-claimed TU (323 of them, report at
 main 295cfd3) was swept:
-- 62 functions missing from docs/pragmasweep_results.md (large or < 80%): 6
+- 62 functions missing from docs/reports/pragmasweep_results.md (large or < 80%): 6
   compilers x 0-2 of the 8 opt_* pragmas + 30 declaration orders. No new 0.
 - The other 261: own cc / 1.3.2 / 2.6 / 1.3 x 0-2 of a second pragma set
   (optimization_level 3/2, optimize_for_size, fp_contract off, unroll/vectorize

@@ -8,7 +8,7 @@ below, most frequent first. Commit ids let you read the before/after source
 
 The checks assume the usual loop: `ninja build/GNLJ82/src/<tu>.o`, then diff
 the function against `build/GNLJ82/asm/<tu>.s` (objdiff or a dtk disasm diff).
-`tools/regswap_classify.py` (output docs/regswap_census.md) groups the
+`tools/regswap_classify.py` (output docs/reports/regswap_census.md) groups the
 current near misses by the shape of their register diff; start there to find
 functions that share a shape with one already fixed.
 `tools/pragmasweep.py` already automates patterns 1 and 4 (compiler x pragma x
@@ -295,7 +295,7 @@ then needed the erase in its own inline helper too (`EraseFrom(l, e)`).
 
 ## 16. A call result takes the wrong dying saved register: name it in the inline (a6d0090, 11-08)
 
-Census shape (docs/regswap_census.md): `saved / reg_only / chain`, where
+Census shape (docs/reports/regswap_census.md): `saved / reg_only / chain`, where
 `after_call`, value `call_result`. One saved register differs, right after
 a `bl`, and only for the value that `mr rN, r3` copies out. Several
 variables died at that call (their saved registers are free), and the

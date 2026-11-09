@@ -32,7 +32,7 @@
 
 - `derive_status()`: placeholder でも `pending`。`excluded` は derive されなくなった
 - `plan_units.py`: `assign_units()` を追加。placeholder を extab group → 前後同 unit →
-  `anon_<addr>` の順で unit に所属させる (`docs/unit_first_strategy.md` §3.5)
+  `anon_<addr>` の順で unit に所属させる (`docs/archive/unit_first_strategy.md` §3.5)
 - `claim_unit.py`: unit member の取得を `assign_units()` 経由に変更 (anon_* を claim 可能に)
 
 ## 2026-10-25 変更後の観測
