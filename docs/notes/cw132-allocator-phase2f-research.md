@@ -1541,3 +1541,8 @@ c21_u131: fn801826F8 inherited opt_lifetimes-off source scores98.1457; removing 
 Source: Codex worker c22_u110_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c22_u110 fn801E9E74 improves98.61724->98.69655/1164B by ordering bonus-loop step ++base,++i. This fixes final pointer/state/index instruction scheduling; retained one-line draft improvement. Doing the same in classifier regresses combined98.60345, so omitted. Returning classification state instead of output pointer regresses88.92414/1124B through branch/store folding. HorizontalDistanceSquared static inline regresses95.441376/1148B: player-Z no longer loop-hoisted, saved FPR count and frame shrink. Both rejected. Array address is a standalone symbol, no shared-pool offset residual; no A/B rescue. EH100/index91.66667 unchanged, no flag/range/header edits, native gain0.
+
+## c23_u137_20261109
+Source: Codex worker c23_u137_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1100 B.
+
+c23_u137: Removed inherited opt_propagation off; natural fn80240378 98.42262%/672B vs inherited98.75%, ten other functions/EH/sdata2 all100. GroupAt pointer accessor95.40476%/664B caches selected-group address, rejected. Actual virtual classes only at registration sites: simple class layout has joint0/vptr4 (not target); empty polymorphic interface corrects layout but adds vtable/constructor work93.66071%/696B. Both rejected and all temporary bridges restored. Do not repeat unsigned index(c21) or GroupAt/field accessor(c19) probes. Dtor-first reversed group blocks B; no new native. Final fallback DOL SHA1ea30f3b1 exact.

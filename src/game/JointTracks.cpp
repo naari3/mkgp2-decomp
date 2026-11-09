@@ -33,8 +33,6 @@ void fn_802400A4(TaskBucket *self, const ChildBinding *binding, int group, void 
     }
 }
 
-#pragma push
-#pragma opt_propagation off
 int fn_80240378(TaskBucket *self, const char *name, int group, void *model,
                 const TrackGroup *groups) {
     const char *strings = lbl_803E5D38 + 0x10000;
@@ -79,7 +77,6 @@ int fn_80240378(TaskBucket *self, const char *name, int group, void *model,
     }
     return 0;
 }
-#pragma pop
 
 
 int fn_80240618(TaskBucket *self, const char *name, int group, void *model) {
