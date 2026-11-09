@@ -2867,23 +2867,6 @@
       "__dt__5Vec3fFv"
     ]
   },
-  "src/game/EnmyFaceEffect_nm1.cpp": [
-    "fn_8022CE34",
-    "fn_8022D050",
-    "fn_8022D210",
-    "fn_8022D514",
-    "fn_8022D9E4",
-    "fn_8022E16C",
-    "fn_8022E624",
-    "fn_8022E810",
-    "fn_8022EB30",
-    "fn_8022EFC8",
-    "fn_8022F548",
-    "fn_8022FCA8",
-    "fn_8022FFD4",
-    "fn_8023001C",
-    "dtor_80036E40"
-  ],
   "src/game/VSMode_FrameUpdate.c": [
     "VSMode_FrameUpdate",
     "BtMode_Dtor",
@@ -3184,7 +3167,21 @@
     "OperationTime_Page",
     "ClockSetting_Page",
     "CabinetSetting_Page",
-    "CardCreate_Page"
+    "CardCreate_Page",
+    "CardRW_Renew_Page",
+    "CardRW_HardwareInit_Page",
+    "CardRW_Reprint_Page",
+    "CardRW_DataRepair_Page",
+    "CardDataTransfer_UI",
+    "CardDataCheck_UI",
+    "CardRW_PrintTest_Page",
+    "CardRW_DispenseTest_Page",
+    "CardRW_ReadWriteTest_Page",
+    "CardRW_CleaningTest_Page",
+    "CardRW_TestTopMenu_Page",
+    "SpeakerTest_Page",
+    "LampTest_Page",
+    "CameraTest_Page"
   ],
   "src/game/fn_801B7EF8.c": [
     "fn_801B7EF8",

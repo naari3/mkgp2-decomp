@@ -1704,80 +1704,10 @@ game/CardRW_ErrorDisplay.c:
 	.text       start:0x80066350 end:0x800668FC
 
 game/CardCreate_Page.cpp:
-	extab       start:0x800080F8 end:0x80008160
-	extabindex  start:0x80020FD8 end:0x80021074
-	.text       start:0x800668FC end:0x8006B32C
+	extab       start:0x800080F8 end:0x800081F0
+	extabindex  start:0x80020FD8 end:0x8002111C
+	.text       start:0x800668FC end:0x80070EA8
 	.data       start:0x803FBF80 end:0x803FDF28
-
-game/CardRW_Renew_Page.c:
-	extab       start:0x80008160 end:0x80008168
-	extabindex  start:0x80021074 end:0x80021080
-	.text       start:0x8006B32C end:0x8006BB04
-
-game/CardRW_HardwareInit_Page.c:
-	extab       start:0x80008168 end:0x80008170
-	extabindex  start:0x80021080 end:0x8002108C
-	.text       start:0x8006BB04 end:0x8006C0F4
-
-game/CardRW_Reprint_Page.c:
-	extab       start:0x80008170 end:0x80008178
-	extabindex  start:0x8002108C end:0x80021098
-	.text       start:0x8006C0F4 end:0x8006C810
-
-game/CardRW_DataRepair_Page.c:
-	extab       start:0x80008178 end:0x80008180
-	extabindex  start:0x80021098 end:0x800210A4
-	.text       start:0x8006C810 end:0x8006D308
-
-game/CardDataTransfer_UI.cpp:
-	extab       start:0x80008180 end:0x80008188
-	extabindex  start:0x800210A4 end:0x800210B0
-	.text       start:0x8006D308 end:0x8006DB90
-
-game/CardDataCheck_UI.cpp:
-	extab       start:0x80008188 end:0x80008190
-	extabindex  start:0x800210B0 end:0x800210BC
-	.text       start:0x8006DB90 end:0x8006E308
-
-game/CardRW_PrintTest_Page.c:
-	extab       start:0x80008190 end:0x80008198
-	extabindex  start:0x800210BC end:0x800210C8
-	.text       start:0x8006E308 end:0x8006E7D0
-
-game/CardRW_DispenseTest_Page.c:
-	extab       start:0x80008198 end:0x800081A0
-	extabindex  start:0x800210C8 end:0x800210D4
-	.text       start:0x8006E7D0 end:0x8006EC24
-
-game/CardRW_ReadWriteTest_Page.c:
-	extab       start:0x800081A0 end:0x800081A8
-	extabindex  start:0x800210D4 end:0x800210E0
-	.text       start:0x8006EC24 end:0x8006F200
-
-game/CardRW_CleaningTest_Page.c:
-	extab       start:0x800081A8 end:0x800081B0
-	extabindex  start:0x800210E0 end:0x800210EC
-	.text       start:0x8006F200 end:0x8006F608
-
-game/CardRW_TestTopMenu_Page.c:
-	extab       start:0x800081B0 end:0x800081B8
-	extabindex  start:0x800210EC end:0x800210F8
-	.text       start:0x8006F608 end:0x8006FA1C
-
-game/SpeakerTest_Page.cpp:
-	extab       start:0x800081B8 end:0x800081C0
-	extabindex  start:0x800210F8 end:0x80021104
-	.text       start:0x8006FA1C end:0x80070238
-
-game/LampTest_Page.cpp:
-	extab       start:0x800081C0 end:0x800081D8
-	extabindex  start:0x80021104 end:0x80021110
-	.text       start:0x80070238 end:0x8007044C
-
-game/CameraTest_Page.cpp:
-	extab       start:0x800081D8 end:0x800081F0
-	extabindex  start:0x80021110 end:0x8002111C
-	.text       start:0x8007044C end:0x80070EA8
 
 game/FlashFadeOverlay_Draw.c:
 	extab       start:0x800081F0 end:0x800081F8
@@ -11091,18 +11021,14 @@ game/fn_8022CDE4.c:
 	.text       start:0x8022CDE4 end:0x8022CE04
 
 game/EnmyFaceEffect.cpp:
-	extab       start:0x8001BFE8 end:0x8001BFF0
-	extabindex  start:0x8002A8D8 end:0x8002A8E4
-	.text       start:0x8022CE04 end:0x8022CE34
-
-game/EnmyFaceEffect_nm1.cpp:
-	extab       start:0x8001BFF0 end:0x8001C15C
-	extabindex  start:0x8002A8E4 end:0x8002A98C
-	.text       start:0x8022CE34 end:0x802300C8
+	extab       start:0x8001BFE8 end:0x8001C15C
+	extabindex  start:0x8002A8D8 end:0x8002A98C
+	.text       start:0x8022CE04 end:0x802300C8
 	.ctors      start:0x802E8954 end:0x802E8958
 	.rodata     start:0x803DAB54 end:0x803DAE88
-	.data       start:0x804EE14C end:0x804EE1B8
-	.bss        start:0x80679CE0 end:0x80679E00
+	.data       start:0x804EE140 end:0x804EE1C8
+	.bss        start:0x80679CE0 end:0x80679DE8
+	.sdata      start:0x806D0620 end:0x806D0630
 	.sbss       start:0x806D1A80 end:0x806D1A88
 
 game/fn_802300C8.c:

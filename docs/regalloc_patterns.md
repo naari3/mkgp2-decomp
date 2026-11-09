@@ -1239,3 +1239,46 @@ Two independent fixes, 18 lines -> 0:
   argument of the following `DebugPrintf`. Read the format string from the DOL
   ("Fixed TitleID loop No : %d, id : %d") and pass every argument it names.
 
+## 50. Pointer fetched through an inline getter is coloured after the temps of the inline that uses it; make it a directly loaded local of that inline (WarpZone_CheckEntry, 11-09)
+
+Target `i` r5, `mgr` r6, zone pointer r7. Ours (99.2 %, a 24-line plateau since 11-07)
+had `mgr` r7 and the zone pointer r6 with
+
+    WarpDashMgr *mgr = WarpDashMgr_GetInstance(self->mgrId);   // inline getter
+    if (mgr == 0) return 0;
+    int zone = WarpZone_FindContainingOBB(mgr, x, y, z);       // inlined
+
+`regfix diag` said: the two vregs are level with each other, and `mgr` (the getter's return
+temp, `@364`) is numbered after the zone pointer (the reference parameter of the inner
+`Contains` inline, `@354`) because the search inline is expanded before the getter's result
+temp is made. About 40 forms that keep `mgr` as a parameter or a getter result do not move
+it (reference / `this` / wrapper inline / local copy `m = mgr` in any decl order / defining
+`Contains` after its caller): the copy is coalesced back into the late temp. A named local of
+the function itself (`mgr = table[id != 0]` at function level) is numbered below everything
+and gets r8.
+
+What works: the whole body is one `static inline` whose **own local** `mgr` is loaded
+straight from the table (no getter inline, no parameter), declared **before** `i`:
+
+    static inline unsigned char FindZone(WarpAutoRun *self, float x, float y, float z) {
+        WarpDashMgr *mgr; int i; int zone;
+        mgr = lbl_806CF238[self->mgrId != 0];
+        ...
+            for (i = 0; i < mgr->obbCount; i++)
+                if (Contains(zoneAt(mgr, i), p) == true) { zone = i; goto done; }
+            zone = -1;
+        ...
+    done:
+        self->zone = zone;
+        return zone != -1;
+    }
+
+Inline locals are coloured latest-declared first (`mgr; i` gives i r5, mgr r6; `i; mgr`
+swaps them), and both come before the parameter temps of inlines expanded inside. The
+`{ zone = i; goto done; }` exit reproduces the `bne next; b found` pair of an inlined
+`return i`; `goto found; ... found: zone = i;` gives a single `beq`.
+
+Also: when an asm function with a manual `.extab_user` entry becomes C++ with a
+destructible local, delete its manual extab/extabindex entries (the compiler emits them;
+keeping both grows main.dol by 0x14).
+Rule name in hits.jsonl: `inline-own-local-direct-load`.

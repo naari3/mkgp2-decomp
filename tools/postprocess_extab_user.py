@@ -208,6 +208,37 @@ def make_undefined(obj: Path, names: list[str]) -> None:
             struct.pack_into(">I", d, shoff + idx * shentsize + 0x14, 0)
     obj.write_bytes(d)
 
+def force_active(obj: Path, names: list[str]) -> None:
+    """Set MWCC's force_active flag (0x08 at +5 of the 8-byte per-symbol
+    record in .comment, see docs/comment_section.md) on the named symbols, so
+    mwld keeps an object nothing references (e.g. the string literals of a
+    never-called static function, which is itself dead-stripped)."""
+    d = bytearray(obj.read_bytes())
+    shoff, = struct.unpack_from(">I", d, 0x20)
+    shentsize, shnum, shstrndx = struct.unpack_from(">HHH", d, 0x2E)
+    secs = [struct.unpack_from(">IIIIIIIIII", d, shoff + i * shentsize) for i in range(shnum)]
+    shstr = secs[shstrndx][4]
+    def secname(sec):
+        o = shstr + sec[0]
+        return bytes(d[o:d.index(b"\0", o)]).decode()
+    comment = next((x for x in secs if secname(x) == ".comment"), None)
+    symtab = next((x for x in secs if x[1] == 2), None)
+    if comment is None or symtab is None:
+        sys.exit(f"{obj}: active: rename needs .symtab and .comment")
+    strtab = secs[symtab[6]][4]
+    left = set(names)
+    for i in range(symtab[5] // 16):
+        st_name, = struct.unpack_from(">I", d, symtab[4] + i * 16)
+        o = strtab + st_name
+        name = bytes(d[o:d.index(b"\0", o)]).decode()
+        if name in left:
+            left.discard(name)
+            d[comment[4] + 0x2C + i * 8 + 5] |= 0x08
+    if left:
+        sys.exit(f"{obj}: active: symbols not found: {sorted(left)}")
+    obj.write_bytes(d)
+
+
 def main() -> int:
     if len(sys.argv) != 2:
         sys.exit("usage: postprocess_extab_user.py <object.o>")
@@ -223,7 +254,17 @@ def main() -> int:
     ]
     renames = load_tu_renames(obj)
     externs: list[str] = []
+    actives: list[str] = []
+    # "#align4": ".rodata,.data" pins those sections to 4-byte alignment
+    # (tools/postprocess_data_align4_keep_comment.py) for a TU whose section
+    # starts on a 4-byte boundary in the target; MWCC always emits 8.
+    align4 = renames.pop("#align4", "")
     for src, dst in renames.items():
+        # "active:<name>" renames a TU-local object and sets its force_active
+        # flag: the target keeps it although nothing references it.
+        if dst.startswith("active:"):
+            dst = dst[len("active:"):]
+            actives.append(dst)
         # "extern:<name>" renames a TU-local object (e.g. an RTTI type-name
         # string) and turns it into an undefined reference: the target keeps
         # that object in another TU's section.
@@ -256,6 +297,14 @@ def main() -> int:
             rsp.unlink(missing_ok=True)
     if externs:
         make_undefined(obj, externs)
+    if actives:
+        force_active(obj, actives)
+    for section in filter(None, align4.split(",")):
+        subprocess.check_call([
+            sys.executable,
+            str(Path(__file__).resolve().parent / "postprocess_data_align4_keep_comment.py"),
+            str(obj), section,
+        ])
     patch_memorymanager_timedfree_extab(obj)
     # Mixed auto/manual extab TUs: consolidate entries into fn-address order
     # (no-op for single-pair or already-sorted objects). See
