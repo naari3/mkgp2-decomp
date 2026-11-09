@@ -3033,5 +3033,49 @@
       "fn_801F27B4",
       "__dt__10FlowFaderIFv"
     ]
+  },
+  "src/game/resultscene/resultscene.cpp": {
+    "extab": [
+      "dtor_8015E8AC",
+      "dtor_8015E864",
+      "fn_8015C41C",
+      "fn_8015CA7C",
+      "fn_8015CB24",
+      "fn_8015CB5C",
+      "fn_8015CBFC",
+      "fn_8015CD74",
+      "fn_8015D4F8",
+      "fn_8015D9F0",
+      "fn_8015DEBC",
+      "fn_8015E12C",
+      "fn_8015E1E8",
+      "fn_8015E48C",
+      "fn_8015E538",
+      "fn_8015E608",
+      "fn_8015E804",
+      "dtor_8007D0D4",
+      "dtor_80082960"
+    ],
+    "extabindex": [
+      "fn_8015C41C",
+      "fn_8015CA7C",
+      "fn_8015CB24",
+      "fn_8015CB5C",
+      "fn_8015CBFC",
+      "fn_8015CD74",
+      "fn_8015D4F8",
+      "fn_8015D9F0",
+      "fn_8015DEBC",
+      "fn_8015E12C",
+      "fn_8015E1E8",
+      "fn_8015E48C",
+      "fn_8015E538",
+      "fn_8015E608",
+      "fn_8015E804",
+      "dtor_8015E864",
+      "dtor_8015E8AC",
+      "dtor_8007D0D4",
+      "dtor_80082960"
+    ]
   }
 }
