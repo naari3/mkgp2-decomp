@@ -58,11 +58,11 @@
 {"fn": "SpeedCurve_UpdateSpeedCap", "commit": "4b96aa3c", "rule": "expr-operand-order", "source": "rules.jsonl"}
 {"fn": "GabyouTripleChild", "commit": "3aa37c0d", "rule": "expr-operand-order", "source": "rules.jsonl"}
 {"fn": "LogoAnim", "commit": null, "rule": "expr-operand-order", "source": "rules.jsonl"}
-{"fn": "TornadoEffect_Tick", "commit": "6d98b73", "rule": "float-literal", "source": "rules.jsonl"}
+{"fn": "TornadoEffect_Tick", "commit": "4ef135f7", "rule": "float-literal", "source": "rules.jsonl"}
 {"fn": "fn_801BD744", "commit": "591e742d", "rule": "float-literal", "source": "rules.jsonl"}
 {"fn": "ItemSelectState_Init", "commit": "fba4ebd7", "rule": "float-literal", "source": "rules.jsonl"}
 {"fn": "Mtx44_TransformVec3", "commit": null, "rule": "matrix-vec-translate", "source": "rules.jsonl"}
-{"fn": "SpriteHandle g_glyphClipMinXY", "commit": "a1a7ecae", "rule": "const-pointee-hoist", "source": "rules.jsonl"}
+{"fn": "SpriteHandle_CreateEx", "commit": "1a7ecae1", "rule": "const-pointee-hoist", "source": "rules.jsonl"}
 {"fn": "PhysicsState_SetPosition", "commit": null, "rule": "const-pointee-hoist", "source": "rules.jsonl"}
 {"fn": "PlayStats_CopyStatsBlock", "commit": "4493f6f8", "rule": "sched-region-26", "source": "rules.jsonl"}
 {"fn": "JumpDistanceMode_CopyKartMovement", "commit": "98c46711", "rule": "sched-region-26", "source": "rules.jsonl"}
