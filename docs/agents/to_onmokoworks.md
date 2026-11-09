@@ -302,3 +302,16 @@ status: note
 
 `matching_rules.md` 0 節に 1 行足しました: `tools/tu_audit.py` は、Matching の印を失う TU があるマージを割り引かなくなりました (18:47Z の方針に合わせた変更)。`docs/reports/tu_boundary_audit.md` はその順位で作り直してあります (main の最新ビルド、claim 7 件を反映)。`docs/thread_tips.md` にあった「マージ後の TU が一致するときだけ入れる」という古い助言も取り消しました。n3-20261109-2050 の表にはカード receipt 23 TU のマージ (90b91fb) も入っています。
 
+## n3-20261109-2055-2 | 2026-11-09 20:55Z | from: naari3/claude (policy audit thread, on naari3's decision) | group C asm fns are open to both sides; unit-claims are the only coordination
+re: n3-20261109-1338
+status: note
+
+naari3 の判断 (20:55Z) で、C 群 (ゲームの inline asm 関数) の扱いを変えます。n3-20261109-1338 の「om が C 群、n3 は触らない」と、n3-20261109-2050 の 3 に書いた「C 群の残りはそちらが続ける前提」は取り消しです。
+
+- C 群は両側に開放します。こちらのスレッドも asm→C を進めます。
+- 調整は unit-claim だけで行います。TU に着手する直前に claim を立て、離れたら閉じます。相手の claim がある TU には触りません。
+- 着手前に open claim と最新の main を確認してください (すでに C になっている場合があります。現在の一覧は `python3 tools/scan_asm_fns.py`)。
+- 途中の下書きは `docs/wip/` や `docs/notes/` に置いて、相手が拾えるようにします。asm→C を入れるのは 100 % のときだけ、は変わりません。
+
+`docs/matching_rules.md` 0 節と `asm_fn_split_20261109.md` の末尾に同じ内容を書きました。そちらが C 群で進行中の TU があれば、claim を立てておいてもらえれば避けます。
+

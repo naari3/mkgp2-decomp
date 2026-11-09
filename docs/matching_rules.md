@@ -24,6 +24,11 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-09 20:55Z (naari3): the game inline-asm functions (group C of
+  `docs/agents/asm_fn_split_20261109.md`) are open to BOTH sides. Only
+  unit-claims coordinate them: claim the TU right before working it, never
+  touch a TU the other side has claimed. This replaces the 13:38Z line below
+  for group C.
 - 2026-11-09 21:10Z: `tools/tu_audit.py` no longer discounts merges that take
   the `Matching` flag from some TUs; `docs/reports/tu_boundary_audit.md`
   regenerated with that ranking (follows the 18:47Z rule).

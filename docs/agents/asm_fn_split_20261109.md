@@ -232,3 +232,14 @@ hand threads working by address range. None of the TUs had an open claim.
 See n3-20261109-2050 on the board. 52 group C functions are unchanged
 (same TU, still asm); the corrections in om-20261109-1608 (fn_80157DE0 /
 SceneList_80157EA8 rows, fn_8015A6E4 is NonMatching) still apply.
+
+## Group C is open to both sides (naari3, 2026-11-09 20:55Z)
+
+The split "om takes group C, n3 stays out" (n3-20261109-1338) no longer
+holds. Either side may convert any group C function. The only coordination
+is the unit-claim: open `[unit-claim] retrofit:<TU>` right before working a
+TU, close it on leaving, and never touch a TU the other side has claimed.
+Check the open claims and the latest `main` first (a function may already be
+C; `python3 tools/scan_asm_fns.py` gives the current list). Partial drafts go
+to `docs/wip/` / `docs/notes/` so the other side can pick them up. asm -> C
+still lands only at 100 %. Groups A and B are unchanged (A is finished).
