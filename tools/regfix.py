@@ -684,6 +684,37 @@ def print_schedule(out, ours_obj, tgt_obj, fn, src_lines=None):
               "'uncovering': try `regfix probe` (__restrict on pointer params) or load into a local before the store")
 
 
+def print_coalesce(out, src_lines=None):
+    """Copies the coalescer refused only because a named variable is involved
+    (coalesce.json from the traced run, rules in docs/mwcc_internals.md): making
+    that variable a temp (inline it / unname it / compute it in an inline) lets
+    the copy merge, and the merged web takes the LOWER number."""
+    f = Path(out) / "coalesce.json"
+    if not f.exists():
+        return
+    d = json.loads(f.read_text())
+    rows = []
+    for r in d.get("rounds", []):
+        ft, lt, nr = r["first_temp"], r["last_temp"], r["n_real"]
+        p = r["class"][0]
+
+        def kind(x):
+            return "phys" if x < nr else ("temp" if ft <= x <= lt else "named")
+        for m in r["moves"]:
+            if m["outcome"].startswith("both virtual"):
+                a, b = m["dst_root"], m["src_root"]
+                named = [x for x in (a, b) if kind(x) == "named"]
+                rows.append((m["line"], m["insn"], f"{p}{a}({kind(a)}) <- {p}{b}({kind(b)})",
+                             ", ".join(f"{p}{x}" for x in named), min(a, b)))
+    print(f"\n== coalescing: {len(rows)} copies kept only because a named variable is involved ==")
+    for line, insn, what, named, low in rows[:20]:
+        print(f"  line {line:>4}  {insn:<18} {what}: make {named} a temp to merge (merged web = {low})")
+        if src_lines and isinstance(line, int) and 0 < line <= len(src_lines):
+            print(f"           | {src_lines[line - 1].rstrip()[:110]}")
+    if rows:
+        print("  (copies marked 'interfere' in `tools/mwsched.py coalesce` need a liveness change instead)")
+
+
 def diagnose(unit, fn, out: Path, rerun=True, quiet=False, depth=2, sched=False):
     if rerun:
         run_dbg(unit, fn, out, trace=sched)
@@ -692,6 +723,7 @@ def diagnose(unit, fn, out: Path, rerun=True, quiet=False, depth=2, sched=False)
     if sched:
         print_schedule(out, ROOT / f"build/{md.VERSION}/src/{unit}.o", ROOT / f"build/{md.VERSION}/obj/{unit}.o",
                        ps.Unit(unit).compiled_name(fn), open(src, errors="replace").read().splitlines())
+        print_coalesce(out, open(src, errors="replace").read().splitlines())
     return diagnose_dir(out, ROOT / f"build/{md.VERSION}/src/{unit}.o",
                         ROOT / f"build/{md.VERSION}/obj/{unit}.o", fn, quiet, depth,
                         src_lines=open(src, errors="replace").read().splitlines())
@@ -1959,6 +1991,7 @@ def main():
                 tsrc.unlink(missing_ok=True)
             print_schedule(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{sw.u.obj}.o", sw.sym or a.fn,
                            sw.render(sw.init).splitlines())
+            print_coalesce(d, sw.render(sw.init).splitlines())
         diagnose_dir(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{sw.u.obj}.o", a.fn, depth=a.depth,
                      src_lines=sw.render(sw.init).splitlines())
     elif a.cmd == "diag":
