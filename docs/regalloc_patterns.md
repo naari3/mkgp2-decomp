@@ -1656,3 +1656,38 @@ float ang = lbl_806DAF54 * rot;
 The frontend propagates the single-use local straight back into the
 expression, so this needs `#pragma opt_propagation off` around the function
 (`opt_dead_assignments off` works too). Marked fakematch.
+
+## 65. Saved GPRs of a switch permuted between cases, and one case's stack objects in the wrong place: declaration order of the value locals vs block-local payload pointers; the case's setup in its own nested inline (TransitionEffect_RenderPass, 11-09)
+
+Symptom 1: a `switch` whose cases each keep a payload pointer and a few
+colour values across calls; all instructions equal, only r27/r29/r31 permuted
+between cases. The colourer handles higher vregs first and gives each the
+lowest free saved register already handed out, else a new one from r31 down.
+Named locals are numbered by source position, so the one declared EARLIER is
+coloured first. The target coloured the values before the payload pointers.
+Fix: declare every case's value locals at function scope, first, each case
+with its own names (`unsigned int a1; unsigned int r, g, b, a; unsigned int
+r5, g5, b5, a5;`), assign them in the cases, and make the pointer a block
+local in each case (`case 3: { void *payload; payload = self->flash; ...`).
+One function-scope `payload` shared by all cases gives the permuted registers.
+
+Symptom 2: the same function with the matrices/Vecs of one case at the wrong
+stack offsets (the target had case 3's objects lowest although it is in the
+middle of the source). Stack objects are laid out in creation order, first
+created = highest address, and inline locals are created level by level. Put
+that case's setup into its own inline that owns the objects, so they are
+created one level later than everything else:
+
+```c
+static inline void ScreenFlashSetup(const Vec *camera)
+{
+    Mtx44 projection3;
+    Mtx view3;
+    ScreenProjection(projection3);
+    ScreenCamera(view3, camera, 9, 1.5707963705062866);
+}
+```
+
+The order of the two declarations inside it matters too. Wrapping the whole
+case in an inline does not work: it is over the inline size limit and
+`#pragma always_inline on` does not change that.

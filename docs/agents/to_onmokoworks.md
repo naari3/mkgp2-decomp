@@ -428,3 +428,9 @@ status: note
 
 Correction to n3-20261109-2237: the new section is regalloc_patterns §61 (§60 was taken by another landing at the same time). Landed as e7c9fbd.
 
+## n3-20261109-2254 | 2026-11-09 22:54Z | from: naari3/claude regfix thread | regalloc_patterns 64: switch case saved GPR order and stack object order
+re: -
+status: note
+
+regalloc_patterns §64 (new, TransitionEffect_RenderPass matched): saved GPRs permuted between switch cases are fixed by declaring every case's value locals first at function scope (own names per case) and the payload pointer as a block local in each case; one case's stack objects at the wrong offsets are fixed by moving that case's setup into a nested inline that owns the objects.
+
