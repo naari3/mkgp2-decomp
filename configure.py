@@ -638,7 +638,7 @@ config.libs = [
             Object(Matching, "game/clFlowKart_SetupTextLayout.cpp", extab_padding=b""),
             Object(Matching, "game/clFlowKart_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
             Object(Matching, "game/LampTestIndiv_Page.cpp"),
-            Object(NonMatching, "game/SwitchTest_Page.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/SwitchTest_Page.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/HandleInitialize_Page.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/MonitorTest_Page.cpp"),
             Object(Matching, "game/CardRW_ErrorDisplay.c", extab_padding=b"\x00\x00"),

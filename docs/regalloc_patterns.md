@@ -1350,3 +1350,20 @@ reference parameters (adds a `mr`).
 Also seen here: MWCC does not CSE two loads of the same address that have
 different types. A union read as `.s` for the compares and `.u` for the call
 arguments reproduces the target's reloads of the same word.
+
+## 55. In-place `x = x / N` is recomputed at its first use (extra saved register): opt_propagation off (SwitchTest_Page, 11-09)
+
+Diff: the target computes a difference straight into a saved register and
+divides it in place (`subf r28,..; ...; srawi r0,r28,6; addze r28,r0`), so
+difference and quotient are ONE variable. Writing `st = steer / 64` gives the
+difference a volatile register; writing `steer = steer / 64` (or `/=`, or an
+inline) moves the division down to the first use and costs one more saved
+register (`stmw r26`). mwtrace: the SRAWI/ADDZE pair appears in the block of
+the first use with a fresh destination vreg.
+
+`#pragma opt_propagation off` keeps the division where it is written. Side
+effect: inline helpers that rely on constant propagation change shape (here
+the shared `for (i = 0; it[i].text; i++)` loop became `mulli` of a zero
+index); write those loops as an explicit pointer walk (`it++, i++`) in a
+local copy. opt_lifetimes / opt_dead_assignments off do not help.
+
