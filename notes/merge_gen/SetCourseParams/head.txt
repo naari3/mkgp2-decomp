@@ -1,0 +1,37 @@
+/* Race context unit, .text 0x8009BAC4..0x8009DD64: race/rank/kart-slot
+ * accessors, course table getters, SetCourseParams, the player-data
+ * wrappers, the cold reset, the RaceContext class (ctor / dtor / singleton)
+ * and the static constructor of the driver array.
+ * One TU: it owns the .bss pool 0x805AC600..0x805D2AA8, and
+ * RaceFlow_ResetState_FullColdInit / RaceContext_InitDefaults reach several
+ * pool objects off one section anchor (`addi r5, r30, 0x6348`), which MWCC
+ * only does in the unit that defines them. Merged from 14 over-split files;
+ * each part keeps its own local views of the pool behind #define/#undef
+ * renames (tools/extab_user_renames.json maps X_pN back to X). */
+
+/* .bss pool, in address order. Defined in C++ mode: C orders pooled .bss by
+ * first use, C++ by definition. */
+typedef struct RaceKartSlot {
+    int driverId;               /* 0x00 */
+    int charId;                 /* 0x04 */
+    int field8;                 /* 0x08 */
+    int fieldC;                 /* 0x0C */
+    int kartVariant;            /* 0x10 */
+    unsigned char items[3];     /* 0x14 */
+    unsigned char pad17;
+} RaceKartSlot;
+
+#pragma cplusplus on
+extern "C" {
+RaceKartSlot lbl_805AC600[8];
+unsigned char lbl_805AC6C0[0xC];     /* global-object registration node */
+unsigned char lbl_805AC6CC[0x5E00];  /* driver array */
+unsigned char lbl_805B24CC[0xA0];    /* rank rows [2][5], 0x10 each */
+unsigned char lbl_805B256C[0x14];    /* latest result */
+unsigned char lbl_805B2580[0x20000]; /* four 0x8000 banks */
+unsigned char g_playerData[0x1DC];
+unsigned char lbl_805D275C[0x1DC];
+unsigned char lbl_805D2938[0x10];    /* per-slot counters (written 8 wide) */
+unsigned char lbl_805D2948[0x160];   /* 8 rank slots, 0x2C each */
+}
+#pragma cplusplus off

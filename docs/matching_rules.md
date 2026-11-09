@@ -179,6 +179,14 @@ without those flags ninja tries to download tools and fails.
 - **Jump tables** need the TU to own the table (`.data start:end:` in
   `splits.txt`). If the owned range starts at 4 mod 8, add the TU to
   `DATA_ALIGN4_TUS` (`.sdata2` equivalent: `SDATA2_ALIGN4_TUS`).
+- **Pooled `.bss` order (multi-TU merges):** a C TU emits pooled `.bss`
+  objects in first-use order, a C++ TU in definition order. When one merged TU
+  must own a `.bss` pool in address order, define the objects up front inside
+  `#pragma cplusplus on` / `extern "C" { ... }` / `#pragma cplusplus off`
+  and leave the functions in C (SetCourseParams merge, .bss
+  0x805AC600..0x805D2AA8). Give each object its real element type: a
+  `((T *)lbl)[i]` cast macro over an `unsigned char` blob changes regalloc in
+  small indexed accessors (addi/add operand order, 91-99%).
 - **Read-only tables:** `extern const T tbl[N]`. Non-const changes load
   scheduling.
 - **s64 globals** split by dtk into `XHi`/`XLo`: merge into one 8-byte symbol in

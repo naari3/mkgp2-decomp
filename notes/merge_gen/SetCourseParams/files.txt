@@ -1,0 +1,14 @@
+game/RaceSys_8009BAC4.c
+game/RankSlot_AppendOrUpdate.c
+game/VSMode_SeedRandomItemSequence.c
+game/RaceData_8009BEF4.c
+game/SetCourseParams.c
+game/PlayerData_ApplyItemUnlockById.c
+game/PlayerData_GetUnlockedItemIdByIndex_U8.c
+game/PlayerData_ResetForFlow.c
+game/RaceFlow_ResetState_FullColdInit.c
+game/ProcessSystemTick.c
+game/RaceContext_Dtor.c
+game/RaceContext_InitDefaults.c
+game/RaceContext_EnsureSingleton.c
+game/KartDriverArray_StaticCtor.c

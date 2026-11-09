@@ -1420,10 +1420,11 @@ void PlayerData_ResetForFlow(void)
  * extend into the first race entry at pool+0x26348. A four-element score
  * member indexed eight times would exceed that member's bounds.
  *
- * NonMatching (90%): the target retains separate entry/rank bases and
- * reloads cup/round globals after the slot stores. This view retains the
- * upper pool base across the initial calls, but still folds field offsets
- * and propagates the just-stored globals. */
+ * NonMatching (95%): left are the anchor/upper-bank saved registers (r31/r30
+ * swapped), row/entries pointer numbering (r8/r7) and an early `li r0,-1`
+ * in the last block. Levers that got here: explicit `RankRow *row` local
+ * (all unrolled stores go through the pointer) and the entry reset loop as
+ * an inline taking the array pointer. */
 
 typedef struct KartSlot {
     int character;      /* 0x00 */
