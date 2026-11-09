@@ -6289,14 +6289,6 @@
     "fn_80231A50__Fi": "fn_80231A50",
     "__RTTI__11clEFacePoly": "lbl_806D0620",
     "__RTTI__17clEFacePolyEffect": "lbl_806D0628",
-    "@367": "lbl_803DADC4",
-    "@434": "active:lbl_803DADD0",
-    "@435": "active:lbl_803DADFC",
-    "@453": "lbl_803DAE40",
-    "@454": "lbl_803DAE5C",
-    "@1040": "lbl_803DAE70",
-    "@988": "jumptable_804EE14C",
-    "@1025": "jumptable_804EE18C",
     "#align4": ".rodata"
   },
   "src/game/EName3D.cpp": {
@@ -7391,9 +7383,6 @@
   },
   "src/game/mapobject/fn_8017D660.cpp": {
     "__dl__FPv": "MemoryManager_TimedFree"
-  },
-  "src/game/EnemyFaceDraw.cpp": {
-    "__dt__5Vec3cFv": "dtor_80036E40"
   },
   "src/game/SceneListOperations.cpp": {
     "SceneListInsert": "fn_801F4DF0"
