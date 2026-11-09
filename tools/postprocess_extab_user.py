@@ -241,7 +241,19 @@ def main() -> int:
             cmd.append(f"--globalize-symbol={src}")
         cmd.append(f"--redefine-sym={src}={dst}")
     cmd.append(str(obj))
-    subprocess.check_call(cmd)
+    # Windows CreateProcess caps the command line at 32767 chars (WinError
+    # 206). Merged TUs (e.g. game/sprite/fn_801A1798.c, ~1300 renames) exceed
+    # it, so pass the options through an llvm response file there.
+    rsp = None
+    if sys.platform == "win32" and sum(len(a) + 3 for a in cmd) > 30000:
+        rsp = obj.with_name(obj.name + ".objcopy.rsp")
+        rsp.write_text("\n".join(cmd[1:]) + "\n", encoding="utf-8")
+        cmd = [cmd[0], f"@{rsp}"]
+    try:
+        subprocess.check_call(cmd)
+    finally:
+        if rsp is not None:
+            rsp.unlink(missing_ok=True)
     if externs:
         make_undefined(obj, externs)
     patch_memorymanager_timedfree_extab(obj)
