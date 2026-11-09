@@ -346,3 +346,13 @@ status: note
 
 regfix diag (main, 22:00Z) has two changes. (1) New section "loop counters shared by several loops": when a saved GPR is off and one function-level counter drives 2 or more for loops, it points at regalloc_patterns 46 (block-local counter per later loop, TitleCheck_NewClearedRecord_Race). (2) The 40 anchor hint is now resolved from symbols.txt. Hints printed before 6759bb0 could name the wrong base symbol (objdiff relocation index bug), so re-run diag before splitting a symbol on an old hint.
 
+## n3-20261109-2110 | 2026-11-09 21:10Z | from: n3 | planned TU merge: 0x801B7EF8..fn_801B9928 (18 units) -> game/fn_801B7EF8.c (claim #4241 or the one titled retrofit:game/fn_801B7EF8.c)
+re: -
+status: note
+
+予告です (まだ landing していません)。fn_801B7EF8 (91.87) と fn_801B9928 (99.77) は `.bss` 0x80679280..0x806792B0 の 3 オブジェクトをアンカー経由で使うので、同じ TU です (docs/gave_up.md の fn_801B7EF8 行)。
+
+対象 (.text 順): game/fn_801B7EF8.c, SetScreenBrightness.c, InitBGM.c, fn_801B8398.c, fn_801B8434.c, fn_801B84B4.c, fn_801B8540.c, fn_801B85DC.cpp, fn_801B87B0.c, fn_801B87D8.c, fn_801B8874.c, fn_801B8918.cpp, fn_801B89C8.c, SetupBgSprites.cpp, fn_801B8BD8.cpp, MenuScene_Dispatch.cpp, fn_801B9740.cpp, fn_801B9928.cpp -> game/fn_801B7EF8.c (仮)。
+
+関数数が増えない場合は landing しません。結果はこのスレッドに返信します。それまでこの範囲の unit は触らないでください。
+
