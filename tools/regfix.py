@@ -233,7 +233,8 @@ def want_map(out: Path, ours_obj: Path, tgt_obj: Path, fn: str):
     """{vreg: {target reg: count}} and {vreg: [(line, op, operands)]} defs/uses."""
     pre = md.parse_pcode(md.find(out, "before-regalloc"))
     post = md.parse_pcode(md.find(out, "after-regalloc"))
-    final = md.parse_pcode(md.find(out, "after-scheduling", last=True))
+    fz = md.find(out, "after-scheduling", last=True)
+    final = md.parse_pcode(fz) if fz else None
     phys = {}
     for rc in ("gpr", "fpr"):
         f = md.find(out, f"regalloc-{rc}-pass-1-all")
@@ -253,6 +254,8 @@ def want_map(out: Path, ours_obj: Path, tgt_obj: Path, fn: str):
         elif j < len(post) and post[j][1] == ins[1]:
             pair.append((ins, post[j]))   # unexpected text: keep in step
             j += 1
+    if final is None:      # native trace: no post-RA listing; map post-regalloc PCode by opcode
+        final = [p for _, p in pair]
     idx = align_final([p for _, p in pair], final)
     ours = md.objdump_fn(ours_obj, fn)
     tgt = md.objdump_fn(tgt_obj, fn)
@@ -673,7 +676,7 @@ def print_schedule(out, ours_obj, tgt_obj, fn, src_lines=None):
         import mwsched
     except ImportError:
         return
-    if not (Path(out) / "sched.json").exists():
+    if not isinstance(out, dict) and not (Path(out) / "sched.json").exists():
         print("\n== schedule: no trace (run diag with --sched; GC/2.6 only) ==")
         return
     try:
@@ -700,10 +703,23 @@ def print_coalesce(out, src_lines=None):
     that variable a temp (inline it / unname it / compute it in an inline) lets
     the copy merge, and the merged web takes the LOWER number."""
     f = Path(out) / "coalesce.json"
-    if not f.exists():
-        return
-    d = json.loads(f.read_text())
     rows = []
+    tf = Path(out) / "trace.txt"
+    if not f.exists() and tf.exists():
+        for l in tf.read_text().splitlines():
+            m = re.match(r"COALESCE ([rf]) (\d+) <- (\d+) .*?\bnamed\b(?: off=(-?\d+))?\s*(.*)$", l)
+            if m:
+                p, a, b = m.group(1), int(m.group(2)), int(m.group(3))
+                line = int(m.group(4)) if m.group(4) else -1
+                rows.append((line, m.group(5)[:18], f"{p}{a} <- {p}{b}", "the named one of " + f"{p}{a}/{p}{b}",
+                             min(a, b)))
+        f = None
+    if f is None:
+        d = {"rounds": []}
+    elif not f.exists():
+        return
+    else:
+        d = json.loads(f.read_text())
     for r in d.get("rounds", []):
         ft, lt, nr = r["first_temp"], r["last_temp"], r["n_real"]
         p = r["class"][0]
@@ -727,11 +743,29 @@ def print_coalesce(out, src_lines=None):
 
 def diagnose(unit, fn, out: Path, rerun=True, quiet=False, depth=2, sched=False):
     if rerun:
-        run_dbg(unit, fn, out, trace=sched)
+        run_dbg(unit, fn, out, trace=sched and not native_ok())
     import pragmasweep as ps
     src = ps.Unit(unit).src
+    if native_ok():
+        # order-only diffs that vanish when one block is re-scheduled after
+        # regalloc (mwsched.resched, RE thread 27f348a): the fix is to make
+        # regalloc insert/delete PCode in that block, not a register trick
+        try:
+            ours = md.objdump_fn(ROOT / f"build/{md.VERSION}/src/{unit}.o", ps.Unit(unit).compiled_name(fn))
+            tgt = md.objdump_fn(ROOT / f"build/{md.VERSION}/obj/{unit}.o", ps.Unit(unit).compiled_name(fn))
+            if ours != tgt and sorted(x.split()[0] for x in ours) == sorted(x.split()[0] for x in tgt):
+                import mwsched
+                print("== order-only diff: post-RA re-schedule probe ==")
+                for l in mwsched.resched(unit, ps.Unit(unit).compiled_name(fn)):
+                    print("  " + l)
+        except Exception as e:
+            print(f"(resched probe failed: {e})")
     if sched:
-        print_schedule(out, ROOT / f"build/{md.VERSION}/src/{unit}.o", ROOT / f"build/{md.VERSION}/obj/{unit}.o",
+        sched_src = out
+        if native_ok():
+            import mwsched
+            sched_src = mwsched.load_native(unit, ps.Unit(unit).compiled_name(fn))
+        print_schedule(sched_src, ROOT / f"build/{md.VERSION}/src/{unit}.o", ROOT / f"build/{md.VERSION}/obj/{unit}.o",
                        ps.Unit(unit).compiled_name(fn), open(src, errors="replace").read().splitlines())
         print_coalesce(out, open(src, errors="replace").read().splitlines())
     return diagnose_dir(out, ROOT / f"build/{md.VERSION}/src/{unit}.o",
@@ -742,8 +776,15 @@ def diagnose(unit, fn, out: Path, rerun=True, quiet=False, depth=2, sched=False)
 def run_dbg(unit, fn, out, timeout=int(os.environ.get("REGFIX_DBG_TIMEOUT", "900")), trace=False):
     import pragmasweep as ps
     fn = ps.Unit(unit).compiled_name(fn)
-    cmd, note = md.compile_command(unit, out / "dbg.o")
     md.sh(["ninja", f"build/{md.VERSION}/src/{unit}.o"], cwd=ROOT)
+    if not trace and native_ok():
+        u = ps.Unit(unit)
+        out.mkdir(parents=True, exist_ok=True)
+        for f in [*out.glob("*.txt"), *out.glob("*.json")]:
+            f.unlink(missing_ok=True)
+        if native_run(shlex.split(u.cmd.split("&&")[0].replace("\\", "/")), u.src, fn, out):
+            return "native mweppc trace"
+    cmd, note = md.compile_command(unit, out / "dbg.o")
     if not md.run_debugger(cmd, fn, out, timeout, trace=trace):
         sys.exit(f"mwcc-debugger failed; see {out}/run.log")
     return note
@@ -823,7 +864,9 @@ def diagnose_dir(out: Path, ours_obj, tgt_obj, fn, quiet=False, depth=2, src_lin
     rep = {"fn": fn, "info": info, "classes": {}}
     P = (lambda *a: None) if quiet else print
     P(f"{fn}: {info['ours']} insns ours / {info['tgt']} target, {info['opcode_diffs']} opcode diffs"
-      + ("" if info["final"] == info["ours"] else f" (PCode {info['final']}: stand-in compiler differs)"))
+      + ("" if info["final"] == info["ours"] or (out / "trace.txt").exists()
+         else f" (PCode {info['final']}: stand-in compiler differs)")
+      + (" [native mweppc trace]" if (out / "trace.txt").exists() else ""))
     for rc in ("gpr", "fpr"):
         g = Graph.load(out, rc)
         if g is None:
@@ -875,7 +918,7 @@ def diagnose_dir(out: Path, ours_obj, tgt_obj, fn, quiet=False, depth=2, src_lin
     rep["sites"] = sites
     cl = {rc: (c["g"], c["w"]) for rc, c in rep["classes"].items() if "g" in c}
     if cl:
-        order = solve_decl(cl)
+        order = solve_decl(cl, tlimit=int(os.environ.get("REGFIX_DECL_TLIMIT", "30")))
         rep["decl_order"] = order
         if order:
             P("\n== declaration order that gives the target registers (first declared first): ==\n   "
@@ -903,6 +946,102 @@ TMPDIR = Path(os.environ.get("REGFIX_TMP", os.path.join(__import__("tempfile").g
 OBJCOPY = ROOT / "build" / "binutils" / f"powerpc-eabi-objcopy{md.EXE}"
 
 
+# ---------------------------------------------------------------------------
+# native trace backend (tools/mwtrace.py, RE thread 456a88c/60206cc): the
+# decompiled GC/2.x compiler built for Linux prints PCODE / IGNODE / COLOR / VREG
+# lines in ~0.1 s, no emulator or gdb. trace_to_dumps writes them in the
+# mwccdbg dump layout so the analysis above runs unchanged.
+
+def native_ok():
+    if os.environ.get("REGFIX_MWCCDBG"):
+        return False
+    try:
+        import mwtrace
+    except ImportError:
+        return False
+    return any(mwtrace.NATIVE.glob("GC_*/native/mwcceppc"))
+
+
+def _pc_text(ins):
+    ins = ins.replace("!", "")
+    ins = re.sub(r"(,_)+$", "", ins)
+    op, _, rest = ins.partition(" ")
+    return op.lower(), rest.replace("c0", "cr0")
+
+
+def trace_to_dumps(lines, d: Path):
+    pre, post, var_args = [], [], []
+    nodes = {"r": {}, "f": {}}
+    color = {"r": [], "f": []}
+    seen_ig, seen_col = {"r": set(), "f": set()}, {"r": set(), "f": set()}
+    done_ig, done_col = {"r": False, "f": False}, {"r": False, "f": False}
+    for l in lines:
+        t = l.split(" ", 4)
+        if t[0] == "PCODE" and len(t) >= 5:
+            ln = t[3] if t[3] != "-1" else ""
+            op, rest = _pc_text(t[4])
+            (pre if t[1] == "pre" else post).append(f"    {ln:>4}  {op:<8} {rest}")
+        elif t[0] == "VREG" and l.split()[1] == "argument":
+            x = l.split()
+            var_args.append((x[2], x[3] if len(x) > 3 else ""))
+        elif t[0] in ("IGNODE", "COLOR"):
+            m = re.match(r"^(IGNODE|COLOR) ([rf]) (\d+) -> (-?\d+)(.*)$", l)
+            if not m:
+                continue
+            k, c, v, col, rest = m.group(1), m.group(2), int(m.group(3)), int(m.group(4)), m.group(5)
+            seen, done = (seen_ig, done_ig) if k == "IGNODE" else (seen_col, done_col)
+            if done[c]:
+                continue
+            if v in seen[c]:          # next colouring attempt: keep pass 1 only
+                done[c] = True
+                continue
+            seen[c].add(v)
+            f = dict(re.findall(r"(\w+)=(\S*)", rest))
+            rec = {"v": v, "col": col if "[spilled]" not in rest else 99, "cost": f.get("cost", "0"),
+                   "flags": f.get("flags", ""), "name": "" if f.get("name", "-") == "-" else f.get("name", ""),
+                   "nb": [int(x) for x in f.get("nb", "").split(",") if x]}
+            if k == "IGNODE":
+                nodes[c][v] = rec
+            else:
+                color[c].append(rec)
+    (d / "backend-16-before-regalloc.txt").write_text("\n".join(pre) + "\n")
+    (d / "backend-17-after-regalloc.txt").write_text("\n".join(post) + "\n")
+    for c, rc in (("r", "gpr"), ("f", "fpr")):
+        def fmt(r):
+            name = r["name"] or nodes[c].get(r["v"], {}).get("name", "")
+            nb = r["nb"] or nodes[c].get(r["v"], {}).get("nb", [])
+            return (f"{c}{r['v']} -> {c}{r['col']} {name}\n  flags: {r['flags']}\n  cost: {r['cost']}\n"
+                    f"  neighbors: {len(nb)} ({' '.join(c + str(x) for x in nb)})\n")
+        if nodes[c] or color[c]:
+            (d / f"regalloc-{rc}-pass-1-all.txt").write_text("".join(fmt(r) for r in sorted(nodes[c].values(), key=lambda r: r["v"])))
+            (d / f"regalloc-{rc}-pass-1-assigned.txt").write_text("".join(fmt(r) for r in color[c]))
+    (d / "variables.txt").write_text("arguments:\n" + "".join(f"    {v} -> {v}   {n}\n" for v, n in var_args))
+
+
+def native_run(cmd_toks, src, fn_sym, d: Path):
+    """Compile src with the native traced compiler (command = production
+    command tokens) and write mwccdbg-layout dumps into d. True on success."""
+    import mwtrace
+    toks = list(cmd_toks)
+    i = next(k for k, t in enumerate(toks) if t.endswith("mwcceppc.exe"))
+    ver = re.search(r"GC/([^/]+)/mwcceppc\.exe", toks[i])
+    nv = mwtrace.TO_NATIVE.get(ver.group(1)) if ver else None
+    exe = mwtrace.NATIVE / f"GC_{nv}" / "native" / "mwcceppc" if nv else None
+    if not exe or not exe.exists():
+        return False
+    args = [a for a in toks[i + 1:] if a != "-MMD"]
+    args[args.index("-c") + 1] = src
+    args[args.index("-o") + 1] = str(d / "native.o")
+    tf = d / "trace.txt"
+    env = dict(os.environ, MWCC_TRACE=str(tf), MWCC_TRACE_FN=fn_sym)
+    r = subprocess.run([str(exe)] + args, cwd=ROOT, env=env, capture_output=True, text=True)
+    (d / "run.log").write_text(r.stdout + r.stderr)
+    if r.returncode or not tf.exists():
+        return False
+    trace_to_dumps(tf.read_text().splitlines(), d)
+    return True
+
+
 class Evaluator:
     """Compile a TU text, score it (diff lines), and diagnose it with the debugger.
     Debugger runs go into separate network namespaces so up to `jobs` run at once."""
@@ -915,7 +1054,8 @@ class Evaluator:
         # retrowin32's gdb stub has a fixed port: parallel runs need a network
         # namespace each (Linux); native gdb (Windows) needs nothing
         self.netns = not md.NATIVE and can_unshare()
-        self.par = md.NATIVE or self.netns
+        self.native = native_ok()
+        self.par = md.NATIVE or self.netns or self.native
         self.cache = {}
         self.tmp = TMPDIR
         self.tmp.mkdir(parents=True, exist_ok=True)
@@ -964,6 +1104,9 @@ class Evaluator:
                                capture_output=True)
             if self.sym != self.fn:   # only the symbol we disassemble (the full map has duplicate targets)
                 md.sh([str(OBJCOPY), f"--redefine-sym={self.sym}={self.fn}", ours], cwd=ROOT)
+            if self.native and native_run(shlex.split(self.ps.swap_cc(self.u.cmd, self.sw.cc).split("&&")[0].replace("\\", "/")),
+                                          Path(sp).as_posix(), self.sym, d):
+                return d
             cmd = self.toks(Path(sp).as_posix(), (d / "dbg.o").as_posix())
             argv = md.debugger_argv(cmd, self.sym, d)
             if argv:
@@ -1626,7 +1769,8 @@ def fix(a, rep0):
         out = TMPDIR / f"{a.fn}.match{sw.u.ext}"
         out.write_text(t)
         print(f"[regfix] MATCH via {' | '.join(s2.hist)}; full TU written to {out}", flush=True)
-        log_hit(a.fn, a.unit, s2.hist, s0)
+        if not getattr(a, "no_log", False):
+            log_hit(a.fn, a.unit, s2.hist, s0)
         return ((0, 0, 0, 0), 0, s2, t, None)
     h0 = try_decl(sw.init, r0)
     if h0:
@@ -1701,7 +1845,10 @@ def fix(a, rep0):
             pool.append((m, sc[k], new[k][0], new[k][1], rep))
             log.write(json.dumps({"fn": a.fn, "score": sc[k], "metric": m, "hist": list(new[k][0].hist)}) + "\n")
         log.flush()
-        pool.sort(key=lambda r: (r[0], r[1], len(r[2].hist)))
+        # ties: keep catalog-rule states (inline / expand / unname / boolnorm) in the
+        # beam, their payoff usually needs a follow-up move
+        pool.sort(key=lambda r: (r[0], r[1], 0 if any(h.startswith(("inline[", "expand", "unname", "boolnorm"))
+                                                       for h in r[2].hist) else 1, len(r[2].hist)))
         uniq, seen_t = [], set()
         for r in pool:
             if r[3] not in seen_t:
@@ -1955,6 +2102,7 @@ def main():
             p.add_argument("--slack", type=int, default=6, help="diff-line slack for the diagnosed set")
             p.add_argument("--focus-only", action="store_true", help="only moves on diagnosed lines/locals")
             p.add_argument("--no-inline", action="store_true", help="no extract-to-static-inline moves")
+            p.add_argument("--no-log", action="store_true", help="do not record a match in tools/patterns/hits.jsonl (replays)")
             p.add_argument("--minutes", type=float, default=0)
             p.add_argument("-j", "--jobs", type=int, default=4)
     pr = sub.add_parser("probe", help="one compile per known lever (pragmas, unname, inline expansion, decl order)")
