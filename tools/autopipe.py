@@ -23,6 +23,12 @@ usage (repo root, after a normal build):
   MKGP2_THREAD=autopipeK python3 tools/autopipe.py run --shard K/N [--min 80] [--max-size 4000] [--perm-minutes 8]
                                 [--limit N] [--only FN] [--no-push] [--no-perm]
   python3 tools/autopipe.py status
+  python3 tools/autopipe.py land-hit FN      (after `run --hold` saved a hit and the TU is claimed)
+
+Stage 2b (stmt): tools/stmtsweep.py on the TU's own setting and on the best
+stage-1/2 setting (after decl order), --no-stmt to skip. For the >=99% sweep:
+  AUTOPIPE_DIR=/mnt/project-files/setup/autopipe99 python3 tools/autopipe.py run \
+      --min 99 --no-perm --hold --stop-on hit --claims FILE
 
 Claims: TUs listed in --claims (default OUT/claims.txt; refresh it from the
 open `unit-claim` issues) are skipped, and so is any fn held by another thread
@@ -203,6 +209,38 @@ def stage_sweep(u, d, fn, a):
     return res, None
 
 
+def stage_stmt(u, d, fn, setting, a):
+    """Stage 2b: tools/stmtsweep.py (dependency-safe statement orders) on top of a
+    stage-1/2 setting. Works on the real source + ninja (one build at a time);
+    the source and configure.py are always restored. Returns (pct, text) or (None, None)."""
+    _, cc, p, o = setting
+    text = ps.variant(u.text, d, p, o)
+    head = u.text[d[0]:d[1]]
+    m = re.search(r'([A-Za-z_~][\w:~]*)\s*\(', head)
+    body = m.group(1) if m else fn
+    orig_cfg = open('configure.py').read()
+    try:
+        open(u.src, 'w').write(text)
+        if cc != u.cc:
+            if not set_cc(u.obj, cc): return None, None
+            configure()
+        cmd = ['python3', '-I', 'tools/stmtsweep.py', '--tu', u.src, '--fn', fn, '--max', str(a.stmt_max), '--apply']
+        if body != fn: cmd += ['--body', body]
+        try:
+            r = subprocess.run(cmd, capture_output=True, text=True, timeout=a.stmt_minutes * 60, cwd=ROOT)
+            outp = r.stdout + r.stderr
+        except subprocess.TimeoutExpired as e:
+            outp = (e.stdout or b'').decode() if isinstance(e.stdout, bytes) else (e.stdout or '')
+        mm = re.search(r'^final \S+ ([\d.]+)', outp, re.M)
+        res = open(u.src).read() if mm else None
+        log(f'  stmt [{cc} {",".join(p) or "-"}{" decl" if o else ""}] '
+            + (mm.group(1) if mm else 'no result: ' + ' | '.join(outp.strip().splitlines()[-2:])))
+        return (float(mm.group(1)) if mm else None), res
+    finally:
+        open(u.src, 'w').write(u.text); open('configure.py', 'w').write(orig_cfg)
+        if cc != u.cc: configure()
+
+
 def stage_perm(u, d, fn, best, a):
     """Stage 3: cperm on the best source. Returns (score, path of best source or None)."""
     _, cc, p, o = best
@@ -330,7 +368,7 @@ def push_main(a):
     return False
 
 
-def land(u, d, fn, best, how, before, a):
+def land(u, d, fn, best, how, before, a, text=None):
     _, cc, p, o = best
     orig_src = u.text; orig_cfg = open('configure.py').read()
 
@@ -338,7 +376,7 @@ def land(u, d, fn, best, how, before, a):
         open(u.src, 'w').write(orig_src); open('configure.py', 'w').write(orig_cfg)
         build_report()
 
-    open(u.src, 'w').write(ps.variant(u.text, d, p, o))
+    open(u.src, 'w').write(text if text is not None else ps.variant(u.text, d, p, o))
     if cc != u.cc and not set_cc(u.obj, cc):
         revert(); return False, 'could not set compiler'
     ok, out = build_report()
@@ -353,7 +391,7 @@ def land(u, d, fn, best, how, before, a):
     ok, out = clean_build_ok()
     if not ok:
         revert(); return False, 'clean build not OK: ' + out[-300:]
-    setting = f'GC/{cc}' + (' + ' + ', '.join(p) if p else '') + (' + decl order' if o else '')
+    setting = f'GC/{cc}' + (' + ' + ', '.join(p) if p else '') + (' + decl order' if o else '') + (' + stmt order' if how == 'stmt' else '')
     msg = (f'autopipe: match {fn} ({setting})\n\n{u.obj}: {how} stage hit; report verified with no '
            f'regressions{", TU now Matching" if flipped else ""}, clean build main.dol OK.\n\n'
            'Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\n'
@@ -397,8 +435,27 @@ def one(p, obj, fn, size, dm, a):
     best = res[0]
     r = {'stage12_best': best[0], 'cc': best[1], 'pragmas': list(best[2]), 'order': list(best[3]) if best[3] else None,
          'own_cc': u.cc, 'base': next((x[0] for x in res if x[1] == u.cc and not x[2] and not x[3]), None)}
+    text = None
+    if not how and not a.no_stmt and best[0] < 10**6:
+        tried = []
+        base = next((x for x in res if x[1] == u.cc and not x[2] and not x[3]), None)
+        for st in [base, best]:
+            if st is None or (st[1], st[2], st[3]) in tried: continue
+            tried.append((st[1], st[2], st[3]))
+            pct, t = stage_stmt(u, d, fn, st, a)
+            if pct is not None: r.setdefault('stmt', []).append(pct)
+            if pct is not None and pct >= 100:
+                best, how, text = st, 'stmt', t; break
     if how:
-        ok, info = land(u, d, fn, best, how, before, a)
+        if a.hold:
+            os.makedirs(f'{OUT}/hits', exist_ok=True)
+            hp = f'{OUT}/hits/{fn}{u.ext}'
+            open(hp, 'w').write(text if text is not None else ps.variant(u.text, d, best[2], best[3]))
+            json.dump({'obj': u.obj, 'fn': fn, 'src': u.src, 'cc': best[1], 'own_cc': u.cc, 'how': how,
+                       'pragmas': list(best[2]), 'order': list(best[3]) if best[3] else None, 'text': hp},
+                      open(f'{OUT}/hits/{fn}.json', 'w'))
+            r.update(outcome='hit', info=f'{how} -> {hp}'); return r
+        ok, info = land(u, d, fn, best, how, before, a, text)
         r.update(outcome='landed' if ok else 'land_failed', info=info)
         if ok: return r
     if a.no_perm or best[0] >= 10**6:
@@ -449,7 +506,10 @@ def cmd_run(a):
         r.update(obj=obj, fn=fn, pct=p, qid=qid)
         record(r)
         o = r['outcome']
-        if o == 'landed':
+        if o == 'hit':
+            q_close(qid, 'release', '')   # the TU claim + landing happen outside (land-hit)
+            log('  HIT (held) ->', r['info'])
+        elif o == 'landed':
             q_close(qid, 'done', 'autopipe ' + r['info'])
         elif o == 'perm_match':
             q_close(qid, 'release', '')   # back to open; a review is pending
@@ -475,6 +535,20 @@ def cmd_status(a):
     for p in sorted(glob.glob(f'{OUT}/landed*.log')): print(open(p).read())
 
 
+def cmd_land_hit(a):
+    h = json.load(open(f'{OUT}/hits/{a.fn}.json'))
+    sync_main(); build_report()
+    u = ps.Unit(h['obj'])
+    if u.cc != h['own_cc']:
+        sys.exit(f"TU compiler changed since the hit ({h['own_cc']} -> {u.cc}); rerun the fn")
+    before = load_report()
+    best = (0, h['cc'], tuple(h['pragmas']), tuple(h['order']) if h['order'] else None)
+    ok, info = land(u, None, h['fn'], best, h['how'], before, a, open(h['text']).read())
+    print('landed' if ok else 'FAILED', info)
+    if ok: os.rename(f'{OUT}/hits/{a.fn}.json', f'{OUT}/hits/{a.fn}.json.landed')
+    sys.exit(0 if ok else 1)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sp = ap.add_subparsers(dest='cmd', required=True)
@@ -485,6 +559,11 @@ def main():
     p.add_argument('--decl-top', type=int, default=2, help='settings from stage 1 to sweep decl order on')
     p.add_argument('-j', '--jobs', type=int, default=os.cpu_count() or 4)
     p.add_argument('--only'); p.add_argument('--no-push', action='store_true'); p.add_argument('--no-perm', action='store_true')
+    p.add_argument('--no-stmt', action='store_true', help='skip the statement-order stage')
+    p.add_argument('--stmt-max', type=int, default=400, help='stmtsweep --max (orders per run / hill-climb builds)')
+    p.add_argument('--stmt-minutes', type=float, default=15)
+    p.add_argument('--hold', action='store_true', help='do not land a stage-1/2/stmt hit: save it to OUT/hits/ '
+                   '(outcome "hit") so the TU can be claimed first, then run `land-hit FN`')
     p.add_argument('--claims', default=f'{OUT}/claims.txt')
     p.add_argument('--hours', type=float, help='do not start a new fn after this many hours')
     p.add_argument('--stop-on', help='comma list of outcomes that end the run, e.g. landed,perm_match')
@@ -492,8 +571,12 @@ def main():
     p.add_argument('--branch', default=sh(['git', 'branch', '--show-current']).stdout.strip())
     p.add_argument('--session', default=os.environ.get('AUTOPIPE_SESSION', ''))
     sp.add_parser('status')
+    h = sp.add_parser('land-hit', help='verify + commit + push a held hit (claim the TU first)')
+    h.add_argument('fn'); h.add_argument('--no-push', action='store_true')
+    h.add_argument('--branch', default=sh(['git', 'branch', '--show-current']).stdout.strip())
+    h.add_argument('--session', default=os.environ.get('AUTOPIPE_SESSION', ''))
     a = ap.parse_args()
-    {'run': cmd_run, 'status': cmd_status}[a.cmd](a)
+    {'run': cmd_run, 'status': cmd_status, 'land-hit': cmd_land_hit}[a.cmd](a)
 
 
 if __name__ == '__main__':
