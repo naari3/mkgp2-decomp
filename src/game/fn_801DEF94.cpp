@@ -1287,7 +1287,10 @@ inline SteeringRingIter SteeringRingIter::operator+(unsigned long n) const {
 
 static inline SteeringRingIter ResizeEnd(SteeringRing *s) {
     const SteeringRingIter &it = s->end();
-    return it;
+    SteeringRing *ring = it.ring;
+    unsigned long index = it.index;
+    int *ptr = it.ptr;
+    return SteeringRingIter(ring, index, ptr);
 }
 
 static inline void QueueResizeGrow(SteeringRing *s, unsigned long n, const int &value) {

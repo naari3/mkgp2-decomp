@@ -83,3 +83,8 @@ c22_u152: Queue growth common-return (break out of the try/loop, then return swa
 Source: Codex worker c23_u88_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c23_u88 fn801E4AF4 retained uint incoming amount -> explicit ulong local n at entry:99.24167->99.808334,2400B/EH116/index12 exact; residual91->23 n/value saved-reg rows. Self/position now exactr30/r27; count/value source29/28 vs target28/29. Unlike c22 uint param alone, explicit single conversion avoids extra count web/r22 save. Reverse conversion98.721664/EH95.68965; scoped conversion99.25/2404B; signed input, pointer/ref value boundary and real member with conversion invariant99.808334. Signed iterator difference types invariant99.24167. No pragmas/maps/ranges/header edits. SinglefnNM/noB/nativegain0; source-only, existing baseline DOLSHA1 exact, no new full link.
+
+## c23_u144_20261109
+Source: Codex worker c23_u144_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c23_u144: ResizeEnd snapshots it.ring/it.index/it.ptr into typed scalar locals and returns SteeringRingIter(ring,index,ptr), avoiding implicit aggregate return-copy. fn801E435C 96.83962->99.48113, 424B/frame80 unchanged; all97 other function scores unchanged. Six add-only aliases restore EH97.21373/index99.72727. Remaining iterator stack-home permutation and conversion-copy field order; all97 cuts cross reversed EH. Word-loop matrix probe85.95984/996B remains unretained due immutable inherited anonymous bridges. Final coordinator fallback DOL SHA1ea30f3b1 exact; no native gain.
