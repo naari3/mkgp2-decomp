@@ -1816,3 +1816,27 @@ Two companion levers from the same function (54 -> 4 -> 2 -> 0 diff lines):
 - A loop counter that must be `li rN,0` rather than a copy of an existing zero
   register needs its own block-local variable (`{ int j; for (j = 0; ...) }`,
   see §46), not the reused function-level `i` and not an inline.
+
+## 70. Saved register chosen "too low" for a value in one branch: where the vreg sits among ALL inline locals decides it (AI_CalcVSTargetSpeed, 11-09)
+
+Two facts measured with mwtrace on this function:
+
+- A saved-register candidate takes the LOWEST-numbered free register among
+  the saved registers already in use, and only opens a new one (r31
+  downward) when none is free. So "target r27, ours r24" for a value with
+  three neighbours means: the target coloured it when exactly r27..r31 were
+  in use, i.e. its virtual register sits between two specific locals.
+- Locals of an inlined function are numbered in REVERSE declaration order
+  (last declared = coloured first). Block-scoped locals inside the inline
+  come before all of them.
+
+The start-of-race branch (`VSInitialSpeed`) and the normal branch were two
+inlines; the target's `kart * 4` of the first branch is coloured between
+`param` and `ctrl` of the second. That is only possible when both branches
+share one local list: one inline with `if/else`, `int off` declared between
+them, the first branch's `ctrl/cup/round` declared last (so they colour
+first and take r31/r30/r29), and the distance rank as a listed local
+instead of a nested inline's local (fixes `lwz r28` vs r24 too).
+
+Recipe: read the COLOR lines in order, write the saved registers as a
+sequence, and place each declaration so that the list reads backwards.
