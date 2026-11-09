@@ -2123,6 +2123,87 @@ def shared_loop_counters(a, rep, src_text):
     return out
 
 
+def copy_direction_hint(a, d):
+    """`addi rA,..; mr rB,rA` (ours) against `addi rB,..; mr rA,rB` (target):
+    regalloc_patterns 57. -> [(index, ours pair, target pair)]"""
+    import pragmasweep as ps
+    u = ps.Unit(a.unit)
+    sym = u.compiled_name(a.fn)
+    oo = Path(d) / "ours.o"
+    if not oo.exists():
+        oo = ROOT / f"build/{md.VERSION}/src/{u.obj}.o"
+    ours = [str(x) for x in md.objdump_fn(oo, sym)]
+    tgt = [str(x) for x in md.objdump_fn(ROOT / f"build/{md.VERSION}/obj/{u.obj}.o", sym)]
+    if len(ours) != len(tgt):
+        return []
+
+    def pair(x, y):
+        m1 = re.match(r"\s*addi\s+(r\d+),(.*)$", x)
+        m2 = re.match(r"\s*mr\s+(r\d+),(r\d+)\s*$", y)
+        if m1 and m2 and m2.group(2) == m1.group(1):
+            return m1.group(1), m2.group(1), m1.group(2).strip()
+        return None
+    out = []
+    for i in range(len(ours) - 1):
+        po, pt = pair(ours[i], ours[i + 1]), pair(tgt[i], tgt[i + 1])
+        if po and pt and po[0] == pt[1] and po[1] == pt[0] and po[0] != po[1]:
+            out.append((i, f"{ours[i].strip()}; {ours[i + 1].strip()}", f"{tgt[i].strip()}; {tgt[i + 1].strip()}"))
+    return out
+
+
+def shape_hints(a, rep, src_text):
+    """Cheap source-shape hints for patterns landed 11-09 (regalloc_patterns 52-54,
+    float literals). -> [text]"""
+    import pragmasweep as ps
+    cl = rep.get("classes", {})
+    gbad = bool(cl.get("gpr") and cl["gpr"].get("bad"))
+    fbad = bool(cl.get("fpr") and cl["fpr"].get("bad"))
+    if not (gbad or fbad):
+        return []
+    u = ps.Unit(a.unit)
+    span = ps.find_def(src_text, a.fn, mangled=u.compiled_name(a.fn))
+    if not span:
+        return []
+    head, body = src_text[span[0]:span[1]], src_text[span[1]:span[2]]
+    out = []
+    if fbad:
+        txt = src_text
+        for inc in re.findall(r'#include\s+"([^"]+)"', src_text):
+            for base in ("include", "src"):
+                f = ROOT / base / inc
+                if f.exists():
+                    txt += "\n" + f.read_text(errors="replace")
+                    break
+        ext = set()
+        for m in re.finditer(r"\bextern\s+(?:const\s+)?(?:float|f32|double|f64)\s+(?:const\s+)?([^;()\[\]]+);", txt):
+            ext.update(x.strip() for x in m.group(1).split(",") if re.fullmatch(r"\s*[A-Za-z_]\w*\s*", x))
+        # the function or any inline of the TU (a use is a mention outside an extern declaration)
+        nodecl = re.sub(r"\bextern\b[^;]*;", "", src_text)
+        used = sorted(n for n in ext if re.search(r"\b" + re.escape(n) + r"\b", nodecl))
+        if used:
+            out.append(f"FPR registers are off and the TU reads {len(used)} extern float constant(s) "
+                       f"({', '.join(used[:6])}{'...' if len(used) > 6 else ''}): an extern is a memory load the optimizer "
+                       f"cannot fold, so its vreg is numbered and coloured differently. Get the literal text with "
+                       f"`python3 tools/float_literal_sweep.py {a.unit} {a.fn}`, then rewrite the expressions in their "
+                       f"natural form (docs/thread_tips.md, FlashFadeOverlay_Draw).")
+    if gbad:
+        g, w = cl["gpr"]["g"], cl["gpr"]["w"]
+        regs = {str(g.phys.get(v)) for v in cl["gpr"]["bad"]} | {str(w.get(v)) for v in cl["gpr"]["bad"]}
+        nums = {int(m.group(1)) for r in regs for m in [re.search(r"(\d+)$", r)] if m}
+        r3r4 = any(re.search(r"(?<!\d)3$", str(g.phys.get(v))) and re.search(r"(?<!\d)4$", str(w.get(v)))
+                   for v in cl["gpr"]["bad"])
+        if r3r4 and not re.search(r"\bvoid\s+[\w:~]*\s*$", head.split("(")[0]) \
+                and "return" in body and not re.search(r"\breturn\s*;", body):
+            out.append("volatile GPRs are off in a function that returns a value: if the target avoids r3 after a call "
+                       "until the epilogue, the original left that block with a valueless `return;` (r3 stays live to the "
+                       "exit); regalloc_patterns 54.")
+        if any(n >= 14 for n in nums) and re.search(r"\bend\s*\(\s*\)|\bbegin\s*\(\s*\)|\bsentinel\b|&\s*\w+(?:->|\.)head\b", src_text):
+            out.append("saved GPRs are off around a list walk: the sentinel `&head` hoisted by the backend takes the newest "
+                       "saved register. Name it as a local of the inline (regalloc_patterns 52) or build begin() as "
+                       "`iterator(((Node *)&head)->next)` instead of `++end()` (regalloc_patterns 53).")
+    return out
+
+
 def print_levers(a, rep, src_text, d, ext):
     """Hand-landed source levers whose shape fits (tools/diag2sweep.levers)."""
     try:
@@ -2136,6 +2217,26 @@ def print_levers(a, rep, src_text, d, ext):
             print(f"  target `{txt}` = {nm}+0x{add:x}: MWCC never folds a constant into an anchored object's address, "
                   f"so an object of the original source starts there. Split {nm} at +0x{add:x} in symbols.txt and "
                   f"index the new object directly.")
+    try:
+        cd = copy_direction_hint(a, d)
+    except Exception as e:  # noqa: BLE001 - advice only
+        cd = []
+        print(f"[regfix] copy direction hint: {e}")
+    if cd:
+        print("\n== copy direction between an address and its walker (rule addi-mr-copy-direction, regalloc_patterns 57) ==")
+        for i, o, t in cd[:6]:
+            print(f"  insn {i}: ours `{o}` | target `{t}`. A copy into a NAMED local is never coalesced, so the address "
+                  f"lands in the temp. The target's base is a split-off range: make the base the SECOND use of a "
+                  f"variable that held something else earlier (look for the same register in two unrelated places).")
+    try:
+        sh = shape_hints(a, rep, src_text)
+    except Exception as e:  # noqa: BLE001 - advice only
+        sh = []
+        print(f"[regfix] shape hint: {e}")
+    if sh:
+        print("\n== source-shape hints (patterns landed 11-09) ==")
+        for t in sh:
+            print("  " + t)
     try:
         sl = shared_loop_counters(a, rep, src_text)
     except Exception as e:  # noqa: BLE001 - advice only
