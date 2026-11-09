@@ -200,7 +200,7 @@ right instructions but colors the constant r0.
 - fn_801BDEB4 ae58acb: TU fn_801BAA88 -> GC/2.6 (all its matched functions
   compile the same), `unsigned char al = (int)(255.0f * a);
   SetColor(0xFFFFFF00 | al)`, and the neighbouring int stores reordered.
-- fn_8023A148 (onmokoworks claim, not landed): GC/2.6 plus
+- fn_8023A148 (landed 310a051, see §21): GC/2.6 plus
   `unsigned char alpha = value;` with the color local declared before the
   title local fixes the color/title registers at the first call site.
 
@@ -417,6 +417,22 @@ statement shape (`idx = x ? 1 : 0;`, `if (done != 1) { ... }`) mattered.
 near miss: `tools/asmgrep.py similar UNIT FN --src`, or grep the near miss's
 distinctive globals/strings in `src/` and read the matched hits. Rule
 `inline-matched-sibling` in tools/patterns/rules.jsonl.
+
+## 21. An unrolled store run that the target reloads for: write it as a loop (fn_8023A148, 11-09)
+
+fn_8023A148 (99.79) stores two colours into 12 `texts[i][j]` text managers
+from a static inline called twice. After GC/2.6 + the natural
+`0xffffff00 | (unsigned char)a` (§11), one site still differed: before the
+call it reads the current alpha from `texts[0][0]`, and ours kept that
+pointer in r3 for the first store (so the alpha went to r4), while the
+target reloads it (`lwz r3, 0x20(r29)`). Writing the 12 stores as
+`for (int i = 0; i < 3; i++) { [i][0] = title; [i][1..3] = color; }` gives
+the same unrolled code but the backend unrolls after the frontend CSE, so the
+pointer is not reused: 100 % (310a051).
+
+**Check:** a hand-unrolled run of stores to `a[0..N]` where the target
+re-loads an element pointer that ours keeps from an earlier statement. Rule
+`rolled-loop-blocks-cse`.
 
 ## Still open (same shape, no fix found yet)
 

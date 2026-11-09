@@ -74,7 +74,6 @@ all of these.
 | `fn_8028A3EC` | triforce/amcoin_nm2 | 99.49 | r0/r3 swap: target loads src[4..7] via r3 and tmp.coinSetting (0xe(r1)) into r0 | R5 2026-11-08: pragmasweep --set all (1.3 + pragmas breaks the flags block), `if (src[3])`/`CoinTable[src[3]]` (18 lines), store orders, ptr temps, freePlay forms, 15-min cperm |
 | `fn_80286864` | triforce/random_nm1 | 84.8 | target shares `ret`'s `li r31, 0` with the zero high word of the inlined u64 range; we emit a separate `li r8, 0` | ret/range variants; 10+20 min permuter |
 | `fn_80291134` | triforce/amsrv_nm1 | 93.71 | e9b8ded: opt_common_subs off + spelled-out reply header gets 62 -> 16 diff lines; left: req->result / req->arg[0] loads get r6/r4 instead of r5/r6 | 20 min cperm; compiler x pragma sweep (psweep); addr/p/arg0 local forms |
-| `fn_8023A148` | game/fn_8023A148 | 99.44 | title / color r0/r4 swap | |
 | `fn_8023AC14` | game/ItemSelectChoiceUpdate | 97.91 | register coloring | `notes/r4/fn_8023AC14_9889.diff` |
 | `SpriteGroup_CreateOrInit` | game/SpriteGroupCreate | 95.65 | `lwz`/`stw` (and `li`) order | |
 | `fn_80245E6C` | game/HudFlow20Update | 98.92 | one `lwz` scheduled differently | |
