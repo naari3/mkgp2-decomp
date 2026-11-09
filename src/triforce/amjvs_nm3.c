@@ -24,14 +24,22 @@ static inline s32 ReadAnalog(s32 node, s16** out, u8* chans) {
         return 5;
     }
     dst = AnalogBuf;
-    for (; n > 0; n--) {
-        *dst++ = (p[0] << 8) | p[1];
-        p += 2;
+    {
+        u32 i;
+        for (i = 0; i < n; i++) {
+            *dst++ = (p[0] << 8) | p[1];
+            p += 2;
+        }
     }
     *out = AnalogBuf;
     return 0;
 }
 
+/* The up-counting loop gives the target's cmplwi/ble guard; the smaller unroll
+   budget makes MWCC unroll it 4x (srwi. 2 / andi. 3) instead of 8x. */
+#pragma push
+#pragma opt_unroll_instr_count 16
 s32 fn_8028AAC0(s32 node, s16** out, u8* chans) {
     return ReadAnalog(node, out, chans);
 }
+#pragma pop
