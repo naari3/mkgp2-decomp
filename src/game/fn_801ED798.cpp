@@ -87,7 +87,9 @@ extern "C" void fn_801ED798(PhysicsGroundState *self, Vec3 *position,
     float fallbackPenetration = lbl_806DA428 * self->scale;
     for (int corner = 0; corner < 4; ++corner) {
         float height = 0.0f;
-        CollisionVec scaled(lbl_803BDD28[corner].x, lbl_803BDD28[corner].y, lbl_803BDD28[corner].z);
+        PhysicsCollisionVec *src = &lbl_803BDD28[corner];
+        float y = src->y;
+        CollisionVec scaled(src->x, y, src->z);
         ScaleGroundCorner(scaled, self->scale);
         self->corners[corner].x = original.m[3][0] + (original.m[0][0] * scaled.x + scaled.y * original.m[1][0] + scaled.z * original.m[2][0]);
         self->corners[corner].y = original.m[3][1] + (original.m[0][1] * scaled.x + scaled.y * original.m[1][1] + scaled.z * original.m[2][1]);
