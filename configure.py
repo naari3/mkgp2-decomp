@@ -469,6 +469,7 @@ config.libs = [
             Object(Matching, "sysdolphin/baselib/mobj.c"),
             Object(Matching, "sysdolphin/baselib/lobj.c"),
             Object(NonMatching, "sysdolphin/baselib/lobj_nm1.c"),
+            Object(Matching, "sysdolphin/baselib/lobj_constants.c"),
             Object(Matching, "sysdolphin/baselib/cobj.c"),
             Object(Matching, "sysdolphin/baselib/cobj_constants.c"),
             Object(Matching, "sysdolphin/baselib/aobj.c"),

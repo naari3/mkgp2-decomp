@@ -326,6 +326,8 @@ static inline void setup_diffuse_lightobj(HSD_LObj* lobj)
     }
 }
 
+extern const f32 lbl_806DCBFC;
+
 static inline void setup_spec_lightobj(HSD_LObj* lobj, Mtx mtx, s32 spec_id)
 {
     f32 x;
@@ -333,7 +335,7 @@ static inline void setup_spec_lightobj(HSD_LObj* lobj, Mtx mtx, s32 spec_id)
     lobj->spec_id = spec_id;
     if (spec_id != 0) {
         GXInitLightColor(&lobj->spec_lightobj, lobj->color);
-        lobj->shininess = 50.0F;
+        lobj->shininess = lbl_806DCBFC;
 
         x = lobj->shininess;
 

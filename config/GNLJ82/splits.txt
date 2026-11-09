@@ -14203,6 +14203,12 @@ sysdolphin/baselib/aobj.c:
 	.sbss       start:0x806D2150 end:0x806D2160
 	.sdata2     start:0x806DCBD8 end:0x806DCBE0
 
+sysdolphin/baselib/lobj_constants.c:
+	.sdata2     start:0x806DCBE0 end:0x806DCC08
+
+sysdolphin/baselib/cobj_constants.c:
+	.sdata2     start:0x806DCC08 end:0x806DCC58
+
 sysdolphin/baselib/lobj.c:
 	.text       start:0x802C4010 end:0x802C40A4
 
@@ -14213,10 +14219,6 @@ sysdolphin/baselib/lobj_nm1.c:
 	.bss        start:0x806CD080 end:0x806CD0A8
 	.sdata      start:0x806D0D20 end:0x806D0D48
 	.sbss       start:0x806D2160 end:0x806D2180
-	.sdata2     start:0x806DCBE0 end:0x806DCC08
-
-sysdolphin/baselib/cobj_constants.c:
-	.sdata2     start:0x806DCC08 end:0x806DCC58
 
 sysdolphin/baselib/cobj.c:
 	.text       start:0x802C6430 end:0x802C8B48
