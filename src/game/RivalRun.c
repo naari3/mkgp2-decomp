@@ -213,7 +213,7 @@ extern void ChallengeGoalCamera_Update();
 extern void CourseEnvironment_UpdateAndCullZones_Timed();
 extern void Fog_UpdateFromCourseScene3D();
 extern void *GetInputManager(void);
-extern void GetRaceContextPtr();
+extern void *GetRaceContextPtr();
 extern void HUD_FrameUpdate();
 extern void *InputMgr_GetPlayer(void *mgr, int idx);
 extern unsigned char IsRaceStarted(void);
@@ -726,19 +726,19 @@ asm void RivalRun_UpdatePathFollower(void) { /* 0x80135EFC size:0x24C */
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void CarObject_ApplyDriftBoost();
+extern unsigned char CarObject_ApplyDriftBoost(void *car, int kind, float amount);
 extern void *CarObject_GetRenderObj(void *car);
-extern void GetRaceContextPtr();
+extern void *GetRaceContextPtr(void);
 extern unsigned char IsRaceStarted(void);
 extern float *KartDriver_GetKartRootMtx(void *render);
-extern void KartItem_CancelAndQueueDefault();
-extern void KartItem_CancelIfNotForced();
-extern void KartMovement_EquipItem();
-extern void OSGetTick();
-extern void RaceContextSlot_GetIfAlive();
-extern void RenderObj_UseItem();
-extern void RivalRun_CalcPathDistance();
-extern void Terrain_RaycastWall();
+extern void KartItem_CancelAndQueueDefault(void *render);
+extern void KartItem_CancelIfNotForced(void *render);
+extern unsigned char KartMovement_EquipItem(void *render, int item);
+extern unsigned long OSGetTick(void);
+extern char *RaceContextSlot_GetIfAlive(void *ctx, int slot);
+extern unsigned char RenderObj_UseItem(void *render, int a, int b);
+float RivalRun_CalcPathDistance(RRPathFollower *f, RRVec3 *a, RRVec3 *b);
+extern unsigned char Terrain_RaycastWall(RRVec3 *from, RRVec3 *to, RRVec3 *hit, RRVec3 *nrm);
 extern float Vec3_Dot(const RRVec3 *a, const RRVec3 *b);
 extern void Vec3_Normalize(const RRVec3 *v, RRVec3 *out);
 extern void Vec3_Subtract(const RRVec3 *a, const RRVec3 *b, RRVec3 *out);
@@ -746,16 +746,16 @@ extern void Vec3_Subtract(const RRVec3 *a, const RRVec3 *b, RRVec3 *out);
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_raceEnded;
 extern const float lbl_806D738C;
-extern unsigned int lbl_806D73A4;
-extern unsigned int lbl_806D73A8;
-extern unsigned int lbl_806D73AC;
-extern unsigned int lbl_806D73B0;
-extern unsigned int lbl_806D73B4;
-extern unsigned int lbl_806D73B8;
-extern unsigned int lbl_806D73BC;
-extern unsigned int lbl_806D73C0;
-extern unsigned int lbl_806D73C4;
-extern unsigned int lbl_806D73C8;
+extern const float lbl_806D73A4;
+extern const float lbl_806D73A8;
+extern const float lbl_806D73AC;
+extern const float lbl_806D73B0;
+extern const float lbl_806D73B4;
+extern const float lbl_806D73B8;
+extern const float lbl_806D73BC;
+extern const float lbl_806D73C0;
+extern const float lbl_806D73C4;
+extern const float lbl_806D73C8;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -767,7 +767,7 @@ extern unsigned int lbl_80495994[];
  */
 
 /* --- forward decls --- */
-asm void RivalRun_RivalTactics(void);
+void RivalRun_RivalTactics(RRRivalAI *self);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -782,466 +782,213 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void RivalRun_RivalTactics(void) { /* 0x80136148 size:0x6AC */
-    nofralloc
-    stwu r1, -0x90(r1)
-    mflr r0
-    stw r0, 0x94(r1)
-    stfd f31, 0x80(r1)
-    psq_st f31, 0x88(r1), 0, 0
-    stw r31, 0x7c(r1)
-    stw r30, 0x78(r1)
-    mr r30, r3
-    lwz r0, 0x0(r3)
-    cmplwi r0, 0x0
-    beq RivalRun_RivalTactics_L_801367D4
-    bl IsRaceStarted
-    clrlwi. r0, r3, 24
-    beq RivalRun_RivalTactics_L_801367D4
-    lwz r0, 0x3c(r30)
-    cmpwi r0, 0x0
-    ble RivalRun_RivalTactics_L_80136190
-    b RivalRun_RivalTactics_L_801367D4
-    RivalRun_RivalTactics_L_80136190:
-    lbz r0, 0x38(r30)
-    cmplwi r0, 0x0
-    beq RivalRun_RivalTactics_L_801361C0
-    lwz r5, 0x0(r30)
-    li r4, 0x4
-    lwz r3, 0x4(r30)
-    lfs f1, 0x4(r5)
-    bl CarObject_ApplyDriftBoost
-    clrlwi. r0, r3, 24
-    beq RivalRun_RivalTactics_L_801361C0
-    li r0, 0x0
-    stb r0, 0x38(r30)
-    RivalRun_RivalTactics_L_801361C0:
-    lwz r3, 0x20(r30)
-    lfs f0, 0x10(r3)
-    stfs f0, 0x28(r30)
-    lfs f0, 0x14(r3)
-    stfs f0, 0x2c(r30)
-    lfs f0, 0x18(r3)
-    stfs f0, 0x30(r30)
-    lwz r3, 0x20(r30)
-    lfs f0, 0x1c(r3)
-    stfs f0, 0x38(r1)
-    fneg f0, f0
-    lfs f2, 0x20(r3)
-    stfs f2, 0x3c(r1)
-    lfs f1, 0x24(r3)
-    stfs f1, 0x40(r1)
-    stfs f1, 0x44(r1)
-    stfs f2, 0x48(r1)
-    stfs f0, 0x4c(r1)
-    lwz r0, 0x50(r30)
-    cmplwi r0, 0x0
-    beq RivalRun_RivalTactics_L_801367D4
-    lwz r3, 0x4(r30)
-    bl CarObject_GetRenderObj
-    lwz r4, 0x50(r30)
-    lwz r0, 0x24c(r3)
-    lwz r3, 0x24c(r4)
-    cmpw r3, r0
-    bne RivalRun_RivalTactics_L_801367D4
-    lwz r3, 0x4(r30)
-    bl CarObject_GetRenderObj
-    bl KartDriver_GetKartRootMtx
-    mr r31, r3
-    lwz r3, 0x50(r30)
-    bl KartDriver_GetKartRootMtx
-    lfs f0, 0xc(r31)
-    addi r4, r1, 0x5c
-    addi r5, r1, 0x50
-    stfs f0, 0x50(r1)
-    lfs f0, 0x1c(r31)
-    stfs f0, 0x54(r1)
-    lfs f0, 0x2c(r31)
-    stfs f0, 0x58(r1)
-    lfs f0, 0xc(r3)
-    stfs f0, 0x5c(r1)
-    lfs f0, 0x1c(r3)
-    stfs f0, 0x60(r1)
-    lfs f0, 0x2c(r3)
-    stfs f0, 0x64(r1)
-    lwz r3, 0x20(r30)
-    bl RivalRun_CalcPathDistance
-    fmr f31, f1
-    addi r3, r1, 0x5c
-    addi r4, r1, 0x50
-    addi r5, r1, 0x38
-    bl Vec3_Subtract
-    addi r3, r1, 0x38
-    addi r4, r1, 0x2c
-    bl Vec3_Normalize
-    addi r3, r1, 0x38
-    addi r4, r1, 0x44
-    bl Vec3_Dot
-    lfs f2, lbl_806D73A4(r2)
-    fcmpo cr0, f31, f2
-    ble RivalRun_RivalTactics_L_801362D0
-    lwz r3, 0x0(r30)
-    lfs f0, 0x10(r3)
-    stfs f0, 0x4c(r30)
-    b RivalRun_RivalTactics_L_80136360
-    RivalRun_RivalTactics_L_801362D0:
-    lfs f0, lbl_806D73A8(r2)
-    fcmpo cr0, f31, f0
-    ble RivalRun_RivalTactics_L_80136304
-    fsubs f2, f31, f0
-    lwz r3, 0x0(r30)
-    lfs f0, lbl_806D73AC(r2)
-    lfs f3, 0xc(r3)
-    fdivs f2, f2, f0
-    lfs f0, 0x10(r3)
-    fsubs f0, f0, f3
-    fmadds f0, f2, f0, f3
-    stfs f0, 0x4c(r30)
-    b RivalRun_RivalTactics_L_80136360
-    RivalRun_RivalTactics_L_80136304:
-    lfs f0, lbl_806D73B0(r2)
-    fcmpo cr0, f31, f0
-    ble RivalRun_RivalTactics_L_80136320
-    lwz r3, 0x0(r30)
-    lfs f0, 0xc(r3)
-    stfs f0, 0x4c(r30)
-    b RivalRun_RivalTactics_L_80136360
-    RivalRun_RivalTactics_L_80136320:
-    lfs f0, lbl_806D73B4(r2)
-    fcmpo cr0, f31, f0
-    ble RivalRun_RivalTactics_L_80136354
-    fadds f2, f2, f31
-    lwz r3, 0x0(r30)
-    lfs f0, lbl_806D73AC(r2)
-    lfs f3, 0x8(r3)
-    fdivs f2, f2, f0
-    lfs f0, 0xc(r3)
-    fsubs f0, f0, f3
-    fmadds f0, f2, f0, f3
-    stfs f0, 0x4c(r30)
-    b RivalRun_RivalTactics_L_80136360
-    RivalRun_RivalTactics_L_80136354:
-    lwz r3, 0x0(r30)
-    lfs f0, 0x8(r3)
-    stfs f0, 0x4c(r30)
-    RivalRun_RivalTactics_L_80136360:
-    lwz r4, 0x20(r30)
-    lfs f0, lbl_806D73AC(r2)
-    lwz r3, 0x4(r4)
-    fcmpo cr0, f31, f0
-    mr r5, r3
-    bgt RivalRun_RivalTactics_L_80136384
-    lfs f0, lbl_806D73B8(r2)
-    fcmpo cr0, f31, f0
-    bge RivalRun_RivalTactics_L_801363B4
-    RivalRun_RivalTactics_L_80136384:
-    lwz r0, 0x24(r30)
-    cmpwi r0, 0x0
-    bne RivalRun_RivalTactics_L_80136414
-    lwz r0, 0x4(r4)
-    cmpwi r0, 0x1
-    beq RivalRun_RivalTactics_L_801363A8
-    li r0, 0x1
-    stw r0, 0x4(r4)
-    stb r0, 0x0(r4)
-    RivalRun_RivalTactics_L_801363A8:
-    li r0, 0x78
-    stw r0, 0x24(r30)
-    b RivalRun_RivalTactics_L_80136414
-    RivalRun_RivalTactics_L_801363B4:
-    lfs f0, lbl_806D738C(r2)
-    fcmpo cr0, f31, f0
-    ble RivalRun_RivalTactics_L_80136414
-    fcmpo cr0, f1, f0
-    ble RivalRun_RivalTactics_L_801363E8
-    lfs f0, lbl_806D73BC(r2)
-    fcmpo cr0, f1, f0
-    bge RivalRun_RivalTactics_L_801363E8
-    cmpwi r3, 0x2
-    bne RivalRun_RivalTactics_L_801363E4
-    subi r5, r3, 0x1
-    b RivalRun_RivalTactics_L_801363E8
-    RivalRun_RivalTactics_L_801363E4:
-    addi r5, r3, 0x1
-    RivalRun_RivalTactics_L_801363E8:
-    lfs f0, lbl_806D738C(r2)
-    fcmpo cr0, f1, f0
-    bge RivalRun_RivalTactics_L_80136414
-    lfs f0, lbl_806D73C0(r2)
-    fcmpo cr0, f1, f0
-    ble RivalRun_RivalTactics_L_80136414
-    cmpwi r5, 0x0
-    bne RivalRun_RivalTactics_L_80136410
-    addi r5, r5, 0x1
-    b RivalRun_RivalTactics_L_80136414
-    RivalRun_RivalTactics_L_80136410:
-    subi r5, r5, 0x1
-    RivalRun_RivalTactics_L_80136414:
-    lwz r3, 0x24(r30)
-    cmpwi r3, 0x0
-    ble RivalRun_RivalTactics_L_8013642C
-    subi r0, r3, 0x1
-    stw r0, 0x24(r30)
-    b RivalRun_RivalTactics_L_80136468
-    RivalRun_RivalTactics_L_8013642C:
-    lwz r3, 0x20(r30)
-    lwz r0, 0x4(r3)
-    cmpw r5, r0
-    beq RivalRun_RivalTactics_L_80136468
-    cmpwi r5, 0x0
-    blt RivalRun_RivalTactics_L_80136460
-    cmpwi r5, 0x3
-    bge RivalRun_RivalTactics_L_80136460
-    cmpw r0, r5
-    beq RivalRun_RivalTactics_L_80136460
-    stw r5, 0x4(r3)
-    li r0, 0x1
-    stb r0, 0x0(r3)
-    RivalRun_RivalTactics_L_80136460:
-    li r0, 0x78
-    stw r0, 0x24(r30)
-    RivalRun_RivalTactics_L_80136468:
-    lbz r0, g_raceEnded(r13)
-    cmplwi r0, 0x0
-    bne RivalRun_RivalTactics_L_801367D4
-    lwz r3, 0x40(r30)
-    cmpwi r3, 0x0
-    ble RivalRun_RivalTactics_L_8013648C
-    subi r0, r3, 0x1
-    stw r0, 0x40(r30)
-    b RivalRun_RivalTactics_L_801367D4
-    RivalRun_RivalTactics_L_8013648C:
-    lwz r0, 0x44(r30)
-    cmpwi r0, 0x0
-    bne RivalRun_RivalTactics_L_80136618
-    lfs f0, lbl_806D73C0(r2)
-    fcmpo cr0, f31, f0
-    bge RivalRun_RivalTactics_L_801364B0
-    li r0, 0x32
-    stw r0, 0x44(r30)
-    b RivalRun_RivalTactics_L_801365C4
-    RivalRun_RivalTactics_L_801364B0:
-    lfs f0, lbl_806D73BC(r2)
-    fcmpo cr0, f31, f0
-    ble RivalRun_RivalTactics_L_801365C4
-    lfs f0, lbl_806D73A8(r2)
-    fcmpo cr0, f31, f0
-    bge RivalRun_RivalTactics_L_80136548
-    bl OSGetTick
-    lis r4, 0x8000
-    lwz r7, 0x0(r30)
-    lwz r5, 0xf8(r4)
-    lis r4, 0x1062
-    addi r6, r4, 0x4dd3
-    lwz r0, 0x24(r7)
-    srwi r4, r5, 2
-    lwz r8, 0x20(r7)
-    mulhwu r5, r6, r4
-    lwz r6, 0x1c(r7)
-    add r0, r8, r0
-    add r4, r6, r0
-    srwi r0, r5, 6
-    divwu r3, r3, r0
-    divw r0, r3, r4
-    mullw r0, r0, r4
-    subf r0, r0, r3
-    cmpw r0, r6
-    bge RivalRun_RivalTactics_L_80136524
-    li r0, 0x3e
-    stw r0, 0x44(r30)
-    b RivalRun_RivalTactics_L_801365C4
-    RivalRun_RivalTactics_L_80136524:
-    subf r0, r6, r0
-    cmpw r0, r8
-    bge RivalRun_RivalTactics_L_8013653C
-    li r0, 0x6c
-    stw r0, 0x44(r30)
-    b RivalRun_RivalTactics_L_801365C4
-    RivalRun_RivalTactics_L_8013653C:
-    li r0, 0x3d
-    stw r0, 0x44(r30)
-    b RivalRun_RivalTactics_L_801365C4
-    RivalRun_RivalTactics_L_80136548:
-    bl OSGetTick
-    lis r4, 0x8000
-    lwz r7, 0x0(r30)
-    lwz r5, 0xf8(r4)
-    lis r4, 0x1062
-    addi r6, r4, 0x4dd3
-    lwz r0, 0x30(r7)
-    srwi r4, r5, 2
-    lwz r8, 0x2c(r7)
-    mulhwu r5, r6, r4
-    lwz r6, 0x28(r7)
-    add r0, r8, r0
-    add r4, r6, r0
-    srwi r0, r5, 6
-    divwu r3, r3, r0
-    divw r0, r3, r4
-    mullw r0, r0, r4
-    subf r0, r0, r3
-    cmpw r0, r6
-    bge RivalRun_RivalTactics_L_801365A4
-    li r0, 0x3e
-    stw r0, 0x44(r30)
-    b RivalRun_RivalTactics_L_801365C4
-    RivalRun_RivalTactics_L_801365A4:
-    subf r0, r6, r0
-    cmpw r0, r8
-    bge RivalRun_RivalTactics_L_801365BC
-    li r0, 0x6c
-    stw r0, 0x44(r30)
-    b RivalRun_RivalTactics_L_801365C4
-    RivalRun_RivalTactics_L_801365BC:
-    li r0, 0x3d
-    stw r0, 0x44(r30)
-    RivalRun_RivalTactics_L_801365C4:
-    lwz r0, 0x44(r30)
-    cmpwi r0, 0x0
-    beq RivalRun_RivalTactics_L_801367D4
-    bl GetRaceContextPtr
-    lwz r4, 0x1c(r30)
-    bl RaceContextSlot_GetIfAlive
-    li r0, 0x0
-    stw r0, 0x90(r3)
-    lwz r3, 0x4(r30)
-    bl CarObject_GetRenderObj
-    lwz r4, 0x44(r30)
-    bl KartMovement_EquipItem
-    clrlwi. r0, r3, 24
-    beq RivalRun_RivalTactics_L_8013660C
-    lwz r3, 0x0(r30)
-    lwz r0, 0x18(r3)
-    stw r0, 0x48(r30)
-    b RivalRun_RivalTactics_L_801367D4
-    RivalRun_RivalTactics_L_8013660C:
-    li r0, 0x0
-    stw r0, 0x44(r30)
-    b RivalRun_RivalTactics_L_801367D4
-    RivalRun_RivalTactics_L_80136618:
-    lfs f0, lbl_806D73BC(r2)
-    fcmpo cr0, f31, f0
-    bge RivalRun_RivalTactics_L_801366AC
-    lfs f0, lbl_806D73C0(r2)
-    fcmpo cr0, f31, f0
-    ble RivalRun_RivalTactics_L_801366AC
-    lwz r3, 0x4(r30)
-    bl CarObject_GetRenderObj
-    bl KartItem_CancelIfNotForced
-    lwz r3, 0x4(r30)
-    bl CarObject_GetRenderObj
-    bl KartItem_CancelAndQueueDefault
-    li r0, 0x0
-    stw r0, 0x44(r30)
-    bl OSGetTick
-    lis r4, 0x8000
-    lis r6, 0x1062
-    lwz r0, 0xf8(r4)
-    lis r5, lbl_80495994@ha
-    lwz r4, 0x0(r30)
-    addi r6, r6, 0x4dd3
-    srwi r0, r0, 2
-    addi r5, r5, lbl_80495994@l
-    mulhwu r0, r6, r0
-    lfs f0, lbl_806D73C4(r2)
-    lwz r4, 0x14(r4)
-    srwi r0, r0, 6
-    divwu r0, r3, r0
-    clrlslwi r0, r0, 26, 2
-    lfsx f1, r5, r0
-    fmuls f0, f0, f1
-    fctiwz f0, f0
-    stfd f0, 0x68(r1)
-    lwz r0, 0x6c(r1)
-    add r0, r4, r0
-    stw r0, 0x40(r30)
-    b RivalRun_RivalTactics_L_801367D4
-    RivalRun_RivalTactics_L_801366AC:
-    lwz r3, 0x48(r30)
-    cmpwi r3, 0x0
-    ble RivalRun_RivalTactics_L_80136758
-    subi r0, r3, 0x1
-    addi r3, r1, 0x20
-    stw r0, 0x48(r30)
-    mr r4, r3
-    lfs f0, lbl_806D738C(r2)
-    lfs f1, 0x8(r31)
-    stfs f1, 0x20(r1)
-    stfs f0, 0x24(r1)
-    lfs f0, 0x28(r31)
-    stfs f0, 0x28(r1)
-    bl Vec3_Normalize
-    addi r3, r1, 0x2c
-    addi r4, r1, 0x20
-    bl Vec3_Dot
-    lfs f0, lbl_806D73C8(r2)
-    fcmpo cr0, f1, f0
-    ble RivalRun_RivalTactics_L_80136708
-    li r0, 0x0
-    stw r0, 0x48(r30)
-    b RivalRun_RivalTactics_L_801367D4
-    RivalRun_RivalTactics_L_80136708:
-    lwz r0, 0x44(r30)
-    cmpwi r0, 0x32
-    beq RivalRun_RivalTactics_L_801367D4
-    lfs f0, lbl_806D73BC(r2)
-    fcmpo cr0, f31, f0
-    ble RivalRun_RivalTactics_L_801367D4
-    addi r3, r1, 0x5c
-    addi r4, r1, 0x50
-    addi r5, r1, 0x14
-    addi r6, r1, 0x8
-    bl Terrain_RaycastWall
-    clrlwi. r0, r3, 24
-    bne RivalRun_RivalTactics_L_801367D4
-    lfs f0, 0x5c(r1)
-    stfs f0, 0x28(r30)
-    lfs f0, 0x60(r1)
-    stfs f0, 0x2c(r30)
-    lfs f0, 0x64(r1)
-    stfs f0, 0x30(r30)
-    b RivalRun_RivalTactics_L_801367D4
-    RivalRun_RivalTactics_L_80136758:
-    lwz r3, 0x4(r30)
-    bl CarObject_GetRenderObj
-    li r4, 0x0
-    li r5, 0x0
-    bl RenderObj_UseItem
-    clrlwi. r0, r3, 24
-    beq RivalRun_RivalTactics_L_801367D4
-    li r0, 0x0
-    stw r0, 0x44(r30)
-    bl OSGetTick
-    lis r4, 0x8000
-    lis r6, 0x1062
-    lwz r0, 0xf8(r4)
-    lis r5, lbl_80495994@ha
-    lwz r4, 0x0(r30)
-    addi r6, r6, 0x4dd3
-    srwi r0, r0, 2
-    addi r5, r5, lbl_80495994@l
-    mulhwu r0, r6, r0
-    lfs f0, lbl_806D73C4(r2)
-    lwz r4, 0x14(r4)
-    srwi r0, r0, 6
-    divwu r0, r3, r0
-    clrlslwi r0, r0, 26, 2
-    lfsx f1, r5, r0
-    fmuls f0, f0, f1
-    fctiwz f0, f0
-    stfd f0, 0x68(r1)
-    lwz r0, 0x6c(r1)
-    add r0, r4, r0
-    stw r0, 0x40(r30)
-    RivalRun_RivalTactics_L_801367D4:
-    psq_l f31, 0x88(r1), 0, 0
-    lwz r0, 0x94(r1)
-    lfd f31, 0x80(r1)
-    lwz r31, 0x7c(r1)
-    lwz r30, 0x78(r1)
-    mtlr r0
-    addi r1, r1, 0x90
-    blr
+typedef struct RRRivalInfo {
+    unsigned char pad0[4];
+    float driftBoost;   /* 0x04 */
+    float accelFar;     /* 0x08 */
+    float accelMid;     /* 0x0C */
+    float accelNear;    /* 0x10 */
+    int itemCooldown;   /* 0x14 */
+    int aimFrames;      /* 0x18 */
+    int nearWeight[3];  /* 0x1C */
+    int farWeight[3];   /* 0x28 */
+} RRRivalInfo;
+
+typedef struct RRKartRender {
+    unsigned char pad0[0x24C];
+    int lap;            /* 0x24C */
+} RRKartRender;
+
+static inline int RR_Lap(void *r) {
+    return ((RRKartRender *)r)->lap;
+}
+
+#define RR_INFO(self) ((RRRivalInfo *)(self)->info)
+
+static inline void RivalRun_CopyVec(RRVec3 *dst, RRVec3 *src) {
+    dst->x = src->x;
+    dst->y = src->y;
+    dst->z = src->z;
+}
+
+static inline void RivalRun_SetLane(RRPathFollower *f, int lane) {
+    if (lane >= 0 && lane < 3 && f->lane != lane) {
+        f->lane = lane;
+        f->needsSearch = 1;
+    }
+}
+
+#define RR_MILLISECONDS() (OSGetTick() / (*(unsigned long *)0x800000F8 / 4 / 1000))
+
+static inline float RivalRun_RandF(void) {
+    return ((float *)lbl_80495994)[RR_MILLISECONDS() % 64];
+}
+
+void RivalRun_RivalTactics(RRRivalAI *self) {
+    RRVec3 other;
+    RRVec3 me;
+    RRVec3 side;
+    RRVec3 dir;
+    RRVec3 n;
+    RRVec3 fwd;
+    RRVec3 hit;
+    RRVec3 nrm;
+    float *mtx;
+    float dist;
+    float dot;
+    RRPathFollower *f;
+    int lane;
+    int r;
+
+    if (self->info == 0 || !IsRaceStarted() || self->holdFrames > 0) {
+        return;
+    }
+    if (self->fast) {
+        if (CarObject_ApplyDriftBoost(self->car, 4, ((RRRivalInfo *)self->info)->driftBoost)) {
+            self->fast = 0;
+        }
+    }
+    RivalRun_CopyVec(&self->aim, &self->follower->target);
+    RivalRun_CopyVec(&dir, &self->follower->dir);
+    side.x = dir.z;
+    side.y = dir.y;
+    side.z = -dir.x;
+    if (self->rivalRender == 0) {
+        return;
+    }
+    if (RR_Lap(self->rivalRender) != RR_Lap(CarObject_GetRenderObj(self->car))) {
+        return;
+    }
+    mtx = KartDriver_GetKartRootMtx(CarObject_GetRenderObj(self->car));
+    {
+        float *o = KartDriver_GetKartRootMtx(self->rivalRender);
+        me.x = mtx[3];
+        me.y = mtx[7];
+        me.z = mtx[11];
+        other.x = o[3];
+        other.y = o[7];
+        other.z = o[11];
+    }
+    dist = RivalRun_CalcPathDistance(self->follower, &other, &me);
+    Vec3_Subtract(&other, &me, &dir);
+    Vec3_Normalize(&dir, &n);
+    dot = Vec3_Dot(&dir, &side);
+
+    if (dist > lbl_806D73A4) {
+        self->accelScale = RR_INFO(self)->accelNear;
+    } else if (dist > lbl_806D73A8) {
+        self->accelScale = (dist - lbl_806D73A8) / lbl_806D73AC * (RR_INFO(self)->accelNear - RR_INFO(self)->accelMid) + RR_INFO(self)->accelMid;
+    } else if (dist > lbl_806D73B0) {
+        self->accelScale = RR_INFO(self)->accelMid;
+    } else if (dist > lbl_806D73B4) {
+        self->accelScale = (lbl_806D73A4 + dist) / lbl_806D73AC * (RR_INFO(self)->accelMid - RR_INFO(self)->accelFar) + RR_INFO(self)->accelFar;
+    } else {
+        self->accelScale = RR_INFO(self)->accelFar;
+    }
+
+    {
+        f = self->follower;
+        lane = f->lane;
+        if (dist > lbl_806D73AC || dist < lbl_806D73B8) {
+            if (self->laneCooldown == 0) {
+                /* fakematch (hand): RivalRun_SetLane(f, 1);
+                 * The natural form shares the lane load above with this test
+                 * (cmpwi r3,1); the target reloads 4(f) here, and the lane
+                 * load temp must stay a frontend CSE temp numbered above f
+                 * (regalloc_patterns §59). */
+                if (*(int *)((char *)f + 4) != 1) { f->lane = 1; f->needsSearch = 1; }
+                self->laneCooldown = 120;
+            }
+        } else if (dist > lbl_806D738C) {
+            if (dot > lbl_806D738C && dot < lbl_806D73BC) {
+                if (f->lane == 2) {
+                    lane = f->lane - 1;
+                } else {
+                    lane = f->lane + 1;
+                }
+            }
+            if (dot < 0.0f && dot > lbl_806D73C0) {
+                if (lane == 0) {
+                    lane++;
+                } else {
+                    lane--;
+                }
+            }
+        }
+    }
+    if (self->laneCooldown > 0) {
+        self->laneCooldown--;
+    } else if (lane != self->follower->lane) {
+        RivalRun_SetLane(self->follower, lane);
+        self->laneCooldown = 120;
+    }
+
+    if (*(unsigned char *)&g_raceEnded) {
+        return;
+    }
+    if (self->itemCooldown > 0) {
+        self->itemCooldown--;
+        return;
+    }
+    if (self->item == 0) {
+        if (dist < lbl_806D73C0) {
+            self->item = 0x32;
+        } else if (dist > lbl_806D73BC) {
+            if (dist < lbl_806D73A8) {
+                r = (int)RR_MILLISECONDS() % (RR_INFO(self)->nearWeight[0] + RR_INFO(self)->nearWeight[1] + RR_INFO(self)->nearWeight[2]);
+                if (r < RR_INFO(self)->nearWeight[0]) {
+                    self->item = 0x3E;
+                } else if (r - RR_INFO(self)->nearWeight[0] < RR_INFO(self)->nearWeight[1]) {
+                    self->item = 0x6C;
+                } else {
+                    self->item = 0x3D;
+                }
+            } else {
+                r = (int)RR_MILLISECONDS() % (RR_INFO(self)->farWeight[0] + RR_INFO(self)->farWeight[1] + RR_INFO(self)->farWeight[2]);
+                if (r < RR_INFO(self)->farWeight[0]) {
+                    self->item = 0x3E;
+                } else if (r - RR_INFO(self)->farWeight[0] < RR_INFO(self)->farWeight[1]) {
+                    self->item = 0x6C;
+                } else {
+                    self->item = 0x3D;
+                }
+            }
+        }
+        if (self->item != 0) {
+            {
+                char *slot = RaceContextSlot_GetIfAlive(GetRaceContextPtr(), self->raceSlot);
+                *(int *)(slot + 0x90) = 0;
+            }
+            if (KartMovement_EquipItem(CarObject_GetRenderObj(self->car), self->item)) {
+                self->aimFrames = ((RRRivalInfo *)self->info)->aimFrames;
+            } else {
+                self->item = 0;
+            }
+        }
+    } else if (dist < lbl_806D73BC && dist > lbl_806D73C0) {
+        KartItem_CancelIfNotForced(CarObject_GetRenderObj(self->car));
+        KartItem_CancelAndQueueDefault(CarObject_GetRenderObj(self->car));
+        self->item = 0;
+        self->itemCooldown = ((RRRivalInfo *)self->info)->itemCooldown + (int)(lbl_806D73C4 * RivalRun_RandF());
+    } else if (self->aimFrames > 0) {
+        self->aimFrames--;
+        fwd.x = mtx[2];
+        fwd.y = lbl_806D738C;
+        fwd.z = mtx[10];
+        Vec3_Normalize(&fwd, &fwd);
+        if (Vec3_Dot(&n, &fwd) > lbl_806D73C8) {
+            self->aimFrames = 0;
+        } else if (self->item != 0x32 && dist > lbl_806D73BC) {
+            if (!Terrain_RaycastWall(&other, &me, &hit, &nrm)) {
+                self->aim.x = other.x;
+                self->aim.y = other.y;
+                self->aim.z = other.z;
+            }
+        }
+    } else if (RenderObj_UseItem(CarObject_GetRenderObj(self->car), 0, 0)) {
+        self->item = 0;
+        self->itemCooldown = ((RRRivalInfo *)self->info)->itemCooldown + (int)(lbl_806D73C4 * RivalRun_RandF());
+    }
 }
 
 /* === extracted from auto_RivalRun_CalcPathDis_text === */
@@ -1269,7 +1016,7 @@ extern const float lbl_806D738C;
  */
 
 /* --- forward decls --- */
-asm void RivalRun_CalcPathDistance(void);
+asm float RivalRun_CalcPathDistance(RRPathFollower *f, RRVec3 *a, RRVec3 *b);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -1284,7 +1031,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void RivalRun_CalcPathDistance(void) { /* 0x801367F4 size:0x3B4 */
+asm float RivalRun_CalcPathDistance(RRPathFollower *f, RRVec3 *a, RRVec3 *b) { /* 0x801367F4 size:0x3B4 */
     nofralloc
     stwu r1, -0xb0(r1)
     mflr r0
@@ -1552,7 +1299,6 @@ asm void RivalRun_CalcPathDistance(void) { /* 0x801367F4 size:0x3B4 */
 /* refine if the real prototype matters for header consumers. */
 extern void ClRomTable_PurgeAll();
 extern void CourseEnvironment_Dtor();
-extern void GetRaceContextPtr();
 extern void ItemObjectManager_Reset();
 extern void LakituStart_Dtor();
 extern void MemoryManager_TimedFree();
@@ -1709,7 +1455,6 @@ extern void GetCourseDataPtr();
 extern float GetCourseStartYaw(void);
 extern int GetDisplayBufferIndex(void);
 extern int *GetKartModelNameEntry(int chara, int arg);
-extern void GetRaceContextPtr();
 extern void GetStartPosition(int idx, float *x, float *y, float *z);
 extern void HUD_RegisterOverlay(void *hud, int id, int arg);
 extern void ItemObjectManager_Init();
@@ -1929,11 +1674,9 @@ extern void *CarObject_GetRenderObj(void *car);
 extern void CarObject_Init();
 extern void CarObject_SetPosition();
 extern float GetCourseStartYaw(void);
-extern void GetRaceContextPtr();
 extern void GetStartPosition();
 extern void ItemEffectBus_OrMask(void *bus, unsigned long long mask);
 extern void PathManager_RegisterCarObject();
-extern void RaceContextSlot_GetIfAlive();
 extern void RivalRun_PathFollowerInit();
 
 /* --- extern decls: sda21-referenced data --- */

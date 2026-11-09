@@ -841,10 +841,8 @@ static inline void RYEntry_Draw(RYPair *p, RYEntry *e) {
             float sc;
             for (j = 0; j < 10; j++) {
                 if (e->subs[j].n >= 0) {
-                    float t = (float)e->subs[j].n / 15.0f;
-                    float ssc;
-                    t = lbl_806D8674 - t;
-                    ssc = 0.035f * t;
+                    float t;
+                    float ssc = 0.035f * (t = 1.0f - (float)e->subs[j].n / 15.0f);
                     VObj *b = p->b;
                     fn_8013D660(b, e->subs[j].x, e->subs[j].y);
                     fn_8013D4B0(p->b, t);

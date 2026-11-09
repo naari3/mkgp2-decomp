@@ -32,8 +32,8 @@ static inline float raiseRivalAngle(float angle, float bound, float turn) {
     return angle;
 }
 static inline float normalizeRivalAngle(float angle) {
-    angle=reduceRivalAngle(angle,lbl_806DA488,lbl_806DA484);
-    return raiseRivalAngle(angle,lbl_806DA48C,lbl_806DA484);
+    angle=reduceRivalAngle(angle,3.1415927f,6.2831855f);
+    return raiseRivalAngle(angle,-3.1415927f,6.2831855f);
 }
 static inline unsigned char findRival(RivalAvoidanceState *self,RivalAvoidanceCandidate &candidate) {
     AIPairRecord *tracking=&lbl_806793D8[self->kartId];
@@ -75,12 +75,12 @@ struct RivalProbeOffset {
 extern "C" float AI_CalcRivalAvoidance(RivalAvoidanceState *self) {
     const char *constants=lbl_803BD920;
     RivalPathEntry *entry=PathManager_GetEntrySubStruct(g_pathSystem,self->pathId);
-    if(!entry || entry->valid<0) return lbl_806DA42C;
+    if(!entry || entry->valid<0) return 0.0f;
     self->avoiding=0;
     RivalAvoidanceCandidate candidate;
     unsigned char found=findRival(self,candidate);
-    if(!found) return lbl_806DA42C;
-    if(2.7e+05f<candidate.distance || candidate.distance<192.0f) return lbl_806DA42C;
+    if(!found) return 0.0f;
+    if(2.7e+05f<candidate.distance || candidate.distance<192.0f) return 0.0f;
     self->avoiding=1;
     float amount=rivalAvoidanceAmount(candidate.distance,192.0f);
     if(!lbl_806D1950) { lbl_806D194C=0.7f*lbl_806D1934; lbl_806D1950=1; }
