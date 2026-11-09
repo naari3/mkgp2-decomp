@@ -830,7 +830,7 @@ function: `lwzu r0,4(rN)` on a table field comes from using
 `table[mode].id` directly at every use (CSE pointer temp), not from a named
 pointer local. Rule: `shared-local-into-inline`.
 
-## 41. `slwi; addi rI,rI,OFF; lhzx rBase,rI` (member offset added to the index): add the offset after the index (fn_801BDB60, AI_CalcLapSpeedBonus, 11-09)
+## 42. `slwi; addi rI,rI,OFF; lhzx rBase,rI` (member offset added to the index): add the offset after the index (fn_801BDB60, AI_CalcLapSpeedBonus, 11-09)
 
 Target folds a constant into the index register and loads indexed; ours forms
 `add rP,rBase,rI; lhz OFF(rP)`. Every member/array spelling (`name.c[i + 1]`,
