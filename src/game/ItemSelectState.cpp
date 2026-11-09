@@ -181,13 +181,10 @@ static inline void SetRefillPosition(RefillSprite *sprite, float x, float y) {
     sprite->y = y;
 }
 extern "C" void fn_802386E0(ItemSelectState *self) {
-    void *playerData = g_playerData;
-    const int *resources = choiceResources;
-    const float *xs = choiceX;
-    const float *ys = choiceY;
+    void *playerData;
     while (self->field14c < 3) {
         int slot = self->field14c;
-        CompleteChoice((RefillChoice *)self->iconArray, slot, resources, g_playerData);
+        CompleteChoice((RefillChoice *)self->iconArray, slot, choiceResources, playerData = g_playerData);
         RefillChoice *choice;
         choice = (RefillChoice *)self->iconArray;
         int column = ChoiceColumn(choice);
@@ -200,7 +197,7 @@ extern "C" void fn_802386E0(ItemSelectState *self) {
             slots[self->field14c * 3 + 0x59]), 0);
         SpriteAnimParamBlock_SetAnimParamCached(self->groups[self->field14c + 3], 0x13b9, item);
         SetRefillPosition(((RefillGroup *)self->groups[self->field14c + 3])->sprite,
-            xs[column], ys[row]);
+            choiceX[column], choiceY[row]);
         SpriteHandle_SetActiveFlag(self->itemSprites[row * 11 + column], 0);
         int oldResource = 0x1424;
         if (self->field14c == 1) oldResource = 0x1423;

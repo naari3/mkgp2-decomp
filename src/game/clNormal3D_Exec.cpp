@@ -77,6 +77,19 @@ static inline void Request(Normal3D *self, Normal3D *source) {
             HSD_JObjReqAnimByFlags(*cursor, 0x7FF, frame);
     }
 }
+static inline void RequestSelf(Normal3D *self) {
+    JObj **cursor;
+    float frame;
+    int i;
+    int count;
+    cursor = self->table;
+    frame = self->frame;
+    count = self->count;
+    if (cursor != 0) {
+        for (i = 0; i < count; ++cursor, ++i)
+            HSD_JObjReqAnimByFlags(*cursor, 0x7FF, frame);
+    }
+}
 static inline bool HasDObj(JObj *node) { return !(node->flags & 0x4020); }
 static inline void Animate(JObj **table, int count) {
     if (table != 0) {
@@ -176,6 +189,17 @@ static inline void RunAnimation(Normal3D *self) {
         HSD_AObjInvokeCallBacks();
     }
 }
+static inline void RestoreAnimationState(Normal3D *self) {
+        int i;
+        for (i=0;i<self->count;i++) {
+            JObj *j=self->table[i];
+            if (j) HSD_JObjClearFlags(j,0x20000);
+        }
+        i=0;
+        self->pad00[1]=i;
+        Quat *rotation=self->savedRotation;
+        for (;i<self->count;rotation++,i++) SetRotation(self->table[i],rotation);
+}
 extern "C" int clNormal3D_Exec(Normal3D *self)
 {
     if (!self->root) return 0;
@@ -189,7 +213,7 @@ extern "C" int clNormal3D_Exec(Normal3D *self)
     AnimRow *row=self->row;
     if (!First(row->joint) && !First(row->material) && !First(row->shape)) return 1;
     if (!self->pad00[1]) {
-        { ScopedTimer timer(11); Request(self,self); }
+        { ScopedTimer timer(11); RequestSelf(self); }
         {
             ScopedTimer timer(7);
             JObj **table=self->table;
@@ -201,17 +225,9 @@ extern "C" int clNormal3D_Exec(Normal3D *self)
             }
         }
     } else if (self->savedRotation) {
-        int i;
-        for (i=0;i<self->count;i++) {
-            JObj *j=self->table[i];
-            if (j) HSD_JObjClearFlags(j,0x20000);
-        }
-        i=0;
-        self->pad00[1]=i;
-        Quat *rotation=self->savedRotation;
-        for (;i<self->count;rotation++,i++) SetRotation(self->table[i],rotation);
+        RestoreAnimationState(self);
         { ScopedTimer timer(8); Attach(self,self->row); }
-        { ScopedTimer timer(11); Request(self,self); }
+        { ScopedTimer timer(11); RequestSelf(self); }
         {
             ScopedTimer timer(7);
             JObj **table=self->table;

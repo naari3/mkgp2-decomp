@@ -31,6 +31,10 @@ below say the same thing.
 - 2026-11-09 22:55Z (n3 structure): TU merge, 4 -> 1: CoinChallengeRender /
   CoinChallengeUpdate / anon_80214B3C / CoinChallengeInit are now
   `game/CoinChallenge.cpp` (clCGameYI, GC/2.6 `-inline deferred -RTTI on -rostr`).
+- 2026-11-10 00:10Z (n3 regfix): `tools/regfix.py diag` hint for two saved
+  GPRs swapped between a pointer local and a shared loop counter
+  (regalloc_patterns §73) or between two split-off temps (§57/§72); checked on
+  the pre-match fn_8018E538
 - 2026-11-09 23:59Z (n3 regfix): `tools/regfix.py diag` lists, for every off
   vreg (up to 8), its neighbours split into coloured-before/after with their
   registers and says who holds the wanted register

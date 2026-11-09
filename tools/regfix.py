@@ -2337,6 +2337,30 @@ def shape_hints(a, rep, src_text):
                        "value (e.g. `virtual int Update()`) and falls off the end, so r3 stays live to the epilogue. "
                        "Declare the non-void return type with no `return` (base and every override for a virtual); "
                        "regalloc_patterns 66.")
+        ph_ = {v: str(g.phys.get(v)) for v in cl["gpr"]["bad"]}
+        swaps = [(x, y) for x in cl["gpr"]["bad"] for y in cl["gpr"]["bad"]
+                 if str(x) < str(y) and ph_[x] == str(w.get(y)) and ph_[y] == str(w.get(x))
+                 and all(re.search(r"(\d+)$", r) and int(re.search(r"(\d+)$", r).group(1)) >= 14 for r in (ph_[x], ph_[y]))]
+        for x, y in swaps[:3]:
+            nx, ny = str(g.names.get(x) or ""), str(g.names.get(y) or "")
+            named = [n for n in (nx, ny) if n and not n.startswith("@")]
+            fors = re.findall(r"\bfor\s*\(\s*(?:int\s+)?(\w+)\s*=", body)
+            shared = sorted({n for n in fors if fors.count(n) >= 2})
+            ctr = [n for n in named if n in shared] or (shared if len(named) == 1 else [])
+            if ctr and named and [n for n in named if n not in ctr]:
+                other = [n for n in named if n not in ctr]
+                out.append(f"saved registers of `{ctr[0]}` (a counter shared by several loops) and `{other[0]}` are swapped "
+                           f"({ph_[x]}/{ph_[y]}): the later range of the counter is a split-off temp and a named local is "
+                           f"always coloured after it. Spell the expression assigned to `{other[0]}` out once more next to "
+                           f"its use (`q = &o->arr[i]; if (o->arr[i].x ... q->y)`) so the address becomes a CSE temp "
+                           f"(numbered above split temps), keep the shared counter, and if the first loop moves declare "
+                           f"the counter before the pointer; regalloc_patterns 73.")
+            elif not named or len(named) == 1:
+                out.append(f"saved registers {ph_[x]}/{ph_[y]} are swapped between {x}({nx or 'temp'}) and {y}({ny or 'temp'}): "
+                           "if both are later ranges of reused variables (split-off temps), ranges of ONE variable are "
+                           "created last range first, ranges of two variables follow declaration order (first declared "
+                           "first). A value can be turned into a second range with a dummy first assignment under "
+                           "`#pragma opt_propagation off`; regalloc_patterns 57 and 72.")
         if any(n >= 14 for n in nums) and re.search(r"\bend\s*\(\s*\)|\bbegin\s*\(\s*\)|\bsentinel\b|&\s*\w+(?:->|\.)head\b", src_text):
             out.append("saved GPRs are off around a list walk: the sentinel `&head` hoisted by the backend takes the newest "
                        "saved register. Name it as a local of the inline (regalloc_patterns 52) or build begin() as "
