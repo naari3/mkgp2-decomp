@@ -1,8 +1,8 @@
 diff --git a/src/game/Scene_8014E0C4.cpp b/src/game/Scene_8014E0C4.cpp
-index aaf185c..d30ffd1 100644
+index 7ad70094..423b902b 100644
 --- a/src/game/Scene_8014E0C4.cpp
 +++ b/src/game/Scene_8014E0C4.cpp
-@@ -724,13 +724,13 @@ void fn_80140810(void *p, int flag);
+@@ -718,13 +718,13 @@ void fn_80140810(void *p, int flag);
  extern void __destroy_arr(void *, void *, unsigned long, unsigned long);
  void fn_80157940(struct LIter *ret, void *list, struct LIter *b, struct LIter *e);
  void fn_80157B38(struct LIter *ret, void *list, struct LIter *b, struct LIter *e);
@@ -22,7 +22,7 @@ index aaf185c..d30ffd1 100644
  extern unsigned int lbl_806D80D0;
  extern unsigned int lbl_806D8248;
  extern unsigned int lbl_806D824C;
-@@ -853,8 +853,10 @@ extern unsigned int lbl_806D8388;
+@@ -846,8 +846,10 @@ extern unsigned int lbl_806D8388;
  void fn_80157EA8(void *l);
  class PairObj : public VObj {
  public:
@@ -33,7 +33,7 @@ index aaf185c..d30ffd1 100644
  };
  
  struct PairPos {
-@@ -865,18 +867,21 @@ struct PairPos {
+@@ -858,18 +860,21 @@ struct PairPos {
  struct VObjPair {
      PairObj *a;
      PairObj *b;
@@ -58,7 +58,7 @@ index aaf185c..d30ffd1 100644
      void Draw() {
          if (mode == 1) {
              int k;
-@@ -910,22 +915,52 @@ public:
+@@ -903,22 +908,52 @@ public:
      virtual void Draw();
  };
  
@@ -116,7 +116,7 @@ index aaf185c..d30ffd1 100644
      CourseFx *obj1A8;
      void *obj1AC;
      unsigned char on1B0;
-@@ -1127,7 +1162,7 @@ void fn_80153ED0(VObj *p);
+@@ -1117,7 +1152,7 @@ void fn_80153ED0(VObj *p);
  CourseScene *fn_80153F08(CourseScene *self, short flag);
  struct ObjListSetFull;
  ObjListSetFull *fn_801540E0(ObjListSetFull *o, short flag);
@@ -125,7 +125,7 @@ index aaf185c..d30ffd1 100644
  void fn_80154FB0(struct SprScene *self, unsigned int layer, unsigned int id, unsigned int flags, float x, float y, float sx, float sy, float rot, float r, float g, float b, float a);
  unsigned char fn_80155398(StateObj *o);
  void fn_801553AC(CourseScene *self);
-@@ -1205,7 +1240,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
+@@ -1190,7 +1225,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
  
  
  
@@ -133,7 +133,7 @@ index aaf185c..d30ffd1 100644
  
  
  
-@@ -1288,9 +1322,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned
+@@ -1258,9 +1292,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned
  
  
  
@@ -143,7 +143,22 @@ index aaf185c..d30ffd1 100644
  
  
  
-@@ -5185,891 +5216,6 @@ extern "C" ObjListSetFull *fn_801540E0(ObjListSetFull *o, short flag) {
+@@ -1768,6 +1799,14 @@ struct SprList {
+ struct SprIter {
+     SprNodeBase *n;
+ };
++struct SprScene {
++    char pad0[0xC];
++    SprList cache;
++    SprList layers[2];
++    void Draw(unsigned int layer, unsigned int id, unsigned int flags, float x, float y, float sx, float sy, float rot, float r, float g, float b, float a);
++};
++
++
+ 
+ struct SprCacheVal {
+     unsigned int key;
+@@ -5227,889 +5266,300 @@ extern "C" ObjListSetFull *fn_801540E0(ObjListSetFull *o, short flag) {
      return o;
  }
  
@@ -1029,22 +1044,6 @@ index aaf185c..d30ffd1 100644
 -    mtlr r0
 -    addi r1, r1, 0x80
 -    blr
--}
--
--
- struct SprNodeBase {
-     SprNodeBase *prev;
-     SprNodeBase *next;
-@@ -6090,6 +5236,307 @@ struct SprIter {
-     SprNodeBase *n;
- };
- 
-+struct SprScene {
-+    char pad0[0xC];
-+    SprList cache;
-+    SprList layers[2];
-+    void Draw(unsigned int layer, unsigned int id, unsigned int flags, float x, float y, float sx, float sy, float rot, float r, float g, float b, float a);
-+};
 +
 +inline VObjPair::VObjPair() {
 +    int k;
@@ -1055,7 +1054,8 @@ index aaf185c..d30ffd1 100644
 +    t = 0.0f;
 +    for (k = 0; k < 5; k++) {
 +        on[k] = 1;
-+        pos[k] = lbl_80366E4C[k];
++        pos[k].x = ((const PairPos *)lbl_80366E4C)[k].x;
++        pos[k].y = ((const PairPos *)lbl_80366E4C)[k].y;
 +        vel[k] = 0.0f;
 +    }
 +    aOn = 1;
@@ -1094,9 +1094,9 @@ index aaf185c..d30ffd1 100644
 +            self->keyT = 0.0f;
 +        }
 +    }
-+    self->cam = (SceneCam *)fn_8014E028(self->list, lbl_80366E88[self->keyIdx].phase);
-+    self->lobjs = fn_8014E004(self->list, lbl_80366E88[self->keyIdx].phase);
-+    self->obj20 = fn_8014DD5C(self->list, lbl_80366E88[self->keyIdx].phase);
++    self->cam = (SceneCam *)fn_8014E028(self->list, lbl_80366E88[self->keyIdx].id);
++    self->lobjs = fn_8014E004(self->list, lbl_80366E88[self->keyIdx].id);
++    self->obj20 = fn_8014DD5C(self->list, lbl_80366E88[self->keyIdx].id);
 +    if (self->cam != 0) {
 +        CamAnim_SetFrame((CourseCamAnim *)self->cam, self->keyT);
 +        CamAnim_Tick((CourseCamAnim *)self->cam);
@@ -1336,14 +1336,12 @@ index aaf185c..d30ffd1 100644
 +    if (self->t >= 2100.0f) {
 +        self->state = 9;
 +    }
-+}
+ }
 +#pragma use_lmw_stmw reset
-+
-+
- struct SprCacheVal {
-     unsigned int key;
-     int ref;
-@@ -6118,12 +5565,6 @@ struct SprInst {
+ 
+ 
+ struct SprDraw {
+@@ -6128,12 +5578,6 @@ struct SprInst {
      ~SprInst();
  };
  
@@ -1354,13 +1352,13 @@ index aaf185c..d30ffd1 100644
 -    void Draw(unsigned int layer, unsigned int id, unsigned int flags, float x, float y, float sx, float sy, float rot, float r, float g, float b, float a);
 -};
  
- static inline void SprCache_Insert(SprList *l, SprCacheVal *v) {
+ static inline void SprList_PushBack(SprList *l, SprInst *h) {
      SprIter ret;
 diff --git a/src/game/Scene_8014E0C4_rodata.inc b/src/game/Scene_8014E0C4_rodata.inc
-index d9bc339..75efa32 100644
+index 36506423..3aa40792 100644
 --- a/src/game/Scene_8014E0C4_rodata.inc
 +++ b/src/game/Scene_8014E0C4_rodata.inc
-@@ -492,13 +492,10 @@ extern const char lbl_80364B64[] = "op_demo_wario_joint";
+@@ -295,13 +295,10 @@ extern const char lbl_80364B64[] = "op_demo_wario_joint";
  extern const char lbl_80364B78[] = "op_demo_monster_joint";
  extern const char lbl_80364B90[] = "op_demo_pacman_joint";
  extern const char lbl_80364BA8[] = "DK_demo_donkey_null_joint";
@@ -1378,59 +1376,16 @@ index d9bc339..75efa32 100644
  };
  static const unsigned int lbl_80364C50[30] = {
      0x43700000, 0x44900000, 0x43700000, 0x40000000, 0x40000000, 0x00000000,
-@@ -1103,15 +1100,15 @@ static const unsigned int lbl_80366E34[3] = {
- static const unsigned int lbl_80366E40[3] = {
-     0x00000000, 0x00000000, 0x00000000,
- };
--static const unsigned int lbl_80366E4C[41] = {
--    0x41A00000, 0x41F00000, 0x43A00000, 0x42200000, 0x440C0000, 0x41A00000,
--    0x41200000, 0x43DC0000, 0x44110000, 0x43E10000, 0x40C00000, 0x41000000,
--    0x41200000, 0x40A00000, 0x40E00000, 0x43480000, 0x00000000, 0x42C80000,
--    0x00000001, 0x42F00000, 0x00000002, 0x42700000, 0x00000003, 0x42700000,
--    0x00000004, 0x42700000, 0x00000005, 0x43700000, 0x00000006, 0x43960000,
--    0x00000007, 0x43340000, 0x00000008, 0x43700000, 0x00000009, 0x444E5F73,
--    0x74616469, 0x756D5F73, 0x686F7274, 0x5F612E64, 0x61740000,
-+static const PairPos lbl_80366E4C[5] = {
-+    {20.0f, 30.0f}, {320.0f, 40.0f}, {560.0f, 20.0f}, {10.0f, 440.0f}, {580.0f, 450.0f},
- };
-+static const float lbl_80366E74[5] = {6.0f, 8.0f, 10.0f, 5.0f, 7.0f};
-+static const CourseCamKey lbl_80366E88[10] = {
-+    {200.0f, 0}, {100.0f, 1}, {120.0f, 2}, {60.0f, 3}, {60.0f, 4},
-+    {60.0f, 5}, {240.0f, 6}, {300.0f, 7}, {180.0f, 8}, {240.0f, 9},
-+};
-+static const char lbl_80366ED8[] = "DN_stadium_short_a.dat";
- static const CourseModeInfo lbl_80366EF0[21] = {
-     {0x1, -1, 0, 0, {0, 0}, 0x0, 0x0, lbl_806D7F78},
-     {0x78, 0xD, 1, 0, {0, 0}, 0x0, 0x0, lbl_806D7F80},
-@@ -1199,14 +1196,11 @@ extern const AttractEntry lbl_80367488[12] = {
-     {16, 0, 0},
- };
- extern const char lbl_80367518[] = "clCSSceneAttract";
--extern const unsigned int lbl_8036752C[34] = {
--    0x636C5363, 0x656E6549, 0x6E746572, 0x66616365, 0x00000000, 0x646B5F64,
--    0x656D6F5F, 0x6D61702E, 0x64617400, 0x4D525F68, 0x69676877, 0x61795F44,
--    0x454D4F5F, 0x412E6461, 0x74000000, 0x68616C61, 0x74696F6E, 0x2E646174,
--    0x00000000, 0x4D525F68, 0x69676877, 0x61795F73, 0x756E5F6A, 0x6F696E74,
--    0x00000000, 0x63726561, 0x6D5F6C2E, 0x64617400, 0x6566665F, 0x706C6174,
--    0x655F6372, 0x65616D5F, 0x732E6461, 0x74000000,
-+extern const unsigned int lbl_8036752C[25] = {
-+    0x636C5363, 0x656E6549, 0x6E746572, 0x66616365, 0x00000000, 0x646B5F64, 0x656D6F5F, 0x6D61702E, 0x64617400, 0x4D525F68, 0x69676877, 0x61795F44, 0x454D4F5F, 0x412E6461, 0x74000000, 0x68616C61, 0x74696F6E, 0x2E646174, 0x00000000, 0x4D525F68, 0x69676877, 0x61795F73, 0x756E5F6A, 0x6F696E74, 0x00000000,
- };
-+static const char lbl_80367590[] = "cream_l.dat";
-+static const char lbl_8036759C[] = "eff_plate_cream_s.dat";
- static const unsigned int lbl_803675B4[4] = {
-     0x4D41494E, 0x20204244, 0x20494420, 0x25730000,
- };
 diff --git a/tools/extab_user_renames.json b/tools/extab_user_renames.json
-index 6035a82..b9b54ba 100644
+index 62fbfef5..142d975e 100644
 --- a/tools/extab_user_renames.json
 +++ b/tools/extab_user_renames.json
-@@ -5259,7 +5259,8 @@
-     "__ct__11StatusSceneFv": "fn_8014F3D8",
-     "__vt__9ModeScene": "lbl_803FE0C8",
-     "__vt__11StatusScene": "lbl_8048FD98",
--    "__dt__9ModeSceneFv": "dtor_8007D0D4"
-+    "__dt__9ModeSceneFv": "dtor_8007D0D4",
+@@ -5741,7 +5741,8 @@
+     "__vt__10TextPanelC": "lbl_8048FFE8",
+     "__ct__11TextManagerFv": "fn_80149214",
+     "__dt__11TextManagerFv": "dtor_800869D0",
+-    "@47": "lbl_80367368"
++    "@47": "lbl_80367368",
 +    "__ct__7PairObjFPCci": "fn_8013D800"
    },
    "src/game/RaceHud_80147470.cpp": {
