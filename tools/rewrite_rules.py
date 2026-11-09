@@ -99,10 +99,17 @@ def canonical_rules(rid) -> list:
 
 
 def load_hits() -> list[dict]:
+    live = load_jsonl(HITS)
+    landed = {(h.get("fn"), r) for h in live if h.get("outcome") == "landed"
+              for r in canonical_rules(h.get("rule_id"))}
     out = []
-    for h in load_jsonl(BACKFILL) + load_jsonl(HITS):
-        for rid in canonical_rules(h.get("rule_id")):
-            out.append(dict(h, rule_id=rid))
+    for src, rows in (("backfill", load_jsonl(BACKFILL)), ("live", live)):
+        for h in rows:
+            for rid in canonical_rules(h.get("rule_id")):
+                # a landing logged live is also in evidence -> backfill: count it once
+                if src == "backfill" and h.get("tool") == "history" and (h.get("fn"), rid) in landed:
+                    continue
+                out.append(dict(h, rule_id=rid))
     return out
 
 
