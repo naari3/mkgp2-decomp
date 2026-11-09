@@ -411,3 +411,29 @@ own_data batches (same thread): batch 1+2 tried the 39 largest candidates that w
 | ItemEffectBus, RaceHud_80147470, CardTaskChecks, CardRW_TestTopMenu_Page, AI_GetItemList, RaceScene_Init, Scene_80164614, Scene_8014E0C4, NetDiag_PacketRatioPage | TU already has that section; the new run is adjacent or split: extend the range by hand, objects in address order |
 | VSMode_FrameUpdate, ItemHitRegistry, fn_801F9628, CollisionFile_Load, FlowDispatcher_ScopedTimer, clFlowItemSelect_Init, anon_8020F44C, fn_801807E0, CardCreditFlow, PushPrompt | typed / struct declarations in the TU (data2c emits words): hand-type the objects |
 | 63 smaller candidates (8.7 KB in all, `own_data.py list`) | not tried |
+
+## shapesweep passes 2026-11-09 (inline-structure search thread)
+
+`tools/shapesweep.py` (beam search over inline helper / temp / accumulate /
+getter / setter shapes; `batch` mode). Hits per pass:
+
+| pass | targets | fns | hits |
+| --- | --- | --- | --- |
+| 1 | >= 99%, all moves | 77 | 2 landed: fn_80231D50 (float literal into a local), CardRegister_Session_Tick (`flag = x != 1` local, TU Matching) |
+| 2 | 97-100%, opcode-identical (register-only) diffs, mwccdbg ranking | 116 | 0 |
+| 3 | 97-100%, the 34 with opcode diffs, all moves | 34 | 0 |
+
+Stopped after two zero-hit passes. Best partial results (not landed, sources in
+/mnt/project-files/setup/shapesweep/):
+
+- `Sci2Card_BuildItemGetReceiptLine` 98.80 -> 99.47: wrap `fn_801D5DE8(player) - count`
+  in a two-level inline. 7 rows are left: `ordinary` (target r25) and `remaining` (target r23) are swapped.
+  Decl order (2000 orders) and statement order make no difference. File: Sci2Card_BuildItemGetReceiptLine_99.47.c
+- `fn_8021DAB8` 100 -> 8 diff lines: `Id(isJapanese())` on both calls plus a layered helper on `3.0f * x14`. File: fn_8021DAB8_8lines.cpp
+- `AI_CalcRivalAvoidance` 122 -> 74, `KartPhysics_ApplyCollisionForce` 70 -> 50,
+  `PhysicsState_WallCollisionCheck` 118 -> 90, `fn_801826F8` 190 -> 115 (shape helpers; these read as fakematches as they stand).
+- `fn_8019EB9C`: 12 -> 9 lines with opt_propagation off and 30 -> 20 without a pragma. A setter with
+  permuted args, a getter and a helper that returns through a local changed nothing.
+
+Lesson: both hits were "hoist a constant or a comparison into a local". On register-only
+diffs, the inline-argument-order moves alone did not reach 100 in this pass.
