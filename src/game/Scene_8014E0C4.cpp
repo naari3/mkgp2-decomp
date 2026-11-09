@@ -1164,7 +1164,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; void *f13; unsigned int f14; unsigned int f15; void *f16; unsigned int f17; void *f18; unsigned int f19; unsigned int f20; void *f21; } extab_fn_801500F4 = { 0x300A0000, 0x00000060, 0x00050038, 0x00000094, 0x00000030, 0x000000D4, 0x00000038, 0x000000DC, 0x00090044, 0x00000120, 0x000C0038, 0x00000000, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001D, 0x00000000, (void *)&dtor_801577D4, 0x0A80001C, (void *)&MemoryManager_Free, 0x8680001D, 0x00000000, (void *)&dtor_801577D4 };
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; void *f9; unsigned int f10; void *f11; unsigned int f12; void *f13; } extab_fn_801502AC = { 0x380A0000, 0x0000006C, 0x00000020, 0x00000198, 0x00000028, 0x000001C8, 0x00000030, 0x00000000, 0x8A800019, (void *)&MemoryManager_TimedFree, 0x8A80001A, (void *)&MemoryManager_TimedFree, 0x8A800019, (void *)&MemoryManager_TimedFree };
 
 
@@ -1234,9 +1233,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801500F4 = {
-    (void *)&fn_801500F4, 0x000001B8, (void *)&extab_fn_801500F4
-};
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801502AC = {
     (void *)&fn_801502AC, 0x00000370, (void *)&extab_fn_801502AC
 };
@@ -1294,6 +1290,10 @@ struct Panel44 {
     char pad[0x44];
 };
 
+
+struct TextPanelIds {
+    int id[4];
+};
 
 #include "src/game/Scene_8014E0C4_rodata.inc"
 
@@ -3586,128 +3586,65 @@ extern "C" void fn_80150004(TextPanel *self) {
     }
 }
 
-extern "C" asm void fn_801500F4(void) { /* 0x801500F4 size:0x1B8 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    lis r7, lbl_8048FF80@ha
-    lis r6, lbl_8048FFE8@ha
-    stw r0, 0x34(r1)
-    addi r0, r6, lbl_8048FFE8@l
-    lis r8, lbl_80363D30@ha
-    stmw r26, 0x18(r1)
-    mr r29, r3
-    addi r3, r7, lbl_8048FF80@l
-    addi r31, r8, lbl_80363D30@l
-    mr r27, r4
-    mr r30, r5
-    stw r3, 0x0(r29)
-    stw r0, 0x0(r29)
-    lwz r5, 0x3638(r31)
-    lwz r4, 0x363c(r31)
-    lwz r3, 0x3640(r31)
-    lwz r0, 0x3644(r31)
-    stw r5, 0x8(r1)
-    stw r4, 0xc(r1)
-    stw r3, 0x10(r1)
-    stw r0, 0x14(r1)
-    bl fn_80121210
-    li r0, 0x0
-    li r3, 0x30
-    stb r0, 0x4(r29)
-    stw r0, 0x8(r29)
-    bl Alloc
-    mr. r26, r3
-    beq fn_801500F4_L_80150188
-    slwi r0, r27, 2
-    addi r4, r1, 0x8
-    lwzx r4, r4, r0
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_InitWithAnim
-    fn_801500F4_L_80150188:
-    stw r26, 0x8(r29)
-    lwz r3, 0x8(r29)
-    cmplwi r3, 0x0
-    beq fn_801500F4_L_801501A0
-    li r0, 0x7
-    stw r0, 0x4(r3)
-    fn_801500F4_L_801501A0:
-    lwz r0, 0x8(r29)
-    cmplwi r0, 0x0
-    bne fn_801500F4_L_801501B4
-    li r0, 0x1
-    stb r0, 0x4(r29)
-    fn_801500F4_L_801501B4:
-    li r3, 0xff
-    li r4, 0xff
-    li r5, 0xff
-    li r6, 0x0
-    bl fn_8002CFB8
-    li r3, 0x470
-    bl FUN_8003b120
-    mr. r28, r3
-    beq fn_801500F4_L_801501F8
-    lis r4, fn_80149214@ha
-    lis r5, dtor_800869D0@ha
-    addi r4, r4, fn_80149214@l
-    li r6, 0x230
-    addi r5, r5, dtor_800869D0@l
-    li r7, 0x2
-    bl __construct_new_array
-    mr r28, r3
-    fn_801500F4_L_801501F8:
-    stw r28, 0xc(r29)
-    li r0, 0x0
-    lwz r3, 0xc(r29)
-    stw r0, 0x18(r3)
-    lwz r3, 0xc(r29)
-    stw r0, 0x248(r3)
-    bl fn_80293BBC
-    mr r28, r3
-    lwz r3, 0xc(r29)
-    addi r4, r31, 0x3884
-    addi r5, r28, 0x18
-    crxor 6, 6, 6
-    bl TexMgr_SetTexture
-    lwz r3, 0xc(r29)
-    addi r4, r31, 0x3894
-    addi r5, r28, 0x2c
-    addi r3, r3, 0x230
-    crxor 6, 6, 6
-    bl TexMgr_SetTexture
-    stw r30, 0x10(r29)
-    li r0, 0x0
-    cmpwi r30, 0x1
-    stw r0, 0x14(r29)
-    beq fn_801500F4_L_80150280
-    bge fn_801500F4_L_80150268
-    cmpwi r30, 0x0
-    bge fn_801500F4_L_80150274
-    b fn_801500F4_L_80150294
-    fn_801500F4_L_80150268:
-    cmpwi r30, 0x3
-    bge fn_801500F4_L_80150294
-    b fn_801500F4_L_8015028C
-    fn_801500F4_L_80150274:
-    lfs f0, lbl_806D8064(r2)
-    stfs f0, 0x18(r29)
-    b fn_801500F4_L_80150294
-    fn_801500F4_L_80150280:
-    lfs f0, lbl_806D8068(r2)
-    stfs f0, 0x18(r29)
-    b fn_801500F4_L_80150294
-    fn_801500F4_L_8015028C:
-    lfs f0, lbl_806D8068(r2)
-    stfs f0, 0x18(r29)
-    fn_801500F4_L_80150294:
-    mr r3, r29
-    lmw r26, 0x18(r1)
-    lwz r0, 0x34(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+struct TextManager {
+    char pad0[0x18];
+    int visible;
+    char pad1C[0x230 - 0x1C];
+    TextManager();
+    ~TextManager();
+};
+
+
+
+class TextPanelC : public SceneBase {
+public:
+    virtual void _keyTextPanelC();
+    TextPanelC(int which, int state);
+    unsigned char done;
+    SceneSprite *sprite;
+    TextManager *text;
+    int state;
+    int timer;
+    float alpha;
+};
+
+#pragma use_lmw_stmw on
+TextPanelC::TextPanelC(int which, int st) {
+    TextPanelIds ids = TextPanelSpriteIds();
+    char *info;
+
+    fn_80121210();
+    done = 0;
+    sprite = 0;
+    sprite = new SceneSprite(ids.id[which], 1, 0);
+    if (sprite != 0) {
+        sprite->mode = 7;
+    }
+    if (sprite == 0) {
+        done = 1;
+    }
+    fn_8002CFB8(0xFF, 0xFF, 0xFF, 0);
+    text = new TextManager[2];
+    text[0].visible = 0;
+    text[1].visible = 0;
+    info = fn_80293BBC();
+    TexMgr_SetTexture(&text[0], (const char *)lbl_803675B4, info + 0x18);
+    TexMgr_SetTexture(&text[1], (const char *)lbl_803675C4, info + 0x2C);
+    state = st;
+    timer = 0;
+    switch (st) {
+    case 0:
+        alpha = 0.0f;
+        break;
+    case 1:
+        alpha = 1.0f;
+        break;
+    case 2:
+        alpha = 1.0f;
+        break;
+    }
 }
+#pragma use_lmw_stmw reset
 
 extern "C" asm void fn_801502AC(void) { /* 0x801502AC size:0x370 */
     nofralloc

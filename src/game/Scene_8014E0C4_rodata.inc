@@ -897,9 +897,10 @@ static const int lbl_80367284[48] = {
 static const Vec3R lbl_80367344 = {0.0f, 0.0f, 0.0f};
 static const Vec3R lbl_80367350 = {0.0f, 0.0f, -1.0f};
 static const Vec3R lbl_8036735C = {0.0f, 0.0f, 0.0f};
-static const unsigned int lbl_80367368[4] = {
-    0x0000013C, 0x0000013A, 0x000000DA, 0x000000D9,
-};
+static inline TextPanelIds TextPanelSpriteIds() {
+    TextPanelIds ids = {{316, 314, 218, 217}};
+    return ids;
+}
 static const unsigned int lbl_80367378[48] = {
     0x43D90000, 0x42180000, 0x44028000, 0x42340000, 0x43DF0000, 0x42180000,
     0x43F70000, 0x42240000, 0x43D90000, 0x42180000, 0x44028000, 0x42340000,

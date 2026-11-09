@@ -1,0 +1,1435 @@
+# c24_scene_fn_80154304_partial
+
+Source: Codex worker c24_a21_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+Best natural C++ partial: 99.4328%, 3244 B. Original r1 draft adapted to current TU while preserving existing matched bodies and DemoPhase.id spelling. Three approaches: block-local cache, function-scope cache (best), inline cache helper + named event zero. Remaining real differences: event-table pointer addi is scheduled before lfs f31; cache spr/n2 roles remain r26/r27 vs target r28/r31 (end sentinel r25 becomes correct in best). Other printed identical instruction mismatches are synthetic R_PPC_NONE pool label boundaries. Not promoted; original asm retained. The following patch is relative to the verified fn_801500F4 conversion snapshot. PairObj ctor bridge __ct__7PairObjFPCci -> fn_8013D800 is needed for this draft only; NOT added to final renames.
+
+```diff
+--- a/src/game/Scene_8014E0C4.cpp
++++ b/src/game/Scene_8014E0C4.cpp
+@@ -718,13 +718,13 @@
+ extern void __destroy_arr(void *, void *, unsigned long, unsigned long);
+ void fn_80157940(struct LIter *ret, void *list, struct LIter *b, struct LIter *e);
+ void fn_80157B38(struct LIter *ret, void *list, struct LIter *b, struct LIter *e);
+-extern void ItemEffectBus_ApplyItemEventClear();
+-extern void ItemEffectBus_ApplyItemEventSet();
+-extern void TornadoEffect_ApplyItemVisual_Primary();
+-extern void TornadoEffect_ApplyItemVisual_Secondary();
++void ItemEffectBus_ApplyItemEventClear(void *bus, int item);
++void ItemEffectBus_ApplyItemEventSet(void *bus, int item, int a);
++void TornadoEffect_ApplyItemVisual_Primary(void *e, int item);
++void TornadoEffect_ApplyItemVisual_Secondary(void *e, int item, int a);
+ void TornadoEffect_ClearFlagC0AndSetC4(void *e, float v);
+-extern void fn_80140344();
+-extern void fn_80169468();
++void fn_80140344(void *o);
++void fn_80169468(int layer, int id, int flags, float x, float y, float sx, float sy, float a, float b);
+ extern unsigned int lbl_806D80D0;
+ extern unsigned int lbl_806D8248;
+ extern unsigned int lbl_806D824C;
+@@ -846,8 +846,10 @@
+ void fn_80157EA8(void *l);
+ class PairObj : public VObj {
+ public:
++    PairObj(const char *name, int flag);
+     virtual ~PairObj();
+     virtual void Update();
++    char data[0x1C];
+ };
+ 
+ struct PairPos {
+@@ -858,18 +860,22 @@
+ struct VObjPair {
+     PairObj *a;
+     PairObj *b;
+-    char pad8[4];
++    unsigned char started;
++    char pad9[3];
+     int mode;
+-    char pad10[4];
++    float t;
+     unsigned char on[5];
+     char pad19[3];
+     PairPos pos[5];
+     PairPos scale[5];
+-    char pad6C[0x14];
++    float vel[5];
+     unsigned char aOn;
+     char pad81[3];
+     PairPos aPos;
+     PairPos aScale;
++    float aVel;
++    VObjPair();
++    void Tick();
+     void Draw() {
+         if (mode == 1) {
+             int k;
+@@ -903,22 +909,52 @@
+     virtual void Draw();
+ };
+ 
++struct CourseSprKey {
++    float time;
++    float x, y, sx, sy, rot, r, g, b, a;
++};
++
++struct CourseSprTrack {
++    CourseSprKey *keys;
++    int id;
++    int flags;
++};
++
++struct CourseItemEvent {
++    float time;
++    int kart;
++    int item;
++    unsigned char set;
++};
++
++struct CourseCamKey {
++    float time;
++    int phase;
++};
++
+ struct CourseScene {
+     void *vt;
+-    char pad4[0xC];
++    int variant;
++    int state;
++    float t;
+     float alpha;
+     void *obj14;
+     SceneCam *cam;
+     void *lobjs;
+     void *obj20;
+-    char pad24[5];
++    CourseSprTrack *tracks;
++    unsigned char bgmOn;
+     unsigned char active;
+-    char pad2A[0xA];
++    char pad2A[2];
++    unsigned int keyIdx;
++    float keyT;
+     void *drivers[6];
+     void *effects[6];
+-    char pad64[0x184 - 0x64];
++    float mtx[6][3][4];
+     void *jobjs[6];
+-    char pad19C[0x1A8 - 0x19C];
++    unsigned char hidden[6];
++    char pad1A2[2];
++    int color;
+     CourseFx *obj1A8;
+     void *obj1AC;
+     unsigned char on1B0;
+@@ -1117,7 +1153,7 @@
+ CourseScene *fn_80153F08(CourseScene *self, short flag);
+ struct ObjListSetFull;
+ ObjListSetFull *fn_801540E0(ObjListSetFull *o, short flag);
+-asm void fn_80154304(void);
++void fn_80154304(CourseScene *self);
+ void fn_80154FB0(struct SprScene *self, unsigned int layer, unsigned int id, unsigned int flags, float x, float y, float sx, float sy, float rot, float r, float g, float b, float a);
+ unsigned char fn_80155398(StateObj *o);
+ void fn_801553AC(CourseScene *self);
+@@ -1191,7 +1227,6 @@
+ 
+ 
+ 
+-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; void *f11; unsigned int f12; void *f13; unsigned int f14; void *f15; unsigned int f16; void *f17; } extab_fn_80154304 = { 0x384A0000, 0x000006EC, 0x00000030, 0x00000700, 0x00000028, 0x0000070C, 0x00000030, 0x00000720, 0x00000038, 0x00000000, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8A800019, (void *)&MemoryManager_TimedFree, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8A800019, (void *)&MemoryManager_TimedFree };
+ 
+ 
+ 
+@@ -1262,9 +1297,6 @@
+ 
+ 
+ 
+-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80154304 = {
+-    (void *)&fn_80154304, 0x00000CAC, (void *)&extab_fn_80154304
+-};
+ 
+ 
+ 
+@@ -5404,889 +5436,320 @@
+     return o;
+ }
+ 
+-extern "C" asm void fn_80154304(void) { /* 0x80154304 size:0xCAC */
+-    nofralloc
+-    stwu r1, -0x80(r1)
+-    mflr r0
+-    stw r0, 0x84(r1)
+-    stfd f31, 0x70(r1)
+-    psq_st f31, 0x78(r1), 0, 0
+-    stmw r25, 0x54(r1)
+-    mr r29, r3
+-    lis r3, lbl_80363D30@ha
+-    lwz r0, 0x8(r29)
+-    addi r31, r3, lbl_80363D30@l
+-    cmpwi r0, 0x9
+-    beq fn_80154304_L_80154F94
+-    lbz r0, 0x28(r29)
+-    cmplwi r0, 0x0
+-    bne fn_80154304_L_8015435C
+-    li r3, 0x0
+-    li r4, 0x0
+-    bl ClSound_PlayBgmStream
+-    clrlwi. r0, r3, 24
+-    beq fn_80154304_L_8015435C
+-    li r0, 0x1
+-    stb r0, 0x28(r29)
+-    fn_80154304_L_8015435C:
+-    lbz r0, 0x29(r29)
+-    cmplwi r0, 0x0
+-    bne fn_80154304_L_80154384
+-    li r3, 0x1
+-    li r0, 0x0
+-    stb r3, 0x29(r29)
+-    lfs f0, lbl_806D8064(r2)
+-    stw r0, 0x2c(r29)
+-    stfs f0, 0x30(r29)
+-    b fn_80154304_L_80154394
+-    fn_80154304_L_80154384:
+-    lfs f1, 0x30(r29)
+-    lfs f0, lbl_806D8068(r2)
+-    fadds f0, f1, f0
+-    stfs f0, 0x30(r29)
+-    fn_80154304_L_80154394:
+-    lwz r4, 0x2c(r29)
+-    addi r3, r31, 0x3158
+-    lfs f0, 0x30(r29)
+-    slwi r0, r4, 3
+-    lfsx f1, r3, r0
+-    fcmpo cr0, f0, f1
+-    cror eq, gt, eq
+-    bne fn_80154304_L_801543DC
+-    cmplwi r4, 0x9
+-    bne fn_80154304_L_801543CC
+-    lfs f0, lbl_806D8068(r2)
+-    fsubs f0, f1, f0
+-    stfs f0, 0x30(r29)
+-    b fn_80154304_L_801543DC
+-    fn_80154304_L_801543CC:
+-    addi r0, r4, 0x1
+-    lfs f0, lbl_806D8064(r2)
+-    stw r0, 0x2c(r29)
+-    stfs f0, 0x30(r29)
+-    fn_80154304_L_801543DC:
+-    lwz r0, 0x2c(r29)
+-    addi r25, r31, 0x3158
+-    addi r25, r25, 0x4
+-    lwz r3, 0x1b8(r29)
+-    slwi r0, r0, 3
+-    lwzx r4, r25, r0
+-    bl fn_8014E028
+-    stw r3, 0x18(r29)
+-    lwz r0, 0x2c(r29)
+-    lwz r3, 0x1b8(r29)
+-    slwi r0, r0, 3
+-    lwzx r4, r25, r0
+-    bl fn_8014E004
+-    stw r3, 0x1c(r29)
+-    lwz r0, 0x2c(r29)
+-    lwz r3, 0x1b8(r29)
+-    slwi r0, r0, 3
+-    lwzx r4, r25, r0
+-    bl fn_8014DD5C
+-    stw r3, 0x20(r29)
+-    lwz r3, 0x18(r29)
+-    cmplwi r3, 0x0
+-    beq fn_80154304_L_801544AC
+-    lfs f1, 0x308c(r3)
+-    lfs f0, lbl_806D8064(r2)
+-    lfs f2, 0x30(r29)
+-    fcmpo cr0, f1, f0
+-    blt fn_80154304_L_80154460
+-    fcmpo cr0, f2, f0
+-    blt fn_80154304_L_80154460
+-    li r0, 0x1
+-    stb r0, 0x3084(r3)
+-    stfs f2, 0x308c(r3)
+-    fn_80154304_L_80154460:
+-    lwz r30, 0x18(r29)
+-    lfs f0, lbl_806D806C(r2)
+-    lfs f1, 0x3088(r30)
+-    fcmpu cr0, f0, f1
+-    beq fn_80154304_L_801544AC
+-    lbz r0, 0x3084(r30)
+-    cmplwi r0, 0x0
+-    beq fn_80154304_L_8015448C
+-    li r0, 0x0
+-    stb r0, 0x3084(r30)
+-    b fn_80154304_L_80154498
+-    fn_80154304_L_8015448C:
+-    lfs f0, 0x308c(r30)
+-    fadds f0, f0, f1
+-    stfs f0, 0x308c(r30)
+-    fn_80154304_L_80154498:
+-    lwz r3, 0x4(r30)
+-    lfs f1, 0x308c(r30)
+-    bl HSD_CObjReqAnim
+-    lwz r3, 0x4(r30)
+-    bl HSD_CObjAnim
+-    fn_80154304_L_801544AC:
+-    lwz r3, 0x20(r29)
+-    cmplwi r3, 0x0
+-    beq fn_80154304_L_801544C8
+-    lfs f1, 0x30(r29)
+-    bl Object_SetField8_AndDirty
+-    lwz r3, 0x20(r29)
+-    bl clNormal3D_Exec
+-    fn_80154304_L_801544C8:
+-    lwz r3, 0x18(r29)
+-    bl SetCourseScene3D
+-    lis r3, lbl_8048F1A8@ha
+-    mr r27, r29
+-    addi r28, r3, lbl_8048F1A8@l
+-    mr r26, r29
+-    li r30, 0x0
+-    fn_80154304_L_801544E4:
+-    lwz r3, 0x20(r29)
+-    lwz r4, 0x0(r28)
+-    bl ResolveJointByName
+-    stw r3, 0x184(r27)
+-    lwz r25, 0x184(r27)
+-    cmplwi r25, 0x0
+-    beq fn_80154304_L_80154590
+-    bne fn_80154304_L_80154514
+-    la r3, lbl_806D8134(r2)  /* lbl_806D8134 */
+-    li r4, 0x47c
+-    la r5, lbl_806D813C(r2)  /* lbl_806D813C */
+-    bl __assert
+-    fn_80154304_L_80154514:
+-    cmplwi r25, 0x0
+-    beq fn_80154304_L_8015455C
+-    bne fn_80154304_L_80154530
+-    la r3, lbl_806D8134(r2)  /* lbl_806D8134 */
+-    li r4, 0x25d
+-    la r5, lbl_806D813C(r2)  /* lbl_806D813C */
+-    bl __assert
+-    fn_80154304_L_80154530:
+-    lwz r4, 0x14(r25)
+-    li r3, 0x0
+-    rlwinm. r0, r4, 0, 8, 8
+-    bne fn_80154304_L_8015454C
+-    rlwinm. r0, r4, 0, 25, 25
+-    beq fn_80154304_L_8015454C
+-    li r3, 0x1
+-    fn_80154304_L_8015454C:
+-    clrlwi. r0, r3, 24
+-    beq fn_80154304_L_8015455C
+-    mr r3, r25
+-    bl HSD_JObjSetupMatrixSub
+-    fn_80154304_L_8015455C:
+-    addi r3, r25, 0x44
+-    addi r4, r26, 0x64
+-    bl PSMTXCopy
+-    addi r25, r30, 0x19c
+-    lbzx r0, r29, r25
+-    cmplwi r0, 0x0
+-    beq fn_80154304_L_801545B8
+-    lwz r3, 0x4c(r27)
+-    lfs f1, lbl_806D8064(r2)
+-    bl TornadoEffect_ClearFlagC0AndSetC4
+-    li r0, 0x0
+-    stbx r0, r29, r25
+-    b fn_80154304_L_801545B8
+-    fn_80154304_L_80154590:
+-    addi r25, r30, 0x19c
+-    lbzx r0, r29, r25
+-    cmplwi r0, 0x0
+-    bne fn_80154304_L_801545B8
+-    lfs f0, lbl_806D8248(r2)
+-    stfs f0, 0x80(r26)
+-    lwz r3, 0x4c(r27)
+-    bl TornadoEffect_SetFlagC0
+-    li r0, 0x1
+-    stbx r0, r29, r25
+-    fn_80154304_L_801545B8:
+-    addi r30, r30, 0x1
+-    addi r27, r27, 0x4
+-    cmpwi r30, 0x6
+-    addi r26, r26, 0x30
+-    addi r28, r28, 0x4
+-    blt fn_80154304_L_801544E4
+-    li r25, 0x0
+-    mr r26, r29
+-    fn_80154304_L_801545D8:
+-    lwz r3, 0x34(r26)
+-    lwz r3, 0x304(r3)
+-    bl ItemEffectBus_SnapshotAndFullReset
+-    addi r25, r25, 0x1
+-    addi r26, r26, 0x4
+-    cmplwi r25, 0x6
+-    blt fn_80154304_L_801545D8
+-    lfs f31, lbl_806D8064(r2)
+-    addi r30, r31, 0xeb0
+-    fn_80154304_L_801545FC:
+-    lfs f1, 0x0(r30)
+-    fcmpo cr0, f1, f31
+-    blt fn_80154304_L_801546EC
+-    lfs f0, 0xc(r29)
+-    fcmpu cr0, f0, f1
+-    bne fn_80154304_L_801546E4
+-    lbz r0, 0xc(r30)
+-    cmplwi r0, 0x0
+-    beq fn_80154304_L_80154688
+-    lwz r0, 0x4(r30)
+-    li r5, 0x1
+-    lwz r4, 0x8(r30)
+-    slwi r3, r0, 2
+-    addi r0, r3, 0x34
+-    lwzx r3, r29, r0
+-    lwz r3, 0x304(r3)
+-    bl ItemEffectBus_ApplyItemEventSet
+-    lwz r0, 0x4(r30)
+-    li r5, 0x1
+-    lwz r4, 0x8(r30)
+-    slwi r3, r0, 2
+-    addi r0, r3, 0x4c
+-    lwzx r3, r29, r0
+-    bl TornadoEffect_ApplyItemVisual_Secondary
+-    lwz r0, 0x8(r30)
+-    cmpwi r0, 0x32
+-    bne fn_80154304_L_801546E4
+-    lwz r0, 0x4(r30)
+-    lfs f0, lbl_806D824C(r2)
+-    slwi r3, r0, 2
+-    addi r0, r3, 0x34
+-    lwzx r3, r29, r0
+-    lwz r3, 0x304(r3)
+-    stfs f0, 0x28(r3)
+-    b fn_80154304_L_801546E4
+-    fn_80154304_L_80154688:
+-    lwz r0, 0x4(r30)
+-    lwz r4, 0x8(r30)
+-    slwi r3, r0, 2
+-    addi r0, r3, 0x34
+-    lwzx r3, r29, r0
+-    lwz r3, 0x304(r3)
+-    bl ItemEffectBus_ApplyItemEventClear
+-    lwz r0, 0x4(r30)
+-    lwz r4, 0x8(r30)
+-    slwi r3, r0, 2
+-    addi r0, r3, 0x4c
+-    lwzx r3, r29, r0
+-    bl TornadoEffect_ApplyItemVisual_Primary
+-    lwz r0, 0x8(r30)
+-    cmpwi r0, 0x32
+-    bne fn_80154304_L_801546E4
+-    lwz r0, 0x4(r30)
+-    lfs f0, lbl_806D8064(r2)
+-    slwi r3, r0, 2
+-    addi r0, r3, 0x34
+-    lwzx r3, r29, r0
+-    lwz r3, 0x304(r3)
+-    stfs f0, 0x28(r3)
+-    fn_80154304_L_801546E4:
+-    addi r30, r30, 0x10
+-    b fn_80154304_L_801545FC
+-    fn_80154304_L_801546EC:
+-    lfs f1, lbl_806D8250(r2)
+-    lfs f0, 0xc(r29)
+-    fcmpu cr0, f1, f0
+-    bne fn_80154304_L_80154714
+-    lwz r3, 0x54(r29)
+-    bl TornadoEffect_SetFlagC0
+-    lwz r3, 0x5c(r29)
+-    bl TornadoEffect_SetFlagC0
+-    lwz r3, 0x60(r29)
+-    bl TornadoEffect_SetFlagC0
+-    fn_80154304_L_80154714:
+-    lfs f1, lbl_806D8254(r2)
+-    lfs f0, 0xc(r29)
+-    fcmpu cr0, f1, f0
+-    bne fn_80154304_L_80154730
+-    lwz r3, 0x54(r29)
+-    lfs f1, lbl_806D8068(r2)
+-    bl TornadoEffect_ClearFlagC0AndSetC4
+-    fn_80154304_L_80154730:
+-    lfs f1, lbl_806D8258(r2)
+-    lfs f0, 0xc(r29)
+-    fcmpu cr0, f1, f0
+-    bne fn_80154304_L_8015474C
+-    lwz r3, 0x60(r29)
+-    lfs f1, lbl_806D8068(r2)
+-    bl TornadoEffect_ClearFlagC0AndSetC4
+-    fn_80154304_L_8015474C:
+-    lfs f1, lbl_806D825C(r2)
+-    lfs f0, 0xc(r29)
+-    fcmpu cr0, f1, f0
+-    bne fn_80154304_L_80154768
+-    lwz r3, 0x5c(r29)
+-    lfs f1, lbl_806D8068(r2)
+-    bl TornadoEffect_ClearFlagC0AndSetC4
+-    fn_80154304_L_80154768:
+-    lfs f1, lbl_806D8260(r2)
+-    lfs f0, 0xc(r29)
+-    fcmpu cr0, f1, f0
+-    bne fn_80154304_L_801547A0
+-    lfs f1, lbl_806D8068(r2)
+-    li r0, 0x10
+-    stw r0, 0x1a4(r29)
+-    fmr f2, f1
+-    lwz r3, 0x58(r29)
+-    bl TireEffect_ResetSpin
+-    lfs f1, lbl_806D8068(r2)
+-    lwz r3, 0x4c(r29)
+-    fmr f2, f1
+-    bl TireEffect_ResetSpin
+-    fn_80154304_L_801547A0:
+-    li r25, 0x0
+-    mr r26, r29
+-    fn_80154304_L_801547A8:
+-    lfs f1, lbl_806D8064(r2)
+-    li r4, 0x0
+-    lwz r3, 0x34(r26)
+-    fmr f2, f1
+-    bl RenderObj_ItemStateMachine_Timed
+-    lwz r3, 0x4c(r26)
+-    li r4, 0x0
+-    bl TornadoEffect_Tick
+-    lwz r0, 0x184(r26)
+-    cmplwi r0, 0x0
+-    beq fn_80154304_L_801547E8
+-    lwz r4, 0x1a4(r29)
+-    lwz r3, 0x4c(r26)
+-    mr r5, r4
+-    bl TornadoEffect_SetColorPairC8CC
+-    b fn_80154304_L_801547F8
+-    fn_80154304_L_801547E8:
+-    lwz r3, 0x4c(r26)
+-    li r4, 0x0
+-    li r5, 0x0
+-    bl TornadoEffect_SetColorPairC8CC
+-    fn_80154304_L_801547F8:
+-    addi r25, r25, 0x1
+-    addi r26, r26, 0x4
+-    cmpwi r25, 0x6
+-    blt fn_80154304_L_801547A8
+-    li r25, 0x0
+-    mr r26, r29
+-    fn_80154304_L_80154810:
+-    lwz r3, 0x34(r26)
+-    lwz r3, 0x304(r3)
+-    bl ItemEffectBus_TickTornadoCooldown
+-    addi r25, r25, 0x1
+-    addi r26, r26, 0x4
+-    cmplwi r25, 0x6
+-    blt fn_80154304_L_80154810
+-    li r25, 0x0
+-    b fn_80154304_L_8015493C
+-    fn_80154304_L_80154834:
+-    lfs f2, 0xc(r29)
+-    lfs f0, 0x0(r7)
+-    fcmpo cr0, f2, f0
+-    blt fn_80154304_L_80154938
+-    lwz r5, 0x4(r4)
+-    addi r3, r7, 0x28
+-    lwz r6, 0x8(r4)
+-    li r4, 0x1
+-    lfs f0, lbl_806D8064(r2)
+-    fn_80154304_L_80154858:
+-    lfs f1, 0x0(r3)
+-    fcmpo cr0, f1, f0
+-    blt fn_80154304_L_80154938
+-    fcmpo cr0, f2, f1
+-    bgt fn_80154304_L_8015492C
+-    mulli r0, r4, 0x28
+-    li r4, 0x0
+-    add r3, r7, r0
+-    lfs f1, -0x28(r3)
+-    lfs f0, 0x0(r3)
+-    fsubs f3, f2, f1
+-    lfs f4, -0x4(r3)
+-    fsubs f2, f0, f1
+-    lfs f0, 0x24(r3)
+-    fsubs f1, f0, f4
+-    fdivs f0, f3, f2
+-    fmadds f1, f0, f1, f4
+-    stfs f1, 0x8(r1)
+-    lfs f4, -0x24(r3)
+-    lfs f2, 0x4(r3)
+-    lfs f9, -0x20(r3)
+-    lfs f1, 0x8(r3)
+-    fsubs f2, f2, f4
+-    lfs f7, -0x1c(r3)
+-    lfs f3, 0xc(r3)
+-    fsubs f6, f1, f9
+-    fmadds f1, f0, f2, f4
+-    lfs f31, -0x18(r3)
+-    lfs f2, 0x10(r3)
+-    fsubs f5, f3, f7
+-    lfs f13, -0x14(r3)
+-    fsubs f8, f2, f31
+-    lfs f4, 0x14(r3)
+-    fmadds f2, f0, f6, f9
+-    lfs f12, -0x10(r3)
+-    lfs f3, 0x18(r3)
+-    fsubs f9, f4, f13
+-    lfs f11, -0xc(r3)
+-    fsubs f6, f3, f12
+-    lfs f4, 0x1c(r3)
+-    fmadds f3, f0, f5, f7
+-    lfs f10, -0x8(r3)
+-    fsubs f7, f4, f11
+-    lfs f5, 0x20(r3)
+-    fmadds f4, f0, f8, f31
+-    lwz r3, 0x1b8(r29)
+-    fsubs f8, f5, f10
+-    fmadds f5, f0, f9, f13
+-    fmadds f6, f0, f6, f12
+-    fmadds f7, f0, f7, f11
+-    fmadds f8, f0, f8, f10
+-    bl fn_80154FB0
+-    b fn_80154304_L_80154938
+-    fn_80154304_L_8015492C:
+-    addi r3, r3, 0x28
+-    addi r4, r4, 0x1
+-    b fn_80154304_L_80154858
+-    fn_80154304_L_80154938:
+-    addi r25, r25, 0xc
+-    fn_80154304_L_8015493C:
+-    lwz r0, 0x24(r29)
+-    add r4, r0, r25
+-    lwz r7, 0x0(r4)
+-    cmplwi r7, 0x0
+-    bne fn_80154304_L_80154834
+-    lwz r3, 0x1a8(r29)
+-    cmplwi r3, 0x0
+-    beq fn_80154304_L_8015496C
+-    lwz r12, 0x0(r3)
+-    lwz r12, 0xc(r12)
+-    mtctr r12
+-    bctrl
+-    fn_80154304_L_8015496C:
+-    lfs f1, 0xc(r29)
+-    lfs f0, lbl_806D8264(r2)
+-    fcmpo cr0, f1, f0
+-    cror eq, gt, eq
+-    bne fn_80154304_L_8015499C
+-    lfs f0, lbl_806D80B0(r2)
+-    fcmpo cr0, f1, f0
+-    cror eq, lt, eq
+-    bne fn_80154304_L_8015499C
+-    li r0, 0x1
+-    stb r0, 0x1b0(r29)
+-    b fn_80154304_L_801549A4
+-    fn_80154304_L_8015499C:
+-    li r0, 0x0
+-    stb r0, 0x1b0(r29)
+-    fn_80154304_L_801549A4:
+-    lbz r0, 0x1b0(r29)
+-    cmplwi r0, 0x0
+-    beq fn_80154304_L_801549B8
+-    lwz r3, 0x1ac(r29)
+-    bl fn_80140344
+-    fn_80154304_L_801549B8:
+-    lfs f1, 0xc(r29)
+-    lfs f0, lbl_806D8268(r2)
+-    fcmpo cr0, f1, f0
+-    cror eq, gt, eq
+-    bne fn_80154304_L_80154C8C
+-    lwz r0, 0x1b4(r29)
+-    cmplwi r0, 0x0
+-    bne fn_80154304_L_80154ADC
+-    li r3, 0x98
+-    bl Alloc
+-    mr. r25, r3
+-    beq fn_80154304_L_80154AD8
+-    li r3, 0x20
+-    bl Alloc
+-    mr. r26, r3
+-    beq fn_80154304_L_80154A04
+-    addi r4, r31, 0x3860
+-    li r5, 0x0
+-    bl fn_8013D800
+-    fn_80154304_L_80154A04:
+-    stw r26, 0x0(r25)
+-    li r3, 0x20
+-    bl Alloc
+-    mr. r26, r3
+-    beq fn_80154304_L_80154A24
+-    addi r4, r31, 0x386c
+-    li r5, 0x0
+-    bl fn_8013D800
+-    fn_80154304_L_80154A24:
+-    stw r26, 0x4(r25)
+-    addi r4, r31, 0x311c
+-    li r5, 0x0
+-    la r3, lbl_806D7F68(r2)  /* lbl_806D7F68 */
+-    stb r5, 0x8(r25)
+-    li r0, 0x1
+-    lfs f7, lbl_806D8064(r2)
+-    stw r5, 0xc(r25)
+-    lfs f1, 0x311c(r31)
+-    stfs f7, 0x10(r25)
+-    lfs f0, 0x4(r4)
+-    stb r0, 0x14(r25)
+-    lfs f2, 0x8(r4)
+-    stfs f1, 0x1c(r25)
+-    lfs f1, 0xc(r4)
+-    stfs f0, 0x20(r25)
+-    lfs f0, 0x10(r4)
+-    stfs f7, 0x6c(r25)
+-    lfs f6, 0x14(r4)
+-    stb r0, 0x15(r25)
+-    lfs f5, 0x18(r4)
+-    stfs f2, 0x24(r25)
+-    lfs f4, 0x1c(r4)
+-    stfs f1, 0x28(r25)
+-    lfs f3, 0x20(r4)
+-    stfs f7, 0x70(r25)
+-    lfs f2, 0x24(r4)
+-    stb r0, 0x16(r25)
+-    lfs f1, lbl_806D7F68(r2)
+-    stfs f0, 0x2c(r25)
+-    lfs f0, 0x4(r3)
+-    stfs f6, 0x30(r25)
+-    stfs f7, 0x74(r25)
+-    stb r0, 0x17(r25)
+-    stfs f5, 0x34(r25)
+-    stfs f4, 0x38(r25)
+-    stfs f7, 0x78(r25)
+-    stb r0, 0x18(r25)
+-    stfs f3, 0x3c(r25)
+-    stfs f2, 0x40(r25)
+-    stfs f7, 0x7c(r25)
+-    stb r0, 0x80(r25)
+-    stfs f1, 0x84(r25)
+-    stfs f0, 0x88(r25)
+-    stfs f7, 0x94(r25)
+-    fn_80154304_L_80154AD8:
+-    stw r25, 0x1b4(r29)
+-    fn_80154304_L_80154ADC:
+-    lwz r3, 0x1b4(r29)
+-    cmplwi r3, 0x0
+-    beq fn_80154304_L_80154C8C
+-    lwz r0, 0xc(r3)
+-    cmpwi r0, 0x0
+-    bne fn_80154304_L_80154AFC
+-    li r0, 0x1
+-    stw r0, 0xc(r3)
+-    fn_80154304_L_80154AFC:
+-    lwz r28, 0x1b4(r29)
+-    lbz r0, 0x8(r28)
+-    cmplwi r0, 0x0
+-    bne fn_80154304_L_80154B18
+-    li r0, 0x1
+-    stb r0, 0x8(r28)
+-    b fn_80154304_L_80154B28
+-    fn_80154304_L_80154B18:
+-    lfs f1, 0x10(r28)
+-    lfs f0, lbl_806D8068(r2)
+-    fadds f0, f1, f0
+-    stfs f0, 0x10(r28)
+-    fn_80154304_L_80154B28:
+-    lwz r0, 0xc(r28)
+-    cmpwi r0, 0x1
+-    bne fn_80154304_L_80154C8C
+-    mr r27, r28
+-    mr r25, r28
+-    addi r26, r31, 0x3144
+-    li r30, 0x0
+-    fn_80154304_L_80154B44:
+-    addi r31, r30, 0x14
+-    lbzx r0, r28, r31
+-    cmplwi r0, 0x0
+-    beq fn_80154304_L_80154BE8
+-    lfs f2, 0x10(r28)
+-    lfs f1, 0x0(r26)
+-    fcmpo cr0, f2, f1
+-    bge fn_80154304_L_80154B74
+-    lfs f0, lbl_806D8064(r2)
+-    stfs f0, 0x44(r27)
+-    stfs f0, 0x48(r27)
+-    b fn_80154304_L_80154BD0
+-    fn_80154304_L_80154B74:
+-    lfs f0, lbl_806D826C(r2)
+-    fadds f0, f0, f1
+-    fcmpo cr0, f2, f0
+-    bge fn_80154304_L_80154BB0
+-    fsubs f1, f2, f1
+-    lfs f0, lbl_806D80AC(r2)
+-    lfs f2, lbl_806D8064(r2)
+-    lfs f3, lbl_806D8068(r2)
+-    fdivs f1, f1, f0
+-    bl Saturate_Double
+-    lfs f0, lbl_806D8270(r2)
+-    fmuls f0, f0, f1
+-    stfs f0, 0x44(r27)
+-    stfs f0, 0x48(r27)
+-    b fn_80154304_L_80154BD0
+-    fn_80154304_L_80154BB0:
+-    lfs f1, 0x6c(r25)
+-    lfs f0, lbl_806D8200(r2)
+-    fadds f0, f1, f0
+-    stfs f0, 0x6c(r25)
+-    lfs f1, 0x20(r27)
+-    lfs f0, 0x6c(r25)
+-    fadds f0, f1, f0
+-    stfs f0, 0x20(r27)
+-    fn_80154304_L_80154BD0:
+-    lfs f1, 0x20(r27)
+-    lfs f0, lbl_806D8274(r2)
+-    fcmpo cr0, f1, f0
+-    ble fn_80154304_L_80154BE8
+-    li r0, 0x0
+-    stbx r0, r28, r31
+-    fn_80154304_L_80154BE8:
+-    addi r30, r30, 0x1
+-    addi r27, r27, 0x8
+-    cmpwi r30, 0x5
+-    addi r25, r25, 0x4
+-    addi r26, r26, 0x4
+-    blt fn_80154304_L_80154B44
+-    lbz r0, 0x80(r28)
+-    cmplwi r0, 0x0
+-    beq fn_80154304_L_80154C8C
+-    lfs f1, 0x10(r28)
+-    lfs f0, lbl_806D826C(r2)
+-    fcmpo cr0, f1, f0
+-    bge fn_80154304_L_80154C44
+-    lfs f0, lbl_806D80AC(r2)
+-    lfs f2, lbl_806D8064(r2)
+-    fdivs f1, f1, f0
+-    lfs f3, lbl_806D8068(r2)
+-    bl Saturate_Double
+-    lfs f0, lbl_806D8278(r2)
+-    fmuls f0, f0, f1
+-    stfs f0, 0x8c(r28)
+-    stfs f0, 0x90(r28)
+-    b fn_80154304_L_80154C74
+-    fn_80154304_L_80154C44:
+-    lfs f2, 0x94(r28)
+-    lfs f1, lbl_806D811C(r2)
+-    lfs f0, lbl_806D827C(r2)
+-    fadds f1, f2, f1
+-    stfs f1, 0x94(r28)
+-    lfs f2, 0x88(r28)
+-    lfs f1, 0x94(r28)
+-    fadds f1, f2, f1
+-    stfs f1, 0x88(r28)
+-    lfs f1, 0x90(r28)
+-    fadds f0, f1, f0
+-    stfs f0, 0x90(r28)
+-    fn_80154304_L_80154C74:
+-    lfs f1, 0x88(r28)
+-    lfs f0, lbl_806D8274(r2)
+-    fcmpo cr0, f1, f0
+-    ble fn_80154304_L_80154C8C
+-    li r0, 0x0
+-    stb r0, 0x80(r28)
+-    fn_80154304_L_80154C8C:
+-    lfs f1, 0xc(r29)
+-    lfs f0, lbl_806D8280(r2)
+-    fcmpo cr0, f1, f0
+-    cror eq, gt, eq
+-    bne fn_80154304_L_80154E64
+-    fsubs f1, f1, f0
+-    lfs f0, lbl_806D8124(r2)
+-    lfs f2, lbl_806D8064(r2)
+-    lfs f3, lbl_806D8068(r2)
+-    fdivs f1, f1, f0
+-    bl Saturate_Double
+-    lwz r0, 0x4(r29)
+-    fmr f31, f1
+-    cmpwi r0, 0x2
+-    beq fn_80154304_L_80154D2C
+-    bge fn_80154304_L_80154D80
+-    cmpwi r0, 0x1
+-    bge fn_80154304_L_80154CD8
+-    b fn_80154304_L_80154D80
+-    fn_80154304_L_80154CD8:
+-    lfs f3, lbl_806D8068(r2)
+-    fmr f6, f31
+-    lfs f1, lbl_806D819C(r2)
+-    li r3, 0x0
+-    fmr f4, f3
+-    lfs f2, lbl_806D8070(r2)
+-    fmr f5, f3
+-    li r4, 0x55
+-    li r5, 0x0
+-    bl fn_80169468
+-    lfs f3, lbl_806D8068(r2)
+-    fmr f6, f31
+-    lfs f1, lbl_806D81A8(r2)
+-    li r3, 0x0
+-    fmr f4, f3
+-    lfs f2, lbl_806D8070(r2)
+-    fmr f5, f3
+-    li r4, 0x56
+-    li r5, 0x0
+-    bl fn_80169468
+-    b fn_80154304_L_80154DF8
+-    fn_80154304_L_80154D2C:
+-    lfs f3, lbl_806D8068(r2)
+-    fmr f6, f31
+-    lfs f1, lbl_806D819C(r2)
+-    li r3, 0x0
+-    fmr f4, f3
+-    lfs f2, lbl_806D8070(r2)
+-    fmr f5, f3
+-    li r4, 0x3a9
+-    li r5, 0x0
+-    bl fn_80169468
+-    lfs f3, lbl_806D8068(r2)
+-    fmr f6, f31
+-    lfs f1, lbl_806D81A8(r2)
+-    li r3, 0x0
+-    fmr f4, f3
+-    lfs f2, lbl_806D8070(r2)
+-    fmr f5, f3
+-    li r4, 0x3aa
+-    li r5, 0x0
+-    bl fn_80169468
+-    b fn_80154304_L_80154DF8
+-    fn_80154304_L_80154D80:
+-    lfs f3, lbl_806D8068(r2)
+-    fmr f6, f31
+-    lfs f1, lbl_806D819C(r2)
+-    li r3, 0x0
+-    fmr f4, f3
+-    lfs f2, lbl_806D8070(r2)
+-    fmr f5, f3
+-    li r4, 0x9c6
+-    li r5, 0x0
+-    bl fn_80169468
+-    lfs f3, lbl_806D8068(r2)
+-    fmr f6, f31
+-    lfs f1, lbl_806D81A8(r2)
+-    li r3, 0x0
+-    fmr f4, f3
+-    lfs f2, lbl_806D8070(r2)
+-    fmr f5, f3
+-    li r4, 0x9c8
+-    li r5, 0x0
+-    bl fn_80169468
+-    lfs f3, lbl_806D8068(r2)
+-    fmr f6, f31
+-    lfs f1, lbl_806D81A8(r2)
+-    li r3, 0x0
+-    fmr f4, f3
+-    lfs f2, lbl_806D8284(r2)
+-    fmr f5, f3
+-    li r4, 0x582
+-    li r5, 0x0
+-    bl fn_80169468
+-    fn_80154304_L_80154DF8:
+-    lwz r3, 0x1bc(r29)
+-    lfs f1, lbl_806D8288(r2)
+-    lfs f2, lbl_806D80D0(r2)
+-    bl fn_801F93EC
+-    lfs f1, lbl_806D8068(r2)
+-    lwz r3, 0x1bc(r29)
+-    fmr f2, f1
+-    bl fn_801F93D0
+-    bl fn_801F8E58
+-    lwz r4, 0x1bc(r29)
+-    li r5, 0x0
+-    bl fn_801F8A34
+-    lwz r3, 0x1bc(r29)
+-    lfs f1, lbl_806D8288(r2)
+-    lfs f2, lbl_806D828C(r2)
+-    addi r3, r3, 0x230
+-    bl fn_801F93EC
+-    lfs f1, lbl_806D8068(r2)
+-    lwz r3, 0x1bc(r29)
+-    fmr f2, f1
+-    addi r3, r3, 0x230
+-    bl fn_801F93D0
+-    bl fn_801F8E58
+-    lwz r4, 0x1bc(r29)
+-    li r5, 0x0
+-    addi r4, r4, 0x230
+-    bl fn_801F8A34
+-    fn_80154304_L_80154E64:
+-    lwz r3, 0x18(r29)
+-    addi r4, r1, 0x3c
+-    bl CObj_LoadProjMatrix
+-    lwz r3, 0x18(r29)
+-    addi r4, r1, 0x30
+-    bl CObj_ApplyScissor
+-    bl ItemObjectManager_Update
+-    lwz r9, 0x30(r1)
+-    addi r3, r1, 0x24
+-    lwz r8, 0x34(r1)
+-    addi r4, r1, 0x18
+-    lwz r7, 0x38(r1)
+-    lwz r6, 0x3c(r1)
+-    lwz r5, 0x40(r1)
+-    lwz r0, 0x44(r1)
+-    stw r9, 0x18(r1)
+-    stw r8, 0x1c(r1)
+-    stw r7, 0x20(r1)
+-    stw r6, 0x24(r1)
+-    stw r5, 0x28(r1)
+-    stw r0, 0x2c(r1)
+-    bl VfxSlotMgr_Update
+-    bl GXDrawDone
+-    lwz r28, 0x1b8(r29)
+-    lwz r0, 0xc(r28)
+-    cmplwi r0, 0x0
+-    beq fn_80154304_L_80154F30
+-    lwz r31, 0x14(r28)
+-    addi r25, r28, 0x10
+-    li r30, 0x0
+-    b fn_80154304_L_80154F28
+-    fn_80154304_L_80154EE0:
+-    lwz r0, 0xc(r31)
+-    cmpwi r0, 0x0
+-    ble fn_80154304_L_80154EF4
+-    stw r30, 0xc(r31)
+-    b fn_80154304_L_80154F24
+-    fn_80154304_L_80154EF4:
+-    lwz r3, 0x10(r31)
+-    cmplwi r3, 0x0
+-    beq fn_80154304_L_80154F08
+-    li r4, 0x1
+-    bl fn_801F7CD8
+-    fn_80154304_L_80154F08:
+-    stw r31, 0x14(r1)
+-    addi r3, r1, 0x10
+-    addi r4, r28, 0xc
+-    addi r5, r1, 0x14
+-    bl fn_80157BE8
+-    lwz r31, 0x10(r1)
+-    b fn_80154304_L_80154F28
+-    fn_80154304_L_80154F24:
+-    lwz r31, 0x4(r31)
+-    fn_80154304_L_80154F28:
+-    cmplw r31, r25
+-    bne fn_80154304_L_80154EE0
+-    fn_80154304_L_80154F30:
+-    lfs f0, 0xc(r29)
+-    lfs f3, lbl_806D8068(r2)
+-    lfs f4, lbl_806D8060(r2)
+-    fadds f1, f0, f3
+-    lfs f0, lbl_806D8290(r2)
+-    fsubs f0, f0, f4
+-    stfs f1, 0xc(r29)
+-    lfs f1, 0xc(r29)
+-    fcmpo cr0, f1, f0
+-    ble fn_80154304_L_80154F70
+-    fsubs f0, f1, f0
+-    lfs f2, lbl_806D8064(r2)
+-    fdivs f1, f0, f4
+-    bl Saturate_Double
+-    stfs f1, 0x10(r29)
+-    b fn_80154304_L_80154F78
+-    fn_80154304_L_80154F70:
+-    lfs f0, lbl_806D8064(r2)
+-    stfs f0, 0x10(r29)
+-    fn_80154304_L_80154F78:
+-    lfs f1, 0xc(r29)
+-    lfs f0, lbl_806D8290(r2)
+-    fcmpo cr0, f1, f0
+-    cror eq, gt, eq
+-    bne fn_80154304_L_80154F94
+-    li r0, 0x9
+-    stw r0, 0x8(r29)
+-    fn_80154304_L_80154F94:
+-    psq_l f31, 0x78(r1), 0, 0
+-    lfd f31, 0x70(r1)
+-    lmw r25, 0x54(r1)
+-    lwz r0, 0x84(r1)
+-    mtlr r0
+-    addi r1, r1, 0x80
+-    blr
+-}
++
++
++
++
++struct SprScene {
++    char pad0[0xC];
++    SprList cache;
++    SprList layers[2];
++    void Draw(unsigned int layer, unsigned int id, unsigned int flags, float x, float y, float sx, float sy, float rot, float r, float g, float b, float a);
++};
++
++inline void VObjPair::Tick() {
++    if (!started) {
++        started = 1;
++    } else {
++        t += 1.0f;
++    }
++    if (mode == 1) {
++        int k;
++        for (k = 0; k < 5; k++) {
++            if (on[k]) {
++                if (t < lbl_80366E74[k]) {
++                    scale[k].x = 0.0f;
++                    scale[k].y = 0.0f;
++                } else if (t < lbl_80366E74[k] + 10.0f) {
++                    float s = 0.03f * Saturate_Double((t - lbl_80366E74[k]) / 3.0f, 0.0f, 1.0f);
++                    scale[k].x = s;
++                    scale[k].y = s;
++                } else {
++                    vel[k] += 0.8f;
++                    pos[k].y += vel[k];
++                }
++                if (pos[k].y > 500.0f) {
++                    on[k] = 0;
++                }
++            }
++        }
++        if (aOn) {
++            if (t < 10.0f) {
++                float s = 0.055f * Saturate_Double(t / 3.0f, 0.0f, 1.0f);
++                aScale.x = s;
++                aScale.y = s;
++            } else {
++                aVel += 0.5f;
++                aPos.y += aVel;
++                aScale.y += 0.001f;
++            }
++            if (aPos.y > 500.0f) {
++                aOn = 0;
++            }
++        }
++    }
++}
++
++inline VObjPair::VObjPair() {
++    int k;
++    a = new PairObj(lbl_80367590, 0);
++    b = new PairObj(lbl_8036759C, 0);
++    started = 0;
++    mode = 0;
++    t = lbl_806D8064;
++    for (k = 0; k < 5; k++) {
++        on[k] = 1;
++        pos[k].x = lbl_80366E4C[k].x;
++        pos[k].y = lbl_80366E4C[k].y;
++        vel[k] = lbl_806D8064;
++    }
++    aOn = 1;
++    aPos.x = lbl_806D7F68[0];
++    aPos.y = lbl_806D7F68[1];
++    aVel = lbl_806D8064;
++}
++
++#pragma use_lmw_stmw on
++extern "C" void fn_80154304(CourseScene *self) {
++    void *jobj;
++    int i;
++    SprNodeBase *e;
++    SprScene *spr;
++    SprNodeBase *n2;
++
++    if (self->state == 9) {
++        return;
++    }
++    if (!self->bgmOn) {
++        if (ClSound_PlayBgmStream(0, 0)) {
++            self->bgmOn = 1;
++        }
++    }
++    if (!self->active) {
++        self->active = 1;
++        self->keyIdx = 0;
++        self->keyT = 0.0f;
++    } else {
++        self->keyT += 1.0f;
++    }
++    if (self->keyT >= lbl_80366E88[self->keyIdx].time) {
++        if (self->keyIdx == 9) {
++            self->keyT = lbl_80366E88[self->keyIdx].time - 1.0f;
++        } else {
++            self->keyIdx++;
++            self->keyT = 0.0f;
++        }
++    }
++    self->cam = (SceneCam *)fn_8014E028(self->list, lbl_80366E88[self->keyIdx].id);
++    self->lobjs = fn_8014E004(self->list, lbl_80366E88[self->keyIdx].id);
++    self->obj20 = fn_8014DD5C(self->list, lbl_80366E88[self->keyIdx].id);
++    if (self->cam != 0) {
++        CamAnim_SetFrame((CourseCamAnim *)self->cam, self->keyT);
++        CamAnim_Tick((CourseCamAnim *)self->cam);
++    }
++    if (self->obj20 != 0) {
++        Object_SetField8_AndDirty(self->obj20, self->keyT);
++        clNormal3D_Exec(self->obj20);
++    }
++    SetCourseScene3D(self->cam);
++    for (i = 0; i < 6; i++) {
++        self->jobjs[i] = ResolveJointByName(self->obj20, (char *)lbl_8048F1A8[i]);
++        jobj = self->jobjs[i];
++        if (jobj != 0) {
++            JObjSetupMatrix(jobj);
++            PSMTXCopy((char *)jobj + 0x44, self->mtx[i]);
++            if (self->hidden[i]) {
++                TornadoEffect_ClearFlagC0AndSetC4(self->effects[i], 0.0f);
++                self->hidden[i] = 0;
++            }
++        } else if (!self->hidden[i]) {
++            self->mtx[i][1][3] = -800.0f;
++            TornadoEffect_SetFlagC0(self->effects[i]);
++            self->hidden[i] = 1;
++        }
++    }
++    {
++        unsigned int n;
++        for (n = 0; n < 6; n++) {
++            ItemEffectBus_SnapshotAndFullReset(*(void **)((char *)self->drivers[n] + 0x304));
++        }
++    }
++    {
++        const CourseItemEvent *ev;
++        for (ev = lbl_80364BE0;; ev++) {
++            if (ev->time < 0.0f) {
++                break;
++            }
++            if (self->t == ev->time) {
++                if (ev->set) {
++                    ItemEffectBus_ApplyItemEventSet(*(void **)((char *)self->drivers[ev->kart] + 0x304), ev->item, 1);
++                    TornadoEffect_ApplyItemVisual_Secondary(self->effects[ev->kart], ev->item, 1);
++                    if (ev->item == 50) {
++                        *(float *)((char *)*(void **)((char *)self->drivers[ev->kart] + 0x304) + 0x28) = 0.20943947f;
++                    }
++                } else {
++                    ItemEffectBus_ApplyItemEventClear(*(void **)((char *)self->drivers[ev->kart] + 0x304), ev->item);
++                    TornadoEffect_ApplyItemVisual_Primary(self->effects[ev->kart], ev->item);
++                    if (ev->item == 50) {
++                        *(float *)((char *)*(void **)((char *)self->drivers[ev->kart] + 0x304) + 0x28) = 0.0f;
++                    }
++                }
++            }
++        }
++    }
++    if (1080.0f == self->t) {
++        TornadoEffect_SetFlagC0(self->effects[2]);
++        TornadoEffect_SetFlagC0(self->effects[4]);
++        TornadoEffect_SetFlagC0(self->effects[5]);
++    }
++    if (1234.0f == self->t) {
++        TornadoEffect_ClearFlagC0AndSetC4(self->effects[2], 1.0f);
++    }
++    if (1243.0f == self->t) {
++        TornadoEffect_ClearFlagC0AndSetC4(self->effects[5], 1.0f);
++    }
++    if (1270.0f == self->t) {
++        TornadoEffect_ClearFlagC0AndSetC4(self->effects[4], 1.0f);
++    }
++    if (1560.0f == self->t) {
++        self->color = 16;
++        TireEffect_ResetSpin(self->effects[3], 1.0f, 1.0f);
++        TireEffect_ResetSpin(self->effects[0], 1.0f, 1.0f);
++    }
++    for (i = 0; i < 6; i++) {
++        RenderObj_ItemStateMachine_Timed(self->drivers[i], 0, 0.0f, 0.0f);
++        TornadoEffect_Tick(self->effects[i], 0);
++        if (self->jobjs[i] != 0) {
++            TornadoEffect_SetColorPairC8CC(self->effects[i], self->color, self->color);
++        } else {
++            TornadoEffect_SetColorPairC8CC(self->effects[i], 0, 0);
++        }
++    }
++    {
++        unsigned int n;
++        for (n = 0; n < 6; n++) {
++            ItemEffectBus_TickTornadoCooldown(*(void **)((char *)self->drivers[n] + 0x304));
++        }
++    }
++    for (i = 0; self->tracks[i].keys != 0; i++) {
++        CourseSprKey *k = self->tracks[i].keys;
++        if (!(self->t < k[0].time)) {
++            int id = self->tracks[i].id;
++            int flags = self->tracks[i].flags;
++            int j;
++            for (j = 1;; j++) {
++                if (k[j].time < 0.0f) {
++                    break;
++                }
++                if (!(self->t > k[j].time)) {
++                    CourseSprKey *b = &k[j];
++                    CourseSprKey *a = b - 1;
++                    float f = (self->t - a->time) / (b->time - a->time);
++                    fn_80154FB0((SprScene *)self->list, 0, id, flags,
++                                f * (b->x - a->x) + a->x, f * (b->y - a->y) + a->y,
++                                f * (b->sx - a->sx) + a->sx, f * (b->sy - a->sy) + a->sy,
++                                f * (b->rot - a->rot) + a->rot, f * (b->r - a->r) + a->r,
++                                f * (b->g - a->g) + a->g, f * (b->b - a->b) + a->b,
++                                f * (b->a - a->a) + a->a);
++                    break;
++                }
++            }
++        }
++    }
++    if (self->obj1A8 != 0) {
++        self->obj1A8->vC();
++    }
++    if (self->t >= 440.0f && self->t <= 539.0f) {
++        self->on1B0 = 1;
++    } else {
++        self->on1B0 = 0;
++    }
++    if (self->on1B0) {
++        fn_80140344(self->obj1AC);
++    }
++    if (self->t >= 1710.0f) {
++        if (self->pair == 0) {
++            self->pair = new VObjPair;
++        }
++        if (self->pair != 0) {
++            if (self->pair->mode == 0) {
++                self->pair->mode = 1;
++            }
++            self->pair->Tick();
++        }
++    }
++    if (self->t >= 1715.0f) {
++        float a = Saturate_Double((self->t - 1715.0f) / 5.0f, 0.0f, 1.0f);
++        switch (self->variant) {
++        case 1:
++            fn_80169468(0, 0x55, 0, 256.0f, 240.0f, 1.0f, 1.0f, 1.0f, a);
++            fn_80169468(0, 0x56, 0, 576.0f, 240.0f, 1.0f, 1.0f, 1.0f, a);
++            break;
++        case 2:
++            fn_80169468(0, 0x3A9, 0, 256.0f, 240.0f, 1.0f, 1.0f, 1.0f, a);
++            fn_80169468(0, 0x3AA, 0, 576.0f, 240.0f, 1.0f, 1.0f, 1.0f, a);
++            break;
++        default:
++            fn_80169468(0, 0x9C6, 0, 256.0f, 240.0f, 1.0f, 1.0f, 1.0f, a);
++            fn_80169468(0, 0x9C8, 0, 576.0f, 240.0f, 1.0f, 1.0f, 1.0f, a);
++            fn_80169468(0, 0x582, 0, 576.0f, 130.0f, 1.0f, 1.0f, 1.0f, a);
++            break;
++        }
++        fn_801F93EC(self->arr, 280.0f, 16.0f);
++        fn_801F93D0(self->arr, 1.0f, 1.0f);
++        fn_801F8A34(fn_801F8E58(), self->arr, 0);
++        fn_801F93EC((char *)self->arr + 0x230, 280.0f, 32.0f);
++        fn_801F93D0((char *)self->arr + 0x230, 1.0f, 1.0f);
++        fn_801F8A34(fn_801F8E58(), (char *)self->arr + 0x230, 0);
++    }
++    {
++        VfxVec eye;
++        VfxVec target;
++        CObj_LoadProjMatrix(self->cam, &eye);
++        CObj_ApplyScissor(self->cam, &target);
++        ItemObjectManager_Update();
++        VfxSlotMgr_Update(eye, target);
++    }
++    GXDrawDone();
++    {
++        spr = (SprScene *)self->list;
++        if (spr->cache.count != 0) {
++            e = &spr->cache.end;
++            n2 = spr->cache.end.next;
++            while (n2 != e) {
++                if (((SprNode *)n2)->ref > 0) {
++                    ((SprNode *)n2)->ref = 0;
++                } else {
++                    SprIter pos;
++                    SprIter ret;
++                    if (((SprNode *)n2)->res != 0) {
++                        fn_801F7CD8(((SprNode *)n2)->res, 1);
++                    }
++                    pos.n = n2;
++                    fn_80157BE8(&ret, &spr->cache, &pos);
++                    n2 = ret.n;
++                    continue;
++                }
++                n2 = n2->next;
++            }
++        }
++    }
++    self->t += 1.0f;
++    {
++        const float fadeLen = lbl_806D8060;
++        if (self->t > 2100.0f - fadeLen) {
++            self->alpha = Saturate_Double((self->t - (2100.0f - fadeLen)) / fadeLen, 0.0f, 1.0f);
++        } else {
++            self->alpha = 0.0f;
++        }
++    }
++    if (self->t >= 2100.0f) {
++        self->state = 9;
++    }
++}
++#pragma use_lmw_stmw reset
++
++
+ 
+ 
+ struct SprDraw {
+@@ -6305,12 +5768,6 @@
+     ~SprInst();
+ };
+ 
+-struct SprScene {
+-    char pad0[0xC];
+-    SprList cache;
+-    SprList layers[2];
+-    void Draw(unsigned int layer, unsigned int id, unsigned int flags, float x, float y, float sx, float sy, float rot, float r, float g, float b, float a);
+-};
+ 
+ static inline void SprList_PushBack(SprList *l, SprInst *h) {
+     SprIter ret;
+--- a/src/game/Scene_8014E0C4_rodata.inc
++++ b/src/game/Scene_8014E0C4_rodata.inc
+@@ -1,3 +1,4 @@
++struct DemoPhase { float time; unsigned int id; };
+ /* .rodata 0x80363D30..0x803678D8, owned by game/Scene_8014E0C4.cpp.
+  * Generated from the DOL; objects are in link order. Pointer slots are
+  * struct fields so the relocations survive. */
+@@ -32,10 +33,6 @@
+     const void *p26;
+     const void *p27;
+     const void *p28;
+-};
+-struct DemoPhase {
+-    float time;
+-    unsigned int id;
+ };
+ struct DemoScriptEntry {
+     const void *data;
+@@ -295,13 +292,10 @@
+ extern const char lbl_80364B78[] = "op_demo_monster_joint";
+ extern const char lbl_80364B90[] = "op_demo_pacman_joint";
+ extern const char lbl_80364BA8[] = "DK_demo_donkey_null_joint";
+-extern const unsigned int lbl_80364BC4[35] = {
+-    0x444B5F64, 0x656D6F5F, 0x6D617269, 0x6F5F6E75, 0x6C6C5F6A, 0x6F696E74,
+-    0x00000000, 0x442DC000, 0x00000002, 0x00000032, 0x01000000, 0x4433C000,
+-    0x00000002, 0x00000032, 0x00000000, 0x443B8000, 0x00000003, 0x00000039,
+-    0x01000000, 0x4442C000, 0x00000003, 0x00000039, 0x00000000, 0x44480000,
+-    0x00000004, 0x00000008, 0x01000000, 0x4451C000, 0x00000004, 0x00000008,
+-    0x00000000, 0xBF800000, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000000,
++extern const char lbl_80364BC4[] = "DK_demo_mario_null_joint";
++static const CourseItemEvent lbl_80364BE0[7] = {
++    {695.0f, 2, 50, 1}, {719.0f, 2, 50, 0}, {750.0f, 3, 57, 1}, {779.0f, 3, 57, 0},
++    {800.0f, 4, 8, 1}, {839.0f, 4, 8, 0}, {-1.0f, -1, -1, 0},
+ };
+ static const unsigned int lbl_80364C50[30] = {
+     0x43700000, 0x44900000, 0x43700000, 0x40000000, 0x40000000, 0x00000000,
+@@ -825,23 +819,13 @@
+ static const unsigned int lbl_80366E40[3] = {
+     0x00000000, 0x00000000, 0x00000000,
+ };
+-static const float lbl_80366E4C[10] = {
+-    20.0f, 30.0f, 320.0f, 40.0f, 560.0f, 20.0f, 10.0f, 440.0f, 580.0f, 450.0f,
+-};
+-static const float lbl_80366E74[5] = {
+-    6.0f, 8.0f, 10.0f, 5.0f, 7.0f,
+-};
++static const PairPos lbl_80366E4C[5] = {
++    {20.0f, 30.0f}, {320.0f, 40.0f}, {560.0f, 20.0f}, {10.0f, 440.0f}, {580.0f, 450.0f},
++};
++static const float lbl_80366E74[5] = {6.0f, 8.0f, 10.0f, 5.0f, 7.0f};
+ static const DemoPhase lbl_80366E88[10] = {
+-    {200.0f, 0},
+-    {100.0f, 1},
+-    {120.0f, 2},
+-    {60.0f, 3},
+-    {60.0f, 4},
+-    {60.0f, 5},
+-    {240.0f, 6},
+-    {300.0f, 7},
+-    {180.0f, 8},
+-    {240.0f, 9},
++    {200.0f, 0}, {100.0f, 1}, {120.0f, 2}, {60.0f, 3}, {60.0f, 4},
++    {60.0f, 5}, {240.0f, 6}, {300.0f, 7}, {180.0f, 8}, {240.0f, 9},
+ };
+ static const char lbl_80366ED8[] = "DN_stadium_short_a.dat";
+ static const CourseModeInfo lbl_80366EF0[21] = {
+```
