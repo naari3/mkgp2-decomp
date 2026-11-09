@@ -6205,7 +6205,7 @@ return 0;
 #pragma exceptions reset
 
 /* ==== game/fn_801AF850.c (0x801af850) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef long long OSTime_p20;
 extern OSTime_p20 OSGetTime_p20(void);
@@ -6640,7 +6640,7 @@ fn_801AF850_p22();
 #pragma exceptions reset
 
 /* ==== game/fn_801B0CE4.c (0x801b0ce4) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 extern int g_gameMode_p23;
 
@@ -6677,7 +6677,7 @@ short fn_801B0CE4(int course, int kart, short variant) {
 #pragma exceptions reset
 
 /* ==== game/fn_801B0D80.c (0x801b0d80) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef long long OSTime_p24;
 extern OSTime_p24 OSGetTime_p24(void);
@@ -6710,7 +6710,7 @@ return total_p24;
 #pragma exceptions reset
 
 /* ==== game/fn_801B0F20.c (0x801b0f20) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef struct VoiceQueueEntry_p25 { short id_p25; short arg_p25; unsigned char played_p25; } VoiceQueueEntry_p25;
 extern int g_voiceQueueHead_p25;
@@ -6729,7 +6729,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/VoiceQueue_Push.c (0x801b0f88) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef long long OSTime_p26;
 extern OSTime_p26 OSGetTime_p26(void);
@@ -6799,7 +6799,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/fn_801B11B8.c (0x801b11b8) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef long long OSTime_p27;
 extern OSTime_p27 OSGetTime_p27(void);
@@ -6844,7 +6844,7 @@ void fn_801B129C(void) {
 #pragma exceptions reset
 
 /* ==== game/fn_801B12A0.c (0x801b12a0) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef long long OSTime_p29;
 extern OSTime_p29 OSGetTime_p29(void);
@@ -6897,7 +6897,7 @@ Push_p29(0x244, -2);
 #pragma exceptions reset
 
 /* ==== game/fn_801B13B0.c (0x801b13b0) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef struct Speaker_p30 {
 int priority_p30;
@@ -6960,7 +6960,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/fn_801B14B8.c (0x801b14b8) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef struct RaceEntry_p31 {
 char pad0_p31[0xC];
@@ -6998,7 +6998,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/fn_801B158C.c (0x801b158c) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef struct RaceEntry_p32 {
 char pad0_p32[0xC];
@@ -7036,7 +7036,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/fn_801B1660.c (0x801b1660) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw on
 typedef long long OSTime_p33;
 extern OSTime_p33 OSGetTime_p33(void);
@@ -7211,7 +7211,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/fn_801B1D5C.c (0x801b1d5c) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw on
 typedef long long OSTime_p34;
 extern OSTime_p34 OSGetTime_p34(void);
@@ -7582,7 +7582,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/Voice_TryEnqueueAnnouncerByPhase.c (0x801b3190) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef long long OSTime_p35;
 extern OSTime_p35 OSGetTime_p35(void);
@@ -7729,7 +7729,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/fn_801B377C.c (0x801b377c) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef long long OSTime_p36;
 extern OSTime_p36 OSGetTime_p36(void);
@@ -7752,7 +7752,7 @@ lbl_806D1798_p36 = now_p36;
 #pragma exceptions reset
 
 /* ==== game/VoiceSystem_SetCheckpointsForTotalLaps.c (0x801b3830) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw on
 typedef struct LapTable_p37 {
 int v_p37[8];
@@ -7810,7 +7810,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/fn_801B3980.c (0x801b3980) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef long long OSTime_p40;
 extern OSTime_p40 OSGetTime_p40(void);
@@ -7851,7 +7851,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/fn_801B3A4C.c (0x801b3a4c) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 
 void fn_801B3A4C(void) {
@@ -7886,7 +7886,7 @@ return id_p41;
 #pragma exceptions reset
 
 /* ==== game/VoiceQueue_Clear.c (0x801b3ab0) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef long long OSTime_p42;
 extern OSTime_p42 OSGetTime_p42(void);
@@ -7921,7 +7921,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/fn_801B3B7C.c (0x801b3b7c) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef struct RaceEntry_p43 {
 char pad0_p43[0x28];
@@ -7946,7 +7946,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/fn_801B3BC8.c (0x801b3bc8) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef long long OSTime_p44;
 extern OSTime_p44 OSGetTime_p44(void);
@@ -7983,7 +7983,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/fn_801B3CE0.c (0x801b3ce0) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef struct RaceEntry_p45 {
 char pad0_p45[0x28];
@@ -8202,7 +8202,9 @@ signed char player_p47;
 signed char f34_p47;
 signed char hits_p47;
 unsigned char pad36_p47[2];
-int id_p47;
+/* fakematch (typed-load CSE): natural code is a plain `int id`; the union keeps the
+   signed compares and the unsigned argument loads from being CSEd (target reloads id). */
+union { int s; unsigned int u; } idu_p47;
 int character_p47;
 void *item_p47;
 unsigned char pad44_p47[0xC];
@@ -8212,6 +8214,7 @@ unsigned char pad55_p47[0xB];
 RaceVoiceRival_p47 *rival_p47;
 unsigned char f64_p47, pad65_p47[3];
 } RaceVoiceEntry_p47;
+#define id_p47 idu_p47.s
 extern RaceVoiceEntry_p47 g_raceEntryArray_p47[8];
 extern int g_gameMode_p47;
 typedef struct RaceVoiceData_p47 {
@@ -8239,6 +8242,7 @@ extern unsigned int g_voiceTickCounter_p47;
 extern unsigned char fn_801A1BD0_p47(float *line_p47, RaceVoiceEntry_p47 *entry_p47);
 extern unsigned char KartItem_GetByte_f4_p47(void *item_p47);
 extern unsigned char KartItem_GetBoostArmedAndTimer_p47(void *item_p47, float *timer_p47);
+#undef id_p47
 static inline short RaceVoice_Character_p47(RaceVoiceData_p47 *data_p47, int character_p47, int id_p47) {
 short *normal_p47 = lbl_80496C54;
 short *special_p47 = lbl_80496CF4;
@@ -8251,6 +8255,7 @@ else voice_p47 = normal_p47[character_p47];
 }
 return voice_p47;
 }
+#define id_p47 idu_p47.s
 static inline unsigned char RaceVoice_Queued_p47(short priority_p47) {
 int i_p47;
 for (i_p47 = g_voiceQueueTail_p47; i_p47 < g_voiceQueueHead_p47; i_p47++) {
@@ -8346,12 +8351,24 @@ extern const float lbl_806D9838_p47;
 static inline void AdvanceItemVoiceMap801B_p47(VoiceItemMap **map_p47, int index_p47) {
 *map_p47 += index_p47;
 }
-static inline short ItemVoiceAttack801B_p47(VoiceItemMap *maps_p47, int item_p47) {
-VoiceItemMap *map_p47 = maps_p47;
+static inline short ItemVoiceAttackRef801B_p47(VoiceItemMap **map_p47, int item_p47) {
+int i_p47 = 0;
+while ((*map_p47)->item != -1) {
+if (item_p47 == (*map_p47)->item) {
+VoiceItemMap *match_p47 = lbl_80497DC4;
+AdvanceItemVoiceMap801B_p47(&match_p47, i_p47);
+return match_p47->attack;
+}
+(*map_p47)++;
+i_p47++;
+}
+return -1;
+}
+static inline short ItemVoiceAttack801B_p47(VoiceItemMap *map_p47, int item_p47) {
 int i_p47 = 0;
 while (map_p47->item != -1) {
 if (item_p47 == map_p47->item) {
-VoiceItemMap *match_p47 = maps_p47;
+VoiceItemMap *match_p47 = lbl_80497DC4;
 AdvanceItemVoiceMap801B_p47(&match_p47, i_p47);
 return match_p47->attack;
 }
@@ -8366,14 +8383,15 @@ return lbl_806D9838_p47 + (g_voicePlayCountTable[0x1C5].length + g_voicePlayCoun
 static inline int FindNearestVoiceKart801B_p47(void) {
 int i_p47;
 int nearest_p47;
+RaceVoiceEntry_p47 *e_p47;
 float distance_p47;
 float best_p47;
 best_p47 = 10000.0f;
 nearest_p47 = -1;
-for (i_p47 = 0; i_p47 < 8; i_p47++) {
-if (g_raceEntryArray_p47[i_p47].id_p47 != -1) {
+for (e_p47 = g_raceEntryArray_p47, i_p47 = 0; i_p47 < 8; i_p47++, e_p47++) {
+if ((*e_p47).id_p47 != -1) {
 distance_p47 = fn_801A19FC_p47(ItemVoice_Kart_p47(&g_raceEntryArray_p47[g_taMinLapPlayerIndex_p47]),
-ItemVoice_Kart_p47(&g_raceEntryArray_p47[i_p47]));
+ItemVoice_Kart_p47(e_p47));
 if (0.0f <= distance_p47 && distance_p47 <= best_p47) {
 nearest_p47 = i_p47;
 best_p47 = distance_p47;
@@ -8382,9 +8400,9 @@ best_p47 = distance_p47;
 }
 return nearest_p47;
 }
+#pragma use_lmw_stmw on
 int fn_801B4548(int kart_p47, int item_p47) {
 VoiceItemData_p47 *data_p47 = (VoiceItemData_p47 *)&(*(RaceVoiceData_p47 *)&lbl_80496C38);
-RaceVoiceEntry_p47 *entry_p47;
 int category_p47;
 int i_p47;
 int nearest_p47;
@@ -8393,9 +8411,8 @@ unsigned int variant_p47;
 OSTime_p47 now_p47;
 if (!g_voiceSystemInitDone_p47) return 0;
 if (kart_p47 < 0 || kart_p47 >= 8) return 0;
-entry_p47 = &g_raceEntryArray_p47[kart_p47];
-entry_p47->present_p47 = 1;
-entry_p47->kind_p47 = item_p47;
+g_raceEntryArray_p47[kart_p47].present_p47 = 1;
+g_raceEntryArray_p47[kart_p47].kind_p47 = item_p47;
 category_p47 = GetItemDataEntry_Bounded_p47(item_p47)->category_p47;
 if (category_p47 == 5) g_raceEntryArray_p47[kart_p47].rank_p47 = 1;
 else if (category_p47 == 6) g_raceEntryArray_p47[kart_p47].rank_p47 = 2;
@@ -8421,9 +8438,11 @@ if ((signed char)g_bgmStateId_p47 != 0) return 1;
 if (!RaceVoice_CanQueue_p47(11)) return 1;
 if (kart_p47 == g_taMinLapPlayerIndex_p47 && (signed char)ItemClass_GetFlagByte1_p47(item_p47) == 7) {
 nearest_p47 = FindNearestVoiceKart801B_p47();
-if (nearest_p47 != -1 && ItemVoiceAttack801B_p47(lbl_80497DC4, item_p47) != -1) {
+if (nearest_p47 != -1) {
+VoiceItemMap *maps_p47 = lbl_80497DC4;
+if (ItemVoiceAttack801B_p47(maps_p47, item_p47) != -1) {
 if (VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_raceEntryArray_p47[g_taMinLapPlayerIndex_p47])->character_p47, (&g_raceEntryArray_p47[g_taMinLapPlayerIndex_p47])->id_p47) , 7, 1, 1)) {
-VoiceQueue_Push_p47(ItemVoiceAttack801B_p47(lbl_80497DC4, item_p47), 7, 1, 1);
+VoiceQueue_Push_p47(ItemVoiceAttackRef801B_p47(&maps_p47, item_p47), 7, 1, 1);
 VoiceQueue_Push_p47(0x1D6, 7, 1, 1);
 g_bgmStateId_p47 = 7;
 now_p47 = OSGetTime_p47();
@@ -8436,13 +8455,14 @@ goto end_p47;
 }
 }
 }
+}
 if (kart_p47 == g_taMinLapPlayerIndex_p47 && (signed char)ItemClass_GetFlagByte1_p47(item_p47) == 5 &&
 item_p47 != 0x2E && item_p47 != 0x2F && item_p47 != 0x31 && item_p47 != 0x30) {
 for (i_p47 = 0; i_p47 < 8; i_p47++) {
 if (g_raceEntryArray_p47[i_p47].id_p47 != -1 &&
 fn_801A1828_p47(ItemVoice_Kart_p47(&g_raceEntryArray_p47[g_taMinLapPlayerIndex_p47]),
 ItemVoice_Kart_p47(&g_raceEntryArray_p47[i_p47])) > 0.0f) {
-voice_p47 = RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (entry_p47)->character_p47, (entry_p47)->id_p47) ;
+voice_p47 = RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, g_raceEntryArray_p47[kart_p47].character_p47, g_raceEntryArray_p47[kart_p47].id_p47) ;
 if (VoiceQueue_Push_p47(voice_p47, 11, 1, 1)) {
 variant_p47 = g_voiceTickCounter_p47 % 3;
 if (variant_p47 == 0) {
@@ -8517,7 +8537,7 @@ goto end_p47;
 }
 if (!RaceVoice_CanQueue_p47(21)) return 1;
 if (g_raceEntryArray_p47[kart_p47].id_p47 == 6 && item_p47 == 0x24) {
-VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_raceEntryArray_p47[kart_p47])->character_p47, (&g_raceEntryArray_p47[kart_p47])->id_p47) , 21, 0, 1);
+VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_raceEntryArray_p47[kart_p47])->character_p47, (&g_raceEntryArray_p47[kart_p47])->idu_p47.u) , 21, 0, 1);
 variant_p47 = g_voiceTickCounter_p47 % 3;
 if (variant_p47 == 0) VoiceQueue_Push_p47(0x201, 21, 0, 0);
 else if (variant_p47 == 1) VoiceQueue_Push_p47(0x202, 21, 0, 0);
@@ -8525,7 +8545,7 @@ else VoiceQueue_Push_p47(0x203, 21, 0, 0);
 return 1;
 }
 if (!RaceVoice_Queued_p47(22) && g_raceEntryArray_p47[kart_p47].id_p47 == 6 && g_raceEntryArray_p47[kart_p47].rank_p47 == 3) {
-VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_raceEntryArray_p47[kart_p47])->character_p47, (&g_raceEntryArray_p47[kart_p47])->id_p47) , 22, 0, 1);
+VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_raceEntryArray_p47[kart_p47])->character_p47, (&g_raceEntryArray_p47[kart_p47])->idu_p47.u) , 22, 0, 1);
 variant_p47 = g_voiceTickCounter_p47 % 3;
 if (variant_p47 == 0) {
 VoiceQueue_Push_p47(ItemVoiceAttack801B_p47(lbl_80497DC4, item_p47), 22, 0, 0);
@@ -8536,34 +8556,34 @@ return 1;
 }
 if (item_p47 == 0x7A && g_voiceTickCounter_p47 % 10 < 3) {
 VoiceQueue_Push_p47(0x1CD, 23, 0, 1);
-VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_raceEntryArray_p47[kart_p47])->character_p47, (&g_raceEntryArray_p47[kart_p47])->id_p47) , 23, 0, 0);
+VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_raceEntryArray_p47[kart_p47])->character_p47, (&g_raceEntryArray_p47[kart_p47])->idu_p47.u) , 23, 0, 0);
 VoiceQueue_Push_p47(0x207, 23, 0, 0);
 return 1;
 }
 if (g_raceEntryArray_p47[kart_p47].id_p47 == 6 && item_p47 == 0x12) {
-VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_raceEntryArray_p47[kart_p47])->character_p47, (&g_raceEntryArray_p47[kart_p47])->id_p47) , 24, 0, 1);
+VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_raceEntryArray_p47[kart_p47])->character_p47, (&g_raceEntryArray_p47[kart_p47])->idu_p47.u) , 24, 0, 1);
 VoiceQueue_Push_p47(0x208, 24, 0, 0);
 return 1;
 }
 if (g_raceEntryArray_p47[kart_p47].id_p47 == 6 && item_p47 == 0xB) {
-VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_raceEntryArray_p47[kart_p47])->character_p47, (&g_raceEntryArray_p47[kart_p47])->id_p47) , 25, 0, 1);
+VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_raceEntryArray_p47[kart_p47])->character_p47, (&g_raceEntryArray_p47[kart_p47])->idu_p47.u) , 25, 0, 1);
 VoiceQueue_Push_p47(0x209, 25, 0, 0);
 return 1;
 }
 if (g_raceEntryArray_p47[kart_p47].id_p47 == 6 && item_p47 == 0x1D) {
-VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_raceEntryArray_p47[kart_p47])->character_p47, (&g_raceEntryArray_p47[kart_p47])->id_p47) , 26, 0, 1);
+VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_raceEntryArray_p47[kart_p47])->character_p47, (&g_raceEntryArray_p47[kart_p47])->idu_p47.u) , 26, 0, 1);
 VoiceQueue_Push_p47(0x20A, 26, 0, 0);
 return 1;
 }
 if (item_p47 == 0x19 && g_voiceTickCounter_p47 % 10 < 3) {
 VoiceQueue_Push_p47(0x1CD, 27, 0, 1);
-VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_raceEntryArray_p47[kart_p47])->character_p47, (&g_raceEntryArray_p47[kart_p47])->id_p47) , 27, 0, 0);
+VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_raceEntryArray_p47[kart_p47])->character_p47, (&g_raceEntryArray_p47[kart_p47])->idu_p47.u) , 27, 0, 0);
 VoiceQueue_Push_p47(0x20B, 27, 0, 0);
 return 1;
 }
 if (item_p47 == 0x1C && g_voiceTickCounter_p47 % 10 < 3) {
 VoiceQueue_Push_p47(0x1CD, 28, 0, 1);
-VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_raceEntryArray_p47[kart_p47])->character_p47, (&g_raceEntryArray_p47[kart_p47])->id_p47) , 28, 0, 0);
+VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_raceEntryArray_p47[kart_p47])->character_p47, (&g_raceEntryArray_p47[kart_p47])->idu_p47.u) , 28, 0, 0);
 VoiceQueue_Push_p47(0x20C, 28, 0, 0);
 return 1;
 }
@@ -8573,8 +8593,9 @@ return 1;
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
 
+#undef id_p47
 /* ==== game/fn_801B5B60.c (0x801b5b60) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef struct RaceEntry_p48 {
 char unk0_p48;
@@ -8639,7 +8660,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/fn_801B5C98.c (0x801b5c98) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef long long OSTime_p49;
 extern OSTime_p49 OSGetTime_p49(void);
@@ -8722,7 +8743,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/RacePerFrame.c (0x801b5e18) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw on
 typedef long long OSTime_p50;
 extern OSTime_p50 OSGetTime_p50(void);
@@ -9144,7 +9165,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/fn_801B6B94.c (0x801b6b94) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 typedef long long OSTime_p51;
 extern OSTime_p51 OSGetTime_p51(void);
