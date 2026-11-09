@@ -1181,3 +1181,44 @@ Same function, stack slots: `CIter b = l.begin(); RenderRange(b, l.end());` (nam
 by value) puts `b` below the by-value parameter copy; the target has them the other way round,
 which is `RenderRange(l.begin(), l.end())` with the temporary as the argument.
 Rule name in hits.jsonl: `loop-in-inline-param`.
+
+## 48. Big update function with several loops: which locals must be inline temps, and a table loop driven by the function-level counter (fn_80154304, 11-09)
+
+`fn_80154304` (CourseScene update, 3244 bytes, `src/game/Scene_8014E0C4.cpp`)
+went 98.8 % -> 100 % with four source-shape levers. None needed a pragma.
+
+1. **A loop whose walkers must be coloured AFTER the other saved registers
+   goes into a `static inline` helper.** Locals of an inlined function are
+   inline temps (high vreg numbers), named locals of the outer function are
+   always low, even when block-local. `CourseScene_UpdateJoints(self)` (the
+   6-joint loop) and `VObjPair::Update()` fixed two groups this way.
+2. **HSD-style nested accessor keeps the object in one register.**
+   `PSMTXCopy(JObjGetMtxPtr(self->jobjs[i]), self->mtx[i])` with
+   `static inline void *JObjGetMtxPtr(void *j) { JObjSetupMatrix(j); return (char *)j + 0x44; }`
+   removed a reload of `self->jobjs[i]`. Passing the destination matrix as a
+   second inline parameter evaluates it too early (worse).
+3. **Mixed case: one variable low, the others high.** The sprite-cache sweep
+   needs the end sentinel `e` as an outer named local but `spr` and the node
+   walker as inline temps. `static inline void SprScene_Sweep(CourseScene *self, SprNodeBase *&e)`
+   with `e` declared in the caller (right after `int i;`) and the helper
+   locals declared in the order `n2, spr` gives exactly that. A named `e`
+   inside the helper, a hoisted `&spr->cache.end`, or `spr` as a parameter all
+   swap registers.
+4. **Loop-invariant constant loaded BEFORE the table pointer** (`lfs f31, 0.0f`
+   then `addi r30, rAnchor, off`; ours had the two swapped): the original
+   indexes the table with the function-level counter,
+   `for (i = 0;; i++) { if (tbl[i].time < 0.0f) break; ... tbl[i].x ... }`.
+   Strength reduction creates the pointer after the constant is hoisted. A
+   walking pointer (`for (ev = tbl;; ev++)`), a block-local `int k` index, a
+   named `float zero`, and an inline helper all keep the wrong order;
+   `while (!(ev->time < 0.0f))` fixes the order but rotates the loop.
+
+Also: a class-specific `operator delete` that only forwards to the global one
+is emitted out of line (weak `__dl__5ClassFPv`) as soon as a `new Class`
+expression needs it for its DELETEPOINTER extab action. If the target's action
+names the global delete, drop the class operator.
+
+Speed tip for a 15 kLoC TU (2.5 min per compile): take the compile command
+from `ninja -t commands <obj>`, write each variant to its own directory, add
+`-i src/<dir>` so the `.inc` files resolve, and run all variants in parallel;
+compare `dtk elf disasm` bodies with symbols normalised.
