@@ -668,6 +668,9 @@ def add_helper(st, kind, op, t):
     elif kind == 'rev':
         name = f'{OPNAME[op]}R_{s}'
         code = f'static inline {t} {name}({t} b, {t} a) {{ return a {op} b; }}'
+    elif kind == 'loc':
+        name = f'{OPNAME[op]}V_{s}'
+        code = f'static inline {t} {name}({t} a, {t} b) {{ {t} r = a {op} b; return r; }}'
     else:  # layered
         inner = add_helper(st, 'fwd', op, t)
         name = f'{OPNAME[op]}L_{s}'
@@ -720,8 +723,8 @@ def _moves(st, ctx, allowed):
         t = typeof(n, env, ctx.ti, H)
         tn = scalar_name(t)
         if n.k == 'bin' and n.op in OPNAME and tn:
-            for kind in ('fwd', 'rev', 'lay'):
-                if ('wrap' if kind != 'lay' else 'wrap2') not in allowed:
+            for kind in ('fwd', 'rev', 'lay', 'loc'):
+                if ('wrap' if kind in ('fwd', 'rev') else 'wrap2') not in allowed:
                     continue
 
                 def f(si=si, xi=xi, path=path, kind=kind, tn=tn, base=None):
@@ -733,6 +736,17 @@ def _moves(st, ctx, allowed):
                     replace_at(slot(s2, si, xi), path, N('call', None, [N('atom', t=name)] + args))
                     return s2
                 yield (f'wrap-{kind} {pr(n)[:40]}', f, si, xi, path)
+        if n.k == 'mem' and n.op == '->' and tn and 'getter' in allowed:
+            bt = typeof(n.kids[0], env, ctx.ti, H)
+            if bt and bt[1] == 1 and re.match(r'^[A-Za-z_]\w*$', bt[0]):
+                def f(si=si, xi=xi, path=path, tn=tn, bt=bt, base=None):
+                    s2 = (base or st).clone()
+                    nn = node_at(get_slot(*slot(s2, si, xi)), path)
+                    name = f'Get_{bt[0]}_{nn.t}'
+                    s2.helpers[name] = (tn, f'static inline {tn} {name}(const {bt[0]} *p) {{ return p->{nn.t}; }}')
+                    replace_at(slot(s2, si, xi), path, N('call', None, [N('atom', t=name), nn.kids[0]]))
+                    return s2
+                yield (f'getter {pr(n)[:40]}', f, si, xi, path)
         if n.k == 'bin' and n.op in COMMUTATIVE and 'swap' in allowed:
             def f(si=si, xi=xi, path=path, base=None):
                 s2 = (base or st).clone()
@@ -856,6 +870,8 @@ def _moves(st, ctx, allowed):
                         s2.stmts = [d for d in s2.stmts if not (d['k'] == 'decl' and not d['vars'])]
                     return s2
                 yield (f'unvar {tgt}', f, None, None, None)
+    if 'setter' in allowed:
+        yield from setter_moves(st, ctx, env)
     if 'declswap' in allowed:
         a, b = decl_front(st)
         for i in range(a, b):
@@ -875,6 +891,50 @@ def _moves(st, ctx, allowed):
                 yield (f'declswap #{i - a}', f, None, None, None)
 
 
+def setter_moves(st, ctx, env):
+    """p->f1 = e1; p->f2 = e2; ... (2-4 consecutive stores through one pointer)
+    -> Set(p, e..) inline with every parameter order (args evaluate right to left)."""
+    import itertools
+    i = 0
+    while i < len(st.stmts):
+        j = i
+        base = None
+        while j < len(st.stmts) and j - i < 4:
+            x = st.stmts[j]
+            if not (x['k'] == 'expr' and x['e'].k == 'asg' and x['e'].op == '=' and x['e'].kids[0].k == 'mem'
+                    and x['e'].kids[0].op == '->' and x['e'].kids[0].kids[0].k == 'atom'):
+                break
+            b = x['e'].kids[0].kids[0].t
+            if base is None:
+                base = b
+            elif b != base:
+                break
+            j += 1
+        if j - i >= 2:
+            bt = env.get(base)
+            fields = [st.stmts[k]['e'].kids[0].t for k in range(i, j)]
+            tys = [scalar_name(ctx.ti.field(fl, bt[0] if bt else None)) for fl in fields]
+            if bt and bt[1] == 1 and all(tys) and len(set(fields)) == len(fields):
+                n = j - i
+                for perm in itertools.permutations(range(n)):
+                    def f(i=i, j=j, perm=perm, bt=bt, fields=fields, tys=tys, base=base):
+                        s2 = st.clone()
+                        vals = [s2.stmts[k]['e'].kids[1] for k in range(i, j)]
+                        tag = ''.join(str(q) for q in perm)
+                        name = f'Set_{bt[0]}_{"".join(fl[:2] for fl in fields)}_{tag}'
+                        params = ', '.join(f'{tys[q]} a{q}' for q in perm)
+                        body = ' '.join(f'p->{fields[q]} = a{q};' for q in range(n))
+                        s2.helpers[name] = ('void', f'static inline void {name}({bt[0]} *p, {params}) {{ {body} }}')
+                        call = N('call', None, [N('atom', t=name), N('atom', t=base)] + [vals[q] for q in perm])
+                        ind = s2.stmts[i]['ind']
+                        s2.stmts[i:j] = [{'k': 'expr', 'ind': ind, 'e': call}]
+                        return s2
+                    yield (f'setter {base}->{",".join(fields)} order {perm}', f, None, None, None)
+            i = j
+        else:
+            i += 1
+
+
 def skeleton(n):
     if n.k == 'atom':
         return 'A'
@@ -892,7 +952,7 @@ def moves(st, ctx, allowed):
             groups.setdefault(skeleton(ex[0][0][ex[0][1]]), []).append(si)
     done = set()
     for label, f, si, xi, path in _moves(st, ctx, allowed):
-        yield label, f
+        yield label, f, si
         if si is None or 'sym' not in allowed:
             continue
         ex = stmt_exprs(st.stmts[si])
@@ -909,7 +969,7 @@ def moves(st, ctx, allowed):
             for sj in sib:
                 s2 = f(si=sj, base=s2)
             return s2
-        yield (f'sym-{label} x{len(sib)}', g)
+        yield (f'sym-{label} x{len(sib)}', g, si)
 
 
 def find_inlines(text, types):
@@ -937,6 +997,8 @@ class Sweep:
         self.u = ps.Unit(a.unit)
         self.text = self.u.text
         self.cpp = self.u.ext != '.c'
+        if getattr(a, 'start_tu', None):
+            self.text = open(a.start_tu).read()
         if a.start:
             self.text = self.splice_start(open(a.start).read())
         self.u.text = self.text
@@ -979,6 +1041,19 @@ class Sweep:
             f = '#pragma push\n' + ''.join(f'#pragma {p}\n' for p in self.a.pragma) + f + '\n#pragma pop'
         return self.text[:ls] + f + self.text[be:]
 
+    def stmt_lines(self, st):
+        """1-based source line of each statement in the rendered TU."""
+        txt = self.render(st)
+        ls = self.d[0]
+        f = self.func_text(st)
+        pre = txt[:txt.index(f)] if f in txt else self.text[:ls]
+        start = pre.count('\n') + 1 + (f.count('\n') - '\n'.join(render_stmt(x) for x in st.stmts).count('\n'))
+        out, ln = [], start
+        for x in st.stmts:
+            out.append(ln)
+            ln += render_stmt(x).count('\n') + 1
+        return out
+
     def score(self, text, wk):
         h = hashlib.sha1(text.encode()).hexdigest()
         if h in self.cache:
@@ -1002,7 +1077,7 @@ def dbg_analyze(u, text, sym, fn, cc):
     try:
         import mwccdbg as md
     except ImportError:
-        return (0, 999)
+        return (0, 999, None)
     out = os.path.join(TMP, 'dbg')
     os.makedirs(out, exist_ok=True)
     sp = os.path.join(os.path.dirname(os.path.abspath(u.src)), f'.shapesweep_dbg{u.ext}')
@@ -1015,7 +1090,7 @@ def dbg_analyze(u, text, sym, fn, cc):
         subprocess.run(c, shell=True, capture_output=True)
         objs = [os.path.join(o, x) for x in os.listdir(o) if x.endswith('.o')]
         if not objs:
-            return (0, 999)
+            return (0, 999, None)
         ours = max(objs, key=os.path.getmtime)
         toks = shlex.split(u.cmd)
         i = next(k for k, t in enumerate(toks) if t.endswith('mwcceppc.exe'))
@@ -1023,7 +1098,7 @@ def dbg_analyze(u, text, sym, fn, cc):
         m = re.search(r'GC/([^/]+)/mwcceppc\.exe', toks[0])
         sup = md.TO_SUPPORTED.get(cc if cc else m.group(1))
         if not sup:
-            return (0, 999)
+            return (0, 999, None)
         toks[0] = re.sub(r'GC/[^/]+/', f'GC/{sup}/', toks[0])
         ci = toks.index('-c')
         toks[ci + 1] = sp
@@ -1039,25 +1114,59 @@ def dbg_analyze(u, text, sym, fn, cc):
         except OSError:
             pass
     if res is None:
-        return (0, 999)
-    first = min((r['pos'] for r in res if r['bad']), default=10**4)
-    nbad = sum(1 for r in res if r['bad'])
-    return (-first, nbad)
+        return (0, 999, None)
+    bad = [r for r in res if r['bad']]
+    first = min((r['pos'] for r in bad), default=10**4)
+    nbad = len(bad)
+    line = None
+    if bad:
+        m = re.match(r'\s*(\d+)', min(bad, key=lambda r: r['pos'])['where'])
+        line = int(m.group(1)) if m else None
+    return (-first, nbad, line)
 
 
 # --------------------------------------------------------------------------
 # search
 
-ALL_MOVES = ['wrap', 'wrap2', 'id', 'hoist', 'accum', 'unvar', 'expand', 'swap', 'assoc', 'declswap', 'sym']
+ALL_MOVES = ['wrap', 'wrap2', 'id', 'hoist', 'accum', 'unvar', 'expand', 'swap', 'assoc', 'declswap', 'sym',
+             'getter', 'setter']
+# fn_8019EB9C review (11-09): MWCC canonicalises commutative operand order and
+# macro expansion removes the inline-argument vreg ordering, so for diffs that
+# are register numbers only, use just the vreg-order moves.
+REG_ONLY_MOVES = ['wrap', 'wrap2', 'id', 'hoist', 'accum', 'unvar', 'declswap', 'sym', 'getter', 'setter']
+
+
+def reg_only(fn, sym=None, ms=None):
+    """True when the variant just scored by worker 0 (its disassembly ms) has
+    exactly the target's opcode sequence."""
+    T = ps.target_body(fn)
+    ms = ms or f'{ps.TMP}/w{os.getpid()}_0/m.s'
+    if not T or not os.path.exists(ms):
+        return False
+    B = ps.norm_body(ms, fn) or (ps.norm_body(ms, sym) if sym else None)
+    if not B or len(B) != len(T):
+        return False
+    return all(a.split()[0] == b.split()[0] for a, b in zip(T, B) if a.split() and b.split())
 
 
 def search(sw, a):
     rnd = random.Random(a.seed)
-    allowed = set(a.moves.split(',')) if a.moves else set(ALL_MOVES)
     init_text = sw.render(sw.init)
     s0 = sw.score(init_text, 0)
+    if a.moves:
+        allowed = set(a.moves.split(','))
+    else:
+        ro = reg_only(a.fn, sw.sym)
+        allowed = set(REG_ONLY_MOVES if ro else ALL_MOVES)
+        print(f'[shapesweep] diff is {"register numbers only" if ro else "not register-only"}: '
+              f'{len(allowed)} move kinds', flush=True)
+        if getattr(a, 'reg_only', False) and not ro and s0 != 0:
+            sw.skipped = 'not register-only'
+            return s0, (s0, (0, 999, None), sw.init, init_text)
     print(f'[shapesweep] {a.unit} {a.fn} GC/{sw.cc} {" ".join(a.pragma or [])}: start {s0} diff lines', flush=True)
-    beam = [(s0, (0, 0), sw.init, init_text)]
+    beam = [(s0, sw.dbg_key(init_text) if a.dbg else (0, 999, None), sw.init, init_text)]
+    if a.dbg:
+        print(f'[shapesweep] mwccdbg start: {beam[0][1][1]} mismatching vregs, first at colouring #{-beam[0][1][0]}, line {beam[0][1][2]}', flush=True)
     best = beam[0]
     stale = 0
     seen = {hashlib.sha1(init_text.encode()).hexdigest()}
@@ -1065,12 +1174,18 @@ def search(sw, a):
     t0 = time.time()
     for rnd_i in range(a.rounds):
         cands = []
-        for _, _, st, _ in beam:
+        for _, k, st, _ in beam:
             if len(st.hist) >= a.max_depth:
                 continue
-            for label, f in moves(st, sw.ctx, allowed):
-                cands.append((st, label, f))
-        rnd.shuffle(cands)
+            focus = set()
+            if len(k) > 2 and k[2]:
+                lines = sw.stmt_lines(st)
+                focus = {i for i, l in enumerate(lines) if l == k[2]}
+            for label, f, si in moves(st, sw.ctx, allowed):
+                cands.append((0 if si in focus else 1, rnd.random(), st, label, f))
+        # moves on the statement that defines the first diverging vreg first
+        cands.sort(key=lambda c: (c[0], c[1]))
+        cands = [c[2:] for c in cands]
         new = []
         for st, label, f in cands:
             if len(new) >= a.sample:
@@ -1100,17 +1215,23 @@ def search(sw, a):
         total += len(new)
         for (s2, txt), s in zip(new, sc):
             sw.log.write(json.dumps({'fn': a.fn, 'score': s, 'hist': list(s2.hist)}) + '\n')
-        pool = beam + [(s, (0, 0), s2, txt) for (s2, txt), s in zip(new, sc) if s < 10**6]
+        pool = beam + [(s, (0, 999, None), s2, txt) for (s2, txt), s in zip(new, sc) if s < 10**6]
         pool.sort(key=lambda r: (r[0], len(r[2].hist)))
         # mwccdbg tie-break among the best-scored states
         if a.dbg and pool and pool[0][0] > 0:
-            top = [r for r in pool if r[0] == pool[0][0]][:max(a.dbg, 1) * 3]
-            keyed = []
-            for r in top[:a.dbg * 3]:
-                k = sw.dbg_key(r[3]) if len(keyed) < a.dbg or r[3] in sw.dbgcache else (0, 999)
-                keyed.append((r[0], k, r[2], r[3]))
-            rest = [r for r in pool if r not in top]
-            keyed.sort(key=lambda r: (r[0], r[1], len(r[2].hist)))
+            # mwccdbg is the primary key among the states within --dbg-slack
+            # diff lines of the best: fewer mismatching vregs, first one later
+            top, seen_t = [], set()
+            for r in pool:
+                if r[0] > pool[0][0] + a.dbg_slack or len(top) >= a.dbg:
+                    break
+                if r[3] not in seen_t:
+                    seen_t.add(r[3])
+                    top.append(r)
+            keyed = [(r[0], sw.dbg_key(r[3]), r[2], r[3]) for r in top]
+            ids = {id(r[2]) for r in top}
+            rest = [r for r in pool if id(r[2]) not in ids]
+            keyed.sort(key=lambda r: (r[1][1], r[1][0], r[0], len(r[2].hist)))
             pool = keyed + rest
         # diversity: at most a.beam distinct texts, and not all children of one parent
         nb, seen_txt, uniq = [], set(), []
@@ -1126,7 +1247,7 @@ def search(sw, a):
         rest = uniq[ne:ne + 4 * a.beam]
         nb += rnd.sample(rest, min(len(rest), a.beam - ne))
         beam = nb
-        if beam[0][0] < best[0] or (beam[0][0] == best[0] and beam[0][1] < best[1]):
+        if beam[0][0] < best[0] or (beam[0][0] == best[0] and beam[0][1][:2] < best[1][:2]):
             best = beam[0]
             stale = 0
         else:
@@ -1167,7 +1288,7 @@ def cmd_batch(a):
     if a.claims:
         claimed = {l.strip() for l in open(a.claims) if l.strip() and not l.startswith('#')}
     a.min, a.max_size = a.min_pct, a.max_size
-    cands = ap.candidates(a)
+    cands = [c for c in ap.candidates(a) if c[0] < a.max_pct]
     if a.only:
         keep = set(a.only.split(','))
         cands = [c for c in cands if c[2] in keep]
@@ -1182,12 +1303,28 @@ def cmd_batch(a):
             return
         b = argparse.Namespace(**vars(a))
         b.unit, b.fn, b.demangled, b.start = obj, fn, dm if dm and '::' in (dm or '') else None, None
+        b.start_tu = None
+        # chain after autopipe99: start from its best pragma/cc/decl/stmt source
+        import glob as _g
+        bests = []
+        for pth in _g.glob(f'{a.chain}/{fn}_*'):
+            mm = re.match(r'.*_([\d.]+)_GC([\w.]+)\.\w+$', pth)
+            if mm:
+                bests.append((float(mm.group(1)), mm.group(2), pth))
+        if bests:
+            _, b.cc, b.start_tu = max(bests)
+        qid = ap.q_claim(fn, obj, pct)
+        if qid is None:
+            print(f'[shapesweep] {fn}: queue item held by someone else, skipped', flush=True)
+            continue
         t0 = time.time()
-        rec = {'obj': obj, 'fn': fn, 'pct': pct, 'size': size}
+        rec = {'obj': obj, 'fn': fn, 'pct': pct, 'size': size, 'start_tu': b.start_tu}
         try:
             sw = Sweep(b)
             s0, best = search(sw, b)
             rec.update(start=s0, best=best[0], moves=list(best[2].hist))
+            if getattr(sw, 'skipped', None):
+                rec['skipped'] = sw.skipped
             if best[0] == 0 and s0 != 0:
                 open(f'{out}/hits/{fn}{sw.u.ext}', 'w').write(best[3])
                 open(f'{out}/hits/{fn}.fn.txt', 'w').write(sw.func_text(best[2]) + '\n')
@@ -1200,6 +1337,14 @@ def cmd_batch(a):
         rec['t'] = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
         with open(res_path, 'a') as f:
             f.write(json.dumps(rec) + '\n')
+        try:
+            if rec.get('best') == 0 or rec.get('skipped') or rec.get('error'):
+                ap.q_close(qid, 'release', '')
+            else:
+                ap.q_close(qid, 'park', f'shapesweep: {rec.get("start")} -> {rec.get("best")} lines '
+                           f'({" | ".join(rec.get("moves", []))[:200]})')
+        except Exception as e:
+            print(f'[shapesweep] queue close failed: {e}', flush=True)
         print(f'[shapesweep] {fn} {pct}%: {rec.get("start")} -> {rec.get("best")} {rec.get("error", "")}', flush=True)
 
 
@@ -1219,6 +1364,8 @@ def main():
     ap.add_argument('--max-depth', type=int, default=10, help='max moves stacked on one state')
     ap.add_argument('--patience', type=int, default=3, help='stop after N rounds without improvement')
     ap.add_argument('--dbg', type=int, default=0, help='mwccdbg tie-break on the K best tied states per round')
+    ap.add_argument('--dbg-slack', type=int, default=4, help='diff-line slack for the mwccdbg-ranked set')
+    ap.add_argument('--start-tu', help='full TU source to start from (e.g. setup/autopipe99/best/FN_PCT_GCcc.cpp)')
     ap.add_argument('--explore', type=float, default=0.4, help='fraction of the beam picked at random from the runners-up')
     ap.add_argument('--seed', type=int, default=1)
     ap.add_argument('-j', '--jobs', type=int, default=4)
@@ -1229,13 +1376,17 @@ def main():
         bp = argparse.ArgumentParser(prog='shapesweep.py batch')
         bp.add_argument('batch')
         bp.add_argument('--min-pct', type=float, default=99.0)
+        bp.add_argument('--max-pct', type=float, default=100.0)
         bp.add_argument('--max-size', type=int, default=2000)
         bp.add_argument('--only', help='comma list of fns')
         bp.add_argument('--retry', action='store_true', help='ignore earlier results')
+        bp.add_argument('--reg-only', action='store_true', help='only functions whose opcodes already match')
+        bp.add_argument('--chain', default='/mnt/project-files/setup/autopipe99/best',
+                        help='start from FN_PCT_GCcc.<ext> full-TU files found here')
         bp.add_argument('--claims', help='file of claimed TU paths (src/... or obj) to skip')
         bp.add_argument('--out', default='/mnt/project-files/setup/shapesweep')
         for k, v in (('--beam', 6), ('--rounds', 8), ('--sample', 200), ('--max-depth', 8), ('--patience', 2),
-                     ('--dbg', 0), ('--seed', 1), ('-j', 4), ('--minutes', 6.0), ('--explore', 0.4)):
+                     ('--dbg', 0), ('--seed', 1), ('-j', 4), ('--minutes', 6.0), ('--explore', 0.4), ('--dbg-slack', 4)):
             bp.add_argument(k, type=type(v), default=v, **({'dest': 'jobs'} if k == '-j' else {}))
         bp.add_argument('--moves')
         bp.add_argument('--pragma', action='append')
@@ -1245,7 +1396,7 @@ def main():
     sw = Sweep(a)
     if a.show:
         print(sw.func_text(sw.init))
-        for label, _ in moves(sw.init, sw.ctx, set(a.moves.split(',')) if a.moves else set(ALL_MOVES)):
+        for label, _, _ in moves(sw.init, sw.ctx, set(a.moves.split(',')) if a.moves else set(ALL_MOVES)):
             print('  move:', label)
         return
     s0, best = search(sw, a)
