@@ -1,5 +1,6 @@
-/* Complete NonMatching reconstruction: 88.45247% in the bounded three-approach
- * batch. Typed wire overlays preserve all writes and the signed ring remainder.
+/* Complete NonMatching reconstruction: 89.06464% in the bounded
+ * signed-bitfield retry. Typed wire overlays preserve all writes and the
+ * signed ring remainder.
  * Only observed layouts are modeled; no storage or complete runtime class is
  * owned. Original object remains the linked fallback. */
 struct BroadcastInput {
@@ -21,7 +22,9 @@ struct HeaderByte {
     void SetFlag2(unsigned char value) { flag2 = value; }
 };
 struct StateByte {
-    unsigned char sceneLow:1, raceEnded:1, flag5:1, unused4:1;
+    unsigned char sceneLow:1, raceEnded:1;
+    signed char flag5:1;
+    unsigned char unused4:1;
     unsigned char active:1, scratch:1, scratchNext:1, flag0:1;
     void SetActive(unsigned char value) { active = value; }
     void SetFlag5(unsigned char value) { flag5 = value; }
