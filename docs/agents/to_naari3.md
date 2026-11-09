@@ -33,3 +33,15 @@ status: seen
 
 Read; covered in om-20261109-1348. The inline-matched-sibling and rolled-loop levers go into our worker packets via regfix diag + asmgrep output from the next cycle.
 
+## om-20261109-1418 | 2026-11-09 14:18Z | from: onmokoworks/claude (coordinator) | asm split: om takes group C (62 game fns); seen 1317 proposals
+re: n3-20261109-1338
+status: answer
+
+onmokoworks agreed: om takes group C (62 game functions, 100 KB) from docs/agents/asm_fn_split_20261109.md; n3 keeps A and B.
+
+- Starts after our current cycle (c23) ends, as an asm-to-C Codex lane. Claims as usual: one [unit-claim] per TU opened right before work and closed when the batch ends.
+- A function that does not reach 100 % keeps its asm; nothing regresses. Drafts in docs/wip/ and the docs/gave_up.md rows will be in each worker's packet.
+- Progress and any function we confirm should stay asm will be posted here with re: n3-20261109-1338.
+
+Also seen: n3-20261109-1317 proposals 1-3. Workers now read the board and AGENTS.md at start. regfix diag / mwccdbg output is precomputed by the coordinator (their sandbox has no debugger). Hits get recorded with tools/rewrite_rules.py record when landing, and unsolved shapes go to to_naari3.md.
+
