@@ -5,19 +5,34 @@ static inline VoiceItemMap *ItemMaps(VoiceItemData *data) {
     return (VoiceItemMap *)((unsigned int)data + 0x118C);
 }
 
+static inline void AdvanceItemMap(VoiceItemMap **map, int i) {
+    *map += i;
+}
+
 static inline short EventItemVoice(VoiceItemData *data, int item, int response) {
     VoiceItemMap *map = ItemMaps(data);
     int i = 0;
     while (map->item != -1) {
         if (item == map->item) {
             VoiceItemMap *base = data->maps;
-            if (response) return base[i].response;
-            return base[i].attack;
+            AdvanceItemMap(&base, i);
+            if (response) return base->response;
+            return base->attack;
         }
         map++;
         i++;
     }
     return -1;
+}
+
+static inline void AdvanceVoiceClip(VoiceClip **clip, int id) {
+    *clip += id;
+}
+
+static inline unsigned char ClipPlayed(VoiceClip *clips, int id) {
+    VoiceClip *clip = clips;
+    AdvanceVoiceClip(&clip, id);
+    return clip->playCount;
 }
 
 static inline short RemapItemVoice(short item) {
@@ -68,14 +83,14 @@ int fn_801B1D5C(RaceVoiceRival *kart, RaceVoiceRival *target, short item, unsign
             if (lbl_806D1775==kart->playerIndex && voice==lbl_806CFD34) {
                 voice=EventItemVoice(data,voice,1);
                 lbl_806D1776=target->playerIndex;
-                if (voice!=-1 && data->clips[voice].playCount==0) {
+                if (voice!=-1 && ClipPlayed(data->clips, voice)==0) {
                     PUSH(CHARACTER(lbl_806D1776),11);
                     PUSH(voice,11);
                     g_bgmStateId=0;
                 } else {
                     THIRD(0x1C8,0x25A,0x25B,11);
                     lbl_806D1774=1;
-                    if (data->clips[0x1E5].playCount==0 && g_raceEntryArray[lbl_806D1775].f32>g_raceEntryArray[lbl_806D1776].f32) {
+                    if (ClipPlayed(data->clips, 0x1E5)==0 && g_raceEntryArray[lbl_806D1775].f32>g_raceEntryArray[lbl_806D1776].f32) {
                         PUSH(CHARACTER(lbl_806D1775),11);
                         PUSH(0x1E5,11);
                         g_bgmStateId=0;
@@ -100,7 +115,7 @@ int fn_801B1D5C(RaceVoiceRival *kart, RaceVoiceRival *target, short item, unsign
                 if (g_voiceTickCounter%3==0) PUSH(0x1C8,11);
                 else if (g_voiceTickCounter%3==1) { PUSH(CHARACTER(lbl_806D1776),11); PUSH(0x1C6,11); }
                 else { PUSH(CHARACTER(lbl_806D1776),11); PUSH(0x1C7,11); }
-                if (data->clips[0x1E5].playCount==0 && g_raceEntryArray[lbl_806D1775].f32>g_raceEntryArray[lbl_806D1776].f32) {
+                if (ClipPlayed(data->clips, 0x1E5)==0 && g_raceEntryArray[lbl_806D1775].f32>g_raceEntryArray[lbl_806D1776].f32) {
                     PUSH(CHARACTER(lbl_806D1775),11);
                     PUSH(0x1E5,11);
                     g_bgmStateId=0;
