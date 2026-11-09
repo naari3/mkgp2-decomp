@@ -39,7 +39,8 @@ void clFAllDisp::Draw() {
         float s = scale.p->Value();
         r.resId = 0xC6F;
         float px = x;
-        r.Show(px, (y + -19.2f) + slide.p->Value(), 1.0f);
+        float dy = -19.2f;
+        r.Show(px, (y + dy) + slide.p->Value(), 1.0f);
         r.SetScale(s);
         fn_8011FAFC(&r, 3);
         r.mode = 3;
