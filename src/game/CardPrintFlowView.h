@@ -28,5 +28,7 @@ int card_rw_get_substate();
 void fn_8024B924(CardPrintFlow *);
 void fn_8024B77C(CardPrintFlow *);
 void DebugPrintf(const char *, ...);
-extern int lbl_806D1AB0;
+/* read-only for the card flow views (only CardPrintConfig writes it, with its own
+   non-const declaration); const lets GC/2.6 hoist its load over self-> stores. */
+extern const int lbl_806D1AB0;
 }
