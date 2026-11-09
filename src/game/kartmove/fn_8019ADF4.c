@@ -1,7 +1,5 @@
 #include "game/kartmove/speed_private.h"
 
-
-
 extern const float lbl_806D9710, lbl_806D9714;
 
 static inline void ForceScale(volatile Vec3 *v, float scale) {
@@ -13,7 +11,6 @@ static inline void ForceScale(volatile Vec3 *v, float scale) {
 }
 
 static inline void ApplyHorizontalForce(KartForceState *k, volatile Vec3 *v, const volatile Vec3 *n) {
-    float dot;
     float vx, vy, vz;
     float nx, ny, nz;
     nx = n->x; vx = v->x; ny = n->y; vy = v->y; nz = n->z; vz = v->z;
@@ -21,11 +18,12 @@ static inline void ApplyHorizontalForce(KartForceState *k, volatile Vec3 *v, con
         float xx = nx*vx;
         float yy = ny*vy;
         float zz = nz*vz;
-        dot = zz + (xx + yy);
+        vz = zz + (xx + yy);
     }
+    nx *= vz; nz *= vz;
     vx = v->x; vz = v->z;
-    vx += lbl_806D9710 * (nx * dot);
-    vz += lbl_806D9710 * (nz * dot);
+    vx += lbl_806D9710 * nx;
+    vz += lbl_806D9710 * nz;
     v->x = vx; v->z = vz;
     k->impulse.x += vx;
     k->impulse.y += vy;

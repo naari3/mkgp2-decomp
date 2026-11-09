@@ -488,3 +488,8 @@ c22_u116 fn_8019A9BC 98.0 -> 98.111115% /1080 B: SetAxisAngle takes const float*
 Source: Codex worker c22_u120_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c22_u120 HomingMarkerUpdate fn_80172948 direct94.84521->95.595894/report95.66438 at2920B, EH8/index12 both100. SetRGBA direct pointer-based writes (separate from RGB+alpha SetScalar wrapper) recover exact RGBA setter blocks and remove27 diff rows. Value-parameter from accumulator94.58219; delta-parameter reuse89.363014/text2988/EH75 rejected; SetTransform boundary invariant94.84521. Remaining149 rows: Pulse/result, SetInterpolated FPR/schedule, case0 radius/RGB, case4 constants/old-channel exchange and commuted arithmetic. No singleton/base-pool residual; colors already owned by matched Scene80172844, one-function TU cannot B-split. Retain NM improvement, full fallback DOL SHA1ea30f3b1 exact; native gain0.
+
+## c22_u180_20261109
+Source: Codex worker c22_u180_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c22_u180 fn8019ADF4: consumed vz reused as dot and nx*=vz/nz*=vz before reflection improves88.11656->88.17792/652B/EH-index100 (normal-x projection now target f5). Nonvolatile Vec3 locals plus existing volatile helper accessors restores initial x/y/z f4/f5/f6 but score88.11656 and prologue scheduling still wrong. Shared ForceRoot + NormalizeForce nesting recovers slots10/8/c but extra fmr/656B and normal/Newton/scale homes regress86.515335,index91.66667; reverted. No flags/ranges/data changes; full fallback DOL SHA1exact, nativegain0.
