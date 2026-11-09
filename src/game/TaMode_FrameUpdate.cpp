@@ -452,7 +452,6 @@ TaMode::TaMode() {
     g_totalRaceTime = lbl_806D4830;
     lbl_806D13A1 = 0;
     g_finalRacePosition = 0;
-    int laps = params[-6].laps;
     float bonus, time;
     time = params[-6].timeLimit;
     bonus = params[-6].lapBonus;
@@ -460,7 +459,7 @@ TaMode::TaMode() {
     g_raceResultCode = -2;
     g_finalLapBannerShown = 0;
     g_lapChangePending = 0;
-    g_totalLaps = laps;
+    g_totalLaps = params[-6].laps;
     g_raceTimeRemaining = time;
     g_lapBonusTimeDelta = bonus;
     lbl_806CF19C = lbl_806D4834;
