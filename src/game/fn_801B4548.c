@@ -102,7 +102,7 @@ int fn_801B4548(int kart, int item) {
                 lbl_806CFD34 = ItemVoice_BaseItem(item);
                 lbl_806D1775 = g_taMinLapPlayerIndex;
                 lbl_806D1776 = nearest;
-                return 1;
+                goto end;
             }
         }
     }
@@ -133,7 +133,7 @@ int fn_801B4548(int kart, int item) {
                     lbl_806D1778 = g_raceEntryArray[(signed char)(unsigned char)kart].distance;
                     lbl_806D1776 = -1;
                     lbl_806D177C = -1;
-                    return 1;
+                    goto end;
                 }
             }
         }
@@ -184,7 +184,7 @@ int fn_801B4548(int kart, int item) {
             g_bgmStateTimeHi = (unsigned long long)now >> 32;
             lbl_806D1776 = -1;
             lbl_806D177C = -1;
-            return 1;
+            goto end;
         }
     }
 
@@ -240,6 +240,7 @@ int fn_801B4548(int kart, int item) {
         VoiceQueue_Push(0x20C, 28, 0, 0);
         return 1;
     }
+end:
     return 1;
 }
 #pragma use_lmw_stmw reset
