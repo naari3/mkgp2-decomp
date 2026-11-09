@@ -215,6 +215,20 @@ without those flags ninja tries to download tools and fails.
   `#pragma exceptions off` / `reset` around a C function that keeps a manual
   entry, or it gets an automatic one too. Worked example: the
   VSMode/BtMode merge (`src/game/VSMode_FrameUpdate.c`, 122d9dbc).
+- **`global:` renames break `#pragma force_active` (silent dead-strip).**
+  `tools/postprocess_extab_user.py` globalizes a `"global:<name>"` symbol with
+  llvm-objcopy, which moves it into the global part of `.symtab` but does NOT
+  permute MWCC's per-symbol `.comment` records (8 bytes per symbol, flag 0x08 =
+  force_active). The flags then sit on the wrong symbols, and a force_active
+  static table that nothing references by name (a vtable reached as
+  `base + 0x54`) is dead-stripped together with every function only it points
+  to: main.dol FAILs with .text/.data shorter, no link error. Fix: define such
+  objects as real globals (drop `static`) and remove their `global:` entries.
+  Check: compare the `.comment` records (offset 0x2c + 8*symindex) of
+  `build/GNLJ82/obj/<tu>.o` and `build/GNLJ82/src/<tu>.o` (DNBress_nm3, 11-09).
+  Also make an inline base dtor out of line (`~Base();` + the
+  `__dt__...` rename) when the target keeps it as an undefined reference;
+  an emitted weak copy gave `internal linker error: ELF_linker.c 1993`.
 - A weak inline destructor that the compiler emits into a TU may be appended
   to that TU's own `tools/extab_order.json` key; new rename pairs may be
   added inside a TU's own `tools/extab_user_renames.json` key. Do not edit

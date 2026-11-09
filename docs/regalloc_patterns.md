@@ -688,6 +688,32 @@ is K+1 or K+2, and few of its neighbours have lower numbers. Add named locals
 push; re-run until it is pushed in sweep 1. A quick simulator of the sweep
 order on the IGNODE dump tells how many neighbours must go.
 
+## 36. Address constants coloured in the wrong order because a base-class initializer is generated first: store the base vtable in the derived ctor body (fn_80227B98, 11-09)
+
+Vreg numbers follow codegen order, and simplify/colour gives the HIGHEST
+number first pick (Coloring.c `simplifygraph`/`colorgraph`). In a derived ctor
+the base initializer (`clMapEffectParts() : vtable(lbl_80490FE0)`) is
+generated before the body, so the `lis` of the base vtable gets the lowest
+vreg of the prologue address constants and is coloured last. In
+clDNBress::clDNBress the target has base vtable r4, data r6, strings r5, i.e.
+the base vtable numbered ABOVE the body's `data`/`strings` bases. The
+`lis` order in the final code follows the registers (r4, r6, r5 both ways),
+so objdiff showed it as a "lis order" diff with masked symbols, and regfix
+diag reported no GPR difference.
+
+Fix: give the base an empty ctor and store the base vtable in the derived ctor
+body, after the locals that load the other bases:
+
+    clMapEffectParts() {}
+    ...
+    const char *data = ...; const char *strings = ...;
+    *(const void **)this = lbl_80490FE0;   /* base vtable, kept: not dead */
+    vtable = data + 0x54;
+
+**Check:** dump both objects with relocations (`objdump -dr`), map each
+`lis`/`addi` to its symbol and compare the registers; `mwtrace` PCODE pre
+shows the vreg numbers per symbol and COLOR shows who is coloured first.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,

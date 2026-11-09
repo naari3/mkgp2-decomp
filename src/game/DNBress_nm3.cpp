@@ -72,11 +72,13 @@ extern "C" const char lbl_80490FE0[];
 struct clMapEffectParts {
     // Explicit ABI view keeps derived dispatch data in the shared table pool.
     const void *vtable;
-    ~clMapEffectParts() {}
+    ~clMapEffectParts();
     void Update();
     void Draw();
     void Enable(int on);
-    clMapEffectParts() : vtable(lbl_80490FE0) {}
+    // No base initializer: the derived ctor stores the base vtable itself, after
+    // its locals, so the base-vtable address is numbered after data/strings.
+    clMapEffectParts() {}
 };
 
 struct clDNBress;
@@ -293,13 +295,13 @@ void fn_802271A4();
 void fn_8022760C();
 void fn_80227490();
 #pragma force_active on
-static float lbl_804EDF80[2][3] = {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}};
-static struct FireRecords { MemberFn spawn; MemberFn upd; } lbl_804EDF98[2] = {
+float lbl_804EDF80[2][3] = {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}};
+struct FireRecords { MemberFn spawn; MemberFn upd; } lbl_804EDF98[2] = {
     {{0, -1, fn_80227318}, {0, -1, fn_802271A4}},
     {{0, -1, fn_8022760C}, {0, -1, fn_80227490}}
 };
-static DNBressTypeInfo lbl_804EDFC8 = {lbl_806D058C, 0, 0};
-static DNBressDispatch lbl_804EDFD4 = {
+DNBressTypeInfo lbl_804EDFC8 = {lbl_806D058C, 0, 0};
+DNBressDispatch lbl_804EDFD4 = {
     lbl_806D0594, 0,
     {fn_80227AA4, fn_80226B20, fn_80226954, fn_8016A26C, 0}
 };
@@ -316,6 +318,7 @@ clDNBress::clDNBress() {
     const FireFuncs *fireFuncs = (const FireFuncs *)(data + 0x18);
     // The original unit addresses its shared strings from one retained base.
     const char *strings = DNBressStrings();
+    *(const void **)this = lbl_80490FE0;
     vtable = data + 0x54;
     type = 0;
     xc = 0;

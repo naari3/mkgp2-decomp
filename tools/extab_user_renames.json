@@ -9531,10 +9531,6 @@
     "__dt__16clMapEffectPartsFv": "dtor_8016A270"
   },
   "src/game/DNBress_nm3.cpp": {
-    "lbl_804EDF80": "global:lbl_804EDF80",
-    "lbl_804EDF98": "global:lbl_804EDF98",
-    "lbl_804EDFC8": "global:lbl_804EDFC8",
-    "lbl_804EDFD4": "global:lbl_804EDFD4",
     "__nwa__FUl": "FUN_8003b120",
     "__dla__FPv": "MemoryManager_Free",
     "__nw__FUl": "Alloc",
@@ -9558,7 +9554,9 @@
     "__ct__9GXChannelFPvPvii": "GXChannel_Init",
     "__dt__9GXChannelFv": "dtor_8007D9C4",
     "PushTransform__9GXChannelFPA4_f": "GXChannel_PushTransform",
-    "__dt__16clMapEffectPartsFv": "dtor_8016A270"
+    "__dt__16clMapEffectPartsFv": "dtor_8016A270",
+    "@102": "@etb_8001BAD0",
+    "@103": "@eti_8002A704"
   },
   "src/game/anon_8020AAD4_m1.cpp": {
     "__ct__6SpriteFiii": "Sprite_InitWithAnim",
