@@ -3184,5 +3184,24 @@
     "ClockSetting_Page",
     "CabinetSetting_Page",
     "CardCreate_Page"
+  ],
+  "src/game/fn_801B7EF8.c": [
+    "fn_801B7EF8",
+    "SetScreenBrightness",
+    "InitBGM",
+    "fn_801B8398",
+    "fn_801B8434",
+    "fn_801B84B4",
+    "fn_801B8540",
+    "fn_801B85DC",
+    "fn_801B87D8",
+    "fn_801B8874",
+    "fn_801B8918",
+    "fn_801B89C8",
+    "SetupBgSprites",
+    "fn_801B8BD8",
+    "MenuScene_Dispatch",
+    "fn_801B9740",
+    "fn_801B9928"
   ]
 }

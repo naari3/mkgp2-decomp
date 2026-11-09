@@ -117,6 +117,18 @@ TOKEN = re.compile(r'''
     (?P<op>.)''', re.X | re.S)
 
 
+def real_flags(name):
+    """(exceptions, lmw, size) from the TU's real compile command: the group cflags count too,
+    not only the Object's extra_cflags (last flag wins)."""
+    cmd = subprocess.run(['ninja', '-t', 'commands', f'build/GNLJ82/src/{Path(name).with_suffix("")}.o'],
+                         cwd=ROOT, capture_output=True, text=True).stdout.strip().splitlines()[-1].split(' && ')[0]
+    def last(pat, default):
+        m = re.findall(pat, cmd)
+        return m[-1] if m else default
+    return (last(r'-Cpp_exceptions (on|off)', 'off') == 'on', last(r'-use_lmw_stmw (on|off)', 'off') == 'on',
+            last(r'-O\d,([ps])', 'p') == 's')
+
+
 def preprocess(name):
     """The TU's own compile command with -E: the text the compiler saw."""
     cmd = subprocess.run(['ninja', '-t', 'commands', f'build/GNLJ82/src/{Path(name).with_suffix("")}.o'],
@@ -292,13 +304,13 @@ def apply(a):
         cpp = b['name'].endswith('.cpp') or '-lang=c++' in flags
         # -i only matters for preprocessing, which runs with each TU's own command
         rest = sorted(f for f in flags if f not in ('-Cpp_exceptions on', '-Cpp_exceptions off', '-lang=c++',
-                                                       '-use_lmw_stmw on', '-use_lmw_stmw off')
+                                                       '-use_lmw_stmw on', '-use_lmw_stmw off', '-O4,s', '-O4,p')
                       and not f.startswith('-i '))
         if base_flags is None:
             base_flags = rest
         elif rest != base_flags:
             sys.exit(f"{b['name']}: flags {rest} differ from {base_flags}; not handled")
-        info.append((b, '-Cpp_exceptions on' in flags, '-use_lmw_stmw on' in flags, cpp))
+        info.append((b, *real_flags(b['name'])[:2], cpp, real_flags(b['name'])[2]))
 
     pool_src = Path(a.pool).read_text() if a.pool else ''
     pool_names = set(re.findall(r'^(?:static\s+)?(?:const\s+)?[\w\s\*]+?\b(\w+)\s*(?:\[[^\]]*\])*\s*=', pool_src, re.M))
@@ -314,13 +326,15 @@ def apply(a):
     if pool_src:
         out += ['/* ==== pool (tools/data2c.py) ==== */'] + (['#pragma cplusplus off'] if mixed else []) \
             + [pool_src.rstrip()] + (['#pragma cplusplus reset'] if mixed else []) + ['']
-    for n, (b, exc, lmw, cpp) in enumerate(info):
+    for n, (b, exc, lmw, cpp, osize) in enumerate(info):
         sec = rename_section(preprocess(b['name']), f'_p{n}', pool_names, renames, cpp)
         out += [f"/* ==== {b['name']} ({text_start(b):#x}) ==== */",
                 f'#pragma exceptions {"on" if exc else "off"}',
                 f'#pragma use_lmw_stmw {"on" if lmw else "off"}'] \
             + ([f'#pragma cplusplus {"on" if cpp else "off"}'] if mixed else []) \
-            + [sec.strip()] + (['#pragma cplusplus reset'] if mixed else []) \
+            + (['#pragma optimize_for_size on'] if osize else []) \
+            + [sec.strip()] + (['#pragma optimize_for_size reset'] if osize else []) \
+            + (['#pragma cplusplus reset'] if mixed else []) \
             + ['#pragma use_lmw_stmw reset', '#pragma exceptions reset', '']
     (ROOT / 'src' / into).write_text('\n'.join(out) + '\n', encoding='latin-1')
 
@@ -376,6 +390,34 @@ def apply(a):
     print(f'next: ninja, then `python3 tools/merge_tus.py prune-renames --tu {into}`')
 
 
+def unsuffix_mangled(sym):
+    """`__ct__16CourseSprite_p17Fiii` -> `__ct__12CourseSpriteFiii` (length prefixes fixed); None if no suffix."""
+    out, i, hit = [], 0, False
+    while i < len(sym):
+        m = re.match(r'\d+', sym[i:])
+        if m and i and sym[i - 1] == 'Q':  # Q<count><len><name>...: the count is one digit
+            out.append(sym[i])
+            i += 1
+            continue
+        if m:
+            n = int(m.group())
+            name = sym[i + len(m.group()):i + len(m.group()) + n]
+            mm = re.match(r'^([A-Za-z_]\w*?)_p\d+$', name)
+            if mm and len(name) == n:
+                out.append(f'{len(mm.group(1))}{mm.group(1)}')
+                i += len(m.group()) + n
+                hit = True
+                continue
+            out.append(m.group())
+            i += len(m.group())
+            continue
+        out.append(sym[i])
+        i += 1
+    res = ''.join(out)
+    res2 = re.sub(r'_p\d+(?=__|$)', '', res)
+    return res2 if hit or res2 != sym else None
+
+
 def prune_renames(a):
     """Drop the generated `_pN` renames that did not become symbols of the object."""
     obj = ROOT / 'build/GNLJ82/src' / (str(Path(a.tu).with_suffix('')) + '.o')
@@ -387,7 +429,18 @@ def prune_renames(a):
     # so a second prune would otherwise drop every rename that is in use.
     rj[key] = {k: v for k, v in rj[key].items() if not re.search(r'_p\d+$', k) or k in syms or v in syms}
     RENAMES.write_text(json.dumps(rj, indent=2, ensure_ascii=False) + '\n')
-    print(f'{key}: {before} -> {len(rj[key])} renames')
+    # C++ sections: mangled names carry the suffixed class names; map them back (through the
+    # TU's older renames, e.g. __ct__12CourseSpriteFiii -> fn_...)
+    added = 0
+    for sym in syms:
+        if not re.search(r'_p\d+', sym) or sym in rj[key]:
+            continue
+        plain = unsuffix_mangled(sym)
+        if plain and plain != sym:
+            rj[key][sym] = rj[key].get(plain, plain)
+            added += 1
+    RENAMES.write_text(json.dumps(rj, indent=2, ensure_ascii=False) + '\n')
+    print(f'{key}: {before} -> {len(rj[key])} renames ({added} mangled)')
 
 
 def main():

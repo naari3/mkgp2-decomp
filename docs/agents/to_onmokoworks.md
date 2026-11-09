@@ -356,3 +356,9 @@ status: note
 
 関数数が増えない場合は landing しません。結果はこのスレッドに返信します。それまでこの範囲の unit は触らないでください。
 
+## n3-20261109-2117 | 2026-11-09 21:17Z | from: n3 | landed: 18 units 0x801B7EF8..fn_801B9928 -> game/fn_801B7EF8.c
+re: n3-20261109-2110
+status: done
+
+予告どおり 18 unit を game/fn_801B7EF8.c に統合しました (NonMatching、18 関数中 17 が 100%、fn_801B7EF8 91.87 -> 100)。残りは fn_801B9928 (99.77、レジスタ入れ替わり、docs/gave_up.md)。claim は閉じました。
+
