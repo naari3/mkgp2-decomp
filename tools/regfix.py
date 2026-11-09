@@ -40,7 +40,9 @@ The allocator model and the declaration-order solver also exist in Rust
 and up to RS_MAXN=11 locals are permuted exhaustively). REGFIX_PY=1 forces
 the Python model; both give identical colourings (checked on every dump).
 
-Usage (repo root, after a build and bash /mnt/project-files/setup/mwccdbg/install.sh):
+Usage (repo root, after a build and `python3 tools/mwccdbg_install.py`; on
+Windows the debugger runs mwcceppc.exe natively under a 32-bit gdb, see
+tools/mwccdbg.py):
     python3 -I tools/regfix.py diag game/Sci2Card_BuildItemGetReceiptLine Sci2Card_BuildItemGetReceiptLine
     python3 -I tools/regfix.py fix  game/Sci2Card_BuildItemGetReceiptLine Sci2Card_BuildItemGetReceiptLine [--start F] [--search]
 `diag` only explains; `fix` also tries rewrites. Nothing is written to src/.
@@ -49,6 +51,7 @@ from __future__ import annotations
 
 import argparse
 import glob
+import subprocess
 import hashlib
 import itertools
 import shlex
@@ -508,7 +511,7 @@ def solve_decl(classes, maxn=8, tlimit=120):
 # Rust hot path (tools/regfix_sim): same model, ~100x faster
 
 SIM_DIR = ROOT / "tools" / "regfix_sim"
-SIM_BIN = ROOT / "build" / "regfix_sim" / "release" / "regfix_sim"
+SIM_BIN = ROOT / "build" / "regfix_sim" / "release" / f"regfix_sim{md.EXE}"
 
 
 def sim_bin():
@@ -758,8 +761,17 @@ NETNS = [sys.executable, str(ROOT / "tools" / "netns_lo.py")]
 
 
 def can_unshare():
-    r = md.sh(["unshare", "-n", *NETNS, "true"])
+    if os.name == "nt":
+        return False
+    try:
+        r = md.sh(["unshare", "-n", *NETNS, "true"])
+    except OSError:
+        return False
     return r.returncode == 0
+
+
+TMPDIR = Path(os.environ.get("REGFIX_TMP", os.path.join(__import__("tempfile").gettempdir(), "regfix")))
+OBJCOPY = ROOT / "build" / "binutils" / f"powerpc-eabi-objcopy{md.EXE}"
 
 
 class Evaluator:
@@ -771,13 +783,16 @@ class Evaluator:
         self.ps, self.sw, self.sym, self.jobs = ps, sw, fn_sym, jobs
         self.fn = fn or fn_sym
         self.u = sw.u
-        self.par = can_unshare()
+        # retrowin32's gdb stub has a fixed port: parallel runs need a network
+        # namespace each (Linux); native gdb (Windows) needs nothing
+        self.netns = not md.NATIVE and can_unshare()
+        self.par = md.NATIVE or self.netns
         self.cache = {}
-        self.tmp = Path("/tmp/regfix")
-        self.tmp.mkdir(exist_ok=True)
+        self.tmp = TMPDIR
+        self.tmp.mkdir(parents=True, exist_ok=True)
 
     def toks(self, src, out_o):
-        toks = shlex.split(self.u.cmd)
+        toks = shlex.split(self.u.cmd.replace("\\", "/"))
         i = next(k for k, t in enumerate(toks) if t.endswith("mwcceppc.exe"))
         toks = toks[i:]
         cc = self.sw.cc
@@ -812,19 +827,20 @@ class Evaluator:
         try:
             # our object with the production compiler
             c = re.sub(r"GC/[^/]+/mwcceppc", f"GC/{self.sw.cc}/mwcceppc", self.u.cmd)
-            c = re.sub(r"-c \S+ -o \S+", f"-c {sp} -o {d}/ours.o", c)
-            md.sh(["bash", "-c", c], cwd=ROOT)
+            ours = (d / "ours.o").as_posix()
+            c = re.sub(r"-c \S+ -o \S+", lambda m: f"-c {sp} -o {ours}", c)
+            subprocess.run(c, shell=True, cwd=ROOT, capture_output=True)
             for x in self.u.post:
-                md.sh(["bash", "-c", x.replace(f"build/GNLJ82/src/{self.u.obj}.o", f"{d}/ours.o")], cwd=ROOT)
-            if self.u.renames:
-                md.sh(["llvm-objcopy"] + [f"--redefine-sym={k}={v}" for k, v in self.u.renames.items()]
-                      + [f"{d}/ours.o"], cwd=ROOT)
-            cmd = self.toks(sp, str(d / "dbg.o"))
-            script = md.DBG_DIR / "mwcc-debugger" / "mwcc_debugger.py"
-            pre = ["unshare", "-n", *NETNS] if self.par else []
-            r = md.sh(pre + [sys.executable, "-I", str(script), "-e", str(md.DBG_DIR / "retrowin32"),
-                             "-a", shlex.join(cmd), self.sym, str(d)], cwd=ROOT, timeout=400)
-            (d / "run.log").write_text(r.stdout + r.stderr)
+                subprocess.run(x.replace(f"build/GNLJ82/src/{self.u.obj}.o", ours), shell=True, cwd=ROOT,
+                               capture_output=True)
+            if self.sym != self.fn:   # only the symbol we disassemble (the full map has duplicate targets)
+                md.sh([str(OBJCOPY), f"--redefine-sym={self.sym}={self.fn}", ours], cwd=ROOT)
+            cmd = self.toks(Path(sp).as_posix(), (d / "dbg.o").as_posix())
+            argv = md.debugger_argv(cmd, self.sym, d)
+            if argv:
+                pre = ["unshare", "-n", *NETNS] if self.netns else []
+                r = md.sh(pre + argv, cwd=ROOT, timeout=400)
+                (d / "run.log").write_text(r.stdout + r.stderr)
         finally:
             try:
                 os.remove(sp)
@@ -947,7 +963,7 @@ def fix(a, rep0):
                             pragma=a.pragma, cc=a.cc, moves=None)
     sw = ss.Sweep(ns)
     ev = Evaluator(sw, sw.sym or a.fn, a.jobs, a.fn)
-    print(f"[regfix] parallel debugger: {'yes' if ev.par else 'no (unshare failed)'}", flush=True)
+    print(f"[regfix] parallel debugger: {'yes (native gdb)' if md.NATIVE else 'yes (netns)' if ev.par else 'no (unshare failed)'}", flush=True)
     allowed = set(ss.REG_ONLY_MOVES) | {"expand", "swap"}
     t0 = time.time()
     text0 = sw.render(sw.init)
@@ -968,7 +984,7 @@ def fix(a, rep0):
         return (s2, t) if sc == 0 else None
 
     def done(s2, t):
-        out = Path("/tmp/regfix") / f"{a.fn}.match{sw.u.ext}"
+        out = TMPDIR / f"{a.fn}.match{sw.u.ext}"
         out.write_text(t)
         print(f"[regfix] MATCH via {' | '.join(s2.hist)}; full TU written to {out}", flush=True)
         return ((0, 0, 0, 0), 0, s2, t, None)
@@ -978,7 +994,7 @@ def fix(a, rep0):
     beam = [(m0, s0, sw.init, text0, r0)]
     best = beam[0]
     seen = {hashlib.sha1(text0.encode()).hexdigest()}
-    log = open(f"/tmp/regfix/{a.fn}.log.jsonl", "a")
+    log = open(TMPDIR / f"{a.fn}.log.jsonl", "a")
     for rnd in range(a.rounds):
         cands = []
         for m, s, st, txt, rep in beam:
@@ -1044,7 +1060,7 @@ def fix(a, rep0):
               f"({time.time() - t0:.0f}s) via {' | '.join(best[2].hist) or '-'}", flush=True)
         if a.minutes and time.time() - t0 > a.minutes * 60:
             break
-    out = Path("/tmp/regfix") / f"{a.fn}.best{sw.u.ext}"
+    out = TMPDIR / f"{a.fn}.best{sw.u.ext}"
     out.write_text(sw.func_text(best[2]))
     print(f"[regfix] best: {best[1]} diff lines, metric {best[0]}; definition written to {out}")
     return best
@@ -1158,10 +1174,11 @@ def main():
             p.add_argument("-j", "--jobs", type=int, default=4)
     b = sub.add_parser("batch")
     b.add_argument("list", help="file of `unit fn` lines")
-    b.add_argument("--best-dir", default="/mnt/project-files/setup/autopipe99/best")
+    shared = "/mnt/project-files/setup" if os.path.isdir("/mnt/project-files/setup") else str(TMPDIR)
+    b.add_argument("--best-dir", default=f"{shared}/autopipe99/best")
     b.add_argument("--claims")
-    b.add_argument("--out", default="/mnt/project-files/setup/regfix/results.jsonl")
-    b.add_argument("--hits", default="/mnt/project-files/setup/regfix/hits")
+    b.add_argument("--out", default=f"{shared}/regfix/results.jsonl")
+    b.add_argument("--hits", default=f"{shared}/regfix/hits")
     b.add_argument("--retry", action="store_true")
     b.add_argument("-j", "--jobs", type=int, default=4)
     a = ap.parse_args()
