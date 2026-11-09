@@ -866,6 +866,52 @@ clFlowRound_Update went from 243 differing lines to 0 with these, no pragma:
 Diagnostic used: `#pragma opt_lifetimes off` cut the diff 243 -> 82, which showed that one more level-1 node
 interfering with `self` was all that was missing. The pragma is not in the final source.
 
+## 44. A base-address local survives only with two uses, and the first copy of an unrolled loop picks it up (Race_PerFrameTickAndAudio, 11-09)
+
+Target, inside an inlined helper followed by a fully unrolled 8-way search:
+
+```
+addi r5,r30,400        ; base = &g_raceEntryArray (anchor + 400)
+mulli r0,r0,104
+add  r4,r5,r0          ; &base[idx]
+...                    ; first unrolled copy
+mulli r0,r3,104
+add  r3,r5,r0          ; reuses r5
+...                    ; copies 2..8
+addi r3,r30,400        ; fresh address every time
+add  r3,r3,r0
+```
+
+Rules read off the experiments (mweppc frontend, IroPropagate + CSE):
+
+- `base = &g; entry = &base[idx];` with ONE use of `base` in the block is propagated away: the base
+  address is folded into `entry` and the first copy gets its own `addi` (one instruction too many).
+- With TWO uses of `base` the assignment stays a real variable, and a later direct `&g[...]` in the
+  same extended block is replaced by that variable. Only the first unrolled copy is in that block,
+  so copies 2..8 keep the fresh `addi`.
+- The natural source is "no cached element pointer": `if (!base[idx].kart->finished) { if (base[idx].rank != 0)`.
+  CSE builds the element pointer itself (r4), and `base` has two uses.
+- A base passed into the search inline as a parameter is used by all eight copies (no `addi` at all).
+  A base assigned before an earlier branch (other block) also survives, but its `addi` sits before
+  that branch.
+
+Other levers the same function needed, all register-only symptoms:
+
+- **Inner search loop indexed, not walked.** `for (j...) if (entries[j].id != -1 && entries[j].rank == ...)`
+  instead of a named `other++` pointer: the walking pointer becomes a strength-reduction temp that is
+  coloured before the hoisted `&entry->rank` temp and the counter (target r5/r6/r7 vs ours r7/r5/r6).
+- **Walk the base local itself in the last loop.** `for (k = 0; k < 8; entries++, k++) { entry = entries; ... }`
+  when the target's last loop steps the register that held the base all function long. A copy
+  (`entry = entries` before the loop) coalesces to the same register but leaves the base local with a
+  lower cost than the section anchor, and the two swap r30/r31 everywhere.
+- **Block-scoped counter for a `li rN,0` that ours turns into `mr rN,rZero`.** The last loop's counter
+  as its own `{ int k; for (k = 0; ...) }` keeps its own `li`; the shared function-level `i` was
+  value-numbered to the zero already held for the stores before the loop (rule `split-loop-counter`).
+- **Increment order** `entry++, i++` vs `i++, entry++` swaps the two `addi` of one unrolled copy.
+- **`signed char` lvalue for `extsb` from the raw byte**: field typed `signed char`, or
+  `*(signed char *)&g_var`; an inline getter or a cast of an `unsigned char` read gets CSE'd differently.
+- **Duplicated `li rX,1` for a result flag**: the if/else chain is an inline with `return 1` / `return 0`.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
