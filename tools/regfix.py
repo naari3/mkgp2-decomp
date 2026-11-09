@@ -280,6 +280,8 @@ def want_map(out: Path, ours_obj: Path, tgt_obj: Path, fn: str):
             if num(v) >= 32:
                 want.setdefault(v, {}).setdefault(t, 0)
                 want[v][t] += 1
+                info.setdefault("at", {}).setdefault(v, []).append(k)
+    info["ours_asm"], info["tgt_asm"] = ours, tgt
     return want, sites, info
 
 
@@ -657,8 +659,11 @@ def solve(g: Graph, w, depth=2, beam=12, limit=8):
 def diagnose(unit, fn, out: Path, rerun=True, quiet=False, depth=2):
     if rerun:
         run_dbg(unit, fn, out)
+    import pragmasweep as ps
+    src = ps.Unit(unit).src
     return diagnose_dir(out, ROOT / f"build/{md.VERSION}/src/{unit}.o",
-                        ROOT / f"build/{md.VERSION}/obj/{unit}.o", fn, quiet, depth)
+                        ROOT / f"build/{md.VERSION}/obj/{unit}.o", fn, quiet, depth,
+                        src_lines=open(src, errors="replace").read().splitlines())
 
 
 def run_dbg(unit, fn, out, timeout=300):
@@ -717,7 +722,30 @@ def advice(g: Graph, x, y):
     return f"frontend temp {nx} must become a backend temp (e.g. no inline / no CSE) or {y} a frontend temp"
 
 
-def diagnose_dir(out: Path, ours_obj, tgt_obj, fn, quiet=False, depth=2):
+def show_context(P, bad, sites, info, src_lines, maxl=12):
+    """Source lines and our/target instructions around the mismatching vregs
+    (for hand work: what to rewrite, and what the target does there)."""
+    lines = sorted({int(x[0]) for v in bad for x in sites.get(v, []) if x[0].isdigit()})
+    if src_lines and lines:
+        P("  source lines involved:")
+        for ln in lines[:maxl]:
+            if 0 < ln <= len(src_lines):
+                P(f"    {ln:>5} | {src_lines[ln - 1].rstrip()}")
+    ks = sorted({k for v in bad for k in info.get("at", {}).get(v, [])})
+    O, T = info.get("ours_asm", []), info.get("tgt_asm", [])
+    if ks:
+        P("  instructions (ours | target), * = differs:")
+        shown = set()
+        for k in ks[:maxl]:
+            for j in range(max(0, k - 1), min(len(O), k + 2)):
+                if j in shown or j >= len(T):
+                    continue
+                shown.add(j)
+                mark = "*" if O[j] != T[j] else " "
+                P(f"    {mark}{j * 4:>5x}  {O[j]:<32} | {T[j]}")
+
+
+def diagnose_dir(out: Path, ours_obj, tgt_obj, fn, quiet=False, depth=2, src_lines=None):
     want, sites, info = want_map(out, Path(ours_obj), Path(tgt_obj), fn)
     rep = {"fn": fn, "info": info, "classes": {}}
     P = (lambda *a: None) if quiet else print
@@ -740,6 +768,7 @@ def diagnose_dir(out: Path, ours_obj, tgt_obj, fn, quiet=False, depth=2):
         pos = {v: i for i, v in enumerate(g.real_order)}
         for v in sorted(bad, key=lambda v: pos[v]):
             P(f"  #{pos[v]:<3} {describe(g, v, sites)}: {g.phys[v]} -> want {w[v]}")
+        show_context(P, bad, sites, info, src_lines)
         if not model_ok:
             P("  (model mismatch: solutions below are unreliable)")
         lv = levels(g)
@@ -1256,7 +1285,8 @@ def main():
         ev = Evaluator(sw, sw.sym or a.fn, 1, a.fn)
         d = ev.run(sw.render(sw.init), "diag")
         print(f"[regfix] score {sw.score(sw.render(sw.init), 0)} diff lines")
-        diagnose_dir(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{sw.u.obj}.o", a.fn, depth=a.depth)
+        diagnose_dir(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{sw.u.obj}.o", a.fn, depth=a.depth,
+                     src_lines=sw.render(sw.init).splitlines())
     elif a.cmd == "diag":
         diagnose(a.unit, a.fn, out, rerun=not a.no_run, depth=a.depth)
         suggest_rules(a.unit, a.fn)
