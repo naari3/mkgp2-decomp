@@ -3,7 +3,8 @@
 
 Outputs (under --out-dir):
   index.html        Standalone dashboard with summary + per-category bars +
-                    treemap-style unit grid + per-unit table.
+                    treemap-style unit grid + functions-by-match% view +
+                    per-unit table.
   report.json       Copy of the input report for direct download.
   shield.json       shields.io endpoint payload (matched code %).
 
@@ -386,6 +387,30 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   .viz-tip .tip-key {{ display: inline-block; width: 12px; height: 2px; border-radius: 1px; flex: none; }}
   .viz-tip .tip-val {{ font-weight: 600; font-variant-numeric: tabular-nums; }}
   .viz-tip .tip-label {{ color: #8b949e; }}
+  .mr-bar {{ display: flex; height: 1.4rem; border-radius: 3px; overflow: hidden; background: #21262d; margin-bottom: 0.75rem; }}
+  .mr-seg {{ height: 100%; }}
+  .mr-cards {{ display: grid; gap: 0.5rem; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); margin-bottom: 1rem; }}
+  .mr-card {{ display: grid; grid-template-columns: auto 1fr; column-gap: 0.4rem; align-items: center; text-align: left;
+    background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 0.5rem 0.7rem;
+    color: #c9d1d9; font-family: inherit; cursor: pointer; }}
+  .mr-card:hover:not([disabled]) {{ border-color: #8b949e; }}
+  .mr-card.active {{ border-color: #58a6ff; background: #1c2433; }}
+  .mr-card.mr-static {{ cursor: default; opacity: 0.85; }}
+  .mr-card .mr-label {{ font-size: 0.8rem; color: #8b949e; }}
+  .mr-card .mr-n {{ grid-column: 1 / -1; font-size: 1.25rem; font-weight: 600; color: #f0f6fc; font-variant-numeric: tabular-nums; }}
+  .mr-card .mr-sub {{ grid-column: 1 / -1; font-size: 0.75rem; color: #8b949e; }}
+  .mr-key {{ display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 0.35rem; vertical-align: -1px; }}
+  .mr-controls {{ display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 0.5rem; font-size: 0.85rem; }}
+  .mr-controls input[type=search] {{ flex: 1 1 260px; max-width: 420px; background: #0d1117; color: #f0f6fc;
+    border: 1px solid #30363d; border-radius: 4px; padding: 0.35rem 0.6rem; font-family: inherit; font-size: 0.85rem; }}
+  .mr-table-wrap {{ max-height: 640px; overflow: auto; border: 1px solid #30363d; border-radius: 6px; }}
+  #mr-table thead th {{ position: sticky; top: 0; background: #161b22; cursor: pointer; user-select: none; white-space: nowrap; }}
+  #mr-table th.sorted {{ color: #f0f6fc; }}
+  #mr-table th[data-dir]::after {{ content: attr(data-dir); margin-left: 0.25rem; font-size: 0.7rem; }}
+  #mr-table td.mono {{ font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.8rem; word-break: break-all; }}
+  #mr-table td.dim {{ color: #8b949e; }}
+  #mr-table td.num, #mr-table td.nw {{ white-space: nowrap; word-break: normal; }}
+  #mr-table td.nm {{ color: #e66767; }}
 </style>
 </head>
 <body>
@@ -416,6 +441,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     {treemap_svg}
     <div id="treemap-tooltip"></div>
   </div>
+{match_rate_section}
 
   <h2>Units (by address)</h2>
   <p class="meta">Units in section virtual-address order. First {top_n} shown; expand below for the full list.</p>
@@ -530,6 +556,203 @@ def unit_row(
         f"<td>{status}</td>"
         "</tr>"
     )
+
+
+# ---------------------------------------------------------------------------
+# Functions-by-match% section (below the treemap): bucket bar + filterable,
+# sortable table of every function that is not a linked, true-C 100% match.
+# ---------------------------------------------------------------------------
+
+# (key, label, lo, hi, color). lo <= fuzzy < hi for the near-miss buckets.
+MATCH_BUCKETS = [
+    ("c", "100% C", None, None, "#1f9d3a"),
+    ("asm", "100% asm_fn", None, None, C_ASM),
+    ("unl", "100% unlinked", None, None, "#2f7d8c"),
+    ("b99", "99–100%", 99.0, 100.0, "#3fa9ff"),
+    ("b95", "95–99%", 95.0, 99.0, "#3987e5"),
+    ("b90", "90–95%", 90.0, 95.0, "#7c6cd6"),
+    ("b50", "50–90%", 50.0, 90.0, "#b05fb8"),
+    ("b0", "0–50%", 0.0, 50.0, C_NONMATCH),
+]
+
+
+def _fn_bucket(fuzzy: float, is_asm: bool, linked: bool) -> str:
+    if fuzzy >= 99.999:
+        if is_asm:
+            return "asm"
+        return "c" if linked else "unl"
+    for key, _, lo, hi, _ in MATCH_BUCKETS:
+        if lo is not None and lo <= fuzzy < hi:
+            return key
+    return "b0"
+
+
+def build_match_rate_section(
+    units: List[Dict[str, Any]],
+    asm_names: set,
+    nonmatching_units: set,
+) -> str:
+    counts = {b[0]: 0 for b in MATCH_BUCKETS}
+    sizes = {b[0]: 0 for b in MATCH_BUCKETS}
+    rows: List[List[Any]] = []
+    seen = set()
+    for u in units:
+        md = u.get("metadata", {})
+        linked = bool(md.get("complete")) and not md.get("auto_generated") \
+            and not is_nonmatching(u, nonmatching_units)
+        nm = is_nonmatching(u, nonmatching_units)
+        for f in u.get("functions") or []:
+            va = f.get("metadata", {}).get("virtual_address")
+            ident = (md.get("module_id", 0), va) if va is not None else (u["name"], f.get("name"))
+            if ident in seen:
+                continue
+            seen.add(ident)
+            size = _to_int(f.get("size"))
+            fuzzy = _to_float(f.get("fuzzy_match_percent"))
+            name = f.get("name", "?")
+            key = _fn_bucket(fuzzy, name in asm_names, linked)
+            counts[key] += 1
+            sizes[key] += size
+            if key == "c":
+                continue
+            addr = 0
+            try:
+                addr = int(va) if va is not None else 0
+            except (TypeError, ValueError):
+                pass
+            state = "nonmatching" if nm else ("linked" if linked else
+                                              ("auto" if md.get("auto_generated") else "unlinked"))
+            rows.append([name, u["name"], addr, size, round(fuzzy, 2), key, state])
+
+    total_n = sum(counts.values()) or 1
+    total_b = sum(sizes.values()) or 1
+
+    bar = []
+    cards = []
+    for key, label, _, _, color in MATCH_BUCKETS:
+        w = sizes[key] / total_b * 100.0
+        if w > 0:
+            bar.append(
+                f'<div class="mr-seg" style="width:{w:.3f}%;background:{color}" '
+                f'title="{html.escape(label)}: {counts[key]} fns · {format_bytes(sizes[key])} ({w:.2f}% of code)"></div>'
+            )
+        clickable = key != "c"
+        cards.append(
+            f'<button class="mr-card{"" if clickable else " mr-static"}" data-b="{key}"'
+            f'{"" if clickable else " disabled"}>'
+            f'<span class="mr-key" style="background:{color}"></span>'
+            f'<span class="mr-label">{html.escape(label)}</span>'
+            f'<span class="mr-n">{counts[key]:,}</span>'
+            f'<span class="mr-sub">{format_bytes(sizes[key])} · {counts[key] / total_n * 100:.1f}%</span>'
+            f'</button>'
+        )
+
+    colors = {b[0]: b[4] for b in MATCH_BUCKETS}
+    labels = {b[0]: b[1] for b in MATCH_BUCKETS}
+    script = (MR_JS.replace("__COLORS__", _json_for_html(colors))
+              .replace("__LABELS__", _json_for_html(labels)))
+    return f"""
+  <h2>Functions by match %</h2>
+  <p class="meta">Code bytes per bucket (objdiff fuzzy % per function). Click a bucket to filter the table; click a column header to sort. Linked true-C 100% functions are counted but not listed.</p>
+  <div class="mr-bar">{"".join(bar)}</div>
+  <div class="mr-cards">{"".join(cards)}</div>
+  <div class="mr-controls">
+    <input type="search" id="mr-q" placeholder="Filter by function or unit name…" autocomplete="off">
+    <label><input type="checkbox" id="mr-near" checked> near-miss only (&lt;100%)</label>
+    <span class="meta" id="mr-count"></span>
+  </div>
+  <div class="mr-table-wrap">
+    <table id="mr-table">
+      <thead><tr>
+        <th class="num" data-k="2">Address</th><th data-k="0">Function</th><th data-k="1">Unit</th>
+        <th class="num" data-k="3">Size</th><th class="num" data-k="4">Fuzzy</th><th data-k="5">Bucket</th><th data-k="6">Unit state</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <noscript><p class="meta">This table needs JavaScript; <a href="report.json">report.json</a> has the same data.</p></noscript>
+  <script type="application/json" id="mr-data">{_json_for_html(rows)}</script>
+  <script>{script}</script>
+"""
+
+
+MR_JS = r"""
+(() => {
+  const rows = JSON.parse(document.getElementById('mr-data').textContent);
+  const COLORS = __COLORS__, LABELS = __LABELS__;
+  const tbody = document.querySelector('#mr-table tbody');
+  const q = document.getElementById('mr-q');
+  const near = document.getElementById('mr-near');
+  const count = document.getElementById('mr-count');
+  const cards = document.querySelectorAll('.mr-card[data-b]:not([disabled])');
+  const heads = document.querySelectorAll('#mr-table th[data-k]');
+  let bucket = null, sortK = 4, sortDir = -1;
+  const LIMIT = 500;
+  const hex = a => a ? '0x' + a.toString(16).toUpperCase().padStart(8, '0') : '—';
+  const fmtB = n => n < 1024 ? n + ' B' : (n / 1024).toFixed(1) + ' KiB';
+  const td = (tr, text, cls, color) => {
+    const c = document.createElement('td');
+    if (cls) c.className = cls;
+    if (color) c.style.color = color;
+    c.textContent = text;
+    tr.appendChild(c);
+    return c;
+  };
+  function render() {
+    const s = q.value.trim().toLowerCase();
+    let list = rows.filter(r =>
+      (bucket ? r[5] === bucket : (!near.checked || r[4] < 99.999)) &&
+      (!s || r[0].toLowerCase().includes(s) || r[1].toLowerCase().includes(s)));
+    list.sort((a, b) => {
+      const x = a[sortK], y = b[sortK];
+      const c = typeof x === 'number' ? x - y : x.localeCompare(y);
+      return c ? c * sortDir : b[3] - a[3];
+    });
+    const total = list.length, bytes = list.reduce((t, r) => t + r[3], 0);
+    list = list.slice(0, LIMIT);
+    const frag = document.createDocumentFragment();
+    for (const r of list) {
+      const tr = document.createElement('tr');
+      td(tr, hex(r[2]), 'num mono');
+      td(tr, r[0], 'mono');
+      td(tr, r[1], 'mono dim');
+      td(tr, fmtB(r[3]), 'num');
+      const f = td(tr, r[4].toFixed(2) + '%', 'num');
+      f.style.color = COLORS[r[5]];
+      const bc = td(tr, '', 'nw');
+      const key = document.createElement('span');
+      key.className = 'mr-key';
+      key.style.background = COLORS[r[5]];
+      bc.appendChild(key);
+      bc.appendChild(document.createTextNode(LABELS[r[5]]));
+      td(tr, r[6], r[6] === 'nonmatching' ? 'nm' : 'dim');
+      frag.appendChild(tr);
+    }
+    tbody.replaceChildren(frag);
+    count.textContent = total.toLocaleString() + ' functions · ' + fmtB(bytes) +
+      (total > LIMIT ? ' (first ' + LIMIT + ' shown)' : '');
+    cards.forEach(c => c.classList.toggle('active', c.dataset.b === bucket));
+    heads.forEach(h => {
+      h.classList.toggle('sorted', +h.dataset.k === sortK);
+      h.dataset.dir = +h.dataset.k === sortK ? (sortDir > 0 ? '▲' : '▼') : '';
+    });
+    near.disabled = !!bucket;
+  }
+  cards.forEach(c => c.addEventListener('click', () => {
+    bucket = bucket === c.dataset.b ? null : c.dataset.b;
+    render();
+  }));
+  heads.forEach(h => h.addEventListener('click', () => {
+    const k = +h.dataset.k;
+    if (k === sortK) sortDir = -sortDir;
+    else { sortK = k; sortDir = (k === 3 || k === 4) ? -1 : 1; }
+    render();
+  }));
+  q.addEventListener('input', render);
+  near.addEventListener('change', render);
+  render();
+})();
+"""
 
 
 # ---------------------------------------------------------------------------
@@ -1327,6 +1550,7 @@ def main() -> int:
         asm_bytes=format_bytes(asm_fn_code),
         category_rows="\n".join(category_rows) or '<p class="meta">No categories defined.</p>',
         treemap_svg=treemap_svg,
+        match_rate_section=build_match_rate_section(units, asm_names, nonmatching_units),
         top_addr_rows="\n".join(unit_row(u, asm_by_unit, nonmatching_units) for u in units_with_code[:30]),
         all_addr_rows="\n".join(unit_row(u, asm_by_unit, nonmatching_units) for u in units_with_code),
         top_size_rows="\n".join(unit_row(u, asm_by_unit, nonmatching_units) for u in units_by_size[:30]),
