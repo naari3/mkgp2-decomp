@@ -323,11 +323,11 @@ def apply(a):
     out = [f'/* {len(tus)} TUs merged by tools/merge_tus.py, .text {a.first:#x}..{end:#x}.',
            ' * Each section is the preprocessed original TU with its names suffixed _pN',
            ' * (tools/extab_user_renames.json maps the symbols back). */']
-    if pool_src:
+    if pool_src and not a.pool_external:
         out += ['/* ==== pool (tools/data2c.py) ==== */'] + (['#pragma cplusplus off'] if mixed else []) \
             + [pool_src.rstrip()] + (['#pragma cplusplus reset'] if mixed else []) + ['']
     for n, (b, exc, lmw, cpp, osize) in enumerate(info):
-        sec = rename_section(preprocess(b['name']), f'_p{n}', pool_names, renames, cpp)
+        sec = rename_section(preprocess(b['name']), f'_p{n + a.suffix_base}', pool_names, renames, cpp)
         out += [f"/* ==== {b['name']} ({text_start(b):#x}) ==== */",
                 f'#pragma exceptions {"on" if exc else "off"}',
                 f'#pragma use_lmw_stmw {"on" if lmw else "off"}'] \
@@ -454,6 +454,11 @@ def main():
             p.add_argument('--into')
             p.add_argument('--pool')
             p.add_argument('--pool-sec', action='append')
+            p.add_argument('--suffix-base', type=int, default=0,
+                           help='first _pN number (when the result is appended to an already merged TU)')
+            p.add_argument('--pool-external', action='store_true',
+                           help='--pool only names the pool objects (already defined in the TU this result '
+                                'will be appended to); nothing is emitted for it')
             p.add_argument('--pool-global', action='store_true',
                            help='keep the scope data2c gave the pool objects (default: all static)')
     p = sp.add_parser('prune-renames')

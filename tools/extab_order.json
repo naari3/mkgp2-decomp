@@ -98,6 +98,7 @@
     ]
   },
   "src/game/clFlowRound.c": [
+    "fn_801C9288",
     "clFlowRound_Draw",
     "clFlowRound_Update",
     "clFlowRound_Dtor",
