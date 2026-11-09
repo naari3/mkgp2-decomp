@@ -2421,14 +2421,6 @@
     "@232": "@etb_80009634",
     "@233": "@eti_80022244"
   },
-  "src/game/clFlowKart_HandleConfirm.c": {
-    "extab_clFlowKart_HandleConfirm": "@etb_8001536C",
-    "extabindex_clFlowKart_HandleConfirm": "@eti_8002813C"
-  },
-  "src/game/clFlowKart_UpdateDisplay.c": {
-    "extab_clFlowKart_UpdateDisplay": "@etb_80015334",
-    "extabindex_clFlowKart_UpdateDisplay": "@eti_80028130"
-  },
   "src/game/clFlowKart_Init.c": {
     "__ct__7FKOwnerFv": "clFlowKart_Init",
     "__vt__7FKOwner": "lbl_8049BBD0",
@@ -2441,14 +2433,21 @@
     "__ct__8FKDriverFiiPfiii": "KartDriver_New_Full",
     "__ct__5FKTexFv": "TexMgr_Init",
     "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
-  },
-  "src/game/clFlowKart_Update.c": {
-    "__ct__10FlowSpriteFiiffffff": "Sprite_CreateWithParams",
-    "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
-    "@82": "@etb_8001537C",
-    "@83": "@eti_80028154"
+    "__ct__Q29fk_update10FlowSpriteFiiffffff": "Sprite_CreateWithParams",
+    "@52": "@etb_80015334",
+    "@87": "@etb_8001536C",
+    "@129": "@etb_80015374",
+    "@212": "@etb_8001537C",
+    "@245": "@etb_800153B4",
+    "@323": "@etb_800153BC",
+    "@53": "@eti_80028130",
+    "@88": "@eti_8002813C",
+    "@130": "@eti_80028148",
+    "@213": "@eti_80028154",
+    "@246": "@eti_80028160",
+    "@324": "@eti_8002816C",
+    "__ct__8FKSpriteFiffi": "fn_801A08B8"
   },
   "src/game/CardRW_CleaningTest_Page.c": {
     "extab_CardRW_CleaningTest_Page": "@etb_800081A8",

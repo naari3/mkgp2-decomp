@@ -9258,35 +9258,10 @@ game/fn_801D7610.c:
 	extabindex  start:0x80028124 end:0x80028130
 	.text       start:0x801D7610 end:0x801D7920
 
-game/clFlowKart_UpdateDisplay.c:
-	extab       start:0x80015334 end:0x8001536C
-	extabindex  start:0x80028130 end:0x8002813C
-	.text       start:0x801D7920 end:0x801D7B50
-
-game/clFlowKart_HandleConfirm.c:
-	extab       start:0x8001536C end:0x80015374
-	extabindex  start:0x8002813C end:0x80028148
-	.text       start:0x801D7B50 end:0x801D7CC4
-
-game/fn_801D7CC4.cpp:
-	extab       start:0x80015374 end:0x8001537C
-	extabindex  start:0x80028148 end:0x80028154
-	.text       start:0x801D7CC4 end:0x801D7E84
-
-game/clFlowKart_Update.c:
-	extab       start:0x8001537C end:0x800153B4
-	extabindex  start:0x80028154 end:0x80028160
-	.text       start:0x801D7E84 end:0x801D8284
-
-game/dtor_801D8284.cpp:
-	extab       start:0x800153B4 end:0x800153BC
-	extabindex  start:0x80028160 end:0x8002816C
-	.text       start:0x801D8284 end:0x801D83D4
-
 game/clFlowKart_Init.c:
-	extab       start:0x800153BC end:0x80015474
-	extabindex  start:0x8002816C end:0x80028178
-	.text       start:0x801D83D4 end:0x801D878C
+	extab       start:0x80015334 end:0x80015474
+	extabindex  start:0x80028130 end:0x80028178
+	.text       start:0x801D7920 end:0x801D878C
 	.rodata     start:0x8039E508 end:0x8039E9F8
 
 game/fn_801D878C.cpp:
