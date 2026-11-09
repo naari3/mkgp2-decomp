@@ -163,7 +163,6 @@ Remaining in range (not done, why), as of PR #247:
   - clFlowRound_Update: instruction stream equal (normalized 0 apart from the regalloc-driven scheduling in PlaceArrows); only self=r31 vs pool base fails, see the regalloc tip above. Drafts: notes/clFlowRound_Update_draft.cpp (user-pointer form), notes/clFlowRound_Update_draft_paramself.cpp. Needs `__rlwimi(c, a, 0, 24, 31)` for the alpha insert and a `switch (x7C) { case -1: ... }` for the beq/b shape.
   - clFlowCup_Init: not attempted. It has the same offset-IV `addi r0,rI,0x124; stwx` slot loop that blocks clFlowRound_Init, plus a ctr-unrolled zeroing loop. The pool (.data 0x8049AD58) is already owned by clFlowCup.c.
   - Done in PR #291: JumpDistanceMode_HandlePhysics, JumpDistanceMode_UpdateGameplay, clFlowCup_Update.
-  - JumpDistanceMode_Update: 6 lines off, only the sqrt fp regs (target x² in f1, z in f2, unfused). Draft notes/r4-6/JumpDistanceMode_Update_draft.cpp.
   - CopyKartMovement: needs `__restrict`-like aliasing plus GPR parity; not solved.
 
 ## NonMatching sweep, SDK/libs 0x8024D764..end (2026-10-25)

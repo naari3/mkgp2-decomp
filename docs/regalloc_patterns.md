@@ -747,6 +747,26 @@ opposite case: a `Vec local = *v;` copy that must sit below the by-value
 argument temps has to stay in a tiny inline (`TransformVelocity`), because
 inline locals are created after the caller's temps.
 
+## 39. Unfused `fmuls; fmuls; fadds` where other code in the function fuses: multiply through an inline helper (JumpDistanceMode_Update, 11-09)
+
+Target (the rest of the function has `fmadds`, so `fp_contract off` is not it):
+
+```
+lfs f0,x; lfs f2,z; fmuls f1,f0,f0; fmuls f2,f2,f2; fadds f4,f1,f2
+```
+
+- `x*x + z*z` (named or direct) fuses into `fmadds`.
+- `float xx = x*x; float zz = z*z; xx + zz` does not fuse, but the loads come
+  out in the other order / other registers (3 to 5 lines off in ~80 variants).
+- `#pragma fp_contract off` around an *inline* does nothing: the pragma state
+  of the function the inline lands in decides.
+
+Fix: `static inline float mul(float a, float b) { return a * b; }` and
+`sqrtf(mul(d.x, d.x) + mul(d.z, d.z))` with the members passed directly (no
+named x/z locals). The inline results are temps that are not fused, and their
+numbering gives the target order. An inline `sq(float v)` or named locals as
+arguments stay 3 lines off.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
