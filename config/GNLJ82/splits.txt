@@ -10951,22 +10951,12 @@ game/EnemyFace_exact5.cpp:
 	extabindex  start:0x8002A8B4 end:0x8002A8C0
 	.text       start:0x8022BF2C end:0x8022BFA8
 
-game/EnemyFaceDraw.cpp:
-	extab       start:0x8001BFC8 end:0x8001BFE0
-	extabindex  start:0x8002A8C0 end:0x8002A8CC
-	.text       start:0x8022BFA8 end:0x8022CDE4
-
-game/fn_8022CDE4.c:
-	extab       start:0x8001BFE0 end:0x8001BFE8
-	extabindex  start:0x8002A8CC end:0x8002A8D8
-	.text       start:0x8022CDE4 end:0x8022CE04
-
 game/EnmyFaceEffect.cpp:
-	extab       start:0x8001BFE8 end:0x8001C15C
-	extabindex  start:0x8002A8D8 end:0x8002A98C
-	.text       start:0x8022CE04 end:0x802300C8
+	extab       start:0x8001BFC8 end:0x8001C15C
+	extabindex  start:0x8002A8C0 end:0x8002A98C
+	.text       start:0x8022BFA8 end:0x802300C8
 	.ctors      start:0x802E8954 end:0x802E8958
-	.rodata     start:0x803DAB54 end:0x803DAE88
+	.rodata     start:0x803DA710 end:0x803DAE88
 	.data       start:0x804EE140 end:0x804EE1C8
 	.bss        start:0x80679CE0 end:0x80679DE8
 	.sdata      start:0x806D0620 end:0x806D0630

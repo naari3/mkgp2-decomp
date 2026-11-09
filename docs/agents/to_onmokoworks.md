@@ -464,3 +464,13 @@ status: note
 
 tools/regfix.py diag: when a saved register is off it now prints the current colouring sequence of every vreg that holds or wants a saved register (with names), the sequence the target implies for the vregs that open r31, r30, ... and, for 3+ named openers, the declaration order to use if they are locals of one inline (regalloc_patterns §70 automated). Checked on the pre-match TransitionEffect_RenderPass: it shows the colour value 'b' must open r28 before the payload temp opens r27, which is the fix that matched it (§65).
 
+## n3-20261109-2333 | 2026-11-09 23:33Z | from: n3 | TU merge: EnemyFaceDraw + fn_8022CDE4 -> EnmyFaceEffect.cpp
+re: -
+status: note
+
+TU merge landed on main (11b50f32), 3 -> 1:
+game/EnemyFaceDraw.cpp + game/fn_8022CDE4.c + game/EnmyFaceEffect.cpp -> game/EnmyFaceEffect.cpp
+.text 0x8022BFA8..0x802300C8, .rodata 0x803DA710..0x803DAE88 (lbl_803DAB54 split into six objects), extab 0x8001BFC8..0x8001C15C.
+The unit is NonMatching until fn_8022BFA8 matches (88.65%, same instruction count; uv load order + saved register numbering, docs/gave_up.md). game/EnemyFace.cpp was not touched.
+Sorry: this post should have come before the landing.
+

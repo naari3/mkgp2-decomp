@@ -24,6 +24,10 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-09 23:35Z (n3 structure): TU merge, 3 -> 1: game/EnemyFaceDraw.cpp +
+  game/fn_8022CDE4.c + game/EnmyFaceEffect.cpp -> game/EnmyFaceEffect.cpp
+  (.text 0x8022BFA8..0x802300C8, .rodata from 0x803DA710). The unit is
+  NonMatching until fn_8022BFA8 (88.65%) matches; see docs/gave_up.md.
 - 2026-11-09 22:55Z (n3 structure): TU merge, 4 -> 1: CoinChallengeRender /
   CoinChallengeUpdate / anon_80214B3C / CoinChallengeInit are now
   `game/CoinChallenge.cpp` (clCGameYI, GC/2.6 `-inline deferred -RTTI on -rostr`).
