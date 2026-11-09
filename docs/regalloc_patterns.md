@@ -1989,3 +1989,27 @@ constant-trip loop that the compiler unrolled:
 The other user of the same inline (Update, fn_8017BF90) has no interference
 in any copy and stays matched. Check: the first copy has no `addi`
 (`index + 0`), the others reload the member and add 1, 2.
+
+## 76. Target copies a CSE temp into a saved register INSIDE a branch (`lwz r3; ...; beq; mr r27,r3`), ours keeps one register (GabyouItem_Tick_HeldAndHoming_2Eto31, 11-10)
+
+```
+lwz r3, 0x304(r3)      ; T = context->target->effects
+lwz r28, 0x8(r3)       ; nextTarget = T->nextTarget
+cmplwi r28, 0 ; beq
+mr r27, r3             ; previousBus = T   (first call below still uses r3)
+```
+Source shape: `nextTarget = E->nextTarget; if (nextTarget) { previousBus = E; f(E); g(previousBus); ... }`.
+Written plainly, IRO turns the second `E` into a copy of the CSE temp and
+then propagates that copy away: one saved register, no `mr`. A copy survives
+propagation when it is not a plain `local = temp` statement:
+- the local's definition is the FIRST occurrence of the expression (the CSE
+  temp is created inside it: `previousBus = (T = E)`), which puts the `mr`
+  where the local is defined (before the `if` here: 2 lines left), or
+- the copy goes through a cast node: `previousBus = (HeldEffectBus *)(void *)E`,
+  `void *previousBus = E`, `(T *)((char *)E + 0)` all keep it. This is the one
+  that puts the `mr` inside the branch.
+Also write the first call with the expression itself (`f(context->target->effects)`)
+so that it takes the temp (r3) without a reload.
+Tried and useless here: reusing a multi-def variable, an inline for the three
+calls, assignment in the condition, `#pragma opt_propagation off` (breaks 30+
+lines elsewhere in a big function).
