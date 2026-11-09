@@ -1,9 +1,7 @@
 /*
- * Course ground-height queries, 0x80035268..0x80035AE4.
- * NonMatching (both functions). The edge loop preserves the original unrolled
- * edge-test temporaries; the penetration query computes plane height locally.
- * Saved parameter homes, cell traversal loads and some FP temporaries differ.
- * The emitted zero constant is not yet mapped to the target shared pool.
+ * Penetrating ground-height query, 0x80035268..0x80035700.
+ * NonMatching: only initial sentinel/X and grid/Z load scheduling differs.
+ * Indexed cell and triangle traversal preserves the original array bases.
  */
 #pragma cplusplus on
 extern "C" {
@@ -96,15 +94,11 @@ static inline float Terrain_PlaneSide(TerrainTri *tri, float x, float y, float z
     return tri->plane[2] * (z - tri->v[0][2]) + (tri->plane[0] * (x - tri->v[0][0]) + tri->plane[1] * (y - tri->v[0][1]));
 }
 
-static inline float Terrain_PlaneHeight(TerrainTri *tri, float x, float y, float z)
-{
-    float b = tri->plane[1];
-    float inv = b;
 
-    if (0.0f != b) {
-        inv = lbl_806D2388 / b;
-    }
-    return inv * (tri->plane[3] + (tri->plane[2] * z + (tri->plane[0] * x + b * y)));
+static inline float Terrain_InitHeight(float x, float *height)
+{
+    *height = lbl_806D2398;
+    return x;
 }
 
 extern "C" unsigned char Terrain_GetGroundHeightWithPenetration(float *pos, float *outHeight, float *outNormal,
@@ -115,8 +109,8 @@ extern "C" unsigned char Terrain_GetGroundHeightWithPenetration(float *pos, floa
     float x;
     int col;
     int row;
-    TerrainCell *cell;
     TerrainTri *tri;
+    TerrainTri *triangles;
     int count;
     int i;
     unsigned char found;
@@ -129,21 +123,20 @@ extern "C" unsigned char Terrain_GetGroundHeightWithPenetration(float *pos, floa
     if (lbl_806CED58 == 0) {
         return 0;
     }
-    x = pos[0];
-    *outHeight = lbl_806D2398;
+    x = Terrain_InitHeight(pos[0], outHeight);
     grid = lbl_806CED58;
     col = (x + grid->offsetX) / grid->cellWidth;
     row = (pos[2] + grid->offsetZ) / grid->cellDepth;
     if (col < 0 || row < 0 || col >= grid->width || row >= grid->height) {
         return 0;
     }
-    cell = &grid->cells[row * grid->width + col];
     best = lbl_806D239C;
     found = 0;
     haveBest = 0;
-    tri = cell->tris;
-    count = cell->triCount;
-    for (i = 0; i < count; i++, tri++) {
+    triangles = grid->cells[row * grid->width + col].tris;
+    count = grid->cells[row * grid->width + col].triCount;
+    for (i = 0; i < count; i++) {
+        tri = &triangles[i];
         if (tri->minX <= x && tri->maxX >= x && tri->minZ <= pos[2] && tri->maxZ >= pos[2]) {
             float z = pos[2];
             if (Terrain_OutsideEdges(tri, x, z) == 0) {
@@ -198,57 +191,6 @@ extern "C" unsigned char Terrain_GetGroundHeightWithPenetration(float *pos, floa
         found = 1;
     }
     return found;
-}
-
-extern "C" unsigned char Terrain_GetGroundHeight(float *pos, float *outHeight, float *outNormal, unsigned int *outAttr)
-{
-    ScopedTimer timer(0x10);
-    TerrainGrid *grid = lbl_806CED58;
-    int col;
-    int row;
-    TerrainCell *cell;
-    TerrainTri *tri;
-    int count;
-    int i;
-
-    if (grid == 0) {
-        return 0;
-    }
-    col = (pos[0] + grid->offsetX) / grid->cellWidth;
-    row = (pos[2] + grid->offsetZ) / grid->cellDepth;
-    if (col < 0 || row < 0 || col >= grid->width || row >= grid->height) {
-        return 0;
-    }
-    cell = &grid->cells[row * grid->width + col];
-    tri = cell->tris;
-    count = cell->triCount;
-    for (i = 0; i < count; i++, tri++) {
-        if (tri->minX <= pos[0] && tri->maxX >= pos[0] && tri->minZ <= pos[2] && tri->maxZ >= pos[2]) {
-            if (Terrain_OutsideEdges(tri, pos[0], pos[2]) == 0) {
-                float y;
-                float b = tri->plane[1];
-                float inv = b;
-                float h;
-
-                if (0.0f != b) {
-                    inv = lbl_806D2388 / b;
-                }
-                y = pos[1];
-                h = inv * (tri->plane[3] + (tri->plane[2] * pos[2] + (tri->plane[0] * pos[0] + b * y)));
-                *outHeight = y - h;
-                if (outNormal != 0) {
-                    outNormal[0] = tri->plane[0];
-                    outNormal[1] = tri->plane[1];
-                    outNormal[2] = tri->plane[2];
-                }
-                if (outAttr != 0) {
-                    *outAttr = *(unsigned int *)tri->pad_5C;
-                }
-                return 1;
-            }
-        }
-    }
-    return 0;
 }
 
 #pragma cplusplus off
