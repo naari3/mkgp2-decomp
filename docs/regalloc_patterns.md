@@ -512,6 +512,10 @@ The same family: a local whose value comes straight from an inline return (`c = 
 
 How to spot it: `regfix.py diag` asks for "temp @N must be numbered after <named local>" and @N is the def of a variable that is already a named local earlier in the function, or the value of an inline call assigned to a local.
 
+## 27. A CSE'd constant load is numbered after the inline's locals: load it into an inline local first (fn_801F8404, 11-09)
+
+`if (lbl_806DA718 == d->angle) { dx = lbl_806DA718; ...}` inside an inline ctor: common-subexpression elimination turns the two loads into one temp that is created late (high @, low vreg number), so it was coloured after `h` and got f10 where the target has f4 (8 lines). Reading it into an inline local right before the test (`float zero = lbl_806DA718; if (zero == d->angle) { dx = zero; ...}`) creates the temp at that point; the remaining w/h swap was the decl order `float h, w, ...` (inline locals: decl order sets @ order). regfix diag says "swap the creation order of temp @A (the `lfs` of the constant) and @B". Same TU: fn_801F8728 matched by reusing the matched sibling's quad class (DrawQuad7F50 from fn_801F7F50) instead of a hand-made copy.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,

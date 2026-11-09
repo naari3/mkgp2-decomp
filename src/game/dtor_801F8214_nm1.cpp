@@ -1,4 +1,5 @@
 #include "game/DrawQuad8214Private.h"
+#include "game/DrawQuad7F50MatchPrivate.h"
 
 extern "C" {
 #pragma force_active on
@@ -132,7 +133,7 @@ static inline void DrawPositionDepth8728(float x, float y, const DrawDesc801F *d
 #pragma push
 #pragma opt_common_subs off
 void fn_801F8728(DrawNode801F *self) {
-    DrawQuadLocal8214 quad(self->description, 0);
+    DrawQuad7F50 quad(self->description);  /* same quad as fn_801F7F50 */
     GXBegin(128,0,4);
     if (!self->depth) {
         DrawPosition801F(quad.x0,quad.y0);
