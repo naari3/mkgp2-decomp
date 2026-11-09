@@ -101,6 +101,12 @@ struct CoinChallengeMode : ModeBase {
     int x24;
     HUD *hud;
     CoinIcons *icons;
+    /* Undefined key function: keeps this TU from emitting the vtable, which
+     * the target has after CoinChallengeInit.cpp's .data. The real class is
+     * clCGameYI : clCGame : clJobRunner (RTTI lbl_806D0408) and spans
+     * 0x802143E4..0x802151C8 (Render, Update, dtor, ctor); see
+     * docs/gave_up.md "CoinChallenge TU". */
+    virtual void VtableKey();
     virtual ~CoinChallengeMode();
 };
 
