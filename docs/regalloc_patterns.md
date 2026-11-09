@@ -506,7 +506,7 @@ Also fn_801826F8 (mobjclass JObj walk, 4-TU C++ merge, inline_depth(3), d9220c1)
 
 ## 26. A named local re-assigned later becomes a temp: one named local per assignment (fn_801F140C, 11-09)
 
-MWCC splits a named local into webs. Only the first web keeps the named-local vreg number (low, coloured last); every later assignment of the same variable gets a frontend temp number. In fn_801F1244/fn_801F140C the target colours both fade colours (`0xFFFFFF00 | v`, then `0xFFFFFF00 | (u8)(255 - v)`) into the same register below the loop counter/offset, but with one `c` assigned twice the second colour was a temp coloured first (27 lines off). Fix: give each assignment its own named local (`c`, `c2`) and let the decl-order solver pick the order (`c, c2, offset, i, v`).
+The backend never splits a named local into webs (§34), but the frontend IR optimiser can take a later assignment away from it: in fn_801F140C regfix diag showed the second colour as a frontend temp (`@358`, defined by the `or`) feeding the loops directly, while `c` kept only the first value. So the second value got a temp number (high, coloured early) instead of the named-local number (low, coloured last). In fn_801F1244/fn_801F140C the target colours both fade colours (`0xFFFFFF00 | v`, then `0xFFFFFF00 | (u8)(255 - v)`) into the same register below the loop counter/offset, but with one `c` assigned twice the second colour was a temp coloured first (27 lines off). Fix: give each assignment its own named local (`c`, `c2`) and let the decl-order solver pick the order (`c, c2, offset, i, v`).
 
 The same family: a local whose value comes straight from an inline return (`c = MenuRGBA(v, v, v, 255)`) is copy-propagated away and the colour stays an inline temp. Write the expression in place (`c = (v << 24) | ((v & 255) << 16) | ((v & 255) << 8) | 255`) so `c` survives as a named local, then sweep the decl order (fn_801F2400, fn_801F1EE0: `c, offset, i`).
 
@@ -663,9 +663,6 @@ rename the loops' counters one by one and keep the ones that help. Rule
 - Value and table pointer swapped r4/r5 in two lookup loops:
   NameCheck_CardName. Tried 120 decl orders, temps, cmp swap, pragmasweep and
   20 minutes of cperm.
-- Quad-ctor FPR coloring: fn_801F8404/fn_801F8728 (the fn_801F7F50 recipe
-  f4d48738 plus `fabs(h)` before `fabs(w)` leaves pure f-register coloring),
-  wip/audit.
 - Table base vs loop walker, copy direction reversed (11-08 diagnosis):
   ClRomTable_PurgeAll, fn_801E96BC, PCBCheck_ProcessLinks. The final registers
   per role are the same; the target materialises the base (`addi rB, sym@l`)
