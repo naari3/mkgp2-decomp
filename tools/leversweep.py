@@ -1305,6 +1305,42 @@ def gen_voidint(fx):
     return out
 
 
+CASTASSIGN_RE = re.compile(r'(?<![=!<>+\-*/&|^%])=\s*\((int|unsigned int|s32|u32|long|unsigned long|unsigned|short|s16|u16|unsigned short)\)\s*'
+                           r'(?=[A-Za-z_(])')
+NARROW_T = r'(?:u8|s8|char|unsigned char|signed char|bool|BOOL8|u16|s16|short|unsigned short)'
+
+
+@lever('narrow-cast-toggle', 'dead-truncation-reschedules-block', 'auto', 'dd11664',
+       '`narrow = (int)x;` <-> `narrow = x;`: a two-step conversion emits a truncation that dies later, the block '
+       'is scheduled again after register allocation and two independent instructions swap (regalloc_patterns 69)')
+def gen_narrowcast(fx):
+    tu = strip_comments(fx.text) if hasattr(fx, 'text') else ''
+    def f(body):
+        res = []
+        sites = [m for m in CASTASSIGN_RE.finditer(body)]
+        if len(sites) <= 16:
+            for k, m in enumerate(sites):
+                res.append((f'drop ({m.group(1)}) cast of assignment {k}', body[:m.start()] + '= ' + body[m.end():]))
+            if len(sites) > 1:
+                nb = body
+                for m in reversed(sites):
+                    nb = nb[:m.start()] + '= ' + nb[m.end():]
+                res.append(('drop every int cast on assignments', nb))
+        names = set(re.findall(r'\b' + NARROW_T + r'\s+(\w+)\s*(?:=|;|,)', body))
+        names |= set(re.findall(r'\bextern\s+(?:volatile\s+)?' + NARROW_T + r'\s+(\w+)\s*;', tu))
+        adds = []
+        for m in re.finditer(r'(?<![\w.>])(\w+)\s*=\s*(?![=(])(?=[A-Za-z_])', body):
+            if m.group(1) in names:
+                stmt = body[m.end():body.find(';', m.end())]
+                if re.fullmatch(r'[\w.\->\[\]]+', stmt.strip()) and not re.fullmatch(r'\d\w*', stmt.strip()):
+                    adds.append(m)
+        if len(adds) <= 12:
+            for k, m in enumerate(adds):
+                res.append((f'add (int) cast to narrow assignment {k} ({m.group(1)})', body[:m.end()] + '(int)' + body[m.end():]))
+        return res
+    return fx.scoped(f)
+
+
 # --------------------------------------------------------------------------
 # runner
 
