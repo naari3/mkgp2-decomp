@@ -280,8 +280,8 @@ object before the loop and passing it through a pointer variable:
     PhysicsCollisionVec *ep = &endpoint;
     for (...) { ...; Terrain_RaycastWall(self + 0x4C, ep, &hit, &n); }
 
-The same shape probably explains KartMovement_CollisionUpdate (`&contact` in
-r31, an onmokoworks claim). It did not help for `&rotation` inside the
+The same shape explains KartMovement_CollisionUpdate (`&contact` in r31):
+applied 11-09, 951 -> 688 diff lines and the target's stmw r19. It did not help for `&rotation` inside the
 inlined `applyYaw`: a pointer local in an inline function gets propagated.
 
 ## 15. Target keeps a list iterator in a stack slot (07fd50d, 11-08)
