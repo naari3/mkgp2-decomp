@@ -10,7 +10,7 @@ struct MovementSettings {
     bool field22;
     unsigned char field23;
     int field24, field28;
-    MovementSettings(int, int, int);
+    MovementSettings(int, int, bool);
 };
 
 struct MovementState {

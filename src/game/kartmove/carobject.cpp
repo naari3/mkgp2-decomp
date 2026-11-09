@@ -28,8 +28,8 @@ extern unsigned char Terrain_GetGroundHeightWithPenetration(Vec3 *, float *, int
 }
 
 static inline void MatrixIdentity(Matrix44 *a) {
-    for (int i = 0; i < 16; i++) ((float *)a)[i] = lbl_806D96D0;
-    a->m[0][0] = a->m[1][1] = a->m[2][2] = a->m[3][3] = lbl_806D96D4;
+    for (int i = 0; i < 16; i++) ((float *)a)[i] = 0.0f;
+    a->m[0][0] = a->m[1][1] = a->m[2][2] = a->m[3][3] = 1.0f;
 }
 
 static inline void AccumulateProduct(float &value, float right, float left) {
@@ -352,44 +352,44 @@ int fn_8019F1C4(CurveKeyKV *p, int n, float t, float *out) {
 
 }
 
-static inline int IsSpecialMovementMode() { return g_gameMode == 2; }
+static inline int IsSpecialMovementMode() { return g_gameMode == 2 ? 1 : 0; }
 
 inline CarTrivial::CarTrivial() {}
 
 inline MovementState::MovementState(float a, float b) : scale(a), value(b) {
-    vector.x = lbl_806D96D0;
-    vector.y = lbl_806D96D0;
-    vector.z = lbl_806D96D0;
+    vector.x = 0.0f;
+    vector.y = 0.0f;
+    vector.z = 0.0f;
 }
 
-inline MovementSettings::MovementSettings(int a, int b, int special) {
+inline MovementSettings::MovementSettings(int a, int b, bool special) {
     field22 = special;
     field24 = a;
     field28 = b;
-    field0c = lbl_806D96D0;
-    field14 = lbl_806D96D0;
-    field10 = lbl_806D96D0;
+    field0c = 0.0f;
+    field14 = 0.0f;
+    field10 = 0.0f;
     field08 = 0;
-    field18 = lbl_806D96D0;
-    field1c = lbl_806D96D4;
+    field18 = 0.0f;
+    field1c = 1.0f;
     field20 = 1;
     field21 = 0;
 }
 
 CarMovementInit::CarMovementInit(void *o, unsigned char *cfg, void *context, float x, float z, float angle)
     : owner(o), config(cfg), settings(*(int *)(config + 0xf0), *(int *)(config + 0xf4), IsSpecialMovementMode()),
-      state(lbl_806D971C, lbl_806D97CC)
+      state(1.5f, 0.95f)
 {
     field320 = context;
     field38 = *(float *)(config + 0x28);
     field3c = *(float *)(config + 0x40);
-    pos.Set(x, lbl_806D96D0, z);
+    pos.Set(x, 0.0f, z);
     prev.Set(pos.x, pos.y, pos.z);
     yaw = angle;
     MatrixIdentity(&orientation);
     Matrix44 rotation;
     MatrixIdentity(&rotation);
-    float radians = (float)(lbl_806D96F0 * yaw);
+    float radians = (float)(0.017453292519943295 * yaw);
     float c = (float)cos(radians);
     float sn = (float)sin(radians);
     rotation.m[0][0] = c; rotation.m[2][0] = sn;
@@ -398,37 +398,37 @@ CarMovementInit::CarMovementInit(void *o, unsigned char *cfg, void *context, flo
     orientation = rotation;
     for (int i = 0; i < 16; i++) ((float *)&previous)[i] = ((float *)&orientation)[i];
     MatrixIdentity(&matrixD8);
-    v158.Set(lbl_806D96D0, lbl_806D96D0, lbl_806D96D0);
-    v164.Set(lbl_806D96D0, lbl_806D96D0, lbl_806D96D0);
-    v170.Set(lbl_806D96D0, lbl_806D96D0, lbl_806D96D0);
-    v17c.Set(lbl_806D96D0, lbl_806D96D0, lbl_806D96D0);
-    v188.Set(lbl_806D96D0, lbl_806D96D0, lbl_806D96D0);
-    v194.Set(lbl_806D96D0, lbl_806D96D0, lbl_806D96D0);
-    field1cc = lbl_806D96D0; field1d0 = yaw;
-    field1d8 = lbl_806D96D0; field1dc = lbl_806D96D0; field1e0 = lbl_806D96D0; field1e4 = lbl_806D96D0; field1e8 = lbl_806D96D0;
-    v1ec.Set(lbl_806D96D0, lbl_806D96D0, lbl_806D96D0);
-    v1f8.Set(lbl_806D96D0, lbl_806D96D0, lbl_806D96D0);
+    v158.Set(0.0f, 0.0f, 0.0f);
+    v164.Set(0.0f, 0.0f, 0.0f);
+    v170.Set(0.0f, 0.0f, 0.0f);
+    v17c.Set(0.0f, 0.0f, 0.0f);
+    v188.Set(0.0f, 0.0f, 0.0f);
+    v194.Set(0.0f, 0.0f, 0.0f);
+    field1cc = 0.0f; field1d0 = yaw;
+    field1d8 = 0.0f; field1dc = 0.0f; field1e0 = 0.0f; field1e4 = 0.0f; field1e8 = 0.0f;
+    v1ec.Set(0.0f, 0.0f, 0.0f);
+    v1f8.Set(0.0f, 0.0f, 0.0f);
     MatrixIdentity(&matrix204);
-    field244 = field245 = field246 = 0; field248 = 0; field24c = lbl_806D96D4; field250 = lbl_806D96D0;
-    field1c0 = lbl_806D96D0; field2be = 0;
-    v1a0.Set(lbl_806D96D0, lbl_806D96D4, lbl_806D96D0);
+    field244 = field245 = field246 = 0; field248 = 0; field24c = 1.0f; field250 = 0.0f;
+    field1c0 = 0.0f; field2be = 0;
+    v1a0.Set(0.0f, 1.0f, 0.0f);
     flags[0] = 1; wheelValues[0] = lbl_804963F8[1];
     flags[1] = 1; wheelValues[1] = lbl_804963F8[1];
     flags[2] = 1; wheelValues[2] = lbl_804963F8[7];
     flags[3] = 1; wheelValues[3] = lbl_804963F8[7];
-    v298.Set(lbl_806D96D0, lbl_806D96D0, lbl_806D96D0);
-    v2a4.Set(lbl_806D96D0, lbl_806D96D0, lbl_806D96D0);
+    v298.Set(0.0f, 0.0f, 0.0f);
+    v2a4.Set(0.0f, 0.0f, 0.0f);
     field2bc = field2bd = 0;
     field2c0 = field2c4 = field2c8 = 1;
-    field2d4 = lbl_806D97D0; field2d8 = lbl_806D96D4; field2dc = 0;
-    field2e0 = lbl_806D96D0; field2f4 = lbl_806D96D4; field2f0 = lbl_806D96D4;
+    field2d4 = lbl_806D97D0; field2d8 = 1.0f; field2dc = 0;
+    field2e0 = 0.0f; field2f4 = 1.0f; field2f0 = 1.0f;
     field2fc = field2fd = field2fe = 0;
-    field2e4 = field2e8 = field2ec = lbl_806D96D0;
-    field2f8 = lbl_806D96D4; field300 = lbl_806D96D4;
-    v310.Set(lbl_806D96D0, lbl_806D96D0, lbl_806D96D0);
+    field2e4 = field2e8 = field2ec = 0.0f;
+    field2f8 = 1.0f; field300 = 1.0f;
+    v310.Set(0.0f, 0.0f, 0.0f);
     GroundHeight ground;
-    if (Terrain_GetGroundHeightWithPenetration(&pos, &ground.value, 0, 0, lbl_806D973C) == 1) {
+    if (Terrain_GetGroundHeightWithPenetration(&pos, &ground.value, 0, 0, 1e+01f) == 1) {
         pos.y = ground.value; prev.y = ground.value;
     }
-    field2c = lbl_806D9728; field30 = 0;
+    field2c = 0.7f; field30 = 0;
 }

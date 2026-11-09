@@ -58,13 +58,13 @@ static inline unsigned char findRival(RivalAvoidanceState *self,RivalAvoidanceCa
 }
 static inline float rivalAvoidanceAmount(float distance, float lower) {
     float amount=distance-lower;
-    amount=lbl_806DA4E8-amount;
-    amount=amount/lbl_806DA4E8;
-    amount=amount+lbl_806DA4EC;
+    amount=269808.0f-amount;
+    amount=amount/269808.0f;
+    amount=amount+0.02f;
     return lbl_806D1938*amount;
 }
 static inline int nearestRivalWaypoint(void *path, const PhysicsPlainVec &position) {
-    int nearest = Waypoint_FindNearest(path, 0, position.x, position.y, position.z, lbl_806DA4F4);
+    int nearest = Waypoint_FindNearest(path, 0, position.x, position.y, position.z, 6e+02f);
     return nearest;
 }
 struct RivalProbeOffset {
@@ -80,10 +80,10 @@ extern "C" float AI_CalcRivalAvoidance(RivalAvoidanceState *self) {
     RivalAvoidanceCandidate candidate;
     unsigned char found=findRival(self,candidate);
     if(!found) return lbl_806DA42C;
-    if(lbl_806DA4E0<candidate.distance || candidate.distance<lbl_806DA4E4) return lbl_806DA42C;
+    if(2.7e+05f<candidate.distance || candidate.distance<192.0f) return lbl_806DA42C;
     self->avoiding=1;
-    float amount=rivalAvoidanceAmount(candidate.distance,lbl_806DA4E4);
-    if(!lbl_806D1950) { lbl_806D194C=lbl_806DA4F0*lbl_806D1934; lbl_806D1950=1; }
+    float amount=rivalAvoidanceAmount(candidate.distance,192.0f);
+    if(!lbl_806D1950) { lbl_806D194C=0.7f*lbl_806D1934; lbl_806D1950=1; }
     if(!lbl_806D1958) { lbl_806D1954=-lbl_806D194C; lbl_806D1958=1; }
     if(candidate.angle>lbl_806D194C) return -amount;
     if(lbl_806D1954>candidate.angle) return amount;
@@ -96,10 +96,10 @@ extern "C" float AI_CalcRivalAvoidance(RivalAvoidanceState *self) {
         if(b->valid<0) b=Path_GetWaypointPtr(path,0);
         yaw=rivalSegmentYaw(a,b);
     } else yaw=GetCourseStartYaw();
-    yaw=lbl_806DA4F8+yaw;
+    yaw=1.5707964f+yaw;
     float c=LUT_Cosine(yaw);
     float s=LUT_Sine(yaw);
-    float distance=lbl_806DA448;
+    float distance=1e+03f;
     RivalProbeOffset offset(distance,c,s);
     PhysicsCollisionVec endpoint;
     endpoint.set(candidate.position.x+offset.x,candidate.position.y,candidate.position.z+offset.z);
@@ -120,7 +120,7 @@ extern "C" float AI_CalcRivalAvoidance(RivalAvoidanceState *self) {
         to.set(hit.x,hit.y,hit.z);
         distance=PSVECSquareDistance(&from,&to);
     }
-    if(distance>lbl_806DA448) return amount;
+    if(distance>1e+03f) return amount;
     return -amount;
 }
 
