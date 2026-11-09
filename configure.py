@@ -3893,7 +3893,6 @@ DATA_ALIGN4_TUS = [
     "game/CardSetupFlowUpdate",
     "game/fn_80108B04",
     "game/ItemCharacterRender",
-    "game/clItemBoxManager_StepTable",
     "game/ItemUseStats",
     "game/RenderObj_UseItem",
     "game/AcError_LogIfError",

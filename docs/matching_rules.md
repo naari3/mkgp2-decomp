@@ -2,19 +2,22 @@
 
 This page is the one place for the rules both sides of the project (naari3's
 Claude threads and onmokoworks's Codex/Claude workers) use to decide whether a
-change is acceptable and how to get there. It is a summary: the long-form
-history is in `docs/per_fn_matching_strategy.md` and `docs/notes/`.
+change is acceptable and how to get there. It is a summary: register-allocation
+fixes are collected in `docs/regalloc_patterns.md`, functions people gave up on
+in `docs/gave_up.md`, and older long-form notes in `docs/notes/`.
 
 If a rule here is wrong or missing, fix it in a small commit and say so in the
 commit message, so the other side sees it.
 
 ## 1. Coordination
 
-- **Claim before you start.** Open a GitHub issue titled
-  `[unit-claim] retrofit:<configure.py path>` (or `newtu:<unit>`), label
-  `unit-claim`, before touching a TU. `tools/claim_unit.py` does this.
-  Close it (`completed` or `not_planned` with a short status comment) when you
-  stop.
+- **Claim before you start.** Right before touching a TU, open a GitHub issue
+  titled `[unit-claim] retrofit:<configure.py path>` (or `newtu:<unit>`), label
+  `unit-claim`, assigned to yourself. Any client works (gh, the GitHub API or
+  MCP); the convention is the rule, not a script. Close it as soon as you stop
+  working on that TU, whatever the outcome (landed, no gain, abandoned;
+  `completed` or `not_planned` with a short status comment). Keep the number of
+  open claims close to the number of TUs you are actively working on.
 - **Check open claims first.** GitHub search tokenizes titles, so searching a
   full TU name can miss a claim. List all open `unit-claim` titles and grep, or
   search a directory prefix.
@@ -230,7 +233,7 @@ roughly in the order worth trying:
    permuter for C++ (`cperm.py`, kept outside the repo, ask if you want it).
    In practice it rarely moved the last register swaps here; new source ideas
    did.
-8. Two shapes that closed 2-line diffs on 2026-11-08:
+8. Shapes that closed 2-line diffs on 2026-11-08:
    - Loop step order (target bumps the pointer before the count): walk with
      a separate index, `int count = 0, i = 0; while (t[i].name) { i++; count++; }`
      (CollisionFile_Load).
@@ -251,12 +254,16 @@ roughly in the order worth trying:
    - Byte stores of a shifted word that put `clrlwi`/`extrwi` in a different
      slot: write the mask, `PUT((v >> 8) & 0xFF)` (jvsio fn_80282CDC).
 
-When you stop, record the function in `docs/gave_up.md` with the current %,
-the remaining diff in one line, and where the WIP lives, so the next person
-starts from there instead of from zero.
 9. Stack slot order (GC/2.6, ItemEffect_Projectile draft, 2026-11-08): local
    aggregates get frame slots in ASCENDING SIZE order, and declaration order
    only breaks ties. So if the target has a 12-byte vector above two 12-byte
    scratch arrays, no declaration order will reproduce it. The vector has to be
    bigger, e.g. 16 bytes with a pad member. Two adjacent int fields copied with
    `lwz,lwz,stw,stw` are one 8-byte struct copy.
+10. More shapes, with commits: `docs/regalloc_patterns.md` (numbered fixes
+    §1..§17 plus the onmokoworks Codex fixes). Functions others already
+    tried, with their best % and WIP location: `docs/gave_up.md`.
+
+When you stop, record the function in `docs/gave_up.md` with the current %,
+the remaining diff in one line, and where the WIP lives, so the next person
+starts from there instead of from zero.
