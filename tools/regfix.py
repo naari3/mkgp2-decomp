@@ -1814,6 +1814,25 @@ def cmd_probe(a):
             if st is not None:
                 variants.append((l, st, ()))
     texts = [rend(st, pr) for _, st, pr in variants]
+    # __restrict on pointer parameters (fn_8019EB9C fa1d62e, rule restrict-input-ptrs):
+    # the scheduler keeps a load after a store only when they may alias
+    ptrs = [n for n, t in _param_decls(sw.sig).items() if "*" in t and "__restrict" not in t]
+    head0 = sw.head
+    sets = [(n,) for n in ptrs] + ([tuple(ptrs)] if len(ptrs) > 1 else [])
+    if 2 < len(ptrs) <= 4:
+        sets += list(itertools.combinations(ptrs, 2))
+    for ns in sets:
+        h = head0
+        for n in ns:
+            h = re.sub(r'\*\s*' + re.escape(n) + r'\b(?=\s*[,)\[])', '*__restrict ' + n, h, count=1)
+        if h == head0:
+            continue
+        sw.head = h
+        try:
+            variants.append((f"__restrict {','.join(ns)}", base, ()))
+            texts.append(rend(base))
+        finally:
+            sw.head = head0
     with ThreadPoolExecutor(a.jobs, initializer=ps._init_worker) as ex:
         sc = list(ex.map(lambda t: sw.score(t, ps.worker_id()), texts))
     s0 = sc[0]
