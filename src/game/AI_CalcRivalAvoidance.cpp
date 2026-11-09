@@ -63,6 +63,15 @@ static inline float rivalAvoidanceAmount(float distance, float lower) {
     amount=amount+lbl_806DA4EC;
     return lbl_806D1938*amount;
 }
+static inline int nearestRivalWaypoint(void *path, const PhysicsPlainVec &position) {
+    int nearest = Waypoint_FindNearest(path, 0, position.x, position.y, position.z, lbl_806DA4F4);
+    return nearest;
+}
+struct RivalProbeOffset {
+    float x, z;
+    RivalProbeOffset(float distance, float cosine, float sine)
+        : x(distance * cosine), z(distance * sine) {}
+};
 extern "C" float AI_CalcRivalAvoidance(RivalAvoidanceState *self) {
     const char *constants=lbl_803BD920;
     RivalPathEntry *entry=PathManager_GetEntrySubStruct(g_pathSystem,self->pathId);
@@ -79,7 +88,7 @@ extern "C" float AI_CalcRivalAvoidance(RivalAvoidanceState *self) {
     if(candidate.angle>lbl_806D194C) return -amount;
     if(lbl_806D1954>candidate.angle) return amount;
     void *path=fn_801DBA2C(self->follower);
-    int nearest=Waypoint_FindNearest(path,0,candidate.position.x,candidate.position.y,candidate.position.z,lbl_806DA4F4);
+    int nearest=nearestRivalWaypoint(path,candidate.position);
     float yaw;
     if(nearest>=0) {
         RivalWaypoint *a=Path_GetWaypointPtr(path,nearest);
@@ -91,10 +100,9 @@ extern "C" float AI_CalcRivalAvoidance(RivalAvoidanceState *self) {
     float c=LUT_Cosine(yaw);
     float s=LUT_Sine(yaw);
     float distance=lbl_806DA448;
-    float dx=distance*c;
-    float dz=distance*s;
+    RivalProbeOffset offset(distance,c,s);
     PhysicsCollisionVec endpoint;
-    endpoint.set(candidate.position.x+dx,candidate.position.y,candidate.position.z+dz);
+    endpoint.set(candidate.position.x+offset.x,candidate.position.y,candidate.position.z+offset.z);
     PhysicsCollisionVec hit;
     PhysicsCollisionVec normal;
     if(Terrain_RaycastWall(&candidate.position,&endpoint,&hit,&normal)) {
@@ -104,7 +112,7 @@ extern "C" float AI_CalcRivalAvoidance(RivalAvoidanceState *self) {
         to.set(hit.x,hit.y,hit.z);
         distance=PSVECSquareDistance(&from,&to);
     }
-    endpoint.set(candidate.position.x-dx,candidate.position.y,candidate.position.z-dz);
+    endpoint.set(candidate.position.x-offset.x,candidate.position.y,candidate.position.z-offset.z);
     if(Terrain_RaycastWall(&candidate.position,&endpoint,&hit,&normal)) {
         PhysicsPlainVec from=*(PhysicsPlainVec *)(constants+0x4ec);
         PhysicsPlainVec to=*(PhysicsPlainVec *)(constants+0x4f8);
