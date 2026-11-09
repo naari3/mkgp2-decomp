@@ -1,6 +1,10 @@
 #include "game/VoiceSystem_Init_private.h"
-#pragma push
-#pragma opt_lifetimes off
+
+static inline void VoiceSystem_ClearPlayCounts(VoiceClip *clips) {
+    int i;
+    for (i = 0; i < 0x282; i++) clips[i].playCount = 0;
+}
+
 int VoiceSystem_Init(void) {
     VoiceInitBss *state = (VoiceInitBss *)g_voiceQueue;
     RaceVoiceData *data = &lbl_80496C38;
@@ -51,20 +55,14 @@ int VoiceSystem_Init(void) {
     g_voiceStreamVolume = volume;
     lbl_806D1778 = 0;
     lbl_806D1788 = lbl_806D97F4;
-    g_voiceTickTimeLo = (int)now;
-    g_voiceTickTimeHi = (int)(now >> 32);
-    lbl_806D172C = (int)now;
-    lbl_806D1728 = (int)(now >> 32);
-    lbl_806D17CC = (int)now;
-    lbl_806D17C8 = (int)(now >> 32);
-    lbl_806D17D4 = (int)now;
-    lbl_806D17D0 = (int)(now >> 32);
-    lbl_806D17DC = (int)now;
-    lbl_806D17D8 = (int)(now >> 32);
+    g_voiceTickTimeHi = now;
+    lbl_806D1728 = now;
+    lbl_806D17C8 = now;
+    lbl_806D17D0 = now;
+    lbl_806D17D8 = now;
     g_voiceStreamTime = now;
     lbl_806D1798 = now;
-    g_bgmStateTimeLo = (int)now;
-    g_bgmStateTimeHi = (int)(now >> 32);
+    g_bgmStateTimeHi = now;
     g_voiceSystemInitDone = 1;
     g_voiceRaceStartLatched = 0;
     lbl_806CFD36 = 0;
@@ -123,9 +121,8 @@ int VoiceSystem_Init(void) {
         entry->pad02[0] = 0;
         entry->f64 = 0;
     }
-    for (i = 0; i < 0x282; i++) ((VoiceClip *)((unsigned int)data + 0x1534))[i].playCount = 0;
+    VoiceSystem_ClearPlayCounts((VoiceClip *)((unsigned int)data + 0x1534));
     return 1;
 }
-#pragma pop
 
 
