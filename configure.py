@@ -2834,7 +2834,7 @@ config.libs = [
             Object(Matching, "game/objview/fn_801986D8.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/kartmove/fn_801999D0.c"),
             Object(Matching, "game/kartmove/KartMovement_CalcMaxSpeed.c"),
-            Object(NonMatching, "game/kartmove/KartMovement_RotateByYaw.cpp", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/kartmove/KartMovement_RotateByYaw.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/kartmove/fn_8019ADF4.c"),
             Object(Matching, "game/kartmove/KartMovement_CalcCurrentSpeed.c", mw_version="GC/2.7"),
             Object(Matching, "game/kartmove/KartMovement_CalcSpeedWithCoinBonus.c", mw_version="GC/2.7"),

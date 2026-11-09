@@ -1245,6 +1245,41 @@ def gen_blockloop(fx):
     return fx.scoped(f)
 
 
+CHAIN_RE = re.compile(r'(?<![=!<>+\-*/&|^%])((?:[A-Za-z_][\w.\->\[\]]*\s*=\s*){2,})([-\w.]+)\s*;')
+
+
+@lever('chain-assign-split', 'chain-assign-split', 'auto', 'f96d5c26',
+       '`a = b = c = K;` written as separate statements (both orders): a chain stores right to left and keeps one '
+       'value temp, separate statements store in source order (KartMovement_Init)')
+def gen_chain(fx):
+    def f(body):
+        sites = []
+        for m in CHAIN_RE.finditer(body):
+            lhs = [x.strip() for x in m.group(1).split('=') if x.strip()]
+            if m.start() and body[m.start() - 1] not in ' \t\n;{}':
+                continue
+            if any(not re.fullmatch(r'[A-Za-z_][\w.\->\[\]]*', x) for x in lhs):
+                continue
+            sites.append((m.start(), m.end(), lhs, m.group(2)))
+        if not sites or len(sites) > 12:
+            return []
+        def build(idxs, rev):
+            nb = body
+            for k in sorted(idxs, reverse=True):
+                s0, s1, lhs, v = sites[k]
+                order = lhs[::-1] if rev else lhs
+                nb = nb[:s0] + ' '.join(f'{x} = {v};' for x in order) + nb[s1:]
+            return nb
+        res = [('all chains split, source order', build(range(len(sites)), False)),
+               ('all chains split, reverse order', build(range(len(sites)), True))]
+        if len(sites) > 1:
+            for k in range(len(sites)):
+                res.append((f'chain {k} split, source order', build([k], False)))
+                res.append((f'chain {k} split, reverse order', build([k], True)))
+        return res
+    return fx.scoped(f)
+
+
 # --------------------------------------------------------------------------
 # runner
 
