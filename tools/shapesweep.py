@@ -1116,6 +1116,8 @@ def dbg_analyze(u, text, sym, fn, cc):
     if res is None:
         return (0, 999, None)
     bad = [r for r in res if r['bad']]
+    if not bad:  # diff not explained by vregs (stand-in compiler or opcode diffs): no signal
+        return (0, 999, None)
     first = min((r['pos'] for r in bad), default=10**4)
     nbad = len(bad)
     line = None
