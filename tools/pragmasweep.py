@@ -45,7 +45,9 @@ PRAGMAS = ['opt_common_subs off', 'opt_propagation off', 'opt_lifetimes off',
 PRAGMAS_EXT = ['optimization_level 3', 'optimization_level 2', 'optimization_level 1',
                'optimize_for_size on', 'fp_contract off', 'opt_unroll_loops off',
                'opt_vectorize_loops off', 'opt_lifetimes off', 'opt_common_subs off',
-               'opt_propagation off']
+               'opt_propagation off',
+               # unroll budget: fn_8028AAC0 (4x instead of 8x, rule loop-unroll-budget)
+               'opt_unroll_instr_count 16', 'opt_unroll_instr_count 8', 'opt_unroll_instr_count 32']
 PRAGMA_SETS = {'default': PRAGMAS, 'extended': PRAGMAS_EXT, 'all': list(dict.fromkeys(PRAGMAS + PRAGMAS_EXT))}
 CCS = ['1.2.5n', '1.3', '1.3.2', '2.0', '2.6', '2.7']
 TMP = os.path.join(__import__('tempfile').gettempdir(), 'pragmasweep')
