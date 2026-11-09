@@ -1392,6 +1392,73 @@ class State_like:
         self.stmts = stmts
 
 
+# --------------------------------------------------------------------------
+# "un-name" a local (SpecialFaceMesh_Dtor 9e7c73b, TripleBladeRing a34ac4b):
+# a local whose every assignment stores the same side-effect-free expression E
+# (global, literal, member chain) is replaced by E everywhere, so the value
+# becomes a backend temp; usually paired with a pragma pseudo-move.
+
+PURE_RE = re.compile(r'^[\w.\->\[\] ]+$')
+
+
+def unname_moves(st, sw, single=False):
+    import shapesweep as ss
+    cands = [] if not single else None
+    L = [ss.render_stmt(s) for s in st.stmts]
+    txt = '\n'.join(L)
+    plain = STR_RE.sub('""', txt)
+    names = []
+    for s in st.stmts:
+        if s['k'] == 'decl':
+            for v in s['vars']:
+                if not v[2]:
+                    names.append(v[0])
+    for nm in names:
+        en = re.escape(nm)
+        if re.search(r'(?:\+\+|--)\s*' + en + r'\b|\b' + en + r'\s*(?:\+\+|--|[-+*/%&|^]=|<<=|>>=)|&\s*' + en + r'\b', plain):
+            continue
+        rhs = set(x.strip() for x in re.findall(r'(?<![\w.])(?<!->)\b' + en + r'\s*=(?!=)\s*([^;),]+)', plain))
+        if len(rhs) != 1:
+            continue
+        E = rhs.pop()
+        if not PURE_RE.match(E) or re.search(r'\b' + en + r'\b', E):
+            continue
+
+        def f(nm=nm, E=E, en=en):
+            out = []
+            for t in L:
+                if re.match(r'^\s*' + en + r'\s*=(?!=)[^;]*;\s*$', t):
+                    continue        # plain `x = E;`
+                t = re.sub(r'\(\s*' + en + r'\s*=(?!=)\s*' + re.escape(E) + r'\s*\)', E, t)
+                out.append(t)
+            body = '\n'.join(out)
+            body = _subst(body, {nm: E})
+            nb = ss.parse_body(body, sw.ti.types)
+            # drop the declaration (now `T E;` or `T E = E;`) -- rebuild from st
+            s2 = st.clone()
+            res = []
+            for x in nb:
+                if x['k'] == 'decl':
+                    x['vars'] = [v for v in x['vars'] if v[0] != E.strip()]
+                    if not x['vars']:
+                        continue
+                res.append(x)
+            s2.stmts = res
+            return s2
+        if cands is not None:
+            cands.append(nm)
+        yield (f"unname {nm}={E}", f, None)
+    if cands and len(cands) > 1:
+        def g():
+            s2 = st
+            for nm in cands:
+                m = [x for x in unname_moves(s2, sw, single=True) if x[0].startswith(f"unname {nm}=")]
+                if m:
+                    s2 = m[0][1]()
+            return s2
+        yield (f"unname-all {','.join(cands)}", g, None)
+
+
 def apply_decl_order(st, order):
     """New State with the leading declarations in `order` (names first declared
     first; others keep their place in front). Initialisers become assignments
@@ -1428,31 +1495,46 @@ def fix(a, rep0):
     allowed = set(ss.REG_ONLY_MOVES) | {"expand", "swap"}
     t0 = time.time()
     PROP = "opt_propagation off"
+    # pragma pseudo-moves: label -> pragma. propagation off keeps named locals;
+    # strength_reduction / common_subs off stop the backend temps the target
+    # does not have (SpecialFaceMesh_Dtor 9e7c73b, TripleBladeRing a34ac4b),
+    # usually after un-naming a local (unvar) or a plain-loop rewrite.
+    PRAGMA_MOVES = {"propoff": PROP, "pragma-sr": "opt_strength_reduction off",
+                    "pragma-cse": "opt_common_subs off", "pragma-lifetimes": "opt_lifetimes off"}
+
+    def prag(st):
+        return tuple(getattr(st, "pragmas", ()))
 
     def rend(st):
-        """render; states with .prop_off get `#pragma opt_propagation off` (named
-        locals survive instead of being propagated away: the temp->local rewrites
-        mostly need it)."""
-        if getattr(st, "prop_off", False) and PROP not in (a.pragma or []):
+        """render with the state's pseudo-move pragmas pushed around the function."""
+        extra = [p for p in prag(st) if p not in (a.pragma or [])]
+        if extra:
             old = sw.a.pragma
-            sw.a.pragma = list(old or []) + [PROP]
+            sw.a.pragma = list(old or []) + extra
             try:
                 return sw.render(st)
             finally:
                 sw.a.pragma = old
         return sw.render(st)
 
-    def prop_move(st):
-        def f():
-            s2 = st.clone()
-            s2.prop_off = True
-            return s2
-        return ("propoff", f, None)
+    def pragma_moves(st):
+        for label, p in PRAGMA_MOVES.items():
+            if p in prag(st) or p in (a.pragma or []):
+                continue
+
+            def f(p=p):
+                s2 = st.clone()
+                s2.pragmas = prag(st) + (p,)
+                return s2
+            yield (label, f, None)
     VI = void_inlines(sw.text[:sw.d[0]])
     text0 = rend(sw.init)
     s0 = sw.score(text0, 0)
     m0, r0 = ev.diag(text0, 0, top_decls(sw.init))
     print(f"[regfix] start: {s0} diff lines, metric {m0}", flush=True)
+    if s0 == 0:
+        print("[regfix] already matching", flush=True)
+        return ((0, 0, 0, 0), 0, sw.init, text0, None)
 
     def try_decl(st, rep):
         if not rep or not rep.get("decl_order"):
@@ -1461,7 +1543,7 @@ def fix(a, rep0):
         if s2 is None:
             return None
         s2.hist = st.hist + ("declorder " + ",".join(rep["decl_order"]),)
-        s2.prop_off = getattr(st, "prop_off", False)
+        s2.pragmas = prag(st)
         t = rend(s2)
         sc = sw.score(t, 0)
         print(f"[regfix] decl-order solver proposes {rep['decl_order']}: {sc} diff lines", flush=True)
@@ -1486,12 +1568,12 @@ def fix(a, rep0):
             lines, names = focus_of(rep)
             sl = sw.stmt_lines(st)
             foc = {i for i, l in enumerate(sl) if l in lines}
-            extra = [] if getattr(st, "prop_off", False) or PROP in (a.pragma or []) else [prop_move(st)]
+            extra = list(pragma_moves(st))
             ext = extract_moves(st, sw, names, a.fn, focus=foc) if not a.no_inline else ()
-            for label, f, si in itertools.chain(extra, ext, expand_moves(st, sw, VI), boolnorm_moves(st, foc),
+            for label, f, si in itertools.chain(extra, ext, expand_moves(st, sw, VI), unname_moves(st, sw), boolnorm_moves(st, foc),
                                                 decl_moves(st, names),
                                                 ss.moves(st, sw.ctx, allowed)):
-                pri = 0 if (si in foc or label.startswith(("declmove", "propoff", "inline", "boolnorm", "expand-void"))) else 1
+                pri = 0 if (si in foc or label.startswith(("declmove", "propoff", "pragma-", "inline", "boolnorm", "expand-void", "unname"))) else 1
                 if pri == 1 and a.focus_only:
                     continue
                 cands.append((pri, len(cands), st, label, f))
@@ -1507,7 +1589,8 @@ def fix(a, rep0):
             if s2 is None:
                 continue
             s2.hist = st.hist + (label,)
-            s2.prop_off = getattr(st, "prop_off", False) or label == "propoff"
+            if label not in PRAGMA_MOVES:
+                s2.pragmas = prag(st)
             txt = rend(s2)
             h = hashlib.sha1(txt.encode()).hexdigest()
             if h in seen:
@@ -1528,7 +1611,7 @@ def fix(a, rep0):
         pick = [i for i in order if sc[i] <= lim][:a.dbg]
         # catalog-rule rewrites usually only pay off after the decl-order
         # solver: always diagnose a few of them whatever their score
-        RULE = ("expand", "inline[", "boolnorm")
+        RULE = ("expand", "inline[", "boolnorm", "pragma-", "propoff", "unname")
         pick += [i for i in order if i not in pick and new[i][0].hist[-1].startswith(RULE)][:a.dbg]
         with ThreadPoolExecutor(a.jobs if ev.par else 1) as ex:
             res = list(ex.map(lambda k: ev.diag(new[pick[k]][1], k, top_decls(new[pick[k]][0])), range(len(pick))))
@@ -1555,8 +1638,9 @@ def fix(a, rep0):
         if a.minutes and time.time() - t0 > a.minutes * 60:
             break
     out = TMPDIR / f"{a.fn}.best{sw.u.ext}"
-    out.write_text(("#pragma push\n#pragma " + PROP + "\n" if getattr(best[2], "prop_off", False) else "")
-                   + sw.func_text(best[2]) + ("\n#pragma pop\n" if getattr(best[2], "prop_off", False) else ""))
+    pp = prag(best[2])
+    out.write_text(("#pragma push\n" + "".join(f"#pragma {p}\n" for p in pp) if pp else "")
+                   + sw.func_text(best[2]) + ("\n#pragma pop\n" if pp else ""))
     print(f"[regfix] best: {best[1]} diff lines, metric {best[0]}; definition written to {out}")
     return best
 
@@ -1583,6 +1667,7 @@ def log_hit(fn, unit, hist, before):
     kinds = {h.split()[0] for h in hist}
     rule = ("inline-matched-sibling" if any(k.startswith("inline[") for k in kinds) else
             "one-named-local-per-def" if kinds & {"expand-void", "expand"} else
+            "unname-pragma" if any(k.startswith("unname") for k in kinds) else
             "regfix-declorder" if "declorder" in kinds else "regfix-" + "+".join(sorted(kinds)))
     try:
         rewrite_rules.record_hit(fn, unit, rule, "regfix", before, 0, note=" | ".join(hist)[:300])
