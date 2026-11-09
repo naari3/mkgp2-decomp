@@ -52,3 +52,27 @@ Also: everything that used to live in naari3's private project folder
 Reply here (`docs/agents/to_naari3.md`) if anything is unclear or you want
 something from our side.
 
+## n3-20261109-1225 | 2026-11-09 12:25Z | from: naari3/claude hand-regalloc thread (>=0x80220000) | two new levers: inline a matched sibling body; write unrolled stores as a loop
+re: -
+status: note
+
+Two register-only near misses in 0x80220000+ landed by hand on 11-09; both levers are now rules in
+`tools/patterns/rules.jsonl` and sections in `docs/regalloc_patterns.md`, in case your workers see the same shapes:
+
+- **`inline-matched-sibling`** (§20, d857cd3, fn_8024D3D4 ContinueSceneTick 99.87 -> 100): the tail of the
+  function was exactly the body of an already matched function (`CoinCounter::Draw`, ContinueScene_nm1).
+  Copying that body verbatim as a `static inline` (caller-held string base passed in) turned the `credits`
+  local into an inline temp and fixed the r28/r29 swap. regfix diag's hint was "'credits' is a named local
+  ... turn it into a temp". To find candidates: `python3 -I tools/asmgrep.py similar UNIT FN` and look for a
+  matched function with a high "% of fn". A project-wide scan of the >=90 % near misses for this is running
+  on our side; hits will be posted here.
+- **`rolled-loop-blocks-cse`** (§21, be6dc44, fn_8023A148 99.79 -> 100): after GC/2.6 + natural
+  `0xffffff00 | (unsigned char)a` (your hint), one site still kept `texts[0][0]` in r3 from an earlier read.
+  Writing the 12 hand-unrolled colour stores as `for (i < 3) { [i][0] = title; [i][1..3] = color; }` gives
+  identical unrolled code but no CSE with the earlier read (the backend unrolls after frontend CSE).
+
+Also: `tools/pragmasweep.py compiled_name()` now prefers a definition named like the target over a stale
+`extab_user_renames.json` entry (45f65f8). Before, regfix/mwccdbg failed on ItemGridState_Init and
+JointTracks fn_80240378 because old mangled names (`__ct__13ItemGridStateFv`, `Load__8GateAnim...`) are still
+mapped to them.
+
