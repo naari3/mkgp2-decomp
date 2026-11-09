@@ -2279,112 +2279,11 @@ game/PCBCheckProcess.c:
 	.text       start:0x80082DB8 end:0x80083348
 
 game/PCBCheckRecv.c:
-	extab       start:0x80008D1C end:0x80008D34
-	extabindex  start:0x80021800 end:0x80021824
-	.text       start:0x80083348 end:0x80084230
-	.bss        start:0x805A5EC0 end:0x805AC290
-
-game/PCBCommPhase5.c:
-	extab       start:0x80008D34 end:0x80008D3C
-	extabindex  start:0x80021824 end:0x80021830
-	.text       start:0x80084230 end:0x800845BC
-
-game/PCBCommPhase1.c:
-	extab       start:0x80008D3C end:0x80008D44
-	extabindex  start:0x80021830 end:0x8002183C
-	.text       start:0x800845BC end:0x800848C4
-
-game/CommBroadcast.c:
-	.text       start:0x800848C4 end:0x80084A84
-
-game/BootPCBCheck.cpp:
-	extab       start:0x80008D44 end:0x80008D54
-	extabindex  start:0x8002183C end:0x80021854
-	.text       start:0x80084A84 end:0x80084D98
-
-game/BootNotice_CheckEnterCondition.c:
-	extab       start:0x80008D54 end:0x80008D5C
-	extabindex  start:0x80021854 end:0x80021860
-	.text       start:0x80084D98 end:0x80084DF8
-
-game/BootPCBCheck_Init.c:
-	extab       start:0x80008D5C end:0x80008D74
-	extabindex  start:0x80021860 end:0x8002186C
-	.text       start:0x80084DF8 end:0x80084E88
-
-game/SetPcbScratchFlag_806d11a4.c:
-	.text       start:0x80084E88 end:0x80084E94
-
-game/PCBCommSnapshot.c:
-	extab       start:0x80008D74 end:0x80008D7C
-	extabindex  start:0x8002186C end:0x80021878
-	.text       start:0x80084E94 end:0x80084FF0
-
-game/ResetIOPorts.c:
-	extab       start:0x80008D7C end:0x80008D84
-	extabindex  start:0x80021878 end:0x80021884
-	.text       start:0x80084FF0 end:0x800850B0
-
-game/PcbSyncTable_Ptr.c:
-	.text       start:0x800850B0 end:0x800850BC
-
-game/SyncSlot.c:
-	extab       start:0x80008D84 end:0x80008D8C
-	extabindex  start:0x80021884 end:0x80021890
-	.text       start:0x800850BC end:0x80085154
-
-game/CommBroadcast_ClearTable.c:
-	extab       start:0x80008D8C end:0x80008D94
-	extabindex  start:0x80021890 end:0x8002189C
-	.text       start:0x80085154 end:0x800851BC
-
-game/PcbSlotReset.c:
-	extab       start:0x80008D94 end:0x80008D9C
-	extabindex  start:0x8002189C end:0x800218A8
-	.text       start:0x800851BC end:0x80085280
-
-game/RingBuffer_Getters.c:
-	.text       start:0x80085280 end:0x80085368
-
-game/PcbSlotSync.c:
-	.text       start:0x80085368 end:0x800854B8
-
-game/PCBCommHostConfirm.c:
-	extab       start:0x80008D9C end:0x80008DAC
-	extabindex  start:0x800218A8 end:0x800218C0
-	.text       start:0x800854B8 end:0x80085648
-
-game/PcbSync_AnyPeer.c:
-	.text       start:0x80085648 end:0x800856CC
-
-game/PCBComm_PromoteToClientConfirmed.c:
-	extab       start:0x80008DAC end:0x80008DB4
-	extabindex  start:0x800218C0 end:0x800218CC
-	.text       start:0x800856CC end:0x800856F4
-
-game/PcbSync_Counts.c:
-	.text       start:0x800856F4 end:0x80085DD8
-
-game/SyncSlot_ApplyCourseChoice.c:
-	extab       start:0x80008DB4 end:0x80008DBC
-	extabindex  start:0x800218CC end:0x800218D8
-	.text       start:0x80085DD8 end:0x80085E3C
-
-game/PcbDebugOverlay.c:
-	extab       start:0x80008DBC end:0x80008DC4
-	extabindex  start:0x800218D8 end:0x800218E4
-	.text       start:0x80085E3C end:0x8008604C
+	extab       start:0x80008D1C end:0x80008E3C
+	extabindex  start:0x80021800 end:0x80021920
+	.text       start:0x80083348 end:0x80086A0C
 	.rodata     start:0x80311E38 end:0x803123B0
-
-game/PcbDebugOverlay_link.cpp:
-	extab       start:0x80008DC4 end:0x80008DDC
-	extabindex  start:0x800218E4 end:0x800218F0
-	.text       start:0x8008604C end:0x80086170
-
-game/PCBCommLifecycle.cpp:
-	extab       start:0x80008DDC end:0x80008E3C
-	extabindex  start:0x800218F0 end:0x80021920
-	.text       start:0x80086170 end:0x80086A0C
+	.bss        start:0x805A5EC0 end:0x805AC290
 
 game/PcbConn_GetStateName.c:
 	extab       start:0x80008E3C end:0x80008E44

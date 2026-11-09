@@ -2444,22 +2444,6 @@
     "RivalRun_Init",
     "RivalRun_RivalInit"
   ],
-  "src/game/PCBCommLifecycle.cpp": {
-    "extab": [
-      "dtor_800869D0",
-      "PCBComm_Process",
-      "PcbComm_Shutdown",
-      "PCBComm_Init",
-      "__dt__11ScopedTimerFv"
-    ],
-    "extabindex": [
-      "PCBComm_Process",
-      "PcbComm_Shutdown",
-      "PCBComm_Init",
-      "dtor_800869D0",
-      "__dt__11ScopedTimerFv"
-    ]
-  },
   "src/game/anon_801FC1E0_nm1.cpp": {
     "extab": [
       "fn_801FD2E8",
@@ -3046,5 +3030,61 @@
     "fn_80192F04",
     "WeatherSystem_PickVariant",
     "Fog_UpdateFromCourseScene3D"
-  ]
+  ],
+  "src/game/PCBCheckRecv.c": {
+    "extab": [
+      "PCBCheck_RecvLinkData",
+      "PCBComm_SendToAllPeers",
+      "PCBComm_ComputeSyncState",
+      "PCBComm_UpdateSyncPhase5",
+      "PCBComm_UpdateSyncPhase1",
+      "BootPCBCheck_Display",
+      "BootPCBCheck_Poll",
+      "BootNotice_CheckEnterCondition",
+      "BootPCBCheck_Init",
+      "PCBComm_PackAndTriggerCardSnapshot",
+      "ResetIOPorts",
+      "SyncSlot_Reset",
+      "CommBroadcast_ClearTable",
+      "PcbSlot_ResetScratchAreas",
+      "PCBComm_ConfirmHostBattle",
+      "PCBComm_ConfirmHostLobby",
+      "PCBComm_PromoteToClientConfirmed",
+      "SyncSlot_ApplyCourseChoice",
+      "DebugOverlay_DumpPcbState",
+      "DrawLinkErrorOverlay",
+      "dtor_800869D0",
+      "PCBComm_Process",
+      "PcbComm_Shutdown",
+      "PCBComm_Init",
+      "__dt__11ScopedTimerFv"
+    ],
+    "extabindex": [
+      "PCBCheck_RecvLinkData",
+      "PCBComm_SendToAllPeers",
+      "PCBComm_ComputeSyncState",
+      "PCBComm_UpdateSyncPhase5",
+      "PCBComm_UpdateSyncPhase1",
+      "BootPCBCheck_Display",
+      "BootPCBCheck_Poll",
+      "BootNotice_CheckEnterCondition",
+      "BootPCBCheck_Init",
+      "PCBComm_PackAndTriggerCardSnapshot",
+      "ResetIOPorts",
+      "SyncSlot_Reset",
+      "CommBroadcast_ClearTable",
+      "PcbSlot_ResetScratchAreas",
+      "PCBComm_ConfirmHostBattle",
+      "PCBComm_ConfirmHostLobby",
+      "PCBComm_PromoteToClientConfirmed",
+      "SyncSlot_ApplyCourseChoice",
+      "DebugOverlay_DumpPcbState",
+      "DrawLinkErrorOverlay",
+      "PCBComm_Process",
+      "PcbComm_Shutdown",
+      "PCBComm_Init",
+      "dtor_800869D0",
+      "__dt__11ScopedTimerFv"
+    ]
+  }
 }
