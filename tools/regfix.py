@@ -867,6 +867,15 @@ def diagnose_dir(out: Path, ours_obj, tgt_obj, fn, quiet=False, depth=2, src_lin
       + ("" if info["final"] == info["ours"] or (out / "trace.txt").exists()
          else f" (PCode {info['final']}: stand-in compiler differs)")
       + (" [native mweppc trace]" if (out / "trace.txt").exists() else ""))
+    if info["ours"] != info["tgt"] or info["opcode_diffs"] > max(8, info["ours"] // 20):
+        # the vreg -> target-register pairing needs (almost) the same instruction
+        # sequence; otherwise every register looks wrong and the solver burns time
+        P(f"  not a register-only diff ({info['ours']} vs {info['tgt']} insns, {info['opcode_diffs']} opcode "
+          f"diffs): fix the instruction sequence first (objdiff / `tools/mwsched.py explain`); "
+          f"set REGFIX_FORCE=1 to diagnose anyway")
+        if not os.environ.get("REGFIX_FORCE"):
+            rep["not_reg_only"] = True
+            return rep
     for rc in ("gpr", "fpr"):
         g = Graph.load(out, rc)
         if g is None:
