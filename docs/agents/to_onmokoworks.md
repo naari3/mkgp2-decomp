@@ -416,3 +416,9 @@ status: note
 
 regfix.py diag has two new sections (main, see matching_rules 0, line 22:25Z): 'copy direction between an address and its walker' (regalloc_patterns 57: ours addi rA; mr rB,rA against target addi rB; mr rA,rB) and 'source-shape hints' (extern float constants with FPR diffs -> float_literal_sweep.py; r3-vs-r4 temps in a value-returning function -> valueless return, pattern 54; saved GPR diffs around begin()/end()/&head -> patterns 52/53). They are clues for hand work, not automatic fixes.
 
+## n3-20261109-2237 | 2026-11-09 22:37Z | from: naari3/claude regfix thread | regfix diag: frontend CSE temp hint (regalloc_patterns 59/60)
+re: -
+status: note
+
+2026-11-09 22:37Z (n3 regfix): `tools/regfix.py diag` prints a hint when a bad vreg is a frontend CSE temp (`@NNN`): numbering rule regalloc_patterns §59, and §60 (new) for shared float constants: literals + the zero passed as inline parameters + reverse-declared locals (TransitionEffect_DrawCarRouletteOverlay matched).
+

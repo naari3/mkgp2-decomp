@@ -1547,3 +1547,40 @@ for (i = 0; i < 4; i++, off += 4) {
 
 `(int)c + off` and an `unsigned long off` do not work (walker again); it has
 to be `int off` added to `(unsigned long)c`.
+
+## 61. Shared float constant in the wrong FPR, and `fadds` with 0.0f that literals fold away: literals everywhere, the zero passed into the inline as parameters, constants loaded once through reverse-declared locals (TransitionEffect, 11-09)
+
+Target (unrolled table loop): `lfs f6,240; lfs f5,0.0; lfs f4,320; ...; fsubs f0,f0,f4; fsubs f2,f2,f6;
+fadds f0,f0,f5; fadds f2,f2,f5`. Three sources, three results:
+
+- `extern const float` for every constant: the frontend CSEs the zero that is read twice into a
+  temp (`@541` in the trace) and the FPRs come out permuted. regfix diag now prints a hint when a
+  bad vreg is a frontend `@` temp.
+- the same with `#pragma opt_common_subs off`: registers right, but the unrolled loop bumps the
+  walker twice.
+- float literals: `x + 0.0f` is folded away completely, so the `fadds` disappears.
+
+The target keeps `fadds` with zero, so the zero reached the expression as a VALUE, not as a
+literal: the quad helper took offsets. Literals everywhere plus the zero as inline parameters
+matches exactly (a hybrid of externs with a literal zero does not):
+
+```c
+static inline void ScreenRouletteTableQuad(float ox, float oy)
+{
+    ...
+    for (int i = 0; i < 16; ++i) {
+        ScreenPosition((v[0].x - 320.0f) + ox, (v[0].y - 240.0f) + oy);
+        ...
+    }
+}
+... ScreenRouletteTableQuad(0.0f, 0.0f);
+```
+
+Side effects of going to literals in the rest of the TU, and their fixes:
+
+- Literals are not CSE'd: every `ScreenPosition(-320.0f, -240.0f)` reloads its constants. Where
+  the target loads each constant once, give them named locals. Block-scope locals are numbered
+  in reverse declaration order, so declare them in reverse of the assignment order to get
+  f3,f2,f1,f0:
+  `float y1, x1, y0, x0; x0 = -320.0f; y0 = -240.0f; x1 = 320.0f; y1 = 240.0f;`
+- The TU must own the constants: add its `.sdata2` range to `config/GNLJ82/splits.txt`.
