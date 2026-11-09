@@ -1222,3 +1222,20 @@ Speed tip for a 15 kLoC TU (2.5 min per compile): take the compile command
 from `ninja -t commands <obj>`, write each variant to its own directory, add
 `-i src/<dir>` so the `.inc` files resolve, and run all variants in parallel;
 compare `dtk elf disasm` bodies with symbols normalised.
+
+## 49. A `long` loop index passed as an `int` argument gets a hoisted copy that is numbered late; and count the `%d` of debug strings (DetermineTitle, 11-09)
+
+Two independent fixes, 18 lines -> 0:
+
+- Inlined `CurrentNameScore`: the outer index of a nested loop is passed to a call in the inner
+  loop. Declared `long`, the `(int)` conversion is a loop-invariant expression, so `IRO_FindLoops`
+  hoists it into a temp (`MR @536,i` in the preheader, seen with `tools/mwtrace.py`) and the index
+  is coalesced into that temp: its node takes the LOW number of the FindLoops temp and is coloured
+  after the other inline locals. Declared `int`, there is no copy and the node keeps the inline
+  local's number. The target had the first loop's `i` late (r20, `long`) and the second loop's `cup`
+  early (r21, `int`). After that, inline locals are numbered in forward declaration order (§45), so
+  `int j; int k;` vs `int k; int j;` picks which of the two takes the register freed by `cup`.
+- `addi r5,r3,0x2d; stw r5,...; cmpw r5,r0` where ours computes into r3: the value is also the third
+  argument of the following `DebugPrintf`. Read the format string from the DOL
+  ("Fixed TitleID loop No : %d, id : %d") and pass every argument it names.
+
