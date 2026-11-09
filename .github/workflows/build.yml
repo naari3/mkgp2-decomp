@@ -19,7 +19,10 @@ jobs:
       contents: write
       packages: read
 
-    runs-on: ubuntu-latest
+    # Pinned instead of ubuntu-latest (which moves to Ubuntu 26 from
+    # 2026-10-19). The build itself runs in the container above, so the host
+    # image only provides docker and node; bump deliberately when needed.
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -247,7 +250,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
