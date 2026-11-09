@@ -1,4 +1,4 @@
-/* Native C++ candidate: 98.44% text, exact owned EH.
+/* Native C++ candidate: 98.64286% text, exact owned EH.
  * Vector-length inline boundaries reproduce the target square-root FP homes.
  * Typed state and literal constants recover the damping/zero-load schedule.
  * The push helper preserves a separate by-value input snapshot.
@@ -89,8 +89,13 @@ static inline void apply_push(CollisionForceState *self, volatile Vec3 &push, fl
     subtract_vector(*(Vec3 *)&self->position, push);
 }
 
+static inline float vector_x(const PhysicsPlainVec &v) {
+    return v.x;
+}
+
 #pragma exceptions on
 extern "C" void KartPhysics_ApplyCollisionForce(CollisionForceState *self) {
+    float dx;
     PhysicsCollisionVec offset;
     volatile Vec3 callVec;
     volatile Vec3 push;
@@ -100,7 +105,6 @@ extern "C" void KartPhysics_ApplyCollisionForce(CollisionForceState *self) {
     float angleDelta;
     float dz;
     float dy;
-    float dx;
 
     len = vector_length(*(Vec3 *)&self->impact);
     limit = lbl_806D1940;
@@ -147,7 +151,7 @@ extern "C" void KartPhysics_ApplyCollisionForce(CollisionForceState *self) {
     }
 
     if (self->applyForce != 0) {
-        apply_push(self, push, self->push.x, self->push.y, self->push.z);
+        apply_push(self, push, vector_x(self->push), self->push.y, self->push.z);
     }
 
     scale = 0.88f;

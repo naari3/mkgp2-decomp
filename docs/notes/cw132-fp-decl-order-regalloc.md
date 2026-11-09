@@ -493,3 +493,8 @@ c22_u120 HomingMarkerUpdate fn_80172948 direct94.84521->95.595894/report95.66438
 Source: Codex worker c22_u180_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c22_u180 fn8019ADF4: consumed vz reused as dot and nx*=vz/nz*=vz before reflection improves88.11656->88.17792/652B/EH-index100 (normal-x projection now target f5). Nonvolatile Vec3 locals plus existing volatile helper accessors restores initial x/y/z f4/f5/f6 but score88.11656 and prologue scheduling still wrong. Shared ForceRoot + NormalizeForce nesting recovers slots10/8/c but extra fmr/656B and normal/Newton/scale homes regress86.515335,index91.66667; reverted. No flags/ranges/data changes; full fallback DOL SHA1exact, nativegain0.
+
+## c23_u16_20261109
+Source: Codex worker c23_u16_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c23_u16 KartPhysics_ApplyCollisionForce 801EDFEC: shape diagnostic Id_f/Mul_f/t0 scores98.73214 locally. Natural scalar snapshots regress97.65625. By-reference vector_x(const PhysicsPlainVec&) accessor and first-declared dx give98.64286 vs98.44196 baseline, same896B/EH24/index12 exact. Meaningful yaw gain helper invariant; remove it, retain ordinary multiplication. Separate double fabs then float conversion regresses98.30804. Final natural source contains no synthetic identity/multiply wrappers or redundant t0->dx. Residual angle f6->f4, gain scheduling, push X/Z f3/f5 and final subtraction FP homes/load order. Source-only NM; B unavailable; coordinator full fallback DOL SHA1 exact, native gain0.
