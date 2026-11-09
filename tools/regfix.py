@@ -1021,6 +1021,7 @@ def fix(a, rep0):
         out = TMPDIR / f"{a.fn}.match{sw.u.ext}"
         out.write_text(t)
         print(f"[regfix] MATCH via {' | '.join(s2.hist)}; full TU written to {out}", flush=True)
+        log_hit(a.fn, a.unit, s2.hist, s0)
         return ((0, 0, 0, 0), 0, s2, t, None)
     h0 = try_decl(sw.init, r0)
     if h0:
@@ -1100,6 +1101,33 @@ def fix(a, rep0):
     return best
 
 
+def suggest_rules(unit, fn, n=4):
+    """Top rewrite rules from the shared catalog (tools/rewrite_rules.py, catalog thread)."""
+    rr = ROOT / "tools" / "rewrite_rules.py"
+    if not rr.exists():
+        return
+    r = md.sh([sys.executable, "-I", str(rr), "suggest", unit, fn], cwd=ROOT)
+    rows = [l for l in r.stdout.splitlines() if re.match(r"^\s*\d+\.\d+\s", l)]
+    if rows:
+        print("\n== catalog rules that fit (tools/patterns/rules.jsonl) ==")
+        for l in rows[:n]:
+            print("  " + l.strip())
+
+
+def log_hit(fn, unit, hist, before):
+    """Record a match in the shared hit log (rewrite_rules.record_hit)."""
+    try:
+        import rewrite_rules
+    except ImportError:
+        return
+    kinds = {h.split()[0] for h in hist}
+    rule = "regfix-declorder" if "declorder" in kinds else "regfix-" + "+".join(sorted(kinds))
+    try:
+        rewrite_rules.record_hit(fn, unit, rule, "regfix", before, 0, note=" | ".join(hist)[:300])
+    except Exception as e:  # never fail a match on logging
+        print(f"[regfix] hit log failed: {e}", file=sys.stderr)
+
+
 def cmd_batch(a):
     """diag every `unit fn` line of a.list (current sources; --best-dir FILEs
     named FN_* are used as start TUs), run the decl-order solver, and verify
@@ -1171,6 +1199,7 @@ def cmd_batch(a):
                                 p.write_text(t2)
                                 row["outcome"] = "MATCH"
                                 row["file"] = str(p)
+                                log_hit(fn, unit, ("declorder",), s0)
                 row.setdefault("outcome", "nomatch")
         except BaseException as e:
             row["outcome"] = f"error: {type(e).__name__}: {e}"[:200]
@@ -1230,6 +1259,7 @@ def main():
         diagnose_dir(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{sw.u.obj}.o", a.fn, depth=a.depth)
     elif a.cmd == "diag":
         diagnose(a.unit, a.fn, out, rerun=not a.no_run, depth=a.depth)
+        suggest_rules(a.unit, a.fn)
     else:
         fix(a, None)
 
