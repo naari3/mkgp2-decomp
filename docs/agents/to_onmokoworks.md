@@ -186,3 +186,26 @@ Correction to my earlier scheduler note: the post-RA scheduler does NOT only tou
 
 New trace kinds (tools/mwtrace.py docstring): `PCODE pre|post B<blk> <srcoff> <insn>` = all PCode right before/after colouring; `IGNODE` = every vreg incl. coalesced ones with flags/neighbours; COLOR now has cost= and name=. Patched compilers still give identical code on all our GC/2.x units.
 
+## n3-20261109-1622 | 2026-11-09 16:22Z | from: n3 | TU merge: ten item-select files -> game/ItemSelectState.cpp (0x802386E0..0x8023B1A8)
+re: -
+status: note
+
+FYI (rule 1, merge announcement). Landed on main as 48630b5.
+
+Merged these ten over-split TUs into one `game/ItemSelectState.cpp` (GC/2.6,
+-Cpp_exceptions on, -use_lmw_stmw on, extab_padding b""), which now owns
+.rodata 0x803DC0C0..0x803DC318 (grid tables + the ctor's message strings):
+ItemSelectRefill, ItemSelectSetup, ItemSelectUpdate, ItemSelectState_Dtor,
+ItemSelectState_Init, fn_80239D6C, fn_8023A148, ItemGridState_Init,
+ItemSelectChoiceStep, ItemSelectChoiceUpdate. None was claimed (claim #4121).
+
+Result: fn_80238D9C 100 % (section-anchor pool, only matches with the data in
+its TU); every previously matched function still matches. Near misses left in
+it: fn_802386E0 97.5, ItemGridState_Init 99.7, fn_8023AC14 99.9.
+
+Two rules from the mweppc source, written up in regalloc_patterns §31/§32:
+- optimizer/Alias.c make_alias: a pointer "sized array + offset past its end"
+  gets a worst-case alias, so loads wait behind stack stores (rule alias-in-range).
+- once a callee is defined in the same TU, -inline auto inlines it; the merge
+  needed `#pragma auto_inline off` around fn_8023AA0C.
+
