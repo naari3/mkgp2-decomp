@@ -504,6 +504,14 @@ function that holds the same block: write the recursion, sweep
 `-inline deferred` if the out-of-line copies must come before their caller.
 Also fn_801826F8 (mobjclass JObj walk, 4-TU C++ merge, inline_depth(3), d9220c1). Rule `recursive-auto-inline`.
 
+## 26. A named local re-assigned later becomes a temp: one named local per assignment (fn_801F140C, 11-09)
+
+MWCC splits a named local into webs. Only the first web keeps the named-local vreg number (low, coloured last); every later assignment of the same variable gets a frontend temp number. In fn_801F1244/fn_801F140C the target colours both fade colours (`0xFFFFFF00 | v`, then `0xFFFFFF00 | (u8)(255 - v)`) into the same register below the loop counter/offset, but with one `c` assigned twice the second colour was a temp coloured first (27 lines off). Fix: give each assignment its own named local (`c`, `c2`) and let the decl-order solver pick the order (`c, c2, offset, i, v`).
+
+The same family: a local whose value comes straight from an inline return (`c = MenuRGBA(v, v, v, 255)`) is copy-propagated away and the colour stays an inline temp. Write the expression in place (`c = (v << 24) | ((v & 255) << 16) | ((v & 255) << 8) | 255`) so `c` survives as a named local, then sweep the decl order (fn_801F2400, fn_801F1EE0: `c, offset, i`).
+
+How to spot it: `regfix.py diag` asks for "temp @N must be numbered after <named local>" and @N is the def of a variable that is already a named local earlier in the function, or the value of an inline call assigned to a local.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
