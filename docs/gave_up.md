@@ -390,3 +390,12 @@ the remaining candidates (~175 KB in Matching TUs). What blocked the rest:
 | `fn_801AC208` | game/sprite/fn_801AC208 | 99.67 | Not tried: the residual is operand order inside one expression; no statement runs to sweep. |
 | `fn_801D1890` | game/fn_801D1890 | 99.99 | All runs in Update / RankingAdvanceFlow / RankingInsertFade: no gain (the slots come from C++ temporaries, not statement order). |
 | `fn_80184928` | game/dlistutil/fn_80184928 | 98.72 (decl160 WIP) | Sweep on the decl160 WIP: 98.72 -> 98.75 (last 7-statement run only). |
+
+## Pool-merge sweep 2026-11-09 (data ownership / §13 thread)
+
+Landed: b788065 (dtor_801F8214 owns the 801F8214..801F89F0 group, fn_801F894C 100),
+8acbced (fn_801F27B4 owns Menu801F0CC0 + fn_801F26C8 + dtor_801F2724, +3).
+
+| Unit(s) | Finding |
+|---|---|
+| clFlowCourse.cpp (`clFlowCourse_Init` 98.41, `clFlowCourse_Dtor` 99.62) | Target loads the .data anchor `lbl_8049B1E0` at entry and stores the vtable as `addi r0, r30, 0x1D4` (vtable 0x8049B3B4 = anchor + 0x1D4). Probes (GC/1.2.5, 1.3.2, 2.0, 2.6): MWCC NEVER addresses a vtable through the section anchor, also not a weak or unnamed-namespace one; and the anchor itself only appears once the fn touches 3 defined internal objects (2 are not enough). So the target vtable at 0x8049B3B4 must be an ordinary data object (manual table), not a compiler vtable. The data 0x8049B1E0..0x8049B4A8 (pool, typeinfo 3A8, vtable 3B4, then the jumptables of fn_801CE800 / fn_801CEB78 / clFlowCourse_Update / clFlowCourse) says 0x801CE800..0x801D1800 was one TU, with fn_801CE918/EB78/Update reaching 1E0/348/388 by their own symbols (declared extern before the definitions). Not merged: the vtable anchor is not reproducible with real C++. |
