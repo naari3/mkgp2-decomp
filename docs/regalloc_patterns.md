@@ -445,6 +445,44 @@ inline LoadFileTable right after `const char *file;` and passing it as
 into LoadFileTable" attempts were circling. Rule:
 `inline-local-to-outer-ref`.
 
+## 23. Compute a value before the local that holds it is declared (PtrVec_InsertFill, 11-09)
+
+`regfix diag` wanted the copy-loop walker temp of an inline
+(`FaceCopyBackward(position, end, end + n)`) numbered just above the named
+locals, and decl-order/naming the `end + n` argument did nothing (copy
+propagation). Computing `tail` from the expression BEFORE declaring `end`,
+`unsigned int tail = (s->data + s->count) - position;` then
+`SpecialFaceNative **end = s->data + s->count;`, makes the address a CSE temp
+created earlier, and the copy loop's registers swap into place: 99.55 -> 100.
+Statement order of two uses of one expression decides which of them owns
+the CSE temp; try it when a named local is "propagated away". Rule:
+`stmt-order` (evidence added).
+
+## 22. A local must be coloured just before a later inline's temps: read it through a nested inline (fn_8018DAD0, 11-09)
+
+Inline locals and parameters become frontend temps (`@N`) when the inline is
+expanded, and MWCC expands inlines level by level: every inline called
+directly from the function body first (in statement order), then the inlines
+those bodies call, and so on. Lower `@` = higher vreg number = coloured
+earlier. So the nesting depth of an inline decides where its temps land in
+the colouring order, independently of where it sits in the source.
+
+fn_8018DAD0 (99.94): the final loop (inline `UpdateParticles`, level 1) has a
+byte-offset IV temp (`mr r26, r28` in the target, r30 in ours). regfix diag:
+"'joint' is a named local, numbered below every temp: turn it into a temp",
+and the edits that fixed it all put `joint` just above the IV, i.e. after
+UpdateParticles' own locals. A level-1 inline `Joint *GetJoint(e)` (or
+`GetJointPos(e, &pos)` with a `joint` local) moved `joint` before every
+other temp and broke 20 lines. Reading it through TWO levels,
+`CopyPos(&pos, GetJoint(e));` (GetJoint's local and return are level-2
+temps, created after all level-1 inline locals) gave 100 % (3fddd78).
+
+**Check:** a regfix diag that wants a named local "numbered above" a temp of
+an inline called later in the function. Wrap the local's computation in an
+inline that is called from another inline (or as an argument of one), so its
+temps are created one level deeper than the later inline's. If a level-1
+inline puts it too early, go one level deeper. Rule `nested-inline-level`.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
@@ -455,7 +493,6 @@ into LoadFileTable" attempts were circling. Rule:
 - Quad-ctor FPR coloring: fn_801F8404/fn_801F8728 (the fn_801F7F50 recipe
   f4d48738 plus `fabs(h)` before `fabs(w)` leaves pure f-register coloring),
   wip/audit.
-- Loop offset r30 vs r26: fn_8018DAD0.
 - Table base vs loop walker, copy direction reversed (11-08 diagnosis):
   ClRomTable_PurgeAll, fn_801E96BC, PCBCheck_ProcessLinks. The final registers
   per role are the same; the target materialises the base (`addi rB, sym@l`)
