@@ -994,6 +994,265 @@ def decl_moves(st, names):
         # split a multi-var or initialised decl? (left to shapesweep's declswap)
 
 
+# --------------------------------------------------------------------------
+# rule inline-matched-sibling (tools/patterns/rules.jsonl), machine form:
+# "named local X must be numbered above temp Y" -> move a statement run that
+# holds X's whole live range into a static inline (its locals become inline
+# temps, numbered above the caller's locals).
+
+ID_RE = re.compile(r'(?<![\w.])(?<!->)\b([A-Za-z_]\w*)\b')
+STR_RE = re.compile(r'"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'')
+WRITE_RE = r'(?:\b{n}\s*(?:[-+*/%&|^]|<<|>>)?=(?!=)|\b{n}\s*(?:\+\+|--)|(?:\+\+|--)\s*{n}\b|&\s*{n}\b)'
+
+
+def _ids(text):
+    return ID_RE.findall(STR_RE.sub('""', text))
+
+
+def _param_decls(sig):
+    import shapesweep as ss
+    out = {}
+    for prm in ss.split_top(sig, ','):
+        prm = re.sub(r'=.*', '', prm).strip()
+        m = re.match(r'(.*?)([A-Za-z_]\w*)\s*((?:\[[^\]]*\])*)$', prm, re.S)
+        if not m or not m.group(1).strip() or prm == 'void':
+            continue
+        out[m.group(2)] = m.group(1).strip() + ('*' if m.group(3) else '')
+    return out
+
+
+def extract_moves(st, sw, names, fn, maxn=24):
+    """Yield (label, f, si): stmts[i:j] -> `Helper(args);` + static inline Helper."""
+    import shapesweep as ss
+    L = [ss.render_stmt(s) for s in st.stmts]
+    n = len(L)
+    void = re.match(r'\s*(?:static\s+|inline\s+|extern\s+"C"\s+)*void\b', sw.head) is not None
+    end = n
+    while end > 0 and not L[end - 1].strip():
+        end -= 1
+    # brace depth before each statement
+    dep, d = [], 0
+    for t in L:
+        dep.append(d)
+        s = STR_RE.sub('""', t)
+        d += s.count('{') - s.count('}')
+    dep.append(d)
+    params = _param_decls(sw.sig)
+    decl_at = {}           # outer local name -> (stmt index, var index)
+    for i, s in enumerate(st.stmts):
+        if s['k'] == 'decl':
+            for k, v in enumerate(s['vars']):
+                decl_at.setdefault(v[0], (i, k))
+    ids = [_ids(t) for t in L]
+
+    def ok_range(i, j):
+        if not (0 <= i < j <= n) or dep[i] != dep[j]:
+            return False
+        lo = dep[i]
+        for k in range(i, j):
+            if dep[k + 1] < lo:
+                return False
+        first = L[i].strip()
+        if first.startswith(('else', '}', 'case', 'default')) or not first:
+            return False
+        if j < n and re.match(r'\s*(\}\s*)?else\b', L[j]):
+            return False
+        if i > 0:
+            prev = L[i - 1].rstrip()
+            if prev.strip() and not prev.endswith((';', '{', '}')):
+                return False     # body of a brace-less if/for/else
+        if L[j - 1].rstrip().endswith(')') or re.match(r'\s*else\s*$', L[j - 1]):
+            return False
+        txt = '\n'.join(L[i:j])
+        w = set(_ids(txt))
+        if w & {'break', 'continue', 'goto', 'case', 'default'} and not w & {'for', 'while', 'do', 'switch'}:
+            return False
+        if 'return' in w:
+            if not (void and j >= end):
+                return False
+            if re.search(r'\breturn\s*[^;\s]', STR_RE.sub('""', txt)):
+                return False
+        return True
+
+    seeds = []
+    for nm in sorted(names):
+        occ = [k for k in range(n) if nm in ids[k]]
+        if not occ or nm in params:
+            continue
+        seeds.append((nm, occ[0], occ[-1] + 1))
+    tried = set()
+    cnt = 0
+    for nm, a0, b0 in seeds:
+        cand = []
+        for i in range(a0, -1, -1):
+            for j in list(range(b0, min(n, b0 + 40) + 1)) + [end]:
+                if ok_range(i, j):
+                    cand.append((i, j))
+            if len(cand) > 60:
+                break
+        # smallest ranges first, plus "to the end of the function / block"
+        cand = sorted({(i, min(j, end) if j >= end else j) for i, j in cand if i < min(j, end)},
+                      key=lambda r: (r[1] - r[0]))
+        for i, j in cand:
+            if (i, j) in tried:
+                continue
+            tried.add((i, j))
+            for variant in ("plain", "argdecl"):
+                f = _mk_extract(st, sw, L, ids, i, j, params, decl_at, fn, variant)
+                if f is None:
+                    continue
+                yield (f"inline[{variant}] {nm}: stmts {i}..{j - 1}", f, i)
+                cnt += 1
+                if cnt >= maxn:
+                    return
+
+
+def _mk_extract(st, sw, L, ids, i, j, params, decl_at, fn, variant):
+    import shapesweep as ss
+    n = len(L)
+    inner = set(x for k in range(i, j) for x in ids[k])
+    after = set(x for k in range(j, n) for x in ids[k])
+    before = set(x for k in range(0, i) for x in ids[k])
+    txt = '\n'.join(L[i:j])
+    plain_txt = STR_RE.sub('""', txt)
+    # locals declared inside the range must not be used after it
+    for k in range(i, j):
+        s = st.stmts[k]
+        if s['k'] == 'decl':
+            for v in s['vars']:
+                if v[0] in after:
+                    return None
+    outer = []
+    moved = []          # outer decls without initialiser used only inside the range
+    local = []          # outer locals written first in the range, dead after it
+    for nm in sorted(inner, key=lambda x: plain_txt.find(x)):
+        if nm in params:
+            ty = params[nm]
+        elif nm in decl_at and decl_at[nm][0] < i:
+            di, vi = decl_at[nm]
+            s = st.stmts[di]
+            name, stars, arr, init = s['vars'][vi]
+            if 'static' in s['ty'].split():
+                continue
+            only_here = nm not in after and sum(1 for k in range(0, i) if nm in ids[k]) == 1
+            if only_here and init is None:
+                moved.append(nm)
+                continue
+            m0 = re.search(r'\b' + re.escape(nm) + r'\b', plain_txt)
+            if (nm not in after and not arr and
+                    re.match(r'\s*=(?!=)', plain_txt[m0.end():])):
+                local.append((nm, (s['ty'] + ' ' + stars).strip()))
+                continue
+            ty = s['ty'] + ' ' + stars + ('*' if arr else '')
+        else:
+            continue
+        if nm in after and re.search(WRITE_RE.format(n=re.escape(nm)), plain_txt):
+            return None          # value would be lost
+        outer.append((nm, ty.strip()))
+    body = list(L[i:j])
+    args = [nm for nm, _ in outer]
+    pdecl = [f"{ty} {nm}" for nm, ty in outer]
+    if variant == "argdecl":
+        # leading `T x = e;` of the range become parameters (argument e)
+        k = i
+        lead = []
+        keepb = []
+        while k < j and st.stmts[k]['k'] == 'decl' and len(st.stmts[k]['vars']) == 1:
+            s = st.stmts[k]
+            name, stars, arr, init = s['vars'][0]
+            rest = '\n'.join(L[k + 1:j])
+            if init is None and not arr:
+                keepb.append(k)
+                k += 1
+                continue
+            if init is None or arr or re.search(WRITE_RE.format(n=re.escape(name)), STR_RE.sub('""', rest)):
+                break
+            if set(_ids(ss.pr(init))) & {x[0] for x in lead}:
+                break
+            lead.append((name, (s['ty'] + ' ' + stars).strip(), ss.pr(init)))
+            k += 1
+        if not lead:
+            return None
+        body = [L[kk] for kk in keepb] + list(L[k:j])
+        # parameters used only by the moved initialisers drop out
+        rest_ids = set(x for kk in list(keepb) + list(range(k, j)) for x in ids[kk])
+        keep = [(nm, ty) for nm, ty in outer if nm in rest_ids]
+        args = [e for _, _, e in lead] + [nm for nm, _ in keep]
+        pdecl = [f"{ty} {nm}" for nm, ty, _ in lead] + [f"{ty} {nm}" for nm, ty in keep]
+    # re-indent the body one level in
+    ind0 = st.stmts[i].get('ind') if st.stmts[i]['k'] != 'raw' else re.match(r'\s*', L[i]).group(0)
+    ind0 = ind0 or ''
+    mov_lines = []
+    for nm in moved:
+        di, vi = decl_at[nm]
+        s = st.stmts[di]
+        _, stars, arr, _ = s['vars'][vi]
+        mov_lines.append(f"    {s['ty']} {stars}{nm}{arr};")
+    for nm, ty in local:
+        mov_lines.append(f"    {ty} {nm};")
+    bl = [("    " + t[len(ind0):] if t.startswith(ind0) else t) for t in body]
+    hname = f"{re.sub(r'[^A-Za-z0-9_]', '_', fn)}_Inl{i}_{j}"
+    code = f"static inline void {hname}({', '.join(pdecl) or 'void'}) {{\n" + '\n'.join(mov_lines + bl) + "\n}"
+
+    def f():
+        s2 = st.clone()
+        s2.helpers[hname] = ("void", code)
+        s2.stmts[i:j] = [{'k': 'raw', 'text': f"{ind0}{hname}({', '.join(args)});"}]
+        # drop moved declarations
+        for nm in moved:
+            di, vi = decl_at[nm]
+            d = s2.stmts[di]
+            d['vars'] = [v for v in d['vars'] if v[0] != nm]
+        s2.stmts = [s for s in s2.stmts if not (s['k'] == 'decl' and not s['vars'])]
+        return s2
+    return f
+
+
+BOOL_RE = re.compile(r'(?P<lhs>(?<![=!<>])=\s*)(?P<a>[^;=?&|]+?)\s*(?P<op>!=|==|<=|>=|<|>)\s*(?P<b>[^;=?&|]+?)\s*;')
+TERN_RE = re.compile(r'(?P<lhs>(?<![=!<>])=\s*)(?P<a>[^;=?]+?)\s*\?\s*1\s*:\s*0\s*;')
+
+
+def _boolnorm_text(t):
+    """`x = a != 0;` <-> `x = a ? 1 : 0;` (and `(a op b) ? 1 : 0` for other comparisons)."""
+    out = []
+    for m in BOOL_RE.finditer(t):
+        a, op, b = m.group('a').strip(), m.group('op'), m.group('b').strip()
+        if op == '!=' and b == '0':
+            new = f"{a} ? 1 : 0;"
+        elif op == '==' and b == '0':
+            new = f"!({a}) ? 1 : 0;" if not re.fullmatch(r'[\w.\->\[\]]+', a) else f"!{a} ? 1 : 0;"
+        else:
+            new = f"({a} {op} {b}) ? 1 : 0;"
+        out.append(t[:m.start()] + m.group('lhs') + new + t[m.end():])
+    for m in TERN_RE.finditer(t):
+        out.append(t[:m.start()] + m.group('lhs') + f"{m.group('a').strip()} != 0;" + t[m.end():])
+    return out
+
+
+def boolnorm_moves(st, focus):
+    """bool-valued assignment shape (rule expr-shape): in the caller's statements
+    on diagnosed lines and anywhere in extracted helpers."""
+    import shapesweep as ss
+    for si, s in enumerate(st.stmts):
+        if s['k'] not in ('expr', 'decl') or si not in focus:
+            continue
+        for k, t2 in enumerate(_boolnorm_text(ss.render_stmt(s))):
+            def f(si=si, t2=t2):
+                s2 = st.clone()
+                s2.stmts[si] = {'k': 'raw', 'text': t2}
+                return s2
+            yield (f"boolnorm stmt {si}#{k}", f, si)
+    for name, (ty, code) in st.helpers.items():
+        if "_Inl" not in name:
+            continue
+        for k, c2 in enumerate(_boolnorm_text(code)):
+            def f(name=name, ty=ty, c2=c2):
+                s2 = st.clone()
+                s2.helpers[name] = (ty, c2)
+                return s2
+            yield (f"boolnorm {name}#{k}", f, None)
+
+
 def apply_decl_order(st, order):
     """New State with the leading declarations in `order` (names first declared
     first; others keep their place in front). Initialisers become assignments
@@ -1088,8 +1347,10 @@ def fix(a, rep0):
             sl = sw.stmt_lines(st)
             foc = {i for i, l in enumerate(sl) if l in lines}
             extra = [] if getattr(st, "prop_off", False) or PROP in (a.pragma or []) else [prop_move(st)]
-            for label, f, si in itertools.chain(extra, decl_moves(st, names), ss.moves(st, sw.ctx, allowed)):
-                pri = 0 if (si in foc or label.startswith(("declmove", "propoff"))) else 1
+            ext = extract_moves(st, sw, names, a.fn) if not a.no_inline else ()
+            for label, f, si in itertools.chain(extra, ext, boolnorm_moves(st, foc), decl_moves(st, names),
+                                                ss.moves(st, sw.ctx, allowed)):
+                pri = 0 if (si in foc or label.startswith(("declmove", "propoff", "inline", "boolnorm"))) else 1
                 if pri == 1 and a.focus_only:
                     continue
                 cands.append((pri, len(cands), st, label, f))
@@ -1175,7 +1436,8 @@ def log_hit(fn, unit, hist, before):
     except ImportError:
         return
     kinds = {h.split()[0] for h in hist}
-    rule = "regfix-declorder" if "declorder" in kinds else "regfix-" + "+".join(sorted(kinds))
+    rule = ("inline-matched-sibling" if any(k.startswith("inline[") for k in kinds) else
+            "regfix-declorder" if "declorder" in kinds else "regfix-" + "+".join(sorted(kinds)))
     try:
         rewrite_rules.record_hit(fn, unit, rule, "regfix", before, 0, note=" | ".join(hist)[:300])
     except Exception as e:  # never fail a match on logging
@@ -1287,6 +1549,7 @@ def main():
             p.add_argument("--dbg", type=int, default=8, help="variants diagnosed per round")
             p.add_argument("--slack", type=int, default=6, help="diff-line slack for the diagnosed set")
             p.add_argument("--focus-only", action="store_true", help="only moves on diagnosed lines/locals")
+            p.add_argument("--no-inline", action="store_true", help="no extract-to-static-inline moves")
             p.add_argument("--minutes", type=float, default=0)
             p.add_argument("-j", "--jobs", type=int, default=4)
     b = sub.add_parser("batch")
