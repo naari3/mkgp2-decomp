@@ -1,12 +1,12 @@
-/* Native candidate. The yaw constructor preserves the saved FP homes, and
- * separate squared components preserve the length calculation's rounding.
+/* Native candidate. Literal zeroes allow normal common-subexpression handling
+ * and preserve the target's function size without optimisation pragmas.
  * Rotation-pointer lifetime and vector-operation registers remain non-exact. */
 #include "game/PhysicsCollisionPrivate.h"
 #include "game/PhysicsWallMatrixPrivate.h"
 
 static inline float CollisionLength(float squared)
 {
-    if (squared > lbl_806DA42C) {
+    if (squared > 0.0f) {
         double estimate = __frsqrte(squared);
         estimate = lbl_806DA458 * estimate * (lbl_806DA460 - squared * (estimate * estimate));
         estimate = lbl_806DA458 * estimate * (lbl_806DA460 - squared * (estimate * estimate));
@@ -17,8 +17,6 @@ static inline float CollisionLength(float squared)
     return squared;
 }
 
-#pragma push
-#pragma opt_common_subs off
 extern "C" void PhysicsState_WallCollisionCheck(char *self)
 {
     float hitPosition[3];
@@ -46,12 +44,12 @@ extern "C" void PhysicsState_WallCollisionCheck(char *self)
         scaled.z *= PH_F(self, 0x13C);
         endpoint.x = original.m[12] + (original.m[0] * scaled.x + scaled.y * original.m[4] + scaled.z * original.m[8]);
         endpoint.y = original.m[13] + (original.m[1] * scaled.x + scaled.y * original.m[5] + scaled.z * original.m[9]);
-        endpoint.z = original.m[14] + (original.m[2] * scaled.x + scaled.y * original.m[6] + scaled.z * original.m[10]);
+        endpoint.z = original.m[14] + (scaled.x * original.m[2] + scaled.y * original.m[6] + scaled.z * original.m[10]);
         if (Terrain_RaycastWall(self + 0x4C, ep, &correction, &normal)) {
             correction.x -= endpoint.x;
             correction.y -= endpoint.y;
             correction.z -= endpoint.z;
-            correction.y = lbl_806DA42C;
+            correction.y = 0.0f;
             PH_F(self, 0x4C) += correction.x;
             PH_F(self, 0x50) += correction.y;
             PH_F(self, 0x54) += correction.z;
@@ -80,4 +78,3 @@ extern "C" void PhysicsState_WallCollisionCheck(char *self)
         }
     }
 }
-#pragma pop
