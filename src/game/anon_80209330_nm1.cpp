@@ -1,6 +1,23 @@
-#include "game/CardRewardPickersPrivate.h"
+#include "game/CommonRewardPickerPrivate.h"
 
-static inline int *MakeShuffledItems(const int *table, int count) {
+static inline void Shuffle(int *out, int *tbl, int n) {
+    bool *used = new bool[n];
+    for (int i = 0; i < n; i++) {
+        out[i] = -1;
+        used[i] = 0;
+    }
+    for (int i = 0; i < n; i++) {
+        int r = Rand15() % n;
+        while (used[r] == 1) {
+            r = WrapInRange(r + 1, 0, n - 1);
+        }
+        used[r] = 1;
+        out[i] = tbl[r];
+    }
+    delete[] used;
+}
+
+static inline int *MakeShuffledItems(int *table, int count) {
     int *items = new int[count];
     bool *used = new bool[count];
     for (int i = 0; i < count; i++) {
