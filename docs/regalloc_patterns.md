@@ -1634,3 +1634,25 @@ Three separate swaps, each with its own cause in the trace:
    first. Assigning the record to the existing function-level local first
    (`record = &base[i]; ClassifyRecord(record, ...)`) creates its walker
    first. Swapping the inline's parameter order has no effect.
+
+## 64. One-line `fmuls fD,fA,fB` operand swap where swapping the source operands also swaps the registers (fn_80219538, 11-09)
+
+Diff: target `lfs f2,K; ...; lfs f3,0x10(r22); fmuls f31,f2,f3`, ours
+`fmuls f31,f3,f2`. Writing `K * mi->rot` instead of `mi->rot * K` flips the
+instruction AND the registers (3 lines), because the backend evaluates the
+left operand first and the first-evaluated value has the lower virtual
+register (coloured later, higher FPR). Literal constants, `*=` forms and
+inline helpers (`Mul(a, b)`, `DegToRad(deg)`) all behave the same: first
+operand = first evaluated.
+
+The target has the SECOND operand in the lower vreg, so `rot` already was
+in a register when the multiply was generated: a named local that survived.
+
+```c
+float rot = mi->rot;
+float ang = lbl_806DAF54 * rot;
+```
+
+The frontend propagates the single-use local straight back into the
+expression, so this needs `#pragma opt_propagation off` around the function
+(`opt_dead_assignments off` works too). Marked fakematch.
