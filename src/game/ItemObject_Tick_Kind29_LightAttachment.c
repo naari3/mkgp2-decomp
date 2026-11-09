@@ -61,6 +61,7 @@ void ItemObject_Tick_Kind29_LightAttachment(unsigned char *self, unsigned char *
     ScaleCurve *c;
     float f;
     int i;
+    int off;
 
     switch (S8(0xC9)) {
     case 0:
@@ -123,10 +124,11 @@ void ItemObject_Tick_Kind29_LightAttachment(unsigned char *self, unsigned char *
         sp = &scale;
         Vec_SetUniform(sp, F(0xC4));
         c = &lbl_80420ED8;
-        for (i = 0; i < 4; i++) {
+        off = 0;
+        for (i = 0; i < 4; i++, off += 4) {
             if (c->t[i] <= t && t <= c->t[i + 1]) {
                 /* View all three channels at the same key offset. */
-                ScaleCurve *segment = (ScaleCurve *)((char *)c + i * sizeof(float));
+                ScaleCurve *segment = (ScaleCurve *)((unsigned long)c + off);
                 f = (1.0f / (c->t[i + 1] - c->t[i])) * (t - c->t[i]);
                 sp->x = sp->x * (f * (segment->x[1] - segment->x[0]) + segment->x[0]);
                 sp->y = sp->y * (f * (segment->y[1] - segment->y[0]) + segment->y[0]);

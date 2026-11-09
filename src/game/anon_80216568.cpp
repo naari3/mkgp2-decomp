@@ -257,7 +257,7 @@ static inline unsigned char IsCourseCleared(int index) {
     return g_playerData.cleared[index];
 }
 
-void CalcEarnedCoins(void) {
+int CalcEarnedCoins(void) {
     int cc;
     int rank;
     int i;

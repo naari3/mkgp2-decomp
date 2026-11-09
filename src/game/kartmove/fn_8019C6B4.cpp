@@ -31,11 +31,11 @@ static inline void QuatMatrix(Matrix44 *m, MovementQuat *q) {
     float yy = y*y;
     float zz = z*z;
     float xy = x*y;
-    float wz = w*z;
     float xz = x*z;
-    float wy = w*y;
     float yz = y*z;
     float wx = w*x;
+    float wy = w*y;
+    float wz = w*z;
     m->m[0][0] = 1.0f - 2.0f*(yy+zz);
     m->m[1][0] = 2.0f*(xy-wz);
     m->m[2][0] = 2.0f*(xz+wy);
@@ -47,21 +47,25 @@ static inline void QuatMatrix(Matrix44 *m, MovementQuat *q) {
     m->m[2][2] = 1.0f - 2.0f*(xx+yy);
 }
 
+static inline void AccumulateProduct(float &value, float right, float left) {
+    value += left * right;
+}
+
 static inline void Multiply(Matrix44 *a, const Matrix44 *b) {
-    float out[16];
-    float sum;
-    int index = 0;
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
-            float a0 = a->m[i][0], b0 = b->m[0][j];
-            float a1 = a->m[i][1], b1 = b->m[1][j];
-            float a2 = a->m[i][2], b2 = b->m[2][j];
-            float a3 = a->m[i][3], b3 = b->m[3][j];
-            sum = a0*b0;
-            sum = a1*b1 + sum;
-            sum = a2*b2 + sum;
-            sum = a3*b3 + sum;
-            out[index+j] = sum;
+    Matrix44 product;
+    float *out = (float *)product.m;
+    int j;
+    int index;
+    int i;
+    float value;
+    index = 0;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4; j++) {
+            value = a->m[i][0]*b->m[0][j];
+            AccumulateProduct(value, b->m[1][j], a->m[i][1]);
+            AccumulateProduct(value, b->m[2][j], a->m[i][2]);
+            AccumulateProduct(value, b->m[3][j], a->m[i][3]);
+            out[index+j] = value;
         }
         index += 4;
     }
@@ -69,12 +73,15 @@ static inline void Multiply(Matrix44 *a, const Matrix44 *b) {
 }
 
 extern const double lbl_806D96F0;
+static inline void QSet(MovementQuat *q, float x, float y, float z, float w) { q->w = w; q->z = z; q->y = y; q->x = x; }
 extern "C" float LUT_Sine(float);
 extern "C" float LUT_Cosine(float);
 extern "C" void Mtx34_Orthonormalize(float *);
 
 extern "C" void fn_8019C6B4(MovementInit *k) {
-    InitVec direction(k->orientation.m[2][0], lbl_806D96D0, k->orientation.m[2][2]);
+    float dz = k->orientation.m[2][2];
+    float dx = k->orientation.m[2][0];
+    InitVec direction(dx, lbl_806D96D0, dz);
     float len = direction.z*direction.z + (direction.x*direction.x + direction.y*direction.y);
     KART_SPEED_ROOT(len);
     if (len <= lbl_806D96D0) {
@@ -86,21 +93,23 @@ extern "C" void fn_8019C6B4(MovementInit *k) {
     float s = LUT_Sine((float)(lbl_806D96F0 * k->yaw));
     InitVec target(LUT_Cosine((float)(lbl_806D96F0 * k->yaw)), lbl_806D96D0, s);
     MovementQuat q;
-    float x = direction.y*target.z - direction.z*target.y;
-    float y = direction.z*target.x - direction.x*target.z;
-    float z = direction.x*target.y - direction.y*target.x;
+    float y, x, z;
+    x = direction.y*target.z - direction.z*target.y;
+    y = direction.z*target.x - direction.x*target.z;
+    z = direction.x*target.y - direction.y*target.x;
     target.x = x; target.y = y; target.z = z;
+    float half, scale, w;
     float angle = z + (x+y);
     if (lbl_806D96D0 != angle) {
-        float half = lbl_806D9704 * angle;
-        float scale = LUT_Cosine(half) / angle;
-        float w = LUT_Sine(half);
-        q.z = target.z*scale; q.y = target.y*scale; q.x = target.x*scale; q.w = w;
+        half = lbl_806D9704 * angle;
+        scale = LUT_Cosine(half) / angle;
+        w = LUT_Sine(half);
+        QSet(&q, target.x*scale, target.y*scale, target.z*scale, w);
         Matrix44 rotation;
         Identity(&rotation);
         QuatMatrix(&rotation, &q);
         Multiply(&k->orientation, &rotation);
-        for (int i = 0; i < 12; i++) {}
+        for (int i = 12; i > 0; i--) {}
         Mtx34_Orthonormalize(&k->orientation.m[0][0]);
     }
     k->orientation.m[3][0] = k->pos.x;

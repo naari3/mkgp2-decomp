@@ -3180,23 +3180,6 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
   },
-  "src/game/CoinChallengeInit.cpp": {
-    "__ct__7CIOwnerFv": "MiniGame_CoinChallenge_Init",
-    "render__5CICarFv": "CarObject_GetRenderObj",
-    "__ct__6CIRootFv": "GameMode_BaseInit",
-    "__dt__6CIBaseFv": "dtor_80122FD8",
-    "__vt__6CIBase": "lbl_8048E144",
-    "__vt__7CIOwner": "lbl_804EDA98",
-    "__ct__7CIInputFv": "InputManager_Init",
-    "__ct__8CICameraFiiffPv": "Camera_Create",
-    "__ct__8CILakituFPCcifff": "LakituStart_Init",
-    "__ct__6CIGoalFv": "ChallengeGoalCamera_Init",
-    "__ct__5CIHudFi": "HUD_Init",
-    "__ct__7CIScoreFi": "ScoreDisplay_Init",
-    "__ct__9CIWeatherFUc": "WeatherSystem_Init",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
-  },
   "src/game/VfxSpritePopup.cpp": {
     "__ct__12PopupResCtrlFv": "ResCtrl_Init",
     "__dt__12PopupResCtrlFv": "dtor_80082960"
@@ -4873,18 +4856,6 @@
     "__dt__17CourseEnvironmentFv": "CourseEnvironment_Dtor",
     "__dt__19ChallengeGoalCameraFv": "fn_80124C84",
     "__dt__8ItemSlotFv": "fn_8023E808",
-    "__dt__3HUDFv": "fn_80254134"
-  },
-  "src/game/anon_80214B3C.cpp": {
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree",
-    "__dt__17CoinChallengeModeFv": "fn_80214B3C",
-    "__dt__8ModeBaseFv": "dtor_80122FD8",
-    "__vt__17CoinChallengeMode": "lbl_804EDA98",
-    "__dt__13WeatherSystemFv": "fn_8016C634",
-    "__dt__11LakituStartFv": "LakituStart_Dtor",
-    "__dt__17CourseEnvironmentFv": "CourseEnvironment_Dtor",
-    "__dt__19ChallengeGoalCameraFv": "fn_80124C84",
     "__dt__3HUDFv": "fn_80254134"
   },
   "src/game/anon_802151C8.cpp": {
@@ -12922,7 +12893,9 @@
     "childCounterInterfaceName": "global:lbl_803E5CC4",
     "childFloatCounterName": "global:lbl_803E5CD8",
     "@136": "@etb_8001CBC4",
-    "@137": "@eti_8002AEB4"
+    "@137": "@eti_8002AEB4",
+    "@139": "@etb_8001CBC4",
+    "@140": "@eti_8002AEB4"
   },
   "src/game/StrPcb_Lifetime_nm1.cpp": {
     "__ct__6StrPcbFi": "StrPcb_Init",
@@ -16924,5 +16897,32 @@
     "__ct__9Sprite_p7Fiii": "Sprite_InitWithAnim",
     "__ct__18MenuRoundScene_p15Fv": "clFlowRound_Init",
     "__ct__23MenuItemSelectScene_p15Fv": "clFlowItemSelect_Init"
+  },
+  "src/game/CoinChallenge.cpp": {
+    "__ct__9clCGameYIFv": "MiniGame_CoinChallenge_Init",
+    "__dt__9clCGameYIFv": "fn_80214B3C",
+    "Update__9clCGameYIFv": "MiniGame_CoinChallenge_Update",
+    "Draw__9clCGameYIFv": "MiniGame_CoinChallenge_Destroy",
+    "__vt__9clCGameYI": "lbl_804EDA98",
+    "__vt__7clCGame": "lbl_8048E144",
+    "__RTTI__9clCGameYI": "lbl_806D0408",
+    "__RTTI__7clCGame": "lbl_806D0400",
+    "__RTTI__11clJobRunner": "lbl_806D03F8",
+    "__ct__11clJobRunnerFv": "GameMode_BaseInit",
+    "__dt__7clCGameFv": "dtor_80122FD8",
+    "__ct__17CourseEnvironmentFv": "InputManager_Init",
+    "__ct__6CameraFiiffPv": "Camera_Create",
+    "__ct__11LakituStartFPCcifff": "LakituStart_Init",
+    "__ct__19ChallengeGoalCameraFv": "ChallengeGoalCamera_Init",
+    "__ct__3HUDFi": "HUD_Init",
+    "__ct__9CoinIconsFi": "ScoreDisplay_Init",
+    "__ct__13WeatherSystemFUc": "WeatherSystem_Init",
+    "__dt__13WeatherSystemFv": "fn_8016C634",
+    "__dt__11LakituStartFv": "LakituStart_Dtor",
+    "__dt__17CourseEnvironmentFv": "CourseEnvironment_Dtor",
+    "__dt__19ChallengeGoalCameraFv": "fn_80124C84",
+    "__dt__3HUDFv": "fn_80254134",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

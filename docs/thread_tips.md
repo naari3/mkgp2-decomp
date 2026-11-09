@@ -595,3 +595,36 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   through the unsuffixed entry, e.g. `__ct__15ServiceMenu_p34Fi` -> `ServiceMenu_Init`); (2) `__declspec(weak)` gets suffixed
   (`weak_p27`): strip it; (3) a section that switches to `#pragma cplusplus off` half way needs `struct T_pN` in the pool casts.
 - The containers in the game are the real Metrowerks MSL C++ (`std::deque`, `Metrowerks::cdeque`, `std::vector`, `std::length_error`); the genuine CW GC 2.5 headers compiled with GC/2.6 reproduce them exactly (7 stuck deque functions at once). Do not hand-write them: `python3 tools/fetch_msl.py`, name mapping and instantiation-order rules in `docs/notes/msl_cpp.md`.
+- KartMovement_RotateByYaw 100% (11-10), matrix/vector inline shapes worth porting to other kartmove near misses:
+  (1) vector transform: copy the input first and store straight into the vector, one expression per component with the
+  translation on the left, `float x = v->x, y = v->y, z = v->z; v->x = m->m[3][0] + (z*m->m[2][0] + (m->m[0][0]*x + y*m->m[1][0]));`
+  (named `rx/ry/rz` accumulators with `+=` statements gave 26 FPR vregs off; matrix loads are CSE'd over two inlined
+  calls, so every numbering detail shows); (2) Identity = 2-D zero loop + `a->m[0][0] = a->m[1][1] = a->m[2][2] = a->m[3][3] = 1.0f;`;
+  (3) Multiply with `Matrix44 product; float *out = (float *)product.m; int j; int index; int i; float value;` and
+  `out[index+j] = value` / `index += 4`; (4) `float c, s;` declared before `double radians`; (5) the member update
+  (`k->yaw += angle`) before the first inline call.
+- leversweep lever `chain-assign-split` (11-10): `a = b = c = K;` as separate statements in both orders. Fired on 7 near
+  misses, 2 small gains, 0 matches.
+- fn_8019A9BC 98.11 -> 100 (11-10), FPR-only diff with more live floats than volatile registers. Read the target's
+  saved registers as "coloured last = lowest number": (1) float literals (constants become shared temps);
+  (2) statements whose loads/constants sit in LOW volatile registers were created LATE: `QuatMatrix(&rotation, &q)`
+  moved above the block that saves `position` and zeroes the translation (189 -> 104); (3) the nine quaternion
+  products are declared in the classic order `xx yy zz xy xz yz wx wy wz` (the fmuls order in the asm is the
+  scheduler's, not the source's; the saved/volatile split gives the decl order) (104 -> 43); (4) the value in the
+  LAST saved register (`w`, f25) is a function-level named local, not an inline local: `float c = (float)cos(..); q.w = c;`
+  in the caller (43 -> 0).
+- Empty counted loop that the target keeps (`li r0,12; mtctr; bdnz` with no body, fn_8019C6B4): write it counting DOWN,
+  `for (int i = 12; i > 0; i--) {}` (or `i != 12`, `while (n--)`). The `i < 12; i++` form is deleted by IRO, the others
+  survive to the backend, which turns them into the bare ctr loop.
+- PCBComm_Process 95.8 -> 99.22 (11-10), recipes: (1) `li rX,1; mulli rX,rX,SIZE` (a constant index that was not
+  folded) = the statement sits in a one-trip loop whose counter feeds the index with an offset:
+  `for (n = 0; n < 1; n++) f(base, n + 1);` (`g[n]` alone folds; `n - 1` gives `li 0; mulli`); (2) `add rP,base,off;
+  lwzu rV,FIELD(rP)` = a pointer local that is reassigned to the field address (`sel = base + off; sel = (T *)&sel->field;`),
+  a fresh `T **p = &sel->field` folds into `lwzx`; (3) `addi rB,anchor,OBJ; addi r0,off,FIELD; lhzx` = the field offset
+  written before the index: `(u8 *)obj + FIELD + i * sizeof(T)`; `obj + (off + FIELD)` folds FIELD into the anchor offset;
+  (4) saved registers of locals that live in two blocks: declare them once at function top, before the first
+  initialised local (`update`), in the order of the target's registers (r30 first). Tool: scratch `opd.py`-style scoring
+  (diff with registers masked) finds the instruction shape first; objdiff score only after the shape is right.
+- `leversweep.py fn|batch --pairs N` (11-10, regalloc_patterns 62): after the single-lever pass, 3-way merges the best N
+  variants per lever that changed the diff with those of every other lever (non-overlapping edits only) and scores the
+  pairs. Results of the 99.x run: docs/sweeps/leversweep_pairs/.

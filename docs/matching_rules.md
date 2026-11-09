@@ -24,6 +24,18 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-09 22:55Z (n3 structure): TU merge, 4 -> 1: CoinChallengeRender /
+  CoinChallengeUpdate / anon_80214B3C / CoinChallengeInit are now
+  `game/CoinChallenge.cpp` (clCGameYI, GC/2.6 `-inline deferred -RTTI on -rostr`).
+- 2026-11-09 23:05Z (n3 regfix): regalloc_patterns §65 (new): saved GPRs
+  permuted between switch cases = declare the per-case value locals first at
+  function scope and the payload pointer as a block local per case; one case's
+  stack objects misplaced = move its setup into a nested inline owning them
+- 2026-11-09 22:37Z (n3 regfix): `tools/regfix.py diag` prints a hint when a
+  bad vreg is a frontend CSE temp (`@NNN`): numbering rule regalloc_patterns
+  §59, and §61 (new) for shared float constants: literals + the zero passed as
+  inline parameters + reverse-declared locals
+  (TransitionEffect_DrawCarRouletteOverlay matched).
 - 2026-11-09 22:20Z (n3 structure): the game's containers are the genuine
   Metrowerks MSL C++ (`std::deque`, `cdeque`, `vector`, `length_error`); the
   CW GC 2.5 headers compiled with GC/2.6 match exactly. Headers are not in
@@ -199,6 +211,7 @@ Defaults per lib block in `configure.py`: game `GC/1.3.2`, Dolphin SDK
 | Loads hoisted over stores / interleaved `lfs; lwz; lfs` before stores | `GC/2.6` |
 | `x \| ~0xFF` as `li rN, -0x100; or` (1.3.2 gives `oris/ori`); `li -0x100; rlwimi` colour inserts | `GC/2.6` |
 | `stmw`/`lmw` prologues instead of `_savegpr` calls | `GC/2.6` + `-use_lmw_stmw on` |
+| Everything matches except one `mr` and one `lfs` swapped in a loop preheader (`mr r29,r28; lfs f30; mr r27,r31` in the target, `mr; mr; lfs` from 1.3/1.3.2/1.3.2r) | `GC/2.0` or later (RivalRun.c uses `GC/2.6`). `for v in 1.3.2 2.0 2.6` on the unit's ninja command line is a 5 second probe |
 | Target does not auto-inline earlier-defined functions | add `-inline noauto` |
 | Leaf with `addi rX, rY, 0` for an offset-0 member (no `mr`) | `GC/1.2.5n` |
 | Some byte-compare / extab-order shapes (StrPcb) | `GC/1.3` (then check `tools/extab_order.json`) |

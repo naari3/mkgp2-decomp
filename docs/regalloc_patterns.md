@@ -1522,3 +1522,238 @@ lane = f->lane;
 ... if (*(int *)((char *)f + 4) != 1) { f->lane = 1; f->needsSearch = 1; }   /* fakematch */
 ... if (f->lane == 2) lane = f->lane - 1; else lane = f->lane + 1;
 ```
+
+## 60. Loop with `add rP,rBase,rOff` per iteration: the byte offset is a named variable added in the INTEGER domain (ItemObject_Tick_Kind29_LightAttachment, 11-09)
+
+Diff: three volatile registers rotated in a keyframe loop (target base r3,
+`t[]` walker r4 = `mr r4,r3`, byte offset r5; ours offset r3, base r4, walker
+r5). mwtrace: with `(char *)c + i * sizeof(float)` the offset is a temp the
+BACKEND creates after code generation (`LI r90,0 ... ADDI r90,r90,4`), so it
+has the highest vreg and is coloured first.
+
+The target's offset is coloured last, so it is a named local. But every
+pointer form (`(char *)c + off`, `&c->x[i]`, `i * 4`, unsigned `i`) is strength
+reduced by IRO into a second walker (no `add`, 36 lines). Adding it as an
+integer keeps both the named offset and the per-iteration `add`:
+
+```c
+int off;
+...
+off = 0;
+for (i = 0; i < 4; i++, off += 4) {
+    if (c->t[i] <= t && t <= c->t[i + 1]) {
+        ScaleCurve *segment = (ScaleCurve *)((unsigned long)c + off);
+```
+
+`(int)c + off` and an `unsigned long off` do not work (walker again); it has
+to be `int off` added to `(unsigned long)c`.
+
+## 61. Shared float constant in the wrong FPR, and `fadds` with 0.0f that literals fold away: literals everywhere, the zero passed into the inline as parameters, constants loaded once through reverse-declared locals (TransitionEffect, 11-09)
+
+Target (unrolled table loop): `lfs f6,240; lfs f5,0.0; lfs f4,320; ...; fsubs f0,f0,f4; fsubs f2,f2,f6;
+fadds f0,f0,f5; fadds f2,f2,f5`. Three sources, three results:
+
+- `extern const float` for every constant: the frontend CSEs the zero that is read twice into a
+  temp (`@541` in the trace) and the FPRs come out permuted. regfix diag now prints a hint when a
+  bad vreg is a frontend `@` temp.
+- the same with `#pragma opt_common_subs off`: registers right, but the unrolled loop bumps the
+  walker twice.
+- float literals: `x + 0.0f` is folded away completely, so the `fadds` disappears.
+
+The target keeps `fadds` with zero, so the zero reached the expression as a VALUE, not as a
+literal: the quad helper took offsets. Literals everywhere plus the zero as inline parameters
+matches exactly (a hybrid of externs with a literal zero does not):
+
+```c
+static inline void ScreenRouletteTableQuad(float ox, float oy)
+{
+    ...
+    for (int i = 0; i < 16; ++i) {
+        ScreenPosition((v[0].x - 320.0f) + ox, (v[0].y - 240.0f) + oy);
+        ...
+    }
+}
+... ScreenRouletteTableQuad(0.0f, 0.0f);
+```
+
+Side effects of going to literals in the rest of the TU, and their fixes:
+
+- Literals are not CSE'd: every `ScreenPosition(-320.0f, -240.0f)` reloads its constants. Where
+  the target loads each constant once, give them named locals. Block-scope locals are numbered
+  in reverse declaration order, so declare them in reverse of the assignment order to get
+  f3,f2,f1,f0:
+  `float y1, x1, y0, x0; x0 = -320.0f; y0 = -240.0f; x1 = 320.0f; y1 = 240.0f;`
+- The TU must own the constants: add its `.sdata2` range to `config/GNLJ82/splits.txt`.
+
+## 62. Hand-unrolled segment calls with base/cursor registers swapped: write the real loop AND pass the base as an expression (EffectVfx29_30_Item4SubFlame_Tick, 11-09)
+
+Diff: four copies of a piecewise-linear segment test; target base r3 and
+`addi r4,r3,4*n` cursors, ours base r4 and cursors r3. Each lever alone fails:
+
+- named outer `FlameCurve *curve` + hand-unrolled calls: curve is coloured
+  last, r3/r4 swapped (99.42);
+- curve passed as an expression + hand-unrolled calls: base r3, but the dead
+  base merges into the last cursor (`lfsu f2,0xc(r3)`);
+- named outer curve + real loop: strength-reduced `lfsu` walk (95%).
+
+Both together match: with the base as a temp expression the compiler fully
+unrolls the constant 4-trip loop itself and keeps one base with `addi`
+cursors, the last one included.
+
+```c
+for (i = 0; i < 4; i++) {
+    FlameCurve_Segment((float (*)[5])((char *)curve + i * sizeof(float)), t, &height);
+}
+...
+int idx = I(0x10);
+height = FlameCurve_Evaluate(lbl_8041A224 + idx, F(0x150));
+```
+
+Lesson: when a row in gave_up lists "loop tried" and "expression tried"
+separately, try the combination before giving up.
+
+## 63. Two loop-long FPRs swapped (hoisted stack float vs hoisted constant), then volatile pairs in an unrolled classify loop (fn_801E9E74, 11-09)
+
+Three separate swaps, each with its own cause in the trace:
+
+1. `lfs f30,0x28(r1); lfs f31,zero` vs ours f31/f30. Both values live across
+   the whole loop with degree >= K. `position.z` was an IRO hoist temp
+   (`@121`, low vreg); the zero was hoisted by the BACKEND (highest vreg). In
+   the first simplify sweep the low temp is skipped and the backend temp is
+   pushed (its neighbours in between are already gone), so the low temp is
+   pushed last and coloured first. Fix: both as named locals, the one that
+   needs the higher register declared FIRST, and passed into the inline:
+   `float zero; float pz; ... pz = position.z; zero = lbl_806DA3F4;`
+   (a named zero alone flips the load order instead).
+2. `range` (named, coloured after the inline's `previous`) f2 vs f1: compute
+   it in a small inline so it becomes a frontend inline temp:
+   `static inline float GetRangeSq(void) { float range = fn(); range *= range; return range; }`.
+   A `Square(float v) { return v * v; }` helper does not do it.
+3. Strength-reduction walkers for `&base[i]` and `&states[i]` r4/r5 swapped:
+   they are numbered in creation order and the inline touches `*result`
+   first. Assigning the record to the existing function-level local first
+   (`record = &base[i]; ClassifyRecord(record, ...)`) creates its walker
+   first. Swapping the inline's parameter order has no effect.
+
+## 64. One-line `fmuls fD,fA,fB` operand swap where swapping the source operands also swaps the registers (fn_80219538, 11-09)
+
+Diff: target `lfs f2,K; ...; lfs f3,0x10(r22); fmuls f31,f2,f3`, ours
+`fmuls f31,f3,f2`. Writing `K * mi->rot` instead of `mi->rot * K` flips the
+instruction AND the registers (3 lines), because the backend evaluates the
+left operand first and the first-evaluated value has the lower virtual
+register (coloured later, higher FPR). Literal constants, `*=` forms and
+inline helpers (`Mul(a, b)`, `DegToRad(deg)`) all behave the same: first
+operand = first evaluated.
+
+The target has the SECOND operand in the lower vreg, so `rot` already was
+in a register when the multiply was generated: a named local that survived.
+
+```c
+float rot = mi->rot;
+float ang = lbl_806DAF54 * rot;
+```
+
+The frontend propagates the single-use local straight back into the
+expression, so this needs `#pragma opt_propagation off` around the function
+(`opt_dead_assignments off` works too). Marked fakematch.
+
+## 65. Saved GPRs of a switch permuted between cases, and one case's stack objects in the wrong place: declaration order of the value locals vs block-local payload pointers; the case's setup in its own nested inline (TransitionEffect_RenderPass, 11-09)
+
+Symptom 1: a `switch` whose cases each keep a payload pointer and a few
+colour values across calls; all instructions equal, only r27/r29/r31 permuted
+between cases. The colourer handles higher vregs first and gives each the
+lowest free saved register already handed out, else a new one from r31 down.
+Named locals are numbered by source position, so the one declared EARLIER is
+coloured first. The target coloured the values before the payload pointers.
+Fix: declare every case's value locals at function scope, first, each case
+with its own names (`unsigned int a1; unsigned int r, g, b, a; unsigned int
+r5, g5, b5, a5;`), assign them in the cases, and make the pointer a block
+local in each case (`case 3: { void *payload; payload = self->flash; ...`).
+One function-scope `payload` shared by all cases gives the permuted registers.
+
+Symptom 2: the same function with the matrices/Vecs of one case at the wrong
+stack offsets (the target had case 3's objects lowest although it is in the
+middle of the source). Stack objects are laid out in creation order, first
+created = highest address, and inline locals are created level by level. Put
+that case's setup into its own inline that owns the objects, so they are
+created one level later than everything else:
+
+```c
+static inline void ScreenFlashSetup(const Vec *camera)
+{
+    Mtx44 projection3;
+    Mtx view3;
+    ScreenProjection(projection3);
+    ScreenCamera(view3, camera, 9, 1.5707963705062866);
+}
+```
+
+The order of the two declarations inside it matters too. Wrapping the whole
+case in an inline does not work: it is over the inline size limit and
+`#pragma always_inline on` does not change that.
+
+## 66. A temp avoids r3 for no visible reason near the END of a function: the function returns non-void and has no return statement (clFlowCC*::Update, 11-09)
+
+Diff: the last loop of the function,
+
+```
+target: lwz r4,0x58(r28); cmplwi r4,0; beq skip; lwz r3,0(r4); bl Sprite_AdvanceAnim
+ours:   lwz r3,0x58(r28); cmplwi r3,0; beq skip; lwz r3,0(r3); bl ...
+```
+
+The temp has three neighbours and r3 looks free, yet the target does not
+use it. The same source loop gives r3 in sibling functions where more
+calls follow the loop, and r4 where the loop is the last statement.
+
+Cause: the function is declared with a return value (`virtual int Update()`)
+and falls off the end. The epilogue then USES r3, so r3 is live from its
+last definition to the exit. On the path that skips the call (`beq skip`)
+r3 is live across the temp, they interfere, and the temp gets r4. With
+unconditional calls after the loop r3 is redefined and nothing shows.
+
+Fix: declare the function with the non-void return type and no `return`.
+For a virtual, change the base and every override (mangled names do not
+contain the return type, callers that ignore the value are unchanged).
+
+Where to look: any `rX` vs r3 swap for a short-lived temp in the tail of a
+`void` function, on a path that can reach the exit without a call; also
+`li r3,N`-free tails where a value seems to be kept away from r3.
+
+## 67. `li rA,0; ... mr rB,rA` for two variables that both start at zero: they are locals of an INLINED function (RivalRun_UpdatePathFollower, 11-10)
+
+Target (search loop preheader): `li r28,0; stb r28,0(r30); mr r29,r28` for
+`best = 0; i = 0`. Written as two locals of the function itself we always got
+`li r28,0; li r29,0`, whatever the statements (`i = best`, `pf->flag = best`,
+shared constant local).
+
+Why (GlobalOptimizer.c `optimizelevel4`, ValueNumbering.c `isCSEop`):
+constant propagation turns every `mr x,y` whose `y` has the single reaching
+definition `li` back into an `li`. The later *aggressive* value numbering pass
+does merge two equal `li`, but only when the destination register is a
+compiler temporary (`>= first_fe_temporary_register`), never a named local of
+the function being compiled. Locals of an inlined function are such
+temporaries. So a surviving `li; mr` pair for two same-valued variables says
+the variables live in an inline.
+
+What else the two inlines (`RR_FindNearest(pts, count, pos)`,
+`RR_Follow(pf, pts, last, pos, &rel)`) fixed, in the order the diff shrank
+(124 -> 0 lines):
+
+- Arguments copied into an inline are coalesced copies that still raise the
+  interference degree of the outer locals: `pts` reaches degree >= 29 and is
+  coloured before `pf` (r31 / r30 as in the target).
+- Inline locals are numbered above the outer named locals, last declared =
+  coloured first: declare the floats of each helper in reverse of the wanted
+  f31, f30, ... order.
+- `count - 1` passed as the argument (not `last = count - 1` inside the helper)
+  puts `last` in r29.
+- A stack object declared in the outer function and passed by pointer
+  (`RRVec3 rel`) sits above the helper's own stack objects (d at 8(r1), rel at
+  20(r1)).
+- The table row read through an inline getter (`RR_Routes(pf->lane)[pf->route].pts`)
+  becomes a late temp, which fixes a volatile r4/r5 swap (same idea as §56).
+- The last two lines were the compiler version, not the source: see
+  matching_rules §4 (preheader `mr`/`lfs` order, GC/2.0 or later).
+
+Rule name in hits.jsonl: `li-cse-inline-locals`.
+

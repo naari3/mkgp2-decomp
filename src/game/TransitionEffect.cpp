@@ -22,7 +22,7 @@ public:
     ScopedTimer(int id) { slot = id; start = OSGetTick(); }
     ~ScopedTimer() {
         Profiler_RecordFrame(slot, (float)(((OSGetTick() - start) << 3) /
-            ((*(volatile unsigned int *)0x800000F8 >> 2) / 125000)) / lbl_806D2FF4);
+            ((*(volatile unsigned int *)0x800000F8 >> 2) / 125000)) / 1e+06f);
     }
 };
 
@@ -34,82 +34,82 @@ extern "C" void TransitionEffect_Tick(TransitionEffectView *self)
     ScopedTimer timer(0x2B);
     unsigned char fadeActive;
     TransitionFade *fade = self->fade;
-    if (fade->delay <= lbl_806D2FD0 && fade->remaining <= lbl_806D2FD0) {
+    if (fade->delay <= 0.0f && fade->remaining <= 0.0f) {
         fadeActive = 0;
     } else {
-        fade->delay -= lbl_806D2FD4;
-        if (fade->delay <= lbl_806D2FD0) {
-            fade->delay = lbl_806D2FD0;
-            fade->remaining -= lbl_806D2FD4;
-            if (fade->remaining <= lbl_806D2FD0) fade->remaining = lbl_806D2FD0;
+        fade->delay -= 0.016666668f;
+        if (fade->delay <= 0.0f) {
+            fade->delay = 0.0f;
+            fade->remaining -= 0.016666668f;
+            if (fade->remaining <= 0.0f) fade->remaining = 0.0f;
         }
         fadeActive = 1;
     }
     TransitionIris *iris = self->iris;
     unsigned char irisActive;
-    if (iris->remaining <= lbl_806D2FD0) irisActive = 0;
+    if (iris->remaining <= 0.0f) irisActive = 0;
     else {
         iris->remaining -= iris->step;
         if (iris->closing == 1) {
-            iris->radius = lbl_806D2FD8 * (lbl_806D2FDC - iris->remaining);
-            iris->alpha = (unsigned int)(lbl_806D2FE0 * iris->remaining);
+            iris->radius = 4.8e+02f * (1.0f - iris->remaining);
+            iris->alpha = (unsigned int)(255.0f * iris->remaining);
         } else {
-            iris->radius = lbl_806D2FD8 * iris->remaining;
-            iris->alpha = (unsigned int)(lbl_806D2FE0 * (lbl_806D2FDC - iris->remaining));
-            if (iris->remaining <= lbl_806D2FD0) {
+            iris->radius = 4.8e+02f * iris->remaining;
+            iris->alpha = (unsigned int)(255.0f * (1.0f - iris->remaining));
+            if (iris->remaining <= 0.0f) {
                 iris->closing = 1;
-                iris->remaining = lbl_806D2FDC;
+                iris->remaining = 1.0f;
             }
         }
         irisActive = 1;
     }
     TransitionFlash *flash = self->flash;
     unsigned int flashActive;
-    flash->remaining -= lbl_806D2FD4;
-    if (flash->remaining <= lbl_806D2FD0) {
+    flash->remaining -= 0.016666668f;
+    if (flash->remaining <= 0.0f) {
         flash->active = flashActive = 0;
-        flash->remaining = lbl_806D2FD0;
+        flash->remaining = 0.0f;
     } else {
-        float alpha = lbl_806D2FE4 * flash->remaining;
-        if (alpha > lbl_806D2FE4) alpha = lbl_806D2FE4;
-        flash->r = lbl_806D2FDC;
-        flash->g = lbl_806D2FDC;
-        flash->b = lbl_806D2FDC;
+        float alpha = 0.9f * flash->remaining;
+        if (alpha > 0.9f) alpha = 0.9f;
+        flash->r = 1.0f;
+        flash->g = 1.0f;
+        flash->b = 1.0f;
         flash->alpha = alpha;
         flash->active = flashActive = 1;
     }
     float *shake = self->shake;
     unsigned char shakeActive;
-    if (*shake <= lbl_806D2FD0) shakeActive = 0;
-    else { *shake -= lbl_806D2FD4; shakeActive = 1; }
+    if (*shake <= 0.0f) shakeActive = 0;
+    else { *shake -= 0.016666668f; shakeActive = 1; }
     TransitionRoulette *roulette = self->roulette;
     unsigned char quadActive = self->quad->active;
     unsigned char rouletteActive;
-    if (roulette->remaining <= lbl_806D2FD0) rouletteActive = 0;
+    if (roulette->remaining <= 0.0f) rouletteActive = 0;
     else {
-        roulette->remaining -= lbl_806D2FD4;
-        if (roulette->remaining > lbl_806D2FDC) {
-            roulette->fade += lbl_806D2FE8;
-            if (roulette->fade > lbl_806D2FDC) roulette->fade = lbl_806D2FDC;
+        roulette->remaining -= 0.016666668f;
+        if (roulette->remaining > 1.0f) {
+            roulette->fade += 0.04f;
+            if (roulette->fade > 1.0f) roulette->fade = 1.0f;
         } else {
-            roulette->fade -= lbl_806D2FE8;
-            if (roulette->fade < lbl_806D2FD0) roulette->fade = lbl_806D2FD0;
+            roulette->fade -= 0.04f;
+            if (roulette->fade < 0.0f) roulette->fade = 0.0f;
         }
-        if (roulette->fade >= lbl_806D2FDC) roulette->speed += lbl_806D2FEC;
-        if (roulette->speed > lbl_806D2FE8) roulette->speed = lbl_806D2FE8;
-        roulette->elapsed += lbl_806D2FD4;
+        if (roulette->fade >= 1.0f) roulette->speed += 0.0005f;
+        if (roulette->speed > 0.04f) roulette->speed = 0.04f;
+        roulette->elapsed += 0.016666668f;
         switch (roulette->phase) {
         case 0:
-            if (roulette->elapsed > lbl_806D2FDC) {
+            if (roulette->elapsed > 1.0f) {
                 ++roulette->phase;
-                roulette->elapsed = lbl_806D2FD0;
+                roulette->elapsed = 0.0f;
                 roulette->active = 0;
             }
             break;
         case 1:
-            if (roulette->elapsed > lbl_806D2FF0) {
+            if (roulette->elapsed > 0.1f) {
                 ++roulette->phase;
-                roulette->elapsed = lbl_806D2FD0;
+                roulette->elapsed = 0.0f;
             }
             break;
         }
@@ -133,17 +133,17 @@ extern const char lbl_80311DA4[];
 void *operator new(unsigned long);
 
 struct TransitionFadeInit : TransitionFade {
-    TransitionFadeInit() { delay = lbl_806D2FD0; remaining = lbl_806D2FD0; }
+    TransitionFadeInit() { delay = 0.0f; remaining = 0.0f; }
 };
 struct TransitionIrisInit : TransitionIris {
-    TransitionIrisInit() { remaining = lbl_806D2FD0; step = lbl_806D2FD0; closing = 1; }
+    TransitionIrisInit() { remaining = 0.0f; step = 0.0f; closing = 1; }
 };
 struct TransitionShakeInit {
     float remaining;
-    TransitionShakeInit() { remaining = lbl_806D2FD0; }
+    TransitionShakeInit() { remaining = 0.0f; }
 };
 struct TransitionFlashInit : TransitionFlash {
-    TransitionFlashInit() { remaining = lbl_806D2FD0; active = 0; }
+    TransitionFlashInit() { remaining = 0.0f; active = 0; }
 };
 struct TransitionQuadInit : TransitionQuad {
     TransitionQuadInit() { active = 0; }
@@ -168,7 +168,7 @@ struct TransitionRouletteInit {
     TransitionRouletteInit() {
         Object_JObjUpdate_870(holder.object, 0x200);
         Object_SetByte48(holder.object, 1);
-        remaining = lbl_806D2FD0;
+        remaining = 0.0f;
     }
 };
 /* A constructor keeps allocation failure cleanups native. The owner views
@@ -207,7 +207,7 @@ struct TransitionEffectInit : TransitionInitBase {
         TransitionInitBase(lbl_803FE37C) {
         fn_801F6804(renderState);
         mode = 0;
-        duration = lbl_806D2FD0;
+        duration = 0.0f;
     }
 };
 extern "C" TransitionEffectView *TransitionEffect_GetOrCreate()
@@ -245,11 +245,11 @@ extern "C" TransitionTextureVertex lbl_803FE230[16];
 
 static inline void ScreenProjection(Mtx44 projection)
 {
-    C_MTXOrtho(projection, lbl_806D3000, lbl_806D3004, lbl_806D3008,
-               lbl_806D300C, lbl_806D3010, lbl_806D3014);
+    C_MTXOrtho(projection, 2.4e+02f, (-2.4e+02f), (-3.2e+02f),
+               3.2e+02f, 1e+02f, 1e+03f);
     GXSetProjection(projection, GX_ORTHOGRAPHIC);
-    GXSetViewport(lbl_806D2FD0, lbl_806D2FD0, lbl_806D3018, lbl_806D2FD8,
-                  lbl_806D2FD0, lbl_806D2FDC);
+    GXSetViewport(0.0f, 0.0f, 6.4e+02f, 4.8e+02f,
+                  0.0f, 1.0f);
     GXSetScissor(0, 0, 640, 480);
 }
 static inline void ScreenCamera(Mtx view, const Vec *camera, int index, double angle)
@@ -328,38 +328,48 @@ static inline void ScreenTexturedMaterial()
 static inline void ScreenFlatQuad(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
     GXBegin(GX_QUADS, GX_VTXFMT0, 4);
-    ScreenPosition(lbl_806D3008, lbl_806D3004); ScreenColor(r,g,b,a);
-    ScreenPosition(lbl_806D300C, lbl_806D3004); ScreenColor(r,g,b,a);
-    ScreenPosition(lbl_806D300C, lbl_806D3000); ScreenColor(r,g,b,a);
-    ScreenPosition(lbl_806D3008, lbl_806D3000); ScreenColor(r,g,b,a);
+    float y1, x1, y0, x0;
+    x0 = -320.0f; y0 = -240.0f; x1 = 320.0f; y1 = 240.0f;
+    ScreenPosition(x0, y0); ScreenColor(r,g,b,a);
+    ScreenPosition(x1, y0); ScreenColor(r,g,b,a);
+    ScreenPosition(x1, y1); ScreenColor(r,g,b,a);
+    ScreenPosition(x0, y1); ScreenColor(r,g,b,a);
 }
-static inline void ScreenTableQuad()
+static inline void ScreenTableQuad(float ox, float oy)
 {
     GXBegin(GX_QUADS, GX_VTXFMT0, 16);
     TransitionTextureVertex *v = lbl_803FE0F0;
     for (int i = 0; i < 16; ++i) {
-        ScreenPosition((v[0].x - lbl_806D300C) + lbl_806D2FD0,
-                       (v[0].y - lbl_806D3000) + lbl_806D2FD0);
+        ScreenPosition((v[0].x - 3.2e+02f) + ox, (v[0].y - 2.4e+02f) + oy);
         *(volatile unsigned int *)0xCC008000 = v[0].color;
-        ScreenPosition(lbl_806D303C * v[0].u, lbl_806D3038 * v[0].v);
+        ScreenPosition(0.0015625f * v[0].u, 0.0020833334f * v[0].v);
         ++v;
     }
 }
 static inline void ScreenRotatedCamera(Mtx view, const Vec *camera, int index, float *angle, signed char *initialized)
 {
     Vec eye = camera[index];
-    if (!*initialized) { *initialized = 1; *angle = lbl_806D301C; }
+    if (!*initialized) { *initialized = 1; *angle = 9e+01f; }
     Vec up = camera[index + 1];
-    up.x = (float)cos((float)(lbl_806D3020 * *angle));
-    up.y = -(float)sin((float)(lbl_806D3020 * *angle));
+    up.x = (float)cos((float)(0.017453292519943295 * *angle));
+    up.y = -(float)sin((float)(0.017453292519943295 * *angle));
     Vec target = camera[index + 2];
     C_MTXLookAt(view, &eye, &up, &target);
     GXLoadPosMtxImm(view, 0);
 }
+static inline void ScreenFlashSetup(const Vec *camera)
+{
+    Mtx44 projection3;
+    Mtx view3;
+    ScreenProjection(projection3);
+    ScreenCamera(view3, camera, 9, 1.5707963705062866);
+}
 extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass)
 {
     const Vec *camera = lbl_80311CA0;
-    void *payload;
+    unsigned int a1;
+    unsigned int r, g, b, a;
+    unsigned int r5, g5, b5, a5;
     /* Keep each pass's escaped matrices in the target stack order. */
     Mtx view1;
     Mtx44 projection1;
@@ -369,8 +379,6 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
     Mtx44 projection4;
     Mtx view5;
     Mtx44 projection5;
-    Mtx view3;
-    Mtx44 projection3;
     ScopedTimer timer(0x2C);
     if (self->mode != pass) return;
     if (self->mode != 3) {
@@ -380,8 +388,9 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
     switch (pass) {
     case 0: break;
     case 1: {
+        void *payload;
         payload = self->fade;
-        if (((TransitionFade *)payload)->delay <= lbl_806D2FD0 && ((TransitionFade *)payload)->remaining <= lbl_806D2FD0) break;
+        if (((TransitionFade *)payload)->delay <= 0.0f && ((TransitionFade *)payload)->remaining <= 0.0f) break;
         GXSetZMode(GX_DISABLE, GX_ALWAYS, GX_ENABLE);
         GXSetZCompLoc(GX_FALSE);
         GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
@@ -397,61 +406,66 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
         GXSetTevOp(GX_TEVSTAGE0, GX_MODULATE);
         GXSetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_SET);
         ScreenVertexFormat(true);
-        unsigned int a = (int)Saturate_Double(lbl_806D3028 * ((TransitionFade *)payload)->remaining, lbl_806D2FD0, lbl_806D3028);
+        a1 = (int)Saturate_Double(2e+02f * ((TransitionFade *)payload)->remaining, 0.0f, 2e+02f);
         GXBegin(GX_QUADS, GX_VTXFMT0, 4);
-        ScreenPosition(lbl_806D3008, lbl_806D3004); ScreenColor(255,255,255,a);
-        ScreenPosition(lbl_806D2FD0, lbl_806D2FD0);
-        ScreenPosition(lbl_806D300C, lbl_806D3004); ScreenColor(255,255,255,a);
-        ScreenPosition(lbl_806D2FDC, lbl_806D2FD0);
-        ScreenPosition(lbl_806D300C, lbl_806D3000); ScreenColor(255,255,255,a);
-        ScreenPosition(lbl_806D2FDC, lbl_806D2FDC);
-        ScreenPosition(lbl_806D3008, lbl_806D3000); ScreenColor(255,255,255,a);
-        ScreenPosition(lbl_806D2FD0, lbl_806D2FDC);
+        float y1, t1, x1, t0, y0, x0;
+        x0 = -320.0f; y0 = -240.0f; t0 = 0.0f; x1 = 320.0f; t1 = 1.0f; y1 = 240.0f;
+        ScreenPosition(x0, y0); ScreenColor(255,255,255,a1);
+        ScreenPosition(t0, t0);
+        ScreenPosition(x1, y0); ScreenColor(255,255,255,a1);
+        ScreenPosition(t1, t0);
+        ScreenPosition(x1, y1); ScreenColor(255,255,255,a1);
+        ScreenPosition(t1, t1);
+        ScreenPosition(x0, y1); ScreenColor(255,255,255,a1);
+        ScreenPosition(t0, t1);
         RestoreScreenChannel();
         break;
     }
     case 2: {
+        void *payload;
         payload = self->iris;
-        if (((TransitionIris *)payload)->remaining <= lbl_806D2FD0 && ((TransitionIris *)payload)->closing == 1) break;
+        if (((TransitionIris *)payload)->remaining <= 0.0f && ((TransitionIris *)payload)->closing == 1) break;
         GXSetZMode(GX_DISABLE, GX_ALWAYS, GX_ENABLE);
         GXSetZCompLoc(GX_FALSE);
         GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         GXSetCullMode(GX_CULL_BACK);
         ScreenProjection(projection2);
-        ScreenCamera(view2, camera, 0, lbl_806D3030);
+        ScreenCamera(view2, camera, 0, 1.5707963705062866);
         ScreenFlatMaterial(GX_BL_INVSRCALPHA);
         GXBegin(GX_QUADS, GX_VTXFMT0, 4);
-        ScreenPosition(lbl_806D3008, lbl_806D3004);
+        float y1, x1, y0, x0;
+        x0 = -320.0f; y0 = -240.0f; x1 = 320.0f; y1 = 240.0f;
+        ScreenPosition(x0, y0);
         *(volatile unsigned int *)0xCC008000 = 255;
-        ScreenPosition(lbl_806D300C, lbl_806D3004);
+        ScreenPosition(x1, y0);
         *(volatile unsigned int *)0xCC008000 = 255;
-        ScreenPosition(lbl_806D300C, lbl_806D3000 - ((TransitionIris *)payload)->radius);
+        ScreenPosition(x1, y1 - ((TransitionIris *)payload)->radius);
         *(volatile unsigned int *)0xCC008000 = 0;
-        ScreenPosition(lbl_806D3008, lbl_806D3000 - ((TransitionIris *)payload)->radius);
+        ScreenPosition(x0, y1 - ((TransitionIris *)payload)->radius);
         *(volatile unsigned int *)0xCC008000 = 0;
         RestoreScreenChannel();
         break;
     }
     case 3: {
+        void *payload;
         payload = self->flash;
         if (!((TransitionFlash *)payload)->active) break;
         GXSetZMode(GX_DISABLE, GX_ALWAYS, GX_ENABLE);
         GXSetZCompLoc(GX_FALSE);
         GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         GXSetCullMode(GX_CULL_BACK);
-        ScreenProjection(projection3);
-        ScreenCamera(view3, camera, 9, lbl_806D3030);
+        ScreenFlashSetup(camera);
         ScreenFlatMaterial(GX_BL_INVSRCALPHA);
-        unsigned int r = (int)Saturate_Double(lbl_806D2FE0 * ((TransitionFlash *)payload)->r, lbl_806D2FD0, lbl_806D2FE0);
-        unsigned int g = (int)Saturate_Double(lbl_806D2FE0 * ((TransitionFlash *)payload)->g, lbl_806D2FD0, lbl_806D2FE0);
-        unsigned int b = (int)Saturate_Double(lbl_806D2FE0 * ((TransitionFlash *)payload)->b, lbl_806D2FD0, lbl_806D2FE0);
-        unsigned int a = (int)Saturate_Double(lbl_806D2FE0 * ((TransitionFlash *)payload)->alpha, lbl_806D2FD0, lbl_806D2FE0);
+        r = (int)Saturate_Double(255.0f * ((TransitionFlash *)payload)->r, 0.0f, 255.0f);
+        g = (int)Saturate_Double(255.0f * ((TransitionFlash *)payload)->g, 0.0f, 255.0f);
+        b = (int)Saturate_Double(255.0f * ((TransitionFlash *)payload)->b, 0.0f, 255.0f);
+        a = (int)Saturate_Double(255.0f * ((TransitionFlash *)payload)->alpha, 0.0f, 255.0f);
         ScreenFlatQuad(r,g,b,a);
         RestoreScreenChannel();
         break;
     }
     case 4: {
-        if (*self->shake <= lbl_806D2FD0) break;
+        if (*self->shake <= 0.0f) break;
         GXSetZMode(GX_DISABLE, GX_NEVER, GX_DISABLE);
         GXSetZCompLoc(GX_FALSE);
         GXSetCullMode(GX_CULL_BACK);
@@ -461,11 +475,12 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
         GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         GXSetNumChans(1);
         ScreenVertexFormat(true);
-        ScreenTableQuad();
+        ScreenTableQuad(0.0f, 0.0f);
         RestoreScreenChannel();
         break;
     }
     case 5: {
+        void *payload;
         payload = self->quad;
         if (!((TransitionQuad *)payload)->active) break;
         GXSetZMode(GX_DISABLE, GX_ALWAYS, GX_ENABLE);
@@ -473,13 +488,13 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
         GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         GXSetCullMode(GX_CULL_BACK);
         ScreenProjection(projection5);
-        ScreenCamera(view5, camera, 9, lbl_806D3030);
+        ScreenCamera(view5, camera, 9, 1.5707963705062866);
         ScreenFlatMaterial(GX_BL_INVSRCALPHA);
-        unsigned int r = (int)Saturate_Double(lbl_806D2FE0 * ((TransitionQuad *)payload)->r, lbl_806D2FD0, lbl_806D2FE0);
-        unsigned int g = (int)Saturate_Double(lbl_806D2FE0 * ((TransitionQuad *)payload)->g, lbl_806D2FD0, lbl_806D2FE0);
-        unsigned int b = (int)Saturate_Double(lbl_806D2FE0 * ((TransitionQuad *)payload)->b, lbl_806D2FD0, lbl_806D2FE0);
-        unsigned int a = (int)Saturate_Double(lbl_806D2FE0 * ((TransitionQuad *)payload)->alpha, lbl_806D2FD0, lbl_806D2FE0);
-        ScreenFlatQuad(r,g,b,a);
+        r5 = (int)Saturate_Double(255.0f * ((TransitionQuad *)payload)->r, 0.0f, 255.0f);
+        g5 = (int)Saturate_Double(255.0f * ((TransitionQuad *)payload)->g, 0.0f, 255.0f);
+        b5 = (int)Saturate_Double(255.0f * ((TransitionQuad *)payload)->b, 0.0f, 255.0f);
+        a5 = (int)Saturate_Double(255.0f * ((TransitionQuad *)payload)->alpha, 0.0f, 255.0f);
+        ScreenFlatQuad(r5,g5,b5,a5);
         RestoreScreenChannel();
         break;
     }
@@ -492,22 +507,15 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
     }
 }
 
-static inline void ScreenTablePosition(float x, float y)
-{
-    y -= lbl_806D3000;
-    y += lbl_806D2FD0;
-    x -= lbl_806D300C;
-    x += lbl_806D2FD0;
-    ScreenPosition(x, y);
-}
-static inline void ScreenRouletteTableQuad()
+static inline void ScreenRouletteTableQuad(float ox, float oy)
 {
     GXBegin(GX_QUADS, GX_VTXFMT0, 16);
     TransitionTextureVertex *v = lbl_803FE230;
+    
     for (int i = 0; i < 16; ++i) {
-        ScreenTablePosition(v[0].x, v[0].y);
+        ScreenPosition((v[0].x - 3.2e+02f) + ox, (v[0].y - 2.4e+02f) + oy);
         *(volatile unsigned int *)0xCC008000 = v[0].color;
-        ScreenPosition(lbl_806D303C * v[0].u, lbl_806D3038 * v[0].v);
+        ScreenPosition(0.0015625f * v[0].u, 0.0020833334f * v[0].v);
         ++v;
     }
 }
@@ -515,7 +523,7 @@ static inline void ScreenRouletteTableQuad()
 extern "C" void TransitionEffect_DrawCarRouletteOverlay(TransitionRoulette *self)
 {
     const Vec *camera = lbl_80311CA0;
-    if (self->remaining <= lbl_806D2FD0) return;
+    if (self->remaining <= 0.0f) return;
     TransitionEffect_DrawCarRouletteAndQuad(self, self->fade, self->speed);
     if (self->active != 1) return;
     GXSetZMode(GX_DISABLE, GX_NEVER, GX_DISABLE);
@@ -535,7 +543,7 @@ extern "C" void TransitionEffect_DrawCarRouletteOverlay(TransitionRoulette *self
     GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
     GXSetNumChans(1);
     ScreenVertexFormat(true);
-    ScreenRouletteTableQuad();
+    ScreenRouletteTableQuad(0.0f, 0.0f);
     RestoreScreenChannel();
 }
 
@@ -546,17 +554,17 @@ extern "C" void TransitionEffect_DrawCarRouletteAndQuad(TransitionRoulette *self
     const Vec *camera = lbl_80311CA0;
     MtxPtr matrix = CObj_GetProjMatrix_Cached(GetCourseScene3D());
     Vec position;
-    position.x = lbl_806D2FD0;
-    position.y = lbl_806D2FD0;
-    position.z = lbl_806D3040 * fade + lbl_806D3044 * (lbl_806D2FDC - fade);
+    position.x = 0.0f;
+    position.y = 0.0f;
+    position.z = (-5e+02f) * fade + (-1e+03f) * (1.0f - fade);
     PSMTXMultVec(matrix, &position, &position);
     Object_SetJObjPositionXYZ(self->holder.object, position.x, position.y, position.z);
-    Object_SetJObjScaleXYZ(self->holder.object, lbl_806D3048, lbl_806D3048, lbl_806D3048);
+    Object_SetJObjScaleXYZ(self->holder.object, 4e+01f, 4e+01f, 4e+01f);
     Object_SetColorRGBA(self->holder.object, 0, fade, fade, fade, fade);
-    JObjTree_TranslateAndMul(self->holder.object, 0, lbl_806D2FD0, angle);
+    JObjTree_TranslateAndMul(self->holder.object, 0, 0.0f, angle);
     Object_RenderJObjTree(self->holder.object, 7);
     float c;
-    float alpha = lbl_806D304C * self->fade;
+    float alpha = 0.8f * self->fade;
     GXSetZMode(GX_DISABLE, GX_ALWAYS, GX_ENABLE);
     GXSetZCompLoc(GX_FALSE);
     GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
@@ -564,7 +572,7 @@ extern "C" void TransitionEffect_DrawCarRouletteAndQuad(TransitionRoulette *self
     Mtx view;
     Mtx44 projection;
     ScreenProjection(projection);
-    ScreenCamera(view, camera, 12, lbl_806D3030);
+    ScreenCamera(view, camera, 12, 1.5707963705062866);
     GXSetNumTevStages(1);
     GXSetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD_NULL, GX_TEXMAP_NULL, GX_COLOR0A0);
     GXSetTevOp(GX_TEVSTAGE0, GX_PASSCLR);
@@ -575,16 +583,18 @@ extern "C" void TransitionEffect_DrawCarRouletteAndQuad(TransitionRoulette *self
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_POS, GX_POS_XY, GX_F32, 0);
     GXSetVtxAttrFmt(GX_VTXFMT0, GX_VA_CLR0, GX_CLR_RGBA, GX_RGBA8, 0);
     unsigned int a, b, g, r;
-    r = (int)Saturate_Double(lbl_806D2FD0, lbl_806D2FD0, lbl_806D2FE0);
-    c = lbl_806D2FE0 * alpha;
-    g = (int)Saturate_Double(c, lbl_806D2FD0, lbl_806D2FE0);
-    b = (int)Saturate_Double(c, lbl_806D2FD0, lbl_806D2FE0);
-    a = (int)Saturate_Double(lbl_806D2FE0 * (lbl_806D3050 * alpha), lbl_806D2FD0, lbl_806D2FE0);
+    r = (int)Saturate_Double(0.0f, 0.0f, 255.0f);
+    c = 255.0f * alpha;
+    g = (int)Saturate_Double(c, 0.0f, 255.0f);
+    b = (int)Saturate_Double(c, 0.0f, 255.0f);
+    a = (int)Saturate_Double(255.0f * (0.7f * alpha), 0.0f, 255.0f);
     GXBegin(GX_QUADS, GX_VTXFMT0, 4);
-    ScreenPosition(lbl_806D3008, lbl_806D3004); ScreenColor(r,g,b,a);
-    ScreenPosition(lbl_806D300C, lbl_806D3004); ScreenColor(r,g,b,a);
-    ScreenPosition(lbl_806D300C, lbl_806D3000); ScreenColor(r,g,b,a);
-    ScreenPosition(lbl_806D3008, lbl_806D3000); ScreenColor(r,g,b,a);
+    float y1, x1, y0, x0;
+    x0 = -320.0f; y0 = -240.0f; x1 = 320.0f; y1 = 240.0f;
+    ScreenPosition(x0, y0); ScreenColor(r,g,b,a);
+    ScreenPosition(x1, y0); ScreenColor(r,g,b,a);
+    ScreenPosition(x1, y1); ScreenColor(r,g,b,a);
+    ScreenPosition(x0, y1); ScreenColor(r,g,b,a);
     RestoreScreenChannel();
 }
 #pragma opt_propagation reset
@@ -606,7 +616,7 @@ extern "C" int ShadowBillboard_SetEffectParams(TransitionEffectView *self, int m
     }
     }
     self->mode = mode;
-    self->duration = lbl_806D2FD0;
+    self->duration = 0.0f;
     self->active = 1;
     return 1;
 }
@@ -618,14 +628,14 @@ extern "C" int CameraEffect_Apply(TransitionEffectView *self, int mode, float du
     case 1: {
         TransitionFade *p = self->fade;
         p->delay = duration;
-        p->remaining = lbl_806D2FDC;
+        p->remaining = 1.0f;
         break;
     }
     case 2: {
         TransitionIris *p = self->iris;
         p->closing = 0;
-        p->remaining = lbl_806D2FDC;
-        p->step = lbl_806D2FDC / (lbl_806D3054 * duration);
+        p->remaining = 1.0f;
+        p->step = 1.0f / (6e+01f * duration);
         break;
     }
     case 3: self->flash->remaining = duration; break;
@@ -633,13 +643,13 @@ extern "C" int CameraEffect_Apply(TransitionEffectView *self, int mode, float du
     case 5: return 0;
     case 6: {
         TransitionRoulette *p = self->roulette;
-        if (p->remaining > lbl_806D2FD0) {
+        if (p->remaining > 0.0f) {
             p->remaining = duration;
         } else {
             p->remaining = duration;
             p->speed = lbl_806D3058;
-            p->fade = lbl_806D2FD0;
-            p->elapsed = lbl_806D2FD0;
+            p->fade = 0.0f;
+            p->elapsed = 0.0f;
             p->phase = 0;
             p->active = 1;
         }

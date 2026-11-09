@@ -2201,6 +2201,19 @@ def shape_hints(a, rep, src_text):
             out.append("saved GPRs are off around a list walk: the sentinel `&head` hoisted by the backend takes the newest "
                        "saved register. Name it as a local of the inline (regalloc_patterns 52) or build begin() as "
                        "`iterator(((Node *)&head)->next)` instead of `++end()` (regalloc_patterns 53).")
+    cse = []
+    for c in ("gpr", "fpr"):
+        if cl.get(c) and cl[c].get("bad"):
+            cse += [f"{v}({cl[c]['g'].names[v]})" for v in cl[c]["bad"]
+                    if str(cl[c]["g"].names.get(v, "")).startswith("@")]
+    if cse:
+        out.append(f"{', '.join(cse[:4])}: a frontend temp is off. If it is a shared load (the same expression read twice), "
+                   "CSE temps are numbered in REVERSE discovery order (the group whose second occurrence comes later "
+                   "gets the lower vreg) and all sit below backend temps; a named function-scope local sits below them "
+                   "(regalloc_patterns 59). To make it a backend temp instead, stop the frontend from seeing one shared "
+                   "expression: for a float constant, write literals and pass the shared value into the inline as "
+                   "separate parameters (TransitionEffect_DrawCarRouletteOverlay: `Quad(0.0f, 0.0f)`, "
+                   "regalloc_patterns 61).")
     return out
 
 

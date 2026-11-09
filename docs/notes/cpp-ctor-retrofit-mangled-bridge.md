@@ -2154,3 +2154,13 @@ c23_u174 fn_8020A6CC 95 -> 100%/104B: restore float output and name the intermed
 Source: Codex worker c25_u3_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c25_u3: BootDispatcher 99.31995 -> 99.35759 via C static inline int BootOptionDisabled(unsigned char), which returns option==0. C frontend int comparison restores cardDisabled srwi5; C++ bool lowering had extrwi8,19. otherDisabled still extrwi. Primary text size6376 unchanged; extab67.36111/index33.333336/rodata100/data100 unchanged. Second wait ==0 (99.354454) and C error-init helper (99.31179) rejected for EH regressions. Pool merge needs coordinator scope across nine TUs; prior isolated .bss ownership cycle already recorded. Full fallback DOL SHA-1 OK; no native gain.
+
+## c25_u17_20261110
+Source: Codex worker c25_u17_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 7 fn / 10180 B.
+
+c25_u17 fn_8018B31C: counter-scope rule46 retains one-line block-local int i in rotation loop. Raw94.276886->94.35414, report94.41471, text6472 unchanged;16 differing aligned rows fixed/no new mismatches (rotation counter r10 and rotation amount r8; nearby scratch reuse also aligns). Explicit WriteField n/start locals93.56613 reverted; flattened writer94.276886 invariant. Pool ownership already correct. BSS81.818184/84vs88 unchanged;EH/index/rodata100. One function cannot B; remains NonMatching. Coordinator build SHA1ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65 OK; nativegain0.
+
+## c25_u30_20261110
+Source: Codex worker c25_u30_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 2024 B.
+
+c25_u30: CalcEarnedCoins 98.534485 -> 99.80604 with ONLY return type void -> int, implicit valueless exit (valueless-return-keeps-r3 / pattern54). No arguments added. MWCC emits return value expected warning. Working volatile registers now exact except four course-clear index shift/add rows +2E0..+2EC: target (course*4+reverse*2)+long; ours (reverse*2+long)+course*4. Reversing inner sum99.69827, nested sum helper/unsigned intermediate/long-last99.80604, direct cleared[8][2][2]98.72845; all discarded. Pool already owned/exact. Remains NonMatching, no A/B unlock/native gain. Full fallback build SHA1 exact.

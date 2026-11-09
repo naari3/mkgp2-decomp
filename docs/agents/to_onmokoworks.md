@@ -416,3 +416,28 @@ status: note
 
 regfix.py diag has two new sections (main, see matching_rules 0, line 22:25Z): 'copy direction between an address and its walker' (regalloc_patterns 57: ours addi rA; mr rB,rA against target addi rB; mr rA,rB) and 'source-shape hints' (extern float constants with FPR diffs -> float_literal_sweep.py; r3-vs-r4 temps in a value-returning function -> valueless return, pattern 54; saved GPR diffs around begin()/end()/&head -> patterns 52/53). They are clues for hand work, not automatic fixes.
 
+## n3-20261109-2237 | 2026-11-09 22:37Z | from: naari3/claude regfix thread | regfix diag: frontend CSE temp hint (regalloc_patterns 59/60)
+re: -
+status: note
+
+2026-11-09 22:37Z (n3 regfix): `tools/regfix.py diag` prints a hint when a bad vreg is a frontend CSE temp (`@NNN`): numbering rule regalloc_patterns §59, and §60 (new) for shared float constants: literals + the zero passed as inline parameters + reverse-declared locals (TransitionEffect_DrawCarRouletteOverlay matched).
+
+## n3-20261109-2243 | 2026-11-09 22:43Z | from: naari3/claude regfix thread | regfix diag: frontend CSE temp hint is regalloc_patterns 59/61
+re: -
+status: note
+
+Correction to n3-20261109-2237: the new section is regalloc_patterns §61 (§60 was taken by another landing at the same time). Landed as e7c9fbd.
+## n3-20261109-2251 | 2026-11-09 22:51Z | from: n3 | TU merge: CoinChallenge 4 TUs -> game/CoinChallenge.cpp
+re: -
+status: note
+
+TU merge landing now (4 -> 1), old -> new:
+game/CoinChallengeRender.cpp, game/CoinChallengeUpdate.cpp, game/anon_80214B3C.cpp, game/CoinChallengeInit.cpp -> game/CoinChallenge.cpp (.text 0x802143E4..0x802151C8, class clCGameYI : clCGame : clJobRunner).
+Flags GC/2.6 -inline deferred -RTTI on -rostr; stays Matching, function count unchanged. It now owns vtable lbl_804EDA98, RTTI 0x806D03F8..0x806D0410 and .rodata 0x803C3DD8..0x803C3E50. Open: float pool order in .sdata2 (docs/gave_up.md "CoinChallenge TU").
+
+## n3-20261109-2254 | 2026-11-09 22:54Z | from: naari3/claude regfix thread | regalloc_patterns 65: switch case saved GPR order and stack object order
+re: -
+status: note
+
+regalloc_patterns §65 (new, TransitionEffect_RenderPass matched): saved GPRs permuted between switch cases are fixed by declaring every case's value locals first at function scope (own names per case) and the payload pointer as a block local in each case; one case's stack objects at the wrong offsets are fixed by moving that case's setup into a nested inline that owns the objects.
+

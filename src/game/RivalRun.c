@@ -528,7 +528,7 @@ void RivalRun_RivalAIUpdate(RRRivalAI *self) {
 /* refine if the real prototype matters for header consumers. */
 extern float Vec3_Dot(const RRVec3 *a, const RRVec3 *b);
 extern void Vec3_Normalize(const RRVec3 *v, RRVec3 *out);
-extern void PSVECSquareMag();
+extern float PSVECSquareMag(const RRVec3 *v);
 
 /* --- extern decls: sda21-referenced data --- */
 extern const float lbl_806D738C;
@@ -543,7 +543,11 @@ extern unsigned int lbl_806D73A0;
  */
 
 /* --- forward decls --- */
-asm void RivalRun_UpdatePathFollower(void);
+typedef struct RRPathRoute {
+    RRVec3 *pts;
+    int count;
+} RRPathRoute;
+void RivalRun_UpdatePathFollower(RRPathFollower *pf, const RRVec3 *pos);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -558,165 +562,102 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
-asm void RivalRun_UpdatePathFollower(void) { /* 0x80135EFC size:0x24C */
-    nofralloc
-    stwu r1, -0x80(r1)
-    mflr r0
-    stw r0, 0x84(r1)
-    stfd f31, 0x70(r1)
-    psq_st f31, 0x78(r1), 0, 0
-    stfd f30, 0x60(r1)
-    psq_st f30, 0x68(r1), 0, 0
-    stfd f29, 0x50(r1)
-    psq_st f29, 0x58(r1), 0, 0
-    stfd f28, 0x40(r1)
-    psq_st f28, 0x48(r1), 0, 0
-    stmw r25, 0x24(r1)
-    mr r30, r3
-    lis r3, lbl_8035C1E4@ha
-    lwz r0, 0x4(r30)
-    addi r5, r3, lbl_8035C1E4@l
-    lwz r3, 0x8(r30)
-    mr r25, r4
-    slwi r4, r0, 4
-    lbz r0, 0x0(r30)
-    add r4, r5, r4
-    slwi r5, r3, 3
-    add r3, r4, r5
-    cmplwi r0, 0x0
-    lwzx r31, r4, r5
-    lwz r26, 0x4(r3)
-    beq RivalRun_UpdatePathFollower_L_80135FE4
-    li r28, 0x0
-    lfs f31, lbl_806D738C(r2)
-    stb r28, 0x0(r30)
-    mr r29, r28
-    lfs f30, 0x0(r25)
-    mr r27, r31
-    lfs f29, 0x4(r25)
-    lfs f28, 0x8(r25)
-    b RivalRun_UpdatePathFollower_L_80135FD8
-    RivalRun_UpdatePathFollower_L_80135F8C:
-    lfs f0, 0x0(r27)
-    addi r3, r1, 0x8
-    fsubs f0, f0, f30
-    stfs f0, 0x8(r1)
-    lfs f0, 0x4(r27)
-    fsubs f0, f0, f29
-    stfs f0, 0xc(r1)
-    lfs f0, 0x8(r27)
-    fsubs f0, f0, f28
-    stfs f0, 0x10(r1)
-    bl PSVECSquareMag
-    cmpwi r29, 0x0
-    beq RivalRun_UpdatePathFollower_L_80135FC8
-    fcmpo cr0, f1, f31
-    bge RivalRun_UpdatePathFollower_L_80135FD0
-    RivalRun_UpdatePathFollower_L_80135FC8:
-    mr r28, r29
-    fmr f31, f1
-    RivalRun_UpdatePathFollower_L_80135FD0:
-    addi r27, r27, 0xc
-    addi r29, r29, 0x1
-    RivalRun_UpdatePathFollower_L_80135FD8:
-    cmpw r29, r26
-    blt RivalRun_UpdatePathFollower_L_80135F8C
-    stw r28, 0xc(r30)
-    RivalRun_UpdatePathFollower_L_80135FE4:
-    lfs f28, 0x0(r25)
-    subi r29, r26, 0x1
-    lfs f29, lbl_806D738C(r2)
-    lfs f30, 0x8(r25)
-    lfs f31, lbl_806D73A0(r2)
-    RivalRun_UpdatePathFollower_L_80135FF8:
-    lwz r0, 0xc(r30)
-    mulli r0, r0, 0xc
-    lfsx f0, r31, r0
-    stfs f0, 0x10(r30)
-    stfs f29, 0x14(r30)
-    lwz r0, 0xc(r30)
-    mulli r3, r0, 0xc
-    addi r0, r3, 0x8
-    lfsx f0, r31, r0
-    stfs f0, 0x18(r30)
-    lwz r0, 0xc(r30)
-    cmpw r0, r29
-    bne RivalRun_UpdatePathFollower_L_8013605C
-    mulli r0, r0, 0xc
-    add r3, r31, r0
-    lfs f1, 0x0(r3)
-    lfs f0, -0xc(r3)
-    fsubs f0, f1, f0
-    stfs f0, 0x1c(r30)
-    stfs f29, 0x20(r30)
-    lfs f1, 0x8(r3)
-    lfs f0, -0x4(r3)
-    fsubs f0, f1, f0
-    stfs f0, 0x24(r30)
-    b RivalRun_UpdatePathFollower_L_80136088
-    RivalRun_UpdatePathFollower_L_8013605C:
-    mulli r0, r0, 0xc
-    add r3, r31, r0
-    lfs f1, 0xc(r3)
-    lfs f0, 0x0(r3)
-    fsubs f0, f1, f0
-    stfs f0, 0x1c(r30)
-    stfs f29, 0x20(r30)
-    lfs f1, 0x14(r3)
-    lfs f0, 0x8(r3)
-    fsubs f0, f1, f0
-    stfs f0, 0x24(r30)
-    RivalRun_UpdatePathFollower_L_80136088:
-    addi r3, r30, 0x1c
-    mr r4, r3
-    bl Vec3_Normalize
-    lfs f0, 0x10(r30)
-    addi r3, r1, 0x14
-    addi r4, r30, 0x1c
-    fsubs f0, f0, f28
-    stfs f29, 0x18(r1)
-    stfs f0, 0x14(r1)
-    lfs f0, 0x18(r30)
-    fsubs f0, f0, f30
-    stfs f0, 0x1c(r1)
-    bl Vec3_Dot
-    lwz r3, 0xc(r30)
-    cmpw r3, r29
-    bne RivalRun_UpdatePathFollower_L_80136100
-    lfs f0, 0x28(r30)
-    fcmpo cr0, f1, f0
-    bge RivalRun_UpdatePathFollower_L_80136114
-    lfs f0, lbl_806D73A0(r2)
-    lfs f2, 0x1c(r30)
-    fsubs f3, f0, f1
-    lfs f0, 0x10(r30)
-    fmadds f0, f2, f3, f0
-    stfs f0, 0x10(r30)
-    lfs f1, 0x24(r30)
-    lfs f0, 0x18(r30)
-    fmadds f0, f1, f3, f0
-    stfs f0, 0x18(r30)
-    b RivalRun_UpdatePathFollower_L_80136114
-    RivalRun_UpdatePathFollower_L_80136100:
-    fcmpo cr0, f1, f31
-    bge RivalRun_UpdatePathFollower_L_80136114
-    addi r0, r3, 0x1
-    stw r0, 0xc(r30)
-    b RivalRun_UpdatePathFollower_L_80135FF8
-    RivalRun_UpdatePathFollower_L_80136114:
-    psq_l f31, 0x78(r1), 0, 0
-    lfd f31, 0x70(r1)
-    psq_l f30, 0x68(r1), 0, 0
-    lfd f30, 0x60(r1)
-    psq_l f29, 0x58(r1), 0, 0
-    lfd f29, 0x50(r1)
-    psq_l f28, 0x48(r1), 0, 0
-    lfd f28, 0x40(r1)
-    lmw r25, 0x24(r1)
-    lwz r0, 0x84(r1)
-    mtlr r0
-    addi r1, r1, 0x80
-    blr
+/*
+ * RivalRun_UpdatePathFollower 0x80135EFC size:0x24C
+ *
+ * The two helpers are inlines in the original too: the search keeps
+ * `li r28,0 ... mr r29,r28` for `best = 0` / `i = 0`, and value numbering
+ * only merges two `li` when the destinations are compiler temporaries, which
+ * is what the locals of an inlined function are (regalloc_patterns).
+ */
+static inline const RRPathRoute *RR_Routes(int lane) {
+    return ((RRPathRoute (*)[2])lbl_8035C1E4)[lane];
+}
+
+static inline int RR_FindNearest(RRVec3 *pts, int count, const RRVec3 *pos) {
+    RRVec3 *p;
+    int best;
+    int i;
+    float bestDist;
+    float px, py, pz;
+
+    bestDist = lbl_806D738C;
+    best = 0;
+    px = pos->x;
+    py = pos->y;
+    pz = pos->z;
+    for (i = 0, p = pts; i < count; p++, i++) {
+        RRVec3 d;
+        float m;
+        d.x = p->x - px;
+        d.y = p->y - py;
+        d.z = p->z - pz;
+        m = PSVECSquareMag(&d);
+        if (i == 0 || m < bestDist) {
+            best = i;
+            bestDist = m;
+        }
+    }
+    return best;
+}
+
+static inline void RR_Follow(RRPathFollower *pf, RRVec3 *pts, int last, const RRVec3 *pos, RRVec3 *relp) {
+    float px;
+    float zero;
+    float pz;
+    float one;
+
+    px = pos->x;
+    zero = lbl_806D738C;
+    pz = pos->z;
+    one = *(const float *)&lbl_806D73A0;
+    for (;;) {
+        float dot;
+        pf->target.x = pts[pf->seg].x;
+        pf->target.y = zero;
+        pf->target.z = pts[pf->seg].z;
+        if (pf->seg == last) {
+            RRVec3 *c = &pts[pf->seg];
+            pf->dir.x = c[0].x - c[-1].x;
+            pf->dir.y = zero;
+            pf->dir.z = c[0].z - c[-1].z;
+        } else {
+            RRVec3 *c = &pts[pf->seg];
+            pf->dir.x = c[1].x - c[0].x;
+            pf->dir.y = zero;
+            pf->dir.z = c[1].z - c[0].z;
+        }
+        Vec3_Normalize(&pf->dir, &pf->dir);
+        relp->x = pf->target.x - px;
+        relp->y = zero;
+        relp->z = pf->target.z - pz;
+        dot = Vec3_Dot(relp, &pf->dir);
+        if (pf->seg == last) {
+            if (dot < pf->endDist) {
+                float t = *(const float *)&lbl_806D73A0 - dot;
+                pf->target.x = pf->dir.x * t + pf->target.x;
+                pf->target.z = pf->dir.z * t + pf->target.z;
+            }
+            return;
+        }
+        if (dot < one) {
+            pf->seg++;
+        } else {
+            return;
+        }
+    }
+}
+
+void RivalRun_UpdatePathFollower(RRPathFollower *pf, const RRVec3 *pos) {
+    RRVec3 *pts = RR_Routes(pf->lane)[pf->route].pts;
+    int count = RR_Routes(pf->lane)[pf->route].count;
+    RRVec3 rel;
+
+    if (pf->needsSearch) {
+        pf->needsSearch = 0;
+        pf->seg = RR_FindNearest(pts, count, pos);
+    }
+    RR_Follow(pf, pts, count - 1, pos, &rel);
 }
 
 /* === extracted from auto_RivalRun_RivalTactic_text === */
@@ -1002,7 +943,7 @@ extern float Vec3_Dot(const RRVec3 *a, const RRVec3 *b);
 extern void Vec3_Magnitude();
 extern void Vec3_Normalize(const RRVec3 *v, RRVec3 *out);
 extern void Vec3_Subtract(const RRVec3 *a, const RRVec3 *b, RRVec3 *out);
-extern void PSVECSquareMag();
+extern float PSVECSquareMag(const RRVec3 *v);
 
 /* --- extern decls: sda21-referenced data --- */
 extern const float lbl_806D738C;
