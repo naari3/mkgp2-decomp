@@ -68,6 +68,7 @@ import mwccdbg as md  # noqa: E402
 
 ROOT = md.ROOT
 K_FREE = {"gpr": 29, "fpr": 32}
+FLT_MAX = 3.4028234663852886e38
 RS_MAXN = 11      # locals permuted exhaustively by the Rust solver
 
 
@@ -148,18 +149,45 @@ class Graph:
                     g.params.add(m.group(2))
         g.real_order = order
         g.allv = allv
+        # r31 named as a neighbour = it is reserved (frame pointer for a dynamic
+        # frame / alloca), so one register fewer is free (fn_801E4AF4)
+        g.K = K_FREE[rc] - (1 if rc == "gpr" and any("r31" in f for _, f in perm.values()) else 0)
+        # spill temporaries of a second colouring pass never get picked as the
+        # stuck-simplify candidate (Coloring.c: reg >= used_regs_before_coloring -> FLT_MAX)
+        g.first_temp = None
+        mf = out / f"regalloc-{rc}-meta.txt"
+        if mf.exists():
+            m = re.search(r"first_temp (\d+)", mf.read_text())
+            g.first_temp = int(m.group(1)) if m else None
         g.cost = {v: (allv.get(v) or asg[v]).get("cost", 0) for v in order}
+        # spill costs are only computed when simplify got stuck. Costs in the dump
+        # but no stuck in the model = fewer registers were free than the default
+        # (inline asm that names machine registers retains them, THPDec fn_80299D58):
+        # take the largest K that gets stuck
+        if any(g.cost.values()):
+            k0 = g.K
+            while g.K > 1:
+                g.was_stuck = False
+                g.simplify()
+                if g.was_stuck:
+                    break
+                g.K -= 1
+            else:
+                g.K = k0
         return g
 
     def copy(self):
         g = Graph(self.rc, self.nodes, self.key, self.nb, self.perm, dict(self.names), self.phys)
         g.params = getattr(self, "params", set())
         g.cost = getattr(self, "cost", {})
+        g.K = getattr(self, "K", K_FREE[self.rc])
+        g.first_temp = getattr(self, "first_temp", None)
         return g
 
     # --- the model ---
     def simplify(self):
-        K = K_FREE[self.rc]
+        K = getattr(self, "K", K_FREE[self.rc])
+        ft = getattr(self, "first_temp", None)
         nodes = sorted(self.nodes, key=lambda v: self.key[v])
         deg = {v: self.perm[v][0] + len(self.nb[v]) for v in nodes}
         removed, push = set(), []
@@ -175,6 +203,7 @@ class Graph:
                     for x in self.nb[v]:
                         deg[x] -= 1
             if not prog:
+                self.was_stuck = True
                 # stuck: MWCC (mweppc Coloring.c simplifygraph) pushes the cheapest
                 # spill candidate, lowest (float)cost/(float)degree. The candidate
                 # list is built by prepending in ascending order and compared with
@@ -184,7 +213,10 @@ class Graph:
                 for u in reversed(nodes):
                     if u in removed:
                         continue
-                    sc = _f32(_f32(cost.get(u, 0)) / _f32(max(deg[u], 1)))
+                    if ft is not None and num(u) >= ft:
+                        sc = FLT_MAX
+                    else:
+                        sc = _f32(_f32(cost.get(u, 0)) / _f32(max(deg[u], 1)))
                     if bs is None or sc < bs:
                         best, bs = u, sc
                 v = best
@@ -609,6 +641,9 @@ def sim_input(classes, names=None):
         g, w = c[0], c[1]
         locs = set(c[2]) if len(c) > 2 else set(decl_locals(g))
         out.append(f"class {g.rc}")
+        out.append(f"k {getattr(g, 'K', K_FREE[g.rc])}")
+        if getattr(g, "first_temp", None) is not None:
+            out.append(f"ftemp {g.first_temp}")
         nodes = list(g.nodes)
         ix = {v: i for i, v in enumerate(nodes)}
         idxs.append(nodes)
@@ -658,7 +693,7 @@ def rs_solve_decl(names, free, classes, maxn, tlimit):
 
 def levels(g: Graph):
     """vreg -> simplify level (0 = pushed in the first sweep = coloured last)."""
-    K = K_FREE[g.rc]
+    K = getattr(g, "K", K_FREE[g.rc])
     nodes = sorted(g.nodes, key=lambda v: g.key[v])
     deg = {v: g.perm[v][0] + len(g.nb[v]) for v in nodes}
     removed, lv, L = set(), {}, 0
@@ -1054,6 +1089,7 @@ def trace_to_dumps(lines, d: Path):
     color = {"r": [], "f": []}
     seen_ig, seen_col = {"r": set(), "f": set()}, {"r": set(), "f": set()}
     done_ig, done_col = {"r": False, "f": False}, {"r": False, "f": False}
+    first_temp = {}           # class -> used_regs_before_coloring when a 2nd pass ran
     for l in lines:
         t = l.split(" ", 4)
         if t[0] == "PCODE" and len(t) >= 5:
@@ -1069,11 +1105,13 @@ def trace_to_dumps(lines, d: Path):
                 continue
             k, c, v, col, rest = m.group(1), m.group(2), int(m.group(3)), int(m.group(4)), m.group(5)
             seen, done = (seen_ig, done_ig) if k == "IGNODE" else (seen_col, done_col)
-            if done[c]:
-                continue
-            if v in seen[c]:          # next colouring attempt: keep pass 1 only
-                done[c] = True
-                continue
+            if v in seen[c]:          # next colouring attempt (after spill code):
+                seen[c].clear()       # the LAST pass decides the registers
+                if k == "IGNODE":
+                    first_temp.setdefault(c, max(nodes[c]) + 1)
+                    nodes[c] = {}
+                else:
+                    color[c] = []
             seen[c].add(v)
             f = dict(re.findall(r"(\w+)=(\S*)", rest))
             rec = {"v": v, "col": col if "[spilled]" not in rest else 99, "cost": f.get("cost", "0"),
@@ -1094,6 +1132,11 @@ def trace_to_dumps(lines, d: Path):
         if nodes[c] or color[c]:
             (d / f"regalloc-{rc}-pass-1-all.txt").write_text("".join(fmt(r) for r in sorted(nodes[c].values(), key=lambda r: r["v"])))
             (d / f"regalloc-{rc}-pass-1-assigned.txt").write_text("".join(fmt(r) for r in color[c]))
+            meta = d / f"regalloc-{rc}-meta.txt"
+            if c in first_temp:
+                meta.write_text(f"first_temp {first_temp[c]}\n")
+            elif meta.exists():
+                meta.unlink()
     (d / "variables.txt").write_text("arguments:\n" + "".join(f"    {v} -> {v}   {n}\n" for v, n in var_args))
 
 
