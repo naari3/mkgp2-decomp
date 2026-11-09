@@ -1883,3 +1883,15 @@ worth 0.1 to 1 %:
 - A product used only inside the innermost `if` is written there; the
   compiler hoists it itself. Hoisting it by hand changes the FPR.
 - `d / 4.0f`, not `d * 0.25f`, when the target loads 0.25 late.
+
+## 72. Two split-lifetime temps in a fixed colour order (RankingMgr_UpdatePositions, 11-09)
+
+Follow-up to 57: two values had to be
+split temps coloured in a given order (`box` before the table walker, both
+r26). Measured: split ranges of ONE variable are created last range first
+(the later range is coloured first); split ranges of two variables follow
+declaration order, first declared first. A single-use dummy first range
+(`b = (void **)g_gameMode; if ((int)b == 1) return;`) is propagated away
+and then the next range becomes the named one, so the function needs
+`#pragma opt_propagation off`. The dummy ranges cost nothing (r0 / r3).
+
