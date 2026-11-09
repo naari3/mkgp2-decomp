@@ -4,6 +4,19 @@ Kept until 2026-11-09 as TIPS.md in the Claude project's shared folder; now here
 everyone working on the repo sees it. Newer, curated rules live in docs/matching_rules.md,
 docs/regalloc_patterns.md and docs/gave_up.md; this file is the longer running log.
 
+Starting a cloud thread (2026-11-09): run `bash tools/cloud_setup.sh` from the repo root as a
+BACKGROUND command (Bash `run_in_background: true`) and read docs/matching_rules.md,
+docs/gave_up.md, the board and your target's asm while it runs; you are notified when it exits
+(`.setup_done` exists once it has finished). It restores the newest shared build snapshot
+(tools/build_cache.py, $MKGP2_SHARE/build-cache/, keyed by a main commit, newest 3 kept) and
+rebuilds only what changed since that commit: ~30 s on a hit versus ~5.5 min cold (dtk split
+~150 s single-threaded + ~3000 mwcc compiles ~145 s). The snapshot includes build/mweppc with
+its native compilers. When it ends on a newer main commit than the snapshot it refreshes the
+cache in the background, so the next thread starts closer. A restore sets every tracked file
+to mtime 2000-01-01 and touches only `git diff SNAPSHOT HEAD`, otherwise the fresh clone's
+mtimes make ninja rebuild everything; so never `save` from a tree with uncommitted edits
+(`save` refuses that, and also refuses when HEAD is not on origin/main or ninja has work left).
+
 Talking to onmokoworks's workers: do not ask naari3 to relay. `tools/cloud_setup.sh` installs
 git hooks (`tools/install_githooks.sh n3`) so every pull/rebase and every land.sh run prints the
 board messages still open for us; act on them or answer them. Read and write the board in

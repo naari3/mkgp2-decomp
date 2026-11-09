@@ -25,7 +25,10 @@ fi
 if ! git -C "$DIR" cat-file -e "$COMMIT^{commit}" 2>/dev/null; then
   git -C "$DIR" fetch -q origin
 fi
-git -C "$DIR" -c advice.detachedHead=false checkout -q "$COMMIT"
+git -C "$DIR" -c advice.detachedHead=false checkout -q -f "$COMMIT"
+rm -f "$DIR/include/compiler/MwTrace.h"
+# decision trace (MWCC_TRACE=file [MWCC_TRACE_FN=linkname]); output-neutral, see docs/mwcc_internals.md
+git -C "$DIR" apply "$ROOT/tools/mweppc_trace/trace.patch"
 echo "mweppc source at build/mweppc ($COMMIT); start with docs/mwcc_internals.md"
 if [ "$1" = "--build" ]; then
   cd "$DIR"

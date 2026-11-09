@@ -24,5 +24,9 @@ compiler source, then change the source to change that input. A row you add to
 coalescing and alias rules live and summarises them; `tools/mwsched.py
 explain UNIT FN --run` says why an instruction pair is in our order.
 
+Cloud threads: `bash tools/cloud_setup.sh` restores a shared build snapshot
+(`tools/build_cache.py`) and finishes in well under a minute on a hit; run it
+in the background and read the docs above meanwhile (`docs/thread_tips.md`).
+
 Never comment on the other side's `[unit-claim]` issues and never edit a TU
 someone else has claimed; post a hint on the board instead.

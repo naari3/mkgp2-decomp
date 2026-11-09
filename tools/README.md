@@ -33,6 +33,7 @@ Rough order to try; each one writes nothing to the repo unless `--apply`.
 | `mwccdbg.py` | nothing; shows why a register went where it did | mwcc-debugger wrapper; `mwcc_dump.py` is the older private-mwcc variant |
 | `mwsched.py` | nothing; says why the scheduler kept an instruction pair in our order (dependence chain or pick key), logs every pick and every coalescer move | `explain|log|coalesce UNIT FN [--run]`; needs `mwccdbg.py --trace` (tools/mwccdbg_trace.py, GC/2.6 breakpoints); docs/mwcc_internals.md |
 | `install_mweppc.sh` | `build/mweppc`: CC0 C source of mwcceppc GC/2.0-2.7 at a pinned commit (`--build` needs archive.org) | run by cloud_setup.sh; index in docs/mwcc_internals.md |
+| `mwtrace.py` | nothing; prints the native trace-patched compiler's decisions for one function (vreg numbering, coalescing, colouring order, scheduler DAG and picks) in ~0.1 s | `UNIT FN [--only VREG,COALESCE,COLOR,SNODE,SPICK]`; needs `install_mweppc.sh --build` |
 
 ## Data / TU boundaries
 

@@ -54,6 +54,8 @@ tmp_probe/
 
 # Grind-mode marker for tools/grind_stop_hook.py (created by setup.sh in cloud threads)
 /.grind
+# Written by tools/cloud_setup.sh when setup has finished
+/.setup_done
 
 # Scratch copies left by an interrupted tools/pragmasweep.py / shapesweep.py run
 .psweep_w*

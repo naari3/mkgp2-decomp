@@ -1,0 +1,334 @@
+diff --git a/include/compiler/MwTrace.h b/include/compiler/MwTrace.h
+new file mode 100644
+index 0000000..cf0b695
+--- /dev/null
++++ b/include/compiler/MwTrace.h
+@@ -0,0 +1,103 @@
++/* Decision trace for the native mweppc build (tools/install_mweppc.sh --build).
++ * Not part of upstream mweppc; tools/mweppc_trace/trace.patch adds the calls.
++ * MWCC_TRACE=<file> appends one line per decision; MWCC_TRACE_FN=<linkname>
++ * limits it to one function. Output-neutral: it only writes the trace file. */
++#ifndef MWTRACE_H
++#define MWTRACE_H
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++
++extern char* mwtrace_fn;
++
++static FILE* mwtrace_out(void) {
++    static int init;
++    static FILE* f;
++    const char* want;
++    if (!init) {
++        const char* p = getenv("MWCC_TRACE");
++        init = 1;
++        if (p && *p) {
++            f = fopen(p, "a");
++        }
++    }
++    if (!f || !mwtrace_fn) {
++        return NULL;
++    }
++    want = getenv("MWCC_TRACE_FN");
++    if (want && *want && strcmp(want, mwtrace_fn) != 0) {
++        return NULL;
++    }
++    return f;
++}
++
++#define MWTRACE(...)                              \
++    do {                                          \
++        FILE* mwtrace_f_ = mwtrace_out();         \
++        if (mwtrace_f_) {                         \
++            fprintf(mwtrace_f_, __VA_ARGS__);     \
++            fflush(mwtrace_f_);                   \
++        }                                         \
++    } while (0)
++
++
++#include "compiler/PCode.h"
++#include "compiler/PCodeInfo.h"
++#include "compiler/objects.h"
++
++/* "op a,b,c": registers as r/f/v/c<num> (+ "!" when written), immediates,
++   memory offsets with their object, labels as L. */
++static void mwtrace_insn(FILE* f, PCode* pc) {
++    int i;
++    fprintf(f, "%s", opcodeinfo[pc->op].name);
++    for (i = 0; i < pc->argCount; i++) {
++        PCodeArg* a = &pc->args[i];
++        fputc(i ? ',' : ' ', f);
++        switch (a->kind) {
++            case PCOp_REGISTER:
++                fprintf(f, "%c%d%s",
++                    a->arg == RegClass_GPR ? 'r' : a->arg == RegClass_FPR ? 'f' : a->arg == RegClass_CRFIELD ? 'c' : 's',
++                    a->data.reg.reg, (a->data.reg.effect & EffectWrite) ? "!" : "");
++                break;
++            case PCOp_IMMEDIATE:
++                fprintf(f, "%ld", (long)a->data.imm.value);
++                if (a->data.imm.obj && a->data.imm.obj->name) {
++                    fprintf(f, "(%s)", a->data.imm.obj->name->name);
++                }
++                break;
++            case PCOp_MEMORY:
++                fprintf(f, "%ld", (long)a->data.mem.offset);
++                if (a->data.mem.obj && a->data.mem.obj->name) {
++                    fprintf(f, "(%s)", a->data.mem.obj->name->name);
++                }
++                break;
++            case PCOp_LABEL:
++                fprintf(f, "L");
++                break;
++            default:
++                fprintf(f, "_");
++                break;
++        }
++    }
++}
++
++
++/* every block's PCode, one insn per line: "PCODE <tag> B<block> <srcoffset> <insn>" */
++static void mwtrace_pcode(const char* tag) {
++    FILE* f = mwtrace_out();
++    PCodeBlock* b;
++    PCode* pc;
++    if (!f) {
++        return;
++    }
++    for (b = pcbasicblocks; b; b = b->nextBlock) {
++        for (pc = b->firstPCode; pc; pc = pc->nextPCode) {
++            fprintf(f, "PCODE %s B%d %ld ", tag, (int)b->blockIndex, (long)pc->sourceoffset);
++            mwtrace_insn(f, pc);
++            fputc('\n', f);
++        }
++    }
++    fflush(f);
++}
++
++#endif
+diff --git a/src/compiler/backend/CodeGen.c b/src/compiler/backend/CodeGen.c
+index d0696ab..dd308f5 100644
+--- a/src/compiler/backend/CodeGen.c
++++ b/src/compiler/backend/CodeGen.c
+@@ -50,6 +50,16 @@
+ #include "driver/CCompiler.h"
+ #include <stdio.h>
+ #include <string.h>
++#include "compiler/MwTrace.h"
++
++char* mwtrace_fn;
++
++static void mwtrace_vreg(const char* kind, Object* obj) {
++    VarInfo* vi = Registers_GetVarInfo(obj);
++    if (vi->flags & VarInfoFlag_InReg) {
++        MWTRACE("VREG %s %c%d %s\n", kind, vi->rclass == RegClass_FPR ? 'f' : 'r', vi->reg, obj->name ? obj->name->name : "?");
++    }
++}
+ 
+ static Macro powcM;
+ static Macro __powcM;
+@@ -300,6 +310,7 @@ static void allocate_local_vregs(void) {
+         if (vi->used && !vi->noregister) {
+             if (!OBJ_GET_TARGET_VOLATILE(obj) && !vi->reg) {
+                 assign_register_by_type(obj);
++                    mwtrace_vreg("exception", obj);
+             }
+         }
+     }
+@@ -313,6 +324,7 @@ static void allocate_local_vregs(void) {
+         if (vi->used && !vi->noregister) {
+             if (!OBJ_GET_TARGET_VOLATILE(obj) && !vi->reg) {
+                 assign_register_by_type(obj);
++                    mwtrace_vreg("argument", obj);
+             }
+         }
+     }
+@@ -325,6 +337,7 @@ static void allocate_local_vregs(void) {
+             if (vi->used && !vi->noregister) {
+                 if (!OBJ_GET_TARGET_VOLATILE(obj) && !vi->reg) {
+                     assign_register_by_type(obj);
++                    mwtrace_vreg("local", obj);
+                 }
+             }
+         }
+@@ -340,6 +353,7 @@ static void allocate_local_vregs(void) {
+             if (vi->used && !vi->noregister) {
+                 if (!OBJ_GET_TARGET_VOLATILE(obj) && !vi->reg) {
+                     assign_register_by_type(obj);
++                    mwtrace_vreg("temp", obj);
+                 }
+             }
+         }
+@@ -351,6 +365,7 @@ static void allocate_local_vregs(void) {
+ 
+         if (!vi->reg && vi->used && vi->usage > 1) {
+             assign_register_by_type(obj);
++                    mwtrace_vreg("toc", obj);
+         }
+     }
+ }
+@@ -1291,6 +1306,8 @@ void CodeGen_Generator(
+     }
+ 
+     gFunction = func;
++    mwtrace_fn = CMangler_GetLinkName(func)->name;
++    MWTRACE("FN %s\n", mwtrace_fn);
+     has_varargs = has_vararglist(func);
+     init_endian();
+     init_stack_globals(func);
+@@ -1490,7 +1507,9 @@ void CodeGen_Generator(
+         }
+     }
+ 
++    mwtrace_pcode("pre");
+     colorinstructions(func);
++    mwtrace_pcode("post");
+     if (copts.debuglisting) {
+         pclistblocks(CMangler_GetLinkName(func)->name, "AFTER REGISTER COLORING");
+     }
+diff --git a/src/compiler/backend/Coloring.c b/src/compiler/backend/Coloring.c
+index 822c848..5e5985f 100644
+--- a/src/compiler/backend/Coloring.c
++++ b/src/compiler/backend/Coloring.c
+@@ -12,6 +12,7 @@
+ #include "compiler/SpillCode.h"
+ #include "compiler/StackFrame.h"
+ #include <float.h>
++#include "compiler/MwTrace.h"
+ 
+ RegClass coloring_class;
+ static short used_regs_before_coloring;
+@@ -211,6 +212,15 @@ static int colorgraph(IGNode* node) {
+             }
+         }
+ 
++        if (mwtrace_out()) {
++            MWTRACE("COLOR %c %d -> %d%s cost=%d name=%s nb=", coloring_class == RegClass_FPR ? 'f' : 'r', node->reg,
++                node->color, (node->flags & fSpilled) ? " spilled" : "", node->spillCost,
++                (node->spillTemporary && node->spillTemporary->name) ? node->spillTemporary->name->name : "-");
++            for (i = 0; i < node->arraySize; i++) {
++                MWTRACE("%s%d", i ? "," : "", node->array[i]);
++            }
++            MWTRACE("\n");
++        }
+         node = node->next;
+     }
+ 
+@@ -296,6 +306,20 @@ void colorinstructions(Object* proc) {
+                 buildinterferencegraph(proc);
+                 markspecialregisters(rclass);
+                 spilled = !colorgraph(simplifygraph());
++                if (mwtrace_out()) {
++                    UInt32 k;
++                    int j;
++                    for (k = n_real_registers[rclass]; k < (UInt32)used_virtual_registers[rclass]; k++) {
++                        IGNode* g = interferencegraph[k];
++                        MWTRACE("IGNODE %c %d -> %d flags=%d cost=%d name=%s nb=", rclass == RegClass_FPR ? 'f' : 'r',
++                            g->reg, g->color, g->flags, g->spillCost,
++                            (g->spillTemporary && g->spillTemporary->name) ? g->spillTemporary->name->name : "-");
++                        for (j = 0; j < g->arraySize; j++) {
++                            MWTRACE("%s%d", j ? "," : "", g->array[j]);
++                        }
++                        MWTRACE("\n");
++                    }
++                }
+ 
+                 if (spilled) {
+                     insertspillcode();
+diff --git a/src/compiler/backend/InterferenceGraph.c b/src/compiler/backend/InterferenceGraph.c
+index b6fc696..d5440d4 100644
+--- a/src/compiler/backend/InterferenceGraph.c
++++ b/src/compiler/backend/InterferenceGraph.c
+@@ -11,6 +11,7 @@
+ #include "compiler/PCodeUtilities.h"
+ #include "compiler/RegisterInfo.h"
+ #include "compiler/Registers.h"
++#include "compiler/MwTrace.h"
+ 
+ IGNode** interferencegraph;
+ static UInt32* interferencematrix;
+@@ -195,6 +196,29 @@ static void coalescenodes(void) {
+                 if (PC_OP_IS_ANY_REGISTER(&instr->args[0], coloring_class)) {
+                     path1 = coalesced_path(instr->args[0].data.reg.reg);
+                     path2 = coalesced_path(instr->args[1].data.reg.reg);
++                    if (mwtrace_out()) {
++                        const char* why;
++                        if (path1 == path2) {
++                            why = "same";
++                        } else if (interferes(path1, path2)) {
++                            why = "interfere";
++                        } else if (path1 >= n_real_registers[coloring_class] &&
++                                   path2 >= n_real_registers[coloring_class] &&
++                                   !(path1 >= first_fe_temporary_register[coloring_class] &&
++                                     path1 <= last_temporary_register[coloring_class] &&
++                                     path2 >= first_fe_temporary_register[coloring_class] &&
++                                     path2 <= last_temporary_register[coloring_class])) {
++                            why = "named";
++                        } else {
++                            why = "merge";
++                        }
++                        MWTRACE("COALESCE %c %d <- %d first_temp=%d last_temp=%d %s off=%ld ",
++                            coloring_class == RegClass_FPR ? 'f' : 'r', path1, path2,
++                            first_fe_temporary_register[coloring_class], (int)last_temporary_register[coloring_class],
++                            why, (long)instr->sourceoffset);
++                        mwtrace_insn(mwtrace_out(), instr);
++                        MWTRACE("\n");
++                    }
+                     if (path1 == path2) {
+                         deletepcode(instr);
+                         continue;
+diff --git a/src/compiler/backend/Scheduler.c b/src/compiler/backend/Scheduler.c
+index 524e350..46e2357 100644
+--- a/src/compiler/backend/Scheduler.c
++++ b/src/compiler/backend/Scheduler.c
+@@ -6,6 +6,7 @@
+ #include "compiler/PCode.h"
+ #include "compiler/PCodeInfo.h"
+ #include "compiler/Registers.h"
++#include "compiler/MwTrace.h"
+ 
+ #pragma pack(2)
+ typedef struct DGNode {
+@@ -479,6 +480,28 @@ static void scheduleblock(PCodeBlock* block) {
+     }
+ 
+     computedeadlines(head);
++    if (mwtrace_out()) {
++        DGNode* n;
++        DGSuccessor* s;
++        int k = 0;
++        MWTRACE("SBLOCK %s critical=%d\n", coloring ? "pre-RA" : "post-RA", criticalpath);
++        for (n = head; n; n = n->next) {
++            MWTRACE("SNODE %d lat=%d height=%d latest=%d preds=%d off=%ld ", k, n->latency, n->height, n->latest,
++                n->predCount, (long)n->instr->sourceoffset);
++            mwtrace_insn(mwtrace_out(), n->instr);
++            MWTRACE(" succ=");
++            for (s = n->successors; s; s = s->next) {
++                DGNode* m;
++                int idx = 0;
++                for (m = head; m && m != s->node; m = m->next) {
++                    idx++;
++                }
++                MWTRACE("%d:%d%s", idx, s->latency, s->next ? "," : "");
++            }
++            MWTRACE("\n");
++            k++;
++        }
++    }
+     block->firstPCode = block->lastPCode = NULL;
+     block->pcodeCount = 0;
+ 
+@@ -494,6 +517,12 @@ static void scheduleblock(PCodeBlock* block) {
+             if (!node) {
+                 break;
+             }
++            if (mwtrace_out()) {
++                MWTRACE("SPICK %d.%d ", counter, i);
++                mwtrace_insn(mwtrace_out(), node->instr);
++                MWTRACE(" crit=%d unc=%d height=%d rank=%d\n", node->latest <= counter, uncovering(node), node->height,
++                    opcodeinfo[node->instr->op].rank);
++            }
+ 
+             instr = node->instr;
+             if (node->successors) {

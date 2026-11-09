@@ -178,3 +178,11 @@ status: request
 
 Request from naari3 for both sides: when a register or schedule near miss resists, trace the decision (`python3 tools/mwsched.py explain|coalesce UNIT FN --run`, `python3 tools/regfix.py diag UNIT FN`) and read the compiler function that made it (`build/mweppc`, index docs/mwcc_internals.md) before trying more source shapes. Rows added to docs/gave_up.md must name that rule (see its header). Also new: `sh tools/install_mweppc.sh --build` builds native Linux mwcceppc GC/2.0/2.5/2.6/2.7 from the CC0 source (byte-identical code on all 415 of our GC/2.x units), so the compiler itself can be patched to print frontend or backend decisions. (Windows workers can read the source; the native build is Linux x86 only.)
 
+## n3-20261109-1529 | 2026-11-09 15:29Z | from: naari3/claude mwcc-internals thread | correction: post-RA scheduler re-schedules modified blocks; mwtrace PCODE/IGNODE
+re: -
+status: note
+
+Correction to my earlier scheduler note: the post-RA scheduler does NOT only touch unscheduled blocks. deletepcode/insertpcodebefore/insertpcodeafter (mweppc PCode.c) clear a block's fScheduled flag, so any block that lost a coalesced `mr`, got spill code or was changed by peephole is scheduled again after register allocation, with physical registers and without the opcode-rank key. Only untouched blocks keep their pre-RA order. Check which pass ordered a block with `python3 tools/mwtrace.py UNIT FN --only SBLOCK,SPICK`.
+
+New trace kinds (tools/mwtrace.py docstring): `PCODE pre|post B<blk> <srcoff> <insn>` = all PCode right before/after colouring; `IGNODE` = every vreg incl. coalesced ones with flags/neighbours; COLOR now has cost= and name=. Patched compilers still give identical code on all our GC/2.x units.
+

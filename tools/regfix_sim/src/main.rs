@@ -21,6 +21,7 @@ struct Class {
     want: Vec<i32>,
     nb: Vec<Vec<usize>>,
     locals: Vec<(usize, usize)>, // (node, nameid)
+    cost: Vec<f64>,              // spill cost (dump `cost:`), for the stuck-simplify pick
 }
 
 const K_GPR: i32 = 29;
@@ -52,7 +53,19 @@ impl Class {
                 }
             }
             if !prog {
-                let v = *sorted.iter().find(|&&v| !removed[v]).unwrap();
+                // MWCC pushes the cheapest spill candidate: lowest cost/degree, ties -> lowest key
+                let mut v = usize::MAX;
+                let mut best = f64::INFINITY;
+                for &u in sorted.iter() {
+                    if removed[u] {
+                        continue;
+                    }
+                    let c = self.cost.get(u).copied().unwrap_or(0.0) / (deg[u].max(1) as f64);
+                    if c < best {
+                        best = c;
+                        v = u;
+                    }
+                }
                 removed[v] = true;
                 order.push(v);
                 for &x in &self.nb[v] {
@@ -155,7 +168,7 @@ fn main() {
             "tlimit" => tlimit = t[1].parse().unwrap(),
             "names" => names = t[1..].iter().map(|x| x.parse().unwrap()).collect(),
             "free" => free = t[1..].iter().map(|x| x.parse().unwrap()).collect(),
-            "class" => cls.push(Class { gpr: t[1] == "gpr", key: vec![], permn: vec![], fixed: vec![], want: vec![], nb: vec![], locals: vec![] }),
+            "class" => cls.push(Class { gpr: t[1] == "gpr", key: vec![], permn: vec![], fixed: vec![], want: vec![], nb: vec![], locals: vec![], cost: vec![] }),
             "node" => {
                 let c = cls.last_mut().unwrap();
                 let i: usize = t[1].parse().unwrap();
@@ -171,6 +184,14 @@ fn main() {
                 c.fixed[i] = t[4].parse().unwrap();
                 c.want[i] = t[5].parse().unwrap();
                 c.nb[i] = t[6..].iter().map(|x| x.parse().unwrap()).collect();
+            }
+            "cost" => {
+                let c = cls.last_mut().unwrap();
+                let i: usize = t[1].parse().unwrap();
+                while c.cost.len() <= i {
+                    c.cost.push(0.0);
+                }
+                c.cost[i] = t[2].parse().unwrap();
             }
             "local" => {
                 let c = cls.last_mut().unwrap();
