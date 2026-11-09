@@ -345,8 +345,8 @@ void fn_80283154(void) {
     int command;
     u8 status[16];
     int i, j, k, pos, count;
-    u8 node, commandIndex;
     int bank;
+    u8 node, commandIndex;
     u8 sum;
     u8* p;
     u8* out;
@@ -437,15 +437,17 @@ void fn_80283154(void) {
                     break;
                 }
                 for (commandIndex = 0; commandIndex < cmd.req[bank][node].n; commandIndex++) {
+                    u32 replyStatus;
                     p = cmd.req[bank][node].reply[commandIndex];
-                    if (p[0] == 1) {
+                    replyStatus = p[0];
+                    if (replyStatus == 1) {
                         switch (cmd.req[bank][node].cmd[commandIndex]) {
                         case 0x20: cmd.node[node].unkAC = p + 1; break;
                         case 0x21: cmd.node[node].unkB0 = p + 1; break;
                         case 0x22: cmd.node[node].unkB4 = p + 1; break;
                         case 0x23: cmd.node[node].unkB8 = p + 1; break;
-                        case 0x24: cmd.node[node].unkC0 = p + 1; break;
                         case 0x25: cmd.node[node].unkBC = p[1]; break;
+                        case 0x24: cmd.node[node].unkC0 = p + 1; break;
                         case 0x26: cmd.node[node].unkC4 = p + 1; break;
                         case 0x10:
                             out = &cmd.node[node].unk0;
@@ -490,7 +492,7 @@ void fn_80283154(void) {
                                 cmd.queue[cmd.qwr].node = node;
                                 cmd.queue[cmd.qwr].cmd = c;
                                 cmd.queue[cmd.qwr].err = 0x20;
-                                cmd.queue[cmd.qwr++].pad = p[0];
+                                cmd.queue[cmd.qwr++].pad = replyStatus;
                             }
                         } else {
                             u8 c = cmd.req[bank][node].cmd[commandIndex];
