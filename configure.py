@@ -1021,7 +1021,7 @@ config.libs = [
             Object(Matching, "game/GameSetting.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/GameTestTopMenu_Page.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/clFlowCup.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
-            Object(Matching, "game/clFlowRound.c", extab_padding=b"\x00\x00", extra_cflags=["-lang=c++", "-use_lmw_stmw on", "-Cpp_exceptions on", "-inline deferred", "-RTTI on", "-rostr"]),
+            Object(Matching, "game/clFlowRound.c", extab_padding=b"\x00\x00", extra_cflags=["-lang=c++", "-use_lmw_stmw on", "-Cpp_exceptions on", "-inline deferred", "-RTTI on", "-rostr"], mw_version="GC/2.6"),
             Object(Matching, "game/clFlowItemSelect_CommitSlotAnim.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clFlowItemSelect_Draw.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/clFlowItemSelect_Update.c", extab_padding=b"\x00\x00"),

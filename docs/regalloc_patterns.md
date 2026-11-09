@@ -830,6 +830,26 @@ function: `lwzu r0,4(rN)` on a table field comes from using
 `table[mode].id` directly at every use (CSE pointer temp), not from a named
 pointer local. Rule: `shared-local-into-inline`.
 
+## 42. `x = new T(args)` vs `x = Alloc(); if (x) ctor(x, args)`, and three small shape levers (clFlowRound_Update, 11-09)
+
+clFlowRound_Update went from 243 differing lines to 0 with these, no pragma:
+
+- **new-expression.** A hand-expanded `p = Alloc(0x30); if (p) Sprite_InitWithAnim(p, ...)` stored into a
+  member gives the result a backend temp that is coloured early. The real `self->slots[j].spr = new Sprite(anim, 0, 0)`
+  gives a temp that is coloured late, and that moved `self` to r31 and shifted every saved register into place.
+  Symptom: the pool base or a loop pointer holds r31 and `self` sits several registers lower. If the view struct
+  lives in a namespace, write `(T *)new ::Sprite(...)` so the ctor symbol stays the global one.
+- **for-scope counters.** `for (int i = 0; ...)` in each loop instead of one function-level `int i` (C++ scoping
+  gives each loop its own vreg, declared later = lower number).
+- **`a - -b`** compiles to `fadds a,b` in source order. `a + b` and `b + a` both get canonicalised the other way.
+  Fakematch; use it only for the last operand-order line.
+- **switch value reused after the switch.** Target `beq +8; b L+4` where L is `lwz r0,N(self)` and the branch
+  lands on the compare after it: the source is `next = self->st; switch (next) { case -1: ...; next = self->st; break; }
+  if (next != -1)`. objdiff shows this only as a 99.99% branch-target diff.
+
+Diagnostic used: `#pragma opt_lifetimes off` cut the diff 243 -> 82, which showed that one more level-1 node
+interfering with `self` was all that was missing. The pragma is not in the final source.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
