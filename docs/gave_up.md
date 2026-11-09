@@ -399,3 +399,15 @@ Landed: b788065 (dtor_801F8214 owns the 801F8214..801F89F0 group, fn_801F894C 10
 | Unit(s) | Finding |
 |---|---|
 | clFlowCourse.cpp (`clFlowCourse_Init` 98.41, `clFlowCourse_Dtor` 99.62) | Target loads the .data anchor `lbl_8049B1E0` at entry and stores the vtable as `addi r0, r30, 0x1D4` (vtable 0x8049B3B4 = anchor + 0x1D4). Probes (GC/1.2.5, 1.3.2, 2.0, 2.6): MWCC NEVER addresses a vtable through the section anchor, also not a weak or unnamed-namespace one; and the anchor itself only appears once the fn touches 3 defined internal objects (2 are not enough). So the target vtable at 0x8049B3B4 must be an ordinary data object (manual table), not a compiler vtable. The data 0x8049B1E0..0x8049B4A8 (pool, typeinfo 3A8, vtable 3B4, then the jumptables of fn_801CE800 / fn_801CEB78 / clFlowCourse_Update / clFlowCourse) says 0x801CE800..0x801D1800 was one TU, with fn_801CE918/EB78/Update reaching 1E0/348/388 by their own symbols (declared extern before the definitions). Not merged: the vtable anchor is not reproducible with real C++. |
+
+own_data batches (same thread): batch 1+2 tried the 39 largest candidates that were onmokoworks-claimed on 11/08
+(landed 1c704c9, 2dd34c8, 82b1ef1, fc2a159, 4686689, +14 KB). Left, with the reason:
+
+| Unit(s) | Blocker |
+|---|---|
+| misc3d fn_80167DDC / fn_80167F24 / fn_801680A0 / fn_80168B90, EffectFA_Update, test-menu pages (NetDiag_*, Stats_Display_UI, GameTestTopMenu_Page, MonitorTest_Page, ...) | link-order cycle with a neighbour that already owns data (merge needed) |
+| TornadoItem.c | `const` tables compile into .data (C TU with inline-asm fragments) |
+| Profiler_DrawBar.c | .rodata ends at 0x802E9C4A: gap_ symbol out of section bounds |
+| ItemEffectBus, RaceHud_80147470, CardTaskChecks, CardRW_TestTopMenu_Page, AI_GetItemList, RaceScene_Init, Scene_80164614, Scene_8014E0C4, NetDiag_PacketRatioPage | TU already has that section; the new run is adjacent or split: extend the range by hand, objects in address order |
+| VSMode_FrameUpdate, ItemHitRegistry, fn_801F9628, CollisionFile_Load, FlowDispatcher_ScopedTimer, clFlowItemSelect_Init, anon_8020F44C, fn_801807E0, CardCreditFlow, PushPrompt | typed / struct declarations in the TU (data2c emits words): hand-type the objects |
+| 63 smaller candidates (8.7 KB in all, `own_data.py list`) | not tried |
