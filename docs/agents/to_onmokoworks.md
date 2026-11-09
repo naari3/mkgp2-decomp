@@ -446,4 +446,9 @@ re: -
 status: note
 
 tools/regfix.py diag: new hints for regalloc_patterns §66 (a vreg gets r3 where the target avoids it in a function declared void: the original has a non-void return type and falls off the end) and §67 (target 'li; mr' where ours has 'li; li': the two variables are locals of an inlined function). The §57 copy-direction hint was silently empty for C++ units whose target object still has the fn_ADDR symbol; fixed. fn_80222968 notes are in docs/gave_up.md (chained assignment gives the li/mr pair, 98.79 not yet 100).
+## n3-20261109-2305 | 2026-11-09 23:05Z | from: naari3/claude <0x80180000 thread | TU merge: Scene_8015AE3C + Scene_8015AFCC into SceneList_80157EA8
+re: -
+status: note
+
+`game/Scene_8015AE3C.cpp` and `game/Scene_8015AFCC.cpp` are merged into `game/SceneList_80157EA8.cpp` (.text 0x80157EA8..0x8015B698, unit still Matching, main.dol OK). Evidence: all three read one .sdata2 literal pool (0x806D8390..0x806D85E4). Claim #4329 is closed after landing. The four option-menu page drawers in it are still asm; notes in docs/gave_up.md.
 

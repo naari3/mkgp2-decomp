@@ -5751,7 +5751,17 @@
     "extab_fn_80159BD0": "@etb_8000F188",
     "extabindex_fn_80159BD0": "@eti_80025964",
     "extab_fn_8015A6E4": "@etb_8000F190",
-    "extabindex_fn_8015A6E4": "@eti_80025970"
+    "extabindex_fn_8015A6E4": "@eti_80025970",
+    "__ct__13Scene8015AFCCFv": "fn_8015AFCC",
+    "__vt__13Scene8015AFCC": "lbl_8049003C",
+    "__vt__15SelectSceneBase": "lbl_803FE0C8",
+    "__dt__15SelectSceneBaseFv": "dtor_8007D0D4",
+    "__ct__11SelectBadgeFv": "fn_8013EAFC",
+    "__ct__12SelectPromptFv": "fn_8013E14C",
+    "__ct__10SelectItemFi": "fn_8013E6F8",
+    "__ct__12SelectDriverFii": "fn_8013CC24",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/DNBress.cpp": {
     "__nwa__FUl": "FUN_8003b120",
@@ -11271,18 +11281,6 @@
   "src/game/Scene_8015BCC4.cpp": {
     "__ct__13ViewerScene3DFUi": "Scene3D_Init",
     "__ct__14ViewerNormal3DFUii": "clNormal3D_Construct",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
-  },
-  "src/game/Scene_8015AFCC.cpp": {
-    "__ct__13Scene8015AFCCFv": "fn_8015AFCC",
-    "__vt__13Scene8015AFCC": "lbl_8049003C",
-    "__vt__15SelectSceneBase": "lbl_803FE0C8",
-    "__dt__15SelectSceneBaseFv": "dtor_8007D0D4",
-    "__ct__11SelectBadgeFv": "fn_8013EAFC",
-    "__ct__12SelectPromptFv": "fn_8013E14C",
-    "__ct__10SelectItemFi": "fn_8013E6F8",
-    "__ct__12SelectDriverFii": "fn_8013CC24",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
   },

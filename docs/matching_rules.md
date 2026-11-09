@@ -32,6 +32,10 @@ below say the same thing.
   non-void return type) and §67 (target `li; mr` vs ours `li; li`: variables
   are locals of an inline); the copy-direction hint (§57) now also works for
   C++ units whose target symbol is still `fn_ADDR`
+- 2026-11-09 23:20Z: `game/Scene_8015AE3C.cpp` and `game/Scene_8015AFCC.cpp` are merged into `game/SceneList_80157EA8.cpp`
+  (.text 0x80157EA8..0x8015B698, still Matching). Evidence: the three shared one .sdata2 literal pool (0x806D8390..0x806D85E4; the next
+  TU restarts with the same 0.7f/0.0f at 0x806D85E8). Shared float literals across adjacent splits = one original TU.
+  The TU cannot own .sdata2 (literals) until its four asm functions are C.
 - 2026-11-09 23:05Z (n3 regfix): regalloc_patterns §65 (new): saved GPRs
   permuted between switch cases = declare the per-case value locals first at
   function scope and the payload pointer as a block local per case; one case's

@@ -5858,20 +5858,10 @@ game/fn_80157DE0.cpp:
 	.text       start:0x80157DE0 end:0x80157EA8
 
 game/SceneList_80157EA8.cpp:
-	extab       start:0x8000F150 end:0x8000F198
-	extabindex  start:0x80025910 end:0x8002597C
-	.text       start:0x80157EA8 end:0x8015AE3C
+	extab       start:0x8000F150 end:0x8000F264
+	extabindex  start:0x80025910 end:0x80025994
+	.text       start:0x80157EA8 end:0x8015B698
 	.rodata     start:0x803678D8 end:0x80367F68
-
-game/Scene_8015AE3C.cpp:
-	extab       start:0x8000F198 end:0x8000F1A0
-	extabindex  start:0x8002597C end:0x80025988
-	.text       start:0x8015AE3C end:0x8015AFCC
-
-game/Scene_8015AFCC.cpp:
-	extab       start:0x8000F1A0 end:0x8000F264
-	extabindex  start:0x80025988 end:0x80025994
-	.text       start:0x8015AFCC end:0x8015B698
 
 game/Scene_8015B698.cpp:
 	extab       start:0x8000F264 end:0x8000F26C
