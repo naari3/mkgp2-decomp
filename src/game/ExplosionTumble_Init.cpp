@@ -1,5 +1,5 @@
-/* NonMatching: 92.81567% text, exact 1736-byte primary size.
- * Rounded quaternion products preserve the target arithmetic.
+/* NonMatching: 93.695854% text, exact 1736-byte primary size.
+ * In-place roots and rounded quaternion products preserve target arithmetic.
  * Vector loads, projection reloads and FPR allocation still differ. */
 #include "game/C7ItemCtorPrivate.h"
 
@@ -18,19 +18,19 @@ struct C7Tumble {
     C7Vec axis;
 };
 struct C7Quat { float x,y,z,w; ~C7Quat() {} };
-static inline float Root(float x) {
+static inline void Root(float& x) {
     volatile float y;
     if(x>lbl_806D27F8) {
         double guess=__frsqrte(x);
         guess=lbl_806D2808*guess*(lbl_806D2810-x*(guess*guess));
         guess=lbl_806D2808*guess*(lbl_806D2810-x*(guess*guess));
         guess=lbl_806D2808*guess*(lbl_806D2810-x*(guess*guess));
-        y=(float)(x*guess); return y;
+        y=(float)(x*guess); x=y;
     }
-    return x;
 }
 static inline void Normalize(C7Vec* v) {
-    float length=Root(v->z*v->z+(v->x*v->x+v->y*v->y));
+    float length=v->z*v->z+(v->x*v->x+v->y*v->y);
+    Root(length);
     if(length<=lbl_806D27F8) { v->z=lbl_806D27F8; v->y=lbl_806D27F8; v->x=lbl_806D27F8; }
     else { float inv=lbl_806D27FC/length; v->x*=inv; v->y*=inv; v->z*=inv; }
 }
@@ -42,9 +42,9 @@ static inline float LengthSquared(float x, float y, float z) {
     return zz+(xx+yy);
 }
 static inline void NormalizeCopy(C7Vec* v, const C7Vec* src) {
-    float x=LengthSquared(src->x,src->y,src->z);
+    float length=LengthSquared(src->x,src->y,src->z);
     *v=*src;
-    float length=Root(x);
+    Root(length);
     if(length<=lbl_806D27F8) {v->z=lbl_806D27F8;v->y=lbl_806D27F8;v->x=lbl_806D27F8;}
     else {float inv=lbl_806D27FC/length;v->x*=inv;v->y*=inv;v->z*=inv;}
 }
