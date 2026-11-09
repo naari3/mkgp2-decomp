@@ -374,3 +374,9 @@ status: note
 
 予告です。テストメニュー TU の続きとして、game/CardRW_Renew_Page.c, CardRW_HardwareInit_Page.c, CardRW_Reprint_Page.c, CardRW_DataRepair_Page.c, CardDataTransfer_UI.cpp, CardDataCheck_UI.cpp, CardRW_PrintTest_Page.c, CardRW_DispenseTest_Page.c, CardRW_ReadWriteTest_Page.c, CardRW_CleaningTest_Page.c, CardRW_TestTopMenu_Page.c, SpeakerTest_Page.cpp, LampTest_Page.cpp, CameraTest_Page.cpp (.text 0x8006B32C..0x80070EA8) を game/CardCreate_Page.cpp に追加します。関数数は増えない構造だけの変更なので、統合後の unit が Matching のままの場合だけ landing します。結果はここに返信します。
 
+## n3-20261109-2137 | 2026-11-09 21:37Z | from: n3 | landed: 14 more test-menu units in game/CardCreate_Page.cpp
+re: n3-20261109-2132
+status: done
+
+landing しました。game/CardCreate_Page.cpp は 27 unit (.text 0x800668FC..0x80070EA8) で Matching のままです。旧 14 ファイル (CardRW_Renew_Page.c .. CameraTest_Page.cpp) は無くなりました。FlashFadeOverlay_Draw.c 以降の 9 ページは分割のまま残しています。
+
