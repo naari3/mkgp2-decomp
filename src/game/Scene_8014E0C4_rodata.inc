@@ -295,13 +295,10 @@ extern const char lbl_80364B64[] = "op_demo_wario_joint";
 extern const char lbl_80364B78[] = "op_demo_monster_joint";
 extern const char lbl_80364B90[] = "op_demo_pacman_joint";
 extern const char lbl_80364BA8[] = "DK_demo_donkey_null_joint";
-extern const unsigned int lbl_80364BC4[35] = {
-    0x444B5F64, 0x656D6F5F, 0x6D617269, 0x6F5F6E75, 0x6C6C5F6A, 0x6F696E74,
-    0x00000000, 0x442DC000, 0x00000002, 0x00000032, 0x01000000, 0x4433C000,
-    0x00000002, 0x00000032, 0x00000000, 0x443B8000, 0x00000003, 0x00000039,
-    0x01000000, 0x4442C000, 0x00000003, 0x00000039, 0x00000000, 0x44480000,
-    0x00000004, 0x00000008, 0x01000000, 0x4451C000, 0x00000004, 0x00000008,
-    0x00000000, 0xBF800000, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000000,
+extern const char lbl_80364BC4[] = "DK_demo_mario_null_joint";
+static const CourseItemEvent lbl_80364BE0[7] = {
+    {695.0f, 2, 50, 1}, {719.0f, 2, 50, 0}, {750.0f, 3, 57, 1}, {779.0f, 3, 57, 0},
+    {800.0f, 4, 8, 1}, {839.0f, 4, 8, 0}, {-1.0f, -1, -1, 0},
 };
 static const unsigned int lbl_80364C50[30] = {
     0x43700000, 0x44900000, 0x43700000, 0x40000000, 0x40000000, 0x00000000,
