@@ -1038,6 +1038,7 @@ SteerMgr::~SteerMgr() {
 
 /* The queue stores eight-byte values in separately allocated blocks. Its
  * block map uses the same circular storage as the neighbouring ring TUs. */
+#define STEERING_RING_INSERT_OPERATORS
 #include "game/SteeringQueueMatchPrivate.h"
 
 extern "C" void *dtor_801E2BD0(SteeringQueue *s, short flag) {
@@ -1122,7 +1123,7 @@ extern "C" unsigned char fn_801E32C8(SteeringQueue *s, unsigned long oldFirst,
             if (remaining <= s->blockSize) {
                 if (s->count) s->first -= n;
                 else s->first = (s->blockSize * (s->blocks.count - 1) - n) / 2;
-                return swapped;
+                break;
             }
             remaining -= s->blockSize;
         } catch (...) {
@@ -1136,6 +1137,7 @@ extern "C" unsigned char fn_801E32C8(SteeringQueue *s, unsigned long oldFirst,
             throw;
         }
     }
+    return swapped;
 }
 
 extern "C" void fn_801E2FD4(SteeringQueue *s, const SteeringQueueValue &value) {
@@ -1270,16 +1272,33 @@ extern "C" void fn_801E3A4C(char *self) {
     fn_801E4524(self + 4, 1, 0);
 }
 
+inline SteeringRingIter &SteeringRingIter::operator+=(unsigned long n) {
+    index += n;
+    unsigned long i = ring->head + index;
+    if (i >= ring->capacity) i -= ring->capacity;
+    ptr = ring->data + i;
+    return *this;
+}
+
+inline SteeringRingIter SteeringRingIter::operator+(unsigned long n) const {
+    SteeringRingIter copy = *this;
+    return copy += n;
+}
+
 static inline SteeringRingIter ResizeEnd(SteeringRing *s) {
     const SteeringRingIter &it = s->end();
     return it;
 }
 
+static inline void QueueResizeGrow(SteeringRing *s, unsigned long n, const int &value) {
+    fn_801E4AF4(s, ResizeEnd(s), n - s->count, value);
+}
+
 extern "C" void fn_801E435C(void *self, unsigned long n, int value) {
     SteeringRing *s = (SteeringRing *)self;
-    if (n > s->count) fn_801E4AF4(s, ResizeEnd(s), n - s->count, value);
+    if (n > s->count) QueueResizeGrow(s, n, value);
     else if (n < s->count) {
-        const SteeringRingIter &first = RingAdvance(s->begin(), n);
+        const SteeringRingIter &first = s->begin() + n;
         fn_801E4824(s, first, ResizeEnd(s));
     }
 }
