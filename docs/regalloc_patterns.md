@@ -1146,3 +1146,24 @@ No codegen pragmas, asm or fakematches were used (onmokoworks's workers are not 
 | `Effect_TwoChildRotate_FromPhase150` | game/EffectRotatePair.cpp | 97.30 | Resolved: FP scratch identities in alpha clamp/phase wrap; addi group and lbz enable scheduling at +0x40/+0x44. | Enable belongs to the group view at +0xC4 (parent +0x190); express access through group, restoring addi-before-lbz, 100%. | 3fc53253 |
 | `fn_8022B278` | game/EnemyFace_nm1.cpp | 97.26 | Resolved GPR partition: target textures/palettes/resources/tluts r31/r30/r29/r28, outer i r27, count n r26, inner k r25. Initial indexed inline helper... | Keep natural textures/palettes/resources/tluts increment order: 100.0%, all owned sections exact. | c928fb29 |
 
+## 46. A loop counter reused by later loops takes the newest saved register: give the later loops block-local counters (TitleCheck_NewClearedRecord_Race, 11-09)
+
+Symptom: register-only diff; the FIRST loop of a variable sits in the lowest saved register
+(ours `li r24,0`, target `li r28,0`), and the same low register is the counter of later,
+unrelated loops (`i` in loops 4 and 5).
+
+Why: `IRO_SplitLifetimes` keeps the name only on the earliest range of a variable; every later
+range is a `SplitOffRange` temp, and temps are coloured before all named locals. `colorgraph`
+gives a node the lowest free saved register already handed out, else a new one (r31 downward).
+With one function-level `i` for loops 4 and 5, the loop-5 range is a temp, is coloured early and
+is the first to allocate r24; the named loop-1 `mode`, coloured late, then finds r24 free and takes
+it. In the target r24 does not exist yet when `mode` is coloured, so it takes r28 (r25..r27 are held
+by j/cur/prev, which must be coloured before it).
+
+Fix: each later loop gets its own block-scoped counter (`{ int i; for (i = 0; ...) }`): a
+single-range named local declared later than everything else, so it is coloured last and is the one
+that allocates the new register. Declare the first loop's counter AFTER the locals whose registers it
+must not take (`int j; int cur; int prev; int mode;`). 12 lines -> 0. Diagnose with
+`tools/mwtrace.py --only COLOR,VREG`: find which node first allocates the low register and whether
+it is a temp (`@9xx` from SplitOffRange) or a named local.
+

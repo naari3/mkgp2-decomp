@@ -1050,11 +1050,10 @@ unsigned char TitleCheck_NewClearedRecord_Race(void)
 {
     PlayerData *pd = &g_playerData;
     int base = pd->b19A == 0 ? 0 : 6;
-    int mode;
-    int i;
     int j;
     int cur;
     int prev;
+    int mode;
 
     for (mode = 0; mode < 2; mode++) {
         cur = 0;
@@ -1104,35 +1103,43 @@ unsigned char TitleCheck_NewClearedRecord_Race(void)
             return 1;
         }
     }
-    for (i = 0; i < 2; i++) {
-        for (j = 0; j < 8; j++) {
-            cur = 0;
-            prev = 0;
-            if (fn_801D5B8C(pd, i, lbl_80326B04[j], 3) == 1) {
-                cur = 1;
-            }
-            if (fn_801D5B8C(&lbl_805D2F40, i, lbl_80326B04[j], 3) == 1) {
-                prev = 1;
-            }
-            if (cur != prev && cur >= 1) {
-                g_stagingTitleId = j + 0xD;
-                return 1;
+    {
+        int i;
+
+        for (i = 0; i < 2; i++) {
+            for (j = 0; j < 8; j++) {
+                cur = 0;
+                prev = 0;
+                if (fn_801D5B8C(pd, i, lbl_80326B04[j], 3) == 1) {
+                    cur = 1;
+                }
+                if (fn_801D5B8C(&lbl_805D2F40, i, lbl_80326B04[j], 3) == 1) {
+                    prev = 1;
+                }
+                if (cur != prev && cur >= 1) {
+                    g_stagingTitleId = j + 0xD;
+                    return 1;
+                }
             }
         }
     }
-    for (i = 0; i < 2; i++) {
-        for (j = 0; j < 8; j++) {
-            cur = 0;
-            prev = 0;
-            if (fn_801D5B8C(pd, i, lbl_80326B04[j], 7) == 1) {
-                cur = 1;
-            }
-            if (fn_801D5B8C(&lbl_805D2F40, i, lbl_80326B04[j], 7) == 1) {
-                prev = 1;
-            }
-            if (cur != prev && cur >= 1) {
-                g_stagingTitleId = j + 0x15;
-                return 1;
+    {
+        int i;
+
+        for (i = 0; i < 2; i++) {
+            for (j = 0; j < 8; j++) {
+                cur = 0;
+                prev = 0;
+                if (fn_801D5B8C(pd, i, lbl_80326B04[j], 7) == 1) {
+                    cur = 1;
+                }
+                if (fn_801D5B8C(&lbl_805D2F40, i, lbl_80326B04[j], 7) == 1) {
+                    prev = 1;
+                }
+                if (cur != prev && cur >= 1) {
+                    g_stagingTitleId = j + 0x15;
+                    return 1;
+                }
             }
         }
     }
