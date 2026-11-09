@@ -103,7 +103,7 @@ template <class T> struct ListImpl {
     ListImpl();
     ~ListImpl() { erase(begin(), end()); }
 
-    iterator begin() { return ++end(); }
+    iterator begin() { return iterator(((Node *)&head)->next); }
     iterator end() { return iterator((Node *)&head); }
     iterator erase(const iterator &first, const iterator &last);
     iterator insert(const iterator &pos, const T &v);

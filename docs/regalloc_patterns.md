@@ -1303,3 +1303,19 @@ void push_back(const T &v) { Node *n = (Node *)&head; insert(iterator(n), v); }
 first changes the stack temps, the second stays a backend temp); the local
 must have the exact type the iterator constructor takes.
 
+## 53. List walker / sentinel saved registers swapped: `begin()` as `iterator(((Node *)&head)->next)` instead of `++end()` (clItemBoxManager_Dtor, 11-09)
+
+Diff: `for (it = l.begin(); it != l.end(); ++it)` gives walker r28 / sentinel
+r29, the target has walker r29 / sentinel r28 (`addi r28,r30,0x14;
+lwz r29,0x18(r30)`). With `begin() { return ++end(); }` the walker starts as
+a copy of the sentinel temp, so the sentinel is the later-numbered value and
+is coloured first. Loading `head.next` directly in `begin()` makes the walker
+independent of the sentinel:
+
+```cpp
+iterator begin() { return iterator(((Node *)&head)->next); }
+```
+
+Same family as section 52 (who names / creates the `&head` value decides the
+saved register). Naming the sentinel in `end()` alone made it worse (50 lines).
+
