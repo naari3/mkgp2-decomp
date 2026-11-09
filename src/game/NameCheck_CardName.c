@@ -3341,13 +3341,13 @@ static inline int extract_two(const NameCode *buf, NameCode *out, int position,
 #define CHECK_PARTS(WITH_SYMBOLS) { NameBool found; int position, length, part; \
     SPLIT_PARTS(WITH_SYMBOLS); \
     PRINT_PARTS(); \
-    for (i = 0; i < 5; i++) { \
+    for (k = 0; k < 5; k++) { \
         memset(first, 0, 12); \
-        strcpy(first, parts[i]); \
+        strcpy(first, parts[k]); \
         DebugPrintf(lbl_806D4750, first); \
         CHECK_WORD(first); \
-        for (k = i + 1; k < 5; k++) { \
-            strcat(first, parts[k]); \
+        for (j = k + 1; j < 5; j++) { \
+            strcat(first, parts[j]); \
             DebugPrintf(lbl_806D4750, first); \
             CHECK_WORD(first); \
         } \
@@ -3380,7 +3380,7 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
     buf[5] = 0;
     CHECK_WORD(buf);
     for (group = 0; group < 10; group++) {
-        for (i = 0; i < 6; i++) { second[i] = 0; first[i] = 0; }
+        for (k = 0; k < 6; k++) { second[k] = 0; first[k] = 0; }
         if (!sCharacterSets[group].second) {
             position = extract_one(buf, first, 0, sCharacterSets[group].first, sCharacterSets[group].first_count);
             extract_one(buf, second, position, sCharacterSets[group].first, sCharacterSets[group].first_count);
@@ -3423,6 +3423,7 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
                 DebugPrintf(sMsgPair, group, open, close);
                 invalid = 0;
                 for (p = open + 1; *p != *close; p++) {
+                    NameBool found;
                     single[0] = *p; single[1] = 0;
                     DebugPrintf(lbl_806D4750, single);
                     found = 0;
@@ -3512,48 +3513,48 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
     }
     CHECK_PARTS(1);
     found = 0;
-    for (i = 0; i < 5; i++) {
+    for (k = 0; k < 5; k++) {
         for (j = 0; j < 81; j++) {
-            if (buf[i] == katakana[j]) { found = 1; break; }
+            if (buf[k] == katakana[j]) { found = 1; break; }
         }
         if (found) break;
     }
-    for (i = 0; i < 5; i++) {
+    for (k = 0; k < 5; k++) {
         for (j = 0; j < 81; j++) {
-            if (buf[i] == hiragana[j]) { found = 1; break; }
+            if (buf[k] == hiragana[j]) { found = 1; break; }
         }
         if (found) break;
     }
     if (!found) {
         count = 0;
-        for (i = 0; i < 5; i++) {
-            for (j = 0; j < 26; j++) if (buf[i] == upper[j]) { count++; break; }
+        for (k = 0; k < 5; k++) {
+            for (j = 0; j < 26; j++) if (buf[k] == upper[j]) { count++; break; }
         }
         if (count >= 2) found = 1;
     }
     if (!found) {
         count = 0;
-        for (i = 0; i < 5; i++) {
-            for (j = 0; j < 26; j++) if (buf[i] == lower[j]) { count++; break; }
+        for (k = 0; k < 5; k++) {
+            for (j = 0; j < 26; j++) if (buf[k] == lower[j]) { count++; break; }
         }
         if (count >= 2) found = 1;
     }
     if (!found) {
         count = 0;
-        for (i = 0; i < 5; i++) {
-            for (j = 0; j < 10; j++) if (buf[i] == digits[j]) { count++; break; }
+        for (k = 0; k < 5; k++) {
+            for (j = 0; j < 10; j++) if (buf[k] == digits[j]) { count++; break; }
         }
         if (count >= 2) found = 1;
     }
     if (found) {
-        for (i = 0; i < 5;) {
+        for (k = 0; k < 5;) {
             for (j = 0; j < 25; j++) {
-                if (buf[i] == symbols[j]) {
-                    for (j = i; j < 5; j++) buf[j] = buf[j + 1];
+                if (buf[k] == symbols[j]) {
+                    for (j = k; j < 5; j++) buf[j] = buf[j + 1];
                     break;
                 }
             }
-            if ((unsigned int)j >= 25) i++;
+            if ((unsigned int)j >= 25) k++;
         }
         {
             int word;
