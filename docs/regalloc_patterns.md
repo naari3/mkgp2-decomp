@@ -1482,3 +1482,43 @@ float ssc = 0.035f * (t = 1.0f - (float)e->subs[j].n / 15.0f);
 straight-line float computation, sort the temps by target register number descending; that is the
 order in which the source must create them.
 
+
+## 59. `lwz rT,4(rF); mr rL,rT` where rT < rF < rL: frontend CSE temps are numbered in reverse discovery order, and the pointer must be a function-scope local declared before the value local (RivalRun_RivalTactics, 11-09)
+
+Symptom (3 diff lines, 1 instruction short): the target has
+
+```
+lwz r4,40(r31)     ; f = self->follower
+lwz r3,4(r4)       ; temp = f->lane
+mr  r5,r3          ; lane = temp
+...
+lwz r0,4(r4)       ; SetLane re-reads f->lane
+cmpwi r0,1
+```
+
+and the build either loads `lane` straight into its register (no `mr`) or puts `f` in r3.
+
+Rules read off `mwccdbg --all --trace`:
+
+- `lane = f->lane` only goes through a temp when the frontend shares the load with a later
+  `f->lane` expression (here the `== 2`, `- 1`, `+ 1` uses). Without a shared use the load
+  goes straight into the named local.
+- Frontend CSE temps are numbered in reverse order of discovery: the group whose second
+  occurrence comes later in the source gets the lower virtual register.
+- Volatiles are coloured highest vreg first, lowest free register first. For r3/r4/r5 the order
+  must be temp > f > lane, so `f` has to be a named local declared BEFORE `lane` at function
+  scope (a block-scope or inline-parameter `f` is a temp numbered above the CSE temp and takes r3).
+- The re-read in the inlined SetLane must not join the shared group (the backend then folds it to
+  `cmpwi r3,1`). Only a different frontend expression kept it: `*(int *)((char *)f + 4) != 1`
+  (fakematch; a getter inline, `self->follower` as the argument and a second SetLane type all
+  lost either the reload or the register order).
+
+```c
+RRPathFollower *f;   /* before lane */
+int lane;
+...
+f = self->follower;
+lane = f->lane;
+... if (*(int *)((char *)f + 4) != 1) { f->lane = 1; f->needsSearch = 1; }   /* fakematch */
+... if (f->lane == 2) lane = f->lane - 1; else lane = f->lane + 1;
+```
