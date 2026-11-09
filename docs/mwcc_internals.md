@@ -73,6 +73,66 @@ frontend temps come out in REVERSE creation order: the last `@N` created gets
 the lowest number (RankingMgr_UpdatePositions: `@99` r34, `@98` r35, `@94`
 r36, ...). `python3 tools/mwtrace.py UNIT FN --only VREG` prints the list.
 
+The full order, lowest number first (GC/2.6, `allocate_local_vregs`, then
+codegen):
+
+1. objects of exception regions;
+2. arguments;
+3. named locals, in REVERSE declaration order (the last declared local gets
+   the lowest number: NameCheck_CardName `j` r33, `i` r34, ... `base` r37);
+4. frontend `@temps`, in REVERSE creation order;
+5. "toc" objects: a section anchor or address used more than once
+   (`...rodata.0`);
+6. backend temps, in code generation order (statement order, and within a
+   statement the order `InstrSelection.c` evaluates operands);
+7. registers created by the backend loop optimiser (CTR counters, strength
+   reduced IVs, hoisted `lis`).
+
+Backend CSE (`ValueNumbering.c`, per extended basic block) creates no
+registers: a CSE'd value keeps the number of its first computation.
+
+Why the number matters: simplify pushes low-degree vregs in ascending order
+and colouring pops them in reverse, so among values live at the same time the
+HIGHER number is coloured FIRST and gets the lower volatile register, or `r31`
+when it needs a saved one.
+
+### Who made each @temp (`mwtrace.py --only TEMPNEW,VREG`)
+
+`TEMPNEW @N caller= outer=` names the compiler function that created each
+temp (labels also use `@N` names; ignore `newlabel`/`statement` rows):
+
+| creator | what it is |
+| --- | --- |
+| `IRO_CommonSubs` | frontend CSE of a repeated expression (a repeated load, `x % 2`, ...) |
+| `SplitOffRange` | a named local with several independent live ranges, split into temps |
+| `CInline_SetupArgsExpression` / `CInline_Expand` | inline function arguments / return value |
+| `LinearizeExpr1`, `GenerateExpr1TempAssignment` | comma / `?:` / call results the IR needs in a temp |
+| `IRO_FindLoops` | loop induction variables and IR loop-invariant hoists |
+| `createfloatconstant` | float literals (become loads from the pool) |
+
+A value that must be numbered AFTER some backend temp therefore must not be
+any of these: it has to be computed by code generation itself, at a point
+after that temp. Working example, fn_801EE36C (3cc4b0e): `previous.x` was
+CSE'd by `IRO_CommonSubs` into `@140` (numbered before every backend temp)
+and coloured after the `0.0125f` constant; the target colours it first. Two
+changes made it a backend temp numbered after the constant: the scale is
+computed before `delta`, and the second use reads `((float*)&self->previous)[0]`
+so the IR optimiser no longer sees two equal loads (backend value numbering
+still merges them, keeping the later first-codegen number).
+
+Open cases with the same root cause, no source shape found yet (11-09):
+
+- clFlowCourse_Dtor: `extra` (named, or IRO CSE `@110`) must be numbered after
+  the backend temps of `selected % 2`. A `?:` would give a codegen result
+  register, but `gen_COND` turns `c ? 4 : 0` with a comparison condition into
+  a branchless select (`TOC_use_isel`, InstrSelection.c `gen_COND`), +1 insn.
+- EffectVfx10_KartTrail_Tick: `item` (named local, r33) must be numbered
+  after the pool anchor, which is a toc object (class 5). Only a backend temp
+  can be, and `item` lives across calls and joins.
+- NameCheck_CardName: the table pointers are `LinearizeExpr1` temps (`@60`,
+  `@61`) and must be numbered after the `lhz` of `cursor[i]`; written directly
+  in the loop, the pointer folds into the load (`add` + `lhz -31560(r3)`).
+
 ## Coalescing (`coalescenodes`)
 
 Walks blocks and instructions in order. For each move `mr a,b` / `fmr a,b`

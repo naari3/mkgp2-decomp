@@ -96,8 +96,9 @@ def symbolize(exe: str, lines: list[str]) -> list[str]:
             return f"{m.group(1)}=-"
         i = bisect.bisect_right(addrs, a) - 1
         return f"{m.group(1)}={names[i].lstrip('_') if i >= 0 else hex(a)}"
-    return [re.sub(r"(caller|outer)=(?:0x)?([0-9a-fA-F]+)", name, l) if l.startswith("TEMPNEW ") else l
-            for l in lines]
+    out = [re.sub(r"(caller|outer)=(?:0x)?([0-9a-fA-F]+)", name, l) if l.startswith("TEMPNEW ") else l
+           for l in lines]
+    return [l for l in out if not (l.startswith("TEMPNEW ") and " caller=newlabel " in l)]  # label names
 
 
 def trace(unit: str, fn: str, obj_out: str | None = None, env: dict | None = None) -> tuple[list[str], str]:
