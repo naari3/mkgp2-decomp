@@ -1,5 +1,6 @@
 #include "game/clFlowCourse.h"
 #include "game/singleton.h"
+#include "game/clFlowCourse_Update_private.h"
 
 /* clFlowCourse_Update, 801CF360..801D0C30 (6352 bytes).
  * Complete state-machine draft, retained as Object(NonMatching).
@@ -117,7 +118,7 @@ void SetSyncTarget(int);
 unsigned char IsSyncReached();
 unsigned char *SyncSlot_GetRecv();
 int GetDisplayBufferIndex();
-unsigned char *PcbSlot_GetByIndex(int);
+CourseRecvSlot *PcbSlot_GetByIndex(int);
 }
 
 static inline InputState *CourseInput() {
@@ -199,9 +200,9 @@ static inline void UpdateRemoteIcons(CourseFlow *self) {
     for (int i = 0; i < 4; i++) {
         if (i != GetDisplayBufferIndex()) {
             int role = g_localPcbRole;
-            if (((PcbSlot_GetByIndex(i)[0] >> 4) & 7) == role) {
+            if (PcbSlot_GetByIndex(i)->HasRole(role)) {
                 CourseLayout *layout;
-                int selected = (PcbSlot_GetByIndex(i)[5] >> 1) & 0x7F;
+                int selected = PcbSlot_GetByIndex(i)->Selection();
                 layout = &lbl_8049B1E0[selected];
                 float x = layout->x;
                 float a;
