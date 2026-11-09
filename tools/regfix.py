@@ -1021,7 +1021,7 @@ def _param_decls(sig):
     return out
 
 
-def extract_moves(st, sw, names, fn, maxn=24):
+def extract_moves(st, sw, names, fn, maxn=24, focus=()):
     """Yield (label, f, si): stmts[i:j] -> `Helper(args);` + static inline Helper."""
     import shapesweep as ss
     L = [ss.render_stmt(s) for s in st.stmts]
@@ -1080,6 +1080,12 @@ def extract_moves(st, sw, names, fn, maxn=24):
         if not occ or nm in params:
             continue
         seeds.append((nm, occ[0], occ[-1] + 1))
+    # no diagnosed named local: seed with the diagnosed statements (temps there)
+    if not seeds and focus:
+        fs = sorted(focus)
+        seeds.append((f"L{fs[0]}", fs[0], fs[-1] + 1))
+        for x in fs[:3]:
+            seeds.append((f"L{x}", x, x + 1))
     tried = set()
     cnt = 0
     for nm, a0, b0 in seeds:
@@ -1347,7 +1353,7 @@ def fix(a, rep0):
             sl = sw.stmt_lines(st)
             foc = {i for i, l in enumerate(sl) if l in lines}
             extra = [] if getattr(st, "prop_off", False) or PROP in (a.pragma or []) else [prop_move(st)]
-            ext = extract_moves(st, sw, names, a.fn) if not a.no_inline else ()
+            ext = extract_moves(st, sw, names, a.fn, focus=foc) if not a.no_inline else ()
             for label, f, si in itertools.chain(extra, ext, boolnorm_moves(st, foc), decl_moves(st, names),
                                                 ss.moves(st, sw.ctx, allowed)):
                 pri = 0 if (si in foc or label.startswith(("declmove", "propoff", "inline", "boolnorm"))) else 1
