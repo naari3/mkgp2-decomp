@@ -13259,6 +13259,7 @@
     "__vt__Q23std11logic_error": "lbl_803F5700",
     "__vt__Q23std12length_error": "lbl_803F56F0",
     "@128": "lbl_803BD228",
+    "@129": "extern:lbl_803BD228",
     "@130": "@etb_800163A0",
     "@131": "@eti_800287B4"
   },
