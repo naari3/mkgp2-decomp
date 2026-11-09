@@ -120,6 +120,19 @@ computed before `delta`, and the second use reads `((float*)&self->previous)[0]`
 so the IR optimiser no longer sees two equal loads (backend value numbering
 still merges them, keeping the later first-codegen number).
 
+Which live range of a named local keeps its name (`IRO_SplitLifetimes`,
+IROUseDef.c): the local's def list is built by prepending, so it starts at the
+LAST def in the function. Ranges are collected starting from the head of that
+list; the first range collected and the LAST range collected keep the named
+variable, every range in between becomes a `SplitOffRange` temp. With three
+loops `for (mode = 0; ...)` that is: loop 3 named, loop 2 temp, loop 1 named
+(the earliest range is always collected last). For loop 1 to become a temp
+too, `mode` needs one more range that starts before loop 1 and survives
+copy propagation and dead-store removal (TitleCheck_NewClearedRecord_Race; a
+`mode = pd->b19A` used once is propagated away, used twice it changes the
+code). Only DLOCALs not live across a call, not volatile and not address-taken
+are split (`usedAtCall`, `noregister`).
+
 Open cases with the same root cause, no source shape found yet (11-09):
 
 - clFlowCourse_Dtor: `extra` (named, or IRO CSE `@110`) must be numbered after
@@ -132,6 +145,12 @@ Open cases with the same root cause, no source shape found yet (11-09):
 - NameCheck_CardName: the table pointers are `LinearizeExpr1` temps (`@60`,
   `@61`) and must be numbered after the `lhz` of `cursor[i]`; written directly
   in the loop, the pointer folds into the load (`add` + `lhz -31560(r3)`).
+  Backend loop optimisation creates new registers only for CTR counts, the
+  divisor of a non-power-of-two step, `lis` of large bounds and strength
+  reduced induction pointers (LoopOptimization.c, StrengthReduction.c), not
+  for a hoisted invariant (it keeps its codegen number). So `converted` can
+  be "late" only as a codegen temp computed in the loop after the `lhz` that
+  does not fold into the load's displacement; no such shape found yet.
 
 ## Coalescing (`coalescenodes`)
 
