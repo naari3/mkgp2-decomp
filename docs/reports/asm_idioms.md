@@ -78,7 +78,7 @@ or $b, $a, $x
 srwi *, $b, 31
 ```
 
-Refs: setup/TIPS.md
+Refs: docs/thread_tips.md
 
 `mcmdVolumeSelect` (65 insns, src/musyx/runtime/synthmacros.c:1136)
 
@@ -107,7 +107,7 @@ cntlzw *, *
 rlwnm *, $o, *, *, *
 ```
 
-Refs: setup/TIPS.md #9
+Refs: docs/thread_tips.md #9
 
 `clItemBoxResponder_IsCmdSlotFree` (5 insns, src/game/clItemBoxResponder_CmdGroup.c:9)
 
@@ -817,7 +817,7 @@ mtctr $b
 bctr
 ```
 
-Refs: setup/TIPS.md gotcha 2
+Refs: docs/thread_tips.md gotcha 2
 
 `long2str` (150 insns, src/MSL_C/printf.c:327)
 
@@ -943,7 +943,7 @@ pool-anchored object at offset 0 (TU owns the pool; often an extra temp) or GC/1
 addi $b, $a, 0x0
 ```
 
-Refs: setup/TIPS.md section-anchor
+Refs: docs/thread_tips.md section-anchor
 
 `OSSaveFPUContext` (2 insns, src/dolphin/os/OSContext.c:191)
 

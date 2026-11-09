@@ -1,0 +1,8 @@
+{"t": "2026-11-08T06:09:49.351526Z", "who": "gaveup-retry", "op": "take", "id": "Q184"}
+{"t": "2026-11-08T06:48:57.174940Z", "who": "gaveup-retry", "op": "park", "id": "Q184", "note": "4c4e90a9 owns PodiumPose .rodata (anchor solved); C ctor 13 FPR insns off in pos/rot copy, draft notes/gaveup-retry/PodiumPose_PoseChar_ctor_13insn.c"}
+{"t": "2026-11-08T06:49:28.895757Z", "who": "gaveup-retry", "op": "take", "id": "Q186"}
+{"t": "2026-11-08T07:13:34.466409Z", "who": "gaveup-retry", "op": "park", "id": "Q186", "note": "489e672c owns KartPreview .rodata (anchor solved); C ctor 59 lines (early return + anim loop IV), draft notes/gaveup-retry/KartPreview_ctor_pooled_draft.c"}
+{"t": "2026-11-08T07:18:21.323194Z", "who": "gaveup-retry", "op": "take", "id": "Q185"}
+{"t": "2026-11-08T07:54:08.890550Z", "who": "gaveup-retry", "op": "park", "id": "Q185", "note": "1 insn short (f->lane reload in SetLane(f,1) branch); draft notes/gaveup-retry/RivalRun_RivalTactics_1insn.c; cperm 57k iters no gain"}
+{"t": "2026-11-08T08:15:16.911455Z", "who": "gaveup-retry", "op": "take", "id": "N2fe404"}
+{"t": "2026-11-08T08:15:32.171562Z", "who": "gaveup-retry", "op": "done", "id": "N2fe404", "note": "e263a5ca", "force": true}

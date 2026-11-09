@@ -1,0 +1,21 @@
+diff --git a/tools/extab_user_renames.json b/tools/extab_user_renames.json
+index ebe7d30..9837292 100644
+--- a/tools/extab_user_renames.json
++++ b/tools/extab_user_renames.json
+@@ -1369,8 +1369,6 @@
+     "extabindex_RivalRun_CalcPathDistance": "@eti_80024BE4",
+     "extab_RivalRun_Destroy": "@etb_8000D044",
+     "extabindex_RivalRun_Destroy": "@eti_80024BF0",
+-    "extab_RivalRun_RivalInit": "@etb_8000D1E8",
+-    "extabindex_RivalRun_RivalInit": "@eti_80024C08",
+     "__ct__8RivalRunFv": "RivalRun_Init",
+     "__ct__12GameModeBaseFv": "GameMode_BaseInit",
+     "__dt__8ModeBaseFv": "dtor_80122FD8",
+@@ -1382,6 +1380,7 @@
+     "__ct__13RIPathManagerFiPvPvPfPfPf": "PathManager_Init",
+     "__ct__13RICollCheckerFv": "fn_802090A8",
+     "__ct__7RIRivalFP13RIPathManageriPv": "RivalRun_RivalInit",
++    "__ct__14RIPathFollowerFP5RIVec": "RivalRun_PathFollowerInit",
+     "__ct__13RILakituStartFPCvifff": "LakituStart_Init",
+     "__ct__9RIScene3DFi": "Scene3D_Init",
+     "__ct__12RIGoalCameraFv": "ChallengeGoalCamera_Init",

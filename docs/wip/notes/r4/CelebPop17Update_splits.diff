@@ -1,0 +1,12 @@
+diff --git a/config/GNLJ82/splits.txt b/config/GNLJ82/splits.txt
+index ea03da9..d2616ab 100644
+--- a/config/GNLJ82/splits.txt
++++ b/config/GNLJ82/splits.txt
+@@ -3518,6 +3518,7 @@ game/CelebPop17Update.cpp:
+ 	extab       start:0x8000A610 end:0x8000A618
+ 	extabindex  start:0x80022A9C end:0x80022AA8
+ 	.text       start:0x800B0C0C end:0x800B0FA4
++	.rodata     start:0x80328EB8 end:0x80329908
+ 
+ game/CharaPop12_SpawnAll.c:
+ 	extab       start:0x8000A618 end:0x8000A620

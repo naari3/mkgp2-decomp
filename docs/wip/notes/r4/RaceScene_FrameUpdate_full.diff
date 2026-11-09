@@ -1,0 +1,234 @@
+diff --git a/config/GNLJ82/symbols.txt b/config/GNLJ82/symbols.txt
+index a14e644..a9f1fec 100644
+--- a/config/GNLJ82/symbols.txt
++++ b/config/GNLJ82/symbols.txt
+@@ -38540,8 +38540,7 @@ g_lakituDropOrderIssued = .sbss:0x806D1370; // type:object size:0x1 data:byte
+ g_raceRenderTarget = .sbss:0x806D1374; // type:object size:0x4 data:4byte
+ g_raceSceneContextSwitch = .sbss:0x806D1378; // type:object size:0x4 data:4byte
+ g_fullThrottleHoldFlag = .sbss:0x806D137C; // type:object size:0x1 data:byte
+-g_prevFrameTimestampHi = .sbss:0x806D1380; // type:object size:0x4 data:4byte
+-g_prevFrameTimestampLo = .sbss:0x806D1384; // type:object size:0x4 data:4byte
++g_prevFrameTimestamp = .sbss:0x806D1380; // type:object size:0x8 data:8byte
+ lbl_806D1388 = .sbss:0x806D1388; // type:object size:0x4 data:4byte
+ lbl_806D138C = .sbss:0x806D138C; // type:object size:0x4 data:4byte
+ lbl_806D1390 = .sbss:0x806D1390; // type:object size:0x4 data:4byte
+diff --git a/configure.py b/configure.py
+index 4f0ea52..6d92fc4 100644
+--- a/configure.py
++++ b/configure.py
+@@ -1467,7 +1467,7 @@ config.libs = [
+             Object(NonMatching, "game/TaMode_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+             Object(Matching, "game/TaMode_Dtor.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
+             Object(Matching, "game/RaceScene_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
+-            Object(NonMatching, "game/RaceScene_FrameUpdate.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
++            Object(Matching, "game/RaceScene_FrameUpdate.cpp", extra_cflags=["-Cpp_exceptions on"]),  #g2
+             Object(NonMatching, "game/EffectItemChainIndicator_Tick.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
+             Object(Matching, "game/ItemObject_WriteVectors.c", extra_cflags=["-Cpp_exceptions on"]),
+             Object(Matching, "game/ItemTracker.c", extra_cflags=["-Cpp_exceptions on"]),
+diff --git a/include/game/TaModeInitPrivate.h b/include/game/TaModeInitPrivate.h
+index 56cfc62..9089bf6 100644
+--- a/include/game/TaModeInitPrivate.h
++++ b/include/game/TaModeInitPrivate.h
+@@ -174,8 +174,7 @@ extern int g_raceFrameCounterLo2digits;
+ extern int g_roundIndex;
+ extern RaceHud *g_raceHud;
+ extern unsigned char g_fullThrottleHoldFlag;
+-extern unsigned int g_prevFrameTimestampLo;
+-extern unsigned int g_prevFrameTimestampHi;
++extern long long g_prevFrameTimestamp;
+ extern int g_humanPlayerCount;
+ extern PathManager *g_raceRankingPathObject;
+ 
+diff --git a/src/game/RaceScene_FrameUpdate.cpp b/src/game/RaceScene_FrameUpdate.cpp
+index f1834be..13bebb5 100644
+--- a/src/game/RaceScene_FrameUpdate.cpp
++++ b/src/game/RaceScene_FrameUpdate.cpp
+@@ -4,8 +4,8 @@
+  * time limit down, and handles the finish: result ranking, the 1st place
+  * Jyugemu and the exit timer. Returns the next scene id (0xD after the
+  * finish wait, 2 on the debug exit button) or -2 to stay.
+- * NonMatching (99.99%): the hold-reset branch materialises its 0 in r3
+- * instead of r0. */
++ * Its .sdata2 literals are exported under their lbl_ names (RaceScene_Init
++ * reads several of them) by tools/postprocess_sdata2.py. */
+ 
+ #include "game/singleton.h"
+ 
+@@ -53,8 +53,7 @@ extern void *lbl_806D109C;
+ extern void *lbl_806D10D0;
+ extern unsigned char g_raceEnded;
+ extern int g_ccClass;
+-extern unsigned int g_prevFrameTimestampHi;
+-extern unsigned int g_prevFrameTimestampLo;
++extern long long g_prevFrameTimestamp;
+ extern unsigned char g_fullThrottleHoldFlag;
+ extern void *g_carObjects[];
+ extern void *g_itemSelects[];
+@@ -245,11 +244,10 @@ extern "C" int RaceScene_FrameUpdate(RaceScene *self)
+         brake = QuantizeInput(pad->Brake());
+         if (g_ccClass != 2) {
+             if (!IsRaceStarted()) {
+-                g_prevFrameTimestampLo = (unsigned int)now;
+-                g_prevFrameTimestampHi = (unsigned int)(now >> 32);
++                g_prevFrameTimestamp = now;
+             } else if (steer < 0.1f && brake < 0.1f) {
+                 if (!g_fullThrottleHoldFlag) {
+-                    long long prev = ((long long)g_prevFrameTimestampHi << 32) | g_prevFrameTimestampLo;
++                    long long prev = g_prevFrameTimestamp;
+                     long long ms = (now - prev) / ((*(unsigned int *)0x800000F8 / 4) / 1000);
+                     if ((float)ms / 1000.0f >= 4.0f) {
+                         g_fullThrottleHoldFlag = 1;
+@@ -259,9 +257,8 @@ extern "C" int RaceScene_FrameUpdate(RaceScene *self)
+                     steer = 1.0f;
+                 }
+             } else {
+-                g_prevFrameTimestampLo = (unsigned int)now;
+                 g_fullThrottleHoldFlag = 0;
+-                g_prevFrameTimestampHi = (unsigned int)(now >> 32);
++                g_prevFrameTimestamp = now;
+             }
+         }
+         accel = QuantizeInput(pad->Accel());
+diff --git a/src/game/RaceScene_Init.cpp b/src/game/RaceScene_Init.cpp
+index f62a0ef..332f6cd 100644
+--- a/src/game/RaceScene_Init.cpp
++++ b/src/game/RaceScene_Init.cpp
+@@ -174,8 +174,7 @@ extern int g_raceFrameCounterLo2digits;
+ extern int g_roundIndex;
+ extern RaceHud *g_raceHud;
+ extern unsigned char g_fullThrottleHoldFlag;
+-extern unsigned int g_prevFrameTimestampLo;
+-extern unsigned int g_prevFrameTimestampHi;
++extern long long g_prevFrameTimestamp;
+ extern int g_humanPlayerCount;
+ extern PathManager *g_raceRankingPathObject;
+ 
+@@ -507,8 +506,7 @@ RaceScene::RaceScene()
+     g_fullThrottleHoldFlag = 0;
+     {
+         long long t = OSGetTime();
+-        g_prevFrameTimestampLo = (unsigned int)t;
+-        g_prevFrameTimestampHi = (unsigned int)(t >> 32);
++        g_prevFrameTimestamp = t;
+     }
+     {
+         int texSize = TEXPalette_GetTotalLoadedSize();
+diff --git a/tools/postprocess_sdata2.py b/tools/postprocess_sdata2.py
+index 5c0c9b9..3c78d72 100644
+--- a/tools/postprocess_sdata2.py
++++ b/tools/postprocess_sdata2.py
+@@ -94,8 +94,11 @@ def func_relative(funcs: List[Tuple[int, int, str]], r_off: int) -> Optional[Tup
+     return None
+ 
+ 
+-def find_text_reloc_names(target_path: Path) -> Dict[int, str]:
+-    """Return offset_in_text -> reloc_target_name for R_PPC_EMB_SDA21 entries."""
++def find_text_reloc_names(target_path: Path, owned: Optional[Dict] = None) -> Dict[int, str]:
++    """Return offset_in_text -> reloc_target_name for R_PPC_EMB_SDA21 entries.
++
++    External (undefined) targets go in the result; named globals the target
++    defines itself go in `owned` when it is given."""
+     data = target_path.read_bytes()
+     en, e_shstrndx, shdrs = read_elf_meta(data)
+ 
+@@ -135,11 +138,19 @@ def find_text_reloc_names(target_path: Path) -> Dict[int, str]:
+             continue
+         sym_off = symtab_sh[4] + r_sym * sym_entsize
+         st_name, _, _, _, _, st_shndx = struct.unpack_from(en + "IIIBBH", data, sym_off)
+-        # Only externals: if the target object defines the symbol itself (the
+-        # TU's split owns that .sdata2 range), the local must stay local.
++        name = read_str(data, strtab_base, strtab_size, st_name)
++        # If the target object defines the symbol itself (the TU's split owns
++        # that .sdata2 range), the local stays defined. When the target
++        # defines it as a named global (another TU reads it), remember the
++        # name so the literal can be exported under it.
+         if st_shndx != SHN_UNDEF:
++            st_bind = struct.unpack_from(en + "IIIBBH", data, sym_off)[3] >> 4
++            if owned is not None and st_bind == STB_GLOBAL and name and not ANON_RE.match(name):
++                owned[r_off] = name
++                rel = func_relative(funcs, r_off)
++                if rel is not None:
++                    owned[rel] = name  # type: ignore[index]
+             continue
+-        name = read_str(data, strtab_base, strtab_size, st_name)
+         if name:
+             result[r_off] = name
+             # Function-relative key: lets a TU whose .text carries extra
+@@ -152,8 +163,9 @@ def find_text_reloc_names(target_path: Path) -> Dict[int, str]:
+ 
+ 
+ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
+-    target_relocs = find_text_reloc_names(target_path)
+-    if not target_relocs:
++    owned_relocs: Dict = {}
++    target_relocs = find_text_reloc_names(target_path, owned_relocs)
++    if not target_relocs and not owned_relocs:
+         if in_path != out_path:
+             out_path.write_bytes(in_path.read_bytes())
+         return False
+@@ -194,6 +206,7 @@ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
+     seen_sym_idxs: set[int] = set()
+     sym_names: Dict[int, str] = {}
+     retarget: List[Tuple[int, str]] = []  # (rela entry file offset, new name)
++    exports: List[Tuple[int, str, str]] = []  # owned literals to export by name
+     n_rela = rela_sh[5] // 12
+     for i in range(n_rela):
+         off = rela_sh[4] + i * 12
+@@ -220,6 +233,13 @@ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
+             # prefer the function-relative match when both exist
+             expected = target_relocs[rel]  # type: ignore[index]
+         if expected is None:
++            own = owned_relocs.get(r_off)
++            if rel is not None and rel in owned_relocs:
++                own = owned_relocs[rel]
++            if own is not None and r_sym not in seen_sym_idxs:
++                seen_sym_idxs.add(r_sym)
++                sym_names[r_sym] = own
++                exports.append((r_sym, name, own))
+             continue
+         if r_sym in seen_sym_idxs:
+             # The same literal is pooled under another name in the target
+@@ -232,7 +252,7 @@ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
+         sym_names[r_sym] = expected
+         targets.append((r_sym, name, expected))
+ 
+-    if not targets:
++    if not targets and not exports:
+         if in_path != out_path:
+             out_path.write_bytes(data)
+         return False
+@@ -240,7 +260,7 @@ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
+     # Append new names to a fresh strtab at file end
+     new_strtab = bytearray(data[strtab_base:strtab_base + strtab_size])
+     new_name_offsets: Dict[str, int] = {}
+-    for new_name in [t[2] for t in targets] + [r[1] for r in retarget]:
++    for new_name in [t[2] for t in targets] + [r[1] for r in retarget] + [e[2] for e in exports]:
+         if new_name not in new_name_offsets:
+             new_name_offsets[new_name] = len(new_strtab)
+             new_strtab += new_name.encode("ascii") + b"\x00"
+@@ -266,6 +286,25 @@ def post_process(in_path: Path, out_path: Path, target_path: Path) -> bool:
+         )
+         print(f"  {in_path.name}: {old_name!r} -> {new_name!r}")
+ 
++    for sym_idx, old_name, new_name in exports:
++        # Keep the definition (section, value, size); only rename and bind
++        # globally so other TUs can link against it.
++        off = symtab_sh[4] + sym_idx * sym_entsize
++        _, st_value, st_size, st_info, st_other, st_shndx = struct.unpack_from(
++            en + "IIIBBH", data, off
++        )
++        struct.pack_into(
++            en + "IIIBBH",
++            data, off,
++            new_name_offsets[new_name],
++            st_value,
++            st_size,
++            (STB_GLOBAL << 4) | (st_info & 0xF),
++            st_other,
++            st_shndx,
++        )
++        print(f"  {in_path.name}: {old_name!r} -> {new_name!r} (exported)")
++
+     if retarget:
+         # Append one undefined global per extra name to a relocated symtab.
+         n_syms = symtab_sh[5] // sym_entsize

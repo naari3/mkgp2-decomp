@@ -8,7 +8,7 @@ for each one, runs the existing tools in order:
                   compiler version x opt_* pragma pairs around the function
   2. decl order   permutations of the leading plain declarations on the best
                   few settings from stage 1 (exhaustive up to 6 decls)
-  3. permuter     cperm.py (setup/tools) on the best stage-1/2 source
+  3. permuter     tools/helpers/cperm.py on the best stage-1/2 source
 
 A stage-1/2 hit (100%) is applied to the source (and configure.py when the
 compiler changes), verified (report.json: the fn is 100% and NO function in
@@ -16,7 +16,7 @@ the project got worse; clean build main.dol OK), committed, rebased onto
 origin/main and pushed straight to main. A permuter hit is NOT landed: its
 source goes to OUT/review/ for a human/Claude rewrite (fakematch rule).
 
-Everything else is parked in the shared queue (setup/tools/queue.py) with the
+Everything else is parked in the shared queue (tools/helpers/workqueue.py) with the
 best score, and appended to OUT/results.jsonl so restarts skip it.
 
 usage (repo root, after a normal build):
@@ -27,20 +27,27 @@ usage (repo root, after a normal build):
 
 Stage 2b (stmt): tools/stmtsweep.py -> tools/typesweep.py --fn -> stmtsweep again, on the TU's own setting and on the best
 stage-1/2 setting (after decl order), --no-stmt to skip. For the >=99% sweep:
-  AUTOPIPE_DIR=/mnt/project-files/setup/autopipe99 python3 tools/autopipe.py run \
+  AUTOPIPE_DIR=docs/sweeps/autopipe99 python3 tools/autopipe.py run \
       --min 99 --no-perm --hold --stop-on hit --claims FILE
 
 Claims: TUs listed in --claims (default OUT/claims.txt; refresh it from the
 open `unit-claim` issues) are skipped, and so is any fn held by another thread
 in the queue. The pipeline holds at most one queue item at a time.
-Stop switch: create OUT/STOP or /mnt/project-files/setup/GRIND_STOP.
+Stop switch: create OUT/STOP or $MKGP2_SHARE/setup/GRIND_STOP.
+
+OUT defaults to docs/sweeps/autopipe/ IN THE REPO: results*.jsonl, best/, hits/ and
+landed*.log are shared knowledge, so commit them (with a landing or at the end of a
+run). Shards in other containers see each other's results after a pull; the jsonl
+files use git's union merge (.gitattributes).
 """
 import argparse, glob, importlib.util, json, os, re, shutil, subprocess, sys, time
 from datetime import datetime, timezone
 
 ROOT = os.getcwd()
-SETUP = '/mnt/project-files/setup'
-OUT = os.environ.get('AUTOPIPE_DIR', f'{SETUP}/autopipe')
+SHARE = os.environ.get('MKGP2_SHARE', '/mnt/project-files')
+SETUP = f'{SHARE}/setup'   # live state only: GRIND_STOP switch, work queue
+OUT = os.environ.get('AUTOPIPE_DIR', os.path.join(ROOT, 'docs', 'sweeps', 'autopipe'))
+HELPERS = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'helpers')
 WHO = os.environ.get('MKGP2_THREAD', 'autopipe')
 REPORT = 'build/GNLJ82/report.json'
 
@@ -53,8 +60,8 @@ def _load(name, path):
     m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
 
 
-Q = _load('mkgp2queue', f'{SETUP}/tools/queue.py')   # (its name shadows stdlib queue)
-CPERM = f'{SETUP}/tools/cperm.py'
+Q = _load('mkgp2queue', os.path.join(HELPERS, 'workqueue.py'))
+CPERM = os.path.join(HELPERS, 'cperm.py')
 
 
 def log(*a):

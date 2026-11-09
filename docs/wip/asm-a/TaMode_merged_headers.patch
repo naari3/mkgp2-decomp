@@ -1,0 +1,109 @@
+diff --git a/include/game/TaModeInitPrivate.h b/include/game/TaModeInitPrivate.h
+index 56cfc62..928943e 100644
+--- a/include/game/TaModeInitPrivate.h
++++ b/include/game/TaModeInitPrivate.h
+@@ -123,7 +123,6 @@ extern const float lbl_806D47EC;
+ extern const float lbl_806D47F4;
+ extern const float lbl_806D4824;
+ 
+-extern const char lbl_80321980[];
+ extern const float lbl_806D4830, lbl_806D4834, lbl_806D4838, lbl_806D483C, lbl_806D484C, lbl_806D4860;
+ 
+ extern int *HSD_RandSeedPtr;
+@@ -142,9 +141,6 @@ extern int g_kartVariant;
+ extern int g_playerKartSlot;
+ extern int g_kartStartSlot;
+ extern void *g_raceRenderTarget;
+-extern RaceCamera *g_raceCamera;
+-extern CarObject *g_carObjects[4];
+-extern ItemSelect *g_itemSelects[4];
+ extern unsigned char g_playerData[];
+ extern unsigned char g_namCamFlag;
+ extern void *g_playerRenderObj;
+@@ -169,7 +165,6 @@ extern unsigned char g_lapChangePending;
+ extern int g_totalLaps;
+ extern float g_raceTimeRemaining;
+ extern float g_lapBonusTimeDelta;
+-extern WeatherSystem *g_weatherSystem;
+ extern int g_raceFrameCounterLo2digits;
+ extern int g_roundIndex;
+ extern RaceHud *g_raceHud;
+@@ -205,12 +200,9 @@ int GetKartStartSlot(int displayIdx);
+ void GetStartPosition(int slot, float *x, int flag, float *y);
+ float GetCourseStartYaw(void);
+ int GetKartSlotCharId(int slot);
+-void *CarObject_GetRenderObj(CarObject *car);
+ void KartItem_SetShortArray34a(void *renderObj, unsigned char *playerData);
+ void VoiceSystem_BindKartCarObject(int slot, CarObject *car);
+ void KartItem_SetField358(void *renderObj, int displayIdx);
+-void SetPlayerCarObject(CarObject *car);
+-float *CarObject_GetTransformMatrix(CarObject *car);
+ void *CourseData_GetDefaultPathKey_Safe(void);
+ void LakituStart_SetCountdownHoldFrames(LakituStart *lakitu, int frames);
+ const char **GetKartModelNameEntry(int charId, int variant);
+@@ -220,7 +212,6 @@ float RaceScene_GetPerspFovyForCup(void);
+ void CObj_UpdatePerspParam(Scene3D *scene, float fovy);
+ unsigned char *GetKartSlotKartVariant(int slot);
+ void ItemSelect_AddSlotItem(ItemSelect *sel, int item, int flag);
+-void SetCourseScene3D(Scene3D *scene);
+ void CourseBgm_Load(void);
+ void PreloadEffectResources(int set);
+ unsigned char ItemSelect_GetSlotItemId(ItemSelect *sel, int slot);
+@@ -248,26 +239,35 @@ void VoiceQueue_Clear(int flag);
+ struct TaSound { char data[0x44]; TaSound(int); };
+ struct TaGhostSource { int character; const char *file; unsigned long size; int unused; };
+ extern "C" {
+-extern int lbl_806D13CC, g_characterId, lbl_806D13A8, lbl_806D1394, lbl_806D139C, lbl_806CF198, lbl_806D13AC, lbl_806D13B0;
++extern int lbl_806D13CC, g_characterId, lbl_806D13A8, lbl_806D139C, lbl_806CF198, lbl_806D13AC, lbl_806D13B0;
+ extern unsigned char lbl_806D13A0, lbl_806D13A1, lbl_806D13B8;
+-extern CarObject *lbl_806D1398;
+-extern PathManager *lbl_806D13A4;
+-extern void *lbl_806D1390, *lbl_806D1388, *lbl_806D13C8;
+-extern unsigned long lbl_806D138C;
+-extern TaSound *lbl_806D13B4;
++extern void *lbl_806D1390;
+ extern float lbl_806CF19C;
+-extern unsigned long lbl_806D13C0, lbl_806D13C4;
+ void RaceSlot_ResetAll();
+ void RaceSlot_InitSlot(int, int, int, int, int);
+ unsigned char GetVBlankFlag();
+ void *DVDFile_LoadSync(const char *);
+-int PathManager_RegisterCarObject(PathManager *, float *, float *, float *, CarObject *, void *, int);
+-void KartMovement_EquipItem(void *, int);
++int PathManager_RegisterCarObject(void *, float *, float *, float *, void *, void *, int);
+ void ItemEffectBus_OrMask(void *, unsigned long long);
+-void fn_8023E1E4(TaSound *, int, int);
+ void *StrPcb_GetInstance();
+ void StrPcb_SetStatusBits(void *, int, int);
+ int IsTimerModeEnabled();
+ void PlayStats_IncTaPlay();
+ }
++
++/* The update and the dtor above declare these with their own (void *) views;
++ * the ctor reads them through its typed ones. */
++#define g_raceCamera (*(RaceCamera **)&g_raceCamera)
++#define g_carObjects (*(CarObject *(*)[4])&g_carObjects)
++#define g_itemSelects (*(ItemSelect *(*)[4])&g_itemSelects)
++#define g_weatherSystem (*(WeatherSystem **)&g_weatherSystem)
++#define lbl_806D1394 (*(int *)&lbl_806D1394)
++#define lbl_806D1398 (*(CarObject **)&lbl_806D1398)
++#define lbl_806D13A4 (*(PathManager **)&lbl_806D13A4)
++#define lbl_806D1388 (*(void **)&lbl_806D1388)
++#define lbl_806D13C8 (*(void **)&lbl_806D13C8)
++#define lbl_806D138C (*(unsigned long *)&lbl_806D138C)
++#define lbl_806D13B4 (*(TaSound **)&lbl_806D13B4)
++#define lbl_806D13C0 (*(unsigned long *)&lbl_806D13C0)
++#define lbl_806D13C4 (*(unsigned long *)&lbl_806D13C4)
+ #endif
+diff --git a/include/game/TaModeInitTablesPrivate.h b/include/game/TaModeInitTablesPrivate.h
+index 3ed63c8..d3450c0 100644
+--- a/include/game/TaModeInitTablesPrivate.h
++++ b/include/game/TaModeInitTablesPrivate.h
+@@ -5,6 +5,6 @@
+ struct TaModeRaceTables {
+     RaceParams cups[8][3][2];
+ };
+-extern "C" TaModeRaceTables BATTLE;
++#define BATTLE (*(TaModeRaceTables *)&BATTLE)
+ 
+ #endif

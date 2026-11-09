@@ -1,0 +1,71 @@
+{"t": "2026-11-08T05:09:11.000002Z", "who": "migrated", "op": "done", "id": "Q002", "note": "0e04029"}
+{"t": "2026-11-08T05:09:11.000006Z", "who": "migrated", "op": "park", "id": "Q006", "note": "R2: i/q r29/r30 swap; 24 decl perms, separate j, inline-helper loop all fail"}
+{"t": "2026-11-08T05:09:11.000007Z", "who": "migrated", "op": "park", "id": "Q007", "note": "epilogue LR reload order only; pragmasweep k2 all, -lang=c++, stmt swaps: no gain (same issue as fn_801D7610)"}
+{"t": "2026-11-08T05:09:11.000008Z", "who": "R4", "op": "take", "id": "Q008", "note": "migrated: R4 04:55"}
+{"t": "2026-11-08T05:09:11.000011Z", "who": "asm-A", "op": "take", "id": "Q011", "note": "migrated: asm-A 05:07"}
+{"t": "2026-11-08T05:09:11.000012Z", "who": "migrated", "op": "done", "id": "Q012", "note": "(already Matching on main)"}
+{"t": "2026-11-08T05:09:11.000022Z", "who": "asm-A", "op": "take", "id": "Q022", "note": "migrated: asm-A 04:49"}
+{"t": "2026-11-08T05:09:11.000025Z", "who": "migrated", "op": "done", "id": "Q025", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000026Z", "who": "migrated", "op": "park", "id": "Q026", "note": "R2 05:05: same 0xFFFFFF00 rlwimi color-reg quirk as clFlowCourse (target: color non-r0, fctiwz temp r0); color/SetColor/cast/order forms + all compilers fail"}
+{"t": "2026-11-08T05:09:11.000027Z", "who": "migrated", "op": "park", "id": "Q027", "note": "r0/r3 swap, see gave_up.md"}
+{"t": "2026-11-08T05:09:11.000028Z", "who": "migrated", "op": "done", "id": "Q028", "note": "already 100% on main e33ad59"}
+{"t": "2026-11-08T05:09:11.000030Z", "who": "migrated", "op": "done", "id": "Q030", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000032Z", "who": "migrated", "op": "done", "id": "Q032", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000034Z", "who": "R2", "op": "take", "id": "Q034", "note": "migrated: R2 05:07"}
+{"t": "2026-11-08T05:09:11.000035Z", "who": "migrated", "op": "done", "id": "Q035", "note": "(100% on main)"}
+{"t": "2026-11-08T05:09:11.000036Z", "who": "migrated", "op": "done", "id": "Q036", "note": "already 100% on main e33ad59"}
+{"t": "2026-11-08T05:09:11.000039Z", "who": "migrated", "op": "park", "id": "Q039", "note": "midrange 05:10: only `lwz r30,x.p` scheduled above lis/addi of lbl_803EF74C; 5 offset/pos/fader-local forms no gain"}
+{"t": "2026-11-08T05:09:11.000040Z", "who": "migrated", "op": "park", "id": "Q040", "note": "midrange 05:20: storing x before y gets 2 lines, but y is still loaded first (lfs 0xc before 0x8); 11 CopyPosition forms + psweep k2 no gain"}
+{"t": "2026-11-08T05:09:11.000041Z", "who": "migrated", "op": "done", "id": "Q041", "note": "already 100% on main e33ad59"}
+{"t": "2026-11-08T05:09:11.000042Z", "who": "migrated", "op": "done", "id": "Q042", "note": "c43e2b7"}
+{"t": "2026-11-08T05:09:11.000043Z", "who": "migrated", "op": "done", "id": "Q043", "note": "(100% on main)"}
+{"t": "2026-11-08T05:09:11.000050Z", "who": "migrated", "op": "done", "id": "Q050", "note": "d284844 (TU Matching on main)"}
+{"t": "2026-11-08T05:09:11.000051Z", "who": "migrated", "op": "done", "id": "Q051", "note": "(merged into WarpZoneVector_Insert.cpp, Matching on main)"}
+{"t": "2026-11-08T05:09:11.000053Z", "who": "midrange", "op": "take", "id": "Q053", "note": "migrated: midrange 05:20"}
+{"t": "2026-11-08T05:09:11.000060Z", "who": "R4", "op": "take", "id": "Q060", "note": "migrated: R4 05:20"}
+{"t": "2026-11-08T05:09:11.000063Z", "who": "migrated", "op": "done", "id": "Q063", "note": "already on main (TU Matching)"}
+{"t": "2026-11-08T05:09:11.000065Z", "who": "migrated", "op": "done", "id": "Q065", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000069Z", "who": "migrated", "op": "done", "id": "Q069", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000070Z", "who": "migrated", "op": "done", "id": "Q070", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000073Z", "who": "migrated", "op": "done", "id": "Q073", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000075Z", "who": "R2", "op": "take", "id": "Q075", "note": "migrated: R2 05:52"}
+{"t": "2026-11-08T05:09:11.000076Z", "who": "R2", "op": "take", "id": "Q076", "note": "migrated: R2 05:35"}
+{"t": "2026-11-08T05:09:11.000085Z", "who": "migrated", "op": "done", "id": "Q085", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000088Z", "who": "migrated", "op": "done", "id": "Q088", "note": "70325a3"}
+{"t": "2026-11-08T05:09:11.000090Z", "who": "migrated", "op": "done", "id": "Q090", "note": "4d5855d"}
+{"t": "2026-11-08T05:09:11.000091Z", "who": "R5", "op": "take", "id": "Q091", "note": "migrated: R5 05:36"}
+{"t": "2026-11-08T05:09:11.000101Z", "who": "migrated", "op": "park", "id": "Q101", "note": "midrange 05:55: __dynamic_cast; `offset` local r31 vs target r12 swapped with the inlined strcmp char; 9 decl/loop forms + psweep k2 (all ccs) no gain"}
+{"t": "2026-11-08T05:09:11.000103Z", "who": "migrated", "op": "done", "id": "Q103", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000104Z", "who": "migrated", "op": "done", "id": "Q104", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000106Z", "who": "migrated", "op": "park", "id": "Q106", "note": "midrange 06:05: volatile r3/r4/r5/r8 coloring inside inlined HandlerFor/ProbeTraceAdd; bss pool already ok"}
+{"t": "2026-11-08T05:09:11.000113Z", "who": "migrated", "op": "done", "id": "Q113", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000120Z", "who": "migrated", "op": "done", "id": "Q120", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000122Z", "who": "migrated", "op": "done", "id": "Q122", "note": "70325a3"}
+{"t": "2026-11-08T05:09:11.000124Z", "who": "migrated", "op": "park", "id": "Q124", "note": "midrange 06:20: FPR coloring of ratio/x/scale (target writes results into the constant regs); 20 ScaleFromOffset x/scale forms, best 26 lines (= -4), no % gain"}
+{"t": "2026-11-08T05:09:11.000127Z", "who": "migrated", "op": "done", "id": "Q127", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000131Z", "who": "migrated", "op": "done", "id": "Q131", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000132Z", "who": "migrated", "op": "done", "id": "Q132", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000135Z", "who": "migrated", "op": "done", "id": "Q135", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000139Z", "who": "migrated", "op": "done", "id": "Q139", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000142Z", "who": "migrated", "op": "done", "id": "Q142", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000143Z", "who": "migrated", "op": "done", "id": "Q143", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000145Z", "who": "migrated", "op": "done", "id": "Q145", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000146Z", "who": "migrated", "op": "done", "id": "Q146", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000147Z", "who": "migrated", "op": "done", "id": "Q147", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000153Z", "who": "migrated", "op": "done", "id": "Q153", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000155Z", "who": "migrated", "op": "done", "id": "Q155", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000157Z", "who": "migrated", "op": "done", "id": "Q157", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000159Z", "who": "migrated", "op": "done", "id": "Q159", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000161Z", "who": "migrated", "op": "done", "id": "Q161", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000180Z", "who": "R1", "op": "take", "id": "Q180", "note": "migrated: R1 05:25"}
+{"t": "2026-11-08T05:09:11.000181Z", "who": "migrated", "op": "done", "id": "Q181", "note": "ba26da4"}
+{"t": "2026-11-08T05:09:11.000194Z", "who": "migrated", "op": "done", "id": "Q194", "note": "already 100% in report (R5 check 05:35)"}
+{"t": "2026-11-08T05:09:11.000200Z", "who": "asm-A", "op": "take", "id": "Q200", "note": "migrated: asm-A 04:43"}
+{"t": "2026-11-08T05:09:11.000201Z", "who": "asm-A", "op": "take", "id": "Q201", "note": "migrated: asm-A 04:43"}
+{"t": "2026-11-08T05:09:11.000204Z", "who": "migrated", "op": "park", "id": "Q204", "note": "rodata pool 0x80329E20 belongs to a ~40-TU kart-fx original TU"}
+{"t": "2026-11-08T05:09:11.000206Z", "who": "migrated", "op": "done", "id": "Q206", "note": "388f2dc"}
+{"t": "2026-11-08T05:09:11.000212Z", "who": "midrange", "op": "take", "id": "Q212", "note": "migrated: midrange 06:25"}
+{"t": "2026-11-08T05:09:11.000213Z", "who": "migrated", "op": "park", "id": "Q213", "note": "midrange 06:00: same unfolded-add idiom as acsocket: target `addi r29,base,0x6398` + later `addi r29,r29,0x1c`, `addi r28,base,0x0` + `addi r28,r28,4` (snapshot/block Payload inlines), plus storage built straight into r31 (ours addi+mr). Inline/no-inline/in-loop/global-direct forms + psweep k2: best 77 lines (no-inline form)"}
+{"t": "2026-11-08T05:09:11.000214Z", "who": "migrated", "op": "park", "id": "Q214", "note": "midrange 05:40: 9dba1c0 all loops -> SetColorRange/DrawRange inlines, 7 fns up (unit 96.47->97.15), none 100; left: color reg vs offset IV numbering (r28/r29), helper/arg/scope forms no gain"}
+{"t": "2026-11-08T05:09:11.000215Z", "who": "migrated", "op": "park", "id": "Q215", "note": "midrange 06:15: also tried FadeAlpha inlines (2 forms), block-scoped float/double temps, floats-first and ints-last orders: frame stays 0x50 or code breaks"}
+{"t": "2026-11-08T05:09:11.000216Z", "who": "migrated", "op": "park", "id": "Q216", "note": "midrange 06:25: the identical Japanese-branch call already matches, so it is scheduler context; SetPosV/SetPosY(&k[2]) inline forms move the good branch wrong too"}

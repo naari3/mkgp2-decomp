@@ -1,0 +1,5 @@
+2026-11-08 08:45Z (mid thread): full C Tick at 14 difflines (fds-normalized). Only remaining diff: flag18!=0 path,
+inlined Mtx44S_RotX: target rad=f27 c=f28, mine rad=f28 c=f27 (main path already right). Tried: decl perms (RotX/RotY/b18 locals),
+RotX/RotY/RotY180 clones for the b18 path only, deg-param modify, extern lbl consts (regalloc §12), dx/dz scoping, cperm 2x30min (stuck at 7).
+Full source: ShadowBillboard_c_draft_14lines.c (also diff Tick_c_draft_14lines.diff). Not yet checked: full SHA / rodata order.
+2026-11-08 09:45Z: retried b18 RotX: rad-copy for sinf, store-order clones, -spin*70, 70*(0-spin): all 14. §12 literal/extern was tried earlier (no change).

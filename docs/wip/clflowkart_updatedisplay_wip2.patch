@@ -1,0 +1,410 @@
+diff --git a/configure.py b/configure.py
+index 4d2d6ec..4fa4637 100644
+--- a/configure.py
++++ b/configure.py
+@@ -706,7 +706,7 @@ config.libs = [
+             Object(Matching, "game/VSMode_Init.c", extab_padding=b"\x00\x00"),
+             Object(Matching, "game/clFlowKart_HandleConfirm.c", extra_cflags=["-Cpp_exceptions on"]),
+             Object(Matching, "game/clFlowKart_SetupTextLayout.cpp", extab_padding=b""),
+-            Object(Matching, "game/clFlowKart_UpdateDisplay.c", extab_padding=b"\x00\x00"),
++            Object(Matching, "game/clFlowKart_UpdateDisplay.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-use_lmw_stmw on"]),
+             Object(Matching, "game/clFlowKart_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
+             Object(Matching, "game/clFlowKart_Update.c", extab_padding=b"\x00\x00", extra_cflags=["-lang=c++"]),
+             Object(Matching, "game/CardRW_CleaningTest_Page.c", extab_padding=b"\x00\x00"),
+diff --git a/src/game/clFlowKart_UpdateDisplay.c b/src/game/clFlowKart_UpdateDisplay.c
+index be17be7..a9f6428 100644
+--- a/src/game/clFlowKart_UpdateDisplay.c
++++ b/src/game/clFlowKart_UpdateDisplay.c
+@@ -1,295 +1,97 @@
+-/* === extracted from auto_clFlowKart_UpdateDis_text === */
+-/* Copy into the TU between forward decls and function bodies; */
+-/* keep emit order = target section layout (do not sort). */
++/* clFlowKart_UpdateDisplay @ 0x801D7920: rebuilds the three kart-select
++ * rank sprites. The display level comes from the player's coin mileage
++ * against two per-kart thresholds (level 1 without a valid card), then
++ * each sprite hides (5 - count) of its five anim params, with the counts
++ * from the level/kart table lbl_8049BB30. The thresholds and the param
++ * list live in clFlowKart_Init.c's pooled .rodata (lbl_8039E508).
++ * Compiled as C++ (-lang=c++) for the `new` cleanups in the extab. */
+ 
+-/* --- extern decls: branch callees (bl/b targets) --- */
+-/* Open prototype (`extern void Foo();`) accepts any call signature; */
+-/* refine if the real prototype matters for header consumers. */
+-extern void Alloc();
+-extern void GetCoinMilage();
+-extern void IsCardValid();
+-extern void Sprite_Destroy();
+-extern void Sprite_SetAnimParam();
+-extern void fn_801A08B8();
++void *operator new(unsigned long);
++void operator delete(void *);
+ 
+-/* --- extern decls: sda21-referenced data --- */
+-extern unsigned int lbl_806DA120;
+-extern unsigned int lbl_806DA124;
+-extern unsigned int lbl_806DA128;
+-extern unsigned int lbl_806DA12C;
++typedef struct FKParams { int v[5]; } FKParams;
+ 
+-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
+-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
+-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
+-extern unsigned int g_playerData[];
+-extern unsigned int lbl_8039E508[];
+-extern unsigned int lbl_8049BB30[];
++typedef struct FKRodata {
++    unsigned char pad000[0x3FC];
++    int need1[13];       /* 0x3FC */
++    int need2[13];       /* 0x430 */
++    unsigned char pad464[0x4B0 - 0x464];
++    FKParams params;     /* 0x4B0 */
++} FKRodata;
+ 
+-/* --- function index (1 fns, .text 0x801D7920..0x801D7B50) ---
+- * [  0] 0x801D7920 size:0x230   global clFlowKart_UpdateDisplay
+- */
++typedef struct FKSprite {
++    unsigned char data[0x30];
++    FKSprite(int id, float x, float y, int flag);
++} FKSprite;
+ 
+-/* --- forward decls --- */
+-asm void clFlowKart_UpdateDisplay(void);
++typedef struct FKDisplay {
++    unsigned char pad00[0x4];
++    int unlocked;        /* 0x04 */
++    unsigned char pad08[0x74 - 0x08];
++    FKSprite *rank[3];   /* 0x74 */
++} FKDisplay;
+ 
+-/* --- extern decls: extab symbolic refs (dtors / typeids) --- */
+-extern void MemoryManager_TimedFree();
++extern "C" {
++int GetCoinMilage(void *data);
++unsigned char IsCardValid(void);
++void Sprite_Destroy(FKSprite *sprite, int flag);
++void Sprite_SetAnimParam(FKSprite *sprite, short param, short key);
+ 
+-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
+-#pragma section R ".extab_user"
+-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; void *f9; unsigned int f10; void *f11; unsigned int f12; void *f13; } extab_clFlowKart_UpdateDisplay = { 0x300A0000, 0x000000CC, 0x00000020, 0x000000F4, 0x00000028, 0x0000011C, 0x00000030, 0x00000000, 0x8A80001A, (void *)&MemoryManager_TimedFree, 0x8A80001A, (void *)&MemoryManager_TimedFree, 0x8A80001A, (void *)&MemoryManager_TimedFree };
+-
+-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
+-#pragma section R ".extabindex_user"
+-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_clFlowKart_UpdateDisplay = {
+-    (void *)&clFlowKart_UpdateDisplay, 0x00000230, (void *)&extab_clFlowKart_UpdateDisplay
+-};
++extern const float lbl_806DA120;
++extern const float lbl_806DA124;
++extern const float lbl_806DA128;
++extern const float lbl_806DA12C;
++extern unsigned char g_playerData[];
++extern FKRodata lbl_8039E508;
++extern signed char lbl_8049BB30[][13][3];
++}
+ 
+-/* --- asm function bodies (.text order = fn address order) --- */
+-asm void clFlowKart_UpdateDisplay(void) { /* 0x801D7920 size:0x230 */
+-    nofralloc
+-    stwu r1, -0x40(r1)
+-    mflr r0
+-    stw r0, 0x44(r1)
+-    stmw r26, 0x28(r1)
+-    mr r27, r3
+-    lis r3, lbl_8039E508@ha
+-    mr r28, r4
+-    addi r31, r3, lbl_8039E508@l
+-    li r29, 0x0
+-    lwz r0, 0x4(r27)
+-    cmpwi r0, 0x1
+-    blt clFlowKart_UpdateDisplay_L_801D79A4
+-    lis r3, g_playerData@ha
+-    addi r3, r3, g_playerData@l
+-    bl GetCoinMilage
+-    slwi r30, r28, 2
+-    addi r4, r31, 0x3fc
+-    lwzx r0, r4, r30
+-    cmpw r3, r0
+-    blt clFlowKart_UpdateDisplay_L_801D7974
+-    li r29, 0x1
+-    clFlowKart_UpdateDisplay_L_801D7974:
+-    lis r3, g_playerData@ha
+-    addi r3, r3, g_playerData@l
+-    bl GetCoinMilage
+-    addi r4, r31, 0x430
+-    lwzx r0, r4, r30
+-    cmpw r3, r0
+-    blt clFlowKart_UpdateDisplay_L_801D7994
+-    li r29, 0x2
+-    clFlowKart_UpdateDisplay_L_801D7994:
+-    bl IsCardValid
+-    clrlwi. r0, r3, 24
+-    bne clFlowKart_UpdateDisplay_L_801D79A4
+-    li r29, 0x1
+-    clFlowKart_UpdateDisplay_L_801D79A4:
+-    lwz r3, 0x74(r27)
+-    li r4, 0x1
+-    bl Sprite_Destroy
+-    lwz r3, 0x78(r27)
+-    li r4, 0x1
+-    bl Sprite_Destroy
+-    lwz r3, 0x7c(r27)
+-    li r4, 0x1
+-    bl Sprite_Destroy
+-    li r3, 0x30
+-    bl Alloc
+-    mr. r26, r3
+-    beq clFlowKart_UpdateDisplay_L_801D79EC
+-    lfs f1, lbl_806DA120(r2)
+-    li r4, 0x16b
+-    lfs f2, lbl_806DA124(r2)
+-    li r5, 0x1
+-    bl fn_801A08B8
+-    clFlowKart_UpdateDisplay_L_801D79EC:
+-    stw r26, 0x74(r27)
+-    li r3, 0x30
+-    bl Alloc
+-    mr. r26, r3
+-    beq clFlowKart_UpdateDisplay_L_801D7A14
+-    lfs f1, lbl_806DA120(r2)
+-    li r4, 0x16b
+-    lfs f2, lbl_806DA128(r2)
+-    li r5, 0x1
+-    bl fn_801A08B8
+-    clFlowKart_UpdateDisplay_L_801D7A14:
+-    stw r26, 0x78(r27)
+-    li r3, 0x30
+-    bl Alloc
+-    mr. r26, r3
+-    beq clFlowKart_UpdateDisplay_L_801D7A3C
+-    lfs f1, lbl_806DA120(r2)
+-    li r4, 0x16b
+-    lfs f2, lbl_806DA12C(r2)
+-    li r5, 0x1
+-    bl fn_801A08B8
+-    clFlowKart_UpdateDisplay_L_801D7A3C:
+-    stw r26, 0x7c(r27)
+-    lis r3, lbl_8049BB30@ha
+-    mulli r4, r29, 0x27
+-    addi r29, r1, 0x8
+-    lwz r8, 0x4b0(r31)
+-    addi r3, r3, lbl_8049BB30@l
+-    lwz r7, 0x4b4(r31)
+-    mr r30, r29
+-    lwz r6, 0x4b8(r31)
+-    mulli r0, r28, 0x3
+-    lwz r5, 0x4bc(r31)
+-    add r3, r3, r4
+-    lwz r4, 0x4c0(r31)
+-    li r28, 0x0
+-    stw r8, 0x8(r1)
+-    add r31, r3, r0
+-    stw r7, 0xc(r1)
+-    stw r6, 0x10(r1)
+-    stw r5, 0x14(r1)
+-    stw r4, 0x18(r1)
+-    b clFlowKart_UpdateDisplay_L_801D7AAC
+-    clFlowKart_UpdateDisplay_L_801D7A90:
+-    lwz r0, 0x0(r30)
+-    li r5, -0x1
+-    lwz r3, 0x74(r27)
+-    extsh r4, r0
+-    bl Sprite_SetAnimParam
+-    addi r30, r30, 0x4
+-    addi r28, r28, 0x1
+-    clFlowKart_UpdateDisplay_L_801D7AAC:
+-    lbz r0, 0x0(r31)
+-    extsb r0, r0
+-    subfic r0, r0, 0x5
+-    cmpw r28, r0
+-    blt clFlowKart_UpdateDisplay_L_801D7A90
+-    mr r28, r29
+-    addi r30, r31, 0x1
+-    li r26, 0x0
+-    b clFlowKart_UpdateDisplay_L_801D7AEC
+-    clFlowKart_UpdateDisplay_L_801D7AD0:
+-    lwz r0, 0x0(r28)
+-    li r5, -0x1
+-    lwz r3, 0x78(r27)
+-    extsh r4, r0
+-    bl Sprite_SetAnimParam
+-    addi r28, r28, 0x4
+-    addi r26, r26, 0x1
+-    clFlowKart_UpdateDisplay_L_801D7AEC:
+-    lbz r0, 0x0(r30)
+-    extsb r0, r0
+-    subfic r0, r0, 0x5
+-    cmpw r26, r0
+-    blt clFlowKart_UpdateDisplay_L_801D7AD0
+-    addi r28, r31, 0x2
+-    li r26, 0x0
+-    b clFlowKart_UpdateDisplay_L_801D7B28
+-    clFlowKart_UpdateDisplay_L_801D7B0C:
+-    lwz r0, 0x0(r29)
+-    li r5, -0x1
+-    lwz r3, 0x7c(r27)
+-    extsh r4, r0
+-    bl Sprite_SetAnimParam
+-    addi r29, r29, 0x4
+-    addi r26, r26, 0x1
+-    clFlowKart_UpdateDisplay_L_801D7B28:
+-    lbz r0, 0x0(r28)
+-    extsb r0, r0
+-    subfic r0, r0, 0x5
+-    cmpw r26, r0
+-    blt clFlowKart_UpdateDisplay_L_801D7B0C
+-    lmw r26, 0x28(r1)
+-    lwz r0, 0x44(r1)
+-    mtlr r0
+-    addi r1, r1, 0x40
+-    blr
++static inline void HideParams(FKDisplay *self, int idx, int *p, signed char *n) {
++    for (int i = 0; i < 5 - *n; i++) {
++        Sprite_SetAnimParam(self->rank[idx], p[i], -1);
++    }
+ }
++/* fakematch (pragma): the natural code is the same body without the pragma;
++ * the original TU owned lbl_8039E508, so CW kept the base + offset addi. */
+ 
+-#if 0
+-/* Complete genuine C++ draft; best probe 97.857142857%, automatic EH/index 100%.
+- * Three bounded approaches exhausted. Active original asm remains exact fallback.
+- * Residual: threshold addressing and local-web register assignments.
+- */
+-/* Observed FlowKart display layout and external Sprite ownership. */
+-extern int GetCoinMilage(void *);
+-extern unsigned char IsCardValid(void);
+-extern void *Sprite_Destroy(void *, short);
+-extern unsigned char Sprite_SetAnimParam(void *, short, short);
+-extern unsigned char g_playerData[];
+-extern unsigned char lbl_8039E508[];
+-extern signed char lbl_8049BB30[3][13][3];
+-extern const float lbl_806DA120, lbl_806DA124, lbl_806DA128, lbl_806DA12C;
+ 
+-#pragma cplusplus on
+-#pragma exceptions on
+-class FlowKartSprite {
+-    unsigned char storage[0x30];
+-public:
+-    FlowKartSprite(int id, int flag, float x, float y);
+-};
+-struct FlowKartDisplay {
+-    void *vtable;
+-    int state;
+-    unsigned char unknown08[0x6c];
+-    FlowKartSprite *first, *second, *third;
+-};
+-struct DisplayWords { int word[5]; };
+-struct DisplayPoolView {
+-    unsigned char unknown000[0x3fc];
+-    int firstThreshold[13];
+-    int secondThreshold[13];
+-    unsigned char unknown464[0x4c];
+-    DisplayWords animations;
+-};
+-extern "C" void clFlowKart_UpdateDisplay(FlowKartDisplay *self, int kart)
++extern "C" void clFlowKart_UpdateDisplay(FKDisplay *self, int kart)
+ {
+-    const DisplayPoolView *pool = (const DisplayPoolView *)lbl_8039E508;
+-    int *cursor0;
+-    int mode = 0;
+-    int index0;
+-    signed char *limits;
++    FKRodata *rd = &lbl_8039E508;
++    int level = 0;
++    FKParams params;
++    signed char *count;
++    signed char *c;
+     int *base;
+-    int *cursor1;
+-    signed char *limit1;
+-    int index1;
+-    signed char *limit2;
+-    if (self->state >= 1) {
+-        if (GetCoinMilage(g_playerData) >= pool->firstThreshold[kart])
+-            mode = 1;
+-        if (GetCoinMilage(g_playerData) >= pool->secondThreshold[kart])
+-            mode = 2;
+-        if (!IsCardValid())
+-            mode = 1;
+-    }
+-    Sprite_Destroy(self->first, 1);
+-    Sprite_Destroy(self->second, 1);
+-    Sprite_Destroy(self->third, 1);
+-    self->first = new FlowKartSprite(0x16b, 1, lbl_806DA120, lbl_806DA124);
+-    self->second = new FlowKartSprite(0x16b, 1, lbl_806DA120, lbl_806DA128);
+-    self->third = new FlowKartSprite(0x16b, 1, lbl_806DA120, lbl_806DA12C);
++    int *p;
++    int i;
+ 
+-    DisplayWords words = pool->animations;
+-    limits = lbl_8049BB30[mode][kart];
+-    base = words.word;
+-    cursor0 = base;
+-    index0 = 0;
+-    while (index0 < 5 - limits[0]) {
+-        Sprite_SetAnimParam(self->first, (short)*cursor0, -1);
+-        ++cursor0;
+-        ++index0;
+-    }
+-    cursor1 = base;
+-    limit1 = limits + 1;
+-    index1 = 0;
+-    while (index1 < 5 - *limit1) {
+-        Sprite_SetAnimParam(self->second, (short)*cursor1, -1);
+-        ++cursor1;
+-        ++index1;
+-    }
+-    limit2 = limits + 2;
+-    index1 = 0;
+-    while (index1 < 5 - *limit2) {
+-        Sprite_SetAnimParam(self->third, (short)*base, -1);
+-        ++base;
+-        ++index1;
++    if (self->unlocked >= 1) {
++        int *need;
++        int m = GetCoinMilage(g_playerData);
++        need = rd->need1;
++        if (m >= need[kart]) {
++            level = 1;
++        }
++        m = GetCoinMilage(g_playerData);
++        need = rd->need2;
++        if (m >= need[kart]) {
++            level = 2;
++        }
++        if (!IsCardValid()) {
++            level = 1;
++        }
+     }
++    Sprite_Destroy(self->rank[0], 1);
++    Sprite_Destroy(self->rank[1], 1);
++    Sprite_Destroy(self->rank[2], 1);
++    self->rank[0] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA124, 1);
++    self->rank[1] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA128, 1);
++    self->rank[2] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA12C, 1);
++    params = rd->params;
++    HideParams(self, 0, params.v, &lbl_8049BB30[level][kart][0]);
++    HideParams(self, 1, params.v, &lbl_8049BB30[level][kart][1]);
++    HideParams(self, 2, params.v, &lbl_8049BB30[level][kart][2]);
+ }
+-#pragma cplusplus off
+-#endif
++
++#pragma opt_propagation reset
+diff --git a/tools/extab_user_renames.json b/tools/extab_user_renames.json
+index 475c04b..fd6318f 100644
+--- a/tools/extab_user_renames.json
++++ b/tools/extab_user_renames.json
+@@ -2027,8 +2027,9 @@
+     "extabindex_clFlowKart_SetupTextLayout": "@eti_800281CC"
+   },
+   "src/game/clFlowKart_UpdateDisplay.c": {
+-    "extab_clFlowKart_UpdateDisplay": "@etb_80015334",
+-    "extabindex_clFlowKart_UpdateDisplay": "@eti_80028130"
++    "__ct__8FKSpriteFiffi": "fn_801A08B8",
++    "__nw__FUl": "Alloc",
++    "__dl__FPv": "MemoryManager_TimedFree"
+   },
+   "src/game/clFlowKart_Init.c": {
+     "__ct__7FKOwnerFv": "clFlowKart_Init",

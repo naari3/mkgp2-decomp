@@ -1,0 +1,2643 @@
+diff --git a/config/GNLJ82/splits.txt b/config/GNLJ82/splits.txt
+index cd1f8a4f..4f0b90e7 100644
+--- a/config/GNLJ82/splits.txt
++++ b/config/GNLJ82/splits.txt
+@@ -2871,33 +2871,11 @@ game/NameCheck_ScanBanned.c:
+ 	extabindex  start:0x80022184 end:0x80022190
+ 	.text       start:0x80099CE4 end:0x8009B98C
+ 
+-game/RaceSys_8009B98C.c:
+-	.text       start:0x8009B98C end:0x8009B9D0
+-
+-game/RaceScene_GetPerspFovyForCup.c:
+-	.text       start:0x8009B9D0 end:0x8009BAC4
++game/RaceData.c:
++	extab       start:0x80009598 end:0x800095B0
++	extabindex  start:0x80022190 end:0x800221B4
++	.text       start:0x8009B98C end:0x8009CFDC
+ 	.data       start:0x80401118 end:0x8040DE94
+-
+-game/RaceSys_8009BAC4.c:
+-	.text       start:0x8009BAC4 end:0x8009BD04
+-
+-game/RankSlot_AppendOrUpdate.c:
+-	extab       start:0x80009598 end:0x800095A0
+-	extabindex  start:0x80022190 end:0x8002219C
+-	.text       start:0x8009BD04 end:0x8009BDC0
+-
+-game/VSMode_SeedRandomItemSequence.c:
+-	extab       start:0x800095A0 end:0x800095A8
+-	extabindex  start:0x8002219C end:0x800221A8
+-	.text       start:0x8009BDC0 end:0x8009BEF4
+-
+-game/RaceData_8009BEF4.c:
+-	.text       start:0x8009BEF4 end:0x8009CBFC
+-
+-game/SetCourseParams.c:
+-	extab       start:0x800095A8 end:0x800095B0
+-	extabindex  start:0x800221A8 end:0x800221B4
+-	.text       start:0x8009CBFC end:0x8009CFDC
+ 	.bss        start:0x805AC600 end:0x805D2AA8
+ 
+ game/PlayerData_ApplyItemUnlockById.c:
+diff --git a/configure.py b/configure.py
+index 1a5aa566..484a7274 100644
+--- a/configure.py
++++ b/configure.py
+@@ -679,7 +679,7 @@ config.libs = [
+             Object(Matching, "game/SoundMgr_CountActiveSEInstances.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
+             Object(Matching, "game/SoundMgr_PlaySE_Positional.c", extab_padding=b"\x00\x00"),
+             Object(Matching, "game/SoundMgr_Play.c", extab_padding=b"\x00\x00"),
+-            Object(Matching, "game/VSMode_SeedRandomItemSequence.c", extab_padding=b"\x00\x00"),
++            Object(NonMatching, "game/RaceData.c", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
+             Object(Matching, "game/VSMode_FrameUpdate.c", extab_padding=b"\x00\x00"),
+             Object(Matching, "game/VSMode_Init.c", extab_padding=b"\x00\x00"),
+             Object(Matching, "game/clFlowKart_HandleConfirm.c", extra_cflags=["-Cpp_exceptions on"]),
+@@ -1179,7 +1179,6 @@ config.libs = [
+             Object(Matching, "game/PreloadItemResources.c", extra_cflags=["-Cpp_exceptions on"]),
+             Object(Matching, "game/PreloadEffectResources.c", extra_cflags=["-Cpp_exceptions on"]),
+             # group2 batch (0x8009B98C..0x801077C8)
+-            Object(Matching, "game/RankSlot_AppendOrUpdate.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+             Object(Matching, "game/PlayerData_ApplyItemUnlockById.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+             Object(Matching, "game/PlayerData_GetUnlockedItemIdByIndex_U8.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+             Object(Matching, "game/PlayerData_ResetForFlow.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+@@ -1337,10 +1336,6 @@ config.libs = [
+             Object(Matching, "game/CharaPop12_Update.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+             Object(Matching, "game/Boomerang_ReturnAndAcquireTargetTick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+             Object(Matching, "game/EffectVfx84_85_BoostChargeRing_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+-            Object(Matching, "game/RaceSys_8009B98C.c"),  #g2
+-            Object(Matching, "game/RaceScene_GetPerspFovyForCup.c"),  #g2
+-            Object(Matching, "game/RaceSys_8009BAC4.c"),  #g2
+-            Object(Matching, "game/RaceData_8009BEF4.c"),  #g2
+             Object(Matching, "game/GameMode_TitleSelect.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),  #g2
+             Object(NonMatching, "game/RankLog.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
+             Object(NonMatching, "game/DbgMenu.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], extab_padding=b""),  #g2
+@@ -1407,7 +1402,6 @@ config.libs = [
+             Object(Matching, "game/fn_80105EB4.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+             Object(Matching, "game/fn_8010670C.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+             Object(Matching, "game/fn_80107040.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+-            Object(NonMatching, "game/SetCourseParams.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+             Object(NonMatching, "game/AnimState_Step.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
+             Object(Matching, "game/ItemCollision_Check.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
+             Object(Matching, "game/ItemHit_Dispatch.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
+diff --git a/src/game/RaceScene_GetPerspFovyForCup.c b/src/game/RaceData.c
+similarity index 92%
+rename from src/game/RaceScene_GetPerspFovyForCup.c
+rename to src/game/RaceData.c
+index ed952c9d..4430e913 100644
+--- a/src/game/RaceScene_GetPerspFovyForCup.c
++++ b/src/game/RaceData.c
+@@ -1,8 +1,131 @@
+-/* RaceScene_GetPerspFovyForCup (0x8009B9D0): per-cup perspective fovy table
+- * lookup. The original TU owned the race/course data .data block
+- * (0x80401118..0x8040DE94); the function touches five of its per-cup tables,
+- * so the compiler addresses them off the pooled section base. The data below
+- * is emitted from the target in order (pointers kept as relocations). */
++/* Race/session data TU (0x8009B98C..0x8009CFDC): race/course .data tables,
++ * the per-race .bss block (kart slots, lap/rank slots, player data) and their
++ * accessors. Merged from 7 split TUs so the compiler pools the .bss objects
++ * off one section base, laid out in first-use order (SetCourseParams). */
++
++extern "C" {
++
++
++typedef struct RankSlot {
++    unsigned char active;
++    unsigned char pad1;
++    unsigned short count;
++    unsigned char pad4[0xC];
++    int target;
++    int source;
++    unsigned char flag18;
++    unsigned char flag19;
++    unsigned char pad1A[2];
++    int timer;
++    float value20;
++    float value24;
++    unsigned char enabled;
++    unsigned char pad29[3];
++} RankSlot;
++
++extern int g_cupId;
++extern int g_longRoundFlag;
++extern int g_courseVariantIdx;
++extern int g_currentSceneState;
++extern int g_gameMode;
++extern int g_raceFrameCounterLo2digits;
++extern unsigned char lbl_806D12AD;
++extern int g_kartVariant;
++extern int g_localPcbRole;
++extern signed char g_isPcbHost;
++extern int lbl_806D12D8;
++extern int lbl_806D1280;
++extern unsigned char lbl_8040DE94[];
++extern RankSlot lbl_805D2948[8];
++extern const float lbl_806D4790;
++extern const float lbl_806D4794;
++
++typedef struct KartSlot {
++    int driverId;
++    int charId;
++    int field8;
++    int fieldC;
++    int kartVariant;
++    unsigned char items[3];
++    unsigned char pad17;
++} KartSlot;
++
++typedef struct LapEntry {
++    int a;
++    int b;
++    float c;
++    float d;
++} LapEntry;
++
++struct LapExtra {
++    LapEntry e;
++    int f10;
++};
++
++typedef struct Vec3f {
++    float x, y, z;
++} Vec3f;
++
++typedef struct RankEntry {
++    int a;
++    int b;
++    float score;
++    float time;
++} RankEntry;
++
++typedef struct CourseDir {
++    void *finishLine;           /* 0x00 */
++    Vec3f *startPos;            /* 0x04 */
++    float startYaw;             /* 0x08 */
++    void *bgmPath;              /* 0x0C */
++    void *model[4];             /* 0x10 */
++    void *modelTimer[4];        /* 0x20 */
++    void *objectTable[4];       /* 0x30 */
++    void *bgm[4];               /* 0x40 */
++    void *unk50[4];             /* 0x50 */
++    void *collision[4];         /* 0x60 */
++} CourseDir;
++
++typedef struct CourseData {
++    void *unk0;                 /* 0x000 */
++    void *jointNames[4];        /* 0x004 */
++    void *collisionBin[4];      /* 0x014 */
++    CourseDir dir[2];           /* 0x024 */
++    void *variantTable[4];      /* 0x104 */
++} CourseData;
++
++typedef struct CharacterData {
++    void *name;
++    unsigned char rest[0x28];
++} CharacterData;
++
++typedef struct DisplayState {
++    unsigned char pad[0x21];
++    signed char bufferIndex;
++} DisplayState;
++
++KartSlot lbl_805AC600[8];
++unsigned char lbl_805AC6C0[0xC];
++unsigned char lbl_805AC6CC[0x5E00];
++LapEntry lbl_805B24CC[10];
++struct LapExtra lbl_805B256C;
++unsigned char lbl_805B2580[0x20000];
++unsigned char g_playerData[0x1DC];
++unsigned char lbl_805D275C[0x1DC];
++int lbl_805D2938[4];
++RankSlot lbl_805D2948[8];
++
++void *TaMode_GetDemoCameraBookend(void)
++{
++    if (g_cupId < 0) {
++        return 0;
++    }
++    if (g_longRoundFlag < 0) {
++        return 0;
++    }
++    return lbl_8040DE94 + g_cupId * 0x30 + g_longRoundFlag * 0x18;
++}
++
+ 
+ extern int g_cupId;
+ extern int g_longRoundFlag;
+@@ -4113,7 +4236,7 @@ void *lbl_8040B11C[63] = {
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+ };
+-void *lbl_8040B218[64] = {
++void *lbl_8040B218[8][2][2][2] = {
+     lbl_80405CF4, lbl_804090F4, lbl_804076F4, lbl_80409BF4,
+     lbl_80405E94, lbl_804091A4, lbl_80407894, lbl_80409CA4,
+     lbl_80406034, lbl_80409254, lbl_80407A34, lbl_80409D54,
+@@ -4270,17 +4393,17 @@ void *lbl_8040B7AC[88] = {
+     lbl_8031CE1C, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+ };
+-void *lbl_8040B90C[2346] = {
++CourseData lbl_8040B90C[17][2] = {
+     lbl_8031CE38, lbl_8040B44C, lbl_8040B44C, lbl_8040B44C,
+     lbl_8040B44C, lbl_8031CE48, lbl_8031CE48, lbl_8031CE48,
+-    lbl_8031CE48, lbl_8040B35C, lbl_8040B374, (void *)0x43340000,
++    lbl_8031CE48, lbl_8040B35C, (Vec3f *)lbl_8040B374, 180.0f,
+     (void *)0x00000000, lbl_8031CE48, lbl_8031CE48, lbl_8031CE48,
+     lbl_8031CE48, lbl_8031CE48, lbl_8031CE48, lbl_8031CE48,
+     lbl_8031CE48, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, lbl_806D3620, lbl_806D3620, lbl_806D3620,
+-    lbl_806D3620, lbl_8040B3D4, lbl_8040B3EC, (void *)0x00000000,
++    lbl_806D3620, lbl_8040B3D4, (Vec3f *)lbl_8040B3EC, 0.0f,
+     (void *)0x00000000, lbl_8031CE48, lbl_8031CE48, lbl_8031CE48,
+     lbl_8031CE48, lbl_8031CE48, lbl_8031CE48, lbl_8031CE48,
+     lbl_8031CE48, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4290,15 +4413,15 @@ void *lbl_8040B90C[2346] = {
+     lbl_806D3620, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, lbl_8031CE60, lbl_8040B44C, lbl_8040B44C,
+     lbl_8040B44C, lbl_8040B44C, lbl_8031CE48, lbl_8031CE48,
+-    lbl_8031CE48, lbl_8031CE48, lbl_8040B35C, lbl_8040B374,
+-    (void *)0x43340000, lbl_8031CE70, lbl_8031CE48, lbl_8031CE48,
++    lbl_8031CE48, lbl_8031CE48, lbl_8040B35C, (Vec3f *)lbl_8040B374,
++    180.0f, lbl_8031CE70, lbl_8031CE48, lbl_8031CE48,
+     lbl_8031CE48, lbl_8031CE48, lbl_8031CE48, lbl_8031CE48,
+     lbl_8031CE48, lbl_8031CE48, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, lbl_806D3620, lbl_806D3620,
+-    lbl_806D3620, lbl_806D3620, lbl_8040B3D4, lbl_8040B3EC,
+-    (void *)0x00000000, lbl_8031CE8C, lbl_8031CE48, lbl_8031CE48,
++    lbl_806D3620, lbl_806D3620, lbl_8040B3D4, (Vec3f *)lbl_8040B3EC,
++    0.0f, lbl_8031CE8C, lbl_8031CE48, lbl_8031CE48,
+     lbl_8031CE48, lbl_8031CE48, lbl_8031CE48, lbl_8031CE48,
+     lbl_8031CE48, lbl_8031CE48, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4308,14 +4431,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, lbl_8031CEA8, lbl_8040B494,
+     lbl_8040B494, lbl_8040B494, lbl_8040B494, lbl_8031CEBC,
+     lbl_8031CECC, lbl_8031CEDC, lbl_8031CEBC, lbl_8040A6F4,
+-    lbl_8040A724, (void *)0x43340000, lbl_8031CEEC, lbl_8031CF08,
++    (Vec3f *)lbl_8040A724, 180.0f, lbl_8031CEEC, lbl_8031CF08,
+     lbl_8031CF20, lbl_8031CF38, lbl_8031CF38, lbl_8031CF08,
+     lbl_8031CF20, lbl_8031CF38, lbl_8031CF38, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, lbl_80401F74,
+     lbl_80401F74, lbl_80401F74, lbl_80401F74, lbl_80405CF4,
+     lbl_80405CF4, lbl_80405CF4, lbl_80405CF4, lbl_8031CF50,
+     lbl_8031CF50, lbl_8031CF50, lbl_8031CF50, lbl_8040A70C,
+-    lbl_8040A784, (void *)0x00000000, lbl_8031CF68, lbl_8031CF08,
++    (Vec3f *)lbl_8040A784, 0.0f, lbl_8031CF68, lbl_8031CF08,
+     lbl_8031CF20, lbl_8031CF38, lbl_8031CF38, lbl_8031CF08,
+     lbl_8031CF20, lbl_8031CF38, lbl_8031CF38, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, lbl_80403D94,
+@@ -4325,14 +4448,14 @@ void *lbl_8040B90C[2346] = {
+     lbl_8031CF9C, lbl_8031CFB4, lbl_8031CF84, lbl_8031CFCC,
+     lbl_8040B494, lbl_8040B494, lbl_8040B494, lbl_8040B494,
+     lbl_8031CFE0, lbl_8031CFF0, lbl_8031D000, lbl_8031D010,
+-    lbl_8040A6F4, lbl_8040A724, (void *)0x43340000, lbl_8031CE70,
++    lbl_8040A6F4, (Vec3f *)lbl_8040A724, 180.0f, lbl_8031CE70,
+     lbl_8031D028, lbl_8031D040, lbl_8031D058, lbl_8031D058,
+     lbl_8031D028, lbl_8031D040, lbl_8031D058, lbl_8031D058,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     lbl_804020B4, lbl_804020B4, lbl_804020B4, lbl_804020B4,
+     lbl_80405E94, lbl_80405E94, lbl_80405E94, lbl_80405E94,
+     lbl_8031D070, lbl_8031D070, lbl_8031D070, lbl_8031D070,
+-    lbl_8040A70C, lbl_8040A784, (void *)0x00000000, lbl_8031CE8C,
++    lbl_8040A70C, (Vec3f *)lbl_8040A784, 0.0f, lbl_8031CE8C,
+     lbl_8031D028, lbl_8031D040, lbl_8031D058, lbl_8031D058,
+     lbl_8031D028, lbl_8031D040, lbl_8031D058, lbl_8031D058,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4342,14 +4465,14 @@ void *lbl_8040B90C[2346] = {
+     lbl_8031D084, lbl_8031D09C, lbl_8031D0B4, lbl_8031D084,
+     lbl_8031D0CC, lbl_8040B4DC, lbl_8040B4DC, lbl_8040B4DC,
+     lbl_8040B4DC, lbl_8031D0E0, lbl_8031D0F0, lbl_8031D100,
+-    lbl_8031D110, lbl_8040A7E4, lbl_8040A814, (void *)0x43340000,
++    lbl_8031D110, lbl_8040A7E4, (Vec3f *)lbl_8040A814, 180.0f,
+     lbl_8031D128, lbl_8031D144, lbl_8031D15C, lbl_8031D110,
+     lbl_8031D110, lbl_8031D144, lbl_8031D15C, lbl_8031D110,
+     lbl_8031D110, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, lbl_804021F4, lbl_804021F4, lbl_804021F4,
+     lbl_804021F4, lbl_80406034, lbl_80406034, lbl_80406034,
+     lbl_80406034, lbl_8031D174, lbl_8031D174, lbl_8031D174,
+-    lbl_8031D174, lbl_8040A7FC, lbl_8040A874, (void *)0x00000000,
++    lbl_8031D174, lbl_8040A7FC, (Vec3f *)lbl_8040A874, 0.0f,
+     lbl_8031D188, lbl_8031D144, lbl_8031D15C, lbl_8031D110,
+     lbl_8031D110, lbl_8031D144, lbl_8031D15C, lbl_8031D110,
+     lbl_8031D110, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4359,15 +4482,15 @@ void *lbl_8040B90C[2346] = {
+     lbl_8031D174, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, lbl_8031D1A4, lbl_8040B4DC, lbl_8040B4DC,
+     lbl_8040B4DC, lbl_8040B4DC, lbl_8031D1B8, lbl_8031D1C8,
+-    lbl_8031D1D8, lbl_8031D1E8, lbl_8040A7E4, lbl_8040A814,
+-    (void *)0x43340000, lbl_8031D200, lbl_8031D218, lbl_8031D230,
++    lbl_8031D1D8, lbl_8031D1E8, lbl_8040A7E4, (Vec3f *)lbl_8040A814,
++    180.0f, lbl_8031D200, lbl_8031D218, lbl_8031D230,
+     lbl_8031D1E8, lbl_8031D1E8, lbl_8031D218, lbl_8031D230,
+     lbl_8031D1E8, lbl_8031D1E8, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, lbl_80402334, lbl_80402334,
+     lbl_80402334, lbl_80402334, lbl_804061D4, lbl_804061D4,
+     lbl_804061D4, lbl_804061D4, lbl_8031D248, lbl_8031D248,
+-    lbl_8031D248, lbl_8031D248, lbl_8040A7FC, lbl_8040A874,
+-    (void *)0x00000000, lbl_8031D25C, lbl_8031D218, lbl_8031D230,
++    lbl_8031D248, lbl_8031D248, lbl_8040A7FC, (Vec3f *)lbl_8040A874,
++    0.0f, lbl_8031D25C, lbl_8031D218, lbl_8031D230,
+     lbl_8031D1E8, lbl_8031D1E8, lbl_8031D218, lbl_8031D230,
+     lbl_8031D1E8, lbl_8031D1E8, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, lbl_804041E4, lbl_804041E4,
+@@ -4377,14 +4500,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, lbl_8031D278, lbl_8040B524,
+     lbl_8040B524, lbl_8040B524, lbl_8040B524, lbl_8031D28C,
+     lbl_8031D298, lbl_8031D298, lbl_8031D2A4, lbl_8040A8D4,
+-    lbl_8040A904, (void *)0x43340000, lbl_8031D2B0, lbl_8031D2C8,
++    (Vec3f *)lbl_8040A904, 180.0f, lbl_8031D2B0, lbl_8031D2C8,
+     lbl_8031D2E0, lbl_8031D2F8, lbl_8031D2F8, lbl_8031D2C8,
+     lbl_8031D2E0, lbl_8031D2F8, lbl_8031D2F8, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, lbl_80402D64,
+     lbl_80402D64, lbl_80402D64, lbl_80402D64, lbl_804069F4,
+     lbl_804069F4, lbl_804069F4, lbl_804069F4, lbl_8031D310,
+     lbl_8031D310, lbl_8031D310, lbl_8031D310, lbl_8040A8EC,
+-    lbl_8040A964, (void *)0x00000000, lbl_8031D324, lbl_8031D2C8,
++    (Vec3f *)lbl_8040A964, 0.0f, lbl_8031D324, lbl_8031D2C8,
+     lbl_8031D2E0, lbl_8031D2F8, lbl_8031D2F8, lbl_8031D2C8,
+     lbl_8031D2E0, lbl_8031D2F8, lbl_8031D2F8, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, lbl_80404CB4,
+@@ -4394,14 +4517,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, lbl_8031D340, lbl_8031D358,
+     lbl_8040B524, lbl_8040B524, lbl_8040B524, lbl_8040B524,
+     lbl_8031D28C, lbl_8031D298, lbl_8031D298, lbl_8031D2A4,
+-    lbl_8040A8D4, lbl_8040A904, (void *)0x43340000, lbl_8031D36C,
++    lbl_8040A8D4, (Vec3f *)lbl_8040A904, 180.0f, lbl_8031D36C,
+     lbl_8031D384, lbl_8031D398, lbl_8031D3AC, lbl_8031D3AC,
+     lbl_8031D384, lbl_8031D398, lbl_8031D3AC, lbl_8031D3AC,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     lbl_80402E64, lbl_80402E64, lbl_80402E64, lbl_80402E64,
+     lbl_80406B94, lbl_80406B94, lbl_80406B94, lbl_80406B94,
+     lbl_8031D3C0, lbl_8031D3C0, lbl_8031D3C0, lbl_8031D3C0,
+-    lbl_8040A8EC, lbl_8040A964, (void *)0x00000000, lbl_8031D3D4,
++    lbl_8040A8EC, (Vec3f *)lbl_8040A964, 0.0f, lbl_8031D3D4,
+     lbl_8031D384, lbl_8031D398, lbl_8031D3AC, lbl_8031D3AC,
+     lbl_8031D384, lbl_8031D398, lbl_8031D3AC, lbl_8031D3AC,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4411,14 +4534,14 @@ void *lbl_8040B90C[2346] = {
+     lbl_8031D3F0, (void *)0x00000000, (void *)0x00000000, lbl_8031D3F0,
+     lbl_8031D408, lbl_8040B56C, lbl_8040B56C, lbl_8040B56C,
+     lbl_8040B56C, lbl_8031D418, lbl_8031D418, lbl_8031D418,
+-    lbl_8031D418, lbl_8040A9C4, lbl_8040AA24, (void *)0x43340000,
++    lbl_8031D418, lbl_8040A9C4, (Vec3f *)lbl_8040AA24, 180.0f,
+     lbl_8031D428, lbl_8031D440, lbl_8031D440, lbl_8031D440,
+     lbl_8031D440, lbl_8031D440, lbl_8031D440, lbl_8031D440,
+     lbl_8031D440, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, lbl_80402FD4, lbl_80402FD4, lbl_80402FD4,
+     lbl_80402FD4, lbl_80406D34, lbl_80406D34, lbl_80406D34,
+     lbl_80406D34, lbl_8031D454, lbl_8031D468, lbl_8031D47C,
+-    lbl_8031D490, lbl_8040A9F4, lbl_8040AAE4, (void *)0x00000000,
++    lbl_8031D490, lbl_8040A9F4, (Vec3f *)lbl_8040AAE4, 0.0f,
+     lbl_8031D4A4, lbl_8031D440, lbl_8031D440, lbl_8031D440,
+     lbl_8031D440, lbl_8031D440, lbl_8031D440, lbl_8031D440,
+     lbl_8031D440, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4428,15 +4551,15 @@ void *lbl_8040B90C[2346] = {
+     lbl_8031D490, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, lbl_8031D4C0, lbl_8040B56C, lbl_8040B56C,
+     lbl_8040B56C, lbl_8040B56C, lbl_8031D4D0, lbl_8031D4D0,
+-    lbl_8031D4D0, lbl_8031D4D0, lbl_8040A9DC, lbl_8040AA84,
+-    (void *)0x00000000, lbl_8031D4E0, lbl_8031D4F8, lbl_8031D4F8,
++    lbl_8031D4D0, lbl_8031D4D0, lbl_8040A9DC, (Vec3f *)lbl_8040AA84,
++    0.0f, lbl_8031D4E0, lbl_8031D4F8, lbl_8031D4F8,
+     lbl_8031D4F8, lbl_8031D4F8, lbl_8031D4F8, lbl_8031D4F8,
+     lbl_8031D4F8, lbl_8031D4F8, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, lbl_80403154, lbl_80403154,
+     lbl_80403154, lbl_80403154, lbl_80406ED4, lbl_80406ED4,
+     lbl_80406ED4, lbl_80406ED4, lbl_8031D50C, lbl_8031D520,
+-    lbl_8031D534, lbl_8031D548, lbl_8040AA0C, lbl_8040AB44,
+-    (void *)0x434C0000, lbl_8031D55C, lbl_8031D4F8, lbl_8031D4F8,
++    lbl_8031D534, lbl_8031D548, lbl_8040AA0C, (Vec3f *)lbl_8040AB44,
++    204.0f, lbl_8031D55C, lbl_8031D4F8, lbl_8031D4F8,
+     lbl_8031D4F8, lbl_8031D4F8, lbl_8031D4F8, lbl_8031D4F8,
+     lbl_8031D4F8, lbl_8031D4F8, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, lbl_804050B4, lbl_804050B4,
+@@ -4446,14 +4569,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, lbl_8031D574, lbl_8040B5B4,
+     lbl_8040B5B4, lbl_8040B5B4, lbl_8040B5B4, lbl_8031D588,
+     lbl_8031D588, lbl_8031D588, lbl_8031D598, lbl_8040ABA4,
+-    lbl_8040ABD4, (void *)0x43340000, lbl_8031D5B0, lbl_8031D598,
++    (Vec3f *)lbl_8040ABD4, 180.0f, lbl_8031D5B0, lbl_8031D598,
+     lbl_8031D598, lbl_8031D598, lbl_8031D598, lbl_8031D598,
+     lbl_8031D598, lbl_8031D598, lbl_8031D598, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, lbl_80402434,
+     lbl_80402434, lbl_80402434, lbl_80402434, lbl_80406374,
+     lbl_80406374, lbl_80406374, lbl_80406374, lbl_8031D5CC,
+     lbl_8031D5CC, lbl_8031D5CC, lbl_8031D5CC, lbl_8040ABBC,
+-    lbl_8040AC34, (void *)0x00000000, lbl_8031D5E0, lbl_8031D598,
++    (Vec3f *)lbl_8040AC34, 0.0f, lbl_8031D5E0, lbl_8031D598,
+     lbl_8031D598, lbl_8031D598, lbl_8031D598, lbl_8031D598,
+     lbl_8031D598, lbl_8031D598, lbl_8031D598, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, lbl_80404394,
+@@ -4463,14 +4586,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, lbl_8031D5FC,
+     lbl_8040B5B4, lbl_8040B5B4, lbl_8040B5B4, lbl_8040B5B4,
+     lbl_8031D610, lbl_8031D610, lbl_8031D610, lbl_8031D620,
+-    lbl_8040ABA4, lbl_8040ABD4, (void *)0x43340000, lbl_8031D638,
++    lbl_8040ABA4, (Vec3f *)lbl_8040ABD4, 180.0f, lbl_8031D638,
+     lbl_8031D620, lbl_8031D620, lbl_8031D620, lbl_8031D620,
+     lbl_8031D620, lbl_8031D620, lbl_8031D620, lbl_8031D620,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     lbl_804025A4, lbl_804025A4, lbl_804025A4, lbl_804025A4,
+     lbl_80406514, lbl_80406514, lbl_80406514, lbl_80406514,
+     lbl_8031D650, lbl_8031D650, lbl_8031D650, lbl_8031D650,
+-    lbl_8040ABBC, lbl_8040AC34, (void *)0x00000000, lbl_8031D664,
++    lbl_8040ABBC, (Vec3f *)lbl_8040AC34, 0.0f, lbl_8031D664,
+     lbl_8031D620, lbl_8031D620, lbl_8031D620, lbl_8031D620,
+     lbl_8031D620, lbl_8031D620, lbl_8031D620, lbl_8031D620,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4480,14 +4603,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     lbl_8031D680, lbl_8040B5FC, lbl_8040B5FC, lbl_8040B5FC,
+     lbl_8040B5FC, lbl_8031D690, lbl_8031D6A0, lbl_8031D6B0,
+-    lbl_8031D6C0, lbl_8040AC94, lbl_8040ACC4, (void *)0x43340000,
++    lbl_8031D6C0, lbl_8040AC94, (Vec3f *)lbl_8040ACC4, 180.0f,
+     lbl_8031D6D0, lbl_8031D6E8, lbl_8031D6FC, lbl_8031D710,
+     lbl_8031D724, lbl_8031D6E8, lbl_8031D6FC, lbl_8031D710,
+     lbl_8031D724, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, lbl_80402724, lbl_80402724, lbl_80402724,
+     lbl_80402724, lbl_804066B4, lbl_804066B4, lbl_804066B4,
+     lbl_804066B4, lbl_8031D738, lbl_8031D738, lbl_8031D738,
+-    lbl_8031D738, lbl_8040ACAC, lbl_8040AD24, (void *)0x00000000,
++    lbl_8031D738, lbl_8040ACAC, (Vec3f *)lbl_8040AD24, 0.0f,
+     lbl_8031D74C, lbl_8031D6E8, lbl_8031D6FC, lbl_8031D710,
+     lbl_8031D724, lbl_8031D6E8, lbl_8031D6FC, lbl_8031D710,
+     lbl_8031D724, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4497,15 +4620,15 @@ void *lbl_8040B90C[2346] = {
+     lbl_8031D738, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, lbl_8031D768, lbl_8040B5FC, lbl_8040B5FC,
+     lbl_8040B5FC, lbl_8040B5FC, lbl_8031D690, lbl_8031D6A0,
+-    lbl_8031D6B0, lbl_8031D6C0, lbl_8040AC94, lbl_8040ACC4,
+-    (void *)0x43340000, lbl_8031D778, lbl_8031D790, lbl_8031D7A4,
++    lbl_8031D6B0, lbl_8031D6C0, lbl_8040AC94, (Vec3f *)lbl_8040ACC4,
++    180.0f, lbl_8031D778, lbl_8031D790, lbl_8031D7A4,
+     lbl_8031D7B8, lbl_8031D7CC, lbl_8031D790, lbl_8031D7A4,
+     lbl_8031D7B8, lbl_8031D7CC, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, lbl_80402A44, lbl_80402A44,
+     lbl_80402A44, lbl_80402A44, lbl_80406854, lbl_80406854,
+     lbl_80406854, lbl_80406854, lbl_8031D7E0, lbl_8031D7E0,
+-    lbl_8031D7E0, lbl_8031D7E0, lbl_8040ACAC, lbl_8040AD24,
+-    (void *)0x00000000, lbl_8031D7F4, lbl_8031D80C, lbl_8031D824,
++    lbl_8031D7E0, lbl_8031D7E0, lbl_8040ACAC, (Vec3f *)lbl_8040AD24,
++    0.0f, lbl_8031D7F4, lbl_8031D80C, lbl_8031D824,
+     lbl_8031D83C, lbl_8031D854, lbl_8031D80C, lbl_8031D824,
+     lbl_8031D83C, lbl_8031D854, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, lbl_80404994, lbl_80404994,
+@@ -4515,14 +4638,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, lbl_8031D880, lbl_8040B644,
+     lbl_8040B644, lbl_8040B644, lbl_8040B644, lbl_8031D890,
+     lbl_8031D890, lbl_8031D890, lbl_8031D890, lbl_8040AD84,
+-    lbl_8040ADB4, (void *)0x43340000, lbl_8031D8A4, lbl_8031D890,
++    (Vec3f *)lbl_8040ADB4, 180.0f, lbl_8031D8A4, lbl_8031D890,
+     lbl_8031D890, lbl_8031D890, lbl_8031D890, lbl_8031D890,
+     lbl_8031D890, lbl_8031D890, lbl_8031D890, lbl_8040AE74,
+     lbl_8040AE74, lbl_8040AE74, lbl_8040AE74, lbl_80403324,
+     lbl_80403324, lbl_80403324, lbl_80403324, lbl_80407074,
+     lbl_80407074, lbl_80407074, lbl_80407074, lbl_8031D8BC,
+     lbl_8031D8BC, lbl_8031D8BC, lbl_8031D8BC, lbl_8040AD9C,
+-    lbl_8040AE14, (void *)0x00000000, lbl_8031D8D0, lbl_8031D890,
++    (Vec3f *)lbl_8040AE14, 0.0f, lbl_8031D8D0, lbl_8031D890,
+     lbl_8031D890, lbl_8031D890, lbl_8031D890, lbl_8031D890,
+     lbl_8031D890, lbl_8031D890, lbl_8031D890, lbl_8040AE74,
+     lbl_8040AE74, lbl_8040AE74, lbl_8040AE74, lbl_80405284,
+@@ -4532,14 +4655,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, lbl_8031D8EC,
+     lbl_8040B644, lbl_8040B644, lbl_8040B644, lbl_8040B644,
+     lbl_8031D8FC, lbl_8031D8FC, lbl_8031D8FC, lbl_8031D8FC,
+-    lbl_8040AD84, lbl_8040ADB4, (void *)0x43340000, lbl_8031D910,
++    lbl_8040AD84, (Vec3f *)lbl_8040ADB4, 180.0f, lbl_8031D910,
+     lbl_8031D8FC, lbl_8031D8FC, lbl_8031D8FC, lbl_8031D8FC,
+     lbl_8031D8FC, lbl_8031D8FC, lbl_8031D8FC, lbl_8031D8FC,
+     lbl_8040AE90, lbl_8040AE90, lbl_8040AE90, lbl_8040AE90,
+     lbl_80403654, lbl_80403654, lbl_80403654, lbl_80403654,
+     lbl_80407214, lbl_80407214, lbl_80407214, lbl_80407214,
+     lbl_8031D928, lbl_8031D928, lbl_8031D928, lbl_8031D928,
+-    lbl_8040AD9C, lbl_8040AE14, (void *)0x00000000, lbl_8031D93C,
++    lbl_8040AD9C, (Vec3f *)lbl_8040AE14, 0.0f, lbl_8031D93C,
+     lbl_8031D8FC, lbl_8031D8FC, lbl_8031D8FC, lbl_8031D8FC,
+     lbl_8031D8FC, lbl_8031D8FC, lbl_8031D8FC, lbl_8031D8FC,
+     lbl_8040AE90, lbl_8040AE90, lbl_8040AE90, lbl_8040AE90,
+@@ -4549,14 +4672,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     lbl_8031D954, lbl_8040B68C, lbl_8040B68C, lbl_8040B68C,
+     lbl_8040B68C, lbl_8031D968, lbl_8031D968, lbl_8031D968,
+-    lbl_8031D968, lbl_8040AEAC, lbl_8040AEDC, (void *)0x43340000,
++    lbl_8031D968, lbl_8040AEAC, (Vec3f *)lbl_8040AEDC, 180.0f,
+     lbl_8031D980, lbl_8031D968, lbl_8031D968, lbl_8031D968,
+     lbl_8031D968, lbl_8031D968, lbl_8031D968, lbl_8031D968,
+     lbl_8031D968, lbl_8040AF9C, lbl_8040AF9C, lbl_8040AF9C,
+     lbl_8040AF9C, lbl_804039B4, lbl_804039B4, lbl_804039B4,
+     lbl_804039B4, lbl_804073B4, lbl_804073B4, lbl_804073B4,
+     lbl_804073B4, lbl_8031D99C, lbl_8031D99C, lbl_8031D99C,
+-    lbl_8031D99C, lbl_8040AEC4, lbl_8040AF3C, (void *)0x00000000,
++    lbl_8031D99C, lbl_8040AEC4, (Vec3f *)lbl_8040AF3C, 0.0f,
+     lbl_8031D9B4, lbl_8031D968, lbl_8031D968, lbl_8031D968,
+     lbl_8031D968, lbl_8031D968, lbl_8031D968, lbl_8031D968,
+     lbl_8031D968, lbl_8040AFD4, lbl_8040AFD4, lbl_8040AFD4,
+@@ -4566,15 +4689,15 @@ void *lbl_8040B90C[2346] = {
+     lbl_8031D99C, lbl_8031D9D0, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, lbl_8031D9E8, lbl_8040B68C, lbl_8040B68C,
+     lbl_8040B68C, lbl_8040B68C, lbl_8031D9FC, lbl_8031D9FC,
+-    lbl_8031D9FC, lbl_8031D9FC, lbl_8040AEAC, lbl_8040AEDC,
+-    (void *)0x43340000, lbl_8031DA14, lbl_8031D9FC, lbl_8031D9FC,
++    lbl_8031D9FC, lbl_8031D9FC, lbl_8040AEAC, (Vec3f *)lbl_8040AEDC,
++    180.0f, lbl_8031DA14, lbl_8031D9FC, lbl_8031D9FC,
+     lbl_8031D9FC, lbl_8031D9FC, lbl_8031D9FC, lbl_8031D9FC,
+     lbl_8031D9FC, lbl_8031D9FC, lbl_8040AFB8, lbl_8040AFB8,
+     lbl_8040AFB8, lbl_8040AFB8, lbl_80403BA4, lbl_80403BA4,
+     lbl_80403BA4, lbl_80403BA4, lbl_80407554, lbl_80407554,
+     lbl_80407554, lbl_80407554, lbl_8031DA30, lbl_8031DA30,
+-    lbl_8031DA30, lbl_8031DA44, lbl_8040AEC4, lbl_8040AF3C,
+-    (void *)0x00000000, lbl_8031DA5C, lbl_8031D9FC, lbl_8031D9FC,
++    lbl_8031DA30, lbl_8031DA44, lbl_8040AEC4, (Vec3f *)lbl_8040AF3C,
++    0.0f, lbl_8031DA5C, lbl_8031D9FC, lbl_8031D9FC,
+     lbl_8031D9FC, lbl_8031D9FC, lbl_8031D9FC, lbl_8031D9FC,
+     lbl_8031D9FC, lbl_8031D9FC, lbl_8040AFF0, lbl_8040AFF0,
+     lbl_8040AFF0, lbl_8040AFF0, lbl_80405B04, lbl_80405B04,
+@@ -4584,14 +4707,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, lbl_8031DA90, Block2,
+     Block2, Block2, Block2, lbl_8031CEBC,
+     lbl_8031CEBC, lbl_8031CEBC, lbl_8031CEBC, lbl_8040B00C,
+-    lbl_8040B024, (void *)0x43A50000, (void *)0x00000000, lbl_8031DAA8,
++    (Vec3f *)lbl_8040B024, 330.0f, (void *)0x00000000, lbl_8031DAA8,
+     lbl_8031DAA8, lbl_8031DAA8, lbl_8031DAA8, lbl_8031DAA8,
+     lbl_8031DAA8, lbl_8031DAA8, lbl_8031DAA8, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, lbl_8031DAC4,
+     lbl_8031DAC4, lbl_8031DAC4, lbl_8031DAC4, lbl_8040B00C,
+-    lbl_8040B024, (void *)0x43A50000, (void *)0x00000000, lbl_8031DAA8,
++    (Vec3f *)lbl_8040B024, 330.0f, (void *)0x00000000, lbl_8031DAA8,
+     lbl_8031DAA8, lbl_8031DAA8, lbl_8031DAA8, lbl_8031DAA8,
+     lbl_8031DAA8, lbl_8031DAA8, lbl_8031DAA8, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4601,14 +4724,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, lbl_8031DA90,
+     Block2, Block2, Block2, Block2,
+     lbl_8031DAA8, lbl_8031DAA8, lbl_8031DAA8, lbl_8031DAA8,
+-    lbl_8040B00C, lbl_8040B024, (void *)0x43A50000, (void *)0x00000000,
++    lbl_8040B00C, (Vec3f *)lbl_8040B024, 330.0f, (void *)0x00000000,
+     lbl_8031DAA8, lbl_8031DAA8, lbl_8031DAA8, lbl_8031DAA8,
+     lbl_8031DAA8, lbl_8031DAA8, lbl_8031DAA8, lbl_8031DAA8,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     lbl_8031DAC4, lbl_8031DAC4, lbl_8031DAC4, lbl_8031DAC4,
+-    lbl_8040B00C, lbl_8040B024, (void *)0x43A50000, (void *)0x00000000,
++    lbl_8040B00C, (Vec3f *)lbl_8040B024, 330.0f, (void *)0x00000000,
+     lbl_8031DAA8, lbl_8031DAA8, lbl_8031DAA8, lbl_8031DAA8,
+     lbl_8031DAA8, lbl_8031DAA8, lbl_8031DAA8, lbl_8031DAA8,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4618,14 +4741,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     lbl_8031DAE0, lbl_8040B71C, lbl_8040B71C, lbl_8040B71C,
+     lbl_8040B71C, lbl_8031D0E0, lbl_8031D0E0, lbl_8031D0E0,
+-    lbl_8031D0E0, lbl_8040B030, lbl_8040B048, (void *)0x43340000,
++    lbl_8031D0E0, lbl_8040B030, (Vec3f *)lbl_8040B048, 180.0f,
+     (void *)0x00000000, lbl_8031DAF4, lbl_8031DAF4, lbl_8031DAF4,
+     lbl_8031DAF4, lbl_8031DAF4, lbl_8031DAF4, lbl_8031DAF4,
+     lbl_8031DAF4, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, lbl_8031D174, lbl_8031D174, lbl_8031D174,
+-    lbl_8031D174, lbl_8040B030, lbl_8040B048, (void *)0x43340000,
++    lbl_8031D174, lbl_8040B030, (Vec3f *)lbl_8040B048, 180.0f,
+     (void *)0x00000000, lbl_8031DAF4, lbl_8031DAF4, lbl_8031DAF4,
+     lbl_8031DAF4, lbl_8031DAF4, lbl_8031DAF4, lbl_8031DAF4,
+     lbl_8031DAF4, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4635,15 +4758,15 @@ void *lbl_8040B90C[2346] = {
+     lbl_8031D174, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, lbl_8031DAE0, lbl_8040B71C, lbl_8040B71C,
+     lbl_8040B71C, lbl_8040B71C, lbl_8031DAF4, lbl_8031DAF4,
+-    lbl_8031DAF4, lbl_8031DAF4, lbl_8040B030, lbl_8040B048,
+-    (void *)0x43340000, (void *)0x00000000, lbl_8031DAF4, lbl_8031DAF4,
++    lbl_8031DAF4, lbl_8031DAF4, lbl_8040B030, (Vec3f *)lbl_8040B048,
++    180.0f, (void *)0x00000000, lbl_8031DAF4, lbl_8031DAF4,
+     lbl_8031DAF4, lbl_8031DAF4, lbl_8031DAF4, lbl_8031DAF4,
+     lbl_8031DAF4, lbl_8031DAF4, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, lbl_8031D174, lbl_8031D174,
+-    lbl_8031D174, lbl_8031D174, lbl_8040B030, lbl_8040B048,
+-    (void *)0x43340000, (void *)0x00000000, lbl_8031DAF4, lbl_8031DAF4,
++    lbl_8031D174, lbl_8031D174, lbl_8040B030, (Vec3f *)lbl_8040B048,
++    180.0f, (void *)0x00000000, lbl_8031DAF4, lbl_8031DAF4,
+     lbl_8031DAF4, lbl_8031DAF4, lbl_8031DAF4, lbl_8031DAF4,
+     lbl_8031DAF4, lbl_8031DAF4, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4653,14 +4776,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, lbl_8031DB0C, lbl_8040B524,
+     lbl_8040B524, lbl_8040B524, lbl_8040B524, lbl_8031D28C,
+     lbl_8031D28C, lbl_8031D28C, lbl_8031D28C, lbl_8040A8D4,
+-    lbl_8040A904, (void *)0x43340000, (void *)0x00000000, lbl_8031DB20,
++    (Vec3f *)lbl_8040A904, 180.0f, (void *)0x00000000, lbl_8031DB20,
+     lbl_8031DB20, lbl_8031DB20, lbl_8031DB20, lbl_8031DB20,
+     lbl_8031DB20, lbl_8031DB20, lbl_8031DB20, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, lbl_8031D310,
+     lbl_8031D310, lbl_8031D310, lbl_8031D310, lbl_8040A8D4,
+-    lbl_8040A904, (void *)0x43340000, (void *)0x00000000, lbl_8031DB20,
++    (Vec3f *)lbl_8040A904, 180.0f, (void *)0x00000000, lbl_8031DB20,
+     lbl_8031DB20, lbl_8031DB20, lbl_8031DB20, lbl_8031DB20,
+     lbl_8031DB20, lbl_8031DB20, lbl_8031DB20, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4670,14 +4793,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, lbl_8031DB0C,
+     lbl_8040B524, lbl_8040B524, lbl_8040B524, lbl_8040B524,
+     lbl_8031D28C, lbl_8031D28C, lbl_8031D28C, lbl_8031D28C,
+-    lbl_8040A8D4, lbl_8040A904, (void *)0x43340000, (void *)0x00000000,
++    lbl_8040A8D4, (Vec3f *)lbl_8040A904, 180.0f, (void *)0x00000000,
+     lbl_8031DB20, lbl_8031DB20, lbl_8031DB20, lbl_8031DB20,
+     lbl_8031DB20, lbl_8031DB20, lbl_8031DB20, lbl_8031DB20,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     lbl_8031DB38, lbl_8031DB38, lbl_8031DB38, lbl_8031DB38,
+-    lbl_8040A8D4, lbl_8040A904, (void *)0x43340000, (void *)0x00000000,
++    lbl_8040A8D4, (Vec3f *)lbl_8040A904, 180.0f, (void *)0x00000000,
+     lbl_8031DB20, lbl_8031DB20, lbl_8031DB20, lbl_8031DB20,
+     lbl_8031DB20, lbl_8031DB20, lbl_8031DB20, lbl_8031DB20,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4687,14 +4810,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     lbl_8031DB50, lbl_8040B764, lbl_8040B764, lbl_8040B764,
+     lbl_8040B764, lbl_8031D418, lbl_8031D418, lbl_8031D418,
+-    lbl_8031D418, lbl_8040B054, lbl_8040B06C, (void *)0x43340000,
++    lbl_8031D418, lbl_8040B054, (Vec3f *)lbl_8040B06C, 180.0f,
+     (void *)0x00000000, lbl_8031DB64, lbl_8031DB64, lbl_8031DB64,
+     lbl_8031DB64, lbl_8031DB64, lbl_8031DB64, lbl_8031DB64,
+     lbl_8031DB64, lbl_8040B078, lbl_8040B078, lbl_8040B078,
+     lbl_8040B078, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, lbl_8031DB7C, lbl_8031DB7C, lbl_8031DB7C,
+-    lbl_8031DB7C, lbl_8040B054, lbl_8040B06C, (void *)0x43340000,
++    lbl_8031DB7C, lbl_8040B054, (Vec3f *)lbl_8040B06C, 180.0f,
+     (void *)0x00000000, lbl_8031DB64, lbl_8031DB64, lbl_8031DB64,
+     lbl_8031DB64, lbl_8031DB64, lbl_8031DB64, lbl_8031DB64,
+     lbl_8031DB64, lbl_8040B078, lbl_8040B078, lbl_8040B078,
+@@ -4704,15 +4827,15 @@ void *lbl_8040B90C[2346] = {
+     lbl_8031DB7C, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, lbl_8031DB50, lbl_8040B764, lbl_8040B764,
+     lbl_8040B764, lbl_8040B764, lbl_8031D4D0, lbl_8031D4D0,
+-    lbl_8031D4D0, lbl_8031D4D0, lbl_8040B054, lbl_8040B06C,
+-    (void *)0x43340000, (void *)0x00000000, lbl_8031DB64, lbl_8031DB64,
++    lbl_8031D4D0, lbl_8031D4D0, lbl_8040B054, (Vec3f *)lbl_8040B06C,
++    180.0f, (void *)0x00000000, lbl_8031DB64, lbl_8031DB64,
+     lbl_8031DB64, lbl_8031DB64, lbl_8031DB64, lbl_8031DB64,
+     lbl_8031DB64, lbl_8031DB64, lbl_8040B078, lbl_8040B078,
+     lbl_8040B078, lbl_8040B078, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, lbl_8031DB7C, lbl_8031DB7C,
+-    lbl_8031DB7C, lbl_8031DB7C, lbl_8040B054, lbl_8040B06C,
+-    (void *)0x43340000, (void *)0x00000000, lbl_8031DB64, lbl_8031DB64,
++    lbl_8031DB7C, lbl_8031DB7C, lbl_8040B054, (Vec3f *)lbl_8040B06C,
++    180.0f, (void *)0x00000000, lbl_8031DB64, lbl_8031DB64,
+     lbl_8031DB64, lbl_8031DB64, lbl_8031DB64, lbl_8031DB64,
+     lbl_8031DB64, lbl_8031DB64, lbl_8040B078, lbl_8040B078,
+     lbl_8040B078, lbl_8040B078, (void *)0x00000000, (void *)0x00000000,
+@@ -4722,14 +4845,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, lbl_8031DB94, lbl_8040B7AC,
+     lbl_8040B7AC, lbl_8040B7AC, lbl_8040B7AC, lbl_8031DBA8,
+     lbl_8031DBA8, lbl_8031DBA8, lbl_8031DBA8, lbl_8040B0B0,
+-    lbl_8040B0C8, (void *)0x43340000, (void *)0x00000000, lbl_8031DBA8,
++    (Vec3f *)lbl_8040B0C8, 180.0f, (void *)0x00000000, lbl_8031DBA8,
+     lbl_8031DBA8, lbl_8031DBA8, lbl_8031DBA8, lbl_8031DBA8,
+     lbl_8031DBA8, lbl_8031DBA8, lbl_8031DBA8, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, lbl_8031DBC0,
+     lbl_8031DBC0, lbl_8031DBC0, lbl_8031DBC0, lbl_8040B0B0,
+-    lbl_8040B0C8, (void *)0x43340000, (void *)0x00000000, lbl_8031DBA8,
++    (Vec3f *)lbl_8040B0C8, 180.0f, (void *)0x00000000, lbl_8031DBA8,
+     lbl_8031DBA8, lbl_8031DBA8, lbl_8031DBA8, lbl_8031DBA8,
+     lbl_8031DBA8, lbl_8031DBA8, lbl_8031DBA8, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4739,14 +4862,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, lbl_8031DB94,
+     lbl_8040B7AC, lbl_8040B7AC, lbl_8040B7AC, lbl_8040B7AC,
+     lbl_8031DBA8, lbl_8031DBA8, lbl_8031DBA8, lbl_8031DBA8,
+-    lbl_8040B0B0, lbl_8040B0C8, (void *)0x43340000, (void *)0x00000000,
++    lbl_8040B0B0, (Vec3f *)lbl_8040B0C8, 180.0f, (void *)0x00000000,
+     lbl_8031DBA8, lbl_8031DBA8, lbl_8031DBA8, lbl_8031DBA8,
+     lbl_8031DBA8, lbl_8031DBA8, lbl_8031DBA8, lbl_8031DBA8,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     lbl_8031DBC0, lbl_8031DBC0, lbl_8031DBC0, lbl_8031DBC0,
+-    lbl_8040B0B0, lbl_8040B0C8, (void *)0x43340000, (void *)0x00000000,
++    lbl_8040B0B0, (Vec3f *)lbl_8040B0C8, 180.0f, (void *)0x00000000,
+     lbl_8031DBA8, lbl_8031DBA8, lbl_8031DBA8, lbl_8031DBA8,
+     lbl_8031DBA8, lbl_8031DBA8, lbl_8031DBA8, lbl_8031DBA8,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4756,14 +4879,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     lbl_8031DBD8, lbl_8040B5FC, lbl_8040B5FC, lbl_8040B5FC,
+     lbl_8040B5FC, lbl_8031D6B0, lbl_8031D6B0, lbl_8031D6B0,
+-    lbl_8031D6B0, lbl_8040AC94, lbl_8040ACC4, (void *)0x43340000,
++    lbl_8031D6B0, lbl_8040AC94, (Vec3f *)lbl_8040ACC4, 180.0f,
+     (void *)0x00000000, lbl_8031D710, lbl_8031D710, lbl_8031D710,
+     lbl_8031D710, lbl_8031D710, lbl_8031D710, lbl_8031D710,
+     lbl_8031D710, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, lbl_8031D738, lbl_8031D738, lbl_8031D738,
+-    lbl_8031D738, lbl_8040AC94, lbl_8040ACC4, (void *)0x43340000,
++    lbl_8031D738, lbl_8040AC94, (Vec3f *)lbl_8040ACC4, 180.0f,
+     (void *)0x00000000, lbl_8031D710, lbl_8031D710, lbl_8031D710,
+     lbl_8031D710, lbl_8031D710, lbl_8031D710, lbl_8031D710,
+     lbl_8031D710, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4773,15 +4896,15 @@ void *lbl_8040B90C[2346] = {
+     lbl_8031D738, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, lbl_8031DBD8, lbl_8040B5FC, lbl_8040B5FC,
+     lbl_8040B5FC, lbl_8040B5FC, lbl_8031D7B8, lbl_8031D7B8,
+-    lbl_8031D7B8, lbl_8031D7B8, lbl_8040AC94, lbl_8040ACC4,
+-    (void *)0x43340000, (void *)0x00000000, lbl_8031D7B8, lbl_8031D7B8,
++    lbl_8031D7B8, lbl_8031D7B8, lbl_8040AC94, (Vec3f *)lbl_8040ACC4,
++    180.0f, (void *)0x00000000, lbl_8031D7B8, lbl_8031D7B8,
+     lbl_8031D7B8, lbl_8031D7B8, lbl_8031D7B8, lbl_8031D7B8,
+     lbl_8031D7B8, lbl_8031D7B8, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, lbl_8031DBEC, lbl_8031DBEC,
+-    lbl_8031DBEC, lbl_8031DBEC, lbl_8040AC94, lbl_8040ACC4,
+-    (void *)0x43340000, (void *)0x00000000, lbl_8031D7B8, lbl_8031D7B8,
++    lbl_8031DBEC, lbl_8031DBEC, lbl_8040AC94, (Vec3f *)lbl_8040ACC4,
++    180.0f, (void *)0x00000000, lbl_8031D7B8, lbl_8031D7B8,
+     lbl_8031D7B8, lbl_8031D7B8, lbl_8031D7B8, lbl_8031D7B8,
+     lbl_8031D7B8, lbl_8031D7B8, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+@@ -4791,14 +4914,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, lbl_8031DC04, lbl_8040B644,
+     lbl_8040B644, lbl_8040B644, lbl_8040B644, lbl_8031D890,
+     lbl_8031D890, lbl_8031D890, lbl_8031D890, lbl_8040AD84,
+-    lbl_8040ADB4, (void *)0x43340000, (void *)0x00000000, lbl_8031D890,
++    (Vec3f *)lbl_8040ADB4, 180.0f, (void *)0x00000000, lbl_8031D890,
+     lbl_8031D890, lbl_8031D890, lbl_8031D890, lbl_8031D890,
+     lbl_8031D890, lbl_8031D890, lbl_8031D890, lbl_8040AE74,
+     lbl_8040AE74, lbl_8040AE74, lbl_8040AE74, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, lbl_8031D8BC,
+     lbl_8031D8BC, lbl_8031D8BC, lbl_8031D8BC, lbl_8040AD84,
+-    lbl_8040ADB4, (void *)0x43340000, (void *)0x00000000, lbl_8031D890,
++    (Vec3f *)lbl_8040ADB4, 180.0f, (void *)0x00000000, lbl_8031D890,
+     lbl_8031D890, lbl_8031D890, lbl_8031D890, lbl_8031D890,
+     lbl_8031D890, lbl_8031D890, lbl_8031D890, lbl_8040AE74,
+     lbl_8040AE74, lbl_8040AE74, lbl_8040AE74, (void *)0x00000000,
+@@ -4808,14 +4931,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, lbl_8031DC04,
+     lbl_8040B644, lbl_8040B644, lbl_8040B644, lbl_8040B644,
+     lbl_8031D890, lbl_8031D890, lbl_8031D890, lbl_8031D890,
+-    lbl_8040AD84, lbl_8040ADB4, (void *)0x43340000, (void *)0x00000000,
++    lbl_8040AD84, (Vec3f *)lbl_8040ADB4, 180.0f, (void *)0x00000000,
+     lbl_8031D890, lbl_8031D890, lbl_8031D890, lbl_8031D890,
+     lbl_8031D890, lbl_8031D890, lbl_8031D890, lbl_8031D890,
+     lbl_8040AE74, lbl_8040AE74, lbl_8040AE74, lbl_8040AE74,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     lbl_8031D8BC, lbl_8031D8BC, lbl_8031D8BC, lbl_8031D8BC,
+-    lbl_8040AD84, lbl_8040ADB4, (void *)0x43340000, (void *)0x00000000,
++    lbl_8040AD84, (Vec3f *)lbl_8040ADB4, 180.0f, (void *)0x00000000,
+     lbl_8031D890, lbl_8031D890, lbl_8031D890, lbl_8031D890,
+     lbl_8031D890, lbl_8031D890, lbl_8031D890, lbl_8031D890,
+     lbl_8040AE74, lbl_8040AE74, lbl_8040AE74, lbl_8040AE74,
+@@ -4825,14 +4948,14 @@ void *lbl_8040B90C[2346] = {
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     lbl_8031DC18, lbl_8040B68C, lbl_8040B68C, lbl_8040B68C,
+     lbl_8040B68C, lbl_8031D968, lbl_8031D968, lbl_8031D968,
+-    lbl_8031D968, lbl_8040B0D4, lbl_8040B104, (void *)0x43340000,
++    lbl_8031D968, lbl_8040B0D4, (Vec3f *)lbl_8040B104, 180.0f,
+     (void *)0x00000000, lbl_8031DC30, lbl_8031DC30, lbl_8031DC30,
+     lbl_8031DC30, lbl_8031DC30, lbl_8031DC30, lbl_8031DC30,
+     lbl_8031DC30, lbl_8040B11C, lbl_8040B11C, lbl_8040B11C,
+     lbl_8040B11C, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, lbl_8031DC4C, lbl_8031DC4C, lbl_8031DC4C,
+-    lbl_8031DC4C, lbl_8040B0EC, lbl_8040B110, (void *)0x00000000,
++    lbl_8031DC4C, lbl_8040B0EC, (Vec3f *)lbl_8040B110, 0.0f,
+     (void *)0x00000000, lbl_8031DC30, lbl_8031DC30, lbl_8031DC30,
+     lbl_8031DC30, lbl_8031DC30, lbl_8031DC30, lbl_8031DC30,
+     lbl_8031DC30, lbl_8040B11C, lbl_8040B11C, lbl_8040B11C,
+@@ -4842,15 +4965,15 @@ void *lbl_8040B90C[2346] = {
+     lbl_8031DC4C, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, lbl_8031DC18, lbl_8040B68C, lbl_8040B68C,
+     lbl_8040B68C, lbl_8040B68C, lbl_8031D968, lbl_8031D968,
+-    lbl_8031D968, lbl_8031D968, lbl_8040B0D4, lbl_8040B104,
+-    (void *)0x43340000, (void *)0x00000000, lbl_8031DC30, lbl_8031DC30,
++    lbl_8031D968, lbl_8031D968, lbl_8040B0D4, (Vec3f *)lbl_8040B104,
++    180.0f, (void *)0x00000000, lbl_8031DC30, lbl_8031DC30,
+     lbl_8031DC30, lbl_8031DC30, lbl_8031DC30, lbl_8031DC30,
+     lbl_8031DC30, lbl_8031DC30, lbl_8040B11C, lbl_8040B11C,
+     lbl_8040B11C, lbl_8040B11C, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
+     (void *)0x00000000, (void *)0x00000000, lbl_8031DC4C, lbl_8031DC4C,
+-    lbl_8031DC4C, lbl_8031DC4C, lbl_8040B0EC, lbl_8040B110,
+-    (void *)0x00000000, (void *)0x00000000, lbl_8031DC30, lbl_8031DC30,
++    lbl_8031DC4C, lbl_8031DC4C, lbl_8040B0EC, (Vec3f *)lbl_8040B110,
++    0.0f, (void *)0x00000000, lbl_8031DC30, lbl_8031DC30,
+     lbl_8031DC30, lbl_8031DC30, lbl_8031DC30, lbl_8031DC30,
+     lbl_8031DC30, lbl_8031DC30, lbl_8040B11C, lbl_8040B11C,
+     lbl_8040B11C, lbl_8040B11C, (void *)0x00000000, (void *)0x00000000,
+@@ -4913,3 +5036,771 @@ float RaceScene_GetPerspFovyForCup(void)
+     }
+     return lbl_806D4794;
+ }
++
++int Input_IsItemButtonPressed(int buttons)
++{
++    if ((g_currentSceneState == 4 || g_currentSceneState == 5) && (buttons & 0x2000)) {
++        return 1;
++    }
++    if (buttons & 0xC000) {
++        return 1;
++    }
++    return 0;
++}
++
++int BattleRoulette_TickAndGetCounter(void)
++{
++    if (g_gameMode == 2) {
++        g_raceFrameCounterLo2digits++;
++    }
++    return g_raceFrameCounterLo2digits;
++}
++
++void SetCardVolumeFlagByte(unsigned char v)
++{
++    lbl_806D12AD = v;
++}
++
++void SetKartVariant(int v)
++{
++    g_kartVariant = v;
++}
++
++int PcbRole_PromoteToClientConfirmed(int arg)
++{
++    if (g_localPcbRole < 2 || g_localPcbRole > 4) {
++        return 0;
++    }
++    g_localPcbRole = 5;
++    return arg;
++}
++
++void SetLocalPcbRole(int role)
++{
++    g_localPcbRole = role;
++    g_isPcbHost = role == 1;
++}
++
++void SetSyncTarget(int v)
++{
++    g_currentSceneState = v;
++}
++
++void ItemUse_ResetAllKartUseSlots(void)
++{
++    int i;
++
++    for (i = 0; i < 8; i++) {
++        RankSlot *s = &lbl_805D2948[i];
++        s->active = 0;
++        s->count = 0;
++        s->target = -1;
++        s->source = -1;
++        s->flag18 = 0;
++        s->flag19 = 0;
++        s->timer = 0;
++        s->value20 = lbl_806D4790;
++        s->value24 = lbl_806D4790;
++        s->enabled = 1;
++    }
++    lbl_806D12D8 = 0;
++}
++
++RankSlot *RankSlot_GetByIndex(int i)
++{
++    if (i < 0 || i >= 8) {
++        return 0;
++    }
++    return &lbl_805D2948[i];
++}
++
++typedef struct RankSlotATime {
++    unsigned short v[5];
++} RankSlotATime;
++
++typedef struct RankSlotA {
++    unsigned char kart;
++    unsigned char pad01;
++    unsigned short time[6];
++    unsigned char pad0e[2];
++    int field10;
++    int field14;
++    unsigned char field18;
++    unsigned char field19;
++    unsigned char pad1a[2];
++    int field1c;
++    float field20;
++    float field24;
++    unsigned char field28;
++    unsigned char pad29[3];
++} RankSlotA;
++
++#define lbl_805D2948 ((RankSlotA *)lbl_805D2948)
++
++int RankSlot_AppendOrUpdate(unsigned char kart, int a1, int a2, RankSlotATime *time,
++                            unsigned char b18, unsigned char b19, int a1c, unsigned char b28,
++                            float f20, float f24, int index)
++{
++    int slot = lbl_806D12D8;
++    RankSlotA *p;
++
++    if (index > -1) {
++        slot = index;
++    }
++    if (slot >= 8) {
++        return -1;
++    }
++    p = &lbl_805D2948[slot];
++    lbl_806D12D8 = slot + 1;
++    p->kart = kart;
++    p->field10 = a1;
++    p->field14 = a2;
++    p->field18 = b18;
++    p->field19 = b19;
++    p->field1c = a1c;
++    p->field20 = f20;
++    p->field24 = f24;
++    p->field28 = b28;
++    if (time == 0) {
++        p->time[0] = 0;
++    } else {
++        p->time[0] = time->v[0];
++        p->time[1] = time->v[1];
++        p->time[2] = time->v[2];
++        p->time[3] = time->v[3];
++        p->time[4] = time->v[4];
++        p->time[5] = 0;
++    }
++    return slot;
++}
++#undef lbl_805D2948
++
++/* VSMode_SeedRandomItemSequence (0x8009BDC0): fill `count` consecutive kart
++ * slots starting at `slot` with CPU drivers (driverId 6) whose characters are
++ * drawn at random without repetition from the 13 selectable characters;
++ * `exclude` (the player's character) is never drawn. Returns the next slot. */
++
++extern int rand(void);
++
++static inline void KartSlot_Set(int i, int driver, int chr)
++{
++    if (i < 0 || i >= 8 || chr < 0 || chr >= 15) {
++        return;
++    }
++    lbl_805AC600[i].driverId = driver;
++    lbl_805AC600[i].charId = chr;
++    lbl_805AC600[i].field8 = 1;
++    lbl_805AC600[i].fieldC = 0;
++    lbl_805AC600[i].kartVariant = 0;
++}
++
++#pragma use_lmw_stmw on
++int VSMode_SeedRandomItemSequence(int slot, int exclude, int count)
++{
++    unsigned char used[13];
++    int i;
++    int chr;
++
++    for (i = 0; i < 13; i++) {
++        used[i] = 0;
++    }
++    used[exclude] = 1;
++    for (i = 0; i < count; i++) {
++        do {
++            chr = rand() % 13;
++        } while (used[chr]);
++        used[chr] = 1;
++        KartSlot_Set(slot, 6, chr);
++        slot++;
++    }
++    return slot;
++}
++#pragma use_lmw_stmw reset
++
++#define lbl_805B256C (*(RankEntry *)&lbl_805B256C)
++#define lbl_805B24CC ((RankEntry (*)[5])lbl_805B24CC)
++#define lbl_80401118 ((unsigned char *)lbl_80401118)
++#define g_characterDataTable ((CharacterData *)g_characterDataTable)
++#define lbl_806D1280 (*(void **)&lbl_806D1280)
++extern int g_cupId;
++extern int g_longRoundFlag;
++extern int g_courseVariantIdx;
++extern int g_reverseRoundFlag;
++extern int g_timerModeEnabled;
++extern int g_ccClass;
++extern int g_gameMode;
++extern unsigned char g_raceStarted;
++extern void *g_courseScene3D;
++extern void *lbl_806D1278;
++extern const float lbl_806D4790;
++
++extern DisplayState lbl_80598A60;
++extern void *lbl_8040E1C4[4];
++extern void *lbl_806CF100[2];
++
++void *GetDisplayContext(int i)
++{
++    if (i < 0 || i > 3) {
++        return 0;
++    }
++    return lbl_805B2580 + (i << 15);
++}
++
++int GetDisplayBufferIndex(void)
++{
++    return lbl_80598A60.bufferIndex - 1;
++}
++
++void SetRaceResultLatestPtr(void *p)
++{
++    lbl_806D1280 = p;
++}
++
++void RaceResult_StoreLatest(int a, int b, float score, float time)
++{
++    lbl_805B256C.a = a;
++    lbl_805B256C.b = b;
++    lbl_805B256C.score = score;
++    lbl_805B256C.time = time;
++}
++
++RankEntry *RaceResult_GetRankEntry(int i)
++{
++    if (i < 0 || i >= 5) {
++        return 0;
++    }
++    return &lbl_805B24CC[g_longRoundFlag][i];
++}
++
++int RaceResult_InsertSortedRank(int a, int b, float score, float time)
++{
++    RankEntry *e;
++    int off;
++    int i;
++    int j;
++
++    off = g_longRoundFlag * 0x50;
++    e = (RankEntry *)((unsigned char *)lbl_805B24CC + off);
++
++    for (i = 0; i < 5; i++) {
++        if (lbl_806D4790 == e[i].time || time <= e[i].time) {
++            break;
++        }
++    }
++    if (i >= 5) {
++        return -1;
++    }
++    if (i != 4) {
++        for (j = 4; j > i; j--) {
++            e[j].a = e[j - 1].a;
++            e[j].b = e[j - 1].b;
++            e[j].score = e[j - 1].score;
++            e[j].time = e[j - 1].time;
++        }
++    }
++    e[i].a = a;
++    {
++        unsigned char *u = (unsigned char *)lbl_805B24CC;
++        RankEntry *t;
++
++        u += off;
++        t = (RankEntry *)u + i;
++        t->b = b;
++        t->score = score;
++        t->time = time;
++    }
++    return i;
++}
++
++void *GetRaceContextPtr(void)
++{
++    return lbl_805AC6CC;
++}
++
++void SetPlayerCarObject(void *p)
++{
++    lbl_806D1278 = p;
++}
++
++void *GetPlayerCarObject(void)
++{
++    return lbl_806D1278;
++}
++
++void SetCourseScene3D(void *p)
++{
++    g_courseScene3D = p;
++}
++
++void *GetCourseScene3D(void)
++{
++    return g_courseScene3D;
++}
++
++void SetRaceStartFlag(unsigned char v)
++{
++    if (g_cupId < 0) {
++        return;
++    }
++    if (g_longRoundFlag < 0) {
++        return;
++    }
++    g_raceStarted = v;
++}
++
++int IsRaceStarted(void)
++{
++    if (g_cupId < 0) {
++        return 0;
++    }
++    if (g_longRoundFlag < 0) {
++        return 0;
++    }
++    return g_raceStarted;
++}
++
++void *GetCourseBgmFilePath(void)
++{
++    if (g_cupId < 0) {
++        return 0;
++    }
++    if (g_longRoundFlag < 0) {
++        return 0;
++    }
++    if (g_courseVariantIdx < 0) {
++        return 0;
++    }
++    return lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].bgmPath;
++}
++
++void *GetCoinSpawnTable(void)
++{
++    int cup = g_cupId - 1;
++    int cc = (g_ccClass == 2) ? 1 : 0;
++    int lr = g_longRoundFlag;
++    int rev = g_reverseRoundFlag;
++
++    if (cup < 0) {
++        return 0;
++    }
++    if (lr < 0) {
++        return 0;
++    }
++    if (rev < 0) {
++        return 0;
++    }
++    if (cc < 0) {
++        return 0;
++    }
++    if (g_gameMode == 1) {
++        return lbl_8040B218[cup][lr][rev][cc];
++    }
++    return lbl_8040B218[cup][lr][rev][0];
++}
++
++void *GetCourseBgmEntry(void)
++{
++    if (g_cupId < 0) {
++        return 0;
++    }
++    if (g_longRoundFlag < 0) {
++        return 0;
++    }
++    if (g_courseVariantIdx < 0) {
++        return 0;
++    }
++    return lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].bgm[g_courseVariantIdx];
++}
++
++void *CourseVariantTableLookup(void)
++{
++    if (g_cupId < 0) {
++        return 0;
++    }
++    if (g_longRoundFlag < 0) {
++        return 0;
++    }
++    if (g_courseVariantIdx < 0) {
++        return 0;
++    }
++    return lbl_8040B90C[g_cupId][g_longRoundFlag].variantTable[g_courseVariantIdx];
++}
++
++void *GetFinishLineSegment(void)
++{
++    if (g_cupId < 0) {
++        return 0;
++    }
++    if (g_longRoundFlag < 0) {
++        return 0;
++    }
++    return lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].finishLine;
++}
++
++void *GetCourseModelFilename(void)
++{
++    if (g_cupId < 0) {
++        return 0;
++    }
++    if (g_longRoundFlag < 0) {
++        return 0;
++    }
++    if (g_timerModeEnabled == 0) {
++        return lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].model[g_courseVariantIdx];
++    }
++    return lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].modelTimer[g_courseVariantIdx];
++}
++
++void *GetCourseObjectTable(void)
++{
++    if (g_cupId < 0) {
++        return 0;
++    }
++    if (g_longRoundFlag < 0) {
++        return 0;
++    }
++    return lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].objectTable[g_courseVariantIdx];
++}
++
++void *GetCollisionFilename(void)
++{
++    if (g_cupId < 0) {
++        return 0;
++    }
++    if (g_longRoundFlag < 0) {
++        return 0;
++    }
++    return lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].collision[g_courseVariantIdx];
++}
++
++void *GetJointNameTable(void)
++{
++    if (g_cupId < 0) {
++        return 0;
++    }
++    if (g_longRoundFlag < 0) {
++        return 0;
++    }
++    return lbl_8040B90C[g_cupId][g_longRoundFlag].jointNames[g_courseVariantIdx];
++}
++
++void *GetCollisionBinFilename(void)
++{
++    if (g_cupId < 0) {
++        return 0;
++    }
++    if (g_longRoundFlag < 0) {
++        return 0;
++    }
++    if (g_courseVariantIdx < 0) {
++        return 0;
++    }
++    return lbl_8040B90C[g_cupId][g_longRoundFlag].collisionBin[g_courseVariantIdx];
++}
++
++float GetCourseStartYaw(void)
++{
++    if (g_cupId < 0) {
++        return lbl_806D4790;
++    }
++    if (g_longRoundFlag < 0) {
++        return lbl_806D4790;
++    }
++    return lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].startYaw;
++}
++
++static inline Vec3f *GetStartPositionPtr(int i)
++{
++    if (i < 0) {
++        return 0;
++    }
++    if (g_cupId < 0) {
++        return 0;
++    }
++    if (g_longRoundFlag < 0) {
++        return 0;
++    }
++    return &lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].startPos[i];
++}
++
++int GetStartPosition(int i, float *x, float *y, float *z)
++{
++    Vec3f *p = GetStartPositionPtr(i);
++
++    if (p == 0) {
++        return 0;
++    }
++    if (x != 0) {
++        *x = p->x;
++    }
++    if (y != 0) {
++        *y = p->y;
++    }
++    if (z != 0) {
++        *z = p->z;
++    }
++    return 1;
++}
++
++int GetKartStartSlot(int driver)
++{
++    int i;
++
++    if (driver <= -1 || driver >= 6) {
++        return -1;
++    }
++    for (i = 0; i < 8; i++) {
++        if (driver == lbl_805AC600[i].driverId) {
++            return i;
++        }
++    }
++    return -1;
++}
++
++void *GetKartModelNameEntry(int chara, int kart)
++{
++    int k;
++
++    if (chara < 0 || chara >= 15) {
++        return 0;
++    }
++    k = kart;
++    if (kart == -1) {
++        k = 0;
++    }
++    if (kart == 3) {
++        k = 2;
++    }
++    return lbl_80401118 + k * 0x9C + chara * 0xC;
++}
++
++void *GetCharacterName(int i)
++{
++    if (i < 0 || i >= 15) {
++        return 0;
++    }
++    return g_characterDataTable[i].name;
++}
++
++CharacterData *GetCharacterDataEntry(int i)
++{
++    if (i < 0 || i >= 15) {
++        return 0;
++    }
++    return &g_characterDataTable[i];
++}
++
++int GetKartSlotCharId(int i)
++{
++    if (i < 0 || i >= 8) {
++        return -1;
++    }
++    return lbl_805AC600[i].charId;
++}
++
++int RaceSlot_GetDriverId(int i)
++{
++    if (i < 0 || i >= 8) {
++        return -1;
++    }
++    return lbl_805AC600[i].driverId;
++}
++
++int GetKartSlotKartVariant(int i)
++{
++    if (i < 0 || i >= 8) {
++        return 0;
++    }
++    return lbl_805AC600[i].kartVariant;
++}
++
++int RaceSlot_SetDriverPtr(int i, int v)
++{
++    if (i < 0 || i >= 8) {
++        return 0;
++    }
++    lbl_805AC600[i].kartVariant = v;
++    return 1;
++}
++
++int RaceSlot_SetItemSlotByte(int i, int slot, unsigned char v)
++{
++    if (i < 0 || i >= 8) {
++        return 0;
++    }
++    if (slot < 0 || slot >= 3) {
++        return 0;
++    }
++    lbl_805AC600[i].items[slot] = v;
++    return 1;
++}
++
++int RaceSlot_InitSlot(int i, int driver, int chara, int f8, int fc)
++{
++    if (i < 0 || i >= 8) {
++        return 0;
++    }
++    if (driver < 0 || driver >= 8) {
++        return 0;
++    }
++    if (chara < 0 || chara >= 15) {
++        return 0;
++    }
++    lbl_805AC600[i].driverId = driver;
++    lbl_805AC600[i].charId = chara;
++    lbl_805AC600[i].field8 = f8;
++    lbl_805AC600[i].fieldC = fc;
++    lbl_805AC600[i].kartVariant = 0;
++    return 1;
++}
++
++void RaceSlot_ResetAll(void)
++{
++    int i;
++
++    for (i = 0; i < 8; i++) {
++        lbl_805AC600[i].driverId = -1;
++        lbl_805AC600[i].charId = -1;
++        lbl_805AC600[i].field8 = 1;
++        lbl_805AC600[i].items[0] = 0x24;
++        lbl_805AC600[i].items[1] = 0x25;
++        lbl_805AC600[i].items[2] = 0x26;
++        lbl_805AC600[i].kartVariant = 0;
++        ((int *)lbl_805D2938)[i] = 0;
++    }
++}
++
++int IsTimerModeEnabled(void)
++{
++    return g_timerModeEnabled;
++}
++
++int SetTimerModeEnabled(int v)
++{
++    g_timerModeEnabled = v;
++    return 1;
++}
++
++void *DebugOverlay_GetDaytimeLabel(int i)
++{
++    if (i <= -1) {
++        i = g_courseVariantIdx;
++    }
++    if (i >= 4) {
++        return 0;
++    }
++    return lbl_8040E1C4[i];
++}
++
++void *DebugOverlay_GetLongRoundLabel(int i)
++{
++    if (i <= -1) {
++        i = g_longRoundFlag;
++    }
++    if (i >= 2) {
++        return 0;
++    }
++    return lbl_806CF100[i];
++}
++
++void *DebugOverlay_GetCupLabel(int i)
++{
++    if (i <= -1) {
++        i = g_cupId;
++    }
++    if (i >= 17) {
++        return 0;
++    }
++    return lbl_8040B318[i];
++}
++
++void SetReverseRoundFlag(int v)
++{
++    g_reverseRoundFlag = v;
++}
++#undef lbl_805B256C
++#undef lbl_805B24CC
++#undef lbl_80401118
++#undef g_characterDataTable
++#undef lbl_806D1280
++
++extern int g_cupId;
++extern int g_longRoundFlag;
++extern int g_courseVariantIdx;
++extern int g_reverseRoundFlag;
++extern unsigned char g_raceStarted;
++extern unsigned char lbl_806D1258;
++extern int lbl_806CF10C;
++extern int lbl_806D1280;
++extern int lbl_806D12D8;
++extern const float lbl_806D4790;
++extern const float lbl_806D4798;
++
++static inline void ResetRankSlot(RankSlot *slot)
++{
++    slot->active = 0;
++    slot->count = 0;
++    slot->target = -1;
++    slot->source = -1;
++    slot->flag18 = 0;
++    slot->flag19 = 0;
++    slot->timer = 0;
++    slot->value20 = lbl_806D4790;
++    slot->value24 = lbl_806D4790;
++    slot->enabled = 1;
++}
++
++int SetCourseParams(int cup, int longRound, int variant, int reverse)
++{
++    int i;
++
++    if (cup < 0 || cup >= 17) {
++        return 0;
++    }
++    if (longRound < 0 || longRound >= 2) {
++        return 0;
++    }
++    g_cupId = cup;
++    g_longRoundFlag = longRound;
++    g_courseVariantIdx = variant;
++    g_reverseRoundFlag = reverse;
++    RaceSlot_ResetAll();
++    if (g_cupId >= 0 && g_longRoundFlag >= 0) {
++        g_raceStarted = 0;
++    }
++    lbl_806CF10C = 0;
++    if (lbl_806D1258 == 0) {
++        LapEntry *lap = lbl_805B24CC;
++        RankSlot *rk = lbl_805D2948;
++        for (i = 0; i < 5; i++) {
++            lap[i].a = 0;
++            lap[i].b = 0;
++            lap[i].c = lbl_806D4790;
++            lap[i].d = lbl_806D4798;
++        }
++        for (i = 5; i < 10; i++) {
++            lap[i].a = 0;
++            lap[i].b = 1;
++            lap[i].c = lbl_806D4790;
++            lap[i].d = lbl_806D4798;
++        }
++        lbl_805B256C.e.a = 0;
++        lbl_805B256C.e.b = 0;
++        lbl_805B256C.e.c = lbl_806D4790;
++        lbl_805B256C.e.d = lbl_806D4798;
++        lbl_806D1280 = 4;
++        lbl_806D1258 = 1;
++        ResetRankSlot(&rk[0]);
++        ResetRankSlot(&rk[1]);
++        ResetRankSlot(&rk[2]);
++        ResetRankSlot(&rk[3]);
++        ResetRankSlot(&rk[4]);
++        ResetRankSlot(&rk[5]);
++        ResetRankSlot(&rk[6]);
++        ResetRankSlot(&rk[7]);
++        lbl_806D12D8 = 0;
++    }
++    return 1;
++}
++
++}
+diff --git a/src/game/RaceData_8009BEF4.c b/src/game/RaceData_8009BEF4.c
+deleted file mode 100644
+index b65f8724..00000000
+--- a/src/game/RaceData_8009BEF4.c
++++ /dev/null
+@@ -1,565 +0,0 @@
+-/* Race/course data accessors (0x8009BEF4..0x8009CBFC): display buffers,
+- * race result ranking, the per-course data table (lbl_8040B90C, indexed
+- * [cup][longRound], with per-reverse and per-variant sub-arrays), kart
+- * slots and debug overlay labels. */
+-
+-typedef struct Vec3f {
+-    float x, y, z;
+-} Vec3f;
+-
+-typedef struct RankEntry {
+-    int a;
+-    int b;
+-    float score;
+-    float time;
+-} RankEntry;
+-
+-typedef struct CourseDir {
+-    void *finishLine;           /* 0x00 */
+-    Vec3f *startPos;            /* 0x04 */
+-    float startYaw;             /* 0x08 */
+-    void *bgmPath;              /* 0x0C */
+-    void *model[4];             /* 0x10 */
+-    void *modelTimer[4];        /* 0x20 */
+-    void *objectTable[4];       /* 0x30 */
+-    void *bgm[4];               /* 0x40 */
+-    void *unk50[4];             /* 0x50 */
+-    void *collision[4];         /* 0x60 */
+-} CourseDir;
+-
+-typedef struct CourseData {
+-    void *unk0;                 /* 0x000 */
+-    void *jointNames[4];        /* 0x004 */
+-    void *collisionBin[4];      /* 0x014 */
+-    CourseDir dir[2];           /* 0x024 */
+-    void *variantTable[4];      /* 0x104 */
+-} CourseData;
+-
+-typedef struct KartSlot {
+-    int driverId;               /* 0x00 */
+-    int charId;                 /* 0x04 */
+-    int field8;                 /* 0x08 */
+-    int fieldC;                 /* 0x0C */
+-    int kartVariant;            /* 0x10 */
+-    unsigned char items[3];     /* 0x14 */
+-    unsigned char pad17;
+-} KartSlot;
+-
+-typedef struct CharacterData {
+-    void *name;
+-    unsigned char rest[0x28];
+-} CharacterData;
+-
+-typedef struct DisplayState {
+-    unsigned char pad[0x21];
+-    signed char bufferIndex;
+-} DisplayState;
+-
+-extern int g_cupId;
+-extern int g_longRoundFlag;
+-extern int g_courseVariantIdx;
+-extern int g_reverseRoundFlag;
+-extern int g_timerModeEnabled;
+-extern int g_ccClass;
+-extern int g_gameMode;
+-extern unsigned char g_raceStarted;
+-extern void *g_courseScene3D;
+-extern void *lbl_806D1278;
+-extern void *lbl_806D1280;
+-extern const float lbl_806D4790;
+-
+-extern unsigned char lbl_805B2580[];
+-extern DisplayState lbl_80598A60;
+-extern RankEntry lbl_805B256C;
+-extern RankEntry lbl_805B24CC[2][5];
+-extern unsigned char lbl_805AC6CC[];
+-extern CourseData lbl_8040B90C[][2];
+-extern void *lbl_8040B218[][2][2][2];
+-extern KartSlot lbl_805AC600[8];
+-extern int lbl_805D2938[8];
+-extern unsigned char lbl_80401118[];
+-extern CharacterData g_characterDataTable[15];
+-extern void *lbl_8040E1C4[4];
+-extern void *lbl_806CF100[2];
+-extern void *lbl_8040B318[17];
+-
+-void *GetDisplayContext(int i)
+-{
+-    if (i < 0 || i > 3) {
+-        return 0;
+-    }
+-    return lbl_805B2580 + (i << 15);
+-}
+-
+-int GetDisplayBufferIndex(void)
+-{
+-    return lbl_80598A60.bufferIndex - 1;
+-}
+-
+-void SetRaceResultLatestPtr(void *p)
+-{
+-    lbl_806D1280 = p;
+-}
+-
+-void RaceResult_StoreLatest(int a, int b, float score, float time)
+-{
+-    lbl_805B256C.a = a;
+-    lbl_805B256C.b = b;
+-    lbl_805B256C.score = score;
+-    lbl_805B256C.time = time;
+-}
+-
+-RankEntry *RaceResult_GetRankEntry(int i)
+-{
+-    if (i < 0 || i >= 5) {
+-        return 0;
+-    }
+-    return &lbl_805B24CC[g_longRoundFlag][i];
+-}
+-
+-int RaceResult_InsertSortedRank(int a, int b, float score, float time)
+-{
+-    RankEntry *e;
+-    int off;
+-    int i;
+-    int j;
+-
+-    off = g_longRoundFlag * 0x50;
+-    e = (RankEntry *)((unsigned char *)lbl_805B24CC + off);
+-
+-    for (i = 0; i < 5; i++) {
+-        if (lbl_806D4790 == e[i].time || time <= e[i].time) {
+-            break;
+-        }
+-    }
+-    if (i >= 5) {
+-        return -1;
+-    }
+-    if (i != 4) {
+-        for (j = 4; j > i; j--) {
+-            e[j].a = e[j - 1].a;
+-            e[j].b = e[j - 1].b;
+-            e[j].score = e[j - 1].score;
+-            e[j].time = e[j - 1].time;
+-        }
+-    }
+-    e[i].a = a;
+-    {
+-        unsigned char *u = (unsigned char *)lbl_805B24CC;
+-        RankEntry *t;
+-
+-        u += off;
+-        t = (RankEntry *)u + i;
+-        t->b = b;
+-        t->score = score;
+-        t->time = time;
+-    }
+-    return i;
+-}
+-
+-void *GetRaceContextPtr(void)
+-{
+-    return lbl_805AC6CC;
+-}
+-
+-void SetPlayerCarObject(void *p)
+-{
+-    lbl_806D1278 = p;
+-}
+-
+-void *GetPlayerCarObject(void)
+-{
+-    return lbl_806D1278;
+-}
+-
+-void SetCourseScene3D(void *p)
+-{
+-    g_courseScene3D = p;
+-}
+-
+-void *GetCourseScene3D(void)
+-{
+-    return g_courseScene3D;
+-}
+-
+-void SetRaceStartFlag(unsigned char v)
+-{
+-    if (g_cupId < 0) {
+-        return;
+-    }
+-    if (g_longRoundFlag < 0) {
+-        return;
+-    }
+-    g_raceStarted = v;
+-}
+-
+-int IsRaceStarted(void)
+-{
+-    if (g_cupId < 0) {
+-        return 0;
+-    }
+-    if (g_longRoundFlag < 0) {
+-        return 0;
+-    }
+-    return g_raceStarted;
+-}
+-
+-void *GetCourseBgmFilePath(void)
+-{
+-    if (g_cupId < 0) {
+-        return 0;
+-    }
+-    if (g_longRoundFlag < 0) {
+-        return 0;
+-    }
+-    if (g_courseVariantIdx < 0) {
+-        return 0;
+-    }
+-    return lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].bgmPath;
+-}
+-
+-void *GetCoinSpawnTable(void)
+-{
+-    int cup = g_cupId - 1;
+-    int cc = g_ccClass == 2;
+-    int lr = g_longRoundFlag;
+-    int rev = g_reverseRoundFlag;
+-
+-    if (cup < 0) {
+-        return 0;
+-    }
+-    if (lr < 0) {
+-        return 0;
+-    }
+-    if (rev < 0) {
+-        return 0;
+-    }
+-    if (cc < 0) {
+-        return 0;
+-    }
+-    if (g_gameMode == 1) {
+-        return lbl_8040B218[cup][lr][rev][cc];
+-    }
+-    return lbl_8040B218[cup][lr][rev][0];
+-}
+-
+-void *GetCourseBgmEntry(void)
+-{
+-    if (g_cupId < 0) {
+-        return 0;
+-    }
+-    if (g_longRoundFlag < 0) {
+-        return 0;
+-    }
+-    if (g_courseVariantIdx < 0) {
+-        return 0;
+-    }
+-    return lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].bgm[g_courseVariantIdx];
+-}
+-
+-void *CourseVariantTableLookup(void)
+-{
+-    if (g_cupId < 0) {
+-        return 0;
+-    }
+-    if (g_longRoundFlag < 0) {
+-        return 0;
+-    }
+-    if (g_courseVariantIdx < 0) {
+-        return 0;
+-    }
+-    return lbl_8040B90C[g_cupId][g_longRoundFlag].variantTable[g_courseVariantIdx];
+-}
+-
+-void *GetFinishLineSegment(void)
+-{
+-    if (g_cupId < 0) {
+-        return 0;
+-    }
+-    if (g_longRoundFlag < 0) {
+-        return 0;
+-    }
+-    return lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].finishLine;
+-}
+-
+-void *GetCourseModelFilename(void)
+-{
+-    if (g_cupId < 0) {
+-        return 0;
+-    }
+-    if (g_longRoundFlag < 0) {
+-        return 0;
+-    }
+-    if (g_timerModeEnabled == 0) {
+-        return lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].model[g_courseVariantIdx];
+-    }
+-    return lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].modelTimer[g_courseVariantIdx];
+-}
+-
+-void *GetCourseObjectTable(void)
+-{
+-    if (g_cupId < 0) {
+-        return 0;
+-    }
+-    if (g_longRoundFlag < 0) {
+-        return 0;
+-    }
+-    return lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].objectTable[g_courseVariantIdx];
+-}
+-
+-void *GetCollisionFilename(void)
+-{
+-    if (g_cupId < 0) {
+-        return 0;
+-    }
+-    if (g_longRoundFlag < 0) {
+-        return 0;
+-    }
+-    return lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].collision[g_courseVariantIdx];
+-}
+-
+-void *GetJointNameTable(void)
+-{
+-    if (g_cupId < 0) {
+-        return 0;
+-    }
+-    if (g_longRoundFlag < 0) {
+-        return 0;
+-    }
+-    return lbl_8040B90C[g_cupId][g_longRoundFlag].jointNames[g_courseVariantIdx];
+-}
+-
+-void *GetCollisionBinFilename(void)
+-{
+-    if (g_cupId < 0) {
+-        return 0;
+-    }
+-    if (g_longRoundFlag < 0) {
+-        return 0;
+-    }
+-    if (g_courseVariantIdx < 0) {
+-        return 0;
+-    }
+-    return lbl_8040B90C[g_cupId][g_longRoundFlag].collisionBin[g_courseVariantIdx];
+-}
+-
+-float GetCourseStartYaw(void)
+-{
+-    if (g_cupId < 0) {
+-        return lbl_806D4790;
+-    }
+-    if (g_longRoundFlag < 0) {
+-        return lbl_806D4790;
+-    }
+-    return lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].startYaw;
+-}
+-
+-static inline Vec3f *GetStartPositionPtr(int i)
+-{
+-    if (i < 0) {
+-        return 0;
+-    }
+-    if (g_cupId < 0) {
+-        return 0;
+-    }
+-    if (g_longRoundFlag < 0) {
+-        return 0;
+-    }
+-    return &lbl_8040B90C[g_cupId][g_longRoundFlag].dir[g_reverseRoundFlag].startPos[i];
+-}
+-
+-int GetStartPosition(int i, float *x, float *y, float *z)
+-{
+-    Vec3f *p = GetStartPositionPtr(i);
+-
+-    if (p == 0) {
+-        return 0;
+-    }
+-    if (x != 0) {
+-        *x = p->x;
+-    }
+-    if (y != 0) {
+-        *y = p->y;
+-    }
+-    if (z != 0) {
+-        *z = p->z;
+-    }
+-    return 1;
+-}
+-
+-int GetKartStartSlot(int driver)
+-{
+-    int i;
+-
+-    if (driver <= -1 || driver >= 6) {
+-        return -1;
+-    }
+-    for (i = 0; i < 8; i++) {
+-        if (driver == lbl_805AC600[i].driverId) {
+-            return i;
+-        }
+-    }
+-    return -1;
+-}
+-
+-void *GetKartModelNameEntry(int chara, int kart)
+-{
+-    int k;
+-
+-    if (chara < 0 || chara >= 15) {
+-        return 0;
+-    }
+-    k = kart;
+-    if (kart == -1) {
+-        k = 0;
+-    }
+-    if (kart == 3) {
+-        k = 2;
+-    }
+-    return lbl_80401118 + k * 0x9C + chara * 0xC;
+-}
+-
+-void *GetCharacterName(int i)
+-{
+-    if (i < 0 || i >= 15) {
+-        return 0;
+-    }
+-    return g_characterDataTable[i].name;
+-}
+-
+-CharacterData *GetCharacterDataEntry(int i)
+-{
+-    if (i < 0 || i >= 15) {
+-        return 0;
+-    }
+-    return &g_characterDataTable[i];
+-}
+-
+-int GetKartSlotCharId(int i)
+-{
+-    if (i < 0 || i >= 8) {
+-        return -1;
+-    }
+-    return lbl_805AC600[i].charId;
+-}
+-
+-int RaceSlot_GetDriverId(int i)
+-{
+-    if (i < 0 || i >= 8) {
+-        return -1;
+-    }
+-    return lbl_805AC600[i].driverId;
+-}
+-
+-int GetKartSlotKartVariant(int i)
+-{
+-    if (i < 0 || i >= 8) {
+-        return 0;
+-    }
+-    return lbl_805AC600[i].kartVariant;
+-}
+-
+-int RaceSlot_SetDriverPtr(int i, int v)
+-{
+-    if (i < 0 || i >= 8) {
+-        return 0;
+-    }
+-    lbl_805AC600[i].kartVariant = v;
+-    return 1;
+-}
+-
+-int RaceSlot_SetItemSlotByte(int i, int slot, unsigned char v)
+-{
+-    if (i < 0 || i >= 8) {
+-        return 0;
+-    }
+-    if (slot < 0 || slot >= 3) {
+-        return 0;
+-    }
+-    lbl_805AC600[i].items[slot] = v;
+-    return 1;
+-}
+-
+-int RaceSlot_InitSlot(int i, int driver, int chara, int f8, int fc)
+-{
+-    if (i < 0 || i >= 8) {
+-        return 0;
+-    }
+-    if (driver < 0 || driver >= 8) {
+-        return 0;
+-    }
+-    if (chara < 0 || chara >= 15) {
+-        return 0;
+-    }
+-    lbl_805AC600[i].driverId = driver;
+-    lbl_805AC600[i].charId = chara;
+-    lbl_805AC600[i].field8 = f8;
+-    lbl_805AC600[i].fieldC = fc;
+-    lbl_805AC600[i].kartVariant = 0;
+-    return 1;
+-}
+-
+-void RaceSlot_ResetAll(void)
+-{
+-    int i;
+-
+-    for (i = 0; i < 8; i++) {
+-        lbl_805AC600[i].driverId = -1;
+-        lbl_805AC600[i].charId = -1;
+-        lbl_805AC600[i].field8 = 1;
+-        lbl_805AC600[i].items[0] = 0x24;
+-        lbl_805AC600[i].items[1] = 0x25;
+-        lbl_805AC600[i].items[2] = 0x26;
+-        lbl_805AC600[i].kartVariant = 0;
+-        lbl_805D2938[i] = 0;
+-    }
+-}
+-
+-int IsTimerModeEnabled(void)
+-{
+-    return g_timerModeEnabled;
+-}
+-
+-int SetTimerModeEnabled(int v)
+-{
+-    g_timerModeEnabled = v;
+-    return 1;
+-}
+-
+-void *DebugOverlay_GetDaytimeLabel(int i)
+-{
+-    if (i <= -1) {
+-        i = g_courseVariantIdx;
+-    }
+-    if (i >= 4) {
+-        return 0;
+-    }
+-    return lbl_8040E1C4[i];
+-}
+-
+-void *DebugOverlay_GetLongRoundLabel(int i)
+-{
+-    if (i <= -1) {
+-        i = g_longRoundFlag;
+-    }
+-    if (i >= 2) {
+-        return 0;
+-    }
+-    return lbl_806CF100[i];
+-}
+-
+-void *DebugOverlay_GetCupLabel(int i)
+-{
+-    if (i <= -1) {
+-        i = g_cupId;
+-    }
+-    if (i >= 17) {
+-        return 0;
+-    }
+-    return lbl_8040B318[i];
+-}
+-
+-void SetReverseRoundFlag(int v)
+-{
+-    g_reverseRoundFlag = v;
+-}
+diff --git a/src/game/RaceSys_8009B98C.c b/src/game/RaceSys_8009B98C.c
+deleted file mode 100644
+index c99eb8f3..00000000
+--- a/src/game/RaceSys_8009B98C.c
++++ /dev/null
+@@ -1,46 +0,0 @@
+-/* Race/session accessors and setters (0x8009B98C..0x8009B9D0). */
+-
+-typedef struct RankSlot {
+-    unsigned char active;
+-    unsigned char pad1;
+-    unsigned short count;
+-    unsigned char pad4[0xC];
+-    int target;
+-    int source;
+-    unsigned char flag18;
+-    unsigned char flag19;
+-    unsigned char pad1A[2];
+-    int timer;
+-    float value20;
+-    float value24;
+-    unsigned char enabled;
+-    unsigned char pad29[3];
+-} RankSlot;
+-
+-extern int g_cupId;
+-extern int g_longRoundFlag;
+-extern int g_courseVariantIdx;
+-extern int g_currentSceneState;
+-extern int g_gameMode;
+-extern int g_raceFrameCounterLo2digits;
+-extern unsigned char lbl_806D12AD;
+-extern int g_kartVariant;
+-extern int g_localPcbRole;
+-extern signed char g_isPcbHost;
+-extern int lbl_806D12D8;
+-extern unsigned char lbl_8040DE94[];
+-extern RankSlot lbl_805D2948[8];
+-extern const float lbl_806D4790;
+-extern const float lbl_806D4794;
+-
+-void *TaMode_GetDemoCameraBookend(void)
+-{
+-    if (g_cupId < 0) {
+-        return 0;
+-    }
+-    if (g_longRoundFlag < 0) {
+-        return 0;
+-    }
+-    return lbl_8040DE94 + g_cupId * 0x30 + g_longRoundFlag * 0x18;
+-}
+-
+diff --git a/src/game/RaceSys_8009BAC4.c b/src/game/RaceSys_8009BAC4.c
+deleted file mode 100644
+index 0ea9cc3f..00000000
+--- a/src/game/RaceSys_8009BAC4.c
++++ /dev/null
+@@ -1,111 +0,0 @@
+-/* Race/session accessors and setters (0x8009BAC4..0x8009BD04). */
+-
+-typedef struct RankSlot {
+-    unsigned char active;
+-    unsigned char pad1;
+-    unsigned short count;
+-    unsigned char pad4[0xC];
+-    int target;
+-    int source;
+-    unsigned char flag18;
+-    unsigned char flag19;
+-    unsigned char pad1A[2];
+-    int timer;
+-    float value20;
+-    float value24;
+-    unsigned char enabled;
+-    unsigned char pad29[3];
+-} RankSlot;
+-
+-extern int g_cupId;
+-extern int g_longRoundFlag;
+-extern int g_courseVariantIdx;
+-extern int g_currentSceneState;
+-extern int g_gameMode;
+-extern int g_raceFrameCounterLo2digits;
+-extern unsigned char lbl_806D12AD;
+-extern int g_kartVariant;
+-extern int g_localPcbRole;
+-extern signed char g_isPcbHost;
+-extern int lbl_806D12D8;
+-extern unsigned char lbl_8040DE94[];
+-extern RankSlot lbl_805D2948[8];
+-extern const float lbl_806D4790;
+-extern const float lbl_806D4794;
+-
+-int Input_IsItemButtonPressed(int buttons)
+-{
+-    if ((g_currentSceneState == 4 || g_currentSceneState == 5) && (buttons & 0x2000)) {
+-        return 1;
+-    }
+-    if (buttons & 0xC000) {
+-        return 1;
+-    }
+-    return 0;
+-}
+-
+-int BattleRoulette_TickAndGetCounter(void)
+-{
+-    if (g_gameMode == 2) {
+-        g_raceFrameCounterLo2digits++;
+-    }
+-    return g_raceFrameCounterLo2digits;
+-}
+-
+-void SetCardVolumeFlagByte(unsigned char v)
+-{
+-    lbl_806D12AD = v;
+-}
+-
+-void SetKartVariant(int v)
+-{
+-    g_kartVariant = v;
+-}
+-
+-int PcbRole_PromoteToClientConfirmed(int arg)
+-{
+-    if (g_localPcbRole < 2 || g_localPcbRole > 4) {
+-        return 0;
+-    }
+-    g_localPcbRole = 5;
+-    return arg;
+-}
+-
+-void SetLocalPcbRole(int role)
+-{
+-    g_localPcbRole = role;
+-    g_isPcbHost = role == 1;
+-}
+-
+-void SetSyncTarget(int v)
+-{
+-    g_currentSceneState = v;
+-}
+-
+-void ItemUse_ResetAllKartUseSlots(void)
+-{
+-    int i;
+-
+-    for (i = 0; i < 8; i++) {
+-        RankSlot *s = &lbl_805D2948[i];
+-        s->active = 0;
+-        s->count = 0;
+-        s->target = -1;
+-        s->source = -1;
+-        s->flag18 = 0;
+-        s->flag19 = 0;
+-        s->timer = 0;
+-        s->value20 = lbl_806D4790;
+-        s->value24 = lbl_806D4790;
+-        s->enabled = 1;
+-    }
+-    lbl_806D12D8 = 0;
+-}
+-
+-RankSlot *RankSlot_GetByIndex(int i)
+-{
+-    if (i < 0 || i >= 8) {
+-        return 0;
+-    }
+-    return &lbl_805D2948[i];
+-}
+diff --git a/src/game/RankSlot_AppendOrUpdate.c b/src/game/RankSlot_AppendOrUpdate.c
+deleted file mode 100644
+index 465b231a..00000000
+--- a/src/game/RankSlot_AppendOrUpdate.c
++++ /dev/null
+@@ -1,60 +0,0 @@
+-typedef struct RankSlotTime {
+-    unsigned short v[5];
+-} RankSlotTime;
+-
+-typedef struct RankSlot {
+-    unsigned char kart;
+-    unsigned char pad01;
+-    unsigned short time[6];
+-    unsigned char pad0e[2];
+-    int field10;
+-    int field14;
+-    unsigned char field18;
+-    unsigned char field19;
+-    unsigned char pad1a[2];
+-    int field1c;
+-    float field20;
+-    float field24;
+-    unsigned char field28;
+-    unsigned char pad29[3];
+-} RankSlot;
+-
+-extern RankSlot lbl_805D2948[8];
+-extern int lbl_806D12D8;
+-
+-int RankSlot_AppendOrUpdate(unsigned char kart, int a1, int a2, RankSlotTime *time,
+-                            unsigned char b18, unsigned char b19, int a1c, unsigned char b28,
+-                            float f20, float f24, int index)
+-{
+-    int slot = lbl_806D12D8;
+-    RankSlot *p;
+-
+-    if (index > -1) {
+-        slot = index;
+-    }
+-    if (slot >= 8) {
+-        return -1;
+-    }
+-    p = &lbl_805D2948[slot];
+-    lbl_806D12D8 = slot + 1;
+-    p->kart = kart;
+-    p->field10 = a1;
+-    p->field14 = a2;
+-    p->field18 = b18;
+-    p->field19 = b19;
+-    p->field1c = a1c;
+-    p->field20 = f20;
+-    p->field24 = f24;
+-    p->field28 = b28;
+-    if (time == 0) {
+-        p->time[0] = 0;
+-    } else {
+-        p->time[0] = time->v[0];
+-        p->time[1] = time->v[1];
+-        p->time[2] = time->v[2];
+-        p->time[3] = time->v[3];
+-        p->time[4] = time->v[4];
+-        p->time[5] = 0;
+-    }
+-    return slot;
+-}
+diff --git a/src/game/SetCourseParams.c b/src/game/SetCourseParams.c
+deleted file mode 100644
+index 594cc580..00000000
+--- a/src/game/SetCourseParams.c
++++ /dev/null
+@@ -1,156 +0,0 @@
+-/* SetCourseParams (0x8009CBFC): select cup/round/variant and reset the
+- * per-race kart, lap and rank slots.
+- *
+- * NonMatching: the target addresses these .bss objects pooled off one base
+- * (they were defined in the original TU, which spans RaceSys_8009B98C ..
+- * SetCourseParams). Defining them here gets the pooling, but MWCC lays the
+- * pooled objects out in first-use order, which only matches when the whole
+- * original TU (with its earlier references) is compiled together. */
+-
+-typedef struct KartSlot {
+-    int driverId;
+-    int charId;
+-    int field8;
+-    int fieldC;
+-    int kartVariant;
+-    unsigned char items[3];
+-    unsigned char pad17;
+-} KartSlot;
+-
+-typedef struct LapEntry {
+-    int a;
+-    int b;
+-    float c;
+-    float d;
+-} LapEntry;
+-
+-struct LapExtra {
+-    LapEntry e;
+-    int f10;
+-};
+-
+-typedef struct RankSlot {
+-    unsigned char active;
+-    unsigned char pad1;
+-    unsigned short count;
+-    unsigned char pad4[0xC];
+-    int target;
+-    int source;
+-    unsigned char flag18;
+-    unsigned char flag19;
+-    unsigned char pad1A[2];
+-    int timer;
+-    float value20;
+-    float value24;
+-    unsigned char enabled;
+-    unsigned char pad29[3];
+-} RankSlot;
+-
+-extern KartSlot lbl_805AC600[8];
+-extern unsigned char lbl_805AC6C0[0xC];
+-extern unsigned char lbl_805AC6CC[0x5E00];
+-extern LapEntry lbl_805B24CC[10];
+-extern struct LapExtra lbl_805B256C;
+-extern unsigned char lbl_805B2580[0x20000];
+-extern unsigned char g_playerData[0x1DC];
+-extern unsigned char lbl_805D275C[0x1DC];
+-extern int lbl_805D2938[4];
+-extern RankSlot lbl_805D2948[8];
+-
+-KartSlot lbl_805AC600[8];
+-unsigned char lbl_805AC6C0[0xC];
+-unsigned char lbl_805AC6CC[0x5E00];
+-LapEntry lbl_805B24CC[10];
+-struct LapExtra lbl_805B256C;
+-unsigned char lbl_805B2580[0x20000];
+-unsigned char g_playerData[0x1DC];
+-unsigned char lbl_805D275C[0x1DC];
+-int lbl_805D2938[4];
+-RankSlot lbl_805D2948[8];
+-
+-extern int g_cupId;
+-extern int g_longRoundFlag;
+-extern int g_courseVariantIdx;
+-extern int g_reverseRoundFlag;
+-extern unsigned char g_raceStarted;
+-extern unsigned char lbl_806D1258;
+-extern int lbl_806CF10C;
+-extern int lbl_806D1280;
+-extern int lbl_806D12D8;
+-extern const float lbl_806D4790;
+-extern const float lbl_806D4798;
+-
+-static inline void ResetRankSlot(RankSlot *slot)
+-{
+-    slot->active = 0;
+-    slot->count = 0;
+-    slot->target = -1;
+-    slot->source = -1;
+-    slot->flag18 = 0;
+-    slot->flag19 = 0;
+-    slot->timer = 0;
+-    slot->value20 = lbl_806D4790;
+-    slot->value24 = lbl_806D4790;
+-    slot->enabled = 1;
+-}
+-
+-int SetCourseParams(int cup, int longRound, int variant, int reverse)
+-{
+-    int i;
+-
+-    if (cup < 0 || cup >= 17) {
+-        return 0;
+-    }
+-    if (longRound < 0 || longRound >= 2) {
+-        return 0;
+-    }
+-    g_cupId = cup;
+-    g_longRoundFlag = longRound;
+-    g_courseVariantIdx = variant;
+-    g_reverseRoundFlag = reverse;
+-    for (i = 0; i < 8; i++) {
+-        lbl_805AC600[i].driverId = -1;
+-        lbl_805AC600[i].charId = -1;
+-        lbl_805AC600[i].field8 = 1;
+-        lbl_805AC600[i].items[0] = 0x24;
+-        lbl_805AC600[i].items[1] = 0x25;
+-        lbl_805AC600[i].items[2] = 0x26;
+-        lbl_805AC600[i].kartVariant = 0;
+-        lbl_805D2938[i] = 0;
+-    }
+-    if (g_cupId >= 0 && g_longRoundFlag >= 0) {
+-        g_raceStarted = 0;
+-    }
+-    lbl_806CF10C = 0;
+-    if (lbl_806D1258 == 0) {
+-        for (i = 0; i < 5; i++) {
+-            lbl_805B24CC[i].a = 0;
+-            lbl_805B24CC[i].b = 0;
+-            lbl_805B24CC[i].c = lbl_806D4790;
+-            lbl_805B24CC[i].d = lbl_806D4798;
+-        }
+-        for (i = 5; i < 10; i++) {
+-            lbl_805B24CC[i].a = 0;
+-            lbl_805B24CC[i].b = 1;
+-            lbl_805B24CC[i].c = lbl_806D4790;
+-            lbl_805B24CC[i].d = lbl_806D4798;
+-        }
+-        lbl_805B256C.e.a = 0;
+-        lbl_805B256C.e.b = 0;
+-        lbl_805B256C.e.c = lbl_806D4790;
+-        lbl_805B256C.e.d = lbl_806D4798;
+-        lbl_806D1280 = 4;
+-        lbl_806D1258 = 1;
+-        /* The original resets each rank explicitly rather than retaining a loop. */
+-        ResetRankSlot(&lbl_805D2948[0]);
+-        ResetRankSlot(&lbl_805D2948[1]);
+-        ResetRankSlot(&lbl_805D2948[2]);
+-        ResetRankSlot(&lbl_805D2948[3]);
+-        ResetRankSlot(&lbl_805D2948[4]);
+-        ResetRankSlot(&lbl_805D2948[5]);
+-        ResetRankSlot(&lbl_805D2948[6]);
+-        ResetRankSlot(&lbl_805D2948[7]);
+-        lbl_806D12D8 = 0;
+-    }
+-    return 1;
+-}
+diff --git a/src/game/VSMode_SeedRandomItemSequence.c b/src/game/VSMode_SeedRandomItemSequence.c
+deleted file mode 100644
+index 76c30188..00000000
+--- a/src/game/VSMode_SeedRandomItemSequence.c
++++ /dev/null
+@@ -1,53 +0,0 @@
+-/* VSMode_SeedRandomItemSequence (0x8009BDC0): fill `count` consecutive kart
+- * slots starting at `slot` with CPU drivers (driverId 6) whose characters are
+- * drawn at random without repetition from the 13 selectable characters;
+- * `exclude` (the player's character) is never drawn. Returns the next slot. */
+-
+-extern int rand(void);
+-
+-typedef struct KartSlot {
+-    int driverId;           /* 0x00 */
+-    int charId;             /* 0x04 */
+-    int field8;             /* 0x08 */
+-    int fieldC;             /* 0x0C */
+-    int kartVariant;        /* 0x10 */
+-    unsigned char items[3]; /* 0x14 */
+-    unsigned char pad17;
+-} KartSlot;
+-
+-extern KartSlot lbl_805AC600[8];
+-
+-static inline void KartSlot_Set(int i, int driver, int chr)
+-{
+-    if (i < 0 || i >= 8 || chr < 0 || chr >= 15) {
+-        return;
+-    }
+-    lbl_805AC600[i].driverId = driver;
+-    lbl_805AC600[i].charId = chr;
+-    lbl_805AC600[i].field8 = 1;
+-    lbl_805AC600[i].fieldC = 0;
+-    lbl_805AC600[i].kartVariant = 0;
+-}
+-
+-#pragma use_lmw_stmw on
+-int VSMode_SeedRandomItemSequence(int slot, int exclude, int count)
+-{
+-    unsigned char used[13];
+-    int i;
+-    int chr;
+-
+-    for (i = 0; i < 13; i++) {
+-        used[i] = 0;
+-    }
+-    used[exclude] = 1;
+-    for (i = 0; i < count; i++) {
+-        do {
+-            chr = rand() % 13;
+-        } while (used[chr]);
+-        used[chr] = 1;
+-        KartSlot_Set(slot, 6, chr);
+-        slot++;
+-    }
+-    return slot;
+-}
+-#pragma use_lmw_stmw reset

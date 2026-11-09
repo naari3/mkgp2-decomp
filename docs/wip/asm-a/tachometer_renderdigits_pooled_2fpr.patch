@@ -1,0 +1,596 @@
+diff --git a/config/GNLJ82/splits.txt b/config/GNLJ82/splits.txt
+index 9e3f610f..eab0e014 100644
+--- a/config/GNLJ82/splits.txt
++++ b/config/GNLJ82/splits.txt
+@@ -3238,6 +3238,7 @@ game/Tachometer.c:
+ 	extab       start:0x8000A074 end:0x8000A0C4
+ 	extabindex  start:0x80022730 end:0x80022760
+ 	.text       start:0x800AB17C end:0x800AB958
++	.data       start:0x80411E20 end:0x80412158
+ 
+ game/ZlibInflate_BufferToBuffer.c:
+ 	extab       start:0x8000A0C4 end:0x8000A0CC
+diff --git a/src/game/Tachometer.c b/src/game/Tachometer.c
+index 08af7e64..88004854 100644
+--- a/src/game/Tachometer.c
++++ b/src/game/Tachometer.c
+@@ -1,26 +1,26 @@
+-/* === extracted from auto_03_800AB17C_text === */
+-/* Copy into the TU between forward decls and function bodies; */
+-/* keep emit order = target section layout (do not sort). */
+-
+-/* --- extern decls: sda21-referenced data --- */
++/* === extracted from auto_03_800AB17C_text === */
++/* Copy into the TU between forward decls and function bodies; */
++/* keep emit order = target section layout (do not sort). */
++
++/* --- extern decls: sda21-referenced data --- */
+ extern unsigned int FLOAT_806cf25c;
+ extern unsigned int FLOAT_806d1474;
+ extern unsigned int g_tachometer_coinCount;
+ extern unsigned int g_tachometer_coinTier;
+ extern unsigned char g_tachometer_isInitialized;
+-
+-/* --- function index (3 fns, .text 0x800AB17C..0x800AB220) ---
+- * [  0] 0x800AB17C size:0x20    global Tachometer_SetMaxSpeedRef
+- * [  1] 0x800AB19C size:0x20    global Tachometer_SetDisplaySpeedRef
+- * [  2] 0x800AB1BC size:0x64    global Tachometer_SetCoinCount
+- */
+-
+-/* --- forward decls --- */
++
++/* --- function index (3 fns, .text 0x800AB17C..0x800AB220) ---
++ * [  0] 0x800AB17C size:0x20    global Tachometer_SetMaxSpeedRef
++ * [  1] 0x800AB19C size:0x20    global Tachometer_SetDisplaySpeedRef
++ * [  2] 0x800AB1BC size:0x64    global Tachometer_SetCoinCount
++ */
++
++/* --- forward decls --- */
+ int Tachometer_SetMaxSpeedRef(float value);
+ int Tachometer_SetDisplaySpeedRef(float value);
+ int Tachometer_SetCoinCount(int count);
+-
+-/* --- asm function bodies (.text order = fn address order) --- */
++
++/* --- asm function bodies (.text order = fn address order) --- */
+ int Tachometer_SetMaxSpeedRef(float value) { /* 0x800AB17C size:0x20 */
+     if (!g_tachometer_isInitialized) return 0;
+     *(float *)&FLOAT_806cf25c = value;
+@@ -42,10 +42,101 @@ int Tachometer_SetCoinCount(int count) { /* 0x800AB1BC size:0x64 */
+     else g_tachometer_coinTier = 3;
+     return 1;
+ }
+-
+-/* The remaining address-ordered members of the Tachometer unit. */
+-#include "Tachometer_UpdateDisplaySpeed.inc"
+-#include "Tachometer_RenderDigits.inc"
+-#include "Tachometer_Destroy.inc"
+-#include "Tachometer_Init.inc"
+-
++
++/* The remaining address-ordered members of the Tachometer unit. */
++/* Tachometer tables (.data 0x80411E20, pooled): sprite resource ids per
++ * glyph and unit, glyph slot positions, and the digit -> glyph map. */
++typedef struct TachGlyphPos {
++    int id;
++    float x;
++    float y;
++} TachGlyphPos;
++static int lbl_80411E20[38][2] = {
++    { 0xBCB, 0xBCB },
++    { 0x9F0, 0x9CA },
++    { 0xBBA, 0xB68 },
++    { 0x9F2, 0x9CC },
++    { 0x9F3, 0x9CD },
++    { 0x9F4, 0x9CE },
++    { 0x9F5, 0x9CF },
++    { 0x9F6, 0x9D0 },
++    { 0x9F7, 0x9D1 },
++    { 0x9F8, 0x9D2 },
++    { 0x9F9, 0x9D3 },
++    { 0x9FA, 0x9D4 },
++    { 0x9FB, 0x9D5 },
++    { 0x9FC, 0x9D6 },
++    { 0x9FD, 0x9D7 },
++    { 0x9FE, 0x9D8 },
++    { 0x9FF, 0x9D9 },
++    { 0xA00, 0x9DA },
++    { 0xA01, 0x9DB },
++    { 0xA02, 0x9DC },
++    { 0xA03, 0x9DD },
++    { 0xA04, 0x9DE },
++    { 0xA05, 0x9DF },
++    { 0xA06, 0x9E0 },
++    { 0xA07, 0x9E1 },
++    { 0xA08, 0x9E2 },
++    { 0xA09, 0x9E3 },
++    { 0xA0A, 0x9E4 },
++    { 0xBB0, 0xB5E },
++    { 0xBB1, 0xB5F },
++    { 0xBB2, 0xB60 },
++    { 0xBB3, 0xB61 },
++    { 0xBB4, 0xB62 },
++    { 0xBB5, 0xB63 },
++    { 0xBB6, 0xB64 },
++    { 0xBB7, 0xB65 },
++    { 0xBB8, 0xB66 },
++    { 0xBB9, 0xB67 },
++};
++static TachGlyphPos s_tachPos[40] = {
++    { 27, 530.0f, 443.0f },
++    { 27, 553.0f, 443.0f },
++    { 27, 576.0f, 443.0f },
++    { 1, 573.0f, 381.0f },
++    { 1, 579.0f, 381.0f },
++    { 1, 585.0f, 381.0f },
++    { 1, 591.0f, 381.0f },
++    { 1, 597.0f, 381.0f },
++    { 1, 603.0f, 381.0f },
++    { 1, 609.0f, 381.0f },
++    { 1, 615.0f, 381.0f },
++    { 1, 621.0f, 381.0f },
++    { 3, 480.0f, 457.0f },
++    { 4, 480.0f, 450.0f },
++    { 5, 482.0f, 443.0f },
++    { 6, 483.0f, 435.0f },
++    { 7, 486.0f, 429.0f },
++    { 8, 489.0f, 423.0f },
++    { 9, 493.0f, 417.0f },
++    { 10, 498.0f, 412.0f },
++    { 11, 502.0f, 407.0f },
++    { 12, 508.0f, 402.0f },
++    { 13, 513.0f, 398.0f },
++    { 14, 519.0f, 395.0f },
++    { 15, 525.0f, 392.0f },
++    { 16, 532.0f, 389.0f },
++    { 17, 538.0f, 387.0f },
++    { 18, 545.0f, 386.0f },
++    { 19, 551.0f, 385.0f },
++    { 20, 559.0f, 384.0f },
++    { 21, 566.0f, 384.0f },
++    { 22, 573.0f, 383.0f },
++    { 23, 579.0f, 383.0f },
++    { 24, 585.0f, 383.0f },
++    { 25, 591.0f, 383.0f },
++    { 26, 597.0f, 383.0f },
++    { 26, 603.0f, 383.0f },
++    { 26, 609.0f, 383.0f },
++    { 26, 615.0f, 383.0f },
++    { 26, 621.0f, 383.0f },
++};
++static int s_tachGlyph[10] = { 28, 29, 30, 31, 32, 33, 34, 35, 36, 37 };
++
++#include "Tachometer_UpdateDisplaySpeed.inc"
++#include "Tachometer_RenderDigits.inc"
++#include "Tachometer_Destroy.inc"
++#include "Tachometer_Init.inc"
++
+diff --git a/src/game/Tachometer_Destroy.inc b/src/game/Tachometer_Destroy.inc
+index cf98c975..2022cbdd 100644
+--- a/src/game/Tachometer_Destroy.inc
++++ b/src/game/Tachometer_Destroy.inc
+@@ -15,7 +15,6 @@ extern unsigned int lbl_806D1459;
+ /* --- extern decls: large-data refs (@ha/@l pairs) --- */
+ /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
+ /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
+-extern unsigned int lbl_80411E20[];
+ extern unsigned int lbl_805D3320[];
+ 
+ /* --- function index (1 fns, .text 0x800AB6BC..0x800AB77C) ---
+@@ -39,9 +38,9 @@ int Tachometer_Destroy(void) {
+     for (i = 0; i < 5; i++) {
+         SpriteHandle_Destroy(lbl_805D3320[i]);
+     }
+-    fn_80120A08(lbl_80411E20[*(unsigned char *)&lbl_806D1459]);
+-    fn_80120A08(lbl_80411E20[*(unsigned char *)&lbl_806D1459 + 4]);
+-    fn_80120A08(lbl_80411E20[*(unsigned char *)&lbl_806D1459 + 0x38]);
++    fn_80120A08(lbl_80411E20[0][*(unsigned char *)&lbl_806D1459]);
++    fn_80120A08(lbl_80411E20[2][*(unsigned char *)&lbl_806D1459]);
++    fn_80120A08(lbl_80411E20[28][*(unsigned char *)&lbl_806D1459]);
+     g_tachometer_isInitialized = 0;
+     return 1;
+ }
+diff --git a/src/game/Tachometer_RenderDigits.inc b/src/game/Tachometer_RenderDigits.inc
+index ada7d189..8847b589 100644
+--- a/src/game/Tachometer_RenderDigits.inc
++++ b/src/game/Tachometer_RenderDigits.inc
+@@ -1,304 +1,74 @@
+-/* === extracted from auto_Tachometer_RenderDig_text === */
+-/* Copy into the TU between forward decls and function bodies; */
+-/* keep emit order = target section layout (do not sort). */
+-
+-/* --- extern decls: branch callees (bl/b targets) --- */
+-/* Open prototype (`extern void Foo();`) accepts any call signature; */
+-/* refine if the real prototype matters for header consumers. */
+-extern void SpriteHandle_RecomputeCull(int h);
+-extern void SpriteHandle_SetActiveFlag(int h, unsigned char on);
+-extern void SpriteLayer_SetResource();
+-extern void fn_8011F744();
+-extern void fn_8011F804();
+-
+-/* --- extern decls: sda21-referenced data --- */
+-extern unsigned int FLOAT_806cf25c;
+-extern unsigned int FLOAT_806d1468;
+-extern unsigned int FLOAT_806d146c;
+-extern unsigned int FLOAT_806d1474;
+-extern unsigned int g_gameMode;
+-extern unsigned int g_tachometer_displaySpeed;
+-extern unsigned char g_tachometer_isInitialized;
+-extern unsigned int lbl_806D1459;
+-extern unsigned int lbl_806D4E48;
+-extern unsigned int lbl_806D4E4C;
+-extern unsigned int lbl_806D4E50;
+-extern unsigned int lbl_806D4E54;
+-extern unsigned int lbl_806D4E58;
+-extern unsigned int lbl_806D4E5C;
+-
+-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
+-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
+-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
+-extern unsigned int lbl_80411E20[];
+-extern unsigned int lbl_805D3320[];
+-
+-/* --- function index (1 fns, .text 0x800AB324..0x800AB6BC) ---
+- * [  0] 0x800AB324 size:0x398   global Tachometer_RenderDigits
+- */
+-
+-/* --- forward decls --- */
+-asm void Tachometer_RenderDigits(void);
+-
+-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
+-#pragma section R ".extab_user"
+-__declspec(section ".extab_user") static const unsigned char extab_Tachometer_RenderDigits[8] = {
+-    0x18, 0x8A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+-};
+-
+-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
+-#pragma section R ".extabindex_user"
+-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_Tachometer_RenderDigits = {
+-    (void *)&Tachometer_RenderDigits, 0x00000398, (void *)extab_Tachometer_RenderDigits
+-};
+-
+-/* --- asm function bodies (.text order = fn address order) --- */
+-asm void Tachometer_RenderDigits(void) { /* 0x800AB324 size:0x398 */
+-    nofralloc
+-    stwu r1, -0x40(r1)
+-    mflr r0
+-    stw r0, 0x44(r1)
+-    stfd f31, 0x30(r1)
+-    psq_st f31, 0x38(r1), 0, 0
+-    stfd f30, 0x20(r1)
+-    psq_st f30, 0x28(r1), 0, 0
+-    stw r31, 0x1c(r1)
+-    stw r30, 0x18(r1)
+-    stw r29, 0x14(r1)
+-    lbz r0, g_tachometer_isInitialized(r13)
+-    lis r3, lbl_80411E20@ha
+-    addi r31, r3, lbl_80411E20@l
+-    cmplwi r0, 0x0
+-    bne Tachometer_RenderDigits_L_800AB368
+-    li r3, 0x0
+-    b Tachometer_RenderDigits_L_800AB690
+-    Tachometer_RenderDigits_L_800AB368:
+-    lwz r0, g_gameMode(r13)
+-    cmpwi r0, 0x2
+-    beq Tachometer_RenderDigits_L_800AB68C
+-    lbz r5, lbl_806D1459(r13)
+-    cmplwi r5, 0x1
+-    bne Tachometer_RenderDigits_L_800AB390
+-    lfs f1, g_tachometer_displaySpeed(r13)
+-    lfs f0, lbl_806D4E48(r2)
+-    fmuls f0, f1, f0
+-    b Tachometer_RenderDigits_L_800AB3A4
+-    Tachometer_RenderDigits_L_800AB390:
+-    lfs f2, g_tachometer_displaySpeed(r13)
+-    lfs f1, lbl_806D4E4C(r2)
+-    lfs f0, lbl_806D4E48(r2)
+-    fdivs f1, f2, f1
+-    fmuls f0, f1, f0
+-    Tachometer_RenderDigits_L_800AB3A4:
+-    fctiwz f2, f0
+-    addi r4, r31, 0x130
+-    lis r3, 0x6666
+-    lfs f1, FLOAT_806d1468(r13)
+-    lfs f0, 0x1c(r4)
+-    addi r0, r3, 0x6667
+-    stfd f2, 0x8(r1)
+-    fadds f2, f1, f0
+-    lfs f0, FLOAT_806d1474(r13)
+-    addi r3, r31, 0x310
+-    lwz r30, 0xc(r1)
+-    lfs f1, FLOAT_806d146c(r13)
+-    fsubs f30, f2, f0
+-    mulhw r0, r0, r30
+-    lfs f0, 0x20(r4)
+-    fadds f31, f1, f0
+-    srawi r0, r0, 2
+-    srwi r4, r0, 31
+-    add r0, r0, r4
+-    mulli r0, r0, 0xa
+-    subf r0, r0, r30
+-    slwi r0, r0, 2
+-    lwzx r0, r3, r0
+-    cmpwi r0, 0x0
+-    blt Tachometer_RenderDigits_L_800AB410
+-    cmpwi r0, 0x26
+-    blt Tachometer_RenderDigits_L_800AB418
+-    Tachometer_RenderDigits_L_800AB410:
+-    li r4, 0x0
+-    b Tachometer_RenderDigits_L_800AB42C
+-    Tachometer_RenderDigits_L_800AB418:
+-    slwi r4, r0, 3
+-    clrlslwi r0, r5, 24, 2
+-    addi r3, r31, 0x0
+-    add r0, r4, r0
+-    lwzx r4, r3, r0
+-    Tachometer_RenderDigits_L_800AB42C:
+-    lis r3, lbl_805D3320@ha
+-    addi r29, r3, lbl_805D3320@l
+-    lwz r3, 0x8(r29)
+-    bl SpriteLayer_SetResource
+-    fmr f1, f30
+-    lwz r3, 0x8(r29)
+-    fmr f2, f31
+-    bl fn_8011F804
+-    lwz r3, 0x8(r29)
+-    li r4, 0x1
+-    bl SpriteHandle_SetActiveFlag
+-    lis r3, 0x6666
+-    addi r4, r31, 0x130
+-    addi r6, r3, 0x6667
+-    lfs f1, FLOAT_806d1468(r13)
+-    mulhw r0, r6, r30
+-    lfs f0, 0x10(r4)
+-    addi r3, r31, 0x310
+-    lfs f2, FLOAT_806d1474(r13)
+-    fadds f3, f1, f0
+-    lfs f1, FLOAT_806d146c(r13)
+-    srawi r0, r0, 2
+-    lfs f0, 0x14(r4)
+-    srwi r4, r0, 31
+-    fsubs f30, f3, f2
+-    add r5, r0, r4
+-    fadds f31, f1, f0
+-    mulhw r0, r6, r5
+-    srawi r0, r0, 2
+-    srwi r4, r0, 31
+-    add r0, r0, r4
+-    mulli r0, r0, 0xa
+-    subf r0, r0, r5
+-    slwi r0, r0, 2
+-    lwzx r3, r3, r0
+-    cmpwi r3, 0x0
+-    blt Tachometer_RenderDigits_L_800AB4C8
+-    cmpwi r3, 0x26
+-    blt Tachometer_RenderDigits_L_800AB4D0
+-    Tachometer_RenderDigits_L_800AB4C8:
+-    li r4, 0x0
+-    b Tachometer_RenderDigits_L_800AB4E8
+-    Tachometer_RenderDigits_L_800AB4D0:
+-    lbz r0, lbl_806D1459(r13)
+-    slwi r4, r3, 3
+-    addi r3, r31, 0x0
+-    slwi r0, r0, 2
+-    add r0, r4, r0
+-    lwzx r4, r3, r0
+-    Tachometer_RenderDigits_L_800AB4E8:
+-    lis r3, lbl_805D3320@ha
+-    addi r29, r3, lbl_805D3320@l
+-    lwz r3, 0xc(r29)
+-    bl SpriteLayer_SetResource
+-    fmr f1, f30
+-    lwz r3, 0xc(r29)
+-    fmr f2, f31
+-    bl fn_8011F804
+-    lwz r3, 0xc(r29)
+-    li r4, 0x1
+-    bl SpriteHandle_SetActiveFlag
+-    lis r3, 0x51ec
+-    addi r6, r31, 0x130
+-    subi r0, r3, 0x7ae1
+-    lis r3, 0x6666
+-    mulhw r4, r0, r30
+-    lfs f1, FLOAT_806d1468(r13)
+-    lfs f0, 0x4(r6)
+-    addi r0, r3, 0x6667
+-    addi r3, r31, 0x310
+-    lfs f2, FLOAT_806d1474(r13)
+-    srawi r4, r4, 5
+-    fadds f3, f1, f0
+-    srwi r5, r4, 31
+-    lfs f1, FLOAT_806d146c(r13)
+-    add r5, r4, r5
+-    lfs f0, 0x8(r6)
+-    mulhw r0, r0, r5
+-    fsubs f30, f3, f2
+-    fadds f31, f1, f0
+-    srawi r0, r0, 2
+-    srwi r4, r0, 31
+-    add r0, r0, r4
+-    mulli r0, r0, 0xa
+-    subf r0, r0, r5
+-    slwi r0, r0, 2
+-    lwzx r3, r3, r0
+-    cmpwi r3, 0x0
+-    blt Tachometer_RenderDigits_L_800AB58C
+-    cmpwi r3, 0x26
+-    blt Tachometer_RenderDigits_L_800AB594
+-    Tachometer_RenderDigits_L_800AB58C:
+-    li r4, 0x0
+-    b Tachometer_RenderDigits_L_800AB5AC
+-    Tachometer_RenderDigits_L_800AB594:
+-    lbz r0, lbl_806D1459(r13)
+-    slwi r4, r3, 3
+-    addi r3, r31, 0x0
+-    slwi r0, r0, 2
+-    add r0, r4, r0
+-    lwzx r4, r3, r0
+-    Tachometer_RenderDigits_L_800AB5AC:
+-    lis r3, lbl_805D3320@ha
+-    addi r30, r3, lbl_805D3320@l
+-    lwz r3, 0x10(r30)
+-    bl SpriteLayer_SetResource
+-    fmr f1, f30
+-    lwz r3, 0x10(r30)
+-    fmr f2, f31
+-    bl fn_8011F804
+-    lwz r3, 0x10(r30)
+-    li r4, 0x1
+-    bl SpriteHandle_SetActiveFlag
+-    lfs f2, lbl_806D4E50(r2)
+-    lis r3, lbl_805D3320@ha
+-    lfs f0, FLOAT_806d1468(r13)
+-    addi r3, r3, lbl_805D3320@l
+-    lfs f1, FLOAT_806d1474(r13)
+-    fadds f3, f2, f0
+-    lfs f2, lbl_806D4E54(r2)
+-    lfs f0, FLOAT_806d146c(r13)
+-    lwz r3, 0x0(r3)
+-    fsubs f1, f3, f1
+-    fadds f2, f2, f0
+-    bl fn_8011F804
+-    lis r3, lbl_805D3320@ha
+-    li r4, 0x1
+-    addi r3, r3, lbl_805D3320@l
+-    lwz r3, 0x0(r3)
+-    bl SpriteHandle_SetActiveFlag
+-    lfs f2, lbl_806D4E58(r2)
+-    lis r3, lbl_805D3320@ha
+-    lfs f0, FLOAT_806d1468(r13)
+-    addi r30, r3, lbl_805D3320@l
+-    lfs f1, FLOAT_806d1474(r13)
+-    fadds f3, f2, f0
+-    lfs f2, lbl_806D4E5C(r2)
+-    lfs f0, FLOAT_806d146c(r13)
+-    lwz r3, 0x4(r30)
+-    fsubs f1, f3, f1
+-    fadds f2, f2, f0
+-    bl fn_8011F804
+-    lwz r3, 0x4(r30)
+-    li r4, 0x1
+-    bl SpriteHandle_SetActiveFlag
+-    lis r3, lbl_805D3320@ha
+-    li r30, 0x0
+-    addi r29, r3, lbl_805D3320@l
+-    Tachometer_RenderDigits_L_800AB664:
+-    lfs f1, FLOAT_806cf25c(r13)
+-    lwz r3, 0x0(r29)
+-    fmr f2, f1
+-    bl fn_8011F744
+-    lwz r3, 0x0(r29)
+-    bl SpriteHandle_RecomputeCull
+-    addi r30, r30, 0x1
+-    addi r29, r29, 0x4
+-    cmpwi r30, 0x5
+-    blt Tachometer_RenderDigits_L_800AB664
+-    Tachometer_RenderDigits_L_800AB68C:
+-    li r3, 0x1
+-    Tachometer_RenderDigits_L_800AB690:
+-    psq_l f31, 0x38(r1), 0, 0
+-    lfd f31, 0x30(r1)
+-    psq_l f30, 0x28(r1), 0, 0
+-    lfd f30, 0x20(r1)
+-    lwz r31, 0x1c(r1)
+-    lwz r30, 0x18(r1)
+-    lwz r0, 0x44(r1)
+-    lwz r29, 0x14(r1)
+-    mtlr r0
+-    addi r1, r1, 0x40
+-    blr
+-}
+-
++/* Tachometer_RenderDigits @ 0x800AB324: places the three speed digits and
++ * the two frame sprites of the tachometer, then refreshes all five. */
++
++extern void SpriteHandle_RecomputeCull(int h);
++extern void SpriteHandle_SetActiveFlag(int h, unsigned char on);
++extern void SpriteLayer_SetResource(int h, int res);
++extern void fn_8011F744(int h, float sx, float sy);
++extern void fn_8011F804(int h, float x, float y);
++
++extern unsigned int FLOAT_806d1468;
++extern unsigned int FLOAT_806d146c;
++extern int g_gameMode;
++extern unsigned int lbl_806D1459; /* byte: unit, 1 = raw, else scaled */
++#define TACH_UNIT (*(unsigned char *)&lbl_806D1459)
++extern const float lbl_806D4E48;
++extern const float lbl_806D4E4C;
++extern const float lbl_806D4E50;
++extern const float lbl_806D4E54;
++extern const float lbl_806D4E58;
++extern const float lbl_806D4E5C;
++
++extern unsigned int lbl_805D3320[]; /* frame 0/1, ones, tens, hundreds */
++
++static inline int Tach_GlyphRes(int glyph) {
++    if (glyph < 0 || glyph >= 38) {
++        return 0;
++    }
++    return lbl_80411E20[glyph][TACH_UNIT];
++}
++
++static inline void Tach_PlaceDigit(int slot, int pos, int digit) {
++    float y;
++    float x;
++    x = TACH_F(FLOAT_806d1468) + s_tachPos[pos].x - TACH_F(FLOAT_806d1474);
++    y = TACH_F(FLOAT_806d146c) + s_tachPos[pos].y;
++    SpriteLayer_SetResource(lbl_805D3320[slot], Tach_GlyphRes(s_tachGlyph[digit]));
++    fn_8011F804(lbl_805D3320[slot], x, y);
++    SpriteHandle_SetActiveFlag(lbl_805D3320[slot], 1);
++}
++
++#pragma exceptions on
++int Tachometer_RenderDigits(void) {
++    int speed;
++    int i;
++
++    if (!g_tachometer_isInitialized) {
++        return 0;
++    }
++    if (g_gameMode != 2) {
++        float v;
++        if (TACH_UNIT == 1) {
++            v = TACH_F(g_tachometer_displaySpeed) * lbl_806D4E48;
++        } else {
++            float q = TACH_F(g_tachometer_displaySpeed) / lbl_806D4E4C;
++            v = q * lbl_806D4E48;
++        }
++        speed = v;
++        Tach_PlaceDigit(2, 2, speed % 10);
++        Tach_PlaceDigit(3, 1, speed / 10 % 10);
++        Tach_PlaceDigit(4, 0, speed / 100 % 10);
++        fn_8011F804(lbl_805D3320[0], lbl_806D4E50 + TACH_F(FLOAT_806d1468) - TACH_F(FLOAT_806d1474),
++                    lbl_806D4E54 + TACH_F(FLOAT_806d146c));
++        SpriteHandle_SetActiveFlag(lbl_805D3320[0], 1);
++        fn_8011F804(lbl_805D3320[1], lbl_806D4E58 + TACH_F(FLOAT_806d1468) - TACH_F(FLOAT_806d1474),
++                    lbl_806D4E5C + TACH_F(FLOAT_806d146c));
++        SpriteHandle_SetActiveFlag(lbl_805D3320[1], 1);
++        for (i = 0; i < 5; i++) {
++            fn_8011F744(lbl_805D3320[i], TACH_F(FLOAT_806cf25c), TACH_F(FLOAT_806cf25c));
++            SpriteHandle_RecomputeCull(lbl_805D3320[i]);
++        }
++    }
++    return 1;
++}
++#pragma exceptions reset
+diff --git a/tools/extab_user_renames.json b/tools/extab_user_renames.json
+index 783cb856..d8501372 100644
+--- a/tools/extab_user_renames.json
++++ b/tools/extab_user_renames.json
+@@ -547,7 +547,15 @@
+     "extab_Tachometer_Destroy": "@etb_8000A084",
+     "extabindex_Tachometer_Destroy": "@eti_80022748",
+     "__ct__7ResCtrlFv": "ResCtrl_Init",
+-    "__dt__7ResCtrlFv": "dtor_80082960"
++    "__dt__7ResCtrlFv": "dtor_80082960",
++    "@67": "@etb_8000A074",
++    "@68": "@eti_80022730",
++    "@126": "@etb_8000A07C",
++    "@127": "@eti_8002273C",
++    "@140": "@etb_8000A084",
++    "@141": "@eti_80022748",
++    "@172": "@etb_8000A08C",
++    "@173": "@eti_80022754"
+   },
+   "src/game/ParticleBurst.c": {
+     "extab_ParticleBurst_Draw": "@etb_8000A6C0",

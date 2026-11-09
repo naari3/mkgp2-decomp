@@ -1,0 +1,328 @@
+{"t": "2026-11-09T05:37:55.209296Z", "who": "shapesweep", "op": "add", "id": "N96f7df", "text": "fn_8029B54C | thp/THPDec | 99.97 | autopipe"}
+{"t": "2026-11-09T05:37:55.210543Z", "who": "shapesweep", "op": "take", "id": "N96f7df"}
+{"t": "2026-11-09T05:38:28.529102Z", "who": "shapesweep", "op": "release", "id": "N96f7df", "note": ""}
+{"t": "2026-11-09T05:38:28.679762Z", "who": "shapesweep", "op": "add", "id": "Nb77e4f", "text": "PCBCheck_ProcessLinks | game/PCBCheckProcess | 99.96 | autopipe"}
+{"t": "2026-11-09T05:38:28.680492Z", "who": "shapesweep", "op": "take", "id": "Nb77e4f"}
+{"t": "2026-11-09T05:39:25.820618Z", "who": "shapesweep", "op": "take", "id": "N96f7df"}
+{"t": "2026-11-09T05:40:31.768459Z", "who": "shapesweep", "op": "park", "id": "N96f7df", "note": "shapesweep: 4 -> 4 lines ()"}
+{"t": "2026-11-09T05:40:31.988342Z", "who": "shapesweep", "op": "take", "id": "Nb77e4f"}
+{"t": "2026-11-09T05:41:30.108784Z", "who": "shapesweep", "op": "park", "id": "Nb77e4f", "note": "shapesweep: 4 -> 4 lines ()"}
+{"t": "2026-11-09T05:41:30.278012Z", "who": "shapesweep", "op": "add", "id": "Nc60008", "text": "LakituStart_UpdateCountdown | game/LakituStart_UpdateCountdown | 99.95 | autopipe"}
+{"t": "2026-11-09T05:41:30.278818Z", "who": "shapesweep", "op": "take", "id": "Nc60008"}
+{"t": "2026-11-09T05:42:03.559444Z", "who": "shapesweep", "op": "park", "id": "Nc60008", "note": "shapesweep: 10 -> 10 lines ()"}
+{"t": "2026-11-09T05:42:03.718285Z", "who": "shapesweep", "op": "add", "id": "N1ef32b", "text": "fn_8023AC14 | game/ItemSelectChoiceUpdate | 99.94 | autopipe"}
+{"t": "2026-11-09T05:42:03.718746Z", "who": "shapesweep", "op": "take", "id": "N1ef32b"}
+{"t": "2026-11-09T05:43:16.801358Z", "who": "shapesweep", "op": "park", "id": "N1ef32b", "note": "shapesweep: 10 -> 10 lines ()"}
+{"t": "2026-11-09T05:43:17.045816Z", "who": "shapesweep", "op": "add", "id": "N324627", "text": "fn_80204218 | game/anon_80203EA0_nm2 | 99.94 | autopipe"}
+{"t": "2026-11-09T05:43:17.046625Z", "who": "shapesweep", "op": "take", "id": "N324627"}
+{"t": "2026-11-09T05:43:50.164768Z", "who": "shapesweep", "op": "park", "id": "N324627", "note": "shapesweep: 8 -> 8 lines ()"}
+{"t": "2026-11-09T05:43:50.321265Z", "who": "shapesweep", "op": "add", "id": "N2f1398", "text": "fn_8020F080 | game/anon_8020E3D0_nm1 | 99.94 | autopipe"}
+{"t": "2026-11-09T05:43:50.322105Z", "who": "shapesweep", "op": "take", "id": "N2f1398"}
+{"t": "2026-11-09T05:44:14.523036Z", "who": "shapesweep", "op": "park", "id": "N2f1398", "note": "shapesweep: 8 -> 8 lines ()"}
+{"t": "2026-11-09T05:44:14.679160Z", "who": "shapesweep", "op": "add", "id": "N16c988", "text": "fn_801D7610 | game/fn_801D7610 | 99.94 | autopipe"}
+{"t": "2026-11-09T05:44:14.679812Z", "who": "shapesweep", "op": "take", "id": "N16c988"}
+{"t": "2026-11-09T05:44:53.328347Z", "who": "shapesweep", "op": "park", "id": "N16c988", "note": "shapesweep: 2 -> 2 lines ()"}
+{"t": "2026-11-09T05:44:53.559529Z", "who": "shapesweep", "op": "add", "id": "Nb73abf", "text": "fn_8018DAD0 | game/objview/fn_8018DAD0 | 99.94 | autopipe"}
+{"t": "2026-11-09T05:44:53.560305Z", "who": "shapesweep", "op": "take", "id": "Nb73abf"}
+{"t": "2026-11-09T05:45:51.941236Z", "who": "shapesweep", "op": "park", "id": "Nb73abf", "note": "shapesweep: 6 -> 6 lines ()"}
+{"t": "2026-11-09T05:45:52.221208Z", "who": "shapesweep", "op": "add", "id": "N80af0f", "text": "fn_8017F538 | game/miyazakiconsole/fn_8017F538 | 99.92 | autopipe"}
+{"t": "2026-11-09T05:45:52.222016Z", "who": "shapesweep", "op": "take", "id": "N80af0f"}
+{"t": "2026-11-09T05:47:14.887811Z", "who": "shapesweep", "op": "park", "id": "N80af0f", "note": "shapesweep: 10 -> 10 lines ()"}
+{"t": "2026-11-09T05:47:15.055519Z", "who": "shapesweep", "op": "add", "id": "N4c3081", "text": "CardData_InitDefaults | game/CardData_InitDefaults | 99.92 | autopipe"}
+{"t": "2026-11-09T05:47:15.056241Z", "who": "shapesweep", "op": "take", "id": "N4c3081"}
+{"t": "2026-11-09T05:47:54.535059Z", "who": "shapesweep", "op": "park", "id": "N4c3081", "note": "shapesweep: 2 -> 2 lines ()"}
+{"t": "2026-11-09T05:47:54.690918Z", "who": "shapesweep", "op": "add", "id": "N4fecbb", "text": "fn_801EE36C | game/fn_801EE36C | 99.91 | autopipe"}
+{"t": "2026-11-09T05:47:54.691467Z", "who": "shapesweep", "op": "take", "id": "N4fecbb"}
+{"t": "2026-11-09T05:48:51.223207Z", "who": "shapesweep", "op": "park", "id": "N4fecbb", "note": "shapesweep: 12 -> 12 lines ()"}
+{"t": "2026-11-09T05:48:51.393300Z", "who": "shapesweep", "op": "add", "id": "Nfcf38e", "text": "SwitchTest_Page | game/SwitchTest_Page | 99.91 | autopipe"}
+{"t": "2026-11-09T05:48:51.393869Z", "who": "shapesweep", "op": "take", "id": "Nfcf38e"}
+{"t": "2026-11-09T05:49:44.901091Z", "who": "shapesweep", "op": "park", "id": "Nfcf38e", "note": "shapesweep: 12 -> 12 lines ()"}
+{"t": "2026-11-09T05:49:45.151669Z", "who": "shapesweep", "op": "add", "id": "Ndf56b2", "text": "fn_80234F70 | game/FlowCardCheck_nm2 | 99.91 | autopipe"}
+{"t": "2026-11-09T05:49:45.152358Z", "who": "shapesweep", "op": "take", "id": "Ndf56b2"}
+{"t": "2026-11-09T05:50:52.745718Z", "who": "shapesweep", "op": "park", "id": "Ndf56b2", "note": "shapesweep: 6 -> 6 lines ()"}
+{"t": "2026-11-09T05:50:52.912234Z", "who": "shapesweep", "op": "add", "id": "N15e8c4", "text": "fn_801F8728 | game/dtor_801F8214 | 99.90 | autopipe"}
+{"t": "2026-11-09T05:50:52.913001Z", "who": "shapesweep", "op": "take", "id": "N15e8c4"}
+{"t": "2026-11-09T05:51:30.907877Z", "who": "shapesweep", "op": "park", "id": "N15e8c4", "note": "shapesweep: 12 -> 12 lines ()"}
+{"t": "2026-11-09T05:51:31.083543Z", "who": "shapesweep", "op": "add", "id": "Nb15e40", "text": "TitleCheck_NewClearedRecord_Race | game/RankLog | 99.88 | autopipe"}
+{"t": "2026-11-09T05:51:31.084118Z", "who": "shapesweep", "op": "take", "id": "Nb15e40"}
+{"t": "2026-11-09T05:52:38.511718Z", "who": "shapesweep", "op": "park", "id": "Nb15e40", "note": "shapesweep: 28 -> 28 lines ()"}
+{"t": "2026-11-09T05:52:38.656172Z", "who": "shapesweep", "op": "add", "id": "Nf368b0", "text": "fn_802854B0 | triforce/jvsio | 99.88 | autopipe"}
+{"t": "2026-11-09T05:52:38.656866Z", "who": "shapesweep", "op": "take", "id": "Nf368b0"}
+{"t": "2026-11-09T05:53:16.508586Z", "who": "shapesweep", "op": "park", "id": "Nf368b0", "note": "shapesweep: 4 -> 4 lines ()"}
+{"t": "2026-11-09T05:53:16.669824Z", "who": "shapesweep", "op": "add", "id": "N56e126", "text": "fn_8024D3D4 | game/ContinueSceneTick | 99.87 | autopipe"}
+{"t": "2026-11-09T05:53:16.670667Z", "who": "shapesweep", "op": "take", "id": "N56e126"}
+{"t": "2026-11-09T05:54:10.192538Z", "who": "shapesweep", "op": "park", "id": "N56e126", "note": "shapesweep: 12 -> 12 lines ()"}
+{"t": "2026-11-09T05:54:10.343660Z", "who": "shapesweep", "op": "take", "id": "Nb80425"}
+{"t": "2026-11-09T05:55:21.821203Z", "who": "shapesweep", "op": "park", "id": "Nb80425", "note": "shapesweep: 4 -> 4 lines ()"}
+{"t": "2026-11-09T05:55:22.051624Z", "who": "shapesweep", "op": "add", "id": "Nbdaf47", "text": "fn_80219538 | game/anon_80218F40_nm1_tail | 99.85 | autopipe"}
+{"t": "2026-11-09T05:55:22.052386Z", "who": "shapesweep", "op": "take", "id": "Nbdaf47"}
+{"t": "2026-11-09T05:56:13.266005Z", "who": "shapesweep", "op": "park", "id": "Nbdaf47", "note": "shapesweep: 2 -> 2 lines ()"}
+{"t": "2026-11-09T05:56:13.423859Z", "who": "shapesweep", "op": "add", "id": "Nc21e6f", "text": "fn_8017DF00 | game/mapobject/fn_8017DF00 | 99.85 | autopipe"}
+{"t": "2026-11-09T05:56:13.424431Z", "who": "shapesweep", "op": "take", "id": "Nc21e6f"}
+{"t": "2026-11-09T05:57:41.010771Z", "who": "shapesweep", "op": "park", "id": "Nc21e6f", "note": "shapesweep: 34 -> 34 lines ()"}
+{"t": "2026-11-09T05:57:41.172661Z", "who": "shapesweep", "op": "add", "id": "Nb2a635", "text": "EffectVfx10_KartTrail_Tick | game/KartFxExhaustRay | 99.82 | autopipe"}
+{"t": "2026-11-09T05:57:41.173211Z", "who": "shapesweep", "op": "take", "id": "Nb2a635"}
+{"t": "2026-11-09T05:58:26.281884Z", "who": "shapesweep", "op": "park", "id": "Nb2a635", "note": "shapesweep: 20 -> 20 lines ()"}
+{"t": "2026-11-09T05:58:26.457433Z", "who": "shapesweep", "op": "add", "id": "N0978f9", "text": "TransitionEffect_DrawCarRouletteOverlay | game/TransitionEffect | 99.82 | autopipe"}
+{"t": "2026-11-09T05:58:26.458061Z", "who": "shapesweep", "op": "take", "id": "N0978f9"}
+{"t": "2026-11-09T05:59:22.437592Z", "who": "shapesweep", "op": "park", "id": "N0978f9", "note": "shapesweep: 14 -> 14 lines ()"}
+{"t": "2026-11-09T05:59:22.698416Z", "who": "shapesweep", "op": "add", "id": "Nc7f1c6", "text": "ClSound_InitSoundSystem | game/clsound/ClSound_InitSoundSystem | 99.81 | autopipe"}
+{"t": "2026-11-09T05:59:22.699206Z", "who": "shapesweep", "op": "take", "id": "Nc7f1c6"}
+{"t": "2026-11-09T06:01:19.290789Z", "who": "shapesweep", "op": "park", "id": "Nc7f1c6", "note": "shapesweep: 30 -> 30 lines ()"}
+{"t": "2026-11-09T06:01:19.447120Z", "who": "shapesweep", "op": "add", "id": "N5e3f75", "text": "NameCheck_CardName | game/NameCheck_CardName | 99.81 | autopipe"}
+{"t": "2026-11-09T06:01:19.447935Z", "who": "shapesweep", "op": "take", "id": "N5e3f75"}
+{"t": "2026-11-09T06:02:03.739552Z", "who": "shapesweep", "op": "park", "id": "N5e3f75", "note": "shapesweep: 16 -> 16 lines (id NameCheck_ScanBannedWords(buf) == 1)"}
+{"t": "2026-11-09T06:02:03.894014Z", "who": "shapesweep", "op": "add", "id": "Ne314ff", "text": "fn_80187410 | game/objview/fn_80187410 | 99.81 | autopipe"}
+{"t": "2026-11-09T06:02:03.894763Z", "who": "shapesweep", "op": "take", "id": "Ne314ff"}
+{"t": "2026-11-09T06:02:56.502037Z", "who": "shapesweep", "op": "park", "id": "Ne314ff", "note": "shapesweep: 12 -> 12 lines ()"}
+{"t": "2026-11-09T06:02:56.660710Z", "who": "shapesweep", "op": "add", "id": "N66ed5a", "text": "clNormal3D_SetScale | game/Normal3DScale | 99.80 | autopipe"}
+{"t": "2026-11-09T06:02:56.661492Z", "who": "shapesweep", "op": "take", "id": "N66ed5a"}
+{"t": "2026-11-09T06:03:42.537078Z", "who": "shapesweep", "op": "park", "id": "N66ed5a", "note": "shapesweep: 22 -> 22 lines ()"}
+{"t": "2026-11-09T06:03:42.799803Z", "who": "shapesweep", "op": "add", "id": "Nf9329d", "text": "fn_8023A148 | game/fn_8023A148 | 99.79 | autopipe"}
+{"t": "2026-11-09T06:03:42.800411Z", "who": "shapesweep", "op": "take", "id": "Nf9329d"}
+{"t": "2026-11-09T06:04:44.854326Z", "who": "shapesweep", "op": "park", "id": "Nf9329d", "note": "shapesweep: 34 -> 34 lines ()"}
+{"t": "2026-11-09T06:04:45.020147Z", "who": "shapesweep", "op": "add", "id": "N74a9db", "text": "fn_801B9928 | game/fn_801B9928 | 99.77 | autopipe"}
+{"t": "2026-11-09T06:04:45.020924Z", "who": "shapesweep", "op": "take", "id": "N74a9db"}
+{"t": "2026-11-09T06:06:20.552328Z", "who": "shapesweep", "op": "park", "id": "N74a9db", "note": "shapesweep: 42 -> 42 lines ()"}
+{"t": "2026-11-09T06:06:20.931800Z", "who": "shapesweep", "op": "add", "id": "N859be9", "text": "DetermineTitle | game/RankLog | 99.76 | autopipe"}
+{"t": "2026-11-09T06:06:20.932492Z", "who": "shapesweep", "op": "take", "id": "N859be9"}
+{"t": "2026-11-09T06:07:10.935584Z", "who": "shapesweep", "op": "park", "id": "N859be9", "note": "shapesweep: 16 -> 16 lines ()"}
+{"t": "2026-11-09T06:07:11.218579Z", "who": "shapesweep", "op": "add", "id": "N84f7ab", "text": "fn_80203224 | game/anon_8020314C_nm1 | 99.75 | autopipe"}
+{"t": "2026-11-09T06:07:11.219106Z", "who": "shapesweep", "op": "take", "id": "N84f7ab"}
+{"t": "2026-11-09T06:07:26.777660Z", "who": "shapesweep", "op": "release", "id": "N84f7ab", "note": ""}
+{"t": "2026-11-09T06:07:26.904578Z", "who": "shapesweep", "op": "add", "id": "N64bf1e", "text": "fn_801F43F8 | game/NamCamFlow | 99.75 | autopipe"}
+{"t": "2026-11-09T06:07:26.905322Z", "who": "shapesweep", "op": "take", "id": "N64bf1e"}
+{"t": "2026-11-09T06:08:37.914818Z", "who": "shapesweep", "op": "park", "id": "N64bf1e", "note": "shapesweep: 24 -> 24 lines ()"}
+{"t": "2026-11-09T06:08:38.070273Z", "who": "shapesweep", "op": "add", "id": "N931d06", "text": "ItemObject_Tick_Kind29_LightAttachment | game/ItemObject_Tick_Kind29_LightAttachment | 99.73 | autopipe"}
+{"t": "2026-11-09T06:08:38.071070Z", "who": "shapesweep", "op": "take", "id": "N931d06"}
+{"t": "2026-11-09T06:09:04.412590Z", "who": "shapesweep", "op": "park", "id": "N931d06", "note": "shapesweep: 14 -> 14 lines ()"}
+{"t": "2026-11-09T06:09:04.587311Z", "who": "shapesweep", "op": "add", "id": "Neb78bd", "text": "fn_80203C24 | game/anon_8020314C_nm2 | 99.73 | autopipe"}
+{"t": "2026-11-09T06:09:04.588199Z", "who": "shapesweep", "op": "take", "id": "Neb78bd"}
+{"t": "2026-11-09T06:09:39.380240Z", "who": "shapesweep", "op": "park", "id": "Neb78bd", "note": "shapesweep: 14 -> 14 lines ()"}
+{"t": "2026-11-09T06:09:39.540605Z", "who": "shapesweep", "op": "add", "id": "Nc16809", "text": "AI_CalcTargetSpeed_PairTracking | game/AI_CalcTargetSpeed_PairTracking | 99.72 | autopipe"}
+{"t": "2026-11-09T06:09:39.541512Z", "who": "shapesweep", "op": "take", "id": "Nc16809"}
+{"t": "2026-11-09T06:10:02.901815Z", "who": "shapesweep", "op": "park", "id": "Nc16809", "note": "shapesweep: 16 -> 16 lines ()"}
+{"t": "2026-11-09T06:10:03.075779Z", "who": "shapesweep", "op": "add", "id": "Nd944a3", "text": "ClRomTable_PurgeAll | game/ClRomTable_PurgeAll | 99.70 | autopipe"}
+{"t": "2026-11-09T06:10:03.076517Z", "who": "shapesweep", "op": "take", "id": "Nd944a3"}
+{"t": "2026-11-09T06:10:21.856120Z", "who": "shapesweep", "op": "park", "id": "Nd944a3", "note": "shapesweep: 4 -> 4 lines ()"}
+{"t": "2026-11-09T06:10:21.979289Z", "who": "shapesweep", "op": "add", "id": "N5a12ad", "text": "CourseData_LoadPathTable | game/CourseData_LoadPathTable | 99.70 | autopipe"}
+{"t": "2026-11-09T06:10:21.979929Z", "who": "shapesweep", "op": "take", "id": "N5a12ad"}
+{"t": "2026-11-09T06:11:05.955652Z", "who": "shapesweep", "op": "park", "id": "N5a12ad", "note": "shapesweep: 24 -> 24 lines ()"}
+{"t": "2026-11-09T06:11:06.127715Z", "who": "shapesweep", "op": "add", "id": "N0a7537", "text": "fn_8028C644 | triforce/amnet_nm3 | 99.70 | autopipe"}
+{"t": "2026-11-09T06:11:06.128768Z", "who": "shapesweep", "op": "take", "id": "N0a7537"}
+{"t": "2026-11-09T06:12:19.702335Z", "who": "shapesweep", "op": "park", "id": "N0a7537", "note": "shapesweep: 32 -> 32 lines ()"}
+{"t": "2026-11-09T06:12:19.969032Z", "who": "shapesweep", "op": "add", "id": "N7b7bcd", "text": "fn_801F2BC8 | game/NamCamFlow | 99.69 | autopipe"}
+{"t": "2026-11-09T06:12:19.969786Z", "who": "shapesweep", "op": "take", "id": "N7b7bcd"}
+{"t": "2026-11-09T06:13:46.295535Z", "who": "shapesweep", "op": "park", "id": "N7b7bcd", "note": "shapesweep: 42 -> 42 lines ()"}
+{"t": "2026-11-09T06:13:46.524778Z", "who": "shapesweep", "op": "add", "id": "N4c0cd1", "text": "fn_802895E4 | triforce/amcoin_nm1 | 99.65 | autopipe"}
+{"t": "2026-11-09T06:13:46.526133Z", "who": "shapesweep", "op": "take", "id": "N4c0cd1"}
+{"t": "2026-11-09T06:15:00.373946Z", "who": "shapesweep", "op": "park", "id": "N4c0cd1", "note": "shapesweep: 42 -> 42 lines ()"}
+{"t": "2026-11-09T06:15:00.526585Z", "who": "shapesweep", "op": "add", "id": "N968a3e", "text": "FlashFadeOverlay_Draw | game/FlashFadeOverlay_Draw | 99.65 | autopipe"}
+{"t": "2026-11-09T06:15:00.527657Z", "who": "shapesweep", "op": "take", "id": "N968a3e"}
+{"t": "2026-11-09T06:15:45.976526Z", "who": "shapesweep", "op": "park", "id": "N968a3e", "note": "shapesweep: 24 -> 24 lines ()"}
+{"t": "2026-11-09T06:15:46.130280Z", "who": "shapesweep", "op": "add", "id": "Nc2774c", "text": "clFlowCourse_Dtor | game/clFlowCourse | 99.62 | autopipe"}
+{"t": "2026-11-09T06:15:46.131267Z", "who": "shapesweep", "op": "take", "id": "Nc2774c"}
+{"t": "2026-11-09T06:16:28.085626Z", "who": "shapesweep", "op": "park", "id": "Nc2774c", "note": "shapesweep: 16 -> 16 lines ()"}
+{"t": "2026-11-09T06:16:28.361824Z", "who": "shapesweep", "op": "add", "id": "N3ecad8", "text": "fn_8015DEBC | game/resultscene/resultscene | 99.62 | autopipe"}
+{"t": "2026-11-09T06:16:28.362621Z", "who": "shapesweep", "op": "take", "id": "N3ecad8"}
+{"t": "2026-11-09T06:17:05.685742Z", "who": "shapesweep", "op": "park", "id": "N3ecad8", "note": "shapesweep: 16 -> 16 lines ()"}
+{"t": "2026-11-09T06:17:05.982586Z", "who": "shapesweep", "op": "add", "id": "N3e8172", "text": "fn_801F8404 | game/dtor_801F8214 | 99.61 | autopipe"}
+{"t": "2026-11-09T06:17:05.983195Z", "who": "shapesweep", "op": "take", "id": "N3e8172"}
+{"t": "2026-11-09T06:17:49.559918Z", "who": "shapesweep", "op": "park", "id": "N3e8172", "note": "shapesweep: 22 -> 22 lines ()"}
+{"t": "2026-11-09T06:17:49.739958Z", "who": "shapesweep", "op": "add", "id": "N0bd7c6", "text": "fn_80243464 | game/fn_80243464 | 99.60 | autopipe"}
+{"t": "2026-11-09T06:17:49.740622Z", "who": "shapesweep", "op": "take", "id": "N0bd7c6"}
+{"t": "2026-11-09T06:18:57.607449Z", "who": "shapesweep", "op": "park", "id": "N0bd7c6", "note": "shapesweep: 24 -> 22 lines (wrap-fwd x + 46.0f)"}
+{"t": "2026-11-09T06:18:57.766068Z", "who": "shapesweep", "op": "add", "id": "Ndafad5", "text": "Object_DriveAnimAndSkin | game/Object_DriveAnimAndSkin | 99.56 | autopipe"}
+{"t": "2026-11-09T06:18:57.766873Z", "who": "shapesweep", "op": "take", "id": "Ndafad5"}
+{"t": "2026-11-09T06:20:11.445567Z", "who": "shapesweep", "op": "park", "id": "Ndafad5", "note": "shapesweep: 66 -> 66 lines ()"}
+{"t": "2026-11-09T06:20:11.611382Z", "who": "shapesweep", "op": "add", "id": "N0f11d7", "text": "PtrVec_InsertFill | game/SpecialFaceMesh_Raycast | 99.55 | autopipe"}
+{"t": "2026-11-09T06:20:11.611981Z", "who": "shapesweep", "op": "take", "id": "N0f11d7"}
+{"t": "2026-11-09T06:21:32.920724Z", "who": "shapesweep", "op": "park", "id": "N0f11d7", "note": "shapesweep: 62 -> 58 lines (id size <= s->capacity)"}
+{"t": "2026-11-09T06:21:33.162601Z", "who": "shapesweep", "op": "add", "id": "N51d9a5", "text": "fn_8023DCEC | game/ItemSelectChildSpriteDraw | 99.54 | autopipe"}
+{"t": "2026-11-09T06:21:33.163369Z", "who": "shapesweep", "op": "take", "id": "N51d9a5"}
+{"t": "2026-11-09T06:22:31.345711Z", "who": "shapesweep", "op": "park", "id": "N51d9a5", "note": "shapesweep: 110 -> 110 lines ()"}
+{"t": "2026-11-09T06:22:31.511026Z", "who": "shapesweep", "op": "add", "id": "Nddb10a", "text": "fn_801F1EE0 | game/fn_801F27B4 | 99.54 | autopipe"}
+{"t": "2026-11-09T06:22:31.511961Z", "who": "shapesweep", "op": "take", "id": "Nddb10a"}
+{"t": "2026-11-09T06:23:05.153150Z", "who": "shapesweep", "op": "park", "id": "Nddb10a", "note": "shapesweep: 10 -> 10 lines ()"}
+{"t": "2026-11-09T06:23:05.330944Z", "who": "shapesweep", "op": "add", "id": "Nd20f6b", "text": "AI_SystemDtor | game/AI_SystemDtor | 99.53 | autopipe"}
+{"t": "2026-11-09T06:23:05.332340Z", "who": "shapesweep", "op": "take", "id": "Nd20f6b"}
+{"t": "2026-11-09T06:23:22.235954Z", "who": "shapesweep", "op": "park", "id": "Nd20f6b", "note": "shapesweep: 8 -> 8 lines ()"}
+{"t": "2026-11-09T06:23:22.360217Z", "who": "shapesweep", "op": "add", "id": "Nad5c99", "text": "AI_CalcVSTargetSpeed | game/AI_CalcVSTargetSpeed | 99.51 | autopipe"}
+{"t": "2026-11-09T06:23:22.361188Z", "who": "shapesweep", "op": "take", "id": "Nad5c99"}
+{"t": "2026-11-09T06:23:44.120581Z", "who": "shapesweep", "op": "park", "id": "Nad5c99", "note": "shapesweep: 24 -> 24 lines ()"}
+{"t": "2026-11-09T06:23:44.289504Z", "who": "shapesweep", "op": "add", "id": "N2c0bb8", "text": "fn_801F2400 | game/fn_801F27B4 | 99.48 | autopipe"}
+{"t": "2026-11-09T06:23:44.290394Z", "who": "shapesweep", "op": "take", "id": "N2c0bb8"}
+{"t": "2026-11-09T06:24:16.738298Z", "who": "shapesweep", "op": "park", "id": "N2c0bb8", "note": "shapesweep: 10 -> 10 lines ()"}
+{"t": "2026-11-09T06:24:17.041849Z", "who": "shapesweep", "op": "add", "id": "N766010", "text": "ItemGridState_Init | game/ItemGridState_Init | 99.47 | autopipe"}
+{"t": "2026-11-09T06:24:17.042539Z", "who": "shapesweep", "op": "take", "id": "N766010"}
+{"t": "2026-11-09T06:24:50.220022Z", "who": "shapesweep", "op": "park", "id": "N766010", "note": "shapesweep: 22 -> 22 lines ()"}
+{"t": "2026-11-09T06:24:50.398014Z", "who": "shapesweep", "op": "add", "id": "Nb2ffdf", "text": "SpecialFaceMesh_Dtor | game/SpecialFaceMesh_Dtor | 99.46 | autopipe"}
+{"t": "2026-11-09T06:24:50.398803Z", "who": "shapesweep", "op": "take", "id": "Nb2ffdf"}
+{"t": "2026-11-09T06:25:13.618594Z", "who": "shapesweep", "op": "park", "id": "Nb2ffdf", "note": "shapesweep: 10 -> 10 lines ()"}
+{"t": "2026-11-09T06:25:13.795261Z", "who": "shapesweep", "op": "add", "id": "Na81a78", "text": "fn_801F6588 | game/OverlayViewSetup | 99.46 | autopipe"}
+{"t": "2026-11-09T06:25:13.796267Z", "who": "shapesweep", "op": "take", "id": "Na81a78"}
+{"t": "2026-11-09T06:25:48.602172Z", "who": "shapesweep", "op": "park", "id": "Na81a78", "note": "shapesweep: 24 -> 24 lines ()"}
+{"t": "2026-11-09T06:25:48.778046Z", "who": "shapesweep", "op": "add", "id": "N0de5b3", "text": "Sci2Card_Tick | game/Sci2Card_Tick | 99.46 | autopipe"}
+{"t": "2026-11-09T06:25:48.779208Z", "who": "shapesweep", "op": "take", "id": "N0de5b3"}
+{"t": "2026-11-09T06:26:04.357554Z", "who": "shapesweep", "op": "release", "id": "N0de5b3", "note": ""}
+{"t": "2026-11-09T06:26:04.494270Z", "who": "shapesweep", "op": "add", "id": "N60faaf", "text": "fn_8018E538 | game/objview/fn_8018E538 | 99.42 | autopipe"}
+{"t": "2026-11-09T06:26:04.495271Z", "who": "shapesweep", "op": "take", "id": "N60faaf"}
+{"t": "2026-11-09T06:26:47.690441Z", "who": "shapesweep", "op": "park", "id": "N60faaf", "note": "shapesweep: 24 -> 24 lines ()"}
+{"t": "2026-11-09T06:26:47.951351Z", "who": "shapesweep", "op": "add", "id": "N63552a", "text": "Terrain_WallEdgeTest | game/Terrain_WallEdgeTest | 99.42 | autopipe"}
+{"t": "2026-11-09T06:26:47.953654Z", "who": "shapesweep", "op": "take", "id": "N63552a"}
+{"t": "2026-11-09T06:27:25.156611Z", "who": "shapesweep", "op": "park", "id": "N63552a", "note": "shapesweep: 28 -> 28 lines ()"}
+{"t": "2026-11-09T06:27:25.410211Z", "who": "shapesweep", "op": "add", "id": "N60157e", "text": "SoundDriver_GetOrCreate | game/clItemBoxManager_nm1 | 99.42 | autopipe"}
+{"t": "2026-11-09T06:27:25.410985Z", "who": "shapesweep", "op": "take", "id": "N60157e"}
+{"t": "2026-11-09T06:27:47.746971Z", "who": "shapesweep", "op": "park", "id": "N60157e", "note": "shapesweep: 12 -> 12 lines ()"}
+{"t": "2026-11-09T06:27:47.917996Z", "who": "shapesweep", "op": "add", "id": "Needf9e", "text": "AI_DecideAndUseItem_PairTracking | game/AI_DecideAndUseItem_PairTracking | 99.41 | autopipe"}
+{"t": "2026-11-09T06:27:47.918814Z", "who": "shapesweep", "op": "take", "id": "Needf9e"}
+{"t": "2026-11-09T06:28:19.792929Z", "who": "shapesweep", "op": "park", "id": "Needf9e", "note": "shapesweep: 34 -> 34 lines ()"}
+{"t": "2026-11-09T06:28:19.961720Z", "who": "shapesweep", "op": "add", "id": "N36b3ae", "text": "PhysicsState_KartCollisionCheck | game/PhysicsState_KartCollisionCheck | 99.39 | autopipe"}
+{"t": "2026-11-09T06:28:19.962588Z", "who": "shapesweep", "op": "take", "id": "N36b3ae"}
+{"t": "2026-11-09T06:28:35.570036Z", "who": "shapesweep", "op": "release", "id": "N36b3ae", "note": ""}
+{"t": "2026-11-09T06:28:35.686572Z", "who": "shapesweep", "op": "add", "id": "N0a367d", "text": "CoinJumpFx_UpdateParticleGrid | game/CoinJumpFx | 99.31 | autopipe"}
+{"t": "2026-11-09T06:28:35.688906Z", "who": "shapesweep", "op": "take", "id": "N0a367d"}
+{"t": "2026-11-09T06:29:27.167398Z", "who": "shapesweep", "op": "park", "id": "N0a367d", "note": "shapesweep: 72 -> 72 lines ()"}
+{"t": "2026-11-09T06:29:27.332705Z", "who": "shapesweep", "op": "add", "id": "N925edd", "text": "fn_80243074 | game/fn_80243074 | 99.28 | autopipe"}
+{"t": "2026-11-09T06:29:27.333710Z", "who": "shapesweep", "op": "take", "id": "N925edd"}
+{"t": "2026-11-09T06:30:23.431068Z", "who": "shapesweep", "op": "park", "id": "N925edd", "note": "shapesweep: 66 -> 62 lines (wrap-loc a->x - position->x)"}
+{"t": "2026-11-09T06:30:23.699017Z", "who": "shapesweep", "op": "add", "id": "Nc27019", "text": "fn_8017BCF8 | game/mapobject/fn_8017BCF8 | 99.28 | autopipe"}
+{"t": "2026-11-09T06:30:23.699832Z", "who": "shapesweep", "op": "take", "id": "Nc27019"}
+{"t": "2026-11-09T06:30:52.438893Z", "who": "shapesweep", "op": "park", "id": "Nc27019", "note": "shapesweep: 32 -> 32 lines ()"}
+{"t": "2026-11-09T06:30:52.606138Z", "who": "shapesweep", "op": "add", "id": "Ne31c5b", "text": "fn_801E5454 | game/fn_801E5454 | 99.22 | autopipe"}
+{"t": "2026-11-09T06:30:52.607105Z", "who": "shapesweep", "op": "take", "id": "Ne31c5b"}
+{"t": "2026-11-09T06:31:35.271797Z", "who": "shapesweep", "op": "park", "id": "Ne31c5b", "note": "shapesweep: 48 -> 48 lines ()"}
+{"t": "2026-11-09T06:31:35.497253Z", "who": "shapesweep", "op": "add", "id": "N7e32e1", "text": "fn_80227B98 | game/DNBress_nm3 | 99.17 | autopipe"}
+{"t": "2026-11-09T06:31:35.498644Z", "who": "shapesweep", "op": "take", "id": "N7e32e1"}
+{"t": "2026-11-09T06:31:51.087114Z", "who": "shapesweep", "op": "release", "id": "N7e32e1", "note": ""}
+{"t": "2026-11-09T06:31:51.210364Z", "who": "shapesweep", "op": "add", "id": "N4c87e6", "text": "clNormal3D_Exec | game/clNormal3D_Exec | 99.13 | autopipe"}
+{"t": "2026-11-09T06:31:51.211345Z", "who": "shapesweep", "op": "take", "id": "N4c87e6"}
+{"t": "2026-11-09T06:32:06.820276Z", "who": "shapesweep", "op": "release", "id": "N4c87e6", "note": ""}
+{"t": "2026-11-09T06:32:06.946926Z", "who": "shapesweep", "op": "add", "id": "N6817c7", "text": "fn_80170B5C | game/Scene_80170B5C | 99.08 | autopipe"}
+{"t": "2026-11-09T06:32:06.947939Z", "who": "shapesweep", "op": "take", "id": "N6817c7"}
+{"t": "2026-11-09T06:32:22.564880Z", "who": "shapesweep", "op": "release", "id": "N6817c7", "note": ""}
+{"t": "2026-11-09T06:32:22.693554Z", "who": "shapesweep", "op": "add", "id": "Neca051", "text": "fn_801F32BC | game/NamCamFlow | 99.07 | autopipe"}
+{"t": "2026-11-09T06:32:22.694562Z", "who": "shapesweep", "op": "take", "id": "Neca051"}
+{"t": "2026-11-09T06:33:25.839003Z", "who": "shapesweep", "op": "park", "id": "Neca051", "note": "shapesweep: 102 -> 102 lines ()"}
+{"t": "2026-11-09T06:33:26.015432Z", "who": "shapesweep", "op": "add", "id": "Na3e6a8", "text": "fn_8018F8A8 | game/objview/fn_8018F8A8 | 99.05 | autopipe"}
+{"t": "2026-11-09T06:33:26.016236Z", "who": "shapesweep", "op": "take", "id": "Na3e6a8"}
+{"t": "2026-11-09T06:33:41.582973Z", "who": "shapesweep", "op": "release", "id": "Na3e6a8", "note": ""}
+{"t": "2026-11-09T06:33:41.719395Z", "who": "shapesweep", "op": "add", "id": "N8699e6", "text": "EffectVfx29_30_Item4SubFlame_Tick | game/EffectVfx29_30_Item4SubFlame_Tick | 99.05 | autopipe"}
+{"t": "2026-11-09T06:33:41.720457Z", "who": "shapesweep", "op": "take", "id": "N8699e6"}
+{"t": "2026-11-09T06:33:57.198453Z", "who": "shapesweep", "op": "release", "id": "N8699e6", "note": ""}
+{"t": "2026-11-09T06:33:57.330477Z", "who": "shapesweep", "op": "add", "id": "N816f38", "text": "AssocTree_FreeAll | game/AssocTree_FreeAll | 99.03 | autopipe"}
+{"t": "2026-11-09T06:33:57.332741Z", "who": "shapesweep", "op": "take", "id": "N816f38"}
+{"t": "2026-11-09T06:34:26.036051Z", "who": "shapesweep", "op": "park", "id": "N816f38", "note": "shapesweep: 430 -> 430 lines ()"}
+{"t": "2026-11-09T06:34:26.240789Z", "who": "shapesweep", "op": "add", "id": "N7f7d3e", "text": "fn_8018E6FC | game/objview/fn_8018E6FC | 99.02 | autopipe"}
+{"t": "2026-11-09T06:34:26.242017Z", "who": "shapesweep", "op": "take", "id": "N7f7d3e"}
+{"t": "2026-11-09T06:34:41.804468Z", "who": "shapesweep", "op": "release", "id": "N7f7d3e", "note": ""}
+{"t": "2026-11-09T06:34:41.923980Z", "who": "shapesweep", "op": "add", "id": "N5bdc27", "text": "fn_80299D58 | thp/THPDec | 99.01 | autopipe"}
+{"t": "2026-11-09T06:34:41.924873Z", "who": "shapesweep", "op": "take", "id": "N5bdc27"}
+{"t": "2026-11-09T06:35:44.393618Z", "who": "shapesweep", "op": "park", "id": "N5bdc27", "note": "shapesweep: 142 -> 142 lines ()"}
+{"t": "2026-11-09T06:35:44.685690Z", "who": "shapesweep", "op": "take", "id": "N1b69c8"}
+{"t": "2026-11-09T06:36:00.378476Z", "who": "shapesweep", "op": "release", "id": "N1b69c8", "note": ""}
+{"t": "2026-11-09T06:36:00.508272Z", "who": "shapesweep", "op": "add", "id": "N3024cb", "text": "fn_80291134 | triforce/amsrv_nm1 | 98.97 | autopipe"}
+{"t": "2026-11-09T06:36:00.509634Z", "who": "shapesweep", "op": "take", "id": "N3024cb"}
+{"t": "2026-11-09T06:36:32.131780Z", "who": "shapesweep", "op": "park", "id": "N3024cb", "note": "shapesweep: 16 -> 16 lines ()"}
+{"t": "2026-11-09T06:36:32.388527Z", "who": "shapesweep", "op": "take", "id": "N8aaa3f"}
+{"t": "2026-11-09T06:36:47.806705Z", "who": "shapesweep", "op": "release", "id": "N8aaa3f", "note": ""}
+{"t": "2026-11-09T06:36:47.934813Z", "who": "shapesweep", "op": "add", "id": "Nee621a", "text": "fn_80245E6C | game/HudFlow20Update | 98.92 | autopipe"}
+{"t": "2026-11-09T06:36:47.935715Z", "who": "shapesweep", "op": "take", "id": "Nee621a"}
+{"t": "2026-11-09T06:37:03.549571Z", "who": "shapesweep", "op": "release", "id": "Nee621a", "note": ""}
+{"t": "2026-11-09T06:37:03.681805Z", "who": "shapesweep", "op": "add", "id": "N2bec62", "text": "fn_8021DAB8 | game/anon_8021BC44_nm1 | 98.88 | autopipe"}
+{"t": "2026-11-09T06:37:03.682530Z", "who": "shapesweep", "op": "take", "id": "N2bec62"}
+{"t": "2026-11-09T06:37:19.292353Z", "who": "shapesweep", "op": "release", "id": "N2bec62", "note": ""}
+{"t": "2026-11-09T06:37:19.440676Z", "who": "shapesweep", "op": "add", "id": "N3db452", "text": "AnimState_Init | game/AnimState_Step | 98.87 | autopipe"}
+{"t": "2026-11-09T06:37:19.441763Z", "who": "shapesweep", "op": "take", "id": "N3db452"}
+{"t": "2026-11-09T06:37:34.852932Z", "who": "shapesweep", "op": "release", "id": "N3db452", "note": ""}
+{"t": "2026-11-09T06:37:34.975058Z", "who": "shapesweep", "op": "take", "id": "Ndf399e"}
+{"t": "2026-11-09T06:39:33.701391Z", "who": "shapesweep", "op": "park", "id": "Ndf399e", "note": "shapesweep: 224 -> 14 lines (hoist-front fn_801D5DE8(player) - count | declswap #7)"}
+{"t": "2026-11-09T06:39:34.028556Z", "who": "shapesweep", "op": "add", "id": "N30bc44", "text": "fn_8015B790 | game/Scene_8015B790 | 98.79 | autopipe"}
+{"t": "2026-11-09T06:39:34.029275Z", "who": "shapesweep", "op": "take", "id": "N30bc44"}
+{"t": "2026-11-09T06:39:49.585460Z", "who": "shapesweep", "op": "release", "id": "N30bc44", "note": ""}
+{"t": "2026-11-09T06:39:49.715690Z", "who": "shapesweep", "op": "add", "id": "N6c0f09", "text": "fn_80222968 | game/anon_8021F088_nm_80221C94_nm1_nm1 | 98.79 | autopipe"}
+{"t": "2026-11-09T06:39:49.716654Z", "who": "shapesweep", "op": "take", "id": "N6c0f09"}
+{"t": "2026-11-09T06:40:05.281200Z", "who": "shapesweep", "op": "release", "id": "N6c0f09", "note": ""}
+{"t": "2026-11-09T06:40:05.406611Z", "who": "shapesweep", "op": "add", "id": "N125ec3", "text": "fn_80240378 | game/JointTracks | 98.75 | autopipe"}
+{"t": "2026-11-09T06:40:05.407218Z", "who": "shapesweep", "op": "take", "id": "N125ec3"}
+{"t": "2026-11-09T06:40:42.194686Z", "who": "shapesweep", "op": "park", "id": "N125ec3", "note": "shapesweep: 76 -> 76 lines ()"}
+{"t": "2026-11-09T06:40:42.379377Z", "who": "shapesweep", "op": "add", "id": "Nb92333", "text": "fn_801893BC | game/nokonoko/fn_801893BC | 98.64 | autopipe"}
+{"t": "2026-11-09T06:40:42.380170Z", "who": "shapesweep", "op": "take", "id": "Nb92333"}
+{"t": "2026-11-09T06:41:37.736607Z", "who": "shapesweep", "op": "park", "id": "Nb92333", "note": "shapesweep: 364 -> 364 lines ()"}
+{"t": "2026-11-09T06:41:38.072827Z", "who": "shapesweep", "op": "add", "id": "N9344ed", "text": "fn_801E9E74 | game/fn_801E9E74 | 98.62 | autopipe"}
+{"t": "2026-11-09T06:41:38.075198Z", "who": "shapesweep", "op": "take", "id": "N9344ed"}
+{"t": "2026-11-09T06:41:53.504280Z", "who": "shapesweep", "op": "release", "id": "N9344ed", "note": ""}
+{"t": "2026-11-09T06:41:53.627170Z", "who": "shapesweep", "op": "take", "id": "Na07383"}
+{"t": "2026-11-09T06:42:09.322408Z", "who": "shapesweep", "op": "release", "id": "Na07383", "note": ""}
+{"t": "2026-11-09T06:42:09.481530Z", "who": "shapesweep", "op": "add", "id": "N8c71c0", "text": "fn_80236CDC | game/FlowCardCheck_nm2 | 98.56 | autopipe"}
+{"t": "2026-11-09T06:42:09.482594Z", "who": "shapesweep", "op": "take", "id": "N8c71c0"}
+{"t": "2026-11-09T06:42:25.361320Z", "who": "shapesweep", "op": "release", "id": "N8c71c0", "note": ""}
+{"t": "2026-11-09T06:42:25.506679Z", "who": "shapesweep", "op": "add", "id": "Ncbda23", "text": "CalcEarnedCoins | game/anon_80216568 | 98.53 | autopipe"}
+{"t": "2026-11-09T06:42:25.507468Z", "who": "shapesweep", "op": "take", "id": "Ncbda23"}
+{"t": "2026-11-09T06:43:40.189238Z", "who": "shapesweep", "op": "park", "id": "Ncbda23", "note": "shapesweep: 146 -> 144 lines (hoist-front 1)"}
+{"t": "2026-11-09T06:43:40.436901Z", "who": "shapesweep", "op": "take", "id": "Nda3599"}
+{"t": "2026-11-09T06:44:20.378806Z", "who": "shapesweep", "op": "park", "id": "Nda3599", "note": "shapesweep: 66 -> 66 lines ()"}
+{"t": "2026-11-09T06:44:20.541965Z", "who": "shapesweep", "op": "add", "id": "N119ea0", "text": "KartPhysics_ApplyCollisionForce | game/KartPhysics_ApplyCollisionForce | 98.44 | autopipe"}
+{"t": "2026-11-09T06:44:20.542870Z", "who": "shapesweep", "op": "take", "id": "N119ea0"}
+{"t": "2026-11-09T06:44:36.115282Z", "who": "shapesweep", "op": "release", "id": "N119ea0", "note": ""}
+{"t": "2026-11-09T06:44:36.270593Z", "who": "shapesweep", "op": "add", "id": "Nf92492", "text": "Effect_DustBurst4_Update | game/EffectDustBurst4 | 98.43 | autopipe"}
+{"t": "2026-11-09T06:44:36.271380Z", "who": "shapesweep", "op": "take", "id": "Nf92492"}
+{"t": "2026-11-09T06:45:16.197280Z", "who": "shapesweep", "op": "park", "id": "Nf92492", "note": "shapesweep: 142 -> 142 lines ()"}
+{"t": "2026-11-09T06:45:16.374816Z", "who": "shapesweep", "op": "take", "id": "N5dd53c"}
+{"t": "2026-11-09T06:45:57.136701Z", "who": "shapesweep", "op": "park", "id": "N5dd53c", "note": "shapesweep: 68 -> 68 lines ()"}
+{"t": "2026-11-09T06:45:57.424483Z", "who": "shapesweep", "op": "take", "id": "N7728b7"}
+{"t": "2026-11-09T06:46:13.003000Z", "who": "shapesweep", "op": "release", "id": "N7728b7", "note": ""}
+{"t": "2026-11-09T06:46:13.123836Z", "who": "shapesweep", "op": "add", "id": "N2fca8a", "text": "fn_80184928 | game/dlistutil/fn_80184928 | 98.41 | autopipe"}
+{"t": "2026-11-09T06:46:13.124425Z", "who": "shapesweep", "op": "take", "id": "N2fca8a"}
+{"t": "2026-11-09T06:48:11.724728Z", "who": "shapesweep", "op": "park", "id": "N2fca8a", "note": "shapesweep: 202 -> 201 lines (hoist-back *(unsigned short*)(p + 1))"}
+{"t": "2026-11-09T06:48:12.021557Z", "who": "shapesweep", "op": "add", "id": "N3b025f", "text": "fn_8028C1B8 | triforce/amnet_nm3 | 98.37 | autopipe"}
+{"t": "2026-11-09T06:48:12.022197Z", "who": "shapesweep", "op": "take", "id": "N3b025f"}
+{"t": "2026-11-09T06:49:13.116194Z", "who": "shapesweep", "op": "park", "id": "N3b025f", "note": "shapesweep: 164 -> 164 lines ()"}
+{"t": "2026-11-09T06:49:13.296372Z", "who": "shapesweep", "op": "add", "id": "Nc07e76", "text": "HSD_TExpSetReg | sysdolphin/baselib/texp_nm1 | 98.37 | autopipe"}
+{"t": "2026-11-09T06:49:13.297450Z", "who": "shapesweep", "op": "take", "id": "Nc07e76"}
+{"t": "2026-11-09T06:49:28.962940Z", "who": "shapesweep", "op": "release", "id": "Nc07e76", "note": ""}
+{"t": "2026-11-09T06:49:29.090624Z", "who": "shapesweep", "op": "add", "id": "Nc6a5a2", "text": "fn_80233310 | game/FlowCardCheck_nm2 | 98.26 | autopipe"}
+{"t": "2026-11-09T06:49:29.091514Z", "who": "shapesweep", "op": "take", "id": "Nc6a5a2"}
+{"t": "2026-11-09T06:51:11.586935Z", "who": "shapesweep", "op": "park", "id": "Nc6a5a2", "note": "shapesweep: 126 -> 111 lines (id y > 0)"}
+{"t": "2026-11-09T06:51:11.863070Z", "who": "shapesweep", "op": "add", "id": "Nb4032c", "text": "PhysicsState_WallCollisionCheck | game/PhysicsState_WallCollisionCheck | 98.11 | autopipe"}
+{"t": "2026-11-09T06:51:11.864108Z", "who": "shapesweep", "op": "take", "id": "Nb4032c"}
+{"t": "2026-11-09T06:51:27.439702Z", "who": "shapesweep", "op": "release", "id": "Nb4032c", "note": ""}
+{"t": "2026-11-09T06:51:27.578375Z", "who": "shapesweep", "op": "take", "id": "N069e9c"}
+{"t": "2026-11-09T06:52:32.906347Z", "who": "shapesweep", "op": "park", "id": "N069e9c", "note": "shapesweep: 190 -> 115 lines (sym-id root && src x7)"}
+{"t": "2026-11-09T06:52:33.087319Z", "who": "shapesweep", "op": "add", "id": "Ndca529", "text": "fn_80282F54 | triforce/jvsio | 98.01 | autopipe"}
+{"t": "2026-11-09T06:52:33.088022Z", "who": "shapesweep", "op": "take", "id": "Ndca529"}
+{"t": "2026-11-09T06:53:05.091599Z", "who": "shapesweep", "op": "park", "id": "Ndca529", "note": "shapesweep: 76 -> 76 lines ()"}
+{"t": "2026-11-09T06:53:05.259073Z", "who": "shapesweep", "op": "take", "id": "N38020f"}
+{"t": "2026-11-09T06:53:57.580978Z", "who": "shapesweep", "op": "park", "id": "N38020f", "note": "shapesweep: 110 -> 110 lines ()"}
+{"t": "2026-11-09T06:53:57.944697Z", "who": "shapesweep", "op": "take", "id": "Nb1f4ec"}
+{"t": "2026-11-09T06:54:13.356021Z", "who": "shapesweep", "op": "release", "id": "Nb1f4ec", "note": ""}
+{"t": "2026-11-09T06:54:13.490410Z", "who": "shapesweep", "op": "take", "id": "Q053"}
+{"t": "2026-11-09T06:54:29.047817Z", "who": "shapesweep", "op": "release", "id": "Q053", "note": ""}
+{"t": "2026-11-09T06:54:29.181304Z", "who": "shapesweep", "op": "take", "id": "Ne43cc0"}
+{"t": "2026-11-09T06:54:44.705371Z", "who": "shapesweep", "op": "release", "id": "Ne43cc0", "note": ""}
+{"t": "2026-11-09T06:54:44.836855Z", "who": "shapesweep", "op": "take", "id": "Q046"}
+{"t": "2026-11-09T06:55:00.269289Z", "who": "shapesweep", "op": "release", "id": "Q046", "note": ""}
+{"t": "2026-11-09T06:55:00.424821Z", "who": "shapesweep", "op": "take", "id": "N785cf7"}
+{"t": "2026-11-09T06:56:27.059978Z", "who": "shapesweep", "op": "park", "id": "N785cf7", "note": "shapesweep: 134 -> 126 lines (getter choice->column | hoist-front 0 | declswap #4)"}
+{"t": "2026-11-09T06:56:27.320140Z", "who": "shapesweep", "op": "take", "id": "N1d2c58"}
+{"t": "2026-11-09T06:56:42.724878Z", "who": "shapesweep", "op": "release", "id": "N1d2c58", "note": ""}
+{"t": "2026-11-09T06:56:42.850875Z", "who": "shapesweep", "op": "take", "id": "N99f091"}
+{"t": "2026-11-09T06:56:58.434546Z", "who": "shapesweep", "op": "release", "id": "N99f091", "note": ""}
+{"t": "2026-11-09T06:56:58.572572Z", "who": "shapesweep", "op": "take", "id": "Ncf08dd"}
+{"t": "2026-11-09T06:57:14.130287Z", "who": "shapesweep", "op": "release", "id": "Ncf08dd", "note": ""}
+{"t": "2026-11-09T06:57:14.250595Z", "who": "shapesweep", "op": "take", "id": "Nf1d8a8"}
+{"t": "2026-11-09T06:57:29.791683Z", "who": "shapesweep", "op": "release", "id": "Nf1d8a8", "note": ""}
+{"t": "2026-11-09T06:57:29.916203Z", "who": "shapesweep", "op": "add", "id": "N7ee84a", "text": "BackupReadRecord | triforce/ambackup_nm2 | 97.40 | autopipe"}
+{"t": "2026-11-09T06:57:29.916907Z", "who": "shapesweep", "op": "take", "id": "N7ee84a"}
+{"t": "2026-11-09T06:57:45.428772Z", "who": "shapesweep", "op": "release", "id": "N7ee84a", "note": ""}
+{"t": "2026-11-09T06:57:45.559043Z", "who": "shapesweep", "op": "add", "id": "N360686", "text": "fn_801C1964 | game/fn_801BAA88 | 97.40 | autopipe"}
+{"t": "2026-11-09T06:57:45.559945Z", "who": "shapesweep", "op": "take", "id": "N360686"}
+{"t": "2026-11-09T06:58:01.159037Z", "who": "shapesweep", "op": "release", "id": "N360686", "note": ""}
+{"t": "2026-11-09T06:58:01.289573Z", "who": "shapesweep", "op": "take", "id": "Q046"}
+{"t": "2026-11-09T06:58:16.877137Z", "who": "shapesweep", "op": "release", "id": "Q046", "note": ""}
+{"t": "2026-11-09T06:58:16.995136Z", "who": "shapesweep", "op": "take", "id": "Nf7ad17"}
+{"t": "2026-11-09T06:58:32.534440Z", "who": "shapesweep", "op": "release", "id": "Nf7ad17", "note": ""}
+{"t": "2026-11-09T06:58:32.661336Z", "who": "shapesweep", "op": "take", "id": "Q046"}
+{"t": "2026-11-09T06:58:48.184316Z", "who": "shapesweep", "op": "release", "id": "Q046", "note": ""}
+{"t": "2026-11-09T06:58:48.299824Z", "who": "shapesweep", "op": "take", "id": "N4f36cb"}
+{"t": "2026-11-09T06:59:03.861751Z", "who": "shapesweep", "op": "release", "id": "N4f36cb", "note": ""}

@@ -1,0 +1,4 @@
+{"t": "2026-11-09T06:42:10.229025Z", "who": "permuter", "op": "take", "id": "Q059"}
+{"t": "2026-11-09T06:46:08.803078Z", "who": "permuter", "op": "release", "id": "Q059", "note": ""}
+{"t": "2026-11-09T06:53:35.606219Z", "who": "permuter", "op": "take", "id": "Q059"}
+{"t": "2026-11-09T07:54:17.208706Z", "who": "permuter", "op": "park", "id": "Q059", "note": "decomp-permuter 55 min (~130k iters) best 330->310 (store order only), no match"}

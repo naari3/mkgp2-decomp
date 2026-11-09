@@ -1,0 +1,16 @@
+diff --git a/src/game/Sci2Card_Tick.cpp b/src/game/Sci2Card_Tick.cpp
+index 5ff2806c..ecb7288f 100644
+--- a/src/game/Sci2Card_Tick.cpp
++++ b/src/game/Sci2Card_Tick.cpp
+@@ -340,7 +340,10 @@ extern "C" void Sci2Card_Tick(Sci2Card *card)
+             return;
+         }
+         card->ClearRx();
+-        card->SendBuffer(0, 0, pool);
++        {
++            unsigned char *p = card->m_txBuf;
++            card->SendRaw(card->m_txLen, p, pool);
++        }
+         card->SetState(2);
+         break;
+     case 2:

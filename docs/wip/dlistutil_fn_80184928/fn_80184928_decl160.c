@@ -1,0 +1,118 @@
+#include <game/dlistutil_extract_private.h>
+
+static inline unsigned char ReadQuadPosition(unsigned char *p, Vec *out) {
+    int i;
+    for (i = 0; i < 22; ++i) {
+        if (!lbl_80677E18[i].desc || lbl_80677E18[i].desc->attr == 0xff) break;
+        if (lbl_80677E18[i].desc->attr == 9) {
+            unsigned int index;
+            float *src;
+            if (lbl_80677E18[i].desc->type == 3)
+                index = *(unsigned short *)(p + lbl_80677E18[i].offset);
+            else
+                index = *(unsigned char *)(p + lbl_80677E18[i].offset);
+            src = lbl_80677E18[i].desc->array;
+            src += index * (lbl_80677E18[i].desc->stride / 4);
+            out->x = src[0];
+            out->y = src[1];
+            out->z = src[2];
+            return 1;
+        }
+    }
+    return 0;
+}
+
+#pragma push
+#pragma opt_lifetimes off
+int fn_80184928(HSD_JObj *jobj, DListPObj *pobj, DListQuad *out) {
+    MtxPtr matrix;
+    Vec *dst;
+    unsigned char *start;
+    unsigned char *end;
+    unsigned int size;
+    int offset;
+    int n;
+    int j;
+    int count;
+    Vec pos[4];
+    int half;
+    DListQuad *quad;
+    unsigned char *p;
+    int primitive;
+
+    if (!jobj || !pobj) return 0;
+    if (!out) return 0;
+    matrix = DListGetMatrix(jobj);
+    start = pobj->display;
+    p = start;
+    end = start + pobj->n_display * 32;
+    count = 0;
+    offset = 0;
+    fn_801866DC(pobj->verts);
+    if (!lbl_806D1678) return 0;
+    while (p < end) {
+        size = DListCmdSize(p);
+        if (size) { p += size; continue; }
+        primitive = *p & 0xf8;
+        n = *(unsigned short *)(p + 1);
+        p += 3;
+        if (primitive != 0x80 && primitive != 0x98) {
+            p += lbl_806D1678 * n;
+            continue;
+        }
+        half = 0;
+        if (primitive == 0x98) {
+            dst = pos;
+            quad = (DListQuad *)((unsigned char *)out + offset);
+            for (j = 0; j < n; ++j) {
+                if (j < 3) ReadQuadPosition(p, dst);
+                else {
+                    pos[0].x = pos[1].x;
+                    pos[0].y = pos[1].y;
+                    pos[0].z = pos[1].z;
+                    pos[1].x = pos[2].x;
+                    pos[1].y = pos[2].y;
+                    pos[1].z = pos[2].z;
+                    ReadQuadPosition(p, &pos[2]);
+                }
+                if (j >= 2) {
+                    if (!half) {
+                        PSMTXMultVec(matrix, &pos[0], &quad->vertex[0]);
+                        PSMTXMultVec(matrix, &pos[1], &quad->vertex[1]);
+                        PSMTXMultVec(matrix, &pos[2], &quad->vertex[3]);
+                        half = 1;
+                    } else {
+                        PSMTXMultVec(matrix, &pos[2], &quad->vertex[2]);
+                        ++count;
+                        half = 0;
+                        ++quad;
+                        offset += sizeof(DListQuad);
+                        if (count >= 6) return 1;
+                    }
+                }
+                p += lbl_806D1678;
+                ++dst;
+            }
+        } else {
+            quad = (DListQuad *)((unsigned char *)out + offset);
+            for (j = 0; j < n; ++j) {
+                half = j & 3;
+                ReadQuadPosition(p, &pos[half]);
+                if (half == 3) {
+                    PSMTXMultVec(matrix, &pos[0], &quad->vertex[0]);
+                    PSMTXMultVec(matrix, &pos[1], &quad->vertex[1]);
+                    PSMTXMultVec(matrix, &pos[2], &quad->vertex[2]);
+                    PSMTXMultVec(matrix, &pos[3], &quad->vertex[3]);
+                    ++count;
+                    offset += sizeof(DListQuad);
+                    ++quad;
+                    if (count >= 6) return 1;
+                }
+                p += lbl_806D1678;
+            }
+        }
+    }
+    return 0;
+}
+#pragma pop
+

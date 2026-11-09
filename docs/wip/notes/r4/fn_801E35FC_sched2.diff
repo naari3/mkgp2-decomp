@@ -1,0 +1,29 @@
+diff --git a/src/game/fn_801DEF94.cpp b/src/game/fn_801DEF94.cpp
+index f3f13e4..6ab04b5 100644
+--- a/src/game/fn_801DEF94.cpp
++++ b/src/game/fn_801DEF94.cpp
+@@ -1162,18 +1162,19 @@ extern "C" SteeringQueue *fn_801E3260(SteeringQueue *s, unsigned long n) {
+ }
+ 
+ extern "C" SteeringQueueIter fn_801E35FC(SteeringQueue *s, unsigned long i) {
+-    unsigned long size = s->blockSize;
+     SteeringRing *map = &s->blocks;
+     unsigned long blockIndex = 0;
+-    int *block = map->data + map->head;
+-    SteeringQueueValue *base, *ptr;
++    unsigned long size = s->blockSize;
++    int *block = s->blocks.data + s->blocks.head;
++    SteeringQueueValue *ptr, *base;
+     if (i < size) {
+-        base = map->count == 0 ? 0 : (SteeringQueueValue *)*block;
++        if (s->blocks.count == 0) base = 0; else base = (SteeringQueueValue *)*block;
+         ptr = base + i;
+     } else {
+         blockIndex = i / size;
+         unsigned long j = map->head + blockIndex;
+-        if (j >= map->capacity) j -= map->capacity;
++        unsigned long cap = map->capacity;
++        if (j >= cap) j -= cap;
+         block = map->data + j;
+         base = (SteeringQueueValue *)*block;
+         ptr = base + i % size;

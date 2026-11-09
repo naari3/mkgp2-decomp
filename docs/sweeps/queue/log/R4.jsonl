@@ -1,0 +1,72 @@
+{"t": "2026-11-08T05:10:15.752814Z", "who": "R4", "op": "release", "id": "Q008", "note": ""}
+{"t": "2026-11-08T05:10:21.477484Z", "who": "R4", "op": "park", "id": "Q008", "note": "base/record swap; R4 tried 4 iterator forms, decl swap, base in loop, base+i, inline on global, for-init"}
+{"t": "2026-11-08T05:10:21.534330Z", "who": "R4", "op": "add", "id": "Na4d605", "text": "CardData_InitDefaults | game/CardData_InitDefaults | 99.92 | epilogue only (target lwz r0 before r31/r30 restores); R4: all cc, k1 pragmas, C++ mode, no-exc, return: no change"}
+{"t": "2026-11-08T05:10:21.582609Z", "who": "R4", "op": "add", "id": "N52fbe0", "text": "fn_8016FE44 | game/Scene_8016FE44 | 99.95 | stack only: target keeps 4 distinct 8-byte slots for the two alpha conversions (frame 0x60 vs 0x50); R4 tried inline/temps/order/pragma k2/cc"}
+{"t": "2026-11-08T05:10:21.631407Z", "who": "R4", "op": "add", "id": "N99951f", "text": "fn_801F3BD8 (NamCamScene ctor) | game/NamCamFlow | 99.84 | text+1 SetPosition: target loads y before x with ptr in r4; alias gives regs but x-first, direct/method/temps give r3/r4 swap (R4)"}
+{"t": "2026-11-08T05:18:43.731682Z", "who": "R4", "op": "park", "id": "Q060", "note": "2 iterator temp stack slots swapped per branch (target interleaves last/result per call); R4: list.Add, by-value/ref inline, copy-in inline, shared inline for both branches, cperm 8 min (stuck at 3)"}
+{"t": "2026-11-08T05:18:57.273870Z", "who": "R4", "op": "take", "id": "Q062"}
+{"t": "2026-11-08T05:24:25.869115Z", "who": "R4", "op": "done", "id": "Q062", "note": "137a663"}
+{"t": "2026-11-08T05:24:38.541203Z", "who": "R4", "op": "take", "id": "Q061"}
+{"t": "2026-11-08T05:27:54.865154Z", "who": "R4", "op": "done", "id": "Q061", "note": "2199af8"}
+{"t": "2026-11-08T05:28:11.193611Z", "who": "R4", "op": "take", "id": "Q067"}
+{"t": "2026-11-08T05:49:14.036410Z", "who": "R4", "op": "park", "id": "Q067", "note": "epilogue only (target lwz r31, lwz r0, lwz r30); same symptom as CardData_InitDefaults; R4: #pragma scheduling 604/750/7400/601/603 no (821 hangs mwcc)"}
+{"t": "2026-11-08T05:49:31.472664Z", "who": "R4", "op": "take", "id": "Q087"}
+{"t": "2026-11-08T05:51:02.157111Z", "who": "R4", "op": "park", "id": "Q087", "note": "opacity fade-down FPR coloring (target opacity f2, dec f1, min f0); R4: 54 decl-order x sub-form x compare-form combos, inline helper: best 99.84 (min>opacity gets opacity f2 but dec/min swapped)"}
+{"t": "2026-11-08T05:52:10.879808Z", "who": "R4", "op": "take", "id": "Q126"}
+{"t": "2026-11-08T05:56:19.425296Z", "who": "R4", "op": "park", "id": "Q126", "note": "R4: one reg diff (row ptr addi r31,0x70 vs mr r29). Tried header operator*=/identity shapes, ptr-local rotation (99.40 but breaks copy loop), pragmasweep all sets: no gain"}
+{"t": "2026-11-08T05:56:20.739542Z", "who": "R4", "op": "take", "id": "Q112"}
+{"t": "2026-11-08T06:09:54.669161Z", "who": "R4", "op": "park", "id": "Q112", "note": "R4: 99.73 now; curve-loop reg numbering (c/seg/offset r3/r4/r5 rotated). decl order, segment shapes, pragmasweep all+decl300, cperm 64k iters: no gain"}
+{"t": "2026-11-08T06:09:56.013013Z", "who": "R4", "op": "take", "id": "Q114"}
+{"t": "2026-11-08T06:23:34.713218Z", "who": "R4", "op": "park", "id": "Q114", "note": "R4: 99.61; FPR coloring in UV block only. 90 random stmt orders, folds/new vars, cperm 31k iters: no gain"}
+{"t": "2026-11-08T06:23:44.506878Z", "who": "R4", "op": "take", "id": "Q115"}
+{"t": "2026-11-08T06:26:52.142769Z", "who": "R4", "op": "done", "id": "Q115", "note": "0f40203"}
+{"t": "2026-11-08T06:27:10.885134Z", "who": "R4", "op": "take", "id": "Q134"}
+{"t": "2026-11-08T06:44:29.990054Z", "who": "R4", "op": "park", "id": "Q134", "note": "R4 f4d4873: 99.92 (decl order w,h,top,... + opt_common_subs off). Left: target loads width*scaleX operands before height*scaleY; stmt/fabs order, operand swaps, pragmasweep, cperm 23k: no gain"}
+{"t": "2026-11-08T06:44:31.123555Z", "who": "R4", "op": "take", "id": "Q138"}
+{"t": "2026-11-08T06:45:56.025593Z", "who": "R4", "op": "park", "id": "Q138", "note": "R4: only tree/node r31/r30 swap; local copies, if-wrap, static inline fns (not inlined in C, 57%), pragmasweep all: no gain"}
+{"t": "2026-11-08T06:46:05.913466Z", "who": "R4", "op": "add", "id": "Na8e63e", "text": "fn_801F8728 | game/fn_801F8728 | 98.99 | same DrawQuad7F50 as fn_801F7F50: try decl order + opt_common_subs off"}
+{"t": "2026-11-08T06:46:13.991914Z", "who": "R4", "op": "take", "id": "Na8e63e"}
+{"t": "2026-11-08T06:46:29.262358Z", "who": "R4", "op": "park", "id": "Na8e63e", "note": "onmokoworks claimed (#2925, also fn_801F8404 #2886); hint only, do not touch"}
+{"t": "2026-11-08T06:46:40.193435Z", "who": "R4", "op": "take", "id": "N7904fe"}
+{"t": "2026-11-08T06:48:52.459508Z", "who": "R4", "op": "park", "id": "N7904fe", "note": "R4: also tried 120 one-line 'register f32 a,b,c,d,e;' perms (different mapping than separate lines but never cc4=f27+bias=f31; best = base 99.01). fn_80299850 matches with the same one-line decl, so the coloring here is driven by the asm block's register vars"}
+{"t": "2026-11-08T06:49:40.128757Z", "who": "R4", "op": "take", "id": "Q171"}
+{"t": "2026-11-08T07:08:55.662689Z", "who": "R4", "op": "park", "id": "Q171", "note": "R4 11-08: C draft now 99.52/99.80/99.02 (GC/2.6 TU), wip/racehud_80147900_wip_r4.patch. 900: target li+mr copy for two 0xFFFFFF00 colors; copy vars get CSE'd to one, opt_propagation off breaks other blocks. AF4/CE8: FPR coloring of 38/3C loads; stmt/var forms, pragmasweep all, cperm 23k: no match"}
+{"t": "2026-11-08T09:12:40.102339Z", "who": "R4", "op": "take", "id": "Q089"}
+{"t": "2026-11-08T09:15:00.991475Z", "who": "R4", "op": "park", "id": "Q089", "note": "R4 09:25: only diff = last feedback loop regs (target feedbackEntry r31/feedbackIndex r28/otherIndex r24; ours r24/r25/r28). Tried inner+outer decl order shuffles (80), reusing outer vars i/e/node/count: best 99.949, no 100"}
+{"t": "2026-11-08T09:15:06.680938Z", "who": "R4", "op": "take", "id": "Q100"}
+{"t": "2026-11-08T09:15:33.678135Z", "who": "R4", "op": "done", "id": "Q100", "note": "already Matching on main (onmokoworks)"}
+{"t": "2026-11-08T09:15:39.017740Z", "who": "R4", "op": "take", "id": "Q105"}
+{"t": "2026-11-08T09:16:42.672538Z", "who": "R4", "op": "park", "id": "Q105", "note": "R4 09:27: volatile-reg swaps in 3 places (TickRemaining loop r4/r5/r6, TickPush r5/r6, two stack-loaded ptrs r6/r7). char *base local in TickRemaining -> 99.75 (fixes ptr reg only); decl moves no further"}
+{"t": "2026-11-08T09:16:48.816878Z", "who": "R4", "op": "take", "id": "Q117"}
+{"t": "2026-11-08T09:17:11.350038Z", "who": "R4", "op": "release", "id": "Q117", "note": "R4: several independent reg/order diffs (BATTLE anchor, extsb r26/r28, flag load order); not attempted before onmoko window closes"}
+{"t": "2026-11-08T09:17:11.433738Z", "who": "R4", "op": "take", "id": "Q056"}
+{"t": "2026-11-08T09:17:50.936988Z", "who": "R4", "op": "done", "id": "Q056", "note": "100% after f0c51ac GC/2.6 switch"}
+{"t": "2026-11-08T09:18:18.059357Z", "who": "R4", "op": "take", "id": "Q148"}
+{"t": "2026-11-08T09:24:15.272520Z", "who": "R4", "op": "park", "id": "Q148", "note": "R4 d791d7c: opt_common_subs off -> 99.58; last diff: color lwz scheduled before big?x:x select (target after). Tried inline helper, if/else, temp order, scheduling/peephole/code_motion pragmas"}
+{"t": "2026-11-08T09:24:21.882358Z", "who": "R4", "op": "take", "id": "Q156"}
+{"t": "2026-11-08T09:24:57.604336Z", "who": "R4", "op": "park", "id": "Q156", "note": "R4 09:26: only diff = target addresses lbl_803BEDC0 as section anchor (addi r3,r31,0); data is owned by dtor_801F8214.cpp rodata (803BEDC0..803BF020) and also used by fn_801F8668.c/fn_801F7604.cpp -> needs TU merge into dtor_801F8214.cpp with static tables (TU-merge job)"}
+{"t": "2026-11-08T09:24:57.707949Z", "who": "R4", "op": "take", "id": "Q154"}
+{"t": "2026-11-08T09:33:53.344108Z", "who": "R4", "op": "done", "id": "Q154", "note": "303ba85"}
+{"t": "2026-11-08T09:34:18.818055Z", "who": "R4", "op": "take", "id": "Q024"}
+{"t": "2026-11-08T09:35:26.804667Z", "who": "R4", "op": "park", "id": "Q024", "note": "R4 09:40: confirmed: target keeps 0.0f (t init) in f0 through LoadSegment, copies use f1/r4; ours uses f0 for first 2 copies then rematerializes 0.0. zero local / init-list / cc 1.2.5n-2.7 sweep: no change"}
+{"t": "2026-11-08T09:35:33.890567Z", "who": "R4", "op": "take", "id": "N8a448e"}
+{"t": "2026-11-08T09:36:41.149646Z", "who": "R4", "op": "release", "id": "N8a448e", "note": "R4: wholesale GPR renumbering (r23-r31), pragmasweep decl 300 + all pragmas: none"}
+{"t": "2026-11-08T10:22:31.868064Z", "who": "R4", "op": "take", "id": "Q102"}
+{"t": "2026-11-08T10:29:53.785225Z", "who": "R4", "op": "park", "id": "Q102", "note": "R4 11-08: RenderPass payload regs/stack regions are from the hoisted Mtx block; DrawCarRouletteOverlay f5/f6 swap survived 5 more ScreenTablePosition forms. No gain."}
+{"t": "2026-11-08T10:30:05.667079Z", "who": "R4", "op": "take", "id": "N73b855"}
+{"t": "2026-11-08T10:49:52.808672Z", "who": "R4", "op": "park", "id": "N73b855", "note": "R4 11-08: 99.07 (c620f30). Left: target li r30/li r31 for i and matrixOffset (ours mr copy of the shared 0), and q/point r7/r9 swap. Pragmas, loop/decl forms, 15 min cperm (43k iters): no gain."}
+{"t": "2026-11-08T10:50:08.023146Z", "who": "R4", "op": "take", "id": "N38627e"}
+{"t": "2026-11-08T11:12:28.817131Z", "who": "R4", "op": "park", "id": "N38627e", "note": "R4 11-08: 99.33 (e284ec8). Left: FPR homes (master phase/wrap f1/f2 swap, arms one/stagger f1/f4). 720 decl orders, named temps, 15 min cperm 72k iters: no gain."}
+{"t": "2026-11-08T11:12:43.816855Z", "who": "R4", "op": "take", "id": "N25bac6"}
+{"t": "2026-11-08T11:13:39.970227Z", "who": "R4", "op": "park", "id": "N25bac6", "note": "R4 11-08: hand-expanded recursion; r28/r31 swaps of inner child/list pointers are invariant to decl hoisting in Visible*/Hide* (4 variants). Probably needs the real recursive inline form."}
+{"t": "2026-11-08T11:13:44.193545Z", "who": "R4", "op": "take", "id": "N4ba121"}
+{"t": "2026-11-08T11:28:55.126753Z", "who": "R4", "op": "park", "id": "N4ba121", "note": "R4 11-08: target never uses r3 from the rank loop to the retired check (mode r6, c/k r4, ours r5/r3). Invariant across GC 1.3.2-2.7, shared k, direct g_gameMode, CourseClearIndex order, 12 min cperm 23k iters."}
+{"t": "2026-11-08T11:29:03.411031Z", "who": "R4", "op": "take", "id": "Nb2d720"}
+{"t": "2026-11-08T11:34:33.077699Z", "who": "R4", "op": "done", "id": "Nb2d720", "note": "5eeda5b"}
+{"t": "2026-11-08T11:34:45.936457Z", "who": "R4", "op": "take", "id": "Nf55765"}
+{"t": "2026-11-08T11:36:03.056402Z", "who": "R4", "op": "park", "id": "Nf55765", "note": "R4 11-08: 98.44. Left: fabs/offset FPR homes, 1.1f/0.009f const order, push snapshot loads. Statement order + PSVECScale arg forms tried."}
+{"t": "2026-11-08T11:36:44.165979Z", "who": "R4", "op": "take", "id": "N861a34"}
+{"t": "2026-11-08T11:38:29.856750Z", "who": "R4", "op": "park", "id": "N861a34", "note": "R4 11-08: 98.42. Left: target keeps r3 free around the pageInput read (same shape as CalcEarnedCoins) and walks grp through this+8 after two peeled iterations."}
+{"t": "2026-11-08T11:38:55.521011Z", "who": "R4", "op": "take", "id": "N913520"}
+{"t": "2026-11-08T11:39:10.924710Z", "who": "R4", "op": "take", "id": "N1f05c0"}
+{"t": "2026-11-08T11:53:13.064872Z", "who": "R4", "op": "park", "id": "N1f05c0", "note": "R4 11-08: 99.67, load-order only; gave_up row"}

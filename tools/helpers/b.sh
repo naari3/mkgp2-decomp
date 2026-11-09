@@ -1,0 +1,1 @@
+cd "$(git rev-parse --show-toplevel)" && python3 configure.py --binutils build/binutils --compilers build/compilers --wrapper build/tools/wibo >/dev/null && ninja all_source progress build/GNLJ82/report.json build/GNLJ82/ok 2>&1 | grep -E "main.dol|functions\)|error|Error|FAILED" | head -${1:-6}

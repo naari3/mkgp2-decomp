@@ -1,0 +1,4692 @@
+[
+ {
+  "unit": "main/game/QuadFrame_FromCornerPtrs",
+  "src": "src/game/QuadFrame_FromCornerPtrs.c",
+  "obj": "game/QuadFrame_FromCornerPtrs",
+  "fns": [
+   [
+    "QuadFrame_FromCornerPtrs",
+    52.021896
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "QuadFrame_FromCornerPtrs": 1398
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/Normal3DScale",
+  "src": "src/game/Normal3DScale.c",
+  "obj": "game/Normal3DScale",
+  "fns": [
+   [
+    "clNormal3D_SetScale",
+    99.8048
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "clNormal3D_SetScale": 11
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/JvsInputPoll",
+  "src": "src/game/JvsInputPoll.c",
+  "obj": "game/JvsInputPoll",
+  "fns": [
+   [
+    "JvsInput_PollAndUpdate",
+    64.7052
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "JvsInput_PollAndUpdate": 274
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/ClRomTable_PurgeAll",
+  "src": "src/game/ClRomTable_PurgeAll.c",
+  "obj": "game/ClRomTable_PurgeAll",
+  "fns": [
+   [
+    "ClRomTable_PurgeAll",
+    99.7
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "ClRomTable_PurgeAll": 2
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/StrPcb_Lifetime",
+  "src": "src/game/StrPcb_Lifetime.cpp",
+  "obj": "game/StrPcb_Lifetime",
+  "fns": [
+   [
+    "StrPcb_Init",
+    83.12834
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "StrPcb_Init": 205
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/STLContainer",
+  "src": "src/game/STLContainer.cpp",
+  "obj": "game/STLContainer",
+  "fns": [
+   [
+    "STLContainer_DisposeRecursive",
+    99.02892
+   ]
+  ],
+  "claimed": false,
+  "version": "2.0",
+  "base": {
+   "STLContainer_DisposeRecursive": 47
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/ItemEffect_TornadoLift",
+  "src": "src/game/ItemEffect_TornadoLift.cpp",
+  "obj": "game/ItemEffect_TornadoLift",
+  "fns": [
+   [
+    "ItemEffect_TornadoLift",
+    86.44
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "ItemEffect_TornadoLift": 426
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/ExplosionTumble_Init",
+  "src": "src/game/ExplosionTumble_Init.cpp",
+  "obj": "game/ExplosionTumble_Init",
+  "fns": [
+   [
+    "ExplosionTumble_Init",
+    89.89171
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "ExplosionTumble_Init": 474
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/PathManager_UpdateAll",
+  "src": "src/game/PathManager_UpdateAll.c",
+  "obj": "game/PathManager_UpdateAll",
+  "fns": [
+   [
+    "PathManager_UpdateAll",
+    99.25592
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "PathManager_UpdateAll": 131
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/RenderObj_ItemStateMachine",
+  "src": "src/game/RenderObj_ItemStateMachine.cpp",
+  "obj": "game/RenderObj_ItemStateMachine",
+  "fns": [
+   [
+    "RenderObj_ItemStateMachine",
+    99.155136
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "RenderObj_ItemStateMachine": 282
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/FlashFadeOverlay_Draw",
+  "src": "src/game/FlashFadeOverlay_Draw.c",
+  "obj": "game/FlashFadeOverlay_Draw",
+  "fns": [
+   [
+    "FlashFadeOverlay_Draw",
+    99.55224
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "FlashFadeOverlay_Draw": 61
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/clItemBoxManager",
+  "src": "src/game/clItemBoxManager.cpp",
+  "obj": "game/clItemBoxManager",
+  "fns": [
+   [
+    "clItemBoxManager_Dtor",
+    99.366196
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "clItemBoxManager_Dtor": 7
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/clItemBoxManager_StepTable",
+  "src": "src/game/clItemBoxManager_StepTable.cpp",
+  "obj": "game/clItemBoxManager_StepTable",
+  "fns": [
+   [
+    "clItemBoxManager_InitStateTable",
+    91.75
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "clItemBoxManager_InitStateTable": 44
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/ServiceMode_UpdateScheduleGate",
+  "src": "src/game/ServiceMode_UpdateScheduleGate.c",
+  "obj": "game/ServiceMode_UpdateScheduleGate",
+  "fns": [
+   [
+    "ServiceMode_UpdateScheduleGate",
+    99.4375
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "ServiceMode_UpdateScheduleGate": 9
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/FrameUpdate",
+  "src": "src/game/FrameUpdate.c",
+  "obj": "game/FrameUpdate",
+  "fns": [
+   [
+    "FrameUpdate",
+    93.662254
+   ]
+  ],
+  "claimed": false,
+  "version": "3.0a5",
+  "base": {
+   "FrameUpdate": 100
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/SpecialFaceMesh_Dtor",
+  "src": "src/game/SpecialFaceMesh_Dtor.cpp",
+  "obj": "game/SpecialFaceMesh_Dtor",
+  "fns": [
+   [
+    "SpecialFaceMesh_Dtor",
+    99.46429
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "SpecialFaceMesh_Dtor": 5
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/PCBCommBroadcast",
+  "src": "src/game/PCBCommBroadcast.c",
+  "obj": "game/PCBCommBroadcast",
+  "fns": [
+   [
+    "PCBComm_BuildBroadcastSlot",
+    88.56654
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "PCBComm_BuildBroadcastSlot": 169
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/SpecialFaceMesh_Raycast",
+  "src": "src/game/SpecialFaceMesh_Raycast.cpp",
+  "obj": "game/SpecialFaceMesh_Raycast",
+  "fns": [
+   [
+    "SpecialFaceMesh_Raycast",
+    92.242424
+   ],
+   [
+    "SpecialFace_RaycastSegment",
+    86.14737
+   ],
+   [
+    "PtrVec_InsertFill",
+    96.32517
+   ],
+   [
+    "PtrVec_Reserve",
+    92.73529
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "SpecialFaceMesh_Raycast": 67,
+   "SpecialFace_RaycastSegment": 556,
+   "PtrVec_InsertFill": 144,
+   "PtrVec_Reserve": 39
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/PCBCommSendPeers",
+  "src": "src/game/PCBCommSendPeers.c",
+  "obj": "game/PCBCommSendPeers",
+  "fns": [
+   [
+    "PCBComm_SendToAllPeers",
+    79.646255
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "PCBComm_SendToAllPeers": 144
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/PCBCheckProcess",
+  "src": "src/game/PCBCheckProcess.c",
+  "obj": "game/PCBCheckProcess",
+  "fns": [
+   [
+    "PCBCheck_ProcessLinks",
+    0
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "PCBCheck_ProcessLinks": 129
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/PCBCommCompute",
+  "src": "src/game/PCBCommCompute.c",
+  "obj": "game/PCBCommCompute",
+  "fns": [
+   [
+    "PCBComm_ComputeSyncState",
+    88.30922
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "PCBComm_ComputeSyncState": 625
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/TransitionEffect",
+  "src": "src/game/TransitionEffect.cpp",
+  "obj": "game/TransitionEffect",
+  "fns": [
+   [
+    "TransitionEffect_Tick",
+    98.85542
+   ],
+   [
+    "TransitionEffect_GetOrCreate",
+    97.864075
+   ],
+   [
+    "TransitionEffect_RenderPass",
+    99.65255
+   ],
+   [
+    "TransitionEffect_DrawCarRouletteOverlay",
+    85.924446
+   ],
+   [
+    "TransitionEffect_DrawCarRouletteAndQuad",
+    94.25498
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "TransitionEffect_Tick": 34,
+   "TransitionEffect_GetOrCreate": 26,
+   "TransitionEffect_RenderPass": 4112,
+   "TransitionEffect_DrawCarRouletteOverlay": 261,
+   "TransitionEffect_DrawCarRouletteAndQuad": 79
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/PCBCommPhase1",
+  "src": "src/game/PCBCommPhase1.c",
+  "obj": "game/PCBCommPhase1",
+  "fns": [
+   [
+    "PCBComm_UpdateSyncPhase1",
+    94.97423
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "PCBComm_UpdateSyncPhase1": 82
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/Card_VerifyChecksum",
+  "src": "src/game/Card_VerifyChecksum.c",
+  "obj": "game/Card_VerifyChecksum",
+  "fns": [
+   [
+    "Card_VerifyChecksum",
+    91.971634
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "Card_VerifyChecksum": 114
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/CardRegister_Session_Tick",
+  "src": "src/game/CardRegister_Session_Tick.c",
+  "obj": "game/CardRegister_Session_Tick",
+  "fns": [
+   [
+    "CardRegister_Session_Tick",
+    99.80132
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "CardRegister_Session_Tick": 12
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/PCBCommLifecycle",
+  "src": "src/game/PCBCommLifecycle.cpp",
+  "obj": "game/PCBCommLifecycle",
+  "fns": [
+   [
+    "PCBComm_Process",
+    91.060814
+   ],
+   [
+    "PCBComm_Init",
+    95.67583
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "PCBComm_Process": 187,
+   "PCBComm_Init": 91
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/CardForceBackup",
+  "src": "src/game/CardForceBackup.c",
+  "obj": "game/CardForceBackup",
+  "fns": [
+   [
+    "card_force_backup_now",
+    57.761063
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "card_force_backup_now": 790
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/Sci2Card_BuildRetryReceiptLine",
+  "src": "src/game/Sci2Card_BuildRetryReceiptLine.c",
+  "obj": "game/Sci2Card_BuildRetryReceiptLine",
+  "fns": [
+   [
+    "Sci2Card_BuildRetryReceiptLine",
+    87.84197
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "Sci2Card_BuildRetryReceiptLine": 328
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/RaceScene_GetPerspFovyForCup",
+  "src": "src/game/RaceScene_GetPerspFovyForCup.c",
+  "obj": "game/RaceScene_GetPerspFovyForCup",
+  "fns": [
+   [
+    "RaceScene_GetPerspFovyForCup",
+    80.983604
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "RaceScene_GetPerspFovyForCup": 106
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/SetCourseParams",
+  "src": "src/game/SetCourseParams.c",
+  "obj": "game/SetCourseParams",
+  "fns": [
+   [
+    "SetCourseParams",
+    87.81855
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "SetCourseParams": 288
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/RaceContextArrayInit",
+  "src": "src/game/RaceContextArrayInit.cpp",
+  "obj": "game/RaceContextArrayInit",
+  "fns": [
+   [
+    "RaceContextArray_Init",
+    77.10476
+   ]
+  ],
+  "claimed": false,
+  "version": "1.2.5n",
+  "base": {
+   "RaceContextArray_Init": 159
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/RaceFlow_ResetState_FullColdInit",
+  "src": "src/game/RaceFlow_ResetState_FullColdInit.c",
+  "obj": "game/RaceFlow_ResetState_FullColdInit",
+  "fns": [
+   [
+    "RaceFlow_ResetState_FullColdInit",
+    89.97151
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "RaceFlow_ResetState_FullColdInit": 571
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/Terrain_FlagsToTypeId_nm2",
+  "src": "src/game/Terrain_FlagsToTypeId_nm2.c",
+  "obj": "game/Terrain_FlagsToTypeId_nm2",
+  "fns": [
+   [
+    "Terrain_GetSlipFactor",
+    98.28571
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "Terrain_GetSlipFactor": 9
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/RaceScene_FrameUpdate",
+  "src": "src/game/RaceScene_FrameUpdate.cpp",
+  "obj": "game/RaceScene_FrameUpdate",
+  "fns": [
+   [
+    "RaceScene_FrameUpdate",
+    99.98599
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "RaceScene_FrameUpdate": 2
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/WarpDashMgr_Init",
+  "src": "src/game/WarpDashMgr_Init.cpp",
+  "obj": "game/WarpDashMgr_Init",
+  "fns": [
+   [
+    "WarpDashMgr_Init",
+    94.477615
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "WarpDashMgr_Init": 42
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/RankLog",
+  "src": "src/game/RankLog.c",
+  "obj": "game/RankLog",
+  "fns": [
+   [
+    "RankLog_OnMatchEnd",
+    93.43137
+   ],
+   [
+    "RankLog_InitStartRace",
+    68.35227
+   ],
+   [
+    "get_title_name",
+    96.49624
+   ],
+   [
+    "get_title_name_global",
+    96.20588
+   ],
+   [
+    "DetermineTitle",
+    97.02105
+   ],
+   [
+    "TitleCheck_NewClearedRecord_Race",
+    98.188156
+   ],
+   [
+    "TitleCheck_ScoreOverQuarterTarget",
+    85.67949
+   ],
+   [
+    "TitleCheck_HeavyLossWithWin",
+    85.860756
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "RankLog_OnMatchEnd": 23,
+   "RankLog_InitStartRace": 711,
+   "get_title_name": 47,
+   "get_title_name_global": 57,
+   "DetermineTitle": 60,
+   "TitleCheck_NewClearedRecord_Race": 462,
+   "TitleCheck_ScoreOverQuarterTarget": 62,
+   "TitleCheck_HeavyLossWithWin": 62
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/ShadowAreaMgr",
+  "src": "src/game/ShadowAreaMgr.cpp",
+  "obj": "game/ShadowAreaMgr",
+  "fns": [
+   [
+    "ShadowAreaMgr_QueryPoint",
+    81.52381
+   ],
+   [
+    "ShadowAreaEntry_ComputeEdgeNormals",
+    96.46667
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "ShadowAreaMgr_QueryPoint": 83,
+   "ShadowAreaEntry_ComputeEdgeNormals": 48
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/CourseData_LoadPathTable",
+  "src": "src/game/CourseData_LoadPathTable.cpp",
+  "obj": "game/CourseData_LoadPathTable",
+  "fns": [
+   [
+    "CourseData_LoadPathTable",
+    90.0
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "CourseData_LoadPathTable": 142
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/CelebPop17Update",
+  "src": "src/game/CelebPop17Update.cpp",
+  "obj": "game/CelebPop17Update",
+  "fns": [
+   [
+    "CelebPop17_Update",
+    84.473915
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "CelebPop17_Update": 230
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/KartShellRibbonDraw",
+  "src": "src/game/KartShellRibbonDraw.c",
+  "obj": "game/KartShellRibbonDraw",
+  "fns": [
+   [
+    "KartShellRibbonDraw",
+    99.90909
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "KartShellRibbonDraw": 7
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/KartFootEffect_Tick",
+  "src": "src/game/KartFootEffect_Tick.c",
+  "obj": "game/KartFootEffect_Tick",
+  "fns": [
+   [
+    "KartFootEffect_Tick",
+    93.11024
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "KartFootEffect_Tick": 169
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/EffectVfx10_KartTrail_Tick",
+  "src": "src/game/EffectVfx10_KartTrail_Tick.c",
+  "obj": "game/EffectVfx10_KartTrail_Tick",
+  "fns": [
+   [
+    "EffectVfx10_KartTrail_Tick",
+    99.82456
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "EffectVfx10_KartTrail_Tick": 10
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/EffectCompoundRing",
+  "src": "src/game/EffectCompoundRing.cpp",
+  "obj": "game/EffectCompoundRing",
+  "fns": [
+   [
+    "Effect_CompoundRing_PlaceChildren",
+    99.333336
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "Effect_CompoundRing_PlaceChildren": 48
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/EffectKartAuraCompound",
+  "src": "src/game/EffectKartAuraCompound.cpp",
+  "obj": "game/EffectKartAuraCompound",
+  "fns": [
+   [
+    "Effect_KartAuraCompound_Update",
+    94.68376
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "Effect_KartAuraCompound_Update": 50
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/DrawEffect_Cb_KartWheelSmokeOrbital_Tick",
+  "src": "src/game/DrawEffect_Cb_KartWheelSmokeOrbital_Tick.c",
+  "obj": "game/DrawEffect_Cb_KartWheelSmokeOrbital_Tick",
+  "fns": [
+   [
+    "DrawEffect_Cb_KartWheelSmokeOrbital_Tick",
+    99.53917
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "DrawEffect_Cb_KartWheelSmokeOrbital_Tick": 5
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/ItemObject_SpawnWithAlias",
+  "src": "src/game/ItemObject_SpawnWithAlias.c",
+  "obj": "game/ItemObject_SpawnWithAlias",
+  "fns": [
+   [
+    "ItemObject_SpawnWithAlias",
+    99.42029
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "ItemObject_SpawnWithAlias": 16
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/OptionMenuDraw",
+  "src": "src/game/OptionMenuDraw.cpp",
+  "obj": "game/OptionMenuDraw",
+  "fns": [
+   [
+    "fn_8015A6E4",
+    99.40426
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8015A6E4": 177
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/mapeffect/Cave16ACtor",
+  "src": "src/game/mapeffect/Cave16ACtor.cpp",
+  "obj": "game/mapeffect/Cave16ACtor",
+  "fns": [
+   [
+    "fn_8016AF3C",
+    93.37079
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8016AF3C": 30
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/HomingMarkerUpdate",
+  "src": "src/game/HomingMarkerUpdate.cpp",
+  "obj": "game/HomingMarkerUpdate",
+  "fns": [
+   [
+    "fn_80172948",
+    89.90959
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_80172948": 662
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/DbgMenu",
+  "src": "src/game/DbgMenu.cpp",
+  "obj": "game/DbgMenu",
+  "fns": [
+   [
+    "TestMenuJointBrowser_Update",
+    99.92248
+   ],
+   [
+    "DbgScene_PreloadResourceTree",
+    81.60098
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "TestMenuJointBrowser_Update": 2,
+   "DbgScene_PreloadResourceTree": 233,
+   "DbgScene03_TplTest_SelectStage": 45
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/mapeffect/PointListConstruct",
+  "src": "src/game/mapeffect/PointListConstruct.cpp",
+  "obj": "game/mapeffect/PointListConstruct",
+  "fns": [
+   [
+    "fn_8016C94C",
+    99.31746
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8016C94C": 9
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/mapobject/fn_8017BCF8",
+  "src": "src/game/mapobject/fn_8017BCF8.cpp",
+  "obj": "game/mapobject/fn_8017BCF8",
+  "fns": [
+   [
+    "fn_8017BCF8",
+    99.27711
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8017BCF8": 16
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/objview/fn_8018A70C",
+  "src": "src/game/objview/fn_8018A70C.cpp",
+  "obj": "game/objview/fn_8018A70C",
+  "fns": [
+   [
+    "fn_8018A70C",
+    92.4386
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8018A70C": 37
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/objview/fn_8018CFC4",
+  "src": "src/game/objview/fn_8018CFC4.cpp",
+  "obj": "game/objview/fn_8018CFC4",
+  "fns": [
+   [
+    "fn_8018CFC4",
+    79.731705
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8018CFC4": 19
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/misc3d/fn_8018D64C",
+  "src": "src/game/misc3d/fn_8018D64C.c",
+  "obj": "game/misc3d/fn_8018D64C",
+  "fns": [
+   [
+    "fn_8018D64C",
+    85.12195
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8018D64C": 38
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/objview/fn_8018E538",
+  "src": "src/game/objview/fn_8018E538.cpp",
+  "obj": "game/objview/fn_8018E538",
+  "fns": [
+   [
+    "fn_8018E538",
+    99.42478
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8018E538": 12
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/clsound/fn_801934F4",
+  "src": "src/game/clsound/fn_801934F4.c",
+  "obj": "game/clsound/fn_801934F4",
+  "fns": [
+   [
+    "fn_801934F4",
+    90.85526
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801934F4": 38
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/objview/MapWaterEffect_Init",
+  "src": "src/game/objview/MapWaterEffect_Init.cpp",
+  "obj": "game/objview/MapWaterEffect_Init",
+  "fns": [
+   [
+    "MapWaterEffect_Init",
+    70.6875
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "MapWaterEffect_Init": 102
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/objview/fn_801967F0",
+  "src": "src/game/objview/fn_801967F0.cpp",
+  "obj": "game/objview/fn_801967F0",
+  "fns": [
+   [
+    "fn_801967F0",
+    93.12791
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801967F0": 55
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/kartmove/KartMovement_RotateByYaw",
+  "src": "src/game/kartmove/KartMovement_RotateByYaw.cpp",
+  "obj": "game/kartmove/KartMovement_RotateByYaw",
+  "fns": [
+   [
+    "KartMovement_RotateByYaw",
+    80.05624
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "KartMovement_RotateByYaw": 1275
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/kartmove/fn_8019ADF4",
+  "src": "src/game/kartmove/fn_8019ADF4.c",
+  "obj": "game/kartmove/fn_8019ADF4",
+  "fns": [
+   [
+    "fn_8019ADF4",
+    87.533745
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8019ADF4": 169
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/kartmove/fn_8019A9BC",
+  "src": "src/game/kartmove/fn_8019A9BC.cpp",
+  "obj": "game/kartmove/fn_8019A9BC",
+  "fns": [
+   [
+    "fn_8019A9BC",
+    94.155556
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8019A9BC": 415
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/kartmove/fn_8019C6B4",
+  "src": "src/game/kartmove/fn_8019C6B4.cpp",
+  "obj": "game/kartmove/fn_8019C6B4",
+  "fns": [
+   [
+    "fn_8019C6B4",
+    77.891426
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8019C6B4": 1076
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/kartmove/KartMovement_CollisionUpdate",
+  "src": "src/game/kartmove/KartMovement_CollisionUpdate.cpp",
+  "obj": "game/kartmove/KartMovement_CollisionUpdate",
+  "fns": [
+   [
+    "KartMovement_CollisionUpdate",
+    87.22604
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "KartMovement_CollisionUpdate": 2913
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/kartmove/carobject",
+  "src": "src/game/kartmove/carobject.cpp",
+  "obj": "game/kartmove/carobject",
+  "fns": [
+   [
+    "KartMovement_Init",
+    66.68763
+   ],
+   [
+    "fn_8019EA08",
+    57.575756
+   ],
+   [
+    "fn_8019EB9C",
+    85.29032
+   ],
+   [
+    "fn_8019EC18",
+    67.64865
+   ],
+   [
+    "SpeedCurve_UpdateSpeedCap",
+    99.07217
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "KartMovement_Init": 1558,
+   "fn_8019EA08": 10,
+   "fn_8019EB9C": 73,
+   "fn_8019EC18": 427,
+   "SpeedCurve_UpdateSpeedCap": 15
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/sprite/fn_801A0004",
+  "src": "src/game/sprite/fn_801A0004.c",
+  "obj": "game/sprite/fn_801A0004",
+  "fns": [
+   [
+    "fn_801A0004",
+    94.404106
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801A0004": 120
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/VoiceSystem_Init",
+  "src": "src/game/VoiceSystem_Init.c",
+  "obj": "game/VoiceSystem_Init",
+  "fns": [
+   [
+    "VoiceSystem_Init",
+    85.69065
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "VoiceSystem_Init": 451
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/fn_801B7EF8",
+  "src": "src/game/fn_801B7EF8.c",
+  "obj": "game/fn_801B7EF8",
+  "fns": [
+   [
+    "fn_801B7EF8",
+    91.867546
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801B7EF8": 68
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/fn_801B9928",
+  "src": "src/game/fn_801B9928.cpp",
+  "obj": "game/fn_801B9928",
+  "fns": [
+   [
+    "fn_801B9928",
+    92.59424
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801B9928": 218
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/fn_801C9288",
+  "src": "src/game/fn_801C9288.cpp",
+  "obj": "game/fn_801C9288",
+  "fns": [
+   [
+    "fn_801C9288",
+    87.85714
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801C9288": 2338
+  },
+  "hits": [],
+  "improved": [
+   {
+    "version": "1.2.5n",
+    "flags": "",
+    "fixed": [],
+    "total": 1668,
+    "base_total": 2338,
+    "left": {
+     "fn_801C9288": 1668
+    }
+   },
+   {
+    "version": "1.2.5n",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 1668,
+    "base_total": 2338,
+    "left": {
+     "fn_801C9288": 1668
+    }
+   },
+   {
+    "version": "1.2.5n",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 1668,
+    "base_total": 2338,
+    "left": {
+     "fn_801C9288": 1668
+    }
+   },
+   {
+    "version": "1.2.5n",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 1668,
+    "base_total": 2338,
+    "left": {
+     "fn_801C9288": 1668
+    }
+   }
+  ]
+ },
+ {
+  "unit": "main/game/clFlowClass_Update",
+  "src": "src/game/clFlowClass_Update.cpp",
+  "obj": "game/clFlowClass_Update",
+  "fns": [
+   [
+    "clFlowClass_Update",
+    99.81776
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "clFlowClass_Update": 17
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/GpPleaseInit",
+  "src": "src/game/GpPleaseInit.cpp",
+  "obj": "game/GpPleaseInit",
+  "fns": [
+   [
+    "clFlowGpPlease_Init",
+    99.352486
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "clFlowGpPlease_Init": 95
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/fn_801BAA88",
+  "src": "src/game/fn_801BAA88.cpp",
+  "obj": "game/fn_801BAA88",
+  "fns": [
+   [
+    "fn_801BC2EC",
+    99.40887
+   ],
+   [
+    "fn_801BDB60",
+    92.821594
+   ],
+   [
+    "fn_801BDEB4",
+    99.71429
+   ],
+   [
+    "fn_801BE170",
+    99.37906
+   ],
+   [
+    "fn_801BEDF0",
+    99.111115
+   ],
+   [
+    "fn_801BF35C",
+    81.935486
+   ],
+   [
+    "fn_801BF644",
+    98.27061
+   ],
+   [
+    "fn_801C0568",
+    98.289474
+   ],
+   [
+    "fn_801C1964",
+    92.03704
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801BC2EC": 1016,
+   "fn_801BDB60": 142,
+   "fn_801BDEB4": 9,
+   "fn_801BE170": 69,
+   "fn_801BEDF0": 31,
+   "fn_801BF35C": 256,
+   "fn_801BF644": 80,
+   "fn_801C0568": 13,
+   "fn_801C1964": 39,
+   "fn_801BBAF0": 30,
+   "fn_801BD038": 40,
+   "fn_801C02C4": 35,
+   "fn_801C0C30": 45
+  },
+  "hits": [],
+  "improved": [
+   {
+    "version": "2.5",
+    "flags": "",
+    "fixed": [],
+    "total": 1776,
+    "base_total": 1805,
+    "left": {
+     "fn_801BC2EC": 1016,
+     "fn_801BDB60": 142,
+     "fn_801BDEB4": 9,
+     "fn_801BE170": 69,
+     "fn_801BEDF0": 31,
+     "fn_801BF35C": 256,
+     "fn_801BF644": 80,
+     "fn_801C0568": 13,
+     "fn_801C1964": 10,
+     "fn_801BBAF0": 30,
+     "fn_801BD038": 40,
+     "fn_801C02C4": 35,
+     "fn_801C0C30": 45
+    }
+   },
+   {
+    "version": "2.5",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 1776,
+    "base_total": 1805,
+    "left": {
+     "fn_801BC2EC": 1016,
+     "fn_801BDB60": 142,
+     "fn_801BDEB4": 9,
+     "fn_801BE170": 69,
+     "fn_801BEDF0": 31,
+     "fn_801BF35C": 256,
+     "fn_801BF644": 80,
+     "fn_801C0568": 13,
+     "fn_801C1964": 10,
+     "fn_801BBAF0": 30,
+     "fn_801BD038": 40,
+     "fn_801C02C4": 35,
+     "fn_801C0C30": 45
+    }
+   },
+   {
+    "version": "2.5",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 1776,
+    "base_total": 1805,
+    "left": {
+     "fn_801BC2EC": 1016,
+     "fn_801BDB60": 142,
+     "fn_801BDEB4": 9,
+     "fn_801BE170": 69,
+     "fn_801BEDF0": 31,
+     "fn_801BF35C": 256,
+     "fn_801BF644": 80,
+     "fn_801C0568": 13,
+     "fn_801C1964": 10,
+     "fn_801BBAF0": 30,
+     "fn_801BD038": 40,
+     "fn_801C02C4": 35,
+     "fn_801C0C30": 45
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "",
+    "fixed": [],
+    "total": 1776,
+    "base_total": 1805,
+    "left": {
+     "fn_801BC2EC": 1016,
+     "fn_801BDB60": 142,
+     "fn_801BDEB4": 9,
+     "fn_801BE170": 69,
+     "fn_801BEDF0": 31,
+     "fn_801BF35C": 256,
+     "fn_801BF644": 80,
+     "fn_801C0568": 13,
+     "fn_801C1964": 10,
+     "fn_801BBAF0": 30,
+     "fn_801BD038": 40,
+     "fn_801C02C4": 35,
+     "fn_801C0C30": 45
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 1776,
+    "base_total": 1805,
+    "left": {
+     "fn_801BC2EC": 1016,
+     "fn_801BDB60": 142,
+     "fn_801BDEB4": 9,
+     "fn_801BE170": 69,
+     "fn_801BEDF0": 31,
+     "fn_801BF35C": 256,
+     "fn_801BF644": 80,
+     "fn_801C0568": 13,
+     "fn_801C1964": 10,
+     "fn_801BBAF0": 30,
+     "fn_801BD038": 40,
+     "fn_801C02C4": 35,
+     "fn_801C0C30": 45
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 1776,
+    "base_total": 1805,
+    "left": {
+     "fn_801BC2EC": 1016,
+     "fn_801BDB60": 142,
+     "fn_801BDEB4": 9,
+     "fn_801BE170": 69,
+     "fn_801BEDF0": 31,
+     "fn_801BF35C": 256,
+     "fn_801BF644": 80,
+     "fn_801C0568": 13,
+     "fn_801C1964": 10,
+     "fn_801BBAF0": 30,
+     "fn_801BD038": 40,
+     "fn_801C02C4": 35,
+     "fn_801C0C30": 45
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "",
+    "fixed": [],
+    "total": 1776,
+    "base_total": 1805,
+    "left": {
+     "fn_801BC2EC": 1016,
+     "fn_801BDB60": 142,
+     "fn_801BDEB4": 9,
+     "fn_801BE170": 69,
+     "fn_801BEDF0": 31,
+     "fn_801BF35C": 256,
+     "fn_801BF644": 80,
+     "fn_801C0568": 13,
+     "fn_801C1964": 10,
+     "fn_801BBAF0": 30,
+     "fn_801BD038": 40,
+     "fn_801C02C4": 35,
+     "fn_801C0C30": 45
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 1776,
+    "base_total": 1805,
+    "left": {
+     "fn_801BC2EC": 1016,
+     "fn_801BDB60": 142,
+     "fn_801BDEB4": 9,
+     "fn_801BE170": 69,
+     "fn_801BEDF0": 31,
+     "fn_801BF35C": 256,
+     "fn_801BF644": 80,
+     "fn_801C0568": 13,
+     "fn_801C1964": 10,
+     "fn_801BBAF0": 30,
+     "fn_801BD038": 40,
+     "fn_801C02C4": 35,
+     "fn_801C0C30": 45
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 1776,
+    "base_total": 1805,
+    "left": {
+     "fn_801BC2EC": 1016,
+     "fn_801BDB60": 142,
+     "fn_801BDEB4": 9,
+     "fn_801BE170": 69,
+     "fn_801BEDF0": 31,
+     "fn_801BF35C": 256,
+     "fn_801BF644": 80,
+     "fn_801C0568": 13,
+     "fn_801C1964": 10,
+     "fn_801BBAF0": 30,
+     "fn_801BD038": 40,
+     "fn_801C02C4": 35,
+     "fn_801C0C30": 45
+    }
+   }
+  ]
+ },
+ {
+  "unit": "main/game/anon_801D286C",
+  "src": "src/game/anon_801D286C.cpp",
+  "obj": "game/anon_801D286C",
+  "fns": [
+   [
+    "fn_801D286C",
+    90.73585
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801D286C": 401
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/ranking_display",
+  "src": "src/game/ranking_display.cpp",
+  "obj": "game/ranking_display",
+  "fns": [
+   [
+    "ranking_display",
+    91.29006
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "ranking_display": 1310
+  },
+  "hits": [],
+  "improved": [
+   {
+    "version": "1.3",
+    "flags": "",
+    "fixed": [],
+    "total": 514,
+    "base_total": 1310,
+    "left": {
+     "ranking_display": 514
+    }
+   },
+   {
+    "version": "1.3",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 514,
+    "base_total": 1310,
+    "left": {
+     "ranking_display": 514
+    }
+   },
+   {
+    "version": "1.3",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 514,
+    "base_total": 1310,
+    "left": {
+     "ranking_display": 514
+    }
+   },
+   {
+    "version": "1.3",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 514,
+    "base_total": 1310,
+    "left": {
+     "ranking_display": 514
+    }
+   }
+  ]
+ },
+ {
+  "unit": "main/game/fn_801D4DC0",
+  "src": "src/game/fn_801D4DC0.cpp",
+  "obj": "game/fn_801D4DC0",
+  "fns": [
+   [
+    "fn_801D4DC0",
+    92.184395
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801D4DC0": 102
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/fn_801D670C",
+  "src": "src/game/fn_801D670C.c",
+  "obj": "game/fn_801D670C",
+  "fns": [
+   [
+    "fn_801D670C",
+    94.166664
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_801D670C": 26
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/fn_801D676C",
+  "src": "src/game/fn_801D676C.c",
+  "obj": "game/fn_801D676C",
+  "fns": [
+   [
+    "fn_801D676C",
+    92.20588
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_801D676C": 22
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/anon_801D2F0C",
+  "src": "src/game/anon_801D2F0C.cpp",
+  "obj": "game/anon_801D2F0C",
+  "fns": [
+   [
+    "fn_801D2F0C",
+    99.908394
+   ],
+   [
+    "fn_801D3118",
+    99.405594
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801D2F0C": 10,
+   "fn_801D3118": 32
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/AI_DecideAndUseItem_PairTracking",
+  "src": "src/game/AI_DecideAndUseItem_PairTracking.cpp",
+  "obj": "game/AI_DecideAndUseItem_PairTracking",
+  "fns": [
+   [
+    "AI_DecideAndUseItem_PairTracking",
+    92.889656
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "AI_DecideAndUseItem_PairTracking": 70
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/AI_CalcTargetSpeed_PairTracking",
+  "src": "src/game/AI_CalcTargetSpeed_PairTracking.c",
+  "obj": "game/AI_CalcTargetSpeed_PairTracking",
+  "fns": [
+   [
+    "AI_CalcTargetSpeed_PairTracking",
+    99.47183
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "AI_CalcTargetSpeed_PairTracking": 34
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/AI_CalcGPTargetSpeed",
+  "src": "src/game/AI_CalcGPTargetSpeed.c",
+  "obj": "game/AI_CalcGPTargetSpeed",
+  "fns": [
+   [
+    "AI_CalcGPTargetSpeed",
+    99.34066
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "AI_CalcGPTargetSpeed": 36
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/AI_PerKartUpdate",
+  "src": "src/game/AI_PerKartUpdate.cpp",
+  "obj": "game/AI_PerKartUpdate",
+  "fns": [
+   [
+    "AI_PerKartUpdate",
+    99.797295
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "AI_PerKartUpdate": 3
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/KartController_Update",
+  "src": "src/game/KartController_Update.cpp",
+  "obj": "game/KartController_Update",
+  "fns": [
+   [
+    "KartController_Update",
+    89.9313
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "KartController_Update": 1827
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/RankingMgr_UpdatePositions",
+  "src": "src/game/RankingMgr_UpdatePositions.cpp",
+  "obj": "game/RankingMgr_UpdatePositions",
+  "fns": [
+   [
+    "RankingMgr_UpdatePositions",
+    99.30232
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "RankingMgr_UpdatePositions": 9
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/fn_801ECA14",
+  "src": "src/game/fn_801ECA14.c",
+  "obj": "game/fn_801ECA14",
+  "fns": [
+   [
+    "fn_801ECA14",
+    74.06896
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801ECA14": 118
+  },
+  "hits": [],
+  "improved": [
+   {
+    "version": "1.2.5n",
+    "flags": "",
+    "fixed": [],
+    "total": 78,
+    "base_total": 118,
+    "left": {
+     "fn_801ECA14": 78
+    }
+   },
+   {
+    "version": "1.2.5n",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 78,
+    "base_total": 118,
+    "left": {
+     "fn_801ECA14": 78
+    }
+   },
+   {
+    "version": "1.2.5n",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 78,
+    "base_total": 118,
+    "left": {
+     "fn_801ECA14": 78
+    }
+   },
+   {
+    "version": "1.2.5n",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 78,
+    "base_total": 118,
+    "left": {
+     "fn_801ECA14": 78
+    }
+   }
+  ]
+ },
+ {
+  "unit": "main/game/fn_801DEF94",
+  "src": "src/game/fn_801DEF94.cpp",
+  "obj": "game/fn_801DEF94",
+  "fns": [
+   [
+    "fn_801DF318",
+    87.5
+   ],
+   [
+    "fn_801DF358",
+    87.5
+   ],
+   [
+    "fn_801E1870",
+    79.6747
+   ],
+   [
+    "fn_801E2C40",
+    48.592594
+   ],
+   [
+    "fn_801E2DF0",
+    67.11539
+   ],
+   [
+    "fn_801E2FD4",
+    53.323742
+   ],
+   [
+    "fn_801E32C8",
+    74.541466
+   ],
+   [
+    "fn_801E35FC",
+    86.790695
+   ],
+   [
+    "fn_801E36A8",
+    63.240383
+   ],
+   [
+    "fn_801E3848",
+    88.736435
+   ],
+   [
+    "fn_801E411C",
+    90.458336
+   ],
+   [
+    "fn_801E435C",
+    73.92453
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801DF318": 10,
+   "fn_801DF358": 10,
+   "fn_801E1870": 294,
+   "fn_801E2C40": 365,
+   "fn_801E2DF0": 161,
+   "fn_801E2FD4": 363,
+   "fn_801E32C8": 368,
+   "fn_801E35FC": 46,
+   "fn_801E36A8": 305,
+   "fn_801E3848": 178,
+   "fn_801E411C": 85,
+   "fn_801E435C": 227
+  },
+  "hits": [],
+  "improved": [
+   {
+    "version": "2.0",
+    "flags": "",
+    "fixed": [],
+    "total": 2305,
+    "base_total": 2412,
+    "left": {
+     "fn_801DF318": 10,
+     "fn_801DF358": 10,
+     "fn_801E1870": 294,
+     "fn_801E2C40": 365,
+     "fn_801E2DF0": 161,
+     "fn_801E2FD4": 351,
+     "fn_801E32C8": 368,
+     "fn_801E35FC": 46,
+     "fn_801E36A8": 305,
+     "fn_801E3848": 83,
+     "fn_801E411C": 85,
+     "fn_801E435C": 227
+    }
+   },
+   {
+    "version": "2.0",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 2305,
+    "base_total": 2412,
+    "left": {
+     "fn_801DF318": 10,
+     "fn_801DF358": 10,
+     "fn_801E1870": 294,
+     "fn_801E2C40": 365,
+     "fn_801E2DF0": 161,
+     "fn_801E2FD4": 351,
+     "fn_801E32C8": 368,
+     "fn_801E35FC": 46,
+     "fn_801E36A8": 305,
+     "fn_801E3848": 83,
+     "fn_801E411C": 85,
+     "fn_801E435C": 227
+    }
+   },
+   {
+    "version": "2.5",
+    "flags": "",
+    "fixed": [],
+    "total": 2305,
+    "base_total": 2412,
+    "left": {
+     "fn_801DF318": 10,
+     "fn_801DF358": 10,
+     "fn_801E1870": 294,
+     "fn_801E2C40": 365,
+     "fn_801E2DF0": 161,
+     "fn_801E2FD4": 351,
+     "fn_801E32C8": 368,
+     "fn_801E35FC": 46,
+     "fn_801E36A8": 305,
+     "fn_801E3848": 83,
+     "fn_801E411C": 85,
+     "fn_801E435C": 227
+    }
+   },
+   {
+    "version": "2.5",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 2305,
+    "base_total": 2412,
+    "left": {
+     "fn_801DF318": 10,
+     "fn_801DF358": 10,
+     "fn_801E1870": 294,
+     "fn_801E2C40": 365,
+     "fn_801E2DF0": 161,
+     "fn_801E2FD4": 351,
+     "fn_801E32C8": 368,
+     "fn_801E35FC": 46,
+     "fn_801E36A8": 305,
+     "fn_801E3848": 83,
+     "fn_801E411C": 85,
+     "fn_801E435C": 227
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "",
+    "fixed": [],
+    "total": 2305,
+    "base_total": 2412,
+    "left": {
+     "fn_801DF318": 10,
+     "fn_801DF358": 10,
+     "fn_801E1870": 294,
+     "fn_801E2C40": 365,
+     "fn_801E2DF0": 161,
+     "fn_801E2FD4": 351,
+     "fn_801E32C8": 368,
+     "fn_801E35FC": 46,
+     "fn_801E36A8": 305,
+     "fn_801E3848": 83,
+     "fn_801E411C": 85,
+     "fn_801E435C": 227
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 2305,
+    "base_total": 2412,
+    "left": {
+     "fn_801DF318": 10,
+     "fn_801DF358": 10,
+     "fn_801E1870": 294,
+     "fn_801E2C40": 365,
+     "fn_801E2DF0": 161,
+     "fn_801E2FD4": 351,
+     "fn_801E32C8": 368,
+     "fn_801E35FC": 46,
+     "fn_801E36A8": 305,
+     "fn_801E3848": 83,
+     "fn_801E411C": 85,
+     "fn_801E435C": 227
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "",
+    "fixed": [],
+    "total": 2305,
+    "base_total": 2412,
+    "left": {
+     "fn_801DF318": 10,
+     "fn_801DF358": 10,
+     "fn_801E1870": 294,
+     "fn_801E2C40": 365,
+     "fn_801E2DF0": 161,
+     "fn_801E2FD4": 351,
+     "fn_801E32C8": 368,
+     "fn_801E35FC": 46,
+     "fn_801E36A8": 305,
+     "fn_801E3848": 83,
+     "fn_801E411C": 85,
+     "fn_801E435C": 227
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 2305,
+    "base_total": 2412,
+    "left": {
+     "fn_801DF318": 10,
+     "fn_801DF358": 10,
+     "fn_801E1870": 294,
+     "fn_801E2C40": 365,
+     "fn_801E2DF0": 161,
+     "fn_801E2FD4": 351,
+     "fn_801E32C8": 368,
+     "fn_801E35FC": 46,
+     "fn_801E36A8": 305,
+     "fn_801E3848": 83,
+     "fn_801E411C": 85,
+     "fn_801E435C": 227
+    }
+   }
+  ]
+ },
+ {
+  "unit": "main/game/PhysicsState_WallCollisionCheck",
+  "src": "src/game/PhysicsState_WallCollisionCheck.cpp",
+  "obj": "game/PhysicsState_WallCollisionCheck",
+  "fns": [
+   [
+    "PhysicsState_WallCollisionCheck",
+    56.79439
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "PhysicsState_WallCollisionCheck": 2209
+  },
+  "hits": [],
+  "improved": [
+   {
+    "version": "1.3",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 1984,
+    "base_total": 2209,
+    "left": {
+     "PhysicsState_WallCollisionCheck": 1984
+    }
+   },
+   {
+    "version": "1.3.2",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 1984,
+    "base_total": 2209,
+    "left": {
+     "PhysicsState_WallCollisionCheck": 1984
+    }
+   },
+   {
+    "version": "1.3.2r",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 1984,
+    "base_total": 2209,
+    "left": {
+     "PhysicsState_WallCollisionCheck": 1984
+    }
+   },
+   {
+    "version": "2.0",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 1984,
+    "base_total": 2209,
+    "left": {
+     "PhysicsState_WallCollisionCheck": 1984
+    }
+   },
+   {
+    "version": "2.5",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 1984,
+    "base_total": 2209,
+    "left": {
+     "PhysicsState_WallCollisionCheck": 1984
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 1984,
+    "base_total": 2209,
+    "left": {
+     "PhysicsState_WallCollisionCheck": 1984
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 1984,
+    "base_total": 2209,
+    "left": {
+     "PhysicsState_WallCollisionCheck": 1984
+    }
+   }
+  ]
+ },
+ {
+  "unit": "main/game/fn_801ED798",
+  "src": "src/game/fn_801ED798.cpp",
+  "obj": "game/fn_801ED798",
+  "fns": [
+   [
+    "fn_801ED798",
+    87.86867
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801ED798": 611
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/fn_801F27B4",
+  "src": "src/game/fn_801F27B4.cpp",
+  "obj": "game/fn_801F27B4",
+  "fns": [
+   [
+    "fn_801F27B4",
+    79.94979
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801F27B4": 1922
+  },
+  "hits": [],
+  "improved": [
+   {
+    "version": "1.2.5n",
+    "flags": "",
+    "fixed": [],
+    "total": 1133,
+    "base_total": 1922,
+    "left": {
+     "fn_801F27B4": 1133
+    }
+   },
+   {
+    "version": "1.2.5n",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 1133,
+    "base_total": 1922,
+    "left": {
+     "fn_801F27B4": 1133
+    }
+   },
+   {
+    "version": "1.2.5n",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 1133,
+    "base_total": 1922,
+    "left": {
+     "fn_801F27B4": 1133
+    }
+   },
+   {
+    "version": "1.2.5n",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 1133,
+    "base_total": 1922,
+    "left": {
+     "fn_801F27B4": 1133
+    }
+   }
+  ]
+ },
+ {
+  "unit": "main/game/Menu801F0CC0",
+  "src": "src/game/Menu801F0CC0.cpp",
+  "obj": "game/Menu801F0CC0",
+  "fns": [
+   [
+    "fn_801F0D04",
+    98.78205
+   ],
+   [
+    "fn_801F0ECC",
+    90.86585
+   ],
+   [
+    "fn_801F1244",
+    93.10526
+   ],
+   [
+    "fn_801F140C",
+    93.08772
+   ],
+   [
+    "fn_801F1664",
+    95.8
+   ],
+   [
+    "fn_801F19C8",
+    91.0
+   ],
+   [
+    "fn_801F1AC8",
+    90.96875
+   ],
+   [
+    "fn_801F1C58",
+    92.12963
+   ],
+   [
+    "fn_801F1EE0",
+    99.53846
+   ],
+   [
+    "fn_801F20A0",
+    93.0
+   ],
+   [
+    "fn_801F21C8",
+    89.40741
+   ],
+   [
+    "fn_801F230C",
+    97.6
+   ],
+   [
+    "fn_801F2400",
+    99.48276
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801F0D04": 15,
+   "fn_801F0ECC": 107,
+   "fn_801F1244": 299,
+   "fn_801F140C": 65,
+   "fn_801F1664": 30,
+   "fn_801F19C8": 36,
+   "fn_801F1AC8": 32,
+   "fn_801F1C58": 40,
+   "fn_801F1EE0": 5,
+   "fn_801F20A0": 145,
+   "fn_801F21C8": 42,
+   "fn_801F230C": 3,
+   "fn_801F2400": 5
+  },
+  "hits": [],
+  "improved": [
+   {
+    "version": "2.0",
+    "flags": "",
+    "fixed": [],
+    "total": 739,
+    "base_total": 824,
+    "left": {
+     "fn_801F0D04": 15,
+     "fn_801F0ECC": 107,
+     "fn_801F1244": 286,
+     "fn_801F140C": 51,
+     "fn_801F1664": 30,
+     "fn_801F19C8": 17,
+     "fn_801F1AC8": 18,
+     "fn_801F1C58": 40,
+     "fn_801F1EE0": 5,
+     "fn_801F20A0": 133,
+     "fn_801F21C8": 29,
+     "fn_801F230C": 3,
+     "fn_801F2400": 5
+    }
+   },
+   {
+    "version": "2.0",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 739,
+    "base_total": 824,
+    "left": {
+     "fn_801F0D04": 15,
+     "fn_801F0ECC": 107,
+     "fn_801F1244": 286,
+     "fn_801F140C": 51,
+     "fn_801F1664": 30,
+     "fn_801F19C8": 17,
+     "fn_801F1AC8": 18,
+     "fn_801F1C58": 40,
+     "fn_801F1EE0": 5,
+     "fn_801F20A0": 133,
+     "fn_801F21C8": 29,
+     "fn_801F230C": 3,
+     "fn_801F2400": 5
+    }
+   },
+   {
+    "version": "2.0",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 739,
+    "base_total": 824,
+    "left": {
+     "fn_801F0D04": 15,
+     "fn_801F0ECC": 107,
+     "fn_801F1244": 286,
+     "fn_801F140C": 51,
+     "fn_801F1664": 30,
+     "fn_801F19C8": 17,
+     "fn_801F1AC8": 18,
+     "fn_801F1C58": 40,
+     "fn_801F1EE0": 5,
+     "fn_801F20A0": 133,
+     "fn_801F21C8": 29,
+     "fn_801F230C": 3,
+     "fn_801F2400": 5
+    }
+   },
+   {
+    "version": "2.0",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 739,
+    "base_total": 824,
+    "left": {
+     "fn_801F0D04": 15,
+     "fn_801F0ECC": 107,
+     "fn_801F1244": 286,
+     "fn_801F140C": 51,
+     "fn_801F1664": 30,
+     "fn_801F19C8": 17,
+     "fn_801F1AC8": 18,
+     "fn_801F1C58": 40,
+     "fn_801F1EE0": 5,
+     "fn_801F20A0": 133,
+     "fn_801F21C8": 29,
+     "fn_801F230C": 3,
+     "fn_801F2400": 5
+    }
+   },
+   {
+    "version": "2.5",
+    "flags": "",
+    "fixed": [],
+    "total": 739,
+    "base_total": 824,
+    "left": {
+     "fn_801F0D04": 15,
+     "fn_801F0ECC": 107,
+     "fn_801F1244": 286,
+     "fn_801F140C": 51,
+     "fn_801F1664": 30,
+     "fn_801F19C8": 17,
+     "fn_801F1AC8": 18,
+     "fn_801F1C58": 40,
+     "fn_801F1EE0": 5,
+     "fn_801F20A0": 133,
+     "fn_801F21C8": 29,
+     "fn_801F230C": 3,
+     "fn_801F2400": 5
+    }
+   },
+   {
+    "version": "2.5",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 739,
+    "base_total": 824,
+    "left": {
+     "fn_801F0D04": 15,
+     "fn_801F0ECC": 107,
+     "fn_801F1244": 286,
+     "fn_801F140C": 51,
+     "fn_801F1664": 30,
+     "fn_801F19C8": 17,
+     "fn_801F1AC8": 18,
+     "fn_801F1C58": 40,
+     "fn_801F1EE0": 5,
+     "fn_801F20A0": 133,
+     "fn_801F21C8": 29,
+     "fn_801F230C": 3,
+     "fn_801F2400": 5
+    }
+   },
+   {
+    "version": "2.5",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 739,
+    "base_total": 824,
+    "left": {
+     "fn_801F0D04": 15,
+     "fn_801F0ECC": 107,
+     "fn_801F1244": 286,
+     "fn_801F140C": 51,
+     "fn_801F1664": 30,
+     "fn_801F19C8": 17,
+     "fn_801F1AC8": 18,
+     "fn_801F1C58": 40,
+     "fn_801F1EE0": 5,
+     "fn_801F20A0": 133,
+     "fn_801F21C8": 29,
+     "fn_801F230C": 3,
+     "fn_801F2400": 5
+    }
+   },
+   {
+    "version": "2.5",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 739,
+    "base_total": 824,
+    "left": {
+     "fn_801F0D04": 15,
+     "fn_801F0ECC": 107,
+     "fn_801F1244": 286,
+     "fn_801F140C": 51,
+     "fn_801F1664": 30,
+     "fn_801F19C8": 17,
+     "fn_801F1AC8": 18,
+     "fn_801F1C58": 40,
+     "fn_801F1EE0": 5,
+     "fn_801F20A0": 133,
+     "fn_801F21C8": 29,
+     "fn_801F230C": 3,
+     "fn_801F2400": 5
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "",
+    "fixed": [],
+    "total": 739,
+    "base_total": 824,
+    "left": {
+     "fn_801F0D04": 15,
+     "fn_801F0ECC": 107,
+     "fn_801F1244": 286,
+     "fn_801F140C": 51,
+     "fn_801F1664": 30,
+     "fn_801F19C8": 17,
+     "fn_801F1AC8": 18,
+     "fn_801F1C58": 40,
+     "fn_801F1EE0": 5,
+     "fn_801F20A0": 133,
+     "fn_801F21C8": 29,
+     "fn_801F230C": 3,
+     "fn_801F2400": 5
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 739,
+    "base_total": 824,
+    "left": {
+     "fn_801F0D04": 15,
+     "fn_801F0ECC": 107,
+     "fn_801F1244": 286,
+     "fn_801F140C": 51,
+     "fn_801F1664": 30,
+     "fn_801F19C8": 17,
+     "fn_801F1AC8": 18,
+     "fn_801F1C58": 40,
+     "fn_801F1EE0": 5,
+     "fn_801F20A0": 133,
+     "fn_801F21C8": 29,
+     "fn_801F230C": 3,
+     "fn_801F2400": 5
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 739,
+    "base_total": 824,
+    "left": {
+     "fn_801F0D04": 15,
+     "fn_801F0ECC": 107,
+     "fn_801F1244": 286,
+     "fn_801F140C": 51,
+     "fn_801F1664": 30,
+     "fn_801F19C8": 17,
+     "fn_801F1AC8": 18,
+     "fn_801F1C58": 40,
+     "fn_801F1EE0": 5,
+     "fn_801F20A0": 133,
+     "fn_801F21C8": 29,
+     "fn_801F230C": 3,
+     "fn_801F2400": 5
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 739,
+    "base_total": 824,
+    "left": {
+     "fn_801F0D04": 15,
+     "fn_801F0ECC": 107,
+     "fn_801F1244": 286,
+     "fn_801F140C": 51,
+     "fn_801F1664": 30,
+     "fn_801F19C8": 17,
+     "fn_801F1AC8": 18,
+     "fn_801F1C58": 40,
+     "fn_801F1EE0": 5,
+     "fn_801F20A0": 133,
+     "fn_801F21C8": 29,
+     "fn_801F230C": 3,
+     "fn_801F2400": 5
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "",
+    "fixed": [],
+    "total": 739,
+    "base_total": 824,
+    "left": {
+     "fn_801F0D04": 15,
+     "fn_801F0ECC": 107,
+     "fn_801F1244": 286,
+     "fn_801F140C": 51,
+     "fn_801F1664": 30,
+     "fn_801F19C8": 17,
+     "fn_801F1AC8": 18,
+     "fn_801F1C58": 40,
+     "fn_801F1EE0": 5,
+     "fn_801F20A0": 133,
+     "fn_801F21C8": 29,
+     "fn_801F230C": 3,
+     "fn_801F2400": 5
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 739,
+    "base_total": 824,
+    "left": {
+     "fn_801F0D04": 15,
+     "fn_801F0ECC": 107,
+     "fn_801F1244": 286,
+     "fn_801F140C": 51,
+     "fn_801F1664": 30,
+     "fn_801F19C8": 17,
+     "fn_801F1AC8": 18,
+     "fn_801F1C58": 40,
+     "fn_801F1EE0": 5,
+     "fn_801F20A0": 133,
+     "fn_801F21C8": 29,
+     "fn_801F230C": 3,
+     "fn_801F2400": 5
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 739,
+    "base_total": 824,
+    "left": {
+     "fn_801F0D04": 15,
+     "fn_801F0ECC": 107,
+     "fn_801F1244": 286,
+     "fn_801F140C": 51,
+     "fn_801F1664": 30,
+     "fn_801F19C8": 17,
+     "fn_801F1AC8": 18,
+     "fn_801F1C58": 40,
+     "fn_801F1EE0": 5,
+     "fn_801F20A0": 133,
+     "fn_801F21C8": 29,
+     "fn_801F230C": 3,
+     "fn_801F2400": 5
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 739,
+    "base_total": 824,
+    "left": {
+     "fn_801F0D04": 15,
+     "fn_801F0ECC": 107,
+     "fn_801F1244": 286,
+     "fn_801F140C": 51,
+     "fn_801F1664": 30,
+     "fn_801F19C8": 17,
+     "fn_801F1AC8": 18,
+     "fn_801F1C58": 40,
+     "fn_801F1EE0": 5,
+     "fn_801F20A0": 133,
+     "fn_801F21C8": 29,
+     "fn_801F230C": 3,
+     "fn_801F2400": 5
+    }
+   }
+  ]
+ },
+ {
+  "unit": "main/game/OverlayViewSetup",
+  "src": "src/game/OverlayViewSetup.cpp",
+  "obj": "game/OverlayViewSetup",
+  "fns": [
+   [
+    "fn_801F6588",
+    85.723076
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801F6588": 177
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/fn_801F9518",
+  "src": "src/game/fn_801F9518.cpp",
+  "obj": "game/fn_801F9518",
+  "fns": [
+   [
+    "fn_801F9518",
+    79.20588
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_801F9518": 55
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/MenuModeLane",
+  "src": "src/game/MenuModeLane.cpp",
+  "obj": "game/MenuModeLane",
+  "fns": [
+   [
+    "fn_801F6178",
+    92.73381
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801F6178": 51
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/CollisionFile_Load",
+  "src": "src/game/CollisionFile_Load.c",
+  "obj": "game/CollisionFile_Load",
+  "fns": [
+   [
+    "CollisionFile_Load",
+    90.476746
+   ]
+  ],
+  "claimed": false,
+  "version": "3.0a5",
+  "base": {
+   "CollisionFile_Load": 79
+  },
+  "hits": [],
+  "improved": [
+   {
+    "version": "1.3",
+    "flags": "",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "1.3",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "1.3",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "1.3",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "1.3.2",
+    "flags": "",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "1.3.2",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "1.3.2",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "1.3.2",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "1.3.2r",
+    "flags": "",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "1.3.2r",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "1.3.2r",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "1.3.2r",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "2.0",
+    "flags": "",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "2.0",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "2.0",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "2.0",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "2.5",
+    "flags": "",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "2.5",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "2.5",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "2.5",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 30,
+    "base_total": 79,
+    "left": {
+     "CollisionFile_Load": 30
+    }
+   }
+  ]
+ },
+ {
+  "unit": "main/game/NamCamFlow",
+  "src": "src/game/NamCamFlow.cpp",
+  "obj": "game/NamCamFlow",
+  "fns": [
+   [
+    "fn_801F2BC8",
+    82.68817
+   ],
+   [
+    "fn_801F32BC",
+    97.38314
+   ],
+   [
+    "fn_801F36D0",
+    70.53435
+   ],
+   [
+    "fn_801F3BD8",
+    86.16968
+   ],
+   [
+    "fn_801F43F8",
+    96.32184
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801F2BC8": 471,
+   "fn_801F32BC": 94,
+   "fn_801F36D0": 241,
+   "fn_801F3BD8": 327,
+   "fn_801F43F8": 330
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/fn_801F9B64",
+  "src": "src/game/fn_801F9B64.cpp",
+  "obj": "game/fn_801F9B64",
+  "fns": [
+   [
+    "fn_801F9B64",
+    85.22222
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_801F9B64": 95
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/anon_80202BCC_nm2",
+  "src": "src/game/anon_80202BCC_nm2.cpp",
+  "obj": "game/anon_80202BCC_nm2",
+  "fns": [
+   [
+    "fn_80202E78",
+    84.545456
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_80202E78": 22
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/anon_80209330_nm1",
+  "src": "src/game/anon_80209330_nm1.cpp",
+  "obj": "game/anon_80209330_nm1",
+  "fns": [
+   [
+    "fn_80209338",
+    94.38389
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_80209338": 145
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/anon_80209FA4_nm3",
+  "src": "src/game/anon_80209FA4_nm3.cpp",
+  "obj": "game/anon_80209FA4_nm3",
+  "fns": [
+   [
+    "fn_8020A788",
+    93.82353
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_8020A788": 6
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/anon_80209FA4_nm2",
+  "src": "src/game/anon_80209FA4_nm2.cpp",
+  "obj": "game/anon_80209FA4_nm2",
+  "fns": [
+   [
+    "fn_8020A6CC",
+    92.88461
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_8020A6CC": 16
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/CoinChallengeUpdate",
+  "src": "src/game/CoinChallengeUpdate.cpp",
+  "obj": "game/CoinChallengeUpdate",
+  "fns": [
+   [
+    "MiniGame_CoinChallenge_Update",
+    98.24586
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "MiniGame_CoinChallenge_Update": 105
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/anon_802124FC_nm1",
+  "src": "src/game/anon_802124FC_nm1.cpp",
+  "obj": "game/anon_802124FC_nm1",
+  "fns": [
+   [
+    "fn_802128F4",
+    99.86264
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_802128F4": 7
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/anon_80218F40_nm1_tail",
+  "src": "src/game/anon_80218F40_nm1_tail.cpp",
+  "obj": "game/anon_80218F40_nm1_tail",
+  "fns": [
+   [
+    "fn_80219538",
+    85.30965
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_80219538": 196
+  },
+  "hits": [],
+  "improved": [
+   {
+    "version": "1.3",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 189,
+    "base_total": 196,
+    "left": {
+     "fn_80219538": 189
+    }
+   },
+   {
+    "version": "1.3.2",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 189,
+    "base_total": 196,
+    "left": {
+     "fn_80219538": 189
+    }
+   },
+   {
+    "version": "1.3.2r",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 189,
+    "base_total": 196,
+    "left": {
+     "fn_80219538": 189
+    }
+   },
+   {
+    "version": "2.0",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 189,
+    "base_total": 196,
+    "left": {
+     "fn_80219538": 189
+    }
+   },
+   {
+    "version": "2.5",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 189,
+    "base_total": 196,
+    "left": {
+     "fn_80219538": 189
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 189,
+    "base_total": 196,
+    "left": {
+     "fn_80219538": 189
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 189,
+    "base_total": 196,
+    "left": {
+     "fn_80219538": 189
+    }
+   }
+  ]
+ },
+ {
+  "unit": "main/game/anon_8021F088_nm_8021F508",
+  "src": "src/game/anon_8021F088_nm_8021F508.cpp",
+  "obj": "game/anon_8021F088_nm_8021F508",
+  "fns": [
+   [
+    "fn_8021F508",
+    92.56784
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_8021F508": 57
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/anon_8021BC44",
+  "src": "src/game/anon_8021BC44.cpp",
+  "obj": "game/anon_8021BC44",
+  "fns": [
+   [
+    "fn_8021C070",
+    93.275314
+   ],
+   [
+    "fn_8021C778",
+    96.75
+   ],
+   [
+    "fn_8021D780",
+    95.694176
+   ],
+   [
+    "fn_8021DAB8",
+    82.17204
+   ],
+   [
+    "fn_8021E0FC",
+    92.986115
+   ],
+   [
+    "fn_8021E714",
+    99.52879
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_8021C070": 136,
+   "fn_8021C778": 234,
+   "fn_8021D780": 47,
+   "fn_8021DAB8": 453,
+   "fn_8021E0FC": 37,
+   "fn_8021E714": 36
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/anon_80224ECC_nm1",
+  "src": "src/game/anon_80224ECC_nm1.cpp",
+  "obj": "game/anon_80224ECC_nm1",
+  "fns": [
+   [
+    "fn_80225124",
+    89.5
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_80225124": 49
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/anon_802253EC_nm1",
+  "src": "src/game/anon_802253EC_nm1.cpp",
+  "obj": "game/anon_802253EC_nm1",
+  "fns": [
+   [
+    "fn_80225C2C",
+    94.49484
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_80225C2C": 104
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/DNStartDino",
+  "src": "src/game/DNStartDino.cpp",
+  "obj": "game/DNStartDino",
+  "fns": [
+   [
+    "fn_80229998",
+    90.43624
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_80229998": 143
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/EnemyFace",
+  "src": "src/game/EnemyFace.cpp",
+  "obj": "game/EnemyFace",
+  "fns": [
+   [
+    "fn_8022ACE4",
+    87.70318
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_8022ACE4": 206
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/EnemyFaceDraw",
+  "src": "src/game/EnemyFaceDraw.cpp",
+  "obj": "game/EnemyFaceDraw",
+  "fns": [
+   [
+    "fn_8022BFA8",
+    85.44128
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_8022BFA8": 2542
+  },
+  "hits": [],
+  "improved": [
+   {
+    "version": "1.2.5n",
+    "flags": "",
+    "fixed": [],
+    "total": 2243,
+    "base_total": 2542,
+    "left": {
+     "fn_8022BFA8": 2243
+    }
+   },
+   {
+    "version": "1.2.5n",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 2243,
+    "base_total": 2542,
+    "left": {
+     "fn_8022BFA8": 2243
+    }
+   },
+   {
+    "version": "1.2.5n",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 2243,
+    "base_total": 2542,
+    "left": {
+     "fn_8022BFA8": 2243
+    }
+   },
+   {
+    "version": "1.2.5n",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 2277,
+    "base_total": 2542,
+    "left": {
+     "fn_8022BFA8": 2277
+    }
+   }
+  ]
+ },
+ {
+  "unit": "main/game/EnmyFaceEffect_nm1",
+  "src": "src/game/EnmyFaceEffect_nm1.cpp",
+  "obj": "game/EnmyFaceEffect_nm1",
+  "fns": [
+   [
+    "fn_8022CE34",
+    98.40741
+   ],
+   [
+    "fn_8022D9E4",
+    99.81328
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_8022CE34": 35,
+   "fn_8022D9E4": 18
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/ItemSelectRefill",
+  "src": "src/game/ItemSelectRefill.cpp",
+  "obj": "game/ItemSelectRefill",
+  "fns": [
+   [
+    "fn_802386E0",
+    94.70238
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_802386E0": 96
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/ItemSelectState_Dtor",
+  "src": "src/game/ItemSelectState_Dtor.cpp",
+  "obj": "game/ItemSelectState_Dtor",
+  "fns": [
+   [
+    "ItemSelectState_Dtor",
+    99.320984
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "ItemSelectState_Dtor": 7
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/ItemSelectUpdate",
+  "src": "src/game/ItemSelectUpdate.cpp",
+  "obj": "game/ItemSelectUpdate",
+  "fns": [
+   [
+    "fn_80238D9C",
+    90.56465
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_80238D9C": 326
+  },
+  "hits": [],
+  "improved": [
+   {
+    "version": "2.0",
+    "flags": "",
+    "fixed": [],
+    "total": 316,
+    "base_total": 326,
+    "left": {
+     "fn_80238D9C": 316
+    }
+   },
+   {
+    "version": "2.0",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 316,
+    "base_total": 326,
+    "left": {
+     "fn_80238D9C": 316
+    }
+   },
+   {
+    "version": "2.0",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 316,
+    "base_total": 326,
+    "left": {
+     "fn_80238D9C": 316
+    }
+   },
+   {
+    "version": "2.5",
+    "flags": "",
+    "fixed": [],
+    "total": 316,
+    "base_total": 326,
+    "left": {
+     "fn_80238D9C": 316
+    }
+   },
+   {
+    "version": "2.5",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 316,
+    "base_total": 326,
+    "left": {
+     "fn_80238D9C": 316
+    }
+   },
+   {
+    "version": "2.5",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 316,
+    "base_total": 326,
+    "left": {
+     "fn_80238D9C": 316
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "",
+    "fixed": [],
+    "total": 316,
+    "base_total": 326,
+    "left": {
+     "fn_80238D9C": 316
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 316,
+    "base_total": 326,
+    "left": {
+     "fn_80238D9C": 316
+    }
+   },
+   {
+    "version": "2.6",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 316,
+    "base_total": 326,
+    "left": {
+     "fn_80238D9C": 316
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "",
+    "fixed": [],
+    "total": 316,
+    "base_total": 326,
+    "left": {
+     "fn_80238D9C": 316
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 316,
+    "base_total": 326,
+    "left": {
+     "fn_80238D9C": 316
+    }
+   },
+   {
+    "version": "2.7",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 316,
+    "base_total": 326,
+    "left": {
+     "fn_80238D9C": 316
+    }
+   }
+  ]
+ },
+ {
+  "unit": "main/game/ItemSelectState_Init",
+  "src": "src/game/ItemSelectState_Init.cpp",
+  "obj": "game/ItemSelectState_Init",
+  "fns": [
+   [
+    "ItemSelectState_Init",
+    91.523315
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "ItemSelectState_Init": 333
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/FlowCardCheck_nm1",
+  "src": "src/game/FlowCardCheck_nm1.cpp",
+  "obj": "game/FlowCardCheck_nm1",
+  "fns": [
+   [
+    "fn_80233310",
+    98.25541
+   ],
+   [
+    "fn_80234300",
+    99.384384
+   ],
+   [
+    "fn_80234840",
+    87.71867
+   ],
+   [
+    "fn_80234F70",
+    98.42857
+   ],
+   [
+    "fn_802351F4",
+    96.78571
+   ],
+   [
+    "fn_802353EC",
+    96.502846
+   ],
+   [
+    "fn_80235CD4",
+    97.27273
+   ],
+   [
+    "fn_80235FA4",
+    92.112724
+   ],
+   [
+    "fn_80236554",
+    96.273384
+   ],
+   [
+    "fn_80236CDC",
+    98.21706
+   ],
+   [
+    "fn_80237434",
+    98.933716
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_80233310": 181,
+   "fn_80234300": 44,
+   "fn_80234840": 409,
+   "fn_80234F70": 21,
+   "fn_802351F4": 54,
+   "fn_802353EC": 218,
+   "fn_80235CD4": 47,
+   "fn_80235FA4": 134,
+   "fn_80236554": 105,
+   "fn_80236CDC": 90,
+   "fn_80237434": 20
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/ItemSelectChoiceUpdate",
+  "src": "src/game/ItemSelectChoiceUpdate.cpp",
+  "obj": "game/ItemSelectChoiceUpdate",
+  "fns": [
+   [
+    "fn_8023AC14",
+    97.91316
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8023AC14": 45
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/fn_8023A148",
+  "src": "src/game/fn_8023A148.cpp",
+  "obj": "game/fn_8023A148",
+  "fns": [
+   [
+    "fn_8023A148",
+    99.43765
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8023A148": 267
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/fn_80242E80",
+  "src": "src/game/fn_80242E80.cpp",
+  "obj": "game/fn_80242E80",
+  "fns": [
+   [
+    "fn_80242E80",
+    99.4
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_80242E80": 12
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/fn_80243464",
+  "src": "src/game/fn_80243464.cpp",
+  "obj": "game/fn_80243464",
+  "fns": [
+   [
+    "fn_80243464",
+    99.40476
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_80243464": 24
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/triforce/random_nm1",
+  "src": "src/triforce/random_nm1.c",
+  "obj": "triforce/random_nm1",
+  "fns": [
+   [
+    "fn_802867B8",
+    88.48837
+   ],
+   [
+    "fn_80286864",
+    84.80769
+   ]
+  ],
+  "claimed": false,
+  "version": "1.2.5n",
+  "base": {
+   "fn_802867B8": 41,
+   "fn_80286864": 84
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/Runtime.PPCEABI.H/MWRTTI",
+  "src": "src/Runtime.PPCEABI.H/MWRTTI.cpp",
+  "obj": "Runtime.PPCEABI.H/MWRTTI",
+  "fns": [
+   [
+    "fn_80271340",
+    99.77124
+   ]
+  ],
+  "claimed": false,
+  "version": "2.6",
+  "base": {
+   "fn_80271340": 7
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/game/HudFlow24Ctor",
+  "src": "src/game/HudFlow24Ctor.cpp",
+  "obj": "game/HudFlow24Ctor",
+  "fns": [
+   [
+    "fn_80245C1C",
+    93.914894
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_80245C1C": 86
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/triforce/jvsio",
+  "src": "src/triforce/jvsio.c",
+  "obj": "triforce/jvsio",
+  "fns": [
+   [
+    "fn_80282CDC",
+    90.68627
+   ],
+   [
+    "fn_80282F54",
+    96.09375
+   ],
+   [
+    "fn_80283154",
+    89.6138
+   ],
+   [
+    "fn_802854B0",
+    95.918365
+   ]
+  ],
+  "claimed": false,
+  "version": "1.2.5n",
+  "base": {
+   "fn_80282CDC": 26,
+   "fn_80282F54": 419,
+   "fn_80283154": 1126,
+   "fn_802854B0": 20
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/triforce/ambackup_nm1",
+  "src": "src/triforce/ambackup_nm1.c",
+  "obj": "triforce/ambackup_nm1",
+  "fns": [
+   [
+    "BackupWriteRecord",
+    94.621216
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "BackupWriteRecord": 64
+  },
+  "hits": [],
+  "improved": [
+   {
+    "version": "1.3",
+    "flags": "",
+    "fixed": [],
+    "total": 51,
+    "base_total": 64,
+    "left": {
+     "BackupWriteRecord": 51
+    }
+   },
+   {
+    "version": "1.3",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 51,
+    "base_total": 64,
+    "left": {
+     "BackupWriteRecord": 51
+    }
+   },
+   {
+    "version": "1.3",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 51,
+    "base_total": 64,
+    "left": {
+     "BackupWriteRecord": 51
+    }
+   },
+   {
+    "version": "1.3",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 51,
+    "base_total": 64,
+    "left": {
+     "BackupWriteRecord": 51
+    }
+   }
+  ]
+ },
+ {
+  "unit": "main/triforce/ambackup_nm2",
+  "src": "src/triforce/ambackup_nm2.c",
+  "obj": "triforce/ambackup_nm2",
+  "fns": [
+   [
+    "BackupReadRecord",
+    88.92216
+   ],
+   [
+    "fn_802889AC",
+    95.04273
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "BackupReadRecord": 103,
+   "fn_802889AC": 46
+  },
+  "hits": [],
+  "improved": [
+   {
+    "version": "1.3",
+    "flags": "",
+    "fixed": [],
+    "total": 135,
+    "base_total": 149,
+    "left": {
+     "BackupReadRecord": 103,
+     "fn_802889AC": 32
+    }
+   },
+   {
+    "version": "1.3",
+    "flags": "-use_lmw_stmw on",
+    "fixed": [],
+    "total": 135,
+    "base_total": 149,
+    "left": {
+     "BackupReadRecord": 103,
+     "fn_802889AC": 32
+    }
+   },
+   {
+    "version": "1.3",
+    "flags": "-inline deferred",
+    "fixed": [],
+    "total": 135,
+    "base_total": 149,
+    "left": {
+     "BackupReadRecord": 103,
+     "fn_802889AC": 32
+    }
+   },
+   {
+    "version": "1.3",
+    "flags": "-fp_contract off",
+    "fixed": [],
+    "total": 135,
+    "base_total": 149,
+    "left": {
+     "BackupReadRecord": 103,
+     "fn_802889AC": 32
+    }
+   }
+  ]
+ },
+ {
+  "unit": "main/triforce/ambackup_nm3",
+  "src": "src/triforce/ambackup_nm3.c",
+  "obj": "triforce/ambackup_nm3",
+  "fns": [
+   [
+    "fn_80288BCC",
+    92.93651
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_80288BCC": 22
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/triforce/amcoin_nm1",
+  "src": "src/triforce/amcoin_nm1.c",
+  "obj": "triforce/amcoin_nm1",
+  "fns": [
+   [
+    "fn_802895E4",
+    96.772575
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_802895E4": 344
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/triforce/amcoin_nm2",
+  "src": "src/triforce/amcoin_nm2.c",
+  "obj": "triforce/amcoin_nm2",
+  "fns": [
+   [
+    "fn_8028A3EC",
+    99.485985
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8028A3EC": 11
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/triforce/amjvs_nm2",
+  "src": "src/triforce/amjvs_nm2.c",
+  "obj": "triforce/amjvs_nm2",
+  "fns": [
+   [
+    "fn_8028A934",
+    99.55224
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8028A934": 6
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/triforce/amjvs_nm3",
+  "src": "src/triforce/amjvs_nm3.c",
+  "obj": "triforce/amjvs_nm3",
+  "fns": [
+   [
+    "fn_8028AAC0",
+    96.14942
+   ],
+   [
+    "fn_8028AC1C",
+    93.71154
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8028AAC0": 48,
+   "fn_8028AC1C": 29
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/triforce/amnet_nm3",
+  "src": "src/triforce/amnet_nm3.c",
+  "obj": "triforce/amnet_nm3",
+  "fns": [
+   [
+    "fn_8028C1B8",
+    94.59925
+   ],
+   [
+    "fn_8028C644",
+    99.69512
+   ],
+   [
+    "fn_8028CB64",
+    96.54929
+   ],
+   [
+    "fn_8028D234",
+    96.34259
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8028C1B8": 134,
+   "fn_8028C644": 16,
+   "fn_8028CB64": 18,
+   "fn_8028D234": 55
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/triforce/acsocket_nm5",
+  "src": "src/triforce/acsocket_nm5.c",
+  "obj": "triforce/acsocket_nm5",
+  "fns": [
+   [
+    "acBind",
+    96.76471
+   ],
+   [
+    "acAccept",
+    89.4955
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "acBind": 43,
+   "acAccept": 96
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/triforce/amsrv_nm1",
+  "src": "src/triforce/amsrv_nm1.c",
+  "obj": "triforce/amsrv_nm1",
+  "fns": [
+   [
+    "fn_80291134",
+    93.706894
+   ],
+   [
+    "fn_8029121C",
+    94.435486
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_80291134": 82,
+   "fn_8029121C": 209
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/triforce/amnet_nm1",
+  "src": "src/triforce/amnet_nm1.c",
+  "obj": "triforce/amnet_nm1",
+  "fns": [
+   [
+    "fn_8028D750",
+    99.07895
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_8028D750": 7
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/triforce/acsocket_nm6",
+  "src": "src/triforce/acsocket_nm6.c",
+  "obj": "triforce/acsocket_nm6",
+  "fns": [
+   [
+    "fn_80292AD8",
+    89.38356
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_80292AD8": 48
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/triforce/acsocket_nm7",
+  "src": "src/triforce/acsocket_nm7.c",
+  "obj": "triforce/acsocket_nm7",
+  "fns": [
+   [
+    "fn_80292D18",
+    96.268654
+   ],
+   [
+    "acReadResponse",
+    98.82653
+   ],
+   [
+    "fn_80293070",
+    74.09346
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "fn_80292D18": 16,
+   "acReadResponse": 336,
+   "fn_80293070": 487
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/sysdolphin/baselib/tobj_setup_nm1",
+  "src": "src/sysdolphin/baselib/tobj_setup_nm1.c",
+  "obj": "sysdolphin/baselib/tobj_setup_nm1",
+  "fns": [
+   [
+    "HSD_TObjSetup",
+    99.79235
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "HSD_TObjSetup": 9
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/thp/THPDec",
+  "src": "src/thp/THPDec.c",
+  "obj": "thp/THPDec",
+  "fns": [
+   [
+    "fn_80299D58",
+    99.01266
+   ],
+   [
+    "__THPDecodeBlock",
+    92.126434
+   ],
+   [
+    "__THPHuffDecode",
+    99.70588
+   ],
+   [
+    "__THPHuffDecodeTab",
+    99.67742
+   ],
+   [
+    "fn_8029B54C",
+    99.96795
+   ],
+   [
+    "__THPGetBit",
+    55.243244
+   ]
+  ],
+  "claimed": false,
+  "version": "1.2.5",
+  "base": {
+   "fn_80299D58": 70,
+   "__THPDecodeBlock": 147,
+   "__THPHuffDecode": 2,
+   "__THPHuffDecodeTab": 2,
+   "fn_8029B54C": 2,
+   "__THPGetBit": 113
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/sysdolphin/baselib/tobj_info_nm",
+  "src": "src/sysdolphin/baselib/tobj_info_nm.c",
+  "obj": "sysdolphin/baselib/tobj_info_nm",
+  "fns": [
+   [
+    "TObjInfoInit",
+    93.53658
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "TObjInfoInit": 16
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/sysdolphin/baselib/state",
+  "src": "src/sysdolphin/baselib/state.c",
+  "obj": "sysdolphin/baselib/state",
+  "fns": [
+   [
+    "HSD_SetupChannelMode",
+    85.44056
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "HSD_SetupChannelMode": 161
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/sysdolphin/baselib/mobj_info_nm",
+  "src": "src/sysdolphin/baselib/mobj_info_nm.c",
+  "obj": "sysdolphin/baselib/mobj_info_nm",
+  "fns": [
+   [
+    "MObjInfoInit",
+    93.63636
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "MObjInfoInit": 17
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/sysdolphin/baselib/lobj_load_nm",
+  "src": "src/sysdolphin/baselib/lobj_load_nm.c",
+  "obj": "sysdolphin/baselib/lobj_load_nm",
+  "fns": [
+   [
+    "LObjInfoInit",
+    93.125
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "LObjInfoInit": 13
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/sysdolphin/baselib/lobj_init_nm",
+  "src": "src/sysdolphin/baselib/lobj_init_nm.c",
+  "obj": "sysdolphin/baselib/lobj_init_nm",
+  "fns": [
+   [
+    "HSD_LObjSetupSpecularInit",
+    99.534164
+   ],
+   [
+    "HSD_LObjSetupInit",
+    99.07162
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "HSD_LObjSetupSpecularInit": 13,
+   "HSD_LObjSetupInit": 70
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/sysdolphin/baselib/jobj_info",
+  "src": "src/sysdolphin/baselib/jobj_info.c",
+  "obj": "sysdolphin/baselib/jobj_info",
+  "fns": [
+   [
+    "JObjInfoInit",
+    99.95744
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "JObjInfoInit": 2
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/sysdolphin/baselib/texpdag_nm1",
+  "src": "src/sysdolphin/baselib/texpdag_nm1.c",
+  "obj": "sysdolphin/baselib/texpdag_nm1",
+  "fns": [
+   [
+    "CalcDistance",
+    99.42593
+   ],
+   [
+    "HSD_TExpMakeDag",
+    99.816666
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "CalcDistance": 22,
+   "HSD_TExpMakeDag": 8
+  },
+  "hits": [],
+  "improved": []
+ },
+ {
+  "unit": "main/sysdolphin/baselib/texpdag_nm2",
+  "src": "src/sysdolphin/baselib/texpdag_nm2.c",
+  "obj": "sysdolphin/baselib/texpdag_nm2",
+  "fns": [
+   [
+    "HSD_TExpSimplify",
+    87.638885
+   ]
+  ],
+  "claimed": false,
+  "version": "1.3.2",
+  "base": {
+   "HSD_TExpSimplify": 32
+  },
+  "hits": [],
+  "improved": []
+ }
+]

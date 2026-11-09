@@ -1,0 +1,29 @@
+diff --git a/config/GNLJ82/splits.txt b/config/GNLJ82/splits.txt
+index e561f5b..385c53c 100644
+--- a/config/GNLJ82/splits.txt
++++ b/config/GNLJ82/splits.txt
+@@ -8516,6 +8516,12 @@ game/fn_801F0C80.c:
+ game/fn_801F0CBC.c:
+ 	.text       start:0x801F0CBC end:0x801F0CC0
+ 
++game/clEzMenu.cpp:
++	extab       start:0x80016E94 end:0x80016F7C
++	extabindex  start:0x80028BD4 end:0x80028D00
++	.text       start:0x801F0CC0 end:0x801F26C8
++	.data       start:0x804E4C28 end:0x804E5278
++
+ game/fn_801F26C8.c:
+ 	extab       start:0x80016F7C end:0x80016F84
+ 	extabindex  start:0x80028D00 end:0x80028D0C
+diff --git a/configure.py b/configure.py
+index 4328359..70ebd50 100644
+--- a/configure.py
++++ b/configure.py
+@@ -2234,6 +2234,7 @@ config.libs = [
+             Object(Matching, "game/fn_801FB418.cpp"),
+             Object(NonMatching, "game/fn_801DEF94.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on"]),
+             Object(NonMatching, "game/fn_801BAA88.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on", "-inline noauto"]),
++            Object(NonMatching, "game/clEzMenu.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on", "-Cpp_exceptions on"]),
+         ],
+     },
+     {

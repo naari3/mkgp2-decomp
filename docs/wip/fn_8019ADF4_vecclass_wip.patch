@@ -1,0 +1,26 @@
+diff --git a/config/GNLJ82/splits.txt b/config/GNLJ82/splits.txt
+index cd1f8a4..902322f 100644
+--- a/config/GNLJ82/splits.txt
++++ b/config/GNLJ82/splits.txt
+@@ -8365,7 +8365,7 @@ game/kartmove/fn_8019A9BC.cpp:
+ 	extabindex  start:0x80027410 end:0x8002741C
+ 	.text       start:0x8019A9BC end:0x8019ADF4
+ 
+-game/kartmove/fn_8019ADF4.c:
++game/kartmove/fn_8019ADF4.cpp:
+ 	extab       start:0x80012660 end:0x80012668
+ 	extabindex  start:0x8002741C end:0x80027428
+ 	.text       start:0x8019ADF4 end:0x8019B080
+diff --git a/configure.py b/configure.py
+index 1a5aa56..45686a8 100644
+--- a/configure.py
++++ b/configure.py
+@@ -3083,7 +3083,7 @@ config.libs = [
+             Object(Matching, "game/kartmove/fn_801999D0.c"),
+             Object(Matching, "game/kartmove/KartMovement_CalcMaxSpeed.c"),
+             Object(NonMatching, "game/kartmove/KartMovement_RotateByYaw.cpp", extra_cflags=["-Cpp_exceptions on"]),
+-            Object(NonMatching, "game/kartmove/fn_8019ADF4.c"),
++            Object(NonMatching, "game/kartmove/fn_8019ADF4.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+             Object(Matching, "game/kartmove/KartMovement_CalcCurrentSpeed.c", mw_version="GC/2.7"),
+             Object(Matching, "game/kartmove/KartMovement_CalcSpeedWithCoinBonus.c", mw_version="GC/2.7"),
+             Object(Matching, "game/kartmove/fn_8019A850.c"),

@@ -1,0 +1,262 @@
+diff --git a/src/game/Scene_8014E0C4.cpp b/src/game/Scene_8014E0C4.cpp
+index 3c66b84..8a2f7ff 100644
+--- a/src/game/Scene_8014E0C4.cpp
++++ b/src/game/Scene_8014E0C4.cpp
+@@ -342,7 +342,7 @@ extern void PreloadItemResources();
+ extern void ResolveJointByName();
+ void SetResourceLoadingFlag(int on);
+ extern void SoundChannels_ClearAll();
+-extern void TexMgr_SetTexture();
++extern void TexMgr_SetTexture(...);
+ extern void TornadoEffect_Ctor();
+ extern void TornadoEffect_SetFlagC0();
+ extern void __construct_array();
+@@ -360,7 +360,7 @@ extern void fn_80157D18();
+ extern unsigned char fn_80169E10(void);
+ int fn_80169E20(void);
+ extern void fn_80171CD0();
+-extern void fn_80293BBC();
++extern void *fn_80293BBC(void);
+ int isJapanese(void);
+ extern unsigned int g_kartStartSlot;
+ extern unsigned int lbl_806D7F68;
+@@ -1071,7 +1071,7 @@ Base *fn_8014FE10(Base *self, short flag);
+ void fn_8014FEC4(VObj *p);
+ void fn_8014FEFC(TextPanelB *self);
+ void fn_80150004(TextPanel *self);
+-asm void fn_801500F4(void);
++void fn_801500F4(void);
+ asm void fn_801502AC(void);
+ asm void fn_8015061C(void);
+ unsigned char fn_80150924(unsigned char *o);
+@@ -1151,7 +1151,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
+ 
+ 
+ 
+-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; void *f13; unsigned int f14; unsigned int f15; void *f16; unsigned int f17; void *f18; unsigned int f19; unsigned int f20; void *f21; } extab_fn_801500F4 = { 0x300A0000, 0x00000060, 0x00050038, 0x00000094, 0x00000030, 0x000000D4, 0x00000038, 0x000000DC, 0x00090044, 0x00000120, 0x000C0038, 0x00000000, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001D, 0x00000000, (void *)&dtor_801577D4, 0x0A80001C, (void *)&MemoryManager_Free, 0x8680001D, 0x00000000, (void *)&dtor_801577D4 };
+ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; void *f9; unsigned int f10; void *f11; unsigned int f12; void *f13; } extab_fn_801502AC = { 0x380A0000, 0x0000006C, 0x00000020, 0x00000198, 0x00000028, 0x000001C8, 0x00000030, 0x00000000, 0x8A800019, (void *)&MemoryManager_TimedFree, 0x8A80001A, (void *)&MemoryManager_TimedFree, 0x8A800019, (void *)&MemoryManager_TimedFree };
+ 
+ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; void *f11; unsigned int f12; void *f13; unsigned int f14; void *f15; unsigned int f16; void *f17; } extab_fn_8015061C = { 0x300A0000, 0x000000E8, 0x00000028, 0x00000144, 0x00000030, 0x0000027C, 0x00000038, 0x000002E4, 0x00000040, 0x00000000, 0x8A80001E, (void *)&MemoryManager_TimedFree, 0x8A80001E, (void *)&MemoryManager_TimedFree, 0x8A80001A, (void *)&MemoryManager_TimedFree, 0x8A80001A, (void *)&MemoryManager_TimedFree };
+@@ -1233,9 +1232,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned
+ 
+ 
+ 
+-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801500F4 = {
+-    (void *)&fn_801500F4, 0x000001B8, (void *)&extab_fn_801500F4
+-};
+ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_801502AC = {
+     (void *)&fn_801502AC, 0x00000370, (void *)&extab_fn_801502AC
+ };
+@@ -2837,128 +2833,72 @@ extern "C" void fn_80150004(TextPanel *self) {
+     }
+ }
+ 
+-extern "C" asm void fn_801500F4(void) { /* 0x801500F4 size:0x1B8 */
+-    nofralloc
+-    stwu r1, -0x30(r1)
+-    mflr r0
+-    lis r7, lbl_8048FF80@ha
+-    lis r6, lbl_8048FFE8@ha
+-    stw r0, 0x34(r1)
+-    addi r0, r6, lbl_8048FFE8@l
+-    lis r8, lbl_80363D30@ha
+-    stmw r26, 0x18(r1)
+-    mr r29, r3
+-    addi r3, r7, lbl_8048FF80@l
+-    addi r31, r8, lbl_80363D30@l
+-    mr r27, r4
+-    mr r30, r5
+-    stw r3, 0x0(r29)
+-    stw r0, 0x0(r29)
+-    lwz r5, 0x3638(r31)
+-    lwz r4, 0x363c(r31)
+-    lwz r3, 0x3640(r31)
+-    lwz r0, 0x3644(r31)
+-    stw r5, 0x8(r1)
+-    stw r4, 0xc(r1)
+-    stw r3, 0x10(r1)
+-    stw r0, 0x14(r1)
+-    bl fn_80121210
+-    li r0, 0x0
+-    li r3, 0x30
+-    stb r0, 0x4(r29)
+-    stw r0, 0x8(r29)
+-    bl Alloc
+-    mr. r26, r3
+-    beq fn_801500F4_L_80150188
+-    slwi r0, r27, 2
+-    addi r4, r1, 0x8
+-    lwzx r4, r4, r0
+-    li r5, 0x1
+-    li r6, 0x0
+-    bl Sprite_InitWithAnim
+-    fn_801500F4_L_80150188:
+-    stw r26, 0x8(r29)
+-    lwz r3, 0x8(r29)
+-    cmplwi r3, 0x0
+-    beq fn_801500F4_L_801501A0
+-    li r0, 0x7
+-    stw r0, 0x4(r3)
+-    fn_801500F4_L_801501A0:
+-    lwz r0, 0x8(r29)
+-    cmplwi r0, 0x0
+-    bne fn_801500F4_L_801501B4
+-    li r0, 0x1
+-    stb r0, 0x4(r29)
+-    fn_801500F4_L_801501B4:
+-    li r3, 0xff
+-    li r4, 0xff
+-    li r5, 0xff
+-    li r6, 0x0
+-    bl fn_8002CFB8
+-    li r3, 0x470
+-    bl FUN_8003b120
+-    mr. r28, r3
+-    beq fn_801500F4_L_801501F8
+-    lis r4, fn_80149214@ha
+-    lis r5, dtor_800869D0@ha
+-    addi r4, r4, fn_80149214@l
+-    li r6, 0x230
+-    addi r5, r5, dtor_800869D0@l
+-    li r7, 0x2
+-    bl __construct_new_array
+-    mr r28, r3
+-    fn_801500F4_L_801501F8:
+-    stw r28, 0xc(r29)
+-    li r0, 0x0
+-    lwz r3, 0xc(r29)
+-    stw r0, 0x18(r3)
+-    lwz r3, 0xc(r29)
+-    stw r0, 0x248(r3)
+-    bl fn_80293BBC
+-    mr r28, r3
+-    lwz r3, 0xc(r29)
+-    addi r4, r31, 0x3884
+-    addi r5, r28, 0x18
+-    crxor 6, 6, 6
+-    bl TexMgr_SetTexture
+-    lwz r3, 0xc(r29)
+-    addi r4, r31, 0x3894
+-    addi r5, r28, 0x2c
+-    addi r3, r3, 0x230
+-    crxor 6, 6, 6
+-    bl TexMgr_SetTexture
+-    stw r30, 0x10(r29)
+-    li r0, 0x0
+-    cmpwi r30, 0x1
+-    stw r0, 0x14(r29)
+-    beq fn_801500F4_L_80150280
+-    bge fn_801500F4_L_80150268
+-    cmpwi r30, 0x0
+-    bge fn_801500F4_L_80150274
+-    b fn_801500F4_L_80150294
+-    fn_801500F4_L_80150268:
+-    cmpwi r30, 0x3
+-    bge fn_801500F4_L_80150294
+-    b fn_801500F4_L_8015028C
+-    fn_801500F4_L_80150274:
+-    lfs f0, lbl_806D8064(r2)
+-    stfs f0, 0x18(r29)
+-    b fn_801500F4_L_80150294
+-    fn_801500F4_L_80150280:
+-    lfs f0, lbl_806D8068(r2)
+-    stfs f0, 0x18(r29)
+-    b fn_801500F4_L_80150294
+-    fn_801500F4_L_8015028C:
+-    lfs f0, lbl_806D8068(r2)
+-    stfs f0, 0x18(r29)
+-    fn_801500F4_L_80150294:
+-    mr r3, r29
+-    lmw r26, 0x18(r1)
+-    lwz r0, 0x34(r1)
+-    mtlr r0
+-    addi r1, r1, 0x30
+-    blr
++class SceneTexElem {
++public:
++    char pad0[0x18];
++    int f18;
++    char pad1C[0x230 - 0x1C];
++    SceneTexElem();
++    ~SceneTexElem();
++};
++
++class SprTexPanel : public SceneBase {
++public:
++    virtual void _keySprTexPanel();
++    SprTexPanel(int sprIdx, int mode);
++    unsigned char failed;
++    SceneSprite *spr;
++    SceneTexElem *tex;
++    int mode;
++    int timer;
++    float alpha;
++};
++
++struct SprIdTable {
++    int ids[4];
++};
++
++/* fakematch: the sprite id table is copied from this area's pooled .data
++ * (lbl_80363D30 + 0x3638) with a struct copy; the natural code is a local
++ * `int ids[4] = {...};` whose initializer CW would emit as an own @N object. */
++#pragma use_lmw_stmw on
++SprTexPanel::SprTexPanel(int sprIdx, int m) {
++    char *pool = lbl_80363D30;
++    SprIdTable ids = *(SprIdTable *)(pool + 0x3638);
++    char *r;
++
++    fn_80121210();
++    failed = 0;
++    spr = 0;
++    spr = new SceneSprite(ids.ids[sprIdx], 1, 0);
++    if (spr != 0) {
++        spr->mode = 7;
++    }
++    if (spr == 0) {
++        failed = 1;
++    }
++    fn_8002CFB8(0xFF, 0xFF, 0xFF, 0);
++    tex = new SceneTexElem[2];
++    tex[0].f18 = 0;
++    tex[1].f18 = 0;
++    r = (char *)fn_80293BBC();
++    TexMgr_SetTexture(&tex[0], pool + 0x3884, r + 0x18);
++    TexMgr_SetTexture(&tex[1], pool + 0x3894, r + 0x2C);
++    mode = m;
++    timer = 0;
++    switch (m) {
++    case 0:
++        alpha = 0.0f;
++        break;
++    case 1:
++        alpha = 1.0f;
++        break;
++    case 2:
++        alpha = 1.0f;
++        break;
++    }
+ }
++#pragma use_lmw_stmw reset
+ 
+ extern "C" asm void fn_801502AC(void) { /* 0x801502AC size:0x370 */
+     nofralloc
+diff --git a/tools/extab_user_renames.json b/tools/extab_user_renames.json
+index 9c9429f..09f73e5 100644
+--- a/tools/extab_user_renames.json
++++ b/tools/extab_user_renames.json
+@@ -5240,7 +5240,13 @@
+     "__ct__11StatusSceneFv": "fn_8014F3D8",
+     "__vt__9ModeScene": "lbl_803FE0C8",
+     "__vt__11StatusScene": "lbl_8048FD98",
+-    "__dt__9ModeSceneFv": "dtor_8007D0D4"
++    "__dt__9ModeSceneFv": "dtor_8007D0D4",
++    "__ct__11SprTexPanelFii": "fn_801500F4",
++    "__vt__11SprTexPanel": "lbl_8048FFE8",
++    "__ct__12SceneTexElemFv": "fn_80149214",
++    "__dt__12SceneTexElemFv": "dtor_800869D0",
++    "__nwa__FUl": "FUN_8003b120",
++    "__dla__FPv": "MemoryManager_Free"
+   },
+   "src/game/RaceHud_80147470.cpp": {
+     "extab_fn_80147470": "@etb_8000DF44",

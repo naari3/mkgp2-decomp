@@ -1,0 +1,103 @@
+--- target
++++ mine
+@@ -251,23 +251,24 @@
+ addi r0, r4, g_playerData@l
+ stw r6, 0x20(r5)
+ lfs f29, lbl_806DB8F0@sda21(r0)
+-mr r26, r0
++mr r29, r0
+ lfs f30, lbl_806DB8CC@sda21(r0)
+-addi r28, r31, 0xc0
++addi r30, r31, 0xc0
+ lfs f31, lbl_806DB910@sda21(r0)
+-addi r27, r31, 0x1dc
++addi r31, r31, 0x1dc
+ subi r20, r3, 0xf01
+-li r25, 0x0
+-li r29, 0x0
+-.L:
+-mr r31, r29
+-mr r30, r28
+-slwi r21, r29, 2
++li r28, 0x0
++li r27, 0x0
++.L:
++mr r26, r30
++mr r25, r28
++slwi r21, r28, 2
+ li r24, 0x0
+ .L:
+-lwz r3, g_characterId@sda21(r0)
++lwz r0, g_characterId@sda21(r0)
+ li r23, 0x1422
+-cmpwi r3, 0x0
++cmpwi r0, 0x0
++mr r3, r0
+ bge .L
+ li r3, 0x0
+ .L:
+@@ -277,18 +278,18 @@
+ .L:
+ cmpwi r24, 0xa
+ blt .L
+-mr r4, r25
++mr r4, r27
+ bl fn_8023D844
+ mr r4, r3
+ b .L
+ .L:
+-lwz r4, 0x0(r30)
++lwz r4, 0x0(r26)
+ .L:
+ addi r0, r4, 0xa8
+-lbzx r0, r26, r0
++lbzx r0, r29, r0
+ cmplwi r0, 0x1
+ bne .L
+-mr r3, r26
++mr r3, r29
+ bl PlayerData_ResolveUnlockedIdByIndex
+ li r4, 0x0
+ bl Item_GetDescriptorField0
+@@ -296,7 +297,7 @@
+ .L:
+ addi r3, r1, 0x8
+ bl ResCtrl_Init
+-lfs f0, 0x0(r27)
++lfs f0, 0x0(r31)
+ li r0, 0x1
+ stw r23, 0x8(r1)
+ addi r3, r1, 0x8
+@@ -316,15 +317,15 @@
+ addi r0, r21, 0x3c
+ cmpwi r24, 0xb
+ stwx r3, r22, r0
+-addi r31, r31, 0x1
++addi r26, r26, 0x4
++addi r25, r25, 0x1
+ addi r21, r21, 0x4
+-addi r30, r30, 0x4
+ blt .L
+-addi r25, r25, 0x1
+-addi r28, r28, 0x28
+-cmpwi r25, 0x6
+-addi r27, r27, 0x4
+-addi r29, r29, 0xb
++addi r27, r27, 0x1
++addi r31, r31, 0x4
++cmpwi r27, 0x6
++addi r28, r28, 0xb
++addi r30, r30, 0x28
+ blt .L
+ addi r3, r1, 0xb8
+ bl fn_80121E10
+@@ -344,8 +345,8 @@
+ stfs f3, 0xcc(r1)
+ stfs f2, 0xd0(r1)
+ stfs f1, 0xd4(r1)
++stfs f1, 0xe8(r1)
+ stfs f0, 0xe4(r1)
+-stfs f1, 0xe8(r1)
+ bl SpriteHandle_CreateDefault
+ stw r3, 0x34(r22)
+ addi r3, r1, 0xb8

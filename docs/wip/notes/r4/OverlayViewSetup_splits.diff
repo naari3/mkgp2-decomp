@@ -1,0 +1,12 @@
+diff --git a/config/GNLJ82/splits.txt b/config/GNLJ82/splits.txt
+index 73b5941..6eded76 100644
+--- a/config/GNLJ82/splits.txt
++++ b/config/GNLJ82/splits.txt
+@@ -10474,6 +10474,7 @@ game/OverlayViewSetup.cpp:
+ 	extab       start:0x800174F4 end:0x800174FC
+ 	extabindex  start:0x80028ED4 end:0x80028EE0
+ 	.text       start:0x801F6588 end:0x801F6790
++	.bss        start:0x80679698 end:0x806796FC
+ 
+ game/fn_801F6790.c:
+ 	extab       start:0x800174FC end:0x80017504

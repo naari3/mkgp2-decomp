@@ -1,0 +1,37 @@
+sysdolphin/baselib/texp_nm1.c 48 '#pragma optimization_level 3' new100 [] lost100 [] gained [] lost 1
+game/JointTracks.cpp 37 '#pragma opt_propagation off' new100 [] lost100 [] gained [] lost 1
+game/RankLog.c 1174 '#pragma dont_inline on' new100 [] lost100 ['TitleCheck_MidpointMilestone'] gained [] lost 1
+game/RankLog.c 1195 '#pragma dont_inline reset' new100 [] lost100 ['CheckTitle_EnhancedKartTA', 'CheckTitle_OriginalKartCoinMilage', 'TitleCheck_AllRecordsCleared', 'TitleCheck_BattleWinsMilestone', 'TitleCheck_ConsecutiveWins', 'TitleCheck_FirstPlayEver', 'TitleCheck_FirstPlayToday_TA', 'TitleCheck_HeavyLossWithWin', 'TitleCheck_NewClearedCountStep', 'TitleCheck_ScoreOverQuarterTarget', 'TitleCheck_TechGrade0', 'TitleCheck_TechGrade1', 'TitleCheck_TechGradeMax_NoLoss', 'TitleCheck_UndefeatedStreak15', 'fn_800A7C0C', 'fn_800A7CF4', 'fn_800A7D20', 'fn_800A7F9C', 'fn_800A7FC8', 'fn_800A805C', 'fn_800A80A0', 'fn_800A8208', 'fn_800A8234', 'fn_800A826C', 'fn_800A8298', 'fn_800A82C8', 'fn_800A82F4', 'fn_800A8320', 'fn_800A834C', 'fn_800A8378', 'fn_800A83A4', 'fn_800A840C', 'fn_800A8438', 'fn_800A87E0', 'fn_800A8854', 'fn_800A88FC', 'fn_800A8974', 'fn_800A89D8'] gained [] lost 38
+game/CardForceBackup.c 1 '#pragma inline_max_size(1000)' new100 [] lost100 [] gained [] lost 1
+game/BootDispatcher.cpp 1 '#pragma inline_max_size(10000)' new100 [] lost100 [] gained [] lost 1
+game/clItemBoxManager_nm1.cpp 18 '#pragma auto_inline off' new100 [] lost100 ['clItemBoxManager_Draw'] gained [] lost 1
+game/clItemBoxManager_nm1.cpp 173 '#pragma auto_inline off' new100 [] lost100 [] gained [] lost 1
+game/TransitionEffect.cpp 31 '#pragma opt_common_subs off' new100 [] lost100 ['TransitionEffect_Tick'] gained [] lost 1
+game/TransitionEffect.cpp 121 '#pragma opt_common_subs reset' new100 [] lost100 [] gained [] lost 1
+game/TransitionEffect.cpp 543 '#pragma opt_propagation off' new100 [] lost100 ['TransitionEffect_DrawCarRouletteAndQuad'] gained [] lost 1
+game/anon_8020314C_nm2.cpp 62 '#pragma opt_common_subs off' new100 [] lost100 [] gained [] lost 1
+game/anon_80203EA0_nm2.cpp 33 '#pragma opt_propagation off' new100 [] lost100 [] gained [('fn_80204218', 96.58209, 98.41791)] lost 0
+game/anon_80209330_nm2.cpp 39 '#pragma opt_common_subs off' new100 [] lost100 ['fn_80209AC4'] gained [] lost 1
+game/anon_8021BC44_nm1.cpp 610 '#pragma opt_propagation off' new100 [] lost100 ['fn_8021E0FC'] gained [] lost 1
+game/DNStartDino.cpp 1245 '#pragma auto_inline off' new100 [] lost100 [] gained [('fn_80229998', 90.020134, 93.557045)] lost 0
+game/EnemyFace.cpp 60 '#pragma opt_lifetimes off' new100 [] lost100 [] gained [] lost 1
+game/EnmyFaceEffect_nm1.cpp 314 '#pragma opt_lifetimes off' new100 [] lost100 ['fn_8022CE34', 'fn_8022D050', 'fn_8022D210', 'fn_8022D514', 'fn_8022E16C', 'fn_8022E624', 'fn_8022E810', 'fn_8022EB30', 'fn_8022EFC8', 'fn_8022F548', 'fn_8022FCA8', 'fn_8023001C'] gained [] lost 13
+game/FlowCardCheck_nm1.cpp 1427 '#pragma opt_lifetimes off' new100 [] lost100 [] gained [] lost 1
+game/ItemSelectUpdate.cpp 49 '#pragma fp_contract reset' new100 [] lost100 [] gained [] lost 1
+game/SpecialFaceMesh_Raycast.cpp 89 '#pragma dont_inline reset' new100 [] lost100 ['PtrVec_Reserve'] gained [] lost 3
+game/Menu801F0CC0.cpp 48 '#pragma opt_strength_reduction off' new100 [] lost100 ['fn_801F0D04'] gained [] lost 1
+game/Menu801F0CC0.cpp 61 '#pragma opt_strength_reduction reset' new100 [] lost100 ['fn_801F0E3C', 'fn_801F115C', 'fn_801F15D4', 'fn_801F190C', 'fn_801F1BC8', 'fn_801F1FE4', 'fn_801F230C'] gained [] lost 15
+game/NamCamFlow.cpp 15 '#pragma auto_inline off' new100 [] lost100 [] gained [] lost 1
+game/NamCamFlow.cpp 41 '#pragma auto_inline reset' new100 [] lost100 ['dtor_801F402C', 'dtor_801F480C', 'dtor_801F498C', 'fn_801F3970', 'fn_801F4BA0'] gained [] lost 7
+game/nokonoko/fn_801893BC.c 123 '#pragma auto_inline off' new100 [] lost100 [] gained [('fn_801893BC', 98.63636, 98.96364)] lost 0
+game/clsound/ClSound_InitSoundSystem.c 95 '#pragma opt_common_subs off' new100 [] lost100 [] gained [] lost 1
+game/kartmove/KartMovement_PhysicsStep.cpp 47 '#pragma fp_contract reset' new100 [] lost100 [] gained [] lost 1
+game/resultscene/resultscene.cpp 2802 '#pragma opt_common_subs off' new100 [] lost100 [] gained [] lost 1
+game/kartmove/KartMovement_CollisionUpdate.cpp 76 '#pragma fp_contract on' new100 [] lost100 [] gained [] lost 1
+thp/THPDec.c 1942 '#pragma opt_propagation off' new100 [] lost100 [] gained [] lost 1
+thp/THPDec.c 1943 '#pragma opt_lifetimes off' new100 [] lost100 [] gained [('__THPGetBit', 80.91892, 84.675674)] lost 0
+triforce/ambackup_nm2.c 3 '#pragma opt_common_subs off' new100 [] lost100 [] gained [] lost 1
+triforce/ambackup_nm2.c 5 '#pragma opt_propagation off' new100 [] lost100 [] gained [] lost 1
+triforce/amnet_setup_nm.c 138 '#pragma opt_propagation off' new100 [] lost100 [] gained [] lost 1
+triforce/amsrv_nm1.c 5 '#pragma opt_common_subs off' new100 [] lost100 [] gained [] lost 1
+triforce/acsocket_nm2.c 9 '#pragma opt_lifetimes off /* leaves only the bufOff "addi rX, r5, 0x0" copy */' new100 [] lost100 [] gained [] lost 1

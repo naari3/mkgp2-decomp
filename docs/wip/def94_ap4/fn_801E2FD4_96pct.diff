@@ -1,0 +1,73 @@
+diff --git a/include/game/SteeringQueueMatchPrivate.h b/include/game/SteeringQueueMatchPrivate.h
+index 1072cc8..58453e8 100644
+--- a/include/game/SteeringQueueMatchPrivate.h
++++ b/include/game/SteeringQueueMatchPrivate.h
+@@ -3,6 +3,7 @@
+ 
+ /* TU-owned queue views use the existing two-pointer RingString exception
+  * model without changing the queue views consumed by other TUs. */
++#define STEERING_RING_SHARED_LATE
+ #include "game/SteeringRingInsertPrivate.h"
+ 
+ inline void *operator new(unsigned long size, void *p) { return p; }
+diff --git a/include/game/SteeringRingInsertPrivate.h b/include/game/SteeringRingInsertPrivate.h
+index 27844ea..4b98558 100644
+--- a/include/game/SteeringRingInsertPrivate.h
++++ b/include/game/SteeringRingInsertPrivate.h
+@@ -15,7 +15,11 @@ void operator delete(void *);
+ struct RingShared {
+     char *ptr;
+     unsigned long *refs;
++#ifdef STEERING_RING_SHARED_LATE
++    RingShared(void *p);
++#else
+     RingShared(void *p) { init(p); }
++#endif
+     void init(void *p) {
+         ptr=(char *)p; refs=0;
+         try { if(ptr) refs=new unsigned long(1); }
+diff --git a/src/game/fn_801DEF94.cpp b/src/game/fn_801DEF94.cpp
+index 27fc33b..c996d43 100644
+--- a/src/game/fn_801DEF94.cpp
++++ b/src/game/fn_801DEF94.cpp
+@@ -1135,6 +1135,21 @@ extern "C" unsigned char fn_801E32C8(SteeringQueue *s, unsigned long oldFirst,
+     }
+ }
+ 
++static inline void QueueConstruct(SteeringQueueValue *p, const SteeringQueueValue &v) {
++    new (p) SteeringQueueValue(v);
++}
++
++static inline void QueueConstructAt(SteeringQueue *s, unsigned long i, const SteeringQueueValue &v) {
++    if (i < s->blockSize) {
++        QueueConstruct((SteeringQueueValue *)s->blocks.data[s->blocks.head] + i, v);
++        return;
++    }
++    unsigned long block = i / s->blockSize;
++    unsigned long j = block + s->blocks.head;
++    if (j >= s->blocks.capacity) j -= s->blocks.capacity;
++    QueueConstruct((SteeringQueueValue *)s->blocks.data[j] + i % s->blockSize, v);
++}
++
+ extern "C" void fn_801E2FD4(SteeringQueue *s, const SteeringQueueValue &value) {
+     if (s->count > 0x1ffffffeUL) throw std::length_error(lbl_803BD208);
+     if (!s->blocks.count) {
+@@ -1145,8 +1160,7 @@ extern "C" void fn_801E2FD4(SteeringQueue *s, const SteeringQueueValue &value) {
+     QueueBlockMap saved;
+     if (s->first == 0) fn_801E32C8(s, s->first, &saved, &added, 1);
+     else --s->first;
+-    SteeringQueueValue *out = QueueAt(s, s->first);
+-    new (out) SteeringQueueValue(value);
++    QueueConstructAt(s, s->first, value);
+     ++s->count;
+     while (s->first >= s->blockSize * 3 / 2) {
+         MemoryManager_TimedFree((void *)s->blocks.data[s->blocks.head]);
+@@ -1155,6 +1169,8 @@ extern "C" void fn_801E2FD4(SteeringQueue *s, const SteeringQueueValue &value) {
+     }
+ }
+ 
++inline RingShared::RingShared(void *p) { init(p); }
++
+ extern "C" SteeringQueue *fn_801E3260(SteeringQueue *s, unsigned long n) {
+     s->blockSize = lbl_806DA360;
+     s->blocks.capacity = 0;

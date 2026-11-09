@@ -1,0 +1,12 @@
+diff --git a/config/GNLJ82/splits.txt b/config/GNLJ82/splits.txt
+index 4d9bd96..b7e1ef1 100644
+--- a/config/GNLJ82/splits.txt
++++ b/config/GNLJ82/splits.txt
+@@ -6320,6 +6320,7 @@ game/Scene_8014E0C4.cpp:
+ 	extab       start:0x8000E8D4 end:0x8000F0DC
+ 	extabindex  start:0x800255BC end:0x800258B0
+ 	.text       start:0x8014E0C4 end:0x80157940
++	.rodata     start:0x80363D30 end:0x803678D8
+ 
+ game/SceneList_80157940.cpp:
+ 	extab       start:0x8000F0DC end:0x8000F114

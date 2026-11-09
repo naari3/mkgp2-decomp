@@ -1372,7 +1372,7 @@ def main():
     ap.add_argument('--patience', type=int, default=3, help='stop after N rounds without improvement')
     ap.add_argument('--dbg', type=int, default=0, help='mwccdbg tie-break on the K best tied states per round')
     ap.add_argument('--dbg-slack', type=int, default=4, help='diff-line slack for the mwccdbg-ranked set')
-    ap.add_argument('--start-tu', help='full TU source to start from (e.g. setup/autopipe99/best/FN_PCT_GCcc.cpp)')
+    ap.add_argument('--start-tu', help='full TU source to start from (e.g. docs/sweeps/autopipe99/best/FN_PCT_GCcc.cpp)')
     ap.add_argument('--explore', type=float, default=0.4, help='fraction of the beam picked at random from the runners-up')
     ap.add_argument('--seed', type=int, default=1)
     ap.add_argument('-j', '--jobs', type=int, default=4)
@@ -1388,10 +1388,10 @@ def main():
         bp.add_argument('--only', help='comma list of fns')
         bp.add_argument('--retry', action='store_true', help='ignore earlier results')
         bp.add_argument('--reg-only', action='store_true', help='only functions whose opcodes already match')
-        bp.add_argument('--chain', default='/mnt/project-files/setup/autopipe99/best',
+        bp.add_argument('--chain', default='docs/sweeps/autopipe99/best',
                         help='start from FN_PCT_GCcc.<ext> full-TU files found here')
         bp.add_argument('--claims', help='file of claimed TU paths (src/... or obj) to skip')
-        bp.add_argument('--out', default='/mnt/project-files/setup/shapesweep')
+        bp.add_argument('--out', default='docs/sweeps/shapesweep', help='results/hits/best dir (in the repo: commit it)')
         for k, v in (('--beam', 6), ('--rounds', 8), ('--sample', 200), ('--max-depth', 8), ('--patience', 2),
                      ('--dbg', 0), ('--seed', 1), ('-j', 4), ('--minutes', 6.0), ('--explore', 0.4), ('--dbg-slack', 4)):
             bp.add_argument(k, type=type(v), default=v, **({'dest': 'jobs'} if k == '-j' else {}))

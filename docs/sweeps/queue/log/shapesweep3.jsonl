@@ -1,0 +1,74 @@
+{"t": "2026-11-09T07:02:41.353034Z", "who": "shapesweep3", "op": "add", "id": "N3db7c4", "text": "fn_80203224 | game/anon_8020314C_nm1 | 99.75 | autopipe"}
+{"t": "2026-11-09T07:02:41.353776Z", "who": "shapesweep3", "op": "take", "id": "N3db7c4"}
+{"t": "2026-11-09T07:02:55.157850Z", "who": "shapesweep3", "op": "take", "id": "N3db7c4"}
+{"t": "2026-11-09T07:03:31.514493Z", "who": "shapesweep3", "op": "park", "id": "N3db7c4", "note": "shapesweep: 2 -> 2 lines ()"}
+{"t": "2026-11-09T07:03:31.757035Z", "who": "shapesweep3", "op": "add", "id": "Nd0d4dc", "text": "Sci2Card_Tick | game/Sci2Card_Tick | 99.46 | autopipe"}
+{"t": "2026-11-09T07:03:31.757999Z", "who": "shapesweep3", "op": "take", "id": "Nd0d4dc"}
+{"t": "2026-11-09T07:04:08.629277Z", "who": "shapesweep3", "op": "park", "id": "Nd0d4dc", "note": "shapesweep: 10 -> 10 lines ()"}
+{"t": "2026-11-09T07:04:08.949359Z", "who": "shapesweep3", "op": "add", "id": "Nbd501c", "text": "PhysicsState_KartCollisionCheck | game/PhysicsState_KartCollisionCheck | 99.39 | autopipe"}
+{"t": "2026-11-09T07:04:08.950025Z", "who": "shapesweep3", "op": "take", "id": "Nbd501c"}
+{"t": "2026-11-09T07:04:52.688224Z", "who": "shapesweep3", "op": "park", "id": "Nbd501c", "note": "shapesweep: 6 -> 6 lines ()"}
+{"t": "2026-11-09T07:04:52.930835Z", "who": "shapesweep3", "op": "take", "id": "N7e32e1"}
+{"t": "2026-11-09T07:05:30.697390Z", "who": "shapesweep3", "op": "park", "id": "N7e32e1", "note": "shapesweep: 8 -> 8 lines ()"}
+{"t": "2026-11-09T07:05:30.898401Z", "who": "shapesweep3", "op": "take", "id": "N4c87e6"}
+{"t": "2026-11-09T07:05:47.313509Z", "who": "shapesweep3", "op": "park", "id": "N4c87e6", "note": "shapesweep: 124 -> 124 lines ()"}
+{"t": "2026-11-09T07:05:47.454450Z", "who": "shapesweep3", "op": "take", "id": "N6817c7"}
+{"t": "2026-11-09T07:06:23.165324Z", "who": "shapesweep3", "op": "park", "id": "N6817c7", "note": "shapesweep: 2 -> 2 lines ()"}
+{"t": "2026-11-09T07:06:23.397290Z", "who": "shapesweep3", "op": "take", "id": "Na3e6a8"}
+{"t": "2026-11-09T07:06:58.945724Z", "who": "shapesweep3", "op": "park", "id": "Na3e6a8", "note": "shapesweep: 2 -> 2 lines ()"}
+{"t": "2026-11-09T07:06:59.141371Z", "who": "shapesweep3", "op": "take", "id": "N8699e6"}
+{"t": "2026-11-09T07:07:14.712023Z", "who": "shapesweep3", "op": "park", "id": "N8699e6", "note": "shapesweep: 130 -> 130 lines ()"}
+{"t": "2026-11-09T07:07:14.838795Z", "who": "shapesweep3", "op": "take", "id": "N7f7d3e"}
+{"t": "2026-11-09T07:07:43.446863Z", "who": "shapesweep3", "op": "park", "id": "N7f7d3e", "note": "shapesweep: 176 -> 176 lines ()"}
+{"t": "2026-11-09T07:07:43.637548Z", "who": "shapesweep3", "op": "take", "id": "N1b69c8"}
+{"t": "2026-11-09T07:07:59.052954Z", "who": "shapesweep3", "op": "release", "id": "N1b69c8", "note": ""}
+{"t": "2026-11-09T07:07:59.196982Z", "who": "shapesweep3", "op": "take", "id": "N8aaa3f"}
+{"t": "2026-11-09T07:08:14.857409Z", "who": "shapesweep3", "op": "park", "id": "N8aaa3f", "note": "shapesweep: 30 -> 30 lines ()"}
+{"t": "2026-11-09T07:08:14.984666Z", "who": "shapesweep3", "op": "take", "id": "Nee621a"}
+{"t": "2026-11-09T07:08:49.033299Z", "who": "shapesweep3", "op": "park", "id": "Nee621a", "note": "shapesweep: 2 -> 2 lines ()"}
+{"t": "2026-11-09T07:08:49.195291Z", "who": "shapesweep3", "op": "take", "id": "N2bec62"}
+{"t": "2026-11-09T07:10:19.390883Z", "who": "shapesweep3", "op": "park", "id": "N2bec62", "note": "shapesweep: 100 -> 8 lines (wrap-lay x10 - 125.0f | id LUT_Sin12Bit(3.0f * x14) | wrap-fwd SubL_f(x10, 125.0f) / 25.0f)"}
+{"t": "2026-11-09T07:10:19.689601Z", "who": "shapesweep3", "op": "take", "id": "N3db452"}
+{"t": "2026-11-09T07:10:37.629461Z", "who": "shapesweep3", "op": "park", "id": "N3db452", "note": "shapesweep: 6 -> 6 lines ()"}
+{"t": "2026-11-09T07:10:37.769439Z", "who": "shapesweep3", "op": "take", "id": "N30bc44"}
+{"t": "2026-11-09T07:11:02.190179Z", "who": "shapesweep3", "op": "park", "id": "N30bc44", "note": "shapesweep: 29 -> 21 lines (swap lbl_806D8604 * (lbl_806D1598 + 1))"}
+{"t": "2026-11-09T07:11:02.358634Z", "who": "shapesweep3", "op": "take", "id": "N6c0f09"}
+{"t": "2026-11-09T07:11:48.057023Z", "who": "shapesweep3", "op": "park", "id": "N6c0f09", "note": "shapesweep: 26 -> 26 lines ()"}
+{"t": "2026-11-09T07:11:48.231718Z", "who": "shapesweep3", "op": "take", "id": "N9344ed"}
+{"t": "2026-11-09T07:12:08.912316Z", "who": "shapesweep3", "op": "park", "id": "N9344ed", "note": "shapesweep: 161 -> 161 lines ()"}
+{"t": "2026-11-09T07:12:09.098002Z", "who": "shapesweep3", "op": "take", "id": "Na07383"}
+{"t": "2026-11-09T07:13:37.552391Z", "who": "shapesweep3", "op": "park", "id": "Na07383", "note": "shapesweep: 60 -> 48 lines (accum1 tv | hoist-front 4 | sym-id p->vy[0] x2 | id u + uv[0])"}
+{"t": "2026-11-09T07:13:37.720884Z", "who": "shapesweep3", "op": "take", "id": "N8c71c0"}
+{"t": "2026-11-09T07:15:01.886962Z", "who": "shapesweep3", "op": "park", "id": "N8c71c0", "note": "shapesweep: 182 -> 174 lines (wrap-fwd lbl_806DB858 + x)"}
+{"t": "2026-11-09T07:15:02.066566Z", "who": "shapesweep3", "op": "take", "id": "N119ea0"}
+{"t": "2026-11-09T07:16:07.317029Z", "who": "shapesweep3", "op": "park", "id": "N119ea0", "note": "shapesweep: 70 -> 50 lines (id self->push.x | wrap-loc scale * scale * 0.009f | wrap-fwd self->position.x - self->previous.x)"}
+{"t": "2026-11-09T07:16:07.477003Z", "who": "shapesweep3", "op": "take", "id": "N7728b7"}
+{"t": "2026-11-09T07:16:59.126276Z", "who": "shapesweep3", "op": "park", "id": "N7728b7", "note": "shapesweep: 38 -> 28 lines (id data->resources[i].id)"}
+{"t": "2026-11-09T07:16:59.326900Z", "who": "shapesweep3", "op": "take", "id": "Nc07e76"}
+{"t": "2026-11-09T07:17:39.086741Z", "who": "shapesweep3", "op": "park", "id": "Nc07e76", "note": "shapesweep: 47 -> 47 lines ()"}
+{"t": "2026-11-09T07:17:39.246889Z", "who": "shapesweep3", "op": "take", "id": "Nb4032c"}
+{"t": "2026-11-09T07:18:34.207529Z", "who": "shapesweep3", "op": "park", "id": "Nb4032c", "note": "shapesweep: 118 -> 90 lines (hoist-back zz + (xx + yy))"}
+{"t": "2026-11-09T07:18:34.396825Z", "who": "shapesweep3", "op": "take", "id": "Q053"}
+{"t": "2026-11-09T07:19:07.010841Z", "who": "shapesweep3", "op": "park", "id": "Q053", "note": "shapesweep: 4 -> 4 lines ()"}
+{"t": "2026-11-09T07:19:07.193536Z", "who": "shapesweep3", "op": "take", "id": "Ne43cc0"}
+{"t": "2026-11-09T07:19:43.837496Z", "who": "shapesweep3", "op": "park", "id": "Ne43cc0", "note": "shapesweep: 100 -> 96 lines (id rule->slot)"}
+{"t": "2026-11-09T07:19:44.004322Z", "who": "shapesweep3", "op": "take", "id": "Q046"}
+{"t": "2026-11-09T07:20:10.381630Z", "who": "shapesweep3", "op": "park", "id": "Q046", "note": "shapesweep: 5 -> 5 lines ()"}
+{"t": "2026-11-09T07:20:10.559491Z", "who": "shapesweep3", "op": "take", "id": "N99f091"}
+{"t": "2026-11-09T07:20:49.748376Z", "who": "shapesweep3", "op": "park", "id": "N99f091", "note": "shapesweep: 4 -> 4 lines ()"}
+{"t": "2026-11-09T07:20:49.917831Z", "who": "shapesweep3", "op": "take", "id": "Ncf08dd"}
+{"t": "2026-11-09T07:21:25.472738Z", "who": "shapesweep3", "op": "park", "id": "Ncf08dd", "note": "shapesweep: 132 -> 132 lines ()"}
+{"t": "2026-11-09T07:21:25.632383Z", "who": "shapesweep3", "op": "take", "id": "Nf1d8a8"}
+{"t": "2026-11-09T07:21:43.014118Z", "who": "shapesweep3", "op": "release", "id": "Nf1d8a8", "note": ""}
+{"t": "2026-11-09T07:21:43.140203Z", "who": "shapesweep3", "op": "take", "id": "N7ee84a"}
+{"t": "2026-11-09T07:22:12.991069Z", "who": "shapesweep3", "op": "park", "id": "N7ee84a", "note": "shapesweep: 16 -> 16 lines ()"}
+{"t": "2026-11-09T07:22:13.170001Z", "who": "shapesweep3", "op": "add", "id": "N69a148", "text": "acInetAddr | triforce/acsocket_nm3 | 97.26 | autopipe"}
+{"t": "2026-11-09T07:22:13.170710Z", "who": "shapesweep3", "op": "take", "id": "N69a148"}
+{"t": "2026-11-09T07:22:28.979685Z", "who": "shapesweep3", "op": "park", "id": "N69a148", "note": "shapesweep: 13 -> 13 lines ()"}
+{"t": "2026-11-09T07:22:29.120037Z", "who": "shapesweep3", "op": "take", "id": "Nf7ad17"}
+{"t": "2026-11-09T07:22:57.719427Z", "who": "shapesweep3", "op": "park", "id": "Nf7ad17", "note": "shapesweep: 27 -> 27 lines ()"}
+{"t": "2026-11-09T07:22:57.884786Z", "who": "shapesweep3", "op": "add", "id": "N7a745e", "text": "acConnect | triforce/acsocket_nm4 | 97.04 | autopipe"}
+{"t": "2026-11-09T07:22:57.885707Z", "who": "shapesweep3", "op": "take", "id": "N7a745e"}
+{"t": "2026-11-09T07:23:25.761717Z", "who": "shapesweep3", "op": "park", "id": "N7a745e", "note": "shapesweep: 13 -> 13 lines ()"}
+{"t": "2026-11-09T07:23:25.936103Z", "who": "shapesweep3", "op": "take", "id": "N4f36cb"}
+{"t": "2026-11-09T07:24:35.418691Z", "who": "shapesweep3", "op": "park", "id": "N4f36cb", "note": "shapesweep: 122 -> 74 lines (sym-wrap-loc distance * c x2 | id Waypoint_FindNearest(path, 0, candidate.)"}

@@ -1,0 +1,84 @@
+diff --git a/src/thp/THPDec.c b/src/thp/THPDec.c
+index 6e6b8cd..221ec43 100644
+--- a/src/thp/THPDec.c
++++ b/src/thp/THPDec.c
+@@ -1936,10 +1936,14 @@ void fn_8029BCF0(THPDecHandle* handle, u8* dst, u8 alpha)
+     __THPGQRRestore(info);
+ }
+ 
++#pragma opt_lifetimes off
++#pragma opt_common_subs off
++#pragma opt_propagation off
+ static s32 __THPGetBit(THPFileInfo* info)
+ {
+     u8* p;
+     u32 b;
++    u32 r;
+     s32 cnt;
+ 
+     cnt = info->cnt;
+@@ -1947,35 +1951,39 @@ static s32 __THPGetBit(THPFileInfo* info)
+         p = info->file;
+         info->cnt = 26;
+         b = *p;
+-        if (b != 0xFF) {
+-            info->currByte = b;
+-            b = (b >> 7) & 1;
+-            info->file = p + 1;
+-        } else {
+-            for (;;) {
+-                if (p[1] == 0) {
+-                    p += 2;
+-                    info->currByte = b;
+-                    b = (b >> 7) & 1;
+-                    info->file = p;
+-                    break;
+-                }
+-                b = p[2];
+-                p += 3;
+-                if (b != 0xFF) {
+-                    info->currByte = b;
+-                    b = (b >> 7) & 1;
+-                    info->file = p;
+-                    break;
+-                }
+-                p--;
+-            }
++        if (b == 0xFF) {
++            goto check;
++        }
++        info->currByte = b;
++        r = (b >> 7) & 1;
++        info->file = p + 1;
++        goto out;
++    again:
++        p--;
++    check:
++        if (p[1] == 0) {
++            goto zero;
++        }
++        b = p[2];
++        p += 3;
++        if (b == 0xFF) {
++            goto again;
+         }
++        info->currByte = b;
++        r = (b >> 7) & 1;
++        info->file = p;
++        goto out;
++    zero:
++        p += 2;
++        info->currByte = b;
++        r = (b >> 7) & 1;
++        info->file = p;
++    out:;
+     } else {
+         b = info->currByte;
+         info->cnt = cnt + 1;
+-        b = __rlwnm(b, cnt, 31, 31);
++        r = __rlwnm(b, cnt, 31, 31);
+     }
+-    return b;
++    return r;
+ }
+ 

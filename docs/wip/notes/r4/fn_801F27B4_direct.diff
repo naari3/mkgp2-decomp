@@ -1,0 +1,15 @@
+diff --git a/src/game/fn_801F27B4.cpp b/src/game/fn_801F27B4.cpp
+index 75935ad..22fe20e 100644
+--- a/src/game/fn_801F27B4.cpp
++++ b/src/game/fn_801F27B4.cpp
+@@ -25,8 +25,6 @@ struct MenuMethodTables801F {
+ };
+ extern "C" MenuMethodTables801F lbl_804E4C28;
+ extern "C" void fn_801F27B4() {
+-    MenuMethodTable801F first = lbl_804E4C28.defaultsA;
+-    lbl_804E4C28.liveA = first;
+-    MenuMethodTable801F second = lbl_804E4C28.defaultsB;
+-    lbl_804E4C28.liveB = second;
++    lbl_804E4C28.liveA = lbl_804E4C28.defaultsA;
++    lbl_804E4C28.liveB = lbl_804E4C28.defaultsB;
+ }

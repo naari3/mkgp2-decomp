@@ -857,7 +857,7 @@ def render(m, merges, owns, splits, sinits, ccs, style_of_cc, learn, validation=
     L.append("## MERGE proposals")
     L.append("")
     L.append("Every TU between the first and last user of a shared private object was one TU. "
-             "Merge recipe: TIPS.md 'Over-split class TU merge recipe'.")
+             "Merge recipe: docs/thread_tips.md 'Over-split class TU merge recipe'.")
     L.append("")
     for i, p in enumerate(sorted(merges, key=score, reverse=True)[:top], 1):
         us = p["units"]
@@ -907,7 +907,7 @@ def render(m, merges, owns, splits, sinits, ccs, style_of_cc, learn, validation=
     L.append("## OWN proposals")
     L.append("")
     L.append("Unowned (auto_) data that only this TU's code uses. Add the range to the TU in "
-             "splits.txt and define the objects (TIPS.md 'section anchor'). Ranges stop at the "
+             "splits.txt and define the objects (docs/thread_tips.md 'section anchor'). Ranges stop at the "
              "last referenced object; trailing unreferenced objects may belong to the next TU.")
     L.append("")
     L.append("| # | TU | status | section | range | objs | users not matching | warn |")
