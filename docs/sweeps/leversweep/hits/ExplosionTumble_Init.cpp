@@ -1,4 +1,3 @@
-static inline float mul__lv(float a, float b) { return a * b; }
 /* NonMatching: 94.86% text, exact 1736-byte primary size.
  * In-place roots and rounded quaternion products preserve target arithmetic.
  * Vector loads, projection reloads and FPR allocation still differ. */
@@ -82,6 +81,9 @@ static inline void QuaternionMatrix(C7Matrix* m, const C7Quat* q) {
     m->m[2][2]=one-two*(xx+yy);
 }
 extern "C" void ExplosionTumble_Init(C7Tumble* __restrict self, C7Vec* __restrict position, C7Vec* __restrict velocity, C7Matrix* __restrict pose) {
+    C7Vec*v_;
+    const C7Vec*src;
+    float length;
     self->Reset();
     self->pos=*position;
     for(int i=0;i<16;i++) ((float*)&self->start)[i]=((float*)pose)[i];
@@ -91,13 +93,19 @@ extern "C" void ExplosionTumble_Init(C7Tumble* __restrict self, C7Vec* __restric
     C7Vec v;
     NormalizeCopy(&v,velocity);
     C7Vec up;
-    NormalizeCopy(&up,(C7Vec*)&self->start.m[1][0]);
+    v_ = &up;
+    src = (C7Vec*)&self->start.m[1][0];
+    length = LengthSquared(src->x,src->y,src->z);
+    *v_=*src;
+    Root(length);
+    if(length<=lbl_806D27F8) {v_->z=lbl_806D27F8;v_->y=lbl_806D27F8;v_->x=lbl_806D27F8;}
+    else {float inv=lbl_806D27FC/length;v_->x*=inv;v_->y*=inv;v_->z*=inv;}
     {const C7Vec* p=&v; float x=up.x*p->x, y=up.y*p->y, z=up.z*p->z; float dot=z+(x+y); Scale(&up,dot);}
     Subtract(&v,&up);
     Normalize(&v);
     C7Vec axis=v;
     axis.x=up.y*v.z-up.z*v.y;
-    axis.y=mul__lv(up.z, v.x)-up.x*v.z;
+    axis.y=up.z*v.x-up.x*v.z;
     axis.z=up.x*v.y-up.y*v.x;
     float length2=axis.z*axis.z+(axis.x*axis.x+axis.y*axis.y);
     if(length2>lbl_806D27F8) { Normalize(&axis); self->axis=axis; }

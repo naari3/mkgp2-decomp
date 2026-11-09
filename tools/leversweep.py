@@ -255,6 +255,8 @@ def lever(name, rule, cls, commit, desc):
 
 # The table of today's levers that are NOT implemented here (semi / manual).
 NOT_AUTOMATED = [
+    ('inline-asm r2/r13 fixed offsets -> symbol refs', '-', 'auto (nothing left)', '71b5ffd4',
+     'grep: no game TU has a numeric r2/r13 displacement in inline asm any more (only TRK, already matching)'),
     ('rolled-loop + opt_unroll_instr_count', 'loop-unroll-budget', 'semi', '833c85a',
      'pragma half is automatic (pragmasweep --set extended sweeps opt_unroll_instr_count 8/16/32); '
      'rolling a hand-unrolled loop back needs the loop count and the induction step, which differ per site'),
@@ -1040,6 +1042,54 @@ def gen_arrinit(fx):
             nb = sub_ident(rest, name, name + '.a').replace('\x00', f'{ind}struct {cn}_s {name};\n{ind}{name} = {cn};\n')
             out.append((f'{lab0} -> struct assignment from a const table', build(sdef, nb)))
     return [(l, t) for l, t in out if t]
+
+
+# ---- single-expr (0b362350): a value built in two steps through a local -> one expression at its use
+
+@lever('single-expr', 'single-expr-local', 'auto', '0b362350',
+       'a local assigned once and read once (`end = a + b; ... f(end - 1)`) is substituted into its use, so '
+       'the whole value is one expression (operand association and temp numbering change); per scope, '
+       'so it also reaches the locals of TU inlines')
+def gen_single(fx):
+    if not (fx.regdiff() or fx.win('add', 'sub', 'addi', 'subi', 'mr')):
+        return []
+
+    def f(b):
+        sb = strip_comments(b)
+        if len(sb) != len(b):
+            return []
+        res = []
+        for m in re.finditer(r'(?m)^([ \t]*)((?:(?:const|unsigned|signed)\s+)*' + ID + r'[ \t\*]+)?(' + ID
+                             + r')\s*=\s*([^;{}=]+);[ \t]*\n', sb):
+            ty, v, e = m.group(2), m.group(3), m.group(4).strip()
+            if ty and ty.split()[0] in CKW | {'return'}:
+                continue
+            if re.search(ID + r'\s*\(', re.sub(r'\(\s*(?:const\s+|unsigned\s+)?' + ID + r'[\s\*]*\)', '', e)):
+                continue  # calls: moving them changes evaluation order
+            if '++' in e or '--' in e or '?' in e:
+                continue
+            allu = [u for u in re.finditer(r'(?<![\w.>])' + re.escape(v) + r'\b', sb)]
+            later = [u for u in allu if u.start() >= m.end()]
+            if len(later) != 1 or len([u for u in allu if u.start() < m.start()]) > (0 if ty else 1):
+                continue
+            u = later[0]
+            if re.match(r'\s*(?:[-+*/|&^]?=[^=]|\+\+|--)', sb[u.end():]) or sb[max(0, u.start() - 2):u.start()] in ('++', '--') \
+                    or sb[u.start() - 1] == '&':
+                continue
+            # the use must be in straight-line code after the def: no loop keyword between
+            mid = sb[m.end():u.start()]
+            if re.search(r'\b(for|while|do|goto|case|default)\b', mid) or mid.count('}') > mid.count('{'):
+                continue
+            # operands of e must not be written in between
+            ops_ = set(re.findall(ID, e))
+            if any(re.search(r'(?<![\w.>])' + re.escape(o) + r'\s*(?:[-+*/|&^]?=[^=]|\+\+|--)', mid) for o in ops_):
+                continue
+            keep = f'{m.group(1)}{ty.strip()} {v};\n' if ty else ''
+            res.append((f'single expr: {v} -> ({e[:30]})', b[:m.start()] + keep + b[m.end():u.start()] + f'({e})'
+                        + b[u.end():]))
+        return res[:16]
+
+    return fx.scoped(f)
 
 
 # ---- try-scope-inside-if (11f056f)

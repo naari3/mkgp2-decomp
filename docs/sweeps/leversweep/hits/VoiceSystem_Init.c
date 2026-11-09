@@ -6,8 +6,6 @@ static inline void VoiceSystem_ClearPlayCounts(VoiceClip *clips) {
 }
 
 int VoiceSystem_Init(void) {
-    int i_;
-    VoiceClip *clips;
     VoiceInitBss *state = (VoiceInitBss *)g_voiceQueue;
     RaceVoiceData *data = &lbl_80496C38;
     OSTime now;
@@ -25,7 +23,6 @@ int VoiceSystem_Init(void) {
     g_voiceQueueTail = 0;
     g_voiceLastTime = OSGetTime();
     now = OSGetTime();
-    duration = (float)(lbl_80598A60.duration * 2);
     volume = g_playerData.audible ? 255 : 0;
     cup = g_cupId;
     g_voiceStreamStartTime = 0;
@@ -83,7 +80,7 @@ int VoiceSystem_Init(void) {
     lbl_806D17B4 = 0;
     lbl_806D1750 = (int)now;
     g_voiceTickCounter = (int)now;
-    lbl_806D1790 = duration;
+    lbl_806D1790 = ((float)(lbl_80598A60.duration * 2));
     g_voiceCupLongRoundTable = 0;
     state->speaker[1] = 0;
     state->speaker[0] = -1;
@@ -125,8 +122,7 @@ int VoiceSystem_Init(void) {
         entry->pad02[0] = 0;
         entry->f64 = 0;
     }
-    clips = (VoiceClip *)((unsigned int)data + 0x1534);
-    for (i_ = 0; i_ < 0x282; i_++) clips[i_].playCount = 0;
+    VoiceSystem_ClearPlayCounts((VoiceClip *)((unsigned int)data + 0x1534));
     return 1;
 }
 
