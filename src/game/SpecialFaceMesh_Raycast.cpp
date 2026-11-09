@@ -90,10 +90,15 @@ extern "C" unsigned char SpecialFace_RaycastSegment(SpecialFaceNative *self,
     SpecialFaceVec offset; offset.x = ray->delta.x; offset.y = ray->delta.y; offset.z = ray->delta.z;
     offset.x *= reciprocal; offset.y *= reciprocal; offset.z *= reciprocal;
     out->x = origin.x + offset.x; out->y = origin.y + offset.y; out->z = origin.z + offset.z;
-    float xx = offset.x*offset.x, yy = offset.y*offset.y, zz = offset.z*offset.z;
-    float length = FaceRaySqrt(zz + (xx + yy));
-    if (length <= 0.0f) offset.x = offset.y = offset.z = 0.0f;
-    else { float inv = lbl_806D2F78 / length; offset.x *= inv; offset.y *= inv; offset.z *= inv; }
+    {
+        float yy = offset.y*offset.y;
+        float xx = offset.x*offset.x;
+        float zz = offset.z*offset.z;
+        float xy = xx + yy;
+        float length = FaceRaySqrt(zz + xy);
+        if (length <= 0.0f) offset.x = offset.y = offset.z = 0.0f;
+        else { float inv = lbl_806D2F78 / length; offset.x *= inv; offset.y *= inv; offset.z *= inv; }
+    }
     offset.x *= lbl_806D2F7C; offset.y *= lbl_806D2F7C; offset.z *= lbl_806D2F7C;
     out->x += offset.x; out->y += offset.y; out->z += offset.z;
     normal->x = -self->normal.x; normal->y = -self->normal.y; normal->z = -self->normal.z;
