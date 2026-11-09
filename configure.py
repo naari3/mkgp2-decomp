@@ -2881,7 +2881,7 @@ config.libs = [
             Object(Matching, "game/miyazakiconsole/fn_801807E0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/miyazakiconsole/fn_8017EC90.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/miyazakiconsole/fn_8017FD68.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/miyazakiconsole/fn_8017F538.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/miyazakiconsole/fn_8017F538.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/miyazakiconsole/fn_8017FAFC.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/miyazakiconsole/fn_8018005C.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/miyazakiconsole/fn_80180100.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),

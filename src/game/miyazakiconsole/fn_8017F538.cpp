@@ -30,12 +30,23 @@ void fn_8017EFFC(unsigned int);
 void DMAChannelManager_Init();
 void fn_801D7610(void *,int);
 }
-static inline Menu *CreateListMenu(const char *name) {
-    Menu *result=fn_801816AC(name);
-    return result;
+/* The three sub-menu builders are inline helpers with their own Menu*
+ * locals: as caller locals (one shared `menu`) the allocator numbered them
+ * below the loop temps and swapped r29/r30/r31 (regfix diag, 11-09). */
+static inline void CreateNumberMenu(const char *name) {
+    Menu *m=fn_801816AC(name);
+    fn_801805AC(m,(void *)fn_8017EB58);
+    char text[16];
+    for (int i=0;i<21;i++) {
+        sprintf(text,lbl_806D91CC,i);
+        fn_801804CC(m,text);
+    }
 }
-static inline void AddBankNames(Menu *m) {
-    for (int i=0;i<9;i++) fn_801804CC(m,lbl_80491768[i]);
+static inline void CreateBankMenu(const char *name) {
+    Menu *m=fn_80180670(name,1);
+    if (m!=0) {
+        for (int i=0;i<9;i++) fn_801804CC(m,lbl_80491768[i]);
+    }
 }
 static inline void AddSoundKinds(Menu *m,const char *s) {
     fn_801804CC(m,lbl_806D91E0);
@@ -49,6 +60,10 @@ static inline void AddSoundKinds(Menu *m,const char *s) {
     fn_801804CC(m,lbl_806D9220);
     fn_801804CC(m,s+0xb50);
     fn_801804CC(m,lbl_806D9228);
+}
+static inline void CreateSoundKindMenu(const char *s) {
+    Menu *m=fn_80180670(s+0xb40,1);
+    if (m!=0) AddSoundKinds(m,s);
 }
 static inline bool ListStreamFiles(Menu *&m,const char *s) {
     m=fn_801816AC(s+0x7d0);
@@ -79,7 +94,7 @@ static inline bool ListStreamFiles(Menu *&m,const char *s) {
 }
 extern "C" int fn_8017F538(unsigned int msg,void *,int cursor,int,unsigned int sub) {
     const char *s=lbl_80376220;
-    int numberIndex;
+    unsigned int id;
     Menu *menu;
     switch(msg) {
     case 0:
@@ -87,23 +102,15 @@ extern "C" int fn_8017F538(unsigned int msg,void *,int cursor,int,unsigned int s
         case 1:
             switch(cursor) {
             case 0: {
-                menu=fn_80180670(s+0x5d8,1);
-                if (menu!=0) AddBankNames(menu);
+                CreateBankMenu(s+0x5d8);
                 break;
             }
             case 1: {
-                menu=fn_80180670(s+0xb40,1);
-                if (menu!=0) AddSoundKinds(menu,s);
+                CreateSoundKindMenu(s);
                 break;
             }
             case 2: {
-                Menu *m=CreateListMenu(s+0x978);
-                fn_801805AC(m,(void *)fn_8017EB58);
-                char text[16];
-                for (numberIndex=0;numberIndex<21;numberIndex++) {
-                    sprintf(text,lbl_806D91CC,numberIndex);
-                    fn_801804CC(m,text);
-                }
+                CreateNumberMenu(s+0x978);
                 break;
             }
             case 3: {
@@ -115,8 +122,7 @@ extern "C" int fn_8017F538(unsigned int msg,void *,int cursor,int,unsigned int s
                 break;
             }
             case 4: {
-                menu=fn_80180670(s+0xb40,1);
-                if (menu!=0) AddSoundKinds(menu,s);
+                CreateSoundKindMenu(s);
                 break;
             }
             default: lbl_806D15F8=1; break;
@@ -138,7 +144,6 @@ extern "C" int fn_8017F538(unsigned int msg,void *,int cursor,int,unsigned int s
                 menu=fn_801816AC(title);
                 fn_801805AC(menu,(void *)fn_8017F1E8);
                 if (menu!=0) {
-                    unsigned int id;
                     const unsigned int *range=(const unsigned int *)(s+0x4c8);
                     for (id=range[lbl_806D1608*2];id<=range[lbl_806D1608*2+1];id++) {
                         sprintf(title,lbl_806D91D8,id);
