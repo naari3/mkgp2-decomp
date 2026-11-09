@@ -4,11 +4,11 @@
  * to the stored neutral calibration). Holding start + select returns to the
  * monitor test page.
  *
- * NonMatching: the axis values. The target divides each clamped difference
- * by 64 in place (same register). Reusing the phase argument for the
- * acceleration difference preserves its register through division. The
- * steering and brake differences still use volatile registers before
- * division; writing those divisions in place rematerializes them at use.
+ * The target divides each axis difference by 64 in place (same register).
+ * With propagation on, mwcc rematerializes an in-place `x = x / 64` at its
+ * first use, so the function is built with opt_propagation off; the menu
+ * item loop then has to walk the pointer itself (the shared
+ * TestPage_DrawItems inline relies on `i = 0` being propagated).
  */
 #include "game/TestMenuPage.h"
 
@@ -49,17 +49,32 @@ extern const char lbl_806D2E5C[4];
 void MonitorTest_Page(SwitchTestPage *self, int phase, int arg);
 }
 
+/* Same as TestPage_DrawItems, written as a pointer walk (see the note above). */
+static inline void SwitchTest_DrawItems(TestPage *self, MenuItem *it, int sel)
+{
+    int i;
+
+    for (i = 0; it->text != 0; it++, i++) {
+        if (i != sel || self->blink <= 0x1E) {
+            if (self->text != 0) {
+                DrawText(self->text, it->x * 14, it->y * 24, 7, 1.0f, it->text);
+            }
+        }
+    }
+}
+
 #pragma exceptions on
 
+/* fakematch (pragma): natural code would use the default propagation and TestPage_DrawItems */
+#pragma push
+#pragma opt_propagation off
 extern "C" int SwitchTest_Page(SwitchTestPage *self, int phase)
 {
     InputPlayer *pl;
     unsigned short coin = g_jvsOperatorBits[12];
     int steer;
     int brake;
-    int st;
     int ac;
-    int br;
 
     if (phase == 0) {
         self->steer = self->calib->steer;
@@ -96,9 +111,9 @@ extern "C" int SwitchTest_Page(SwitchTestPage *self, int phase)
         if (brake < 0) {
             brake = 0;
         }
-        st = steer / 64;
+        steer = steer / 64;
         ac = phase / 64;
-        br = brake / 64;
+        brake = brake / 64;
         if (self->text != 0) {
             DrawText(self->text, 0x134, 0x48, 4, 1.0f, lbl_806D2E50);
             if (self->flash != 0) {
@@ -116,19 +131,19 @@ extern "C" int SwitchTest_Page(SwitchTestPage *self, int phase)
             } else {
                 DrawText(self->text, 0x15E, 0xA8, 7, 1.0f, lbl_806D2D94);
             }
-            DrawText(self->text, 0x15E, 0xC0, 7, 1.0f, lbl_806D2DCC, st);
-            if (st >= 0x180) {
+            DrawText(self->text, 0x15E, 0xC0, 7, 1.0f, lbl_806D2DCC, steer);
+            if (steer >= 0x180) {
                 DrawText(self->text, 0x1B2, 0xC0, 2, 1.0f, lbl_80310BF4);
             }
-            if (st <= -0x180) {
+            if (steer <= -0x180) {
                 DrawText(self->text, 0x1B2, 0xC0, 2, 1.0f, lbl_806D2E54);
             }
             DrawText(self->text, 0x15E, 0xD8, 7, 1.0f, lbl_806D2DCC, ac);
             if (ac >= 0x140) {
                 DrawText(self->text, 0x1B2, 0xD8, 2, 1.0f, lbl_806D2E5C);
             }
-            DrawText(self->text, 0x15E, 0xF0, 7, 1.0f, lbl_806D2DCC, br);
-            if (br >= 0x140) {
+            DrawText(self->text, 0x15E, 0xF0, 7, 1.0f, lbl_806D2DCC, brake);
+            if (brake >= 0x140) {
                 DrawText(self->text, 0x1B2, 0xF0, 2, 1.0f, lbl_806D2E5C);
             }
             if (pl->Held(0x2000)) {
@@ -142,9 +157,11 @@ extern "C" int SwitchTest_Page(SwitchTestPage *self, int phase)
                 DrawText(self->text, 0x15E, 0x120, 7, 1.0f, lbl_806D2D94);
             }
         }
-        TestPage_DrawItems((TestPage *)self, lbl_803FC654, -1);
+        SwitchTest_DrawItems((TestPage *)self, lbl_803FC654, -1);
     }
     return 1;
 }
+
+#pragma pop
 
 #pragma exceptions reset

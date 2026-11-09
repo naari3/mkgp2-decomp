@@ -28,7 +28,7 @@ extern unsigned char Terrain_GetGroundHeightWithPenetration(Vec3 *, float *, int
 }
 
 static inline void MatrixIdentity(Matrix44 *a) {
-    for (int i = 0; i < 16; i++) ((float *)a)[i] = 0.0f;
+    for (int i = 0; i < 4; i++) for (int j = 0; j < 4; j++) a->m[i][j] = 0.0f;
     a->m[0][0] = a->m[1][1] = a->m[2][2] = a->m[3][3] = 1.0f;
 }
 
@@ -38,8 +38,8 @@ static inline void AccumulateProduct(float &value, float right, float left) {
 
 static inline void MatrixMultiply(Matrix44 *a, const Matrix44 *b) {
     float out[16];
-    int k = 0;
-    for (int i = 0; i < 4; i++) {
+    int i, k;
+    for (k = 0, i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++) {
             float sum = a->m[i][0] * b->m[0][j];
             AccumulateProduct(sum, b->m[1][j], a->m[i][1]);
@@ -409,7 +409,7 @@ CarMovementInit::CarMovementInit(void *o, unsigned char *cfg, void *context, flo
     v1ec.Set(0.0f, 0.0f, 0.0f);
     v1f8.Set(0.0f, 0.0f, 0.0f);
     MatrixIdentity(&matrix204);
-    field244 = field245 = field246 = 0; field248 = 0; field24c = 1.0f; field250 = 0.0f;
+    field244 = 0; field245 = 0; field246 = 0; field248 = 0; field24c = 1.0f; field250 = 0.0f;
     field1c0 = 0.0f; field2be = 0;
     v1a0.Set(0.0f, 1.0f, 0.0f);
     flags[0] = 1; wheelValues[0] = lbl_804963F8[1];
@@ -418,16 +418,16 @@ CarMovementInit::CarMovementInit(void *o, unsigned char *cfg, void *context, flo
     flags[3] = 1; wheelValues[3] = lbl_804963F8[7];
     v298.Set(0.0f, 0.0f, 0.0f);
     v2a4.Set(0.0f, 0.0f, 0.0f);
-    field2bc = field2bd = 0;
-    field2c0 = field2c4 = field2c8 = 1;
-    field2d4 = lbl_806D97D0; field2d8 = 1.0f; field2dc = 0;
+    field2bc = 0; field2bd = 0;
+    field2c0 = 1; field2c4 = 1; field2c8 = 1;
+    field2d4 = 35.0f; field2d8 = 1.0f; field2dc = 0;
     field2e0 = 0.0f; field2f4 = 1.0f; field2f0 = 1.0f;
-    field2fc = field2fd = field2fe = 0;
-    field2e4 = field2e8 = field2ec = 0.0f;
+    field2fc = 0; field2fd = 0; field2fe = 0;
+    field2e4 = 0.0f; field2e8 = 0.0f; field2ec = 0.0f;
     field2f8 = 1.0f; field300 = 1.0f;
     v310.Set(0.0f, 0.0f, 0.0f);
     GroundHeight ground;
-    if (Terrain_GetGroundHeightWithPenetration(&pos, &ground.value, 0, 0, 1e+01f) == 1) {
+    if (Terrain_GetGroundHeightWithPenetration(&pos, &ground.value, 0, 0, 10.0f) == 1) {
         pos.y = ground.value; prev.y = ground.value;
     }
     field2c = 0.7f; field30 = 0;
