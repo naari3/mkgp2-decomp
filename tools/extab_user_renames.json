@@ -2802,13 +2802,6 @@
     "__dt__14Holder801F0B58Fv": "dtor_801F0B58",
     "__dt__13Owned801F0B58Fv": "fn_801DC29C"
   },
-  "src/game/fn_801F7CD8.cpp": {
-    "__dt__14Holder801F7CD8Fv": "fn_801F7CD8"
-  },
-  "src/game/fn_801F7D50.cpp": {
-    "__ct__14Holder801F7D50Fi": "fn_801F7D50",
-    "__ct__11Obj801F7D50Fi": "fn_801F6918"
-  },
   "src/game/fn_801BA110.cpp": {
     "__ct__11Obj801BA110Fv": "fn_801B9928"
   },
@@ -3224,9 +3217,6 @@
     "__dt__8GXObjectFv": "Object_DtorWithGXSync",
     "__dl__FPv": "MemoryManager_TimedFree"
   },
-  "src/game/fn_801F7E98.cpp": {
-    "__ct__8NodeDescFv": "fn_801F7E98"
-  },
   "src/game/fn_801CE1EC.cpp": {
     "__dt__13Scene801CE1ECFv": "fn_801CE1EC",
     "__dt__8FlowBaseFv": "dtor_801BA14C",
@@ -3274,9 +3264,6 @@
     "__dt__12GameModeBaseFv": "dtor_8002CDF4",
     "__dt__9SpriteObjFv": "Sprite_Destroy",
     "__dl__FPv": "MemoryManager_TimedFree"
-  },
-  "src/game/fn_801F7DAC.cpp": {
-    "__as__8NodeDescFRC8NodeDesc": "fn_801F7DAC"
   },
   "src/game/fn_801CCF2C.cpp": {
     "__dt__13Scene801CCF2CFv": "fn_801CCF2C",
@@ -12189,18 +12176,17 @@
     "@262": "@etb_80016CD4",
     "@263": "@eti_80028B50"
   },
-  "src/game/fn_801F7F50.cpp": {
+  "src/game/fn_801F7604.cpp": {
+    "__dt__12ColorDrawS56Fv": "dtor_801F7AD0",
+    "__dt__10TexDrawS56Fv": "dtor_801F7A74",
+    "__dt__10MixDrawS56Fv": "dtor_801F6BD0",
+    "__dt__11DrawBaseS56Fv": "fn_801F7B2C",
+    "__dt__14Holder801F7CD8Fv": "fn_801F7CD8",
+    "__ct__14Holder801F7D50Fi": "fn_801F7D50",
+    "__ct__11Obj801F7D50Fi": "fn_801F6918",
+    "__as__8NodeDescFRC8NodeDesc": "fn_801F7DAC",
+    "__ct__12NodeDescInitFv": "fn_801F7E98",
     "__dt__12DrawQuad7F50Fv": "dtor_801F8214",
-    "@153": "@etb_80017618",
-    "@154": "@eti_8002900C",
-    "@133": "@etb_80017618",
-    "@134": "@eti_8002900C"
-  },
-  "src/game/dtor_801F8214.cpp": {
-    "@8": "@etb_80017630",
-    "@9": "@eti_80029018",
-    "@25": "@etb_80017638",
-    "@26": "@eti_80029024",
     "colorFlatS56": "lbl_803BEDE0",
     "colorDepthS56": "lbl_803BEE20",
     "texDescS56": "lbl_803BEE60",
@@ -12209,20 +12195,7 @@
     "mixDescS56": "lbl_803BEF00",
     "mixFlatS56": "lbl_803BEF20",
     "mixDepthS56": "lbl_803BEFA0",
-    "__dl__FPv": "MemoryManager_TimedFree",
-    "__dt__9DrawQuadSFv": "dtor_801F8214",
-    "@30": "@etb_80017630",
-    "@31": "@eti_80029018"
-  },
-  "src/game/fn_801F7604.cpp": {
-    "__dt__12ColorDrawS56Fv": "dtor_801F7AD0",
-    "__dt__10TexDrawS56Fv": "dtor_801F7A74",
-    "__dt__10MixDrawS56Fv": "dtor_801F6BD0",
-    "@130": "@etb_80017580",
-    "@131": "@eti_80028F88",
-    "...rodata.0": "lbl_803BEDC0",
-    "@136": "@etb_80017580",
-    "@137": "@eti_80028F88"
+    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/SpriteAnimHandleCtor.cpp": {
     "__nw__FUl": "Alloc",
@@ -13963,28 +13936,6 @@
     "__dla__FPv": "MemoryManager_Free",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
-  },
-  "src/game/dtor_801F8214_nm1.cpp": {
-    "colorFlatS56": "lbl_803BEDE0",
-    "colorDepthS56": "lbl_803BEE20",
-    "texDescS56": "lbl_803BEE60",
-    "texFlatS56": "lbl_803BEE80",
-    "texDepthS56": "lbl_803BEEC0",
-    "mixDescS56": "lbl_803BEF00",
-    "mixFlatS56": "lbl_803BEF20",
-    "mixDepthS56": "lbl_803BEFA0",
-    "__dl__FPv": "MemoryManager_TimedFree",
-    "__dt__17DrawQuadLocal8214Fv": "dtor_801F8214",
-    "@41": "@etb_80017638",
-    "@42": "@eti_80029024",
-    "@156": "@etb_80017640",
-    "@157": "@eti_80029030",
-    "@169": "@etb_80017658",
-    "@170": "@eti_8002903C",
-    "@258": "@etb_80017660",
-    "@259": "@eti_80029048",
-    "@267": "@etb_80017678",
-    "@268": "@eti_80029054"
   },
   "src/game/ItemSelectState.cpp": {
     "__ct__11TextManagerFv": "TexMgr_Init",

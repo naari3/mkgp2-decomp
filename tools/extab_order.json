@@ -2889,14 +2889,6 @@
     "VSMode_Init",
     "BtMode_Init"
   ],
-  "src/game/dtor_801F8214_nm1.cpp": [
-    "fn_801F8250",
-    "fn_801F8404",
-    "fn_801F8668",
-    "fn_801F8728",
-    "fn_801F894C",
-    "dtor_801F8214"
-  ],
   "src/game/fn_801F27B4.cpp": {
     "extab": [
       "fn_801F2690",
