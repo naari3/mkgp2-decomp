@@ -389,7 +389,7 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
     lbl_806D0F9C=(BootTimer *)Alloc(4);
     while (!fn_80293BCC()) {
         BootWait wait;
-        while (wait.Done()!=1) {}
+        while (wait.Done()==0) {}
         RefreshBootState();
     }
     GameBoot_Init();
@@ -397,6 +397,7 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
     RaceContext_EnsureSingleton();
     if (lbl_80598A60.receiptTest==1) Sci2Card_FlagReceiptTestEnable();
     BootConfig *config=&lbl_80598A60;
+    BootConfig *calibration=&lbl_80598A60;
     unsigned char enabled=config->card;
     lbl_806D0F94=enabled;
     if (!enabled) lbl_806D0F98=1;
@@ -406,7 +407,6 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
     lbl_806D0F99=(int)(config->otherDisabled==0);
     InputMgr_Init();
     StrPcb_EnsureInstance();
-    BootConfig *calibration=&lbl_80598A60;
     JvsInput_SetSteeringCalibration(calibration->steering);
     JvsInput_SetAccelCalibration(calibration->accel);
     JvsInput_SetBrakeCalibration(calibration->brake);

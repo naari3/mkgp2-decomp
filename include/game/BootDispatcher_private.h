@@ -5,6 +5,21 @@ struct Word2 {
     unsigned int w[2];
 };
 
+struct Word5 {
+    Word2 a;
+    Word2 b;
+    unsigned int c;
+
+    Word5 &operator=(const Word5 &o)
+    {
+        Word5 *d = this;
+        d->a = o.a;
+        d->b = o.b;
+        d->c = o.c;
+        return *this;
+    }
+};
+
 struct BootState {
     unsigned short f00;
     unsigned short f02;
@@ -16,12 +31,8 @@ struct BootState {
     unsigned short f12;
     unsigned short f14;
     unsigned short f16;
-    Word2 f18;
-    Word2 f20;
-    unsigned int f28;
-    Word2 f2C;
-    Word2 f34;
-    unsigned int f3C;
+    Word5 f18;
+    Word5 f2C;
     Word2 f40;
     Word2 f48;
     Word2 f50;
@@ -41,11 +52,7 @@ struct BootState {
         f14 = o.f14;
         f16 = o.f16;
         f18 = o.f18;
-        f20 = o.f20;
-        f28 = o.f28;
         f2C = o.f2C;
-        f34 = o.f34;
-        f3C = o.f3C;
         f40 = o.f40;
         f48 = o.f48;
         f50 = o.f50;
