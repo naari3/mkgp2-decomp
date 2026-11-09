@@ -1925,3 +1925,53 @@ Side effect on the FIRST loop: named locals take the lowest free saved
 register already in use (see 70), and r29 was opened by the split temp, so
 whichever of `p` / `i` is coloured first now gets r29. Declare `i` before
 `p` to give `i` r29 and `p` r30.
+
+## 74. Float arguments evaluated BEFORE an int argument: redeclare the callee with the floats first (fn_80158CE4 / fn_8015915C, option menu record pages, 11-09)
+
+Symptom: everything matches except the order in which the arguments of one
+call are computed. The target computes the float arguments (`fsubs`, `fadds`,
+int -> float conversion with `xoris` / `0x4330`) first and the int sprite id
+(`slwi` / `add` / `addi r4,r0,0x7e4`) last; ours computes the id first. In
+fn_8015915C the same thing showed up as `xoris r3` / `addi r0` swapped inside
+the digit loops.
+
+Cause: MWCC evaluates arguments in prototype order. GPR and FPR arguments are
+numbered independently (r3.. and f1..), so `f(int, int, float, float, float,
+int)` and `f(int, float, float, float, int, int)` pass exactly the same
+registers. The prototype guessed from the asm (ints first) is therefore not
+the only possible one, and the order of int versus float parameters is a free
+lever for scheduling and for vreg creation order.
+
+Fix: declare the same symbol a second time with another parameter order and
+call that. In C++ with C linkage this can be done without changing the other
+callers:
+
+```cpp
+namespace alt { extern "C" void fn_801695E0(int, float, float, float, int, int); }
+...
+alt::fn_801695E0(layer, x, y, alpha, 0x7e4 + self->course[i] * 2 + self->mode[i], 0);
+```
+
+A cast function pointer does NOT work (it becomes an indirect `bctrl` call).
+When every caller turns out to want the float-first order, change the real
+prototype instead.
+
+Other levers that were needed in the same two functions:
+
+- fn_8015915C: a named float (`baseX`) took a saved FPR one off. regfix diag
+  said "turn the named local into a temp via inline argument": the digit loops
+  went into `static inline void DrawDigits(int layer, signed char *digits,
+  float x, float y, float alpha)` and the value is passed as an expression.
+- fn_8015915C: `float colX; float gridY;` declared first at function level,
+  `rowY` as a block local in each branch (colX f25 / gridY f24).
+- fn_80158CE4: `#pragma opt_loop_invariants off` around the function, and the
+  id written as `0x7e4 + course * 2 + mode` (`(course << 1) + mode + 0x7e4`
+  gives 98.39 %).
+- Float constants the target reloads per call must be literals, not
+  `extern const float` (postprocess_sdata2.py maps the anonymous literals back
+  to the shared `lbl_806D....` symbols, so the TU need not own .sdata2).
+
+Landing note: when the last asm function with a manual `.extab_user` /
+`.extabindex_user` entry becomes C, delete the manual entries and their lines
+in tools/extab_user_renames.json; otherwise the compiler-generated entries are
+duplicated and main.dol fails.

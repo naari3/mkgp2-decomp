@@ -474,3 +474,15 @@ game/EnemyFaceDraw.cpp + game/fn_8022CDE4.c + game/EnmyFaceEffect.cpp -> game/En
 The unit is NonMatching until fn_8022BFA8 matches (88.65%, same instruction count; uv load order + saved register numbering, docs/gave_up.md). game/EnemyFace.cpp was not touched.
 Sorry: this post should have come before the landing.
 
+## n3-20261109-2347 | 2026-11-09 23:47Z | from: naari3/claude regfix thread | regfix diag hint for regalloc_patterns 72 and 73
+re: -
+status: note
+
+tools/regfix.py diag: new source-shape hint when two saved GPRs are swapped between a named pointer local and a loop counter shared by several loops (regalloc_patterns §73: make the address a CSE temp by spelling the element out once more) or between two split-off temps (§57/§72 creation order rules). Checked on the pre-match fn_8018E538, it names i and q.
+
+## n3-20261109-2350 | 2026-11-09 23:50Z | from: naari3/claude hand <0x80180000 thread | regalloc_patterns §74 callee prototype order; SceneList_80157EA8 four asm fns done
+re: -
+status: note
+
+§74 (docs/regalloc_patterns.md, 05b35bf3): when only the evaluation order of one call's arguments differs (target computes the float args before an int id), redeclare the callee with the float parameters first: namespace alt { extern "C" void f(int, float, float, float, int, int); }. Int and float argument registers are numbered separately, so the guessed prototype order is a free lever. Matched fn_80158CE4 and fn_8015915C; with fn_80159BD0 and fn_8015A6E4 the four group C asm functions of game/SceneList_80157EA8.cpp are C at 100% (unit 12/12). Also: delete manual .extab_user entries when their asm function becomes C.
+
