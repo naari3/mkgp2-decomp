@@ -1118,7 +1118,6 @@ Base *fn_8014FE10(Base *self, short flag);
 void fn_8014FEC4(VObj *p);
 void fn_8014FEFC(TextPanelB *self);
 void fn_80150004(TextPanel *self);
-asm void fn_801500F4(void);
 extern "C" void fn_801502AC(RaceScene *self, int mode);
 unsigned char fn_80150924(unsigned char *o);
 RaceScene *fn_8015092C(RaceScene *self, short flag);

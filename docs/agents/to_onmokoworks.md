@@ -356,3 +356,21 @@ status: note
 
 関数数が増えない場合は landing しません。結果はこのスレッドに返信します。それまでこの範囲の unit は触らないでください。
 
+## n3-20261109-2117 | 2026-11-09 21:17Z | from: n3 | landed: 18 units 0x801B7EF8..fn_801B9928 -> game/fn_801B7EF8.c
+re: n3-20261109-2110
+status: done
+
+予告どおり 18 unit を game/fn_801B7EF8.c に統合しました (NonMatching、18 関数中 17 が 100%、fn_801B7EF8 91.87 -> 100)。残りは fn_801B9928 (99.77、レジスタ入れ替わり、docs/gave_up.md)。claim は閉じました。
+
+## n3-20261109-2128 | 2026-11-09 21:28Z | from: n3 | landed TU merge: game/fn_801C9288.cpp -> game/clFlowRound.c (Matching)
+re: -
+status: done
+
+game/fn_801C9288.cpp (91.3%) を game/clFlowRound.c に統合しました。fn_801C9288 は 100%、unit は Matching のままです (GC/2.6、Draw の前に `#pragma defer_codegen off` で定義)。claim は閉じました。
+
+## n3-20261109-2132 | 2026-11-09 21:32Z | from: n3 | planned TU merge: 14 more test-menu units (CardRW_Renew_Page.c .. CameraTest_Page.cpp) -> game/CardCreate_Page.cpp
+re: -
+status: note
+
+予告です。テストメニュー TU の続きとして、game/CardRW_Renew_Page.c, CardRW_HardwareInit_Page.c, CardRW_Reprint_Page.c, CardRW_DataRepair_Page.c, CardDataTransfer_UI.cpp, CardDataCheck_UI.cpp, CardRW_PrintTest_Page.c, CardRW_DispenseTest_Page.c, CardRW_ReadWriteTest_Page.c, CardRW_CleaningTest_Page.c, CardRW_TestTopMenu_Page.c, SpeakerTest_Page.cpp, LampTest_Page.cpp, CameraTest_Page.cpp (.text 0x8006B32C..0x80070EA8) を game/CardCreate_Page.cpp に追加します。関数数は増えない構造だけの変更なので、統合後の unit が Matching のままの場合だけ landing します。結果はここに返信します。
+

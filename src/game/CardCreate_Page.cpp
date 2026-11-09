@@ -2294,7 +2294,7 @@ void *lbl_803FDE64[5] = {
 #pragma cplusplus reset
 
 /* ==== game/UI_PageDispatcher.c (0x800668fc) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 #pragma cplusplus off
 typedef struct TestPage_p0 {
@@ -2457,7 +2457,7 @@ return 0;
 #pragma exceptions reset
 
 /* ==== game/SystemInfo_UI.cpp (0x80066b74) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 #pragma cplusplus on
 struct InputPlayer_p1 {
@@ -2581,7 +2581,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/BackupMemoryInitialize_Page.cpp (0x80066e10) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 #pragma cplusplus on
 struct InputPlayer_p2 {
@@ -2785,7 +2785,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/NetDiag_QualityPage.c (0x80067494) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 #pragma cplusplus off
 #pragma cplusplus on
@@ -2922,7 +2922,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/NetDiag_CounterPage.c (0x80067f74) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 #pragma cplusplus off
 #pragma cplusplus on
@@ -3189,7 +3189,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/NetDiag_PacketPage.c (0x80068d00) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 #pragma cplusplus off
 #pragma cplusplus on
@@ -3344,7 +3344,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/Stats_Display_UI.cpp (0x80069720) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw on
 #pragma cplusplus on
 struct InputPlayer_p7 {
@@ -3472,7 +3472,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/NetDiag_PacketRatioPage.c (0x80069ab0) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 #pragma cplusplus off
 #pragma cplusplus on
@@ -3595,7 +3595,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/OperationTime_Page.cpp (0x8006a160) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 #pragma cplusplus on
 struct InputPlayer_p9 {
@@ -3927,7 +3927,7 @@ return 1;
 #pragma exceptions reset
 
 /* ==== game/CabinetSetting_Page.cpp (0x8006aa84) ==== */
-#pragma exceptions off
+#pragma exceptions on
 #pragma use_lmw_stmw off
 #pragma cplusplus on
 struct InputPlayer_p11 {

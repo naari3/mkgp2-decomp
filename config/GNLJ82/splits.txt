@@ -8218,93 +8218,10 @@ game/fn_801B7CD0.cpp:
 	.text       start:0x801B7CD0 end:0x801B7EF8
 
 game/fn_801B7EF8.c:
-	extab       start:0x80012C80 end:0x80012C88
-	extabindex  start:0x800278E4 end:0x800278F0
-	.text       start:0x801B7EF8 end:0x801B8154
-
-game/SetScreenBrightness.c:
-	extab       start:0x80012C88 end:0x80012C90
-	extabindex  start:0x800278F0 end:0x800278FC
-	.text       start:0x801B8154 end:0x801B833C
-
-game/InitBGM.c:
-	extab       start:0x80012C90 end:0x80012C98
-	extabindex  start:0x800278FC end:0x80027908
-	.text       start:0x801B833C end:0x801B8398
-
-game/fn_801B8398.c:
-	extab       start:0x80012C98 end:0x80012CA0
-	extabindex  start:0x80027908 end:0x80027914
-	.text       start:0x801B8398 end:0x801B8434
-
-game/fn_801B8434.c:
-	extab       start:0x80012CA0 end:0x80012CA8
-	extabindex  start:0x80027914 end:0x80027920
-	.text       start:0x801B8434 end:0x801B84B4
-
-game/fn_801B84B4.c:
-	extab       start:0x80012CA8 end:0x80012CB0
-	extabindex  start:0x80027920 end:0x8002792C
-	.text       start:0x801B84B4 end:0x801B8540
-
-game/fn_801B8540.c:
-	extab       start:0x80012CB0 end:0x80012CB8
-	extabindex  start:0x8002792C end:0x80027938
-	.text       start:0x801B8540 end:0x801B85DC
-
-game/fn_801B85DC.cpp:
-	extab       start:0x80012CB8 end:0x80012D10
-	extabindex  start:0x80027938 end:0x80027944
-	.text       start:0x801B85DC end:0x801B87B0
-
-game/fn_801B87B0.c:
-	.text       start:0x801B87B0 end:0x801B87D8
-
-game/fn_801B87D8.c:
-	extab       start:0x80012D10 end:0x80012D18
-	extabindex  start:0x80027944 end:0x80027950
-	.text       start:0x801B87D8 end:0x801B8874
-
-game/fn_801B8874.c:
-	extab       start:0x80012D18 end:0x80012D20
-	extabindex  start:0x80027950 end:0x8002795C
-	.text       start:0x801B8874 end:0x801B8918
-
-game/fn_801B8918.cpp:
-	extab       start:0x80012D20 end:0x80012D38
-	extabindex  start:0x8002795C end:0x80027968
-	.text       start:0x801B8918 end:0x801B89C8
-
-game/fn_801B89C8.c:
-	extab       start:0x80012D38 end:0x80012D40
-	extabindex  start:0x80027968 end:0x80027974
-	.text       start:0x801B89C8 end:0x801B8A80
-
-game/SetupBgSprites.cpp:
-	extab       start:0x80012D40 end:0x80012D88
-	extabindex  start:0x80027974 end:0x80027980
-	.text       start:0x801B8A80 end:0x801B8BD8
-
-game/fn_801B8BD8.cpp:
-	extab       start:0x80012D88 end:0x80012D90
-	extabindex  start:0x80027980 end:0x8002798C
-	.text       start:0x801B8BD8 end:0x801B8EC0
-
-game/MenuScene_Dispatch.cpp:
-	extab       start:0x80012D90 end:0x80012EC8
-	extabindex  start:0x8002798C end:0x80027998
-	.text       start:0x801B8EC0 end:0x801B9740
+	extab       start:0x80012C80 end:0x800130FC
+	extabindex  start:0x800278E4 end:0x800279B0
+	.text       start:0x801B7EF8 end:0x801BA034
 	.data       start:0x8049A77C end:0x8049A844
-
-game/fn_801B9740.cpp:
-	extab       start:0x80012EC8 end:0x80012ED0
-	extabindex  start:0x80027998 end:0x800279A4
-	.text       start:0x801B9740 end:0x801B9928
-
-game/fn_801B9928.cpp:
-	extab       start:0x80012ED0 end:0x800130FC
-	extabindex  start:0x800279A4 end:0x800279B0
-	.text       start:0x801B9928 end:0x801BA034
 	.bss        start:0x80679280 end:0x806792B0
 
 game/GetCourseSelectEntry.c:
@@ -8429,15 +8346,10 @@ game/clFlowCup.c:
 	.text       start:0x801C7360 end:0x801C9288
 	.data       start:0x8049AD58 end:0x8049AE70
 
-game/fn_801C9288.cpp:
-	extab       start:0x8001457C end:0x800145E4
-	extabindex  start:0x80027E30 end:0x80027E3C
-	.text       start:0x801C9288 end:0x801C9C28
-
 game/clFlowRound.c:
-	extab       start:0x800145E4 end:0x80014720
-	extabindex  start:0x80027E3C end:0x80027E6C
-	.text       start:0x801C9C28 end:0x801CB620
+	extab       start:0x8001457C end:0x80014720
+	extabindex  start:0x80027E30 end:0x80027E6C
+	.text       start:0x801C9288 end:0x801CB620
 	.rodata     start:0x8039B308 end:0x8039B3C8
 	.data       start:0x8049AE70 end:0x8049AFD0
 	.sdata      start:0x806CFDF0 end:0x806CFE08

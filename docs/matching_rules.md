@@ -29,6 +29,14 @@ below say the same thing.
   regalloc_patterns §46 (block-local counter per later loop) first; (2) resolves the §40 anchor
   hint from symbols.txt. Hints printed before 6759bb0 could name the wrong base symbol, so
   re-run diag before splitting a symbol on an old hint.
+- 2026-11-09 22:15Z: `game/fn_801C9288.cpp` is merged into `game/clFlowRound.c` (Matching).
+- 2026-11-09 21:50Z: when merging TUs, take each TU's flags from its real compile command
+  (`ninja -t commands`): lib groups such as `game_extab`, `game_ai`, `game_801077C8` set
+  `-Cpp_exceptions on` for every unit, and a section merged with exceptions off loses its extab
+  entries and the exception-safe `new`. `tools/merge_tus.py` does this since 3edd2cdc; check a
+  merged unit by comparing its extabindex function list with the target object.
+- 2026-11-09 21:40Z: 18 units 0x801B7EF8..fn_801B9928 are one TU, `game/fn_801B7EF8.c`
+  (board n3-20261109-2110).
 - 2026-11-09 21:15Z: test-menu pages UI_PageDispatcher..CardCreate_Page (13 units) are one TU,
   `game/CardCreate_Page.cpp`; the 23 pages after it belong to the same TU and are not merged yet
   (`docs/gave_up.md`, board n3-20261109-2053).

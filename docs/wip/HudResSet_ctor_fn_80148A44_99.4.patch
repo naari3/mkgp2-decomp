@@ -1,0 +1,886 @@
+diff --git a/src/game/RaceHud_80147470.cpp b/src/game/RaceHud_80147470.cpp
+index 403f831..a18dda9 100644
+--- a/src/game/RaceHud_80147470.cpp
++++ b/src/game/RaceHud_80147470.cpp
+@@ -204,7 +204,7 @@ extern unsigned int lbl_806D7C20;
+ extern unsigned int lbl_806D7C34;
+ extern const float lbl_806D7C38;
+ extern unsigned int lbl_806D7C3C;
+-extern unsigned int lbl_806D7C40;
++extern const float lbl_806D7C40;
+ extern unsigned int lbl_806D7C44;
+ void SoundMgr_Play(int id);
+ extern unsigned int lbl_806D7C48;
+@@ -244,7 +244,7 @@ extern unsigned int lbl_806D7C64;
+ extern unsigned int lbl_806D7C68;
+ extern const float lbl_806D7C6C;
+ extern unsigned int lbl_806D7C70;
+-extern unsigned int lbl_806D7C90;
++extern const float lbl_806D7C90;
+ extern unsigned int lbl_806D7C94;
+ void __destroy_arr(void *p, void *dtor, unsigned long size, unsigned long n);
+ extern void __unexpected();
+@@ -262,26 +262,26 @@ extern void fn_8013D800();
+ extern void fn_80140874();
+ extern const float lbl_806D7C98;
+ extern void dtor_801419C8();
+-extern void DebugPrintf();
++extern "C" void DebugPrintf(const char *, ...);
+ extern void __construct_array();
+-extern void fn_801F8E90();
+-extern void fn_801F93EC();
++void fn_801F8E90(void *);
++void fn_801F93EC(void *, float, float);
+ int isJapanese(void);
+-extern void strlen();
+-extern unsigned int lbl_806D7C9C;
+-extern unsigned int lbl_806D7CA0;
+-extern unsigned int lbl_806D7CA4;
+-extern unsigned int lbl_806D7CA8;
+-extern unsigned int lbl_806D7CAC;
+-extern unsigned int lbl_806D7CB0;
+-extern unsigned int lbl_806D7CB4;
+-extern unsigned int lbl_806D7CB8;
+-extern unsigned int lbl_806D7CBC;
+-extern unsigned int lbl_806D7CC4;
+-extern unsigned int lbl_806D7CC8;
+-extern unsigned int lbl_806D7CCC;
+-extern unsigned int lbl_806D7CD0;
+-extern unsigned int lbl_806D7CD4;
++extern "C" unsigned long strlen(const char *);
++extern const float lbl_806D7C9C;
++extern const float lbl_806D7CA0;
++extern const float lbl_806D7CA4;
++extern const float lbl_806D7CA8;
++extern const float lbl_806D7CAC;
++extern const float lbl_806D7CB0;
++extern const float lbl_806D7CB4;
++extern const float lbl_806D7CB8;
++extern const float lbl_806D7CBC;
++extern const float lbl_806D7CC4;
++extern const float lbl_806D7CC8;
++extern const float lbl_806D7CCC;
++extern const float lbl_806D7CD0;
++extern const float lbl_806D7CD4;
+ float LUT_Sin12Bit(float a);
+ struct HudRankSlot *RankSlot_GetByIndex(int i);
+ void fn_8013C534(void *m, float r, float g, float b, float a);
+@@ -614,7 +614,6 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80147CE8[8
+ 
+ 
+ 
+-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; void *f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; void *f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; void *f20; } extab_fn_80148A44 = { 0x388A0000, 0x00000090, 0x00000040, 0x000000B0, 0x0000002C, 0x000000C4, 0x018F0020, 0x00000000, 0x0780001F, 0x00000A68, (void *)&dtor_8014917C, 0x0980001F, 0x000003D8, 0x00000003, 0x00000230, (void *)&dtor_800869D0, 0x8980001F, 0x00000010, 0x0000000B, 0x00000058, (void *)&dtor_80082960 };
+ 
+ 
+ 
+@@ -662,9 +661,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned
+ 
+ 
+ 
+-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80148A44 = {
+-    (void *)&fn_80148A44, 0x00000738, (void *)&extab_fn_80148A44
+-};
+ 
+ 
+ 
+@@ -692,33 +688,83 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned
+ }
+ 
+ 
+-struct ResTrio {
+-    char res[3][0x58];
++struct ResCtrl {
++    int resId;
++    int field4;
++    int mode;
++    int fieldc;
++    unsigned char flag;
++    char pad11[3];
++    float x;
++    float y;
++    float z;
++    float width;
++    float height;
++    float field28;
++    float scaleX;
++    float scaleY;
++    unsigned int colors[4];
++    char pad44[0x58 - 0x44];
++    ResCtrl();
++    ~ResCtrl() {}
++    void Show(float px, float py, float pz) {
++        flag = 1;
++        x = px;
++        y = py;
++        z = pz;
++    }
++    void SetSize(float w, float h) {
++        width = w;
++        height = h;
++    }
++    void SetColor(unsigned int c) {
++        colors[0] = c;
++        colors[1] = c;
++        colors[2] = c;
++        colors[3] = c;
++    }
+ };
+ 
+-inline ResTrio *ResTrio_Destroy(ResTrio *self, short flag) {
+-    if (self != 0) {
+-        __destroy_arr(self, (void *)dtor_80082960, 0x58, 3);
+-        if (flag > 0) {
+-            MemoryManager_TimedFree(self);
++struct HRes : ResCtrl {
++    HRes();
++    ~HRes();
++    void SetColors(unsigned int c) {
++        int j;
++        for (j = 0; j < 4; j++) {
++            colors[j] = c;
+         }
+     }
+-    return self;
+-}
++};
++
++struct HText {
++    HText();
++    ~HText();
++    char pad0[0x18];
++    int x18;
++    int x1c;
++    unsigned int color;
++    char pad24[0x22C - 0x24];
++    float y;
++};
+ 
+-struct HudResSet {
+-    HudResSet(int coins, int layer, int mode);
++struct ResTrio {
++    HRes res[3];
++};
++
++struct HudResState {
+     int state;
+     int layer;
+-    char pad8[8];
+-    char res[11][0x58];
+-    char texts[3][0x230];
++    int field8;
++    unsigned char flagC;
++    HudResState(int ly) : state(0), layer(ly), field8(0), flagC(0) {}
++};
++
++struct HudResSet : HudResState {
++    HudResSet(int coins, int param, int ly);
++    HRes res[11];
++    HText texts[3];
+     ResTrio tail;
+-    ~HudResSet() {
+-        ResTrio_Destroy(&tail, 0);
+-        __destroy_arr(texts, (void *)dtor_800869D0, 0x230, 3);
+-        __destroy_arr(res, (void *)dtor_80082960, 0x58, 11);
+-    }
++    ~HudResSet() {}
+ };
+ 
+ struct HudResHolder {
+@@ -1101,7 +1147,7 @@ extern const TexIdPair lbl_80362790[8] = {
+     {0, 0}, {0x8D, 0x92}, {0x8E, 0x93}, {0x8E, 0x93},
+     {0x8F, 0x94}, {0, 0}, {0x8B, 0x90}, {0x8C, 0x91},
+ };
+-static const unsigned short sRecordDigitTex[10] = {
++static const short sRecordDigitTex[10] = {
+     0x23E7, 0x23E9, 0x23EB, 0x23ED, 0x23EF, 0x23F1, 0x23F3, 0x23F5, 0x23F7, 0x23F9,
+ };
+ extern const char lbl_803627E4[] = "clCSResultChallenge";
+@@ -1549,47 +1595,11 @@ extern "C" asm void fn_80147CE8(void) { /* 0x80147CE8 size:0x200 */
+     blr
+ }
+ 
+-struct ResCtrl {
+-    int resId;
+-    int field4;
+-    int mode;
+-    int fieldc;
+-    unsigned char flag;
+-    char pad11[3];
+-    float x;
+-    float y;
+-    float z;
+-    float width;
+-    float height;
+-    float field28;
+-    float scaleX;
+-    float scaleY;
+-    unsigned int colors[4];
+-    char pad44[0x58 - 0x44];
+-    ResCtrl();
+-    ~ResCtrl() {}
+-    void Show(float px, float py, float pz) {
+-        flag = 1;
+-        x = px;
+-        y = py;
+-        z = pz;
+-    }
+-    void SetSize(float w, float h) {
+-        width = w;
+-        height = h;
+-    }
+-    void SetColor(unsigned int c) {
+-        colors[0] = c;
+-        colors[1] = c;
+-        colors[2] = c;
+-        colors[3] = c;
+-    }
+-};
+ 
+ inline void ResTrio_Draw(ResTrio *t, int layer) {
+-    fn_8011FAFC(t->res[0], layer);
+-    fn_8011FAFC(t->res[1], layer);
+-    fn_8011FAFC(t->res[2], layer);
++    fn_8011FAFC(&t->res[0], layer);
++    fn_8011FAFC(&t->res[1], layer);
++    fn_8011FAFC(&t->res[2], layer);
+ }
+ 
+ inline void HudResSet_Draw(HudResSet *res) {
+@@ -1597,10 +1607,10 @@ inline void HudResSet_Draw(HudResSet *res) {
+     void *ctx = fn_801F8E58();
+     ResTrio_Draw(&res->tail, res->layer);
+     for (i = 0; i < 3; i++) {
+-        fn_801F8A34(ctx, res->texts[i], res->layer);
++        fn_801F8A34(ctx, &res->texts[i], res->layer);
+     }
+     for (i = 0; i < 11; i++) {
+-        fn_8011FAFC(res->res[i], res->layer);
++        fn_8011FAFC(&res->res[i], res->layer);
+     }
+ }
+ 
+@@ -1864,499 +1874,118 @@ RecordHud::RecordHud(int ly, unsigned char act, int md, int id)
+ }
+ #pragma use_lmw_stmw reset
+ 
+-extern "C" asm void fn_80148A44(void) { /* 0x80148A44 size:0x738 */
+-    nofralloc
+-    stwu r1, -0x60(r1)
+-    mflr r0
+-    stw r0, 0x64(r1)
+-    stfd f31, 0x50(r1)
+-    psq_st f31, 0x58(r1), 0, 0
+-    stfd f30, 0x40(r1)
+-    psq_st f30, 0x48(r1), 0, 0
+-    stmw r25, 0x24(r1)
+-    mr r31, r3
+-    li r8, 0x0
+-    stw r8, 0x0(r3)
+-    lis r7, ResCtrl_Init@ha
+-    lis r3, dtor_80082960@ha
+-    lis r9, lbl_80362778@ha
+-    stw r6, 0x4(r31)
+-    addi r6, r7, ResCtrl_Init@l
+-    mr r28, r4
+-    addi r0, r3, dtor_80082960@l
+-    stw r8, 0x8(r31)
+-    mr r26, r5
+-    mr r4, r6
+-    mr r5, r0
+-    stb r8, 0xc(r31)
+-    addi r30, r9, lbl_80362778@l
+-    addi r3, r31, 0x10
+-    li r6, 0x58
+-    li r7, 0xb
+-    bl __construct_array
+-    lis r3, fn_80149214@ha
+-    lis r5, dtor_800869D0@ha
+-    addi r4, r3, fn_80149214@l
+-    li r6, 0x230
+-    addi r3, r31, 0x3d8
+-    addi r5, r5, dtor_800869D0@l
+-    li r7, 0x3
+-    bl __construct_array
+-    lis r3, ResCtrl_Init@ha
+-    lis r5, dtor_80082960@ha
+-    addi r4, r3, ResCtrl_Init@l
+-    li r6, 0x58
+-    addi r3, r31, 0xa68
+-    addi r5, r5, dtor_80082960@l
+-    li r7, 0x3
+-    bl __construct_array
+-    mr r4, r26
+-    mr r5, r28
+-    addi r3, r30, 0xc8
+-    crxor 6, 6, 6
+-    bl DebugPrintf
+-    lwz r6, g_cupId(r13)
+-    li r0, 0x1d56
+-    li r4, 0x1d57
+-    lis r3, 0x6666
+-    stw r0, 0xa68(r31)
+-    addi r0, r3, 0x6667
+-    mulhw r0, r0, r28
+-    li r3, 0x1d58
+-    stw r4, 0xac0(r31)
+-    li r5, 0x1
+-    lfs f0, lbl_806D7C9C(r2)
+-    li r4, 0x16d8
+-    stw r3, 0xb18(r31)
+-    srawi r0, r0, 2
+-    lfs f5, lbl_806D7C90(r2)
+-    srwi r3, r0, 31
+-    stb r5, 0xa78(r31)
+-    add. r3, r0, r3
+-    lfs f4, lbl_806D7C38(r2)
+-    subi r27, r6, 0x8
+-    stfs f0, 0xa7c(r31)
+-    addi r0, r3, 0x14ba
+-    lfs f0, lbl_806D7CA0(r2)
+-    stfs f5, 0xa80(r31)
+-    extsh r0, r0
+-    lfs f3, lbl_806D7CA4(r2)
+-    stfs f4, 0xa84(r31)
+-    lfs f2, lbl_806D7C2C(r2)
+-    stb r5, 0xad0(r31)
+-    lfs f1, lbl_806D7CA8(r2)
+-    stfs f0, 0xad4(r31)
+-    lfs f0, lbl_806D7CAC(r2)
+-    stfs f5, 0xad8(r31)
+-    stfs f4, 0xadc(r31)
+-    stb r5, 0xb28(r31)
+-    stfs f3, 0xb2c(r31)
+-    stfs f5, 0xb30(r31)
+-    stfs f4, 0xb34(r31)
+-    stfs f4, 0xa94(r31)
+-    stfs f2, 0xa98(r31)
+-    stfs f4, 0xaec(r31)
+-    stfs f2, 0xaf0(r31)
+-    stfs f4, 0xb44(r31)
+-    stfs f2, 0xb48(r31)
+-    stw r4, 0x10(r31)
+-    stb r5, 0x20(r31)
+-    stfs f1, 0x24(r31)
+-    stfs f0, 0x28(r31)
+-    stfs f4, 0x2c(r31)
+-    bne fn_80148A44_L_80148BD4
+-    li r0, 0x1ecd
+-    fn_80148A44_L_80148BD4:
+-    extsh r5, r0
+-    lis r3, 0x6666
+-    stw r5, 0x68(r31)
+-    addi r0, r3, 0x6667
+-    li r7, 0x1
+-    lfs f3, lbl_806D7CB0(r2)
+-    stb r7, 0x78(r31)
+-    mulhw r4, r0, r28
+-    lis r3, 0x51ec
+-    lfs f2, lbl_806D7CB4(r2)
+-    stfs f3, 0x7c(r31)
+-    li r6, 0x3
+-    subi r0, r3, 0x7ae1
+-    stfs f2, 0x80(r31)
+-    srawi r3, r4, 2
+-    lfs f1, lbl_806D7C38(r2)
+-    srwi r4, r3, 31
+-    add r3, r3, r4
+-    lfs f0, lbl_806D7CB8(r2)
+-    stfs f1, 0x84(r31)
+-    mulli r4, r3, 0xa
+-    addi r3, r30, 0x58
+-    stw r5, 0x118(r31)
+-    subf r4, r4, r28
+-    stb r7, 0x128(r31)
+-    addi r4, r4, 0x14ba
+-    mulhw r0, r0, r26
+-    stfs f3, 0x12c(r31)
+-    extsh r5, r4
+-    stfs f2, 0x130(r31)
+-    stfs f1, 0x134(r31)
+-    srawi r0, r0, 5
+-    srwi r4, r0, 31
+-    stw r6, 0x120(r31)
+-    add. r29, r0, r4
+-    stw r5, 0xc0(r31)
+-    slwi r0, r29, 1
+-    stb r7, 0xd0(r31)
+-    lhax r0, r3, r0
+-    stfs f0, 0xd4(r31)
+-    stfs f2, 0xd8(r31)
+-    stfs f1, 0xdc(r31)
+-    stw r5, 0x170(r31)
+-    stb r7, 0x180(r31)
+-    stfs f0, 0x184(r31)
+-    stfs f2, 0x188(r31)
+-    stfs f1, 0x18c(r31)
+-    stw r6, 0x178(r31)
+-    bne fn_80148A44_L_80148C9C
+-    li r0, 0x1ecd
+-    fn_80148A44_L_80148C9C:
+-    lis r3, 0x6666
+-    extsh r4, r0
+-    addi r5, r3, 0x6667
+-    stw r4, 0x1c8(r31)
+-    mulhw r0, r5, r26
+-    addi r3, r30, 0x58
+-    stw r4, 0x2d0(r31)
+-    li r4, 0x3
+-    stw r4, 0x2d8(r31)
+-    srawi r0, r0, 2
+-    srwi r4, r0, 31
+-    add. r28, r0, r4
+-    mulhw r0, r5, r28
+-    srawi r0, r0, 2
+-    srwi r4, r0, 31
+-    add r0, r0, r4
+-    mulli r0, r0, 0xa
+-    subf r0, r0, r28
+-    slwi r0, r0, 1
+-    lhax r0, r3, r0
+-    bne fn_80148A44_L_80148CF4
+-    li r0, 0x1ecd
+-    fn_80148A44_L_80148CF4:
+-    lis r3, 0x6666
+-    extsh r5, r0
+-    addi r0, r3, 0x6667
+-    stw r5, 0x220(r31)
+-    mulhw r4, r0, r26
+-    addi r3, r30, 0x58
+-    stw r5, 0x328(r31)
+-    li r6, 0x3
+-    li r0, 0xb
+-    stw r6, 0x330(r31)
+-    srawi r4, r4, 2
+-    li r7, 0x0
+-    srwi r5, r4, 31
+-    add r4, r4, r5
+-    mulli r4, r4, 0xa
+-    li r5, -0x100
+-    subf r4, r4, r26
+-    slwi r4, r4, 1
+-    lhax r3, r3, r4
+-    stw r3, 0x278(r31)
+-    stw r3, 0x380(r31)
+-    stw r6, 0x388(r31)
+-    mtctr r0
+-    fn_80148A44_L_80148D50:
+-    addi r0, r7, 0x44
+-    addi r4, r7, 0x48
+-    stwx r5, r31, r0
+-    addi r3, r7, 0x4c
+-    addi r0, r7, 0x50
+-    addi r7, r7, 0x58
+-    stwx r5, r31, r4
+-    stwx r5, r31, r3
+-    stwx r5, r31, r0
+-    bdnz fn_80148A44_L_80148D50
+-    li r3, 0x8a
+-    li r4, -0x1
+-    bl GetTextureByIdAndLang
+-    mr r4, r3
+-    addi r3, r31, 0x3d8
+-    crxor 6, 6, 6
+-    bl TexMgr_SetTexture
+-    lfs f1, lbl_806D7CBC(r2)
+-    addi r3, r31, 0x3d8
+-    lfs f2, lbl_806D7CAC(r2)
+-    bl fn_801F93EC
+-    cmpwi r27, 0x1
+-    beq fn_80148A44_L_80148DB4
+-    cmpwi r27, 0x6
+-    bne fn_80148A44_L_80148E78
+-    fn_80148A44_L_80148DB4:
+-    li r0, 0x0
+-    addi r3, r31, 0x608
+-    stb r0, 0xc(r31)
+-    la r4, lbl_806D7CC0(r2)  /* lbl_806D7CC0 */
+-    crxor 6, 6, 6
+-    bl TexMgr_SetTexture
+-    addi r3, r31, 0x838
+-    la r4, lbl_806D7CC0(r2)  /* lbl_806D7CC0 */
+-    crxor 6, 6, 6
+-    bl TexMgr_SetTexture
+-    li r0, 0x1ecd
+-    lfs f1, lbl_806D7CBC(r2)
+-    stw r0, 0x1c8(r31)
+-    addi r3, r31, 0x3d8
+-    lfs f2, lbl_806D7C90(r2)
+-    stw r0, 0x220(r31)
+-    stw r0, 0x278(r31)
+-    stw r0, 0x2d0(r31)
+-    stw r0, 0x328(r31)
+-    stw r0, 0x380(r31)
+-    bl fn_801F93EC
+-    li r0, 0x1
+-    lfs f5, lbl_806D7CB0(r2)
+-    stb r0, 0x78(r31)
+-    lfs f4, lbl_806D7CC4(r2)
+-    stfs f5, 0x7c(r31)
+-    lfs f3, lbl_806D7C38(r2)
+-    stfs f4, 0x80(r31)
+-    lfs f2, lbl_806D7CB8(r2)
+-    stfs f3, 0x84(r31)
+-    lfs f1, lbl_806D7CA8(r2)
+-    stb r0, 0x128(r31)
+-    lfs f0, lbl_806D7C90(r2)
+-    stfs f5, 0x12c(r31)
+-    stfs f4, 0x130(r31)
+-    stfs f3, 0x134(r31)
+-    stb r0, 0xd0(r31)
+-    stfs f2, 0xd4(r31)
+-    stfs f4, 0xd8(r31)
+-    stfs f3, 0xdc(r31)
+-    stb r0, 0x180(r31)
+-    stfs f2, 0x184(r31)
+-    stfs f4, 0x188(r31)
+-    stfs f3, 0x18c(r31)
+-    stb r0, 0x20(r31)
+-    stfs f1, 0x24(r31)
+-    stfs f0, 0x28(r31)
+-    stfs f3, 0x2c(r31)
+-    b fn_80148A44_L_80149104
+-    fn_80148A44_L_80148E78:
+-    bl isJapanese
+-    cmpwi r3, 0x0
+-    bne fn_80148A44_L_80148E8C
+-    lfs f31, lbl_806D7CC8(r2)
+-    b fn_80148A44_L_80148E90
+-    fn_80148A44_L_80148E8C:
+-    lfs f31, lbl_806D7C40(r2)
+-    fn_80148A44_L_80148E90:
+-    addi r0, r30, 0x18
+-    slwi r26, r27, 3
+-    add r27, r0, r26
+-    lwzu r3, -0x8(r27)
+-    li r0, 0x1
+-    li r4, -0x1
+-    stb r0, 0xc(r31)
+-    bl GetTextureByIdAndLang
+-    bl strlen
+-    addi r0, r30, 0x18
+-    mr r25, r3
+-    add r30, r0, r26
+-    lwzu r3, -0x4(r30)
+-    li r4, -0x1
+-    bl GetTextureByIdAndLang
+-    bl strlen
+-    cmpwi r28, 0x0
+-    mr r26, r3
+-    li r28, 0x1
+-    ble fn_80148A44_L_80148EE4
+-    li r28, 0x2
+-    fn_80148A44_L_80148EE4:
+-    cmpwi r29, 0x0
+-    ble fn_80148A44_L_80148EF0
+-    li r28, 0x3
+-    fn_80148A44_L_80148EF0:
+-    mr r29, r28
+-    bl isJapanese
+-    cmpwi r3, 0x0
+-    bne fn_80148A44_L_80148F04
+-    slwi r29, r28, 1
+-    fn_80148A44_L_80148F04:
+-    add r3, r29, r26
+-    lis r0, 0x4330
+-    addi r3, r3, 0x1
+-    stw r0, 0x8(r1)
+-    add r0, r25, r3
+-    lfd f3, lbl_806D7C20(r2)
+-    xoris r0, r0, 0x8000
+-    lfs f4, lbl_806D7CCC(r2)
+-    stw r0, 0xc(r1)
+-    addi r3, r31, 0x608
+-    lfs f0, lbl_806D7C7C(r2)
+-    lfd f1, 0x8(r1)
+-    lfs f2, lbl_806D7CD0(r2)
+-    fsubs f1, f1, f3
+-    fmuls f1, f31, f1
+-    fnmsubs f30, f4, f1, f0
+-    fmr f1, f30
+-    bl fn_801F93EC
+-    addi r0, r25, 0x1
+-    lis r4, 0x4330
+-    xoris r0, r0, 0x8000
+-    stw r4, 0x10(r1)
+-    lfd f5, lbl_806D7C20(r2)
+-    cmpwi r28, 0x2
+-    stw r0, 0x14(r1)
+-    lfd f0, 0x10(r1)
+-    fsubs f0, f0, f5
+-    fmadds f1, f0, f31, f30
+-    beq fn_80148A44_L_80148FF0
+-    bge fn_80148A44_L_80148F88
+-    cmpwi r28, 0x1
+-    bge fn_80148A44_L_80149058
+-    b fn_80148A44_L_801490C0
+-    fn_80148A44_L_80148F88:
+-    cmpwi r28, 0x4
+-    bge fn_80148A44_L_801490C0
+-    xoris r3, r29, 0x8000
+-    xoris r0, r28, 0x8000
+-    stw r3, 0x14(r1)
+-    li r3, 0x1
+-    lfs f4, lbl_806D7CD0(r2)
+-    stw r4, 0x10(r1)
+-    lfs f3, lbl_806D7C38(r2)
+-    lfd f0, 0x10(r1)
+-    stw r0, 0xc(r1)
+-    fsubs f2, f0, f5
+-    stw r4, 0x8(r1)
+-    lfd f0, 0x8(r1)
+-    fmuls f2, f2, f31
+-    stb r3, 0x1d8(r31)
+-    fsubs f0, f0, f5
+-    stfs f1, 0x1dc(r31)
+-    fdivs f0, f2, f0
+-    stfs f4, 0x1e0(r31)
+-    stfs f3, 0x1e4(r31)
+-    stb r3, 0x2e0(r31)
+-    stfs f1, 0x2e4(r31)
+-    stfs f4, 0x2e8(r31)
+-    fadds f1, f1, f0
+-    stfs f3, 0x2ec(r31)
+-    fn_80148A44_L_80148FF0:
+-    lis r3, 0x4330
+-    xoris r0, r29, 0x8000
+-    stw r0, 0x14(r1)
+-    xoris r0, r28, 0x8000
+-    li r4, 0x1
+-    lfd f3, lbl_806D7C20(r2)
+-    stw r3, 0x10(r1)
+-    lfs f5, lbl_806D7CD0(r2)
+-    lfd f0, 0x10(r1)
+-    stw r0, 0xc(r1)
+-    fsubs f2, f0, f3
+-    lfs f4, lbl_806D7C38(r2)
+-    stw r3, 0x8(r1)
+-    lfd f0, 0x8(r1)
+-    fmuls f2, f2, f31
+-    stb r4, 0x230(r31)
+-    fsubs f0, f0, f3
+-    stfs f1, 0x234(r31)
+-    fdivs f0, f2, f0
+-    stfs f5, 0x238(r31)
+-    stfs f4, 0x23c(r31)
+-    stb r4, 0x338(r31)
+-    stfs f1, 0x33c(r31)
+-    stfs f5, 0x340(r31)
+-    fadds f1, f1, f0
+-    stfs f4, 0x344(r31)
+-    fn_80148A44_L_80149058:
+-    lis r3, 0x4330
+-    xoris r0, r29, 0x8000
+-    stw r0, 0x14(r1)
+-    xoris r0, r28, 0x8000
+-    li r4, 0x1
+-    lfd f3, lbl_806D7C20(r2)
+-    stw r3, 0x10(r1)
+-    lfs f5, lbl_806D7CD0(r2)
+-    lfd f0, 0x10(r1)
+-    stw r0, 0xc(r1)
+-    fsubs f2, f0, f3
+-    lfs f4, lbl_806D7C38(r2)
+-    stw r3, 0x8(r1)
+-    lfd f0, 0x8(r1)
+-    fmuls f2, f2, f31
+-    stb r4, 0x288(r31)
+-    fsubs f0, f0, f3
+-    stfs f1, 0x28c(r31)
+-    fdivs f0, f2, f0
+-    stfs f5, 0x290(r31)
+-    stfs f4, 0x294(r31)
+-    stb r4, 0x390(r31)
+-    stfs f1, 0x394(r31)
+-    stfs f5, 0x398(r31)
+-    fadds f1, f1, f0
+-    stfs f4, 0x39c(r31)
+-    fn_80148A44_L_801490C0:
+-    lfs f2, lbl_806D7CD0(r2)
+-    addi r3, r31, 0x838
+-    bl fn_801F93EC
+-    lwz r3, 0x0(r27)
+-    li r4, -0x1
+-    bl GetTextureByIdAndLang
+-    mr r4, r3
+-    addi r3, r31, 0x608
+-    crxor 6, 6, 6
+-    bl TexMgr_SetTexture
+-    lwz r3, 0x0(r30)
+-    li r4, -0x1
+-    bl GetTextureByIdAndLang
+-    mr r4, r3
+-    addi r3, r31, 0x838
+-    crxor 6, 6, 6
+-    bl TexMgr_SetTexture
+-    fn_80148A44_L_80149104:
+-    bl isJapanese
+-    cmpwi r3, 0x1
+-    bne fn_80148A44_L_80149118
+-    lfs f0, lbl_806D7CD4(r2)
+-    stfs f0, 0x604(r31)
+-    fn_80148A44_L_80149118:
+-    li r28, 0x0
+-    li r27, -0x100
+-    mr r25, r28
+-    li r26, 0x1
+-    fn_80148A44_L_80149128:
+-    addi r0, r25, 0x3f8
+-    addi r3, r25, 0x3d8
+-    stwx r27, r31, r0
+-    addi r0, r25, 0x3f0
+-    add r3, r31, r3
+-    stwx r26, r31, r0
+-    bl fn_801F8E90
+-    addi r28, r28, 0x1
+-    addi r25, r25, 0x230
+-    cmpwi r28, 0x3
+-    blt fn_80148A44_L_80149128
+-    mr r3, r31
+-    psq_l f31, 0x58(r1), 0, 0
+-    lfd f31, 0x50(r1)
+-    psq_l f30, 0x48(r1), 0, 0
+-    lfd f30, 0x40(r1)
+-    lmw r25, 0x24(r1)
+-    lwz r0, 0x64(r1)
+-    mtlr r0
+-    addi r1, r1, 0x60
+-    blr
+-}
+-
+-extern "C" void *dtor_8014917C(void *self, short flag) {
+-    if (self != 0) {
+-        __destroy_arr(self, (void *)dtor_80082960, 0x58, 3);
+-        if (flag > 0) {
+-            MemoryManager_TimedFree(self);
++#pragma use_lmw_stmw on
++HudResSet::HudResSet(int coins, int param, int ly) : HudResState(ly) {
++    int idx;
++    int i;
++    short v;
++    DebugPrintf(sRecordParamFmt, param, coins);
++    idx = g_cupId - 8;
++    tail.res[0].resId = 0x1D56;
++    tail.res[1].resId = 0x1D57;
++    tail.res[2].resId = 0x1D58;
++    tail.res[0].Show(lbl_806D7C9C, lbl_806D7C90, lbl_806D7C38);
++    tail.res[1].Show(lbl_806D7CA0, lbl_806D7C90, lbl_806D7C38);
++    tail.res[2].Show(lbl_806D7CA4, lbl_806D7C90, lbl_806D7C38);
++    tail.res[0].scaleX = lbl_806D7C38;
++    tail.res[0].scaleY = lbl_806D7C2C;
++    tail.res[1].scaleX = lbl_806D7C38;
++    tail.res[1].scaleY = lbl_806D7C2C;
++    tail.res[2].scaleX = lbl_806D7C38;
++    tail.res[2].scaleY = lbl_806D7C2C;
++    res[0].resId = 0x16D8;
++    res[0].Show(lbl_806D7CA8, lbl_806D7CAC, lbl_806D7C38);
++    v = coins / 10 + 0x14BA;
++    if (coins / 10 == 0) v = 0x1ECD;
++    res[1].resId = v;
++    res[1].Show(lbl_806D7CB0, lbl_806D7CB4, lbl_806D7C38);
++    res[3].resId = v;
++    res[3].Show(lbl_806D7CB0, lbl_806D7CB4, lbl_806D7C38);
++    res[3].mode = 3;
++    v = coins % 10 + 0x14BA;
++    res[2].resId = v;
++    res[2].Show(lbl_806D7CB8, lbl_806D7CB4, lbl_806D7C38);
++    res[4].resId = v;
++    res[4].Show(lbl_806D7CB8, lbl_806D7CB4, lbl_806D7C38);
++    res[4].mode = 3;
++    v = sRecordDigitTex[param / 100];
++    if (param / 100 == 0) v = 0x1ECD;
++    res[5].resId = v;
++    res[8].resId = v;
++    res[8].mode = 3;
++    v = sRecordDigitTex[(param / 10) % 10];
++    if (param / 10 == 0) v = 0x1ECD;
++    res[6].resId = v;
++    res[9].resId = v;
++    res[9].mode = 3;
++    v = sRecordDigitTex[param % 10];
++    res[7].resId = v;
++    res[10].resId = v;
++    res[10].mode = 3;
++    for (i = 0; i < 11; i++) {
++        res[i].SetColors(0xFFFFFF00);
++    }
++    TexMgr_SetTexture((TextManager *)&texts[0], GetTextureByIdAndLang(0x8A, -1));
++    fn_801F93EC(&texts[0], lbl_806D7CBC, lbl_806D7CAC);
++    if (idx == 1 || idx == 6) {
++        flagC = 0;
++        TexMgr_SetTexture((TextManager *)&texts[1], (const char *)lbl_806D7CC0);
++        TexMgr_SetTexture((TextManager *)&texts[2], (const char *)lbl_806D7CC0);
++        res[5].resId = 0x1ECD;
++        res[6].resId = 0x1ECD;
++        res[7].resId = 0x1ECD;
++        res[8].resId = 0x1ECD;
++        res[9].resId = 0x1ECD;
++        res[10].resId = 0x1ECD;
++        fn_801F93EC(&texts[0], lbl_806D7CBC, lbl_806D7C90);
++        res[1].Show(lbl_806D7CB0, lbl_806D7CC4, lbl_806D7C38);
++        res[3].Show(lbl_806D7CB0, lbl_806D7CC4, lbl_806D7C38);
++        res[2].Show(lbl_806D7CB8, lbl_806D7CC4, lbl_806D7C38);
++        res[4].Show(lbl_806D7CB8, lbl_806D7CC4, lbl_806D7C38);
++        res[0].Show(lbl_806D7CA8, lbl_806D7C90, lbl_806D7C38);
++    } else {
++        float w = isJapanese() == 0 ? lbl_806D7CC8 : lbl_806D7C40;
++        int len1, len2, n, m, total;
++        float x0, x;
++        flagC = 1;
++        len1 = strlen(GetTextureByIdAndLang(lbl_80362790[idx - 1].a, -1));
++        len2 = strlen(GetTextureByIdAndLang(lbl_80362790[idx - 1].b, -1));
++        n = 1;
++        if (param / 10 > 0) n = 2;
++        if (param / 100 > 0) n = 3;
++        m = n;
++        if (!isJapanese()) m = n * 2;
++        x0 = lbl_806D7C7C - lbl_806D7CCC * (w * (float)(len1 + m + len2 + 1));
++        fn_801F93EC(&texts[1], x0, lbl_806D7CD0);
++        x = (float)(len1 + 1) * w + x0;
++        switch (n) {
++        case 3:
++            res[5].Show(x, lbl_806D7CD0, lbl_806D7C38);
++            res[8].Show(x, lbl_806D7CD0, lbl_806D7C38);
++            x += (float)m * w / (float)n;
++        case 2:
++            res[6].Show(x, lbl_806D7CD0, lbl_806D7C38);
++            res[9].Show(x, lbl_806D7CD0, lbl_806D7C38);
++            x += (float)m * w / (float)n;
++        case 1:
++            res[7].Show(x, lbl_806D7CD0, lbl_806D7C38);
++            res[10].Show(x, lbl_806D7CD0, lbl_806D7C38);
++            x += (float)m * w / (float)n;
+         }
++        fn_801F93EC(&texts[2], x, lbl_806D7CD0);
++        TexMgr_SetTexture((TextManager *)&texts[1], GetTextureByIdAndLang(lbl_80362790[idx - 1].a, -1));
++        TexMgr_SetTexture((TextManager *)&texts[2], GetTextureByIdAndLang(lbl_80362790[idx - 1].b, -1));
++    }
++    if (isJapanese() == 1) {
++        texts[0].y = lbl_806D7CD4;
++    }
++    for (i = 0; i < 3; i++) {
++        texts[i].color = 0xFFFFFF00;
++        texts[i].x18 = 1;
++        fn_801F8E90(&texts[i]);
+     }
+-    return self;
+ }
++#pragma use_lmw_stmw reset
+ 
+ extern "C" void fn_801491DC(VObj *p) {
+     delete p;
+diff --git a/tools/extab_user_renames.json b/tools/extab_user_renames.json
+index 1f82c51..ba5cd4b 100644
+--- a/tools/extab_user_renames.json
++++ b/tools/extab_user_renames.json
+@@ -5807,6 +5807,11 @@
+     "__ct__9RecSpriteFPCci": "fn_8013D800",
+     "__ct__5RecFxFv": "fn_80140874",
+     "__ct__9HudResSetFiii": "fn_80148A44",
++    "__ct__4HResFv": "ResCtrl_Init",
++    "__dt__4HResFv": "dtor_80082960",
++    "__ct__5HTextFv": "fn_80149214",
++    "__dt__5HTextFv": "dtor_800869D0",
++    "__dt__7ResTrioFv": "dtor_8014917C",
+     "__ct__14RecCounterCardFii": "fn_80217F78",
+     "__ct__14RecCounterFreeFii": "fn_802182BC",
+     "__dt__9PtrHolderFv": "dtor_80149320",

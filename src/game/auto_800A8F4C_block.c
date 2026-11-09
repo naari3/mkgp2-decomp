@@ -127,26 +127,20 @@ void WarpAutoRun_Init(WarpAutoRun *self, unsigned char mgrId);
 int DashZone_ProcessAutoRun(WarpAutoRun *self, float x, float y, float z, float yaw);
 int WarpAutoRun_GetParam(WarpAutoRun *self, float *vx, float *vy, float *vz, float *yaw);
 void WarpAutoRun_OnEnter(void *self, float f1, float f2, float f3, float f4, float vx, float vy, float vz);
-asm void WarpZone_CheckEntry(void);
+unsigned char WarpZone_CheckEntry(WarpAutoRun *self, float x, float y, float z);
 int Field4NotMinusOne(WarpAutoRun *self);
 void *dtor_800A9CC8(void *this, short flag);
 void *dtor_800A9D2C(void *this, short flag);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-/* dtor_800A9CC8, WarpZone_CalcExitPosition, WarpDashMgr_Cleanup and WarpDashMgr_GetOrCreate promoted; CW auto-emits their extab/extabindex. */
+/* dtor_800A9CC8, WarpZone_CalcExitPosition, WarpDashMgr_Cleanup WarpDashMgr_GetOrCreate and WarpZone_CheckEntry promoted; CW auto-emits their extab/extabindex. */
 #pragma section R ".extab_user"
 __declspec(section ".extab_user") static const unsigned char extab_dtor_800A9D2C[8] = {
     0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-__declspec(section ".extab_user") static const unsigned char extab_WarpZone_CheckEntry[8] = {
-    0x00, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
 #pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_WarpZone_CheckEntry = {
-    (void *)&WarpZone_CheckEntry, 0x00000170, (void *)extab_WarpZone_CheckEntry
-};
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_800A9D2C = {
     (void *)&dtor_800A9D2C, 0x00000058, (void *)extab_dtor_800A9D2C
 };
@@ -209,6 +203,7 @@ extern "C" int WarpZone_FindContainingOBB(WarpDashMgr *mgr, float x, float y, fl
     }
     return -1;
 }
+
 #pragma cplusplus off
 
 #pragma cplusplus on
@@ -416,114 +411,43 @@ void WarpAutoRun_OnEnter(void *self, float f1, float f2, float f3, float f4, flo
     *(int *)self = 1;
 }
 
-asm void WarpZone_CheckEntry(void) {
-    nofralloc
-    stwu r1, -0x20(r1)
-    la r4, lbl_806CF238(r13)  /* lbl_806CF238 */
-    lbz r5, 0x20(r3)
-    neg r0, r5
-    or r0, r0, r5
-    rlwinm r0, r0, 3, 29, 29
-    lwzx r6, r4, r0
-    cmplwi r6, 0x0
-    bne WarpZone_CheckEntry_L_800A9848
-    li r3, 0x0
-    b WarpZone_CheckEntry_L_800A9984
-    WarpZone_CheckEntry_L_800A9848:
-    lbz r0, 0x18(r6)
-    cmplwi r0, 0x0
-    bne WarpZone_CheckEntry_L_800A985C
-    li r5, -0x1
-    b WarpZone_CheckEntry_L_800A9970
-    WarpZone_CheckEntry_L_800A985C:
-    lwz r0, 0x10(r6)
-    cmpwi r0, 0x0
-    bgt WarpZone_CheckEntry_L_800A9870
-    li r5, -0x1
-    b WarpZone_CheckEntry_L_800A9970
-    WarpZone_CheckEntry_L_800A9870:
-    li r5, 0x0
-    frsp f5, f3
-    frsp f6, f1
-    mr r4, r5
-    stfs f1, 0x8(r1)
-    lfs f4, lbl_806D4DE8(r2)
-    stfs f2, 0xc(r1)
-    stfs f3, 0x10(r1)
-    mtctr r0
-    ble WarpZone_CheckEntry_L_800A996C
-    WarpZone_CheckEntry_L_800A9898:
-    lwz r0, 0x14(r6)
-    add r7, r0, r4
-    lwz r8, 0x0(r7)
-    lfs f0, 0xc(r7)
-    lfs f1, 0xc(r8)
-    lfs f2, 0x14(r8)
-    fsubs f3, f6, f1
-    lfs f1, 0x4(r7)
-    fsubs f2, f5, f2
-    fmuls f0, f3, f0
-    fneg f2, f2
-    fmadds f0, f2, f1, f0
-    fcmpo cr0, f0, f4
-    ble WarpZone_CheckEntry_L_800A98D8
-    li r0, 0x0
-    b WarpZone_CheckEntry_L_800A9950
-    WarpZone_CheckEntry_L_800A98D8:
-    lfs f0, 0x18(r7)
-    lfs f1, 0x10(r7)
-    fmuls f0, f3, f0
-    fmadds f0, f2, f1, f0
-    fcmpo cr0, f0, f4
-    ble WarpZone_CheckEntry_L_800A98F8
-    li r0, 0x0
-    b WarpZone_CheckEntry_L_800A9950
-    WarpZone_CheckEntry_L_800A98F8:
-    lfs f0, 0x24(r8)
-    lfs f1, 0x2c(r8)
-    fsubs f3, f6, f0
-    lfs f0, 0x24(r7)
-    fsubs f2, f5, f1
-    lfs f1, 0x1c(r7)
-    fmuls f0, f3, f0
-    fneg f2, f2
-    fmadds f0, f2, f1, f0
-    fcmpo cr0, f0, f4
-    ble WarpZone_CheckEntry_L_800A992C
-    li r0, 0x0
-    b WarpZone_CheckEntry_L_800A9950
-    WarpZone_CheckEntry_L_800A992C:
-    lfs f0, 0x30(r7)
-    lfs f1, 0x28(r7)
-    fmuls f0, f3, f0
-    fmadds f0, f2, f1, f0
-    fcmpo cr0, f0, f4
-    ble WarpZone_CheckEntry_L_800A994C
-    li r0, 0x0
-    b WarpZone_CheckEntry_L_800A9950
-    WarpZone_CheckEntry_L_800A994C:
-    li r0, 0x1
-    WarpZone_CheckEntry_L_800A9950:
-    clrlwi r0, r0, 24
-    cmplwi r0, 0x1
-    bne WarpZone_CheckEntry_L_800A9960
-    b WarpZone_CheckEntry_L_800A9970
-    WarpZone_CheckEntry_L_800A9960:
-    addi r5, r5, 0x1
-    addi r4, r4, 0x50
-    bdnz WarpZone_CheckEntry_L_800A9898
-    WarpZone_CheckEntry_L_800A996C:
-    li r5, -0x1
-    WarpZone_CheckEntry_L_800A9970:
-    subfic r4, r5, -0x1
-    addi r0, r5, 0x1
-    or r0, r4, r0
-    stw r5, 0x4(r3)
-    srwi r3, r0, 31
-    WarpZone_CheckEntry_L_800A9984:
-    addi r1, r1, 0x20
-    blr
+#pragma cplusplus on
+/* The manager must be a local of an inline function that is loaded straight
+ * from the table (not through WarpDashMgr_GetInstance or an inline parameter)
+ * and declared before `i`: that numbers it between the loop counter and the
+ * zone pointer (r5 / r6 / r7). The search loop of WarpZone_FindContainingOBB is
+ * written out here for the same reason. regalloc_patterns 50. */
+static inline unsigned char WarpAutoRun_FindZone(WarpAutoRun *self, float x, float y, float z) {
+    WarpDashMgr *mgr;
+    int i;
+    int zone;
+    mgr = lbl_806CF238[self->mgrId != 0];
+    if (mgr == 0) {
+        return 0;
+    }
+    if (!mgr->enabled) {
+        zone = -1;
+    } else if (mgr->obbCount <= 0) {
+        zone = -1;
+    } else {
+        WarpVec p(x, y, z);
+        for (i = 0; i < mgr->obbCount; i++) {
+            if (WarpZone_Contains(*(WarpZone *)((char *)mgr->obbs + i * sizeof(WarpZone)), p) == true) {
+                zone = i;
+                goto done;
+            }
+        }
+        zone = -1;
+    }
+done:
+    self->zone = zone;
+    return zone != -1;
 }
+
+extern "C" unsigned char WarpZone_CheckEntry(WarpAutoRun *self, float x, float y, float z) {
+    return WarpAutoRun_FindZone(self, x, y, z);
+}
+#pragma cplusplus off
 
 int Field4NotMinusOne(WarpAutoRun *self) {
     return self->zone != -1;
