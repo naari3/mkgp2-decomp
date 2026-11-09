@@ -174,6 +174,20 @@ void clFlowCCBattle::Draw() {
     }
 }
 
+static inline void ShiftBattleGrid(clFlowCCBattle *page) {
+    for (int y = 4; y >= 0; y--) {
+        for (int x = 19; x >= 0; x--) {
+            int src = 100;
+            if (y > 0) {
+                src = x + (y - 1) * 20;
+            } else if (x > 0) {
+                src = (x - 1) + y * 20;
+            }
+            page->grid[x + y * 20] = page->grid[src];
+        }
+    }
+}
+
 void clFlowCCBattle::Update() {
     InputPlayer &pl = *InputMgr_GetPlayer(GetInputManager(), 0);
     UpdateSlide();
@@ -202,17 +216,7 @@ void clFlowCCBattle::Update() {
             grid[100] = 0.0165f * blink;
         }
     }
-    for (int y = 4; y >= 0; y--) {
-        for (int x = 19; x >= 0; x--) {
-            int src = 100;
-            if (y > 0) {
-                src = x + (y - 1) * 20;
-            } else if (x > 0) {
-                src = (x - 1) + y * 20;
-            }
-            grid[x + y * 20] = grid[src];
-        }
-    }
+    ShiftBattleGrid(this);
     for (int i = 0; i < 3; i++) {
         if (grp[i] != 0) {
             Sprite_AdvanceAnim(*grp[i], 0.0165f);
@@ -900,9 +904,9 @@ void clFlowCCCharaItem::Select(int delta) {
             }
             return;
         }
-        int item;
-        if (!special) item = PlayerData_ResolveUnlockedIdByIndex(pd, fn_8023D844(kCharaGroups[which][field24], field28 + 1));
-        else item = PlayerData_ResolveUnlockedIdByIndex(pd, 60);
+        int item = !special
+            ? PlayerData_ResolveUnlockedIdByIndex(pd, fn_8023D844(kCharaGroups[which][field24], field28 + 1))
+            : PlayerData_ResolveUnlockedIdByIndex(pd, 60);
         short res = Item_GetDescriptorField0(item, 0);
         SpriteAnimParamBlock_SetAnimParamCached(grp[8], resId, res);
         SpriteAnimParamBlock_SetAnimParamCached(grp[1], resId, res);
@@ -1017,6 +1021,11 @@ clFlowCCCharaItem::clFlowCCCharaItem(int which) : which(which), field20(0), fiel
     Select(1);
 }
 
+static inline void PositionOffsetText(TextMgr *text, const Vec2 &position, float offset, float slide) {
+    float x = offset + position.x;
+    fn_801F93EC(text, x + slide, position.y);
+}
+
 void clFlowCCDate::Update() {
     InputPlayer *pl = InputMgr_GetPlayer(GetInputManager(), 0);
     UpdateSlide();
@@ -1067,9 +1076,7 @@ void clFlowCCDate::Update() {
         }
         if (isJapanese()) {
             fn_801F93EC(text[0], lbl_806DB780.x + slide, lbl_806DB780.y);
-            float x = kDateTextPos[11].x;
-            x = lbl_806DB858 + x;
-            fn_801F93EC(text[11], x + slide, kDateTextPos[11].y);
+            PositionOffsetText(text[11], kDateTextPos[11], lbl_806DB858, slide);
         }
         fn_8023CD3C(indicator, lbl_806DB85C + slide, lbl_806DB860);
         fn_8023CD24(indicator, lbl_806DB85C + slide, lbl_806DB864);
