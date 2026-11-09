@@ -1938,6 +1938,27 @@ def fix(a, rep0):
     return best
 
 
+def print_levers(a, rep, src_text, d, ext):
+    """Hand-landed source levers whose shape fits (tools/diag2sweep.levers)."""
+    try:
+        import diag2sweep as d2s
+        import pragmasweep as ps
+        u = ps.Unit(a.unit)
+        tf = Path(d) / "trace.txt"
+        tl = tf.read_text(errors="replace").splitlines() if tf.exists() else []
+        lv = d2s.levers(src_text, a.fn, rep, tl, lambda t, f: ps.find_def(t, f, mangled=u.compiled_name(f)),
+                        ext in (".cpp", ".cp", ".cc"))
+    except Exception as e:  # noqa: BLE001 - advice only
+        print(f"[regfix] levers: {e}")
+        return []
+    if lv:
+        print("\n== source levers that fit this function's shape ==")
+        for rid, text in lv:
+            print(f"  [{rid}] {text}")
+        print("  (try them together with:  regfix diag ... --tracesweep --run)")
+    return lv
+
+
 def emit_tracesweep(a, rep, src_text, d: Path, ext):
     """diag -> tracesweep template + --want (tools/diag2sweep.py); --run runs it."""
     import diag2sweep as d2s
@@ -2283,14 +2304,16 @@ def main():
             print_coalesce(d, sw.render(sw.init).splitlines())
         rep = diagnose_dir(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{sw.u.obj}.o", a.fn, depth=a.depth,
                            src_lines=sw.render(sw.init).splitlines())
+        print_levers(a, rep, sw.render(sw.init), d, sw.u.ext)
         if a.tracesweep:
             emit_tracesweep(a, rep, sw.render(sw.init), d, sw.u.ext)
     elif a.cmd == "diag":
         rep = diagnose(a.unit, a.fn, out, rerun=not a.no_run, depth=a.depth, sched=a.sched)
         suggest_rules(a.unit, a.fn)
+        import pragmasweep as ps
+        u = ps.Unit(a.unit)
+        print_levers(a, rep, open(u.src, errors="replace").read(), out, u.ext)
         if a.tracesweep:
-            import pragmasweep as ps
-            u = ps.Unit(a.unit)
             emit_tracesweep(a, rep, open(u.src, errors="replace").read(), out, u.ext)
     else:
         fix(a, None)
