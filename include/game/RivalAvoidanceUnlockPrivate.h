@@ -33,7 +33,7 @@ struct RivalAvoidanceCandidate {
         position.x=20000.0f;
         position.y=20000.0f;
         position.z=20000.0f;
-        angle=lbl_806DA42C;
+        angle=0.0f;
     }
     ~RivalAvoidanceCandidate() {}
 };

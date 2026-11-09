@@ -79,9 +79,12 @@ void fn_801E9E74(AISpeedOwner *self) {
     AIPairRecord *base;
     AIPairRecord *record;
     int i;
-    int limit = lbl_806D1920;
+    /* fakematch (hand): natural code is `int limit = lbl_806D1920;`. base must be the
+     * second lifetime range of a variable so the table address lands in its
+     * register (regalloc_patterns 57, same as fn_801E96BC). */
+    base = (AIPairRecord *)lbl_806D1920;
     ++self->frame;
-    if (limit < self->frame) self->frame = limit;
+    if ((int)base < self->frame) self->frame = (int)base;
     if (GetPlayerCarObject()) player = CarObject_GetRenderObj(GetPlayerCarObject());
     else player = 0;
     position = lbl_803BD8A8;
@@ -91,7 +94,8 @@ void fn_801E9E74(AISpeedOwner *self) {
         position.y = lbl_806DA3F4;
     }
     base = lbl_806793D8;
-    for (i = 0, record = base; i < 8; ++i, ++record) {
+    for (i = 0; i < 8; ++i) {
+        record = &base[i];
         record->speedBonus = lbl_806DA3F4;
         UpdateRecord(record, base, &position);
     }
@@ -102,8 +106,8 @@ void fn_801E9E74(AISpeedOwner *self) {
             int count = 0;
             float range = fn_801DCCBC();
             range *= range;
-            for (i = 0, record = base; i < 8; ++i, ++record)
-                ClassifyRecord(record, range, &count, &states[i]);
+            for (i = 0; i < 8; ++i)
+                ClassifyRecord(&base[i], range, &count, &states[i]);
             if (count > fn_801DCC94(setting)) {
                 float bonus = fn_801DCC6C(setting);
                 for (i = 0; i < 8; ++base, ++i) {

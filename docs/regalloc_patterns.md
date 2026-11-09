@@ -1403,3 +1403,82 @@ the shared `for (i = 0; it[i].text; i++)` loop became `mulli` of a zero
 index); write those loops as an explicit pointer walk (`it++, i++`) in a
 local copy. opt_lifetimes / opt_dead_assignments off do not help.
 
+
+## 56. Optimizer temp takes the wrong already-used saved register: load a pointer local through an inline getter; and share float locals across switch cases (CoinSystem_UpdateAll, 11-09)
+
+Rule observed with tools/mwccdbg.py `--all`: named locals get the lowest
+vreg numbers (reverse declaration order), optimizer temps (CSE of
+`&c->sparks[i]`, hoisted values) come next, inline return/parameter temps
+last. Colouring runs from the highest vreg down, and a saved-register node
+takes the lowest saved register already handed out before it opens a new one.
+
+- GPR: target kept `c + i*16` in r28 (the register of `flags` from an earlier
+  loop), ours in r29 (register of `p`). `flags` was a named local, so it was
+  coloured AFTER the temp and opened r28 too late. `flags = CoinKart_GetFlags(kart);`
+  (static inline returning `kart->flags`) turns the value into a late temp,
+  coloured before the CSE temp. Declaration order of `flags` has no effect.
+- FPR: target reused one saved FPR for "range" in loop 1, "t" in cases 2/3
+  and one of the homing targets in cases 7/10 (x in one case, y in the other).
+  Separate locals (`range`, `t`, `tx`, `ty`) gave f30 instead of f28. Two
+  function-level floats `a`, `b` reused for all of them match; read from the
+  target which case uses which.
+- Moving the whole pickup test into an inline also fixed the GPR but its
+  float local became a late temp (f30 again) and its Vec moved on the stack.
+
+Same rule, volatile registers (KartItem_ApplyImpactReflectAndDampVelocity, 11-09): an inline
+`bool IsReflectLane(Lane *lane)` called as `IsReflectLane(self->secondary)` gave lane r6 / result
+flag r5, target lane r5 / flag r6. `mwccdbg --all` showed the flag (inline return temp) with a
+higher vreg than the lane (argument temp), so the flag was coloured first and took the lower
+register. Wrapping the call as `inline bool IsReflectItem(Self *self) { return
+IsReflectLane(GetSecondary(self)); }` creates the getter's return temp after the wrapper's result
+temp: the lane is coloured first and gets r5. A getter at the call site without the wrapper, a
+getter inside the loop inline, an id getter and an in-body flag did not work.
+
+## 57. `addi rBase,..; mr rWalker,rBase` versus `addi rWalker,..; mr rBase,rWalker`: the base must be a split-off lifetime range (fn_801E96BC, 11-09)
+
+Diff: only the direction of the copy between a table base (`base = table;`,
+kept for an inner loop) and the strength-reduced walker of `&base[i]`.
+mwtrace (ours): `ADDI r54,..; MR base,r54; MR walker,r54`. The copy into the
+NAMED local `base` is never coalesced, the walker temp merges with r54, so the
+address lands in the walker. The target needs `base` itself to merge with the
+address temp; then `MR walker,base` stays because the two interfere.
+
+Only vregs in the temp range coalesce. A variable's FIRST lifetime range is
+the named local; every later range is a SplitOffRange temp (mwcc_internals,
+IRO_SplitLifetimes). So `base` has to be the second range of a variable that
+was used for something else earlier:
+
+```c
+base = (AIPairRecord *)lbl_806D1920;            /* first range: the cap */
+self->frame++;
+if ((int)base < self->frame) self->frame = (int)base;
+base = lbl_806793D8;                            /* second range: a temp */
+```
+
+A dead first assignment (`base = 0;` / the same assignment twice) is removed
+and does not count; an inline parameter is constant-propagated and the address
+is rematerialised in the loop; a named walker gives `addi r0; mr; mr`.
+When a diff is exactly this copy direction, look for a variable the original
+may have reused (same register in two unrelated places in the target).
+
+## 58. Volatile FPRs of an int-to-float divide chain: read the creation order off the registers and write it as one expression (fn_8015DEBC, 11-09)
+
+Symptom (99.62, 6 volatile FPR rows): `t = 1 - (float)n / 15; ssc = 0.035 * t` written as
+separate statements gives `0.035 -> f0, bias -> f1, 15.0 -> f2, 1.0 -> f3, diff -> f4`; the target
+has `15.0 -> f0, double -> f1, bias/diff -> f2, 1.0 -> f3, 0.035 -> f4`.
+
+Volatile temps are coloured highest virtual register first and take the lowest free register, so the
+register numbers give the creation order backwards: here 0.035 was created FIRST and 15.0 LAST.
+That is the evaluation order of one expression, left operand first:
+
+```c
+float t;
+float ssc = 0.035f * (t = 1.0f - (float)e->subs[j].n / 15.0f);
+```
+
+(0.035, then 1.0, then the conversion bias and stack double, then 15.0.) Splitting the statements
+(§26) had fixed the saved pair but put the constants in statement order. Float literals, not
+`extern const float`, are needed for this to work. Rule: when only volatile registers differ in a
+straight-line float computation, sort the temps by target register number descending; that is the
+order in which the source must create them.
+

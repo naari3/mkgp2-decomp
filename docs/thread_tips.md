@@ -590,3 +590,8 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   its natural form afterwards (statement groups in 6 orders x named/unnamed product, scored with objdiff).
   Use `float_literal_sweep.py UNIT FN` to get the literal text, then reshape by hand. Table: docs/sweeps/float_literal.md.
 - `python3 -I tools/flagsweep.py [flags]` recompiles every NonMatching unit with extra compiler flags and lists functions that get closer. 11-09 run with `-inline deferred` over 126 units: no function improves (most get worse), so the EnmyFaceEffect gain (fn_8022D9E4 99.81 -> 100) needs the full recipe (deferred + reversed function order + real classes), not the flag alone. Try other flags (`-use_lmw_stmw on`, `-RTTI on`, `-opt ...`) with the same tool.
+- merge_tus append pitfalls (last test-menu pages, 11-10): (1) never run `prune-renames` before the merged file compiles: it
+  prunes against the stale object and drops every new rename (rebuild them from `nm` + `merge_tus.unsuffix_mangled`, chaining
+  through the unsuffixed entry, e.g. `__ct__15ServiceMenu_p34Fi` -> `ServiceMenu_Init`); (2) `__declspec(weak)` gets suffixed
+  (`weak_p27`): strip it; (3) a section that switches to `#pragma cplusplus off` half way needs `struct T_pN` in the pool casts.
+- The containers in the game are the real Metrowerks MSL C++ (`std::deque`, `Metrowerks::cdeque`, `std::vector`, `std::length_error`); the genuine CW GC 2.5 headers compiled with GC/2.6 reproduce them exactly (7 stuck deque functions at once). Do not hand-write them: `python3 tools/fetch_msl.py`, name mapping and instantiation-order rules in `docs/notes/msl_cpp.md`.
