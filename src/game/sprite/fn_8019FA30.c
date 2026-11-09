@@ -21,6 +21,11 @@ static inline void SpriteAnim_DrawResources(SpriteAnim *s, SpriteAnimFrame *draw
     }
 }
 
+static inline void SpriteAnim_InitLayers(int *ids, int *sorted) {
+    int i;
+    for (i = 0; i < 120; i++) { ids[i] = -1; sorted[i] = -1; }
+}
+
 void fn_8019FA30(SpriteAnim *s, SpriteAnimFrame *frames, float *matrix,
                    int r, int g, int b, int a, float alpha) {
     int sorted[120], ids[120];
@@ -29,7 +34,7 @@ void fn_8019FA30(SpriteAnim *s, SpriteAnimFrame *frames, float *matrix,
     int layerIndex;
     SpriteAnimFrame *scan;
     short red, green, blue, opacity;
-    for (i = 0; i < 120; i++) { ids[i] = -1; sorted[i] = -1; }
+    SpriteAnim_InitLayers(ids, sorted);
     nextId = ids;
     for (scan = frames;; scan++) {
         for (i = 0; i < count; i++) { if (ids[i] == scan->layer) break; }
