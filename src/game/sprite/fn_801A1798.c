@@ -4167,7 +4167,7 @@ float remaining_p13 = 0.0f;
 int i_p13;
 if (g_voiceQueueHead_p13 != 0) {
 for (i_p13 = g_voiceQueueTail_p13; i_p13 < g_voiceQueueHead_p13; i_p13++) {
-remaining_p13 += *(float *)((unsigned int)clips_p13 + g_voiceQueue_p13[i_p13].id_p13 * sizeof(VoiceClip) + 4);
+remaining_p13 += clips_p13[g_voiceQueue_p13[i_p13].id_p13].length;
 }
 remaining_p13 -= (float)((g_voiceStreamLastPollTime_p13 - g_voiceStreamStartTime_p13) / (((*(unsigned long *)0x800000F8) / 4) / 1000)) / 1000.0f;
 if (remaining_p13 < 0.0f) remaining_p13 = 0.0f;
@@ -4262,7 +4262,7 @@ lbl_806D1770_p13 = 1;
 return 0;
 }
 if (byRank_p13[0]->active_p13 && byRank_p13[1]->active_p13 && byRank_p13[2]->active_p13 && byRank_p13[3]->active_p13 &&
-(byRank_p13[3]->distance_p13 + byRank_p13[2]->distance_p13) + byRank_p13[1]->distance_p13 < 2) {
+(byRank_p13[1]->distance_p13 + byRank_p13[2]->distance_p13) + byRank_p13[3]->distance_p13 < 2) {
 TickPush_p13(0x1BC) ;
 TickPush_p13(0x1BD) ;
 lbl_806D1770_p13 = 1;
