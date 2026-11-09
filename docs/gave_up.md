@@ -398,6 +398,7 @@ the remaining candidates (~175 KB in Matching TUs). What blocked the rest:
 | `fn_80184928` | game/dlistutil/fn_80184928 | 98.72 (decl160 WIP) | Sweep on the decl160 WIP: 98.72 -> 98.75 (last 7-statement run only). |
 | `fn_802854B0` | triforce/jvsio | 99.88 | prologue: `addi r4,&tx.len` / `addi r8,&cmd.len` emitted in the opposite order (field-address CSE temps) | n3 11-09: inline vs open-coded check, operand order, int/u16 param, len local in 3 spots, early return, statement swap, pragmasweep all + decl 100 (GC/1.2.5n), shapesweep 12 min: best 4 lines |
 | `fn_80299D58` | thp/THPDec | 99.01 | asm register vars: ws r24/itmp0 r26 swapped and f27/f31 (cc4 vs bias) swapped through the whole body | n3 11-09: all 119 f32 decl perms (best 140/142 lines), all 105 pairwise swaps of 15 GPR register-var decls: no gain; regfix diag says model mismatch (asm register vars) |
+| `fn_8028C1B8` | triforce/amnet_nm3 | 98.37 | 16 GPR vregs off: base temp r30/r31, `ch` wants r31 (ours r24), pkt/addr/dev temps rotated | n3 11-09: regfix diag (95k edits, none at depth 2: temp structure differs); ch as param / u8, separate ALIGN32 buf local, addr inline: 156 -> 157..170 lines |
 
 ## Pool-merge sweep 2026-11-09 (data ownership / §13 thread)
 
