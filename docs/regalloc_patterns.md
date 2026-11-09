@@ -1283,6 +1283,42 @@ destructible local, delete its manual extab/extabindex entries (the compiler emi
 keeping both grows main.dol by 0x14).
 Rule name in hits.jsonl: `inline-own-local-direct-load`.
 
+## 51. Saved registers of two disjoint blocks: declare every block temp at function scope under its own name, in colouring order (fn_80141454 LogoAnim, 11-09)
+
+Target, two unrelated `else if` blocks that each keep floats across calls:
+
+    block A (t < 105):   a f30, sy f29, sx f28      (t itself sits in f31)
+    block B (t >= 105):  y f31, a f30, sy f29, sx f28
+
+With block-scope locals ours gave block A `sx` f31 (3 lines off; 960 decl orders and 22 min of
+cperm did not move it). Sharing one function-scope `a/sx/sy` between the blocks is much worse.
+
+Why, from the allocator model (`Graph.colour` in tools/regfix.py, which reproduced the real
+colouring here): named locals are numbered in reverse declaration order over the whole
+function, and vregs are coloured highest number first. A vreg that needs a saved register takes
+the **lowest-numbered saved register already in use** that its neighbours do not hold, and only
+then opens a new one, from f31 down. Block-scope locals of A are declared before those of B,
+so A is coloured first: `sx` reuses f31 (free, `t` is dead), `a` opens f30, `sy` opens f29.
+The target has B coloured first (y reuses f31, then a/sy/sx open f30/f29/f28) and A afterwards,
+each taking the lowest used register: sx f28, sy f29, a f30.
+
+So B's temps must be declared before A's, which block scope cannot express. Fix: seven
+distinct locals at function scope, in exactly the colouring order
+
+    float t; float a; float s;
+    float splitY, splitT, splitSy, splitSx, outSx, outSy, outT;   // B's four, then A's three
+
+How to read the order off the target: list the saved registers per block; the block whose
+registers were opened in descending order (f31, f30, f29, f28 = declaration order) comes
+first; a later block fills from the lowest register up (f28 first = declared first).
+`python3 tools/regfix.py diag` prints one line ("f31 -> want f28") and finds no edit, because
+the fix is a renumbering across two groups; print `Graph.colour()` order with keys to see it.
+
+Also in this TU: the C body must stay after the empty `fn_80141450` (text order), the float
+literals need the `.sdata2` range in splits.txt (0x806D7900..0x806D7998, the ctor's 0.0f
+included), and the manual extab entry and its two extab_user_renames go away.
+Rule name in hits.jsonl: `fn-scope-distinct-temps-order`.
+
 ## 52. Loop-invariant `&member` hoisted by the backend takes the newest saved register: name it as a local of the inline (SoundDriver_GetOrCreate, 11-09)
 
 Diff: two saved registers swapped between a loop cursor and a hoisted

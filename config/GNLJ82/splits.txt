@@ -5793,6 +5793,7 @@ game/LogoAnim.c:
 	extab       start:0x8000D7AC end:0x8000D7DC
 	extabindex  start:0x8002504C end:0x80025094
 	.text       start:0x80141450 end:0x80141A6C
+	.sdata2     start:0x806D7900 end:0x806D7998
 
 game/PushPrompt.c:
 	extab       start:0x8000D7DC end:0x8000D838
