@@ -120,7 +120,10 @@ class Unit:
         if re.search(r'^[^\n;{}]*\b' + re.escape(fn) + r'\s*\([^;{]*\)\s*\{', self.text, re.M): return fn
         for k, v in self.renames.items():
             if v == fn: return k
-        # renames are sometimes filed under another TU's key (moved code)
+        # renames are sometimes filed under another TU's key (moved code),
+        # but a name the source itself defines wins (VSMode_FrameUpdate's
+        # *_p0 rename once sent RankingMgr_UpdatePositions to a missing fn)
+        if re.search(rf'\b{re.escape(fn)}\s*\(', self.text): return fn
         for tu in _all_renames().values():
             if not isinstance(tu, dict): continue
             for k, v in tu.items():

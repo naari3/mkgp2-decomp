@@ -45,6 +45,17 @@ static inline void UpdateParticles(Owner *o) {
         if(age>=fadeEnd[p->type]) p->type=3; }
     }
 }
+static inline Joint *GetJoint(Emitter *e) {
+    Joint *joint=e->joint;
+    if(!joint) __assert(lbl_806D93FC,0x3e4,lbl_806D9404);
+    return joint;
+}
+/* The joint is read through two inline levels: its temp is then created
+ * after UpdateParticles' locals (inlines expand level by level), so it is
+ * coloured just before the final loop's offset IV and frees r26 for it. */
+static inline void CopyPos(Vec3 *pos, Joint *joint) {
+    pos->x=joint->pos.x; pos->y=joint->pos.y; pos->z=joint->pos.z;
+}
 void fn_8018DAD0(Owner *o) {
     void *camera;
     Vec3 eye, pos, delta, nearest;
@@ -60,11 +71,8 @@ void fn_8018DAD0(Owner *o) {
     best=lbl_806D93F8;
     zero=lbl_806D93F0;
     for(i=0;i<o->count;i++) {
-        Joint *joint;
         e=&o->emitters[i];
-        joint=e->joint;
-        if(!joint) __assert(lbl_806D93FC,0x3e4,lbl_806D9404);
-        pos.x=joint->pos.x; pos.y=joint->pos.y; pos.z=joint->pos.z;
+        CopyPos(&pos, GetJoint(e));
         Vec3_Subtract(&pos,&eye,&delta);
         dist=PSVECSquareMag(&delta);
         if(best<zero || dist<best) { best=dist; nearest.x=pos.x; nearest.y=pos.y; nearest.z=pos.z; }

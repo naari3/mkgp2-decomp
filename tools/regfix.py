@@ -383,7 +383,7 @@ def candidate_edits(g: Graph, w, ph):
     for v in bad:
         # whoever holds the register v wants, and whoever v's register should go to
         for x in g.nodes:
-            if ph.get(x) == w[v] and (x in g.nb[v] or True):
+            if ph.get(x) == w[v]:
                 focus.add(x)
     focus = [v for v in g.nodes if v in focus]
     E = []
