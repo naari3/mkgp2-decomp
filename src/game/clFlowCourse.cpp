@@ -314,8 +314,9 @@ static inline void DeactivatePulse(CoursePulse *p) {
 }
 static inline void ShowPulse(CoursePulse *p) { if (p) ActivatePulse(p); }
 static inline void HidePulse(CoursePulse *p) { if (p) DeactivatePulse(p); }
+extern "C" const float lbl_806D9F30;
 static inline float PulseAlpha(CoursePulse *p) {
-    if (p->flag == 0) return (float)p->timer * (0.125f);
+    if (p->flag == 0) return (float)p->timer * lbl_806D9F30;
     return (1.0f) - (float)p->timer * (0.125f);
 }
 static inline void SetupExitSprites(CourseFlow *self) {

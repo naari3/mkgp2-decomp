@@ -35,6 +35,8 @@ below say the same thing.
   regalloc_patterns §46 (block-local counter per later loop) first; (2) resolves the §40 anchor
   hint from symbols.txt. Hints printed before 6759bb0 could name the wrong base symbol, so
   re-run diag before splitting a symbol on an old hint.
+- 2026-11-10 01:10Z: the last 8 test-menu units (`FlashFadeOverlay_Draw.c` .. `ServiceMenu_Page.c`, .text 0x80070EA8..0x80073E20)
+  are appended to `game/CardCreate_Page.cpp`: the test-menu TU is complete (40 functions, .text 0x800668FC..0x80073E20, Matching).
 - 2026-11-09 22:45Z: 14 more test-menu units (`CardRW_Renew_Page.c` .. `CameraTest_Page.cpp`, .text 0x8006B32C..0x80070EA8)
   are appended to `game/CardCreate_Page.cpp` (27 units, still Matching). The 9 remaining pages from
   `FlashFadeOverlay_Draw.c` on stay split until their two near misses match.

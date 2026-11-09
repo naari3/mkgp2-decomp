@@ -2149,3 +2149,8 @@ c23_u157 acLib fn_80255154 improves 93.79204->94.37168 (912->908 B), extab100/in
 Source: Codex worker c23_u174_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 5 fn / 3488 B.
 
 c23_u174 fn_8020A6CC 95 -> 100%/104B: restore float output and name the intermediate float step = rate*t; then step = from + coefficient*step; value = step. This changes FP allocation and preserves the target fmadds f0;fmr f1,f0, all 26 instructions exact. Remove copied unused scaffolding and reuse canonical FlowFaderF x/y/z to avoid bias @61 colliding with prior add-only EH bridges; bias becomes @31, add own @32/@33 -> etb19420/eti29B1C. Matching flag, text/EH/index100, source main.elf input at8020A6CC size104, coordinator full DOL SHA1 exact. Inline coefficient helper split the FMA; double API/result coalesced the final copy, both rejected. No new ranges/shared headers/build logic.
+
+## c25_u3_20261110
+Source: Codex worker c25_u3_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c25_u3: BootDispatcher 99.31995 -> 99.35759 via C static inline int BootOptionDisabled(unsigned char), which returns option==0. C frontend int comparison restores cardDisabled srwi5; C++ bool lowering had extrwi8,19. otherDisabled still extrwi. Primary text size6376 unchanged; extab67.36111/index33.333336/rodata100/data100 unchanged. Second wait ==0 (99.354454) and C error-init helper (99.31179) rejected for EH regressions. Pool merge needs coordinator scope across nine TUs; prior isolated .bss ownership cycle already recorded. Full fallback DOL SHA-1 OK; no native gain.

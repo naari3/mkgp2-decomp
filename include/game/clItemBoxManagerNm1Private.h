@@ -119,7 +119,7 @@ template <class T> struct ListImpl {
     iterator end() { return iterator((Node *)&head); }
     iterator erase(const iterator &first, const iterator &last);
     iterator insert(const iterator &pos, const T &v);
-    void push_back(const T &v) { insert(end(), v); }
+    void push_back(const T &v) { Node *n = (Node *)&head; insert(iterator(n), v); }
 
     template <class Pred> void remove_if(Pred pred);
 };

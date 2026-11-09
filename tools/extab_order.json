@@ -3321,7 +3321,20 @@
     "CardRW_TestTopMenu_Page",
     "SpeakerTest_Page",
     "LampTest_Page",
-    "CameraTest_Page"
+    "CameraTest_Page",
+    "FlashFadeOverlay_Draw",
+    "LampTestIndiv_Page",
+    "SwitchTest_Page",
+    "HandleInitialize_Page",
+    "MonitorTest_Page",
+    "GameSetting_Page_VariantA",
+    "GameSetting_Page_VariantB",
+    "GameSetting_Page",
+    "GameTestTopMenu_Page",
+    "ServiceMenu_Draw",
+    "ServiceMenu_Tick",
+    "ServiceMenu_Dtor",
+    "ServiceMenu_Init"
   ],
   "src/game/fn_801B7EF8.c": [
     "fn_801B7EF8",

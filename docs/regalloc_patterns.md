@@ -1282,3 +1282,145 @@ Also: when an asm function with a manual `.extab_user` entry becomes C++ with a
 destructible local, delete its manual extab/extabindex entries (the compiler emits them;
 keeping both grows main.dol by 0x14).
 Rule name in hits.jsonl: `inline-own-local-direct-load`.
+
+## 51. Saved registers of two disjoint blocks: declare every block temp at function scope under its own name, in colouring order (fn_80141454 LogoAnim, 11-09)
+
+Target, two unrelated `else if` blocks that each keep floats across calls:
+
+    block A (t < 105):   a f30, sy f29, sx f28      (t itself sits in f31)
+    block B (t >= 105):  y f31, a f30, sy f29, sx f28
+
+With block-scope locals ours gave block A `sx` f31 (3 lines off; 960 decl orders and 22 min of
+cperm did not move it). Sharing one function-scope `a/sx/sy` between the blocks is much worse.
+
+Why, from the allocator model (`Graph.colour` in tools/regfix.py, which reproduced the real
+colouring here): named locals are numbered in reverse declaration order over the whole
+function, and vregs are coloured highest number first. A vreg that needs a saved register takes
+the **lowest-numbered saved register already in use** that its neighbours do not hold, and only
+then opens a new one, from f31 down. Block-scope locals of A are declared before those of B,
+so A is coloured first: `sx` reuses f31 (free, `t` is dead), `a` opens f30, `sy` opens f29.
+The target has B coloured first (y reuses f31, then a/sy/sx open f30/f29/f28) and A afterwards,
+each taking the lowest used register: sx f28, sy f29, a f30.
+
+So B's temps must be declared before A's, which block scope cannot express. Fix: seven
+distinct locals at function scope, in exactly the colouring order
+
+    float t; float a; float s;
+    float splitY, splitT, splitSy, splitSx, outSx, outSy, outT;   // B's four, then A's three
+
+How to read the order off the target: list the saved registers per block; the block whose
+registers were opened in descending order (f31, f30, f29, f28 = declaration order) comes
+first; a later block fills from the lowest register up (f28 first = declared first).
+`python3 tools/regfix.py diag` prints one line ("f31 -> want f28") and finds no edit, because
+the fix is a renumbering across two groups; print `Graph.colour()` order with keys to see it.
+
+Also in this TU: the C body must stay after the empty `fn_80141450` (text order), the float
+literals need the `.sdata2` range in splits.txt (0x806D7900..0x806D7998, the ctor's 0.0f
+included), and the manual extab entry and its two extab_user_renames go away.
+Rule name in hits.jsonl: `fn-scope-distinct-temps-order`.
+
+## 52. Loop-invariant `&member` hoisted by the backend takes the newest saved register: name it as a local of the inline (SoundDriver_GetOrCreate, 11-09)
+
+Diff: two saved registers swapped between a loop cursor and a hoisted
+address (`mr r31,r28; addi r30,r29,4` in the target, r30/r31 the other way
+round in ours). mwtrace shows the address (`&list.head`, written inline as
+`insert(end(), v)`) is a *backend* temp (`ADDI r53!,r36,4`, off=-1, moved to
+the preheader after code generation). Backend temps are numbered above every
+IRO temp and named local, so it is coloured first and takes r31.
+
+Fix: give the address a name inside the inline, so it is an inline local
+(numbered with the IRO temps, below the caller's cursor):
+
+```cpp
+void push_back(const T &v) { Node *n = (Node *)&head; insert(iterator(n), v); }
+```
+
+`iterator e = end(); insert(e, v)` and a `ListHead *` local do NOT work (the
+first changes the stack temps, the second stays a backend temp); the local
+must have the exact type the iterator constructor takes.
+
+## 53. List walker / sentinel saved registers swapped: `begin()` as `iterator(((Node *)&head)->next)` instead of `++end()` (clItemBoxManager_Dtor, 11-09)
+
+Diff: `for (it = l.begin(); it != l.end(); ++it)` gives walker r28 / sentinel
+r29, the target has walker r29 / sentinel r28 (`addi r28,r30,0x14;
+lwz r29,0x18(r30)`). With `begin() { return ++end(); }` the walker starts as
+a copy of the sentinel temp, so the sentinel is the later-numbered value and
+is coloured first. Loading `head.next` directly in `begin()` makes the walker
+independent of the sentinel:
+
+```cpp
+iterator begin() { return iterator(((Node *)&head)->next); }
+```
+
+Same family as section 52 (who names / creates the `&head` value decides the
+saved register). Naming the sentinel in `end()` alone made it worse (50 lines).
+
+
+## 54. Volatile temps after a call start at r4 instead of r3: the block leaves through a valueless `return;` (fn_801B4548, 11-09)
+
+Diff: after a call near the end of a block (here `OSGetTime`), ours puts the
+following short temps in r3, r4, .. while the target uses r4, r5, .. and never
+touches r3 until the shared epilogue; the opcodes are identical.
+
+Cause: the original source leaves the block with `return;` (no value) in a
+function that returns `int` (MWCC C accepts it with a warning). A valueless
+return emits no `li r3,N`, but the exit block still "uses" r3 as the return
+register, so physical r3 stays live from its last definition (the call) to the
+exit and interferes with every temp in between. With `return 1;` or a `goto`
+to the shared `return 1;` r3 is free and the temps take it.
+
+Fix: write `return;` for those exits and keep the final `return 1;` of the
+function (dropping that one too removes the `li r3,1` and shifts the length).
+Returning the call's own value (`return (int)hi;`) is not the same shape.
+
+Not fixed in the same function (16 lines left): saved registers of four
+vregs. regfix diag: entry temp @9778 r25 (want r28), FindNearest result r28
+(want r26), its counter r26 (want r25), `maps` r23 (want r25). In
+simplifygraph (Coloring.c) all of them fall into the second round and are
+pushed in ascending vreg order, so the inline local (170) is coloured before
+the optimizer temps 65..67; the target needs it coloured between 66 and 65.
+Tried without change: inline local orders, `maps` at function scope, entry in
+an inline, block-local loop counter, search written in the body or with
+reference parameters (adds a `mr`).
+
+Also seen here: MWCC does not CSE two loads of the same address that have
+different types. A union read as `.s` for the compares and `.u` for the call
+arguments reproduces the target's reloads of the same word.
+
+## 55. In-place `x = x / N` is recomputed at its first use (extra saved register): opt_propagation off (SwitchTest_Page, 11-09)
+
+Diff: the target computes a difference straight into a saved register and
+divides it in place (`subf r28,..; ...; srawi r0,r28,6; addze r28,r0`), so
+difference and quotient are ONE variable. Writing `st = steer / 64` gives the
+difference a volatile register; writing `steer = steer / 64` (or `/=`, or an
+inline) moves the division down to the first use and costs one more saved
+register (`stmw r26`). mwtrace: the SRAWI/ADDZE pair appears in the block of
+the first use with a fresh destination vreg.
+
+`#pragma opt_propagation off` keeps the division where it is written. Side
+effect: inline helpers that rely on constant propagation change shape (here
+the shared `for (i = 0; it[i].text; i++)` loop became `mulli` of a zero
+index); write those loops as an explicit pointer walk (`it++, i++`) in a
+local copy. opt_lifetimes / opt_dead_assignments off do not help.
+
+
+## 56. Optimizer temp takes the wrong already-used saved register: load a pointer local through an inline getter; and share float locals across switch cases (CoinSystem_UpdateAll, 11-09)
+
+Rule observed with tools/mwccdbg.py `--all`: named locals get the lowest
+vreg numbers (reverse declaration order), optimizer temps (CSE of
+`&c->sparks[i]`, hoisted values) come next, inline return/parameter temps
+last. Colouring runs from the highest vreg down, and a saved-register node
+takes the lowest saved register already handed out before it opens a new one.
+
+- GPR: target kept `c + i*16` in r28 (the register of `flags` from an earlier
+  loop), ours in r29 (register of `p`). `flags` was a named local, so it was
+  coloured AFTER the temp and opened r28 too late. `flags = CoinKart_GetFlags(kart);`
+  (static inline returning `kart->flags`) turns the value into a late temp,
+  coloured before the CSE temp. Declaration order of `flags` has no effect.
+- FPR: target reused one saved FPR for "range" in loop 1, "t" in cases 2/3
+  and one of the homing targets in cases 7/10 (x in one case, y in the other).
+  Separate locals (`range`, `t`, `tx`, `ty`) gave f30 instead of f28. Two
+  function-level floats `a`, `b` reused for all of them match; read from the
+  target which case uses which.
+- Moving the whole pickup test into an inline also fixed the GPR but its
+  float local became a late temp (f30 again) and its Vec moved on the stack.

@@ -865,7 +865,7 @@ static inline void SetCharaGroup(Sprite **group, const int &which, int index) {
 }
 
 /* Unused slots on the sentinel character row do not contain cards. */
-static inline unsigned char CharaCardState(PlayerData *pd, int group, const int &slot) {
+static inline unsigned int CharaCardState(PlayerData *pd, int group, const int &slot) {
     if (group == -1 && slot >= 1) return 0;
     return pd->unlocked[fn_8023D844(group, slot + 1)];
 }

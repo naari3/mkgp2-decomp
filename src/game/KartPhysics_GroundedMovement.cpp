@@ -74,6 +74,32 @@ static inline void *courseData() {
     return SINGLETON_INSTANCE(g_courseData);
 }
 
+static inline float groundedTravelSqrt(float v) {
+    if (v > lbl_806DA42C) {
+        double e=__frsqrte(v);
+        e=lbl_806DA458*e*(lbl_806DA460-v*(e*e));
+        e=lbl_806DA458*e*(lbl_806DA460-v*(e*e));
+        e=lbl_806DA458*e*(lbl_806DA460-v*(e*e));
+        volatile float result=v*e;
+        return result;
+    }
+    return v;
+}
+static inline void groundedTravel(GroundedMovementState *self) {
+    float divided=self->speed/lbl_806DA44C;
+    divided/=lbl_806DA44C;
+    float speed=divided/lbl_806DA44C;
+    if (speed<lbl_806DA450) speed=lbl_806DA450;
+    float length=groundedTravelSqrt(speed*speed+self->velocity.y*self->velocity.y);
+    float delta=length-speed;
+    if (lbl_806DA42C<speed) {
+        speed-=delta;
+        if (speed<lbl_806DA42C) speed=lbl_806DA42C;
+    }
+    self->position.x+=speed*LUT_Cosine(self->yaw);
+    self->position.z+=speed*LUT_Sine(self->yaw);
+}
+
 #pragma use_lmw_stmw on
 #pragma push
 #pragma opt_common_subs off
@@ -374,18 +400,7 @@ extern "C" void KartPhysics_GroundedMovement(GroundedMovementState *self) {
     if (self->slip<lbl_806DA52C) self->slip=lbl_806DA52C;
     float slipYaw=lbl_806DA470*self->slip;
     self->matrixYaw=self->yaw+slipYaw;
-    speed=self->speed;
-    speed/=lbl_806DA44C; speed/=lbl_806DA44C; speed/=lbl_806DA44C;
-    if (speed<lbl_806DA450) speed=lbl_806DA450;
-    float length=speed*speed+self->velocity.y*self->velocity.y;
-    groundedSqrt(length);
-    float loss=length-speed;
-    if (lbl_806DA42C<speed) {
-        speed-=loss;
-        if (speed<lbl_806DA42C) speed=lbl_806DA42C;
-    }
-    self->position.x+=speed*LUT_Cosine(self->yaw);
-    self->position.z+=speed*LUT_Sine(self->yaw);
+    groundedTravel(self);
 }
 #pragma pop
 

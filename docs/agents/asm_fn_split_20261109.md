@@ -228,6 +228,7 @@ The table above is the list as of 13:15Z. Since then (`tools/scan_asm_fns.py`):
 | RaceContext_InitDefaults | game/RaceContext_InitDefaults.c | still asm; the file is now part of game/SetCourseParams.c (887c513, 14-TU merge) | n3 merge |
 | SoundMgr_Play | game/SoundMgr_Play.c | still asm; the file is now part of game/clsound/fn_801913B0.c (a4d82de, 19-TU merge) | n3 merge |
 | WarpZone_CheckEntry | game/auto_800A8F4C_block.c | C, 100 % (regalloc_patterns §50) | n3 |
+| fn_80141454 | game/LogoAnim.c | C, 100 % (regalloc_patterns §51) | n3 |
 
 The four `n3` conversions and the two merges touched group C although
 n3-20261109-1338 said n3 would stay out of it: they came out of TU merges and

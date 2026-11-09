@@ -205,10 +205,10 @@ static TaRecord taReverseRecords[8][2] = {
 
 static unsigned int taMemberFunction[3] = { 0, 16, 0 };
 
-static inline void SelectTaRecord(TaRecord *&record, int round, int reversed, int cup)
+static inline void SelectTaRecord(TaRecord *&record, int reversed, int cup)
 {
-    record = &taReverseRecords[cup - 1][round];
-    if (!reversed) record = &taNormalRecords[cup - 1][round];
+    record = &taReverseRecords[cup - 1][g_longRoundFlag];
+    if (!reversed) record = &taNormalRecords[cup - 1][g_longRoundFlag];
 }
 
 
@@ -770,7 +770,7 @@ int TaMode::FrameUpdate()
                 } else {
                     float time = tafu::g_totalRaceTime;
                     TaRecord *record;
-                    SelectTaRecord(record, tafu::g_longRoundFlag, tafu::g_reverseRoundFlag, tafu::g_cupId);
+                    SelectTaRecord(record, tafu::g_reverseRoundFlag, tafu::g_cupId);
                     if (time < record->time) {
                         fn_801D676C(tafu::g_playerData);
                         PlayStats_IncTaBestRecord();

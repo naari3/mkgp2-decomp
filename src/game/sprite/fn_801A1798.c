@@ -8451,7 +8451,7 @@ g_bgmStateTimeHi_p47 = (unsigned long long)now_p47 >> 32;
 lbl_806CFD34_p47 = ItemVoice_BaseItem_p47(item_p47);
 lbl_806D1775_p47 = g_taMinLapPlayerIndex_p47;
 lbl_806D1776_p47 = nearest_p47;
-goto end_p47;
+return;
 }
 }
 }
@@ -8482,7 +8482,7 @@ lbl_806D1777_p47 = g_raceEntryArray_p47[(signed char)(unsigned char)kart_p47].pl
 lbl_806D1778_p47 = g_raceEntryArray_p47[(signed char)(unsigned char)kart_p47].distance_p47;
 lbl_806D1776_p47 = -1;
 lbl_806D177C_p47 = -1;
-goto end_p47;
+return;
 }
 }
 }
@@ -8532,7 +8532,7 @@ g_bgmStateTimeLo_p47 = (unsigned int)now_p47;
 g_bgmStateTimeHi_p47 = (unsigned long long)now_p47 >> 32;
 lbl_806D1776_p47 = -1;
 lbl_806D177C_p47 = -1;
-goto end_p47;
+return;
 }
 }
 if (!RaceVoice_CanQueue_p47(21)) return 1;
@@ -8587,7 +8587,6 @@ VoiceQueue_Push_p47(RaceVoice_Character_p47((RaceVoiceData_p47 *)data_p47, (&g_r
 VoiceQueue_Push_p47(0x20C, 28, 0, 0);
 return 1;
 }
-end_p47:
 return 1;
 }
 #pragma use_lmw_stmw reset

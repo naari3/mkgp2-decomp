@@ -279,24 +279,22 @@ void fn_80282F3C(void) {
     tx.len = 2;
 }
 
-static inline void jvsFailReplies(u8 res) {
-    int j;
-    int i;
-    for (i = 0; i <= cmd.nodeCount && i < 16; i++) {
-        if (cmd.req[cmd.cur[i]][i].n != 0) {
-            for (j = 0; j < cmd.req[cmd.cur[i]][i].n; j++) {
-                u8 c = cmd.req[cmd.cur[i]][i].cmd[j];
+static inline void jvsFailReplies(u8 res, int *nodeIndex, int *commandIndex) {
+    for ((*nodeIndex) = 0; (*nodeIndex) <= cmd.nodeCount && (*nodeIndex) < 16; (*nodeIndex)++) {
+        if (cmd.req[cmd.cur[(*nodeIndex)]][(*nodeIndex)].n != 0) {
+            for ((*commandIndex) = 0; (*commandIndex) < cmd.req[cmd.cur[(*nodeIndex)]][(*nodeIndex)].n; (*commandIndex)++) {
+                u8 c = cmd.req[cmd.cur[(*nodeIndex)]][(*nodeIndex)].cmd[(*commandIndex)];
                 if (cmd.qwr + 1 != cmd.qrd) {
-                    cmd.queue[cmd.qwr].node = i;
+                    cmd.queue[cmd.qwr].node = (*nodeIndex);
                     cmd.queue[cmd.qwr].cmd = c;
                     cmd.queue[cmd.qwr].err = res;
                     cmd.queue[cmd.qwr++].pad = 0;
                 }
             }
-            cmd.req[cmd.cur[i]][i].n = 0;
+            cmd.req[cmd.cur[(*nodeIndex)]][(*nodeIndex)].n = 0;
         }
-        if (cmd.req[cmd.next[i]][i].n != 0) {
-            cmd.cur[i] = cmd.next[i];
+        if (cmd.req[cmd.next[(*nodeIndex)]][(*nodeIndex)].n != 0) {
+            cmd.cur[(*nodeIndex)] = cmd.next[(*nodeIndex)];
         }
     }
 }
@@ -304,6 +302,8 @@ static inline void jvsFailReplies(u8 res) {
 
 static void fn_80282F54(s32 chan, u32 err, OSContext* ctx) {
     int checksumIndex;
+    int nodeIndex;
+    int commandIndex;
     u8 sum;
     u8 res;
 
@@ -334,7 +334,7 @@ static void fn_80282F54(s32 chan, u32 err, OSContext* ctx) {
     }
     res = tx.result;
     if (res != 0) {
-        jvsFailReplies(res);
+        jvsFailReplies(res, &nodeIndex, &commandIndex);
     }
 }
 
