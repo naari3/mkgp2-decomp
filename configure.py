@@ -1404,7 +1404,7 @@ config.libs = [
             Object(Matching, "game/Sci2Card_Status.c"),
             Object(Matching, "game/SceneRender.c", extab_padding=b""),
             Object(Matching, "game/Camera_Create.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/ClRomTable_PurgeAll.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/ClRomTable_PurgeAll.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/clRomAccessors.c"),
             Object(Matching, "game/clRomDtor.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Archive.c"),
