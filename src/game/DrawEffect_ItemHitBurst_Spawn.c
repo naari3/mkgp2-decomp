@@ -30,6 +30,14 @@ extern const float lbl_806D5724; /* 1.2 */
 extern const float lbl_806D5758; /* -15.0 */
 extern const float lbl_806D575C; /* 15.0 */
 
+extern const float lbl_806D5748; /* degrees to radians */
+extern const float lbl_806D5704; /* 0.5 */
+
+extern const float lbl_806D5760; /* pi */
+extern const float lbl_806D5764; /* pi / 2 */
+extern const float lbl_806D5768; /* pi / 4 */
+extern const float lbl_806D576C; /* -pi / 4 */
+
 static inline void SpawnGroundBurst(Vec *pos, float m[4][4], signed char strength,
                                     signed char ground, float speed, Vec *tints)
 {
@@ -50,8 +58,8 @@ static inline void SpawnGroundBurst(Vec *pos, float m[4][4], signed char strengt
         count = 8;
         break;
     }
-    yaw = 0.017453289f * Rand_RangeFloat(lbl_806D5750, lbl_806D5754);
-    spread = 0.5f * speed;
+    yaw = lbl_806D5748 * Rand_RangeFloat(lbl_806D5750, lbl_806D5754);
+    spread = lbl_806D5704 * speed;
     for (i = 0; i < count; i++) {
         self = DrawEffect_SpawnDirect(Effect_ExplosionPiece_Update);
         if (self != 0) {
@@ -60,7 +68,7 @@ static inline void SpawnGroundBurst(Vec *pos, float m[4][4], signed char strengt
             GetSpawnPosition(V(0xA4), 0.0f, 0.0f,
                              spread * Rand_RangeFloat(lbl_806D5720, lbl_806D5724));
             Vec2_RotateY(V(0xA4), V(0xA4),
-                         BuildOrientationFromYaw(0.017453289f * Rand_RangeFloat(lbl_806D5758, lbl_806D575C) + yaw));
+                         BuildOrientationFromYaw(lbl_806D5748 * Rand_RangeFloat(lbl_806D5758, lbl_806D575C) + yaw));
             local = *V(0xA4);
             Mtx44_TransformVec3(V(0xA4), m, &local);
             switch (strength) {
@@ -89,13 +97,13 @@ static inline void SpawnGroundBurst(Vec *pos, float m[4][4], signed char strengt
         }
         switch (strength) {
         case 1:
-            yaw = BuildOrientationFromYaw(3.141592f + yaw);
+            yaw = BuildOrientationFromYaw(lbl_806D5760 + yaw);
             break;
         case 2:
-            yaw = BuildOrientationFromYaw(1.570796f + yaw);
+            yaw = BuildOrientationFromYaw(lbl_806D5764 + yaw);
             break;
         case 3:
-            yaw = BuildOrientationFromYaw(0.785398f + yaw);
+            yaw = BuildOrientationFromYaw(lbl_806D5768 + yaw);
             break;
         }
     }
@@ -121,17 +129,17 @@ static inline void SpawnGroundSparks(Vec *pos, float m[4][4], signed char streng
         count = 8;
         break;
     }
-    yaw = 0.017453289f * Rand_RangeFloat(lbl_806D5750, lbl_806D5754);
-    spread = 0.5f * speed;
+    yaw = lbl_806D5748 * Rand_RangeFloat(lbl_806D5750, lbl_806D5754);
+    spread = lbl_806D5704 * speed;
     for (i = 0; i < count; i++) {
         self = DrawEffect_SpawnDirect(DrawEffect_KartSparkTier_Update);
         if (self != 0) {
             Vec3_Copy(V(0x8C), pos);
             GetSpawnPosition(V(0xA4), 0.0f, 0.0f,
                              spread * Rand_RangeFloat(lbl_806D5720, lbl_806D5724));
-            Vec2_RotateX(V(0xA4), V(0xA4), -0.785398f);
+            Vec2_RotateX(V(0xA4), V(0xA4), lbl_806D576C);
             Vec2_RotateY(V(0xA4), V(0xA4),
-                         BuildOrientationFromYaw(0.017453289f * Rand_RangeFloat(lbl_806D5758, lbl_806D575C) + yaw));
+                         BuildOrientationFromYaw(lbl_806D5748 * Rand_RangeFloat(lbl_806D5758, lbl_806D575C) + yaw));
             local2 = *V(0xA4);
             Mtx44_TransformVec3(V(0xA4), m, &local2);
             S8(0x190) = strength;
@@ -139,13 +147,13 @@ static inline void SpawnGroundSparks(Vec *pos, float m[4][4], signed char streng
         }
         switch (strength) {
         case 1:
-            yaw = BuildOrientationFromYaw(1.570796f + yaw);
+            yaw = BuildOrientationFromYaw(lbl_806D5764 + yaw);
             break;
         case 2:
-            yaw = BuildOrientationFromYaw(0.785398f + yaw);
+            yaw = BuildOrientationFromYaw(lbl_806D5768 + yaw);
             break;
         case 3:
-            yaw = BuildOrientationFromYaw(0.785398f + yaw);
+            yaw = BuildOrientationFromYaw(lbl_806D5768 + yaw);
             break;
         }
     }
