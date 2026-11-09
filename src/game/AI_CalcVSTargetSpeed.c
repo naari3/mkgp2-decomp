@@ -18,27 +18,20 @@ static inline void VSInitialSpeed(int kart) {
     min *= scale;
     VSSetSpeed(ctrl, max, min);
 }
-static inline float VSLapBonus(void *ctrl, int kart) {
-    int lap;
-    int rank = KartController_GetRenderObj(ctrl)->rank;
-    lap = KartController_GetRenderObj(ctrl)->lap;
-    {
-        int difference = AI_GetLapDifference(ctrl);
-        return AI_CalcLapSpeedBonus(kart, g_totalLaps - lap, difference, rank);
-    }
-}
 static inline float DistanceBonus(AISpeedOwner *self, void *ctrl, int kart) {
     int rank = KartController_GetRenderObj(ctrl)->rank;
     return AI_CalcDistanceSpeedBonus(kart, CarObject_GetRenderObj(self->car)->rank, rank);
 }
 static inline void NormalSpeed(AISpeedOwner *self, int kart) {
-        float min;
         int round;
+        float min;
         AIPairRecord *record;
-        void *ctrl = Read_U32[kart];
-        float max;
         void *param;
         float bonus;
+        void *ctrl = Read_U32[kart];
+        int lap;
+        int rank;
+        float max;
         int cup;
         record = &lbl_806793D8[kart];
         param = GetEnemyParam();
@@ -46,7 +39,9 @@ static inline void NormalSpeed(AISpeedOwner *self, int kart) {
         min = GetBaseSpeedMin(param, cup, round);
         bonus = DistanceBonus(self, ctrl, kart);
         max += bonus; min += bonus;
-        bonus = VSLapBonus(ctrl, kart);
+        rank = KartController_GetRenderObj(ctrl)->rank;
+        lap = KartController_GetRenderObj(ctrl)->lap;
+        bonus = AI_CalcLapSpeedBonus(kart, g_totalLaps - lap, AI_GetLapDifference(ctrl), rank);
         max += bonus; min += bonus;
         if (fn_801DC69C(kart) != -1) {
             AI_UseItem(Read_U32[kart], GetKartSlotKartVariant(fn_801DC6CC(kart)));
