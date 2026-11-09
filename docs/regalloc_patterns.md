@@ -1319,3 +1319,34 @@ iterator begin() { return iterator(((Node *)&head)->next); }
 Same family as section 52 (who names / creates the `&head` value decides the
 saved register). Naming the sentinel in `end()` alone made it worse (50 lines).
 
+
+## 54. Volatile temps after a call start at r4 instead of r3: the block leaves through a valueless `return;` (fn_801B4548, 11-09)
+
+Diff: after a call near the end of a block (here `OSGetTime`), ours puts the
+following short temps in r3, r4, .. while the target uses r4, r5, .. and never
+touches r3 until the shared epilogue; the opcodes are identical.
+
+Cause: the original source leaves the block with `return;` (no value) in a
+function that returns `int` (MWCC C accepts it with a warning). A valueless
+return emits no `li r3,N`, but the exit block still "uses" r3 as the return
+register, so physical r3 stays live from its last definition (the call) to the
+exit and interferes with every temp in between. With `return 1;` or a `goto`
+to the shared `return 1;` r3 is free and the temps take it.
+
+Fix: write `return;` for those exits and keep the final `return 1;` of the
+function (dropping that one too removes the `li r3,1` and shifts the length).
+Returning the call's own value (`return (int)hi;`) is not the same shape.
+
+Not fixed in the same function (16 lines left): saved registers of four
+vregs. regfix diag: entry temp @9778 r25 (want r28), FindNearest result r28
+(want r26), its counter r26 (want r25), `maps` r23 (want r25). In
+simplifygraph (Coloring.c) all of them fall into the second round and are
+pushed in ascending vreg order, so the inline local (170) is coloured before
+the optimizer temps 65..67; the target needs it coloured between 66 and 65.
+Tried without change: inline local orders, `maps` at function scope, entry in
+an inline, block-local loop counter, search written in the body or with
+reference parameters (adds a `mr`).
+
+Also seen here: MWCC does not CSE two loads of the same address that have
+different types. A union read as `.s` for the compares and `.u` for the call
+arguments reproduces the target's reloads of the same word.
