@@ -368,3 +368,9 @@ status: done
 
 game/fn_801C9288.cpp (91.3%) を game/clFlowRound.c に統合しました。fn_801C9288 は 100%、unit は Matching のままです (GC/2.6、Draw の前に `#pragma defer_codegen off` で定義)。claim は閉じました。
 
+## n3-20261109-2132 | 2026-11-09 21:32Z | from: n3 | planned TU merge: 14 more test-menu units (CardRW_Renew_Page.c .. CameraTest_Page.cpp) -> game/CardCreate_Page.cpp
+re: -
+status: note
+
+予告です。テストメニュー TU の続きとして、game/CardRW_Renew_Page.c, CardRW_HardwareInit_Page.c, CardRW_Reprint_Page.c, CardRW_DataRepair_Page.c, CardDataTransfer_UI.cpp, CardDataCheck_UI.cpp, CardRW_PrintTest_Page.c, CardRW_DispenseTest_Page.c, CardRW_ReadWriteTest_Page.c, CardRW_CleaningTest_Page.c, CardRW_TestTopMenu_Page.c, SpeakerTest_Page.cpp, LampTest_Page.cpp, CameraTest_Page.cpp (.text 0x8006B32C..0x80070EA8) を game/CardCreate_Page.cpp に追加します。関数数は増えない構造だけの変更なので、統合後の unit が Matching のままの場合だけ landing します。結果はここに返信します。
+
