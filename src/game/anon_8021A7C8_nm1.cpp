@@ -357,8 +357,9 @@ clCSOrgKartModel::clCSOrgKartModel(int character_, int variant, unsigned char wi
     HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C5390), 0x10);
     HSD_JObjSetFlagsAll(ResolveJointByName(tires, pool_803C53A8), 0x10);
     if (withDriver == 1) {
-        for (int i = 0; i < 4; i++) {
-            anims[i] = new clNormal3D(cd->anims[animIds[i]], 0);
+        const int *id = animIds;
+        for (int i = 0; i < 4; id++, i++) {
+            anims[i] = new clNormal3D(cd->anims[*id], 0);
         }
         clNormal3D_SetScale(driverAnim, anims[0], lbl_806DAFF4, lbl_806DAFE8, lbl_806DAFE8, lbl_806DAFE8);
         ObjectTree_BlendOrCopy_Timed(driver, Archive_GetRootJObj(driverAnim), Archive_GetRootJObj(driver), lbl_806DAFE8, 0);
