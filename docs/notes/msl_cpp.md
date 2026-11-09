@@ -67,7 +67,6 @@ loops in our sources were compensating for the hand-written container.
 
 The headers are Metrowerks copyright and are **not** in the repository.
 
-    apt install unshield && pip install pycdlib
     python3 tools/fetch_msl.py        # archive.org -> build/msl_cw25/
 
 A unit that uses them adds `*cflags_msl_cpp` (and normally `-rostr`,

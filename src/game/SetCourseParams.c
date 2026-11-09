@@ -1562,9 +1562,10 @@ void RaceFlow_ResetState_FullColdInit(void)
 
     lbl_806CF10C = 0;
     if (!lbl_806D1258) {
-        RankRow *row = lbl_805B24CC;
+        RankRow *extra = &lbl_805B256C;
         RaceEntry *e = lbl_805D2948;
-        for (i = 0; i < 5; i++) {
+        RankRow *row = lbl_805B24CC;
+        for (i = 0; 5 > i; ++i) {
             row[i].id = 0;
             row[i].group = 0;
             row[i].time = lbl_806D4790;
@@ -1577,9 +1578,9 @@ void RaceFlow_ResetState_FullColdInit(void)
             row[i].best = lbl_806D4798;
         }
         lbl_805B256C.id = 0;
-        lbl_805B256C.group = 0;
-        lbl_805B256C.time = lbl_806D4790;
-        lbl_805B256C.best = lbl_806D4798;
+        extra->group = 0;
+        extra->time = lbl_806D4790;
+        extra->best = lbl_806D4798;
         lbl_806D1280 = 4;
         lbl_806D1258 = 1;
         RaceEntries_Reset(e);

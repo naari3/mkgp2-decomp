@@ -1,0 +1,347 @@
+diff --git a/src/game/RivalRun.c b/src/game/RivalRun.c
+index 645b799..8632b55 100644
+--- a/src/game/RivalRun.c
++++ b/src/game/RivalRun.c
+@@ -940,7 +940,7 @@ void RivalRun_RivalTactics(RRRivalAI *self) {
+ /* Open prototype (`extern void Foo();`) accepts any call signature; */
+ /* refine if the real prototype matters for header consumers. */
+ extern float Vec3_Dot(const RRVec3 *a, const RRVec3 *b);
+-extern void Vec3_Magnitude();
++extern float Vec3_Magnitude(const RRVec3 *v);
+ extern void Vec3_Normalize(const RRVec3 *v, RRVec3 *out);
+ extern void Vec3_Subtract(const RRVec3 *a, const RRVec3 *b, RRVec3 *out);
+ extern float PSVECSquareMag(const RRVec3 *v);
+@@ -957,7 +957,7 @@ extern const float lbl_806D738C;
+  */
+ 
+ /* --- forward decls --- */
+-asm float RivalRun_CalcPathDistance(RRPathFollower *f, RRVec3 *a, RRVec3 *b);
++float RivalRun_CalcPathDistance(RRPathFollower *pf, RRVec3 *from, RRVec3 *to);
+ 
+ /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
+ #pragma section R ".extab_user"
+@@ -972,263 +972,67 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned
+ };
+ 
+ /* --- asm function bodies (.text order = fn address order) --- */
+-asm float RivalRun_CalcPathDistance(RRPathFollower *f, RRVec3 *a, RRVec3 *b) { /* 0x801367F4 size:0x3B4 */
+-    nofralloc
+-    stwu r1, -0xb0(r1)
+-    mflr r0
+-    stw r0, 0xb4(r1)
+-    stfd f31, 0xa0(r1)
+-    psq_st f31, 0xa8(r1), 0, 0
+-    stfd f30, 0x90(r1)
+-    psq_st f30, 0x98(r1), 0, 0
+-    stfd f29, 0x80(r1)
+-    psq_st f29, 0x88(r1), 0, 0
+-    stfd f28, 0x70(r1)
+-    psq_st f28, 0x78(r1), 0, 0
+-    stfd f27, 0x60(r1)
+-    psq_st f27, 0x68(r1), 0, 0
+-    stmw r24, 0x40(r1)
+-    lwz r6, 0x4(r3)
+-    mr r28, r4
+-    lwz r0, 0x8(r3)
+-    lis r3, lbl_8035C1E4@ha
+-    lfs f31, lbl_806D738C(r2)
+-    slwi r4, r6, 4
+-    addi r3, r3, lbl_8035C1E4@l
+-    slwi r0, r0, 3
+-    add r4, r3, r4
+-    fmr f27, f31
+-    add r3, r4, r0
+-    lwzx r31, r4, r0
+-    li r26, 0x0
+-    lwz r30, 0x4(r3)
+-    lfs f30, 0x0(r28)
+-    lfs f29, 0x4(r28)
+-    mr r29, r5
+-    lfs f28, 0x8(r28)
+-    mr r27, r26
+-    mr r25, r31
+-    b RivalRun_CalcPathDistance_L_801368CC
+-    RivalRun_CalcPathDistance_L_80136880:
+-    lfs f0, 0x0(r25)
+-    addi r3, r1, 0x14
+-    fsubs f0, f0, f30
+-    stfs f0, 0x14(r1)
+-    lfs f0, 0x4(r25)
+-    fsubs f0, f0, f29
+-    stfs f0, 0x18(r1)
+-    lfs f0, 0x8(r25)
+-    fsubs f0, f0, f28
+-    stfs f0, 0x1c(r1)
+-    bl PSVECSquareMag
+-    cmpwi r27, 0x0
+-    beq RivalRun_CalcPathDistance_L_801368BC
+-    fcmpo cr0, f1, f27
+-    bge RivalRun_CalcPathDistance_L_801368C4
+-    RivalRun_CalcPathDistance_L_801368BC:
+-    mr r26, r27
+-    fmr f27, f1
+-    RivalRun_CalcPathDistance_L_801368C4:
+-    addi r25, r25, 0xc
+-    addi r27, r27, 0x1
+-    RivalRun_CalcPathDistance_L_801368CC:
+-    cmpw r27, r30
+-    blt RivalRun_CalcPathDistance_L_80136880
+-    li r25, 0x0
+-    lfs f27, lbl_806D738C(r2)
+-    lfs f28, 0x0(r29)
+-    mr r27, r25
+-    lfs f29, 0x4(r29)
+-    mr r24, r31
+-    lfs f30, 0x8(r29)
+-    b RivalRun_CalcPathDistance_L_80136940
+-    RivalRun_CalcPathDistance_L_801368F4:
+-    lfs f0, 0x0(r24)
+-    addi r3, r1, 0x8
+-    fsubs f0, f0, f28
+-    stfs f0, 0x8(r1)
+-    lfs f0, 0x4(r24)
+-    fsubs f0, f0, f29
+-    stfs f0, 0xc(r1)
+-    lfs f0, 0x8(r24)
+-    fsubs f0, f0, f30
+-    stfs f0, 0x10(r1)
+-    bl PSVECSquareMag
+-    cmpwi r27, 0x0
+-    beq RivalRun_CalcPathDistance_L_80136930
+-    fcmpo cr0, f1, f27
+-    bge RivalRun_CalcPathDistance_L_80136938
+-    RivalRun_CalcPathDistance_L_80136930:
+-    mr r25, r27
+-    fmr f27, f1
+-    RivalRun_CalcPathDistance_L_80136938:
+-    addi r24, r24, 0xc
+-    addi r27, r27, 0x1
+-    RivalRun_CalcPathDistance_L_80136940:
+-    cmpw r27, r30
+-    blt RivalRun_CalcPathDistance_L_801368F4
+-    cmpw r26, r25
+-    beq RivalRun_CalcPathDistance_L_80136A10
+-    ble RivalRun_CalcPathDistance_L_801369B4
+-    mulli r0, r25, 0xc
+-    mr r27, r25
+-    add r24, r31, r0
+-    b RivalRun_CalcPathDistance_L_801369A8
+-    RivalRun_CalcPathDistance_L_80136964:
+-    lfs f1, 0xc(r24)
+-    addi r3, r1, 0x2c
+-    lfs f0, 0x0(r24)
+-    fsubs f0, f1, f0
+-    stfs f0, 0x2c(r1)
+-    lfs f1, 0x10(r24)
+-    lfs f0, 0x4(r24)
+-    fsubs f0, f1, f0
+-    stfs f0, 0x30(r1)
+-    lfs f1, 0x14(r24)
+-    lfs f0, 0x8(r24)
+-    fsubs f0, f1, f0
+-    stfs f0, 0x34(r1)
+-    bl Vec3_Magnitude
+-    fadds f31, f31, f1
+-    addi r24, r24, 0xc
+-    addi r27, r27, 0x1
+-    RivalRun_CalcPathDistance_L_801369A8:
+-    cmpw r27, r26
+-    blt RivalRun_CalcPathDistance_L_80136964
+-    b RivalRun_CalcPathDistance_L_80136A10
+-    RivalRun_CalcPathDistance_L_801369B4:
+-    mulli r0, r26, 0xc
+-    mr r27, r26
+-    add r24, r31, r0
+-    b RivalRun_CalcPathDistance_L_80136A08
+-    RivalRun_CalcPathDistance_L_801369C4:
+-    lfs f1, 0xc(r24)
+-    addi r3, r1, 0x2c
+-    lfs f0, 0x0(r24)
+-    fsubs f0, f1, f0
+-    stfs f0, 0x2c(r1)
+-    lfs f1, 0x10(r24)
+-    lfs f0, 0x4(r24)
+-    fsubs f0, f1, f0
+-    stfs f0, 0x30(r1)
+-    lfs f1, 0x14(r24)
+-    lfs f0, 0x8(r24)
+-    fsubs f0, f1, f0
+-    stfs f0, 0x34(r1)
+-    bl Vec3_Magnitude
+-    fsubs f31, f31, f1
+-    addi r24, r24, 0xc
+-    addi r27, r27, 0x1
+-    RivalRun_CalcPathDistance_L_80136A08:
+-    cmpw r27, r25
+-    blt RivalRun_CalcPathDistance_L_801369C4
+-    RivalRun_CalcPathDistance_L_80136A10:
+-    mulli r24, r26, 0xc
+-    addi r4, r1, 0x2c
+-    mr r3, r28
+-    mr r5, r4
+-    add r27, r31, r24
+-    lfs f0, 0x0(r27)
+-    stfs f0, 0x2c(r1)
+-    lfs f0, 0x4(r27)
+-    stfs f0, 0x30(r1)
+-    lfs f0, 0x8(r27)
+-    stfs f0, 0x34(r1)
+-    bl Vec3_Subtract
+-    subi r0, r30, 0x1
+-    cmpw r26, r0
+-    bne RivalRun_CalcPathDistance_L_80136A78
+-    lfs f2, 0x0(r27)
+-    lfs f1, -0xc(r27)
+-    lfs f0, lbl_806D738C(r2)
+-    fsubs f1, f2, f1
+-    stfs f0, 0x24(r1)
+-    stfs f1, 0x20(r1)
+-    lfs f1, 0x8(r27)
+-    lfs f0, -0x4(r27)
+-    fsubs f0, f1, f0
+-    stfs f0, 0x28(r1)
+-    b RivalRun_CalcPathDistance_L_80136AA0
+-    RivalRun_CalcPathDistance_L_80136A78:
+-    lfs f1, 0x0(r27)
+-    lfs f2, 0xc(r27)
+-    lfs f0, lbl_806D738C(r2)
+-    fsubs f1, f2, f1
+-    stfs f0, 0x24(r1)
+-    stfs f1, 0x20(r1)
+-    lfs f1, 0x14(r27)
+-    lfs f0, 0x8(r27)
+-    fsubs f0, f1, f0
+-    stfs f0, 0x28(r1)
+-    RivalRun_CalcPathDistance_L_80136AA0:
+-    addi r3, r1, 0x20
+-    mr r4, r3
+-    bl Vec3_Normalize
+-    addi r3, r1, 0x2c
+-    addi r4, r1, 0x20
+-    bl Vec3_Dot
+-    mulli r24, r25, 0xc
+-    addi r4, r1, 0x2c
+-    fadds f31, f31, f1
+-    mr r3, r29
+-    mr r5, r4
+-    add r26, r31, r24
+-    lfs f0, 0x0(r26)
+-    stfs f0, 0x2c(r1)
+-    lfs f0, 0x4(r26)
+-    stfs f0, 0x30(r1)
+-    lfs f0, 0x8(r26)
+-    stfs f0, 0x34(r1)
+-    bl Vec3_Subtract
+-    subi r0, r30, 0x1
+-    cmpw r25, r0
+-    bne RivalRun_CalcPathDistance_L_80136B24
+-    lfs f2, 0x0(r26)
+-    lfs f1, -0xc(r26)
+-    lfs f0, lbl_806D738C(r2)
+-    fsubs f1, f2, f1
+-    stfs f0, 0x24(r1)
+-    stfs f1, 0x20(r1)
+-    lfs f1, 0x8(r26)
+-    lfs f0, -0x4(r26)
+-    fsubs f0, f1, f0
+-    stfs f0, 0x28(r1)
+-    b RivalRun_CalcPathDistance_L_80136B4C
+-    RivalRun_CalcPathDistance_L_80136B24:
+-    lfs f1, 0x0(r26)
+-    lfs f2, 0xc(r26)
+-    lfs f0, lbl_806D738C(r2)
+-    fsubs f1, f2, f1
+-    stfs f0, 0x24(r1)
+-    stfs f1, 0x20(r1)
+-    lfs f1, 0x14(r26)
+-    lfs f0, 0x8(r26)
+-    fsubs f0, f1, f0
+-    stfs f0, 0x28(r1)
+-    RivalRun_CalcPathDistance_L_80136B4C:
+-    addi r3, r1, 0x20
+-    mr r4, r3
+-    bl Vec3_Normalize
+-    addi r3, r1, 0x2c
+-    addi r4, r1, 0x20
+-    bl Vec3_Dot
+-    fsubs f31, f31, f1
+-    fmr f1, f31
+-    psq_l f31, 0xa8(r1), 0, 0
+-    lfd f31, 0xa0(r1)
+-    psq_l f30, 0x98(r1), 0, 0
+-    lfd f30, 0x90(r1)
+-    psq_l f29, 0x88(r1), 0, 0
+-    lfd f29, 0x80(r1)
+-    psq_l f28, 0x78(r1), 0, 0
+-    lfd f28, 0x70(r1)
+-    psq_l f27, 0x68(r1), 0, 0
+-    lfd f27, 0x60(r1)
+-    lmw r24, 0x40(r1)
+-    lwz r0, 0xb4(r1)
+-    mtlr r0
+-    addi r1, r1, 0xb0
+-    blr
++float RivalRun_CalcPathDistance(RRPathFollower *pf, RRVec3 *from, RRVec3 *to) {
++    RRVec3 *pts = RR_Routes(pf->lane)[pf->route].pts;
++    int count = RR_Routes(pf->lane)[pf->route].count;
++    RRVec3 rel;
++    RRVec3 dir;
++    float dist;
++    int a;
++    int b;
++    int i;
++
++    dist = lbl_806D738C;
++    a = RR_FindNearest(pts, count, from);
++    b = RR_FindNearest(pts, count, to);
++    if (a != b) {
++        if (a > b) {
++            for (i = b; i < a; i++) {
++                rel.x = pts[i + 1].x - pts[i].x;
++                rel.y = pts[i + 1].y - pts[i].y;
++                rel.z = pts[i + 1].z - pts[i].z;
++                dist += Vec3_Magnitude(&rel);
++            }
++        } else {
++            for (i = a; i < b; i++) {
++                rel.x = pts[i + 1].x - pts[i].x;
++                rel.y = pts[i + 1].y - pts[i].y;
++                rel.z = pts[i + 1].z - pts[i].z;
++                dist -= Vec3_Magnitude(&rel);
++            }
++        }
++    }
++    rel.x = pts[a].x;
++    rel.y = pts[a].y;
++    rel.z = pts[a].z;
++    Vec3_Subtract(from, &rel, &rel);
++    if (a == count - 1) {
++        dir.x = pts[a].x - pts[a - 1].x;
++        dir.y = lbl_806D738C;
++        dir.z = pts[a].z - pts[a - 1].z;
++    } else {
++        dir.x = pts[a + 1].x - pts[a].x;
++        dir.y = lbl_806D738C;
++        dir.z = pts[a + 1].z - pts[a].z;
++    }
++    Vec3_Normalize(&dir, &dir);
++    dist += Vec3_Dot(&rel, &dir);
++    rel.x = pts[b].x;
++    rel.y = pts[b].y;
++    rel.z = pts[b].z;
++    Vec3_Subtract(to, &rel, &rel);
++    if (b == count - 1) {
++        dir.x = pts[b].x - pts[b - 1].x;
++        dir.y = lbl_806D738C;
++        dir.z = pts[b].z - pts[b - 1].z;
++    } else {
++        dir.x = pts[b + 1].x - pts[b].x;
++        dir.y = lbl_806D738C;
++        dir.z = pts[b + 1].z - pts[b].z;
++    }
++    Vec3_Normalize(&dir, &dir);
++    dist -= Vec3_Dot(&rel, &dir);
++    return dist;
+ }
+ 
+ /* === extracted from auto_RivalRun_Destroy_text === */
