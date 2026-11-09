@@ -20,7 +20,7 @@ unsigned char lbl_80677F04[28];
 unsigned char lbl_80677F20[28];
 
 
-static inline void WriteBits(int start, int n, unsigned char value) {
+static inline void WriteBits(int start, int n, int value) {
     int i;
     for (i = 0; i < n && i + start < 125; i++) {
         lbl_80677EE8[(start + i) / 5] &= ~(1 << (4 - (start + i) % 5));
@@ -28,7 +28,7 @@ static inline void WriteBits(int start, int n, unsigned char value) {
     }
 }
 
-static inline void WriteField(int field, unsigned char value) {
+static inline void WriteField(int field, int value) {
     WriteBits(lbl_80377C00.offsets[field], lbl_80377BE0[field], value);
 }
 
