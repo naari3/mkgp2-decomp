@@ -1725,6 +1725,9 @@ def fix(a, rep0):
     ns = argparse.Namespace(unit=a.unit, fn=a.fn, demangled=None, start=a.start, start_tu=a.start_tu,
                             pragma=a.pragma, cc=a.cc, moves=None)
     sw = ss.Sweep(ns)
+    if a.objdiff:
+        ps.OBJDIFF = True
+        a.slack *= 10
     ev = Evaluator(sw, sw.sym or a.fn, a.jobs, a.fn)
     print(f"[regfix] parallel debugger: {'yes (native gdb)' if md.NATIVE else 'yes (netns)' if ev.par else 'no (unshare failed)'}", flush=True)
     allowed = set(ss.REG_ONLY_MOVES) | {"expand", "swap"}
@@ -1884,7 +1887,9 @@ def fix(a, rep0):
     pp = prag(best[2])
     out.write_text(("#pragma push\n" + "".join(f"#pragma {p}\n" for p in pp) if pp else "")
                    + sw.func_text(best[2]) + ("\n#pragma pop\n" if pp else ""))
-    print(f"[regfix] best: {best[1]} diff lines, metric {best[0]}; definition written to {out}")
+    pcs = objdiff_pcts(sw, [text0, rend(best[2]), rend(bestl[1])], a.jobs)
+    print(f"[regfix] objdiff: start {pcs[0]}, best {pcs[1]}, fewest-lines {pcs[2]}")
+    print(f"[regfix] best: {best[1]} {'objdiff units' if a.objdiff else 'diff lines'}, metric {best[0]}; definition written to {out}")
     if bestl[0] < best[1]:
         o2 = TMPDIR / f"{a.fn}.fewest{sw.u.ext}"
         pp = prag(bestl[1])
@@ -2013,6 +2018,23 @@ PROBE_PRAGMAS = ["opt_propagation off", "opt_strength_reduction off", "opt_commo
                  "opt_lifetimes off", "opt_dead_assignments off", "opt_loop_invariants off"]
 
 
+def objdiff_pcts(sw, texts, jobs=4):
+    """objdiff fuzzy match % per TU text (as strings), next to the diff-line
+    metric: fewer differing lines does not always mean a higher % (fn_802386E0)."""
+    import pragmasweep as ps
+    from concurrent.futures import ThreadPoolExecutor
+    if not os.path.exists(ps.OBJDIFF_CLI):
+        return ["n/a"] * len(texts)
+    old = ps.OBJDIFF
+    ps.OBJDIFF = True
+    try:
+        with ThreadPoolExecutor(jobs, initializer=ps._init_worker) as ex:
+            r = list(ex.map(lambda t: sw.u.compile_score(t, sw.a.fn, sw.cc, 100 + ps.worker_id()), texts))
+    finally:
+        ps.OBJDIFF = old
+    return ["fail" if x >= 10**6 else f"{100 - x / 100:.2f}%" for x in r]
+
+
 def cmd_probe(a):
     """One compile per lever that hand landings used on register-only diffs, so
     the person rewriting sees which levers move the registers at all:
@@ -2074,11 +2096,18 @@ def cmd_probe(a):
             sw.head = head0
     with ThreadPoolExecutor(a.jobs, initializer=ps._init_worker) as ex:
         sc = list(ex.map(lambda t: sw.score(t, ps.worker_id()), texts))
+    pct = objdiff_pcts(sw, texts, a.jobs)
     s0 = sc[0]
-    print(f"{a.fn}: start {s0} diff lines; one compile per lever (lower is better, 0 = match)")
-    for (l, _, _), x in sorted(zip(variants, sc), key=lambda r: r[1]):
+    print(f"{a.fn}: start {s0} diff lines / objdiff {pct[0]}; one compile per lever "
+          f"(sorted by objdiff %, which the progress report counts; lines: 0 = match)")
+    def pkey(r):
+        try:
+            return (-float(r[2].rstrip("%")), r[1])
+        except ValueError:
+            return (1, r[1])
+    for (l, _, _), x, pc in sorted(zip(variants, sc, pct), key=pkey):
         mark = "MATCH" if x == 0 else ("better" if x < s0 else ("same" if x == s0 else "worse"))
-        print(f"  {x:>6}  {mark:<6}  {l}")
+        print(f"  {x:>6}  {pc:>7}  {mark:<6}  {l}")
     if not a.no_dbg:
         ev = Evaluator(sw, sw.sym or a.fn, 1, a.fn)
         # the solver on the start and on every structural lever: those often
@@ -2122,6 +2151,8 @@ def main():
             p.add_argument("--focus-only", action="store_true", help="only moves on diagnosed lines/locals")
             p.add_argument("--no-inline", action="store_true", help="no extract-to-static-inline moves")
             p.add_argument("--no-log", action="store_true", help="do not record a match in tools/patterns/hits.jsonl (replays)")
+            p.add_argument("--objdiff", action="store_true",
+                           help="rank variants by objdiff fuzzy %% ((100-%%)*100) instead of diff lines")
             p.add_argument("--minutes", type=float, default=0)
             p.add_argument("-j", "--jobs", type=int, default=4)
     pr = sub.add_parser("probe", help="one compile per known lever (pragmas, unname, inline expansion, decl order)")
