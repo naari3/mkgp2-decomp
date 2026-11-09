@@ -24,6 +24,12 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-09 21:55Z (n3 structure): TU merge `game/EnmyFaceEffect.cpp` +
+  `game/EnmyFaceEffect_nm1.cpp` -> `game/EnmyFaceEffect.cpp` landed (2ce236c2,
+  Matching, owns both vtables/RTTI; board n3-20261109-2105). New rename
+  directives in `tools/extab_user_renames.json`: `"@N": "active:lbl_X"` keeps
+  an unreferenced literal alive, `"#align4": ".rodata"` pins a section to
+  4-byte alignment (`docs/thread_tips.md`, last two bullets).
 - 2026-11-09 22:00Z (n3 regfix): `regfix.py diag` now (1) prints a section "loop counters shared by
   several loops" when a saved GPR is off and a function-level counter drives >= 2 `for` loops: try
   regalloc_patterns §46 (block-local counter per later loop) first; (2) resolves the §40 anchor
