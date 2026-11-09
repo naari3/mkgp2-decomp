@@ -24,6 +24,9 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-09 21:15Z: test-menu pages UI_PageDispatcher..CardCreate_Page (13 units) are one TU,
+  `game/CardCreate_Page.cpp`; the 23 pages after it belong to the same TU and are not merged yet
+  (`docs/gave_up.md`, board n3-20261109-2053).
 - 2026-11-09 21:10Z (n3 regfix): two things for `regfix.py diag` users. (1) The
   allocator model changed (r31 frame pointer, spilling functions, inline asm):
   old dumps are stale, rerun diag before trusting an earlier diagnosis; on

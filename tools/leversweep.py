@@ -1171,6 +1171,80 @@ def gen_deaddef(fx):
     return out
 
 
+# ---- later-loops-block-local-counter (regalloc_patterns 46, b879fcb TitleCheck_NewClearedRecord_Race)
+
+def loop_sites(b, n):
+    """(start, end) of every `for (n = ...) stmt` in b."""
+    res = []
+    for m in re.finditer(r'\bfor\s*\(\s*%s\s*=' % re.escape(n), b):
+        o = b.index('(', m.start())
+        c = match_paren(b, o)
+        if c < 0:
+            continue
+        j = c
+        while j < len(b) and b[j].isspace():
+            j += 1
+        if j < len(b) and b[j] == '{':
+            e = match_paren(b, j, '{', '}')
+            if e < 0:
+                continue
+        else:
+            e = b.find(';', j) + 1
+            if not e:
+                continue
+        res.append((m.start(), e))
+    return res
+
+
+@lever('block-local-counter', 'later-loops-block-local-counter', 'auto', 'b879fcb',
+       'a function-level counter shared by several loops -> block-local `{ int i; for (...) }` for the later loops '
+       '(later ranges are SplitOffRange temps coloured before named locals)')
+def gen_blockloop(fx):
+    if fx.diag.get('kind') not in ('reg_only', 'reg+sched'):
+        return []
+    def f(body):
+        b = body
+        decls, st = body_decls(strip_comments(b))
+        res = []
+        for t, n, init in decls:
+            if '*' in t or t.split()[-1] not in SCALARS:
+                continue
+            sites = loop_sites(b, n)
+            if len(sites) < 2 or len(sites) > 8:
+                continue
+            def wrap(idxs):
+                nb = b
+                for k in sorted(idxs, reverse=True):
+                    s0, s1 = sites[k]
+                    nb = nb[:s0] + f'{{ {t} {n}; ' + nb[s0:s1] + ' }' + nb[s1:]
+                return nb
+            later = list(range(1, len(sites)))
+            res.append((f'{n}: later loops block-local', wrap(later)))
+            res.append((f'{n}: all loops block-local', wrap(range(len(sites)))))
+            if len(sites) > 2:
+                for k in range(len(sites)):
+                    res.append((f'{n}: loop {k} block-local', wrap([k])))
+                res.append((f'{n}: last loop block-local', wrap([len(sites) - 1])))
+            # first counter declared after the other leading locals
+            dm = re.search(r'^[ \t]*%s\s+%s\s*;[ \t]*\n' % (re.escape(t), re.escape(n)), b, re.M)
+            if dm and len(decls) > 1 and init is None:
+                last = None
+                for t2, n2, _ in decls:
+                    for mm in re.finditer(r'^[ \t]*%s\s+%s\b[^;\n]*;[ \t]*\n' % (re.escape(t2), re.escape(n2)), b, re.M):
+                        last = mm
+                        break
+                if last and last.end() > dm.end():
+                    moved = b[:dm.start()] + b[dm.end():last.end()] + dm.group(0) + b[last.end():]
+                    sites2 = loop_sites(moved, n)
+                    nb = moved
+                    for k in sorted(range(1, len(sites2)), reverse=True):
+                        s0, s1 = sites2[k]
+                        nb = nb[:s0] + f'{{ {t} {n}; ' + nb[s0:s1] + ' }' + nb[s1:]
+                    res.append((f'{n}: later loops block-local + decl last', nb))
+        return res
+    return fx.scoped(f)
+
+
 # --------------------------------------------------------------------------
 # runner
 

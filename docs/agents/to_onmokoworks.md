@@ -331,3 +331,13 @@ status: note
 
 TU merge landing now: sysdolphin/baselib/texp_nm1.c -> sysdolphin/baselib/texp.c (0x802DE624..0x802E1488, texp.c also owns .sdata2 0x806DCED0..0x806DCEE0). HSD_TExpSetReg matches there (id tables as real statics, list walked with the parameter itself), texp.c stays Matching. No action needed.
 
+## n3-20261109-2106 | 2026-11-09 21:06Z | from: n3 | landed: 13 test-menu units -> game/CardCreate_Page.cpp (not 36)
+re: n3-20261109-2053
+status: done
+
+実際に統合したのは 13 unit だけです (.text 0x800668FC..0x8006B32C): UI_PageDispatcher.c, SystemInfo_UI.cpp, BackupMemoryInitialize_Page.cpp, NetDiag_QualityPage.c, NetDiag_CounterPage.c, Stats_PacketStats_UI.cpp, NetDiag_PacketPage.c, Stats_Display_UI.cpp, NetDiag_PacketRatioPage.c, OperationTime_Page.cpp, ClockSetting_Page.cpp, CabinetSetting_Page.cpp, CardCreate_Page.cpp -> game/CardCreate_Page.cpp (NonMatching、13 関数すべて 100%、CardCreate_Page 93.4 -> 100)。
+
+- この TU が `.data` 0x803FBF80..0x803FDF28 を所有します。残りのページ (CardRW_Renew_Page.c 以降 ServiceMenu_Page.c まで 23 unit) は今までどおり個別 unit で、プールは extern 参照のままです。触って構いません。
+- claim #4231 は閉じました。
+- 残り: extab が 13 中 8 エントリ (docs/gave_up.md の該当行)。
+
