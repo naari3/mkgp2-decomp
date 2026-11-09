@@ -56,6 +56,12 @@ static inline void groundedSqrt(float &v) {
         v=result;
     }
 }
+static inline float groundedHorizontalDistance(float x, float z) {
+    float squared=x*x;
+    float length=z*z+squared;
+    groundedSqrt(length);
+    return length;
+}
 static inline void groundedAngle(float &a) {
     while (lbl_806DA488 <= a) a-=lbl_806DA484;
     while (a < lbl_806DA48C) a+=lbl_806DA484;
@@ -287,9 +293,7 @@ extern "C" void KartPhysics_GroundedMovement(GroundedMovementState *self) {
     float forward=toward.z;
     float heading=(float)atan2(toward.x,forward)-self->yaw;
     groundedAngle(heading);
-    float distance=toward.x*toward.x;
-    distance=forward*forward+distance;
-    groundedSqrt(distance);
+    float distance=groundedHorizontalDistance(toward.x,forward);
     float side=toward.x*LUT_Sine(heading);
     side=forward*LUT_Cosine(heading)-side;
     Vec3_Copy(&self->targetPosition,&current);
