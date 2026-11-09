@@ -1,5 +1,7 @@
 
 /* sdata symbols referenced from asm */
+extern unsigned char lbl_806D8574[4];
+extern unsigned char lbl_806D859C[4];
 extern unsigned char lbl_806D83D8[4];
 extern unsigned char lbl_806D83E4[5];
 extern unsigned char lbl_806D83F0[8];
@@ -2277,7 +2279,7 @@ extern "C" asm void fn_8015A6E4(OptionMenu *, int, float, float, float) { /* 0x8
     lfs f0, lbl_806D83D0(r2)
     mr r3, r30
     fadds f1, f1, f25
-    addi r4, r2, -0x1CEC  /* lbl_806D8574 */
+    la r4, lbl_806D8574(r2)  /* lbl_806D8574 */
     fadds f2, f0, f26
     creqv 6, 6, 6
     bl fn_80168798
@@ -2286,7 +2288,7 @@ extern "C" asm void fn_8015A6E4(OptionMenu *, int, float, float, float) { /* 0x8
     lfs f0, lbl_806D83E0(r2)
     mr r3, r30
     fadds f1, f1, f25
-    addi r4, r2, -0x1E7C  /* lbl_806D83E4 */
+    la r4, lbl_806D83E4(r2)  /* lbl_806D83E4 */
     fadds f2, f0, f26
     creqv 6, 6, 6
     bl fn_80168D84
@@ -2307,7 +2309,7 @@ extern "C" asm void fn_8015A6E4(OptionMenu *, int, float, float, float) { /* 0x8
     fmr f3, f27
     mr r3, r30
     fadds f1, f0, f25
-    addi r4, r2, -0x1CEC  /* lbl_806D8574 */
+    la r4, lbl_806D8574(r2)  /* lbl_806D8574 */
     creqv 6, 6, 6
     bl fn_80168798
     lfs f1, lbl_806D83DC(r2)
@@ -2315,7 +2317,7 @@ extern "C" asm void fn_8015A6E4(OptionMenu *, int, float, float, float) { /* 0x8
     lfs f0, lbl_806D83E0(r2)
     mr r3, r30
     fadds f1, f1, f25
-    addi r4, r2, -0x1E70  /* lbl_806D83F0 */
+    la r4, lbl_806D83F0(r2)  /* lbl_806D83F0 */
     fadds f2, f0, f26
     creqv 6, 6, 6
     bl fn_80168D84
@@ -2410,7 +2412,7 @@ extern "C" asm void fn_8015A6E4(OptionMenu *, int, float, float, float) { /* 0x8
     li r3, 0x0
     fn_8015A6E4_L_8015A974:
     cmplwi r3, 0x0
-    addi r27, r2, -0x1CC4  /* lbl_806D859C */
+    la r27, lbl_806D859C(r2)  /* lbl_806D859C */
     beq fn_8015A6E4_L_8015A988
     bl get_title_name_global
     mr r27, r3
