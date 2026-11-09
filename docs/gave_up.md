@@ -396,6 +396,7 @@ the remaining candidates (~175 KB in Matching TUs). What blocked the rest:
 | `fn_801AC208` | game/sprite/fn_801AC208 | 99.67 | Not tried: the residual is operand order inside one expression; no statement runs to sweep. |
 | `fn_801D1890` | game/fn_801D1890 | 99.99 | All runs in Update / RankingAdvanceFlow / RankingInsertFade: no gain (the slots come from C++ temporaries, not statement order). |
 | `fn_80184928` | game/dlistutil/fn_80184928 | 98.72 (decl160 WIP) | Sweep on the decl160 WIP: 98.72 -> 98.75 (last 7-statement run only). |
+| `fn_802854B0` | triforce/jvsio | 99.88 | prologue: `addi r4,&tx.len` / `addi r8,&cmd.len` emitted in the opposite order (field-address CSE temps) | n3 11-09: inline vs open-coded check, operand order, int/u16 param, len local in 3 spots, early return, statement swap, pragmasweep all + decl 100 (GC/1.2.5n), shapesweep 12 min: best 4 lines |
 
 ## Pool-merge sweep 2026-11-09 (data ownership / §13 thread)
 
