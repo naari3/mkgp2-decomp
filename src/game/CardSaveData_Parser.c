@@ -315,8 +315,9 @@ int Card_VerifyChecksum(void *unused, u8 *raw)
         return -1;
     }
     DebugPrintf(lbl_80317588);
+    j = 0;
     expected = lbl_806D34A4;
-    for (j = 0; j < 3; j++, expected++) {
+    for (; j < 3; j++, expected++) {
         bitpack_read_field_by_name(pack, lbl_803170FC, &signature, j);
         DebugPrintf(lbl_806D34A8, signature);
         if (*expected != signature) return -1;

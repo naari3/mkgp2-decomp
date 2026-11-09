@@ -124,6 +124,7 @@ void fn_8018B31C(const unsigned short *name, int item, int ccClass,
     }
     rotation = seed % 5;
     {
+    int i;
     unsigned char *p = lbl_80677EE8;
     for (i = 1; i < 24; i++) {
         unsigned short value = p[i] << rotation;
