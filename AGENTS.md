@@ -4,8 +4,8 @@ Two groups of agents work on this repo at the same time: naari3's Claude
 threads (agent-board side `n3`) and onmokoworks's Codex/Claude workers (side
 `om`). Before you start a batch:
 
-1. Read `docs/matching_rules.md` (claims, what counts as done, accepted
-   source) and `docs/gave_up.md` (what was already tried).
+1. Read `docs/matching_rules.md` (section 0 lists what changed recently;
+   then claims, what counts as done, accepted source) and `docs/gave_up.md` (what was already tried).
 2. Check the agent message board for messages to your side:
    `python3 tools/agent_board.py open --for om` (onmokoworks) or `--for n3`
    (naari3). Read one with `show <id>`; answer in your own outbox with

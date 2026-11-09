@@ -3143,5 +3143,31 @@
     "Race_PerFrameTickAndAudio",
     "fn_801B6B94",
     "VoiceSystem_Init"
+  ],
+  "src/game/Sci2Card_BuildRetryReceiptLine.c": [
+    "Sci2Card_BuildRetryReceiptLine",
+    "Sci2Card_BuildScoreReceiptLine",
+    "Sci2Card_WriteTrackData_PollState",
+    "Sci2Card_WriteTrackData_StartFlow",
+    "Sci2Card_EjectAndFinalize_Step",
+    "card_rw_state_machine_short",
+    "card_rw_state_machine",
+    "card_rw_kick_state_machine",
+    "card_read_tick",
+    "card_send_read_cmd_init",
+    "card_read_state_machine",
+    "card_send_read_cmd_init_dup_unused",
+    "card_ping_state_machine",
+    "card_send_ping_cmd_init",
+    "card_cleaning_state_machine",
+    "card_send_cleaning_cmd_init",
+    "card_eject_state_machine",
+    "card_eject_init",
+    "card_force_backup_now",
+    "Sci2Card_PollResponseStatusTri",
+    "Sci2Card_ResetRetryAndStatus",
+    "Sci2Card_BuildItemGetReceiptLine",
+    "Sci2Card_PopulateRankRowByMode",
+    "Sci2Card_RegisterReceiptBuffersCleanup"
   ]
 }

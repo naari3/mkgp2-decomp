@@ -2687,111 +2687,12 @@ game/Sci2Card_PrintReceipt.c:
 	.text       start:0x80094950 end:0x80094D80
 
 game/Sci2Card_BuildRetryReceiptLine.c:
-	extab       start:0x800094C8 end:0x800094D0
-	extabindex  start:0x80022058 end:0x80022064
-	.text       start:0x80094D80 end:0x80095388
-	.data       start:0x803FFE58 end:0x803FFE80
-
-game/Sci2Card_BuildScoreReceiptLine.c:
-	extab       start:0x800094D0 end:0x800094D8
-	extabindex  start:0x80022064 end:0x80022070
-	.text       start:0x80095388 end:0x80095C5C
-	.data       start:0x803FFE80 end:0x803FFEA8
-
-game/Sci2Card_WriteTrackData.c:
-	extab       start:0x800094D8 end:0x800094F0
-	extabindex  start:0x80022070 end:0x80022094
-	.text       start:0x80095C5C end:0x80096034
-
-game/card_rw_state_machine_short.c:
-	extab       start:0x800094F0 end:0x800094F8
-	extabindex  start:0x80022094 end:0x800220A0
-	.text       start:0x80096034 end:0x80096A5C
-
-game/card_rw_state_machine.c:
-	extab       start:0x800094F8 end:0x80009500
-	extabindex  start:0x800220A0 end:0x800220AC
-	.text       start:0x80096A5C end:0x8009755C
-
-game/CardReadCommand.c:
-	extab       start:0x80009500 end:0x80009518
-	extabindex  start:0x800220AC end:0x800220D0
-	.text       start:0x8009755C end:0x800976C0
-
-game/card_read_state_machine.c:
-	extab       start:0x80009518 end:0x80009520
-	extabindex  start:0x800220D0 end:0x800220DC
-	.text       start:0x800976C0 end:0x80098320
-
-game/CardReadCommandUnused.c:
-	extab       start:0x80009520 end:0x80009528
-	extabindex  start:0x800220DC end:0x800220E8
-	.text       start:0x80098320 end:0x8009838C
-
-game/card_is_ejected.c:
-	.text       start:0x8009838C end:0x800983A0
-
-game/CardPingCommand.c:
-	extab       start:0x80009528 end:0x80009538
-	extabindex  start:0x800220E8 end:0x80022100
-	.text       start:0x800983A0 end:0x80098790
-
-game/card_ping_clear_pending_flag.c:
-	.text       start:0x80098790 end:0x800987A8
-
-game/CardCleaningCommand.c:
-	extab       start:0x80009538 end:0x80009548
-	extabindex  start:0x80022100 end:0x80022118
-	.text       start:0x800987A8 end:0x80098A90
-
-game/CardEjectCommand.c:
-	extab       start:0x80009548 end:0x80009558
-	extabindex  start:0x80022118 end:0x80022130
-	.text       start:0x80098A90 end:0x80098E48
-
-game/card_rw_get_substate.c:
-	.text       start:0x80098E48 end:0x80098E50
-
-game/CardForceBackup.c:
-	extab       start:0x80009558 end:0x80009560
-	extabindex  start:0x80022130 end:0x8002213C
-	.text       start:0x80098E50 end:0x800991D8
-
-game/Sci2Card_FlagReceiptTestEnable.c:
-	.text       start:0x800991D8 end:0x800991FC
-
-game/Sci2Card_PollResponseStatusTri.c:
-	extab       start:0x80009560 end:0x80009568
-	extabindex  start:0x8002213C end:0x80022148
-	.text       start:0x800991FC end:0x8009927C
-
-game/Sci2Card_GetPrintErrorCode.c:
-	.text       start:0x8009927C end:0x80099284
-
-game/Sci2Card_ResetRetryAndStatus.c:
-	extab       start:0x80009568 end:0x80009570
-	extabindex  start:0x80022148 end:0x80022154
-	.text       start:0x80099284 end:0x800992C0
-
-game/Sci2Card_BuildItemGetReceiptLine.c:
-	extab       start:0x80009570 end:0x80009578
-	extabindex  start:0x80022154 end:0x80022160
-	.text       start:0x800992C0 end:0x800997E4
-
-game/Sci2Card_PopulateRankRowByMode.c:
-	extab       start:0x80009578 end:0x80009580
-	extabindex  start:0x80022160 end:0x8002216C
-	.text       start:0x800997E4 end:0x8009990C
-
-game/Sci2Card_RegisterReceiptBuffersCleanup.c:
-	extab       start:0x80009580 end:0x80009588
-	extabindex  start:0x8002216C end:0x80022178
-	.text       start:0x8009990C end:0x80099958
+	extab       start:0x800094C8 end:0x80009588
+	extabindex  start:0x80022058 end:0x80022178
+	.text       start:0x80094D80 end:0x80099994
 	.ctors      start:0x802E88F8 end:0x802E88FC
-
-game/Sci2Card_ReceiptTables.c:
-	.text       start:0x80099958 end:0x80099994
-	.data       start:0x803FFEA8 end:0x80401118
+	.rodata     start:0x80317948 end:0x80318270
+	.data       start:0x803FFDF0 end:0x80401118
 
 game/NameCheck_CardName.c:
 	extab       start:0x80009588 end:0x80009598
@@ -13661,12 +13562,9 @@ sysdolphin/baselib/hash.c:
 	.sdata      start:0x806D0F30 end:0x806D0F38
 
 sysdolphin/baselib/texp.c:
-	.text       start:0x802DE624 end:0x802E0F8C
+	.text       start:0x802DE624 end:0x802E1488
 	.data       start:0x804FD988 end:0x804FDCF0
 	.sdata      start:0x806D0F38 end:0x806D0F60
-
-sysdolphin/baselib/texp_nm1.c:
-	.text       start:0x802E0F8C end:0x802E1488
 	.sdata2     start:0x806DCED0 end:0x806DCEE0
 
 sysdolphin/baselib/texp_compile.c:

@@ -15,6 +15,45 @@ hints on the other side's claimed TUs, requests, questions) go on the board in
 first (`python3 tools/agent_board.py open --for om` or `--for n3`), answer with
 a `re:` entry in your own outbox. Append only.
 
+## 0. What changed recently (read this first)
+
+The rules below are current practice, not permanent law: naari3 changes them
+as the project moves, and the newest dated line wins over older text anywhere
+in `docs/`. Whoever changes a rule adds ONE line here (newest on top, date in
+UTC, where the full text is) and posts the same line on the agent board
+(`docs/agents/`). Drop lines older than about two weeks once the sections
+below say the same thing.
+
+- 2026-11-09 21:10Z (n3 regfix): two things for `regfix.py diag` users. (1) The
+  allocator model changed (r31 frame pointer, spilling functions, inline asm):
+  old dumps are stale, rerun diag before trusting an earlier diagnosis; on
+  GC/1.0-1.2.5 units diag now prints a warning because the trace is a newer
+  stand-in. (2) New `docs/regalloc_patterns.md` 45: registers of values loaded
+  inside an inlined helper are steered by naming them as uninitialised locals
+  of the inline; inline locals number in FORWARD declaration order.
+- 2026-11-09 20:55Z (naari3): the game inline-asm functions (group C of
+  `docs/agents/asm_fn_split_20261109.md`) are open to BOTH sides. Only
+  unit-claims coordinate them: claim the TU right before working it, never
+  touch a TU the other side has claimed. This replaces the 13:38Z line below
+  for group C.
+- 2026-11-09 21:10Z: `tools/tu_audit.py` no longer discounts merges that take
+  the `Matching` flag from some TUs; `docs/reports/tu_boundary_audit.md`
+  regenerated with that ranking (follows the 18:47Z rule).
+- 2026-11-09 20:50Z: big changes (TU merges, tools, build rules) are announced
+  on the board no later than the push that lands them (section 1).
+- 2026-11-09 18:47Z: the original TU structure wins over the `Matching` flag;
+  a merge may leave a TU `NonMatching` if `main.dol` is OK and the count of
+  100% functions rises (section 2, rule 5; section 5 "Over-split TUs").
+- 2026-11-09 18:39Z: pool ownership is checked before moving data
+  (`pool_audit.py`, `own_data.py` guard; section 5).
+- 2026-11-09 15:19Z: diagnose before guessing; a new `docs/gave_up.md` row
+  names the compiler rule (section 7, `AGENTS.md`).
+- 2026-11-09 13:38Z: the 158 inline-asm functions are shared out (n3: SDK and
+  card, om: game group C); claims stay the binding rule
+  (`docs/agents/asm_fn_split_20261109.md`).
+- 2026-11-09 12:20Z: messages between the two sides go on the agent board
+  instead of through naari3.
+
 ## 1. Coordination
 
 - **Claim before you start.** Right before touching a TU, open a GitHub issue
@@ -30,10 +69,14 @@ a `re:` entry in your own outbox. Append only.
 - **Never touch a TU with someone else's open claim**, even indirectly (for
   example as part of a TU merge, a shared `splits.txt` block, or a rename in
   `tools/extab_user_renames.json` that belongs to that TU).
-- **Big changes get announced first.** Changes to `tools/`, the build rules in
-  `configure.py`, TU splits/merges that cross several claims, and anything
-  that renumbers shared data should be mentioned in the commit/PR description
-  and to the other side before landing. Small per-TU edits do not need this.
+- **Big changes get announced on the board.** Changes to `tools/`, the build
+  rules in `configure.py`, TU splits/merges, and anything that renumbers
+  shared data get a post on the agent board (`docs/agents/`) no later than the
+  push that lands them, naming the old and new TU paths and the address range,
+  so the other side can re-point its work lists. Small per-TU edits do not
+  need this. (naari3's threads landed about fifteen merges on 2026-11-09
+  between 18:20Z and 20:50Z with only a late summary, n3-20261109-2050; that
+  was a miss on our side, not the rule.)
 - **Shared lists:** insert new entries next to neighbours from the same address
   range in `configure.py`, `config/GNLJ82/splits.txt`, `symbols.txt`,
   `tools/extab_user_renames.json`, `tools/extab_order.json`,
@@ -59,6 +102,21 @@ A change can land on `main` (directly or by PR) when all of these hold:
 4. A TU flips to `Matching` only when every function in it is 100% and the DOL
    still links byte-identical. A TU with one unmatched function stays
    `NonMatching` even if the rest is perfect.
+5. **The original TU structure wins over the Matching flag** (naari3,
+   2026-11-09 18:47Z). When the evidence says several split files were one
+   original source file (shared section anchor / pool, link-order cycle, weak
+   inline copy placement, section 5 and 6), merge them even if the merged TU
+   becomes `NonMatching` and TUs that were `Matching` lose that flag, as long
+   as `main.dol` is OK and the number of 100% functions goes up. A merge that
+   is right but raises no function count yet is not landed: its evidence and
+   recipe go into `docs/gave_up.md` until a function matches with it. The
+   report's "matched code %" can therefore go down in a commit that is
+   progress; compare function counts. onmokoworks's side may count this
+   differently in its own numbers; the rule is about what may land on `main`.
+6. **asm -> C lands only at 100%.** A function that is inline asm in a
+   `Matching` TU is replaced by C/C++ only when the C matches; a partial draft
+   goes to `docs/wip/` with a row in `docs/gave_up.md`. Both sides work this
+   way (om-20261109-1418).
 
 ## 3. What source is acceptable
 
@@ -163,7 +221,25 @@ without those flags ninja tries to download tools and fails.
   file. Merge the split TUs back into one (concatenate sources, merge the
   `splits.txt` blocks, delete stale `build/GNLJ82/asm/*.s`). Keep the original
   file name (it matters for `__FILE__` strings). Only do this when no part of
-  the merge is claimed by someone else, and announce it (rule 1).
+  the merge is claimed by someone else, and announce it (rule 1). The merged
+  TU may end up `NonMatching` (section 2, rule 5). `tools/merge_tus.py`
+  (`plan` / `apply` / `prune-renames`, see its docstring and
+  `docs/thread_tips.md`) does the mechanical part for C TUs: it rewrites
+  `splits.txt`, `configure.py` and the two extab json files. Worked examples
+  and what had to change on the way: `docs/regalloc_patterns.md` §32 (item
+  select, ten files), §40 (race voice, 53 files).
+- **Which TU owns a pool: check before moving data.** `tools/pool_audit.py`
+  (output `docs/reports/pool_audit.md`) lists functions whose target reaches
+  several objects from one base; an `OTHER` or `UNOWNED` row on a near miss is
+  an ownership bug, not a register problem. Never give the middle of another
+  TU's anchor pool to a different TU: `tools/own_data.py apply` refuses such a
+  range since 7653d99 (NameCheck_CardName sat at 99.81% for exactly this).
+- **Object boundaries inside a pool.** Every distinct `N` in the target's
+  `addi rX, anchor, N` is the first byte of a real source object; split the
+  pool there (in the source and in `symbols.txt`) and index that object
+  directly instead of `base + CONST` (`docs/regalloc_patterns.md` §40;
+  `python3 tools/leversweep.py detect` lists candidates in
+  `docs/sweeps/leversweep/anchor_detect.md`).
 - **Identical instruction, still `DIFF_ARG_MISMATCH` (pooled offsets).**
   objdiff resolves `addi/lfs rX, rBase, OFF` inside an owned pool to the data
   symbol at that address. If `symbols.txt` has one big target object
@@ -288,6 +364,16 @@ without those flags ninja tries to download tools and fails.
 
 ## 7. Before you give up on a function
 
+**Diagnose first (since 2026-11-09).** Blind sweeps (pragma x decl order x
+permuter, about 1950 rule applications) gave 2 matches; reading the diagnosis
+and picking one rewrite gives about 3 an hour. Before the list below, run
+`python3 tools/regfix.py diag UNIT FN` (first vreg coloured differently, the
+source line, fitting rules), `python3 tools/mwsched.py explain|coalesce UNIT FN
+--run` (order, kept copies) and `python3 tools/asmgrep.py similar UNIT FN
+--src` (how matched functions wrote the same shape); the compiler rules are in
+`docs/mwcc_internals.md`. First ask whether it is a register problem at all:
+a `reloc` / anchor diff is TU or pool ownership (section 5).
+
 Things that solved "only registers/schedule differ" cases on this project,
 roughly in the order worth trying:
 
@@ -302,9 +388,10 @@ roughly in the order worth trying:
    `opt_dead_assignments off` / `opt_strength_reduction off` (mark fakematch),
    then re-create the one CSE you lost by hand with a named local.
 7. Permuter. decomp-permuter works for C TUs; naari3's side also has a text
-   permuter for C++ (`cperm.py`, kept outside the repo, ask if you want it).
-   In practice it rarely moved the last register swaps here; new source ideas
-   did.
+   permuter for C++ (`tools/helpers/cperm.py`) and a template permuter that
+   only keeps variants passing a trace predicate (`tools/tracesweep.py`).
+   In practice permuters rarely moved the last register swaps here; new
+   source ideas did.
 8. Shapes that closed 2-line diffs on 2026-11-08:
    - Loop step order (target bumps the pointer before the count): walk with
      a separate index, `int count = 0, i = 0; while (t[i].name) { i++; count++; }`
@@ -333,7 +420,10 @@ roughly in the order worth trying:
    bigger, e.g. 16 bytes with a pad member. Two adjacent int fields copied with
    `lwz,lwz,stw,stw` are one 8-byte struct copy.
 10. More shapes, with commits: `docs/regalloc_patterns.md` (numbered fixes
-    §1..§17 plus the onmokoworks Codex fixes). Functions others already
+    §1..§43 plus the onmokoworks Codex fixes; §18 onwards are from
+    2026-11-09 and each names its rule in `tools/patterns/rules.jsonl`).
+    `python3 tools/leversweep.py fn UNIT FN --show` tries the hand levers of
+    that day whose trigger fits the diff. Functions others already
     tried, with their best % and WIP location: `docs/gave_up.md`.
 
 When you stop, record the function in `docs/gave_up.md` with the current %,
