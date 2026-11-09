@@ -19,7 +19,8 @@ struct MarkerPart {
         SetScalar(scale, rotation, rgb[0], rgb[1], rgb[2], alpha);
     }
     void SetRGBA(float scale, float rotation, const float *rgba) {
-        SetScalar(scale, rotation, rgba[0], rgba[1], rgba[2], rgba[3]);
+        visible = 1; sy = scale; sx = scale; angle = rotation;
+        color[0] = rgba[0]; color[1] = rgba[1]; color[2] = rgba[2]; color[3] = rgba[3];
     }
     void Fade(float scale, float rotation, const float *rgb, float t) {
         sx = Approach(sx, scale, t); sy = Approach(sy, scale, t); angle = rotation;
