@@ -50,7 +50,7 @@ all of these.
 | `fn_8029B54C` | thp/THPDec | 99.97 | vs (`0x41b - 0x6f2`) computed into r23 then masked into r26; target subf straight into r26 | R5 11-08: hs/vs types (u8/u16/u32/s32 x2), swap order, `(u8)` casts, decl-order sweep 400 + single pragmas: all stay at 4 lines |
 | `__THPGetBit` | thp/THPDec | 80.9 | -O2 drops the dead loop-entry `b`; li/lbz order and fast-path store order remain | R5 11-08: `#pragma optimization_level 2` (put it before the opt_* offs, it resets them) = 6 lines, + scheduling/peephole off = 4; loop shapes, statement perms, every cc: no match |
 | `ClRomTable_PurgeAll` | game/ClRomTable_PurgeAll | 99.70 | r27/r29 swap | 8 loop shapes; 40 min permuter |
-| `fn_801F1EE0`, `fn_801F2400`, `fn_801F230C` | game/Menu801F0CC0 | 99.54 / 99.48 / 97.60 | target does `mr rX, r_i` copy of the induction var at loop start; not reproducible so far | decl orders, scoped `i` |
+| `fn_801F1EE0`, `fn_801F2400`, `fn_801F230C` | game/fn_801F27B4 (Menu801F0CC0 merged 11-09) | 99.54 / 99.48 / 97.60 | target does `mr rX, r_i` copy of the induction var at loop start; not reproducible so far | decl orders, scoped `i` |
 | `fn_8018E538` | game/objview/fn_8018E538 | 99.42 | same `mr rX, r_i` IV init copy as above | |
 | `CardData_InitDefaults` | game/CardData_InitDefaults | 99.92 | epilogue `lwz r0` order | no flag or version fixes it |
 | `fn_801E96BC` | game/fn_801E96BC | 99.85 | base / iterator register swap | |
@@ -351,7 +351,6 @@ OptionMenuDraw.cpp was merged into SceneList_80157EA8.cpp (dbc2a11) so the optio
 ## asm-A wind-down 2026-11-08 11:50
 - `AI_SystemDtor` (game/AI_SystemDtor, 99.53 after 62a185a2): writing `driver = 0` before `kartId = -1` in ResetRecord gives the target constant registers (0 in r4, -1 in r3). What's left: the scheduler then puts the `driver` store before the `kartId` store, where the target stores -1 first (8 lines). The cperm best (statement order and block scopes changed) is /mnt/project-files/wip/asm-a/AI_SystemDtor_cperm23.cpp and is not verified as a % gain.
 - `Terrain_FindTriangleAtPosition` (98.41): the only real diff is that triCount is loaded into r0 where the target uses r4 (`lwz r4,4(r4); mtctr r4`). The 0.0f literal diff is only @N naming, since the TU owns 0x806D2384. Tried with no gain: pragmasweep all k2, every decl order, cell-pointer, countdown and inline-loop forms, and cperm 36k iterations.
-- `Menu801F0CC0` fn_801F1664/fn_801F1C58 (12/16 lines): the target keeps the table offsets unfolded (`addi r4,r31,0x128; addi r4,r4,0x90`). Inline helpers and struct-member address forms all fold. fn_801F1EE0/2400 hit the color/loop-counter swap (regalloc_patterns "Still open"). cperm 13k with no gain.
 - `NokoNoko_801287F8` NokoNokoChallenge_Update: 3 instructions from matching. The patch is /mnt/project-files/wip/asm-a/nokonoko_update_3insn.patch (it includes the extab_order/renames changes). Every holding-variable coloring attempt failed (decls, types, scopes, inline, 24k cperm).
 
 ## gaveup-retry wind-down 2026-11-08 11:50

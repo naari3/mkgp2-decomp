@@ -10419,25 +10419,10 @@ game/fn_801F0C80.c:
 game/fn_801F0CBC.c:
 	.text       start:0x801F0CBC end:0x801F0CC0
 
-game/Menu801F0CC0.cpp:
-	extab       start:0x80016E94 end:0x80016F7C
-	extabindex  start:0x80028BD4 end:0x80028D00
-	.text       start:0x801F0CC0 end:0x801F26C8
-
-game/fn_801F26C8.c:
-	extab       start:0x80016F7C end:0x80016F84
-	extabindex  start:0x80028D00 end:0x80028D0C
-	.text       start:0x801F26C8 end:0x801F2724
-
-game/dtor_801F2724.cpp:
-	extab       start:0x80016F84 end:0x80016FAC
-	extabindex  start:0x80028D0C end:0x80028D18
-	.text       start:0x801F2724 end:0x801F27B4
-
 game/fn_801F27B4.cpp:
-	extab       start:0x80016FAC end:0x80016FB4
-	extabindex  start:0x80028D18 end:0x80028D24
-	.text       start:0x801F27B4 end:0x801F2B70
+	extab       start:0x80016E94 end:0x80016FB4
+	extabindex  start:0x80028BD4 end:0x80028D24
+	.text       start:0x801F0CC0 end:0x801F2B70
 	.ctors      start:0x802E8930 end:0x802E8934
 	.data       start:0x804E4C28 end:0x804E5248
 

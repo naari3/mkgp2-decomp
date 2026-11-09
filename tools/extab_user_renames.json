@@ -2817,9 +2817,6 @@
     "__dt__14Holder801F0B58Fv": "dtor_801F0B58",
     "__dt__13Owned801F0B58Fv": "fn_801DC29C"
   },
-  "src/game/dtor_801F2724.cpp": {
-    "__dt__14Holder801F2724Fv": "dtor_801F2724"
-  },
   "src/game/fn_801F7CD8.cpp": {
     "__dt__14Holder801F7CD8Fv": "fn_801F7CD8"
   },
@@ -11540,17 +11537,6 @@
   "src/game/mapeffect/PointListConstruct.cpp": {
     "__ct__9PointListFP10SpawnPoint": "fn_8016C94C"
   },
-  "src/game/Menu801F0CC0.cpp": {
-    "__dt__8Menu801FFv": "fn_801F25BC",
-    "__vt__8Menu801F": "lbl_804E5254",
-    "__vt__12MenuBase801F": "lbl_803FE0C8",
-    "__dt__14MenuSprite801FFv": "dtor_80122120",
-    "__dt__10FlowFaderIFv": "fn_801F26C8",
-    "__vt__10FlowFaderI": "lbl_804E5284",
-    "__dl__FPv": "MemoryManager_TimedFree",
-    "__dla__FPv": "MemoryManager_TimedFree",
-    "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724"
-  },
   "src/game/TransitionEffect.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
@@ -13849,7 +13835,6 @@
     "@61": "@etb_80016FAC",
     "@62": "@eti_80028D18",
     "...data.0": "global:lbl_804E4C28",
-    "menuGeometryB": "global:lbl_804E4D30",
     "liveA": "global:lbl_804E5050",
     "liveB": "global:lbl_804E51A0",
     "fn_801F2400__16MenuReceiver801FFv": "fn_801F2400",
@@ -13901,7 +13886,17 @@
     "@25": "lbl_804E5170",
     "@26": "lbl_804E517C",
     "@27": "lbl_804E5188",
-    "@28": "lbl_804E5194"
+    "@28": "lbl_804E5194",
+    "menuSelectRects": "global:lbl_804E4D30",
+    "__dt__8Menu801FFv": "fn_801F25BC",
+    "__vt__8Menu801F": "lbl_804E5254",
+    "__vt__12MenuBase801F": "lbl_803FE0C8",
+    "__dt__14MenuSprite801FFv": "dtor_80122120",
+    "__vt__10FlowFaderI": "lbl_804E5284",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__dla__FPv": "MemoryManager_TimedFree",
+    "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
+    "__dt__14Holder801F2724Fv": "dtor_801F2724"
   },
   "src/game/CollisionFile_Load.cpp": {
     "__ct__11CECollisionFPCc": "CollisionFile_Load"
