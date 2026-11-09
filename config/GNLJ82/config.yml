@@ -29,6 +29,16 @@ globalize_symbols: true
 
 # 0x80010003 is a magic division constant (Rand15 % range), not "@etb_8000FFF8"+0xB.
 block_relocations:
+# Sci2Card receipt font glyph bitmaps (0x803FFEA8..): bit patterns, not pointers.
+- source: 0x803FFFC0
+- source: 0x80400060
+- source: 0x804000A8
+- source: 0x80400158
+- source: 0x8040018C
+- source: 0x80400290
+- source: 0x804003F0
+- source: 0x80400618
+- source: 0x80400EA4
 - source: 0x800D63F0
 - source: 0x800D63FC
 - source: 0x800D6458
