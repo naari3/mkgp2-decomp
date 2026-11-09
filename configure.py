@@ -2025,7 +2025,7 @@ config.libs = [
             Object(Matching, "game/LookupSin.c", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/LookupCos.c", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/FrameUpdate.c", extra_cflags=["-use_lmw_stmw on"], mw_version="GC/1.3.2"),
-            Object(NonMatching, "game/FlashFadeOverlay_Draw.c", extra_cflags=["-i include/libc"]),
+            Object(Matching, "game/FlashFadeOverlay_Draw.c", extra_cflags=["-i include/libc"]),
             Object(Matching, "game/Cosf_LUT_Wrap.c"),
             Object(Matching, "game/Sinf_LUT_Wrap.c"),
             Object(Matching, "game/LUT_Sine.c"),

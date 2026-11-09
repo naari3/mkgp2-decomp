@@ -6,22 +6,6 @@ extern double cos(double), sin(double);
 #include "game/FlashFadeOverlay_private.h"
 extern signed char lbl_806D0F8C;
 extern float lbl_806D0F88;
-extern const float lbl_806D2D44;
-extern const float lbl_806D2D70;
-extern const float lbl_806D2D74;
-extern const float lbl_806D2E18;
-extern const float lbl_806D2E1C;
-extern const float lbl_806D2E20;
-extern const float lbl_806D2E24;
-extern const float lbl_806D2E28;
-extern const float lbl_806D2E2C;
-extern const float lbl_806D2E30;
-extern const float lbl_806D2E34;
-extern const float lbl_806D2E40;
-extern const float lbl_806D2E44;
-extern const float lbl_806D2E48;
-extern const float lbl_806D2E4C;
-extern const double lbl_806D2E38;
 #pragma exceptions on
 void FlashFadeOverlay_Draw(struct FlashOverlay *self, float x0, float y0, float x1, float y1, float u, float v)
 {
@@ -30,24 +14,23 @@ void FlashFadeOverlay_Draw(struct FlashOverlay *self, float x0, float y0, float 
     Mtx view;
     GXTexObj texture;
     Vec eye, up, target;
-    float v1, u1;
-    float one, vm, vscale, um, uscale, yc, xc;
+    float u0, v0, u1, v1, pu, pv;
     if (GetVBlankFlag() && self->enabled) {
         GXSetZMode(0, 0, 0);
         GXSetZCompLoc(0);
         GXSetCullMode(2);
-        C_MTXOrtho(projection, lbl_806D2E18, lbl_806D2E1C, lbl_806D2E20, lbl_806D2E24, lbl_806D2D74, lbl_806D2E28);
+        C_MTXOrtho(projection, 240.0f, -240.0f, -320.0f, 320.0f, 100.0f, 1000.0f);
         GXSetProjection(projection, 1);
-        GXSetViewport(lbl_806D2D70, lbl_806D2D70, lbl_806D2E2C, lbl_806D2E30, lbl_806D2D70, lbl_806D2D44);
+        GXSetViewport(0.0f, 0.0f, 640.0f, 480.0f, 0.0f, 1.0f);
         GXSetScissor(0, 0, 640, 480);
         eye = vectors->eye;
         if (!lbl_806D0F8C) {
-            lbl_806D0F88 = lbl_806D2E34;
+            lbl_806D0F88 = 90.0f;
             lbl_806D0F8C = 1;
         }
         up = vectors->up;
-        up.x = (float)cos((float)(lbl_806D2E38 * lbl_806D0F88));
-        up.y = -(float)sin((float)(lbl_806D2E38 * lbl_806D0F88));
+        up.x = (float)cos((float)(0.017453292519943295 * lbl_806D0F88));
+        up.y = -(float)sin((float)(0.017453292519943295 * lbl_806D0F88));
         target = vectors->target;
         C_MTXLookAt(view, &eye, &up, &target);
         GXLoadPosMtxImm(view, 0);
@@ -68,30 +51,21 @@ void FlashFadeOverlay_Draw(struct FlashOverlay *self, float x0, float y0, float 
         GXSetVtxDesc(11, 1);
         GXSetVtxAttrFmt(0, 13, 1, 4, 0);
         GXSetVtxDesc(13, 1);
-        u1 = lbl_806D2E44 + u;
-        v1 = lbl_806D2E4C + v;
-        um = lbl_806D2E44 - u;
-        vm = lbl_806D2E4C - v;
-        uscale = lbl_806D2E40;
-        vscale = lbl_806D2E48;
-        u1 *= uscale;
-        v1 *= vscale;
-        xc = lbl_806D2E24;
-        yc = lbl_806D2E18;
-        one = lbl_806D2D44;
-        x0 -= xc;
-        y0 -= yc;
-        x1 -= xc;
-        y1 -= yc;
-        u = uscale * um;
-        v = vscale * vm;
-        u1 = one - u1;
-        v1 = one - v1;
+        x0 -= 320.0f;
+        y0 -= 240.0f;
+        x1 -= 320.0f;
+        y1 -= 240.0f;
+        u0 = 0.003125f * (16.0f - u);
+        v0 = (1.0f / 240.0f) * (12.0f - v);
+        pu = 0.003125f * (16.0f + u);
+        pv = (1.0f / 240.0f) * (12.0f + v);
+        u1 = 1.0f - pu;
+        v1 = 1.0f - pv;
         GXBegin(0x80, 0, 4);
-        GXPosition2f32(x0, y0); GXColor1u32(0xFFFFFFFF); GXTexCoord2f32(u, v);
-        GXPosition2f32(x1, y0); GXColor1u32(0xFFFFFFFF); GXTexCoord2f32(u1, v);
+        GXPosition2f32(x0, y0); GXColor1u32(0xFFFFFFFF); GXTexCoord2f32(u0, v0);
+        GXPosition2f32(x1, y0); GXColor1u32(0xFFFFFFFF); GXTexCoord2f32(u1, v0);
         GXPosition2f32(x1, y1); GXColor1u32(0xFFFFFFFF); GXTexCoord2f32(u1, v1);
-        GXPosition2f32(x0, y1); GXColor1u32(0xFFFFFFFF); GXTexCoord2f32(u, v1);
+        GXPosition2f32(x0, y1); GXColor1u32(0xFFFFFFFF); GXTexCoord2f32(u0, v1);
         GXSetChanCtrl(4, 1, 1, 1, 1, 2, 2);
         HSD_StateInvalidate(0x7F);
     }
