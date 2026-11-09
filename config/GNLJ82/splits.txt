@@ -6603,6 +6603,7 @@ game/misc3d/fn_80167C60.cpp:
 	extab       start:0x8000FFC8 end:0x8000FFE0
 	extabindex  start:0x80025EBC end:0x80025EC8
 	.text       start:0x80167C60 end:0x80167DDC
+	.rodata     start:0x8036BF90 end:0x8036C8B0
 
 game/misc3d/fn_80167DDC.cpp:
 	extab       start:0x8000FFE0 end:0x8000FFF8
