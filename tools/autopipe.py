@@ -118,6 +118,11 @@ def record(r):
     # rclone mount lose lines (last write wins)
     with open(f'{OUT}/results_{WHO}.jsonl', 'a') as f:
         f.write(json.dumps(r) + '\n')
+    try:  # per-rule attempt/hit log for tools/rewrite_rules.py report
+        import rewrite_rules
+        rewrite_rules.record_autopipe(dict(r))
+    except Exception:
+        pass
 
 
 # ------------------------------------------------------------------ queue claim
