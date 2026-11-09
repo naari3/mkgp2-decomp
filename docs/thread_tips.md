@@ -625,3 +625,6 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   (4) saved registers of locals that live in two blocks: declare them once at function top, before the first
   initialised local (`update`), in the order of the target's registers (r30 first). Tool: scratch `opd.py`-style scoring
   (diff with registers masked) finds the instruction shape first; objdiff score only after the shape is right.
+- `leversweep.py fn|batch --pairs N` (11-10, regalloc_patterns 62): after the single-lever pass, 3-way merges the best N
+  variants per lever that changed the diff with those of every other lever (non-overlapping edits only) and scores the
+  pairs. Results of the 99.x run: docs/sweeps/leversweep_pairs/.
