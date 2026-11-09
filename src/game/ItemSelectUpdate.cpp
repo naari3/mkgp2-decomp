@@ -52,6 +52,17 @@ static inline RefillSingleton *GetRefillSingleton() {
     return lbl_806D1A88 ? lbl_806D1A88 : (lbl_806D1A88 = new RefillSingleton);
 }
 static inline RefillSprite *GroupSprite(void *group) { return ((RefillGroup *)group)->sprite; }
+static inline void UpdateSprites(ItemSelectState *self) {
+    int i;
+    ItemSelectState *cursor;
+    for (i = 0, cursor = self; i < 9; ++i, cursor = (ItemSelectState *)((char *)cursor + 4)) {
+        if (cursor->groups[0]) Sprite_AdvanceAnim(GroupSprite(cursor->groups[0]), lbl_806DB8A8);
+    }
+    for (i = 0, cursor = self; i < 66; ++i, cursor = (ItemSelectState *)((char *)cursor + 4))
+        SpriteHandle_RecomputeCull(cursor->itemSprites[0]);
+    for (i = 0, cursor = self; i < 5; ++i, cursor = (ItemSelectState *)((char *)cursor + 4))
+        SpriteHandle_RecomputeCull(cursor->sprites[0]);
+}
 extern "C" void fn_80238D9C(ItemSelectState *self) {
     int row;
     int i;
@@ -64,9 +75,9 @@ extern "C" void fn_80238D9C(ItemSelectState *self) {
     case 2: break;
     case 1: {
         if (self->resultCode >= 8 && self->resultCode <= 15) {
-            float fade = (self->resultCode - 8) / lbl_806DB914;
-            if (fade < lbl_806DB888) fade = lbl_806DB888;
-            int alpha = lbl_806DB894 * fade;
+            float fade = (self->resultCode - 8) / 7.0f;
+            if (fade < 0.0f) fade = 0.0f;
+            int alpha = 255.0f * fade;
             SpriteHandle_SetCornerAlpha(self->sprites[1], alpha);
             SpriteHandle_SetCornerAlpha(self->sprites[2], alpha);
             SpriteHandle_SetActiveFlag(self->sprites[1], 1);
@@ -162,12 +173,5 @@ extern "C" void fn_80238D9C(ItemSelectState *self) {
         GroupSprite(self->groups[7])->y = lbl_806DB89C * ((RefillChoice *)self->iconArray)->row + lbl_806DB8E8;
     }
     fn_8011F804(self->sprites[3], lbl_806DB8DC, layout->y[((RefillChoice *)self->iconArray)->row]);
-    ItemSelectState *cursor;
-    for (i = 0, cursor = self; i < 9; ++i, cursor = (ItemSelectState *)((char *)cursor + 4)) {
-        if (cursor->groups[0]) Sprite_AdvanceAnim(GroupSprite(cursor->groups[0]), lbl_806DB8A8);
-    }
-    for (i = 0, cursor = self; i < 66; ++i, cursor = (ItemSelectState *)((char *)cursor + 4))
-        SpriteHandle_RecomputeCull(cursor->itemSprites[0]);
-    for (i = 0, cursor = self; i < 5; ++i, cursor = (ItemSelectState *)((char *)cursor + 4))
-        SpriteHandle_RecomputeCull(cursor->sprites[0]);
+    UpdateSprites(self);
 }
