@@ -556,6 +556,36 @@ temps: drop the locals, then try `opt_common_subs off`. Together with §28
 "frontend temp @N must become a backend temp", try turning off the pass that
 made @N. Rule `pragma-opt-off`.
 
+## 30. Loads hoisted above stores to a possibly aliasing out: __restrict on the inputs (fn_8019EB9C, 11-09)
+
+fn_8019EB9C (Vec3 x 4x4 matrix, called with out == v) loads every matrix
+element before the first `stfs`, and its FPR homes and tail `fadds` order
+come from that one scheduler DAG. Writing the result into locals and storing
+at the end (the old 8-line best) or `opt_propagation`/`opt_lifetimes off`
+plus a shared variable (4 lines, every register right) only imitates that
+DAG; the pre-RA scheduler still ranks the z chain above `fadds x`. The
+natural straight-store source matches with no pragma once the INPUT pointers
+are `__restrict`:
+
+```c++
+void fn_8019EB9C(const Matrix44 *__restrict a, Vec3 *out, const Vec3 *__restrict v) {
+    float vx = v->x; float vy = v->y; float vz = v->z;
+    out->x = a->m[0][0] * vx + vy * a->m[1][0] + vz * a->m[2][0] + a->m[3][0];
+    ...
+```
+
+`__restrict` on `out` instead (40 lines) does not remove the store->load
+edges the same way. The product operand order then still had to be swept
+(1024 orders, one match: `m*vx` first for x and y, `vx*m` for z).
+
+**Check:** a function whose target does all loads before all stores even
+though the output pointer may alias an input (often called with out == in):
+put `__restrict` on the input pointers before trying locals or pragmas.
+Scheduler rule (from the mweppc Scheduler.c decomp, via the scheduler RE
+thread): ready list walked in original order; critical first, then more
+uncovered successors, then height, then opcode rank, then original order.
+Rule `restrict-input-ptrs`.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
