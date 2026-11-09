@@ -516,6 +516,11 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   single-use product locals written back so they fuse, plus fp_contract on/off) and `local-array-init`
   (5eca6fc, both directions; only tables defined in the TU, extern tables would need their values).
   Batch over 169 near misses: 0 matches, 1 small objdiff gain (ExplosionTumble_Init).
+- Added 21:20: lever `single-expr` (0b362350; local assigned once and read once -> one expression,
+  also inside TU inlines) and `leversweep.py detect` (regalloc_patterns 40, detect only): lists near
+  misses whose target forms `addi rX, anchor, N` for an N our build never forms, in
+  `docs/sweeps/leversweep/anchor_detect.md`. Full rerun after the TU merges (169 fns): 0 matches;
+  TaMode_Init 99.63 -> 99.66 landed.
 - Not automated (need a decision a regex cannot make): rolled loop + unroll budget (which loop),
   base vtable store in the ctor body, avoiding IRO CSE temps, pool-owner TU merges.
 - Do not run bare `python3 configure.py`: it regenerates build.ninja with the compiler download

@@ -257,6 +257,8 @@ def lever(name, rule, cls, commit, desc):
 NOT_AUTOMATED = [
     ('inline-asm r2/r13 fixed offsets -> symbol refs', '-', 'auto (nothing left)', '71b5ffd4',
      'grep: no game TU has a numeric r2/r13 displacement in inline asm any more (only TRK, already matching)'),
+    ('split the pool at `addi rX, anchor, N`', 'anchor-addi-object-boundary', 'semi (detect only)', '§40',
+     '`leversweep.py detect` lists the functions and offsets; the split edits the pool source and symbols.txt'),
     ('rolled-loop + opt_unroll_instr_count', 'loop-unroll-budget', 'semi', '833c85a',
      'pragma half is automatic (pragmasweep --set extended sweeps opt_unroll_instr_count 8/16/32); '
      'rolling a hand-unrolled loop back needs the loop count and the induction step, which differ per site'),
@@ -1368,6 +1370,66 @@ SELFTEST = [
 ]
 
 
+# ---- detect-only: anchor-addi-object-boundary (regalloc_patterns 40)
+
+ADDI_RE = re.compile(r'^(addi|subi) (r\d+), (r\d+), (0x[0-9a-fA-F]+)$')
+
+
+def anchor_addis(body):
+    """{base reg: {offset}} of `addi rX, rB, N` (rX != rB, rB not r1/r2/r13, |N| >= 8)."""
+    out = {}
+    for l in body or []:
+        m = ADDI_RE.match(l)
+        if not m or m.group(2) == m.group(3) or m.group(3) in ('r1', 'r2', 'r13', 'r0'):
+            continue
+        n = int(m.group(4), 16) * (-1 if m.group(1) == 'subi' else 1)
+        if abs(n) >= 8:
+            out.setdefault(m.group(3), set()).add(n)
+    return out
+
+
+def cmd_detect(a):
+    """List near misses whose target takes `addi rX, anchor, N` object addresses that ours never forms."""
+    rows = []
+    for pct, unit, fn, dem in candidates(a.min, a.max):
+        try:
+            u = ps.Unit(unit)
+        except Exception:
+            continue
+        T = ps.target_body(fn)
+        d = f'{ps.TMP}/det_{os.getpid()}'
+        os.makedirs(d, exist_ok=True)
+        subprocess.run([ps.DTK, 'elf', 'disasm', f'build/GNLJ82/src/{unit}.o', d + '/m.s'], capture_output=True)
+        B = ps.norm_body(d + '/m.s', fn) or ps.norm_body(d + '/m.s', u.compiled_name(fn))
+        if not T or not B:
+            continue
+        ta, ba = anchor_addis(T), anchor_addis(B)
+        # the anchor = the base register with the most distinct offsets in the target (>= 2)
+        if not ta:
+            continue
+        reg, offs = max(ta.items(), key=lambda kv: len(kv[1]))
+        if len(offs) < 2:
+            continue
+        ours = set().union(*ba.values()) if ba else set()
+        missing = sorted(offs - ours)
+        extra = sorted(ours - set().union(*ta.values()))
+        if missing:
+            rows.append((pct, unit, fn, reg, missing, extra))
+    md = ['# anchor-addi-object-boundary candidates (detect only)', '',
+          'Near misses where the target forms `addi rX, <anchor>, N` for an N that our build never forms. '
+          'By regalloc_patterns 40 each such N is the first byte of a real object in the pool: split the pool '
+          'object there and index it directly. "ours only" = offsets we form and the target does not '
+          '(a base + constant written by hand). Heuristic: the anchor is the base register with the most '
+          'distinct offsets; a saved pointer to a big struct looks the same, so check the function.', '',
+          '| fn | TU | % | anchor reg | target-only offsets | ours-only offsets |', '| --- | --- | --- | --- | --- | --- |']
+    for pct, unit, fn, reg, mi, ex in sorted(rows, key=lambda r: -r[0]):
+        md.append(f'| `{fn}` | {unit} | {pct:.2f} | {reg} | {", ".join(hex(x) for x in mi[:12])} | '
+                  f'{", ".join(hex(x) for x in ex[:12])} |')
+    os.makedirs(a.out, exist_ok=True)
+    open(os.path.join(a.out, 'anchor_detect.md'), 'w').write('\n'.join(md) + '\n')
+    print('\n'.join(md[4:]))
+
+
 def cmd_selftest(a):
     ok = True
     for unit, fn, rev, lv in SELFTEST:
@@ -1421,6 +1483,10 @@ def main():
     b.add_argument('-j', '--jobs', type=int, default=4)
     b.add_argument('--out', default='docs/sweeps/leversweep')
     sp.add_parser('selftest')
+    dt = sp.add_parser('detect', help='detect-only triggers (anchor-addi-object-boundary)')
+    dt.add_argument('--min', type=float, default=80)
+    dt.add_argument('--max', type=float, default=100)
+    dt.add_argument('--out', default='docs/sweeps/leversweep')
     s = sp.add_parser('summary')
     s.add_argument('--out', default='docs/sweeps/leversweep')
     a = p.parse_args()
@@ -1436,6 +1502,8 @@ def main():
         cmd_batch(a)
     elif a.cmd == 'selftest':
         cmd_selftest(a)
+    elif a.cmd == 'detect':
+        cmd_detect(a)
     elif a.cmd == 'summary':
         summary(a.out)
 
