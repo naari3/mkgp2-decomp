@@ -7,9 +7,14 @@ static inline float AddOffset(float value, float offset) {
     return value;
 }
 
+static inline float Complement(float value) {
+    value = 1.0f - value;
+    return value;
+}
+
 static inline float ScaleFromOffset(float offset, float range, float factor, float bias) {
     range = offset / range;
-    range = 1.0f - range;
+    range = Complement(range);
     range = factor * range;
     range = range + bias;
     return range;
