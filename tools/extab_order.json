@@ -3030,5 +3030,21 @@
       "dtor_8007D0D4",
       "dtor_80082960"
     ]
-  }
+  },
+  "src/game/clsound/fn_801913B0.c": [
+    "fn_801913B0",
+    "fn_80191A14",
+    "fn_80191B5C",
+    "fn_80191CF4",
+    "fn_80191DF8",
+    "fn_801920D4",
+    "fn_80192208",
+    "fn_80192348",
+    "fn_80192514",
+    "fn_80192688",
+    "SoundMgr_Play",
+    "fn_80192F04",
+    "WeatherSystem_PickVariant",
+    "Fog_UpdateFromCourseScene3D"
+  ]
 }

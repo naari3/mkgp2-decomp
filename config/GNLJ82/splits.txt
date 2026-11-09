@@ -7924,85 +7924,9 @@ game/clsound/fn_80190D24.c:
 	.text       start:0x80190D24 end:0x801913B0
 
 game/clsound/fn_801913B0.c:
-	extab       start:0x80012254 end:0x8001225C
-	extabindex  start:0x800270F8 end:0x80027104
-	.text       start:0x801913B0 end:0x801915DC
-
-game/clsound/fn_801915DC.c:
-	.text       start:0x801915DC end:0x801915F4
-
-game/clsound/fn_801915F4.c:
-	.text       start:0x801915F4 end:0x801916FC
-
-game/clsound/fn_801916FC.c:
-	.text       start:0x801916FC end:0x80191804
-
-game/clsound/fn_80191804.c:
-	.text       start:0x80191804 end:0x8019190C
-
-game/clsound/fn_8019190C.c:
-	.text       start:0x8019190C end:0x80191A14
-
-game/clsound/fn_80191A14.c:
-	extab       start:0x8001225C end:0x80012264
-	extabindex  start:0x80027104 end:0x80027110
-	.text       start:0x80191A14 end:0x80191B5C
-
-game/clsound/fn_80191B5C.c:
-	extab       start:0x80012264 end:0x8001226C
-	extabindex  start:0x80027110 end:0x8002711C
-	.text       start:0x80191B5C end:0x80191CF4
-
-game/clsound/fn_80191CF4.c:
-	extab       start:0x8001226C end:0x80012274
-	extabindex  start:0x8002711C end:0x80027128
-	.text       start:0x80191CF4 end:0x80191DF8
-
-game/clsound/fn_80191DF8.c:
-	extab       start:0x80012274 end:0x8001227C
-	extabindex  start:0x80027128 end:0x80027134
-	.text       start:0x80191DF8 end:0x80191F1C
-
-game/clsound/fn_80191F1C.c:
-	.text       start:0x80191F1C end:0x80192010
-
-game/clsound/fn_80192010.c:
-	.text       start:0x80192010 end:0x801920D4
-
-game/clsound/fn_801920D4.c:
-	extab       start:0x8001227C end:0x80012284
-	extabindex  start:0x80027134 end:0x80027140
-	.text       start:0x801920D4 end:0x80192208
-
-game/clsound/fn_80192208.c:
-	extab       start:0x80012284 end:0x8001228C
-	extabindex  start:0x80027140 end:0x8002714C
-	.text       start:0x80192208 end:0x80192348
-
-game/clsound/fn_80192348.c:
-	extab       start:0x8001228C end:0x80012294
-	extabindex  start:0x8002714C end:0x80027158
-	.text       start:0x80192348 end:0x80192514
-
-game/clsound/fn_80192514.c:
-	extab       start:0x80012294 end:0x8001229C
-	extabindex  start:0x80027158 end:0x80027164
-	.text       start:0x80192514 end:0x80192688
-
-game/clsound/fn_80192688.c:
-	extab       start:0x8001229C end:0x800122A4
-	extabindex  start:0x80027164 end:0x80027170
-	.text       start:0x80192688 end:0x80192884
-
-game/SoundMgr_Play.c:
-	extab       start:0x800122A4 end:0x800122AC
-	extabindex  start:0x80027170 end:0x8002717C
-	.text       start:0x80192884 end:0x80192F04
-
-game/clsound/fn_80192F04.c:
-	extab       start:0x800122AC end:0x800122C4
-	extabindex  start:0x8002717C end:0x800271A0
-	.text       start:0x80192F04 end:0x801933D0
+	extab       start:0x80012254 end:0x800122C4
+	extabindex  start:0x800270F8 end:0x800271A0
+	.text       start:0x801913B0 end:0x801933D0
 	.data       start:0x80495F20 end:0x80495F48
 
 game/clsound/fn_801933D0.c:
