@@ -318,11 +318,26 @@ static inline u8 PeersReady(int role)
     return ready;
 }
 
-static inline int RoleCount(u8* sync, int role)
+static inline void PeersReady2(int role, u8 *ready)
 {
-    int count = 0;
+    int i;
+    if (role != 0) {
+        unsigned int scene = g_currentSceneState;
+        SyncPeerSlot* peer = (SyncPeerSlot *)lbl_805A6154;
+        for (i = 0; i < 4; ++i, ++peer)
+            if (peer->first.bytes.header.role == role &&
+                ((peer->first.word >> 15) & 255) != scene) *ready = 0;
+    }
+}
+
+static inline int RoleCount(int role)
+{
+    u8* sync;
+    int count;
     int i;
     if (role == 0) return 1;
+    count = 0;
+    sync = g_pcbSyncTable;
     for (i = 0; i < 4; ++i, ++sync)
         if (sync[4] == role) ++count;
     return count;
@@ -401,7 +416,8 @@ int PCBComm_ComputeSyncState(void)
         if (g_localPcbRole != 0) return 0;
         out = &((SyncOutput *)lbl_805AC258)[0];
     }
-    ready = PeersReady(g_localPcbRole);
+    ready = 1;
+    PeersReady2(g_localPcbRole, &ready);
     if (ready == 1) out->scene = g_currentSceneState;
 
     if ((int)out->scene == 12) {
@@ -417,14 +433,14 @@ int PCBComm_ComputeSyncState(void)
         out->commonItem = -1;
     }
     if ((int)out->scene == 26) {
-        winner = 0;
+        int winner = 0;
         CountTrackVotes(((SyncPeerSlot *)lbl_805A6154), trackVotes, g_localPcbRole);
         for (i = 0; i < 16; ++i)
             if (trackVotes[i] > trackVotes[winner]) winner = i;
         out->choice.half.track = winner;
     }
     if ((int)out->scene == 26) {
-        winner = 0;
+        int winner = 0;
         CountOptionVotes(((SyncPeerSlot *)lbl_805A6154), optionVotes, g_localPcbRole);
         for (i = 0; i < 2; ++i)
             if (optionVotes[i] > optionVotes[winner]) winner = i;
@@ -440,8 +456,7 @@ int PCBComm_ComputeSyncState(void)
         out->commonItem = CardSnapshot_ResolveCommonItems(cards.row);
         positionCount = 0;
         for (i = 0; i < 4; ++i) usedPositions[i] = 0;
-        role = g_localPcbRole;
-        for (; positionCount < 4 - RoleCount(g_pcbSyncTable, role); ++positionCount)
+        for (; positionCount < 4 - RoleCount(g_localPcbRole); ++positionCount)
             usedPositions[positionCount] = 1;
         for (i = 0; i < 4; ++i) {
             int peerRole = firstPeer[i].first.bytes.header.role;
