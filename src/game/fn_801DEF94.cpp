@@ -1221,6 +1221,8 @@ static inline const unsigned long &QueueMinRef(const unsigned long &a, const uns
     return a < b ? a : b;
 }
 
+#pragma push
+#pragma opt_propagation off /* pragmasweep: 149 -> 102 lines; the dtor loops keep the ring loads hoisted */
 extern "C" void fn_801E36A8(SteeringQueue *s, const SteeringQueueConstIter &first,
         const SteeringQueueConstIter &last) {
     if (first.ptr != last.ptr) {
@@ -1251,6 +1253,8 @@ extern "C" void fn_801E36A8(SteeringQueue *s, const SteeringQueueConstIter &firs
         }
     }
 }
+
+#pragma pop
 
 static inline void QueueUninitializedFillN(SteeringQueueValue *out,
         unsigned long n, const SteeringQueueValue &value) {
