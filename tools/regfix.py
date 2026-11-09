@@ -83,7 +83,7 @@ def parse_dump(path: Path):
     for l in path.read_text().splitlines():
         m = re.match(r"^([rf]\d+) -> ([rf]\d+)\s*(.*)$", l)
         if m:
-            cur = {"v": m.group(1), "phys": m.group(2), "name": m.group(3).strip(), "flags": "", "nb": []}
+            cur = {"v": m.group(1), "phys": m.group(2), "name": m.group(3).strip(), "flags": "", "nb": [], "cost": 0}
             out[cur["v"]] = cur
             order.append(cur["v"])
             continue
@@ -92,6 +92,9 @@ def parse_dump(path: Path):
         m = re.match(r"^\s+flags:\s*(.*)$", l)
         if m:
             cur["flags"] = m.group(1)
+        m = re.match(r"^\s+cost:\s*(-?\d+)", l)
+        if m:
+            cur["cost"] = int(m.group(1))
         m = re.match(r"^\s+neighbors: \d+ \((.*)\)", l)
         if m:
             cur["nb"] = m.group(1).split()
@@ -140,11 +143,13 @@ class Graph:
                     g.params.add(m.group(2))
         g.real_order = order
         g.allv = allv
+        g.cost = {v: (allv.get(v) or asg[v]).get("cost", 0) for v in order}
         return g
 
     def copy(self):
         g = Graph(self.rc, self.nodes, self.key, self.nb, self.perm, self.names, self.phys)
         g.params = getattr(self, "params", set())
+        g.cost = getattr(self, "cost", {})
         return g
 
     # --- the model ---
@@ -165,8 +170,11 @@ class Graph:
                     for x in self.nb[v]:
                         deg[x] -= 1
             if not prog:
-                # spill choice by cost is not modelled; pick the lowest key
-                v = next(v for v in nodes if v not in removed)
+                # stuck: MWCC (mweppc Coloring.c) pushes the cheapest spill
+                # candidate, lowest cost/degree; ties -> lowest number
+                cost = getattr(self, "cost", {})
+                v = min((v for v in nodes if v not in removed),
+                        key=lambda v: (cost.get(v, 0) / max(deg[v], 1), self.key[v]))
                 removed.add(v)
                 push.append(v)
                 for x in self.nb[v]:
@@ -561,6 +569,8 @@ def sim_input(classes, names=None):
                 mask |= 1 << num(r)
             wv = num(w[v]) if v in w and w[v] != "spill" else -1
             out.append(f"node {ix[v]} {g.key[v]} {n} {mask} {wv} " + " ".join(str(ix[x]) for x in g.nb[v] if x in ix))
+            if getattr(g, "cost", {}).get(v):
+                out.append(f"cost {ix[v]} {g.cost[v]}")
             if v in locs:
                 out.append(f"local {ix[v]} {nid.setdefault(g.names[v], len(nid))}")
     return out, idxs, nid
