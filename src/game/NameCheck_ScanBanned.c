@@ -206,49 +206,51 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
     }
     open = (NameCode *)strstr(buf, lbl_806D4754);
     if (open) {
-        count = 0; found = 0;
+        NameBool prefix_found;
+        count = 0; prefix_found = 0;
         for (p = buf; *p != *open; p++) {
             for (j = 0; j < 3; j++) {
                 if (*p == lbl_806D4740[j]) { count++; break; }
             }
-            found = 0;
+            prefix_found = 0;
             for (j = 0; j < 25; j++) {
-                if (*p == symbols[j]) { found = 1; break; }
+                if (*p == symbols[j]) { prefix_found = 1; break; }
             }
-            if (!found) count = 0;
+            if (!prefix_found) count = 0;
         }
         if (count >= 2) {
             for (j = 0; j < 26; j++) {
-                if (*open == upper[j]) { found = 1; break; }
-                if (found == 1) break;
+                if (*open == upper[j]) { prefix_found = 1; break; }
+                if (prefix_found == 1) break;
             }
             boundary_set = upper; boundary_count = 26;
-            if (found == 1) { boundary_set = lower; boundary_count = 26; }
+            if (prefix_found == 1) { boundary_set = lower; boundary_count = 26; }
             if (!at_boundary(open + 1, boundary_set, boundary_count)) return 1;
         }
     }
     open = (NameCode *)strstr(buf, lbl_806D4758);
     DebugPrintf(lbl_806D4760, open);
     if (open) {
-        count = 0; found = 0;
+        NameBool prefix_found;
+        count = 0; prefix_found = 0;
         for (p = buf; *p != *open; p++) {
             for (j = 0; j < 3; j++) {
                 if (*p == lbl_806D4740[j]) { count++; break; }
             }
-            found = 0;
+            prefix_found = 0;
             for (j = 0; j < 25; j++) {
-                if (*p == symbols[j]) { found = 1; break; }
+                if (*p == symbols[j]) { prefix_found = 1; break; }
             }
-            if (!found) count = 0;
+            if (!prefix_found) count = 0;
         }
         DebugPrintf(base - 0x7920, count);
         if (count >= 1) {
             for (j = 0; j < 26; j++) {
-                if (*open == upper[j]) { found = 1; break; }
-                if (found == 1) break;
+                if (*open == upper[j]) { prefix_found = 1; break; }
+                if (prefix_found == 1) break;
             }
             boundary_set = upper; boundary_count = 26;
-            if (found == 1) { boundary_set = lower; boundary_count = 26; }
+            if (prefix_found == 1) { boundary_set = lower; boundary_count = 26; }
             if (!at_boundary(open + 2, boundary_set, boundary_count)) return 1;
         }
     }
