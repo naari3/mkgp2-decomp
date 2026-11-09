@@ -504,3 +504,16 @@ copy/assign ctors on the element type, separate pointer variables. If you crack 
 ## mwcc-debugger: why a register went where it did (2026-11-09)
 `python3 tools/mwccdbg_install.py` once, then `python3 tools/mwccdbg.py <unit> <fn>` (about 10 s, one run at a time: fixed gdb port).
 It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugged with GC/2.6: identical output checked on dtor_801F8214) and lists, in colouring order, the virtual registers whose register differs from the target, with the first one marked. Colouring goes from the highest vreg number down and picks the lowest free register, so the fix is about vreg NUMBERING (creation order in the backend), not decl order of inlined locals (renamed to @NN temps). Dumps: build/mwccdbg/out/<fn>/.
+
+## leversweep: today's hand levers as triggered rewrites (11-09)
+
+- `python3 tools/leversweep.py fn UNIT FN --show` tries every lever whose trigger fits the objdiff
+  diagnosis; `batch --min 90` runs all near misses (174 fns in about 4 minutes); `selftest` replays
+  three past landings; `summary` rewrites `docs/sweeps/leversweep/summary.md`.
+- Levers work per scope: the function body and every TU inline it calls (3 levels deep).
+- Result of the first batch: 1 match (PCBCheck_ProcessLinks, dead-def-split, a5a84ae), about 30
+  line-count improvements, of which only 8 raise objdiff %. Fewer diff lines often LOWERS objdiff %.
+- Not automated (need a decision a regex cannot make): rolled loop + unroll budget (which loop),
+  base vtable store in the ctor body, avoiding IRO CSE temps, pool-owner TU merges.
+- Do not run bare `python3 configure.py`: it regenerates build.ninja with the compiler download
+  rule (blocked host). Use `--binutils build/binutils --compilers build/compilers --wrapper build/tools/wibo`.

@@ -12,6 +12,7 @@ already tried); the `*.jsonl` files use git's union merge (`.gitattributes`).
 | `shapesweep/` | `tools/shapesweep.py batch` (`--out`) | `results_*.jsonl`, `hits/` (matched TU + fn list), best partial sources |
 | `regfix/` | `tools/regfix.py batch` (`--out`, `--hits`) | `results.jsonl`, `hits/` |
 | `autosweep/` | `tools/helpers/autosweep.py` (round 2) | candidate lists and `cc.json` (per-fn compiler probe) |
+| `leversweep/` | `tools/leversweep.py batch` | diagnosis-triggered source levers (inline -> named locals + decl order, index for walk, restrict, arg-order prototype, try scope, non-const zero arm, dead def): `results.jsonl`, `summary.md` (per-lever fired/improved/matched and the levers that are not automated), `hits/` best TU text per improved fn. Rank by objdiff %, not by diff lines |
 | `queue/` | `tools/helpers/workqueue.py snapshot` | copy of the live grind queue: `queue_snapshot.md` (every item with the notes of who tried what), `seed.txt`, `log/*.jsonl` |
 
 `tools/rewrite_rules.py backfill` reads `autopipe*/`, `shapesweep/` and
