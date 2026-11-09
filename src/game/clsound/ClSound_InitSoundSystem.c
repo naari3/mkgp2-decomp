@@ -48,6 +48,9 @@ static inline void LoadSoundFile(const char *strings, unsigned int offset, void 
     unsigned int size;
     int result;
     void *data = 0;
+    DVDFileInfo *file_;
+    unsigned int end;
+    int result_;
     if (!DVDOpen(strings + offset, &file)) {
         DebugPrintf(strings + 0x3fbc, strings + offset);
     } else if (file.length == 0) {
@@ -59,7 +62,16 @@ static inline void LoadSoundFile(const char *strings, unsigned int offset, void 
             DebugPrintf(strings + 0x3ff8);
         } else {
             memset(data, 0xe0, size);
-            result = ReadSoundFile(&file, data, size, file.startAddr, file.length);
+            /* fakematch (leversweep inline-to-named-locals): natural code is
+             * result = ReadSoundFile(&file, data, size, file.startAddr, file.length);
+             * the helper's locals must be named locals of this function, and
+             * the end address is start + length - 1 in one expression. */
+            file_ = &file;
+            end = file.startAddr + file.length - 1;
+            DVDLoad_WaitIfSamePage(file.startAddr);
+            result_ = DVDReadPrio(file_, data, size, 0, 2);
+            DVDLoad_RecordOpStart(end);
+            result = result_;
             if (result <= 0) {
                 DebugPrintf(strings + 0x401c, strings + offset);
                 OSFreeToHeap(lbl_806CF010, data);
