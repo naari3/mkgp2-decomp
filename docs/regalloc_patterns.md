@@ -1975,3 +1975,17 @@ Landing note: when the last asm function with a manual `.extab_user` /
 `.extabindex_user` entry becomes C, delete the manual entries and their lines
 in tools/extab_user_renames.json; otherwise the compiler-generated entries are
 duplicated and main.dol fails.
+
+## 75. Repeated inline copies use a "busy-avoiding" register where nothing is busy: the copies are one unrolled loop (fn_8017BCF8, clModelM ctor, 11-10)
+
+Three inlined `pN = Point(index + N)` struct copies. The target uses r4 / f1
+for the temporaries in all three; ours r3 / f0 in the first two and r4 / f1
+only in the third, where r3 (`mr r3,r30` for the return) and f0 (a constant
+kept for a later store) really are live. A register that is avoided where
+nothing interferes means the temporaries of all copies are ONE variable
+whose interference is the union over the copies, i.e. the source is a
+constant-trip loop that the compiler unrolled:
+`for (int k = 0; k < 3; k++) (&p0)[k] = Point(index + k);`.
+The other user of the same inline (Update, fn_8017BF90) has no interference
+in any copy and stays matched. Check: the first copy has no `addi`
+(`index + 0`), the others reload the member and add 1, 2.
