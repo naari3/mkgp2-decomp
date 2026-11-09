@@ -150,20 +150,44 @@ template <class T> inline ListNode<T> *EraseListNodes(ListImpl<T> *self, ListNod
     return last;
 }
 
+template <class T> struct EraseIter {
+    ListNode<T> *node;
+    EraseIter(ListNode<T> *n) : node(n) {}
+    EraseIter(const EraseIter &o) : node(o.node) {}
+};
+
+template <class T> inline EraseIter<T> EraseListIters(ListImpl<T> *self, EraseIter<T> first, EraseIter<T> last)
+{
+    if (first.node == last.node) {
+        return last;
+    }
+    ListNode<T> *lp = last.node->prev;
+    first.node->prev->next = lp->next;
+    lp->next->prev = first.node->prev;
+    while (first.node != last.node) {
+        ListNode<T> *n = first.node;
+        first.node = n->next;
+        delete n;
+        self->size--;
+    }
+    return last;
+}
+
 template <class T> template <class Pred> void ListImpl<T>::remove_if(Pred pred)
 {
-    iterator e = end();
-    for (iterator i = begin(); i != e; ++i) {
-        if (pred(*i)) {
-            iterator j = i;
-            ++j;
-            for (; j != e; ++j) {
-                if (!pred(*j)) {
+    EraseIter<T> e((ListNode<T> *)&head);
+    EraseIter<T> i(e.node->next);
+    for (; i.node != e.node; i.node = i.node->next) {
+        if (pred(i.node->value)) {
+            EraseIter<T> j(i);
+            j.node = j.node->next;
+            for (; j.node != e.node; j.node = j.node->next) {
+                if (!pred(j.node->value)) {
                     break;
                 }
             }
-            i.node = EraseListNodes(this, i.node, j.node);
-            if (i == e) {
+            i = EraseListIters(this, i, j);
+            if (i.node == e.node) {
                 break;
             }
         }
