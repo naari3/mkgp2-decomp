@@ -555,3 +555,8 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   names machine registers retains them: fewer free registers, detected from spill
   costs being present (THPDec fn_80299D58). Old dumps: delete
   `build/mwccdbg/out/FN` or rerun diag to regenerate.
+
+### tools/reloc_only_detect.py: near misses that differ only in relocations (11-09)
+- `python3 tools/reloc_only_detect.py [--min 90] [--md docs/sweeps/reloc_only.md]` compares our object with the target per function (instruction words with the relocated bits masked). A hit has identical code and only a relocation symbol/addend differs: split the pool symbol in symbols.txt at the listed offsets (6cbe52d8) or fix pool ownership. After 6cbe52d8 the whole project has 0 such functions; rerun after symbols.txt or pool changes.
+- §43 (`new T(...)` written as Alloc + ctor call) has no candidate left among the >= 80% near misses (scan of `x = Alloc(..); if (x) ...` in near-miss bodies: CardCreate_Page only, and its diff is the .data anchor, see gave_up). No leversweep lever added.
+
