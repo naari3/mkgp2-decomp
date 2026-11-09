@@ -731,6 +731,22 @@ float, float, float)` matched at once.
 an int and a float argument. Swap their order in the prototype (keeping each
 class's order) and at every call site in the TU.
 
+## 38. Named locals must be numbered between inline temps: write the inline bodies directly and let the per-branch reuse split (DrawEffect_ItemHitBurst_Spawn, 11-09)
+
+`regfix diag` said "pitch/roll are named locals numbered below every temp;
+target colours them before the helper temps". Two `static inline` helpers
+(one per switch case) held `yaw`/`spread`; their locals are frontend temps
+and always sit above the caller's locals. Fix: paste both helper bodies into
+the caller, declare every float in the wanted colouring order (later
+declaration = lower vreg = coloured later), and give the second case its own
+`yaw2`/`spread2` (the frontend splits a reused local per branch anyway, and
+the split copies become temps). The clamp was also written directly so
+`speed` stays a named local. Declaration order that matched:
+`spread2, spread, pitch, roll, speed, yaw2, yaw`. Stack objects are the
+opposite case: a `Vec local = *v;` copy that must sit below the by-value
+argument temps has to stay in a tiny inline (`TransformVelocity`), because
+inline locals are created after the caller's temps.
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,

@@ -4277,40 +4277,10 @@ game/DrawEffect_KartSpark_Update.c:
 	.text       start:0x800CABEC end:0x800CAE78
 
 game/DrawEffect_KartDustRing_Update.c:
-	extab       start:0x8000AB40 end:0x8000AB48
-	extabindex  start:0x8002324C end:0x80023258
-	.text       start:0x800CAE78 end:0x800CB0C8
+	extab       start:0x8000AB40 end:0x8000AB78
+	extabindex  start:0x8002324C end:0x800232A0
+	.text       start:0x800CAE78 end:0x800CC130
 	.data       start:0x8041A4D0 end:0x8041A4F4
-
-game/DrawEffect_SmokeRingTimed_Update.c:
-	extab       start:0x8000AB48 end:0x8000AB50
-	extabindex  start:0x80023258 end:0x80023264
-	.text       start:0x800CB0C8 end:0x800CB344
-
-game/DrawEffect_KartSparkTier_Update.c:
-	extab       start:0x8000AB50 end:0x8000AB58
-	extabindex  start:0x80023264 end:0x80023270
-	.text       start:0x800CB344 end:0x800CB620
-
-game/DrawEffect_HitFlash_Update.c:
-	extab       start:0x8000AB58 end:0x8000AB60
-	extabindex  start:0x80023270 end:0x8002327C
-	.text       start:0x800CB620 end:0x800CB778
-
-game/DrawEffect_ItemHitFx_Spawn.c:
-	extab       start:0x8000AB60 end:0x8000AB68
-	extabindex  start:0x8002327C end:0x80023288
-	.text       start:0x800CB778 end:0x800CB8C0
-
-game/DrawEffect_ItemHitOriented_Spawn.c:
-	extab       start:0x8000AB68 end:0x8000AB70
-	extabindex  start:0x80023288 end:0x80023294
-	.text       start:0x800CB8C0 end:0x800CBBD4
-
-game/DrawEffect_ItemHitBurst_Spawn.c:
-	extab       start:0x8000AB70 end:0x8000AB78
-	extabindex  start:0x80023294 end:0x800232A0
-	.text       start:0x800CBBD4 end:0x800CC130
 
 game/DrawEffect_TrailDot_Spawn.c:
 	extab       start:0x8000AB78 end:0x8000AB80
