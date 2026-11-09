@@ -133,6 +133,7 @@ int PCBComm_ComputeSyncState(void)
     u8 usedCharacters[13];
     int optionVotes[2];
     u8 usedPositions[4];
+    int positionCount;
     int characterCount;
     CommStorage* storage = lbl_805A5EC0;
     PeerSlot* firstPeer;
@@ -182,13 +183,13 @@ int PCBComm_ComputeSyncState(void)
         role = g_localPcbRole;
         SelectRoleCards(peer, card, &cards, role);
         out->commonItem = CardSnapshot_ResolveCommonItems(cards.row);
+        positionCount = 0;
         for (i = 0; i < 4; ++i) usedPositions[i] = 0;
         role = g_localPcbRole;
-        for (i = 0; i < 4 - RoleCount(storage->sync, role); ++i)
-            usedPositions[i] = 1;
-        peer = firstPeer;
-        for (i = 0; i < 4; ++i, ++peer) {
-            if (peer->first.bytes.header.role == g_localPcbRole) {
+        for (; positionCount < 4 - RoleCount(storage->sync, role); ++positionCount)
+            usedPositions[positionCount] = 1;
+        for (i = 0; i < 4; ++i) {
+            if (firstPeer[i].first.bytes.header.role == g_localPcbRole) {
                 int position;
                 do { position = rand() % 4; }
                 while (usedPositions[position] != 0);
