@@ -6122,7 +6122,8 @@
     "__dt__7ResCtrlFv": "dtor_80082960",
     "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
     "__ct__13WeatherSystemFi": "WeatherSystem_Init",
-    "__nw__FUl": "Alloc"
+    "__nw__FUl": "Alloc",
+    "__dt__8NkVelVecFv": "dtor_80036E40"
   },
   "src/game/fn_8012A71C.cpp": {
     "extab_fn_8012A71C": "@etb_8000C698",
