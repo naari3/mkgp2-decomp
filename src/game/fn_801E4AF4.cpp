@@ -23,7 +23,8 @@ static inline int *InsertFillN(int *out, unsigned long n, const int &value) {
     while(n) { *out++ = value; --n; }
     return out;
 }
-extern "C" void fn_801E4AF4(SteeringRing *s, SteeringRingIter position, unsigned long n, const int &value) {
+extern "C" void fn_801E4AF4(SteeringRing *s, SteeringRingIter position, unsigned int amount, const int &value) {
+    unsigned long n = amount;
     if(n) {
         unsigned long max=InsertMaxSize();
         if(n>max || s->count>max-n) throw std::length_error(lbl_803BD2C0);
