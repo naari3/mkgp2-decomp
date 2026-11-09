@@ -1167,3 +1167,17 @@ must not take (`int j; int cur; int prev; int mode;`). 12 lines -> 0. Diagnose w
 `tools/mwtrace.py --only COLOR,VREG`: find which node first allocates the low register and whether
 it is a temp (`@9xx` from SplitOffRange) or a named local.
 
+
+## 47. Loop over a global object's members: put the loop in an inline that takes the pointer (fn_8013DA00, 11-09)
+
+Target loads the global straight into the LOWEST saved register and walks it, while the counter
+gets the highest: `lwz r29,g; cmplwi r29,0; li r31,0; ... addi r31,r31,1; addi r29,r29,12`.
+Writing the loop in the function itself (`T *p = g; if (p) for (i...) p->lists[i]`) gives the
+pointer r31 and the counter r30. Moving the loop into an inline whose parameter is the pointer
+(`if (g) RenderAll(g);`) gives the target's order: the inline's parameter copy is a later virtual
+register than the loop's own locals. Explicit `l++` pointer walks are worse (one extra insn).
+
+Same function, stack slots: `CIter b = l.begin(); RenderRange(b, l.end());` (named iterator passed
+by value) puts `b` below the by-value parameter copy; the target has them the other way round,
+which is `RenderRange(l.begin(), l.end())` with the temporary as the argument.
+Rule name in hits.jsonl: `loop-in-inline-param`.
