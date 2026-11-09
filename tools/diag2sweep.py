@@ -344,6 +344,23 @@ def build_template(src, fn_span, lines, cpp, max_axes=6):
                 edits.append((st, st, 'asg', '{{' + c + ': | ' + asg + ' }} '))
         notes.append(f'{c}: call {nm}__nl with {", ".join(f for f, _, _ in fields)} read into named locals '
                      f'(inline-wrapper-named-locals)')
+    # walking pointer -> indexed base inside a called static inline (025713e)
+    wk = 0
+    for nm in inl:
+        if wk >= 2:
+            break
+        iv = index_variant(inl[nm][2])
+        if not iv:
+            continue
+        sites = [m for m in re.finditer(r'\b' + nm + r'(?=\s*\()', text[body_lo:end])]
+        if not sites:
+            continue
+        w = f'w{wk}'
+        wk += 1
+        helpers.append(f'static inline {inl[nm][0]} {nm}__ix({inl[nm][1]}) {{{iv[0]}}}\n')
+        for m in sites:
+            edits.append((body_lo + m.start(), body_lo + m.end(), 'repl', (w, [None, nm + '__ix'])))
+        notes.append(f'{w}: {nm} indexes `{iv[2]}[i + K]` instead of walking `{iv[1]}` (indexed-vs-walking-pointer)')
     # replacements: nested prefixes share their start; build each group's
     # point from the shortest out (an outer point's "original" alternative
     # holds the inner point + the rest of the text)
@@ -365,8 +382,123 @@ def build_template(src, fn_span, lines, cpp, max_axes=6):
     allx = sorted(reps + ins, key=lambda x: (x[0], order.get(x[2], 2)), reverse=True)
     t = text[ls:end]
     for s, e, kind, payload in allx:
+        if payload.startswith('{{') and s > ls and text[s - 1] in '{}':
+            payload = ' ' + payload     # `{` + `{{` would be read as a point start
         t = t[:s - ls] + payload + t[e - ls:]
+    if '{{' in text[ls:end] or '}}' in text[ls:end]:
+        return [], None, ['source has literal {{ or }}: not templated']
     return helpers, t, notes
+
+
+WALK = re.compile(r'(?:\+\+\s*(\w+)\b|\b(\w+)\s*\+\+|\b(\w+)\s*\+=\s*\w+)')
+
+
+def walking_pointers(body):
+    """Pointer locals stepped inside a loop: [(name, init expr or None)]."""
+    out = []
+    ptrs = dict((m.group(2), m.group(3)) for m in
+                re.finditer(r'(?m)^\s*(?:const\s+)?[\w ]+?\*+\s*(?:const\s+)?(\b)(\w+)\s*(?:=\s*([^;]+))?;', body))
+    if not ptrs or not re.search(r'\b(for|while|do)\b', body):
+        return out
+    for m in WALK.finditer(body):
+        n = m.group(1) or m.group(2) or m.group(3)
+        if n in ptrs and n not in [x for x, _ in out]:
+            init = ptrs[n]
+            if not init:
+                im = re.search(r'\b' + n + r'\s*=\s*([^;,]+)[;,]', body)
+                init = im.group(1).strip() if im else None
+            out.append((n, init))
+    return out
+
+
+def index_variant(body):
+    """Walking pointer -> indexed base, for the shape
+        T *p; p = BASE; for (i = 0; ...; ++i, ++p) ... p[K] / *p / p->f ...
+    -> (new body, p, BASE) or None."""
+    for p, init in walking_pointers(body):
+        if not init or not re.fullmatch(r'(\([^()]*\)\s*)?&?[A-Za-z_]\w*', init.strip()):
+            continue
+        fm = re.search(r'for\s*\(\s*(?:int\s+)?(\w+)\s*=\s*0\s*;[^;]*;\s*([^)]*)\)', body)
+        if not fm:
+            continue
+        i, step = fm.group(1), fm.group(2)
+        parts = [x.strip() for x in step.split(',')]
+        if not ({f'++{i}', f'{i}++'} & set(parts)) or not ({f'++{p}', f'{p}++'} & set(parts)):
+            continue
+        b = body[:fm.start(2)] + ', '.join(x for x in parts if x not in (f'++{p}', f'{p}++')) + body[fm.end(2):]
+        b, n1 = re.subn(r'(?m)^[ \t]*(?:const\s+)?[\w ]+?\*+\s*' + p + r'\s*(=[^;]*)?;[ \t]*\n', '', b, count=1)
+        b = re.sub(r'(?m)^[ \t]*' + p + r'\s*=\s*' + re.escape(init) + r'\s*;[ \t]*\n', '', b, count=1)
+        base = init.strip()
+        if not re.fullmatch(r'\w+', base):
+            base = f'({base})'
+        b = re.sub(r'\b' + p + r'\[\s*([^\]]+?)\s*\]', lambda m: f'{base}[{i} + {m.group(1)}]', b)
+        b = re.sub(r'\*\s*' + p + r'\b(?!\s*[\[(])', f'{base}[{i}]', b)
+        b = re.sub(r'\b' + p + r'\s*->\s*', f'{base}[{i}].', b)
+        if not n1 or re.search(r'\b' + p + r'\b', b):
+            continue
+        return b, p, base
+    return None
+
+
+def levers(src_text, fn, rep, trace_lines, find_def, cpp):
+    """Source levers landed by hand on 11-09 whose shape fits this function.
+    -> [(rule id, advice)]; rep may be None / without solutions."""
+    span = find_def(src_text, fn)
+    if not span:
+        return []
+    ls, _, end = span
+    body = src_text[ls:end]
+    out = []
+    kinds = set()
+    for rc in ('gpr', 'fpr'):
+        for es in ((rep or {}).get('classes', {}).get(rc) or {}).get('solutions', []):
+            kinds |= {e['kind'] for e in es}
+    inl = static_inlines(src_text[:ls])
+    called = [n for n in inl if re.search(r'\b' + n + r'\s*\(', body)]
+    # 1. inline wrapper -> named locals (a4d82de fn_801913B0, 8f0fdc0 fn_8023AC14)
+    with_locals = [n for n in called
+                   if re.search(r'(?m)^\s*[\w\s\*]+?\b\w+\s*(=[^;]*)?;', inl[n][2])]
+    if with_locals and (not kinds or kinds & {'name', 'renumber', 'swapnum', 'lownb'}):
+        whole = [n for n in with_locals if len(re.findall(r';', body)) <= 3]
+        out.append(('inline-wrapper-named-locals',
+                    f"locals of the inline(s) {', '.join(with_locals[:4])} are frontend temps (numbered above every "
+                    'named local, below backend temps). To get a LOWER number / an earlier simplify push, '
+                    + ('write the wrapper body directly in this function' if whole else
+                       'read the values in this function into named locals and pass them (F(self) -> '
+                       'int a = self->a; F2(a))')
+                    + '; decl order then sets the numbers. Landed a4d82de, 8f0fdc0 (docs/regalloc_patterns.md 35).'))
+    # 2. indexed vs walking pointer (025713e PCBComm_ComputeSyncState)
+    bodies = [(fn, body)] + [(n, inl[n][2]) for n in called]
+    for nm, b in bodies:
+        for p, init in walking_pointers(b):
+            out.append(('indexed-vs-walking-pointer',
+                        f'`{p}` in {nm} is a pointer local stepped in a loop'
+                        + (f' (from `{init}`)' if init else '')
+                        + ': a named local, so it gets a low number and is created at its assignment. If diag wants '
+                        'that base created later / as a temp, index the base directly (`BASE[i + K]`) and drop the '
+                        'pointer. Landed 025713e.'))
+            break
+        gi = re.search(r'\b(for|while)\b[^{;]*[{;]?[^}]*?\b([A-Za-z_]\w*)\[\s*\w+\s*\+\s*\d+\s*\]', b, re.S)
+        if gi and not walking_pointers(b) and kinds:
+            out.append(('indexed-vs-walking-pointer',
+                        f'`{gi.group(2)}[i + K]` in a loop in {nm}: the base is a codegen temp (high number). If diag '
+                        'wants it named / created before the loop, walk a pointer local instead (reverse of 025713e).'))
+    # 3. base vtable store in the ctor body (fn_80227B98, 36)
+    if cpp:
+        cm = re.match(r'\s*(?:[\w\s]*?\b)?(\w+)::\1\s*\(', body) or \
+            re.search(r'\b(\w+)::\1\s*\([^)]*\)\s*(?::[^{]*)?\{', body[:body.find('{') + 1])
+        if cm:
+            cls = cm.group(1)
+            bm = re.search(r'\b(?:struct|class)\s+' + cls + r'\s*:\s*(?:public\s+)?(\w+)', src_text)
+            if bm:
+                base = bm.group(1)
+                out.append(('base-init-in-body',
+                            f'{cls} derives from {base}: the base initializer is generated BEFORE the body, so its '
+                            'vtable address gets the lowest prologue vreg and is coloured last. If the diff is the '
+                            'lis/addi registers (or "lis order") of the prologue address constants, give the base an '
+                            'empty ctor and store the base vtable in this ctor body after the address locals '
+                            '(docs/regalloc_patterns.md 36, fn_80227B98).'))
+    return out
 
 
 def generate(src_text, fn, rep, trace_lines, find_def, cpp):
@@ -390,4 +522,6 @@ def generate(src_text, fn, rep, trace_lines, find_def, cpp):
     if not span:
         return None
     helpers, t, notes = build_template(src_text, span, lines, cpp)
+    if t is None:
+        return None
     return {'template': ''.join(helpers) + t, 'want': want, 'notes': notes, 'lines': sorted(lines)}
