@@ -332,14 +332,12 @@ static inline void PeersReady2(int role, u8 *ready)
 
 static inline int RoleCount(int role)
 {
-    u8* sync;
     int count;
     int i;
     if (role == 0) return 1;
     count = 0;
-    sync = g_pcbSyncTable;
-    for (i = 0; i < 4; ++i, ++sync)
-        if (sync[4] == role) ++count;
+    for (i = 0; i < 4; ++i)
+        if (g_pcbSyncTable[i + 4] == role) ++count;
     return count;
 }
 
