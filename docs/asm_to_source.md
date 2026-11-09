@@ -83,6 +83,16 @@ and [reports/rewrite_coverage.md](reports/rewrite_coverage.md):
 - Pace is slowing (+353, +97, +25 matched functions on 11-07..11-09), as
   expected for a long tail.
 
+- Backfill (`rewrite_rules.py backfill`, 11-09): the 193 dated past fixes
+  plus every run in the autopipe / shapesweep / regfix result logs (570 runs,
+  11-08..11-09) go to `hits_backfill.jsonl`. Automated application of the
+  broad rules to the leftovers has a low yield: 2 matches (shapesweep
+  `hoist`: CardRegister_Session_Tick, fn_80231D50) and 39 partial
+  improvements from about 1950 rule applications, against 193 landings that
+  people/Codex made by picking one specific lever. The rules that are
+  only ever recorded as landed (100 %) have no failed attempts on record,
+  so their rate means nothing yet.
+
 Recommendation: keep the catalog as the shared vocabulary between regfix,
 shapesweep and the onmokoworks workers (it is plain JSONL in the repo, so their
 prompts can read it), and judge convergence from the hits log rather than from
