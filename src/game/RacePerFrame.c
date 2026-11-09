@@ -1,12 +1,16 @@
 #include "game/RacePerFramePrivate.h"
 
+static inline signed char TickPlayerRank(const TickEntry *entry) {
+    return entry->player;
+}
+
 static inline unsigned char TickFanfare(TickBlock *block) {
     TickEntry *entries = block->entries;
     TickEntry *entry;
     if (g_voiceQueueMuted) return 1;
     entry = &entries[g_goalFanfarePlayerIndex];
     if (!entry->kart->finished) {
-        if (g_gameMode == 2 && (signed char)entry->player != 0) {
+        if (g_gameMode == 2 && TickPlayerRank(entry) != 0) {
             if (TickFindLeader(block)->kart->finished) {
                 g_voiceQueueMuted = 1;
                 g_goalFanfareStartTimeHi = OSGetTime();
@@ -50,11 +54,11 @@ int Race_PerFrameTickAndAudio(void) {
             entry->checkpoint = scalar - entry->kart->lap;
             entry->player = entry->kart->rank;
             if (entry->checkpoint < -1) entry->checkpoint = -1;
-            if ((signed char)entry->player < minRank && entry->participant) {
-                minRank = (signed char)entry->player;
+            if (TickPlayerRank(entry) < minRank && entry->participant) {
+                minRank = TickPlayerRank(entry);
                 minIndex = i;
             }
-            if ((signed char)entry->player == 0) {
+            if (TickPlayerRank(entry) == 0) {
                 g_lastPlayerCurrentCheckpoint = entry->checkpoint;
                 g_lastPlayerIndexCrossingCheckpoint = i;
             }
@@ -63,12 +67,12 @@ int Race_PerFrameTickAndAudio(void) {
     if (g_gameMode == 2 && g_currentVoiceSubId == -1) g_taMinLapPlayerIndex = minIndex;
     if (g_raceRankingPathObject) {
         for (i = 0, entry = entries; i < 8; entry++, i++) {
-            if (entry->id != -1 && (signed char)entry->player != 0) {
+            if (entry->id != -1 && TickPlayerRank(entry) != 0) {
                 TickEntry *other = entries;
                 for (j = 0; j < 8; other++, j++) {
-                    if (other->id != -1 && (signed char)other->player == (signed char)entry->player - 1) {
+                    if (other->id != -1 && TickPlayerRank(other) == TickPlayerRank(entry) - 1) {
                         entry->distance = Race_CompareKartProgress(g_raceRankingPathObject, block->entries[j].kart->participantIndex, entry->kart->participantIndex);
-                        if ((signed char)entry->player != entry->previousRank) {
+                        if (TickPlayerRank(entry) != entry->previousRank) {
                             entry->overtakeState = 0;
                             entry->previousRank = entry->player;
                         }
