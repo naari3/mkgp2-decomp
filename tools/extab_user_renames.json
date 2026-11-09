@@ -5725,7 +5725,8 @@
     "__vt__10TextPanelC": "lbl_8048FFE8",
     "__ct__11TextManagerFv": "fn_80149214",
     "__dt__11TextManagerFv": "dtor_800869D0",
-    "@47": "lbl_80367368"
+    "@47": "lbl_80367368",
+    "__ct__7PairObjFPCci": "fn_8013D800"
   },
   "src/game/RaceHud_80147470.cpp": {
     "extab_fn_80147470": "@etb_8000DF44",

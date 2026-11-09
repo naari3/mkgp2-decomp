@@ -223,6 +223,7 @@ The table above is the list as of 13:15Z. Since then (`tools/scan_asm_fns.py`):
 | clFlowKart_UpdateDisplay | game/clFlowKart_UpdateDisplay.c | C, 100 %, inside the merged game/clFlowKart_Init.c (5eca6fc) | n3 |
 | clFlowRound_Update | game/clFlowRound.c | C, 100 % (3f6d3c7) | n3 |
 | fn_801502AC | game/Scene_8014E0C4.cpp | C, 100 % (cf30eee) | n3 |
+| fn_80154304 | game/Scene_8014E0C4.cpp | C, 100 % (regalloc_patterns §48) | n3 |
 | RaceContext_InitDefaults | game/RaceContext_InitDefaults.c | still asm; the file is now part of game/SetCourseParams.c (887c513, 14-TU merge) | n3 merge |
 | SoundMgr_Play | game/SoundMgr_Play.c | still asm; the file is now part of game/clsound/fn_801913B0.c (a4d82de, 19-TU merge) | n3 merge |
 

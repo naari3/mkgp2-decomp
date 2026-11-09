@@ -859,8 +859,8 @@ TitleTracker *TitleTracker_GetOrCreateSingleton(void)
 
 static inline int CurrentNameScore(void)
 {
-    int k;
     int j;
+    int k;
     int score;
     long i;
     score = 0;
@@ -874,7 +874,7 @@ static inline int CurrentNameScore(void)
         }
     }
     {
-        long cup;
+        int cup;
         int variant;
 
         for (cup = 1; cup < 9; cup++) {
@@ -954,7 +954,7 @@ void DetermineTitle(unsigned char mode)
             if (checks[i]() == 1 && g_stagingTitleId > 0) {
                 g_stagingTitleId += 0x2D;
                 if (g_stagingTitleId != g_playerData.b19B || g_stagingTitleId == 0x42) {
-                    DebugPrintf((char *)pool + 0x20D8, i);
+                    DebugPrintf((char *)pool + 0x20D8, i, g_stagingTitleId);
                     break;
                 }
             }
