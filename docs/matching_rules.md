@@ -24,6 +24,9 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-09 21:10Z: `tools/tu_audit.py` no longer discounts merges that take
+  the `Matching` flag from some TUs; `docs/reports/tu_boundary_audit.md`
+  regenerated with that ranking (follows the 18:47Z rule).
 - 2026-11-09 20:50Z: big changes (TU merges, tools, build rules) are announced
   on the board no later than the push that lands them (section 1).
 - 2026-11-09 18:47Z: the original TU structure wins over the `Matching` flag;

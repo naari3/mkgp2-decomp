@@ -767,8 +767,8 @@ def score(p):
     unlock = len(p["nonmatch"])
     reloc = len(p.get("hot_reloc", ()))
     s = base * (1 + 2 * len(p["hot"]) + 8 * reloc + 0.25 * (unlock - len(p["hot"])))
-    if p["kind"] == "merge" and p["matching_units"] and unlock:
-        s *= 0.7  # risk of demoting Matching TUs
+    # No penalty for a merge that takes the Matching flag from some TUs: the
+    # original TU structure wins (docs/matching_rules.md section 2, rule 5).
     if p["claimed"]:
         s *= 0.2
     return s
@@ -787,7 +787,8 @@ def warn(m, p):
     if p["claimed"]:
         w.append("CLAIMED: " + ", ".join("%s (%s)" % (m.units[u]["name"], who or "?") for u, who in p["claimed"]))
     if p["kind"] == "merge" and p["matching_units"] and len(p["matching_units"]) < len(p["units"]):
-        w.append("DEMOTES %d Matching TU(s) unless the merged TU matches fully: %s" % (
+        w.append("note: %d Matching TU(s) lose the flag until the merged TU matches fully "
+                 "(allowed when the function count rises, matching_rules 2.5): %s" % (
             len(p["matching_units"]), ", ".join(m.units[u]["name"] for u in p["matching_units"][:6])))
     return w
 
@@ -801,7 +802,9 @@ def render(m, merges, owns, splits, sinits, ccs, style_of_cc, learn, validation=
     L.append("")
     L.append("Evidence is address-based (target asm), so it is independent of the current cuts. "
              "Scores = evidence weight x (1 + non-matching functions in the touched TUs); "
-             "merges that would demote Matching TUs are discounted, claimed TUs heavily discounted.")
+             "near misses with a reloc/anchor diff weigh most. A merge that takes the Matching flag "
+             "from some TUs is NOT discounted (matching_rules section 2, rule 5: land it when main.dol "
+             "is OK and the count of 100% functions rises); claimed TUs are heavily discounted.")
     L.append("")
     L.append("Claims loaded: %d (%s). Re-check open unit-claims before acting." % (
         len(m.claims), ", ".join(sorted("%s=%s" % (k, v or "?") for k, v in m.claims.items())) or "none"))
