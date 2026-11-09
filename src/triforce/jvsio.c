@@ -484,8 +484,8 @@ void fn_80283154(void) {
                             break;
                         }
                     } else {
-                        u8 c = cmd.req[bank][node].cmd[commandIndex];
                         if (cmd.req[bank][node].response[1] == 1) {
+                            u8 c = cmd.req[bank][node].cmd[commandIndex];
                             if (cmd.qwr + 1 != cmd.qrd) {
                                 cmd.queue[cmd.qwr].node = node;
                                 cmd.queue[cmd.qwr].cmd = c;
@@ -493,6 +493,7 @@ void fn_80283154(void) {
                                 cmd.queue[cmd.qwr++].pad = p[0];
                             }
                         } else {
+                            u8 c = cmd.req[bank][node].cmd[commandIndex];
                             if (cmd.qwr + 1 != cmd.qrd) {
                                 cmd.queue[cmd.qwr].node = node;
                                 cmd.queue[cmd.qwr].cmd = c;
