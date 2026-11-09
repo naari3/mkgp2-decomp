@@ -33,6 +33,36 @@ fn_801E4AF4, fn_801E5454).
 | SharedPtr_Init / dtor_80038E30 | `std::_RefCountedPtr<char, _Array<char>>` ctor / dtor |
 | FUN_8003b120 / MemoryManager_Free / Alloc / MemoryManager_TimedFree | `operator new[]` / `delete[]` / `new` / `delete` |
 
+### std::list and std::vector (same day)
+
+| address | MSL function |
+| --- | --- |
+| DoublyLinkedList_Init | `std::__list_deleter<const void*>::__list_deleter()` |
+| DoublyLinkedList_PushBefore | `__list_deleter<const void*>::insert(iterator, const T&)` (what `push_back` calls) |
+| fn_8012215C | `__list_deleter<const void*>::erase(iterator)` |
+| PtrVec_InsertFill | `std::__vector_pod<unsigned long>::insert(pointer, size_type, const T&)` (every `vector<T*>::push_back`) |
+| fn_80146000 | `__vector_pod<unsigned long>::at(size_type)` |
+| fn_801460D0 | `std::out_of_range::~out_of_range` |
+| dtor_80145F9C | `std::vector<FadeObj*>::~vector` |
+| fn_801C1964 / 1AA8 / 1BD8, dtor_801C1B78 / 1CE8 | `__vector_imp<KeyGroup,...,0>::init` / `at`, `__vector_deleter::clear` / dtor, `vector<KeyGroup>` dtor |
+
+Matched with the real headers after long hand sweeps had failed:
+
+- `it = list.erase(it)` loops (fn_80204218, fn_8020F080, about 300 hand-written
+  forms tried): the list<void const*> iterator is converted back to the
+  list<T*> iterator, which is where the extra stack copies come from.
+- `std::vector<KeyGroup> groups(5)` + `for (int i = 0; i < groups.size(); i++)
+  groups.at(i) = table[i];` (fn_801BF644).  `T()` for a POD is copied from a
+  zero .bss/.sbss object (`lbl_806792B8`), and the `int` index is what moves
+  the `mr r4, r30` copy into the loop test.
+- A ctor that `push_back`s panels into a `std::list` (clFlowGpPlease_Init):
+  the hand-written `End()` sentinel caused an r0/r7 exchange; with the real
+  list and the natural `table[i]`, `118 + i * 202` loop it matches.
+
+Rule of thumb: once the container is real, write the user code in the most
+ordinary way (`int i`, `operator[]`, `push_back`); the odd pointer/offset
+loops in our sources were compensating for the hand-written container.
+
 ## Getting the headers
 
 The headers are Metrowerks copyright and are **not** in the repository.
