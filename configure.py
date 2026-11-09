@@ -2031,7 +2031,7 @@ config.libs = [
             Object(Matching, "game/Item_GetDescriptor.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Item_GetDescriptorField0.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/ItemSelectState.cpp", mw_version="GC/2.6", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(NonMatching, "game/ItemSelectChildSpriteDraw.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/ItemSelectChildSpriteDraw.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/ItemSelectChildSpriteMethods.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemSelectChildSpriteUpdate.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/ItemSelectChildSpriteDtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),

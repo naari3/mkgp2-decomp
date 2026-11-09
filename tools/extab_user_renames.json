@@ -12922,7 +12922,9 @@
     "childCounterInterfaceName": "global:lbl_803E5CC4",
     "childFloatCounterName": "global:lbl_803E5CD8",
     "@136": "@etb_8001CBC4",
-    "@137": "@eti_8002AEB4"
+    "@137": "@eti_8002AEB4",
+    "@139": "@etb_8001CBC4",
+    "@140": "@eti_8002AEB4"
   },
   "src/game/StrPcb_Lifetime_nm1.cpp": {
     "__ct__6StrPcbFi": "StrPcb_Init",

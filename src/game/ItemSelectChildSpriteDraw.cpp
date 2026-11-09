@@ -1,8 +1,8 @@
 #include "game/ItemSelectChildSprite.h"
 /* Original shared animation curves and child layout pool at 0x803E5878. */
 #pragma force_active on
-static const float childScales[3] = {1.0f, 0.7f, 0.9f};
-static const float childCurves[18][7][2] = {
+extern const float childScales[3] = {1.0f, 0.7f, 0.9f};
+extern const float childCurves[18][7][2] = {
     {{0.0f, 0.0f}, {500.0f, 66.66667175292969f}, {1000.0f, 66.66667175292969f}, {2000.0f, 66.66667175292969f}, {3000.0f, 66.66667175292969f}, {4000.0f, 66.66667175292969f}, {5000.0f, 66.66667175292969f}},
     {{0.0f, 0.0f}, {500.0f, 66.66667175292969f}, {1000.0f, 66.66667175292969f}, {2000.0f, 66.66667175292969f}, {3000.0f, 66.66667175292969f}, {4000.0f, 66.66667175292969f}, {5000.0f, 66.66667175292969f}},
     {{0.0f, 0.0f}, {500.0f, 66.66667175292969f}, {1000.0f, 66.66667175292969f}, {2000.0f, 66.66667175292969f}, {3000.0f, 66.66667175292969f}, {4000.0f, 66.66667175292969f}, {5000.0f, 66.66667175292969f}},
@@ -22,41 +22,39 @@ static const float childCurves[18][7][2] = {
     {{0.0f, 0.0f}, {500.0f, 83.33333587646484f}, {1000.0f, 83.33333587646484f}, {2000.0f, 83.33333587646484f}, {3000.0f, 83.33333587646484f}, {4000.0f, 83.33333587646484f}, {5000.0f, 83.33333587646484f}},
     {{0.0f, 0.0f}, {500.0f, 83.33333587646484f}, {1000.0f, 83.33333587646484f}, {2000.0f, 83.33333587646484f}, {3000.0f, 83.33333587646484f}, {4000.0f, 83.33333587646484f}, {5000.0f, 83.33333587646484f}}
 };
-static const float childOrigins[4][2] = {{162.0f, 40.0f}, {260.0f, 40.0f}, {162.0f, 40.0f}, {147.0f, 40.0f}};
-static const float childEffectPositions[2][2] = {{0.0f, -8.5f}, {0.0f, 11.5f}};
-static const float childOffsets[4] = {0.0f, 0.0f, 0.0f, 0.0f};
-static const char childIntCounterName[] = "clIntCounter";
-static const char childCounterInterfaceName[] = "clCounterInterface";
-static const char childFloatCounterName[] = "clFloatCounter";
+extern const float childOrigins[4][2] = {{162.0f, 40.0f}, {260.0f, 40.0f}, {162.0f, 40.0f}, {147.0f, 40.0f}};
+extern const float childEffectPositions[2][2] = {{0.0f, -8.5f}, {0.0f, 11.5f}};
+extern const float childOffsets[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+extern const char childIntCounterName[] = "clIntCounter";
+extern const char childCounterInterfaceName[] = "clCounterInterface";
+extern const char childFloatCounterName[] = "clFloatCounter";
 #pragma force_active reset
 extern "C" {
 void fn_8023D2B8(ItemAliasSprite *);
 int fn_8020A788(FlowFader *);
 }
 static inline void DrawEffect(ItemSelectChildSprite *self, int active) {
-    const float (*position)[2];
     ItemSelectChildEffect *effect = self->effect;
     float sx = effect->scale;
     float sy = effect->scale * fn_8020A6CC(effect->fade.p);
     float shift = effect->scale * (lbl_806DBDA8 - fn_8020A6CC(effect->fade.p));
-    position = childEffectPositions;
     for (int i = 0; i < 2; ++i) {
         fn_8011F804(effect->handles[i],
-            effect->scale * (*position)[0] + effect->x,
-            shift * (*position)[1] +
-                (effect->scale * (*position)[1] + effect->y));
+            effect->scale * childEffectPositions[i][0] + effect->x,
+            shift * childEffectPositions[i][1] +
+                (effect->scale * childEffectPositions[i][1] + effect->y));
         fn_8011F744(effect->handles[i], sx, sy);
         SpriteHandle_SetActiveFlag(effect->handles[i], active);
         SpriteHandle_RecomputeCull(effect->handles[i]);
-        ++position;
     }
     effect->fade.p->Step();
     if (lbl_806DBDA8 == fn_8020A6CC(effect->fade.p)) effect->active = 0;
     else effect->active = 1;
 }
 static inline void DrawOverlay(ItemSelectChildSprite *self, int active) {
+    ItemSelectChildOverlay *overlay;
     int pulse;
-    ItemSelectChildOverlay *overlay = self->overlay;
+    overlay = self->overlay;
     float scale = overlay->scale * fn_8020A6CC(overlay->fade.p);
     fn_8011F804(overlay->handles[0], overlay->x, overlay->y);
     fn_8011F744(overlay->handles[0], scale, scale);
@@ -78,11 +76,17 @@ static inline void DrawOverlay(ItemSelectChildSprite *self, int active) {
         else fn_8020A7CC(overlay->pulse.p, 0, 255, 5);
     }
 }
-static inline void SetItemPos(ItemAliasSprite *item, float y, float x) { item->x=x; item->y=y; }
+static inline void SetItemPos(ItemAliasSprite *item, float y, float x) {
+    float px; float py;
+    px = x; py = y;
+    item->x=px; item->y=py;
+}
 static inline void SetItemScale(ItemAliasSprite *item, float scale) { item->scaleX=scale; item->scaleY=scale; }
-template <class T> static inline void SetPartPos(T *part, float y, float x) { part->x=x; part->y=y; }
-#pragma push
-#pragma opt_dead_assignments off
+template <class T> static inline void SetPartPos(T *part, float y, float x) {
+    float px; float py;
+    px = x; py = y;
+    part->x=px; part->y=py;
+}
 extern "C" void fn_8023DCEC(ItemSelectChildSprite *self, int active) {
     ResCtrl rc;
     float scale;
@@ -113,5 +117,4 @@ extern "C" void fn_8023DCEC(ItemSelectChildSprite *self, int active) {
     self->overlay->scale = scale;
     DrawOverlay(self, active);
 }
-#pragma pop
 
