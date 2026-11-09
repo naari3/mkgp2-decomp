@@ -1269,7 +1269,7 @@ config.libs = [
             Object(Matching, "game/ShellPilePiece_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/ShellPile_Spawn.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/ItemObject_TickHornBlastShockwave.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(NonMatching, "game/ItemObject_Tick_Kind29_LightAttachment.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/ItemObject_Tick_Kind29_LightAttachment.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/ItemObject_Tick_Kind28_BananaTrioChild.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/ItemObject_Tick_Kind27_TimedDrop.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/ItemObject_Tick_Kind2c_Horn.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
@@ -2843,7 +2843,7 @@ config.libs = [
             Object(Matching, "game/kartmove/fn_8019C078.c"),
             Object(NonMatching, "game/kartmove/KartMovement_PhysicsStep.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/kartmove/fn_8019C6B4.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/kartmove/fn_8019A9BC.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/kartmove/fn_8019A9BC.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/kartmove/fn_8019C15C.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/sprite/fn_8019F5BC.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/sprite/fn_8019FA30.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),

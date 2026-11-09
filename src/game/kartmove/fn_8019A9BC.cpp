@@ -1,18 +1,22 @@
-#include "game/kartmove/rotation_private.h"
+#include "game/kartmove/carobject_private.h"
+struct MovementQuat {
+    float x, y, z, w;
+    MovementQuat() { x = y = z = w = 0.0f; }
+    ~MovementQuat() {}
+};
 
-extern const float lbl_806D96D0, lbl_806D96D4;
-extern const float lbl_806D9704, lbl_806D9708, lbl_806D970C;
+extern const float lbl_806D9704;
 extern "C" double sin(double);
 extern "C" double cos(double);
 
 
 
 static inline void Identity(Matrix44 *a) {
-    a->m[3][3] = a->m[2][2] = a->m[1][1] = a->m[0][0] = lbl_806D96D0;
-    a->m[1][0] = a->m[0][3] = a->m[0][2] = a->m[0][1] = lbl_806D96D0;
-    a->m[2][1] = a->m[2][0] = a->m[1][3] = a->m[1][2] = lbl_806D96D0;
-    a->m[3][2] = a->m[3][1] = a->m[3][0] = a->m[2][3] = lbl_806D96D0;
-    a->m[0][0] = a->m[1][1] = a->m[2][2] = a->m[3][3] = lbl_806D96D4;
+    a->m[3][3] = a->m[2][2] = a->m[1][1] = a->m[0][0] = 0.0f;
+    a->m[1][0] = a->m[0][3] = a->m[0][2] = a->m[0][1] = 0.0f;
+    a->m[2][1] = a->m[2][0] = a->m[1][3] = a->m[1][2] = 0.0f;
+    a->m[3][2] = a->m[3][1] = a->m[3][0] = a->m[2][3] = 0.0f;
+    a->m[0][0] = a->m[1][1] = a->m[2][2] = a->m[3][3] = 1.0f;
 }
 
 static inline void SetRotation(Matrix44 *m, float m00, float m10, float m20,
@@ -28,16 +32,16 @@ static inline void QuatMatrix(Matrix44 *m, MovementQuat *q) {
     float yy = q->y*q->y;
     float zz = q->z*q->z;
     float xy = q->x*q->y;
-    float wz = q->w*q->z;
     float xz = q->x*q->z;
-    float wy = q->w*q->y;
     float yz = q->y*q->z;
     float wx = q->w*q->x;
-    SetRotation(m, lbl_806D96D4 - lbl_806D9708*(yy+zz),
-                lbl_806D9708*(xy-wz), lbl_806D9708*(xz+wy),
-                lbl_806D9708*(xy+wz), lbl_806D96D4 - lbl_806D9708*(xx+zz),
-                lbl_806D9708*(yz-wx), lbl_806D9708*(xz-wy),
-                lbl_806D9708*(yz+wx), lbl_806D96D4 - lbl_806D9708*(xx+yy));
+    float wy = q->w*q->y;
+    float wz = q->w*q->z;
+    SetRotation(m, 1.0f - 2.0f*(yy+zz),
+                2.0f*(xy-wz), 2.0f*(xz+wy),
+                2.0f*(xy+wz), 1.0f - 2.0f*(xx+zz),
+                2.0f*(yz-wx), 2.0f*(xz-wy),
+                2.0f*(yz+wx), 1.0f - 2.0f*(xx+yy));
 }
 
 static inline void AccumulateProduct(float &value, float right, float left) {
@@ -66,14 +70,11 @@ static inline void Multiply(Matrix44 *a, const Matrix44 *b) {
 }
 
 static inline void SetAxisAngle(MovementQuat *q, const float *axis) {
-    float c;
     float z = axis[2];
     float y = axis[1];
     float x = axis[0];
     float s = (float)sin(lbl_806D9704);
     q->x = x*s; q->y = y*s; q->z = z*s;
-    c = (float)cos(lbl_806D9704);
-    q->w = c;
 }
 
 extern "C" void fn_8019A9BC(MovementInit *k) {
@@ -81,14 +82,16 @@ extern "C" void fn_8019A9BC(MovementInit *k) {
     MovementQuat q;
     Identity(&rotation);
     SetAxisAngle(&q, k->orientation.m[0]);
+    float c = (float)cos(lbl_806D9704);
+    q.w = c;
+    QuatMatrix(&rotation, &q);
     Vec3 position;
     position.x = k->orientation.m[3][0];
-    position.y = lbl_806D970C + k->orientation.m[3][1];
+    position.y = 50.0f + k->orientation.m[3][1];
     position.z = k->orientation.m[3][2];
-    k->orientation.m[3][0] = lbl_806D96D0;
-    k->orientation.m[3][1] = lbl_806D96D0;
-    k->orientation.m[3][2] = lbl_806D96D0;
-    QuatMatrix(&rotation, &q);
+    k->orientation.m[3][0] = 0.0f;
+    k->orientation.m[3][1] = 0.0f;
+    k->orientation.m[3][2] = 0.0f;
     Multiply(&k->orientation, &rotation);
     k->orientation.m[3][0] = position.x;
     k->orientation.m[3][1] = position.y;
