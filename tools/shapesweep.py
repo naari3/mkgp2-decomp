@@ -700,8 +700,8 @@ class Ctx:
         self.ti, self.sig, self.inlines, self.cpp = ti, sig, inlines, cpp
 
 
-def moves(st, ctx, allowed):
-    """Yield (label, fn) where fn() returns a new State or None."""
+def _moves(st, ctx, allowed):
+    """Yield (label, fn, si, xi, path); node-level fns accept base= (apply to another state)."""
     env = env_of(ctx.sig, st.stmts)
     H = st.helpers
     for si, xi, n, path, cond, lval in list(all_nodes(st)):
@@ -714,52 +714,52 @@ def moves(st, ctx, allowed):
                 if ('wrap' if kind != 'lay' else 'wrap2') not in allowed:
                     continue
 
-                def f(si=si, xi=xi, path=path, kind=kind, tn=tn):
-                    s2 = st.clone()
+                def f(si=si, xi=xi, path=path, kind=kind, tn=tn, base=None):
+                    s2 = (base or st).clone()
                     nn = node_at(get_slot(*slot(s2, si, xi)), path)
                     name = add_helper(s2, kind, nn.op, tn)
                     a, b = nn.kids
                     args = [b, a] if kind == 'rev' else [a, b]
                     replace_at(slot(s2, si, xi), path, N('call', None, [N('atom', t=name)] + args))
                     return s2
-                yield (f'wrap-{kind} {pr(n)[:40]}', f)
+                yield (f'wrap-{kind} {pr(n)[:40]}', f, si, xi, path)
         if n.k == 'bin' and n.op in COMMUTATIVE and 'swap' in allowed:
-            def f(si=si, xi=xi, path=path):
-                s2 = st.clone()
+            def f(si=si, xi=xi, path=path, base=None):
+                s2 = (base or st).clone()
                 nn = node_at(get_slot(*slot(s2, si, xi)), path)
                 nn.kids.reverse()
                 return s2
-            yield (f'swap {pr(n)[:40]}', f)
+            yield (f'swap {pr(n)[:40]}', f, si, xi, path)
         if n.k == 'bin' and n.op in ('+', '*') and 'assoc' in allowed and t and t[1] == 0:
             l, r = n.kids
             if l.k == 'bin' and l.op == n.op:
-                def f(si=si, xi=xi, path=path):
-                    s2 = st.clone()
+                def f(si=si, xi=xi, path=path, base=None):
+                    s2 = (base or st).clone()
                     nn = node_at(get_slot(*slot(s2, si, xi)), path)
                     (a, b), c = nn.kids[0].kids, nn.kids[1]
                     replace_at(slot(s2, si, xi), path, N('bin', nn.op, [a, N('bin', nn.op, [b, c])]))
                     return s2
-                yield (f'assoc-r {pr(n)[:40]}', f)
+                yield (f'assoc-r {pr(n)[:40]}', f, si, xi, path)
             if r.k == 'bin' and r.op == n.op:
-                def f(si=si, xi=xi, path=path):
-                    s2 = st.clone()
+                def f(si=si, xi=xi, path=path, base=None):
+                    s2 = (base or st).clone()
                     nn = node_at(get_slot(*slot(s2, si, xi)), path)
                     a, (b, c) = nn.kids[0], nn.kids[1].kids
                     replace_at(slot(s2, si, xi), path, N('bin', nn.op, [N('bin', nn.op, [a, b]), c]))
                     return s2
-                yield (f'assoc-l {pr(n)[:40]}', f)
+                yield (f'assoc-l {pr(n)[:40]}', f, si, xi, path)
         if tn and n.k != 'atom' and 'id' in allowed and not (n.k == 'call' and n.kids[0].k == 'atom' and n.kids[0].t.startswith('Id_')):
-            def f(si=si, xi=xi, path=path, tn=tn):
-                s2 = st.clone()
+            def f(si=si, xi=xi, path=path, tn=tn, base=None):
+                s2 = (base or st).clone()
                 nn = node_at(get_slot(*slot(s2, si, xi)), path)
                 name = add_helper(s2, 'id', None, tn)
                 replace_at(slot(s2, si, xi), path, N('call', None, [N('atom', t=name), nn]))
                 return s2
-            yield (f'id {pr(n)[:40]}', f)
+            yield (f'id {pr(n)[:40]}', f, si, xi, path)
         if tn and n.k != 'atom' and not cond and 'hoist' in allowed and path != ():
             for where in ('front', 'back'):
-                def f(si=si, xi=xi, path=path, tn=tn, where=where):
-                    s2 = st.clone()
+                def f(si=si, xi=xi, path=path, tn=tn, where=where, base=None):
+                    s2 = (base or st).clone()
                     nn = node_at(get_slot(*slot(s2, si, xi)), path)
                     name = f't{s2.ntemp}'
                     s2.ntemp += 1
@@ -770,12 +770,12 @@ def moves(st, ctx, allowed):
                     d = {'k': 'decl', 'ind': first_ind(s2), 'ty': tn, 'vars': [[name, '', '', None]]}
                     s2.stmts.insert(a if where == 'front' else b, d)
                     return s2
-                yield (f'hoist-{where} {pr(n)[:40]}', f)
+                yield (f'hoist-{where} {pr(n)[:40]}', f, si, xi, path)
         if n.k == 'call' and n.kids[0].k == 'atom' and n.kids[0].t in ctx.inlines and 'expand' in allowed:
             params, body = ctx.inlines[n.kids[0].t]
             if len(params) == len(n.kids) - 1:
-                def f(si=si, xi=xi, path=path, params=params, body=body):
-                    s2 = st.clone()
+                def f(si=si, xi=xi, path=path, params=params, body=body, base=None):
+                    s2 = (base or st).clone()
                     nn = node_at(get_slot(*slot(s2, si, xi)), path)
                     args = dict(zip(params, nn.kids[1:]))
                     e = copy.deepcopy(body)
@@ -787,7 +787,7 @@ def moves(st, ctx, allowed):
                         return x
                     replace_at(slot(s2, si, xi), path, sub(e))
                     return s2
-                yield (f'expand {n.kids[0].t}', f)
+                yield (f'expand {n.kids[0].t}', f, si, xi, path)
 
     # statement-level moves
     for si, s in enumerate(st.stmts):
@@ -797,6 +797,8 @@ def moves(st, ctx, allowed):
             tgt, rhs = s['e'].kids[0].t, s['e'].kids[1]
         elif s['k'] == 'decl' and len(s['vars']) == 1 and s['vars'][0][3] is not None and not s['vars'][0][1]:
             tgt, rhs = s['vars'][0][0], s['vars'][0][3]
+        if tgt and any(y.k == 'atom' and y.t == tgt for y, _, _, _ in walk(rhs)):
+            tgt = None  # x = f(x): splitting would clobber x
         if tgt and 'accum' in allowed and rhs.k in ('bin', 'call') and (rhs.k == 'call' or rhs.op in OPNAME):
             # x = E(c, ...)  ->  x = c; x = E(x, ...)   for each non-atom operand c
             for ci in range(1 if rhs.k == 'call' else 0, len(rhs.kids)):
@@ -816,7 +818,7 @@ def moves(st, ctx, allowed):
                     s2.stmts.insert(si + 1, {'k': 'expr', 'ind': x['ind'],
                                              'e': N('asg', '=', [N('atom', t=tgt), r])})
                     return s2
-                yield (f'accum{ci} {tgt}', f)
+                yield (f'accum{ci} {tgt}', f, None, None, None)
         # unvar: single-use local substituted into its use
         if tgt and 'unvar' in allowed and uses(st, tgt) == (2 if s['k'] == 'expr' else 1):
             later = [j for j in range(si + 1, len(st.stmts)) if st.stmts[j]['k'] != 'raw'
@@ -842,7 +844,7 @@ def moves(st, ctx, allowed):
                                 d['vars'] = [v for v in d['vars'] if v[0] != tgt]
                         s2.stmts = [d for d in s2.stmts if not (d['k'] == 'decl' and not d['vars'])]
                     return s2
-                yield (f'unvar {tgt}', f)
+                yield (f'unvar {tgt}', f, None, None, None)
     if 'declswap' in allowed:
         a, b = decl_front(st)
         for i in range(a, b):
@@ -853,13 +855,50 @@ def moves(st, ctx, allowed):
                     v = s2.stmts[i]['vars']
                     v[j], v[j + 1] = v[j + 1], v[j]
                     return s2
-                yield (f'declswap {d["vars"][j][0]}/{d["vars"][j + 1][0]}', f)
+                yield (f'declswap {d["vars"][j][0]}/{d["vars"][j + 1][0]}', f, None, None, None)
             if i + 1 < b:
                 def f(i=i):
                     s2 = st.clone()
                     s2.stmts[i], s2.stmts[i + 1] = s2.stmts[i + 1], s2.stmts[i]
                     return s2
-                yield (f'declswap #{i - a}', f)
+                yield (f'declswap #{i - a}', f, None, None, None)
+
+
+def skeleton(n):
+    if n.k == 'atom':
+        return 'A'
+    return '(' + n.k + (n.op or '') + (n.t if n.k == 'mem' else '') + ' ' + ' '.join(skeleton(c) for c in n.kids) + ')'
+
+
+def moves(st, ctx, allowed):
+    """Yield (label, fn) where fn() returns a new State or None. With 'sym',
+    a node move is also offered applied at the same place in every statement
+    with the same expression skeleton (x/y/z component triples)."""
+    groups = {}
+    for si, s in enumerate(st.stmts):
+        ex = stmt_exprs(s)
+        if len(ex) == 1:
+            groups.setdefault(skeleton(ex[0][0][ex[0][1]]), []).append(si)
+    done = set()
+    for label, f, si, xi, path in _moves(st, ctx, allowed):
+        yield label, f
+        if si is None or 'sym' not in allowed:
+            continue
+        ex = stmt_exprs(st.stmts[si])
+        if len(ex) != 1:
+            continue
+        sib = groups.get(skeleton(ex[0][0][ex[0][1]]), [])
+        kind = label.split()[0]
+        if len(sib) < 2 or kind.startswith('hoist') or (kind, path, tuple(sib)) in done:
+            continue
+        done.add((kind, path, tuple(sib)))
+
+        def g(f=f, sib=sib):
+            s2 = None
+            for sj in sib:
+                s2 = f(si=sj, base=s2)
+            return s2
+        yield (f'sym-{label} x{len(sib)}', g)
 
 
 def find_inlines(text, types):
@@ -998,7 +1037,7 @@ def dbg_analyze(u, text, sym, fn, cc):
 # --------------------------------------------------------------------------
 # search
 
-ALL_MOVES = ['wrap', 'wrap2', 'id', 'hoist', 'accum', 'unvar', 'expand', 'swap', 'assoc', 'declswap']
+ALL_MOVES = ['wrap', 'wrap2', 'id', 'hoist', 'accum', 'unvar', 'expand', 'swap', 'assoc', 'declswap', 'sym']
 
 
 def search(sw, a):
@@ -1063,14 +1102,18 @@ def search(sw, a):
             keyed.sort(key=lambda r: (r[0], r[1], len(r[2].hist)))
             pool = keyed + rest
         # diversity: at most a.beam distinct texts, and not all children of one parent
-        nb, seen_txt = [], set()
+        nb, seen_txt, uniq = [], set(), []
         for r in pool:
-            if r[3] in seen_txt:
-                continue
-            seen_txt.add(r[3])
-            nb.append(r)
-            if len(nb) >= a.beam:
-                break
+            if r[3] not in seen_txt:
+                seen_txt.add(r[3])
+                uniq.append(r)
+        # elite part (best scores, then fewer moves) + explore part: random
+        # picks among the next 4*beam, so a worse intermediate shape that a
+        # second move could fix is not always thrown away
+        ne = max(1, int(round(a.beam * (1 - a.explore))))
+        nb = uniq[:ne]
+        rest = uniq[ne:ne + 4 * a.beam]
+        nb += rnd.sample(rest, min(len(rest), a.beam - ne))
         beam = nb
         if beam[0][0] < best[0] or (beam[0][0] == best[0] and beam[0][1] < best[1]):
             best = beam[0]
@@ -1165,6 +1208,7 @@ def main():
     ap.add_argument('--max-depth', type=int, default=10, help='max moves stacked on one state')
     ap.add_argument('--patience', type=int, default=3, help='stop after N rounds without improvement')
     ap.add_argument('--dbg', type=int, default=0, help='mwccdbg tie-break on the K best tied states per round')
+    ap.add_argument('--explore', type=float, default=0.4, help='fraction of the beam picked at random from the runners-up')
     ap.add_argument('--seed', type=int, default=1)
     ap.add_argument('-j', '--jobs', type=int, default=4)
     ap.add_argument('--apply', action='store_true', help='write the best variant into src/ when it matches')
@@ -1179,7 +1223,7 @@ def main():
         bp.add_argument('--claims', help='file of claimed TU paths (src/... or obj) to skip')
         bp.add_argument('--out', default='/mnt/project-files/setup/shapesweep')
         for k, v in (('--beam', 6), ('--rounds', 8), ('--sample', 200), ('--max-depth', 8), ('--patience', 2),
-                     ('--dbg', 0), ('--seed', 1), ('-j', 4), ('--minutes', 6.0)):
+                     ('--dbg', 0), ('--seed', 1), ('-j', 4), ('--minutes', 6.0), ('--explore', 0.4)):
             bp.add_argument(k, type=type(v), default=v, **({'dest': 'jobs'} if k == '-j' else {}))
         bp.add_argument('--moves')
         bp.add_argument('--pragma', action='append')
