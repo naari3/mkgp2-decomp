@@ -2416,7 +2416,7 @@ config.libs = [
             Object(Matching, "game/fn_801E9CBC.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/AI_CalcVSTargetSpeed.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801E66B4.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/AI_CalcTargetSpeed_PairTracking.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/AI_CalcTargetSpeed_PairTracking.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/AI_UpdateItemUseLogic.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-proc 750"]),
             Object(NonMatching, "game/AI_CalcLapSpeedBonus.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801D3A70.cpp"),

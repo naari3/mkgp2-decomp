@@ -1840,3 +1840,17 @@ instead of a nested inline's local (fixes `lwz r28` vs r24 too).
 
 Recipe: read the COLOR lines in order, write the saved registers as a
 sequence, and place each declaration so that the list reads backwards.
+
+Follow-up (AI_CalcTargetSpeed_PairTracking, same shape): two more rules were
+needed there.
+
+- Which nodes survive the FIRST simplify sweep decides who gets r31/r30. A
+  high-degree local that is declared late in the inline (high vreg) sees its
+  lower neighbours already removed and is pushed in sweep 1, so the
+  arguments end up in r31/r30 instead. Declaring `record`/`ctrl` FIRST in
+  the list (low vregs) keeps them for sweep 2, after `self`/`kart`, and they
+  are coloured first.
+- `cup = g_cupId` is propagated into a CSE temp (lowest vreg, coloured last)
+  unless the file has `#pragma opt_propagation off`; then cup/round stay
+  locals at their declared position.
+
