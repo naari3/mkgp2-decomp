@@ -667,14 +667,14 @@ extern const float lbl_806D9818, lbl_806D981C, lbl_806D9820;
 
 
 #define SINCE(t) ((float)OSTicksToMilliseconds(now - (t)) / 1000.0f)
-#define CLIP_PLAYED(id) RaceVoice_ClipPlayed(clips, (id))
+#define CLIP_PLAYED(id) RaceVoice_ClipPlayed(data, (id))
 
 static inline void RaceVoice_AdvanceClip(VoiceClip **clip, int id) {
     *clip += id;
 }
 
-static inline unsigned char RaceVoice_ClipPlayed(VoiceClip *clips, int id) {
-    VoiceClip *clip = clips;
+static inline unsigned char RaceVoice_ClipPlayed(RaceVoiceData *data, int id) {
+    VoiceClip *clip = data->clips;
     RaceVoice_AdvanceClip(&clip, id);
     return clip->playCount;
 }
@@ -721,8 +721,9 @@ static inline unsigned char RaceVoice_PushSpinning(RaceVoiceData *data) {
  * overtakes, item hits, boost and the rotating mid-race comments.
  * NonMatching (~99%): the .rodata pool is defined in section order.
  * Cursor helpers preserve the goal-line and clip-table base additions.
- * The chasing loop still hoists its clip base, and some saved registers
- * and copy temporaries differ from the target.  The time divisor is a
+ * Clip selection stays inside the accessor so the chasing branches each
+ * materialize their base. Saved registers and copy temporaries still
+ * differ from the target. The time divisor is a
  * literal so each check reloads it without preserving f31 across calls. */
 void fn_801A6538(void) {
     RaceVoiceData *data = &lbl_80496C38;
@@ -734,7 +735,6 @@ void fn_801A6538(void) {
     unsigned char cond;
     float timer;
     short voice;
-    VoiceClip *clips;
     VoiceList3 backCur;
     VoiceList3 backList;
 
@@ -959,7 +959,6 @@ void fn_801A6538(void) {
                     int i;
                     for (i = 0; i < 6; i++) {
                         short farCur[6] = {609, 610, 611, 381, 382, 383};
-                        clips = data->clips;
                         voice = farCur[(lbl_806D1750 + i) % 6];
                         if (!CLIP_PLAYED(voice)) {
                             VoiceQueue_Push(ENTRY_VOICE(entry), 0x1F, 0, 1);
@@ -973,7 +972,6 @@ void fn_801A6538(void) {
                     int i;
                     for (i = 0; i < 5; i++) {
                         short nearCur[5] = {612, 613, 614, 384, 385};
-                        clips = data->clips;
                         voice = nearCur[(lbl_806D1750 + i) % 5];
                         if (!CLIP_PLAYED(voice)) {
                             VoiceQueue_Push(ENTRY_VOICE(entry), 0x1F, 0, 1);
@@ -987,7 +985,6 @@ void fn_801A6538(void) {
                     int i;
                     for (i = 0; i < 5; i++) {
                         short closeCur[5] = {615, 616, 617, 386, 620};
-                        clips = data->clips;
                         voice = closeCur[(lbl_806D1750 + i) % 5];
                         if (!CLIP_PLAYED(voice)) {
                             if (voice == 0x267 || voice == 0x268) {
@@ -1010,7 +1007,6 @@ void fn_801A6538(void) {
                 int i;
                 for (i = 0; i < 10; i++) {
                     short chaseCur[10] = {618, 275, 619, 620, 621, 387, 388, 389, 390, 391};
-                    clips = data->clips;
                     voice = chaseCur[(lbl_806D1750 + i) % 10];
                     if (voice == 0x113) {
                         if (!CLIP_PLAYED(voice + entry->player)) {
@@ -1035,7 +1031,6 @@ void fn_801A6538(void) {
             {
                 int i;
                 for (i = 0; i < 3; i++) {
-                    clips = data->clips;
                     backCur = backList;
                     voice = backCur.v[(lbl_806D1750 + i) % 3];
                     if (!CLIP_PLAYED(voice)) {
