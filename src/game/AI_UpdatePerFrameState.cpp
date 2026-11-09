@@ -49,22 +49,25 @@ static inline void FrameUpdatePairs(AISpeedRender *player, float px, float py, f
     }
     }
 }
+static inline FramePairRecord *FrameFindRank(FramePairRecord *pairs, int rank, AISpeedRender *&driver) {
+    FramePairRecord *record;
+    FramePairRecord *cursor=pairs;
+    driver=0;
+    for (int i=0; i<8; ++i,++cursor) {
+        record=cursor;
+        if (cursor && cursor->driver && cursor->driver->rank == rank) {
+            driver=cursor->driver;
+            break;
+        }
+    }
+    return record;
+}
 static inline void UpdateFlags(AIFrameOwner *self, AISpeedRender *player, int waypoint, FramePairRecord *pairs) {
     AISpeedRender *driver;
     FramePairRecord *p;
-    FramePairRecord *cursor;
-    int i;
     self->flag18 = 0;
     if (player->rank == 0) {
-        driver=0;
-        cursor=pairs;
-        for (i=0; i<8; ++i,++cursor) {
-            p=cursor;
-            if (cursor && cursor->driver && ((AISpeedRender *)cursor->driver)->rank == 1) {
-                driver=(AISpeedRender *)cursor->driver;
-                break;
-            }
-        }
+        p=FrameFindRank(pairs,1,driver);
         if (driver) {
             int count=Path_GetTotalCount(g_pathSystem);
             int playerLap=player->lap;
@@ -83,15 +86,7 @@ static inline void UpdateFlags(AIFrameOwner *self, AISpeedRender *player, int wa
     }
     self->flag19 = 0;
     if (player->rank == 5) {
-        driver=0;
-        cursor=pairs;
-        for (i=0; i<8; ++i,++cursor) {
-            p=cursor;
-            if (cursor && cursor->driver && ((AISpeedRender *)cursor->driver)->rank == 4) {
-                driver=(AISpeedRender *)cursor->driver;
-                break;
-            }
-        }
+        p=FrameFindRank(pairs,4,driver);
         if (driver) {
             int count=Path_GetTotalCount(g_pathSystem);
             int playerLap=player->lap;
