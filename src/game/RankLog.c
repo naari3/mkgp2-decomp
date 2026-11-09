@@ -746,9 +746,31 @@ static inline char *NameStr(int name)
     return lbl_80411B18[name].jp;
 }
 
+/* The target keeps title * sizeof(TitleEntry) in its own saved register, computed
+ * before the range re-check, and adds it to the table at each use. */
+static inline TitleEntry *TitleAt(TitleEntry *t, int off)
+{
+    char *e = (char *)t;
+
+    e += off;
+    return (TitleEntry *)e;
+}
+
+static inline char *TitleStrAt(TitleEntry *tbl, int off, int title)
+{
+    if (title < 0 || title >= 0xBB) {
+        return lbl_806CF1E8;
+    }
+    if (isJapanese() == 0) {
+        return TitleAt(tbl, off)->en;
+    }
+    return TitleAt(tbl, off)->jp;
+}
+
 char *get_title_name(void *self, int title, unsigned char count, int unused, int name)
 {
     unsigned char *pool = lbl_80324B98;
+    int off;
     TitleEntry *tbl;
     char *tstr;
 
@@ -761,8 +783,9 @@ char *get_title_name(void *self, int title, unsigned char count, int unused, int
         return lbl_806D4A44;
     }
     tbl = (TitleEntry *)(pool + 0x1520);
-    tstr = TitleStr(&tbl[title], title);
-    switch (tbl[title].type) {
+    off = title * 12;
+    tstr = TitleStrAt(tbl, off, title);
+    switch (((TitleEntry *)((char *)tbl + off))->type) {
     case 0:
         sprintf(lbl_805D311C, lbl_806D4DD8, tstr, NameStr(name));
         break;
@@ -782,12 +805,18 @@ char *get_title_name(void *self, int title, unsigned char count, int unused, int
 
 char *get_title_name_global(void)
 {
-    unsigned char *pool = lbl_80324B98;
-    int title = g_playerData.b19B;
-    int name = g_playerData.byte1B1;
-    unsigned char count = g_playerData.b19C;
-    TitleEntry *tbl;
     char *tstr;
+    unsigned char *pool;
+    TitleEntry *tbl;
+    int title;
+    unsigned char count;
+    int name;
+    int off;
+
+    pool = lbl_80324B98;
+    title = g_playerData.b19B;
+    name = g_playerData.byte1B1;
+    count = g_playerData.b19C;
 
     if (title < 0 || title >= 0xBB) {
         DebugPrintf((char *)pool + 0x2008, title);
@@ -798,8 +827,9 @@ char *get_title_name_global(void)
         return lbl_806D4A44;
     }
     tbl = (TitleEntry *)(pool + 0x1520);
-    tstr = TitleStr(&tbl[title], title);
-    switch (tbl[title].type) {
+    off = title * 12;
+    tstr = TitleStrAt(tbl, off, title);
+    switch (((TitleEntry *)((char *)tbl + off))->type) {
     case 0:
         sprintf(lbl_805D311C, lbl_806D4DD8, tstr, NameStr(name));
         break;

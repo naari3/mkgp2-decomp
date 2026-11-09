@@ -637,25 +637,11 @@ config.libs = [
             Object(Matching, "game/VSMode_FrameUpdate.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clFlowKart_SetupTextLayout.cpp", extab_padding=b""),
             Object(Matching, "game/clFlowKart_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
-            Object(Matching, "game/CardRW_CleaningTest_Page.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/CardRW_TestTopMenu_Page.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/SpeakerTest_Page.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(Matching, "game/LampTest_Page.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/CameraTest_Page.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/LampTestIndiv_Page.cpp"),
             Object(NonMatching, "game/SwitchTest_Page.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/HandleInitialize_Page.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/MonitorTest_Page.cpp"),
-            Object(Matching, "game/CardRW_DispenseTest_Page.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/CardRW_PrintTest_Page.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/CardRW_ErrorDisplay.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/CardRW_ReadWriteTest_Page.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/CardRW_HardwareInit_Page.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/CardRW_Reprint_Page.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/CardRW_Renew_Page.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/CardRW_DataRepair_Page.c", extab_padding=b"\x00\x00"),
-            Object(Matching, "game/CardDataTransfer_UI.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(Matching, "game/CardDataCheck_UI.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/HUD_RegisterOverlay.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/HUD_Init.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/HUD_FrameUpdate.c", extab_padding=b"\x00\x00"),
@@ -1266,7 +1252,7 @@ config.libs = [
             Object(Matching, "game/RaceScene_GetPerspFovyForCup.c"),  #g2
             Object(Matching, "game/GameMode_TitleSelect.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(NonMatching, "game/RankLog.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
-            Object(NonMatching, "game/DbgMenu.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], extab_padding=b""),  #g2
+            Object(Matching, "game/DbgMenu.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], extab_padding=b""),  #g2
             Object(NonMatching, "game/ShadowAreaMgr.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/EffectVfx13or14_MushroomDust_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/EffectVfx6D_KartSmokeSpark_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
@@ -1981,7 +1967,7 @@ config.libs = [
             Object(Matching, "game/DNFlash_tail.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/DNFlashInit.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/DNFlashBounds.c", mw_version="GC/2.6"),
-            Object(NonMatching, "game/DNLensflare.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+            Object(Matching, "game/DNLensflare.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/DNStartCamera.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/DNStartCamera_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/DNStartCamera_m2.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
@@ -2000,12 +1986,11 @@ config.libs = [
             Object(Matching, "game/EnemyFace_nm4.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/EnemyFace_exact5.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(NonMatching, "game/EnemyFaceDraw.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
-            Object(Matching, "game/EnmyFaceEffect.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
-            Object(NonMatching, "game/EnmyFaceEffect_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+            Object(Matching, "game/EnmyFaceEffect.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-rostr", "-inline deferred"], mw_version="GC/2.6"),
             Object(Matching, "game/EName3D.cpp", extab_padding=b"\x00\x00", extra_cflags=["-rostr", "-inline deferred", "-Cpp_exceptions on", "-RTTI on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/ENo3D.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-use_lmw_stmw on", "-rostr"], mw_version="GC/2.6"),
             Object(Matching, "game/FaceEffect.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-use_lmw_stmw on", "-rostr", "-inline deferred"], mw_version="GC/2.6"),
-            Object(NonMatching, "game/FAllDisp.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+            Object(Matching, "game/FAllDisp.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-use_lmw_stmw on", "-rostr"], mw_version="GC/2.6"),
             Object(Matching, "game/TimerDisp.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/FlowCardCheck.cpp", extab_padding=b"\x00\x00", extra_cflags=["-RTTI on", "-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/FlowCardCheck_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-RTTI on", "-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
