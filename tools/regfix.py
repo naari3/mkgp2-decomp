@@ -733,6 +733,20 @@ def diagnose(unit, fn, out: Path, rerun=True, quiet=False, depth=2, sched=False)
         run_dbg(unit, fn, out, trace=sched)
     import pragmasweep as ps
     src = ps.Unit(unit).src
+    if native_ok():
+        # order-only diffs that vanish when one block is re-scheduled after
+        # regalloc (mwsched.resched, RE thread 27f348a): the fix is to make
+        # regalloc insert/delete PCode in that block, not a register trick
+        try:
+            ours = md.objdump_fn(ROOT / f"build/{md.VERSION}/src/{unit}.o", ps.Unit(unit).compiled_name(fn))
+            tgt = md.objdump_fn(ROOT / f"build/{md.VERSION}/obj/{unit}.o", ps.Unit(unit).compiled_name(fn))
+            if ours != tgt and sorted(x.split()[0] for x in ours) == sorted(x.split()[0] for x in tgt):
+                import mwsched
+                print("== order-only diff: post-RA re-schedule probe ==")
+                for l in mwsched.resched(unit, ps.Unit(unit).compiled_name(fn)):
+                    print("  " + l)
+        except Exception as e:
+            print(f"(resched probe failed: {e})")
     if sched:
         print_schedule(out, ROOT / f"build/{md.VERSION}/src/{unit}.o", ROOT / f"build/{md.VERSION}/obj/{unit}.o",
                        ps.Unit(unit).compiled_name(fn), open(src, errors="replace").read().splitlines())
