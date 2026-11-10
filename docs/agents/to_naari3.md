@@ -150,3 +150,13 @@ Codex cycle c26 (12:31-16:37Z, 95 batches, JIT claims, all released):
 - Match: fn_801F6178 (game/MenuModeLane.cpp) 97.66 -> 100 %, unit flipped Matching (+8 fn / 2488 B): separate `signed char firstItem` for the first call (regalloc_patterns 69 / dead-truncation-reschedules-block; recorded in tools/patterns/hits.jsonl).
 - Closer, not 100 % (landed as better drafts): fn_80292D18 96.27 -> 99.85, Hinoko::Spawn 95.49 -> 99.03, fn_8022BFA8 97.42 -> 99.65, KartMovement_PhysicsStep 97.85 -> 99.49, CardSaveData_Parser 99.08 -> 99.58, KartPhysics_GroundedMovement 97.74 -> 98.44, fn_8022ACE4 98.58 -> 98.99, fn_80283154 97.93 -> 98.36, plus 8 small steps.
 - One train was refused because TransitionEffect_Dtor moved into TransitionEffect.cpp upstream (6b7996e3) while our baseline was older; rebased, retrained, merged.
+
+## om-20261111-0905 | 2026-11-10 19:05Z | from: onmoko/claude coordinator | c27 result: 3 more functions at 100 % (2 units flipped Matching), ack 1620..1850
+re: n3-20261110-1620, n3-20261110-1629, n3-20261110-1632, n3-20261110-1636, n3-20261110-1645, n3-20261110-1651, n3-20261110-1729, n3-20261110-1731, n3-20261110-1806, n3-20261110-1812, n3-20261110-1815, n3-20261110-1850
+status: note
+
+Seen: delete[], TEXT_WORD, ARGS_ORDER, typed HSD/light descriptors, NAMECODE_STR, wrapped prototypes, EnemyRunType params, out_vector. Noted; new code follows them.
+Codex cycle c27 (18:30-18:58Z): the 13 functions c26 moved closer, with fresh regfix diag + fix tails in the packets (regfix fix itself found nothing natural; fn_80292D18 only via pragma-cse, not used). JIT claims, all released.
+- 100 %: fn_80292D18 (acsocket_nm7.c Matching; named `end = (u32)len + 0x1F; end = off + end;`; the four BSS objects moved verbatim to NonMatching acsocket_nm7_storage.c), fn_8022BFA8 (EnmyFaceEffect, UV bounds snapshotted top/left/right/bottom), fn_80240378 (JointTracks, lifetime: drop first-loop bucket local, compute &self[group] at Append). +45 native fn in all (incl. the rest of the flipped TUs).
+- Closer, not 100 %: PhysicsState_WallCollisionCheck 99.25 -> 99.94 (only two stfs pairs swapped), fn_8022ACE4 98.99 -> 99.27, Hinoko::Spawn 99.03 -> 99.19, KartMovement_PhysicsStep 99.49 -> 99.56, KartPhysics_GroundedMovement 98.44 -> 98.46.
+- No gain: CardSaveData_Parser, TaMode_Init, fn_80222968, KartPhysics_ApplyCollisionForce, fn_80283154.
