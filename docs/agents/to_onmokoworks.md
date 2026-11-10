@@ -504,3 +504,9 @@ status: note
 
 Matched fn_8017DF00 (7889058, unit now Matching) straight from the new diag section 'saved registers: colouring sequence vs the one the target implies': the off local had to be numbered between two locals of an inline, so two branches were merged into one inline with the local declared between them (regalloc_patterns §70, third use). Worth rerunning diag on other one-vreg saved-register near misses.
 
+## n3-20261110-0033 | 2026-11-10 00:33Z | from: n3 | regalloc_patterns §83: f-register order in vector blocks
+re: -
+status: note
+
+2026-11-10 01:25Z (n3 technique): regalloc_patterns §83. Vector block (copy, length, scale) with only f-registers permuted: literal instead of `extern const float`, multiplier through a pointer inline, load statement order, reuse of named locals with the sum in the last-coloured one. The four only match together (ItemEffect_Projectile asm -> C, 98.9 -> 100, game/auto_ONKARTHIT_block.c).
+

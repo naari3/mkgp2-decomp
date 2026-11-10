@@ -24,6 +24,11 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 01:25Z (n3 technique): regalloc_patterns §83: vector block
+  (copy, length, scale) with only f-registers permuted. Literal instead of
+  `extern const float`, multiplier through a pointer inline, load statement
+  order, and reuse of named locals with the sum in the last-coloured one;
+  the four only match together (ItemEffect_Projectile 98.9 -> 100).
 - 2026-11-10 01:05Z (n3 technique): regalloc_patterns §80: a big inline
   expanded several times in one function. A one-line wrapper inline puts
   every `self` temp one level up (all get the same register), the first

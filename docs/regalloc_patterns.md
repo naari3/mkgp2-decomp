@@ -2184,3 +2184,52 @@ static inline void freeParticle(ViewEmitter *o, ViewBillboardParticle *&out) {
 
 Sign: a value assigned from an inline's return sits one or two volatile
 registers too high and no declaration order moves it.
+
+## 82. Sum passed as a float argument is scheduled after the other argument loads: load the operand into a local, then add in place (fn_8014ADB4, asm -> C, 96.9 -> 100, 11-10)
+
+Target computes `dy + pos.y` (`lfs f0; ...; fadds f2,f31,f0`) before the
+`lfs f1` / `fmr f4` of the neighbouring arguments, and keeps `dy` in f31.
+Writing the sum inside the call, in a fresh local (`yy = dy + pos.y`), or
+in an inline all gave the same late `fadds`; `dy += pos.y` put the result
+in f31 plus an extra `fmr`. What matched:
+
+```c
+yy = sRankPortraitPos[kart][i].y;
+yy = dy + yy;
+SPR(0, voice, 0, pos.x, yy, k, k, self->t);
+```
+
+The same function needed two more things: the section 74 prototype lever
+(all five float params declared before `obj, id, flag`, so `id` is loaded
+last), and float literals instead of `extern const float` for the
+`t += 0.05f; if (t > 1.0f) t = 1.0f;` clamp (extern constants numbered the
+FPRs t=f1/step=f0/max=f2, literals give t=f2/step=f1/max=f0).
+
+
+## 83. Float register order of a "copy vector, take length, scale" block: literal constant, multiplier through a pointer inline, and which reused local holds the sum (ItemEffect_Projectile, 98.9 -> 100, 11-10)
+
+Same instructions as the target, only f-registers permuted (48 lines). Four
+levers were needed together; each alone moved the count up or sideways
+(48 -> 50 -> 44 -> 38 -> 0), so do not judge them one at a time (see §62).
+
+1. `extern const float lbl_806D2730` (1/60) -> the literal `1.0f / 60.0f`.
+   The extern load is a frontend CSE temp; the literal load is a backend temp
+   and is coloured before the products (target f1). `postprocess_sdata2.py`
+   renames the anonymous `@N` literal to the target symbol, no split needed.
+2. The multiplier goes through a small pointer inline, also for the table
+   value: `static inline void Proj_scale(float *v, float k) { v[0] = v[0] * k; ... }`.
+3. Named locals: first declared = highest vreg = coloured first. Declare
+   `vx; vy; mv; vz; s;` and write the LOADS in the order the target schedules
+   them (`vy = obj->velY;` before `vx = obj->velX;`).
+4. Second block (velocity copy + length): reuse existing locals instead of
+   fresh ones, and choose the roles: `s, vy, vx` take the three loads, `vz`
+   takes the sum `p[2]*p[2] + (p[0]*p[0] + p[1]*p[1])`. The sum must be the
+   local coloured after the y and z values, and it must stay coalesced with the
+   sqrt inline's argument; a fresh local (or reusing the result local) for the
+   sum breaks the coalescing and adds an `fmr`.
+
+Do not replace the hand-written copies by `Proj_cpy`/`Proj_len` style inlines:
+stores and `frsp` disappear (70-200 lines).
+
+Sign: vector math block at 98-99% with only f0-f7 permuted, constants loaded
+from `extern const float`.
