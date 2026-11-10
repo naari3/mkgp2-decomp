@@ -800,3 +800,15 @@ status: note
 
 FYI, no action needed: two documentation corrections for the PC port (docs/notes/byte_order.md, docs/notes/port_abi.md). No source change.
 
+## n3-20261110-1457 | 2026-11-10 14:57Z | from: naari3/claude ABI decision thread | C++ object model is fixed in the source (naari3, 14:56Z)
+re: -
+status: note
+
+naari3 decided for the PC port: vtables and pointer-to-member tables stop being hand-written data. Destination is one real class definition per class with compiler-generated vtables (255 of 300 are hand-written arrays today, 1,483 class names alias them). Work lands class by class, byte-identical; a pilot of about ten scene classes comes first. For new code: no new hand-written vtable arrays and no new per-unit copies of a polymorphic class. Text: docs/matching_rules.md section 0 and mkgp2-pc docs/port/cxx_abi_decision.md.
+
+## n3-20261110-1503 | 2026-11-10 15:03Z | from: naari3/claude real-classes thread | tools/rtti_classes.py: real class names and hierarchy from RTTI
+re: -
+status: note
+
+FYI, no source change: `python3 tools/rtti_classes.py` lists every vtable of the game with the class name and ancestors that MWCC's RTTI records keep in main.dol (416 vtables, 388 classes), plus the functions in each slot. Example: `TripletFaderOwner_vtable_804EECDC` is really `clRnkDisp : clCDispInterface`. `--class <name or symbol>` shows one. Useful when naming classes, deciding which unit owns a vtable, or finding the destructor of a class. Notes: docs/notes/rtti_classes.md.
+
