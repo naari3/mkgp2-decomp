@@ -487,3 +487,35 @@ integer/pointer (611 names; harmless for the calling convention). Not read:
 prototypes inside class bodies, in src/game/autodata, and the
 `extern void name();` lists of inline-asm blocks in files that also carry the
 right prototype.
+
+## Structs passed by value where the definition takes a pointer
+
+MWCC passes a struct argument as the address of a copy the caller makes, so a
+by-value call reaches a definition written with a pointer parameter and the
+PowerPC code is the same as for a by-value definition. A host compiler pushes
+the struct's bytes instead.
+
+`StlList_RemoveByValueField` (auto_ONKARTHIT_block.c) was defined with
+`StlListValRef *key` and called through a function-pointer cast with the key
+by value. The definition now takes `StlListValRef key` (same code): both sides
+are by value. The cast stays because the caller's key is a C++ class with a
+constructor (`KartItemListKey`, same layout) and the C part of the unit cannot
+name it.
+
+`python3 tools/port_abi/byvalue_struct.py` compares function-pointer casts
+applied to a function name, and prototypes (also `name_pN`), with the
+definition, parameter by parameter. State on 2026-11-10: 369 places, 43
+functions.
+
+- One cast: Scene_8014E0C4.cpp calls `fn_80157D30` (returns `ListPos`, takes
+  two `ListPos` by value) as `(ListIter *ret, List *, ListIter *, ListIter *)`.
+- 316 prototypes of 38 functions pass a `Vec3`-like struct by value where the
+  definition takes a pointer (`Mtx44_TransformVec3`, `ItemObject_GetGroundTypeAt`,
+  `VfxSlot_SetPositionFromVec`, `Mtx44_Translate`, ...). The callers are right
+  (they make the copy); the definitions were written with pointers.
+- 52 prototypes of 5 functions do the reverse (`SoundMgr_PlaySE_Positional`
+  takes `Vec pos` by value, many callers declare `Vec *pos` and copy by hand).
+
+These are not changed yet: a function's callers disagree among themselves, and
+a caller written with a pointer and a hand-made copy only keeps its code when
+the copy stays as written.

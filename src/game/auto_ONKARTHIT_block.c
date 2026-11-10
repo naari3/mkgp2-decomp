@@ -1525,7 +1525,7 @@ int KartItem_ApplyEffectToVictim_AdjThunk(void *self, void *itemObj, int itemIdA
 void KartItem_ApplyEffectToVictim_AdjThunk(void);
 #endif
 void *dtor_800524CC(void *self, short flag);
-void StlList_RemoveByValueField(StlList *l, StlListValRef *key);
+void StlList_RemoveByValueField(StlList *l, StlListValRef key);
 C_REGION_END
 #pragma cplusplus on
 struct StlEraseIter {
@@ -9422,16 +9422,17 @@ static inline StlEraseIter StlList_EraseInl(StlList *l, StlEraseIter first, StlE
     }
     return last;
 }
-/* std::list::remove(value): erase every run of nodes whose obj equals key->val */
-extern "C" void StlList_RemoveByValueField(StlList *l, StlListValRef *key) { /* 0x80052508 size:0xCC */
+/* std::list::remove(value): erase every run of nodes whose obj equals key.val.
+ * The key is passed by value, as its caller in KartItem_Dtor passes it. */
+extern "C" void StlList_RemoveByValueField(StlList *l, StlListValRef key) { /* 0x80052508 size:0xCC */
     StlEraseIter last((StlListNode *)&l->head);
     StlEraseIter first(last.node->next);
     while (first.node != last.node) {
-        if (first.node->obj == key->val) {
+        if (first.node->obj == key.val) {
             StlEraseIter next(first);
             next.node = next.node->next;
             while (next.node != last.node) {
-                if (next.node->obj != key->val) {
+                if (next.node->obj != key.val) {
                     break;
                 }
                 next.node = next.node->next;

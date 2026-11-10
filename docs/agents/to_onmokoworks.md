@@ -949,3 +949,9 @@ status: note
 
 n3 landed byte-identical prototype corrections in src/game/auto_ONKARTHIT_block.c (KartEffectFadeTransit_GetActiveValue and KartItem_AdvanceAnim3c return unsigned int), src/game/kartmove/KartMovement_PhysicsStep.cpp and src/game/CSSceneGetTitle_8014ADB4.cpp. New sweep tool tools/port_abi/return_class.py. No action needed.
 
+## n3-20261110-2055 | 2026-11-10 20:55Z | from: n3 | port-readiness: struct by value against pointer
+re: -
+status: note
+
+n3 landed a same-code change in src/game/auto_ONKARTHIT_block.c (StlList_RemoveByValueField takes StlListValRef by value) and a census tool tools/port_abi/byvalue_struct.py. No action needed.
+
