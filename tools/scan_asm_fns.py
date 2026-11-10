@@ -82,6 +82,14 @@ def scan_repo(root: Path = ROOT) -> Dict[str, Any]:
             tu = path.relative_to(src).as_posix()
             for m in ASM_FN_RE.finditer(text):
                 name = m.group(1)
+                # a prototype (`asm void f(void);`) is not an asm body: the
+                # function may be C in another unit
+                depth, k = 1, m.end()
+                while k < len(text) and depth:
+                    depth += {"(": 1, ")": -1}.get(text[k], 0)
+                    k += 1
+                if text[k:k + 200].lstrip()[:1] != "{":
+                    continue
                 info = symbols.get(name)
                 if not info:
                     # local asm helper (e.g. GetR2) — not an address-mapped
