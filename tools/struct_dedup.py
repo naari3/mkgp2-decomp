@@ -499,7 +499,37 @@ class Scan:
             self.defs.extend(defs)
 
     def includes(self, f):
-        return set(INC_RE.findall(self.text[f]))
+        """Every header `f` reaches through quoted/angle includes that resolve
+        inside the repo (transitively), spelled as written in the #include."""
+        cache = self.__dict__.setdefault("_inc_cache", {})
+        if f in cache:
+            return cache[f]
+        seen, out, todo = {f}, set(), [f]
+        while todo:
+            cur = todo.pop()
+            for spell in INC_RE.findall(self._text_of(cur)):
+                out.add(spell)
+                for base in (os.path.dirname(cur), "include", "src"):
+                    cand = os.path.normpath(os.path.join(base, spell))
+                    if os.path.isfile(os.path.join(ROOT, cand)):
+                        if cand not in seen:
+                            seen.add(cand)
+                            todo.append(cand)
+                        break
+        cache[f] = out
+        return out
+
+    def _text_of(self, f):
+        # self.text has string literals blanked, so read the file again
+        extra = self.__dict__.setdefault("_extra", {})
+        if f not in extra:
+            try:
+                with open(os.path.join(ROOT, f), encoding="latin-1") as fh:
+                    t = fh.read()
+            except OSError:
+                t = ""
+            extra[f] = re.sub(r"/\*.*?\*/|//[^\n]*", " ", t, flags=re.S)
+        return extra[f]
 
     def movable(self, d):
         """None when `d` may be moved now, else the reason."""
