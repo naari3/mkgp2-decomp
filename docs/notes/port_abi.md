@@ -151,6 +151,20 @@ inheritance the game uses; the call assumes member functions take `this` as
 an ordinary first argument (true for Itanium-ABI targets, not for 32-bit
 MSVC `thiscall`).
 
+## Vtable pointer position (measured by the port thread, 2026-11-10)
+
+MWCC GC/1.3.2 puts the vtable pointer where the first virtual function is
+declared, not at the start of the class: `struct { int a; virtual void f();
+int b; }` has it at +4 and `b` at +8; at +0 when the virtual comes first;
+after a non-polymorphic base when there is one. A virtual destructor takes
+one vtable slot. Itanium-ABI compilers always put the pointer first and use
+two destructor slots. The port rewrites clang's output for the vtable target
+and the destructor slot (mkgp2-pc `port/tools/mwcc_cxx_abi.py`); the pointer
+position is not handled there yet and affects base-less classes with data
+members before the first virtual (about 12 in `src`, 5 in `include`:
+`PropNode`, `CoursePropNode`, `clCSPartsInerface`, mapobject `Obj` /
+`clModel`, the `*Base0` classes). Nothing was changed here for it.
+
 ## Bit-field order (item 12)
 
 MWCC for PowerPC allocates bit-fields from the most significant bit, x86

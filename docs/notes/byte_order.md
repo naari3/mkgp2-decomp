@@ -64,22 +64,28 @@ Roots the game looks up (`HSD_ArchiveGetPublicAddress`):
 | `scene_data` | `src/game/Scene3D.c`, `SceneDrawList.cpp` (`DrawArchive`), `SceneModel_Init.cpp` (`LObjScene`), `Normal3DLoad.c` (`PublicRows`, rows of `AssetRow`: descriptor, joint / material / shape animation lists) | the sysdolphin scene descriptor: pointers to null-ended lists of model sets, cameras, lights and fog |
 | `<name>_joint` and the other per-object names | `src/game/ResolveJointByName.c` and the name tables in the autodata units | a joint descriptor tree |
 
-This repository does not declare the on-disc descriptor structs under their
-sysdolphin names: `include/sysdolphin/baselib/` has only the runtime objects
-(`HSD_JObj`, `HSD_DObj`, `HSD_AObj`, `HSD_FObj`, `HSD_RObj`), and the game
-units use small local views of the fields they touch (the callers above,
-`include/game/types/ModelDesc.h`, `PObjView.h`, `VtxDesc.h`,
-`VtxAttrEntry.h`). The full layouts are the standard sysdolphin ones, which
-doldecomp/melee documents in its `src/sysdolphin/baselib/*.h`
-(`HSD_SceneDesc`, `HSD_Joint`, `HSD_DObjDesc`, `HSD_MObjDesc`,
-`HSD_Material`, `HSD_TObjDesc`, `HSD_ImageDesc`, `HSD_TlutDesc`,
-`HSD_PObjDesc`, `HSD_VtxDescList`, `HSD_AnimJoint`, `HSD_MatAnimJoint`,
-`HSD_ShapeAnimJoint`, `HSD_AObjDesc`, `HSD_FObjDesc`, `HSD_LightDesc`,
-`HSD_CameraDescPerspective`, `HSD_FogDesc`). The baselib here is the same
-library, but the
-build may differ in details, so check a field against the loader in the
-matching `.c` (`HSD_JObjLoadJoint` in `jobj.c`, `HSD_DObjLoadDesc` in
-`dobj.c`, and so on) before trusting it.
+The on-disc descriptor structs are in the vendored sysdolphin headers,
+`libs/melee/src/sysdolphin/baselib/*.h` (`HSD_ArchiveHeader` and
+`HSD_ArchivePublicInfo` in `archive.h`, `HSD_Joint` in `jobj.h`,
+`HSD_DObjDesc` in `dobj.h`, `HSD_MObjDesc`, `HSD_Material`, `HSD_PEDesc`,
+`HSD_MatAnimJoint` in `mobj.h`, `HSD_TObjDesc`, `HSD_ImageDesc`,
+`HSD_TlutDesc`, `HSD_TObjTevDesc`, `HSD_TexAnim` in `tobj.h`, `HSD_PObjDesc`,
+`HSD_VtxDescList`, `HSD_ShapeSetDesc`, `HSD_EnvelopeDesc`,
+`HSD_ShapeAnimJoint` in `pobj.h`, `HSD_AnimJoint`, `HSD_AObjDesc` in
+`aobj.h`, `HSD_FObjDesc` in `fobj.h`, `HSD_RObjDesc` in `robj.h`,
+`HSD_LightDesc` in `lobj.h`, `HSD_WObjDesc` in `wobj.h`,
+`HSD_CameraDescPerspective` in `cobj.h`, `HSD_FogDesc` in `fog.h`,
+`HSD_Spline` in `spline.h`). The matched baselib units in
+`src/sysdolphin/baselib/` compile against them. `include/sysdolphin/baselib/`
+and the game units only hold small local views of the runtime objects and of
+the fields they touch. The scene root has no header: from the callers it is
+four pointers to null-ended lists, model sets at 0 (`AssetRow` in
+`Normal3DLoad.c`: joint, joint / material / shape animation lists), cameras
+at 4 (`Scene3DDesc`), lights at 8 (`LObjScene`), fog at 0xC.
+
+The PC port's converter walks the graph with these types and accounts for
+98.8 % of the pointer fields named by the relocation tables of all 1,917
+archives (port thread, 2026-11-10).
 
 A converter has to walk that graph from each root, marking visited blocks,
 because blocks are shared. Vertex buffers are typed by the vertex

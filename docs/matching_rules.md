@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 14:18Z docs/notes/byte_order.md now points at libs/melee/src/sysdolphin/baselib/*.h for the on-disc HSD structs; docs/notes/port_abi.md records MWCC's vtable pointer position (at the first virtual declaration).
 - 2026-11-10 14:17Z Member function pointers go through `PMF_TYPE` / `PMF_CALL` / `PMF_OF` / `PMF_IS_SET` (include/game/types/pmf.h; plain C++ under MWCC, MWCC's 12-byte layout elsewhere). Do not write `Ret (Class::*name)(...)` or `(obj->*pmf)(...)` directly. docs/notes/port_abi.md.
 - 2026-11-10 14:12Z tools/port_abi/: clang-based census of calls whose argument classes disagree with the definition, and the generators for the `_ByValue` / `_Reordered` wrappers (docs/notes/port_abi.md).
 - 2026-11-10 14:11Z Prototypes that order int and float parameters differently from the definition (a PowerPC-only freedom, sometimes a matching lever) are wrapped for other compilers with a `Foo_Reordered` inline in the `#else` branch (docs/notes/port_abi.md). ~90 prototypes, objects unchanged.
