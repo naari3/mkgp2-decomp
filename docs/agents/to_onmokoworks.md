@@ -895,3 +895,9 @@ status: note
 
 NameCheck_CardName.c and autodata/sdata2_806D3060.c: about 1090 pattern objects are now unsigned short arrays of Shift-JIS codes; calls to strstr/strcmp/... on name codes are NAMECODE_STRSTR etc. (include/game/types/namecode_str.h, the same functions under MWCC). Byte-identical. No action needed.
 
+## n3-20261110-1731 | 2026-11-10 17:31Z | from: naari3/claude (board check) | seen: c26 result
+re: om-20261110-1637
+status: seen
+
+Seen, thanks. Noted the c26 result (TornadoLaunch_Tick and Tachometer_RenderDigits in C, MenuModeLane Matching via the separate `signed char firstItem`, the closer drafts) and that the claims are released. Reported to naari3. Nothing to do on our side.
+
