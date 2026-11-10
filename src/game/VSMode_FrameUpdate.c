@@ -190,6 +190,762 @@ extern const unsigned int lbl_80320D9C[];
 /* sdata symbols referenced from asm */
 extern unsigned char lbl_806D12F0[4];
 extern unsigned char lbl_806D131C[1];
+#ifdef NON_MATCHING
+/*
+ * Equivalent C++ for the PC port (docs/nonmatching_c.md). VS mode per-frame
+ * update: the net-play version of RaceScene_FrameUpdate (same file layout as
+ * src/game/RaceScene_FrameUpdate.cpp). The host simulates all karts from the
+ * inputs in the ring buffer and publishes positions / ranks / time; clients
+ * apply them. Returns the next scene id (0xD after the result sync, 4 on the
+ * debug exit button) or -2 to stay.
+ */
+#pragma cplusplus on
+#include "game/singleton.h"
+struct VsVec {
+    float x, y, z;
+};
+struct VsInputPlayer {
+    virtual void v0();
+    virtual void v1();
+    virtual float Accel();
+    virtual void v3();
+    virtual float Steer();
+    virtual float Brake();
+    virtual unsigned char Pressed(int mask);
+    virtual void v7();
+    virtual unsigned int Held(int mask);
+};
+extern "C" {
+extern int g_currentSceneState;
+extern unsigned char g_isCommHost;
+extern unsigned int *HSD_RandSeedPtr;
+extern int lbl_806D134C;
+extern int lbl_806D1350;
+extern int lbl_806D1310;
+extern int lbl_806D1314;
+extern unsigned char g_raceEnded;
+extern unsigned char g_playerData[];
+extern void *g_carObjects[];
+extern void *g_itemSelects[];
+extern unsigned char lbl_806D1191;
+extern unsigned char lbl_806D1318;
+extern unsigned char lbl_806D1319;
+extern void *lbl_806D10A0;
+extern void *lbl_806D109C;
+extern void *lbl_806D10D0;
+extern int g_finalRacePosition;
+extern int g_sceneTransitionTimer;
+extern void *lbl_806D12F4;
+extern unsigned char lbl_806CF148;
+extern float g_raceTimeRemaining;
+extern int lbl_806D12FC;
+extern char lbl_806792D8[];
+extern int lbl_805D2B00[];
+extern char lbl_805D2AA8[];
+extern int g_ccClass;
+extern int lbl_806CF140;
+extern char *g_playerRenderObj;
+extern unsigned char lbl_806D12E8;
+extern unsigned char g_rendererGateFlag;
+extern int g_currentLap;
+extern int g_totalLaps;
+extern float g_currentLapTime;
+extern float g_bestLapTime;
+extern float g_totalRaceTime;
+extern unsigned char g_finalLapBannerShown;
+extern int g_raceResultCode;
+extern unsigned char g_finalLapCoinJumpEnabled;
+extern unsigned char lbl_806CF270;
+extern int lbl_806D12EC;
+extern int lbl_806D1300;
+extern unsigned char g_lakituStartAnimDone;
+extern unsigned char g_lapChangePending;
+extern void *g_weatherSystem;
+extern unsigned char lbl_806D0051;
+
+unsigned char IsSyncReached(void);
+void SyncSlot_ApplyCourseChoice(void);
+void VSMode_Init(void *self);
+void SetSyncTarget(int target);
+void DebugPrintf(const char *fmt, ...);
+void *memset(void *dst, int c, unsigned long n);
+unsigned char *SyncSlot_GetRecv(void);
+void Rand_SetSeedDebug(int seed);
+void ReplayRandCursor_Reset(void);
+void PcbSlot_ResetScratchAreas(void);
+void CommBroadcast_ClearTable(void);
+void PlayStats_IncVsPlay(void);
+void PlayStats_IncVsPeerCount(void);
+void VoiceQueue_Clear(int a);
+void *GetInputManager(void);
+VsInputPlayer *InputMgr_GetPlayer(void *mgr, int index);
+int GetCoinMilage(unsigned char *playerData);
+void *GetPlayerCarObject(void);
+void CoinJumpFlasher_Toggle(void *car);
+char *RingBuffer_GetKartSlot(int kart);
+void VIWaitForRetrace(void);
+void Frame_UpdatePerFrameState(void);
+void Timer_Decrement(void);
+void PCBComm_Process(int a, int b);
+unsigned char CommBroadcast_ScanForMySyncMatch(void);
+void fn_801B5C98(void);
+unsigned char *SyncSlot_GetHostSend(void);
+void Race_PerFrameTickAndAudio(void);
+unsigned char Live_IsConnectReady(void);
+void LakituStart_SetCountdownHoldFrames(void *lakitu, int frames);
+unsigned char fn_8020B07C(void *overlay);
+void fn_8020AF08(void *overlay, int flag);
+void race_result_handler(void *stats, int pos, int running);
+void PathManager_RefreshFinishPositions(void *path);
+int CountPeersWithRole(int role);
+char *CarObject_GetRenderObj(void *car);
+void fn_8016C600(void);
+void fn_8016C598(void);
+int RaceSlot_GetDriverId(int slot);
+char *RingBuffer_GetRankSlot(int n);
+void fn_801DC740(int slot, void *pos);
+void fn_801DC714(int slot, int v);
+void fn_801DC6E4(int slot, int v);
+void fn_801DC6B4(int slot, int v);
+float *fn_801DC72C(int slot);
+short fn_801DC6FC(int slot);
+signed char fn_801DC6CC(int slot);
+signed char fn_801DC69C(int slot);
+void *GetRaceContextPtr(void);
+void ItemObjectManager_PerFrameUpdate(void *ctx);
+void RankingMgr_UpdatePositions(void *ai);
+void fn_80208E30(void *coll);
+long long OSGetTime(void);
+float CalcSoundDirection(void *render, void *path, float *steer, int pathSlot);
+unsigned char IsRaceStarted(void);
+float *CarObject_GetTransformMatrix(void *car);
+void CarObject_SetPosition(void *car, void *pos);
+void KartItem_SetCarObjectField1c8Float(void *car, float v);
+void CarObject_ApplyInput_AI(void *car, unsigned char started, float accel, float padAccel, float steer, float brake);
+void CarObject_FrameUpdate(void *car, unsigned int held);
+void ItemBox_ProcessPickup(void *sel, void *car, int a, unsigned int held, int local, float steer);
+int ItemSelect_StartRouletteSpin(void *sel, void *render, int unused, int forced);
+float *Path_LookupCheckpointOffset(void *path, int slot, int which);
+unsigned char JObj_IsForwardDotBelowThreshold(void *render, VsVec *a, VsVec *b);
+void Jyugemu_ReverseFlag_SetState(void *flag, int state);
+int GetDisplayBufferIndex(void);
+void TitleStats_AccumDistanceCounter(void *stats, int display, int reverse);
+void fn_801B3BC8(void *p);
+void fn_801B3B7C(void *p);
+void KartItem_UpdateShadowBillboardAndViewport(void *car, void *scene, int flag);
+void Fog_UpdateFromCourseScene3D(void);
+void PathManager_UpdateAll(void *path);
+unsigned char LakituStart_UpdateCountdown(void *lakitu);
+void LakituStart_Dtor(void *lakitu, int flag);
+void Jyugemu_Flag_Tick(void *flag);
+void Jyugemu_ReverseFlag_Tick(void *flag);
+void LapBannerScene_UpdateAndDriveAnim(void *banner);
+void CourseEnvironment_UpdateAndCullZones_Timed(void *env);
+int Race_CompareKartProgress(void *path, int a, int b);
+void CObj_LoadProjMatrix(void *scene, VsVec *v);
+void CObj_ApplyScissor(void *scene, VsVec *v);
+void ItemObjectManager_Update(void);
+void VfxSlotMgr_Update(VsVec a, VsVec b);
+char *RingBuffer_GetEntryHead(void);
+void fn_80253BE4(void *hud);
+void fn_8016C554(int flag);
+void fn_801B12A0(void);
+void Tachometer_RenderDigits(void);
+void HitMessageOverlay_FrameUpdate(void);
+void HUD_SetCurrentLap(void *hud, int lap);
+void fn_80253FD8(void *hud, float time);
+float CarObject_CalcSpeedRatio(void *car);
+void fn_80253EBC(void *hud, float v);
+float KartItem_GetCurrentSpeedWithBonus(void *car);
+void fn_80253EC0(void *hud, float v);
+void fn_80253EC4(void *hud, float v);
+void fn_80253F2C(void *hud, float v);
+void HUD_SetRacePosition(void *hud, int pos);
+void fn_80253E18(void *hud, int v);
+void TransitionEffect_Tick(void *fx);
+void fn_80253DF0(void *hud);
+void KartItem_OnFallOffOrDeath(void *car);
+void CoinJumpFlasher_SetArmed(void *car, int armed);
+void ItemSelect_Reset(void *sel, int flag);
+int GetKartSlotCharId(int slot);
+void RaceResult_StoreLatest(int charId, int pos, float best, float total);
+int RaceResult_InsertSortedRank(int charId, int pos, float best, float total);
+void SetRaceResultLatestPtr(void);
+void fn_80253D00(void *hud);
+void Object_SetByte10_Return1(void *scene, int v);
+void Jyugemu_Flag_SetKartDriver(void *flag, void *render);
+void CoinEvent_PlayResultSE(void *car, int pos);
+void RankLog_SetRaceResult(void *stats, int display, int pos, int time);
+void LapBannerScene_TriggerBannerAnim(void *banner);
+void fn_8016C5CC(void);
+void TitleTracker_ResetPerRound(void *stats, int display, int lap);
+void HUD_FrameUpdate(void *hud);
+void clItemBoxManager_Update(void *mgr);
+void fn_8013A534(void);
+void fn_8016B32C(void *weather);
+int VSMode_FrameUpdate(char *self);
+}
+
+#define VS_PTR(p, o) (*(void **)((char *)(p) + (o)))
+#define VS_INT(p, o) (*(int *)((char *)(p) + (o)))
+#define VS_F32(p, o) (*(float *)((char *)(p) + (o)))
+#define VS_U8(p, o) (*(unsigned char *)((char *)(p) + (o)))
+
+static inline void *VsTitleStats(void)
+{
+    return SINGLETON_INSTANCE(lbl_806D10A0);
+}
+
+static inline float VsQuantizeInput(float v)
+{
+    return (float)(int)(10000.0f * v) / 10000.0f;
+}
+
+/* both sides seed their random streams from the byte the host sent */
+static inline void VsSeedRandom(void)
+{
+    memset(lbl_806D12F0, 0, 4);
+    HSD_RandSeedPtr = (unsigned int *)lbl_806D12F0;
+    *HSD_RandSeedPtr = SyncSlot_GetRecv()[0x1b];
+    Rand_SetSeedDebug(SyncSlot_GetRecv()[0x1b]);
+    lbl_806D134C = SyncSlot_GetRecv()[0x1b];
+    lbl_806D1350 = SyncSlot_GetRecv()[0x1b];
+    ReplayRandCursor_Reset();
+}
+
+extern "C" int VSMode_FrameUpdate(char *self)
+{
+    const char *pool = (const char *)lbl_80320960;
+    char *shared = lbl_805D2AA8; /* 4 x 64-bit idle timestamps, then two Vecs at +0x20 / +0x2c */
+    VsInputPlayer *pad;
+    unsigned int held[4];
+    unsigned char *send;
+    long long now;
+    void *stats;
+    int i;
+    int j;
+    int n;
+
+    if (g_currentSceneState == 0x2A) {
+        if (IsSyncReached()) {
+            SyncSlot_ApplyCourseChoice();
+            VSMode_Init(self);
+            SetSyncTarget(0x2B);
+            DebugPrintf(pool + 0x448);
+        }
+        return -2;
+    }
+    if (g_currentSceneState == 0x2B) {
+        if (IsSyncReached()) {
+            VsSeedRandom();
+            PcbSlot_ResetScratchAreas();
+            CommBroadcast_ClearTable();
+            SetSyncTarget(0x2C);
+            PlayStats_IncVsPlay();
+            PlayStats_IncVsPeerCount();
+            VoiceQueue_Clear(0);
+            lbl_806D1310 = 7;
+            lbl_806D1314 = g_isCommHost ? 0 : 2;
+            DebugPrintf(pool + 0x47c);
+        }
+        return -2;
+    }
+    if (lbl_806D1314 != 0) {
+        if (--lbl_806D1314 == 0) {
+            VsSeedRandom();
+        }
+        return -2;
+    }
+
+    pad = InputMgr_GetPlayer(GetInputManager(), 0);
+    if (!g_raceEnded && pad->Held(0x400) && GetCoinMilage(g_playerData) >= 4000) {
+        CoinJumpFlasher_Toggle(GetPlayerCarObject());
+    }
+
+    held[0] = 0;
+    held[1] = 0;
+    held[2] = 0;
+    held[3] = 0;
+    if (g_isCommHost == 1) {
+        /* host: wait (at most 4 frames) while a client is 2+ inputs behind */
+        int waits = 0;
+        for (;;) {
+            unsigned char lag = 0;
+            for (i = 0; i < 4; i++) {
+                if (g_carObjects[i] != 0) {
+                    char *slot = RingBuffer_GetKartSlot(i);
+                    held[i] |= *(unsigned int *)(slot + 0xc);
+                    if (VS_U8(slot, 0x22) > lag) {
+                        lag = VS_U8(slot, 0x22);
+                    }
+                }
+            }
+            if (lag < 2) {
+                break;
+            }
+            if (++waits > 4) {
+                break;
+            }
+            VIWaitForRetrace();
+            Frame_UpdatePerFrameState();
+            Timer_Decrement();
+            PCBComm_Process(1, 0);
+            if (lbl_806D1191 == 1) {
+                return -2;
+            }
+        }
+    } else if (!CommBroadcast_ScanForMySyncMatch()) {
+        /* client: wait for the host's frame */
+        unsigned char got;
+        do {
+            VIWaitForRetrace();
+            Frame_UpdatePerFrameState();
+            Timer_Decrement();
+            PCBComm_Process(0, 1);
+            got = CommBroadcast_ScanForMySyncMatch();
+            if (lbl_806D1191 == 1) {
+                return -2;
+            }
+        } while (got <= 1);
+    }
+    for (i = 0; i < 4; i++) {
+        if (g_carObjects[i] != 0) {
+            held[i] |= *(unsigned int *)(RingBuffer_GetKartSlot(i) + 0xc);
+        }
+    }
+
+    fn_801B5C98();
+    if (SyncSlot_GetHostSend() != 0) {
+        Race_PerFrameTickAndAudio();
+    }
+    if (!lbl_806D1318 && Live_IsConnectReady()) {
+        lbl_806D1318 = 1;
+        if (SyncSlot_GetHostSend() != 0) {
+            unsigned char *s = SyncSlot_GetHostSend();
+            s[2] = (s[2] & ~0x80) | 0x80;
+        }
+    }
+    if (lbl_806D1319 && ((SyncSlot_GetRecv()[2] >> 7) & 1) == 1) {
+        if (VS_PTR(self, 0x4) != 0) {
+            LakituStart_SetCountdownHoldFrames(VS_PTR(self, 0x4), -1);
+        }
+        lbl_806D1319 = 0;
+    }
+    if (VS_PTR(self, 0x34) != 0 && fn_8020B07C(VS_PTR(self, 0x34))) {
+        fn_8020AF08(VS_PTR(self, 0x34), 1);
+        VS_PTR(self, 0x34) = 0;
+    }
+
+    if (g_currentSceneState == 0x2D) {
+        if (IsSyncReached()) {
+            DebugPrintf(pool + 0x4b0);
+            stats = VsTitleStats();
+            if (stats != 0) {
+                if (!g_raceEnded) {
+                    race_result_handler(stats, g_finalRacePosition, 1);
+                } else {
+                    race_result_handler(stats, g_finalRacePosition, 0);
+                }
+            }
+            return 0xD;
+        }
+    } else if (g_sceneTransitionTimer > 0) {
+        if (Live_IsConnectReady()) {
+            if (--g_sceneTransitionTimer == 0) {
+                PathManager_RefreshFinishPositions(lbl_806D12F4);
+                SetSyncTarget(0x2D);
+            }
+        } else {
+            g_sceneTransitionTimer = 0xB4;
+        }
+    } else {
+        int finished = 0;
+        int peers = CountPeersWithRole(-1);
+        for (i = 0; i < 4; i++) {
+            if (g_carObjects[i] != 0 && VS_U8(CarObject_GetRenderObj(g_carObjects[i]), 0x2b8) != 0) {
+                finished++;
+            }
+        }
+        if (peers != 0 && peers == finished) {
+            g_sceneTransitionTimer = 0xB4;
+        }
+        if (finished != 0 && lbl_806CF148 != 0) {
+            lbl_806CF148 = 0;
+            if (g_raceTimeRemaining > 15.0f) {
+                g_raceTimeRemaining = 15.0f;
+            }
+        }
+    }
+
+    n = (SyncSlot_GetRecv()[0] >> 3) & 0x1f;
+    if (n != lbl_806D12FC) {
+        lbl_806D12FC = n;
+        if (n == 3) {
+            fn_8016C600();
+        }
+        if (n == 4) {
+            fn_8016C598();
+        }
+    }
+
+    if (!g_isCommHost) {
+        /* client: take the CPU karts from the host */
+        n = 0;
+        for (i = 0; i < 8; i++) {
+            if (RaceSlot_GetDriverId(i) == 6) {
+                char *rank = RingBuffer_GetRankSlot(n++);
+                char *e = lbl_806792D8 + i * 0x20;
+                fn_801DC740(i, rank);
+                VS_F32(e, 0xc) = VS_F32(rank, 0xc);
+                VS_F32(e, 0x10) = VS_F32(rank, 0x10);
+                fn_801DC714(i, *(short *)(rank + 0x14));
+                fn_801DC6E4(i, *(signed char *)(rank + 0x16));
+                fn_801DC6B4(i, *(signed char *)(rank + 0x17));
+            }
+        }
+    }
+    ItemObjectManager_PerFrameUpdate(GetRaceContextPtr());
+    RankingMgr_UpdatePositions(VS_PTR(self, 0x2c));
+    fn_80208E30(VS_PTR(self, 0x30));
+    if (g_isCommHost == 1) {
+        /* host: publish the CPU karts */
+        n = 0;
+        for (i = 0; i < 8; i++) {
+            if (RaceSlot_GetDriverId(i) == 6) {
+                char *rank = RingBuffer_GetRankSlot(n++);
+                char *e = lbl_806792D8 + i * 0x20;
+                float *pos = fn_801DC72C(i);
+                VS_F32(rank, 0x0) = pos[0];
+                VS_F32(rank, 0x4) = pos[1];
+                VS_F32(rank, 0x8) = pos[2];
+                VS_F32(rank, 0xc) = VS_F32(e, 0xc);
+                VS_F32(rank, 0x10) = VS_F32(e, 0x10);
+                *(short *)(rank + 0x14) = fn_801DC6FC(i);
+                *(signed char *)(rank + 0x16) = fn_801DC6CC(i);
+                *(signed char *)(rank + 0x17) = fn_801DC69C(i);
+            }
+        }
+    }
+
+    send = SyncSlot_GetHostSend();
+    now = OSGetTime();
+    for (i = 0; i < 4; i++) {
+        char *slot = RingBuffer_GetKartSlot(i);
+        void *car = g_carObjects[i];
+        long long *idleSince = (long long *)(shared + i * 8);
+        float accel;
+        float steer;
+        float brake;
+        unsigned char started;
+        unsigned int h;
+
+        if (car == 0) {
+            continue;
+        }
+        if (lbl_806D1310 > 0) {
+            /* first frames after the start sync: no input */
+            lbl_806D1310--;
+            accel = 0.0f;
+            brake = 0.0f;
+            started = 0;
+            h = 0;
+            VS_F32(slot, 0x0) = 0.0f;
+            steer = 0.0f;
+            VS_F32(slot, 0x4) = 0.0f;
+            VS_F32(slot, 0x8) = 0.0f;
+        } else if (VS_U8(CarObject_GetRenderObj(car), 0x2b8) == 1) {
+            /* finished: drive automatically */
+            accel = CalcSoundDirection(CarObject_GetRenderObj(car), lbl_806D12F4, &steer, lbl_805D2B00[i]);
+            brake = 0.0f;
+            started = 1;
+            h = 0;
+        } else {
+            accel = VS_F32(slot, 0x0);
+            steer = VS_F32(slot, 0x4);
+            brake = VS_F32(slot, 0x8);
+            if (g_ccClass != 2) {
+                if (!IsRaceStarted()) {
+                    *idleSince = now;
+                } else if (steer < 0.1f && brake < 0.1f) {
+                    if (!lbl_806D131C[i]) {
+                        long long ms = (now - *idleSince) / ((*(unsigned int *)0x800000F8 / 4) / 1000);
+                        if ((float)ms / 1000.0f >= 4.0f) {
+                            lbl_806D131C[i] = 1;
+                        }
+                    }
+                    if (lbl_806D131C[i]) {
+                        steer = 1.0f;
+                    }
+                } else {
+                    *idleSince = now;
+                    lbl_806D131C[i] = 0;
+                }
+            }
+            brake = VS_F32(slot, 0x8);
+            started = IsRaceStarted();
+            h = held[i];
+            if (!g_isCommHost) {
+                VS_INT(g_itemSelects[i], 0x5c) = *(short *)(slot + 0x24);
+            }
+        }
+
+        if (g_isCommHost == 1) {
+            float *m = CarObject_GetTransformMatrix(car);
+            *(unsigned int *)(slot + 0xc) = h;
+            VS_F32(slot, 0x10) = m[12];
+            VS_F32(slot, 0x14) = m[13];
+            VS_F32(slot, 0x18) = m[14];
+            VS_F32(slot, 0x1c) = VS_F32(VS_PTR(car, 0x28), 0x1c8);
+        } else {
+            CarObject_SetPosition(car, slot + 0x10);
+            KartItem_SetCarObjectField1c8Float(car, VS_F32(slot, 0x1c));
+        }
+
+        if (i == lbl_806CF140) {
+            CarObject_ApplyInput_AI(car, started, accel, VsQuantizeInput(pad->Accel()), steer, brake);
+        } else {
+            CarObject_ApplyInput_AI(car, started, accel, accel, steer, brake);
+        }
+        CarObject_FrameUpdate(car, h);
+        if (i == lbl_806CF140) {
+            ItemBox_ProcessPickup(g_itemSelects[i], car, 0, h, 1, steer);
+        } else {
+            ItemBox_ProcessPickup(g_itemSelects[i], car, 0, h, 0, steer);
+        }
+        if (g_isCommHost == 1) {
+            *(short *)(slot + 0x24) = VS_INT(g_itemSelects[i], 0x5c);
+        }
+        if (send != 0 && ((send[0] >> 3) & 0x1f) < 4 && VS_INT(CarObject_GetRenderObj(car), 0x240) == 1) {
+            send[0] = (send[0] & ~0xF8) | (4 << 3);
+        }
+    }
+
+    if (!g_isCommHost) {
+        for (i = 0; i < 4; i++) {
+            if (g_carObjects[i] != 0 && VS_U8(CarObject_GetRenderObj(g_carObjects[i]), 0x2b8) == 0) {
+                unsigned short forced = *(unsigned short *)(RingBuffer_GetKartSlot(i) + 0x20);
+                ItemSelect_StartRouletteSpin(g_itemSelects[i], CarObject_GetRenderObj(g_carObjects[i]), 0, forced);
+            }
+        }
+    }
+
+    if (IsRaceStarted() == 1) {
+        float *cp0 = Path_LookupCheckpointOffset(lbl_806D12F4, lbl_805D2B00[lbl_806CF140], 0);
+        float *cp1 = Path_LookupCheckpointOffset(lbl_806D12F4, lbl_805D2B00[lbl_806CF140], 1);
+        VsVec a = *(const VsVec *)(pool + 0x3fc);
+        a.x = cp0[1];
+        a.z = cp0[3];
+        VsVec b = *(const VsVec *)(pool + 0x408);
+        b.x = cp1[1];
+        b.z = cp1[3];
+        if (JObj_IsForwardDotBelowThreshold(g_playerRenderObj, &a, &b) == 1) {
+            Jyugemu_ReverseFlag_SetState(VS_PTR(self, 0xc), 1);
+            stats = VsTitleStats();
+            if (stats != 0) {
+                TitleStats_AccumDistanceCounter(stats, GetDisplayBufferIndex(), 1);
+            }
+        } else {
+            Jyugemu_ReverseFlag_SetState(VS_PTR(self, 0xc), 0);
+            stats = VsTitleStats();
+            if (stats != 0) {
+                TitleStats_AccumDistanceCounter(stats, GetDisplayBufferIndex(), 0);
+            }
+        }
+        if (g_isCommHost == 1) {
+            for (i = 0; i < 4; i++) {
+                if (g_carObjects[i] != 0) {
+                    char *render = CarObject_GetRenderObj(g_carObjects[i]);
+                    float *c0 = Path_LookupCheckpointOffset(lbl_806D12F4, lbl_805D2B00[i], 0);
+                    float *c1 = Path_LookupCheckpointOffset(lbl_806D12F4, lbl_805D2B00[i], 1);
+                    VsVec p = *(const VsVec *)(pool + 0x414);
+                    p.x = c0[1];
+                    p.z = c0[3];
+                    VsVec q = *(const VsVec *)(pool + 0x420);
+                    q.x = c1[1];
+                    q.z = c1[3];
+                    if (JObj_IsForwardDotBelowThreshold(render, &p, &q) == 1) {
+                        fn_801B3BC8(VS_PTR(render, 0x248));
+                    } else {
+                        fn_801B3B7C(VS_PTR(render, 0x248));
+                    }
+                }
+            }
+        }
+    }
+
+    VS_INT(self, 0x1c) = 0;
+    KartItem_UpdateShadowBillboardAndViewport(GetPlayerCarObject(), VS_PTR(self, 0x18), VS_INT(self, 0x1c));
+    if (!lbl_806D12E8) {
+        lbl_806D12E8 = 1;
+    }
+    Fog_UpdateFromCourseScene3D();
+    PathManager_UpdateAll(lbl_806D12F4);
+    if (VS_PTR(self, 0x4) != 0 && !LakituStart_UpdateCountdown(VS_PTR(self, 0x4))) {
+        LakituStart_Dtor(VS_PTR(self, 0x4), 1);
+        VS_PTR(self, 0x4) = 0;
+    }
+    Jyugemu_Flag_Tick(VS_PTR(self, 0x8));
+    Jyugemu_ReverseFlag_Tick(VS_PTR(self, 0xc));
+    LapBannerScene_UpdateAndDriveAnim(VS_PTR(self, 0x10));
+    CourseEnvironment_UpdateAndCullZones_Timed(VS_PTR(self, 0x14));
+
+    /* rank among the humans, and the gap to the neighbours */
+    for (i = 0; i < 4; i++) {
+        if (g_carObjects[i] != 0) {
+            char *render = CarObject_GetRenderObj(g_carObjects[i]);
+            n = 0;
+            for (j = 0; j < 4; j++) {
+                if (i != j && g_carObjects[j] != 0 &&
+                    VS_INT(CarObject_GetRenderObj(g_carObjects[j]), 0x23c) < VS_INT(render, 0x23c)) {
+                    n++;
+                }
+            }
+            VS_INT(render, 0x1bc) = n;
+        }
+    }
+    for (i = 0; i < 4; i++) {
+        if (g_carObjects[i] != 0) {
+            char *render = CarObject_GetRenderObj(g_carObjects[i]);
+            if (VS_INT(render, 0x1bc) == 0) {
+                VS_INT(render, 0x1b4) = -1;
+                VS_INT(render, 0x1b0) = -1;
+                for (j = 0; j < 4; j++) {
+                    if (g_carObjects[j] != 0) {
+                        int gap = Race_CompareKartProgress(lbl_806D12F4, lbl_805D2B00[i], lbl_805D2B00[j]);
+                        VS_INT(CarObject_GetRenderObj(g_carObjects[j]), 0x1b4) = gap;
+                    }
+                }
+            } else {
+                for (j = 0; j < 4; j++) {
+                    if (g_carObjects[j] != 0) {
+                        int rank = VS_INT(render, 0x1bc);
+                        if (VS_INT(CarObject_GetRenderObj(g_carObjects[j]), 0x1bc) == rank - 1) {
+                            VS_INT(render, 0x1b0) =
+                                Race_CompareKartProgress(lbl_806D12F4, lbl_805D2B00[j], lbl_805D2B00[i]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    CObj_LoadProjMatrix(VS_PTR(self, 0x18), (VsVec *)(shared + 0x20));
+    CObj_ApplyScissor(VS_PTR(self, 0x18), (VsVec *)(shared + 0x2c));
+    ItemObjectManager_Update();
+    VfxSlotMgr_Update(*(VsVec *)(shared + 0x20), *(VsVec *)(shared + 0x2c));
+
+    if (g_rendererGateFlag == 1 && IsRaceStarted() == 1 && g_raceTimeRemaining > 0.0f) {
+        float t;
+        if (g_isCommHost == 1) {
+            t = g_raceTimeRemaining - 0.016666668f;
+        } else {
+            t = VS_F32(RingBuffer_GetEntryHead(), 0xd0);
+        }
+        g_raceTimeRemaining = t;
+        if (t <= 0.0f) {
+            if (VS_U8(g_playerRenderObj, 0x2b8) == 0) {
+                fn_80253BE4(VS_PTR(self, 0x24));
+            }
+            g_sceneTransitionTimer = 0xB4;
+            g_raceTimeRemaining = 0.0f;
+            fn_8016C554(0);
+            fn_801B12A0();
+        }
+    }
+    if (g_isCommHost == 1) {
+        float t = g_raceTimeRemaining;
+        VS_F32(RingBuffer_GetEntryHead(), 0xd0) = t;
+    }
+
+    Tachometer_RenderDigits();
+    HitMessageOverlay_FrameUpdate();
+    HUD_SetCurrentLap(VS_PTR(self, 0x24), g_currentLap);
+    fn_80253FD8(VS_PTR(self, 0x24), g_raceTimeRemaining);
+    fn_80253EBC(VS_PTR(self, 0x24), 100.0f * CarObject_CalcSpeedRatio(GetPlayerCarObject()));
+    fn_80253EC0(VS_PTR(self, 0x24), KartItem_GetCurrentSpeedWithBonus(GetPlayerCarObject()));
+    fn_80253EC4(VS_PTR(self, 0x24), g_currentLapTime);
+    fn_80253F2C(VS_PTR(self, 0x24), g_bestLapTime);
+    HUD_SetRacePosition(VS_PTR(self, 0x24), g_finalRacePosition);
+    fn_80253E18(VS_PTR(self, 0x24), VS_INT(g_playerRenderObj, 0x2cc));
+    TransitionEffect_Tick(SINGLETON_INSTANCE(lbl_806D109C));
+    if (!g_finalLapBannerShown && g_currentLap >= g_totalLaps) {
+        g_finalLapBannerShown = 1;
+        fn_80253DF0(VS_PTR(self, 0x24));
+    }
+
+    if (0.0f != g_raceTimeRemaining && g_raceResultCode == -2) {
+        if (g_currentLap >= g_totalLaps + 1) {
+            if (g_finalLapCoinJumpEnabled == 1) {
+                CoinJumpFlasher_Toggle(GetPlayerCarObject());
+            }
+            lbl_806CF270 = 0;
+            KartItem_OnFallOffOrDeath(g_carObjects[lbl_806CF140]);
+            CoinJumpFlasher_SetArmed(g_carObjects[lbl_806CF140], 0);
+            ItemSelect_Reset(g_itemSelects[lbl_806CF140], 0);
+            g_finalRacePosition = VS_INT(g_playerRenderObj, 0x23c);
+            RaceResult_StoreLatest(GetKartSlotCharId(lbl_806D12EC), g_finalRacePosition, g_bestLapTime,
+                                   g_totalRaceTime);
+            g_raceResultCode = RaceResult_InsertSortedRank(GetKartSlotCharId(lbl_806D12EC), g_finalRacePosition,
+                                                           g_bestLapTime, g_totalRaceTime);
+            SetRaceResultLatestPtr();
+            fn_80253D00(VS_PTR(self, 0x24));
+            Object_SetByte10_Return1(VS_PTR(self, 0x18), 1);
+            if (g_finalRacePosition == 0) {
+                Jyugemu_Flag_SetKartDriver(VS_PTR(self, 0x8), g_playerRenderObj);
+                fn_8016C554(1);
+            } else {
+                fn_8016C554(0);
+            }
+            CoinEvent_PlayResultSE(g_carObjects[lbl_806CF140], g_finalRacePosition);
+            g_raceEnded = 1;
+            g_lakituStartAnimDone = 0;
+            lbl_806D1300++;
+            stats = VsTitleStats();
+            if (stats != 0) {
+                RankLog_SetRaceResult(stats, GetDisplayBufferIndex(), g_finalRacePosition, (int)g_raceTimeRemaining);
+            }
+        } else if (g_lapChangePending) {
+            if (g_finalLapBannerShown) {
+                LapBannerScene_TriggerBannerAnim(VS_PTR(self, 0x10));
+            } else {
+                fn_8016C5CC();
+            }
+            stats = VsTitleStats();
+            if (stats != 0) {
+                TitleTracker_ResetPerRound(stats, GetDisplayBufferIndex(), g_currentLap - 1);
+            }
+            g_lapChangePending = 0;
+        }
+    } else if (lbl_806D1300 != 0) {
+        lbl_806D1300++;
+    }
+
+    HUD_FrameUpdate(VS_PTR(self, 0x24));
+    clItemBoxManager_Update(SINGLETON_INSTANCE(lbl_806D10D0));
+    fn_8013A534();
+    if (g_weatherSystem != 0) {
+        fn_8016B32C(g_weatherSystem);
+    }
+    if (g_isCommHost) {
+        /* host: publish each kart's next roulette value */
+        for (i = 0; i < 4; i++) {
+            if (g_carObjects[i] != 0) {
+                unsigned short next = VS_INT(g_itemSelects[i], 0x54) + 1;
+                *(unsigned short *)(RingBuffer_GetKartSlot(i) + 0x20) = next;
+            }
+        }
+    }
+    if (!lbl_806D0051 && pad->Pressed(0x400) == 1) {
+        return 4;
+    }
+    return -2;
+}
+#undef VS_PTR
+#undef VS_INT
+#undef VS_F32
+#undef VS_U8
+#pragma cplusplus off
+#else
 /* === extracted from auto_VSMode_FrameUpdate_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -1769,6 +2525,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     addi r1, r1, 0xf0
     blr
 }
+#endif
 #undef CObj_ApplyScissor
 #undef CObj_LoadProjMatrix
 #undef CalcSoundDirection
