@@ -2498,3 +2498,28 @@ extabindex row; `reorder_extab.py` silently skips a TU whose function set
 differs from `tools/extab_order.json`, so add the weak dtor to both lists.
 Check with `objdump -r -j extabindex` against the json when only extab bytes
 differ.
+
+## 92. Inline counter below the caller's named loop counter, flag coloured before backend temps, table address created after another one (fn_802353EC, 42 -> 10 diff lines, not matched yet, 11-10)
+
+clFlowCCCharaItem ctor with the inlined SetCharaGroup; each lever read from
+`tools/mwtrace.py --only COLOR` (saved registers in colouring order):
+
+1. Target `j` (loop counter inside the inline) in the LAST saved register,
+   below the ctor's named `i`: an inline local is a frontend temp and always
+   outranks named locals. Declare `int j;` as a block local of the caller's
+   loop body and pass it by reference (`int &j`, `for (j = 0; ...)`).
+2. `unsigned char special = 0; if (cond) special = 1;` puts the flag in a
+   frontend temp (coloured after the backend temps of the neighbouring index
+   math, it got r4). `unsigned char special = (a && b) || c;` materialises
+   the boolean in a backend temp created after them: flag in r0, the index
+   temps in r3/r4 as in the target.
+3. Two address computations swapped r3/r4 (`grp[i + 2]` vs
+   `kCharaGroups[which][index]`): the one that must take the lower register
+   has to be CREATED later. Pass the array and the slot (`groups, slot`) and
+   load `Sprite **group = groups[slot];` inside the inline after the `id`
+   line; keep `int group = i + 2;` as a named local in the caller or the
+   `+ 2` is folded into the displacement.
+
+Left: the special branch's `res` takes j's free register (r19) instead of
+the walker's (r23). `j` has degree 29 (survives the first simplify round and
+opens r19 before `res` is coloured); see docs/gave_up.md.
