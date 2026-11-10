@@ -359,9 +359,6 @@ void fn_80283154(void) {
     u8 sum;
     u8* p;
     u8* out;
-    u8* packetLength;
-    u8* packetStatus;
-    u8* payload;
     for (i = 0; i < 16 && i <= cmd.nodeCount; i++) status[i] = 0;
     tx.packetCount = 0;
     for (i = 2; i < tx.rx[1]; i += tx.rx[i + 1] + 2) {
@@ -414,19 +411,16 @@ void fn_80283154(void) {
         case 0xE0: tx.unk115 = tx.packet[i][2]; break;
         case 0xE1: tx.unk116 = tx.packet[i][2]; break;
         default:
-            packetLength = &packet->length;
-            packetStatus = &packet->payload[1];
-            payload = packet->payload;
             if ((command & 0xE0) != 0x40) break;
-            if (*packetLength != 0) { node = command & 0x1F; bank = cmd.cur[node]; }
+            if (packet->length != 0) { node = command & 0x1F; bank = cmd.cur[node]; }
             else status[node] = 1;
-            if (*packetLength == 0 || *packetStatus != 0) break;
+            if (packet->length == 0 || packet->payload[1] != 0) break;
             count = 0;
-            for (j = 2; j < *packetLength; j++) {
-                if (payload[j] == 0xD0) cmd.req[bank][node].response[count++] = payload[++j] + 1;
-                else cmd.req[bank][node].response[count++] = payload[j];
+            for (j = 2; j < packet->length; j++) {
+                if (packet->payload[j] == 0xD0) cmd.req[bank][node].response[count++] = packet->payload[++j] + 1;
+                else cmd.req[bank][node].response[count++] = packet->payload[j];
             }
-            sum = *packetStatus;
+            sum = packet->payload[1];
             for (j = 0; j < count - 1; j++) sum += cmd.req[bank][node].response[j];
             if (sum != cmd.req[bank][node].response[j]) status[node] = 4;
             else status[node] = 5;
