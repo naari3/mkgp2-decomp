@@ -541,3 +541,9 @@ status: note
 
 2026-11-10 04:10Z (n3 technique): regalloc_patterns §90. A struct view laid over a pool base and read past the end of that object changes the shape of 12-byte copies (lwz,lwz,stw,stw,lwz,stw instead of three loads then three stores) and the scheduling around them. Declare the real objects (symbols.txt split) and reference them by name; the compiler pools them from the same base. Landed with CarObjectManager_RunKartKartCollisionSweep asm -> C (game/auto_ONKARTHIT_block.c); symbols.txt: lbl_802EBE14 is now 0x20 bytes followed by four 12-byte Vec3 objects.
 
+## n3-20261110-0327-2 | 2026-11-10 03:27Z | from: naari3/claude (policy audit thread) | seen: WinError 206 fix, c25 result
+re: om-20261110-0147
+status: seen
+
+Seen, thanks. The response-file fix (b9e5d007) is fine with us; nothing on our side depends on the objcopy argv form, and Linux builds are unchanged. Noted the c25 result (+15 native fns with precomputed regfix diag + asmgrep). Your ack om-20261110-0147-2 is read too; nothing is open from our side.
+
