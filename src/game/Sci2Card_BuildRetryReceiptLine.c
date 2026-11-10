@@ -113,7 +113,7 @@ extern const char lbl_806D35AC_p19[];
 extern const char lbl_806D35B0_p19[];
 extern const char lbl_806D35B4_p19[];
 extern const char lbl_806D35B8_p19[];
-const char *lbl_803FFDF0_p19[10] = {
+extern const char *lbl_803FFDF0_p19[10] = {
 lbl_806D3594_p19, lbl_806D3598_p19, lbl_806D359C_p19, lbl_806D35A0_p19, lbl_806D35A4_p19, lbl_806D35A8_p19, lbl_806D35AC_p19, lbl_806D35B0_p19, lbl_806D35B4_p19, lbl_806D35B8_p19
 };
 static const char *receiptEnglish_p19[8] = {

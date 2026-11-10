@@ -51,7 +51,7 @@ typedef struct BiribiriObstacleDesc {
 
 /* --- .rodata of this scene (0x80357B00..0x803580F8) --- */
 /* Table at the start of this scene's .rodata (0x80357B00); no code reference. */
-const float BiribiriLand_UpdateObstacles_rodata_80357B00[255] = {
+extern const float BiribiriLand_UpdateObstacles_rodata_80357B00[255] = {
     1.0f, 0.7f, 0.9f,
     0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
     0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
@@ -74,16 +74,16 @@ const float BiribiriLand_UpdateObstacles_rodata_80357B00[255] = {
 };
 
 /* Model archives (referenced from the scene's .data table). */
-const char lbl_80357EFC[] = "obj_red.dat";
-const char lbl_80357F08[] = "obj_blue.dat";
-const char lbl_80357F18[] = "obj_yellow.dat";
-const char lbl_80357F28[] = "obj_pink.dat";
-const char lbl_80357F38[] = "obj_purple.dat";
-const char lbl_80357F48[] = "obj_UFO.dat";
-const char lbl_80357F54[] = "packland_biribiri.dat";
+extern const char lbl_80357EFC[] = "obj_red.dat";
+extern const char lbl_80357F08[] = "obj_blue.dat";
+extern const char lbl_80357F18[] = "obj_yellow.dat";
+extern const char lbl_80357F28[] = "obj_pink.dat";
+extern const char lbl_80357F38[] = "obj_purple.dat";
+extern const char lbl_80357F48[] = "obj_UFO.dat";
+extern const char lbl_80357F54[] = "packland_biribiri.dat";
 
 /* Obstacle gates: two posts, gate yaw, post model, electric pole flag. */
-const BiribiriObstacleDesc BiribiriLand_rodata_80357F6C[9] = {
+extern const BiribiriObstacleDesc BiribiriLand_rodata_80357F6C[9] = {
     {{113.0f, 0.0f, -1700.0f}, {-113.0f, 0.0f, -1700.0f}, 0.0f, 0, 0},
     {{113.0f, 0.0f, -3900.0f}, {-113.0f, 0.0f, -3900.0f}, 0.0f, 1, 0},
     {{113.0f, 0.0f, -5800.0f}, {-113.0f, 0.0f, -5800.0f}, 0.0f, 2, 0},
@@ -505,9 +505,9 @@ void BiribiriLand_UpdateObstacles(BiribiriObstacles *obs)
 #pragma exceptions reset
 
 /* --- class-name strings and Lakitu archive (tail of the scene's .rodata) --- */
-const char lbl_803580C8[] = "clCGamePC";
-const char lbl_803580D4[] = "clJobRunner";
-const char lbl_803580E0[] = "jyugemu_start.dat";
+extern const char lbl_803580C8[] = "clCGamePC";
+extern const char lbl_803580D4[] = "clJobRunner";
+extern const char lbl_803580E0[] = "jyugemu_start.dat";
 
 
 

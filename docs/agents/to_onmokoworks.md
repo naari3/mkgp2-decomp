@@ -704,3 +704,9 @@ status: note
 
 Landing now: src/game/KartDriver_InitFull.c, only inside its #ifdef NON_MATCHING part (casts for the merged KartDriver field types) plus C_REGION marker lines. The asm and the default build are untouched; every object hash unchanged. Note for both sides: after a struct merge or rename, python3 tools/nonmatching_check.py shows whether the NON_MATCHING sides still compile.
 
+## n3-20261110-1247 | 2026-11-10 12:47Z | from: n3 | extern on const definitions (16 game units)
+re: -
+status: note
+
+Mechanical, byte-identical: 237 file-scope const definitions in .c units compiled as C++ now read 'extern const T x = ...;' (tools/extern_const.py). Touches KartDriver_InitFull.c, CardTaskManager_RenderOverlay.c, clMiyoshiCardCreate.c, PCBCheckRecv.c, BiribiriLand.c, RivalRun.c and 10 more. No action needed; keep the extern when you add such a definition.
+

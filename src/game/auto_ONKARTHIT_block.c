@@ -1446,11 +1446,11 @@ static const unsigned int KartItem_ApplyImpactReflectAndDampVelocity_rodata_802E
 static const unsigned int KartItem_PerFrameStep_rodata_802ED9F4[3] = {
     0x00000000, 0x00000000, 0x00000000,
 };
-const char lbl_802EDA00[12] = "clCarObject";
-const char lbl_802EDA0C[19] = "clItemBoxResponder";
+extern const char lbl_802EDA00[12] = "clCarObject";
+extern const char lbl_802EDA0C[19] = "clItemBoxResponder";
 static const char lbl_802EDA20[51] = "clCarObject::clBodyDamageEffector result is error\n";
-const char lbl_802EDA54[26] = "teSingleton<clCollPlayer>";
-const char lbl_802EDA70[13] = "clCollPlayer";
+extern const char lbl_802EDA54[26] = "teSingleton<clCollPlayer>";
+extern const char lbl_802EDA70[13] = "clCollPlayer";
 static const char lbl_802EDA80[34] = "vector::construction length error";
 
 

@@ -1513,7 +1513,7 @@ static RaceScriptEntry lbl_8048F9B8[46] = {
     {0x14, 0x78, 0, 0x2F, 0},
 };
 
-const char *Scene_8014E0C4_data_8048FD50[15] = {
+extern const char *Scene_8014E0C4_data_8048FD50[15] = {
     lbl_80367438, lbl_806D8020, lbl_806D8028, lbl_806D8030, lbl_806D8038, lbl_806D8040, lbl_806D8048, lbl_806D8050, lbl_80367444, lbl_80367454, lbl_80367464, lbl_80367470, lbl_8036747C, lbl_806D8058, 0,
 };
 

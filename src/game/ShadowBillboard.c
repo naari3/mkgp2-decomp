@@ -138,7 +138,7 @@ extern unsigned int lbl_806D2C08;
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
 /* .rodata 0x802EE320..0x802EE50B: play camera tables */
-const float ShadowBillboard_rodata_802EE320[13][2][4] = {
+extern const float ShadowBillboard_rodata_802EE320[13][2][4] = {
     {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 57.0f, 10.0f}},
     {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 57.0f, 10.0f}},
     {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 57.0f, 10.0f}},
@@ -153,8 +153,8 @@ const float ShadowBillboard_rodata_802EE320[13][2][4] = {
     {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 60.0f, 10.0f}},
     {{18.0f, 25.0f, 50.0f, 10.0f}, {18.0f, 30.0f, 55.0f, 10.0f}},
 };
-const float lbl_802EE4C0[3] = {1.0f, 0.7f, 0.9f};
-const float ShadowBillboard_LerpMtx4x4_rodata_802EE4CC[3] = {0.075f, 0.075f, 0.075f};
+extern const float lbl_802EE4C0[3] = {1.0f, 0.7f, 0.9f};
+extern const float ShadowBillboard_LerpMtx4x4_rodata_802EE4CC[3] = {0.075f, 0.075f, 0.075f};
 #define sCamTable ShadowBillboard_rodata_802EE320
 
 
@@ -734,7 +734,7 @@ void ShadowBillboard_StepSimple(ShadowBillboard *sb, void *lineCam, void *worldO
 #pragma exceptions reset
 
 /* rest of the play camera .rodata: Tick's zero vector, file name */
-const char lbl_802EE4FC[15] = "playcamera.cpp";
+extern const char lbl_802EE4FC[15] = "playcamera.cpp";
 
 void ShadowBillboard_SetTargetSaturation(ShadowBillboard *sb, float value) {
     sb->targetSaturation = value;

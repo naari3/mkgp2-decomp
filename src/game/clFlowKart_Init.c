@@ -177,8 +177,8 @@ extern "C" void clFlowKart_UpdateDisplay(FKDisplay *self, int kart)
     }
 }
 #pragma pop
-const char clFlowKart[] = "clFlowKart";
-const char clFlowProcess[] = "clFlowProcess";
+extern const char clFlowKart[] = "clFlowKart";
+extern const char clFlowProcess[] = "clFlowProcess";
 
 /* ---- clFlowKart_HandleConfirm (0x801D7B50) ---- */
 namespace fk_confirm {

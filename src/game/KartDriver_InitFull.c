@@ -89,7 +89,7 @@ extern unsigned int KartDriver_InitFull_data_803F5928[];
 #endif
 #pragma force_active on
 /* element type read off the values (all floats), not from code */
-const float KartDriver_rodata_802E9F80[255] = {
+extern const float KartDriver_rodata_802E9F80[255] = {
     1.0f, 0.7f, 0.9f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f,
     66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f,
     66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f,
@@ -123,109 +123,109 @@ const float KartDriver_rodata_802E9F80[255] = {
     83.333336f, 0.0f, 0.0f, 500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f,
     83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f, 5000.0f, 83.333336f
 };
-const char lbl_802EA37C[] = "mario_shadow.dat";
-const char lbl_802EA390[] = "luigi_shadow.dat";
-const char lbl_802EA3A4[] = "wario_shadow.dat";
-const char lbl_802EA3B8[] = "peach_shadow.dat";
-const char lbl_802EA3CC[] = "koopa_shadow.dat";
-const char lbl_802EA3E0[] = "kinopio_shadow.dat";
-const char lbl_802EA3F4[] = "donkey_shadow.dat";
-const char lbl_802EA408[] = "yoshi_shadow.dat";
-const char lbl_802EA41C[] = "pacman_shadow.dat";
-const char lbl_802EA430[] = "mspacman_shadow.dat";
-const char lbl_802EA444[] = "monster_shadow.dat";
-const char lbl_802EA458[] = "waluigi_shadow.dat";
-const char lbl_802EA46C[] = "mametch_shadow.dat";
-const char lbl_802EA480[] = "mario_sp_shadow.dat";
-const char lbl_802EA494[] = "luigi_sp_shadow.dat";
-const char lbl_802EA4A8[] = "wario_sp_shadow.dat";
-const char lbl_802EA4BC[] = "peach_sp_shadow.dat";
-const char lbl_802EA4D0[] = "koopa_sp_shadow.dat";
-const char lbl_802EA4E4[] = "kinopio_sp_shadow.dat";
-const char lbl_802EA4FC[] = "donkey_sp_shadow.dat";
-const char lbl_802EA514[] = "yoshi_sp_shadow.dat";
-const char lbl_802EA528[] = "pacman_sp_shadow.dat";
-const char lbl_802EA540[] = "mspacman_sp_shadow.dat";
-const char lbl_802EA558[] = "monster_sp_shadow.dat";
-const char lbl_802EA570[] = "waluigi_sp_shadow.dat";
-const char lbl_802EA588[] = "mametch_sp_shadow.dat";
-const char lbl_802EA5A0[] = "mario_b_handle.dat";
-const char lbl_802EA5B4[] = "mario_b_tamb_cen.dat";
-const char lbl_802EA5CC[] = "mario_b_tamb_l.dat";
-const char lbl_802EA5E0[] = "mario_b_tamb_r.dat";
-const char lbl_802EA5F4[] = "luigi_b_handle.dat";
-const char lbl_802EA608[] = "luigi_b_tamb_cen.dat";
-const char lbl_802EA620[] = "luigi_b_tamb_l.dat";
-const char lbl_802EA634[] = "luigi_b_tamb_r.dat";
-const char lbl_802EA648[] = "wario_b_handle.dat";
-const char lbl_802EA65C[] = "wario_b_tamb_cen.dat";
-const char lbl_802EA674[] = "wario_b_tamb_l.dat";
-const char lbl_802EA688[] = "wario_b_tamb_r.dat";
-const char lbl_802EA69C[] = "peach_b_handle.dat";
-const char lbl_802EA6B0[] = "peach_b_tamb_cen.dat";
-const char lbl_802EA6C8[] = "peach_b_tamb_l.dat";
-const char lbl_802EA6DC[] = "peach_b_tamb_r.dat";
-const char lbl_802EA6F0[] = "koopa_b_handle.dat";
-const char lbl_802EA704[] = "koopa_b_tamb_cen.dat";
-const char lbl_802EA71C[] = "koopa_b_tamb_l.dat";
-const char lbl_802EA730[] = "koopa_b_tamb_r.dat";
-const char lbl_802EA744[] = "kinopio_b_handle.dat";
-const char lbl_802EA75C[] = "kinopio_b_tamb_cen.dat";
-const char lbl_802EA774[] = "kinopio_b_tamb_l.dat";
-const char lbl_802EA78C[] = "kinopio_b_tamb_r.dat";
-const char lbl_802EA7A4[] = "donkey_b_handle.dat";
-const char lbl_802EA7B8[] = "donkey_b_tamb_cen.dat";
-const char lbl_802EA7D0[] = "donkey_b_tamb_l.dat";
-const char lbl_802EA7E4[] = "donkey_b_tamb_r.dat";
-const char lbl_802EA7F8[] = "yoshi_b_handle.dat";
-const char lbl_802EA80C[] = "yoshi_b_tamb_cen.dat";
-const char lbl_802EA824[] = "yoshi_b_tamb_l.dat";
-const char lbl_802EA838[] = "yoshi_b_tamb_r.dat";
-const char lbl_802EA84C[] = "pacman_b_handle.dat";
-const char lbl_802EA860[] = "pacman_b_tamb_cen.dat";
-const char lbl_802EA878[] = "pacman_b_tamb_l.dat";
-const char lbl_802EA88C[] = "pacman_b_tamb_r.dat";
-const char lbl_802EA8A0[] = "mspacman_b_handle.dat";
-const char lbl_802EA8B8[] = "mspacman_b_tamb_cen.dat";
-const char lbl_802EA8D0[] = "mspacman_b_tamb_l.dat";
-const char lbl_802EA8E8[] = "mspacman_b_tamb_r.dat";
-const char lbl_802EA900[] = "monster_b_handle.dat";
-const char lbl_802EA918[] = "monster_b_tamb_cen.dat";
-const char lbl_802EA930[] = "monster_b_tamb_l.dat";
-const char lbl_802EA948[] = "monster_b_tamb_r.dat";
-const char lbl_802EA960[] = "waluigi_b_handle.dat";
-const char lbl_802EA978[] = "waluigi_b_tamb_cen.dat";
-const char lbl_802EA990[] = "waluigi_b_tamb_l.dat";
-const char lbl_802EA9A8[] = "waluigi_b_tamb_r.dat";
-const char lbl_802EA9C0[] = "mametch_b_handle.dat";
-const char lbl_802EA9D8[] = "mametch_b_tamb_cen.dat";
-const char lbl_802EA9F0[] = "mametch_b_tamb_l.dat";
-const char lbl_802EAA08[] = "mametch_b_tamb_r.dat";
-const char lbl_802EAA20[] = "robo_mario_handle.dat";
-const char lbl_802EAA38[] = "robo_mario_item_handle.dat";
-const char lbl_802EAA54[] = "robo_mario_tamb_cen.dat";
-const char lbl_802EAA6C[] = "robo_mario_item_pa_tamb.dat";
-const char lbl_802EAA88[] = "robo_mario_item_goo_tamb.dat";
-const char lbl_802EAAA8[] = "robo_mario_tamb_l.dat";
-const char lbl_802EAAC0[] = "robo_mario_item_pa_tamb_l.dat";
-const char lbl_802EAAE0[] = "robo_mario_item_goo_tamb_l.dat";
-const char lbl_802EAB00[] = "robo_mario_tamb_r.dat";
-const char lbl_802EAB18[] = "robo_mario_item_pa_tamb_r.dat";
-const char lbl_802EAB38[] = "robo_mario_item_goo_tamb_r.dat";
-const char lbl_802EAB58[] = "robo_mario_item_attack.dat";
-const char lbl_802EAB74[] = "robo_mario_jump.dat";
-const char lbl_802EAB88[] = "robo_mario_item_jump.dat";
-const char lbl_802EABA4[] = "robo_mario_item_b_attack.dat";
-const char lbl_802EABC4[] = "robo_mario_turbo_lv1.dat";
-const char lbl_802EABE0[] = "robo_mario_item_turbo_lv1.dat";
-const char lbl_802EAC00[] = "robo_mario_hyouji_b.dat";
-const char lbl_802EAC18[] = "robo_mario_bone_a.dat";
-const char lbl_802EAC30[] = "robo_mario_bone_b.dat";
-const char lbl_802EAC48[] = "robo_mario_hyouji_w.dat";
-const char lbl_802EAC60[] = "chara_robo_mario_info_null_joint";
-const char lbl_802EAC84[] = "chara_robo_mario_r_hand_null_joint";
-const char lbl_802EACA8[] = "chara_robo_mario_hand_goo_joint";
-const char lbl_802EACC8[] = "chara_robo_mario_hand_pa_joint";
+extern const char lbl_802EA37C[] = "mario_shadow.dat";
+extern const char lbl_802EA390[] = "luigi_shadow.dat";
+extern const char lbl_802EA3A4[] = "wario_shadow.dat";
+extern const char lbl_802EA3B8[] = "peach_shadow.dat";
+extern const char lbl_802EA3CC[] = "koopa_shadow.dat";
+extern const char lbl_802EA3E0[] = "kinopio_shadow.dat";
+extern const char lbl_802EA3F4[] = "donkey_shadow.dat";
+extern const char lbl_802EA408[] = "yoshi_shadow.dat";
+extern const char lbl_802EA41C[] = "pacman_shadow.dat";
+extern const char lbl_802EA430[] = "mspacman_shadow.dat";
+extern const char lbl_802EA444[] = "monster_shadow.dat";
+extern const char lbl_802EA458[] = "waluigi_shadow.dat";
+extern const char lbl_802EA46C[] = "mametch_shadow.dat";
+extern const char lbl_802EA480[] = "mario_sp_shadow.dat";
+extern const char lbl_802EA494[] = "luigi_sp_shadow.dat";
+extern const char lbl_802EA4A8[] = "wario_sp_shadow.dat";
+extern const char lbl_802EA4BC[] = "peach_sp_shadow.dat";
+extern const char lbl_802EA4D0[] = "koopa_sp_shadow.dat";
+extern const char lbl_802EA4E4[] = "kinopio_sp_shadow.dat";
+extern const char lbl_802EA4FC[] = "donkey_sp_shadow.dat";
+extern const char lbl_802EA514[] = "yoshi_sp_shadow.dat";
+extern const char lbl_802EA528[] = "pacman_sp_shadow.dat";
+extern const char lbl_802EA540[] = "mspacman_sp_shadow.dat";
+extern const char lbl_802EA558[] = "monster_sp_shadow.dat";
+extern const char lbl_802EA570[] = "waluigi_sp_shadow.dat";
+extern const char lbl_802EA588[] = "mametch_sp_shadow.dat";
+extern const char lbl_802EA5A0[] = "mario_b_handle.dat";
+extern const char lbl_802EA5B4[] = "mario_b_tamb_cen.dat";
+extern const char lbl_802EA5CC[] = "mario_b_tamb_l.dat";
+extern const char lbl_802EA5E0[] = "mario_b_tamb_r.dat";
+extern const char lbl_802EA5F4[] = "luigi_b_handle.dat";
+extern const char lbl_802EA608[] = "luigi_b_tamb_cen.dat";
+extern const char lbl_802EA620[] = "luigi_b_tamb_l.dat";
+extern const char lbl_802EA634[] = "luigi_b_tamb_r.dat";
+extern const char lbl_802EA648[] = "wario_b_handle.dat";
+extern const char lbl_802EA65C[] = "wario_b_tamb_cen.dat";
+extern const char lbl_802EA674[] = "wario_b_tamb_l.dat";
+extern const char lbl_802EA688[] = "wario_b_tamb_r.dat";
+extern const char lbl_802EA69C[] = "peach_b_handle.dat";
+extern const char lbl_802EA6B0[] = "peach_b_tamb_cen.dat";
+extern const char lbl_802EA6C8[] = "peach_b_tamb_l.dat";
+extern const char lbl_802EA6DC[] = "peach_b_tamb_r.dat";
+extern const char lbl_802EA6F0[] = "koopa_b_handle.dat";
+extern const char lbl_802EA704[] = "koopa_b_tamb_cen.dat";
+extern const char lbl_802EA71C[] = "koopa_b_tamb_l.dat";
+extern const char lbl_802EA730[] = "koopa_b_tamb_r.dat";
+extern const char lbl_802EA744[] = "kinopio_b_handle.dat";
+extern const char lbl_802EA75C[] = "kinopio_b_tamb_cen.dat";
+extern const char lbl_802EA774[] = "kinopio_b_tamb_l.dat";
+extern const char lbl_802EA78C[] = "kinopio_b_tamb_r.dat";
+extern const char lbl_802EA7A4[] = "donkey_b_handle.dat";
+extern const char lbl_802EA7B8[] = "donkey_b_tamb_cen.dat";
+extern const char lbl_802EA7D0[] = "donkey_b_tamb_l.dat";
+extern const char lbl_802EA7E4[] = "donkey_b_tamb_r.dat";
+extern const char lbl_802EA7F8[] = "yoshi_b_handle.dat";
+extern const char lbl_802EA80C[] = "yoshi_b_tamb_cen.dat";
+extern const char lbl_802EA824[] = "yoshi_b_tamb_l.dat";
+extern const char lbl_802EA838[] = "yoshi_b_tamb_r.dat";
+extern const char lbl_802EA84C[] = "pacman_b_handle.dat";
+extern const char lbl_802EA860[] = "pacman_b_tamb_cen.dat";
+extern const char lbl_802EA878[] = "pacman_b_tamb_l.dat";
+extern const char lbl_802EA88C[] = "pacman_b_tamb_r.dat";
+extern const char lbl_802EA8A0[] = "mspacman_b_handle.dat";
+extern const char lbl_802EA8B8[] = "mspacman_b_tamb_cen.dat";
+extern const char lbl_802EA8D0[] = "mspacman_b_tamb_l.dat";
+extern const char lbl_802EA8E8[] = "mspacman_b_tamb_r.dat";
+extern const char lbl_802EA900[] = "monster_b_handle.dat";
+extern const char lbl_802EA918[] = "monster_b_tamb_cen.dat";
+extern const char lbl_802EA930[] = "monster_b_tamb_l.dat";
+extern const char lbl_802EA948[] = "monster_b_tamb_r.dat";
+extern const char lbl_802EA960[] = "waluigi_b_handle.dat";
+extern const char lbl_802EA978[] = "waluigi_b_tamb_cen.dat";
+extern const char lbl_802EA990[] = "waluigi_b_tamb_l.dat";
+extern const char lbl_802EA9A8[] = "waluigi_b_tamb_r.dat";
+extern const char lbl_802EA9C0[] = "mametch_b_handle.dat";
+extern const char lbl_802EA9D8[] = "mametch_b_tamb_cen.dat";
+extern const char lbl_802EA9F0[] = "mametch_b_tamb_l.dat";
+extern const char lbl_802EAA08[] = "mametch_b_tamb_r.dat";
+extern const char lbl_802EAA20[] = "robo_mario_handle.dat";
+extern const char lbl_802EAA38[] = "robo_mario_item_handle.dat";
+extern const char lbl_802EAA54[] = "robo_mario_tamb_cen.dat";
+extern const char lbl_802EAA6C[] = "robo_mario_item_pa_tamb.dat";
+extern const char lbl_802EAA88[] = "robo_mario_item_goo_tamb.dat";
+extern const char lbl_802EAAA8[] = "robo_mario_tamb_l.dat";
+extern const char lbl_802EAAC0[] = "robo_mario_item_pa_tamb_l.dat";
+extern const char lbl_802EAAE0[] = "robo_mario_item_goo_tamb_l.dat";
+extern const char lbl_802EAB00[] = "robo_mario_tamb_r.dat";
+extern const char lbl_802EAB18[] = "robo_mario_item_pa_tamb_r.dat";
+extern const char lbl_802EAB38[] = "robo_mario_item_goo_tamb_r.dat";
+extern const char lbl_802EAB58[] = "robo_mario_item_attack.dat";
+extern const char lbl_802EAB74[] = "robo_mario_jump.dat";
+extern const char lbl_802EAB88[] = "robo_mario_item_jump.dat";
+extern const char lbl_802EABA4[] = "robo_mario_item_b_attack.dat";
+extern const char lbl_802EABC4[] = "robo_mario_turbo_lv1.dat";
+extern const char lbl_802EABE0[] = "robo_mario_item_turbo_lv1.dat";
+extern const char lbl_802EAC00[] = "robo_mario_hyouji_b.dat";
+extern const char lbl_802EAC18[] = "robo_mario_bone_a.dat";
+extern const char lbl_802EAC30[] = "robo_mario_bone_b.dat";
+extern const char lbl_802EAC48[] = "robo_mario_hyouji_w.dat";
+extern const char lbl_802EAC60[] = "chara_robo_mario_info_null_joint";
+extern const char lbl_802EAC84[] = "chara_robo_mario_r_hand_null_joint";
+extern const char lbl_802EACA8[] = "chara_robo_mario_hand_goo_joint";
+extern const char lbl_802EACC8[] = "chara_robo_mario_hand_pa_joint";
 /* anchor pool cut into its strings and numbers by value (text, floats, small integers),
  * not from code */
 typedef struct KartDriver_InitFull_rodata_802EACE8_Pool {
@@ -237,7 +237,7 @@ typedef struct KartDriver_InitFull_rodata_802EACE8_Pool {
     char s_098[32];
     char s_0B8[28];
 } KartDriver_InitFull_rodata_802EACE8_Pool;
-const KartDriver_InitFull_rodata_802EACE8_Pool KartDriver_InitFull_rodata_802EACE8 = {
+extern const KartDriver_InitFull_rodata_802EACE8_Pool KartDriver_InitFull_rodata_802EACE8 = {
     "chara_robo_mario_head_null_joint",
     "item_bazooka.dat",
     "item_bazooka_item_position_joint",
@@ -262,7 +262,7 @@ typedef struct lbl_802EADBC_Pool {
     char s_124[28];
     int i_140;
 } lbl_802EADBC_Pool;
-const lbl_802EADBC_Pool KartDriver_InitFull_rodata_802EADBC = {
+extern const lbl_802EADBC_Pool KartDriver_InitFull_rodata_802EADBC = {
     "!(jobj->flags & JOBJ_USE_QUATERNION)",
     "hchara_mametch_haed_happy_joint",
     "chara_mametch_haed_normal_joint",
