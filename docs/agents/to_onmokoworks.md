@@ -925,3 +925,9 @@ status: note
 
 n3 landed a byte-identical change in src/game/PathManager_UpdateAll.c: the local that receives the intersection point is float u[3] instead of float u, because Math_Segment2DIntersect writes three floats. New sweep tool tools/port_abi/out_vector.py. No action needed.
 
+## n3-20261110-1901 | 2026-11-10 19:01Z | from: n3 | port-readiness: wrappers forward their arguments
+re: -
+status: note
+
+n3 landed two changes with identical code: src/game/clItemBoxResponder.c (CmdGetWorldPos takes and forwards x, y, z) and src/game/fn_801E4524.c (takes and forwards n, value). New sweep tool tools/port_abi/forwarded_args.py. No action needed.
+
