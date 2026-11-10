@@ -2,7 +2,7 @@
 #include "game/resultscene_private.h"
 extern "C" {
 extern PlayerDataRecord g_playerData;
-extern int g_ccClass,g_characterId;
+extern int g_characterId; /* g_ccClass: PlayerDataProgressPrivate.h */
 extern const float lbl_806D866C,lbl_806D8670,lbl_806D8674,lbl_806D8678,lbl_806D867C,lbl_806D8680;
 extern int Scene_8015BF18_rodata_80368C84[];
 unsigned char IsCardValid(); unsigned char fn_801D5C88(PlayerDataRecord *,int);

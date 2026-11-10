@@ -38,7 +38,8 @@ void ItemWnd::Open() {
             spr[2]->SetAnimParam(0x1933, 0x1ECD);
             spr[2]->SetAnimParam(0x1934, 0x1ECD);
             int d[4];
-            *(struct Digits4 { int v[4]; } *)d = *(const struct Digits4 *)lbl_803C6BC4;
+            struct Digits4 { int v[4]; };
+            *(struct Digits4 *)d = *(const struct Digits4 *)lbl_803C6BC4;
             d[0] = coins % 10;
             d[1] = coins / 10 % 10;
             d[2] = coins / 100 % 10;

@@ -51,7 +51,8 @@ void ItemWnd::ShowItem() {
         TexMgr_SetTexture(&texts[4], fn_8023D938(itemId, 0));
         TexMgr_SetTexture(&texts[5], fn_8023D938(itemId, 1));
         TexMgr_SetTexture(&texts[6], fn_8023D938(itemId, 2));
-        *(struct Buf40 { char c[0x40]; } *)buf = *(const struct Buf40 *)lbl_803C6B84;
+        struct Buf40 { char c[0x40]; };
+        *(struct Buf40 *)buf = *(const struct Buf40 *)lbl_803C6B84;
         int kind = fn_8023D710(itemId);
         switch (kind) {
         case -1:

@@ -3923,7 +3923,7 @@ lbl_806D1210_p12 = 1;
 return 1;
 }
 lbl_806D1227_p12 = 0;
-lbl_806D121C_p12 = card_eject_p12(Sci2Card_Singleton_Get_p12());
+lbl_806D121C_p12 = card_eject_p12((int *)Sci2Card_Singleton_Get_p12());
 lbl_806CF0D4_p12 = 0;
 return 1;
 }
@@ -3937,7 +3937,7 @@ return 1;
 if (lbl_806D1210_p12 != 0) {
 return 1;
 }
-card_p12 = Sci2Card_Singleton_Get_p12();
+card_p12 = (int *)Sci2Card_Singleton_Get_p12();
 if (lbl_806D1227_p12 == 0) {
 if (lbl_806D121C_p12 == 0) {
 lbl_806D121C_p12 = CardEject_Begin_p12();
@@ -3998,7 +3998,7 @@ lbl_806D1210_p12 = 1;
 return 1;
 }
 lbl_806D1227_p12 = 0;
-lbl_806D121C_p12 = card_eject_p12(Sci2Card_Singleton_Get_p12());
+lbl_806D121C_p12 = card_eject_p12((int *)Sci2Card_Singleton_Get_p12());
 lbl_806CF0D4_p12 = 0;
 return 1;
 }
@@ -4371,8 +4371,8 @@ extern unsigned char lbl_805AC550_p21[];
 extern unsigned char lbl_805AC5E4_p21[];
 void Sci2Card_RegisterReceiptBuffersCleanup(void)
 {
-__register_global_object(&lbl_806D122C_p21, dtor_8002F978_p21, lbl_805AC550_p21);
-__register_global_object(&lbl_806D1244_p21, dtor_8002F978_p21, lbl_805AC5E4_p21);
+__register_global_object(&lbl_806D122C_p21, (void *)dtor_8002F978_p21, lbl_805AC550_p21);
+__register_global_object(&lbl_806D1244_p21, (void *)dtor_8002F978_p21, lbl_805AC5E4_p21);
 }
 __declspec(section ".ctors") static void (*const s_Sci2Card_RegisterReceiptBuffersCleanup_ctor_p21)(void) = Sci2Card_RegisterReceiptBuffersCleanup;
 #pragma use_lmw_stmw reset

@@ -88,7 +88,7 @@ void KartFx_Slot5C_TripleStreakTick(BoostEffect *effect) {
     int childIndex;
     BoostPayload *payload = &effect->payload;
     switch (effect->state) {
-    case 0:
+    case 0: {
         for (int i = 0; i < 3; ++i) {
             payload->children[i] = DrawEffect_SpawnDirect(fn_800AF4F8);
             if (payload->children[i])
@@ -101,6 +101,7 @@ void KartFx_Slot5C_TripleStreakTick(BoostEffect *effect) {
         payload->timer0 = 0;
         ++effect->state;
         break;
+    }
     case 1: break;
     }
     if (effect->destroy) {

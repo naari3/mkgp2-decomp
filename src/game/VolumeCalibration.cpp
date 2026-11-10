@@ -103,44 +103,47 @@ void clCab::Draw()
     }
 }
 
-/* Update stays asm: the C body below is instruction-identical except a
+#ifdef NON_MATCHING
+/* NON_MATCHING: equivalent C++, instruction-identical except a register
+ * permutation in the jvs-load head (see below). */
+int clCab::Update()
+{
+    InputPlayer *pad;
+    int accel = g_jvsOperatorBits.accel;
+    int brake = g_jvsOperatorBits.brake;
+    int s = g_jvsOperatorBits.steer;
+
+    steer = s;
+    if (steerMin > s) {
+        steerMin = s;
+    } else if (steerMax < s) {
+        steerMax = s;
+    }
+    if (accelMin > accel) {
+        accelMin = accel;
+    } else if (accelMax < accel) {
+        accelMax = accel;
+    }
+    if (brakeMin > brake) {
+        brakeMin = brake;
+    } else if (brakeMax < brake) {
+        brakeMax = brake;
+    }
+    pad = InputMgr_GetPlayer(GetInputManager(), 0);
+    if (pad->Pressed(0x401) == 1) {
+        return -4;
+    }
+    posData = StrPcb_GetReceivedPosData(StrPcb_GetInstance());
+    if (pad->Pressed(0x40) == 1) {
+        StrPcb_SetStatusBits(StrPcb_GetInstance(), 0xC, 0);
+    }
+    return -2;
+}
+#else
+/* Update stays asm: the C body above is instruction-identical except a
  * register permutation in the jvs-load head (target keeps `this` in r3 for
  * the first store/load and loads the channels into base=r5/accel=r4/
  * brake=r0; CW moves `this` to r30 at entry, so base=r3/brake=r5/temp=r0).
- *
- * int clCab::Update()
- * {
- *     InputPlayer *pad;
- *     int accel = g_jvsOperatorBits.accel;
- *     int brake = g_jvsOperatorBits.brake;
- *     int s = g_jvsOperatorBits.steer;
- *
- *     steer = s;
- *     if (steerMin > s) {
- *         steerMin = s;
- *     } else if (steerMax < s) {
- *         steerMax = s;
- *     }
- *     if (accelMin > accel) {
- *         accelMin = accel;
- *     } else if (accelMax < accel) {
- *         accelMax = accel;
- *     }
- *     if (brakeMin > brake) {
- *         brakeMin = brake;
- *     } else if (brakeMax < brake) {
- *         brakeMax = brake;
- *     }
- *     pad = InputMgr_GetPlayer(GetInputManager(), 0);
- *     if (pad->Pressed(0x401) == 1) {
- *         return -4;
- *     }
- *     posData = StrPcb_GetReceivedPosData(StrPcb_GetInstance());
- *     if (pad->Pressed(0x40) == 1) {
- *         StrPcb_SetStatusBits(StrPcb_GetInstance(), 0xC, 0);
- *     }
- *     return -2;
- * }
  */
 asm int clCab::Update()
 {
@@ -231,6 +234,7 @@ asm int clCab::Update()
     addi r1, r1, 0x10
     blr
 }
+#endif
 
 clCab::~clCab()
 {

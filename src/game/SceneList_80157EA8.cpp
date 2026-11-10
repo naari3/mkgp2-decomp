@@ -653,7 +653,11 @@ extern "C" void fn_801589BC(OptionMenu *self, int mode) {
  * registers are identical; only the evaluation order changes (the target
  * evaluates x/y/alpha before the id). The real prototype is probably
  * float-first. See docs/regalloc_patterns.md section 74. */
+#ifdef __MWERKS__ /* same registers as the declaration above, another argument order in the source */
 namespace alt { extern "C" void fn_801695E0(int, float, float, float, int, int); }
+#else
+namespace alt { static inline void fn_801695E0(int layer, float x, float y, float a, int id, int f) { ::fn_801695E0(layer, id, f, x, y, a); } }
+#endif
 static inline void DrawSpriteScaled(int layer, int id, float x, float y, float scale, float alpha)
 {
     fn_80169334(layer, id, 0, x, y, scale, scale, alpha);

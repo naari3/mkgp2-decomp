@@ -125,6 +125,12 @@ template <class T> struct ListImpl {
     template <class Pred> void remove_if(Pred pred);
 };
 
+/* Explicit specializations defined in clItemBoxManager_nm1.cpp. Standard C++
+ * wants them declared before the first use that would instantiate them. */
+template <> ListImpl<void *>::ListImpl();
+template <> ListIter<void *> ListImpl<void *>::insert(const ListIter<void *> &pos, void * const &v);
+template <> ListIter<void *> ListImpl<void *>::erase(const ListIter<void *> &first, const ListIter<void *> &last);
+
 template <class T> struct ListBase : ListImpl<T> {
     ~ListBase() {}
 };

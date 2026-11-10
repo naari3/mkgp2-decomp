@@ -3,7 +3,7 @@
 #pragma force_active on
 extern "C" const char clItemBox_Ctor_GroundSnap_rodata_802EDF20[184] = { 99, 108, 73, 116, 101, 109, 66, 111, 120, 58, 58, 115, 101, 116, 117, 112, 58, 58, 99, 108, 71, 114, 111, 117, 110, 100, 67, 111, 108, 108, 58, 58, 99, 104, 107, 80, 111, 105, 110, 116, 32, 110, 111, 32, 103, 114, 111, 117, 110, 100, 32, 115, 101, 97, 114, 99, 104, 10, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 46, 100, 97, 116, 0, 0, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 95, 104, 97, 104, 101, 110, 95, 110, 117, 108, 108, 49, 95, 106, 111, 105, 110, 116, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 95, 98, 95, 98, 111, 120, 95, 106, 111, 105, 110, 116, 0, 0, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 95, 97, 95, 98, 111, 120, 95, 106, 111, 105, 110, 116, 0, 0, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 95, 105, 116, 101, 109, 95, 98, 111, 120, 95, 110, 117, 108, 108, 95, 106, 111, 105, 110, 116, 0, 0, 0, 0 };
 #pragma force_active reset
-extern "C" /*
+/*
  * clItemBox: item box objects and the manager's assets, 0x8005EA94..0x8005F5CC.
  * The parts below were separate split TUs. The .data at 0x803F9C60 holds the
  * compiler's member-function-pointer constants (&clItemBox::PopOut, ...): two
@@ -204,9 +204,11 @@ struct GroundItemBox {
     GroundMotion motion;
     GroundItemBox(float x, float z);
 };
+#ifdef __MWERKS__ /* sizes of the original ABI (a pointer to member function is 12 bytes there) */
 typedef char GroundParticleSize[(sizeof(GroundParticle) == 0x2C) ? 1 : -1];
 typedef char GroundDebrisSize[(sizeof(GroundDebris) == 0x298) ? 1 : -1];
 typedef char GroundItemBoxSize[(sizeof(GroundItemBox) == 0x34) ? 1 : -1];
+#endif
 
 GroundItemBox::GroundItemBox(float x, float z)
     : height(lbl_806D29A8), debris(0), position(x, lbl_806D29A8, z),
@@ -301,7 +303,7 @@ clItemBox *clItemBox_Dtor(clItemBox *self, short flag)
     if (self != 0) {
         debris = self->debris;
         if (debris != 0) {
-            __destroy_arr(debris->items, clItemBoxResponder_DebrisParticle_Dtor, 0x2c, 0xf);
+            __destroy_arr(debris->items, (void *)clItemBoxResponder_DebrisParticle_Dtor, 0x2c, 0xf);
             MemoryManager_TimedFree(debris);
         }
         self->debris = 0;
@@ -365,7 +367,7 @@ typedef struct clItemBox {
 extern int clItemBox_data_806CEEA0;
 extern GXChannel *clItemBox_bss_806D10B0;
 extern GXChannel *clItemBox_bss_806D10B4;
-extern void *clItemBox_bss_806D10BC;
+
 extern const float lbl_806D29E0;
 extern const double lbl_806D29F0;
 extern const float lbl_806D2A04;

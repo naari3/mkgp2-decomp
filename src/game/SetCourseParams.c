@@ -2752,7 +2752,7 @@ extern void __register_global_object(void *object, void *dtor, void *regmem);
 
 void KartDriverArray_StaticCtor(void)
 {
-    __register_global_object(RaceContextArray_Init(SetCourseParams_bss_805AC6CC), RaceContextArray_Dtor, KartDriverArray_StaticCtor_bss_805AC6C0);
+    __register_global_object(RaceContextArray_Init(SetCourseParams_bss_805AC6CC), (void *)RaceContextArray_Dtor, KartDriverArray_StaticCtor_bss_805AC6C0);
 }
 
 __declspec(section ".ctors") static void (*const s_KartDriverArray_StaticCtor_ctor)(void) = KartDriverArray_StaticCtor;

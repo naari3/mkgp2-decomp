@@ -314,11 +314,11 @@ done:
 C_REGION_BEGIN
 
 /* Exact asm_fn bridges for the contiguous partial-matching range. */
-#include "src/game/TmpActionShake.c"
+#include "src/game/TmpActionShake.inc"
 C_REGION_END
-#include "src/game/TmpSplit.c"
+#include "src/game/TmpSplit.inc"
 C_REGION_BEGIN
-#include "src/game/TmpActionSplit.c"
+#include "src/game/TmpActionSplit.inc"
 
 C_REGION_END
 #pragma cplusplus on
@@ -497,7 +497,7 @@ done_vibrate_sub:
 #pragma cplusplus off
 C_REGION_BEGIN
 
-#include "src/game/TmpActionVibrate.c"
+#include "src/game/TmpActionVibrate.inc"
 
 C_REGION_END
 #pragma cplusplus on

@@ -63,6 +63,7 @@ int isJapanese(void);
 
 void CreditMgr_PollInsertAndPlay(unsigned char silent);
 int CreditMgr_GetCoinCount(unsigned char noClamp);
+int CreditMgr_GetCoinsPerCredit(int slot);
 
 #pragma exceptions on
 C_REGION_END

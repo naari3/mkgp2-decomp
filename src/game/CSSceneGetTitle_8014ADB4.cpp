@@ -778,7 +778,11 @@ struct RankBoard {
  * fn_80169334(obj, id, flag, x, y, sx, sy, a). Declaring the float
  * parameters first keeps the same argument registers but makes the compiler
  * evaluate the floats before `id`, as the target does (id is loaded last). */
+#ifdef __MWERKS__ /* same registers as the declaration above, another argument order in the source */
 namespace RankDraw { extern "C" void fn_80169334(float x, float y, float sx, float sy, float a, void *obj, int id, int flag); }
+#else
+namespace RankDraw { static inline void fn_80169334(float x, float y, float sx, float sy, float a, void *obj, int id, int flag) { ::fn_80169334(obj, id, flag, x, y, sx, sy, a); } }
+#endif
 #define SPR(obj, id, flag, x, y, sx, sy, a) RankDraw::fn_80169334(x, y, sx, sy, a, obj, id, flag)
 extern "C" void fn_8014ADB4(RankBoard *self)
 {

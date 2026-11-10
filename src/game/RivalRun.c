@@ -2045,9 +2045,9 @@ C_REGION_BEGIN
 extern void Alloc();
 extern void *CarObject_GetRenderObj(void *car);
 extern void CarObject_Init();
-extern void CarObject_SetPosition();
+extern void CarObject_SetPosition(void *car, void *pos);
 extern float GetCourseStartYaw(void);
-extern void GetStartPosition();
+extern void GetStartPosition(int idx, float *x, float *y, float *z);
 extern void ItemEffectBus_OrMask(void *bus, unsigned long long mask);
 extern void PathManager_RegisterCarObject();
 extern void RivalRun_PathFollowerInit();

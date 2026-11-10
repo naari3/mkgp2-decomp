@@ -5850,7 +5850,7 @@ void CarObject_MainUpdate(void *self_, void *arg) { /* 0x8004D404 size:0xAC8 */
         }
     }
     KartItem_PerFrameStep((PfsKartView *)self, arg);
-    KartItem_Tick((void *)self);
+    KartItem_Tick((KartItemTickView *)self);
     InputMgr_GetPlayer(GetInputManager(), 0);
     {
         CarObjectManager_RunKartKartCollisionSweep((struct CarObjectManager *)g_carObjectList);
