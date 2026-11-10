@@ -42,6 +42,26 @@ IFDEF_RE = re.compile(r"^[ \t]*#[ \t]*if(?:def[ \t]+NON_MATCHING\b|[ \t]+defined
 ASM_DEF_RE = re.compile(r"^[^\n;{}#]*\basm\b[^\n;{}]*?\b([A-Za-z_]\w*)\s*\([^;{}]*\)\s*\{", re.M)
 
 
+INC_RE = re.compile(r'^[ \t]*#[ \t]*include[ \t]+"([^"\n]+\.inc)"[^\n]*$', re.M)
+
+
+def read_expanded(path, depth=0):
+    """Source text with local `#include "x.inc"` fragments spliced in (some
+    units keep their functions in .inc files next to the .c)."""
+    try:
+        text = open(path, encoding="utf-8", errors="replace").read()
+    except OSError:
+        return ""
+    if depth > 4:
+        return text
+
+    def sub(m):
+        inc = os.path.join(os.path.dirname(path), m.group(1))
+        return read_expanded(inc, depth + 1) if os.path.isfile(inc) else m.group(0)
+
+    return INC_RE.sub(sub, text)
+
+
 def guarded_units():
     out = []
     for base, _, files in os.walk(os.path.join(ROOT, "src")):
@@ -49,10 +69,7 @@ def guarded_units():
             if not f.endswith((".c", ".cpp", ".cp")):
                 continue
             p = os.path.join(base, f)
-            try:
-                text = open(p, encoding="utf-8", errors="replace").read()
-            except OSError:
-                continue
+            text = read_expanded(p)
             if GUARD_RE.search(text):
                 out.append(os.path.relpath(p, ROOT))
     return sorted(out)
@@ -65,7 +82,7 @@ ASM_LINE_RE = re.compile(r"\s*(?:extern\s+\"C\"\s+)?(?:[\w\*]+\s+)*asm\s+[^;{}(]
 def guarded_functions(src):
     """Names of asm functions that are compiled only without NON_MATCHING:
     the #else arm of `#ifdef NON_MATCHING`, or the body of `#ifndef NON_MATCHING`."""
-    text = open(os.path.join(ROOT, src), encoding="utf-8", errors="replace").read()
+    text = read_expanded(os.path.join(ROOT, src))
     names = []
     depth = []  # True = this arm is the asm side
     for line in text.splitlines(True):

@@ -7,9 +7,21 @@
 /* refine if the real prototype matters for header consumers. */
 extern void SpriteHandle_RecomputeCull(int h);
 extern void SpriteHandle_SetActiveFlag(int h, unsigned char on);
+#ifdef NON_MATCHING
+extern void SpriteLayer_SetResource(int h, int res);
+#else
 extern void SpriteLayer_SetResource();
+#endif
+#ifdef NON_MATCHING
+extern void fn_8011F744(int h, float sx, float sy);
+#else
 extern void fn_8011F744();
+#endif
+#ifdef NON_MATCHING
+extern void fn_8011F804(int h, float x, float y);
+#else
 extern void fn_8011F804();
+#endif
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int FLOAT_806cf25c;
@@ -38,7 +50,11 @@ extern unsigned int lbl_805D3320[];
  */
 
 /* --- forward decls --- */
+#ifdef NON_MATCHING
+int Tachometer_RenderDigits(void);
+#else
 asm void Tachometer_RenderDigits(void);
+#endif
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -53,6 +69,77 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
+#ifdef NON_MATCHING
+/* NON_MATCHING: equivalent C (docs/wip/asm-a/tachometer_renderdigits_pooled_2fpr.patch
+ * is the pooled draft, two float registers off): places the three speed digits and
+ * the two frame sprites of the tachometer, then refreshes all five. */
+typedef struct TachGlyphPos {
+    int id;
+    float x;
+    float y;
+} TachGlyphPos;
+/* lbl_80411E20 (.data, 0x338): sprite resource ids per glyph and unit, glyph slot
+ * positions, and the digit -> glyph map. */
+typedef struct TachTables {
+    int res[38][2];
+    TachGlyphPos pos[40];
+    int glyph[10];
+} TachTables;
+#define TACH_TBL ((TachTables *)(void *)lbl_80411E20)
+#define TACH_UNIT (*(unsigned char *)&lbl_806D1459) /* 1 = raw, else scaled */
+
+static int Tach_GlyphRes(int glyph) {
+    if (glyph < 0 || glyph >= 38) {
+        return 0;
+    }
+    return TACH_TBL->res[glyph][TACH_UNIT];
+}
+
+static void Tach_PlaceDigit(int slot, int pos, int digit) {
+    float y;
+    float x;
+    x = TACH_F(FLOAT_806d1468) + TACH_TBL->pos[pos].x - TACH_F(FLOAT_806d1474);
+    y = TACH_F(FLOAT_806d146c) + TACH_TBL->pos[pos].y;
+    SpriteLayer_SetResource(lbl_805D3320[slot], Tach_GlyphRes(TACH_TBL->glyph[digit]));
+    fn_8011F804(lbl_805D3320[slot], x, y);
+    SpriteHandle_SetActiveFlag(lbl_805D3320[slot], 1);
+}
+
+int Tachometer_RenderDigits(void) {
+    int speed;
+    int i;
+
+    if (!g_tachometer_isInitialized) {
+        return 0;
+    }
+    if (g_gameMode != 2) {
+        float v;
+        if (TACH_UNIT == 1) {
+            v = TACH_F(g_tachometer_displaySpeed) * 0.5f;
+        } else {
+            float q = TACH_F(g_tachometer_displaySpeed) / 1.6f;
+            v = q * 0.5f;
+        }
+        speed = v;
+        Tach_PlaceDigit(2, 2, speed % 10);
+        Tach_PlaceDigit(3, 1, speed / 10 % 10);
+        Tach_PlaceDigit(4, 0, speed / 100 % 10);
+        fn_8011F804(lbl_805D3320[0], 612.0f + TACH_F(FLOAT_806d1468) - TACH_F(FLOAT_806d1474),
+                    443.0f + TACH_F(FLOAT_806d146c));
+        SpriteHandle_SetActiveFlag(lbl_805D3320[0], 1);
+        fn_8011F804(lbl_805D3320[1], 559.0f + TACH_F(FLOAT_806d1468) - TACH_F(FLOAT_806d1474),
+                    427.0f + TACH_F(FLOAT_806d146c));
+        SpriteHandle_SetActiveFlag(lbl_805D3320[1], 1);
+        for (i = 0; i < 5; i++) {
+            fn_8011F744(lbl_805D3320[i], TACH_F(FLOAT_806cf25c), TACH_F(FLOAT_806cf25c));
+            SpriteHandle_RecomputeCull(lbl_805D3320[i]);
+        }
+    }
+    return 1;
+}
+#undef TACH_TBL
+#undef TACH_UNIT
+#else
 asm void Tachometer_RenderDigits(void) { /* 0x800AB324 size:0x398 */
     nofralloc
     stwu r1, -0x40(r1)
@@ -301,4 +388,5 @@ asm void Tachometer_RenderDigits(void) { /* 0x800AB324 size:0x398 */
     addi r1, r1, 0x40
     blr
 }
+#endif
 
