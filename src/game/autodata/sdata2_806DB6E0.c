@@ -392,18 +392,16 @@ const lbl_806DBA20_Pool lbl_806DBA20 = {
 const lbl_806DBA28_Pool lbl_806DBA28 = {
     "\203o\203i\203i"
 };
-const unk32 lbl_806DBA30[2] = {
-    0x82BD82E9, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806DBA30[8] = "\202\275\202\351";
 const lbl_806DBA38_Pool lbl_806DBA38 = {
     "\203^\203\211\203C"
 };
 const lbl_806DBA40_Pool lbl_806DBA40 = {
     "\203n\201[\203g"
 };
-const unk32 lbl_806DBA48[2] = {
-    0x83708343, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806DBA48[8] = "\203p\203C";
 const lbl_806DBA50_Pool lbl_806DBA50 = {
     "\217\316\202\242\221\334"
 };
@@ -412,30 +410,24 @@ const char lbl_806DBA60[] = "FLASH";
 const lbl_806DBA68_Pool lbl_806DBA68 = {
     "\203L\203\211\201["
 };
-const unk32 lbl_806DBA70[2] = {
-    0x978B895F, 0x00000000
-};
-const unk32 lbl_806DBA78[2] = {
-    0x90E1895F, 0x00000000
-};
-const unk32 lbl_806DBA80[2] = {
-    0x894A895F, 0x00000000
-};
-const unk32 lbl_806DBA88[2] = {
-    0x836A834E, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806DBA70[8] = "\227\213\211_";
+/* Shift-JIS text */
+const char lbl_806DBA78[8] = "\220\341\211_";
+/* Shift-JIS text */
+const char lbl_806DBA80[8] = "\211J\211_";
+/* Shift-JIS text */
+const char lbl_806DBA88[8] = "\203j\203N";
 const lbl_806DBA90_Pool lbl_806DBA90 = {
     "\202\250\202\310\202\347"
 };
-const unk32 lbl_806DBA98[2] = {
-    0x8378838D, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806DBA98[8] = "\203x\203\215";
 const lbl_806DBAA0_Pool lbl_806DBAA0 = {
     "\203X\203p\203i"
 };
-const unk32 lbl_806DBAA8[2] = {
-    0x82A896CA, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806DBAA8[8] = "\202\250\226\312";
 const lbl_806DBAB0_Pool lbl_806DBAB0 = {
     "\203|\203\223\203v"
 };
@@ -471,18 +463,16 @@ const lbl_806DBB1C_Pool lbl_806DBB1C = {
 };
 const char lbl_806DBB24[] = "END";
 const unsigned int lbl_806DBB28 = 0x81400000;
-const unk32 lbl_806DBB2C[2] = {
-    0x82B78142, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806DBB2C[8] = "\202\267\201B";
 const lbl_806DBB34_Pool lbl_806DBB34 = {
     "\202\334\202\267\201B"
 };
 const lbl_806DBB3C_Pool lbl_806DBB3C = {
     "\203p\203C\202\360"
 };
-const unk32 lbl_806DBB44[2] = {
-    0x82C882B5, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806DBB44[8] = "\202\310\202\265";
 const char lbl_806DBB4C[] = "Hammer";
 const char lbl_806DBB54[] = "Cake";
 const char lbl_806DBB5C[] = "Garlic";

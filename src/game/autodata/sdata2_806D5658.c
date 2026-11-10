@@ -1992,30 +1992,25 @@ const char lbl_806D755C[] = "Round2";
 const char lbl_806D7564[] = "Round3";
 const char lbl_806D756C[] = "Round4";
 const char lbl_806D7574[] = "DK CUP";
-const unk32 lbl_806D757C[2] = {
-    0x8B749196, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D757C[8] = "\213t\221\226";
 const char lbl_806D7584[] = "REVERSE";
-const unk32 lbl_806D758C[2] = {
-    0x8F8788CA, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D758C[8] = "\217\207\210\312";
 const char lbl_806D7594[] = "Ranking";
 const char lbl_806D759C[] = "%2d/50";
-const unk32 lbl_806D75A4[2] = {
-    0x96BC914F, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D75A4[8] = "\226\274\221O";
 const char lbl_806D75AC[] = "Name";
-const unk32 lbl_806D75B4[2] = {
-    0x8FCC8D86, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D75B4[8] = "\217\314\215\206";
 const char lbl_806D75BC[] = "Rank";
 const char lbl_806D75C4[] = "Driver";
 const float lbl_806D75CC[2] = {
     49.825718f, -0.00028951466f
 };
-const unk32 lbl_806D75D4[2] = {
-    0x82CD82A2, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D75D4[8] = "\202\315\202\242";
 const char lbl_806D75DC[] = "YES";
 const lbl_806D75E0_Pool lbl_806D75E0 = {
     "\202\242\202\242\202\246"
@@ -2026,12 +2021,10 @@ const unk32 lbl_806D75F0[2] = {
     0x257382CC, 0x00000000
 };
 const char lbl_806D75F8[] = " ";
-const unk32 lbl_806D75FC[2] = {
-    0x82A082C6, 0x00000000
-};
-const unk32 lbl_806D7604[2] = {
-    0x8D878C76, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D75FC[8] = "\202\240\202\306";
+/* Shift-JIS text */
+const char lbl_806D7604[8] = "\215\207\214v";
 const char lbl_806D760C[] = "Total";
 const char lbl_806D7614[] = "%dgames";
 const unk32 lbl_806D761C[2] = {

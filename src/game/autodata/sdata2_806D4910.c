@@ -229,9 +229,8 @@ const lbl_806D49D4_Pool lbl_806D49D4 = {
     "\226\\\202\352\224n"
 };
 const char lbl_806D49DC[] = "Mustang";
-const unk32 lbl_806D49E4[2] = {
-    0x8D95955E, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D49E4[8] = "\215\225\225^";
 const char lbl_806D49EC[] = "Panther";
 const lbl_806D49F4_Pool lbl_806D49F4 = {
     "\217\237\225\211\216t"
@@ -258,9 +257,8 @@ const char lbl_806D4A3C[] = "MK Lord";
 const char lbl_806D4A44[4] = {
     0, 0, 0, 0
 };
-const unk32 lbl_806D4A48[2] = {
-    0x96B39473, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4A48[8] = "\226\263\224s";
 const lbl_806D4A50_Pool lbl_806D4A50 = {
     "\214\263\226\263\224s"
 };
@@ -277,68 +275,51 @@ const char lbl_806D4AA0[] = "50 Wins";
 const char lbl_806D4AA8[] = "Genius";
 const char lbl_806D4AB0[] = "Reputed";
 const char lbl_806D4AB8[] = "Fearful";
-const unk32 lbl_806D4AC0[2] = {
-    0x93AC8DB0, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4AC0[8] = "\223\254\215\260";
 const char lbl_806D4AC8[] = "Blazing";
-const unk32 lbl_806D4AD0[2] = {
-    0x91AC82AB, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4AD0[8] = "\221\254\202\253";
 const char lbl_806D4AD8[] = "Speedy";
-const unk32 lbl_806D4AE0[2] = {
-    0x92658ADB, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4AE0[8] = "\222e\212\333";
 const char lbl_806D4AE8[] = "Bullet";
-const unk32 lbl_806D4AF0[2] = {
-    0x96D297F3, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4AF0[8] = "\226\322\227\363";
 const char lbl_806D4AF8[] = "Fierce";
-const unk32 lbl_806D4B00[2] = {
-    0x91538A4A, 0x00000000
-};
-const unk32 lbl_806D4B08[2] = {
-    0x949A9196, 0x00000000
-};
-const unk32 lbl_806D4B10[2] = {
-    0x8D8291AC, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4B00[8] = "\221S\212J";
+/* Shift-JIS text */
+const char lbl_806D4B08[8] = "\224\232\221\226";
+/* Shift-JIS text */
+const char lbl_806D4B10[8] = "\215\202\221\254";
 const char lbl_806D4B18[] = "Speed";
-const unk32 lbl_806D4B20[2] = {
-    0x89F591AC, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4B20[8] = "\211\365\221\254";
 const char lbl_806D4B28[] = "Swift";
-const unk32 lbl_806D4B30[2] = {
-    0x8F7891AC, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4B30[8] = "\217x\221\254";
 const char lbl_806D4B38[] = "Fleet";
-const unk32 lbl_806D4B40[2] = {
-    0x89B991AC, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4B40[8] = "\211\271\221\254";
 const char lbl_806D4B48[] = "Sonic";
-const unk32 lbl_806D4B50[2] = {
-    0x8CF591AC, 0x00000000
-};
-const unk32 lbl_806D4B58[2] = {
-    0x8C8391AC, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4B50[8] = "\214\365\221\254";
+/* Shift-JIS text */
+const char lbl_806D4B58[8] = "\214\203\221\254";
 const char lbl_806D4B60[] = "Rapid";
-const unk32 lbl_806D4B68[2] = {
-    0x92B491AC, 0x00000000
-};
-const unk32 lbl_806D4B70[2] = {
-    0x8BC191AC, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4B68[8] = "\222\264\221\254";
+/* Shift-JIS text */
+const char lbl_806D4B70[8] = "\213\301\221\254";
 const char lbl_806D4B78[] = "Arrow";
-const unk32 lbl_806D4B80[2] = {
-    0x89F691AC, 0x00000000
-};
-const unk32 lbl_806D4B88[2] = {
-    0x8B5391AC, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4B80[8] = "\211\366\221\254";
+/* Shift-JIS text */
+const char lbl_806D4B88[8] = "\213S\221\254";
 const char lbl_806D4B90[] = "Zippy";
-const unk32 lbl_806D4B98[2] = {
-    0x8B868BC9, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4B98[8] = "\213\206\213\311";
 const char lbl_806D4BA0[] = "Massive";
 const lbl_806D4BA8_Pool lbl_806D4BA8 = {
     "\202u\202h\202o"
@@ -374,15 +355,13 @@ const lbl_806D4C24_Pool lbl_806D4C24 = {
 const char lbl_806D4C2C[] = "Dynamic";
 const char lbl_806D4C34[] = "Sniper";
 const char lbl_806D4C3C[] = "Kind";
-const unk32 lbl_806D4C44[2] = {
-    0x91EE947A, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4C44[8] = "\221\356\224z";
 const char lbl_806D4C4C[] = "Passing";
 const char lbl_806D4C54[] = "Top";
 const char lbl_806D4C58[] = "Perfect";
-const unk32 lbl_806D4C60[2] = {
-    0x895C82CC, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4C60[8] = "\211\\\202\314";
 const char lbl_806D4C68[] = "Rumored";
 const char lbl_806D4C70[] = "Close";
 const char lbl_806D4C78[] = "Dancing";
@@ -396,9 +375,8 @@ const lbl_806D4C98_Pool lbl_806D4C98 = {
 };
 const char lbl_806D4CA0[] = "Warring";
 const char lbl_806D4CA8[] = "Magical";
-const unk32 lbl_806D4CB0[2] = {
-    0x8BC988AB, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4CB0[8] = "\213\311\210\253";
 const char lbl_806D4CB8[] = "Evil";
 const char lbl_806D4CC0[] = "Crisis";
 const lbl_806D4CC8_Pool lbl_806D4CC8 = {
@@ -435,9 +413,8 @@ const lbl_806D4D78_Pool lbl_806D4D78 = {
     "\220\341\223\271\202\314"
 };
 const char lbl_806D4D80[] = "Snow";
-const unk32 lbl_806D4D88[2] = {
-    0x93BB82CC, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4D88[8] = "\223\273\202\314";
 const char lbl_806D4D90[] = "Peak";
 const lbl_806D4D98_Pool lbl_806D4D98 = {
     "\226\300\213{\202\314"

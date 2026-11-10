@@ -261,9 +261,8 @@ const char lbl_806D2E84[] = "BLUE";
 const char lbl_806D2E8C[] = "100 YEN";
 const char lbl_806D2E94[] = "1 COIN";
 const float lbl_806D2E9C = 137.0f;
-const unk32 lbl_806D2EA0[2] = {
-    0x8263826A, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D2EA0[8] = "\202c\202j";
 const lbl_806D2EA8_Pool lbl_806D2EA8 = {
     "\202o\202\201\202\203"
 };

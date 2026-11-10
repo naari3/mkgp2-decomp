@@ -73,12 +73,10 @@ const char lbl_806DBE08[] = " ";
 /* text only: a string pool (strings back to back, the code points into it) */
 const char lbl_806DBE0C[8] =
     "%d00\211~";
-const unk32 lbl_806DBE14[2] = {
-    0x8DEC82E9, 0x00000000
-};
-const unk32 lbl_806DBE1C[2] = {
-    0x82B782E9, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806DBE14[8] = "\215\354\202\351";
+/* Shift-JIS text */
+const char lbl_806DBE1C[8] = "\202\267\202\351";
 const lbl_806DBE24_Pool lbl_806DBE24 = {
     "\202\265\202\310\202\242"
 };
@@ -206,12 +204,10 @@ const char lbl_806DBFE0[] = " ";
 /* text only: a string pool (strings back to back, the code points into it) */
 const char lbl_806DBFE4[8] =
     "%d00\211~";
-const unk32 lbl_806DBFEC[2] = {
-    0x8DEC82E9, 0x00000000
-};
-const unk32 lbl_806DBFF4[2] = {
-    0x82B782E9, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806DBFEC[8] = "\215\354\202\351";
+/* Shift-JIS text */
+const char lbl_806DBFF4[8] = "\202\267\202\351";
 const lbl_806DBFFC_Pool lbl_806DBFFC = {
     "\202\265\202\310\202\242"
 };
@@ -270,9 +266,8 @@ const lbl_806DC0B8_Pool lbl_806DC0B8 = {
 const lbl_806DC0C0_Pool lbl_806DC0C0 = {
     "\203N\203b\203p"
 };
-const unk32 lbl_806DC0C8[2] = {
-    0x8263826A, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806DC0C8[8] = "\202c\202j";
 const lbl_806DC0D0_Pool lbl_806DC0D0 = {
     "\202o\202`\202b"
 };

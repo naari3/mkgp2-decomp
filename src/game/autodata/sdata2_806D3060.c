@@ -2004,13 +2004,11 @@ const unsigned int lbl_806D4704 = 0x83490000;
 const unsigned int lbl_806D4708 = 0x83520000;
 const unsigned int lbl_806D470C = 0x837C0000;
 const unsigned int lbl_806D4710 = 0x837D0000;
-const unk32 lbl_806D4714[2] = {
-    0x82728267, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4714[8] = "\202r\202g";
 const unsigned int lbl_806D471C = 0x82730000;
-const unk32 lbl_806D4720[2] = {
-    0x82938288, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D4720[8] = "\202\223\202\210";
 const unsigned int lbl_806D4728 = 0x82940000;
 const unsigned int lbl_806D472C = 0x81960000;
 const unsigned int lbl_806D4730 = 0x817E0000;
@@ -2018,9 +2016,8 @@ const unsigned int lbl_806D4734 = 0x819E0000;
 const unsigned int lbl_806D4738 = 0x824F0000;
 const unsigned int lbl_806D473C = 0x826E0000;
 /* decl: NameCode */
-const unk16 lbl_806D4740[4] = {
-    0x8196, 0x8197, 0x817E, 0x0000
-};
+/* Shift-JIS text */
+const char lbl_806D4740[8] = "\201\226\201\227\201~";
 const char lbl_806D4748[] = "clGame";
 const char lbl_806D4750[] = "%s\n";
 const char lbl_806D4754[4] = {

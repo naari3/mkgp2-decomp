@@ -2113,12 +2113,10 @@ const char lbl_806D9988[] = " ";
 /* text only: a string pool (strings back to back, the code points into it) */
 const char lbl_806D998C[8] =
     "%d00\211~";
-const unk32 lbl_806D9994[2] = {
-    0x8DEC82E9, 0x00000000
-};
-const unk32 lbl_806D999C[2] = {
-    0x82B782E9, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D9994[8] = "\215\354\202\351";
+/* Shift-JIS text */
+const char lbl_806D999C[8] = "\202\267\202\351";
 const lbl_806D99A4_Pool lbl_806D99A4 = {
     "\202\265\202\310\202\242"
 };
@@ -2135,9 +2133,8 @@ const lbl_806D99C4_Pool lbl_806D99C4 = {
 const lbl_806D99CC_Pool lbl_806D99CC = {
     "\203N\203b\203p"
 };
-const unk32 lbl_806D99D4[2] = {
-    0x8263826A, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806D99D4[8] = "\202c\202j";
 const lbl_806D99DC_Pool lbl_806D99DC = {
     "\202o\202`\202b"
 };

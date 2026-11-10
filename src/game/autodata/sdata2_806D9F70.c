@@ -139,9 +139,8 @@ const lbl_806DA098_Pool lbl_806DA098 = {
 const lbl_806DA0A0_Pool lbl_806DA0A0 = {
     "\202\255\202\301\202\317"
 };
-const unk32 lbl_806DA0A8[2] = {
-    0x8284828B, 0x00000000
-};
+/* Shift-JIS text */
+const char lbl_806DA0A8[8] = "\202\204\202\213";
 const lbl_806DA0B0_Pool lbl_806DA0B0 = {
     "\202\220\202\201\202\203"
 };
