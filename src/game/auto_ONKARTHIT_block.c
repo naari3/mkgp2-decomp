@@ -2638,19 +2638,6 @@ void KartItem_PlaySE_0x09(KartItemHitSEView *self) { /* 0x8004B118 size:0x28 */
 }
 #pragma exceptions reset
 
-static inline float KartItem_sqrtf(float x) {
-    volatile float y;
-    if (x > lbl_806D26EC) {
-        double guess = __frsqrte(x);
-        guess = lbl_806D2720 * guess * (lbl_806D2728 - x * (guess * guess));
-        guess = lbl_806D2720 * guess * (lbl_806D2728 - x * (guess * guess));
-        guess = lbl_806D2720 * guess * (lbl_806D2728 - x * (guess * guess));
-        y = (float)(x * guess);
-        x = y;
-    }
-    return x;
-}
-
 /* The lane pointer has to be a later temp than the inlined result flag (lane r5,
  * flag r6): it comes from a getter inside a wrapper inline. Passing
  * self->secondary directly swaps the two registers (regalloc_patterns 56). */
@@ -2759,352 +2746,118 @@ int KartItem_TryCancelIfDropAllowed(KartItemDropView *self) { /* 0x8004B430 size
 }
 #pragma exceptions reset
 
-asm void KartItem_ApplyImpactImpulseAndRumble(KartItemOpsView *self, int mode, float x, float y, float z) { /* 0x8004B49C size:0x520 */
-    nofralloc
-    stwu r1, -0xa0(r1)
-    mflr r0
-    stw r0, 0xa4(r1)
-    stfd f31, 0x90(r1)
-    psq_st f31, 0x98(r1), 0, 0
-    stfd f30, 0x80(r1)
-    psq_st f30, 0x88(r1), 0, 0
-    stw r31, 0x7c(r1)
-    stw r30, 0x78(r1)
-    mr r31, r3
-    lfs f0, lbl_806D26EC(r2)
-    lwz r3, 0x28(r3)
-    mr r30, r4
-    lfs f9, 0x68(r3)
-    lfs f8, 0x6c(r3)
-    stfs f9, 0x48(r1)
-    lfs f9, 0x88(r3)
-    stfs f8, 0x4c(r1)
-    lfs f8, 0x8c(r3)
-    frsp f5, f9
-    lfs f7, 0x70(r3)
-    frsp f4, f8
-    lfs f13, 0x58(r3)
-    fsubs f6, f1, f5
-    stfs f7, 0x50(r1)
-    lfs f7, 0x90(r3)
-    fsubs f5, f2, f4
-    frsp f4, f7
-    lfs f12, 0x5c(r3)
-    fmuls f2, f6, f6
-    lfs f11, 0x60(r3)
-    fmuls f1, f5, f5
-    fsubs f3, f3, f4
-    lfs f10, 0x64(r3)
-    lfs f4, 0x74(r3)
-    fadds f1, f2, f1
-    fmuls f2, f3, f3
-    stfs f13, 0x38(r1)
-    lfs f13, 0x78(r3)
-    stfs f12, 0x3c(r1)
-    fadds f31, f2, f1
-    lfs f12, 0x7c(r3)
-    stfs f11, 0x40(r1)
-    lfs f11, 0x80(r3)
-    stfs f10, 0x44(r1)
-    fcmpo cr0, f31, f0
-    lfs f10, 0x84(r3)
-    stfs f4, 0x54(r1)
-    lfs f4, 0x94(r3)
-    stfs f13, 0x58(r1)
-    stfs f12, 0x5c(r1)
-    stfs f11, 0x60(r1)
-    stfs f10, 0x64(r1)
-    stfs f9, 0x68(r1)
-    stfs f8, 0x6c(r1)
-    stfs f7, 0x70(r1)
-    stfs f4, 0x74(r1)
-    stfs f6, 0x2c(r1)
-    stfs f5, 0x30(r1)
-    stfs f3, 0x34(r1)
-    ble KartItem_ApplyImpactImpulseAndRumble_L_8004B5DC
-    frsqrte f1, f31
-    lfd f3, lbl_806D2720(r2)
-    lfd f2, lbl_806D2728(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f31, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f31, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f31, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f31, f0
-    frsp f0, f0
-    stfs f0, 0x10(r1)
-    lfs f31, 0x10(r1)
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B5DC:
-    lwz r3, 0x44(r31)
-    bl EffectState_HasContent
-    clrlwi. r0, r3, 24
-    bne KartItem_ApplyImpactImpulseAndRumble_L_8004B644
-    lfs f1, 0x30(r1)
-    lfs f0, 0x3c(r1)
-    lbz r0, 0x20(r31)
-    fmuls f0, f1, f0
-    lfs f2, 0x2c(r1)
-    lfs f1, 0x38(r1)
-    cmplwi r0, 0x1
-    lfs f3, 0x34(r1)
-    fmadds f0, f2, f1, f0
-    lfs f1, 0x40(r1)
-    fmadds f1, f3, f1, f0
-    bne KartItem_ApplyImpactImpulseAndRumble_L_8004B644
-    lfs f0, lbl_806D26EC(r2)
-    fcmpo cr0, f1, f0
-    ble KartItem_ApplyImpactImpulseAndRumble_L_8004B630
-    lfs f30, lbl_806D2734(r2)
-    b KartItem_ApplyImpactImpulseAndRumble_L_8004B634
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B630:
-    lfs f30, lbl_806D2738(r2)
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B634:
-    bl StrPcb_GetInstance
-    fmr f1, f30
-    li r4, 0xc
-    bl StrPcb_SetTimer3c40
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B644:
-    lfs f0, lbl_806D26FC(r2)
-    lis r0, 0x1000
-    lwz r3, 0x2c(r31)
-    li r5, 0x0
-    fdivs f0, f0, f31
-    lfs f2, 0x2c(r1)
-    lwz r4, 0x304(r3)
-    lfs f1, 0x30(r1)
-    lwz r3, 0x10(r4)
-    lwz r4, 0x14(r4)
-    fneg f3, f0
-    lfs f0, 0x34(r1)
-    and r0, r4, r0
-    and r4, r3, r5
-    xor r3, r0, r5
-    fmuls f2, f2, f3
-    fmuls f1, f1, f3
-    xor r0, r4, r5
-    fmuls f0, f0, f3
-    or. r0, r3, r0
-    stfs f2, 0x2c(r1)
-    stfs f1, 0x30(r1)
-    stfs f0, 0x34(r1)
-    beq KartItem_ApplyImpactImpulseAndRumble_L_8004B6AC
-    clrlwi. r0, r30, 24
-    bne KartItem_ApplyImpactImpulseAndRumble_L_8004B7D4
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B6AC:
-    lfs f0, lbl_806D273C(r2)
-    lwz r3, 0x28(r31)
-    fmuls f5, f0, f31
-    lfs f1, 0x2c(r1)
-    lfs f0, 0x30(r1)
-    lfs f2, 0x34(r1)
-    fmuls f4, f1, f5
-    lfs f1, 0x1ac(r3)
-    fmuls f3, f0, f5
-    lfs f0, lbl_806D26EC(r2)
-    fmuls f2, f2, f5
-    fadds f1, f1, f4
-    stfs f4, 0x2c(r1)
-    stfs f1, 0x1ac(r3)
-    lfs f1, 0x1b0(r3)
-    stfs f3, 0x30(r1)
-    fadds f1, f1, f3
-    stfs f2, 0x34(r1)
-    stfs f1, 0x1b0(r3)
-    lfs f1, 0x1b4(r3)
-    fadds f1, f1, f2
-    stfs f1, 0x1b4(r3)
-    lfs f2, 0x1ac(r3)
-    lfs f1, 0x1b0(r3)
-    fmuls f2, f2, f2
-    lfs f3, 0x1b4(r3)
-    fmuls f1, f1, f1
-    fmuls f3, f3, f3
-    fadds f1, f2, f1
-    fadds f4, f3, f1
-    fcmpo cr0, f4, f0
-    ble KartItem_ApplyImpactImpulseAndRumble_L_8004B778
-    frsqrte f1, f4
-    lfd f3, lbl_806D2720(r2)
-    lfd f2, lbl_806D2728(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f4, f0
-    frsp f0, f0
-    stfs f0, 0xc(r1)
-    lfs f4, 0xc(r1)
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B778:
-    lfs f0, 0x1b8(r3)
-    fcmpo cr0, f4, f0
-    ble KartItem_ApplyImpactImpulseAndRumble_L_8004B7AC
-    fdivs f1, f0, f4
-    lfs f0, 0x1ac(r3)
-    fmuls f0, f0, f1
-    stfs f0, 0x1ac(r3)
-    lfs f0, 0x1b0(r3)
-    fmuls f0, f0, f1
-    stfs f0, 0x1b0(r3)
-    lfs f0, 0x1b4(r3)
-    fmuls f0, f0, f1
-    stfs f0, 0x1b4(r3)
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B7AC:
-    lfs f1, lbl_806D2740(r2)
-    lfs f0, lbl_806D26EC(r2)
-    fsubs f1, f1, f31
-    fmr f31, f1
-    fcmpo cr0, f1, f0
-    bge KartItem_ApplyImpactImpulseAndRumble_L_8004B7C8
-    lfs f31, lbl_806D26FC(r2)
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B7C8:
-    lfs f0, lbl_806D273C(r2)
-    fmuls f31, f31, f0
-    b KartItem_ApplyImpactImpulseAndRumble_L_8004B818
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B7D4:
-    xor r0, r4, r5
-    or. r0, r3, r0
-    bne KartItem_ApplyImpactImpulseAndRumble_L_8004B7E4
-    b KartItem_ApplyImpactImpulseAndRumble_L_8004B7E8
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B7E4:
-    li r5, 0x1
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B7E8:
-    clrlwi r0, r5, 24
-    cmplwi r0, 0x1
-    bne KartItem_ApplyImpactImpulseAndRumble_L_8004B818
-    lfs f1, lbl_806D2740(r2)
-    lfs f0, lbl_806D26EC(r2)
-    fsubs f1, f1, f31
-    fmr f31, f1
-    fcmpo cr0, f1, f0
-    bge KartItem_ApplyImpactImpulseAndRumble_L_8004B810
-    lfs f31, lbl_806D26FC(r2)
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B810:
-    lfs f0, lbl_806D273C(r2)
-    fmuls f31, f31, f0
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B818:
-    lfs f5, 0x58(r1)
-    lfs f3, 0x5c(r1)
-    lfs f1, 0x2c(r1)
-    lfs f0, 0x30(r1)
-    lfs f4, 0x60(r1)
-    fmuls f1, f5, f1
-    fmuls f0, f3, f0
-    lfs f2, 0x34(r1)
-    lfs f13, 0x2c(r1)
-    fmuls f2, f4, f2
-    lfs f11, 0x30(r1)
-    fadds f0, f1, f0
-    fmuls f12, f13, f31
-    lwz r3, 0x28(r31)
-    fmuls f10, f11, f31
-    fadds f0, f2, f0
-    lfs f9, 0x34(r1)
-    lfs f2, lbl_806D2744(r2)
-    stfs f12, 0x310(r3)
-    fmuls f8, f9, f31
-    fneg f1, f0
-    stfs f10, 0x314(r3)
-    lfs f0, lbl_806D26EC(r2)
-    fmuls f2, f2, f1
-    stfs f8, 0x318(r3)
-    lwz r3, 0x28(r31)
-    fmuls f7, f5, f2
-    stfs f5, 0x14(r1)
-    lfs f1, 0x1ac(r3)
-    fmuls f6, f3, f2
-    fmuls f2, f4, f2
-    stfs f3, 0x18(r1)
-    fadds f3, f13, f7
-    stfs f4, 0x1c(r1)
-    fadds f5, f11, f6
-    fadds f4, f9, f2
-    stfs f12, 0x20(r1)
-    fadds f1, f1, f3
-    stfs f10, 0x24(r1)
-    stfs f1, 0x1ac(r3)
-    lfs f1, 0x1b0(r3)
-    stfs f8, 0x28(r1)
-    fadds f1, f1, f5
-    stfs f7, 0x14(r1)
-    stfs f1, 0x1b0(r3)
-    lfs f1, 0x1b4(r3)
-    stfs f6, 0x18(r1)
-    fadds f1, f1, f4
-    stfs f2, 0x1c(r1)
-    stfs f1, 0x1b4(r3)
-    lfs f2, 0x1ac(r3)
-    lfs f1, 0x1b0(r3)
-    lfs f6, 0x1b4(r3)
-    fmuls f2, f2, f2
-    fmuls f1, f1, f1
-    stfs f3, 0x2c(r1)
-    fmuls f3, f6, f6
-    stfs f5, 0x30(r1)
-    fadds f1, f2, f1
-    stfs f4, 0x34(r1)
-    fadds f4, f3, f1
-    fcmpo cr0, f4, f0
-    ble KartItem_ApplyImpactImpulseAndRumble_L_8004B960
-    frsqrte f1, f4
-    lfd f3, lbl_806D2720(r2)
-    lfd f2, lbl_806D2728(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f4, f0
-    frsp f0, f0
-    stfs f0, 0x8(r1)
-    lfs f4, 0x8(r1)
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B960:
-    lfs f0, 0x1b8(r3)
-    fcmpo cr0, f4, f0
-    ble KartItem_ApplyImpactImpulseAndRumble_L_8004B994
-    fdivs f1, f0, f4
-    lfs f0, 0x1ac(r3)
-    fmuls f0, f0, f1
-    stfs f0, 0x1ac(r3)
-    lfs f0, 0x1b0(r3)
-    fmuls f0, f0, f1
-    stfs f0, 0x1b0(r3)
-    lfs f0, 0x1b4(r3)
-    fmuls f0, f0, f1
-    stfs f0, 0x1b4(r3)
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B994:
-    psq_l f31, 0x98(r1), 0, 0
-    lfd f31, 0x90(r1)
-    psq_l f30, 0x88(r1), 0, 0
-    lfd f30, 0x80(r1)
-    lwz r31, 0x7c(r1)
-    lwz r0, 0xa4(r1)
-    lwz r30, 0x78(r1)
-    mtlr r0
-    addi r1, r1, 0xa0
-    blr
+/* 0.5 / 3.0 are literals on purpose: with the extern doubles the sum is coloured before
+ * the two constants (f2 instead of f4), regalloc_patterns 83. */
+static inline float KartItem_sqrtf(float x) {
+    volatile float y;
+    if (x > 0.0f) {
+        double guess = __frsqrte(x);
+        guess = 0.5 * guess * (3.0 - x * (guess * guess));
+        guess = 0.5 * guess * (3.0 - x * (guess * guess));
+        guess = 0.5 * guess * (3.0 - x * (guess * guess));
+        y = (float)(x * guess);
+        x = y;
+    }
+    return x;
 }
+static inline void KartItem_AddImpactClamped(KartMovementSpeedView *mv, const float *v) {
+    float len;
+    mv->impact1ac += v[0];
+    mv->impact1b0 += v[1];
+    mv->impact1b4 += v[2];
+    len = KartItem_sqrtf(mv->impact1ac * mv->impact1ac + mv->impact1b0 * mv->impact1b0 + mv->impact1b4 * mv->impact1b4);
+    if (len > mv->impactCap1b8) {
+        float k = mv->impactCap1b8 / len;
+        mv->impact1ac *= k;
+        mv->impact1b0 *= k;
+        mv->impact1b4 *= k;
+    }
+}
+
+#pragma exceptions off
+static inline void KI_sub3(float *o, float x, float y, float z, const float *q) { o[0] = x - q[12]; o[1] = y - q[13]; o[2] = z - q[14]; }
+static inline float KI_len3(const float *p) { return KartItem_sqrtf(p[2] * p[2] + (p[0] * p[0] + p[1] * p[1])); }
+void KartItem_ApplyImpactImpulseAndRumble(KartItemOpsView *self, int mode, float x, float y, float z) { /* 0x8004B49C size:0x520 */
+    float mtx[16];
+    float d[3];
+    float r[3];
+    float w[3];
+    float len;
+    float *t = self->movement->transform;
+    int i;
+    for (i = 0; i < 16; i++) mtx[i] = t[i];
+    {
+        float *q = mtx;
+        float *pd = d;
+        KI_sub3(pd, x, y, z, q); len = KI_len3(pd);
+    }
+    if (!EffectState_HasContent(self->effectState44)) {
+        float dot = d[0] * mtx[0] + d[1] * mtx[1] + d[2] * mtx[2];
+        if (self->strPcbGate20 == 1) {
+            float tm;
+            if (dot > lbl_806D26EC) {
+                tm = lbl_806D2734;
+            } else {
+                tm = lbl_806D2738;
+            }
+            StrPcb_SetTimer3c40(StrPcb_GetInstance(), tm, 0xc);
+        }
+    }
+    {
+        float inv = -(lbl_806D26FC / len);
+        d[0] *= inv;
+        d[1] *= inv;
+        d[2] *= inv;
+    }
+    if (!(self->ownerDriver->itemBus->flags & 0x10000000ULL) || !(unsigned char)mode) {
+        float s = lbl_806D273C * len;
+        d[0] *= s;
+        d[1] *= s;
+        d[2] *= s;
+        KartItem_AddImpactClamped(self->movement, d);
+        len = lbl_806D2740 - len;
+        if (len < lbl_806D26EC) len = 1.0f;
+        len *= lbl_806D273C;
+    } else if (ItemBus_TestFlags((ItemBusFlagsView *)self->ownerDriver->itemBus, 0x10000000ULL) == 1) {
+        len = lbl_806D2740 - len;
+        if (len < lbl_806D26EC) len = 1.0f;
+        len *= lbl_806D273C;
+    }
+    {
+        float proj;
+        float k;
+        float *pr = r;
+        float *pw = w;
+        pr[0] = d[0] * len;
+        pr[1] = d[1] * len;
+        pr[2] = d[2] * len;
+        { float *rp = &self->movement->rumbleX310; rp[0] = pr[0]; rp[1] = pr[1]; rp[2] = pr[2]; }
+        pw[0] = mtx[8];
+        pw[1] = mtx[9];
+        pw[2] = mtx[10];
+        {
+            /* fakematch (hand): natural code reads `d` here. The target loads d a second
+             * time for this dot product (separate from the loads used for r and d += w),
+             * which MWCC only does when the access goes through another object. */
+            float *pd = &mtx[-3];
+            float *q = &mtx[8];
+            float t0 = q[0] * pd[0];
+            float t1 = q[1] * pd[1];
+            float sum = t0 + t1;
+            float t2 = q[2] * pd[2];
+            proj = -(t2 + sum);
+        }
+        k = lbl_806D2744 * proj;
+        pw[0] *= k;
+        pw[1] *= k;
+        pw[2] *= k;
+        d[0] += pw[0];
+        d[1] += pw[1];
+        d[2] += pw[2];
+        KartItem_AddImpactClamped(self->movement, d);
+    }
+}
+#pragma exceptions reset
 
 #pragma exceptions off
 void KartItem_RenderPipelinedWithEffects(KartItemRenderView *self) { /* 0x8004B9BC size:0xF0 */

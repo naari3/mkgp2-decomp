@@ -1,7 +1,8 @@
 /*
- * NonMatching draft for 0x80039780..0x80039A34 (direct objdiff 93.25433%).
+ * NonMatching draft for 0x80039780..0x80039A34 (direct objdiff 93.36994%).
  * Player button accesses are volatile, including the edge helper reads.
  * Reusing operatorBits for the raw input avoids an extra register copy.
+ * The final three players share an unrolled edge-update loop.
  * All polling loops match; snapshot scheduling and edge-block registers
  * still differ. The emitted function and target are both 692 bytes.
  */
@@ -90,12 +91,13 @@ int JvsInput_PollAndUpdate(void)
         g_jvsOperatorBits[CURRENT] = operatorBits;
         g_jvsPlayerButtons[RELEASED] = ReleasedButtons(g_jvsPlayerButtons);
         g_jvsOperatorBits[RELEASED] = previous & ~operatorBits;
-        g_jvsPlayerButtons[PLAYER_STRIDE + PRESSED] = PressedButtons(&g_jvsPlayerButtons[PLAYER_STRIDE]);
-        g_jvsPlayerButtons[PLAYER_STRIDE + RELEASED] = ReleasedButtons(&g_jvsPlayerButtons[PLAYER_STRIDE]);
-        g_jvsPlayerButtons[2 * PLAYER_STRIDE + PRESSED] = PressedButtons(&g_jvsPlayerButtons[2 * PLAYER_STRIDE]);
-        g_jvsPlayerButtons[2 * PLAYER_STRIDE + RELEASED] = ReleasedButtons(&g_jvsPlayerButtons[2 * PLAYER_STRIDE]);
-        g_jvsPlayerButtons[3 * PLAYER_STRIDE + PRESSED] = PressedButtons(&g_jvsPlayerButtons[3 * PLAYER_STRIDE]);
-        g_jvsPlayerButtons[3 * PLAYER_STRIDE + RELEASED] = ReleasedButtons(&g_jvsPlayerButtons[3 * PLAYER_STRIDE]);
+        {
+            int player;
+            for (player = 1; player < 4; ++player) {
+                g_jvsPlayerButtons[player * PLAYER_STRIDE + PRESSED] = PressedButtons(&g_jvsPlayerButtons[player * PLAYER_STRIDE]);
+                g_jvsPlayerButtons[player * PLAYER_STRIDE + RELEASED] = ReleasedButtons(&g_jvsPlayerButtons[player * PLAYER_STRIDE]);
+            }
+        }
     }
     fn_80293580();
     return 1;

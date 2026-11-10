@@ -2240,3 +2240,112 @@ lines). The integer tail needed the id/flag pair copied as ONE struct
 assignment (`*(Pair *)&self->activeId = *(const Pair *)&tbl[idx].valC;`)
 instead of two int locals: the struct copy's temps are backend temps, coloured
 before the owner chain (target valC r3, valD r0, chain r4/r5).
+
+## 84. Add tree of a three-term index is wrong whatever grouping you pick: enumerate all 12 groupings, the frontend rotates them (CalcEarnedCoins, 99.81 -> 100, 11-10)
+
+Symptom: only the two `add`s (and the order of the two `slwi`s) of an index
+`a*4 + b*2 + c` differ. Target `r0 = a*4 + b*2; r4 = c + r0`, ours
+`r0 = b*2 + c; r4 = a*4 + r0`. Writing the grouping the target shows
+(`c + (a*4 + b*2)`) does NOT give it: MWCC's frontend re-associates the sum
+before codegen, so the emitted tree is a rotation of the source tree.
+
+What produced the target here:
+
+```c
+static inline int CourseClearIndex(int course, int reverse, int isLong) {
+    return isLong + course * 4 + reverse * 2;   /* (isLong + course*4) + reverse*2 */
+}
+```
+
+Measured table (diff lines; 0 = match), terms a=`course*4`, b=`reverse*2`, c=`isLong`:
+
+| source | lines |
+| --- | --- |
+| `(c + a) + b`, `(a + c) + b` | 0 |
+| `c + (a + b)`, `(a + b) + c` | 4 |
+| `a + (b + c)`, `a + (c + b)` | 5 |
+| every form starting with `b` or ending in `+ a` | 9-10 |
+
+Rule of thumb: the term that the target adds LAST (here `c`) must sit in the
+inner sum together with the first-shifted term in the source, and the term
+with the smaller shift goes outside. Do not reason about it; a 12-form sweep
+takes one minute (script shape: replace the return expression, `ninja` the
+object, count diff lines).
+
+## 85. `add rT, rBase, rT` vs `add rT, rT, rIdx`, a u8 parameter coloured first, and an aligned buffer that must be coloured before the address (fn_8028C1B8, 98.37 -> 100, 11-10)
+
+Three independent levers in one function (triforce/amnet_nm3.c), each found
+with `tools/mwtrace.py --only COLOR,PCODE`:
+
+1. **u8 parameter wants r31, a `u32 ch = channel;` local gets the last saved
+   register.** The named local has a low vreg number and is pushed first.
+   Use the `u8` parameter directly where the integer promotion happens
+   (`channel << 16`, `channel == 0xFF`): the `clrlwi` result is then a backend
+   temp numbered above the .bss anchor and is coloured first. Uses that would
+   re-extend the raw parameter after a call (u8 inline parameters, later
+   compares) get an explicit `(u32)channel`, otherwise the raw parameter stays
+   live and takes one more saved register.
+2. **A loop-invariant expression passed to an inline is numbered last.**
+   `DevWaitIdle(addr, ALIGN32(raw))` hoists the align out of the inline's
+   loop into a late IRO temp (lowest number, coloured after `addr`). Wrapping
+   it in a one-line inline (`AlignPacket(raw)`) in the argument creates the
+   temp at expansion time, before the callee's parameter temps; it is then
+   coloured before `addr` and shares the register of the later `pkt`.
+   Calling a nested search inline directly (`FindDev(ChannelDeviceId(ch))`
+   written as two statements instead of through a wrapper inline) moves its
+   walker one expansion level up in the same way.
+3. **`&table[n & 7]` always computes the base into the destination**
+   (`addi rT,anchor,0; add rT,rT,rIdx`), whatever the C form (`t += i`,
+   `&t[i]`, `(u8 *)t + i * size`). The target had the scaled index in the
+   destination and the base in a scratch (`add r8, r3, r8`). Only the integer
+   accumulate form gives that: `u32 i = (n & 7) * sizeof(T); i += (u32)table;
+   t = (T *)i;` (fakematch). The same change fixed three trace-buffer copies in
+   fn_8028C644.
+
+## 86. Scratch registers of a small search inline: declaration order sets the frontend temps, and the masked index must be a real variable (fn_8028C644, 99.88 -> 100, 11-10)
+
+`HandlerFor` (table walk `while ((fns = d->fns) != NULL)`, then
+`fns[idx]`): target `fns` r3, `d` r4, `cmd` r5, `idx` r4; ours `cmd` r3,
+`idx` r3, `fns` r5. `tools/regfix.py diag` named both edits:
+
+- inline locals are coloured in reverse declaration order (last declared
+  first), so `u16 cmd; const NetDispatch* d; const NetHandler* fns;` gives
+  `fns` r3;
+- with `s32 idx = (u8)cmd;` in the inner block the variable disappears and
+  the `clrlwi` is a backend temp, coloured before every frontend temp (it took
+  r3). Declared first at inline scope and written `idx = cmd & 0xFF;` it stays
+  a variable with the lowest number, is coloured last and reuses `d`'s r4.
+
+## 87. A local vector loaded twice in one block: MWCC only keeps two load sets when one access goes through another object (KartItem_ApplyImpactImpulseAndRumble, asm -> C, 92.4 -> 100, 11-10)
+
+Target: the dot product `row . d` loads `d` (f1, f0, f2, multiplied in place),
+and `r = d * len` / `d += w` load `d` again (f13, f11, f9), with no store in
+between. In C every spelling of `d[i]` is merged into one load set (351
+instead of 354 instructions): pointer locals, struct casts, integer casts,
+putting w/r/d/mtx in one struct, named scalar copies, a different statement
+order, stores through an unknown pointer (locals are never killed by those).
+What keeps the loads apart:
+
+- `volatile float *pd = d;` gives the count but the wrong registers and
+  schedule (products not in place), a dead end;
+- an access through a neighbouring object: `float *pd = &mtx[-3];` (d sits
+  right below mtx on the stack). The instruction selection is then the natural
+  one and only the statement order was left: r, rumble store, row copy into w,
+  dot (row through `q = &mtx[8]`), k, `w *= k`, `d += w`.
+
+Marked fakematch; the original is probably a C++ Vec3/matrix-row expression we
+cannot spell in this C TU. Other levers of the same function:
+
+- `x - q[12]` etc. through a value-parameter inline
+  (`KI_sub3(out, x, y, z, q)`) followed by a pointer length inline: the
+  differences are coloured before the 16 unrolled matrix copy temps (250 ->
+  164 lines). Written in the body they come last (f11-f13).
+- sqrt inline with LITERAL `0.5` / `3.0` instead of the extern doubles: sum
+  f4, constants f3/f2 as in the target (§83 lever 1 for doubles, 164 -> 76).
+- `bne; b` after the 64-bit flag test = the shared `ItemBus_TestFlags(...) == 1`
+  inline (result variable with if/else), not an open-coded test.
+- three stores to `self->movement->...` with one pointer load: take
+  `float *rp = &self->movement->rumbleX310;` first.
+
+Sign: instruction count 3 short in a vector block and the target has two
+`lfs` runs from the same stack slots.

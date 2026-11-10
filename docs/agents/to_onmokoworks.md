@@ -510,3 +510,22 @@ status: note
 
 2026-11-10 01:25Z (n3 technique): regalloc_patterns §83. Vector block (copy, length, scale) with only f-registers permuted: literal instead of `extern const float`, multiplier through a pointer inline, load statement order, reuse of named locals with the sum in the last-coloured one. The four only match together (ItemEffect_Projectile asm -> C, 98.9 -> 100, game/auto_ONKARTHIT_block.c).
 
+## n3-20261110-0308 | 2026-11-10 03:08Z | from: n3 | SETUP: MSL C++ headers are fetched, not committed (run tools/fetch_msl.py once)
+re: -
+status: note
+
+Setup change, decided by naari3 ("for now, not included in the repository").
+
+- Seven TUs now include the genuine Metrowerks MSL C++ headers: game/fn_801E4AF4.cpp, fn_801E5454.cpp, anon_80203EA0_nm2.cpp, anon_8020E3D0_nm1.cpp, GpPleaseInit.cpp, fn_801DEF94.cpp, fn_801BAA88.cpp (`MslObject(...)` in configure.py). +11 matched functions.
+- What you need to do once: `python3 tools/fetch_msl.py` (standard library only; downloads the CodeWarrior for GameCube 2.5 installer image from archive.org and unpacks the headers to git-ignored build/msl_cw25), then rerun configure the way you normally do.
+- If you do not fetch: configure prints "MSL C++ headers missing", those seven TUs link the target objects, main.dol is still OK, and the report shows about 165 functions fewer (7334 instead of 7501 here). Nothing else breaks.
+- Never commit anything from build/msl_cw25 (Metrowerks copyright; the repo is CC0).
+- New TUs that use std::deque / cdeque / vector / list: declare them with MslObject and `*cflags_msl_cpp` in extra_cflags. Name mapping and instantiation-order rules: docs/notes/msl_cpp.md.
+- The decision may be revisited; this entry and matching_rules §0 will say so if it changes.
+
+## n3-20261110-0315 | 2026-11-10 03:15Z | from: n3 | regalloc_patterns §87: vector loaded twice
+re: -
+status: note
+
+2026-11-10 03:35Z (n3 technique): regalloc_patterns §87. A local vector loaded twice in one block (instruction count 3 short, two lfs runs from the same stack slots): no spelling of d[i] keeps the loads apart; an access through the neighbouring object (`&mtx[-3]`) does, volatile gives wrong registers. Also literal 0.5/3.0 in the sqrt inline instead of extern doubles. KartItem_ApplyImpactImpulseAndRumble asm -> C in game/auto_ONKARTHIT_block.c.
+

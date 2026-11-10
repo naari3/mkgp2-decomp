@@ -58,3 +58,13 @@ c23_u120: isolate only paired ids/sorted sentinel initialization as static inlin
 Source: Codex worker c23_u166_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1072 B.
 
 c23_u166: fn801A0004 94.678085->95.92466. TU-private Dot2(ax,ay,bx,by) plus Add(translation,product) in Compose restores source584B/146insns, target frameA0/savef29-f31, extab/index100. BOTH helper boundaries needed: Add-only94.16438/568B, Dot-only92.45206/568B (previous c21 dot-only failure does not cover this combination). Caller-owned scratch array is invariant94.678085; two-row identity initialization51.027397/684B rejected. Final remaining80 aligned rows are exclusively FPR identities; all146 opcodes/order, GPRs, stack accesses, branches and relocation operands match. Baseline68 aligned rows included missing saves/frame mismatch; new score reflects structural/EH improvement, not monotonic per-row register improvement. One-function TU remains NM; no A/B/pool/singleton rescue. Coordinator full build exit0/fallbackDOL SHA1ea30f3b1 exact; native gain0. All attempts in build/w.
+
+## c25_u74_20261110
+Source: Codex worker c25_u74_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 2388 B.
+
+c25_u74: nested double-return SpriteAnim_Magnitude(float)->__fabs(scale), called from ScaleTranslate, improves fn_8019F5BC97.666664->97.73684 (1140B,EH/index100), removing all four first-sine/fabs FPR differences. ?24 nested-inline-level explains temporary creation after ScaleTranslate parameters. Full collection helper95.6807 (index91.66667) and distinct sampling layerIndex97.47369 rejected. Final40 aligned rows all GPR identities/prologue copies. No A/B/pool/singleton rescue; native gain0. No full build requested (flags/ranges unchanged).
+
+## c25_u103_20261110
+Source: Codex worker c25_u103_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c25_u103: named caller float x, assigned after identity initialization immediately before translation transform fill, improves fn_801A0004 95.92466->96.9863 (584B,extab/index100). Same early load before identity regresses91.58904 through scheduling. Final146 opcodes/order and all non-FPR operands exact;62 FPR-only rows versus80 initially. Compose wrapper invariant; Dot2 pointer-out82.863014/index91.66667 rejected. No A/B rescue or native gain.

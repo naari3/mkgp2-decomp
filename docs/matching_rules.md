@@ -24,6 +24,20 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 03:35Z (n3 technique): regalloc_patterns §87: a local vector
+  loaded twice in one block (instruction count 3 short). No spelling of `d[i]`
+  keeps the loads apart; an access through the neighbouring object
+  (`&mtx[-3]`) does, volatile gives wrong registers. Plus literal doubles in
+  the sqrt inline (KartItem_ApplyImpactImpulseAndRumble asm -> C).
+- 2026-11-10 03:15Z (n3 structure, SETUP CHANGE, naari3's decision "for now"):
+  seven TUs now compile against the genuine Metrowerks MSL C++ headers
+  (`MslObject(...)` in configure.py, +11 functions). The headers stay out of
+  the repo: run `python3 tools/fetch_msl.py` once (standard library only,
+  downloads to git-ignored `build/msl_cw25`), then rerun configure. Without
+  them configure prints a notice, those TUs link the target objects, main.dol
+  is still OK and the report shows about 165 functions fewer. Never commit
+  anything from `build/msl_cw25`. CI and `tools/cloud_setup.sh` fetch them.
+  Details: `docs/notes/msl_cpp.md`; board n3-20261110-0308.
 - 2026-11-10 01:25Z (n3 technique): regalloc_patterns §83: vector block
   (copy, length, scale) with only f-registers permuted. Literal instead of
   `extern const float`, multiplier through a pointer inline, load statement

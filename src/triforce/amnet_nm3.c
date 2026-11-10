@@ -20,9 +20,14 @@ void (*lbl_804F5800[5])(void) = {NULL, fn_8028F430, fn_8028F3D8, fn_8028F31C, fn
 void (*lbl_804F5814[5])(void) = {NULL, fn_8028F404, fn_8028F348, fn_8028F298, NULL};
 
 static inline void TracePacket(u8 op, u8 dir, void* buf, u32 addr, u32 size) {
-    NetTrace* t = lbl_806937C0;
+    NetTrace* t;
     u32 n = lbl_806D1E44++;
-    t += n & 7;
+    /* fakematch (hand): natural code is `t = &lbl_806937C0[n & 7];`. The integer
+     * accumulate form computes the scaled index into t's register and the table
+     * address into a scratch (`add r8, r3, r8` instead of `add r8, r8, r3`). */
+    u32 i = (n & 7) * sizeof(NetTrace);
+    i += (u32)lbl_806937C0;
+    t = (NetTrace*)i;
     t->seq = n;
     t->op = op;
     t->dir = dir;
@@ -69,8 +74,10 @@ static inline NetDev* ChannelDevice(u32 ch, u8* devId) {
     return FindDev(*devId);
 }
 
+static inline NetPacket* AlignPacket(u8* raw) {
+    return ALIGN32(raw);
+}
 s32 fn_8028C1B8(u8 channel) {
-    u32 ch = channel;
     u8 devId;
     NetDev* dev;
     u32 addr;
@@ -78,15 +85,14 @@ s32 fn_8028C1B8(u8 channel) {
     u8 raw[0x40];
     OSSemaphore* sem;
 
-    LOG((ch << 16) | 0x20000000 | (u16)lbl_80699140.txCount);
-    if (ch == 0xFF) {
+    LOG((channel << 16) | 0x20000000 | (u16)lbl_80699140.txCount);
+    if (channel == 0xFF) {
         return 3;
     }
-    dev = ChannelDevice(ch, &devId);
-    addr = dev->statAddr;
-    pkt = ALIGN32(raw);
-    DevWaitIdle(addr, pkt);
-    pkt = TxPacket(ch);
+    devId = ChannelDeviceId(channel);
+    dev = FindDev(devId);
+    DevWaitIdle(dev->statAddr, AlignPacket(raw));
+    pkt = TxPacket((u32)channel);
     if ((lbl_806937C0[0].flags & 2) && devId == 0xA9) {
         TracePacket('T', 'R', pkt, dev->statAddr, 0x20);
     }
@@ -102,9 +108,9 @@ s32 fn_8028C1B8(u8 channel) {
     if (pkt->flags & 0x80) {
         sem = &lbl_80699140.sem;
         OSSignalSemaphore(sem);
-        if (ch <= 0x3F) {
+        if ((u32)channel <= 0x3F) {
             OSWaitSemaphore(sem);
-            FreeChan(ChannelFor(ch));
+            FreeChan(ChannelFor(channel));
             OSSignalSemaphore(sem);
         }
         OSWaitSemaphore(sem);
@@ -138,14 +144,15 @@ static inline u8 OpenChan(NetPacket* pkt, u8 dev) {
 }
 
 static inline NetHandler HandlerFor(NetPacket* pkt) {
-    const NetHandler* fns;
-    const NetDispatch* d;
+    s32 idx;
     u16 cmd;
+    const NetDispatch* d;
+    const NetHandler* fns;
     cmd = BSWAP16(pkt->flags);
     d = lbl_803F2868;
     while ((fns = d->fns) != NULL) {
         if ((cmd & 0x7F00) == d->key) {
-            s32 idx = (u8)cmd;
+            idx = cmd & 0xFF;
             if (idx < d->count) return fns[idx];
             break;
         }

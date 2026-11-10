@@ -1158,6 +1158,9 @@
     "__vt__11Obj8018FEAC": "lbl_80495F04"
   },
   "src/game/resultscene/resultscene.cpp": {
+    "Destroy__12ResultSceneXFv": "fn_8015CB24",
+    "Update__12ResultSceneXFv": "fn_8015BF18",
+    "Draw__12ResultSceneXFv": "fn_8015BED4",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__vt__9SceneBase": "lbl_803FE0C8",
@@ -2860,7 +2863,29 @@
     "@1050": "jumptable_8049A948",
     "@1260": "jumptable_8049A9B0",
     "@3153": "lbl_8039A498",
-    "@3184": "lbl_8039A50C"
+    "@3184": "lbl_8039A50C",
+    "__dt__Q23std56__vector_deleter<8KeyGroup,Q23std20allocator<8KeyGroup>>Fv": "dtor_801C1B78",
+    "clear__Q23std56__vector_deleter<8KeyGroup,Q23std20allocator<8KeyGroup>>Fv": "fn_801C1BD8",
+    "at__Q23std54__vector_imp<8KeyGroup,Q23std20allocator<8KeyGroup>,0>FUl": "fn_801C1AA8",
+    "init__Q23std54__vector_imp<8KeyGroup,Q23std20allocator<8KeyGroup>,0>FUlRC8KeyGroup": "fn_801C1964",
+    "__dt__Q23std46vector<8KeyGroup,Q23std20allocator<8KeyGroup>>Fv": "dtor_801C1CE8",
+    "__dt__Q23std12length_errorFv": "ClStrPcb_Dtor",
+    "__dt__Q23std12out_of_rangeFv": "fn_801460D0",
+    "__dt__Q23std11logic_errorFv": "ClStrPcb_Mid_Dtor",
+    "__dt__Q23std9exceptionFv": "dtor_80038DD4",
+    "what__Q23std11logic_errorCFv": "fn_80038E28",
+    "what__Q23std9exceptionCFv": "fn_80038E1C",
+    "__dt__Q23std34_RefCountedPtr<c,Q23std9_Array<c>>Fv": "dtor_80038E30",
+    "__ct__Q23std34_RefCountedPtr<c,Q23std9_Array<c>>FPc": "SharedPtr_Init",
+    "__vt__Q23std9exception": "lbl_803F5710",
+    "__vt__Q23std11logic_error": "lbl_803F5700",
+    "__vt__Q23std12length_error": "lbl_803F56F0",
+    "__vt__Q23std12out_of_range": "lbl_8048EF68",
+    "__nwa__FUl": "FUN_8003b120",
+    "__dla__FPv": "MemoryManager_Free",
+    "__dt__Q23std46vector<P7FadeObj,Q23std20allocator<P7FadeObj>>Fv": "dtor_80145F9C",
+    "at__Q23std38__vector_pod<Ul,Q23std13allocator<Ul>>FUl": "fn_80146000",
+    "insert__Q23std38__vector_pod<Ul,Q23std13allocator<Ul>>FPUlUlRCUl": "PtrVec_InsertFill"
   },
   "src/game/fn_801DEF94.cpp": {
     "__ct__8SteerMgrFP7KartRefPv": "SteeringMgr_Init",
@@ -2890,7 +2915,6 @@
     "__vt__9SteerBase": "lbl_804E4A08",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
-    "__dt__13QueueBlockMapFv": "dtor_801E3200",
     "__vt__Q23std9exception": "lbl_803F5710",
     "__vt__Q23std11logic_error": "lbl_803F5700",
     "__vt__Q23std12length_error": "lbl_803F56F0",
@@ -3073,7 +3097,39 @@
     "@2656": "@etb_800161C4",
     "@2657": "@eti_8002876C",
     "@2662": "@etb_800161F8",
-    "@2663": "@eti_80028778"
+    "@2663": "@eti_80028778",
+    "__dt__Q23std47deque<9DriveStep,Q23std21allocator<9DriveStep>>Fv": "dtor_801E2BD0",
+    "tear_down__Q23std47deque<9DriveStep,Q23std21allocator<9DriveStep>>Fv": "fn_801E2C40",
+    "clear__Q23std47deque<9DriveStep,Q23std21allocator<9DriveStep>>Fv": "fn_801E2DF0",
+    "pop_front__Q23std47deque<9DriveStep,Q23std21allocator<9DriveStep>>Fv": "fn_801E2F28",
+    "push_front__Q23std47deque<9DriveStep,Q23std21allocator<9DriveStep>>FRC9DriveStep": "fn_801E2FD4",
+    "__dt__Q210Metrowerks50cdeque<P9DriveStep,Q23std22allocator<P9DriveStep>>Fv": "dtor_801E3200",
+    "__ct__Q23std47deque<9DriveStep,Q23std21allocator<9DriveStep>>FUl": "fn_801E3260",
+    "grow_buf_front__Q23std47deque<9DriveStep,Q23std21allocator<9DriveStep>>FUlRQ210Metrowerks50cdeque<P9DriveStep,Q23std22allocator<P9DriveStep>>RUlUl": "fn_801E32C8",
+    "make_iterator__Q23std47deque<9DriveStep,Q23std21allocator<9DriveStep>>FUl": "fn_801E35FC",
+    "destroy__Q23std47deque<9DriveStep,Q23std21allocator<9DriveStep>>FQ33std47deque<9DriveStep,Q23std21allocator<9DriveStep>>8iteratorQ33std47deque<9DriveStep,Q23std21allocator<9DriveStep>>8iterator": "fn_801E36A8",
+    "init__Q23std47deque<9DriveStep,Q23std21allocator<9DriveStep>>FUlRC9DriveStep": "fn_801E3848",
+    "init_buf__Q23std47deque<9DriveStep,Q23std21allocator<9DriveStep>>Fv": "fn_801E3A4C",
+    "__vc__Q210Metrowerks34cdeque<PCv,Q23std14allocator<PCv>>FUl": "fn_801E40C0",
+    "pop_front__Q210Metrowerks34cdeque<PCv,Q23std14allocator<PCv>>Fv": "fn_801E40E8",
+    "reserve__Q210Metrowerks34cdeque<PCv,Q23std14allocator<PCv>>FUl": "fn_801E411C",
+    "resize__Q210Metrowerks34cdeque<PCv,Q23std14allocator<PCv>>FUlPCv": "fn_801E435C",
+    "reserve__Q210Metrowerks50cdeque<P9DriveStep,Q23std22allocator<P9DriveStep>>FUl": "fn_801E4504",
+    "resize__Q210Metrowerks50cdeque<P9DriveStep,Q23std22allocator<P9DriveStep>>FUlP9DriveStep": "fn_801E4524",
+    "do_assign<Q23std137__convert_iterator<Q23std108__implicit_convert<PP9DriveStep,Q310Metrowerks50cdeque<P9DriveStep,Q23std22allocator<P9DriveStep>>8iterator>>>__Q210Metrowerks34cdeque<PCv,Q23std14allocator<PCv>>FQ23std137__convert_iterator<Q23std108__implicit_convert<PP9DriveStep,Q310Metrowerks50cdeque<P9DriveStep,Q23std22allocator<P9DriveStep>>8iterator>>Q23std137__convert_iterator<Q23std108__implicit_convert<PP9DriveStep,Q310Metrowerks50cdeque<P9DriveStep,Q23std22allocator<P9DriveStep>>8iterator>>Q23std20forward_iterator_tag": "fn_801E4544",
+    "erase__Q210Metrowerks34cdeque<PCv,Q23std14allocator<PCv>>FQ310Metrowerks34cdeque<PCv,Q23std14allocator<PCv>>8iteratorQ310Metrowerks34cdeque<PCv,Q23std14allocator<PCv>>8iterator": "fn_801E4824",
+    "insert__Q210Metrowerks34cdeque<PCv,Q23std14allocator<PCv>>FQ310Metrowerks34cdeque<PCv,Q23std14allocator<PCv>>8iteratorUlRCPCv": "fn_801E4AF4",
+    "push_back__Q210Metrowerks34cdeque<PCv,Q23std14allocator<PCv>>FRCPCv": "fn_801E5454",
+    "push_front__Q210Metrowerks34cdeque<PCv,Q23std14allocator<PCv>>FRCPCv": "fn_801E5724",
+    "max_size__Q210Metrowerks34cdeque<PCv,Q23std14allocator<PCv>>CFv": "fn_801E5A00",
+    "__nwa__FUl": "FUN_8003b120",
+    "__dla__FPv": "MemoryManager_Free",
+    "__dt__Q23std11logic_errorFv": "ClStrPcb_Mid_Dtor",
+    "what__Q23std11logic_errorCFv": "fn_80038E28",
+    "what__Q23std9exceptionCFv": "fn_80038E1C",
+    "__dt__Q23std34_RefCountedPtr<c,Q23std9_Array<c>>Fv": "dtor_80038E30",
+    "__ct__Q23std34_RefCountedPtr<c,Q23std9_Array<c>>FPc": "SharedPtr_Init",
+    "default_bufsize_s__Q23std47deque<9DriveStep,Q23std21allocator<9DriveStep>>": "lbl_806DA360"
   },
   "src/game/fn_801FB634.cpp": {
     "__ct__9FlowSceneFi": "fn_801FD41C",
@@ -3260,20 +3316,9 @@
     "__dt__7ResCtrlFv": "dtor_80082960"
   },
   "src/game/KartPreview.c": {
-    "extab_fn_8013C4A4": "@etb_8000D400",
-    "extabindex_fn_8013C4A4": "@eti_80024DC4",
-    "extab_fn_8013C534": "@etb_8000D408",
-    "extabindex_fn_8013C534": "@eti_80024DD0",
-    "extab_fn_8013C5FC": "@etb_8000D410",
-    "extabindex_fn_8013C5FC": "@eti_80024DDC",
-    "extab_fn_8013C674": "@etb_8000D418",
-    "extabindex_fn_8013C674": "@eti_80024DE8",
-    "extab_fn_8013C6EC": "@etb_8000D420",
-    "extabindex_fn_8013C6EC": "@eti_80024DF4",
-    "extab_fn_8013C7BC": "@etb_8000D428",
-    "extabindex_fn_8013C7BC": "@eti_80024E00",
-    "extab_fn_8013CC24": "@etb_8000D450",
-    "extabindex_fn_8013CC24": "@eti_80024E3C"
+    "__ct__6KPCtorFiUc": "fn_8013CC24",
+    "__ct__10KPNormal3DFPCvUc": "clNormal3D_Construct",
+    "__dt__6KPBaseFv": "dtor_8013DCBC"
   },
   "src/game/PreviewModel.c": {
     "__dt__12PreviewModelFv": "fn_8013D778",
@@ -9735,7 +9780,9 @@
     "Update__13SceneListImplFv": "fn_80204324",
     "Draw__13SceneListImplFv": "fn_80204218",
     "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
-    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80"
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
+    "Draw__12SceneListStdFv": "fn_80204218",
+    "erase__Q23std42__list_deleter<PCv,Q23std14allocator<PCv>>FQ33std42__list_deleter<PCv,Q23std14allocator<PCv>>19generic_iterator<0>": "fn_8012215C"
   },
   "src/game/anon_80203EA0_m2.cpp": {
     "__RTTI__8MsgPopup": "lbl_806D0268",
@@ -10389,8 +10436,10 @@
     "@49": "@eti_8002A8B4"
   },
   "src/game/anon_8020E3D0_nm1.cpp": {
-    "Draw__12TaskListImplFv": "fn_8020F080",
-    "Erase__11TaskEntriesF8TaskIter": "fn_8012215C"
+    "Draw__11TaskListStdFv": "fn_8020F080",
+    "erase__Q23std42__list_deleter<PCv,Q23std14allocator<PCv>>FQ33std42__list_deleter<PCv,Q23std14allocator<PCv>>19generic_iterator<0>": "fn_8012215C",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__nw__FUl": "Alloc"
   },
   "src/game/anon_8020E3D0_update.cpp": {
     "Update__12TaskListImplFv": "fn_8020F18C"
@@ -10543,15 +10592,18 @@
     "SlideOut__17clFlowCCInterfaceFv": "SlideOut__17clFlowCCInterfaceFi"
   },
   "src/game/fn_801E4AF4.cpp": {
+    "__nwa__FUl": "FUN_8003b120",
     "__dt__Q23std9exceptionFv": "dtor_80038DD4",
-    "__dt__10RingSharedFv": "dtor_80038E30",
+    "__dt__Q23std34_RefCountedPtr<c,Q23std9_Array<c>>Fv": "dtor_80038E30",
+    "__ct__Q23std34_RefCountedPtr<c,Q23std9_Array<c>>FPc": "SharedPtr_Init",
     "__dt__Q23std12length_errorFv": "ClStrPcb_Dtor",
     "__vt__Q23std9exception": "lbl_803F5710",
     "__vt__Q23std11logic_error": "lbl_803F5700",
     "__vt__Q23std12length_error": "lbl_803F56F0",
-    "@436": "@etb_8001632C",
-    "@437": "@eti_800287A8",
-    "@450": "extern:lbl_803BD228"
+    "insert__Q210Metrowerks34cdeque<PCv,Q23std14allocator<PCv>>FQ310Metrowerks34cdeque<PCv,Q23std14allocator<PCv>>8iteratorUlRCPCv": "fn_801E4AF4",
+    "@1992": "extern:lbl_803BD2C0",
+    "@615": "extern:lbl_803BD228",
+    "@1326": "extern:lbl_806CFF88"
   },
   "src/game/anon_8021F088_nm_80221C94_nm1.cpp": {
     "__nw__FUl": "Alloc",
@@ -11903,7 +11955,10 @@
     "__vt__11GpTextPanel": "lbl_8049B18C",
     "__vt__12GpLabelPanel": "lbl_8048EF20",
     "__vt__12GpColorPanel": "lbl_8049B1AC",
-    "__dt__15GpPayloadHolderFv": "dtor_801CDBB8"
+    "__dt__15GpPayloadHolderFv": "dtor_801CDBB8",
+    "__ct__Q23std42__list_deleter<PCv,Q23std14allocator<PCv>>Fv": "DoublyLinkedList_Init",
+    "insert__Q23std42__list_deleter<PCv,Q23std14allocator<PCv>>FQ33std42__list_deleter<PCv,Q23std14allocator<PCv>>19generic_iterator<0>RCPCv": "DoublyLinkedList_PushBefore",
+    "__dt__Q23std54list<P11GpPanelBase,Q23std25allocator<P11GpPanelBase>>Fv": "dtor_801CDC68"
   },
   "src/game/clFlowTaPlease_Init.cpp": {
     "__ct__10C8TaPleaseFv": "clFlowTaPlease_Init",
@@ -12843,16 +12898,18 @@
     "@132": "@eti_800287C0"
   },
   "src/game/fn_801E5454.cpp": {
+    "push_back__Q210Metrowerks34cdeque<PCv,Q23std14allocator<PCv>>FRCPCv": "fn_801E5454",
+    "__nwa__FUl": "FUN_8003b120",
     "__dt__Q23std9exceptionFv": "dtor_80038DD4",
-    "__dt__10RingSharedFv": "dtor_80038E30",
+    "__dt__Q23std34_RefCountedPtr<c,Q23std9_Array<c>>Fv": "dtor_80038E30",
+    "__ct__Q23std34_RefCountedPtr<c,Q23std9_Array<c>>FPc": "SharedPtr_Init",
     "__dt__Q23std12length_errorFv": "ClStrPcb_Dtor",
     "__vt__Q23std9exception": "lbl_803F5710",
     "__vt__Q23std11logic_error": "lbl_803F5700",
     "__vt__Q23std12length_error": "lbl_803F56F0",
-    "@128": "lbl_803BD228",
-    "@129": "extern:lbl_803BD228",
-    "@130": "@etb_800163A0",
-    "@131": "@eti_800287B4"
+    "@2073": "extern:lbl_803BD2DC",
+    "@615": "extern:lbl_803BD228",
+    "@1281": "extern:lbl_806CFF84"
   },
   "src/game/ItemSelectChildSpriteDraw.cpp": {
     "__ct__7ResCtrlFv": "ResCtrl_Init",
@@ -16972,10 +17029,5 @@
     "__dt__3HUDFv": "fn_80254134",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
-  },
-  "src/game/KartPreview.c": {
-    "__ct__6KPCtorFiUc": "fn_8013CC24",
-    "__ct__10KPNormal3DFPCvUc": "clNormal3D_Construct",
-    "__dt__6KPBaseFv": "dtor_8013DCBC"
   }
 }
