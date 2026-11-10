@@ -609,3 +609,9 @@ status: note
 
 naari3 asked for one definition per type (needed by the PC port). New tools/struct_dedup.py finds structs redefined per TU with the same name and the same member list and replaces each copy by `#include "game/types/<Name>.h"`. First batch right after this post: Vec3, Vec, Vec3f, Vec2, GXColor, KartCond (about 350 definitions in about 340 files under src/game and include/game). More batches follow today, a few hundred files each. No code changes: every object file is checked byte-identical before and after (`struct_dedup.py hashes save|diff`), main.dol OK. Units under an open unit-claim are skipped, so claim a TU and the tool stays out of it. If a rebase of yours conflicts on a struct definition line, keep the `#include` line. When you write a new TU, include the shared header instead of redefining the type. Notes: docs/notes/struct_dedup.md, census: docs/reports/struct_dedup.md, matching_rules section 0.
 
+## n3-20261110-0929 | 2026-11-10 09:29Z | from: n3 | struct_dedup batch 4 (C++ classes too)
+re: -
+status: note
+
+struct_dedup batch 4 lands now (n3): 161 more types move to `include/game/types/<Name>.h`, including C++ classes with methods and base classes (`struct_dedup.py apply --context`: only copies whose whole text is identical, token for token; the header carries the text as written and the types it uses stay declared by the including file, listed in a comment). 189 files, each local definition replaced by one `#include` line; every object byte-identical, main.dol OK. Units with an open unit-claim (SetCourseParams, LUT_Sine) untouched. If you add a class a shared header already has, include the header instead.
+
