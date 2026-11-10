@@ -832,12 +832,12 @@ clFlowCCItem::clFlowCCItem() : field1C(0), field20(0), resId(0x13B9), paramId(0x
     Select(1);
 }
 
-static inline void SetCharaGroupForPlayer(Sprite **group, const int &which, int index, PlayerData *pd) {
+static inline void SetCharaGroupForPlayer(Sprite ***groups, int slot, const int &which, int index, PlayerData *pd, int &j) {
     int id = kCharaGroups[which][index];
-    unsigned char special = 0;
-    if ((which == 1 && index == 5) || id < 0) special = 1;
+    Sprite **group = groups[slot];
+    unsigned char special = (which == 1 && index == 5) || id < 0;
     if (!special) {
-        for (int j = 0; j < 5; j++) {
+        for (j = 0; j < 5; j++) {
             int res = 0x1422;
             int unlocked = fn_8023D844(id, j + 1);
             if (pd->unlocked[unlocked] == 1) res = (short)Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(pd, unlocked), 0);
@@ -856,9 +856,9 @@ static inline void SetCharaGroupForPlayer(Sprite **group, const int &which, int 
     SpriteAnimParamBlock_SetAnimParamCached(group, 0x1D24, kCharaFrames[which][index][1]);
 }
 
-static inline void SetCharaGroup(Sprite **group, const int &which, int index) {
+static inline void SetCharaGroup(Sprite ***groups, int slot, const int &which, int index, int &j) {
     PlayerData *pd = &g_playerData;
-    SetCharaGroupForPlayer(group, which, index, pd);
+    SetCharaGroupForPlayer(groups, slot, which, index, pd, j);
 }
 
 /* Unused slots on the sentinel character row do not contain cards. */
@@ -925,8 +925,9 @@ void clFlowCCCharaItem::Select(int delta) {
         if (oldGroup != field24) {
             SpriteAnimParamBlock_Reload(grp[oldGroup + 2], 0x15E);
             SpriteAnimParamBlock_Reload(grp[field24 + 2], 0x15F);
-            SetCharaGroupForPlayer(grp[oldGroup + 2], which, oldGroup, pd);
-            SetCharaGroupForPlayer(grp[field24 + 2], which, field24, pd);
+            int j;
+            SetCharaGroupForPlayer(grp, oldGroup + 2, which, oldGroup, pd, j);
+            SetCharaGroupForPlayer(grp, field24 + 2, which, field24, pd, j);
         }
     }
 }
@@ -967,9 +968,9 @@ clFlowCCCharaItem::clFlowCCCharaItem(int which) : which(which), field20(0), fiel
     fn_8019FF8C(*grp[3], 0x13BD, &out);
     slots[1][4] = out.x;
     for (int i = 0; i < 6; i++) {
+        int j;
         int group = i + 2;
-        Sprite **sprites = grp[group];
-        SetCharaGroup(sprites, this->which, i);
+        SetCharaGroup(grp, group, this->which, i, j);
     }
     int i;
     for (i = 0; i < 8; i++) text[i] = new TextMgr();
