@@ -2372,7 +2372,7 @@ config.libs = [
             Object(Matching, "game/EnemyRunType2_CalcSteering.c"),
             Object(Matching, "game/fn_801ECB04.c"),
             Object(Matching, "game/fn_801F5A64.cpp"),
-            Object(NonMatching, "game/MenuModeLane.cpp", extab_padding=b""),
+            Object(Matching, "game/MenuModeLane.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801F9888.c"),
             Object(Matching, "game/fn_801F98E8.c"),
             Object(Matching, "game/CollisionFile_Load.cpp", mw_version="GC/1.3", extab_padding=b""),

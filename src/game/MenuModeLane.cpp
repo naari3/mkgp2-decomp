@@ -1,6 +1,5 @@
 /* 0x801F5A9C..0x801F6454. Menu configuration scene and owning game mode.
- * The reversed EH group remains NonMatching: fn_801F6178 has scheduling
- * differences, while the other seven primary functions match exactly.
+ * All eight primary functions and their owned EH match exactly.
  */
 #include "game/MenuModeLane_private.h"
 
@@ -111,7 +110,7 @@ extern "C" void *fn_801F6178(MenuMode *self, short flag) {
         lbl_806D1290=self->role == 0 ? self->randomItem != 0 : false;
         RaceSlot_InitSlot(slot,GetDisplayBufferIndex(),self->character,1,0);
         g_characterId=self->character;
-        int firstItem=DebugOverlay_RaceConfig_data_804E53B0[0];
+        signed char firstItem=DebugOverlay_RaceConfig_data_804E53B0[0];
         lbl_806CF110=self->modeFlag;
         RaceSlot_SetItemSlotByte(slot,0,firstItem);
         signed char item=DebugOverlay_RaceConfig_data_804E53B0[1];
