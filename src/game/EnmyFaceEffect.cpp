@@ -13,6 +13,7 @@
  */
 
 #include "game/types/size_t.h"
+#include "libc/stddef.h"
 void *operator new(size_t size);
 void operator delete(void *p) throw();
 
@@ -1179,6 +1180,27 @@ static inline void FillFaceUVExpanded(float *uv, const float *rect) {
     uv[12]=right; uv[13]=mid; uv[14]=left; uv[15]=mid;
 }
 
+static inline void FillDisplacedFaceUV(float *uv, const float *rect, FaceDrawVec *offset) {
+    float bottom, left, mid, top, factor, right, difference;
+    top=rect[1]; bottom=rect[3]; left=rect[0];
+    difference=bottom-top;
+    factor=lbl_806DB5EC;
+    mid=factor*difference+top;
+    right=rect[2];
+    uv[0]=left; uv[1]=mid; uv[2]=right; uv[3]=mid;
+    uv[4]=right; uv[5]=top; uv[6]=left; uv[7]=top;
+    uv[8]=left; uv[9]=bottom; uv[10]=right; uv[11]=bottom;
+    uv[12]=right; uv[13]=mid; uv[14]=left; uv[15]=mid;
+    offset->x+=offset->x; offset->z+=offset->z;
+}
+
+static inline void FillTopFaceUV(float *uv, const float *rect) {
+    float top, left, right, bottom;
+    left=rect[0]; bottom=rect[3]; right=rect[2]; top=rect[1];
+    uv[0]=left; uv[1]=bottom; uv[2]=right; uv[3]=bottom;
+    uv[4]=right; uv[5]=top; uv[6]=left; uv[7]=top;
+}
+
 /* Keep each vertex attribute write together; snapshot displacement after GXBegin. */
 static inline void WriteFaceVertex(FaceDrawVec *p, float *uv, float x, float z, unsigned int color) {
     FIFO.f32=x+p->x; FIFO.f32=p->y; FIFO.f32=z+p->z;
@@ -1249,9 +1271,12 @@ static inline void DrawQuads(FaceDrawVec *&draw, float *tex, FaceDrawVec *offset
 }
 static inline void BuildOverlayQuads(FaceDrawModel *self, FaceDrawVec *vertexBase, const FaceDrawVec *&alternateBase, FaceMtx scale, FaceMtx translation, FaceMtx temporary, FaceMtx copy) {
     int j;
+    int i;
     FaceDrawVec *dstRow=vertexBase;
-    for (int i=0;i<2;++i) {
-        PSMTXCopy(self->sub->m[i],copy);
+    int matrixOffset;
+    for (i=0, matrixOffset=0;i<2;++i) {
+        int rowOffset=matrixOffset+offsetof(FaceDrawSub,m);
+        PSMTXCopy(*(FaceMtx *)((unsigned long)self->sub+rowOffset),copy);
         FaceVecView localOffset;
         localOffset=self->sub->offset;
         copy[0][3]+=localOffset.value.x; copy[1][3]+=localOffset.value.y; copy[2][3]+=localOffset.value.z;
@@ -1261,7 +1286,7 @@ static inline void BuildOverlayQuads(FaceDrawModel *self, FaceDrawVec *vertexBas
         FaceDrawVec *q;
         q=dstRow; p=alternateBase;
         for (j=0;j<4;++j) { PSMTXMultVec(temporary,p,q); ++q; ++p; }
-        alternateBase+=4; dstRow+=4;
+        matrixOffset+=sizeof(FaceMtx); dstRow+=4; alternateBase+=4;
     }
 }
 static inline void DrawCachedQuads(FaceDrawVec *&vertexBase, float *&uvBase, FaceDrawVec *offset, unsigned int color) {
@@ -1348,7 +1373,7 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
     BuildFaceQuads(self,vertexBase,alternateBase,world);
     fn_8011D890(self->face,rect,0);
     uvBase=uv;
-    FillFaceUVExpanded(uvBase,rect); offset.x+=offset.x; offset.z+=offset.z;
+    FillDisplacedFaceUV(uvBase,rect,&offset);
     {
         FaceDrawVec *draw=vertexBase;
         float *tex=uvBase;
@@ -1359,8 +1384,7 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
         const FaceDrawVec *p=sQuadTop;
         for (int i=0;i<4;++i) { PSMTXMultVec(world[0],p,q); ++q; ++p; }
         fn_8011D890(sFaceSprites[9],rect,0);
-        uvBase[0]=rect[0]; uvBase[1]=rect[3]; uvBase[2]=rect[2]; uvBase[3]=rect[3];
-        uvBase[4]=rect[2]; uvBase[5]=rect[1]; uvBase[6]=rect[0]; uvBase[7]=rect[1];
+        FillTopFaceUV(uvBase,rect);
         offset.x+=offset.x; offset.z+=offset.z;
         DrawFaceQuad(vertexBase,uvBase,&offset,0xffffffff);
     }

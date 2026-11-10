@@ -53,8 +53,8 @@ static inline float SteeringMagnitude(float value) {
     return (float)magnitude;
 }
 
-static inline float QuantizeSteering(float value) {
-    return (float)(int)(lbl_806D9750 * value) * lbl_806D9754;
+static inline int QuantizeSteering(float value) {
+    return (int)(lbl_806D9750 * value);
 }
 
 static inline void ProjectSubtract(Vec3 &v, const Vec3 &b) {
@@ -93,7 +93,7 @@ extern "C" void KartMovement_PhysicsStep(MovementInit *k, unsigned char active,
         else k->field2be = 0;
         k->field2bd = 0;
     }
-    float quantized = QuantizeSteering(steering);
+    float quantized = (float)QuantizeSteering(steering) * lbl_806D9754;
     float absolute = Abs(quantized);
     if (absolute < lbl_806D9740) turn = lbl_806D96D0;
     else {
@@ -110,8 +110,8 @@ extern "C" void KartMovement_PhysicsStep(MovementInit *k, unsigned char active,
         fn_8019EA8C(&velocity);
         InitVec forward(k->orientation.m[2][0], k->orientation.m[2][1], k->orientation.m[2][2]);
         fn_8019EA8C(&forward);
-        float blend = lbl_806D9704 * (lbl_806D96D4 + Dot(velocity, forward));
-        Scale(k->v17c, blend * Param(k, 0x50) + (lbl_806D96D4-blend)*Param(k, 0x54));
+        float blend = lbl_806D9704 * (1.0f + Dot(velocity, forward));
+        Scale(k->v17c, blend * Param(k, 0x50) + (1.0f-blend)*Param(k, 0x54));
     }
     k->field1d0 = k->yaw;
     Matrix44 matrix;
@@ -225,7 +225,7 @@ extern "C" void KartMovement_PhysicsStep(MovementInit *k, unsigned char active,
     }
     {
         InitVec velocity(k->v17c.x, k->v17c.y, k->v17c.z);
-        Scale(velocity, lbl_806D9780);
+        Scale(velocity, 1.0f / 60.0f);
         float angle = SteeringMagnitude(lbl_806D9760*k->pad1c4);
         float speed = fn_8019EA08(&velocity);
         if (angle > lbl_806D96D0 && speed > lbl_806D96D0) {

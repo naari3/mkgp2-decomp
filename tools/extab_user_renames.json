@@ -6332,6 +6332,7 @@
     "Reset__12FaceModelSubFi": "fn_8022FCA8"
   },
   "src/game/EnmyFaceEffect.cpp": {
+    "__dt__11FaceVecViewFv": "dtor_80036E40",
     "__nwa__FUl": "FUN_8003b120",
     "__dla__FPv": "MemoryManager_Free",
     "__nw__FUl": "Alloc",
