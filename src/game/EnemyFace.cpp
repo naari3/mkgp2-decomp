@@ -56,6 +56,27 @@ static inline void TireTexCoord(float u, float v) {
     GXFIFO.f32 = v;
 }
 
+static inline void DrawTireVertices(TireSprite *s, unsigned int color, float u, float v) {
+    TireSprite *p = s;
+    const float *uv = lbl_803DA680;
+    for (int i = 0; i < 2; i++) {
+        TirePosition(p->vx[0], p->vy[0], p->vz[0]);
+        GXFIFO.u32 = color;
+        float tu = u + uv[0];
+        float tv = v + uv[1];
+        TireTexCoord(tu, tv);
+        TireTexCoord(tu, tv);
+        TirePosition(p->vx[1], p->vy[1], p->vz[1]);
+        GXFIFO.u32 = color;
+        tu = u + uv[2];
+        tv = v + uv[3];
+        TireTexCoord(tu, tv);
+        TireTexCoord(tu, tv);
+        uv += 4;
+        p = (TireSprite *)((char *)p + 8);
+    }
+}
+
 #pragma push
 #pragma opt_lifetimes off
 void TireSprite_Draw(TireSprite *s) {
@@ -112,24 +133,7 @@ void TireSprite_Draw(TireSprite *s) {
     unsigned int color = 0xFFFFFF00;
     color = (color & ~0xFF) | ((int)(255.0f * s->alpha) & 0xFF);
     GXBegin(0x80, 0, 4);
-    TireSprite *p = s;
-    const float *uv = lbl_803DA680;
-    for (int i = 0; i < 2; i++) {
-        TirePosition(p->vx[0], p->vy[0], p->vz[0]);
-        GXFIFO.u32 = color;
-        float tu = u + uv[0];
-        float tv = v + uv[1];
-        TireTexCoord(tu, tv);
-        TireTexCoord(tu, tv);
-        TirePosition(p->vx[1], p->vy[1], p->vz[1]);
-        GXFIFO.u32 = color;
-        tu = u + uv[2];
-        tv = v + uv[3];
-        TireTexCoord(tu, tv);
-        TireTexCoord(tu, tv);
-        uv += 4;
-        p = (TireSprite *)((char *)p + 8);
-    }
+    DrawTireVertices(s, color, u, v);
     HSD_StateInvalidate(-1);
 }
 #pragma pop

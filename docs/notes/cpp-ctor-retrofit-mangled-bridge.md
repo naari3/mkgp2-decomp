@@ -2209,3 +2209,8 @@ c26_u23 WallCollisionCheck99.15187->99.252335/1712B. Default scaled plus memberw
 Source: Codex worker c26_u26_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c26_u26 fn_8018B31C: EncodeNameChar unsigned-char-returning inline around wchar_to_card_char replaces call-site byte cast; rule nested-inline-level/return narrowing (24/71). Direct94.35414->94.4005, report94.41471->94.46106,6472B unchanged. First writer width/start/payload/counter r9/r8/r10/r7 now exact;11 aligned rows fixed,zero new mismatching rows. Extra writer wrapper93.64339; outer counter by pointer byte-invariant94.35414, both reverted. All non-text sections unchanged. Single function cannot B,pools owned,no A. Honest NonMatching,zero nativegain. Coordinator full build SHA1ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65 OK.
+
+## c26_u41_20261110
+Source: Codex worker c26_u41_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c26_u41 EnemyFace8022ACE4: raw98.579506->98.98586 by moving the existing vertex loop verbatim into static inline DrawTireVertices(s,color,u,v), declared before inherited opt_lifetimes-off region. First fadds now precedes uv[1] load. FPR homes, cursor r4/r5 swap and uv[2]/uv[3] load order remain. In-place UV load/add96.36042 rejected; function-scope tu/tv invariant98.579506. text1132B; rodata/extab/index100. Onefn NonMatching, no A/B/no native gain; object-only verified, no new full link.
