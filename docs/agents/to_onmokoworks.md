@@ -698,3 +698,9 @@ status: note
 
 Landing now for the PC port: clFlowKart_Init.c, clFlowCourse.cpp and include/game/TaMode_FrameUpdate_private.h redeclare functions/objects with different types per namespace (left from TU merges). Those lines are now inside #ifdef __MWERKS__, with a view (static reference or static inline forwarder) for other compilers in the #else. MWCC sees exactly the old text; clean build, every object hash unchanged, main.dol OK.
 
+## n3-20261110-1229 | 2026-11-10 12:29Z | from: n3 | KartDriver_InitFull NON_MATCHING side repaired (default build unchanged)
+re: -
+status: note
+
+Landing now: src/game/KartDriver_InitFull.c, only inside its #ifdef NON_MATCHING part (casts for the merged KartDriver field types) plus C_REGION marker lines. The asm and the default build are untouched; every object hash unchanged. Note for both sides: after a struct merge or rename, python3 tools/nonmatching_check.py shows whether the NON_MATCHING sides still compile.
+

@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 
 /* sdata symbols referenced from asm */
 extern unsigned char lbl_806D2644[6];
@@ -1159,7 +1161,9 @@ asm void KartDriver_InitFull(void) { /* 0x80044D50 size:0xC00 */
 }
 #endif
 
+C_REGION_END
 #ifdef NON_MATCHING
+C_REGION_BEGIN
 /* NON_MATCHING: equivalent C++ (docs/nonmatching_c.md). The `new T(...)` ctors are
  * renamed to the real functions in tools/extab_user_renames.json. */
 /* Complete genuine C++ reconstruction, bounded after three structural approaches.
@@ -1169,10 +1173,12 @@ asm void KartDriver_InitFull(void) { /* 0x80044D50 size:0xC00 */
  * loop induction/address scheduling. This draft is not a matching gain.
  * ABI verified from complete authoritative target/callee ASM; runtime unverified.
  */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 /* Observed views only; external constructors own opaque allocation storage. */
 struct KartDriver;
+typedef struct KartDriver Driver; /* EffectBus.h and DriverTail.h name it Driver */
 struct Accessory { unsigned char opaque[48]; Accessory(KartDriver*); };
 struct EffectState { unsigned char opaque[40]; EffectState(KartDriver*); };
 struct HUD28 { unsigned char pad00[8]; float x,y; unsigned char pad10[12]; HUD28(); };
@@ -1233,7 +1239,7 @@ extern const char *mario_cart_tire_rl_joint[];
 extern const char *mario_cart_tire_rr_joint[];
 extern const char *mario_shadow_dat[];
 }
-static inline Normal3D *LoadNormal(const char **resource) { return new Normal3D(*resource,0); }
+static inline Normal3D *LoadNormal(const char **resource) { return new Normal3D((void *)*resource,0); }
 static inline void BlendRoots(KartDriver *self, void *to) {
     ObjectTree_BlendOrCopy_Timed(self->driver,Archive_GetRootJObj(self->animation),to,0,lbl_806D2540);
 }
@@ -1254,17 +1260,17 @@ extern "C" int KartDriver_InitFull(void *self_,int id,int characterId,void *matr
         character=GetCharacterDataEntry(characterId);
     }
     self->slot=id; self->chara=characterId;
-    self->model=new Normal3D(model->file,0);
-    self->driver=new Normal3D(character->file,0);
-    self->animation=new Normal3D(character->anim,0);
-    self->other=new Normal3D(character->other,0);
+    self->model=new Normal3D((void *)model->file,0);
+    self->driver=new Normal3D((void *)character->file,0);
+    self->animation=new Normal3D((void *)character->anim,0);
+    self->other=new Normal3D((void *)character->other,0);
     self->driver_29C=new Accessory(self);
-    self->a22C=a8; self->airState=slot; self->raceSlot=slot; self->a24C=0;
+    self->a22C=a8; self->airState=slot; self->raceSlot=(void *)slot; self->a24C=0;
     if (!self->model || !self->driver || !self->animation || !self->other) return 0;
     if (mode==2 || mode==3) { self->lodMid=0; self->lodFar=0; }
-    else { self->lodMid=new Normal3D(model->wheelA,0); self->lodFar=new Normal3D(model->wheelB,0); }
-    RaceSlot_SetDriverPtr(self->raceSlot,self);
-    if (self->raceSlot==g_kartStartSlot) self->forceDraw=1; else self->forceDraw=0;
+    else { self->lodMid=new Normal3D((void *)model->wheelA,0); self->lodFar=new Normal3D((void *)model->wheelB,0); }
+    RaceSlot_SetDriverPtr((int)(unsigned long)self->raceSlot,self);
+    if ((int)(unsigned long)self->raceSlot==g_kartStartSlot) self->forceDraw=1; else self->forceDraw=0;
     self->matrixSource=matrix;
     self->contextSlot=RaceContextSlot_AllocDriver(GetRaceContextPtr(),id,characterId,matrix,self,slot);
     Object_BindMatrixSource(self->model,matrix,0);
@@ -1276,24 +1282,24 @@ extern "C" int KartDriver_InitFull(void *self_,int id,int characterId,void *matr
     const char **override3=override0+3;
     for (int i=0;i<49;++i) {
         if (g_cupId!=11) {
-            if (character->motion[i]) self->parts[i]=new Normal3D(character->motion[i],0);
+            if (character->motion[i]) self->parts[i]=new Normal3D((void *)character->motion[i],0);
             else self->parts[i]=0;
         } else {
             if (i==0) self->parts[i]=LoadNormal(override0);
             else if (i==5) self->parts[i]=LoadNormal(override1);
             else if (i==10) self->parts[i]=LoadNormal(override2);
             else if (i==15) self->parts[i]=LoadNormal(override3);
-            else if (character->motion[i]) self->parts[i]=new Normal3D(character->motion[i],0);
+            else if (character->motion[i]) self->parts[i]=new Normal3D((void *)character->motion[i],0);
             else self->parts[i]=0;
         }
     }
     Object_DriveAnimAndSkin(self->animation,self->parts[0],lbl_806D2574,lbl_806D2540);
     BlendRoots(self,Archive_GetRootJObj(self->driver));
     HeapStats_DumpForTag((const char *)lbl_806D2644,heap);
-    self->wheel[0]=ResolveJointByName(self->model,mario_cart_tire_fl_joint[characterId]);
-    self->wheel[1]=ResolveJointByName(self->model,mario_cart_tire_fr_joint[characterId]);
-    self->wheel[2]=ResolveJointByName(self->model,mario_cart_tire_rl_joint[characterId]);
-    self->wheel[3]=ResolveJointByName(self->model,mario_cart_tire_rr_joint[characterId]);
+    self->wheel[0]=(struct HSD_JObj *)ResolveJointByName(self->model,mario_cart_tire_fl_joint[characterId]);
+    self->wheel[1]=(struct HSD_JObj *)ResolveJointByName(self->model,mario_cart_tire_fr_joint[characterId]);
+    self->wheel[2]=(struct HSD_JObj *)ResolveJointByName(self->model,mario_cart_tire_rl_joint[characterId]);
+    self->wheel[3]=(struct HSD_JObj *)ResolveJointByName(self->model,mario_cart_tire_rr_joint[characterId]);
     self->ground[0]=ResolveJointByName(self->model,mario_cart_ground_fl_joint[characterId]);
     self->ground[1]=ResolveJointByName(self->model,mario_cart_ground_fr_joint[characterId]);
     self->ground[2]=ResolveJointByName(self->model,mario_cart_ground_rl_joint[characterId]);
@@ -1329,17 +1335,17 @@ extern "C" int KartDriver_InitFull(void *self_,int id,int characterId,void *matr
             self->joint158=0; self->joint15C=0; self->joint160=0;
         }
     }
-    self->itemBus=new EffectBus(self);
+    self->itemBus=(struct ItemEffectBus *)new EffectBus(self);
     if (mode==2 || mode==3) self->joint154=ResolveJointByName(self->model,mario_cart_position_joint[characterId]);
     else self->joint154=0;
     if (self->chara==11) {
-        if (mode==2 || mode==3) self->joint164=ResolveJointByName(self->model,pool+0xEC4);
+        if (mode==2 || mode==3) self->joint164=(struct HSD_JObj *)ResolveJointByName(self->model,pool+0xEC4);
         else self->joint164=0;
     } else self->joint164=0;
     if (self->chara==10) {
         if (mode==2 || mode==3) {
-            self->joint_168=ResolveJointByName(self->model,pool+0xEE4);
-            self->joint16C=ResolveJointByName(self->model,pool+0xF04);
+            self->joint_168=(struct HSD_JObj *)ResolveJointByName(self->model,pool+0xEE4);
+            self->joint16C=(struct HSD_JObj *)ResolveJointByName(self->model,pool+0xF04);
         } else { self->joint16C=0; self->joint_168=0; }
     } else { self->joint16C=0; self->joint_168=0; }
     self->baseRotZ=lbl_806D2540;
@@ -1350,7 +1356,7 @@ extern "C" int KartDriver_InitFull(void *self_,int id,int characterId,void *matr
     self->a318=lbl_806D2540;
     if (self->chara==3) {
         self->extraEnabled=ResolveJointByName(self->driver,pool+0xF34);
-        self->extra=new Normal3D(pool+0xF50,0);
+        self->extra=new Normal3D((void *)(pool+0xF50),0);
         clNormal3D_SetScale(self->extra,0,lbl_806D2540,lbl_806D2570,lbl_806D2540,lbl_806D2574);
     } else { self->extraEnabled=0; self->extra=0; }
     if (self->joint158) JObj_Hide(self->driver,self->joint158,0x10);
@@ -1360,12 +1366,12 @@ extern "C" int KartDriver_InitFull(void *self_,int id,int characterId,void *matr
     self->a328=KartDriver_GetJointByIdx(self,9)->value;
     self->a31C=lbl_806D2570; self->a320=lbl_806D2540;
     if (g_raceCamera) {
-        if (mode==2 || mode==3) self->obj18=new Normal3D(((const char**)(data+0xAC))[characterId],0);
-        else self->obj18=new Normal3D(((const char**)(data+0x78))[characterId],0);
+        if (mode==2 || mode==3) self->obj18=new Normal3D((void *)((const char**)(data+0xAC))[characterId],0);
+        else self->obj18=new Normal3D((void *)((const char**)(data+0x78))[characterId],0);
         void *camera=g_raceCamera;
         SceneRender_CmdB_8aa20(camera,Archive_GetRootJObj(self->obj18));
     } else self->obj18=0;
-    self->accessory=new Normal3D(pool+0xD8C,0);
+    self->accessory=new Normal3D((void *)(pool+0xD8C),0);
     if (self->accessory) {
         self->showAccessory=0; self->a178=0;
         self->joint13C=ResolveJointByName(self->accessory,pool+0xDA0);
@@ -1375,19 +1381,20 @@ extern "C" int KartDriver_InitFull(void *self_,int id,int characterId,void *matr
         self->joint14C=ResolveJointByName(self->accessory,pool+0xE20);
     }
     if (self->forceDraw==1) {
-        self->helper35C=new HUD28();
-        self->helper360=new HUD16();
-        if (self->helper35C) { self->helper35C->x=lbl_806D264C; self->helper35C->y=lbl_806D2650; }
-        if (self->helper360) { self->helper360->x=lbl_806D2654; self->helper360->y=lbl_806D2658; }
+        HUD28 *h28=new HUD28(); self->helper35C=(struct KartHelper *)h28;
+        HUD16 *h16=new HUD16(); self->helper360=(struct KartHelper *)h16;
+        if (h28) { h28->x=lbl_806D264C; h28->y=lbl_806D2650; }
+        if (h16) { h16->x=lbl_806D2654; h16->y=lbl_806D2658; }
     } else { self->helper35C=0; self->helper360=0; }
     self->tireFX=new TireFX(characterId,mode,self->wheel[0],self->wheel[1],self->wheel[2],self->wheel[3]);
     if (self->tireFX) KartTireFX_SetVisibleAll4Wheels(self->tireFX,0);
     self->a32C=new EffectState(self);
     self->tail=new DriverTail(self);
-    if (self->forceDraw!=0) { self->helper378=new HUD12(); self->helper380=new HUD36(); }
+    if (self->forceDraw!=0) { self->helper378=(struct KartHelper *)new HUD12(); self->helper380=(struct KartHelper *)new HUD36(); }
     else { self->helper378=0; self->helper380=0; }
     self->a374=-1;
     return 1;
 }
 
+#pragma cplusplus reset
 #endif
