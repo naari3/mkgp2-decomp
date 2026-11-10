@@ -367,9 +367,11 @@ void GabyouItem_Tick_HeldAndHoming_2Eto31(HeldItem *item, HeldContext *context)
                     return;
                 }
                 HeldKart *nextTarget;
-                HeldEffectBus *previousBus = context->target->effects;
-                nextTarget = previousBus->nextTarget;
+                nextTarget = context->target->effects->nextTarget;
                 if (nextTarget) {
+                    /* regalloc_patterns 76: the cast keeps this from being a plain copy of
+                     * the CSE temp, so the named local survives (`mr r27,r3` in this block). */
+                    HeldEffectBus *previousBus = (HeldEffectBus *)(void *)context->target->effects;
                     if (item->type == 0x31) ItemEffectBus_ClearMask(previousBus, 0x1000000000000000ULL);
                     if (item->type == 0x30) ItemEffectBus_ClearMask(previousBus, 0x2000000000000000ULL);
                     ItemEffectBus_ClearMask(previousBus, 0x0800000000000000ULL);

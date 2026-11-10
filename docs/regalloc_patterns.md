@@ -1925,3 +1925,116 @@ Side effect on the FIRST loop: named locals take the lowest free saved
 register already in use (see 70), and r29 was opened by the split temp, so
 whichever of `p` / `i` is coloured first now gets r29. Declare `i` before
 `p` to give `i` r29 and `p` r30.
+
+## 74. Float arguments evaluated BEFORE an int argument: redeclare the callee with the floats first (fn_80158CE4 / fn_8015915C, option menu record pages, 11-09)
+
+Symptom: everything matches except the order in which the arguments of one
+call are computed. The target computes the float arguments (`fsubs`, `fadds`,
+int -> float conversion with `xoris` / `0x4330`) first and the int sprite id
+(`slwi` / `add` / `addi r4,r0,0x7e4`) last; ours computes the id first. In
+fn_8015915C the same thing showed up as `xoris r3` / `addi r0` swapped inside
+the digit loops.
+
+Cause: MWCC evaluates arguments in prototype order. GPR and FPR arguments are
+numbered independently (r3.. and f1..), so `f(int, int, float, float, float,
+int)` and `f(int, float, float, float, int, int)` pass exactly the same
+registers. The prototype guessed from the asm (ints first) is therefore not
+the only possible one, and the order of int versus float parameters is a free
+lever for scheduling and for vreg creation order.
+
+Fix: declare the same symbol a second time with another parameter order and
+call that. In C++ with C linkage this can be done without changing the other
+callers:
+
+```cpp
+namespace alt { extern "C" void fn_801695E0(int, float, float, float, int, int); }
+...
+alt::fn_801695E0(layer, x, y, alpha, 0x7e4 + self->course[i] * 2 + self->mode[i], 0);
+```
+
+A cast function pointer does NOT work (it becomes an indirect `bctrl` call).
+When every caller turns out to want the float-first order, change the real
+prototype instead.
+
+Other levers that were needed in the same two functions:
+
+- fn_8015915C: a named float (`baseX`) took a saved FPR one off. regfix diag
+  said "turn the named local into a temp via inline argument": the digit loops
+  went into `static inline void DrawDigits(int layer, signed char *digits,
+  float x, float y, float alpha)` and the value is passed as an expression.
+- fn_8015915C: `float colX; float gridY;` declared first at function level,
+  `rowY` as a block local in each branch (colX f25 / gridY f24).
+- fn_80158CE4: `#pragma opt_loop_invariants off` around the function, and the
+  id written as `0x7e4 + course * 2 + mode` (`(course << 1) + mode + 0x7e4`
+  gives 98.39 %).
+- Float constants the target reloads per call must be literals, not
+  `extern const float` (postprocess_sdata2.py maps the anonymous literals back
+  to the shared `lbl_806D....` symbols, so the TU need not own .sdata2).
+
+Landing note: when the last asm function with a manual `.extab_user` /
+`.extabindex_user` entry becomes C, delete the manual entries and their lines
+in tools/extab_user_renames.json; otherwise the compiler-generated entries are
+duplicated and main.dol fails.
+
+## 75. Repeated inline copies use a "busy-avoiding" register where nothing is busy: the copies are one unrolled loop (fn_8017BCF8, clModelM ctor, 11-10)
+
+Three inlined `pN = Point(index + N)` struct copies. The target uses r4 / f1
+for the temporaries in all three; ours r3 / f0 in the first two and r4 / f1
+only in the third, where r3 (`mr r3,r30` for the return) and f0 (a constant
+kept for a later store) really are live. A register that is avoided where
+nothing interferes means the temporaries of all copies are ONE variable
+whose interference is the union over the copies, i.e. the source is a
+constant-trip loop that the compiler unrolled:
+`for (int k = 0; k < 3; k++) (&p0)[k] = Point(index + k);`.
+The other user of the same inline (Update, fn_8017BF90) has no interference
+in any copy and stays matched. Check: the first copy has no `addi`
+(`index + 0`), the others reload the member and add 1, 2.
+
+## 76. Target copies a CSE temp into a saved register INSIDE a branch (`lwz r3; ...; beq; mr r27,r3`), ours keeps one register (GabyouItem_Tick_HeldAndHoming_2Eto31, 11-10)
+
+```
+lwz r3, 0x304(r3)      ; T = context->target->effects
+lwz r28, 0x8(r3)       ; nextTarget = T->nextTarget
+cmplwi r28, 0 ; beq
+mr r27, r3             ; previousBus = T   (first call below still uses r3)
+```
+Source shape: `nextTarget = E->nextTarget; if (nextTarget) { previousBus = E; f(E); g(previousBus); ... }`.
+Written plainly, IRO turns the second `E` into a copy of the CSE temp and
+then propagates that copy away: one saved register, no `mr`. A copy survives
+propagation when it is not a plain `local = temp` statement:
+- the local's definition is the FIRST occurrence of the expression (the CSE
+  temp is created inside it: `previousBus = (T = E)`), which puts the `mr`
+  where the local is defined (before the `if` here: 2 lines left), or
+- the copy goes through a cast node: `previousBus = (HeldEffectBus *)(void *)E`,
+  `void *previousBus = E`, `(T *)((char *)E + 0)` all keep it. This is the one
+  that puts the `mr` inside the branch.
+Also write the first call with the expression itself (`f(context->target->effects)`)
+so that it takes the temp (r3) without a reload.
+Tried and useless here: reusing a multi-def variable, an inline for the three
+calls, assignment in the condition, `#pragma opt_propagation off` (breaks 30+
+lines elsewhere in a big function).
+
+## 77. Two instances of one search inline: walking pointers coloured AFTER both instances' counters: index the array in the inline (RivalRun_CalcPathDistance, near miss 100 -> 4 lines, 11-10)
+
+Target (two calls of the same nearest-point inline) colours `i1, best1, i2,
+best2` first and only then the two pointers that walk the point array, so the
+second counter reuses the first one's register and the second `best` opens a
+new one. With a pointer local in the inline (`RRVec3 *p = pts; ... p++`) the
+locals are numbered `p < best < i` per instance, so `p1` is coloured before
+`i2` and every saved GPR of the second search is off.
+
+Lever: no pointer local in the inline; index instead.
+
+```c
+for (i = 0; i < count; i++) {
+    d.x = pts[i].x - px;   /* not: p->x - px; p++ */
+    ...
+}
+```
+
+Strength reduction turns `pts[i]` into a walking pointer, but that pointer is
+a backend temp created after every frontend local of BOTH inline instances,
+hence coloured last. Same instructions, 100 -> 4 register diff lines. The
+function is still asm (docs/gave_up.md, draft
+docs/wip/RivalRun_CalcPathDistance_regonly.patch); the rest is one `lfs`/`fmr`
+direction of a shared zero load.
