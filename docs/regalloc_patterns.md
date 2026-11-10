@@ -2080,3 +2080,19 @@ float s = 0.2f * (1.0f - (o->timer - 30) / 15.0f) + 1.0f;
 (`float t; a = (int)(255.0f * (t = 1.0f - (o->timer - 30) / 15.0f));` matches too.) The same repeated form
 is 99.6 in AF4 and the AF4 form is 99.1 in CE8, so try both. When diag asks for "constant X generated after
 constant Y", move the statement that uses X into the expression that uses Y.
+
+## 79. `lfs fA,K; fmr fB,fA` direction between a named accumulator and an inline local with the same initial constant (RivalRun_CalcPathDistance, 11-10)
+
+Target `lfs f31,K` (dist) + `fmr f27,f31` (the inline's bestDist), ours the
+reverse. Mechanism: IRO forwards `dist = K` into the inline's `bestDist = K`,
+CSEs the two loads into a temp T, and the first coalescible copy
+(`bestDist <- T`, temp-temp) takes T; `dist <- T` is named and stays a copy.
+Fix (the 78 lever): give the inline an `init` parameter and write the
+assignment inside the argument, `a = Find(pts, count, from, dist = K);`.
+Then dist is defined by the load itself and bestDist is the copy.
+Things that do NOT work: passing `dist` after a separate `dist = K;`
+(forwarded), casts (76 is for pointers), `#pragma opt_propagation off`
+(fixes the pair, breaks 220 lines).
+Follow-up: the change renumbers the float locals of the SECOND inline
+instance; that instance needed its own copy of the inline with the float
+declarations in the order `pz, py, px, bestDist` (24 orders swept, one hit).
