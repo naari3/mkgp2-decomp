@@ -28,3 +28,7 @@ with the allocator model.
 Hints older than 54 that diag also prints: 35 (inline wrapper, named
 locals), 40 (anchor offsets inside a symbol), 46 (shared loop counter),
 52/53 (list sentinel).
+
+Wider check (2026-11-10): `python3 tools/shapediag_replay.py run` replays all
+263 recorded fixes (hits.jsonl + Codex table) from the tree before each fix;
+results and per-rule verdicts in docs/reports/shapediag_replay.md.

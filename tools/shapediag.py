@@ -56,13 +56,16 @@ CLASSES = {
         "one argument loaded first: fetch it through a getter WITH a local (`T *r = p; return r;`) (91 lever 2)",
         "inline ctor/setter: take only the owner, declare locals in colour order and load them in statement order (91 lever 3)",
         "globals kept in saved registers and passed: assign inside the call, `f(p, cup = g_cup)` (rules 7.8)",
+        "one small inline per scalar argument (`RankingPlacementY()`, fn_801D2F0C); literal constants instead of extern loads (KartFx_DriftSparkParticleTick); right-to-left evaluation of a `Show(...)` call with py declared before px (fn_802064D8)",
     ]),
     "order:store": ("stores (or a load and a store) are in another order", [
-        "store order is statement order: reorder the assignments / member initialisers (7)",
+        "store order is statement order: reorder the assignments / member initialisers (7); in a ctor the base-class initialiser is generated first: store the base vtable in the derived ctor body (36)",
+        "a local array initialiser vs element-wise assignments (clFlowKart merge)",
         "a load moved ABOVE a store in the target: the compiler knew they cannot alias: `__restrict` on the pointer params, a `const` view of the global, `extern const T tbl[N]` (30; rules 7.8, rules 5)",
         "a load stuck BEHIND stack stores: the pointer runs outside its object (31, 90); declare the real objects",
         "loads hoisted over stores everywhere / `lfs; lwz; lfs` interleaved: the TU is GC/2.6 (rules 4)",
         "long straight-line copy runs: the scheduler works in 26-statement regions (8)",
+        "evaluation/source order of the assignment (`g = f(...)` vs temp then store, fn_801CDF10); `frsp` result vs original stored: keep the query in the outer function (Item_BendVelocityByGroundProbe); string/rodata ownership, `-rostr` (fn_801E4544)",
     ]),
     "order:copyrun": ("a struct/array copy has another load/store interleave", [
         "load-load-store-store-load-store vs three loads then three stores: the source is read outside its object; declare the real objects and let the compiler pool them (90)",
@@ -85,12 +88,14 @@ CLASSES = {
         "this is a register diff: `python3 tools/regfix.py diag UNIT FN` (colouring order, declaration order)",
         "two strength-reduction walkers: they are numbered in creation order; touch the one that needs the lower register first, `record = &base[i]; f(record, ...)` (63 lever 3); index the array in the inline (77)",
         "pointer local vs shared loop counter: make the pointer a CSE temp (73); block-local counters (46)",
+        "compute the pointer before assigning the indexed descriptor (fn_8016A854); one inline helper per child `updateChild(row, group, effect, i)` (Effect_KartJoint12_3Stage_Update)",
     ]),
     "order:load": ("loads are scheduled in another order", [
         "a global/member load moved UP in the target: the compiler knew no store in between can alias: `__restrict` on pointer params, `const` view, read-only table as `extern const` (30; rules 7.8, rules 5); loads hoisted everywhere: GC/2.6 (rules 4)",
         "evaluation order: the first operand of an expression is loaded first (64); load a value into a local earlier / later (3, 23, 82)",
         "which value is a named local and which a temp decides who is loaded first (declaration order does not): inline getter with a local (91 lever 2), value-parameter inline (87)",
         "`python3 tools/mwsched.py explain UNIT FN --run` names the dependency that differs",
+        "const-qualify the pointee as well: `const char *const tbl[]` for a .rodata table (fn_80201BE8); native local aggregate initialisers (DrawEffect_Cb_RalySmokeVariant_Tick); declaration order of the two values (fn_801F7F50)",
     ]),
     "order:expr": ("arithmetic of one expression is emitted in another order", [
         "sub-expressions are emitted in evaluation order: swap operands / regroup; a three-term sum has 12 groupings, brute-force them (84; `leversweep.py fn UNIT FN --levers sum3-regroup`)",
@@ -122,11 +127,15 @@ CLASSES = {
         "`x += y` gives result-in-place plus `fmr`: `t = y; t = x + t;` (82)",
         "an inline parameter copied: pass by reference / const reference, or write the body in place (5, 38)",
         "a call result that takes the wrong dying register: name it inside the inline (16)",
+        "`fmr` of a constant argument: literal `0.0f` instead of the extern constant (Item_SpawnHitBurstParticles); read the member directly in the compare instead of through a local (setupTopHalfCamera)",
+        "keep the computation local to its inline helper instead of a caller local (GameTestTopMenu_Page, card_unpack_legacy_dispatch)",
     ]),
     "operand-order": ("a commutative instruction has its operands swapped", [
         "the first operand is the first EVALUATED: swap the source operands (`a * b` -> `b * a`) (64)",
         "`add rT,rBase,rT` vs `add rT,rT,rIdx`: `base[i]` vs `*(base + i)`, cast form of the index (85); member offset added after the index (42)",
         "a three-term index sum: brute-force the 12 groupings, the frontend rotates them (84); `python3 tools/leversweep.py fn UNIT FN --levers sum3-regroup`",
+        "wrap just that product/sum in a small static inline (`static inline float Row(float row, float origin) { return row + origin; }`): the parameter order fixes the operands (Codex: fn_8020579C, fn_801F6C2C)",
+        "a literal instead of an extern constant inside the product, `(10.0f * scale) * k` (ItemObject_CheckKartCollision); declaration order / lifetime of the accumulator (KartFx_BurnoutChargeTick)",
     ]),
     "load:target-reloads": ("the target loads a value AGAIN that ours keeps in a register", [
         "do not cache it in a local: write the member / global expression again at the second use",
@@ -134,6 +143,8 @@ CLASSES = {
         "a store in between that may alias in the target: drop `__restrict`/`const`, store through the real (non-char-safe) pointer type; unrolled store run that reloads = write the loop (21)",
         "reload after a call: the value is not a local in the original (global or member read each time)",
         "`#pragma opt_common_subs off` for the function (1, 29), then re-create the CSEs you still need by hand",
+        "a CONSTANT reloaded (`lfs fN,lbl@sda` twice): literal vs `extern const float` decides whether it is kept in a register (rules 5; KartPair3ArmUpdate: `c->yaw[i] *= -1.0f`)",
+        "cached values through axis/scale inline helpers, scale-first multiply (fn_802064D8)",
     ]),
     "load:ours-reloads": ("ours loads a value again that the target keeps in a register", [
         "cache it in a named local (snapshot before the stores / calls)",
@@ -145,6 +156,7 @@ CLASSES = {
         "`lfs fA,K; fmr fB,fA` direction between a named accumulator and an inline local with the same initial constant (79)",
         "`li rA,0; mr rB,rA`: both variables are locals of an inlined function (67)",
         "literal vs `extern const float` (12; rules 5); read constants directly and turn CSE off (29)",
+        "`mr r30,r29` where ours has `li r30,0`: the search loop is a static inline returning the pointer, so its zero init is copied from the caller's (fn_80226B20, fn_80170B5C)",
     ]),
     "address:pool": ("data is addressed through another base (pooled anchor vs one `lis/addi` per object)", [
         "target uses ONE base + offsets: the original TU owns that data section; give the TU the range in splits.txt and define the objects in order (rules 5 'Pooled base registers', 13, 40)",
@@ -157,6 +169,8 @@ CLASSES = {
         "ours has the extra `addi`: write `&obj` at each use and let the compiler hoist it (90), or index the object directly instead of `base + CONST` (40)",
         "first access folded, the rest through a pointer: static object behind the section anchor (13)",
         "`addi rX,rY,0` instead of `mr` in a leaf: GC/1.2.5n (rules 4)",
+        "an extra `li rN,0/1`: let the code reuse an earlier constant (selection in a static inline, fn_8020D00C; loops in a shared inline that use the initialised counter, fn_801807E0); declaration order of the zero/index locals (card_unpack_v1)",
+        "extra `addi` + `mr` for a table base: file-static typed arrays referenced directly, no cached base pointer (fn_8020B234, fn_801903D0); native string literals instead of an extern message-base pointer (ClStream_UpdateAll)",
     ]),
     "address:sda": ("small-data (`r13`/`r2`) addressing on one side, `lis/addi` on the other", [
         "the object's declared size/section differs: `extern T x[]` (unknown size) is never SDA; give the real size, or declare it as an array to force `lis/addi`",
@@ -192,15 +206,18 @@ CLASSES = {
         "a dead truncation: `(int)x` assigned to a u8 (69); narrow-cast toggle: `python3 tools/leversweep.py fn UNIT FN --levers narrow-cast-toggle`",
         "byte stores of a shifted word: write the mask, `PUT((v >> 8) & 0xFF)` (rules 7.8)",
         "a `long` index passed as `int` (49); bool vs int flag",
+        "`rlwimi` vs `clrlwi; or`: bitfield insert (`x = (x & ~m) | v` / struct bitfield) vs separate mask and or; fade/colour packing expression shape (fn_801D9B70)",
     ]),
     "select:signedness": ("signed vs unsigned instruction selection", [
         "`cmpwi` vs `cmplwi`, `srawi(+addze)` vs `srwi`, `mulhw` vs `mulhwu`, `lha` vs `lhz`, `xoris 0x8000` in int->float: change the signedness of the variable / field / constant (17)",
         "enum vs int; `size_t`/`u32` loop bounds; char signedness of a struct member",
+        "`cmpwi`/`cmplwi` against 0 on a flag: bool/u8 fields with explicit control flow instead of a mask select (fn_801DABFC)",
     ]),
     "select:compare": ("another compare / branch condition", [
         "`<` vs `<=` with constant +-1, `!=` vs `<` as the loop test, operands swapped (`a < b` vs `b > a`)",
         "unsigned range check `(unsigned)(x - lo) <= hi - lo` vs two compares: write the `&&` form or a switch",
         "`cror` + `beq`/`bne`: float `<=`/`>=`; negate the test to flip it",
+        "a byte predicate: `== 1` gives `srwi; cmplwi; bne`, `> 0` gives `srwi.; beq` (fn_801F7198)",
     ]),
     "select:fused": ("`fmadds`/`fmsubs` on one side, `fmuls` + `fadds` on the other", [
         "target does NOT fuse where ours does: multiply through an inline helper so the product is a separate temp (39)",
@@ -244,6 +261,7 @@ CLASSES = {
         "one shared counter over several loops vs block-local counters (34, 46, 73); loop inside an inline (47, 68)",
         "early return vs `goto end` / single exit; `if (a || b == X) return;`; empty `case N: break;` (rules 7.5)",
         "a hand-expanded recursion or an already matched function's body: call the real function and let it inline (20, 25)",
+        "a missing or unreachable `b`/branch in a switch: spell out the full case domain, leading with the case the target tests first (Effect_Cluster16_Update, ItemObject_Tick_Kind28); nested pointer validation inside an inline (roll2upvec, upvec2roll)",
     ]),
     "call:inline": ("a function is called on one side and inlined on the other", [
         "target calls, ours inlines: define the callee AFTER the caller, `-inline noauto` on the TU (rules 4), or `#pragma dont_inline on` around it",
@@ -284,7 +302,7 @@ class Ins:
         self.ops, self.reloc, self.rc, self.dest = [], None, None, None
         if len(parts) > 1:
             body = parts[1]
-            m = re.search(r"\b([0-9a-f]+) <[^>]+>\s*$", body)
+            m = re.search(r"\b([0-9a-f]+) <.+>\s*$", body)
             if m and (self.mn.startswith("b")):
                 self.dest = int(m.group(1), 16)
                 body = body[:m.start()].rstrip(", ")
@@ -312,8 +330,8 @@ class Ins:
                     if not o.startswith("(") and not REG.match(o) and not o.startswith("cr"):
                         ops[k] = sym + tag
                         break
-                if typ == "R_PPC_EMB_SDA21":
-                    ops = [o for o in ops if o != "(0)"]
+                if "SDA" in typ:
+                    ops = [o for o in ops if o not in ("(0)", "(r2)", "(r13)")]
         elif self.dest is not None:
             ops = [o for o in ops]  # condition register operand stays
             ops.append("fwd" if self.dest > self.addr else "back")
@@ -738,6 +756,9 @@ def classify_delta(Tx, Ox, tseq, oseq, tlp, olp):
         side = "target has " + " ".join(f"{k}x{v}" for k, v in sorted(tm.items())) if tm else ""
         side += (" / " if tm and om else "") + ("ours has " + " ".join(f"{k}x{v}" for k, v in sorted(om.items())) if om else "")
         return [("address:materialise", side)]
+    if any(k.endswith(".") for k in allm) and any(k.startswith("cmp") for k in allm) and len(allm) <= 6 \
+            and fam(allm, r"\w+\.|cmp\w+|b\w+|srwi|slwi|rlwinm|andi|extrwi|clrlwi|f?mr"):
+        return [("select:compare", f"record form vs explicit compare: target {' '.join(sorted(tm)) or '-'} / ours {' '.join(sorted(om)) or '-'}")]
     if BOOLARITH & allm and any(re.fullmatch(r"b\w+|cmp\w+|li", k) for k in allm):
         ta = bool(BOOLARITH & set(tm))
         return [("select:bool", ("target" if ta else "ours") + " computes the flag with arithmetic (" +
