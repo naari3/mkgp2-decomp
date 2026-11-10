@@ -118,3 +118,20 @@ Pitfalls seen so far:
 - A header named after a generic type (`Node`, `ListNode`, `Obj`) holds the
   largest identical group only; other TUs keep a different local `Node`.
 - Data symbol naming (the second half of this task) has not been started.
+
+Pitfall (2026-11-10): objects restored from the setup build cache have no
+header dependencies in ninja's deps log (`ninja -t deps X.o` lists only the
+source), so a header-only change does not rebuild them and `hashes diff` /
+main.dol say nothing about those TUs. Before landing a batch that edits
+headers (copies in include/game/*.h, shared headers), run one clean build:
+`rm -rf build/GNLJ82/src && ninja` (about 2 minutes). Batches 3-6 and the
+data names were confirmed with a clean build on 88e7a64.
+
+Member-name tiers (2026-11-10): `unify` renames members of minority copies
+whose members agree by position; `relayout` re-cuts copies with the same
+byte layout to the canonical member list when every accessed member has a
+counterpart at the same offset and type. Both rename only `.x` / `->x`
+in the copy's own file and skip copies in headers, files with an aggregate
+initialiser of the type, and names other structs in reach also use. Run
+`apply` afterwards. What is left differs in method signatures or layout:
+changing those changes mangled names or code, so each needs a human.
