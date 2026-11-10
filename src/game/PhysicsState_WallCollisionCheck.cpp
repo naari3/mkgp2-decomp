@@ -1,8 +1,68 @@
-/* Native candidate. Literal zeroes allow normal common-subexpression handling
- * and preserve the target's function size without optimisation pragmas.
- * Rotation-pointer lifetime and vector-operation registers remain non-exact. */
+/* Native candidate: only two vector-copy store pairs remain non-exact. */
 #include "game/PhysicsCollisionPrivate.h"
-#include "game/PhysicsWallMatrixPrivate.h"
+
+static inline PhysicsCollisionVec *WallEndpoint(PhysicsCollisionVec &value) {
+    PhysicsCollisionVec *result = &value;
+    return result;
+}
+
+static inline float WallRowProduct(const float *row, const float *column) {
+    float value = row[0] * column[0];
+    value += row[1] * column[4];
+    value += row[2] * column[8];
+    value += row[3] * column[12];
+    return value;
+}
+
+/* Indexed rows let identity initialization and multiplication share a base. */
+struct WallCollisionMatrix {
+    float m[4][4];
+    WallCollisionMatrix() {}
+    void setTranslation(float x, float y, float z) {
+        m[3][0] = x;
+        m[3][1] = y;
+        m[3][2] = z;
+    }
+    WallCollisionMatrix(const WallCollisionMatrix &other) {
+        for (int i = 0; i < 16; ++i) ((float *)m)[i] = ((const float *)other.m)[i];
+    }
+    void identity() {
+        for (int i = 0; i < 4; ++i)
+            for (int j = 0; j < 4; ++j) m[i][j] = 0.0f;
+        m[0][0] = m[1][1] = m[2][2] = m[3][3] = lbl_806DA450;
+    }
+    WallCollisionMatrix &operator*=(const WallCollisionMatrix &b) {
+        WallCollisionMatrix result;
+        const float *column;
+        float *output = result.m[0];
+        const float *right = b.m[0];
+        int n = 0;
+        for (int i = 0; i < 4; i++) {
+            column = right;
+            for (int j = 0; j < 4; j++, column++) {
+                float value = WallRowProduct(m[i], column);
+                output[n + j] = value;
+            }
+            n += 4;
+        }
+        for (int i = 0; i < 16; i++) ((float *)m)[i] = ((float *)result.m)[i];
+        return *this;
+    }
+    WallCollisionMatrix(float yaw) {
+        identity();
+        float cosine = (float)cos(yaw);
+        float sine = (float)sin(yaw);
+        m[0][0] = cosine;
+        m[2][0] = sine;
+        m[2][2] = cosine;
+        m[0][2] = -sine;
+    }
+    void applyYaw(float yaw) {
+        WallCollisionMatrix rotation(yaw);
+        rotation *= *this;
+        *this = rotation;
+    }
+};
 
 static inline void CollisionLength(float &squared)
 {
@@ -26,11 +86,11 @@ extern "C" void PhysicsState_WallCollisionCheck(char *self)
         PH_F(self, 0x50) = hitPosition[1];
         PH_F(self, 0x54) = hitPosition[2];
     }
-    PhysicsWallMatrix original(*(PhysicsWallMatrix *)(self + 0xE4));
+    WallCollisionMatrix original(*(WallCollisionMatrix *)(self + 0xE4));
     original.applyYaw(PH_F(self, 0x84));
     original.setTranslation(PH_F(self, 0x4C), PH_F(self, 0x50), PH_F(self, 0x54));
     PhysicsCollisionVec endpoint;
-    PhysicsCollisionVec *ep = &endpoint;
+    PhysicsCollisionVec *ep = WallEndpoint(endpoint);
     unsigned char applied = 0;
     for (int corner = 0; corner < 4; ++corner) {
         PhysicsCollisionVec scaled;
@@ -42,9 +102,9 @@ extern "C" void PhysicsState_WallCollisionCheck(char *self)
         scaled.x *= PH_F(self, 0x13C);
         scaled.y *= PH_F(self, 0x13C);
         scaled.z *= PH_F(self, 0x13C);
-        endpoint.x = original.m[12] + (original.m[0] * scaled.x + scaled.y * original.m[4] + scaled.z * original.m[8]);
-        endpoint.y = original.m[13] + (original.m[1] * scaled.x + scaled.y * original.m[5] + scaled.z * original.m[9]);
-        endpoint.z = original.m[14] + (scaled.x * original.m[2] + scaled.y * original.m[6] + scaled.z * original.m[10]);
+        endpoint.x = original.m[3][0] + (original.m[0][0] * scaled.x + scaled.y * original.m[1][0] + scaled.z * original.m[2][0]);
+        endpoint.y = original.m[3][1] + (original.m[0][1] * scaled.x + scaled.y * original.m[1][1] + scaled.z * original.m[2][1]);
+        endpoint.z = original.m[3][2] + (scaled.x * original.m[0][2] + scaled.y * original.m[1][2] + scaled.z * original.m[2][2]);
         if (Terrain_RaycastWall(self + 0x4C, ep, &correction, &normal)) {
             correction.x -= endpoint.x;
             correction.y -= endpoint.y;
