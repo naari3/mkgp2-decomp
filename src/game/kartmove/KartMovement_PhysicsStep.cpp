@@ -11,7 +11,7 @@ extern const float lbl_806D97A8;
 extern const double lbl_806D96F0, lbl_806D96F8, lbl_806D97A0;
 
 extern "C" {
-void fn_8019EA8C(Vec3 *);
+float fn_8019EA8C(Vec3 *);
 float fn_8019EA08(Vec3 *);
 float fn_8019E9C0(Vec3 *, Vec3 *);
 void fn_8019EC18(Matrix44 *, float);
