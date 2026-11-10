@@ -1,7 +1,7 @@
-/* Native C++ candidate: 98.64286% text, exact owned EH.
+/* Native C++ candidate: 98.70982% text, exact owned EH.
  * Vector-length inline boundaries reproduce the target square-root FP homes.
  * Typed state and literal constants recover the damping/zero-load schedule.
- * The push helper preserves a separate by-value input snapshot.
+ * The push helper snapshots all three input components before updating them.
  * Remaining differences: angle/offset and push FP allocation/scheduling.
  * The empty canonical vector destructor supplies compiler-generated cleanup.
  */
@@ -64,9 +64,15 @@ static inline void set_scaled(volatile Vec3 &dest, float ax, float ay, float az,
     dest.z = az * factor;
 }
 
-static inline void apply_push(CollisionForceState *self, volatile Vec3 &push, float dx, float dy, float dz) {
+static inline void apply_push(CollisionForceState *self, volatile Vec3 &push) {
+    float dx;
+    float dy;
+    float dz;
     float scale;
     int timer;
+    dz = self->push.z;
+    dy = self->push.y;
+    dx = self->push.x;
     push.y = dy;
     push.x = dx;
     push.z = dz;
@@ -87,10 +93,6 @@ static inline void apply_push(CollisionForceState *self, volatile Vec3 &push, fl
     }
 
     subtract_vector(*(Vec3 *)&self->position, push);
-}
-
-static inline float vector_x(const PhysicsPlainVec &v) {
-    return v.x;
 }
 
 #pragma exceptions on
@@ -151,7 +153,7 @@ extern "C" void KartPhysics_ApplyCollisionForce(CollisionForceState *self) {
     }
 
     if (self->applyForce != 0) {
-        apply_push(self, push, vector_x(self->push), self->push.y, self->push.z);
+        apply_push(self, push);
     }
 
     scale = 0.88f;
