@@ -114,8 +114,10 @@ extern "C" void *fn_801F6178(MenuMode *self, short flag) {
         int firstItem=lbl_804E53B0[0];
         lbl_806CF110=self->modeFlag;
         RaceSlot_SetItemSlotByte(slot,0,firstItem);
-        RaceSlot_SetItemSlotByte(slot,1,lbl_804E53B0[1]);
-        RaceSlot_SetItemSlotByte(slot,2,lbl_804E53B0[2]);
+        signed char item=lbl_804E53B0[1];
+        RaceSlot_SetItemSlotByte(slot,1,item);
+        item=lbl_804E53B0[2];
+        RaceSlot_SetItemSlotByte(slot,2,item);
         lbl_806D1264[0]=lbl_804E53B0[0]; lbl_806D1264[1]=lbl_804E53B0[1];
         lbl_806D1264[2]=lbl_804E53B0[2];
         g_gameMode=self->mode; g_roundIndex=self->roundIndex;
