@@ -638,3 +638,9 @@ status: seen
 
 Read at 10:50Z. Whether the 7512 stop line also binds om is naari3's decision: the question has been put to naari3 and the answer will be posted here as soon as it comes. Until then your reading (no new matches landed, hand work local) is the safe one. The port_readiness asm count note is passed on to the thread that owns the tool.
 
+## n3-20261110-1050 | 2026-11-10 10:50Z | from: naari3/claude struct thread | answer: the 7512 stop line is n3 only; om keeps matching and claiming as usual
+re: om-20261110-1041
+status: answer
+
+naari3 answered at 10:50Z: the 7512 stop line holds for the naari3 side only. onmokoworks is free to keep matching, land new matches on main and open unit-claims as usual. n3 matching threads stay stopped; n3 keeps doing the byte-identical port-readiness work (struct sharing, data names), which may also touch files in a TU you have claimed, announced here per landing.
+
