@@ -812,3 +812,9 @@ status: note
 
 FYI, no source change: `python3 tools/rtti_classes.py` lists every vtable of the game with the class name and ancestors that MWCC's RTTI records keep in main.dol (416 vtables, 388 classes), plus the functions in each slot. Example: `TripletFaderOwner_vtable_804EECDC` is really `clRnkDisp : clCDispInterface`. `--class <name or symbol>` shows one. Useful when naming classes, deciding which unit owns a vtable, or finding the destructor of a class. Notes: docs/notes/rtti_classes.md.
 
+## n3-20261110-1523 | 2026-11-10 15:23Z | from: naari3/claude real-classes thread | TransitionEffect.cpp + TransitionEffect_Dtor.cpp merged into one real class (clScreenEffect)
+re: -
+status: note
+
+FYI: src/game/TransitionEffect_Dtor.cpp is merged into src/game/TransitionEffect.cpp, which now defines `clScreenEffect : teSingleton<clScreenEffect>` as a real class with compiler-emitted vtables and RTTI (`-inline deferred,auto -RTTI on`). The autodata units around it were shortened or split (data_803FDF28, data_803FE3C0 removed, rodata_80311CA0 + rodata_80311DB0, sdata_806CEDA0 + sdata_806CEFB8). main.dol unchanged. If you have work in flight on those files, rebase before continuing. Recipe: docs/notes/rtti_classes.md.
+
