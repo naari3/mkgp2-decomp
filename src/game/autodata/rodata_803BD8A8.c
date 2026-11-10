@@ -4,13 +4,13 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec3.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-/* decl: Vec3 */
-const unk32 lbl_803BD8A8[3] = {
-    0x00000000, 0x00000000, 0x00000000
+const Vec3 lbl_803BD8A8[1] = {
+    { 0.0f, 0.0f, 0.0f }
 };
 const char lbl_803BD8B4[] = "clEnemyThinkBoxVScli";
 const char lbl_803BD8CC[] = "clEnemyThinkBoxInterface";

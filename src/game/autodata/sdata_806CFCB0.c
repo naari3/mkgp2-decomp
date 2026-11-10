@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Remap.h"
 
 extern char clFlowCard[];
 extern char clFlowChara[];
@@ -90,9 +91,8 @@ void *lbl_806CFCF0[2] = {
 float lbl_806CFCF8[2] = {
     2.0f, 0.0f
 };
-/* decl: Remap */
-unk32 lbl_806CFD00[2] = {
-    0xFFFFFFFF, 0xFFFFFFFF
+Remap lbl_806CFD00[1] = {
+    { -1, -1 }
 };
 int g_spriteSystemInited[2] = {
     -1, 0

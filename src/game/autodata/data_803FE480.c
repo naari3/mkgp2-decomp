@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/CardPrinterStatePtr.h"
 
 extern void CameraChecker_Alloc();
 extern void CameraChecker_Draw();
@@ -351,6 +352,24 @@ extern char lbl_806D32BC[];
 extern char lbl_806D32C4[];
 extern char lbl_806D3440[];
 
+/* layout as declared in src/game/CardTaskChecks.cpp */
+typedef struct CardTextLine {
+    float x;
+    float y;
+    char *format;
+    int font;
+    int r;
+    int g;
+    int b;
+    int a;
+} CardTextLine;
+
+/* layout as declared in src/game/card_task_manager_create.c */
+typedef struct CardTaskFactory {
+    void *create;   /* function * */
+    void *other;
+} CardTaskFactory;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -458,56 +477,13 @@ void *lbl_803FE5F0[3] = {
     (void *)0xFFFFFFFF,
     (void *)CardTaskWelcome_StepStatus
 };
-/* decl: CardTextLine */
-void *lbl_803FE5FC[48] = {
-    (void *)0x43540000,
-    (void *)0x43800000,
-    (void *)&lbl_803128CC,
-    (void *)0x1,
-    (void *)0xFF,
-    (void *)0xFF,
-    (void *)0xFF,
-    (void *)0xFF,
-    (void *)0x42EE0000,
-    (void *)0x43700000,
-    (void *)&lbl_803128E4,
-    (void *)0x1,
-    (void *)0xFF,
-    (void *)0xFF,
-    (void *)0xFF,
-    (void *)0xFF,
-    (void *)0x43200000,
-    (void *)0x43960000,
-    (void *)&lbl_80312938,
-    (void *)0x1,
-    (void *)0xFF,
-    (void *)0xFF,
-    (void *)0xFF,
-    (void *)0xFF,
-    (void *)0x434C0000,
-    (void *)0x43960000,
-    (void *)&lbl_80312958,
-    (void *)0x1,
-    (void *)0xFF,
-    (void *)0xFF,
-    (void *)0xFF,
-    (void *)0xFF,
-    (void *)0x43020000,
-    (void *)0x43960000,
-    (void *)&lbl_8031296C,
-    (void *)0x1,
-    (void *)0xFF,
-    (void *)0xFF,
-    (void *)0xFF,
-    (void *)0xFF,
-    (void *)0x430C0000,
-    (void *)0x43960000,
-    (void *)&lbl_80312994,
-    (void *)0x1,
-    (void *)0xFF,
-    (void *)0xFF,
-    (void *)0xFF,
-    (void *)0xFF
+CardTextLine lbl_803FE5FC[6] = {
+    { 212.0f, 256.0f, (void *)&lbl_803128CC, 1, 255, 255, 255, 255 },
+    { 119.0f, 240.0f, (void *)&lbl_803128E4, 1, 255, 255, 255, 255 },
+    { 160.0f, 300.0f, (void *)&lbl_80312938, 1, 255, 255, 255, 255 },
+    { 204.0f, 300.0f, (void *)&lbl_80312958, 1, 255, 255, 255, 255 },
+    { 130.0f, 300.0f, (void *)&lbl_8031296C, 1, 255, 255, 255, 255 },
+    { 140.0f, 300.0f, (void *)&lbl_80312994, 1, 255, 255, 255, 255 }
 };
 /* decl: CardStep */
 void *lbl_803FE6BC[3] = {
@@ -629,16 +605,11 @@ void *lbl_803FE7DC[3] = {
     (void *)0xFFFFFFFF,
     (void *)CameraChecker_State_Entry
 };
-/* decl: CardTaskDesc / CardTaskFactory */
-void *lbl_803FE7E8[8] = {
-    (void *)CardTaskWelcome_New,
-    (void *)&lbl_806D32AC,
-    (void *)CardTaskWaitInput_New,
-    (void *)&lbl_806D32B4,
-    (void *)CardTaskPrintJob_New,
-    (void *)&lbl_806D32BC,
-    (void *)CameraChecker_Alloc,
-    (void *)&lbl_806D32C4
+CardTaskFactory lbl_803FE7E8[4] = {
+    { (void *)CardTaskWelcome_New, (void *)&lbl_806D32AC },
+    { (void *)CardTaskWaitInput_New, (void *)&lbl_806D32B4 },
+    { (void *)CardTaskPrintJob_New, (void *)&lbl_806D32BC },
+    { (void *)CameraChecker_Alloc, (void *)&lbl_806D32C4 }
 };
 void *lbl_803FE808[3] = {
     (void *)&lbl_806CEFE0,
@@ -711,29 +682,17 @@ void *lbl_803FE8B8[8] = {
     0,
     (void *)fn_80089FA0
 };
-/* decl: CardPrinterStatePtr */
-void *lbl_803FE8D8[3] = {
-    0,
-    (void *)0xFFFFFFFF,
-    (void *)CardPrinterChecker_State_CardResetWait
+CardPrinterStatePtr lbl_803FE8D8[1] = {
+    { 0, -1, (void *)CardPrinterChecker_State_CardResetWait }
 };
-/* decl: CardPrinterStatePtr */
-void *lbl_803FE8E4[3] = {
-    0,
-    (void *)0xFFFFFFFF,
-    (void *)CardPrinterChecker_State_CleaningWait
+CardPrinterStatePtr lbl_803FE8E4[1] = {
+    { 0, -1, (void *)CardPrinterChecker_State_CleaningWait }
 };
-/* decl: CardPrinterStatePtr */
-void *lbl_803FE8F0[3] = {
-    0,
-    (void *)0xFFFFFFFF,
-    (void *)CardPrinterChecker_State_CardEjectWait
+CardPrinterStatePtr lbl_803FE8F0[1] = {
+    { 0, -1, (void *)CardPrinterChecker_State_CardEjectWait }
 };
-/* decl: CardPrinterStatePtr */
-void *lbl_803FE8FC[3] = {
-    0,
-    (void *)0xFFFFFFFF,
-    (void *)fn_8008F074
+CardPrinterStatePtr lbl_803FE8FC[1] = {
+    { 0, -1, (void *)fn_8008F074 }
 };
 /* decl: CardPrinterStatePtr */
 void *lbl_803FE908[4] = {

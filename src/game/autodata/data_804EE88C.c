@@ -19,6 +19,12 @@ extern char lbl_806D0858[];
 extern char lbl_806D0864[];
 extern char lbl_806D086C[];
 
+/* layout as declared in src/game/RaceDigitLap.cpp */
+typedef struct DigitPosition {
+    float x;
+    float y;
+} DigitPosition;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -58,13 +64,27 @@ float lbl_804EE8F0[3][10][2] = {
     { { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f } },
     { { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 0.0f }, { 0.0f, 4.0f }, { 0.0f, 4.0f }, { 0.0f, 4.0f } }
 };
-/* decl: DigitPosition */
-float lbl_804EE9E0[40] = {
-    32.0f, 116.0f, 32.0f, 163.0f, 32.0f, 1.9e+02f, 32.0f, 0.0f,
-    32.0f, 0.0f, 32.0f, 0.0f, 32.0f, 0.0f, 32.0f, 0.0f,
-    32.0f, 0.0f, 32.0f, 0.0f, 3e+01f, 6e+01f, 32.0f, 124.0f,
-    32.0f, 151.0f, 32.0f, 0.0f, 32.0f, 0.0f, 32.0f, 0.0f,
-    32.0f, 0.0f, 32.0f, 0.0f, 32.0f, 0.0f, 32.0f, 0.0f
+DigitPosition lbl_804EE9E0[20] = {
+    { 32.0f, 116.0f },
+    { 32.0f, 163.0f },
+    { 32.0f, 190.0f },
+    { 32.0f, 0.0f },
+    { 32.0f, 0.0f },
+    { 32.0f, 0.0f },
+    { 32.0f, 0.0f },
+    { 32.0f, 0.0f },
+    { 32.0f, 0.0f },
+    { 32.0f, 0.0f },
+    { 30.0f, 60.0f },
+    { 32.0f, 124.0f },
+    { 32.0f, 151.0f },
+    { 32.0f, 0.0f },
+    { 32.0f, 0.0f },
+    { 32.0f, 0.0f },
+    { 32.0f, 0.0f },
+    { 32.0f, 0.0f },
+    { 32.0f, 0.0f },
+    { 32.0f, 0.0f }
 };
 void *lbl_804EEA80[3] = {
     (void *)&lbl_806D0864,

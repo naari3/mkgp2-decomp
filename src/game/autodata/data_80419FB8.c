@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec.h"
 
 extern void CelebPop17_SpawnAll();
 extern void CharaPop12_SpawnAll();
@@ -36,6 +37,24 @@ extern char lbl_8032A6E4[];
 extern char lbl_8032A6FC[];
 extern char lbl_8032A714[];
 
+/* layout as declared in src/game/EffectVfx55_HornBlastTrio_Tick.c */
+typedef struct HornBlastCurve {
+    float keys[3];
+    float scale[3];
+    float alpha[3];
+} HornBlastCurve;
+
+/* layout as declared in src/game/EffectVfx29_30_Item4SubFlame_Tick.c */
+typedef struct FlameCurve {
+    float keys[5];
+    float values[5];
+} FlameCurve;
+
+/* layout as declared in src/game/KartFxExhaustRay.c */
+typedef struct RayColors {
+    Vec entries[2];
+} RayColors;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -60,13 +79,20 @@ void *lbl_80419FB8[18] = {
     (void *)VfxSpritePopup_TickType0,
     0
 };
-/* decl: Vec */
-float lbl_8041A000[39] = {
-    0.0f, 3.0f, 0.0f, 0.0f, 4.5f, 0.0f, 0.0f, 2.0f,
-    0.0f, 0.0f, 2.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-    3.0f, 0.0f, 0.0f, 1.5f, 0.0f, 0.0f, 3.0f, 0.0f,
-    0.0f, 4.0f, 0.0f, 0.0f, 4.0f, 0.0f, 0.0f, 2.0f,
-    0.0f, 0.0f, 3.0f, 0.0f, 0.0f, 1.7f, -1.0f
+Vec lbl_8041A000[13] = {
+    { 0.0f, 3.0f, 0.0f },
+    { 0.0f, 4.5f, 0.0f },
+    { 0.0f, 2.0f, 0.0f },
+    { 0.0f, 2.5f, 0.0f },
+    { 0.0f, 1.0f, 0.0f },
+    { 0.0f, 3.0f, 0.0f },
+    { 0.0f, 1.5f, 0.0f },
+    { 0.0f, 3.0f, 0.0f },
+    { 0.0f, 4.0f, 0.0f },
+    { 0.0f, 4.0f, 0.0f },
+    { 0.0f, 2.0f, 0.0f },
+    { 0.0f, 3.0f, 0.0f },
+    { 0.0f, 1.7f, -1.0f }
 };
 unk32 lbl_8041A09C[5] = {
     0x00000000, 0x00000002, 0x00000096, 0x000000D2, 0xFFFFFFFF
@@ -140,35 +166,34 @@ char *lbl_8041A17C[15] = {
     (char *)&lbl_803295F0,
     0
 };
-/* decl: HornBlastCurve */
-float lbl_8041A1B8[27] = {
-    0.0f, 2.0f, 4.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-    1.0f, 2.0f, 3.0f, 4.0f, 0.0f, 0.5f, 1.0f, 1.0f,
-    1.0f, 1.0f, 4.0f, 5.5f, 7.0f, 1.0f, 1.5f, 2.0f,
-    1.0f, 0.5f, 0.0f
+HornBlastCurve lbl_8041A1B8[3] = {
+    { { 0.0f, 2.0f, 4.0f }, { 0.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
+    { { 2.0f, 3.0f, 4.0f }, { 0.0f, 0.5f, 1.0f }, { 1.0f, 1.0f, 1.0f } },
+    { { 4.0f, 5.5f, 7.0f }, { 1.0f, 1.5f, 2.0f }, { 1.0f, 0.5f, 0.0f } }
 };
-/* decl: FlameCurve */
-float lbl_8041A224[20] = {
-    0.0f, 1.0f, 1e+01f, 22.0f, 29.0f, 1e+02f, 1.5e+02f, 1.2e+02f,
-    8e+01f, 0.0f, 0.0f, 5.0f, 1e+01f, 4e+01f, 54.0f, 6e+01f,
-    8e+01f, 1e+02f, 5e+01f, 3e+01f
+FlameCurve lbl_8041A224[2] = {
+    { { 0.0f, 1.0f, 10.0f, 22.0f, 29.0f }, { 100.0f, 150.0f, 120.0f, 80.0f, 0.0f } },
+    { { 0.0f, 5.0f, 10.0f, 40.0f, 54.0f }, { 60.0f, 80.0f, 100.0f, 50.0f, 30.0f } }
 };
-/* decl: Vec */
-float lbl_8041A274[3] = {
-    1.0f, 0.6f, 1.0f
+Vec lbl_8041A274[1] = {
+    { 1.0f, 0.6f, 1.0f }
 };
-/* decl: RayColors */
-float lbl_8041A280[12] = {
-    0.5f, 1.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-    0.0f, 0.0f, 0.0f, 0.0f
+RayColors lbl_8041A280[2] = {
+    { { { 0.5f, 1.5f, 0.5f }, { 0.0f, 0.0f, 1.0f } } },
+    { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } }
 };
-/* decl: Vec */
-float lbl_8041A2B0[33] = {
-    1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.9f, 0.9f,
-    0.9f, 1.2f, 1.2f, 1.2f, 1.1f, 1.1f, 1.1f, 1.0f,
-    1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.2f, 1.2f, 1.2f,
-    1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.9f, 0.9f,
-    0.9f
+Vec lbl_8041A2B0[11] = {
+    { 1.0f, 1.0f, 1.0f },
+    { 1.0f, 1.0f, 1.0f },
+    { 0.9f, 0.9f, 0.9f },
+    { 1.2f, 1.2f, 1.2f },
+    { 1.1f, 1.1f, 1.1f },
+    { 1.0f, 1.0f, 1.0f },
+    { 1.0f, 1.0f, 1.0f },
+    { 1.2f, 1.2f, 1.2f },
+    { 1.0f, 1.0f, 1.0f },
+    { 1.0f, 1.0f, 1.0f },
+    { 0.9f, 0.9f, 0.9f }
 };
 char *lbl_8041A334[3] = {
     (char *)&lbl_8032A6E4,

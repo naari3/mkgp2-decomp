@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec3.h"
 
 extern void fn_8016A26C();
 extern void fn_8016A2BC();
@@ -78,6 +79,22 @@ extern char lbl_806CFC64[];
 extern char lbl_806CFC6C[];
 extern char lbl_806CFC90[];
 extern char lbl_806CFC98[];
+
+/* layout as declared in src/game/NokoNoko_Init.c */
+typedef struct SpawnRow {
+    float x;
+    float y;
+    float z;
+    unsigned int flags;
+} SpawnRow;
+
+/* layout as declared in src/game/objview/fn_8018D82C.cpp */
+typedef struct TexWrap {
+    int pad0;
+    unsigned char s;
+    unsigned char t;
+    unsigned char pad6[10];
+} TexWrap;
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -690,16 +707,23 @@ void *lbl_80495C0C[7] = {
     (void *)fn_8016A26C,
     0
 };
-/* decl: SpawnRow */
-unk32 lbl_80495C28[64] = {
-    0xC11E9C5F, 0x00000000, 0x44806D89, 0x00000001, 0xC0CAA5A0, 0x00000000, 0xC4253568, 0x00000001,
-    0xC0041548, 0x00000000, 0xC45F21E7, 0x00000001, 0x44556852, 0x00000000, 0x448F6C5A, 0x00000001,
-    0xC092E8C2, 0x00000000, 0x4438811A, 0x00000001, 0x44553A1D, 0x00000000, 0xC463EA78, 0x00000001,
-    0x44579952, 0x00000000, 0xC4186AC7, 0x00000001, 0x44564376, 0x00000000, 0x4411DA53, 0x00000001,
-    0xC0F1A8AC, 0x00000000, 0xC4A9E2A0, 0x00000001, 0xBFC2AF79, 0x00000000, 0xC3BF55E7, 0x00000001,
-    0x44523375, 0x00000000, 0xC49384A4, 0x00000001, 0x445619F4, 0x00000000, 0x4393678D, 0x00000001,
-    0x4455E47E, 0x00000000, 0x445FEF6E, 0x00000001, 0xC0E3706B, 0x00000000, 0xC48E54CD, 0x00000001,
-    0x3FE7F887, 0x00000000, 0x43E35965, 0x00000001, 0x00000000, 0x00000000, 0x00000000, 0x00000002
+SpawnRow lbl_80495C28[16] = {
+    { -9.913177f, 0.0f, 1027.423f, 1 },
+    { -6.332718f, 0.0f, -660.8345f, 1 },
+    { -2.063799f, 0.0f, -892.5297f, 1 },
+    { 853.63f, 0.0f, 1147.386f, 1 },
+    { -4.590913f, 0.0f, 738.0172f, 1 },
+    { 852.908f, 0.0f, -911.6636f, 1 },
+    { 862.3956f, 0.0f, -609.6684f, 1 },
+    { 857.0541f, 0.0f, 583.4113f, 1 },
+    { -7.55184f, 0.0f, -1359.082f, 1 },
+    { -1.52098f, 0.0f, -382.6711f, 1 },
+    { 840.804f, 0.0f, -1180.145f, 1 },
+    { 856.4055f, 0.0f, 294.809f, 1 },
+    { 855.5702f, 0.0f, 895.7411f, 1 },
+    { -7.107473f, 0.0f, -1138.65f, 1 },
+    { 1.812272f, 0.0f, 454.6984f, 1 },
+    { 0.0f, 0.0f, 0.0f, 2 }
 };
 /* decl: NokoKind * */
 void *lbl_80495D28[3] = {
@@ -714,11 +738,15 @@ void *lbl_80495D34[5] = {
     (void *)&lbl_80377650,
     0
 };
-/* decl: Vec3 */
-float lbl_80495D48[24] = {
-    -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -1.0f,
-    1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f,
-    1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f
+Vec3 lbl_80495D48[8] = {
+    { -1.0f, -1.0f, -1.0f },
+    { 1.0f, -1.0f, -1.0f },
+    { -1.0f, -1.0f, 1.0f },
+    { 1.0f, -1.0f, 1.0f },
+    { -1.0f, 1.0f, -1.0f },
+    { 1.0f, 1.0f, -1.0f },
+    { -1.0f, 1.0f, 1.0f },
+    { 1.0f, 1.0f, 1.0f }
 };
 void *lbl_80495DA8[3] = {
     (void *)&lbl_806CFBE8,
@@ -771,9 +799,9 @@ void *lbl_80495E18[6] = {
     (void *)fn_8018D068,
     (void *)fn_8016A26C
 };
-/* decl: TexWrap / float */
-float lbl_80495E30[8] = {
-    -1.0f, 9.477423e-38f, 0.0f, -0.1f, -1.5e+02f, 3.849744e-37f, 0.0f, -0.1f
+TexWrap lbl_80495E30[2] = {
+    { -1082130432, 2, 1, { 0, 0, 0, 0, 0, 0, 0xBD, 0xCC, 0xCC, 0xCD } },
+    { -1021968384, 3, 3, { 0, 0, 0, 0, 0, 0, 0xBD, 0xCC, 0xCC, 0xCD } }
 };
 void *lbl_80495E50[3] = {
     (void *)&lbl_80377F70,

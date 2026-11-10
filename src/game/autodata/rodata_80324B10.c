@@ -4,6 +4,8 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Int4.h"
+#include "game/types/Vec.h"
 
 extern char lbl_806CF1C0[];
 extern char lbl_806CF1C8[];
@@ -1493,9 +1495,8 @@ const int lbl_80326A64[13][2] = {
     { 510, 550 },
     { 870, 920 }
 };
-/* decl: Int4 */
-const unk32 lbl_80326ACC[4] = {
-    0x00000014, 0x0000000F, 0x0000000A, 0x00000005
+const Int4 lbl_80326ACC[1] = {
+    { { 20, 15, 10, 5 } }
 };
 const int lbl_80326ADC[10] = {
     96, 103, 95, 97, 99, 101, 100, 98,
@@ -1504,9 +1505,8 @@ const int lbl_80326ADC[10] = {
 const int lbl_80326B04[8] = {
     7, 1, 8, 2, 3, 4, 5, 6
 };
-/* decl: Vec */
-const unk32 lbl_80326B24[3] = {
-    0x00000000, 0x00000000, 0x00000000
+const Vec lbl_80326B24[1] = {
+    { 0.0f, 0.0f, 0.0f }
 };
 const char lbl_80326B30[] = "clRankLog";
 const char lbl_80326B3C[] = "teSingleton<clRankLog>";

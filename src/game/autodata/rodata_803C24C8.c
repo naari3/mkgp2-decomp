@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -75,13 +76,11 @@ const char lbl_803C2780[116] = {
 };
 const char lbl_803C27F4[] = "clMnCdAllowDraw";
 /* 8-aligned in the original: probably the first object of a TU */
-/* decl: Vec */
-const unk32 lbl_803C2808[3] __attribute__((aligned(8))) = {
-    0x00000000, 0x00000000, 0x00000000
+const Vec lbl_803C2808[1] __attribute__((aligned(8))) = {
+    { 0.0f, 0.0f, 0.0f }
 };
-/* decl: Vec */
-const unk32 lbl_803C2814[3] = {
-    0x00000000, 0x00000000, 0x00000000
+const Vec lbl_803C2814[1] = {
+    { 0.0f, 0.0f, 0.0f }
 };
 
 #pragma force_active reset

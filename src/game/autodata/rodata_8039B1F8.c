@@ -5,6 +5,16 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* layout as declared in src/game/clFlowCup.c */
+typedef struct CupSide {
+    float x0;
+    float y0;
+    float rot0;
+    float x1;
+    float y1;
+    float rot1;
+} CupSide;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -13,14 +23,15 @@ const char lbl_8039B208[] = "clFlowProcess";
 const short lbl_8039B218[8] = {
     7842, 7843, 7844, 7845, 7846, 7847, 7848, 7849
 };
-/* decl: CupSide */
-const float lbl_8039B228[48] = {
-    52.0f, 192.0f, -1.3e+02f, 132.0f, 192.0f, -5e+01f, 114.0f, 195.0f,
-    1.3e+02f, 2.1e+02f, 195.0f, 5e+01f, 183.0f, 192.0f, -1.3e+02f, 263.0f,
-    192.0f, -5e+01f, 245.0f, 195.0f, 1.3e+02f, 341.0f, 195.0f, 5e+01f,
-    315.0f, 192.0f, -1.3e+02f, 395.0f, 192.0f, -5e+01f, 377.0f, 195.0f,
-    1.3e+02f, 473.0f, 195.0f, 5e+01f, 446.0f, 192.0f, -1.3e+02f, 526.0f,
-    192.0f, -5e+01f, 508.0f, 195.0f, 1.3e+02f, 604.0f, 195.0f, 5e+01f
+const CupSide lbl_8039B228[8] = {
+    { 52.0f, 192.0f, -130.0f, 132.0f, 192.0f, -50.0f },
+    { 114.0f, 195.0f, 130.0f, 210.0f, 195.0f, 50.0f },
+    { 183.0f, 192.0f, -130.0f, 263.0f, 192.0f, -50.0f },
+    { 245.0f, 195.0f, 130.0f, 341.0f, 195.0f, 50.0f },
+    { 315.0f, 192.0f, -130.0f, 395.0f, 192.0f, -50.0f },
+    { 377.0f, 195.0f, 130.0f, 473.0f, 195.0f, 50.0f },
+    { 446.0f, 192.0f, -130.0f, 526.0f, 192.0f, -50.0f },
+    { 508.0f, 195.0f, 130.0f, 604.0f, 195.0f, 50.0f }
 };
 const char clFlowCup[] = "clFlowCup";
 const char lbl_8039B2F4[] = "clFlowProcess";

@@ -31,35 +31,28 @@ extern char lbl_806D4734[];
 extern char lbl_806D4738[];
 extern char lbl_806D473C[];
 
+/* layout as declared in src/game/NameCheck_CardName.c */
+typedef struct NameDelimiterPair {
+    char *open;
+    char *close;
+} NameDelimiterPair;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-/* decl: NameDelimiterPair */
-void *lbl_8040E450[24] = {
-    (void *)&lbl_806D46E4,
-    (void *)&lbl_806D46E8,
-    (void *)&lbl_806D46EC,
-    (void *)&lbl_806D46F0,
-    (void *)&lbl_806D46E8,
-    (void *)&lbl_806D46F0,
-    (void *)&lbl_806D46E8,
-    (void *)&lbl_806D46F4,
-    (void *)&lbl_806D46F8,
-    (void *)&lbl_806D46F0,
-    (void *)&lbl_806D46FC,
-    (void *)&lbl_806D4700,
-    (void *)&lbl_806D4704,
-    (void *)&lbl_806D4708,
-    (void *)&lbl_806D4700,
-    (void *)&lbl_806D4708,
-    (void *)&lbl_806D4700,
-    (void *)&lbl_806D470C,
-    (void *)&lbl_806D4710,
-    (void *)&lbl_806D4708,
-    (void *)&lbl_806D4714,
-    (void *)&lbl_806D471C,
-    (void *)&lbl_806D4720,
-    (void *)&lbl_806D4728
+NameDelimiterPair lbl_8040E450[12] = {
+    { (void *)&lbl_806D46E4, (void *)&lbl_806D46E8 },
+    { (void *)&lbl_806D46EC, (void *)&lbl_806D46F0 },
+    { (void *)&lbl_806D46E8, (void *)&lbl_806D46F0 },
+    { (void *)&lbl_806D46E8, (void *)&lbl_806D46F4 },
+    { (void *)&lbl_806D46F8, (void *)&lbl_806D46F0 },
+    { (void *)&lbl_806D46FC, (void *)&lbl_806D4700 },
+    { (void *)&lbl_806D4704, (void *)&lbl_806D4708 },
+    { (void *)&lbl_806D4700, (void *)&lbl_806D4708 },
+    { (void *)&lbl_806D4700, (void *)&lbl_806D470C },
+    { (void *)&lbl_806D4710, (void *)&lbl_806D4708 },
+    { (void *)&lbl_806D4714, (void *)&lbl_806D471C },
+    { (void *)&lbl_806D4720, (void *)&lbl_806D4728 }
 };
 char *lbl_8040E4B0[5] = {
     (char *)&lbl_806D472C,

@@ -18,6 +18,35 @@ extern char lbl_806DBFF4[];
 extern char lbl_806DBFFC[];
 extern char lbl_806DC004[];
 
+/* layout as declared in src/game/HudFlow20Update.cpp */
+typedef struct HudPosition {
+    float x;
+    float y;
+} HudPosition;
+
+/* layout as declared in src/game/HudSelectionUpdate.cpp */
+typedef struct HudSelectionPosition {
+    float x;
+    float y;
+} HudSelectionPosition;
+
+/* layout as declared in src/game/RaceDigitUpdate.cpp */
+typedef struct DigitPosition {
+    float x;
+    float y;
+} DigitPosition;
+
+/* layout as declared in src/game/RaceDigits.cpp */
+typedef struct DigitMap {
+    int digits[10];
+} DigitMap;
+
+/* layout as declared in src/game/CardPrintFlowRender.cpp */
+typedef struct PrintErrorCaption {
+    int code;
+    int texture;
+} PrintErrorCaption;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -390,28 +419,33 @@ const char lbl_803EF734[12] = {
 const char lbl_803EF740[12] = {
     -126, 108, -126, 96, -126, 108, -126, 100, 0, 0, 0, 0
 };
-/* decl: HudPosition */
-const float lbl_803EF74C[4] = {
-    2e+01f, 303.6f, 2e+01f, 339.0f
+const HudPosition lbl_803EF74C[2] = {
+    { 20.0f, 303.6f },
+    { 20.0f, 339.0f }
 };
-/* decl: HudSelectionPosition */
-const float lbl_803EF75C[8] = {
-    64.399994f, 303.6f, 64.399994f, 339.0f, 48.0f, 303.6f, 48.0f, 339.0f
+const HudSelectionPosition lbl_803EF75C[4] = {
+    { 64.399994f, 303.6f },
+    { 64.399994f, 339.0f },
+    { 48.0f, 303.6f },
+    { 48.0f, 339.0f }
 };
 const char lbl_803EF77C[] = "clNameDisp";
 const char lbl_803EF788[] = "clCDispInterface";
 const char lbl_803EF79C[] = "clCounterInterface";
 const char lbl_803EF7B0[] = "clNoDisp";
 /* 8-aligned in the original: probably the first object of a TU */
-/* decl: DigitPosition */
-const float lbl_803EF7C0[16] __attribute__((aligned(8))) = {
-    62.0f, 146.0f, 62.0f, 99.0f, 8e+01f, 155.0f, 8e+01f, 107.0f,
-    62.0f, 106.0f, 75.0f, 3e+01f, 8e+01f, 115.0f, 105.0f, 5e+01f
+const DigitPosition lbl_803EF7C0[8] __attribute__((aligned(8))) = {
+    { 62.0f, 146.0f },
+    { 62.0f, 99.0f },
+    { 80.0f, 155.0f },
+    { 80.0f, 107.0f },
+    { 62.0f, 106.0f },
+    { 75.0f, 30.0f },
+    { 80.0f, 115.0f },
+    { 105.0f, 50.0f }
 };
-/* decl: DigitMap */
-const unk32 lbl_803EF800[10] = {
-    0x00000000, 0x00000001, 0xFFFFFFFF, 0x00000002, 0x00000003, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000004,
-    0x00000005, 0x00000006
+const DigitMap lbl_803EF800[1] = {
+    { { 0, 1, -1, 2, 3, -1, -1, 4, 5, 6 } }
 };
 const char lbl_803EF828[] = "clRecDisp";
 const char lbl_803EF834[] = "clCDispInterface";
@@ -483,10 +517,14 @@ const char lbl_803EFD20[] = "clYTaskInterface";
 const char lbl_803EFD34[] = "clMnTaskInterface";
 const char lbl_803EFD48[] = "clMnPedalSprTask";
 const char lbl_803EFD5C[] = "clMnHandleTask";
-/* decl: PrintErrorCaption */
-const unk32 lbl_803EFD6C[14] = {
-    0x00000037, 0x0000009C, 0x00000033, 0x0000009B, 0x00000034, 0x0000009D, 0x00000000, 0x00000000,
-    0x00000035, 0x0000009A, 0x00000036, 0x0000009E, 0x00000037, 0x0000009C
+const PrintErrorCaption lbl_803EFD6C[7] = {
+    { 55, 156 },
+    { 51, 155 },
+    { 52, 157 },
+    { 0, 0 },
+    { 53, 154 },
+    { 54, 158 },
+    { 55, 156 }
 };
 const char lbl_803EFDA4[] = "clMnCardT01";
 const char lbl_803EFDB0[] = "clMnCardT0Interface";

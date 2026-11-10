@@ -237,6 +237,12 @@ extern char lbl_806DA638[];
 extern char lbl_806DA63C[];
 extern char lbl_806DA6A0[];
 
+/* layout as declared in src/game/anon_8020314C_nm2.cpp */
+typedef struct MsgPopupState {
+    int cur;
+    int pending;
+} MsgPopupState;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -702,9 +708,8 @@ void *lbl_806D0248[2] = {
     (void *)&lbl_803C0358,
     (void *)&lbl_804EC344
 };
-/* decl: MsgPopupState */
-unk32 lbl_806D0250[2] = {
-    0xFFFFFFFF, 0xFFFFFFFF
+MsgPopupState lbl_806D0250[1] = {
+    { -1, -1 }
 };
 const char *lbl_806D0258[2] = {
     (const char *)&lbl_803C24D4, 0

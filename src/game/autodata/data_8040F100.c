@@ -5,14 +5,25 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* layout as declared in src/game/Terrain_FlagsToTypeId.c */
+typedef struct TerrainTypeEntry {
+    unsigned int mask;
+    signed char id;
+} TerrainTypeEntry;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-/* decl: TerrainTypeEntry */
-unk32 lbl_8040F100[18] = {
-    0x00000003, 0x01000000, 0x00000024, 0x03000000, 0x00000040, 0x04000000, 0x00000080, 0x05000000,
-    0x00000010, 0x02000000, 0x00000300, 0x01000000, 0x00000400, 0x06000000, 0x00000800, 0x01000000,
-    0x00001000, 0x01000000
+TerrainTypeEntry lbl_8040F100[9] = {
+    { 3, 1 },
+    { 0x24, 3 },
+    { 0x40, 4 },
+    { 0x80, 5 },
+    { 0x10, 2 },
+    { 0x300, 1 },
+    { 0x400, 6 },
+    { 0x800, 1 },
+    { 0x1000, 1 }
 };
 
 #pragma force_active reset

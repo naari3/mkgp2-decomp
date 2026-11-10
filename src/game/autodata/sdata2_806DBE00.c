@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec2.h"
 
 extern char lbl_803EF950[];
 extern char lbl_803EF9C8[];
@@ -230,9 +231,8 @@ const unk32 lbl_806DC0D0[2] = {
 const unk32 lbl_806DC0D8[2] = {
     0x82718264, 0x82630000
 };
-/* decl: Vec2 */
-const float lbl_806DC0E0[2] = {
-    3.2e+02f, 118.0f
+const Vec2 lbl_806DC0E0[1] = {
+    { 320.0f, 118.0f }
 };
 const float lbl_806DC0E8 = 0.0f;
 const float lbl_806DC0EC = 1.0f;
@@ -240,9 +240,8 @@ const float lbl_806DC0F0 = 255.0f;
 const char lbl_806DC0F4[4] = {
     0, 0, 0, 0
 };
-/* decl: Vec2 */
-const float lbl_806DC0F8[2] = {
-    3.2e+02f, 198.0f
+const Vec2 lbl_806DC0F8[1] = {
+    { 320.0f, 198.0f }
 };
 const float lbl_806DC100 = 0.00390625f;
 const double lbl_806DC108 = 4503601774854144.0;
@@ -258,9 +257,8 @@ const float lbl_806DC130 = 6.0f;
 const float lbl_806DC134 = 1e+02f;
 const float lbl_806DC138 = 2.5f;
 const float lbl_806DC13C = 999.0f;
-/* decl: Vec2 */
-const float lbl_806DC140[2] = {
-    132.0f, 448.0f
+const Vec2 lbl_806DC140[1] = {
+    { 132.0f, 448.0f }
 };
 const float lbl_806DC148[2] = {
     0.8f, 0.6f

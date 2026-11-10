@@ -5,12 +5,21 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* layout as declared in src/game/TwinSpriteOverlay.c */
+typedef struct TwinYaws {
+    float y[2];
+} TwinYaws;
+
+/* layout as declared in src/game/KartFxDispatchE.cpp */
+typedef struct StatePair {
+    signed char value[2];
+} StatePair;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-/* decl: TwinYaws */
-const float lbl_806D5018[2] = {
-    0.0f, 3.141592f
+const TwinYaws lbl_806D5018[1] = {
+    { { 0.0f, 3.141592f } }
 };
 const float lbl_806D5020 = 3.2e+02f;
 const float lbl_806D5024 = 2.4e+02f;
@@ -109,18 +118,15 @@ const float lbl_806D5194 = 0.002f;
 const float lbl_806D5198[2] = {
     0.1f, 0.0f
 };
-/* decl: StatePair */
-const unk16 lbl_806D51A0[1] = {
-    0x0302
+const StatePair lbl_806D51A0[1] = {
+    { { 3, 2 } }
 };
-/* decl: StatePair */
-const unk16 lbl_806D51A4[1] = {
-    0x0103
+const StatePair lbl_806D51A4[1] = {
+    { { 1, 3 } }
 };
 const signed char lbl_806D51A6 = 2;
-/* decl: StatePair */
-const unk16 lbl_806D51A8[1] = {
-    0x0405
+const StatePair lbl_806D51A8[1] = {
+    { { 4, 5 } }
 };
 const int lbl_806D51AC = 2;
 const int lbl_806D51B0 = 3;

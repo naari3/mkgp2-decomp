@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/CountdownResStep.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -42,19 +43,36 @@ char * const lbl_803C0064[4] = {
     (char *)&lbl_803C0044,
     (char *)&lbl_803C0054
 };
-/* decl: CountdownResStep */
-const unk32 lbl_803C0074[26] = {
-    0x00000000, 0x0000089D, 0x00000018, 0x0000089E, 0x0000001C, 0x0000089F, 0x00000020, 0x000008A0,
-    0x0000002D, 0x0000089F, 0x00000032, 0x0000089E, 0x0000003A, 0x0000089D, 0x00000054, 0x0000089C,
-    0x00000058, 0x0000089B, 0x0000005C, 0x000008A1, 0x00000069, 0x0000089B, 0x0000006E, 0x0000089C,
-    0x00000074, 0x0000089D
+const CountdownResStep lbl_803C0074[13] = {
+    { 0, 2205 },
+    { 24, 2206 },
+    { 28, 2207 },
+    { 32, 2208 },
+    { 45, 2207 },
+    { 50, 2206 },
+    { 58, 2205 },
+    { 84, 2204 },
+    { 88, 2203 },
+    { 92, 2209 },
+    { 105, 2203 },
+    { 110, 2204 },
+    { 116, 2205 }
 };
-/* decl: CountdownResStep */
-const unk32 lbl_803C00DC[28] = {
-    0x00000000, 0x00000883, 0x0000000A, 0x00000887, 0x0000000E, 0x00000888, 0x00000012, 0x00000889,
-    0x00000028, 0x00000888, 0x0000002C, 0x00000887, 0x00000032, 0x00000883, 0x0000003C, 0x00000883,
-    0x00000046, 0x00000884, 0x0000004A, 0x00000885, 0x0000004E, 0x00000886, 0x00000064, 0x00000885,
-    0x00000068, 0x00000884, 0x0000006E, 0x00000883
+const CountdownResStep lbl_803C00DC[14] = {
+    { 0, 2179 },
+    { 10, 2183 },
+    { 14, 2184 },
+    { 18, 2185 },
+    { 40, 2184 },
+    { 44, 2183 },
+    { 50, 2179 },
+    { 60, 2179 },
+    { 70, 2180 },
+    { 74, 2181 },
+    { 78, 2182 },
+    { 100, 2181 },
+    { 104, 2180 },
+    { 110, 2179 }
 };
 const float lbl_803C014C[15][2] = {
     { -1.0f, -33.0f },

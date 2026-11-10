@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec3f.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -18,13 +19,19 @@ const char lbl_8037809C[] = "!(jobj->flags & JOBJ_USE_QUATERNION)";
 /* 8-aligned in the original: probably the first object of a TU */
 const char lbl_803780C8[] __attribute__((aligned(8))) = "shooting_star.dat";
 const char lbl_803780DC[] = "star_dust.dat";
-/* decl: Vec3f */
-const float lbl_803780EC[36] = {
-    -112.0f, -112.0f, 0.0f, -188.0f, -194.0f, 0.0f, -258.0f, -268.0f,
-    0.0f, -3.2e+02f, -336.0f, 0.0f, -3.8e+02f, -4e+02f, 0.0f, -433.0f,
-    -4.6e+02f, 0.0f, -484.0f, -5.2e+02f, 0.0f, -5.3e+02f, -574.0f, 0.0f,
-    -5.7e+02f, -622.0f, 0.0f, -608.0f, -6.7e+02f, 0.0f, -632.0f, -704.0f,
-    0.0f, -6.5e+02f, -724.0f, 0.0f
+const Vec3f lbl_803780EC[12] = {
+    { -112.0f, -112.0f, 0.0f },
+    { -188.0f, -194.0f, 0.0f },
+    { -258.0f, -268.0f, 0.0f },
+    { -320.0f, -336.0f, 0.0f },
+    { -380.0f, -400.0f, 0.0f },
+    { -433.0f, -460.0f, 0.0f },
+    { -484.0f, -520.0f, 0.0f },
+    { -530.0f, -574.0f, 0.0f },
+    { -570.0f, -622.0f, 0.0f },
+    { -608.0f, -670.0f, 0.0f },
+    { -632.0f, -704.0f, 0.0f },
+    { -650.0f, -724.0f, 0.0f }
 };
 const char lbl_8037817C[] = "clRBShootingStar";
 const char lbl_80378190[] = "clMapEffectParts";

@@ -4,15 +4,17 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec3.h"
+#include "game/types/Quat.h"
+#include "game/types/TerrainSegment.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
 const char lbl_802E96A8[] = "clJobRunner";
 /* 8-aligned in the original: probably the first object of a TU */
-/* decl: Vec3 / char */
-const char lbl_802E96B8[12] __attribute__((aligned(8))) = {
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+const Vec3 lbl_802E96B8[1] __attribute__((aligned(8))) = {
+    { 0.0f, 0.0f, 0.0f }
 };
 const char lbl_802E96C4[] = "clCamera";
 const char lbl_802E96D0[] = "************************************** \n";
@@ -29,9 +31,8 @@ const char lbl_802E96FC[132] = {
     69, 95, 69, 78, 68, 40, 37, 100, 41, 44, 10, 0,
     115, 99, 101, 110, 101, 95, 100, 97, 116, 97, 0, 0
 };
-/* decl: Quat */
-const unk32 lbl_802E9780[4] = {
-    0x00000000, 0x00000000, 0x00000000, 0x00000000
+const Quat lbl_802E9780[1] = {
+    { 0.0f, 0.0f, 0.0f, 0.0f }
 };
 const char lbl_802E9790[] = "!(jobj->flags & JOBJ_USE_QUATERNION)";
 const char lbl_802E97B8[] = "translate";
@@ -40,9 +41,8 @@ const char lbl_802E97D0[] = "clNormal3D::load::lGetJObjList is over member\n";
 const char lbl_802E9800[] = "%s retry %d\n";
 const char lbl_802E9810[] = "No%02d : %02d : %s";
 /* 8-aligned in the original: probably the first object of a TU */
-/* decl: TerrainSegment */
-const unk32 lbl_802E9828[4] __attribute__((aligned(8))) = {
-    0x00000000, 0x00000000, 0x00000000, 0x00000000
+const TerrainSegment lbl_802E9828[1] __attribute__((aligned(8))) = {
+    { 0.0f, 0.0f, 0.0f, 0.0f }
 };
 const int lbl_802E9838[4] = {
     16, 80, 48, 112

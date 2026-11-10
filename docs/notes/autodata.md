@@ -48,6 +48,8 @@ defined but `unk` / typed. State on 2026-11-10 (263 units):
 | defined, layout unknown (`unk*`) | 138,305 | 152,093 |
 | defined and typed | 280,360 | 402,635 |
 
+After `retype` (struct initialisers, same day): unk 69,827, typed 484,901.
+
 (The 131 KB sine table went to `LUT_Sine.c` directly, commit 44f521b.)
 
 ## Mechanics worth knowing
@@ -87,6 +89,25 @@ After `gen`: rerun configure with the flags from tools/cloud_setup.sh, `ninja`,
 main.dol OK. `gen` reads build/GNLJ82/asm, so build once before generating
 again.
 
+## Struct types (`autodata.py retype`, `tools/cstruct.py`)
+
+`retype` looks at every definition that carries a `/* decl: T */` comment,
+reads the layout of `T` from the TU that declares the object (preprocessed with
+that TU's own flags, parsed by `tools/cstruct.py`), and rewrites the blob as
+`T name[n] = { { ... }, ... };`. It is refused when the object size is not a
+multiple of the struct size, when padding bytes are not zero, when a relocation
+sits in a member that is not a pointer, or when a float member holds something
+that is not a float; the reason is printed. When several TUs declare different
+types, the one with the most members that still fits wins.
+
+The type itself comes from `include/game/types/<T>.h` when that header exists
+with the same layout (tools/struct_dedup.py writes those), otherwise a
+definition with builtin member types is written into the autodata file with a
+comment naming the TU it was read from. Pointer members become `void *` with
+the original target in a comment.
+
+`python3 tools/cstruct.py src/game/Foo.c TypeName` prints a layout.
+
 ## Symbol fixes that were needed (symbols.txt)
 
 - An object that starts on an odd address right after another one is a wrong
@@ -103,6 +124,6 @@ again.
 
 ## To do
 
-- Struct initialisers for the `/* decl: T */` objects, then the `unk` objects
-  nobody declares (read how the code indexes them).
+- The `unk` objects nobody declares with a struct type (read how the code
+  indexes them), and the `/* decl: T */` objects `retype` refused.
 - Moving definitions into their real TUs where that is possible.

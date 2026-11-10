@@ -5,14 +5,24 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* layout as declared in src/game/fn_80108484.c */
+typedef struct ItemBendParam {
+    float a;
+    float b;
+    float c;
+} ItemBendParam;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-/* decl: ItemBendParam */
-float lbl_80421B30[21] = {
-    -0.12217302f, 0.20943946f, 0.0f, -0.14835295f, 0.13962631f, 0.0f, -0.17453289f, 0.069813155f,
-    0.0f, -0.069813155f, 0.0f, 0.0f, -0.017453289f, -0.069813155f, 0.0f, -0.09599309f,
-    -0.13962631f, 0.0f, -0.043633223f, -0.20943946f, 0.0f
+ItemBendParam lbl_80421B30[7] = {
+    { -0.12217302f, 0.20943946f, 0.0f },
+    { -0.14835295f, 0.13962631f, 0.0f },
+    { -0.17453289f, 0.069813155f, 0.0f },
+    { -0.069813155f, 0.0f, 0.0f },
+    { -0.017453289f, -0.069813155f, 0.0f },
+    { -0.09599309f, -0.13962631f, 0.0f },
+    { -0.043633223f, -0.20943946f, 0.0f }
 };
 
 #pragma force_active reset

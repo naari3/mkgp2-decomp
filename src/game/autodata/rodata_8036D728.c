@@ -4,6 +4,22 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec3f.h"
+
+/* layout as declared in src/game/mapeffect/CoursePropCtor.cpp */
+typedef struct CoursePropResource {
+    char *resource;
+    float radius;
+    float height;
+    float scale;
+} CoursePropResource;
+
+/* layout as declared in src/game/mapeffect/CoursePropCtor.cpp */
+typedef struct CoursePropData {
+    Vec3f position;
+    float yaw;
+    int kind;
+} CoursePropData;
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -11,68 +27,46 @@
 const char lbl_8036D728[] = "KPC_pata.dat";
 const char lbl_8036D738[] = "KPC_noko.dat";
 const char lbl_8036D748[] = "KPC_mec_koopa.dat";
-/* decl: CoursePropResource / PropKind */
-void *const lbl_8036D75C[12] = {
-    (void *)&lbl_8036D728,
-    (void *)0x41A00000,
-    (void *)0x41A00000,
-    (void *)0x3F800000,
-    (void *)&lbl_8036D738,
-    (void *)0x41A00000,
-    (void *)0x41700000,
-    (void *)0x3F800000,
-    (void *)&lbl_8036D748,
-    (void *)0x41700000,
-    (void *)0x40E00000,
-    (void *)0x40A00000
+const CoursePropResource lbl_8036D75C[3] = {
+    { (void *)&lbl_8036D728, 20.0f, 20.0f, 1.0f },
+    { (void *)&lbl_8036D738, 20.0f, 15.0f, 1.0f },
+    { (void *)&lbl_8036D748, 15.0f, 7.0f, 5.0f }
 };
-/* decl: CoursePropData */
-const unk32 lbl_8036D78C[5] = {
-    0x44378000, 0x41BC0000, 0xC4F55000, 0xBE860A92, 0x00000001
+const CoursePropData lbl_8036D78C[1] = {
+    { { 734.0f, 23.5f, -1962.5f }, -0.2617994f, 1 }
 };
-/* decl: CoursePropData */
-const unk32 lbl_8036D7A0[5] = {
-    0x43190000, 0x41C00000, 0x450EA800, 0x40490FDB, 0x00000001
+const CoursePropData lbl_8036D7A0[1] = {
+    { { 153.0f, 24.0f, 2282.5f }, 3.1415927f, 1 }
 };
-/* decl: CoursePropData */
-const unk32 lbl_8036D7B4[5] = {
-    0x44730000, 0x41BC0000, 0xC4E0A000, 0xBFC90FDB, 0x00000001
+const CoursePropData lbl_8036D7B4[1] = {
+    { { 972.0f, 23.5f, -1797.0f }, -1.5707964f, 1 }
 };
-/* decl: CoursePropData */
-const unk32 lbl_8036D7C8[5] = {
-    0x4468C000, 0x422A0000, 0xC4C9C000, 0xC016CBE4, 0x00000001
+const CoursePropData lbl_8036D7C8[1] = {
+    { { 931.0f, 42.5f, -1614.0f }, -2.3561945f, 1 }
 };
-/* decl: CoursePropData */
-const float lbl_8036D7DC[5] = {
-    795.5f, 23.5f, -1944.0f, -0.2617994f, 0.0f
+const CoursePropData lbl_8036D7DC[1] = {
+    { { 795.5f, 23.5f, -1944.0f }, -0.2617994f, 0 }
 };
-/* decl: CoursePropData */
-const float lbl_8036D7F0[5] = {
-    184.5f, 24.0f, 2279.0f, 3.8397243f, 0.0f
+const CoursePropData lbl_8036D7F0[1] = {
+    { { 184.5f, 24.0f, 2279.0f }, 3.8397243f, 0 }
 };
-/* decl: CoursePropData */
-const float lbl_8036D804[5] = {
-    963.5f, 23.5f, -1742.0f, -1.5707964f, 0.0f
+const CoursePropData lbl_8036D804[1] = {
+    { { 963.5f, 23.5f, -1742.0f }, -1.5707964f, 0 }
 };
-/* decl: CoursePropData */
-const float lbl_8036D818[5] = {
-    901.5f, 41.0f, -1528.0f, -2.3561945f, 0.0f
+const CoursePropData lbl_8036D818[1] = {
+    { { 901.5f, 41.0f, -1528.0f }, -2.3561945f, 0 }
 };
-/* decl: CoursePropData */
-const unk32 lbl_8036D82C[5] = {
-    0xC4288000, 0x42DE0000, 0xC3D20000, 0x00000000, 0x00000002
+const CoursePropData lbl_8036D82C[1] = {
+    { { -674.0f, 111.0f, -420.0f }, 0.0f, 2 }
 };
-/* decl: CoursePropData */
-const unk32 lbl_8036D840[5] = {
-    0xC413A000, 0x42DE0000, 0xC400E000, 0x3FC90FDB, 0x00000002
+const CoursePropData lbl_8036D840[1] = {
+    { { -590.5f, 111.0f, -515.5f }, 1.5707964f, 2 }
 };
-/* decl: CoursePropData */
-const unk32 lbl_8036D854[5] = {
-    0xC40E0000, 0x42DE0000, 0x43F08000, 0x405F66F3, 0x00000002
+const CoursePropData lbl_8036D854[1] = {
+    { { -568.0f, 111.0f, 481.0f }, 3.4906585f, 2 }
 };
-/* decl: CoursePropData */
-const unk32 lbl_8036D868[5] = {
-    0xC3E6C000, 0x42DF0000, 0x440AC000, 0x4016CBE4, 0x00000002
+const CoursePropData lbl_8036D868[1] = {
+    { { -461.5f, 111.5f, 555.0f }, 2.3561945f, 2 }
 };
 const char lbl_8036D87C[] = "clKPChara";
 const char lbl_8036D888[] = "clMapEffectParts";

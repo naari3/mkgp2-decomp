@@ -4,6 +4,14 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec3f.h"
+
+/* layout as declared in src/game/mapeffect/EffectFA_Update.cpp */
+typedef struct MapEffectDef {
+    int model;
+    char *joint;
+    void *animation;
+} MapEffectDef;
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -44,30 +52,16 @@ const char lbl_8036DF9C[] = "ef_magic_pink_inazuma_joint";
 const char lbl_8036DFB8[] = "ef_magic_pink_obi_joint";
 const char lbl_8036DFD0[] = "ef_magic_green_joint";
 const char lbl_8036DFE8[] = "ef_magic_white_joint";
-/* decl: MapEffectDef */
-void *const lbl_8036E000[18] = {
-    0,
-    (void *)&lbl_8036DF80,
-    (void *)&lbl_8036DD8C,
-    (void *)0x1,
-    (void *)&lbl_8036DF9C,
-    (void *)&lbl_8036DDC8,
-    (void *)0x1,
-    (void *)&lbl_8036DFB8,
-    (void *)&lbl_8036DE2C,
-    (void *)0x2,
-    (void *)&lbl_8036DFD0,
-    (void *)&lbl_8036DE90,
-    (void *)0x2,
-    (void *)&lbl_8036DFE8,
-    (void *)&lbl_8036DEE0,
-    (void *)0x2,
-    (void *)&lbl_8036DFE8,
-    (void *)&lbl_8036DF30
+const MapEffectDef lbl_8036E000[6] = {
+    { 0, (void *)&lbl_8036DF80, (void *)&lbl_8036DD8C },
+    { 1, (void *)&lbl_8036DF9C, (void *)&lbl_8036DDC8 },
+    { 1, (void *)&lbl_8036DFB8, (void *)&lbl_8036DE2C },
+    { 2, (void *)&lbl_8036DFD0, (void *)&lbl_8036DE90 },
+    { 2, (void *)&lbl_8036DFE8, (void *)&lbl_8036DEE0 },
+    { 2, (void *)&lbl_8036DFE8, (void *)&lbl_8036DF30 }
 };
-/* decl: Vec3f */
-const unk32 lbl_8036E048[3] = {
-    0x00000000, 0x00000000, 0x00000000
+const Vec3f lbl_8036E048[1] = {
+    { 0.0f, 0.0f, 0.0f }
 };
 const char lbl_8036E054[84] = {
     33, 40, 106, 111, 98, 106, 45, 62, 102, 108, 97, 103,

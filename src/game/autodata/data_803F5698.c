@@ -46,6 +46,12 @@ extern char lbl_806CED78[];
 extern char lbl_806CED80[];
 extern char lbl_806CED88[];
 
+/* layout as declared in src/game/InputObj_ReadRawInput.c */
+typedef struct RawButtonMap {
+    unsigned int mask;
+    unsigned int bit;
+} RawButtonMap;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -104,10 +110,12 @@ void *lbl_803F5710[4] = {
     (void *)dtor_80038DD4,
     (void *)fn_80038E1C
 };
-/* decl: RawButtonMap */
-unk32 kRawGameMap_Raw0[10] = {
-    0x00000200, 0x00008400, 0x00008000, 0x00000040, 0x00004000, 0x00000080, 0x00002000, 0x00006001,
-    0x00001000, 0x00006002
+RawButtonMap kRawGameMap_Raw0[5] = {
+    { 0x200, 0x8400 },
+    { 0x8000, 0x40 },
+    { 0x4000, 0x80 },
+    { 0x2000, 0x6001 },
+    { 0x1000, 0x6002 }
 };
 void *lbl_803F5748[3] = {
     (void *)&lbl_806CED78,

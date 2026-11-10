@@ -188,7 +188,9 @@ def fmt_float(w):
     if struct.pack('>f', float(t)) != struct.pack('>I', w): return None
     for prec in range(1, 9):   # shortest text that round-trips
         s = '%.*g' % (prec, f)
-        if struct.pack('>f', float(s)) == struct.pack('>I', w): t = s; break
+        if struct.pack('>f', float(s)) == struct.pack('>I', w):
+            t = repr(float(s)) if 1e-4 <= abs(float(s)) < 1e9 else s   # 20.0, not 2e+01
+            break
     if '.' not in t and 'e' not in t and 'n' not in t: t += '.0'
     return t + 'f'
 
@@ -592,6 +594,208 @@ def cmd_drop(a):
     align4_write(al)
 
 
+# ---------------------------------------------------------------- struct types (retype)
+
+def blob(o):
+    """-> (bytes, {offset: relocation text})"""
+    bs, rel = bytearray(), {}
+    for k, v in o['items']:
+        if k == 's': bs += v
+        elif D.isnum(v):
+            w = {'1': 1, '2': 2, '4': 4, '8': 8}[k]
+            bs += (int(v, 0) & ((1 << (8 * w)) - 1)).to_bytes(w, 'big')
+        else:
+            rel[len(bs)] = v; bs += b'\0\0\0\0'
+    return bytes(bs), rel
+
+
+class StructInit:
+    """Initialiser text for one object laid out as `count` elements of a cstruct type."""
+    def __init__(self, ctx, o, t):
+        import cstruct as C
+        self.C, self.ctx, self.o, self.t = C, ctx, o, t
+        self.bs, self.rel = blob(o)
+        self.used = bytearray(len(self.bs))
+        self.ext = set()
+
+    def sym(self, v):
+        m = SYMREF.match(v)
+        sym, sign, off = m.group(1), m.group(2), m.group(3)
+        self.ext.add(sym)
+        kind = self.ctx.m.objs.get(self.ctx.m.byname.get(sym), {}).get('kind')
+        if not off: return '(void *)%s%s' % ('' if kind == 'fn' else '&', sym)
+        return '(void *)((char *)&%s %s %s)' % (sym, sign, off)
+
+    def value(self, t, off):
+        C = self.C
+        k = t.kind
+        if k == 'scalar':
+            n = t.size
+            raw = self.bs[off:off + n]
+            if any(off + i in self.rel for i in range(n)): raise C.Unsupported('relocation in a %s member at +0x%X' % (t.name, off))
+            for i in range(n): self.used[off + i] = 1
+            x = int.from_bytes(raw, 'big')
+            if t.name == 'float':
+                r = fmt_float(x)
+                if r is None: raise C.Unsupported('float member at +0x%X holds 0x%08X' % (off, x))
+                return r
+            if t.name == 'double':
+                r = fmt_double(x)
+                if r is None: raise C.Unsupported('double member at +0x%X' % off)
+                return r
+            if t.name in ('char', 'schar', 'short', 'int', 'llong'):
+                return str(int.from_bytes(raw, 'big', signed=True))
+            return str(x) if x < 10 else '0x%X' % x
+        if k == 'ptr':
+            for i in range(4): self.used[off + i] = 1
+            if off in self.rel: return self.sym(self.rel[off])
+            x = int.from_bytes(self.bs[off:off + 4], 'big')
+            return '0' if x == 0 else '(void *)0x%X' % x
+        if k == 'array':
+            s, _ = t.elem.size_align()
+            if t.elem.kind == 'scalar' and t.elem.name == 'char' and t.n > 1:
+                raw = self.bs[off:off + t.n]
+                txt = raw.rstrip(b'\0')
+                if txt and len(txt) < t.n and all(32 <= c < 127 for c in txt) and not any(off + i in self.rel for i in range(t.n)):
+                    for i in range(t.n): self.used[off + i] = 1
+                    return D.c_string(txt)
+            return '{ ' + ', '.join(self.value(t.elem, off + i * s) for i in range(t.n)) + ' }'
+        if k == 'struct':
+            t.layout()
+            fs = t.fields[:1] if t.union else t.fields
+            return '{ ' + ', '.join(self.value(ft, off + fo) for _, ft, fo in fs) + ' }'
+        raise C.Unsupported(getattr(t, 'reason', 'unsupported type'))
+
+    def run(self):
+        C = self.C
+        size, _ = self.t.size_align()
+        if size == 0 or len(self.bs) % size: raise C.Unsupported('object size 0x%X is not a multiple of 0x%X' % (len(self.bs), size))
+        vals = [self.value(self.t, i * size) for i in range(len(self.bs) // size)]
+        for i, u in enumerate(self.used):
+            if not u and (self.bs[i] or i in self.rel): raise C.Unsupported('non-zero padding at +0x%X' % i)
+        for r in self.rel:
+            if not self.used[r]: raise C.Unsupported('relocation in padding at +0x%X' % r)
+        return vals
+
+
+NOTE_DEF = re.compile(r'^/\* decl: ([^\n]*?) \*/\n((?:static )?(?:const )?)([^\n=]*?)\b(\w+)\[(\d+)\]( __attribute__\(\(aligned\(8\)\)\))? = \{\n.*?\n\};', re.M | re.S)
+
+
+def cmd_retype(a):
+    """Replace `/* decl: T */` blobs with struct initialisers of type T (layout from the declaring TU)."""
+    import cstruct as C
+    ctx = Ctx()
+    ctx.decls()
+    files = [os.path.join(OUTDIR, os.path.basename(u) if u.endswith('.c') else os.path.basename(u) + '.c') for u in a.units] \
+        or sorted(glob.glob(os.path.join(OUTDIR, '*.c')))
+    typesdir = os.path.join(ROOT, 'include', 'game', 'types')
+    done_bytes = 0
+    for f in files:
+        text = open(f, encoding='utf-8').read()
+        is_const = os.path.basename(f).split('_')[0] in ('rodata', 'sdata2')
+        local = {}     # type name -> signature, defined in this file
+        includes, defs, exts = [], [], set()
+        defined_here = set(re.findall(r'^(?!extern)[^ /#\n][^=\n]*?\b(\w+)(?:\[[^\]\n]*\])*(?: __attribute__\(\(aligned\(8\)\)\))? = ', text, re.M))
+
+        def repl(m):
+            nonlocal done_bytes
+            names, quals, oldtype, name, cnt, attr = m.groups()
+            ad = ctx.m.byname.get(name)
+            o = next((x for x in ctx.objs.get('.' + os.path.basename(f).split('_')[0], []) if x['addr'] == ad), None)
+            if o is None: return m.group(0)
+            srcs = ['src/' + ctx.m.units[u]['name'] for u in sorted(ctx.m.user_units(ad)) if not ctx.m.units[u]['auto']]
+            srcs += [w for (n, key), w in ctx._where.items() if n == name]
+            best = None
+            why = []
+            for tn in [x.strip() for x in names.split('/')]:
+                if not IDENT.match(tn) or tn in D.SCALARS[1] + D.SCALARS[2] + D.SCALARS[4] + D.SCALARS[8]: continue
+                for src in dict.fromkeys(srcs):
+                    if not os.path.exists(os.path.join(ROOT, src)): continue
+                    try:
+                        t = C.find_type(src, tn)
+                        if t is None or t.kind != 'struct': continue
+                        si = StructInit(ctx, o, t)
+                        vals = si.run()
+                        sig = C.signature(t)
+                    except C.Unsupported as e:
+                        why.append('%s (%s): %s' % (tn, src, e)); continue
+                    except Exception as e:
+                        why.append('%s (%s): %r' % (tn, src, e)); continue
+                    score = len(sig[1])
+                    if best is None or score > best[0]: best = (score, tn, t, si, vals, sig, src)
+                    break
+            if best is None:
+                print('  %s: no usable struct type (%s)' % (name, '; '.join(why[:3]) or names))
+                return m.group(0)
+            _, tn, t, si, vals, sig, src = best
+            hdr = os.path.join(typesdir, tn + '.h')
+            use_hdr = False
+            if os.path.exists(hdr):
+                try:
+                    ht = C.find_type(os.path.relpath(hdr, ROOT), tn)
+                    use_hdr = ht is not None and C.signature(ht) == sig
+                except Exception:
+                    use_hdr = False
+            if use_hdr:
+                inc = '#include "game/types/%s.h"' % tn
+                if inc not in includes and inc not in text: includes.append(inc)
+            elif tn in local:
+                if local[tn] != sig:
+                    print('  %s: another %s with a different layout is already in this file' % (name, tn))
+                    return m.group(0)
+            else:
+                out = []
+                try:
+                    C.c_definition(t, tn, set(), out)
+                except C.Unsupported as e:
+                    print('  %s: %s' % (name, e)); return m.group(0)
+                pend = []
+                for d in out:
+                    dn = re.search(r'\} (\w+);$', d).group(1)
+                    if dn in local or ('typedef struct %s {' % dn) in text or ('typedef union %s {' % dn) in text: continue
+                    h2 = os.path.join(typesdir, dn + '.h')
+                    if os.path.exists(h2):   # a nested type that is already shared: must be the same layout
+                        o2 = []
+                        try:
+                            C.c_definition(C.find_type(os.path.relpath(h2, ROOT), dn), dn, set(), o2)
+                        except Exception:
+                            o2 = []
+                        if not o2 or o2[-1] != d:
+                            print('  %s: nested %s differs from include/game/types/%s.h' % (name, dn, dn))
+                            return m.group(0)
+                        inc = '#include "game/types/%s.h"' % dn
+                        if inc not in includes and inc not in text: includes.append(inc)
+                        continue
+                    pend.append((dn, '/* layout as declared in %s */\n%s' % (src, d)))
+                for dn, d in pend:
+                    local[dn] = None
+                    defs.append(d)
+                local[tn] = sig
+            exts.update(si.ext)
+            done_bytes += o['size']
+            body = ',\n'.join('    ' + v for v in vals)
+            if is_const and 'const' not in quals: quals += 'const '
+            return '%s%s %s[%d]%s = {\n%s\n};' % (quals, tn, name, len(vals), attr or '', body)
+
+        new = NOTE_DEF.sub(repl, text)
+        if new == text: continue
+        need = sorted(s for s in exts if s not in defined_here and not re.search(r'^extern [^\n]*\b%s(\(\)|\[\]);' % re.escape(s), new, re.M))
+        ext_lines = ['extern %s;' % ('void %s()' % s if ctx.m.objs.get(ctx.m.byname.get(s), {}).get('kind') == 'fn' else 'char %s[]' % s) for s in need]
+        head = '#include "game/autodata.h"\n'
+        add = ''.join(i + '\n' for i in includes)
+        tail = ''
+        if ext_lines: tail += '\n' + '\n'.join(ext_lines) + '\n'
+        if defs: tail += '\n' + '\n\n'.join(defs) + '\n'
+        prag = '\n#pragma explicit_zero_data on'
+        i = new.index(prag)
+        new = new.replace(head, head + add, 1)
+        i = new.index(prag)
+        new = new[:i].rstrip('\n') + '\n' + tail + new[i:]
+        open(f, 'w', encoding='utf-8').write(new)
+        print('retyped', os.path.relpath(f, ROOT))
+    print('%d bytes now have a struct type' % done_bytes)
+
+
 # ---------------------------------------------------------------- check (ELF compare)
 
 def elf_sections(path):
@@ -719,10 +923,11 @@ def main():
     p.add_argument('--min', type=lambda x: int(x, 0), default=0)
     p = sub.add_parser('check'); p.add_argument('units', nargs='*')
     p = sub.add_parser('drop'); p.add_argument('units', nargs='+')
+    p = sub.add_parser('retype'); p.add_argument('units', nargs='*')
     p = sub.add_parser('report'); p.add_argument('--md')
     a = ap.parse_args()
     if a.cmd == 'gen' and a.sec_opt: a.sec = a.sec_opt
-    return {'runs': cmd_runs, 'gen': cmd_gen, 'check': cmd_check, 'drop': cmd_drop, 'report': cmd_report}[a.cmd](a)
+    return {'runs': cmd_runs, 'gen': cmd_gen, 'check': cmd_check, 'drop': cmd_drop, 'report': cmd_report, 'retype': cmd_retype}[a.cmd](a)
 
 
 if __name__ == '__main__':

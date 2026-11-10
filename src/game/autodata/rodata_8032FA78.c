@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec3.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -100,9 +101,8 @@ const float lbl_8032FF60[261] = {
     83.333336f, 3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f, 13.0f,
     0.2f, 0.0f, 0.0f, 1.570796f, 0.0f
 };
-/* decl: Vec3 */
-const unk32 lbl_80330374[3] = {
-    0x00000000, 0x00000000, 0x00000000
+const Vec3 lbl_80330374[1] = {
+    { 0.0f, 0.0f, 0.0f }
 };
 const char lbl_80330380[] = "item_center_joint";
 

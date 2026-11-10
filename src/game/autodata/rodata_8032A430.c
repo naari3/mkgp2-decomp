@@ -5,27 +5,85 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* layout as declared in src/game/KartFxDriftSparkParticle.cpp */
+typedef struct SparkVec3 {
+    float x;
+    float y;
+    float z;
+} SparkVec3;
+
+/* layout as declared in src/game/KartFxChargeIcon.cpp */
+typedef struct ChargeVec3 {
+    float x;
+    float y;
+    float z;
+} ChargeVec3;
+
+/* layout as declared in src/game/KartFxChargeIcon.cpp */
+typedef struct ChargePlacement {
+    ChargeVec3 offset;
+    ChargeVec3 scale;
+} ChargePlacement;
+
+/* layout as declared in src/game/DrawEffect_Cb_KartWheel_DualSpawn.c */
+typedef struct PhaseTable {
+    float v[4];
+} PhaseTable;
+
+/* layout as declared in src/game/EffectSmokeRing3.cpp */
+typedef struct SmokeVec {
+    float v[3];
+} SmokeVec;
+
+/* layout as declared in src/game/EffectKartWaveGlow.cpp */
+typedef struct WaveGlowVec3 {
+    float x;
+    float y;
+    float z;
+} WaveGlowVec3;
+
+/* layout as declared in src/game/EffectCompoundRing.cpp */
+typedef struct RingVec {
+    float value[3];
+} RingVec;
+
+/* layout as declared in src/game/DrawEffect_KartWheel_TripleChildUpdate.c */
+typedef struct ChildOffsets {
+    float v[3];
+} ChildOffsets;
+
+/* layout as declared in src/game/DrawEffect_Cb_KartItemTrail_4Phase.c */
+typedef struct PeriodTable {
+    float v[4];
+} PeriodTable;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-/* decl: SparkVec3 */
-const float lbl_8032A430[30] = {
-    1.0f, 1.0f, 1.0f, 1.0f, 0.8f, 0.8f, 0.8f, 1.0f,
-    0.8f, 0.8f, 0.8f, 1.0f, 0.8f, 1.0f, 1.0f, 1.0f,
-    0.8f, 1.0f, 1.0f, 1.0f, 0.8f, 1.0f, 0.3f, 0.5f,
-    1.0f, 0.8f, 0.0f, 0.7f, 0.3f, 1.0f
+const SparkVec3 lbl_8032A430[10] = {
+    { 1.0f, 1.0f, 1.0f },
+    { 1.0f, 0.8f, 0.8f },
+    { 0.8f, 1.0f, 0.8f },
+    { 0.8f, 0.8f, 1.0f },
+    { 0.8f, 1.0f, 1.0f },
+    { 1.0f, 0.8f, 1.0f },
+    { 1.0f, 1.0f, 0.8f },
+    { 1.0f, 0.3f, 0.5f },
+    { 1.0f, 0.8f, 0.0f },
+    { 0.7f, 0.3f, 1.0f }
 };
-/* decl: ChargePlacement */
-const float lbl_8032A4A8[66] = {
-    0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-    0.0f, 1.0f, 1.0f, 1.0f, -1.5f, 2.0f, 0.0f, 1.0f,
-    1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
-    0.0f, 3.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.5f, -1.5f,
-    0.0f, 1.0f, 1.0f, 1.0f, -2.0f, 5.0f, 0.0f, 1.0f,
-    1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
-    -1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, -1.0f, 0.0f,
-    0.0f, 1.0f, 1.0f, 1.0f, 0.5f, 0.0f, 0.0f, 1.0f,
-    1.0f, 1.0f
+const ChargePlacement lbl_8032A4A8[11] = {
+    { { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
+    { { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
+    { { -1.5f, 2.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
+    { { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
+    { { 0.0f, 3.5f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
+    { { 1.5f, -1.5f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
+    { { -2.0f, 5.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
+    { { 1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
+    { { -1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
+    { { -1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
+    { { 0.5f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } }
 };
 const float lbl_8032A5B0[43] = {
     0.3f, -0.3f, -1.0f, 1.0f, 0.0f, 2.0943947f, 4.1887894f, -0.17453289f,
@@ -42,37 +100,30 @@ const float lbl_8032A65C[30] = {
     -0.09f, 0.05f, 0.63f, -0.55f, 0.06f, 1.0f, 0.3f, 0.5f,
     1.0f, 0.8f, 0.0f, 1.0f, 1.0f, 1.0f
 };
-/* decl: PhaseTable */
-const float lbl_8032A6D4[4] = {
-    0.0f, 4.712388f, 1.570796f, 3.141592f
+const PhaseTable lbl_8032A6D4[1] = {
+    { { 0.0f, 4.712388f, 1.570796f, 3.141592f } }
 };
 const char lbl_8032A6E4[] = "muteki_muteki_b_joint";
 const char lbl_8032A6FC[] = "muteki_muteki_p_joint";
 const char lbl_8032A714[] = "muteki_muteki_y_joint";
 /* 8-aligned in the original: probably the first object of a TU */
-/* decl: SmokeVec */
-const float lbl_8032A730[3] __attribute__((aligned(8))) = {
-    0.0f, 2.0943947f, 4.1887894f
+const SmokeVec lbl_8032A730[1] __attribute__((aligned(8))) = {
+    { { 0.0f, 2.0943947f, 4.1887894f } }
 };
-/* decl: SmokeVec */
-const float lbl_8032A73C[3] = {
-    -0.34906578f, 0.0f, 0.34906578f
+const SmokeVec lbl_8032A73C[1] = {
+    { { -0.34906578f, 0.0f, 0.34906578f } }
 };
-/* decl: WaveGlowVec3 */
-const float lbl_8032A748[3] = {
-    0.0f, 1e+01f, -1e+01f
+const WaveGlowVec3 lbl_8032A748[1] = {
+    { 0.0f, 10.0f, -10.0f }
 };
-/* decl: RingVec */
-const float lbl_8032A754[3] = {
-    0.8f, 0.6f, 0.4f
+const RingVec lbl_8032A754[1] = {
+    { { 0.8f, 0.6f, 0.4f } }
 };
-/* decl: RingVec */
-const float lbl_8032A760[3] = {
-    0.0f, 0.5235987f, 0.87266445f
+const RingVec lbl_8032A760[1] = {
+    { { 0.0f, 0.5235987f, 0.87266445f } }
 };
-/* decl: ChildOffsets */
-const float lbl_8032A76C[3] = {
-    -1.0f, -1.0f, -1.0f
+const ChildOffsets lbl_8032A76C[1] = {
+    { { -1.0f, -1.0f, -1.0f } }
 };
 const char lbl_8032A778[] = "muteki_muteki_b_joint";
 const char lbl_8032A790[] = "muteki_muteki_p_joint";
@@ -82,9 +133,8 @@ const char *const lbl_8032A7C0[4] = {
     (const char *)&lbl_8032A778, (const char *)&lbl_8032A790,
     (const char *)&lbl_8032A7A8, 0
 };
-/* decl: PeriodTable */
-const float lbl_8032A7D0[4] = {
-    3e+01f, 45.0f, 6e+01f, 75.0f
+const PeriodTable lbl_8032A7D0[1] = {
+    { { 30.0f, 45.0f, 60.0f, 75.0f } }
 };
 
 #pragma force_active reset

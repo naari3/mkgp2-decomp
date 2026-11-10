@@ -4,17 +4,16 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec3f.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-/* decl: Vec3f */
-const unk32 lbl_80370858[3] = {
-    0x00000000, 0x00000000, 0x00000000
+const Vec3f lbl_80370858[1] = {
+    { 0.0f, 0.0f, 0.0f }
 };
-/* decl: Vec3f */
-const unk32 lbl_80370864[3] = {
-    0x00000000, 0x00000000, 0x00000000
+const Vec3f lbl_80370864[1] = {
+    { 0.0f, 0.0f, 0.0f }
 };
 
 #pragma force_active reset

@@ -4,6 +4,14 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec2.h"
+#include "game/types/ShowXform.h"
+
+/* layout as declared in src/game/ItemViewer.cpp */
+typedef struct ViewerEntry {
+    char *file;
+    ShowXform xf;
+} ViewerEntry;
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -174,17 +182,29 @@ const char lbl_803F1070[] = "clStartNum";
 const char lbl_803F107C[] = "clYTaskInterface";
 const char lbl_803F1090[] = "clCTaskInterface";
 const char lbl_803F10A4[] = "clStartGo";
-/* decl: Vec2 */
-const float lbl_803F10B0[4] = {
-    64.0f, 27.0f, 573.0f, 29.0f
+const Vec2 lbl_803F10B0[2] = {
+    { 64.0f, 27.0f },
+    { 573.0f, 29.0f }
 };
-/* decl: Vec2 */
-const float lbl_803F10C0[36] = {
-    94.0f, 59.0f, 62.0f, 59.0f, 3e+01f, 59.0f, 78.0f, 59.0f,
-    46.0f, 59.0f, -2.0000005f, 59.0f, 64.0f, 59.0f, -1.0f, 42.0f,
-    -1.0f, 42.0f, 603.0f, 59.0f, 571.0f, 59.0f, 539.0f, 59.0f,
-    587.0f, 59.0f, 557.0f, 59.0f, 544.0f, 59.0f, 573.0f, 59.0f,
-    -1.0f, 42.0f, -1.0f, 42.0f
+const Vec2 lbl_803F10C0[18] = {
+    { 94.0f, 59.0f },
+    { 62.0f, 59.0f },
+    { 30.0f, 59.0f },
+    { 78.0f, 59.0f },
+    { 46.0f, 59.0f },
+    { -2.0000005f, 59.0f },
+    { 64.0f, 59.0f },
+    { -1.0f, 42.0f },
+    { -1.0f, 42.0f },
+    { 603.0f, 59.0f },
+    { 571.0f, 59.0f },
+    { 539.0f, 59.0f },
+    { 587.0f, 59.0f },
+    { 557.0f, 59.0f },
+    { 544.0f, 59.0f },
+    { 573.0f, 59.0f },
+    { -1.0f, 42.0f },
+    { -1.0f, 42.0f }
 };
 const char lbl_803F1150[] = "clTimDisp";
 const char lbl_803F115C[] = "clCDispInterface";
@@ -204,24 +224,9 @@ const char lbl_803F1208[12] = {
 };
 const char lbl_803F1214[] = "item_coin.dat";
 const char lbl_803F1224[] = "mario_coin.dat";
-/* decl: ViewerEntry */
-void *const lbl_803F1234[16] = {
-    (void *)&lbl_803F1214,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    (void *)0x3F800000,
-    (void *)&lbl_803F1224,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    (void *)0x3F800000
+const ViewerEntry lbl_803F1234[2] = {
+    { (void *)&lbl_803F1214, { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, 1.0f } },
+    { (void *)&lbl_803F1224, { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, 1.0f } }
 };
 const char lbl_803F1274[] = "clItemViewer";
 const unk32 lbl_803F1284[77] = {

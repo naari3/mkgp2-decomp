@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec3.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -314,24 +315,20 @@ const unk32 lbl_803315D8[14] = {
     0x00000000, 0x41400000, 0x41700000, 0x6974656D, 0x5F63686E, 0x365F6A6F, 0x696E7400, 0x6974656D,
     0x5F776172, 0x61695F65, 0x66666563, 0x745F6A6F, 0x696E7400, 0x00000000
 };
-/* decl: Vec3 */
-const float lbl_80331610[3] = {
-    0.0f, 1.0f, 0.0f
+const Vec3 lbl_80331610[1] = {
+    { 0.0f, 1.0f, 0.0f }
 };
-/* decl: Vec3 */
-const float lbl_8033161C[3] = {
-    0.26179934f, 2.530727f, 0.0f
+const Vec3 lbl_8033161C[1] = {
+    { 0.26179934f, 2.530727f, 0.0f }
 };
 const char lbl_80331628[] = "kansaku_motion_80f_purple_joint";
 const char lbl_80331648[] = "item_eye1_joint";
 const char lbl_80331658[] = "item_eye2_joint";
-/* decl: Vec3 */
-const float lbl_80331668[3] = {
-    0.0f, 2.0f, 0.0f
+const Vec3 lbl_80331668[1] = {
+    { 0.0f, 2.0f, 0.0f }
 };
-/* decl: Vec3 */
-const float lbl_80331674[3] = {
-    0.785398f, 2.356194f, 0.0f
+const Vec3 lbl_80331674[1] = {
+    { 0.785398f, 2.356194f, 0.0f }
 };
 const char lbl_80331680[] = "item_center_joint";
 

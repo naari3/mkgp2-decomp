@@ -4,6 +4,32 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec.h"
+#include "game/types/FloatTriple.h"
+
+/* layout as declared in src/game/DbgMenu.cpp */
+typedef struct JointEntry {
+    char name[16];
+    int a;
+    int b;
+} JointEntry;
+
+/* layout as declared in src/game/DbgMenu.cpp */
+typedef struct JointTable {
+    JointEntry e[34];
+} JointTable;
+
+/* layout as declared in src/game/ItemHoming.c */
+typedef struct Float3 {
+    float value[3];
+} Float3;
+
+/* layout as declared in src/game/ItemHitPropagation.c */
+typedef struct HitVec3 {
+    float x;
+    float y;
+    float z;
+} HitVec3;
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -430,34 +456,8 @@ const char lbl_8032CB38[300] = {
     95, 99, 111, 117, 114, 115, 101, 95, 99, 111, 99, 111,
     110, 117, 116, 95, 106, 111, 105, 110, 116, 0, 0, 0
 };
-/* decl: JointTable */
-const unk32 lbl_8032CC64[204] = {
-    0x6D6F7669, 0x65206F6C, 0x64000000, 0x00000000, 0x00000000, 0x00000000, 0x6D6F7669, 0x6520616C,
-    0x6C000000, 0x00000000, 0x00000001, 0xFFFFFFFF, 0x6D6F7669, 0x65206375, 0x74300000, 0x00000000,
-    0x00000001, 0x00000000, 0x6D6F7669, 0x65206375, 0x74310000, 0x00000000, 0x00000001, 0x00000001,
-    0x6D6F7669, 0x65206375, 0x74320000, 0x00000000, 0x00000001, 0x00000002, 0x6D6F7669, 0x65206375,
-    0x74330000, 0x00000000, 0x00000001, 0x00000003, 0x6D6F7669, 0x65206375, 0x74340000, 0x00000000,
-    0x00000001, 0x00000004, 0x6D6F7669, 0x65206375, 0x74350000, 0x00000000, 0x00000001, 0x00000005,
-    0x6D6F7669, 0x65206375, 0x74360000, 0x00000000, 0x00000001, 0x00000006, 0x6D6F7669, 0x65206375,
-    0x74370000, 0x00000000, 0x00000001, 0x00000007, 0x6D6F7669, 0x65206375, 0x74380000, 0x00000000,
-    0x00000001, 0x00000008, 0x6D6F7669, 0x65206375, 0x74390000, 0x00000000, 0x00000001, 0x00000009,
-    0x6D6F7669, 0x65206375, 0x74313000, 0x00000000, 0x00000001, 0x0000000A, 0x6D6F7669, 0x65206375,
-    0x74313100, 0x00000000, 0x00000001, 0x0000000B, 0x6D6F7669, 0x65206375, 0x74313200, 0x00000000,
-    0x00000001, 0x0000000C, 0x6D6F7669, 0x65206375, 0x74313300, 0x00000000, 0x00000001, 0x0000000D,
-    0x6D6F7669, 0x65206375, 0x74313400, 0x00000000, 0x00000001, 0x0000000E, 0x6D6F7669, 0x65206375,
-    0x74313500, 0x00000000, 0x00000001, 0x0000000F, 0x6D6F7669, 0x65206375, 0x74313600, 0x00000000,
-    0x00000001, 0x00000010, 0x6D6F7669, 0x65206375, 0x74313700, 0x00000000, 0x00000001, 0x00000011,
-    0x6D6F7669, 0x65206375, 0x74313800, 0x00000000, 0x00000001, 0x00000012, 0x6D6F7669, 0x65206375,
-    0x74313900, 0x00000000, 0x00000001, 0x00000013, 0x6D6F7669, 0x65206375, 0x74323000, 0x00000000,
-    0x00000001, 0x00000014, 0x6C6F676F, 0x206E696E, 0x74656E64, 0x6F000000, 0x00000002, 0x00000000,
-    0x6C6F676F, 0x20626E67, 0x31000000, 0x00000000, 0x00000002, 0x00000001, 0x6C6F676F, 0x206E616D,
-    0x636F0000, 0x00000000, 0x00000002, 0x00000002, 0x6C6F676F, 0x20626E67, 0x32000000, 0x00000000,
-    0x00000002, 0x00000003, 0x6E616D63, 0x616D206F, 0x6C640000, 0x00000000, 0x00000003, 0x00000000,
-    0x6E616D63, 0x616D206E, 0x65770000, 0x00000000, 0x00000004, 0x00000000, 0x706C6179, 0x20303720,
-    0x73686F72, 0x74000000, 0x00000005, 0x00000000, 0x706C6179, 0x20303820, 0x73686F72, 0x74000000,
-    0x00000005, 0x00000001, 0x706C6179, 0x20303720, 0x6C6F6E67, 0x00000000, 0x00000005, 0x00000002,
-    0x706C6179, 0x20303820, 0x6C6F6E67, 0x00000000, 0x00000005, 0x00000003, 0x686F7720, 0x746F2070,
-    0x6C617900, 0x00000000, 0x00000006, 0x00000000
+const JointTable lbl_8032CC64[1] = {
+    { { { "movie old", 0, 0 }, { "movie all", 1, -1 }, { "movie cut0", 1, 0 }, { "movie cut1", 1, 1 }, { "movie cut2", 1, 2 }, { "movie cut3", 1, 3 }, { "movie cut4", 1, 4 }, { "movie cut5", 1, 5 }, { "movie cut6", 1, 6 }, { "movie cut7", 1, 7 }, { "movie cut8", 1, 8 }, { "movie cut9", 1, 9 }, { "movie cut10", 1, 10 }, { "movie cut11", 1, 11 }, { "movie cut12", 1, 12 }, { "movie cut13", 1, 13 }, { "movie cut14", 1, 14 }, { "movie cut15", 1, 15 }, { "movie cut16", 1, 16 }, { "movie cut17", 1, 17 }, { "movie cut18", 1, 18 }, { "movie cut19", 1, 19 }, { "movie cut20", 1, 20 }, { "logo nintendo", 2, 0 }, { "logo bng1", 2, 1 }, { "logo namco", 2, 2 }, { "logo bng2", 2, 3 }, { "namcam old", 3, 0 }, { "namcam new", 4, 0 }, { "play 07 short", 5, 0 }, { "play 08 short", 5, 1 }, { "play 07 long", 5, 2 }, { "play 08 long", 5, 3 }, { "how to play", 6, 0 } } }
 };
 const char lbl_8032CF94[] = "00:Spr Viewer";
 const char lbl_8032CFA4[] = "01:SprMng2 Test";
@@ -730,18 +730,16 @@ const unsigned char lbl_8032D9C8[1020] = {
     0x45, 0x3B, 0x80, 0x0, 0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x7A, 0x0, 0x0,
     0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x9C, 0x40, 0x0, 0x42, 0xA6, 0xAA, 0xAB
 };
-/* decl: Float3 */
-const float lbl_8032DDC4[3] = {
-    15.0f, 15.0f, 5e+01f
+const Float3 lbl_8032DDC4[1] = {
+    { { 15.0f, 15.0f, 50.0f } }
 };
-/* decl: Float3 */
-const float lbl_8032DDD0[9] = {
-    0.0f, 1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-    0.0f
+const Float3 lbl_8032DDD0[3] = {
+    { { 0.0f, 1.0f, -1.0f } },
+    { { 0.0f, 0.0f, 0.0f } },
+    { { 0.0f, 0.0f, 0.0f } }
 };
-/* decl: HitVec3 */
-const float lbl_8032DDF4[3] = {
-    0.0f, 5.0f, 0.0f
+const HitVec3 lbl_8032DDF4[1] = {
+    { 0.0f, 5.0f, 0.0f }
 };
 /* decl: ItemKindDef */
 const unk32 lbl_8032DE00[152] = {
@@ -870,13 +868,11 @@ const char lbl_8032E060[1236] = {
     63, -16, -89, 30, 63, -48, -37, -116, 63, -39, -83, 67,
     63, -39, -83, 67, 63, 99, 90, -122, 63, -128, 0, 0
 };
-/* decl: Vec */
-const float lbl_8032E534[3] = {
-    0.0f, 15.0f, 1e+01f
+const Vec lbl_8032E534[1] = {
+    { 0.0f, 15.0f, 10.0f }
 };
-/* decl: FloatTriple */
-const float lbl_8032E540[3] = {
-    0.0f, 0.4f, 0.0f
+const FloatTriple lbl_8032E540[1] = {
+    { { 0.0f, 0.4f, 0.0f } }
 };
 /* decl: FloatTriple */
 const unk32 lbl_8032E54C[40] = {

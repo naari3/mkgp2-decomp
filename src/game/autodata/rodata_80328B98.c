@@ -36,6 +36,16 @@ extern char lbl_806D4F1C[];
 extern char lbl_806D4F24[];
 extern char lbl_806D4F2C[];
 
+/* layout as declared in src/game/HitMessageOverlay_Show.c */
+typedef struct LineTable {
+    int lines[4];
+} LineTable;
+
+/* layout as declared in src/game/ReverseChallenge.c */
+typedef struct RCQuadPtsC {
+    float p[4][2];
+} RCQuadPtsC;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -46,9 +56,8 @@ const int lbl_80328B98[11] = {
 const float lbl_80328BC4[3] = {
     1.3f, 1.0f, 1.0f
 };
-/* decl: LineTable */
-const unk32 lbl_80328BD0[4] = {
-    0x00002B00, 0x00002B01, 0x00002B02, 0x00002B03
+const LineTable lbl_80328BD0[1] = {
+    { { 11008, 11009, 11010, 11011 } }
 };
 const char lbl_80328BE0[] = "clCounterInterface";
 const char lbl_80328BF4[] = "clFloatCounter";
@@ -134,9 +143,8 @@ const char lbl_80328DA8[] = "clStageSelect";
 const char lbl_80328DB8[] = "SeqStageSelect";
 const char lbl_80328DC8[] = "SeqTitle";
 /* 8-aligned in the original: probably the first object of a TU */
-/* decl: RCQuadPtsC */
-const float lbl_80328DD8[8] __attribute__((aligned(8))) = {
-    1045.0f, -3.4e+02f, 913.4f, 2.5e+02f, 6.5e+02f, 330.9f, 6.5e+02f, -1.5e+02f
+const RCQuadPtsC lbl_80328DD8[1] __attribute__((aligned(8))) = {
+    { { { 1045.0f, -340.0f }, { 913.4f, 250.0f }, { 650.0f, 330.9f }, { 650.0f, -150.0f } } }
 };
 const char lbl_80328DF8[] = "clCGameWC";
 const char lbl_80328E04[] = "clJobRunner";

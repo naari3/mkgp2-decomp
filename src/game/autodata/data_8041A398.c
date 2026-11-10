@@ -5,16 +5,19 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* layout as declared in src/game/EffectDustBurst4.cpp */
+typedef struct DustCurve {
+    float values[9];
+} DustCurve;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-/* decl: DustCurve */
-float lbl_8041A398[36] = {
-    0.0f, 2.0f, 5.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-    0.0f, 2.0f, 7.0f, 11.0f, 0.0f, 1.0f, 2.0f, 0.0f,
-    1.0f, 0.0f, 5.0f, 7.0f, 11.0f, 0.0f, 1.0f, 1.0f,
-    1.0f, 1.0f, 0.0f, 2.0f, 7.0f, 11.0f, 0.0f, 1.0f,
-    2.0f, 0.0f, 0.6f, 0.0f
+DustCurve lbl_8041A398[4] = {
+    { { 0.0f, 2.0f, 5.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f } },
+    { { 2.0f, 7.0f, 11.0f, 0.0f, 1.0f, 2.0f, 0.0f, 1.0f, 0.0f } },
+    { { 5.0f, 7.0f, 11.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f } },
+    { { 2.0f, 7.0f, 11.0f, 0.0f, 1.0f, 2.0f, 0.0f, 0.6f, 0.0f } }
 };
 
 #pragma force_active reset

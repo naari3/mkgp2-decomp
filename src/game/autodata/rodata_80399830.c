@@ -12,6 +12,11 @@ extern char lbl_806D999C[];
 extern char lbl_806D99A4[];
 extern char lbl_806D99AC[];
 
+/* layout as declared in src/game/fn_801C1F88.cpp */
+typedef struct AnimIds {
+    int values[3];
+} AnimIds;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -561,13 +566,11 @@ const unsigned char lbl_8039A5A0[1128] = {
     0x0, 0x0, 0x0, 0xC, 0x0, 0x0, 0x0, 0x2, 0x0, 0x0, 0x0, 0x7,
     0x0, 0x0, 0x0, 0xB, 0x0, 0x0, 0x0, 0x1, 0x0, 0x0, 0x0, 0x6
 };
-/* decl: AnimIds */
-const unk32 lbl_8039AA08[3] = {
-    0x0000000D, 0x00000003, 0x00000008
+const AnimIds lbl_8039AA08[1] = {
+    { { 13, 3, 8 } }
 };
-/* decl: AnimIds */
-const unk32 lbl_8039AA14[3] = {
-    0x0000000A, 0x00000000, 0x00000005
+const AnimIds lbl_8039AA14[1] = {
+    { { 10, 0, 5 } }
 };
 const char clFlowClass[] = "clFlowClass";
 const char lbl_8039AA2C[] = "clFlowProcess";

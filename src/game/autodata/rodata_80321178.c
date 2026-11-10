@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -100,13 +101,11 @@ const char lbl_803211D8[1020] = {
     69, 59, -128, 0, 66, -90, -86, -85, 69, 122, 0, 0,
     66, -90, -86, -85, 69, -100, 64, 0, 66, -90, -86, -85
 };
-/* decl: Vec */
-const unk32 lbl_803215D4[3] = {
-    0x00000000, 0x00000000, 0x00000000
+const Vec lbl_803215D4[1] = {
+    { 0.0f, 0.0f, 0.0f }
 };
-/* decl: Vec */
-const unk32 lbl_803215E0[3] = {
-    0x00000000, 0x00000000, 0x00000000
+const Vec lbl_803215E0[1] = {
+    { 0.0f, 0.0f, 0.0f }
 };
 const char lbl_803215EC[] = "clGameSingle";
 const unk32 lbl_803215FC[225] = {

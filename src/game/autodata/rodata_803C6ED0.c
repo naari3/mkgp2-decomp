@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec3f.h"
 
 extern char lbl_806DB3E0[];
 
@@ -4985,9 +4986,9 @@ const float lbl_803D0278[10] = {
     2e+03f, -4.2e+03f, 5e+03f, -2e+03f, 0.6f, 0.75f, 0.6f, 7e+01f,
     7e+01f, 7e+01f
 };
-/* decl: Vec3f / float */
-const float lbl_803D02A0[6] = {
-    3.67e+03f, 1.5e+02f, -3.25e+03f, 3.88e+03f, 1.5e+02f, -2846.0f
+const Vec3f lbl_803D02A0[2] = {
+    { 3670.0f, 150.0f, -3250.0f },
+    { 3880.0f, 150.0f, -2846.0f }
 };
 const float lbl_803D02B8[10] = {
     3.75e+03f, 2.3e+02f, -2971.0f, 4049.0f, 2.3e+02f, -2.8e+03f, 3122.0f, 4412.0f,

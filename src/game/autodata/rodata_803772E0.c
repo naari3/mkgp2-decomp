@@ -4,6 +4,20 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec3.h"
+#include "game/types/Vec.h"
+
+/* layout as declared in src/game/objview/fn_801879E4.c */
+typedef struct Path {
+    Vec3 p0;
+    Vec3 p1;
+    Vec3 p2;
+} Path;
+
+/* layout as declared in src/game/NokoNoko_Update.c */
+typedef struct Quad {
+    Vec v[4];
+} Quad;
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -14,28 +28,38 @@ const char lbl_80377304[] = " DeleteMapEffect : clMRLightHouse\n";
 const char lbl_80377328[] = " CreateMapEffect : clMRLightHouse\n";
 const char lbl_8037734C[] = "MRA_lighthouse_C.dat";
 /* 8-aligned in the original: probably the first object of a TU */
-/* decl: Path */
-const float lbl_80377368[27] __attribute__((aligned(8))) = {
-    340.1803f, -408.622f, -3607.14f, 105.9669f, 12.6597f, -4003.29f, -79.0158f, -389.73f,
-    -4383.93f, 354.5148f, -408.463f, -4526.88f, 403.1689f, -49.6883f, -4071.17f, 442.1717f,
-    -392.301f, -3610.22f, 620.166f, -408.762f, -4532.42f, 723.8622f, -74.7206f, -4075.58f,
-    808.1324f, -393.497f, -3685.97f
+const Path lbl_80377368[3] __attribute__((aligned(8))) = {
+    { { 340.1803f, -408.622f, -3607.14f }, { 105.9669f, 12.6597f, -4003.29f }, { -79.0158f, -389.73f, -4383.93f } },
+    { { 354.5148f, -408.463f, -4526.88f }, { 403.1689f, -49.6883f, -4071.17f }, { 442.1717f, -392.301f, -3610.22f } },
+    { { 620.166f, -408.762f, -4532.42f }, { 723.8622f, -74.7206f, -4075.58f }, { 808.1324f, -393.497f, -3685.97f } }
 };
 const char lbl_803773D4[] = "clMRPukupuku";
 const char lbl_803773E4[] = "clMapEffectParts";
 const char lbl_803773F8[] = " DeleteMapEffect : clMRPukupuku\n";
 const char lbl_8037741C[] = " CreateMapEffect : clMRPukupuku\n";
 const char lbl_80377440[] = "MRA_puku.dat";
-/* decl: Vec */
-const float lbl_80377450[63] = {
-    0.0f, 0.0f, 0.0f, 1.493047f, 0.0f, -242.65889f, 4.056378f, 0.0f,
-    -601.4776f, -22.345526f, 0.0f, -921.381f, -16.991966f, 0.0f, -1435.6628f, 134.62973f,
-    0.0f, -1832.4192f, 465.47156f, 0.0f, -1970.9429f, 748.8264f, 0.0f, -1788.9553f,
-    819.2118f, 0.0f, -1387.4492f, 827.81134f, 0.0f, -903.74207f, 845.88794f, 0.0f,
-    -511.83994f, 853.3076f, 0.0f, -134.58167f, 856.0699f, 0.0f, 226.98029f, 859.05963f,
-    0.0f, 648.0602f, 872.08936f, 0.0f, 984.2251f, 830.0011f, 0.0f, 1372.6128f,
-    597.60583f, 0.0f, 1715.3751f, 214.77362f, 0.0f, 1748.6566f, -4.925331f, 0.0f,
-    1416.0548f, -16.69406f, 0.0f, 1000.6227f, -6.274629f, 0.0f, 512.3508f
+const Vec lbl_80377450[21] = {
+    { 0.0f, 0.0f, 0.0f },
+    { 1.493047f, 0.0f, -242.65889f },
+    { 4.056378f, 0.0f, -601.4776f },
+    { -22.345526f, 0.0f, -921.381f },
+    { -16.991966f, 0.0f, -1435.6628f },
+    { 134.62973f, 0.0f, -1832.4192f },
+    { 465.47156f, 0.0f, -1970.9429f },
+    { 748.8264f, 0.0f, -1788.9553f },
+    { 819.2118f, 0.0f, -1387.4492f },
+    { 827.81134f, 0.0f, -903.74207f },
+    { 845.88794f, 0.0f, -511.83994f },
+    { 853.3076f, 0.0f, -134.58167f },
+    { 856.0699f, 0.0f, 226.98029f },
+    { 859.05963f, 0.0f, 648.0602f },
+    { 872.08936f, 0.0f, 984.2251f },
+    { 830.0011f, 0.0f, 1372.6128f },
+    { 597.60583f, 0.0f, 1715.3751f },
+    { 214.77362f, 0.0f, 1748.6566f },
+    { -4.925331f, 0.0f, 1416.0548f },
+    { -16.69406f, 0.0f, 1000.6227f },
+    { -6.274629f, 0.0f, 512.3508f }
 };
 const unk32 lbl_8037754C[15] = {
     0x00000003, 0x00000002, 0x00000258, 0x3ECCCCCD, 0x3C2B92A4, 0x00000003, 0x00000002, 0x00000258,
@@ -54,10 +78,8 @@ const char lbl_80377614[] = "nokonoko_tamb.dat";
 const char lbl_80377628[] = "nokonoko_work.dat";
 const char lbl_8037763C[] = "nokonoko_run.dat";
 const char lbl_80377650[] = "nokonoko_damage.dat";
-/* decl: Quad */
-const unk32 lbl_80377664[12] = {
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000
+const Quad lbl_80377664[1] = {
+    { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } }
 };
 /* decl: Quad */
 const unk32 lbl_80377694[13] = {

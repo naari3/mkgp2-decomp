@@ -4,17 +4,25 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-/* decl: Vec */
-const float lbl_8037D9E0[39] = {
-    1e+01f, 1e+01f, 6.0f, 1e+01f, 1e+01f, 6.0f, 11.0f, 1e+01f,
-    7.0f, 1e+01f, 1e+01f, 6.0f, 12.0f, 1e+01f, 7.0f, 9.0f,
-    1e+01f, 6.0f, 12.0f, 1e+01f, 7.0f, 1e+01f, 1e+01f, 6.0f,
-    1e+01f, 1e+01f, 6.0f, 1e+01f, 1e+01f, 6.0f, 9.0f, 1e+01f,
-    6.0f, 1e+01f, 1e+01f, 6.0f, 1e+01f, 1e+01f, 6.0f
+const Vec lbl_8037D9E0[13] = {
+    { 10.0f, 10.0f, 6.0f },
+    { 10.0f, 10.0f, 6.0f },
+    { 11.0f, 10.0f, 7.0f },
+    { 10.0f, 10.0f, 6.0f },
+    { 12.0f, 10.0f, 7.0f },
+    { 9.0f, 10.0f, 6.0f },
+    { 12.0f, 10.0f, 7.0f },
+    { 10.0f, 10.0f, 6.0f },
+    { 10.0f, 10.0f, 6.0f },
+    { 10.0f, 10.0f, 6.0f },
+    { 9.0f, 10.0f, 6.0f },
+    { 10.0f, 10.0f, 6.0f },
+    { 10.0f, 10.0f, 6.0f }
 };
 const char lbl_8037DA7C[] = "it_a_01_banana.dat";
 

@@ -4,6 +4,8 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/FloatTriple.h"
+#include "game/types/Vec.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -20,13 +22,11 @@ const char lbl_8032F9AC[100] = {
     95, 104, 97, 104, 101, 110, 95, 106, 111, 105, 110, 116,
     0, 0, 0, 0
 };
-/* decl: FloatTriple */
-const float lbl_8032FA10[3] = {
-    0.087266445f, 0.5235987f, -0.5235987f
+const FloatTriple lbl_8032FA10[1] = {
+    { { 0.087266445f, 0.5235987f, -0.5235987f } }
 };
-/* decl: FloatTriple */
-const float lbl_8032FA1C[3] = {
-    0.0f, -0.087266445f, -0.26179934f
+const FloatTriple lbl_8032FA1C[1] = {
+    { { 0.0f, -0.087266445f, -0.26179934f } }
 };
 /* decl: Vec3 */
 const float lbl_8032FA28[4] = {
@@ -35,13 +35,11 @@ const float lbl_8032FA28[4] = {
 const unsigned int lbl_8032FA38[4] = {
     0x0, 0x0, 0x0, 0x0
 };
-/* decl: Vec */
-const float lbl_8032FA48[3] = {
-    0.0f, -1.0f, -2.5f
+const Vec lbl_8032FA48[1] = {
+    { 0.0f, -1.0f, -2.5f }
 };
-/* decl: Vec */
-const float lbl_8032FA54[3] = {
-    -0.5235987f, 2.8797927f, 0.0f
+const Vec lbl_8032FA54[1] = {
+    { -0.5235987f, 2.8797927f, 0.0f }
 };
 const char lbl_8032FA60[] = "item_effect_joint";
 

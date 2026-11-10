@@ -20,22 +20,33 @@ extern char lbl_803F56DC[];
 extern char lbl_803F5748[];
 extern char lbl_806D22C0[];
 
+/* layout as declared in src/game/BootDispatcher.cpp */
+typedef struct BootHooks {
+    void *begin;   /* ? * */
+    void *end;   /* ? * */
+} BootHooks;
+
+/* layout as declared in src/game/BootDispatcher.cpp */
+typedef struct BootColor {
+    unsigned char r;
+    unsigned char g;
+    unsigned char b;
+    unsigned char a;
+} BootColor;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
 const char *lbl_806CED20[2] = {
     (const char *)&lbl_802E8F38, 0
 };
-/* decl: BootHooks / FrameHookPair / void * */
-void *lbl_806CED28[2] = {
-    0,
-    0
+BootHooks lbl_806CED28[1] = {
+    { 0, 0 }
 };
 /* decl: u8 / unsigned char */
 unsigned char lbl_806CED30 = 0x1;
-/* decl: BootColor / ServiceColor / u32 / unsigned char */
-unsigned char lbl_806CED34[4] = {
-    0x0, 0x0, 0x0, 0xFF
+BootColor lbl_806CED34[1] = {
+    { 0, 0, 0, 0xFF }
 };
 const char *lbl_806CED38[2] = {
     (const char *)&lbl_802E96A8, 0

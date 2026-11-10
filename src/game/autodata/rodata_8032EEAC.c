@@ -4,6 +4,8 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec3.h"
+#include "game/types/Vec.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -114,42 +116,35 @@ const unsigned char lbl_8032EFF0[1068] = {
     0xC0, 0x16, 0xCB, 0xE2, 0x0, 0x0, 0x0, 0x0, 0xBF, 0xC9, 0xF, 0xD8
 };
 const char lbl_8032F41C[] = "it_a_01_banana_banana_atari_joint";
-/* decl: Vec3 */
-const float lbl_8032F440[3] = {
-    1.0f, 1.5f, 0.0f
+const Vec3 lbl_8032F440[1] = {
+    { 1.0f, 1.5f, 0.0f }
 };
-/* decl: Vec3 */
-const float lbl_8032F44C[3] = {
-    0.0f, -0.785398f, 0.0f
+const Vec3 lbl_8032F44C[1] = {
+    { 0.0f, -0.785398f, 0.0f }
 };
 const char lbl_8032F458[] = "item_taru_joint";
 const char lbl_8032F468[] = "item_hahen_taru_joint";
 const char lbl_8032F480[] = "item_goro_egg_joint";
 const char lbl_8032F494[] = "item_goro_egg_hahen_joint";
-/* decl: Vec3 */
-const float lbl_8032F4B0[3] = {
-    0.0f, 0.0f, -0.8f
+const Vec3 lbl_8032F4B0[1] = {
+    { 0.0f, 0.0f, -0.8f }
 };
-/* decl: Vec3 */
-const float lbl_8032F4BC[3] = {
-    1.9198618f, 0.0f, 0.0f
+const Vec3 lbl_8032F4BC[1] = {
+    { 1.9198618f, 0.0f, 0.0f }
 };
 const unsigned int lbl_8032F4C8[12] = {
     0x40200000, 0x40400000, 0x3FC00000, 0x40000000, 0x3F000000, 0x40000000, 0x3F800000, 0x40000000,
     0x40400000, 0x40400000, 0x3F800000, 0x0
 };
-/* decl: Vec3 */
-const float lbl_8032F4F8[3] = {
-    0.0f, 2e+01f, 15.0f
+const Vec3 lbl_8032F4F8[1] = {
+    { 0.0f, 20.0f, 15.0f }
 };
 const char lbl_8032F504[] = "item_speaker2_joint";
-/* decl: Vec */
-const float lbl_8032F518[3] = {
-    0.0f, 1.0f, 0.0f
+const Vec lbl_8032F518[1] = {
+    { 0.0f, 1.0f, 0.0f }
 };
-/* decl: Vec */
-const float lbl_8032F524[3] = {
-    0.0f, 0.0f, -1.570796f
+const Vec lbl_8032F524[1] = {
+    { 0.0f, 0.0f, -1.570796f }
 };
 const char lbl_8032F530[] = "enmaku_effect_joint";
 

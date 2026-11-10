@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/YesNoPos.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -17,9 +18,8 @@ const float lbl_806DAAEC = 2.4e+02f;
 const float lbl_806DAAF0[2] = {
     262.0f, 0.0f
 };
-/* decl: YesNoPos */
-const float lbl_806DAAF8[2] = {
-    314.0f, 242.0f
+const YesNoPos lbl_806DAAF8[1] = {
+    { 314.0f, 242.0f }
 };
 const float lbl_806DAB00[2] = {
     1e+01f, 0.0f

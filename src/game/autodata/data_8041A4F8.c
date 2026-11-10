@@ -423,6 +423,20 @@ extern char lbl_806D5858[];
 extern char lbl_806D5860[];
 extern char lbl_806D5868[];
 
+/* layout as declared in src/game/DbgMenu.cpp */
+typedef struct ScrollEntry {
+    int id;
+    float x;
+    float y;
+    float w;
+} ScrollEntry;
+
+/* layout as declared in src/game/DbgMenu.cpp */
+typedef struct DbgMenuEntry {
+    void *ctor;   /* function * */
+    char *name;
+} DbgMenuEntry;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -2391,42 +2405,29 @@ void *lbl_8041C8A0[8] = {
     (void *)0xD000000,
     0
 };
-/* decl: ScrollEntry */
-unk32 lbl_8041C8C0[24] = {
-    0x00000A3D, 0x427F9998, 0x436F8000, 0x00000000, 0x00000A3E, 0x43BFF333, 0x436F8000, 0x00000000,
-    0x00000A3F, 0x4313E666, 0x436F8000, 0x00000000, 0x00000A59, 0x43982000, 0x436CD99A, 0x00000000,
-    0x00000A5A, 0x4411999A, 0x436CD99A, 0x00000000, 0x00000A5A, 0x43D1F333, 0x43D2C000, 0xBFC90FD8
+ScrollEntry lbl_8041C8C0[6] = {
+    { 2621, 63.899994f, 239.5f, 0.0f },
+    { 2622, 383.9f, 239.5f, 0.0f },
+    { 2623, 147.9f, 239.5f, 0.0f },
+    { 2649, 304.25f, 236.85f, 0.0f },
+    { 2650, 582.4f, 236.85f, 0.0f },
+    { 2650, 419.9f, 421.5f, -1.570796f }
 };
-/* decl: DbgMenuEntry */
-void *lbl_8041C920[28] = {
-    (void *)DbgScene01_SprMng2Test_Ctor,
-    (void *)&lbl_8032CF94,
-    (void *)DbgScene02_MapViewer_Ctor,
-    (void *)&lbl_8032CFA4,
-    (void *)DbgScene03_TplTest_Ctor,
-    (void *)&lbl_8032CFB4,
-    (void *)DbgScene04_AnmTest_Ctor,
-    (void *)&lbl_8032CFC4,
-    (void *)DbgScene05_TplTest2_Ctor,
-    (void *)&lbl_8032CFD0,
-    (void *)DbgScene06_SprMng2Test_Ctor,
-    (void *)&lbl_8032CFDC,
-    (void *)DbgScene07_ScrEffTest_Ctor,
-    (void *)&lbl_8032CFEC,
-    (void *)DbgScene08_AtrTest_Ctor,
-    (void *)&lbl_8032CFFC,
-    (void *)DbgScene09_Flash_Ctor,
-    (void *)&lbl_8032D00C,
-    (void *)DbgScene10_TtlTest_Ctor,
-    (void *)&lbl_8032D018,
-    (void *)DbgScene11_Empty_Ctor,
-    (void *)&lbl_806D5868,
-    (void *)DbgScene12_PrzTest_Ctor,
-    (void *)&lbl_8032D024,
-    (void *)DbgScene13_PrxTest2_Ctor,
-    (void *)&lbl_8032D030,
-    (void *)TestMenuRaceStart_Ctor,
-    (void *)&lbl_8032D03C
+DbgMenuEntry lbl_8041C920[14] = {
+    { (void *)DbgScene01_SprMng2Test_Ctor, (void *)&lbl_8032CF94 },
+    { (void *)DbgScene02_MapViewer_Ctor, (void *)&lbl_8032CFA4 },
+    { (void *)DbgScene03_TplTest_Ctor, (void *)&lbl_8032CFB4 },
+    { (void *)DbgScene04_AnmTest_Ctor, (void *)&lbl_8032CFC4 },
+    { (void *)DbgScene05_TplTest2_Ctor, (void *)&lbl_8032CFD0 },
+    { (void *)DbgScene06_SprMng2Test_Ctor, (void *)&lbl_8032CFDC },
+    { (void *)DbgScene07_ScrEffTest_Ctor, (void *)&lbl_8032CFEC },
+    { (void *)DbgScene08_AtrTest_Ctor, (void *)&lbl_8032CFFC },
+    { (void *)DbgScene09_Flash_Ctor, (void *)&lbl_8032D00C },
+    { (void *)DbgScene10_TtlTest_Ctor, (void *)&lbl_8032D018 },
+    { (void *)DbgScene11_Empty_Ctor, (void *)&lbl_806D5868 },
+    { (void *)DbgScene12_PrzTest_Ctor, (void *)&lbl_8032D024 },
+    { (void *)DbgScene13_PrxTest2_Ctor, (void *)&lbl_8032D030 },
+    { (void *)TestMenuRaceStart_Ctor, (void *)&lbl_8032D03C }
 };
 void *lbl_8041C990[3] = {
     (void *)&lbl_806CF334,

@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec3.h"
 
 extern void fn_8016A26C();
 extern void fn_80196028();
@@ -104,13 +105,11 @@ void *lbl_804963A4[7] = {
     (void *)fn_8016A26C,
     0
 };
-/* decl: Vec3 */
-float lbl_804963C0[3] = {
-    0.0f, 1.5f, 0.0f
+Vec3 lbl_804963C0[1] = {
+    { 0.0f, 1.5f, 0.0f }
 };
-/* decl: Vec3 */
-float lbl_804963CC[3] = {
-    0.34906578f, 2.6179934f, 0.0f
+Vec3 lbl_804963CC[1] = {
+    { 0.34906578f, 2.6179934f, 0.0f }
 };
 
 #pragma force_active reset

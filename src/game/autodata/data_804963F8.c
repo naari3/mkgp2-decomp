@@ -498,13 +498,21 @@ extern char lbl_80381060[];
 extern char lbl_80381078[];
 extern char lbl_8038108C[];
 
+/* layout as declared in src/game/kartmove/fn_8019C078.c */
+typedef struct SuspParam {
+    float pad0;
+    float target;
+    float rateUp;
+    float rateDown;
+    unsigned char pad10[8];
+} SuspParam;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-/* decl: SuspParam / SuspensionParam / float */
-float lbl_804963F8[12] = {
-    2.0f, 1.0f, 0.4f, 0.3f, 0.0f, 0.0f, 2.0f, 1.0f,
-    0.4f, 0.3f, 0.0f, 0.0f
+SuspParam lbl_804963F8[2] = {
+    { 2.0f, 1.0f, 0.4f, 0.3f, { 0, 0, 0, 0, 0, 0, 0, 0 } },
+    { 2.0f, 1.0f, 0.4f, 0.3f, { 0, 0, 0, 0, 0, 0, 0, 0 } }
 };
 char *lbl_80496428[492] = {
     (char *)&lbl_8037DDE0,

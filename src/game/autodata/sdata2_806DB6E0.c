@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec2.h"
 
 extern char lbl_803E863C[];
 
@@ -49,9 +50,8 @@ const float lbl_806DB76C = 1.0f;
 const double lbl_806DB770 = 4503601774854144.0;
 const float lbl_806DB778 = 584.0f;
 const float lbl_806DB77C = 56.0f;
-/* decl: Vec2 */
-const float lbl_806DB780[2] = {
-    4.3e+02f, 1e+02f
+const Vec2 lbl_806DB780[1] = {
+    { 430.0f, 100.0f }
 };
 const char lbl_806DB788[] = "50cc";
 const char lbl_806DB790[] = "100cc";

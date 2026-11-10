@@ -5,16 +5,18 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* layout as declared in src/game/fn_80105800.c */
+typedef struct ScaleKey {
+    float t[9];
+    float v[9];
+} ScaleKey;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-/* decl: ScaleKey */
-float lbl_80421A28[36] = {
-    6.8e+02f, 692.0f, 701.0f, 712.0f, 724.0f, 737.0f, 744.0f, 7.6e+02f,
-    7.7e+02f, 0.85f, 1.2f, 0.87f, 1.2f, 0.88f, 1.2f, 0.87f,
-    1.2f, 0.85f, 6.8e+02f, 693.0f, 702.0f, 713.0f, 726.0f, 734.0f,
-    7.5e+02f, 761.0f, 7.7e+02f, 1.2f, 0.8f, 1.2f, 0.84f, 1.2f,
-    0.83f, 1.2f, 0.84f, 1.2f
+ScaleKey lbl_80421A28[2] = {
+    { { 680.0f, 692.0f, 701.0f, 712.0f, 724.0f, 737.0f, 744.0f, 760.0f, 770.0f }, { 0.85f, 1.2f, 0.87f, 1.2f, 0.88f, 1.2f, 0.87f, 1.2f, 0.85f } },
+    { { 680.0f, 693.0f, 702.0f, 713.0f, 726.0f, 734.0f, 750.0f, 761.0f, 770.0f }, { 1.2f, 0.8f, 1.2f, 0.84f, 1.2f, 0.83f, 1.2f, 0.84f, 1.2f } }
 };
 
 #pragma force_active reset

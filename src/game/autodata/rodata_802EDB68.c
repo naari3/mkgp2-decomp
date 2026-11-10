@@ -5,6 +5,11 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* layout as declared in src/game/TornadoEffect.c */
+typedef struct TEPtr3 {
+    float *p[3];
+} TEPtr3;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -17,13 +22,11 @@ const char lbl_802EDC14[] = "nsCarBodyDamage::clDamage";
 const unsigned int lbl_802EDC30[3] = {
     0x0, 0x0, 0x0
 };
-/* decl: TEPtr3 */
-const unk32 lbl_802EDC3C[3] = {
-    0x00000000, 0x00000000, 0x00000000
+const TEPtr3 lbl_802EDC3C[1] = {
+    { { 0, 0, 0 } }
 };
-/* decl: TEPtr3 */
-const unk32 lbl_802EDC48[3] = {
-    0x00000000, 0x00000000, 0x00000000
+const TEPtr3 lbl_802EDC48[1] = {
+    { { 0, 0, 0 } }
 };
 const unsigned int lbl_802EDC54[3] = {
     0x0, 0x0, 0x0

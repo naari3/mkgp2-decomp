@@ -5,6 +5,13 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* layout as declared in src/game/anon_8021550C.cpp */
+typedef struct CountPos {
+    float x;
+    float y;
+    float scale;
+} CountPos;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -14,13 +21,19 @@ const int lbl_803C3E50[6] = {
 const char lbl_803C3E68[] = "clRaceCountNum";
 const char lbl_803C3E78[] = "clYTaskInterface";
 const char lbl_803C3E8C[] = "clCTaskInterface";
-/* decl: CountPos */
-const float lbl_803C3EA0[36] = {
-    607.0f, 415.0f, 1.0f, 544.0f, 413.0f, 1.0f, 563.0f, 413.0f,
-    1.0f, 579.0f, 413.0f, 1.0f, 565.0f, 413.0f, 1.0f, 625.0f,
-    413.0f, 1.0f, 589.0f, 452.0f, 1.0f, 526.0f, 4.5e+02f, 1.0f,
-    545.0f, 4.5e+02f, 1.0f, 561.0f, 4.5e+02f, 1.0f, 547.0f, 4.5e+02f,
-    1.0f, 607.0f, 4.5e+02f, 1.0f
+const CountPos lbl_803C3EA0[12] = {
+    { 607.0f, 415.0f, 1.0f },
+    { 544.0f, 413.0f, 1.0f },
+    { 563.0f, 413.0f, 1.0f },
+    { 579.0f, 413.0f, 1.0f },
+    { 565.0f, 413.0f, 1.0f },
+    { 625.0f, 413.0f, 1.0f },
+    { 589.0f, 452.0f, 1.0f },
+    { 526.0f, 450.0f, 1.0f },
+    { 545.0f, 450.0f, 1.0f },
+    { 561.0f, 450.0f, 1.0f },
+    { 547.0f, 450.0f, 1.0f },
+    { 607.0f, 450.0f, 1.0f }
 };
 const char lbl_803C3F30[] = "clCoinDisp";
 const char lbl_803C3F3C[] = "clCDispInterface";

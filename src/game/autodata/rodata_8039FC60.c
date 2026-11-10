@@ -5,14 +5,26 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* layout as declared in src/game/fn_801D8E28.cpp */
+typedef struct FKPosition {
+    float x;
+    float y;
+} FKPosition;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-/* decl: FKPosition / Vec2 */
-const float lbl_8039FC60[20] = {
-    3.2e+02f, 2.3e+02f, 0.0f, -45.0f, 0.0f, -5.0f, 0.0f, 37.0f,
-    -2e+01f, -45.0f, -2e+01f, -4.0f, -2e+01f, 37.0f, -122.0f, 0.0f,
-    0.0f, -9e+01f, 0.0f, 0.0f
+const FKPosition lbl_8039FC60[10] = {
+    { 320.0f, 230.0f },
+    { 0.0f, -45.0f },
+    { 0.0f, -5.0f },
+    { 0.0f, 37.0f },
+    { -20.0f, -45.0f },
+    { -20.0f, -4.0f },
+    { -20.0f, 37.0f },
+    { -122.0f, 0.0f },
+    { 0.0f, -90.0f },
+    { 0.0f, 0.0f }
 };
 const char clFlowFigure[] = "clFlowFigure";
 const char lbl_8039FCC0[] = "clFlowProcess";

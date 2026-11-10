@@ -4,6 +4,13 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/Vec3.h"
+#include "game/types/Vec.h"
+
+/* layout as declared in src/game/SuikaBallObj_UpdatePhysics.c */
+typedef struct BallProbes {
+    Vec v[4];
+} BallProbes;
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -15,23 +22,17 @@ const char lbl_803558C8[] = "clAreaData";
 const char lbl_803558D4[] = "clAreaDataSimple";
 const char lbl_803558E8[] = "clAttract";
 const char lbl_803558F4[] = "clJobRunner";
-/* decl: Vec3 */
-const unk32 lbl_80355900[3] = {
-    0x00000000, 0x00000000, 0x00000000
+const Vec3 lbl_80355900[1] = {
+    { 0.0f, 0.0f, 0.0f }
 };
-/* decl: Vec3 */
-const unk32 lbl_8035590C[3] = {
-    0x00000000, 0x00000000, 0x00000000
+const Vec3 lbl_8035590C[1] = {
+    { 0.0f, 0.0f, 0.0f }
 };
-/* decl: BallProbes */
-const unk32 lbl_80355918[12] = {
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000
+const BallProbes lbl_80355918[1] = {
+    { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } }
 };
-/* decl: BallProbes */
-const unk32 lbl_80355948[12] = {
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000
+const BallProbes lbl_80355948[1] = {
+    { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } }
 };
 const char lbl_80355978[] = "cam_challenge_goal.dat";
 const char lbl_80355990[] = "challenge_demo_DK.dat";

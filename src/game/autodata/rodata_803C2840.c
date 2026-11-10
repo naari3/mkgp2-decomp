@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/JobEntry.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -57,36 +58,21 @@ const char lbl_803C2CD4[] = "Particle test.";
 const char lbl_803C2CE4[] = "Performance test.";
 const char lbl_803C2CF8[] = "New sprite test.";
 const char lbl_803C2D0C[] = "Old sprite sample.";
-/* decl: JobEntry */
-void *const lbl_803C2D20[28] = {
-    (void *)0xE,
-    (void *)&lbl_803C2C3C,
-    (void *)0x5,
-    (void *)&lbl_803C2C48,
-    (void *)0xF,
-    (void *)&lbl_803C2C54,
-    (void *)0x6,
-    (void *)&lbl_803C2C60,
-    (void *)0x7,
-    (void *)&lbl_803C2C70,
-    (void *)0xB,
-    (void *)&lbl_803C2C84,
-    0,
-    (void *)&lbl_803C2C98,
-    (void *)0x1,
-    (void *)&lbl_803C2CA8,
-    (void *)0xA,
-    (void *)&lbl_803C2CB8,
-    (void *)0x2,
-    (void *)&lbl_803C2CC8,
-    (void *)0x3,
-    (void *)&lbl_803C2CD4,
-    (void *)0x8,
-    (void *)&lbl_803C2CE4,
-    (void *)0xC,
-    (void *)&lbl_803C2CF8,
-    (void *)0xD,
-    (void *)&lbl_803C2D0C
+const JobEntry lbl_803C2D20[14] = {
+    { 14, (void *)&lbl_803C2C3C },
+    { 5, (void *)&lbl_803C2C48 },
+    { 15, (void *)&lbl_803C2C54 },
+    { 6, (void *)&lbl_803C2C60 },
+    { 7, (void *)&lbl_803C2C70 },
+    { 11, (void *)&lbl_803C2C84 },
+    { 0, (void *)&lbl_803C2C98 },
+    { 1, (void *)&lbl_803C2CA8 },
+    { 10, (void *)&lbl_803C2CB8 },
+    { 2, (void *)&lbl_803C2CC8 },
+    { 3, (void *)&lbl_803C2CD4 },
+    { 8, (void *)&lbl_803C2CE4 },
+    { 12, (void *)&lbl_803C2CF8 },
+    { 13, (void *)&lbl_803C2D0C }
 };
 const char lbl_803C2D90[] = "clYokome";
 const unk32 lbl_803C2D9C[19] = {
