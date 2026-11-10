@@ -10,23 +10,9 @@ void Profiler_RecordFrame(int slot, float value);
 
 #include "game/types/TerrainTri.h"
 
-typedef struct TerrainCell {
-    TerrainTri *tris;
-    int triCount;
-    void *walls;
-    int wallCount;
-} TerrainCell;
+#include "game/types/TerrainCell.h"
 
-typedef struct TerrainGrid {
-    int width;
-    int height;
-    float cellWidth;
-    float cellDepth;
-    unsigned char pad_10[0x10];
-    float offsetX;
-    float offsetZ;
-    TerrainCell *cells;
-} TerrainGrid;
+#include "game/types/TerrainGrid.h"
 
 extern "C" {
 extern TerrainGrid *lbl_806CED58;

@@ -5,14 +5,9 @@
 
 #include "game/types/ListNode.h"
 
-struct ListIter {
-    ListNode *n;
-};
+#include "game/types/ListIter.h"
 
-struct List {
-    int size;
-    ListNode head;
-};
+#include "game/types/List.h"
 
 #include "game/types/DataBuf.h"
 
@@ -41,27 +36,7 @@ struct InputView {
 
 #include "game/types/MenuTarget.h"
 
-struct OptionMenu {
-    char pad0[0x1d];
-    unsigned char toggleEnabled;
-    char pad1E[2];
-    MenuTarget *target;
-    char pad24[0x20];
-    float blink;
-    char pad48[4];
-    bool toggle;
-    char pad4D[3];
-    float fade50;
-    float fade54;
-    unsigned char sel;
-    char pad59[3];
-    float blink2;
-    char pad60[4];
-    int value;
-    char pad68[0x1c];
-    int scroll;
-    int scrollTimer;
-};
+#include "game/types/OptionMenu.h"
 
 /* TOP-END */
 

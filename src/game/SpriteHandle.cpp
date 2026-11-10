@@ -25,10 +25,7 @@ struct ResEntry {
 
 #include "game/types/TEXHeader.h"
 
-struct TEXDescriptor {
-    TEXHeader *tex;
-    void *clut;
-};
+#include "game/types/TEXDescriptor.h"
 
 #include "game/types/SavedGXState.h"
 extern "C" void MemoryManager_TimedFree(void *p);

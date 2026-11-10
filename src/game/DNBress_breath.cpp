@@ -51,20 +51,7 @@ private:
     char pad[0x14];
 };
 
-struct Particle {
-    unsigned char active;
-    Vec3f v;
-    Vec3f pos;
-    float scale;
-    float alpha;
-    float c[3];
-    float speed;
-    float grow;
-    float dvx;
-    float dvy;
-    float dvz;
-    int delay;
-};
+#include "game/types/Particle.h"
 
 struct clMapEffectParts {
     virtual ~clMapEffectParts() {}

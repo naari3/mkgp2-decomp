@@ -1,16 +1,6 @@
 #include "game/types/Vec3.h"
 
-typedef struct BBox {
-    Vec3 min;
-    Vec3 max;
-    Vec3 center;
-    float radius;
-    int x28;
-    int x2c;
-    int x30;
-    int x34;
-    int x38;
-} BBox;
+#include "game/types/BBox.h"
 
 extern const float lbl_806D9360;
 extern void fn_80189C10(BBox *box);

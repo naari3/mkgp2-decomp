@@ -40,10 +40,7 @@ private:
     char pad[0x14];
 };
 
-struct FlashPoint {
-    Vec3f pos;
-    unsigned char used;
-};
+#include "game/types/FlashPoint.h"
 
 struct FlashPart {
     unsigned char active;

@@ -29,16 +29,7 @@ public:
 };
 #include "game/types/Countdown.h"
 #include "game/types/SelSlot.h"
-struct LapSel {
-    char pad0[0x18];
-    int mode;
-    float f1C;
-    int cur;
-    SelSlot slots[2];
-    int timer;
-    Countdown *cd;
-    void *p7c;
-};
+#include "game/types/LapSel.h"
 #include "game/types/TripleObj.h"
 
 /* TOP-END */

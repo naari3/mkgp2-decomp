@@ -22,7 +22,7 @@ struct Pad {
 
 struct KartMove { char pad[0x1c8]; float heading; };
 struct CarObject { char pad[0x28]; KartMove *move; };
-struct GoalPlane { Vec3 *point; Vec3 normal; };
+#include "game/types/GoalPlane.h"
 
 struct JumpDistanceMode {
     void *vtbl;

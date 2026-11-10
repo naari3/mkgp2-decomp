@@ -61,14 +61,7 @@ struct JobTask15 : JobTask {
 
 #include "game/types/JobEntry.h"
 
-struct JobRodata {
-    char pad000[0x4E0];
-    JobEntry entries[14];
-    char pad550[0x568 - 0x550];
-    char selectFmt[0x14];
-    char runFmt[0x14];
-    char drawFmt[0x14];
-};
+#include "game/types/JobRodata.h"
 
 extern "C" {
 extern const JobRodata lbl_803C2840;

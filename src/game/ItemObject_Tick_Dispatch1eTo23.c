@@ -4,12 +4,7 @@
  * child effect follows it each frame. */
 #include "game/types/Vec.h"
 
-typedef struct HandheldPose {
-    int pad;
-    float scale;
-    Vec ofs;
-    Vec rot;
-} HandheldPose;
+#include "game/types/HandheldPose.h"
 
 extern HandheldPose lbl_80420D58[];
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);

@@ -3,40 +3,7 @@
 
 #include "game/types/ItemKartFlag.h"
 
-typedef struct ItemKart {
-    unsigned char pad000[0x174];
-    unsigned char field174;
-    unsigned char pad175[0x1CC - 0x175];
-    float dt; /* 0x1CC */
-    unsigned char pad1D0[0x1E0 - 0x1D0];
-    float stunTime; /* 0x1E0 */
-    float field1E4;
-    unsigned char pad1E8[0x205 - 0x1E8];
-    unsigned char flag205;
-    unsigned char pad206[0x290 - 0x206];
-    int counter290;
-    float field294;
-    unsigned char field298;
-    unsigned char pad299[0x29C - 0x299];
-    void *field29C;
-    float timer2A0;
-    int hitDir; /* 0x2A4 */
-    unsigned char pad2A8[0x2B0 - 0x2A8];
-    unsigned char field2B0;
-    unsigned char pad2B1[2];
-    unsigned char iseActive; /* 0x2B3 */
-    int field2B4;
-    unsigned char pad2B8[0x2C0 - 0x2B8];
-    int currentItemId; /* 0x2C0 */
-    unsigned char pad2C4[4];
-    int currentISESlot; /* 0x2C8 */
-    unsigned char pad2CC[0x2DC - 0x2CC];
-    void *iseSlots[20]; /* 0x2DC */
-    void *field32C;
-    unsigned char pad330[0x35C - 0x330];
-    ItemKartFlag *field35C;
-    ItemKartFlag *field360;
-} ItemKart;
+#include "game/types/ItemKart.h"
 
 void ISESlot_Deactivate(void *slot);
 void ISESlot_StopEffect(void *slot, int a, int b);
@@ -70,11 +37,7 @@ static inline void ClearCurrentItem(ItemKart *kart)
     fn_80173BE8(kart->field29C);
 }
 
-typedef struct ItemPick {
-    ItemKart *kart;
-    int field4;
-    int field8;
-} ItemPick;
+#include "game/types/ItemPick.h"
 
 extern const float lbl_806D2590;
 extern const float lbl_806D2594;

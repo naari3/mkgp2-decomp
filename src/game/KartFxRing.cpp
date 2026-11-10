@@ -1,27 +1,8 @@
 /* Ring explosion callbacks. These views describe only observed fields. */
 #include "game/types/Vec3.h"
 #include "game/types/RingKartView.h"
-struct RingEffectView {
-    unsigned char pad00[0x14];
-    unsigned char slot[0x14];
-    unsigned char active;
-    unsigned char pad29[3];
-    float lifetime;
-    unsigned char pad30[0x5C];
-    Vec3 position;
-    Vec3 rotation;
-    Vec3 velocity;
-    float scale;
-    signed char state, phase;
-    unsigned char padB6[0x66];
-    RingKartView *kart;
-    Vec3 offset;
-    unsigned char pad12C[0x24];
-    float amount;
-    unsigned char pad154[0x2C];
-    unsigned int timer0, timer1, timer2, timer3;
-};
-struct RingCameraView { unsigned char pad00[0x80]; Vec3 position; };
+#include "game/types/RingEffectView.h"
+#include "game/types/RingCameraView.h"
 extern "C" {
 extern RingCameraView lbl_805DF3D0;
 extern const float lbl_806D51C0, lbl_806D51C4, lbl_806D51C8;

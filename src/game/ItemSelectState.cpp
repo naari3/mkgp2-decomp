@@ -13,7 +13,7 @@ void *operator new(unsigned long);
 void operator delete(void *) throw();
 
 #include "game/types/RefillSprite.h"
-struct RefillGroup { RefillSprite *sprite; };
+#include "game/types/RefillGroup.h"
 struct RefillChoice {
     RefillGroup *groups[4];
     TextManager *text[4];

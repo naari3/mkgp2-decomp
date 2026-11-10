@@ -3,10 +3,7 @@
  * 120 frames), then free the receiver. */
 #include "game/types/NamCamSocket.h"
 
-typedef struct NamCam {
-    unsigned char frame[0x80000];
-    NamCamSocket sock; /* 0x80000 */
-} NamCam;
+#include "game/types/NamCam.h"
 
 extern NamCam *lbl_806D1070;
 extern char lbl_802EB9E4[];

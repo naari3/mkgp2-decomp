@@ -5,11 +5,7 @@
 
 #include "game/types/CardPrinterStatePtr.h"
 
-typedef struct CardPrinterChecker {
-    CardPrinterStatePtr state; /* 0x00 */
-    int stage; /* 0x0C */
-    int errorCode; /* 0x10 */
-} CardPrinterChecker;
+#include "game/types/CardPrinterChecker.h"
 
 extern CardPrinterStatePtr lbl_803FE8E4; /* State_CleaningWait */
 extern CardPrinterStatePtr lbl_803FE8F0; /* State_CardEjectWait */

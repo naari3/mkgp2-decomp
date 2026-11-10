@@ -4,10 +4,7 @@
  * rotated to face its screen-space velocity. */
 #include "game/DrawEffectAccess.h"
 
-typedef struct CameraView {
-    unsigned char pad0[0x80];
-    Vec eye;
-} CameraView;
+#include "game/types/CameraView.h"
 
 extern CameraView lbl_805DF3D0;
 extern const float lbl_806D51BC; /* 2.0 */

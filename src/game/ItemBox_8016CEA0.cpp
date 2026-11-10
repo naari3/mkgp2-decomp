@@ -5,10 +5,7 @@
 
 #include "game/types/Vec3f.h"
 
-struct BoxShadow {
-    Vec3f pos;
-    float scale;
-};
+#include "game/types/BoxShadow.h"
 
 struct ItemBoxSlot {
     char pad00[0x4];

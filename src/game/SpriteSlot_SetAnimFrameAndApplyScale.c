@@ -5,11 +5,7 @@
 
 #include "game/types/SpriteAnimEntry.h"
 
-typedef struct SpriteClassEntry {
-    unsigned char pad0[4];
-    SpriteAnimEntry *anims; /* 0x4 */
-    unsigned char pad8[0xC];
-} SpriteClassEntry;
+#include "game/types/SpriteClassEntry.h"
 
 typedef struct SpriteSlot {
     unsigned char pad0[4];

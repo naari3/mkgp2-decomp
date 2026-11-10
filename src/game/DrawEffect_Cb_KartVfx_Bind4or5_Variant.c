@@ -3,10 +3,7 @@
  * slightly in front of the kart toward the camera. */
 #include "game/DrawEffectAccess.h"
 
-typedef struct CameraView {
-    unsigned char pad0[0x80];
-    Vec eye;
-} CameraView;
+#include "game/types/CameraView.h"
 
 extern const float lbl_806D51C0; /* 0.0 */
 extern const float lbl_806D51C4; /* 1.0 */

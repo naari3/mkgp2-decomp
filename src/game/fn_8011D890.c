@@ -5,7 +5,7 @@ unsigned int lbl_804221C8[16] = { 0x00000000, 0x00000001, 0x00000002, 0x00000003
 #include "game/types/GXTexObj.h"
 #include "game/types/GXTlutObj.h"
 #include "game/types/TEXHeader.h"
-typedef struct TEXDescriptor { TEXHeader *tex; void *clut; } TEXDescriptor;
+#include "game/types/TEXDescriptor.h"
 
 typedef struct ResourceSlot {
     int id;

@@ -9,22 +9,9 @@ extern unsigned char lbl_806D7288[5];
 
 #include "game/types/Vec3.h"
 #include "game/types/LNode.h"
-struct Trail { int age; Vec3 pos; };
-struct Shot {
-    char pad0[0x14];
-    int active;
-    char pad18[4];
-    int timer;
-    Vec3 pos;
-    Vec3 vel;
-    float rot;
-    float alpha;
-    Trail trail[18];
-    char pad160[0xc];
-};
-struct ShotSet {
-    Shot shots[6];
-};
+#include "game/types/Trail.h"
+#include "game/types/Shot.h"
+#include "game/types/ShotSet.h"
 struct ShotOwner {
     char pad0[4];
     void *model;

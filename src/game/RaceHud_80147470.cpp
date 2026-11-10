@@ -39,15 +39,7 @@ public:
 
 #include "game/types/LapSlot.h"
 
-struct LapCtrl {
-    char pad0[0x18];
-    int mode;
-    float f1C;
-    int cur;
-    char pad24[0x24];
-    LapSlot slots[2];
-    char pad98[0x74 - 0x98 + 0x50];
-};
+#include "game/types/LapCtrl.h"
 
 class RecordCounter {
 public:
@@ -125,10 +117,7 @@ struct HudPanel {
     VObj14 *f80;
 };
 
-struct CdHolder {
-    char pad0[0x1C];
-    Countdown *cd;
-};
+#include "game/types/CdHolder.h"
 
 struct CdHolder2 {
     char pad0[0x34];

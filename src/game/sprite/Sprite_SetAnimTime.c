@@ -1,13 +1,6 @@
 #include "game/types/SpriteAnimData.h"
 
-typedef struct SpriteAnim {
-    unsigned char flag;
-    unsigned char pad1[7];
-    float time;
-    float c[6];
-    const char *name;
-    SpriteAnimData *data;
-} SpriteAnim;
+#include "game/types/SpriteAnim.h"
 
 int Sprite_SetAnimTime(SpriteAnim *s, float t) {
     if (s->data == 0) {

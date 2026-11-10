@@ -13,7 +13,7 @@ struct CoinJumpEffect {
     signed char state; char padB5[0x14]; signed char cleanup; char padCA[2];
     CoinJumpGroup group;
 };
-struct CoinJumpCamera { char pad[0x80]; CoinJumpVec position; };
+#include "game/types/CoinJumpCamera.h"
 extern "C" {
 extern CoinJumpCamera lbl_805DF3D0;
 void Vec3_Copy(CoinJumpVec *,const CoinJumpVec *);

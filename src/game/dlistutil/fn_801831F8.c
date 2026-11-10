@@ -1,17 +1,8 @@
 #include "game/types/VtxDesc.h"
 
-typedef struct VtxAttrEntry {
-    VtxDesc *desc;
-    unsigned int offset;
-} VtxAttrEntry;
+#include "game/types/VtxAttrEntry.h"
 
-typedef struct PObjView {
-    unsigned char pad[0x8];
-    VtxDesc *verts;
-    unsigned char pad2[0x2];
-    unsigned short n_display;
-    unsigned char *display;
-} PObjView;
+#include "game/types/PObjView.h"
 
 extern VtxAttrEntry lbl_80677E18[22];
 extern unsigned int lbl_806D1678;

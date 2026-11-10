@@ -2,7 +2,7 @@
 #define GAME_ITEMSELECTREFILLPRIVATE_H
 #include "game/ItemSelectState.h"
 #include "game/types/RefillSprite.h"
-struct RefillGroup { RefillSprite *sprite; };
+#include "game/types/RefillGroup.h"
 struct RefillChoice {
     RefillGroup *groups[4];
     TextManager *text[4];

@@ -5,12 +5,7 @@
  * the kind's own tick. A child effect follows the item each frame. */
 #include "game/types/Vec.h"
 
-typedef struct HandheldPose {
-    int pad;
-    float scale;
-    Vec ofs;
-    Vec rot;
-} HandheldPose;
+#include "game/types/HandheldPose.h"
 
 extern const char lbl_8032E060[];
 extern HandheldPose lbl_80420E18[];

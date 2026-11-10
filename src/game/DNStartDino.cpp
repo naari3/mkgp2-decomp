@@ -46,30 +46,9 @@ struct GateAnim {
     void Update();
 };
 
-struct FirePuff {
-    unsigned char active;
-    Vec3f vel;
-    Vec3f pos;
-    float scale;
-    float alpha;
-    float speed;
-    float dscale;
-    float pad2c;
-    float lift;
-    float pad34;
-    float fade;
-};
+#include "game/types/FirePuff.h"
 
-struct Ember {
-    unsigned char active;
-    Vec3f pos;
-    Vec3f vel;
-    int color;
-    float speed;
-    float scale;
-    float alpha;
-    Vec3f accel;
-};
+#include "game/types/Ember.h"
 
 struct KartRender;
 

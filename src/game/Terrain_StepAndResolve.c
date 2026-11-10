@@ -2,35 +2,13 @@
 
 #include "game/types/TerrainVertex.h"
 
-typedef struct TerrainTriangle {
-    unsigned char pad_00[0x10];
-    TerrainVertex verts[3];
-    unsigned char pad_34[0x24];
-    unsigned int wallEdges;
-} TerrainTriangle;
+#include "game/types/TerrainTriangle.h"
 
 #include "game/types/TerrainSegment.h"
 
-typedef struct TerrainSample {
-    void *walls;
-    TerrainTriangle *triangle;
-    float x;
-    float y;
-    float z;
-    unsigned char onTriangle;
-    unsigned char pad_15[3];
-} TerrainSample;
+#include "game/types/TerrainSample.h"
 
-typedef struct TerrainStepper {
-    TerrainSample samples[2];
-    float normal[3];
-    float x;
-    float pad_40;
-    float z;
-    int index;
-    unsigned char pad_4C[4];
-    float delta[3];
-} TerrainStepper;
+#include "game/types/TerrainStepper.h"
 
 extern const float lbl_806D2380;
 extern const float lbl_806D2384;

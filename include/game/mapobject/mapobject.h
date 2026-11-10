@@ -5,18 +5,11 @@ typedef float Mtx[3][4];
 
 #include "game/types/Vec3f.h"
 
-struct ModelPath {
-    Vec3f *points;
-    int count;
-    float speed;
-};
+#include "game/types/ModelPath.h"
 
 #include "game/types/ModelDef.h"
 
-struct ModelEntry {
-    const void *desc;
-    ModelDef *defs;
-};
+#include "game/types/ModelEntry.h"
 
 struct HSD_JObj {
     char pad00[0x14];
@@ -193,12 +186,7 @@ public:
     }
 };
 
-struct ModelParam {
-    Vec3f pos;
-    float rotX;
-    float rotY;
-    float rotZ;
-};
+#include "game/types/ModelParam.h"
 
 class clModelPR : public clModel {
 public:

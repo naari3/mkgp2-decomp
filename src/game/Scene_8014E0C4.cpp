@@ -1546,13 +1546,8 @@ extern const int lbl_806D7F50[2];
 
 
 #include "game/types/ListNode.h"
-struct ListIter {
-    ListNode *n;
-};
-struct List {
-    int size;
-    ListNode head;
-};
+#include "game/types/ListIter.h"
+#include "game/types/List.h"
 extern "C" List *fn_8014E04C(List *self, short flag);
 
 /* TOP-END */

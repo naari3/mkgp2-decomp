@@ -23,14 +23,9 @@ extern unsigned char lbl_806D84D8[4];
 
 #include "game/types/ListNode.h"
 
-struct ListIter {
-    ListNode *n;
-};
+#include "game/types/ListIter.h"
 
-struct List {
-    int size;
-    ListNode head;
-};
+#include "game/types/List.h"
 
 #include "game/types/DataBuf.h"
 

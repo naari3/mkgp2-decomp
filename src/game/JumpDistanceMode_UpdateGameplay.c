@@ -8,7 +8,7 @@
 #include "game/types/Rect.h"
 
 struct CarObject;
-struct GoalPlane { Vec3 *point; Vec3 normal; };
+#include "game/types/GoalPlane.h"
 struct JDLanding { unsigned char active; unsigned char slowed; char pad2[2]; int x4; int x8; };
 struct JDCoins { char pad[8]; int base; int earned; };
 
