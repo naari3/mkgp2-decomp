@@ -1682,6 +1682,7 @@ game/LUT_Sine.c:
 	extab       start:0x800080A8 end:0x800080B0
 	extabindex  start:0x80020F78 end:0x80020F84
 	.text       start:0x80065928 end:0x80065990
+	.rodata     start:0x802EE580 end:0x8030E584
 
 game/TransparentDraw.c:
 	extab       start:0x800080B0 end:0x800080C8
