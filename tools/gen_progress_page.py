@@ -439,6 +439,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       <div class="sub">objdiff fuzzy score</div></div>
   </div>
 {history_section}
+{port_section}
   <h2>Categories</h2>
   {category_rows}
 
@@ -1534,6 +1535,16 @@ def main() -> int:
             history_section = build_history_section(hist_rows, args.repo_url)
             shutil.copyfile(args.history, args.out_dir / "history.jsonl")
 
+    # Port-readiness table (tools/port_readiness.py); the page still builds without it
+    port_section = ""
+    try:
+        import port_readiness
+        pr = port_readiness.collect()
+        port_section = port_readiness.html_section(pr)
+        (args.out_dir / "port_readiness.json").write_text(json.dumps(pr, indent=1), encoding="utf-8")
+    except Exception as e:
+        print(f"warning: port readiness section skipped: {e!r}", file=sys.stderr)
+
     commit_part = f" · commit <code>{html.escape(args.commit)}</code>" if args.commit else ""
 
     html_out = HTML_TEMPLATE.format(
@@ -1541,6 +1552,7 @@ def main() -> int:
         version=html.escape(args.version),
         commit_part=commit_part,
         history_section=history_section,
+        port_section=port_section,
         matched_pct=measures.matched_code_percent,
         matched_bytes=format_bytes(measures.matched_code),
         total_bytes=format_bytes(measures.total_code),
