@@ -219,7 +219,11 @@ extern unsigned int jumptable_803FF4E0[];
  */
 
 /* --- forward decls --- */
+#ifdef NON_MATCHING
+void ItemEffectBus_ApplyItemEventClear(ItemEffectBus *bus, unsigned int event);
+#else
 asm void ItemEffectBus_ApplyItemEventClear(void);
+#endif
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -234,6 +238,216 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
+#ifdef NON_MATCHING
+/* NON_MATCHING: equivalent C, one instruction off (li r4 vs r0 for the 0x2B1 store in
+ * cases 0x1A/0x23; docs/gave_up.md). */
+/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
+#pragma section R ".extab_user"
+
+/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
+#pragma section R ".extabindex_user"
+
+/* --- asm function bodies (.text order = fn address order) --- */
+static inline void KartDriver_SetFlag2B1(void *driver, unsigned char on)
+{
+    *((unsigned char *)driver + 0x2B1) = on;
+}
+
+static inline void ItemEffectBus_ClearMaskI(ItemEffectBus *bus, ItemEffectMask mask)
+{
+    ItemEffectBus_Commit(bus, bus->mask & ~mask);
+}
+
+static inline void ItemEffectBus_ClearBits(ItemEffectBus *bus, unsigned int flags)
+{
+    ItemEffectMask clear = 0;
+
+    if (flags & 0x1) {
+        clear |= lbl_806D34B8;
+    }
+    if (flags & 0x2) {
+        clear |= lbl_806D34C0;
+    }
+    if (flags & 0x4) {
+        clear |= lbl_806D34C8;
+    }
+    if (flags & 0x8) {
+        clear |= lbl_806D34D0;
+    }
+    if (flags & 0x10) {
+        clear |= lbl_806D34D8;
+    }
+    if (flags & 0x20) {
+        clear |= lbl_806D34E0;
+    }
+    if (flags & 0x40) {
+        clear |= lbl_806D34E8;
+    }
+    if (flags & 0x80) {
+        clear |= lbl_806D34F0;
+    }
+    ItemEffectBus_Commit(bus, bus->mask & ~clear);
+}
+
+#pragma exceptions on
+void ItemEffectBus_ApplyItemEventClear(ItemEffectBus *bus, unsigned int event)
+{
+    unsigned int bits = 0;
+
+    bus->timer28 = 0.0f;
+    switch (event) {
+    case 0x2B:
+    case 0x2D:
+    case 0x46:
+    case 0x4A:
+    case 0x4B:
+    case 0x50:
+    case 0x5B:
+    case 0x5C:
+    case 0x5D:
+    case 0x8D:
+        bits = lbl_806D34F8; break;
+    case 0x3C:
+    case 0x71:
+    case 0x72:
+    case 0x73:
+        bits = lbl_806D34FC; break;
+    case 0xC:
+    case 0xD:
+    case 0xE:
+    case 0xF:
+    case 0x10:
+    case 0x11:
+    case 0x13:
+    case 0x14:
+    case 0x15:
+    case 0x16:
+    case 0x18:
+    case 0x19:
+    case 0x1B:
+    case 0x1C:
+    case 0x1D:
+    case 0x1E:
+    case 0x1F:
+    case 0x20:
+    case 0x21:
+    case 0x22:
+    case 0x24:
+    case 0x25:
+    case 0x26:
+    case 0x27:
+    case 0x28:
+    case 0x8B:
+    case 0x91:
+        bits = lbl_806D3500; break;
+    case 0x1A:
+    case 0x23:
+        KartDriver_SetFlag2B1(bus->driver, 0);
+        bits = lbl_806D3500; break;
+    case 0x1:
+    case 0x2:
+    case 0x3:
+    case 0x4:
+    case 0x5:
+    case 0x6:
+    case 0x8:
+    case 0x9:
+    case 0xB:
+    case 0x12:
+    case 0x2E:
+    case 0x32:
+    case 0x33:
+    case 0x34:
+    case 0x35:
+    case 0x37:
+    case 0x38:
+    case 0x3D:
+    case 0x3E:
+    case 0x3F:
+    case 0x45:
+    case 0x4D:
+    case 0x4F:
+    case 0x5F:
+    case 0x60:
+    case 0x61:
+    case 0x63:
+    case 0x6A:
+    case 0x70:
+    case 0x76:
+    case 0x89:
+    case 0x8A:
+    case 0x96:
+    case 0x11C:
+    case 0x121:
+        bus->timer28 = 0.0f;
+        bits = lbl_806D3504; break;
+    case 0x59:
+        ItemEffectBus_ClearMaskI(bus, 0x800000ULL);
+        break;
+    case 0x5A:
+        ItemEffectBus_ClearMaskI(bus, 0x0ULL);
+        break;
+    case 0x74:
+        ItemEffectBus_ClearMaskI(bus, 0x40000000ULL);
+        break;
+    case 0x75:
+        ItemEffectBus_ClearMaskI(bus, 0x1000000000ULL);
+        break;
+    case 0x55:
+        ItemEffectBus_ClearMaskI(bus, 0x800000000ULL);
+        break;
+    case 0x85:
+        ItemEffectBus_ClearMaskI(bus, 0x800000000ULL);
+        break;
+    case 0x58:
+        ItemEffectBus_ClearMaskI(bus, 0x2000000000ULL);
+        break;
+    case 0x98:
+        ItemEffectBus_ClearMaskI(bus, 0x100000000000ULL);
+        break;
+    case 0x95:
+        ItemEffectBus_ClearMaskI(bus, 0x2000000000000ULL);
+        break;
+    case 0x88:
+        ItemEffectBus_ClearMaskI(bus, 0x4000000000000ULL);
+        break;
+    case 0x8F:
+        ItemEffectBus_ClearMaskI(bus, 0x8000000000000ULL);
+        break;
+    case 0x93:
+        ItemEffectBus_ClearMaskI(bus, 0x10000000000000ULL);
+        break;
+    case 0x94:
+        ItemEffectBus_ClearMaskI(bus, 0x20000000000000ULL);
+        break;
+    case 0x68:
+    case 0x79:
+        ItemEffectBus_ClearMaskI(bus, 0x4000000000ULL);
+        break;
+    case 0x99:
+        ItemEffectBus_ClearMaskI(bus, 0x800000000000ULL);
+        break;
+    case 0x9A:
+        ItemEffectBus_ClearMaskI(bus, 0x400000000000ULL);
+        break;
+    case 0x8C:
+        ItemEffectBus_ClearMaskI(bus, 0x1000000000000ULL);
+        break;
+    case 0x9B:
+        ItemEffectBus_ClearMaskI(bus, 0x400200000000000ULL);
+        break;
+    case 0x9D:
+        ItemEffectBus_ClearMaskI(bus, 0x40000000000ULL);
+        break;
+    case 0x9E:
+        ItemEffectBus_ClearMaskI(bus, 0x80000000000ULL);
+        break;
+    default:
+        return;
+    }
+    ItemEffectBus_ClearBits(bus, bits);
+}
+#else
 asm void ItemEffectBus_ApplyItemEventClear(void) { /* 0x80091438 size:0x424 */
     nofralloc
     stwu r1, -0x10(r1)
@@ -512,6 +726,7 @@ asm void ItemEffectBus_ApplyItemEventClear(void) { /* 0x80091438 size:0x424 */
     addi r1, r1, 0x10
     blr
 }
+#endif
 
 /* === extracted from auto_ItemEffectBus_ApplyI_text_1 === */
 /* Copy into the TU between forward decls and function bodies; */
