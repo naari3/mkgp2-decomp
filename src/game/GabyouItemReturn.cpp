@@ -29,7 +29,14 @@ float Vec3_HorizontalYawTo(const GabyouReturnVec *, const GabyouReturnVec *);
 double FAbs_FloatAsDouble(float);
 void Vec3_Subtract_DestFirst(GabyouReturnVec *, const GabyouReturnVec *, const GabyouReturnVec *);
 void Mtx44_Inverse_GaussJordan(GabyouReturnMatrix *, const GabyouReturnMatrix *);
+#ifdef __MWERKS__
 void Mtx44_TransformVec3(GabyouReturnVec *, const GabyouReturnMatrix *, GabyouReturnVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(GabyouReturnVec *, const GabyouReturnMatrix *, GabyouReturnVec *);
+static inline void Mtx44_TransformVec3_ByValue(GabyouReturnVec *a0, const GabyouReturnMatrix *a1, GabyouReturnVec a2) { Mtx44_TransformVec3(a0, a1, &a2); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 float Vec3_Magnitude_Wrapper(const GabyouReturnVec *);
 void Vec3_Scale(GabyouReturnVec *, const GabyouReturnVec *, float);
 void GetSpawnPosition(GabyouReturnVec *, float, float, float);

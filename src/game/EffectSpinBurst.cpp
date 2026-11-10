@@ -35,7 +35,14 @@ void Vec3_Add_DestFirst(SpinVec *, const SpinVec *, const SpinVec *);
 void DrawEffect_Free(SpinEffect *);
 float BuildOrientationFromYaw(float);
 unsigned char FinalLapCoinJump_CheckActiveForObject(void *);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, SpinVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, SpinVec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, SpinVec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetRotationZ(void *, float);
 void VfxSlot_SetScaleUniform(void *, float);
 void Effect_SpinBurst_Update(SpinEffect *effect) {

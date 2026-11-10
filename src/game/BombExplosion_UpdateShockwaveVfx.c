@@ -10,7 +10,14 @@ extern void Mtx44_GetTranslation_ColMajor(Vec *out, float m[4][4]);
 extern float Mtx44_GetYawOfPosZ(float m[4][4]);
 extern float Mtx44_GetPitchOfPosZ(float m[4][4]);
 extern void GetSpawnPosition(void *out, float x, float y, float z);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(void *out, float m[4][4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(void *, float m[4][4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(void *out, float m[4][4], Vec v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern float KartFxParam_GetConst1p5(void *driver);
 extern void Item_PropagateHitToDriversInRadius(unsigned char *self, void *kart);
 extern void Mtx_Copy(void *dst, const void *src);
@@ -19,7 +26,14 @@ extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *driver);
 extern void VfxSlot_TickAnim(void *slot, int step);
 extern float Vec3_HorizontalDistance(const Vec *a, const void *b);
 extern void Vec3_Copy(void *dst, const void *src);
+#ifdef __MWERKS__
 extern unsigned char ItemObject_RaycastWallStub(Vec from, Vec to, Vec *hit, Vec *normal);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern unsigned char ItemObject_RaycastWallStub(Vec *, Vec *, Vec *, Vec *);
+static inline unsigned char ItemObject_RaycastWallStub_ByValue(Vec from, Vec to, Vec *hit, Vec *normal) { return ItemObject_RaycastWallStub(&from, &to, hit, normal); }
+#define ItemObject_RaycastWallStub ItemObject_RaycastWallStub_ByValue
+#endif
 extern void Vec3_Subtract_DestFirst(void *dst, const void *a, const void *b);
 extern void Vec3_Scale(Vec *out, const Vec *in, float s);
 extern void Vec3_ScaleXZ(Vec *out, const Vec *in, float s);
@@ -34,11 +48,39 @@ extern void Mtx44_Scale_PerAxis(float dst[4][4], float src[4][4], float x, float
 extern void Matrix4_PreMultiplyRotX(float dst[4][4], float src[4][4], float a);
 extern void Matrix4_PreMultiplyRotY(float dst[4][4], float src[4][4], float a);
 extern void Matrix4_PreMultiplyRotZ(float dst[4][4], float src[4][4], float a);
+#ifdef __MWERKS__
 extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec t);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec *);
+static inline void Mtx44_Translate_ByValue(float dst[4][4], float src[4][4], Vec t) { Mtx44_Translate(dst, src, &t); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 extern void DbgScene_CopyMatrix3x4Transpose(void *dst, float src[4][4]);
+#ifdef __MWERKS__
 extern signed char ItemObject_GetGroundTypeAt(Vec pos, float *outGroundY, int mode);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(Vec *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(Vec pos, float *outGroundY, int mode) { return ItemObject_GetGroundTypeAt(&pos, outGroundY, mode); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
+#ifdef __MWERKS__
 extern float Item_ProbeForwardGroundPitch(Vec pos, float yaw, float a, float b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeForwardGroundPitch(Vec *, float, float, float);
+static inline float Item_ProbeForwardGroundPitch_ByValue(Vec pos, float yaw, float a, float b) { return Item_ProbeForwardGroundPitch(&pos, yaw, a, b); }
+#define Item_ProbeForwardGroundPitch Item_ProbeForwardGroundPitch_ByValue
+#endif
+#ifdef __MWERKS__
 extern float Item_ProbeLateralGroundPitch(Vec pos, float yaw, float a, float b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeLateralGroundPitch(Vec *, float, float, float);
+static inline float Item_ProbeLateralGroundPitch_ByValue(Vec pos, float yaw, float a, float b) { return Item_ProbeLateralGroundPitch(&pos, yaw, a, b); }
+#define Item_ProbeLateralGroundPitch Item_ProbeLateralGroundPitch_ByValue
+#endif
 
 #define F(o) (*(float *)(self + (o)))
 #define P(o) (*(unsigned char **)(self + (o)))

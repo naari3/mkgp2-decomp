@@ -47,14 +47,28 @@ extern void *KartDriver_GetKartRootMtx(void *);
 extern float KartFxParam_GetConst1p5(void *);
 extern void Mtx44_GetTranslation_ColMajor(Vec3 *, float (*)[4]);
 extern void Mtx44_GetTranslation_RowMajor(Vec3 *, void *);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(Vec3 *, float (*)[4], Vec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec3 *, float (*a1)[4], Vec3 *);
+static inline void Mtx44_TransformVec3_ByValue(Vec3 *a0, float (*a1)[4], Vec3 a2) { Mtx44_TransformVec3(a0, a1, &a2); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern void Mtx_TransposeToMtx44(float (*)[4], void *);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *, int, float);
 extern void SpriteSlot_SetScale(void *, float);
 extern void Vec2_RotateY(Vec3 *, Vec3 *, float);
 extern void Vec3_Add_DestFirst(Vec3 *, Vec3 *, Vec3 *);
 extern float Vec3_HorizontalYawTo(Vec3 *, Vec3 *);
+#ifdef __MWERKS__
 extern void Vec3_Lerp(Vec3 *, Vec3, Vec3, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Vec3_Lerp(Vec3 *, Vec3 *, Vec3 *, float);
+static inline void Vec3_Lerp_ByValue(Vec3 *a0, Vec3 a1, Vec3 a2, float a3) { Vec3_Lerp(a0, &a1, &a2, a3); }
+#define Vec3_Lerp Vec3_Lerp_ByValue
+#endif
 extern void Vec3_Subtract_DestFirst(Vec3 *, Vec3 *, Vec3 *);
 extern double sin(double);
 

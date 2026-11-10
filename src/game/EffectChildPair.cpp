@@ -21,7 +21,14 @@ void Mtx44_GetTranslation_ColMajor(ChildPairVec *, const ChildPairMatrix *);
 void DbgScene_CopyMatrix3x4Transpose(float *, const ChildPairMatrix *);
 void Vec3_Copy(ChildPairVec *, const ChildPairVec *);
 float fn_800D4174(const ChildPairMatrix *);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, ChildPairVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, ChildPairVec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, ChildPairVec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetScaleUniform(void *, float);
 void Effect_ApplyParentToChildPair_DcDe(ChildPairEffect *effect, const ChildPairMatrix *matrix, float alpha) {
     if (effect) {

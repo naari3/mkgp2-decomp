@@ -41,7 +41,14 @@ void DrawEffect_Free(HitEffect *);
 float BuildOrientationFromYaw(float);
 double FAbs_FloatAsDouble(float);
 int Item_AdvanceTrackedHomingState(HitItem *, HitVec *, float);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, HitVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, HitVec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, HitVec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetRotationZ(void *, float);
 void VfxSlot_SetScaleVec3(void *, float, float, float);
 unsigned char FinalLapCoinJump_CheckActiveForObject(void *);

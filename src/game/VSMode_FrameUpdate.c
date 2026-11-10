@@ -353,7 +353,15 @@ int Race_CompareKartProgress(void *path, int a, int b);
 void CObj_LoadProjMatrix(void *scene, VsVec *v);
 void CObj_ApplyScissor(void *scene, VsVec *v);
 void ItemObjectManager_Update(void);
+#ifdef __MWERKS__
 void VfxSlotMgr_Update(VsVec a, VsVec b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlotMgr_Update(VsVec *, VsVec *);
+static inline void VfxSlotMgr_Update_ByValue(VsVec a, VsVec b) { VfxSlotMgr_Update(&a, &b); }
+#undef VfxSlotMgr_Update
+#define VfxSlotMgr_Update VfxSlotMgr_Update_ByValue
+#endif
 char *RingBuffer_GetEntryHead(void);
 void fn_80253BE4(void *hud);
 void fn_8016C554(int flag);

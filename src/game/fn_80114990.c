@@ -11,7 +11,14 @@ extern float BuildOrientationFromYaw(float yaw);
 extern void DbgScene_CopyMatrix3x4Transpose(void *dst, float src[4][4]);
 extern unsigned char *DrawEffect_SpawnDirect(void (*callback)(unsigned char *));
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *kart);
+#ifdef __MWERKS__
 extern void *FindNearestDriverWithinConeAndRadius(Vec pos, void *kart, int flag, float yaw, float cone, float radius);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void * FindNearestDriverWithinConeAndRadius(Vec *, void *, int, float, float, float);
+static inline void * FindNearestDriverWithinConeAndRadius_ByValue(Vec pos, void *kart, int flag, float yaw, float cone, float radius) { return FindNearestDriverWithinConeAndRadius(&pos, kart, flag, yaw, cone, radius); }
+#define FindNearestDriverWithinConeAndRadius FindNearestDriverWithinConeAndRadius_ByValue
+#endif
 extern void GetSpawnPosition(void *out, float x, float y, float z);
 extern unsigned char *ItemObject_SpawnWithAlias(int id, int alias);
 extern void JointByName_GetWorldPosition(void *out, void *slot, char *name);
@@ -30,8 +37,22 @@ extern void Mtx44_GetTranslation_RowMajor(void *out, void *m);
 extern float Mtx44_GetYawOfPosZ_Padded(void *m);
 extern void Mtx44_Lerp(float dst[4][4], float a[4][4], float b[4][4], float t);
 extern void Mtx44_Scale_Uniform(float dst[4][4], float src[4][4], float s);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(void *out, float m[4][4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(void *, float m[4][4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(void *out, float m[4][4], Vec v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
+#ifdef __MWERKS__
 extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec *);
+static inline void Mtx44_Translate_ByValue(float dst[4][4], float src[4][4], Vec v) { Mtx44_Translate(dst, src, &v); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 extern void Mtx_TransposeToMtx44(float dst[4][4], void *src);
 extern void SoundMgr_PlaySE_Positional(int id, Vec pos, int ch);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int anim, float frame);

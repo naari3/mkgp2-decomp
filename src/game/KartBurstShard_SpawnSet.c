@@ -7,7 +7,14 @@ typedef struct ShardAngles { float a[6]; } ShardAngles;
 
 extern const ShardAngles KartBurstShard_SpawnSet_rodata_80329474;
 extern void Mtx44_GetTranslation_ColMajor(Vec *out, float m[4][4]);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec in);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec *, float m[4][4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(Vec *out, float m[4][4], Vec in) { Mtx44_TransformVec3(out, m, &in); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern void KartFadeInEffect_Update(unsigned char *self);
 extern void KartBurstShard_Update(unsigned char *self);
 

@@ -15,7 +15,14 @@ extern int Item_OrbitAnchorKart(unsigned char *self, void *offset, unsigned int 
 extern void ItemObject_DecrementCategoryBudget(unsigned char *self);
 extern void SpriteSlot_Container_Free(void *self);
 extern void Vec3_Add_DestFirst(void *dst, void *a, void *b);
+#ifdef __MWERKS__
 extern void SpriteSlot_SetTransform(void *slot, Vec pos, Vec rot, float scale);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SpriteSlot_SetTransform(void *, Vec *, Vec *, float);
+static inline void SpriteSlot_SetTransform_ByValue(void *slot, Vec pos, Vec rot, float scale) { SpriteSlot_SetTransform(slot, &pos, &rot, scale); }
+#define SpriteSlot_SetTransform SpriteSlot_SetTransform_ByValue
+#endif
 
 #define F(o) (*(float *)(self + (o)))
 #define S8(o) (*(signed char *)(self + (o)))

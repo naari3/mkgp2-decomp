@@ -8,14 +8,14 @@
 
 extern void DbgScene_CopyMatrix3x4Transpose();
 
-extern void GabyouItem_BuildLocalTransformFromHandJoint();
+extern void GabyouItem_BuildLocalTransformFromHandJoint(void *, int, float, float, float);
 extern char *ItemObject_AllocFromPool();
 extern void ItemObject_DecrementCategoryBudget();
-extern void Item_InitLaunchFromKart();
+extern void Item_InitLaunchFromKart(void *, void *, float, float);
 
 extern void Matrix4_Identity();
 extern void Matrix4_Multiply();
-extern void Matrix4_PreMultiplyRotY();
+extern void Matrix4_PreMultiplyRotY(void *, void *, float);
 extern void Mtx44_GetTranslation_ColMajor();
 extern void Mtx_TransposeToMtx44();
 extern void SpriteSlot_InitNonLoop();

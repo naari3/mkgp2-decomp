@@ -26,7 +26,14 @@ extern const float lbl_806D524C; /* -50.0 */
 extern const float lbl_806D5250; /* -45.0 */
 extern const float lbl_806D5254; /* -2.0 */
 extern const float lbl_806D5258; /* 0.07 */
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec *, float m[4][4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(Vec *out, float m[4][4], Vec v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern void Mtx44_GetTranslation_ColMajor(Vec *out, float m[4][4]);
 
 static inline void SetPosV(void *slot, Vec v) { VfxSlot_SetPositionFromVec(slot, &v); }

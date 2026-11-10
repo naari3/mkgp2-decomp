@@ -22,9 +22,23 @@ struct PlaceE4Effect {
 extern "C" {
 extern const float lbl_806D57E8;
 void Vec3_Copy(PlaceE4Vec *, const PlaceE4Vec *);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, PlaceE4Vec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, PlaceE4Vec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, PlaceE4Vec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetScaleUniform(void *, float);
+#ifdef __MWERKS__
 void Effect_SparkSpray_PlaceChildren(PlaceE4Effect *, PlaceE4Vec, float, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Effect_SparkSpray_PlaceChildren(PlaceE4Effect *, PlaceE4Vec *, float, float);
+static inline void Effect_SparkSpray_PlaceChildren_ByValue(PlaceE4Effect *a0, PlaceE4Vec a1, float a2, float a3) { Effect_SparkSpray_PlaceChildren(a0, &a1, a2, a3); }
+#define Effect_SparkSpray_PlaceChildren Effect_SparkSpray_PlaceChildren_ByValue
+#endif
 void Effect_TwoChildPlace_AndForward_E4(PlaceE4Effect *effect, const PlaceE4Vec *position, float scale, float alpha) {
     if (effect) {
         PlaceE4Group *group = &effect->group;

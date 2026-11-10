@@ -1,3 +1,4 @@
+#include "game/types/port_hooks.h"
 /* clGameTimeAttack (time-attack mode scene): one TU, 0x800A2B90..0x800A4578.
  * Built with -inline deferred, so functions are written in reverse address
  * order (ctor, dtor, FrameUpdate). Deferred codegen runs the class action
@@ -455,6 +456,7 @@ TaMode::TaMode() {
         TaMode_FrameUpdate_bss_806D139C = RegisterGhost(matrix, CarObject_GetRenderObj(g_taGhostCar));
         TaMode_FrameUpdate_data_806CF198 = 3;
         TaMode_FrameUpdate_bss_806D1390 = DVDFile_LoadSync(ghost->file);
+        PORT_DATA_LOADED(PORT_DATA_GHOST, TaMode_FrameUpdate_bss_806D1390, ghost->size);
         TaMode_FrameUpdate_bss_806D1388 = TaMode_FrameUpdate_bss_806D1390;
         TaMode_FrameUpdate_bss_806D138C = ghost->size;
         if (g_taGhostCar) {

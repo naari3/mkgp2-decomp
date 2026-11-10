@@ -3,14 +3,35 @@
 extern double sin(double);
 extern float BuildOrientationFromYaw(float yaw);
 extern int ItemCollision_Check(unsigned char *self);
+#ifdef __MWERKS__
 extern char ItemObject_GetGroundTypeAt(Vec pos, float *y, void *n);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern char ItemObject_GetGroundTypeAt(Vec *, float *, void *);
+static inline char ItemObject_GetGroundTypeAt_ByValue(Vec pos, float *y, void *n) { return ItemObject_GetGroundTypeAt(&pos, y, n); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 extern void ItemTracker_AcquireLock(unsigned char *self);
 extern void *ItemTracker_GetTargetKart(unsigned char *self);
 extern void ItemTracker_ReleaseLock(unsigned char *self);
 extern void ItemTracker_SetTrackPhase(unsigned char *self, int phase);
+#ifdef __MWERKS__
 extern void Item_BounceOffWall(unsigned char *self, Vec n, int se, int flag, float k1, float k2);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_BounceOffWall(unsigned char *, Vec *, int, int, float, float);
+static inline void Item_BounceOffWall_ByValue(unsigned char *self, Vec n, int se, int flag, float k1, float k2) { Item_BounceOffWall(self, &n, se, flag, k1, k2); }
+#define Item_BounceOffWall Item_BounceOffWall_ByValue
+#endif
 extern int Item_CheckWallCollision(unsigned char *self, Vec *n, int flag);
+#ifdef __MWERKS__
 extern void Item_ComputeYawRelativeApproach(void *vel, void *target, Vec pos, Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_ComputeYawRelativeApproach(void *, void *, Vec *, Vec *);
+static inline void Item_ComputeYawRelativeApproach_ByValue(void *vel, void *target, Vec pos, Vec v) { Item_ComputeYawRelativeApproach(vel, target, &pos, &v); }
+#define Item_ComputeYawRelativeApproach Item_ComputeYawRelativeApproach_ByValue
+#endif
 extern void Item_DecayVelocityScalar(unsigned char *self, float k);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float scale);
 extern float Vec3_ToYaw(void *v);

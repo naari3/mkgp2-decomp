@@ -7,13 +7,41 @@ extern const float lbl_806D5400; /* 0.0 */
 extern const float lbl_806D5424; /* 1.0 */
 extern const float lbl_806D5464; /* pi / 2 */
 extern void SoundMgr_PlaySE_Positional(int id, Vec pos, int a);
+#ifdef __MWERKS__
 extern signed char ItemObject_GetGroundTypeAt(Vec pos, float *outGroundY, int mode);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(Vec *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(Vec pos, float *outGroundY, int mode) { return ItemObject_GetGroundTypeAt(&pos, outGroundY, mode); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
+#ifdef __MWERKS__
 extern float Item_ProbeForwardGroundPitch(Vec pos, float a, float b, float c);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeForwardGroundPitch(Vec *, float, float, float);
+static inline float Item_ProbeForwardGroundPitch_ByValue(Vec pos, float a, float b, float c) { return Item_ProbeForwardGroundPitch(&pos, a, b, c); }
+#define Item_ProbeForwardGroundPitch Item_ProbeForwardGroundPitch_ByValue
+#endif
+#ifdef __MWERKS__
 extern float Item_ProbeLateralGroundPitch(Vec pos, float a, float b, float c);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeLateralGroundPitch(Vec *, float, float, float);
+static inline float Item_ProbeLateralGroundPitch_ByValue(Vec pos, float a, float b, float c) { return Item_ProbeLateralGroundPitch(&pos, a, b, c); }
+#define Item_ProbeLateralGroundPitch Item_ProbeLateralGroundPitch_ByValue
+#endif
 extern void Mtx44_Scale_Uniform(float dst[4][4], float src[4][4], float s);
 extern void Matrix4_PreMultiplyRotZ(float dst[4][4], float src[4][4], float angle);
 extern void Matrix4_PreMultiplyRotX(float dst[4][4], float src[4][4], float angle);
+#ifdef __MWERKS__
 extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec *);
+static inline void Mtx44_Translate_ByValue(float dst[4][4], float src[4][4], Vec v) { Mtx44_Translate(dst, src, &v); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 extern double sin(double x);
 
 void EffectVfx4E_TextSplash_Tick(unsigned char *self)

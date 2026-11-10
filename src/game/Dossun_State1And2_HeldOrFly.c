@@ -12,14 +12,28 @@ extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float f)
 extern void GabyouItem_BuildLocalTransformFromHandJoint(unsigned char *self, int a, float x, float y, float z);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *driver);
 extern void Item_InitLaunchFromKart(unsigned char *self, void *pos, float x, float y);
+#ifdef __MWERKS__
 extern signed char ItemObject_GetGroundTypeAt(Vec pos, float *outGroundY, int mode);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(Vec *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(Vec pos, float *outGroundY, int mode) { return ItemObject_GetGroundTypeAt(&pos, outGroundY, mode); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 extern void Item_HomingScanAndSteer(unsigned char *self, void *yaw, int flag);
 extern float BuildOrientationFromYaw(float yaw);
 extern void Item_DecayVelocityScalar(unsigned char *self, float k);
 extern void SoundMgr_PlaySE_Positional(int se, Vec pos, int ch);
 extern void Vec3_Add_DestFirst(void *dst, void *a, void *b);
 extern int Item_CheckWallCollision(unsigned char *self, Vec *n, int flag);
+#ifdef __MWERKS__
 extern void Item_BounceOffWall(unsigned char *self, Vec n, int se, int flag, float k1, float k2);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_BounceOffWall(unsigned char *, Vec *, int, int, float, float);
+static inline void Item_BounceOffWall_ByValue(unsigned char *self, Vec n, int se, int flag, float k1, float k2) { Item_BounceOffWall(self, &n, se, flag, k1, k2); }
+#define Item_BounceOffWall Item_BounceOffWall_ByValue
+#endif
 extern void ItemTracker_AcquireLock(unsigned char *self);
 extern void ItemTracker_SetTrackPhase(unsigned char *self, int phase);
 extern void ItemTracker_ReleaseLock(unsigned char *self);
@@ -27,7 +41,14 @@ extern void *ItemTracker_GetTargetKart(unsigned char *self);
 extern float Vec3_ToYaw(const Vec *v);
 extern void ItemHitRegistry_AddEntry(unsigned char *self);
 extern unsigned char ItemHitRegistry_RemoveEntry(unsigned char *self, int id, int flag);
+#ifdef __MWERKS__
 extern void DrawEffect_ItemHitBurst_Spawn(Vec pos, Vec vel, int kind);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void DrawEffect_ItemHitBurst_Spawn(Vec *, Vec *, int);
+static inline void DrawEffect_ItemHitBurst_Spawn_ByValue(Vec pos, Vec vel, int kind) { DrawEffect_ItemHitBurst_Spawn(&pos, &vel, kind); }
+#define DrawEffect_ItemHitBurst_Spawn DrawEffect_ItemHitBurst_Spawn_ByValue
+#endif
 extern unsigned char *DrawEffect_SpawnDirect(void (*callback)(unsigned char *));
 extern void DrawEffect_Cb_ItemBoxBurstSpawner(unsigned char *self);
 extern void Vec3_Copy(void *dst, void *src);
@@ -35,8 +56,22 @@ extern void ItemObject_DecrementCategoryBudget(unsigned char *self);
 extern void SpriteSlot_Container_Free(unsigned char *self);
 extern float AngleStepForward_OrSnap(float current, float target, float step);
 extern float AngleStepTowards_Shortest(float cur, float target, float step);
+#ifdef __MWERKS__
 extern float Item_ProbeForwardGroundPitch(Vec pos, float yaw, float a, float b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeForwardGroundPitch(Vec *, float, float, float);
+static inline float Item_ProbeForwardGroundPitch_ByValue(Vec pos, float yaw, float a, float b) { return Item_ProbeForwardGroundPitch(&pos, yaw, a, b); }
+#define Item_ProbeForwardGroundPitch Item_ProbeForwardGroundPitch_ByValue
+#endif
+#ifdef __MWERKS__
 extern float Item_ProbeLateralGroundPitch(Vec pos, float yaw, float a, float b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeLateralGroundPitch(Vec *, float, float, float);
+static inline float Item_ProbeLateralGroundPitch_ByValue(Vec pos, float yaw, float a, float b) { return Item_ProbeLateralGroundPitch(&pos, yaw, a, b); }
+#define Item_ProbeLateralGroundPitch Item_ProbeLateralGroundPitch_ByValue
+#endif
 extern float FAbs_FloatAsDouble(float x);
 extern int ItemCollision_Check(unsigned char *self);
 extern short ItemAlias_HitRemapLookup(unsigned int itemId);

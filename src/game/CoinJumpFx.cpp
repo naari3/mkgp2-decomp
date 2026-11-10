@@ -19,7 +19,14 @@ void Vec3_Add_DestFirst(CoinJumpVec *,const CoinJumpVec *,const CoinJumpVec *);
 float Vec3_Magnitude_Wrapper(const CoinJumpVec *);
 void Vec3_Scale(CoinJumpVec *,const CoinJumpVec *,float);
 float BuildOrientationFromYaw(float);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *,CoinJumpVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, CoinJumpVec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, CoinJumpVec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetRotationZ(void *,float);
 void VfxSlot_SetScaleUniform(void *,float);
 void VfxSlot_SetUVScroll(void *,float,float);

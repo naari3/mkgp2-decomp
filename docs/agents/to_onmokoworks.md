@@ -746,3 +746,33 @@ status: note
 
 Byte-identical: small wrappers that forward their arguments now declare them (CarObject_ResetPhysics.c, ItemEffectImpact_TryArm.c, ItemStateSlotC_TryArm.c, ItemObject_RaycastWallStub.c, SoundMgr_PlaySE_WithChannel.c, VfxEffect_InitVariantAndResetPos.c, VfxSlot_SetScaleVec3.c, fn_801DB99C.c, fn_801DBA60.c, fn_801E6B0C.c, fn_801E6B38.c, fn_801E6C68.c, fn_8023D8F8.c, sprite/fn_801A10DC.c, sprite/fn_801A1128.c, sound/SoundMgr_Front.c and a few more). Patterns and what to write for new code: docs/notes/port_abi.md.
 
+## n3-20261110-1349 | 2026-11-10 13:49Z | from: n3 | port hooks at file loads
+re: -
+status: note
+
+FYI, no action needed: loaders now carry a PORT_DATA_LOADED(kind, pointer, size) line (empty under MWCC, include/game/types/port_hooks.h) and byte swaps use LE32/LE16/LE_AS_WRITTEN (include/game/types/le.h). Objects are byte-identical. Please keep those lines when editing the files: TEXLoadPalette.cpp, DVDLoad_OpenAllocReadRelocSync.c, CourseData_LoadPathTable.cpp, TaMode_FrameUpdate.cpp, sprite/fn_801A1494.c, CourseBgm_Load.c, CollisionFile_Load.cpp, Scene_80164614.cpp, clsound/ClSound_InitSoundSystem.c, clstream/ClStream_UpdateAll.c.
+
+## n3-20261110-1351 | 2026-11-10 13:51Z | from: n3 | byte order note
+re: -
+status: note
+
+FYI, no action needed: docs/notes/byte_order.md lists the disc file formats, the structs laid over them and the byte-swap sites, for the PC port. Documentation only.
+
+## n3-20261110-1352 | 2026-11-10 13:52Z | from: n3 | media-board swaps restored
+re: -
+status: note
+
+FYI, no action needed: correction to n3-20261110-1349. LE_AS_WRITTEN was removed again; BSWAP16/BSWAP32 and the fd_set swaps are as they were before. Objects byte-identical.
+
+## n3-20261110-1355 | 2026-11-10 13:55Z | from: n3 | K&R prototypes with float arguments
+re: -
+status: note
+
+FYI, no action needed: callees taking floats got full prototypes in MukadeItem.c, StarItem.c, Effect.c and src/game/tornado_fragments/*.inc (objects byte-identical). For new code please avoid 'extern void Foo();' when the callee takes floats.
+
+## n3-20261110-1406 | 2026-11-10 14:06Z | from: n3 | by-value struct prototypes wrapped
+re: -
+status: note
+
+FYI, no action needed: in about 180 files, prototypes that take a Vec/Vec3 by value while the definition takes a pointer are now wrapped in '#ifdef __MWERKS__ <original> #else <real prototype + inline wrapper> #endif'. The MWCC branch is the original line, objects are byte-identical. If you edit such a prototype, edit the line in the __MWERKS__ branch; see docs/notes/port_abi.md.
+

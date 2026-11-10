@@ -8,8 +8,22 @@ extern void GabyouItem_BuildLocalTransformFromHandJoint(unsigned char *self, int
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *obj);
 extern void GetSpawnPosition(Vec3 *out, float x, float y, float z);
 extern void Mtx_TransposeToMtx44(float *dst, void *src);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(Vec3 *out, float *m, Vec3 v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec3 *, float *, Vec3 *);
+static inline void Mtx44_TransformVec3_ByValue(Vec3 *out, float *m, Vec3 v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
+#ifdef __MWERKS__
 extern void Effect_BuildYawPitchScaleMtx_48(unsigned char *e, Vec3 pos, float scale, float yaw);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Effect_BuildYawPitchScaleMtx_48(unsigned char *, Vec3 *, float, float);
+static inline void Effect_BuildYawPitchScaleMtx_48_ByValue(unsigned char *e, Vec3 pos, float scale, float yaw) { Effect_BuildYawPitchScaleMtx_48(e, &pos, scale, yaw); }
+#define Effect_BuildYawPitchScaleMtx_48 Effect_BuildYawPitchScaleMtx_48_ByValue
+#endif
 extern void SpriteSlot_Container_Free(void *self);
 extern int lbl_806CF440;
 extern float lbl_806D6CD0;

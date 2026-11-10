@@ -26,8 +26,22 @@ void VfxSlot_SetAnimSpeed(void *, float);
 void VfxSlot_SetScaleUniform(void *, float);
 void *KartDriver_GetKartRootMtx(void *);
 void Mtx_TransposeToMtx44(float *, const void *);
+#ifdef __MWERKS__
 void Mtx44_TransformVec3(WaveGlowVec3 *, const float *, WaveGlowVec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(WaveGlowVec3 *, const float *, WaveGlowVec3 *);
+static inline void Mtx44_TransformVec3_ByValue(WaveGlowVec3 *a0, const float *a1, WaveGlowVec3 a2) { Mtx44_TransformVec3(a0, a1, &a2); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, WaveGlowVec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, WaveGlowVec3 *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, WaveGlowVec3 a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 unsigned char FinalLapCoinJump_CheckActiveForObject(void *);
 
 void Effect_KartWaveGlow_Update(WaveGlowEffect *effect) {

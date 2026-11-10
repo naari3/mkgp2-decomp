@@ -41,9 +41,16 @@ struct SmokePuff {
 extern void Vec3_Add_DestFirst(SmokeVec *dst, const SmokeVec *a, const SmokeVec *b);
 extern void Vec3_Copy();
 extern float Vec3_Magnitude_Wrapper(const SmokeVec *v);
-extern void Vec3_Scale();
+extern void Vec3_Scale(void *, void *, float);
 extern void Vec3_Subtract_DestFirst(SmokeVec *dst, const SmokeVec *a, const SmokeVec *b);
+#ifdef __MWERKS__
 extern void VfxSlot_SetPositionFromVec(void *slot, SmokeVec pos);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, SmokeVec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *slot, SmokeVec pos) { VfxSlot_SetPositionFromVec(slot, &pos); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 extern void VfxSlot_SetScaleUniform(void *slot, float scale);
 
 #pragma exceptions on

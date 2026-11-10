@@ -1,7 +1,14 @@
 #include "game/OnchiSpeakerFlightPrivate.h"
 extern float BuildOrientationFromYaw(float);
 extern void GetSpawnPosition(Vec3 *, float, float, float);
+#ifdef __MWERKS__
 extern signed char ItemObject_GetGroundTypeAt(Vec3, float *, int);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(Vec3 *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(Vec3 a0, float *a1, int a2) { return ItemObject_GetGroundTypeAt(&a0, a1, a2); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 extern void Item_DecayVelocityScalar(Item *, float);
 extern void *KartDriver_GetKartRootMtx(void *);
 extern void Mtx44_GetTranslation_RowMajor(Vec3 *, void *);

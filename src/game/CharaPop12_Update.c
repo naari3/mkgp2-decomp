@@ -14,13 +14,27 @@ extern const float lbl_806D5070; /* -1.0 */
 extern const float lbl_806D5074; /* -0.1 */
 extern const char *CharaPop12_Update_data_8041A17C[14];
 extern void SpriteSlot_InitNonLoop(void *slot, int id);
+#ifdef __MWERKS__
 extern void SpriteSlot_SetTransform(void *slot, Vec pos, Vec rot, float scale);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SpriteSlot_SetTransform(void *, Vec *, Vec *, float);
+static inline void SpriteSlot_SetTransform_ByValue(void *slot, Vec pos, Vec rot, float scale) { SpriteSlot_SetTransform(slot, &pos, &rot, scale); }
+#define SpriteSlot_SetTransform SpriteSlot_SetTransform_ByValue
+#endif
 extern void SpriteSlot_TickAnim(void *slot);
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int on);
 extern void SpriteSlot_SetJointVisibilityByName(void *slot, const char *name, int flag, int hide);
 extern void JointByName_GetWorldPosition(Vec *out, void *slot, const char *name);
 extern void SpriteSlot_Container_Free(unsigned char *self);
+#ifdef __MWERKS__
 extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec t);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec *);
+static inline void Mtx44_Translate_ByValue(float dst[4][4], float src[4][4], Vec t) { Mtx44_Translate(dst, src, &t); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 extern void Matrix4_PreMultiplyRotX(float dst[4][4], float src[4][4], float a);
 extern void Matrix4_PreMultiplyRotY(float dst[4][4], float src[4][4], float a);
 

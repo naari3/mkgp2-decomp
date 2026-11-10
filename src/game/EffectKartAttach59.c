@@ -27,7 +27,14 @@ extern void Vec3_Subtract_DestFirst(AttachVec *, const AttachVec *, const Attach
 extern void Vec3_Add_DestFirst(AttachVec *, const AttachVec *, const AttachVec *);
 extern void VfxSlot_SetAnimFrame(void *, float);
 extern void DrawEffect_Free(AttachEffect *);
+#ifdef __MWERKS__
 extern void VfxSlot_SetPositionFromVec(void *, AttachVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, AttachVec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, AttachVec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 extern void VfxSlot_SetScaleUniform(void *, float);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *);
 void Effect_KartAttach_Res59_Update(AttachEffect *effect) {

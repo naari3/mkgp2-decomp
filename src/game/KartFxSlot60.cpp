@@ -20,7 +20,14 @@ extern const float lbl_806D528C, lbl_806D5274;
 void DrawEffect_Free(Effect *);
 int ShadowBillboard_SetEffectParams(void *, int, float, float, float, float);
 void GetSpawnPosition(Vec3 *, float, float, float);
+#ifdef __MWERKS__
 void Vec3_Lerp(Vec3 *, Vec3, Vec3, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Vec3_Lerp(Vec3 *, Vec3 *, Vec3 *, float);
+static inline void Vec3_Lerp_ByValue(Vec3 *a0, Vec3 a1, Vec3 a2, float a3) { Vec3_Lerp(a0, &a1, &a2, a3); }
+#define Vec3_Lerp Vec3_Lerp_ByValue
+#endif
 }
 static inline void *PresentOrNull(void *p) { if (!p) p = 0; return p; }
 static inline unsigned char SparkFlag(KartState *s) {

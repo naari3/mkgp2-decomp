@@ -20,7 +20,14 @@ extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *kart);
 extern double sin(double x);
 extern void *GetRaceContextPtr(void);
 extern void Item_DecayVelocityScalar(char *item, float k);
+#ifdef __MWERKS__
 extern void Item_RenderHandheldByCharacter(char *item, Vec3 ofs, Vec3 rot, int flag, float scale);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_RenderHandheldByCharacter(char *, Vec3 *, Vec3 *, int, float);
+static inline void Item_RenderHandheldByCharacter_ByValue(char *item, Vec3 ofs, Vec3 rot, int flag, float scale) { Item_RenderHandheldByCharacter(item, &ofs, &rot, flag, scale); }
+#define Item_RenderHandheldByCharacter Item_RenderHandheldByCharacter_ByValue
+#endif
 extern void ItemObject_DispatchVtable18_GetState(void *kart);
 extern void JointByName_GetLocalMatrix4x3(Mtx34 *out, void *slot, const char *name);
 extern void *KartDriver_GetKartRootMtx(void *kart);
@@ -29,12 +36,26 @@ extern void Mtx_TransposeToMtx44(Mtx44 *dst, void *src);
 extern float Mtx44_GetYawOfPosZ(Mtx44 *m);
 extern float Mtx44_GetYawOfPosZ_Padded(void *m);
 extern void Mtx44_Inverse_GaussJordan(Mtx44 *dst, Mtx44 *src);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(void *out, Mtx44 m, Vec3 v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(void *, Mtx44, Vec3 *);
+static inline void Mtx44_TransformVec3_ByValue(void *out, Mtx44 m, Vec3 v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern int *RaceContextSlot_GetIfAlive(void *ctx, int idx);
 extern void SpriteSlot_Container_Free(char *item);
 extern void SpriteSlot_InitNonLoop(void *slot, unsigned char id);
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int enable);
+#ifdef __MWERKS__
 extern void SpriteSlot_SetTransform(void *slot, Vec3 pos, Vec3 rot, float scale);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SpriteSlot_SetTransform(void *, Vec3 *, Vec3 *, float);
+static inline void SpriteSlot_SetTransform_ByValue(void *slot, Vec3 pos, Vec3 rot, float scale) { SpriteSlot_SetTransform(slot, &pos, &rot, scale); }
+#define SpriteSlot_SetTransform SpriteSlot_SetTransform_ByValue
+#endif
 extern void SpriteSlot_TickAnim(void *slot);
 extern void Effect_KartAuraCompound_Update(char *self);
 extern void Effect_KartGlow_Update(char *self);

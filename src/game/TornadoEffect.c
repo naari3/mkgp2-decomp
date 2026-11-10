@@ -23,7 +23,14 @@ void DrawEffect_SetByte10C(void *, int);
 unsigned int Terrain_ApplyCup2FlagPatch(unsigned int);
 int Terrain_FlagsToTypeId(unsigned int);
 float Saturate_Double(float, float, float);
+#ifdef __MWERKS__
 void *DrawEffect_SpawnWithDescriptor(int, TornadoSpawnPos);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void * DrawEffect_SpawnWithDescriptor(int, TornadoSpawnPos *);
+static inline void * DrawEffect_SpawnWithDescriptor_ByValue(int a0, TornadoSpawnPos a1) { return DrawEffect_SpawnWithDescriptor(a0, &a1); }
+#define DrawEffect_SpawnWithDescriptor DrawEffect_SpawnWithDescriptor_ByValue
+#endif
 void Object_RenderJObjTree(void *, int);
 
 #include "tornado_fragments/auto_TornadoEffect_InitDe_text.inc"

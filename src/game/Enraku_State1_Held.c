@@ -30,7 +30,14 @@ extern void fn_801B1660(void *driver, void *target);
 extern void fn_801B158C(void *driver, void *target);
 extern void fn_801B14B8(void *driver, void *target);
 extern void ItemHit_Dispatch(unsigned char *self, int a, void *pos, int b);
+#ifdef __MWERKS__
 extern void Item_ComputeYawRelativeApproach(void *vel, void *target, Vec pos, Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_ComputeYawRelativeApproach(void *, void *, Vec *, Vec *);
+static inline void Item_ComputeYawRelativeApproach_ByValue(void *vel, void *target, Vec pos, Vec v) { Item_ComputeYawRelativeApproach(vel, target, &pos, &v); }
+#define Item_ComputeYawRelativeApproach Item_ComputeYawRelativeApproach_ByValue
+#endif
 extern float Vec3_ToYaw(const void *v);
 extern int Item_CheckWallCollision(unsigned char *self, Vec *n, int flag);
 extern void GetSpawnPosition(void *out, float x, float y, float z);

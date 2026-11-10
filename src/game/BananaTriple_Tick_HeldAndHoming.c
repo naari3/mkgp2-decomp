@@ -17,14 +17,28 @@ extern "C" {
 
 extern float AngleStepTowards_Shortest(float cur, float target, float step);
 extern float BuildOrientationFromYaw(float yaw);
+#ifdef __MWERKS__
 extern void DrawEffect_ItemHitBurst_Spawn(Vec3 pos, Vec3 vel, int kind);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void DrawEffect_ItemHitBurst_Spawn(Vec3 *, Vec3 *, int);
+static inline void DrawEffect_ItemHitBurst_Spawn_ByValue(Vec3 pos, Vec3 vel, int kind) { DrawEffect_ItemHitBurst_Spawn(&pos, &vel, kind); }
+#define DrawEffect_ItemHitBurst_Spawn DrawEffect_ItemHitBurst_Spawn_ByValue
+#endif
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *kart);
 extern void GetSpawnPosition(void *out, float x, float y, float z);
 extern short ItemAlias_HitRemapLookup(int id);
 extern int ItemCollision_Check(char *self);
 extern void ItemHitRegistry_AddEntry(char *self);
 extern unsigned char ItemHitRegistry_RemoveEntry(char *self, int id, int flag);
+#ifdef __MWERKS__
 extern signed char ItemObject_GetGroundTypeAt(Vec3 pos, float *groundY, int mode);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(Vec3 *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(Vec3 pos, float *groundY, int mode) { return ItemObject_GetGroundTypeAt(&pos, groundY, mode); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 extern void ItemObject_DecrementCategoryBudget(char *self);
 extern void ItemTracker_AcquireLock(char *self);
 extern void *ItemTracker_GetTargetKart(char *self);
@@ -33,18 +47,60 @@ extern void ItemTracker_SetTrackPhase(char *self, int phase);
 extern void Item_AccelClampVelocity(char *self, float accel, float maxv);
 extern int Item_AdvanceFallingDrop(char *self, float gravity, int *landed, float *groundY);
 extern int Item_AdvanceProjectileSimple(char *self, void *groundY, float a, float b);
+#ifdef __MWERKS__
 extern void Item_BendVelocityByGroundProbe(void *vel, Vec3 pos, float yaw, float speed, float pitch);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_BendVelocityByGroundProbe(void *, Vec3 *, float, float, float);
+static inline void Item_BendVelocityByGroundProbe_ByValue(void *vel, Vec3 pos, float yaw, float speed, float pitch) { Item_BendVelocityByGroundProbe(vel, &pos, yaw, speed, pitch); }
+#define Item_BendVelocityByGroundProbe Item_BendVelocityByGroundProbe_ByValue
+#endif
+#ifdef __MWERKS__
 extern void Item_BounceOffWall(char *self, Vec3 n, int se, int flag, float k1, float k2);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_BounceOffWall(char *, Vec3 *, int, int, float, float);
+static inline void Item_BounceOffWall_ByValue(char *self, Vec3 n, int se, int flag, float k1, float k2) { Item_BounceOffWall(self, &n, se, flag, k1, k2); }
+#define Item_BounceOffWall Item_BounceOffWall_ByValue
+#endif
 extern int Item_CheckWallCollision(char *self, Vec3 *n, int flag);
+#ifdef __MWERKS__
 extern void Item_ComputeYawRelativeApproach(void *vel, void *target, Vec3 pos, Vec3 v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_ComputeYawRelativeApproach(void *, void *, Vec3 *, Vec3 *);
+static inline void Item_ComputeYawRelativeApproach_ByValue(void *vel, void *target, Vec3 pos, Vec3 v) { Item_ComputeYawRelativeApproach(vel, target, &pos, &v); }
+#define Item_ComputeYawRelativeApproach Item_ComputeYawRelativeApproach_ByValue
+#endif
 extern void Item_DecayVelocityScalar(char *self, float k);
 extern void Item_HomingScanAndSteer(char *self, void *yaw, int flag);
 extern void Item_InitLaunchFromKart(char *self, void *pos, float x, float y);
+#ifdef __MWERKS__
 extern float Item_ProbeForwardGroundPitch(Vec3 pos, float yaw, float a, float b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeForwardGroundPitch(Vec3 *, float, float, float);
+static inline float Item_ProbeForwardGroundPitch_ByValue(Vec3 pos, float yaw, float a, float b) { return Item_ProbeForwardGroundPitch(&pos, yaw, a, b); }
+#define Item_ProbeForwardGroundPitch Item_ProbeForwardGroundPitch_ByValue
+#endif
+#ifdef __MWERKS__
 extern float Item_ProbeLateralGroundPitch(Vec3 pos, float yaw, float a, float b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeLateralGroundPitch(Vec3 *, float, float, float);
+static inline float Item_ProbeLateralGroundPitch_ByValue(Vec3 pos, float yaw, float a, float b) { return Item_ProbeLateralGroundPitch(&pos, yaw, a, b); }
+#define Item_ProbeLateralGroundPitch Item_ProbeLateralGroundPitch_ByValue
+#endif
 extern void Item_RenderCharacterScaledFromJoint12(char *self, Vec3 a, Vec3 b, int flag, float s);
 extern void Item_SpawnGroundExplosionAndFX(char *self);
+#ifdef __MWERKS__
 extern void KartDriver_TransformWorldToLocalY0(void *dst, Vec3 src, void *kart);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void KartDriver_TransformWorldToLocalY0(void *, Vec3 *, void *);
+static inline void KartDriver_TransformWorldToLocalY0_ByValue(void *dst, Vec3 src, void *kart) { KartDriver_TransformWorldToLocalY0(dst, &src, kart); }
+#define KartDriver_TransformWorldToLocalY0 KartDriver_TransformWorldToLocalY0_ByValue
+#endif
 extern void SpriteSlot_Container_Free(char *self);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float scale);
 extern void SpriteSlot_SetJointVisibilityByName(void *slot, const char *name, int a, int visible);

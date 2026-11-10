@@ -593,7 +593,15 @@ void TornadoEffect_SetFlagB4(void *e, int f);
 void TornadoEffect_SetScalePairB0BC(void *e, float a, float b);
 void TornadoEffect_Tick(void *e, int a);
 void Vec3_Copy(void *dst, void *src);
+#ifdef __MWERKS__
 void VfxSlotMgr_Update(struct VfxVec eye, struct VfxVec target);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md.
+ * VfxVec is not complete yet here, so the call is rewritten by a macro
+ * instead of an inline wrapper; the callers pass named locals. */
+extern void VfxSlotMgr_Update(struct VfxVec *, struct VfxVec *);
+#define VfxSlotMgr_Update(eye, target) VfxSlotMgr_Update(&(eye), &(target))
+#endif
 void __assert(char *file, int line, char *expr);
 void clStream_setVolume(int id, int vol);
 float fn_800D3184(void *a, void *b);

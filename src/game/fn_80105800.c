@@ -19,12 +19,26 @@ extern int Item_OrbitAnchorKart(unsigned char *self, void *offset, unsigned int 
 extern void ItemObject_DecrementCategoryBudget(unsigned char *self);
 extern void SpriteSlot_Container_Free(void *self);
 extern void Vec3_Add_DestFirst(void *dst, void *a, void *b);
+#ifdef __MWERKS__
 extern void SpriteSlot_SetTransform(void *slot, Vec pos, Vec rot, float scale);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SpriteSlot_SetTransform(void *, Vec *, Vec *, float);
+static inline void SpriteSlot_SetTransform_ByValue(void *slot, Vec pos, Vec rot, float scale) { SpriteSlot_SetTransform(slot, &pos, &rot, scale); }
+#define SpriteSlot_SetTransform SpriteSlot_SetTransform_ByValue
+#endif
 
 extern void SpriteSlot_SetJointScaleByName(void *slot, const unsigned char *name, float x, float y, float z);
 extern void SpriteSlot_TickAnim(void *slot);
 extern void JointByName_GetWorldPosition(Vec *out, void *slot, const unsigned char *name);
+#ifdef __MWERKS__
 extern void VfxLaugh_Tick(void *e, Vec pos, unsigned char visible, float scale, float alpha);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxLaugh_Tick(void *, Vec *, unsigned char, float, float);
+static inline void VfxLaugh_Tick_ByValue(void *e, Vec pos, unsigned char visible, float scale, float alpha) { VfxLaugh_Tick(e, &pos, visible, scale, alpha); }
+#define VfxLaugh_Tick VfxLaugh_Tick_ByValue
+#endif
 
 extern unsigned char lbl_803311D0[];
 extern ScaleKey lbl_80421A28[2];

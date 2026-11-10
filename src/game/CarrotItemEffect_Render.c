@@ -74,14 +74,28 @@ extern void Matrix4_Identity(float m[4][4]);
 extern void Mtx44_Scale_Uniform(float dst[4][4], float src[4][4], float s);
 extern void Matrix4_PreMultiplyRotX(float dst[4][4], float src[4][4], float angle);
 extern void Matrix4_PreMultiplyRotY(float dst[4][4], float src[4][4], float angle);
+#ifdef __MWERKS__
 extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec *);
+static inline void Mtx44_Translate_ByValue(float dst[4][4], float src[4][4], Vec v) { Mtx44_Translate(dst, src, &v); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 extern void DbgScene_CopyMatrix3x4Transpose(float dst[3][4], float src[4][4]);
 extern void Object_BindMatrixSource(void *obj, float m[3][4], int flag);
 extern void Object_DriveAnimMatrix(void *obj);
 extern void Object_RenderJObjTree(void *obj, int flags);
 extern unsigned char fn_80231B74(int id);
 extern unsigned char fn_8011D890(int id, float uv[2][2], int flags);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec *, float m[4][4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(Vec *out, float m[4][4], Vec v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 
 #include "game/types/WGPipeWord.h"
 

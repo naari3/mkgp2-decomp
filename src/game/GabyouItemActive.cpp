@@ -57,18 +57,53 @@ void fn_801B1D5C(void *, void *, int, int);
 void fn_801B1660(void *, void *);
 void fn_801B158C(void *, void *);
 void fn_801B14B8(void *, void *);
+#ifdef __MWERKS__
 void Item_ComputeYawRelativeApproach(Vec3 *, void *, Vec3, Vec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_ComputeYawRelativeApproach(Vec3 *, void *, Vec3 *, Vec3 *);
+static inline void Item_ComputeYawRelativeApproach_ByValue(Vec3 *a0, void *a1, Vec3 a2, Vec3 a3) { Item_ComputeYawRelativeApproach(a0, a1, &a2, &a3); }
+#define Item_ComputeYawRelativeApproach Item_ComputeYawRelativeApproach_ByValue
+#endif
 float Vec3_ToYaw(const Vec3 *);
 void ItemHit_Dispatch(GabyouActiveView *, void *, int, int);
 void Vec3_Add_DestFirst(Vec3 *, const Vec3 *, const Vec3 *);
 int Item_CheckWallCollision(GabyouActiveView *, Vec3 *, Vec3 *);
+#ifdef __MWERKS__
 void Item_BounceOffWall(GabyouActiveView *, Vec3, unsigned int, signed char, float, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_BounceOffWall(GabyouActiveView *, Vec3 *, unsigned int, signed char, float, float);
+static inline void Item_BounceOffWall_ByValue(GabyouActiveView *a0, Vec3 a1, unsigned int a2, signed char a3, float a4, float a5) { Item_BounceOffWall(a0, &a1, a2, a3, a4, a5); }
+#define Item_BounceOffWall Item_BounceOffWall_ByValue
+#endif
 int Item_AdvanceFallingDrop(GabyouActiveView *, int *, float *, float);
+#ifdef __MWERKS__
 void DrawEffect_ItemHitBurst_Spawn(Vec3, Vec3, signed char);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void DrawEffect_ItemHitBurst_Spawn(Vec3 *, Vec3 *, signed char);
+static inline void DrawEffect_ItemHitBurst_Spawn_ByValue(Vec3 a0, Vec3 a1, signed char a2) { DrawEffect_ItemHitBurst_Spawn(&a0, &a1, a2); }
+#define DrawEffect_ItemHitBurst_Spawn DrawEffect_ItemHitBurst_Spawn_ByValue
+#endif
 void SoundMgr_PlaySE_Positional(unsigned int, Vec3, int);
 void GetSpawnPosition(Vec3 *, float, float, float);
+#ifdef __MWERKS__
 float Item_ProbeForwardGroundPitch(Vec3, float, float, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeForwardGroundPitch(Vec3 *, float, float, float);
+static inline float Item_ProbeForwardGroundPitch_ByValue(Vec3 a0, float a1, float a2, float a3) { return Item_ProbeForwardGroundPitch(&a0, a1, a2, a3); }
+#define Item_ProbeForwardGroundPitch Item_ProbeForwardGroundPitch_ByValue
+#endif
+#ifdef __MWERKS__
 float Item_ProbeLateralGroundPitch(Vec3, float, float, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeLateralGroundPitch(Vec3 *, float, float, float);
+static inline float Item_ProbeLateralGroundPitch_ByValue(Vec3 a0, float a1, float a2, float a3) { return Item_ProbeLateralGroundPitch(&a0, a1, a2, a3); }
+#define Item_ProbeLateralGroundPitch Item_ProbeLateralGroundPitch_ByValue
+#endif
 float AngleStepTowards_Shortest(float, float, float);
 void ItemObject_DecrementCategoryBudget(GabyouActiveView *);
 void SpriteSlot_Container_Free(GabyouActiveView *);

@@ -28,7 +28,14 @@ struct RotateEffect {
 };
 extern "C" {
 void Vec3_Copy(RotateVec *, const RotateVec *);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, RotateVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, RotateVec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, RotateVec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetRotationZ(void *, float);
 void VfxSlot_SetScaleUniform(void *, float);
 void Effect_TwoChildRotate_FromPhase150(RotateEffect *effect, RotateVec *position, float scale, float alpha) {

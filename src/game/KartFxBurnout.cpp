@@ -30,7 +30,14 @@ void VfxSlot_BindResourceEx(void *,int,int);
 void VfxSlot_BindResource(void *,int);
 void VfxSlot_SetMatrixSourceEnabled(void *,int);
 void VfxSlot_SetUVScroll(void *,float,float);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *,BurnVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, BurnVec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, BurnVec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetRotationZ(void *,float);
 void VfxSlot_SetScaleUniform(void *,float);
 float BuildOrientationFromYaw(float);
@@ -42,7 +49,14 @@ float Mtx44_GetPitchOfPosZ_Padded(const void *);
 float Mtx44_GetPitchOfNegX(const void *);
 void Vec2_RotateY(BurnVec *,const BurnVec *,float);
 void Mtx_TransposeToMtx44(BurnMtx *,const void *);
+#ifdef __MWERKS__
 void Mtx44_TransformVec3(BurnVec *,const BurnMtx *,BurnVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(BurnVec *, const BurnMtx *, BurnVec *);
+static inline void Mtx44_TransformVec3_ByValue(BurnVec *a0, const BurnMtx *a1, BurnVec a2) { Mtx44_TransformVec3(a0, a1, &a2); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 void GetSpawnPosition(BurnVec *,float,float,float);
 float KartCharacterParam_GetFxSizeFactor(BurnKart *);
 void Vec3_Scale(BurnVec *,const BurnVec *,float);
@@ -58,11 +72,25 @@ void Mtx44_Scale_Uniform(BurnMtx *,const BurnMtx *,float);
 void Matrix4_PreMultiplyRotX(BurnMtx *,const BurnMtx *,float);
 void Matrix4_PreMultiplyRotY(BurnMtx *,const BurnMtx *,float);
 void Matrix4_PreMultiplyRotZ(BurnMtx *,const BurnMtx *,float);
+#ifdef __MWERKS__
 void Mtx44_Translate(BurnMtx *,const BurnMtx *,BurnVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(BurnMtx *, const BurnMtx *, BurnVec *);
+static inline void Mtx44_Translate_ByValue(BurnMtx *a0, const BurnMtx *a1, BurnVec a2) { Mtx44_Translate(a0, a1, &a2); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 void DbgScene_CopyMatrix3x4Transpose(float *,const BurnMtx *);
 int SoundMgr_CountActiveSEInstances(int);
 void SoundMgr_PlaySE_Positional(int,BurnVec,int);
+#ifdef __MWERKS__
 void SoundMgr_PlaySE_WithChannel(int,BurnVec,int);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SoundMgr_PlaySE_WithChannel(int, BurnVec *, int);
+static inline void SoundMgr_PlaySE_WithChannel_ByValue(int a0, BurnVec a1, int a2) { SoundMgr_PlaySE_WithChannel(a0, &a1, a2); }
+#define SoundMgr_PlaySE_WithChannel SoundMgr_PlaySE_WithChannel_ByValue
+#endif
 static inline int BurnCharacter(BurnKart *kart) {
     if (!kart) return -1;
     if (kart->player < 0 || kart->player > 3) return -1;

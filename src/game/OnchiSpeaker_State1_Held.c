@@ -11,7 +11,14 @@ extern void *KartDriver_GetJointByIdx(void *, int);
 extern void Mtx44_GetTranslation_RowMajor(Vec3 *, void *);
 extern void ItemTracker_AcquireLock(Item *);
 extern void ItemTracker_SetTrackPhase(Item *, int);
+#ifdef __MWERKS__
 extern signed char ItemObject_GetGroundTypeAt(Vec3, float *, int);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(Vec3 *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(Vec3 a0, float *a1, int a2) { return ItemObject_GetGroundTypeAt(&a0, a1, a2); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 extern void Item_HomingScanAndSteer(Item *, float *, int);
 extern void Item_AccelClampVelocity(Item *, float, float);
 extern void Item_DecayVelocityScalar(Item *, float);
@@ -29,7 +36,14 @@ extern float Vec3_ToYaw(Vec3 *);
 extern void SoundMgr_PlaySE_Positional(int, Vec3, int);
 extern void Vec3_Add_DestFirst(Vec3 *, Vec3 *, Vec3 *);
 extern int Item_CheckWallCollision(Item *, Vec3 *, int);
+#ifdef __MWERKS__
 extern void Item_BounceOffWall(Item *, Vec3, int, int, float, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_BounceOffWall(Item *, Vec3 *, int, int, float, float);
+static inline void Item_BounceOffWall_ByValue(Item *a0, Vec3 a1, int a2, int a3, float a4, float a5) { Item_BounceOffWall(a0, &a1, a2, a3, a4, a5); }
+#define Item_BounceOffWall Item_BounceOffWall_ByValue
+#endif
 extern int Item_AdvanceProjectileSimple(Item *, float *, float, float);
 extern int g_ccClass;
 

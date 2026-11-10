@@ -7,11 +7,25 @@ typedef struct JointNames {
 extern void *KartDriver_GetKartRootMtx(void *kart);
 extern void Mtx_TransposeToMtx44(float dst[4][4], const void *src);
 extern void Mtx44_GetTranslation_ColMajor(Vec *out, float m[4][4]);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(void *out, float m[4][4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(void *, float m[4][4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(void *out, float m[4][4], Vec v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern void GetSpawnPosition(void *out, float x, float y, float z);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float scale);
 extern void SpriteSlot_SetScale(void *slot, float scale);
+#ifdef __MWERKS__
 extern void Vec3_Lerp(void *dst, Vec a, Vec b, float t);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Vec3_Lerp(void *, Vec *, Vec *, float);
+static inline void Vec3_Lerp_ByValue(void *dst, Vec a, Vec b, float t) { Vec3_Lerp(dst, &a, &b, t); }
+#define Vec3_Lerp Vec3_Lerp_ByValue
+#endif
 extern float Vec3_HorizontalYawTo(void *a, void *b);
 extern float Vec3_PitchTo(void *a, void *b);
 extern float AngleStepTowards_Shortest(float cur, float target, float step);
@@ -27,21 +41,49 @@ extern float fn_800D3184(void *a, void *b);
 extern float Mtx44_GetYawOfPosZ(float m[4][4]);
 extern float BuildOrientationFromYaw(float yaw);
 extern float FAbs_FloatAsDouble(float x);
+#ifdef __MWERKS__
 extern char ItemObject_GetGroundTypeAt(Vec pos, float *y, void *n);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern char ItemObject_GetGroundTypeAt(Vec *, float *, void *);
+static inline char ItemObject_GetGroundTypeAt_ByValue(Vec pos, float *y, void *n) { return ItemObject_GetGroundTypeAt(&pos, y, n); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 extern void Vec3_Subtract_DestFirst(void *dst, void *a, void *b);
+#ifdef __MWERKS__
 extern void DrawEffect_ItemHitOriented_Spawn(Vec pos, Vec vel, int mode);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void DrawEffect_ItemHitOriented_Spawn(Vec *, Vec *, int);
+static inline void DrawEffect_ItemHitOriented_Spawn_ByValue(Vec pos, Vec vel, int mode) { DrawEffect_ItemHitOriented_Spawn(&pos, &vel, mode); }
+#define DrawEffect_ItemHitOriented_Spawn DrawEffect_ItemHitOriented_Spawn_ByValue
+#endif
 extern void Matrix4_Identity(float m[4][4]);
 extern void Mtx44_Scale_Uniform(float dst[4][4], float src[4][4], float s);
 extern void Matrix4_PreMultiplyRotZ(float dst[4][4], float src[4][4], float a);
 extern void Matrix4_PreMultiplyRotX(float dst[4][4], float src[4][4], float a);
 extern void Matrix4_PreMultiplyRotY(float dst[4][4], float src[4][4], float a);
+#ifdef __MWERKS__
 extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec *);
+static inline void Mtx44_Translate_ByValue(float dst[4][4], float src[4][4], Vec v) { Mtx44_Translate(dst, src, &v); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 extern void DbgScene_CopyMatrix3x4Transpose(void *dst, float src[4][4]);
 extern void SpriteSlot_TickAnim(void *slot);
 extern void SoundMgr_StopSE_OrSpecial(int se, int ch);
 extern int SoundMgr_CountActiveSEInstances(int se);
 extern void SoundMgr_PlaySE_Positional(int se, Vec pos, int ch);
+#ifdef __MWERKS__
 extern void SoundMgr_PlaySE_WithChannel(int se, Vec pos, int ch);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SoundMgr_PlaySE_WithChannel(int, Vec *, int);
+static inline void SoundMgr_PlaySE_WithChannel_ByValue(int se, Vec pos, int ch) { SoundMgr_PlaySE_WithChannel(se, &pos, ch); }
+#define SoundMgr_PlaySE_WithChannel SoundMgr_PlaySE_WithChannel_ByValue
+#endif
 extern float KartFxParam_GetConst1p5(void *kart);
 extern void Item_DecayVelocityScalar(unsigned char *self, float k);
 

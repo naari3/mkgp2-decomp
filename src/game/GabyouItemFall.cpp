@@ -30,7 +30,14 @@ struct GabyouFallContext {
 extern "C" {
 extern float lbl_806D62C0, lbl_806D62F0, lbl_806D6310;
 extern float lbl_806D62FC, lbl_806D6300;
+#ifdef __MWERKS__
 signed char ItemObject_GetGroundTypeAt(Vec3, float *, int);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(Vec3 *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(Vec3 a0, float *a1, int a2) { return ItemObject_GetGroundTypeAt(&a0, a1, a2); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 void *KartDriver_GetKartRootMtx(void *);
 void Mtx44_GetTranslation_RowMajor(Vec3 *, void *);
 void Vec3_Subtract_DestFirst(Vec3 *, const Vec3 *, const Vec3 *);

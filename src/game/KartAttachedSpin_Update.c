@@ -15,7 +15,14 @@ extern const float lbl_806D508C; /* -180.0 */
 extern const float lbl_806D5090; /* 180.0 */
 extern const float lbl_806D5094; /* -10 deg */
 extern void SpriteSlot_InitNonLoop(void *slot, int id);
+#ifdef __MWERKS__
 extern void SpriteSlot_SetTransform(void *slot, Vec pos, Vec rot, float scale);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SpriteSlot_SetTransform(void *, Vec *, Vec *, float);
+static inline void SpriteSlot_SetTransform_ByValue(void *slot, Vec pos, Vec rot, float scale) { SpriteSlot_SetTransform(slot, &pos, &rot, scale); }
+#define SpriteSlot_SetTransform SpriteSlot_SetTransform_ByValue
+#endif
 extern void SpriteSlot_Container_Free(unsigned char *self);
 
 void KartAttachedSpin_Update(unsigned char *self)

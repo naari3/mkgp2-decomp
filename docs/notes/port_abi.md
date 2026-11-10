@@ -27,12 +27,54 @@ What the pairs turned out to be, and what to write:
 Always try the plain form first and check the object hash; fall back to the
 macro only when the object changes.
 
-Left open: `arity_census.py --all` also lists about 650 pairs where the call
-passes *more* arguments than the definition takes. Most are harmless on
-cdecl (wrappers with unused trailing arguments), but the list also holds the
-reverse of the by-value case (a caller with a `Vec` by value, a definition
-that takes the pointer, e.g. `SoundMgr_PlaySE_WithChannel`) and K&R
-prototypes with `float` arguments. Not swept.
+### The reverse: the caller declares a struct by value, the definition takes its address
+
+About 330 caller/callee pairs (45 callees: `Mtx44_TransformVec3`,
+`ItemObject_GetGroundTypeAt`, `VfxSlot_SetPositionFromVec`, `Mtx44_Translate`,
+`VfxSlotMgr_Update`, `SoundMgr_PlaySE_WithChannel`, ...) declare
+`void Foo(Mtx44 m, Vec3 v)` and call `Foo(m, pos)` while the definition is
+`void Foo(float (*m)[4], Vec3 *v)`; some also declare a `Vec3` return where
+the definition has a leading result pointer. MWCC produces exactly that
+(address of a caller-made copy, hidden result pointer first), so the objects
+match. For other compilers each such prototype is wrapped:
+
+```c
+#ifdef __MWERKS__
+extern void SoundMgr_PlaySE_WithChannel(int se, Vec3 pos, int ch);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SoundMgr_PlaySE_WithChannel(int, Vec3 *, int);
+static inline void SoundMgr_PlaySE_WithChannel_ByValue(int se, Vec3 pos, int ch) { SoundMgr_PlaySE_WithChannel(se, &pos, ch); }
+#define SoundMgr_PlaySE_WithChannel SoundMgr_PlaySE_WithChannel_ByValue
+#endif
+```
+
+The MWCC branch is the original line, so the objects cannot change, and the
+call sites are untouched. Write the same block when a new unit declares one
+of these callees by value. (`Scene_8014E0C4.cpp` uses a function-like macro
+for `VfxSlotMgr_Update` because the struct is still incomplete at that
+point.)
+
+### K&R prototypes and floats
+
+`extern void Foo();` followed by `Foo(p, 1.0f)` promotes the float to double.
+PowerPC passes both in the same register; nothing else does. The units that
+did this (`MukadeItem.c`, `StarItem.c`, `Effect.c`, the `TornadoItem`
+fragments) now declare the parameter lists. Do not use empty parentheses for
+a callee that takes floats.
+
+### Still open
+
+- Seven calls pass an explicit result pointer to a definition that returns a
+  small class by value (`fn_80157940`, `fn_80157B38`, `fn_80157C60`,
+  `fn_80157D30`, `fn_80157DE0` from `Scene_8014E0C4.cpp`; `fn_80247C3C` from
+  `RaceDigitLap.cpp`). The classes have user-written copy operations, so
+  Itanium-style ABIs pass and return them by address like MWCC does; the only
+  difference is 32-bit x86, where a struct-returning callee pops the result
+  pointer. Left as they are.
+- The remaining `arity_census.py --all` pairs are calls with trailing
+  arguments the definition does not read; harmless where the caller cleans
+  the stack.
 
 ## Bit-field order (item 12)
 

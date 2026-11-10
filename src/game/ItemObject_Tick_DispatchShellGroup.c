@@ -38,8 +38,22 @@ extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *driver);
 extern float KartCharacterParam_GetKinopioBoostBonus(void *driver);
 extern float KartFxParam_GetConst1p5(void *driver);
 extern double sin(double x);
+#ifdef __MWERKS__
 extern void Vec3_Lerp(Vec *dst, Vec a, Vec b, float t);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Vec3_Lerp(Vec *, Vec *, Vec *, float);
+static inline void Vec3_Lerp_ByValue(Vec *dst, Vec a, Vec b, float t) { Vec3_Lerp(dst, &a, &b, t); }
+#define Vec3_Lerp Vec3_Lerp_ByValue
+#endif
+#ifdef __MWERKS__
 extern void KartDriver_BuildJoint12EulerTransform(void *slot, void *driver, Vec ofs, Vec rot, float scale);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void KartDriver_BuildJoint12EulerTransform(void *, void *, Vec *, Vec *, float);
+static inline void KartDriver_BuildJoint12EulerTransform_ByValue(void *slot, void *driver, Vec ofs, Vec rot, float scale) { KartDriver_BuildJoint12EulerTransform(slot, driver, &ofs, &rot, scale); }
+#define KartDriver_BuildJoint12EulerTransform KartDriver_BuildJoint12EulerTransform_ByValue
+#endif
 extern void Mtx44_GetTranslation_RowMajor(Vec *out, void *mtx);
 extern void DrawEffect_KartItemTrail_ExplodeAndPropagate(unsigned char *e, void *mtx, float alpha);
 

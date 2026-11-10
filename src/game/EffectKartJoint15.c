@@ -31,8 +31,22 @@ extern float KartFxParam_GetConst1p5(void *);
 extern void Vec3_Subtract_DestFirst(JointVec *, const JointVec *, const JointVec *);
 extern void Vec3_Add_DestFirst(JointVec *, const JointVec *, const JointVec *);
 extern void DrawEffect_Free(JointEffect *);
+#ifdef __MWERKS__
 extern void VfxSlot_SetPositionFromVec(void *, JointVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, JointVec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, JointVec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
+#ifdef __MWERKS__
 extern void VfxSlot_SetRotationXYZFromVec(void *, JointVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetRotationXYZFromVec(void *, JointVec *);
+static inline void VfxSlot_SetRotationXYZFromVec_ByValue(void *a0, JointVec a1) { VfxSlot_SetRotationXYZFromVec(a0, &a1); }
+#define VfxSlot_SetRotationXYZFromVec VfxSlot_SetRotationXYZFromVec_ByValue
+#endif
 extern void VfxSlot_SetScaleVec3(void *, float, float, float);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *);
 

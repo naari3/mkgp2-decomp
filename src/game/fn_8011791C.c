@@ -9,7 +9,14 @@ extern void Item_InitLaunchFromKart(unsigned char *self, void *pos, float x, flo
 extern void fn_80117494(unsigned char *self, unsigned char *ctx);
 extern void SpriteSlot_TickAnim(void *slot);
 extern void JointByName_GetWorldPosition(Vec3 *out, void *slot, const char *name);
+#ifdef __MWERKS__
 extern void VfxEffect_UpdateTwoChildSpinAndSound_Helper(void *e, Vec3 pos, float a, float b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxEffect_UpdateTwoChildSpinAndSound_Helper(void *, Vec3 *, float, float);
+static inline void VfxEffect_UpdateTwoChildSpinAndSound_Helper_ByValue(void *e, Vec3 pos, float a, float b) { VfxEffect_UpdateTwoChildSpinAndSound_Helper(e, &pos, a, b); }
+#define VfxEffect_UpdateTwoChildSpinAndSound_Helper VfxEffect_UpdateTwoChildSpinAndSound_Helper_ByValue
+#endif
 extern unsigned char *DrawEffect_SpawnDirect(void *fn);
 extern void Effect_Burst_Res8F_Update(void *e);
 extern char lbl_803324C0[];

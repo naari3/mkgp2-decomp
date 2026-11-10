@@ -40,15 +40,43 @@ extern void Matrix4_Multiply(float a[4][4], float b[4][4], float out[4][4]);
 extern void DbgScene_CopyMatrix3x4Transpose(void *dst, float src[4][4]);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *driver);
 extern void JointByName_GetWorldPosition(Vec *out, void *slot, const char *name);
+#ifdef __MWERKS__
 extern void Effect_TwoChildPlace_AndForward_E4(unsigned char *e, Vec pos, float scale, float alpha);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Effect_TwoChildPlace_AndForward_E4(unsigned char *, Vec *, float, float);
+static inline void Effect_TwoChildPlace_AndForward_E4_ByValue(unsigned char *e, Vec pos, float scale, float alpha) { Effect_TwoChildPlace_AndForward_E4(e, &pos, scale, alpha); }
+#define Effect_TwoChildPlace_AndForward_E4 Effect_TwoChildPlace_AndForward_E4_ByValue
+#endif
+#ifdef __MWERKS__
 extern void Effect_BuildYawPitchScaleMtx_48(unsigned char *e, Vec pos, float scale, float alpha);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Effect_BuildYawPitchScaleMtx_48(unsigned char *, Vec *, float, float);
+static inline void Effect_BuildYawPitchScaleMtx_48_ByValue(unsigned char *e, Vec pos, float scale, float alpha) { Effect_BuildYawPitchScaleMtx_48(e, &pos, scale, alpha); }
+#define Effect_BuildYawPitchScaleMtx_48 Effect_BuildYawPitchScaleMtx_48_ByValue
+#endif
+#ifdef __MWERKS__
 extern void CoinJumpFx_UpdateParticleGrid(unsigned char *e, Vec pos, float scale, float alpha);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void CoinJumpFx_UpdateParticleGrid(unsigned char *, Vec *, float, float);
+static inline void CoinJumpFx_UpdateParticleGrid_ByValue(unsigned char *e, Vec pos, float scale, float alpha) { CoinJumpFx_UpdateParticleGrid(e, &pos, scale, alpha); }
+#define CoinJumpFx_UpdateParticleGrid CoinJumpFx_UpdateParticleGrid_ByValue
+#endif
 extern void Mtx_Copy(void *dst, const void *src);
 extern void Vec3_Copy(Vec *dst, const Vec *src);
 extern void Vec3_Subtract_DestFirst(Vec *out, const Vec *a, const Vec *b);
 extern float Vec3_Magnitude_Wrapper(const Vec *v);
 extern void Vec3_Scale(Vec *out, const Vec *in, float s);
+#ifdef __MWERKS__
 extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec t);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec *);
+static inline void Mtx44_Translate_ByValue(float dst[4][4], float src[4][4], Vec t) { Mtx44_Translate(dst, src, &t); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 extern float BuildOrientationFromYaw(float yaw);
 extern double sin(double x);
 

@@ -301,10 +301,31 @@ extern const float lbl_806D5708; /* 1.5 */
 extern const float lbl_806D5740; /* 500.0 */
 
 extern unsigned char lbl_805DF3D0[];
+#ifdef __MWERKS__
 extern float Item_ProbeForwardGroundPitch(Vec pos, float a, float b, float c);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeForwardGroundPitch(Vec *, float, float, float);
+static inline float Item_ProbeForwardGroundPitch_ByValue(Vec pos, float a, float b, float c) { return Item_ProbeForwardGroundPitch(&pos, a, b, c); }
+#define Item_ProbeForwardGroundPitch Item_ProbeForwardGroundPitch_ByValue
+#endif
+#ifdef __MWERKS__
 extern float Item_ProbeLateralGroundPitch(Vec pos, float a, float b, float c);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeLateralGroundPitch(Vec *, float, float, float);
+static inline float Item_ProbeLateralGroundPitch_ByValue(Vec pos, float a, float b, float c) { return Item_ProbeLateralGroundPitch(&pos, a, b, c); }
+#define Item_ProbeLateralGroundPitch Item_ProbeLateralGroundPitch_ByValue
+#endif
 extern float fn_800D3184(const Vec *a, const Vec *b);
+#ifdef __MWERKS__
 extern signed char ItemObject_GetGroundTypeAt(Vec pos, float *outGroundY, int mode);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(Vec *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(Vec pos, float *outGroundY, int mode) { return ItemObject_GetGroundTypeAt(&pos, outGroundY, mode); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 extern void DrawEffect_KartDustRing_Update(unsigned char *self);
 extern void DrawEffect_KartSpark_Update(unsigned char *self);
 

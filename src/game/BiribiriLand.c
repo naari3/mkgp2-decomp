@@ -251,7 +251,14 @@ void SoundMgr_PlaySE(int id);
 void TransitionEffect_Tick(void *te);
 float Vec3_Dot(Vec *a, Vec *b);
 void Vec3_Subtract(Vec *a, Vec *b, Vec *out);
+#ifdef __MWERKS__
 void VfxSlotMgr_Update(Vec a, Vec b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlotMgr_Update(Vec *, Vec *);
+static inline void VfxSlotMgr_Update_ByValue(Vec a, Vec b) { VfxSlotMgr_Update(&a, &b); }
+#define VfxSlotMgr_Update VfxSlotMgr_Update_ByValue
+#endif
 void fn_8016B32C(void *w);
 unsigned char fn_80253C40(void *hud);
 void fn_80253C74(void *hud, int success, int text, int time);

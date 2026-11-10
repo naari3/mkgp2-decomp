@@ -22,7 +22,14 @@ extern void GetSpawnPosition(void *out, float x, float y, float z);
 extern void Vec2_RotateY(void *dst, void *src, float a);
 extern void *KartDriver_GetKartRootMtx(void *kart);
 extern void Mtx_TransposeToMtx44(float dst[4][4], const void *src);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(void *out, float m[4][4], Vec3 v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(void *, float m[4][4], Vec3 *);
+static inline void Mtx44_TransformVec3_ByValue(void *out, float m[4][4], Vec3 v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern void SpriteSlot_SetTransform(void *slot, float *pos, float *rot, float scale);
 extern F3 lbl_80332518;
 

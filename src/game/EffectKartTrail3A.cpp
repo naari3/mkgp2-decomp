@@ -15,16 +15,51 @@ void Mtx_TransposeToMtx44(TrailMatrix *,const void *);
 void VfxSlot_BindResource(void *,int);
 void VfxSlot_SetMatrixSourceEnabled(void *,int);
 void Mtx44_Inverse_GaussJordan(TrailMatrix *,const TrailMatrix *);
+#ifdef __MWERKS__
 void Mtx44_TransformVec3(TrailVec *,const TrailMatrix *,TrailVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(TrailVec *, const TrailMatrix *, TrailVec *);
+static inline void Mtx44_TransformVec3_ByValue(TrailVec *a0, const TrailMatrix *a1, TrailVec a2) { Mtx44_TransformVec3(a0, a1, &a2); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 void DrawEffect_Free(void *);
+#ifdef __MWERKS__
 signed char ItemObject_GetGroundTypeAt(TrailVec,float *,int);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(TrailVec *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(TrailVec a0, float *a1, int a2) { return ItemObject_GetGroundTypeAt(&a0, a1, a2); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
+#ifdef __MWERKS__
 float Item_ProbeForwardGroundPitch(TrailVec,float,float,float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeForwardGroundPitch(TrailVec *, float, float, float);
+static inline float Item_ProbeForwardGroundPitch_ByValue(TrailVec a0, float a1, float a2, float a3) { return Item_ProbeForwardGroundPitch(&a0, a1, a2, a3); }
+#define Item_ProbeForwardGroundPitch Item_ProbeForwardGroundPitch_ByValue
+#endif
+#ifdef __MWERKS__
 float Item_ProbeLateralGroundPitch(TrailVec,float,float,float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeLateralGroundPitch(TrailVec *, float, float, float);
+static inline float Item_ProbeLateralGroundPitch_ByValue(TrailVec a0, float a1, float a2, float a3) { return Item_ProbeLateralGroundPitch(&a0, a1, a2, a3); }
+#define Item_ProbeLateralGroundPitch Item_ProbeLateralGroundPitch_ByValue
+#endif
 void Matrix4_Identity(TrailMatrix *);
 void Matrix4_PreMultiplyRotX(TrailMatrix *,const TrailMatrix *,float);
 void Matrix4_PreMultiplyRotZ(TrailMatrix *,const TrailMatrix *,float);
 void Mtx44_Scale_Uniform(TrailMatrix *,const TrailMatrix *,float);
+#ifdef __MWERKS__
 void Mtx44_Translate(TrailMatrix *,const TrailMatrix *,TrailVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(TrailMatrix *, const TrailMatrix *, TrailVec *);
+static inline void Mtx44_Translate_ByValue(TrailMatrix *a0, const TrailMatrix *a1, TrailVec a2) { Mtx44_Translate(a0, a1, &a2); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 void DbgScene_CopyMatrix3x4Transpose(float *,const TrailMatrix *);
 unsigned char FinalLapCoinJump_CheckActiveForObject(void *);
 void Effect_KartTrailRes3A_Update(TrailEffect *effect) {

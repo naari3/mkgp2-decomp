@@ -8,7 +8,14 @@ extern BombItem *ItemObject_SpawnWithAlias(int, int);
 extern int Item_AdvanceTetherToJoint13(BombItem *, float *, float, float, float);
 extern void Item_DecayVelocityScalar(BombItem *, float);
 extern int Item_OrbitAnchorKart(BombItem *, Vec *, unsigned int, float, float);
+#ifdef __MWERKS__
 extern Vec JointByName_GetWorldPosition(void *, const char *);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void JointByName_GetWorldPosition(Vec *, void *, const char *);
+static inline Vec JointByName_GetWorldPosition_ByValue(void *a0, const char *a1) { Vec port_ret; JointByName_GetWorldPosition(&port_ret, a0, a1); return port_ret; }
+#define JointByName_GetWorldPosition JointByName_GetWorldPosition_ByValue
+#endif
 extern void SpriteSlot_Container_Free(BombItem *);
 extern void SpriteSlot_InitNonLoop(void *, int);
 extern void SpriteSlot_SetTransform(void *, Vec *, Vec *, float);

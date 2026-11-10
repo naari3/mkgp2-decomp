@@ -1,3 +1,4 @@
+#include "game/types/port_hooks.h"
 #pragma readonly_strings on
 #include "game/clsound_s25_private.h"
 typedef struct StreamInfo {
@@ -77,6 +78,7 @@ void ClStream_UpdateAll(void) {
             switch (s->state) {
             case 1:
                 if ((unsigned int)DVDReadPrio(&s->file, lbl_806D16DC, 0x60, 0, 2) != 0x60) break;
+                PORT_DATA_LOADED(PORT_DATA_STREAM_HEADER, lbl_806D16DC, 0x60);
                 memcpy(s->info, lbl_806D16DC, 0x60);
                 s->size = s->info->byteLength >> 1;
                 if (s->info->loop) {

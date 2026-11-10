@@ -30,15 +30,50 @@ extern float KartFxParam_GetConst1p5(void *driver);
 extern void *KartDriver_GetJointByIdx(void *kart, int idx);
 extern void Mtx44_GetTranslation_RowMajor(Vec *out, void *mtx);
 extern void Vec3_Copy(Vec *dst, const Vec *src);
+#ifdef __MWERKS__
 extern void KartDriver_BuildJoint12EulerTransform(void *slot, void *driver, Vec ofs, Vec rot, float scale);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void KartDriver_BuildJoint12EulerTransform(void *, void *, Vec *, Vec *, float);
+static inline void KartDriver_BuildJoint12EulerTransform_ByValue(void *slot, void *driver, Vec ofs, Vec rot, float scale) { KartDriver_BuildJoint12EulerTransform(slot, driver, &ofs, &rot, scale); }
+#define KartDriver_BuildJoint12EulerTransform KartDriver_BuildJoint12EulerTransform_ByValue
+#endif
+#ifdef __MWERKS__
 extern void Item_RenderHandheldByCharacter(unsigned char *self, Vec ofs, Vec rot, int c, float d);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_RenderHandheldByCharacter(unsigned char *, Vec *, Vec *, int, float);
+static inline void Item_RenderHandheldByCharacter_ByValue(unsigned char *self, Vec ofs, Vec rot, int c, float d) { Item_RenderHandheldByCharacter(self, &ofs, &rot, c, d); }
+#define Item_RenderHandheldByCharacter Item_RenderHandheldByCharacter_ByValue
+#endif
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *driver);
 extern void JointByName_GetWorldPosition(Vec *out, void *slot, const char *name);
 extern void GetSpawnPosition(Vec *out, float x, float y, float z);
 extern void Mtx_TransposeToMtx44(float dst[4][4], const void *src);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec in);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec *, float m[4][4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(Vec *out, float m[4][4], Vec in) { Mtx44_TransformVec3(out, m, &in); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
+#ifdef __MWERKS__
 extern void Effect_TwoChildPlace_AndForward_E4(unsigned char *e, Vec pos, float scale, float alpha);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Effect_TwoChildPlace_AndForward_E4(unsigned char *, Vec *, float, float);
+static inline void Effect_TwoChildPlace_AndForward_E4_ByValue(unsigned char *e, Vec pos, float scale, float alpha) { Effect_TwoChildPlace_AndForward_E4(e, &pos, scale, alpha); }
+#define Effect_TwoChildPlace_AndForward_E4 Effect_TwoChildPlace_AndForward_E4_ByValue
+#endif
+#ifdef __MWERKS__
 extern void Effect_BuildYawPitchScaleMtx_48(unsigned char *e, Vec pos, float scale, float alpha);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Effect_BuildYawPitchScaleMtx_48(unsigned char *, Vec *, float, float);
+static inline void Effect_BuildYawPitchScaleMtx_48_ByValue(unsigned char *e, Vec pos, float scale, float alpha) { Effect_BuildYawPitchScaleMtx_48(e, &pos, scale, alpha); }
+#define Effect_BuildYawPitchScaleMtx_48 Effect_BuildYawPitchScaleMtx_48_ByValue
+#endif
 
 #define F(o) (*(float *)(self + (o)))
 #define I(o) (*(int *)(self + (o)))

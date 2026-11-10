@@ -21,9 +21,23 @@ extern void GetSpawnPosition(void *out, float x, float y, float z);
 extern void Vec2_RotateX(void *dst, void *src, float a);
 extern void Vec2_RotateY(void *dst, void *src, float a);
 extern void Vec3_Scale(void *out, void *in, float s);
+#ifdef __MWERKS__
 extern void Vec3_Lerp(void *dst, Vec a, Vec b, float t);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Vec3_Lerp(void *, Vec *, Vec *, float);
+static inline void Vec3_Lerp_ByValue(void *dst, Vec a, Vec b, float t) { Vec3_Lerp(dst, &a, &b, t); }
+#define Vec3_Lerp Vec3_Lerp_ByValue
+#endif
 extern unsigned char *ItemObject_SpawnWithAlias(int id, int alias);
+#ifdef __MWERKS__
 extern void Vec3_AddNormalizedXZ(unsigned char *self, void *a, Vec b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Vec3_AddNormalizedXZ(unsigned char *, void *, Vec *);
+static inline void Vec3_AddNormalizedXZ_ByValue(unsigned char *self, void *a, Vec b) { Vec3_AddNormalizedXZ(self, a, &b); }
+#define Vec3_AddNormalizedXZ Vec3_AddNormalizedXZ_ByValue
+#endif
 extern void *KartDriver_GetKartRootMtx(void *kart);
 extern void Mtx44_GetTranslation_RowMajor(void *out, void *mtx);
 extern void Vec3_Add_DestFirst(void *dst, void *a, void *b);
@@ -33,11 +47,32 @@ extern void Item_DecayVelocityScalar(unsigned char *self, float k);
 extern int Item_AdvanceTetherToJoint13(unsigned char *self, float *tether, float scale, float a, float b);
 extern void Vec3_Subtract_DestFirst(void *dst, void *a, void *b);
 extern int Item_OrbitAnchorKart(unsigned char *self, void *off, unsigned int t, float a, float b);
+#ifdef __MWERKS__
 extern signed char ItemObject_GetGroundTypeAt(Vec pos, float *outGroundY, int mode);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(Vec *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(Vec pos, float *outGroundY, int mode) { return ItemObject_GetGroundTypeAt(&pos, outGroundY, mode); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 extern void ItemObject_DecrementCategoryBudget(unsigned char *self);
 extern void SpriteSlot_Container_Free(void *self);
+#ifdef __MWERKS__
 extern void Effect_SparkSpray_PlaceChildren(unsigned char *e, Vec pos, float scale, float alpha);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Effect_SparkSpray_PlaceChildren(unsigned char *, Vec *, float, float);
+static inline void Effect_SparkSpray_PlaceChildren_ByValue(unsigned char *e, Vec pos, float scale, float alpha) { Effect_SparkSpray_PlaceChildren(e, &pos, scale, alpha); }
+#define Effect_SparkSpray_PlaceChildren Effect_SparkSpray_PlaceChildren_ByValue
+#endif
+#ifdef __MWERKS__
 extern void SpriteSlot_SetTransform(void *slot, Vec pos, Vec rot, float scale);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SpriteSlot_SetTransform(void *, Vec *, Vec *, float);
+static inline void SpriteSlot_SetTransform_ByValue(void *slot, Vec pos, Vec rot, float scale) { SpriteSlot_SetTransform(slot, &pos, &rot, scale); }
+#define SpriteSlot_SetTransform SpriteSlot_SetTransform_ByValue
+#endif
 
 #define F(o) (*(float *)(self + (o)))
 #define I(o) (*(int *)(self + (o)))

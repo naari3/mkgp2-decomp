@@ -28,7 +28,14 @@ float Vec3_Magnitude_Wrapper(const Variant77Vec *);
 void Vec3_Scale(Variant77Vec *, const Variant77Vec *, float);
 void Vec3_Add_DestFirst(Variant77Vec *, const Variant77Vec *, const Variant77Vec *);
 void DrawEffect_Free(Variant77Effect *);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, Variant77Vec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, Variant77Vec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, Variant77Vec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetScaleUniform(void *, float);
 void Effect_Res77or78_Variant_Update(Variant77Effect *effect) {
     Variant77Vec direction;

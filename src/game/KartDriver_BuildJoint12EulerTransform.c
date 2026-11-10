@@ -12,7 +12,14 @@ extern void Matrix4_PreMultiplyRotX(float dst[4][4], float src[4][4], float a);
 extern void Matrix4_PreMultiplyRotY(float dst[4][4], float src[4][4], float a);
 extern void Matrix4_PreMultiplyRotZ(float dst[4][4], float src[4][4], float a);
 extern void Vec3_Scale(Vec *dst, const Vec *src, float scale);
+#ifdef __MWERKS__
 extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec t);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec *);
+static inline void Mtx44_Translate_ByValue(float dst[4][4], float src[4][4], Vec t) { Mtx44_Translate(dst, src, &t); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 extern void Matrix4_Multiply(float a[4][4], float b[4][4], float dst[4][4]);
 extern void DbgScene_CopyMatrix3x4Transpose(void *dst, float src[4][4]);
 extern void PSMTXScale(float m[3][4], float x, float y, float z);

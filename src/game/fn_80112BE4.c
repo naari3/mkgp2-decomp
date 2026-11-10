@@ -6,7 +6,14 @@ extern void Vec3_Copy(void *dst, void *src);
 extern void Item_DecayVelocityScalar(unsigned char *self, float k);
 extern void *KartDriver_GetKartRootMtx(void *kart);
 extern void Mtx_TransposeToMtx44(float *dst, void *src);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(void *out, float *m, Vec3 v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(void *, float *, Vec3 *);
+static inline void Mtx44_TransformVec3_ByValue(void *out, float *m, Vec3 v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern float Mtx44_GetYawOfPosZ(float *m);
 extern float BuildOrientationFromYaw(float a);
 extern const float lbl_806D69A8;

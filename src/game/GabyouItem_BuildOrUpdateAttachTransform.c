@@ -13,7 +13,14 @@ extern float Mtx44_GetYawOfPosZ_Padded(void *mtx);
 extern void Matrix4_Identity(float m[4][4]);
 extern void Mtx44_Scale_Uniform(float dst[4][4], float src[4][4], float s);
 extern void Matrix4_PreMultiplyRotY(float dst[4][4], float src[4][4], float a);
+#ifdef __MWERKS__
 extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec *);
+static inline void Mtx44_Translate_ByValue(float dst[4][4], float src[4][4], Vec v) { Mtx44_Translate(dst, src, &v); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 extern void Matrix4_Copy(float dst[4][4], float src[4][4]);
 extern void Mtx_TransposeToMtx44(float dst[4][4], const void *src);
 extern void Matrix4_PreMultiplyTranslation(float dst[4][4], float src[4][4], float x, float y, float z);

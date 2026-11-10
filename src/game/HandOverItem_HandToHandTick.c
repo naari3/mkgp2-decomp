@@ -9,13 +9,34 @@ extern void *KartDriver_GetKartRootMtx(void *kart);
 extern void Mtx_TransposeToMtx44(float dst[4][4], const void *src);
 extern void Mtx44_GetTranslation_ColMajor(Vec *out, float m[4][4]);
 extern void Mtx44_Inverse_GaussJordan(float dst[4][4], float src[4][4]);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(void *out, float m[4][4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(void *, float m[4][4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(void *out, float m[4][4], Vec v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern float Mtx44_GetYawOfPosZ(float m[4][4]);
+#ifdef __MWERKS__
 extern void *FindNearestDriverWithinConeAndRadius(Vec pos, void *kart, int flag, float yaw, float cone, float radius);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void * FindNearestDriverWithinConeAndRadius(Vec *, void *, int, float, float, float);
+static inline void * FindNearestDriverWithinConeAndRadius_ByValue(Vec pos, void *kart, int flag, float yaw, float cone, float radius) { return FindNearestDriverWithinConeAndRadius(&pos, kart, flag, yaw, cone, radius); }
+#define FindNearestDriverWithinConeAndRadius FindNearestDriverWithinConeAndRadius_ByValue
+#endif
 extern float BuildOrientationFromYaw(float yaw);
 extern double sin(double);
 extern void Vec2_RotateY(Vec *dst, Vec *src, float a);
+#ifdef __MWERKS__
 extern void Vec3_Lerp(void *dst, Vec a, Vec b, float t);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Vec3_Lerp(void *, Vec *, Vec *, float);
+static inline void Vec3_Lerp_ByValue(void *dst, Vec a, Vec b, float t) { Vec3_Lerp(dst, &a, &b, t); }
+#define Vec3_Lerp Vec3_Lerp_ByValue
+#endif
 extern float KartFxParam_GetConst1p5(void *kart);
 extern void *KartDriver_GetJointByIdx(void *kart, int idx);
 extern void Mtx44_GetTranslation_RowMajor(Vec *out, void *mtx);

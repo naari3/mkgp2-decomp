@@ -8,17 +8,45 @@ typedef struct SparkOffsets {
 
 extern void Effect_SparkSprayCompound_Update(void);
 extern unsigned char *DrawEffect_SpawnDirect(void (*fn)(void));
+#ifdef __MWERKS__
 extern void Effect_SparkSpray_PlaceChildren(unsigned char *effect, Vec3 pos, float scale, float alpha);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Effect_SparkSpray_PlaceChildren(unsigned char *, Vec3 *, float, float);
+static inline void Effect_SparkSpray_PlaceChildren_ByValue(unsigned char *effect, Vec3 pos, float scale, float alpha) { Effect_SparkSpray_PlaceChildren(effect, &pos, scale, alpha); }
+#define Effect_SparkSpray_PlaceChildren Effect_SparkSpray_PlaceChildren_ByValue
+#endif
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *kart);
+#ifdef __MWERKS__
 extern void Item_RenderHandheldByCharacter(unsigned char *self, Vec3 pos, Vec3 rot, int flag, float scale);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_RenderHandheldByCharacter(unsigned char *, Vec3 *, Vec3 *, int, float);
+static inline void Item_RenderHandheldByCharacter_ByValue(unsigned char *self, Vec3 pos, Vec3 rot, int flag, float scale) { Item_RenderHandheldByCharacter(self, &pos, &rot, flag, scale); }
+#define Item_RenderHandheldByCharacter Item_RenderHandheldByCharacter_ByValue
+#endif
 extern void *KartDriver_GetKartRootMtx(void *kart);
 extern void Mtx44_Inverse_GaussJordan(float *dst, float *src);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(void *out, float *m, Vec3 v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(void *, float *, Vec3 *);
+static inline void Mtx44_TransformVec3_ByValue(void *out, float *m, Vec3 v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern void Mtx_TransposeToMtx44(float *dst, void *src);
 extern void SpriteSlot_Container_Free(unsigned char *self);
 extern void SpriteSlot_InitNonLoop(unsigned char *slot, unsigned char id);
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(unsigned char *slot, int enabled);
+#ifdef __MWERKS__
 extern void SpriteSlot_SetTransform(unsigned char *slot, Vec3 pos, Vec3 rot, float scale);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SpriteSlot_SetTransform(unsigned char *, Vec3 *, Vec3 *, float);
+static inline void SpriteSlot_SetTransform_ByValue(unsigned char *slot, Vec3 pos, Vec3 rot, float scale) { SpriteSlot_SetTransform(slot, &pos, &rot, scale); }
+#define SpriteSlot_SetTransform SpriteSlot_SetTransform_ByValue
+#endif
 extern void Vec3_Add_DestFirst(Vec3 *dst, void *a, void *b);
 extern void fn_80112BE4(unsigned char *self, unsigned char *ctx);
 extern unsigned int lbl_806CF3E8;

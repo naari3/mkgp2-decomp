@@ -18,7 +18,14 @@ extern void Mtx44_GetTranslation_RowMajor(Vec *out, void *mtx);
 extern void SoundMgr_PlaySE_Positional(unsigned int se, Vec pos, int ch);
 extern BombItem *ItemObject_SpawnWithAlias(int id, int alias);
 extern void Mtx_TransposeToMtx44(float dst[4][4], void *src);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec in);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec *, float m[4][4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(Vec *out, float m[4][4], Vec in) { Mtx44_TransformVec3(out, m, &in); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern void ItemObject_DecrementCategoryBudget(BombItem *self);
 extern void SpriteSlot_Container_Free(BombItem *self);
 

@@ -15,7 +15,14 @@ extern float Vec3_Magnitude(Vec *v);
 extern void Vec3_Normalize(Vec *src, Vec *dst);
 extern double atan2(double, double);
 extern void SoundMgr_PlaySE(int id);
+#ifdef __MWERKS__
 extern void DrawEffect_SpawnWithDescriptor(int kind, Vec pos);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void DrawEffect_SpawnWithDescriptor(int, Vec *);
+static inline void DrawEffect_SpawnWithDescriptor_ByValue(int kind, Vec pos) { DrawEffect_SpawnWithDescriptor(kind, &pos); }
+#define DrawEffect_SpawnWithDescriptor DrawEffect_SpawnWithDescriptor_ByValue
+#endif
 
 static inline unsigned char NokoNoko_TryHit(NokoNoko *n, Vec *pos, float r, Vec *out) {
     Vec d;

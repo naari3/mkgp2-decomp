@@ -56,7 +56,14 @@ extern void GXSetVtxAttrFmt(int fmt, int attr, int cnt, int type, int frac);
 extern void GXBegin(int prim, int fmt, int n);
 extern unsigned int __cvt_fp2unsigned(float f);
 extern void Mtx_TransposeToMtx44(float dst[4][4], const void *src);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec *, float m[4][4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(Vec *out, float m[4][4], Vec v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern float FAbs_FloatAsDouble(float f);
 extern unsigned char fn_8011D890(int id, float uv[2][2], int flags);
 extern void ResourceTable_GetSizeXY(int id, float *x, float *y);

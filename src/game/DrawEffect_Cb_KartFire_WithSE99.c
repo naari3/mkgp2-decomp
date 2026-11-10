@@ -10,13 +10,27 @@ extern const float lbl_806D51C4; /* 1.0 */
 extern const float lbl_806D5200; /* 10.0 */
 extern CameraView lbl_805DF3D0;
 extern void Effect_TwoChild_Res3C_3D_Init(unsigned char *e);
+#ifdef __MWERKS__
 extern void Effect_TwoChildRotate_FromPhase150(void *fx, Vec pos, float size, float alpha);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Effect_TwoChildRotate_FromPhase150(void *, Vec *, float, float);
+static inline void Effect_TwoChildRotate_FromPhase150_ByValue(void *fx, Vec pos, float size, float alpha) { Effect_TwoChildRotate_FromPhase150(fx, &pos, size, alpha); }
+#define Effect_TwoChildRotate_FromPhase150 Effect_TwoChildRotate_FromPhase150_ByValue
+#endif
 extern float KartCharacterParam_GetFxSizeFactor(void *driver);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *kart);
 extern void SoundMgr_StopSE_OrSpecial(int se, int ch);
 extern signed char SoundMgr_CountActiveSEInstances(int se);
 extern void SoundMgr_PlaySE_Positional(int se, Vec pos, int ch);
+#ifdef __MWERKS__
 extern void SoundMgr_PlaySE_WithChannel(int se, Vec pos, int ch);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SoundMgr_PlaySE_WithChannel(int, Vec *, int);
+static inline void SoundMgr_PlaySE_WithChannel_ByValue(int se, Vec pos, int ch) { SoundMgr_PlaySE_WithChannel(se, &pos, ch); }
+#define SoundMgr_PlaySE_WithChannel SoundMgr_PlaySE_WithChannel_ByValue
+#endif
 
 void DrawEffect_Cb_KartFire_WithSE99(unsigned char *self)
 {

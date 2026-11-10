@@ -30,7 +30,14 @@ extern "C" {
 void Vec3_Copy(SprayVec *, const SprayVec *);
 void Vec3_Scale(SprayVec *, const SprayVec *, float);
 void Vec3_Add_DestFirst(SprayVec *, const SprayVec *, const SprayVec *);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, SprayVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, SprayVec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, SprayVec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetRotationZ(void *, float);
 void VfxSlot_SetScaleUniform(void *, float);
 

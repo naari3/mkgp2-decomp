@@ -46,7 +46,14 @@ unsigned char Terrain_RaycastWall(Vec3 *, Vec3 *, Vec3 *, Vec3 *);
 void LakituStart_UpdateCountdown(void *);
 void CourseEnvironment_UpdateAndCullZones_Timed(void *);
 void ItemObjectManager_Update();
+#ifdef __MWERKS__
 void VfxSlotMgr_Update(Vec3, Vec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlotMgr_Update(Vec3 *, Vec3 *);
+static inline void VfxSlotMgr_Update_ByValue(Vec3 a0, Vec3 a1) { VfxSlotMgr_Update(&a0, &a1); }
+#define VfxSlotMgr_Update VfxSlotMgr_Update_ByValue
+#endif
 unsigned char IsRaceStarted();
 void fn_802124FC(JDCoins *);
 void fn_80253FD8(void *, float);

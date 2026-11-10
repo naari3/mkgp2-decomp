@@ -22,7 +22,14 @@ void Vec2_RotateX(BurstVec *, const BurstVec *, float);
 void Vec2_RotateY(BurstVec *, const BurstVec *, float);
 void DrawEffect_Free(BurstEffect *);
 void Vec3_Add_DestFirst(BurstVec *, const BurstVec *, const BurstVec *);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, BurstVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, BurstVec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, BurstVec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetRotationZ(void *, float);
 void VfxSlot_SetScaleUniform(void *, float);
 void Effect_Burst_Res8F_Update(BurstEffect *effect) {

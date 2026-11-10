@@ -77,7 +77,14 @@ extern float Mtx44_GetYawOfPosZ(float m[4][4]);
 extern void VfxSlot_SetUVScroll(void *slot, float u, float v);
 extern void Matrix4_Copy(float dst[4][4], float src[4][4]);
 extern void Matrix4_PreMultiplyRotY(float dst[4][4], float src[4][4], float angle);
+#ifdef __MWERKS__
 extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec *);
+static inline void Mtx44_Translate_ByValue(float dst[4][4], float src[4][4], Vec v) { Mtx44_Translate(dst, src, &v); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 extern void Mtx44_Scale_PerAxis(float dst[4][4], float src[4][4], float sx, float sy, float sz);
 
 
@@ -98,13 +105,48 @@ extern RayColors KartFx_BoostExhaustRayTick_data_8041A280[2];
 extern signed char KartFx_BoostExhaustRayTick_bss_806D14B8;
 extern const float lbl_806D51D4, lbl_806D52B8;
 extern void Mtx44_GetTranslation_ColMajor(Vec *, float m[4][4]);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(Vec *, float m[4][4], Vec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec *, float m[4][4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(Vec *a0, float m[4][4], Vec a2) { Mtx44_TransformVec3(a0, m, &a2); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern float Mtx44_GetPitchOfPosZ(float m[4][4]);
 extern float Mtx44_GetPitchOfNegX_Lean(float m[4][4]);
+#ifdef __MWERKS__
 extern void Vec3_Lerp(Vec *, Vec, Vec, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Vec3_Lerp(Vec *, Vec *, Vec *, float);
+static inline void Vec3_Lerp_ByValue(Vec *a0, Vec a1, Vec a2, float a3) { Vec3_Lerp(a0, &a1, &a2, a3); }
+#define Vec3_Lerp Vec3_Lerp_ByValue
+#endif
+#ifdef __MWERKS__
 extern signed char ItemObject_GetGroundTypeAt(Vec, float *, int);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(Vec *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(Vec a0, float *a1, int a2) { return ItemObject_GetGroundTypeAt(&a0, a1, a2); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
+#ifdef __MWERKS__
 extern float Item_ProbeForwardGroundPitch(Vec, float, float, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeForwardGroundPitch(Vec *, float, float, float);
+static inline float Item_ProbeForwardGroundPitch_ByValue(Vec a0, float a1, float a2, float a3) { return Item_ProbeForwardGroundPitch(&a0, a1, a2, a3); }
+#define Item_ProbeForwardGroundPitch Item_ProbeForwardGroundPitch_ByValue
+#endif
+#ifdef __MWERKS__
 extern float Item_ProbeLateralGroundPitch(Vec, float, float, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeLateralGroundPitch(Vec *, float, float, float);
+static inline float Item_ProbeLateralGroundPitch_ByValue(Vec a0, float a1, float a2, float a3) { return Item_ProbeLateralGroundPitch(&a0, a1, a2, a3); }
+#define Item_ProbeLateralGroundPitch Item_ProbeLateralGroundPitch_ByValue
+#endif
 extern void Matrix4_PreMultiplyRotX(float dst[4][4], float src[4][4], float angle);
 extern void Matrix4_PreMultiplyRotZ(float dst[4][4], float src[4][4], float angle);
 

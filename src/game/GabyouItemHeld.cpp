@@ -72,7 +72,14 @@ void ItemTracker_AcquireLock(HeldItem *);
 void ItemTracker_SetTrackPhase(HeldItem *, int);
 void ItemTracker_ReleaseLock(HeldItem *);
 HeldKart *ItemTracker_GetTargetKart(HeldItem *);
+#ifdef __MWERKS__
 signed char ItemObject_GetGroundTypeAt(Vec3, float *, int);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(Vec3 *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(Vec3 a0, float *a1, int a2) { return ItemObject_GetGroundTypeAt(&a0, a1, a2); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 void Item_AccelClampVelocity(HeldItem *, float, float);
 void fn_801B129C(const Vec3 *);
 void Item_HomingScanAndSteer(HeldItem *, float *, int);
@@ -83,7 +90,14 @@ int fn_801B1D5C(HeldKart *, HeldKart *, short, int);
 void fn_801B1660(HeldKart *, HeldKart *);
 void fn_801B14B8(HeldKart *, HeldKart *);
 void fn_801B158C(HeldKart *, HeldKart *);
+#ifdef __MWERKS__
 void Item_ComputeYawRelativeApproach(Vec3 *, HeldKart *, Vec3, Vec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_ComputeYawRelativeApproach(Vec3 *, HeldKart *, Vec3 *, Vec3 *);
+static inline void Item_ComputeYawRelativeApproach_ByValue(Vec3 *a0, HeldKart *a1, Vec3 a2, Vec3 a3) { Item_ComputeYawRelativeApproach(a0, a1, &a2, &a3); }
+#define Item_ComputeYawRelativeApproach Item_ComputeYawRelativeApproach_ByValue
+#endif
 float Vec3_ToYaw(const Vec3 *);
 void GetSpawnPosition(Vec3 *, float, float, float);
 int Item_CheckWallCollision(HeldItem *, void *, void *);

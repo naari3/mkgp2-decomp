@@ -775,7 +775,14 @@ extern void PathManager_UpdateAll(void *);
 extern void RivalRun_RivalAIUpdate(RRRivalAI *self);
 extern void SetCoinCount(int);
 extern void TransitionEffect_Tick(void *);
+#ifdef __MWERKS__
 extern void VfxSlotMgr_Update(RRVec3 a, RRVec3 b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlotMgr_Update(RRVec3 *, RRVec3 *);
+static inline void VfxSlotMgr_Update_ByValue(RRVec3 a, RRVec3 b) { VfxSlotMgr_Update(&a, &b); }
+#define VfxSlotMgr_Update VfxSlotMgr_Update_ByValue
+#endif
 extern void clItemBoxManager_Update(void *);
 extern void fn_8016B32C(void *);
 extern void fn_8016C554(int);
