@@ -42,10 +42,10 @@ static inline float LengthSquared(float x, float y, float z) {
     return zz+(xx+yy);
 }
 static inline void NormalizeCopy(C7Vec* v, const C7Vec* src) {
+    float z=src->z;
     float y=src->y;
-    float x=src->x;
     *v=*src;
-    float length=LengthSquared(x,y,src->z);
+    float length=LengthSquared(src->x,y,z);
     Root(length);
     if(length<=0.0f) {v->z=0.0f;v->y=0.0f;v->x=0.0f;}
     else {float inv=1.0f/length;v->x*=inv;v->y*=inv;v->z*=inv;}
@@ -60,23 +60,22 @@ static inline void Scale(C7Vec* a, float scale) {
 static inline void Subtract(C7Vec* a, const C7Vec* b) {
     a->x-=b->x; a->y-=b->y; a->z-=b->z;
 }
+static inline float HalfCos() { return (float)cos(lbl_806D2818); }
 static inline void AxisAngle(C7Quat* q, float x, float y, float z) {
     float sine=(float)sin(lbl_806D2818);
     q->x=x*sine; q->y=y*sine; q->z=z*sine;
 }
 static inline void QuaternionMatrix(C7Matrix* m, const C7Quat* q) {
     // Round the component products before combining matrix entries.
-    float x, z, y, w;
-    x=q->x; y=q->y; z=q->z; w=q->w;
-    float xx=x*x;
-    float yy=y*y;
-    float zz=z*z;
-    float xy=x*y;
-    float xz=x*z;
-    float yz=y*z;
-    float wx=w*x;
-    float wy=w*y;
-    float wz=w*z;
+    float xx=q->x*q->x;
+    float yy=q->y*q->y;
+    float zz=q->z*q->z;
+    float xy=q->x*q->y;
+    float xz=q->x*q->z;
+    float yz=q->y*q->z;
+    float wx=q->w*q->x;
+    float wy=q->w*q->y;
+    float wz=q->w*q->z;
     float two=2.0f, one=1.0f;
     m->m[0][0]=one-two*(yy+zz);
     m->m[1][0]=two*(xy-wz);
@@ -103,16 +102,15 @@ extern "C" void ExplosionTumble_Init(C7Tumble* __restrict self, C7Vec* __restric
     Subtract(&v,&up);
     Normalize(&v);
     C7Vec axis=v;
-    axis.x=up.y*v.z-up.z*v.y;
     axis.y=up.z*v.x-up.x*v.z;
     axis.z=up.x*v.y-up.y*v.x;
+    axis.x=up.y*v.z-v.y*up.z;
     float length2=axis.z*axis.z+(axis.x*axis.x+axis.y*axis.y);
     if(length2>0.0f) { Normalize(&axis); self->axis=axis; }
     else { float x=self->start.m[0][0], y=self->start.m[0][1], z=self->start.m[0][2]; self->axis.x=x; self->axis.y=y; self->axis.z=z; }
     C7Quat q;
     q.w=0.0f; q.z=0.0f; q.y=0.0f; q.x=0.0f;
     AxisAngle(&q,self->axis.x,self->axis.y,self->axis.z);
-    float c=(float)cos(lbl_806D2818);
-    q.w=c;
+    q.w=HalfCos();
     QuaternionMatrix(&self->rotation,&q);
 }
