@@ -8,12 +8,7 @@
 
 #include "game/types/Vec3f.h"
 
-struct HSD_JObj {
-    char pad00[0x14];
-    unsigned int flags;
-    char pad18[0x20];
-    Vec3f translate;
-};
+#include "game/types/HSD_JObj.h"
 
 struct Debris {
     HSD_JObj *jobj;

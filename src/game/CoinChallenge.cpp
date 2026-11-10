@@ -48,7 +48,7 @@ struct InputPlayer {
     virtual float accelerator();
     virtual float brake();
 };
-#include "game/types/KartRender.h"
+#include "game/types/KartDriver.h"
 #include "game/types/VObj.h"
 struct Scene3D {
     virtual ~Scene3D();
@@ -119,7 +119,7 @@ void CarObject_ApplyInput(void *, float, float, float, unsigned char);
 void CarObject_FrameUpdate(void *, int);
 void KartItem_UpdateShadowBillboardAndViewport(void *, void *, int);
 void KartMovement_SetSpeedScale(void *, float);
-KartRender *CarObject_GetRenderObj(void *);
+KartDriver *CarObject_GetRenderObj(void *);
 void *KartDriver_GetKartRootMtx(void *);
 void ChallengeGoalCamera_Update(void *, void *, void *);
 void Fog_UpdateFromCourseScene3D();
@@ -270,8 +270,8 @@ clCGameYI::clCGameYI() {
     RankingTable_Init(GetRaceContextPtr()); lbl_806D12BC=0; SoundDriver_GetOrCreate(0);
     float x,z; GetStartPosition(0,&x,0,&z);
     car=(CarObject*)new CICar(&x,&z); car->fd=0; car->fe=0;
-    {KartRender*r=CarObject_GetRenderObj(car); r->visible=1;}
-    {KartRender*r=CarObject_GetRenderObj(car); r->special=1;}
+    {KartDriver*r=CarObject_GetRenderObj(car); r->visible_238=1;}
+    {KartDriver*r=CarObject_GetRenderObj(car); r->forceDraw=1;}
     SetPlayerCarObject(car);
     lakitu=new LakituStart("jyugemu_start.dat",0,0.0f,0.0f,0.0f);
     scene=(Scene3D*)new CIScene; goalCam=new ChallengeGoalCamera; ProcessSystemTick(0);
@@ -460,11 +460,11 @@ int clCGameYI::Update() {
             if (resultFrames == 0) {
                 SetCoinCount(awards);
                 if (won != 0) {
-                    KartRender *render = CarObject_GetRenderObj(car);
+                    KartDriver *render = CarObject_GetRenderObj(car);
                     fn_80253C74(hud, 1, NokoNokoChallenge_CalcResultText(this, 1, 0), render->coins);
                     KartMovement_ResetOnGoal(CarObject_GetRenderObj(car));
                 } else {
-                    KartRender *render = CarObject_GetRenderObj(car);
+                    KartDriver *render = CarObject_GetRenderObj(car);
                     fn_80253C74(hud, 0, NokoNokoChallenge_CalcResultText(this, 0, 0), render->coins);
                     KartMovement_ResetOnTimeout(CarObject_GetRenderObj(car));
                 }

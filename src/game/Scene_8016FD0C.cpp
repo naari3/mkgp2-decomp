@@ -4,12 +4,7 @@
  * actions; mangled names are bridged in tools/extab_user_renames.json.
  */
 
-struct HSD_JObj {
-    char pad00[0x38];
-    float tx;
-    float ty;
-    float tz;
-};
+#include "game/types/HSD_JObj.h"
 
 struct clNormal3D {
     char _opaque[0x5C];
@@ -34,21 +29,21 @@ static inline float HSD_JObjGetTranslationX(HSD_JObj *jobj) {
     if (jobj == 0) {
         __assert(lbl_806D8C7C, 0x3F1, lbl_806D8C84);
     }
-    return jobj->tx;
+    return jobj->translate.x;
 }
 
 static inline float HSD_JObjGetTranslationY(HSD_JObj *jobj) {
     if (jobj == 0) {
         __assert(lbl_806D8C7C, 0x3FD, lbl_806D8C84);
     }
-    return jobj->ty;
+    return jobj->translate.y;
 }
 
 static inline float HSD_JObjGetTranslationZ(HSD_JObj *jobj) {
     if (jobj == 0) {
         __assert(lbl_806D8C7C, 0x409, lbl_806D8C84);
     }
-    return jobj->tz;
+    return jobj->translate.z;
 }
 
 #include "game/types/CourseMarkerBase.h"

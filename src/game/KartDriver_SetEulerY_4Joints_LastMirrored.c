@@ -1,11 +1,6 @@
 /* Set the Y rotation of the four wheel/steering joints (0xe8, 0xec, 0x164,
  * 0x16c); the last one is mirrored (negated angle). */
-typedef struct HSD_JObj {
-    unsigned char pad00[0x14];
-    unsigned int flags; /* 0x14 */
-    unsigned char pad18[0x20 - 0x18];
-    float rotY;         /* 0x20 */
-} HSD_JObj;
+#include "game/types/HSD_JObj.h"
 
 #include "game/types/KartDriver.h"
 
@@ -36,7 +31,7 @@ static inline void HSD_JObjSetRotationY(HSD_JObj *jobj, float y)
     if (jobj->flags & 0x20000) {
         __assert(lbl_806D2548, 0x2b9, KartDriver_InitFull_rodata_802EADBC);
     }
-    jobj->rotY = y;
+    jobj->rotate.y = y;
     if (!(jobj->flags & 0x02000000)) {
         if (jobj != 0 && !HSD_JObjMtxIsDirty(jobj)) {
             HSD_JObjSetMtxDirtySub(jobj);

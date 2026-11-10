@@ -1,18 +1,4 @@
-typedef struct HSD_JObj {
-    unsigned char pad[0x14];
-    unsigned int flags;
-    unsigned int pad_18;
-    float rotation_x;
-    float rotation_y;
-    float rotation_z;
-    unsigned char pad_28[4];
-    float scale_x;
-    float scale_y;
-    float scale_z;
-    float position_x;
-    float position_y;
-    float position_z;
-} HSD_JObj;
+#include "game/types/HSD_JObj.h"
 
 #include "game/types/ObjectJObjView.h"
 
@@ -47,9 +33,9 @@ void Object_SetJObjPositionVec(ObjectJObjView *object, float *position) {
         if (position == 0) {
             __assert(lbl_806D2348, 0x3AA, lbl_802E97B8);
         }
-        jobj->position_x = position[0];
-        jobj->position_y = position[1];
-        jobj->position_z = position[2];
+        jobj->translate.x = position[0];
+        jobj->translate.y = position[1];
+        jobj->translate.z = position[2];
         if (!(jobj->flags & 0x02000000) && jobj != 0) {
             if (jobj == 0) {
                 __assert(lbl_806D2348, 0x25D, lbl_806D2350);
@@ -68,7 +54,7 @@ float Object_GetJObjRotationZ(ObjectJObjView *object) {
     if (jobj == 0) {
         __assert(lbl_806D2348, 0x308, lbl_806D2350);
     }
-    return jobj->rotation_z;
+    return jobj->rotate.z;
 }
 
 float Object_GetJObjRotationY(ObjectJObjView *object) {
@@ -80,7 +66,7 @@ float Object_GetJObjRotationY(ObjectJObjView *object) {
     if (jobj == 0) {
         __assert(lbl_806D2348, 0x2FA, lbl_806D2350);
     }
-    return jobj->rotation_y;
+    return jobj->rotate.y;
 }
 
 float Object_GetJObjRotationX(ObjectJObjView *object) {
@@ -92,6 +78,6 @@ float Object_GetJObjRotationX(ObjectJObjView *object) {
     if (jobj == 0) {
         __assert(lbl_806D2348, 0x2EC, lbl_806D2350);
     }
-    return jobj->rotation_x;
+    return jobj->rotate.x;
 }
 #pragma exceptions reset

@@ -100,7 +100,7 @@ void SoundDriver_GetOrCreate(int arg);
 int GetDisplayBufferIndex(void);
 void GetStartPosition(int idx, float *x, float *y, float *z);
 float GetCourseStartYaw(void);
-struct RenderObj *CarObject_GetRenderObj(void *car);
+struct KartDriver *CarObject_GetRenderObj(void *car);
 void KartMovement_EquipItem(void *obj, int item);
 void SetPlayerCarObject(void *car);
 int *GetKartModelNameEntry(int chara, int arg);
@@ -830,7 +830,7 @@ extern "C" TimeTrialMode *TimeTrial_Destroy(TimeTrialMode *self, short flag)
  * are mapped in tools/extab_user_renames.json. */
 #pragma exceptions on
 
-#include "game/types/RenderObj.h"
+#include "game/types/KartDriver.h"
 
 #include "game/types/InputManager.h"
 #include "game/types/Camera.h"
@@ -1001,12 +1001,12 @@ NokoNokoChallenge::NokoNokoChallenge() {
     GetStartPosition(0, &x, 0, &z);
     car = new PlayerCar(&x, &z, GetChara());
     {
-        RenderObj *r = CarObject_GetRenderObj(car);
-        r->x238 = 1;
+        KartDriver *r = CarObject_GetRenderObj(car);
+        r->visible_238 = 1;
     }
     {
-        RenderObj *r = CarObject_GetRenderObj(car);
-        r->x2D0 = 1;
+        KartDriver *r = CarObject_GetRenderObj(car);
+        r->forceDraw = 1;
     }
     SetPlayerCarObject(car);
     KartMovement_EquipItem(CarObject_GetRenderObj(car), 6);

@@ -1,14 +1,9 @@
 #include "game/types/Vec3.h"
-typedef struct Joint {
-    unsigned char pad0[0x14];
-    unsigned int flags;
-    unsigned char pad18[0x44-0x18];
-    float m[3][4];
-} Joint;
+#include "game/types/HSD_JObj.h"
 typedef struct Entry {
     void *model;
-    Joint *scrollJoint;
-    Joint *sourceJoint;
+    HSD_JObj *scrollJoint;
+    HSD_JObj *sourceJoint;
     int delay;
 } Entry;
 typedef struct Particle {
@@ -30,8 +25,8 @@ extern void CObj_LoadProjMatrix(void *, Vec3 *);
 extern void Object_GetJObjPositionVec(void *, Vec3 *);
 extern void Vec3_Subtract(const Vec3 *, const Vec3 *, Vec3 *);
 extern float PSVECSquareMag(const Vec3 *);
-extern void fn_80182B50(Joint *, float, float);
-extern void HSD_JObjSetupMatrixSub(Joint *);
+extern void fn_80182B50(HSD_JObj *, float, float);
+extern void HSD_JObjSetupMatrixSub(HSD_JObj *);
 extern void __assert(char *, int, char *);
 extern unsigned char fn_8016C360(int);
 extern unsigned char SoundMgr_PlaySE(int);
@@ -66,28 +61,28 @@ static inline Particle *FindFree(Owner *o) {
     }
     return 0;
 }
-static inline unsigned char MatrixDirty(Joint *j) {
+static inline unsigned char MatrixDirty(HSD_JObj *j) {
     unsigned char dirty;
     if (j == 0) __assert(lbl_806D9668, 0x25D, lbl_806D9670);
     dirty = 0;
     if (!(j->flags & 0x800000) && (j->flags & 0x40)) dirty = 1;
     return dirty;
 }
-static inline void Spawn(Owner *o, Particle *p, Joint *j) {
+static inline void Spawn(Owner *o, Particle *p, HSD_JObj *j) {
     if (j == 0) __assert(lbl_806D9668, 0x47C, lbl_806D9670);
     if (j != 0 && MatrixDirty(j)) HSD_JObjSetupMatrixSub(j);
-    p->pos.x = j->m[0][3];
-    p->pos.y = j->m[1][3];
-    p->pos.z = j->m[2][3];
-    p->xAxis.x = j->m[0][0];
-    p->xAxis.y = j->m[1][0];
-    p->xAxis.z = j->m[2][0];
-    p->yAxis.x = j->m[0][1];
-    p->yAxis.y = j->m[1][1];
-    p->yAxis.z = j->m[2][1];
-    p->zAxis.x = -j->m[0][2];
-    p->zAxis.y = j->m[1][2];
-    p->zAxis.z = -j->m[2][2];
+    p->pos.x = j->mtx[0][3];
+    p->pos.y = j->mtx[1][3];
+    p->pos.z = j->mtx[2][3];
+    p->xAxis.x = j->mtx[0][0];
+    p->xAxis.y = j->mtx[1][0];
+    p->xAxis.z = j->mtx[2][0];
+    p->yAxis.x = j->mtx[0][1];
+    p->yAxis.y = j->mtx[1][1];
+    p->yAxis.z = j->mtx[2][1];
+    p->zAxis.x = -j->mtx[0][2];
+    p->zAxis.y = j->mtx[1][2];
+    p->zAxis.z = -j->mtx[2][2];
     p->scale = lbl_806D9678 + NextScale(o);
     {
         float r = NextScale(o);

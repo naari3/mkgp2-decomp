@@ -6,14 +6,7 @@
  */
 #pragma cplusplus on
 
-typedef struct HSD_JObj {
-    unsigned char pad00[0x14];
-    unsigned int flags; /* 0x14 */
-    unsigned char pad18[0x24];
-    float translateY;   /* 0x3C */
-    unsigned char pad40[0x4];
-    float mtx[3][4];    /* 0x44 */
-} HSD_JObj;
+#include "game/types/HSD_JObj.h"
 
 #include "game/types/CharacterData.h"
 
@@ -95,7 +88,7 @@ static inline void HSD_JObjSetTranslateY(HSD_JObj *jobj, float y)
     if (!jobj) {
         __assert(lbl_806D70C8, 0x3c6, lbl_806D70D0);
     }
-    jobj->translateY = y;
+    jobj->translate.y = y;
     if (!(jobj->flags & 0x02000000)) {
         if (jobj != 0 && !HSD_JObjMtxIsDirty(jobj)) {
             HSD_JObjSetMtxDirtySub(jobj);

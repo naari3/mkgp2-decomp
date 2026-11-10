@@ -1,11 +1,4 @@
-typedef struct HSD_JObj {
-    unsigned char pad[0x14];
-    unsigned int flags;
-    unsigned char pad_18[0x14];
-    float scale_x;
-    float scale_y;
-    float scale_z;
-} HSD_JObj;
+#include "game/types/HSD_JObj.h"
 
 extern char lbl_806D2348[7];
 extern char lbl_806D2350[5];
@@ -35,7 +28,7 @@ static inline void set_scale_x(HSD_JObj *jobj, float x) {
     if (jobj == 0) {
         __assert(lbl_806D2348, 0x325, lbl_806D2350);
     }
-    jobj->scale_x = x;
+    jobj->scale.x = x;
     set_mtx_dirty(jobj);
 }
 
@@ -43,7 +36,7 @@ static inline void set_scale_y(HSD_JObj *jobj, float y) {
     if (jobj == 0) {
         __assert(lbl_806D2348, 0x333, lbl_806D2350);
     }
-    jobj->scale_y = y;
+    jobj->scale.y = y;
     set_mtx_dirty(jobj);
 }
 
@@ -51,7 +44,7 @@ static inline void set_scale_z(HSD_JObj *jobj, float z) {
     if (jobj == 0) {
         __assert(lbl_806D2348, 0x341, lbl_806D2350);
     }
-    jobj->scale_z = z;
+    jobj->scale.z = z;
     set_mtx_dirty(jobj);
 }
 

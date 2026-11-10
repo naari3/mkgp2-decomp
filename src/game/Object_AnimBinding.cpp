@@ -9,12 +9,7 @@ extern char lbl_806D2350[5]; /* "jobj" */
 extern char lbl_806D2378[4]; /* "mtx" */
 }
 
-struct HSD_JObj {
-    unsigned char pad00[0x14];
-    unsigned int flags; /* 0x14 */
-    unsigned char pad18[0x2C];
-    float mtx[3][4]; /* 0x44 */
-};
+#include "game/types/HSD_JObj.h"
 
 extern "C" {
 void __assert(char *file, int line, char *cond);

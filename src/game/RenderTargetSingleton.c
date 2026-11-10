@@ -3,12 +3,7 @@
  * (0x8013C334..0x8013C4A4), same shape as OrthoCam.
  */
 
-typedef struct HSD_JObj {
-    unsigned char pad[0x14];
-    unsigned int flags;
-    unsigned char pad18[0x44 - 0x18];
-    unsigned char anim[1];
-} HSD_JObj;
+#include "game/types/HSD_JObj.h"
 
 #include "game/types/RenderTargetHolder.h"
 

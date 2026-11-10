@@ -7,7 +7,7 @@
     ]
   },
   "KartDriver": {
-    "why": "names at 0x0-0x20 from KartDriver_Render (LOD selection, driver/accessory trees) and KartDriver_Dtor; 0xE8 is the four wheel joints (KartDriver_SetUniformScale_4Wheels).",
+    "why": "names at 0x0-0x20 from KartDriver_Render (LOD selection, driver/accessory trees) and KartDriver_Dtor; 0xE8 is the four wheel joints (KartDriver_SetUniformScale_4Wheels). Driver, KartRender, RenderObj, KartItem, DispatchKart and Kart are the same object under other names: they agree with KartDriver on 0x1F4/0x1F8 (slot, character), 0x248, 0x2D0 and the pointer at 0x304, with no overlapping member. Not aliases: BoostKart (int/float at 0x08/0x0C), KartObj, KartPreview, and the `Kart` in kartmove/fn_8019A8A4.c (a Vec3 position at 0x40, where KartDriver has model pointers).",
     "names": {
       "0x0": "model",
       "0x4": "lodMid",
@@ -19,7 +19,18 @@
       "0x2D0": "forceDraw",
       "0x304": "itemBus",
       "0x30C": "tireFX"
-    }
+    },
+    "aliases": [
+      "Driver",
+      "KartRender",
+      "RenderObj",
+      "KartItem",
+      "DispatchKart",
+      "Kart"
+    ],
+    "exclude": [
+      "src/game/kartmove/fn_8019A8A4.c"
+    ]
   },
   "NokoNoko": {
     "why": "NokoNoko_InitEntity.c labelled 0x0C/0x10/0x18 one slot off (model/anim/extra); every other user reads 0x0C as the state and 0x10 as the model handle, and Update counts 0x18 down as a timer.",
@@ -73,6 +84,29 @@
     "why": "The 0x580-byte struct in Scene_8014E0C4.cpp is another scene class (script-driven, 21 objects, 48 sprites), not the race mode object.",
     "exclude": [
       "src/game/Scene_8014E0C4.cpp"
+    ]
+  },
+  "HSD_JObj": {
+    "why": "HAL sysdolphin HSD_JObj (same offsets as the SSBM decomp, include/sysdolphin/baselib/jobj.h): HSD_Obj header, next/parent/child, flags, the dobj union, rotate (quaternion or euler in xyz), scale, translate, mtx, then scl/envelope/aobj/robj/desc. Views that spelled the vectors as scalars now use rotate.x, scale.y, translate.z.",
+    "fields": {
+      "0x8": "struct HSD_JObj *next",
+      "0xC": "struct HSD_JObj *parent",
+      "0x10": "struct HSD_JObj *child",
+      "0x14": "unsigned int flags",
+      "0x18": "void *dobj",
+      "0x1C": "Quat rotate",
+      "0x2C": "Vec3 scale",
+      "0x38": "Vec3 translate",
+      "0x44": "float mtx[3][4]",
+      "0x74": "Vec3 *scl",
+      "0x78": "void *envelopemtx",
+      "0x7C": "void *aobj",
+      "0x80": "void *robj",
+      "0x84": "void *desc"
+    },
+    "size": "0x88",
+    "aliases": [
+      "Joint"
     ]
   }
 }

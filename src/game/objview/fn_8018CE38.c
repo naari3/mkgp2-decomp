@@ -1,15 +1,5 @@
 #include "game/types/Vec3.h"
-typedef struct HSD_JObj {
-    unsigned char pad[0x8];
-    struct HSD_JObj *next;
-    struct HSD_JObj *parent;
-    struct HSD_JObj *child;
-    unsigned int flags;
-    unsigned char pad18[0x20 - 0x18];
-    float rotz;
-    unsigned char pad24[0x38 - 0x24];
-    Vec3 translate;
-} HSD_JObj;
+#include "game/types/HSD_JObj.h"
 typedef struct Obj {
     void *vt;
     void *gobj;
@@ -52,7 +42,7 @@ static inline void JObjAddRotationZ(HSD_JObj *jobj, float z) {
     if (!jobj) {
         __assert(lbl_806D93A8, 0x41d, lbl_806D93B0);
     }
-    jobj->rotz += z;
+    jobj->rotate.y += z;
     if (!(jobj->flags & 0x2000000)) {
         if (jobj != 0 && !JObjMtxIsDirty(jobj)) {
             HSD_JObjSetMtxDirtySub(jobj);

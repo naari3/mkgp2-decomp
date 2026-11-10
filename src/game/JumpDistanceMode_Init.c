@@ -123,7 +123,7 @@ int GetKartStartSlot(void);
 void GetStartPosition(int idx, float *x, float *y, float *z);
 float GetCourseStartYaw(void);
 void CarObject_SetPosition(void *car, Vec *pos);
-struct RenderObj *CarObject_GetRenderObj(void *car);
+struct KartDriver *CarObject_GetRenderObj(void *car);
 void *CarObject_GetKartMovementPtr(void *car);
 void KartMovement_EquipItem(void *obj, int item);
 void fn_8023E1E4(void *obj, int item, int arg);
@@ -145,7 +145,7 @@ void InitRumbleController(int arg);
 void fn_801699D8(int a, int b);
 }
 
-#include "game/types/RenderObj.h"
+#include "game/types/KartDriver.h"
 
 #include "game/types/InputManager.h"
 #include "game/types/Camera.h"
@@ -377,12 +377,12 @@ JumpDistanceMode::JumpDistanceMode() {
     car = new PlayerCar(&pos, GetChara(), GetCC());
     CarObject_SetPosition(car, &pos);
     {
-        RenderObj *r = CarObject_GetRenderObj(car);
-        r->x238 = 1;
+        KartDriver *r = CarObject_GetRenderObj(car);
+        r->visible_238 = 1;
     }
     {
-        RenderObj *r = CarObject_GetRenderObj(car);
-        r->x2D0 = 1;
+        KartDriver *r = CarObject_GetRenderObj(car);
+        r->forceDraw = 1;
     }
     KartMovement_EquipItem(CarObject_GetRenderObj(car), 0x17);
     itemSlot = new ItemSlot(0);

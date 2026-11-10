@@ -7,13 +7,7 @@
  * depth (the deepest level calls the out-of-line copies). */
 #include "game/types/HSD_MObj.h"
 #include "game/types/HSD_DObj.h"
-struct HSD_JObj {
-    unsigned char pad[0x8];
-    HSD_JObj *next;
-    HSD_JObj *parent;
-    HSD_JObj *child;
-    unsigned int flags;
-};
+#include "game/types/HSD_JObj.h"
 extern "C" {
 HSD_DObj *HSD_JObjGetDObj(HSD_JObj *jobj);
 void *hsdAllocMemPiece(unsigned int size);

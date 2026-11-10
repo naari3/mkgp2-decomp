@@ -5,12 +5,7 @@
 
 #include "game/types/Vec3f.h"
 
-struct HSD_JObj {
-    char pad00[0x8];
-    HSD_JObj *next;
-    char pad0C[0x2C];
-    Vec3f translate;
-};
+#include "game/types/HSD_JObj.h"
 
 #include "game/types/MarkerChain.h"
 

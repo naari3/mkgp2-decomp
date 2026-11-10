@@ -1,18 +1,4 @@
-typedef struct HSD_JObj {
-    unsigned char pad[0x14];
-    unsigned int flags;
-    unsigned int pad_18;
-    float rotation_x;
-    float rotation_y;
-    float rotation_z;
-    unsigned char pad_28[4];
-    float scale_x;
-    float scale_y;
-    float scale_z;
-    float position_x;
-    float position_y;
-    float field_40;
-} HSD_JObj;
+#include "game/types/HSD_JObj.h"
 
 typedef struct ObjectRotationView {
     unsigned char pad[0x2C];
@@ -51,7 +37,7 @@ void Object_SetJObjRotationZ(ObjectRotationView *object, float rotation) {
         if (jobj->flags & 0x00020000) {
             __assert(lbl_806D2348, 0x2CD, lbl_802E9790);
         }
-        jobj->rotation_z = rotation;
+        jobj->rotate.z = rotation;
         if (!(jobj->flags & 0x02000000) && jobj != 0) {
             if (jobj == 0) {
                 __assert(lbl_806D2348, 0x25D, lbl_806D2350);
@@ -71,7 +57,7 @@ void Object_SetJObjRotationY(ObjectRotationView *object, float rotation) {
         if (jobj->flags & 0x00020000) {
             __assert(lbl_806D2348, 0x2B9, lbl_802E9790);
         }
-        jobj->rotation_y = rotation;
+        jobj->rotate.y = rotation;
         if (!(jobj->flags & 0x02000000) && jobj != 0) {
             if (jobj == 0) {
                 __assert(lbl_806D2348, 0x25D, lbl_806D2350);
@@ -91,7 +77,7 @@ void Object_SetJObjRotationX(ObjectRotationView *object, float rotation) {
         if (jobj->flags & 0x00020000) {
             __assert(lbl_806D2348, 0x2A5, lbl_802E9790);
         }
-        jobj->rotation_x = rotation;
+        jobj->rotate.x = rotation;
         if (!(jobj->flags & 0x02000000) && jobj != 0) {
             if (jobj == 0) {
                 __assert(lbl_806D2348, 0x25D, lbl_806D2350);
@@ -109,9 +95,9 @@ void Object_SetJObjScaleXYZ(ObjectRotationView *object, float scale_x, float sca
         if (jobj == 0) {
             __assert(lbl_806D2348, 0x316, lbl_806D2350);
         }
-        jobj->scale_x = scale_x;
-        jobj->scale_y = scale_y;
-        jobj->scale_z = scale_z;
+        jobj->scale.x = scale_x;
+        jobj->scale.y = scale_y;
+        jobj->scale.z = scale_z;
         if (!(jobj->flags & 0x02000000) && jobj != 0) {
             if (jobj == 0) {
                 __assert(lbl_806D2348, 0x25D, lbl_806D2350);
@@ -131,9 +117,9 @@ void Object_SetJObjScaleVec(ObjectRotationView *object, float *scale) {
         if (scale == 0) {
             __assert(lbl_806D2348, 0x317, lbl_806D2358);
         }
-        jobj->scale_x = scale[0];
-        jobj->scale_y = scale[1];
-        jobj->scale_z = scale[2];
+        jobj->scale.x = scale[0];
+        jobj->scale.y = scale[1];
+        jobj->scale.z = scale[2];
         if (!(jobj->flags & 0x02000000) && jobj != 0) {
             if (jobj == 0) {
                 __assert(lbl_806D2348, 0x25D, lbl_806D2350);
@@ -150,7 +136,7 @@ void Object_SetJObjField40(ObjectRotationView *object, float value) {
         if (jobj == 0) {
             __assert(lbl_806D2348, 0x3D4, lbl_806D2350);
         }
-        jobj->field_40 = value;
+        jobj->translate.z = value;
         if (!(jobj->flags & 0x02000000) && jobj != 0) {
             if (jobj == 0) {
                 __assert(lbl_806D2348, 0x25D, lbl_806D2350);
@@ -167,7 +153,7 @@ void Object_SetJObjPositionY(ObjectRotationView *object, float position) {
         if (jobj == 0) {
             __assert(lbl_806D2348, 0x3C6, lbl_806D2350);
         }
-        jobj->position_y = position;
+        jobj->translate.y = position;
         if (!(jobj->flags & 0x02000000) && jobj != 0) {
             if (jobj == 0) {
                 __assert(lbl_806D2348, 0x25D, lbl_806D2350);
@@ -184,7 +170,7 @@ void Object_SetJObjPositionX(ObjectRotationView *object, float position) {
         if (jobj == 0) {
             __assert(lbl_806D2348, 0x3B8, lbl_806D2350);
         }
-        jobj->position_x = position;
+        jobj->translate.x = position;
         if (!(jobj->flags & 0x02000000) && jobj != 0) {
             if (jobj == 0) {
                 __assert(lbl_806D2348, 0x25D, lbl_806D2350);
@@ -202,9 +188,9 @@ void Object_SetJObjPositionXYZ(ObjectRotationView *object, float position_x,
         if (jobj == 0) {
             __assert(lbl_806D2348, 0x3A9, lbl_806D2350);
         }
-        jobj->position_x = position_x;
-        jobj->position_y = position_y;
-        jobj->field_40 = position_z;
+        jobj->translate.x = position_x;
+        jobj->translate.y = position_y;
+        jobj->translate.z = position_z;
         if (!(jobj->flags & 0x02000000) && jobj != 0) {
             if (jobj == 0) {
                 __assert(lbl_806D2348, 0x25D, lbl_806D2350);

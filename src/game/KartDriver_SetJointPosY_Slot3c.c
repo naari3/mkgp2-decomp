@@ -26,7 +26,7 @@ static inline void HSD_JObjSetTranslateY(HSD_JObj *jobj, float y)
     if (!jobj) {
         __assert(lbl_806D2548, 0x3c6, lbl_806D2550);
     }
-    jobj->translateY = y;
+    jobj->translate.y = y;
     if (!(jobj->flags & 0x02000000)) {
         if (jobj != 0 && !HSD_JObjMtxIsDirty(jobj)) {
             HSD_JObjSetMtxDirtySub(jobj);

@@ -1,11 +1,6 @@
 /* Forward the pitch to the tire FX, then roll joint 0x168 to its base
  * angle plus the same amount. */
-typedef struct HSD_JObj {
-    unsigned char pad00[0x14];
-    unsigned int flags; /* 0x14 */
-    unsigned char pad18[0xc];
-    float rotZ;         /* 0x24 */
-} HSD_JObj;
+#include "game/types/HSD_JObj.h"
 
 #include "game/types/KartDriver.h"
 
@@ -37,7 +32,7 @@ static inline void HSD_JObjSetRotationZ(HSD_JObj *jobj, float z)
     if (jobj->flags & 0x20000) {
         __assert(lbl_806D2548, 0x2cd, KartDriver_InitFull_rodata_802EADBC);
     }
-    jobj->rotZ = z;
+    jobj->rotate.z = z;
     if (!(jobj->flags & 0x02000000)) {
         if (jobj != 0 && !HSD_JObjMtxIsDirty(jobj)) {
             HSD_JObjSetMtxDirtySub(jobj);

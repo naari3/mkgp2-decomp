@@ -1,11 +1,6 @@
 /* fn_8012A61C: draws the preview kart, its driver model and the optional
  * attachment bound to a joint of the driver. */
-typedef struct HSD_JObj {
-    char pad00[0x14];
-    unsigned int flags;
-    char pad18[0x44 - 0x18];
-    float mtx[3][4];
-} HSD_JObj;
+#include "game/types/HSD_JObj.h"
 
 typedef struct KartPreviewDraw {
     void *kart;

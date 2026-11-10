@@ -27,7 +27,7 @@ struct HSD_JObj {
 
 #include "game/types/AnimCtrl.h"
 
-#include "game/types/KartRender.h"
+#include "game/types/KartDriver.h"
 
 #include "game/types/GXChannel.h"
 
@@ -107,7 +107,7 @@ extern const char DNBress_nm3_rodata_803C6ED0[];
 extern int g_gameMode;
 extern int g_longRoundFlag;
 extern int g_reverseRoundFlag;
-extern KartRender *g_playerRenderObj;
+extern KartDriver *g_playerRenderObj;
 extern const char lbl_806DB3F0[7];
 extern const char lbl_806DB3F8[5];
 extern const int lbl_806DB3E8[2];
@@ -176,10 +176,10 @@ float PSVECSquareMag(Vec3f *v);
 void Object_SetColorRGBA(clNormal3D *m, int idx, float r, float g, float b, float a);
 void Object_DriveAnimMatrix(clNormal3D *m);
 void clNormal3D_SetScale(clNormal3D *m, int idx, float x, float y, float z, float w);
-KartRender *GetKartSlotKartVariant(int slot);
+KartDriver *GetKartSlotKartVariant(int slot);
 void *GetPlayerCarObject(void);
-KartRender *CarObject_GetRenderObj(void *car);
-const float *KartDriver_GetKartRootMtx(KartRender *k);
+KartDriver *CarObject_GetRenderObj(void *car);
+const float *KartDriver_GetKartRootMtx(KartDriver *k);
 void fn_80240014(AnimCtrl *a);
 void fn_8023FE74(AnimCtrl *a, int b, int frame);
 void fn_80240378(AnimCtrl *a, const char *file, int b, clNormal3D *m, const char **names);

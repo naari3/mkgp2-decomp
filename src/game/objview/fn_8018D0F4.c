@@ -1,21 +1,13 @@
-typedef struct Joint {
-    char pad0[8];
-    struct Joint *next;
-    void *parent;
-    struct Joint *child;
-    unsigned int flags;
-    char pad18[0x18];
-    float scaleY;
-} Joint;
+#include "game/types/HSD_JObj.h"
 typedef struct Obj { void *vt; void **models; int count; float angle; } Obj;
 extern char lbl_806D93D0[7], lbl_806D93D8[5];
 extern float LUT_Sin12Bit(float);
 extern float fn_80186960(float);
 extern float fn_8018D638(float);
-extern Joint *Archive_GetRootJObj(void *);
+extern HSD_JObj *Archive_GetRootJObj(void *);
 extern void __assert(char *, int, char *);
-extern void HSD_JObjSetMtxDirtySub(Joint *);
-static inline unsigned char IsDirty(Joint *j) {
+extern void HSD_JObjSetMtxDirtySub(HSD_JObj *);
+static inline unsigned char IsDirty(HSD_JObj *j) {
     unsigned int flags;
     unsigned char dirty;
     if (!j) __assert(lbl_806D93D0, 0x25d, lbl_806D93D8);
@@ -24,19 +16,19 @@ static inline unsigned char IsDirty(Joint *j) {
     if (!(flags & 0x800000) && (flags & 0x40)) dirty = 1;
     return dirty;
 }
-static inline void SetScaleY(Joint *j, float y) {
+static inline void SetScaleY(HSD_JObj *j, float y) {
     if (!j) __assert(lbl_806D93D0, 0x333, lbl_806D93D8);
-    j->scaleY = y;
+    j->scale.y = y;
     if (!(j->flags & 0x2000000)) {
         if (j && !IsDirty(j)) HSD_JObjSetMtxDirtySub(j);
     }
 }
-static inline Joint *Child(Joint *j) { if (j == 0) return 0; return j->child; }
-static inline Joint *Next(Joint *j) { if (j == 0) return 0; return j->next; }
+static inline HSD_JObj *Child(HSD_JObj *j) { if (j == 0) return 0; return j->child; }
+static inline HSD_JObj *Next(HSD_JObj *j) { if (j == 0) return 0; return j->next; }
 void fn_8018D0F4(Obj *o) {
     float a, odd, even;
     int i, n;
-    Joint *j, *root;
+    HSD_JObj *j, *root;
     if (o->models == 0 || o->count == 0) return;
     o->angle += 1.0f;
     a=o->angle;

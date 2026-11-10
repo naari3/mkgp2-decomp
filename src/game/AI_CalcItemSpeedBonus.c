@@ -1,6 +1,6 @@
 #include "game/ItemEffectBusPrivate.h"
 
-#include "game/types/RenderObj.h"
+#include "game/types/KartDriver.h"
 
 #include "game/types/KartObj.h"
 
@@ -19,7 +19,7 @@ typedef struct AIItemState {
 
 extern KartObj *Read_U32[];
 extern void *fn_801DE1B0(void);
-extern RenderObj *CarObject_GetRenderObj(void *car);
+extern KartDriver *CarObject_GetRenderObj(void *car);
 extern float fn_801DE0E8(void *param);
 extern float fn_801DE000(void *param);
 extern int fn_801DDE7C(void *param);
@@ -42,7 +42,7 @@ float AI_CalcItemSpeedBonus(AIItemState *self, int kart) {
 
     kartObj = Read_U32[kart];
     param = fn_801DE1B0();
-    status = CarObject_GetRenderObj(self->car)->status;
+    status = CarObject_GetRenderObj(self->car)->itemBus;
     bonus = 0.0f;
 
     if (self->useBoost) {

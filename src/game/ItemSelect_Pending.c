@@ -23,21 +23,18 @@ typedef struct ItemSelect {
     unsigned char dropped; /* 0x84 */
 } ItemSelect;
 
-typedef struct Kart {
-    unsigned char pad000[0x2b1];
-    unsigned char noItems; /* 0x2B1 */
-} Kart;
+#include "game/types/KartDriver.h"
 
 extern int g_gameMode;
 extern unsigned char g_isCommHost;
 extern int BattleRoulette_TickAndGetCounter(void);
-extern void KartItem_CancelAndQueueDefault(Kart *kart);
-extern int KartMovement_GetCurrentItemId(Kart *kart);
+extern void KartItem_CancelAndQueueDefault(KartDriver *kart);
+extern int KartMovement_GetCurrentItemId(KartDriver *kart);
 extern void SoundMgr_PlaySE(unsigned int id);
 extern void fn_8023E19C(void *hud);
 extern void fn_8023E1E4(void *hud, int a, int b);
 
-static inline unsigned char ItemSelect_IsBusy(ItemSelect *self, Kart *kart)
+static inline unsigned char ItemSelect_IsBusy(ItemSelect *self, KartDriver *kart)
 {
     if (KartMovement_GetCurrentItemId(kart) != -1) {
         return 1;
@@ -56,7 +53,7 @@ static inline void ItemSelect_RollSlot(ItemSelect *self)
     }
 }
 
-int ItemSelect_OnDropAllCancel(ItemSelect *self, Kart *kart)
+int ItemSelect_OnDropAllCancel(ItemSelect *self, KartDriver *kart)
 {
     if (self->slot == -1) {
         return 0;
@@ -74,7 +71,7 @@ int ItemSelect_OnDropAllCancel(ItemSelect *self, Kart *kart)
     return 1;
 }
 
-int ItemSelect_GiveItemOrQueueDrop(ItemSelect *self, Kart *kart, int item, unsigned char queue)
+int ItemSelect_GiveItemOrQueueDrop(ItemSelect *self, KartDriver *kart, int item, unsigned char queue)
 {
     if (ItemSelect_IsBusy(self, kart) == 1) {
         if (queue == 1 && self->queuedItem == -1) {
@@ -111,7 +108,7 @@ int ItemSelect_GiveItemOrQueueDrop(ItemSelect *self, Kart *kart, int item, unsig
     return 1;
 }
 
-int ItemSelect_StartRouletteSpin(ItemSelect *self, Kart *kart, int unused, int forced)
+int ItemSelect_StartRouletteSpin(ItemSelect *self, KartDriver *kart, int unused, int forced)
 {
     if (self->queuedItem != -1) {
         return -1;

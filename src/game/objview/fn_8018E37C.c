@@ -1,14 +1,4 @@
-typedef struct HSD_JObj {
-    char pad00[0x8];
-    struct HSD_JObj *next;
-    char pad0c[0x4];
-    struct HSD_JObj *child;
-    unsigned int flags;
-    char pad18[0x4];
-    float rotX;
-    float rotY;
-    float rotZ;
-} HSD_JObj;
+#include "game/types/HSD_JObj.h"
 
 typedef struct Spinner {
     void *vt;
@@ -48,7 +38,7 @@ static inline void HSD_JObjSetRotationY(HSD_JObj *jobj, float y) {
     if (jobj->flags & 0x20000) {
         __assert(lbl_806D9428, 0x2B9, lbl_8037809C);
     }
-    jobj->rotY = y;
+    jobj->rotate.y = y;
     if (!(jobj->flags & 0x02000000) && jobj != 0) {
         HSD_JObjSetMtxDirty(jobj);
     }

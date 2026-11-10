@@ -1,11 +1,6 @@
 #include "game/types/Quat.h"
 
-typedef struct HSD_JObj {
-    unsigned char pad[0x14];
-    unsigned int flags;
-    unsigned int pad_18;
-    Quat rotation;
-} HSD_JObj;
+#include "game/types/HSD_JObj.h"
 
 #include "game/types/ObjectJObjView.h"
 
@@ -41,10 +36,10 @@ void JObj_SetRotationQuat(ObjectJObjView *object, float x, float y, float z) {
         if (jobj == 0) {
             __assert(lbl_806D2348, 0x290, lbl_806D2350);
         }
-        jobj->rotation.x = quat.x;
-        jobj->rotation.y = quat.y;
-        jobj->rotation.z = quat.z;
-        jobj->rotation.w = quat.w;
+        jobj->rotate.x = quat.x;
+        jobj->rotate.y = quat.y;
+        jobj->rotate.z = quat.z;
+        jobj->rotate.w = quat.w;
         if (!(jobj->flags & 0x02000000) && jobj != 0) {
             if (jobj == 0) {
                 __assert(lbl_806D2348, 0x25D, lbl_806D2350);

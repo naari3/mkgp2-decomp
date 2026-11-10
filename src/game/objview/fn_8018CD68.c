@@ -1,12 +1,5 @@
 #include "game/types/Vec3.h"
-typedef struct HSD_JObj {
-    unsigned char pad[0x8];
-    struct HSD_JObj *next;
-    struct HSD_JObj *parent;
-    struct HSD_JObj *child;
-    unsigned char pad2[0x38 - 0x14];
-    Vec3 translate;
-} HSD_JObj;
+#include "game/types/HSD_JObj.h"
 typedef struct Obj {
     void *vt;
     void *gobj;

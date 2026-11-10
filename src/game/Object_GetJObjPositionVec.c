@@ -1,12 +1,4 @@
-typedef struct HSD_JObj {
-    unsigned char pad[0x14];
-    unsigned int flags;
-    unsigned char pad_18[0x20];
-    float position_x;
-    float position_y;
-    float position_z;
-    float mtx[3][4];
-} HSD_JObj;
+#include "game/types/HSD_JObj.h"
 
 #include "game/types/ObjectJObjView.h"
 
@@ -48,9 +40,9 @@ int Object_GetJObjPositionVec(ObjectJObjView *object, float *position) {
         if (position == 0) {
             __assert(lbl_806D2348, 0x3E5, lbl_802E97B8);
         }
-        position[0] = jobj->position_x;
-        position[1] = jobj->position_y;
-        position[2] = jobj->position_z;
+        position[0] = jobj->translate.x;
+        position[1] = jobj->translate.y;
+        position[2] = jobj->translate.z;
     }
     return 1;
 }

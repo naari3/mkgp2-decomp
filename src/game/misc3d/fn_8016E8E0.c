@@ -1,10 +1,7 @@
 #include "game/types/Vec3.h"
 typedef float Mtx[3][4];
 
-typedef struct Kart {
-    char pad[0x1f8];
-    int kind;
-} Kart;
+#include "game/types/KartDriver.h"
 
 typedef struct Gate {
     int pad0;
@@ -13,8 +10,8 @@ typedef struct Gate {
     float t;
 } Gate;
 
-extern Kart *GetKartSlotKartVariant(int slot);
-extern Mtx *KartDriver_GetKartRootMtx(Kart *k);
+extern KartDriver *GetKartSlotKartVariant(int slot);
+extern Mtx *KartDriver_GetKartRootMtx(KartDriver *k);
 extern void Vec3_Subtract(const Vec3 *a, const Vec3 *b, Vec3 *out);
 extern float PSVECSquareMag(const Vec3 *v);
 extern const float lbl_806D8BA8;
@@ -29,14 +26,14 @@ extern const float lbl_806D8BC8;
 extern const float lbl_806D8BCC;
 
 void fn_8016E8E0(Gate *g) {
-    Kart *k;
+    KartDriver *k;
     unsigned char near = 0;
     int i;
     Vec3 v;
     float nt;
     for (i = 0; i < 8; i++) {
         k = GetKartSlotKartVariant(i);
-        if (k != 0 && k->kind == 4) {
+        if (k != 0 && k->chara == 4) {
             v.x = (*KartDriver_GetKartRootMtx(k))[0][3];
             v.y = (*KartDriver_GetKartRootMtx(k))[1][3];
             v.z = (*KartDriver_GetKartRootMtx(k))[2][3];

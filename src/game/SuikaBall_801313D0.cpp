@@ -37,14 +37,7 @@ struct HsdClass {
 
 #include "game/types/Quat.h"
 
-struct HSD_JObj {
-    char pad0[0x14];
-    unsigned int flags;     /* 0x14 */
-    char pad18[4];
-    Quat rotate;            /* 0x1C */
-    Vec3 scale;             /* 0x2C */
-    Vec3 translate;         /* 0x38 */
-};
+#include "game/types/HSD_JObj.h"
 
 struct InputPlayer {
     virtual void v0();
@@ -995,7 +988,7 @@ extern "C" SuikaBall *fn_80133008(SuikaBall *self, short flag)
     return self;
 }
 
-#include "game/types/RenderObj.h"
+#include "game/types/KartDriver.h"
 
 #include "game/types/InputManager.h"
 #include "game/types/Camera.h"
@@ -1170,8 +1163,8 @@ SuikaBallMode::SuikaBallMode() {
     car = new PlayerCar(&pos.x, &pos.z, GetChara());
     CarObject_SetPosition(car, &pos);
     {
-        RenderObj *r = (RenderObj *)CarObject_GetRenderObj(car);
-        r->x238 = 1;
+        KartDriver *r = (KartDriver *)CarObject_GetRenderObj(car);
+        r->visible_238 = 1;
     }
     SetPlayerCarObject(car);
     lakitu = new LakituStart(s_lakituFile, 0, lbl_806D72B8, lbl_806D72B8, lbl_806D72B8);

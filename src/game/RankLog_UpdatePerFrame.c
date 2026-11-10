@@ -5,7 +5,7 @@
 
 #include "game/types/Vec.h"
 
-#include "game/types/RenderObj.h"
+#include "game/types/KartDriver.h"
 
 extern const float lbl_806D4DC8; /* 0.0 */
 extern const float lbl_806D4DCC; /* 0.5 */
@@ -25,11 +25,11 @@ extern unsigned int lbl_806D1428;
 extern int RankLog_bss_806D1424;
 extern void *GetPlayerCarObject(void);
 extern unsigned char IsRaceStarted(void);
-extern RenderObj *CarObject_GetRenderObj(void *car);
+extern KartDriver *CarObject_GetRenderObj(void *car);
 extern float *KartDriver_GetKartRootMtx(void *driver);
 extern float KartItem_GetCurrentSpeedWithBonus(void *car);
 extern float KartItem_GetMaxSpeedWithBonus(void *car);
-extern float KartMovement_GetVelocityMagnitude(RenderObj *obj);
+extern float KartMovement_GetVelocityMagnitude(KartDriver *obj);
 extern void *fn_80190658(void);
 extern int fn_8019032C(void *zones, Vec *pos);
 extern void *fn_8016CB44(void);
@@ -56,7 +56,7 @@ void RankLog_UpdatePerFrame(void)
         return;
     }
     air = CarObject_GetRenderObj(car)->airState;
-    section = CarObject_GetRenderObj(car)->section;
+    section = CarObject_GetRenderObj(car)->coins;
     {
         float *m = KartDriver_GetKartRootMtx(CarObject_GetRenderObj(car));
         pos = RankLog_UpdatePerFrame_rodata_80326B24;
