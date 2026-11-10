@@ -96,6 +96,47 @@ def strip_comments(text):
     return "".join(out)
 
 
+def strip_comments_only(text):
+    """Comments -> one space; string and char literals kept."""
+    out, i, n = [], 0, len(text)
+    while i < n:
+        c = text[i]
+        if c == "/" and i + 1 < n and text[i + 1] in "*/":
+            j = text.find("*/", i + 2) + 2 if text[i + 1] == "*" else text.find("\n", i)
+            if j < 2 or j < 0:
+                j = n
+            out.append(" ")
+            i = j
+        elif c in "\"'":
+            j = i + 1
+            while j < n and text[j] != c and text[j] != "\n":
+                j += 2 if text[j] == "\\" else 1
+            out.append(text[i:j + 1])
+            i = j + 1
+        else:
+            out.append(c)
+            i += 1
+    return "".join(out)
+
+
+CTX_SKIPS = {None, "has base class", "class",
+             "non-plain member (method, nested type, access label)"}
+
+
+def ctx_key(d):
+    """Whole-definition key for context mode: every token, string literals
+    included, comments and white space ignored."""
+    return (d.kind, d.name, tuple(TOKEN_RE.findall(strip_comments_only(d.raw))))
+
+
+def ctx_eligible(d):
+    if d.skip not in CTX_SKIPS or not d.name or "#" in d.body:
+        return False
+    if d.typedef:
+        return d.names == [d.name] and (not d.tag or d.tag == d.name)
+    return not d.tail and d.tag == d.name
+
+
 DEF_RE = re.compile(
     r"\b(?:(typedef)\s+)?(struct|union|class)\b\s*([A-Za-z_]\w*)?\s*(:[^{;()]*)?\{"
 )
@@ -274,6 +315,8 @@ class Def:
         self.skip = None                # reason this def is never auto-moved
         self.name = None
         self.cpp = False
+        self.tail = ""
+        self.raw = ""
 
     def key(self):
         return (self.kind, self.name,
@@ -337,6 +380,8 @@ def scan_file(path, text=None):
         d.tag = m.group(3)
         d.typedef = bool(m.group(1))
         d.body = s[ob + 1:cb]
+        d.tail = tail
+        d.raw = text[m.start():semi + 1]
         d.cpp = path.endswith((".cpp", ".hpp"))
         pos = semi + 1
         if not prev_ok:
@@ -499,12 +544,19 @@ class Scan:
             self.defs.extend(defs)
 
     def includes(self, f):
-        """Every header `f` reaches through quoted/angle includes that resolve
-        inside the repo (transitively), spelled as written in the #include."""
+        """Every header `f` reaches through #includes that resolve inside the
+        repo (transitively), spelled as written in the #include."""
+        return self._closure(f)[0]
+
+    def closure_files(self, f):
+        """`f` and every repo file it includes, transitively (resolved paths)."""
+        return self._closure(f)[1]
+
+    def _closure(self, f):
         cache = self.__dict__.setdefault("_inc_cache", {})
         if f in cache:
             return cache[f]
-        seen, out, todo = {f}, set(), [f]
+        seen, order, out, todo = {f}, [f], set(), [f]
         while todo:
             cur = todo.pop()
             for spell in INC_RE.findall(self._text_of(cur)):
@@ -514,10 +566,71 @@ class Scan:
                     if os.path.isfile(os.path.join(ROOT, cand)):
                         if cand not in seen:
                             seen.add(cand)
+                            order.append(cand)
                             todo.append(cand)
                         break
-        cache[f] = out
-        return out
+        cache[f] = (out, order)
+        return cache[f]
+
+    def typedef_expansion(self, f, name, depth=0):
+        """What the typedef `name` visible in `f` stands for, spelled with C
+        built-ins only: (base, stars, dims) or None (unknown, not a plain
+        typedef, or two different typedefs of it in reach)."""
+        cache = self.__dict__.setdefault("_td_cache", {})
+        if (f, name) in cache:
+            return cache[(f, name)]
+        found = set()
+        pat = re.compile(r"\btypedef\b([^;{}()#]*\b%s\b[^;{}()#]*);" % re.escape(name))
+        for g in self.closure_files(f):
+            for m in pat.finditer(self._text_of(g)):
+                toks = re.findall(r"\[[^\]]*\]|\w+|\*", m.group(1))
+                dims = []
+                while toks and toks[-1].startswith("["):
+                    dims.insert(0, " ".join(toks.pop()[1:-1].split()))
+                if not toks or toks[-1] != name:
+                    continue
+                toks.pop()
+                stars = 0
+                while toks and toks[-1] == "*":
+                    toks.pop()
+                    stars += 1
+                if "*" in toks or not toks:
+                    found.add(None)
+                    continue
+                words = [t for t in toks if t not in ("const", "volatile")]
+                if len(words) != len(toks):
+                    found.add(None)   # keep cv-qualified typedefs out
+                    continue
+                base = " ".join(words)
+                if base in PRIM_SIZE or base == "void":
+                    found.add((base, stars, tuple(dims)))
+                elif len(words) == 1 and depth < 4:
+                    sub = self.typedef_expansion(f, base, depth + 1)
+                    if sub is None or (stars and sub[2]):
+                        found.add(None)
+                    else:
+                        found.add((sub[0], sub[1] + stars, tuple(dims) + sub[2]))
+                else:
+                    found.add(None)
+        res = found.pop() if len(found) == 1 else None
+        cache[(f, name)] = res
+        return res
+
+    def expansions(self, d):
+        """dep -> expansion for the deps of `d` that are not shared types,
+        or None when one of them cannot be spelled with built-ins."""
+        res = {}
+        for dep in d.deps():
+            if dep in self.shared:
+                continue
+            e = self.typedef_expansion(d.file, dep)
+            if e is None:
+                return None
+            for m in d.members:
+                if dep in m.type.split() and (m.fnptr or (e[2] and m.ptr)):
+                    return None   # array typedef behind a pointer: spell by hand
+            res[dep] = e
+        return res
 
     def _text_of(self, f):
         # self.text has string literals blanked, so read the file again
@@ -553,12 +666,41 @@ class Scan:
             # C++ mangles an unnamed struct differently from a named one
             return "anonymous typedef in C++ (name mangling)"
         inc = self.includes(d.file)
+        exp = self.expansions(d) or {}
         for dep in d.deps():
             hdr = self.shared.get(dep)
+            if hdr is None and dep in exp:
+                continue
             if hdr is None:
                 return f"needs {dep} (not shared yet)"
             if hdr not in inc:
                 return f"needs {dep} (file has its own)"
+        return None
+
+
+    def movable_ctx(self, d):
+        """Context mode: None when `d` (any struct/class whose whole text is
+        identical in every copy) may move, else the reason.  Types the body
+        needs that are not shared stay whatever the including file declares
+        before the #include, which is what the copy saw in place."""
+        if not ctx_eligible(d):
+            return d.skip or "not eligible"
+        saved = d.skip
+        d.skip = None
+        members = d.members
+        if d.members is None:
+            d.members = []
+        try:
+            r = self.movable(d)
+        finally:
+            d.skip = saved
+            d.members = members
+        if r:
+            return r
+        inc = self.includes(d.file)
+        for t in set(TOKEN_RE.findall(strip_comments(d.raw))):
+            if t != d.name and t in self.shared and self.shared[t] not in inc:
+                return f"needs {t} (file has its own)"
         return None
 
 
@@ -701,21 +843,38 @@ def cmd_groups(args):
             print(f"   {d.file}:{d.line}  {sc.movable(d) or 'movable'}")
 
 
-def header_text(d, shared):
+def expand_member(m, exp):
+    """(type, decl) of member `m` with typedef names from `exp` spelled out."""
+    t = m.type.split()
+    decl = m.decl
+    for i, w in enumerate(t):
+        if w in exp:
+            base, stars, dims = exp[w]
+            t[i] = base
+            if stars:
+                decl = "* " * stars + decl
+            if dims:
+                decl = decl + "".join(f" [ {x} ]" for x in dims)
+    return " ".join(t), decl
+
+
+def header_text(d, shared, exp=None):
+    exp = exp or {}
     guard = "GAME_TYPES_" + re.sub(r"\W", "_", d.name).upper() + "_H"
     lines = [f"#ifndef {guard}", f"#define {guard}", ""]
-    deps = sorted(d.deps())
+    deps = sorted(x for x in d.deps() if x not in exp)
     for dep in deps:
         lines.append(f'#include "{shared[dep]}"')
     if deps:
         lines.append("")
     lines.append(f"typedef {d.kind} {d.name} {{")
     for m in d.members:
-        decl = m.decl.replace(" [ ", "[").replace(" ]", "]").replace("[ ", "[")
+        mtype, decl = expand_member(m, exp)
+        decl = decl.replace(" [ ", "[").replace(" ]", "]").replace("[ ", "[")
         decl = re.sub(r"\* (?=[\w*(])", "*", decl)
         decl = decl.replace("( *", "(*").replace(" )", ")").replace("( ", "(").replace(" ,", ",")
         decl = decl.replace(" : ", " : ")
-        lines.append(f"    {m.type} {decl};")
+        lines.append(f"    {mtype} {decl};")
     lines.append(f"}} {d.name};")
     lines += ["", f"#endif /* {guard} */", ""]
     return "\n".join(lines)
@@ -730,8 +889,35 @@ def open_claim_paths():
     return set()
 
 
+def ctx_header_text(d, sc, type_names, also=()):
+    """`also`: names moved in the same batch whose header every user of `d`
+    includes as well; they are #included like shared types."""
+    guard = "GAME_TYPES_" + re.sub(r"\W", "_", d.name).upper() + "_H"
+    toks = set(TOKEN_RE.findall(strip_comments(d.raw)))
+    avail = dict(sc.shared)
+    for t in also:
+        avail.setdefault(t, f"{TYPES_INC}/{t}.h")
+    shared = sorted(t for t in toks if t != d.name and t in avail)
+    ctx = sorted(t for t in toks if t != d.name and t not in avail
+                 and t not in BUILTIN and (t in type_names or t in KNOWN_TYPEDEF))
+    lines = [f"#ifndef {guard}", f"#define {guard}", ""]
+    for t in shared:
+        lines.append(f'#include "{avail[t]}"')
+    if shared:
+        lines.append("")
+    if ctx:
+        lines.append("/* Declare before including (each user already does): "
+                     + ", ".join(ctx) + " */")
+        lines.append("")
+    lines.append(d.raw.replace("\r\n", "\n"))
+    lines += ["", f"#endif /* {guard} */", ""]
+    return "\n".join(lines)
+
+
 def cmd_apply(args):
     sc = Scan()
+    if args.context:
+        return cmd_apply_ctx(args, sc)
     groups = build_groups(sc)
     claimed = open_claim_paths()
     cands = []
@@ -744,6 +930,12 @@ def cmd_apply(args):
             continue
         mv = [d for d in v if sc.movable(d) is None]
         mv = [d for d in mv if d.file.replace("src/", "", 1) not in claimed]
+        # typedef names spelled out must mean the same thing in every copy
+        by_exp = defaultdict(list)
+        for d in mv:
+            by_exp[tuple(sorted((sc.expansions(d) or {}).items()))].append(d)
+        if by_exp:
+            mv = max(by_exp.values(), key=len)
         if len({d.file for d in mv}) < args.min_files:
             continue
         cands.append((len(mv), name, mv))
@@ -762,7 +954,7 @@ def cmd_apply(args):
         if not args.dry:
             os.makedirs(os.path.join(ROOT, TYPES_DIR), exist_ok=True)
             with open(os.path.join(ROOT, hdr), "w") as f:
-                f.write(header_text(mv[0], sc.shared))
+                f.write(header_text(mv[0], sc.shared, sc.expansions(mv[0])))
         for d in mv:
             edits[d.file].append(d)
     nrep = 0
@@ -785,6 +977,56 @@ def cmd_apply(args):
         print(f"{name}: {n} definitions -> {TYPES_DIR}/{name}.h")
     print(f"{len(made)} types, {nrep} definitions replaced in {len(edits)} files"
           + (" (dry run)" if args.dry else ""))
+
+
+def cmd_apply_ctx(args, sc):
+    claimed = open_claim_paths()
+    type_names = {d.name for d in sc.defs if d.name}
+    groups = defaultdict(list)
+    for d in sc.defs:
+        if d.name and d.name not in sc.shared and sc.movable_ctx(d) is None \
+                and d.file.replace("src/", "", 1) not in claimed:
+            groups[ctx_key(d)].append(d)
+    best = {}
+    for k, v in sorted(groups.items(), key=lambda kv: (-len(kv[1]), kv[0][1])):
+        if len({d.file for d in v}) >= args.min_files and (not args.name or k[1] in args.name):
+            best.setdefault(k[1], v)
+    order = sorted(best.items(), key=lambda x: (-len(x[1]), x[0]))
+    if args.max_groups:
+        order = order[:args.max_groups]
+    edits = defaultdict(list)
+    files_of = {name: {d.file for d in mv} for name, mv in order}
+    for name, mv in order:
+        mine = files_of[name]
+        also = [t for t, fs in files_of.items() if t != name and mine <= fs]
+        if not args.dry:
+            os.makedirs(os.path.join(ROOT, TYPES_DIR), exist_ok=True)
+            with open(os.path.join(ROOT, TYPES_DIR, name + ".h"), "w", encoding="latin-1", newline="\n") as f:
+                f.write(ctx_header_text(mv[0], sc, type_names, also))
+        for d in mv:
+            edits[d.file].append(d)
+        print(f"{name}: {len(mv)} definitions -> {TYPES_DIR}/{name}.h (context)")
+    nrep = _rewrite(edits, sc, args.dry)
+    print(f"{len(order)} types, {nrep} definitions replaced in {len(edits)} files"
+          + (" (dry run)" if args.dry else ""))
+
+
+def _rewrite(edits, sc, dry):
+    nrep = 0
+    for f, ds in edits.items():
+        with open(os.path.join(ROOT, f), encoding="latin-1", newline="") as fh:
+            text = fh.read()
+        if len(text) != len(sc.text[f]):
+            print(f"skip {f}: length changed by decoding", file=sys.stderr)
+            continue
+        for d in sorted(ds, key=lambda x: -x.start):
+            inc = f'#include "{TYPES_INC}/{d.name}.h"'
+            text = text[:d.start] + inc + _pad_lines(text, d, 0) + text[d.end:]
+            nrep += 1
+        if not dry:
+            with open(os.path.join(ROOT, f), "w", encoding="latin-1", newline="") as fh:
+                fh.write(text)
+    return nrep
 
 
 def _pad_lines(text, d, nl):
@@ -857,6 +1099,9 @@ def main():
     p.add_argument("--max-groups", type=int, default=0)
     p.add_argument("--min-files", type=int, default=2)
     p.add_argument("--dry", action="store_true")
+    p.add_argument("--context", action="store_true",
+                   help="whole-text identical definitions of any kind (classes, methods, bases); "
+                        "types they use stay declared by the including file")
     p.set_defaults(fn=cmd_apply)
     p = sub.add_parser("hashes")
     p.add_argument("mode", choices=["save", "diff"])

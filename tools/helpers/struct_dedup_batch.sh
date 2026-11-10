@@ -28,6 +28,13 @@ for round in 1 2 3 4 5 6; do
     grep -q "main.dol: OK" build/struct_dedup.log || ninja | grep -q "main.dol: OK" || { rm -f build/GNLJ82/main.dol; ninja | tail -1; }
     tail -1 build/struct_dedup_diff.log
     echo "batch: clean after round $round"
+    # headers whose every copy was reverted
+    for h in include/game/types/*.h; do
+      n=$(basename "$h")
+      if ! grep -rqF "game/types/$n" src include --include='*.c' --include='*.cpp' --include='*.h' --include='*.hpp' --include='*.inc'; then
+        rm -f "$h"; echo "batch: removed unused $h"
+      fi
+    done
     python3 tools/struct_dedup.py scan > /dev/null
     exit 0
   fi
