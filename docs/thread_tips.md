@@ -719,3 +719,22 @@ leave" without touching the tree.
 - New pattern: add a lever line (or a detector) to `CLASSES` in the tool and a
   case to `SELFTESTS` / `REPLAY`; update docs/regfix_coverage.md.
 - Census of all current non-matching functions: docs/reports/shapediag_census.md.
+
+### shapediag replay over every recorded fix (2026-11-10)
+
+`python3 tools/shapediag_replay.py run` takes every landed fix that has a
+commit (tools/patterns/hits.jsonl + the Codex table in regalloc_patterns.md,
+263 cases), extracts the tree just before the fix, compiles the TU with that
+tree's own command and asks shapediag what the diff was. `report` rates it
+against `EXPECT` (rule -> classes that carry that lever). Result in
+docs/reports/shapediag_replay.md, rows in docs/sweeps/shapediag/replay.jsonl:
+228 of 263 reproduce; 89 of those are register-only (regfix territory), 139
+differ in the instruction sequence. Rated: 82 hit, 4 miss, 15 colouring levers
+where shapediag showed another (real, but secondary) class, 3 structural
+levers invisible in the code (pool/data merges). The Codex notes were used to
+add about 25 lever lines to the classes (inline helper per operand, literal
+vs extern for reloaded constants, full switch case domain, `== 1` vs `> 0`).
+When a new fix lands with a hits.jsonl row, rerun `run` (restartable) and
+check that its row is a hit; if not, add the lever to the class it fired.
+Needs history: `git fetch --shallow-since=2026-10-24 origin main`; the
+trees take about 10 GB with `--keep`.
