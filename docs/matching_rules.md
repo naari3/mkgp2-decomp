@@ -24,6 +24,11 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 04:10Z (n3 technique): regalloc_patterns §90: a struct view
+  laid over a pool base and read past the end of that object changes copy
+  shape and scheduling. Declare the real objects (symbols.txt split) and let
+  the compiler pool them; `base + big offset` in asm is usually pooling
+  (CarObjectManager_RunKartKartCollisionSweep asm -> C).
 - 2026-11-10 03:35Z (n3 technique): regalloc_patterns §87: a local vector
   loaded twice in one block (instruction count 3 short). No spelling of `d[i]`
   keeps the loads apart; an access through the neighbouring object
