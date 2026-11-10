@@ -1,8 +1,15 @@
+#include "game/types/shared_data.h"
+#ifndef __MWERKS__ /* the names other units use (tools/alias_census.py) */
+/* In front of the headers on purpose: JvsReq has a member called `cmd`, and
+ * the macro has to rename it in its declaration as well as in its uses. */
+#define cmd jvsio_bss_8067E2A0
+#define tx jvsio_bss_80683280
+#endif
 #include <triforce/jvsio_private.h>
 #include <triforce/jvsio_packet_private.h>
 
-static JvsCmd cmd;
-static JvsTx tx;
+SHARED_BSS JvsCmd cmd;
+SHARED_BSS JvsTx tx;
 
 #define R tx.ring
 #define PUT(b) (tx.buf[tx.len++] = (b))

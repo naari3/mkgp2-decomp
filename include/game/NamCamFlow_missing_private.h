@@ -51,7 +51,9 @@ extern const float lbl_806DA580, lbl_806DA584, lbl_806DA58C;
 extern const float lbl_806DA5B4, lbl_806DA5B8, lbl_806DA5BC, lbl_806DA5C0;
 extern const float lbl_806DA5E0, lbl_806DA5E4, lbl_806DA5E8, lbl_806DA5EC;
 extern const float lbl_806DA5F0, lbl_806DA5F4, lbl_806DA5F8;
+#ifdef __MWERKS__ /* elsewhere kNamCamBorderA/B are defined under these names (NamCamFlow_layout_private.h) */
 extern const float NamCamFlow_rodata_803BE3C4[4][2], NamCamFlow_rodata_803BE3E4[4][2];
+#endif
 extern short NamCamFlow_data_804E52E0[8], NamCamFlow_data_804E52C0[8];
 extern short NamCamFlow_data_806D0010, NamCamFlow_data_806D0012;
 extern float NamCamFlow_data_806D0014;

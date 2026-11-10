@@ -28,8 +28,13 @@ static CoursePropData *reverseProps[7] = {
 static CoursePropData *longProps[3] = { &CoursePropCtor_rodata_8036D7B4, &CoursePropCtor_rodata_8036D804, 0 };
 static CoursePropData *longReverseProps[3] = { &CoursePropCtor_rodata_8036D7C8, &CoursePropCtor_rodata_8036D818, 0 };
 // RTTI hierarchy record followed by the list virtual table.
-static void *propTypeInfo[3] = { CoursePropCtor_data_806CFA50, 0, 0 };
-static void *propVtable[6] = {
+#include "game/types/shared_data.h"
+#ifndef __MWERKS__ /* the names other units use (tools/alias_census.py) */
+#define propTypeInfo sdata_806CF750_data_804911A0
+#define propVtable Scene_8016E1C0_data_804911AC
+#endif
+SHARED_STATIC void *propTypeInfo[3] = { CoursePropCtor_data_806CFA50, 0, 0 };
+SHARED_STATIC void *propVtable[6] = {
     CoursePropCtor_data_806CFA58, 0, (void *)fn_8016E358, (void *)fn_8016E308,
     (void *)fn_8016E1C0, (void *)fn_8016A26C
 };

@@ -1,8 +1,9 @@
 #include "game/ItemBoxConstruct_private.h"
 // Original file-static string pool; direct references preserve the pooled base.
-static const char lbl_8036D588[] = "clKPBubble";
-static const char lbl_8036D594[] = "clMapEffectParts";
-static const char lbl_8036D5A8[] = " DeleteMapEffect : clKPBubble\n";
+#include "game/types/shared_data.h"
+SHARED_STATIC const char lbl_8036D588[] = "clKPBubble";
+SHARED_STATIC const char lbl_8036D594[] = "clMapEffectParts";
+SHARED_STATIC const char lbl_8036D5A8[] = " DeleteMapEffect : clKPBubble\n";
 static const char lbl_8036D5C8[] = " CreateMapEffect : clKPBubble\n";
 static const char lbl_8036D5E8[] = "red_sphere.dat";
 static const char lbl_8036D5F8[] = "bubble_fire.dat";

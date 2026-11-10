@@ -81,8 +81,13 @@ static const char *const selectModels[13] = { modelName13, modelName14, modelNam
 static const float selectScale[3] = { 3.5999999046325684f, 0.0f, 0.0f };
 static const short characterAnims[14] = { 7486, 7487, 7488, 7489, 7490, 7491, 7492, 7493, 7494, 7495, 7496, 5785, 5786, 0 };
 static const int statAnims[5] = { 5812, 5811, 5810, 5809, 5808 };
-static const char className[12] = "clFlowChara";
-static const char baseClassName[16] = "clFlowProcess";
+#include "game/types/shared_data.h"
+#ifndef __MWERKS__ /* the names other units use (tools/alias_census.py) */
+#define baseClassName lbl_8039B1C8
+#define className clFlowChara
+#endif
+SHARED_STATIC const char className[12] = "clFlowChara";
+SHARED_STATIC const char baseClassName[16] = "clFlowProcess";
 static const char jointName[28] = "demo_chara_kart_null_joint";
 
 extern "C" {

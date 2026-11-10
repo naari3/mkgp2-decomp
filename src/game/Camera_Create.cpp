@@ -37,8 +37,12 @@ void HSD_CObjSetNear(HSD_CObj *cobj, float near);
 void HSD_CObjSetFar(HSD_CObj *cobj, float far);
 }
 
-static const char lbl_802E9D38[] = "clShadow";
-static const char callback_name[] = "clCallback";
+#include "game/types/shared_data.h"
+#ifndef __MWERKS__ /* the names other units use (tools/alias_census.py) */
+#define callback_name lbl_802E9D44
+#endif
+SHARED_STATIC const char lbl_802E9D38[] = "clShadow";
+SHARED_STATIC const char callback_name[] = "clCallback";
 static const char shadow_header[] = "shadow.h";
 static const char infinite_message[] = "LOBJ_INFINITE\n";
 static const char point_spot_message[] = "LOBJ_POINT or SPOT\n";

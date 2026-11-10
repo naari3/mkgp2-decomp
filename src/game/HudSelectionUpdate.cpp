@@ -48,7 +48,11 @@ void fn_8024584C(); void fn_80245834();
 }
 static const char *internationalLabels[13] = {lbl_806DBEE0,HudSelectionUpdate_rodata_803EF668,lbl_806DBEE8,lbl_806DBEF0,lbl_806DBEF8,HudSelectionUpdate_rodata_803EF674,HudSelectionUpdate_rodata_803EF680,HudSelectionUpdate_rodata_803EF68C,HudSelectionUpdate_rodata_803EF698,HudSelectionUpdate_rodata_803EF6A4,HudSelectionUpdate_rodata_803EF6B0,HudSelectionUpdate_rodata_803EF6BC,HudSelectionUpdate_rodata_803EF6C8};
 static const char *japaneseLabels[13] = {HudSelectionUpdate_rodata_803EF6D4,HudSelectionUpdate_rodata_803EF6E0,HudSelectionUpdate_rodata_803EF6EC,HudSelectionUpdate_rodata_803EF6F8,HudSelectionUpdate_rodata_803EF704,HudSelectionUpdate_rodata_803EF710,lbl_806DBF00,HudSelectionUpdate_rodata_803EF71C,lbl_806DBF08,HudSelectionUpdate_rodata_803EF728,lbl_806DBF10,HudSelectionUpdate_rodata_803EF734,HudSelectionUpdate_rodata_803EF740};
-static void *hudTypeInfo[3] = {lbl_806D0840,0,0};
+#include "game/types/shared_data.h"
+#ifndef __MWERKS__ /* the names other units use (tools/alias_census.py) */
+#define hudTypeInfo sdata_806D0728_data_804EE830
+#endif
+SHARED_STATIC void *hudTypeInfo[3] = {lbl_806D0840,0,0};
 static void *hudVtable[6] = {HudSelectionUpdate_data_806D0848,0,(void*)fn_80245B10,(void*)fn_80245850,(void*)fn_8024584C,(void*)fn_80245834};
 
 extern "C" void fn_80245850(HudSelection *self) {

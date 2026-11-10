@@ -66,7 +66,11 @@ static const char select_803BFA98[] = "select_monster.dat";
 static const char select_803BFAAC[] = "select_waluigi.dat";
 static const char select_mametch[] = "select_mametch.dat";
 static const void *const selectModels[13] = {select_803BF9D0, select_803BF9E4, select_803BF9F8, select_803BFA0C, select_803BFA20, select_803BFA34, select_803BFA48, select_803BFA5C, select_803BFA70, select_803BFA84, select_803BFA98, select_803BFAAC, select_mametch};
-static const char destroyLog[] = "clCharSelTank _dt\n";
+#include "game/types/shared_data.h"
+#ifndef __MWERKS__ /* the names other units use (tools/alias_census.py) */
+#define destroyLog lbl_803BFB08
+#endif
+SHARED_STATIC const char destroyLog[] = "clCharSelTank _dt\n";
 static const char createLog[] = "clCharSelTank _ct\n";
 
 struct ModelPair {

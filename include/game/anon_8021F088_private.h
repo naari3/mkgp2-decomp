@@ -185,10 +185,13 @@ extern char g_playerData[];
 extern void *lbl_806D1A60;
 extern const float CoinResultScene_Init_rodata_803C6A18[3];
 extern const float lbl_803C6A24[];
+#if defined(__MWERKS__) || !defined(ANON_8021F088_POOL_OWNER)
+/* views of objects that anon_8021F088_nm_8021F508.cpp defines as int[5], int[16] and float[12] */
 extern const Int5 lbl_803C6B70;
 extern const char lbl_803C6B84[0x40];
-extern const int lbl_803C6BC4[4];
 extern const float lbl_803C6BD4[3][4];
+#endif
+extern const int lbl_803C6BC4[4];
 extern const char lbl_803C6C2C[];
 extern const char lbl_803C6C58[];
 extern const char lbl_803C6C70[];
