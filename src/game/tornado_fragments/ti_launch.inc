@@ -45,7 +45,7 @@ extern unsigned int jumptable_804217D8[];
 #ifdef NON_MATCHING
 void TornadoLaunch_Tick(char *self);
 #else
-asm void TornadoLaunch_Tick(void);
+void TornadoLaunch_Tick(void);
 #endif
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */

@@ -7,6 +7,7 @@
 #pragma cplusplus on
 
 typedef struct { char c[256]; } TextBuf;
+#ifdef __MWERKS__
 typedef struct {
     char gpr;
     char fpr;
@@ -18,6 +19,9 @@ typedef __va_list va_list;
 extern "C" void *__va_arg(va_list v_list, int type);
 #define va_start(ap, fmt) ((void)fmt, __builtin_va_info(&ap))
 #define va_end(ap) ((void)0)
+#else
+#include <stdarg.h>
+#endif
 
 extern "C" {
 extern char lbl_8048EB44[];

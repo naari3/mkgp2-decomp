@@ -112,7 +112,7 @@ extern unsigned int lbl_80598A60[];
  */
 
 /* --- forward decls --- */
-asm void CardSave_Tick_CaptureAndStart(void);
+void CardSave_Tick_CaptureAndStart(void);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"

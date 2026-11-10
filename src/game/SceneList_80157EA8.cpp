@@ -226,7 +226,7 @@ void fn_80157BE8(ListIter *ret, List *l, ListIter *it);
 void fn_80157C60(void);
 void fn_80157D18(List *l);
 void fn_80157D30(void);
-asm void fn_80157DE0(void);
+void fn_80157DE0(void);
 void fn_80157EA8(List *l);
 DataBuf *dtor_80157EC0(DataBuf *self, short flag);
 void fn_80157F1C(DrawScene *self);

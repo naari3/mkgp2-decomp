@@ -222,7 +222,7 @@ extern unsigned int jumptable_803FF4E0[];
 #ifdef NON_MATCHING
 void ItemEffectBus_ApplyItemEventClear(ItemEffectBus *bus, unsigned int event);
 #else
-asm void ItemEffectBus_ApplyItemEventClear(void);
+void ItemEffectBus_ApplyItemEventClear(void);
 #endif
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */

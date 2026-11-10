@@ -6,7 +6,6 @@ extern "C" const char lbl_8036DD5C[] = "magic_stick.dat";
 extern "C" const char lbl_8036DD6C[] = "magic_pink.dat";
 extern "C" const char lbl_8036DD7C[] = "magic_white.dat";
 #pragma force_active reset
-extern "C" 
 static inline void InitModels() {
     for (int i = 0; i < 3; i++) {
         lbl_80491224[i] = new clNormal3D(EffectFA_Ctor_data_80491218[i], 0);

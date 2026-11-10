@@ -626,7 +626,7 @@ void CGameCoin_Draw(CGameCoin *self);
 #ifdef NON_MATCHING
 extern "C" int CGameCoin_Update(CGameCoin *self);
 #else
-asm void CGameCoin_Update(void);
+void CGameCoin_Update(void);
 #endif
 struct DefeatDemo;
 void DefeatDemo_Update(DefeatDemo *self);

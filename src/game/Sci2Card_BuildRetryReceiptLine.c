@@ -1019,7 +1019,7 @@ extern unsigned int g_playerData_p3[];
 extern unsigned int lbl_80598A60_p3[];
 extern unsigned int lbl_805AC55C_p3[];
 #ifndef NON_MATCHING /* C version: end of this file */
-asm void card_rw_state_machine_short(void);
+void card_rw_state_machine_short(void);
 
 #pragma section R".extab_user"
 
@@ -1801,7 +1801,7 @@ extern unsigned int g_playerData_p4[];
 extern unsigned int lbl_80598A60_p4[];
 extern unsigned int lbl_805AC55C_p4[];
 #ifndef NON_MATCHING /* C version: end of this file */
-asm void card_rw_state_machine(void);
+void card_rw_state_machine(void);
 
 #pragma section R".extab_user"
 
@@ -2704,7 +2704,7 @@ extern unsigned int lbl_80598A60_p6[];
 extern unsigned int lbl_805AC55C_p6[];
 extern unsigned int lbl_805D275C_p6[];
 #ifndef NON_MATCHING /* C version: end of this file */
-asm void card_read_state_machine(void);
+void card_read_state_machine(void);
 
 #pragma section R".extab_user"
 

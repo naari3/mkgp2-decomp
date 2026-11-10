@@ -48,7 +48,7 @@ extern unsigned int lbl_8048DAA8[];
 #ifdef NON_MATCHING
 void fn_801232E0(void);
 #else
-asm void fn_801232E0(void);
+void fn_801232E0(void);
 #endif
 
 #pragma section R ".extab_user"

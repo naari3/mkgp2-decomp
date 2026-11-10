@@ -214,16 +214,16 @@ void fn_80157BE8(ListIter *ret, List *l, ListIter *it);
 ListPos fn_80157C60(List *l, const ListPos &pos, const ListValue &value);
 void fn_80157D18(List *l);
 ListPos fn_80157D30(List *l, ListPos first, ListPos last);
-asm void fn_80157DE0(void);
+void fn_80157DE0(void);
 void fn_80157EA8(List *l);
 DataBuf *dtor_80157EC0(DataBuf *self, short flag);
 void fn_80157F1C(DrawScene *self);
 void fn_80157FB4(void);
 void fn_801589BC(OptionMenu *self, int mode);
-asm void fn_80158CE4(void);
-asm void fn_8015915C(void);
-asm void fn_801596D4(void);
-asm void fn_80159BD0(void);
+void fn_80158CE4(void);
+void fn_8015915C(void);
+void fn_801596D4(void);
+void fn_80159BD0(void);
 
 #pragma section R ".extab_user"
 

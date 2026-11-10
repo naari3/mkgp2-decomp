@@ -104,7 +104,7 @@ extern unsigned int lbl_806D7A78;
 extern unsigned int lbl_806D7A88;
 extern void MemoryManager_TimedFree();
 #ifndef NON_MATCHING
-asm void __ct__8PoseCharFiiP4Vec3P4Vec3Pf(void);
+void __ct__8PoseCharFiiP4Vec3P4Vec3Pf(void);
 
 #pragma section R ".extab_user"
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; void *f9; unsigned int f10; void *f11; unsigned int f12; void *f13; } extab_fn_80143450 = { 0x404A0000, 0x00000074, 0x00000020, 0x00000094, 0x00000028, 0x0000017C, 0x00000030, 0x00000000, 0x8A800018, (void *)&MemoryManager_TimedFree, 0x8A800018, (void *)&MemoryManager_TimedFree, 0x8A800018, (void *)&MemoryManager_TimedFree };

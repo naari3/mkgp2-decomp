@@ -37,7 +37,8 @@ union GXFifoPipe {
     unsigned int u32;
     float f32;
 };
-volatile GXFifoPipe GXWGFifo : 0xCC008000;
+#include "game/types/at_address.h"
+volatile GXFifoPipe GXWGFifo AT_ADDRESS(0xCC008000);
 
 static inline void GXPosition2f32(float x, float y) {
     GXWGFifo.f32 = x;

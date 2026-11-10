@@ -8814,14 +8814,21 @@ typedef void (*OSErrorHandler_p27)(OSError_p27 error_p27, OSContext_p27* context
 OSErrorHandler_p27 OSSetErrorHandler_p27(OSError_p27 error_p27, OSErrorHandler_p27 handler_p27);
 extern u32_p27 __OSFpscrEnableBits;
 extern OSErrorHandler_p27 __OSErrorTable[17];
-volatile u16_p27 __VIRegs[59] : (0xCC002000) ;
-volatile u32_p27 __PIRegs[12] : (0xCC003000) ;
-volatile u16_p27 __MEMRegs[64] : (0xCC004000) ;
-volatile u16_p27 __DSPRegs[] : (0xCC005000) ;
-volatile u32_p27 __DIRegs[] : (0xCC006000) ;
-volatile u32_p27 __SIRegs[0x100] : (0xCC006400) ;
-volatile u32_p27 __EXIRegs[0x40] : (0xCC006800) ;
-volatile u32_p27 __AIRegs[8] : (0xCC006C00) ;
+#include "game/types/at_address.h"
+volatile u16_p27 __VIRegs[59] AT_ADDRESS(0xCC002000);
+volatile u32_p27 __PIRegs[12] AT_ADDRESS(0xCC003000);
+volatile u16_p27 __MEMRegs[64] AT_ADDRESS(0xCC004000);
+#ifndef __MWERKS__
+extern /* no size: cannot be a definition without the absolute address */
+#endif
+volatile u16_p27 __DSPRegs[] AT_ADDRESS(0xCC005000);
+#ifndef __MWERKS__
+extern /* no size: cannot be a definition without the absolute address */
+#endif
+volatile u32_p27 __DIRegs[] AT_ADDRESS(0xCC006000);
+volatile u32_p27 __SIRegs[0x100] AT_ADDRESS(0xCC006400);
+volatile u32_p27 __EXIRegs[0x40] AT_ADDRESS(0xCC006800);
+volatile u32_p27 __AIRegs[8] AT_ADDRESS(0xCC006C00);
 typedef struct OSSram_p27 {
 u16_p27 checkSum_p27;
 u16_p27 checkSumInv_p27;
@@ -8940,8 +8947,8 @@ typedef int (*appGetNextCallback_p27)(void*, u32_p27*, u32_p27*);
 typedef void (*appInitCallback_p27)(void (*)(char*));
 typedef void* (*appGetEntryCallback_p27)();
 typedef void (*AppLoaderCallback_p27)(appInitCallback_p27*, appGetNextCallback_p27*, appGetEntryCallback_p27*);
-OSExecParams_p27* __OSExecParams : (0x800030F0) ;
-s32_p27 __OSAppLoaderOffset : (0x800030F4) ;
+OSExecParams_p27* __OSExecParams AT_ADDRESS(0x800030F0);
+s32_p27 __OSAppLoaderOffset AT_ADDRESS(0x800030F4);
 void OSExecv_p27(const char* dolfile_p27, const char** argv_p27);
 void OSExecl_p27(const char* dolfile_p27, const char* arg0_p27, ...);
 void OSProtectRange_p27(u32_p27 chan_p27, void* addr_p27, u32_p27 nBytes_p27, u32_p27 control_p27);
@@ -8961,18 +8968,18 @@ OSTimerCallback_p27 OSSetTimerCallback_p27(OSTimerCallback_p27 callback_p27);
 void OSInitTimer_p27(u32_p27 time_p27, u32_p27 mode_p27);
 void OSStartTimer_p27(void);
 void OSStopTimer_p27(void);
-u32_p27 __OSPhysicalMemSize : ((0x8000 << 16) | 0x0028) ;
-volatile int __OSTVMode : ((0x8000 << 16) | 0x00CC) ;
-OSThreadQueue_p27 __OSActiveThreadQueue : ((0x8000 << 16) | 0x00DC) ;
-OSThread_p27* __OSCurrentThread : ((0x8000 << 16) | 0x00E4) ;
-u32_p27 __OSSimulatedMemSize : ((0x8000 << 16) | 0x00F0) ;
-u32_p27 __OSBusClock : ((0x8000 << 16) | 0x00F8) ;
-u32_p27 __OSCoreClock : ((0x8000 << 16) | 0x00FC) ;
-volatile u16_p27 __OSDeviceCode : ((0x8000 << 16) | 0x30E6) ;
-u16_p27 __OSWirelessPadFixMode : ((0x8000 << 16) | 0x30E0) ;
-OSThread_p27* __gUnkThread1 : ((0x8000 << 16) | 0x00D8) ;
-int __gUnknown800030C0[2] : ((0x8000 << 16) | 0x30C0) ;
-u8_p27 __gUnknown800030E3 : ((0x8000 << 16) | 0x30E3) ;
+u32_p27 __OSPhysicalMemSize AT_ADDRESS(((0x8000 << 16) | 0x0028));
+volatile int __OSTVMode AT_ADDRESS(((0x8000 << 16) | 0x00CC));
+OSThreadQueue_p27 __OSActiveThreadQueue AT_ADDRESS(((0x8000 << 16) | 0x00DC));
+OSThread_p27* __OSCurrentThread AT_ADDRESS(((0x8000 << 16) | 0x00E4));
+u32_p27 __OSSimulatedMemSize AT_ADDRESS(((0x8000 << 16) | 0x00F0));
+u32_p27 __OSBusClock AT_ADDRESS(((0x8000 << 16) | 0x00F8));
+u32_p27 __OSCoreClock AT_ADDRESS(((0x8000 << 16) | 0x00FC));
+volatile u16_p27 __OSDeviceCode AT_ADDRESS(((0x8000 << 16) | 0x30E6));
+u16_p27 __OSWirelessPadFixMode AT_ADDRESS(((0x8000 << 16) | 0x30E0));
+OSThread_p27* __gUnkThread1 AT_ADDRESS(((0x8000 << 16) | 0x00D8));
+int __gUnknown800030C0[2] AT_ADDRESS(((0x8000 << 16) | 0x30C0));
+u8_p27 __gUnknown800030E3 AT_ADDRESS(((0x8000 << 16) | 0x30E3));
 u32_p27 OSGetConsoleType_p27(void);
 void OSInit_p27(void);
 void OSRegisterVersion_p27(const char* id_p27);
@@ -9202,7 +9209,7 @@ s64_p27 s64_p27;
 f32_p27 f32_p27;
 f64_p27 f64_p27;
 } PPCWGPipe_p27;
-volatile PPCWGPipe_p27 GXWGFifo_p27 : (0xCC008000) ;
+volatile PPCWGPipe_p27 GXWGFifo_p27 AT_ADDRESS(0xCC008000);
 static inline void GXCmd1u8_p27(u8_p27 x_p27) { GXWGFifo_p27.u8_p27 = x_p27; }
 static inline void GXCmd1u16_p27(u16_p27 x_p27) { GXWGFifo_p27.u16_p27 = x_p27; }
 static inline void GXCmd1u32_p27(u32_p27 x_p27) { GXWGFifo_p27.u32_p27 = x_p27; }

@@ -151,7 +151,7 @@ extern unsigned int lbl_80598A60[];
  */
 
 /* --- forward decls --- */
-asm void card_save_trigger(void);
+void card_save_trigger(void);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"

@@ -284,7 +284,7 @@ const lbl_802EADBC_Pool KartDriver_InitFull_rodata_802EADBC = {
 #ifdef NON_MATCHING
 int KartDriver_InitFull(void *self, int id, int characterId, void *matrix, int slot, int a8, int mode);
 #else
-asm void KartDriver_InitFull(void);
+void KartDriver_InitFull(void);
 #endif
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */

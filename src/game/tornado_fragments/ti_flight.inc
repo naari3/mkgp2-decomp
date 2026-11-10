@@ -80,7 +80,7 @@ extern unsigned int Tornado_FlightTick_rodata_8032FE8C[];
 #ifdef NON_MATCHING
 void Tornado_FlightTick(char *self);
 #else
-asm void Tornado_FlightTick(void);
+void Tornado_FlightTick(void);
 #endif
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */

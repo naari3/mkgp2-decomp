@@ -1171,7 +1171,7 @@ static inline unsigned char ItemBus_TestFlags(ItemBusFlagsView *bus, unsigned lo
 #ifdef NON_MATCHING
 unsigned char KartItem_OnKartHit(KartItemHit *self, KartDriverHitView *victim);
 #else
-asm void KartItem_OnKartHit(void);
+void KartItem_OnKartHit(void);
 #endif
 void KartItem_PlayHitSE_DifferentVictim(KartItemHitSEView *self, void *victim, int channel);
 int CarObject_OnItemHit(KartItemOpsView *self, void *itemObj, int itemIdArg);
@@ -1186,20 +1186,20 @@ void KartItem_RenderPipelinedWithEffects(KartItemRenderView *self);
 #ifdef NON_MATCHING
 void KartItem_Tick(KartItemTickView *self);
 #else
-asm void KartItem_Tick(void);
+void KartItem_Tick(void);
 #endif
 #ifdef NON_MATCHING
 struct PfsKartView;
 void KartItem_PerFrameStep(struct PfsKartView *self, void *arg);
 #else
-asm void KartItem_PerFrameStep(void);
+void KartItem_PerFrameStep(void);
 #endif
 void CarObject_UpdateCoinSpeedBonus(KartItemOpsView *self);
 void CarObject_ProcessWarpAndDash(CarObjWarpView *self);
 #ifdef NON_MATCHING
 void CarObject_MainUpdate(void *self_, void *arg);
 #else
-asm void CarObject_MainUpdate(void *self, void *arg);
+void CarObject_MainUpdate(void *self, void *arg);
 #endif
 void CarObject_FrameUpdate(CarObjFrameView *self, void *arg);
 void CarObject_ApplyInput_AI(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3, float in4);
@@ -1471,32 +1471,32 @@ unsigned long Bitset_MaxSize(void);
 #ifdef NON_MATCHING
 void *fn_8005249C(void *self, short flag);
 #else
-asm void fn_8005249C(void);
+void fn_8005249C(void);
 #endif
 #ifdef NON_MATCHING
 unsigned char KartItem_TryDropCoinsAndPlaySE_AdjThunk(void *self, int count, unsigned char force);
 #else
-asm void KartItem_TryDropCoinsAndPlaySE_AdjThunk(void);
+void KartItem_TryDropCoinsAndPlaySE_AdjThunk(void);
 #endif
 #ifdef NON_MATCHING
 int fn_800524AC(void *self);
 #else
-asm void fn_800524AC(void);
+void fn_800524AC(void);
 #endif
 #ifdef NON_MATCHING
 unsigned char fn_800524B4(void *self, void *victim);
 #else
-asm void fn_800524B4(void);
+void fn_800524B4(void);
 #endif
 #ifdef NON_MATCHING
 void KartItem_PlayHitSE_DifferentVictim_AdjThunk(void *self, void *victim, int channel);
 #else
-asm void KartItem_PlayHitSE_DifferentVictim_AdjThunk(void);
+void KartItem_PlayHitSE_DifferentVictim_AdjThunk(void);
 #endif
 #ifdef NON_MATCHING
 int KartItem_ApplyEffectToVictim_AdjThunk(void *self, void *itemObj, int itemIdArg);
 #else
-asm void KartItem_ApplyEffectToVictim_AdjThunk(void);
+void KartItem_ApplyEffectToVictim_AdjThunk(void);
 #endif
 void *dtor_800524CC(void *self, short flag);
 void StlList_RemoveByValueField(StlList *l, StlListValRef *key);

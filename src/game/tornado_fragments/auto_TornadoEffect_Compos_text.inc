@@ -31,7 +31,7 @@ typedef struct { float x, y, z; } TEVec3c;
 typedef union { float m[4][4]; float f[16]; } TEMtx;
 void TornadoEffect_ComposeRenderMatrix(void *e, const TEMtx *src, TEMtx *out);
 #else
-asm void TornadoEffect_ComposeRenderMatrix(void);
+void TornadoEffect_ComposeRenderMatrix(void);
 #endif
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */

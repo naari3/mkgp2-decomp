@@ -1,6 +1,7 @@
 /* 0x8017FF10: printf into the debug console's character grid at (x, y).
  * Characters outside the grid are clipped. */
 
+#ifdef __MWERKS__
 typedef struct __va_list_struct {
     char gpr;
     char fpr;
@@ -11,6 +12,9 @@ typedef struct __va_list_struct {
 typedef __va_list va_list;
 
 #define va_start(ap, fmt) ((void)fmt, __builtin_va_info(&ap))
+#else
+#include <stdarg.h>
+#endif
 
 extern char *lbl_806D1650;
 extern unsigned int lbl_806CFB98;

@@ -409,7 +409,7 @@ void fn_801478B0(StepHolder *self);
 #ifdef NON_MATCHING
 extern "C" void fn_80147900(HudResSet *set);
 #else
-asm void fn_80147900(struct HudResSet *o);
+void fn_80147900(struct HudResSet *o);
 #endif
 void fn_80147AF4(struct HudResSet *o);
 void fn_80147CE8(struct HudResSet *o);
@@ -419,7 +419,7 @@ struct RecordPanel *fn_80148648(struct RecordPanel *self, short flag);
 #ifdef NON_MATCHING
 extern "C" HudResSet *fn_80148A44(HudResSet *set, int coins, int param, int ly);
 #else
-asm void fn_80148A44(void);
+void fn_80148A44(void);
 #endif
 void *dtor_8014917C(void *self, short flag);
 void fn_801491DC(VObj *p);
@@ -437,11 +437,11 @@ HudPanel *fn_8014A890(HudPanel *self, short flag);
 struct StrPanel *fn_8014A8FC(struct StrPanel *self, short flag);
 void fn_8014AC48(void *self);
 void fn_8014AD7C(VObj *p);
-asm void fn_8014ADB4(void);
-asm void fn_8014BBE4(struct ResultPanel *self, float alpha);
+void fn_8014ADB4(void);
+void fn_8014BBE4(struct ResultPanel *self, float alpha);
 void fn_8014BF80(struct ResultPanel *self, float alpha);
 struct ResultPanel *fn_8014C308(struct ResultPanel *self, short flag);
-asm void fn_8014C53C(void);
+void fn_8014C53C(void);
 
 #pragma section R ".extab_user"
 

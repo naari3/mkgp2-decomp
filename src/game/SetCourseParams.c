@@ -2074,7 +2074,7 @@ extern unsigned int lbl_80598A60[];
 #ifdef NON_MATCHING
 void *RaceContext_InitDefaults(void *self);
 #else
-asm void RaceContext_InitDefaults(void);
+void RaceContext_InitDefaults(void);
 #endif
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */

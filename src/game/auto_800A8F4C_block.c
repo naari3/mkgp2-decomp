@@ -129,8 +129,8 @@ int WarpAutoRun_GetParam(WarpAutoRun *self, float *vx, float *vy, float *vz, flo
 void WarpAutoRun_OnEnter(void *self, float f1, float f2, float f3, float f4, float vx, float vy, float vz);
 unsigned char WarpZone_CheckEntry(WarpAutoRun *self, float x, float y, float z);
 int Field4NotMinusOne(WarpAutoRun *self);
-void *dtor_800A9CC8(void *this, short flag);
-void *dtor_800A9D2C(void *this, short flag);
+void *dtor_800A9CC8(void *self, short flag);
+void *dtor_800A9D2C(void *self, short flag);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 /* dtor_800A9CC8, WarpZone_CalcExitPosition, WarpDashMgr_Cleanup WarpDashMgr_GetOrCreate and WarpZone_CheckEntry promoted; CW auto-emits their extab/extabindex. */
@@ -506,27 +506,27 @@ WarpZoneObj::WarpZoneObj(WarpNode *n) : node(n) {
 }
 #pragma cplusplus off
 
-void *dtor_800A9CC8(void *this, short flag) {
-    if (this != 0) {
-        __destroy_arr((char *)this + 4, &dtor_80036E40, 0xc, 0x4);
+void *dtor_800A9CC8(void *self, short flag) {
+    if (self != 0) {
+        __destroy_arr((char *)self + 4, &dtor_80036E40, 0xc, 0x4);
         if (flag > 0) {
-            MemoryManager_TimedFree(this);
+            MemoryManager_TimedFree(self);
         }
     }
-    return this;
+    return self;
 }
 
 #pragma exceptions off
-void *dtor_800A9D2C(void *this, short flag) {
-    if (this) {
-        if (this) {
-            dtor_800AA69C(this, 0);
+void *dtor_800A9D2C(void *self, short flag) {
+    if (self) {
+        if (self) {
+            dtor_800AA69C(self, 0);
         }
         if (flag > 0) {
-            MemoryManager_TimedFree(this);
+            MemoryManager_TimedFree(self);
         }
     }
-    return this;
+    return self;
 }
 #pragma exceptions reset
 

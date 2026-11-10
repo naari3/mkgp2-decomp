@@ -2049,7 +2049,7 @@ extern const float lbl_806D738C;
  */
 
 /* --- forward decls --- */
-asm void RivalRun_RivalInit(void);
+void RivalRun_RivalInit(void);
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */
 extern void MemoryManager_TimedFree();

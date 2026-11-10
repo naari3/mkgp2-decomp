@@ -29,14 +29,14 @@ extern void MemoryManager_TimedFree(void *);
 extern char clCallback_vtable_803F58E0[];  /* SceneRender base vtable @ 0x803F58E0 */
 
 #pragma exceptions on
-void *dtor_8003A71C(void *this, short flag) {
-    if (this != 0) {
-        *(char **)this = clCallback_vtable_803F58E0;
+void *dtor_8003A71C(void *self, short flag) {
+    if (self != 0) {
+        *(char **)self = clCallback_vtable_803F58E0;
         if (flag > 0) {
-            MemoryManager_TimedFree(this);
+            MemoryManager_TimedFree(self);
         }
     }
-    return this;
+    return self;
 }
 #pragma exceptions reset
 

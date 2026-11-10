@@ -1093,7 +1093,8 @@ struct FaceDrawSub {
 };
 #include "game/types/FaceDrawModel.h"
 union FaceDrawPipe { float f32; unsigned int u32; };
-volatile FaceDrawPipe GXWGFifo : 0xCC008000;
+#include "game/types/at_address.h"
+volatile FaceDrawPipe GXWGFifo AT_ADDRESS(0xCC008000);
 #define FIFO GXWGFifo
 extern "C" {
 extern const float lbl_806D6DE4, lbl_806D6DE8;

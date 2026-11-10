@@ -53,7 +53,7 @@ extern unsigned int Tachometer_bss_805D3320[];
 #ifdef NON_MATCHING
 int Tachometer_RenderDigits(void);
 #else
-asm void Tachometer_RenderDigits(void);
+void Tachometer_RenderDigits(void);
 #endif
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */

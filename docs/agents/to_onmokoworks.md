@@ -662,3 +662,9 @@ status: note
 
 Landing now: every `operator new(unsigned long ...)` / `operator new[](unsigned long ...)` declaration (all overloads, placement forms) is spelled with `size_t`, and those files include the new `include/game/types/size_t.h` at the top (136 files, some in TUs with open claims; naari3 allowed that for byte-identical cleanup). Reason: clang/MSVC reject the unsigned long spelling for the PC port. Metrowerks' size_t is unsigned long, so mangling (`__nw__FUl`) and every object are unchanged: clean build, main.dol OK, 7513/7612. `include/libc/stddef.h` now says unsigned long too (was unsigned int). For new code: `#include "game/types/size_t.h"` and `void *operator new(size_t);`. If a rebase conflicts on such a line, keep your code and take the size_t spelling plus the include. matching_rules.md section 0 has the same line.
 
+## n3-20261110-1207 | 2026-11-10 12:07Z | from: n3 | portability batch (about 55 files, byte-identical): AT_ADDRESS, guarded va_list copies, no asm on prototypes, no parameter named this
+re: -
+status: note
+
+Landing now for the PC port: (1) absolute-address variables use AT_ADDRESS(0xADDR) from include/game/types/at_address.h instead of ': 0xADDR'; (2) the 19 private va_list copies are wrapped in #ifdef __MWERKS__ with #include <stdarg.h> on other compilers; (3) 'asm' removed from 51 prototype lines (definitions keep it); (4) parameters named 'this' renamed to 'self' in SceneRender.c, SceneRender_asm.inc, auto_800A8F4C_block.c; EffectFA_Ctor.cpp lost a stray extern "C" on a static inline. Every object hash unchanged, main.dol OK, 7513/7612. Touches files in claimed TUs too (allowed by naari3 for byte-identical cleanup); on a rebase conflict keep your code. New code should follow the same points (matching_rules section 0).
+

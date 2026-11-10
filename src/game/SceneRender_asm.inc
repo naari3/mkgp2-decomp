@@ -186,17 +186,17 @@ extern char clShadow_vtable_803F58FC[];
 /* 0x8003AA58 size:0x74 */
 #pragma exceptions on
 #pragma dont_inline on
-void *SceneRender_Dtor(void *this, short flag) {
-    if (this != 0) {
-        *(void **)this = clShadow_vtable_803F58FC;
-        HSD_ShadowRemove(*(void **)((char *)this + 4));
-        *(void **)((char *)this + 4) = 0;
-        dtor_8003A71C(this, 0);
+void *SceneRender_Dtor(void *self, short flag) {
+    if (self != 0) {
+        *(void **)self = clShadow_vtable_803F58FC;
+        HSD_ShadowRemove(*(void **)((char *)self + 4));
+        *(void **)((char *)self + 4) = 0;
+        dtor_8003A71C(self, 0);
         if (flag > 0) {
-            MemoryManager_TimedFree(this);
+            MemoryManager_TimedFree(self);
         }
     }
-    return this;
+    return self;
 }
 #pragma dont_inline reset
 #pragma exceptions reset

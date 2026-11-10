@@ -1049,7 +1049,7 @@ extern unsigned int ClSound_InitSoundSystem_bss_80678378[];
 #ifdef NON_MATCHING
 int SoundMgr_Play(unsigned int id);
 #else
-asm void SoundMgr_Play(void);
+void SoundMgr_Play(void);
 #endif
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */

@@ -46,7 +46,7 @@ extern unsigned int TornadoItem_HoldTick_rodata_8032FA78[];
 #ifdef NON_MATCHING
 void TornadoItem_HoldTick(char *self);
 #else
-asm void TornadoItem_HoldTick(void);
+void TornadoItem_HoldTick(void);
 #endif
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */

@@ -1106,7 +1106,7 @@ struct RaceScene {
 void *fn_8014E0C4(int a);
 void fn_8014E618(AttractPanel *self);
 #ifndef NON_MATCHING
-asm void fn_8014E804(void);
+void fn_8014E804(void);
 #else /* NON_MATCHING */
 void fn_8014E804(struct StatusView *self);
 #endif /* NON_MATCHING */

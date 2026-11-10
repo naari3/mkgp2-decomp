@@ -83,7 +83,7 @@ extern void ResCtrl_Init(void *res);
 #ifdef NON_MATCHING
 void fn_8013AE20(CSAnim *n, float x, float y, float alpha);
 #else
-asm void fn_8013AE20(void);
+void fn_8013AE20(void);
 #endif
 
 inline void fn_8013BA78(CSAnim *n) {
