@@ -2310,6 +2310,105 @@ def neighbour_hint(rep):
     return out
 
 
+def late_pattern_hints(a, rep, src_text, d):
+    """Hints for regalloc_patterns 58/78 (float constant creation order), 64/85
+    (commutative operand order), 71 (inline return type), 79 (lfs/fmr copy
+    direction), 93 (inline `this` temps), from the listings, the diag report and
+    the source. -> [text]"""
+    import pragmasweep as ps
+    out = []
+    u = ps.Unit(a.unit)
+    sym = u.compiled_name(a.fn)
+    oo = Path(d) / "ours.o"
+    if not oo.exists():
+        oo = ROOT / f"build/{md.VERSION}/src/{u.obj}.o"
+    ours, tgt = _listings(oo, ROOT / f"build/{md.VERSION}/obj/{u.obj}.o", sym, a.fn)
+    norm = lambda x: re.sub(r"\s+", " ", x.strip())
+    if ours and len(ours) == len(tgt):
+        ours, tgt = [norm(x) for x in ours], [norm(x) for x in tgt]
+        # 64 / 85: same commutative instruction with the two sources exchanged
+        comm = r"(add|fmuls|fmul|fadds|fadd|mullw|and|or|xor) ([rf]\d+),([rf]\d+),([rf]\d+)$"
+        sw = []
+        for i, (x, y) in enumerate(zip(ours, tgt)):
+            m1, m2 = re.match(comm, x), re.match(comm, y)
+            if m1 and m2 and m1.group(1) == m2.group(1) and m1.group(3) != m1.group(4) \
+                    and (m1.group(3), m1.group(4)) == (m2.group(4), m2.group(3)):
+                sw.append((i, x, y))
+        if sw:
+            out.append("commutative instruction with its two sources exchanged: "
+                       + "; ".join(f"insn {i}: ours `{x}` | target `{y}`" for i, x, y in sw[:4])
+                       + ". The backend evaluates the LEFT operand first, and the first-evaluated value has the lower "
+                       "vreg. Swap the operands in the source; if that also swaps the registers, the target's second "
+                       "operand was already in a register: a named local that survived (`float rot = p->rot; a = K * "
+                       "rot;` under `#pragma opt_propagation off`, regalloc_patterns 64). For `add rT,rBase,rT` vs "
+                       "`add rT,rT,rIdx` on a table address see regalloc_patterns 85 (3), and for a three-term index "
+                       "enumerate all 12 groupings (84, leversweep).")
+        # 79: lfs fA,K ; fmr fB,fA  against  lfs fB,K ; fmr fA,fB (not necessarily adjacent)
+        def fcopies(lst):
+            last, res = {}, []
+            for i, x in enumerate(lst):
+                m = re.match(r"lfs (f\d+),", x)
+                if m:
+                    last[m.group(1)] = i
+                m = re.match(r"fmr (f\d+),(f\d+)$", x)
+                if m and m.group(2) in last and i - last[m.group(2)] <= 6:
+                    res.append((i, m.group(2), m.group(1)))
+            return res
+        fo, ft = {i: (s_, d_) for i, s_, d_ in fcopies(ours)}, {i: (s_, d_) for i, s_, d_ in fcopies(tgt)}
+        rev = [(i, fo[i], ft[i]) for i in fo if i in ft and fo[i] == ft[i][::-1]]
+        if rev:
+            out.append("float constant loaded into one variable and copied to the other, direction reversed ("
+                       + "; ".join(f"insn {i}: ours lfs {o[0]} + fmr {o[1]},{o[0]} | target lfs {t[0]} + fmr {t[1]},{t[0]}"
+                                   for i, o, t in rev[:3])
+                       + "): the frontend shares the two `= K` loads in a temp and the first coalescible copy takes it; "
+                       "a named variable stays the copy. Make the variable that must own the load the place where K "
+                       "is written: pass it as `Inline(..., dist = K)` with an `init` parameter in the inline "
+                       "(regalloc_patterns 79, the 78 lever). Casts and opt_propagation off do not help.")
+    cl = rep.get("classes", {})
+    sites = rep.get("sites", {})
+    span = ps.find_def(src_text, a.fn, mangled=sym)
+    body = src_text[span[1]:span[2]] if span else ""
+    f = cl.get("fpr")
+    if f and f.get("bad"):
+        g, w = f["g"], f["w"]
+        vol = [v for v in f["bad"] if re.fullmatch(r"f\d+", str(w.get(v))) and num(str(w.get(v))) < 14]
+        consts = [v for v in vol if any(x[1] in ("lfs", "lfd") and ("lbl_" in x[2] or "@" in x[2])
+                                        and md.pc_regs(x[1], x[2])[:1] == [v] for x in sites.get(v, []))]
+        if len(consts) >= 1 and len(vol) >= 2:
+            order = sorted(vol, key=lambda v: -num(str(w[v])))
+            out.append("volatile FPRs of float constants/temps are off (" + ", ".join(f"{v}->{w[v]}" for v in vol[:6])
+                       + "). Volatile temps are coloured highest vreg first and take the lowest free register, so the "
+                       "target registers sorted DESCENDING give the order in which the source must create the values: "
+                       + ", ".join(f"{v}({w[v]})" for v in order[:6])
+                       + ". Constants are created in expression order (left operand first), the loads are scheduled "
+                       "later. Write the computation as one expression in that order, or put the earlier statement's "
+                       "assignment inside the later expression (`a = (int)(255.0f * (t = 1.0f - t));`), with float "
+                       "literals rather than extern constants (regalloc_patterns 58, 78).")
+    gp = cl.get("gpr")
+    if gp and gp.get("bad"):
+        g = gp["g"]
+        temps = [v for v in gp["bad"] if str(g.names.get(v) or "").startswith("@") or not g.names.get(v)]
+        calls = re.findall(r"\b(\w+)\s*\[[^\]]+\]\s*->\s*(\w+)\s*\(", body)
+        from collections import Counter
+        rep_m = [f"{k[0]}[i]->{k[1]}()" for k, n in Counter(calls).items() if n >= 3]
+        if temps and rep_m:
+            out.append(f"repeated inline method calls on array elements ({', '.join(rep_m[:3])}): each call's `this` is a "
+                       "frontend temp (high vreg, coloured first) and can take the register an address/CSE temp wants. "
+                       "Load each object into ONE reused block-local pointer and call through it "
+                       "(`{ T *s; s = arr[0]; s->Set(x, y); s = arr[1]; s->Set(x, y); ... }`): a named local is numbered "
+                       "below every temp. One local per call does not work (regalloc_patterns 93).")
+        narrow = sorted({m.group(2) for m in re.finditer(
+            r"\bstatic\s+inline\s+(unsigned\s+char|bool|u8|char|unsigned\s+short|u16)\s+(\w+)\s*\(", src_text)
+            if re.search(r"\b" + re.escape(m.group(2)) + r"\s*\(", body)})
+        if narrow:
+            out.append(f"the function uses inline(s) with a narrow return type ({', '.join(narrow[:4])}): the return type is a "
+                       "lever. Returning `int` moves the truncation to the assignment and the flag is coloured one slot "
+                       "earlier; returning `unsigned int` into an `int` local keeps a `mr rSaved,r0` copy that a "
+                       "ternary or an int-returning inline coalesces away (regalloc_patterns 71; double bool "
+                       "conversion through a `bool` parameter of an inline member: 94 (2)).")
+    return out
+
+
 def shape_hints(a, rep, src_text):
     """Cheap source-shape hints for patterns landed 11-09 (regalloc_patterns 52-54,
     float literals). -> [text]"""
@@ -2461,7 +2560,8 @@ def print_levers(a, rep, src_text, d, ext):
                   "copy back into `li` for named locals of the function; equal `li` are merged again only for compiler "
                   "temporaries, and locals of an INLINED function are such temporaries. Move the two variables (and the "
                   "code using them) into a static inline. A chained assignment `d = c = N` with both modified in place "
-                  "also gives the pair (fn_80222968 note in docs/gave_up.md).")
+                  "also gives the pair (fn_80222968 note in docs/gave_up.md). At a loop entry (`li i,0; mr off,i` for the "
+                  "strength-reduced offset of `arr[i]`) the loop itself sits in an inline (regalloc_patterns 94 (1)).")
         if any(k == "mr-li" for *_, k in lm):
             print("  Ours copies where the target loads the constant twice: the two variables are named locals of the "
                   "function itself in the original, not locals of an inline.")
@@ -2501,6 +2601,15 @@ def print_levers(a, rep, src_text, d, ext):
               "r31 down. Inline locals are numbered in reverse declaration order; block locals inside the inline come "
               "before them; two inlines never interleave, so a vreg coloured BETWEEN locals of another inline means "
               "both belong to one inline (merge the branches into one inline with if/else).")
+    try:
+        lp = late_pattern_hints(a, rep, src_text, d)
+    except Exception as e:  # noqa: BLE001 - advice only
+        lp = []
+        print(f"[regfix] pattern hint: {e}")
+    if lp:
+        print("\n== pattern hints (regalloc_patterns 58, 64, 71, 78, 79, 85, 93) ==")
+        for t in lp:
+            print("  " + t)
     try:
         sh = shape_hints(a, rep, src_text)
     except Exception as e:  # noqa: BLE001 - advice only
