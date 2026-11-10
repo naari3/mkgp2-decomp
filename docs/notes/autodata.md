@@ -40,13 +40,13 @@ into its TU, and move the range in splits.txt.
    initialiser with that type.
 
 `python3 tools/autodata.py report` prints bytes per section: no C definition /
-defined but `unk` / typed. State on 2026-11-10 after the first run (252 units):
+defined but `unk` / typed. State on 2026-11-10 (263 units):
 
-| | bytes |
-|---|---|
-| no C definition yet | 137,668 |
-| defined, layout unknown (`unk*`) | 138,305 |
-| defined and typed | 280,360 |
+| | first run | after the symbol fixes |
+|---|---|---|
+| no C definition yet | 137,668 | 1,584 (jump tables) |
+| defined, layout unknown (`unk*`) | 138,305 | 152,093 |
+| defined and typed | 280,360 | 402,635 |
 
 (The 131 KB sine table went to `LUT_Sine.c` directly, commit 44f521b.)
 
@@ -87,11 +87,22 @@ After `gen`: rerun configure with the flags from tools/cloud_setup.sh, `ninja`,
 main.dol OK. `gen` reads build/GNLJ82/asm, so build once before generating
 again.
 
+## Symbol fixes that were needed (symbols.txt)
+
+- An object that starts on an odd address right after another one is a wrong
+  split: `lbl_80383FFD` was the middle of a float (kart parameter block
+  `lbl_80383F28`, now 0xF0 bytes of float plus `lbl_80384018`), `"M"` + `"KA"`
+  was the card magic `"MKA"` (`lbl_806D34A4`, `lbl_806DA110`).
+- A one-byte variable in .sdata followed by zero bytes had the padding counted
+  in its size (`lbl_806CEF69`, `lbl_806CFBA1`, `lbl_806CFCA2`, `lbl_806CFCAB`:
+  size 1 now).
+- When one object cannot be placed (`left out:` in the gen output) the tool
+  leaves it in its auto unit and continues with a new unit after it.
+- MWCC ignores `__attribute__((aligned(8)))` on pointer types; the tool starts
+  a new unit at such an object instead.
+
 ## To do
 
-- Runs the tool skips: an object that starts on an odd address (dtk split a
-  string or byte table in the middle; fix the object in symbols.txt), and a
-  relocation inside an object that is not word-shaped.
 - Struct initialisers for the `/* decl: T */` objects, then the `unk` objects
   nobody declares (read how the code indexes them).
 - Moving definitions into their real TUs where that is possible.

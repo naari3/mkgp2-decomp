@@ -70,6 +70,8 @@ def load(sec, lo, hi):
             t = line.split(' # ')[0].strip()
             if t.startswith('.endobj'): objs.append(cur); cur = None; continue
             if t.startswith('.string '): cur['items'].append(('s', parse_string(t[8:].strip()[1:-1]) + b'\0'))
+            elif t.startswith('.ascii '):  # no terminator: plain bytes
+                cur['items'] += [('1', str(b)) for b in parse_string(t[7:].strip()[1:-1])]
             elif t.startswith('.string16 '):  # dtk data:wstring: UTF-16BE + 0 terminator
                 cur['items'] += [('2', str(ord(c))) for c in parse_string(t[10:].strip()[1:-1]).decode('latin-1')] + [('2', '0')]
             elif t.startswith('.4byte '): cur['items'] += [('4', v.strip()) for v in t[7:].split(',')]

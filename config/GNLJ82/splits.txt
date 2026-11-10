@@ -606,6 +606,9 @@ game/VolumeCalibration.cpp:
 game/autodata/sdata2_806D2490.c:
 	.sdata2     start:0x806D2490 end:0x806D299C
 
+game/autodata/sdata_806CEDA0.c:
+	.sdata      start:0x806CEDA0 end:0x806CEFD0
+
 game/autodata/data_803F57E0.c:
 	.data       start:0x803F57E0 end:0x803F5BF4
 
@@ -2140,6 +2143,9 @@ game/TransitionEffect.cpp:
 	.data       start:0x803FE388 end:0x803FE3C0
 	.sdata2     start:0x806D2FD0 end:0x806D3060
 
+game/autodata/sdata2_806D3060.c:
+	.sdata2     start:0x806D3060 end:0x806D47D8
+
 game/autodata/data_803FE3C0.c:
 	.data       start:0x803FE3C0 end:0x803FE3D0
 
@@ -3460,6 +3466,12 @@ game/DrawEffect_Cb_WheelSpark_Bind4D.c:
 	extabindex  start:0x80022CD0 end:0x80022CDC
 	.text       start:0x800B75B8 end:0x800B7864
 	.sdata2     start:0x806D51B4 end:0x806D51BC
+
+game/autodata/sdata2_806D51BC.c:
+	.sdata2     start:0x806D51BC end:0x806D52E0
+
+game/autodata/sdata2_806D52E0.c:
+	.sdata2     start:0x806D52E0 end:0x806D5640
 
 game/DrawEffect_Cb_KartItem_Bind6E_3Phase.c:
 	extab       start:0x8000A7A0 end:0x8000A7A8
@@ -6928,6 +6940,15 @@ game/mapeffect/mapeffect.cpp:
 	.data       start:0x804914B8 end:0x804916C8
 	.sdata      start:0x806CFAD0 end:0x806CFB50
 
+game/autodata/sdata_806CFB50.c:
+	.sdata      start:0x806CFB50 end:0x806CFBA4
+
+game/autodata/sdata_806CFBA8.c:
+	.sdata      start:0x806CFBA8 end:0x806CFCAC
+
+game/autodata/sdata_806CFCB0.c:
+	.sdata      start:0x806CFCB0 end:0x806CFDF0
+
 game/mapobject/DistanceSwitchUpdate.cpp:
 	extab       start:0x80011878 end:0x80011880
 	extabindex  start:0x800268B8 end:0x800268C4
@@ -8434,6 +8455,9 @@ game/sprite/fn_801A1798.c:
 game/autodata/data_8049A208.c:
 	.data       start:0x8049A208 end:0x8049A748
 
+game/autodata/rodata_80383CF8.c:
+	.rodata     start:0x80383CF8 end:0x803993A0
+
 game/fn_801B70EC.cpp:
 	extab       start:0x80012BA8 end:0x80012BB0
 	extabindex  start:0x80027824 end:0x80027830
@@ -8777,6 +8801,12 @@ game/clFlowCourse.cpp:
 	.data       start:0x8049B1E0 end:0x8049B4A8
 	.sdata      start:0x806CFE68 end:0x806CFE78
 	.sdata2     start:0x806D9ED8 end:0x806D9F70
+
+game/autodata/sdata2_806D9F70.c:
+	.sdata2     start:0x806D9F70 end:0x806DA700
+
+game/autodata/sdata_806CFE78.c:
+	.sdata      start:0x806CFE78 end:0x806D0338
 
 game/fn_801D1800.cpp:
 	extab       start:0x80014EB4 end:0x80014EBC
@@ -11765,6 +11795,9 @@ game/ItemSelectAllowed.c:
 	extabindex  start:0x8002AD70 end:0x8002AD7C
 	.text       start:0x8023C8B0 end:0x8023CC74
 	.rodata     start:0x803DC378 end:0x803DC530
+
+game/autodata/rodata_803DC530.c:
+	.rodata     start:0x803DC530 end:0x803E5878
 
 game/SpritePairOwner.cpp:
 	extab       start:0x8001CAB4 end:0x8001CADC
