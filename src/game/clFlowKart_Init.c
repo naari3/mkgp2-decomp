@@ -196,18 +196,38 @@ extern "C" {
 extern const float lbl_806DA13C;
 extern const float lbl_806DA140;
 extern const float lbl_806DA144;
+#ifdef __MWERKS__
 extern char *g_pInputState;
+#else /* this namespace sees g_pInputState with another type: a view of the same object */
+static char * &g_pInputState = *(char * *)&::g_pInputState;
+#endif
+#ifdef __MWERKS__
 extern int g_characterId;
+#else /* this namespace sees g_characterId with another type: a view of the same object */
+static int &g_characterId = *(int *)&::g_characterId;
+#endif
 extern int g_gameMode;
 extern unsigned char g_playerData[];
+#ifdef __MWERKS__
 extern int g_kartEnhancedUnlockThreshold[];
+#else /* this namespace sees g_kartEnhancedUnlockThreshold with another type: a view of the same object */
+static int *const g_kartEnhancedUnlockThreshold = (int *)::g_kartEnhancedUnlockThreshold;
+#endif
 extern void *GetInputManager(void);
 extern void InputMgr_GetPlayer(void *mgr, int idx);
 extern void SetRumbleMode(int a, int b, int c);
+#ifdef __MWERKS__
 extern int GetCoinMilage(void *pd);
+#else /* this namespace declares GetCoinMilage with other types: a view of the same object */
+static inline int GetCoinMilage(void * a0) { return (int)((int (*)(void *))&::GetCoinMilage)(a0); }
+#endif
 extern void SetKartVariant(int v);
 extern void fn_801B7C64(void);
+#ifdef __MWERKS__
 extern void SetScreenBrightness(float b);
+#else /* this namespace declares SetScreenBrightness with other types: a view of the same object */
+static inline void SetScreenBrightness(float a0) { ((void (*)(float))&::SetScreenBrightness)(a0); }
+#endif
 
 }
 #pragma exceptions on
@@ -285,7 +305,11 @@ typedef struct FlowKartDraw {
     char ctrl[4];
 } FlowKartDraw;
 extern "C" {
+#ifdef __MWERKS__
 extern int g_characterId;
+#else /* this namespace sees g_characterId with another type: a view of the same object */
+static int &g_characterId = *(int *)&::g_characterId;
+#endif
 extern short clFlowKart_Init_data_8049BBA8[];
 extern const float lbl_806DA148, lbl_806DA14C, lbl_806DA150, lbl_806DA154;
 void fn_8011FAB8(void);
@@ -372,24 +396,52 @@ struct FlowUpdateView {
     FlowSprite* sprites[6];
 };
 extern "C" {
+#ifdef __MWERKS__
 extern FlowInput* g_pInputState;
+#else /* this namespace sees g_pInputState with another type: a view of the same object */
+static FlowInput* &g_pInputState = *(FlowInput* *)&::g_pInputState;
+#endif
+#ifdef __MWERKS__
 extern int g_characterId;
+#else /* this namespace sees g_characterId with another type: a view of the same object */
+static int &g_characterId = *(int *)&::g_characterId;
+#endif
 extern signed char lbl_806D184C, lbl_806D184D;
 extern const float lbl_806DA13C, lbl_806DA148, lbl_806DA158, lbl_806DA15C;
 extern const float lbl_806DA160, lbl_806DA164, lbl_806DA168, lbl_806DA16C, lbl_806DA170;
 void RumbleUpdate();
 void fn_801699D8(unsigned int, unsigned char);
+#ifdef __MWERKS__
 int SetScreenBrightness(float);
+#else /* this namespace declares SetScreenBrightness with other types: a view of the same object */
+static inline int SetScreenBrightness(float a0) { return (int)((unsigned char (*)(float))&::SetScreenBrightness)(a0); }
+#endif
 void fn_801B7CAC();
 int fn_801B87D8();
 int fn_801B8398(int);
+#ifdef __MWERKS__
 int clFlowKart_HandleConfirm(FlowUpdateView*);
+#else /* this namespace declares clFlowKart_HandleConfirm with other types: a view of the same object */
+static inline int clFlowKart_HandleConfirm(FlowUpdateView* a0) { return (int)((int (*)(FlowUpdateView*))&fk_confirm::clFlowKart_HandleConfirm)(a0); }
+#endif
+#ifdef __MWERKS__
 void clFlowKart_UpdateDisplay(FlowUpdateView*, int);
+#else /* this namespace declares clFlowKart_UpdateDisplay with other types: a view of the same object */
+static inline void clFlowKart_UpdateDisplay(FlowUpdateView* a0, int a1) { ((void (*)(FlowUpdateView*, int))&::clFlowKart_UpdateDisplay)(a0, a1); }
+#endif
 void KartMovement_ResetOnGoal(void*);
 void* KartDriver_Dtor(void*, short);
+#ifdef __MWERKS__
 FlowSprite* Sprite_Destroy(FlowSprite*, short);
+#else /* this namespace declares Sprite_Destroy with other types: a view of the same object */
+static inline FlowSprite* Sprite_Destroy(FlowSprite* a0, short a1) { return ((FlowSprite* (*)(FlowSprite*, short))&::Sprite_Destroy)(a0, a1); }
+#endif
 int Sprite_AdvanceAnim(FlowSprite*, float);
+#ifdef __MWERKS__
 int RenderObj_ItemStateMachine_Timed(void*, int, float, float);
+#else /* this namespace declares RenderObj_ItemStateMachine_Timed with other types: a view of the same object */
+static inline int RenderObj_ItemStateMachine_Timed(void* a0, int a1, float a2, float a3) { return (int)((unsigned char (*)(void*, int, float, float))&::RenderObj_ItemStateMachine_Timed)(a0, a1, a2, a3); }
+#endif
 }
 static inline FlowInput* CurrentFlowInput()
 {
@@ -536,11 +588,27 @@ struct SceneObject {
 
 extern "C" {
 extern char FKOwner_vtable_8049BBD0[];
+#ifdef __MWERKS__
 extern InputState *g_pInputState;
+#else /* this namespace sees g_pInputState with another type: a view of the same object */
+static InputState * &g_pInputState = *(InputState * *)&::g_pInputState;
+#endif
 void fn_80169C44(void);
+#ifdef __MWERKS__
 void SetScreenBrightness(float);
+#else /* this namespace declares SetScreenBrightness with other types: a view of the same object */
+static inline void SetScreenBrightness(float a0) { ((void (*)(float))&::SetScreenBrightness)(a0); }
+#endif
+#ifdef __MWERKS__
 void Sprite_Destroy(void *, int);
+#else /* this namespace declares Sprite_Destroy with other types: a view of the same object */
+static inline void Sprite_Destroy(void * a0, int a1) { ((void (*)(void *, int))&::Sprite_Destroy)(a0, a1); }
+#endif
+#ifdef __MWERKS__
 void KartDriver_Dtor(void *, int);
+#else /* this namespace declares KartDriver_Dtor with other types: a view of the same object */
+static inline void KartDriver_Dtor(void * a0, int a1) { ((void (*)(void *, int))&fk_update::KartDriver_Dtor)(a0, a1); }
+#endif
 void LObjList_Destroy(void *, int);
 void MemoryManager_TimedFree(void *);
 void fn_80120A08(int);

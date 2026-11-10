@@ -261,24 +261,72 @@ struct RaceScene {
 };
 
 extern "C" {
+#ifdef __MWERKS__
 extern char TaMode_FrameUpdate_rodata_80321980[];
+#else /* this namespace sees TaMode_FrameUpdate_rodata_80321980 with another type: a view of the same object */
+static char *const TaMode_FrameUpdate_rodata_80321980 = (char *)::TaMode_FrameUpdate_rodata_80321980;
+#endif
 extern char GameModeBase_vtable_8040E76C[];
+#ifdef __MWERKS__
 extern void *g_weatherSystem;
+#else /* this namespace sees g_weatherSystem with another type: a view of the same object */
+static void * &g_weatherSystem = *(void * *)&::g_weatherSystem;
+#endif
+#ifdef __MWERKS__
 extern CarObject *g_carObjects[];
+#else /* this namespace sees g_carObjects with another type: a view of the same object */
+static CarObject * *const g_carObjects = (CarObject * *)::g_carObjects;
+#endif
+#ifdef __MWERKS__
 extern void *g_itemSelects[];
+#else /* this namespace sees g_itemSelects with another type: a view of the same object */
+static void * *const g_itemSelects = (void * *)::g_itemSelects;
+#endif
+#ifdef __MWERKS__
 extern void *TaMode_FrameUpdate_bss_806D13A4;
+#else /* this namespace sees TaMode_FrameUpdate_bss_806D13A4 with another type: a view of the same object */
+static void * &TaMode_FrameUpdate_bss_806D13A4 = *(void * *)&::TaMode_FrameUpdate_bss_806D13A4;
+#endif
+#ifdef __MWERKS__
 extern CarObject *g_taGhostCar;
+#else /* this namespace sees g_taGhostCar with another type: a view of the same object */
+static CarObject * &g_taGhostCar = *(CarObject * *)&::g_taGhostCar;
+#endif
 extern void *TaMode_FrameUpdate_bss_806D1390;
+#ifdef __MWERKS__
 extern void *g_taSound;
+#else /* this namespace sees g_taSound with another type: a view of the same object */
+static void * &g_taSound = *(void * *)&::g_taSound;
+#endif
+#ifdef __MWERKS__
 extern HsdRefObj *TaMode_FrameUpdate_bss_806D13C8;
+#else /* this namespace sees TaMode_FrameUpdate_bss_806D13C8 with another type: a view of the same object */
+static HsdRefObj * &TaMode_FrameUpdate_bss_806D13C8 = *(HsdRefObj * *)&::TaMode_FrameUpdate_bss_806D13C8;
+#endif
+#ifdef __MWERKS__
 extern Deletable *lbl_806D10D0;
+#else /* this namespace sees lbl_806D10D0 with another type: a view of the same object */
+static Deletable * &lbl_806D10D0 = *(Deletable * *)&tafu::lbl_806D10D0;
+#endif
+#ifdef __MWERKS__
 extern Deletable *lbl_806D109C;
+#else /* this namespace sees lbl_806D109C with another type: a view of the same object */
+static Deletable * &lbl_806D109C = *(Deletable * *)&tafu::lbl_806D109C;
+#endif
 extern Deletable *g_courseData;
+#ifdef __MWERKS__
 extern void *g_raceCamera;
+#else /* this namespace sees g_raceCamera with another type: a view of the same object */
+static void * &g_raceCamera = *(void * *)&::g_raceCamera;
+#endif
 
 void fn_801B6B94(void);
 void fn_8016C634(void *p, int flag);
+#ifdef __MWERKS__
 void SetActiveCamera(void *cam, int flag);
+#else /* this namespace declares SetActiveCamera with other types: a view of the same object */
+static inline void SetActiveCamera(void * a0, int a1) { ((void (*)(void *, int))&::SetActiveCamera)(a0, a1); }
+#endif
 void fn_8020AF08(void *p, int flag);
 void ProcessSystemTick(const char *msg);
 void AI_SystemDtor(void *p, int flag);
@@ -298,13 +346,21 @@ void VfxSlotMgr_Shutdown(void);
 void *GetRaceContextPtr(void);
 void RankingTable_Init(void *ctx);
 void ClRomTable_PurgeAll(void);
+#ifdef __MWERKS__
 void SetPlayerCarObject(void *car);
+#else /* this namespace declares SetPlayerCarObject with other types: a view of the same object */
+static inline void SetPlayerCarObject(void * a0) { ((void (*)(void *))&::SetPlayerCarObject)(a0); }
+#endif
 void fn_8013A6F8(void);
 void CourseBgm_Free(void);
 void SceneDrawList_Reset(void);
 void SetResourceLoadingFlag(int flag);
 void clRom_PurgeAll(void);
+#ifdef __MWERKS__
 void SetCourseScene3D(void *scene);
+#else /* this namespace declares SetCourseScene3D with other types: a view of the same object */
+static inline void SetCourseScene3D(void * a0) { ((void (*)(void *))&::SetCourseScene3D)(a0); }
+#endif
 void MemoryManager_TimedFree(void *p);
 void MemoryManager_Free(void *p);
 void fn_8023E808(void *p, int flag);

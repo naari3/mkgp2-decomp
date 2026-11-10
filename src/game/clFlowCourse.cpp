@@ -14,6 +14,9 @@
 namespace course_rows {
 #include "game/C8CourseRowsPrivate.h"
 }
+#ifndef __MWERKS__ /* defined at the end of the file; declared here for the views in course_update */
+namespace course_rows { extern "C" { int fn_801CEB78(CourseRows *self, int index, int state); int fn_801CE918(CourseRows *self, int index); } }
+#endif
 
 /* === .data 0x8049B1E0 === */
 namespace course_data {
@@ -71,7 +74,11 @@ typedef struct CourseSel {
     float fadeF0;
 } CourseSel;
 
+#ifdef __MWERKS__
 extern CupNames clFlowCourse_data_8049B388[8];
+#else /* this namespace sees clFlowCourse_data_8049B388 with another type: a view of the same object */
+static CupNames *const clFlowCourse_data_8049B388 = (CupNames *)course_data::clFlowCourse_data_8049B388;
+#endif
 void fn_80121E10(void *ctrl);
 short GetCourseShortIdByCupAndMirror(int cup, int mirror);
 
@@ -221,20 +228,53 @@ static const ArrowLayout courseArrows[16] = {
     };
 
 extern "C" {
+#ifdef __MWERKS__
 extern CourseLayout clFlowCourse_data_8049B1E0[];
+#else /* this namespace sees clFlowCourse_data_8049B1E0 with another type: a view of the same object */
+static CourseLayout *const clFlowCourse_data_8049B1E0 = (CourseLayout *)course_data::clFlowCourse_data_8049B1E0;
+#endif
 extern short clFlowCourse_data_8049B388[][2];
 extern int g_gameMode, g_roundIndex, g_localPcbRole, lbl_806CF12C;
 extern signed char lbl_806D184C, lbl_806D184D;
 extern unsigned char g_playerData[];
 void RumbleUpdate();
+#ifdef __MWERKS__
 void fn_801CEB78(CourseFlow *, int, int);
 void fn_801CE918(CourseFlow *, int);
+#else /* this namespace declares them with other types: views of the same functions */
+static inline void fn_801CEB78(CourseFlow *a0, int a1, int a2) { ((void (*)(CourseFlow *, int, int))&course_rows::fn_801CEB78)(a0, a1, a2); }
+static inline void fn_801CE918(CourseFlow *a0, int a1) { ((void (*)(CourseFlow *, int))&course_rows::fn_801CE918)(a0, a1); }
+#endif
+#ifdef __MWERKS__
 void Sprite_SetAnimParam(CourseSprite *, int, short);
+#else /* this namespace declares Sprite_SetAnimParam with other types: a view of the same object */
+static inline void Sprite_SetAnimParam(CourseSprite * a0, int a1, short a2) { ((void (*)(CourseSprite *, int, short))&course_rows::Sprite_SetAnimParam)(a0, a1, a2); }
+#endif
+#ifdef __MWERKS__
 void Sprite_SetupAnim(CourseSprite *, int, int, int);
+#else /* this namespace declares Sprite_SetupAnim with other types: a view of the same object */
+static inline void Sprite_SetupAnim(CourseSprite * a0, int a1, int a2, int a3) { ((void (*)(CourseSprite *, int, int, int))&course_rows::Sprite_SetupAnim)(a0, a1, a2, a3); }
+#endif
+#ifdef __MWERKS__
 unsigned char Sprite_AdvanceAnim(CourseSprite *, float);
+#else /* this namespace declares Sprite_AdvanceAnim with other types: a view of the same object */
+static inline unsigned char Sprite_AdvanceAnim(CourseSprite * a0, float a1) { return (unsigned char)((unsigned char (*)(CourseSprite *, float))&course_rows::Sprite_AdvanceAnim)(a0, a1); }
+#endif
+#ifdef __MWERKS__
 void fn_801A0550(CourseSprite *);
+#else /* this namespace declares fn_801A0550 with other types: a view of the same object */
+static inline void fn_801A0550(CourseSprite * a0) { ((void (*)(CourseSprite *))&course_rows::fn_801A0550)(a0); }
+#endif
+#ifdef __MWERKS__
 void fn_8019FF6C(CourseSprite *, int);
+#else /* this namespace declares fn_8019FF6C with other types: a view of the same object */
+static inline void fn_8019FF6C(CourseSprite * a0, int a1) { ((void (*)(CourseSprite *, int))&course_rows::fn_8019FF6C)(a0, a1); }
+#endif
+#ifdef __MWERKS__
 void fn_80121E10(ResCtrl *);
+#else /* this namespace declares fn_80121E10 with other types: a view of the same object */
+static inline void fn_80121E10(ResCtrl * a0) { ((void (*)(ResCtrl *))&course_sel::fn_80121E10)(a0); }
+#endif
 short GetCourseShortIdByCupAndMirror(int, int);
 void fn_801699D8(int, int);
 void fn_801B7CAC();
@@ -351,7 +391,11 @@ void DebugPrintf(const char *, ...);
 void PreloadResource(int);
 void SetSyncTarget(int);
 short *fn_801A0310(CourseSprite *, int);
+#ifdef __MWERKS__
 void fn_80121E10(ResCtrl *);
+#else /* declared above as fn_80121E10(void *): a view of the same function */
+static inline void fn_80121E10(ResCtrl *a0) { ((void (*)(ResCtrl *))&course_sel::fn_80121E10)(a0); }
+#endif
 short GetCourseShortIdByCupAndMirror(int, int);
 int fn_801B8918(int);
 void InitBGM();

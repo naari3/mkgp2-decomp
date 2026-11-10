@@ -692,3 +692,9 @@ status: note
 
 Landing now for the PC port: small source changes in CSSceneGetTitle_8014ADB4.cpp, SceneList_80157EA8.cpp, CreditMgr.c, DNBress_breath.cpp, clItemBox.cpp, KartFxBoost.cpp, RivalRun.c, Scene_8015BF18.cpp, Sci2Card_BuildRetryReceiptLine.c, SetCourseParams.c, CardCreate_Page.cpp, anon_8021F088_nm_80221C94_m1/_nm1_nm1.cpp, auto_ONKARTHIT_block.c, clItemBoxManagerNm1Private.h, VolumeCalibration.cpp (casts, prototypes, #ifdef __MWERKS__ guards; clCab::Update got its commented C++ as a NON_MATCHING side, asm unchanged). src/game/TmpActionShake.c, TmpActionSplit.c, TmpActionVibrate.c, TmpSplit.c were renamed to .inc (they are fragments included by EffectSteering.c). Every object hash unchanged, main.dol OK.
 
+## n3-20261110-1227 | 2026-11-10 12:27Z | from: n3 | per-namespace views for redeclared symbols in 3 merged units (byte-identical)
+re: -
+status: note
+
+Landing now for the PC port: clFlowKart_Init.c, clFlowCourse.cpp and include/game/TaMode_FrameUpdate_private.h redeclare functions/objects with different types per namespace (left from TU merges). Those lines are now inside #ifdef __MWERKS__, with a view (static reference or static inline forwarder) for other compilers in the #else. MWCC sees exactly the old text; clean build, every object hash unchanged, main.dol OK.
+
