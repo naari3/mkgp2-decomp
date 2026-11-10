@@ -921,15 +921,6 @@ typedef struct BitsetRef {
 unsigned char Bitset_TestBit(Bitset *self, unsigned long idx);
 void Bitset_SetBit(Bitset *self, unsigned long idx, unsigned char val);
 
-/* sweep AABB config inside the lbl_802EBA18 rodata blob */
-typedef struct SweepCfgView {
-    char pad_0x0[0x41c];
-    Vec3 halfA;             /* 0x41c */
-    Vec3 centerA;           /* 0x428 */
-    Vec3 halfB;             /* 0x434 */
-    Vec3 centerB;           /* 0x440 */
-} SweepCfgView;
-
 /* --- views for ItemEffect_Trap / ItemEffect_Projectile --- */
 
 /* trap effect table entry (stride 0x18, lbl_802ED7BC) */
@@ -1286,9 +1277,16 @@ static const unsigned int lbl_802EBA18[255] = {
     0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000,
     0x42A6AAAB, 0x459C4000, 0x42A6AAAB,
 };
-static const float lbl_802EBE14[20] = {
-    0.625f, 0.5555556f, 0.1f, 0.0325f, 1.25f, 0.5555556f, 0.2f, 0.065f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f
+static const float lbl_802EBE14[8] = {
+    0.625f, 0.5555556f, 0.1f, 0.0325f, 1.25f, 0.5555556f, 0.2f, 0.065f
 };
+/* Initial values of the half-extent / centre vectors in
+ * CarObjectManager_RunKartKartCollisionSweep (kart A, then kart B). They are four
+ * separate objects: the function addresses them from the pooled .rodata base. */
+static const Vec3 lbl_802EBE34 = { 0.0f, 0.0f, 0.0f };
+static const Vec3 lbl_802EBE40 = { 0.0f, 0.0f, 0.0f };
+static const Vec3 lbl_802EBE4C = { 0.0f, 0.0f, 0.0f };
+static const Vec3 lbl_802EBE58 = { 0.0f, 0.0f, 0.0f };
 static const ItemRemapEntry lbl_802EBE64[7] = {
     {1, 119, 3, {23, 43, 62}},
     {0, 71, 2, {279, 23, -1}},
@@ -1453,7 +1451,7 @@ int ItemTable_FindEntryByIdStride12_v2(ItemCatEntry12 *tbl, int count, int itemI
 int ItemTable_FindEntryByIdStride24(ItemCatEntry24 *tbl, int count, int itemId);
 int ItemTable_FindEntryByIdStride20(ItemCatEntry20 *tbl, int count, int itemId);
 void CarObject_GetField304Vec3(Vec3 *out, CarObjAux304View *car);
-asm void CarObjectManager_RunKartKartCollisionSweep(void);
+void CarObjectManager_RunKartKartCollisionSweep(CarObjectManager *self);
 CarObjectManager *CarObjectManager_Dtor(CarObjectManager *self, short flag);
 Bitset *dtor_80052200(Bitset *self, short flag);
 unsigned char Bitset_TestBit(Bitset *self, unsigned long idx);
@@ -7805,247 +7803,139 @@ void CarObject_GetField304Vec3(Vec3 *out, CarObjAux304View *car) { /* 0x80051DD0
 }
 #pragma exceptions reset
 
-/* parked at 98.95% (5 probes): all 219 instructions content-identical, residue is a
- * 6-web callee-saved permutation (target bp2=r31 cfg=r30 na=r29 nb=r28 sent=r27 i=r26 vs
- * CW cfg=r31 i=r30 bp2=r29 na=r28 nb=r27 sent=r26; cfg/i pinned across decl orders and
- * scoping = allocator-internal ranking, ProcessWarpAndDash family) + r12 vcall chain temp
- * + one stw r4-vs-r23 copy pick. 98.95% paste-ready C in batch HANDOFF appendix A.
- * Win idioms proven here: volatile-field BitsetRef proxy pair keeps the dead ctor stores;
- * scr out-vec is float[4] (slot layout); half=cfg copy -> K*scr fills -> center=cfg copy
- * -> mt row fills statement order locks the fp webs. */
-asm void CarObjectManager_RunKartKartCollisionSweep(void) { /* 0x80051DEC size:0x36C */
-    nofralloc
-    stwu r1, -0x1d0(r1)
-    mflr r0
-    lis r4, lbl_802EBA18@ha
-    stw r0, 0x1d4(r1)
-    stmw r23, 0x1ac(r1)
-    mr r24, r3
-    addi r30, r4, lbl_802EBA18@l
-    lwz r3, 0x10(r3)
-    addi r0, r3, 0x1
-    stw r0, 0x10(r24)
-    lwz r3, 0x10(r24)
-    lwz r0, g_carObjectCount(r13)
-    cmpw r3, r0
-    blt CarObjectManager_RunKartKartCollisionSweep_L_80052144
-    li r0, 0x0
-    addi r3, r1, 0x84
-    stw r0, 0x10(r24)
-    addi r5, r1, 0x8
-    stb r0, 0x8(r1)
-    lwz r4, 0x4(r24)
-    stw r0, 0x84(r1)
-    stw r0, 0x88(r1)
-    stw r0, 0x8c(r1)
-    bl Bitset_Init
-    addi r25, r1, 0x84
-    li r23, 0x0
-    b CarObjectManager_RunKartKartCollisionSweep_L_80051E70
-    CarObjectManager_RunKartKartCollisionSweep_L_80051E58:
-    stw r25, 0x2c(r1)
-    mr r3, r25
-    li r5, 0x0
-    stw r4, 0x30(r1)
-    bl Bitset_SetBit
-    addi r23, r23, 0x1
-    CarObjectManager_RunKartKartCollisionSweep_L_80051E70:
-    lwz r0, 0x4(r24)
-    mr r4, r23
-    cmplw r23, r0
-    blt CarObjectManager_RunKartKartCollisionSweep_L_80051E58
-    lwz r29, 0xc(r24)
-    addi r27, r24, 0x8
-    addi r31, r1, 0x84
-    li r26, 0x0
-    b CarObjectManager_RunKartKartCollisionSweep_L_8005212C
-    CarObjectManager_RunKartKartCollisionSweep_L_80051E94:
-    stw r31, 0x24(r1)
-    mr r3, r31
-    lwz r28, 0xc(r24)
-    mr r4, r26
-    stw r26, 0x28(r1)
-    bl Bitset_TestBit
-    clrlwi. r0, r3, 24
-    bne CarObjectManager_RunKartKartCollisionSweep_L_80052124
-    addi r3, r1, 0x148
-    li r25, 0x0
-    li r4, -0x1
-    li r5, 0x0
-    bl fn_802091BC
-    lwz r3, 0x8(r29)
-    addi r4, r1, 0xc0
-    lwz r3, 0x28(r3)
-    addi r23, r3, 0x58
-    mr r3, r23
-    bl Mtx4x4_TransposeTo4x3
-    addi r3, r1, 0xc0
-    addi r4, r1, 0x74
-    bl HSD_MtxGetRotation
-    lfs f4, lbl_806D27AC(r2)
-    addi r3, r1, 0x148
-    lfs f2, 0x74(r1)
-    addi r4, r1, 0x5c
-    lfs f1, 0x78(r1)
-    addi r5, r1, 0x68
-    lfs f0, 0x7c(r1)
-    fmuls f3, f4, f2
-    lwz r7, 0x41c(r30)
-    fmuls f2, f4, f1
-    lwz r6, 0x420(r30)
-    fmuls f0, f4, f0
-    lwz r0, 0x424(r30)
-    stw r7, 0x68(r1)
-    lwz r7, 0x428(r30)
-    stw r6, 0x6c(r1)
-    lwz r6, 0x42c(r30)
-    stw r0, 0x70(r1)
-    lwz r0, 0x430(r30)
-    stfs f3, 0x68(r1)
-    lfs f1, lbl_806D2704(r2)
-    stfs f2, 0x6c(r1)
-    lfs f2, lbl_806D27B0(r2)
-    stfs f0, 0x70(r1)
-    lfs f3, lbl_806D2714(r2)
-    stw r7, 0x5c(r1)
-    stw r6, 0x60(r1)
-    stw r0, 0x64(r1)
-    lfs f0, 0x30(r23)
-    stfs f0, 0x5c(r1)
-    lfs f0, 0x34(r23)
-    stfs f0, 0x60(r1)
-    lfs f0, 0x38(r23)
-    stfs f0, 0x64(r1)
-    bl fn_802090F0
-    b CarObjectManager_RunKartKartCollisionSweep_L_80052110
-    CarObjectManager_RunKartKartCollisionSweep_L_80051F7C:
-    cmpw r26, r25
-    beq CarObjectManager_RunKartKartCollisionSweep_L_80052108
-    addi r3, r1, 0x84
-    stw r25, 0x20(r1)
-    mr r4, r25
-    stw r3, 0x1c(r1)
-    bl Bitset_TestBit
-    clrlwi. r0, r3, 24
-    bne CarObjectManager_RunKartKartCollisionSweep_L_80052108
-    addi r3, r1, 0xf0
-    li r4, -0x1
-    li r5, 0x0
-    bl fn_802091BC
-    lwz r3, 0x8(r28)
-    addi r4, r1, 0x90
-    lwz r3, 0x28(r3)
-    addi r23, r3, 0x58
-    mr r3, r23
-    bl Mtx4x4_TransposeTo4x3
-    addi r3, r1, 0x90
-    addi r4, r1, 0x4c
-    bl HSD_MtxGetRotation
-    lfs f4, lbl_806D27AC(r2)
-    addi r3, r1, 0xf0
-    lfs f2, 0x4c(r1)
-    addi r4, r1, 0x34
-    lfs f1, 0x50(r1)
-    addi r5, r1, 0x40
-    lfs f0, 0x54(r1)
-    fmuls f3, f4, f2
-    lwz r7, 0x434(r30)
-    fmuls f2, f4, f1
-    lwz r6, 0x438(r30)
-    fmuls f0, f4, f0
-    lwz r0, 0x43c(r30)
-    stw r7, 0x40(r1)
-    lwz r7, 0x440(r30)
-    stw r6, 0x44(r1)
-    lwz r6, 0x444(r30)
-    stw r0, 0x48(r1)
-    lwz r0, 0x448(r30)
-    stfs f3, 0x40(r1)
-    lfs f1, lbl_806D2704(r2)
-    stfs f2, 0x44(r1)
-    lfs f2, lbl_806D27B0(r2)
-    stfs f0, 0x48(r1)
-    lfs f3, lbl_806D2714(r2)
-    stw r7, 0x34(r1)
-    stw r6, 0x38(r1)
-    stw r0, 0x3c(r1)
-    lfs f0, 0x30(r23)
-    stfs f0, 0x34(r1)
-    lfs f0, 0x34(r23)
-    stfs f0, 0x38(r1)
-    lfs f0, 0x38(r23)
-    stfs f0, 0x3c(r1)
-    bl fn_802090F0
-    lwz r3, g_objCollChecker(r13)
-    cmplwi r3, 0x0
-    beq CarObjectManager_RunKartKartCollisionSweep_L_800520FC
-    addi r4, r1, 0x148
-    addi r5, r1, 0xf0
-    bl CollisionTest_CalcPenetration
-    lfs f0, lbl_806D26EC(r2)
-    fcmpo cr0, f1, f0
-    ble CarObjectManager_RunKartKartCollisionSweep_L_800520FC
-    lwz r3, 0x8(r29)
-    lwz r4, 0x8(r28)
-    lwz r12, 0x0(r3)
-    lwz r4, 0x2c(r4)
-    lwz r12, 0x3c(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x8(r28)
-    lwz r4, 0x8(r29)
-    lwz r12, 0x0(r3)
-    lwz r4, 0x2c(r4)
-    lwz r12, 0x3c(r12)
-    mtctr r12
-    bctrl
-    addi r3, r1, 0x84
-    stw r26, 0x18(r1)
-    mr r4, r26
-    li r5, 0x1
-    stw r3, 0x14(r1)
-    bl Bitset_SetBit
-    addi r3, r1, 0x84
-    stw r25, 0x10(r1)
-    mr r4, r25
-    li r5, 0x1
-    stw r3, 0xc(r1)
-    bl Bitset_SetBit
-    addi r3, r1, 0xf0
-    li r4, -0x1
-    bl dtor_80209180
-    b CarObjectManager_RunKartKartCollisionSweep_L_80052118
-    CarObjectManager_RunKartKartCollisionSweep_L_800520FC:
-    addi r3, r1, 0xf0
-    li r4, -0x1
-    bl dtor_80209180
-    CarObjectManager_RunKartKartCollisionSweep_L_80052108:
-    lwz r28, 0x4(r28)
-    addi r25, r25, 0x1
-    CarObjectManager_RunKartKartCollisionSweep_L_80052110:
-    cmplw r28, r27
-    bne CarObjectManager_RunKartKartCollisionSweep_L_80051F7C
-    CarObjectManager_RunKartKartCollisionSweep_L_80052118:
-    addi r3, r1, 0x148
-    li r4, -0x1
-    bl dtor_80209180
-    CarObjectManager_RunKartKartCollisionSweep_L_80052124:
-    lwz r29, 0x4(r29)
-    addi r26, r26, 0x1
-    CarObjectManager_RunKartKartCollisionSweep_L_8005212C:
-    cmplw r29, r27
-    bne CarObjectManager_RunKartKartCollisionSweep_L_80051E94
-    lwz r3, 0x8c(r1)
-    cmplwi r3, 0x0
-    beq CarObjectManager_RunKartKartCollisionSweep_L_80052144
-    bl MemoryManager_TimedFree
-    CarObjectManager_RunKartKartCollisionSweep_L_80052144:
-    lmw r23, 0x1ac(r1)
-    lwz r0, 0x1d4(r1)
-    mtlr r0
-    addi r1, r1, 0x1d0
-    blr
+/* Matched 2026-11-10 (regalloc_patterns 90). Levers: the four start vectors are separate
+ * .rodata objects addressed from the pooled base (an out-of-bounds view of lbl_802EBA18
+ * changes the 12-byte copies), the collide callback is a real virtual call, the index
+ * of the outer loop reaches the bitset calls as int so no shared (unsigned long)i temp
+ * is coalesced with it, and &bs is written at each use instead of a pointer local. */
+#pragma cplusplus on
+struct SweepKartBase {
+    virtual void v08(); virtual void v0C(); virtual void v10(); virtual void v14();
+    virtual void v18(); virtual void v1C(); virtual void v20(); virtual void v24();
+    virtual void v28(); virtual void v2C(); virtual void v30(); virtual void v34();
+    virtual void v38();
+    virtual void OnKartCollide(void *other);
+};
+#pragma exceptions off
+void CarObjectManager_RunKartKartCollisionSweep(CarObjectManager *self) {
+    CollProbe objA;
+    CollProbe objB;
+    float mtxA[12];
+    float mtxB[12];
+    Bitset bs;
+    float scrA[4];
+    Vec3 halfA;
+    Vec3 centerA;
+    float scrB[4];
+    Vec3 halfB;
+    Vec3 centerB;
+    BitsetRef ref1;
+    BitsetRef ref2;
+    BitsetRef ref3;
+    BitsetRef ref4;
+    BitsetRef ref5;
+    unsigned char flagFalse;
+    StlListNode *na;
+    StlListNode *nb;
+    StlListNode *sent;
+    int i;
+    int j;
+    float *mt;
+    int k;
+    Bitset *bp;
+    unsigned long n;                /* count temp for Bitset_Init */
+
+    self->frame = self->frame + 1;
+    if (self->frame < g_carObjectCount) {
+        return;
+    }
+    self->frame = 0;
+    flagFalse = 0;
+    n = self->list.count;
+    bs.cap = 0;
+    bs.size = 0;
+    bs.data = 0;
+    Bitset_Init(&bs, n, &flagFalse);
+    bp = &bs;
+    for (k = 0; k < self->list.count; k++) {
+        unsigned long uk = k;
+        ref1.b = bp;
+        ref1.i = uk;
+        Bitset_SetBit(bp, uk, 0);
+    }
+    {
+    na = self->list.tail;
+    sent = (StlListNode *)&self->list.head;
+        i = 0;
+    while (na != sent) {
+        ref2.b = &bs;
+        *(volatile int *)&ref2.i = i;
+        nb = self->list.tail;
+        if (!((unsigned char (*)(Bitset *, int))Bitset_TestBit)(&bs, i)) {
+            j = 0;
+            fn_802091BC(&objA, -1, 0);
+            mt = (float *)((char *)na->obj->body28 + 0x58);
+            Mtx4x4_TransposeTo4x3(mt, mtxA);
+            HSD_MtxGetRotation(mtxA, scrA);
+            halfA = lbl_802EBE34;
+            halfA.x = lbl_806D27AC * scrA[0];
+            halfA.y = lbl_806D27AC * scrA[1];
+            halfA.z = lbl_806D27AC * scrA[2];
+            centerA = lbl_802EBE40;
+            centerA.x = mt[12];
+            centerA.y = mt[13];
+            centerA.z = mt[14];
+            fn_802090F0(&objA, &centerA, &halfA, lbl_806D2704, lbl_806D27B0, lbl_806D2714);
+            while (nb != sent) {
+                if (i != j) {
+                    ref3.i = j;
+                    ref3.b = &bs;
+                    if (!Bitset_TestBit(&bs, j)) {
+                        fn_802091BC(&objB, -1, 0);
+                        mt = (float *)((char *)nb->obj->body28 + 0x58);
+                        Mtx4x4_TransposeTo4x3(mt, mtxB);
+                        HSD_MtxGetRotation(mtxB, scrB);
+                        halfB = lbl_802EBE4C;
+                        halfB.x = lbl_806D27AC * scrB[0];
+                        halfB.y = lbl_806D27AC * scrB[1];
+                        halfB.z = lbl_806D27AC * scrB[2];
+                        centerB = lbl_802EBE58;
+                        centerB.x = mt[12];
+                        centerB.y = mt[13];
+                        centerB.z = mt[14];
+                        fn_802090F0(&objB, &centerB, &halfB, lbl_806D2704, lbl_806D27B0, lbl_806D2714);
+                        if (g_objCollChecker) {
+                            if (CollisionTest_CalcPenetration(g_objCollChecker, &objA, &objB) > lbl_806D26EC) {
+                                ((SweepKartBase *)na->obj)->OnKartCollide(nb->obj->coll2c);
+                                ((SweepKartBase *)nb->obj)->OnKartCollide(na->obj->coll2c);
+                                *(volatile int *)&ref4.i = i;
+                                ref4.b = &bs;
+                                ((void (*)(Bitset *, int, unsigned char))Bitset_SetBit)(&bs, i, 1);
+                                ref5.i = j;
+                                ref5.b = &bs;
+                                Bitset_SetBit(&bs, j, 1);
+                                dtor_80209180(&objB, -1);
+                                break;
+                            }
+                        }
+                        dtor_80209180(&objB, -1);
+                    }
+                }
+                nb = nb->next;
+                j++;
+            }
+            dtor_80209180(&objA, -1);
+        }
+        na = na->next;
+        i++;
+    }
+    }
+    if (bs.data) {
+        MemoryManager_TimedFree(bs.data);
+    }
 }
+#pragma exceptions reset
+#pragma cplusplus off
 
 #pragma cplusplus on
 /* inlined std-list dtor chain: each inline level re-guards its `this` */

@@ -2426,3 +2426,38 @@ once with the real compiler.
 
 Sign: `stmw r19/r20`, many loops, only r20..r24 differ, regfix diag lists
 "want r20" for several unrelated temps.
+
+## 90. 12-byte struct copy comes out as load-load-store-store-load-store: the source is read out of bounds of its object (CarObjectManager_RunKartKartCollisionSweep, asm -> C, 98.95 parked -> 100, 11-10)
+
+Target copies each `Vec3` start value with three loads then three stores
+(`lwz r7/r6/r0 ... stw r7/r6/r0`, interleaved with the next copy and with the
+float multiplies). Ours gave `lwz, lwz, stw, stw, lwz, stw` with two
+registers, and the multiplies were scheduled after it. Source was the same
+`half = cfg->halfA;` in both cases. Cause: `cfg` was a struct view laid over
+`lbl_802EBA18[255]` and the fields sat at +0x41c, past the end of that array
+(inside the next object). For a load the compiler cannot place inside the
+object, the stack stores become dependencies of the third load (mwtrace:
+`LWZ ... preds=2`), which fixes the pairwise order.
+
+Fix = the real data layout: the values are separate `static const Vec3`
+objects (symbols.txt split of the neighbouring float table), referenced by
+name. Four objects in one function are addressed from the pooled `.rodata`
+base, so the code still uses `lbl_802EBA18 + 0x41c..`, as the target does.
+A `base + big offset` access in asm is usually this pooling, not a struct
+view of the first object.
+
+Other levers of the same function:
+
+- `lwz r12,0(r3); lwz r12,0x3c(r12)`: real virtual call, a base struct with
+  the virtuals inside `#pragma cplusplus on` (matching_rules 6).
+- loop counter `i` coloured second instead of last: it was coalesced with
+  the frontend CSE temp of `(unsigned long)i` shared by two call sites (mwtrace
+  `COALESCE r48 <- r38 named`). Passing `i` as int (function pointer cast for
+  those calls) removes the temp and `i` is coloured as a plain named local.
+  The first loop needs the opposite: `unsigned long uk = k;` used for both the
+  store and the call (target stores the argument copy r4).
+- `bp2 = &bs` as a local took a callee-saved register before the pool base;
+  writing `&bs` at each use lets the compiler hoist it itself (r31 first).
+
+Sign: struct copies in a different shape from an otherwise identical
+standalone probe; check whether the pointer really points inside its object.
