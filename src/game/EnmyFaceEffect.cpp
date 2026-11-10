@@ -1227,11 +1227,6 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
     FaceMtx copy;
     float rect[4];
     FaceDrawVec offset, eye;
-    FaceDrawVec *out, *q, *draw;
-    const FaceDrawVec *src, *p;
-    FaceMtx *matrix;
-    float *tex;
-    int i, j;
     if (!self->kart) return;
     if (self->scale <= lbl_806DB5E0) {
         if (self->sub->anim == 0) {
@@ -1270,14 +1265,14 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
         offset.x*=lbl_806DB5E8; offset.z*=lbl_806DB5E8;
     }
     if (self->left>0) {
-        draw=vertices;
-        out=draw;
-        src=sQuadNormal;
-        matrix=world;
-        for (i=0;i<2;++i) {
-            q=out;
-            p=src;
-            for (j=0;j<4;++j) { PSMTXMultVec(*matrix,p,q); ++p; ++q; }
+        FaceDrawVec *draw=vertices;
+        FaceDrawVec *out=draw;
+        const FaceDrawVec *src=sQuadNormal;
+        FaceMtx *matrix=world;
+        for (int i=0;i<2;++i) {
+            FaceDrawVec *q=out;
+            const FaceDrawVec *p=src;
+            for (int j=0;j<4;++j) { PSMTXMultVec(*matrix,p,q); ++p; ++q; }
             src+=4; ++matrix; out+=4;
         }
         if (!fn_8011D890(self->left,rect,0)) {
@@ -1285,100 +1280,104 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
             HSD_StateInvalidate(0x7e); return;
         }
         FillFaceUV(uv,rect);
-        tex=uv;
-        for (i=0;i<2;++i) { DrawFaceQuadPlain(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
+        float *tex=uv;
+        for (int i=0;i<2;++i) { DrawFaceQuadPlain(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
     }
     if (self->right>0) {
-        draw=vertices;
-        out=draw;
-        src=sQuadRight;
-        matrix=world;
-        for (i=0;i<2;++i) {
-            q=out;
-            p=src;
-            for (j=0;j<4;++j) { PSMTXMultVec(*matrix,p,q); ++p; ++q; }
+        FaceDrawVec *draw=vertices;
+        FaceDrawVec *out=draw;
+        const FaceDrawVec *src=sQuadRight;
+        FaceMtx *matrix=world;
+        for (int i=0;i<2;++i) {
+            FaceDrawVec *q=out;
+            const FaceDrawVec *p=src;
+            for (int j=0;j<4;++j) { PSMTXMultVec(*matrix,p,q); ++p; ++q; }
             src+=4; ++matrix; out+=4;
         }
         fn_8011D890(self->right,rect,0);
         FillFaceUV(uv,rect);
-        tex=uv;
-        for (i=0;i<2;++i) { DrawFaceQuad(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
+        float *tex=uv;
+        for (int i=0;i<2;++i) { DrawFaceQuad(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
     }
     FaceDrawVec *vertexBase=vertices;
     float *uvBase;
     const FaceDrawVec *alternateBase=sQuadWide;
-    const FaceDrawVec *normal=sQuadNormal;
-    const FaceDrawVec *alternate=alternateBase;
-    const FaceDrawVec *standard=sQuadStandard;
-    out=vertexBase;
-    matrix=world;
-    for (i=0;i<2;++i) {
-        q=out;
-        const FaceDrawVec *n=normal, *a=alternate, *s=standard;
-        for (j=0;j<4;++j) {
-            if (self->left<0) PSMTXMultVec(*matrix,n,q);
-            else if (self->variant==1) PSMTXMultVec(*matrix,a,q);
-            else PSMTXMultVec(*matrix,s,q);
-            ++n; ++a; ++s; ++q;
+    {
+        FaceDrawVec *out=vertexBase;
+        const FaceDrawVec *normal=sQuadNormal;
+        const FaceDrawVec *alternate=alternateBase;
+        const FaceDrawVec *standard=sQuadStandard;
+        FaceMtx *matrix=world;
+        for (int i=0;i<2;++i) {
+            FaceDrawVec *q=out;
+            const FaceDrawVec *n=normal, *a=alternate, *s=standard;
+            for (int j=0;j<4;++j) {
+                if (self->left<0) PSMTXMultVec(*matrix,n,q);
+                else if (self->variant==1) PSMTXMultVec(*matrix,a,q);
+                else PSMTXMultVec(*matrix,s,q);
+                ++n; ++a; ++s; ++q;
+            }
+            normal+=4; alternate+=4; standard+=4; ++matrix; out+=4;
         }
-        normal+=4; alternate+=4; standard+=4; ++matrix; out+=4;
     }
     fn_8011D890(self->face,rect,0);
     uvBase=uv;
     FillFaceUV(uvBase,rect); offset.x+=offset.x; offset.z+=offset.z;
-    draw=vertexBase;
-    tex=uvBase;
-    for (i=0;i<2;++i) { DrawFaceQuad(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
+    {
+        FaceDrawVec *draw=vertexBase;
+        float *tex=uvBase;
+        for (int i=0;i<2;++i) { DrawFaceQuad(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
+    }
     if (self->kart->state==0) {
-        p=sQuadTop;
-        q=vertexBase;
-        for (i=0;i<4;++i) { PSMTXMultVec(world[0],p,q); ++p; ++q; }
+        const FaceDrawVec *p=sQuadTop;
+        FaceDrawVec *q=vertexBase;
+        for (int i=0;i<4;++i) { PSMTXMultVec(world[0],p,q); ++p; ++q; }
         fn_8011D890(sFaceSprites[9],rect,0);
         uvBase[0]=rect[0]; uvBase[1]=rect[3]; uvBase[2]=rect[2]; uvBase[3]=rect[3];
         uvBase[4]=rect[2]; uvBase[5]=rect[1]; uvBase[6]=rect[0]; uvBase[7]=rect[1];
         offset.x+=offset.x; offset.z+=offset.z;
         DrawFaceQuad(vertexBase,uvBase,&offset,0xffffffff);
     }
-    int overlay=self->sub->overlay;
-    if (overlay!=-1) {
+    int kind=self->sub->overlay;
+    if (kind!=-1) {
         FaceDrawVec *dstRow=vertexBase;
-        for (i=0;i<2;++i) {
+        for (int i=0;i<2;++i) {
             PSMTXCopy(self->sub->m[i],copy);
             FaceVecView localOffset;
             localOffset=self->sub->offset;
             copy[0][3]+=localOffset.value.x; copy[1][3]+=localOffset.value.y; copy[2][3]+=localOffset.value.z;
             PSMTXConcat(scale,copy,temporary);
             PSMTXConcat(translation,temporary,temporary);
-            q=dstRow;
-            p=alternateBase;
-            for (j=0;j<4;++j) { PSMTXMultVec(temporary,p,q); ++p; ++q; }
+            FaceDrawVec *q=dstRow;
+            const FaceDrawVec *p=alternateBase;
+            for (int j=0;j<4;++j) { PSMTXMultVec(temporary,p,q); ++p; ++q; }
             dstRow+=4; alternateBase+=4;
         }
-        fn_8011D890(sFaceSprites[overlay],rect,0);
+        fn_8011D890(sFaceSprites[kind],rect,0);
         offset.x+=offset.x; offset.z+=offset.z;
         FillFaceUV(uvBase,rect);
         unsigned int color=0xffffff00;
         color=(color&~0xff)|((int)(lbl_806DB5F0*self->sub->alpha)&0xff);
-        for (i=0;i<2;++i) { DrawFaceQuadCached(vertexBase,uvBase,&offset,color); uvBase+=8; vertexBase+=4; }
+        for (int i=0;i<2;++i) { DrawFaceQuadCached(vertexBase,uvBase,&offset,color); uvBase+=8; vertexBase+=4; }
     }
     HSD_StateInvalidate(0x7e); GXSetCullMode(2);
-    int anim=self->sub->anim;
-    if (anim!=-1) {
+    kind=self->sub->anim;
+    if (kind!=-1) {
         float frame=++self->timer;
-        if (anim==0) frame+=lbl_806DB5F4;
+        if (kind==0) frame+=lbl_806DB5F4;
         PSMTXConcat(projection,self->sub->animMtx,temporary);
         PSMTXConcat(translation,temporary,temporary);
-        Object_SetAnimBinding(self->models[anim],temporary,0);
-        Object_SetField8_AndDirty(self->models[anim],frame);
-        if (anim==0) {
-            clNormal3D_Exec(self->models[anim]);
+        Object_SetAnimBinding(self->models[kind],temporary,0);
+        Object_SetField8_AndDirty(self->models[kind],frame);
+        if (kind==0) {
+            clNormal3D_Exec(self->models[kind]);
             if (self->timer>=160) self->sub->finished=1;
-        } else if (anim==1) {
-            clNormal3D_Exec(self->models[anim]);
+        } else if (kind==1) {
+            clNormal3D_Exec(self->models[kind]);
             if (self->timer>=360) self->sub->finished=1;
         }
-        Object_DriveAnimMatrix(self->models[anim]);
-        Object_RenderJObjTree(self->models[anim],7);
+        Object_DriveAnimMatrix(self->models[kind]);
+        Object_RenderJObjTree(self->models[kind],7);
     }
 }
 #pragma pop
