@@ -82,6 +82,11 @@ below say the same thing.
 - 2026-11-09 22:55Z (n3 structure): TU merge, 4 -> 1: CoinChallengeRender /
   CoinChallengeUpdate / anon_80214B3C / CoinChallengeInit are now
   `game/CoinChallenge.cpp` (clCGameYI, GC/2.6 `-inline deferred -RTTI on -rostr`).
+- 2026-11-10 04:05Z (n3 regfix): `tools/regfix.py diag` neighbour section now
+  says per off vreg whether it must move EARLIER or LATER in the colouring
+  order and which lever does that for its kind (named local / frontend temp /
+  backend temp: inline getter, named local, declaration order;
+  regalloc_patterns §89)
 - 2026-11-10 00:45Z (n3 regfix): `tools/regfix.py diag` flags an off `@temp`
   that may be an inline's RETURN temp (regalloc_patterns §81: return through a
   reference out-parameter); checked on the pre-match fn_8018E6FC. fn_8017DF00
