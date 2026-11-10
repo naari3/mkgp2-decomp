@@ -30,7 +30,7 @@ import os
 import re
 import subprocess
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCAN_DIRS = ["src/game", "src/ui", "src/sound", "src/util", "src/resource", "include/game"]
@@ -65,7 +65,7 @@ KNOWN_TYPEDEF = {
 TOKEN_RE = re.compile(r"[A-Za-z_]\w*|0[xX][0-9A-Fa-f]+[uUlL]*|\d+[uUlL]*|::|->|<<|>>|\S")
 
 
-def strip_comments(text):
+def strip_comments(text, keep_strings=False):
     """Replace comments and string/char literals by spaces, keeping offsets."""
     out = list(text)
     i, n = 0, len(text)
@@ -88,8 +88,9 @@ def strip_comments(text):
             j = i + 1
             while j < n and text[j] != c and text[j] != "\n":
                 j += 2 if text[j] == "\\" else 1
-            for k in range(i + 1, min(j, n)):
-                out[k] = " "
+            if not keep_strings:
+                for k in range(i + 1, min(j, n)):
+                    out[k] = " "
             i = j + 1
         else:
             i += 1
@@ -858,14 +859,35 @@ def expand_member(m, exp):
     return " ".join(t), decl
 
 
+def _is_ctx_header(inc):
+    try:
+        with open(os.path.join(ROOT, "include", inc), encoding="latin-1") as f:
+            t = f.read()
+    except OSError:
+        return False
+    if "Declare before including" in t:
+        return True
+    # context headers carry the copy as written: methods, bases, classes
+    body = re.sub(r"/\*.*?\*/|//[^\n]*", " ", t, flags=re.S)
+    return bool(re.search(r"\bclass\b|\bstruct\s+\w+\s*:|\w\s*\((?!\s*\*)", body))
+
+
 def header_text(d, shared, exp=None):
     exp = exp or {}
     guard = "GAME_TYPES_" + re.sub(r"\W", "_", d.name).upper() + "_H"
     lines = [f"#ifndef {guard}", f"#define {guard}", ""]
     deps = sorted(x for x in d.deps() if x not in exp)
+    # a context-mode header needs its users' declarations first: including it
+    # here, earlier than the user did, breaks; the user already has it
+    ctx = [x for x in deps if _is_ctx_header(shared[x])]
+    deps = [x for x in deps if x not in ctx]
     for dep in deps:
         lines.append(f'#include "{shared[dep]}"')
     if deps:
+        lines.append("")
+    if ctx:
+        lines.append("/* Include before this header (each user already does): "
+                     + ", ".join(f'"{shared[x]}"' for x in ctx) + " */")
         lines.append("")
     lines.append(f"typedef {d.kind} {d.name} {{")
     for m in d.members:
@@ -905,10 +927,9 @@ def ctx_header_text(d, sc, type_names, also=()):
         lines.append(f'#include "{avail[t]}"')
     if shared:
         lines.append("")
-    if ctx:
-        lines.append("/* Declare before including (each user already does): "
-                     + ", ".join(ctx) + " */")
-        lines.append("")
+    lines.append("/* Declare before including (each user already does): "
+                 + (", ".join(ctx) if ctx else "whatever the definition below uses") + " */")
+    lines.append("")
     lines.append(d.raw.replace("\r\n", "\n"))
     lines += ["", f"#endif /* {guard} */", ""]
     return "\n".join(lines)
@@ -927,7 +948,9 @@ def cmd_apply(args):
         if args.name and name not in args.name:
             continue
         if name in taken_names:
-            continue
+            sd = sc.shared_defs.get(name)
+            if sd is None or sd.members is None or sd.key() != k:
+                continue
         mv = [d for d in v if sc.movable(d) is None]
         mv = [d for d in mv if d.file.replace("src/", "", 1) not in claimed]
         # typedef names spelled out must mean the same thing in every copy
@@ -951,7 +974,7 @@ def cmd_apply(args):
     for name, mv in order:
         hdr = f"{TYPES_DIR}/{name}.h"
         made.append((name, len(mv)))
-        if not args.dry:
+        if not args.dry and name not in sc.shared:
             os.makedirs(os.path.join(ROOT, TYPES_DIR), exist_ok=True)
             with open(os.path.join(ROOT, hdr), "w") as f:
                 f.write(header_text(mv[0], sc.shared, sc.expansions(mv[0])))
@@ -1029,6 +1052,126 @@ def _rewrite(edits, sc, dry):
     return nrep
 
 
+GENERIC_RE = re.compile(r"^(_+|pad|unk|field|fld|m|f|x|u|data|_?0x)?_?[0-9A-Fa-f]*$|^(pad|unk|field|gap|reserved|dummy)", re.I)
+
+
+def shape_key(d):
+    """Members by position without their names: what must agree for a rename."""
+    return (d.kind, d.name, tuple((canon_type(m.type), m.ptr, tuple(m.dims), m.bits, m.fnptr)
+                                  for m in d.members))
+
+
+def _descriptive(d):
+    return sum(1 for m in d.members if m.name and not GENERIC_RE.match(m.name))
+
+
+def _member_names_in(sc, f):
+    names = set()
+    for g in sc.closure_files(f):
+        for x in sc.by_file.get(g, []):
+            for m in (x.members or []):
+                if m.name:
+                    names.add((x, m.name))
+    return names
+
+
+def cmd_unify(args):
+    """Class B: copies with the same name and the same members by position,
+    only the member names differ.  Rename the members of the minority copies
+    (definition and every `.name` / `->name` in the same file) to the
+    canonical spelling; then plain `apply` can share them."""
+    sc = Scan()
+    claimed = open_claim_paths()
+    by_shape = defaultdict(list)
+    for d in sc.defs:
+        if d.skip or d.members is None or not d.name or any(m.name is None for m in d.members):
+            continue
+        by_shape[shape_key(d)].append(d)
+    plan = []
+    for sk, ds in by_shape.items():
+        variants = defaultdict(list)
+        for d in ds:
+            variants[d.key()].append(d)
+        if len(variants) < 2:
+            continue
+        name = sk[1]
+        if args.name and name not in args.name:
+            continue
+        shared = sc.shared_defs.get(name)
+        if shared is not None and shared.members is not None and shape_key(shared)[2] == sk[2]:
+            canon = shared
+        elif shared is not None:
+            continue   # the shared header holds a different shape: leave the name alone
+        else:
+            # most descriptive member names first, then the most copies
+            best = max(variants.values(), key=lambda v: (_descriptive(v[0]), len(v), -min(x.line for x in v)))
+            canon = best[0]
+        for k, v in variants.items():
+            if k == canon.key():
+                continue
+            for d in v:
+                plan.append((d, canon))
+    edits = defaultdict(list)
+    skipped = Counter()
+    for d, canon in plan:
+        if d.file.replace("src/", "", 1) in claimed and not args.include_claimed:
+            skipped["claimed"] += 1
+            continue
+        if not d.file.endswith((".c", ".cpp")):
+            skipped["copy in a header (users elsewhere)"] += 1
+            continue
+        ren = {m.name: c.name for m, c in zip(d.members, canon.members) if m.name != c.name}
+        if not ren:
+            continue
+        others = {n for (x, n) in _member_names_in(sc, d.file) if x is not d}
+        with open(os.path.join(ROOT, d.file), encoding="latin-1", newline="") as fh:
+            raw = strip_comments(fh.read(), keep_strings=True)
+        outside = raw[:d.start] + " " * (d.end - d.start) + raw[d.end:] if len(raw) == len(sc.text[d.file]) else None
+        why = None
+        for old in ren:
+            if old in others:
+                why = "member name also used by another struct in reach"
+                break
+            if outside is None:
+                why = "file not decodable"
+                break
+            for mm in re.finditer(r"\b%s\b" % re.escape(old), outside):
+                pre = outside[:mm.start()].rstrip()
+                if not (pre.endswith(".") or pre.endswith("->")):
+                    why = "name used outside member access"
+                    break
+            if why:
+                break
+        if why:
+            skipped[why] += 1
+            continue
+        edits[d.file].append((d, ren))
+    nfiles = 0
+    for f, items in edits.items():
+        with open(os.path.join(ROOT, f), encoding="latin-1", newline="") as fh:
+            text = fh.read()
+        allren = {}
+        for d, ren in items:
+            allren.update(ren)
+        # definitions first (back to front), then accesses everywhere else
+        spans = sorted(((d.start, d.end, ren) for d, ren in items), reverse=True)
+        for a, b, ren in spans:
+            body = re.sub(r"\b(%s)\b" % "|".join(map(re.escape, ren)),
+                          lambda m: ren[m.group(1)], text[a:b])
+            text = text[:a] + body + text[b:]
+        # accesses: only `.old` / `->old`, outside the (already renamed) definitions
+        pat = re.compile(r"(\.|->)(\s*)(%s)\b" % "|".join(map(re.escape, allren)))
+        text = pat.sub(lambda m: m.group(1) + m.group(2) + allren[m.group(3)], text)
+        if not args.dry:
+            with open(os.path.join(ROOT, f), "w", encoding="latin-1", newline="") as fh:
+                fh.write(text)
+        nfiles += 1
+    print(f"{sum(len(v) for v in edits.values())} copies renamed in {nfiles} files"
+          + (" (dry run)" if args.dry else ""))
+    for k, v in skipped.most_common():
+        print(f"  skipped {v}: {k}")
+
+
 def _pad_lines(text, d, nl):
     """What follows the #include: nothing, or a line break when more code
     follows the definition on its last line.  (Line numbers are not kept:
@@ -1103,6 +1246,11 @@ def main():
                    help="whole-text identical definitions of any kind (classes, methods, bases); "
                         "types they use stay declared by the including file")
     p.set_defaults(fn=cmd_apply)
+    p = sub.add_parser("unify")
+    p.add_argument("--name", action="append")
+    p.add_argument("--dry", action="store_true")
+    p.add_argument("--include-claimed", action="store_true")
+    p.set_defaults(fn=cmd_unify)
     p = sub.add_parser("hashes")
     p.add_argument("mode", choices=["save", "diff"])
     p.add_argument("--revert", action="store_true",
