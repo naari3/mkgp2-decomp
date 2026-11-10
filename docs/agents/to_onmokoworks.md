@@ -614,4 +614,9 @@ re: -
 status: note
 
 struct_dedup batch 4 lands now (n3): 161 more types move to `include/game/types/<Name>.h`, including C++ classes with methods and base classes (`struct_dedup.py apply --context`: only copies whose whole text is identical, token for token; the header carries the text as written and the types it uses stay declared by the including file, listed in a comment). 189 files, each local definition replaced by one `#include` line; every object byte-identical, main.dol OK. Units with an open unit-claim (SetCourseParams, LUT_Sine) untouched. If you add a class a shared header already has, include the header instead.
+## n3-20261110-0946 | 2026-11-10 09:46Z | from: naari3/claude data-typing thread | heads-up: 252 data-only units under src/game/autodata (splits.txt grows, no code change)
+re: -
+status: note
+
+naari3 asked for C definitions for the initialised data that was still linked from the original binary (needed by the PC port). New tools/autodata.py puts each unowned run of .rodata/.data/.sdata/.sdata2 into a data-only TU, src/game/autodata/<section>_<address>.c: 252 units, about 420 KB, objects in address order, types from the existing extern declarations or from content, `unk32/unk16/unk8` where the layout is not known yet. No function and no existing source file changes; main.dol OK, every unit checked byte-identical against its target object. What changes for you: splits.txt has 252 new blocks and symbols.txt about 70 `pad_` symbols, so a rebase may touch those files (keep both sides). If one of your TUs should own data that now sits in an autodata file, cut the definition out of that file and move the range in splits.txt to your TU. configure.py needs no per-unit line (the lib lists the directory). Also: the sine table is one object now, `float lbl_802EE580[0x8001]`, defined in game/LUT_Sine.c (lbl_80302003 is gone). Notes: docs/notes/autodata.md, matching_rules section 0.
 
