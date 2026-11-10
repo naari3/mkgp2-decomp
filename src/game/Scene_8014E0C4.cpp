@@ -404,35 +404,58 @@ void GXDrawDone(void);
 unsigned char GetVBlankFlag(void);
 void NamCam_End(void);
 void NamCam_Init(void);
+#ifndef NON_MATCHING
 extern void OperationClock_Commit();
 extern void RaceFlow_ResetState_FullColdInit();
 extern void RumbleUpdate();
 extern void SetCourseParams();
+#else /* NON_MATCHING */
+void OperationClock_Commit(void);
+void RaceFlow_ResetState_FullColdInit(void);
+void RumbleUpdate(void);
+void SetCourseParams(int course, int a, int b, int c);
+#endif /* NON_MATCHING */
 extern void SetSyncTarget(int target);
 extern void Sprite_InitWithAnim();
 void *StrPcb_GetInstance(void);
 void StrPcb_ResetCommands_NeutralDefault(void *pcb);
 void StrPcb_ResetCommands_Zero(void *pcb, int arg);
+#ifndef NON_MATCHING
 extern void TEXBindPaletteEntry_RGB();
 extern void TEXLoadPalette_Retry();
 extern void TitleTracker_OnAttract_Stub();
+#else /* NON_MATCHING */
+void TEXBindPaletteEntry_RGB(void *pal, void *out, int idx);
+void TEXLoadPalette_Retry(void **out, char *name);
+void TitleTracker_OnAttract_Stub(struct TitleDB *db);
+#endif /* NON_MATCHING */
 unsigned char VBlankValue_Get(void);
 void fn_8002CFB8(int a, int b, int c, int d);
 void fn_801699D8(int a, int b);
+#ifndef NON_MATCHING
 extern void fn_8019FEF4();
+#else /* NON_MATCHING */
+void fn_8019FEF4(void *spr);
+#endif /* NON_MATCHING */
 void fn_801B7CD0(int a);
 extern void fn_801F6804(void *p);
 extern unsigned int g_cupId;
 extern unsigned int g_currentSceneState;
 extern struct TitleDB *lbl_806D10A0;
+#ifndef NON_MATCHING
 extern unsigned int lbl_806D12E1;
+#else /* NON_MATCHING */
+extern unsigned char lbl_806D12E1;
+#endif /* NON_MATCHING */
 extern unsigned int jumptable_8048FDCC[];
 extern unsigned int lbl_8048FE14[];
 extern unsigned int lbl_8048FE3C[];
 extern unsigned int lbl_8048FE64[];
 extern unsigned int lbl_8048FE8C[];
 extern unsigned int lbl_8048FF64[];
+#ifndef NON_MATCHING
 extern void dtor_80080330();
+#endif /* ! NON_MATCHING */
 unsigned char Sprite_AdvanceAnim(void *s, float dt);
 extern const float lbl_806D8060;
 extern unsigned int lbl_806D8098;
@@ -1098,7 +1121,11 @@ struct RaceScene {
 
 void *fn_8014E0C4(int a);
 void fn_8014E618(AttractPanel *self);
+#ifndef NON_MATCHING
 asm void fn_8014E804(void);
+#else /* NON_MATCHING */
+void fn_8014E804(struct StatusView *self);
+#endif /* NON_MATCHING */
 void fn_8014F164(CreditPanel *self);
 DemoPanel *fn_8014F2DC(DemoPanel *self, short flag);
 void fn_8014F3D8(void *self);
@@ -1176,7 +1203,9 @@ ListHead *dtor_801578C8(ListHead *self, short flag);
 
 
 
+#ifndef NON_MATCHING
 __declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; unsigned int f29; unsigned int f30; unsigned int f31; unsigned int f32; unsigned int f33; unsigned int f34; unsigned int f35; unsigned int f36; unsigned int f37; unsigned int f38; unsigned int f39; unsigned int f40; unsigned int f41; unsigned int f42; unsigned int f43; unsigned int f44; unsigned int f45; unsigned int f46; unsigned int f47; unsigned int f48; unsigned int f49; unsigned int f50; unsigned int f51; unsigned int f52; unsigned int f53; unsigned int f54; unsigned int f55; void *f56; unsigned int f57; unsigned int f58; void *f59; unsigned int f60; void *f61; unsigned int f62; unsigned int f63; void *f64; unsigned int f65; unsigned int f66; void *f67; unsigned int f68; void *f69; unsigned int f70; unsigned int f71; void *f72; unsigned int f73; void *f74; unsigned int f75; void *f76; unsigned int f77; unsigned int f78; void *f79; unsigned int f80; void *f81; unsigned int f82; void *f83; unsigned int f84; unsigned int f85; void *f86; unsigned int f87; unsigned int f88; void *f89; unsigned int f90; void *f91; unsigned int f92; void *f93; unsigned int f94; unsigned int f95; void *f96; unsigned int f97; unsigned int f98; void *f99; unsigned int f100; void *f101; unsigned int f102; void *f103; unsigned int f104; void *f105; unsigned int f106; void *f107; unsigned int f108; void *f109; unsigned int f110; void *f111; unsigned int f112; void *f113; unsigned int f114; void *f115; unsigned int f116; void *f117; } extab_fn_8014E804 = { 0x180A0000, 0x00000248, 0x000000E4, 0x00000260, 0x001700D8, 0x000002FC, 0x00000104, 0x00000314, 0x000D00F8, 0x00000430, 0x00000118, 0x00000498, 0x00120134, 0x000004F8, 0x0000012C, 0x00000508, 0x00000134, 0x00000520, 0x00000148, 0x00000540, 0x00050134, 0x000005B4, 0x0011015C, 0x00000610, 0x00000154, 0x00000620, 0x0000015C, 0x00000638, 0x00000170, 0x00000658, 0x0005015C, 0x000006C0, 0x000E0184, 0x0000071C, 0x0000017C, 0x0000072C, 0x00130184, 0x000007DC, 0x00000198, 0x00000808, 0x000001A0, 0x00000850, 0x000001A8, 0x00000874, 0x000001B0, 0x000008A0, 0x000001B8, 0x000008C4, 0x000001C0, 0x000008E8, 0x000001C8, 0x0000090C, 0x000001D0, 0x00000000, 0x0780001D, 0x00000034, (void *)&dtor_80080330, 0x0680001D, 0x00000000, (void *)&dtor_801577D4, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x0780001D, 0x00000034, (void *)&dtor_80080330, 0x0680001D, 0x00000000, (void *)&dtor_801577D4, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x0680001D, 0x00000000, (void *)&dtor_801577D4, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0680001E, 0x00000000, (void *)&dtor_801577D4, 0x8A80001E, (void *)&MemoryManager_TimedFree, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x01000134, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0680001E, 0x00000000, (void *)&dtor_801577D4, 0x8A80001E, (void *)&MemoryManager_TimedFree, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0100015C, 0x0A80001D, (void *)&MemoryManager_TimedFree, 0x0680001E, 0x00000000, (void *)&dtor_801577D4, 0x8A80001E, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree, 0x8A80001D, (void *)&MemoryManager_TimedFree };
+#endif /* ! NON_MATCHING */
 
 
 
@@ -1241,9 +1270,11 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
+#ifndef NON_MATCHING
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8014E804 = {
     (void *)&fn_8014E804, 0x00000960, (void *)&extab_fn_8014E804
 };
+#endif /* ! NON_MATCHING */
 
 
 
@@ -1940,12 +1971,19 @@ public:
     DemoScene();
 };
 
+#ifdef NON_MATCHING
+#pragma push
+#pragma auto_inline off
+#endif /* NON_MATCHING */
 extern "C" void *fn_8014D848(void)
 {
     Frame_PostDrawOverlay();
     Frame_UpdatePerFrameState();
     return new DemoScene;
 }
+#ifdef NON_MATCHING
+#pragma pop
+#endif /* NON_MATCHING */
 
 DemoScene::DemoScene()
 {
@@ -2349,11 +2387,18 @@ public:
     DemoScene1C0(int a);
 };
 
+#ifdef NON_MATCHING
+#pragma push
+#pragma auto_inline off
+#endif /* NON_MATCHING */
 extern "C" void *fn_8014E0C4(int a) {
     Frame_PostDrawOverlay();
     Frame_UpdatePerFrameState();
     return new DemoScene1C0(a);
 }
+#ifdef NON_MATCHING
+#pragma pop
+#endif /* NON_MATCHING */
 
 #pragma push
 #pragma use_lmw_stmw on
@@ -2479,6 +2524,7 @@ extern "C" void fn_8014E618(AttractPanel *self) {
     }
 }
 
+#ifndef NON_MATCHING
 extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
     nofralloc
     stwu r1, -0x20(r1)
@@ -3133,6 +3179,337 @@ extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
     mtlr r0
     addi r1, r1, 0x20
     blr
+#else /* NON_MATCHING */
+class SceneSprite {
+public:
+    char pad0[4];
+    int mode;
+    char pad8[4];
+    float x;
+    float y;
+    char pad14[0x1C];
+    SceneSprite(int id, int a, int b);
+    void SetPos(float px, float py) {
+        x = px;
+        y = py;
+    }
+};
+
+struct SceneIf {
+    virtual void _keySceneIf();
+    virtual void Release();
+    virtual void Start();
+    virtual void Next();
+    virtual bool IsDone();
+};
+
+struct StatusEntry {
+    unsigned int kind;
+    unsigned int arg;
+    int pad;
+};
+
+#define STATUS_TABLE ((StatusEntry *)(base + 0x3758))
+
+struct StatusView : SceneIf {
+    unsigned char done;
+    SceneIf *scene;
+    int index;
+    unsigned int kind;
+    int f14;
+    unsigned char f18;
+    int course;
+    int f20;
+    char pad24[4];
+    float f28;
+    int f2C;
+    int credits;
+    unsigned char f34;
+    int f38;
+    unsigned char rumble;
+    int f40;
+};
+
+
+struct NamCamTexture {
+    NamCamTexture() { fn_801F6804(this); }
+    ~NamCamTexture();
+    char pad[0x4C];
+};
+
+class StatusLogoScene : public LoaderBase {
+public:
+    virtual void _keyStatusLogoScene();
+    StatusLogoScene(char *base) {
+        f4 = 0;
+        f8 = 0.0f;
+        palette = 0;
+        if (isJapanese() == 1) {
+            TEXLoadPalette_Retry(&palette, base + 0x38A4);
+        } else {
+            TEXLoadPalette_Retry(&palette, base + 0x38BC);
+        }
+        TEXBindPaletteEntry_RGB(palette, rgb, 0);
+        if ((int)g_currentSceneState != 5) {
+            SetSyncTarget(4);
+        }
+        fn_8002CFB8(0xFF, 0xFF, 0xFF, 0xFF);
+    }
+    int f4;
+    float f8;
+    int fC;
+    void *palette;
+    char rgb[0x20];
+    NamCamTexture tex;
+};
+
+class StatusNoticeScene : public LoaderBase {
+public:
+    virtual void _keyStatusNoticeScene();
+    StatusNoticeScene(char *base) {
+        f4 = 0;
+        f8 = 0.0f;
+        palette = 0;
+        if (isJapanese() == 1) {
+            TEXLoadPalette_Retry(&palette, base + 0x38D4);
+        } else {
+            TEXLoadPalette_Retry(&palette, base + 0x38E8);
+        }
+        TEXBindPaletteEntry_RGB(palette, rgb, 0);
+    }
+    int f4;
+    float f8;
+    int fC;
+    void *palette;
+    char rgb[0x20];
+    NamCamTexture tex;
+};
+
+class CourseDemoScene : public LoaderBase {
+public:
+    virtual void _keyCourseDemoScene();
+    CourseDemoScene() {
+        f4 = 0;
+        f8 = 0.0f;
+        f10 = 0;
+        fC = 0.0f;
+        cup = g_cupId;
+        DrawManager_GetOrCreate();
+    }
+    int f4;
+    float f8;
+    float fC;
+    unsigned char f10;
+    int cup;
+};
+
+class EntryScene : public LoaderBase {
+public:
+    virtual void _keyEntryScene();
+    virtual void Init();
+    EntryScene(int arg, unsigned char flag) {
+        lang = fn_80169E20();
+        f8 = 0;
+        fC = 0.0f;
+        f10 = flag;
+        f14 = 0;
+        f18 = arg;
+        f1C = 0;
+        credits = CreditMgr_GetCreditCount(0);
+        if (lang == 0) {
+            sprite = new SceneSprite(0x138, 1, 0);
+        } else {
+            sprite = new SceneSprite(0x107, 1, 0);
+        }
+        if (sprite != 0) {
+            sprite->mode = 1;
+            fn_8019FEF4(sprite);
+        }
+        Init();
+    }
+    int lang;
+    int f8;
+    float fC;
+    unsigned char f10;
+    int f14;
+    int f18;
+    unsigned char f1C;
+    int credits;
+    SceneSprite *sprite;
+};
+
+
+
+
+extern "C" void fn_8014E804(StatusView *self) {
+    char *base = (char *)lbl_80363D30;
+    int prev = self->credits;
+    self->credits = CreditMgr_GetCreditCount(0);
+    if (self->credits != prev) {
+        StatusEntry *e;
+        self->f34 = 1;
+        e = STATUS_TABLE;
+        if (e[self->index].kind != 6) {
+            int i = 0;
+            while (1) {
+                if (e->kind >= 15) {
+                    break;
+                }
+                if (e->kind == 6) {
+                    if (self->scene != 0) {
+                        GXDrawDone();
+                        self->scene->Release();
+                        self->scene = 0;
+                    }
+                    self->index = i;
+                    break;
+                }
+                e++;
+                i++;
+            }
+        }
+    }
+    if (self->scene != 0 && self->scene->IsDone()) {
+        GXDrawDone();
+        self->scene->Release();
+        self->scene = 0;
+        if (StrPcb_GetInstance() != 0) {
+            StrPcb_ResetCommands_Zero(StrPcb_GetInstance(), 1);
+            StrPcb_ResetCommands_NeutralDefault(StrPcb_GetInstance());
+        }
+        StatusEntry *table = STATUS_TABLE;
+        do {
+            self->index++;
+            if (table[self->index].kind == 13) {
+                if (lbl_806D12E1 == 1) {
+                    self->index = self->index + 1;
+                }
+                lbl_806D12E1 = 1;
+            }
+            if (table[self->index].kind >= 15) {
+                self->index = 1;
+                self->f18 = 0;
+                TitleDB *db = SINGLETON_INSTANCE(lbl_806D10A0);
+                if (db != 0) {
+                    TitleTracker_OnAttract_Stub(db);
+                }
+            }
+        } while (table[self->index].kind == 6);
+    }
+    if (self->scene == 0) {
+        StatusEntry *table = STATUS_TABLE;
+        self->kind = table[self->index].kind;
+        switch (self->kind) {
+        case 0:
+            self->f14++;
+            ServiceMode_UpdateScheduleGate();
+            OperationClock_Commit();
+            RaceFlow_ResetState_FullColdInit();
+            Frame_PostDrawOverlay();
+            Frame_UpdatePerFrameState();
+            self->scene = (SceneIf *)new StatusLogoScene(base);
+            break;
+        case 1:
+            Frame_PostDrawOverlay();
+            Frame_UpdatePerFrameState();
+            self->scene = (SceneIf *)new StatusNoticeScene(base);
+            break;
+        case 2:
+            if (self->f18) {
+                self->scene = (SceneIf *)fn_8014E0C4(0);
+            } else {
+                self->scene = (SceneIf *)fn_8014E0C4(1);
+            }
+            break;
+        case 3:
+            self->scene = (SceneIf *)fn_8014D848();
+            break;
+        case 4:
+            if (table[self->index].arg == 1 && self->course != 0 && self->course != 3) {
+                if (self->course > 3) {
+                    self->course = 0;
+                } else {
+                    self->course = 3;
+                }
+            }
+            SetCourseParams(self->course + 1, 0, 0, 0);
+            self->scene = (SceneIf *)new CourseDemoScene;
+            if (++self->course >= 6) {
+                self->course = 0;
+            }
+            break;
+        case 5: {
+            int arg = table[self->index].arg;
+            Frame_PostDrawOverlay();
+            Frame_UpdatePerFrameState();
+            self->scene = (SceneIf *)new EntryScene(arg, 1);
+            self->Next();
+            break;
+        }
+        case 6: {
+            int arg = table[self->index].arg;
+            Frame_PostDrawOverlay();
+            Frame_UpdatePerFrameState();
+            self->scene = (SceneIf *)new EntryScene(arg, 0);
+            break;
+        }
+        case 7:
+            Frame_PostDrawOverlay();
+            Frame_UpdatePerFrameState();
+            self->scene = (SceneIf *)new AttractScene;
+            break;
+        case 8:
+            self->scene = (SceneIf *)fn_80163614((void *)self->f20);
+            if (++self->f20 >= 4) {
+                self->f20 = 0;
+            }
+            break;
+        case 9:
+            if (self->f18) {
+                Frame_PostDrawOverlay();
+                Frame_UpdatePerFrameState();
+                self->scene = (SceneIf *)new TitleScene(0, (void *)-1);
+            } else {
+                Frame_PostDrawOverlay();
+                Frame_UpdatePerFrameState();
+                self->scene = (SceneIf *)new TitleScene(1, (void *)-1);
+            }
+            break;
+        case 10:
+            self->f14++;
+            ServiceMode_UpdateScheduleGate();
+            OperationClock_Commit();
+            RaceFlow_ResetState_FullColdInit();
+            if (self->f40) {
+                self->scene = (SceneIf *)new SelectScene((void *)0, 0);
+            } else {
+                self->scene = (SceneIf *)new SelectScene((void *)0, 1);
+            }
+            self->f40 = 1;
+            break;
+        case 11:
+            self->scene = (SceneIf *)new SelectScene((void *)1, 0);
+            break;
+        case 12:
+            self->scene = (SceneIf *)new SelectScene((void *)2, 2);
+            break;
+        case 13:
+            self->scene = (SceneIf *)new SelectScene((void *)3, 1);
+            break;
+        case 14:
+            Frame_PostDrawOverlay();
+            Frame_UpdatePerFrameState();
+            self->scene = (SceneIf *)new RankingScene;
+            break;
+        }
+    }
+    if (self->scene != 0) {
+        self->scene->Start();
+        fn_801B7CD0(0);
+    }
+    fn_801699D8(0, self->rumble);
+    RumbleUpdate();
+#endif /* NON_MATCHING */
 }
 
 extern "C" void fn_8014F164(CreditPanel *self) {
@@ -3443,6 +3820,7 @@ extern "C" void fn_8014F8FC(NamCamPanel *self) {
 }
 
 
+#ifndef NON_MATCHING
 class SceneSprite {
 public:
     char pad0[4];
@@ -3457,6 +3835,7 @@ public:
         y = py;
     }
 };
+#endif /* ! NON_MATCHING */
 
 class NamCamC {
 public:

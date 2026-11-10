@@ -50,6 +50,15 @@ asm void Foo_Update(Foo *self) { /* 0x80012345 size:0x1F0 */
   attempt starts from.
 - A helper, type or prototype that only the C side needs goes inside the same
   `#ifdef NON_MATCHING` (or its own one), so the default compile cannot change.
+- If the C++ side makes the compiler emit a mangled symbol that the binary
+  has under another name (a ctor/dtor of a class view, a vtable), add the
+  rename to this TU's block in `tools/extab_user_renames.json` (text edit,
+  never `json.dump`). The default object does not contain these symbols, so
+  the default build is unaffected; the check tool applies the renames.
+- A whole-TU draft patch from `docs/wip/` can be folded in mechanically:
+  apply it to a copy of the file and write `diff -D NON_MATCHING old new`
+  back; every hunk becomes an `#ifndef NON_MATCHING` / `#else` / `#endif`
+  block.
 - The manual `.extab_user` records of the asm function stay as they are.
 - When somebody later matches the function, the guard and the asm go away and
   it is an ordinary 100 % landing.

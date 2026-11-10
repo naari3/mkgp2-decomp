@@ -5702,7 +5702,12 @@
     "__ct__11TextManagerFv": "fn_80149214",
     "__dt__11TextManagerFv": "dtor_800869D0",
     "@47": "lbl_80367368",
-    "__ct__7PairObjFPCci": "fn_8013D800"
+    "__ct__7PairObjFPCci": "fn_8013D800",
+    "__vt__15StatusLogoScene": "lbl_8048FE8C",
+    "__vt__17StatusNoticeScene": "lbl_8048FE64",
+    "__vt__15CourseDemoScene": "lbl_8048FE3C",
+    "__vt__10EntryScene": "lbl_8048FE14",
+    "__dt__13NamCamTextureFv": "dtor_80080330"
   },
   "src/game/RaceHud_80147470.cpp": {
     "extab_fn_80147470": "@etb_8000DF44",
