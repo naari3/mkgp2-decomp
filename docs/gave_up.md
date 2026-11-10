@@ -501,6 +501,12 @@ diffs, the inline-argument-order moves alone did not reach 100 in this pass.
   rescheduling with a WAR edge on r5). Not found: inline wrapper for the loop, label/do-while(0)/
   while/goto loop forms, statement reorders of the digit stores, literal vs parameter colour,
   GC/2.0-2.7 (same code), pragmasweep k=2 + decl order, leversweep, tracesweep, `mwsched resched`.
+  11-10 retry after the TU moved to GC/2.6: same 99.437 and the same 12 lines. regfix diag: the sign temp of
+  `param % 10` would have to be numbered below the loop-offset frontend temp and the `3` constant (any vreg
+  in the named-local range gives the target registers). No change: `(int)`/`~0xFF`/named-local/`int c` colour,
+  literal inside `SetColors`, explicit inner loop, `param % 10` in a local before `res[9].mode = 3`. Worse:
+  `HRes *r = &res[i]` (98.2), const-ref colour (98.4), block-local counter (98.8), 11-loop in an inline
+  (97.1, pointer walk 96.3), `res[10].mode = res[9].mode = 3` (99.1), four explicit stores (88.2).
 
 ### DbgMenu TU real extent (structure lead, 11-09)
 `game/DbgMenu.cpp` is Matching since the extab fix (all `new` sites written as `new T(...)`, `ResCtrl` with an out-of-line ctor and an empty inline dtor, declared extab order). It still does not own its vtables: the target data 0x8041C990..0x8041CBA8 is one run of RTTI vtables (`{RTTI ptr, 0, Update, Render, Dtor}` plus 0xC base lists pointing at 0x806CF344 = MenuSceneBase RTTI), from the DbgMenu class (lbl_8041C99C, virtuals DbgMenu_HandleInput / DbgMenu_TickSubScene / DbgMenu_Dtor) to the scene 01 class (lbl_8041CB94). So the original TU runs from DbgMenu_Dtor (0x800CE4C4, now `game/DbgMenu_Dtor.c`) to fn_800D2BE4 and was built with `-RTTI on`; every hand-written `XXX_Dtor(self, flag)` / `self->vt = lbl_...` in the file is a real virtual destructor. Converting the classes one by one (see `src/game/EnmyFaceEffect.cpp` for the RTTI/vtable renames) would let the TU own .data and .sdata 0x806CF33C.. and drop the two `active:` renames that keep DbgMenu_TickSubScene / DbgMenu_HandleInput alive.
