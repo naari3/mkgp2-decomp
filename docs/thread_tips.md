@@ -664,3 +664,10 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   (6 orders) before anything else; result locals are propagated and do nothing. Values that overflow
   the volatile FPRs go to saved registers lowest-first, so "w in f29" means w is coloured first of the
   overflowers: an inline return value plus direct `q->x` reads did it.
+
+- 11-10 clNormal3D_SetScale 100: three saved values (table r31, count r30, loop cursor r27) where the cursor
+  must OPEN a new saved register. An inline local (frontend temp) is always coloured before the caller's named
+  locals, so the cursor took the freed r30. Fix: write the inline's loop out in the function and declare its
+  locals as named locals `node; i; table; count; cursor;` (last declared = lowest vreg = coloured last).
+  Sweep all declaration orders (120 here, 2 gave 0 diff lines). leversweep inline-to-named-locals could not
+  do it (all variants failed to compile in this `.c` + `#pragma cplusplus` TU), so try by hand when it reports compile_fail.

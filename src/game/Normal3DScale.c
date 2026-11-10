@@ -85,19 +85,6 @@ static inline void RequestSelf(Normal3D *self) {
     }
 }
 static inline int HasDObj(JObj *node) { if (node->flags & 0x4020) return 0; return 1; }
-static inline void Animate(JObj **table, int count) {
-    if (table != 0) {
-        JObj **cursor = table;
-        for (int i = 0; i < count; ++cursor, ++i) {
-            JObj *node = *cursor;
-            if (node != 0) {
-                HSD_AObjInterpretAnim(node->aobj, node, node->klass->animate);
-                if (HasDObj(node)) HSD_DObjAnimAll(node->dobj);
-            }
-        }
-        HSD_JObjCheckDepend(*table);
-    }
-}
 extern "C" int clNormal3D_SetScale(Normal3D *self, Normal3D *source,
     float frame, float x, float y, float z)
 {
@@ -138,11 +125,28 @@ extern "C" int clNormal3D_SetScale(Normal3D *self, Normal3D *source,
     }
     if (updated == 1) {
         ScopedTimer timer(7);
-        JObj **table = self->table;
-        int count = self->count;
+        /* Animate() written out: cursor has to be a named local declared
+           after table and count so that it is coloured last (opens r27). */
+        JObj *node;
+        int i;
+        JObj **table;
+        int count;
+        JObj **cursor;
+        table = self->table;
+        count = self->count;
         if (table != 0) {
             HSD_AObjInitEndCallBack();
-            Animate(table, count);
+            if (table != 0) {
+                cursor = table;
+                for (i = 0; i < count; ++cursor, ++i) {
+                    node = *cursor;
+                    if (node != 0) {
+                        HSD_AObjInterpretAnim(node->aobj, node, node->klass->animate);
+                        if (HasDObj(node)) HSD_DObjAnimAll(node->dobj);
+                    }
+                }
+                HSD_JObjCheckDepend(*table);
+            }
             HSD_AObjInvokeCallBacks();
         }
     }
