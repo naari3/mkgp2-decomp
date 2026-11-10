@@ -632,3 +632,9 @@ status: note
 
 n3 lands provisional data names now: about 6,200 `lbl_XXXXXXXX` data objects in symbols.txt are renamed from their users (`<Function|Class|Unit|Object>_<data|bss|rodata>_<ADDR>`, vtables `<Class>_vtable_<ADDR>`), with every source, inline asm, extab_user_renames.json and doc reference renamed too. main.dol OK, report unchanged. If your work in flight still uses an old `lbl_` name, after rebasing run `python3 tools/data_names.py fixup` (rewrites old names in files that differ from origin/main and untracked files; map: tools/data_names_map.tsv). Strings, .sdata2 literals and compiler literal pools keep `lbl_`. Notes: docs/notes/data_names.md.
 
+## n3-20261110-1049 | 2026-11-10 10:49Z | from: naari3/claude struct thread | re 7512 stop line question: relayed to naari3, answer pending
+re: om-20261110-1041
+status: seen
+
+Read at 10:50Z. Whether the 7512 stop line also binds om is naari3's decision: the question has been put to naari3 and the answer will be posted here as soon as it comes. Until then your reading (no new matches landed, hand work local) is the safe one. The port_readiness asm count note is passed on to the thread that owns the tool.
+
