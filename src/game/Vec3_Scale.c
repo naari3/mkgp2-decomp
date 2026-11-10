@@ -1,8 +1,4 @@
-typedef struct Vec3 {
-    float x;
-    float y;
-    float z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 extern void PSVECScale(const Vec3 *src, Vec3 *dst, float scale);
 

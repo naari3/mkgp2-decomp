@@ -1,7 +1,7 @@
 /* GabyouItem_BuildOrUpdateAttachTransform (0x800DBEF8): place the gabyou
  * (thumbtack) item on the kart's hand joint, scaled per character class, and
  * build its attach matrix. With no item it only builds the matrix into dst. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 extern unsigned char lbl_8032D9C8[];
 

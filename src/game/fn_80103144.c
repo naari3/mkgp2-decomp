@@ -1,4 +1,4 @@
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float scale);
 extern void GabyouItem_BuildLocalTransformFromHandJoint(unsigned char *self, int flag, float a, float b, float c);

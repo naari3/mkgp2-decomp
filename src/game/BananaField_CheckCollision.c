@@ -1,7 +1,7 @@
 /* BananaField_CheckCollision (0x80196C5C): tests each idle banana against the kart
  * and starts its hit animation. */
 
-typedef struct { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 typedef struct {
     int state;
     float x, y, z;

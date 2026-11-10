@@ -3,7 +3,7 @@
  * then four effects are laid out along the blast's reach: the flash at the
  * centre, a wall splash where a wall cuts the reach short, and two ground
  * shockwave rings, each tilted to the ground and faded with the distance. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 extern void Mtx_TransposeToMtx44(float dst[4][4], const void *src);
 extern void Mtx44_GetTranslation_ColMajor(Vec *out, float m[4][4]);

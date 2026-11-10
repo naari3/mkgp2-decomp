@@ -446,9 +446,7 @@ static inline float (*JObjGetMtxPtr(JObj *jobj))[4] {
     return jobj->mtx;
 }
 
-struct Vec3f {
-    float x, y, z;
-};
+#include "game/types/Vec3f.h"
 
 struct ZoneVolume {
     ZoneVolume(const ZoneDesc *desc, int closed);

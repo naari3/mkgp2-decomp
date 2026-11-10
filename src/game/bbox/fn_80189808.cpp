@@ -1,9 +1,7 @@
 /* 0x80189808: add the octant `oct` child box of an octree node, unless it
  * already exists. */
 
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 struct BBox {
     BBox(Vec3 *min, Vec3 *max, BBox *parent, int oct);

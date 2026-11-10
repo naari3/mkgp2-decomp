@@ -4,9 +4,7 @@ typedef struct VfxSlot {
     void *model; /* 0x04 */
 } VfxSlot;
 
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 extern void cLNormal3DWrap_Slot_SetPositionXYZ(void *model, float x, float y, float z);
 

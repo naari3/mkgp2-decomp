@@ -18,11 +18,7 @@ struct HSD_JObj {
     float mtx[3][4];
 };
 
-struct Vec3 {
-    float x;
-    float y;
-    float z;
-};
+#include "game/types/Vec3.h"
 
 struct clNormal3D {
     char pad[0x5C];

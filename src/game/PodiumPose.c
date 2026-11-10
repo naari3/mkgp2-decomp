@@ -10,9 +10,7 @@
 typedef float Mtx[3][4];
 typedef float (*MtxPtr)[4];
 
-struct Vec3 {
-    float x, y, z;
-};
+#include "game/types/Vec3.h"
 
 struct JObj {
     unsigned char pad0[0x8];

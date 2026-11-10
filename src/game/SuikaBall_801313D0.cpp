@@ -7,7 +7,7 @@ extern unsigned char lbl_806D7288[5];
  */
 #pragma cplusplus on
 
-struct Vec3 { float x, y, z; };
+#include "game/types/Vec3.h"
 struct LNode { char pad[8]; void *f8; };
 struct Trail { int age; Vec3 pos; };
 struct Shot {

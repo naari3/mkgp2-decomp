@@ -1,6 +1,4 @@
-struct Vec3 {
-    float x, y, z;
-};
+#include "game/types/Vec3.h"
 struct RaceSlot {
     char pad0[0x90];
     int targetId;

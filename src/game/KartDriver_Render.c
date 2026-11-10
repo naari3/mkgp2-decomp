@@ -5,9 +5,7 @@
  * >= 280 units once the race has started) and renders the driver/accessory
  * joint trees requested by the render pass mode.
  */
-typedef struct Vec {
-    float x, y, z;
-} Vec;
+#include "game/types/Vec.h"
 
 typedef struct KartStatus {
     unsigned char pad00[0x10];

@@ -1,4 +1,4 @@
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 typedef float Mtx44[4][4];
 
 extern void GetSpawnPosition(void *out, float x, float y, float z);

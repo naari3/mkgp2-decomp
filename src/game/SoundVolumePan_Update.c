@@ -7,11 +7,7 @@
  * ((channel & 0xF) << 27) | base, as in KartItemAudio.c.
  */
 
-typedef struct Vec3 {
-    float x;
-    float y;
-    float z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 typedef struct KartAudioChannel {
     unsigned char pad_0[4];

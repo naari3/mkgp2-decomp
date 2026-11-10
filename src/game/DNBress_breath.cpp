@@ -17,9 +17,7 @@ void operator delete(void *p) throw();
 
 typedef float Mtx[3][4];
 
-struct Vec3f {
-    float x, y, z;
-};
+#include "game/types/Vec3f.h"
 
 struct HSD_JObj {
     char pad00[0x14];

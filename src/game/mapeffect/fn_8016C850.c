@@ -1,4 +1,4 @@
-typedef struct { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 typedef struct PointList {
     int count;
     Vec *pts;

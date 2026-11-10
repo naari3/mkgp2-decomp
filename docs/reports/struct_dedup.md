@@ -5,26 +5,26 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | Item | Count |
 |---|---|
 | Files scanned (src/game, src/ui, src/sound, src/util, src/resource, include/game) | 2840 |
-| struct/union/class definitions at file scope | 6921 in 1813 files |
-| Distinct type names | 4329 |
-| Names defined in more than one file | 731 |
+| struct/union/class definitions at file scope | 6582 in 1699 files |
+| Distinct type names | 4335 |
+| Names defined in more than one file | 728 |
 | Types already in `include/game/types` | 6 |
-| Class A groups (same name, same members, 2+ files) | 283 groups, 1153 definitions |
-| ... of which movable right now | 179 groups, 848 definitions |
-| Definitions whose byte layout the tool can compute | 3879 (not computable: 245) |
-| Class B (same name, same layout, different member spelling) | 81 name/layout pairs, 180 spellings |
-| Class C (same layout of 16+ bytes and 3+ fields, different names) | 178 layouts, 804 definitions |
+| Class A groups (same name, same members, 2+ files) | 279 groups, 806 definitions |
+| ... of which movable right now | 173 groups, 501 definitions |
+| Definitions whose byte layout the tool can compute | 3538 (not computable: 245) |
+| Class B (same name, same layout, different member spelling) | 80 name/layout pairs, 178 spellings |
+| Class C (same layout of 16+ bytes and 3+ fields, different names) | 179 layouts, 806 definitions |
 
 ## Why a definition is not movable yet
 
 | Reason | Definitions |
 |---|---|
-| non-plain member (method, nested type, access label) | 1754 |
-| needs another type (not shared yet) | 1095 |
-| has base class | 705 |
+| non-plain member (method, nested type, access label) | 1755 |
+| needs another type (not shared yet) | 1086 |
+| has base class | 706 |
 | class | 260 |
 | has storage/qualifier prefix | 259 |
-| needs another type (file has its own) | 218 |
+| needs another type (file has its own) | 229 |
 | forward declaration in file | 45 |
 | name defined twice in file | 37 |
 | separate typedef in file | 32 |
@@ -40,9 +40,6 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 
 | Name | Definitions | Distinct member lists | Largest identical group | Movable now |
 |---|---|---|---|---|
-| Vec3 | 179 | 1 | 174 | 171 |
-| Vec | 101 | 1 | 92 | 89 |
-| Vec3f | 59 | 1 | 58 | 58 |
 | HSD_JObj | 58 | 37 | 13 | 4 |
 | Obj | 45 | 29 | 4 | 4 |
 | clNormal3D | 44 | 0 | 0 | 0 |
@@ -66,22 +63,20 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | SceneBase | 15 | 0 | 0 | 0 |
 | ObjView | 15 | 11 | 3 | 3 |
 | SpriteSlot | 15 | 10 | 5 | 5 |
-| GXColor | 15 | 3 | 10 | 10 |
 | PlayerData | 14 | 12 | 2 | 2 |
 | Scene3D | 14 | 2 | 1 | 1 |
 | VfxSlot | 14 | 8 | 4 | 4 |
 | InputState | 13 | 8 | 4 | 4 |
 | JObj | 13 | 9 | 2 | 2 |
 | Buf256 | 13 | 2 | 9 | 9 |
+| Vec | 12 | 1 | 3 | 0 |
 | CarObject | 12 | 1 | 1 | 0 |
 | WeatherSystem | 12 | 4 | 1 | 1 |
 | ListNode | 11 | 5 | 4 | 4 |
 | Normal3D | 11 | 2 | 2 | 0 |
 | PtrVecBase | 11 | 0 | 0 | 0 |
 | WGPipe | 10 | 2 | 7 | 7 |
-| Vec2 | 10 | 1 | 9 | 9 |
 | PtrVec | 10 | 0 | 0 | 0 |
-| KartCond | 10 | 1 | 10 | 10 |
 | ClStream | 10 | 7 | 2 | 2 |
 | LakituStart | 9 | 0 | 0 | 0 |
 | TextSprite | 9 | 0 | 0 | 0 |
@@ -98,8 +93,13 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | KartStatus | 8 | 5 | 2 | 2 |
 | ItemKartFlag | 8 | 1 | 8 | 8 |
 | ItemKart | 8 | 6 | 2 | 0 |
+| Vec3 | 8 | 1 | 3 | 0 |
 | ChallengeGoalCamera | 8 | 2 | 1 | 0 |
 | TexMgr | 8 | 3 | 1 | 1 |
+| SpriteObj | 8 | 1 | 1 | 1 |
+| Tween | 8 | 0 | 0 | 0 |
+| FadeKeyBase | 8 | 0 | 0 | 0 |
+| FadeKey | 8 | 0 | 0 | 0 |
 
 ## Class C: largest same-layout sets with different names (candidates only)
 

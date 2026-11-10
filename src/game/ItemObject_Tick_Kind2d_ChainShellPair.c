@@ -6,7 +6,7 @@
  * by the end code in 0xCB (orbit the bound kart, tether back, fall and fade
  * out). Every frame the children follow the parent's null joint, scaled by
  * a keyframe curve of the parent's animation. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct ChainScaleKey {
     float t[4];

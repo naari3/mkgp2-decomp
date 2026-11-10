@@ -2,7 +2,7 @@
  * from its bounding box. The bounds are copied as words like the target. */
 #pragma cplusplus on
 void *operator new(unsigned long size);
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 struct W3 { int a, b, c; };
 struct SuikaNormal {
     unsigned char opaque[0x5C];

@@ -9,11 +9,7 @@
  * so the layout is declared locally.
  */
 
-typedef struct Vec3 {
-    float x;
-    float y;
-    float z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 typedef float Mtx44[4][4];
 

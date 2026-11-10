@@ -1,6 +1,4 @@
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 extern const float lbl_806D5078; /* pi/12 */
 

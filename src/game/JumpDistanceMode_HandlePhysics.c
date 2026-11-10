@@ -4,7 +4,7 @@
  * tools/postprocess_sdata2.py; the literal form is needed so CW reloads them
  * instead of keeping one register across the angle-wrap loops.
  */
-struct Vec3 { float x, y, z; };
+#include "game/types/Vec3.h"
 struct XZ { float x, z; };
 struct Rect { float minX, minZ, maxX, maxZ; };
 

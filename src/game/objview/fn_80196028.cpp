@@ -1,5 +1,5 @@
 typedef float Mtx[3][4];
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 typedef struct HSD_JObj HSD_JObj;
 typedef struct HSD_DObj HSD_DObj;
 

@@ -3,11 +3,7 @@
  * (voice base + offset) and its positional update.
  */
 
-typedef struct Vec3 {
-    float x;
-    float y;
-    float z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 typedef struct SoundObj {
     int charId;               /* 0x0 */

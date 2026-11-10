@@ -1,8 +1,6 @@
 /* Apply a visible sprite slot's colour and UV offset, then queue its
  * object for sorted drawing. Flag bits: 1 = no depth bias, 2 = hidden. */
-typedef struct Vec {
-    float x, y, z;
-} Vec;
+#include "game/types/Vec.h"
 
 typedef struct SpriteSlot {
     unsigned char flags;        /* 0x00 */

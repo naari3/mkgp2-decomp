@@ -6,9 +6,7 @@
  * the five effect dispatch groups.
  */
 
-typedef struct Vec {
-    float x, y, z;
-} Vec;
+#include "game/types/Vec.h"
 
 extern void *DrawEffect_SpawnDirect(void (*callback)(void));
 extern void *KartDriver_GetKartRootMtx(void *driver);

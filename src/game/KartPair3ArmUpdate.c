@@ -3,8 +3,8 @@
  * horn SE loops; once the timer runs out they leave the screen and the
  * effect frees itself. Picks the character voice lines on its first frame. */
 
-typedef struct Vec { float x, y, z; } Vec;
-typedef struct Vec2 { float x, y; } Vec2;
+#include "game/types/Vec.h"
+#include "game/types/Vec2.h"
 typedef struct Int4 { int v[4]; } Int4;
 
 typedef struct CarrotPad {

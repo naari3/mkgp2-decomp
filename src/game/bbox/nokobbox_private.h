@@ -1,6 +1,6 @@
 #ifndef NOKO_BBOX_PRIVATE_H
 #define NOKO_BBOX_PRIVATE_H
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 typedef struct FlagObject { unsigned char pad[0x14]; unsigned int flags; } FlagObject;
 typedef struct ShadowEntry {
     struct ShadowEntry *next;

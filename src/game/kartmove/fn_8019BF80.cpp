@@ -1,9 +1,7 @@
 /* 0x8019BF80: rebuild the kart's orientation matrix from its four ground
  * contact corners. */
 
-typedef struct Vec3f {
-    float x, y, z;
-} Vec3f;
+#include "game/types/Vec3f.h"
 
 struct Vec {
     float x, y, z;

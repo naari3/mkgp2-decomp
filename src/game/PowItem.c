@@ -6,11 +6,7 @@
  * (no committed struct header yet); see Ghidra bmp_output plate comments.
  */
 
-typedef struct Vec3 {
-    float x;
-    float y;
-    float z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 /* --- extern decls: callees referenced from C bodies --- */
 extern signed char ItemObject_GetGroundTypeAt(float *pos, float *outGroundY, int flag);

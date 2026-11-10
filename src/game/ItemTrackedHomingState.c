@@ -2,7 +2,7 @@
  * Reconstructed from complete target/callee assembly (Ghidra unavailable).
  * Only observed fields are named; this is not a full Item class layout.
  */
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 
 typedef struct ItemTrackedHomingView {
     char pad0[0xA0];

@@ -6,9 +6,7 @@
  * Inline target-yaw and candidate-selection helpers preserve the original
  * temporary lifetimes, stack vectors, and scan initialization.
  */
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 typedef struct Float3 {
     float value[3];

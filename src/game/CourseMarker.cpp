@@ -6,9 +6,7 @@
  * tools/extab_user_renames.json.
  */
 
-typedef struct Vec3f {
-    float x, y, z;
-} Vec3f;
+#include "game/types/Vec3f.h"
 
 typedef struct MarkerPath {
     Vec3f start;

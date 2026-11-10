@@ -2,7 +2,7 @@
  * (explicit kart, or the one in the item's hit-registry slot), show the hit
  * message, work out the impact point and spawn the hit effect there.
  * C++ for the virtual-call sequence on the kart's hit sink (vtable +0x8). */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct ItemClassEntry {
     unsigned char pad0[8];

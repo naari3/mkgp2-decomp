@@ -1,5 +1,5 @@
 /* Fall recovery state. Layouts describe only fields observed in this function. */
-struct Vec3 { float x, y, z; };
+#include "game/types/Vec3.h"
 struct GabyouItemFallView {
     unsigned char pad00[0x28];
     unsigned char active;

@@ -15,11 +15,7 @@
 
 typedef float Mtx[3][4];
 
-struct Vec3 {
-    float x;
-    float y;
-    float z;
-};
+#include "game/types/Vec3.h"
 
 struct HSD_JObj {
     char pad00[0x14];

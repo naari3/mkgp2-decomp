@@ -1,4 +1,4 @@
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int enabled);
 extern void *ItemObject_AllocGabyou(void);

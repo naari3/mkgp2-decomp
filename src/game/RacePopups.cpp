@@ -10,10 +10,7 @@
 
 #include "game/FlowScene.h"
 
-struct Vec2 {
-    float x;
-    float y;
-};
+#include "game/types/Vec2.h"
 
 extern "C" {
 extern const Vec2 lbl_806DC0F8;

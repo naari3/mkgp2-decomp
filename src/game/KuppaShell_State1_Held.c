@@ -3,7 +3,7 @@
  * thrown, sub-state 2 rolls it forward, bouncing off walls a few times and
  * hopping along the ground, until a kart hit, a wall stop, a fall or a
  * timeout ends the flight. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct KuppaShellWork {
     unsigned char bounces;

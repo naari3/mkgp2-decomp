@@ -1,6 +1,4 @@
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);
 extern void fn_80113F30(unsigned char *self, unsigned char *sub);

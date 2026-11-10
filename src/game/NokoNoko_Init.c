@@ -7,7 +7,7 @@ struct Normal3D {
     Normal3D(void *resource, int mode);
     ~Normal3D();
 };
-struct Vec3 { float x, y, z; };
+#include "game/types/Vec3.h"
 struct NokoEntity {
     NokoEntity *next;
     unsigned char opaque04[60];

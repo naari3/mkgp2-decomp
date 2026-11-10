@@ -8,9 +8,7 @@
  * that comes within its hit radius. */
 typedef float Mtx[3][4];
 
-typedef struct Vec {
-    float x, y, z;
-} Vec;
+#include "game/types/Vec.h"
 
 typedef struct RaceContextSlot {
     int type;               /* 0x00 */

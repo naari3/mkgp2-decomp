@@ -2,7 +2,7 @@
  * kart for two turns, spiralling outward and then back in, with a bob
  * that dips lower on the last turn. It spawns an orbit spark at the start,
  * then fades out. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float f);
 extern void SpriteSlot_SetScale(void *slot, float s);

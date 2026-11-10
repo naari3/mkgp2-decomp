@@ -1,7 +1,7 @@
 #ifndef FN_8018DAD0_PRIVATE_H
 #define FN_8018DAD0_PRIVATE_H
 
-typedef struct Vec3 { float x,y,z; } Vec3;
+#include "game/types/Vec3.h"
 typedef struct Joint { char pad[0x38]; Vec3 pos; } Joint;
 typedef struct Emitter { Joint *joint; unsigned char delay, burst; char pad[2]; } Emitter;
 typedef struct Particle {

@@ -1,7 +1,7 @@
 /* JumpDistanceMode_PredictLanding (0x80210A50): simulates a copy of the kart movement until it
  * lands and places the landing marker/camera target accordingly. */
 
-typedef struct { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 typedef struct {
     char pad00[0x8];
     void *car;

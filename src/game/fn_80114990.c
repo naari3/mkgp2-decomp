@@ -1,7 +1,5 @@
 /* Triple-item throw phase: swing the held item, aim at the nearest kart and release it. */
-typedef struct Vec {
-    float x, y, z;
-} Vec;
+#include "game/types/Vec.h"
 
 extern void AnimState_SetGlobalScale(void *anim, float s);
 extern void AnimState_SetEnabledTimers(void *anim, float t);

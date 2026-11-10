@@ -4,7 +4,7 @@
  * addi+lwzx form. Layout follows target accesses; Ghidra exposes an untyped
  * self pointer.
  */
-struct Vec { float x,y,z; };
+#include "game/types/Vec.h"
 struct Effect { char p0[16]; int index; char slot[20]; char visible; char p29[3]; float alpha; char p30[0x5c]; Vec pos; char p98[12]; Vec velocity; float scale; signed char state; char pb5[0xcb]; unsigned int timer; };
 /* .rodata 0x80328EB8..0x80329908: shared effect tables (section anchor of the original effects TU) */
 extern "C" const unsigned int lbl_80328EB8[255] = {

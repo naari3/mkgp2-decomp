@@ -1,5 +1,5 @@
 /* Ring explosion callbacks. These views describe only observed fields. */
-struct Vec3 { float x, y, z; };
+#include "game/types/Vec3.h"
 struct RingKartView { unsigned char pad00[0x238]; int alternateMode; };
 struct RingEffectView {
     unsigned char pad00[0x14];

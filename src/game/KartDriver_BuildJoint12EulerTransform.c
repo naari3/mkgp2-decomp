@@ -3,9 +3,7 @@
  * translate by an offset scaled by 1/KartFxParam_GetConst1p5, compose with the
  * joint matrix, then apply a uniform scale. */
 
-typedef struct Vec {
-    float x, y, z;
-} Vec;
+#include "game/types/Vec.h"
 
 extern float KartFxParam_GetConst1p5(void *driver);
 extern void KartDriver_GetJointMatrix4x3(void *driver, int joint, float m[4][4]);

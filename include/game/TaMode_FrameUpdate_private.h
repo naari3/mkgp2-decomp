@@ -15,9 +15,7 @@ struct TaGhostFrame {
     float accel, steer, brake;
     signed char started, item, coins, pad;
 };
-typedef struct Vec {
-    float x, y, z;
-} Vec;
+#include "game/types/Vec.h"
 
 struct InputPlayer {
     virtual void v0();

@@ -33,11 +33,7 @@ extern void fn_8016C394();                  /* stop SE by id */
 extern void fn_8016C488();                  /* global SE stop (mode) */
 extern void fn_8016C4CC();                  /* global SE stop / reset (mode) */
 
-typedef struct Vec3 {
-    float x;
-    float y;
-    float z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 /* Shared zero Vec3 in .rodata (0x802EDD24). */
 extern const Vec3 lbl_802EDD24;

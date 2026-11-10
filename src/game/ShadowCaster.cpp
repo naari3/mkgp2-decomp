@@ -24,9 +24,7 @@ struct JObj {
 
 struct ShadowSet;
 
-struct Vec3f {
-    float x, y, z;
-};
+#include "game/types/Vec3f.h"
 
 extern "C" {
 unsigned int HSD_JObjGetFlags(JObj *);

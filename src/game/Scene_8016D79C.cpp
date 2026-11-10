@@ -3,9 +3,7 @@
  * the deleting destructor (vtable lbl_80491134, base vtable lbl_80490FE0).
  */
 
-struct Vec3f {
-    float x, y, z;
-};
+#include "game/types/Vec3f.h"
 
 struct HSD_JObj {
     char pad00[0x8];

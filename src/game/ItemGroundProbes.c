@@ -6,9 +6,7 @@
  * the existing shared-pool pass maps it to lbl_806D5AC8. The fallback probe
  * reloads that pool value, and its subtraction reverses the first-hit order.
  */
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 extern void GetSpawnPosition(Vec3 *out, float x, float y, float z);
 extern void Vec2_RotateY(Vec3 *out, const Vec3 *in, float yaw);

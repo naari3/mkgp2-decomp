@@ -1,4 +1,4 @@
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 
 extern void Effect_Explosion_Compound_Update(void);
 extern unsigned char *DrawEffect_SpawnDirect(void (*fn)(void));

@@ -1,4 +1,4 @@
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 
 extern void Vec3_Subtract_DestFirst(void *dst, void *a, void *b);
 extern void *KartDriver_GetKartRootMtx(void *kart);

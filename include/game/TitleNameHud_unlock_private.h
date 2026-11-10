@@ -15,10 +15,7 @@
 
 #include "game/FlowScene.h"
 
-struct Vec2 {
-    float x;
-    float y;
-};
+#include "game/types/Vec2.h"
 
 struct GlyphInfo {
     int pad00[2];

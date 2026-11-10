@@ -1,8 +1,6 @@
 /* Queue a visible VFX slot for sorted drawing at its joint (or fixed)
  * position. Flag bits: 1 = no depth bias, 2 = hidden, 8 = fixed position. */
-typedef struct Vec {
-    float x, y, z;
-} Vec;
+#include "game/types/Vec.h"
 
 typedef struct VfxSlot {
     signed char flags;          /* 0x00 */

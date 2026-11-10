@@ -157,9 +157,7 @@ extern void *lbl_804E49C4[];
 extern void *lbl_804E49EC[];
 extern void *lbl_804E4A08[];
 
-typedef struct Vec3f {
-    float x, y, z;
-} Vec3f;
+#include "game/types/Vec3f.h"
 
 void Vec3_Copy(Vec3f *dst, const Vec3f *src);
 void Vec3_Normalize_SafeXZY(Vec3f *dst, const Vec3f *src);

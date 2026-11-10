@@ -1,4 +1,4 @@
-typedef struct { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 
 typedef struct Slot {
     Vec3 pos;

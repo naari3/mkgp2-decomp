@@ -3,9 +3,7 @@
  * and hands over to state 3.  Otherwise it falls, accelerates (class-
  * dependent), spins, steers its yaw towards the velocity, bounces off walls
  * and, on landing, tilts with the ground and veers down steep slopes. */
-typedef struct Vec {
-    float x, y, z;
-} Vec;
+#include "game/types/Vec.h"
 
 typedef struct TaruItem {
     unsigned char pad000[0x28];

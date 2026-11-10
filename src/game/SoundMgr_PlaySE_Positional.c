@@ -8,9 +8,7 @@
  */
 
 typedef unsigned int u32;
-typedef struct Vec {
-    float x, y, z;
-} Vec;
+#include "game/types/Vec.h"
 
 typedef struct CameraMatrices {
     float proj[4][4]; /* 0x00 */

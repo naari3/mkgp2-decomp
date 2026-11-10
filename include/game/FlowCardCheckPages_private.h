@@ -5,9 +5,7 @@
 void *operator new(unsigned long size);
 void operator delete(void *p) throw();
 
-struct Vec2 {
-    float x, y;
-};
+#include "game/types/Vec2.h"
 
 struct Sprite {
     int id;

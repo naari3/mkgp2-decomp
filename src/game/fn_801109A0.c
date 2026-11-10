@@ -1,4 +1,4 @@
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 typedef struct ItemPickTable { unsigned char b[9]; } ItemPickTable;
 
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);

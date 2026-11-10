@@ -15,11 +15,7 @@ void operator delete(void *p) throw();
 
 typedef float Mtx[3][4];
 
-struct Vec {
-    float x;
-    float y;
-    float z;
-};
+#include "game/types/Vec.h"
 
 struct HSD_JObj {
     char pad00[0x14];

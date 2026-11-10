@@ -1,4 +1,4 @@
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 
 extern signed char ItemObject_GetGroundTypeAt(Vec3 *pos, float *outY, int a);
 extern void *KartDriver_GetKartRootMtx(void *kart);

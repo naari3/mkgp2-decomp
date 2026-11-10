@@ -12,7 +12,7 @@ typedef struct { float x, y, z; } Vec;
 void *operator new(unsigned long size);
 void operator delete(void *p);
 
-struct Vec3 { float x, y, z; };
+#include "game/types/Vec3.h"
 struct LNode { char pad[8]; void *f8; };
 struct Trail { int age; Vec3 pos; };
 struct Shot {

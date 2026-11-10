@@ -6,7 +6,7 @@
  */
 #include "game/AnimState_Step_private.h"
 
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct AnimEntry {
     char type;

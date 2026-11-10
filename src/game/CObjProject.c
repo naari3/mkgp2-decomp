@@ -1,5 +1,5 @@
 /* Only the fields observed in the camera projection callers are described. */
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 typedef float Matrix3x4[3][4];
 typedef struct CObjProjectView {
     char pad0[4];

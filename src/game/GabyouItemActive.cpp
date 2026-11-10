@@ -2,7 +2,7 @@
  * Reconstructed from the complete target and actual callee disassembly.
  * Ghidra was unavailable. Views are local and describe observed fields only.
  */
-struct Vec3 { float x, y, z; };
+#include "game/types/Vec3.h"
 struct GabyouActiveView {
     unsigned char pad00[8];
     int alias;

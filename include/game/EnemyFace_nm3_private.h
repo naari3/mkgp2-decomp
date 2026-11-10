@@ -34,9 +34,7 @@ struct Vec3c {
 #endif
 };
 
-struct Vec3f {
-    float x, y, z;
-};
+#include "game/types/Vec3f.h"
 
 struct KartFlags {
     char pad[0x10];

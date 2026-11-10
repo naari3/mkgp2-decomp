@@ -41,11 +41,7 @@ struct SavedGXState {
 };
 extern "C" void MemoryManager_TimedFree(void *p);
 
-struct Vec3 {
-    float x;
-    float y;
-    float z;
-};
+#include "game/types/Vec3.h"
 
 struct LNode {
     LNode *prev;

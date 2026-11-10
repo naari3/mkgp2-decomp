@@ -1,6 +1,6 @@
 /* NokoNoko_FindNearest (0x801887BC): nearest live NokoNoko (state < 4) to a point. */
 
-typedef struct { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 typedef struct NokoNoko {
     struct NokoNoko *next;
     char pad04[0x8];

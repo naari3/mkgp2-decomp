@@ -6,7 +6,7 @@ const unsigned char lbl_8032E648[1104] = { 0x3F, 0x80, 0x0, 0x0, 0x3F, 0x33, 0x3
  * hand. It fades in and out with the hold state, hits drivers in range and
  * spawns a blast trail when triggered, and scales its two bell joints along
  * keyframe curves while the second animation plays. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 typedef struct { float v[3]; } FloatTriple;
 typedef struct { float v[6]; } FloatSix;
 typedef struct { unsigned char b[0x1EC]; } ItemObjectCopy;

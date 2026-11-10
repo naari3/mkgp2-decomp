@@ -1,6 +1,6 @@
 #ifndef OBJVIEW_A418_PRIVATE_H
 #define OBJVIEW_A418_PRIVATE_H
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 typedef struct Frame { int active; float time; } Frame;
 typedef struct ObjView {
     void *vt, *jobj;

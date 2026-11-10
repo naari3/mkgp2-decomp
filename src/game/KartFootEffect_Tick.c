@@ -1,5 +1,5 @@
 /* Actor is opaque in Ghidra; named accessors document the observed layout. */
-typedef struct Vec { float x,y,z; } Vec;
+#include "game/types/Vec.h"
 const float lbl_80329908[255] = {
     1.0f, 0.7f, 0.9f, 0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f,
     66.66667f, 2e+03f, 66.66667f, 3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f,

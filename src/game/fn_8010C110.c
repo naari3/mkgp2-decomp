@@ -1,7 +1,7 @@
 /* fn_8010C110: held-item tick for the 0x71..0x73 item kinds. Spawns and
  * fades the attached effect, follows the kart toward the camera side, and
  * scales its joints along keyframe curves. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef unsigned long long ItemEffectMask;
 typedef struct ItemEffectBusView {

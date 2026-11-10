@@ -1,4 +1,4 @@
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 typedef struct Mtx44 { float m[4][4]; } Mtx44;
 typedef struct Mtx34 { float m[3][4]; } Mtx34;
 

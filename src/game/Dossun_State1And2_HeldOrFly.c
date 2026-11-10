@@ -4,7 +4,7 @@
  * 3 is the stomp: it slams down, bounces back up and repeats until its
  * hit registry entry is gone. A kart hit while airborne kicks the item
  * back into the drop state. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct DossunWork {
     unsigned char landed;

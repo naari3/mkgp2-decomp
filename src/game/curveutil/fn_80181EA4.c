@@ -1,6 +1,4 @@
-typedef struct Vec3f {
-    float x, y, z;
-} Vec3f;
+#include "game/types/Vec3f.h"
 
 void fn_80181EA4(const Vec3f *p0, const Vec3f *p1, const Vec3f *p2, Vec3f *out, float t) {
     float u = 1.0f - t;

@@ -3,7 +3,7 @@
  * kart's joint 12 with a per-kind offset/rotation, scaled by the driver's
  * boost bonus, and drives a child effect until the hold flag 0x18C is set
  * (kinds 0x14/0x15 play an SE when dropped). */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct HandheldPose {
     signed char onKart;

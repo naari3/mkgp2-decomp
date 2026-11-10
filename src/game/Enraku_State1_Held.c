@@ -3,7 +3,7 @@
  * until it is thrown, sub-state 2 flies it forward with homing and a spin,
  * and leaves the flying state on a kart hit, a wall, a landing or a
  * timeout. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct EnrakuWork {
     unsigned char pad0[4];

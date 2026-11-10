@@ -143,9 +143,7 @@ struct GXColorB {
     unsigned char r, g, b, a;
 };
 
-struct Vec3f {
-    float x, y, z;
-};
+#include "game/types/Vec3f.h"
 
 struct CamVecs {
     Vec3f eye;

@@ -20,11 +20,7 @@
  *     t=f3/b=f2 swap instead).
  */
 
-typedef struct Vec3 {
-    float x;
-    float y;
-    float z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 extern float LUT_Sine(float angle);
 extern float LUT_Cosine(float angle);

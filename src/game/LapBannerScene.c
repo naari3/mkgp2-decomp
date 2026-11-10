@@ -40,11 +40,7 @@ typedef struct LapBannerScene {
     float timer;          /* 0xC */
 } LapBannerScene;
 
-typedef struct Vec3 {
-    float x;
-    float y;
-    float z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 extern const float lbl_806D3250; /* 0.0f */
 extern const float lbl_806D3254; /* timer step */

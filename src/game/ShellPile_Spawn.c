@@ -2,7 +2,7 @@
  * into its configured pieces (ShellPilePiece_Tick). Each piece starts at
  * its rest pose in the item's (or a named joint's) matrix and is flung away
  * from the item's center. Not used in game mode 2. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 extern unsigned char lbl_8041EEC0[];
 extern int g_gameMode;

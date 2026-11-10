@@ -1,4 +1,4 @@
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 
 extern void ItemTracker_AcquireLock(unsigned char *self);
 extern void ItemTracker_SetTrackPhase(unsigned char *self, int phase);

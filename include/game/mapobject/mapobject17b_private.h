@@ -3,9 +3,7 @@
 
 typedef float Mtx[3][4];
 
-struct Vec3f {
-    float x, y, z;
-};
+#include "game/types/Vec3f.h"
 
 struct ModelPath {
     Vec3f *points;

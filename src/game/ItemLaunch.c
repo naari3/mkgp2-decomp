@@ -1,6 +1,6 @@
 /* Observed Item launch fields and complete target/callee assembly provenance.
  * These views do not establish the full runtime Item or KartDriver layouts. */
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 typedef struct ItemLaunchView {
     unsigned char pad00[0x2C];
     float launchScalar;

@@ -7,7 +7,7 @@ const char lbl_80330398[1020] = { 63, -128, 0, 0, 63, 51, 51, 51, 63, 102, 102, 
  * blade joints between them. State 1 is held/flying, state 2 fades it out
  * or tethers it back to the kart. Each frame the partner follows the
  * item's "boomerang" joint, scaled by the spin pace. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct BoomerangWork {
     unsigned char thrown;

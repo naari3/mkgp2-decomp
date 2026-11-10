@@ -8,9 +8,7 @@
  * `st` is the per-item state block at self + 0xEC.
  */
 
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 typedef float Mtx44[4][4];
 typedef float Mtx34[3][4];

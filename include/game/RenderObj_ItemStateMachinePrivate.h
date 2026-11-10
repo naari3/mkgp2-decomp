@@ -2,7 +2,7 @@
 #define RENDEROBJ_ITEMSTATEMACHINE_PRIVATE_H
 #include "sysdolphin/baselib/jobj.h"
 typedef float Mtx[3][4];
-struct Vec3f { float x, y, z; };
+#include "game/types/Vec3f.h"
 struct RenderFlags { char pad[0x10]; unsigned long long bits; };
 struct RenderVisibility { char pad[0x14]; unsigned char a, b; };
 struct RenderOverlay { char pad[4]; unsigned char active; char pad5[3]; float x, y; };

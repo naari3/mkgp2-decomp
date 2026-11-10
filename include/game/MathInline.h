@@ -1,9 +1,7 @@
 #ifndef GAME_MATHINLINE_H
 #define GAME_MATHINLINE_H
 
-typedef struct Vec3f {
-    float x, y, z;
-} Vec3f;
+#include "game/types/Vec3f.h"
 
 /* MSL sqrtf: three Newton refinements and a single-precision spill. */
 static inline float MathInline_sqrtf(float x)

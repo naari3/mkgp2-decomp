@@ -2,7 +2,7 @@
  * 0x1E..0x23. The item stays in the character's hand with a per-kind
  * offset/rotation (kind 0x21 spins) until the hold flag 0x18C is set, and a
  * child effect follows it each frame. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct HandheldPose {
     int pad;

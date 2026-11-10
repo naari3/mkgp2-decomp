@@ -4,9 +4,7 @@
  * faces are added to the special face mesh and it scales in).
  */
 
-struct Vec3f {
-    float x, y, z;
-};
+#include "game/types/Vec3f.h"
 
 struct GrowSub {
     char pad00[0x10];

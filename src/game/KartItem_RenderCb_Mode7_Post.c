@@ -1,9 +1,4 @@
-typedef struct GXColor {
-    unsigned char r;
-    unsigned char g;
-    unsigned char b;
-    unsigned char a;
-} GXColor;
+#include "game/types/GXColor.h"
 
 extern const GXColor lbl_806D28C0;
 extern const GXColor lbl_806D28C4;

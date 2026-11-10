@@ -3,7 +3,7 @@
  * 0x19 pulses its scale along per-axis keyframe curves, kind 0x1B keeps a
  * second sprite nudged toward the camera, kind 0x1C flickers, and the
  * others drive a child effect from a named joint. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct PulseKey {
     float t[9];

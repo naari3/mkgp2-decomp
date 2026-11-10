@@ -3,7 +3,7 @@
  * joint and offsets the orbit start by 120 degrees per slot. It circles
  * the kart, faces it, and fades out once the driver's trio flag drops or
  * its 600-frame life ends. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 extern const char lbl_8032E060[];
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);

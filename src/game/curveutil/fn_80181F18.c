@@ -1,6 +1,4 @@
-typedef struct Vec3f {
-    float x, y, z;
-} Vec3f;
+#include "game/types/Vec3f.h"
 
 extern const float lbl_80491988[];
 extern void Vec3_Subtract(const Vec3f *a, const Vec3f *b, Vec3f *out);

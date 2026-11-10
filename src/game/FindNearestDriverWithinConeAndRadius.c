@@ -1,6 +1,4 @@
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 typedef struct RaceContextSlot {
     unsigned int kind;           /* 0x00 */

@@ -11,9 +11,7 @@ const int lbl_803604D8[8] = { 5286, 5284, 5283, 5287, 5285, 5288, 5290, 5289 };
 #pragma cplusplus on
 
 typedef float Mtx[3][4];
-struct Vec3f {
-    float x, y, z;
-};
+#include "game/types/Vec3f.h"
 struct TexMgr {
     unsigned char pad0[0x18];
     int mode;

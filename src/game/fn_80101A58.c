@@ -1,4 +1,4 @@
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 extern void *KartDriver_GetKartRootMtx(void *kart);
 extern void Mtx_TransposeToMtx44(float dst[4][4], const void *src);

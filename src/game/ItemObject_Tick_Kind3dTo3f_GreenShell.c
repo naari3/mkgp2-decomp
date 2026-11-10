@@ -3,7 +3,7 @@
  * dispatches on how the shell left the flying state: hit rebound, tether
  * back to the kart, shatter, orbit, or a fade on the ground. Kind 0x3F
  * also drives a spark spray, and the shell's trail effect follows it. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct GreenShellWork {
     unsigned char bounces;

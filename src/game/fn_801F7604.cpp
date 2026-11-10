@@ -274,9 +274,7 @@ struct Vec2f {
     float x, y;
 };
 
-struct Vec3f {
-    float x, y, z;
-};
+#include "game/types/Vec3f.h"
 
 struct Rect4f {
     float a, b, c, d;

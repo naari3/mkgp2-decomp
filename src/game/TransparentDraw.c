@@ -14,9 +14,7 @@
  *   0x80065FD8 TransparentDraw_RemoveByOwner    (0xC4)
  */
 
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 /* draw object: vtable + refcount + intrusive draw chain + position block */
 typedef struct TDrawObjVtbl TDrawObjVtbl;

@@ -12,11 +12,7 @@
  * Sub-state buffer sub = self + 0xec (sub+0x30 = SE 200 channel).
  */
 
-typedef struct Vec3 {
-    float x;
-    float y;
-    float z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 /* --- extern decls: callees --- */
 extern float AngleStepTowards_Shortest(float cur, float target, float step);

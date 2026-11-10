@@ -1,5 +1,5 @@
 /* Tick state dispatch. Local views contain only the observed object fields. */
-struct Vec3 { float x, y, z; };
+#include "game/types/Vec3.h"
 struct GabyouTickContext {
     unsigned char pad00[4];
     unsigned int timer, timer8, timerC, timer10;

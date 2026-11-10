@@ -2,9 +2,7 @@
  * Reconstructed from complete target/callee disassembly; Ghidra unavailable.
  * GetSpawnPosition is a vector setter (out r3, x/y/z f1/f2/f3), not a getter.
  */
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 typedef struct ItemAccelerationView {
     char pad0[0xB0];

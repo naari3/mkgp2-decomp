@@ -6,9 +6,7 @@
  * through one hoisted base.
  */
 
-struct Vec3f {
-    float x, y, z;
-};
+#include "game/types/Vec3f.h"
 
 struct HSD_JObj {
     char pad00[0x14];

@@ -3,7 +3,7 @@
 
 /* Byte-offset accessors for DrawEffect pool entries (see DrawEffectPool.h)
  * and the VfxSlot / Vec3 helpers their per-frame callbacks call. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 #define F(o) (*(float *)(self + (o)))
 #define I(o) (*(int *)(self + (o)))

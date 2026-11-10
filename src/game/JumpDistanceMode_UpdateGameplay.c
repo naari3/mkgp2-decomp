@@ -3,7 +3,7 @@
  * Float literals in JD_sqrtf are remapped to the shared .sdata2 labels by
  * tools/postprocess_sdata2.py.
  */
-struct Vec3 { float x, y, z; };
+#include "game/types/Vec3.h"
 struct XZ { float x, z; };
 struct Rect { float minX, minZ, maxX, maxZ; };
 

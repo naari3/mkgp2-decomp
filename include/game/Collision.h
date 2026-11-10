@@ -3,9 +3,7 @@
 
 /* Sphere/box collision objects and their manager (0x80207E3C..0x80209330). */
 
-struct Vec {
-    float x, y, z;
-};
+#include "game/types/Vec.h"
 typedef float Mtx[3][4];
 
 extern "C" {

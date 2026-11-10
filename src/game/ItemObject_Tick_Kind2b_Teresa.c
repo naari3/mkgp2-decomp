@@ -3,7 +3,7 @@
  * state 2 plays the ending picked by the end code in 0xCB: track the
  * robbed kart, burst into pieces, tether back to the owner, orbit the kart
  * or fade away. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 extern const char lbl_8032E630[];
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);

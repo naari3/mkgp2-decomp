@@ -4,9 +4,7 @@
  */
 #pragma cplusplus on
 
-struct Vec3f {
-    float x, y, z;
-};
+#include "game/types/Vec3f.h"
 struct OccluderShape {
     Vec3f pts[4];
     float zmax;

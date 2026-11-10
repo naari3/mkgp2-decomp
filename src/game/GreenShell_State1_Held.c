@@ -3,7 +3,7 @@
  * kart's hand until it is thrown, sub-state 2 rolls it along the ground
  * with a spin, bouncing off walls a few times and leaving the flying
  * state on a kart hit, a wall stop, a fall or a timeout. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct GreenShellWork {
     unsigned char bounces;

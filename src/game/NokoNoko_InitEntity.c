@@ -2,7 +2,7 @@
  * kind from the shared random table and faces it along the nearest path
  * segment. */
 
-typedef struct { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct NokoKind {
     int model;

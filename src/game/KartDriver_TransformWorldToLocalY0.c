@@ -1,9 +1,7 @@
 /* Transform a world-space point into the kart's local frame with its x
  * component cleared, then back through the kart matrix. */
 
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 extern float *KartDriver_GetKartRootMtx(void *kart);
 extern void Mtx44_Inverse_GaussJordan(float inv[4][4], float m[4][4]);

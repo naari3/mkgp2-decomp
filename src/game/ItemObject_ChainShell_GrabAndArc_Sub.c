@@ -3,7 +3,7 @@
  * sub[0] is its phase (0 thrown, 1 lunging, 2 falling, 3 planted with a
  * smoke ring). Hits steal or knock the target per the ItemCollision result,
  * walls bounce it, and a planted shell ends when its hit entry expires. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 extern int g_ccClass;
 extern void *KartDriver_GetJointByIdx(void *kart, int idx);

@@ -1,6 +1,4 @@
-typedef struct GXColor {
-    unsigned char r, g, b, a;
-} GXColor;
+#include "game/types/GXColor.h"
 
 typedef union WGPipe {
     unsigned char u8;

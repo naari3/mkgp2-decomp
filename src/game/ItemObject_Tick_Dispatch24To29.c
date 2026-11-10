@@ -3,7 +3,7 @@
  * and light attachment). Holds the item in the character's hand with a
  * per-kind offset/rotation, launches or drops it on the hold flag, then runs
  * the kind's own tick. A child effect follows the item each frame. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct HandheldPose {
     int pad;

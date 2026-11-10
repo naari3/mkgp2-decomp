@@ -1,7 +1,7 @@
 /* NokoNoko_CheckHitAndKill (0x801888B8): knocks out every NokoNoko inside the given
  * sphere; returns 1 if any was hit. */
 
-typedef struct { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 typedef struct NokoNoko {
     struct NokoNoko *next;
     char pad04[0x8];

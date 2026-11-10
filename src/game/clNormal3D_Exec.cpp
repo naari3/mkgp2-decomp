@@ -4,7 +4,7 @@
  * rotations were converted to quaternions (see Object_DriveAnimAndSkin),
  * the saved rotations are restored first and converted again afterwards. */
 struct Quat { float x,y,z,w; };
-struct Vec3 { float x,y,z; };
+#include "game/types/Vec3.h"
 struct JObj;
 typedef void (*AnimCallback)(void);
 struct JObjClass { unsigned char pad[0x50]; AnimCallback animate; };

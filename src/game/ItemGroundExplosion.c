@@ -1,5 +1,5 @@
 /* Observed Item/effect fields only; authoritative PowerPC ASM ABI reconstruction. */
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 typedef struct ItemExplosionView {
     unsigned char pad00[0xA0];
     Vec3 position;

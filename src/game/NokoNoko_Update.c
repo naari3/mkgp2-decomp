@@ -2,7 +2,7 @@
  * turn back on contact with another NokoNoko, the player or a wall, and keeps
  * it on the ground. */
 
-typedef struct { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct NokoKind {
     int state;

@@ -1,4 +1,4 @@
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 extern double sin(double);
 extern float BuildOrientationFromYaw(float yaw);

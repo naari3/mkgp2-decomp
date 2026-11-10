@@ -1,4 +1,4 @@
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 
 extern void *KartDriver_GetJointByIdx(void *kart, int idx);
 extern void Mtx44_GetTranslation_RowMajor(void *out, void *mtx);

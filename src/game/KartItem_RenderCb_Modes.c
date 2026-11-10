@@ -2,12 +2,7 @@
  * KartItem TEV render callbacks and VisualEffectHolder dtor, 0x80056A48..0x80056CB0.
  */
 
-typedef struct GXColor {
-    unsigned char r;
-    unsigned char g;
-    unsigned char b;
-    unsigned char a;
-} GXColor;
+#include "game/types/GXColor.h"
 
 typedef struct VisualEffectHolder {
     unsigned char pad_00[0x10];

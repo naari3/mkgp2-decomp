@@ -3,7 +3,7 @@
  * tracked target and, on a hit, steals that kart's item (the ItemCollision
  * result picks the outcome) and switches to the track-to-kart state. Wall
  * hits, landing and timeouts end it with their own end codes in 0xCB. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 extern int g_ccClass;
 extern void *KartDriver_GetKartRootMtx(void *driver);

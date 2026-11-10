@@ -12,9 +12,7 @@
  */
 #pragma cplusplus on
 
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 extern "C" {
 extern int g_cupId;

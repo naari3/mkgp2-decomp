@@ -3,7 +3,7 @@
  * trigger flag switches to its second animation for 180 frames with a
  * child effect, and fades out. Its offset eases toward a rest point and
  * its scale pulses along a 4-segment keyframe curve. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct ScaleCurve {
     float x[5];

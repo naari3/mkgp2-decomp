@@ -3,11 +3,7 @@
  * Structural twin of EggItem_Tick_HeldAndHoming_3B3C; raw offsets as there.
  * sub = self + 0xec: [0] render, [1] hit flag, [2] wall bounces left,
  * +4 life timer, +8 landing burst, +0xc track timer, +0x30 SE 0xbd channel. */
-typedef struct Vec3 {
-    float x;
-    float y;
-    float z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 extern float AngleStepTowards_Shortest(float cur, float target, float step);
 extern float BuildOrientationFromYaw(float yaw);

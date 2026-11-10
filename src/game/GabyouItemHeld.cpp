@@ -1,6 +1,6 @@
 /* Held/launch/homing/attached-effect phases, reconstructed from the target
  * 800E6F78..800E7EC4. These local views describe only observed fields. */
-struct Vec3 { float x, y, z; };
+#include "game/types/Vec3.h"
 struct HeldKart;
 struct HeldEffectBus {
     unsigned char pad00[8];

@@ -3,7 +3,7 @@
  * camera and rendered, then the two trailing ribbons are drawn as quads
  * through each carrot's matrix. The local tables are copied from the
  * shared .rodata block that starts at lbl_80328EB8 (see KartShellRibbonDraw). */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct CarrotF3 { float v[3]; } CarrotF3;
 typedef struct CarrotPts { Vec p[8]; } CarrotPts;

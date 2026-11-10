@@ -535,9 +535,7 @@ void *lbl_8040E1C4[163] = {
  * [cup][longRound], with per-reverse and per-variant sub-arrays), kart
  * slots and debug overlay labels. */
 
-typedef struct Vec3f {
-    float x, y, z;
-} Vec3f;
+#include "game/types/Vec3f.h"
 
 typedef struct RankEntry {
     int a;

@@ -37,9 +37,7 @@ int fn_801DB890(int ctx, int item);
 extern const float lbl_806DB668;
 extern const float lbl_806DB66C;
 
-struct Vec3 {
-    float x, y, z;
-};
+#include "game/types/Vec3.h"
 
 struct Vec3c : Vec3 {
     Vec3c() {}

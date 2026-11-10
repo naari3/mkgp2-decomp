@@ -1,7 +1,7 @@
 /* BananaField_TestHitBox (0x80196F60): oriented-box test of a point against the kart
  * matrix, using the per-character half extents in lbl_8037D9E0. */
 
-typedef struct { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 extern Vec lbl_8037D9E0[];
 extern const float lbl_806D95B8;

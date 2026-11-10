@@ -1,9 +1,7 @@
 #ifndef GAME_PATHCURSOR_H
 #define GAME_PATHCURSOR_H
 
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 typedef struct Waypoint {
     int flag;

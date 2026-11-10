@@ -3,7 +3,7 @@
  * longest standstill streak, title-grade reset on a new lap section, and
  * which hazard / shortcut zones the kart has passed. */
 
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct RenderObj {
     unsigned char pad0[0x23C];

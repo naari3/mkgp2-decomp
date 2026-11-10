@@ -10,11 +10,7 @@ unsigned int OSGetTick(void);
 void Profiler_RecordFrame(int slot, float value);
 }
 
-typedef struct Vec3 {
-    float x;
-    float y;
-    float z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 typedef struct TerrainSample {
     void *cell;

@@ -3,7 +3,7 @@
  * kart's joint 12, grows in with a sine pulse after being fired, hits the
  * kart that touches it and fades out on the hold flag 0x18C. Kind 8 also
  * drives a trail effect with a looping SE, kind 0xB animates its chain. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct ShellPose {
     int anim;

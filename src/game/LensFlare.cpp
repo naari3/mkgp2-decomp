@@ -5,9 +5,7 @@
  * actions; mangled names are bridged in tools/extab_user_renames.json.
  */
 
-struct Vec3f {
-    float x, y, z;
-};
+#include "game/types/Vec3f.h"
 
 struct HSD_JObj {
     char pad00[0x14];

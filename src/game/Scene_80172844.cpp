@@ -5,9 +5,7 @@
  * wobble offsets and the zero initializer of the screen position).
  */
 
-struct Vec3f {
-    float x, y, z;
-};
+#include "game/types/Vec3f.h"
 
 struct Vec2f {
     float x, y;

@@ -6,9 +6,7 @@
  * The empty mode-0 case is required for the original switch branch structure.
  * Declaring named clamp temporaries did not change those FP homes.
  */
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 typedef float Matrix4[4][4];
 typedef float Matrix3x4[3][4];
 

@@ -1,6 +1,4 @@
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 typedef struct MObjHolder {
     unsigned char pad[8];

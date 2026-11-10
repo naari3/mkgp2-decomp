@@ -1,4 +1,4 @@
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 typedef struct Joint {
     unsigned char pad0[0x14];
     unsigned int flags;

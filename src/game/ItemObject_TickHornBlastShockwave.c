@@ -3,7 +3,7 @@
  * the horn SE once it is triggered. Phase 1 grows the ring over the kart
  * (scaled by the Kinopio boost bonus) and hits drivers in range every 30
  * frames, then fades out. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 typedef struct { float v[3]; } FloatTriple;
 typedef struct { unsigned char b[0x1EC]; } ItemObjectCopy;
 

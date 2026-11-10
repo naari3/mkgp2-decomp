@@ -10,9 +10,7 @@ void operator delete(void *p) throw();
 
 typedef float Mtx[3][4];
 
-struct Vec3 {
-    float x, y, z;
-};
+#include "game/types/Vec3.h"
 
 extern "C" {
 void PSMTXIdentity(Mtx m);
@@ -158,9 +156,7 @@ static const int kEmblemRes[4] = {0x00000C24, 0x00000C25, 0x00000C26, 0x00000C27
 static const int kModeRes[10] = {0x00000C66, 0x00000C66, 0x00000C68, 0x00000C69, 0x00000C6B, 0x00000C6A, 0x00000C67, 0x00000C63, 0x00000C65, 0x00000C64};
 const unsigned int lbl_803DB4B8[56] = {0x3F800000, 0x40800000, 0x3F000000, 0x40D00000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x41480000, 0x41080000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x41200000, 0x40800000, 0x41C00000, 0x40000000, 0x42000000, 0x40C00000, 0x41200000, 0x40C00000, 0x41900000, 0x41400000, 0x41E00000, 0x41C00000, 0x41A00000, 0x40800000, 0x42000000, 0x40E00000, 0x42240000, 0x41600000, 0xC1200000, 0x40800000, 0xC1C00000, 0x40000000, 0xC2000000, 0x40C00000, 0xC1200000, 0x40C00000, 0xC1900000, 0x41400000, 0xC1E00000, 0x41C00000, 0xC1A00000, 0x40800000, 0xC2000000, 0x40E00000, 0xC2240000, 0x41600000};
 
-struct Vec2 {
-    float x, y;
-};
+#include "game/types/Vec2.h"
 
 static const Vec2 kIconOffset[13] = {{0.0f, 0.0f}, {0.0f, 0.0f}, {0.0f, 0.0f}, {0.0f, 8.0f}, {0.0f, 0.0f}, {0.0f, 10.0f}, {0.0f, 0.0f}, {0.0f, -16.0f}, {0.0f, 0.0f}, {0.0f, 0.0f}, {0.0f, 0.0f}, {0.0f, 0.0f}, {0.0f, 8.0f}};
 static const Vec3 sPenOrigin = {0.0f, 0.0f, -3.0f};

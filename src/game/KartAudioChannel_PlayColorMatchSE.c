@@ -3,9 +3,7 @@
  * table index wins; speed <= 0 means "no surface"), and when it changed,
  * stops the previous loop and starts the new one (plus its positional copy
  * at the kart when the channel has a source and is not muted). */
-typedef struct Vec {
-    float x, y, z;
-} Vec;
+#include "game/types/Vec.h"
 
 typedef struct SoundSource {
     unsigned char pad00[0xc];

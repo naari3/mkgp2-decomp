@@ -3,9 +3,7 @@
  * fuse sound at the kart and starts a 10-frame countdown.  State 1 spawns the
  * explosion item (0x67) in front of the kart once the countdown runs out and
  * frees the bomb.  All four item timers tick down every frame. */
-typedef struct Vec {
-    float x, y, z;
-} Vec;
+#include "game/types/Vec.h"
 
 typedef struct DrawEffect {
     unsigned char pad000[0x11C];

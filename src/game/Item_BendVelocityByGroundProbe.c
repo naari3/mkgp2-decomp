@@ -1,6 +1,4 @@
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 extern void GetSpawnPosition(Vec3 *out, float x, float y, float z);
 extern void Vec2_RotateY(Vec3 *out, const Vec3 *in, float angle);

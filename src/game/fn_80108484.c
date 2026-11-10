@@ -1,4 +1,4 @@
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 typedef struct ItemBendParam { float a, b, c; } ItemBendParam;
 
 extern float KartFxParam_GetConst1p5(void *kart);

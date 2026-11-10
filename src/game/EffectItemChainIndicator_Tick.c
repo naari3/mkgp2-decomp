@@ -10,9 +10,7 @@
  * has these two instructions in the opposite order. Conversion literals
  * are already mapped to pooled lbl_806D5378 by the standard postprocess. */
 
-typedef struct Vec {
-    float x, y, z;
-} Vec;
+#include "game/types/Vec.h"
 
 extern int g_gameMode;
 extern int g_kartVariant;

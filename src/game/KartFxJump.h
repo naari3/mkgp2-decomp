@@ -1,5 +1,5 @@
 /* Jump effects. These local views name only fields observed in this family. */
-struct Vec3 { float x, y, z; };
+#include "game/types/Vec3.h"
 struct JumpKartView {
     unsigned char pad00[0x238];
     int visible;

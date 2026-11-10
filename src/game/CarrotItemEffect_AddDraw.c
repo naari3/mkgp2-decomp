@@ -1,9 +1,7 @@
 /* CarrotItemEffect_AddDraw: queue CarrotItemEffect_Render in the sorted draw
  * list at the camera-transformed anchor (same shape as
  * TwinSpriteOverlay_AddDraw). */
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 extern Vec3 Mtx44_TransformVec3(const float *m, Vec3 v);
 extern void clDrawMan_AddSorted_NoDepthBias(void *mgr, void (*fn)(char *), char *obj,

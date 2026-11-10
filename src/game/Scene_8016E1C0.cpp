@@ -4,9 +4,7 @@
  * self-recursive node destructor (node vtable lbl_804911F4).
  */
 
-struct Vec3f {
-    float x, y, z;
-};
+#include "game/types/Vec3f.h"
 
 struct PropData {
     Vec3f pos;

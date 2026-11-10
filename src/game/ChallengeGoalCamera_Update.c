@@ -1,6 +1,6 @@
 /* ChallengeGoalCamera_Update (0x80124AE8): advances the challenge goal
  * camera animation and loads its projection into GX. */
-typedef struct { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct GoalCamAnim {
     unsigned char pad0[4];

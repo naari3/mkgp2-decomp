@@ -1,6 +1,6 @@
 #ifndef OBJVIEW_ITEM_STATE_PRIVATE_H
 #define OBJVIEW_ITEM_STATE_PRIVATE_H
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 typedef struct Item {
     unsigned char pad0[8];
     int id;

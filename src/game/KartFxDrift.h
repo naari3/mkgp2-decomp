@@ -1,5 +1,5 @@
 /* Drift puff family: local views contain only target-observed fields. */
-struct Vec3 { float x, y, z; };
+#include "game/types/Vec3.h"
 struct KartState { unsigned char pad00[0x10]; unsigned long long flags; };
 struct Kart { unsigned char pad00[0x304]; KartState *state; };
 struct Effect {

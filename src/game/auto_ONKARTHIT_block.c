@@ -591,11 +591,7 @@ typedef struct CarObjGetterView {
 } CarObjGetterView;
 
 /* views for the 0x8004F174 StrPcb / item ops cluster */
-typedef struct Vec3 {
-    float x;
-    float y;
-    float z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 typedef struct ItemStateBlock {
     struct KartItemOpsView *owner;     /* 0x0 */

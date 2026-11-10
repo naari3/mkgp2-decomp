@@ -7,9 +7,7 @@
  * twice, billboarded towards the camera at two fixed screen offsets.
  */
 
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 typedef struct TwinOffsets {
     Vec3 v[3];

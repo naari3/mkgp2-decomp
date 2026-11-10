@@ -1,4 +1,4 @@
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 
 extern void GetSpawnPosition(void *out, float x, float y, float z);
 extern float BuildOrientationFromYaw(float a);

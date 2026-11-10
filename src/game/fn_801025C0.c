@@ -1,4 +1,4 @@
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int enabled);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float scale);

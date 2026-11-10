@@ -73,9 +73,7 @@ static inline void ClearCurrentItem(ItemKart *kart)
     fn_80173BE8(kart->field29C);
 }
 
-typedef struct Vec3f {
-    float x, y, z;
-} Vec3f;
+#include "game/types/Vec3f.h"
 
 extern const float lbl_806D25A8;
 extern const float lbl_806D25AC;

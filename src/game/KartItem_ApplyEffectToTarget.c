@@ -4,9 +4,7 @@
  * logs the defeat for rank tracking. */
 #pragma cplusplus on
 
-struct Vec3 {
-    float x, y, z;
-};
+#include "game/types/Vec3.h"
 
 struct ItemHandler {
     virtual void Slot08();

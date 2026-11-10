@@ -26,11 +26,7 @@ extern int SoundMgr_PlaySE(int soundId);
 extern int isJapanese(void);
 extern void fn_8016C288(); /* positional SE update (id, Vec3 *pos) */
 
-typedef struct Vec3 {
-    float x;
-    float y;
-    float z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 /* .rodata 0x802EDC70..0x802EDD30 */
 const int lbl_802EDC70[13] = {

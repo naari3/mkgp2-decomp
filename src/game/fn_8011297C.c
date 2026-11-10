@@ -1,4 +1,4 @@
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 
 extern unsigned char *ItemObject_SpawnWithAlias(int kind, int alias);
 extern void ItemObject_SetByte18c(void *obj, int v);

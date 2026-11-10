@@ -4,9 +4,7 @@
  * color) and drawn.
  */
 
-struct Vec3f {
-    float x, y, z;
-};
+#include "game/types/Vec3f.h"
 
 struct SlotDesc {
     float params[4];

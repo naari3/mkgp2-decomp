@@ -1,5 +1,5 @@
 /* Item object manager: draw every active item slot and its ground shadow. */
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 
 extern void DbgScene_CopyMatrix3x4Transpose(float (*dst)[4], float (*src)[4]);
 extern float Item_ProbeForwardGroundPitch(Vec3 pos, float yaw, float a, float b);

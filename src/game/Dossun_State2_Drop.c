@@ -3,7 +3,7 @@
  * until the item has fallen to it, sub-state 2 arms the landing timer and
  * fades the item out once it runs down. The kind (0xCB) picks the spin and
  * the drift of the falling item. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct DossunWork {
     unsigned char pad0[4];

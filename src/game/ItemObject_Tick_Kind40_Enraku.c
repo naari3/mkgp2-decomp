@@ -3,7 +3,7 @@
  * the flying state: most endings drop a shell object (alias 0x65) and fade
  * out, others tether it back to the kart or orbit the hit kart. Its smoke
  * cloud effect follows the item's "enraku_smoke" joint. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct EnrakuWork {
     unsigned char pad0[4];

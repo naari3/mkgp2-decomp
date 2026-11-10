@@ -27,7 +27,7 @@ extern "C" int lbl_804EDA60[3][2] = {
 };
 #pragma force_active reset
 
-struct Vec3 { float x, y, z; };
+#include "game/types/Vec3.h"
 struct SpriteHandle;
 
 struct HsdClassInfo {

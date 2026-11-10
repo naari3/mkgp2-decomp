@@ -2,7 +2,7 @@
  * item. Sub-state 1 holds it in the character's hand until it is thrown,
  * sub-state 2 flies it forward with homing, bounces it off walls and
  * leaves the flying state on a kart hit, a landing or a timeout. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct BombWork {
     unsigned char pad0[4];

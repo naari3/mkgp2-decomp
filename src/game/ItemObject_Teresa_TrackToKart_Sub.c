@@ -3,7 +3,7 @@
  * animations, then fades out. If the target becomes invincible (status
  * flag 0x10000) it bursts into six pieces and vanishes; while the target
  * is not in the stolen state its lifetime is cut short. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 extern const char lbl_8032E630[];
 extern void GetSpawnPosition(Vec *out, float x, float y, float z);

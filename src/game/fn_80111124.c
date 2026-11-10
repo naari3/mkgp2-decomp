@@ -1,4 +1,4 @@
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int a, float f);
 extern void SpriteSlot_SetScale(void *slot, float s);

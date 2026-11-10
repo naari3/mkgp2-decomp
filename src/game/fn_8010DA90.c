@@ -1,4 +1,4 @@
-typedef struct Vec3 { float x, y, z; } Vec3;
+#include "game/types/Vec3.h"
 
 extern void Item_PrepareHitRebound(unsigned char *self, void *a, void *b, void *c);
 extern void Vec3_AddNormalizedXZ(unsigned char *self, void *a, Vec3 *b);

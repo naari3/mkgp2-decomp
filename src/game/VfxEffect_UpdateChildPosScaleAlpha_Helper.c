@@ -1,8 +1,6 @@
 /* Per-frame update of a VFX effect child: restart its animation when
  * asked, hide it once it is dying, and move/scale/fade its slot. */
-typedef struct Vec {
-    float x, y, z;
-} Vec;
+#include "game/types/Vec.h"
 
 typedef struct VfxEffectChild {
     unsigned char pad000[0x14];

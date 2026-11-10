@@ -27,11 +27,7 @@
 #ifndef GAME_KARTMOVEMENT_H
 #define GAME_KARTMOVEMENT_H
 
-typedef struct Vec3 {
-    float x;
-    float y;
-    float z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 typedef struct KartMovement {
     /* +0x000 */ unsigned char _pad00[0x40];

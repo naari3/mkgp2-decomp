@@ -2,9 +2,7 @@
  * Reconstructed from complete authoritative target and callee disassembly;
  * Ghidra was unavailable.
  */
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 extern void Vec3_Copy(Vec3 *out, const Vec3 *in);
 extern float Vec3_Magnitude_Wrapper(const Vec3 *v);

@@ -8,7 +8,7 @@
  *
  * The stretched-ribbon loop shares its half-scale value with the width
  * calculation. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct RibbonPts { Vec p[8]; } RibbonPts;
 typedef struct RibbonSigns { int s[8][2]; } RibbonSigns;

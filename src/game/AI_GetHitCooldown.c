@@ -1,10 +1,4 @@
-typedef struct KartCond {
-    signed char mode;
-    signed char cup;
-    signed char ccClass;
-    signed char round;
-    signed char kart;
-} KartCond;
+#include "game/types/KartCond.h"
 
 typedef struct HitCooldownEntry {
     KartCond cond;

@@ -3,7 +3,7 @@
  * Returns 0 (no contact), 1 (hit), 2 (blocked/guarded), 3, or 5 (lost).
  * C++ for the virtual-call sequence (lwz r12; lwz r12, 0xC(r12)).
  * The team accessor mirrors the inline getter used by the hit path. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct ItemClassEntry {
     unsigned char pad0[8];

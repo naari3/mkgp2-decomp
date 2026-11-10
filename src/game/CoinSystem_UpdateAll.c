@@ -4,9 +4,7 @@
  *   0 respawn wait, 1 rise, 2 idle spin, 3 collected (sparkle + count),
  *   4 gone, 5/8 drop delay, 6/9 drop flight, 7/10 homing to the kart. */
 
-typedef struct Vec {
-    float x, y, z;
-} Vec;
+#include "game/types/Vec.h"
 
 typedef float Mtx[3][4];
 

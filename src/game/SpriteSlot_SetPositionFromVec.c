@@ -3,9 +3,7 @@ typedef struct SpriteSlot {
     void *object; /* 0x04 */
 } SpriteSlot;
 
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 extern void Object_SetJObjPositionXYZ(void *object, float x, float y, float z);
 

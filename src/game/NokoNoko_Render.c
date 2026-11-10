@@ -1,6 +1,6 @@
 /* NokoNoko_Render (0x80188B24): draws every visible NokoNoko, blending the secondary animation. */
 
-typedef struct { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 typedef struct NokoNoko {
     struct NokoNoko *next;
     char pad04[0xC];

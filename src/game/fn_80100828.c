@@ -1,4 +1,4 @@
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float scale);

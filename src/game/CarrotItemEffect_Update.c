@@ -3,9 +3,7 @@
  * early once its bus bit is gone (or, after 3 frames, when bit 16 is set it
  * clears bit 49).  While visible the sprite follows joint 15 of the kart,
  * scaled by 2 and offset per character. */
-typedef struct Vec {
-    float x, y, z;
-} Vec;
+#include "game/types/Vec.h"
 
 typedef struct ItemEffectBus {
     unsigned char pad00[0x10];

@@ -5,7 +5,7 @@
  * pacing its animation along a keyframe curve, until its timer runs out
  * and the return flight starts. A kart hit or a kick on either object ends
  * the flight. */
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 typedef struct PaceKey {
     float t[4];

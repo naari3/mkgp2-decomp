@@ -1,4 +1,4 @@
-struct Vec3 { float x, y, z; };
+#include "game/types/Vec3.h"
 
 struct JDCamera {
     int state;

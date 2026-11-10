@@ -13,9 +13,7 @@
  * - FallingDrop evaluates the candidate Y before assigning minimumY in the
  *   comparison; this preserves the original load/fused-multiply-add order.
  */
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 /* Minimal view of the fields used by the item motion helpers. */
 typedef struct ItemMotionView {

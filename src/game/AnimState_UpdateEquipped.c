@@ -10,9 +10,7 @@ typedef struct HSD_JObj {
     Mtx mtx;
 } HSD_JObj;
 
-typedef struct Vec3 {
-    float x, y, z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 extern char lbl_806D2548[7];
 extern char lbl_806D2550[5];
