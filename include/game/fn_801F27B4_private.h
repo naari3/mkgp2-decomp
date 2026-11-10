@@ -1,6 +1,7 @@
 #ifndef GAME_FN_801F27B4_PRIVATE_H
 #define GAME_FN_801F27B4_PRIVATE_H
 
+#include "game/types/pmf.h"
 struct MenuReceiver801F {
     void fn_801F2400();
     void fn_801F2370();
@@ -25,6 +26,6 @@ struct MenuReceiver801F {
     void fn_801F0E3C();
     void fn_801F0CBC();
 };
-typedef void (MenuReceiver801F::*MenuMethod801F)();
+PMF_TYPE(MenuMethod801F, MenuReceiver801F, void, ());
 
 #endif

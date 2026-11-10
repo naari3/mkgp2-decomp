@@ -1,3 +1,4 @@
+#include "game/types/pmf.h"
 #include "game/CardTaskChecks_private.h"
 
 extern "C" int CardTaskWelcome_StepStatus(WelcomeObject *self) {
@@ -46,7 +47,7 @@ extern "C" void CardTaskWelcome_StateInit(WelcomeObject *self) {
 }
 extern "C" int CardTaskWelcome_TickCounter(WelcomeObject *self) {
     ++self->counter;
-    return (self->*self->step)();
+    return PMF_CALL(self, self->step)();
 }
 extern "C" void fn_8008A760() {}
 extern "C" void CardTaskWelcome_DrawByPhase(WelcomeObject *self) {
@@ -246,7 +247,7 @@ extern "C" void CardPrinterChecker_State_InitPrinter(PrintObject *self) {
         Sci2Card_SendCmdRetry(card,0);
     }
 }
-extern "C" int CardPrinterChecker_PostFrame(PrintObject *self) { return (self->*self->step)(); }
+extern "C" int CardPrinterChecker_PostFrame(PrintObject *self) { return PMF_CALL(self, self->step)(); }
 extern "C" void CardPrinterChecker_Draw(PrintObject *self) {
     switch (self->result) {
     case 1:
@@ -366,7 +367,7 @@ extern "C" void CameraChecker_State_WaitVBlank(CameraObject *self) {
 extern "C" int CardTaskDispatch_WithFrameBudget(CameraObject *self) {
     CardFrameTimer timer;
     timer.started=OSGetTick();
-    int result=(self->*self->step)();
+    int result=PMF_CALL(self, self->step)();
     unsigned char slow=(float)CardMicroseconds(OSGetTick()-timer.started)/1000000.0f >= 1.0f ? 1 : 0;
     if (slow==1) StrPcb_DrainInputBuffer(StrPcb_GetInstance());
     return result;

@@ -1,5 +1,6 @@
 #ifndef GAME_CARDTASKCHECKS_PRIVATE_H
 #define GAME_CARDTASKCHECKS_PRIVATE_H
+#include "game/types/pmf.h"
 #include "game/TextDraw801F.h"
 #include "game/ServiceButtonPrivate.h"
 #include "libc/stdarg.h"
@@ -15,7 +16,7 @@ struct CardTaskObject {
     int state;
     CardTaskObject() : state(0) {}
 };
-typedef int (CardTaskObject::*CardStep)();
+PMF_TYPE(CardStep, CardTaskObject, int, ());
 extern "C" CardStep lbl_803F1C68;
 struct WelcomeObject : CardTaskObject {
     virtual unsigned char Ready();

@@ -1,3 +1,4 @@
+#include "game/types/pmf.h"
 /* ItemEffectMgr_TickPickLowestTimer @ 0x8007B534: polls every kart slot for
  * a pending item effect and picks the one with the lowest timer, keeping
  * the previous pick when it is still pending. */
@@ -14,11 +15,13 @@ struct ItemPickEntry {
     int repeat;
 };
 
+struct ItemEffectMgr;
+PMF_TYPE(ItemEffectMgrPoll, ItemEffectMgr, void, (int variant, ItemPickEntry *entry));
 struct ItemEffectMgr {
     int field0;
     int picked;
     void *owner;
-    void (ItemEffectMgr::*poll)(int variant, ItemPickEntry *entry);
+    ItemEffectMgrPoll poll;
     ItemPickEntry cur;
 
     void ResetEntry(ItemPickEntry *e)
@@ -44,8 +47,8 @@ extern "C" int ItemEffectMgr_TickPickLowestTimer(ItemEffectMgr *self)
     }
     for (i = 0; i < 8; i++) {
         self->ResetEntry(&entries[i]);
-        if (self->poll) {
-            (self->*self->poll)(GetKartSlotKartVariant(i), &entries[i]);
+        if (PMF_IS_SET(self->poll)) {
+            PMF_CALL(self, self->poll)(GetKartSlotKartVariant(i), &entries[i]);
         }
     }
     best = -1;

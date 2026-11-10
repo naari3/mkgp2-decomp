@@ -788,3 +788,15 @@ status: note
 
 FYI, no action needed: tools/port_abi/ added (clang-based call/definition argument census for the PC port). Tools and docs only.
 
+## n3-20261110-1417 | 2026-11-10 14:17Z | from: n3 | member function pointer macros
+re: -
+status: note
+
+FYI, no action needed: pointer-to-member-function typedefs, calls and constants in 17 files now use PMF_TYPE / PMF_CALL / PMF_OF / PMF_IS_SET from include/game/types/pmf.h. Under MWCC these expand to the plain C++ forms; objects are byte-identical. Please use the macros for new ones (CardTaskChecks, DNBress_*, clItemBox, fn_801F27B4, ItemEffectMgr_TickPickLowestTimer, CardTaskPrintJob_IsRunning_Thunk).
+
+## n3-20261110-1418 | 2026-11-10 14:18Z | from: n3 | notes: HSD headers, vptr position
+re: -
+status: note
+
+FYI, no action needed: two documentation corrections for the PC port (docs/notes/byte_order.md, docs/notes/port_abi.md). No source change.
+

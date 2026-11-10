@@ -1,5 +1,6 @@
 #ifndef GAME_MENU801F0CC0_PRIVATE_H
 #define GAME_MENU801F0CC0_PRIVATE_H
+#include "game/types/pmf.h"
 #include "game/FlowScene.h"
 #include "game/TestMenuPage.h"
 
@@ -26,7 +27,7 @@ struct Menu801F : MenuBase801F {
     virtual void _key();
     ~Menu801F();
 };
-typedef void (Menu801F::*Menu801FMethod)();
+PMF_TYPE(Menu801FMethod, Menu801F, void, ());
 extern "C" {
 extern const float lbl_806DA550, lbl_806DA554, lbl_806DA558;
 extern const float lbl_806DA55C, lbl_806DA560, lbl_806DA564;

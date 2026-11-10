@@ -1,3 +1,4 @@
+#include "game/types/pmf.h"
 #include "game/Menu801F0CC0_private.h"
 #include "game/fn_801F27B4_private.h"
 
@@ -79,36 +80,36 @@ static MenuRect801F menuLevelIcon[6] = {
 };
 /* MWCC emits the default ptmf records and the .ctors initializer. */
 static MenuMethod801F liveA[14] = {
-    &MenuReceiver801F::fn_801F2400,
-    &MenuReceiver801F::fn_801F2370,
-    &MenuReceiver801F::fn_801F21C8,
-    &MenuReceiver801F::fn_801F20A0,
-    &MenuReceiver801F::fn_801F1EE0,
-    &MenuReceiver801F::fn_801F1C58,
-    &MenuReceiver801F::fn_801F1AC8,
-    &MenuReceiver801F::fn_801F19C8,
-    &MenuReceiver801F::fn_801F1664,
-    &MenuReceiver801F::fn_801F140C,
-    &MenuReceiver801F::fn_801F1244,
-    &MenuReceiver801F::fn_801F0ECC,
-    &MenuReceiver801F::fn_801F0D04,
-    &MenuReceiver801F::fn_801F0CC0
+    PMF_OF(&MenuReceiver801F::fn_801F2400),
+    PMF_OF(&MenuReceiver801F::fn_801F2370),
+    PMF_OF(&MenuReceiver801F::fn_801F21C8),
+    PMF_OF(&MenuReceiver801F::fn_801F20A0),
+    PMF_OF(&MenuReceiver801F::fn_801F1EE0),
+    PMF_OF(&MenuReceiver801F::fn_801F1C58),
+    PMF_OF(&MenuReceiver801F::fn_801F1AC8),
+    PMF_OF(&MenuReceiver801F::fn_801F19C8),
+    PMF_OF(&MenuReceiver801F::fn_801F1664),
+    PMF_OF(&MenuReceiver801F::fn_801F140C),
+    PMF_OF(&MenuReceiver801F::fn_801F1244),
+    PMF_OF(&MenuReceiver801F::fn_801F0ECC),
+    PMF_OF(&MenuReceiver801F::fn_801F0D04),
+    PMF_OF(&MenuReceiver801F::fn_801F0CC0)
 };
 static MenuMethod801F liveB[14] = {
-    &MenuReceiver801F::fn_801F230C,
-    &MenuReceiver801F::fn_801F230C,
-    &MenuReceiver801F::fn_801F1FE4,
-    &MenuReceiver801F::fn_801F1FE4,
-    &MenuReceiver801F::fn_801F1BC8,
-    &MenuReceiver801F::fn_801F1BC8,
-    &MenuReceiver801F::fn_801F190C,
-    &MenuReceiver801F::fn_801F190C,
-    &MenuReceiver801F::fn_801F15D4,
-    &MenuReceiver801F::fn_801F115C,
-    &MenuReceiver801F::fn_801F115C,
-    &MenuReceiver801F::fn_801F0E3C,
-    &MenuReceiver801F::fn_801F0E3C,
-    &MenuReceiver801F::fn_801F0CBC
+    PMF_OF(&MenuReceiver801F::fn_801F230C),
+    PMF_OF(&MenuReceiver801F::fn_801F230C),
+    PMF_OF(&MenuReceiver801F::fn_801F1FE4),
+    PMF_OF(&MenuReceiver801F::fn_801F1FE4),
+    PMF_OF(&MenuReceiver801F::fn_801F1BC8),
+    PMF_OF(&MenuReceiver801F::fn_801F1BC8),
+    PMF_OF(&MenuReceiver801F::fn_801F190C),
+    PMF_OF(&MenuReceiver801F::fn_801F190C),
+    PMF_OF(&MenuReceiver801F::fn_801F15D4),
+    PMF_OF(&MenuReceiver801F::fn_801F115C),
+    PMF_OF(&MenuReceiver801F::fn_801F115C),
+    PMF_OF(&MenuReceiver801F::fn_801F0E3C),
+    PMF_OF(&MenuReceiver801F::fn_801F0E3C),
+    PMF_OF(&MenuReceiver801F::fn_801F0CBC)
 };
 #ifndef __MWERKS__
 /* Menu801F0CC0_private.h declares these two tables for this unit as
@@ -502,12 +503,12 @@ extern "C" void fn_801F2400(Menu801F *self) {
 
 extern "C" void fn_801F24E8(Menu801F *self) {
     GX_EndDraw(0);
-    (self->*lbl_804E51A0[self->state % 14])();
+    PMF_CALL(self, lbl_804E51A0[self->state % 14])();
     GX_BeginDraw();
 }
 
 extern "C" void fn_801F2560(Menu801F *self) {
-    (self->*lbl_804E5050[self->state % 14])();
+    PMF_CALL(self, lbl_804E5050[self->state % 14])();
 }
 
 Menu801F::~Menu801F() {

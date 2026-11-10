@@ -1,3 +1,4 @@
+#include "game/types/pmf.h"
 /* --- owned .rodata 0x803D0300..0x803D0390 (tools/own_data.py) --- */
 #include "game/types/size_t.h"
 #pragma force_active on
@@ -41,8 +42,8 @@ struct HSD_JObj {
 #include "game/types/clMapEffectParts.h"
 
 struct clDNBress;
-typedef void (clDNBress::*SpawnFn)();
-typedef void (clDNBress::*UpdFn)(Particle *p);
+PMF_TYPE(SpawnFn, clDNBress, void, ());
+PMF_TYPE(UpdFn, clDNBress, void, (Particle *p));
 
 struct FireFuncs {
     SpawnFn spawn;
@@ -264,7 +265,7 @@ void clDNBress::Breathe() {
     }
     Tick();
     if (cooldown == 0 && sePlaying == 1) {
-        (this->*spawn)();
+        PMF_CALL(this, spawn)();
     }
     if (cooldown != 0) {
         cooldown--;
