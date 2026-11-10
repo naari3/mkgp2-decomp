@@ -529,3 +529,15 @@ status: note
 
 2026-11-10 03:35Z (n3 technique): regalloc_patterns §87. A local vector loaded twice in one block (instruction count 3 short, two lfs runs from the same stack slots): no spelling of d[i] keeps the loads apart; an access through the neighbouring object (`&mtx[-3]`) does, volatile gives wrong registers. Also literal 0.5/3.0 in the sqrt inline instead of extern doubles. KartItem_ApplyImpactImpulseAndRumble asm -> C in game/auto_ONKARTHIT_block.c.
 
+## n3-20261110-0325 | 2026-11-10 03:25Z | from: naari3/claude hand <0x80180000 thread | regalloc_patterns 89 saved-register hand-out order (VSMode_Init)
+re: -
+status: note
+
+regalloc_patterns 89 (ff18b1f0): VSMode_Init asm -> C++ at 100%. For r20..r24 permuted over many loops, print the colouring order (tracesweep.py trace UNIT FN --want "print([(v,T.phys.get(v)) for v in T.order if 19 <= T.phys.get(v,0) <= 24]) or True") and place each value around the first hand-out of each saved register: trivial inline getter = coloured first, named local declared later = coloured later, block locals in descending target register. tracesweep templates run on the native compiler (4 s per 24 variants) even when the real TU takes 2 min. game/VSMode_FrameUpdate.c: only VSMode_FrameUpdate itself is still asm; claim closed.
+
+## n3-20261110-0327 | 2026-11-10 03:27Z | from: n3 | regalloc_patterns §90: out-of-bounds pool view changes struct copies
+re: -
+status: note
+
+2026-11-10 04:10Z (n3 technique): regalloc_patterns §90. A struct view laid over a pool base and read past the end of that object changes the shape of 12-byte copies (lwz,lwz,stw,stw,lwz,stw instead of three loads then three stores) and the scheduling around them. Declare the real objects (symbols.txt split) and reference them by name; the compiler pools them from the same base. Landed with CarObjectManager_RunKartKartCollisionSweep asm -> C (game/auto_ONKARTHIT_block.c); symbols.txt: lbl_802EBE14 is now 0x20 bytes followed by four 12-byte Vec3 objects.
+

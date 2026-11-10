@@ -2349,3 +2349,115 @@ cannot spell in this C TU. Other levers of the same function:
 
 Sign: instruction count 3 short in a vector block and the target has two
 `lfs` runs from the same stack slots.
+
+## 88. Named locals must be coloured in the middle of an inline's temporaries: the surrounding code belongs to the same inline (fn_8019C6B4, 99.79 -> 100, 11-10)
+
+Symptom (regfix diag / `tools/mwtrace.py`): the target equals our interference
+graph, but a function-level named local (`angle`) must be coloured BETWEEN two
+temporaries of an inlined helper (the `y` and `z` of QuatMatrix), and backend
+temps of an argument expression (`target.z*scale`) must be coloured after an
+earlier call-result temp. No function-level spelling can do that: named locals
+of the function always have the lowest vregs (coloured last), and locals of an
+OUTER inline are created before those of a nested inline (coloured first).
+
+Rules read from the trace (`VREG`, `TEMPNEW`, `COLOR` lines) and Coloring.c:
+
+- `colorgraph` takes the lowest-numbered register in "volatile + already
+  obtained nonvolatile" that no coloured neighbour holds; a new nonvolatile
+  (f31, f30, ...) is obtained only when that mask is empty. So WHEN a node is
+  coloured relative to the nodes that obtain new nonvolatiles decides its
+  register (here: angle = f28 needs f29/f28 obtained, f27/f26 not yet).
+- Locals of ONE inline become frontend temps created in REVERSE declaration
+  order (last declared = created first = highest vreg = coloured first).
+- A single-use local of an inline survives as its own temp (a single-use named
+  local of the function is propagated away), so `qz = target.z*scale;` in the
+  inline gives a frontend temp numbered below every backend temp.
+
+Fix: the `if (angle != 0)` block, the quaternion set and the hand-expanded
+matrix build are one inline (`Turn(k, target, q, z + (x+y))`), with all locals
+in one list: `float half, scale, sw; float w, z, angle, y, x; float xx, ...,
+wz; float qz, qy, qx;` and the products assigned in the order z, y, x, stored
+x, y, z, w. The inline is too big for the default limit: `#pragma
+inline_max_size(100000)` (marked fakematch; a whole-body inline also expands
+with it). 11 -> 7 (angle) -> 0 lines (products).
+
+Sign: the diag says "must be numbered between inline temps @N and @M".
+## 89. Saved registers r20..r24 permuted over many short loops: read the colouring order, then move each value to the right side of the first hand-out (VSMode_Init, 99.60 -> 100, 11-10)
+
+Big init function, `stmw r19`, 879 instructions all equal, 112 lines of
+r20..r24 renumbering over ten loops. A 6144-variant `for (int i)` x declaration
+order sweep had found nothing. What worked was reading the order from the
+trace and using the colour rule (lowest free register among those already
+handed out, a new one r31 downward only when none is free):
+
+    python3 tools/tracesweep.py trace UNIT FN --want \
+      "print([(v,T.phys.get(v)) for v in T.order if 19 <= T.phys.get(v,0) <= 24]) or True"
+
+Order is: high-degree nodes first, then everything else by DESCENDING vreg
+(inline temps > FindLoops temps > CSE temps > SplitOffRange temps > named
+locals, first declared = highest). Five separate fixes, each read off that list:
+
+1. Three block locals of one loop in swapped saved registers (target slot r21,
+   cameraPeer r22, human r24; ours reversed): they are coloured in declaration
+   order, each taking a NEW register. Declare them without initializers in the
+   order of descending target register (`human; cameraPeer; slot; lap;`) and
+   assign below in the order of the target's loads. A function-level `slot`
+   shared with another loop had to become two block locals. 112 -> 88.
+2. Everything that wants the last register (r20) got r21+: r20 was first
+   handed out too late. Its first holder in the target is the value live
+   across the widest point (`cc` during `new VSCar(...)`). A named local is
+   coloured after all temps; a trivial getter `static inline int VS_cc()
+   { return g_ccClass; }` makes it an inline temp, coloured before them. 88 -> 50.
+3. Loop counter must take the register ABOVE three loop-body locals (target
+   round r20, cup r21, mode r22, i r23): the counter must be a named local
+   declared AFTER them. `{ int round, cup, mode; ...; for (int i = 0; ...)
+   { round = ...; cup = ...; mode = ...; } }`. The function-level `i` is a
+   split-range temp there and is always coloured first. 50 -> 14.
+4. `clrlwi. r3,r3,24; beq; mr r20,r3` (target) vs `clrlwi. r20,r3,24; beq;
+   mr r3,r20`: the local holding a u8 call result is `unsigned int`, not
+   `unsigned char`. 14 -> 8.
+5. Volatile pair swapped between a named table-row pointer and the CSE temp
+   of `flag * 12` (row r4 in target): the row comes from an inline
+   (`VS_row(g_cupId)`), so it is coloured before the CSE temps. 8 -> 0.
+
+All five were found with tracesweep templates on the native compiler (4 s per
+24 variants; the real GC/1.3.2 compile of this TU takes 2 min), then confirmed
+once with the real compiler.
+
+Sign: `stmw r19/r20`, many loops, only r20..r24 differ, regfix diag lists
+"want r20" for several unrelated temps.
+
+## 90. 12-byte struct copy comes out as load-load-store-store-load-store: the source is read out of bounds of its object (CarObjectManager_RunKartKartCollisionSweep, asm -> C, 98.95 parked -> 100, 11-10)
+
+Target copies each `Vec3` start value with three loads then three stores
+(`lwz r7/r6/r0 ... stw r7/r6/r0`, interleaved with the next copy and with the
+float multiplies). Ours gave `lwz, lwz, stw, stw, lwz, stw` with two
+registers, and the multiplies were scheduled after it. Source was the same
+`half = cfg->halfA;` in both cases. Cause: `cfg` was a struct view laid over
+`lbl_802EBA18[255]` and the fields sat at +0x41c, past the end of that array
+(inside the next object). For a load the compiler cannot place inside the
+object, the stack stores become dependencies of the third load (mwtrace:
+`LWZ ... preds=2`), which fixes the pairwise order.
+
+Fix = the real data layout: the values are separate `static const Vec3`
+objects (symbols.txt split of the neighbouring float table), referenced by
+name. Four objects in one function are addressed from the pooled `.rodata`
+base, so the code still uses `lbl_802EBA18 + 0x41c..`, as the target does.
+A `base + big offset` access in asm is usually this pooling, not a struct
+view of the first object.
+
+Other levers of the same function:
+
+- `lwz r12,0(r3); lwz r12,0x3c(r12)`: real virtual call, a base struct with
+  the virtuals inside `#pragma cplusplus on` (matching_rules 6).
+- loop counter `i` coloured second instead of last: it was coalesced with
+  the frontend CSE temp of `(unsigned long)i` shared by two call sites (mwtrace
+  `COALESCE r48 <- r38 named`). Passing `i` as int (function pointer cast for
+  those calls) removes the temp and `i` is coloured as a plain named local.
+  The first loop needs the opposite: `unsigned long uk = k;` used for both the
+  store and the call (target stores the argument copy r4).
+- `bp2 = &bs` as a local took a callee-saved register before the pool base;
+  writing `&bs` at each use lets the compiler hoist it itself (r31 first).
+
+Sign: struct copies in a different shape from an otherwise identical
+standalone probe; check whether the pointer really points inside its object.
