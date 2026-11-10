@@ -574,7 +574,7 @@ config.libs = [
             Object(Matching, "game/CountdownOwner.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/TaskBucketsCast.cpp", extab_padding=b""),
             Object(Matching, "game/TaskBuckets.cpp", extab_padding=b""),
-            Object(NonMatching, "game/JointTracks.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on", "-rostr", "-inline deferred"]),
+            Object(Matching, "game/JointTracks.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on", "-rostr", "-inline deferred"]),
             Object(Matching, "game/fn_8023F5B4.cpp", extab_padding=b""),
             Object(Matching, "game/fn_80241B84.c"),
             Object(Matching, "game/fn_80242DEC.c"),

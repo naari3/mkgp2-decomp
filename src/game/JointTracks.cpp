@@ -4320,12 +4320,10 @@ int fn_80240378(TaskBucket *self, const char *name, int group, void *model,
 }
 
 static void AddTracks(TaskBucket *self, const TrackGroup *entry, int group, void *model) {
-    TaskBucket *bucket;
     const TrackBinding *cursor;
     const TrackBinding *first;
     first = entry->tracks;
     if (!first) return;
-    bucket = &self[group];
     cursor = first;
     for (; cursor->name; ++cursor) {
         HSD_JObj *joint = ResolveJointByName(model, cursor->name);
@@ -4334,7 +4332,7 @@ static void AddTracks(TaskBucket *self, const TrackGroup *entry, int group, void
             continue;
         }
         TrackTask *task = new TrackTask(joint, cursor->tracks);
-        Append(bucket, task);
+        Append(&self[group], task);
     }
 }
 
