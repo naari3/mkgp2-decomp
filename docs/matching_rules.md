@@ -29,6 +29,11 @@ below say the same thing.
   keeps the loads apart; an access through the neighbouring object
   (`&mtx[-3]`) does, volatile gives wrong registers. Plus literal doubles in
   the sqrt inline (KartItem_ApplyImpactImpulseAndRumble asm -> C).
+- 2026-11-10 03:36Z (n3 technique): regalloc_patterns §89: r20..r24 permuted
+  over many loops (VSMode_Init 99.60 -> 100). Print the colouring order with
+  `tracesweep.py trace ... --want`, then use an inline getter (coloured first)
+  or a later-declared named local (coloured later) per value. tracesweep on the
+  native compiler is 4 s per 24 variants even when the real TU takes 2 min.
 - 2026-11-10 03:15Z (n3 structure, SETUP CHANGE, naari3's decision "for now"):
   seven TUs now compile against the genuine Metrowerks MSL C++ headers
   (`MslObject(...)` in configure.py, +11 functions). The headers stay out of

@@ -2382,3 +2382,47 @@ inline_max_size(100000)` (marked fakematch; a whole-body inline also expands
 with it). 11 -> 7 (angle) -> 0 lines (products).
 
 Sign: the diag says "must be numbered between inline temps @N and @M".
+## 89. Saved registers r20..r24 permuted over many short loops: read the colouring order, then move each value to the right side of the first hand-out (VSMode_Init, 99.60 -> 100, 11-10)
+
+Big init function, `stmw r19`, 879 instructions all equal, 112 lines of
+r20..r24 renumbering over ten loops. A 6144-variant `for (int i)` x declaration
+order sweep had found nothing. What worked was reading the order from the
+trace and using the colour rule (lowest free register among those already
+handed out, a new one r31 downward only when none is free):
+
+    python3 tools/tracesweep.py trace UNIT FN --want \
+      "print([(v,T.phys.get(v)) for v in T.order if 19 <= T.phys.get(v,0) <= 24]) or True"
+
+Order is: high-degree nodes first, then everything else by DESCENDING vreg
+(inline temps > FindLoops temps > CSE temps > SplitOffRange temps > named
+locals, first declared = highest). Five separate fixes, each read off that list:
+
+1. Three block locals of one loop in swapped saved registers (target slot r21,
+   cameraPeer r22, human r24; ours reversed): they are coloured in declaration
+   order, each taking a NEW register. Declare them without initializers in the
+   order of descending target register (`human; cameraPeer; slot; lap;`) and
+   assign below in the order of the target's loads. A function-level `slot`
+   shared with another loop had to become two block locals. 112 -> 88.
+2. Everything that wants the last register (r20) got r21+: r20 was first
+   handed out too late. Its first holder in the target is the value live
+   across the widest point (`cc` during `new VSCar(...)`). A named local is
+   coloured after all temps; a trivial getter `static inline int VS_cc()
+   { return g_ccClass; }` makes it an inline temp, coloured before them. 88 -> 50.
+3. Loop counter must take the register ABOVE three loop-body locals (target
+   round r20, cup r21, mode r22, i r23): the counter must be a named local
+   declared AFTER them. `{ int round, cup, mode; ...; for (int i = 0; ...)
+   { round = ...; cup = ...; mode = ...; } }`. The function-level `i` is a
+   split-range temp there and is always coloured first. 50 -> 14.
+4. `clrlwi. r3,r3,24; beq; mr r20,r3` (target) vs `clrlwi. r20,r3,24; beq;
+   mr r3,r20`: the local holding a u8 call result is `unsigned int`, not
+   `unsigned char`. 14 -> 8.
+5. Volatile pair swapped between a named table-row pointer and the CSE temp
+   of `flag * 12` (row r4 in target): the row comes from an inline
+   (`VS_row(g_cupId)`), so it is coloured before the CSE temps. 8 -> 0.
+
+All five were found with tracesweep templates on the native compiler (4 s per
+24 variants; the real GC/1.3.2 compile of this TU takes 2 min), then confirmed
+once with the real compiler.
+
+Sign: `stmw r19/r20`, many loops, only r20..r24 differ, regfix diag lists
+"want r20" for several unrelated temps.
