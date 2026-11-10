@@ -67,6 +67,12 @@ static inline void ProjectAdd(Vec3 &v, const Vec3 &b) {
     for (int i = 0; i < 3; ++i) (&v.x)[i] += (&b.x)[i];
 }
 
+static inline void ApplyDisplacement(MovementInit *k, Vec3 &displacement, float scale) {
+    k->prev.Set(k->pos.x, k->pos.y, k->pos.z);
+    Scale(displacement, scale);
+    Add(k->pos, displacement);
+}
+
 extern "C" void KartMovement_PhysicsStep(MovementInit *k, unsigned char active,
                                          float steering, float throttle, float brake) {
     float force;
@@ -120,7 +126,7 @@ extern "C" void KartMovement_PhysicsStep(MovementInit *k, unsigned char active,
         grip = lbl_806D96D4 - brake;
         if (throttle <= lbl_806D96D0) grip *= lbl_806D9704;
     }
-    if (throttle > lbl_806D96D0) k->field14 = throttle;
+    if (throttle > 0.0f) k->field14 = throttle;
     Copy(k->v170, k->v158);
     if (airborne != 4 && k->v2a4.y <= lbl_806D96D0) {
         float speed = k->field2d8 * (k->field21 == 0 ? k->field10 : -k->field10);
@@ -245,14 +251,14 @@ extern "C" void KartMovement_PhysicsStep(MovementInit *k, unsigned char active,
         if (magnitude > k->field2d4) k->v194.y *= k->field2d4 / magnitude;
     }
     {
-    float dx = lbl_806D9780*(lbl_806D9790*k->v17c.x+k->v17c.x);
-    float dz = lbl_806D9780*(lbl_806D9790*k->v17c.z+k->v17c.z);
+    float dx = k->v17c.x;
+    dx = lbl_806D9780*(lbl_806D9790*dx+dx);
+    float dz = k->v17c.z;
+    dz = lbl_806D9780*(lbl_806D9790*dz+dz);
     float dy = k->v2a4.y+(k->v17c.y+k->v194.y);
     dy = lbl_806D9780*(lbl_806D9790*dy+dy);
     InitVec displacement(dx, dy, dz);
-    Copy(k->prev, k->pos);
-    Scale(displacement, lbl_806D973C+k->field2e0);
-    Add(k->pos, displacement);
+    ApplyDisplacement(k, displacement, lbl_806D973C+k->field2e0);
     Add(k->pos, k->v310);
     Add(k->pos, (Vec3 &)k->v1ac);
     }
