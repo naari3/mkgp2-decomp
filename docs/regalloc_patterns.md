@@ -1989,3 +1989,52 @@ constant-trip loop that the compiler unrolled:
 The other user of the same inline (Update, fn_8017BF90) has no interference
 in any copy and stays matched. Check: the first copy has no `addi`
 (`index + 0`), the others reload the member and add 1, 2.
+
+## 76. Target copies a CSE temp into a saved register INSIDE a branch (`lwz r3; ...; beq; mr r27,r3`), ours keeps one register (GabyouItem_Tick_HeldAndHoming_2Eto31, 11-10)
+
+```
+lwz r3, 0x304(r3)      ; T = context->target->effects
+lwz r28, 0x8(r3)       ; nextTarget = T->nextTarget
+cmplwi r28, 0 ; beq
+mr r27, r3             ; previousBus = T   (first call below still uses r3)
+```
+Source shape: `nextTarget = E->nextTarget; if (nextTarget) { previousBus = E; f(E); g(previousBus); ... }`.
+Written plainly, IRO turns the second `E` into a copy of the CSE temp and
+then propagates that copy away: one saved register, no `mr`. A copy survives
+propagation when it is not a plain `local = temp` statement:
+- the local's definition is the FIRST occurrence of the expression (the CSE
+  temp is created inside it: `previousBus = (T = E)`), which puts the `mr`
+  where the local is defined (before the `if` here: 2 lines left), or
+- the copy goes through a cast node: `previousBus = (HeldEffectBus *)(void *)E`,
+  `void *previousBus = E`, `(T *)((char *)E + 0)` all keep it. This is the one
+  that puts the `mr` inside the branch.
+Also write the first call with the expression itself (`f(context->target->effects)`)
+so that it takes the temp (r3) without a reload.
+Tried and useless here: reusing a multi-def variable, an inline for the three
+calls, assignment in the condition, `#pragma opt_propagation off` (breaks 30+
+lines elsewhere in a big function).
+
+## 77. Two instances of one search inline: walking pointers coloured AFTER both instances' counters: index the array in the inline (RivalRun_CalcPathDistance, near miss 100 -> 4 lines, 11-10)
+
+Target (two calls of the same nearest-point inline) colours `i1, best1, i2,
+best2` first and only then the two pointers that walk the point array, so the
+second counter reuses the first one's register and the second `best` opens a
+new one. With a pointer local in the inline (`RRVec3 *p = pts; ... p++`) the
+locals are numbered `p < best < i` per instance, so `p1` is coloured before
+`i2` and every saved GPR of the second search is off.
+
+Lever: no pointer local in the inline; index instead.
+
+```c
+for (i = 0; i < count; i++) {
+    d.x = pts[i].x - px;   /* not: p->x - px; p++ */
+    ...
+}
+```
+
+Strength reduction turns `pts[i]` into a walking pointer, but that pointer is
+a backend temp created after every frontend local of BOTH inline instances,
+hence coloured last. Same instructions, 100 -> 4 register diff lines. The
+function is still asm (docs/gave_up.md, draft
+docs/wip/RivalRun_CalcPathDistance_regonly.patch); the rest is one `lfs`/`fmr`
+direction of a shared zero load.

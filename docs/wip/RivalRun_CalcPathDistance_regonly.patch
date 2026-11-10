@@ -1,8 +1,37 @@
 diff --git a/src/game/RivalRun.c b/src/game/RivalRun.c
-index 645b799..8632b55 100644
+index 645b799..079729d 100644
 --- a/src/game/RivalRun.c
 +++ b/src/game/RivalRun.c
-@@ -940,7 +940,7 @@ void RivalRun_RivalTactics(RRRivalAI *self) {
+@@ -575,23 +575,22 @@ static inline const RRPathRoute *RR_Routes(int lane) {
+ }
+ 
+ static inline int RR_FindNearest(RRVec3 *pts, int count, const RRVec3 *pos) {
+-    RRVec3 *p;
+     int best;
+     int i;
+     float bestDist;
+-    float px, py, pz;
++    float pz, py, px;
+ 
+     bestDist = lbl_806D738C;
+     best = 0;
+     px = pos->x;
+     py = pos->y;
+     pz = pos->z;
+-    for (i = 0, p = pts; i < count; p++, i++) {
++    for (i = 0; i < count; i++) {
+         RRVec3 d;
+         float m;
+-        d.x = p->x - px;
+-        d.y = p->y - py;
+-        d.z = p->z - pz;
++        d.x = pts[i].x - px;
++        d.y = pts[i].y - py;
++        d.z = pts[i].z - pz;
+         m = PSVECSquareMag(&d);
+         if (i == 0 || m < bestDist) {
+             best = i;
+@@ -940,7 +939,7 @@ void RivalRun_RivalTactics(RRRivalAI *self) {
  /* Open prototype (`extern void Foo();`) accepts any call signature; */
  /* refine if the real prototype matters for header consumers. */
  extern float Vec3_Dot(const RRVec3 *a, const RRVec3 *b);
@@ -11,7 +40,7 @@ index 645b799..8632b55 100644
  extern void Vec3_Normalize(const RRVec3 *v, RRVec3 *out);
  extern void Vec3_Subtract(const RRVec3 *a, const RRVec3 *b, RRVec3 *out);
  extern float PSVECSquareMag(const RRVec3 *v);
-@@ -957,7 +957,7 @@ extern const float lbl_806D738C;
+@@ -957,7 +956,7 @@ extern const float lbl_806D738C;
   */
  
  /* --- forward decls --- */
@@ -20,7 +49,7 @@ index 645b799..8632b55 100644
  
  /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
  #pragma section R ".extab_user"
-@@ -972,263 +972,67 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned
+@@ -972,263 +971,67 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned
  };
  
  /* --- asm function bodies (.text order = fn address order) --- */
