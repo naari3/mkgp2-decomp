@@ -416,3 +416,28 @@ scalar, or a scalar local cast to a struct pointer. It follows the
 `Foo_Reordered` wrappers. It reports 0 after this change. It is text based and
 does not see C++ member functions or callees that index through a copy of the
 parameter.
+
+## Definitions that take fewer parameters than their callers pass
+
+MWCC leaves r4.. and f1.. alone when a function does not name them, so a
+wrapper written with fewer parameters than its callers pass still delivers
+the rest to whatever it calls. A host compiler passes nothing on. Two
+definitions did that and now name and forward the arguments (same code):
+
+- `clItemBoxResponder_CmdGetWorldPos(self, float *x, float *y, float *z)`
+  calls `self->GetWorldPos(x, y, z)`.
+- `fn_801E4524(self, unsigned long n, const void *value)`
+  (`cdeque<DriveStep *>::resize`) calls `fn_801E435C(self, n, value)`.
+
+`python3 tools/port_abi/forwarded_args.py` lists definitions that have a wider
+prototype somewhere and whose body contains a member or pointer call, or a
+call with fewer arguments than the callee takes; `-a` lists all 106
+definitions with a wider prototype. The rest are harmless: empty hooks, stubs
+and functions that ignore the extra arguments, and their calls inside pass
+everything the callee takes. What it still prints:
+
+- `ItemEffectDamp_TryArm`: its one caller casts to the five-parameter type;
+  the virtual `Reset()` inside is declared without parameters.
+- `fn_80157C60`, `fn_80157DE0`, `fn_80247C3C`: the fourth argument in the C
+  prototypes is the hidden pointer for the returned struct, not a forwarded
+  argument.
