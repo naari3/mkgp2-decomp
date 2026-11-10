@@ -1,3 +1,4 @@
+#include "game/types/reg_args.h"
 #include "../src/game/mapeffect/mapfx16a_private.h"
 
 /* This TU owns its rodata pool (0x8036CF68..0x8036D540): the ctor reaches it
@@ -121,7 +122,7 @@ struct CourseObj8016ACD4 {
 extern "C" {
 extern char Cave16A_vtable_8049107C[];
 extern char lbl_80490FE0[];
-extern void Object_SetColorAlphaOnly(void *, int);
+extern void Object_SetColorAlphaOnly(void *, int MORE_REG_ARGS1(float a));
 extern void Object_RenderJObjTree(void *, int);
 extern void fn_8018D64C(void *);
 extern unsigned char fn_8016C360(int);
@@ -140,7 +141,7 @@ extern void MemoryManager_TimedFree(void *);
 
 void fn_8016ACD4(CourseObj8016ACD4 *self) {
     if (self->archive && self->alpha > 0.0f) {
-        Object_SetColorAlphaOnly(self->archive, 0);
+        Object_SetColorAlphaOnly(self->archive, 0 MORE_REG_ARGS1(self->alpha)); /* f1 still holds the alpha just compared */
         Object_RenderJObjTree(self->archive, 7);
     }
     if (!self->hit) {

@@ -54,7 +54,12 @@ extern void Item_BounceOffWall();
 extern int Item_CheckWallCollision();
 extern void Item_HomingScanAndSteer();
 extern void Item_InitLaunchFromKart();
+#ifdef __MWERKS__
 extern void Item_RenderCharacterScaledFromJoint12();
+#else /* this unit passes the two vectors as addresses of its own copies (ItemCharacterRender.c) */
+#define Item_RenderCharacterScaledFromJoint12 Item_RenderCharacterScaledFromJoint12_ByAddress
+extern void Item_RenderCharacterScaledFromJoint12(void *item, const void *offset, const void *euler, int mode, float scale);
+#endif
 extern float KartCharacterParam_GetVfxBindHeightOffset();
 extern void KartDriver_TransformWorldToLocalY0();
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed();

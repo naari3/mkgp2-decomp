@@ -21,6 +21,9 @@ extern void SpriteSlot_SetScale(void *slot, float s);
 extern void SpriteSlot_SetJointScaleByName(void *slot, const unsigned char *name, float x, float y, float z);
 extern void SpriteSlot_Container_Free(void *self);
 extern void ItemObject_DecrementCategoryBudget(unsigned char *self);
+#ifndef __MWERKS__ /* this unit passes the two vectors as addresses of its own copies (ItemCharacterRender.c) */
+#define Item_RenderCharacterScaledFromJoint12 Item_RenderCharacterScaledFromJoint12_ByAddress
+#endif
 extern void Item_RenderCharacterScaledFromJoint12(unsigned char *self, FloatTriple *a, FloatTriple *b, int c, float d);
 extern void *memset(void *dst, int c, unsigned long n);
 extern void Vec3_Copy(Vec *dst, const Vec *src);

@@ -1,3 +1,4 @@
+#include "game/types/reg_args.h"
 class InputPlayer {
 public:
     virtual ~InputPlayer();
@@ -43,7 +44,7 @@ InputPlayer *InputMgr_GetPlayer(void *mgr, int idx);
 int CountPeersWithRole(int role);
 int PcbSync_CountJoinedPcbsAdvancedKarts(void);
 float PcbSyncTable_GetMyValue(void);
-void fn_80161888(void);
+void fn_80161888(REG_ARGS1(void *reader));
 void SetTimerModeEnabled(int enable);
 void SetLocalPcbRole(int role);
 void SetRumbleMode(int a, int b, int c);
@@ -65,10 +66,10 @@ extern "C" int fn_801BA1A4(EntryScene *self) {
         self->done = 1;
     } else if (self->cardMode && !self->cardDone) {
         if (self->reader->GetResult() == 1) {
-            fn_80161888();
+            fn_80161888(REG_ARGS1(self->reader)); /* r3 still holds the reader */
             self->cardDone = 1;
         } else if (self->reader->GetResult() == 0) {
-            fn_80161888();
+            fn_80161888(REG_ARGS1(self->reader)); /* r3 still holds the reader */
             self->cardDone = 1;
             g_gameMode = 0;
             SetTimerModeEnabled(0);

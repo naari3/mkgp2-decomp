@@ -78,3 +78,13 @@ void Item_RenderCharacterScaledFromJoint12(ItemCharacterRenderView *item,
                                          &offsetCopy, &eulerCopy, item->scale);
     Mtx44_GetTranslation_RowMajor(&item->position, item->render.matrix);
 }
+
+#ifndef __MWERKS__
+/* Entry for the units that pass the two by-value vectors as addresses of
+ * their own copies, which is the same call under MWCC (see
+ * SoundMgr_PlaySE_Positional.c). */
+void Item_RenderCharacterScaledFromJoint12_ByAddress(ItemCharacterRenderView *item, const Vec3 *offset, const Vec3 *euler, int mode, float scale)
+{
+    Item_RenderCharacterScaledFromJoint12(item, *offset, *euler, mode, scale);
+}
+#endif

@@ -1,6 +1,6 @@
-extern void Terrain_RaycastWall(void);
+extern unsigned char Terrain_RaycastWall(float *from, float *to, float *outPos, float *outNormal);
 
-void ItemObject_RaycastWallStub(void)
+unsigned char ItemObject_RaycastWallStub(float *from, float *to, float *outPos, float *outNormal)
 {
-    Terrain_RaycastWall();
+    return Terrain_RaycastWall(from, to, outPos, outNormal);
 }

@@ -305,7 +305,12 @@ extern void Item_ComputeYawRelativeApproach();
 extern void Item_DecayVelocityScalar(Item *, float);
 extern void Item_HomingScanAndSteer();
 extern void Item_InitLaunchFromKart();
+#ifdef __MWERKS__
 extern void Item_RenderCharacterScaledFromJoint12();
+#else /* this unit passes the two vectors as addresses of its own copies (ItemCharacterRender.c) */
+#define Item_RenderCharacterScaledFromJoint12 Item_RenderCharacterScaledFromJoint12_ByAddress
+extern void Item_RenderCharacterScaledFromJoint12(void *item, const void *offset, const void *euler, int mode, float scale);
+#endif
 extern void Item_SpawnHitBurstParticles();
 extern void JointByName_GetWorldPosition();
 void *KartDriver_GetJointByIdx();

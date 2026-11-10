@@ -1,4 +1,4 @@
-extern void ItemEffectImpact_TryArmInit(void *state);
+extern void ItemEffectImpact_TryArmInit(void *state, void *velocity, void *pose, int timer);
 
 typedef struct ItemEffectImpactSlot {
     unsigned char pad_0[4];
@@ -8,12 +8,12 @@ typedef struct ItemEffectImpactSlot {
 } ItemEffectImpactSlot;
 
 /* 0x80053E8C: arm the impact effect with its state if the slot is free. */
-int ItemEffectImpact_TryArm(ItemEffectImpactSlot *slot)
+int ItemEffectImpact_TryArm(ItemEffectImpactSlot *slot, void *velocity, void *pose, int timer)
 {
     if (slot->armed != 0) {
         return 0;
     }
     slot->armed = slot->state;
-    ItemEffectImpact_TryArmInit(slot->state);
+    ItemEffectImpact_TryArmInit(slot->state, velocity, pose, timer);
     return 1;
 }
