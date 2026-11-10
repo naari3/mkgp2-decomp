@@ -91,6 +91,23 @@ Rules found on the way (GC/1.3.2):
 - Under `-RTTI on` the unit owns the RTTI records of every class it emits,
   and the linker keeps one copy of a weak table per unit that needs it.
 
+### Second class: clMenuInput (4 minutes, 2 compiles)
+
+`src/game/clMenuInput.cpp` replaces four one-function units and the first
+function of a fifth. Differences from clScreenEffect:
+
+- **Not deferred.** The data order is weak base vtable, base list, vtable,
+  and the functions are in source order with the weak base destructor last,
+  which is what the compiler does without `-inline deferred`. So the mode is
+  per unit; read it from the data order before starting.
+- `OpenFullServiceMenu` had a hand-written exception table to imitate an
+  allocation that is freed when the constructor throws. As
+  `new ServiceMenu(-1)` the compiler writes that table itself.
+- Where the unit ends: the weak destructor of `teSingleton<X>` is the last
+  function of X's file (slot 0 of the `teSingleton<X>` vtable in
+  `rtti_classes.py`), so the file runs from X's own destructor to there.
+  For the ten singleton classes this gives 1 to 5 of today's units each.
+
 What this says about the other 351: each needs the unit that holds the
 class's first non-inline virtual function to own the class data, which often
 means merging units first, and the constructors and destructors written as

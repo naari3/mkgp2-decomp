@@ -11295,6 +11295,30 @@
   "src/game/mapeffect/PointListConstruct.cpp": {
     "__ct__9PointListFP10SpawnPoint": "fn_8016C94C"
   },
+  "src/game/clMenuInput.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__11ServiceMenuFi": "ServiceMenu_Init",
+    "__dt__11clMenuInputFv": "SmallObj_Dtor_VtableA",
+    "__dt__26teSingleton<11clMenuInput>Fv": "SmallObj_Dtor_VtableB",
+    "__vt__11clMenuInput": "lbl_803FDF40",
+    "__vt__26teSingleton<11clMenuInput>": "lbl_803FDF28",
+    "__RTTI__26teSingleton<11clMenuInput>": "lbl_806CEF58",
+    "__RTTI__11clMenuInput": "lbl_806CEF60",
+    "@34": "lbl_80310DB8",
+    "@39": "lbl_80310DD4",
+    "@40": "lbl_803FDF34",
+    "@12": "@etb_800082A0",
+    "@13": "@eti_800211B8",
+    "@20": "@etb_800082A8",
+    "@21": "@eti_800211C4",
+    "@26": "@etb_800082C0",
+    "@27": "@eti_800211D0",
+    "@32": "@etb_800082C8",
+    "@33": "@eti_800211DC",
+    "@37": "@etb_800082D0",
+    "@38": "@eti_800211E8"
+  },
   "src/game/TransitionEffect.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
@@ -17076,5 +17100,9 @@
     "__dt__3HUDFv": "fn_80254134",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/PcbIdToIpAndModify.c": {
+    "@24": "@etb_800082D8",
+    "@25": "@eti_800211F4"
   }
 }

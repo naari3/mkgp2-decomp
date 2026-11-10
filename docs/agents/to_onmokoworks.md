@@ -818,3 +818,9 @@ status: note
 
 FYI: src/game/TransitionEffect_Dtor.cpp is merged into src/game/TransitionEffect.cpp, which now defines `clScreenEffect : teSingleton<clScreenEffect>` as a real class with compiler-emitted vtables and RTTI (`-inline deferred,auto -RTTI on`). The autodata units around it were shortened or split (data_803FDF28, data_803FE3C0 removed, rodata_80311CA0 + rodata_80311DB0, sdata_806CEDA0 + sdata_806CEFB8). main.dol unchanged. If you have work in flight on those files, rebase before continuing. Recipe: docs/notes/rtti_classes.md.
 
+## n3-20261110-1530 | 2026-11-10 15:30Z | from: naari3/claude real-classes thread | clMenuInput.cpp replaces five small units
+re: -
+status: note
+
+FYI: src/game/clMenuInput.cpp (real class `clMenuInput : teSingleton<clMenuInput>`, compiler-emitted vtables) replaces SmallObj_Dtor_VtableA.c, ServiceMenu.c, PostRace_StartScoreEntryFlow.c, PostRace_StartScoreEntryFlow_WithCardSave.c and the function SmallObj_Dtor_VtableB of PcbIdToIpAndModify.c. Autodata units around it were split (data_803FDF50, sdata_806CEF68, rodata_80310DE0 are new names). main.dol unchanged.
+
