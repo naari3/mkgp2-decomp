@@ -2184,3 +2184,8 @@ c25_u55 fn_8018E6FC: 99.06888 -> 99.73214, text1568/EH8/index12. Keep updateMatr
 Source: Codex worker c25_u56_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 67 fn / 23644 B.
 
 c25_u56: base already contained the fn_80179F60 pattern45 fix, but merged split-era source was not layout-correct. Restore 4a1f4f60 original unsplit declaration layout/anonymous namespace, retain current QuadCross and named InQuad locals plus explicit lbl_806D8E90, use canonical HSD_JObjSetMtxDirtySub, and keep YIState::UpdateT as a generic inline member template rather than an explicit specialization. The specialization emits before MR dtor; generic inline template instantiates last. All 65 functions, 61 owned EH payloads+relocations and linked addresses exact; Matching full DOL SHA-1 OK. No data padding or bridge-map edits needed.
+
+## c25_u100_20261110
+Source: Codex worker c25_u100_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c25_u100: recovered documented endpoint-first Raycast form from gave_up (both endpoints copied before delta=*to then delta-=*from), independently verified 92.242424->94.252525/.text98.16759. All ten other function scores, extab95.83333/index89.393936/rodata100 unchanged. Canonical nontrivial vector input types invariant; endpoint-component loop92.30303 discarded. Segment direct-facing fields96.04211, extern-zero94.79649, uncached normal member reads96.04211 all reverted. No new 100% mechanism; whole reversed group stays NM. Build service exit0/SHA1ea30f3b1 exact, source not linked, native gain0.
