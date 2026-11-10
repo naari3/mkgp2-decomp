@@ -411,6 +411,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   #mr-table td.dim {{ color: #8b949e; }}
   #mr-table td.num, #mr-table td.nw {{ white-space: nowrap; word-break: normal; }}
   #mr-table td.nm {{ color: #e66767; }}
+  .table-scroll {{ overflow-x: auto; -webkit-overflow-scrolling: touch; }}
+  @media (max-width: 600px) {{
+    body {{ padding: 1rem 0.75rem; }}
+    h1 {{ font-size: 1.4rem; }}
+    .cat-row {{ grid-template-columns: 1fr auto; gap: 0.25rem 0.75rem; }}
+    .cat-row .bar {{ grid-column: 1 / -1; grid-row: 2; }}
+  }}
 </style>
 </head>
 <body>
@@ -445,30 +452,30 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
   <h2>Units (by address)</h2>
   <p class="meta">Units in section virtual-address order. First {top_n} shown; expand below for the full list.</p>
-  <table>
+  <div class="table-scroll"><table>
     <thead><tr><th class="num">Address</th><th>Unit</th><th class="num">Code</th><th class="num">Matched</th><th class="num">Fuzzy</th><th>Status</th></tr></thead>
     <tbody>{top_addr_rows}</tbody>
-  </table>
+  </table></div>
   <details>
     <summary>All units by address ({n_units})</summary>
-    <table>
+    <div class="table-scroll"><table>
       <thead><tr><th class="num">Address</th><th>Unit</th><th class="num">Code</th><th class="num">Matched</th><th class="num">Fuzzy</th><th>Status</th></tr></thead>
       <tbody>{all_addr_rows}</tbody>
-    </table>
+    </table></div>
   </details>
 
   <h2>Units (by size)</h2>
   <p class="meta">Largest units by code size. First {top_n} shown; expand below for the full list.</p>
-  <table>
+  <div class="table-scroll"><table>
     <thead><tr><th class="num">Address</th><th>Unit</th><th class="num">Code</th><th class="num">Matched</th><th class="num">Fuzzy</th><th>Status</th></tr></thead>
     <tbody>{top_size_rows}</tbody>
-  </table>
+  </table></div>
   <details>
     <summary>All units by size ({n_units})</summary>
-    <table>
+    <div class="table-scroll"><table>
       <thead><tr><th class="num">Address</th><th>Unit</th><th class="num">Code</th><th class="num">Matched</th><th class="num">Fuzzy</th><th>Status</th></tr></thead>
       <tbody>{all_size_rows}</tbody>
-    </table>
+    </table></div>
   </details>
 
   <p class="meta" style="margin-top:2rem"><a href="report.json">Raw report.json</a> · <a href="shield.json">Shield JSON</a> · <a href="history.jsonl">History JSONL</a></p>
@@ -1320,10 +1327,10 @@ def build_history_section(rows: List[Dict[str, Any]], repo_url: str) -> str:
         table_details = f"""
   <details>
     <summary>All commits ({len(commit_rows)})</summary>
-    <table>
+    <div class="table-scroll"><table>
       <thead><tr><th>Date</th><th>Commit</th><th class="num">Matched</th><th class="num">Δ matched</th><th class="num">Δ bytes</th><th class="num">Linked</th><th class="num">Fns</th></tr></thead>
       <tbody>{"".join(commit_rows)}</tbody>
-    </table>
+    </table></div>
   </details>"""
     else:
         table_meta = (f"All {len(commit_rows)} commits on <code>main</code> "
@@ -1368,10 +1375,10 @@ def build_history_section(rows: List[Dict[str, Any]], repo_url: str) -> str:
 
   <h2>Per-commit progress</h2>
   <p class="meta">{table_meta}</p>
-  <table>
+  <div class="table-scroll"><table>
     <thead><tr><th>Date</th><th>Commit</th><th class="num">Matched</th><th class="num">Δ matched</th><th class="num">Δ bytes</th><th class="num">Linked</th><th class="num">Fns</th></tr></thead>
     <tbody>{"".join(commit_rows[:top_n])}</tbody>
-  </table>{table_details}
+  </table></div>{table_details}
 
   <script type="application/json" id="tl-data">{_json_for_html(tl_pts)}</script>
   <script type="application/json" id="dg-data">{_json_for_html(dg_days)}</script>
