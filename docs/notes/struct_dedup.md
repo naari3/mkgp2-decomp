@@ -40,6 +40,26 @@ NonMatching unit links the original object.
 - Units under an open unit-claim are skipped: put their configure.py paths
   (`game/Foo.c`) in `build/open_claims.txt`, one per line, before `apply`.
 
+## Context mode (`apply --context`, 2026-11-10)
+
+Plain mode (above) only moves structs whose members are all data. Most
+duplicated names are C++ classes (methods, constructors, base classes).
+`--context` groups copies whose whole text is identical token for token
+(string literals included, comments and white space ignored), writes the
+first copy as written into the header, and replaces each copy with the
+`#include`. Types the class uses and that are not shared stay whatever the
+including file declares before the `#include` (the copy saw the same thing in
+place); the header lists them in a comment. Same-batch types every user also
+moved (e.g. a base class) are `#include`d. Inline method bodies emit code,
+so the hash check matters here as much as before; batch 4 was clean.
+
+Plain mode also spells typedef names (`u8`, `u32`, `Mtx`, ...) as the C
+built-ins they resolve to in each copy's file (all copies must agree), so it
+needs no SDK header. Include checks follow `#include`s transitively (until
+2026-11-10 they matched blanked string literals and never saw any include).
+
+`struct_dedup_batch.sh` removes headers whose every copy was reverted.
+
 ## Classes that are only reported
 
 - B: same name, same byte layout, different member names or padding
