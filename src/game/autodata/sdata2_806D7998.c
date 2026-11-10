@@ -2010,8 +2010,9 @@ const float lbl_806D97DC = 1.0f;
 const float lbl_806D97E0[2] = {
     255.0f, 0.0f
 };
-const unk8 lbl_806D97E8[6] = {
-    0x02, 0x6E, 0x02, 0x6F, 0x02, 0x70
+/* Three voice ids (fn_801A1798.c copies it as a struct of three shorts). */
+const short lbl_806D97E8[3] = {
+    0x026E, 0x026F, 0x0270
 };
 const float lbl_806D97F0 = -1.0f;
 const float lbl_806D97F4 = 0.0f;
