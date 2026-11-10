@@ -399,3 +399,20 @@ Left open: a view made of `u8` bit-fields over a `u16`/`u32` (PCBCheckRecv.c
 `union SlotFlags` member `bits`, `union PacketHead`). Each byte's bits are
 right now, but on a little-endian host the bytes themselves trade places.
 That is byte order, and stays with the port.
+
+## Out parameters that receive more than one element
+
+`Math_Segment2DIntersect(float *outT, float *outPos, ...)` writes three floats
+through `outPos` (x, 0, z). `PathManager_UpdateAll` passed the address of a
+single `float u`, so the callee wrote past it; on the console the frame happens
+to have room, on a host the neighbouring local (`finish`) was overwritten. The
+local is now `float u[3]` and is passed as `u`; MWCC lays the frame out the
+same way, the object is unchanged.
+
+`python3 tools/port_abi/out_vector.py` looks for the pattern: a callee that
+indexes a pointer parameter beyond `[0]` (`p[N]`, `((float *)p)[N]`,
+`(char *)p + N`) and a call that passes `&local` there with `local` a plain
+scalar, or a scalar local cast to a struct pointer. It follows the
+`Foo_Reordered` wrappers. It reports 0 after this change. It is text based and
+does not see C++ member functions or callees that index through a copy of the
+parameter.

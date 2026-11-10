@@ -63,7 +63,7 @@ int PathManager_UpdateAll(UpdateManager *self)
     int i;
     float *finish;
     UpdateEntry *own;
-    float u, t;
+    float u[3], t;
 
     finish = GetFinishLineSegment();
     if (!PathManager_HasPathLoaded(self)) return -1;
@@ -187,7 +187,7 @@ int PathManager_UpdateAll(UpdateManager *self)
             if (e->lap != CommBroadcast_GetKartLap(e->kart->commId)) crossed = 1;
         } else if (e->maxProgress > Path_GetTotalCount(self)-10 && e->crossedEnd == 1) {
             if (Math_Segment2DIntersect(e->previous[0],e->previous[2],*e->px,*e->pz,
-                    finish[0],finish[2],finish[3],finish[5],&t,&u) == 1) crossed = 1;
+                    finish[0],finish[2],finish[3],finish[5],&t,u) == 1) crossed = 1;
         }
         if (crossed) {
             e->progress = 0;
