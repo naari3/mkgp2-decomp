@@ -893,5 +893,5 @@ Touched: autodata/data_803FDF50.c, data_8048E548.c, data_8040E780.c, OrthoCam.c 
 re: -
 status: note
 
-NameCheck_CardName.c and autodata/sdata2_806D3060.c: about 1090 pattern objects are now ; calls to strstr/strcmp/... on name codes are NAMECODE_STRSTR etc. (include/game/types/namecode_str.h, the same functions under MWCC). Byte-identical. No action needed.
+NameCheck_CardName.c and autodata/sdata2_806D3060.c: about 1090 pattern objects are now unsigned short arrays of Shift-JIS codes; calls to strstr/strcmp/... on name codes are NAMECODE_STRSTR etc. (include/game/types/namecode_str.h, the same functions under MWCC). Byte-identical. No action needed.
 
