@@ -1,3 +1,4 @@
+#include "game/types/reg_args.h"
 /* main @ 0x800AC894 (size 0x68)
  *
  * Top-level game lifecycle wrapper (a.k.a. RunGameMain). Called from
@@ -28,7 +29,7 @@
 extern void BootDispatcher(void *scratch);
 extern void DeadCounters_PostBootReset(void);
 extern void *FlowDispatcher_Create(void *p, int mode);
-extern void MainGameLoop(void);
+extern void MainGameLoop(REG_ARGS1(void *scene));
 extern void FlowDispatcher_Dtor(void *scene, int flag);
 extern void Game_Shutdown(void);
 
@@ -47,7 +48,7 @@ void main(void) {
         mode = 12;
     }
     scene = FlowDispatcher_Create(main_rodata_80328C94, mode);
-    MainGameLoop();
+    MainGameLoop(REG_ARGS1(scene)); /* r3 still holds scene */
     FlowDispatcher_Dtor(scene, 1);
     Game_Shutdown();
 }

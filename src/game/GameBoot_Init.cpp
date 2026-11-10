@@ -47,7 +47,7 @@ extern "C" void GameBoot_Init() {
     SnapshotBootBackup();
     memcpy(&GameBoot_Init_bss_805A5EB0, messages + 0x6bc, 8);
     GameBoot_Init_bss_805A5EB0.size = 0x6a20; GameBoot_Init_bss_805A5EB0.type = 0x11;
-    if (fn_80288574(0, &lbl_80598A60) != 0 || lbl_80598A60.head.tag != 15 || lbl_80598A60.head.a08 != 0) {
+    if (fn_80288574(0, &lbl_80598A60, &GameBoot_Init_bss_805A5EB0) != 0 || lbl_80598A60.head.tag != 15 || lbl_80598A60.head.a08 != 0) {
         Backup_LoadFromMemoryOrInit();
         Backup_ClearHiScores();
         if (lbl_806D1120 && lbl_806D1128 == 0) ClearBootStats();

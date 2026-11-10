@@ -54,7 +54,7 @@ extern void Sprite_Destroy(void *spr, int flag);
 extern void GX_BeginDraw(void);
 extern void GXTexModeSync(void);
 extern int GetDisplayBufferIndex(void);
-extern void *GetDisplayContext(void);
+extern void *GetDisplayContext(int index);
 extern void DrawNamCamImage(void *ctx, void *tex, int w, int h, int fmt, u16 left, u16 top, u16 right, u16 bottom, int, int, int);
 extern void GX_EndDraw(int);
 extern void SoundMgr_Play(int);
@@ -277,8 +277,7 @@ static inline int ConfirmTick(clFlowNamcamRec *self) {
             GXTexModeSync();
             cfgX = *(int *)(lbl_80598A60 + 0x4c);
             cfgY = *(int *)(lbl_80598A60 + 0x48);
-            GetDisplayBufferIndex();
-            ctx = GetDisplayContext();
+            ctx = GetDisplayContext(GetDisplayBufferIndex());
             DrawNamCamImage(ctx, self->namcam->tex, 0x140, 0xf0, 6,
                             (int)FLOAT_NAMCAM_LEFT - cfgX - 7,
                             (int)FLOAT_NAMCAM_TOP - cfgY - 0xa,

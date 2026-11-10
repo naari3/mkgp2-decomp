@@ -1,3 +1,4 @@
+#include "game/types/reg_args.h"
 #include "game/FlowDispatcher_private.h"
 #include "game/CreditHud.h"
 extern "C" {
@@ -29,7 +30,7 @@ const char *StrPcb_GetErrorCodeString(void *);
 unsigned char StrPcb_HasError(void *);
 unsigned char StrPcb_GetCommErrorFlag(void *);
 void DrawLinkErrorOverlay();
-void CardTaskWelcome_DrawStatus();
+void CardTaskWelcome_DrawStatus(REG_ARGS1(void *unused));
 void fn_80218B5C(CreditHud *);
 void fn_8011F994(int);
 void fn_801A1280();
@@ -124,7 +125,7 @@ extern "C" void MainGameLoop(FlowDispatcher *self)
         do {
             Frame_Begin();
             if (lbl_806D1191) DrawLinkErrorOverlay();
-            else CardTaskWelcome_DrawStatus();
+            else CardTaskWelcome_DrawStatus(REG_ARGS1(0)); /* the callee ignores its parameter */
             hud->Update();
             fn_80218B5C(hud);
             for (int i = 0; i < 8; ++i) fn_8011F994(i);

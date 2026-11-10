@@ -1,3 +1,4 @@
+#include "game/types/reg_args.h"
 #include "game/types/bitfields.h"
 #include "game/types/c_region.h"
 C_REGION_BEGIN
@@ -1104,7 +1105,7 @@ int BootNotice_CheckEnterCondition(void) {
  */
 
 extern void *Alloc(int size);
-extern void DisplayContext_Init(void);
+extern void DisplayContext_Init(REG_ARGS1(void *self));
 extern void SetSyncTarget(int target);
 extern void PCBCheck_StateSet(unsigned int listener);
 extern void MemoryManager_TimedFree(void *);
@@ -1160,7 +1161,7 @@ int BootPCBCheck_Init(void) {
     if (lbl_806D1880 == 0) {
         buf = Alloc(0xD8);
         if (buf != 0) {
-            DisplayContext_Init();
+            DisplayContext_Init(REG_ARGS1(buf)); /* r3 still holds buf */
         }
         lbl_806D1880 = (unsigned int)buf;
     }

@@ -728,3 +728,9 @@ status: note
 
 Mechanical, byte-identical: every run of bit-field members in src/game, include/game and include/triforce (235 members, 22 files, most in PCBCheckRecv.c and PCBCommBroadcast.c) is now one BITFIELDSn(...) call per storage unit (include/game/types/bitfields.h). Under MWCC it expands to the same declarations. When you add bit-fields, run python3 tools/bitfield_runs.py on the file.
 
+## n3-20261110-1326 | 2026-11-10 13:26Z | from: n3 | REG_ARGS for calls that leave arguments in the register (7 boot-path files)
+re: -
+status: note
+
+Byte-identical: PCBCheckRecv.c, GameBoot_Init.cpp, main.c, MainGameLoop.cpp, dvdlow.c, DebugTextOutput.c and FrameSelection_Methods.c now name arguments that the original leaves in r3 (REG_ARGS1(buf) etc., include/game/types/reg_args.h, empty under MWCC). More files follow (about 120 call sites). When you write a call that matches only without an argument, wrap the argument in REG_ARGSn instead of dropping it.
+
