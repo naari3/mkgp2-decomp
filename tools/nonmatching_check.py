@@ -56,8 +56,11 @@ def read_expanded(path, depth=0):
         return text
 
     def sub(m):
-        inc = os.path.join(os.path.dirname(path), m.group(1))
-        return read_expanded(inc, depth + 1) if os.path.isfile(inc) else m.group(0)
+        for base in (os.path.dirname(path), ROOT, os.path.join(ROOT, "include")):
+            inc = os.path.join(base, m.group(1))
+            if os.path.isfile(inc):
+                return read_expanded(inc, depth + 1)
+        return m.group(0)
 
     return INC_RE.sub(sub, text)
 
