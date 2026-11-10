@@ -95,7 +95,14 @@ extern void Vec3_Add_DestFirst(RCVec3 *out, RCVec3 *a, RCVec3 *b);
 extern float Vec3_Dot(RCVec3 *a, RCVec3 *b);
 extern void Vec3_Subtract(void *a, void *b, void *out);
 extern void Vec3_Subtract_DestFirst(RCVec3 *out, RCVec3 *a, RCVec3 *b);
+#ifdef __MWERKS__
 extern void VfxSlotMgr_Update(RCVec3 proj, RCVec3 scissor);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlotMgr_Update(RCVec3 *, RCVec3 *);
+static inline void VfxSlotMgr_Update_ByValue(RCVec3 proj, RCVec3 scissor) { VfxSlotMgr_Update(&proj, &scissor); }
+#define VfxSlotMgr_Update VfxSlotMgr_Update_ByValue
+#endif
 extern void fn_8016B32C(void *weather);
 extern unsigned char fn_80253C40(void *hud);
 extern void fn_80253C74(void *hud, int won, int text, int time);

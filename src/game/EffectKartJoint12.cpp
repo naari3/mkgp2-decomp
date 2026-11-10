@@ -22,9 +22,23 @@ void DrawEffect_Free(Joint12Effect *);
 void VfxSlot_BindResourceEx(void *, int, int);
 void *KartDriver_GetKartRootMtx(void *);
 void Mtx_TransposeToMtx44(float (*)[4], const void *);
+#ifdef __MWERKS__
 void Mtx44_TransformVec3(JointVec *, const float (*)[4], JointVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(JointVec *, const float (*a1)[4], JointVec *);
+static inline void Mtx44_TransformVec3_ByValue(JointVec *a0, const float (*a1)[4], JointVec a2) { Mtx44_TransformVec3(a0, a1, &a2); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 void Vec3_Copy(JointVec *, const JointVec *);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, JointVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, JointVec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, JointVec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetScaleUniform(void *, float);
 }
 static inline float stageFraction(float start, float end, float age) {

@@ -61,7 +61,14 @@ extern void PreloadResource(int id);
 extern void fn_80120A08(int id);
 extern int SoundMgr_CountActiveSEInstances(int se);
 extern void SoundMgr_PlaySE_Positional(int se, Vec pos, int ch);
+#ifdef __MWERKS__
 extern void SoundMgr_PlaySE_WithChannel(int se, Vec pos, int ch);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SoundMgr_PlaySE_WithChannel(int, Vec *, int);
+static inline void SoundMgr_PlaySE_WithChannel_ByValue(int se, Vec pos, int ch) { SoundMgr_PlaySE_WithChannel(se, &pos, ch); }
+#define SoundMgr_PlaySE_WithChannel SoundMgr_PlaySE_WithChannel_ByValue
+#endif
 extern void SoundMgr_StopSE_OrSpecial(int se, int ch);
 extern float BuildOrientationFromYaw(float yaw);
 extern float Rand_RangeFloatMax(float max);

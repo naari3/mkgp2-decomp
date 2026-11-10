@@ -36,9 +36,23 @@ extern float Vec3_ToYaw(const Vec *v);
 extern float AngleStepTowards_Shortest(float cur, float target, float step);
 extern void Item_DecayVelocityScalar(TaruItem *self, float k);
 extern int Item_CheckWallCollision(TaruItem *self, Vec *normal, int mode);
+#ifdef __MWERKS__
 extern void Item_BounceOffWall(TaruItem *self, Vec normal, int a, int b, float restitution, float c);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_BounceOffWall(TaruItem *, Vec *, int, int, float, float);
+static inline void Item_BounceOffWall_ByValue(TaruItem *self, Vec normal, int a, int b, float restitution, float c) { Item_BounceOffWall(self, &normal, a, b, restitution, c); }
+#define Item_BounceOffWall Item_BounceOffWall_ByValue
+#endif
 extern int Item_AdvanceFallingDrop(TaruItem *self, int *landed, float *groundY, float gravity);
+#ifdef __MWERKS__
 extern float Item_ProbeLateralGroundPitch(Vec pos, float yaw, float a, float b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeLateralGroundPitch(Vec *, float, float, float);
+static inline float Item_ProbeLateralGroundPitch_ByValue(Vec pos, float yaw, float a, float b) { return Item_ProbeLateralGroundPitch(&pos, yaw, a, b); }
+#define Item_ProbeLateralGroundPitch Item_ProbeLateralGroundPitch_ByValue
+#endif
 extern float FAbs_FloatAsDouble(float x);
 extern void Vec2_RotateY(Vec *out, const Vec *in, float a);
 

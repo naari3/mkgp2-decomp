@@ -37,7 +37,14 @@ extern void cLNormal3DWrap_Slot_Render(void *slot);
 extern void cLNormal3DWrap_Slot_SetMatrixSource(void *slot, Mtx34 *m);
 extern void cLNormal3DWrap_Slot_SetRotationQuat(void *slot, float x, float y, float z, float w);
 extern void PSMTXMultVec(void *m, Vec3 *src, Vec3 *dst);
+#ifdef __MWERKS__
 extern Vec3 Mtx44_TransformVec3(const float *m, Vec3 v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec3 *, const float *, Vec3 *);
+static inline Vec3 Mtx44_TransformVec3_ByValue(const float *m, Vec3 v) { Vec3 port_ret; Mtx44_TransformVec3(&port_ret, m, &v); return port_ret; }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern void clDrawMan_AddSorted_NoDepthBias(void *mgr, void (*fn)(char *), char *obj,
                                             float x, float y, float z, float bias);
 extern void *AnimStatePool_Alloc(void *desc);

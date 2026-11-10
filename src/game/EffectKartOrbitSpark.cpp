@@ -32,7 +32,14 @@ float BuildOrientationFromYaw(float);
 double sin(double);
 void DrawEffect_Free(OrbitSparkEffect *);
 unsigned char FinalLapCoinJump_CheckActiveForObject(void *);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, OrbitSparkVec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, OrbitSparkVec3 *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, OrbitSparkVec3 a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetScaleUniform(void *, float);
 
 void Effect_KartOrbitSpark_Update(OrbitSparkEffect *effect) {

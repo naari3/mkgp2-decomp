@@ -12,7 +12,14 @@ extern void Effect_TwoChild_Res8F_Update(unsigned char *self);
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int en);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int anim, float frame);
 extern unsigned char *DrawEffect_SpawnDirect(void (*callback)(unsigned char *));
+#ifdef __MWERKS__
 extern void Item_RenderHandheldByCharacter(unsigned char *self, Vec ofs, Vec rot, int c, float scale);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_RenderHandheldByCharacter(unsigned char *, Vec *, Vec *, int, float);
+static inline void Item_RenderHandheldByCharacter_ByValue(unsigned char *self, Vec ofs, Vec rot, int c, float scale) { Item_RenderHandheldByCharacter(self, &ofs, &rot, c, scale); }
+#define Item_RenderHandheldByCharacter Item_RenderHandheldByCharacter_ByValue
+#endif
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *driver);
 extern void Item_InitLaunchFromKart(unsigned char *self, void *pos, float x, float y);
 extern void ItemTracker_AcquireLock(unsigned char *self);
@@ -30,12 +37,33 @@ extern void fn_801B1660(void *driver, void *target);
 extern void fn_801B158C(void *driver, void *target);
 extern void fn_801B14B8(void *driver, void *target);
 extern void ItemHit_Dispatch(unsigned char *self, int a, void *pos, int b);
+#ifdef __MWERKS__
 extern void Item_ComputeYawRelativeApproach(void *vel, void *target, Vec pos, Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_ComputeYawRelativeApproach(void *, void *, Vec *, Vec *);
+static inline void Item_ComputeYawRelativeApproach_ByValue(void *vel, void *target, Vec pos, Vec v) { Item_ComputeYawRelativeApproach(vel, target, &pos, &v); }
+#define Item_ComputeYawRelativeApproach Item_ComputeYawRelativeApproach_ByValue
+#endif
 extern float Vec3_ToYaw(const void *v);
 extern int Item_CheckWallCollision(unsigned char *self, Vec *n, int flag);
+#ifdef __MWERKS__
 extern void Item_BounceOffWall(unsigned char *self, Vec n, int a, int b, float x, float y);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_BounceOffWall(unsigned char *, Vec *, int, int, float, float);
+static inline void Item_BounceOffWall_ByValue(unsigned char *self, Vec n, int a, int b, float x, float y) { Item_BounceOffWall(self, &n, a, b, x, y); }
+#define Item_BounceOffWall Item_BounceOffWall_ByValue
+#endif
 extern int Item_AdvanceFallingDrop(unsigned char *self, int *landed, int *hit, float f);
+#ifdef __MWERKS__
 extern void DrawEffect_ItemHitBurst_Spawn(Vec pos, Vec vel, int kind);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void DrawEffect_ItemHitBurst_Spawn(Vec *, Vec *, int);
+static inline void DrawEffect_ItemHitBurst_Spawn_ByValue(Vec pos, Vec vel, int kind) { DrawEffect_ItemHitBurst_Spawn(&pos, &vel, kind); }
+#define DrawEffect_ItemHitBurst_Spawn DrawEffect_ItemHitBurst_Spawn_ByValue
+#endif
 extern void GetSpawnPosition(void *out, float x, float y, float z);
 extern void ItemObject_DecrementCategoryBudget(unsigned char *self);
 extern void SpriteSlot_Container_Free(unsigned char *self);

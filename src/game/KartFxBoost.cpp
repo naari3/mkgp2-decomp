@@ -47,7 +47,14 @@ extern const float lbl_806D51BC, lbl_806D51C4, lbl_806D51C8;
 extern const float lbl_806D51D8, lbl_806D527C, lbl_806D52BC, lbl_806D52C0;
 extern const float lbl_806D52C4, lbl_806D52C8;
 void VfxSlot_BindResourceEx(void *, unsigned char, int);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, Vec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, Vec3 *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, Vec3 a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetScaleUniform(void *, float);
 void VfxSlot_SetRotationZ(void *, float);
 void DrawEffect_Free(BoostEffect *);
@@ -58,7 +65,14 @@ void *KartDriver_GetKartRootMtx(BoostKart *);
 float Mtx44_GetYawOfPosZ_Padded(void *);
 void Mtx44_GetTranslation_RowMajor(Vec3 *, void *);
 void Mtx_TransposeToMtx44(Mtx44 *, void *);
+#ifdef __MWERKS__
 void Mtx44_TransformVec3(Vec3 *, const Mtx44 *, Vec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec3 *, const Mtx44 *, Vec3 *);
+static inline void Mtx44_TransformVec3_ByValue(Vec3 *a0, const Mtx44 *a1, Vec3 a2) { Mtx44_TransformVec3(a0, a1, &a2); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 void Vec3_Copy(Vec3 *, const Vec3 *);
 void Vec3_Subtract_DestFirst(Vec3 *, const Vec3 *, const Vec3 *);
 void Vec3_Add_DestFirst(Vec3 *, const Vec3 *, const Vec3 *);

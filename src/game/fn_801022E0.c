@@ -13,7 +13,14 @@ extern const float lbl_806D64F4; /* 1.5 */
 extern const float lbl_806D6500; /* 3 deg */
 extern const float lbl_806D6548; /* 0.05 */
 extern const float lbl_806D6544; /* -0.2 */
+#ifdef __MWERKS__
 extern signed char ItemObject_GetGroundTypeAt(Vec pos, float *outGroundY, int mode);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(Vec *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(Vec pos, float *outGroundY, int mode) { return ItemObject_GetGroundTypeAt(&pos, outGroundY, mode); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float scale);
 extern void SpriteSlot_SetScale(void *slot, float scale);
 extern void Item_DecayVelocityScalar(unsigned char *self, float k);

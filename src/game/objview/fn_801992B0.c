@@ -16,7 +16,14 @@ extern void Item_DecayVelocityScalar(Item *, float);
 extern void GetSpawnPosition(Vec3 *, float, float, float);
 extern void Vec3_Subtract_DestFirst(Vec3 *, Vec3 *, Vec3 *);
 extern int Item_OrbitAnchorKart(Item *, Vec3 *, unsigned int, float, float);
+#ifdef __MWERKS__
 extern char ItemObject_GetGroundTypeAt(Vec3, float *, void *);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern char ItemObject_GetGroundTypeAt(Vec3 *, float *, void *);
+static inline char ItemObject_GetGroundTypeAt_ByValue(Vec3 a0, float *a1, void *a2) { return ItemObject_GetGroundTypeAt(&a0, a1, a2); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 extern int Item_AdvanceProjectileSimple(Item *, float *, float, float);
 extern void ItemObject_DecrementCategoryBudget(Item *);
 extern void SpriteSlot_Container_Free(Item *);

@@ -217,7 +217,14 @@ void RenderObj_ItemStateMachine_Timed(DemoDriver *driver, int a, float b, float 
 void TornadoEffect_Tick(DemoTornado *t, int disp);
 void VisualEffectHolder_Dtor(DemoTornado *t, int del);
 void DrawEffect_TickAndCull(void);
+#ifdef __MWERKS__
 void VfxSlotMgr_Update(Vec eye, Vec target);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlotMgr_Update(Vec *, Vec *);
+static inline void VfxSlotMgr_Update_ByValue(Vec eye, Vec target) { VfxSlotMgr_Update(&eye, &target); }
+#define VfxSlotMgr_Update VfxSlotMgr_Update_ByValue
+#endif
 void VfxSlotMgr_Shutdown(void);
 void ClRomTable_PurgeAll(void);
 void clRom_PurgeAll(void);

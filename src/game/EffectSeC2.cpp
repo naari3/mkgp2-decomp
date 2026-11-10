@@ -18,7 +18,14 @@ extern "C" {
 void SoundMgr_StopSE_OrSpecial(int, int);
 int SoundMgr_CountActiveSEInstances(int);
 void SoundMgr_PlaySE_Positional(int, SeC2Vec, int);
+#ifdef __MWERKS__
 void SoundMgr_PlaySE_WithChannel(int, SeC2Vec, int);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SoundMgr_PlaySE_WithChannel(int, SeC2Vec *, int);
+static inline void SoundMgr_PlaySE_WithChannel_ByValue(int a0, SeC2Vec a1, int a2) { SoundMgr_PlaySE_WithChannel(a0, &a1, a2); }
+#define SoundMgr_PlaySE_WithChannel SoundMgr_PlaySE_WithChannel_ByValue
+#endif
 void DrawEffect_Free(void *);
 void Effect_SeC2_PositionalUpdate(SeC2Effect *effect) {
     switch (effect->state) {

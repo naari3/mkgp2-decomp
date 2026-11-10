@@ -9,7 +9,14 @@ extern const char lbl_8032E630[];
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float f);
 extern void SpriteSlot_SetScale(void *slot, float s);
+#ifdef __MWERKS__
 extern void SpriteSlot_SetTransform(void *slot, Vec pos, Vec rot, float scale);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SpriteSlot_SetTransform(void *, Vec *, Vec *, float);
+static inline void SpriteSlot_SetTransform_ByValue(void *slot, Vec pos, Vec rot, float scale) { SpriteSlot_SetTransform(slot, &pos, &rot, scale); }
+#define SpriteSlot_SetTransform SpriteSlot_SetTransform_ByValue
+#endif
 extern void SpriteSlot_Container_Free(void *self);
 extern void ItemObject_DecrementCategoryBudget(unsigned char *self);
 extern void ItemObject_Teresa_GrabAndArc_Sub(unsigned char *self, unsigned char *sub);

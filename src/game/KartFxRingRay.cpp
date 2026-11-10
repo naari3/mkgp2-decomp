@@ -11,7 +11,14 @@ extern const float lbl_806D51F8, lbl_806D5200, lbl_806D5214, lbl_806D521C;
 extern const float lbl_806D5250, lbl_806D527C, lbl_806D5280;
 extern const float lbl_806D52AC, lbl_806D52B4, lbl_806D52B8;
 void VfxSlot_BindResourceEx(void *, unsigned char, int);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, Vec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, Vec3 *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, Vec3 a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetScaleUniform(void *, float);
 void VfxSlot_SetRotationZ(void *, float);
 void DrawEffect_Free(RingEffectView *);

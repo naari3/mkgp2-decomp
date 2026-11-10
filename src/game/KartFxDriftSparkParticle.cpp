@@ -37,7 +37,14 @@ extern const float lbl_806D52A0, lbl_806D52A4, lbl_806D52A8;
 extern const float lbl_806D5310, lbl_806D5314, lbl_806D5318, lbl_806D531C, lbl_806D5320;
 void VfxSlot_BindResourceEx(void *, int, int);
 void GetSpawnPosition(SparkVec3 *, float, float, float);
+#ifdef __MWERKS__
 void Mtx44_TransformVec3(SparkVec3 *, const float *, SparkVec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(SparkVec3 *, const float *, SparkVec3 *);
+static inline void Mtx44_TransformVec3_ByValue(SparkVec3 *a0, const float *a1, SparkVec3 a2) { Mtx44_TransformVec3(a0, a1, &a2); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 void Vec3_Subtract_DestFirst(SparkVec3 *, const SparkVec3 *, const SparkVec3 *);
 void Vec3_Add_DestFirst(SparkVec3 *, const SparkVec3 *, const SparkVec3 *);
 const float *KartDriver_GetKartRootMtx(SparkKart *);
@@ -49,7 +56,14 @@ void Vec2_RotateZ(SparkVec3 *, const SparkVec3 *, float);
 void VfxSlot_SetRotationZ(void *, float);
 void VfxSlot_SetScaleVec3(void *, float, float, float);
 void Vec3_Copy(SparkVec3 *, const SparkVec3 *);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, SparkVec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, SparkVec3 *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, SparkVec3 a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void DrawEffect_Free(SparkEffect *);
 
 void KartFx_DriftSparkParticleTick(SparkEffect *effect) {

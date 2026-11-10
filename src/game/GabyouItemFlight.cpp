@@ -33,8 +33,22 @@ extern const float lbl_806D6300,lbl_806D630C,lbl_806D6314,lbl_806D6318,lbl_806D6
 extern const float lbl_806D6320,lbl_806D6324,lbl_806D6328,lbl_806D632C;
 extern const float lbl_806D6330,lbl_806D6334,lbl_806D6338,lbl_806D633C,lbl_806D6340,lbl_806D6344;
 extern int g_ccClass;
+#ifdef __MWERKS__
 void Item_BendVelocityByGroundProbe(FlightVec *,FlightVec,float,float,float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_BendVelocityByGroundProbe(FlightVec *, FlightVec *, float, float, float);
+static inline void Item_BendVelocityByGroundProbe_ByValue(FlightVec *a0, FlightVec a1, float a2, float a3, float a4) { Item_BendVelocityByGroundProbe(a0, &a1, a2, a3, a4); }
+#define Item_BendVelocityByGroundProbe Item_BendVelocityByGroundProbe_ByValue
+#endif
+#ifdef __MWERKS__
 void KartDriver_TransformWorldToLocalY0(FlightVec *,FlightVec,void *);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void KartDriver_TransformWorldToLocalY0(FlightVec *, FlightVec *, void *);
+static inline void KartDriver_TransformWorldToLocalY0_ByValue(FlightVec *a0, FlightVec a1, void *a2) { KartDriver_TransformWorldToLocalY0(a0, &a1, a2); }
+#define KartDriver_TransformWorldToLocalY0 KartDriver_TransformWorldToLocalY0_ByValue
+#endif
 void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *,int);
 void *ItemObject_AllocGabyou();
 void Item_RenderFlyingFromKart(FlightItem *,void *,int,float,float,float);
@@ -43,7 +57,14 @@ void SpriteSlot_Container_Free(void *);
 void Item_InitLaunchFromKart(FlightItem *,int,float,float);
 void ItemTracker_AcquireLock(FlightItem *);
 void ItemTracker_SetTrackPhase(FlightItem *,int);
+#ifdef __MWERKS__
 signed char ItemObject_GetGroundTypeAt(FlightVec,float *,int);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(FlightVec *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(FlightVec a0, float *a1, int a2) { return ItemObject_GetGroundTypeAt(&a0, a1, a2); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 void Item_AccelClampVelocity(FlightItem *,float,float);
 void fn_801B129C(FlightVec *);
 void Item_HomingScanAndSteer(FlightItem *,float *,int);
@@ -68,7 +89,14 @@ void Vec2_RotateY(FlightVec *,const FlightVec *,float);
 void *KartDriver_GetJointByIdx(void *,int);
 void Mtx44_GetTranslation_RowMajor(FlightVec *,void *);
 float fn_800D3184(const FlightVec *,const FlightVec *);
+#ifdef __MWERKS__
 void Item_ComputeYawRelativeApproach(FlightVec *,void *,FlightVec,FlightVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_ComputeYawRelativeApproach(FlightVec *, void *, FlightVec *, FlightVec *);
+static inline void Item_ComputeYawRelativeApproach_ByValue(FlightVec *a0, void *a1, FlightVec a2, FlightVec a3) { Item_ComputeYawRelativeApproach(a0, a1, &a2, &a3); }
+#define Item_ComputeYawRelativeApproach Item_ComputeYawRelativeApproach_ByValue
+#endif
 float Vec3_ToYaw(const FlightVec *);
 void Vec3_Add_DestFirst(FlightVec *,const FlightVec *,const FlightVec *);
 int Item_CheckWallCollision(FlightItem *,FlightVec *,void *);
@@ -79,8 +107,22 @@ float AngleStepTowards_Shortest(float,float,float);
 double sin(double);
 int Item_AdvanceFallingDrop(FlightItem *,int *,float *,float);
 float Vec3_Magnitude_Wrapper(const FlightVec *);
+#ifdef __MWERKS__
 void DrawEffect_ItemHitOriented_Spawn(FlightVec,FlightVec,int);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void DrawEffect_ItemHitOriented_Spawn(FlightVec *, FlightVec *, int);
+static inline void DrawEffect_ItemHitOriented_Spawn_ByValue(FlightVec a0, FlightVec a1, int a2) { DrawEffect_ItemHitOriented_Spawn(&a0, &a1, a2); }
+#define DrawEffect_ItemHitOriented_Spawn DrawEffect_ItemHitOriented_Spawn_ByValue
+#endif
+#ifdef __MWERKS__
 float Item_ProbeForwardGroundPitch(FlightVec,float,float,float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeForwardGroundPitch(FlightVec *, float, float, float);
+static inline float Item_ProbeForwardGroundPitch_ByValue(FlightVec a0, float a1, float a2, float a3) { return Item_ProbeForwardGroundPitch(&a0, a1, a2, a3); }
+#define Item_ProbeForwardGroundPitch Item_ProbeForwardGroundPitch_ByValue
+#endif
 float AngleStepForward_OrSnap(float,float,float);
 void Vec3_Scale(FlightVec *,const FlightVec *,float);
 }

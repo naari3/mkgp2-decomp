@@ -40,7 +40,14 @@ void Mtx44_GetTranslation_RowMajor(ExplosionVec *, const void *);
 void GetSpawnPosition(ExplosionVec *, float, float, float);
 void DrawEffect_Free(ExplosionEffect *);
 float BuildOrientationFromYaw(float);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, ExplosionVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, ExplosionVec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, ExplosionVec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetRotationZ(void *, float);
 void VfxSlot_SetScaleUniform(void *, float);
 unsigned char FinalLapCoinJump_CheckActiveForObject(void *);

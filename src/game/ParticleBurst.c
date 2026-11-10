@@ -146,7 +146,14 @@ typedef struct PBVec3 {
     float x, y, z;
 } PBVec3;
 
+#ifdef __MWERKS__
 extern PBVec3 Mtx44_TransformVec3(const float *m, PBVec3 v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(PBVec3 *, const float *, PBVec3 *);
+static inline PBVec3 Mtx44_TransformVec3_ByValue(const float *m, PBVec3 v) { PBVec3 port_ret; Mtx44_TransformVec3(&port_ret, m, &v); return port_ret; }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern void clDrawMan_AddSorted_NoDepthBias(void *mgr, void (*fn)(char *), char *obj,
                                             float x, float y, float z, float bias);
 extern void *lbl_806D10AC;

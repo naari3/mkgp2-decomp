@@ -117,7 +117,14 @@ extern "C" const char lbl_803298F0[0x14] = "item_carrot_1_joint";
 extern "C" {
 extern const float lbl_806D5044,lbl_806D5048,lbl_806D504C,lbl_806D5050,lbl_806D5054,lbl_806D5058,lbl_806D505C;
 void VfxSlot_BindResourceEx(void*,int,int);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void*,Vec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void*, Vec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void*a0, Vec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetScaleUniform(void*,float);
 void Vec3_Add_DestFirst(Vec*,const Vec*,const Vec*);
 void DrawEffect_Free(Effect*);

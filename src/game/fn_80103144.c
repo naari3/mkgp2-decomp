@@ -8,7 +8,14 @@ extern void *KartDriver_GetJointByIdx(void *kart, int idx);
 extern void Mtx44_GetTranslation_RowMajor(void *dst, void *mtx);
 extern void ItemTracker_AcquireLock(unsigned char *self);
 extern void ItemTracker_SetTrackPhase(unsigned char *self, int phase);
+#ifdef __MWERKS__
 extern char ItemObject_GetGroundTypeAt(Vec pos, float *y, void *n);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern char ItemObject_GetGroundTypeAt(Vec *, float *, void *);
+static inline char ItemObject_GetGroundTypeAt_ByValue(Vec pos, float *y, void *n) { return ItemObject_GetGroundTypeAt(&pos, y, n); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 extern void Effect_Cluster16_Update(unsigned char *self);
 extern unsigned char *DrawEffect_SpawnDirect(void (*callback)(unsigned char *));
 extern void VfxEffect_InitVariantAndResetPos(void *e, int variant, float a, float b, float c);
@@ -23,7 +30,14 @@ extern void fn_801B1D5C(void *kart, void *target, int alias, int flag);
 extern void fn_801B1660(void *kart, void *target);
 extern void fn_801B158C(void *kart, void *target);
 extern void fn_801B14B8(void *kart, void *target);
+#ifdef __MWERKS__
 extern void Item_ComputeYawRelativeApproach(void *vel, void *target, Vec pos, Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_ComputeYawRelativeApproach(void *, void *, Vec *, Vec *);
+static inline void Item_ComputeYawRelativeApproach_ByValue(void *vel, void *target, Vec pos, Vec v) { Item_ComputeYawRelativeApproach(vel, target, &pos, &v); }
+#define Item_ComputeYawRelativeApproach Item_ComputeYawRelativeApproach_ByValue
+#endif
 extern float Vec3_ToYaw(void *v);
 extern void ItemTracker_ReleaseLock(unsigned char *self);
 extern void GetSpawnPosition(void *out, float x, float y, float z);

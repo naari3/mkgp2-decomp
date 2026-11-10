@@ -35,7 +35,14 @@ struct ImpactContext {
     void *driver;
 };
 extern "C" {
+#ifdef __MWERKS__
 signed char ItemObject_GetGroundTypeAt(ImpactVec3, float *, int);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(ImpactVec3 *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(ImpactVec3 a0, float *a1, int a2) { return ItemObject_GetGroundTypeAt(&a0, a1, a2); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 void GetSpawnPosition(ImpactVec3 *, float, float, float);
 void *KartDriver_GetKartRootMtx(void *);
 void Mtx44_GetTranslation_RowMajor(ImpactVec3 *, const void *);

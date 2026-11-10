@@ -4,7 +4,14 @@ extern void Vec3_Subtract_DestFirst(void *dst, void *a, void *b);
 extern void *KartDriver_GetKartRootMtx(void *kart);
 extern void Mtx_TransposeToMtx44(float *dst, void *src);
 extern void Mtx44_Inverse_GaussJordan(float *dst, float *src);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(void *out, float *m, Vec3 v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(void *, float *, Vec3 *);
+static inline void Mtx44_TransformVec3_ByValue(void *out, float *m, Vec3 v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern float Vec3_HorizontalMagnitude(void *v);
 extern void Vec3_ScaleXZ(void *dst, void *src, float s);
 extern void GetSpawnPosition(void *out, float x, float y, float z);

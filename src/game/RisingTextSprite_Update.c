@@ -23,7 +23,14 @@ extern const float lbl_806D5160; /* 720.0 */
 extern void *g_courseScene3D;
 extern void SpriteSlot_InitLoop(void *slot, int id);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float scale);
+#ifdef __MWERKS__
 extern void SpriteSlot_SetTransform(void *slot, Vec pos, Vec rot, float scale);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SpriteSlot_SetTransform(void *, Vec *, Vec *, float);
+static inline void SpriteSlot_SetTransform_ByValue(void *slot, Vec pos, Vec rot, float scale) { SpriteSlot_SetTransform(slot, &pos, &rot, scale); }
+#define SpriteSlot_SetTransform SpriteSlot_SetTransform_ByValue
+#endif
 extern void SpriteSlot_Container_Free(unsigned char *self);
 extern void *CObj_GetProjMatrix_Cached(void *scene);
 extern void PSMTXMultVec(void *m, Vec *src, Vec *dst);

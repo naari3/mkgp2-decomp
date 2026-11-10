@@ -1,5 +1,12 @@
 #include "game/OnchiSpeakerTickPrivate.h"
+#ifdef __MWERKS__
 extern void DrawEffect_KartImpactRing_AdvanceByVfxDelta(void *, Vec3, float, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void DrawEffect_KartImpactRing_AdvanceByVfxDelta(void *, Vec3 *, float, float);
+static inline void DrawEffect_KartImpactRing_AdvanceByVfxDelta_ByValue(void *a0, Vec3 a1, float a2, float a3) { DrawEffect_KartImpactRing_AdvanceByVfxDelta(a0, &a1, a2, a3); }
+#define DrawEffect_KartImpactRing_AdvanceByVfxDelta DrawEffect_KartImpactRing_AdvanceByVfxDelta_ByValue
+#endif
 extern void GetSpawnPosition(Vec3 *, float, float, float);
 extern void ItemObject_DecrementCategoryBudget(Item *);
 extern int Item_AdvanceTetherToJoint13(Item *, float *, float, float, float);
@@ -12,7 +19,14 @@ extern void SpriteSlot_Container_Free(Item *);
 extern void SpriteSlot_InitNonLoop(void *, int);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *, int, float);
 extern void SpriteSlot_SetScale(void *, float);
+#ifdef __MWERKS__
 extern void SpriteSlot_SetTransform(void *, Vec3, Vec3, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SpriteSlot_SetTransform(void *, Vec3 *, Vec3 *, float);
+static inline void SpriteSlot_SetTransform_ByValue(void *a0, Vec3 a1, Vec3 a2, float a3) { SpriteSlot_SetTransform(a0, &a1, &a2, a3); }
+#define SpriteSlot_SetTransform SpriteSlot_SetTransform_ByValue
+#endif
 extern void SpriteSlot_TickAnim(void *);
 extern void Vec3_Add_DestFirst(Vec3 *, Vec3 *, Vec3 *);
 extern void Vec3_Subtract_DestFirst(Vec3 *, Vec3 *, Vec3 *);

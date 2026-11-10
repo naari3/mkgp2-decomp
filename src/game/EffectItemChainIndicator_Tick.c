@@ -30,7 +30,14 @@ extern void fn_8022B150(void);
 extern float *KartDriver_GetJointByIdx(void *kart, int idx);
 extern void Mtx_TransposeToMtx44(float m[4][4], float *src);
 extern void Mtx44_GetTranslation_ColMajor(Vec *out, float m[4][4]);
+#ifdef __MWERKS__
 extern char ItemObject_GetGroundTypeAt(Vec pos, float *y, void *n);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern char ItemObject_GetGroundTypeAt(Vec *, float *, void *);
+static inline char ItemObject_GetGroundTypeAt_ByValue(Vec pos, float *y, void *n) { return ItemObject_GetGroundTypeAt(&pos, y, n); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 extern void Vec3_Copy(void *dst, const void *src);
 extern unsigned char *DrawEffect_SpawnDirect(void (*callback)(unsigned char *));
 extern unsigned char *PcbSlot_GetByIndex(int idx);
@@ -39,13 +46,27 @@ extern void Vec3_Subtract_DestFirst(void *out, const void *a, const void *b);
 extern float Vec3_ToPitch(const void *v);
 extern float Vec3_ToYaw(const void *v);
 extern float Vec3_Magnitude_Wrapper(const void *v);
+#ifdef __MWERKS__
 extern float Item_ProbeLateralGroundPitch(Vec pos, float yaw, float a, float b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeLateralGroundPitch(Vec *, float, float, float);
+static inline float Item_ProbeLateralGroundPitch_ByValue(Vec pos, float yaw, float a, float b) { return Item_ProbeLateralGroundPitch(&pos, yaw, a, b); }
+#define Item_ProbeLateralGroundPitch Item_ProbeLateralGroundPitch_ByValue
+#endif
 extern void Matrix4_Identity(float m[4][4]);
 extern void Matrix4_PreMultiplyTranslation(float dst[4][4], float src[4][4], float x, float y, float z);
 extern void Matrix4_PreMultiplyRotZ(float dst[4][4], float src[4][4], float a);
 extern void Matrix4_PreMultiplyRotX(float dst[4][4], float src[4][4], float a);
 extern void Matrix4_PreMultiplyRotY(float dst[4][4], float src[4][4], float a);
+#ifdef __MWERKS__
 extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec t);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec *);
+static inline void Mtx44_Translate_ByValue(float dst[4][4], float src[4][4], Vec t) { Mtx44_Translate(dst, src, &t); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 extern void DbgScene_CopyMatrix3x4Transpose(void *dst, float src[4][4]);
 extern void PSMTXMultVec(void *m, const Vec *src, Vec *dst);
 extern void DrawEffect_Free(unsigned char *self);

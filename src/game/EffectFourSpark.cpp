@@ -26,7 +26,14 @@ void Vec3_Subtract_DestFirst(FourSparkVec *,const FourSparkVec *,const FourSpark
 void Vec3_Add_DestFirst(FourSparkVec *,const FourSparkVec *,const FourSparkVec *);
 void Vec3_Copy(FourSparkVec *,const FourSparkVec *);
 unsigned char FinalLapCoinJump_CheckActiveForObject(void *);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *,FourSparkVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, FourSparkVec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, FourSparkVec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetRotationZ(void *,float);
 void VfxSlot_SetScaleUniform(void *,float);
 void Effect_FourSpark_Res65_68_Update(FourSparkEffect *effect) {

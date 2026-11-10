@@ -11,7 +11,14 @@ extern unsigned char *DrawEffect_SpawnDirect(void (*callback)(unsigned char *));
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float scale);
 extern void SpriteSlot_SetScale(void *slot, float scale);
 extern void Mtx44_Inverse_GaussJordan(float dst[4][4], float src[4][4]);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(void *out, float m[4][4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(void *, float m[4][4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(void *out, float m[4][4], Vec v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern float Vec3_ToYaw(void *v);
 extern float FAbs_FloatAsDouble(float x);
 extern float Vec3_HorizontalMagnitude(void *v);

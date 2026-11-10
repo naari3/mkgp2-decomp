@@ -18,7 +18,14 @@ typedef struct CameraMatrices {
 extern CameraMatrices lbl_805DF3D0;
 
 extern void SoundMgr_PlaySE(u32 se);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec in);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec *, float m[4][4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(Vec *out, float m[4][4], Vec in) { Mtx44_TransformVec3(out, m, &in); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern float Vec3_Magnitude_Wrapper(Vec *v);
 extern void fn_8016C444(int);
 extern void fn_8016C1B0(u32 se, int volume);

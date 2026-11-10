@@ -30,7 +30,14 @@ void Matrix4_Identity(YawPitchMatrix *);
 void Mtx44_Scale_Uniform(YawPitchMatrix *, const YawPitchMatrix *, float);
 void Matrix4_PreMultiplyRotY(YawPitchMatrix *, const YawPitchMatrix *, float);
 void Matrix4_PreMultiplyRotX(YawPitchMatrix *, const YawPitchMatrix *, float);
+#ifdef __MWERKS__
 void Mtx44_Translate(YawPitchMatrix *, const YawPitchMatrix *, YawPitchVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(YawPitchMatrix *, const YawPitchMatrix *, YawPitchVec *);
+static inline void Mtx44_Translate_ByValue(YawPitchMatrix *a0, const YawPitchMatrix *a1, YawPitchVec a2) { Mtx44_Translate(a0, a1, &a2); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 void DbgScene_CopyMatrix3x4Transpose(float *, const YawPitchMatrix *);
 void Effect_BuildYawPitchScaleMtx_48(YawPitchEffect *effect, const YawPitchVec *position, float scale, float alpha) {
     if (effect) {

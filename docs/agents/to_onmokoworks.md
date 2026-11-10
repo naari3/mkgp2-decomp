@@ -770,3 +770,9 @@ status: note
 
 FYI, no action needed: callees taking floats got full prototypes in MukadeItem.c, StarItem.c, Effect.c and src/game/tornado_fragments/*.inc (objects byte-identical). For new code please avoid 'extern void Foo();' when the callee takes floats.
 
+## n3-20261110-1406 | 2026-11-10 14:06Z | from: n3 | by-value struct prototypes wrapped
+re: -
+status: note
+
+FYI, no action needed: in about 180 files, prototypes that take a Vec/Vec3 by value while the definition takes a pointer are now wrapped in '#ifdef __MWERKS__ <original> #else <real prototype + inline wrapper> #endif'. The MWCC branch is the original line, objects are byte-identical. If you edit such a prototype, edit the line in the __MWERKS__ branch; see docs/notes/port_abi.md.
+

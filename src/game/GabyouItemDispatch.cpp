@@ -53,7 +53,14 @@ void Effect_TwoChild_Res3C_3D_Init(GabyouDispatchView *);
 void SpriteSlot_InitNonLoop(void *, int);
 void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *, int);
 void SpriteSlot_Container_Free(GabyouDispatchView *);
+#ifdef __MWERKS__
 void SpriteSlot_SetTransform(void *, Vec3, Vec3, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SpriteSlot_SetTransform(void *, Vec3 *, Vec3 *, float);
+static inline void SpriteSlot_SetTransform_ByValue(void *a0, Vec3 a1, Vec3 a2, float a3) { SpriteSlot_SetTransform(a0, &a1, &a2, a3); }
+#define SpriteSlot_SetTransform SpriteSlot_SetTransform_ByValue
+#endif
 void SpriteSlot_TickAnim(void *);
 void SpriteSlot_SetAnimFrameAndApplyScale(void *, signed char, float);
 void GabyouItem_Tick_HeldAndHoming_2Eto31(GabyouDispatchView *, GabyouDispatchContext *);
@@ -77,8 +84,22 @@ void Matrix4_PreMultiplyRotY(Matrix4 *, const Matrix4 *, float);
 void Matrix4_Multiply(Matrix4 *, const Matrix4 *, const Matrix4 *);
 void DbgScene_CopyMatrix3x4Transpose(float *, const Matrix4 *);
 void SoundMgr_PlaySE_Positional(int, Vec3, int);
+#ifdef __MWERKS__
 void VfxEffect_UpdateTwoChildSpinAndSound_Helper(GabyouDispatchView *, Vec3, float, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxEffect_UpdateTwoChildSpinAndSound_Helper(GabyouDispatchView *, Vec3 *, float, float);
+static inline void VfxEffect_UpdateTwoChildSpinAndSound_Helper_ByValue(GabyouDispatchView *a0, Vec3 a1, float a2, float a3) { VfxEffect_UpdateTwoChildSpinAndSound_Helper(a0, &a1, a2, a3); }
+#define VfxEffect_UpdateTwoChildSpinAndSound_Helper VfxEffect_UpdateTwoChildSpinAndSound_Helper_ByValue
+#endif
+#ifdef __MWERKS__
 void Effect_TwoChildRotate_FromPhase150(GabyouDispatchView *, Vec3, float, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Effect_TwoChildRotate_FromPhase150(GabyouDispatchView *, Vec3 *, float, float);
+static inline void Effect_TwoChildRotate_FromPhase150_ByValue(GabyouDispatchView *a0, Vec3 a1, float a2, float a3) { Effect_TwoChildRotate_FromPhase150(a0, &a1, a2, a3); }
+#define Effect_TwoChildRotate_FromPhase150 Effect_TwoChildRotate_FromPhase150_ByValue
+#endif
 
 static inline void Finish(GabyouDispatchView *item) {
     item->active = 0;

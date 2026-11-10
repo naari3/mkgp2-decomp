@@ -15,7 +15,14 @@ extern const float lbl_806D5770,lbl_806D5774,lbl_806D5778,lbl_806D577C,lbl_806D5
 void Vec3_Add_DestFirst(DustScatterVec*,const DustScatterVec*,const DustScatterVec*);
 void Vec3_Subtract_DestFirst(DustScatterVec*,const DustScatterVec*,const DustScatterVec*);
 void Vec3_Copy(DustScatterVec*,const DustScatterVec*);
+#ifdef __MWERKS__
 void Mtx44_TransformVec3(DustScatterVec*,const float*,DustScatterVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(DustScatterVec*, const float*, DustScatterVec *);
+static inline void Mtx44_TransformVec3_ByValue(DustScatterVec*a0, const float*a1, DustScatterVec a2) { Mtx44_TransformVec3(a0, a1, &a2); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 void GetSpawnPosition(DustScatterVec*,float,float,float);
 float Rand_RangeFloat(float,float);
 int Rand_RangeIntMax(int);
@@ -26,7 +33,14 @@ void Mtx44_GetTranslation_RowMajor(DustScatterVec*,const float*);
 void DrawEffect_Free(DustScatterEffect*);
 double atan2(double,double);
 float BuildOrientationFromYaw(float);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void*,DustScatterVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void*, DustScatterVec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void*a0, DustScatterVec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetRotationZ(void*,float);
 void VfxSlot_SetScaleUniform(void*,float);
 unsigned char FinalLapCoinJump_CheckActiveForObject(void*);

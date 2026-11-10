@@ -40,7 +40,14 @@ void VfxSlot_SetMatrixSourceEnabled(void *, int);
 void VfxSlot_SetAnimSpeed(void *, float);
 void VfxSlot_SetRotationZ(void *, float);
 void VfxSlot_SetScaleUniform(void *, float);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, Vec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, Vec3 *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, Vec3 a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 float Rand_RangeFloat(float, float);
 int Rand_RangeInt(int, int);
 void GetSpawnPosition(Vec3 *, float, float, float);
@@ -56,7 +63,14 @@ void Matrix4_Identity(float *);
 void Matrix4_PreMultiplyTranslation(float *, const float *, float, float, float);
 void Matrix4_Multiply(float *, const float *, const float *);
 void Mtx44_Inverse_GaussJordan(float *, const float *);
+#ifdef __MWERKS__
 Vec3 Mtx44_TransformVec3(const float *, Vec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec3 *, const float *, Vec3 *);
+static inline Vec3 Mtx44_TransformVec3_ByValue(const float *a0, Vec3 a1) { Vec3 port_ret; Mtx44_TransformVec3(&port_ret, a0, &a1); return port_ret; }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 void Mtx44_Scale_Uniform(float *, const float *, float);
 double atan2(double, double);
 float BuildOrientationFromYaw(float);

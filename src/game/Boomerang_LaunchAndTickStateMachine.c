@@ -30,17 +30,45 @@ extern void Vec3_Copy(void *dst, void *src);
 extern void SoundMgr_PlaySE_Positional(int se, Vec pos, int ch);
 extern void Vec3_Add_DestFirst(void *dst, void *a, void *b);
 extern int Item_CheckWallCollision(unsigned char *self, Vec *n, int flag);
+#ifdef __MWERKS__
 extern void Item_BounceOffWall(unsigned char *self, Vec n, int se, int flag, float k1, float k2);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_BounceOffWall(unsigned char *, Vec *, int, int, float, float);
+static inline void Item_BounceOffWall_ByValue(unsigned char *self, Vec n, int se, int flag, float k1, float k2) { Item_BounceOffWall(self, &n, se, flag, k1, k2); }
+#define Item_BounceOffWall Item_BounceOffWall_ByValue
+#endif
 extern int Item_AdvanceFallingDrop(unsigned char *self, int *out, void *groundY, float f);
+#ifdef __MWERKS__
 extern void DrawEffect_ItemHitBurst_Spawn(Vec pos, Vec vel, int kind);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void DrawEffect_ItemHitBurst_Spawn(Vec *, Vec *, int);
+static inline void DrawEffect_ItemHitBurst_Spawn_ByValue(Vec pos, Vec vel, int kind) { DrawEffect_ItemHitBurst_Spawn(&pos, &vel, kind); }
+#define DrawEffect_ItemHitBurst_Spawn DrawEffect_ItemHitBurst_Spawn_ByValue
+#endif
 extern void GetSpawnPosition(void *out, float x, float y, float z);
 extern void ItemTracker_AcquireLock(unsigned char *self);
 extern void ItemTracker_SetTrackPhase(unsigned char *self, int phase);
 extern void ItemTracker_ReleaseLock(unsigned char *self);
 extern void *ItemTracker_GetTargetKart(unsigned char *self);
 extern void Boomerang_ReturnAndAcquireTargetTick(unsigned char *self, BoomerangWork *w);
+#ifdef __MWERKS__
 extern float Item_ProbeForwardGroundPitch(Vec pos, float yaw, float a, float b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeForwardGroundPitch(Vec *, float, float, float);
+static inline float Item_ProbeForwardGroundPitch_ByValue(Vec pos, float yaw, float a, float b) { return Item_ProbeForwardGroundPitch(&pos, yaw, a, b); }
+#define Item_ProbeForwardGroundPitch Item_ProbeForwardGroundPitch_ByValue
+#endif
+#ifdef __MWERKS__
 extern float Item_ProbeLateralGroundPitch(Vec pos, float yaw, float a, float b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeLateralGroundPitch(Vec *, float, float, float);
+static inline float Item_ProbeLateralGroundPitch_ByValue(Vec pos, float yaw, float a, float b) { return Item_ProbeLateralGroundPitch(&pos, yaw, a, b); }
+#define Item_ProbeLateralGroundPitch Item_ProbeLateralGroundPitch_ByValue
+#endif
 extern float AngleStepTowards_Shortest(float cur, float target, float step);
 extern int ItemCollision_Check(unsigned char *self);
 extern void ItemObject_DispatchVtable18_GetState(void *kart);

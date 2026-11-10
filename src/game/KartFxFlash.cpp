@@ -40,8 +40,22 @@ void Vec3_Subtract_DestFirst(FlashVec3 *, const FlashVec3 *, const FlashVec3 *);
 float Vec3_Magnitude_Wrapper(const FlashVec3 *);
 void Vec3_Scale(FlashVec3 *, const FlashVec3 *, float);
 void Vec3_Add_DestFirst(FlashVec3 *, const FlashVec3 *, const FlashVec3 *);
+#ifdef __MWERKS__
 void Mtx44_TransformVec3(FlashVec3 *, const float *, FlashVec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(FlashVec3 *, const float *, FlashVec3 *);
+static inline void Mtx44_TransformVec3_ByValue(FlashVec3 *a0, const float *a1, FlashVec3 a2) { Mtx44_TransformVec3(a0, a1, &a2); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, FlashVec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, FlashVec3 *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, FlashVec3 a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 unsigned char FinalLapCoinJump_CheckActiveForObject(void *);
 
 void KartFx_FlashOrbitTick(FlashEffect *effect) {

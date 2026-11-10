@@ -43,7 +43,14 @@ void Item_DecayVelocityScalar(GabyouTickView *, float);
 float AngleStepTowards_Shortest(float, float, float);
 void ItemObject_DecrementCategoryBudget(GabyouTickView *);
 void SpriteSlot_Container_Free(GabyouTickView *);
+#ifdef __MWERKS__
 void SpriteSlot_SetTransform(void *, Vec3, Vec3, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SpriteSlot_SetTransform(void *, Vec3 *, Vec3 *, float);
+static inline void SpriteSlot_SetTransform_ByValue(void *a0, Vec3 a1, Vec3 a2, float a3) { SpriteSlot_SetTransform(a0, &a1, &a2, a3); }
+#define SpriteSlot_SetTransform SpriteSlot_SetTransform_ByValue
+#endif
 
 static inline void MarkFinished(GabyouTickView *item) {
     item->active = 0;

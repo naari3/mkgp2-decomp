@@ -133,7 +133,7 @@ extern float Item_ProbeForwardGroundPitch(Vec3 *pos, float yaw, float a, float b
 extern float Item_ProbeLateralGroundPitch(Vec3 *pos, float yaw, float a, float b);
 extern float AngleStepForward_OrSnap(float current, float target, float step);
 /* The definition takes three floats. Declaring `target` as double is what
- * makes MWCC pass the double sums below without rounding them first; on
+ * makes MWCC pass the double pitch values below without rounding them first; on
  * PowerPC both travel in the same register, elsewhere they do not. */
 #ifdef __MWERKS__
 extern float AngleStepTowards_Shortest(float current, double target, float step);
@@ -157,7 +157,14 @@ extern void Matrix4_PreMultiplyRotY(Mtx44 dst, const Mtx44 src, float angle);
 extern void Mtx44_Translate(Mtx44 dst, const Mtx44 src, const Vec3 *offset);
 extern void DbgScene_CopyMatrix3x4Transpose(float *dst, const Mtx44 src);
 extern void Mtx_TransposeToMtx44(Mtx44 dst, const float *src);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(Vec3 *out, const Mtx44 m, Vec3 in);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec3 *, const Mtx44, Vec3 *);
+static inline void Mtx44_TransformVec3_ByValue(Vec3 *out, const Mtx44 m, Vec3 in) { Mtx44_TransformVec3(out, m, &in); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 
 /* Manual exception metadata for Update (compiled with exceptions off).
  * postprocess_extab_user.py renames .extab_user/.extabindex_user sections

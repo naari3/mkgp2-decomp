@@ -150,8 +150,22 @@ extern void Object_BindMatrixSource(void *obj, Mtx m, int flag);
 extern void Object_DriveAnimMatrix(void *obj);
 extern void *ItemObject_SpawnWithAlias(int id, int alias);
 extern void Vec3_Normalize(Vec3 *src, Vec3 *dst);
+#ifdef __MWERKS__
 extern void ItemObject_WritePositionTo(void *obj, Vec3 v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void ItemObject_WritePositionTo(void *, Vec3 *);
+static inline void ItemObject_WritePositionTo_ByValue(void *obj, Vec3 v) { ItemObject_WritePositionTo(obj, &v); }
+#define ItemObject_WritePositionTo ItemObject_WritePositionTo_ByValue
+#endif
+#ifdef __MWERKS__
 extern void ItemObject_WriteVec3At0x190To(void *obj, Vec3 v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void ItemObject_WriteVec3At0x190To(void *, Vec3 *);
+static inline void ItemObject_WriteVec3At0x190To_ByValue(void *obj, Vec3 v) { ItemObject_WriteVec3At0x190To(obj, &v); }
+#define ItemObject_WriteVec3At0x190To ItemObject_WriteVec3At0x190To_ByValue
+#endif
 extern void ItemObject_SetPair180(void *obj, int a, ItemKart *kart);
 extern void ItemObject_SetField168(void *obj, ItemKart *kart);
 extern unsigned char fn_80173BD0(void *p);

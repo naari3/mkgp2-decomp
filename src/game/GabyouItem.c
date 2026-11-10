@@ -9,7 +9,14 @@ extern void Mtx44_GetTranslation_ColMajor(Vec3 *, float [4][4]);
 extern void Mtx44_GetTranslation_RowMajor(Vec3 *, void *);
 extern void Matrix4_Copy(float [4][4], float [4][4]);
 extern void Matrix4_PreMultiplyTranslation(float [4][4], float [4][4], float, float, float);
+#ifdef __MWERKS__
 extern void Mtx44_Translate(float [4][4], float [4][4], Vec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(float a0[4][4], float a1[4][4], Vec3 *);
+static inline void Mtx44_Translate_ByValue(float a0[4][4], float a1[4][4], Vec3 a2) { Mtx44_Translate(a0, a1, &a2); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 extern void Matrix4_Identity(float [4][4]);
 extern void Matrix4_PreMultiplyRotY(float [4][4], float [4][4], float);
 extern void Matrix4_Multiply(float [4][4], float [4][4], float [4][4]);

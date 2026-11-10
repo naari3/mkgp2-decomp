@@ -22,15 +22,43 @@ extern const float lbl_806D555C, lbl_806D55A8, lbl_806D55AC;
 extern const float lbl_806D55BC, lbl_806D55B4, lbl_806D556C;
 void VfxSlot_BindResource(void *, int);
 void VfxSlot_SetMatrixSourceEnabled(void *, int);
+#ifdef __MWERKS__
 signed char ItemObject_GetGroundTypeAt(Drift79Vec, float *, int);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(Drift79Vec *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(Drift79Vec a0, float *a1, int a2) { return ItemObject_GetGroundTypeAt(&a0, a1, a2); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
+#ifdef __MWERKS__
 float Item_ProbeForwardGroundPitch(Drift79Vec, float, float, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeForwardGroundPitch(Drift79Vec *, float, float, float);
+static inline float Item_ProbeForwardGroundPitch_ByValue(Drift79Vec a0, float a1, float a2, float a3) { return Item_ProbeForwardGroundPitch(&a0, a1, a2, a3); }
+#define Item_ProbeForwardGroundPitch Item_ProbeForwardGroundPitch_ByValue
+#endif
+#ifdef __MWERKS__
 float Item_ProbeLateralGroundPitch(Drift79Vec, float, float, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeLateralGroundPitch(Drift79Vec *, float, float, float);
+static inline float Item_ProbeLateralGroundPitch_ByValue(Drift79Vec a0, float a1, float a2, float a3) { return Item_ProbeLateralGroundPitch(&a0, a1, a2, a3); }
+#define Item_ProbeLateralGroundPitch Item_ProbeLateralGroundPitch_ByValue
+#endif
 void DrawEffect_Free(Drift79Effect *);
 void Matrix4_Identity(Drift79Matrix *);
 void Mtx44_Scale_Uniform(Drift79Matrix *, const Drift79Matrix *, float);
 void Matrix4_PreMultiplyRotZ(Drift79Matrix *, const Drift79Matrix *, float);
 void Matrix4_PreMultiplyRotX(Drift79Matrix *, const Drift79Matrix *, float);
+#ifdef __MWERKS__
 void Mtx44_Translate(Drift79Matrix *, const Drift79Matrix *, Drift79Vec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(Drift79Matrix *, const Drift79Matrix *, Drift79Vec *);
+static inline void Mtx44_Translate_ByValue(Drift79Matrix *a0, const Drift79Matrix *a1, Drift79Vec a2) { Mtx44_Translate(a0, a1, &a2); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 void DbgScene_CopyMatrix3x4Transpose(float *, const Drift79Matrix *);
 void Effect_DriftExplosion_Res79_Update(Drift79Effect *effect) {
     Drift79Matrix matrix;

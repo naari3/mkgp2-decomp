@@ -17,7 +17,14 @@ extern void KartFx_DispatchGroupD_RingBurst(unsigned char *self, unsigned char *
 extern void KartFx_DispatchGroupE_StateByte(unsigned char *self, unsigned char *fx, unsigned char *kart, int enabled);
 extern void Mtx44_GetTranslation_RowMajor(void *dst, void *mtx);
 extern void Mtx44_Inverse_GaussJordan(float (*dst)[4], void *src);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(void *dst, float (*mtx)[4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(void *, float (*mtx)[4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(void *dst, float (*mtx)[4], Vec v) { Mtx44_TransformVec3(dst, mtx, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern void Vec3_Copy(void *dst, void *src);
 extern float Vec3_Magnitude_Wrapper(void *v);
 extern void Vec3_Subtract_DestFirst(void *dst, void *a, void *b);

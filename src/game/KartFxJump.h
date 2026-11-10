@@ -25,10 +25,24 @@ extern const float lbl_806D521C, lbl_806D5230, lbl_806D5250;
 extern const float lbl_806D52A0, lbl_806D52A4, lbl_806D52A8, lbl_806D52AC, lbl_806D52B0;
 extern float lbl_805DF3D0[16];
 void VfxSlot_BindResourceEx(void *, int, int);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, Vec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, Vec3 *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, Vec3 a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetScaleUniform(void *, float);
 void VfxSlot_SetRotationZ(void *, float);
+#ifdef __MWERKS__
 Vec3 Mtx44_TransformVec3(const float *, Vec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec3 *, const float *, Vec3 *);
+static inline Vec3 Mtx44_TransformVec3_ByValue(const float *a0, Vec3 a1) { Vec3 port_ret; Mtx44_TransformVec3(&port_ret, a0, &a1); return port_ret; }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 int Rand_RangeIntMax(int);
 float Rand_RangeFloat(float, float);
 void Vec3_Copy(Vec3 *, const Vec3 *);

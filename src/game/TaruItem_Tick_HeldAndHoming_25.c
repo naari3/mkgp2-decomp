@@ -7,7 +7,14 @@
 
 extern float AngleStepTowards_Shortest(float cur, float target, float step);
 extern float BuildOrientationFromYaw(float yaw);
+#ifdef __MWERKS__
 extern void DrawEffect_ItemHitOriented_Spawn(Vec3 pos, Vec3 vel, int mode);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void DrawEffect_ItemHitOriented_Spawn(Vec3 *, Vec3 *, int);
+static inline void DrawEffect_ItemHitOriented_Spawn_ByValue(Vec3 pos, Vec3 vel, int mode) { DrawEffect_ItemHitOriented_Spawn(&pos, &vel, mode); }
+#define DrawEffect_ItemHitOriented_Spawn DrawEffect_ItemHitOriented_Spawn_ByValue
+#endif
 extern float FAbs_FloatAsDouble(float x);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *kart);
 extern void GetSpawnPosition(float x, float y, float z, float *out);
@@ -21,16 +28,37 @@ extern void Item_AccelClampVelocity(void *self, float accel, float maxv);
 extern int Item_AdvanceFallingDrop(void *self, float gravity, int *landed, float *groundY);
 extern void Item_BounceOffWall(float k1, float k2, void *self, Vec3 normal, int se, int flag);
 extern int Item_CheckWallCollision(void *self, float *out, int flag);
+#ifdef __MWERKS__
 extern void Item_ComputeYawRelativeApproach(float *vel, void *target, Vec3 pos, Vec3 curVel);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_ComputeYawRelativeApproach(float *, void *, Vec3 *, Vec3 *);
+static inline void Item_ComputeYawRelativeApproach_ByValue(float *vel, void *target, Vec3 pos, Vec3 curVel) { Item_ComputeYawRelativeApproach(vel, target, &pos, &curVel); }
+#define Item_ComputeYawRelativeApproach Item_ComputeYawRelativeApproach_ByValue
+#endif
 extern void Item_DecayVelocityScalar(void *item, float scalar);
 extern void Item_InitLaunchFromKart(float k1, float k2, void *self, float *vel);
+#ifdef __MWERKS__
 extern float Item_ProbeLateralGroundPitch(Vec3 pos, float yaw, float a, float b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeLateralGroundPitch(Vec3 *, float, float, float);
+static inline float Item_ProbeLateralGroundPitch_ByValue(Vec3 pos, float yaw, float a, float b) { return Item_ProbeLateralGroundPitch(&pos, yaw, a, b); }
+#define Item_ProbeLateralGroundPitch Item_ProbeLateralGroundPitch_ByValue
+#endif
 extern void Item_RenderCharacterScaledFromJoint12(void *self, Vec3 ofs, Vec3 rot, int flag, float scale);
 extern float *KartDriver_GetJointByIdx(void *kart, int idx);
 extern void Mtx44_GetTranslation_RowMajor(float *out, float *mtx);
 extern int SoundMgr_CountActiveSEInstances(int se);
 extern void SoundMgr_PlaySE_Positional(int se, Vec3 pos, int ch);
+#ifdef __MWERKS__
 extern void SoundMgr_PlaySE_WithChannel(int se, Vec3 pos, int ch);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SoundMgr_PlaySE_WithChannel(int, Vec3 *, int);
+static inline void SoundMgr_PlaySE_WithChannel_ByValue(int se, Vec3 pos, int ch) { SoundMgr_PlaySE_WithChannel(se, &pos, ch); }
+#define SoundMgr_PlaySE_WithChannel SoundMgr_PlaySE_WithChannel_ByValue
+#endif
 extern void SoundMgr_StopSE_OrSpecial(int se, int ch);
 extern void Vec2_RotateY(float *dst, float *src, float yaw);
 extern float Vec3_ToYaw(float *v);

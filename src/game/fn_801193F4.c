@@ -20,9 +20,23 @@ extern void ItemTracker_SetTrackPhase(unsigned char *self, int phase);
 extern int Item_AdvanceFallingDrop(unsigned char *self, int *landed, int flag, float k);
 extern void Item_DecayVelocityScalar(unsigned char *self, float k);
 extern void *KartDriver_GetKartRootMtx(void *kart);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(Vec3 *out, Mtx44 m, Vec3 v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec3 *, Mtx44, Vec3 *);
+static inline void Mtx44_TransformVec3_ByValue(Vec3 *out, Mtx44 m, Vec3 v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern void Mtx_TransposeToMtx44(Mtx44 out, void *src);
+#ifdef __MWERKS__
 extern void SpriteSlot_SetTransform(void *slot, Vec3 pos, Vec3 rot, float scale);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SpriteSlot_SetTransform(void *, Vec3 *, Vec3 *, float);
+static inline void SpriteSlot_SetTransform_ByValue(void *slot, Vec3 pos, Vec3 rot, float scale) { SpriteSlot_SetTransform(slot, &pos, &rot, scale); }
+#define SpriteSlot_SetTransform SpriteSlot_SetTransform_ByValue
+#endif
 extern void Vec3_Add_DestFirst(void *out, void *a, void *b);
 extern void Vec3_Copy(void *dst, void *src);
 extern float Vec3_HorizontalYawTo(void *from, void *to);
@@ -35,7 +49,14 @@ extern void fn_801B1D5C(void *kart, void *target, int alias, int flag);
 extern unsigned int CourseInteractMover_Update[];
 extern unsigned int KartAttachedSpin_Update[];
 extern void GabyouItem_BuildLocalTransformFromHandJoint(unsigned char *self, int flag, float a, float b, float c);
+#ifdef __MWERKS__
 extern void Item_BendVelocityByGroundProbe(void *vel, Vec3 pos, float yaw, float a, float b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_BendVelocityByGroundProbe(void *, Vec3 *, float, float, float);
+static inline void Item_BendVelocityByGroundProbe_ByValue(void *vel, Vec3 pos, float yaw, float a, float b) { Item_BendVelocityByGroundProbe(vel, &pos, yaw, a, b); }
+#define Item_BendVelocityByGroundProbe Item_BendVelocityByGroundProbe_ByValue
+#endif
 extern void JointByName_GetLocalMatrix4x3(void *out, void *slot, char *name);
 extern void Mtx44_GetTranslation_RowMajor(void *out, void *m);
 extern float Mtx44_GetYawOfPosZ(Mtx44 m);

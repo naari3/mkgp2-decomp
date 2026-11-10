@@ -2,7 +2,14 @@
 
 extern unsigned char *ItemObject_SpawnWithAlias(int kind, int alias);
 extern void ItemObject_SetByte18c(void *obj, int v);
+#ifdef __MWERKS__
 extern void ItemObject_WriteVec3At0x190To(void *obj, Vec3 v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void ItemObject_WriteVec3At0x190To(void *, Vec3 *);
+static inline void ItemObject_WriteVec3At0x190To_ByValue(void *obj, Vec3 v) { ItemObject_WriteVec3At0x190To(obj, &v); }
+#define ItemObject_WriteVec3At0x190To ItemObject_WriteVec3At0x190To_ByValue
+#endif
 extern void ItemObject_SetField168(void *obj, int v);
 extern void SpriteSlot_Container_Free(void *self);
 

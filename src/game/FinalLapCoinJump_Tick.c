@@ -11,11 +11,25 @@ extern void CoinJumpFx_SpawnSlots(unsigned char *e);
 extern void SoundMgr_StopSE_OrSpecial(int se, int ch);
 extern signed char SoundMgr_CountActiveSEInstances(int se);
 extern void SoundMgr_PlaySE_Positional(int se, Vec pos, int ch);
+#ifdef __MWERKS__
 extern void SoundMgr_PlaySE_WithChannel(int se, Vec pos, int ch);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SoundMgr_PlaySE_WithChannel(int, Vec *, int);
+static inline void SoundMgr_PlaySE_WithChannel_ByValue(int se, Vec pos, int ch) { SoundMgr_PlaySE_WithChannel(se, &pos, ch); }
+#define SoundMgr_PlaySE_WithChannel SoundMgr_PlaySE_WithChannel_ByValue
+#endif
 extern void KartDriver_GetJoint13_WorldPos(Vec *out, void *kart);
 extern float KartFxParam_GetConst1p5(void *kart);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *kart);
+#ifdef __MWERKS__
 extern void CoinJumpFx_UpdateParticleGrid(void *fx, Vec pos, float scale, float alpha);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void CoinJumpFx_UpdateParticleGrid(void *, Vec *, float, float);
+static inline void CoinJumpFx_UpdateParticleGrid_ByValue(void *fx, Vec pos, float scale, float alpha) { CoinJumpFx_UpdateParticleGrid(fx, &pos, scale, alpha); }
+#define CoinJumpFx_UpdateParticleGrid CoinJumpFx_UpdateParticleGrid_ByValue
+#endif
 
 void FinalLapCoinJump_Tick(unsigned char *self)
 {

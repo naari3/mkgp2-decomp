@@ -17,13 +17,41 @@ extern unsigned char *DrawEffect_SpawnDirect(void (*callback)(unsigned char *));
 extern void Effect_SparkSprayCompound_Init(unsigned char *self);
 extern void Effect_BindRes31or34_Init(unsigned char *self);
 extern float BuildOrientationFromYaw(float yaw);
+#ifdef __MWERKS__
 extern void Item_RenderHandheldByCharacter(unsigned char *self, Vec ofs, Vec rot, int c, float d);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_RenderHandheldByCharacter(unsigned char *, Vec *, Vec *, int, float);
+static inline void Item_RenderHandheldByCharacter_ByValue(unsigned char *self, Vec ofs, Vec rot, int c, float d) { Item_RenderHandheldByCharacter(self, &ofs, &rot, c, d); }
+#define Item_RenderHandheldByCharacter Item_RenderHandheldByCharacter_ByValue
+#endif
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *driver);
 extern void Mtx_TransposeToMtx44(float dst[4][4], const void *src);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec in);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec *, float m[4][4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(Vec *out, float m[4][4], Vec in) { Mtx44_TransformVec3(out, m, &in); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern void GetSpawnPosition(Vec *out, float x, float y, float z);
+#ifdef __MWERKS__
 extern void Effect_TwoChildPlace_AndForward_E4(unsigned char *e, Vec pos, float scale, float alpha);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Effect_TwoChildPlace_AndForward_E4(unsigned char *, Vec *, float, float);
+static inline void Effect_TwoChildPlace_AndForward_E4_ByValue(unsigned char *e, Vec pos, float scale, float alpha) { Effect_TwoChildPlace_AndForward_E4(e, &pos, scale, alpha); }
+#define Effect_TwoChildPlace_AndForward_E4 Effect_TwoChildPlace_AndForward_E4_ByValue
+#endif
+#ifdef __MWERKS__
 extern void Effect_ApplyUvScrollAlong_E4(unsigned char *e, Vec pos, float scale, float alpha);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Effect_ApplyUvScrollAlong_E4(unsigned char *, Vec *, float, float);
+static inline void Effect_ApplyUvScrollAlong_E4_ByValue(unsigned char *e, Vec pos, float scale, float alpha) { Effect_ApplyUvScrollAlong_E4(e, &pos, scale, alpha); }
+#define Effect_ApplyUvScrollAlong_E4 Effect_ApplyUvScrollAlong_E4_ByValue
+#endif
 
 #define F(o) (*(float *)(self + (o)))
 #define I(o) (*(int *)(self + (o)))

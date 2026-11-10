@@ -19,7 +19,14 @@ extern const float lbl_806D5BB4; /* 0.1 */
 extern const float lbl_806D5BD4; /* 2.0 */
 extern const float lbl_806D5C10; /* 20 deg */
 extern const float lbl_806D5C14; /* 0.5 */
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec in);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec *, float m[4][4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(Vec *out, float m[4][4], Vec in) { Mtx44_TransformVec3(out, m, &in); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern void Effect_KartOrbitSpark_Update(unsigned char *self);
 
 void ItemObject_Tick_Kind2426_FastDrop(unsigned char *self, FastDropWork *work)

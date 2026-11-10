@@ -8,7 +8,14 @@ extern void fn_80107040(void);
 extern unsigned char *ItemObject_AllocFromPool(void (*fn)(void));
 extern void *KartDriver_GetJointByIdx(void *kart, int idx);
 extern void Mtx44_GetTranslation_RowMajor(void *dst, void *src);
+#ifdef __MWERKS__
 extern void Vec3_Lerp(void *dst, Vec3 a, Vec3 b, float t);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Vec3_Lerp(void *, Vec3 *, Vec3 *, float);
+static inline void Vec3_Lerp_ByValue(void *dst, Vec3 a, Vec3 b, float t) { Vec3_Lerp(dst, &a, &b, t); }
+#define Vec3_Lerp Vec3_Lerp_ByValue
+#endif
 extern void *KartDriver_GetKartRootMtx(void *kart);
 extern float Mtx44_GetYawOfPosZ_Padded(void *m);
 extern void ItemObject_DecrementCategoryBudget(unsigned char *self);

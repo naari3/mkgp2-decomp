@@ -124,7 +124,14 @@ void CourseEnvironment_UpdateAndCullZones_Timed(void *env);
 void CObj_LoadProjMatrix(void *scene, Vec *v);
 void CObj_ApplyScissor(void *scene, Vec *v);
 void ItemObjectManager_Update(void);
+#ifdef __MWERKS__
 void VfxSlotMgr_Update(Vec a, Vec b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlotMgr_Update(Vec *, Vec *);
+static inline void VfxSlotMgr_Update_ByValue(Vec a, Vec b) { VfxSlotMgr_Update(&a, &b); }
+#define VfxSlotMgr_Update VfxSlotMgr_Update_ByValue
+#endif
 void fn_80253BE4(void *hud);
 void fn_8016C554(int flag);
 void fn_801B12A0(void);

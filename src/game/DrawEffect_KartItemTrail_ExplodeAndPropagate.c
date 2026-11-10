@@ -11,7 +11,14 @@ typedef struct TrailWork {
 extern unsigned char lbl_805DF3D0[];
 extern void Mtx_TransposeToMtx44(float dst[4][4], const void *src);
 extern void Mtx44_Inverse_GaussJordan(float dst[4][4], float src[4][4]);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec *, float m[4][4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(Vec *out, float m[4][4], Vec v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern void Matrix4_Identity(float m[4][4]);
 extern void Matrix4_PreMultiplyTranslation(float dst[4][4], float src[4][4], float x, float y, float z);
 extern double atan2(float y, float x);

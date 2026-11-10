@@ -51,8 +51,22 @@ void VfxSlot_SetRotationZ(void *, float);
 void GetSpawnPosition(DustVec3 *, float, float, float);
 void DrawEffect_Free(DustEffect *);
 void Vec3_Add_DestFirst(DustVec3 *, const DustVec3 *, const DustVec3 *);
+#ifdef __MWERKS__
 void Mtx44_TransformVec3(DustVec3 *, const float *, DustVec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(DustVec3 *, const float *, DustVec3 *);
+static inline void Mtx44_TransformVec3_ByValue(DustVec3 *a0, const float *a1, DustVec3 a2) { Mtx44_TransformVec3(a0, a1, &a2); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, DustVec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, DustVec3 *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, DustVec3 a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetScaleVec3(void *, float, float, float);
 void VfxSlot_SetScaleUniform(void *, float);
 

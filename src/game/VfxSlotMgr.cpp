@@ -26,7 +26,14 @@ void VfxSlot_Release(void*);
 void fn_8022B1C8();
 void Vec3_Subtract_DestFirst(Vec*,const Vec*,const Vec*);
 void Vec3_ToYawPitch(const Vec*,float*,float*);
+#ifdef __MWERKS__
 void Mtx44_FromEulerXYZTrans(Matrix*,Vec,EulerAngles);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_FromEulerXYZTrans(Matrix*,Vec*,EulerAngles*);
+static inline void Mtx44_FromEulerXYZTrans_ByValue(Matrix*m,Vec v,EulerAngles e) { Mtx44_FromEulerXYZTrans(m,&v,&e); }
+#define Mtx44_FromEulerXYZTrans Mtx44_FromEulerXYZTrans_ByValue
+#endif
 void Mtx44_Inverse_GaussJordan(Matrix*,const Matrix*);
 void Vec3_Copy(Vec*,const Vec*);
 extern Slot g_drawEffectSlots[512];

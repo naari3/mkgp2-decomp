@@ -6,7 +6,14 @@ extern void Vec3_Copy(Vec3 *, Vec3 *);
 extern void GetSpawnPosition(Vec3 *, float, float, float);
 extern void Vec3_Subtract_DestFirst(Vec3 *, Vec3 *, Vec3 *);
 extern void Vec3_Add_DestFirst(Vec3 *, Vec3 *, Vec3 *);
+#ifdef __MWERKS__
 extern void Vec3_AddNormalizedXZ(Item *, Vec3 *, Vec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Vec3_AddNormalizedXZ(Item *, Vec3 *, Vec3 *);
+static inline void Vec3_AddNormalizedXZ_ByValue(Item *a0, Vec3 *a1, Vec3 a2) { Vec3_AddNormalizedXZ(a0, a1, &a2); }
+#define Vec3_AddNormalizedXZ Vec3_AddNormalizedXZ_ByValue
+#endif
 extern void ItemHit_Dispatch(Item *, int, Vec3 *, void *);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *, int, float);
 extern void SpriteSlot_SetScale(void *, float);

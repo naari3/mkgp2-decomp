@@ -165,7 +165,14 @@ extern void SuikaBallObj_UpdatePhysics(SuikaBallObj *ball, float (*mtx)[4], Vec3
 extern void TransitionEffect_Tick(void *te);
 extern float Vec3_Dot(Vec3 *a, Vec3 *b);
 extern void Vec3_Subtract(Vec3 *a, Vec3 *b, Vec3 *out);
+#ifdef __MWERKS__
 extern void VfxSlotMgr_Update(Vec3 eye, Vec3 at);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlotMgr_Update(Vec3 *, Vec3 *);
+static inline void VfxSlotMgr_Update_ByValue(Vec3 eye, Vec3 at) { VfxSlotMgr_Update(&eye, &at); }
+#define VfxSlotMgr_Update VfxSlotMgr_Update_ByValue
+#endif
 extern double atan2(double y, double x);
 extern void clNormal3D_Exec(void *o);
 extern void fn_8016B32C(void *ws);

@@ -25,7 +25,14 @@ extern void Vec2_RotateY(Vec3 *out, const Vec3 *in, float angle);
 extern void Vec2_RotateX(Vec3 *out, const Vec3 *in, float angle);
 extern void Vec3_Subtract_DestFirst(Vec3 *out, const Vec3 *a, const Vec3 *b);
 extern void Vec3_Add_DestFirst(Vec3 *out, const Vec3 *a, const Vec3 *b);
+#ifdef __MWERKS__
 extern signed char ItemObject_GetGroundTypeAt(Vec3 position, float *height, int mode);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(Vec3 *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(Vec3 position, float *height, int mode) { return ItemObject_GetGroundTypeAt(&position, height, mode); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 extern const float *KartDriver_GetJointByIdx(void *kart, int index);
 extern const float *KartDriver_GetKartRootMtx(void *kart);
 extern void Mtx44_GetTranslation_RowMajor(Vec3 *out, const float *matrix);

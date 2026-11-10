@@ -34,7 +34,14 @@ extern float KartFxParam_GetConst1p5(void *driver);
 extern void Mtx44_GetTranslation_RowMajor(Vec *dst, void *mtx);
 extern int SoundMgr_CountActiveSEInstances(int se);
 extern void SoundMgr_PlaySE_Positional(int se, Vec pos, int ch);
+#ifdef __MWERKS__
 extern void SoundMgr_PlaySE_WithChannel(int se, Vec pos, int ch);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SoundMgr_PlaySE_WithChannel(int, Vec *, int);
+static inline void SoundMgr_PlaySE_WithChannel_ByValue(int se, Vec pos, int ch) { SoundMgr_PlaySE_WithChannel(se, &pos, ch); }
+#define SoundMgr_PlaySE_WithChannel SoundMgr_PlaySE_WithChannel_ByValue
+#endif
 extern void SoundMgr_StopSE_OrSpecial(int se, int ch);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float scale);
 extern void SpriteSlot_SetJointScaleByName(void *slot, const char *name, float x, float y, float z);
@@ -42,7 +49,14 @@ extern void SpriteSlot_SetScale(void *slot, float scale);
 extern void Vec2_RotateY(Vec *out, Vec *in, float yaw);
 extern void Vec3_Add_DestFirst(Vec *dst, Vec *a, Vec *b);
 extern float Vec3_HorizontalYawTo(Vec *from, Vec *to);
+#ifdef __MWERKS__
 extern void Vec3_Lerp(void *dst, Vec a, Vec b, float t);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Vec3_Lerp(void *, Vec *, Vec *, float);
+static inline void Vec3_Lerp_ByValue(void *dst, Vec a, Vec b, float t) { Vec3_Lerp(dst, &a, &b, t); }
+#define Vec3_Lerp Vec3_Lerp_ByValue
+#endif
 extern void fn_8010BF20(unsigned char *self, unsigned char *sub);
 extern void Effect_Res5F_Init(unsigned char *effect);
 extern void Effect_Res7Eor62_Variant_Init(unsigned char *effect);

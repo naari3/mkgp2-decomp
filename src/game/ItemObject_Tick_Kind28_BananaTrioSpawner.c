@@ -29,7 +29,14 @@ extern float KartFxParam_GetConst1p5(void *kart);
 extern float Vec3_HorizontalMagnitude(const Vec *v);
 extern void Vec3_ScaleXZ(Vec *out, const Vec *in, float s);
 extern void Mtx_TransposeToMtx44(float dst[4][4], const void *src);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec *, float m[4][4], Vec *);
+static inline void Mtx44_TransformVec3_ByValue(Vec *out, float m[4][4], Vec v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern float Mtx44_GetYawOfPosZ_Padded(void *mtx);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *kart);
 

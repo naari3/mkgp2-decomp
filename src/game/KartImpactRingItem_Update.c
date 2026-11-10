@@ -12,7 +12,14 @@ extern const float lbl_806D60C4; /* 9.0 */
 extern const float lbl_806D60C8; /* 75.0 */
 extern void DrawEffect_Cb_KartVfx4B_StubInit(unsigned char *e);
 extern void Matrix4_Copy(void *dst, void *src);
+#ifdef __MWERKS__
 extern void Mtx44_TransformVec3(Vec *out, void *m, Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(Vec *, void *, Vec *);
+static inline void Mtx44_TransformVec3_ByValue(Vec *out, void *m, Vec v) { Mtx44_TransformVec3(out, m, &v); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 extern void Mtx44_GetTranslation_ColMajor(Vec *out, void *m);
 extern void DrawEffect_KartImpactRing_SpawnFromVfx(void *e, float m[3][4]);
 extern void Item_PropagateHitToDriversInRadius(unsigned char *self, void *kart);

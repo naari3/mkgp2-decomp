@@ -20,7 +20,14 @@ extern void Effect_ExplosionPiece_Update(unsigned char *e);
 extern unsigned char *DrawEffect_SpawnDirect(void (*callback)(unsigned char *));
 extern void fn_80103144(unsigned char *self, unsigned char *w);
 extern void Item_PrepareHitRebound(unsigned char *self, void *a, void *b, void *c);
+#ifdef __MWERKS__
 extern void Vec3_AddNormalizedXZ(unsigned char *self, void *a, Vec b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Vec3_AddNormalizedXZ(unsigned char *, void *, Vec *);
+static inline void Vec3_AddNormalizedXZ_ByValue(unsigned char *self, void *a, Vec b) { Vec3_AddNormalizedXZ(self, a, &b); }
+#define Vec3_AddNormalizedXZ Vec3_AddNormalizedXZ_ByValue
+#endif
 extern void ItemHit_Dispatch(void *self, int kind, void *pos, void *kart);
 extern void Vec3_Copy(void *dst, void *src);
 extern float Rand_RangeFloat(float lo, float hi);
@@ -36,7 +43,14 @@ extern void Item_DecayVelocityScalar(unsigned char *self, float k);
 extern int Item_AdvanceTetherToJoint13(unsigned char *self, float *tether, float scale, float a, float b);
 extern void Vec3_Subtract_DestFirst(void *dst, void *a, void *b);
 extern int Item_OrbitAnchorKart(unsigned char *self, void *offset, unsigned int timer, float a, float b);
+#ifdef __MWERKS__
 extern char ItemObject_GetGroundTypeAt(Vec pos, float *y, void *n);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern char ItemObject_GetGroundTypeAt(Vec *, float *, void *);
+static inline char ItemObject_GetGroundTypeAt_ByValue(Vec pos, float *y, void *n) { return ItemObject_GetGroundTypeAt(&pos, y, n); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 extern void ItemObject_DecrementCategoryBudget(unsigned char *self);
 extern void SpriteSlot_Container_Free(void *self);
 extern void Matrix4_Identity(float m[4][4]);
@@ -44,15 +58,36 @@ extern void Mtx44_Scale_Uniform(float dst[4][4], float src[4][4], float s);
 extern void Matrix4_PreMultiplyRotZ(float dst[4][4], float src[4][4], float a);
 extern void Matrix4_PreMultiplyRotX(float dst[4][4], float src[4][4], float a);
 extern void Matrix4_PreMultiplyRotY(float dst[4][4], float src[4][4], float a);
+#ifdef __MWERKS__
 extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(float dst[4][4], float src[4][4], Vec *);
+static inline void Mtx44_Translate_ByValue(float dst[4][4], float src[4][4], Vec v) { Mtx44_Translate(dst, src, &v); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 extern void DbgScene_CopyMatrix3x4Transpose(void *dst, float src[4][4]);
 extern void Mtx_TransposeToMtx44(float dst[4][4], const void *src);
 extern void Mtx44_Scale_PerAxis(float dst[4][4], float src[4][4], float x, float y, float z);
 extern void Matrix4_Multiply(float dst[4][4], float a[4][4], float b[4][4]);
 extern void SpriteSlot_TickAnim(void *slot);
 extern void JointByName_GetWorldPosition(Vec *out, void *slot, const char *name);
+#ifdef __MWERKS__
 extern void DrawEffect_KartWheel_TripleChildUpdate(void *child, Vec pos, float scale, float alpha);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void DrawEffect_KartWheel_TripleChildUpdate(void *, Vec *, float, float);
+static inline void DrawEffect_KartWheel_TripleChildUpdate_ByValue(void *child, Vec pos, float scale, float alpha) { DrawEffect_KartWheel_TripleChildUpdate(child, &pos, scale, alpha); }
+#define DrawEffect_KartWheel_TripleChildUpdate DrawEffect_KartWheel_TripleChildUpdate_ByValue
+#endif
+#ifdef __MWERKS__
 extern void DrawEffect_ApplyScaleAndIntensity(void *e, Vec pos, float scale, float alpha);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void DrawEffect_ApplyScaleAndIntensity(void *, Vec *, float, float);
+static inline void DrawEffect_ApplyScaleAndIntensity_ByValue(void *e, Vec pos, float scale, float alpha) { DrawEffect_ApplyScaleAndIntensity(e, &pos, scale, alpha); }
+#define DrawEffect_ApplyScaleAndIntensity DrawEffect_ApplyScaleAndIntensity_ByValue
+#endif
 
 extern unsigned char lbl_80330D10[];
 extern ScaleKey lbl_804218E0[3];

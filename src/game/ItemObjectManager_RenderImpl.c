@@ -2,13 +2,34 @@
 #include "game/types/Vec3.h"
 
 extern void DbgScene_CopyMatrix3x4Transpose(float (*dst)[4], float (*src)[4]);
+#ifdef __MWERKS__
 extern float Item_ProbeForwardGroundPitch(Vec3 pos, float yaw, float a, float b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeForwardGroundPitch(Vec3 *, float, float, float);
+static inline float Item_ProbeForwardGroundPitch_ByValue(Vec3 pos, float yaw, float a, float b) { return Item_ProbeForwardGroundPitch(&pos, yaw, a, b); }
+#define Item_ProbeForwardGroundPitch Item_ProbeForwardGroundPitch_ByValue
+#endif
+#ifdef __MWERKS__
 extern float Item_ProbeLateralGroundPitch(Vec3 pos, float yaw, float a, float b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern float Item_ProbeLateralGroundPitch(Vec3 *, float, float, float);
+static inline float Item_ProbeLateralGroundPitch_ByValue(Vec3 pos, float yaw, float a, float b) { return Item_ProbeLateralGroundPitch(&pos, yaw, a, b); }
+#define Item_ProbeLateralGroundPitch Item_ProbeLateralGroundPitch_ByValue
+#endif
 extern void Matrix4_Identity(float (*m)[4]);
 extern void Matrix4_PreMultiplyRotX(float (*dst)[4], float (*src)[4], float a);
 extern void Matrix4_PreMultiplyRotZ(float (*dst)[4], float (*src)[4], float a);
 extern void Mtx44_Scale_Uniform(float (*dst)[4], float (*src)[4], float s);
+#ifdef __MWERKS__
 extern void Mtx44_Translate(float (*dst)[4], float (*src)[4], Vec3 v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_Translate(float (*dst)[4], float (*src)[4], Vec3 *);
+static inline void Mtx44_Translate_ByValue(float (*dst)[4], float (*src)[4], Vec3 v) { Mtx44_Translate(dst, src, &v); }
+#define Mtx44_Translate Mtx44_Translate_ByValue
+#endif
 extern void Object_BindMatrixSource(void *obj, float (*m)[4], int flag);
 extern void Object_DriveAnimMatrix(void *obj);
 extern void Object_RenderJObjTree(void *obj, int mask);

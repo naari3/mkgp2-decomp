@@ -8,8 +8,22 @@
 #include "game/types/GreenShellWork.h"
 
 extern int g_ccClass;
+#ifdef __MWERKS__
 extern void Item_BendVelocityByGroundProbe(void *vel, Vec pos, float yaw, float speed, float pitch);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_BendVelocityByGroundProbe(void *, Vec *, float, float, float);
+static inline void Item_BendVelocityByGroundProbe_ByValue(void *vel, Vec pos, float yaw, float speed, float pitch) { Item_BendVelocityByGroundProbe(vel, &pos, yaw, speed, pitch); }
+#define Item_BendVelocityByGroundProbe Item_BendVelocityByGroundProbe_ByValue
+#endif
+#ifdef __MWERKS__
 extern void KartDriver_TransformWorldToLocalY0(void *dst, Vec src, void *kart);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void KartDriver_TransformWorldToLocalY0(void *, Vec *, void *);
+static inline void KartDriver_TransformWorldToLocalY0_ByValue(void *dst, Vec src, void *kart) { KartDriver_TransformWorldToLocalY0(dst, &src, kart); }
+#define KartDriver_TransformWorldToLocalY0 KartDriver_TransformWorldToLocalY0_ByValue
+#endif
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int en);
 extern void *ItemObject_AllocGabyou(void);
 extern void Item_RenderFlyingFromKart(unsigned char *self, void *obj, int a, float x, float y, float z);
@@ -22,7 +36,14 @@ extern void ItemTracker_AcquireLock(unsigned char *self);
 extern void ItemTracker_SetTrackPhase(unsigned char *self, int phase);
 extern void ItemTracker_ReleaseLock(unsigned char *self);
 extern void *ItemTracker_GetTargetKart(unsigned char *self);
+#ifdef __MWERKS__
 extern signed char ItemObject_GetGroundTypeAt(Vec pos, float *outGroundY, int mode);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern signed char ItemObject_GetGroundTypeAt(Vec *, float *, int);
+static inline signed char ItemObject_GetGroundTypeAt_ByValue(Vec pos, float *outGroundY, int mode) { return ItemObject_GetGroundTypeAt(&pos, outGroundY, mode); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 extern void Effect_Cluster16_Update(unsigned char *self);
 extern unsigned char *DrawEffect_SpawnDirect(void (*callback)(unsigned char *));
 extern void GetSpawnPosition(void *out, float x, float y, float z);
@@ -37,14 +58,35 @@ extern void fn_801B1D5C(void *a, void *kart, int remapId, int flag);
 extern void fn_801B1660(void *driver, void *target);
 extern void fn_801B158C(void *driver, void *target);
 extern void fn_801B14B8(void *driver, void *target);
+#ifdef __MWERKS__
 extern void Item_ComputeYawRelativeApproach(void *vel, void *target, Vec pos, Vec v);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_ComputeYawRelativeApproach(void *, void *, Vec *, Vec *);
+static inline void Item_ComputeYawRelativeApproach_ByValue(void *vel, void *target, Vec pos, Vec v) { Item_ComputeYawRelativeApproach(vel, target, &pos, &v); }
+#define Item_ComputeYawRelativeApproach Item_ComputeYawRelativeApproach_ByValue
+#endif
 extern void SoundMgr_StopSE_OrSpecial(int se, int ch);
 extern int SoundMgr_CountActiveSEInstances(int se);
 extern void SoundMgr_PlaySE_Positional(int se, Vec pos, int ch);
+#ifdef __MWERKS__
 extern void SoundMgr_PlaySE_WithChannel(int se, Vec pos, int ch);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SoundMgr_PlaySE_WithChannel(int, Vec *, int);
+static inline void SoundMgr_PlaySE_WithChannel_ByValue(int se, Vec pos, int ch) { SoundMgr_PlaySE_WithChannel(se, &pos, ch); }
+#define SoundMgr_PlaySE_WithChannel SoundMgr_PlaySE_WithChannel_ByValue
+#endif
 extern void Vec3_Add_DestFirst(void *dst, void *a, void *b);
 extern int Item_CheckWallCollision(unsigned char *self, Vec *n, int flag);
+#ifdef __MWERKS__
 extern void Item_BounceOffWall(unsigned char *self, Vec n, int se, int flag, float k1, float k2);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Item_BounceOffWall(unsigned char *, Vec *, int, int, float, float);
+static inline void Item_BounceOffWall_ByValue(unsigned char *self, Vec n, int se, int flag, float k1, float k2) { Item_BounceOffWall(self, &n, se, flag, k1, k2); }
+#define Item_BounceOffWall Item_BounceOffWall_ByValue
+#endif
 extern int Item_AdvanceProjectileGravity(unsigned char *self, float *groundY, float a, float b, float c);
 
 #define F(o) (*(float *)(self + (o)))

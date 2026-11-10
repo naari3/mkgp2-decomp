@@ -25,7 +25,14 @@ void *KartDriver_GetJObjRootIfReady(void *);
 void Object_GetJObjPositionVec(void *, Vec3 *);
 float AI_GetYaw(void *);
 int AI_GetItemType(void *);
+#ifdef __MWERKS__
 unsigned char AI_CheckTargetInRange(int, Vec3, Vec3, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern unsigned char AI_CheckTargetInRange(int, Vec3 *, Vec3 *, float);
+static inline unsigned char AI_CheckTargetInRange_ByValue(int a0, Vec3 a1, Vec3 a2, float a3) { return AI_CheckTargetInRange(a0, &a1, &a2, a3); }
+#define AI_CheckTargetInRange AI_CheckTargetInRange_ByValue
+#endif
 unsigned char AI_RollItemUseProbability(int);
 int GetCourseSectionType(int);
 void AI_UseItem(void *, void *);

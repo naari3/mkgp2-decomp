@@ -7,7 +7,14 @@ extern void fn_80105EB4(unsigned char *self, unsigned char *w);
 extern void fn_80105CC4(unsigned char *self, unsigned char *w, int type, float yaw);
 extern void Item_PrepareHitRebound(unsigned char *self, void *a, void *b, void *c);
 extern void ItemHit_Dispatch(void *self, int kind, void *pos, void *kart);
+#ifdef __MWERKS__
 extern void Vec3_AddNormalizedXZ(unsigned char *self, void *a, Vec b);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Vec3_AddNormalizedXZ(unsigned char *, void *, Vec *);
+static inline void Vec3_AddNormalizedXZ_ByValue(unsigned char *self, void *a, Vec b) { Vec3_AddNormalizedXZ(self, a, &b); }
+#define Vec3_AddNormalizedXZ Vec3_AddNormalizedXZ_ByValue
+#endif
 extern void *KartDriver_GetKartRootMtx(void *kart);
 extern void Mtx44_GetTranslation_RowMajor(void *dst, void *mtx);
 extern void Vec3_Add_DestFirst(void *dst, void *a, void *b);
@@ -16,13 +23,27 @@ extern void GetSpawnPosition(void *out, float x, float y, float z);
 extern int Item_AdvanceTetherToJoint13(unsigned char *self, float *tether, float scale, float a, float b);
 extern void Vec3_Subtract_DestFirst(void *dst, void *a, void *b);
 extern int Item_OrbitAnchorKart(unsigned char *self, void *offset, unsigned int timer, float a, float b);
+#ifdef __MWERKS__
 extern char ItemObject_GetGroundTypeAt(Vec pos, float *y, void *n);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern char ItemObject_GetGroundTypeAt(Vec *, float *, void *);
+static inline char ItemObject_GetGroundTypeAt_ByValue(Vec pos, float *y, void *n) { return ItemObject_GetGroundTypeAt(&pos, y, n); }
+#define ItemObject_GetGroundTypeAt ItemObject_GetGroundTypeAt_ByValue
+#endif
 extern int Item_AdvanceFallingDrop(unsigned char *self, int *landed, float *gy, float k);
 extern void ItemObject_DecrementCategoryBudget(unsigned char *self);
 extern void SpriteSlot_Container_Free(void *self);
 extern float BuildOrientationFromYaw(float yaw);
 extern double sin(double);
+#ifdef __MWERKS__
 extern void SpriteSlot_SetPositionFromVec(void *slot, Vec pos);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void SpriteSlot_SetPositionFromVec(void *, Vec *);
+static inline void SpriteSlot_SetPositionFromVec_ByValue(void *slot, Vec pos) { SpriteSlot_SetPositionFromVec(slot, &pos); }
+#define SpriteSlot_SetPositionFromVec SpriteSlot_SetPositionFromVec_ByValue
+#endif
 extern void SpriteSlot_SetRotationQuat(void *slot, float x, float y, float z);
 extern void SpriteSlot_SetScaleUniform(void *slot, float s);
 extern void Mtx_TransposeToMtx44(float dst[4][4], const void *src);

@@ -39,7 +39,14 @@ float Rand_RangeFloat(float, float);
 int Rand_RangeIntMax(int);
 const float *KartDriver_GetKartRootMtx(void *);
 void Mtx_TransposeToMtx44(float *, const float *);
+#ifdef __MWERKS__
 void Mtx44_TransformVec3(LandVec3 *, const float *, LandVec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Mtx44_TransformVec3(LandVec3 *, const float *, LandVec3 *);
+static inline void Mtx44_TransformVec3_ByValue(LandVec3 *a0, const float *a1, LandVec3 a2) { Mtx44_TransformVec3(a0, a1, &a2); }
+#define Mtx44_TransformVec3 Mtx44_TransformVec3_ByValue
+#endif
 void Mtx44_GetTranslation_ColMajor(LandVec3 *, const float *);
 void Mtx44_GetTranslation_RowMajor(LandVec3 *, const float *);
 void Vec3_Subtract_DestFirst(LandVec3 *, const LandVec3 *, const LandVec3 *);
@@ -47,7 +54,14 @@ void Vec3_Add_DestFirst(LandVec3 *, const LandVec3 *, const LandVec3 *);
 void Vec3_Copy(LandVec3 *, const LandVec3 *);
 void Vec2_RotateX(LandVec3 *, const LandVec3 *, float);
 void Vec2_RotateY(LandVec3 *, const LandVec3 *, float);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *, LandVec3);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, LandVec3 *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, LandVec3 a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetRotationZ(void *, float);
 void VfxSlot_SetScaleUniform(void *, float);
 unsigned char FinalLapCoinJump_CheckActiveForObject(void *);

@@ -35,7 +35,14 @@ void Vec3_Subtract_DestFirst(ClusterVec *,const ClusterVec *,const ClusterVec *)
 void Vec3_Add_DestFirst(ClusterVec *,const ClusterVec *,const ClusterVec *);
 float Vec3_Magnitude_Wrapper(const ClusterVec *);
 void Vec3_Scale(ClusterVec *,const ClusterVec *,float);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void *,ClusterVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void *, ClusterVec *);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void *a0, ClusterVec a1) { VfxSlot_SetPositionFromVec(a0, &a1); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 void VfxSlot_SetRotationZ(void *,float);
 void VfxSlot_SetScaleUniform(void *,float);
 float Rand_RangeFloat(float,float);
