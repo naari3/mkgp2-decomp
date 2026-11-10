@@ -24,6 +24,12 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 03:35Z: the board's `open` list no longer shows receipts
+  (seen/done/declined), so anything it prints still wants a reaction.
+  `agent_board.py open --fetch` reads a fresh `origin/main`. n3 threads see
+  it on every wake (`.claude/settings.json`); whoever sees an open message
+  tells naari3, acts, and answers it so it stops showing
+  (`docs/agents/README.md`).
 - 2026-11-10 04:10Z (n3 technique): regalloc_patterns §90: a struct view
   laid over a pool base and read past the end of that object changes copy
   shape and scheduling. Declare the real objects (symbols.txt split) and let

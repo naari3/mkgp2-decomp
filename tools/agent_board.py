@@ -4,6 +4,8 @@ and onmokoworks's Codex/Claude workers (docs/agents/, see its README.md).
 
   python3 tools/agent_board.py post --from n3 --topic "..." [--re ID] [--status S] < body.md
   python3 tools/agent_board.py open --for om      # messages to you with no reply yet
+                                                  # (seen/done/declined receipts are never listed)
+  python3 tools/agent_board.py open --for n3 --fetch   # same, read from a fresh origin/main
   python3 tools/agent_board.py open --quiet       # side from git config mkgp2.agentSide;
                                                   # prints nothing when nothing is open
                                                   # (used by tools/githooks, land.sh, SessionStart)
@@ -23,11 +25,37 @@ HEAD = re.compile(r"^## (\S+) \| (.*)$")
 STATUSES = ("note", "request", "question", "seen", "done", "declined", "answer")
 
 
-def parse(path):
+def read_text(path, ref=None):
+    """File text from the working tree, or from a git ref (`--ref origin/main`)."""
+    if ref:
+        rel = os.path.relpath(path, ROOT).replace(os.sep, "/")
+        r = subprocess.run(["git", "show", f"{ref}:{rel}"], cwd=ROOT, capture_output=True)
+        if r.returncode == 0:
+            return r.stdout.decode("utf-8", "replace")
+    try:
+        return open(path, encoding="utf-8").read()
+    except OSError:
+        return ""
+
+
+def fetch_if_stale(minutes=10):
+    """`git fetch origin main` unless one ran in the last `minutes` (cheap enough for a hook)."""
+    try:
+        gd = subprocess.run(["git", "rev-parse", "--git-dir"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
+        fh = os.path.join(ROOT, gd, "FETCH_HEAD") if not os.path.isabs(gd) else os.path.join(gd, "FETCH_HEAD")
+        import time
+        if os.path.exists(fh) and time.time() - os.path.getmtime(fh) < minutes * 60:
+            return
+        subprocess.run(["git", "fetch", "-q", "origin", "main"], cwd=ROOT, capture_output=True, timeout=20)
+    except (OSError, subprocess.SubprocessError):
+        pass
+
+
+def parse(path, ref=None):
     msgs, cur = [], None
     if not os.path.exists(path):
         return msgs
-    for line in open(path, encoding="utf-8"):
+    for line in read_text(path, ref).splitlines(True):
         m = HEAD.match(line.rstrip("\n"))
         if m:
             cur = {"id": m.group(1), "head": m.group(2), "re": [], "status": "", "body": [], "file": os.path.basename(path)}
@@ -92,8 +120,15 @@ def cmd_open(a):
             sys.exit("say --for n3|om (or: git config mkgp2.agentSide n3|om)")
         return
     other = "om" if a.reader == "n3" else "n3"
-    inbox = parse(os.path.join(BOARD, OUTBOX[other]))
-    replies = parse(os.path.join(BOARD, OUTBOX[a.reader]))
+    ref = a.ref
+    if a.fetch:
+        fetch_if_stale()
+        ref = ref or "origin/main"
+    inbox = parse(os.path.join(BOARD, OUTBOX[other]), ref)
+    replies = parse(os.path.join(BOARD, OUTBOX[a.reader]), ref)
+    if ref:  # replies written here but not pushed yet count too
+        seen_ids = {r["id"] for r in replies}
+        replies += [r for r in parse(os.path.join(BOARD, OUTBOX[a.reader])) if r["id"] not in seen_ids]
     answered = {}
     for r in replies:
         for i in r["re"]:
@@ -104,13 +139,23 @@ def cmd_open(a):
         rs = answered.get(m["id"], [])
         last = rs[-1]["status"] if rs else ""
         closed = last in ("done", "declined", "answer") or (last == "seen" and m["status"] not in ("request", "question"))
+        # A receipt (seen/done/declined) needs no answer: it is never open, so
+        # the list holds only messages that still want a reaction and a new
+        # one is not lost among old acknowledgements.
+        if m["status"] in ("seen", "done", "declined"):
+            closed = True
         if a.all or not closed:
             n += 1
             rows.append(f"  {m['id']} | {m['head']} | {m['status'] or '-'} | your last reply: {last or 'none'}")
     if n:
         print(f"agent board: {n} open message(s) for {a.reader} in docs/agents/{OUTBOX[other]}"
+              f"{' at ' + ref if ref else ''}"
               f" (python3 tools/agent_board.py show <id>; answer with post --from {a.reader} --re <id>)")
         print("\n".join(rows))
+        if a.reader == "n3":
+            print("n3 threads: nobody has answered these yet. Read each one, tell naari3 what arrived "
+                  "(your thread reply, or the coordinator), act if it asks for something, then post "
+                  "--re <id> --status seen|done|answer and push, so it stops showing.")
     elif not a.quiet:
         print("nothing open")
 
@@ -136,10 +181,14 @@ def main():
     q.add_argument("--re", action="append", default=[], help="id being answered (repeatable)")
     q.add_argument("--status", choices=STATUSES)
     q.set_defaults(f=cmd_post)
-    q = sp.add_parser("open", help="messages to you that have no done/declined/answer reply")
+    q = sp.add_parser("open", help="messages to you that still want a reaction (receipts are never open)")
     q.add_argument("--for", dest="reader", choices=OUTBOX, help="default: $MKGP2_AGENT_SIDE or git config mkgp2.agentSide")
     q.add_argument("--all", action="store_true")
     q.add_argument("--quiet", action="store_true", help="print nothing when nothing is open (or no side is set)")
+    q.add_argument("--ref", help="read the board from this git ref instead of the working tree (e.g. origin/main)")
+    q.add_argument("--fetch", action="store_true",
+                   help="git fetch origin main first (at most once per 10 min) and read origin/main; "
+                        "for hooks, so a stale checkout still sees new messages")
     q.set_defaults(f=cmd_open)
     q = sp.add_parser("show", help="print one message and its replies")
     q.add_argument("id")

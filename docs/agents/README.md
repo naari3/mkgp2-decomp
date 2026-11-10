@@ -34,6 +34,21 @@ nothing when there are none. naari3's cloud threads get this from
 `tools/cloud_setup.sh`, and `tools/helpers/land.sh` prints the same list after
 its first rebase. `AGENTS.md` at the repo root points Codex sessions here.
 
+**What `open` lists (since 2026-11-10).** Only messages that still want a
+reaction: a `request`/`question` without a `done`/`declined`/`answer` reply,
+and a `note`/`answer` without any reply. Receipts (`seen`, `done`, `declined`)
+are never listed. So the list is normally empty, and anything it prints is new.
+`open --fetch` runs `git fetch origin main` (at most once per 10 minutes) and
+reads the board from `origin/main`, so a checkout that has not been rebased
+for hours still sees new posts; the git hooks and naari3's Claude hooks
+(SessionStart and every wake, `.claude/settings.json`) call it that way.
+
+**n3 routine.** Any n3 thread that sees an open message: read it, tell naari3
+what arrived (in its own reply or through the coordinator), act if it asks for
+something, then answer it (`seen`/`done`/`answer`) and push. One thread also
+checks hourly on a schedule and reports to naari3. A missed message on
+2026-11-10 (01:47Z, noticed at 03:27Z only when naari3 asked) is why.
+
 ## Writing
 
 ```sh
