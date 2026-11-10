@@ -23,22 +23,7 @@ struct InputPlayer {
     virtual unsigned int Held(int mask);
 };
 
-struct RaceScene {
-    void *vtable;
-    void *lakitu;          /* 0x04 */
-    void *jyugemuFlag;     /* 0x08 */
-    void *jyugemuReverse;  /* 0x0C */
-    void *lapBanner;       /* 0x10 */
-    void *environment;     /* 0x14 */
-    void *pad18;
-    void *scene;           /* 0x1C */
-    void *pad20[3];
-    void *hud;             /* 0x2C */
-    void *pad30;
-    void *ai;              /* 0x34 */
-    void *coll;            /* 0x38 */
-    void *overlay;         /* 0x3C */
-};
+#include "game/types/RaceScene.h"
 
 extern "C" {
 extern unsigned char g_lakituDropOrderIssued;
@@ -305,11 +290,11 @@ extern "C" int RaceScene_FrameUpdate(RaceScene *self)
         }
     }
 
-    fn_80208E30(self->coll);
+    fn_80208E30(self->hud38);
     if (!g_rendererActivated) {
         g_rendererActivated = 1;
     }
-    KartItem_UpdateShadowBillboardAndViewport(g_carObjects[0], self->scene, 0);
+    KartItem_UpdateShadowBillboardAndViewport(g_carObjects[0], self->camera, 0);
     Fog_UpdateFromCourseScene3D();
     PathManager_UpdateAll(g_pathManager);
     if (self->lakitu != 0 && !LakituStart_UpdateCountdown(self->lakitu)) {
@@ -320,8 +305,8 @@ extern "C" int RaceScene_FrameUpdate(RaceScene *self)
     Jyugemu_ReverseFlag_Tick(self->jyugemuReverse);
     LapBannerScene_UpdateAndDriveAnim(self->lapBanner);
     CourseEnvironment_UpdateAndCullZones_Timed(self->environment);
-    CObj_LoadProjMatrix(self->scene, &RaceScene_FrameUpdate_bss_805D2B10);
-    CObj_ApplyScissor(self->scene, &RaceScene_FrameUpdate_bss_805D2B1C);
+    CObj_LoadProjMatrix(self->camera, &RaceScene_FrameUpdate_bss_805D2B10);
+    CObj_ApplyScissor(self->camera, &RaceScene_FrameUpdate_bss_805D2B1C);
     ItemObjectManager_Update();
     VfxSlotMgr_Update(RaceScene_FrameUpdate_bss_805D2B10, RaceScene_FrameUpdate_bss_805D2B1C);
 
@@ -380,7 +365,7 @@ extern "C" int RaceScene_FrameUpdate(RaceScene *self)
                 fn_801D67F4(g_playerData);
             }
             fn_80253D00(self->hud);
-            Object_SetByte10_Return1(self->scene, 1);
+            Object_SetByte10_Return1(self->camera, 1);
             if (g_finalRacePosition == 0) {
                 Jyugemu_Flag_SetKartDriver(self->jyugemuFlag, CarObject_GetRenderObj(g_carObjects[0]));
                 fn_8016C554(1);

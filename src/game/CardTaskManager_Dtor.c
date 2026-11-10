@@ -8,10 +8,7 @@ public:
     virtual ~CardTask();
 };
 
-typedef struct CardTaskEntry {
-    CardTask *task;
-    int kind;
-} CardTaskEntry;
+#include "game/types/CardTaskEntry.h"
 
 #include "game/types/CardTaskManager.h"
 

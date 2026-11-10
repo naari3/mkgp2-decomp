@@ -7,14 +7,7 @@
 
 #include "game/types/SpriteClassEntry.h"
 
-typedef struct SpriteSlot {
-    unsigned char pad0[4];
-    void *model;       /* 0x04 */
-    unsigned char cls; /* 0x08 */
-    signed char anim;  /* 0x09 */
-    signed char state; /* 0x0A */
-    float frame;       /* 0x0C */
-} SpriteSlot;
+#include "game/types/SpriteSlot.h"
 
 extern SpriteClassEntry lbl_8041AC24[];
 
@@ -36,7 +29,7 @@ void SpriteSlot_SetAnimFrameAndApplyScale(SpriteSlot *slot, signed char anim, fl
 {
     float t;
 
-    if (slot->model == 0) {
+    if (slot->object == 0) {
         return;
     }
     slot->anim = anim;
@@ -46,7 +39,7 @@ void SpriteSlot_SetAnimFrameAndApplyScale(SpriteSlot *slot, signed char anim, fl
     }
     slot->state = 0;
     slot->frame = t - lbl_8041AC24[slot->cls].anims[slot->anim].start;
-    clNormal3D_SetScale(slot->model, 0, SpriteSlot_GetFrame(slot), 1.0f, 0.0f,
+    clNormal3D_SetScale(slot->object, 0, SpriteSlot_GetFrame(slot), 1.0f, 0.0f,
                         0.0f);
-    Object_SetField14_IfValid(slot->model, 0.0f);
+    Object_SetField14_IfValid(slot->object, 0.0f);
 }

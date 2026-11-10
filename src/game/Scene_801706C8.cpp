@@ -14,14 +14,7 @@ struct HSD_JObj {
     float scaleZ;
 };
 
-struct GrowEntry {
-    HSD_JObj *jobj;
-    char pad04[0xC];
-    int state;
-    char pad14[0x4];
-    float scale;
-    void *sub;
-};
+#include "game/types/GrowEntry.h"
 
 #include "game/types/GrowSet.h"
 

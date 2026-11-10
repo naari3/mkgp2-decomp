@@ -1,7 +1,4 @@
-typedef struct EffectState {
-    unsigned char padding[0x1c];
-    void *content;
-} EffectState;
+#include "game/types/EffectState.h"
 
 unsigned char EffectState_HasContent(EffectState *self)
 {

@@ -1,14 +1,4 @@
-typedef struct NokoNoko {
-    struct NokoNoko *next;
-    unsigned char pad_0x04[0x8];
-    int state;
-    int speed;
-    unsigned char pad_0x14[0x4];
-    int owner_id;
-    unsigned char pad_0x1c[0x10];
-    float t1;
-    float t2;
-} NokoNoko;
+#include "game/types/NokoNoko.h"
 
 extern unsigned char g_nokonokoEnable;
 extern NokoNoko *g_nokonokoHead;
@@ -28,10 +18,10 @@ void NokoNoko_StopAllAlive(void) {
     for (; p != 0; p = p->next) {
         if (p->state < 4) {
             p->state = 0;
-            p->speed = 0;
-            p->owner_id = -1;
-            p->t1 = fVar1;
-            p->t2 = fVar1;
+            p->model = 0;
+            p->timer = -1;
+            p->speed = fVar1;
+            p->radius = fVar1;
         }
     }
 }

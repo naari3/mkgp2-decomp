@@ -4,30 +4,9 @@
 
 #include "game/types/Vec.h"
 
-typedef struct NokoKind {
-    int state;
-    int model;
-    int timer;
-    float speed;
-    float turn;
-} NokoKind;
+#include "game/types/NokoKind.h"
 
-typedef struct NokoNoko {
-    struct NokoNoko *next;
-    int kindTable;
-    int kindIndex;
-    int state;
-    int model;
-    float frame;
-    int timer;
-    Vec pos;
-    float yaw;
-    float speed;
-    float turn;
-    int model2;
-    float blend;
-    float frame2;
-} NokoNoko;
+#include "game/types/NokoNoko.h"
 
 extern NokoNoko *g_nokonokoHead;
 #include "game/types/Quad.h"
@@ -75,7 +54,7 @@ static inline void NokoNoko_TurnBack(NokoNoko *n) {
     n->model = 1;
     n->timer = 0x78;
     n->speed = lbl_806D9324;
-    n->turn = lbl_806D9334;
+    n->radius = lbl_806D9334;
 }
 
 #pragma exceptions on
@@ -97,7 +76,7 @@ void NokoNoko_Update(NokoNoko *self) {
     y0 = self->pos.y;
     z0 = self->pos.z;
     if (self->state < 4) {
-        self->yaw += self->turn;
+        self->yaw += self->radius;
         if (self->yaw < lbl_806D9324) {
             self->yaw += lbl_806D9328;
         }
@@ -129,7 +108,7 @@ void NokoNoko_Update(NokoNoko *self) {
             self->model = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].model;
             self->timer = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].timer;
             self->speed = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].speed;
-            self->turn = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].turn;
+            self->radius = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].radius;
         }
         if (self->speed > lbl_806D9324) {
             for (n = g_nokonokoHead; n != 0; n = n->next) {

@@ -167,10 +167,7 @@ public:
     int kind;
 };
 
-struct CardTaskEntry {
-    CardTask *task;
-    int desc;
-};
+#include "game/types/CardTaskEntry.h"
 
 #include "game/types/CardTaskManager.h"
 

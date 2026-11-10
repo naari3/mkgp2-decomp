@@ -1,8 +1,4 @@
-typedef struct NokoNoko {
-    struct NokoNoko *next;
-    unsigned char pad_0x04[0x8];
-    int state;
-} NokoNoko;
+#include "game/types/NokoNoko.h"
 
 extern unsigned char g_nokonokoEnable;
 extern NokoNoko *g_nokonokoHead;

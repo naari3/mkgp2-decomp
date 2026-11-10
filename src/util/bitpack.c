@@ -36,12 +36,7 @@
  * variable declared ahead of `bits`/`i` reproduces.
  */
 
-typedef struct BitpackEntry {
-    const char *tag; /* 0x00 */
-    int width;       /* 0x04 bits per slot */
-    int slots;       /* 0x08 slot count */
-    int offset;      /* 0x0C bit offset (filled by bitpack_init) */
-} BitpackEntry;
+#include "game/types/BitpackEntry.h"
 
 #include "game/types/Bitpack.h"
 
@@ -78,7 +73,7 @@ static inline int bitpack_find(Bitpack *self, const char *tag) {
     int i;
 
     for (i = 0; i < self->count; i++) {
-        if (bitpack_tag_equal(tag, self->schema[i].tag) == 1) {
+        if (bitpack_tag_equal(tag, self->schema[i].name) == 1) {
             return i;
         }
     }

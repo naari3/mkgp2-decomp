@@ -28,13 +28,7 @@ extern int g_localPcbRole;
 
 #include "game/ItemEffectBusPrivate.h"
 
-struct KartRender {
-    char pad0[0x1F4];
-    int slot;
-    int chara;
-    char pad1FC[0x304 - 0x1FC];
-    ItemEffectBus *status;
-};
+#include "game/types/KartRender.h"
 
 #include "game/types/PcbSlot.h"
 

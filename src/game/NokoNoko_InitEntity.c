@@ -4,30 +4,9 @@
 
 #include "game/types/Vec.h"
 
-typedef struct NokoKind {
-    int model;
-    int anim;
-    int extra;
-    float speed;
-    float radius;
-} NokoKind;
+#include "game/types/NokoKind.h"
 
-typedef struct NokoNoko {
-    struct NokoNoko *next;
-    int kindTable;
-    int kindIndex;
-    int model;
-    int anim;
-    float frame;
-    int extra;
-    Vec pos;
-    float yaw;
-    float speed;
-    float radius;
-    int model2;
-    float blend;
-    float frame2;
-} NokoNoko;
+#include "game/types/NokoNoko.h"
 
 extern int lbl_806D1684;
 extern const float lbl_806D9324;
@@ -70,9 +49,9 @@ NokoNoko *NokoNoko_InitEntity(NokoNoko *self, Vec *pos) {
         self->kindTable = lbl_806D9350 * r;
     }
     self->kindIndex = 0;
+    self->state = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].state;
     self->model = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].model;
-    self->anim = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].anim;
-    self->extra = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].extra;
+    self->timer = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].timer;
     self->speed = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].speed;
     self->radius = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].radius;
     self->frame = lbl_806D9324;

@@ -2,18 +2,7 @@
  * object for sorted drawing. Flag bits: 1 = no depth bias, 2 = hidden. */
 #include "game/types/Vec.h"
 
-typedef struct SpriteSlot {
-    unsigned char flags;        /* 0x00 */
-    unsigned char pad01[0x3];
-    void *object;               /* 0x04 */
-    unsigned char pad08[0xc];
-    signed char visible;        /* 0x14 */
-    unsigned char pad15[0x3];
-    float alpha;                /* 0x18 */
-    float r, g, b;              /* 0x1C */
-    unsigned char pad28[0x4];
-    float u, v;                 /* 0x2C */
-} SpriteSlot;
+#include "game/types/SpriteSlot.h"
 
 extern void *lbl_806D10AC;
 extern const float lbl_806D5960;
@@ -40,14 +29,14 @@ void SpriteSlot_RegisterDraw(SpriteSlot *self)
     Vec pos;
     void *object;
 
-    if (self->object == 0 || !self->visible || (self->flags & 2)) {
+    if (self->object == 0 || !self->animated || (self->flags & 2)) {
         return;
     }
     if (self->alpha <= lbl_806D5960) {
         return;
     }
     Object_SetColorRGBA(self->object, 0, self->r, self->g, self->b, self->alpha);
-    JObjTree_TranslateAndMul(self->object, 0, self->u, self->v);
+    JObjTree_TranslateAndMul(self->object, 0, self->translate_dx, self->translate_dy);
     object = self->object;
     Object_GetJObjPositionVec(object, &pos);
     if (!(self->flags & 1)) {

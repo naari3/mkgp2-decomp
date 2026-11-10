@@ -1,7 +1,4 @@
-typedef struct JyugemuFlag {
-    unsigned char _pad[8];
-    void *kart_driver;
-} JyugemuFlag;
+#include "game/types/JyugemuFlag.h"
 
 int Jyugemu_Flag_SetKartDriver(JyugemuFlag *self, void *kart_driver)
 {

@@ -15,10 +15,7 @@ public:
     int state; /* 0x04 */
 };
 
-struct CardTaskEntry {
-    CardTask *task;
-    int kind;
-};
+#include "game/types/CardTaskEntry.h"
 
 #include "game/types/CardTaskManager.h"
 

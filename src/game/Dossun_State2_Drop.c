@@ -5,12 +5,7 @@
  * the drift of the falling item. */
 #include "game/types/Vec.h"
 
-typedef struct DossunWork {
-    unsigned char pad0[4];
-    unsigned int timers[4];
-    float groundY;
-    float spinDir;
-} DossunWork;
+#include "game/types/DossunWork.h"
 
 extern signed char ItemObject_GetGroundTypeAt(Vec pos, float *outGroundY, int mode);
 extern float Vec3_ToYaw(const Vec *v);
@@ -58,9 +53,9 @@ void Dossun_State2_Drop(unsigned char *self, DossunWork *w)
         case 0:
             if (*(char *)(self + 0xCB) == 4) {
                 if (1.570796f < FAbs_FloatAsDouble(BuildOrientationFromYaw(Vec3_ToYaw((Vec *)(self + 0xB8)) - F(0xB0)))) {
-                    w->spinDir = -1.0f;
+                    w->tetherScale = -1.0f;
                 } else {
-                    w->spinDir = 1.0f;
+                    w->tetherScale = 1.0f;
                 }
             }
             switch (S8(0xCB)) {
@@ -110,7 +105,7 @@ void Dossun_State2_Drop(unsigned char *self, DossunWork *w)
     }
     switch (S8(0xCB)) {
     case 4:
-        F(0xAC) = BuildOrientationFromYaw(0.034906577f * w->spinDir + F(0xAC));
+        F(0xAC) = BuildOrientationFromYaw(0.034906577f * w->tetherScale + F(0xAC));
         break;
     case 9:
         F(0xAC) = AngleStepTowards_Shortest(F(0xAC), 0.0f, 0.017453289f);

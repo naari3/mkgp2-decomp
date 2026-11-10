@@ -7,10 +7,7 @@ struct Fader {
     short time;
 };
 
-struct PcbMode {
-    char pad0[8];
-    int light;
-};
+#include "game/types/PcbMode.h"
 
 struct CardInfo {
     int unk0;

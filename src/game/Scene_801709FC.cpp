@@ -3,16 +3,7 @@
  * (vtable GrowSet_vtable_8049128C, base vtable lbl_80490FE0).
  */
 
-struct GrowEntry {
-    void *jobj;
-    void *faces;
-    int faceCount;
-    void *anim;
-    int state;
-    float t;
-    float scale;
-    void *sub;
-};
+#include "game/types/GrowEntry.h"
 
 #include "game/types/GrowSet.h"
 
@@ -42,9 +33,9 @@ GrowSet *fn_801709FC(GrowSet *self, short flag) {
                     self->entries[i].faces = 0;
                     self->entries[i].faceCount = 0;
                 }
-                if (self->entries[i].anim) {
-                    fn_80123B48(self->entries[i].anim, 1);
-                    self->entries[i].anim = 0;
+                if (self->entries[i].trigger) {
+                    fn_80123B48(self->entries[i].trigger, 1);
+                    self->entries[i].trigger = 0;
                 }
                 if (self->entries[i].sub) {
                     fn_8016F9A0(self->entries[i].sub, 1);

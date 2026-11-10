@@ -19,7 +19,7 @@ AnimState *AnimState_New(AnimState *self)
         self->scale[i].x = 1.0f;
         self->scale[i].y = 1.0f;
         self->scale[i].z = 1.0f;
-        self->alpha[i] = 1.0f;
+        self->d[i] = 1.0f;
     }
     self->weight = 1.0f;
     AnimState_Init(self, 0.0f);

@@ -20,34 +20,7 @@ struct JDTimer {
 #include "game/types/JDLanding.h"
 #include "game/types/JDCoins.h"
 
-struct JDMode {
-    void *vptr;
-    int x4;
-    void *car;
-    void *lakitu;
-    void *environment;
-    void *camera;
-    void *goalCamera;
-    void *x1C;
-    char pad20[8];
-    void *hud;
-    JDTimer *timer;
-    char pad30[0xC];
-    JDLanding *landing;
-    JDCamera *introCamera;
-    unsigned char active;
-    unsigned char reached;
-    char pad46[2];
-    int endDelay;
-    int resultFrames;
-    int state;
-    char pad54[4];
-    float distance;
-    char pad5C[0x20];
-    JDCoins *coins;
-    char pad80[4];
-    int coinCount;
-};
+#include "game/types/JDMode.h"
 
 extern "C" {
 extern unsigned char g_raceEnded, g_lakituStartAnimDone;
@@ -250,7 +223,7 @@ extern "C" int JumpDistanceMode_Update(JDMode *self) {
     fn_80253EBC(self->hud, lbl_806DADA4 * CarObject_CalcSpeedRatio(self->car));
     fn_80253EC0(self->hud, KartItem_GetCurrentSpeedWithBonus(self->car));
     HUD_FrameUpdate(self->hud);
-    UpdateTimer(self->timer);
+    UpdateTimer(self->display);
     RumbleUpdate();
     TransitionEffect_Tick(getTransition());
     if (g_raceEnded == 1) {
@@ -278,7 +251,7 @@ extern "C" int JumpDistanceMode_Update(JDMode *self) {
                 }
                 NokoNokoChallenge_SaveResult(self, self->coinCount, self->reached);
                 {
-                    JDTimer *t = self->timer;
+                    JDTimer *t = self->display;
                     t->slide = lbl_806DAD7C;
                     t->exiting = 1;
                 }

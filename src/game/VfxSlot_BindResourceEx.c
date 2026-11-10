@@ -1,23 +1,6 @@
 /* Bind a VFX slot to a model resource like VfxSlot_BindResource; an unlit
  * slot (lit == 0) also gets render flag 0x800. */
-typedef struct VfxSlot {
-    unsigned char active;       /* 0x00 */
-    unsigned char kind;         /* 0x01 */
-    unsigned char pad02[0x2];
-    void *slot;                 /* 0x04 */
-    unsigned char resource;     /* 0x08 */
-    unsigned char pad09;
-    unsigned char animDone;     /* 0x0A */
-    unsigned char pad0b;
-    float animFrame;            /* 0x0C */
-    float scale;                /* 0x10 */
-    unsigned char visible;      /* 0x14 */
-    unsigned char pad15[0x3];
-    float alpha;                /* 0x18 */
-    float pos[3];               /* 0x1C */
-    unsigned char pad28[0x3c];
-    void (*draw)(struct VfxSlot *self); /* 0x64 */
-} VfxSlot;
+#include "game/types/VfxSlot.h"
 
 extern void *lbl_806D14A8;
 extern const float lbl_806D4FF8;

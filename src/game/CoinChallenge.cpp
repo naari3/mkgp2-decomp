@@ -48,10 +48,7 @@ struct InputPlayer {
     virtual float accelerator();
     virtual float brake();
 };
-struct KartRender {
-    unsigned char pad[0x238]; int visible;
-    unsigned char middle[0x90]; int coins; unsigned char active;
-};
+#include "game/types/KartRender.h"
 #include "game/types/VObj.h"
 struct Scene3D {
     virtual ~Scene3D();
@@ -274,7 +271,7 @@ clCGameYI::clCGameYI() {
     float x,z; GetStartPosition(0,&x,0,&z);
     car=(CarObject*)new CICar(&x,&z); car->fd=0; car->fe=0;
     {KartRender*r=CarObject_GetRenderObj(car); r->visible=1;}
-    {KartRender*r=CarObject_GetRenderObj(car); r->active=1;}
+    {KartRender*r=CarObject_GetRenderObj(car); r->special=1;}
     SetPlayerCarObject(car);
     lakitu=new LakituStart("jyugemu_start.dat",0,0.0f,0.0f,0.0f);
     scene=(Scene3D*)new CIScene; goalCam=new ChallengeGoalCamera; ProcessSystemTick(0);

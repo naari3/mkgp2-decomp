@@ -2,10 +2,77 @@
   "ItemEffectBus": {
     "why": "KartDriver+0x304. The u64 at 0x10 that the KartStatus views test is ItemEffectBus.mask (ItemEffectBus_* functions set it); KartStatus was a second name for the same object.",
     "header": "include/game/ItemEffectBusPrivate.h",
-    "aliases": ["KartStatus"]
+    "aliases": [
+      "KartStatus"
+    ]
   },
   "KartDriver": {
     "why": "names at 0x0-0x20 from KartDriver_Render (LOD selection, driver/accessory trees) and KartDriver_Dtor; 0xE8 is the four wheel joints (KartDriver_SetUniformScale_4Wheels).",
-    "names": {"0x0": "model", "0x4": "lodMid", "0x8": "lodFar", "0xC": "driver", "0x18": "obj18", "0x1C": "accessory", "0x20": "extra", "0x2D0": "forceDraw", "0x304": "itemBus", "0x30C": "tireFX"}
+    "names": {
+      "0x0": "model",
+      "0x4": "lodMid",
+      "0x8": "lodFar",
+      "0xC": "driver",
+      "0x18": "obj18",
+      "0x1C": "accessory",
+      "0x20": "extra",
+      "0x2D0": "forceDraw",
+      "0x304": "itemBus",
+      "0x30C": "tireFX"
+    }
+  },
+  "NokoNoko": {
+    "why": "NokoNoko_InitEntity.c labelled 0x0C/0x10/0x18 one slot off (model/anim/extra); every other user reads 0x0C as the state and 0x10 as the model handle, and Update counts 0x18 down as a timer.",
+    "names": {
+      "0xC": "state",
+      "0x10": "model",
+      "0x18": "timer",
+      "0x2C": "speed"
+    }
+  },
+  "NokoKind": {
+    "why": "InitEntity copies kind[0], [4], [8] into NokoNoko 0x0C/0x10/0x18 (state, model, timer); names follow NokoNoko.",
+    "names": {
+      "0x0": "state",
+      "0x4": "model",
+      "0x8": "timer"
+    }
+  },
+  "SpriteHandle": {
+    "why": "0x78-0x84 are the four GXSetBlendMode arguments (SpriteHandlePool passes them in order); 0xD8-0xE0 is the draw callback and its argument.",
+    "names": {
+      "0x78": "blendType",
+      "0x7C": "blendSrc",
+      "0x80": "blendDst",
+      "0x84": "blendOp",
+      "0xA8": "texUV",
+      "0xD8": "hasCallback",
+      "0xD9": "callbackOn",
+      "0xDC": "callback",
+      "0xE0": "callbackArg"
+    }
+  },
+  "KartAudioChannel": {
+    "why": "KartAudioChannel.c only had placeholders; names from SoundVolumePan_Update (volume/pitch chase their targets) and the Play*SE users.",
+    "names": {
+      "0x4": "muted",
+      "0x5": "enabled",
+      "0xC": "source",
+      "0x10": "targetVol",
+      "0x14": "vol",
+      "0x18": "playing",
+      "0x1C": "targetPitch",
+      "0x20": "pitch",
+      "0x24": "mode",
+      "0x28": "pendingStopSE",
+      "0x2C": "stopTimer",
+      "0x34": "surfaceSE"
+    }
+  },
+  "RaceScene": {
+    "why": "The 0x580-byte struct in Scene_8014E0C4.cpp is another scene class (script-driven, 21 objects, 48 sprites), not the race mode object.",
+    "exclude": [
+      "src/game/Scene_8014E0C4.cpp"
+    ]
   }
 }

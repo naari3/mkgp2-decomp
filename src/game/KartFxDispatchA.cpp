@@ -2,12 +2,7 @@
  * can mutate kart state, so later dispatches deliberately reload their flags.
  */
 #include "game/types/DispatchKart.h"
-struct DispatchEffect {
-    unsigned char pad00[0x10];
-    unsigned int side;
-    unsigned char pad14[0x108];
-    DispatchKart *kart;
-};
+#include "game/types/DispatchEffect.h"
 struct DispatchMotion {
     unsigned char pad00[0x10];
     unsigned long long flags;
@@ -69,7 +64,7 @@ extern "C" void KartFx_DispatchGroupA(void *, DispatchPayload *payload,
         DispatchEffect *effect = DrawEffect_SpawnDirect(KartFx_FlashOrbitTick);
         if (effect) {
             effect->kart = payload->kart;
-            effect->side = payload->flashIndex;
+            effect->index = payload->flashIndex;
             payload->flashIndex = (payload->flashIndex + 1) % 4;
         }
         payload->flashDelay = 10;
@@ -95,7 +90,7 @@ extern "C" void KartFx_DispatchGroupA(void *, DispatchPayload *payload,
                 DispatchEffect *effect = DrawEffect_SpawnDirect(KartFx_Slot57_BoostFlameTick);
                 if (effect) {
                     effect->kart = payload->kart;
-                    effect->side = i;
+                    effect->index = i;
                 }
             }
         }
@@ -150,7 +145,7 @@ extern "C" void KartFx_DispatchGroupA(void *, DispatchPayload *payload,
         for (int i = 0; i < 2; ++i) {
             DispatchEffect *effect = DrawEffect_SpawnDirect(DrawEffect_Cb_WheelSpark_Bind4D);
             if (effect) {
-                effect->side = (unsigned char)i;
+                effect->index = (unsigned char)i;
                 effect->kart = payload->kart;
             }
             payload->wheelDelay = 3;
@@ -178,9 +173,9 @@ extern "C" void KartFx_DispatchGroupA(void *, DispatchPayload *payload,
         DispatchEffect *effect = DrawEffect_SpawnDirect(DrawEffect_Cb_BurstSpawner_30Frame);
         if (effect) {
             effect->kart = payload->kart;
-            if (Flag(motion, 0x800ULL)) effect->side = 0;
-            else if ((motion->flags & 0x200000000ULL) != 0) effect->side = 1;
-            else effect->side = 2;
+            if (Flag(motion, 0x800ULL)) effect->index = 0;
+            else if ((motion->flags & 0x200000000ULL) != 0) effect->index = 1;
+            else effect->index = 2;
         }
     }
 }

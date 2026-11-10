@@ -315,7 +315,15 @@ def header(sc, name, fields, size, copies):
             decl = S._fmt_decl(re.sub(r"\( \* \w+ \)", "( * %s )" % f.name, raw, count=1))
         else:
             decl = "*" * ptr + f.name + "".join(f"[{S._fmt_decl(x)}]" for x in dims)
-        body.append(f"    /* 0x{f.off:03X} */ {t} {decl};")
+        also = sorted(k for k in getattr(f, "nvotes", {}) if k != f.name)
+        if not also and f.name in (getattr(f, "also_seen", None) or ()):
+            also = []
+        note = ""
+        if also or getattr(f, "also_seen", None):
+            names_ = sorted(set(also) | set(getattr(f, "also_seen", ()) or ()) - {f.name})
+            if names_:
+                note = "  /* also: " + ", ".join(names_) + " */"
+        body.append(f"    /* 0x{f.off:03X} */ {t} {decl};{note}")
         pos = f.off + f.size
     pad(size)
     lines = [f"#ifndef {guard}", f"#define {guard}", ""]
@@ -380,6 +388,14 @@ def plan(sc, name, aliases=()):
         chk = offs
     else:
         fields, conflicts, size = merge(sc, name, copies, hint)
+        old = os.path.join(ROOT, S.TYPES_DIR, name + ".h")
+        if os.path.exists(old):
+            # alternative names an earlier merge recorded stay recorded
+            with open(old, encoding="latin-1") as fh:
+                seen = {int(a, 16): b.split(", ") for a, b in
+                        re.findall(r"/\* 0x([0-9A-F]+) \*/[^\n]*/\* also: (.*?) \*/", fh.read())}
+            for f in fields:
+                f.also_seen = seen.get(f.off)
         text = header(sc, name, fields, size, copies)
         # self check: the header must lay out exactly as planned
         defs, _ = S.scan_file(f"{S.TYPES_DIR}/{name}.h", text)

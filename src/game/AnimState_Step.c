@@ -14,20 +14,7 @@ typedef struct AnimEntry {
     void *data;
 } AnimEntry;
 
-typedef struct AnimState {
-    AnimEntry *entries;     /* 0x00 */
-    int value4;             /* 0x04 */
-    float time[8];          /* 0x08 */
-    float speed;            /* 0x28 */
-    signed char keyCount[8];  /* 0x2C */
-    signed char lastKey[8];   /* 0x34 */
-    signed char state[8];     /* 0x3C */
-    int value44;            /* 0x44 */
-    Vec a[4];               /* 0x48 */
-    Vec b[4];               /* 0x78 */
-    Vec c[4];               /* 0xA8 */
-    float d[8];             /* 0xD8 */
-} AnimState;
+#include "game/types/AnimState.h"
 
 extern float BuildOrientationFromYaw(float yaw);
 
@@ -53,31 +40,31 @@ static inline void AnimState_Apply(AnimState *s, AnimEntry *e, char type,
     }
     switch ((signed char)type) {
     case 2:
-        s->a[a[0]++].x = v;
+        s->pos[a[0]++].x = v;
         break;
     case 3:
-        s->a[a[1]++].y = v;
+        s->pos[a[1]++].y = v;
         break;
     case 4:
-        s->a[a[2]++].z = v;
+        s->pos[a[2]++].z = v;
         break;
     case 5:
-        s->b[b[0]++].x = BuildOrientationFromYaw(v);
+        s->rot[b[0]++].x = BuildOrientationFromYaw(v);
         break;
     case 6:
-        s->b[b[1]++].y = BuildOrientationFromYaw(v);
+        s->rot[b[1]++].y = BuildOrientationFromYaw(v);
         break;
     case 7:
-        s->b[b[2]++].z = BuildOrientationFromYaw(v);
+        s->rot[b[2]++].z = BuildOrientationFromYaw(v);
         break;
     case 8:
-        s->c[c[0]++].x = v;
+        s->scale[c[0]++].x = v;
         break;
     case 9:
-        s->c[c[1]++].y = v;
+        s->scale[c[1]++].y = v;
         break;
     case 10:
-        s->c[c[2]++].z = v;
+        s->scale[c[2]++].z = v;
         break;
     case 11:
         s->d[(*j)++] = v;
@@ -113,7 +100,7 @@ int AnimState_Step(AnimState *s)
     res = -1;
     while (e->type != 13) {
         if ((signed char)e->type == 0) {
-            switch (s->state[i]) {
+            switch (s->timerOn[i]) {
             case 0:
                 t = 0.0f;
                 key = 0;
@@ -123,35 +110,35 @@ int AnimState_Step(AnimState *s)
                 key = s->keyCount[i] - 1;
                 break;
             case 1:
-                s->time[i] += s->speed;
+                s->timer[i] += s->weight;
                 n = s->keyCount[i];
                 for (m = 0; m < n; m++) {
-                    if ((float)((int *)e->data)[m] <= s->time[i]) {
+                    if ((float)((int *)e->data)[m] <= s->timer[i]) {
                         key = m;
                     }
                 }
                 if (n - 1 <= key) {
                     t = 0.0f;
                     if (s->lastKey[i] == -2) {
-                        s->state[i] = 3;
+                        s->timerOn[i] = 3;
                     } else {
-                        s->state[i] = 2;
+                        s->timerOn[i] = 2;
                     }
                 } else {
                     int first;
                     data = (int *)e->data;
                     first = data[key];
-                    t = (s->time[i] - (float)first) * (1.0f / (float)(data[key + 1] - first));
+                    t = (s->timer[i] - (float)first) * (1.0f / (float)(data[key + 1] - first));
                 }
                 break;
             case 3:
-                s->state[i] = 1;
+                s->timerOn[i] = 1;
                 key = 0;
-                t = s->time[i] = 0.0f;
+                t = s->timer[i] = 0.0f;
                 break;
             }
             if (res == -1) {
-                if (*(char *)&s->state[i] == 1) {
+                if (*(char *)&s->timerOn[i] == 1) {
                     res = 0;
                 } else {
                     res = 1;
@@ -194,7 +181,7 @@ int AnimState_Step(AnimState *s)
             }
         } else if ((signed char)e->type != 12) {
             if ((signed char)e->type == 1) {
-                s->value44 = ((int *)e->data)[key];
+                s->current = ((int *)e->data)[key];
             } else {
                 AnimState_Apply(s, e, e->type, key, t, a, b, c, &j);
             }
@@ -226,38 +213,38 @@ static inline void AnimState_InitEntries(AnimState *s, AnimEntry *entries,
                  s->keyCount[*n]++) {
             }
             s->lastKey[*n] = ((int *)e->data)[s->keyCount[*n]];
-            s->state[*n] = 1;
+            s->timerOn[*n] = 1;
             (*n)++;
             break;
         case 1:
-            s->value44 = *(int *)e->data;
+            s->current = *(int *)e->data;
             break;
         case 2:
-            s->a[a.v[0]++].x = *(float *)e->data;
+            s->pos[a.v[0]++].x = *(float *)e->data;
             break;
         case 3:
-            s->a[a.v[1]++].y = *(float *)e->data;
+            s->pos[a.v[1]++].y = *(float *)e->data;
             break;
         case 4:
-            s->a[a.v[2]++].z = *(float *)e->data;
+            s->pos[a.v[2]++].z = *(float *)e->data;
             break;
         case 5:
-            s->b[b.v[0]++].x = *(float *)e->data;
+            s->rot[b.v[0]++].x = *(float *)e->data;
             break;
         case 6:
-            s->b[b.v[1]++].y = *(float *)e->data;
+            s->rot[b.v[1]++].y = *(float *)e->data;
             break;
         case 7:
-            s->b[b.v[2]++].z = *(float *)e->data;
+            s->rot[b.v[2]++].z = *(float *)e->data;
             break;
         case 8:
-            s->c[c.v[0]++].x = *(float *)e->data;
+            s->scale[c.v[0]++].x = *(float *)e->data;
             break;
         case 9:
-            s->c[c.v[1]++].y = *(float *)e->data;
+            s->scale[c.v[1]++].y = *(float *)e->data;
             break;
         case 10:
-            s->c[c.v[2]++].z = *(float *)e->data;
+            s->scale[c.v[2]++].z = *(float *)e->data;
             break;
         case 11:
             s->d[(*j)++] = *(float *)e->data;
@@ -278,10 +265,10 @@ void AnimState_Init(AnimState *s, AnimEntry *entries)
     s->entries = entries;
     s->value4 = 0;
     for (i = 0; i < 8; i++) {
-        s->time[i] = 0.0f;
+        s->timer[i] = 0.0f;
         s->keyCount[i] = 0;
         s->lastKey[i] = 0;
-        s->state[i] = 0;
+        s->timerOn[i] = 0;
     }
     if (entries != 0) {
         signed char n = 0;

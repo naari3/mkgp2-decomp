@@ -4,18 +4,7 @@
 
 #include "game/types/AnimVec3.h"
 
-typedef struct AnimState {
-    unsigned char pad00[0x08];
-    float timer[8];
-    float weight;
-    unsigned char pad2c[0x3C - 0x2C];
-    signed char timerOn[8];
-    int current;
-    AnimVec3 pos[4];
-    AnimVec3 rot[4];
-    AnimVec3 scale[4];
-    float alpha[4];
-} AnimState;
+#include "game/types/AnimState.h"
 
 void fn_800AE71C(void)
 {
@@ -27,7 +16,7 @@ void fn_800AE720(void)
 
 float AnimState_GetTotalWeight(AnimState *self)
 {
-    return self->alpha[3] * (self->alpha[2] * (self->alpha[0] * self->alpha[1]));
+    return self->d[3] * (self->d[2] * (self->d[0] * self->d[1]));
 }
 
 float AnimState_GetTotalScaleZ(AnimState *self)

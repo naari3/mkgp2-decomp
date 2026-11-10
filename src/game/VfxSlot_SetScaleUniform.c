@@ -5,7 +5,7 @@ extern void cLNormal3DWrap_Slot_SetScaleVec3(void *model, float x, float y, floa
 
 void VfxSlot_SetScaleUniform(VfxSlot *self, float scale)
 {
-    void *model = self->model;
+    void *model = self->slot;
 
     if (model != 0) {
         cLNormal3DWrap_Slot_SetScaleVec3(model, scale, scale, scale);

@@ -137,58 +137,7 @@ struct ResCtrl {
 };
 
 
-struct SpriteHandle {
-    signed char active;
-    char pad1[3];
-    int type;
-    int next;
-    unsigned char keep;
-    unsigned char released;
-    char padE[2];
-    int resId;
-    void *texObj;
-    void *tlut;
-    unsigned char texFmt;
-    char pad1D[3];
-    int baseResId;
-    signed char tevMode;
-    char pad25;
-    unsigned char posMode;
-    char pad27;
-    float sizeX;
-    float sizeY;
-    char pad30[4];
-    float rot;
-    float texW;
-    float texH;
-    float posX;
-    float posY;
-    unsigned char clipFlags;
-    unsigned char hasUV;
-    char pad4A[2];
-    float uv[6];
-    unsigned int color[4];
-    unsigned char flip;
-    char pad75[3];
-    int uvMode;
-    int uvA;
-    int uvB;
-    int uvC;
-    float corner[4][2];
-    float texUV[2][2];
-    unsigned char hasTex2;
-    char padB9[3];
-    int resId2;
-    void *texObj2;
-    void *tlut2;
-    float uv2[4];
-    unsigned char activeFlag;
-    unsigned char visible;
-    signed char dirty;
-    char padDB;
-    int fDC;
-    int fE0;
-};
+#include "game/types/SpriteHandle.h"
 
 
 extern "C" {
@@ -561,7 +510,7 @@ extern "C" void SpriteHandle_Destroy(int h) {
     if (h != 0) {
         SpriteHandle *s = GetHandle(h);
         s->keep = 0;
-        s->activeFlag = 0;
+        s->hasCallback = 0;
     }
 }
 
@@ -593,18 +542,18 @@ extern "C" void SpriteHandle_RecomputeCull(int h) {
                     maxY = y;
                 }
             }
-            s->visible = 1;
+            s->callbackOn = 1;
             if (g_glyphClipMaxX < minX) {
-                s->visible = 0;
+                s->callbackOn = 0;
             }
             if (maxX < g_glyphClipMinXY) {
-                s->visible = 0;
+                s->callbackOn = 0;
             }
             if (g_glyphClipMaxY < minY) {
-                s->visible = 0;
+                s->callbackOn = 0;
             }
             if (maxY < g_glyphClipMinXY) {
-                s->visible = 0;
+                s->callbackOn = 0;
             }
             s->dirty = 0;
         }
@@ -613,7 +562,7 @@ extern "C" void SpriteHandle_RecomputeCull(int h) {
 
 extern "C" void SpriteHandle_SetActiveFlag(int h, unsigned char on) {
     if (h != 0) {
-        GetHandle(h)->activeFlag = on;
+        GetHandle(h)->hasCallback = on;
     }
 }
 
@@ -952,8 +901,8 @@ extern "C" int SpriteHandle_CreateEx(ResCtrl *a, int b, unsigned char c) {
     h->type = b;
     h->next = -1;
     h->keep = c;
-    h->fDC = 0;
-    h->fE0 = 0;
+    h->callback = 0;
+    h->callbackArg = 0;
     h->baseResId = baseId;
     h->resId = resId;
     int slot = ResourceTable_GetSlotIndex(baseId);
@@ -966,11 +915,11 @@ extern "C" int SpriteHandle_CreateEx(ResCtrl *a, int b, unsigned char c) {
     }
     h->texFmt = e->data2[slot];
     h->tevMode = a->f8;
-    h->pad25 = a->fC != 0;
-    h->posMode = a->f10;
+    h->posMode = a->fC != 0;
+    h->posMode_026 = a->f10;
     h->sizeX = a->f14;
     h->sizeY = a->f18;
-    *(float *)h->pad30 = a->f1C;
+    *(float *)h->z = a->f1C;
     h->rot = a->f28;
     if (h->tevMode == 2) {
         h->texW = a->f20;
@@ -999,12 +948,12 @@ extern "C" int SpriteHandle_CreateEx(ResCtrl *a, int b, unsigned char c) {
     h->uv[4] = lbl_806D6D8C;
     h->uv[5] = g_glyphClipMinXY;
     if (a->f48 == 1) {
-        h->uvMode = 1;
-        h->uvA = a->f4C;
-        h->uvB = a->f50;
+        h->blendType = 1;
+        h->blendSrc = a->f4C;
+        h->blendDst = a->f50;
     } else {
-        h->uvMode = 2;
-        h->uvC = a->f54;
+        h->blendType = 2;
+        h->blendOp = a->f54;
     }
     fn_801217E8(h);
     if (h->tevMode != 2) {
@@ -1087,9 +1036,9 @@ extern "C" int SpriteHandle_CreateEx(ResCtrl *a, int b, unsigned char c) {
             }
         }
     }
-    h->activeFlag = 1;
+    h->hasCallback = 1;
     if (!c) {
-        h->visible = 1;
+        h->callbackOn = 1;
     } else {
         float maxY;
         float maxX;
@@ -1113,18 +1062,18 @@ extern "C" int SpriteHandle_CreateEx(ResCtrl *a, int b, unsigned char c) {
                 maxY = y;
             }
         }
-        h->visible = 1;
+        h->callbackOn = 1;
         if (g_glyphClipMaxX < minX) {
-            h->visible = 0;
+            h->callbackOn = 0;
         }
         if (maxX < g_glyphClipMinXY) {
-            h->visible = 0;
+            h->callbackOn = 0;
         }
         if (g_glyphClipMaxY < minY) {
-            h->visible = 0;
+            h->callbackOn = 0;
         }
         if (maxY < g_glyphClipMinXY) {
-            h->visible = 0;
+            h->callbackOn = 0;
         }
     }
     h->dirty = 0;
@@ -1312,7 +1261,7 @@ extern "C" void fn_801217E8(SpriteHandle *s) {
         for (i = 0; i < 4; i++) {
             s->corner[i][0] = sn * (w * c9[i][0]) - cs * (h * c9[i][1]);
             s->corner[i][1] = cs * (w * c9[i][0]) + sn * (h * c9[i][1]);
-            if (s->posMode == 1) {
+            if (s->posMode_026 == 1) {
                 s->corner[i][0] += s->sizeX;
                 s->corner[i][1] += s->sizeY;
             } else {

@@ -4,15 +4,7 @@
 
 #include "game/types/SoundSource.h"
 
-typedef struct KartAudioChannel {
-    unsigned char pad00[0x4];
-    unsigned char muted;   /* 0x04 */
-    unsigned char pad05[0x3];
-    int channel;           /* 0x08 */
-    SoundSource *source;   /* 0x0C */
-    unsigned char pad10[0x20];
-    int jumpKind;          /* 0x30 */
-} KartAudioChannel;
+#include "game/types/KartAudioChannel.h"
 
 extern const Vec KartItemAudio_PlaySEByItemId_rodata_802EDD24;
 extern void SoundMgr_PlaySE(unsigned int id);
@@ -36,7 +28,7 @@ void KartAudioChannel_PlayJumpSE(KartAudioChannel *self, int kind)
     default:
         return;
     }
-    self->jumpKind = kind;
+    self->skidState = kind;
     SoundMgr_PlaySE(id | ((self->channel & 0xf) << 27));
     if (self->muted == 0) {
         src = self->source;

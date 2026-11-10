@@ -1,10 +1,4 @@
-typedef struct ItemHolder {
-    unsigned char pad_0x00[0x1c];
-    unsigned int itemType;
-    unsigned int hasItem;
-    unsigned char pad_0x24[0x4];
-    unsigned int effectCategory;
-} ItemHolder;
+#include "game/types/ItemHolder.h"
 
 unsigned int ItemHolder_GetItemType(ItemHolder *self) {
     return self->itemType;

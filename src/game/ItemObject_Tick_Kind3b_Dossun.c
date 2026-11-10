@@ -4,15 +4,7 @@
  * it is retired. */
 #include "game/DrawEffectAccess.h"
 
-typedef struct DossunWork {
-    unsigned char pad0[3];
-    unsigned char buildMtx;
-    unsigned int timers[4];
-    float tether;
-    float tetherScale;
-    unsigned char pad1C[0x90 - 0x1C];
-    unsigned char active;
-} DossunWork;
+#include "game/types/DossunWork.h"
 
 extern const float lbl_806D5ED0; /* 0.0 */
 extern const float lbl_806D5ED4; /* 5 deg */
@@ -65,13 +57,13 @@ void ItemObject_Tick_Kind3b_Dossun(unsigned char *self)
             case 0:
                 GetSpawnPosition(V(0xB8), lbl_806D5ED0, lbl_806D5ED0, lbl_806D5ED0);
                 U8(0x3C) = 0;
-                w->tether = lbl_806D5ED0;
+                w->groundY = lbl_806D5ED0;
                 w->tetherScale = F(0xC4);
                 S8(0xC9)++;
             case 1:
                 break;
             }
-            if (Item_AdvanceTetherToJoint13(self, &w->tether, w->tetherScale, lbl_806D5ED4, lbl_806D5ED4) != 0) {
+            if (Item_AdvanceTetherToJoint13(self, &w->groundY, w->tetherScale, lbl_806D5ED4, lbl_806D5ED4) != 0) {
                 U8(0x28) = 0;
                 S8(0xC8) = 3;
                 S8(0xC9) = 0;

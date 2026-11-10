@@ -1,6 +1,13 @@
 #include "game/types/MObjView.h"
 
-#include "game/types/MObjClassView.h"
+#include "game/types/MObjView.h"
+
+typedef struct MObjClassView {
+    unsigned char base[0x40];
+    int (*load) (MObjView *, void *);
+    void *(*setupTev) (MObjView *, void *, void **);
+    unsigned char tail[0xC];
+} MObjClassView;
 
 extern MObjClassView hsdMObj;
 

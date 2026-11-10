@@ -52,13 +52,7 @@ struct PcbSlot {
 
 #include "game/ItemEffectBusPrivate.h"
 
-struct KartRender {
-    char pad0[0x1F4];
-    int slot;
-    int chara;
-    char pad1FC[0x304 - 0x1FC];
-    ItemEffectBus *status;
-};
+#include "game/types/KartRender.h"
 
 /* Badge position; its empty inline dtor is the shared dtor_80036E40. */
 struct ENo3DPos {

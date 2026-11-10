@@ -1,9 +1,4 @@
-typedef struct SpeedTable {
-    void *pts;
-    int count;
-    float maxProgress;
-    unsigned char pad[0xc];
-} SpeedTable;
+#include "game/types/SpeedTable.h"
 
 #include "game/types/KartMove.h"
 

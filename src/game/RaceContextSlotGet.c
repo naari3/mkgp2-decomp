@@ -1,8 +1,5 @@
 /* Observed slot view; the complete runtime class is not yet established. */
-typedef struct RaceContextSlot {
-    int type;
-    unsigned char remaining[0xB8];
-} RaceContextSlot;
+#include "game/types/RaceContextSlot.h"
 
 static inline unsigned char Slot_IsAlive(RaceContextSlot* slot)
 {

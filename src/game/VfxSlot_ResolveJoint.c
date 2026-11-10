@@ -1,7 +1,4 @@
-typedef struct VfxSlot {
-    void* unk0;
-    void* slot;
-} VfxSlot;
+#include "game/types/VfxSlot.h"
 
 extern void cLNormal3DWrap_Slot_ResolveJoint(void* slot, void* joint);
 

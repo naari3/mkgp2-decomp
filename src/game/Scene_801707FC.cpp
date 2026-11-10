@@ -12,16 +12,7 @@ struct GrowFace {
     char pad00[0x34];
 };
 
-struct GrowEntry {
-    void *jobj;
-    GrowFace *faces;
-    int faceCount;
-    void *trigger;
-    int state;
-    float t;
-    float scale;
-    GrowSub *sub;
-};
+#include "game/types/GrowEntry.h"
 
 #include "game/types/GrowSet.h"
 

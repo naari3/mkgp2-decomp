@@ -7,16 +7,7 @@
 
 #include "game/types/SoundSource.h"
 
-typedef struct KartAudioChannel {
-    void *owner;          /* 0x00 */
-    unsigned char muted;  /* 0x04 */
-    unsigned char enabled; /* 0x05 */
-    unsigned char pad06[0x2];
-    int channel;          /* 0x08 */
-    SoundSource *source;  /* 0x0C */
-    unsigned char pad10[0x24];
-    int surfaceSE;        /* 0x34 */
-} KartAudioChannel;
+#include "game/types/KartAudioChannel.h"
 
 typedef struct SurfaceSE {
     unsigned int ground;

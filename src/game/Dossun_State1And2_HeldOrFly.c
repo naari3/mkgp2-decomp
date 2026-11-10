@@ -6,21 +6,7 @@
  * back into the drop state. */
 #include "game/types/Vec.h"
 
-typedef struct DossunWork {
-    unsigned char landed;
-    unsigned char hitKart;
-    unsigned char stopped;
-    unsigned char buildMtx;
-    unsigned int timers[4];
-    float groundY;
-    float yaw;
-    unsigned char pad1C[0x98 - 0x1C];
-    void *driver;
-    void *target;
-    signed char launch;
-    unsigned char padA1[3];
-    Vec dir;
-} DossunWork;
+#include "game/types/DossunWork.h"
 
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float f);
 extern void GabyouItem_BuildLocalTransformFromHandJoint(unsigned char *self, int a, float x, float y, float z);
@@ -137,7 +123,7 @@ void Dossun_State1And2_HeldOrFly(unsigned char *self, DossunWork *w)
             self[0x3C] = 1;
             w->timers[0] = 10;
             ItemObject_GetGroundTypeAt(*(Vec *)(self + 0xA0), &w->groundY, 0);
-            w->yaw = 0.0f;
+            w->tetherScale = 0.0f;
             self[0xCA]++;
         case 1:
             F(0xBC) += -0.1f;
@@ -177,8 +163,8 @@ void Dossun_State1And2_HeldOrFly(unsigned char *self, DossunWork *w)
                 F(0xBC) = 0.0f;
             }
         }
-        w->yaw += F(0xBC);
-        if (60.0f < w->yaw) {
+        w->tetherScale += F(0xBC);
+        if (60.0f < w->tetherScale) {
             F(0xB8) = 0.0f;
             F(0xC0) = 0.0f;
             if (ItemObject_GetGroundTypeAt(*(Vec *)(self + 0xA0), &w->groundY, 0)) {
@@ -197,7 +183,7 @@ void Dossun_State1And2_HeldOrFly(unsigned char *self, DossunWork *w)
         case 0:
             ItemTracker_AcquireLock(self);
             ItemTracker_SetTrackPhase(self, 1);
-            w->yaw = Vec3_ToYaw(&w->dir);
+            w->tetherScale = Vec3_ToYaw(&w->dir);
             w->timers[0] = 900;
             ItemHitRegistry_AddEntry(self);
             self[0xCA] = 1;
@@ -283,7 +269,7 @@ void Dossun_State1And2_HeldOrFly(unsigned char *self, DossunWork *w)
             break;
         }
         Item_DecayVelocityScalar(self, 5.0f);
-        F(0xB0) = AngleStepForward_OrSnap(F(0xB0), w->yaw, 0.17453289f);
+        F(0xB0) = AngleStepForward_OrSnap(F(0xB0), w->tetherScale, 0.17453289f);
         if (S8(0xCA) == 1 || S8(0xCA) == 2) {
             F(0xAC) = AngleStepTowards_Shortest(F(0xAC), Dossun_ClampPitch(Item_ProbeForwardGroundPitch(*(Vec *)(self + 0xA0), F(0xB0), 10.0f, F(0xA4) - w->groundY)), 0.017453289f);
             F(0xB4) = AngleStepTowards_Shortest(F(0xB4), Dossun_ClampPitch(Item_ProbeLateralGroundPitch(*(Vec *)(self + 0xA0), F(0xB0), 10.0f, F(0xA4) - w->groundY)), 0.017453289f);

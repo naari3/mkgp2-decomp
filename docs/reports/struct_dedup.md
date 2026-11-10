@@ -5,22 +5,22 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | Item | Count |
 |---|---|
 | Files scanned (src/game, src/ui, src/sound, src/util, src/resource, include/game) | 3104 |
-| struct/union/class definitions at file scope | 6382 in 1478 files |
-| Distinct type names | 5210 |
-| Names defined in more than one file | 336 |
-| Types already in `include/game/types` | 584 |
-| Class A groups (same name, same members, 2+ files) | 60 groups, 175 definitions |
-| ... of which movable right now | 28 groups, 88 definitions |
-| Definitions whose byte layout the tool can compute | 3852 (not computable: 231) |
-| Class B (same name, same layout, different member spelling) | 49 name/layout pairs, 110 spellings |
-| Class C (same layout of 16+ bytes and 3+ fields, different names) | 155 layouts, 635 definitions |
+| struct/union/class definitions at file scope | 6313 in 1437 files |
+| Distinct type names | 5200 |
+| Names defined in more than one file | 319 |
+| Types already in `include/game/types` | 605 |
+| Class A groups (same name, same members, 2+ files) | 58 groups, 168 definitions |
+| ... of which movable right now | 28 groups, 86 definitions |
+| Definitions whose byte layout the tool can compute | 3783 (not computable: 231) |
+| Class B (same name, same layout, different member spelling) | 38 name/layout pairs, 86 spellings |
+| Class C (same layout of 16+ bytes and 3+ fields, different names) | 150 layouts, 618 definitions |
 
 ## Why a definition is not movable yet
 
 | Reason | Definitions |
 |---|---|
 | non-plain member (method, nested type, access label) | 1431 |
-| needs another type (not shared yet) | 673 |
+| needs another type (not shared yet) | 653 |
 | has base class | 586 |
 | has storage/qualifier prefix | 256 |
 | class | 204 |
@@ -58,7 +58,6 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | PtrVecBase | 11 | 0 | 0 | 0 |
 | Scene3D | 10 | 2 | 1 | 1 |
 | PtrVec | 10 | 0 | 0 | 0 |
-| VfxSlot | 10 | 7 | 4 | 4 |
 | PlayerData | 9 | 9 | 1 | 1 |
 | InputState | 9 | 7 | 2 | 2 |
 | CarObject | 9 | 1 | 1 | 1 |
@@ -66,33 +65,28 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | FireFuncs | 9 | 1 | 9 | 0 |
 | clDNBress | 9 | 0 | 0 | 0 |
 | Buf256 | 9 | 1 | 9 | 9 |
-| KartRender | 8 | 5 | 2 | 1 |
 | GXChannel | 8 | 2 | 1 | 0 |
 | Normal3D | 8 | 2 | 2 | 0 |
-| SpriteSlot | 8 | 8 | 1 | 1 |
 | WeatherSystem | 8 | 4 | 1 | 1 |
 | Particle | 8 | 8 | 1 | 1 |
 | Owner | 8 | 8 | 1 | 0 |
 | Vec3 | 8 | 1 | 3 | 0 |
 | ListNode | 7 | 4 | 1 | 1 |
 | SceneBase | 7 | 0 | 0 | 0 |
-| KartAudioChannel | 7 | 6 | 1 | 1 |
 | InputView | 7 | 4 | 3 | 3 |
 | Kart | 7 | 7 | 1 | 1 |
-| NokoNoko | 7 | 7 | 1 | 1 |
 | CoinPopupDetail | 6 | 0 | 0 | 0 |
-| RaceScene | 6 | 5 | 1 | 1 |
 | ItemKart | 6 | 5 | 1 | 1 |
 | TexMgr | 6 | 3 | 1 | 1 |
 | SpriteObj | 6 | 1 | 1 | 1 |
 | Group | 6 | 2 | 1 | 1 |
 | GameCfg | 6 | 1 | 6 | 6 |
+| KartRender | 5 | 3 | 1 | 1 |
 | YesNoButtonL | 5 | 0 | 0 | 0 |
 | ModeBase | 5 | 0 | 0 | 0 |
 | LakituStart | 5 | 0 | 0 | 0 |
 | TextSprite | 5 | 0 | 0 | 0 |
 | ModelEntry | 5 | 5 | 1 | 1 |
-| JyugemuFlag | 5 | 2 | 1 | 1 |
 | DVDFileInfo | 5 | 4 | 2 | 2 |
 | Item | 5 | 3 | 1 | 1 |
 | HsdObj | 5 | 2 | 4 | 0 |
@@ -100,6 +94,12 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | GXColor | 5 | 2 | 4 | 4 |
 | ItemDescriptor | 5 | 3 | 3 | 3 |
 | ItemObject | 5 | 5 | 1 | 1 |
+| Slot | 5 | 5 | 1 | 1 |
+| ScaleKey | 5 | 3 | 2 | 2 |
+| clItemBoxResponder | 5 | 4 | 1 | 1 |
+| Entry | 5 | 4 | 1 | 1 |
+| MenuModeBase | 4 | 0 | 0 | 0 |
+| CardTask | 4 | 0 | 0 | 0 |
 
 ## Class C: largest same-layout sets with different names (candidates only)
 
@@ -138,10 +138,10 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | 0x30 | 12 | 6 | BallProbes, DListQuad, DirTable, EffectJointMatrix, GoalLinePair, Mtx34 |
 | 0x14 | 5 | 6 | TDrawVecBlk, rodata_8036DD8C_rodata_8036DD8C_Row, rodata_8036DD8C_rodata_8036DE2C_Row, rodata_8036DD8C_rodata_8036DE90_Row, rodata_8036DD8C_rodata_8036DEE0_Row, rodata_8036DD8C_rodata_8036DF30_Row |
 | 0x14 | 5 | 5 | CardTaskManager, ItemDisplay, ModelEntry, RoundSlot, SceneWords |
-| 0x308 | 5 | 5 | BurnKart, Kart, KartRender |
-| 0x14 | 5 | 5 | NokoKind, lbl_8037754C_Row, lbl_80377588_Row, lbl_803775C4_Row |
 | 0x18 | 6 | 5 | KartSlot, NMKartSlot, RaceKartSlot |
 | 0x2C | 10 | 5 | NMRaceWideRow, RaceEntry, RaceWideRow, RankSlot |
 | 0x10 | 4 | 4 | AISpeedOwner, Entry, JointSetDesc, Obj987Entry |
 | 0x38 | 14 | 4 | BtModeView, RefVtable162, VSOwner, VsScene |
 | 0x3C | 4 | 4 | CollisionDVDFileInfo, DVDFileInfo |
+| 0x1C | 4 | 4 | DampArmSlot, PlaceE4Group, SprayInitGroup, WheelWork |
+| 0x44 | 4 | 4 | GrowJoint, HSD_JObj, Joint |

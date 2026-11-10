@@ -2,21 +2,7 @@
  * sphere; returns 1 if any was hit. */
 
 #include "game/types/Vec.h"
-typedef struct NokoNoko {
-    struct NokoNoko *next;
-    char pad04[0x8];
-    int state;
-    int model;
-    float frame;
-    char pad18[0x4];
-    Vec pos;
-    float yaw;
-    float x2C;
-    float x30;
-    int model2;
-    float blend;
-    float frame2;
-} NokoNoko;
+#include "game/types/NokoNoko.h"
 
 extern unsigned char g_nokonokoEnable;
 extern NokoNoko *g_nokonokoHead;
@@ -55,8 +41,8 @@ static inline unsigned char NokoNoko_TryHit(NokoNoko *n, Vec *pos, float r, Vec 
         n->state = 4;
         n->model = 3;
         n->frame = lbl_806D9324;
-        n->x2C = lbl_806D9324;
-        n->x30 = lbl_806D9324;
+        n->speed = lbl_806D9324;
+        n->radius = lbl_806D9324;
         n->model2 = n->model;
         n->blend = lbl_806D9324;
         n->frame2 = n->frame;

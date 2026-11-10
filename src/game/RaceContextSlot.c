@@ -1,25 +1,5 @@
 /* Only fields accessed by these two functions are modeled. */
-typedef struct RaceContextSlot {
-    int type;
-    int id;
-    unsigned int word08, word0C;
-    unsigned char pad10[0x60];
-    void* object70;
-    unsigned char pad74[0x0C];
-    void* position;
-    int index84;
-    unsigned int word88, word8C;
-    int index90, index94;
-    unsigned char pad98[4];
-    unsigned int word9C;
-    unsigned char padA0[4];
-    float scale;
-    void* item;
-    unsigned int argument6;
-    int state;
-    unsigned int argument7;
-    unsigned int wordB8;
-} RaceContextSlot;
+#include "game/types/RaceContextSlot.h"
 
 extern void* ItemObject_GetPositionPtr(void* item);
 extern const float lbl_806D4898;
@@ -41,7 +21,7 @@ int RaceContextSlot_Free(RaceContextSlot* slots, int index)
         slot->id = -1;
         slot->word08 = 0;
         slot->word0C = 0;
-        slot->object70 = 0;
+        slot->driver = 0;
         slot->index84 = 0;
         slot->word88 = 0;
         slot->word8C = 0;
@@ -61,15 +41,15 @@ static inline void Slot_InitItem(RaceContextSlot* slots, int index, int id,
     if (Slot_IsAlive(slot) != 1) {
         slot->type = 7;
         slot->id = id;
-        slot->object70 = 0;
+        slot->driver = 0;
         slot->position = position;
         slot->item = item;
         slot->index84 = -1;
-        slot->argument6 = argument6;
+        slot->indexAC = argument6;
         slot->state = 0x30;
         slot->scale = lbl_806D4898;
         slot->word9C = 0;
-        slot->argument7 = argument7;
+        slot->payloadB4 = argument7;
         slot->wordB8 = 0;
     }
 }

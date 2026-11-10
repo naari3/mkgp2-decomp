@@ -1,8 +1,4 @@
-typedef struct SpriteSlot {
-    unsigned char pad0[0x2C];
-    float translate_dx;
-    float translate_dy;
-} SpriteSlot;
+#include "game/types/SpriteSlot.h"
 
 void SpriteSlot_SetTranslateDxDy(SpriteSlot *slot, float dx, float dy)
 {

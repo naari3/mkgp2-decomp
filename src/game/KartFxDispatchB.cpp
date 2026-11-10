@@ -3,14 +3,7 @@
  */
 #include "game/types/DispatchKart.h"
 #include "game/types/DispatchPayload.h"
-struct DispatchEffect {
-    unsigned char pad00[0x10];
-    unsigned int index;
-    unsigned char pad14[0x108];
-    DispatchKart *kart;
-    unsigned char pad120[0x70];
-    unsigned char variant;
-};
+#include "game/types/DispatchEffect.h"
 extern "C" {
 extern int g_gameMode;
 void EffectVfx72_ItemStarAura_Tick(DispatchEffect *);

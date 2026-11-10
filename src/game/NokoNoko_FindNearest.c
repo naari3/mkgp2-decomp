@@ -1,13 +1,7 @@
 /* NokoNoko_FindNearest (0x801887BC): nearest live NokoNoko (state < 4) to a point. */
 
 #include "game/types/Vec.h"
-typedef struct NokoNoko {
-    struct NokoNoko *next;
-    char pad04[0x8];
-    int state;
-    char pad10[0xC];
-    Vec pos;
-} NokoNoko;
+#include "game/types/NokoNoko.h"
 
 extern NokoNoko *g_nokonokoHead;
 extern void Vec3_Subtract(const Vec *a, const Vec *b, Vec *out);

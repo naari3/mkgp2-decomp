@@ -3,12 +3,7 @@
 
 #include "game/types/Vec.h"
 #include "game/types/Banana.h"
-typedef struct {
-    unsigned int active;
-    Banana *items;
-    int count;
-    unsigned char hit;
-} BananaField;
+#include "game/types/BananaField.h"
 
 extern int g_characterId;
 extern const float lbl_806D95B8;

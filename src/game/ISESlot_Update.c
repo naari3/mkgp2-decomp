@@ -21,19 +21,7 @@
  *   +0x20 : s32  column selector for ISE_ScaleColumnDirectionByMagnitude
  */
 
-typedef struct ISESlot {
-    float timer;            /* +0x00 */
-    unsigned char active;   /* +0x04 */
-    unsigned char pending;  /* +0x05 */
-    unsigned char pad06[2]; /* +0x06 */
-    int param;              /* +0x08 */
-    int state;              /* +0x0C */
-    int kartIdx;            /* +0x10 */
-    int kind;               /* +0x14 */
-    void *item;             /* +0x18 */
-    int pairParam;          /* +0x1C */
-    int column;             /* +0x20 */
-} ISESlot;
+#include "game/types/ISESlot.h"
 
 typedef struct ISEVec3 {
     float x, y, z;
@@ -60,24 +48,24 @@ int ISESlot_FrameUpdate(ISESlot *self) {
     if (self->active == 0) {
         return 0;
     }
-    switch (self->state) {
+    switch (self->field_0x0c) {
     case 0:
         ItemSpawner_TimedRemapAndSpawn(self);
         break;
     case 1:
         if (self->pending != 0) {
-            self->timer = lbl_806D26C8;
-            if (self->kind == 0x12) {
+            self->field_0x00 = lbl_806D26C8;
+            if (self->typeId == 0x12) {
                 if (self->item != 0) {
                     ItemObject_SetByte18c(self->item, 2);
                 }
                 self->item = ItemObject_SpawnWithAlias(0x45, 0xFF);
-                ItemObject_SetPair180(self->item, self->kartIdx, self->pairParam);
+                ItemObject_SetPair180(self->item, self->field_0x10, self->field_0x1c);
             } else {
                 ISE_ScaleColumnDirectionByMagnitude(
-                    RaceContextSlot_GetIfAlive(GetRaceContextPtr(), self->kartIdx),
-                    self->column, &vec, lbl_806D26CC);
-                if (self->param == 6) {
+                    RaceContextSlot_GetIfAlive(GetRaceContextPtr(), self->field_0x10),
+                    self->ctxSlot, &vec, lbl_806D26CC);
+                if (self->state == 6) {
                     vec.x *= lbl_806D26D0;
                     vec.y *= lbl_806D26D0;
                     vec.z *= lbl_806D26D0;
@@ -87,7 +75,7 @@ int ISESlot_FrameUpdate(ISESlot *self) {
                 ItemObject_SetByte18c(self->item, 1);
                 self->item = 0;
                 self->active = 0;
-                self->state += 1;
+                self->field_0x0c += 1;
             }
         }
         break;

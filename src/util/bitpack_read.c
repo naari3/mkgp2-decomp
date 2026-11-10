@@ -1,12 +1,7 @@
 /* bitpack_read_field_by_name @ 0x80088880..0x80088A5C: reads slot `index`
  * of the named field from a bitpack context (layout in util/bitpack.c). */
 
-typedef struct BitpackEntry {
-    const char *name;
-    int width;
-    int count;
-    int offset;
-} BitpackEntry;
+#include "game/types/BitpackEntry.h"
 
 #include "game/types/Bitpack.h"
 
@@ -42,7 +37,7 @@ static inline unsigned char bitpack_read_slot(Bitpack *ctx, int i, unsigned int 
     *out = 0;
     e = &ctx->schema[i];
     buf = ctx->dest;
-    if (index >= e->count) {
+    if (index >= e->slots) {
         return 0;
     }
     bit = e->offset + (index + 1) * e->width;

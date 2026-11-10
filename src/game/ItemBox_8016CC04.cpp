@@ -9,19 +9,7 @@ typedef float Mtx[3][4];
 
 #include "game/types/BoxShadow.h"
 
-struct ItemBoxSlot {
-    char pad00[0x24];
-    Vec3f pos;
-    float rotX;
-    float rotY;
-    float rotZ;
-    char pad3C[0x4];
-    int hidden;
-    unsigned char visible;
-    char pad45[0x3];
-    BoxShadow shadows[10];
-    char padE8[0x8];
-};
+#include "game/types/ItemBoxSlot.h"
 
 struct ListNode {
     char pad00[0x4];

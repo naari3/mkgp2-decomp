@@ -27,7 +27,10 @@ struct HSD_JObj {
 
 #include "game/types/AnimCtrl.h"
 
-#include "game/types/KartRender.h"
+typedef struct KartRender {
+    char pad000[0x23C];
+    int x23c;
+} KartRender;
 
 #include "game/types/GXChannel.h"
 

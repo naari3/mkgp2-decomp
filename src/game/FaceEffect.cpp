@@ -88,15 +88,7 @@ struct PcbSlot {
 
 #include "game/ItemEffectBusPrivate.h"
 
-struct KartRender {
-    char pad0[0x1F4];
-    int slot;
-    int chara;
-    char pad1FC[0x2D0 - 0x1FC];
-    unsigned char special;
-    char pad2D1[0x304 - 0x2D1];
-    ItemEffectBus *status;
-};
+#include "game/types/KartRender.h"
 
 extern "C" int fn_8023D1B4(KartRender *kart);
 

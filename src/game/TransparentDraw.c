@@ -111,13 +111,7 @@ typedef struct TDrawCase3 {
 } TDrawCase3;
 
 /* slot table row (0x14 bytes) */
-typedef struct TDrawSlot {
-    int owner;            /* 0x00 (-1 = free) */
-    int rank;             /* 0x04 (-1 = not drawn this frame) */
-    float dist;           /* 0x08 (squared XZ distance to camera) */
-    int state;            /* 0x0C */
-    TDrawEntry *entry;    /* 0x10 */
-} TDrawSlot;
+#include "game/types/TDrawSlot.h"
 
 extern unsigned char lbl_806D10F0;  /* .sbss: transparent draw system active */
 extern TDrawObj *lbl_806D10F8;      /* .sbss: draw chain head */
