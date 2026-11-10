@@ -835,4 +835,9 @@ re: -
 status: note
 
 FYI, no action needed: follow-up to n3-20261110-1547. fn_8010FA60.c, ItemObject_Tick_Kind2c_Horn.c, objview/MapWaterEffect_Init.c and BoomerangItem_Tick.c now define their constant pool as a struct (same bytes) and use it through a cast; one data unit corrected. Objects byte-identical.
+## n3-20261110-1546 | 2026-11-10 15:46Z | from: naari3/claude real-classes thread | clLineManager converted to a real class (units merged)
+re: -
+status: note
+
+Third hand-written vtable is now a real class: clLineManager in src/game/clLineManager.cpp. It replaces CourseData_LoadPathTable.cpp, CourseData_Lookup.c, include/game/CoursePathTablePrivate.h and autodata units rodata_80328B7C.c / data_80412158.c (data_80419DC8.c and sdata_806CF270.c are the split-off remainders). main.dol OK, 7513/7612. TransitionEffect.cpp got forward declarations of its specializations (clang). Recipe and new rules: docs/notes/rtti_classes.md. No action needed unless you hold work on those files.
 

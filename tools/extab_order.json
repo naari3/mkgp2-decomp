@@ -526,13 +526,17 @@
       "dtor_8005D8C4"
     ]
   },
-  "src/game/CourseData_Lookup.c": {
+  "src/game/clLineManager.cpp": {
     "extab": [
+      "PrintLines__13clLineManagerFv",
+      "CourseData_LoadPathTable",
       "dtor_800ABF10",
       "HitMessageOverlay_Dtor",
       "CourseData_GetOrCreate"
     ],
     "extabindex": [
+      "PrintLines__13clLineManagerFv",
+      "CourseData_LoadPathTable",
       "HitMessageOverlay_Dtor",
       "CourseData_GetOrCreate",
       "dtor_800ABF10"

@@ -59,6 +59,7 @@ template <class T> struct TransitionModelOwnerT {
     TransitionModelOwnerT() : object(new T) {}
     ~TransitionModelOwnerT() throw();
 };
+template <> TransitionModelOwnerT<TransitionModelInit>::~TransitionModelOwnerT() throw();
 typedef TransitionModelOwnerT<TransitionModelInit> TransitionModelOwner;
 struct TransitionRouletteInit {
     TransitionModelOwner holder;
@@ -95,6 +96,16 @@ template <class T> struct TransitionRenderState {
     TransitionRenderState() { fn_801F6804(this); }
     ~TransitionRenderState();
 };
+/* Declared before the class uses them, as the language asks (clang insists). */
+template <> teSingleton<clScreenEffect>::~teSingleton();
+template <> TransitionOwner<TransitionFadeInit>::~TransitionOwner();
+template <> TransitionOwner<TransitionIrisInit>::~TransitionOwner();
+template <> TransitionOwner<TransitionShakeInit>::~TransitionOwner();
+template <> TransitionOwner<TransitionFlashInit>::~TransitionOwner();
+template <> TransitionOwner<TransitionQuadInit>::~TransitionOwner();
+template <> TransitionOwner<TransitionRouletteInit>::~TransitionOwner();
+template <> TransitionEmptyMember<clScreenEffect>::~TransitionEmptyMember();
+template <> TransitionRenderState<clScreenEffect>::~TransitionRenderState();
 class clScreenEffect : public teSingleton<clScreenEffect> {
 public:
     TransitionOwner<TransitionFadeInit> fade;

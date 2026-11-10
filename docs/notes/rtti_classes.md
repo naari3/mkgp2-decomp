@@ -108,7 +108,59 @@ function of a fifth. Differences from clScreenEffect:
   `rtti_classes.py`), so the file runs from X's own destructor to there.
   For the ten singleton classes this gives 1 to 5 of today's units each.
 
-What this says about the other 351: each needs the unit that holds the
+### Third class: clLineManager (about 50 minutes, 30 compiles)
+
+`src/game/clLineManager.cpp` replaces `CourseData_LoadPathTable.cpp` (the
+constructor), `CourseData_Lookup.c` and two data-only units. Deferred mode
+again (data order base list, vtable, weak base vtable). New rules:
+
+- **Under deferred mode the file does not start at the class destructor.**
+  The constructor sits before it in the binary, so it is later in the
+  source; look at the function before the destructor too.
+- **String literals are pooled in the order the functions are generated**,
+  i.e. from the last function of the source backwards, and inside one
+  function in the order of the generated code. Static `const char x[]`
+  arrays come before the RTTI name strings, literals after them, so the
+  place of the class-name strings in `.rodata` tells which of the two the
+  original used.
+- **A function the linker dropped can still be seen in the pool.** The
+  target has "line %08x" and the member-count text before the two load
+  messages, although the constructor uses them after. No arrangement of the
+  inline loaders gives that (ten tried: helper first or last, member or
+  static, in-class body, default arguments, locals, `-str` flags). A member
+  function nobody calls, defined after the constructor, does: it is
+  generated first, puts its literals first, and mwld strips its code and
+  exception table. `clLineManager::PrintLines` is that function, body
+  guessed, marked in the source.
+- **Exception table order is not function order.** The target has the weak
+  base destructor's entry right after the constructor's (where the compiler
+  generates an inline destructor the constructor needs) while its code is
+  last. The explicit specialization gives the code order;
+  `tools/extab_order.json` declares the table order.
+- **The unit's `.data` must start where the original file's did.** The
+  class data starts at 0x80419DA4, not 8-aligned, because the built-in path
+  table (0x7C4C bytes) of the same file comes first. The table moved into
+  the unit (`include/game/clLineManager_kp_castle_short_line.inc`).
+- `-rostr` literals replaced the named format arrays and the separate
+  "create line manager" unit.
+
+### Rules for every converted class
+
+- **Check with clang before landing**; compiling off MWCC is the point.
+  `clang -target i686-pc-linux-gnu -fsyntax-only -nostdinc -x c++
+  -std=gnu++98` with the include paths and `-include mwcc_compat.h` of
+  mkgp2-pc `port/tools/compile_census.py`. First catch: an explicit
+  specialization has to be declared before the class that uses it
+  (`template <> teSingleton<X>::~teSingleton();` ahead of `class X`), the
+  definition can stay where the order needs it.
+- **Base class tail padding** (from the port, mkgp2-pc
+  `docs/port/cxx_classes.md`): the Itanium ABI puts the first members of a
+  derived class into the tail padding of a non-POD base, MWCC does not. A
+  base whose last member leaves padding (a `char` after an `int`, say) must
+  spell the padding as a member (`unsigned char pad[3];`), as clScreenEffect
+  does with `align[2]`, so both compilers lay the derived class out alike.
+
+What this says about the other 347: each needs the unit that holds the
 class's first non-inline virtual function to own the class data, which often
 means merging units first, and the constructors and destructors written as
 real ones. That is matching-grade work per class, helped by the table but

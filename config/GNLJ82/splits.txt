@@ -2853,7 +2853,7 @@ game/autodata/sdata2_806D4910.c:
 	.sdata2     start:0x806D4910 end:0x806D5010
 
 game/autodata/sdata_806CF1C0.c:
-	.sdata      start:0x806CF1C0 end:0x806CF708
+	.sdata      start:0x806CF1C0 end:0x806CF260
 
 game/autodata/data_8040F168.c:
 	.data       start:0x8040F168 end:0x80411458
@@ -2946,30 +2946,27 @@ game/Tachometer.c:
 	.text       start:0x800AB17C end:0x800AB958
 	.data       start:0x80411E20 end:0x80412158
 
-game/autodata/data_80412158.c:
-	.data       start:0x80412158 end:0x80419F20
-
 game/ZlibInflate_BufferToBuffer.c:
 	extab       start:0x8000A0C4 end:0x8000A0CC
 	extabindex  start:0x80022760 end:0x8002276C
 	.text       start:0x800AB958 end:0x800ABAE8
 
-game/CourseData_LoadPathTable.cpp:
-	extab       start:0x8000A0CC end:0x8000A0E8
-	extabindex  start:0x8002276C end:0x80022778
-	.text       start:0x800ABAE8 end:0x800ABD80
-	.rodata     start:0x803285C0 end:0x80328B7C
+game/clLineManager.cpp:
+	extab       start:0x8000A0CC end:0x8000A110
+	extabindex  start:0x8002276C end:0x8002279C
+	.text       start:0x800ABAE8 end:0x800ABF58
+	.rodata     start:0x803285C0 end:0x80328B98
+	.data       start:0x80412158 end:0x80419DC8
+	.sdata      start:0x806CF260 end:0x806CF270
 
-game/autodata/rodata_80328B7C.c:
-	.rodata     start:0x80328B7C end:0x80328B94
+game/autodata/sdata_806CF270.c:
+	.sdata      start:0x806CF270 end:0x806CF708
+
+game/autodata/data_80419DC8.c:
+	.data       start:0x80419DC8 end:0x80419F20
 
 game/autodata/rodata_80328B98.c:
 	.rodata     start:0x80328B98 end:0x80328EA0
-
-game/CourseData_Lookup.c:
-	extab       start:0x8000A0E8 end:0x8000A110
-	extabindex  start:0x80022778 end:0x8002279C
-	.text       start:0x800ABD80 end:0x800ABF58
 
 game/HitMessageOverlay_Show.c:
 	extab       start:0x8000A110 end:0x8000A118
