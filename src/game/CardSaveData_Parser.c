@@ -124,8 +124,7 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
     row = dest;
     fields = lbl_80317484;
     for (group = 0; group < 6; row += 4, group++, fields++) {
-        cursor = row;
-        for (i = 0; i < 4; i++, cursor++) {
+        for (i = 0, cursor = row; i < 4; i++, cursor++) {
             bitpack_read_field_by_name(pack, *fields, &grid, i);
             cursor[0x9C] = grid != 0;
         }
@@ -160,14 +159,13 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
             dest[(rule->group*4+CardUnlockRuleSlot(rule))+0x23] = 1;
     }
     {
+        unsigned int group;
         const char *const *fields;
         int i;
-        unsigned int group;
         u8 *cursor, *row;
         int j;
     row = dest;
-    fields = lbl_806D349C;
-    for (group = 0; group < 2; row += 12, group++, fields++) {
+    for (group = 0, fields = lbl_806D349C; group < 2; row += 12, group++, fields++) {
         counter = 0;
         cursor = row;
         for (j = 0; j < 3; j++, cursor += 4) {
