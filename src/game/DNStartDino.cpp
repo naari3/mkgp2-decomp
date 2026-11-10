@@ -1196,6 +1196,30 @@ static inline float (*JObjGetMtx(HSD_JObj *jobj))[4] {
     return jobj->mtx;
 }
 
+static inline void SetEmberPosition(Ember *ember, const Vec3f *position, float velocityZ) {
+    float half;
+    float vx, vy, vz;
+    float sx, sy, sz;
+    float px, py, pz;
+    half = lbl_806DB508;
+    sx = DNStartDino_tail_data_804EE0E0.x;
+    sy = DNStartDino_tail_data_804EE0E0.y;
+    sz = DNStartDino_tail_data_804EE0E0.z;
+    ember->vel.z = velocityZ;
+    vx = ember->vel.x;
+    px = position->x;
+    sx = vx * sx;
+    ember->pos.x = half * sx + px;
+    vy = ember->vel.y;
+    py = position->y;
+    sy = vy * sy;
+    ember->pos.y = half * sy + py;
+    vz = ember->vel.z;
+    pz = position->z;
+    sz = vz * sz;
+    ember->pos.z = half * sz + pz;
+}
+
 void Hinoko::Spawn() {
     int k = 0;
     for (int i = 0; i < 2; i++) {
@@ -1205,13 +1229,7 @@ void Hinoko::Spawn() {
                 embers[k].vel.x = dir[i].x * (lbl_806DB50C * Rand() + lbl_806DB508);
                 embers[k].vel.y = dir[i].y;
                 float vz = lbl_806DB50C * (Rand() - lbl_806DB508) + dir[i].z;
-                float sx = DNStartDino_tail_data_804EE0E0.x;
-                float sy = DNStartDino_tail_data_804EE0E0.y;
-                float sz = DNStartDino_tail_data_804EE0E0.z;
-                embers[k].vel.z = vz;
-                embers[k].pos.x = lbl_806DB508 * (embers[k].vel.x * sx) + pos[i].x;
-                embers[k].pos.y = lbl_806DB508 * (embers[k].vel.y * sy) + pos[i].y;
-                embers[k].pos.z = lbl_806DB508 * (embers[k].vel.z * sz) + pos[i].z;
+                SetEmberPosition(&embers[k], &pos[i], vz);
                 embers[k].color = lbl_806DB528 * Rand();
                 embers[k].speed = lbl_806DB52C;
                 embers[k].scale = lbl_806DB530;

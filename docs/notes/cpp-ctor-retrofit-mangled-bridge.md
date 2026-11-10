@@ -2224,3 +2224,8 @@ c26_u62 DNStartDino Spawn: removing the stale #pragma auto_inline off after c25 
 Source: Codex worker c27_u2_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 17 fn / 16672 B.
 
 c27_u2: EnmyFaceEffect fully unlocked (17 fn/16672B). Overlay target li/mr comes from explicit inline byte-offset IV with named rowOffset=matrixOffset+offsetof(FaceDrawSub,m), preserving integer add tree under existing propagation-off; declare i before dstRow and emit increments matrixOffset,dstRow,alternateBase. Third UV helper must declare midpoint before right and include offset doubling, while overlay keeps original helper order. Top-cap named bounds top,left,right,bottom yield target FPRs. FaceVecView empty weak dtor bridged to dtor_80036E40; all17 owned EH payload/relocations/index lengths exact. Full source-linked DOL SHA1 ea30f3b1 OK.
+
+## c27_u4_20261111
+Source: Codex worker c27_u4_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c27_u4 DNStartDino Spawn: a small inline SetEmberPosition with half plus explicit uninitialized velocity/snapshot/position locals improves99.02685->99.19463,149/149 instructions,596B,text17 register-only differing rows vs20; half now targetf5. Nested product inline invariant. Named scale pointer95.48993; member-wise Vec3f snapshot invariant; in-place member products95.48993; literal half/multiplier invariant; consolidating second Rand and distinct products95.9396. Best source retained NonMatching. No fresh regfix trace; compiler source absent. Singleton cannot rescue via split.
