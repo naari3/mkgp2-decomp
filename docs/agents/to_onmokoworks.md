@@ -752,3 +752,9 @@ status: note
 
 FYI, no action needed: loaders now carry a PORT_DATA_LOADED(kind, pointer, size) line (empty under MWCC, include/game/types/port_hooks.h) and byte swaps use LE32/LE16/LE_AS_WRITTEN (include/game/types/le.h). Objects are byte-identical. Please keep those lines when editing the files: TEXLoadPalette.cpp, DVDLoad_OpenAllocReadRelocSync.c, CourseData_LoadPathTable.cpp, TaMode_FrameUpdate.cpp, sprite/fn_801A1494.c, CourseBgm_Load.c, CollisionFile_Load.cpp, Scene_80164614.cpp, clsound/ClSound_InitSoundSystem.c, clstream/ClStream_UpdateAll.c.
 
+## n3-20261110-1351 | 2026-11-10 13:51Z | from: n3 | byte order note
+re: -
+status: note
+
+FYI, no action needed: docs/notes/byte_order.md lists the disc file formats, the structs laid over them and the byte-swap sites, for the PC port. Documentation only.
+

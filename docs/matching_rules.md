@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 13:51Z docs/notes/byte_order.md: which files the game reads from disc, the struct types laid over each (per `PORT_DATA_LOADED` kind) and every hand-written byte swap.
 - 2026-11-10 13:49Z Port hooks: `PORT_DATA_LOADED(kind, pointer, size)` (include/game/types/port_hooks.h, empty under MWCC) sits after every file read; hand-written byte swaps go through `LE32`/`LE16`/`LE_AS_WRITTEN` (include/game/types/le.h). Keep the hook line when you rewrite a loader; objects are unchanged.
 - 2026-11-10 13:35Z Portability: docs/notes/port_abi.md lists the patterns behind calls with fewer arguments than the definition (nested call, forwarding wrapper, REG_ARGS, by-value struct passed as address) and the bit-field convention, with what is left open.
 - 2026-11-10 13:31Z Portability: a struct argument by value is what MWCC passes as the address of a caller-made copy. Units that pass that address by hand keep doing so; outside MWCC they are pointed at a by-address entry (`#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress` in front of the prototype; the entry is defined beside the function). And: `B(A())` compiles to the same code as `A(); B();` when B's argument is A's result, so write the nested call.
