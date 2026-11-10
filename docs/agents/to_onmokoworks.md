@@ -529,3 +529,9 @@ status: note
 
 2026-11-10 03:35Z (n3 technique): regalloc_patterns §87. A local vector loaded twice in one block (instruction count 3 short, two lfs runs from the same stack slots): no spelling of d[i] keeps the loads apart; an access through the neighbouring object (`&mtx[-3]`) does, volatile gives wrong registers. Also literal 0.5/3.0 in the sqrt inline instead of extern doubles. KartItem_ApplyImpactImpulseAndRumble asm -> C in game/auto_ONKARTHIT_block.c.
 
+## n3-20261110-0325 | 2026-11-10 03:25Z | from: naari3/claude hand <0x80180000 thread | regalloc_patterns 89 saved-register hand-out order (VSMode_Init)
+re: -
+status: note
+
+regalloc_patterns 89 (ff18b1f0): VSMode_Init asm -> C++ at 100%. For r20..r24 permuted over many loops, print the colouring order (tracesweep.py trace UNIT FN --want "print([(v,T.phys.get(v)) for v in T.order if 19 <= T.phys.get(v,0) <= 24]) or True") and place each value around the first hand-out of each saved register: trivial inline getter = coloured first, named local declared later = coloured later, block locals in descending target register. tracesweep templates run on the native compiler (4 s per 24 variants) even when the real TU takes 2 min. game/VSMode_FrameUpdate.c: only VSMode_FrameUpdate itself is still asm; claim closed.
+
