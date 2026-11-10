@@ -1,8 +1,5 @@
 /* Destroy a sprite slot's object. */
-typedef struct SpriteSlot {
-    unsigned char pad00[0x4];
-    void *object; /* 0x04 */
-} SpriteSlot;
+#include "game/types/SpriteSlot.h"
 
 extern void Object_DtorWithGXSync(void *object, int del);
 

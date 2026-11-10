@@ -186,17 +186,9 @@ static const CoinTimeTable kTimesRev = {{
     { { 11, lbl_803C4A28, 7708, 126.4000015258789f }, { 0, lbl_803C4A3C, 7687, 126.0999984741211f } },
 }};
 } /* extern "C" */
-typedef struct RaceResult {
-    char pad00;
-    unsigned char retired;
-    char pad02[0x18 - 0x2];
-    int coins;
-    int coinGoal;
-} RaceResult;
+#include "game/types/RaceResult.h"
 
-typedef struct RankSlot {
-    unsigned char active;
-} RankSlot;
+#include "game/types/RankSlot.h"
 
 typedef struct PlayerData {
     char pad00[0x48];

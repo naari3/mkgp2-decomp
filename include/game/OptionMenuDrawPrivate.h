@@ -1,10 +1,10 @@
 #ifndef GAME_OPTION_MENU_DRAW_PRIVATE_H
 #define GAME_OPTION_MENU_DRAW_PRIVATE_H
-struct OptionDrawPrefix { int layer, pad4; float x, y, alpha; };
+#include "game/types/OptionDrawPrefix.h"
 struct OptionDrawPanel : OptionDrawPrefix {
     virtual void v8(); virtual void vC(); virtual void v10(); virtual void v14(); virtual void Draw();
 };
-struct OptionDrawTarget { char pad[0x198]; signed char count; };
+#include "game/types/OptionDrawTarget.h"
 struct OptionDrawScene {
     char pad0[0x20]; OptionDrawTarget *target; void *preview;
     char pad28[0x10]; OptionDrawPanel *panel38; OptionDrawPanel *panel3C;

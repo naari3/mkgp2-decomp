@@ -4,11 +4,7 @@
 /* Private view of the voice queue and its 0x68-byte race entries. */
 #include "game/os_time.h"
 
-typedef struct VoiceQueueEntry {
-    short id;
-    short priority;
-    unsigned char flag;
-} VoiceQueueEntry;
+#include "game/types/VoiceQueueEntry.h"
 
 extern int g_countdownVoiceId;
 extern OSTime g_voiceLastTime;

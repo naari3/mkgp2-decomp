@@ -4,11 +4,7 @@
  * effect and item resources the race can need.
  * The slot getter returns an int; the preload loop narrows it to a byte. */
 
-typedef struct RaceParams {
-    signed char laps;
-    float timeLimit;
-    float lapBonus;
-} RaceParams;
+#include "game/types/RaceParams.h"
 
 struct GameModeBase {
     GameModeBase() {}

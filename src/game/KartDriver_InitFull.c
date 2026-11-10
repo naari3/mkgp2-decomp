@@ -1116,8 +1116,8 @@ struct Driver {
     unsigned char pad369[11]; int a374; HUD12 *a378; unsigned char pad37C[4]; HUD36 *a380;
 };
 struct ModelEntry { const char *file,*wheelA,*wheelB; };
-struct CharacterEntry { unsigned char pad00[4]; const char *file,*anim,*other; unsigned char pad10[8]; const char **motion; unsigned char pad1C[16]; };
-struct JointMatrix { unsigned char pad00[28]; float value; };
+#include "game/types/CharacterEntry.h"
+#include "game/types/JointMatrix.h"
 extern "C" {
 extern int g_cupId,g_roundIndex; extern unsigned char lbl_803F5928[];
 extern const char *lbl_806CEDD8,*lbl_806CEDDC,*lbl_806CEDE0,*lbl_806CEDE4,*lbl_806CEDE8;

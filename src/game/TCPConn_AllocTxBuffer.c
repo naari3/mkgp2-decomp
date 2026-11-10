@@ -5,10 +5,7 @@
  * 0xA000 to *out_size on success, 0 on exhaustion (when out_size != NULL).
  */
 
-typedef struct MediaBuffer {
-    unsigned char busy;
-    void *data;
-} MediaBuffer;
+#include "game/types/MediaBuffer.h"
 
 extern MediaBuffer g_mediaBuffers[6];
 

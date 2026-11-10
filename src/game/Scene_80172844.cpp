@@ -7,14 +7,9 @@
 
 #include "game/types/Vec3f.h"
 
-struct Vec2f {
-    float x, y;
-};
+#include "game/types/Vec2f.h"
 
-struct SlotDesc {
-    float params[4];
-    int obj;
-};
+#include "game/types/SlotDesc.h"
 
 extern const char lbl_8036E8B0[0x14] = "homing_target.tpl";
 extern const char lbl_8036E8C4[0x10] = "target_line.tpl";

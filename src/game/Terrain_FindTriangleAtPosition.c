@@ -5,17 +5,7 @@
  * and floating-point temporaries.
  */
 
-typedef struct TerrainTri {
-    float minX;
-    float minZ;
-    float maxX;
-    float maxZ;
-    float v[3][3];
-    float edgeNormal[3][3];
-    unsigned int wallEdges;
-    unsigned char pad_5C[4];
-    float plane[4];
-} TerrainTri;
+#include "game/types/TerrainTri.h"
 
 typedef struct TerrainCell {
     TerrainTri *tris;

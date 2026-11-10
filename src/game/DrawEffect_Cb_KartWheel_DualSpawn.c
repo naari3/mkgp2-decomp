@@ -18,10 +18,7 @@ static inline float sinf(float x)
     return sin(x);
 }
 
-typedef struct KartStatus {
-    unsigned char pad[0x10];
-    unsigned long long flags;
-} KartStatus;
+#include "game/types/KartStatus.h"
 
 static inline unsigned char has_flag(KartStatus *st, unsigned long long mask)
 {

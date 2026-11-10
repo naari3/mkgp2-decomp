@@ -4,10 +4,7 @@
 
 #include "game/types/Vec3f.h"
 
-struct CourseModel {
-    void *vtable;
-    void *model;
-};
+#include "game/types/CourseModel.h"
 
 extern "C" {
 void Object_GetJObjPositionVec(void *, Vec3f *);

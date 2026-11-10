@@ -21,10 +21,7 @@ extern unsigned char lbl_806D84D8[4];
  */
 #pragma cplusplus on
 
-struct ListNode {
-    ListNode *prev;
-    ListNode *next;
-};
+#include "game/types/ListNode.h"
 
 struct ListIter {
     ListNode *n;
@@ -35,10 +32,7 @@ struct List {
     ListNode head;
 };
 
-struct DataBuf {
-    int pad0;
-    void *data;
-};
+#include "game/types/DataBuf.h"
 
 class DrawObj {
 public:
@@ -1146,11 +1140,11 @@ extern "C" void fn_80159BD0(OptionMenu *self, int layer, float x, float y, float
 }
 
 /* ---- formerly OptionMenuDraw.cpp ---- */
-struct OptionDrawPrefix { int layer, pad4; float x, y, alpha; };
+#include "game/types/OptionDrawPrefix.h"
 struct OptionDrawPanel : OptionDrawPrefix {
     virtual void v8(); virtual void vC(); virtual void v10(); virtual void v14(); virtual void Draw();
 };
-struct OptionDrawTarget { char pad[0x198]; signed char count; };
+#include "game/types/OptionDrawTarget.h"
 struct OptionDrawScene {
     char pad0[0x20]; OptionDrawTarget *target; void *preview;
     char pad28[0x10]; OptionDrawPanel *panel38; OptionDrawPanel *panel3C;
@@ -1273,9 +1267,7 @@ struct VObj {
     virtual void Update();
 };
 
-struct VObjPad {
-    char pad[0x14];
-};
+#include "game/types/VObjPad.h"
 
 struct VObj14 : VObjPad {
     virtual ~VObj14();

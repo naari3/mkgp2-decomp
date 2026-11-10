@@ -4,10 +4,7 @@ extern "C" const char lbl_803BFB30[96] = { 68, 101, 115, 116, 114, 111, 121, 32,
 #pragma force_active reset
 extern "C" /* Course object set owned by lbl_806D19B0; deleted through its inline dtor. */
 struct HSD_Obj;
-struct ObjEntry {
-    int id;
-    int arg;
-};
+#include "game/types/ObjEntry.h"
 extern "C" {
 extern ObjEntry *lbl_804EBD50[3];
 extern ObjEntry *lbl_804EBD5C[3];

@@ -7,9 +7,9 @@ const unsigned char lbl_8032E648[1104] = { 0x3F, 0x80, 0x0, 0x0, 0x3F, 0x33, 0x3
  * spawns a blast trail when triggered, and scales its two bell joints along
  * keyframe curves while the second animation plays. */
 #include "game/types/Vec.h"
-typedef struct { float v[3]; } FloatTriple;
+#include "game/types/FloatTriple.h"
 typedef struct { float v[6]; } FloatSix;
-typedef struct { unsigned char b[0x1EC]; } ItemObjectCopy;
+#include "game/types/ItemObjectCopy.h"
 
 typedef struct ScaleKey {
     float t[5];

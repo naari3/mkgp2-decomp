@@ -4,8 +4,8 @@
  * tools/postprocess_sdata2.py.
  */
 #include "game/types/Vec3.h"
-struct XZ { float x, z; };
-struct Rect { float minX, minZ, maxX, maxZ; };
+#include "game/types/XZ.h"
+#include "game/types/Rect.h"
 
 struct CarObject;
 struct GoalPlane { Vec3 *point; Vec3 normal; };

@@ -1,10 +1,7 @@
 /* ItemHandler_Star @ 0x8003E540: per-frame handler while the kart holds a
  * star; counts the star down and clears the held item when it runs out. */
 
-typedef struct ItemKartFlag {
-    unsigned char pad0[4];
-    unsigned char active; /* 0x4 */
-} ItemKartFlag;
+#include "game/types/ItemKartFlag.h"
 
 typedef struct ItemKart {
     unsigned char pad000[0x174];

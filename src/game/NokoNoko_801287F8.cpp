@@ -13,7 +13,7 @@ void *operator new(unsigned long size);
 void operator delete(void *p);
 
 #include "game/types/Vec3.h"
-struct LNode { char pad[8]; void *f8; };
+#include "game/types/LNode.h"
 struct Trail { int age; Vec3 pos; };
 struct Shot {
     char pad0[0x14];
@@ -40,11 +40,7 @@ struct ShotOwner {
     int trailCount;
 };
 
-struct ModelPair {
-    void **vt;
-    void *a;
-    void *b;
-};
+#include "game/types/ModelPair.h"
 
 struct VObj {
     virtual ~VObj();
@@ -855,12 +851,7 @@ extern "C" TimeTrialMode *TimeTrial_Destroy(TimeTrialMode *self, short flag)
  * are mapped in tools/extab_user_renames.json. */
 #pragma exceptions on
 
-struct RenderObj {
-    char pad0[0x238];
-    int x238;
-    char pad23C[0x94];
-    unsigned char x2D0;
-};
+#include "game/types/RenderObj.h"
 
 struct InputManager { char data[0x37C]; InputManager(); };
 struct Camera { char data[0x2C]; Camera(float a, float b, int w, int h, int target); };

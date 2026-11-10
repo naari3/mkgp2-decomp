@@ -1,4 +1,4 @@
-typedef struct ClStreamSlot { unsigned int handle, id; } ClStreamSlot;
+#include "game/types/ClStreamSlot.h"
 typedef struct ClBgmFiles { const char* left; const char* right; } ClBgmFiles;
 extern unsigned char ClSound_Initialized;
 extern ClStreamSlot ClSound_ActiveStreams[4];

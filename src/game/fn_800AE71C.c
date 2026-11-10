@@ -2,9 +2,7 @@
  * per-axis product of the four layer scales, the product of the four layer
  * alphas, and the global-scale / timer setters. */
 
-typedef struct AnimVec3 {
-    float x, y, z;
-} AnimVec3;
+#include "game/types/AnimVec3.h"
 
 typedef struct AnimState {
     unsigned char pad00[0x08];

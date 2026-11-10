@@ -1,25 +1,5 @@
 /* Observed 0xBC-byte slot view; unknown fields remain padding. */
-typedef struct RaceContextSlot {
-    int type;
-    int id;
-    unsigned int word08, word0C;
-    unsigned char pad10[0x60];
-    void* driver;
-    unsigned char pad74[0x0C];
-    void* position;
-    int index84;
-    unsigned int word88, word8C;
-    int index90, index94;
-    unsigned char pad98[4];
-    unsigned int word9C;
-    unsigned char padA0[4];
-    float scale;
-    void* item;
-    int indexAC;
-    int state;
-    unsigned int payloadB4;
-    unsigned int wordB8;
-} RaceContextSlot;
+#include "game/types/RaceContextSlot.h"
 
 extern const float lbl_806D4898;
 

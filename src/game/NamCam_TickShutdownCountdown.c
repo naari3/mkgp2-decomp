@@ -1,13 +1,7 @@
 /* Per-frame NAM camera shutdown: drain frames until the socket goes idle
  * (or the countdown runs out), then free the receiver. Returns 1 when it
  * is gone. */
-typedef struct NamCamSocket {
-    unsigned char pad00[0x10];
-    signed char busy;       /* 0x10 */
-    unsigned char pad11[0x1b];
-    int countdown;          /* 0x2C */
-    int state;              /* 0x30 */
-} NamCamSocket;
+#include "game/types/NamCamSocket.h"
 
 typedef struct NamCam {
     unsigned char frame[0x80000];

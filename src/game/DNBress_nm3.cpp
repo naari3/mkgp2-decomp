@@ -35,10 +35,7 @@ struct AnimCtrl {
     ~AnimCtrl();
 };
 
-struct KartRender {
-    char pad000[0x23C];
-    int x23c;
-};
+#include "game/types/KartRender.h"
 
 class GXChannel {
 public:

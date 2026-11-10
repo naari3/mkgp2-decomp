@@ -1,7 +1,4 @@
-typedef struct TObjView {
-    unsigned char pad[0x74];
-    float mtx[3][4];
-} TObjView;
+#include "game/types/TObjView.h"
 
 extern const float lbl_806D927C;
 extern void PSMTXTrans(float m[3][4], float x, float y, float z);

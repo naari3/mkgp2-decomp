@@ -6,10 +6,7 @@
 
 #include "game/types/Vec3f.h"
 
-struct SlotDesc {
-    float params[4];
-    int obj;
-};
+#include "game/types/SlotDesc.h"
 
 struct EffectObj {
     char pad00[0x4];

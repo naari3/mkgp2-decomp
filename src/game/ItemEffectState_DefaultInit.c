@@ -1,8 +1,4 @@
-typedef struct ItemEffectCallback {
-    int a;
-    int b;
-    int c;
-} ItemEffectCallback;
+#include "game/types/ItemEffectCallback.h"
 
 typedef struct ItemEffectState {
     int slot;

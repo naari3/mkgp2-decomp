@@ -1,5 +1,5 @@
 typedef struct MaterialNode { char pad[8]; void *material; } MaterialNode;
-typedef struct UV { float u,v; } UV;
+#include "game/types/UV.h"
 typedef struct Wave { float speedU,speedV,scaleU,scaleV,ampU,ampV,freqU,freqV; MaterialNode *node; char pad24[0x10]; int count; unsigned short *indices; UV *output,*input; float phaseU,phaseV; } Wave;
 typedef struct Obj { void *vt,*model; Wave *wave; } Obj;
 

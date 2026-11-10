@@ -23,9 +23,7 @@ public:
     virtual void v14();
 };
 
-struct Pad14 {
-    char pad[0x14];
-};
+#include "game/types/Pad14.h"
 
 class VObj14 : public Pad14 {
 public:
@@ -37,17 +35,9 @@ public:
     virtual void v1C();
 };
 
-struct Countdown {
-    void *vt;
-    int f4;
-    int delay;
-    int state;
-};
+#include "game/types/Countdown.h"
 
-struct LapSlot {
-    float t;
-    char pad4[0x24];
-};
+#include "game/types/LapSlot.h"
 
 struct LapCtrl {
     char pad0[0x18];
@@ -86,12 +76,7 @@ public:
     }
 };
 
-struct Spark {
-    float x;
-    float y;
-    float z;
-    int life;
-};
+#include "game/types/Spark.h"
 
 struct StepHolder {
     char pad0[0xC];
@@ -116,11 +101,7 @@ struct StepHolder {
     unsigned char glow;
 };
 
-struct KartVariant {
-    char pad0[0x1F4];
-    int kind;
-    int sub;
-};
+#include "game/types/KartVariant.h"
 
 struct CountEntry {
     int count;
@@ -645,9 +626,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 }
 
 
-struct ResTrio {
-    char res[3][0x58];
-};
+#include "game/types/ResTrio.h"
 
 inline ResTrio *ResTrio_Destroy(ResTrio *self, short flag) {
     if (self != 0) {
@@ -763,11 +742,7 @@ struct ResultFader {
     float alpha;
 };
 
-struct Pad14F {
-    char pad0[4];
-    unsigned char f4;
-    char pad5[0xF];
-};
+#include "game/types/Pad14F.h"
 
 class VObj14F : public Pad14F {
 public:

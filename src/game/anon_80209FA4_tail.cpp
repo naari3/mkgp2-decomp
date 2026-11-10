@@ -18,9 +18,7 @@ void *GetInputManager(void);
 
 /* ---- job runner singleton ---- */
 
-struct JobRunner {
-    char pad;
-};
+#include "game/types/JobRunner.h"
 
 extern "C" JobRunner *lbl_806D1A00;
 extern "C" JobRunner lbl_806D1A20;
@@ -61,10 +59,7 @@ struct JobTask15 : JobTask {
     JobTask15();
 };
 
-struct JobEntry {
-    int type;
-    const char *name;
-};
+#include "game/types/JobEntry.h"
 
 struct JobRodata {
     char pad000[0x4E0];

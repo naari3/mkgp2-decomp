@@ -6,13 +6,7 @@ struct SpriteObj {
     SpriteObj(int anim, int loop, float x, float y, float sx, float sy, float a, float b);
 };
 
-struct InputView {
-    unsigned char opaque[4];
-    unsigned char enabled;
-    unsigned char opaque5[0x13];
-    int held;
-    int edge;
-};
+#include "game/types/InputView.h"
 
 struct FlowBase {
     void *vt;

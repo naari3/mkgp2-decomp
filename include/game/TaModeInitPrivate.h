@@ -2,11 +2,7 @@
 #define GAME_TA_MODE_INIT_PRIVATE_H
 void *operator new(unsigned long);
 void operator delete(void *);
-typedef struct RaceParams {
-    signed char laps;
-    float timeLimit;
-    float lapBonus;
-} RaceParams;
+#include "game/types/RaceParams.h"
 
 struct GameModeBase {
     GameModeBase() {}

@@ -4,10 +4,7 @@
  * zeroing both fields.
  */
 
-typedef struct MediaBuffer {
-    unsigned char busy;
-    void *data;
-} MediaBuffer;
+#include "game/types/MediaBuffer.h"
 
 extern void MemoryManager_Free(void *p);
 extern MediaBuffer g_mediaBuffers[6];

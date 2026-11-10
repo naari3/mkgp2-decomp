@@ -151,10 +151,7 @@ struct CamVecs {
     Vec3f target;
 };
 
-union WGPipe {
-    unsigned char u8;
-    float f32;
-};
+#include "game/types/WGPipe.h"
 
 #define GXFIFO (*(volatile WGPipe *)0xCC008000)
 
@@ -1548,10 +1545,7 @@ extern const int lbl_806D7F50[2];
  */
 
 
-struct ListNode {
-    ListNode *prev;
-    ListNode *next;
-};
+#include "game/types/ListNode.h"
 struct ListIter {
     ListNode *n;
 };

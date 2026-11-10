@@ -2,7 +2,7 @@
  * held over the kart. It shows three sprite children around a carried
  * gabyou. When released (sub flag at +0xA0 == 1) it launches three
  * GabyouTripleChild objects in a spread and frees itself. */
-typedef struct { float v[3]; } FloatTriple;
+#include "game/types/FloatTriple.h"
 
 extern FloatTriple lbl_8032FA1C;
 extern FloatTriple lbl_8032FA10;

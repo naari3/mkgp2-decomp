@@ -61,10 +61,7 @@ extern float FAbs_FloatAsDouble(float f);
 extern unsigned char fn_8011D890(int id, float uv[2][2], int flags);
 extern void ResourceTable_GetSizeXY(int id, float *x, float *y);
 
-typedef union {
-    float f;
-    unsigned int u;
-} WGPipeWord;
+#include "game/types/WGPipeWord.h"
 
 #define GXWGFifo (*(volatile WGPipeWord *)0xCC008000)
 

@@ -2,14 +2,7 @@
  * kart when the channel has a source and is not muted. */
 #include "game/types/Vec.h"
 
-typedef struct SoundSource {
-    unsigned char pad00[0xc];
-    float x; /* 0x0C */
-    unsigned char pad10[0xc];
-    float y; /* 0x1C */
-    unsigned char pad20[0xc];
-    float z; /* 0x2C */
-} SoundSource;
+#include "game/types/SoundSource.h"
 
 typedef struct KartAudioChannel {
     unsigned char pad00[0x4];

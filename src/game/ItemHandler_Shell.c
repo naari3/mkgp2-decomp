@@ -1,10 +1,7 @@
 /* ItemHandler_Shell @ 0x8003E8BC: shell hit handler; waits out the initial
  * spin, then runs the stage timer like KartItem_TickEffectStage_a. */
 
-typedef struct ItemKartFlag {
-    unsigned char pad0[4];
-    unsigned char active; /* 0x4 */
-} ItemKartFlag;
+#include "game/types/ItemKartFlag.h"
 
 typedef struct ItemKart {
     unsigned char pad000[0x174];

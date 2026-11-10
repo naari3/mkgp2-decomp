@@ -1,8 +1,5 @@
 /* Output of fn_8019FF8C; only the leading position is read here. */
-struct SpriteNodeInfo {
-    float x, y;
-    char rest[0x28];
-};
+#include "game/types/SpriteNodeInfo.h"
 class Sprite {
 public:
     Sprite(int id, int a, int b);

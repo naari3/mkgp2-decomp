@@ -1,8 +1,5 @@
 /* Scale a named joint of the slot's object. */
-typedef struct SpriteSlot {
-    unsigned char pad00[0x4];
-    void *object; /* 0x04 */
-} SpriteSlot;
+#include "game/types/SpriteSlot.h"
 
 extern void *ResolveJointByName(void *object, const char *name);
 extern void JObj_SetScale(void *object, void *jobj, float x, float y, float z);

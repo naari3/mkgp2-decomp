@@ -5,9 +5,7 @@
 
 /* OSCalendarTime layout from dolphin/os.h; that umbrella header also pulls
  * in libc headers unavailable under this game TU's compiler include flags. */
-typedef struct OSCalendarTime {
-    int sec, min, hour, mday, mon, year, wday, yday, msec, usec;
-} OSCalendarTime;
+#include "game/types/OSCalendarTime.h"
 extern void OSTicksToCalendarTime(OSTime ticks, OSCalendarTime *td);
 
 #endif

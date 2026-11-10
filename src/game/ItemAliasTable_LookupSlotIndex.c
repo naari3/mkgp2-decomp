@@ -1,8 +1,4 @@
-typedef struct ItemAliasEntry {
-    int source;
-    int dest;
-    int flags;
-} ItemAliasEntry;
+#include "game/types/ItemAliasEntry.h"
 
 typedef struct ItemClassEntry {
     unsigned char pad0[4];

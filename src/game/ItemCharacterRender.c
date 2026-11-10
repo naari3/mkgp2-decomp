@@ -5,10 +5,7 @@
 #include "game/types/Vec3.h"
 typedef float Matrix3x4[3][4];
 
-typedef struct KartDriverCharacterView {
-    char pad0[0x1F8];
-    unsigned int characterId;
-} KartDriverCharacterView;
+#include "game/types/KartDriverCharacterView.h"
 
 typedef struct ItemRenderStateView {
     char pad0[0x18];

@@ -30,11 +30,7 @@ struct ShowAnim {
     ~ShowAnim();
 };
 
-struct ShowXform {
-    float pos[3];
-    float rot[3];
-    float scale;
-};
+#include "game/types/ShowXform.h"
 
 extern "C" {
 extern int g_humanPlayerCount;

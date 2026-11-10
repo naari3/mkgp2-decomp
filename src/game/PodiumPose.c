@@ -219,12 +219,7 @@ static inline void InvWorldScale(JObj *jobj, Mtx m) {
     }
 }
 
-struct FxData {
-    int obj;
-    unsigned char active;
-    float x, y;
-    float alpha;
-};
+#include "game/types/FxData.h"
 
 struct FxBase : FxData {
     FxBase() {

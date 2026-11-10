@@ -349,10 +349,7 @@ extern const float lbl_806D58E0;
 }
 
 
-typedef union WGPipe {
-    unsigned char u8;
-    float f32;
-} WGPipe;
+#include "game/types/WGPipe.h"
 
 #define GXFIFO (*(volatile WGPipe *)0xCC008000)
 

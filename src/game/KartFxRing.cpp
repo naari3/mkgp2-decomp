@@ -1,6 +1,6 @@
 /* Ring explosion callbacks. These views describe only observed fields. */
 #include "game/types/Vec3.h"
-struct RingKartView { unsigned char pad00[0x238]; int alternateMode; };
+#include "game/types/RingKartView.h"
 struct RingEffectView {
     unsigned char pad00[0x14];
     unsigned char slot[0x14];

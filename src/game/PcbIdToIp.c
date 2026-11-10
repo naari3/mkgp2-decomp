@@ -1,9 +1,6 @@
 /* PCB id to IP address lookups, 0x800740BC..0x80074190. */
 
-typedef struct PcbIpEntry {
-    unsigned int ip;
-    const char *text;
-} PcbIpEntry;
+#include "game/types/PcbIpEntry.h"
 
 extern PcbIpEntry g_pcbIpTable[4];
 extern signed char lbl_80598A60[0x2A];

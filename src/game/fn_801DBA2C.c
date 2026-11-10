@@ -1,7 +1,4 @@
-typedef struct Obj {
-    unsigned char pad_0[0xC];
-    int f_C;
-} Obj;
+#include "game/types/Obj.h"
 
 int fn_801DBA2C(Obj *obj) {
     return obj->f_C;

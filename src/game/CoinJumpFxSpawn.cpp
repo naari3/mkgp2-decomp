@@ -1,5 +1,5 @@
 /* Narrow target-observed layout; live Ghidra types unavailable in this worker. */
-struct CoinJumpVec { float x,y,z; };
+#include "game/types/CoinJumpVec.h"
 struct CoinJumpEffect;
 struct CoinJumpGroup {
     char pad00[0x10]; CoinJumpEffect *children[5];

@@ -1,7 +1,5 @@
 /* Draw all 15 debris particles while the burst is active. */
-typedef struct DebrisParticle {
-    unsigned char data[0x2c];
-} DebrisParticle;
+#include "game/types/DebrisParticle.h"
 
 typedef struct DebrisBurst {
     unsigned char active;          /* 0x00 */

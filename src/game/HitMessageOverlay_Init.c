@@ -2,14 +2,7 @@
  * TweenInterp objects and preloads the overlay sprites.
  * TweenInterp_Dtor: deleting destructor (TweenInterp -> TweenBase). */
 
-typedef struct TweenInterp {
-    void *vtable;                /* 0x00 */
-    short from;                  /* 0x04 */
-    short to;                    /* 0x06 */
-    float t;                     /* 0x08 */
-    float value;                 /* 0x0C */
-    float speed;                 /* 0x10 */
-} TweenInterp;
+#include "game/types/TweenInterp.h"
 
 extern char lbl_80419DC8[];      /* TweenBase vtable */
 extern char lbl_80419DE0[];      /* TweenInterp vtable */

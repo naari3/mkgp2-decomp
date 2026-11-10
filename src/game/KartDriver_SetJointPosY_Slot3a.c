@@ -1,10 +1,5 @@
 /* Set the Y translation of the kart joint at 0xe8 (slot 3a). */
-typedef struct HSD_JObj {
-    unsigned char pad00[0x14];
-    unsigned int flags; /* 0x14 */
-    unsigned char pad18[0x24];
-    float translateY;   /* 0x3C */
-} HSD_JObj;
+#include "game/types/HSD_JObj.h"
 
 typedef struct KartDriver {
     void *model;  /* 0x00 */

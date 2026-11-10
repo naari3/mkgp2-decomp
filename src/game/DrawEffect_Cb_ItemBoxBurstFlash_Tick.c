@@ -1,6 +1,4 @@
-typedef struct FlashVec3 {
-    float x, y, z;
-} FlashVec3;
+#include "game/types/FlashVec3.h"
 
 typedef struct ItemBoxBurstFlash {
     unsigned char pad000[0x14];

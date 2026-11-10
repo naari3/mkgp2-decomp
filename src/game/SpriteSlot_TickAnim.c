@@ -3,11 +3,7 @@
  * SpriteSlot_SetAnimFrameAndApplyScale (0x800D657C, own TU) is inlined into
  * the "restart" state here, so its body is repeated as a static inline. */
 
-typedef struct SpriteAnimEntry {
-    signed char loop; /* 0x0 */
-    float start;      /* 0x4 */
-    float end;        /* 0x8 */
-} SpriteAnimEntry;
+#include "game/types/SpriteAnimEntry.h"
 
 typedef struct SpriteClassEntry {
     unsigned char pad0[4];

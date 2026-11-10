@@ -24,7 +24,7 @@ double atan2(double, double);
 }
 struct ReverseFlag { void *object; void *driver; unsigned char state; unsigned char pad[3]; int timer; float phase; };
 /* Mirror the HSD JObj setter inlines used by Jyugemu_Flag_Tick. */
-typedef struct JointTransform { float rotation[4], scale[3], translation[3]; } JointTransform;
+#include "game/types/JointTransform.h"
 static inline JointTransform *Transform(HSD_JObj *j) { return (JointTransform *)j->_pad_1c; }
 static inline unsigned char MatrixDirty(HSD_JObj *j) {
     unsigned int flags;

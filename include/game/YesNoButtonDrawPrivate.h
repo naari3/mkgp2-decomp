@@ -33,10 +33,7 @@ extern const float lbl_806DAB4C;
 extern const float lbl_806DAB50;
 extern const float lbl_806DAB54;
 
-struct YesNoPos {
-    float x;
-    float y;
-};
+#include "game/types/YesNoPos.h"
 extern const YesNoPos lbl_806DAAF8;
 
 void fn_8020A734(FlowFader *fader, int frames, float from, float to);

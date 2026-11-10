@@ -290,9 +290,7 @@ static inline Vec3f SBShake_GetOffset(SBShake *sh) {
     return lbl_802EE4F0;
 }
 
-typedef struct Mtx44S {
-    float v[16];
-} Mtx44S;
+#include "game/types/Mtx44S.h"
 
 /* Alias-safe 4x4 product (out may be a or b), result through a scratch buffer. */
 static inline void Mtx44S_Mul(Mtx44S *out, const Mtx44S *a, const Mtx44S *b) {

@@ -13,7 +13,7 @@ struct JObj {
     unsigned char pad1C[0x60];
     void *aobj;
 };
-struct AnimRow { void *descriptor; void **joint; void **material; void **shape; };
+#include "game/types/AnimRow.h"
 struct Normal3D {
     unsigned char pad00[2]; unsigned char changed; unsigned char animated;
     unsigned char pad04[4];

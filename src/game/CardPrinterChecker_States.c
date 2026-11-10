@@ -3,11 +3,7 @@
  * The checker keeps its current state as a C++ pointer-to-member at +0x0.
  */
 
-typedef struct CardPrinterStatePtr {
-    int thisDelta;
-    int vtblOffset;
-    void *func;
-} CardPrinterStatePtr;
+#include "game/types/CardPrinterStatePtr.h"
 
 typedef struct CardPrinterChecker {
     CardPrinterStatePtr state; /* 0x00 */

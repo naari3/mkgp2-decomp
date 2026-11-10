@@ -168,10 +168,7 @@ struct BannerPartB {
     }
 };
 
-struct CountdownResStep {
-    int threshold;
-    int resId;
-};
+#include "game/types/CountdownResStep.h"
 
 extern "C" {
 extern CountdownResStep lbl_803C00DC[14];

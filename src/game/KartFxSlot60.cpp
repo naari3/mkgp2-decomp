@@ -1,6 +1,6 @@
 /* Drift-spark shadow colour controller: observed local ABI views only. */
 #include "game/types/Vec3.h"
-struct KartState { unsigned char pad00[0x10]; unsigned long long flags; };
+#include "game/types/KartState.h"
 struct Kart { unsigned char pad00[0x238]; int enabled; unsigned char pad23C[0xC8]; KartState *state; };
 struct Effect {
     unsigned char pad00[0x2C]; float alpha; Vec3 color;

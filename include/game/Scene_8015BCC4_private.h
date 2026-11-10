@@ -11,5 +11,5 @@ struct ViewerNormal3D {
     char opaque[0x5c];
     ViewerNormal3D(unsigned int, int);
 };
-struct ViewerVec { float x, y, z; };
+#include "game/types/ViewerVec.h"
 #endif

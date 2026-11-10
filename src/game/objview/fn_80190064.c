@@ -1,7 +1,7 @@
 typedef struct Attr { int attr; int unused; int type; int format; unsigned short unknown,stride; void *data; } Attr;
 typedef struct Handle { char pad[8]; Attr *attrs; } Handle;
 typedef struct DObj { char pad[0xc]; Handle *handle; } DObj;
-typedef struct UV { float u,v; } UV;
+#include "game/types/UV.h"
 typedef struct Wave { float speedU,speedV,scaleU,scaleV,ampU,ampV,freqU,freqV; DObj *node; Handle *handle; Attr *copy,*original; int attrIndex,count; unsigned short *indices; UV *output,*input; float phaseU,phaseV; } Wave;
 extern const float lbl_806D94E0,lbl_806D94E4,lbl_806D94E8,lbl_806D94EC,lbl_806D94DC;
 extern DObj *HSD_JObjGetDObj(void *);

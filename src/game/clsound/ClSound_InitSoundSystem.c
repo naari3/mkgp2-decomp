@@ -1,8 +1,8 @@
 #include "game/clsound_s25_private.h"
 #include "game/clsound_spatial_private.h"
 
-typedef struct SoundEvent { unsigned int id; int state; int countdown; } SoundEvent;
-typedef struct ActiveStream { unsigned int handle, id; } ActiveStream;
+#include "game/types/SoundEvent.h"
+#include "game/types/ActiveStream.h"
 /* Separate objects let MWCC retain the shared BSS base and subobject addresses. */
 SoundEvent lbl_80677F40[37];
 static SND_AUX_REVERBHI ClSound_ReverbHI;

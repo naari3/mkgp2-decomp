@@ -2,10 +2,7 @@
  * Cancel the held item unless it is locked, 0x800404C4..0x80040600.
  */
 
-typedef struct CancelFlag {
-    unsigned char pad0[4];
-    unsigned char active; /* 0x4 */
-} CancelFlag;
+#include "game/types/CancelFlag.h"
 
 typedef struct CancelKart {
     unsigned char pad000[0x174];

@@ -19,11 +19,7 @@ struct ShowModel {
     char pad[0x20 - 0x4];
 };
 
-struct ShowXform {
-    float pos[3];
-    float rot[3];
-    float scale;
-};
+#include "game/types/ShowXform.h"
 
 struct ViewerEntry {
     const char *file;

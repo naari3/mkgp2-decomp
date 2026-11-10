@@ -1,8 +1,5 @@
 /* Set an MJObj's RGBA colour, clamping each channel to 0..255. */
-typedef struct MJObj {
-    unsigned char pad00[0x88];
-    unsigned char rgba[4]; /* 0x88 */
-} MJObj;
+#include "game/types/MJObj.h"
 
 extern unsigned char lbl_806D24A0[8]; /* source file name */
 extern char lbl_802E9D04[];           /* assert condition */

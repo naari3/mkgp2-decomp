@@ -1,6 +1,4 @@
-typedef struct GXTexObj {
-    unsigned int dummy[8];
-} GXTexObj;
+#include "game/types/GXTexObj.h"
 
 extern GXTexObj lbl_804FE060;
 extern char lbl_804FE080[];

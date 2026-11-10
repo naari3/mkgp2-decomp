@@ -1,7 +1,4 @@
-typedef struct MObjView {
-    unsigned char base[0x20];
-    unsigned char color[4];
-} MObjView;
+#include "game/types/MObjView.h"
 
 typedef struct MObjClassView {
     unsigned char base[0x40];

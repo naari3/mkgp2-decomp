@@ -1,9 +1,4 @@
-typedef struct SpriteAnimData {
-    unsigned char pad[0x14];
-    float length;
-    void *frames;
-    short *params;
-} SpriteAnimData;
+#include "game/types/SpriteAnimData.h"
 
 extern int lbl_806D16EC;
 extern int lbl_806D16E8;

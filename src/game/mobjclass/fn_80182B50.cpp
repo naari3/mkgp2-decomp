@@ -3,11 +3,7 @@ struct HSD_TObj {
     float mtx[3][4];
 };
 
-struct HSD_DObj {
-    void *parent;
-    HSD_DObj *next;
-    void *mobj;
-};
+#include "game/types/HSD_DObj.h"
 
 struct HSD_JObj {
     unsigned char pad[0x8];

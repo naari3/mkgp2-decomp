@@ -18,9 +18,7 @@ typedef struct ItemKindEntry {
     unsigned char pad11[3];
 } ItemKindEntry;
 
-typedef struct ItemObjectCopy {
-    unsigned char b[0x1EC];
-} ItemObjectCopy;
+#include "game/types/ItemObjectCopy.h"
 
 struct KartHitSink {
     virtual unsigned char onHit(void *item, int arg); /* vtable +0x8 */

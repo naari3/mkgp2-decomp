@@ -1,7 +1,5 @@
 /* Deleting destructor: destroys the flag model. */
-typedef struct JyugemuFlag {
-    void *model; /* 0x00 */
-} JyugemuFlag;
+#include "game/types/JyugemuFlag.h"
 
 extern void Object_DtorWithGXSync(void *model, int del);
 extern void MemoryManager_TimedFree(void *p);

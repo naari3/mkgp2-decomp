@@ -1,4 +1,4 @@
-struct Quat { float x,y,z,w; };
+#include "game/types/Quat.h"
 #include "game/types/Vec3.h"
 struct JObj;
 typedef void (*AnimCallback)(void);
@@ -12,7 +12,7 @@ struct JObj {
     unsigned char pad2C[0x50];
     void *aobj;
 };
-struct AnimRow { void *descriptor; void **joint; void **material; void **shape; };
+#include "game/types/AnimRow.h"
 struct Normal3D {
     unsigned char pad00[2]; unsigned char changed; unsigned char animated;
     int jointCount;

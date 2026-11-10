@@ -1,9 +1,4 @@
-typedef struct Quat {
-    float x;
-    float y;
-    float z;
-    float w;
-} Quat;
+#include "game/types/Quat.h"
 
 typedef struct HSD_JObj {
     unsigned char pad[0x14];

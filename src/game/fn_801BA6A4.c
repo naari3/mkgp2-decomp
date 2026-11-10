@@ -1,10 +1,4 @@
-typedef struct InputView {
-    unsigned char opaque[4];
-    unsigned char enabled;
-    unsigned char opaque5[0x13];
-    int held;
-    int edge;
-} InputView;
+#include "game/types/InputView.h"
 
 typedef struct EntryFlow {
     void *vt;

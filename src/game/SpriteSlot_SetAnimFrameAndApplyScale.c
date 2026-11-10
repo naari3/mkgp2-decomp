@@ -3,11 +3,7 @@
  * the resulting frame to the model. The same body is inlined into
  * SpriteSlot_TickAnim (see SpriteSlot_TickAnim.c). */
 
-typedef struct SpriteAnimEntry {
-    signed char loop; /* 0x0 */
-    float start;      /* 0x4 */
-    float end;        /* 0x8 */
-} SpriteAnimEntry;
+#include "game/types/SpriteAnimEntry.h"
 
 typedef struct SpriteClassEntry {
     unsigned char pad0[4];

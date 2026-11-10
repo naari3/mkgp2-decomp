@@ -12,7 +12,7 @@ extern const char lbl_803284A4[];
 inline void *operator new(unsigned long, void *p) { return p; }
 
 /* Four corners have nontrivial lifetime; the two remaining vectors are plain. */
-struct WarpPlainVector { float x, y, z; };
+#include "game/types/WarpPlainVector.h"
 struct WarpCorner : WarpPlainVector {
     WarpCorner(const WarpCorner &v) : WarpPlainVector(v) {}
     ~WarpCorner();

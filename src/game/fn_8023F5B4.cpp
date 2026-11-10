@@ -1,6 +1,6 @@
 #include "game/SpritePairOwner.h"
 
-struct SpriteResourceId { int id; };
+#include "game/types/SpriteResourceId.h"
 
 static inline void SetPosition(Sprite *self, float x, float y) {
     self->x = x;

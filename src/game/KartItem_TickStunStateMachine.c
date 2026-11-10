@@ -1,10 +1,7 @@
 /* KartItem_TickStunStateMachine @ 0x8003ED8C: steps the stun of the held
  * item effect and clears the item once the stun has run its course. */
 
-typedef struct ItemKartFlag {
-    unsigned char pad0[4];
-    unsigned char active; /* 0x4 */
-} ItemKartFlag;
+#include "game/types/ItemKartFlag.h"
 
 typedef struct ItemKart {
     unsigned char pad000[0x174];

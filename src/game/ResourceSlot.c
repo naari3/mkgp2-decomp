@@ -3,13 +3,9 @@
  * one GXTexObj per texture, a GXTlutObj per CI texture and the TLUT slot it
  * was assigned. Ids from 0x2B00 up name display buffers instead of files.
  */
-typedef struct GXTexObj {
-    unsigned int dummy[8];
-} GXTexObj;
+#include "game/types/GXTexObj.h"
 
-typedef struct GXTlutObj {
-    unsigned int dummy[3];
-} GXTlutObj;
+#include "game/types/GXTlutObj.h"
 
 extern void GXInitTlutObj(GXTlutObj *obj, void *lut, unsigned int fmt, unsigned short n);
 extern void GXInitTexObj(GXTexObj *obj, void *image, unsigned short w, unsigned short h, unsigned int fmt,

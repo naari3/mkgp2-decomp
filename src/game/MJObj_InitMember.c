@@ -1,9 +1,6 @@
 /* MJObj member init: run the parent class init, then default the RGBA
  * colour to opaque white. */
-typedef struct MJObj {
-    unsigned char pad00[0x88];
-    unsigned char rgba[4]; /* 0x88 */
-} MJObj;
+#include "game/types/MJObj.h"
 
 typedef struct MJObjClassInfo {
     unsigned char pad00[0x2c];

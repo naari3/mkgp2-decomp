@@ -1,8 +1,5 @@
 /* Uniform scale on a bound VfxSlot's model. */
-typedef struct VfxSlot {
-    unsigned char pad00[0x4];
-    void *model; /* 0x04 */
-} VfxSlot;
+#include "game/types/VfxSlot.h"
 
 extern void cLNormal3DWrap_Slot_SetScaleVec3(void *model, float x, float y, float z);
 

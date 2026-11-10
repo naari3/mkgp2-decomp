@@ -1,5 +1,5 @@
 /* Narrow layout from target access and existing DrawForward ABI. */
-struct DebrisVec { float x,y,z; };
+#include "game/types/DebrisVec.h"
 struct DebrisResponder { void *particles; DebrisResponder(DebrisVec, DebrisVec); };
 struct DebrisArray {
  char pad00[0x78]; void (*draw)(DebrisArray*); DebrisArray *drawSelf;

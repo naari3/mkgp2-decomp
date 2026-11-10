@@ -2,11 +2,7 @@
  * item id, resolving alias ids to their source item first. Id 0x10E (or
  * 0x45 spawned with arg 0x10E) is forced to the plain 0x45 item. */
 
-typedef struct ItemAliasEntry {
-    int source;
-    int dest;
-    int flags;
-} ItemAliasEntry;
+#include "game/types/ItemAliasEntry.h"
 
 typedef struct ItemClassEntry {
     int def;

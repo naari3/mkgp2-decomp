@@ -1081,7 +1081,7 @@ struct FaceVecView {
     FaceVecView() {}
     ~FaceVecView() {}
 };
-struct FaceDrawKart { char pad[0x23c]; int state; };
+#include "game/types/FaceDrawKart.h"
 struct FaceDrawSub {
     char pad00[0x40];
     FaceMtx m[2];

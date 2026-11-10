@@ -50,10 +50,7 @@ static inline float (*HSD_JObjGetMtxPtr(HSD_JObj *jobj))[4]
     return jobj->mtx;
 }
 
-typedef struct ItemKartFlag {
-    unsigned char pad0[4];
-    unsigned char active; /* 0x4 */
-} ItemKartFlag;
+#include "game/types/ItemKartFlag.h"
 
 typedef struct ItemKart {
     unsigned char pad000[0x1C];

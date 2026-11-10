@@ -1,10 +1,6 @@
 /* Two-sample position stepping against the course terrain, 0x800364D8..0x80036710. */
 
-typedef struct TerrainVertex {
-    float x;
-    float y;
-    float z;
-} TerrainVertex;
+#include "game/types/TerrainVertex.h"
 
 typedef struct TerrainTriangle {
     unsigned char pad_00[0x10];
@@ -13,12 +9,7 @@ typedef struct TerrainTriangle {
     unsigned int wallEdges;
 } TerrainTriangle;
 
-typedef struct TerrainSegment {
-    float ax;
-    float az;
-    float bx;
-    float bz;
-} TerrainSegment;
+#include "game/types/TerrainSegment.h"
 
 typedef struct TerrainSample {
     void *walls;

@@ -23,10 +23,7 @@ typedef struct Particle {
     signed char dead;  /* 0x1D */
 } Particle;
 
-typedef union WGPipe {
-    unsigned char u8;
-    float f32;
-} WGPipe;
+#include "game/types/WGPipe.h"
 
 #define GXFIFO (*(volatile WGPipe *)0xCC008000)
 

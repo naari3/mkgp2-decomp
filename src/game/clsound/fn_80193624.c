@@ -1,5 +1,5 @@
-typedef struct SoundEvent { unsigned int id; int state; int countdown; } SoundEvent;
-typedef struct ActiveStream { unsigned int handle; unsigned int id; } ActiveStream;
+#include "game/types/SoundEvent.h"
+#include "game/types/ActiveStream.h"
 extern unsigned char ClSound_Initialized;
 extern SoundEvent lbl_80677F40[37];
 extern ActiveStream ClSound_ActiveStreams[4];

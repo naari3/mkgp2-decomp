@@ -1,7 +1,4 @@
-typedef struct ClStreamSlot {
-    unsigned int handle;
-    unsigned int id;
-} ClStreamSlot;
+#include "game/types/ClStreamSlot.h"
 
 extern unsigned char ClSound_Initialized;
 extern ClStreamSlot ClSound_ActiveStreams[4];

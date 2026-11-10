@@ -155,12 +155,7 @@ extern const float lbl_806D7850, lbl_806D7854, lbl_806D7858, lbl_806D785C;
 extern const float lbl_806DA870, lbl_806DA874;
 }
 
-struct FxData {
-    int obj;
-    unsigned char active;
-    float x, y;
-    float alpha;
-};
+#include "game/types/FxData.h"
 
 struct FxBase : FxData {
     FxBase() {

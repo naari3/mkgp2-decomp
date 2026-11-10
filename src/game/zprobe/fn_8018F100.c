@@ -1,10 +1,4 @@
-typedef struct ZProbe {
-    unsigned char active;
-    unsigned short x;
-    unsigned short y;
-    unsigned int z;
-    struct ZProbe *next;
-} ZProbe;
+#include "game/types/ZProbe.h"
 
 extern ZProbe *lbl_806D16A0;
 

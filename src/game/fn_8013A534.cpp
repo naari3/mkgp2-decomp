@@ -3,11 +3,7 @@
  */
 #pragma cplusplus on
 
-struct ModelPair {
-    void **vt;
-    void *a;
-    void *b;
-};
+#include "game/types/ModelPair.h"
 
 /* TOP-END */
 

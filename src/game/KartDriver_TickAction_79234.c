@@ -1,11 +1,5 @@
 /* Forward to the kart's tire FX (KartTireFX_AddPitch) once the kart model is loaded. */
-typedef struct KartDriver {
-    void *model;           /* 0x000 */
-    unsigned char pad004[0x8];
-    void *loaded;          /* 0x00C */
-    unsigned char pad010[0x2fc];
-    void *tireFX;          /* 0x30C */
-} KartDriver;
+#include "game/types/KartDriver.h"
 
 extern void KartTireFX_AddPitch(void *tireFX, float value);
 

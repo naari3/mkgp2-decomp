@@ -1,10 +1,7 @@
 #ifndef GAME_ITEMSELECTREFILLPRIVATE_H
 #define GAME_ITEMSELECTREFILLPRIVATE_H
 #include "game/ItemSelectState.h"
-struct RefillSprite {
-    int field0, layer, field8;
-    float x, y, sx, sy, field1c, alpha;
-};
+#include "game/types/RefillSprite.h"
 struct RefillGroup { RefillSprite *sprite; };
 struct RefillChoice {
     RefillGroup *groups[4];

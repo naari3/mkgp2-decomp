@@ -2,10 +2,7 @@
  * Cancel the held item and queue the default animation, 0x8003F668..0x8003F77C.
  */
 
-typedef struct CancelFlag {
-    unsigned char pad0[4];
-    unsigned char active; /* 0x4 */
-} CancelFlag;
+#include "game/types/CancelFlag.h"
 
 typedef struct CancelKart {
     unsigned char pad000[0x174];

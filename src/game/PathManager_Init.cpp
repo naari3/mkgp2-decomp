@@ -11,11 +11,7 @@ public:
     unsigned char pad_0[0x14];
 };
 
-struct PathParticipant {
-    unsigned char pad_0[0x14];
-    int node;
-    unsigned char pad_18[0x80];
-};
+#include "game/types/PathParticipant.h"
 
 class PathManager {
 public:

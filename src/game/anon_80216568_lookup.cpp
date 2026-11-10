@@ -57,17 +57,9 @@ extern const CoinRodata lbl_803C3F50;
 #define kTimesFwd (rd->timesFwd)
 #define kTimesRev (rd->timesRev)
 
-typedef struct RaceResult {
-    char pad00;
-    unsigned char retired;
-    char pad02[0x18 - 0x2];
-    int coins;
-    int coinGoal;
-} RaceResult;
+#include "game/types/RaceResult.h"
 
-typedef struct RankSlot {
-    unsigned char active;
-} RankSlot;
+#include "game/types/RankSlot.h"
 
 typedef struct PlayerData {
     char pad00[0x48];

@@ -21,15 +21,7 @@
  * them -- same pattern as LapDisp_SetTotalLaps.c.
  */
 
-typedef struct LapDisp {
-    char pad_00[0x10];
-    int currentLapLayer;   // SpriteLayer slot id used here, resId base 0xB3B
-    int totalLapsLayer;    // SpriteLayer slot id used by SetTotalLaps
-    char pad_18[0x10];
-    int currentLap;
-    int totalLaps;
-    int currentLapFloor;
-} LapDisp;
+#include "game/types/LapDisp.h"
 
 extern void SpriteLayer_SetResource(int layerId, unsigned int resourceId);
 

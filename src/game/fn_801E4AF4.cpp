@@ -6,10 +6,7 @@
  * DriveBehavior code before it). */
 #include <deque>
 
-struct SteerStep {
-    int action;
-    int frames;
-};
+#include "game/types/SteerStep.h"
 
 static void UseCtor(std::deque<SteerStep> *queue) {
     new (queue) std::deque<SteerStep>(3);

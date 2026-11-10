@@ -20,32 +20,11 @@ struct SceneBase {
     SceneBase() : done(false) {}
 };
 
-struct FlowMgrInfo {
-    char pad000[0x164];
-    int chara;
-    int f168;
-    int mode;
-    int f170;
-    int f174;
-    int f178;
-    int f17C;
-    int f180;
-    int pad184;
-    int f188[3];
-    unsigned char f194;
-};
+#include "game/types/FlowMgrInfo.h"
 
-struct CardConfig {
-    char pad00[2];
-    unsigned char f02;
-    char pad03[0xE - 3];
-    unsigned char f0E;
-    unsigned char f0F;
-};
+#include "game/types/CardConfig.h"
 
-struct DispFlags {
-    unsigned char f00;
-};
+#include "game/types/DispFlags.h"
 
 /* Menu mode base (vtable lbl_804E549C, ctor fn_801F5B54). */
 struct MenuModeBase : SceneBase {
@@ -86,13 +65,7 @@ struct CardMenuRoot : MenuModeBase {
     virtual void Draw();
 };
 
-struct InputImpl {
-    void *vt;
-    unsigned char enabled;
-    unsigned char flag5;
-    unsigned char flag6;
-    int fields[8];
-};
+#include "game/types/InputImpl.h"
 
 extern "C" {
 extern int g_localPcbRole;

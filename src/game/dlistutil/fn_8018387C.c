@@ -1,7 +1,4 @@
-typedef struct VtxDesc {
-    int attr;
-    int type;
-} VtxDesc;
+#include "game/types/VtxDesc.h"
 
 typedef struct VtxAttrEntry {
     VtxDesc *desc;

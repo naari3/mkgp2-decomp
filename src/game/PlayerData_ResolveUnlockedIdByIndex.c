@@ -1,4 +1,4 @@
-typedef struct UnlockRemap { int baseId; int flagIdx; int resultId; } UnlockRemap;
+#include "game/types/UnlockRemap.h"
 extern int kItemBaseIdTable[];
 extern UnlockRemap kItemUnlockRemap[3];
 

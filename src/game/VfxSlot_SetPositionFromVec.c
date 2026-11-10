@@ -1,8 +1,5 @@
 /* Position a bound VfxSlot's model from a vector. */
-typedef struct VfxSlot {
-    unsigned char pad00[0x4];
-    void *model; /* 0x04 */
-} VfxSlot;
+#include "game/types/VfxSlot.h"
 
 #include "game/types/Vec3.h"
 

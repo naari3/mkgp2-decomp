@@ -1,7 +1,4 @@
-typedef struct Obj {
-    unsigned char pad_0[0xC];
-    int f_C;
-} Obj;
+#include "game/types/Obj.h"
 
 extern void PathCursor_SetIndex(int);
 

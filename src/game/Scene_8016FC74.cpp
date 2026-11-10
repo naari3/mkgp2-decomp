@@ -3,10 +3,7 @@
  * with a looping SE (vtable lbl_8049123C, base vtable lbl_80490FE0).
  */
 
-struct CourseModel {
-    void *vtable;
-    void *model;
-};
+#include "game/types/CourseModel.h"
 
 extern "C" {
 extern char lbl_8049123C[];

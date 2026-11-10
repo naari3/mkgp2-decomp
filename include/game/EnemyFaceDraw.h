@@ -4,7 +4,7 @@
 typedef float FaceMtx[3][4];
 struct FaceDrawVec { float x, y, z; };
 struct Vec3c { float x, y, z; Vec3c() {} ~Vec3c() {} };
-struct FaceDrawKart { char pad[0x23c]; int state; };
+#include "game/types/FaceDrawKart.h"
 struct FaceDrawSub {
     char pad00[0x40];
     FaceMtx m[2];

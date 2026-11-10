@@ -10,10 +10,7 @@ typedef struct ScrollState {
     float velY;
 } ScrollState;
 
-typedef struct Vec2f {
-    float x;
-    float y;
-} Vec2f;
+#include "game/types/Vec2f.h"
 
 void fn_801F6574(float *w, float *h);
 

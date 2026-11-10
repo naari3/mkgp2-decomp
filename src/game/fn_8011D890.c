@@ -2,9 +2,9 @@
 #pragma force_active on
 unsigned int lbl_804221C8[16] = { 0x00000000, 0x00000001, 0x00000002, 0x00000003, 0x00000004, 0x00000005, 0x00000006, 0x00000007, 0x00000008, 0x00000009, 0x0000000A, 0x0000000B, 0x0000000C, 0x0000000D, 0x0000000E, 0x0000000F };
 #pragma force_active reset
-typedef struct GXTexObj { unsigned int dummy[8]; } GXTexObj;
-typedef struct GXTlutObj { unsigned int dummy[3]; } GXTlutObj;
-typedef struct TEXHeader { unsigned short height; unsigned short width; } TEXHeader;
+#include "game/types/GXTexObj.h"
+#include "game/types/GXTlutObj.h"
+#include "game/types/TEXHeader.h"
 typedef struct TEXDescriptor { TEXHeader *tex; void *clut; } TEXDescriptor;
 
 typedef struct ResourceSlot {

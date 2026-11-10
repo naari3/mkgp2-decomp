@@ -11,15 +11,7 @@ struct ModelPath {
     float speed;
 };
 
-struct ModelDef {
-    const char *name;
-    int type;
-    float height;
-    float frameEnd;
-    unsigned int flags;
-    void *param;
-    char pad18[0x4];
-};
+#include "game/types/ModelDef.h"
 
 struct ModelEntry {
     const void *desc;

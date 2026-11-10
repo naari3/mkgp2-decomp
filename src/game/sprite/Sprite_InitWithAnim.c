@@ -1,9 +1,4 @@
-typedef struct SpriteAnimData {
-    unsigned char pad[0x14];
-    float length;
-    void *frames;
-    short *params;
-} SpriteAnimData;
+#include "game/types/SpriteAnimData.h"
 
 typedef struct SpriteAnim {
     unsigned char flag;
@@ -15,15 +10,9 @@ typedef struct SpriteAnim {
     SpriteAnimData *data;
 } SpriteAnim;
 
-typedef struct Remap {
-    int from;
-    int to;
-} Remap;
+#include "game/types/Remap.h"
 
-typedef struct GameCfg {
-    unsigned char pad[0x20];
-    signed char region;
-} GameCfg;
+#include "game/types/GameCfg.h"
 
 extern GameCfg lbl_80598A60;
 extern Remap lbl_806CFD00[1];

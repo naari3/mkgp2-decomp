@@ -17,11 +17,7 @@
 
 #include "game/types/Vec2.h"
 
-struct GlyphInfo {
-    int pad00[2];
-    int resId;
-    int pad0C;
-};
+#include "game/types/GlyphInfo.h"
 
 /* Stack TextManager built by TexMgr_Init; glyph codes start at +0x24. */
 struct GlyphText {

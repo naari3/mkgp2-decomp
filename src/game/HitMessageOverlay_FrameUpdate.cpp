@@ -48,14 +48,7 @@ struct ResCtrl {
     }
 };
 
-struct TweenInterp {
-    void *vtable;
-    short from;
-    short to;
-    float t;
-    float value;
-    float speed;
-};
+#include "game/types/TweenInterp.h"
 
 extern "C" {
 extern unsigned char lbl_806D1478;

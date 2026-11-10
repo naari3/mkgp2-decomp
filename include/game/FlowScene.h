@@ -22,14 +22,7 @@ struct VObject {
     virtual ~VObject();
 };
 
-struct InputState {
-    char pad00[4];
-    unsigned char enabled;
-    char pad05[0xF];
-    int dir;
-    int held;
-    int edge;
-};
+#include "game/types/InputState.h"
 
 extern "C" InputState *g_pInputState;
 

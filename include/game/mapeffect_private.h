@@ -5,27 +5,9 @@
 
 struct ZoneDesc;
 
-struct JObj {
-    char pad00[0x8];
-    JObj *next;
-    JObj *parent;
-    JObj *child;
-    unsigned int flags;
-    char pad18[0x8];
-    float rotY;
-    char pad24[0x8];
-    float scaleX;
-    char pad30[0x4];
-    float scaleZ;
-    char pad38[0xC];
-    float mtx[3][4];
-};
+#include "game/types/JObj.h"
 
-struct MoveTexDesc {
-    const char *name;
-    float u;
-    float v;
-};
+#include "game/types/MoveTexDesc.h"
 
 struct DrawEffect;
 
@@ -621,10 +603,7 @@ struct PartsList {
     void SetHidden(int mask, unsigned char hide);
 };
 
-struct PartsCtx {
-    char pad00[0xC];
-    int mode;
-};
+#include "game/types/PartsCtx.h"
 
 struct clMapEffect {
     virtual ~clMapEffect() {}

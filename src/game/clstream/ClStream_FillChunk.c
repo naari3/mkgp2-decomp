@@ -1,4 +1,4 @@
-typedef struct DVDFileInfo { unsigned char pad[0x3c]; } DVDFileInfo;
+#include "game/types/DVDFileInfo.h"
 
 typedef struct StreamInfo {
     unsigned char pad0[0xc];

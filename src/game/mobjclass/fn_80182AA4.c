@@ -1,7 +1,4 @@
-typedef struct TObjView {
-    unsigned char pad[0x74];
-    float mtx[3][4];
-} TObjView;
+#include "game/types/TObjView.h"
 
 typedef struct DObjView {
     void *parent;

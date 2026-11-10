@@ -537,12 +537,7 @@ void *lbl_8040E1C4[163] = {
 
 #include "game/types/Vec3f.h"
 
-typedef struct RankEntry {
-    int a;
-    int b;
-    float score;
-    float time;
-} RankEntry;
+#include "game/types/RankEntry.h"
 
 typedef struct CourseDir {
     void *finishLine;           /* 0x00 */

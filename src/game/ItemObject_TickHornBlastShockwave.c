@@ -4,8 +4,8 @@
  * (scaled by the Kinopio boost bonus) and hits drivers in range every 30
  * frames, then fades out. */
 #include "game/types/Vec.h"
-typedef struct { float v[3]; } FloatTriple;
-typedef struct { unsigned char b[0x1EC]; } ItemObjectCopy;
+#include "game/types/FloatTriple.h"
+#include "game/types/ItemObjectCopy.h"
 
 extern const FloatTriple lbl_8032E540;
 extern const FloatTriple lbl_8032E54C;

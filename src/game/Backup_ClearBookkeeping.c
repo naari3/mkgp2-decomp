@@ -1,9 +1,6 @@
 /* Clear the play stats and restart the operation clock. Only allowed on a
  * cold start; returns 1 when cleared. */
-typedef struct BackupData {
-    unsigned char pad000[0x274];
-    unsigned char stats[0x26c]; /* 0x274 */
-} BackupData;
+#include "game/types/BackupData.h"
 
 typedef struct OperationClockState OperationClockState;
 

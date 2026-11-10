@@ -1,43 +1,7 @@
 /* 0x8012B924..0x8012BDA4: kart preview animation requests. Each one picks
  * the next animation and its camera framing, and fails while another
  * request is still pending. */
-typedef struct KartPreviewParts {
-    void *kart;
-    void *tires;
-    void *driver;
-    void *extraA;
-    void *extraB;
-    void *parts[49];
-    int fD8;
-    float fDC[3];
-    int characterId;
-    int animCur;
-    int animNext;
-    int animBase;
-    float fF8;
-    float fFC;
-    float f100;
-    int f104;
-    float f108;
-    float f10C;
-    float f110;
-    float f114;
-    float f118;
-    float f11C;
-    float f120;
-    void *attach;
-    void *attachJoint;
-    char pad12C[0x144 - 0x12C];
-    int f144;
-    int f148;
-    int f14C;
-    int f150;
-    int f154;
-    int f158;
-    int f15C;
-    int f160;
-    int f164;
-} KartPreviewParts;
+#include "game/types/KartPreviewParts.h"
 
 extern float lbl_806CF01C, lbl_806CF020, lbl_806CF024, lbl_806CF028, lbl_806CF04C, lbl_806CF050, lbl_806CF054, lbl_806CF058, lbl_806CF06C, lbl_806CF070, lbl_806CF074, lbl_806CF078, lbl_806CF07C, lbl_806CF080, lbl_806CF084, lbl_806CF088, lbl_806CF08C, lbl_806CF090, lbl_806CF094, lbl_806CF098;
 

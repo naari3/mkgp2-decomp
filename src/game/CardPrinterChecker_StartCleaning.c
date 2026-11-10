@@ -3,11 +3,7 @@
  * 0x8008F504..0x8008F5A4.
  */
 
-typedef struct CardPrinterStatePtr {
-    int thisDelta;
-    int vtblOffset;
-    void *func;
-} CardPrinterStatePtr;
+#include "game/types/CardPrinterStatePtr.h"
 
 typedef struct CardPrinterChecker {
     CardPrinterStatePtr state; /* 0x00 */

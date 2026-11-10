@@ -1,6 +1,4 @@
-typedef struct AnimVec3 {
-    float x, y, z;
-} AnimVec3;
+#include "game/types/AnimVec3.h"
 
 typedef struct AnimState {
     unsigned char pad00[0x28];

@@ -24,15 +24,7 @@
  *   0x30  int currentLapFloor            (lower clamp for currentLap)
  */
 
-typedef struct LapDisp {
-    char pad_00[0x10];
-    int currentLapLayer;   // SpriteLayer slot id used by SetCurrentLap
-    int totalLapsLayer;    // SpriteLayer slot id used here
-    char pad_18[0x10];
-    int currentLap;
-    int totalLaps;
-    int currentLapFloor;
-} LapDisp;
+#include "game/types/LapDisp.h"
 
 extern void SpriteLayer_SetResource(int layerId, unsigned int resourceId);
 

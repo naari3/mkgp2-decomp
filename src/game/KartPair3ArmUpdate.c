@@ -5,7 +5,7 @@
 
 #include "game/types/Vec.h"
 #include "game/types/Vec2.h"
-typedef struct Int4 { int v[4]; } Int4;
+#include "game/types/Int4.h"
 
 typedef struct CarrotPad {
     unsigned char pad0[0x10];

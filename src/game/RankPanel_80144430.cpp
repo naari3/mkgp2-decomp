@@ -257,10 +257,7 @@ extern const char lbl_80361DF8[0x14] = "clCSPartsInerface";
 extern const char lbl_80361E0C[0x1C] = "nsMenuUtil::clSpriteNode";
 extern const char lbl_80361E28[0x18] = "nsMenuUtil::clMenuNode";
 }
-struct SpriteNodeInfo {
-    float x, y;
-    char rest[0x28];
-};
+#include "game/types/SpriteNodeInfo.h"
 struct RecCursor {
     Sprite *sprite;
     unsigned char on;

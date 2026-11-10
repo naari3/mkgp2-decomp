@@ -42,10 +42,7 @@ struct EffectSlot {
     char pad00[0x94];
 };
 
-struct SlotDesc {
-    float params[4];
-    int obj;
-};
+#include "game/types/SlotDesc.h"
 
 extern "C" {
 extern const SlotDesc lbl_8036E8D4[4];
@@ -166,9 +163,7 @@ struct EffectHandle {
     ~EffectHandle();
 };
 
-struct Vec2f {
-    float x, y;
-};
+#include "game/types/Vec2f.h"
 
 struct Driver {
     char pad000[0x2D0];

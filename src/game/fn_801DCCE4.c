@@ -1,10 +1,4 @@
-typedef struct PathCond {
-    signed char mode;
-    signed char cup;
-    signed char ccClass;
-    signed char round;
-    unsigned char extra;
-} PathCond;
+#include "game/types/PathCond.h"
 
 typedef struct PathVariantEntry {
     PathCond cond;

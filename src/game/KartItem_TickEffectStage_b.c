@@ -2,10 +2,7 @@
  * of the held item effect, playing the hit sound for item kinds 4/5
  * and clearing the item when its uses run out. */
 
-typedef struct ItemKartFlag {
-    unsigned char pad0[4];
-    unsigned char active; /* 0x4 */
-} ItemKartFlag;
+#include "game/types/ItemKartFlag.h"
 
 typedef struct ItemKart {
     void *object;

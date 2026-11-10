@@ -8,11 +8,7 @@
  * object each. */
 #include "game/os_time.h"
 
-typedef struct VoiceQueueEntry {
-    short id;
-    short priority;
-    unsigned char flag;
-} VoiceQueueEntry;
+#include "game/types/VoiceQueueEntry.h"
 
 extern VoiceQueueEntry g_voiceQueue[64];
 extern int g_voiceQueueHead;
@@ -61,12 +57,7 @@ typedef struct RaceVoiceEntry {
 extern RaceVoiceEntry g_raceEntryArray[8];
 extern int g_gameMode;
 
-typedef struct VoiceClip {
-    unsigned char playCount;
-    char pad1[3];
-    float length;
-    void *path;
-} VoiceClip;
+#include "game/types/VoiceClip.h"
 
 /* .data block starting at 0x80496C38. */
 typedef struct RaceVoiceData {

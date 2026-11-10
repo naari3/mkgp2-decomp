@@ -14,11 +14,7 @@ struct HSD_JObj {
     Vec3f translate;
 };
 
-struct HSD_DObj {
-    void *parent;
-    HSD_DObj *next;
-    void *mobj;
-};
+#include "game/types/HSD_DObj.h"
 
 struct GXRenderModeObj {
     unsigned int viTVmode;

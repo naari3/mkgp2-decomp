@@ -1,11 +1,6 @@
 /* BananaField_Render (0x80196AA0): draws idle bananas, then the bouncing/fading hit ones. */
 
-typedef struct {
-    int state;
-    float x, y, z;
-    float angle;
-    float timer;
-} Banana;
+#include "game/types/Banana.h"
 typedef struct {
     void *obj;
     Banana *items;

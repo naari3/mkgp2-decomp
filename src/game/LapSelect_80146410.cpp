@@ -21,16 +21,8 @@ public:
     virtual void v10();
     virtual void v14();
 };
-struct Countdown {
-    void *vt;
-    int f4;
-    int delay;
-    int state;
-};
-struct SelSlot {
-    char pad0[0x24];
-    float t;
-};
+#include "game/types/Countdown.h"
+#include "game/types/SelSlot.h"
 struct LapSel {
     char pad0[0x18];
     int mode;
@@ -41,11 +33,7 @@ struct LapSel {
     Countdown *cd;
     void *p7c;
 };
-struct TripleObj {
-    char pad0[0x14];
-    void **vt14;
-    void *p18;
-};
+#include "game/types/TripleObj.h"
 
 struct XfSlot {
     float ox, oy, scx, scy;

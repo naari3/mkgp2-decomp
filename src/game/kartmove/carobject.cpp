@@ -153,9 +153,7 @@ void fn_8019EB9C(const Matrix44 *__restrict a, Vec3 *out, const Vec3 *__restrict
     out->z = vx * a->m[0][2] + vy * a->m[1][2] + vz * a->m[2][2] + a->m[3][2];
 }
 
-struct Mtx44S {
-    float v[16];
-};
+#include "game/types/Mtx44S.h"
 
 /* Alias-safe 4x4 product (out may be a or b), result through a scratch buffer. */
 static inline void Mtx44S_Mul(Mtx44S *out, const Mtx44S *a, const Mtx44S *b) {

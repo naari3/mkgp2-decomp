@@ -1,8 +1,6 @@
 /* 0x801622C8..0x8016234C: per-frame hook of a scene with an 8-slot table. */
 
-struct VObjPad {
-    char pad[0x14];
-};
+#include "game/types/VObjPad.h"
 
 struct Model : VObjPad {
     virtual ~Model();

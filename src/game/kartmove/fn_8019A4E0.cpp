@@ -6,9 +6,7 @@ struct Vec {
     ~Vec() {}
 };
 
-struct V3 {
-    float x, y, z;
-};
+#include "game/types/V3.h"
 
 struct KartMove {
     unsigned char pad0[0x40];

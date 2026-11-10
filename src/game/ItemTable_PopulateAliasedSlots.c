@@ -2,11 +2,7 @@
  * each alias source into item ids 0x9F..0x114, then fills the fixed extra
  * slots 0x109..0x114 from their base items. */
 
-typedef struct ItemAliasEntry {
-    int source;
-    int dest;
-    int flags;
-} ItemAliasEntry;
+#include "game/types/ItemAliasEntry.h"
 
 typedef struct ItemClassEntry {
     unsigned char pad0[4];

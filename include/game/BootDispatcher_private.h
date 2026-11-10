@@ -1,9 +1,7 @@
 #ifndef BOOT_DISPATCHER_PRIVATE_H
 #define BOOT_DISPATCHER_PRIVATE_H
 
-struct Word2 {
-    unsigned int w[2];
-};
+#include "game/types/Word2.h"
 
 struct Word5 {
     Word2 a;
@@ -62,9 +60,7 @@ struct BootState {
     }
 };
 
-struct BootTimer {
-    unsigned int lastTick;
-};
+#include "game/types/BootTimer.h"
 
 struct BootConfig {
     unsigned char pad00[0x21];

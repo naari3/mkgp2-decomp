@@ -2,7 +2,7 @@
 #define GAME_VOICE_ITEM_EVENT_PRIVATE_H
 #include "game/RaceVoiceRivalPrivate.h"
 
-typedef struct VoiceItemMap { short item, attack, response; } VoiceItemMap;
+#include "game/types/VoiceItemMap.h"
 typedef struct VoiceItemData {
     short f0[14], normal[14], raceStart[14], f54[52], special[52];
     unsigned char unknown124[0x118C-0x124];

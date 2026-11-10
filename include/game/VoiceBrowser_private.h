@@ -2,12 +2,7 @@
 #define GAME_VOICEBROWSER_PRIVATE_H
 #include "game/TestMenuPage.h"
 #include "game/os_time.h"
-struct VoiceClip {
-    unsigned char playCount;
-    char pad1[3];
-    float length;
-    void *path;
-};
+#include "game/types/VoiceClip.h"
 struct VoiceBrowser {
     void *vtable;
     void *context;

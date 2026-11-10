@@ -1,7 +1,4 @@
-struct Def {
-    unsigned char pad[0x18];
-    int mask;
-};
+#include "game/types/Def.h"
 
 class Obj {
 public:
@@ -30,10 +27,7 @@ struct Group {
     }
 };
 
-struct Cam {
-    unsigned char pad[0xC];
-    int index;
-};
+#include "game/types/Cam.h"
 
 struct Mgr {
     Cam *cam;

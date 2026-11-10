@@ -80,7 +80,7 @@ RoundInfo *fn_8024F588(void);
 void fn_80169C44(void);
 void CreditMgr_SetActiveSlot(int slot);
 int InitRumbleController(int deviceId);
-struct SpriteResourceId { int id; };
+#include "game/types/SpriteResourceId.h"
 void fn_8023F5B4(Sprite **out, const SpriteResourceId *resource, int enabled, float x, float y);
 void fn_801A0004(Sprite *spr);
 unsigned char Sprite_AdvanceAnim(Sprite *spr, float dt);

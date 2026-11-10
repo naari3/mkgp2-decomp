@@ -1,6 +1,4 @@
-typedef struct Node {
-    struct Node *next;
-} Node;
+#include "game/types/Node.h"
 
 typedef struct List {
     Node *head;

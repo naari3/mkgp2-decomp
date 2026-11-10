@@ -1,6 +1,6 @@
 /* Drift puff family: local views contain only target-observed fields. */
 #include "game/types/Vec3.h"
-struct KartState { unsigned char pad00[0x10]; unsigned long long flags; };
+#include "game/types/KartState.h"
 struct Kart { unsigned char pad00[0x304]; KartState *state; };
 struct Effect {
     unsigned char pad00[0x14];

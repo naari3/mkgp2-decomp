@@ -8,5 +8,5 @@ struct ViewerInput {
 };
 struct ModelEntry { const char *res; float scale; int icon; float iconScale; float field10, field14, field18, field1C; float iconY; };
 struct CameraOwner { void *vtable; void *camera; };
-struct ViewerVec { float x,y,z; };
+#include "game/types/ViewerVec.h"
 #endif

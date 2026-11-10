@@ -23,22 +23,14 @@ struct ResEntry {
 };
 
 
-struct TEXHeader {
-    unsigned short height;
-    unsigned short width;
-};
+#include "game/types/TEXHeader.h"
 
 struct TEXDescriptor {
     TEXHeader *tex;
     void *clut;
 };
 
-struct SavedGXState {
-    int cullMode;
-    float proj[7];
-    float viewport[6];
-    unsigned int scissor[4];
-};
+#include "game/types/SavedGXState.h"
 extern "C" void MemoryManager_TimedFree(void *p);
 
 #include "game/types/Vec3.h"

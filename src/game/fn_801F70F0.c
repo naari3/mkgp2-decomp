@@ -1,16 +1,7 @@
 /* Sets a scroll offset and wraps it into the texture extent. */
-typedef struct ScrollState {
-    float x;
-    float y;
-    float pad8;
-    float padC;
-    float speed;
-} ScrollState;
+#include "game/types/ScrollState.h"
 
-typedef struct Vec2f {
-    float x;
-    float y;
-} Vec2f;
+#include "game/types/Vec2f.h"
 
 void fn_801F6574(float *w, float *h);
 

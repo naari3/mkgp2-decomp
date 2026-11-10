@@ -8,7 +8,7 @@ extern unsigned char lbl_806D7288[5];
 #pragma cplusplus on
 
 #include "game/types/Vec3.h"
-struct LNode { char pad[8]; void *f8; };
+#include "game/types/LNode.h"
 struct Trail { int age; Vec3 pos; };
 struct Shot {
     char pad0[0x14];
@@ -35,11 +35,7 @@ struct ShotOwner {
     int trailCount;
 };
 
-struct ModelPair {
-    void **vt;
-    void *a;
-    void *b;
-};
+#include "game/types/ModelPair.h"
 
 struct Deletable {
     virtual ~Deletable();
@@ -63,7 +59,7 @@ struct HsdRefObj {
     unsigned short ref;
 };
 
-struct Quat { float x, y, z, w; };
+#include "game/types/Quat.h"
 
 struct HSD_JObj {
     char pad0[0x14];

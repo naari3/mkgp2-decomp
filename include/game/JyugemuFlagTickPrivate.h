@@ -14,7 +14,7 @@ extern "C" void Object_DriveAnimMatrix(void *);
 typedef struct FlagDesc { char pad[0x14]; float x,y,z,angle; } FlagDesc;
 /* Tick is an inline member: the original object stays live across setters. */
 struct Flag { void *object; FlagDesc *desc; void *driver; inline int Tick(); };
-typedef struct JointTransform { float rotation[4], scale[3], translation[3]; } JointTransform;
+#include "game/types/JointTransform.h"
 static inline JointTransform *Transform(HSD_JObj *j) { return (JointTransform *)j->_pad_1c; }
 static inline unsigned char MatrixDirty(HSD_JObj *j) {
     unsigned int flags;

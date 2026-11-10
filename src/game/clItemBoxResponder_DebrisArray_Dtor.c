@@ -2,9 +2,7 @@
  * particles of the owned block, frees the block, then frees itself when
  * flag > 0. */
 
-typedef struct DebrisParticle {
-    unsigned char data[0x2c];
-} DebrisParticle;
+#include "game/types/DebrisParticle.h"
 
 typedef struct DebrisBlock {
     int header;

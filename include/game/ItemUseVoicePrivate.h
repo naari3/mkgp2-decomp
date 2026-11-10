@@ -2,10 +2,7 @@
 #define GAME_ITEM_USE_VOICE_PRIVATE_H
 #include "game/RaceVoiceRivalPrivate.h"
 
-typedef struct ItemUseVoiceItem {
-    unsigned char pad0[5];
-    signed char category;
-} ItemUseVoiceItem;
+#include "game/types/ItemUseVoiceItem.h"
 typedef struct ItemUseVoiceMap { short item, voice, unused; } ItemUseVoiceMap;
 
 extern ItemUseVoiceItem *GetItemDataEntry_Bounded(int);

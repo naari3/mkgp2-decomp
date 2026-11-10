@@ -1,5 +1,5 @@
 #include "game/mapobject/mapobject.h"
-struct ObjEntry { int id, arg; };
+#include "game/types/ObjEntry.h"
 extern "C" {
 struct CourseRodata { char pad0[0x708]; char extra[0x10]; char joint[0x1C]; char ready[4]; };
 extern const CourseRodata lbl_803BF440;

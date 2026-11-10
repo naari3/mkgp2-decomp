@@ -1,10 +1,7 @@
 /* KartItem_TickEffectStage_a @ 0x8003E694: runs the repeating stage timer
  * of the held item effect, clearing the item when its uses run out. */
 
-typedef struct ItemKartFlag {
-    unsigned char pad0[4];
-    unsigned char active; /* 0x4 */
-} ItemKartFlag;
+#include "game/types/ItemKartFlag.h"
 
 typedef struct ItemKart {
     unsigned char pad000[0x174];

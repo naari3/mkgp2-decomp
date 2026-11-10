@@ -33,8 +33,8 @@ struct Driver {
     unsigned char pad369[11]; int a374,a378; unsigned char pad37C[4]; int a380;
 };
 struct ModelEntry { const char *file; unsigned char pad04[8]; };
-struct CharacterEntry { unsigned char pad00[4]; const char *file,*anim,*other; unsigned char pad10[8]; const char **motion; unsigned char pad1C[16]; };
-struct JointMatrix { unsigned char pad00[28]; float value; };
+#include "game/types/CharacterEntry.h"
+#include "game/types/JointMatrix.h"
 extern "C" {
 extern int g_kartStartSlot; extern void *g_raceCamera;
 extern const float lbl_806D2540,lbl_806D2570,lbl_806D2574;

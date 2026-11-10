@@ -116,11 +116,7 @@ typedef struct PlayerData {
     unsigned char byte1D8, byte1D9, byte1DA;
 } PlayerData;
 
-typedef struct RankEntry {
-    int a, b;
-    float score;
-    float time;
-} RankEntry;
+#include "game/types/RankEntry.h"
 
 extern PlayerData g_playerData;
 extern PlayerData lbl_805D2F40;
@@ -164,9 +160,7 @@ typedef struct DisplayState {
     unsigned char flag24;
 } DisplayState;
 
-typedef struct OSCalendarTime {
-    int sec, min, hour, mday, mon, year, wday, yday, msec, usec;
-} OSCalendarTime;
+#include "game/types/OSCalendarTime.h"
 
 extern DisplayState lbl_80598A60;
 /* Per cup, CC class and round length: score and two floating limits. */
@@ -1312,9 +1306,7 @@ extern int lbl_80326A24[16];
 extern int lbl_80326A14[4];
 extern int lbl_803269CC[18];
 
-typedef struct Int4 {
-    int v[4];
-} Int4;
+#include "game/types/Int4.h"
 extern Int4 lbl_80326ACC;
 
 unsigned char TitleCheck_AllRecordsCleared(void)

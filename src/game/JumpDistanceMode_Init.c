@@ -145,12 +145,7 @@ void InitRumbleController(int arg);
 void fn_801699D8(int a, int b);
 }
 
-struct RenderObj {
-    char pad0[0x238];
-    int x238;
-    char pad23C[0x94];
-    unsigned char x2D0;
-};
+#include "game/types/RenderObj.h"
 
 struct InputManager { char data[0x37C]; InputManager(); };
 struct Camera { char data[0x2C]; Camera(float a, float b, int w, int h, int target); };

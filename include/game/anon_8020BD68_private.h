@@ -33,18 +33,9 @@ struct PlayerData {
     unsigned char chara;
 };
 
-struct SyncSlot {
-    unsigned char kind : 5;
-    unsigned char rest : 3;
-};
+#include "game/types/SyncSlot.h"
 
-struct InputImpl {
-    void *vt;
-    unsigned char enabled;
-    unsigned char flag5;
-    unsigned char flag6;
-    int fields[8];
-};
+#include "game/types/InputImpl.h"
 
 extern "C" {
 extern PlayerData g_playerData;

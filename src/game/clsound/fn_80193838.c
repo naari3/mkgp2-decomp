@@ -7,10 +7,7 @@ typedef struct SndSlot {
     unsigned char pad19[0x1c - 0x19];
 } SndSlot;
 
-typedef struct ClStreamSlot {
-    unsigned int handle;
-    unsigned int id;
-} ClStreamSlot;
+#include "game/types/ClStreamSlot.h"
 
 extern unsigned char ClSound_Initialized;
 extern SndSlot lbl_80678378[32];

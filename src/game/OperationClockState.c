@@ -2,18 +2,7 @@
  * Daily clock / operation clock helpers, 0x8008C930..0x8008CB3C.
  */
 
-typedef struct OSCalendarTime {
-    int sec;
-    int min;
-    int hour;
-    int mday;
-    int mon;
-    int year;
-    int wday;
-    int yday;
-    int msec;
-    int usec;
-} OSCalendarTime;
+#include "game/types/OSCalendarTime.h"
 
 long long OSGetTime(void);
 void OSTicksToCalendarTime(long long ticks, OSCalendarTime *td);

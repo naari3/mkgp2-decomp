@@ -36,10 +36,7 @@ extern void Item_DecayVelocityScalar(unsigned char *self, float k);
 #define SU32(o) (*(unsigned int *)(sub + (o)))
 #define SP(o) (*(unsigned char **)(sub + (o)))
 
-typedef struct KartStatus {
-    unsigned char pad[0x10];
-    unsigned long long flags;
-} KartStatus;
+#include "game/types/KartStatus.h"
 
 static inline unsigned char has_flag(KartStatus *st, unsigned long long mask)
 {

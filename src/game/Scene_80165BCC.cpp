@@ -8,9 +8,7 @@ struct VObj {
     virtual ~VObj();
 };
 
-struct VObjPad {
-    char pad[0x14];
-};
+#include "game/types/VObjPad.h"
 
 struct Model : VObjPad {
     virtual ~Model();

@@ -21,20 +21,9 @@ typedef struct HSD_JObj {
     unsigned char anim[1];
 } HSD_JObj;
 
-typedef struct RenderTargetHolder {
-    unsigned char active;
-    void *rt;
-} RenderTargetHolder;
+#include "game/types/RenderTargetHolder.h"
 
-typedef struct CharacterData {
-    int pad0;
-    void *driver_model;
-    void *kart_model;
-    int pad0C[4];
-    float anim1C;
-    float pad20;
-    float anim24;
-} CharacterData;
+#include "game/types/CharacterData.h"
 
 typedef struct KartPreview {
     void *vtbl;

@@ -7,9 +7,7 @@ const char lbl_802E9650[88] = { 108, 118, 32, 37, 100, 32, 105, 100, 32, 37, 100
  * lbl_802E8F48; the compiler keeps the pool base in a register. */
 #pragma cplusplus on
 
-struct Word2 {
-    unsigned int w[2];
-};
+#include "game/types/Word2.h"
 
 struct BootState {
     unsigned short f00;
@@ -61,9 +59,7 @@ struct BootState {
     }
 };
 
-struct BootTimer {
-    unsigned int lastTick;
-};
+#include "game/types/BootTimer.h"
 
 extern "C" {
 void DebugPrintf(const char *fmt, ...);

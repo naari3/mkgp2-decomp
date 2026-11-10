@@ -39,10 +39,7 @@ struct Vec3c {
 
 #include "game/types/Vec3f.h"
 
-struct KartFlags {
-    char pad[0x10];
-    unsigned long long bits;
-};
+#include "game/types/KartFlags.h"
 
 struct KartRender {
     char pad0[0x1E8];
@@ -65,18 +62,7 @@ struct PathEntry {
     KartRender *kart;
 };
 
-struct TireSprite {
-    signed char flip;
-    char pad01[0x14 - 1];
-    signed char visible;
-    float alpha;
-    char pad1C[0x34 - 0x1C];
-    float vx[4];
-    float vy[4];
-    float vz[4];
-    char pad64[0x6C - 0x64];
-    float px, py, pz;
-};
+#include "game/types/TireSprite.h"
 
 struct FaceSprite {
     virtual ~FaceSprite();

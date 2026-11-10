@@ -1,4 +1,4 @@
-typedef struct GameCfg { unsigned char pad[0x20]; signed char region; } GameCfg;
+#include "game/types/GameCfg.h"
 extern GameCfg lbl_80598A60;
 
 int fn_80169E20(void) {

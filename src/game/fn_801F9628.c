@@ -1,10 +1,4 @@
-typedef struct CharEntry {
-    unsigned short card;
-    unsigned short code;
-    int width;
-    int height;
-    int advance;
-} CharEntry;
+#include "game/types/CharEntry.h"
 
 typedef struct GlyphPos {
     short x;

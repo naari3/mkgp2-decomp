@@ -2,7 +2,7 @@
  * TransformVec3 writes its result explicitly and consumes a by-value Vec3;
  * the compiler therefore owns the input copy and emits native exception data.
  */
-struct FlashVec3 { float x, y, z; };
+#include "game/types/FlashVec3.h"
 struct FlashCamera { float matrix[16]; unsigned char pad40[0x40]; FlashVec3 position; };
 struct FlashEffect {
     unsigned char pad00[0x10];

@@ -2,12 +2,7 @@
  * and starts its hit animation. */
 
 #include "game/types/Vec.h"
-typedef struct {
-    int state;
-    float x, y, z;
-    float angle;
-    float timer;
-} Banana;
+#include "game/types/Banana.h"
 typedef struct {
     unsigned int active;
     Banana *items;

@@ -2,10 +2,7 @@
  * SmallObj_Dtor_VtableB and PcbIdToIpAndModify, 0x80073F24..0x800740BC.
  */
 
-typedef struct PcbIpEntry {
-    unsigned int ip;
-    const char *text;
-} PcbIpEntry;
+#include "game/types/PcbIpEntry.h"
 
 typedef struct SmallObj {
     void *vtable;

@@ -1,13 +1,7 @@
 /* Shut the NAM camera down synchronously: keep drawing frames until the
  * socket has gone busy and then idle again (each wait times out after
  * 120 frames), then free the receiver. */
-typedef struct NamCamSocket {
-    unsigned char pad00[0x10];
-    signed char busy;       /* 0x10 */
-    unsigned char pad11[0x1b];
-    int countdown;          /* 0x2C */
-    int state;              /* 0x30 */
-} NamCamSocket;
+#include "game/types/NamCamSocket.h"
 
 typedef struct NamCam {
     unsigned char frame[0x80000];

@@ -15,13 +15,7 @@ struct Owned801CE1EC {
     ~Owned801CE1EC();
 };
 
-struct InputView {
-    unsigned char opaque[4];
-    unsigned char enabled;
-    unsigned char opaque5[0x13];
-    int held;
-    int edge;
-};
+#include "game/types/InputView.h"
 
 struct FlowBase {
     void *vt;

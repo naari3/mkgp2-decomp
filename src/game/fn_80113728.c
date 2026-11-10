@@ -1,5 +1,5 @@
 #include "game/types/Vec3.h"
-typedef struct Mtx44 { float m[4][4]; } Mtx44;
+#include "game/types/Mtx44.h"
 typedef struct Mtx34 { float m[3][4]; } Mtx34;
 
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);

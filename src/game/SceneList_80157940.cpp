@@ -3,10 +3,7 @@
  */
 #pragma cplusplus on
 
-struct ListNode {
-    ListNode *prev;
-    ListNode *next;
-};
+#include "game/types/ListNode.h"
 
 struct ListIter {
     ListNode *n;
@@ -54,10 +51,7 @@ struct ListNodeGuard {
     }
 };
 
-struct DataBuf {
-    int pad0;
-    void *data;
-};
+#include "game/types/DataBuf.h"
 
 class DrawObj {
 public:
@@ -82,12 +76,7 @@ struct InputView {
     int dir;
 };
 
-struct MenuTarget {
-    char pad0[0xc];
-    unsigned char sel;
-    char padD[0x19d - 0xd];
-    unsigned char flag;
-};
+#include "game/types/MenuTarget.h"
 
 struct OptionMenu {
     char pad0[0x1d];

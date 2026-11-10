@@ -5,8 +5,8 @@
  * instead of keeping one register across the angle-wrap loops.
  */
 #include "game/types/Vec3.h"
-struct XZ { float x, z; };
-struct Rect { float minX, minZ, maxX, maxZ; };
+#include "game/types/XZ.h"
+#include "game/types/Rect.h"
 
 struct Pad {
     virtual void v0();

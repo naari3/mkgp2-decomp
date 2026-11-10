@@ -1,6 +1,4 @@
-typedef struct Node {
-    struct Node *next;
-} Node;
+#include "game/types/Node.h"
 
 void fn_8016E7E4(Node *n, Node *item) {
     if (n->next != 0) {

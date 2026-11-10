@@ -2,10 +2,7 @@
 #define GAME_ITEM_USE_VOICE_801B4548_PRIVATE_H
 #include "game/VoiceItemEventPrivate.h"
 
-typedef struct ItemUseVoiceItem {
-    unsigned char pad0[5];
-    signed char category;
-} ItemUseVoiceItem;
+#include "game/types/ItemUseVoiceItem.h"
 
 extern ItemUseVoiceItem *GetItemDataEntry_Bounded(int);
 extern unsigned char ItemClass_GetFlagByte1(int);

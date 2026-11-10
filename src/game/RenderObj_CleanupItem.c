@@ -1,10 +1,7 @@
 /* RenderObj_CleanupItem @ 0x8003F13C: once the held item effect has run
  * long enough, hand it to the ISE cleanup and clear the held item. */
 
-typedef struct ItemKartFlag {
-    unsigned char pad0[4];
-    unsigned char active; /* 0x4 */
-} ItemKartFlag;
+#include "game/types/ItemKartFlag.h"
 
 typedef struct ItemKart {
     unsigned char pad000[0x174];

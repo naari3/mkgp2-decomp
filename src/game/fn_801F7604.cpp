@@ -270,9 +270,7 @@ void *memcpy(void *dst, const void *src, unsigned long n);
 void PSMTXCopy(const float src[3][4], float dst[3][4]);
 }
 
-struct Vec2f {
-    float x, y;
-};
+#include "game/types/Vec2f.h"
 
 #include "game/types/Vec3f.h"
 

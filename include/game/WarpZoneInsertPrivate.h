@@ -13,7 +13,7 @@ inline void *operator new(unsigned long, void *p) { return p; }
 inline void operator delete(void *, void *) {}
 
 /* Four corners have nontrivial lifetime; the two remaining vectors are plain. */
-struct WarpPlainVector { float x, y, z; };
+#include "game/types/WarpPlainVector.h"
 struct WarpCorner : WarpPlainVector {
     WarpCorner(const WarpCorner &v) : WarpPlainVector(v) {}
     ~WarpCorner();
