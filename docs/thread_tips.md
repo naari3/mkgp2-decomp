@@ -678,3 +678,8 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   0 matches, clNormal3D_Exec 130 -> 94 lines (by hand 78, 99.47). Hill-climbing the declaration order of ALL
   inline locals written out was worse than writing out only the inline the diag points at.
   Sweep pitfall: check that the variant compiled (grep FAILED), a stale .o gives a constant score.
+- 11-10 `tools/oob_read_detect.py` (regalloc_patterns 90 detector): lists .text relocations `symbol+addend` in our
+  objects whose addend is past the symbol's size in symbols.txt (a struct/array view laid over a neighbour).
+  First run on all near misses: only fn_801A6538, and those were symbols.txt splitting 8-byte OSTime objects and a
+  6-byte struct into halves (merged; objdiff % unchanged because it resolves by address). So §90 has no further
+  candidates among today's near misses; rerun after new asm -> C conversions (`--md docs/sweeps/oob_read.md`).
