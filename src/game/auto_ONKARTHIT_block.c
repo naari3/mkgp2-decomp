@@ -1446,7 +1446,7 @@ int ItemEffect_TryStartByCategory_Wrap(ItemStateBlock *self, int itemId, void *a
 int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *arg);
 void ItemEffect_Explosion(ItemStateBlock *self, int idx, const void *arg);
 asm void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg);
-asm void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg);
+void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg);
 int ItemTable_FindEntryByIdStride16(ItemCatEntry16 *tbl, int count, int itemId);
 int ItemTable_FindEntryByIdStride12_v1(ItemCatEntry12 *tbl, int count, int itemId);
 int ItemTable_FindEntryByIdStride12_v2(ItemCatEntry12 *tbl, int count, int itemId);
@@ -8029,159 +8029,65 @@ asm void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg) { /* 0x800518
  * the lbl_802ED5B4 base rematerialized per region. The first normalize
  * block (from arg+0xb8, no frsp) is solvable with the Explosion recipe. */
 #define VF(x) (*(volatile float *)&(x))
-asm void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg) { /* 0x80051A70 size:0x248 */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    lfs f0, lbl_806D26EC(r2)
-    stw r0, 0x44(r1)
-    stw r31, 0x3c(r1)
-    stw r30, 0x38(r1)
-    mr r30, r3
-    lfs f5, 0xbc(r5)
-    lfs f4, 0xb8(r5)
-    fmuls f1, f5, f5
-    lfs f6, 0xc0(r5)
-    fmuls f2, f4, f4
-    fmuls f3, f6, f6
-    stfs f4, 0x28(r1)
-    fadds f1, f2, f1
-    stfs f5, 0x2c(r1)
-    stfs f6, 0x30(r1)
-    fadds f4, f3, f1
-    fcmpo cr0, f4, f0
-    ble ItemEffect_Projectile_L_80051B0C
-    frsqrte f1, f4
-    lfd f3, lbl_806D2720(r2)
-    lfd f2, lbl_806D2728(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f4, f0
-    frsp f0, f0
-    stfs f0, 0xc(r1)
-    lfs f4, 0xc(r1)
-    ItemEffect_Projectile_L_80051B0C:
-    lfs f0, lbl_806D26EC(r2)
-    fcmpo cr0, f4, f0
-    cror eq, lt, eq
-    bne ItemEffect_Projectile_L_80051B2C
-    stfs f0, 0x30(r1)
-    stfs f0, 0x2c(r1)
-    stfs f0, 0x28(r1)
-    b ItemEffect_Projectile_L_80051B58
-    ItemEffect_Projectile_L_80051B2C:
-    lfs f0, lbl_806D26FC(r2)
-    lfs f2, 0x28(r1)
-    fdivs f3, f0, f4
-    lfs f1, 0x2c(r1)
-    lfs f0, 0x30(r1)
-    fmuls f2, f2, f3
-    fmuls f1, f1, f3
-    fmuls f0, f0, f3
-    stfs f2, 0x28(r1)
-    stfs f1, 0x2c(r1)
-    stfs f0, 0x30(r1)
-    ItemEffect_Projectile_L_80051B58:
-    lwz r3, 0x0(r30)
-    lfs f0, lbl_806D26EC(r2)
-    lwz r3, 0x28(r3)
-    lfs f5, 0x180(r3)
-    lfs f4, 0x17c(r3)
-    frsp f1, f5
-    lfs f6, 0x184(r3)
-    frsp f2, f4
-    stfs f4, 0x10(r1)
-    frsp f3, f6
-    fmuls f1, f1, f1
-    fmuls f2, f2, f2
-    stfs f5, 0x14(r1)
-    fmuls f3, f3, f3
-    stfs f6, 0x18(r1)
-    fadds f1, f2, f1
-    stfs f4, 0x1c(r1)
-    fadds f7, f3, f1
-    stfs f5, 0x20(r1)
-    stfs f6, 0x24(r1)
-    fcmpo cr0, f7, f0
-    ble ItemEffect_Projectile_L_80051BFC
-    frsqrte f1, f7
-    lfd f3, lbl_806D2720(r2)
-    lfd f2, lbl_806D2728(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f7, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f7, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f7, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f7, f0
-    frsp f0, f0
-    stfs f0, 0x8(r1)
-    lfs f7, 0x8(r1)
-    ItemEffect_Projectile_L_80051BFC:
-    lfs f2, 0x28(r1)
-    mulli r31, r4, 0x14
-    lfs f1, 0x2c(r1)
-    lis r3, lbl_802ED5B4@ha
-    lfs f0, 0x30(r1)
-    fmuls f4, f2, f7
-    fmuls f3, f1, f7
-    lfs f1, lbl_806D2730(r2)
-    fmuls f2, f0, f7
-    addi r0, r3, lbl_802ED5B4@l
-    stfs f4, 0x28(r1)
-    add r3, r0, r31
-    fmuls f0, f4, f1
-    lfs f5, 0x4(r3)
-    fmuls f4, f3, f1
-    stfs f3, 0x2c(r1)
-    fmuls f3, f2, f1
-    lwz r6, 0x8(r3)
-    stfs f2, 0x30(r1)
-    fmuls f2, f0, f5
-    fmuls f1, f4, f5
-    addi r4, r1, 0x28
-    stfs f0, 0x28(r1)
-    fmuls f0, f3, f5
-    stfs f4, 0x2c(r1)
-    stfs f3, 0x30(r1)
-    stfs f2, 0x28(r1)
-    stfs f1, 0x2c(r1)
-    stfs f0, 0x30(r1)
-    lwz r5, 0x0(r30)
-    lwz r3, 0x4(r30)
-    lwz r5, 0x28(r5)
-    addi r5, r5, 0x58
-    bl ItemEffectImpact_TryArm
-    lis r3, lbl_802ED5B4@ha
-    addi r0, r3, lbl_802ED5B4@l
-    add r4, r0, r31
-    lwz r3, 0xc(r4)
-    lwz r0, 0x10(r4)
-    stw r3, 0xc(r30)
-    stw r0, 0x10(r30)
-    lwz r31, 0x3c(r1)
-    lwz r30, 0x38(r1)
-    lwz r0, 0x44(r1)
-    mtlr r0
-    addi r1, r1, 0x40
-    blr
+#pragma exceptions off
+static inline void Proj_scale(float *v, float k) { v[0] = v[0] * k; v[1] = v[1] * k; v[2] = v[2] * k; }
+void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg) { /* 0x80051A70 size:0x248 */
+    const ItemObjectPosView *obj = (const ItemObjectPosView *)arg;
+    float mag2;
+    float mag;
+    struct { float x, y, z, pad; } d;
+    float w2[3];
+    float w[3];
+    float vx;
+    float vy;
+    KartMovementSpeedView *mv;
+    float vz;
+    float s;
+
+    vy = obj->velY;
+    vx = obj->velX;
+    vz = obj->velZ;
+    d.x = vx;
+    d.y = vy;
+    d.z = vz;
+    vx = d.z * d.z + (d.x * d.x + d.y * d.y); mag = ItemEffect_sqrtf(vx);
+    {
+        float *dp = &d.x;
+        if (mag <= lbl_806D26EC) {
+            dp[0] = dp[1] = dp[2] = lbl_806D26EC;
+        } else {
+            float inv = lbl_806D26FC / mag;
+            dp[0] = dp[0] * inv;
+            dp[1] = dp[1] * inv;
+            dp[2] = dp[2] * inv;
+        }
+    }
+    mv = self->owner->movement;
+    {
+        float *vel = &mv->velX;
+        float *p;
+        /* fakematch (hand): the natural code is C++ `Vec3 v = mv->velocity; float len = v.length();`
+         * (two Vec3 objects with destructors, see extab). The TU builds as C, so the copies are
+         * spelled out; the three loads reuse s/vy/vx and the sum reuses vz so that the sum is
+         * coloured after the y and z values (target f7), and 1/60 is a literal, not the extern,
+         * so its load is a backend temp coloured before the products. */
+        s = vel[0]; vy = vel[1]; vx = vel[2]; w[0] = s; w[1] = vy; w[2] = vx;
+        { float *q = w; w2[0] = q[0]; w2[1] = q[1]; w2[2] = q[2]; }
+        p = w2;
+        vz = p[2] * p[2] + (p[0] * p[0] + p[1] * p[1]); mag2 = ItemEffect_sqrtf(vz);
+    }
+    d.x = d.x * mag2;
+    d.y = d.y * mag2;
+    d.z = d.z * mag2;
+    Proj_scale(&d.x, 1.0f / 60.0f);
+    Proj_scale(&d.x, lbl_802ED5B4[idx].scaleA);
+    ItemEffectImpact_TryArm(self->guard, &d.x, self->owner->movement->transform, lbl_802ED5B4[idx].mode8);
+    {
+        typedef struct { int a, b; } ProjPair;
+        *(ProjPair *)&self->activeId = *(const ProjPair *)&lbl_802ED5B4[idx].valC;
+    }
 }
+#pragma exceptions reset
 #undef VF
 
 #pragma exceptions off

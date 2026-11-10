@@ -2205,3 +2205,31 @@ last), and float literals instead of `extern const float` for the
 `t += 0.05f; if (t > 1.0f) t = 1.0f;` clamp (extern constants numbered the
 FPRs t=f1/step=f0/max=f2, literals give t=f2/step=f1/max=f0).
 
+
+## 83. Float register order of a "copy vector, take length, scale" block: literal constant, multiplier through a pointer inline, and which reused local holds the sum (ItemEffect_Projectile, 98.9 -> 100, 11-10)
+
+Same instructions as the target, only f-registers permuted (48 lines). Four
+levers were needed together; each alone moved the count up or sideways
+(48 -> 50 -> 44 -> 38 -> 0), so do not judge them one at a time (see §62).
+
+1. `extern const float lbl_806D2730` (1/60) -> the literal `1.0f / 60.0f`.
+   The extern load is a frontend CSE temp; the literal load is a backend temp
+   and is coloured before the products (target f1). `postprocess_sdata2.py`
+   renames the anonymous `@N` literal to the target symbol, no split needed.
+2. The multiplier goes through a small pointer inline, also for the table
+   value: `static inline void Proj_scale(float *v, float k) { v[0] = v[0] * k; ... }`.
+3. Named locals: first declared = highest vreg = coloured first. Declare
+   `vx; vy; mv; vz; s;` and write the LOADS in the order the target schedules
+   them (`vy = obj->velY;` before `vx = obj->velX;`).
+4. Second block (velocity copy + length): reuse existing locals instead of
+   fresh ones, and choose the roles: `s, vy, vx` take the three loads, `vz`
+   takes the sum `p[2]*p[2] + (p[0]*p[0] + p[1]*p[1])`. The sum must be the
+   local coloured after the y and z values, and it must stay coalesced with the
+   sqrt inline's argument; a fresh local (or reusing the result local) for the
+   sum breaks the coalescing and adds an `fmr`.
+
+Do not replace the hand-written copies by `Proj_cpy`/`Proj_len` style inlines:
+stores and `frsp` disappear (70-200 lines).
+
+Sign: vector math block at 98-99% with only f0-f7 permuted, constants loaded
+from `extern const float`.
