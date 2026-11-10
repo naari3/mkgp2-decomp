@@ -652,3 +652,8 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   (b) r4/r5 swapped between an address temp and a value used three times: drop the value's named
   local and repeat the expression (the CSE temp colours before the address temp).
   (c) `addi r4,base; mr r3,r4; add r4,r4,n` for memcpy(dst, base + n): `src = base; dst = src; src += n;`.
+- `-inline deferred` string order (JointTracks / MapAnim.cpp, 11-10): a `static inline` helper pools its string
+  literals where the CALLER is generated; a plain `static` helper that deferred auto-inlining swallows pools them
+  at its own source position (it is still compiled; mwld strips the unused copy). Line numbers that DEscend with
+  the address (0x1ED, 0x1B1, 0x18E, 0x164) are the sign of a deferred TU: reverse the source order and put the
+  helpers between the functions. A TU without `-rostr` puts literals in .data, not .rodata.

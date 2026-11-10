@@ -729,16 +729,19 @@ struct ItemWnd {
         digits[3].SetColor(c);
     }
     void Draw() {
-        for (int i = 0; i < 3; i++) {
+        /* one counter for all three loops: its later ranges are split-off
+           temps numbered below the loop pointers (regalloc_patterns 73) */
+        int i;
+        for (i = 0; i < 3; i++) {
             if (spr[i] != 0) {
                 fn_801A0004(spr[i]);
             }
         }
         void *mgr = fn_801F8E58();
-        for (int i = 0; i < 7; i++) {
+        for (i = 0; i < 7; i++) {
             fn_801F8A34(mgr, &texts[i], 5);
         }
-        for (int i = 0; i < 4; i++) {
+        for (i = 0; i < 4; i++) {
             fn_8011FAFC(&digits[i], 5);
         }
         fn_8011FAFC(&label, labelLayer);
@@ -797,10 +800,11 @@ struct NextWnd {
         if (state != 0) {
             fn_8011FAFC(&back, 3);
             fn_8011FAFC(&label, 4);
-            for (int i = 0; i < 3; i++) {
+            int i;
+            for (i = 0; i < 3; i++) {
                 fn_8011FAFC(&digits[i], 5);
             }
-            for (int i = 0; i < 2; i++) {
+            for (i = 0; i < 2; i++) {
                 if (spr[i] != 0) {
                     fn_801A0004(spr[i]);
                 }

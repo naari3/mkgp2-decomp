@@ -20,7 +20,6 @@ void __assert(const char *, int, const char *);
 void DebugPrintf(const char *, ...);
 int strcmp(const char *, const char *);
 extern const char lbl_806DBDE4[7], lbl_806DBDEC[5], lbl_806DBDF4[4];
-extern const char lbl_803E5D38[], lbl_803EED14[], lbl_803EED64[], lbl_803EEE30[];
 extern const float lbl_806DBDE0, lbl_806DBE00;
 extern const unsigned char lbl_804EE6C0[], lbl_804EE68C[], lbl_804EE6AC[];
 extern int g_cupId;
@@ -138,7 +137,10 @@ void *fn_80241C08(TaskBucket *);
 void fn_802400A4(TaskBucket *, const ChildBinding *, int, void *);
 int fn_80240378(TaskBucket *, const char *, int, void *, const TrackGroup *);
 }
-template <class T> static inline void Append(TaskBucket *b, T *&p) {
+static inline void Append(TaskBucket *b, TrackTask *&p) {
+    PtrVec_InsertFill(b, b->End(), 1, &p);
+}
+static inline void Append(TaskBucket *b, AnimTask *&p) {
     PtrVec_InsertFill(b, b->End(), 1, &p);
 }
 static inline void AppendChild(ChildVector *b, MatrixChild *p) {
