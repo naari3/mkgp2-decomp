@@ -1,12 +1,12 @@
+#include "game/types/bitfields.h"
 /* Observed link-slot storage only; no foreign data is owned by this TU. */
 typedef struct PcbConnection { unsigned char pad0[0xC]; int state; } PcbConnection;
 typedef union PcbLinkFlags {
     struct {
-        unsigned char local:1, reserved6:1, polled:1, receiving:1;
-        unsigned char reserved3:1, dirty:1, reserved0:2;
-        unsigned char reserved7:1, low:7;
+        BITFIELDS7(unsigned char local:1, unsigned char reserved6:1, unsigned char polled:1, unsigned char receiving:1, unsigned char reserved3:1, unsigned char dirty:1, unsigned char reserved0:2)
+        BITFIELDS2(unsigned char reserved7:1, unsigned char low:7)
     } byte;
-    struct { unsigned short upper:6, id:3, lower:7; } half;
+    struct { BITFIELDS3(unsigned short upper:6, unsigned short id:3, unsigned short lower:7) } half;
 } PcbLinkFlags;
 typedef struct PcbLinkSlot {
     unsigned char header[0x2C];

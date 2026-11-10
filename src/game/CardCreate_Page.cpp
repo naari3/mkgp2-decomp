@@ -1,3 +1,4 @@
+#include "game/types/bitfields.h"
 /* 13 TUs merged by tools/merge_tus.py, .text 0x800668fc..0x8006b32c.
  * Each section is the preprocessed original TU with its names suffixed _pN
  * (tools/extab_user_renames.json maps the symbols back). */
@@ -7491,10 +7492,7 @@ void* __va_arg(va_list_p27 v_list_p27, unsigned char type_p27);
 typedef struct
 {
 int unk0_p27;
-unsigned short unk4b0_p27:7;
-unsigned short unk4b7_p27:3;
-unsigned short unk4b10_p27:2;
-unsigned short unk4b12_p27:1;
+BITFIELDS4_PAD(unsigned short :3, unsigned short unk4b0_p27:7, unsigned short unk4b7_p27:3, unsigned short unk4b10_p27:2, unsigned short unk4b12_p27:1)
 unsigned char filler6_p27[0x14-0x6];
 int unk14_p27;
 int unk18_p27;

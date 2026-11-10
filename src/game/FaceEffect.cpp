@@ -1,3 +1,4 @@
+#include "game/types/bitfields.h"
 /*
  * 0x80230644..0x80231D50: clFaceEffect, the reaction icon (tears, sweat,
  * pencil scribble, ...) drawn on a rival's face icon, plus the helper
@@ -78,13 +79,9 @@ void fn_80121E10(ResCtrl *r);
 
 struct PcbSlot {
     unsigned char b0, b1, b2;
-    unsigned char b3_0 : 2;
-    unsigned char active : 1;
-    unsigned char b3_3 : 5;
+    BITFIELDS3(unsigned char b3_0:2, unsigned char active:1, unsigned char b3_3:5)
     unsigned char b4, b5;
-    unsigned short h6_0 : 7;
-    unsigned short tier : 4;
-    unsigned short h6_11 : 5;
+    BITFIELDS3(unsigned short h6_0:7, unsigned short tier:4, unsigned short h6_11:5)
 };
 
 #include "game/ItemEffectBusPrivate.h"

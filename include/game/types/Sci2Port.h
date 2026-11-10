@@ -1,5 +1,6 @@
 #ifndef GAME_TYPES_SCI2PORT_H
 #define GAME_TYPES_SCI2PORT_H
+#include "game/types/bitfields.h"
 
 class Sci2Port {
 public:
@@ -68,13 +69,8 @@ public:
     }
 
     unsigned char m_b0;
-    unsigned char m_pad1 : 3;
-    unsigned char m_parityOdd : 1;
-    unsigned char m_parityOn : 1;
-    unsigned char m_stop2 : 1;
-    unsigned char m_dataBits : 2;
-    unsigned char m_cts : 1;
-    unsigned char m_pad2 : 7;
+    BITFIELDS5(unsigned char m_pad1:3, unsigned char m_parityOdd:1, unsigned char m_parityOn:1, unsigned char m_stop2:1, unsigned char m_dataBits:2)
+    BITFIELDS2(unsigned char m_cts:1, unsigned char m_pad2:7)
     unsigned char m_b3;
     unsigned char m_b4;
     unsigned char m_b5;

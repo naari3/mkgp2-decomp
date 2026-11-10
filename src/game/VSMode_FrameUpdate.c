@@ -1,3 +1,4 @@
+#include "game/types/bitfields.h"
 #include "game/types/c_region.h"
 C_REGION_BEGIN
 /* VS/Battle mode unit: .text 0x8009E0D4..0x800A0688, .rodata 0x80320960..0x80321178.
@@ -3112,16 +3113,16 @@ struct VSOwner {
     VSFinalObject* finalObject;
 };
 struct VSPeer {
-    unsigned char teamTop : 1, teamId : 3, teamLow : 4;
+    BITFIELDS3(unsigned char teamTop:1, unsigned char teamId:3, unsigned char teamLow:4)
     unsigned char unknown1, unknown2, cameraFlags;
-    unsigned char charId : 4, charLow : 4;
+    BITFIELDS2(unsigned char charId:4, unsigned char charLow:4)
     unsigned char unknown5, tuning;
     unsigned char unknown7[9];
     unsigned short items[3];
     unsigned short shorts16[3];
     unsigned char remainder[0xA3C - 0x1C];
 };
-struct VSHostFlags { unsigned char ready : 1, rest : 7; };
+struct VSHostFlags { BITFIELDS2(unsigned char ready:1, unsigned char rest:7) };
 struct VSRaceRow { signed char laps; unsigned char pad[3]; float remaining, bonus; };
 
 extern "C" {

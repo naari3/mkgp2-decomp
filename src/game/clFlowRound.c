@@ -1,3 +1,4 @@
+#include "game/types/bitfields.h"
 /* clFlowRound: the round (race 1-4) select flow of a cup.
  * A real polymorphic class with RTTI: the ctor stores the vtable between the
  * clFlowProcess base ctor and the ResCtrl member ctors, and -inline deferred
@@ -716,8 +717,7 @@ static inline InputState *input_state(void) {
 union RoundColor {
     unsigned int rgba;
     struct {
-        unsigned int rgb : 24;
-        unsigned int a : 8;
+        BITFIELDS2(unsigned int rgb:24, unsigned int a:8)
     } c;
 };
 

@@ -722,3 +722,9 @@ status: note
 
 Mechanical, byte-identical: ranking_display.cpp, Scene_80164614.cpp, fn_801F27B4.cpp, RaceScene_FrameUpdate.cpp, clFlowCourse.cpp, FaceEffect.cpp and three private headers got non-MWCC definitions or names for data other units read by name. Nothing changes under MWCC. Background and conventions: docs/notes/shared_data.md.
 
+## n3-20261110-1321 | 2026-11-10 13:21Z | from: n3 | bit-fields declared through BITFIELDSn (22 files)
+re: -
+status: note
+
+Mechanical, byte-identical: every run of bit-field members in src/game, include/game and include/triforce (235 members, 22 files, most in PCBCheckRecv.c and PCBCommBroadcast.c) is now one BITFIELDSn(...) call per storage unit (include/game/types/bitfields.h). Under MWCC it expands to the same declarations. When you add bit-fields, run python3 tools/bitfield_runs.py on the file.
+

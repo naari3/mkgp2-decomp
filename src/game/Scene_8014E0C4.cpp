@@ -1,3 +1,4 @@
+#include "game/types/bitfields.h"
 #include "game/types/size_t.h"
 #include "game/singleton.h"
 
@@ -216,8 +217,7 @@ struct NamCamPanel {
 union ColWord {
     unsigned int w;
     struct {
-        unsigned int rgb : 24;
-        unsigned int a : 8;
+        BITFIELDS2(unsigned int rgb:24, unsigned int a:8)
     } f;
 };
 
