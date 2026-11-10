@@ -54,3 +54,47 @@ NonMatching unit links the original object.
 Announce on the agent board first, land in batches of a few hundred files,
 check the board and open claims before each batch, and do not touch a TU
 somebody has claimed.
+
+## State and next steps (handover, 2026-11-10 09:20Z)
+
+Done on main: tool (aec71a4), batch 1 (58fea97: Vec3, Vec, Vec3f, Vec2,
+GXColor, KartCond; 347 definitions) and batch 2 (6f6b17c: 150 more types,
+445 definitions). 156 types are in `include/game/types`. Both batches left
+all 2,743 objects byte-identical.
+
+One batch, start to finish (about 3 minutes):
+
+    git fetch origin main && git checkout -B work origin/main     # clean tree
+    # open unit-claims (list with explicit page numbers) -> build/open_claims.txt, one `game/Foo.c` per line
+    bash tools/helpers/struct_dedup_batch.sh                      # all movable groups; or --name X / --max-groups N
+    git add -A include src docs && git commit -m "struct_dedup batch N: ..."
+    bash tools/helpers/land.sh
+
+Order from here:
+1. Rerun the batch until `apply` reports 0 types (the census said 23 groups /
+   56 definitions were movable right after batch 2; each landing unlocks
+   structs that contain the types just shared).
+2. Then the reasons table in docs/reports/struct_dedup.md is the work list,
+   biggest first. Each needs a tool extension, not hand edits:
+   - "needs another type": typedef names such as u8/u32/f32 (give the header
+     one fixed include for them, or spell the built-in type) and pointers to
+     SDK/HSD types (the header must include the same SDK header every member
+     TU uses).
+   - "non-plain member": structs with methods, nested types or access
+     labels (C++ classes; inline method bodies do emit code, so compare
+     bodies as well as members).
+   - "has base class", "class": same, plus the base must be shared first.
+   - "forward declaration in file" / "separate typedef in file": drop the
+     local forward declaration together with the definition.
+3. Class B (same name and layout, different member names): choose one
+   spelling per type and rename the fields in the other TUs.
+4. Class C (same layout, different names, e.g. Vec/Vec3/Vec3f): one set at a
+   time; renaming changes C++ mangled names.
+
+Pitfalls seen so far:
+- `git stash` leaves the untracked `include/game/types/*.h` behind, and
+  `apply` then treats those names as already shared and does nothing. Start
+  from a really clean tree (`git status --short` empty).
+- A header named after a generic type (`Node`, `ListNode`, `Obj`) holds the
+  largest identical group only; other TUs keep a different local `Node`.
+- Data symbol naming (the second half of this task) has not been started.
