@@ -635,22 +635,23 @@ static inline int RR_FindNearest3(RRVec3 *pts, int count, const RRVec3 *pos, flo
 }
 
 static inline int RR_FindNearest(RRVec3 *pts, int count, const RRVec3 *pos) {
+    RRVec3 *p;
     int best;
     int i;
     float bestDist;
-    float pz, py, px;
+    float px, py, pz;
 
     bestDist = lbl_806D738C;
     best = 0;
     px = pos->x;
     py = pos->y;
     pz = pos->z;
-    for (i = 0; i < count; i++) {
+    for (i = 0, p = pts; i < count; p++, i++) {
         RRVec3 d;
         float m;
-        d.x = pts[i].x - px;
-        d.y = pts[i].y - py;
-        d.z = pts[i].z - pz;
+        d.x = p->x - px;
+        d.y = p->y - py;
+        d.z = p->z - pz;
         m = PSVECSquareMag(&d);
         if (i == 0 || m < bestDist) {
             best = i;
