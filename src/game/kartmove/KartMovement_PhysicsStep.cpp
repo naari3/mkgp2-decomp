@@ -33,6 +33,9 @@ unsigned char Terrain_GetGroundHeight(Vec3 *, float *, void *, void *);
 static inline float Param(MovementInit *k, int offset) {
     return *(float *)(k->config + offset);
 }
+static inline float MinimumResponse(MovementInit *k) {
+    return *(float *)(k->config + 0x2c) * k->field2f0;
+}
 static inline void Scale(Vec3 &v, float s) { v.x *= s; v.y *= s; v.z *= s; }
 static inline void Add(Vec3 &v, const Vec3 &b) { v.x += b.x; v.y += b.y; v.z += b.z; }
 static inline void Sub(Vec3 &v, const Vec3 &b) { v.x -= b.x; v.y -= b.y; v.z -= b.z; }
@@ -158,7 +161,7 @@ extern "C" void KartMovement_PhysicsStep(MovementInit *k, unsigned char active,
         targetResponse = limit / force;
         targetResponse *= k->field3c;
         Scale(k->v188, targetResponse);
-        float lower = Param(k, 0x2c) * k->field2f0;
+        float lower = MinimumResponse(k);
         if (targetResponse <= lower) targetResponse = lower;
         targetDamping = Param(k, 8);
     } else {
@@ -177,7 +180,7 @@ extern "C" void KartMovement_PhysicsStep(MovementInit *k, unsigned char active,
         if (alignment > lbl_806D96D0)
         {
             float correction = alignment*Param(k, 0x80);
-            targetResponse = Saturate_Double(targetResponse + correction, Param(k, 0x2c)*k->field2f0, lbl_806D96D4);
+            targetResponse = Saturate_Double(targetResponse + correction, MinimumResponse(k), lbl_806D96D4);
         }
         if (k->field1d8 > targetResponse) {
             k->field1d8 -= Param(k, 0x34);

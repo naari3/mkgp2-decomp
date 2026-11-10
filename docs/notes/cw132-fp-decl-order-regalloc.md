@@ -543,3 +543,8 @@ c26_u48: KartPhysics_ApplyCollisionForce 801EDFEC 98.64286 ->98.70982 using rega
 Source: Codex worker c26_u60_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c26_u60 fn_8019ADF4: GC/2.7 baseline96.04908 ->96.073616/652B by caller-owned volatile Newton-result slots declared initialRoot,impulseRoot,normalRoot and passed to a TU-private root macro. Repairs all four root slot rows (normal8, impulseC); projection instruction text unchanged. Named dot partial sum invariant; literal0.001f projection96.0184 regresses. No flag/range changes; full service DOL SHA1ea30f3b1 exact; native gain0. Remaining projection graph/load order needs fresh compiler evidence, not slot permutations.
+
+## c28_u3_20261111
+Source: Codex worker c28_u3_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c28_u3: PhysicsStep99.561066->99.57633 with dedicated MinimumResponse(k) reading config+0x2c and field2f0 directly, replacing nested generic Param in both lower-bound expressions. Exactly four load-FPR rows +638/+63c/+71c/+724 now exact, no opcode/order regression, primary5240B. Add-only own @699/@700 automatic EH aliases restore owned232B EH/12B index100. Six hypotheses archived build/w/c28. Scalar ref-output integration99.55725, whole integration inline99.512215; quantization/commutative operand reversal invariant. Integration literals text99.58397 but collide with existing EH @696 key, reverted. Sole function remains NM, nativegain0, coordinator full SHA1ea30f3b1 exact. No live colouring diagnosis supplied; request fresh coordinator trace before continuing.
