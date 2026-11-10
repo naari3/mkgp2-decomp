@@ -2043,8 +2043,11 @@
       "SharedPtr_Init"
     ]
   },
-  "src/game/clDrawMan.cpp": {
+  "src/game/clDrawManager.cpp": {
     "extab": [
+      "clDrawMan_Dtor",
+      "clDrawMan_NodePool_Free",
+      "clDrawMan_Buckets_Free",
       "dtor_8007AD78",
       "DrawManager_GetOrCreate",
       "clDrawMan_Buckets_Dispatch",
@@ -2054,6 +2057,9 @@
       "__dt__11ScopedTimerFv"
     ],
     "extabindex": [
+      "clDrawMan_Dtor",
+      "clDrawMan_NodePool_Free",
+      "clDrawMan_Buckets_Free",
       "DrawManager_GetOrCreate",
       "clDrawMan_Buckets_Dispatch",
       "clDrawMan_AddSorted",
