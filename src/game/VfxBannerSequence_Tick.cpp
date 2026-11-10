@@ -6,16 +6,7 @@ extern "C" {
 #include "game/DrawEffectAccess.h"
 }
 
-struct ResCtrl {
-    void *resId;
-    int field4, mode, fieldc;
-    unsigned char flag, pad11[3];
-    float x, y, z, width, height, field28, scaleX, scaleY;
-    unsigned int colors[4];
-    int tail[5];
-    ResCtrl();
-    ~ResCtrl() {}
-};
+#include "game/types/ResCtrl.h"
 
 extern "C" {
 extern const float lbl_806D5020; /* 320.0 */

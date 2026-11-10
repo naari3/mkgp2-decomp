@@ -48,14 +48,7 @@ static inline RankLog *GetRankLog() {
     return SINGLETON_INSTANCE(lbl_806D10A0);
 }
 
-struct clSceneInterface {
-    virtual ~clSceneInterface() {}
-    virtual void Destroy();
-    virtual void Update();
-    virtual void Draw();
-    unsigned char done;
-    clSceneInterface() : done(false) {}
-};
+#include "game/types/clSceneInterface.h"
 
 struct clCSSceneNextRaceGP : clSceneInterface {
     int state;

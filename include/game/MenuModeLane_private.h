@@ -2,14 +2,7 @@
 #define MENU_MODE_LANE_PRIVATE_H
 void *operator new(unsigned long);
 void operator delete(void *) throw();
-struct SceneBase {
-    virtual ~SceneBase() {}
-    virtual void Destroy();
-    virtual void Update();
-    virtual void Draw();
-    bool done;
-    SceneBase() : done(false) {}
-};
+#include "game/types/SceneBase.h"
 struct MenuModeBase : SceneBase {
     virtual void _key();
     int cup, course, variant, round, startAnim, timer, itemCount, randomItem;

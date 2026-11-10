@@ -18,10 +18,7 @@ struct CoinWindow {
     CoinWindow();
 };
 
-struct CoinPrompt {
-    char body[0x20];
-    CoinPrompt(int a, int b, int c, int d, int e);
-};
+#include "game/types/CoinPrompt.h"
 
 struct CoinPopupDetail {
     int pad00[4];
@@ -32,10 +29,7 @@ struct CoinPopupDetail {
     CoinPopupDetail(int a, int b, int c);
 };
 
-struct ItemMsgWnd {
-    char body[0x5C];
-    ItemMsgWnd();
-};
+#include "game/types/ItemMsgWnd.h"
 
 struct MsgParam {
     int a;
@@ -136,11 +130,7 @@ static inline bool IsNoCredit() {
     return 0;
 }
 
-struct CoinPromptHolder {
-    CoinPrompt *p;
-    CoinPromptHolder(CoinPrompt *q) : p(q) {}
-    ~CoinPromptHolder() throw() { fn_8023CFE0(p, 1); }
-};
+#include "game/types/CoinPromptHolder.h"
 
 struct CoinCounter {
     int slot;

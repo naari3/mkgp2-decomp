@@ -3,17 +3,9 @@ extern "C" {
 extern void *lbl_804E4C18[];
 }
 
-class PathUser {
-public:
-    ~PathUser();
-};
+#include "game/types/PathUser.h"
 
-struct PathUserHolder {
-    PathUser *p;
-    ~PathUserHolder() throw() {
-        delete p;
-    }
-};
+#include "game/types/PathUserHolder.h"
 
 struct PathOwner801F05A8 {
     void *vt;

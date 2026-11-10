@@ -22,29 +22,11 @@ struct HSD_JObj {
     Mtx mtx;
 };
 
-struct clNormal3D {
-    char _opaque[0x5C];
-    clNormal3D(const char *res, int flags);
-    ~clNormal3D();
-};
+#include "game/types/clNormal3D.h"
 
-class GXChannel {
-public:
-    GXChannel(void *root, void *desc, int flags, int mode);
-    ~GXChannel();
-    void PushTransform(Mtx m);
+#include "game/types/GXChannel.h"
 
-private:
-    char pad[0x14];
-};
-
-struct GateAnim {
-    char _opaque[0x180];
-    GateAnim();
-    ~GateAnim();
-    void Load(const char *name, int flags, clNormal3D *model, const void *desc);
-    void Update();
-};
+#include "game/types/GateAnim.h"
 
 #include "game/types/FirePuff.h"
 
@@ -160,13 +142,7 @@ struct Hinoko {
     void Update();
 };
 
-struct clMapEffectParts {
-    virtual ~clMapEffectParts() {}
-    virtual void Update();
-    virtual void Draw();
-    virtual void Enable(int on);
-    clMapEffectParts() {}
-};
+#include "game/types/clMapEffectParts.h"
 
 struct clDNStartDino : clMapEffectParts {
     clNormal3D *gate;

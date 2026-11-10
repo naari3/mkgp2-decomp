@@ -10,11 +10,7 @@ unsigned char Terrain_GetGroundHeight(float *pos, float *height, int, int);
 extern char lbl_8037DA7C[];
 }
 
-class Normal3D {
-public:
-    Normal3D(void *desc, int flags);
-    unsigned char data[0x5C];
-};
+#include "game/types/Normal3D.h"
 
 struct SpawnEntry {
     float pos[3];

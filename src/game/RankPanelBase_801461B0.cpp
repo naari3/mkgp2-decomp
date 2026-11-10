@@ -20,13 +20,7 @@ public:
     virtual void v1C();
     virtual unsigned char Pressed(int mask);
 };
-class VObjC {
-public:
-    virtual void v8();
-    virtual void vC();
-    virtual void v10();
-    virtual void v14();
-};
+#include "game/types/VObjC.h"
 #include "game/types/Countdown.h"
 #include "game/types/SelSlot.h"
 #include "game/types/LapSel.h"

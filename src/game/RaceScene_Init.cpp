@@ -11,15 +11,9 @@ struct GameModeBase {
     virtual ~GameModeBase();
 };
 
-struct EnvironmentMgr {
-    unsigned char data[0x37C];
-    EnvironmentMgr();
-};
+#include "game/types/EnvironmentMgr.h"
 
-struct RaceCamera {
-    unsigned char data[0x2C];
-    RaceCamera(float fovy, int width, float aspect, int height, void *renderTarget);
-};
+#include "game/types/RaceCamera.h"
 
 struct CarObject {
     unsigned char data[0x118];
@@ -27,10 +21,7 @@ struct CarObject {
               int team, int local, int ghost);
 };
 
-struct PathManager {
-    unsigned char data[0x4E8];
-    PathManager(void *pathKey, CarObject *car, void *renderObj, float *x, float *y, float *z);
-};
+#include "game/types/PathManager.h"
 
 struct LakituStart {
     unsigned char data[0x58];
@@ -47,45 +38,24 @@ struct JyugemuFlag {
     JyugemuFlag(Scene3D *scene);
 };
 
-struct JyugemuReverseFlag {
-    unsigned char data[0x14];
-    JyugemuReverseFlag(void *renderObj);
-};
+#include "game/types/JyugemuReverseFlag.h"
 
-struct FinalLapBanner {
-    unsigned char data[0x10];
-    FinalLapBanner(void *renderObj);
-};
+#include "game/types/FinalLapBanner.h"
 
-struct ObjCollChecker {
-    unsigned char data[0x18];
-    ObjCollChecker();
-};
+#include "game/types/ObjCollChecker.h"
 
-struct AISystem {
-    unsigned char data[0x4];
-    AISystem(PathManager *path, ObjCollChecker *coll, int flag);
-};
+#include "game/types/AISystem.h"
 
-struct ItemSelect {
-    unsigned char data[0x88];
-    ItemSelect(int slot, int flag);
-};
+#include "game/types/ItemSelect.h"
 
 struct WeatherSystem {
     unsigned char data[0x1B4];
     WeatherSystem(int flag);
 };
 
-struct RaceHud {
-    unsigned char data[0x80];
-    RaceHud(PathManager *path);
-};
+#include "game/types/RaceHud.h"
 
-struct SceneOverlay {
-    unsigned char data[0x24];
-    SceneOverlay(int frames);
-};
+#include "game/types/SceneOverlay.h"
 
 struct RaceScene : GameModeBase {
     LakituStart *lakitu;           /* 0x04 */

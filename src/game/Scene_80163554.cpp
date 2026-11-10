@@ -3,9 +3,7 @@
  * getter, and a virtual-delete thunk.
  */
 
-struct VObj {
-    virtual ~VObj();
-};
+#include "game/types/VObj.h"
 
 struct Holder80163554 {
     void *vtable;

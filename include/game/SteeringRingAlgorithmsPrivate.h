@@ -5,17 +5,7 @@ extern "C" {
 extern const char lbl_803BD2A4[], lbl_803BD2C0[];
 extern unsigned long lbl_806CFF88;
 }
-struct SteeringRingConstIter {
-    SteeringRing *ring;
-    unsigned long index;
-    const int *ptr;
-    unsigned long reserved;
-    SteeringRingConstIter &operator++() {
-        ++index;
-        if(++ptr==ring->data+ring->capacity) ptr=ring->data;
-        return *this;
-    }
-};
+#include "game/types/SteeringRingConstIter.h"
 inline unsigned long RingDistance4(SteeringRingConstIter first, SteeringRingConstIter last) {
     return last.index-first.index;
 }

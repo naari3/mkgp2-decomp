@@ -15,10 +15,7 @@ extern "C" OSTime OSGetTime(void);
 #define OS_TIMER_CLOCK (OS_BUS_CLOCK / 4)
 #define OSTicksToMilliseconds(ticks) ((ticks) / (OS_TIMER_CLOCK / 1000))
 
-struct CoinPrompt {
-    char body[0x20];
-    CoinPrompt(int a, int b, int c, int d, int e);
-};
+#include "game/types/CoinPrompt.h"
 
 struct CoinCounter {
     int slot;
@@ -51,21 +48,9 @@ struct CoinPopupDetail {
     unsigned char Closed() { return state == 6; }
 };
 
-struct ItemMsgWnd {
-    char body[0x5C];
-    ItemMsgWnd();
-};
+#include "game/types/ItemMsgWnd.h"
 
-struct SyncWaiter {
-    char pad00[0x14];
-    virtual ~SyncWaiter();
-    virtual void v0C();
-    virtual void v10();
-    virtual void Update();
-    virtual void Draw();
-    char pad18[0x4C - 0x18];
-    SyncWaiter();
-};
+#include "game/types/SyncWaiter.h"
 
 struct InputPlayer {
     virtual void v0();
@@ -197,11 +182,7 @@ static inline float ElapsedMs(OSTime start) {
     return (float)OSTicksToMilliseconds(OSGetTime() - start);
 }
 
-struct CoinPromptHolder {
-    CoinPrompt *p;
-    CoinPromptHolder(CoinPrompt *q) : p(q) {}
-    ~CoinPromptHolder() throw() { fn_8023CFE0(p, 1); }
-};
+#include "game/types/CoinPromptHolder.h"
 
 inline Panel::Panel() : kind(3), timer(0) {
     frame.mode = 2;

@@ -1,20 +1,9 @@
 /* CC-class select flow constructor. */
-struct SpriteObj {
-    char pad0[0xC];
-    float x;
-    float y;
-    char pad14[0x1C];
-
-    SpriteObj(int anim, int loop, int arg);
-};
+#include "game/types/SpriteObj.h"
 
 #include "game/types/InputView.h"
 
-struct FlowBase {
-    void *vt;
-    FlowBase();
-    ~FlowBase();
-};
+#include "game/types/FlowBase.h"
 
 struct ClassFlow : FlowBase {
     unsigned char unk4;

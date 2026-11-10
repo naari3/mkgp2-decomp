@@ -65,31 +65,9 @@ public:
 };
 
 class clIndicator;
-class clFlowProcess {
-public:
-    clFlowProcess();
-    virtual ~clFlowProcess();
-    virtual int Update();
-    virtual void Draw();
-};
+#include "game/types/clFlowProcess.h"
 
-class clFlowCardCheck : public clFlowProcess {
-public:
-    unsigned char stickLatch;
-    int page;
-    int prevPage;
-    int timer;
-    int state;
-    float bright;
-    int result;
-    clIndicator *indicator;
-    clFlowCCInterface *pages[8];
-
-    clFlowCardCheck();
-    virtual ~clFlowCardCheck();
-    virtual int Update();
-    virtual void Draw();
-};
+#include "game/types/clFlowCardCheck.h"
 
 
 #endif

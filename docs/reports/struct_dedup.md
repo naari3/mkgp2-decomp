@@ -5,26 +5,26 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | Item | Count |
 |---|---|
 | Files scanned (src/game, src/ui, src/sound, src/util, src/resource, include/game) | 2840 |
-| struct/union/class definitions at file scope | 5980 in 1558 files |
-| Distinct type names | 4201 |
-| Names defined in more than one file | 581 |
-| Types already in `include/game/types` | 201 |
-| Class A groups (same name, same members, 2+ files) | 85 groups, 223 definitions |
-| ... of which movable right now | 27 groups, 65 definitions |
-| Definitions whose byte layout the tool can compute | 2956 (not computable: 239) |
+| struct/union/class definitions at file scope | 5482 in 1537 files |
+| Distinct type names | 4112 |
+| Names defined in more than one file | 459 |
+| Types already in `include/game/types` | 366 |
+| Class A groups (same name, same members, 2+ files) | 80 groups, 210 definitions |
+| ... of which movable right now | 33 groups, 88 definitions |
+| Definitions whose byte layout the tool can compute | 2949 (not computable: 236) |
 | Class B (same name, same layout, different member spelling) | 65 name/layout pairs, 145 spellings |
-| Class C (same layout of 16+ bytes and 3+ fields, different names) | 170 layouts, 683 definitions |
+| Class C (same layout of 16+ bytes and 3+ fields, different names) | 170 layouts, 686 definitions |
 
 ## Why a definition is not movable yet
 
 | Reason | Definitions |
 |---|---|
-| non-plain member (method, nested type, access label) | 1754 |
-| needs another type (not shared yet) | 909 |
-| has base class | 700 |
+| non-plain member (method, nested type, access label) | 1429 |
+| needs another type (not shared yet) | 762 |
+| has base class | 586 |
 | has storage/qualifier prefix | 259 |
-| class | 253 |
-| needs another type (file has its own) | 90 |
+| class | 204 |
+| needs another type (file has its own) | 131 |
 | forward declaration in file | 43 |
 | name defined twice in file | 37 |
 | separate typedef in file | 32 |
@@ -40,66 +40,66 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 
 | Name | Definitions | Distinct member lists | Largest identical group | Movable now |
 |---|---|---|---|---|
-| HSD_JObj | 54 | 36 | 13 | 3 |
-| clNormal3D | 44 | 0 | 0 | 0 |
+| HSD_JObj | 54 | 36 | 13 | 13 |
 | Obj | 41 | 28 | 3 | 3 |
-| InputPlayer | 33 | 0 | 0 | 0 |
-| ResCtrl | 33 | 2 | 1 | 1 |
-| ScopedTimer | 33 | 0 | 0 | 0 |
-| VObj | 27 | 0 | 0 | 0 |
-| GXChannel | 26 | 2 | 1 | 0 |
-| Sprite | 23 | 5 | 1 | 1 |
-| GameModeBase | 23 | 1 | 2 | 0 |
-| clMapEffectParts | 21 | 0 | 0 | 0 |
-| TextManager | 20 | 0 | 0 | 0 |
+| ResCtrl | 30 | 2 | 1 | 1 |
+| ScopedTimer | 30 | 0 | 0 | 0 |
+| clNormal3D | 27 | 0 | 0 | 0 |
+| Sprite | 21 | 5 | 1 | 1 |
+| InputPlayer | 20 | 0 | 0 | 0 |
 | __va_list_struct | 18 | 0 | 0 | 0 |
+| GameModeBase | 16 | 1 | 2 | 0 |
 | SndSlot | 16 | 10 | 4 | 1 |
-| SceneBase | 15 | 0 | 0 | 0 |
+| VObj | 15 | 0 | 0 | 0 |
 | KartDriver | 15 | 13 | 2 | 2 |
-| Scene3D | 14 | 2 | 1 | 1 |
+| TextManager | 14 | 0 | 0 | 0 |
 | PlayerData | 12 | 11 | 2 | 2 |
 | ObjView | 12 | 10 | 2 | 2 |
 | Vec | 12 | 1 | 3 | 0 |
-| CarObject | 12 | 1 | 1 | 0 |
-| WeatherSystem | 12 | 4 | 1 | 1 |
 | JObj | 11 | 8 | 2 | 2 |
-| Normal3D | 11 | 2 | 2 | 0 |
 | PtrVecBase | 11 | 0 | 0 | 0 |
+| Scene3D | 10 | 2 | 1 | 1 |
 | SpriteSlot | 10 | 9 | 2 | 2 |
 | PtrVec | 10 | 0 | 0 | 0 |
 | VfxSlot | 10 | 7 | 4 | 4 |
 | InputState | 9 | 7 | 2 | 2 |
-| LakituStart | 9 | 0 | 0 | 0 |
-| TextSprite | 9 | 0 | 0 | 0 |
+| CarObject | 9 | 1 | 1 | 0 |
 | PtrVecData | 9 | 0 | 0 | 0 |
-| AnimCtrl | 9 | 0 | 0 | 0 |
 | FireFuncs | 9 | 1 | 9 | 0 |
 | clDNBress | 9 | 0 | 0 | 0 |
-| ItemMsgWnd | 8 | 0 | 0 | 0 |
 | KartRender | 8 | 5 | 2 | 1 |
-| ModeBase | 8 | 0 | 0 | 0 |
+| GXChannel | 8 | 2 | 1 | 0 |
+| Normal3D | 8 | 2 | 2 | 0 |
+| WeatherSystem | 8 | 4 | 1 | 1 |
 | Particle | 8 | 8 | 1 | 1 |
 | Owner | 8 | 8 | 1 | 0 |
 | Vec3 | 8 | 1 | 3 | 0 |
-| ChallengeGoalCamera | 8 | 2 | 1 | 0 |
-| TexMgr | 8 | 3 | 1 | 1 |
-| SpriteObj | 8 | 1 | 1 | 1 |
-| Tween | 8 | 0 | 0 | 0 |
-| FadeKeyBase | 8 | 0 | 0 | 0 |
-| FadeKey | 8 | 0 | 0 | 0 |
-| FadeSeq | 8 | 0 | 0 | 0 |
-| FlowBase | 8 | 0 | 0 | 0 |
 | ClStream | 8 | 6 | 2 | 2 |
 | ListNode | 7 | 4 | 1 | 1 |
 | PathCursor | 7 | 4 | 1 | 1 |
+| SceneBase | 7 | 0 | 0 | 0 |
 | KartAudioChannel | 7 | 6 | 1 | 1 |
-| HUD | 7 | 1 | 1 | 1 |
-| Camera | 7 | 3 | 1 | 1 |
 | InputView | 7 | 4 | 3 | 3 |
 | ItemObject | 7 | 7 | 1 | 1 |
 | Kart | 7 | 7 | 1 | 1 |
 | NokoNoko | 7 | 7 | 1 | 1 |
-| FlowSceneHost | 6 | 0 | 0 | 0 |
+| CoinPopupDetail | 6 | 0 | 0 | 0 |
+| FlowPanel | 6 | 2 | 1 | 1 |
+| SpriteAnim | 6 | 2 | 3 | 3 |
+| RaceScene | 6 | 5 | 1 | 1 |
+| KartStatus | 6 | 4 | 2 | 2 |
+| ItemKart | 6 | 5 | 1 | 1 |
+| TexMgr | 6 | 3 | 1 | 1 |
+| PcbSlot | 6 | 5 | 1 | 1 |
+| SpriteObj | 6 | 1 | 1 | 1 |
+| FlowController | 6 | 1 | 6 | 0 |
+| Group | 6 | 2 | 1 | 1 |
+| PathEntry | 5 | 4 | 2 | 1 |
+| YesNoButtonL | 5 | 0 | 0 | 0 |
+| ModeBase | 5 | 0 | 0 | 0 |
+| JumpDistanceMode | 5 | 2 | 1 | 1 |
+| LakituStart | 5 | 0 | 0 | 0 |
+| SpriteBox | 5 | 1 | 1 | 1 |
 
 ## Class C: largest same-layout sets with different names (candidates only)
 
@@ -135,11 +135,11 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | 0x14 | 5 | 6 | CardTaskManager, ItemDisplay, ModelEntry, RoundSlot, SceneWords |
 | 0x118C | 327 | 6 | RaceVoiceTables, RaceVoiceTables_p14, RaceVoiceTables_p15, RaceVoiceTables_p16, RaceVoiceTables_p19, RaceVoiceTables_p9 |
 | 0x68 | 14 | 6 | RaceVoiceEntry, RaceVoiceEntry_p11, RaceVoiceEntry_p13, RaceVoiceEntry_p34, RaceVoiceEntry_p50, RaceVoiceEntry_p52 |
+| 0x2C | 10 | 6 | NMRaceWideRow, RaceEntry, RaceWideRow, RankSlot |
+| 0x18 | 6 | 6 | KartSlot, NMKartSlot, RaceKartSlot, RaceSlot |
 | 0x10 | 4 | 5 | AISpeedOwner, Entry, GrowSet, JointSetDesc, Obj987Entry |
 | 0x48 | 18 | 5 | BurstPos, ObjParticle, Particle, PulseKey, ScaleKey |
 | 0x308 | 5 | 5 | BurnKart, Kart, KartRender |
-| 0x2C | 10 | 5 | RaceEntry, RaceWideRow, RankSlot |
-| 0x18 | 6 | 5 | KartSlot, RaceKartSlot, RaceSlot |
 | 0x38 | 14 | 4 | BtModeView, RefVtable162, VSOwner, VsScene |
 | 0x3C | 4 | 4 | CollisionDVDFileInfo, DVDFileInfo |
 | 0x14 | 5 | 4 | DrawSlot, RaceScriptEntry, RoundTileSlot, TDrawSlot |

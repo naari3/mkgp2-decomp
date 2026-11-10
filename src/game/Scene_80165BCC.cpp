@@ -4,9 +4,7 @@
  * lbl_8048ED10 -> lbl_8048ECF8 base chain, and update/draw forwarders).
  */
 
-struct VObj {
-    virtual ~VObj();
-};
+#include "game/types/VObj.h"
 
 #include "game/types/VObjPad.h"
 

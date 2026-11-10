@@ -8,13 +8,7 @@
 void *operator new(unsigned long size);
 void operator delete(void *p) throw();
 
-struct clMapEffectParts {
-    virtual ~clMapEffectParts() {}
-    virtual void Update();
-    virtual void Draw();
-    virtual void Enable(int on);
-    clMapEffectParts() {}
-};
+#include "game/types/clMapEffectParts.h"
 
 struct clLensFlare : clMapEffectParts {
     char pad[0x78];

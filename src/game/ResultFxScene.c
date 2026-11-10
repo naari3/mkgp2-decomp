@@ -21,20 +21,7 @@ struct SpritePos {
     float x, y;
     float rest[9];
 };
-struct TexMgr {
-    unsigned char pad0[0x18];
-    int mode;
-    unsigned char pad1C[4];
-    unsigned int color;
-    unsigned char pad24[0x208];
-    float fade;
-    TexMgr();
-    ~TexMgr() {}
-    void SetColor(unsigned int c) {
-        mode = 1;
-        color = c;
-    }
-};
+#include "game/types/TexMgr.h"
 
 extern "C" {
 extern char lbl_8048EB44[];
@@ -130,15 +117,7 @@ static const int s_cupParam[8][3] = {
 };
 
 
-struct InputPlayer {
-    virtual void v0();
-    virtual void v1();
-    virtual float v2();
-    virtual void v3();
-    virtual float StickRight();
-    virtual float StickLeft();
-    virtual unsigned char Pressed(int mask);
-};
+#include "game/types/InputPlayer.h"
 
 struct ResCtrl {
     int resId;
@@ -208,44 +187,15 @@ extern const float lbl_806DA870, lbl_806DA874;
 
 #include "game/types/FxData.h"
 
-struct FxBase : FxData {
-    FxBase() {
-        obj = 0;
-        active = 0;
-        x = 0.0f;
-        y = 0.0f;
-        alpha = 1.0f;
-    }
-    virtual ~FxBase() {}
-    virtual void m0C();
-    virtual void m10();
-    virtual void Update();
-    virtual void Draw();
-    virtual void m1C();
-};
+#include "game/types/FxBase.h"
 
-struct Handle {
-    virtual ~Handle();
-    virtual void Stop();
-};
+#include "game/types/Handle.h"
 
-struct HandleF : Handle {
-    unsigned char pad[0x18];
-    float x, y;
-    void SetXY(float a, float b) {
-        x = a;
-        y = b;
-    }
-};
+#include "game/types/HandleF.h"
 
 extern "C" HandleF *fn_8020007C(int a, int obj, int b);
 
-struct SpriteRef {
-    struct Sprite {
-        char pad[0x20];
-        float t;
-    } *spr;
-};
+#include "game/types/SpriteRef.h"
 
 static inline float Lerp(float a, float b, float cur, float end) {
     return (b - a) * (cur / end) + a;

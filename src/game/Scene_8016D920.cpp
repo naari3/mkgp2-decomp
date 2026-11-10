@@ -27,11 +27,7 @@ void clNormal3D_SetScale(clNormal3D *, int, float, float, float, float);
 void Object_SetJObjScaleXYZ(clNormal3D *, float, float, float);
 }
 
-struct CourseMarkerBase {
-    virtual void vKeyFunction();
-    virtual ~CourseMarkerBase();
-    CourseMarkerBase() {}
-};
+#include "game/types/CourseMarkerBase.h"
 
 struct MarkerChain : CourseMarkerBase {
     clNormal3D *model;

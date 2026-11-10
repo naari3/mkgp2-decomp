@@ -1,13 +1,5 @@
 /* Card print flow: reads the card, prints, ejects and handles print errors. */
-struct InputPlayer {
-    virtual void v0();
-    virtual void v1();
-    virtual float v2();
-    virtual void v3();
-    virtual float StickRight();
-    virtual float StickLeft();
-    virtual unsigned char Pressed(int mask);
-};
+#include "game/types/InputPlayer.h"
 
 struct Fader {
     char pad0[4];

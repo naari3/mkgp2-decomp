@@ -68,11 +68,7 @@ struct MsgPopup : FlowTask {
 };
 
 /* Popup variant used for message 0x1C (vtable lbl_804EC3AC). */
-struct MsgPopupCoin : MsgPopup {
-    MsgPopupCoin(int msg, int layer_, int id) : MsgPopup(msg, layer_, id) {}
-    ~MsgPopupCoin();
-    virtual void _key4();
-};
+#include "game/types/MsgPopupCoin.h"
 
 extern "C" {
 struct MsgPopupState {

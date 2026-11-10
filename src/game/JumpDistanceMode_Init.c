@@ -147,12 +147,9 @@ void fn_801699D8(int a, int b);
 
 #include "game/types/RenderObj.h"
 
-struct InputManager { char data[0x37C]; InputManager(); };
-struct Camera { char data[0x2C]; Camera(float a, float b, int w, int h, int target); };
-struct CarObject {
-    char data[0x118];
-    CarObject(int disp, int chara, int cc, int a, int b, int c, int d, int e, float x, float z, float yaw);
-};
+#include "game/types/InputManager.h"
+#include "game/types/Camera.h"
+#include "game/types/CarObject.h"
 static inline int GetCC() { return g_ccClass; }
 static inline int GetChara() { return g_characterId; }
 struct PlayerCar : CarObject {
@@ -160,16 +157,16 @@ struct PlayerCar : CarObject {
         : CarObject(GetDisplayBufferIndex(), chara, cc, 0, 1, 7, 0, 0, pos->x, pos->z, GetCourseStartYaw()) {}
 };
 struct ItemSlot { char data[0x44]; ItemSlot(int arg); };
-struct LakituStart { char data[0x58]; LakituStart(const void *data, int arg, float x, float y, float z); };
-struct Scene3D { char data[0x3084]; Scene3D(int name); };
-struct ChallengeGoalCamera { char data[8]; ChallengeGoalCamera(); };
+#include "game/types/LakituStart.h"
+#include "game/types/Scene3D.h"
+#include "game/types/ChallengeGoalCamera.h"
 struct KartMovement {
     char data[0x324];
     KartMovement(const KartMovement &src);
 };
-struct HUD { char data[0x80]; HUD(int arg); };
+#include "game/types/HUD.h"
 struct TimerDisplay { char data[0x2C]; TimerDisplay(int value); };
-struct WeatherSystem { char data[0x1B4]; WeatherSystem(int arg); };
+#include "game/types/WeatherSystem.h"
 struct LandingMarker { char data[0x20]; LandingMarker(const void *data, int arg); };
 
 struct ScenePos {
@@ -284,11 +281,7 @@ inline LandingGrid::LandingGrid(const char *m0, const char *m1, const Vec *pos, 
     }
 }
 
-struct GameModeBase {
-    virtual void _key();
-    virtual ~GameModeBase();
-    GameModeBase();
-};
+#include "game/types/GameModeBase.h"
 
 struct ModeBase : GameModeBase {
     float x4;

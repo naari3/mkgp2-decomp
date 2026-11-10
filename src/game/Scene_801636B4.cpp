@@ -3,9 +3,7 @@
  * of a course loader scene (vtable lbl_80490DF8), plus a virtual-delete thunk.
  */
 
-struct VObj {
-    virtual ~VObj();
-};
+#include "game/types/VObj.h"
 
 struct Scene801636B4 {
     void *vtable;

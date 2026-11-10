@@ -1,14 +1,5 @@
-struct BucketTask {
-    virtual void _key();
-    virtual void Update();
-    virtual void Draw();
-};
-struct TaskBucket {
-    void *allocation;
-    unsigned int count;
-    BucketTask **start;
-    BucketTask **End() { return start + count; }
-};
+#include "game/types/BucketTask.h"
+#include "game/types/TaskBucket.h"
 extern "C" {
 extern char lbl_806D07D8[8], lbl_806D07D0[8];
 void *fn_80271340(void *, int, void *, void *, int);

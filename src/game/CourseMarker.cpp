@@ -59,11 +59,7 @@ extern void clNormal3D_SetScale(clNormal3D *, int, float, float, float, float);
 extern void *FUN_8003b120(int);
 }
 
-struct CourseMarkerBase {
-    virtual void vKeyFunction();
-    virtual ~CourseMarkerBase();
-    CourseMarkerBase() {}
-};
+#include "game/types/CourseMarkerBase.h"
 
 struct CourseMarker : CourseMarkerBase {
     clNormal3D *model;

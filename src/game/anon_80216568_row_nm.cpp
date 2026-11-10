@@ -6,17 +6,7 @@
 /* ---- text sprite row ---- */
 
 /* 0x230-byte text sprite (ctor TexMgr_Init). */
-struct TextSprite {
-    char pad000[0x8];
-    float width;
-    char pad00C[0x18 - 0xC];
-    int visible;
-    char pad01C[0x20 - 0x1C];
-    unsigned int color;
-    char pad024[0x22C - 0x24];
-    float spacing;
-    TextSprite();
-};
+#include "game/types/TextSprite.h"
 
 extern "C" {
 void PtrVec_InsertFill(void *v, void *pos, int n, const void *val);
@@ -70,19 +60,7 @@ static inline unsigned int PackColor(unsigned char r, unsigned char g, unsigned 
     return ((r & 0xFF) << 24) | ((g & 0xFF) << 16) | ((b & 0xFF) << 8) | (a & 0xFF);
 }
 
-struct TextRow {
-    PtrVec<TextSprite *> sprites;
-    int layer;
-    int align;
-    int visible;
-    unsigned char alpha;
-    float x;
-    float y;
-    float sx;
-    float sy;
-    unsigned char dirty;
-    ~TextRow();
-};
+#include "game/types/TextRow.h"
 
 extern "C" void fn_802170F0(TextRow *row, unsigned char alpha) {
     TextSprite *sprite;

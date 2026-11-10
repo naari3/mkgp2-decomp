@@ -1,11 +1,6 @@
 #ifndef FLOW_DISPATCHER_PRIVATE_H
 #define FLOW_DISPATCHER_PRIVATE_H
-class FlowObject {
-public:
-    virtual void v0();
-    virtual void v1();
-    virtual ~FlowObject();
-};
+#include "game/types/FlowObject.h"
 struct FlowEntry {
     FlowObject *(*create)();
     const char *name;

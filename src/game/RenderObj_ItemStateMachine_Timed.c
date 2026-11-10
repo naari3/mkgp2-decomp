@@ -8,26 +8,7 @@ int RenderObj_ItemStateMachine(void *obj, int arg, float a, float b);
 extern const float lbl_806D25E0;
 }
 
-class ScopedTimer {
-public:
-    inline ScopedTimer(int slot)
-    {
-        m_slot = slot;
-        m_startTick = OSGetTick();
-    }
-
-    inline ~ScopedTimer()
-    {
-        /* Keep the conversion in one expression to preserve scheduling. */
-        Profiler_RecordFrame(m_slot,
-            (float)(((OSGetTick() - m_startTick) * 8) /
-                ((*(unsigned int *)0x800000F8 / 4) / 125000)) / lbl_806D25E0);
-    }
-
-private:
-    unsigned int m_startTick;
-    volatile int m_slot;
-};
+#include "game/types/ScopedTimer.h"
 
 extern "C" int RenderObj_ItemStateMachine_Timed(void *obj, int arg, float a, float b)
 {

@@ -58,11 +58,7 @@ struct PathEntry {
 
 #include "game/types/TireSprite.h"
 
-struct FaceSprite {
-    virtual ~FaceSprite();
-    char pad04[0x14 - 4];
-    float scale;
-};
+#include "game/types/FaceSprite.h"
 
 struct FaceIcon : FaceSprite {
     char iconState[0x10];
@@ -82,11 +78,7 @@ struct FaceRing : FaceSprite {
     void Update();
 };
 
-struct FaceModelSub {
-    char pad[0x20];
-    float scale;
-    void Reset();
-};
+#include "game/types/FaceModelSub.h"
 
 struct clNormal3D;
 
@@ -134,21 +126,9 @@ struct clEFace3D {
     }
 };
 
-struct FaceHolder {
-    FaceSprite *p;
-    FaceHolder(FaceSprite *q) : p(q) {}
-    ~FaceHolder() throw() {
-        delete p;
-    }
-};
+#include "game/types/FaceHolder.h"
 
-struct clCDispInterface {
-    virtual ~clCDispInterface() {}
-    int id;
-    clCDispInterface() {
-        id = -1;
-    }
-};
+#include "game/types/clCDispInterface.h"
 
 struct clEnemyFace : clCDispInterface {
 #ifdef ENEMYFACE_INLINE_VEC_DTOR

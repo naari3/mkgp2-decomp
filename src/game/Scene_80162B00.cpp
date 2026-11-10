@@ -4,9 +4,7 @@
  * virtual-delete thunk.
  */
 
-struct VObj {
-    virtual ~VObj();
-};
+#include "game/types/VObj.h"
 
 #include "game/types/VObjPad.h"
 

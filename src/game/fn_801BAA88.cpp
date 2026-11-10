@@ -2149,10 +2149,7 @@ struct SpritePair {
     }
 };
 
-struct clFlowBase {
-    clFlowBase();
-    virtual ~clFlowBase();
-};
+#include "game/types/clFlowBase.h"
 
 struct clFlowCard : clFlowBase {
     int next;

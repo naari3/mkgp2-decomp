@@ -2,11 +2,7 @@
  * RaceScene_RenderPass. Only draws once the scene is running, and draws
  * the other karts before the local one. */
 
-struct SceneCamera {
-    virtual void v0();
-    virtual unsigned char Begin();
-    virtual void End();
-};
+#include "game/types/SceneCamera.h"
 
 struct VsScene {
     void *vtable;

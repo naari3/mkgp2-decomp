@@ -14,20 +14,9 @@ struct Tween : FlowFader {
     float Value();
 };
 
-struct FadeKeyBase {
-    virtual ~FadeKeyBase();
-    int dur;
-    FadeKeyBase(int d) : dur(d) {}
-};
+#include "game/types/FadeKeyBase.h"
 
-struct FadeKey : FadeKeyBase {
-    float from;
-    float to;
-    VHolder<FadeKey> next;
-    FadeKey(int d, float f, float t) : FadeKeyBase(d), from(f), to(t) {}
-    ~FadeKey();
-    void Append(int dur, float to);
-};
+#include "game/types/FadeKey.h"
 
 struct FadeSeq {
     virtual ~FadeSeq();

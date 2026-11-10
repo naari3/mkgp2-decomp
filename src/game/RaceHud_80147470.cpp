@@ -15,25 +15,11 @@ public:
     virtual ~VObj();
 };
 
-class VObjC {
-public:
-    virtual void v8();
-    virtual void vC();
-    virtual void v10();
-    virtual void v14();
-};
+#include "game/types/VObjC.h"
 
 #include "game/types/Pad14.h"
 
-class VObj14 : public Pad14 {
-public:
-    virtual ~VObj14();
-    virtual void vC();
-    virtual void v10();
-    virtual void v14();
-    virtual void v18();
-    virtual void v1C();
-};
+#include "game/types/VObj14.h"
 
 #include "game/types/Countdown.h"
 
@@ -41,32 +27,7 @@ public:
 
 #include "game/types/LapCtrl.h"
 
-class RecordCounter {
-public:
-    virtual void v8();
-    virtual void vC();
-    virtual void Start();
-    virtual void v14();
-    int f4;
-    int busy;
-    int count;
-    bool Tick() {
-        if (busy > 0) {
-            busy--;
-            return 0;
-        }
-        if (count == 1) {
-            count = 2;
-        }
-        return count <= 0;
-    }
-    bool Idle() {
-        if (busy > 0) {
-            return 0;
-        }
-        return count <= 0;
-    }
-};
+#include "game/types/RecordCounter.h"
 
 #include "game/types/Spark.h"
 
@@ -627,32 +588,11 @@ inline ResTrio *ResTrio_Destroy(ResTrio *self, short flag) {
     return self;
 }
 
-struct HudResSet {
-    HudResSet(int coins, int layer, int mode);
-    int state;
-    int layer;
-    char pad8[8];
-    char res[11][0x58];
-    char texts[3][0x230];
-    ResTrio tail;
-    ~HudResSet() {
-        ResTrio_Destroy(&tail, 0);
-        __destroy_arr(texts, (void *)dtor_800869D0, 0x230, 3);
-        __destroy_arr(res, (void *)dtor_80082960, 0x58, 11);
-    }
-};
+#include "game/types/HudResSet.h"
 
-struct HudResHolder {
-    HudResSet *p;
-    HudResHolder(HudResSet *q) : p(q) {}
-    ~HudResHolder() throw();
-};
+#include "game/types/HudResHolder.h"
 
-struct PtrHolder {
-    VObj *p;
-    PtrHolder(VObj *q) : p(q) {}
-    ~PtrHolder() throw();
-};
+#include "game/types/PtrHolder.h"
 
 inline HudResHolder *HudResHolder_Destroy(HudResHolder *self, short flag) throw() {
     if (self != 0) {
@@ -733,31 +673,11 @@ struct ResultFader {
 
 #include "game/types/Pad14F.h"
 
-class VObj14F : public Pad14F {
-public:
-    virtual ~VObj14F();
-    virtual void vC();
-    virtual void v10();
-    virtual void v14();
-    virtual void v18();
-    virtual void v1C();
-};
+#include "game/types/VObj14F.h"
 
-class VObjCF : public VObjC {
-public:
-    unsigned char f4;
-};
+#include "game/types/VObjCF.h"
 
-class HudInput {
-public:
-    virtual void v8();
-    virtual void vC();
-    virtual void v10();
-    virtual void v14();
-    virtual float v18();
-    virtual void v1C();
-    virtual unsigned char Pressed(int mask);
-};
+#include "game/types/HudInput.h"
 
 struct ResultPanel {
     void *vt;
@@ -807,31 +727,9 @@ struct HudRankSlot {
     int icon;
 };
 
-struct HudModel {
-    char data[0x90];
-    HudModel(int kart, int flag) {
-        fn_8013CC24(this, kart, flag);
-    }
-};
+#include "game/types/HudModel.h"
 
-struct CountListFull {
-    void *vt;
-    char pad4[0xC];
-    int layer;
-    float t;
-    unsigned char on;
-    char pad19[3];
-    RecordCounter *f1C;
-    char pad20[4];
-    VObj14 *f24;
-    char pad28[4];
-    struct {
-        int count;
-        float t;
-        VObj *obj;
-    } e[6];
-    int highlight;
-};
+#include "game/types/CountListFull.h"
 
 extern "C" int fn_80147470(LapCtrl *self, int idx) {
     if (idx < 0 || idx >= 2) {

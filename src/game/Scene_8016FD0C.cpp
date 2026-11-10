@@ -51,11 +51,7 @@ static inline float HSD_JObjGetTranslationZ(HSD_JObj *jobj) {
     return jobj->tz;
 }
 
-struct CourseMarkerBase {
-    virtual void vKeyFunction();
-    virtual ~CourseMarkerBase();
-    CourseMarkerBase() {}
-};
+#include "game/types/CourseMarkerBase.h"
 
 struct CourseModel : CourseMarkerBase {
     clNormal3D *model;

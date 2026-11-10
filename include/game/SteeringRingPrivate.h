@@ -12,17 +12,7 @@ extern unsigned long lbl_806CFF84, lbl_806CFF80;
 }
 void *operator new(unsigned long);
 void operator delete(void *);
-struct RingShared {
-    char *ptr;
-    unsigned long *refs;
-    RingShared(void *p) { init(p); }
-    void init(void *p) {
-        ptr=(char *)p; refs=0;
-        try { if(ptr) refs=new unsigned long(1); }
-        catch(...) { MemoryManager_Free(ptr); throw; }
-    }
-    ~RingShared();
-};
+#include "game/types/RingShared.h"
 namespace std {
 struct exception { exception() {} virtual ~exception(); };
 struct logic_error : exception {

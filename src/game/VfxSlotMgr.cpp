@@ -18,7 +18,7 @@ struct Slot {
     char pad8[0x84]; Vec position; char pad98[0x18]; float scale;
     char padB4[4]; Vec renderPosition; float renderScale; char padC8[0x104];
 };
-class Resource { public: virtual ~Resource(); };
+#include "game/types/Resource.h"
 extern "C" {
 unsigned int OSGetTick();
 void Profiler_RecordFrame(int,float);

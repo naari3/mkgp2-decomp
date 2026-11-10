@@ -18,9 +18,7 @@ void operator delete(void *p) throw();
 void *operator new[](unsigned long size);
 void operator delete[](void *p) throw();
 
-struct VObject {
-    virtual ~VObject();
-};
+#include "game/types/VObject.h"
 
 #include "game/types/InputState.h"
 

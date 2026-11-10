@@ -77,11 +77,7 @@ int fn_8023D1B4(KartRender *kart);
 unsigned char fn_80231B74(int id);
 int fn_80231A50(int id);
 
-struct clNormal3D {
-    char _opaque[0x5C];
-    clNormal3D(const char *res, int flags);
-    ~clNormal3D();
-};
+#include "game/types/clNormal3D.h"
 
 /* Shared float table of a common header: every TU that includes it carries a
  * copy at the start of its .rodata (here 0x803DA710, never referenced). */

@@ -11,27 +11,14 @@ int WrapInRange(int v, int lo, int hi);
 void OverlayText(int a, int b, int line, const char *fmt, ...);
 }
 
-struct InputPlayer {
-    virtual void v0();
-    virtual void v1();
-    virtual float v2();
-    virtual void v3();
-    virtual float StickRight();
-    virtual float StickLeft();
-    virtual unsigned char Pressed(int mask);
-};
+#include "game/types/InputPlayer.h"
 
 extern "C" {
 void *GetInputManager(void);
 InputPlayer *InputMgr_GetPlayer(void *mgr, int index);
 }
 
-struct clJobRunner {
-    clJobRunner();
-    virtual int Update();
-    virtual void Draw();
-    virtual ~clJobRunner();
-};
+#include "game/types/clJobRunner.h"
 
 struct clGameRuleSelector : clJobRunner {
     int cursor;

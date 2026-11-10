@@ -44,11 +44,7 @@ extern "C" clItemBoxStep lbl_803F9CA8[4];
  */
 
 
-class Normal3D {
-public:
-    Normal3D(void *desc, int flags);
-    unsigned char data[0x5C];
-};
+#include "game/types/Normal3D.h"
 
 
 extern "C" {

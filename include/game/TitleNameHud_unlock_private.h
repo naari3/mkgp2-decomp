@@ -20,12 +20,7 @@
 #include "game/types/GlyphInfo.h"
 
 /* Stack TextManager built by TexMgr_Init; glyph codes start at +0x24. */
-struct GlyphText {
-    char pad000[0x24];
-    unsigned short glyphs[(0x230 - 0x24) / 2];
-    GlyphText();
-    TextManager *tm() { return (TextManager *)this; }
-};
+#include "game/types/GlyphText.h"
 
 struct RankLog;
 

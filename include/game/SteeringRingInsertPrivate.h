@@ -12,17 +12,7 @@ extern unsigned long lbl_806CFF84, lbl_806CFF80;
 }
 void *operator new(unsigned long);
 void operator delete(void *);
-struct RingShared {
-    char *ptr;
-    unsigned long *refs;
-    RingShared(void *p) { init(p); }
-    void init(void *p) {
-        ptr=(char *)p; refs=0;
-        try { if(ptr) refs=new unsigned long(1); }
-        catch(...) { MemoryManager_Free(ptr); throw; }
-    }
-    ~RingShared();
-};
+#include "game/types/RingShared.h"
 namespace std {
 struct exception { exception() {} virtual ~exception(); };
 struct RingString {
@@ -90,17 +80,7 @@ extern "C" {
 extern const char lbl_803BD2A4[], lbl_803BD2C0[];
 extern unsigned long lbl_806CFF88;
 }
-struct SteeringRingConstIter {
-    SteeringRing *ring;
-    unsigned long index;
-    const int *ptr;
-    unsigned long reserved;
-    SteeringRingConstIter &operator++() {
-        ++index;
-        if(++ptr==ring->data+ring->capacity) ptr=ring->data;
-        return *this;
-    }
-};
+#include "game/types/SteeringRingConstIter.h"
 inline unsigned long RingDistance4(SteeringRingConstIter first, SteeringRingConstIter last) {
     return last.index-first.index;
 }

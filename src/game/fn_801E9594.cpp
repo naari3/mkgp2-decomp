@@ -1,12 +1,7 @@
 /* Per-kart AI tick: drives speed before the race starts, then the AI logic. */
 #include "game/types/PathSlot.h"
 
-class KartAI {
-public:
-    virtual void v8();
-    virtual void vC();
-    virtual void Think(int kart);
-};
+#include "game/types/KartAI.h"
 
 extern "C" {
 extern void *Read_U32[8];

@@ -5,15 +5,7 @@
 
 #include "game/ItemDisplay.h"
 
-struct Sprite {
-    int field00;
-    int style;
-    int field08;
-    float x;
-    float y;
-    char pad14[0x30 - 0x14];
-    Sprite(int anim, int loop, int arg);
-};
+#include "game/types/Sprite.h"
 
 extern "C" {
 void Sprite_SetupAnim(Sprite *sprite, int anim, int loop, int arg);

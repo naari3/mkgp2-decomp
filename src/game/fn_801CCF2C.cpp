@@ -45,11 +45,7 @@ struct ObjList : ListBase {
 
 #include "game/types/InputView.h"
 
-struct FlowBase {
-    void *vt;
-    FlowBase();
-    ~FlowBase();
-};
+#include "game/types/FlowBase.h"
 
 extern "C" {
 extern InputView *g_pInputState;

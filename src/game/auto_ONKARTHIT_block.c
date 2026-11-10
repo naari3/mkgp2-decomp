@@ -9263,12 +9263,7 @@ struct exception {
     virtual ~exception();
 };
 }
-struct ClStr {
-    char *ptr;
-    unsigned long *refs;
-    ClStr(void *p);
-    ~ClStr();
-};
+#include "game/types/ClStr.h"
 namespace std {
 struct BitsetString {
     ClStr value;

@@ -1,12 +1,5 @@
 /* Game-mode factory: allocates and constructs a mode object. */
-struct SpriteObj {
-    char pad0[0xC];
-    float x;
-    float y;
-    char pad14[0x1C];
-
-    SpriteObj(int anim, int loop, int arg);
-};
+#include "game/types/SpriteObj.h"
 
 struct GameModeBase {
     void *vt;

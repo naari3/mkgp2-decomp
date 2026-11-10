@@ -38,10 +38,7 @@ HSD_JObj *ResolveJointByName(clNormal3D *model, const char *name);
 void fn_80182954(HSD_JObj *jobj, int flag);
 }
 
-struct ObjBase {
-    ObjBase() {}
-    virtual ~ObjBase();
-};
+#include "game/types/ObjBase.h"
 
 struct WaveTex {
     float x0, x4, x8, xc, x10, x14, x18, x1c;

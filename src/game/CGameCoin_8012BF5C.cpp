@@ -3841,7 +3841,7 @@ static inline void CreateInputState(void)
     }
 }
 
-struct InputManager { char data[0x37C]; InputManager(); };
+#include "game/types/InputManager.h"
 struct InputCmd { char data[0x30]; InputCmd(int frames); };
 struct KartDriver {
     char pad0[0x238];
@@ -3862,11 +3862,11 @@ struct KPRival {
     int x164;
     KPRival(int chara, void *start);
 };
-struct LakituStart { char data[0x58]; LakituStart(const void *data, int arg, float x, float y, float z); };
-struct Scene3D { char data[0x3084]; Scene3D(int name); };
-struct ChallengeGoalCamera { char data[8]; ChallengeGoalCamera(); };
-struct HUD { char data[0x80]; HUD(int arg); };
-struct WeatherSystem { char data[0x1B4]; WeatherSystem(int arg); };
+#include "game/types/LakituStart.h"
+#include "game/types/Scene3D.h"
+#include "game/types/ChallengeGoalCamera.h"
+#include "game/types/HUD.h"
+#include "game/types/WeatherSystem.h"
 struct KPShellPath { char data[0x20]; KPShellPath(); };
 struct KPShellTrack { int data; KPShellTrack(const void *path, int arg); };
 struct KPUnk70 { char data[0x10]; KPUnk70(); };
@@ -3964,11 +3964,7 @@ struct KPShell {
     }
 };
 
-struct GameModeBase {
-    virtual void _key();
-    virtual ~GameModeBase();
-    GameModeBase();
-};
+#include "game/types/GameModeBase.h"
 
 struct ModeBase : GameModeBase {
     float x4;

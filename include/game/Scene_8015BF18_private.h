@@ -11,11 +11,7 @@ struct ResultParamsSprite {
     char data[0x30];
     ResultParamsSprite();
 };
-struct SpriteHolder {
-    void *s;
-    SpriteHolder(void *p) : s(p) {}
-    ~SpriteHolder() throw();
-};
+#include "game/types/SpriteHolder.h"
 struct ResultInnerModel { char data[0x48]; ResultInnerModel(int); };
 struct ResultEnvironment { char data[0x24]; ResultEnvironment(); };
 struct ResultAward : ResultPart {

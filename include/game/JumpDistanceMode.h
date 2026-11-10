@@ -101,9 +101,7 @@ struct Scene3D {
     virtual void Render();
 };
 
-struct VObj {
-    virtual ~VObj();
-};
+#include "game/types/VObj.h"
 
 struct GameModeBase {
     virtual int Update();

@@ -42,11 +42,7 @@ struct PopupRoot {
     PopupRoot(int id_) : id(id_), field08(0), done(0) {}
 };
 
-struct PopupTask : PopupRoot {
-    PopupTask(int id_) : PopupRoot(id_) {}
-    virtual ~PopupTask() {}
-    virtual void _keyT();
-};
+#include "game/types/PopupTask.h"
 
 struct KindPopup : PopupTask {
     virtual void _key();

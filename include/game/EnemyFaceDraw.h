@@ -3,7 +3,7 @@
 /* Private layout views for fn_8022BFA8. */
 typedef float FaceMtx[3][4];
 struct FaceDrawVec { float x, y, z; };
-struct Vec3c { float x, y, z; Vec3c() {} ~Vec3c() {} };
+#include "game/types/Vec3c.h"
 #include "game/types/FaceDrawKart.h"
 struct FaceDrawSub {
     char pad00[0x40];

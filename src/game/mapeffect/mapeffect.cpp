@@ -389,21 +389,9 @@ static inline float (*JObjGetMtxPtr(JObj *jobj))[4] {
 
 #include "game/types/Vec3f.h"
 
-struct ZoneVolume {
-    ZoneVolume(const ZoneDesc *desc, int closed);
-    ~ZoneVolume();
-    unsigned char Contains(Vec3f *pos);
-    void Draw();
-    char pad00[0x4];
-};
+#include "game/types/ZoneVolume.h"
 
-struct clMapEffectParts {
-    virtual ~clMapEffectParts() {}
-    virtual void Update();
-    virtual void Draw();
-    virtual void Enable(int on);
-    clMapEffectParts() {}
-};
+#include "game/types/clMapEffectParts.h"
 
 namespace {
 
@@ -505,279 +493,41 @@ struct P_fn_8016D2D0 : clMapEffectParts {
     P_fn_8016D2D0(JObj *);
 };
 
-struct P_fn_80171CD0 : clMapEffectParts {
-    char pad[0x78];
+#include "game/types/P_fn_80171CD0.h"
 
-    P_fn_80171CD0(const char *file, JObj *joint, float a, float b);
-};
+#include "game/types/PartsNode.h"
 
-struct PartsNode {
-    int kind;
-    int prio;
-    clMapEffectParts *parts;
-    unsigned char done;
-    PartsNode *next;
-
-    PartsNode(int kind, int prio, clMapEffectParts *parts) {
-        this->kind = kind;
-        this->prio = prio;
-        this->parts = parts;
-        done = 0;
-        next = 0;
-    }
-
-    int Append(int kind, int prio, clMapEffectParts *parts) {
-        if (parts) {
-            if (next) {
-                next->Append(kind, prio, parts);
-            } else {
-                next = new PartsNode(kind, prio, parts);
-            }
-            return 1;
-        }
-        return 0;
-    }
-
-    ~PartsNode();
-    clMapEffectParts *Find(unsigned int kind);
-    void Update();
-    void Draw(int mask);
-    void SetHidden(int mask, unsigned char hide);
-};
-
-struct PartsList {
-    PartsNode *head;
-
-    PartsList() {
-        head = 0;
-    }
-
-    ~PartsList();
-    int Add(int kind, int prio, clMapEffectParts *parts);
-    clMapEffectParts *Find(unsigned int kind);
-    void Update();
-    void Draw(int mask);
-    void SetHidden(int mask, unsigned char hide);
-};
+#include "game/types/PartsList.h"
 
 #include "game/types/PartsCtx.h"
 
-struct clMapEffect {
-    virtual ~clMapEffect() {}
-    virtual void Update();
-    virtual void Draw(int mask);
+#include "game/types/clMapEffect.h"
 
-    clMapEffect() {}
-};
+#include "game/types/clMapEffectDN.h"
 
-struct clMapEffectDN : clMapEffect {
-    PartsList *parts;
-    unsigned char done;
+#include "game/types/YIState.h"
 
-    virtual ~clMapEffectDN();
-    virtual void Update();
-    virtual void Draw(int mask);
+#include "game/types/clMapEffectYI.h"
 
-    clMapEffectDN(JObj *root, int arg);
-};
+#include "game/types/clMapEffectRB.h"
 
-struct YIState {
-    unsigned char a;
-    float x04;
-    unsigned char b;
-    int x0c;
-    unsigned char c;
-    float x14;
-    unsigned char d;
-    float x1c;
-    int x20;
-    int x24;
-    int x28;
-    int x2c;
+#include "game/types/clMapEffectKP.h"
 
-    YIState() {
-        x20 = 0;
-        x24 = 0;
-        x2c = 0;
-        a = 0;
-        b = 0;
-        c = 0;
-        d = 0;
-        x14 = 0.0f;
-        x1c = 0.0f;
-    }
+#include "game/types/clMapEffectPC.h"
 
-    ~YIState() {
-        if (a == 1) {
-            fn_8016C394(0x3E);
-        }
-        if (d == 1) {
-            fn_8016C394(0x3F);
-        }
-        if (c == 1) {
-            fn_8016C394(0x40);
-        }
-        if (b == 1) {
-            fn_8016C394(0x3B);
-        }
-    }
+#include "game/types/clMapEffectWC.h"
 
-    template <int N>
-    void UpdateT();
+#include "game/types/clMapEffectDK.h"
 
-    void Update() {
-        UpdateT<0>();
-    }
-};
+#include "game/types/clMapEffectMR.h"
 
-struct clMapEffectYI : clMapEffect {
-    PartsList *parts;
-    YIState *state;
+#include "game/types/clMapEffectWCC.h"
 
-    virtual ~clMapEffectYI();
-    virtual void Update();
-    virtual void Draw(int mask);
+#include "game/types/clMapEffectKPC.h"
 
-    clMapEffectYI(JObj *root, int arg);
-};
+#include "game/types/clMapEffectPCC.h"
 
-struct clMapEffectRB : clMapEffect {
-    PartsList *parts;
-    PartsCtx *ctx;
-    unsigned char done;
-
-    virtual ~clMapEffectRB();
-    virtual void Update();
-    virtual void Draw(int mask);
-
-    clMapEffectRB(JObj *root, int arg);
-};
-
-struct clMapEffectKP : clMapEffect {
-    PartsList *parts;
-    ZoneVolume *zone;
-    float x0c;
-    JObj *x10;
-    float x14;
-    unsigned char x18;
-    JObj *x1c;
-    JObj *x20;
-    float x24;
-    float x28;
-    unsigned char x2c;
-
-    virtual ~clMapEffectKP();
-    virtual void Update();
-    virtual void Draw(int mask);
-
-    clMapEffectKP(JObj *root, int arg);
-};
-
-struct clMapEffectPC : clMapEffect {
-    PartsList *parts;
-    PartsCtx *ctx;
-    unsigned char done;
-
-    virtual ~clMapEffectPC();
-    virtual void Update();
-    virtual void Draw(int mask);
-
-    clMapEffectPC(JObj *root, int arg);
-};
-
-struct clMapEffectWC : clMapEffect {
-    PartsList *parts;
-    unsigned char done;
-
-    virtual ~clMapEffectWC();
-    virtual void Update();
-    virtual void Draw(int mask);
-
-    clMapEffectWC(JObj *root, int arg);
-};
-
-struct clMapEffectDK : clMapEffect {
-    PartsList *parts;
-    int x08;
-    int x0c;
-    int x10;
-    unsigned char done;
-
-    virtual ~clMapEffectDK();
-    virtual void Update();
-    virtual void Draw(int mask);
-
-    clMapEffectDK(JObj *root, int arg);
-};
-
-struct clMapEffectMR : clMapEffect {
-    PartsList *parts;
-    unsigned char done;
-
-    virtual ~clMapEffectMR();
-    virtual void Update();
-    virtual void Draw(int mask);
-
-    clMapEffectMR(JObj *root, int arg);
-};
-
-struct clMapEffectWCC : clMapEffect {
-    PartsList *parts;
-    unsigned char done;
-
-    virtual ~clMapEffectWCC();
-    virtual void Update();
-    virtual void Draw(int mask);
-
-    clMapEffectWCC(JObj *root, int arg);
-};
-
-struct clMapEffectKPC : clMapEffect {
-    unsigned char done;
-
-    virtual ~clMapEffectKPC();
-    virtual void Update();
-    virtual void Draw(int mask);
-
-    clMapEffectKPC() {
-        done = 0;
-    }
-};
-
-struct clMapEffectPCC : clMapEffect {
-    unsigned char done;
-
-    virtual ~clMapEffectPCC();
-    virtual void Update();
-    virtual void Draw(int mask);
-
-    clMapEffectPCC() {
-        done = 0;
-    }
-};
-
-struct clMapEffectDKC : clMapEffect {
-    int wait;
-    int volIdx;
-    int panIdx;
-    unsigned char done;
-
-    virtual ~clMapEffectDKC();
-    virtual void Update();
-    virtual void Draw(int mask);
-
-    clMapEffectDKC() {
-        wait = 0;
-        volIdx = 0;
-        panIdx = 0;
-        done = 0;
-        fn_8016B248(0);
-        fn_8016B178(2);
-        fn_8016B160(0.0f);
-        fn_8016B148(10000.0f);
-        fn_8016B0F0(0xC0, 0xC0, 0xC0);
-    }
-};
+#include "game/types/clMapEffectDKC.h"
 
 inline ZoneVolume *NewKPZone() {
     static const unsigned int lbl_80371A34[0x2D] = {

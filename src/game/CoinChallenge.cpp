@@ -52,9 +52,7 @@ struct KartRender {
     unsigned char pad[0x238]; int visible;
     unsigned char middle[0x90]; int coins; unsigned char active;
 };
-struct VObj {
-    virtual ~VObj();
-};
+#include "game/types/VObj.h"
 struct Scene3D {
     virtual ~Scene3D();
     virtual unsigned char Ready();
@@ -226,12 +224,7 @@ struct CoinIcons {
     }
 };
 
-struct clJobRunner {
-    clJobRunner();
-    virtual int Update();
-    virtual void Draw();
-    virtual ~clJobRunner();
-};
+#include "game/types/clJobRunner.h"
 struct clCGame : clJobRunner {
     float phase;
     clCGame() { phase = 0.0f; }

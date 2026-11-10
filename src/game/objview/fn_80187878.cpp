@@ -10,10 +10,7 @@ struct clNormal3D {
     clNormal3D(const char *name, int arg);
 };
 
-struct ObjBase {
-    ObjBase() {}
-    virtual ~ObjBase();
-};
+#include "game/types/ObjBase.h"
 
 struct ObjView : ObjBase {
     clNormal3D *jobj;

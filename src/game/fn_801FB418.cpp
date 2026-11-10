@@ -1,13 +1,5 @@
 /* Card cleaning prompt: yes/no cursor, then runs the cleaning sequence. */
-struct InputPlayer {
-    virtual void v0();
-    virtual void v1();
-    virtual float v2();
-    virtual void v3();
-    virtual float StickRight();
-    virtual float StickLeft();
-    virtual unsigned char Pressed(int mask);
-};
+#include "game/types/InputPlayer.h"
 
 struct CardCleanScene {
     char pad0[0x10];

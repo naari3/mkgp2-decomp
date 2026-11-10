@@ -775,7 +775,7 @@ extern "C" int clFlowChara_Update(CharaView* self)
 /* ------------------------------------------------------------------ */
 /* clFlowChara_Destructor (0x801C4CA4): character select flow teardown. */
 
-struct VObj { virtual ~VObj(); };
+#include "game/types/VObj.h"
 struct DtorView {
     void *vt;
     char pad04[0x14 - 0x4];

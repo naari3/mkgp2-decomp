@@ -23,15 +23,7 @@ struct BackupCalibView {
     int accel; /* 0x40 */
 };
 
-struct InputPlayer {
-    virtual void v0();
-    virtual void v1();
-    virtual float v2();
-    virtual void v3();
-    virtual float StickRight();
-    virtual float StickLeft();
-    virtual unsigned char Pressed(int mask);
-};
+#include "game/types/InputPlayer.h"
 
 extern "C" {
 void OverlayText(int layer, int flag, int row, const char *fmt, ...);
@@ -53,12 +45,7 @@ extern JvsOperatorInput g_jvsOperatorBits;
 static const char *const s_pedalNames[2] = { "RIGHT PEDAL", "LEFT  PEDAL" };
 static const char *const s_jobRunnerName = "clJobRunner";
 
-struct clJobRunner {
-    clJobRunner();
-    virtual int Update();
-    virtual void Draw();
-    virtual ~clJobRunner();
-};
+#include "game/types/clJobRunner.h"
 
 struct clCab : clJobRunner {
     int steer;     /* 0x04 */

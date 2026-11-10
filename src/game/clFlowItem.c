@@ -278,10 +278,7 @@ static inline InputRec *GetInput(void) {
 
 /* Base class: ctor -> InitializeFrameSelection, dtor -> dtor_801BA14C (both
  * extern, bridged via --redefine-sym). Polymorphic so the vptr sits at 0. */
-struct clFlowBase {
-    clFlowBase();
-    virtual ~clFlowBase();
-};
+#include "game/types/clFlowBase.h"
 
 /* Stack-local resource descriptor used while creating the HUD sprites
  * (ctor = ResCtrl_Init, dtor = dtor_80082960 -> DESTROYLOCAL 0x8(SP)). */

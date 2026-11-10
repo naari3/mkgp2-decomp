@@ -62,34 +62,8 @@ static inline RankLog *GetRankLog() {
     return lbl_806D10A0 == 0 ? (RankLog *)0 : lbl_806D10A0;
 }
 
-struct HudPart {
-    virtual ~HudPart() {}
-    virtual void Update() = 0;
-    virtual void Draw() = 0;
-    virtual void SetDelay(int n) = 0;
-    virtual void _keyH();
-    int delay;
-    HudPart() : delay(-1) {}
-};
+#include "game/types/HudPart.h"
 
-struct TitleNameHud : HudPart {
-    int layer;
-    int sprites[24];
-    int count;
-    int state;
-    int title;
-    int field78;
-    int field7C;
-    VHolder<FlowFaderF> slide;
-    VHolder<FlowFaderF> scale;
-    char name[0x200];
-    float xs[22];
-    TitleNameHud(int layer_);
-    ~TitleNameHud();
-    void Update();
-    void Draw();
-    void SetDelay(int n);
-    virtual void _key();
-};
+#include "game/types/TitleNameHud.h"
 
 #endif

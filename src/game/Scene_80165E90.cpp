@@ -3,9 +3,7 @@
  * virtual stub, and a virtual-delete thunk.
  */
 
-struct VObj {
-    virtual ~VObj();
-};
+#include "game/types/VObj.h"
 
 struct InputPlayer {
     virtual void v0();

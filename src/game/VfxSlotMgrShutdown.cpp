@@ -1,6 +1,6 @@
 /* Standalone pool shutdown, real C++ virtual delete. */
 struct Slot { signed char active; char reserved[0x1CB]; };
-class Resource { public: virtual ~Resource(); };
+#include "game/types/Resource.h"
 extern "C" { void VfxSlot_Release(void*); void fn_8022B1C8();
 extern Slot lbl_805DF468[512]; extern Resource *lbl_806D14A8; }
 extern "C" void VfxSlotMgr_Shutdown() {

@@ -12,15 +12,7 @@ typedef __va_list va_list;
 
 #include "game/types/Buf256.h"
 
-struct TextManager {
-    TextManager();
-    ~TextManager() {}
-    unsigned char pad0[0x18];
-    int x18;
-    unsigned char pad1c[4];
-    unsigned int color;
-    unsigned char pad24[0x234 - 0x24];
-};
+#include "game/types/TextManager.h"
 
 extern "C" {
 extern int vsprintf(char *, const char *, va_list);

@@ -1,14 +1,7 @@
 #ifndef GAME_RACEHUDSCENECTORPRIVATE_H
 #define GAME_RACEHUDSCENECTORPRIVATE_H
 #include "game/FlowScene.h"
-struct SceneBase {
-    virtual ~SceneBase() {}
-    virtual void Destroy();
-    virtual void Update();
-    virtual void Draw();
-    bool done;
-    SceneBase() : done(false) {}
-};
+#include "game/types/SceneBase.h"
 struct FlowSceneHost {
     virtual ~FlowSceneHost();
     virtual void HostUpdate()=0;

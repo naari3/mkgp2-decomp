@@ -221,21 +221,7 @@ static inline void InvWorldScale(JObj *jobj, Mtx m) {
 
 #include "game/types/FxData.h"
 
-struct FxBase : FxData {
-    FxBase() {
-        obj = 0;
-        active = 0;
-        x = 0.0f;
-        y = 0.0f;
-        alpha = 1.0f;
-    }
-    virtual ~FxBase() {}
-    virtual void m0C();
-    virtual void m10();
-    virtual void Update();
-    virtual void Draw();
-    virtual void m1C();
-};
+#include "game/types/FxBase.h"
 
 /* .rodata 0x803608D0..0x80360C70 (TU-owned). The PoseChar ctor addresses the
  * scale table (+0x164), the joint-name format table (+0x2B4) and the two

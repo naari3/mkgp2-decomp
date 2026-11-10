@@ -12,20 +12,7 @@ const int lbl_803604D8[8] = { 5286, 5284, 5283, 5287, 5285, 5288, 5290, 5289 };
 
 typedef float Mtx[3][4];
 #include "game/types/Vec3f.h"
-struct TexMgr {
-    unsigned char pad0[0x18];
-    int mode;
-    unsigned char pad1C[4];
-    unsigned int color;
-    unsigned char pad24[0x208];
-    float fade;
-    TexMgr();
-    ~TexMgr() {}
-    void SetColor(unsigned int c) {
-        mode = 1;
-        color = c;
-    }
-};
+#include "game/types/TexMgr.h"
 
 extern "C" {
 extern char lbl_8048EB44[];
@@ -79,15 +66,7 @@ extern void dtor_800869D0();
 }
 
 
-struct InputPlayer {
-    virtual void v0();
-    virtual void v1();
-    virtual float v2();
-    virtual void v3();
-    virtual float StickRight();
-    virtual float StickLeft();
-    virtual unsigned char Pressed(int mask);
-};
+#include "game/types/InputPlayer.h"
 
 struct ResCtrl {
     int resId;
@@ -173,28 +152,13 @@ struct FxBase : FxData {
     virtual void m1C();
 };
 
-struct Handle {
-    virtual ~Handle();
-    virtual void Stop();
-};
+#include "game/types/Handle.h"
 
-struct HandleF : Handle {
-    unsigned char pad[0x18];
-    float x, y;
-    void SetXY(float a, float b) {
-        x = a;
-        y = b;
-    }
-};
+#include "game/types/HandleF.h"
 
 extern "C" HandleF *fn_8020007C(int a, int obj, int b);
 
-struct SpriteRef {
-    struct Sprite {
-        char pad[0x20];
-        float t;
-    } *spr;
-};
+#include "game/types/SpriteRef.h"
 
 
 

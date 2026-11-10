@@ -8,25 +8,9 @@
 inline void *operator new(unsigned long size, void *p) { return p; }
 inline void operator delete(void *memory, void *place) {}
 
-struct SteeringQueueValue {
-    int first, second;
-    SteeringQueueValue() {}
-    SteeringQueueValue(const SteeringQueueValue &v) : first(v.first), second(v.second) {}
-};
+#include "game/types/SteeringQueueValue.h"
 
-struct QueueBlockMap : SteeringRing {
-    QueueBlockMap() {
-        capacity = 0;
-        count = 0;
-        head = 0;
-        data = 0;
-    }
-    ~QueueBlockMap() {
-        if (this) {
-            if (data) MemoryManager_TimedFree(data);
-        }
-    }
-};
+#include "game/types/QueueBlockMap.h"
 
 struct SteeringQueue {
     unsigned long blockSize;
@@ -34,39 +18,11 @@ struct SteeringQueue {
     unsigned long first, count;
 };
 
-struct SteeringQueueIter {
-    SteeringRing *map;
-    unsigned long blockIndex;
-    int *block;
-    SteeringQueueValue *ptr, *end;
-    unsigned long index;
+#include "game/types/SteeringQueueIter.h"
 
-    SteeringQueueIter(SteeringRing *m, unsigned long b, int *bp,
-            SteeringQueueValue *p, SteeringQueueValue *e, unsigned long i)
-        : map(m), blockIndex(b), block(bp), ptr(p), end(e), index(i) {}
-    SteeringQueueIter(const SteeringQueueIter &o)
-        : map(o.map), blockIndex(o.blockIndex), block(o.block), ptr(o.ptr),
-          end(o.end), index(o.index) {}
-};
+#include "game/types/SteeringQueueConstIter.h"
 
-struct SteeringQueueConstIter {
-    SteeringRing *map;
-    unsigned long blockIndex;
-    int *block;
-    SteeringQueueValue *ptr, *end;
-    unsigned long index;
-    SteeringQueueConstIter(const SteeringQueueIter &o)
-        : map(o.map), blockIndex(o.blockIndex), block(o.block), ptr(o.ptr),
-          end(o.end), index(o.index) {}
-};
-
-struct QueueRingConstIter {
-    SteeringRing *ring;
-    unsigned long index;
-    const int *ptr;
-    QueueRingConstIter(const SteeringRingIter &p)
-        : ring(p.ring), index(p.index), ptr(p.ptr) {}
-};
+#include "game/types/QueueRingConstIter.h"
 
 /* The range-assign dispatch passes an empty iterator-category tag in r6. */
 struct QueueInputTag {};

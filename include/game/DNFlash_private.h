@@ -28,23 +28,11 @@ struct HSD_JObj {
     Vec3f translate;
 };
 
-struct clNormal3D {
-    char _opaque[0x5C];
-    clNormal3D(const char *res, int flags);
-    ~clNormal3D();
-};
+#include "game/types/clNormal3D.h"
 
 struct KartRender;
 
-class GXChannel {
-public:
-    GXChannel(void *root, void *desc, int flags, int mode);
-    ~GXChannel();
-    void PushTransform(Mtx m);
-
-private:
-    char pad[0x14];
-};
+#include "game/types/GXChannel.h"
 
 #include "game/types/FlashPoint.h"
 
@@ -68,13 +56,7 @@ struct TriggerBox {
     Vec3f b;
 };
 
-struct clMapEffectParts {
-    virtual ~clMapEffectParts() {}
-    virtual void Update();
-    virtual void Draw();
-    virtual void Enable(int on);
-    clMapEffectParts() {}
-};
+#include "game/types/clMapEffectParts.h"
 
 struct clDNFlash : clMapEffectParts {
     clNormal3D *fx;

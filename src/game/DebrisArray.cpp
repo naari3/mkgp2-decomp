@@ -1,12 +1,7 @@
 /* Narrow layout from target access and existing DrawForward ABI. */
 #include "game/types/DebrisVec.h"
-struct DebrisResponder { void *particles; DebrisResponder(DebrisVec, DebrisVec); };
-struct DebrisArray {
- char pad00[0x78]; void (*draw)(DebrisArray*); DebrisArray *drawSelf;
- char pad80[0xC]; DebrisVec position; char pad98[0xC]; DebrisVec velocity;
- float scale; signed char state; char padB5[0x14]; signed char cleanup;
- char padCA[2]; DebrisResponder *responder;
-};
+#include "game/types/DebrisResponder.h"
+#include "game/types/DebrisArray.h"
 void *operator new(unsigned long);
 void operator delete(void *);
 extern "C" {

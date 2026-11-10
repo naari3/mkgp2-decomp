@@ -1626,10 +1626,7 @@ struct clSceneInterface {
     unsigned char done;
 };
 
-struct LoaderBase {
-    LoaderBase() {}
-    virtual ~LoaderBase();
-};
+#include "game/types/LoaderBase.h"
 
 struct NamCam {
     unsigned char active;

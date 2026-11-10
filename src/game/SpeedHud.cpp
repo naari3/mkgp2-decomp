@@ -43,15 +43,7 @@ int fn_8020A900(int value, int digit);
 void PreloadResource(int id);
 }
 
-struct HudPart {
-    virtual ~HudPart() {}
-    virtual void Update() = 0;
-    virtual void Draw() = 0;
-    virtual void SetDelay(int n) = 0;
-    virtual void _keyH();
-    int delay;
-    HudPart() : delay(-1) {}
-};
+#include "game/types/HudPart.h"
 
 struct GaugeMark {
     int sprite;

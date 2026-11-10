@@ -17,11 +17,7 @@ struct HSD_JObj {
     Vec3 translate; /* 0x2C */
 };
 
-class Normal3D {
-public:
-    Normal3D(void *desc, int flags);
-    unsigned char data[0x5C];
-};
+#include "game/types/Normal3D.h"
 
 extern "C" {
 extern const float lbl_806D3250;

@@ -8,14 +8,7 @@
 #include "game/FlowScene.h"
 
 /* Scene object with a done flag (base vtable lbl_803FE0C8). */
-struct SceneBase {
-    virtual ~SceneBase() {}
-    virtual void Destroy();
-    virtual void Update();
-    virtual void Draw();
-    bool done;
-    SceneBase() : done(false) {}
-};
+#include "game/types/SceneBase.h"
 
 struct FlowMgrInfo {
     char pad000[0x164];

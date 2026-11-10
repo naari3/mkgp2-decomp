@@ -73,11 +73,7 @@ static const char *kNamesE[13] = {
 
 static const float kOffsetX[4] = {7.0f, 0.0f, 14.0f, 0.0f};
 
-struct Vec3c {
-    float x, y, z;
-    Vec3c() {}
-    ~Vec3c() {}
-};
+#include "game/types/Vec3c.h"
 
 class clEName3D {
 public:

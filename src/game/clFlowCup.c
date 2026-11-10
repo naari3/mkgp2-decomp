@@ -853,11 +853,7 @@ extern const float lbl_806D9D04;
 }
 #endif
 
-struct FlowBase {
-    void *vt;
-    FlowBase();
-    ~FlowBase();
-};
+#include "game/types/FlowBase.h"
 
 struct CupIconDef {
     short anim;

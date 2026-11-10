@@ -29,23 +29,9 @@ extern unsigned char lbl_806D84D8[4];
 
 #include "game/types/DataBuf.h"
 
-class DrawObj {
-public:
-    virtual void v8();
-    virtual void vC();
-    virtual void v10();
-    virtual void Draw();
-};
+#include "game/types/DrawObj.h"
 
-struct DrawScene {
-    char pad0[4];
-    unsigned char hidden;
-    char pad5[3];
-    unsigned char state;
-    char pad9[0x2c - 9];
-    DrawObj *a;
-    DrawObj *b;
-};
+#include "game/types/DrawScene.h"
 
 struct InputView {
     char pad[0x14];
@@ -1136,16 +1122,9 @@ extern "C" void fn_80159BD0(OptionMenu *self, int layer, float x, float y, float
 
 /* ---- formerly OptionMenuDraw.cpp ---- */
 #include "game/types/OptionDrawPrefix.h"
-struct OptionDrawPanel : OptionDrawPrefix {
-    virtual void v8(); virtual void vC(); virtual void v10(); virtual void v14(); virtual void Draw();
-};
+#include "game/types/OptionDrawPanel.h"
 #include "game/types/OptionDrawTarget.h"
-struct OptionDrawScene {
-    char pad0[0x20]; OptionDrawTarget *target; void *preview;
-    char pad28[0x10]; OptionDrawPanel *panel38; OptionDrawPanel *panel3C;
-    char pad40[8]; int texture; unsigned char toggle; char pad4D[3];
-    float fade50, fade54; unsigned char selection;
-};
+#include "game/types/OptionDrawScene.h"
 struct OptionDrawPoint { float x, y; };
 static inline RankLog *GetRankLog() { RankLog **pp = (RankLog **)&lbl_806D10A0; return (*pp == 0 ? 0 : *pp); }
 extern "C" void fn_8015A6E4(OptionMenu *self_, int layer, float x, float y, float alpha) {

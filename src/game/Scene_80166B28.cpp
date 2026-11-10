@@ -4,9 +4,7 @@
  * lbl_8048ED10 -> lbl_8048ECF8).
  */
 
-struct VObj {
-    virtual ~VObj();
-};
+#include "game/types/VObj.h"
 
 struct Scene80166B64 {
     void *vtable;

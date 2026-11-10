@@ -47,13 +47,7 @@ struct Sprite {
     ~Sprite();
 };
 
-struct SceneObj {
-    char pad00[0x20];
-    SceneObj(int a, int b, int c, int d, int e);
-    ~SceneObj();
-    void Update();
-    void Draw();
-};
+#include "game/types/SceneObj.h"
 
 struct RoundInfo {
     unsigned char flag;
@@ -101,14 +95,7 @@ static inline InputState *GetInput() {
     return g_pInputState == 0 ? (InputState *)0 : g_pInputState;
 }
 
-struct clSceneInterface {
-    virtual ~clSceneInterface() {}
-    virtual void Destroy();
-    virtual void Update();
-    virtual void Draw();
-    unsigned char done;
-    clSceneInterface() : done(false) {}
-};
+#include "game/types/clSceneInterface.h"
 
 struct clCSSceneGetRace : clSceneInterface {
     SceneObj *obj;

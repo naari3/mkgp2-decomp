@@ -1373,20 +1373,9 @@ struct RIGoalCamera { char data[8]; RIGoalCamera(); };
 struct RIHUD { char data[0x80]; RIHUD(RIPathManager *path); };
 struct RIWeatherSystem { char data[0x1B4]; RIWeatherSystem(int arg); };
 
-struct GameModeBase {
-    virtual void _key();
-    virtual ~GameModeBase();
-    GameModeBase();
-};
+#include "game/types/GameModeBase.h"
 
-struct ModeBase : GameModeBase {
-    float x4;
-    ModeBase() {
-        x4 = 0.0f;
-    }
-    virtual void _key2();
-    virtual ~ModeBase();
-};
+#include "game/types/ModeBase.h"
 
 struct RivalRun : ModeBase {
     virtual void _key3();

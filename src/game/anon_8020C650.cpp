@@ -5,14 +5,7 @@
 
 #include "game/FlowScene.h"
 
-struct SceneBase {
-    virtual ~SceneBase() {}
-    virtual void Destroy();
-    virtual void Update();
-    virtual void Draw();
-    bool done;
-    SceneBase() : done(false) {}
-};
+#include "game/types/SceneBase.h"
 
 struct FlowMgrInfo {
     char pad000[0x164];

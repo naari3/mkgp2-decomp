@@ -132,11 +132,7 @@ void Sprite_SetAnimTime(Sprite *s, float t);
 unsigned char Sprite_AdvanceAnim(Sprite *s, float dt);
 }
 
-struct clNormal3D {
-    char _opaque[0x5C];
-    clNormal3D(const char *res, int flags);
-    ~clNormal3D();
-};
+#include "game/types/clNormal3D.h"
 
 extern "C" {
 void Object_JObjUpdate_870(clNormal3D *o, int flags);

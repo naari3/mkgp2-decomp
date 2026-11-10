@@ -39,12 +39,7 @@ static const char cardEmptyE[0xb] = "CARD EMPTY";
 static const char cardErrorJ[0x14] = "\203G\203\211\201[\203R\201[\203h\201FE%02d";
 static const char cardErrorE[0x12] = "ERROR CODE\201FE%02d";
 
-struct CardEjectTask : FlowTask {
-    TextManager *texts;
-    CardEjectTask(int id);
-    ~CardEjectTask();
-    virtual void _key3();
-};
+#include "game/types/CardEjectTask.h"
 
 CardEjectTask::CardEjectTask(int id) : FlowTask(id) {
     float x;

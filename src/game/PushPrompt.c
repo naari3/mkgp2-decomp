@@ -44,15 +44,7 @@ extern void fn_80120A08(int id);
 extern void SetRumbleMode(unsigned int ch, unsigned int mode, int duration);
 }
 
-struct InputPlayer {
-    virtual void v0();
-    virtual void v1();
-    virtual float v2();
-    virtual void v3();
-    virtual float StickRight();
-    virtual float StickLeft();
-    virtual unsigned char Pressed(int mask);
-};
+#include "game/types/InputPlayer.h"
 
 extern "C" {
 extern void *GetInputManager(void);

@@ -116,13 +116,9 @@ template <class T> struct ListBase : ListImpl<T> {
     ~ListBase() {}
 };
 
-struct ResponderList : ListBase<void *> {
-    ~ResponderList() {}
-};
+#include "game/types/ResponderList.h"
 
-struct BoxList : ListBase<void *> {
-    ~BoxList() {}
-};
+#include "game/types/BoxList.h"
 
 struct clItemBoxManagerBase {
     virtual void Key();
@@ -134,14 +130,6 @@ extern "C" clItemBoxManagerBase *lbl_806D10D0;
 
 inline clItemBoxManagerBase::clItemBoxManagerBase() { lbl_806D10D0 = this; }
 
-struct clItemBoxManager : clItemBoxManagerBase {
-    ResponderList responders; /* 0x04 */
-    BoxList boxes;            /* 0x10 */
-    unsigned char active;    /* 0x1C */
-
-    virtual void Key();
-    virtual ~clItemBoxManager();
-    clItemBoxManager(void *table);
-};
+#include "game/types/clItemBoxManager.h"
 
 #endif

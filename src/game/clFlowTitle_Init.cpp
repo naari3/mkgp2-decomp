@@ -8,11 +8,7 @@ struct SpriteObj {
 
 #include "game/types/InputView.h"
 
-struct FlowBase {
-    void *vt;
-    FlowBase();
-    ~FlowBase();
-};
+#include "game/types/FlowBase.h"
 
 struct TitleFlow : FlowBase {
     unsigned char unk4;

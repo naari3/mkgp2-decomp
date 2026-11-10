@@ -4,9 +4,7 @@
  * the 0x115-entry parameter table before freeing it.
  */
 
-struct VObj {
-    virtual ~VObj();
-};
+#include "game/types/VObj.h"
 
 typedef struct ParamEntry {
     float v[7];

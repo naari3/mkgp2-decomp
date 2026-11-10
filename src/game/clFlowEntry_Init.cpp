@@ -4,11 +4,7 @@ public:
     virtual ~InputView();
 };
 
-struct FlowBase {
-    void *vt;
-    FlowBase();
-    ~FlowBase();
-};
+#include "game/types/FlowBase.h"
 
 struct EntryFlow : FlowBase {
     int timer;

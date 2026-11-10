@@ -1,8 +1,6 @@
 /* 0x8015B698..0x8015B6D0: virtual-delete thunk. */
 
-struct VObj {
-    virtual ~VObj();
-};
+#include "game/types/VObj.h"
 
 extern "C" {
 

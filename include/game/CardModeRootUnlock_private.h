@@ -11,14 +11,7 @@
 
 #pragma auto_inline off
 
-struct SceneBase {
-    virtual ~SceneBase() {}
-    virtual void Destroy();
-    virtual void Update();
-    virtual void Draw();
-    bool done;
-    SceneBase() : done(false) {}
-};
+#include "game/types/SceneBase.h"
 
 #include "game/types/FlowMgrInfo.h"
 
@@ -56,14 +49,7 @@ struct FlowSceneHost {
     void UpdateScenes();
 };
 
-struct CardMenuRoot : MenuModeBase {
-    SceneBase *task;
-    CardMenuRoot();
-    ~CardMenuRoot();
-    virtual void Destroy();
-    virtual void Update();
-    virtual void Draw();
-};
+#include "game/types/CardMenuRoot.h"
 
 #include "game/types/InputImpl.h"
 

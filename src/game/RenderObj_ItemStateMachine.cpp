@@ -69,21 +69,7 @@ extern const float lbl_806D2628, lbl_806D262C, lbl_806D2630;
 extern const float lbl_806D2634, lbl_806D2638;
 }
 
-class ScopedTimer {
-public:
-    inline ScopedTimer(int slot) {
-        m_slot = slot;
-        m_startTick = OSGetTick();
-    }
-    inline ~ScopedTimer() {
-        Profiler_RecordFrame(m_slot,
-            (float)(((OSGetTick() - m_startTick) * 8) /
-                ((*(unsigned int *)0x800000F8 / 4) / 125000)) / lbl_806D25E0);
-    }
-private:
-    unsigned int m_startTick;
-    volatile int m_slot;
-};
+#include "game/types/ScopedTimer.h"
 
 static inline unsigned char MatrixDirty(HSD_JObj *joint) {
     unsigned int flags;

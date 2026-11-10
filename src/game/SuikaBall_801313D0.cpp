@@ -1039,22 +1039,19 @@ struct RenderObj {
     int x238;
 };
 
-struct InputManager { char data[0x37C]; InputManager(); };
-struct Camera { char data[0x2C]; Camera(float a, float b, int w, int h, int target); };
-struct CarObject {
-    char data[0x118];
-    CarObject(int disp, int chara, int cc, int a, int b, int c, int d, int e, float x, float z, float yaw);
-};
+#include "game/types/InputManager.h"
+#include "game/types/Camera.h"
+#include "game/types/CarObject.h"
 static inline int GetChara() { return g_characterId; }
 struct PlayerCar : CarObject {
     PlayerCar(const float *x, const float *z, int chara)
         : CarObject(GetDisplayBufferIndex(), chara, 0, 0, 1, 0, 0, 0, *x, *z, GetCourseStartYaw()) {}
 };
-struct LakituStart { char data[0x58]; LakituStart(const void *data, int arg, float x, float y, float z); };
-struct Scene3D { char data[0x3084]; Scene3D(int name); };
-struct ChallengeGoalCamera { char data[8]; ChallengeGoalCamera(); };
-struct HUD { char data[0x80]; HUD(int arg); };
-struct WeatherSystem { char data[0x1B4]; WeatherSystem(int arg); };
+#include "game/types/LakituStart.h"
+#include "game/types/Scene3D.h"
+#include "game/types/ChallengeGoalCamera.h"
+#include "game/types/HUD.h"
+#include "game/types/WeatherSystem.h"
 struct clNormal3D { char data[0x5C]; clNormal3D(const char *file, int arg); };
 
 struct ShotVec {
@@ -1073,16 +1070,7 @@ struct CoinShot {
     CoinShotTrail trail[20];
 };
 
-struct CoinShotBase {
-    virtual ~CoinShotBase();
-    clNormal3D *model;
-    clNormal3D *trailModel;
-    int xC;
-    int x10;
-    CoinShot shots[6];
-    int trailCount;
-    CoinShotBase(const char *modelFile, const char *trailFile);
-};
+#include "game/types/CoinShotBase.h"
 
 inline CoinShotBase::CoinShotBase(const char *modelFile, const char *trailFile) {
     xC = 0;
@@ -1114,11 +1102,7 @@ struct SuikaCoinShots : CoinShotBase {
     virtual ~SuikaCoinShots();
 };
 
-struct GameModeBase {
-    virtual void _key();
-    virtual ~GameModeBase();
-    GameModeBase();
-};
+#include "game/types/GameModeBase.h"
 
 struct ModeBase : GameModeBase {
     float x4;

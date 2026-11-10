@@ -14,23 +14,10 @@ inline void operator delete(void *, void *) {}
 
 /* Four corners have nontrivial lifetime; the two remaining vectors are plain. */
 #include "game/types/WarpPlainVector.h"
-struct WarpCorner : WarpPlainVector {
-    WarpCorner(const WarpCorner &v) : WarpPlainVector(v) {}
-    ~WarpCorner();
-};
-struct WarpZoneValue {
-    unsigned long flags;
-    WarpCorner corners[4];
-    WarpPlainVector vector1, vector2;
-    float distance;
-};
+#include "game/types/WarpCorner.h"
+#include "game/types/WarpZoneValue.h"
 
-struct WarpErrorString {
-    char *ptr;
-    void *control;
-    WarpErrorString(void *);
-    ~WarpErrorString();
-};
+#include "game/types/WarpErrorString.h"
 struct WarpString {
     WarpErrorString storage;
     WarpString(const char *s) : storage(FUN_8003b120(strlen(s) + 1)) { strcpy(storage.ptr, s); }
@@ -48,19 +35,7 @@ struct length_error : logic_error {
 };
 }
 
-struct WarpZoneVectorStorage {
-    unsigned long capacity, count;
-    WarpZoneValue *data;
-    WarpZoneVectorStorage() : capacity(0), count(0), data(0) {}
-    ~WarpZoneVectorStorage();
-    void swap(WarpZoneVectorStorage &other) {
-        if (this != &other) {
-            unsigned long c = capacity; capacity = other.capacity; other.capacity = c;
-            WarpZoneValue *p = data; data = other.data; other.data = p;
-            unsigned long n = count; count = other.count; other.count = n;
-        }
-    }
-};
+#include "game/types/WarpZoneVectorStorage.h"
 extern "C" {
 void WarpZoneVector_Clear(WarpZoneVectorStorage *);
 void WarpZoneArray_UninitFillN(WarpZoneValue *, unsigned long, const WarpZoneValue *);

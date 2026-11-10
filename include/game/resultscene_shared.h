@@ -283,11 +283,7 @@ struct ResultPartB : ResultPart {
 
 extern "C" void fn_80192348(int id);
 
-struct SpriteHolder {
-    void *s;
-    SpriteHolder(void *p) : s(p) {}
-    ~SpriteHolder() throw();
-};
+#include "game/types/SpriteHolder.h"
 
 
 

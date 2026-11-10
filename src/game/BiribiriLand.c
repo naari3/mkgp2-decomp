@@ -755,20 +755,9 @@ struct BLGoalLine {
     }
 };
 
-struct GameModeBase {
-    virtual void _key();
-    virtual ~GameModeBase();
-    GameModeBase();
-};
+#include "game/types/GameModeBase.h"
 
-struct ModeBase : GameModeBase {
-    float x4;
-    ModeBase() {
-        x4 = 0.0f;
-    }
-    virtual void _key2();
-    virtual ~ModeBase();
-};
+#include "game/types/ModeBase.h"
 
 struct BiribiriLand : ModeBase {
     virtual void _key3();

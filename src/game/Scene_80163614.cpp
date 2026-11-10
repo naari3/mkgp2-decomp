@@ -10,10 +10,7 @@ struct CourseLoader {
     CourseLoader(void *desc, int mode);
 };
 
-struct LoaderBase {
-    LoaderBase() {}
-    virtual ~LoaderBase();
-};
+#include "game/types/LoaderBase.h"
 
 struct LoaderHolder : LoaderBase {
     CourseLoader *loader;

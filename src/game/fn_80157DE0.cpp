@@ -11,23 +11,9 @@
 
 #include "game/types/DataBuf.h"
 
-class DrawObj {
-public:
-    virtual void v8();
-    virtual void vC();
-    virtual void v10();
-    virtual void Draw();
-};
+#include "game/types/DrawObj.h"
 
-struct DrawScene {
-    char pad0[4];
-    unsigned char hidden;
-    char pad5[3];
-    unsigned char state;
-    char pad9[0x2c - 9];
-    DrawObj *a;
-    DrawObj *b;
-};
+#include "game/types/DrawScene.h"
 
 struct InputView {
     char pad[0x14];

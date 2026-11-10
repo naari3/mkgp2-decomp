@@ -128,19 +128,7 @@ static inline unsigned int PackColor(int r, int g, int b, int a) {
     return ((r & 0xFF) << 24) | ((g & 0xFF) << 16) | ((b & 0xFF) << 8) | (a & 0xFF);
 }
 
-struct TextRow {
-    PtrVec<TextSprite *> sprites;
-    int layer;
-    int align;
-    int visible;
-    unsigned char alpha;
-    float x;
-    float y;
-    float sx;
-    float sy;
-    unsigned char dirty;
-    ~TextRow();
-};
+#include "game/types/TextRow.h"
 
 TextRow::~TextRow() {
     for (TextSprite **it = sprites.begin(); it != sprites.end(); it++) {
@@ -167,20 +155,9 @@ extern "C" TextRow *fn_802174A8(TextRow *row) {
 
 /* ---- "insert card" prompt ---- */
 
-struct FadeKeyBase {
-    virtual ~FadeKeyBase();
-    int dur;
-    FadeKeyBase(int d) : dur(d) {}
-};
+#include "game/types/FadeKeyBase.h"
 
-struct FadeKey : FadeKeyBase {
-    float from;
-    float to;
-    VHolder<FadeKey> next;
-    FadeKey(int d, float f, float t) : FadeKeyBase(d), from(f), to(t) {}
-    ~FadeKey();
-    void Append(int dur, float to);
-};
+#include "game/types/FadeKey.h"
 
 struct FadeSeq {
     virtual ~FadeSeq();

@@ -35,15 +35,7 @@ struct clNormal3D {
 
 typedef float Mtx[3][4];
 
-class GXChannel {
-public:
-    GXChannel(void *root, void *desc, int flags, int mode);
-    ~GXChannel();
-    void PushTransform(Mtx m);
-
-private:
-    char pad[0x14];
-};
+#include "game/types/GXChannel.h"
 
 struct clMapEffectParts {
     virtual void vKeyFunction();

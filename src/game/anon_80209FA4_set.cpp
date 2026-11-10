@@ -29,35 +29,18 @@ extern "C" JobRunner lbl_806D1A20;
 
 /* ---- clJobRunner debug mode ---- */
 
-struct InputPlayer {
-    virtual void v0();
-    virtual void v1();
-    virtual float v2();
-    virtual void v3();
-    virtual float StickRight();
-    virtual float StickLeft();
-    virtual unsigned char Pressed(int mask);
-};
+#include "game/types/InputPlayer.h"
 
 extern "C" InputPlayer *InputMgr_GetPlayer(void *mgr, int index);
 
-struct JobTask {
-    virtual void v0();
-    virtual void Kill();
-    virtual void Update();
-    virtual void Draw();
-    unsigned char done;
-};
+#include "game/types/JobTask.h"
 
 extern "C" {
 JobTask *fn_8020CEAC(void);
 JobTask *fn_80254F74(void);
 }
 
-struct JobTask15 : JobTask {
-    char pad[0x18 - 0x8];
-    JobTask15();
-};
+#include "game/types/JobTask15.h"
 
 #include "game/types/JobEntry.h"
 
@@ -81,18 +64,7 @@ struct GameModeBase {
     virtual ~GameModeBase();
 };
 
-struct JobRunnerMode : GameModeBase {
-    JobTask *task;
-    unsigned int updateStart;
-    unsigned int updateEnd;
-    unsigned int drawStart;
-    unsigned int drawEnd;
-    int sel;
-    JobRunnerMode() : task(0), sel(3) {}
-    virtual int Update();
-    virtual void Draw();
-    virtual ~JobRunnerMode();
-};
+#include "game/types/JobRunnerMode.h"
 
 static inline JobTask *CreateJob(int type) {
     switch (type) {
@@ -130,51 +102,15 @@ static inline JobTask *CreateJob(int type) {
 
 /* ---- fade keyframe sequence ---- */
 
-struct FadeKeyBase {
-    virtual ~FadeKeyBase();
-    int dur;
-    FadeKeyBase(int d) : dur(d) {}
-};
+#include "game/types/FadeKeyBase.h"
 
-struct FadeKey : FadeKeyBase {
-    float from;
-    float to;
-    VHolder<FadeKey> next;
-    FadeKey(int d, float f, float t) : FadeKeyBase(d), from(f), to(t) {}
-    ~FadeKey();
-    void Append(int dur, float to);
-};
+#include "game/types/FadeKey.h"
 
-struct FadeSeqBase {
-    virtual ~FadeSeqBase();
-    bool loop;
-    FadeSeqBase(bool l) : loop(l) {}
-};
+#include "game/types/FadeSeqBase.h"
 
-struct Tween : FlowFader {
-    float from;
-    float to;
-    float rate;
-    Tween(float v) : from(v), to(v), rate(v) {}
-    virtual void _key2();
-    float Value();
-    void Set(float f, float t, short d);
-};
+#include "game/types/Tween.h"
 
-struct FadeSeq : FadeSeqBase {
-    FadeKey *head;
-    FadeKey *cur;
-    Tween *tween;
-    FadeSeq(FadeKey *h, bool l);
-    ~FadeSeq();
-    void Update();
-    bool Done();
-    void Load() {
-        float t = cur->to;
-        tween->Set(cur->from, t, cur->dur);
-        cur = cur->next.p;
-    }
-};
+#include "game/types/FadeSeq.h"
 
 extern "C" const float lbl_806DABD8;
 extern "C" const float lbl_806DABE8;
@@ -190,14 +126,7 @@ extern "C" const float lbl_806DABEC;
 
 
 
-struct TweenI : FlowFader {
-    int from;
-    int to;
-    int rate;
-    virtual void _key2();
-    int Value();
-    void Set(int f, int t, short d);
-};
+#include "game/types/TweenI.h"
 
 
 

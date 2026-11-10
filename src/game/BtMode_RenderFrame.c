@@ -4,11 +4,7 @@
  * effects and the HUD layers, then flushes the HUD and GX state. */
 #pragma cplusplus on
 
-struct SceneCamera {
-    virtual void v0();
-    virtual unsigned char Begin();
-    virtual void End();
-};
+#include "game/types/SceneCamera.h"
 
 struct ISESlotOwner {
     unsigned char pad00[0x18];

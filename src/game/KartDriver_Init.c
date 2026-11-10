@@ -5,13 +5,9 @@
 /* Observed views only; external constructors own opaque allocation storage. */
 struct Driver;
 struct Normal3D { unsigned char opaque[92]; Normal3D(const char *, int); };
-struct EffectBus { unsigned char opaque[88]; EffectBus(Driver *); };
-struct TireFX { unsigned char opaque[196]; TireFX(int,int,void*,void*,void*,void*); };
-struct DriverTail {
-    Driver *owner; int a04, a08, a0C, a10;
-    unsigned char a14,a15,pad16[2]; int a18;
-    DriverTail(Driver *p) { owner=p; a04=0; a0C=0; a10=0; a14=0; a15=0; a18=-1; }
-};
+#include "game/types/EffectBus.h"
+#include "game/types/TireFX.h"
+#include "game/types/DriverTail.h"
 struct Driver {
     Normal3D *kart; unsigned char pad04[8];
     Normal3D *character,*animation,*other,*shadow;

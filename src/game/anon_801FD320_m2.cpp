@@ -27,12 +27,7 @@ void card_eject_init(void);
 void fn_801D7610(unsigned char *data, int mode);
 }
 
-struct CardEjectTask : FlowTask {
-    TextManager *texts;
-    CardEjectTask(int id);
-    ~CardEjectTask();
-    virtual void _key3();
-};
+#include "game/types/CardEjectTask.h"
 
 extern "C" void fn_801FD800(FlowController *self) {
     self->owner->Draw();

@@ -736,14 +736,7 @@ static inline unsigned int PackColor(int r, int g, int b, int a) {
     return ((r & 0xFF) << 24) | ((g & 0xFF) << 16) | ((b & 0xFF) << 8) | (a & 0xFF);
 }
 
-struct SceneBase {
-    virtual ~SceneBase() {}
-    virtual void Destroy();
-    virtual void Update();
-    virtual void Draw();
-    bool done;
-    SceneBase() : done(false) {}
-};
+#include "game/types/SceneBase.h"
 
 struct TimeAttackResult : SceneBase {
     virtual void _key();
