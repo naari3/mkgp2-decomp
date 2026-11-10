@@ -110,7 +110,7 @@ extern const char lbl_80368C40[];
 extern const char lbl_80368C50[];
 extern const char lbl_80368C60[];
 extern const char lbl_80368C74[];
-extern const unsigned char Scene_8015BF18_rodata_80368C84[0x18];
+extern const int Scene_8015BF18_rodata_80368C84[6];
 extern const char lbl_80368C9C[];
 extern const char lbl_80368CAC[0x14];
 extern const char lbl_80368CC0[0xC];

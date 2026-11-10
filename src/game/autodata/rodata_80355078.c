@@ -36,6 +36,11 @@ typedef struct Rodata80355078_Row5 {
     float f_04;
     int i_08[3];
 } Rodata80355078_Row5;
+/* a float and a count; member types read off the values, not from code */
+typedef struct Rodata80355078_FloatInt {
+    float f_00;
+    int i_04;
+} Rodata80355078_FloatInt;
 
 typedef struct Rodata80355078_Row13 {
     int i_00;
@@ -166,30 +171,12 @@ const float lbl_80355198[6] = {
 const float lbl_803551B0[6] = {
     0.25f, 0.45f, 0.78f, 0.1f, 0.98f, 0.9f
 };
-/* element type read off the values (16-bit pairs), not from code */
-const short lbl_803551C8[4] = {
-    16128, 0, 0, 15
-};
-/* element type read off the values (16-bit pairs), not from code */
-const short lbl_803551D0[4] = {
-    16256, 0, 0, 15
-};
-/* element type read off the values (16-bit pairs), not from code */
-const short lbl_803551D8[4] = {
-    16128, 0, 0, 15
-};
-/* element type read off the values (16-bit pairs), not from code */
-const short lbl_803551E0[4] = {
-    16256, 0, 0, 15
-};
-/* element type read off the values (16-bit pairs), not from code */
-const short lbl_803551E8[4] = {
-    16128, 0, 0, 15
-};
-/* element type read off the values (16-bit pairs), not from code */
-const short lbl_803551F0[4] = {
-    16256, 0, 0, 15
-};
+const Rodata80355078_FloatInt lbl_803551C8 = { 0.5f, 15 };
+const Rodata80355078_FloatInt lbl_803551D0 = { 1.0f, 15 };
+const Rodata80355078_FloatInt lbl_803551D8 = { 0.5f, 15 };
+const Rodata80355078_FloatInt lbl_803551E0 = { 1.0f, 15 };
+const Rodata80355078_FloatInt lbl_803551E8 = { 0.5f, 15 };
+const Rodata80355078_FloatInt lbl_803551F0 = { 1.0f, 15 };
 const Rodata80355078_Row5 lbl_803551F8 = { 0, 6.0f, { 70, 120, 0 } };
 const Rodata80355078_Row5 lbl_8035520C = { 0, 5.0f, { 60, 120, 0 } };
 const Rodata80355078_Row5 lbl_80355220 = { 0, 6.0f, { 50, 120, 0 } };
@@ -464,43 +451,19 @@ const float NokoNokoChallenge_GetCoinDivisor_rodata_80355600[6] = {
 const float NokoNokoChallenge_GetCoinDivisor_rodata_80355618[6] = {
     0.25f, 0.45f, 0.78f, 0.1f, 0.98f, 0.9f
 };
-/* element type read off the values (16-bit pairs), not from code */
-const short NokoNokoChallenge_GetCoinDivisor_rodata_80355630[4] = {
-    16128, 0, 0, 15
-};
-/* element type read off the values (16-bit pairs), not from code */
-const short NokoNokoChallenge_GetCoinDivisor_rodata_80355638[4] = {
-    16256, 0, 0, 15
-};
-/* element type read off the values (16-bit pairs), not from code */
-const short NokoNokoChallenge_GetCoinDivisor_rodata_80355640[4] = {
-    16128, 0, 0, 15
-};
-/* element type read off the values (16-bit pairs), not from code */
-const short NokoNokoChallenge_GetCoinDivisor_rodata_80355648[4] = {
-    16256, 0, 0, 15
-};
-/* element type read off the values (16-bit pairs), not from code */
-const short NokoNokoChallenge_GetCoinDivisor_rodata_80355650[4] = {
-    16128, 0, 0, 15
-};
-/* element type read off the values (16-bit pairs), not from code */
-const short NokoNokoChallenge_GetCoinDivisor_rodata_80355658[4] = {
-    16256, 0, 0, 15
-};
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355660[20] = {
-    0, 0, 0, 0, 64, -64, 0, 0, 0, 0, 0, 70,
-    0, 0, 0, 120, 0, 0, 0, 0
-};
+const Rodata80355078_FloatInt NokoNokoChallenge_GetCoinDivisor_rodata_80355630 = { 0.5f, 15 };
+const Rodata80355078_FloatInt NokoNokoChallenge_GetCoinDivisor_rodata_80355638 = { 1.0f, 15 };
+const Rodata80355078_FloatInt NokoNokoChallenge_GetCoinDivisor_rodata_80355640 = { 0.5f, 15 };
+const Rodata80355078_FloatInt NokoNokoChallenge_GetCoinDivisor_rodata_80355648 = { 1.0f, 15 };
+const Rodata80355078_FloatInt NokoNokoChallenge_GetCoinDivisor_rodata_80355650 = { 0.5f, 15 };
+const Rodata80355078_FloatInt NokoNokoChallenge_GetCoinDivisor_rodata_80355658 = { 1.0f, 15 };
+const Rodata80355078_Row5 NokoNokoChallenge_GetCoinDivisor_rodata_80355660 = { 0, 6.0f, { 70, 120, 0 } };
 const NokoNokoChallenge_GetCoinDivisor_rodata_80355674_Pool NokoNokoChallenge_GetCoinDivisor_rodata_80355674 = {
     0,
     5.0f,
     { 60, 120, 0 }
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355688[20] = {
-    0, 0, 0, 0, 64, -64, 0, 0, 0, 0, 0, 50,
-    0, 0, 0, 120, 0, 0, 0, 0
-};
+const Rodata80355078_Row5 NokoNokoChallenge_GetCoinDivisor_rodata_80355688 = { 0, 6.0f, { 50, 120, 0 } };
 const NokoNokoChallenge_GetCoinDivisor_rodata_8035569C_Pool NokoNokoChallenge_GetCoinDivisor_rodata_8035569C = {
     0,
     5.0f,

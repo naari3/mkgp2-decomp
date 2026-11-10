@@ -128,8 +128,8 @@ int ItemSelectState_data_806D072C = 88;
 int ItemSelectState_data_806D0730 = 87;
 int ItemSelectState_data_806D0734 = 419;
 float ItemSelectState_data_806D0738 = 1.8e+02f;
-char ItemSelectState_data_806D073C[4] = {
-    0, 0, 0, 73
+int ItemSelectState_data_806D073C[1] = {
+    73
 };
 /* element type read off the value (a small integer), not from code */
 int ItemSelectState_data_806D0740[1] = {
@@ -155,8 +155,8 @@ int ItemSelectState_data_806D0750[1] = {
 int ItemSelectState_data_806D0754[1] = {
     156
 };
-char clFlowItem_Update_data_806D0758[4] = {
-    0, 0, 0, 77
+int clFlowItem_Update_data_806D0758[1] = {
+    77
 };
 int ItemSelectState_data_806D075C = 63;
 int ItemSelectState_data_806D0760 = 63;
@@ -166,11 +166,11 @@ int ItemSelectState_data_806D076C = 425;
 int ItemSelectState_data_806D0770 = 414;
 int ItemSelectState_data_806D0774 = 414;
 int ItemSelectState_data_806D0778 = 414;
-char clFlowItem_Init_data_806D077C[4] = {
-    0, 0, 0, 74
+int clFlowItem_Init_data_806D077C[1] = {
+    74
 };
-char clFlowItem_Init_data_806D0780[4] = {
-    0, 0, 0, 116
+int clFlowItem_Init_data_806D0780[1] = {
+    116
 };
 void *data_804EE520_data_806D0784[2] = {
     (void *)&sdata_806D0728_rodata_803DC2CC,

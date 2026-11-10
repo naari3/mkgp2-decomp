@@ -604,11 +604,11 @@ void *data_8048E548_data_806CF680[2] = {
     (void *)&lbl_80360484,
     (void *)&sdata_806CF1C0_data_8048EB90
 };
-char ResultFx_data_806CF688[4] = {
-    0, 0, 0, 126
+int ResultFx_data_806CF688[1] = {
+    126
 };
-char ResultFx_data_806CF68C[4] = {
-    0, 0, 0, 67
+int ResultFx_data_806CF68C[1] = {
+    67
 };
 /* element type read off the value (a small integer), not from code */
 int ResultFx_data_806CF690[1] = {
@@ -622,21 +622,21 @@ void *data_8048E548_data_806CF69C[3] = {
     (void *)&sdata_806CF1C0_data_8048EBC0,
     0
 };
-unsigned char ResultFxScene_data_806CF6A8[4] = {
-    0x0, 0x0, 0x0, 0x7A
+int ResultFxScene_data_806CF6A8[1] = {
+    122
 };
 /* element type read off the value (a small integer), not from code */
 int ResultFxScene_data_806CF6AC[1] = {
     443
 };
-unsigned char ResultFxScene_data_806CF6B0[4] = {
-    0x0, 0x0, 0x0, 0x43
+int ResultFxScene_data_806CF6B0[1] = {
+    67
 };
-unsigned char ResultFxScene_data_806CF6B4[4] = {
-    0x0, 0x0, 0x0, 0x42
+int ResultFxScene_data_806CF6B4[1] = {
+    66
 };
-char ResultFxScene_data_806CF6B8[4] = {
-    0, 0, 0, 118
+int ResultFxScene_data_806CF6B8[1] = {
+    118
 };
 const char *data_8048EC90_data_806CF6BC[2] = {
     (const char *)&lbl_80360758, 0

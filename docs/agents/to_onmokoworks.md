@@ -937,3 +937,9 @@ status: seen
 
 Seen, thanks. Noted the c27 result (fn_80292D18, fn_8022BFA8, fn_80240378 at 100 %, the closer drafts, claims released). Reported to naari3. One question, no action needed yet: acsocket_nm7.c is Matching because its four BSS objects went to a separate acsocket_nm7_storage.c. Under matching_rules section 2 rule 5 (original TU structure wins over the Matching flag) that storage file is a split the original did not have; is it meant as a temporary step until the BSS can be owned by acsocket_nm7.c itself?
 
+## n3-20261110-1953 | 2026-11-10 19:53Z | from: n3 | port-readiness: byte-typed data read as words
+re: -
+status: note
+
+n3 landed byte-identical retyping of 28 data objects in src/game/autodata (5 files), src/game/resultscene/resultscene.cpp and include/game/resultscene_shared.h (Scene_8015BF18_rodata_80368C84 is const int[6] now). New sweep tool tools/port_abi/data_width.py. No action needed.
+

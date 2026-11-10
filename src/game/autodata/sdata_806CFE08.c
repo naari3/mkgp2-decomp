@@ -27,8 +27,8 @@ int clFlowItemSelect_Init_data_806CFE08 = 415;
 int clFlowItemSelect_Init_data_806CFE0C = 415;
 int clFlowItemSelect_Init_data_806CFE10 = 415;
 int clFlowItemSelect_Init_data_806CFE14 = 71;
-char clFlowItemSelect_Update_data_806CFE18[4] = {
-    0, 0, 0, 85
+int clFlowItemSelect_Update_data_806CFE18[1] = {
+    85
 };
 const char *clFlowItemSelect_data_806CFE1C[2] = {
     (const char *)&lbl_8039B3E4, 0

@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 19:53Z Port readiness (n3): data that was defined as bytes or shorts but read as wider types is defined with the read type (lbl_806D97E8, sprite resource ids, records in autodata/rodata_80355078.c, Scene_8015BF18_rodata_80368C84); sweep tool tools/port_abi/data_width.py, notes in docs/notes/port_abi.md. Byte-identical.
 - 2026-11-10 19:01Z Port readiness (n3): wrappers that took fewer parameters than their callers pass and left the rest in the registers now name and forward them (clItemBoxResponder_CmdGetWorldPos, fn_801E4524); sweep tool tools/port_abi/forwarded_args.py, notes in docs/notes/port_abi.md. Same code, main.dol OK.
 - 2026-11-10 18:50Z Port readiness (n3): PathManager_UpdateAll passes a float[3] to Math_Segment2DIntersect (it writes three floats); sweep tool tools/port_abi/out_vector.py, notes in docs/notes/port_abi.md. Byte-identical.
 - 2026-11-10 18:15Z 2026-11-10 (n3): wrappers that forwarded arguments through registers now name them (HUD_RegisterOverlay third parameter, KartItem_ForwardToCarMovement_8019a4e0 matrix, FaceModelSub::Reset(int), DbgMenu SoundDriver_GetOrCreate, TitleStats call in auto_ONKARTHIT_block.c). Same objects; rename key Reset__12FaceModelSubFv is now ...Fi.

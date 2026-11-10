@@ -441,3 +441,27 @@ everything the callee takes. What it still prints:
 - `fn_80157C60`, `fn_80157DE0`, `fn_80247C3C`: the fourth argument in the C
   prototypes is the hidden pointer for the returned struct, not a forwarded
   argument.
+
+## Data defined with a narrower element than its users read
+
+An object defined as bytes (or shorts) keeps the console's byte order when a
+little-endian host compiles it; a user that reads it as short, int or float
+then gets swapped values. `lbl_806D97E8` was six bytes read as three shorts
+(voice ids). Each such object is now defined with the type it is read through,
+values written as numbers of that type (MWCC output unchanged):
+
+- `lbl_806D97E8`: `const short[3]`.
+- twelve one-entry sprite resource lists passed to `SpriteGroup_CreateOrInit`
+  (`int *resource`), e.g. `ResultFx_data_806CF688`: `int[1]`.
+- twelve float-and-count records in autodata/rodata_80355078.c
+  (`lbl_803551C8`.., `NokoNokoChallenge_GetCoinDivisor_rodata_80355630`..):
+  `Rodata80355078_FloatInt`; two five-word records there: `Rodata80355078_Row5`.
+- `Scene_8015BF18_rodata_80368C84`: `const int[6]`.
+
+`python3 tools/port_abi/data_width.py --content` finds them: definitions with a
+1- or 2-byte element whose `extern` declarations or pointer casts elsewhere
+use a wider type, and byte arrays whose bytes look like big-endian words. It
+reports 0 now. It does not see a byte pool that is read through a local
+pointer plus offset (`strings + 0x4E8`) when the bytes at that offset look
+like text. `lbl_802EB4E0` (declared `NamCamPool` by one user) is all text
+bytes and stays `char`.

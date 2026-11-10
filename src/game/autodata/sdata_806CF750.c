@@ -408,8 +408,8 @@ int resultscene_nm1_data_806CF914[1] = {
 int resultscene_nm1_data_806CF918[1] = {
     153
 };
-char resultscene_nm1_data_806CF91C[4] = {
-    0, 0, 0, -56
+int resultscene_nm1_data_806CF91C[1] = {
+    200
 };
 const char *data_8048FE08_data_806CF920[2] = {
     (const char *)&lbl_803691E8, 0

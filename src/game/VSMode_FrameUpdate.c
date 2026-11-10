@@ -1116,7 +1116,7 @@ extern unsigned int g_totalLaps;
 extern unsigned int g_totalRaceTime;
 extern unsigned int g_weatherSystem;
 extern unsigned int lbl_806CF140;
-extern unsigned int VSMode_FrameUpdate_data_806CF148;
+extern unsigned char VSMode_FrameUpdate_data_806CF148;
 extern unsigned int lbl_806CF270;
 extern unsigned int lbl_806D0051;
 extern unsigned int HSD_RandSeedPtr;

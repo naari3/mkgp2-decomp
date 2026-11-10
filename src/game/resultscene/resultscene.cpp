@@ -159,9 +159,8 @@ extern const char lbl_80368C40[] = "THE TYPEFACES";
 extern const char lbl_80368C50[] = "INCLUDED HEREIN";
 extern const char lbl_80368C60[] = "ARE DEVELOPED BY";
 extern const char lbl_80368C74[] = "DYNACOMWARE.";
-extern const unsigned char Scene_8015BF18_rodata_80368C84[0x18] = {
-    0x00, 0x00, 0x00, 0x79, 0x00, 0x00, 0x00, 0x7D, 0x00, 0x00, 0x00, 0x77, 0x00, 0x00, 0x00, 0x7B,
-    0x00, 0x00, 0x00, 0x78, 0x00, 0x00, 0x00, 0x7C,
+extern const int Scene_8015BF18_rodata_80368C84[6] = {
+    0x79, 0x7D, 0x77, 0x7B, 0x78, 0x7C,
 };
 extern const char lbl_80368C9C[] = "clCSSceneEnding";
 extern const char lbl_80368CAC[0x14] = "clSceneInterface";
