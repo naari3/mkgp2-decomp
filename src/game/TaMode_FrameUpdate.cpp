@@ -449,16 +449,17 @@ TaMode::TaMode() {
     }
     TaMode_FrameUpdate_bss_806D1394 = 0;
     if (cc == 2 && TaMode_FrameUpdate_bss_806D13A0) {
-        const TaGhostSource *ghost = (const TaGhostSource *)&tafu::taReverseRecords[cup][g_longRoundFlag];
-        if (!reverse) ghost = (const TaGhostSource *)&tafu::taNormalRecords[cup][g_longRoundFlag];
-        g_taGhostCar = new CarObject(4, ghost->character, startX, startY, GetCourseStartYaw(), 2, 3, 0, -1, 0, 0);
+        const TaGhostSource &ghost = !reverse
+            ? *(const TaGhostSource *)&tafu::taNormalRecords[cup][g_longRoundFlag]
+            : *(const TaGhostSource *)&tafu::taReverseRecords[cup][g_longRoundFlag];
+        g_taGhostCar = new CarObject(4, ghost.character, startX, startY, GetCourseStartYaw(), 2, 3, 0, -1, 0, 0);
         float *matrix = CarObject_GetTransformMatrix(g_taGhostCar);
         TaMode_FrameUpdate_bss_806D139C = RegisterGhost(matrix, CarObject_GetRenderObj(g_taGhostCar));
         TaMode_FrameUpdate_data_806CF198 = 3;
-        TaMode_FrameUpdate_bss_806D1390 = DVDFile_LoadSync(ghost->file);
-        PORT_DATA_LOADED(PORT_DATA_GHOST, TaMode_FrameUpdate_bss_806D1390, ghost->size);
+        TaMode_FrameUpdate_bss_806D1390 = DVDFile_LoadSync(ghost.file);
+        PORT_DATA_LOADED(PORT_DATA_GHOST, TaMode_FrameUpdate_bss_806D1390, ghost.size);
         TaMode_FrameUpdate_bss_806D1388 = TaMode_FrameUpdate_bss_806D1390;
-        TaMode_FrameUpdate_bss_806D138C = ghost->size;
+        TaMode_FrameUpdate_bss_806D138C = ghost.size;
         if (g_taGhostCar) {
             KartMovement_EquipItem(CarObject_GetRenderObj(g_taGhostCar), 0x17);
             ItemEffectBus_OrMask(*(void **)((char *)CarObject_GetRenderObj(g_taGhostCar) + 0x304), 0x8000000000ULL);
