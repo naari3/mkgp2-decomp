@@ -2233,3 +2233,10 @@ stores and `frsp` disappear (70-200 lines).
 
 Sign: vector math block at 98-99% with only f0-f7 permuted, constants loaded
 from `extern const float`.
+
+Addendum (ItemEffect_Trap, 98.5 -> 100, same day): the same two levers
+(literal 1/60 passed to `Proj_scale(v, k)`) fix the float half (36 -> 20
+lines). The integer tail needed the id/flag pair copied as ONE struct
+assignment (`*(Pair *)&self->activeId = *(const Pair *)&tbl[idx].valC;`)
+instead of two int locals: the struct copy's temps are backend temps, coloured
+before the owner chain (target valC r3, valD r0, chain r4/r5).

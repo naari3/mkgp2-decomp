@@ -1445,7 +1445,7 @@ static const char lbl_802EDA80[34] = "vector::construction length error";
 int ItemEffect_TryStartByCategory_Wrap(ItemStateBlock *self, int itemId, void *arg);
 int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *arg);
 void ItemEffect_Explosion(ItemStateBlock *self, int idx, const void *arg);
-asm void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg);
+void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg);
 void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg);
 int ItemTable_FindEntryByIdStride16(ItemCatEntry16 *tbl, int count, int itemId);
 int ItemTable_FindEntryByIdStride12_v1(ItemCatEntry12 *tbl, int count, int itemId);
@@ -7859,178 +7859,70 @@ void ItemEffect_Explosion(ItemStateBlock *self, int idx, const void *arg) { /* 0
 }
 #pragma exceptions reset
 
-/* Precan park (2026-06-10, batch_promote_80051648_effectsrun, 0 probes):
- * ItemEffect_Trap carries TWO documented hard-block classes at once.
- * (1) class-2 frsp store-forward interleave: the 16-float transform copy
- * (0x58..0x94 -> sp+0x38..0x74) stores RAW lfs values while the dot-product
- * consumes frsp'd copies of the same loads (frsp f0,f9 etc.) - CW 1.3.2
- * tracks lfs-derived singles through cast chains and always elides the frsp
- * (see cw132-frsp-store-forward-negative-probes.md, 6-probe ledger).
- * (2) cross-call product-only callee-saved: mulli r30,r4,0x18 is kept in r30
- * across the ItemEffectDamp_TryArm call while the lbl_802ED7BC table base is
- * rematerialized (lis/addi) per use region - the TryStartByCategory
- * addressing-reassociation family; CW saves the full pointer instead. */
-#define VF(x) (*(volatile float *)&(x))
-asm void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg) { /* 0x80051834 size:0x23C */
-    nofralloc
-    stwu r1, -0xb0(r1)
-    mflr r0
-    stw r0, 0xb4(r1)
-    stfd f31, 0xa0(r1)
-    psq_st f31, 0xa8(r1), 0, 0
-    stfd f30, 0x90(r1)
-    psq_st f30, 0x98(r1), 0, 0
-    stfd f29, 0x80(r1)
-    psq_st f29, 0x88(r1), 0, 0
-    stw r31, 0x7c(r1)
-    stw r30, 0x78(r1)
-    cmplwi r5, 0x0
-    lfs f31, lbl_806D26FC(r2)
-    mr r31, r3
-    beq ItemEffect_Trap_L_8005197C
-    lwz r3, 0x0(r31)
-    lfs f3, 0xa4(r5)
-    lwz r3, 0x28(r3)
-    lfs f1, 0xa0(r5)
-    lfs f9, 0x68(r3)
-    lfs f8, 0x6c(r3)
-    stfs f9, 0x48(r1)
-    lfs f9, 0x88(r3)
-    stfs f8, 0x4c(r1)
-    lfs f8, 0x8c(r3)
-    frsp f0, f9
-    lfs f13, 0x58(r3)
-    frsp f2, f8
-    lfs f12, 0x5c(r3)
-    fsubs f5, f1, f0
-    lfs f7, 0x70(r3)
-    frsp f4, f13
-    lfs f11, 0x60(r3)
-    fsubs f30, f3, f2
-    stfs f7, 0x50(r1)
-    frsp f3, f12
-    lfs f7, 0x90(r3)
-    fmuls f1, f4, f5
-    lfs f10, 0x64(r3)
-    fmuls f0, f3, f30
-    stfs f13, 0x38(r1)
-    frsp f2, f11
-    lfs f13, 0x78(r3)
-    frsp f6, f7
-    stfs f12, 0x3c(r1)
-    fadds f0, f1, f0
-    lfs f1, 0xa8(r5)
-    stfs f11, 0x40(r1)
-    fsubs f29, f1, f6
-    lfs f6, 0x74(r3)
-    stfs f10, 0x44(r1)
-    lfs f12, 0x7c(r3)
-    fmuls f1, f2, f29
-    stfs f6, 0x54(r1)
-    lfs f11, 0x80(r3)
-    lfs f10, 0x84(r3)
-    fadds f1, f1, f0
-    lfs f0, lbl_806D26EC(r2)
-    lfs f6, 0x94(r3)
-    stfs f13, 0x58(r1)
-    fcmpo cr0, f1, f0
-    stfs f12, 0x5c(r1)
-    stfs f11, 0x60(r1)
-    stfs f10, 0x64(r1)
-    stfs f9, 0x68(r1)
-    stfs f8, 0x6c(r1)
-    stfs f7, 0x70(r1)
-    stfs f6, 0x74(r1)
-    stfs f5, 0x2c(r1)
-    stfs f30, 0x30(r1)
-    stfs f29, 0x34(r1)
-    stfs f4, 0x20(r1)
-    stfs f3, 0x24(r1)
-    stfs f2, 0x28(r1)
-    bge ItemEffect_Trap_L_80051964
-    lfs f31, lbl_806D26E4(r2)
-    ItemEffect_Trap_L_80051964:
-    mulli r0, r4, 0x18
-    lis r3, lbl_802ED7BC@ha
-    addi r3, r3, lbl_802ED7BC@l
-    add r3, r3, r0
-    lfs f0, 0x8(r3)
-    fmuls f31, f31, f0
-    ItemEffect_Trap_L_8005197C:
-    lwz r5, 0x0(r31)
-    mulli r30, r4, 0x18
-    lis r3, lbl_802ED7BC@ha
-    lfs f3, lbl_806D2730(r2)
-    lwz r6, 0x28(r5)
-    fmr f2, f31
-    addi r0, r3, lbl_802ED7BC@l
-    lfs f10, 0x184(r6)
-    add r3, r0, r30
-    lfs f9, 0x180(r6)
-    addi r4, r1, 0x14
-    lfs f7, 0x17c(r6)
-    frsp f0, f10
-    frsp f1, f9
-    lfs f8, 0x4(r3)
-    frsp f6, f7
-    stfs f7, 0x14(r1)
-    fmuls f4, f0, f3
-    fmuls f5, f1, f3
-    fmuls f1, f6, f3
-    stfs f9, 0x18(r1)
-    fmuls f0, f4, f8
-    lwz r5, 0xc(r3)
-    stfs f10, 0x1c(r1)
-    fmuls f3, f1, f8
-    stfs f1, 0x14(r1)
-    fmuls f1, f5, f8
-    stfs f5, 0x18(r1)
-    stfs f4, 0x1c(r1)
-    stfs f3, 0x14(r1)
-    stfs f1, 0x18(r1)
-    stfs f0, 0x1c(r1)
-    stfs f7, 0x8(r1)
-    lwz r3, 0x4(r31)
-    stfs f9, 0xc(r1)
-    lfs f1, 0x1c8(r6)
-    stfs f10, 0x10(r1)
-    bl ItemEffectDamp_TryArm
-    lwz r4, 0x0(r31)
-    lis r3, lbl_802ED7BC@ha
-    addi r0, r3, lbl_802ED7BC@l
-    lwz r5, 0x2c(r4)
-    add r4, r0, r30
-    lwz r3, 0x10(r4)
-    lwz r5, 0x304(r5)
-    lwz r0, 0x14(r4)
-    stfs f31, 0x28(r5)
-    stw r3, 0xc(r31)
-    stw r0, 0x10(r31)
-    psq_l f31, 0xa8(r1), 0, 0
-    lfd f31, 0xa0(r1)
-    psq_l f30, 0x98(r1), 0, 0
-    lfd f30, 0x90(r1)
-    psq_l f29, 0x88(r1), 0, 0
-    lfd f29, 0x80(r1)
-    lwz r31, 0x7c(r1)
-    lwz r0, 0xb4(r1)
-    lwz r30, 0x78(r1)
-    mtlr r0
-    addi r1, r1, 0xb0
-    blr
-}
-#undef VF
-
-/* Precan park (2026-06-10, batch_promote_80051648_effectsrun, 0 probes):
- * ItemEffect_Projectile has the same two classes as ItemEffect_Trap above:
- * (1) class-2 frsp interleave in the velocity-magnitude block (raw stfs of
- * velX/Y/Z to TWO stack regions interleaved with frsp'd squares); (2)
- * mulli r31,r4,0x14 kept callee-saved across ItemEffectImpact_TryArm with
- * the lbl_802ED5B4 base rematerialized per region. The first normalize
- * block (from arg+0xb8, no frsp) is solvable with the Explosion recipe. */
-#define VF(x) (*(volatile float *)&(x))
+/* ItemEffect_Trap / ItemEffect_Projectile: matched 2026-11-10, see regalloc_patterns §83
+ * (literal 1/60, multiplier through Proj_scale, id/flag pair copied as a struct). */
 #pragma exceptions off
 static inline void Proj_scale(float *v, float k) { v[0] = v[0] * k; v[1] = v[1] * k; v[2] = v[2] * k; }
+void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg) { /* 0x80051834 size:0x23C */
+    float scale = lbl_806D26FC;
+    int i;
+    if (arg != 0) {
+        ItemObjectPosView *o = (ItemObjectPosView *)arg;
+        float mtx[16];
+        float d[3];
+        float dir[3];
+        float *t = self->owner->movement->transform;
+        for (i = 0; i < 16; i++) mtx[i] = t[i];
+        {
+            float *q = mtx;
+            float *pd = d;
+            float *pr = dir;
+            {
+                float dy = o->posY - q[13];
+                float dx = o->posX - q[12];
+                float dz = o->posZ - q[14];
+                pd[0] = dx; pd[1] = dy; pd[2] = dz;
+            }
+            pr[0] = q[0]; pr[1] = q[1]; pr[2] = q[2];
+            {
+                float t0 = pr[0] * pd[0];
+                float t1 = pr[1] * pd[1];
+                float sum = t0 + t1;
+                float t2 = pr[2] * pd[2];
+                if (t2 + sum < lbl_806D26EC) scale = lbl_806D26E4;
+            }
+        }
+        scale *= lbl_802ED7BC[idx].scaleB;
+    }
+    {
+        KartMovementSpeedView *mv = self->owner->movement;
+        float v[3];
+        float w[3];
+        float *vel = &mv->velX;
+        { float vx, vy, vz;
+          vz = vel[2]; vx = vel[0]; vy = vel[1];
+          w[0] = vx; w[1] = vy; w[2] = vz; }
+        { float *q = w; v[0] = q[0]; v[1] = q[1]; v[2] = q[2]; }
+        {
+            float *p = v;
+            Proj_scale(v, 1.0f / 60.0f);
+        }
+        {
+            float *p = v;
+            Proj_scale(v, lbl_802ED7BC[idx].scaleA);
+        }
+        /* the declared sixth float (k) is not set up by this caller: f3 holds a leftover product */
+        ((void (*)(void *, float *, int, float, float))ItemEffectDamp_TryArm)(self->guard, v, lbl_802ED7BC[idx].mode, mv->accel1c8, scale);
+    }
+    {
+        typedef struct { int a, b; } TrapPair;
+        *(float *)((char *)self->owner->ownerDriver->itemBus + 0x28) = scale;
+        *(TrapPair *)&self->activeId = *(const TrapPair *)&lbl_802ED7BC[idx].valC;
+    }
+}
+#pragma exceptions reset
+
+#pragma exceptions off
 void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg) { /* 0x80051A70 size:0x248 */
     const ItemObjectPosView *obj = (const ItemObjectPosView *)arg;
     float mag2;
@@ -8088,7 +7980,6 @@ void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg) { /* 0x8005
     }
 }
 #pragma exceptions reset
-#undef VF
 
 #pragma exceptions off
 int ItemTable_FindEntryByIdStride16(ItemCatEntry16 *tbl, int count, int itemId) { /* 0x80051CB8 size:0x38 */
