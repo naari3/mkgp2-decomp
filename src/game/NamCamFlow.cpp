@@ -263,16 +263,18 @@ static inline void NamCamDrawBorders() {
         rc.Show(lbl_806DA588, lbl_806DA58C, lbl_806DA590);
         rc.SetColor(0x1BFFFF);
         fn_8011FAFC(&rc, 0);
-        for (int i = 0; i < 4; ++i) {
+        const float (*a)[2] = lbl_803BE3C4;
+        const float (*b)[2] = lbl_803BE3E4;
+        for (int i = 0; i < 4; ++i, ++a, ++b) {
             fn_80121E10(&rc);
             rc.resId = 0x50B;
-            rc.Show(lbl_803BE3C4[i][0], lbl_803BE3C4[i][1], lbl_806DA590);
+            rc.Show(a[0][0], a[0][1], lbl_806DA590);
             fn_8011FAFC(&rc, 0);
             fn_80121E10(&rc);
             rc.resId = 0x50C;
             float y, x;
-            x = lbl_803BE3E4[i][0];
-            y = lbl_803BE3E4[i][1];
+            x = b[0][0];
+            y = b[0][1];
             rc.Show(x, y, lbl_806DA590);
             fn_8011FAFC(&rc, 0);
         }
