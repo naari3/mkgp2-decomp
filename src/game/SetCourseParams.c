@@ -2014,12 +2014,21 @@ RaceContext::RaceContext() {
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
+#ifdef NON_MATCHING
+extern int CreditMgr_GetCreditCount(int idx);
+extern void ItemTable_PopulateAliasedSlots(void);
+extern void *TitleTracker_GetOrCreateSingleton(void);
+extern void fn_8018CC64(void);
+extern void fn_801D7610(void *playerData, unsigned char flag);
+extern void *memset(void *dst, int c, unsigned long n);
+#else
 extern void CreditMgr_GetCreditCount();
 extern void ItemTable_PopulateAliasedSlots();
 extern void TitleTracker_GetOrCreateSingleton();
 extern void fn_8018CC64();
 extern void fn_801D7610();
 extern void memset();
+#endif
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_ccClass;
@@ -2068,7 +2077,11 @@ extern unsigned int lbl_80598A60[];
  */
 
 /* --- forward decls --- */
+#ifdef NON_MATCHING
+void *RaceContext_InitDefaults(void *self);
+#else
 asm void RaceContext_InitDefaults(void);
+#endif
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */
 #pragma cplusplus on
@@ -2087,6 +2100,162 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
+#ifdef NON_MATCHING
+/* NON_MATCHING: equivalent C for the RaceContext ctor, 75 % (the rank-row loop is
+ * not unrolled, savegpr instead of stmw; the C++ ctor draft
+ * notes/merge_gen/SetCourseParams/InitDefaults_draft_v1_93.79.txt is closer): resets the race
+ * globals, the kart slot table and (once) the rank rows. Globals are reached
+ * through width casts because this part of the merged TU declares them as words. */
+typedef struct NMKartSlot {
+    int driverId, charId, field8, fieldC, kartVariant;
+    unsigned char items[3], pad17;
+} NMKartSlot;
+typedef struct NMRaceAux {
+    int value, enabled;
+    float current, limit;
+} NMRaceAux;
+typedef struct NMRaceWideRow {
+    unsigned char active, pad1;
+    unsigned short count;
+    unsigned char pad4[12];
+    int selection, state;
+    unsigned char flag18, flag19, pad1A[2];
+    int value;
+    float x, y;
+    unsigned char enabled, pad29[3];
+} NMRaceWideRow;
+#define NM_B(x) (*(unsigned char *)&(x))
+#define NM_I(x) (*(int *)&(x))
+#define NM_A(x) ((unsigned char *)&(x))
+static void NM_InitializeWideRow(NMRaceWideRow *row) {
+    row->active = 0;
+    row->count = 0;
+    row->selection = -1;
+    row->state = -1;
+    row->flag18 = 0;
+    row->flag19 = 0;
+    row->value = 0;
+    row->x = 0.0f;
+    row->y = 0.0f;
+    row->enabled = 1;
+}
+void *RaceContext_InitDefaults(void *self) {
+    int i;
+    int j;
+    unsigned char noCredit;
+    NMKartSlot *slots = (NMKartSlot *)(void *)lbl_805AC600;
+    int *counters = (int *)(void *)lbl_805D2938;
+    NMRaceAux *latest = (NMRaceAux *)(void *)lbl_805B256C;
+
+    /* base-class ctor, then the derived vtable */
+    *(void **)self = (void *)lbl_8040E4DC;
+    *(void **)&lbl_806D12DC = self;
+    *(void **)self = (void *)lbl_8040E4D0;
+
+    ItemTable_PopulateAliasedSlots();
+    if (NM_B(lbl_806D1259) != 1) {
+        for (i = 0; i <= 3; i++) {
+            memset((unsigned char *)(void *)lbl_805B2580 + i * 0x8000, (signed char)((signed char)((unsigned char *)(void *)lbl_80598A60)[0x21] - 1), 0x8000);
+        }
+        NM_B(lbl_806D1259) = 1;
+    }
+
+    NM_I(g_timerModeEnabled) = 1;
+    NM_I(g_cupId) = 1;
+    NM_I(g_longRoundFlag) = 0;
+    NM_I(g_courseVariantIdx) = 0;
+    NM_I(g_reverseRoundFlag) = 0;
+    for (i = 0; i < 8; i++) {
+        slots[i].driverId = -1;
+        slots[i].charId = -1;
+        slots[i].field8 = 1;
+        slots[i].items[0] = 0x24;
+        slots[i].items[1] = 0x25;
+        slots[i].items[2] = 0x26;
+        slots[i].kartVariant = 0;
+        counters[i] = 0;
+    }
+    if (NM_I(g_cupId) >= 0 && NM_I(g_longRoundFlag) >= 0) {
+        NM_B(g_raceStarted) = 0;
+    }
+
+    NM_I(lbl_806CF10C) = 0;
+    if (!NM_B(lbl_806D1258)) {
+        NMRaceAux *row = (NMRaceAux *)(void *)lbl_805B24CC;
+        NMRaceWideRow *e = (NMRaceWideRow *)(void *)lbl_805D2948;
+        for (i = 0; i < 5; i++) {
+            row[i].value = 0;
+            row[i].enabled = 0;
+            row[i].current = 0.0f;
+            row[i].limit = 1000.0f;
+        }
+        for (i = 5; i < 10; i++) {
+            row[i].value = 0;
+            row[i].enabled = 1;
+            row[i].current = 0.0f;
+            row[i].limit = 1000.0f;
+        }
+        latest->value = 0;
+        latest->enabled = 0;
+        latest->current = 0.0f;
+        latest->limit = 1000.0f;
+        NM_I(lbl_806D1280) = 4;
+        NM_B(lbl_806D1258) = 1;
+        for (j = 0; j < 8; j++) {
+            NM_InitializeWideRow(&e[j]);
+        }
+        NM_I(lbl_806D12D8) = 0;
+    }
+
+    NM_I(g_ccClass) = 0;
+    for (i = 0; i < 7; i++) {
+        slots[i].driverId = 6;
+        slots[i].charId = i + 1;
+        slots[i].field8 = 1;
+        slots[i].fieldC = 0;
+        slots[i].kartVariant = 0;
+    }
+    slots[7].driverId = 0;
+    slots[7].charId = 0;
+    slots[7].field8 = 1;
+    slots[7].fieldC = 0;
+    slots[7].kartVariant = 0;
+    slots[7].items[0] = 0x2B;
+    slots[7].items[1] = 0x2D;
+    slots[7].items[2] = 0x32;
+    NM_A(lbl_806D1264)[0] = 0x2B;
+    NM_A(lbl_806D1264)[1] = 0x2D;
+    NM_A(lbl_806D1264)[2] = 0x32;
+    NM_B(g_lakituStartAnimDone) = 0;
+    NM_B(lbl_806D1290) = 0;
+    NM_I(lbl_806CF110) = 1;
+    NM_I(g_gameMode) = 0;
+    NM_B(g_isCommHost) = 0;
+    NM_I(g_currentSceneState) = 2;
+    NM_B(g_isPcbHost) = 0;
+    NM_I(g_localPcbRole) = 0;
+    NM_B(lbl_806D12B0) = 0;
+    NM_I(g_kartVariant) = -1;
+    NM_I(g_humanPlayerCount) = -1;
+    NM_I(g_consecutiveWinsTier) = 0;
+    NM_I(lbl_806CF12C) = -1;
+    memset((void *)g_playerData, 0, 0x1DC);
+    fn_801D7610((void *)g_playerData, 1);
+    fn_8018CC64();
+    TitleTracker_GetOrCreateSingleton();
+    noCredit = CreditMgr_GetCreditCount(0) <= 0; /* target: (1 rotl cntlzw(n)) & 1 */
+    NM_B(lbl_806D12E1) = 0;
+    NM_B(lbl_806D117C) = noCredit;
+    NM_B(lbl_806D12E2) = 0;
+    NM_A(lbl_806D12E4)[0] = 0;
+    NM_A(lbl_806D12E4)[1] = 0;
+    NM_A(lbl_806D12E4)[2] = 0;
+    return self;
+}
+#undef NM_B
+#undef NM_I
+#undef NM_A
+#else
 asm void RaceContext_InitDefaults(void) { /* 0x8009D6CC size:0x5B4 */
     nofralloc
     stwu r1, -0x30(r1)
@@ -2459,6 +2628,7 @@ asm void RaceContext_InitDefaults(void) { /* 0x8009D6CC size:0x5B4 */
     addi r1, r1, 0x30
     blr
 }
+#endif
 #undef CreditMgr_GetCreditCount
 #undef InitializeWideRow
 #undef ItemTable_PopulateAliasedSlots
