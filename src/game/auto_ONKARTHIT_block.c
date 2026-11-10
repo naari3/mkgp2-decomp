@@ -35,7 +35,11 @@ extern int DashZone_ProcessAutoRun(void *ctx, float x, float y, float z, float y
 extern void DebugPrintf();
 extern void EffectSpeed_ApplySpeedScale(void *req, float a, float b);
 extern void EffectSpeed_Init();
+#ifdef NON_MATCHING
+extern float EffectSpeed_TickAndGet(void *obj);
+#else
 extern void EffectSpeed_TickAndGet();
+#endif
 extern void EffectSpeed_TickTimer();
 extern unsigned char EffectState_HasContent(void *effectState);
 extern void EffectState_ReleaseAndClear();
@@ -55,11 +59,19 @@ extern void *FUN_8003b120(unsigned long);
 extern unsigned char Field4NotMinusOne(void *ctx);
 extern void Free_IfOwnedShort();
 extern void *GetCourseScene3D(void);
+#ifdef NON_MATCHING
+extern void *GetInputManager(void);
+#else
 extern void GetInputManager();
+#endif
 extern void GetKartParamBlock();
 extern int GetKartStartSlot();
 extern void InputCmd_Dtor();
+#ifdef NON_MATCHING
+extern unsigned char InputCmd_GetDetectedFlag(void *cmd);
+#else
 extern void InputCmd_GetDetectedFlag();
+#endif
 extern void InputCmd_Init();
 extern void InputCmd_PushSample();
 extern void InputCmd_SetCooldown();
@@ -89,7 +101,11 @@ extern unsigned char ItemSelect_GiveItemOrQueueDrop(void *itemSelect, void *driv
 extern unsigned char ItemSelect_OnDropAllCancel(void *itemSelect, void *driver);
 extern int ItemSelect_StartRouletteSpin();
 extern unsigned char ItemStateGuard_IsActive(void *guard);
+#ifdef NON_MATCHING
+extern unsigned char ItemStateGuard_PruneIfDeadAndReport(void *guard);
+#else
 extern void ItemStateGuard_PruneIfDeadAndReport();
+#endif
 extern void ItemStateSlotC_TryArm();
 extern void KartAudioChannel_Init();
 extern void KartAudioChannel_PlayColorMatchSE(void *snd, int a, int b, float spd);
@@ -123,7 +139,11 @@ extern void KartItem_FlushPendingRender();
 extern void KartItem_FlushPendingRender_v2();
 extern void KartItem_FlushRenderIfReady();
 extern void KartItem_SetVec3At338();
+#ifdef NON_MATCHING
+extern unsigned char KartItem_Stub_Returns0(void *obj, float t);
+#else
 extern void KartItem_Stub_Returns0();
+#endif
 extern float KartMovement_CalcCurrentSpeed(void *mov, int flag);
 extern float KartMovement_CalcMaxSpeed(void *mov, int flag);
 extern float KartMovement_CalcSpeedWithCoinBonus(void *mv, int flag);
@@ -191,7 +211,11 @@ extern void TornadoEffect_ApplyItemVisual_Secondary(void *fx, int itemId, int fl
 extern void TornadoEffect_ClearFlagC0AndSetC4(void *obj, float v);
 extern void TornadoEffect_ComposeRenderMatrix();
 extern void TornadoEffect_Ctor();
+#ifdef NON_MATCHING
+extern float TornadoEffect_GetField114(void *effect);
+#else
 extern void TornadoEffect_GetField114();
+#endif
 extern void TornadoEffect_SetColorPairC8CC(void *obj, int a, int b);
 extern void TornadoEffect_SetColorRGBLerp(void *fx, int mode, float r, float g, float b);
 extern void TornadoEffect_SetColorY(); /* K&R on purpose: matched C calls it with 1 arg (StopCarObjectSE) and 2 args (OnApply_Freeze) */
@@ -226,7 +250,11 @@ extern void dtor_800AA888();
 extern void dtor_80209180();
 extern void fn_8019A4E0();
 extern void fn_8019A6A4();
+#ifdef NON_MATCHING
+extern float fn_8019A850(void *movement, int wheel);
+#else
 extern void fn_8019A850();
+#endif
 extern unsigned char fn_8019A8A4(void *mv, float f);
 extern void fn_8019A9BC();
 extern void fn_8019CC2C();
@@ -237,7 +265,11 @@ extern void fn_802090F0(void *obj, void *center, void *half, float f1, float f2,
 extern void fn_802091BC();
 extern void __throw();
 extern void strcpy();
+#ifdef NON_MATCHING
+extern double cos(double x);
+#else
 extern void cos();
+#endif
 extern double sin(double x);
 extern void fn_802BD6AC(float x, float y);
 extern void fn_802BD6C0();
@@ -1135,7 +1167,11 @@ static inline unsigned char ItemBus_TestFlags(ItemBusFlagsView *bus, unsigned lo
 }
 
 /* --- forward decls --- */
+#ifdef NON_MATCHING
+unsigned char KartItem_OnKartHit(KartItemHit *self, KartDriverHitView *victim);
+#else
 asm void KartItem_OnKartHit(void);
+#endif
 void KartItem_PlayHitSE_DifferentVictim(KartItemHitSEView *self, void *victim, int channel);
 int CarObject_OnItemHit(KartItemOpsView *self, void *itemObj, int itemIdArg);
 int CarObject_HandleObstacleHit(KartItemOpsView *self, ObstacleHitEvent *evt);
@@ -1146,11 +1182,24 @@ unsigned char KartItem_TryDropCoinsAndPlaySE(KartItemDropView *self, int count, 
 int KartItem_TryCancelIfDropAllowed(KartItemDropView *self);
 void KartItem_ApplyImpactImpulseAndRumble(KartItemOpsView *self, int mode, float x, float y, float z);
 void KartItem_RenderPipelinedWithEffects(KartItemRenderView *self);
+#ifdef NON_MATCHING
+void KartItem_Tick(KartItemTickView *self);
+#else
 asm void KartItem_Tick(void);
+#endif
+#ifdef NON_MATCHING
+struct PfsKartView;
+void KartItem_PerFrameStep(struct PfsKartView *self, void *arg);
+#else
 asm void KartItem_PerFrameStep(void);
+#endif
 void CarObject_UpdateCoinSpeedBonus(KartItemOpsView *self);
 void CarObject_ProcessWarpAndDash(CarObjWarpView *self);
+#ifdef NON_MATCHING
+void CarObject_MainUpdate(void *self_, void *arg);
+#else
 asm void CarObject_MainUpdate(void *self, void *arg);
+#endif
 void CarObject_FrameUpdate(CarObjFrameView *self, void *arg);
 void CarObject_ApplyInput_AI(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3, float in4);
 void CarObject_ApplyInput(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3);
@@ -1453,12 +1502,36 @@ unsigned char Bitset_TestBit(Bitset *self, unsigned long idx);
 void Bitset_SetBit(Bitset *self, unsigned long idx, unsigned char val);
 void Bitset_Init(Bitset *self, unsigned long n, const unsigned char *pval);
 unsigned long Bitset_MaxSize(void);
+#ifdef NON_MATCHING
+void *fn_8005249C(void *self, short flag);
+#else
 asm void fn_8005249C(void);
+#endif
+#ifdef NON_MATCHING
+unsigned char KartItem_TryDropCoinsAndPlaySE_AdjThunk(void *self, int count, unsigned char force);
+#else
 asm void KartItem_TryDropCoinsAndPlaySE_AdjThunk(void);
+#endif
+#ifdef NON_MATCHING
+int fn_800524AC(void *self);
+#else
 asm void fn_800524AC(void);
+#endif
+#ifdef NON_MATCHING
+unsigned char fn_800524B4(void *self, void *victim);
+#else
 asm void fn_800524B4(void);
+#endif
+#ifdef NON_MATCHING
+void KartItem_PlayHitSE_DifferentVictim_AdjThunk(void *self, void *victim, int channel);
+#else
 asm void KartItem_PlayHitSE_DifferentVictim_AdjThunk(void);
+#endif
+#ifdef NON_MATCHING
+int KartItem_ApplyEffectToVictim_AdjThunk(void *self, void *itemObj, int itemIdArg);
+#else
 asm void KartItem_ApplyEffectToVictim_AdjThunk(void);
+#endif
 void *dtor_800524CC(void *self, short flag);
 void StlList_RemoveByValueField(StlList *l, StlListValRef *key);
 #pragma cplusplus on
@@ -1867,6 +1940,211 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 /* extabindex_dtor_80052D40: auto-emitted */
 /* extabindex_KartMovement_UpdateBoostVisualBlend: auto-emitted */
 /* --- asm function bodies (.text order = fn address order) --- */
+#ifdef NON_MATCHING
+/* NON_MATCHING: equivalent C, 96.4 % when written (docs/archive/drafts/Class2_expansion_nearmatches.handoff.md, appendix B). */
+#pragma exceptions off
+unsigned char KartItem_OnKartHit(KartItemHit *self, KartDriverHitView *victim) { /* 0x8004A238 size:0x680 */
+    struct {
+        float d[3];         /* sp+0x8 */
+        float mB[16];       /* sp+0x14 */
+        float mA[16];       /* sp+0x54 */
+    } s;
+    OnHitEvent ev;              /* sp+0x94 */
+    OnHitBusView *bus;          /* r25 */
+    unsigned char fresh;        /* r26 */
+    unsigned char b27;          /* r27 */
+    unsigned char b28;          /* r28 */
+    KartRootMtxView *rm;        /* r29 */
+    unsigned char b26;          /* r26 (reuse) */
+    unsigned char b25;          /* r25 (reuse) */
+    unsigned char ok;
+    unsigned char b1;
+    unsigned char b2;
+    unsigned char b3;
+    KartDriverHitView *drv;
+    KartDriverHitView *drv2;
+    unsigned long long vf;
+    float mx;
+    float my;
+    float mz;
+
+    bus = self->ownerDriver->itemBus;
+    ok = IsRaceStarted();
+    if (ok != 0) {
+        if (self->hitState109 == 0) {
+            if ((bus->flags & 0x80ULL) == 0) {
+                b1 = 0;
+            } else {
+                b1 = 1;
+            }
+            if (b1 == 1) {
+                return 0;
+            }
+            if ((victim->itemBus->flags & 0x80ULL) == 0) {
+                b2 = 0;
+            } else {
+                b2 = 1;
+            }
+            if (b2 == 1) {
+                return 0;
+            }
+        }
+        rm = KartDriver_GetKartRootMtx(victim);
+        drv = self->ownerDriver;
+        if ((drv->itemBus->flags & 0x30000000ULL) == 0) {
+            float *t;
+            int i;
+
+            t = self->movement->transform;
+            for (i = 0; i < 16; i++) {
+                s.mA[i] = t[i];
+            }
+            {
+                float dir0;
+                float dir1;
+                float dir2;
+                float dot;
+                s.d[0] = rm->posX - s.mA[12];
+                s.d[1] = rm->posY - s.mA[13];
+                s.d[2] = rm->posZ - s.mA[14];
+                dir0 = s.mA[0];
+                dir1 = s.mA[1];
+                dir2 = *(volatile float *)&s.mA[2];         /* reload-mode slot */
+                dot = s.d[0] * dir0 + s.d[1] * dir1 + s.d[2] * dir2;
+                if (dot > 0.0f) {
+                    KartReaction_Side(drv);
+                } else {
+                    KartReaction_Front(drv);
+                }
+            }
+        }
+        fresh = 0;
+        if (bus->lastVictim == 0) {
+            if ((self->ownerDriver->itemBus->flags & 0x30000000ULL) == 0) {
+                SoundObj_PlaySE_Direct(self->soundCtrl, 0x58);
+                SoundObj_PlaySE(self->soundCtrl, 0x11);
+                fn_801B1458(self->ownerDriver, victim);
+                if (self->hitTimerC4 <= 0) {
+                    void *rank;
+
+                    fresh = 1;
+                    if ((rank = lbl_806D10A0) == 0) {
+                        rank = 0;
+                    }
+                    if (rank != 0) {
+                        RankLog_OnMatchEnd(rank, self->raceScore10, self->ownerDriver, victim);
+                    }
+                }
+            }
+            if ((self->ownerDriver->itemBus->flags & 0x10000000ULL) == 0) {
+                b3 = 0;
+            } else {
+                b3 = 1;
+            }
+            if (b3 == 1) {
+                SoundObj_PlaySE_Direct(self->soundCtrl, 0xc6);
+            }
+            self->hitTimerC4 = 0x3c;
+        }
+        bus->lastVictim = victim;
+        if (fresh == 1) {
+            if (self->coinPenaltyFD != 0) {
+                if (self->raceScore10 != 4) {
+                    CoinSystem_RemoveCoins(self->ownerDriver, 1);
+                } else {
+                    KartDriverHitView *d2 = self->ownerDriver;
+                    int n = d2->coins2cc - 1;
+                    if (n < 0) {
+                        n = 0;
+                    }
+                    d2->coins2cc = n;
+                }
+                self->coinSnapC8 = self->ownerDriver->coins2cc;
+            }
+        }
+        KartItem_ApplyImpactImpulseAndRumble((KartItemOpsView *)self, 1, rm->posX, rm->posY, rm->posZ);
+        if (self->hitState109 == 1) {
+            return 1;
+        }
+        drv2 = self->ownerDriver;
+        b28 = 0;
+        if (((*(OnHitBusView * volatile *)&drv2->itemBus)->flags & 0x20000000ULL) == 0) {
+            b28 = 0;
+        } else {
+            b28 = 1;
+        }
+        vf = victim->itemBus->flags;
+        b27 = 0;
+        if ((vf & 0x20000000ULL) == 0) {
+            b27 = 0;
+        } else {
+            b27 = 1;
+        }
+        b26 = 0;
+        if (((*(OnHitBusView * volatile *)&drv2->itemBus)->flags & 0x10000000ULL) == 0) {
+            b26 = 0;
+        } else {
+            b26 = 1;
+        }
+        b25 = 0;
+        if ((vf & 0x10000000ULL) == 0) {
+            b25 = 0;
+        } else {
+            b25 = 1;
+        }
+        memset(&ev, 0, 0x1ec);
+        {
+            float *t2;
+            int j;
+
+            t2 = self->movement->transform;
+            for (j = 0; j < 16; j++) {
+                s.mB[j] = t2[j];
+            }
+            {
+                float mb12 = s.mB[12];
+                float mb13 = s.mB[13];
+                float mb14 = s.mB[14];
+                float sy = rm->posY + mb13;
+                float sx = rm->posX + mb12;
+                float sz = rm->posZ + mb14;
+                my = 0.5f * sy;
+                mx = 0.5f * sx;
+                mz = 0.5f * sz;
+            }
+            ev.posX = mx;
+            ev.posY = my;
+            ev.posZ = mz;
+        }
+        if (b28 == 1 && b27 == 0) {
+            if (victim->state1f4 >= 0 && victim->state1f4 <= 3) {
+                ev.kind = 2;
+                victim->dispatcher->vt->onHitEvent(victim->dispatcher, &ev, 0x122);
+            } else {
+                ev.kind = 0x3d;
+                victim->dispatcher->vt->onHitEvent(victim->dispatcher, &ev, -1);
+            }
+        } else if (b28 == 0 && b27 == 1) {
+            ev.kind = 2;
+            self->vt->applyEffect(self, &ev, -1);
+        } else if (b26 == 1 && b25 == 0) {
+            if (victim->state1f4 >= 0 && victim->state1f4 <= 3) {
+                ev.kind = 2;
+                victim->dispatcher->vt->onHitEvent(victim->dispatcher, &ev, 0x123);
+            } else {
+                ev.kind = 0x3d;
+                victim->dispatcher->vt->onHitEvent(victim->dispatcher, &ev, -1);
+            }
+        } else if (b26 == 0 && b25 == 1) {
+            ev.kind = 2;
+            self->vt->applyEffect(self, &ev, 0x123);
+        }
+        return 1;
+    }
+    return ok;
+}
+#pragma exceptions reset
+#else
 asm void KartItem_OnKartHit(void) { /* 0x8004A238 size:0x680 */
     nofralloc
     stwu r1, -0x2a0(r1)
@@ -2320,6 +2598,7 @@ asm void KartItem_OnKartHit(void) { /* 0x8004A238 size:0x680 */
     addi r1, r1, 0x2a0
     blr
 }
+#endif
 
 #pragma exceptions off
 void KartItem_PlayHitSE_DifferentVictim(KartItemHitSEView *self, void *victim, int channel) { /* 0x8004A8B8 size:0x60 */
@@ -2874,6 +3153,286 @@ void KartItem_RenderPipelinedWithEffects(KartItemRenderView *self) { /* 0x8004B9
 #pragma exceptions reset
 
 #define VF(x) (*(volatile float *)&(x))
+#ifdef NON_MATCHING
+/* NON_MATCHING: equivalent C, 98.8 % when written (docs/archive/drafts/Class2_expansion_nearmatches.handoff.md, appendix C). */
+#define VF(x) (*(volatile float *)&(x))
+#pragma exceptions off
+void KartItem_Tick(KartItemTickView *self) { /* 0x8004BAAC size:0x874 */
+    struct {
+        float sqD;          /* sp+0x8: sqrtf slot */
+        int col2c8;         /* sp+0xc */
+        int col2c4;         /* sp+0x10 */
+        float row[3];       /* sp+0x14 */
+        float vel[3];       /* sp+0x20 */
+        float m[16];        /* sp+0x2c */
+    } s;
+    float *mtx;             /* r30: movement->mtx98 */
+    double guess;
+    float spd;
+    float spdJ;
+    float ratio;
+    float ty;
+    float tx;
+    float tz;
+    float py;
+    float px;
+    float sum;
+    float pz;
+    float o0;
+    float o1;
+    float o2;
+    float u0;
+    float u1;
+    float u2;
+    float drift;            /* f31 */
+    float best;             /* f28 */
+    float vol;
+    unsigned char gate;
+    unsigned char cond;
+    unsigned char b;
+    int mode;
+    int st;
+
+    mtx = self->movement->mtx98;
+    if (GetCourseScene3D() != 0 && CObj_GetViewMatrix_Cached(GetCourseScene3D()) != 0) {
+        float *vm;
+        KartMovementTickView *mv2;
+        int i;
+
+        vm = CObj_GetViewMatrix_Cached(GetCourseScene3D());
+        mv2 = self->movement;
+        for (i = 0; i < 16; i++) {
+            s.m[i] = 0.0f;
+        }
+        s.vel[0] = mv2->velX;
+        s.vel[1] = mv2->velY;
+        s.vel[2] = mv2->velZ;
+        ty = (float)(double)s.vel[1];
+        tx = (float)(double)s.vel[0];
+        tz = (float)(double)s.vel[2];
+        py = ty * ty;
+        px = tx * tx;
+        sum = px + py;
+        pz = tz * tz;
+        spd = pz + sum;
+        s.m[0] = 1.0f;
+        s.m[5] = 1.0f;
+        s.m[10] = 1.0f;
+        s.m[15] = 1.0f;
+        s.m[0] = vm[0];
+        s.m[4] = vm[1];
+        s.m[8] = vm[2];
+        s.m[12] = vm[3];
+        s.m[1] = vm[4];
+        s.m[5] = vm[5];
+        s.m[9] = vm[6];
+        s.m[13] = vm[7];
+        s.m[2] = vm[8];
+        s.m[6] = vm[9];
+        s.m[10] = vm[10];
+        s.m[14] = vm[11];
+        if (spd > 0.0f) {
+            guess = __frsqrte(spd);
+            guess = 0.5 * guess * (3.0 - spd * (guess * guess));
+            guess = 0.5 * guess * (3.0 - spd * (guess * guess));
+            guess = 0.5 * guess * (3.0 - spd * (guess * guess));
+            VF(s.sqD) = (float)(spd * guess);
+            spd = VF(s.sqD);
+        }
+        spdJ = 0.0f;
+        if (spd <= spdJ) {
+            s.vel[2] = spdJ;
+            s.vel[1] = spdJ;
+            s.vel[0] = spdJ;
+        } else {
+            float inv;
+            spdJ = spd;
+            inv = 1.0f / spd;
+            s.vel[0] = s.vel[0] * inv;
+            s.vel[1] = s.vel[1] * inv;
+            s.vel[2] = s.vel[2] * inv;
+        }
+        ratio = spdJ / 220.0f;
+        o0 = s.m[0] * s.vel[0] + s.vel[1] * s.m[4] + s.vel[2] * s.m[8];
+        o1 = s.m[1] * s.vel[0] + s.vel[1] * s.m[5] + s.vel[2] * s.m[9];
+        o2 = s.vel[0] * s.m[2] + s.vel[1] * s.m[6] + s.vel[2] * s.m[10];
+        s.vel[0] = o0;
+        s.vel[1] = o1;
+        s.vel[2] = o2;
+        u0 = o0 * ratio;
+        u1 = o1 * ratio;
+        u2 = o2 * ratio;
+        self->postFxU = self->postFxU + u0;
+        s.vel[0] = u0;
+        s.vel[1] = u1;
+        s.vel[2] = u2;
+        self->postFxV = self->postFxV - u1;
+        while (self->postFxU > 1.0f) {
+            self->postFxU = VF(self->postFxU) - 1.0f;
+        }
+        while (self->postFxU < 0.0f) {
+            self->postFxU = 1.0f + self->postFxU;
+        }
+        while (self->postFxV > 1.0f) {
+            self->postFxV = VF(self->postFxV) - 1.0f;
+        }
+        while (self->postFxV < 0.0f) {
+            self->postFxV = 1.0f + self->postFxV;
+        }
+    }
+    if (ShadowAreaMgr_QueryPoint(lbl_806D1060, mtx[12], mtx[13], mtx[14]) == 1) {
+        TornadoEffect_TriggerField140(self->effectObj);
+    }
+    {
+        float vy = 10.0f;
+        float k0 = 0.0f;
+        float rx, ry, rz;
+
+        s.row[0] = k0;
+        s.row[1] = vy;
+        s.row[2] = k0;
+        rx = mtx[0] * k0 + vy * mtx[4] + k0 * mtx[8] + mtx[12];
+        ry = mtx[1] * k0 + vy * mtx[5] + k0 * mtx[9] + mtx[13];
+        rz = k0 * mtx[2] + vy * mtx[6] + k0 * mtx[10] + mtx[14];
+        s.row[0] = rx;
+        s.row[1] = ry;
+        s.row[2] = rz;
+        TornadoEffect_SetMatrixRow0_5c(self->effectObj, rx, ry, rz);
+    }
+    TornadoEffect_SetMatrix1c(self->effectObj, mtx);
+    TornadoEffect_SetFieldAc(self->effectObj, self->spd9C);
+    {
+        KartMovementTickView *mv3;
+
+        mv3 = self->movement;
+        s.col2c4 = mv3->col2c4;
+        s.col2c8 = mv3->col2c8;
+        if (mv3->state2bc == 0 && mv3->airborne2bd == 0) {
+            KartMovementTickView *mv4;
+
+            if (ItemStateGuard_IsActive(self->stateBlock->guard) == 0) {
+                TornadoEffect_SetColorPairC8CC(self->effectObj, s.col2c4, s.col2c8);
+            }
+            {
+                void *snd = self->soundCtrl;
+                KartAudioChannel_PlayColorMatchSE(snd, s.col2c4, s.col2c8,
+                                                  KartMovement_CalcSpeedWithCoinBonus(self->movement, 0));
+            }
+            if (self->movement->flag2be == 1) {
+                TornadoEffect_ClearFlagC0AndSetC4(self->effectObj, 2.3f * self->airTimerB8);
+                if (self->strPcbGate20 != 0) {
+                    StrPcb_SetTimer3034_38(StrPcb_GetInstance(), 0xc, 2, -1.0f);
+                }
+            }
+            mv4 = self->movement;
+            cond = (mv4->airborne2bd == 1) ? 0 : mv4->flag2dc;
+            if (cond == 1) {
+                MediaBoard_PollCompletion(self->soundCtrl, 1.0f);
+                TornadoEffect_SetScalePairB0BC(self->effectObj, 1.0f, 0.0f);
+            } else {
+                MediaBoard_PollCompletion(self->soundCtrl, 0.0f);
+                TornadoEffect_SetScalePairB0BC(self->effectObj, 0.0f, 1.0f);
+            }
+        } else {
+            if (ItemStateGuard_IsActive(self->stateBlock->guard) == 1) {
+                TornadoEffect_SetColorPairC8CC(self->effectObj, 0, 0);
+            }
+            MediaBoard_PollCompletion(self->soundCtrl, 0.0f);
+            KartAudioChannel_PlayColorMatchSE(self->soundCtrl, 0, 0, 0.0f);
+            TireEffect_ResetSpin(self->effectObj, 0.0f, 0.0f);
+            TornadoEffect_SetFlagC0(self->effectObj);
+        }
+    }
+    if (self->movement->airborne2bd == 1) {
+        self->airTimerB8 = self->airTimerB8 + 0.016666668f;
+        if (self->airCapBC > 0.0f && self->airTimerB8 > self->airCapBC) {
+            self->movement->steer2d4 = 80.0f;
+        }
+    } else {
+        self->airTimerB8 = 0.0f;
+        self->movement->steer2d4 = 35.0f;
+    }
+    if (KartEffectFadeTransit_IsActive(self->boostObj) == 0) {
+        if (self->driftTimer10C > 0.78f) {
+            self->driftTimer10C = self->driftTimer10C - 0.002f;
+            if (self->driftTimer10C < 0.78f) {
+                self->driftTimer10C = 0.78f;
+            }
+        }
+    }
+    {
+        int i2;
+        int off;
+        KartMovementTickView *mv5;
+
+        gate = self->gateA8;
+        drift = self->driftTimer10C;
+        mv5 = self->movement;
+        if (gate == 1) {
+            if (mv5->airborne2bd == 1 && self->airTimerB8 > 0.06666667f) {
+                drift = drift * 1.1f;
+                vol = Saturate_Double(drift * (mv5->speed / mv5->table[mv5->tableIdx].refSpeed),
+                                      0.0f, drift);
+            } else if (mv5->byte20 == 1) {
+                SpeedTableEntry *e;
+
+                i2 = 0;
+                best = 0.0f;
+                off = i2;
+                while (i2 < (e = &mv5->table[mv5->tableIdx])->count) {
+                    if ((float)__fabs(*(const float *)((const char *)e->pairs + off) - e->refSpeed) < 1.0f) {
+                        best = mv5->table[mv5->tableIdx].pairs[i2].value;
+                        break;
+                    }
+                    off += 8;
+                    i2 += 1;
+                }
+                if (mv5->capFlag22 == 1) {
+                    if (best >= 55.555557f) {
+                        best = 55.555557f;
+                    }
+                }
+                vol = Saturate_Double(drift * (KartMovement_CalcSpeedWithCoinBonus(self->movement, 0) / (3.6f * best)),
+                                      0.0f, drift);
+            } else {
+                float rr2 = mv5->speed / mv5->table[mv5->tableIdx].refSpeed - 0.1f;
+                vol = Saturate_Double(rr2 * drift, 0.0f, drift);
+            }
+        } else {
+            float rr = mv5->speed / mv5->table[mv5->tableIdx].refSpeed;
+            vol = Saturate_Double(rr * drift, 0.0f, drift);
+        }
+        SoundCtrl_SetVolume(self->soundCtrl, vol);
+    }
+    st = ((TornadoStateView *)self->effectObj)->state148;
+    mode = -1;
+    if (st != 0) {
+        if (st == 1) {
+            mode = 0;
+        } else {
+            mode = 1;
+        }
+    }
+    b = 0;
+    if ((self->ownerDriver->itemBus->flags & 0x30ULL) == 0) {
+        b = 0;
+    } else {
+        b = 1;
+    }
+    if (b == 1) {
+        mode = 2;
+    }
+    if (mode == -1) {
+        KartAudioChannel_StopSE8a(self->soundCtrl, 1);
+    } else {
+        KartAudioChannel_PlayJumpSE(self->soundCtrl, mode);
+    }
+    TornadoEffect_Tick(self->effectObj, self->raceScore10);
+    SoundVolumePan_Update(self->soundCtrl);
+}
+#pragma exceptions reset
+#undef VF
+#else
 asm void KartItem_Tick(void) { /* 0x8004BAAC size:0x874 */
     nofralloc
     stwu r1, -0xc0(r1)
@@ -3458,8 +4017,468 @@ asm void KartItem_Tick(void) { /* 0x8004BAAC size:0x874 */
     addi r1, r1, 0xc0
     blr
 }
+#endif
 #undef VF
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: equivalent C, 97.9 % when written (docs/archive/drafts/KartItem_PerFrameStep_98pct.handoff.md);
+ * residue is float/GPR scratch register numbering. */
+/* --- views for KartItem_PerFrameStep (0x8004C320) --- */
+typedef struct PfsMovementView {
+    char pad_0x0[0x58];
+    float mtx[16];              /* 0x58: transform matrix */
+    float mtx98[16];            /* 0x98: render-source matrix */
+    char pad_0xd8[0xa4];
+    float velX;                 /* 0x17c */
+    float velY;                 /* 0x180 */
+    float velZ;                 /* 0x184 */
+    char pad_0x188[0x50];
+    float spin1d8;              /* 0x1d8 */
+    char pad_0x1dc[0xc];
+    float field1e8;             /* 0x1e8 */
+    char pad_0x1ec[0x58];
+    unsigned char gate244;      /* 0x244 */
+    char pad_0x245[0x79];
+    unsigned char gate2be;      /* 0x2be */
+    char pad_0x2bf[0x5];
+    unsigned int mode2c4;       /* 0x2c4 */
+    unsigned int mode2c8;       /* 0x2c8 */
+    char pad_0x2cc[0x4];
+    unsigned char flag2d0;      /* 0x2d0 */
+    char pad_0x2d1[0x2b];
+    unsigned char flag2fc;      /* 0x2fc */
+} PfsMovementView;
+
+typedef struct PfsKartView {
+    char pad_0x0[0x10];
+    int raceScore10;            /* 0x10 */
+    char pad_0x14[0xc];
+    unsigned char strPcbGate20; /* 0x20 */
+    char pad_0x21[0x3];
+    void *soundCtrl;            /* 0x24 */
+    PfsMovementView *movement;  /* 0x28 */
+    KartDriverBusView *ownerDriver; /* 0x2c */
+    char pad_0x30[0x4];
+    void *effectObj;            /* 0x34 */
+    char pad_0x38[0x4];
+    void *boostObj;             /* 0x3c */
+    char pad_0x40[0x10];
+    ItemSecondaryLane *secondary; /* 0x50 */
+    char pad_0x54[0xc];
+    float xfrm60[12];           /* 0x60: transposed 4x3 out */
+    float velSnapX;             /* 0x90 */
+    float velSnapY;             /* 0x94 */
+    float velSnapZ;             /* 0x98 */
+    float spd0;                 /* 0x9c */
+    float spd1;                 /* 0xa0 */
+    float spd2;                 /* 0xa4 */
+    unsigned char gateA8;       /* 0xa8 */
+    char pad_0xa9[0x7];
+    unsigned char boostArmedB0; /* 0xb0 */
+    unsigned char perfectGateB1;/* 0xb1 */
+    char pad_0xb2[0x2];
+    float timerB4;              /* 0xb4 */
+    char pad_0xb8[0x8];
+    int timerC0;                /* 0xc0 */
+    char pad_0xc4[0x4];
+    int coinCountC8;            /* 0xc8 */
+    char pad_0xcc[0x8];
+    unsigned char physModeD4;   /* 0xd4 */
+    char pad_0xd5[0xf];
+    float decayE4;              /* 0xe4 */
+    float depthE8;              /* 0xe8 */
+    char pad_0xec[0xc];
+    int slowTimerF8;            /* 0xf8 */
+    char pad_0xfc[0x1];
+    unsigned char coinPenaltyFD;/* 0xfd */
+} PfsKartView;
+
+/* Vec3 working group: one escaping struct (address escapes via &G.scaled
+ * passed to KartItem_SetVec3At338) pins every member in memory - keeps the
+ * dead y-overwrite stores in na/nb, keeps vb from being copy-propagated,
+ * and keeps register forwarding of just-stored values (non-volatile). */
+typedef struct PfsVecGroup {
+    Vec3 nb;                    /* sp+0x24 */
+    Vec3 na;                    /* sp+0x30 */
+    Vec3 vb;                    /* sp+0x3c */
+    Vec3 pos;                   /* sp+0x48 */
+    Vec3 scaled;                /* sp+0x54 */
+} PfsVecGroup;
+
+/* combined matrix scratch: c (compose/transpose buffer) escapes via the
+ * ComposeRenderMatrix call, which pins the whole struct in memory so the
+ * 13 unread m[] copy slots survive (no registerization, no volatile
+ * serialization of the 16-float copy schedule). Largest local -> top of
+ * the frame (CW 1.3.2 sorts locals by size descending, fills top-down). */
+typedef struct PfsMtxPair {
+    float c[16];                /* sp+0x60 */
+    float m[16];                /* sp+0xa0 */
+} PfsMtxPair;
+
+#pragma exceptions off
+void KartItem_PerFrameStep(PfsKartView *self, void *arg) { /* 0x8004C320 size:0xC44 */
+    PfsMtxPair mtxs;            /* sp+0x60..0xe0 */
+    PfsVecGroup G;              /* sp+0x24..0x60 */
+    volatile Vec3 v304;         /* sp+0x18: volatile blocks pos=v304 copy-propagation */
+    volatile unsigned int modeA;/* sp+0x14: mov->mode2c4 snapshot */
+    volatile unsigned int modeB;/* sp+0x10: mov->mode2c8 snapshot */
+    volatile float sqA;         /* sp+0x0c: 1st in-place sqrtf slot */
+    volatile float sqB;         /* sp+0x08: 2nd in-place sqrtf slot */
+    KartDriverBusView *drv;
+    ItemSecondaryLane *sl;
+    void *t;
+    float fwdSpeed;
+    float t0, t1, t2, t3, t4, t5, t6, t7;
+
+    G.scaled = *(Vec3 *)lbl_802ED9F4;
+    G.scaled.x = 0.016666668f * self->movement->velX;
+    G.scaled.y = 0.016666668f * self->movement->velY;
+    G.scaled.z = 0.016666668f * self->movement->velZ;
+    KartItem_SetVec3At338(self->ownerDriver, &G.scaled);
+
+    {
+        PfsMovementView *mv = self->movement;
+        unsigned char mode;
+        mode = self->physModeD4;
+        t7 = mv->mtx[7];
+        t6 = mv->mtx[6];
+        t5 = mv->mtx[5];
+        t4 = mv->mtx[4];
+        t3 = mv->mtx[3];
+        t2 = mv->mtx[2];
+        t1 = mv->mtx[1];
+        t0 = mv->mtx[0];
+        mtxs.m[0] = t0;
+        t0 = mv->mtx[8];
+        mtxs.m[1] = t1;
+        t1 = mv->mtx[9];
+        mtxs.m[2] = t2;
+        t2 = mv->mtx[10];
+        mtxs.m[3] = t3;
+        t3 = mv->mtx[11];
+        mtxs.m[4] = t4;
+        t4 = mv->mtx[12];
+        mtxs.m[5] = t5;
+        t5 = mv->mtx[13];
+        mtxs.m[6] = t6;
+        t6 = mv->mtx[14];
+        mtxs.m[7] = t7;
+        t7 = mv->mtx[15];
+        mtxs.m[8] = t0;
+        mtxs.m[9] = t1;
+        mtxs.m[10] = t2;
+        mtxs.m[11] = t3;
+        mtxs.m[12] = t4;
+        mtxs.m[13] = t5;
+        mtxs.m[14] = t6;
+        mtxs.m[15] = t7;
+        if (mode == 1) {
+            KartMovement_PhysicsStep(mv, self->spd0, self->spd1, self->spd2, self->gateA8);
+        } else {
+            fn_8019CC2C(mv);
+        }
+    }
+    fwdSpeed = mtxs.m[4] * self->movement->mtx[4] + mtxs.m[5] * self->movement->mtx[5] + mtxs.m[6] * self->movement->mtx[6];
+    if (self->slowTimerF8 > 0) {
+        self->slowTimerF8--;
+    }
+    modeA = self->movement->mode2c4;
+    modeB = self->movement->mode2c8;
+    if (KartMovement_CalcSpeedWithCoinBonus(self->movement, 0) > 0.0f) {
+        if (fwdSpeed < 0.999f || modeA == 4 || modeB == 4) {
+            if (self->slowTimerF8 <= 0) {
+                self->decayE4 = self->decayE4 * -1.0f;
+                fwdSpeed = 0.7f * self->decayE4;
+                if (self->strPcbGate20 != 0) {
+                    StrPcb_SetTimer3034_38(StrPcb_GetInstance(), 3, 3, fwdSpeed);
+                }
+                self->slowTimerF8 = 3;
+            }
+        }
+    }
+    if (self->movement->gate2be == 1) {
+        if (self->boostArmedB0 == 1) {
+            SoundObj_PlaySE_Direct(self->soundCtrl, 0x57);
+            self->perfectGateB1 = 1;
+            self->timerB4 = 0.0f;
+            self->movement->flag2fc = 1;
+            KartAudioChannel_Set24WithSeStop(self->soundCtrl, 1);
+            TornadoEffect_SetFlagB4(self->effectObj, 1);
+            TornadoEffect_SetField11c(self->effectObj, (self->spd0 < 0.0f) ? 7.0f : -7.0f);
+        } else if (IsRaceStarted() == 1) {
+            SoundObj_PlaySE_Direct(self->soundCtrl, 0x57);
+        }
+        self->boostArmedB0 = 0;
+    }
+    if (self->movement->gate244 == 1) {
+        if (self->timerC0 <= 0) {
+            if ((self->ownerDriver->itemBus->flags & 0x30000000ULL) == 0) {
+                CarObject_GetField304Vec3((Vec3 *)&v304, (CarObjAux304View *)self->movement);
+                G.pos = *(Vec3 *)&v304;
+                SoundObj_PlaySE(self->soundCtrl, 0x11);
+                SoundObj_PlaySE_Direct(self->soundCtrl, 0x59);
+                if (self->perfectGateB1 != 0) {
+                    if (self->timerB4 >= 5.0f) {
+                        if ((t = lbl_806D10A0) == 0) {
+                            t = 0;
+                        }
+                        if (t != 0) {
+                            TitleStats_MarkAllCoursesClearedIfDistance(t, self->raceScore10);
+                        }
+                    }
+                }
+                self->perfectGateB1 = 0;
+                self->timerB4 = 0.0f;
+                self->movement->flag2d0 = 0;
+                self->movement->flag2fc = 0;
+                TornadoEffect_SetFlagB4(self->effectObj, 0);
+                TornadoEffect_SetField11c(self->effectObj, 0.0f);
+                ItemEffectBus_ClearMask(self->ownerDriver->itemBus, 0x40ULL);
+                KartAudioChannel_Set24WithSeStop(self->soundCtrl, 0);
+                sl = self->secondary;
+                if (sl->itemId >= 0) {
+                    switch (sl->itemId) {
+                    case 0x22:
+                        TornadoEffect_ApplyItemVisual_Compact(sl->owner->effectObj, sl->itemId, 1);
+                        KartItemAudio_PlayThrowConfirmSE(sl->owner->soundCtrl, sl->itemId);
+                        ItemEffectBus_ApplyItemConfirm(sl->owner->ownerDriver->itemBus, sl->itemId);
+                        break;
+                    case 0xc: case 0xd: case 0xe: case 0xf: case 0x10: case 0x11:
+                    case 0x13: case 0x14: case 0x15: case 0x16:
+                    case 0x18:
+                    case 0x1e: case 0x1f: case 0x20:
+                    case 0x24: case 0x25: case 0x26: case 0x27: case 0x28:
+                    case 0xd5: case 0xd6:
+                    case 0xdc:
+                    case 0xe2:
+                    case 0xe8:
+                    case 0xee:
+                    case 0xf4:
+                    case 0xfa:
+                    case 0x101:
+                    case 0x107:
+                        TornadoEffect_ApplyItemVisual_Compact(sl->owner->effectObj, sl->itemId, 1);
+                        KartItemAudio_PlayThrowConfirmSE(sl->owner->soundCtrl, sl->itemId);
+                        ItemEffectBus_ApplyItemConfirm(sl->owner->ownerDriver->itemBus, sl->itemId);
+                        ItemEffectBus_SnapshotAndClearSpawnFlags(sl->owner->ownerDriver->itemBus);
+                        break;
+                    }
+                }
+                if (self->coinPenaltyFD != 0) {
+                    if (self->raceScore10 != 4) {
+                        CoinSystem_RemoveCoins(self->ownerDriver, 1);
+                    } else {
+                        int n = self->ownerDriver->coins2cc - 1;
+                        if (n < 0) {
+                            n = 0;
+                        }
+                        self->ownerDriver->coins2cc = n;
+                    }
+                    self->coinCountC8 = self->ownerDriver->coins2cc;
+                }
+                fn_801B1410(self->ownerDriver);
+                if ((t = lbl_806D10A0) == 0) {
+                    t = 0;
+                }
+                if (t != 0) {
+                    RankLog_OnPlayerDefeated(t, self->raceScore10);
+                }
+                ItemEffectBus_RegisterBonkPosition(self->ownerDriver->itemBus, G.pos.x, G.pos.y, G.pos.z);
+            }
+            {
+                unsigned char b;
+                if ((self->ownerDriver->itemBus->flags & 0x10000000ULL) == 0) {
+                    b = 0;
+                } else {
+                    b = 1;
+                }
+                if (b == 1) {
+                    SoundObj_PlaySE_Direct(self->soundCtrl, 0xc6);
+                }
+            }
+        }
+        self->timerC0 = 0x1e;
+    }
+    if (self->perfectGateB1 == 1) {
+        unsigned char flag;
+        flag = 0;
+        self->timerB4 = self->timerB4 + 0.016666668f;
+        {
+            PfsMovementView *mv2 = self->movement;
+            float vx, spin, vy, vz;
+            spin = mv2->spin1d8;
+            vz = mv2->mtx[10];
+            vy = mv2->mtx[9];
+            vx = mv2->mtx[8];
+            G.vb.y = vy;
+            G.vb.x = vx;
+            G.vb.z = vz;
+        if (spin >= 0.2f) {
+            flag = 1;
+        } else {
+            float zero, ax, ay, az, sq, inv;
+            zero = 0.0f;
+            ax = mv2->velX;
+            ay = mv2->velY;
+            az = mv2->velZ;
+            G.na.x = ax;
+            G.na.y = ay;
+            G.na.z = az;
+            G.na.y = zero;
+            sq = G.na.z * G.na.z + (G.na.x * G.na.x + G.na.y * G.na.y);
+            if (sq > zero) {
+                double guess = __frsqrte(sq);
+                guess = 0.5 * guess * (3.0 - sq * (guess * guess));
+                guess = 0.5 * guess * (3.0 - sq * (guess * guess));
+                guess = 0.5 * guess * (3.0 - sq * (guess * guess));
+                sqA = (float)(sq * guess);
+                sq = sqA;
+            }
+            if (sq <= 0.0f) {
+                G.na.x = G.na.y = G.na.z = 0.0f;
+            } else {
+                inv = 1.0f / sq;
+                G.na.x = G.na.x * inv;
+                G.na.y = G.na.y * inv;
+                G.na.z = G.na.z * inv;
+            }
+            zero = 0.0f;
+            ax = G.vb.x;
+            ay = G.vb.y;
+            az = G.vb.z;
+            G.nb.x = ax;
+            G.nb.y = ay;
+            G.nb.z = az;
+            G.nb.y = zero;
+            sq = G.nb.z * G.nb.z + (G.nb.x * G.nb.x + G.nb.y * G.nb.y);
+            if (sq > zero) {
+                double guess2 = __frsqrte(sq);
+                guess2 = 0.5 * guess2 * (3.0 - sq * (guess2 * guess2));
+                guess2 = 0.5 * guess2 * (3.0 - sq * (guess2 * guess2));
+                guess2 = 0.5 * guess2 * (3.0 - sq * (guess2 * guess2));
+                sqB = (float)(sq * guess2);
+                sq = sqB;
+            }
+            if (sq <= 0.0f) {
+                G.nb.x = G.nb.y = G.nb.z = 0.0f;
+            } else {
+                inv = 1.0f / sq;
+                G.nb.x = G.nb.x * inv;
+                G.nb.y = G.nb.y * inv;
+                G.nb.z = G.nb.z * inv;
+            }
+            {
+                float crX;
+                float crY;
+                float crZ;
+                crX = G.nb.y * G.na.z - G.nb.z * G.na.y;
+                crY = G.nb.z * G.na.x - G.nb.x * G.na.z;
+                crZ = G.nb.x * G.na.y - G.nb.y * G.na.x;
+                G.na.y = crY;
+                G.na.x = crX;
+                G.na.z = crZ;
+                if ((float)__fabs(crZ + (crX + crY)) < 0.17453292f) {
+                    flag = 1;
+                }
+            }
+        }
+        }
+        if (flag == 1) {
+            if (KartItem_Stub_Returns0(self->boostObj, self->timerB4) == 1) {
+                int t2 = (int)(12.0f * self->timerB4 + 8.0f);
+                if (self->strPcbGate20 != 0) {
+                    StrPcb_SetTimer3034_38(StrPcb_GetInstance(), t2, 3, -1.0f);
+                }
+            }
+            if (self->perfectGateB1 != 0) {
+                if (self->timerB4 >= 5.0f) {
+                    if ((t = lbl_806D10A0) == 0) {
+                        t = 0;
+                    }
+                    if (t != 0) {
+                        TitleStats_MarkAllCoursesClearedIfDistance(t, self->raceScore10);
+                    }
+                }
+            }
+            self->perfectGateB1 = 0;
+            self->timerB4 = 0.0f;
+            self->movement->flag2d0 = 0;
+            self->movement->flag2fc = 0;
+            TornadoEffect_SetFlagB4(self->effectObj, 0);
+            TornadoEffect_SetField11c(self->effectObj, 0.0f);
+            ItemEffectBus_ClearMask(self->ownerDriver->itemBus, 0x40ULL);
+            KartAudioChannel_Set24WithSeStop(self->soundCtrl, 0);
+            sl = self->secondary;
+            if (sl->itemId >= 0) {
+                switch (sl->itemId) {
+                case 0x22:
+                    TornadoEffect_ApplyItemVisual_Compact(sl->owner->effectObj, sl->itemId, 1);
+                    KartItemAudio_PlayThrowConfirmSE(sl->owner->soundCtrl, sl->itemId);
+                    ItemEffectBus_ApplyItemConfirm(sl->owner->ownerDriver->itemBus, sl->itemId);
+                    break;
+                case 0xc: case 0xd: case 0xe: case 0xf: case 0x10: case 0x11:
+                case 0x13: case 0x14: case 0x15: case 0x16:
+                case 0x18:
+                case 0x1e: case 0x1f: case 0x20:
+                case 0x24: case 0x25: case 0x26: case 0x27: case 0x28:
+                case 0xd5: case 0xd6:
+                case 0xdc:
+                case 0xe2:
+                case 0xe8:
+                case 0xee:
+                case 0xf4:
+                case 0xfa:
+                case 0x101:
+                case 0x107:
+                    TornadoEffect_ApplyItemVisual_Compact(sl->owner->effectObj, sl->itemId, 1);
+                    KartItemAudio_PlayThrowConfirmSE(sl->owner->soundCtrl, sl->itemId);
+                    ItemEffectBus_ApplyItemConfirm(sl->owner->ownerDriver->itemBus, sl->itemId);
+                    ItemEffectBus_SnapshotAndClearSpawnFlags(sl->owner->ownerDriver->itemBus);
+                    break;
+                }
+            }
+        } else {
+            if ((self->ownerDriver->itemBus->flags & 0x40ULL) == 0) {
+                ItemEffectBus_OrMask(self->ownerDriver->itemBus, 0x40ULL);
+                SoundObj_PlaySE(self->soundCtrl, 2);
+            }
+        }
+    }
+    {
+        float px;
+        float py;
+        float pz;
+        pz = self->movement->mtx[14];
+        py = self->movement->mtx[13];
+        px = self->movement->mtx[12];
+        self->velSnapX = px;
+        self->velSnapY = py;
+        self->velSnapZ = pz;
+    }
+    TornadoEffect_SetField114(self->effectObj, self->movement->field1e8);
+    TornadoEffect_ComposeRenderMatrix(self->effectObj, self->movement->mtx98, mtxs.c);
+    Mtx4x4_TransposeTo4x3(mtxs.c, self->xfrm60);
+    drv = self->ownerDriver;
+    KartDriver_SetJointPosY_Slot3a(drv, -fn_8019A850(self->movement, 0));
+    drv = self->ownerDriver;
+    KartDriver_SetJointPosY_Slot3b(drv, -fn_8019A850(self->movement, 1));
+    drv = self->ownerDriver;
+    KartDriver_SetJointPosY_Slot3c(drv, -fn_8019A850(self->movement, 2));
+    drv = self->ownerDriver;
+    KartDriver_SetJointPosY_Slot3d(drv, -fn_8019A850(self->movement, 3));
+    drv = self->ownerDriver;
+    KartDriver_TickAction_79268_AndSetSlot5aEulerZ(drv, TornadoEffect_GetField114(self->effectObj));
+    drv = self->ownerDriver;
+    KartDriver_TickAction_79260(drv, TornadoEffect_GetField114(self->effectObj));
+    if (self->strPcbGate20 == 1) {
+        HSD_FObjForceLinearInterp(0);
+    }
+    RenderObj_ItemStateMachine_Timed(self->ownerDriver, arg, -self->depthE8, 0.0f);
+    HSD_FObjForceLinearInterp(1);
+    KartEffectFadeTransit_Tick(self->boostObj);
+}
+#pragma exceptions reset
+#else
 asm void KartItem_PerFrameStep(void) { /* 0x8004C320 size:0xC44 */
     nofralloc
     stwu r1, -0x110(r1)
@@ -4305,6 +5324,7 @@ asm void KartItem_PerFrameStep(void) { /* 0x8004C320 size:0xC44 */
     addi r1, r1, 0x110
     blr
 }
+#endif
 
 #pragma exceptions off
 void CarObject_UpdateCoinSpeedBonus(KartItemOpsView *self) { /* 0x8004CF64 size:0x244 */
@@ -4451,6 +5471,421 @@ extern "C" void CarObject_ProcessWarpAndDash(CarObjWarpView *self) { /* 0x8004D1
 }
 #pragma cplusplus off
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: equivalent C, 82 % when written (docs/archive/drafts/CarObject_MainUpdate_82pct.handoff.md);
+ * the 4x4 matrix-multiply loop is strength-reduced differently, the rest follows from it. */
+/* --- struct views for CarObject_MainUpdate --- */
+typedef struct ItemEffectBusView {
+    char pad_0x0[0x10];
+    unsigned long long flags;        /* 0x10 (u64) */
+} ItemEffectBusView;
+
+typedef struct KartDriverAuxView {
+    char pad_0x0[0x2cc];
+    int coinCount;                   /* 0x2cc */
+    char pad_0x2d0[0x34];
+    ItemEffectBusView *bus;          /* 0x304 */
+} KartDriverAuxView;
+
+typedef struct KartItemObjView {
+    char pad_0x0[0x24];
+    void *soundCtrl;                 /* 0x24 */
+    char pad_0x28[0x4];
+    KartDriverAuxView *driver;       /* 0x2c */
+    char pad_0x30[0x4];
+    void *kartBody;                  /* 0x34 */
+    void *billboard;                 /* 0x38 */
+} KartItemObjView;
+
+typedef struct CarObjGuardView {
+    KartItemObjView *obj;            /* 0x0 */
+    void *composite;                 /* 0x4 */
+    int itemId;                      /* 0x8 */
+    int param0c;                     /* 0xc */
+    void *param10;                   /* 0x10 */
+} CarObjGuardView;
+
+typedef struct CarObjSlotView {
+    KartItemObjView *obj;            /* 0x0 */
+    char pad_0x4[0x4];
+    int itemId;                      /* 0x8 */
+    float timer;                     /* 0xc */
+} CarObjSlotView;
+
+typedef struct KartItemEventView {
+    char pad_0x0[0x18];
+    int eventId;                     /* 0x18 */
+    char pad_0x1c[0xc];
+    int hasObjField;                 /* 0x28 */
+    char pad_0x2c[0xc];
+    void *eventObj;                  /* 0x38 */
+} KartItemEventView;
+
+typedef struct KartMovementMtxView {
+    char pad_0x0[0x98];
+    float mtx[16];                   /* 0x98 */
+} KartMovementMtxView;
+
+typedef struct CarObjMainView {
+    char pad_0x0[0x10];
+    int kartSlot;                    /* 0x10 */
+    char pad_0x14[0xc];
+    unsigned char isPlayer;          /* 0x20 */
+    char pad_0x21[0x3];
+    void *soundCtrl;                 /* 0x24 */
+    KartMovementMtxView *movement;   /* 0x28 */
+    KartDriverAuxView *renderObj;    /* 0x2c */
+    void *inputCmd;                  /* 0x30 */
+    void *kartBody;                  /* 0x34 */
+    char pad_0x38[0x8];
+    CarObjGuardView *guard;          /* 0x40 */
+    void *effSpeedA;                 /* 0x44 */
+    void *effSpeedB;                 /* 0x48 */
+    KartItemEventView *kartItem;     /* 0x4c */
+    CarObjSlotView *slot;            /* 0x50 */
+    char pad_0x54[0x48];
+    float spd0;                      /* 0x9c */
+    float spd1;                      /* 0xa0 */
+    float spd2;                      /* 0xa4 */
+    unsigned char gateA8;            /* 0xa8 */
+    char pad_0xa9[0x7];
+    unsigned char flagB0;            /* 0xb0 */
+    char pad_0xb1[0xf];
+    int timerC0;                     /* 0xc0 */
+    int timerC4;                     /* 0xc4 */
+    int coinCount;                   /* 0xc8 */
+    char pad_0xcc[0x4];
+    int timerD0;                     /* 0xd0 */
+} CarObjMainView;
+
+/* single escaping scratch struct: all float locals of CarObject_MainUpdate
+ * live here so dead stores survive DSE (s.mA escapes via fn_8019A6A4). */
+typedef struct MainUpdateScratch {
+    float qx, qy, qz, qw;            /* sp+0xc quaternion */
+    float axis[3];                   /* sp+0x1c */
+    float colY[3];                   /* sp+0x28 */
+    float up[3];                     /* sp+0x34 */
+    float mOut[16];                  /* sp+0x40 */
+    float mB[16];                    /* sp+0x80 */
+    float mA[16];                    /* sp+0xc0 */
+} MainUpdateScratch;
+
+/* MSL-style inline sqrtf (frsqrte + 3 NR steps, volatile store-reload). */
+static inline float MainUpdate_sqrtf(float x) {
+    volatile float y;
+    if (x > 0.0f) {
+        double guess = __frsqrte(x);
+        guess = 0.5 * guess * (3.0 - x * (guess * guess));
+        guess = 0.5 * guess * (3.0 - x * (guess * guess));
+        guess = 0.5 * guess * (3.0 - x * (guess * guess));
+        y = (float)(x * guess);
+        return y;
+    }
+    return x;
+}
+
+
+#pragma exceptions off
+void CarObject_MainUpdate(void *self_, void *arg) { /* 0x8004D404 size:0xAC8 */
+    CarObjMainView *self = (CarObjMainView *)self_;
+    MainUpdateScratch s;
+    ItemEffectBusView *bus;
+    CarObjGuardView *guard;
+    int state;
+
+    bus = self->renderObj->bus;
+    ItemEffectBus_SnapshotAndFullReset(bus);
+    CarObject_ProcessWarpAndDash((void *)self);
+    if (self->coinCount < self->renderObj->coinCount) {
+        TornadoEffect_TriggerFlagD2WithTimer(self->kartBody);
+    }
+    self->coinCount = self->renderObj->coinCount;
+    self->spd0 = EffectSpeed_TickAndGet(self->effSpeedA);
+    self->spd0 = Saturate_Double(self->spd0, -1.0f, 1.0f);
+    EffectSpeed_TickTimer(self->effSpeedB);
+    if (self->timerD0 > 0 || ItemStateGuard_IsActive(self->guard->composite) == 1) {
+        if (self->timerD0 > 0) {
+            self->timerD0--;
+        }
+        ItemEffectBus_OrMask(bus, 0x0080000000000000ULL);
+    } else {
+        ItemEffectBus_ClearMask(bus, 0x0080000000000000ULL);
+    }
+    if (self->timerC4 > 0) {
+        self->timerC4--;
+        ItemEffectBus_OrMask(bus, 0x0040000000000000ULL);
+    } else {
+        ItemEffectBus_ClearMask(bus, 0x0040000000000000ULL);
+    }
+    if (self->timerC0 > 0) {
+        self->timerC0--;
+    }
+    guard = self->guard;
+    if (guard->itemId < 0) {
+        state = 0;
+    } else if (ItemStateGuard_PruneIfDeadAndReport(guard->composite) == 0) {
+        ShadowBillboard_SetField0x6CAndComputeAxis(guard->obj->billboard, 0);
+        {
+            KartItemObjView *obj;
+            int id = guard->itemId;
+            if (id >= 0) {
+                obj = guard->obj;
+                TornadoEffect_ApplyItemVisual_Primary(obj->kartBody, id);
+                KartItemAudio_StopSEByItemId(obj->soundCtrl, id);
+                ItemEffectBus_ApplyItemEventClear(obj->driver->bus, id);
+                guard->itemId = -1;
+            }
+        }
+        state = 2;
+    } else {
+        state = 1;
+    }
+    switch (state) {
+    case 1:
+        self->spd0 = 0.0f;
+        self->spd1 = 0.0f;
+        self->spd2 = 0.0f;
+        MediaBoard_PollCompletion(self->soundCtrl, 0.0f);
+        KartAudioChannel_PlayColorMatchSE(self->soundCtrl, 0, 0.0f, 0);
+        TornadoEffect_SetColorPairC8CC(self->kartBody, 0, 0);
+        TireEffect_ResetSpin(self->kartBody, 0.0f, 0.0f);
+        self->timerD0 = 0x2d;
+        break;
+    case 2: {
+        switch (ItemEffect_SelectAndDispatch_Wrap((void *)self->kartItem, self->guard->param0c, 0, (int)self->guard->param10)) {
+        case 0: {
+            KartItemEventView *it;
+            int ev;
+            unsigned char hasObj;
+            CarObjSlotView *sl2;
+            self->flagB0 = 0;
+            it = self->kartItem;
+            ev = it->eventId;
+            hasObj = it->hasObjField >= 0;
+            ItemEffectBus_ApplyItemEventSet(bus, ev, (hasObj == 1) ? it->eventObj : 0);
+            TornadoEffect_ApplyItemVisual_Secondary(self->kartBody, ev, 1);
+            KartItemAudio_PlayHitConfirmSE(self->soundCtrl, ev);
+            sl2 = self->slot;
+            if (sl2->itemId >= 0) {
+                TornadoEffect_ApplyItemVisual_Primary(sl2->obj->kartBody, sl2->itemId);
+                KartItemAudio_StopSEByItemId(sl2->obj->soundCtrl, sl2->itemId);
+                ItemEffectBus_ApplyItemEventClear(sl2->obj->driver->bus, sl2->itemId);
+                sl2->itemId = -1;
+                sl2->timer = 0.0f;
+            }
+            break;
+        }
+        }
+        break;
+    }
+    case 0: {
+        KartMovementMtxView *m = self->movement;
+        s.mA[0] = m->mtx[0];
+        s.mA[1] = m->mtx[1];
+        s.mA[2] = m->mtx[2];
+        s.mA[3] = m->mtx[3];
+        s.mA[4] = m->mtx[4];
+        s.mA[5] = m->mtx[5];
+        s.mA[6] = m->mtx[6];
+        s.mA[7] = m->mtx[7];
+        s.mA[8] = m->mtx[8];
+        s.mA[9] = m->mtx[9];
+        s.mA[10] = m->mtx[10];
+        s.mA[11] = m->mtx[11];
+        s.mA[12] = m->mtx[12];
+        s.mA[13] = m->mtx[13];
+        s.mA[14] = m->mtx[14];
+        s.mA[15] = m->mtx[15];
+        if (s.mA[5] < (float)cos(0.7853981852531433)) {
+            float mag;
+            float sinv;
+            float az, ay, ax;
+            float x, y, z, w2;
+            float xx, yy, zz, xy, wz, xz, wy, yz, wx;
+            float *pa;
+            float *out;
+            int k;
+            int i;
+
+            s.axis[0] = 0.0f;
+            s.axis[1] = 1.0f;
+            s.axis[2] = 0.0f;
+            s.colY[0] = s.mA[4];
+            s.colY[1] = s.mA[5];
+            s.colY[2] = s.mA[6];
+            s.up[0] = 0.0f;
+            s.up[1] = 1.0f;
+            s.up[2] = 0.0f;
+            s.axis[0] = s.colY[1] * (float)(double)s.up[2] - s.colY[2] * (float)(double)s.up[1];
+            s.axis[1] = s.colY[2] * (float)(double)s.up[0] - s.colY[0] * (float)(double)s.up[2];
+            s.axis[2] = s.colY[0] * (float)(double)s.up[1] - s.colY[1] * (float)(double)s.up[0];
+            mag = MainUpdate_sqrtf(s.axis[2] * s.axis[2] + (s.axis[0] * s.axis[0] + s.axis[1] * s.axis[1]));
+            if (mag <= 0.0f) {
+                s.axis[0] = s.axis[1] = s.axis[2] = 0.0f;
+            } else {
+                float inv = 1.0f / mag;
+                s.axis[0] = s.axis[0] * inv;
+                s.axis[1] = s.axis[1] * inv;
+                s.axis[2] = s.axis[2] * inv;
+            }
+            s.qx = s.qy = s.qz = s.qw = 0.0f;
+            az = s.axis[2];
+            ay = s.axis[1];
+            ax = s.axis[0];
+            sinv = (float)sin(0.04363323f);
+            s.qx = ax * sinv;
+            s.qy = ay * sinv;
+            s.qz = az * sinv;
+            s.qw = (float)cos(0.04363323f);
+            x = s.qx;
+            y = s.qy;
+            z = s.qz;
+            w2 = (float)(double)s.qw;
+            xx = x * x;
+            yy = y * y;
+            zz = z * z;
+            xy = x * y;
+            wz = w2 * z;
+            xz = x * z;
+            wy = w2 * y;
+            yz = y * z;
+            wx = w2 * x;
+            s.mB[0] = 0.0f;
+            s.mB[1] = 0.0f;
+            s.mB[2] = 0.0f;
+            s.mB[3] = 0.0f;
+            s.mB[4] = 0.0f;
+            s.mB[5] = 0.0f;
+            s.mB[6] = 0.0f;
+            s.mB[7] = 0.0f;
+            s.mB[8] = 0.0f;
+            s.mB[9] = 0.0f;
+            s.mB[10] = 0.0f;
+            s.mB[11] = 0.0f;
+            s.mB[12] = 0.0f;
+            s.mB[13] = 0.0f;
+            s.mB[14] = 0.0f;
+            s.mB[15] = 0.0f;
+            s.mB[0] = 1.0f;
+            s.mB[5] = 1.0f;
+            s.mB[10] = 1.0f;
+            s.mB[15] = 1.0f;
+            s.mB[0] = 1.0f - 2.0f * (yy + zz);
+            s.mB[4] = 2.0f * (xy - wz);
+            s.mB[8] = 2.0f * (xz + wy);
+            s.mB[1] = 2.0f * (xy + wz);
+            s.mB[5] = 1.0f - 2.0f * (xx + zz);
+            s.mB[9] = 2.0f * (yz - wx);
+            s.mB[2] = 2.0f * (xz - wy);
+            s.mB[6] = 2.0f * (yz + wx);
+            s.mB[10] = 1.0f - 2.0f * (xx + yy);
+            k = 0;
+            i = 0;
+            pa = s.mA;
+            out = s.mOut;
+            do {
+                out[k] = pa[0] * s.mB[0] + pa[1] * s.mB[4] + pa[2] * s.mB[8] + pa[3] * s.mB[12];
+                out[k + 1] = pa[0] * s.mB[1] + pa[1] * s.mB[5] + pa[2] * s.mB[9] + pa[3] * s.mB[13];
+                out[k + 2] = pa[0] * s.mB[2] + pa[1] * s.mB[6] + pa[2] * s.mB[10] + pa[3] * s.mB[14];
+                out[k + 3] = pa[0] * s.mB[3] + pa[1] * s.mB[7] + pa[2] * s.mB[11] + pa[3] * s.mB[15];
+                k += 4;
+                out[k] = pa[4] * s.mB[0] + pa[5] * s.mB[4] + pa[6] * s.mB[8] + pa[7] * s.mB[12];
+                out[k + 1] = pa[4] * s.mB[1] + pa[5] * s.mB[5] + pa[6] * s.mB[9] + pa[7] * s.mB[13];
+                out[k + 2] = pa[4] * s.mB[2] + pa[5] * s.mB[6] + pa[6] * s.mB[10] + pa[7] * s.mB[14];
+                out[k + 3] = pa[4] * s.mB[3] + pa[5] * s.mB[7] + pa[6] * s.mB[11] + pa[7] * s.mB[15];
+                k += 4;
+                pa += 8;
+                i += 1;
+            } while (i < 2);
+            s.mA[0] = s.mOut[0];
+            s.mA[1] = s.mOut[1];
+            s.mA[2] = s.mOut[2];
+            s.mA[3] = s.mOut[3];
+            s.mA[4] = s.mOut[4];
+            s.mA[5] = s.mOut[5];
+            s.mA[6] = s.mOut[6];
+            s.mA[7] = s.mOut[7];
+            s.mA[8] = s.mOut[8];
+            s.mA[9] = s.mOut[9];
+            s.mA[10] = s.mOut[10];
+            s.mA[11] = s.mOut[11];
+            s.mA[12] = s.mOut[12];
+            s.mA[13] = s.mOut[13];
+            s.mA[14] = s.mOut[14];
+            s.mA[15] = s.mOut[15];
+            fn_8019A6A4(self->movement, s.mA);
+        }
+        break;
+    }
+    default:
+        DebugPrintf((char *)lbl_802EDA20);
+        break;
+    }
+    KartItem_TickActiveEffectsTwoLane((void *)self->kartItem);
+    {
+        CarObjSlotView *slot = self->slot;
+        if (slot->itemId >= 0) {
+            unsigned char expired = 0;
+            int id;
+            slot->timer = slot->timer - 0.016666668f;
+            id = slot->itemId;
+            switch (id) {
+            case 0x9b: {
+                unsigned char hit;
+                if ((slot->obj->driver->bus->flags & 0x0400000000000000ULL) == 0) {
+                    hit = expired;
+                } else {
+                    hit = 1;
+                }
+                if (hit == 1) {
+                    expired = 1;
+                }
+                break;
+            }
+            }
+            if (slot->timer < 0.0f || expired == 1) {
+                if (id >= 0) {
+                    TornadoEffect_ApplyItemVisual_Primary(slot->obj->kartBody, id);
+                    KartItemAudio_StopSEByItemId(slot->obj->soundCtrl, slot->itemId);
+                    ItemEffectBus_ApplyItemEventClear(slot->obj->driver->bus, slot->itemId);
+                    slot->itemId = -1;
+                    slot->timer = 0.0f;
+                }
+            }
+        }
+    }
+    CarObject_UpdateCoinSpeedBonus((void *)self);
+    InputCmd_PushSample(self->inputCmd, 0, self->spd0, self->spd1, self->spd2);
+    InputCmd_TickAndDetectAndClear(self->inputCmd);
+    if (self->gateA8 == 1) {
+        if (InputCmd_GetDetectedFlag(self->inputCmd) == 1) {
+            if ((self->renderObj->bus->flags & 0x0000000000800000ULL) == 0) {
+                SoundObj_PlaySE(self->soundCtrl, 1);
+                if (fn_8019A8A4(self->movement, 1.0f) != 0) {
+                    void *t = lbl_806D10A0; /* title stats singleton */
+                    if (t != 0) {
+                        TitleStats_IncTotalRaces(t, self->kartSlot);
+                    }
+                    SoundObj_PlaySE_Direct(self->soundCtrl, 0x56);
+                    SetAnimSpin(self->renderObj);
+                    TornadoEffect_SetFlagC0(self->kartBody);
+                    self->flagB0 = 1;
+                }
+            } else if (self->isPlayer != 0) {
+                SoundObj_PlaySE_Direct(self->soundCtrl, 0x9e);
+            }
+        }
+    }
+    KartItem_PerFrameStep((void *)self, arg);
+    KartItem_Tick((void *)self);
+    InputMgr_GetPlayer(GetInputManager(), 0);
+    {
+        CarObjectManager_RunKartKartCollisionSweep((struct CarObjectManager *)g_carObjectList);
+    }
+    ItemEffectBus_TickTornadoCooldown(bus);
+}
+#pragma exceptions reset
+#else
 asm void CarObject_MainUpdate(void *self, void *arg) { /* 0x8004D404 size:0xAC8 */
     nofralloc
     stwu r1, -0x170(r1)
@@ -5180,6 +6615,7 @@ asm void CarObject_MainUpdate(void *self, void *arg) { /* 0x8004D404 size:0xAC8 
     addi r1, r1, 0x170
     blr
 }
+#endif
 
 #pragma exceptions off
 /* inline-expanded ScopedTimer (id 0x28): ctor stores id + OSGetTick at
@@ -7884,41 +9320,83 @@ unsigned long Bitset_MaxSize(void) { /* 0x80052494 size:0x8 */
 #pragma exceptions reset
 
 /* adjustor thunk (this-0xc -> KartItem_Dtor tail b): C probe emits bl+prologue, kept as asm_fn */
+#ifdef NON_MATCHING
+/* NON_MATCHING: adjustor thunk (this - 0xC), tail call in the target. */
+void *fn_8005249C(void *self, short flag) {
+    return KartItem_Dtor((struct KartItemObj *)((char *)self - 0xC), flag);
+}
+#else
 asm void fn_8005249C(void) { /* 0x8005249C size:0x8 */
     nofralloc
     subi r3, r3, 0xc
     b KartItem_Dtor
 }
+#endif
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: adjustor thunk (this - 0xC), tail call in the target. */
+unsigned char KartItem_TryDropCoinsAndPlaySE_AdjThunk(void *self, int count, unsigned char force) {
+    return KartItem_TryDropCoinsAndPlaySE((KartItemDropView *)((char *)self - 0xC), count, force);
+}
+#else
 asm void KartItem_TryDropCoinsAndPlaySE_AdjThunk(void) { /* 0x800524A4 size:0x8 */
     nofralloc
     subi r3, r3, 0xc
     b KartItem_TryDropCoinsAndPlaySE
 }
+#endif
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: adjustor thunk (this - 0xC), tail call in the target. */
+int fn_800524AC(void *self) {
+    return KartItem_TryCancelIfDropAllowed((KartItemDropView *)((char *)self - 0xC));
+}
+#else
 asm void fn_800524AC(void) { /* 0x800524AC size:0x8 */
     nofralloc
     subi r3, r3, 0xc
     b KartItem_TryCancelIfDropAllowed
 }
+#endif
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: adjustor thunk (this - 0xC), tail call in the target. */
+unsigned char fn_800524B4(void *self, void *victim) {
+    return KartItem_OnKartHit((KartItemHit *)((char *)self - 0xC), (KartDriverHitView *)victim);
+}
+#else
 asm void fn_800524B4(void) { /* 0x800524B4 size:0x8 */
     nofralloc
     subi r3, r3, 0xc
     b KartItem_OnKartHit
 }
+#endif
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: adjustor thunk (this - 0xC), tail call in the target. */
+void KartItem_PlayHitSE_DifferentVictim_AdjThunk(void *self, void *victim, int channel) {
+    KartItem_PlayHitSE_DifferentVictim((KartItemHitSEView *)((char *)self - 0xC), victim, channel);
+}
+#else
 asm void KartItem_PlayHitSE_DifferentVictim_AdjThunk(void) { /* 0x800524BC size:0x8 */
     nofralloc
     subi r3, r3, 0xc
     b KartItem_PlayHitSE_DifferentVictim
 }
+#endif
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: adjustor thunk (this - 0xC), tail call in the target. */
+int KartItem_ApplyEffectToVictim_AdjThunk(void *self, void *itemObj, int itemIdArg) {
+    return CarObject_OnItemHit((KartItemOpsView *)((char *)self - 0xC), itemObj, itemIdArg);
+}
+#else
 asm void KartItem_ApplyEffectToVictim_AdjThunk(void) { /* 0x800524C4 size:0x8 */
     nofralloc
     subi r3, r3, 0xc
     b CarObject_OnItemHit
 }
+#endif
 
 /* std::list<T> written as C++ with a by-value iterator class: erase(first,last)
  * inlined into remove(); begin is end()->next of the head/tail sentinel.

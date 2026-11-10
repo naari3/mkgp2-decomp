@@ -44,6 +44,17 @@ asm void Foo_Update(Foo *self) { /* 0x80012345 size:0x1F0 */
   the target asm, not from memory of what the function ought to do. Put the
   percentage and what is known to differ in the comment on the first line of
   the block.
+- Check equivalence, not only the percentage: `python3 tools/nonmatching_audit.py
+  UNIT FN` compares the call sequence, the non-stack stores and the compare
+  shapes of the two versions. The check tool also lists UNKNOWN SYMBOLS:
+  undefined symbols of the NON_MATCHING object that symbols.txt does not have
+  (a function that was never declared and so returns `int`, a name that was
+  renamed since the draft was written, a mangled ctor without a rename). Both
+  must be clean or explained before pushing.
+- Give callees real prototypes on the C side (guard the old `extern void
+  Foo();` with `#ifdef NON_MATCHING` and put the prototype in the other arm):
+  an unprototyped call passes `float` as `double`, which is only harmless on
+  PowerPC.
 - Write natural code: no fakematch tricks, no pragmas whose only purpose is
   the last few percent. Types and field names over raw offsets where the TU
   already has them; this code is what the port runs and what a later matching

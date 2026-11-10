@@ -118,7 +118,7 @@ def compile_cmd(src):
     args[c:c] = ["-DNON_MATCHING"]
     # one error is not enough when writing a long function
     if "-maxerrors" in args:
-        args[args.index("-maxerrors") + 1] = "8"
+        args[args.index("-maxerrors") + 1] = os.environ.get("NM_MAXERRORS", "8")
     out = outdir + "/" + os.path.splitext(os.path.basename(src))[0] + ".o"
     # the unit's own object post-processing (symbol renames, extab clean-up),
     # so function names line up with the target; best effort
@@ -144,6 +144,24 @@ def scores(src, out):
     return res
 
 
+_KNOWN = None
+
+
+def unknown_symbols(out):
+    """Undefined symbols of the NON_MATCHING object that config/GNLJ82/symbols.txt
+    does not know: a call to a function that was never declared (implicit int),
+    an old name, or a mangled ctor/vtable without a rename. The port cannot link these."""
+    global _KNOWN
+    if _KNOWN is None:
+        _KNOWN = set()
+        for l in open(os.path.join(ROOT, "config/GNLJ82/symbols.txt"), encoding="utf-8", errors="replace"):
+            _KNOWN.add(l.split(" = ", 1)[0].strip())
+    nm = os.path.join(ROOT, "build/binutils/powerpc-eabi-nm")
+    r = subprocess.run([nm, "-u", out], cwd=ROOT, capture_output=True, text=True)
+    names = [l.split()[-1] for l in r.stdout.splitlines() if l.strip()]
+    return sorted(n for n in names if n not in _KNOWN)
+
+
 def check(src):
     args, out, post, err = compile_cmd(src)
     if err:
@@ -155,7 +173,9 @@ def check(src):
         p = subprocess.run(st, shell=True, cwd=ROOT, capture_output=True, text=True)
         if p.returncode:
             break  # e.g. extab reorder on compiler-made records: names may stay mangled
-    return src, True, out, scores(src, out)
+    sc = scores(src, out)
+    sc["?unknown"] = unknown_symbols(out)
+    return src, True, out, sc
 
 
 def fn_text(obj, fn, tag):
@@ -205,7 +225,11 @@ def main():
             print("FAIL %s\n%s" % (src, info))
             continue
         fns = guarded_functions(src)
+        unknown = sc.pop("?unknown", [])
         print("ok   %s" % src)
+        if unknown:
+            bad += 1
+            print("       UNKNOWN SYMBOLS (not in symbols.txt: undeclared function, old name or missing rename): " + ", ".join(unknown))
         names = sorted(sc) if a.all_functions else fns
         for fn in names:
             if fn not in sc:
