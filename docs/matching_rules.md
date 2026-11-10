@@ -24,6 +24,11 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 00:50Z (n3 technique): regalloc_patterns §78: two float constants in
+  swapped registers = constant temps are numbered in expression walk order.
+  Write the earlier statement inside the later expression
+  (`a = (int)(255.0f * (t = 1.0f - t));`) or repeat the expression in both
+  users. game/RaceHud_80147470.cpp is GC/2.6 now (72f59e72).
 - 2026-11-09 23:50Z (n3 technique): regalloc_patterns §74: when only the
   evaluation order of one call's arguments differs (target computes the float
   args before an int arg), redeclare the callee with the float parameters

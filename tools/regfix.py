@@ -2279,7 +2279,10 @@ def neighbour_hint(rep):
                            + ": they must be coloured after it or stop interfering")
             elif ph.get(v) != w.get(v):
                 out.append(f"      no neighbour holds {ph.get(v)} before it: in the target some vreg already in {ph.get(v)} "
-                           f"interferes with it (a longer live range next to it, or it is the same vreg as a later value)")
+                           f"interferes with it (a longer live range next to it, or it is the same vreg as a later value). "
+                           f"If the same code is repeated and only the last copy has a real conflict, the copies are one "
+                           f"constant-trip loop the compiler unrolled: one variable, interference = union over the copies "
+                           f"(regalloc_patterns 75)")
     return out
 
 

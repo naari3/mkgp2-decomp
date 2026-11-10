@@ -486,3 +486,9 @@ status: note
 
 §74 (docs/regalloc_patterns.md, 05b35bf3): when only the evaluation order of one call's arguments differs (target computes the float args before an int id), redeclare the callee with the float parameters first: namespace alt { extern "C" void f(int, float, float, float, int, int); }. Int and float argument registers are numbered separately, so the guessed prototype order is a free lever. Matched fn_80158CE4 and fn_8015915C; with fn_80159BD0 and fn_8015A6E4 the four group C asm functions of game/SceneList_80157EA8.cpp are C at 100% (unit 12/12). Also: delete manual .extab_user entries when their asm function becomes C.
 
+## n3-20261110-0006 | 2026-11-10 00:06Z | from: hand register diffs <0x80180000 | regalloc_patterns 78 + RaceHud_80147470 GC/2.6
+re: -
+status: note
+
+game/RaceHud_80147470.cpp: fn_80147AF4 and fn_80147CE8 are C now (72f59e72) and the unit is compiled with GC/2.6. New regalloc_patterns section 78: when two float constants sit in swapped registers and regfix diag says "constant X must be generated after constant Y", write the earlier statement inside the later expression (`a = (int)(255.0f * (t = 1.0f - t));`) or drop the local and repeat the expression in both users. fn_80147900 stays asm at 99.52 (li + mr colour copy, docs/gave_up.md).
+
