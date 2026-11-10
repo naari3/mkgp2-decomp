@@ -13,31 +13,67 @@ extern int g_longRoundFlag;
 extern int g_roundIndex;
 }
 
-static const unsigned int CSPartsResultStage_rodata_80361970[33] = {
-    0x00000001, 0x00000025, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x00000002,
-    0x0000000F, 0x442A8000, 0x41F00000, 0x3F19999A, 0x3F19999A, 0x00000000,
-    0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x00000004, 0x00000000,
-    0x43D20000, 0x41F00000, 0x3F19999A, 0x3F19999A, 0x00000000, 0x3F800000,
-    0x3F800000, 0x3F800000, 0x3F800000,
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct CSPartsResultStage_rodata_80361970_Row {
+    int i_00;
+    int i_04;
+    float f_08;
+    float f_0C;
+    float f_10;
+    float f_14;
+    int i_18;
+    float f_1C;
+    float f_20;
+    float f_24;
+    float f_28;
+} CSPartsResultStage_rodata_80361970_Row;
+static const CSPartsResultStage_rodata_80361970_Row CSPartsResultStage_rodata_80361970[3] = {
+    { 1, 37, 0.0f, 0.0f, 0.0f, 0.0f, 0, 1.0f, 1.0f, 1.0f, 0.0f },
+    { 2, 15, 682.0f, 30.0f, 0.6f, 0.6f, 0, 1.0f, 1.0f, 1.0f, 1.0f },
+    { 4, 0, 420.0f, 30.0f, 0.6f, 0.6f, 0, 1.0f, 1.0f, 1.0f, 1.0f }
 };
 
-static const unsigned int lbl_803619F4[33] = {
-    0x00000001, 0x00000028, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x00000002,
-    0x0000000F, 0x44354000, 0x41F00000, 0x3F19999A, 0x3F19999A, 0x00000000,
-    0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x00000004, 0x00000000,
-    0x43E78000, 0x41F00000, 0x3F19999A, 0x3F19999A, 0x00000000, 0x3F800000,
-    0x3F800000, 0x3F800000, 0x3F800000,
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803619F4_Row {
+    int i_00;
+    int i_04;
+    float f_08;
+    float f_0C;
+    float f_10;
+    float f_14;
+    int i_18;
+    float f_1C;
+    float f_20;
+    float f_24;
+    float f_28;
+} lbl_803619F4_Row;
+static const lbl_803619F4_Row lbl_803619F4[3] = {
+    { 1, 40, 0.0f, 0.0f, 0.0f, 0.0f, 0, 1.0f, 1.0f, 1.0f, 0.0f },
+    { 2, 15, 725.0f, 30.0f, 0.6f, 0.6f, 0, 1.0f, 1.0f, 1.0f, 1.0f },
+    { 4, 0, 463.0f, 30.0f, 0.6f, 0.6f, 0, 1.0f, 1.0f, 1.0f, 1.0f }
 };
 
-static const unsigned int lbl_80361A78[33] = {
-    0x00000001, 0x0000002B, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x00000002,
-    0x0000000F, 0x443C8000, 0x41E00000, 0x3F800000, 0x3F800000, 0x00000000,
-    0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x00000004, 0x00000000,
-    0x440BC000, 0x41E00000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000,
-    0x3F800000, 0x3F800000, 0x3F800000,
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_80361A78_Row {
+    int i_00;
+    int i_04;
+    float f_08;
+    float f_0C;
+    float f_10;
+    float f_14;
+    int i_18;
+    float f_1C;
+    float f_20;
+    float f_24;
+    float f_28;
+} lbl_80361A78_Row;
+static const lbl_80361A78_Row lbl_80361A78[3] = {
+    { 1, 43, 0.0f, 0.0f, 0.0f, 0.0f, 0, 1.0f, 1.0f, 1.0f, 0.0f },
+    { 2, 15, 754.0f, 28.0f, 1.0f, 1.0f, 0, 1.0f, 1.0f, 1.0f, 1.0f },
+    { 4, 0, 559.0f, 28.0f, 1.0f, 1.0f, 0, 1.0f, 1.0f, 1.0f, 1.0f }
 };
 
 static const int lbl_80361AFC[17][2] = {

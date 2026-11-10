@@ -1,6 +1,10 @@
 /* --- owned .data 0x804221C8..0x80422208 (tools/own_data.py) --- */
 #pragma force_active on
-unsigned int lbl_804221C8[16] = { 0x00000000, 0x00000001, 0x00000002, 0x00000003, 0x00000004, 0x00000005, 0x00000006, 0x00000007, 0x00000008, 0x00000009, 0x0000000A, 0x0000000B, 0x0000000C, 0x0000000D, 0x0000000E, 0x0000000F };
+/* element type read off the values (all small integers), not from code */
+int lbl_804221C8[16] = {
+    0, 1, 2, 3, 4, 5, 6, 7,
+    8, 9, 10, 11, 12, 13, 14, 15
+};
 #pragma force_active reset
 #include "game/types/GXTexObj.h"
 #include "game/types/GXTlutObj.h"

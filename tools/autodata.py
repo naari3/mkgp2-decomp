@@ -799,6 +799,7 @@ def cmd_retype(a):
 # ---------------------------------------------------------------- rows inferred from the values (infer)
 
 UNK32_DEF = re.compile(r'^((?:/\* [^\n]* \*/\n)?)((?:static )?(?:const )?)unk32 (\w+)\[(\d+)\]( __attribute__\(\(aligned\(8\)\)\))? = \{\n(.*?)\n\};', re.M | re.S)
+RAW32_DEF = re.compile(r'^()((?:static )?(?:const )?)unsigned int (\w+)\[(\d+)\]( __attribute__\(\(aligned\(8\)\)\))? = \{[ \n]*((?:0x[0-9A-Fa-f]+[,\s]*)+?)[ \n]*\};', re.M)
 
 
 def s16(x):
@@ -894,6 +895,8 @@ def cmd_infer(a):
     all floats, all small integers, single bytes or 16-bit pairs."""
     files = [os.path.join(OUTDIR, os.path.basename(u) if u.endswith('.c') else os.path.basename(u) + '.c') for u in a.units] \
         or sorted(glob.glob(os.path.join(OUTDIR, '*.c')))
+    if a.raw:   # normal TUs: one-line `unsigned int x[N] = { ... };` word dumps
+        files = [os.path.join(ROOT, u) for u in a.units]
     total = 0
     CT = {'f': 'float', 'i': 'int'}
     for f in files:
@@ -966,7 +969,16 @@ def cmd_infer(a):
             rows = ['    { ' + ', '.join(val(words[i + c], kinds[c]) for c in range(p)) + ' }' for i in range(0, len(words), p)]
             return '%s%s%s %s[%d]%s = {\n%s\n};' % (note, quals, tn, name, len(words) // p, attr, ',\n'.join(rows))
 
-        new = UNK32_DEF.sub(repl, text)
+        if a.raw:
+            def raw_repl(m):
+                if len(re.findall(r'[^,\s][^,]*', m.group(6))) != int(m.group(4)) or int(m.group(4)) < 16: return m.group(0)
+                k = len(types)
+                out = repl(m)
+                mine = types[k:]; del types[k:]
+                return ''.join(t + '\n' for t in mine) + out
+            new = RAW32_DEF.sub(raw_repl, text)
+        else:
+            new = UNK32_DEF.sub(repl, text)
         if new == text: continue
         if types:
             prag = '\n#pragma explicit_zero_data on'
@@ -1106,6 +1118,7 @@ def main():
     p = sub.add_parser('drop'); p.add_argument('units', nargs='+')
     p = sub.add_parser('retype'); p.add_argument('units', nargs='*')
     p = sub.add_parser('infer'); p.add_argument('units', nargs='*'); p.add_argument('--min-words', type=int, default=2)
+    p.add_argument('--raw', action='store_true', help='units are normal source files: retype their unsigned int word dumps')
     p = sub.add_parser('report'); p.add_argument('--md')
     a = ap.parse_args()
     if a.cmd == 'gen' and a.sec_opt: a.sec = a.sec_opt

@@ -1304,7 +1304,24 @@ VoiceClip g_voicePlayCountTable[642] = {
     { 0, { 0, 0, 0 }, 0.632f, (void *)lbl_80383C74 },
 };
 unsigned int lbl_80499F84[5] = { 0x01000000, 0xC58771E5, 0xC50C427F, 0xC58E4075, 0xC50E850A };
-unsigned int lbl_80499F98[30] = { 0x00000000, 0x46108749, 0xC464C2B0, 0x4611FAE0, 0xC4D3D75C, 0x00000000, 0x45F8B2E7, 0xC5017CEE, 0x45F9583B, 0xC4A1BA35, 0x00000000, 0x46010BA4, 0xC54253CF, 0x45ED9504, 0xC55CA0B4, 0x00000000, 0x45E9133F, 0xC58C2BA2, 0x45FAE33D, 0xC5771B54, 0x00000000, 0x46146507, 0xC5ABA154, 0x460BBC49, 0xC5BCCE6D, 0x01000000, 0x460EB399, 0xC5DC7F23, 0x461647CA, 0xC5C961B6 };
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_80499F98_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+    float f_0C;
+    float f_10;
+} lbl_80499F98_Row;
+lbl_80499F98_Row lbl_80499F98[6] = {
+    { 0, { 0, 0, 0 }, 9249.821f, -915.042f, 9342.719f, -1694.73f },
+    { 0, { 0, 0, 0 }, 7958.363f, -2071.808f, 7979.029f, -1293.819f },
+    { 0, { 0, 0, 0 }, 8258.91f, -3109.238f, 7602.627f, -3530.044f },
+    { 0, { 0, 0, 0 }, 7458.406f, -4485.454f, 8028.405f, -3953.708f },
+    { 0, { 0, 0, 0 }, 9497.257f, -5492.166f, 8943.071f, -6041.803f },
+    { 1, { 0, 0, 0 }, 9132.899f, -7055.892f, 9617.947f, -6444.214f }
+};
 unsigned int lbl_8049A010[10] = { 0x00000000, 0x454607BA, 0xC514B09C, 0x4525C298, 0xC518CA19, 0x01000000, 0x45479046, 0x44C7486A, 0x4526F317, 0x44C8A0A4 };
 unsigned int lbl_8049A038[10] = { 0x00000000, 0x4538A51B, 0xC499A13F, 0x455632A8, 0xC45B577D, 0x01000000, 0x455C423D, 0x443C6375, 0x457D35F0, 0x443F0E25 };
 

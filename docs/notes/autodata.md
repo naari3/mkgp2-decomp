@@ -130,6 +130,12 @@ between are floats or small integers, and it becomes one
 `struct <name>_Pool { char s_000[28]; float f_01C[3]; ... }`. A port swaps the
 numeric members and leaves the `char` members alone.
 
+`infer --raw <source files>` does the same for one-line `unsigned int x[N] = {...};`
+word dumps inside normal TUs (32 KB on 2026-11-10: path point tables of RivalRun
+and others became `float` arrays or row structs). Build afterwards: a TU that
+indexes the array as integers would change or fail, then revert that file.
+`tools/port_readiness.py` counts what is left as "plain unsigned int array".
+
 An embedded file image is typed as bytes on purpose: the 31.8 KB object at
 0x80412158 is a `*_line.bin` course file (dtk had cut it in two), read by
 `CourseLookup::LoadMemory`. A port swaps it with the loader, like the files.
