@@ -37,13 +37,17 @@ static inline float RotatedAngle(float ax, float az, float bx, float bz, double 
     float c = AngleCos(angle);
     return (float)atan2(x*c-z*s, x*s+z*c);
 }
+static inline RivalPath *PathOf(RivalMarkerHud *self) { return self->path; }
 extern "C" float fn_80243074(RivalMarkerHud *self, int index, const RivalPosition *position) {
-    RivalPath *path = self->path;
+    RivalPath *path = PathOf(self);
     int total = Path_GetTotalCount(path);
-    int old = index;
-    index = (index + 1) % total;
+    /* `long`: the advanced index becomes its own temp numbered above `position`
+       (regalloc_patterns 95); with `int` it stays the parameter and r28/r29 swap. */
+    long i = index;
+    long old = i;
+    i = (i + 1) % total;
     RivalWaypoint *a = Path_GetWaypointPtr(path, old);
-    RivalWaypoint *b = Path_GetWaypointPtr(path, index);
+    RivalWaypoint *b = Path_GetWaypointPtr(path, i);
     if (!a || !b) {
         DebugPrintf(lbl_803EF600);
         return 0.0f;

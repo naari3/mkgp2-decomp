@@ -2577,3 +2577,35 @@ object to one reused block-local pointer before each call. Rule
 Also: float arguments in the wrong load order from `extern const float`
 (`lfs f5` before `lfs f1`): literals (see 83), `postprocess_sdata2.py` renames
 them.
+
+## 95. Two saved parameters swapped: advance the index through a `long` local, read the base through an inline getter (fn_80243074, 36 -> 14 diff lines, not matched yet, 11-10)
+
+**Symptom:** `index` (r4) and `position` (r5) are both kept across calls and
+land in r28/r29 instead of r29/r28. Parameters are numbered in declaration
+order and the higher one is coloured first, so `position` always wins; copies
+of a parameter into an `int` local are propagated back onto the parameter.
+
+**Lever:** two changes that only work together.
+
+```cpp
+static inline RivalPath *PathOf(RivalMarkerHud *self) { return self->path; }
+...
+RivalPath *path = PathOf(self);       /* inline temp instead of a named local */
+int total = Path_GetTotalCount(path);
+long i = index;                       /* long, not int */
+long old = i;
+i = (i + 1) % total;
+a = Path_GetWaypointPtr(path, old);
+b = Path_GetWaypointPtr(path, i);
+```
+
+With `long i` the advanced value is a frontend temp (numbered above every
+named local and parameter) while `old` stays on the parameter; the two ranges
+do not overlap. `path` as an inline temp is coloured before that temp and
+reuses r31 (free after `b`), so the temp opens r29, `position` takes r28 and
+the old index, coloured last, takes the lowest free register in use, r29.
+With `int i` (any spelling) or with `path` as a named local nothing moves.
+
+**Check:** regfix diag says a parameter must be numbered above a later
+parameter, and the parameter is reassigned once (`index = f(index)`).
+
