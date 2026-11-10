@@ -2349,3 +2349,36 @@ cannot spell in this C TU. Other levers of the same function:
 
 Sign: instruction count 3 short in a vector block and the target has two
 `lfs` runs from the same stack slots.
+
+## 88. Named locals must be coloured in the middle of an inline's temporaries: the surrounding code belongs to the same inline (fn_8019C6B4, 99.79 -> 100, 11-10)
+
+Symptom (regfix diag / `tools/mwtrace.py`): the target equals our interference
+graph, but a function-level named local (`angle`) must be coloured BETWEEN two
+temporaries of an inlined helper (the `y` and `z` of QuatMatrix), and backend
+temps of an argument expression (`target.z*scale`) must be coloured after an
+earlier call-result temp. No function-level spelling can do that: named locals
+of the function always have the lowest vregs (coloured last), and locals of an
+OUTER inline are created before those of a nested inline (coloured first).
+
+Rules read from the trace (`VREG`, `TEMPNEW`, `COLOR` lines) and Coloring.c:
+
+- `colorgraph` takes the lowest-numbered register in "volatile + already
+  obtained nonvolatile" that no coloured neighbour holds; a new nonvolatile
+  (f31, f30, ...) is obtained only when that mask is empty. So WHEN a node is
+  coloured relative to the nodes that obtain new nonvolatiles decides its
+  register (here: angle = f28 needs f29/f28 obtained, f27/f26 not yet).
+- Locals of ONE inline become frontend temps created in REVERSE declaration
+  order (last declared = created first = highest vreg = coloured first).
+- A single-use local of an inline survives as its own temp (a single-use named
+  local of the function is propagated away), so `qz = target.z*scale;` in the
+  inline gives a frontend temp numbered below every backend temp.
+
+Fix: the `if (angle != 0)` block, the quaternion set and the hand-expanded
+matrix build are one inline (`Turn(k, target, q, z + (x+y))`), with all locals
+in one list: `float half, scale, sw; float w, z, angle, y, x; float xx, ...,
+wz; float qz, qy, qx;` and the products assigned in the order z, y, x, stored
+x, y, z, w. The inline is too big for the default limit: `#pragma
+inline_max_size(100000)` (marked fakematch; a whole-body inline also expands
+with it). 11 -> 7 (angle) -> 0 lines (products).
+
+Sign: the diag says "must be numbered between inline temps @N and @M".

@@ -21,32 +21,6 @@ static inline double QuatY(const MovementQuat *q) { return q->y; }
 static inline double QuatZ(const MovementQuat *q) { return q->z; }
 static inline double QuatW(const MovementQuat *q) { return q->w; }
 
-static inline void QuatMatrix(Matrix44 *m, MovementQuat *q) {
-    float w, z, y, x;
-    x = QuatX(q);
-    y = QuatY(q);
-    z = QuatZ(q);
-    w = QuatW(q);
-    float xx = x*x;
-    float yy = y*y;
-    float zz = z*z;
-    float xy = x*y;
-    float xz = x*z;
-    float yz = y*z;
-    float wx = w*x;
-    float wy = w*y;
-    float wz = w*z;
-    m->m[0][0] = 1.0f - 2.0f*(yy+zz);
-    m->m[1][0] = 2.0f*(xy-wz);
-    m->m[2][0] = 2.0f*(xz+wy);
-    m->m[0][1] = 2.0f*(xy+wz);
-    m->m[1][1] = 1.0f - 2.0f*(xx+zz);
-    m->m[2][1] = 2.0f*(yz-wx);
-    m->m[0][2] = 2.0f*(xz-wy);
-    m->m[1][2] = 2.0f*(yz+wx);
-    m->m[2][2] = 1.0f - 2.0f*(xx+yy);
-}
-
 static inline void AccumulateProduct(float &value, float right, float left) {
     value += left * right;
 }
@@ -73,10 +47,60 @@ static inline void Multiply(Matrix44 *a, const Matrix44 *b) {
 }
 
 extern const double lbl_806D96F0;
-static inline void QSet(MovementQuat *q, float x, float y, float z, float w) { q->w = w; q->z = z; q->y = y; q->x = x; }
+static inline void QSet(MovementQuat *q, float x, float y, float z, float w) { q->x = x; q->y = y; q->z = z; q->w = w; }
 extern "C" float LUT_Sine(float);
 extern "C" float LUT_Cosine(float);
 extern "C" void Mtx34_Orthonormalize(float *);
+
+/* The angle test, the quaternion and the matrix build are ONE inline in the
+ * original: `angle` and the q products are coloured among the matrix
+ * temporaries (regalloc_patterns 88). Inline locals are created in reverse
+ * declaration order. */
+/* fakematch (inline limit): the original presumably built with a larger
+ * inline size limit; without this pragma Turn is not inlined. */
+#pragma inline_max_size(100000)
+static inline void Turn(MovementInit *k, InitVec &target, MovementQuat &q, float a) {
+    float half, scale, sw; float w, z, angle, y, x;
+    float xx, yy, zz, xy, xz, yz, wx, wy, wz;
+    float qz, qy, qx;
+    angle = a;
+    if (lbl_806D96D0 != angle) {
+        half = lbl_806D9704 * angle;
+        scale = LUT_Cosine(half) / angle;
+        sw = LUT_Sine(half);
+        qz = target.z*scale;
+        qy = target.y*scale;
+        qx = target.x*scale;
+        QSet(&q, qx, qy, qz, sw);
+        Matrix44 rotation;
+        Identity(&rotation);
+        x = QuatX(&q);
+        y = QuatY(&q);
+        z = QuatZ(&q);
+        w = QuatW(&q);
+        xx = x*x;
+        yy = y*y;
+        zz = z*z;
+        xy = x*y;
+        xz = x*z;
+        yz = y*z;
+        wx = w*x;
+        wy = w*y;
+        wz = w*z;
+        rotation.m[0][0] = 1.0f - 2.0f*(yy+zz);
+        rotation.m[1][0] = 2.0f*(xy-wz);
+        rotation.m[2][0] = 2.0f*(xz+wy);
+        rotation.m[0][1] = 2.0f*(xy+wz);
+        rotation.m[1][1] = 1.0f - 2.0f*(xx+zz);
+        rotation.m[2][1] = 2.0f*(yz-wx);
+        rotation.m[0][2] = 2.0f*(xz-wy);
+        rotation.m[1][2] = 2.0f*(yz+wx);
+        rotation.m[2][2] = 1.0f - 2.0f*(xx+yy);
+        Multiply(&k->orientation, &rotation);
+        for (int i = 12; i > 0; i--) {}
+        Mtx34_Orthonormalize(&k->orientation.m[0][0]);
+    }
+}
 
 extern "C" void fn_8019C6B4(MovementInit *k) {
     float dz = k->orientation.m[2][2];
@@ -98,20 +122,7 @@ extern "C" void fn_8019C6B4(MovementInit *k) {
     y = direction.z*target.x - direction.x*target.z;
     z = direction.x*target.y - direction.y*target.x;
     target.x = x; target.y = y; target.z = z;
-    float half, scale, w;
-    float angle = z + (x+y);
-    if (lbl_806D96D0 != angle) {
-        half = lbl_806D9704 * angle;
-        scale = LUT_Cosine(half) / angle;
-        w = LUT_Sine(half);
-        QSet(&q, target.x*scale, target.y*scale, target.z*scale, w);
-        Matrix44 rotation;
-        Identity(&rotation);
-        QuatMatrix(&rotation, &q);
-        Multiply(&k->orientation, &rotation);
-        for (int i = 12; i > 0; i--) {}
-        Mtx34_Orthonormalize(&k->orientation.m[0][0]);
-    }
+    Turn(k, target, q, z + (x+y));
     k->orientation.m[3][0] = k->pos.x;
     k->orientation.m[3][1] = k->pos.y;
     k->orientation.m[3][2] = k->pos.z;
