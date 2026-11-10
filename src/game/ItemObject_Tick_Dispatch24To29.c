@@ -29,6 +29,9 @@ extern void *KartDriver_GetKartRootMtx(void *driver);
 extern void Mtx_TransposeToMtx44(float dst[4][4], const void *src);
 extern void Mtx44_Inverse_GaussJordan(float dst[4][4], float src[4][4]);
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec in);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, Vec *pos, int ch);
 extern void ItemObject_Tick_Kind2426_FastDrop(unsigned char *self, unsigned char *sub);
 extern void ItemObject_Tick_Kind27_TimedDrop(unsigned char *self, unsigned char *sub);

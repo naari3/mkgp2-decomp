@@ -3,6 +3,9 @@
 
 extern double sin(double);
 extern int SoundMgr_CountActiveSEInstances(int sound);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int sound, const Vec *position, int channel);
 extern void SoundMgr_PlaySE_WithChannel(int sound, const Vec *position, int channel);
 

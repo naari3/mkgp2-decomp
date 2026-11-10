@@ -1,3 +1,4 @@
+#include "game/types/bitfields.h"
 #ifdef __MWERKS__
 typedef struct __va_list_struct {
     char gpr;
@@ -15,10 +16,7 @@ typedef __va_list va_list;
 #endif
 
 struct GXColor {
-    unsigned int r : 8;
-    unsigned int g : 8;
-    unsigned int b : 8;
-    unsigned int a : 8;
+    BITFIELDS4(unsigned int r:8, unsigned int g:8, unsigned int b:8, unsigned int a:8)
 };
 
 #include "game/types/Buf256.h"

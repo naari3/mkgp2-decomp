@@ -8,6 +8,9 @@ extern void Vec3_Copy(void *dst, void *src);
 extern float Rand_RangeFloat(float lo, float hi);
 extern void Vec2_RotateX(void *dst, void *src, float a);
 extern void Vec2_RotateY(void *dst, void *src, float a);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int id, Vec3 *pos, int a);
 extern char lbl_80331698[];
 

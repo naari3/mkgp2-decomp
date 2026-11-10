@@ -172,7 +172,7 @@ extern void fn_801A0004(void *obj);
 extern void *fn_801F8E58(void);
 extern void fn_801F8A34(void *ctx, void *item, int mode);
 extern void *ItemDisplay_GetOrCreate(void);
-extern void fn_8020AC34(void);
+extern void fn_8020AC34(void *);
 extern void ItemDisplay_Update(void *disp);
 extern void ItemDisplay_Start(void *disp, int id);
 extern void ItemDisplay_Destroy(void);
@@ -390,8 +390,7 @@ extern "C" void clFlowItem_Draw(clFlowItem *self) {
     if (self->itemGrid) {
         ItemGrid_Draw(self->itemGrid);
     }
-    ItemDisplay_GetOrCreate();
-    fn_8020AC34();
+    fn_8020AC34(ItemDisplay_GetOrCreate());
     fn_802321F8(ItemMsg_Get());
 }
 

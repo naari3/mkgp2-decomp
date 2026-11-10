@@ -1,3 +1,4 @@
+#include "game/types/reg_args.h"
 #ifndef GAME_SCENE_80163EF4_PRIVATE_H
 #define GAME_SCENE_80163EF4_PRIVATE_H
 
@@ -71,7 +72,7 @@ void ItemSelect_Reset(void *, int);
 int GetKartSlotCharId(int);
 void RaceResult_StoreLatest(int, int, float, float);
 int RaceResult_InsertSortedRank(int, int, float, float);
-void SetRaceResultLatestPtr();
+void SetRaceResultLatestPtr(REG_ARGS1(void *p));
 void Object_SetByte10_Return1(DemoSceneBase *, int);
 void Jyugemu_Flag_SetKartDriver(void *, void *);
 void KartMovement_ResetOnGoal(void *);

@@ -3,6 +3,9 @@
 extern void Item_PrepareHitRebound(unsigned char *self, void *a, void *b, void *c);
 extern void Vec3_AddNormalizedXZ(unsigned char *self, void *a, Vec3 *b);
 extern void ItemHit_Dispatch(unsigned char *self, int a, void *pos, void *b);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int id, Vec3 *pos, int a);
 extern void Vec3_Add_DestFirst(void *dst, void *a, void *b);
 extern void *KartDriver_GetKartRootMtx(void *kart);

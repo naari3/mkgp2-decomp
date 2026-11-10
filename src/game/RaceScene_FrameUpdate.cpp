@@ -1,3 +1,4 @@
+#include "game/types/reg_args.h"
 /* RaceScene_FrameUpdate (0x800A0EF4): per-frame update of the race scene.
  * Reads the player's pad (or steers automatically once the race is over),
  * drives the kart, item pickup, Lakitu, flags and lap banner, counts the
@@ -147,7 +148,7 @@ void ItemSelect_Reset(void *sel, int flag);
 int GetKartSlotCharId(int slot);
 void RaceResult_StoreLatest(int charId, int pos, float best, float total);
 int RaceResult_InsertSortedRank(int charId, int pos, float best, float total);
-void SetRaceResultLatestPtr(void);
+void SetRaceResultLatestPtr(REG_ARGS1(void *p));
 void fn_801D680C(unsigned char *playerData, int cup, int round, int win);
 void fn_801D67F4(unsigned char *playerData);
 void fn_80253D00(void *hud);
@@ -367,7 +368,7 @@ extern "C" int RaceScene_FrameUpdate(RaceScene *self)
                                    g_totalRaceTime);
             g_raceResultCode = RaceResult_InsertSortedRank(GetKartSlotCharId(g_playerKartSlot),
                                                            g_finalRacePosition, g_bestLapTime, g_totalRaceTime);
-            SetRaceResultLatestPtr();
+            SetRaceResultLatestPtr(REG_ARGS1((void *)g_raceResultCode)); /* r3 still holds the rank just stored */
             if (g_finalRacePosition == 0) {
                 fn_801D680C(g_playerData, g_cupId - 1, g_roundIndex, 1);
             } else {

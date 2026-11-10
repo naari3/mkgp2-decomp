@@ -20,6 +20,9 @@ extern int Item_CheckWallCollision(void *self, float *out, int flag);
 extern int Item_AdvanceProjectileSimple(void *self, float *anchor, float k1, float k2);
 extern void fn_801B129C(float *pos);
 extern void Vec3_Add_DestFirst(float *dst, float *a, float *b);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, float *pos, int flag);
 extern void Item_BounceOffWall(void *self, float *normal, int se, int flag, float k1, float k2);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int a, float f);

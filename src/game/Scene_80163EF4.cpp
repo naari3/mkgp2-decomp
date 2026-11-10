@@ -1,3 +1,4 @@
+#include "game/types/reg_args.h"
 #include "game/Scene_80163EF4Private.h"
 
 static inline void CapTime(float limit, float &value) { if (value > limit) value = limit; }
@@ -84,7 +85,7 @@ extern "C" int fn_80163EF4(LoaderTick163 *s) {
             g_finalRacePosition = ((ResultKart163 *)g_playerRenderObj)->position;
             RaceResult_StoreLatest(GetKartSlotCharId(s->slot), g_finalRacePosition, g_bestLapTime, g_totalRaceTime);
             g_raceResultCode = RaceResult_InsertSortedRank(GetKartSlotCharId(s->slot), g_finalRacePosition, g_bestLapTime, g_totalRaceTime);
-            SetRaceResultLatestPtr();
+            SetRaceResultLatestPtr(REG_ARGS1((void *)g_raceResultCode)); /* r3 still holds the rank just stored */
             Object_SetByte10_Return1(s->scene, 1);
             if (g_finalRacePosition == 0) {
                 Jyugemu_Flag_SetKartDriver(s->flag, CarObject_GetRenderObj(g_carObjects[0]));

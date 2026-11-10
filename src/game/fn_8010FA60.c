@@ -11,6 +11,9 @@ extern void ItemHit_Dispatch(unsigned char *self, int a, void *pos, void *kart);
 extern void Effect_FourSpark_Res65_68_Update(void *e);
 extern unsigned char *DrawEffect_SpawnDirect(void (*cb)(void *));
 extern void JointByName_GetWorldPosition(void *out, void *slot, const char *name);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, Vec3 *pos, int flag);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float scale);
 extern void SpriteSlot_SetScale(void *slot, float scale);

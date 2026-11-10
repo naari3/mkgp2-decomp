@@ -68,7 +68,7 @@ FlowMgrInfo *fn_801FE404(void);
 void fn_801FE584(FlowMgrInfo *mgr);
 CardConfig *fn_8024F588(FlowMgrInfo *mgr);
 DispFlags *fn_801DAEC0(void);
-void fn_801DABFC(void);
+void fn_801DABFC(void *);
 void fn_801DAE54(void);
 void fn_8011FAB8(void);
 void fn_8011F86C(void);

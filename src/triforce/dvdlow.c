@@ -1,3 +1,4 @@
+#include "game/types/reg_args.h"
 /* Triforce replacement for dvdlow.c: DI commands go to the AM baseboard. */
 #include <dolphin.h>
 #include <dolphin/dvd.h>
@@ -50,7 +51,7 @@ void __DVDLowSetWAType(u32 type, u32 location);
 extern void __DVDSetOptionalCommandChecker(void (*)(DVDCommandBlock*, DVDLowCallback));
 extern void __DVDSetImmCommand(u32 cmd);
 extern void __DVDSetDmaCommand(u32 cmd);
-extern void fn_802867B0(void);
+extern void fn_802867B0(REG_ARGS1(u32 seed));
 extern void fn_80286730(void);
 extern u32 fn_802867B8(u32, u32);
 extern void fn_80286314(u32, u32, u32);
@@ -63,8 +64,8 @@ static BOOL fn_80285F48(u32 arg, DVDLowCallback callback);
 static BOOL fn_8028607C(u32, u32, u32, DVDLowCallback callback);
 static BOOL fn_80285FE8(void);
 
-void fn_802857E0(void) {
-    fn_802867B0();
+void fn_802857E0(REG_ARGS1(u32 seed)) { /* initialize.c passes 0; it stays in r3 */
+    fn_802867B0(REG_ARGS1(seed));
     __DVDSetOptionalCommandChecker(CommandChecker);
     __DVDSetImmCommand(0x65);
     __DVDSetImmCommand(0x67);

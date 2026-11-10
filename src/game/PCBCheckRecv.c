@@ -1,3 +1,5 @@
+#include "game/types/reg_args.h"
+#include "game/types/bitfields.h"
 #include "game/types/c_region.h"
 C_REGION_BEGIN
 #pragma exceptions on
@@ -18,12 +20,7 @@ C_REGION_BEGIN
  * alias is a non-local Object).
  * NonMatching: PCBComm_Process (99.95%, see docs/gave_up.md). */
 typedef struct PcbRecvFlags {
-    unsigned char local : 1;
-    unsigned char reserved6 : 2;
-    unsigned char receiving : 1;
-    unsigned char reserved3 : 1;
-    unsigned char completed : 1;
-    unsigned char reserved0 : 2;
+    BITFIELDS6(unsigned char local:1, unsigned char reserved6:2, unsigned char receiving:1, unsigned char reserved3:1, unsigned char completed:1, unsigned char reserved0:2)
 } PcbRecvFlags;
 typedef struct PcbRecvSlot {
     unsigned char header[0x2C];
@@ -221,20 +218,12 @@ int PCBCheck_RecvLinkData(unsigned char advanceRead)
 #pragma optimize_for_size on
 /* Only fields observed by SendToAllPeers. */
 typedef struct SendPeerSlot {
-    unsigned char unusedHead : 1;
-    unsigned char role : 3;
-    unsigned char unusedLow : 4;
+    BITFIELDS3(unsigned char unusedHead:1, unsigned char role:3, unsigned char unusedLow:4)
     unsigned char gap01[0xA2B];
     void *connection;
     unsigned char gapA30[4];
-    unsigned char unusedFlags : 2;
-    unsigned char sendPending : 1;
-    unsigned char unusedBit4 : 1;
-    unsigned char cardPending : 1;
-    unsigned char ackPending : 1;
-    unsigned char unusedBits01 : 2;
-    unsigned char unusedCountBit : 1;
-    unsigned char blocksRemaining : 7;
+    BITFIELDS6(unsigned char unusedFlags:2, unsigned char sendPending:1, unsigned char unusedBit4:1, unsigned char cardPending:1, unsigned char ackPending:1, unsigned char unusedBits01:2)
+    BITFIELDS2(unsigned char unusedCountBit:1, unsigned char blocksRemaining:7)
     unsigned char gapA36[6];
 } SendPeerSlot;
 extern unsigned char g_pcbSyncReady;
@@ -316,13 +305,10 @@ typedef unsigned short u16;
 typedef unsigned int u32;
 
 typedef struct PeerHeader {
-    unsigned char reserved7 : 1;
-    unsigned char role : 3;
-    unsigned char reserved0 : 4;
+    BITFIELDS3(unsigned char reserved7:1, unsigned char role:3, unsigned char reserved0:4)
 } PeerHeader;
 typedef struct VoteByte {
-    unsigned char track : 7;
-    unsigned char option : 1;
+    BITFIELDS2(unsigned char track:7, unsigned char option:1)
 } VoteByte;
 typedef struct SyncPeerSlot {
     union { u32 word; struct { PeerHeader header; u8 rest[3]; } bytes; } first;
@@ -335,11 +321,8 @@ typedef struct CardRow { u8 bytes[0x45]; } CardRow;
 typedef struct CardPointers { CardRow* row[4]; } CardPointers;
 typedef struct SyncOutput {
     union {
-        struct { unsigned short upper : 5; unsigned short track : 7;
-                 unsigned short lower : 4; } half;
-        struct { u8 byte0; unsigned char upper : 4;
-                 unsigned char option : 1; unsigned char mode : 2;
-                 unsigned char lower : 1; } bytes;
+        struct { BITFIELDS3(unsigned short upper:5, unsigned short track:7, unsigned short lower:4) } half;
+        struct { u8 byte0; BITFIELDS4(unsigned char upper:4, unsigned char option:1, unsigned char mode:2, unsigned char lower:1) } bytes;
     } choice;
     u8 pad2[2];
     int commonItem;
@@ -567,8 +550,8 @@ int PCBComm_ComputeSyncState(void)
 #pragma exceptions off
 #pragma use_lmw_stmw on
 /* Only observed overlays; all global storage remains externally owned. */
-typedef struct { unsigned char high : 1; unsigned char role : 3; unsigned char low : 4; } RoleByte;
-typedef struct { unsigned char high : 5; unsigned char flag2 : 1; unsigned char flag1 : 1; unsigned char low : 1; } PhaseFlags;
+typedef struct { BITFIELDS3(unsigned char high:1, unsigned char role:3, unsigned char low:4) } RoleByte;
+typedef struct { BITFIELDS4(unsigned char high:5, unsigned char flag2:1, unsigned char flag1:1, unsigned char low:1) } PhaseFlags;
 typedef union {
     unsigned int word;
     struct { RoleByte role; unsigned char unused; PhaseFlags flags; unsigned char tail; } bytes;
@@ -699,15 +682,10 @@ int PCBComm_UpdateSyncPhase5(void)
 #pragma use_lmw_stmw off
 /* Observed byte/word overlays only; all storage remains externally owned. */
 typedef struct {
-    unsigned char unused7 : 1;
-    unsigned char role : 3;
-    unsigned char unusedLow : 4;
+    BITFIELDS3(unsigned char unused7:1, unsigned char role:3, unsigned char unusedLow:4)
 } RoleByte;
 typedef struct {
-    unsigned char high : 5;
-    unsigned char flag2 : 1;
-    unsigned char flag1 : 1;
-    unsigned char low : 1;
+    BITFIELDS4(unsigned char high:5, unsigned char flag2:1, unsigned char flag1:1, unsigned char low:1)
 } PhaseFlags;
 typedef union {
     unsigned int word;
@@ -822,10 +800,8 @@ int PCBComm_UpdateSyncPhase1(void)
  * entry 0; clients read the entry at g_ringReadIdx. */
 
 typedef struct CommRankNibbles {
-    signed char kart0 : 4;
-    signed char kart1 : 4;
-    signed char kart2 : 4;
-    signed char kart3 : 4;
+    BITFIELDS2(signed char kart0:4, signed char kart1:4)
+    BITFIELDS2(signed char kart2:4, signed char kart3:4)
 } CommRankNibbles;
 
 typedef struct CommEntry {
@@ -940,11 +916,7 @@ struct BootInput {
 };
 
 typedef struct {
-    unsigned char disabled : 1;
-    unsigned char unused6 : 1;
-    unsigned char ready : 1;
-    unsigned char flag4 : 1;
-    unsigned char unusedLow : 4;
+    BITFIELDS5(unsigned char disabled:1, unsigned char unused6:1, unsigned char ready:1, unsigned char flag4:1, unsigned char unusedLow:4)
 } ReadyFlags;
 
 typedef struct PcbSlot {
@@ -1133,7 +1105,7 @@ int BootNotice_CheckEnterCondition(void) {
  */
 
 extern void *Alloc(int size);
-extern void DisplayContext_Init(void);
+extern void DisplayContext_Init(REG_ARGS1(void *self));
 extern void SetSyncTarget(int target);
 extern void PCBCheck_StateSet(unsigned int listener);
 extern void MemoryManager_TimedFree(void *);
@@ -1189,7 +1161,7 @@ int BootPCBCheck_Init(void) {
     if (lbl_806D1880 == 0) {
         buf = Alloc(0xD8);
         if (buf != 0) {
-            DisplayContext_Init();
+            DisplayContext_Init(REG_ARGS1(buf)); /* r3 still holds buf */
         }
         lbl_806D1880 = (unsigned int)buf;
     }
@@ -1237,16 +1209,11 @@ void SetPcbScratchFlag_806d11a4(void) {
 #pragma use_lmw_stmw off
 /* Observed communication-slot bytes only; all storage is external. */
 typedef struct SnapshotHeader {
-    unsigned char reserved7 : 1;
-    unsigned char role : 3;
-    unsigned char ready : 1;
-    unsigned char reserved0 : 3;
+    BITFIELDS4(unsigned char reserved7:1, unsigned char role:3, unsigned char ready:1, unsigned char reserved0:3)
 } SnapshotHeader;
 
 typedef struct SnapshotTrigger {
-    unsigned char upper : 4;
-    unsigned char pending : 1;
-    unsigned char lower : 3;
+    BITFIELDS3(unsigned char upper:4, unsigned char pending:1, unsigned char lower:3)
 } SnapshotTrigger;
 
 typedef struct SnapshotSlot {
@@ -1530,11 +1497,7 @@ unsigned int PcbSlot_GetCharIdByte(int index)
 }
 
 typedef struct {
-    unsigned char disabled : 1;
-    unsigned char unused6 : 1;
-    unsigned char ready : 1;
-    unsigned char flag4 : 1;
-    unsigned char unusedLow : 4;
+    BITFIELDS5(unsigned char disabled:1, unsigned char unused6:1, unsigned char ready:1, unsigned char flag4:1, unsigned char unusedLow:4)
 } ReadyFlags;
 
 static inline unsigned int FinalReadyFlag(const ReadyFlags *ready)
@@ -1695,25 +1658,17 @@ int PCBComm_PromoteToClientConfirmed(void) {
 /* PCB sync-table and link-slot peer counters, 0x800856F4..0x80085DD8. */
 
 typedef struct {
-    unsigned char disabled : 1;
-    unsigned char unused6 : 1;
-    unsigned char ready : 1;
-    unsigned char flag4 : 1;
-    unsigned char unusedLow : 4;
+    BITFIELDS5(unsigned char disabled:1, unsigned char unused6:1, unsigned char ready:1, unsigned char flag4:1, unsigned char unusedLow:4)
 } ReadyFlags;
 
 typedef struct PcbSlot {
     union {
         unsigned int word;
         struct {
-            unsigned char unused7 : 1;
-            unsigned char team : 3;
-            unsigned char unusedLow : 4;
+            BITFIELDS3(unsigned char unused7:1, unsigned char team:3, unsigned char unusedLow:4)
             unsigned char b1;
             unsigned char b2;
-            unsigned char unused3hi : 6;
-            unsigned char readyBit1 : 1;
-            unsigned char unused3lo : 1;
+            BITFIELDS3(unsigned char unused3hi:6, unsigned char readyBit1:1, unsigned char unused3lo:1)
         } bits;
     } hdr;
     unsigned char pad_04[0xA30];
@@ -1971,11 +1926,10 @@ int SyncSlot_ApplyCourseChoice(void) {
 
 typedef union PcbLinkFlags {
     struct {
-        unsigned char disabled : 1, reserved6 : 1, ready : 1, flag4 : 1;
-        unsigned char reserved3 : 4;
+        BITFIELDS5(unsigned char disabled:1, unsigned char reserved6:1, unsigned char ready:1, unsigned char flag4:1, unsigned char reserved3:4)
     } byte;
     struct {
-        unsigned short upper : 6, id : 3, lower : 7;
+        BITFIELDS3(unsigned short upper:6, unsigned short id:3, unsigned short lower:7)
     } half;
 } PcbLinkFlags;
 
@@ -1991,9 +1945,7 @@ typedef struct PcbLinkSlot {
     union {
         unsigned int word;
         struct {
-            unsigned char unused7 : 1;
-            unsigned char team : 3;
-            unsigned char unusedLow : 4;
+            BITFIELDS3(unsigned char unused7:1, unsigned char team:3, unsigned char unusedLow:4)
         } bits;
     } hdr;
     unsigned char pad_04[0xA28];
@@ -2267,18 +2219,17 @@ public:
     u8 bytes[0x60];
     LifecycleConn();
 };
-struct RoleByte { u8 high:1; u8 role:3; u8 low:4; };
+struct RoleByte { BITFIELDS3(u8 high:1, u8 role:3, u8 low:4) };
 union PacketHead {
     u32 word;
     struct { RoleByte role; u8 remaining[3]; } bytes;
 };
 union SlotFlags {
     u16 half;
-    struct { u16 local:1; u16 reserved:5; u16 id:3; u16 blocks:7; } ids;
+    struct { BITFIELDS4(u16 local:1, u16 reserved:5, u16 id:3, u16 blocks:7) } ids;
     struct {
-        u8 local:1; u8 idHigh:1; u8 tx:1; u8 rx:1;
-        u8 card:1; u8 ack:1; u8 low:2;
-        u8 idLow:1; u8 blocks:7;
+        BITFIELDS7(u8 local:1, u8 idHigh:1, u8 tx:1, u8 rx:1, u8 card:1, u8 ack:1, u8 low:2)
+        BITFIELDS2(u8 idLow:1, u8 blocks:7)
     } bits;
 };
 struct Slot {

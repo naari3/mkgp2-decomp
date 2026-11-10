@@ -8,6 +8,9 @@ extern void ItemTracker_ReleaseLock(void *self);
 extern void *ItemTracker_GetTargetKart(void *self);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *obj);
 extern int SoundMgr_CountActiveSEInstances(int se);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, Vec3 *pos, int ch);
 extern void SoundMgr_PlaySE_WithChannel(int se, Vec3 *pos, int ch);
 extern void SoundMgr_StopSE_OrSpecial(int se, int ch);

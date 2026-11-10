@@ -3,6 +3,9 @@
 extern void Effect_Explosion_Compound_Update(void);
 extern unsigned char *DrawEffect_SpawnDirect(void (*fn)(void));
 extern void Vec3_Copy(void *dst, void *src);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int id, Vec3 *pos, int a);
 extern void Item_PropagateHitToDriversInRadius(unsigned char *self, int a);
 extern void SpriteSlot_Container_Free(void *self);

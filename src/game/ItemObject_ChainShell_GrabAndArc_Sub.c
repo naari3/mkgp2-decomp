@@ -38,6 +38,9 @@ extern void fn_801B1660(void *driver, void *target);
 extern void fn_801B158C(void *driver, void *target);
 extern void fn_801B14B8(void *driver, void *target);
 extern void Item_ComputeYawRelativeApproach(Vec *vel, void *kart, Vec *pos, Vec *prevVel);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, Vec *pos, int ch);
 extern void GetSpawnPosition(Vec *out, float x, float y, float z);
 extern int Item_CheckWallCollision(unsigned char *self, Vec *outNormal, int mode);

@@ -10,6 +10,9 @@ extern void Mtx44_GetTranslation_RowMajor(Vec3 *, void *);
 extern void Item_PrepareHitRebound(Item *, Vec3 *, Vec3 *, unsigned int *);
 extern void ItemHit_Dispatch(Item *, int, int, void *);
 extern void ShellPile_Spawn(Item *, TaruState *);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int, Vec3 *, int);
 extern void Vec3_AddNormalizedXZ(Item *, Vec3 *, Vec3 *);
 extern void Vec3_Add_DestFirst(Vec3 *, Vec3 *, Vec3 *);

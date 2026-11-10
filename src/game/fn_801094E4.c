@@ -22,6 +22,9 @@ extern void fn_801B14B8(void *kart, void *target);
 extern void Item_ComputeYawRelativeApproach(void *vel, void *target, Vec3 *pos, Vec3 *v);
 extern void ItemTracker_ReleaseLock(unsigned char *self);
 extern void Vec3_Add_DestFirst(void *dst, void *a, void *b);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, Vec3 *pos, int flag);
 extern int Item_CheckWallCollision(unsigned char *self, Vec3 *n, int flag);
 extern void Item_BounceOffWall(unsigned char *self, Vec3 *n, int a, int b, float k1, float k2);

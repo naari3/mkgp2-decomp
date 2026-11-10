@@ -21,6 +21,9 @@ extern void ItemObject_DecrementCategoryBudget(unsigned char *self);
 extern unsigned char *DrawEffect_SpawnDirect(void (*callback)(unsigned char *));
 extern void Effect_SparkSprayCompound_Init(unsigned char *self);
 extern void Effect_BindRes25_Init(unsigned char *self);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, Vec *pos, int ch);
 extern float KartCharacterParam_GetKinopioBoostBonus(void *driver);
 extern float KartFxParam_GetConst1p5(void *driver);

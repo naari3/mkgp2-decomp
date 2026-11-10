@@ -1,5 +1,6 @@
 #ifndef GAME_STRPCB_LIFETIME_PRIVATE_H
 #define GAME_STRPCB_LIFETIME_PRIVATE_H
+#include "game/types/bitfields.h"
 #include "game/types/size_t.h"
 
 typedef unsigned char u8;
@@ -49,16 +50,9 @@ struct StrPcbBuffer {
 };
 
 struct StrPcbFlags {
-    u8 bit80 : 1;
-    u8 bit40 : 1;
-    u8 bit20 : 1;
-    u8 bit10 : 1;
-    u8 bit08 : 1;
-    u8 bit04 : 1;
-    u8 low : 2;
+    BITFIELDS7(u8 bit80:1, u8 bit40:1, u8 bit20:1, u8 bit10:1, u8 bit08:1, u8 bit04:1, u8 low:2)
     u8 id;
-    u8 pad2 : 7;
-    u8 bit01 : 1;
+    BITFIELDS2(u8 pad2:7, u8 bit01:1)
 };
 
 class StrPcb {

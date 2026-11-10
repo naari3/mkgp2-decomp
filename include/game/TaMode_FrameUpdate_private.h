@@ -206,7 +206,7 @@ int __ptmf_test(const void *);
 void fn_8023E324(void *, int);
 int KartMovement_GetCurrentItemId(TaRender *);
 unsigned char KartItem_GetByte_f4(void *);
-unsigned char Input_IsItemButtonPressed(void);
+unsigned char Input_IsItemButtonPressed(int buttons);
 unsigned char RenderObj_UseItem(TaRender *, int, int);
 void RankLog_OnPlayerVictory(void *, int, int);
 void CarObject_ApplyDriftBoost(void *, int, float);

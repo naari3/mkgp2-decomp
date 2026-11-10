@@ -7,6 +7,9 @@ extern void ItemTracker_ReleaseLock(unsigned char *self);
 extern void ItemTracker_SetTrackPhase(unsigned char *self, int phase);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int a, float f);
 extern void SpriteSlot_SetScale(void *slot, float s);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int id, Vec3 *pos, int a);
 extern int ItemCollision_Check(unsigned char *self);
 extern void *ItemTracker_GetTargetKart(unsigned char *self);

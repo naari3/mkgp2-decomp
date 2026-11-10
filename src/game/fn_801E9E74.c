@@ -1,3 +1,4 @@
+#include "game/types/reg_args.h"
 /* Native reconstruction of the assigned single-function TU. */
 #include "game/AISpeedPrivate.h"
 #include "game/KartMovement.h"
@@ -9,7 +10,7 @@ extern void *g_pathSystem;
 extern int Waypoint_FindNearest(void *, int, float, float, float, float);
 extern float PSVECSquareDistance(const Vec3 *, const Vec3 *);
 extern int fn_801DCCE4(void);
-extern float fn_801DCCBC(void);
+extern float fn_801DCCBC(REG_ARGS1(int idx));
 extern int fn_801DCC94(int);
 extern float fn_801DCC6C(int);
 static inline void UpdateRecord(AIPairRecord *record, AIPairRecord *base, Vec3 *player, float pz) {
@@ -73,7 +74,7 @@ static inline void ResetRecord(AIPairRecord *record) {
         *(unsigned char *)&record->field30 = 0;
     }
 }
-static inline float GetRangeSq(void) { float range = fn_801DCCBC(); range *= range; return range; }
+static inline float GetRangeSq(REG_ARGS1(int idx)) { float range = fn_801DCCBC(REG_ARGS1(idx)); range *= range; return range; }
 void fn_801E9E74(AISpeedOwner *self) {
     AISpeedRender *player;
     Vec3 position;
@@ -109,7 +110,7 @@ void fn_801E9E74(AISpeedOwner *self) {
         if (setting >= 0) {
             int states[8];
             int count = 0;
-            float range = GetRangeSq();
+            float range = GetRangeSq(REG_ARGS1(setting)); /* r3 still holds setting */
             for (i = 0; i < 8; ++i) {
                 record = &base[i];
                 ClassifyRecord(record, range, &count, &states[i]);

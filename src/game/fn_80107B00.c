@@ -6,6 +6,9 @@ extern void ItemTracker_SetTrackPhase(unsigned char *self, int phase);
 extern void Effect_DustBurst4_Update(void);
 extern unsigned char *DrawEffect_SpawnDirect(void (*fn)(void));
 extern void Vec3_Copy(void *dst, void *src);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int id, Vec3 *pos, int a);
 extern int ItemCollision_Check(unsigned char *self);
 extern void ItemHit_Dispatch(unsigned char *self, int a, void *pos, int b);

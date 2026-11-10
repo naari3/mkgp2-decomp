@@ -47,7 +47,7 @@ void Backup_LoadFromMemoryOrInit();
 void Backup_ClearHiScores();
 void PlayStats_Clear();
 void CreditMgr_ResetState(int);
-int fn_80288574(int, BootBackup *);
+int fn_80288574(int, BootBackup *, BootDescriptor *);
 void fn_80288210(int, BootBackup *);
 int acModifyMyIPaddr(unsigned int, unsigned int);
 void DebugPrintf(const char *, ...);

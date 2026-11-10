@@ -1,3 +1,4 @@
+#include "game/types/bitfields.h"
 /* Complete NonMatching reconstruction: 89.06464% in the bounded
  * signed-bitfield retry. Typed wire overlays preserve all writes and the
  * signed ring remainder.
@@ -15,17 +16,14 @@ struct BroadcastInput {
     virtual unsigned int PressedMasked(unsigned int);
 };
 struct HeaderByte {
-    unsigned char active:1, role:3, host:1, flag2:1, low:2;
+    BITFIELDS5(unsigned char active:1, unsigned char role:3, unsigned char host:1, unsigned char flag2:1, unsigned char low:2)
     void SetActive(unsigned char value) { active = value; }
     void SetRole(int value) { role = value; }
     void SetHost(unsigned char value) { host = value; }
     void SetFlag2(unsigned char value) { flag2 = value; }
 };
 struct StateByte {
-    unsigned char sceneLow:1, raceEnded:1;
-    signed char flag5:1;
-    unsigned char unused4:1;
-    unsigned char active:1, scratch:1, scratchNext:1, flag0:1;
+    BITFIELDS8(unsigned char sceneLow:1, unsigned char raceEnded:1, signed char flag5:1, unsigned char unused4:1, unsigned char active:1, unsigned char scratch:1, unsigned char scratchNext:1, unsigned char flag0:1)
     void SetActive(unsigned char value) { active = value; }
     void SetFlag5(unsigned char value) { flag5 = value; }
     void SetRaceEnded(unsigned char value) { raceEnded = value; }
@@ -34,8 +32,7 @@ struct StateByte {
     void SetFlag0(unsigned char value) { flag0 = value; }
 };
 struct StatusByte {
-    unsigned char flag7:1, card:1, confirmed:1, display:1;
-    unsigned char unused3:1, flag2:1, host:1, displayLow:1;
+    BITFIELDS8(unsigned char flag7:1, unsigned char card:1, unsigned char confirmed:1, unsigned char display:1, unsigned char unused3:1, unsigned char flag2:1, unsigned char host:1, unsigned char displayLow:1)
     void SetFlag7(unsigned char value) { flag7 = value; }
     void SetCard(unsigned char value) { card = value; }
     void SetConfirmed(unsigned char value) { confirmed = value; }
@@ -46,14 +43,14 @@ struct StatusByte {
 };
 union BroadcastHeader {
     struct { HeaderByte first; unsigned char second; StateByte state; StatusByte status; } bytes;
-    struct { unsigned int upper:9, scene:8, lower:15; } word;
+    struct { BITFIELDS3(unsigned int upper:9, unsigned int scene:8, unsigned int lower:15) } word;
 };
-struct DisplayByte { unsigned char character:4, buffer:4; };
-struct RoundByte { unsigned char round:7, reverse:1; };
-struct ClassByte { unsigned char mode:2, cc:2, allCleared:1, kart:2, low:1; };
+struct DisplayByte { BITFIELDS2(unsigned char character:4, unsigned char buffer:4) };
+struct RoundByte { BITFIELDS2(unsigned char round:7, unsigned char reverse:1) };
+struct ClassByte { BITFIELDS5(unsigned char mode:2, unsigned char cc:2, unsigned char allCleared:1, unsigned char kart:2, unsigned char low:1) };
 union ClassHeader {
     struct { ClassByte first; unsigned char second; } bytes;
-    struct { unsigned short upper:7, wins:4, low:5; } half;
+    struct { BITFIELDS3(unsigned short upper:7, unsigned short wins:4, unsigned short low:5) } half;
 };
 struct BroadcastSlot {
     BroadcastHeader header;

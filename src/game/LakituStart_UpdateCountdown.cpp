@@ -1,3 +1,4 @@
+#include "game/types/bitfields.h"
 #include "game/LakituStartPrivate.h"
 extern "C" {
 void *GetCourseScene3D();
@@ -51,7 +52,7 @@ static inline void HideCountdown(LakituStart *self) {
     for (unsigned i = 0; i < 6; ++i)
         JObj_Hide(self->model, ResolveJointByName(self->model, LakituStart_UpdateCountdown_data_803F5910[i]), 0x10);
 }
-struct SyncFlags { unsigned char countdown:5; unsigned char flags:3; };
+struct SyncFlags { BITFIELDS2(unsigned char countdown:5, unsigned char flags:3) };
 extern "C" int LakituStart_UpdateCountdown(LakituStart *self) {
     if (!self->model) return 0;
     if (self->frame >= lbl_806CEDBC) return 0;

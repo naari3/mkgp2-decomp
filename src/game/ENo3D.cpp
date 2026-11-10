@@ -1,3 +1,4 @@
+#include "game/types/bitfields.h"
 /*
  * 0x80230404..0x80230644: clENo3D, the player-number badge drawn next to a
  * rival's face icon in network battle mode.
@@ -46,8 +47,7 @@ struct ResCtrl {
 void fn_8011FAFC(ResCtrl *r, int prio);
 
 struct PcbSlot {
-    unsigned char pad : 1;
-    unsigned char role : 3;
+    BITFIELDS2_PAD(unsigned char :4, unsigned char pad:1, unsigned char role:3)
 };
 
 #include "game/ItemEffectBusPrivate.h"

@@ -1,5 +1,6 @@
 #ifndef GAME_PCBSLOTRESET_PRIVATE_H
 #define GAME_PCBSLOTRESET_PRIVATE_H
+#include "game/types/bitfields.h"
 
 /* Same observed slot layout used by PCBCheckProcess. */
 typedef struct PcbScratchSlot {
@@ -8,8 +9,7 @@ typedef struct PcbScratchSlot {
     void *primary;
     void *secondary;
     struct {
-        unsigned char local : 1;
-        unsigned char remaining : 7;
+        BITFIELDS2(unsigned char local:1, unsigned char remaining:7)
     } flags;
     unsigned char reservedA35;
     short timeout;

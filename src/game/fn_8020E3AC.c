@@ -1,5 +1,5 @@
 extern void PreloadResource(int);
 
-void fn_8020E3AC(int p0) {
+void fn_8020E3AC(void) {
     PreloadResource(11002);
 }

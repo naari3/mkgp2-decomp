@@ -667,8 +667,7 @@ int TaMode::FrameUpdate()
             TaRender *render = CarObject_GetRenderObj(tafu::g_carObjects[0]);
             if (KartMovement_GetCurrentItemId(render) != -1) {
                 if (!KartItem_GetByte_f4(tafu::g_carObjects[0])) {
-                    pad->Held(0xe3ff);
-                    if (Input_IsItemButtonPressed() && RenderObj_UseItem(render, 0, 0)) {
+                    if (Input_IsItemButtonPressed(pad->Held(0xe3ff)) && RenderObj_UseItem(render, 0, 0)) {
                         void *stats = TitleStats();
                         if (stats) RankLog_OnPlayerVictory(stats, tafu::GetDisplayBufferIndex(), 0);
                         CarObject_ApplyDriftBoost(tafu::g_carObjects[0], 5, 3.0f);

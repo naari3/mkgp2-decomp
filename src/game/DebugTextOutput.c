@@ -1,3 +1,4 @@
+#include "game/types/reg_args.h"
 #ifdef __MWERKS__
 typedef struct __va_list_struct {
     char gpr;
@@ -14,7 +15,7 @@ typedef __va_list va_list;
 #include <stdarg.h>
 #endif
 
-extern unsigned char IsDisplayModeEnabled(void);
+extern unsigned char IsDisplayModeEnabled(REG_ARGS1(int mode));
 extern int OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(int);
 extern int vsprintf(char *, const char *, va_list);
@@ -28,7 +29,7 @@ void DebugTextOutput(int channel, const char *fmt, ...) {
     va_list args;
     int enabled;
 
-    if (IsDisplayModeEnabled() && lbl_80598A60[0x2A] != 0) {
+    if (IsDisplayModeEnabled(REG_ARGS1(channel)) && lbl_80598A60[0x2A] != 0) {
         enabled = OSDisableInterrupts();
         va_start(args, fmt);
         vsprintf(DebugTextOutput_bss_805960F0, fmt, args);
@@ -42,7 +43,7 @@ void OverlayText(int layer, int x, int y, const char *fmt, ...) {
     va_list args;
     int enabled;
 
-    if (IsDisplayModeEnabled() && lbl_80598A60[0x2A] != 0) {
+    if (IsDisplayModeEnabled(REG_ARGS1(layer)) && lbl_80598A60[0x2A] != 0) {
         enabled = OSDisableInterrupts();
         va_start(args, fmt);
         vsprintf(DebugTextOutput_bss_805960F0, fmt, args);

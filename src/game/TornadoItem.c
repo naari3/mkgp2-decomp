@@ -24,6 +24,9 @@ extern int Item_AdvanceTrackedHomingState(void *target, float *pos, float speed)
 #define TI_F32(p, o) (*(float *)((char *)(p) + (o)))
 #define TI_PTR(p, o) (*(char **)((char *)(p) + (o)))
 
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 #include "src/game/tornado_fragments/ti_active.inc"
 #include "src/game/tornado_fragments/ti_launch.inc"
 #include "src/game/tornado_fragments/ti_homing_child.inc"

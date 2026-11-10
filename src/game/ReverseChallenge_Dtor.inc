@@ -13,7 +13,7 @@ extern void *GetRaceContextPtr();
 extern void ItemObjectManager_Reset();
 extern void LakituStart_Dtor(void *, int);
 extern void MemoryManager_TimedFree(void *);
-extern void RankingTable_Init();
+extern void RankingTable_Init(void *);
 extern void SceneDrawList_Reset();
 extern void SetActiveCamera(int, void *);
 extern void SetPlayerCarObject(void *);
@@ -126,8 +126,7 @@ extern "C" void *ReverseChallenge_Dtor(ReverseChallengeState *self, short freeMe
         ItemObjectManager_Reset();
         VfxSlotMgr_Shutdown();
         ClRomTable_PurgeAll();
-        GetRaceContextPtr();
-        RankingTable_Init();
+        RankingTable_Init(GetRaceContextPtr());
         delete (RCVirtual *)lbl_806D10D0;
         lbl_806D10D0 = 0;
         SceneDrawList_Reset();

@@ -44,7 +44,7 @@ unsigned char NokoNokoChallenge_HandleBrakeInput(JumpDistanceMode *self, int bra
 void CarObject_ApplyInput(CarObject *car, unsigned char started, float steer, float brake, float accel);
 void CarObject_FrameUpdate(CarObject *car, int buttons);
 void *CarObject_GetRenderObj(CarObject *car);
-unsigned char Input_IsItemButtonPressed(void);
+unsigned char Input_IsItemButtonPressed(int buttons);
 unsigned char RenderObj_UseItem(void *ro, int a, int b);
 void CarObject_ApplyDriftBoost(CarObject *car, int kind, float amount);
 void fn_8023E1E4(void *p, int a, int b);
@@ -125,8 +125,7 @@ extern "C" void JumpDistanceMode_HandlePhysics(JumpDistanceMode *self) {
         buttons = 0;
         if (IsRaceStarted() == 1) {
             buttons = pad->GetButton(0xE7FF);
-            pad->GetButton(0xE3FF);
-            if (Input_IsItemButtonPressed() && RenderObj_UseItem(CarObject_GetRenderObj(self->car), 0, 0)) {
+            if (Input_IsItemButtonPressed(pad->GetButton(0xE3FF)) && RenderObj_UseItem(CarObject_GetRenderObj(self->car), 0, 0)) {
                 CarObject_ApplyDriftBoost(self->car, 5, lbl_806DADB0);
                 fn_8023E1E4(self->x1C, -1, 0);
                 fn_801699D8(0, 0);

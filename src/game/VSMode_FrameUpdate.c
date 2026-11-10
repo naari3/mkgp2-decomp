@@ -1,3 +1,5 @@
+#include "game/types/reg_args.h"
+#include "game/types/bitfields.h"
 #include "game/types/c_region.h"
 C_REGION_BEGIN
 /* VS/Battle mode unit: .text 0x8009E0D4..0x800A0688, .rodata 0x80320960..0x80321178.
@@ -277,7 +279,7 @@ void DebugPrintf(const char *fmt, ...);
 void *memset(void *dst, int c, unsigned long n);
 unsigned char *SyncSlot_GetRecv(void);
 void Rand_SetSeedDebug(int seed);
-void ReplayRandCursor_Reset(void);
+void ReplayRandCursor_Reset(REG_ARGS1(void *self));
 void PcbSlot_ResetScratchAreas(void);
 void CommBroadcast_ClearTable(void);
 void PlayStats_IncVsPlay(void);
@@ -376,7 +378,7 @@ void ItemSelect_Reset(void *sel, int flag);
 int GetKartSlotCharId(int slot);
 void RaceResult_StoreLatest(int charId, int pos, float best, float total);
 int RaceResult_InsertSortedRank(int charId, int pos, float best, float total);
-void SetRaceResultLatestPtr(void);
+void SetRaceResultLatestPtr(REG_ARGS1(void *p));
 void fn_80253D00(void *hud);
 void Object_SetByte10_Return1(void *scene, int v);
 void Jyugemu_Flag_SetKartDriver(void *flag, void *render);
@@ -416,7 +418,7 @@ static inline void VsSeedRandom(void)
     Rand_SetSeedDebug(SyncSlot_GetRecv()[0x1b]);
     lbl_806D134C = SyncSlot_GetRecv()[0x1b];
     lbl_806D1350 = SyncSlot_GetRecv()[0x1b];
-    ReplayRandCursor_Reset();
+    ReplayRandCursor_Reset(REG_ARGS1(0)); /* the callee ignores its parameter */
 }
 
 extern "C" int VSMode_FrameUpdate(char *self)
@@ -893,7 +895,7 @@ extern "C" int VSMode_FrameUpdate(char *self)
                                    g_totalRaceTime);
             g_raceResultCode = RaceResult_InsertSortedRank(GetKartSlotCharId(VSMode_FrameUpdate_bss_806D12EC), g_finalRacePosition,
                                                            g_bestLapTime, g_totalRaceTime);
-            SetRaceResultLatestPtr();
+            SetRaceResultLatestPtr(REG_ARGS1((void *)g_raceResultCode)); /* r3 still holds the rank just stored */
             fn_80253D00(VS_PTR(self, 0x24));
             Object_SetByte10_Return1(VS_PTR(self, 0x18), 1);
             if (g_finalRacePosition == 0) {
@@ -3112,16 +3114,16 @@ struct VSOwner {
     VSFinalObject* finalObject;
 };
 struct VSPeer {
-    unsigned char teamTop : 1, teamId : 3, teamLow : 4;
+    BITFIELDS3(unsigned char teamTop:1, unsigned char teamId:3, unsigned char teamLow:4)
     unsigned char unknown1, unknown2, cameraFlags;
-    unsigned char charId : 4, charLow : 4;
+    BITFIELDS2(unsigned char charId:4, unsigned char charLow:4)
     unsigned char unknown5, tuning;
     unsigned char unknown7[9];
     unsigned short items[3];
     unsigned short shorts16[3];
     unsigned char remainder[0xA3C - 0x1C];
 };
-struct VSHostFlags { unsigned char ready : 1, rest : 7; };
+struct VSHostFlags { BITFIELDS2(unsigned char ready:1, unsigned char rest:7) };
 struct VSRaceRow { signed char laps; unsigned char pad[3]; float remaining, bonus; };
 
 extern "C" {

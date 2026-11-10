@@ -1,3 +1,4 @@
+#include "game/types/reg_args.h"
 #ifndef GAME_AI_FRAME_PRIVATE_H
 #define GAME_AI_FRAME_PRIVATE_H
 extern "C" {
@@ -28,7 +29,7 @@ void *fn_801DE1B0();
 float fn_801DE074();
 float fn_801DDF8C();
 int fn_801DCCE4();
-float fn_801DCCBC();
+float fn_801DCCBC(REG_ARGS1(int idx));
 int fn_801DCC94(int);
 float fn_801DCC6C(int);
 }

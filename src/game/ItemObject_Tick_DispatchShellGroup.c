@@ -27,6 +27,9 @@ extern int ItemCollision_Check(unsigned char *self);
 extern short ItemAlias_HitRemapLookup(unsigned int itemId);
 extern void fn_801B1D5C(void *a, void *kart, int remapId, int flag);
 extern void ItemHit_Dispatch(unsigned char *self, int a, Vec *pos, int b);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, Vec *pos, int ch);
 extern void SoundMgr_PlaySE_WithChannel(int se, Vec *pos, int ch);
 extern void SoundMgr_StopSE_OrSpecial(int se, int ch);

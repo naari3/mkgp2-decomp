@@ -1,3 +1,4 @@
+#include "game/types/bitfields.h"
 /*
  * Kart alert panel @ 0x802506F8..0x80250F34 (vtable KartAlertPanel_vtable_804EF130).
  *
@@ -13,12 +14,9 @@
 #include "game/types/NameBuf.h"
 
 struct PcbSlot {
-    unsigned char b0_0 : 1;
-    unsigned char role : 3;
-    unsigned char b0_4 : 4;
+    BITFIELDS3(unsigned char b0_0:1, unsigned char role:3, unsigned char b0_4:4)
     char pad01[2];
-    unsigned char hasName : 1;
-    unsigned char b3_1 : 7;
+    BITFIELDS2(unsigned char hasName:1, unsigned char b3_1:7)
     char pad04[0x12];
     unsigned short name[6];
 };

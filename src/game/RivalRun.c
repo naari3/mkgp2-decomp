@@ -758,7 +758,7 @@ extern void *GetRaceContextPtr();
 extern void HUD_FrameUpdate(void *);
 extern void *InputMgr_GetPlayer(void *mgr, int idx);
 extern unsigned char IsRaceStarted(void);
-extern void ItemObjectManager_PerFrameUpdate();
+extern void ItemObjectManager_PerFrameUpdate(void *);
 extern void ItemObjectManager_Update();
 extern float *KartDriver_GetKartRootMtx(void *render);
 extern void KartItem_UpdateShadowBillboardAndViewport(void *, void *, int);
@@ -831,8 +831,7 @@ extern "C" int RivalRun_Update(RivalRunState *self)
     if (self->active == 0) {
         self->active = 1;
     }
-    GetRaceContextPtr();
-    ItemObjectManager_PerFrameUpdate();
+    ItemObjectManager_PerFrameUpdate(GetRaceContextPtr());
     {
     unsigned char flag;
     RRInput *input = (RRInput *)InputMgr_GetPlayer(GetInputManager(), 0);
@@ -1651,7 +1650,7 @@ extern void LakituStart_Dtor(void *, int);
 extern void MemoryManager_TimedFree(void *);
 extern void PathParticipantArray_Dtor(void *, int);
 extern void Path_ResetCursorForKart(void *, int);
-extern void RankingTable_Init();
+extern void RankingTable_Init(void *);
 extern void SceneDrawList_Reset();
 extern void SetActiveCamera(int, void *);
 extern void SetPlayerCarObject(void *);
@@ -1762,8 +1761,7 @@ extern "C" void *RivalRun_Destroy(RivalRunState *self, short freeMemory)
         ItemObjectManager_Reset();
         VfxSlotMgr_Shutdown();
         ClRomTable_PurgeAll();
-        GetRaceContextPtr();
-        RankingTable_Init();
+        RankingTable_Init(GetRaceContextPtr());
         delete (RRVirtual *)lbl_806D10D0;
         lbl_806D10D0 = 0;
         SceneDrawList_Reset();
@@ -1812,7 +1810,7 @@ extern int MiniGame_GetTimerValue(void);
 extern void PreloadEffectResources(int id);
 extern void PreloadItemResources(int id);
 extern void ProcessSystemTick(int arg);
-extern void RankingTable_Init();
+extern void RankingTable_Init(void *);
 extern int HSD_LObjLoadDesc(void);
 extern void Scene3D_GetCameraPos(void *scene, float *a, float *b);
 extern void Scene3D_SetupProjection(void *scene, float a, float b);
@@ -1981,8 +1979,7 @@ RivalRun::RivalRun() {
     SetActiveCamera(0, camera);
     *(RICamera **)&g_raceCamera = camera;
     ProcessSystemTick(0);
-    GetRaceContextPtr();
-    RankingTable_Init();
+    RankingTable_Init(GetRaceContextPtr());
     lbl_806D12BC = 0;
     SoundDriver_GetOrCreate(0);
     g_kartStartSlot = 0;

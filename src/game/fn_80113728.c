@@ -19,6 +19,9 @@ extern float Rand_RangeFloat(float lo, float hi);
 extern void GetSpawnPosition(void *out, float x, float y, float z);
 extern void Vec2_RotateX(void *dst, void *src, float a);
 extern void Vec2_RotateY(void *dst, void *src, float a);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, Vec3 *pos, int flag);
 extern void Item_DecayVelocityScalar(unsigned char *self, float k);
 extern int Item_OrbitAnchorKart(unsigned char *self, void *off, unsigned int t, float a, float b);

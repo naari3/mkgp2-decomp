@@ -1,15 +1,13 @@
 #ifndef TRIFORCE_AMUART_PRIVATE_H
 #define TRIFORCE_AMUART_PRIVATE_H
+#include "game/types/bitfields.h"
 
 #include <dolphin.h>
 
 typedef struct UartCfg {
     /* 0x0 */ u8 mode;
-    /* 0x1 */ u8 enable : 1;
-    u8 parity : 2;
-    u8 unk1 : 5;
-    /* 0x2 */ u8 unk2 : 1;
-    u8 baud : 7;
+    /* 0x1 */ BITFIELDS3(u8 enable:1, u8 parity:2, u8 unk1:5)
+    BITFIELDS2(u8 unk2:1, u8 baud:7) /* 0x2 */
     /* 0x3 */ u8 stop;
     /* 0x4 */ u8 unk4;
     /* 0x5 */ u8 unk5;

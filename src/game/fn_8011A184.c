@@ -19,6 +19,9 @@ extern void KartPair3ArmUpdate(void);
 extern void EffectActor_BindKartTargetPair(void *o, void *a, void *b);
 extern void Item_ComputeYawRelativeApproach(float *vel, void *target, float *pos, float *outVel);
 extern float Vec3_ToYaw(float *v);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, float *pos, int flag);
 extern void Vec3_Add_DestFirst(float *dst, float *a, float *b);
 extern int Item_CheckWallCollision(void *self, float *out, int flag);

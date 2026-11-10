@@ -1,3 +1,4 @@
+#include "game/types/bitfields.h"
 /* clsound voice/listener unit, .text 0x801913B0..0x801933D0, merged from the
  * over-split per-function files (fn_801913B0 needs the listener pool that
  * fn_80192F04 owns: .data 0x80495F20..0x80495F48). */
@@ -615,10 +616,7 @@ typedef struct SndSlot {
     union {
         unsigned int flags;
         struct {
-            unsigned int pad : 29;
-            unsigned int stopping : 1;
-            unsigned int paused : 1;
-            unsigned int loop : 1;
+            BITFIELDS4(unsigned int pad:29, unsigned int stopping:1, unsigned int paused:1, unsigned int loop:1)
         } b;
     } u;
     unsigned int id;
@@ -696,10 +694,7 @@ typedef struct SndSlot {
     union {
         unsigned int flags;
         struct {
-            unsigned int pad : 29;
-            unsigned int stopping : 1;
-            unsigned int paused : 1;
-            unsigned int loop : 1;
+            BITFIELDS4(unsigned int pad:29, unsigned int stopping:1, unsigned int paused:1, unsigned int loop:1)
         } b;
     } u;
     unsigned int id;
@@ -864,10 +859,7 @@ typedef struct SndSlot {
     union {
         unsigned int flags;
         struct {
-            unsigned int pad : 29;
-            unsigned int stopping : 1;
-            unsigned int paused : 1;
-            unsigned int loop : 1;
+            BITFIELDS4(unsigned int pad:29, unsigned int stopping:1, unsigned int paused:1, unsigned int loop:1)
         } b;
     } u;
     unsigned int id;
