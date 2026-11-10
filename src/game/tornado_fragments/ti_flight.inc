@@ -8,8 +8,16 @@
 
 extern char *ItemObject_AllocFromPool();
 extern int Item_AdvanceFallingDrop();
+#ifdef NON_MATCHING
+extern int Item_AdvanceTetherToJoint13();
+#else
 extern void Item_AdvanceTetherToJoint13();
+#endif
+#ifdef NON_MATCHING
+extern int SoundMgr_CountActiveSEInstances(int se);
+#else
 extern void SoundMgr_CountActiveSEInstances();
+#endif
 extern void SoundMgr_PlaySE_Positional();
 extern void SoundMgr_PlaySE_WithChannel();
 extern void SoundMgr_StopSE_OrSpecial();
@@ -17,11 +25,27 @@ extern void SpriteSlot_InitNonLoop();
 extern void SpriteSlot_SetJointVisibilityByName();
 extern void SpriteSlot_SetPositionFromVec();
 extern void SpriteSlot_SetRotationQuatFromVec();
+#ifdef NON_MATCHING
+extern void SpriteSlot_SetScaleXYZ(void *slot, float x, float y, float z);
+#else
 extern void SpriteSlot_SetScaleXYZ();
+#endif
+#ifdef NON_MATCHING
+extern void SpriteSlot_SetTranslateDxDy(void *slot, float dx, float dy);
+#else
 extern void SpriteSlot_SetTranslateDxDy();
+#endif
 extern void Tornado_LockOnHomingTick();
+#ifdef NON_MATCHING
+extern void Vec3_Scale(void *dst, void *src, float k);
+#else
 extern void Vec3_Scale();
+#endif
+#ifdef NON_MATCHING
+extern double sin(double);
+#else
 extern void sin();
+#endif
 
 /* --- extern decls: sda21-referenced data --- */
 extern const float lbl_806D6260;
@@ -53,7 +77,11 @@ extern unsigned int lbl_8032FE8C[];
  */
 
 /* --- forward decls --- */
+#ifdef NON_MATCHING
+void Tornado_FlightTick(char *self);
+#else
 asm void Tornado_FlightTick(void);
+#endif
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -68,6 +96,217 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
+#ifdef NON_MATCHING
+/*
+ * Equivalent C for the PC port (docs/nonmatching_c.md). Thrown tornado:
+ * homing flight (Tornado_LockOnHomingTick), then an end phase selected by
+ * self+0xcb, then removal. Three funnel sprites (self+0x148..0x150) follow
+ * the body with their own spin, stretch and flicker.
+ */
+static inline void TornadoFlight_Shrink(char *self, char *sub)
+{
+    switch (TI_S8(self, 0xc9)) {
+    case 0:
+        TI_F32(sub, 0x18) = 0.2f;
+        TI_U8(self, 0xc9) = TI_U8(self, 0xc9) + 1;
+        /* fall through */
+    case 1:
+        TI_F32(self, 0x2c) = TI_F32(self, 0x2c) - 0.05f;
+        if (TI_F32(self, 0x2c) < 0.0f) {
+            TI_F32(self, 0x2c) = 0.0f;
+            TI_U32(sub, 4) = 0x78;
+            TI_U8(self, 0xc9) = TI_U8(self, 0xc9) + 1;
+            break;
+        }
+        Vec3_Scale(self + 0xb8, self + 0xb8, 0.9f);
+        if (Item_AdvanceFallingDrop(self, 0, 0, 0.0f) != 0) {
+            TI_F32(self, 0xbc) = TI_F32(self, 0xbc) + -0.6f;
+        } else {
+            TI_F32(self, 0xbc) = 0.0f;
+        }
+        TI_F32(sub, 0x18) = TI_F32(sub, 0x18) * 0.8f;
+        TI_F32(sub, 0x20) = TI_F32(sub, 0x20) + TI_F32(sub, 0x18);
+        break;
+    case 2:
+        if (TI_U32(sub, 4) == 0) {
+            TI_U8(self, 0xc8) = 3;
+            TI_U8(self, 0xc9) = 0;
+        }
+        break;
+    }
+}
+
+void Tornado_FlightTick(char *self)
+{
+    TIVec3 sePos;
+    TIVec3 v;
+    char *sub = self + 0xec;
+    char **slot;
+    float phase;
+    float sx;
+    float sy;
+    int i;
+
+    switch (TI_S8(self, 0xc8)) {
+    case 0:
+        TI_U32(self, 8) = 0x4f;
+        SpriteSlot_InitNonLoop(self + 0x14, 0x50);
+        TI_U8(self, 0x28) = 0;
+        TI_U8(self, 0x8c) = 5;
+        TI_U8(self, 0x8d) = 0;
+        TI_F32(sub, 0x1c) = 0.0f;
+        TI_F32(sub, 0x20) = 1.0f;
+        *(int *)(sub + 0x30) = -1;
+        slot = (char **)(sub + 0x5c);
+        for (i = 0; i < 3; i++, slot++) {
+            *slot = ItemObject_AllocFromPool(fn_800D748C);
+            if (*slot != 0) {
+                SpriteSlot_InitNonLoop(*slot + 0x14, 0x50);
+                if (i == 0) {
+                    SpriteSlot_SetTranslateDxDy(*slot + 0x14, 0.08888889f, 0.0f);
+                }
+                if (i == 0) {
+                    SpriteSlot_SetJointVisibilityByName(*slot + 0x14, lbl_8032FE74, 0x10, 0);
+                    SpriteSlot_SetJointVisibilityByName(*slot + 0x14, lbl_8032FE8C, 0x10, 1);
+                } else {
+                    SpriteSlot_SetJointVisibilityByName(*slot + 0x14, lbl_8032FE74, 0x10, 1);
+                    SpriteSlot_SetJointVisibilityByName(*slot + 0x14, lbl_8032FE8C, 0x10, 0);
+                }
+            }
+        }
+        TI_U8(self, 0xc8) = 1;
+        TI_U8(self, 0xc9) = 0;
+        /* fall through */
+    case 1:
+        Tornado_LockOnHomingTick(self, sub);
+        break;
+    case 2:
+        switch (TI_S8(self, 0xcb)) {
+        case 3:
+            switch (TI_S8(self, 0xc9)) {
+            case 0:
+                GetSpawnPosition(self + 0xb8, 0.0f, 0.0f, 0.0f);
+                TI_F32(sub, 0x14) = 0.0f;
+                TI_F32(sub, 0x18) = TI_F32(self, 0xc4);
+                TI_U8(self, 0xc9) = TI_U8(self, 0xc9) + 1;
+                /* fall through */
+            case 1:
+                if (Item_AdvanceTetherToJoint13(self, sub + 0x14, TI_F32(sub, 0x18), 0.0f, 0.0f) != 0) {
+                    TI_F32(self, 0x2c) = 0.0f;
+                    TI_U32(sub, 4) = 0x78;
+                    TI_U8(self, 0xc9) = TI_U8(self, 0xc9) + 1;
+                }
+                break;
+            case 2:
+                if (TI_U32(sub, 4) == 0) {
+                    TI_U8(self, 0xc8) = 3;
+                    TI_U8(self, 0xc9) = 0;
+                }
+                break;
+            }
+            break;
+        case 4:
+            TornadoFlight_Shrink(self, sub);
+            break;
+        case 7:
+            TornadoFlight_Shrink(self, sub);
+            break;
+        case 9:
+            TornadoFlight_Shrink(self, sub);
+            break;
+        case 5:
+            TornadoFlight_Shrink(self, sub);
+            break;
+        }
+        break;
+    case 3:
+        slot = (char **)(sub + 0x5c);
+        for (i = 0; i < 3; i++, slot++) {
+            SpriteSlot_Container_Free(*slot);
+            *slot = 0;
+        }
+        if (*(int *)(sub + 0x30) >= 0) {
+            SoundMgr_StopSE_OrSpecial(0x82, *(int *)(sub + 0x30));
+            *(int *)(sub + 0x30) = -1;
+        }
+        SpriteSlot_Container_Free(self);
+        return;
+    }
+
+    Vec3_Add_DestFirst((float *)(self + 0xa0), (float *)(self + 0xa0), (float *)(self + 0xb8));
+    if (*(int *)(sub + 0x30) < 0) {
+        *(int *)(sub + 0x30) = SoundMgr_CountActiveSEInstances(0x82);
+        if (*(int *)(sub + 0x30) >= 0) {
+            sePos = *(TIVec3 *)(self + 0xa0);
+            SoundMgr_PlaySE_Positional(0x82, &sePos, *(int *)(sub + 0x30));
+        }
+    } else {
+        sePos = *(TIVec3 *)(self + 0xa0);
+        SoundMgr_PlaySE_WithChannel(0x82, &sePos, *(int *)(sub + 0x30));
+    }
+
+    TI_F32(sub, 0x1c) = TI_F32(sub, 0x1c) + 0.0055555557f;
+    if (1.0f < TI_F32(sub, 0x1c)) {
+        TI_F32(sub, 0x1c) = TI_F32(sub, 0x1c) - 1.0f;
+    }
+
+    slot = (char **)(sub + 0x5c);
+    for (i = 0; i < 3; i++, slot++) {
+        if (*slot == 0) {
+            continue;
+        }
+        Vec3_Copy((float *)(*slot + 0xa0), (float *)(self + 0xa0));
+        v = *(TIVec3 *)(*slot + 0xa0);
+        SpriteSlot_SetPositionFromVec(*slot + 0x14, &v);
+        phase = TI_F32(sub, 0x1c);
+        if (i == 2) {
+            phase += 0.5f;
+            if (1.0f < phase) {
+                phase -= 1.0f;
+            }
+        }
+        Vec3_Copy((float *)(*slot + 0xac), (float *)(self + 0xac));
+        switch (i) {
+        case 0:
+            TI_F32(*slot, 0xb0) = BuildOrientationFromYaw(-12.566368f * phase + TI_F32(*slot, 0xb0));
+            break;
+        case 1:
+            TI_F32(*slot, 0xb0) = BuildOrientationFromYaw(25.132736f * phase + TI_F32(*slot, 0xb0));
+            break;
+        case 2:
+            TI_F32(*slot, 0xb0) = BuildOrientationFromYaw(25.132736f * phase + TI_F32(*slot, 0xb0));
+            break;
+        }
+        v = *(TIVec3 *)(*slot + 0xac);
+        SpriteSlot_SetRotationQuatFromVec(*slot + 0x14, &v);
+        TI_F32(*slot, 0xc4) = TI_F32(self, 0xc4);
+        sy = TI_F32(*slot, 0xc4);
+        sx = sy * TI_F32(sub, 0x20);
+        if (i != 0) {
+            sy = sy * (0.8f * phase + 0.2f);
+        }
+        SpriteSlot_SetScaleXYZ(*slot + 0x14, sx, sy, sx);
+        TI_F32(*slot, 0x2c) = TI_F32(self, 0x2c);
+        if (i != 0) {
+            TI_F32(*slot, 0x2c) = TI_F32(*slot, 0x2c) *
+                ((1.0f + (float)sin(0.017453289f * (360.0f * phase + 270.0f))) * 0.5f);
+        }
+    }
+
+    if (TI_U32(sub, 4) != 0) {
+        TI_U32(sub, 4) = TI_U32(sub, 4) - 1;
+    }
+    if (TI_U32(sub, 8) != 0) {
+        TI_U32(sub, 8) = TI_U32(sub, 8) - 1;
+    }
+    if (TI_U32(sub, 0xc) != 0) {
+        TI_U32(sub, 0xc) = TI_U32(sub, 0xc) - 1;
+    }
+    if (TI_U32(sub, 0x10) != 0) {
+        TI_U32(sub, 0x10) = TI_U32(sub, 0x10) - 1;
+    }
+}
+#else
 asm void Tornado_FlightTick(void) { /* 0x800F9618 size:0x9BC */
     nofralloc
     stwu r1, -0x60(r1)
@@ -754,4 +993,5 @@ asm void Tornado_FlightTick(void) { /* 0x800F9618 size:0x9BC */
     addi r1, r1, 0x60
     blr
 }
+#endif
 

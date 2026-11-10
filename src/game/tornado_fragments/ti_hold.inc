@@ -43,7 +43,11 @@ extern unsigned int lbl_8032FA78[];
  */
 
 /* --- forward decls --- */
+#ifdef NON_MATCHING
+void TornadoItem_HoldTick(char *self);
+#else
 asm void TornadoItem_HoldTick(void);
+#endif
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -58,6 +62,119 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
+#ifdef NON_MATCHING
+/*
+ * Equivalent C for the PC port (docs/nonmatching_c.md). Held tornado: three
+ * funnel sprites (self+0x148..0x150) spin around the hand joint until the
+ * launch flag at self+0x18c is set.
+ */
+void TornadoItem_HoldTick(char *self)
+{
+    float handMtx[16];
+    float m[16];
+    char *sub = self + 0xec;
+    char *names = (char *)lbl_8032FA78;
+    char **slot;
+    char *shot;
+    int i;
+
+    switch (TI_S8(self, 0xc8)) {
+    case 0:
+        slot = (char **)(sub + 0x5c);
+        for (i = 0; i < 3; i++, slot++) {
+            *slot = ItemObject_AllocFromPool(fn_800D748C);
+            if (*slot != 0) {
+                SpriteSlot_InitNonLoop(*slot + 0x14, 0x4f);
+                TI_U8(*slot, 0x14) = 4;
+                SpriteSlot_SetMatrixSourceEnabled_WithReseed(*slot + 0x14, 1);
+                switch (i) {
+                case 0:
+                    SpriteSlot_SetJointVisibilityByName(*slot + 0x14, names + 0x42c, 0x10, 0);
+                    SpriteSlot_SetJointVisibilityByName(*slot + 0x14, names + 0x450, 0x10, 1);
+                    SpriteSlot_SetJointVisibilityByName(*slot + 0x14, names + 0x474, 0x10, 1);
+                    break;
+                case 1:
+                    /* the target really addresses slot 0 here and slot 1 in case 2 */
+                    SpriteSlot_SetJointVisibilityByName(TI_PTR(sub, 0x5c) + 0x14, names + 0x42c, 0x10, 1);
+                    SpriteSlot_SetJointVisibilityByName(TI_PTR(sub, 0x5c) + 0x14, names + 0x450, 0x10, 0);
+                    SpriteSlot_SetJointVisibilityByName(TI_PTR(sub, 0x5c) + 0x14, names + 0x474, 0x10, 1);
+                    break;
+                case 2:
+                    SpriteSlot_SetJointVisibilityByName(TI_PTR(sub, 0x60) + 0x14, names + 0x42c, 0x10, 1);
+                    SpriteSlot_SetJointVisibilityByName(TI_PTR(sub, 0x60) + 0x14, names + 0x450, 0x10, 1);
+                    SpriteSlot_SetJointVisibilityByName(TI_PTR(sub, 0x60) + 0x14, names + 0x474, 0x10, 0);
+                    break;
+                }
+                TI_F32(*slot, 0x100) = lbl_806D6264;
+            }
+        }
+        TI_F32(self, 0x2c) = lbl_806D6264;
+        TI_U8(self, 0xc8) = 1;
+        break;
+    case 1:
+        break;
+    }
+
+    if (FinalLapCoinJump_CheckActiveForObject(TI_PTR(sub, 0x98)) != 0) {
+        TI_U8(self, 0x28) = 0;
+    } else {
+        TI_U8(self, 0x28) = 1;
+    }
+
+    if (TI_S8(sub, 0xa0) != 0) {
+        if (TI_S8(sub, 0xa0) == 1) {
+            shot = ItemObject_AllocFromPool(Tornado_FlightTick);
+            if (shot != 0) {
+                TI_U8(shot, 0x1dc) = TI_U8(sub, 0xf0);
+                TI_U32(shot, 0x1e0) = TI_U32(sub, 0xf4);
+                Mtx44_GetTranslation_RowMajor((float *)(shot + 0xa0), KartDriver_GetJointByIdx(TI_PTR(sub, 0x98), 12));
+                Vec3_Copy((float *)(shot + 0x190), (float *)(sub + 0xa4));
+                TI_U32(shot, 0x180) = TI_U32(sub, 0x94);
+                TI_U32(shot, 0x184) = TI_U32(sub, 0x98);
+                Item_InitLaunchFromKart(shot, sub + 0x34, lbl_806D6260, lbl_806D6264);
+            }
+        }
+        slot = (char **)(sub + 0x5c);
+        for (i = 0; i < 3; i++, slot++) {
+            SpriteSlot_Container_Free(*slot);
+            *slot = 0;
+        }
+        ItemObject_DecrementCategoryBudget(self);
+        SpriteSlot_Container_Free(self);
+        return;
+    }
+
+    Mtx44_GetTranslation_RowMajor((float *)(sub + 0x34), KartDriver_GetJointByIdx(TI_PTR(sub, 0x98), 12));
+    GabyouItem_BuildLocalTransformFromHandJoint(self, 1, lbl_806D6264, lbl_806D6264, lbl_806D62AC);
+    Mtx_TransposeToMtx44(handMtx, self + 0x48);
+    slot = (char **)(sub + 0x5c);
+    for (i = 0; i < 3; i++, slot++) {
+        if (*slot == 0) {
+            continue;
+        }
+        switch (i) {
+        case 0:
+            TI_F32(*slot, 0x100) = BuildOrientationFromYaw(lbl_806D62B0 + TI_F32(*slot, 0x100));
+            break;
+        case 1:
+            TI_F32(*slot, 0x100) = BuildOrientationFromYaw(lbl_806D62B4 + TI_F32(*slot, 0x100));
+            break;
+        case 2:
+            TI_F32(*slot, 0x100) = BuildOrientationFromYaw(lbl_806D62B8 + TI_F32(*slot, 0x100));
+            break;
+        }
+        Matrix4_Identity(m);
+        Matrix4_PreMultiplyRotY(m, m, TI_F32(*slot, 0x100));
+        Matrix4_Multiply(m, m, handMtx);
+        DbgScene_CopyMatrix3x4Transpose(*slot + 0x48, m);
+        Mtx44_GetTranslation_ColMajor(*slot + 0xa0, m);
+        TI_F32(*slot, 0xc4) = TI_F32(self, 0xc4);
+        TI_F32(*slot, 0x2c) = TI_F32(self, 0x2c);
+        TI_U8(*slot, 0x28) = TI_U8(self, 0x28);
+        SpriteSlot_TickAnim(*slot + 0x14);
+    }
+}
+#else
 asm void TornadoItem_HoldTick(void) { /* 0x800F9FD4 size:0x404 */
     nofralloc
     stwu r1, -0xa0(r1)
@@ -340,4 +457,5 @@ asm void TornadoItem_HoldTick(void) { /* 0x800F9FD4 size:0x404 */
     addi r1, r1, 0xa0
     blr
 }
+#endif
 
