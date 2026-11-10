@@ -2523,3 +2523,30 @@ clFlowCCCharaItem ctor with the inlined SetCharaGroup; each lever read from
 Left: the special branch's `res` takes j's free register (r19) instead of
 the walker's (r23). `j` has degree 29 (survives the first simplify round and
 opens r19 before `res` is coloured); see docs/gave_up.md.
+
+## 93. Inline `this` temps coloured before an address CSE temp: call the method through one reused named pointer local (fn_801B9928, 99.77 -> 100, 11-10)
+
+Seven `arr[i]->SetPosition(x, y)` calls after `arr[i] = new Sprite(...)`. The
+target keeps `&arr2[3]` (a CSE temp, reused by the 7th call) in r4 and every
+sprite pointer in r5; ours the other way (40 lines). `regfix diag`: the seven
+loads are the inline's `this` temps (@657..@667, frontend temps, high vreg,
+coloured first, so they took r4) and the address is CSE temp @715 below them;
+"they must be coloured after it".
+
+A named local is numbered below every temp, so loading each sprite into ONE
+block-local pointer and calling through it moves all seven below the CSE temp:
+
+    { CourseSprite *s;
+      s = arr[0]; s->SetPosition(x, y);
+      s = arr[1]; s->SetPosition(x, y);  ... }
+
+(the frontend forwards `s` into the inline `this`, the value keeps the named
+local's number). Not the same: one local per call or a local declared at the
+store (tried 11-09, no gain), direct field stores without a local or a static
+inline taking the pointer (46-57 lines).
+
+**Check:** regfix diag says a short-lived `this` / pointer temp of repeated
+inline calls holds the register an address or CSE temp wants: assign the
+object to one reused block-local pointer before each call. Rule
+`inline-this-via-reused-named-local`.
+
