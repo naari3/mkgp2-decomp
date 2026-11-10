@@ -46,6 +46,38 @@ float AI_CalcRivalAvoidance(void *);
 float fn_801DE7B0();
 }
 
+/* These shared-pool values live in immutable .sdata2. Keep this TU
+ * read-only without changing the collision header used by other units. */
+namespace groundedReadOnly {
+#ifdef __MWERKS__
+extern "C" {
+extern const float lbl_806DA42C, lbl_806DA450, lbl_806DA470, lbl_806DA484, lbl_806DA488, lbl_806DA48C, lbl_806DA490, lbl_806DA4A0;
+extern const double lbl_806DA458, lbl_806DA460;
+}
+#else
+static const float &lbl_806DA42C = ::lbl_806DA42C;
+static const float &lbl_806DA450 = ::lbl_806DA450;
+static const float &lbl_806DA470 = ::lbl_806DA470;
+static const float &lbl_806DA484 = ::lbl_806DA484;
+static const float &lbl_806DA488 = ::lbl_806DA488;
+static const float &lbl_806DA48C = ::lbl_806DA48C;
+static const float &lbl_806DA490 = ::lbl_806DA490;
+static const float &lbl_806DA4A0 = ::lbl_806DA4A0;
+static const double &lbl_806DA458 = ::lbl_806DA458;
+static const double &lbl_806DA460 = ::lbl_806DA460;
+#endif
+}
+#define lbl_806DA42C groundedReadOnly::lbl_806DA42C
+#define lbl_806DA450 groundedReadOnly::lbl_806DA450
+#define lbl_806DA470 groundedReadOnly::lbl_806DA470
+#define lbl_806DA484 groundedReadOnly::lbl_806DA484
+#define lbl_806DA488 groundedReadOnly::lbl_806DA488
+#define lbl_806DA48C groundedReadOnly::lbl_806DA48C
+#define lbl_806DA490 groundedReadOnly::lbl_806DA490
+#define lbl_806DA4A0 groundedReadOnly::lbl_806DA4A0
+#define lbl_806DA458 groundedReadOnly::lbl_806DA458
+#define lbl_806DA460 groundedReadOnly::lbl_806DA460
+
 static inline void groundedSqrt(float &v) {
     if (v > lbl_806DA42C) {
         double e=__frsqrte(v);
@@ -240,12 +272,14 @@ extern "C" void KartPhysics_GroundedMovement(GroundedMovementState *self) {
     int selected=fn_801DBA58(self->follower);
     if (self->selectedPath!=-1) selected=self->selectedPath;
     if (self->currentPath!=selected) {
+        float zero=lbl_806DA42C;
         self->previousPath=self->currentPath;
         self->currentPath=selected;
-        self->pathBlend=lbl_806DA42C;
+        self->pathBlend=zero;
     }
+    float fullBlend=lbl_806DA450;
     self->pathBlend+=lbl_806DA504;
-    if (lbl_806DA450<self->pathBlend) self->pathBlend=lbl_806DA450;
+    if (fullBlend<self->pathBlend) self->pathBlend=fullBlend;
 
     PhysicsPlainVec current=*(const PhysicsPlainVec *)(constants+0x480);
     int currentPath=self->currentPath;
@@ -379,9 +413,10 @@ extern "C" void KartPhysics_GroundedMovement(GroundedMovementState *self) {
     self->turnVelocity=lbl_806DA490*turn;
     if (self->steeringEnabled) self->yaw+=turn;
     if (advanced) {
+        float zero=lbl_806DA42C;
         self->slipStrength=(float)__fabs(lbl_806DA490*normalized);
         self->slipStrength-=lbl_806DA51C;
-        if (self->slipStrength<lbl_806DA42C) self->slipStrength=lbl_806DA42C;
+        if (self->slipStrength<zero) self->slipStrength=zero;
         self->slipStrength*=lbl_806DA4D0;
     }
     speed=self->speed;
