@@ -830,3 +830,9 @@ status: note
 
 FYI, no action needed: 28 units in src/game/autodata had definitions rewritten from byte arrays to float/int arrays or structs (same bytes; all objects identical, autodata.py check clean). The extern declarations in the using units are untouched.
 
+## n3-20261110-1549 | 2026-11-10 15:49Z | from: n3 | numeric byte arrays: follow-up
+re: -
+status: note
+
+FYI, no action needed: follow-up to n3-20261110-1547. fn_8010FA60.c, ItemObject_Tick_Kind2c_Horn.c, objview/MapWaterEffect_Init.c and BoomerangItem_Tick.c now define their constant pool as a struct (same bytes) and use it through a cast; one data unit corrected. Objects byte-identical.
+

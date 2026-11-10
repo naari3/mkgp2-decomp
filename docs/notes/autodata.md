@@ -162,10 +162,19 @@ an offset whose address is passed on starts a new member (and is what lets a
 string start there), a block copy marks numbers, a byte-wide load or store on
 a member that would become a number vetoes the object. Where bytes read as
 text and as floats alike (`42 85 55 56 44 7A 00 00` is 66.6667, 1000.0, and
-also "B\x85UVDz"), they are text only when the code takes that address.
+also "B\x85UVDz"), they are floats; a string whose first word alone is also a
+float needs the code to take its address, and a string never runs across an
+address the code takes (the last float of a table can be followed by a joint
+name with no terminator between).
 `0x43300000 00000000` / `...80000000` are doubles (the int-to-float conversion
 constants). Everything else is read off the values, as in `infer`: a small
 word is an `int`, which is a guess when nothing reads it directly.
+
+Four tables of the same kind were defined inside normal units
+(`fn_8010FA60.c`, `ItemObject_Tick_Kind2c_Horn.c`, `MapWaterEffect_Init.c`,
+`BoomerangItem_Tick.c`); they got the same pool structs, cut at the offsets
+the unit adds to the table pointer, and the unit takes the address with a
+cast.
 
 Still bytes on purpose: text, all-zero objects, sizes that are not a multiple
 of 4, and six small-data objects whose values fit nothing

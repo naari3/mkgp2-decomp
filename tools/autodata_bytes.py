@@ -57,7 +57,7 @@ def floats_too(bs, o, end):
     return all(w == 0 or (A.floatlike(w) and A.fmt_float(w)) for w in ws)
 
 
-def text_at(bs, o, referenced):
+def text_at(bs, o, referenced, refs=()):
     """length in bytes (terminator and padding to 4 included) of a string starting at o, or 0"""
     e = bs.find(b'\0', o)
     if e < 0 or e == o: return 0
@@ -66,9 +66,16 @@ def text_at(bs, o, referenced):
     if len(t) < 3 and not referenced: return 0
     end = (e + 4) & ~3
     if any(bs[e:end]): return 0
-    # bytes that read as text and as floats alike (`42 85 55 56 44 7A 00 00` is 66.6667, 1000.0):
-    # text only when the code takes the address of exactly this place
-    if not referenced and floats_too(bs, o, end): return 0
+    # the code points at a place inside: the string starts there, and what is in front is something else
+    # (the last float of a table followed by a joint name, with no terminator between)
+    if any(o < r < e for r in refs): return 0
+    # a first word that is also a float needs the code's word that a string starts here
+    w0 = int.from_bytes(bs[o:o + 4], 'big')
+    if not referenced and A.floatlike(w0) and A.fmt_float(w0): return 0
+    # bytes that read as text and as floats alike (`42 85 55 56 44 7A 00 00` is 66.6667, 1000.0, and
+    # `3F 66 66 66 00 00 00 00` is 0.9, 0.0): floats, also when the code points there (it points at
+    # float triples as well as at names)
+    if floats_too(bs, o, end): return 0
     return end - o
 
 
@@ -92,7 +99,7 @@ def segments(bs, refs, copies, doubles=()):
     o = 0
     while o < n:
         if o not in numeric:
-            ln = text_at(bs, o, o in refs)
+            ln = text_at(bs, o, o in refs, refs)
             if ln and not any(x in numeric for x in range(o, o + ln, 4)):
                 add('s', o, ln); o += ln; continue
         w = int.from_bytes(bs[o:o + 4], 'big')
