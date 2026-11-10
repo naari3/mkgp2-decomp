@@ -4368,9 +4368,7 @@ void fn_802400A4(TaskBucket *self, const ChildBinding *binding, int group, void 
 
 static void AddAnimated(TaskBucket *self, const char **animated, int group, void *model) {
     const char **cursor;
-    TaskBucket *bucket;
     if (!animated) return;
-    bucket = &self[group];
     cursor = animated;
     for (; *cursor; ++cursor) {
         HSD_JObj *joint = ResolveJointByName(model, *cursor);
@@ -4379,6 +4377,7 @@ static void AddAnimated(TaskBucket *self, const char **animated, int group, void
             continue;
         }
         AnimTask *task = new AnimTask(joint);
+        TaskBucket *bucket = &self[group];
         Append(bucket, task);
     }
 }
