@@ -63,7 +63,11 @@ int NokoNoko_CheckHitAndKill(Vec *pos, Vec *out, float radius) {
     float r;
 
     if (g_nokonokoEnable == 0 || pos == 0 || radius <= lbl_806D9324) {
+#ifdef __MWERKS__
         return; /* sic: original returns whatever is in r3 */
+#else /* C++ needs a value: r3 still holds pos here (matching_rules 54) */
+        return (int)(unsigned long)pos;
+#endif
     }
     hit = 0;
     lbl_80677ED8.x = pos->x;

@@ -23,7 +23,11 @@ int Item_OrbitAnchorKart(unsigned char *self, Vec *off, void *keep, float dYaw, 
     int lost;
 
     if (self == 0) {
+#ifdef __MWERKS__
         return;
+#else /* C++ needs a value: r3 still holds self, which is 0 here (matching_rules 54) */
+        return 0;
+#endif
     }
     anchor = (unsigned char *)P(0x9C);
     if (anchor == 0 || off == 0) {

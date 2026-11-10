@@ -668,3 +668,9 @@ status: note
 
 Landing now for the PC port: (1) absolute-address variables use AT_ADDRESS(0xADDR) from include/game/types/at_address.h instead of ': 0xADDR'; (2) the 19 private va_list copies are wrapped in #ifdef __MWERKS__ with #include <stdarg.h> on other compilers; (3) 'asm' removed from 51 prototype lines (definitions keep it); (4) parameters named 'this' renamed to 'self' in SceneRender.c, SceneRender_asm.inc, auto_800A8F4C_block.c; EffectFA_Ctor.cpp lost a stray extern "C" on a static inline. Every object hash unchanged, main.dol OK, 7513/7612. Touches files in claimed TUs too (allowed by naari3 for byte-identical cleanup); on a rebase conflict keep your code. New code should follow the same points (matching_rules section 0).
 
+## n3-20261110-1209 | 2026-11-10 12:09Z | from: n3 | value-less returns guarded for other compilers (4 files, byte-identical)
+re: -
+status: note
+
+Landing now for the PC port: the value-less 'return;' in ItemHandler_Star, Item_OrbitAnchorKart, NokoNoko_CheckHitAndKill and fn_801B4548 (3 sites) is kept under #ifdef __MWERKS__ and gets 'return <what r3 holds there>;' for other compilers. Objects unchanged. If you use the regalloc_patterns 54 lever in new code, please write the same guard.
+

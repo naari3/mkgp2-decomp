@@ -75,7 +75,11 @@ void RenderObj_UseItem(ItemKart *kart, int a, int b);
 int ItemHandler_Star(ItemKart *kart, void *input)
 {
     if (kart->starLocked == 1) {
+#ifdef __MWERKS__
         return;
+#else /* C++ needs a value: r3 still holds kart here (matching_rules 54) */
+        return (int)(unsigned long)kart;
+#endif
     }
     if (Input_IsItemButtonPressed(input)) {
         RenderObj_UseItem(kart, 0, 0);

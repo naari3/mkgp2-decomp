@@ -8466,7 +8466,11 @@ g_bgmStateTimeHi_p47 = (unsigned long long)now_p47 >> 32;
 lbl_806CFD34_p47 = ItemVoice_BaseItem_p47(item_p47);
 lbl_806D1775_p47 = g_taMinLapPlayerIndex_p47;
 lbl_806D1776_p47 = nearest_p47;
+#ifdef __MWERKS__
 return;
+#else /* C++ needs a value: r3 still holds the high word of OSGetTime() (matching_rules 54) */
+return (int)g_bgmStateTimeHi_p47;
+#endif
 }
 }
 }
@@ -8497,7 +8501,11 @@ lbl_806D1777_p47 = g_raceEntryArray_p47[(signed char)(unsigned char)kart_p47].pl
 lbl_806D1778_p47 = g_raceEntryArray_p47[(signed char)(unsigned char)kart_p47].distance_p47;
 lbl_806D1776_p47 = -1;
 lbl_806D177C_p47 = -1;
+#ifdef __MWERKS__
 return;
+#else /* C++ needs a value: r3 still holds the high word of OSGetTime() (matching_rules 54) */
+return (int)g_bgmStateTimeHi_p47;
+#endif
 }
 }
 }
@@ -8547,7 +8555,11 @@ g_bgmStateTimeLo_p47 = (unsigned int)now_p47;
 g_bgmStateTimeHi_p47 = (unsigned long long)now_p47 >> 32;
 lbl_806D1776_p47 = -1;
 lbl_806D177C_p47 = -1;
+#ifdef __MWERKS__
 return;
+#else /* C++ needs a value: r3 still holds the high word of OSGetTime() (matching_rules 54) */
+return (int)g_bgmStateTimeHi_p47;
+#endif
 }
 }
 if (!RaceVoice_CanQueue_p47(21)) return 1;
