@@ -7,6 +7,16 @@
 #include <dolphin/gx.h>
 #include <dolphin/vi.h>
 
+/* This file has its own static copy of functions the header declares extern.
+ * Metrowerks accepts that; for other compilers the copy gets a name of its own. */
+#ifndef __MWERKS__
+#define HSD_VIGetXFBDrawEnable HSD_VIGetXFBDrawEnable__video
+#define HSD_VIWaitXFBDrawEnable HSD_VIWaitXFBDrawEnable__video
+#define HSD_VIGXSetDrawDone HSD_VIGXSetDrawDone__video
+#define HSD_VISetXFBWaitDone HSD_VISetXFBWaitDone__video
+#define HSD_VIDrawDoneXFB HSD_VIDrawDoneXFB__video
+#endif
+
 HSD_VIInfo HSD_VIData;
 static u8 garbage[HSD_ANTIALIAS_GARBAGE_SIZE] ATTRIBUTE_ALIGN(32);
 

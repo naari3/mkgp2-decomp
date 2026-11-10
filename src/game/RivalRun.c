@@ -666,24 +666,24 @@ const char lbl_8035C22C[] = "jyugemu_start.dat";
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void CObj_DebugVizPathFlush();
-extern void CourseEnvironment_RenderObjects_Timed();
+extern void CObj_DebugVizPathFlush(void *);
+extern void CourseEnvironment_RenderObjects_Timed(void *);
 extern void DrawEffect_TickAndCull();
 extern void ItemObjectManager_Render();
-extern void KartItem_RenderPipelinedWithEffects();
-extern void Object_RenderJObjIfWithinRange();
-extern void Subsystem36c_DispatchPass2_Timed();
-extern void Subsystem36c_DispatchPass4_Timed();
-extern void TransitionEffect_RenderPass();
+extern void KartItem_RenderPipelinedWithEffects(void *, int);
+extern void Object_RenderJObjIfWithinRange(void *);
+extern void Subsystem36c_DispatchPass2_Timed(void *);
+extern void Subsystem36c_DispatchPass4_Timed(void *);
+extern void TransitionEffect_RenderPass(void *, int);
 extern void TransparentDraw_SortAndDispatch();
-extern void clDrawMan_Buckets_Dispatch();
-extern void clDrawMan_Buckets_Reset();
-extern void clDrawMan_EndFrame_NoOp();
-extern void clItemBoxManager_Draw();
+extern void clDrawMan_Buckets_Dispatch(void *);
+extern void clDrawMan_Buckets_Reset(void *);
+extern void clDrawMan_EndFrame_NoOp(void *);
+extern void clItemBoxManager_Draw(void *);
 extern void fn_8016B0C4();
-extern void fn_80253448();
-extern void fn_802535D4();
-extern void HSD_StateInvalidate();
+extern void fn_80253448(void *, unsigned int);
+extern void fn_802535D4(void *);
+extern void HSD_StateInvalidate(int);
 
 /* --- extern decls: sda21-referenced data --- */
 extern void *lbl_806D109C;
@@ -745,43 +745,43 @@ C_REGION_BEGIN
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern void CObj_ApplyScissor();
-extern void CObj_LoadProjMatrix();
+extern void CObj_ApplyScissor(void *, void *);
+extern void CObj_LoadProjMatrix(void *, void *);
 extern void CarObject_ApplyInput(void *car, float steer, float accel, float brake, unsigned char started);
 extern void CarObject_FrameUpdate(void *car, int flag);
 extern void *CarObject_GetRenderObj(void *car);
-extern void ChallengeGoalCamera_Update();
-extern void CourseEnvironment_UpdateAndCullZones_Timed();
+extern void ChallengeGoalCamera_Update(void *, void *, void *);
+extern void CourseEnvironment_UpdateAndCullZones_Timed(void *);
 extern void Fog_UpdateFromCourseScene3D();
 extern void *GetInputManager(void);
 extern void *GetRaceContextPtr();
-extern void HUD_FrameUpdate();
+extern void HUD_FrameUpdate(void *);
 extern void *InputMgr_GetPlayer(void *mgr, int idx);
 extern unsigned char IsRaceStarted(void);
 extern void ItemObjectManager_PerFrameUpdate();
 extern void ItemObjectManager_Update();
 extern float *KartDriver_GetKartRootMtx(void *render);
-extern void KartItem_UpdateShadowBillboardAndViewport();
-extern void KartMovement_ResetOnGoal();
-extern void KartMovement_ResetOnTimeout();
+extern void KartItem_UpdateShadowBillboardAndViewport(void *, void *, int);
+extern void KartMovement_ResetOnGoal(void *);
+extern void KartMovement_ResetOnTimeout(void *);
 extern void KartMovement_SetSpeedScale(void *car, float scale);
-extern void LakituStart_UpdateCountdown();
+extern void LakituStart_UpdateCountdown(void *);
 extern int NokoNokoChallenge_CalcResultText(void *self, int success, int arg);
 extern int *NokoNokoChallenge_GetCoinDivisor(void);
 extern unsigned char NokoNokoChallenge_HandleBrakeInput(void *self, unsigned char brake);
-extern void NokoNokoChallenge_SaveResult();
+extern void NokoNokoChallenge_SaveResult(void *, int, int);
 extern int NokoNokoChallenge_TransitionToResult(void *self);
-extern void PathManager_UpdateAll();
-extern void RivalRun_RivalAIUpdate();
-extern void SetCoinCount();
-extern void TransitionEffect_Tick();
+extern void PathManager_UpdateAll(void *);
+extern void RivalRun_RivalAIUpdate(RRRivalAI *self);
+extern void SetCoinCount(int);
+extern void TransitionEffect_Tick(void *);
 extern void VfxSlotMgr_Update(RRVec3 a, RRVec3 b);
-extern void clItemBoxManager_Update();
-extern void fn_8016B32C();
-extern void fn_8016C554();
+extern void clItemBoxManager_Update(void *);
+extern void fn_8016B32C(void *);
+extern void fn_8016C554(int);
 extern void fn_801A1280();
 extern unsigned char fn_80253C40(void *hud);
-extern void fn_80253C74();
+extern void fn_80253C74(void *, int, int, int);
 extern void fn_80253FD8(void *hud, float v);
 
 /* --- extern decls: sda21-referenced data --- */
@@ -862,7 +862,7 @@ extern "C" int RivalRun_Update(RivalRunState *self)
         ChallengeGoalCamera_Update(self->goalCamera, self->scene, KartDriver_GetKartRootMtx(CarObject_GetRenderObj(self->car)));
     }
     }
-    RivalRun_RivalAIUpdate(self->rival);
+    RivalRun_RivalAIUpdate((RRRivalAI *)self->rival);
     Fog_UpdateFromCourseScene3D();
     PathManager_UpdateAll(self->participants);
     LakituStart_UpdateCountdown(self->lakitu);
@@ -938,9 +938,9 @@ extern unsigned char IsRaceStarted(void);
 extern void ItemEffectBus_OrMask(void *bus, unsigned long long mask);
 extern float *KartDriver_GetKartRootMtx(void *render);
 extern float KartItem_GetCurrentSpeedWithBonus(void *car);
-extern void KartItem_TryArmBoostOnLanding();
-extern void RivalRun_RivalTactics();
-extern void RivalRun_UpdatePathFollower();
+extern void KartItem_TryArmBoostOnLanding(void *, int);
+extern void RivalRun_RivalTactics(RRRivalAI *self);
+extern void RivalRun_UpdatePathFollower(RRPathFollower *pf, const RRVec3 *pos);
 extern float Saturate_Double(float value, float lo, float hi);
 extern float Vec3_Dot(const RRVec3 *a, const RRVec3 *b);
 extern void Vec3_Normalize(const RRVec3 *v, RRVec3 *out);
@@ -1645,24 +1645,24 @@ float RivalRun_CalcPathDistance(RRPathFollower *pf, RRVec3 *from, RRVec3 *to) {
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern void ClRomTable_PurgeAll();
-extern void CourseEnvironment_Dtor();
+extern void CourseEnvironment_Dtor(void *, int);
 extern void ItemObjectManager_Reset();
-extern void LakituStart_Dtor();
-extern void MemoryManager_TimedFree();
-extern void PathParticipantArray_Dtor();
-extern void Path_ResetCursorForKart();
+extern void LakituStart_Dtor(void *, int);
+extern void MemoryManager_TimedFree(void *);
+extern void PathParticipantArray_Dtor(void *, int);
+extern void Path_ResetCursorForKart(void *, int);
 extern void RankingTable_Init();
 extern void SceneDrawList_Reset();
-extern void SetActiveCamera();
-extern void SetPlayerCarObject();
-extern void SetResourceLoadingFlag();
+extern void SetActiveCamera(int, void *);
+extern void SetPlayerCarObject(void *);
+extern void SetResourceLoadingFlag(int);
 extern void VfxSlotMgr_Shutdown();
 extern void clRom_PurgeAll();
-extern void dtor_80122FD8();
-extern void fn_80124C84();
-extern void fn_8016C634();
-extern void fn_80208FE4();
-extern void fn_80254134();
+extern void dtor_80122FD8(void *, int);
+extern void fn_80124C84(void *, int);
+extern void fn_8016C634(void *, int);
+extern void fn_80208FE4(void *, int);
+extern void fn_80254134(void *, int);
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int g_courseData;
@@ -1816,10 +1816,10 @@ extern void RankingTable_Init();
 extern int HSD_LObjLoadDesc(void);
 extern void Scene3D_GetCameraPos(void *scene, float *a, float *b);
 extern void Scene3D_SetupProjection(void *scene, float a, float b);
-extern void SetActiveCamera();
+extern void SetActiveCamera(int, void *);
 extern void SetCourseScene3D(void *scene);
-extern void SetPlayerCarObject();
-extern void SetResourceLoadingFlag();
+extern void SetPlayerCarObject(void *);
+extern void SetResourceLoadingFlag(int);
 extern void SetReverseRoundFlag(int flag);
 extern void SoundChannels_ClearAll();
 extern void SoundDriver_GetOrCreate(int arg);
@@ -2064,7 +2064,7 @@ extern const float lbl_806D738C;
 void RivalRun_RivalInit(void);
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */
-extern void MemoryManager_TimedFree();
+extern void MemoryManager_TimedFree(void *);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"

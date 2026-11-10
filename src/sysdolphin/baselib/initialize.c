@@ -1,3 +1,4 @@
+struct _HSD_ObjAllocData; /* initialize.h names it in a prototype before objalloc.h is included */
 #include "initialize.h"
 
 #include <stdarg.h>

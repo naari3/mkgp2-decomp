@@ -49,7 +49,11 @@ static inline void TE_SetVisualState2(void *e, int r, int flag)
     TE_S32(e, 0x128) = r;
 }
 
-void TornadoEffect_ApplyItemVisual_Primary();
+#ifdef __MWERKS__
+void TornadoEffect_ApplyItemVisual_Primary(); /* the call below passes two arguments */
+#else
+void TornadoEffect_ApplyItemVisual_Primary(void *e, int item, int eq);
+#endif
 
 /* ApplyItemVisual_Compact's steps, as inlined at the end of Primary (the
  * self-call there passes no eq). */
@@ -62,7 +66,11 @@ static inline void TE_ReapplyCompact(void *e, int item, int flag)
     int r2;
 
     if (prev != -1) {
+#ifdef __MWERKS__
         TornadoEffect_ApplyItemVisual_Primary(e, prev);
+#else
+        TornadoEffect_ApplyItemVisual_Primary(e, prev, 0); /* eq is never read */
+#endif
     }
     TE_S32(e, 0x14C) = item;
     r = 0;

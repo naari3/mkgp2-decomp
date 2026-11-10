@@ -209,10 +209,10 @@ static inline void DemoJObjSetTranslate(HSD_JObj *jobj, const Vec *t) {
 C_REGION_BEGIN
 
 /* callees used by the plain C views below */
-extern void fn_8016EACC();
-extern void MemoryManager_TimedFree();
-extern void dtor_8002CDF4();
-extern void fn_8016EFA8();
+extern void fn_8016EACC(void *);
+extern void MemoryManager_TimedFree(void *);
+extern void dtor_8002CDF4(void *, int);
+extern void fn_8016EFA8(void *, int);
 extern unsigned int lbl_80419F0C[];
 extern unsigned int ChallengeDemoBlock_vtable_8048E258[];
 extern void fn_801825C8();

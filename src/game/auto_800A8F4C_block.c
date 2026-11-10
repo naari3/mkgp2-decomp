@@ -26,7 +26,7 @@ extern void DebugPrintf(const char *fmt, ...);
 extern void WarpDashMgr_Init();
 extern void MemoryManager_TimedFree(void *);
 extern void dtor_800AA69C(void *, short);
-extern void __destroy_arr();
+extern void __destroy_arr(void *, void *, int, int);
 extern void __construct_array();
 extern double cos(double);
 extern double sin(double);

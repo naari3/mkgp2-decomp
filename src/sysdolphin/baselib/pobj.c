@@ -22,6 +22,13 @@
 #include <dolphin/os.h>
 #include "initialize.h"
 
+/* This file has its own static copy of functions the header declares extern.
+ * Metrowerks accepts that; for other compilers the copy gets a name of its own. */
+#ifndef __MWERKS__
+#define HSD_PObjSetMtxMark HSD_PObjSetMtxMark__pobj
+#define HSD_PObjGetMtxMark HSD_PObjGetMtxMark__pobj
+#endif
+
 /* mkgp2 (HSD 1.3.x): the shape-anim aobj lives in HSD_PObj, so HSD_ShapeSet
  * ends before its aobj field (aobj.c still reads the old field). */
 #define SHAPESET_SIZE offsetof(HSD_ShapeSet, aobj)

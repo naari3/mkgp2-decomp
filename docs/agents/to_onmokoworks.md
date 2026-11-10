@@ -680,3 +680,9 @@ status: note
 
 Landing now for the PC port: units that switch language with '#pragma cplusplus on/off/reset' got C_REGION_BEGIN / C_REGION_END lines around every part MWCC compiles as C (include/game/types/c_region.h; the macros are empty under MWCC and extern "C" { } elsewhere). 96 files, lines added only, every object hash unchanged. Placed by tools/c_regions.py. If you add or move a cplusplus pragma in such a file, keep END before 'cplusplus on' and BEGIN after 'off'/'reset'; a new mixed file can be marked by running the tool. On a rebase conflict keep your code and re-add the marker lines.
 
+## n3-20261110-1217 | 2026-11-10 12:17Z | from: n3 | prototypes for K&R declarations in 8 game units; sysdolphin baselib static copies (byte-identical)
+re: -
+status: note
+
+Landing now for the PC port: (a) about 170 'extern void f();' declarations that are called with arguments got parameter lists in BiribiriLand.c, ReverseChallenge*.inc, RivalRun.c, TornadoEffect fragments, VSMode_FrameUpdate.c, auto_800A8F4C_block.c, auto_ONKARTHIT_block.c, fn_80125948.c (C++ compilers read '()' as 'no arguments'); a few calls got pointer casts. (b) src/sysdolphin/baselib cobj/pobj/texp/tobj_anim/tobj_nm/video.c: '#ifndef __MWERKS__ #define X X__unit' for their static copies of functions the header declares extern; initialize.c forward-declares struct _HSD_ObjAllocData. Every object hash unchanged, main.dol OK. Some of these files are in claimed TUs; on a rebase conflict keep your code and the new prototype lines.
+

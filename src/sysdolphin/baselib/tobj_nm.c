@@ -180,6 +180,16 @@ void TObjUpdateFunc(void* obj, enum_t type, HSD_ObjData* val)
 #define FLT_EPSILON 1.00000001335e-10F
 
 #include "tobj_private.h"
+
+/* This file has its own static copy of functions the header declares extern.
+ * Metrowerks accepts that; for other compilers the copy gets a name of its own. */
+#ifndef __MWERKS__
+#define HSD_TObjAnim HSD_TObjAnim__tobj_nm
+#define HSD_TObjRemove HSD_TObjRemove__tobj_nm
+#define HSD_TObjGetDefaultClass HSD_TObjGetDefaultClass__tobj_nm
+#define HSD_TObjTevFree HSD_TObjTevFree__tobj_nm
+#define HSD_TObjTevRemove HSD_TObjTevRemove__tobj_nm
+#endif
 extern char lbl_806D0C94[7];
 extern char lbl_806D0C9C[5];
 #undef __FILE__

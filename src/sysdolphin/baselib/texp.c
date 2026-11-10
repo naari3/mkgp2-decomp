@@ -142,6 +142,12 @@ void HSD_TExpUnref(HSD_TExp* texp, u8 sel)
 #include "tobj.h"
 
 #include "texp_inline.h"
+
+/* This file has its own static copy of functions the header declares extern.
+ * Metrowerks accepts that; for other compilers the copy gets a name of its own. */
+#ifndef __MWERKS__
+#define HSD_TExpFree HSD_TExpFree__texp
+#endif
 #undef __FILE__
 #define __FILE__ lbl_806D0F38
 extern char lbl_806D0F38[];

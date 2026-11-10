@@ -10,6 +10,14 @@ inline double fabs(double f)
 }
 #include "cobj_private.h"
 
+/* This file has its own static copy of functions the header declares extern.
+ * Metrowerks accepts that; for other compilers the copy gets a name of its own. */
+#ifndef __MWERKS__
+#define makeProjectionMtx makeProjectionMtx__cobj
+#define HSD_CObjSetScissor HSD_CObjSetScissor__cobj
+#define HSD_CObjSetViewport HSD_CObjSetViewport__cobj
+#endif
+
 int ref_width = 640;
 int ref_height = 480;
 char lbl_806D0D50[7] = "cobj.c";

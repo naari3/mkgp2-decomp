@@ -13,6 +13,13 @@
 #include <dolphin/gx.h>
 #include <dolphin/mtx.h>
 
+/* This file has its own static copy of functions the header declares extern.
+ * Metrowerks accepts that; for other compilers the copy gets a name of its own. */
+#ifndef __MWERKS__
+#define HSD_TObjAddAnim HSD_TObjAddAnim__tobj_anim
+#define HSD_TObjReqAnimByFlags HSD_TObjReqAnimByFlags__tobj_anim
+#endif
+
 #define FLT_EPSILON 1.00000001335e-10F
 
 #ifndef MUST_MATCH

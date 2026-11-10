@@ -3682,7 +3682,7 @@ extern void ItemUse_ResetAllKartUseSlots();
 extern void ProcessSystemTick(const char *name);
 extern void RaceScene_ClearPlayerSlotPointers();
 extern void RaceSlot_ResetAll();
-extern void SetSyncTarget();
+extern void SetSyncTarget(int);
 extern void VoiceSystem_Init();
 
 /* --- extern decls: sda21-referenced data --- */
