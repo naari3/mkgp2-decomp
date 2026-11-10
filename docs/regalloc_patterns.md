@@ -2461,3 +2461,40 @@ Other levers of the same function:
 
 Sign: struct copies in a different shape from an otherwise identical
 standalone probe; check whether the pointer really points inside its object.
+
+## 91. Argument load order at three call sites of a big C++ ctor (CarObject_Init, asm -> C++, 99.4 -> 100, 11-10)
+
+All three were "same instructions, loads in another order / other argument
+registers". Each needed a different lever:
+
+1. `new Tornado(1, driver, character, isPlayer, x, 0.0f, y)`: target emits the
+   float constant and `li r4,1` BEFORE the two member loads. §74 again: the
+   arguments are evaluated in prototype order, so the callee prototype
+   interleaves ints and floats: `(int, Driver *, float, float, int, int, float)`.
+   Sweep all 35 positions of the three floats; several match, take the most
+   natural one. The mangled name changes: update `extab_user_renames.json`.
+2. `new Fade(movement.p, tornado.p, camera.get(), isPlayer)`: target loads the
+   camera first. `get()`, `.p`, conversion operators and `operator->` all give
+   the same code. A getter WITH A LOCAL (`T *getV() const { T *r = p; return r; }`)
+   makes that argument a temp that is loaded first.
+3. Inline payload ctor `Blend(this, isPlayer20, speed.p, steering.p)`: with
+   parameters, the first parameter gets the lowest register AND arguments are
+   loaded right to left, so register order and load order are always opposite;
+   the target has both ascending (st r5, sp r6, act r7, loaded st, sp, act).
+   Fix: the ctor takes only the owner and reads the values itself, with the
+   declarations separated from the loads:
+   `unsigned char act; Speed *sp; Steering *st; st = o->steering.p; sp = o->speed.p; act = o->isPlayer20;`
+   then the member stores. Declaration order sets the colouring (last declared
+   first), statement order sets the load order. Brute-force the 6 declaration
+   orders.
+
+Landing notes for a ctor converted inside an asm + manual extab TU:
+`main.dol` failed with every function at 100% twice. (a) A holder dtor kept as
+an `extern "C"` function next to a declared-only `~Holder()` renamed to the same
+symbol was emitted after the following function; defining the real
+`Holder::~Holder()` at that place fixed the order. (b) The ctor uses a
+ScopedTimer, so the TU gets a weak `__dt__11ScopedTimerFv` with its own
+extabindex row; `reorder_extab.py` silently skips a TU whose function set
+differs from `tools/extab_order.json`, so add the weak dtor to both lists.
+Check with `objdump -r -j extabindex` against the json when only extab bytes
+differ.

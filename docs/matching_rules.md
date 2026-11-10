@@ -24,6 +24,17 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 03:38Z (n3 technique): regalloc_patterns §91: argument load order
+  in a C++ ctor. Prototype int/float interleave (§74), a getter with a local
+  to load one argument first, and "declare in colour order, load in statement
+  order" inside an inline ctor. Also: a weak `__dt__11ScopedTimerFv` must be
+  listed in tools/extab_order.json or reorder_extab skips the TU (CarObject_Init).
+- 2026-11-10 03:35Z: the board's `open` list no longer shows receipts
+  (seen/done/declined), so anything it prints still wants a reaction.
+  `agent_board.py open --fetch` reads a fresh `origin/main`. n3 threads see
+  it on every wake (`.claude/settings.json`); whoever sees an open message
+  tells naari3, acts, and answers it so it stops showing
+  (`docs/agents/README.md`).
 - 2026-11-10 04:10Z (n3 technique): regalloc_patterns §90: a struct view
   laid over a pool base and read past the end of that object changes copy
   shape and scheduling. Declare the real objects (symbols.txt split) and let
@@ -76,6 +87,11 @@ below say the same thing.
 - 2026-11-09 22:55Z (n3 structure): TU merge, 4 -> 1: CoinChallengeRender /
   CoinChallengeUpdate / anon_80214B3C / CoinChallengeInit are now
   `game/CoinChallenge.cpp` (clCGameYI, GC/2.6 `-inline deferred -RTTI on -rostr`).
+- 2026-11-10 04:05Z (n3 regfix): `tools/regfix.py diag` neighbour section now
+  says per off vreg whether it must move EARLIER or LATER in the colouring
+  order and which lever does that for its kind (named local / frontend temp /
+  backend temp: inline getter, named local, declaration order;
+  regalloc_patterns §89)
 - 2026-11-10 00:45Z (n3 regfix): `tools/regfix.py diag` flags an off `@temp`
   that may be an inline's RETURN temp (regalloc_patterns §81: return through a
   reference out-parameter); checked on the pre-match fn_8018E6FC. fn_8017DF00

@@ -2273,6 +2273,30 @@ def neighbour_hint(rep):
                        f"neighbours coloured before it: "
                        + (", ".join(f"{x}({nm(x)})={ph.get(x)}" for x in before[:10]) or "none")
                        + "; after it: " + (", ".join(f"{x}({nm(x)})={ph.get(x)}" for x in after[:10]) or "none"))
+            # which way must v move in the colouring order, and how (regalloc_patterns 89)
+            kind = ("named" if nm(v) != "temp" and not str(nm(v)).startswith("@") else
+                    "cse" if str(nm(v)).startswith("@") else "backend")
+            later = [x for x in after if w.get(x, ph.get(x)) == ph.get(v)]      # they should take ours first
+            earlier = [x for x in before if ph.get(x) == w.get(v) and w.get(x, ph.get(x)) != w.get(v)]
+            if later:
+                how = {"backend": "it is a backend temp (coloured before all frontend temps and locals): give the value a "
+                                  "named local, or a local of the inline, declared so that it comes later",
+                       "cse": "it is a frontend temp: make it a named local of the function (coloured after all temps), "
+                              "declared after the others; a loop counter that must sit above body locals is a named "
+                              "local declared AFTER them",
+                       "named": "declare it later (first declared = coloured first among function locals; in an inline "
+                                "the last declared is coloured first)"}[kind]
+                out.append(f"      move LATER: {', '.join(f'{x}({nm(x)})' for x in later[:3])} should take {ph.get(v)} before "
+                           f"it; {how}")
+            if earlier:
+                how = {"named": "a named local is coloured after every temp: return the value from a trivial inline getter "
+                                "(`static inline int get() { return g; }`) or make it a local of an inline so it becomes "
+                                "an inline temp, or declare it earlier among the named locals",
+                       "cse": "write the expression so its temp is created earlier (CSE temps: the group whose second "
+                              "occurrence comes later gets the lower vreg), or compute it through an inline",
+                       "backend": "it already is a backend temp; the neighbour must become a later one (named local)"}[kind]
+                out.append(f"      move EARLIER: it must be coloured before {', '.join(f'{x}({nm(x)})' for x in earlier[:3])} "
+                           f"(which holds the wanted {w.get(v)}); {how}")
             holders = [x for x in after if ph.get(x) == w.get(v)] + [x for x in before if ph.get(x) == w.get(v)]
             if holders:
                 out.append(f"      the wanted {w.get(v)} is held by neighbour(s) " + ", ".join(f"{x}({nm(x)})" for x in holders[:4])
