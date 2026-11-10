@@ -1800,10 +1800,10 @@ game/clMenuInput.cpp:
 	.sdata      start:0x806CEF58 end:0x806CEF68
 
 game/autodata/sdata_806CEF68.c:
-	.sdata      start:0x806CEF68 end:0x806CEFA8
+	.sdata      start:0x806CEF68 end:0x806CEF78
 
 game/autodata/data_803FDF50.c:
-	.data       start:0x803FDF50 end:0x803FE370
+	.data       start:0x803FDF50 end:0x803FE050
 
 game/autodata/rodata_80310DE0.c:
 	.rodata     start:0x80310DE0 end:0x803114CC
@@ -1948,35 +1948,26 @@ game/KartTireFX.cpp:
 	.text       start:0x80077E24 end:0x80079B24
 	.rodata     start:0x803115F0 end:0x80311B30
 
-game/autodata/rodata_80311B30.c:
-	.rodata     start:0x80311B30 end:0x80311BF8
-
-game/clDrawMan_Dtor.c:
-	extab       start:0x80008490 end:0x80008498
-	extabindex  start:0x80021428 end:0x80021434
-	.text       start:0x80079B24 end:0x80079BD0
-
-game/clDrawMan_NodePool_Free.c:
-	extab       start:0x80008498 end:0x800084A0
-	extabindex  start:0x80021434 end:0x80021440
-	.text       start:0x80079BD0 end:0x80079C0C
-
-game/clDrawMan_Buckets_Free.c:
-	extab       start:0x800084A0 end:0x800084A8
-	extabindex  start:0x80021440 end:0x8002144C
-	.text       start:0x80079C0C end:0x80079C48
-
-game/clDrawMan_NodeList.c:
-	.text       start:0x80079C48 end:0x80079CDC
-
-game/clDrawMan.cpp:
-	extab       start:0x800084A8 end:0x80008620
-	extabindex  start:0x8002144C end:0x80021494
-	.text       start:0x80079CDC end:0x8007ADC0
+game/clDrawManager.cpp:
+	extab       start:0x80008490 end:0x80008620
+	extabindex  start:0x80021428 end:0x80021494
+	.text       start:0x80079B24 end:0x8007ADC0
+	.rodata     start:0x80311B30 end:0x80311BA8
+	.data       start:0x803FE050 end:0x803FE078
+	.sdata      start:0x806CEF78 end:0x806CEF88
 	.sdata2     start:0x806D2F38 end:0x806D2F40
 
 game/autodata/sdata2_806D2F40.c:
 	.sdata2     start:0x806D2F40 end:0x806D2FD0
+
+game/autodata/sdata_806CEF88.c:
+	.sdata      start:0x806CEF88 end:0x806CEFA8
+
+game/autodata/data_803FE078.c:
+	.data       start:0x803FE078 end:0x803FE370
+
+game/autodata/rodata_80311BA8.c:
+	.rodata     start:0x80311BA8 end:0x80311BF8
 
 game/KartItem_FindRearTarget_v1.cpp:
 	extab       start:0x80008620 end:0x80008628

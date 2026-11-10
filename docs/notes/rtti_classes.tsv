@@ -40,11 +40,11 @@ address	class	bases	symbol	data_unit	slots	offset_to_top
 0x803FDE64	clTestMode	clJobRunner	CardCreate_Page_data_803FDE64	game/CardCreate_Page.cpp	ServiceMenu_Tick,ServiceMenu_Draw,ServiceMenu_Dtor	0
 0x803FDF28	teSingleton<clMenuInput>		lbl_803FDF28	game/clMenuInput.cpp	SmallObj_Dtor_VtableB	0
 0x803FDF40	clMenuInput	teSingleton<clMenuInput>	lbl_803FDF40	game/clMenuInput.cpp	SmallObj_Dtor_VtableA	0
-0x803FE05C	clDrawManager	teSingleton<clDrawManager>	lbl_803FE05C	game/autodata/data_803FDF50.c	clDrawMan_Dtor	0
-0x803FE068	teSingleton<clDrawManager>		clDrawMan_vtable_803FE068	game/autodata/data_803FDF50.c	dtor_8007AD78	0
-0x803FE0AC	clPlaneHitManager	teSingleton<clPlaneHitManager>	SpecialFaceMesh_data_803FE0AC	game/autodata/data_803FDF50.c	SpecialFaceMesh_Dtor	0
-0x803FE0B8	teSingleton<clPlaneHitManager>		SpecialFaceMesh_vtable_803FE0B8	game/autodata/data_803FDF50.c	dtor_8007CC54	0
-0x803FE0C8	clSceneInterface		lbl_803FE0C8	game/autodata/data_803FDF50.c	dtor_8007D0D4	0
+0x803FE05C	clDrawManager	teSingleton<clDrawManager>	lbl_803FE05C	game/clDrawManager.cpp	clDrawMan_Dtor	0
+0x803FE068	teSingleton<clDrawManager>		clDrawMan_vtable_803FE068	game/clDrawManager.cpp	dtor_8007AD78	0
+0x803FE0AC	clPlaneHitManager	teSingleton<clPlaneHitManager>	SpecialFaceMesh_data_803FE0AC	game/autodata/data_803FE078.c	SpecialFaceMesh_Dtor	0
+0x803FE0B8	teSingleton<clPlaneHitManager>		SpecialFaceMesh_vtable_803FE0B8	game/autodata/data_803FE078.c	dtor_8007CC54	0
+0x803FE0C8	clSceneInterface		lbl_803FE0C8	game/autodata/data_803FE078.c	dtor_8007D0D4	0
 0x803FE37C	clScreenEffect	teSingleton<clScreenEffect>	TransitionEffect_data_803FE37C	game/TransitionEffect.cpp	TransitionEffect_Dtor	0
 0x803FE3C0	teSingleton<clScreenEffect>		TransitionEffect_vtable_803FE3C0	game/TransitionEffect.cpp	dtor_8008068C	0
 0x803FE464	clNormal3DNodeManager	clNodeManager<char *, clNormal3D *>	clNormal3DNodeManager_vtable_803FE464	game/cLNormal3DWrap.cpp	cLNormal3DWrap_Mgr_Dtor	0

@@ -144,6 +144,24 @@ again (data order base list, vtable, weak base vtable). New rules:
 - `-rostr` literals replaced the named format arrays and the separate
   "create line manager" unit.
 
+### Fourth class: clDrawManager (about 15 minutes, 3 compiles)
+
+`src/game/clDrawManager.cpp` replaces five units (`clDrawMan.cpp`, the
+destructor, two array-element destructors, the node constructors) and
+`include/game/clDrawMan_private.h`, which already had the class almost
+written. Went straight through with the rules above:
+
+- The data order (base list, vtable, weak base vtable) was again the
+  deferred one; the same source without `-inline deferred` gives weak base
+  vtable first, also when the destructor is the first function. **So far:
+  base vtable first = not deferred, base list first = deferred.**
+- Deferred, so the source is in reverse address order, the destructor last.
+- The element destructors and constructors (`DrawNode`, `DrawBucket`) are
+  plain out-of-line definitions; `delete[]` of a class with a destructor is
+  the `__destroy_new_array` call the old C file spelled by hand.
+- The weak `ScopedTimer` destructor lands in the middle of the object and
+  the linker drops it, as before.
+
 ### Rules for every converted class
 
 - **Check with clang before landing**; compiling off MWCC is the point.
@@ -160,7 +178,7 @@ again (data order base list, vtable, weak base vtable). New rules:
   spell the padding as a member (`unsigned char pad[3];`), as clScreenEffect
   does with `align[2]`, so both compilers lay the derived class out alike.
 
-What this says about the other 347: each needs the unit that holds the
+What this says about the other 345: each needs the unit that holds the
 class's first non-inline virtual function to own the class data, which often
 means merging units first, and the constructors and destructors written as
 real ones. That is matching-grade work per class, helped by the table but
