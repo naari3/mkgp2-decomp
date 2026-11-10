@@ -169,6 +169,23 @@ unchanged. No other source calls `__destroy_new_array` or
 `__construct_new_array` explicitly. `__construct_array` / `__destroy_arr` on
 member arrays carry no header and are fine as they are.
 
+## Text stored as words (request 21, 2026-11-10)
+
+Some tables keep a file name or a label inline between pointers and numbers,
+and the source describes the table as an array of words (`void *const
+lbl_8037D7DC[9] = { 0x65665F73, ... }` is "ef_st_dino_sazanami.dat" followed
+by three words). A little-endian host stores each word reversed, so the text
+is scrambled. Such words are written with `TEXT_WORD('e', 'f', '_', 's')`
+(`include/game/types/text_word.h`): the same number under MWCC, the bytes in
+reading order on any host. The object's type and every use of it stay as
+they are.
+
+`python3 tools/port_abi/text_words.py` lists the runs it recognises (two or
+more words that decode as ASCII or Shift-JIS text, start at a boundary and
+end in a NUL; floats that look like text, such as 0x3F333333 0x3F666666, are
+kept out). `--fix <files>` rewrites them. Bytes outside ASCII are written as
+numbers (`TEXT_WORD(0x83, 0x5E, 0x83, 0x43)`).
+
 ## Pointers to member functions (item 14)
 
 MWCC's pointer to member function is 12 bytes, `{ long thisDelta; long
