@@ -2,5 +2,5 @@
 # Show open agent-board messages (docs/agents/) after git pull / merge.
 # Installed by tools/install_githooks.sh (core.hooksPath=tools/githooks).
 cd "$(git rev-parse --show-toplevel)" 2>/dev/null || exit 0
-python3 tools/agent_board.py open --quiet 2>/dev/null || true
+python3 tools/agent_board.py open --quiet --fetch 2>/dev/null || true
 exit 0
