@@ -2,9 +2,9 @@
 
 #include "game/types/AnimState.h"
 
-extern void AnimState_Init(AnimState *, float);
+extern void AnimState_Init(AnimState *, void *entries);
 
-void AnimState_Reset(AnimState *self)
+void AnimState_Reset(AnimState *self, void *entries)
 {
     int i;
 
@@ -22,5 +22,5 @@ void AnimState_Reset(AnimState *self)
         self->d[i] = 1.0f;
     }
     self->weight = 1.0f;
-    AnimState_Init(self, 0.0f);
+    AnimState_Init(self, entries); /* the second argument goes straight through */
 }

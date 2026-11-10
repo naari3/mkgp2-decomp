@@ -60,7 +60,14 @@ extern void CObj_ApplyScissor(void *cam, void *out);
 extern void CObj_ApplyViewport(void *cam, void *in);
 extern void CObj_LoadIntoGX(void *cam, void *in);
 extern void CObj_LoadProjMatrix(void *cam, void *out);
+#ifdef __MWERKS__
 extern void CarObject_ApplyInput(RCCar *car, float steer, float accel, float brake, unsigned char started);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void CarObject_ApplyInput(RCCar *, unsigned char, float, float, float);
+static inline void CarObject_ApplyInput_Reordered(RCCar * a0, float a1, float a2, float a3, unsigned char a4) { CarObject_ApplyInput(a0, a4, a1, a2, a3); }
+#define CarObject_ApplyInput CarObject_ApplyInput_Reordered
+#endif
 extern float CarObject_CalcSpeedRatio(RCCar *car);
 extern void CarObject_FrameUpdate(RCCar *car, int arg);
 extern void CarObject_HandleObstacleHit(RCCar *car, RCHitInfo *info);

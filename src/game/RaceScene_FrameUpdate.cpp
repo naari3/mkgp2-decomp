@@ -98,7 +98,14 @@ long long OSGetTime(void);
 unsigned char IsRaceStarted(void);
 void *CarObject_GetRenderObj(void *car);
 float CalcSoundDirection(void *render, void *path, float *steer, int flag);
+#ifdef __MWERKS__
 void CarObject_ApplyInput(void *car, float accel, float steer, float brake, unsigned char started);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void CarObject_ApplyInput(void *, unsigned char, float, float, float);
+static inline void CarObject_ApplyInput_Reordered(void * a0, float a1, float a2, float a3, unsigned char a4) { CarObject_ApplyInput(a0, a4, a1, a2, a3); }
+#define CarObject_ApplyInput CarObject_ApplyInput_Reordered
+#endif
 void CarObject_FrameUpdate(void *car, unsigned int held);
 void ItemBox_ProcessPickup(void *sel, void *car, int a, unsigned int held, int b, float steer);
 int GetCoinMilage(unsigned char *playerData);

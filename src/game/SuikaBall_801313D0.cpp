@@ -129,7 +129,14 @@ extern const unsigned int lbl_806DC1B8;
 extern const Vec3 SuikaBall_Render_rodata_803579F4[4][2];
 extern void CObj_ApplyScissor(void *cobj, Vec3 *v);
 extern void CObj_LoadProjMatrix(void *cobj, Vec3 *v);
+#ifdef __MWERKS__
 extern void CarObject_ApplyInput(void *car, float steer, float accel, float brake, unsigned char started);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void CarObject_ApplyInput(void *, unsigned char, float, float, float);
+static inline void CarObject_ApplyInput_Reordered(void * a0, float a1, float a2, float a3, unsigned char a4) { CarObject_ApplyInput(a0, a4, a1, a2, a3); }
+#define CarObject_ApplyInput CarObject_ApplyInput_Reordered
+#endif
 extern float CarObject_CalcSpeedRatio(void *car);
 extern void CarObject_FrameUpdate(void *car, int flag);
 extern void *CarObject_GetRenderObj(void *car);

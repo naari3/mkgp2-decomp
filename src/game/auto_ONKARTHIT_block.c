@@ -77,7 +77,14 @@ extern unsigned char InputCmd_GetDetectedFlag(void *cmd);
 extern void InputCmd_GetDetectedFlag();
 #endif
 extern void InputCmd_Init();
+#ifdef __MWERKS__
 extern void InputCmd_PushSample(void *, int, float, float, float);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void InputCmd_PushSample(void *, float, float, float, int);
+static inline void InputCmd_PushSample_Reordered(void * a0, int a1, float a2, float a3, float a4) { InputCmd_PushSample(a0, a2, a3, a4, a1); }
+#define InputCmd_PushSample InputCmd_PushSample_Reordered
+#endif
 extern void InputCmd_SetCooldown(void *, int);
 extern void InputCmd_TickAndDetectAndClear(void *);
 extern void InputMgr_GetPlayer(void *, int);
@@ -153,7 +160,14 @@ extern float KartMovement_CalcMaxSpeed(void *mov, int flag);
 extern float KartMovement_CalcSpeedWithCoinBonus(void *mv, int flag);
 extern int KartMovement_GetCurrentItemId(void *driver);
 extern void KartMovement_Init();
+#ifdef __MWERKS__
 extern void KartMovement_PhysicsStep(void *, float, float, float, int);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void KartMovement_PhysicsStep(void *, int, float, float, float);
+static inline void KartMovement_PhysicsStep_Reordered(void * a0, float a1, float a2, float a3, int a4) { KartMovement_PhysicsStep(a0, a4, a1, a2, a3); }
+#define KartMovement_PhysicsStep KartMovement_PhysicsStep_Reordered
+#endif
 extern void KartMovement_RotateByYaw(void *mv, float yaw);
 extern void KartMovement_SetPosition(void *mv, void *pos, int flag);
 extern void KartMovement_SetTravelProgress(void *mov, float v);
@@ -265,7 +279,14 @@ extern void fn_8019CC2C(void *);
 extern void fn_801B1410(void *);
 extern void fn_801B1458(void *, void *);
 extern void fn_801B5B60(int);
+#ifdef __MWERKS__
 extern void fn_802090F0(void *obj, void *center, void *half, float f1, float f2, float f3);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_802090F0(void *, float, float, float, void *, void *);
+static inline void fn_802090F0_Reordered(void * a0, void * a1, void * a2, float a3, float a4, float a5) { fn_802090F0(a0, a3, a4, a5, a1, a2); }
+#define fn_802090F0 fn_802090F0_Reordered
+#endif
 extern void fn_802091BC(void *, int, int);
 extern void __throw();
 extern void strcpy(void *, const void *);

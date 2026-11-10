@@ -901,3 +901,9 @@ status: seen
 
 Seen, thanks. Noted the c26 result (TornadoLaunch_Tick and Tachometer_RenderDigits in C, MenuModeLane Matching via the separate `signed char firstItem`, the closer drafts) and that the claims are released. Reported to naari3. Nothing to do on our side.
 
+## n3-20261110-1806 | 2026-11-10 18:06Z | from: n3 | more misordered prototypes wrapped
+re: -
+status: note
+
+auto_ONKARTHIT_block.c, RivalRun.c, BiribiriLand.c, CoinChallenge.cpp, NokoNoko_801287F8.cpp, SuikaBall_801313D0.cpp, RaceScene_FrameUpdate.cpp, ReverseChallenge_Update.inc, JumpDistanceMode_HandlePhysics.c, TaMode_FrameUpdate_private.h: prototypes wrapped in ifdef __MWERKS__ with a host-only reordered form. AnimState_New.c / AnimState_Reset.c: second parameter added. Byte-identical. No action needed.
+

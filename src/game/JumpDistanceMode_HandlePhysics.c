@@ -46,7 +46,14 @@ void CarObject_FrameUpdate(CarObject *car, int buttons);
 void *CarObject_GetRenderObj(CarObject *car);
 unsigned char Input_IsItemButtonPressed(int buttons);
 unsigned char RenderObj_UseItem(void *ro, int a, int b);
+#ifdef __MWERKS__
 void CarObject_ApplyDriftBoost(CarObject *car, int kind, float amount);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void CarObject_ApplyDriftBoost(CarObject *, float, int);
+static inline void CarObject_ApplyDriftBoost_Reordered(CarObject * a0, int a1, float a2) { CarObject_ApplyDriftBoost(a0, a2, a1); }
+#define CarObject_ApplyDriftBoost CarObject_ApplyDriftBoost_Reordered
+#endif
 void fn_8023E1E4(void *p, int a, int b);
 void fn_801699D8(int a, int b);
 void KartItem_UpdateShadowBillboardAndViewport(CarObject *car, void *view, int a);

@@ -95,7 +95,14 @@ TaRender *CarObject_GetRenderObj(void *car);
 static inline TaRender * CarObject_GetRenderObj(void * a0) { return ((TaRender * (*)(void *))&::CarObject_GetRenderObj)(a0); }
 #endif
 float CalcSoundDirection(void *render, void *path, float *steer, int flag);
+#ifdef __MWERKS__
 void CarObject_ApplyInput(void *car, float accel, float steer, float brake, unsigned char started);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void CarObject_ApplyInput(void *, unsigned char, float, float, float);
+static inline void CarObject_ApplyInput_Reordered(void * a0, float a1, float a2, float a3, unsigned char a4) { CarObject_ApplyInput(a0, a4, a1, a2, a3); }
+#define CarObject_ApplyInput CarObject_ApplyInput_Reordered
+#endif
 void CarObject_FrameUpdate(void *car, unsigned int held);
 int GetCoinMilage(unsigned char *playerData);
 void CoinJumpFlasher_Toggle(void *car);
@@ -216,7 +223,14 @@ unsigned char KartItem_GetByte_f4(void *);
 unsigned char Input_IsItemButtonPressed(int buttons);
 unsigned char RenderObj_UseItem(TaRender *, int, int);
 void RankLog_OnPlayerVictory(void *, int, int);
+#ifdef __MWERKS__
 void CarObject_ApplyDriftBoost(void *, int, float);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void CarObject_ApplyDriftBoost(void *, float, int);
+static inline void CarObject_ApplyDriftBoost_Reordered(void * a0, int a1, float a2) { CarObject_ApplyDriftBoost(a0, a2, a1); }
+#define CarObject_ApplyDriftBoost CarObject_ApplyDriftBoost_Reordered
+#endif
 #ifdef __MWERKS__
 void fn_8023E1E4(void *, int, int);
 #else /* this namespace declares fn_8023E1E4 with other types: a view of the same object */

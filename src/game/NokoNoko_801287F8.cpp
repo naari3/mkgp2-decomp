@@ -404,7 +404,14 @@ void *GetInputManager();
 NkInput *InputMgr_GetPlayer(void *, int);
 unsigned char IsRaceStarted();
 unsigned char NokoNokoChallenge_HandleBrakeInput(void *, int);
+#ifdef __MWERKS__
 void CarObject_ApplyInput(void *, float, float, float, unsigned char);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void CarObject_ApplyInput(void *, unsigned char, float, float, float);
+static inline void CarObject_ApplyInput_Reordered(void * a0, float a1, float a2, float a3, unsigned char a4) { CarObject_ApplyInput(a0, a4, a1, a2, a3); }
+#define CarObject_ApplyInput CarObject_ApplyInput_Reordered
+#endif
 void CarObject_FrameUpdate(void *, int);
 void KartItem_UpdateShadowBillboardAndViewport(void *, void *, int);
 void KartMovement_SetSpeedScale(void *, float);

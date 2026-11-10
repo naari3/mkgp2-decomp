@@ -748,7 +748,14 @@ C_REGION_BEGIN
 /* refine if the real prototype matters for header consumers. */
 extern void CObj_ApplyScissor(void *, void *);
 extern void CObj_LoadProjMatrix(void *, void *);
+#ifdef __MWERKS__
 extern void CarObject_ApplyInput(void *car, float steer, float accel, float brake, unsigned char started);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void CarObject_ApplyInput(void *, unsigned char, float, float, float);
+static inline void CarObject_ApplyInput_Reordered(void * a0, float a1, float a2, float a3, unsigned char a4) { CarObject_ApplyInput(a0, a4, a1, a2, a3); }
+#define CarObject_ApplyInput CarObject_ApplyInput_Reordered
+#endif
 extern void CarObject_FrameUpdate(void *car, int flag);
 extern void *CarObject_GetRenderObj(void *car);
 extern void ChallengeGoalCamera_Update(void *, void *, void *);
@@ -937,7 +944,11 @@ C_REGION_BEGIN
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
+#ifdef __MWERKS__
 extern void CarObject_ApplyInput(void *car, float steer, float accel, float brake, unsigned char started);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+#endif
 extern void CarObject_FrameUpdate(void *car, int flag);
 extern void *CarObject_GetRenderObj(void *car);
 extern unsigned char CarObject_IsAirborne(void *car);
@@ -1277,7 +1288,14 @@ void RivalRun_UpdatePathFollower(RRPathFollower *pf, const RRVec3 *pos) {
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
+#ifdef __MWERKS__
 extern unsigned char CarObject_ApplyDriftBoost(void *car, int kind, float amount);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern unsigned char CarObject_ApplyDriftBoost(void *, float, int);
+static inline unsigned char CarObject_ApplyDriftBoost_Reordered(void * a0, int a1, float a2) { return CarObject_ApplyDriftBoost(a0, a2, a1); }
+#define CarObject_ApplyDriftBoost CarObject_ApplyDriftBoost_Reordered
+#endif
 extern void *CarObject_GetRenderObj(void *car);
 extern void *GetRaceContextPtr(void);
 extern unsigned char IsRaceStarted(void);

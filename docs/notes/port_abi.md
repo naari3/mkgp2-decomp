@@ -85,6 +85,26 @@ static inline void Object_DriveAnimAndSkin_Reordered(clNormal3D *obj, float a, f
 #endif
 ```
 
+### More int/float order cases (request 25, 2026-11-10)
+
+`mkgp2-pc port/tools/arg_order_census.py` (declarations against definitions
+in the port's LLVM IR) found five functions the sweep above had missed. Their
+misordered prototypes got the same `Foo_Reordered` wrapper:
+`fn_802090F0`, `InputCmd_PushSample`, `KartMovement_PhysicsStep` (in
+auto_ONKARTHIT_block.c), `CarObject_ApplyInput` (eight units) and
+`CarObject_ApplyDriftBoost` (three units).
+
+`AnimState_Init(self, 0.0f)` in `AnimState_New` / `AnimState_Reset` was not
+an order case: the definition takes `(AnimState *, AnimEntry *entries)`, and
+the callers of `AnimState_New` / `AnimState_Reset` pass two arguments. The
+second one went through r4 untouched. Both functions now have the parameter
+and pass it on (same objects).
+
+C++ names: a definition and a declaration with different parameter lists have
+different mangled names and cannot link, unless
+`tools/extab_user_renames.json` joins them; `tools/port_abi/rename_order.py`
+checks exactly those (see "Constructors declared in another order").
+
 ### Tools
 
 `tools/port_abi/` holds what found and rewrote these: `types_census.py`
