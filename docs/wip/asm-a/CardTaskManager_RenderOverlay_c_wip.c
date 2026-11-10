@@ -18,7 +18,7 @@ extern unsigned int lbl_806D32D8;
 extern unsigned int lbl_806D32E8;
 extern unsigned int lbl_806D32F0;
 extern unsigned int lbl_806D32F4;
-extern unsigned int lbl_80312850[];
+extern unsigned int Card_rodata_80312850[];
 extern unsigned int lbl_803FE7E8[];
 }
 
@@ -52,7 +52,7 @@ struct CardTaskManager {
 #pragma exceptions on
 #pragma use_lmw_stmw on
 extern "C" void CardTaskManager_RenderOverlay(CardTaskManager *m) {
-    char *base = (char *)lbl_80312850;
+    char *base = (char *)Card_rodata_80312850;
     CardTask *t;
     int i;
     int j;

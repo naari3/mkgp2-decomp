@@ -250,8 +250,8 @@ struct clCGameYI : clCGame {
 };
 
 /* Also read by ScoreDisplay_Init (anon_802151C8.cpp). */
-extern "C" extern const float lbl_803C3DD8[18];
-const float lbl_803C3DD8[18] = {
+extern "C" extern const float CoinChallenge_rodata_803C3DD8[18];
+const float CoinChallenge_rodata_803C3DD8[18] = {
     320.0f, 71.25f, 250.0f, 69.25f, 320.0f, 33.25f, 285.0f, 71.25f, 315.0f, 69.25f,
     345.0f, 69.25f, 365.0f, 76.25f, 380.0f, 83.25f, 398.0f, 83.25f
 };
@@ -376,7 +376,7 @@ static inline void UpdateCoinIcons(CoinIcons *sprites) {
     if (sprites->exiting != 0) {
         if (sprites->slide >= 1.0f) goto sprites_done;
         float accelerator = 640.0f;
-        const float *positions = lbl_803C3DD8;
+        const float *positions = CoinChallenge_rodata_803C3DD8;
         cursor = sprites->icons;
         sprites->slide += 0.1f;
         for (int j = 0; j < 9; ++j, positions += 2, ++cursor)

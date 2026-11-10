@@ -21,7 +21,7 @@ typedef struct KartDriver {
 
 extern char lbl_806D2548[7]; /* "jobj.h" */
 extern char lbl_806D2550[5]; /* "jobj" */
-extern char lbl_802EADBC[];  /* "!(jobj->flags & JOBJ_USE_QUATERNION)" */
+extern char KartDriver_InitFull_rodata_802EADBC[];  /* "!(jobj->flags & JOBJ_USE_QUATERNION)" */
 extern void __assert(const char *file, int line, const char *cond);
 extern void HSD_JObjSetMtxDirtySub(HSD_JObj *jobj);
 extern void KartTireFX_SetPitch(void *fx, float pitch);
@@ -45,7 +45,7 @@ static inline void HSD_JObjSetRotationZ(HSD_JObj *jobj, float z)
         __assert(lbl_806D2548, 0x2cc, lbl_806D2550);
     }
     if (jobj->flags & 0x20000) {
-        __assert(lbl_806D2548, 0x2cd, lbl_802EADBC);
+        __assert(lbl_806D2548, 0x2cd, KartDriver_InitFull_rodata_802EADBC);
     }
     jobj->rotZ = z;
     if (!(jobj->flags & 0x02000000)) {

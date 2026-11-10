@@ -2108,7 +2108,7 @@ void *lbl_80419E30[3] = {
     0
 };
 /* decl: char */
-void *lbl_80419E3C[5] = {
+void *GameMode_Title_data_80419E3C[5] = {
     (void *)&lbl_806CF2A8,
     0,
     (void *)fn_800AC9AC,

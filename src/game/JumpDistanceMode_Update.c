@@ -55,7 +55,7 @@ extern float g_raceTimeRemaining;
 extern void *g_weatherSystem, *lbl_806D109C;
 extern const float lbl_806DAD70, lbl_806DAD74, lbl_806DAD7C, lbl_806DAD88, lbl_806DADA4;
 extern const float lbl_806DADB0, lbl_806DADD8, lbl_806DADE8, lbl_806DADEC, lbl_806DADF4;
-extern const float lbl_803C3CF0[14];
+extern const float JumpDistanceMode_rodata_803C3CF0[14];
 void *GetRaceContextPtr();
 void ItemObjectManager_PerFrameUpdate(void *);
 void fn_802128F4(JDLanding *, void *);
@@ -183,7 +183,7 @@ static inline void UpdateTimer(JDTimer *timer) {
         k = lbl_806DADF4;
         timer->slide += lbl_806DAD88;
         for (i = 0; i < 7; i++) {
-            fn_8011F804(timer->sprite[i], k * timer->slide + lbl_803C3CF0[i * 2], lbl_803C3CF0[i * 2 + 1]);
+            fn_8011F804(timer->sprite[i], k * timer->slide + JumpDistanceMode_rodata_803C3CF0[i * 2], JumpDistanceMode_rodata_803C3CF0[i * 2 + 1]);
         }
     }
     {

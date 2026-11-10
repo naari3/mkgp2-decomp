@@ -7,7 +7,7 @@
 
 #include "game/types/HandheldPose.h"
 
-extern const char lbl_8032E060[];
+extern const char ItemObject_Tick_rodata_8032E060[];
 extern HandheldPose ItemObject_Tick_Dispatch24To29_data_80420E18[];
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float f);
@@ -104,7 +104,7 @@ void ItemObject_Tick_Dispatch24To29(unsigned char *self)
     Vec ofs;
     Vec rot;
     Vec v;
-    const char *names = lbl_8032E060;
+    const char *names = ItemObject_Tick_rodata_8032E060;
     unsigned char *sub = self + 0xEC;
 
     switch (S8(0xC8)) {

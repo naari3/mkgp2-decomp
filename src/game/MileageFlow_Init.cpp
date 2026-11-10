@@ -22,12 +22,12 @@ static MileageTableEntry mileageEntries[10] = {
     {2230,0xc46,0x1ccb}
 };
 extern "C" void* MileageFlow_Init_data_8049AD34[3] = {MileageFlow_Init_data_806CFDD0,0,0};
-extern "C" void* lbl_8049AD40[6] = {
+extern "C" void* MileageFlow_Init_data_8049AD40[6] = {
     MileageFlow_Init_data_806CFDD8,0,(void*)fn_801C5C34,(void*)FrameSelection_Update,
     (void*)FrameSelection_Draw,0
 };
 MileageFlow::MileageFlow() {
-    vt=lbl_8049AD40;
+    vt=MileageFlow_Init_data_8049AD40;
     SetSyncTarget(0x13); PreloadResource(0x18dd);
     for(int i=0;i<11;i++) available[i]=0;
     available[0]=1;

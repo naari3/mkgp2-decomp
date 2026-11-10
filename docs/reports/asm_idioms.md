@@ -997,7 +997,7 @@ stfsu *, *, *
 
 ```
   fmuls f0, f1, f0
-> stfsu f2, lbl_804EE0E0@l(r3)
+> stfsu f2, DNStartDino_tail_data_804EE0E0@l(r3)
   stfs f0, 0x4(r3)
 ```
 

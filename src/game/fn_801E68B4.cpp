@@ -17,7 +17,7 @@ void fn_801DF010(void *, int, void *);
 void fn_801DEAF4(void *, int);
 void KartItemAudio_PlaySEByItemId(void *, int);
 struct ItemVariants { int items[3]; };
-extern const ItemVariants lbl_803BD770;
+extern const ItemVariants KartController_Update_rodata_803BD770;
 extern const float lbl_806DA388;
 extern const double lbl_806DA3A0, lbl_806DA3A8;
 }
@@ -63,7 +63,7 @@ int AIItemController::ApplyIncomingItem(AIIncomingItem *incoming) {
         direction.z *= scale;
     }
     if (item == 0x77) {
-        ItemVariants variants = lbl_803BD770;
+        ItemVariants variants = KartController_Update_rodata_803BD770;
         item = variants.items[ItemObject_GetByteAt0xEC(incoming, 0)];
     }
     self->cooldown = fn_801DB878(fn_801DB8F0(), item);

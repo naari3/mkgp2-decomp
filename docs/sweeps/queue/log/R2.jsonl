@@ -55,7 +55,7 @@
 {"t": "2026-11-08T10:37:20.859827Z", "who": "R2", "op": "take", "id": "N139eab"}
 {"t": "2026-11-08T10:53:45.874756Z", "who": "R2", "op": "park", "id": "N139eab", "note": "R2: li -0x100 constant CSE (target mr r5,r4) + 0x4330 store sched; natural | form worse (98.51), cperm 15m 0"}
 {"t": "2026-11-08T10:54:01.111311Z", "who": "R2", "op": "take", "id": "Nfd786e"}
-{"t": "2026-11-08T10:55:39.839587Z", "who": "R2", "op": "park", "id": "Nfd786e", "note": "R2: needs rodata ownership: target anchors pool lbl_80369D78 (unowned auto_06 rodata, shared w/ Scene_80166BE8, strings at +0x504..) in r31, self r29; explicit 'char *strings' user var gets r30. Needs TU merge 801661FC..80166BE8 owning .rodata (regalloc_patterns 13)"}
+{"t": "2026-11-08T10:55:39.839587Z", "who": "R2", "op": "park", "id": "Nfd786e", "note": "R2: needs rodata ownership: target anchors pool Scene_801661FC_rodata_80369D78 (unowned auto_06 rodata, shared w/ Scene_80166BE8, strings at +0x504..) in r31, self r29; explicit 'char *strings' user var gets r30. Needs TU merge 801661FC..80166BE8 owning .rodata (regalloc_patterns 13)"}
 {"t": "2026-11-08T10:55:39.927513Z", "who": "R2", "op": "take", "id": "N6e2d04"}
 {"t": "2026-11-08T11:12:55.854762Z", "who": "R2", "op": "park", "id": "N6e2d04", "note": "R2: QueueTime inline loop regs (tail r6/clips r4 in target) + lbl_806D17CC split symbol; decl order/pragmasweep all/cperm 15m (inline moved into .c) = 0"}
 {"t": "2026-11-08T11:13:17.487880Z", "who": "R2", "op": "take", "id": "N5f265a"}

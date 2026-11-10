@@ -1,6 +1,6 @@
 typedef struct SoundEvent { unsigned int id; int state; int countdown; } SoundEvent;
 extern unsigned char ClSound_Initialized;
-extern SoundEvent lbl_80677F40[37];
+extern SoundEvent ClSound_InitSoundSystem_bss_80677F40[37];
 extern const char lbl_8037D058[];
 extern int sprintf(char *, const char *, ...);
 extern void DeadCounter_Set_ced48(int);
@@ -12,7 +12,7 @@ void fn_801934F4(void) {
     char text[64];
     row = 0;
     if (ClSound_Initialized) {
-        event = lbl_80677F40;
+        event = ClSound_InitSoundSystem_bss_80677F40;
         for (i = row; i < 37; i++, event++) {
             if (event->id == 0xffffffff) break;
             {

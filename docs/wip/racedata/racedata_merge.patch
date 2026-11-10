@@ -206,7 +206,7 @@ index ed952c9d..4430e913 100644
 +struct LapExtra RaceResult_StoreLatest_bss_805B256C;
 +unsigned char SetCourseParams_bss_805B2580[0x20000];
 +unsigned char g_playerData[0x1DC];
-+unsigned char lbl_805D275C[0x1DC];
++unsigned char SetCourseParams_bss_805D275C[0x1DC];
 +int RaceSlot_ResetAll_bss_805D2938[4];
 +RankSlot SetCourseParams_bss_805D2948[8];
 +
@@ -1029,7 +1029,7 @@ index ed952c9d..4430e913 100644
 +
 +#define RaceResult_StoreLatest_bss_805B256C (*(RankEntry *)&RaceResult_StoreLatest_bss_805B256C)
 +#define SetCourseParams_bss_805B24CC ((RankEntry (*)[5])SetCourseParams_bss_805B24CC)
-+#define lbl_80401118 ((unsigned char *)lbl_80401118)
++#define RaceScene_GetPerspFovyForCup_data_80401118 ((unsigned char *)RaceScene_GetPerspFovyForCup_data_80401118)
 +#define g_characterDataTable ((CharacterData *)g_characterDataTable)
 +#define SetCourseParams_bss_806D1280 (*(void **)&SetCourseParams_bss_806D1280)
 +extern int g_cupId;
@@ -1381,7 +1381,7 @@ index ed952c9d..4430e913 100644
 +    if (kart == 3) {
 +        k = 2;
 +    }
-+    return lbl_80401118 + k * 0x9C + chara * 0xC;
++    return RaceScene_GetPerspFovyForCup_data_80401118 + k * 0x9C + chara * 0xC;
 +}
 +
 +void *GetCharacterName(int i)
@@ -1530,7 +1530,7 @@ index ed952c9d..4430e913 100644
 +}
 +#undef RaceResult_StoreLatest_bss_805B256C
 +#undef SetCourseParams_bss_805B24CC
-+#undef lbl_80401118
++#undef RaceScene_GetPerspFovyForCup_data_80401118
 +#undef g_characterDataTable
 +#undef SetCourseParams_bss_806D1280
 +
@@ -1699,7 +1699,7 @@ index b65f8724..00000000
 -extern void *GetCoinSpawnTable_data_8040B218[][2][2][2];
 -extern KartSlot SetCourseParams_bss_805AC600[8];
 -extern int RaceSlot_ResetAll_bss_805D2938[8];
--extern unsigned char lbl_80401118[];
+-extern unsigned char RaceScene_GetPerspFovyForCup_data_80401118[];
 -extern CharacterData g_characterDataTable[15];
 -extern void *DebugOverlay_GetDaytimeLabel_data_8040E1C4[4];
 -extern void *DebugOverlay_GetLongRoundLabel_data_806CF100[2];
@@ -2038,7 +2038,7 @@ index b65f8724..00000000
 -    if (kart == 3) {
 -        k = 2;
 -    }
--    return lbl_80401118 + k * 0x9C + chara * 0xC;
+-    return RaceScene_GetPerspFovyForCup_data_80401118 + k * 0x9C + chara * 0xC;
 -}
 -
 -void *GetCharacterName(int i)
@@ -2481,7 +2481,7 @@ index 594cc580..00000000
 -extern struct LapExtra RaceResult_StoreLatest_bss_805B256C;
 -extern unsigned char SetCourseParams_bss_805B2580[0x20000];
 -extern unsigned char g_playerData[0x1DC];
--extern unsigned char lbl_805D275C[0x1DC];
+-extern unsigned char SetCourseParams_bss_805D275C[0x1DC];
 -extern int RaceSlot_ResetAll_bss_805D2938[4];
 -extern RankSlot SetCourseParams_bss_805D2948[8];
 -
@@ -2492,7 +2492,7 @@ index 594cc580..00000000
 -struct LapExtra RaceResult_StoreLatest_bss_805B256C;
 -unsigned char SetCourseParams_bss_805B2580[0x20000];
 -unsigned char g_playerData[0x1DC];
--unsigned char lbl_805D275C[0x1DC];
+-unsigned char SetCourseParams_bss_805D275C[0x1DC];
 -int RaceSlot_ResetAll_bss_805D2938[4];
 -RankSlot SetCourseParams_bss_805D2948[8];
 -

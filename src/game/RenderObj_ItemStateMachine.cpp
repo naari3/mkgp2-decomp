@@ -56,7 +56,7 @@ void fn_80245704(void *);
 void fn_8024F618(void *);
 void fn_80250984(void *);
 extern unsigned char g_finalLapCoinJumpEnabled;
-extern const char lbl_806D2548[8], lbl_806D2550[5], lbl_802EADBC[];
+extern const char lbl_806D2548[8], lbl_806D2550[5], KartDriver_InitFull_rodata_802EADBC[];
 extern float lbl_806CF018;
 extern const float lbl_806D2540, lbl_806D256C, lbl_806D2570;
 extern const float lbl_806D2574, lbl_806D257C, lbl_806D2590;
@@ -360,7 +360,7 @@ extern "C" int RenderObj_ItemStateMachine(RenderItemState *obj, int arg, float s
         steering = (float)bounce;
         HSD_JObj *joint = obj->bounceJoint;
         if (!joint) __assert(lbl_806D2548, 0x2A4, lbl_806D2550);
-        if (joint->flags & 0x20000) __assert(lbl_806D2548, 0x2A5, lbl_802EADBC);
+        if (joint->flags & 0x20000) __assert(lbl_806D2548, 0x2A5, KartDriver_InitFull_rodata_802EADBC);
         *(float *)((char *)joint + 0x1C) = (float)(lbl_806D2620 * steering);
         if (!(joint->flags & 0x02000000) && joint && !MatrixDirty(joint)) HSD_JObjSetMtxDirtySub(joint);
     }

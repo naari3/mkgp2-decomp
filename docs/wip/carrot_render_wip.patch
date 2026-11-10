@@ -23,7 +23,7 @@ index 9b4c287..d6972b1 100644
 + * Three billboard matrices are built from the effect's screen anchors and
 + * used to render the model three times; then two textured quads (ids at
 + * +0xF4/+0xF8) are drawn through each matrix. The local tables are copied
-+ * from the shared .rodata block at lbl_80328EB8 (as in KartShellRibbonDraw). */
++ * from the shared .rodata block at CelebPop17Update_rodata_80328EB8 (as in KartShellRibbonDraw). */
 +typedef struct Vec3 {
 +    float x, y, z;
 +} Vec3;
@@ -92,7 +92,7 @@ index 9b4c287..d6972b1 100644
 -/* --- extern decls: large-data refs (@ha/@l pairs) --- */
 -/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 -/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
--extern unsigned int lbl_80328EB8[];
+-extern unsigned int CelebPop17Update_rodata_80328EB8[];
 +typedef struct CarrotRodata {
 +    unsigned char pad000[0x530];
 +    CarrotZs zs;        /* 0x530 */
@@ -134,7 +134,7 @@ index 9b4c287..d6972b1 100644
 +extern const float lbl_806D50D8;
 +extern const float lbl_806D50DC;
 +extern const float lbl_806D50E0;
-+extern CarrotRodata lbl_80328EB8;
++extern CarrotRodata CelebPop17Update_rodata_80328EB8;
  
 -/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
 -#pragma section R ".extabindex_user"
@@ -187,7 +187,7 @@ index 9b4c287..d6972b1 100644
 -    addi r25, r1, 0x104
 -    addi r23, r22, 0xec
 -    addi r26, r1, 0x1c4
--    lis r3, lbl_80328EB8@ha
+-    lis r3, CelebPop17Update_rodata_80328EB8@ha
 -    lfs f27, lbl_806D509C(r2)
 -    lfs f28, lbl_806D5020(r2)
 -    mr r29, r23
@@ -196,7 +196,7 @@ index 9b4c287..d6972b1 100644
 -    lfs f30, lbl_806D5024(r2)
 -    mr r27, r26
 -    lfs f31, lbl_806D5028(r2)
--    addi r31, r3, lbl_80328EB8@l
+-    addi r31, r3, CelebPop17Update_rodata_80328EB8@l
 -    addi r30, r1, 0x78
 -    li r24, 0x0
 -    CarrotItemEffect_Render_L_800B2454:
@@ -682,7 +682,7 @@ index 9b4c287..d6972b1 100644
 +    int j;
 +    int k;
 +    CarrotQuads *q = &self->quads;
-+    CarrotRodata *rd = &lbl_80328EB8;
++    CarrotRodata *rd = &CelebPop17Update_rodata_80328EB8;
 +
 +    for (i = 0; i < 3; i++) {
 +        *(CarrotZs *)zs = rd->zs;

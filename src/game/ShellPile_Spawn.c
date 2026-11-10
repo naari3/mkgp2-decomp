@@ -4,7 +4,7 @@
  * from the item's center. Not used in game mode 2. */
 #include "game/types/Vec.h"
 
-extern unsigned char lbl_8041EEC0[];
+extern unsigned char ShellPile_data_8041EEC0[];
 extern int g_gameMode;
 extern void JointByName_GetMatrix4x4Transposed(float dst[4][4], void *slot, const char *name);
 extern void Mtx_TransposeToMtx44(float dst[4][4], const void *src);
@@ -33,7 +33,7 @@ void ShellPile_Spawn(unsigned char *item, unsigned char *owner)
     float scale[4][4];
     Vec center;
     Vec local;
-    unsigned char *base = lbl_8041EEC0;
+    unsigned char *base = ShellPile_data_8041EEC0;
     unsigned char *cfg;
     unsigned char *e;
     int i;

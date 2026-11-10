@@ -8,7 +8,7 @@ extern "C" /*
  * a breath sound starts and fire/frost particles (two variants, picked by the
  * reverse-course flag) are spawned through pointer-to-member tables. Four
  * smoke puffs rise over the lake. The class data (spawn ranges, member
- * function tables, vtable) lives in lbl_804EDF80 and is addressed off one
+ * function tables, vtable) lives in DNBress_nm3_data_804EDF80 and is addressed off one
  * base; the static initializer (fn_80227FA4) stays in asm.
  */
 
@@ -105,7 +105,7 @@ extern const float DNBress_tick_rodata_803D0260[3];
 extern const float lbl_803D026C[3];
 extern const float DNBress_breath_rodata_803D0278[4];
 extern const Vec3f lbl_803D02A0[2];
-extern float lbl_804EDF80[2][3];
+extern float DNBress_nm3_data_804EDF80[2][3];
 extern FireFuncs lbl_804EDF98[2];
 extern float lbl_80495A94[48];
 extern const char lbl_803D01BC[];

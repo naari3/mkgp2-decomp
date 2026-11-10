@@ -9,7 +9,7 @@ struct SpriteObj {
 
 extern "C" {
 extern InputView *g_pInputState;
-extern void *lbl_8049AD40[];
+extern void *MileageFlow_Init_data_8049AD40[];
 void fn_801B7B04(int arg);
 void fn_801699D8(int a, int b);
 void fn_80169C44(void);
@@ -65,7 +65,7 @@ struct Scene801C5C34 : FlowBase {
 Scene801C5C34::~Scene801C5C34() {
     int i;
 
-    vt = lbl_8049AD40;
+    vt = MileageFlow_Init_data_8049AD40;
     fn_801B7B04(1);
     if (input_state()) {
         InputView *input = input_state();

@@ -61,7 +61,7 @@ const int ItemSelectState_rodata_803DC0C0[15][3] = {
     {0, 96, 255},
 };
 const int ItemGridState_Init_rodata_803DC174[3] = {6, 1, 0};
-const int lbl_803DC180[6][10] = {
+const int ItemSelectState_rodata_803DC180[6][10] = {
     {6, 2, 1, 0, 11, 8, 10, 9, 13, 12},
     {7, 3, 4, 5, 22, 23, 44, 27, 43, 59},
     {42, 15, 30, 14, 41, 45, 19, 25, 29, 20},
@@ -150,7 +150,7 @@ static inline int RefillItem(int column, int row) {
     if (character < 0) character = 0;
     if (character >= 13) character = 0;
     if (column >= 10) return fn_8023D844(character, row);
-    const int (*items)[10] = lbl_803DC180;
+    const int (*items)[10] = ItemSelectState_rodata_803DC180;
     return items[row][column];
 }
 static inline void CompleteChoice(RefillChoice *choice, int slot, const int *resources, void *playerData) {
@@ -289,7 +289,7 @@ static inline void SelectChoice(RefillChoice *choice, int slot, const int *resou
     choice->timer = 0;
     SpriteAnimParamBlock_Reload(choice->groups[1], slot + 0x4e);
     int resource = (short)Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(playerData,
-        GridItem(lbl_803DC180, choice->column, choice->row)), 0);
+        GridItem(ItemSelectState_rodata_803DC180, choice->column, choice->row)), 0);
     SpriteAnimParamBlock_SetAnimParamCached(choice->groups[1], resources[slot], resource);
     SpriteAnimParamBlock_SetAnimParamCached(choice->groups[1], 0x13b9, resource);
     choice->slots[slot][0] = choice->column;
@@ -385,7 +385,7 @@ extern "C" void fn_80238D9C(ItemSelectState *self) {
                 SlotsView *view = (SlotsView *)self;
                 view->slots[self->field14c][0] = i;
                 view->slots[self->field14c][1] = row;
-                view->slots[self->field14c][2] = GridItem(lbl_803DC180, i, row);
+                view->slots[self->field14c][2] = GridItem(ItemSelectState_rodata_803DC180, i, row);
                 SelectChoice((RefillChoice *)self->iconArray, self->field14c, choiceResources);
                 int item = Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(playerData,
                     view->slots[self->field14c][2]), 0);
@@ -453,7 +453,7 @@ ItemSelectState::~ItemSelectState() {
         int character=characterId();
         int index;
         if(i%11>=10) index=fn_8023D844(character,i/11);
-        else index=lbl_803DC180[i/11][i%11];
+        else index=ItemSelectState_rodata_803DC180[i/11][i%11];
         fn_80120A08(Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(player,index),0));
     }
     for(int i=0;i<5;i++) SpriteHandle_Destroy(sprites[i]);
@@ -504,7 +504,7 @@ ItemSelectState::ItemSelectState() {
  fn_801F93EC(auxBuffer,lbl_806DB92C,lbl_806DB930);fn_801F8E90(auxBuffer);
  *(unsigned int *)(auxBuffer->data+0x20)=0xffffff00;
  unsigned int *table; float *ys; unsigned char *player; int row; int col;
- table=(unsigned int *)lbl_803DC180;
+ table=(unsigned int *)ItemSelectState_rodata_803DC180;
  ys=(float *)choiceY;
  player=g_playerData;
  for(row=0;row<6;row++,table+=10,ys++) {
@@ -787,7 +787,7 @@ static inline int ChoiceItem(RefillChoice *self) {
     if (character < 0) character = 0;
     if (character >= 13) character = 0;
     if (column >= 10) return fn_8023D844(character, row);
-    return lbl_803DC180[row][column];
+    return ItemSelectState_rodata_803DC180[row][column];
 }
 static inline unsigned char ChoiceOccupied(RefillChoice *self) {
     unsigned char occupied = 0;
@@ -850,7 +850,7 @@ static inline int ChoiceItemRC(int row, int column) {
     if (character < 0) character = 0;
     if (character >= 13) character = 0;
     if (column >= 10) return fn_8023D844(character, row);
-    return lbl_803DC180[row][column];
+    return ItemSelectState_rodata_803DC180[row][column];
 }
 extern "C" void fn_8023AC14(RefillChoice *self) {
     if (!self->active) return;

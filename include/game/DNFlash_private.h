@@ -111,7 +111,7 @@ extern const unsigned int DNFlash_tail_rodata_803D0390[0x102];
 extern const float DNFlash_tail_rodata_803D0798[3];
 extern const float lbl_803D07A4[3];
 extern const float lbl_803D07B0[3];
-extern const TriggerBox lbl_803D07BC[4];
+extern const TriggerBox DNFlash_tail_rodata_803D07BC[4];
 extern const char lbl_803D081C[0xA];
 extern const char lbl_803D0828[0x11];
 extern const char lbl_803D083C[0x1E];

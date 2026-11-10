@@ -563,7 +563,7 @@ u8 card_unpack_v1(u8 *, void *, u8);
 u8 CardSaveData_Parser(u8 *, void *, u8);
 void MemoryManager_TimedFree(void *);
 void SetCardVolumeFlagByte(u8);
-extern const char lbl_80315378[0x3FC];
+extern const char CardSaveData_Parser_rodata_80315378[0x3FC];
 extern u8 g_playerData[0x1DC];
 extern u8 lbl_806D12AF;
 }
@@ -580,7 +580,7 @@ public:
 
 extern "C" u8 card_unpack_legacy_dispatch(u8 *dest, const void *raw, u8 publish)
 {
-    const char *messages = lbl_80315378;
+    const char *messages = CardSaveData_Parser_rodata_80315378;
     u8 result;
     int version;
     CardBitpack *pack;

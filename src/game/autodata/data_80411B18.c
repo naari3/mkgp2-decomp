@@ -233,13 +233,13 @@ void *lbl_80411DA8[3] = {
     0
 };
 /* decl: char / void * */
-void *lbl_80411DB4[3] = {
+void *TitleTracker_data_80411DB4[3] = {
     (void *)&lbl_806CF230,
     0,
     (void *)TitleTracker_Dtor
 };
 /* decl: char / void * */
-void *lbl_80411DC0[4] = {
+void *TitleTracker_data_80411DC0[4] = {
     (void *)&lbl_806CF228,
     0,
     (void *)TitleTrackerSingleton_Dtor,

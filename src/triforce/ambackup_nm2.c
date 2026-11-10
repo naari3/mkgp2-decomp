@@ -31,7 +31,7 @@ s32 BackupReadRecord(u32 chan, void* data, BackupEntry* e) {
     size = (e->cfg.size + 3) & ~3;
     info = &lbl_806DC918[chan];
     recSize = (size + 0xC + info->align - 1) & -info->align;
-    if (fn_8028812C(chan, (e->cfg.flags >> 4) & 1, e->addr, lbl_806835E0,
+    if (fn_8028812C(chan, (e->cfg.flags >> 4) & 1, e->addr, ambackup_nm1_bss_806835E0,
                       (e->cfg.flags & 2) ? recSize * 2 : recSize)) {
         return 1;
     }
@@ -39,7 +39,7 @@ s32 BackupReadRecord(u32 chan, void* data, BackupEntry* e) {
     ok[1] = e->cfg.flags & 2;
     valid = ok;
     words = size >> 2;
-    buffer = lbl_806835E0;
+    buffer = ambackup_nm1_bss_806835E0;
     for (i = 0, off = 0; i < 2; i++, off += recSize, valid++) {
         if (!*valid) {
             break;
@@ -65,7 +65,7 @@ s32 BackupReadRecord(u32 chan, void* data, BackupEntry* e) {
             k = 1 - j;
         }
         if (ok[k]) {
-            memcpy(data, lbl_806835E0 + k * recSize + 0xC, e->cfg.size);
+            memcpy(data, ambackup_nm1_bss_806835E0 + k * recSize + 0xC, e->cfg.size);
             break;
         }
     }

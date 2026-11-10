@@ -1176,7 +1176,7 @@ extern void *RaceScene_GetPerspFovyForCup_data_8040B71C[];
 extern void *RaceScene_GetPerspFovyForCup_data_8040B764[];
 extern void *RaceScene_GetPerspFovyForCup_data_8040B7AC[];
 
-void *lbl_80401118[117] = {
+void *RaceScene_GetPerspFovyForCup_data_80401118[117] = {
     lbl_8031866C, lbl_8031867C, lbl_80318690, lbl_803186A4,
     lbl_803186B4, lbl_803186C8, lbl_803186DC, lbl_803186EC,
     lbl_80318700, lbl_80318714, lbl_80318724, lbl_80318738,

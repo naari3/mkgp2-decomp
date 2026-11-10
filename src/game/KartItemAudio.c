@@ -12,7 +12,7 @@
  * If self->playerType == 0 and self->mtx != NULL, every played SE is
  * followed by a positional update (fn_8016C288) using the translation
  * column of the 3x4 matrix at self->mtx ([3], [7], [11]). The Vec3 is
- * initialized from the shared zero vector lbl_802EDD24 and then overwritten
+ * initialized from the shared zero vector KartItemAudio_PlaySEByItemId_rodata_802EDD24 and then overwritten
  * component-wise (the dead struct copy is emitted by CW and kept).
  *
  * Each function is its own dtk reversed-extab singleton group; the three
@@ -36,7 +36,7 @@ extern void fn_8016C4CC();                  /* global SE stop / reset (mode) */
 #include "game/types/Vec3.h"
 
 /* Shared zero Vec3 in .rodata (0x802EDD24). */
-extern const Vec3 lbl_802EDD24;
+extern const Vec3 KartItemAudio_PlaySEByItemId_rodata_802EDD24;
 
 typedef struct KartItemAudio {
     unsigned char pad_0[4];
@@ -55,7 +55,7 @@ typedef struct KartItemAudio {
     if (self->playerType == 0) {                            \
         float *mtx = self->mtx;                             \
         if (mtx != 0) {                                     \
-            Vec3 pos = lbl_802EDD24;                        \
+            Vec3 pos = KartItemAudio_PlaySEByItemId_rodata_802EDD24;                        \
             pos.x = mtx[3];                                 \
             pos.y = mtx[7];                                 \
             pos.z = mtx[11];                                \

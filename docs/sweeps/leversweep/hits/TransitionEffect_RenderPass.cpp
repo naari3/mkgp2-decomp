@@ -127,7 +127,7 @@ void Object_JObjUpdate_870(void *, int);
 void Object_SetByte48(void *, int);
 void fn_801F6804(void *);
 extern TransitionEffectView *lbl_806D109C;
-extern void *lbl_803FE37C[];
+extern void *TransitionEffect_data_803FE37C[];
 extern const char lbl_80311DA4[];
 }
 void *operator new(unsigned long);
@@ -204,7 +204,7 @@ struct TransitionEffectInit : TransitionInitBase {
     unsigned char align[2];
     unsigned char renderState[0x4C];
     TransitionEffectInit() :
-        TransitionInitBase(lbl_803FE37C) {
+        TransitionInitBase(TransitionEffect_data_803FE37C) {
         fn_801F6804(renderState);
         mode = 0;
         duration = lbl_806D2FD0;

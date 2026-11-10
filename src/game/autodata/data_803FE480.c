@@ -66,7 +66,7 @@ extern char data_803FE480_rodata_80312874[];
 extern char lbl_80312884[];
 extern char data_803FE480_rodata_80312894[];
 extern char lbl_803128B8[];
-extern char lbl_803128CC[];
+extern char CardTaskManager_RenderOverlay_rodata_803128CC[];
 extern char lbl_803128E4[];
 extern char data_803FE480_rodata_80312900[];
 extern char lbl_8031291C[];
@@ -409,7 +409,7 @@ void *CardTaskChecks_data_803FE480[80] = {
     (void *)0xFF,
     (void *)0x43540000,
     (void *)0x43800000,
-    (void *)&lbl_803128CC,
+    (void *)&CardTaskManager_RenderOverlay_rodata_803128CC,
     (void *)0x1,
     (void *)0xFF,
     (void *)0xFF,
@@ -478,7 +478,7 @@ void *CardTaskWelcome_StateInit_data_803FE5F0[3] = {
     (void *)CardTaskWelcome_StepStatus
 };
 CardTextLine CardTaskWaitInput_DrawByButtons_data_803FE5FC[6] = {
-    { 212.0f, 256.0f, (void *)&lbl_803128CC, 1, 255, 255, 255, 255 },
+    { 212.0f, 256.0f, (void *)&CardTaskManager_RenderOverlay_rodata_803128CC, 1, 255, 255, 255, 255 },
     { 119.0f, 240.0f, (void *)&lbl_803128E4, 1, 255, 255, 255, 255 },
     { 160.0f, 300.0f, (void *)&data_803FE480_rodata_80312938, 1, 255, 255, 255, 255 },
     { 204.0f, 300.0f, (void *)&lbl_80312958, 1, 255, 255, 255, 255 },

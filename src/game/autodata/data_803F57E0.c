@@ -148,7 +148,7 @@ void *lbl_803F57E0[21] = {
     0
 };
 /* decl: MObj1ClassView / MObjClassView */
-void *lbl_803F5834[21] = {
+void *MObj_data_803F5834[21] = {
     (void *)MObj_ClassInit,
     0,
     0,

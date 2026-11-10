@@ -20,7 +20,7 @@ typedef struct lbl_8037CEC4_Pool {
 #pragma force_active on
 
 /* decl: char / unsigned char */
-const char lbl_80379100[1108] = {
+const char ClSound_rodata_80379100[1108] = {
     63, -128, 0, 0, 63, 51, 51, 51, 63, 102, 102, 102,
     0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0,
     66, -123, 85, 86, 68, 122, 0, 0, 66, -123, 85, 86,

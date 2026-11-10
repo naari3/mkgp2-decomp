@@ -10,12 +10,12 @@ extern const float lbl_806D521C; /* deg->rad */
 extern const float lbl_806D5220; /* -180.0 */
 extern const float lbl_806D5224; /* 180.0 */
 extern const float lbl_806D5230; /* -1.0 */
-extern unsigned char lbl_80329E20[];
+extern unsigned char KartFxExhaustRay_rodata_80329E20[];
 extern void Effect_ExplosionPiece_Update(unsigned char *e);
 
 void DrawEffect_Cb_BurstSpawner_30Frame(unsigned char *self)
 {
-    unsigned char *tbl = lbl_80329E20;
+    unsigned char *tbl = KartFxExhaustRay_rodata_80329E20;
 
     switch (STATE) {
     case 0:

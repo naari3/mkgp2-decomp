@@ -21,7 +21,7 @@ extern "C" int fn_80255000(void) {
     if (reset) {
         char info[0x30];
         char msg[0x50];
-        if (lbl_80679E28.onReset != 0 && lbl_80679E28.onReset(error) == 0) {
+        if (acLib_tail_bss_80679E28.onReset != 0 && acLib_tail_bss_80679E28.onReset(error) == 0) {
             return 0;
         }
         sprintf(msg, lbl_803F13E4, rs->error);

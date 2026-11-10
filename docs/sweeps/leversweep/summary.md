@@ -27,7 +27,7 @@
 | `fn_8015B790` | game/Scene_8015B790 | 98.79 | 29 | 12 | 98.78 -> 98.48 | mul-fuse | fp_contract on |
 | `fn_8018E538` | game/objview/fn_8018E538 | 99.42 | 24 | 22 | 99.42 -> 97.74 | dead-def-split | dead q |
 | `fn_80225C2C` | game/anon_802253EC_nm1 | 94.65 | 40 | 38 | 94.57 -> 93.93 | single-expr | single expr: nextJoin -> (lbl_806D1A78 + 1) |
-| `fn_80229998` | game/DNStartDino | 91.34 | 47 | 43 | 90.02 -> 89.88 | single-expr | single expr: sz -> (lbl_804EE0E0.z) |
+| `fn_80229998` | game/DNStartDino | 91.34 | 47 | 43 | 90.02 -> 89.88 | single-expr | single expr: sz -> (DNStartDino_tail_data_804EE0E0.z) |
 | `KartPhysics_ApplyCollisionForce` | game/KartPhysics_ApplyCollisionForce | 98.64 | 54 | 46 | 98.35 -> 97.61 | inline-to-named-locals | apply_push@1498 subst front order timer,scale_,dz_,dy_,dx_ |
 | `fn_8022ACE4` | game/EnemyFace | 98.61 | 60 | 56 | 98.49 -> 98.48 | inline-to-named-locals | TirePosition@1788 locals front order z,y,x |
 | `TaMode_Init` | game/TaMode_FrameUpdate | 99.66 | 58 | 58 | 99.63 -> 99.66 | single-expr | single expr: laps -> (params[-6].laps) |

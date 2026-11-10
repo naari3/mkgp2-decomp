@@ -55,7 +55,7 @@ const float AI_CalcLapSpeedBonus_rodata_8039FD90[270] = {
     7.200000286102295f, 0.0f, 9.600000381469727f, -7.200000286102295f, 0.0f, 9.600000381469727f,
     7.200000286102295f, 0.0f, -9.600000381469727f, -7.200000286102295f, 0.0f, -9.600000381469727f,
 };
-const float lbl_803A01C8[8] = {
+const float AI_CalcLapSpeedBonus_rodata_803A01C8[8] = {
     1.2999999523162842f, 1.2000000476837158f, 1.2000000476837158f, 1.0499999523162842f, 1.0f, 0.5f,
     0.6000000238418579f, 0.5799999833106995f,
 };
@@ -317,7 +317,7 @@ const AINonRaceParameters kAIBaseSpeedTable_BattleTimeAttack = {
     AI_CalcLapSpeedBonus_data_804E2170, AI_CalcLapSpeedBonus_data_804E2180, AI_CalcLapSpeedBonus_data_804E2190, AI_CalcLapSpeedBonus_data_804E21A0,
   }
 };
-const AICourseTuning lbl_803A0908[192] = {
+const AICourseTuning AI_CalcLapSpeedBonus_rodata_803A0908[192] = {
     { 0.5f, 15.0f, 10.0f, 100.0f, 100.0f, 20.0f, 120, 20.0f, 180, 20.0f, 300, 20.0f, 300 },
     { 0.5f, 15.0f, 10.0f, 100.0f, 100.0f, 20.0f, 120, 20.0f, 180, 20.0f, 300, 20.0f, 300 },
     { 0.699999988079071f, 20.0f, 10.0f, 100.0f, 120.0f, 10.0f, 300, 10.0f, 240, 20.0f, 300, 20.0f, 300 },

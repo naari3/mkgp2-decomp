@@ -8,11 +8,11 @@ s32 fn_80288574(u32 chan, void* data, BackupConfig* cfg) {
     if (chan > 1 || data == NULL || cfg == NULL) {
         return 1;
     }
-    sem = &lbl_80690DE0.sem;
+    sem = &ambackup_nm1_bss_80690DE0.sem;
     if (OSTryWaitSemaphore(sem) <= 0) {
         return 5;
     }
-    e = &lbl_80690DE0.entry[chan][1];
+    e = &ambackup_nm1_bss_80690DE0.entry[chan][1];
     e->cfg = *cfg;
     ret = BackupReadRecord(chan, data, e);
     e->reset = (ret == 1);
@@ -27,11 +27,11 @@ s32 fn_80288668(u32 chan, void* data) {
     if (chan > 1 || data == NULL) {
         return 1;
     }
-    sem = &lbl_80690DE0.sem;
+    sem = &ambackup_nm1_bss_80690DE0.sem;
     if (OSTryWaitSemaphore(sem) <= 0) {
         return 5;
     }
-    ret = BackupReadRecord(chan, data, &lbl_80690DE0.entry[chan][0]);
+    ret = BackupReadRecord(chan, data, &ambackup_nm1_bss_80690DE0.entry[chan][0]);
     OSSignalSemaphore(sem);
     return ret;
 }

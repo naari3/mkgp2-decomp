@@ -15,7 +15,7 @@ int fn_8023D844(int,int);int PlayerData_ResolveUnlockedIdByIndex(void *,int);
 int Item_GetDescriptorField0(int,void *);
 extern int g_characterId;
 extern unsigned char g_playerData[];
-extern unsigned int lbl_803DC180[6][10];
+extern unsigned int ItemSelectState_rodata_803DC180[6][10];
 extern float lbl_803DC29C[];
 extern char ItemSelectState_rodata_803DC0C0[];
 extern const float lbl_806DB88C,lbl_806DB890,lbl_806DB8CC,lbl_806DB900,lbl_806DB924;

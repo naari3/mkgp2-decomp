@@ -13,7 +13,7 @@
 
 extern const char lbl_8036E8B0[0x14] = "homing_target.tpl";
 extern const char lbl_8036E8C4[0x10] = "target_line.tpl";
-extern const SlotDesc lbl_8036E8D4[4] = {
+extern const SlotDesc Scene_80172844_rodata_8036E8D4[4] = {
     {{1.0f, 1.0f, 78.0f, 78.0f}, 0},
     {{80.0f, 1.0f, 113.0f, 113.0f}, 0},
     {{194.0f, 1.0f, 52.0f, 52.0f}, 0},

@@ -10,7 +10,7 @@ typedef struct SndSlot {
 #include "game/types/ClStreamSlot.h"
 
 extern unsigned char ClSound_Initialized;
-extern SndSlot lbl_80678378[32];
+extern SndSlot ClSound_InitSoundSystem_bss_80678378[32];
 extern ClStreamSlot ClSound_ActiveStreams[4];
 extern int lbl_806CF010;
 extern void *lbl_806D16B4;
@@ -42,10 +42,10 @@ void fn_80193838(void) {
         lbl_806D16B8 = 0;
         lbl_806D16BC = 0;
         for (i = 0; i < 32; i++) {
-            lbl_80678378[i].id = -1;
-            lbl_80678378[i].group = 0xff;
-            lbl_80678378[i].x18 = 0xff;
-            lbl_80678378[i].flags = 0;
+            ClSound_InitSoundSystem_bss_80678378[i].id = -1;
+            ClSound_InitSoundSystem_bss_80678378[i].group = 0xff;
+            ClSound_InitSoundSystem_bss_80678378[i].x18 = 0xff;
+            ClSound_InitSoundSystem_bss_80678378[i].flags = 0;
         }
         ClSound_Initialized = 0;
         for (i = 0; i < 4; i++) {

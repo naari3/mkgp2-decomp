@@ -6,8 +6,8 @@ u8 fn_8028EF74(u8 id) {
     case 0x21:
         return 0;
     case 0x29:
-        if (FindDev(0xA9) == NULL && lbl_80699140.numDev < 2) {
-            lbl_80699140.dev[lbl_80699140.numDev++].id = 0xA9;
+        if (FindDev(0xA9) == NULL && amnet_nm3_bss_80699140.numDev < 2) {
+            amnet_nm3_bss_80699140.dev[amnet_nm3_bss_80699140.numDev++].id = 0xA9;
             return 0xA9;
         }
         return 0;
@@ -25,8 +25,8 @@ u8 fn_8028F008(void) {
     id = BSWAP32(v);
     for (p = lbl_806DC930; *p != 0;) {
         if (*p++ == id) {
-            if (FindDev(id) == NULL && lbl_80699140.numDev < 2) {
-                lbl_80699140.dev[lbl_80699140.numDev++].id = id;
+            if (FindDev(id) == NULL && amnet_nm3_bss_80699140.numDev < 2) {
+                amnet_nm3_bss_80699140.dev[amnet_nm3_bss_80699140.numDev++].id = id;
                 return id;
             }
             return 0;
@@ -44,24 +44,24 @@ s32 fn_8028F0E8(void) {
     if (!fn_80294DF8(0)) {
         return 1;
     }
-    memset(&lbl_80699140, 0, sizeof(NetState));
+    memset(&amnet_nm3_bss_80699140, 0, sizeof(NetState));
     return 0;
 }
 
 s32 fn_8028F160(u32 param) {
     u16 v;
 
-    memset(&lbl_80699140, 0, sizeof(NetState));
-    lbl_80699140.param = param;
-    lbl_80699140.unkC8 = 0x01000000;
-    OSInitSemaphore(&lbl_80699140.sem, 1);
-    memset(lbl_80697940, 0, sizeof(lbl_80697940));
+    memset(&amnet_nm3_bss_80699140, 0, sizeof(NetState));
+    amnet_nm3_bss_80699140.param = param;
+    amnet_nm3_bss_80699140.unkC8 = 0x01000000;
+    OSInitSemaphore(&amnet_nm3_bss_80699140.sem, 1);
+    memset(amnet_nm3_bss_80697940, 0, sizeof(amnet_nm3_bss_80697940));
     if (!fn_80294E30(0, 2)) {
         return 1;
     }
-    OSInitSemaphore(&lbl_80699140.irqSem, 0);
-    if (lbl_804F5800[4] != NULL) {
-        lbl_804F5800[4]();
+    OSInitSemaphore(&amnet_nm3_bss_80699140.irqSem, 0);
+    if (amnet_nm3_data_804F5800[4] != NULL) {
+        amnet_nm3_data_804F5800[4]();
     }
     fn_80287E14(2, (EXICallback)fn_8028CC80);
     fn_80287B44(0, 2, &v);

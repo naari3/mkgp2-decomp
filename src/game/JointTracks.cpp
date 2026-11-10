@@ -4084,7 +4084,7 @@ extern "C" const void *const lbl_803EEC78[13] = {
     (void *)0x0
 };
 extern "C" const char lbl_803EECAC[] = "clMapAnim";
-extern "C" const char lbl_803EECB8[] = "clMapAnimBase";
+extern "C" const char JointTracks_rodata_803EECB8[] = "clMapAnimBase";
 #pragma force_active reset
 
 // -inline deferred: functions are emitted in reverse source order.

@@ -15,11 +15,11 @@ index 9941ce2..8c8dd12 100644
          PCBCheckRecv_bss_806D11C0[1] = lbl_806D3160;
          return 1;
      }
--    slots = lbl_805A6154;
+-    slots = PCBCheckRecv_bss_805A6154;
 -    phases = g_pcbSyncPhasePerPcb;
 -    slot = slots;
 -    phase = phases;
-+    slot = slots = lbl_805A6154;
++    slot = slots = PCBCheckRecv_bss_805A6154;
 +    phase = phases = g_pcbSyncPhasePerPcb;
      for (i = 0; i < 4;) {
          unsigned int role;

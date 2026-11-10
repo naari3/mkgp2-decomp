@@ -2,6 +2,6 @@
 
 extern "C" StrPcb *StrPcb_GetInstance(void)
 {
-    return lbl_806D1010;
+    return StrPcb_bss_806D1010;
 }
 

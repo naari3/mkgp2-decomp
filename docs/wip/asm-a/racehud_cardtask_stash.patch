@@ -73,7 +73,7 @@ index 9d028a2..47e0217 100644
 -/* --- extern decls: large-data refs (@ha/@l pairs) --- */
 -/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 -/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
--extern unsigned int lbl_80312850[];
+-extern unsigned int Card_rodata_80312850[];
 -extern unsigned int lbl_803FE7E8[];
 +struct CardTaskDesc {
 +    int id;
@@ -98,7 +98,7 @@ index 9d028a2..47e0217 100644
 +extern float lbl_806D32E8;
 +extern float lbl_806D32F0;
 +extern float lbl_806D32F4;
-+extern char lbl_80312850[];          /* .rodata string pool base */
++extern char Card_rodata_80312850[];          /* .rodata string pool base */
 +extern CardTaskDesc lbl_803FE7E8[];
  
 -/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
@@ -117,7 +117,7 @@ index 9d028a2..47e0217 100644
 +#pragma exceptions on
 +#pragma opt_strength_reduction off
 +void CardTaskManager_RenderOverlay(CardTaskManager *m) {
-+    char *pool = lbl_80312850;
++    char *pool = Card_rodata_80312850;
  
 -/* --- asm function bodies (.text order = fn address order) --- */
 -asm void CardTaskManager_RenderOverlay(void) { /* 0x80089C58 size:0x214 */
@@ -129,9 +129,9 @@ index 9d028a2..47e0217 100644
 -    psq_st f31, 0x48(r1), 0, 0
 -    stmw r22, 0x18(r1)
 -    mr r25, r3
--    lis r3, lbl_80312850@ha
+-    lis r3, Card_rodata_80312850@ha
 -    lwz r4, 0x8(r25)
--    addi r30, r3, lbl_80312850@l
+-    addi r30, r3, Card_rodata_80312850@l
 -    lwz r0, 0x4(r25)
 -    cmpw r4, r0
 -    bge CardTaskManager_RenderOverlay_L_80089D20

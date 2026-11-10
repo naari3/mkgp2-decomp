@@ -1,7 +1,7 @@
 /* --- owned .rodata 0x802EE580..0x8030E584 (tools/own_data.py) --- */
 #pragma force_active on
 /* cos(i * PI / 0x8000) for i = 0..0x8000 (half period; the lookups mirror the index). */
-const float lbl_802EE580[32769] = {
+const float LUT_Sine_rodata_802EE580[32769] = {
     1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
     1.0f, 1.0f, 1.0f, 0.999998987f, 0.999998987f, 0.999998987f, 0.999998987f, 0.999998987f,
     0.999998987f, 0.999998987f, 0.999998987f, 0.999997973f, 0.999997973f, 0.999997973f, 0.999997973f, 0.999997973f,
@@ -4107,7 +4107,7 @@ const float lbl_802EE580[32769] = {
  * lbl_806D2C60 (= 10430.378 = 65536 / (2*PI)), plus ±half-LSB rounding bias
  * (lbl_806D2C54 / lbl_806D2C58 = ±1/131072) per sign of angle, fctiwz to
  * int, masked to low 16 bits (lbl_806CEF18 = 0xFFFF), mirror at 0x7FFF for
- * the upper half of the period, then table lookup in lbl_802EE580[].
+ * the upper half of the period, then table lookup in LUT_Sine_rodata_802EE580[].
  *
  * Has extab/extabindex entry (large-frame flag from the stack-allocated
  * fctiwz scratch slot), so wrap with #pragma exceptions on to let CW
@@ -4138,6 +4138,6 @@ float LUT_Sine(float angle) {
     if ((unsigned short)idx > 0x7FFF) {
         idx = (0x10000 - idx) & 0xFFFF;
     }
-    return lbl_802EE580[(unsigned short)idx];
+    return LUT_Sine_rodata_802EE580[(unsigned short)idx];
 }
 #pragma exceptions reset

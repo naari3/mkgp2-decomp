@@ -49,8 +49,8 @@ typedef struct SoundQueue {
 
 extern u8 ClSound_Initialized;
 extern SoundDef lbl_80379554[];
-extern SoundQueue lbl_80677F40[];
-extern SoundSlot lbl_80678378[];
+extern SoundQueue ClSound_InitSoundSystem_bss_80677F40[];
+extern SoundSlot ClSound_InitSoundSystem_bss_80678378[];
 
 static inline void SoundQueue_Stop(u32 id) {
     int i;
@@ -58,11 +58,11 @@ static inline void SoundQueue_Stop(u32 id) {
     SoundQueue tmp;
 
     for (i = 0; i < 37; i++) {
-        if (lbl_80677F40[i].id == 0xFFFFFFFF) {
+        if (ClSound_InitSoundSystem_bss_80677F40[i].id == 0xFFFFFFFF) {
             break;
         }
-        if (id == lbl_80677F40[i].id) {
-            p = &lbl_80677F40[i];
+        if (id == ClSound_InitSoundSystem_bss_80677F40[i].id) {
+            p = &ClSound_InitSoundSystem_bss_80677F40[i];
             p->state = 3;
             p->timer = 0;
             for (; i > 0; i--) {
@@ -70,7 +70,7 @@ static inline void SoundQueue_Stop(u32 id) {
                 if (p[-1].state == 3) {
                     break;
                 }
-                q = &lbl_80677F40[i - 1];
+                q = &ClSound_InitSoundSystem_bss_80677F40[i - 1];
                 tmp = *p;
                 p->id = q->id;
                 p->state = q->state;
@@ -87,10 +87,10 @@ static inline int SoundQueue_Find(u32 id) {
     int i;
 
     for (i = 0; i < 37; i++) {
-        if (lbl_80677F40[i].id == 0xFFFFFFFF) {
+        if (ClSound_InitSoundSystem_bss_80677F40[i].id == 0xFFFFFFFF) {
             return -1;
         }
-        if (id == lbl_80677F40[i].id) {
+        if (id == ClSound_InitSoundSystem_bss_80677F40[i].id) {
             return i;
         }
     }
@@ -103,21 +103,21 @@ static inline void SoundQueue_Push(SoundInfo *info) {
 
     i = SoundQueue_Find(id);
     if (i >= 0) {
-        SoundQueue *p = &lbl_80677F40[i];
+        SoundQueue *p = &ClSound_InitSoundSystem_bss_80677F40[i];
         for (; i < 36; i++) {
-            SoundQueue *q = &lbl_80677F40[i + 1];
+            SoundQueue *q = &ClSound_InitSoundSystem_bss_80677F40[i + 1];
             p->id = q->id;
             p->state = q->state;
             p->timer = q->timer;
             p++;
         }
-        lbl_80677F40[36].id = 0xFFFFFFFF;
+        ClSound_InitSoundSystem_bss_80677F40[36].id = 0xFFFFFFFF;
     }
     for (i = 0; i < 37; i++) {
-        if (lbl_80677F40[i].id == 0xFFFFFFFF) {
-            lbl_80677F40[i].id = id;
-            lbl_80677F40[i].state = 1;
-            lbl_80677F40[i].timer = 10;
+        if (ClSound_InitSoundSystem_bss_80677F40[i].id == 0xFFFFFFFF) {
+            ClSound_InitSoundSystem_bss_80677F40[i].id = id;
+            ClSound_InitSoundSystem_bss_80677F40[i].state = 1;
+            ClSound_InitSoundSystem_bss_80677F40[i].timer = 10;
             break;
         }
     }
@@ -152,14 +152,14 @@ int SoundMgr_Play(u32 id) {
     if (index >= 0x1EA) {
         return 0;
     }
-    slots = lbl_80678378;
+    slots = ClSound_InitSoundSystem_bss_80678378;
     slot = SoundSlot_Find(slots, id);
     if (slot >= 0) {
-        if (lbl_80678378[slot].info.x19 != 0) {
+        if (ClSound_InitSoundSystem_bss_80678378[slot].info.x19 != 0) {
             return 1;
         }
-        SoundQueue_Stop(lbl_80678378[slot].info.id);
-        lbl_80678378[slot].flags = (lbl_80678378[slot].flags & ~6) | 4;
+        SoundQueue_Stop(ClSound_InitSoundSystem_bss_80678378[slot].info.id);
+        ClSound_InitSoundSystem_bss_80678378[slot].flags = (ClSound_InitSoundSystem_bss_80678378[slot].flags & ~6) | 4;
     }
     if (lbl_80379554[index].info.type == 2) {
         info = &lbl_80379554[index].info;
@@ -181,21 +181,21 @@ int SoundMgr_Play(u32 id) {
         return 0;
     }
     def = &lbl_80379554[index];
-    lbl_80678378[i].flags = (((def->info.x18 >> 1) & 1) ? 0 : 0x200) | 0x11;
-    lbl_80678378[i].info.id = id;
-    lbl_80678378[i].info.group = def->info.group;
-    lbl_80678378[i].info.x18 = def->info.x15;
-    lbl_80678378[i].info.xC = -1;
-    lbl_80678378[i].info.x10 = 0x80;
-    lbl_80678378[i].info.x11 = 0x7F;
-    lbl_80678378[i].info.x12 = 0x40;
-    lbl_80678378[i].info.x13 = 0x40;
-    lbl_80678378[i].info.x14 = def->info.x12;
-    lbl_80678378[i].info.x16 = 0x2000;
-    lbl_80678378[i].info.x19 = def->info.x14;
-    if (lbl_80678378[i].info.x14 != 0x2000) {
-        lbl_80678378[i].flags |= 0x80;
+    ClSound_InitSoundSystem_bss_80678378[i].flags = (((def->info.x18 >> 1) & 1) ? 0 : 0x200) | 0x11;
+    ClSound_InitSoundSystem_bss_80678378[i].info.id = id;
+    ClSound_InitSoundSystem_bss_80678378[i].info.group = def->info.group;
+    ClSound_InitSoundSystem_bss_80678378[i].info.x18 = def->info.x15;
+    ClSound_InitSoundSystem_bss_80678378[i].info.xC = -1;
+    ClSound_InitSoundSystem_bss_80678378[i].info.x10 = 0x80;
+    ClSound_InitSoundSystem_bss_80678378[i].info.x11 = 0x7F;
+    ClSound_InitSoundSystem_bss_80678378[i].info.x12 = 0x40;
+    ClSound_InitSoundSystem_bss_80678378[i].info.x13 = 0x40;
+    ClSound_InitSoundSystem_bss_80678378[i].info.x14 = def->info.x12;
+    ClSound_InitSoundSystem_bss_80678378[i].info.x16 = 0x2000;
+    ClSound_InitSoundSystem_bss_80678378[i].info.x19 = def->info.x14;
+    if (ClSound_InitSoundSystem_bss_80678378[i].info.x14 != 0x2000) {
+        ClSound_InitSoundSystem_bss_80678378[i].flags |= 0x80;
     }
-    SoundQueue_Push(&lbl_80678378[i].info);
+    SoundQueue_Push(&ClSound_InitSoundSystem_bss_80678378[i].info);
     return 1;
 }

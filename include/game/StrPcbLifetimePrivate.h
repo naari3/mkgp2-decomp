@@ -14,13 +14,13 @@ void fn_80293998(void);
 int fn_80293290(int chan, int *count);
 void fn_8029321C(int chan);
 
-extern const float lbl_802E9848[3];
+extern const float StrPcb_rodata_802E9848[3];
 extern const float lbl_806D23E0;
 extern const float lbl_806D23E4;
 extern const float lbl_806D2400;
 extern const float lbl_806D2410;
-extern u8 lbl_806D1000[3];
-extern int lbl_806D1004;
+extern u8 StrPcb_bss_806D1000[3];
+extern int StrPcb_bss_806D1004;
 }
 
 void *operator new(unsigned long size);
@@ -107,7 +107,7 @@ public:
 
 };
 
-extern "C" StrPcb *lbl_806D1010;
+extern "C" StrPcb *StrPcb_bss_806D1010;
 
 static inline void StrPcb_ClearTransient(StrPcb *pcb)
 {

@@ -202,7 +202,7 @@ Q201|CoinJumpFx_UpdateParticleGrid | game/CoinJumpFx | 98.99 | child/loop-var re
 Q202|AnimState_Init | game/AnimState_Step | 98.87 | zero constant shares k's register in target (r5)
 Q203|Sci2Card_Tick | game/Sci2Card_Tick | 98.94 | extra mr copies of inline params (SendBuffer->SendRaw); pragmasweep all: no gain
 Q204|KartFx_BoostExhaustRayTick | game/KartFxExhaustRay | 98.95 | pooled base
-Q205|fn_8028D8CC | triforce/amnet_nm3 | 99.97 | only an r4/r5 swap left in case 0x29 (li 2 for dev->kind vs &lbl_80699140 for hwFlags); R5 tried store orders, inline/manual ReadDeviceWord, ptr temps, pragmas, 5-min cperm. Same TU: fn_8028C1B8 94.8, fn_8028C644 99.7, fn_8028CB64 96.5
+Q205|fn_8028D8CC | triforce/amnet_nm3 | 99.97 | only an r4/r5 swap left in case 0x29 (li 2 for dev->kind vs &amnet_nm3_bss_80699140 for hwFlags); R5 tried store orders, inline/manual ReadDeviceWord, ptr temps, pragmas, 5-min cperm. Same TU: fn_8028C1B8 94.8, fn_8028C644 99.7, fn_8028CB64 96.5
 Q206|__THPHuffDecodeTab | thp/THPDec | 99.6
 Q207|clFlowCourse_Init, fn_801D1684, clFlowCourse_Dtor (TU merge WIP: Init 100 / Update 99.70 in docs/wip/r2/clFlowCourse_merge.patch) | game/clFlowCourse | 98.22 / 98.21 / 99.62 | Released stale claim #2697 (R2, 2026-11-08)
 Q208|fn_802867B8 | triforce/random_nm1 | 95.23 | Released stale claim #2610 (R2, 2026-11-08)

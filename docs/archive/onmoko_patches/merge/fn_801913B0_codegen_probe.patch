@@ -14,8 +14,8 @@ index c3d63b0..d19c16d 100644
      ClSoundVec delta;
      float near_distance, far_distance, distance;
      int volume, pan, surround;
-     near_distance = lbl_80379554[lbl_80678378[index].id & ~0x78000000].near_distance;
-     far_distance = lbl_80379554[lbl_80678378[index].id & ~0x78000000].far_distance;
+     near_distance = lbl_80379554[ClSound_InitSoundSystem_bss_80678378[index].id & ~0x78000000].near_distance;
+     far_distance = lbl_80379554[ClSound_InitSoundSystem_bss_80678378[index].id & ~0x78000000].far_distance;
 -    Vec3_Subtract(position, &listener->position, &delta);
 +    Vec3_Subtract(position, &lbl_80495F38.pos, &delta);
      distance = Vec3_Magnitude(&delta);

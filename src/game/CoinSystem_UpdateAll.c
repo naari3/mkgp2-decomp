@@ -52,9 +52,9 @@ typedef struct Coin {
 
 extern Coin *lbl_806D1534;
 extern int lbl_806D1538;
-extern int lbl_806D153C;
-extern int lbl_806D1540;
-extern int lbl_806D1544;
+extern int CoinSystem_bss_806D153C;
+extern int CoinSystem_bss_806D1540;
+extern int CoinSystem_bss_806D1544;
 extern unsigned char lbl_806D1548;
 extern unsigned char g_raceEnded;
 extern int lbl_80677CC8[];
@@ -152,8 +152,8 @@ void CoinSystem_UpdateAll(void)
         }
     }
 
-    if (lbl_806D153C != 0) {
-        lbl_806D153C--;
+    if (CoinSystem_bss_806D153C != 0) {
+        CoinSystem_bss_806D153C--;
     }
 
     for (c = lbl_806D1534; c < lbl_806D1534 + lbl_806D1538; c++) {
@@ -161,7 +161,7 @@ void CoinSystem_UpdateAll(void)
         case 0:
             if (c->timer > 0.0f) {
                 c->timer -= 1.0f;
-            } else if (lbl_806D153C == 0) {
+            } else if (CoinSystem_bss_806D153C == 0) {
                 c->state = 1;
                 c->timer = 0.0f;
                 c->cur.x = c->pos.x;
@@ -169,7 +169,7 @@ void CoinSystem_UpdateAll(void)
                 c->cur.z = c->pos.z;
                 c->spin = 0.0f;
                 c->scale = 0.0f;
-                lbl_806D153C = 5;
+                CoinSystem_bss_806D153C = 5;
             }
             break;
         case 1:
@@ -244,14 +244,14 @@ void CoinSystem_UpdateAll(void)
                 for (i = 0; i < 5; i++) {
                     if (c->sparks[i].life < 0.0f) {
                         c->sparks[i].life = 0.0f;
-                        c->sparks[i].x = 5.0f * LUT_Sin12Bit(360.0f * lbl_80495994[lbl_806D1540]);
-                        c->sparks[i].y = 10.0f * lbl_80495A94[lbl_806D1544];
-                        c->sparks[i].z = 5.0f * fn_80186960(360.0f * lbl_80495994[lbl_806D1540]);
-                        if (++lbl_806D1540 >= 64) {
-                            lbl_806D1540 = 0;
+                        c->sparks[i].x = 5.0f * LUT_Sin12Bit(360.0f * lbl_80495994[CoinSystem_bss_806D1540]);
+                        c->sparks[i].y = 10.0f * lbl_80495A94[CoinSystem_bss_806D1544];
+                        c->sparks[i].z = 5.0f * fn_80186960(360.0f * lbl_80495994[CoinSystem_bss_806D1540]);
+                        if (++CoinSystem_bss_806D1540 >= 64) {
+                            CoinSystem_bss_806D1540 = 0;
                         }
-                        if (++lbl_806D1544 >= 48) {
-                            lbl_806D1544 = 0;
+                        if (++CoinSystem_bss_806D1544 >= 48) {
+                            CoinSystem_bss_806D1544 = 0;
                         }
                         break;
                     }
@@ -308,11 +308,11 @@ void CoinSystem_UpdateAll(void)
                 c->timer -= 1.0f;
             } else {
                 c->timer = 0.0f;
-                c->rot = 1.570796f * lbl_80495A94[lbl_806D1544] - 0.785398f;
+                c->rot = 1.570796f * lbl_80495A94[CoinSystem_bss_806D1544] - 0.785398f;
                 c->scale = 0.0f;
                 c->state = (c->state == 8) ? 9 : 6;
-                if (++lbl_806D1544 >= 48) {
-                    lbl_806D1544 = 0;
+                if (++CoinSystem_bss_806D1544 >= 48) {
+                    CoinSystem_bss_806D1544 = 0;
                 }
             }
             break;

@@ -47,7 +47,7 @@ struct RaceScene {
 };
 
 extern "C" {
-extern char lbl_803211D8[];
+extern char RaceScene_rodata_803211D8[];
 extern char g_RaceModeVtable[];
 extern char GameModeBase_vtable_8040E76C[];
 extern void *g_weatherSystem;
@@ -116,7 +116,7 @@ static inline void HsdRef_Unref(HsdRefObj *o)
 
 extern "C" RaceScene *RaceScene_Dtor(RaceScene *self, short flag)
 {
-    const char *log = lbl_803211D8;
+    const char *log = RaceScene_rodata_803211D8;
 
     if (self != 0) {
         self->vtable = g_RaceModeVtable;

@@ -22,7 +22,7 @@ BlockMsg PCBCheckRecv_bss_805A5EC0;
 unsigned char PCBComm_BuildBroadcastSlot_bss_805A60C4[0x54];
 unsigned char g_pcbSyncTable[0x1C];
 unsigned char PCBCheck_ProcessLinks_bss_805A6134[0x20];
-PeerSlot lbl_805A6154[4];
+PeerSlot PCBCheckRecv_bss_805A6154[4];
 unsigned char PCBComm_PackAndTriggerCardSnapshot_bss_805A8A44[4][0x45];
 unsigned char g_ringBufferBase[0x3700];
 SnapshotMsg PCBCheckRecv_bss_805AC258;
@@ -52,7 +52,7 @@ void *OrderProbe(int i)
     case 1: return PCBComm_BuildBroadcastSlot_bss_805A60C4;
     case 2: return g_pcbSyncTable;
     case 3: return PCBCheck_ProcessLinks_bss_805A6134;
-    case 4: return lbl_805A6154;
+    case 4: return PCBCheckRecv_bss_805A6154;
     case 5: return PCBComm_PackAndTriggerCardSnapshot_bss_805A8A44;
     case 6: return g_ringBufferBase;
     }
@@ -71,7 +71,7 @@ int PCBComm_SendToAllPeers(void)
     snapshot = PCBCheckRecv_bss_805AC258.body;
     block = PCBCheckRecv_bss_805A5EC0.data;
     scene = g_currentSceneState;
-    peer = lbl_805A6154;
+    peer = PCBCheckRecv_bss_805A6154;
     for (i = 0; i < 4; i++, peer++) {
         void *connection = peer->connection;
         if (connection == 0) continue;

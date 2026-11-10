@@ -17,7 +17,7 @@ int Card_VerifyChecksum(void *unused, u8 *raw)
     u32 sum;
     int i;
     const signed char *expected;
-    const char *messages = (const char *)lbl_80315378;
+    const char *messages = (const char *)CardSaveData_Parser_rodata_80315378;
     bitpack_init(pack, Card_VerifyChecksum_data_803FED40, 3, raw, 0);
     checksum = 0;
     sum = 0;

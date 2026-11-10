@@ -7,11 +7,11 @@ static inline unsigned int UpdateCoinHistory(unsigned int coin, unsigned int ser
     int i;
     int prev;
     long cur;
-    acLib_nm1_bss_80679E34[lbl_806D1AD4] = coin;
-    if (++lbl_806D1AD4 >= 8) {
-        lbl_806D1AD4 = 0;
+    acLib_nm1_bss_80679E34[acLib_tail_bss_806D1AD4] = coin;
+    if (++acLib_tail_bss_806D1AD4 >= 8) {
+        acLib_tail_bss_806D1AD4 = 0;
     }
-    cur = lbl_806D1AD4;
+    cur = acLib_tail_bss_806D1AD4;
     {
         int t = cur - 1;
         prev = 7;
@@ -43,7 +43,7 @@ static inline unsigned int UpdateCoinHistory(unsigned int coin, unsigned int ser
     }
 
     pressed = 0;
-    if (lbl_806D1AD0 == 0) {
+    if (acLib_tail_bss_806D1AD0 == 0) {
         for (int pulse = 0; pulse < 32; pulse++) {
             unsigned int mask = 1 << pulse;
             if (!(service & mask)) {

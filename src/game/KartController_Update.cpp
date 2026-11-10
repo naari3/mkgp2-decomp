@@ -51,7 +51,7 @@ static const KCVec lbl_803BD728[4] = {
 };
 static const KCVec lbl_803BD758 = {0.0f, 4.8f, 2.4f};
 static const KCVec lbl_803BD764 = {0.0f, 12.0f, 0.0f};
-static const int lbl_803BD770[3] = {73,43,62};
+static const int KartController_Update_rodata_803BD770[3] = {73,43,62};
 static const char lbl_803BD77C[13] = "clEnemyThink";
 static const char lbl_803BD78C[19] = "clItemBoxResponder";
 static const char lbl_803BD7A0[38] = "GRID %d: speed %6.2f(km/h) line %d-%d";

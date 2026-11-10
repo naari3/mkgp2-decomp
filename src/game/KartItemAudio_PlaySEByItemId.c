@@ -9,11 +9,11 @@
  * reset to -1.
  *
  * The target addresses the voice table, the exclusion list and the shared
- * zero Vec3 through one hoisted base (lbl_802EDC70, then +0x34 / +0xB4) and
+ * zero Vec3 through one hoisted base (KartItemAudio_PlaySEByItemId_rodata_802EDC70, then +0x34 / +0xB4) and
  * keeps an `addi rX, base, 0` for the voice table. CW emits that shape for
  * objects defined in the same TU, so this TU owns .rodata 0x802EDC70..
  * 0x802EDD30 and defines the four objects there (KartAudioChannel_PlayColorMatchSE_rodata_802EDCBC and
- * lbl_802EDD24 stay global: other TUs reference them). An extern struct
+ * KartItemAudio_PlaySEByItemId_rodata_802EDD24 stay global: other TUs reference them). An extern struct
  * overlay only reaches ~96-97% (offsets get folded into displacements).
  * The function is
  * its own reversed-extab singleton (extab 0x800076F0, extabindex 0x80020900);
@@ -29,7 +29,7 @@ extern void fn_8016C288(); /* positional SE update (id, Vec3 *pos) */
 #include "game/types/Vec3.h"
 
 /* .rodata 0x802EDC70..0x802EDD30 */
-const int lbl_802EDC70[13] = {
+const int KartItemAudio_PlaySEByItemId_rodata_802EDC70[13] = {
     0xD7, 0xEC, 0x101, 0x116, 0x12B, 0x141, 0x156, 0x16B, 0x180, 0x195, 0x1AA, 0x1C0, 0x1D5,
 };
 const int IsAudioMutedItem_rodata_802EDCA4[6] = { 0x52, 0x53, 0xA7, 0x10A, 0x2A, 0xFB };
@@ -40,7 +40,7 @@ const int KartAudioChannel_PlayColorMatchSE_rodata_802EDCBC[26] = {
     32, 116, 512, 122, 256, 121, 1024, 127,
     0, -1
 };
-const Vec3 lbl_802EDD24 = { 0.0f, 0.0f, 0.0f };
+const Vec3 KartItemAudio_PlaySEByItemId_rodata_802EDD24 = { 0.0f, 0.0f, 0.0f };
 
 typedef struct KartItemAudio {
     int charId;               /* 0x0 */
@@ -67,13 +67,13 @@ static inline unsigned char KartItemAudio_IsVoicedItem(int itemId) {
 
 #define KIA_PLAY_VOICE(self, ofs)                                       \
     if (self->voiceOn != 0) {                                           \
-        int se = lbl_802EDC70[self->charId] + (ofs);                    \
+        int se = KartItemAudio_PlaySEByItemId_rodata_802EDC70[self->charId] + (ofs);                    \
         isJapanese();                                                   \
         SoundMgr_PlaySE(se | ((self->channel & 0xF) << 27));            \
         if (self->playerType == 0) {                                    \
             float *mtx = self->mtx;                                     \
             if (mtx != 0) {                                             \
-                Vec3 pos = lbl_802EDD24;                                \
+                Vec3 pos = KartItemAudio_PlaySEByItemId_rodata_802EDD24;                                \
                 pos.x = mtx[3];                                         \
                 pos.y = mtx[7];                                         \
                 pos.z = mtx[11];                                        \

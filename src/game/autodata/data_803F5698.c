@@ -135,7 +135,7 @@ void *g_InputObjectVtable[13] = {
     (void *)InputObj_GetHeldMasked,
     (void *)InputObj_ReadRawInput
 };
-void *lbl_803F5788[14] = {
+void *JvsInput_data_803F5788[14] = {
     (void *)&lbl_806CED88,
     0,
     (void *)JvsInput_DtorAndFree,

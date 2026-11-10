@@ -18,7 +18,7 @@ typedef struct PcbLinkSlot {
     signed char readIndex, writeIndex;
     unsigned char padA3A[2];
 } PcbLinkSlot;
-extern PcbLinkSlot lbl_805A6154[];
+extern PcbLinkSlot PCBCheckRecv_bss_805A6154[];
 extern PcbConnection* PCBCheck_ProcessLinks_bss_805A6134[];
 extern unsigned char g_pcbCommEnabled, lbl_806D1191, g_pcbSyncReady, lbl_806D1193;
 extern int g_localPcbRole, g_myPcbId;
@@ -75,7 +75,7 @@ static inline void PCBCheck_ResetLinks(int requested)
     int count = 4;
     if (requested != -1) { index = requested; count = 1; }
     while (count != 0) {
-        reset = &lbl_805A6154[index];
+        reset = &PCBCheckRecv_bss_805A6154[index];
         if (requested != -1) {
             TCPConn_Reset(reset->primary);
             if (reset->secondary != 0) TCPConn_Close(reset->secondary);
@@ -136,7 +136,7 @@ int PCBCheck_ProcessLinks(void)
     int i;
     base = 0;
     if (g_pcbCommEnabled == 0) return 0;
-    base = lbl_805A6154;
+    base = PCBCheckRecv_bss_805A6154;
     for (i = 0; i < 4; ++i) {
         unsigned char recover;
         slot = &base[i];

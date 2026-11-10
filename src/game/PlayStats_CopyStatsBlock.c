@@ -32,7 +32,7 @@ typedef struct BackupStatsShadow {
 } BackupStatsShadow;
 
 extern BackupStatsShadow lbl_80598A60;
-extern PlayStatsBlock lbl_805AC2E0;
+extern PlayStatsBlock PlayStats_bss_805AC2E0;
 
 void Backup_PublishShadowCopy_Inline(void);
 void PlayStats_CopyStatsBlock(PlayStatsBlock *dst, const PlayStatsBlock *src);

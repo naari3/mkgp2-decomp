@@ -45,7 +45,7 @@ struct EffectSlot {
 #include "game/types/SlotDesc.h"
 
 extern "C" {
-extern const SlotDesc lbl_8036E8D4[4];
+extern const SlotDesc Scene_80172844_rodata_8036E8D4[4];
 extern const char *Scene_801734B0_data_806CFAC8[2];
 void fn_801F7344(EffectObj *, EffectSlot *);
 void fn_801F7198(EffectObj *, EffectSlot *, int);
@@ -63,12 +63,12 @@ struct SharedEffect {
             objs[i] = new EffectObj(Scene_801734B0_data_806CFAC8[i]);
         }
         for (i = 0; i < 4; i++) {
-            int obj = lbl_8036E8D4[i].obj;
+            int obj = Scene_80172844_rodata_8036E8D4[i].obj;
 
             if (objs[obj]) {
                 fn_801F7344(objs[obj], &slots[i]);
                 fn_801F7198(objs[obj], &slots[i], 0);
-                fn_801F6D58(&slots[i], &lbl_8036E8D4[i], 0, 0);
+                fn_801F6D58(&slots[i], &Scene_80172844_rodata_8036E8D4[i], 0, 0);
             }
         }
     }

@@ -3,7 +3,7 @@
   "cpp": true,
   "replace": [
    [
-    "KartSlot SetCourseParams_bss_805AC600[8];\nunsigned char KartDriverArray_StaticCtor_bss_805AC6C0[0xC];\nunsigned char SetCourseParams_bss_805AC6CC[0x5E00];\nLapEntry SetCourseParams_bss_805B24CC[10];\nstruct LapExtra RaceResult_StoreLatest_bss_805B256C;\nunsigned char SetCourseParams_bss_805B2580[0x20000];\nunsigned char g_playerData[0x1DC];\nunsigned char lbl_805D275C[0x1DC];\nint RaceSlot_ResetAll_bss_805D2938[4];\nRankSlot SetCourseParams_bss_805D2948[8];\n\n",
+    "KartSlot SetCourseParams_bss_805AC600[8];\nunsigned char KartDriverArray_StaticCtor_bss_805AC6C0[0xC];\nunsigned char SetCourseParams_bss_805AC6CC[0x5E00];\nLapEntry SetCourseParams_bss_805B24CC[10];\nstruct LapExtra RaceResult_StoreLatest_bss_805B256C;\nunsigned char SetCourseParams_bss_805B2580[0x20000];\nunsigned char g_playerData[0x1DC];\nunsigned char SetCourseParams_bss_805D275C[0x1DC];\nint RaceSlot_ResetAll_bss_805D2938[4];\nRankSlot SetCourseParams_bss_805D2948[8];\n\n",
     ""
    ]
   ]

@@ -20,7 +20,7 @@ StrPcb::StrPcb(int target) : buffer(new int)
     int mode = Clamp_Int(1, 0, 2);
 
     intensityMode = mode;
-    intensityScale = lbl_802E9848[mode];
+    intensityScale = StrPcb_rodata_802E9848[mode];
     positionTarget = target;
     position10 = 0x1FF;
     position28 = 0x1FF;
@@ -30,7 +30,7 @@ StrPcb::StrPcb(int target) : buffer(new int)
     memset(&StrPcb_InputTick_bss_8059850C[0], 0, 4);
     memset(lbl_80598300, 0, 4);
     memset(StrPcb_Init_bss_80598100, 0, 4);
-    memset(lbl_806D1000, 0, 3);
+    memset(StrPcb_bss_806D1000, 0, 3);
     memset(this, 0, 3);
     flags.bit40 = 0;
     flags.bit20 = 0;
@@ -39,7 +39,7 @@ StrPcb::StrPcb(int target) : buffer(new int)
     flags.low = 0;
     flags.id = 0x35;
     flags.bit01 = 0;
-    lbl_806D1004 = 0;
+    StrPcb_bss_806D1004 = 0;
     StrPcb_OutputTick_bss_80598500[0] = 0xFF;
     StrPcb_OutputTick_bss_80598500[1] = 0xFF;
     StrPcb_OutputTick_bss_80598500[5] = 0;

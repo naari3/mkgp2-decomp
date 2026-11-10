@@ -8,7 +8,7 @@ extern int g_gameMode;
 extern int g_cupId;
 extern const float lbl_806D5348; /* pi */
 /* Shared effect parameter pool, addressed from one section base. */
-const float lbl_80329E20[255] = {
+const float KartFxExhaustRay_rodata_80329E20[255] = {
     1.0f, 0.699999988f, 0.899999976f, 0.0f, 0.0f, 500.0f, 66.6666718f,
     1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
     66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,

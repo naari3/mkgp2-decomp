@@ -5,7 +5,7 @@
 struct Vec { float x,y,z; };
 struct Effect { char p0[16]; int index; char slot[20]; char visible; char p29[3]; float alpha; char p30[0x5c]; Vec pos; char p98[12]; Vec velocity; float scale; signed char state; char pb5[0xcb]; unsigned int timer; };
 /* .rodata 0x80328EB8..0x80329908: shared effect tables (section anchor of the original effects TU) */
-extern "C" const unsigned int lbl_80328EB8[255] = {
+extern "C" const unsigned int CelebPop17Update_rodata_80328EB8[255] = {
     0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
     0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
     0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
@@ -48,7 +48,7 @@ extern "C" const unsigned int ParticleBurst_DrawCb_rodata_803292C8[3] = {
 extern "C" const unsigned int TripleBladeRing_SetWorldYaw_rodata_803292D4[3] = {
     0x00000000, 0x41700000, 0x41F00000
 };
-extern "C" const unsigned int lbl_803292E0[60] = {
+extern "C" const unsigned int Kart_rodata_803292E0[60] = {
     0x00002B00, 0x00002B01, 0x00002B02, 0x00002B03, 0xBFCEA897, 0x3FC5C2E3, 0x3E9320DA, 0x3FCA46F1,
     0x3FC5C2E3, 0x3E9320DA, 0x3FCA46F1, 0x40A128F6, 0x3E9320DA, 0xBFCEA897, 0x40A128F6, 0x3E9320DA,
     0xBFCEA897, 0x3FC5C2E3, 0x3DB2E9CC, 0x3FCA46F1, 0x3FC5C2E3, 0x3DB2E9CC, 0x3FCA46F1, 0x40A128F6,

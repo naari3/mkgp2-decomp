@@ -70,12 +70,12 @@ extern "C" int LakituStart_UpdateCountdown(LakituStart *self) {
         Vec3_Subtract(&at, &eye, &dir);
         dir.y = lbl_806D2510;
         Vec3_Normalize(&dir, &dir);
-        offset.x = lbl_806CEDC0 + self->x;
-        offset.z = lbl_806CEDC8 + self->z;
+        offset.x = LakituStart_data_806CEDC0 + self->x;
+        offset.z = LakituStart_data_806CEDC8 + self->z;
         const float dy = dir.y;
         const float dx = dir.x;
         float height;
-        height = lbl_806CEDC4 + self->y;
+        height = LakituStart_data_806CEDC4 + self->y;
         result.x = dx * offset.z + (-dir.z * offset.x + eye.x);
         SetX(Archive_GetRootJObj(self->model), result.x);
         result.y = height + (dir.y * offset.z + (dy * offset.x + eye.y));

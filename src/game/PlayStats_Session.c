@@ -19,19 +19,19 @@ typedef struct BackupShadow {
     unsigned int creditsAdded;
 } BackupShadow;
 
-extern PlayStatsTimes lbl_805AC2E0;
+extern PlayStatsTimes PlayStats_bss_805AC2E0;
 extern BackupShadow lbl_80598A60;
-extern void *lbl_806D11E0; /* daily clock */
-extern unsigned char lbl_806D11E4; /* session active */
-extern unsigned char lbl_806D11E5;
-extern unsigned char lbl_806D11E6;
-extern unsigned char lbl_806D11E7;
-extern unsigned char lbl_806D11E8;
-extern unsigned char lbl_806D11E9;
-extern unsigned char lbl_806D11EA;
-extern int lbl_806D11EC;
-extern int lbl_806D11F0; /* session start seconds */
-extern int lbl_806CF00C;
+extern void *PlayStats_bss_806D11E0; /* daily clock */
+extern unsigned char PlayStats_bss_806D11E4; /* session active */
+extern unsigned char PlayStats_bss_806D11E5;
+extern unsigned char PlayStats_bss_806D11E6;
+extern unsigned char PlayStats_bss_806D11E7;
+extern unsigned char PlayStats_bss_806D11E8;
+extern unsigned char PlayStats_bss_806D11E9;
+extern unsigned char PlayStats_bss_806D11EA;
+extern int PlayStats_bss_806D11EC;
+extern int PlayStats_bss_806D11F0; /* session start seconds */
+extern int PlayStats_data_806CF00C;
 extern int g_gameMode;
 
 int DailyClock_GetCurrentSeconds(void *clock);
@@ -47,66 +47,66 @@ int PlayStats_TickActiveSessionSeconds(void)
 {
     int delta;
 
-    if (lbl_806D11E4 == 0) {
+    if (PlayStats_bss_806D11E4 == 0) {
         return 0;
     }
-    delta = DailyClock_GetCurrentSeconds(lbl_806D11E0) - lbl_806D11F0;
-    lbl_805AC2E0.sessionSeconds += delta;
+    delta = DailyClock_GetCurrentSeconds(PlayStats_bss_806D11E0) - PlayStats_bss_806D11F0;
+    PlayStats_bss_805AC2E0.sessionSeconds += delta;
     if (g_gameMode == 0) {
-        lbl_805AC2E0.grandPrixSeconds += delta;
+        PlayStats_bss_805AC2E0.grandPrixSeconds += delta;
     }
     OperationClock_Commit();
-    return lbl_806D11F0 = DailyClock_GetCurrentSeconds(lbl_806D11E0);
+    return PlayStats_bss_806D11F0 = DailyClock_GetCurrentSeconds(PlayStats_bss_806D11E0);
 }
 
 int PlayStats_EndPlaySession(void)
 {
     int delta;
 
-    if (lbl_806D11E4 == 0) {
+    if (PlayStats_bss_806D11E4 == 0) {
         return 0;
     }
     PlayStats_AccumulateFinishByRank();
-    delta = DailyClock_GetCurrentSeconds(lbl_806D11E0) - lbl_806D11F0;
-    lbl_805AC2E0.sessionSeconds += delta;
+    delta = DailyClock_GetCurrentSeconds(PlayStats_bss_806D11E0) - PlayStats_bss_806D11F0;
+    PlayStats_bss_805AC2E0.sessionSeconds += delta;
     if (g_gameMode == 0) {
-        lbl_805AC2E0.grandPrixSeconds += delta;
+        PlayStats_bss_805AC2E0.grandPrixSeconds += delta;
     }
     OperationClock_Commit();
-    lbl_806D11EC = 0;
-    lbl_806D11E4 = 0;
-    lbl_806D11F0 = 0;
+    PlayStats_bss_806D11EC = 0;
+    PlayStats_bss_806D11E4 = 0;
+    PlayStats_bss_806D11F0 = 0;
     return 1;
 }
 
 int PlayStats_BeginPlaySession(void)
 {
-    if (lbl_806D11E4 == 1) {
+    if (PlayStats_bss_806D11E4 == 1) {
         return 0;
     }
-    lbl_806D11F0 = DailyClock_GetCurrentSeconds(lbl_806D11E0);
-    lbl_806D11EC = 0;
-    lbl_806D11E4 = 1;
-    lbl_806CF00C = -1;
-    lbl_806D11E5 = 0;
-    lbl_806D11E6 = 0;
-    lbl_806D11E7 = 0;
-    lbl_806D11E8 = 0;
-    lbl_806D11E9 = 0;
-    lbl_806D11EA = 0;
+    PlayStats_bss_806D11F0 = DailyClock_GetCurrentSeconds(PlayStats_bss_806D11E0);
+    PlayStats_bss_806D11EC = 0;
+    PlayStats_bss_806D11E4 = 1;
+    PlayStats_data_806CF00C = -1;
+    PlayStats_bss_806D11E5 = 0;
+    PlayStats_bss_806D11E6 = 0;
+    PlayStats_bss_806D11E7 = 0;
+    PlayStats_bss_806D11E8 = 0;
+    PlayStats_bss_806D11E9 = 0;
+    PlayStats_bss_806D11EA = 0;
     return 1;
 }
 
 void PlayStats_PublishCoinCreditShadow(void)
 {
-    lbl_80598A60.coinsInserted = lbl_805AC2E0.coinsInserted;
-    lbl_80598A60.creditsAdded = lbl_805AC2E0.creditsAdded;
+    lbl_80598A60.coinsInserted = PlayStats_bss_805AC2E0.coinsInserted;
+    lbl_80598A60.creditsAdded = PlayStats_bss_805AC2E0.creditsAdded;
     Backup_PublishShadowCopy_Inline();
 }
 
 int PlayStats_PublishStatsBlockShadow(void)
 {
-    PlayStats_CopyStatsBlock((char *)&lbl_80598A60 + 0x274, &lbl_805AC2E0);
+    PlayStats_CopyStatsBlock((char *)&lbl_80598A60 + 0x274, &PlayStats_bss_805AC2E0);
     Backup_PublishShadowCopy_Inline();
     return 1;
 }

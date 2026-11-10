@@ -1098,7 +1098,7 @@ static const unsigned int s_defaultCourse[5] = {
     0x00000078, 0x40A00000, 0x00000014, 0x00000078, 0x01000000,
 };
 extern "C" const char lbl_80356BF4[12] = "clCGameKP";
-extern "C" const unsigned int lbl_80356C00[0x16] = {
+extern "C" const unsigned int CGameCoin_8012BF5C_rodata_80356C00[0x16] = {
     0x636C4A6F, 0x6252756E, 0x6E657200, 0x48697420, 0x4E6F203D, 0x2025640A,
     0x00000000, 0x53746172, 0x7420746F, 0x204B5043, 0x6F696E2E, 0x20436F69,
     0x6E206B69, 0x6E642069, 0x73202564, 0x2E202025, 0x73202D20, 0x25640A00,
@@ -4862,9 +4862,9 @@ struct CoinUpdatePad {
     virtual unsigned int Buttons(int mask);
 };
 
-#define COIN_STR_HIT_NO     ((const char *)lbl_80356C00 + 0x0C) /* "Hit No = %d\n" */
-#define COIN_STR_START_COIN ((const char *)lbl_80356C00 + 0x1C) /* "Start to KPCoin. Coin kind is %d.  %s - %d\n" */
-#define COIN_STR_HPP        ((const char *)lbl_80356C00 + 0x48) /* "CGameCoin.hpp" */
+#define COIN_STR_HIT_NO     ((const char *)CGameCoin_8012BF5C_rodata_80356C00 + 0x0C) /* "Hit No = %d\n" */
+#define COIN_STR_START_COIN ((const char *)CGameCoin_8012BF5C_rodata_80356C00 + 0x1C) /* "Start to KPCoin. Coin kind is %d.  %s - %d\n" */
+#define COIN_STR_HPP        ((const char *)CGameCoin_8012BF5C_rodata_80356C00 + 0x48) /* "CGameCoin.hpp" */
 #define COIN_SHELL_START    ((const float *)&s_shellPathData[15])
 #define COIN_LANE_TARGETS   ((const float *)&s_shellPathData[18]) /* 5 x Vec */
 #define COIN_LANE_YAW       ((const float *)&s_shellPathData[33]) /* 5 floats */

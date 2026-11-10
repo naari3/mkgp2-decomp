@@ -1,11 +1,11 @@
 /* Triforce pseudo-random numbers (LCG). */
 #include <dolphin.h>
 
-u32 lbl_806D0C18 = 1;
+u32 random_nm1_data_806D0C18 = 1;
 
 static inline u32 Step(void) {
-    lbl_806D0C18 = lbl_806D0C18 * 0x41C64E6D + 12345;
-    return lbl_806D0C18;
+    random_nm1_data_806D0C18 = random_nm1_data_806D0C18 * 0x41C64E6D + 12345;
+    return random_nm1_data_806D0C18;
 }
 
 static inline u32 Next(void) {

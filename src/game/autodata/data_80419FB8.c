@@ -189,7 +189,7 @@ Vec DrawEffect_Cb_KartItemStatus_Bind0C_data_8041A2B0[11] = {
     { 1.0f, 1.0f, 1.0f },
     { 0.9f, 0.9f, 0.9f }
 };
-char *lbl_8041A334[3] = {
+char *DrawEffect_Cb_MutekiStar_data_8041A334[3] = {
     (char *)&lbl_8032A6E4,
     (char *)&lbl_8032A6FC,
     (char *)&lbl_8032A714

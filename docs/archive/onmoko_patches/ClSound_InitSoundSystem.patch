@@ -21,7 +21,7 @@ index 8af3a37..a5a5cd4 100644
 +#pragma push
 +#pragma opt_common_subs off
  void ClSound_InitSoundSystem(void) {
-     const char *strings = lbl_80379100;
+     const char *strings = ClSound_rodata_80379100;
      void *samples;
 @@ -145,3 +149,5 @@ fail:
          ClSound_Initialized = 0;

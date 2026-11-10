@@ -12,7 +12,7 @@ typedef struct DisplayBufferState {
 typedef struct BufferLink { DisplayBufferState *buffer; int value; } BufferLink;
 typedef struct BufferEntry { int a,b; BufferLink *link; } BufferEntry;
 extern "C" {
-BufferEntry lbl_806795B8[4];
+BufferEntry DisplayBuffersReset_bss_806795B8[4];
 BufferLink lbl_806795E8[4];
 DisplayBufferState lbl_80679608[4];
 }
@@ -26,7 +26,7 @@ extern "C" void fn_801F6494(void) {
     int i;
     state = lbl_80679608;
     link = lbl_806795E8;
-    entry = lbl_806795B8;
+    entry = DisplayBuffersReset_bss_806795B8;
     for(i=0;i<=3;i++) {
         state->width = 128;
         state->height = 128;

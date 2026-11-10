@@ -64,7 +64,7 @@ void *lbl_8049B13C[3] = {
     0,
     0
 };
-void *lbl_8049B148[6] = {
+void *clFlowItemSelect_data_8049B148[6] = {
     (void *)&lbl_806CFE24,
     0,
     (void *)clFlowItemSelect_Dtor,

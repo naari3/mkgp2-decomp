@@ -21,51 +21,51 @@ typedef struct PlayStats {
     unsigned int allCupsFinal[3]; /* 0x60, per cc class */
 } PlayStats;
 
-extern PlayStats lbl_805AC2E0;
-extern unsigned char lbl_806CF008; /* stats enabled */
-extern int lbl_806CF00C;
-extern int lbl_806D11EC;
-extern unsigned char lbl_806D11E5;
-extern unsigned char lbl_806D11E6;
-extern unsigned char lbl_806D11E7;
-extern unsigned char lbl_806D11E8;
-extern unsigned char lbl_806D11E9;
-extern unsigned char lbl_806D11EA;
+extern PlayStats PlayStats_bss_805AC2E0;
+extern unsigned char PlayStats_data_806CF008; /* stats enabled */
+extern int PlayStats_data_806CF00C;
+extern int PlayStats_bss_806D11EC;
+extern unsigned char PlayStats_bss_806D11E5;
+extern unsigned char PlayStats_bss_806D11E6;
+extern unsigned char PlayStats_bss_806D11E7;
+extern unsigned char PlayStats_bss_806D11E8;
+extern unsigned char PlayStats_bss_806D11E9;
+extern unsigned char PlayStats_bss_806D11EA;
 extern int g_ccClass;
 extern int g_roundIndex;
 
 #define PLAYSTATS_INC(field)                       \
     do {                                           \
-        if (++lbl_805AC2E0.field > PLAYSTATS_MAX) { \
-            lbl_805AC2E0.field = PLAYSTATS_MAX;    \
+        if (++PlayStats_bss_805AC2E0.field > PLAYSTATS_MAX) { \
+            PlayStats_bss_805AC2E0.field = PLAYSTATS_MAX;    \
         }                                          \
     } while (0)
 
 void PlayStats_OnAllItemsUnlocked_Stub(void)
 {
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
 }
 
 void PlayStats_IncAllCupsClearedFinalMilestone(void)
 {
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
     if (g_ccClass == 0) {
-        if (lbl_806D11E6 == 0) {
-            lbl_806D11E6 = 1;
+        if (PlayStats_bss_806D11E6 == 0) {
+            PlayStats_bss_806D11E6 = 1;
             PLAYSTATS_INC(allCupsFinal[0]);
         }
     } else if (g_ccClass == 1) {
-        if (lbl_806D11E8 == 0) {
-            lbl_806D11E8 = 1;
+        if (PlayStats_bss_806D11E8 == 0) {
+            PlayStats_bss_806D11E8 = 1;
             PLAYSTATS_INC(allCupsFinal[1]);
         }
     } else {
-        if (lbl_806D11EA == 0) {
-            lbl_806D11EA = 1;
+        if (PlayStats_bss_806D11EA == 0) {
+            PlayStats_bss_806D11EA = 1;
             PLAYSTATS_INC(allCupsFinal[2]);
         }
     }
@@ -73,22 +73,22 @@ void PlayStats_IncAllCupsClearedFinalMilestone(void)
 
 void PlayStats_IncAllCupsCleared3rdMilestone(void)
 {
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
     if (g_ccClass == 0) {
-        if (lbl_806D11E5 == 0) {
-            lbl_806D11E5 = 1;
+        if (PlayStats_bss_806D11E5 == 0) {
+            PlayStats_bss_806D11E5 = 1;
             PLAYSTATS_INC(allCups3rd[0]);
         }
     } else if (g_ccClass == 1) {
-        if (lbl_806D11E7 == 0) {
-            lbl_806D11E7 = 1;
+        if (PlayStats_bss_806D11E7 == 0) {
+            PlayStats_bss_806D11E7 = 1;
             PLAYSTATS_INC(allCups3rd[1]);
         }
     } else {
-        if (lbl_806D11E9 == 0) {
-            lbl_806D11E9 = 1;
+        if (PlayStats_bss_806D11E9 == 0) {
+            PlayStats_bss_806D11E9 = 1;
             PLAYSTATS_INC(allCups3rd[2]);
         }
     }
@@ -96,7 +96,7 @@ void PlayStats_IncAllCupsCleared3rdMilestone(void)
 
 void PlayStats_OnMissionResult_Stub(void)
 {
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
     if (g_roundIndex == 4) {
@@ -106,7 +106,7 @@ void PlayStats_OnMissionResult_Stub(void)
 
 void PlayStats_OnMissionSceneInit_Stub(void)
 {
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
     if (g_roundIndex == 4) {
@@ -116,7 +116,7 @@ void PlayStats_OnMissionSceneInit_Stub(void)
 
 void PlayStats_OnRace1stPlace_Stub(void)
 {
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
     if (g_roundIndex == 4) {
@@ -126,7 +126,7 @@ void PlayStats_OnRace1stPlace_Stub(void)
 
 void PlayStats_OnRaceSceneInit_Stub(void)
 {
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
     if (g_roundIndex == 4) {
@@ -136,7 +136,7 @@ void PlayStats_OnRaceSceneInit_Stub(void)
 
 void PlayStats_IncVs3PlusJoin(void)
 {
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
     PLAYSTATS_INC(vs3PlusJoins);
@@ -144,7 +144,7 @@ void PlayStats_IncVs3PlusJoin(void)
 
 void PlayStats_IncVs4PJoin(void)
 {
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
     PLAYSTATS_INC(vs4PJoins);
@@ -152,7 +152,7 @@ void PlayStats_IncVs4PJoin(void)
 
 void PlayStats_IncVs2PlusJoin(void)
 {
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
     PLAYSTATS_INC(vs2PlusJoins);
@@ -160,25 +160,25 @@ void PlayStats_IncVs2PlusJoin(void)
 
 void PlayStats_IncVs2PJoin(void)
 {
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
     PLAYSTATS_INC(vs2PJoins);
-    lbl_806CF00C = 0;
+    PlayStats_data_806CF00C = 0;
 }
 
 void PlayStats_IncSinglePlayJoin(void)
 {
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
     PLAYSTATS_INC(singlePlayJoins);
-    lbl_806D11EC++;
+    PlayStats_bss_806D11EC++;
 }
 
 void PlayStats_IncCreditAdded(void)
 {
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
     PLAYSTATS_INC(creditsAdded);
@@ -186,7 +186,7 @@ void PlayStats_IncCreditAdded(void)
 
 void PlayStats_IncCoinInserted(void)
 {
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
     PLAYSTATS_INC(coinsInserted);
@@ -194,7 +194,7 @@ void PlayStats_IncCoinInserted(void)
 
 void PlayStats_AddTotalPlaySeconds(unsigned int seconds)
 {
-    if ((lbl_805AC2E0.totalPlaySeconds += seconds) > PLAYSTATS_MAX) {
-        lbl_805AC2E0.totalPlaySeconds = PLAYSTATS_MAX;
+    if ((PlayStats_bss_805AC2E0.totalPlaySeconds += seconds) > PLAYSTATS_MAX) {
+        PlayStats_bss_805AC2E0.totalPlaySeconds = PLAYSTATS_MAX;
     }
 }

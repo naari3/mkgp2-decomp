@@ -10,12 +10,12 @@ void *operator new(unsigned long size);
 void operator delete(void *p);
 
 extern "C" {
-extern const float lbl_802E9848[3];
+extern const float StrPcb_rodata_802E9848[3];
 extern const float lbl_806D23E4;
 extern const float lbl_806D2400;
 extern const float lbl_806D2410;
-extern u8 lbl_806D1000[3];
-extern int lbl_806D1004;
+extern u8 StrPcb_bss_806D1000[3];
+extern int StrPcb_bss_806D1004;
 
 unsigned int OSGetTick(void);
 int Clamp_Int(int value, int min, int max);
@@ -177,7 +177,7 @@ public:
 };
 
 extern "C" {
-extern StrPcb *lbl_806D1010;
+extern StrPcb *StrPcb_bss_806D1010;
 
 StrPcb *StrPcb_GetInstance(void);
 void StrPcb_Shutdown(void);
@@ -193,7 +193,7 @@ StrPcb::StrPcb(int position) : scratch(operator new(4))
 
     mode = Clamp_Int(1, 0, 2);
     intensityMode = mode;
-    intensityScale = lbl_802E9848[mode];
+    intensityScale = StrPcb_rodata_802E9848[mode];
     positionTarget = position;
     position10 = 0x1FF;
     position28 = 0x1FF;
@@ -203,7 +203,7 @@ StrPcb::StrPcb(int position) : scratch(operator new(4))
     memset(bufs->log, 0, 4);
     memset(bufs->rx, 0, 4);
     memset(bufs->tx, 0, 4);
-    memset(lbl_806D1000, 0, 3);
+    memset(StrPcb_bss_806D1000, 0, 3);
     memset(this, 0, 3);
     flag06 = 0;
     flag05 = 0;
@@ -212,7 +212,7 @@ StrPcb::StrPcb(int position) : scratch(operator new(4))
     mode00 = 0;
     header01 = 0x35;
     flag20 = 0;
-    lbl_806D1004 = 0;
+    StrPcb_bss_806D1004 = 0;
     {
         u8 *packet = bufs->packet;
 
@@ -262,23 +262,23 @@ StrPcb::StrPcb(int position) : scratch(operator new(4))
 
 StrPcb *StrPcb_GetInstance(void)
 {
-    return lbl_806D1010;
+    return StrPcb_bss_806D1010;
 }
 
 void StrPcb_Shutdown(void)
 {
-    StrPcb *pcb = lbl_806D1010;
+    StrPcb *pcb = StrPcb_bss_806D1010;
 
     if (pcb != 0) {
         pcb->ParkAndWait();
         delete pcb;
     }
-    lbl_806D1010 = 0;
+    StrPcb_bss_806D1010 = 0;
 }
 
 void StrPcb_EnsureInstance(void)
 {
-    if (lbl_806D1010 == 0) {
-        lbl_806D1010 = new StrPcb(0x1FF);
+    if (StrPcb_bss_806D1010 == 0) {
+        StrPcb_bss_806D1010 = new StrPcb(0x1FF);
     }
 }

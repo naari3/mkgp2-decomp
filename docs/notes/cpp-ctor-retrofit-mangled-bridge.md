@@ -1693,7 +1693,7 @@ c19_u225 retry fn_80225C2C: fresh baseline94.46907 ->94.62371, 776B. Plain verif
 ## c19_u246_20261107
 Source: Codex worker c19_u246_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
-c19_u246: DNStartDino Spawn 80229998 reproducible direct objdiff baseline is 89.442955% (584 B emitted vs 596 B target), despite assignment summary 90.44%. Three scalar snapshots sx/sy/sz of lbl_804EE0E0 before position writes improve to 90.020134%, same extab 100% and extabindex 91.66667%. Aggregate copy adds stack traffic; while is invariant; infinite loop with guarded return worsens; inline SetEmberPosition with float scale arguments ties scalar result. Remaining target top-tested outer loop and FP loads/registers not recovered. Single-function TU cannot rescue exact subsets.
+c19_u246: DNStartDino Spawn 80229998 reproducible direct objdiff baseline is 89.442955% (584 B emitted vs 596 B target), despite assignment summary 90.44%. Three scalar snapshots sx/sy/sz of DNStartDino_tail_data_804EE0E0 before position writes improve to 90.020134%, same extab 100% and extabindex 91.66667%. Aggregate copy adds stack traffic; while is invariant; infinite loop with guarded return worsens; inline SetEmberPosition with float scale arguments ties scalar result. Remaining target top-tested outer loop and FP loads/registers not recovered. Single-function TU cannot rescue exact subsets.
 
 ## c19_u240_20261107
 Source: Codex worker c19_u240_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.

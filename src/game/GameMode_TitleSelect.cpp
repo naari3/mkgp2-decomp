@@ -37,7 +37,7 @@ extern void DEMOPuts(int x, int y, int color, const char *text);
 extern VObj *fn_8015CB5C(int arg);
 extern void fn_801A1280(void);
 extern void fn_8011FAB8(void);
-extern char lbl_80419E3C[];
+extern char GameMode_Title_data_80419E3C[];
 extern char GameMode_TitleSelect_data_80419E1C[];
 extern char GameMode_TitleSelect_data_80419DFC[];
 extern char lbl_80328DC8[];
@@ -103,7 +103,7 @@ struct SelectCharacter : SelectBase {
 extern "C" GameModeTitle *GameMode_Title_Dtor(GameModeTitle *self, short flag)
 {
     if (self != 0) {
-        self->vtable = lbl_80419E3C;
+        self->vtable = GameMode_Title_data_80419E3C;
         dtor_8002CDF4(self, 0);
         if (flag > 0) {
             MemoryManager_TimedFree(self);

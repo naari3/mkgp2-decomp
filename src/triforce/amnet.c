@@ -1,7 +1,7 @@
 #include <triforce/amnet_priv.h>
 
 s32 fn_8028C158(u8 ch) {
-    OSSemaphore* sem = &lbl_80699140.sem;
+    OSSemaphore* sem = &amnet_nm3_bss_80699140.sem;
     s32 ret;
 
     OSWaitSemaphore(sem);

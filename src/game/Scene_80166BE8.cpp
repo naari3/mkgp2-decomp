@@ -2,7 +2,7 @@
 #include "game/Scene_80166BE8_private.h"
 
 extern "C" {
-extern char lbl_80369D78[];
+extern char Scene_801661FC_rodata_80369D78[];
 extern char lbl_806D89CC[4];
 extern void *lbl_806D10A0;
 extern unsigned char g_playerData[];
@@ -12,7 +12,7 @@ void fn_80168A4C(void *, char *, float, float, ...);
 TitlePreview *fn_80252D90(void *);
 #pragma exceptions on
 void fn_80166BE8(TitlePreviewScene *self) {
-    char *strings = lbl_80369D78;
+    char *strings = Scene_801661FC_rodata_80369D78;
     if (InputMgr_GetPlayer(GetInputManager(), 0)->StickRight() > 0.7f) {
         if (self->repeat < 0) self->repeat = 0;
         else if (++self->repeat > 20) self->repeat = 18;

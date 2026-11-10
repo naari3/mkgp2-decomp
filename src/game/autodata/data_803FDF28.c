@@ -162,7 +162,7 @@ void *lbl_803FE0A0[3] = {
     0
 };
 /* decl: unsigned int */
-void *lbl_803FE0AC[3] = {
+void *SpecialFaceMesh_data_803FE0AC[3] = {
     (void *)&lbl_806CEF90,
     0,
     (void *)SpecialFaceMesh_Dtor
@@ -227,7 +227,7 @@ void *lbl_803FE370[3] = {
     0,
     0
 };
-void *lbl_803FE37C[3] = {
+void *TransitionEffect_data_803FE37C[3] = {
     (void *)&lbl_806CEFB0,
     0,
     (void *)TransitionEffect_Dtor

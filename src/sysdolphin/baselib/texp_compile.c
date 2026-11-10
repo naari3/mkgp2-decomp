@@ -11,7 +11,7 @@
 extern char lbl_806D0F38[8];
 extern char lbl_806D0F54[8];
 extern char lbl_804FD988[];
-extern char lbl_804FDC64[12];
+extern char texp_data_804FDC64[12];
 extern int TExpAssignReg(HSD_TExp*, HSD_TExpRes*);
 extern void TExp2TevDesc(HSD_TExp*, HSD_TExpTevDesc*, int*, int*);
 
@@ -88,7 +88,7 @@ int HSD_TExpCompile(HSD_TExp* texp, HSD_TExpTevDesc** tevdesc,
     HSD_TExpSchedule(num, list, order, &res);
     for (i = 0; i < num; ++i) {
         val = TExpAssignReg(order[i], &res);
-        ((val >= 0) ? ((void) 0) : __assert(lbl_806D0F38, 0x671, lbl_804FDC64));
+        ((val >= 0) ? ((void) 0) : __assert(lbl_806D0F38, 0x671, texp_data_804FDC64));
     }
 
     for (i = num - 1; i >= 0; --i) {

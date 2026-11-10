@@ -30,7 +30,7 @@ In the winning SendToAllPeers version the locals are declared peer, snapshot, bl
 onmokoworks holds claims on PCBCommCompute (#2896), PCBCheckRecv (#2865), PCBCheckProcess (#2807),
 so we will not merge the module. Hint for them (relay via user):
 - ComputeSyncState: defining the objects for real (BlockMsg PCBCheckRecv_bss_805A5EC0, u8 PCBComm_BuildBroadcastSlot_bss_805A60C4[0x54], g_pcbSyncTable[0x1C],
-  PCBCheck_ProcessLinks_bss_805A6134[0x20], PeerSlot lbl_805A6154[4], CardRow PCBComm_PackAndTriggerCardSnapshot_bss_805A8A44[4], g_ringBufferBase[0x3700],
+  PCBCheck_ProcessLinks_bss_805A6134[0x20], PeerSlot PCBCheckRecv_bss_805A6154[4], CardRow PCBComm_PackAndTriggerCardSnapshot_bss_805A8A44[4], g_ringBufferBase[0x3700],
   SnapshotMsg PCBCheckRecv_bss_805AC258 {SyncOutput header, body}) + using them directly instead of the CommStorage overlay
   takes it from 92.15% to 94.9% (remaining = PeersReady reg colouring r5/r6 vs r6/r5).
 - The same applies to every PCBComm function that does `addi rX, base, off` off PCBCheckRecv_bss_805A5EC0.

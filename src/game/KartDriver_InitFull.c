@@ -87,7 +87,7 @@ extern unsigned int KartDriver_InitFull_data_803F5928[];
 #endif
 #pragma force_active on
 /* element type read off the values (all floats), not from code */
-const float lbl_802E9F80[255] = {
+const float KartDriver_rodata_802E9F80[255] = {
     1.0f, 0.7f, 0.9f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f,
     66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f,
     66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f,
@@ -260,7 +260,7 @@ typedef struct lbl_802EADBC_Pool {
     char s_124[28];
     int i_140;
 } lbl_802EADBC_Pool;
-const lbl_802EADBC_Pool lbl_802EADBC = {
+const lbl_802EADBC_Pool KartDriver_InitFull_rodata_802EADBC = {
     "!(jobj->flags & JOBJ_USE_QUATERNION)",
     "hchara_mametch_haed_happy_joint",
     "chara_mametch_haed_normal_joint",
@@ -309,7 +309,7 @@ asm void KartDriver_InitFull(void) { /* 0x80044D50 size:0xC00 */
     stwu r1, -0x50(r1)
     mflr r0
     lis r11, KartDriver_InitFull_data_803F5928@ha
-    lis r10, lbl_802E9F80@ha
+    lis r10, KartDriver_rodata_802E9F80@ha
     stw r0, 0x54(r1)
     stmw r16, 0x10(r1)
     mr r31, r3
@@ -322,7 +322,7 @@ asm void KartDriver_InitFull(void) { /* 0x80044D50 size:0xC00 */
     mr r3, r20
     mr r6, r31
     addi r18, r11, KartDriver_InitFull_data_803F5928@l
-    addi r30, r10, lbl_802E9F80@l
+    addi r30, r10, KartDriver_rodata_802E9F80@l
     bl fn_801B5BF4
     lwz r0, g_cupId(r13)
     li r19, -0x1
@@ -1258,7 +1258,7 @@ static inline void BlendRoots(Driver *self, void *to) {
 }
 extern "C" int KartDriver_InitFull(void *self_,int id,int characterId,void *matrix,int slot,int a8,int mode) {
     Driver *self=(Driver *)self_;
-    const char *pool=(const char *)lbl_802E9F80;
+    const char *pool=(const char *)KartDriver_rodata_802E9F80;
     unsigned char *data=KartDriver_InitFull_data_803F5928;
     fn_801B5BF4(slot,id,characterId,self);
     int special=-1;

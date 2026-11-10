@@ -21,7 +21,7 @@ extern int g_cupId;
 extern int g_gameMode;
 extern unsigned char g_nonFirstFinishFlag;
 extern int g_roundIndex;
-extern CourseTuning lbl_803A0908[];
+extern CourseTuning AI_CalcLapSpeedBonus_rodata_803A0908[];
 
 static inline int CourseTuning_Index(void) {
     int cup = g_cupId;
@@ -34,7 +34,7 @@ static inline int CourseTuning_Index(void) {
 
 static inline CourseTuning *CourseTuning_Get(void) {
     if (g_gameMode == 0) {
-        return &lbl_803A0908[CourseTuning_Index()];
+        return &AI_CalcLapSpeedBonus_rodata_803A0908[CourseTuning_Index()];
     }
     return 0;
 }

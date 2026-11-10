@@ -13,7 +13,7 @@ struct Effect {
 };
 struct ResourceView { unsigned char pad00[0x890]; Vec3 colors[3]; };
 extern "C" {
-extern ResourceView lbl_80329E20;
+extern ResourceView KartFxExhaustRay_rodata_80329E20;
 extern void *lbl_806D109C;
 extern const float lbl_806D51C0, lbl_806D51C4, lbl_806D51D4, lbl_806D51D8;
 extern const float lbl_806D528C, lbl_806D5274;
@@ -39,7 +39,7 @@ static inline bool Decay(float *value, float step, float minimum) {
     return false;
 }
 extern "C" void KartFx_Slot60_DriftSparkTick(Effect *e) {
-    ResourceView *resources = &lbl_80329E20;
+    ResourceView *resources = &KartFxExhaustRay_rodata_80329E20;
     KartState *s = e->kart->state;
     int red = 0;
     if (SparkFlag(s)) red = 1;

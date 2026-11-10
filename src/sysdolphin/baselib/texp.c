@@ -1100,7 +1100,7 @@ int AssignAlphaKonst(HSD_TETev* tev, int idx, HSD_TExpRes* res)
 extern char lbl_806D0F38[];
 extern char lbl_806D0F40[];
 extern char lbl_806D0F4C[];
-extern char lbl_804FDC64[];
+extern char texp_data_804FDC64[];
 extern int AssignColorReg(HSD_TETev*, int, HSD_TExpRes*);
 extern int AssignColorKonst(HSD_TETev*, int, HSD_TExpRes*);
 extern int AssignAlphaKonst(HSD_TETev*, int, HSD_TExpRes*);
@@ -1146,7 +1146,7 @@ int TExpAssignReg(HSD_TExp* texp, HSD_TExpRes* res)
                 if (tev->c_in[i].type == HSD_TE_CNST) {
                     val = AssignColorReg(tev, i, res);
                     if (val < 0) {
-                        HSD_ASSERTMSG(0x47D, val >= 0, lbl_804FDC64);
+                        HSD_ASSERTMSG(0x47D, val >= 0, texp_data_804FDC64);
                         return val;
                     }
                 }
@@ -1157,7 +1157,7 @@ int TExpAssignReg(HSD_TExp* texp, HSD_TExpRes* res)
             if (AssignColorReg(tev, 3, res) < 0) {
                 val = AssignColorKonst(tev, 3, res);
                 if (val < 0) {
-                    HSD_ASSERTMSG(0x489, val >= 0, lbl_804FDC64);
+                    HSD_ASSERTMSG(0x489, val >= 0, texp_data_804FDC64);
                     return val;
                 }
             }
@@ -1167,7 +1167,7 @@ int TExpAssignReg(HSD_TExp* texp, HSD_TExpRes* res)
                     if (AssignColorKonst(tev, i, res) < 0) {
                         val = AssignColorReg(tev, i, res);
                         if (val < 0) {
-                            HSD_ASSERTMSG(0x496, val >= 0, lbl_804FDC64);
+                            HSD_ASSERTMSG(0x496, val >= 0, texp_data_804FDC64);
                             return val;
                         }
                     }
@@ -1177,7 +1177,7 @@ int TExpAssignReg(HSD_TExp* texp, HSD_TExpRes* res)
                 if (tev->c_in[i].type == HSD_TE_CNST) {
                     val = AssignColorReg(tev, i, res);
                     if (val < 0) {
-                        HSD_ASSERTMSG(0x49F, val >= 0, lbl_804FDC64);
+                        HSD_ASSERTMSG(0x49F, val >= 0, texp_data_804FDC64);
                         return val;
                     }
                 }
@@ -1191,7 +1191,7 @@ int TExpAssignReg(HSD_TExp* texp, HSD_TExpRes* res)
                 if (tev->a_in[i].type == HSD_TE_CNST) {
                     val = AssignAlphaReg(tev, i, res);
                     if (val < 0) {
-                        HSD_ASSERTMSG(0x4AF, val >= 0, lbl_804FDC64);
+                        HSD_ASSERTMSG(0x4AF, val >= 0, texp_data_804FDC64);
                         return val;
                     }
                 }
@@ -1203,7 +1203,7 @@ int TExpAssignReg(HSD_TExp* texp, HSD_TExpRes* res)
                 if (AssignAlphaReg(tev, 3, res) < 0) {
                     val = AssignAlphaKonst(tev, 3, res);
                     if (val < 0) {
-                        HSD_ASSERTMSG(0x4BB, val >= 0, lbl_804FDC64);
+                        HSD_ASSERTMSG(0x4BB, val >= 0, texp_data_804FDC64);
                         return val;
                     }
                 }
@@ -1213,7 +1213,7 @@ int TExpAssignReg(HSD_TExp* texp, HSD_TExpRes* res)
                         if (AssignAlphaKonst(tev, i, res) < 0) {
                             val = AssignAlphaReg(tev, i, res);
                             if (val < 0) {
-                                HSD_ASSERTMSG(0x4C8, val >= 0, lbl_804FDC64);
+                                HSD_ASSERTMSG(0x4C8, val >= 0, texp_data_804FDC64);
                                 return val;
                             }
                         }
@@ -1223,7 +1223,7 @@ int TExpAssignReg(HSD_TExp* texp, HSD_TExpRes* res)
                     if (tev->a_in[i].type == HSD_TE_CNST) {
                         val = AssignAlphaReg(tev, i, res);
                         if (val < 0) {
-                            HSD_ASSERTMSG(0x4D1, val >= 0, lbl_804FDC64);
+                            HSD_ASSERTMSG(0x4D1, val >= 0, texp_data_804FDC64);
                             return val;
                         }
                     }
@@ -1265,7 +1265,7 @@ extern int AssignColorReg(HSD_TETev*, int, HSD_TExpRes*);
 extern int AssignColorKonst(HSD_TETev*, int, HSD_TExpRes*);
 extern int AssignAlphaKonst(HSD_TETev*, int, HSD_TExpRes*);
 
-char lbl_804FDC64[] = "val >= 0";
+char texp_data_804FDC64[] = "val >= 0";
 
 static inline u32 TEUndef(u8 v, u32 def)
 {

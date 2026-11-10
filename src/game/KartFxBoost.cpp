@@ -45,7 +45,7 @@ struct BoostResources {
 };
 struct BoostCamera { unsigned char pad00[0x80]; Vec3 position; };
 extern "C" {
-extern BoostResources lbl_80329E20;
+extern BoostResources KartFxExhaustRay_rodata_80329E20;
 extern BoostCamera lbl_805DF3D0;
 extern float lbl_806D51C0;
 extern const float lbl_806D51BC, lbl_806D51C4, lbl_806D51C8;
@@ -89,7 +89,7 @@ static inline void FreeBoostChildren(BoostPayload *payload) {
 }
 
 void KartFx_Slot5C_TripleStreakTick(BoostEffect *effect) {
-    BoostResources *resources = &lbl_80329E20;
+    BoostResources *resources = &KartFxExhaustRay_rodata_80329E20;
     int childIndex;
     BoostPayload *payload = &effect->payload;
     switch (effect->state) {

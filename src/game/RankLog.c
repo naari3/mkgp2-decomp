@@ -30,7 +30,7 @@ extern int GetDisplayBufferIndex(void);
 extern RoundInfo *fn_8024F588(void);
 
 extern int RankLog_bss_806D13EC;
-extern int lbl_806D13F0;
+extern int RankLog_bss_806D13F0;
 extern int g_technicalTitleGrade;
 extern int g_raceResult;
 extern int g_totalScore;
@@ -75,12 +75,12 @@ extern int g_rankingPosition;
 extern unsigned char RankLog_bss_806D1448;
 extern unsigned char RankLog_bss_806D1449;
 extern unsigned char RankLog_InitStartRace_bss_806D144A;
-extern int lbl_806CF1F4;
+extern int RankLog_data_806CF1F4;
 extern int lbl_806CF1F8;
-extern int lbl_806D1424;
-extern int lbl_806CF21C;
+extern int RankLog_bss_806D1424;
+extern int RankLog_data_806CF21C;
 extern int g_hazardPassCount;
-extern int lbl_806CF20C;
+extern int RankLog_data_806CF20C;
 extern int g_maxCoins;
 extern const float lbl_806D4DD4;
 extern char lbl_80326B54[];
@@ -135,8 +135,8 @@ extern int sprintf(char *buf, const char *fmt, ...);
 extern void *memset(void *p, int c, unsigned long n);
 extern void *Alloc(unsigned long size);
 extern void *lbl_806D10A0;
-extern void *lbl_80411DC0[];
-extern void *lbl_80411DB4[];
+extern void *TitleTracker_data_80411DC0[];
+extern void *TitleTracker_data_80411DB4[];
 
 typedef struct TitleEntry {
     int type;
@@ -342,7 +342,7 @@ static inline unsigned char IsLocalSlot(int slot)
 void RankLog_SetRaceResult(void *self, int slot, void *result, int score)
 {
     if (IsLocalSlot(slot) == 1) {
-        if (RankLog_bss_806D13EC > 0 && RankLog_bss_806D13EC == lbl_806D13F0) {
+        if (RankLog_bss_806D13EC > 0 && RankLog_bss_806D13EC == RankLog_bss_806D13F0) {
             g_technicalTitleGrade = 1;
         }
         g_raceResult = (int)result;
@@ -584,12 +584,12 @@ void RankLog_InitStartRace(void *self)
     g_raceResult = -1;
     g_totalScore = 0;
     g_playCount = -1;
-    lbl_806CF1F4 = -1;
+    RankLog_data_806CF1F4 = -1;
     lbl_806CF1F8 = -1;
     g_totalRaces = 0;
     g_allCoursesCleared = 0;
     RankLog_bss_806D13EC = 0;
-    lbl_806D13F0 = 0;
+    RankLog_bss_806D13F0 = 0;
     g_technicalTitleGrade = -1;
     g_totalDistance = 0;
     g_matchCount = 0;
@@ -601,7 +601,7 @@ void RankLog_InitStartRace(void *self)
     RankLog_bss_806D1408 = 0;
     RankLog_bss_806D140C = 0;
     lbl_806D1420 = 0;
-    lbl_806D1424 = 0;
+    RankLog_bss_806D1424 = 0;
     lbl_806D1428 = 0;
     g_currentRaceScore = 0;
     g_prevRaceScore = 0;
@@ -611,10 +611,10 @@ void RankLog_InitStartRace(void *self)
     g_gpLossCount = 0;
     g_specificDefeatCount = 0;
     g_ghostDefeatCount = 0;
-    lbl_806CF21C = -1;
+    RankLog_data_806CF21C = -1;
     lbl_806D1450 = 0;
     g_hazardPassCount = 0;
-    lbl_806CF20C = -1;
+    RankLog_data_806CF20C = -1;
     g_maxCoins = -1;
     g_scoreThreshold = -1;
     RankLog_InitStartRace_bss_806D144A = 0;
@@ -869,9 +869,9 @@ TitleTracker *TitleTracker_GetOrCreateSingleton(void)
     if (tracker() == 0) {
         TitleTracker *t = (TitleTracker *)Alloc(4);
         if (t != 0) {
-            t->vt = lbl_80411DC0;
+            t->vt = TitleTracker_data_80411DC0;
             lbl_806D10A0 = t;
-            t->vt = lbl_80411DB4;
+            t->vt = TitleTracker_data_80411DB4;
         }
     }
     return tracker();
@@ -1034,7 +1034,7 @@ int DateTitle_GetMonthSeasonIndex(void)
 TitleTracker *TitleTrackerSingleton_Dtor(TitleTracker *self, short flag)
 {
     if (self != 0) {
-        self->vt = lbl_80411DC0;
+        self->vt = TitleTracker_data_80411DC0;
         if (flag > 0) {
             MemoryManager_TimedFree(self);
         }

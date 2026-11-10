@@ -1,7 +1,7 @@
 #include <triforce/ambackup_private.h>
 
-u8 lbl_806835E0[0xD800];
-BackupState lbl_80690DE0;
+u8 ambackup_nm1_bss_806835E0[0xD800];
+BackupState ambackup_nm1_bss_80690DE0;
 const BackupInfo lbl_806DC918[1] = {{0x2000, 0x20}};
 
 s32 BackupWriteRecord(u32 chan, void* data, BackupEntry* e) {
@@ -17,7 +17,7 @@ s32 BackupWriteRecord(u32 chan, void* data, BackupEntry* e) {
     if (e->cfg.id[0] == 0) {
         return 1;
     }
-    hdr = (BackupHeader*)lbl_806835E0;
+    hdr = (BackupHeader*)ambackup_nm1_bss_806835E0;
     { info = &lbl_806DC918[chan]; }
     { size = (3 + e->cfg.size) & ~3; }
     recSize = (size + 0xC + info->align - 1) & -info->align;
@@ -26,7 +26,7 @@ s32 BackupWriteRecord(u32 chan, void* data, BackupEntry* e) {
         { total = info->words * 4 - e->addr; }
         e->reset = FALSE;
     }
-    { memset(lbl_806835E0, 0, recSize); }
+    { memset(ambackup_nm1_bss_806835E0, 0, recSize); }
     { memcpy(hdr->data, data, e->cfg.size); }
     memcpy(hdr->id, e->cfg.id, 8);
     { hdr->words = size >> 2; }
@@ -37,9 +37,9 @@ s32 BackupWriteRecord(u32 chan, void* data, BackupEntry* e) {
         hdr->sum = 0;
     }
     if (2 & e->cfg.flags) {
-        memcpy(recSize + lbl_806835E0, lbl_806835E0, recSize);
+        memcpy(recSize + ambackup_nm1_bss_806835E0, ambackup_nm1_bss_806835E0, recSize);
     }
-    if (fn_80288048(chan, (e->cfg.flags >> 4) & 1, lbl_806835E0, e->addr, total)) {
+    if (fn_80288048(chan, (e->cfg.flags >> 4) & 1, ambackup_nm1_bss_806835E0, e->addr, total)) {
         return 1;
     }
     return 0;

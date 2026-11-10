@@ -8,10 +8,10 @@ struct ItemObject {
 };
 
 extern ItemObject lbl_80638300[0x100];
-extern "C" int lbl_806D14D0;
+extern "C" int ItemObject_bss_806D14D0;
 
 static inline ItemObject *pool_alloc(void) {
-    int cursor = lbl_806D14D0;
+    int cursor = ItemObject_bss_806D14D0;
     int i;
 
     for (i = 0; i < 0x100; i++) {
@@ -20,7 +20,7 @@ static inline ItemObject *pool_alloc(void) {
 
         if (item->inUse == 0) {
             memset(item, 0, sizeof(ItemObject));
-            lbl_806D14D0 = index;
+            ItemObject_bss_806D14D0 = index;
             item->inUse = 1;
             return item;
         }

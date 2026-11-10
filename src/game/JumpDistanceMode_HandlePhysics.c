@@ -52,7 +52,7 @@ extern const float lbl_806DADAC, lbl_806DADB0, lbl_806DADB4, lbl_806DADB8, lbl_8
 extern const float lbl_806DADC0, lbl_806DADC4, lbl_806DADC8, lbl_806DADCC, lbl_806DADD0;
 extern const XZ lbl_806DCF68;
 extern const Rect JumpDistanceMode_HandlePhysics_rodata_803C3D64;
-extern const Vec3 lbl_803C3D80;
+extern const Vec3 JumpDistanceMode_rodata_803C3D80;
 
 void *GetInputManager(void);
 Pad *InputMgr_GetPlayer(void *mgr, int idx);
@@ -86,7 +86,7 @@ static inline float WrapAngle(float a) {
 }
 
 static inline unsigned char IsInFront(GoalPlane *goal, float *mtx) {
-    Vec3 pos = lbl_803C3D80;
+    Vec3 pos = JumpDistanceMode_rodata_803C3D80;
     Vec3 d;
 
     pos.x = mtx[3];

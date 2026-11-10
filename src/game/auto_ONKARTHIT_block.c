@@ -368,7 +368,7 @@ extern unsigned int lbl_803F5710[];
 extern unsigned int CarObject_HandleItemEffect_data_803F75D0[];
 extern unsigned int CarObject_vtable_803F75F8[];
 extern unsigned int lbl_803F7690[];
-extern unsigned int lbl_803F76A8[];
+extern unsigned int CarObject_data_803F76A8[];
 
 /* --- function index (107 fns, .text 0x8004A238..0x80052F20) ---
  * [  0] 0x8004A238 size:0x680   global KartItem_OnKartHit
@@ -7066,7 +7066,7 @@ struct CarList : CarListBase {
     StlList list;
     int f10;
     CarList() {
-        vptr = (void *)lbl_803F76A8;
+        vptr = (void *)CarObject_data_803F76A8;
         StlList_InitEmpty(&list);
         f10 = 0;
     }
@@ -9171,7 +9171,7 @@ static inline void StlList_DtorInline(StlList *l) {
 #pragma exceptions off
 extern "C" CarObjectManager *CarObjectManager_Dtor(CarObjectManager *self, short flag) { /* 0x80052158 */
     if (self) {
-        self->vtable = lbl_803F76A8;
+        self->vtable = CarObject_data_803F76A8;
         StlList_DtorInline(&self->list);
         if (self) {
             self->vtable = lbl_803F7690;

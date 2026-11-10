@@ -4,7 +4,7 @@
 void operator delete(void *p) throw();
 
 extern "C" void Object_DtorWithGXSync(void *obj, int flag);
-extern "C" void *lbl_803FE37C[];
+extern "C" void *TransitionEffect_data_803FE37C[];
 extern "C" void *lbl_803FE3C0[];
 
 struct TransitionOverlay {
@@ -56,7 +56,7 @@ struct TransitionEffect {
 extern "C" TransitionEffect *TransitionEffect_Dtor(TransitionEffect *self, short flag)
 {
     if (self != 0) {
-        self->vtable = lbl_803FE37C;
+        self->vtable = TransitionEffect_data_803FE37C;
         (&self->overlay)->~TransitionOverlayHolder();
         (&self->buf14)->~TransitionBuffer();
         (&self->buf10)->~TransitionBuffer();

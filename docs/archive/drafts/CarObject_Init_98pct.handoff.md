@@ -721,8 +721,8 @@ index b65cbb3..8a5b548 100644
 -    lis r3, lbl_803F7690@ha
 -    addi r0, r3, lbl_803F7690@l
 -    stw r0, 0x0(r23)
--    lis r3, lbl_803F76A8@ha
--    addi r0, r3, lbl_803F76A8@l
+-    lis r3, CarObject_data_803F76A8@ha
+-    addi r0, r3, CarObject_data_803F76A8@l
 -    stw r23, g_carObjectList(r13)
 -    addi r3, r23, 0x4
 -    stw r0, 0x0(r23)
@@ -1084,7 +1084,7 @@ index b65cbb3..8a5b548 100644
 +            if (mgr != 0) {
 +                mgr->vtable = lbl_803F7690;
 +                g_carObjectList = (unsigned int)mgr;
-+                mgr->vtable = lbl_803F76A8;
++                mgr->vtable = CarObject_data_803F76A8;
 +                StlList_InitEmpty(&mgr->list);
 +                mgr->frame = 0;
 +            }

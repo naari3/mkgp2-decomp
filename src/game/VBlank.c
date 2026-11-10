@@ -1,6 +1,6 @@
 extern unsigned char lbl_806CED34[4];
-extern unsigned char lbl_806D0FA0;
-extern unsigned char lbl_806D0F8D;
+extern unsigned char Boot_bss_806D0FA0;
+extern unsigned char ServiceButton_bss_806D0F8D;
 extern unsigned char lbl_806D0F94;
 extern unsigned char vblank_flag;
 extern unsigned char lbl_806D0F96;
@@ -17,7 +17,7 @@ void fn_8002CFB8(unsigned char a, unsigned char b, unsigned char c, unsigned cha
 }
 
 unsigned char BootConfigFlag_Get(void) {
-    return lbl_806D0FA0;
+    return Boot_bss_806D0FA0;
 }
 
 int ServiceLatch_CheckTriggered(void) {
@@ -84,9 +84,9 @@ void *BootStateStruct_Get(void) {
 }
 
 unsigned char ServiceButtonExtra_Get(void) {
-    return lbl_806D0F8D;
+    return ServiceButton_bss_806D0F8D;
 }
 
 void ServiceButtonExtra_Set(unsigned char value) {
-    lbl_806D0F8D = value;
+    ServiceButton_bss_806D0F8D = value;
 }

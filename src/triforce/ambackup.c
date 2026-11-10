@@ -67,11 +67,11 @@ s32 fn_80288210(u32 chan, void* data) {
     if (chan > 1 || data == NULL) {
         return 1;
     }
-    sem = &lbl_80690DE0.sem;
+    sem = &ambackup_nm1_bss_80690DE0.sem;
     if (OSTryWaitSemaphore(sem) <= 0) {
         return 5;
     }
-    ret = BackupWriteRecord(chan, data, &lbl_80690DE0.entry[chan][1]);
+    ret = BackupWriteRecord(chan, data, &ambackup_nm1_bss_80690DE0.entry[chan][1]);
     OSSignalSemaphore(sem);
     return ret;
 }
@@ -83,11 +83,11 @@ s32 fn_802882BC(u32 chan, void* data) {
     if (chan > 1 || data == NULL) {
         return 1;
     }
-    sem = &lbl_80690DE0.sem;
+    sem = &ambackup_nm1_bss_80690DE0.sem;
     if (OSTryWaitSemaphore(sem) <= 0) {
         return 5;
     }
-    ret = BackupWriteRecord(chan, data, &lbl_80690DE0.entry[chan][0]);
+    ret = BackupWriteRecord(chan, data, &ambackup_nm1_bss_80690DE0.entry[chan][0]);
     OSSignalSemaphore(sem);
     return ret;
 }

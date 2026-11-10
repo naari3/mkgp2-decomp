@@ -80,7 +80,7 @@ struct TaMode : GameModeBase {
 };
 
 extern "C" {
-extern char lbl_803211D8[];
+extern char RaceScene_rodata_803211D8[];
 extern const char lbl_806D4800[4];  /* "map" */
 extern const char lbl_806D4804[6];  /* "light" */
 extern const char lbl_806D480C[8];  /* "itembox" */

@@ -18,7 +18,7 @@ struct ReverseJObj {
     ReverseVec3 scale;
 };
 extern "C" {
-extern unsigned char lbl_806CEFC0[8];
+extern unsigned char Jyugemu_ReverseFlag_data_806CEFC0[8];
 extern const float lbl_806D3078, lbl_806D307C, lbl_806D30A4;
 extern const char lbl_806D308C[7], lbl_806D3094[5];
 extern unsigned char lbl_80311E24[];
@@ -64,7 +64,7 @@ struct JyugemuReverseFlagCtor {
 JyugemuReverseFlagCtor::JyugemuReverseFlagCtor(void* owner_)
 {
     ReverseVec3 scale;
-    lbl_806CEFC0[0] = 1;
+    Jyugemu_ReverseFlag_data_806CEFC0[0] = 1;
     normal = 0;
     phase = lbl_806D3078;
     counter = 180;

@@ -50,7 +50,7 @@ extern const float lbl_806D2400;
 extern const float lbl_806D2410;
 extern const float lbl_806D23E0;
 extern const float lbl_806D23DC;
-extern unsigned int lbl_806D100C;
+extern unsigned int StrPcb_bss_806D100C;
 
 extern unsigned int OSGetTick(void);
 extern void Frame_PostDrawOverlay(void);
@@ -87,7 +87,7 @@ static inline void StrPcb_ForceRun(StrPcbCmd *pcb)
     }
     pcb->status24 |= 0x80;
     pcb->value4C = lbl_806D23DC;
-    lbl_806D100C = OSGetTick();
+    StrPcb_bss_806D100C = OSGetTick();
     StrPcb_SetNeutralCommands(pcb);
 }
 

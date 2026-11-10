@@ -47,7 +47,7 @@ extern unsigned char g_raceEnded;
 extern const float lbl_806DAD74, lbl_806DAD7C, lbl_806DADA0, lbl_806DADA4, lbl_806DADA8, lbl_806DADAC;
 extern const XZ lbl_806DCF60;
 extern const Rect JumpDistanceMode_UpdateGameplay_rodata_803C3D54;
-extern const Vec3 lbl_803C3D80;
+extern const Vec3 JumpDistanceMode_rodata_803C3D80;
 
 unsigned char CarObject_IsAirborne(CarObject *car);
 void *CarObject_GetRenderObj(CarObject *car);
@@ -81,7 +81,7 @@ static inline float JD_sqrtf(float x) {
 }
 
 static inline unsigned char IsInFront(GoalPlane *goal, float *mtx) {
-    Vec3 pos = lbl_803C3D80;
+    Vec3 pos = JumpDistanceMode_rodata_803C3D80;
     Vec3 d;
 
     pos.x = mtx[3];

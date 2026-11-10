@@ -6,7 +6,7 @@ extern int lbl_806D1210;
 extern unsigned char lbl_806D121C;
 extern int lbl_806D1220;
 extern unsigned char lbl_806D122A;
-extern int lbl_806D1240;
+extern int CardPrintJob_bss_806D1240;
 
 static inline void CardPrintJob_ResetCommand(void)
 {
@@ -27,6 +27,6 @@ unsigned char CardPrintJob_KickFontTransfer(void)
     lbl_806CF0E8 = 3;
     CardPrintJob_ResetCommand();
     lbl_806D1220 = 0;
-    lbl_806D1240 = 0;
+    CardPrintJob_bss_806D1240 = 0;
     return 1;
 }

@@ -1,6 +1,6 @@
 #include "game/DrawEffectAccess.h"
 
-extern const char *lbl_8041A334[3];
+extern const char *DrawEffect_Cb_MutekiStar_data_8041A334[3];
 extern int Rand_RangeIntMax(int max);
 extern void VfxSlot_ResolveJoint(void *slot, const char *name);
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec *in);
@@ -21,7 +21,7 @@ void DrawEffect_Cb_MutekiStar_VfxB(unsigned char *self)
     switch (STATE) {
     case 0:
         VfxSlot_BindResourceEx(SLOT(self), 3, 0);
-        VfxSlot_ResolveJoint(SLOT(self), lbl_8041A334[Rand_RangeIntMax(0xF) % 3]);
+        VfxSlot_ResolveJoint(SLOT(self), DrawEffect_Cb_MutekiStar_data_8041A334[Rand_RangeIntMax(0xF) % 3]);
         F(0x150) = 0.0f;
         GetSpawnPosition(V(0x120), 0.0f, Rand_RangeFloat(0.0f, 5.0f), Rand_RangeFloat(8.0f, 10.0f));
         Vec2_RotateY(V(0x120), V(0x120), 0.017453292f * Rand_RangeFloat(-180.0f, 180.0f));

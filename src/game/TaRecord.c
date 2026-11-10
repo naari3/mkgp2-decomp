@@ -7,7 +7,7 @@ extern int g_ccClass;
 extern int g_cupId;
 extern int g_longRoundFlag;
 extern int g_reverseRoundFlag;
-extern int lbl_806D112C;
+extern int TaRecord_bss_806D112C;
 extern const float lbl_806D2EB0;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
@@ -80,6 +80,6 @@ float TaRecord_GetTime_Current(int index) { /* 0x80074B5C size:0xCC */
 }
 
 int TaRecord_GetLastInsertedRank(void) { /* 0x80074C28 size:0x8 */
-    return lbl_806D112C;
+    return TaRecord_bss_806D112C;
 }
 

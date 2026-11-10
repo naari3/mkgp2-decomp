@@ -29,19 +29,19 @@ typedef struct SndQueue {
 
 extern unsigned char ClSound_Initialized;
 extern SndDef lbl_80379554[];
-extern SndSlot lbl_80678378[32];
-extern SndQueue lbl_80677F40[37];
+extern SndSlot ClSound_InitSoundSystem_bss_80678378[32];
+extern SndQueue ClSound_InitSoundSystem_bss_80677F40[37];
 
 static inline void SndQueue_Stop(unsigned int id) {
     int i;
     for (i = 0; i < 37; i++) {
-        if (lbl_80677F40[i].id == 0xFFFFFFFF) break;
-        if (id == lbl_80677F40[i].id) {
+        if (ClSound_InitSoundSystem_bss_80677F40[i].id == 0xFFFFFFFF) break;
+        if (id == ClSound_InitSoundSystem_bss_80677F40[i].id) {
             SndQueue *q;
             SndQueue *e;
-            lbl_80677F40[i].state = 3;
-            lbl_80677F40[i].timer = 0;
-            q = lbl_80677F40;
+            ClSound_InitSoundSystem_bss_80677F40[i].state = 3;
+            ClSound_InitSoundSystem_bss_80677F40[i].timer = 0;
+            q = ClSound_InitSoundSystem_bss_80677F40;
             e = &q[i];
             for (; i > 0; e--) {
                 SndQueue t;
@@ -71,8 +71,8 @@ static inline int FindPlaying(SndSlot *slots, unsigned int id) {
 static inline int FindQueued(unsigned int id) {
     int i;
     for (i = 0; i < 37; i++) {
-        if (lbl_80677F40[i].id == 0xFFFFFFFF) return -1;
-        if (id == lbl_80677F40[i].id) return i;
+        if (ClSound_InitSoundSystem_bss_80677F40[i].id == 0xFFFFFFFF) return -1;
+        if (id == ClSound_InitSoundSystem_bss_80677F40[i].id) return i;
     }
     return -1;
 }
@@ -81,16 +81,16 @@ static inline void QueuePush(unsigned int *pid) {
     unsigned int id = *pid;
     int i = FindQueued(id);
     if (i >= 0) {
-        SndQueue *q = lbl_80677F40;
+        SndQueue *q = ClSound_InitSoundSystem_bss_80677F40;
         SndQueue *d = &q[i];
         for (; i < 36; i++, d++) { int k = i + 1; d->id = q[k].id; d->state = q[k].state; d->timer = q[k].timer; }
-        lbl_80677F40[36].id = 0xFFFFFFFF;
+        ClSound_InitSoundSystem_bss_80677F40[36].id = 0xFFFFFFFF;
     }
     for (i = 0; i < 37; i++) {
-        if (lbl_80677F40[i].id == 0xFFFFFFFF) {
-            lbl_80677F40[i].id = id;
-            lbl_80677F40[i].state = 1;
-            lbl_80677F40[i].timer = 10;
+        if (ClSound_InitSoundSystem_bss_80677F40[i].id == 0xFFFFFFFF) {
+            ClSound_InitSoundSystem_bss_80677F40[i].id = id;
+            ClSound_InitSoundSystem_bss_80677F40[i].state = 1;
+            ClSound_InitSoundSystem_bss_80677F40[i].timer = 10;
             break;
         }
     }
@@ -121,12 +121,12 @@ int SoundMgr_Play(unsigned int id) {
     index = id & ~0x78000000;
     variant = id & 0x78000000;
     if (index >= 490) return 0;
-    slots = lbl_80678378;
+    slots = ClSound_InitSoundSystem_bss_80678378;
     i = FindPlaying(slots, id);
     if (i >= 0) {
-        if (lbl_80678378[i].delay != 0) return 1;
-        SndQueue_Stop(lbl_80678378[i].id);
-        lbl_80678378[i].flags = (lbl_80678378[i].flags & ~6) | 4;
+        if (ClSound_InitSoundSystem_bss_80678378[i].delay != 0) return 1;
+        SndQueue_Stop(ClSound_InitSoundSystem_bss_80678378[i].id);
+        ClSound_InitSoundSystem_bss_80678378[i].flags = (ClSound_InitSoundSystem_bss_80678378[i].flags & ~6) | 4;
     }
     if (lbl_80379554[index].mode == 2) {
         unsigned char *group = &lbl_80379554[index].group;
@@ -146,10 +146,10 @@ int SoundMgr_Play(unsigned int id) {
     if (i >= 32) return 0;
     {
         SndDef *def = &lbl_80379554[index];
-        lbl_80678378[i].flags = ((def->attributes & 2) ? 0 : 0x200) | 0x11;
-        SlotSetup(&lbl_80678378[i], id, def);
-        if (lbl_80678378[i].pitch != 0x2000) lbl_80678378[i].flags |= 0x80;
-        QueuePush(&lbl_80678378[i].id);
+        ClSound_InitSoundSystem_bss_80678378[i].flags = ((def->attributes & 2) ? 0 : 0x200) | 0x11;
+        SlotSetup(&ClSound_InitSoundSystem_bss_80678378[i], id, def);
+        if (ClSound_InitSoundSystem_bss_80678378[i].pitch != 0x2000) ClSound_InitSoundSystem_bss_80678378[i].flags |= 0x80;
+        QueuePush(&ClSound_InitSoundSystem_bss_80678378[i].id);
     }
     return 1;
 }

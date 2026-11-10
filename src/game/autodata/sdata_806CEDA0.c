@@ -109,9 +109,9 @@ void *data_803F57E0_data_806CEDB0[2] = {
 };
 float LakituStart_UpdateCountdown_data_806CEDB8 = 301.0f;
 float lbl_806CEDBC = 3.3e+02f;
-float lbl_806CEDC0 = 18.0f;
-float lbl_806CEDC4 = -27.0f;
-float lbl_806CEDC8 = 6e+01f;
+float LakituStart_data_806CEDC0 = 18.0f;
+float LakituStart_data_806CEDC4 = -27.0f;
+float LakituStart_data_806CEDC8 = 6e+01f;
 float LakituStart_UpdateCountdown_data_806CEDCC = 2.8797932f;
 float LakituStart_Init_data_806CEDD0[2] = {
     1.0f, 0.0f
@@ -180,7 +180,7 @@ void *data_803F7690_data_806CEE48[2] = {
     (void *)&lbl_802EDC14,
     (void *)&data_803F7690_data_803F774C
 };
-void *lbl_806CEE50[2] = {
+void *InputCmd_data_806CEE50[2] = {
     (void *)0x1,
     0
 };
@@ -219,7 +219,7 @@ void *data_803F9B48_data_806CEE98[2] = {
     (void *)&lbl_802EDED4,
     (void *)&data_803F9B48_data_803F9C3C
 };
-int lbl_806CEEA0[2] = {
+int clItemBox_data_806CEEA0[2] = {
     -1, 0
 };
 const char *lbl_806CEEA8[2] = {
@@ -344,7 +344,7 @@ void *lbl_806CEFB0[2] = {
 float Jyugemu_Flag_Ctor_data_806CEFB8 = 1.0f;
 float Jyugemu_Flag_Ctor_data_806CEFBC = 1.2e+02f;
 /* decl: u8 / unsigned char */
-unsigned char lbl_806CEFC0[8] = {
+unsigned char Jyugemu_ReverseFlag_data_806CEFC0[8] = {
     0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 };
 unsigned char PCBCheckRecv_data_806CEFC8[8] = {

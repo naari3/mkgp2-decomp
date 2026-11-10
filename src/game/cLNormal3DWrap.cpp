@@ -22,7 +22,7 @@ extern const float lbl_806D3280; /* 1.0f */
 extern const float lbl_806D3284; /* 0.0f */
 extern const float lbl_806D3288; /* -1.0f */
 extern int cLNormal3DWrap_bss_806D11D8; /* active slot count */
-extern int lbl_806D11DC; /* peak active slot count */
+extern int cLNormal3DWrap_Mgr_bss_806D11DC; /* peak active slot count */
 
 typedef struct ModelEntry {
     void *archive;
@@ -121,8 +121,8 @@ public:
     inline void Activate(ModelHandle *h, int index)
     {
         cLNormal3DWrap_bss_806D11D8++;
-        if (cLNormal3DWrap_bss_806D11D8 > lbl_806D11DC) {
-            lbl_806D11DC = cLNormal3DWrap_bss_806D11D8;
+        if (cLNormal3DWrap_bss_806D11D8 > cLNormal3DWrap_Mgr_bss_806D11DC) {
+            cLNormal3DWrap_Mgr_bss_806D11DC = cLNormal3DWrap_bss_806D11D8;
         }
         active = 1;
         uvMtxValid = 0;

@@ -78,11 +78,11 @@ extern char lbl_803561C0[];
 extern char lbl_803561D0[];
 extern char lbl_803561DC[];
 extern char lbl_80356658[];
-extern char lbl_80356664[];
+extern char NokoNoko_801287F8_rodata_80356664[];
 extern char lbl_803566E4[];
 extern char lbl_803566F4[];
 extern char lbl_80356BF4[];
-extern char lbl_80356C00[];
+extern char CGameCoin_8012BF5C_rodata_80356C00[];
 extern char lbl_80356FD0[];
 extern char sdata_806CF1C0_rodata_80356FE0[];
 extern char lbl_80357A54[];
@@ -221,17 +221,17 @@ int rodata_80324B10_data_806CF1E0[2] = {
 char *RankLog_data_806CF1E8 = (char *)&lbl_806D4A44;
 int g_rankingPosition = -1;
 int g_raceResult = -1;
-int lbl_806CF1F4 = -1;
+int RankLog_data_806CF1F4 = -1;
 int lbl_806CF1F8 = -1;
 int g_technicalTitleGrade = -1;
 int g_playCount = -1;
 int RankLog_data_806CF204 = -1;
 float RankLog_data_806CF208 = -1.0f;
-int lbl_806CF20C = -1;
+int RankLog_data_806CF20C = -1;
 int g_maxCoins = -1;
 int g_prevRaceResult = -1;
 int g_prevPrevRaceResult = -1;
-int lbl_806CF21C = -1;
+int RankLog_data_806CF21C = -1;
 /* decl: TitleCheckFn */
 void *DetermineTitle_data_806CF220[1] = {
     (void *)TitleCheck_AlwaysFalse
@@ -273,8 +273,8 @@ void *data_80412158_data_806CF268[2] = {
 };
 /* decl: unsigned char / unsigned int */
 unsigned char lbl_806CF270 = 0x1;
-int lbl_806CF274 = -1;
-int lbl_806CF278 = -1;
+int HitMessageOverlay_data_806CF274 = -1;
+int HitMessageOverlay_data_806CF278 = -1;
 const char *lbl_806CF27C[2] = {
     (const char *)&lbl_80328BE0, 0
 };
@@ -551,7 +551,7 @@ void *data_8048E200_data_806CF540[2] = {
     (void *)&sdata_806CF1C0_data_8048E2EC
 };
 void *lbl_806CF548[2] = {
-    (void *)&lbl_80356664,
+    (void *)&NokoNoko_801287F8_rodata_80356664,
     0
 };
 void *data_8048E200_data_806CF550[2] = {
@@ -581,7 +581,7 @@ float CGameCoin_8012BF5C_data_806CF590 = 0.8f;
 float CGameCoin_8012BF5C_data_806CF594 = 0.7f;
 float CGameCoin_8012BF5C_data_806CF598 = 1.0f;
 void *lbl_806CF59C[2] = {
-    (void *)&lbl_80356C00,
+    (void *)&CGameCoin_8012BF5C_rodata_80356C00,
     0
 };
 void *data_8048E200_data_806CF5A4[2] = {

@@ -4473,7 +4473,7 @@ return lbl_80401018_p22[page_p22];
 extern "C" {
 extern unsigned char lbl_806D1224;
 extern unsigned char lbl_806D1225;
-extern struct CardPlayerSnapshot_p14 lbl_805D275C;
+extern struct CardPlayerSnapshot_p14 SetCourseParams_bss_805D275C;
 extern int Backup_PublishShadowCopy_Inline(void);
 extern void Sci2Card_GetResponsePayload(void *card, void *payload);
 extern unsigned char fn_801D4FF4(void *player, const void *raw, unsigned char publish);
@@ -4800,7 +4800,7 @@ unsigned char card_read_state_machine(void)
             memset_p0(lbl_805AC55C_p2, 0, 0x45);
             Sci2Card_GetResponsePayload(card, lbl_805AC55C_p2);
             if (fn_801D4FF4(&g_playerData_p14, lbl_805AC55C_p2, 1) == 1) {
-                lbl_805D275C = g_playerData_p14;
+                SetCourseParams_bss_805D275C = g_playerData_p14;
                 if ((signed char)g_playerData_p14.byte198_p14 > 0 && g_playerData_p14.byte199_p14 == 0) {
                     lbl_806D1214_p15 = 2;
                     lbl_806D122A_p2 = 0;

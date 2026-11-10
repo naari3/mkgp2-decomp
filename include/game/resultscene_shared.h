@@ -24,7 +24,7 @@ extern const char lbl_806D87A4[];
 extern const char lbl_806D87AC[];
 extern const char lbl_806D87B4[];
 extern const char lbl_806D87BC[];
-extern const unsigned char lbl_803682B0[0x408];
+extern const unsigned char resultscene_rodata_803682B0[0x408];
 extern const int lbl_803686B8[13];
 extern const float lbl_803686EC[3];
 extern const float lbl_803686F8[3];

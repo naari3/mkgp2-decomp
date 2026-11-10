@@ -48,7 +48,7 @@ void *lbl_803F769C[3] = {
     0
 };
 /* decl: unsigned int */
-void *lbl_803F76A8[4] = {
+void *CarObject_data_803F76A8[4] = {
     (void *)&lbl_806CEE18,
     0,
     (void *)CarObjectManager_Dtor,

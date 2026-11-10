@@ -2,7 +2,7 @@
 typedef struct ClBgmFiles { const char* left; const char* right; } ClBgmFiles;
 extern unsigned char ClSound_Initialized;
 extern ClStreamSlot ClSound_ActiveStreams[4];
-extern const unsigned char lbl_80379100[];
+extern const unsigned char ClSound_rodata_80379100[];
 extern void DebugPrintf(const char*, ...);
 extern unsigned char ClStream_Stop(unsigned int);
 extern unsigned char ClStream_IsActive(unsigned int);
@@ -23,7 +23,7 @@ static inline unsigned char StopBgm(unsigned int id, const unsigned char* resour
     return 1;
 }
 int ClSound_PlayBgmStream(unsigned int id, unsigned int arg) {
-    const unsigned char* resources=lbl_80379100;
+    const unsigned char* resources=ClSound_rodata_80379100;
     int i;
     const ClBgmFiles* files;
     if (!ClSound_Initialized) return 0;

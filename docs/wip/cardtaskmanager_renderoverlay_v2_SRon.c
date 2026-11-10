@@ -41,7 +41,7 @@ extern float lbl_806D32D8;
 extern float lbl_806D32E8;
 extern float lbl_806D32F0;
 extern float lbl_806D32F4;
-extern char lbl_80312850[];          /* .rodata string pool base */
+extern char Card_rodata_80312850[];          /* .rodata string pool base */
 extern CardTaskDesc lbl_803FE7E8[];
 
 void CardTaskManager_RenderOverlay(CardTaskManager *m);
@@ -49,7 +49,7 @@ void CardTaskManager_RenderOverlay(CardTaskManager *m);
 
 #pragma exceptions on
 void CardTaskManager_RenderOverlay(CardTaskManager *m) {
-    char *pool = lbl_80312850;
+    char *pool = Card_rodata_80312850;
 
     if (m->current < m->count) {
         CardTask *t = m->entries[m->current].task;

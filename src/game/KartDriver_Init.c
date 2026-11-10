@@ -34,7 +34,7 @@ struct ModelEntry { const char *file; unsigned char pad04[8]; };
 extern "C" {
 extern int g_kartStartSlot; extern void *g_raceCamera;
 extern const float lbl_806D2540,lbl_806D2570,lbl_806D2574;
-extern const char lbl_806D263C[7],lbl_806D2644[6],lbl_802E9F80[];
+extern const char lbl_806D263C[7],lbl_806D2644[6],KartDriver_rodata_802E9F80[];
 int HeapStats_DumpForTag(const char *,int);
 ModelEntry *GetKartModelNameEntry(int,int);
 CharacterEntry *GetCharacterDataEntry(int);
@@ -74,7 +74,7 @@ extern const char *mario_cart_tire_rr_joint[];
 extern const char *mario_shadow_dat[];
 }
 extern "C" int KartDriver_Init(Driver *self,int id,int characterId,void *matrix,int slot,int unused,int mode) {
-    const char *pool=lbl_802E9F80;
+    const char *pool=KartDriver_rodata_802E9F80;
     int heap=HeapStats_DumpForTag(lbl_806D263C,0);
     ModelEntry *model=GetKartModelNameEntry(characterId,mode);
     CharacterEntry *character=GetCharacterDataEntry(characterId);

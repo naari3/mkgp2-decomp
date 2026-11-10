@@ -33,12 +33,12 @@ typedef struct PlayStatsRace {
     unsigned int rankByChar[13][2]; /* 0x204 */
 } PlayStatsRace;
 
-extern PlayStatsRace lbl_805AC2E0;
+extern PlayStatsRace PlayStats_bss_805AC2E0;
 extern unsigned char lbl_80598A60[];
 extern unsigned char g_playerData[];
-extern unsigned char lbl_806CF008; /* stats enabled */
-extern int lbl_806CF00C; /* finish rank */
-extern int lbl_806D11EC;
+extern unsigned char PlayStats_data_806CF008; /* stats enabled */
+extern int PlayStats_data_806CF00C; /* finish rank */
+extern int PlayStats_bss_806D11EC;
 extern int g_gameMode;
 extern int g_ccClass;
 extern int g_cupId;
@@ -51,15 +51,15 @@ int CountPeersWithRole(int role);
 
 #define PLAYSTATS_INC(field)                       \
     do {                                           \
-        if (++lbl_805AC2E0.field > PLAYSTATS_MAX) { \
-            lbl_805AC2E0.field = PLAYSTATS_MAX;    \
+        if (++PlayStats_bss_805AC2E0.field > PLAYSTATS_MAX) { \
+            PlayStats_bss_805AC2E0.field = PLAYSTATS_MAX;    \
         }                                          \
     } while (0)
 
 #define PLAYSTATS_INC6(field)                       \
     do {                                            \
-        if (++lbl_805AC2E0.field > PLAYSTATS_MAX6) { \
-            lbl_805AC2E0.field = PLAYSTATS_MAX6;    \
+        if (++PlayStats_bss_805AC2E0.field > PLAYSTATS_MAX6) { \
+            PlayStats_bss_805AC2E0.field = PLAYSTATS_MAX6;    \
         }                                           \
     } while (0)
 
@@ -68,27 +68,27 @@ void PlayStats_AccumulatePlayTime(unsigned char catchUp) {
     int i;
 
     if ((int)lbl_80598A60[0x20] == 2 || g_playerData[0x19F] == 0) {
-        lbl_806CF00C = 1;
+        PlayStats_data_806CF00C = 1;
         return;
     }
     n = 1;
     if (catchUp == 1) {
-        n = lbl_806D11EC + 1;
+        n = PlayStats_bss_806D11EC + 1;
     }
     for (i = 0; i < n; i++) {
-        if (lbl_806CF008 != 0) {
+        if (PlayStats_data_806CF008 != 0) {
             PLAYSTATS_INC(playFrames);
         }
         if (g_gameMode == 0) {
-            if (lbl_806CF008 != 0) {
+            if (PlayStats_data_806CF008 != 0) {
                 PLAYSTATS_INC(gpFrames);
             }
         } else if (g_gameMode == 2) {
-            if (lbl_806CF008 != 0) {
+            if (PlayStats_data_806CF008 != 0) {
                 PLAYSTATS_INC(mode2Frames);
             }
         } else if (g_gameMode == 1) {
-            if (lbl_806CF008 != 0) {
+            if (PlayStats_data_806CF008 != 0) {
                 PLAYSTATS_INC(mode1Frames);
             }
         }
@@ -97,7 +97,7 @@ void PlayStats_AccumulatePlayTime(unsigned char catchUp) {
 
 void PlayStats_AccumulateCcClassPlay(void) {
     if (g_gameMode == 0) {
-        if (lbl_806CF008 == 0) {
+        if (PlayStats_data_806CF008 == 0) {
             return;
         }
         if (g_ccClass == 0) {
@@ -108,7 +108,7 @@ void PlayStats_AccumulateCcClassPlay(void) {
             PLAYSTATS_INC(gpByCc[2]);
         }
     } else if (g_gameMode == 1) {
-        if (lbl_806CF008 == 0) {
+        if (PlayStats_data_806CF008 == 0) {
             return;
         }
         if (g_ccClass == 1) {
@@ -117,7 +117,7 @@ void PlayStats_AccumulateCcClassPlay(void) {
             PLAYSTATS_INC(mode1Cc2);
         }
     } else if (g_gameMode == 2) {
-        if (lbl_806CF008 == 0) {
+        if (PlayStats_data_806CF008 == 0) {
             return;
         }
         if (g_ccClass == 0) {
@@ -133,10 +133,10 @@ void PlayStats_AccumulateCcClassPlay(void) {
 void PlayStats_AccumulateFinishByRank(void) {
     int rank;
 
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
-    rank = lbl_806CF00C;
+    rank = PlayStats_data_806CF00C;
     if (rank == -1) {
         return;
     }
@@ -175,7 +175,7 @@ void PlayStats_AccumulateFinishByRank(void) {
 void PlayStats_IncTaBestRecord(void) {
     int course;
 
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
     course = g_longRoundFlag + g_reverseRoundFlag * 2;
@@ -201,7 +201,7 @@ void PlayStats_IncTaBestRecord(void) {
 void PlayStats_IncTaPlay(void) {
     int course;
 
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
     course = g_longRoundFlag + g_reverseRoundFlag * 2;
@@ -227,7 +227,7 @@ void PlayStats_IncTaPlay(void) {
 void PlayStats_IncVsPlay(void) {
     int course;
 
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
     course = g_longRoundFlag + g_reverseRoundFlag * 2;
@@ -255,7 +255,7 @@ void PlayStats_IncVsPlay(void) {
 void PlayStats_IncVsPeerCount(void) {
     int peers;
 
-    if (lbl_806CF008 == 0) {
+    if (PlayStats_data_806CF008 == 0) {
         return;
     }
     if (g_localPcbRole <= 1) {

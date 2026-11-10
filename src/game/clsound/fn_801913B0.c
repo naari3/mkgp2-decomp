@@ -17,7 +17,7 @@ int fn_801913B0(int index, const ClSoundVec* position) {
     ClSoundVec delta;
     float near_distance, far_distance, distance;
     int volume, pan, surround;
-    sound_id = lbl_80678378[index].id & ~0x78000000;
+    sound_id = ClSound_InitSoundSystem_bss_80678378[index].id & ~0x78000000;
     definition = &lbl_80379554[sound_id];
     near_distance = definition->near_distance;
     far_distance = definition->far_distance;
@@ -36,9 +36,9 @@ int fn_801913B0(int index, const ClSoundVec* position) {
         else if (distance <= -near_distance) surround=0;
         else surround=(int)(lbl_806D9518+lbl_806D951C*(distance/near_distance));
     }
-    if ((unsigned char)volume != lbl_80678378[index].volume) { lbl_80678378[index].volume=volume; lbl_80678378[index].flags |= 0x10; }
-    if ((unsigned char)pan != lbl_80678378[index].pan) { lbl_80678378[index].pan=pan; lbl_80678378[index].flags |= 0x20; }
-    if ((unsigned char)surround != lbl_80678378[index].surround) { lbl_80678378[index].surround=surround; lbl_80678378[index].flags |= 0x40; }
+    if ((unsigned char)volume != ClSound_InitSoundSystem_bss_80678378[index].volume) { ClSound_InitSoundSystem_bss_80678378[index].volume=volume; ClSound_InitSoundSystem_bss_80678378[index].flags |= 0x10; }
+    if ((unsigned char)pan != ClSound_InitSoundSystem_bss_80678378[index].pan) { ClSound_InitSoundSystem_bss_80678378[index].pan=pan; ClSound_InitSoundSystem_bss_80678378[index].flags |= 0x20; }
+    if ((unsigned char)surround != ClSound_InitSoundSystem_bss_80678378[index].surround) { ClSound_InitSoundSystem_bss_80678378[index].surround=surround; ClSound_InitSoundSystem_bss_80678378[index].flags |= 0x40; }
     return 1;
 }
 
@@ -66,7 +66,7 @@ unsigned char fn_801915DC(int i) {
 #define ClSound_Initialized ClSound_Initialized_p2
 #define FindSlot FindSlot_p2
 #define SndSlot SndSlot_p2
-#define lbl_80678378 lbl_80678378_p2
+#define ClSound_InitSoundSystem_bss_80678378 lbl_80678378_p2
 #pragma exceptions off
 typedef struct SndSlot {
     unsigned int flags;
@@ -77,12 +77,12 @@ typedef struct SndSlot {
 } SndSlot;
 
 extern unsigned char ClSound_Initialized;
-extern SndSlot lbl_80678378[32];
+extern SndSlot ClSound_InitSoundSystem_bss_80678378[32];
 
 static inline int FindSlot(unsigned int id) {
     int i;
     for (i = 0; i < 32; i++) {
-        if (id == lbl_80678378[i].id && !(lbl_80678378[i].flags & 6)) {
+        if (id == ClSound_InitSoundSystem_bss_80678378[i].id && !(ClSound_InitSoundSystem_bss_80678378[i].flags & 6)) {
             return i;
         }
     }
@@ -96,9 +96,9 @@ int fn_801915F4(unsigned int id, unsigned short vol) {
     }
     i = FindSlot(id);
     if (i >= 0) {
-        if (vol != lbl_80678378[i].vol) {
-            lbl_80678378[i].vol = vol;
-            lbl_80678378[i].flags |= 0x80;
+        if (vol != ClSound_InitSoundSystem_bss_80678378[i].vol) {
+            ClSound_InitSoundSystem_bss_80678378[i].vol = vol;
+            ClSound_InitSoundSystem_bss_80678378[i].flags |= 0x80;
         }
         return 1;
     }
@@ -108,13 +108,13 @@ int fn_801915F4(unsigned int id, unsigned short vol) {
 #undef ClSound_Initialized
 #undef FindSlot
 #undef SndSlot
-#undef lbl_80678378
+#undef ClSound_InitSoundSystem_bss_80678378
 
 /* ==== game/clsound/fn_801916FC.c (0x801916FC) ==== */
 #define ClSound_Initialized ClSound_Initialized_p3
 #define FindSlot FindSlot_p3
 #define SndSlot SndSlot_p3
-#define lbl_80678378 lbl_80678378_p3
+#define ClSound_InitSoundSystem_bss_80678378 lbl_80678378_p3
 #pragma exceptions off
 typedef struct SndSlot {
     unsigned int flags;
@@ -125,12 +125,12 @@ typedef struct SndSlot {
 } SndSlot;
 
 extern unsigned char ClSound_Initialized;
-extern SndSlot lbl_80678378[32];
+extern SndSlot ClSound_InitSoundSystem_bss_80678378[32];
 
 static inline int FindSlot(unsigned int id) {
     int i;
     for (i = 0; i < 32; i++) {
-        if (id == lbl_80678378[i].id && !(lbl_80678378[i].flags & 6)) {
+        if (id == ClSound_InitSoundSystem_bss_80678378[i].id && !(ClSound_InitSoundSystem_bss_80678378[i].flags & 6)) {
             return i;
         }
     }
@@ -144,9 +144,9 @@ int fn_801916FC(unsigned int id, unsigned char vol) {
     }
     i = FindSlot(id);
     if (i >= 0) {
-        if (vol != lbl_80678378[i].vol) {
-            lbl_80678378[i].vol = vol;
-            lbl_80678378[i].flags |= 0x40;
+        if (vol != ClSound_InitSoundSystem_bss_80678378[i].vol) {
+            ClSound_InitSoundSystem_bss_80678378[i].vol = vol;
+            ClSound_InitSoundSystem_bss_80678378[i].flags |= 0x40;
         }
         return 1;
     }
@@ -156,13 +156,13 @@ int fn_801916FC(unsigned int id, unsigned char vol) {
 #undef ClSound_Initialized
 #undef FindSlot
 #undef SndSlot
-#undef lbl_80678378
+#undef ClSound_InitSoundSystem_bss_80678378
 
 /* ==== game/clsound/fn_80191804.c (0x80191804) ==== */
 #define ClSound_Initialized ClSound_Initialized_p4
 #define FindSlot FindSlot_p4
 #define SndSlot SndSlot_p4
-#define lbl_80678378 lbl_80678378_p4
+#define ClSound_InitSoundSystem_bss_80678378 lbl_80678378_p4
 #pragma exceptions off
 typedef struct SndSlot {
     unsigned int flags;
@@ -173,12 +173,12 @@ typedef struct SndSlot {
 } SndSlot;
 
 extern unsigned char ClSound_Initialized;
-extern SndSlot lbl_80678378[32];
+extern SndSlot ClSound_InitSoundSystem_bss_80678378[32];
 
 static inline int FindSlot(unsigned int id) {
     int i;
     for (i = 0; i < 32; i++) {
-        if (id == lbl_80678378[i].id && !(lbl_80678378[i].flags & 6)) {
+        if (id == ClSound_InitSoundSystem_bss_80678378[i].id && !(ClSound_InitSoundSystem_bss_80678378[i].flags & 6)) {
             return i;
         }
     }
@@ -192,9 +192,9 @@ int fn_80191804(unsigned int id, unsigned char vol) {
     }
     i = FindSlot(id);
     if (i >= 0) {
-        if (vol != lbl_80678378[i].vol) {
-            lbl_80678378[i].vol = vol;
-            lbl_80678378[i].flags |= 0x20;
+        if (vol != ClSound_InitSoundSystem_bss_80678378[i].vol) {
+            ClSound_InitSoundSystem_bss_80678378[i].vol = vol;
+            ClSound_InitSoundSystem_bss_80678378[i].flags |= 0x20;
         }
         return 1;
     }
@@ -204,13 +204,13 @@ int fn_80191804(unsigned int id, unsigned char vol) {
 #undef ClSound_Initialized
 #undef FindSlot
 #undef SndSlot
-#undef lbl_80678378
+#undef ClSound_InitSoundSystem_bss_80678378
 
 /* ==== game/clsound/fn_8019190C.c (0x8019190C) ==== */
 #define ClSound_Initialized ClSound_Initialized_p5
 #define FindSlot FindSlot_p5
 #define SndSlot SndSlot_p5
-#define lbl_80678378 lbl_80678378_p5
+#define ClSound_InitSoundSystem_bss_80678378 lbl_80678378_p5
 #pragma exceptions off
 typedef struct SndSlot {
     unsigned int flags;
@@ -221,12 +221,12 @@ typedef struct SndSlot {
 } SndSlot;
 
 extern unsigned char ClSound_Initialized;
-extern SndSlot lbl_80678378[32];
+extern SndSlot ClSound_InitSoundSystem_bss_80678378[32];
 
 static inline int FindSlot(unsigned int id) {
     int i;
     for (i = 0; i < 32; i++) {
-        if (id == lbl_80678378[i].id && !(lbl_80678378[i].flags & 6)) {
+        if (id == ClSound_InitSoundSystem_bss_80678378[i].id && !(ClSound_InitSoundSystem_bss_80678378[i].flags & 6)) {
             return i;
         }
     }
@@ -240,9 +240,9 @@ int fn_8019190C(unsigned int id, unsigned char vol) {
     }
     i = FindSlot(id);
     if (i >= 0) {
-        if (vol != lbl_80678378[i].vol) {
-            lbl_80678378[i].vol = vol;
-            lbl_80678378[i].flags |= 0x10;
+        if (vol != ClSound_InitSoundSystem_bss_80678378[i].vol) {
+            ClSound_InitSoundSystem_bss_80678378[i].vol = vol;
+            ClSound_InitSoundSystem_bss_80678378[i].flags |= 0x10;
         }
         return 1;
     }
@@ -252,7 +252,7 @@ int fn_8019190C(unsigned int id, unsigned char vol) {
 #undef ClSound_Initialized
 #undef FindSlot
 #undef SndSlot
-#undef lbl_80678378
+#undef ClSound_InitSoundSystem_bss_80678378
 
 /* ==== game/clsound/fn_80191A14.c (0x80191A14) ==== */
 #define ClSound_Initialized ClSound_Initialized_p6
@@ -260,7 +260,7 @@ int fn_8019190C(unsigned int id, unsigned char vol) {
 #define Saturate_Double Saturate_Double_p6
 #define SetVol SetVol_p6
 #define SndSlot SndSlot_p6
-#define lbl_80678378 lbl_80678378_p6
+#define ClSound_InitSoundSystem_bss_80678378 lbl_80678378_p6
 #define lbl_806D9508 lbl_806D9508_p6
 #define lbl_806D950C lbl_806D950C_p6
 #define lbl_806D9510 lbl_806D9510_p6
@@ -278,12 +278,12 @@ extern float Saturate_Double(float v, float lo, float hi);
 extern const float lbl_806D9508;
 extern const float lbl_806D950C;
 extern const float lbl_806D9510;
-extern SndSlot lbl_80678378[32];
+extern SndSlot ClSound_InitSoundSystem_bss_80678378[32];
 
 static inline int FindSlot(unsigned int id) {
     int i;
     for (i = 0; i < 32; i++) {
-        if (id == lbl_80678378[i].id && !(lbl_80678378[i].flags & 6)) {
+        if (id == ClSound_InitSoundSystem_bss_80678378[i].id && !(ClSound_InitSoundSystem_bss_80678378[i].flags & 6)) {
             return i;
         }
     }
@@ -291,9 +291,9 @@ static inline int FindSlot(unsigned int id) {
 }
 
 static inline void SetVol(int i, unsigned char vol) {
-    if (vol != lbl_80678378[i].vol) {
-        lbl_80678378[i].vol = vol;
-        lbl_80678378[i].flags |= 0x10;
+    if (vol != ClSound_InitSoundSystem_bss_80678378[i].vol) {
+        ClSound_InitSoundSystem_bss_80678378[i].vol = vol;
+        ClSound_InitSoundSystem_bss_80678378[i].flags |= 0x10;
     }
 }
 
@@ -315,7 +315,7 @@ int fn_80191A14(unsigned int id, float f) {
 #undef Saturate_Double
 #undef SetVol
 #undef SndSlot
-#undef lbl_80678378
+#undef ClSound_InitSoundSystem_bss_80678378
 #undef lbl_806D9508
 #undef lbl_806D950C
 #undef lbl_806D9510
@@ -327,7 +327,7 @@ int fn_80191A14(unsigned int id, float f) {
 #define SndSlot SndSlot_p7
 #define Vec3 Vec3_p7
 #define Vec3_Subtract Vec3_Subtract_p7
-#define lbl_80678378 lbl_80678378_p7
+#define ClSound_InitSoundSystem_bss_80678378 lbl_80678378_p7
 #define lbl_80495F38 (*(Vec3 *)&lbl_80495F38)
 #define fn_801913B0 fn_801913B0_ext1
 extern int fn_801913B0(int slot, void *pos);
@@ -347,12 +347,12 @@ extern unsigned char ClSound_Initialized;
 extern void Vec3_Subtract(Vec3 *a, Vec3 *b, Vec3 *out);
 extern float PSVECSquareMag(Vec3 *v);
 
-extern SndSlot lbl_80678378[32];
+extern SndSlot ClSound_InitSoundSystem_bss_80678378[32];
 
 static inline int FindSlot(unsigned int id) {
     int i;
     for (i = 0; i < 32; i++) {
-        if (id == lbl_80678378[i].id && !(lbl_80678378[i].flags & 6)) {
+        if (id == ClSound_InitSoundSystem_bss_80678378[i].id && !(ClSound_InitSoundSystem_bss_80678378[i].flags & 6)) {
             return i;
         }
     }
@@ -402,7 +402,7 @@ int fn_80191B5C(unsigned int id, Vec3 *pts, int n) {
 #undef SndSlot
 #undef Vec3
 #undef Vec3_Subtract
-#undef lbl_80678378
+#undef ClSound_InitSoundSystem_bss_80678378
 #undef lbl_80495F38
 #undef fn_801913B0
 
@@ -411,7 +411,7 @@ int fn_80191B5C(unsigned int id, Vec3 *pts, int n) {
 #define FindSlot FindSlot_p8
 #define SndSlot SndSlot_p8
 #define Vec3 Vec3_p8
-#define lbl_80678378 lbl_80678378_p8
+#define ClSound_InitSoundSystem_bss_80678378 lbl_80678378_p8
 #define fn_801913B0 fn_801913B0_ext2
 extern int fn_801913B0(int slot, void *pos);
 #pragma exceptions on
@@ -426,12 +426,12 @@ typedef struct SndSlot {
 typedef struct Vec3 { float x, y, z; } Vec3;
 extern unsigned char ClSound_Initialized;
 
-extern SndSlot lbl_80678378[32];
+extern SndSlot ClSound_InitSoundSystem_bss_80678378[32];
 
 static inline int FindSlot(unsigned int id) {
     int i;
     for (i = 0; i < 32; i++) {
-        if (id == lbl_80678378[i].id && !(lbl_80678378[i].flags & 6)) {
+        if (id == ClSound_InitSoundSystem_bss_80678378[i].id && !(ClSound_InitSoundSystem_bss_80678378[i].flags & 6)) {
             return i;
         }
     }
@@ -457,7 +457,7 @@ int fn_80191CF4(unsigned int id, Vec3 *pos) {
 #undef FindSlot
 #undef SndSlot
 #undef Vec3
-#undef lbl_80678378
+#undef ClSound_InitSoundSystem_bss_80678378
 #undef fn_801913B0
 
 /* ==== game/clsound/fn_80191DF8.c (0x80191DF8) ==== */
@@ -466,7 +466,7 @@ int fn_80191CF4(unsigned int id, Vec3 *pos) {
 #define SndSlot SndSlot_p9
 #define Vec3 Vec3_p9
 #define lbl_8037CEC4 lbl_8037CEC4_p9
-#define lbl_80678378 lbl_80678378_p9
+#define ClSound_InitSoundSystem_bss_80678378 lbl_80678378_p9
 #define fn_801913B0 fn_801913B0_ext3
 extern int fn_801913B0(int slot, void *pos);
 #pragma exceptions on
@@ -482,12 +482,12 @@ typedef struct Vec3 { float x, y, z; } Vec3;
 extern unsigned char ClSound_Initialized;
 extern const Vec3 lbl_8037CEC4;
 
-extern SndSlot lbl_80678378[32];
+extern SndSlot ClSound_InitSoundSystem_bss_80678378[32];
 
 static inline int FindSlot(unsigned int id) {
     int i;
     for (i = 0; i < 32; i++) {
-        if (id == lbl_80678378[i].id && !(lbl_80678378[i].flags & 6)) {
+        if (id == ClSound_InitSoundSystem_bss_80678378[i].id && !(ClSound_InitSoundSystem_bss_80678378[i].flags & 6)) {
             return i;
         }
     }
@@ -516,14 +516,14 @@ int fn_80191DF8(unsigned int id, float x, float y, float z) {
 #undef SndSlot
 #undef Vec3
 #undef lbl_8037CEC4
-#undef lbl_80678378
+#undef ClSound_InitSoundSystem_bss_80678378
 #undef fn_801913B0
 
 /* ==== game/clsound/fn_80191F1C.c (0x80191F1C) ==== */
 #define ClSound_Initialized ClSound_Initialized_p10
 #define FindSlot FindSlot_p10
 #define SndSlot SndSlot_p10
-#define lbl_80678378 lbl_80678378_p10
+#define ClSound_InitSoundSystem_bss_80678378 lbl_80678378_p10
 #pragma exceptions off
 typedef struct SndSlot {
     unsigned int flags;
@@ -534,12 +534,12 @@ typedef struct SndSlot {
 } SndSlot;
 
 extern unsigned char ClSound_Initialized;
-extern SndSlot lbl_80678378[32];
+extern SndSlot ClSound_InitSoundSystem_bss_80678378[32];
 
 static inline int FindSlot(unsigned int id) {
     int i;
     for (i = 0; i < 32; i++) {
-        if (id == lbl_80678378[i].id && !(lbl_80678378[i].flags & 6)) {
+        if (id == ClSound_InitSoundSystem_bss_80678378[i].id && !(ClSound_InitSoundSystem_bss_80678378[i].flags & 6)) {
             return i;
         }
     }
@@ -552,7 +552,7 @@ int fn_80191F1C(unsigned int id) {
         return 0;
     }
     i = FindSlot(id);
-    if (i >= 0 && lbl_80678378[i].busy) {
+    if (i >= 0 && ClSound_InitSoundSystem_bss_80678378[i].busy) {
         return 0;
     }
     return 1;
@@ -561,12 +561,12 @@ int fn_80191F1C(unsigned int id) {
 #undef ClSound_Initialized
 #undef FindSlot
 #undef SndSlot
-#undef lbl_80678378
+#undef ClSound_InitSoundSystem_bss_80678378
 
 /* ==== game/clsound/fn_80192010.c (0x80192010) ==== */
 #define FindSlot FindSlot_p11
 #define SndSlot SndSlot_p11
-#define lbl_80678378 lbl_80678378_p11
+#define ClSound_InitSoundSystem_bss_80678378 lbl_80678378_p11
 #pragma exceptions off
 typedef struct SndSlot {
     unsigned int flags;
@@ -574,12 +574,12 @@ typedef struct SndSlot {
     unsigned char pad[0x14];
 } SndSlot;
 
-extern SndSlot lbl_80678378[32];
+extern SndSlot ClSound_InitSoundSystem_bss_80678378[32];
 
 static inline int FindSlot(unsigned int id) {
     int i;
     for (i = 0; i < 32; i++) {
-        if (id == lbl_80678378[i].id && !(lbl_80678378[i].flags & 6)) {
+        if (id == ClSound_InitSoundSystem_bss_80678378[i].id && !(ClSound_InitSoundSystem_bss_80678378[i].flags & 6)) {
             return i;
         }
     }
@@ -595,15 +595,15 @@ int fn_80192010(unsigned int id) {
 #pragma exceptions reset
 #undef FindSlot
 #undef SndSlot
-#undef lbl_80678378
+#undef ClSound_InitSoundSystem_bss_80678378
 
 /* ==== game/clsound/fn_801920D4.c (0x801920D4) ==== */
 #define ClSound_Initialized ClSound_Initialized_p12
 #define SndQueue SndQueue_p12
 #define SndQueue_Stop SndQueue_Stop_p12
 #define SndSlot SndSlot_p12
-#define lbl_80677F40 lbl_80677F40_p12
-#define lbl_80678378 lbl_80678378_p12
+#define ClSound_InitSoundSystem_bss_80677F40 lbl_80677F40_p12
+#define ClSound_InitSoundSystem_bss_80678378 lbl_80678378_p12
 #pragma exceptions on
 typedef struct SndQueue {
     unsigned int id;
@@ -627,19 +627,19 @@ typedef struct SndSlot {
 } SndSlot;
 
 extern unsigned char ClSound_Initialized;
-extern SndSlot lbl_80678378[32];
-extern SndQueue lbl_80677F40[37];
+extern SndSlot ClSound_InitSoundSystem_bss_80678378[32];
+extern SndQueue ClSound_InitSoundSystem_bss_80677F40[37];
 
 static inline void SndQueue_Stop(unsigned int id) {
     int i;
     for (i = 0; i < 37; i++) {
-        if (lbl_80677F40[i].id == 0xFFFFFFFF) break;
-        if (id == lbl_80677F40[i].id) {
+        if (ClSound_InitSoundSystem_bss_80677F40[i].id == 0xFFFFFFFF) break;
+        if (id == ClSound_InitSoundSystem_bss_80677F40[i].id) {
             SndQueue *q;
             SndQueue *e;
-            lbl_80677F40[i].state = 3;
-            lbl_80677F40[i].timer = 0;
-            q = lbl_80677F40;
+            ClSound_InitSoundSystem_bss_80677F40[i].state = 3;
+            ClSound_InitSoundSystem_bss_80677F40[i].timer = 0;
+            q = ClSound_InitSoundSystem_bss_80677F40;
             e = &q[i];
             for (; i > 0; e--) {
                 SndQueue t;
@@ -662,7 +662,7 @@ int fn_801920D4(void) {
     int i;
     if (!ClSound_Initialized) return 1;
     for (i = 0; i < 32; i++) {
-        SndSlot *s = &lbl_80678378[i];
+        SndSlot *s = &ClSound_InitSoundSystem_bss_80678378[i];
         if (s->id != 0xFFFFFFFF && !(s->u.flags & 6)) {
             SndQueue_Stop(s->id);
             s->u.flags = (s->u.flags & ~6) | 4;
@@ -675,16 +675,16 @@ int fn_801920D4(void) {
 #undef SndQueue
 #undef SndQueue_Stop
 #undef SndSlot
-#undef lbl_80677F40
-#undef lbl_80678378
+#undef ClSound_InitSoundSystem_bss_80677F40
+#undef ClSound_InitSoundSystem_bss_80678378
 
 /* ==== game/clsound/fn_80192208.c (0x80192208) ==== */
 #define ClSound_Initialized ClSound_Initialized_p13
 #define SndQueue SndQueue_p13
 #define SndQueue_Stop SndQueue_Stop_p13
 #define SndSlot SndSlot_p13
-#define lbl_80677F40 lbl_80677F40_p13
-#define lbl_80678378 lbl_80678378_p13
+#define ClSound_InitSoundSystem_bss_80677F40 lbl_80677F40_p13
+#define ClSound_InitSoundSystem_bss_80678378 lbl_80678378_p13
 #pragma exceptions on
 typedef struct SndQueue {
     unsigned int id;
@@ -708,19 +708,19 @@ typedef struct SndSlot {
 } SndSlot;
 
 extern unsigned char ClSound_Initialized;
-extern SndSlot lbl_80678378[32];
-extern SndQueue lbl_80677F40[37];
+extern SndSlot ClSound_InitSoundSystem_bss_80678378[32];
+extern SndQueue ClSound_InitSoundSystem_bss_80677F40[37];
 
 static inline void SndQueue_Stop(unsigned int id) {
     int i;
     for (i = 0; i < 37; i++) {
-        if (lbl_80677F40[i].id == 0xFFFFFFFF) break;
-        if (id == lbl_80677F40[i].id) {
+        if (ClSound_InitSoundSystem_bss_80677F40[i].id == 0xFFFFFFFF) break;
+        if (id == ClSound_InitSoundSystem_bss_80677F40[i].id) {
             SndQueue *q;
             SndQueue *e;
-            lbl_80677F40[i].state = 3;
-            lbl_80677F40[i].timer = 0;
-            q = lbl_80677F40;
+            ClSound_InitSoundSystem_bss_80677F40[i].state = 3;
+            ClSound_InitSoundSystem_bss_80677F40[i].timer = 0;
+            q = ClSound_InitSoundSystem_bss_80677F40;
             e = &q[i];
             for (; i > 0; e--) {
                 SndQueue t;
@@ -743,7 +743,7 @@ int fn_80192208(unsigned int group) {
     int i;
     if (!ClSound_Initialized) return 1;
     for (i = 0; i < 32; i++) {
-        SndSlot *s = &lbl_80678378[i];
+        SndSlot *s = &ClSound_InitSoundSystem_bss_80678378[i];
         if (s->id != 0xFFFFFFFF && group == s->group && !(s->u.flags & 6)) {
             SndQueue_Stop(s->id);
             s->u.flags = (s->u.flags & ~6) | 4;
@@ -756,8 +756,8 @@ int fn_80192208(unsigned int group) {
 #undef SndQueue
 #undef SndQueue_Stop
 #undef SndSlot
-#undef lbl_80677F40
-#undef lbl_80678378
+#undef ClSound_InitSoundSystem_bss_80677F40
+#undef ClSound_InitSoundSystem_bss_80678378
 
 /* ==== game/clsound/fn_80192348.c (0x80192348) ==== */
 #define ClSound_Initialized ClSound_Initialized_p14
@@ -765,8 +765,8 @@ int fn_80192208(unsigned int group) {
 #define ReleaseVoice ReleaseVoice_p14
 #define SndSlot SndSlot_p14
 #define Voice Voice_p14
-#define lbl_80677F40 lbl_80677F40_p14
-#define lbl_80678378 lbl_80678378_p14
+#define ClSound_InitSoundSystem_bss_80677F40 lbl_80677F40_p14
+#define ClSound_InitSoundSystem_bss_80678378 lbl_80678378_p14
 #pragma exceptions on
 typedef struct SndSlot {
     unsigned int flags;
@@ -782,20 +782,20 @@ typedef struct Voice {
 } Voice;
 
 extern unsigned char ClSound_Initialized;
-extern SndSlot lbl_80678378[32];
-extern Voice lbl_80677F40[37];
+extern SndSlot ClSound_InitSoundSystem_bss_80678378[32];
+extern Voice ClSound_InitSoundSystem_bss_80677F40[37];
 
 
 static inline void ReleaseVoice(unsigned int h) {
     Voice *e;
     int i;
     for (i = 0; i < 37; i++) {
-        if (lbl_80677F40[i].handle == -1) break;
-        if (h == lbl_80677F40[i].handle) {
+        if (ClSound_InitSoundSystem_bss_80677F40[i].handle == -1) break;
+        if (h == ClSound_InitSoundSystem_bss_80677F40[i].handle) {
             Voice *q;
-            lbl_80677F40[i].state = 3;
-            lbl_80677F40[i].x8 = 0;
-            q = lbl_80677F40;
+            ClSound_InitSoundSystem_bss_80677F40[i].state = 3;
+            ClSound_InitSoundSystem_bss_80677F40[i].x8 = 0;
+            q = ClSound_InitSoundSystem_bss_80677F40;
             e = &q[i];
             for (; i > 0; e--) {
                 Voice t;
@@ -817,7 +817,7 @@ static inline void ReleaseVoice(unsigned int h) {
 static inline int FindSlot(unsigned int id) {
     int i;
     for (i = 0; i < 32; i++) {
-        if (id == lbl_80678378[i].id && !(lbl_80678378[i].flags & 6)) {
+        if (id == ClSound_InitSoundSystem_bss_80678378[i].id && !(ClSound_InitSoundSystem_bss_80678378[i].flags & 6)) {
             return i;
         }
     }
@@ -831,8 +831,8 @@ int fn_80192348(unsigned int id) {
     }
     i = FindSlot(id);
     if (i >= 0) {
-        ReleaseVoice(lbl_80678378[i].id);
-        lbl_80678378[i].flags = (lbl_80678378[i].flags & ~6) | 4;
+        ReleaseVoice(ClSound_InitSoundSystem_bss_80678378[i].id);
+        ClSound_InitSoundSystem_bss_80678378[i].flags = (ClSound_InitSoundSystem_bss_80678378[i].flags & ~6) | 4;
     }
     return 1;
 }
@@ -842,8 +842,8 @@ int fn_80192348(unsigned int id) {
 #undef ReleaseVoice
 #undef SndSlot
 #undef Voice
-#undef lbl_80677F40
-#undef lbl_80678378
+#undef ClSound_InitSoundSystem_bss_80677F40
+#undef ClSound_InitSoundSystem_bss_80678378
 
 /* ==== game/clsound/fn_80192514.c (0x80192514) ==== */
 #define ClSound_Initialized ClSound_Initialized_p15
@@ -851,8 +851,8 @@ int fn_80192348(unsigned int id) {
 #define SndQueue_Stop SndQueue_Stop_p15
 #define SndSlot SndSlot_p15
 #define fn_80194158 fn_80194158_p15
-#define lbl_80677F40 lbl_80677F40_p15
-#define lbl_80678378 lbl_80678378_p15
+#define ClSound_InitSoundSystem_bss_80677F40 lbl_80677F40_p15
+#define ClSound_InitSoundSystem_bss_80678378 lbl_80678378_p15
 #pragma exceptions on
 typedef struct SndQueue {
     unsigned int id;
@@ -876,19 +876,19 @@ typedef struct SndSlot {
 } SndSlot;
 
 extern unsigned char ClSound_Initialized;
-extern SndSlot lbl_80678378[32];
-extern SndQueue lbl_80677F40[37];
+extern SndSlot ClSound_InitSoundSystem_bss_80678378[32];
+extern SndQueue ClSound_InitSoundSystem_bss_80677F40[37];
 
 static inline void SndQueue_Stop(unsigned int id) {
     int i;
     for (i = 0; i < 37; i++) {
-        if (lbl_80677F40[i].id == 0xFFFFFFFF) break;
-        if (id == lbl_80677F40[i].id) {
+        if (ClSound_InitSoundSystem_bss_80677F40[i].id == 0xFFFFFFFF) break;
+        if (id == ClSound_InitSoundSystem_bss_80677F40[i].id) {
             SndQueue *q;
             SndQueue *e;
-            lbl_80677F40[i].state = 3;
-            lbl_80677F40[i].timer = 0;
-            q = lbl_80677F40;
+            ClSound_InitSoundSystem_bss_80677F40[i].state = 3;
+            ClSound_InitSoundSystem_bss_80677F40[i].timer = 0;
+            q = ClSound_InitSoundSystem_bss_80677F40;
             e = &q[i];
             for (; i > 0; e--) {
                 SndQueue t;
@@ -915,7 +915,7 @@ int fn_80192514(unsigned int group, int a) {
     if (!ClSound_Initialized) return 1;
     v = fn_80194158(a, 1, 7) << 11;
     for (i = 0; i < 32; i++) {
-        SndSlot *s = &lbl_80678378[i];
+        SndSlot *s = &ClSound_InitSoundSystem_bss_80678378[i];
         if (s->id != 0xFFFFFFFF && group == s->group && !(s->u.flags & 6)) {
             SndQueue_Stop(s->id);
             s->u.flags = v | ((s->u.flags & ~6) | 2);
@@ -929,8 +929,8 @@ int fn_80192514(unsigned int group, int a) {
 #undef SndQueue_Stop
 #undef SndSlot
 #undef fn_80194158
-#undef lbl_80677F40
-#undef lbl_80678378
+#undef ClSound_InitSoundSystem_bss_80677F40
+#undef ClSound_InitSoundSystem_bss_80678378
 
 /* ==== game/clsound/fn_80192688.c (0x80192688) ==== */
 #define ClSound_Initialized ClSound_Initialized_p16
@@ -939,8 +939,8 @@ int fn_80192514(unsigned int group, int a) {
 #define SndSlot SndSlot_p16
 #define TouchPrio TouchPrio_p16
 #define fn_80194158 fn_80194158_p16
-#define lbl_80677F40 lbl_80677F40_p16
-#define lbl_80678378 lbl_80678378_p16
+#define ClSound_InitSoundSystem_bss_80677F40 lbl_80677F40_p16
+#define ClSound_InitSoundSystem_bss_80678378 lbl_80678378_p16
 #pragma exceptions on
 typedef struct SndSlot {
     unsigned int flags;
@@ -955,14 +955,14 @@ typedef struct SndPrio {
 } SndPrio;
 
 extern unsigned char ClSound_Initialized;
-extern SndSlot lbl_80678378[32];
-extern SndPrio lbl_80677F40[37];
+extern SndSlot ClSound_InitSoundSystem_bss_80678378[32];
+extern SndPrio ClSound_InitSoundSystem_bss_80677F40[37];
 extern unsigned char fn_80194158(unsigned char v, unsigned char lo, unsigned char hi);
 
 static inline int FindSlot(unsigned int id) {
     int i;
     for (i = 0; i < 32; i++) {
-        if (id == lbl_80678378[i].id && !(lbl_80678378[i].flags & 6)) {
+        if (id == ClSound_InitSoundSystem_bss_80678378[i].id && !(ClSound_InitSoundSystem_bss_80678378[i].flags & 6)) {
             return i;
         }
     }
@@ -973,12 +973,12 @@ static inline void TouchPrio(unsigned int id) {
     SndPrio *e;
     int i;
     for (i = 0; i < 37; i++) {
-        if (lbl_80677F40[i].id == -1) break;
-        if (id == lbl_80677F40[i].id) {
+        if (ClSound_InitSoundSystem_bss_80677F40[i].id == -1) break;
+        if (id == ClSound_InitSoundSystem_bss_80677F40[i].id) {
             SndPrio *q;
-            lbl_80677F40[i].state = 3;
-            lbl_80677F40[i].x = 0;
-            q = lbl_80677F40;
+            ClSound_InitSoundSystem_bss_80677F40[i].state = 3;
+            ClSound_InitSoundSystem_bss_80677F40[i].x = 0;
+            q = ClSound_InitSoundSystem_bss_80677F40;
             e = &q[i];
             for (; i > 0; e--) {
                 SndPrio t;
@@ -1006,8 +1006,8 @@ int fn_80192688(unsigned int id, unsigned char v) {
     slot = FindSlot(id);
     c = fn_80194158(v, 1, 7);
     if (slot >= 0) {
-        TouchPrio(lbl_80678378[slot].id);
-        lbl_80678378[slot].flags = (c << 11) | ((lbl_80678378[slot].flags & ~6) | 2);
+        TouchPrio(ClSound_InitSoundSystem_bss_80678378[slot].id);
+        ClSound_InitSoundSystem_bss_80678378[slot].flags = (c << 11) | ((ClSound_InitSoundSystem_bss_80678378[slot].flags & ~6) | 2);
     }
     return 1;
 }
@@ -1018,14 +1018,14 @@ int fn_80192688(unsigned int id, unsigned char v) {
 #undef SndSlot
 #undef TouchPrio
 #undef fn_80194158
-#undef lbl_80677F40
-#undef lbl_80678378
+#undef ClSound_InitSoundSystem_bss_80677F40
+#undef ClSound_InitSoundSystem_bss_80678378
 
 /* ==== game/SoundMgr_Play.c (0x) ==== */
 #define ClSound_Initialized ClSound_Initialized_p17
 #define lbl_80379554 lbl_80379554_p17
-#define lbl_80677F40 lbl_80677F40_p17
-#define lbl_80678378 lbl_80678378_p17
+#define ClSound_InitSoundSystem_bss_80677F40 lbl_80677F40_p17
+#define ClSound_InitSoundSystem_bss_80678378 lbl_80678378_p17
 #pragma exceptions off
 /* === extracted from auto_SoundMgr_Play_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -1038,8 +1038,8 @@ extern unsigned int ClSound_Initialized;
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
 extern unsigned int lbl_80379554[];
-extern unsigned int lbl_80677F40[];
-extern unsigned int lbl_80678378[];
+extern unsigned int ClSound_InitSoundSystem_bss_80677F40[];
+extern unsigned int ClSound_InitSoundSystem_bss_80678378[];
 
 /* --- function index (1 fns, .text 0x80192884..0x80192F04) ---
  * [  0] 0x80192884 size:0x680   global SoundMgr_Play
@@ -1113,8 +1113,8 @@ typedef struct SPQueue {
 
 
 #define SP_DEFS ((SPDef *)lbl_80379554)
-#define SP_QUEUE ((SPQueue *)lbl_80677F40)
-#define SP_SLOTS ((SPSlot *)lbl_80678378)
+#define SP_QUEUE ((SPQueue *)ClSound_InitSoundSystem_bss_80677F40)
+#define SP_SLOTS ((SPSlot *)ClSound_InitSoundSystem_bss_80678378)
 static inline void SoundQueue_Stop(unsigned int id) {
     int i;
     for (i = 0; i < 37; i++) {
@@ -1278,9 +1278,9 @@ asm void SoundMgr_Play(void) { /* 0x80192884 size:0x680 */
     li r3, 0x0
     b SoundMgr_Play_L_80192EEC
     SoundMgr_Play_L_801928C4:
-    lis r5, lbl_80678378@ha
+    lis r5, ClSound_InitSoundSystem_bss_80678378@ha
     li r0, 0x8
-    addi r6, r5, lbl_80678378@l
+    addi r6, r5, ClSound_InitSoundSystem_bss_80678378@l
     li r5, 0x0
     mr r7, r6
     mtctr r0
@@ -1331,8 +1331,8 @@ asm void SoundMgr_Play(void) { /* 0x80192884 size:0x680 */
     cmpwi r5, 0x0
     blt SoundMgr_Play_L_80192A84
     mulli r0, r5, 0x1c
-    lis r5, lbl_80678378@ha
-    addi r5, r5, lbl_80678378@l
+    lis r5, ClSound_InitSoundSystem_bss_80678378@ha
+    addi r5, r5, ClSound_InitSoundSystem_bss_80678378@l
     add r9, r5, r0
     lbz r5, 0x19(r9)
     cmplwi r5, 0x0
@@ -1340,9 +1340,9 @@ asm void SoundMgr_Play(void) { /* 0x80192884 size:0x680 */
     li r3, 0x1
     b SoundMgr_Play_L_80192EEC
     SoundMgr_Play_L_801929A0:
-    lis r7, lbl_80677F40@ha
+    lis r7, ClSound_InitSoundSystem_bss_80677F40@ha
     li r5, 0x25
-    addi r10, r7, lbl_80677F40@l
+    addi r10, r7, ClSound_InitSoundSystem_bss_80677F40@l
     lwz r7, 0x4(r9)
     li r12, 0x0
     mtctr r5
@@ -1354,9 +1354,9 @@ asm void SoundMgr_Play(void) { /* 0x80192884 size:0x680 */
     cmplw r7, r9
     bne SoundMgr_Play_L_80192A60
     mulli r9, r12, 0xc
-    lis r5, lbl_80677F40@ha
+    lis r5, ClSound_InitSoundSystem_bss_80677F40@ha
     li r7, 0x3
-    addi r11, r5, lbl_80677F40@l
+    addi r11, r5, ClSound_InitSoundSystem_bss_80677F40@l
     add r30, r11, r9
     li r5, 0x0
     stw r7, 0x4(r30)
@@ -1395,8 +1395,8 @@ asm void SoundMgr_Play(void) { /* 0x80192884 size:0x680 */
     addi r12, r12, 0x1
     bdnz SoundMgr_Play_L_801929B8
     SoundMgr_Play_L_80192A6C:
-    lis r5, lbl_80678378@ha
-    addi r7, r5, lbl_80678378@l
+    lis r5, ClSound_InitSoundSystem_bss_80678378@ha
+    addi r7, r5, ClSound_InitSoundSystem_bss_80678378@l
     lwzx r5, r7, r0
     rlwinm r5, r5, 0, 31, 28
     ori r5, r5, 0x4
@@ -1427,9 +1427,9 @@ asm void SoundMgr_Play(void) { /* 0x80192884 size:0x680 */
     lwz r9, 0x0(r4)
     rlwinm. r9, r9, 0, 29, 30
     bne SoundMgr_Play_L_80192BBC
-    lis r10, lbl_80677F40@ha
+    lis r10, ClSound_InitSoundSystem_bss_80677F40@ha
     li r9, 0x25
-    addi r10, r10, lbl_80677F40@l
+    addi r10, r10, ClSound_InitSoundSystem_bss_80677F40@l
     li r30, 0x0
     mtctr r9
     SoundMgr_Play_L_80192AF8:
@@ -1440,9 +1440,9 @@ asm void SoundMgr_Play(void) { /* 0x80192884 size:0x680 */
     cmplw r11, r12
     bne SoundMgr_Play_L_80192BA0
     mulli r10, r30, 0xc
-    lis r9, lbl_80677F40@ha
+    lis r9, ClSound_InitSoundSystem_bss_80677F40@ha
     li r11, 0x3
-    addi r31, r9, lbl_80677F40@l
+    addi r31, r9, ClSound_InitSoundSystem_bss_80677F40@l
     add r29, r31, r10
     li r9, 0x0
     stw r11, 0x4(r29)
@@ -1543,11 +1543,11 @@ asm void SoundMgr_Play(void) { /* 0x80192884 size:0x680 */
     b SoundMgr_Play_L_80192EEC
     SoundMgr_Play_L_80192C8C:
     lis r5, lbl_80379554@ha
-    lis r4, lbl_80678378@ha
+    lis r4, ClSound_InitSoundSystem_bss_80678378@ha
     addi r6, r5, lbl_80379554@l
     li r8, -0x1
     add r12, r6, r0
-    addi r11, r4, lbl_80678378@l
+    addi r11, r4, ClSound_InitSoundSystem_bss_80678378@l
     lwz r0, 0x18(r12)
     mulli r28, r7, 0x1c
     li r5, 0x200
@@ -1584,9 +1584,9 @@ asm void SoundMgr_Play(void) { /* 0x80192884 size:0x680 */
     ori r0, r0, 0x80
     stwx r0, r11, r28
     SoundMgr_Play_L_80192D30:
-    lis r3, lbl_80677F40@ha
+    lis r3, ClSound_InitSoundSystem_bss_80677F40@ha
     li r0, 0x25
-    addi r3, r3, lbl_80677F40@l
+    addi r3, r3, ClSound_InitSoundSystem_bss_80677F40@l
     lwz r8, 0x0(r29)
     li r9, 0x0
     mr r4, r3
@@ -1611,9 +1611,9 @@ asm void SoundMgr_Play(void) { /* 0x80192884 size:0x680 */
     cmpwi r9, 0x0
     blt SoundMgr_Play_L_80192E98
     mulli r0, r9, 0xc
-    lis r4, lbl_80677F40@ha
+    lis r4, ClSound_InitSoundSystem_bss_80677F40@ha
     cmpwi r9, 0x24
-    addi r7, r4, lbl_80677F40@l
+    addi r7, r4, ClSound_InitSoundSystem_bss_80677F40@l
     subfic r4, r9, 0x24
     add r11, r7, r0
     bge SoundMgr_Play_L_80192E88
@@ -1678,9 +1678,9 @@ asm void SoundMgr_Play(void) { /* 0x80192884 size:0x680 */
     addi r11, r11, 0xc
     bdnz SoundMgr_Play_L_80192E58
     SoundMgr_Play_L_80192E88:
-    lis r4, lbl_80677F40@ha
+    lis r4, ClSound_InitSoundSystem_bss_80677F40@ha
     li r0, -0x1
-    addi r4, r4, lbl_80677F40@l
+    addi r4, r4, ClSound_InitSoundSystem_bss_80677F40@l
     stw r0, 0x1b0(r4)
     SoundMgr_Play_L_80192E98:
     li r0, 0x25
@@ -1692,9 +1692,9 @@ asm void SoundMgr_Play(void) { /* 0x80192884 size:0x680 */
     cmplwi r0, 0xffff
     bne SoundMgr_Play_L_80192EDC
     mulli r0, r5, 0xc
-    lis r3, lbl_80677F40@ha
+    lis r3, ClSound_InitSoundSystem_bss_80677F40@ha
     li r4, 0x1
-    addi r3, r3, lbl_80677F40@l
+    addi r3, r3, ClSound_InitSoundSystem_bss_80677F40@l
     stwx r8, r3, r0
     add r3, r3, r0
     li r0, 0xa
@@ -1719,8 +1719,8 @@ asm void SoundMgr_Play(void) { /* 0x80192884 size:0x680 */
 #pragma exceptions reset
 #undef ClSound_Initialized
 #undef lbl_80379554
-#undef lbl_80677F40
-#undef lbl_80678378
+#undef ClSound_InitSoundSystem_bss_80677F40
+#undef ClSound_InitSoundSystem_bss_80678378
 
 /* ==== game/clsound/fn_80192F04.c (0x80192F04) ==== */
 #define CObj_GetViewMatrix_Cached CObj_GetViewMatrix_Cached_p18
@@ -1782,8 +1782,8 @@ void fn_80193134(unsigned char v) {
     }
     lbl_806D16C0 = v;
     for (i = 0; i < 32; i++) {
-        if (lbl_80678378[i].id != -1) {
-            lbl_80678378[i].flags |= (lbl_80379554[lbl_80678378[i].id & ~0x78000000].attributes & 2) ? 0 : 0x200;
+        if (ClSound_InitSoundSystem_bss_80678378[i].id != -1) {
+            ClSound_InitSoundSystem_bss_80678378[i].flags |= (lbl_80379554[ClSound_InitSoundSystem_bss_80678378[i].id & ~0x78000000].attributes & 2) ? 0 : 0x200;
         }
     }
 }

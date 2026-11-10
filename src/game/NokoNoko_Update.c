@@ -34,9 +34,9 @@ extern NokoNoko *g_nokonokoHead;
 
 extern const Quad NokoNoko_Update_rodata_80377664;
 extern const Quad NokoNoko_Update_rodata_80377694;
-extern NokoKind *lbl_80495D28[];
+extern NokoKind *NokoNoko_data_80495D28[];
 extern Vec lbl_80677ED8;
-extern const float lbl_806CFBD8;
+extern const float NokoNoko_data_806CFBD8;
 extern float lbl_806D168C;
 extern const float lbl_806D931C;
 extern const float lbl_806D9320;
@@ -105,9 +105,9 @@ void NokoNoko_Update(NokoNoko *self) {
         if (f >= lbl_806D9328) {
             self->yaw = f - lbl_806D9328;
         }
-        self->pos.x += lbl_806CFBD8 * (self->speed * LookupSin(self->yaw));
+        self->pos.x += NokoNoko_data_806CFBD8 * (self->speed * LookupSin(self->yaw));
         self->pos.y -= lbl_806D931C;
-        self->pos.z += lbl_806CFBD8 * (self->speed * LookupCos(self->yaw));
+        self->pos.z += NokoNoko_data_806CFBD8 * (self->speed * LookupCos(self->yaw));
         if (self->timer > 0) {
             self->timer--;
         }
@@ -121,15 +121,15 @@ void NokoNoko_Update(NokoNoko *self) {
             if (self->kindIndex < 0) {
                 self->kindIndex = 0;
             }
-            if (lbl_80495D28[self->kindTable][self->kindIndex].state == -1) {
+            if (NokoNoko_data_80495D28[self->kindTable][self->kindIndex].state == -1) {
                 self->kindIndex = 0;
             }
-            NokoNoko_SetModel(self, lbl_80495D28[self->kindTable][self->kindIndex].model);
-            self->state = lbl_80495D28[self->kindTable][self->kindIndex].state;
-            self->model = lbl_80495D28[self->kindTable][self->kindIndex].model;
-            self->timer = lbl_80495D28[self->kindTable][self->kindIndex].timer;
-            self->speed = lbl_80495D28[self->kindTable][self->kindIndex].speed;
-            self->turn = lbl_80495D28[self->kindTable][self->kindIndex].turn;
+            NokoNoko_SetModel(self, NokoNoko_data_80495D28[self->kindTable][self->kindIndex].model);
+            self->state = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].state;
+            self->model = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].model;
+            self->timer = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].timer;
+            self->speed = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].speed;
+            self->turn = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].turn;
         }
         if (self->speed > lbl_806D9324) {
             for (n = g_nokonokoHead; n != 0; n = n->next) {

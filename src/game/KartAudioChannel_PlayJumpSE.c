@@ -14,7 +14,7 @@ typedef struct KartAudioChannel {
     int jumpKind;          /* 0x30 */
 } KartAudioChannel;
 
-extern const Vec lbl_802EDD24;
+extern const Vec KartItemAudio_PlaySEByItemId_rodata_802EDD24;
 extern void SoundMgr_PlaySE(unsigned int id);
 extern void fn_8016C288(unsigned int id, Vec *pos);
 
@@ -41,7 +41,7 @@ void KartAudioChannel_PlayJumpSE(KartAudioChannel *self, int kind)
     if (self->muted == 0) {
         src = self->source;
         if (src != 0) {
-            Vec pos = lbl_802EDD24;
+            Vec pos = KartItemAudio_PlaySEByItemId_rodata_802EDD24;
             pos.x = src->x;
             pos.y = src->y;
             pos.z = src->z;

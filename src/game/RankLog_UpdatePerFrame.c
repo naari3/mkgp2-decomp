@@ -16,18 +16,18 @@ extern const float lbl_806D4DC8; /* 0.0 */
 extern const float lbl_806D4DCC; /* 0.5 */
 extern Vec RankLog_UpdatePerFrame_rodata_80326B24;
 extern unsigned char g_raceEnded;
-extern int lbl_806CF1F4;  /* previous air state */
+extern int RankLog_data_806CF1F4;  /* previous air state */
 extern int lbl_806CF1F8;  /* frames since air-state change, -1 = unset */
-extern int lbl_806CF20C;  /* current standstill frames */
+extern int RankLog_data_806CF20C;  /* current standstill frames */
 extern int g_maxCoins;    /* longest standstill frames */
-extern int lbl_806D13F0;  /* previous section */
+extern int RankLog_bss_806D13F0;  /* previous section */
 extern int g_technicalTitleGrade;
 extern unsigned int lbl_806D1450; /* hazard zones touched */
-extern int lbl_806CF21C;  /* previous hazard zone */
+extern int RankLog_data_806CF21C;  /* previous hazard zone */
 extern int g_hazardPassCount;
 extern unsigned char lbl_806D1420;
 extern unsigned int lbl_806D1428;
-extern int lbl_806D1424;
+extern int RankLog_bss_806D1424;
 extern void *GetPlayerCarObject(void);
 extern unsigned char IsRaceStarted(void);
 extern RenderObj *CarObject_GetRenderObj(void *car);
@@ -72,32 +72,32 @@ void RankLog_UpdatePerFrame(void)
     speed = KartItem_GetCurrentSpeedWithBonus(car);
     maxSpeed = KartItem_GetMaxSpeedWithBonus(car);
     if (lbl_806CF1F8 == -1) {
-        lbl_806CF1F4 = air;
+        RankLog_data_806CF1F4 = air;
         lbl_806CF1F8 = 0;
         return;
     }
-    if (lbl_806CF1F4 != air) {
-        if ((lbl_806CF1F4 != 0 && air == 0) || (lbl_806CF1F4 == 0 && air != 0)) {
+    if (RankLog_data_806CF1F4 != air) {
+        if ((RankLog_data_806CF1F4 != 0 && air == 0) || (RankLog_data_806CF1F4 == 0 && air != 0)) {
             lbl_806CF1F8 = 0;
         }
     }
     if (lbl_806D4DC8 == KartMovement_GetVelocityMagnitude(CarObject_GetRenderObj(car)) && air == 0) {
-        lbl_806CF20C++;
-        if (lbl_806CF20C > g_maxCoins) {
-            g_maxCoins = lbl_806CF20C;
+        RankLog_data_806CF20C++;
+        if (RankLog_data_806CF20C > g_maxCoins) {
+            g_maxCoins = RankLog_data_806CF20C;
         }
     } else {
-        lbl_806CF20C = 0;
+        RankLog_data_806CF20C = 0;
     }
-    lbl_806CF1F4 = air;
+    RankLog_data_806CF1F4 = air;
     if (lbl_806CF1F8 < 60) {
         lbl_806CF1F8++;
     }
-    if (lbl_806D13F0 != section) {
+    if (RankLog_bss_806D13F0 != section) {
         if (g_technicalTitleGrade == 2) {
             g_technicalTitleGrade = -1;
         }
-        lbl_806D13F0 = section;
+        RankLog_bss_806D13F0 = section;
     }
     zones = fn_80190658();
     if (zones != 0) {
@@ -106,18 +106,18 @@ void RankLog_UpdatePerFrame(void)
             if (speed < lbl_806D4DCC * maxSpeed) {
                 lbl_806D1450 |= 1 << idx;
             }
-        } else if (lbl_806CF21C >= 0 && !(lbl_806D1450 & (1 << lbl_806CF21C))) {
-            lbl_806D1450 |= 1 << lbl_806CF21C;
+        } else if (RankLog_data_806CF21C >= 0 && !(lbl_806D1450 & (1 << RankLog_data_806CF21C))) {
+            lbl_806D1450 |= 1 << RankLog_data_806CF21C;
             g_hazardPassCount++;
         }
-        lbl_806CF21C = idx;
+        RankLog_data_806CF21C = idx;
     }
     zones = fn_8016CB44();
     if (zones != 0 && lbl_806D1420 != 0) {
         int idx = fn_8016C850(zones, &pos);
         if (idx >= 0 && !(lbl_806D1428 & (1 << idx))) {
             lbl_806D1428 |= 1 << idx;
-            lbl_806D1424++;
+            RankLog_bss_806D1424++;
         }
         lbl_806D1420 = 0;
     }

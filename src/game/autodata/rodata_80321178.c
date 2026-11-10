@@ -59,7 +59,7 @@ const char lbl_80321194[] = "***** SetRandSeedEnable( %d ) *****\n";
 /* 8-aligned in the original: probably the first object of a TU */
 const char lbl_803211C0[] __attribute__((aligned(8))) = "clGameMain";
 const char lbl_803211CC[] = "clJobRunner";
-const char lbl_803211D8[1020] = {
+const char RaceScene_rodata_803211D8[1020] = {
     63, -128, 0, 0, 63, 51, 51, 51, 63, 102, 102, 102,
     0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0,
     66, -123, 85, 86, 68, 122, 0, 0, 66, -123, 85, 86,

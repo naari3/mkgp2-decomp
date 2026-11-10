@@ -196,7 +196,7 @@ extern const float lbl_806D9A1C[2];
 extern char lbl_8039A33C[];
 extern const char lbl_806D9A44[4];
 extern char lbl_80399870[];
-extern char lbl_805D275C[];
+extern char SetCourseParams_bss_805D275C[];
 extern unsigned char g_playerData[];
 
 void DebugPrintf(const char *fmt, ...);
@@ -498,7 +498,7 @@ CardEntry::~CardEntry() {
     }
     if (!Sci2Card_GetByteFlag1224()) {
         PlayerData_ResetForFlow();
-        fn_801D7610(lbl_805D275C, 1);
+        fn_801D7610(SetCourseParams_bss_805D275C, 1);
     }
 }
 

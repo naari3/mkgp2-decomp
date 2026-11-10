@@ -81,7 +81,7 @@ extern char lbl_8036A174[];
 extern char lbl_8036A184[];
 extern char lbl_8036A198[];
 extern char lbl_8036A1A8[];
-extern char lbl_8036A1BC[];
+extern char Scene_801661FC_rodata_8036A1BC[];
 extern char lbl_8036A1E4[];
 extern char lbl_8036A1F8[];
 extern char sdata_806CF750_rodata_8036A308[];
@@ -470,7 +470,7 @@ const char *lbl_806CF9A0[2] = {
     (const char *)&lbl_8036A1A8, 0
 };
 void *lbl_806CF9A8[2] = {
-    (void *)&lbl_8036A1BC,
+    (void *)&Scene_801661FC_rodata_8036A1BC,
     (void *)&lbl_80490E94
 };
 void *data_80490E94_data_806CF9B0[2] = {

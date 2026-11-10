@@ -2107,7 +2107,7 @@ extern const char lbl_803DA224[0x24] = " CreateMapEffect : clDNStartDino\n";
 extern const char lbl_803DA248[0x1C] = "DNA_startgate_challenge.dat";
 extern const char lbl_803DA264[0x14] = "koopa_fire.dat";
 
-Vec3f lbl_804EE0E0 = {30.0f * DNStartDino_tail_rodata_803DA120[0], 80.0f * DNStartDino_tail_rodata_803DA120[1], 0.0f};
+Vec3f DNStartDino_tail_data_804EE0E0 = {30.0f * DNStartDino_tail_rodata_803DA120[0], 80.0f * DNStartDino_tail_rodata_803DA120[1], 0.0f};
 
 static inline float JObjGetTranslationX(HSD_JObj *jobj) {
     if (jobj == 0) {

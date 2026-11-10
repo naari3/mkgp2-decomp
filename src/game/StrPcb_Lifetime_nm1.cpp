@@ -11,8 +11,8 @@ StrPcbBuffer::~StrPcbBuffer()
 
 extern "C" void StrPcb_EnsureInstance(void)
 {
-    if (lbl_806D1010 == 0) {
-        lbl_806D1010 = new StrPcb(0x1FF);
+    if (StrPcb_bss_806D1010 == 0) {
+        StrPcb_bss_806D1010 = new StrPcb(0x1FF);
     }
 }
 
@@ -52,7 +52,7 @@ inline StrPcb::~StrPcb()
 
 extern "C" void StrPcb_Shutdown(void)
 {
-    delete lbl_806D1010;
-    lbl_806D1010 = 0;
+    delete StrPcb_bss_806D1010;
+    StrPcb_bss_806D1010 = 0;
 }
 

@@ -30,7 +30,7 @@ unsigned char SetCourseParams_bss_805B24CC[0xA0];    /* rank rows [2][5], 0x10 e
 unsigned char RaceResult_StoreLatest_bss_805B256C[0x14];    /* latest result */
 unsigned char SetCourseParams_bss_805B2580[0x20000]; /* four 0x8000 banks */
 unsigned char g_playerData[0x1DC];
-unsigned char lbl_805D275C[0x1DC];
+unsigned char SetCourseParams_bss_805D275C[0x1DC];
 unsigned char RaceSlot_ResetAll_bss_805D2938[0x10];    /* per-slot counters (written 8 wide) */
 unsigned char SetCourseParams_bss_805D2948[0x160];   /* 8 rank slots, 0x2C each */
 }
@@ -339,7 +339,7 @@ int VSMode_SeedRandomItemSequence(int slot, int exclude, int count)
 #define g_reverseRoundFlag g_reverseRoundFlag_p4
 #define g_timerModeEnabled g_timerModeEnabled_p4
 #define SetCourseParams_rodata_80320604 lbl_80320604_p4
-#define lbl_80401118 lbl_80401118_p4
+#define RaceScene_GetPerspFovyForCup_data_80401118 lbl_80401118_p4
 #define GetCoinSpawnTable_data_8040B218 lbl_8040B218_p4
 #define DebugOverlay_GetCupLabel_data_8040B318 lbl_8040B318_p4
 #define SetCourseParams_data_8040B90C lbl_8040B90C_p4
@@ -590,7 +590,7 @@ extern DisplayState lbl_80598A60;
 extern CourseData SetCourseParams_data_8040B90C[][2];
 extern void *GetCoinSpawnTable_data_8040B218[][2][2][2];
 
-extern unsigned char lbl_80401118[];
+extern unsigned char RaceScene_GetPerspFovyForCup_data_80401118[];
 extern CharacterData g_characterDataTable[15];
 extern void *DebugOverlay_GetLongRoundLabel_data_806CF100[2];
 extern void *DebugOverlay_GetCupLabel_data_8040B318[17];
@@ -928,7 +928,7 @@ void *GetKartModelNameEntry(int chara, int kart)
     if (kart == 3) {
         k = 2;
     }
-    return lbl_80401118 + k * 0x9C + chara * 0xC;
+    return RaceScene_GetPerspFovyForCup_data_80401118 + k * 0x9C + chara * 0xC;
 }
 
 void *GetCharacterName(int i)
@@ -1093,7 +1093,7 @@ void SetReverseRoundFlag(int v)
 #undef g_reverseRoundFlag
 #undef g_timerModeEnabled
 #undef SetCourseParams_rodata_80320604
-#undef lbl_80401118
+#undef RaceScene_GetPerspFovyForCup_data_80401118
 #undef GetCoinSpawnTable_data_8040B218
 #undef DebugOverlay_GetCupLabel_data_8040B318
 #undef SetCourseParams_data_8040B90C
@@ -1137,7 +1137,7 @@ void SetReverseRoundFlag(int v)
 #define RaceResult_StoreLatest_bss_805B256C (*(struct LapExtra *)RaceResult_StoreLatest_bss_805B256C)
 #define SetCourseParams_bss_805B2580 ((unsigned char *)SetCourseParams_bss_805B2580)
 #define g_playerData ((unsigned char *)g_playerData)
-#define lbl_805D275C ((unsigned char *)lbl_805D275C)
+#define SetCourseParams_bss_805D275C ((unsigned char *)SetCourseParams_bss_805D275C)
 #define RaceSlot_ResetAll_bss_805D2938 ((int *)RaceSlot_ResetAll_bss_805D2938)
 #define SetCourseParams_bss_805D2948 ((RankSlot *)SetCourseParams_bss_805D2948)
 #pragma exceptions on
@@ -1307,7 +1307,7 @@ int SetCourseParams(int cup, int longRound, int variant, int reverse)
 #undef SetCourseParams_bss_805B24CC
 #undef RaceResult_StoreLatest_bss_805B256C
 #undef SetCourseParams_bss_805B2580
-#undef lbl_805D275C
+#undef SetCourseParams_bss_805D275C
 #undef RaceSlot_ResetAll_bss_805D2938
 #undef SetCourseParams_bss_805D2948
 #pragma cplusplus off

@@ -16,16 +16,16 @@
 extern unsigned char lbl_806D3290[], lbl_806D3294[], lbl_806D3298[], lbl_806D32A0[], lbl_806D32A4[];
 /* owned pool .rodata 0x80312850..0x80312DEC (tools/data2c.py) */
 #pragma force_active on
-const char lbl_80312850[12] = "CHECKING...";
+const char Card_rodata_80312850[12] = "CHECKING...";
 static const char *const lbl_8031285C[6] = {
-    (const char *)lbl_806D3290, lbl_80312850, (const char *)lbl_806D3294,
+    (const char *)lbl_806D3290, Card_rodata_80312850, (const char *)lbl_806D3294,
     (const char *)lbl_806D3298, (const char *)lbl_806D3290, (const char *)lbl_806D3290
 };
 const unsigned int data_803FE480_rodata_80312874[4] = { 0x975C917A, 0x82B582C8, 0x82A297E1, 0x8A4F0000 };
 const char lbl_80312884[] = "Program error";
 const unsigned int data_803FE480_rodata_80312894[9] = { 0x836E8393, 0x8368838B, 0x82C98EE8, 0x82F09047, 0x82EA82C8, 0x82A282C5, 0x82AD82BE, 0x82B382A2, 0x00000000 };
 const char lbl_803128B8[] = "Do not touch wheel";
-const unsigned int lbl_803128CC[6] = { 0x8C5788F5, 0x82F08CC4, 0x82F182C5, 0x82AD82BE, 0x82B382A2, 0x00000000 };
+const unsigned int CardTaskManager_RenderOverlay_rodata_803128CC[6] = { 0x8C5788F5, 0x82F08CC4, 0x82F182C5, 0x82AD82BE, 0x82B382A2, 0x00000000 };
 const char lbl_803128E4[] = "Please call an attendant";
 const unsigned int data_803FE480_rodata_80312900[7] = { 0x836E8393, 0x8368838B, 0x82C988D9, 0x8FED82AA, 0x82A082E8, 0x82DC82B7, 0x00000000 };
 const char lbl_8031291C[] = "Wheel error";
@@ -54,7 +54,7 @@ const char lbl_80312B74[] = "Card R/W will be cleaned";
 const unsigned int CardTaskManager_RenderOverlay_rodata_80312B90[3] = { 0x8EC08D73, 0x82B582DC, 0x82B70000 };
 const unsigned int CardTaskManager_RenderOverlay_rodata_80312B9C[3] = { 0x8358834C, 0x83628376, 0x00000000 };
 const void *const CardPrinterChecker_Draw_rodata_80312BA8[26] = {
-    (void *)&lbl_803128CC,
+    (void *)&CardTaskManager_RenderOverlay_rodata_803128CC,
     (void *)&lbl_803128E4,
     (void *)&CardTaskManager_RenderOverlay_rodata_803129B0,
     (void *)&lbl_803129CC,
@@ -90,7 +90,7 @@ const char lbl_80312C98[] = "Press Item button or Versus Cancel Button";
 const void *const CameraChecker_Draw_rodata_80312CC4[64] = {
     (void *)0x43540000,
     (void *)0x43800000,
-    (void *)&lbl_803128CC,
+    (void *)&CardTaskManager_RenderOverlay_rodata_803128CC,
     (void *)0x1,
     (void *)0xFF,
     (void *)0xFF,

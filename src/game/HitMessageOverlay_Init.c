@@ -7,16 +7,16 @@
 extern char FlowFader_vtable_80419DC8[];      /* TweenBase vtable */
 extern char lbl_80419DE0[];      /* TweenInterp vtable */
 
-extern unsigned char lbl_806D1478;
+extern unsigned char HitMessageOverlay_bss_806D1478;
 extern unsigned char lbl_806CF270;
-extern int lbl_806CF274;
-extern int lbl_806CF278;
-extern int lbl_806D147C;
-extern int lbl_806D1480;
-extern float lbl_806D1484;
-extern float lbl_806D1488;
-extern TweenInterp *lbl_806D148C;
-extern TweenInterp *lbl_806D1490;
+extern int HitMessageOverlay_data_806CF274;
+extern int HitMessageOverlay_data_806CF278;
+extern int HitMessageOverlay_bss_806D147C;
+extern int HitMessageOverlay_bss_806D1480;
+extern float HitMessageOverlay_bss_806D1484;
+extern float HitMessageOverlay_bss_806D1488;
+extern TweenInterp *HitMessageOverlay_bss_806D148C;
+extern TweenInterp *HitMessageOverlay_bss_806D1490;
 
 extern const float lbl_806D4E90; /* 0.0 */
 extern const float lbl_806D4EE0; /* 0.2 */
@@ -64,19 +64,19 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 #pragma exceptions off
 int HitMessageOverlay_Init(void)
 {
-    if (lbl_806D1478 == 1) {
+    if (HitMessageOverlay_bss_806D1478 == 1) {
         return 0;
     }
     lbl_806CF270 = 1;
-    lbl_806D1478 = 1;
-    lbl_806CF274 = -1;
-    lbl_806CF278 = -1;
-    lbl_806D147C = 0;
-    lbl_806D1480 = 0;
-    lbl_806D1484 = lbl_806D4E90;
-    lbl_806D1488 = lbl_806D4EE0;
-    lbl_806D148C = TweenInterp_New();
-    lbl_806D1490 = TweenInterp_New();
+    HitMessageOverlay_bss_806D1478 = 1;
+    HitMessageOverlay_data_806CF274 = -1;
+    HitMessageOverlay_data_806CF278 = -1;
+    HitMessageOverlay_bss_806D147C = 0;
+    HitMessageOverlay_bss_806D1480 = 0;
+    HitMessageOverlay_bss_806D1484 = lbl_806D4E90;
+    HitMessageOverlay_bss_806D1488 = lbl_806D4EE0;
+    HitMessageOverlay_bss_806D148C = TweenInterp_New();
+    HitMessageOverlay_bss_806D1490 = TweenInterp_New();
     PreloadResource(0xC6C);
     PreloadResource(0xC6D);
     PreloadResource(0xC6E);

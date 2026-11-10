@@ -13,13 +13,13 @@ extern "C" unsigned char fn_801C6744(FigureSlotView* self,int index) {
         if(!slot->sprite) slot->sprite=new FigureSprite(0x182,0,0);
         else Sprite_SetupAnim(slot->sprite,0x182,0,0);
         if(self->second == 0 && index == 7 && !self->unlock0)
-            Sprite_SetAnimParam(slot->sprite,0x1777,lbl_8049AD58[index+1].label);
+            Sprite_SetAnimParam(slot->sprite,0x1777,clFlowCup_data_8049AD58[index+1].label);
         else if(self->second == 1 && index == 7 && !self->unlock1)
-            Sprite_SetAnimParam(slot->sprite,0x1777,lbl_8049AD58[index+1].label);
-        else Sprite_SetAnimParam(slot->sprite,0x1777,lbl_8049AD58[index].label);
-        Sprite_SetAnimParam(slot->sprite,0x1780,lbl_8049AD58[index].sub);
+            Sprite_SetAnimParam(slot->sprite,0x1777,clFlowCup_data_8049AD58[index+1].label);
+        else Sprite_SetAnimParam(slot->sprite,0x1777,clFlowCup_data_8049AD58[index].label);
+        Sprite_SetAnimParam(slot->sprite,0x1780,clFlowCup_data_8049AD58[index].sub);
         fn_801A0550(slot->sprite);
-        slot->sprite->SetPos(lbl_8049AD58[index].x,lbl_806D9C80+lbl_8049AD58[index].y);
+        slot->sprite->SetPos(clFlowCup_data_8049AD58[index].x,lbl_806D9C80+clFlowCup_data_8049AD58[index].y);
         slot->sprite->SetScale(lbl_806D9C70);
         fn_8019FF6C(slot->sprite,1);
         break;
@@ -30,21 +30,21 @@ extern "C" unsigned char fn_801C6744(FigureSlotView* self,int index) {
             if(!slot->sprite) slot->sprite=new FigureSprite(0x181,0,0);
             else Sprite_SetupAnim(slot->sprite,0x181,0,0);
             if(self->second == 0 && index == 7 && !self->unlock0)
-                Sprite_SetAnimParam(slot->sprite,0x1777,lbl_8049AD58[index+1].label);
+                Sprite_SetAnimParam(slot->sprite,0x1777,clFlowCup_data_8049AD58[index+1].label);
             else if(self->second == 1 && index == 7 && !self->unlock1)
-                Sprite_SetAnimParam(slot->sprite,0x1777,lbl_8049AD58[index+1].label);
-            else Sprite_SetAnimParam(slot->sprite,0x1777,lbl_8049AD58[index].label);
-            Sprite_SetAnimParam(slot->sprite,0x1780,lbl_8049AD58[index].sub);
+                Sprite_SetAnimParam(slot->sprite,0x1777,clFlowCup_data_8049AD58[index+1].label);
+            else Sprite_SetAnimParam(slot->sprite,0x1777,clFlowCup_data_8049AD58[index].label);
+            Sprite_SetAnimParam(slot->sprite,0x1780,clFlowCup_data_8049AD58[index].sub);
             fn_801A0550(slot->sprite);
-            slot->sprite->SetPos(lbl_8049AD58[index].x,lbl_806D9C84+lbl_8049AD58[index].y);
+            slot->sprite->SetPos(clFlowCup_data_8049AD58[index].x,lbl_806D9C84+clFlowCup_data_8049AD58[index].y);
             slot->sprite->SetScale(lbl_806D9C88);
             slot->phase++;
         } else if(slot->phase == 1) {
-            float dx=lbl_806D9C74-lbl_8049AD58[index].x;
-            float dy=lbl_806D9C8C-lbl_8049AD58[index].y;
+            float dx=lbl_806D9C74-clFlowCup_data_8049AD58[index].x;
+            float dy=lbl_806D9C8C-clFlowCup_data_8049AD58[index].y;
             slot->ticks++;
-            float x=InterpolateFigurePosition(lbl_8049AD58[index].x,dx,slot->ticks);
-            float y=InterpolateFigurePosition(lbl_8049AD58[index].y,dy,slot->ticks);
+            float x=InterpolateFigurePosition(clFlowCup_data_8049AD58[index].x,dx,slot->ticks);
+            float y=InterpolateFigurePosition(clFlowCup_data_8049AD58[index].y,dy,slot->ticks);
             slot->sprite->SetPos(x,y);
             if(slot->ticks>=12) slot->phase++;
         }

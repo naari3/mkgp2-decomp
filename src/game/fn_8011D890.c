@@ -31,14 +31,14 @@ extern TEXDescriptor *TEXGetPaletteEntry(void *palette, unsigned int index);
 extern void GXLoadTlut(GXTlutObj *obj, unsigned int name);
 extern void GXLoadTexObj(GXTexObj *obj, int map);
 
-extern ResourceSlot lbl_806573E8[600];
+extern ResourceSlot SpriteHandle_bss_806573E8[600];
 
 static inline ResourceSlot *FindSlot(int group)
 {
     int i;
     for (i = 0; i < 600; i++) {
-        if (group == lbl_806573E8[i].group) {
-            return &lbl_806573E8[i];
+        if (group == SpriteHandle_bss_806573E8[i].group) {
+            return &SpriteHandle_bss_806573E8[i];
         }
     }
     return 0;

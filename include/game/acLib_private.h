@@ -64,12 +64,12 @@ int fn_80255154(int board, int id);
 
 
 extern "C" {
-extern MediaConfig lbl_80679E28;
+extern MediaConfig acLib_tail_bss_80679E28;
 extern unsigned int acLib_nm1_bss_80679E34[8];
 extern unsigned int acLib_nm1_bss_80679E54[32];
 extern MediaRequestSlot acLib_tail_bss_80679ED4;
-extern int lbl_806D1AD0;
-extern int lbl_806D1AD4;
+extern int acLib_tail_bss_806D1AD0;
+extern int acLib_tail_bss_806D1AD4;
 extern void *acLib_tail_data_806D0A90;
 int fn_80294810(int a, int b, int c);
 int fn_8028BAD0(void);

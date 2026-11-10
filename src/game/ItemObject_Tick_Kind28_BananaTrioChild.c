@@ -5,7 +5,7 @@
  * its 600-frame life ends. */
 #include "game/types/Vec.h"
 
-extern const char lbl_8032E060[];
+extern const char ItemObject_Tick_rodata_8032E060[];
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);
 extern void SpriteSlot_SetJointVisibilityByName(void *slot, const char *name, int a, int b);
 extern void SpriteSlot_Container_Free(void *self);
@@ -43,7 +43,7 @@ void ItemObject_Tick_Kind28_BananaTrioChild(unsigned char *self)
     Vec local;
     Vec pos;
     Vec rot;
-    const char *names = lbl_8032E060;
+    const char *names = ItemObject_Tick_rodata_8032E060;
 
     switch (S8(0xC8)) {
     case 0:

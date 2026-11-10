@@ -92,7 +92,7 @@ unsigned char PCBComm_BuildBroadcastSlot_bss_805A60C4[0x54];
 unsigned char g_pcbSyncTable[0x1C];
 unsigned char PCBCheck_ProcessLinks_bss_805A6134[0x10];
 unsigned char lbl_805A6144[0x10];
-PcbRecvSlot lbl_805A6154[4];
+PcbRecvSlot PCBCheckRecv_bss_805A6154[4];
 unsigned char PCBComm_PackAndTriggerCardSnapshot_bss_805A8A44[4][0x45];
 unsigned char g_ringBufferBase[64][0xDC];
 unsigned char PCBCheckRecv_bss_805AC258[2][0x1C];
@@ -133,7 +133,7 @@ int PCBCheck_RecvLinkData(unsigned char advanceRead)
     if (g_pcbCommEnabled == 0) {
         return 0;
     }
-    slot = lbl_805A6154;
+    slot = PCBCheckRecv_bss_805A6154;
     output = g_ringBufferBase[0];
     status = PCBComm_PackAndTriggerCardSnapshot_bss_805A8A44[0];
     localSample = PCBComm_BuildBroadcastSlot_bss_805A60C4 + 0x2C;
@@ -261,7 +261,7 @@ int PCBComm_SendToAllPeers(void)
     snapshot = Payload(PCBCheckRecv_bss_805AC258[0], sizeof(PCBCheckRecv_bss_805AC258[0]));
     block = Payload(PCBCheckRecv_bss_805A5EC0, sizeof(int));
     scene = g_currentSceneState;
-    peer = ((SendPeerSlot *)lbl_805A6154);
+    peer = ((SendPeerSlot *)PCBCheckRecv_bss_805A6154);
     for (i = 0; i < 4; i++, peer++) {
         void *connection = peer->connection;
         if (connection == 0) continue;
@@ -371,7 +371,7 @@ static inline u8 PeersReady(int role)
     u8 ready = 1;
     if (role != 0) {
         unsigned int scene = g_currentSceneState;
-        SyncPeerSlot* peer = (SyncPeerSlot *)lbl_805A6154;
+        SyncPeerSlot* peer = (SyncPeerSlot *)PCBCheckRecv_bss_805A6154;
         for (i = 0; i < 4; ++i, ++peer)
             if (peer->first.bytes.header.role == role &&
                 ((peer->first.word >> 15) & 255) != scene) ready = 0;
@@ -384,7 +384,7 @@ static inline void PeersReady2(int role, u8 *ready)
     int i;
     if (role != 0) {
         unsigned int scene = g_currentSceneState;
-        SyncPeerSlot* peer = (SyncPeerSlot *)lbl_805A6154;
+        SyncPeerSlot* peer = (SyncPeerSlot *)PCBCheckRecv_bss_805A6154;
         for (i = 0; i < 4; ++i, ++peer)
             if (peer->first.bytes.header.role == role &&
                 ((peer->first.word >> 15) & 255) != scene) *ready = 0;
@@ -480,7 +480,7 @@ int PCBComm_ComputeSyncState(void)
     if (ready == 1) out->scene = g_currentSceneState;
 
     if ((int)out->scene == 12) {
-        CountModeVotes(((SyncPeerSlot *)lbl_805A6154), modeVotes, g_localPcbRole);
+        CountModeVotes(((SyncPeerSlot *)PCBCheckRecv_bss_805A6154), modeVotes, g_localPcbRole);
         winner = 0;
         for (i = 1; i < 3; ++i)
             if (modeVotes[i] > modeVotes[winner]) winner = i;
@@ -493,21 +493,21 @@ int PCBComm_ComputeSyncState(void)
     }
     if ((int)out->scene == 26) {
         int winner = 0;
-        CountTrackVotes(((SyncPeerSlot *)lbl_805A6154), trackVotes, g_localPcbRole);
+        CountTrackVotes(((SyncPeerSlot *)PCBCheckRecv_bss_805A6154), trackVotes, g_localPcbRole);
         for (i = 0; i < 16; ++i)
             if (trackVotes[i] > trackVotes[winner]) winner = i;
         out->choice.half.track = winner;
     }
     if ((int)out->scene == 26) {
         int winner = 0;
-        CountOptionVotes(((SyncPeerSlot *)lbl_805A6154), optionVotes, g_localPcbRole);
+        CountOptionVotes(((SyncPeerSlot *)PCBCheckRecv_bss_805A6154), optionVotes, g_localPcbRole);
         for (i = 0; i < 2; ++i)
             if (optionVotes[i] > optionVotes[winner]) winner = i;
         out->choice.bytes.option = winner;
     }
     if ((int)out->scene == 26 && out->commonItem == -1) {
         CardRow* card = (CardRow *)PCBComm_PackAndTriggerCardSnapshot_bss_805A8A44;
-        firstPeer = ((SyncPeerSlot *)lbl_805A6154);
+        firstPeer = ((SyncPeerSlot *)PCBCheckRecv_bss_805A6154);
         peer = firstPeer;
         cards = PCBComm_ComputeSyncState_rodata_80312234[0];
         role = g_localPcbRole;
@@ -559,7 +559,7 @@ int PCBComm_ComputeSyncState(void)
 #define lbl_806D3160 lbl_806D3160_p1
 #define lbl_806D3164 lbl_806D3164_p1
 #define lbl_806D3168 lbl_806D3168_p1
-#define lbl_805A6154 ((SlotView *)lbl_805A6154)
+#define PCBCheckRecv_bss_805A6154 ((SlotView *)PCBCheckRecv_bss_805A6154)
 #pragma exceptions off
 #pragma use_lmw_stmw on
 /* Only observed overlays; all global storage remains externally owned. */
@@ -601,7 +601,7 @@ int PCBComm_UpdateSyncPhase5(void)
         PCBCheckRecv_bss_806D11C0[1] = lbl_806D3160;
         return 1;
     }
-    slot = slots = lbl_805A6154;
+    slot = slots = PCBCheckRecv_bss_805A6154;
     phase = phases = g_pcbSyncPhasePerPcb;
     for (i = 0; i < 4;) {
         unsigned int role;
@@ -679,7 +679,7 @@ int PCBComm_UpdateSyncPhase5(void)
 #undef lbl_806D3160
 #undef lbl_806D3164
 #undef lbl_806D3168
-#undef lbl_805A6154
+#undef PCBCheckRecv_bss_805A6154
 
 /* ==== PCBCommPhase1.c ==== */
 #define PhaseFlags PhaseFlags_p2
@@ -690,7 +690,7 @@ int PCBComm_UpdateSyncPhase5(void)
 #define PCBCheckRecv_bss_806D11C0 lbl_806D11C0_p2
 #define lbl_806D3164 lbl_806D3164_p2
 #define lbl_806D316C lbl_806D316C_p2
-#define lbl_805A6154 ((SlotView *)lbl_805A6154)
+#define PCBCheckRecv_bss_805A6154 ((SlotView *)PCBCheckRecv_bss_805A6154)
 #pragma exceptions off
 #pragma use_lmw_stmw off
 /* Observed byte/word overlays only; all storage remains externally owned. */
@@ -730,7 +730,7 @@ int PCBComm_UpdateSyncPhase1(void)
     unsigned char truncate = 0;
     unsigned char reset = 0;
     int i;
-    slot = slots = lbl_805A6154;
+    slot = slots = PCBCheckRecv_bss_805A6154;
     phase = phases = g_pcbSyncPhasePerPcb;
     for (i = 0; i < 4;) {
         unsigned int role;
@@ -801,7 +801,7 @@ int PCBComm_UpdateSyncPhase1(void)
 #undef PCBCheckRecv_bss_806D11C0
 #undef lbl_806D3164
 #undef lbl_806D316C
-#undef lbl_805A6154
+#undef PCBCheckRecv_bss_805A6154
 
 /* ==== CommBroadcast.c ==== */
 #define CommBroadcast_CurrentEntry CommBroadcast_CurrentEntry_p3
@@ -918,7 +918,7 @@ unsigned char CommBroadcast_ScanForMySyncMatch(void)
 #define lbl_806D315C lbl_806D315C_p4
 #define lbl_806D3170 lbl_806D3170_p4
 #define lbl_806D3178 lbl_806D3178_p4
-#define lbl_805A6154 ((PcbSlot *)lbl_805A6154)
+#define PCBCheckRecv_bss_805A6154 ((PcbSlot *)PCBCheckRecv_bss_805A6154)
 #pragma exceptions on
 #pragma use_lmw_stmw off
 /* Boot-time PCB link check screen, 0x80084A84..0x80084D98. */
@@ -972,9 +972,9 @@ extern "C" int BootPCBCheck_Display(void)
         return 0;
     }
     for (i = 0; i < 4; i++) {
-        if (lbl_805A6154[i].flags.disabled == 1) {
+        if (PCBCheckRecv_bss_805A6154[i].flags.disabled == 1) {
             DrawText(PCBCheckRecv_bss_806D11B8, 0x54, (i + 1) * 0x18, 7, lbl_806D315C, lbl_80312244, i + 1);
-        } else if (lbl_805A6154[i].primary != 0 && lbl_805A6154[i].secondary != 0) {
+        } else if (PCBCheckRecv_bss_805A6154[i].primary != 0 && PCBCheckRecv_bss_805A6154[i].secondary != 0) {
             DrawText(PCBCheckRecv_bss_806D11B8, 0x54, (i + 1) * 0x18, 7, lbl_806D315C, lbl_80312244, i + 1);
         } else {
             DrawText(PCBCheckRecv_bss_806D11B8, 0x54, (i + 1) * 0x18, 7, lbl_806D315C, lbl_80312254, i + 1);
@@ -1000,9 +1000,9 @@ extern "C" int BootPCBCheck_Poll(void)
     }
     PCBCheckRecv_bss_806D11BC--;
     for (i = 0; i < 4; i++) {
-        if (lbl_805A6154[i].flags.disabled == 1) {
+        if (PCBCheckRecv_bss_805A6154[i].flags.disabled == 1) {
             n++;
-        } else if (lbl_805A6154[i].flags.ready == 1 && lbl_805A6154[i].flags.flag4 == 1) {
+        } else if (PCBCheckRecv_bss_805A6154[i].flags.ready == 1 && PCBCheckRecv_bss_805A6154[i].flags.flag4 == 1) {
             n++;
         }
     }
@@ -1026,7 +1026,7 @@ extern "C" int BootPCBCheck_Poll(void)
 #undef lbl_806D315C
 #undef lbl_806D3170
 #undef lbl_806D3178
-#undef lbl_805A6154
+#undef PCBCheckRecv_bss_805A6154
 #pragma cplusplus off
 
 /* ==== BootNotice_CheckEnterCondition.c ==== */
@@ -1226,7 +1226,7 @@ void SetPcbScratchFlag_806d11a4(void) {
 #define g_localPcbRole g_localPcbRole_p8
 #define g_myPcbId g_myPcbId_p8
 #define g_playerData g_playerData_p8
-#define lbl_805A6154 ((SnapshotSlot *)lbl_805A6154)
+#define PCBCheckRecv_bss_805A6154 ((SnapshotSlot *)PCBCheckRecv_bss_805A6154)
 #pragma exceptions on
 #pragma use_lmw_stmw off
 /* Observed communication-slot bytes only; all storage is external. */
@@ -1262,7 +1262,7 @@ int PCBComm_PackAndTriggerCardSnapshot(void)
     if (g_localPcbRole == 0) return 0;
     card_pack(g_playerData, PCBComm_PackAndTriggerCardSnapshot_bss_805A8A44[g_myPcbId - 1], 1);
     if (g_isCommHost == 0) {
-        SnapshotSlot* slot = lbl_805A6154;
+        SnapshotSlot* slot = PCBCheckRecv_bss_805A6154;
         int local = g_myPcbId - 1;
         int role = g_localPcbRole;
         int i;
@@ -1281,14 +1281,14 @@ int PCBComm_PackAndTriggerCardSnapshot(void)
 #undef g_localPcbRole
 #undef g_myPcbId
 #undef g_playerData
-#undef lbl_805A6154
+#undef PCBCheckRecv_bss_805A6154
 
 /* ==== ResetIOPorts.c ==== */
 #define GetDisplayContext GetDisplayContext_p9
 #define g_localPcbRole g_localPcbRole_p9
 #define g_myPcbId g_myPcbId_p9
 #define PCBCheckRecv_bss_806D11B0 lbl_806D11B0_p9
-#define lbl_805A6154 ((ResetIOPort *)lbl_805A6154)
+#define PCBCheckRecv_bss_805A6154 ((ResetIOPort *)PCBCheckRecv_bss_805A6154)
 #pragma exceptions off
 #pragma use_lmw_stmw off
 /* ResetIOPorts @ 0x80084FF0, 192 bytes. */
@@ -1310,7 +1310,7 @@ int ResetIOPorts(void) {
     }
     PCBCheckRecv_bss_806D11B0 = GetDisplayContext(g_myPcbId - 1);
     role = g_localPcbRole;
-    port = lbl_805A6154;
+    port = PCBCheckRecv_bss_805A6154;
     for (i = 0; i < 4; i++, port++) {
         if (((port->header >> 4) & 7) == role) {
             port->status = 0x40;
@@ -1323,7 +1323,7 @@ int ResetIOPorts(void) {
 #undef g_localPcbRole
 #undef g_myPcbId
 #undef PCBCheckRecv_bss_806D11B0
-#undef lbl_805A6154
+#undef PCBCheckRecv_bss_805A6154
 
 /* ==== PcbSyncTable_Ptr.c ==== */
 #pragma exceptions off
@@ -1412,7 +1412,7 @@ void CommBroadcast_ClearTable(void)
 /* ==== PcbSlotReset.c ==== */
 #define ResetScratchSlot ResetScratchSlot_p13
 #define memset memset_p13
-#define lbl_805A6154 ((PcbScratchSlot *)lbl_805A6154)
+#define PCBCheckRecv_bss_805A6154 ((PcbScratchSlot *)PCBCheckRecv_bss_805A6154)
 #pragma exceptions on
 #pragma use_lmw_stmw off
 #include "game/PcbSlotReset_private.h"
@@ -1440,12 +1440,12 @@ void PcbSlot_ResetScratchAreas(void)
 {
     int index;
     for (index = 0; index < 4; ++index) {
-        ResetScratchSlot(&lbl_805A6154[index], index);
+        ResetScratchSlot(&PCBCheckRecv_bss_805A6154[index], index);
     }
 }
 #undef ResetScratchSlot
 #undef memset
-#undef lbl_805A6154
+#undef PCBCheckRecv_bss_805A6154
 
 /* ==== RingBuffer_Getters.c ==== */
 #define g_isCommHost g_isCommHost_p14
@@ -1503,7 +1503,7 @@ void *RingBuffer_GetKartSlot(int kartIdx) {
 #define ReadyFlags ReadyFlags_p15
 #define g_myPcbId g_myPcbId_p15
 #define lbl_806D3160 lbl_806D3160_p15
-#define lbl_805A6154 ((unsigned char *)lbl_805A6154)
+#define PCBCheckRecv_bss_805A6154 ((unsigned char *)PCBCheckRecv_bss_805A6154)
 #pragma exceptions off
 #pragma use_lmw_stmw off
 /* Observed PCB storage views; definitions remain in the existing global units. */
@@ -1514,13 +1514,13 @@ extern float lbl_806D3160;
 void *PcbSlot_GetByIndex(int index)
 {
     if (index < 0 || index >= 4) return 0;
-    return lbl_805A6154 + index * 0xA3C;
+    return PCBCheckRecv_bss_805A6154 + index * 0xA3C;
 }
 
 unsigned int PcbSlot_GetCharIdByte(int index)
 {
     if (index < 0 || index >= 4) return 0;
-    return (*(unsigned int *)(lbl_805A6154 + index * 0xA3C) >> 15) & 0xFF;
+    return (*(unsigned int *)(PCBCheckRecv_bss_805A6154 + index * 0xA3C) >> 15) & 0xFF;
 }
 
 typedef struct {
@@ -1546,7 +1546,7 @@ static inline int ReadyByte(const ReadyFlags *ready)
 int PcbSlot_IsReadyByIndex(int index)
 {
     if (index < 0 || index >= 4) return 0;
-    return ReadyByte((ReadyFlags *)(lbl_805A6154 + index * 0xA3C + 0xA34));
+    return ReadyByte((ReadyFlags *)(PCBCheckRecv_bss_805A6154 + index * 0xA3C + 0xA34));
 }
 
 float PcbSyncTable_LookupValueByState(int state)
@@ -1573,7 +1573,7 @@ int PcbSyncTable_MyFlagIsSet(void)
 #undef ReadyFlags
 #undef g_myPcbId
 #undef lbl_806D3160
-#undef lbl_805A6154
+#undef PCBCheckRecv_bss_805A6154
 
 /* ==== PCBCommHostConfirm.c ==== */
 #define SetLocalPcbRole SetLocalPcbRole_p16
@@ -1682,7 +1682,7 @@ int PCBComm_PromoteToClientConfirmed(void) {
 #define g_currentSceneState g_currentSceneState_p19
 #define g_localPcbRole g_localPcbRole_p19
 #define g_myPcbId g_myPcbId_p19
-#define lbl_805A6154 ((PcbSlot *)lbl_805A6154)
+#define PCBCheckRecv_bss_805A6154 ((PcbSlot *)PCBCheckRecv_bss_805A6154)
 #define PCBCheckRecv_bss_805AC258 ((signed char *)PCBCheckRecv_bss_805AC258)
 #pragma exceptions off
 #pragma use_lmw_stmw off
@@ -1797,7 +1797,7 @@ int PcbSync_AnyJoinedPcbHasReadyFlagBit1(void)
     int i;
 
     for (i = 0; i < 4; i++) {
-        if (PCB_IS_JOINED(&lbl_805A6154[i], i, g_myPcbId - 1) && lbl_805A6154[i].hdr.bits.readyBit1 == 1) {
+        if (PCB_IS_JOINED(&PCBCheckRecv_bss_805A6154[i], i, g_myPcbId - 1) && PCBCheckRecv_bss_805A6154[i].hdr.bits.readyBit1 == 1) {
             return 1;
         }
     }
@@ -1810,7 +1810,7 @@ static inline int PcbSync_CountJoined(void)
     int i;
 
     for (i = 0; i < 4; i++) {
-        if (PCB_IS_JOINED(&lbl_805A6154[i], i, g_myPcbId - 1)) {
+        if (PCB_IS_JOINED(&PCBCheckRecv_bss_805A6154[i], i, g_myPcbId - 1)) {
             n++;
         }
     }
@@ -1823,7 +1823,7 @@ int PcbSync_CountJoinedPcbsAdvancedKarts(void)
     int i;
 
     for (i = 0; i < 4; i++) {
-        if (PCB_IS_JOINED(&lbl_805A6154[i], i, g_myPcbId - 1) && PCB_CHAR_ID(&lbl_805A6154[i]) >= 8) {
+        if (PCB_IS_JOINED(&PCBCheckRecv_bss_805A6154[i], i, g_myPcbId - 1) && PCB_CHAR_ID(&PCBCheckRecv_bss_805A6154[i]) >= 8) {
             n--;
         }
     }
@@ -1836,7 +1836,7 @@ int PcbSync_CountJoinedPcbs(void)
     int i;
 
     for (i = 0; i < 4; i++) {
-        if (PCB_IS_JOINED(&lbl_805A6154[i], i, g_myPcbId - 1)) {
+        if (PCB_IS_JOINED(&PCBCheckRecv_bss_805A6154[i], i, g_myPcbId - 1)) {
             n++;
         }
     }
@@ -1852,8 +1852,8 @@ int PcbSync_AllKartsInValidSelectState(void)
         return 0;
     }
     for (i = 0; i < 4; i++) {
-        state = PCB_CHAR_ID(&lbl_805A6154[i]);
-        if (state != 0 && state < 7 && lbl_805A6154[i].hdr.bits.team == 0 && state != 3 && state != 5) {
+        state = PCB_CHAR_ID(&PCBCheckRecv_bss_805A6154[i]);
+        if (state != 0 && state < 7 && PCBCheckRecv_bss_805A6154[i].hdr.bits.team == 0 && state != 3 && state != 5) {
             return 0;
         }
     }
@@ -1877,7 +1877,7 @@ int PcbSync_AlwaysZero_Stub(void)
 #undef g_myPcbId
 #undef PCB_CHAR_ID
 #undef PCB_IS_JOINED
-#undef lbl_805A6154
+#undef PCBCheckRecv_bss_805A6154
 #undef PCBCheckRecv_bss_805AC258
 
 /* ==== SyncSlot_ApplyCourseChoice.c ==== */
@@ -1951,7 +1951,7 @@ int SyncSlot_ApplyCourseChoice(void) {
 #define lbl_806D318C lbl_806D318C_p21
 #define lbl_806D3190 lbl_806D3190_p21
 #define lbl_806D3194 lbl_806D3194_p21
-#define lbl_805A6154 ((PcbLinkSlot *)lbl_805A6154)
+#define PCBCheckRecv_bss_805A6154 ((PcbLinkSlot *)PCBCheckRecv_bss_805A6154)
 #pragma exceptions off
 #pragma use_lmw_stmw on
 /*
@@ -2071,27 +2071,27 @@ void DebugOverlay_DumpPcbState(void)
         OverlayText(1, 0, 1, lbl_8031226C, g_myPcbId, PcbListener_GetStateName(listener), listener->port);
     }
     for (i = 0; i < 4; i++) {
-        r = lbl_805A6154[i].readIndex;
-        w = lbl_805A6154[i].writeIndex;
+        r = PCBCheckRecv_bss_805A6154[i].readIndex;
+        w = PCBCheckRecv_bss_805A6154[i].writeIndex;
         for (pending = 0; w != r % 64; r++, pending++) {
         }
-        if (lbl_805A6154[i].flags.byte.disabled == 1) {
-            OverlayText(1, 0, i + 2, lbl_80312284, lbl_805A6154[i].flags.half.id,
-                        lbl_805A6154[i].hdr.bits.team, PCB_CHAR_ID(&lbl_805A6154[i]), pending);
+        if (PCBCheckRecv_bss_805A6154[i].flags.byte.disabled == 1) {
+            OverlayText(1, 0, i + 2, lbl_80312284, PCBCheckRecv_bss_805A6154[i].flags.half.id,
+                        PCBCheckRecv_bss_805A6154[i].hdr.bits.team, PCB_CHAR_ID(&PCBCheckRecv_bss_805A6154[i]), pending);
         } else {
-            primary = lbl_805A6154[i].primary;
-            if (primary != 0 && (secondary = lbl_805A6154[i].secondary) != 0) {
+            primary = PCBCheckRecv_bss_805A6154[i].primary;
+            if (primary != 0 && (secondary = PCBCheckRecv_bss_805A6154[i].secondary) != 0) {
                 closeCount = PcbConn_GetCloseCount(primary);
                 portCycle = PcbConn_GetPortCycle(primary);
                 secondaryName = PcbConn_GetStateName(secondary);
-                OverlayText(1, 0, i + 2, lbl_803122A8, lbl_805A6154[i].flags.half.id,
-                            PcbConn_GetStateName(lbl_805A6154[i].primary), portCycle, closeCount,
-                            secondaryName, lbl_805A6154[i].hdr.bits.team,
-                            PCB_CHAR_ID(&lbl_805A6154[i]), pending, secondary->field20);
+                OverlayText(1, 0, i + 2, lbl_803122A8, PCBCheckRecv_bss_805A6154[i].flags.half.id,
+                            PcbConn_GetStateName(PCBCheckRecv_bss_805A6154[i].primary), portCycle, closeCount,
+                            secondaryName, PCBCheckRecv_bss_805A6154[i].hdr.bits.team,
+                            PCB_CHAR_ID(&PCBCheckRecv_bss_805A6154[i]), pending, secondary->field20);
             } else {
-                OverlayText(1, 0, i + 2, lbl_803122DC, lbl_805A6154[i].flags.half.id,
+                OverlayText(1, 0, i + 2, lbl_803122DC, PCBCheckRecv_bss_805A6154[i].flags.half.id,
                             PcbConn_GetStateName(primary), primary->portCycle,
-                            primary->closeCount, lbl_805A6154[i].secondary);
+                            primary->closeCount, PCBCheckRecv_bss_805A6154[i].secondary);
             }
         }
     }
@@ -2130,7 +2130,7 @@ void DebugOverlay_DumpPcbState(void)
 #undef lbl_806D3190
 #undef lbl_806D3194
 #undef PCB_CHAR_ID
-#undef lbl_805A6154
+#undef PCBCheckRecv_bss_805A6154
 
 /* C++ parts. Every declaration of both parts comes before the first C++
  * function: MWCC emits pending weak inline copies (FKTex::~FKTex) at the
@@ -2242,7 +2242,7 @@ extern void fn_8011F994(int arg);
 #define memset memset_p23
 #define g_out ((LifecycleConn **)PCBCheck_ProcessLinks_bss_805A6134)
 #define g_in ((LifecycleConn **)lbl_805A6144)
-#define g_slots ((Slot *)lbl_805A6154)
+#define g_slots ((Slot *)PCBCheckRecv_bss_805A6154)
 #define g_ring g_ringBufferBase
 #define g_snaps PCBCheckRecv_bss_805AC258
 #define g_pcbSyncTable (*(Sync *)g_pcbSyncTable)
@@ -2528,7 +2528,7 @@ extern "C" int DrawLinkErrorOverlay(void)
 #define memset memset_p23
 #define g_out ((LifecycleConn **)PCBCheck_ProcessLinks_bss_805A6134)
 #define g_in ((LifecycleConn **)lbl_805A6144)
-#define g_slots ((Slot *)lbl_805A6154)
+#define g_slots ((Slot *)PCBCheckRecv_bss_805A6154)
 #define g_ring g_ringBufferBase
 #define g_snaps PCBCheckRecv_bss_805AC258
 #define g_pcbSyncTable (*(Sync *)g_pcbSyncTable)

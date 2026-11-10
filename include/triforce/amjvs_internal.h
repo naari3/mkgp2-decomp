@@ -151,8 +151,8 @@ extern s32 fn_80293580(void);
 extern void fn_80293AF0(void);
 extern void fn_80293B74(void);
 
-extern JvsMgr lbl_806910B8;
-#define Mgr lbl_806910B8
+extern JvsMgr amjvs_bss_806910B8;
+#define Mgr amjvs_bss_806910B8
 
 extern s16 amjvs_nm3_bss_806D1E30[4];
 extern u32 amjvs_nm7_bss_806D1E38;

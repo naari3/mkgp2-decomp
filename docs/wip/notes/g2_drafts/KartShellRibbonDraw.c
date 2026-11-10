@@ -21,7 +21,7 @@ typedef struct RibbonRodata {
     RibbonUvIdx uvIdx;  /* 0x4F8 */
 } RibbonRodata;
 
-extern RibbonRodata lbl_80328EB8;
+extern RibbonRodata CelebPop17Update_rodata_80328EB8;
 extern const float lbl_806D6DE4;
 extern const float lbl_806D5028; /* 1.0f */
 extern const float lbl_806D5034; /* 0.0f */
@@ -113,7 +113,7 @@ static inline int Ribbon_GetKind(int id)
 
 void KartShellRibbonDraw(unsigned char *self)
 {
-    RibbonRodata *rd = &lbl_80328EB8;
+    RibbonRodata *rd = &CelebPop17Update_rodata_80328EB8;
 
     if (Ribbon_SetupGX()) {
         int color;

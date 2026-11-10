@@ -1145,7 +1145,7 @@ extern const char lbl_803DA248[];
 extern const char lbl_803DA264[];
 extern const char lbl_806DB500[];
 
-extern Vec3f lbl_804EE0E0;
+extern Vec3f DNStartDino_tail_data_804EE0E0;
 static inline float JObjGetTranslationX(HSD_JObj *jobj) {
     if (jobj == 0) {
         __assert(lbl_806DB574, 0x3F1, lbl_806DB57C);

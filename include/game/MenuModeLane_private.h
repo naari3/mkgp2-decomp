@@ -48,7 +48,7 @@ extern unsigned char MenuModeLane_data_806D0050, lbl_806D0051, lbl_806D1290;
 extern unsigned char lbl_806D1264[3];
 extern int lbl_806CF110;
 extern volatile int lbl_806D12C0;
-extern int lbl_804E53B0[3];
+extern int DebugOverlay_RaceConfig_data_804E53B0[3];
 extern char lbl_806D005C[8], lbl_806D0054[8];
 extern char g_playerData[0x2000];
 extern void *MenuScene_vtable_804E5444[], *MenuModeBase_vtable_804E549C[], *lbl_803FE0C8[], *MenuModeLane_data_804E54D8[];

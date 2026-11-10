@@ -311,7 +311,7 @@ static inline void StlList_DtorInline(StlList *l) {
 #pragma exceptions off
 CarObjectManager *CarObjectManager_Dtor(CarObjectManager *self, short flag) { /* 0x80052158 */
     if (self) {
-        self->vtable = lbl_803F76A8;
+        self->vtable = CarObject_data_803F76A8;
         StlList_DtorInline(&self->list);
         if (self) {
             self->vtable = lbl_803F7690;

@@ -4,7 +4,7 @@ void operator delete(void *);
 
 extern "C" {
 extern void GameMode_BaseInit(void *);
-extern char lbl_80419E3C[];  /* GameMode_Title vtable */
+extern char GameMode_Title_data_80419E3C[];  /* GameMode_Title vtable */
 }
 
 struct GameModeTitle {
@@ -13,7 +13,7 @@ struct GameModeTitle {
 
     GameModeTitle() {
         GameMode_BaseInit(this);
-        vtable = lbl_80419E3C;
+        vtable = GameMode_Title_data_80419E3C;
         field4 = 0;
     }
 };

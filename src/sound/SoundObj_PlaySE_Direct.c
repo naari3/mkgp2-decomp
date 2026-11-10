@@ -11,7 +11,7 @@
  *      the sound-id word.
  *   2) If the +0x4 gate byte is clear and the sub pointer at +0xC is
  *      non-null, build a local Vec3 by (a) struct-copying the constant
- *      template at lbl_802EDD24 (12 bytes, all-zero in the rom but emitted
+ *      template at KartItemAudio_PlaySEByItemId_rodata_802EDD24 (12 bytes, all-zero in the rom but emitted
  *      via lwz/stw so source must mirror that shape) and (b) overwriting
  *      each lane with sub->fXX. Pass &local as the second arg to
  *      fn_8016C288, reusing the same channel-id expression (CW 1.3.2
@@ -31,7 +31,7 @@ extern void fn_8016C288(unsigned int sound_id, float *vec);
 
 extern const struct {
     unsigned int a, b, c;
-} lbl_802EDD24;
+} KartItemAudio_PlaySEByItemId_rodata_802EDD24;
 
 #pragma exceptions on
 void SoundObj_PlaySE_Direct(unsigned char *self, unsigned int mask) {
@@ -42,9 +42,9 @@ void SoundObj_PlaySE_Direct(unsigned char *self, unsigned int mask) {
     if (self[4] == 0) {
         void *sub = *(void **)(self + 0xC);
         if (sub != 0) {
-            *(unsigned int *)&local[0] = lbl_802EDD24.a;
-            *(unsigned int *)&local[1] = lbl_802EDD24.b;
-            *(unsigned int *)&local[2] = lbl_802EDD24.c;
+            *(unsigned int *)&local[0] = KartItemAudio_PlaySEByItemId_rodata_802EDD24.a;
+            *(unsigned int *)&local[1] = KartItemAudio_PlaySEByItemId_rodata_802EDD24.b;
+            *(unsigned int *)&local[2] = KartItemAudio_PlaySEByItemId_rodata_802EDD24.c;
             local[0] = *(float *)((char *)sub + 0xC);
             local[1] = *(float *)((char *)sub + 0x1C);
             local[2] = *(float *)((char *)sub + 0x2C);

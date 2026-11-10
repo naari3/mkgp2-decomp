@@ -1145,7 +1145,7 @@ extern const char lbl_803DA248[];
 extern const char lbl_803DA264[];
 extern const char lbl_806DB500[];
 
-extern Vec3f lbl_804EE0E0;
+extern Vec3f DNStartDino_tail_data_804EE0E0;
 static inline float JObjGetTranslationX(HSD_JObj *jobj) {
     if (jobj == 0) {
         __assert(lbl_806DB574, 0x3F1, lbl_806DB57C);
@@ -1205,9 +1205,9 @@ void Hinoko::Spawn() {
                 embers[k].vel.x = dir[i].x * (lbl_806DB50C * Rand() + lbl_806DB508);
                 embers[k].vel.y = dir[i].y;
                 float vz = lbl_806DB50C * (Rand() - lbl_806DB508) + dir[i].z;
-                float sx = lbl_804EE0E0.x;
-                float sy = lbl_804EE0E0.y;
-                float sz = lbl_804EE0E0.z;
+                float sx = DNStartDino_tail_data_804EE0E0.x;
+                float sy = DNStartDino_tail_data_804EE0E0.y;
+                float sz = DNStartDino_tail_data_804EE0E0.z;
                 embers[k].vel.z = vz;
                 embers[k].pos.x = lbl_806DB508 * (embers[k].vel.x * sx) + pos[i].x;
                 embers[k].pos.y = lbl_806DB508 * (embers[k].vel.y * sy) + pos[i].y;

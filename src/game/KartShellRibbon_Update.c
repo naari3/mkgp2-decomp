@@ -7,7 +7,7 @@
 
 typedef struct RibbonTexIds { int id[4]; } RibbonTexIds;
 
-extern RibbonTexIds lbl_803292E0;
+extern RibbonTexIds Kart_rodata_803292E0;
 extern int g_gameMode;
 extern unsigned char g_playerData[];
 extern unsigned char g_namCamFlag;
@@ -28,7 +28,7 @@ void KartShellRibbon_Update(unsigned char *self)
 
         I(0x170) = -1;
         I(0x174) = -1;
-        tex = lbl_803292E0;
+        tex = Kart_rodata_803292E0;
         slot = *(int *)(driver + 0x1F4);
         if (g_gameMode == 0) {
             if (GetVBlankFlag() && VBlankValue_Get() != 1 && g_playerData[0x19D] != 0 &&

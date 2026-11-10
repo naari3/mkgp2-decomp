@@ -173,7 +173,7 @@ extern void *lbl_806D14F4;
 extern void *lbl_806D14F8;
 extern signed char lbl_806D14FC;
 extern const SpriteUVTable SpriteHandlePool_rodata_803325D0;
-extern SavedGXState lbl_806573A0;
+extern SavedGXState SpriteHandle_bss_806573A0;
 void fn_8011E31C(SpriteHandle *h);
 }
 
@@ -241,11 +241,11 @@ extern "C" void fn_8011E31C(SpriteHandle *h) {
         GXSetAlphaCompare(7, 0, 0, 7, 0);
         GXSetZCompLoc(1);
         GXSetZMode(1, 3, 1);
-        GXSetScissor(lbl_806573A0.scissor[0], lbl_806573A0.scissor[1], lbl_806573A0.scissor[2], lbl_806573A0.scissor[3]);
-        GXSetViewport(lbl_806573A0.viewport[0], lbl_806573A0.viewport[1], lbl_806573A0.viewport[2],
-            lbl_806573A0.viewport[3], lbl_806573A0.viewport[4], lbl_806573A0.viewport[5]);
-        GXSetProjectionv(lbl_806573A0.proj);
-        GXSetCullMode(lbl_806573A0.cullMode);
+        GXSetScissor(SpriteHandle_bss_806573A0.scissor[0], SpriteHandle_bss_806573A0.scissor[1], SpriteHandle_bss_806573A0.scissor[2], SpriteHandle_bss_806573A0.scissor[3]);
+        GXSetViewport(SpriteHandle_bss_806573A0.viewport[0], SpriteHandle_bss_806573A0.viewport[1], SpriteHandle_bss_806573A0.viewport[2],
+            SpriteHandle_bss_806573A0.viewport[3], SpriteHandle_bss_806573A0.viewport[4], SpriteHandle_bss_806573A0.viewport[5]);
+        GXSetProjectionv(SpriteHandle_bss_806573A0.proj);
+        GXSetCullMode(SpriteHandle_bss_806573A0.cullMode);
         HSD_StateInvalidate(-1);
         fn_8011EC18(h->posMode);
     }

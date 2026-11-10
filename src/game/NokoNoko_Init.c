@@ -22,7 +22,7 @@ extern Normal3D *lbl_80677EC8[];
 extern Vec3 lbl_80677ED8;
 extern void *NokoNoko_Init_data_80495D34[];
 extern SpawnRow NokoNoko_Init_data_80495C28[];
-extern float lbl_806CFBD8, lbl_806D168C;
+extern float NokoNoko_data_806CFBD8, lbl_806D168C;
 extern int lbl_806D1684;
 extern const float lbl_806D9324, lbl_806D931C, lbl_806D9354;
 unsigned int OSGetTick(void);
@@ -84,7 +84,7 @@ extern "C" void NokoNoko_Init(float value) {
             tail = node;
         }
     }
-    lbl_806CFBD8 = value;
+    NokoNoko_data_806CFBD8 = value;
     lbl_80677ED8.x = lbl_806D9324;
     lbl_80677ED8.y = lbl_806D9324;
     lbl_80677ED8.z = lbl_806D9324;

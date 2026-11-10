@@ -26,7 +26,7 @@ struct ServiceVI { unsigned char pad[0x48]; unsigned char r,g,b,a; };
 struct ServiceColor { unsigned char r,g,b,a; };
 extern "C" {
 extern int g_currentSceneState;
-extern unsigned char lbl_806D0F8D,lbl_806D0F8E,lbl_806D0F94,lbl_806D0F98;
+extern unsigned char ServiceButton_bss_806D0F8D,lbl_806D0F8E,lbl_806D0F94,lbl_806D0F98;
 extern void *lbl_806D0F90,*lbl_806D0FD8,*lbl_806D0FC8;
 extern ServiceOwned *lbl_806D12DC;
 extern unsigned int *lbl_806D0F9C;

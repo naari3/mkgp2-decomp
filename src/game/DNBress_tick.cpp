@@ -4,7 +4,7 @@
  * a breath sound starts and fire/frost particles (two variants, picked by the
  * reverse-course flag) are spawned through pointer-to-member tables. Four
  * smoke puffs rise over the lake. The class data (spawn ranges, member
- * function tables, vtable) lives in lbl_804EDF80 and is addressed off one
+ * function tables, vtable) lives in DNBress_nm3_data_804EDF80 and is addressed off one
  * base; the static initializer (fn_80227FA4) stays in asm.
  */
 
@@ -101,7 +101,7 @@ extern const float DNBress_tick_rodata_803D0260[3];
 extern const float lbl_803D026C[3];
 extern const float DNBress_breath_rodata_803D0278[4];
 extern const Vec3f lbl_803D02A0[2];
-extern float lbl_804EDF80[2][3];
+extern float DNBress_nm3_data_804EDF80[2][3];
 extern FireFuncs lbl_804EDF98[2];
 extern float lbl_80495A94[48];
 extern const char lbl_803D01BC[];
@@ -250,12 +250,12 @@ void clDNBress::Tick() {
             p->delay--;
         } else {
             p->v.y = lbl_806DB414 * lbl_80495A94[randIdx] + lbl_806DB410;
-            p->pos.x = lbl_804EDF80[type][0] * lbl_80495A94[randIdx] + lbl_803D02A0[type].x;
+            p->pos.x = DNBress_nm3_data_804EDF80[type][0] * lbl_80495A94[randIdx] + lbl_803D02A0[type].x;
             if (++randIdx >= 48) {
                 randIdx = 0;
             }
             p->pos.y = lbl_803D02A0[type].y;
-            p->pos.z = lbl_804EDF80[type][2] * lbl_80495A94[randIdx] + lbl_803D02A0[type].z;
+            p->pos.z = DNBress_nm3_data_804EDF80[type][2] * lbl_80495A94[randIdx] + lbl_803D02A0[type].z;
             p->scale = lbl_806DB418;
             p->alpha = lbl_806DB41C;
             p->speed = lbl_806DB41C * lbl_80495A94[randIdx] + lbl_806DB404;

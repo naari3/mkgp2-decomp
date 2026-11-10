@@ -35,8 +35,8 @@ unsigned char clDNFlash::Check() {
         return 0;
     }
     float nx, nz;
-    float dx = lbl_803D07BC[t].b.x - lbl_803D07BC[t].a.x;
-    nz = lbl_803D07BC[t].b.z - lbl_803D07BC[t].a.z;
+    float dx = DNFlash_tail_rodata_803D07BC[t].b.x - DNFlash_tail_rodata_803D07BC[t].a.x;
+    nz = DNFlash_tail_rodata_803D07BC[t].b.z - DNFlash_tail_rodata_803D07BC[t].a.z;
     nx = -dx;
     nx *= KartMovement_GetVelocityPtr(k)[2];
     if (nz * KartMovement_GetVelocityPtr(k)[0] + nx < lbl_806DB490) {

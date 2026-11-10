@@ -51,18 +51,18 @@ struct ResCtrl {
 #include "game/types/TweenInterp.h"
 
 extern "C" {
-extern unsigned char lbl_806D1478;
+extern unsigned char HitMessageOverlay_bss_806D1478;
 extern unsigned char lbl_806CF270;
-extern int lbl_806CF274;
-extern int lbl_806CF278;
-extern int lbl_806D147C;
-extern int lbl_806D1480;
-extern float lbl_806D1484;
-extern float lbl_806D1488;
-extern TweenInterp *lbl_806D148C;
-extern TweenInterp *lbl_806D1490;
-extern int lbl_806D1494;
-extern int lbl_806D1498;
+extern int HitMessageOverlay_data_806CF274;
+extern int HitMessageOverlay_data_806CF278;
+extern int HitMessageOverlay_bss_806D147C;
+extern int HitMessageOverlay_bss_806D1480;
+extern float HitMessageOverlay_bss_806D1484;
+extern float HitMessageOverlay_bss_806D1488;
+extern TweenInterp *HitMessageOverlay_bss_806D148C;
+extern TweenInterp *HitMessageOverlay_bss_806D1490;
+extern int HitMessageOverlay_bss_806D1494;
+extern int HitMessageOverlay_bss_806D1498;
 extern const float HitMessageOverlay_FrameUpdate_rodata_80328BC4[];
 
 extern const float lbl_806D4E90; /* 0.0 */
@@ -110,40 +110,40 @@ extern "C" int HitMessageOverlay_FrameUpdate(void)
     if (!lbl_806CF270) {
         return 0;
     }
-    if (!lbl_806D1478) {
+    if (!HitMessageOverlay_bss_806D1478) {
         return 0;
     }
-    if (lbl_806CF274 == -1) {
+    if (HitMessageOverlay_data_806CF274 == -1) {
         return 0;
     }
 
-    lbl_806D147C++;
-    Tween_Tick(lbl_806D148C);
-    if (lbl_806D147C == 0xA6) {
-        fn_8020A734(lbl_806D148C, 0x10, lbl_806D4E90, lbl_806D4E98);
+    HitMessageOverlay_bss_806D147C++;
+    Tween_Tick(HitMessageOverlay_bss_806D148C);
+    if (HitMessageOverlay_bss_806D147C == 0xA6) {
+        fn_8020A734(HitMessageOverlay_bss_806D148C, 0x10, lbl_806D4E90, lbl_806D4E98);
     }
-    if (lbl_806D147C == 0xB6) {
-        lbl_806CF274 = -1;
+    if (HitMessageOverlay_bss_806D147C == 0xB6) {
+        HitMessageOverlay_data_806CF274 = -1;
     }
 
-    lbl_806D1484 += lbl_806D1488;
-    if (lbl_806D1488 > lbl_806D4E90) {
-        if (lbl_806D1484 > lbl_806D4E9C) {
-            lbl_806D1488 = lbl_806D4EA0;
+    HitMessageOverlay_bss_806D1484 += HitMessageOverlay_bss_806D1488;
+    if (HitMessageOverlay_bss_806D1488 > lbl_806D4E90) {
+        if (HitMessageOverlay_bss_806D1484 > lbl_806D4E9C) {
+            HitMessageOverlay_bss_806D1488 = lbl_806D4EA0;
         }
-    } else if (lbl_806D1484 < lbl_806D4EA4) {
-        lbl_806D1488 = lbl_806D4E94;
+    } else if (HitMessageOverlay_bss_806D1484 < lbl_806D4EA4) {
+        HitMessageOverlay_bss_806D1488 = lbl_806D4E94;
     }
 
-    Tween_Tick(lbl_806D1490);
-    lbl_806D1480 = (lbl_806D1480 + 1) % 20;
-    if (lbl_806D1480 == 0) {
-        fn_8020A734(lbl_806D1490, 10, lbl_806D4E90, lbl_806D4E94);
-    } else if (lbl_806D1480 == 10) {
-        fn_8020A734(lbl_806D1490, 10, lbl_806D4E94, lbl_806D4E90);
+    Tween_Tick(HitMessageOverlay_bss_806D1490);
+    HitMessageOverlay_bss_806D1480 = (HitMessageOverlay_bss_806D1480 + 1) % 20;
+    if (HitMessageOverlay_bss_806D1480 == 0) {
+        fn_8020A734(HitMessageOverlay_bss_806D1490, 10, lbl_806D4E90, lbl_806D4E94);
+    } else if (HitMessageOverlay_bss_806D1480 == 10) {
+        fn_8020A734(HitMessageOverlay_bss_806D1490, 10, lbl_806D4E94, lbl_806D4E90);
     }
 
-    if (lbl_806CF274 == -1) {
+    if (HitMessageOverlay_data_806CF274 == -1) {
         return 0;
     }
 
@@ -152,48 +152,48 @@ extern "C" int HitMessageOverlay_FrameUpdate(void)
     c.tail[0] = 1;
     c.tail[1] = 4;
     c.tail[2] = 1;
-    c.Show(lbl_806D4EB0, lbl_806D4EA8 + (lbl_806D4EAC - fn_8020A6CC(lbl_806D148C)), lbl_806D4E94);
+    c.Show(lbl_806D4EB0, lbl_806D4EA8 + (lbl_806D4EAC - fn_8020A6CC(HitMessageOverlay_bss_806D148C)), lbl_806D4E94);
     c.SetScaleXY(lbl_806D4EB4, lbl_806D4EB8);
-    c.rot = lbl_806D4EBC * lbl_806D1484;
+    c.rot = lbl_806D4EBC * HitMessageOverlay_bss_806D1484;
     fn_8011FAFC(&c, 4);
 
-    if (lbl_806CF278 != -1) {
+    if (HitMessageOverlay_data_806CF278 != -1) {
         fn_80121E10(&c);
-        c.resId = lbl_806CF278;
-        c.Show(lbl_806D4EB0, lbl_806D4EA8 + (lbl_806D4EAC - fn_8020A6CC(lbl_806D148C)), lbl_806D4E94);
+        c.resId = HitMessageOverlay_data_806CF278;
+        c.Show(lbl_806D4EB0, lbl_806D4EA8 + (lbl_806D4EAC - fn_8020A6CC(HitMessageOverlay_bss_806D148C)), lbl_806D4E94);
         c.SetScaleXY(lbl_806D4EC0, lbl_806D4EC4);
-        c.rot = lbl_806D4EBC * lbl_806D1484;
+        c.rot = lbl_806D4EBC * HitMessageOverlay_bss_806D1484;
         fn_8011FAFC(&c, 4);
     }
 
-    if (lbl_806D1494 != -1) {
+    if (HitMessageOverlay_bss_806D1494 != -1) {
         fn_80121E10(&c);
-        c.resId = lbl_806D1494;
-        c.Show(lbl_806D4EB0, lbl_806D4EA8 + (lbl_806D4EAC - fn_8020A6CC(lbl_806D148C)), lbl_806D4E94);
+        c.resId = HitMessageOverlay_bss_806D1494;
+        c.Show(lbl_806D4EB0, lbl_806D4EA8 + (lbl_806D4EAC - fn_8020A6CC(HitMessageOverlay_bss_806D148C)), lbl_806D4E94);
         c.scaleY = c.scaleX = lbl_806D4EC8;
-        c.rot = lbl_806D4EBC * lbl_806D1484;
+        c.rot = lbl_806D4EBC * HitMessageOverlay_bss_806D1484;
         fn_8011FAFC(&c, 4);
     }
 
-    if (lbl_806CF274 != -1) {
+    if (HitMessageOverlay_data_806CF274 != -1) {
         fn_80121E10(&c);
         off = lbl_806D4E90;
-        c.resId = lbl_806CF274;
-        if (lbl_806D1498 == 1) {
+        c.resId = HitMessageOverlay_data_806CF274;
+        if (HitMessageOverlay_bss_806D1498 == 1) {
             off = lbl_806D4ECC;
         }
-        c.Show(lbl_806D4EB0, off + (lbl_806D4EA8 + (lbl_806D4EAC - fn_8020A6CC(lbl_806D148C))), lbl_806D4E94);
-        c.SetScale(HitMessageOverlay_FrameUpdate_rodata_80328BC4[lbl_806D1498]);
-        c.rot = lbl_806D4EBC * lbl_806D1484;
+        c.Show(lbl_806D4EB0, off + (lbl_806D4EA8 + (lbl_806D4EAC - fn_8020A6CC(HitMessageOverlay_bss_806D148C))), lbl_806D4E94);
+        c.SetScale(HitMessageOverlay_FrameUpdate_rodata_80328BC4[HitMessageOverlay_bss_806D1498]);
+        c.rot = lbl_806D4EBC * HitMessageOverlay_bss_806D1484;
         fn_8011FAFC(&c, 4);
     }
 
     {
-        float blink = fn_8020A6CC(lbl_806D1490);
+        float blink = fn_8020A6CC(HitMessageOverlay_bss_806D1490);
         unsigned int col = (unsigned int)(lbl_806D4ED0 * blink) | 0xFFFFFF00;
         fn_80121E10(&c);
         c.resId = 0xC6C;
-        c.Show(lbl_806D4EB0, lbl_806D4ED4 + (lbl_806D4EAC - fn_8020A6CC(lbl_806D148C)), lbl_806D4E94);
+        c.Show(lbl_806D4EB0, lbl_806D4ED4 + (lbl_806D4EAC - fn_8020A6CC(HitMessageOverlay_bss_806D148C)), lbl_806D4E94);
         c.SetScale(lbl_806D4EDC * blink + lbl_806D4ED8);
         c.SetColor(col);
         fn_8011FAFC(&c, 4);

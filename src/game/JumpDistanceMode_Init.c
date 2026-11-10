@@ -66,7 +66,7 @@ static const unsigned int lbl_803C3CC0[12] = {
     0x44480000, 0x00000000, 0xC5D61000, 0x43C80000, 0x00000000, 0xC5D61000,
     0x43C80000, 0x00000000, 0xC48FC000, 0x44480000, 0x00000000, 0xC48FC000,
 };
-extern const float lbl_803C3CF0[14] = {
+extern const float JumpDistanceMode_rodata_803C3CF0[14] = {
     330.0f, 63.25f, 318.0f, 79.25f, 358.0f, 79.25f, 399.0f, 79.25f,
     355.0f, 38.25f, 380.0f, 38.25f, 405.0f, 38.25f,
 };
@@ -75,9 +75,9 @@ static const float s_gridY[3] = { 43.0f, 78.0f, 113.0f };
 static const Vec s_markerScale = { 0.0f, 0.0f, -5.0f };
 extern const float JumpDistanceMode_UpdateGameplay_rodata_803C3D54[4] = { 300.0f, -7500.0f, 1000.0f, -800.0f };
 extern const float JumpDistanceMode_HandlePhysics_rodata_803C3D64[7] = { 1900.0f, -7800.0f, 2100.0f, -7400.0f, 0.0f, 0.0f, 0.0f };
-extern const unsigned int lbl_803C3D80[3] = { 0, 0, 0 };
+extern const unsigned int JumpDistanceMode_rodata_803C3D80[3] = { 0, 0, 0 };
 extern const char lbl_803C3D8C[] = "clCGameDN";
-extern const char lbl_803C3D98[12] = "clJobRunner";
+extern const char JumpDistanceMode_Init_rodata_803C3D98[12] = "clJobRunner";
 static const char s_lakituFile[20] = "jyugemu_start.dat";
 static const char s_coinFile[16] = "mario_coin.dat";
 static const char s_kiraFile[16] = "k_kira13.dat";

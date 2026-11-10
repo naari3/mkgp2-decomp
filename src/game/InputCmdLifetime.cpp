@@ -2,7 +2,7 @@
 void *operator new[](unsigned long);
 void operator delete[](void *);
 void operator delete(void *);
-extern "C" void *lbl_806CEE50;
+extern "C" void *InputCmd_data_806CEE50;
 
 struct InputCmdOwnedSample {
     float x, y, z;
@@ -35,7 +35,7 @@ InputCmdLifetime::~InputCmdLifetime()
 InputCmdLifetime::InputCmdLifetime(int count)
 {
     mode = 0;
-    config = lbl_806CEE50;
+    config = InputCmd_data_806CEE50;
     capacity = count;
     samples = new InputCmdOwnedSample[capacity];
     readIndex = 0;

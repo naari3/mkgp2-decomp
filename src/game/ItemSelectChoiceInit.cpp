@@ -1,6 +1,6 @@
 #include "game/ItemSelectRefillPrivate.h"
 extern "C" {
-extern const int lbl_803DC180[6][10];
+extern const int ItemSelectState_rodata_803DC180[6][10];
 const char *Item_GetLocalizedAsset(int, int);
 void TexMgr_SetTexture(TextManager *, const char *, ...);
 void TexMgr_Apply(TextManager *);
@@ -44,7 +44,7 @@ extern "C" RefillChoice *fn_8023B1A8(RefillChoice *self) {
             int character = ChoiceCharacter();
             int id;
             if (column >= 10) id = fn_8023D844(character, row);
-            else id = lbl_803DC180[row][column];
+            else id = ItemSelectState_rodata_803DC180[row][column];
             if (player[id + 0xa8] == 1) {
                 int descriptor = PlayerData_ResolveUnlockedIdByIndex(player, id);
                 TexMgr_SetTexture(&text, Item_GetLocalizedAsset(descriptor, 0));

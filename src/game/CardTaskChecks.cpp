@@ -139,7 +139,7 @@ extern "C" int CardTaskPrintJob_StepNoCardPrinter(PrintObject *) {
 }
 extern "C" int CardTaskPrintJob_StepWaitFontTransfer(PrintObject *self) {
     unsigned char *table=CardTaskChecks_data_803FE480;
-    const char *messages=lbl_80312850;
+    const char *messages=Card_rodata_80312850;
     if (!CardPrintJob_TickFontTransfer(Sci2Card_Singleton_Get())) return 1;
     if (Sci2Card_GetPrintErrorCode()!=1) {
         DebugPrintf(messages+0x608);
@@ -180,7 +180,7 @@ static inline int CardSelectCleaning(PrintObject *self,unsigned char *table,cons
 }
 extern "C" int CardPrinterChecker_State_SetupCleaning(PrintObject *self) {
     unsigned char *table=CardTaskChecks_data_803FE480;
-    const char *messages=lbl_80312850;
+    const char *messages=Card_rodata_80312850;
     if (!Sci2Card_WaitPingStatus()) return 1;
     if (Sci2Card_GetPrintErrorCode()!=1) return CardCleaningError(self,table);
     if (!Sci2Card_GetByteFlag1224()) return CardSelectCleaning(self,table,messages);
@@ -190,7 +190,7 @@ extern "C" int CardPrinterChecker_State_SetupCleaning(PrintObject *self) {
 }
 extern "C" int CardPrinterChecker_State_RemainCardJobEnd(PrintObject *self) {
     unsigned char *table=CardTaskChecks_data_803FE480;
-    const char *messages=lbl_80312850;
+    const char *messages=Card_rodata_80312850;
     if (!card_eject_state_machine()) return 1;
     if (Sci2Card_GetPrintErrorCode()!=1) {
         if (Sci2Card_GetByteFlag1224()==1) { card_eject_init(); return 1; }

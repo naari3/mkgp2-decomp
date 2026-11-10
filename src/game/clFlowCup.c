@@ -156,7 +156,7 @@ extern const float lbl_806D9CC0;
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern CupMark lbl_8049AD58[];
+extern CupMark clFlowCup_data_8049AD58[];
 
 /* --- function index (1 fns, .text 0x801C7360..0x801C772C) ---
  * [  0] 0x801C7360 size:0x3CC   global clFlowCup_Draw
@@ -209,7 +209,7 @@ void clFlowCup_Draw(clFlowCup *self) {
         if (self->mode == 1) {
             SpriteInfo info;
 
-            fn_8019FF8C(self->slots[self->round].sprite, lbl_8049AD58[self->round].id, &info);
+            fn_8019FF8C(self->slots[self->round].sprite, clFlowCup_data_8049AD58[self->round].id, &info);
             fn_801A1174(0x15F4, 5, 0, 0, 0);
             fn_801A1128(info.x - lbl_806D9CA8, lbl_806D9CAC + info.y);
             fn_801A10DC(lbl_806D9CB0, lbl_806D9CB0);
@@ -639,8 +639,8 @@ int clFlowCup_Update(clFlowCup *self) {
             base = lbl_806D9CD4 + self->x120;
         }
         for (i = 0; i < 8; i++) {
-            SetX(self->slots[i].sprite, self->x120 + lbl_8049AD58[i].x);
-            SetX(self->icons[i], base + lbl_8049AD58[i].x);
+            SetX(self->slots[i].sprite, self->x120 + clFlowCup_data_8049AD58[i].x);
+            SetX(self->icons[i], base + clFlowCup_data_8049AD58[i].x);
         }
         {
             float x = lbl_806D9CC4 + base;
@@ -785,7 +785,7 @@ extern "C" clFlowCup *clFlowCup_Dtor(clFlowCup *self, short flags) {
 extern char clFlowCup_data_806CFDE0[];
 extern char clFlowCup_data_806CFDE8[];
 
-CupMark lbl_8049AD58[10] = {
+CupMark clFlowCup_data_8049AD58[10] = {
     { 0x1777, 0x1780, 90.0f, 185.0f },
     { 0x1778, 0x1781, 161.0f, 263.0f },
     { 0x1779, 0x1782, 221.0f, 185.0f },
@@ -1002,8 +1002,8 @@ CupFlow::CupFlow() {
     fn_801C64DC((clFlowCup *)this, round);
     for (int k = 0; k < 9; k++) {
         icons[k] = new CupSpr(0x180, 1, 0);
-        Sprite_SetAnimParam(icons[k], 0x1777, lbl_8049AD58[k].x0);
-        SetXY(icons[k], lbl_806D9C94 + lbl_8049AD58[k].x, lbl_8049AD58[k].y);
+        Sprite_SetAnimParam(icons[k], 0x1777, clFlowCup_data_8049AD58[k].x0);
+        SetXY(icons[k], lbl_806D9C94 + clFlowCup_data_8049AD58[k].x, clFlowCup_data_8049AD58[k].y);
         SetScale(icons[k], lbl_806D9C70);
     }
     sprite148 = new CupSpr(0x18F, 1, lbl_806D9CF8, lbl_806D9CC8, lbl_806D9C88, lbl_806D9C88, lbl_806D9C80, lbl_806D9C88);

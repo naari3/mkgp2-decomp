@@ -47,7 +47,7 @@ const TerrainSegment Terrain_WallEdgeTest_rodata_802E9828[1] __attribute__((alig
 const int StrPcb_BeginEffect_rodata_802E9838[4] = {
     16, 80, 48, 112
 };
-const float lbl_802E9848[3] = {
+const float StrPcb_rodata_802E9848[3] = {
     0.0f, 0.5f, 1.0f
 };
 const char lbl_802E9854[] = "strpcb result code is %c%c%c\n";

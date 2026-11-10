@@ -14,7 +14,7 @@ typedef struct BananaState {
     unsigned char active;
 } BananaState;
 extern unsigned char lbl_806CF3C0[6];
-extern char lbl_804211B0[][0xC0];
+extern char BananaTriple_data_804211B0[][0xC0];
 extern char lbl_8032F41C[];
 extern void Effect_SparkSprayCompound_Update(void);
 extern void *DrawEffect_SpawnDirect(void (*)(void));

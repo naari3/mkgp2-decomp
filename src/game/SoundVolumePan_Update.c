@@ -28,7 +28,7 @@ typedef struct KartAudioChannel {
     int skidState;            /* 0x30 */
 } KartAudioChannel;
 
-extern const Vec3 lbl_802EDD24;
+extern const Vec3 KartItemAudio_PlaySEByItemId_rodata_802EDD24;
 extern const Vec3 SoundVolumePan_Update_rodata_802EDD30;
 extern int SoundMgr_PlaySE(int soundId);
 extern void fn_8016C288();
@@ -44,7 +44,7 @@ extern int Clamp_Int(int v, int lo, int hi);
     if (self->playerType == 0) {                            \
         float *mtx = self->mtx;                             \
         if (mtx != 0) {                                     \
-            Vec3 pos = lbl_802EDD24;                        \
+            Vec3 pos = KartItemAudio_PlaySEByItemId_rodata_802EDD24;                        \
             pos.x = mtx[3];                                 \
             pos.y = mtx[7];                                 \
             pos.z = mtx[11];                                \

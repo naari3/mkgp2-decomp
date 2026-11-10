@@ -56,8 +56,8 @@ void *data_803FE480_data_806CF000[2] = {
     (void *)&lbl_80312FC8,
     (void *)&sdata_806CEFE0_data_803FE88C
 };
-unsigned char lbl_806CF008 = 0x1;
-int lbl_806CF00C = -1;
+unsigned char PlayStats_data_806CF008 = 0x1;
+int PlayStats_data_806CF00C = -1;
 /* decl: OSHeapHandle / int / s32 / void * */
 void *lbl_806CF010[2] = {
     (void *)0xFFFFFFFF,

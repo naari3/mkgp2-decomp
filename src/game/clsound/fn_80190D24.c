@@ -1,6 +1,6 @@
 #include "game/clsound_spatial_private.h"
 typedef struct ClSoundQueue { unsigned int id; int state, delay; } ClSoundQueue;
-extern ClSoundQueue lbl_80677F40[37];
+extern ClSoundQueue ClSound_InitSoundSystem_bss_80677F40[37];
 extern unsigned char lbl_80598A60[];
 extern unsigned char lbl_806CFCA0, lbl_806D16C0;
 extern const float lbl_806D94F8;
@@ -24,13 +24,13 @@ static inline void ResetVoice(ClSoundVoice* voice) {
 static inline void RemoveQueued(unsigned int id) {
     int i;
     for (i=0;i<37;i++) {
-        if (lbl_80677F40[i].id == -1) break;
-        if (id == lbl_80677F40[i].id) {
+        if (ClSound_InitSoundSystem_bss_80677F40[i].id == -1) break;
+        if (id == ClSound_InitSoundSystem_bss_80677F40[i].id) {
             ClSoundQueue *q;
             ClSoundQueue *e;
-            lbl_80677F40[i].state=3;
-            lbl_80677F40[i].delay=0;
-            q=lbl_80677F40;
+            ClSound_InitSoundSystem_bss_80677F40[i].state=3;
+            ClSound_InitSoundSystem_bss_80677F40[i].delay=0;
+            q=ClSound_InitSoundSystem_bss_80677F40;
             e=&q[i];
             for (;i>0;e--) {
                 ClSoundQueue tmp;
@@ -55,7 +55,7 @@ void fn_80190D24(void) {
     unsigned int id;
     interrupts=OSDisableInterrupts();
     for (i=0;i<32;i++) {
-        voice=&lbl_80678378[i];
+        voice=&ClSound_InitSoundSystem_bss_80678378[i];
         if (voice->id == -1) continue;
         id=voice->id & ~0x78000000;
         if ((voice->flags & 6)==2) {

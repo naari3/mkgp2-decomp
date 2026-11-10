@@ -4,10 +4,10 @@
  stw r31, 0x4c(r1)
  stw r30, 0x48(r1)
  mr r30, r3
--lis r3, lbl_80328EB8@ha
+-lis r3, CelebPop17Update_rodata_80328EB8@ha
 +lis r3, ...rodata.0@ha
  lbz r0, 0xb4(r30)
--addi r31, r3, lbl_80328EB8@l
+-addi r31, r3, CelebPop17Update_rodata_80328EB8@l
 +addi r31, r3, ...rodata.0@l
  extsb r0, r0
  cmpwi r0, 0x1

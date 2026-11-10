@@ -2,13 +2,13 @@
 extern "C" {
 extern unsigned long strlen(const char *text);
 extern ResultMessageRecord lbl_80490080[98];
-extern const unsigned char lbl_803682B0[0x408];
+extern const unsigned char resultscene_rodata_803682B0[0x408];
 extern const char lbl_806D8650[4];
 extern const char lbl_806D8654[4];
 extern const char lbl_806D865C[4];
 
 void fn_8015E928(void) {
-    const char *pool = (const char *)lbl_803682B0;
+    const char *pool = (const char *)resultscene_rodata_803682B0;
     lbl_80490080[0].length = strlen(pool + 0x484);
     lbl_80490080[1].length = strlen(pool + 0x498);
     lbl_80490080[2].length = strlen(pool + 0x4ac);

@@ -29,7 +29,7 @@
 | `fn_801B4548` | game/sprite/fn_801A1798 | 99.93 | 36 | 29 | 99.92 -> 99.86 | inline-to-named-locals | FindNearestVoiceKart801B_p47@1997 subst front order best_p47,distance_p47_,e_p47,nearest_p47_,i_p47_ |
 | `KartPhysics_ApplyCollisionForce` | game/KartPhysics_ApplyCollisionForce | 98.64 | 54 | 38 | 98.35 -> 97.75 | inline-to-named-locals+single-expr | apply_push@1498 subst front order timer,scale_,dz_,dy_,dx_ & [subtract_vector] single expr: az -> (src.z) |
 | `fn_80225C2C` | game/anon_802253EC_nm1 | 94.65 | 40 | 38 | 94.57 -> 93.93 | single-expr | single expr: nextJoin -> (lbl_806D1A78 + 1) |
-| `fn_80229998` | game/DNStartDino | 91.34 | 47 | 43 | 90.02 -> 89.88 | single-expr | single expr: sz -> (lbl_804EE0E0.z) |
+| `fn_80229998` | game/DNStartDino | 91.34 | 47 | 43 | 90.02 -> 89.88 | single-expr | single expr: sz -> (DNStartDino_tail_data_804EE0E0.z) |
 | `fn_8022ACE4` | game/EnemyFace | 98.61 | 60 | 56 | 98.49 -> 98.48 | inline-to-named-locals | TirePosition@1788 locals front order z,y,x |
 | `fn_801E2FD4` | game/fn_801DEF94 | 71.24 | 69 | 67 | 71.06 -> 72.89 | restrict-input-ptrs | restrict s |
 | `fn_801E435C` | game/fn_801DEF94 | 99.48 | 70 | 68 | 99.48 -> 99.34 | single-expr | [ResizeEnd] single expr: ptr -> (it.ptr) |

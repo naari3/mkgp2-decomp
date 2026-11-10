@@ -33,7 +33,7 @@ extern int lbl_806D1684;
 extern const float lbl_806D9324;
 extern const float lbl_806D9350;
 extern float lbl_80495994[];
-extern NokoKind *lbl_80495D28[];
+extern NokoKind *NokoNoko_data_80495D28[];
 extern Vec NokoNoko_InitEntity_rodata_80377450[];
 extern void Vec3_Subtract(Vec *a, Vec *b, Vec *out);
 extern float PSVECSquareMag(Vec *v);
@@ -70,11 +70,11 @@ NokoNoko *NokoNoko_InitEntity(NokoNoko *self, Vec *pos) {
         self->kindTable = lbl_806D9350 * r;
     }
     self->kindIndex = 0;
-    self->model = lbl_80495D28[self->kindTable][self->kindIndex].model;
-    self->anim = lbl_80495D28[self->kindTable][self->kindIndex].anim;
-    self->extra = lbl_80495D28[self->kindTable][self->kindIndex].extra;
-    self->speed = lbl_80495D28[self->kindTable][self->kindIndex].speed;
-    self->radius = lbl_80495D28[self->kindTable][self->kindIndex].radius;
+    self->model = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].model;
+    self->anim = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].anim;
+    self->extra = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].extra;
+    self->speed = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].speed;
+    self->radius = NokoNoko_data_80495D28[self->kindTable][self->kindIndex].radius;
     self->frame = lbl_806D9324;
     for (i = 0; i < 21; i++) {
         Vec3_Subtract(NokoNoko_InitEntity_rodata_80377450, &self->pos, &d);

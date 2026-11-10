@@ -21,8 +21,8 @@ void BananaTriple_Dispatch_32to36(Item *item)
         item->sprite[0] = 4;
         SpriteSlot_SetMatrixSourceEnabled_WithReseed(item->sprite, 1);
         state->matrixEnabled = 1;
-        SpriteSlot_SetJointVisibilityByName(item->sprite, lbl_804211B0[state->variant], 16, 1);
-        SpriteSlot_SetJointVisibilityByName(item->sprite, lbl_804211B0[state->variant] + 0x40, 16, 0);
+        SpriteSlot_SetJointVisibilityByName(item->sprite, BananaTriple_data_804211B0[state->variant], 16, 1);
+        SpriteSlot_SetJointVisibilityByName(item->sprite, BananaTriple_data_804211B0[state->variant] + 0x40, 16, 0);
         switch (item->id) {
         case 0x32: case 0x33: case 0x35:
             item->flags8c = 2; item->tracking = 0; break;

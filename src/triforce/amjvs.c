@@ -1,6 +1,6 @@
 #include <triforce/amjvs_internal.h>
 
-JvsMgr lbl_806910B8;
+JvsMgr amjvs_bss_806910B8;
 
 s32 fn_8028A598(s32 node, u8 n, u8* data) {
     OSSemaphore* sem = &Mgr.sem;

@@ -721,7 +721,7 @@ SpawnRow NokoNoko_Init_data_80495C28[16] = {
     { 0.0f, 0.0f, 0.0f, 2 }
 };
 /* decl: NokoKind * */
-void *lbl_80495D28[3] = {
+void *NokoNoko_data_80495D28[3] = {
     (void *)&lbl_8037754C,
     (void *)&lbl_80377588,
     (void *)&lbl_803775C4

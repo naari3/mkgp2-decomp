@@ -207,7 +207,7 @@ void GXSetZMode(int, int, int);
 void HSD_StateInvalidate(int);
 void fn_8011E9C0(int type);
 extern unsigned char lbl_806D14F0;
-extern SavedGXState lbl_806573A0;
+extern SavedGXState SpriteHandle_bss_806573A0;
 void C_MTXLookAt(float (*)[4], const Vec3 *, const Vec3 *, const Vec3 *);
 void C_MTXOrtho(float (*)[4], float, float, float, float, float, float);
 void GXGetCullMode(int *);
@@ -246,7 +246,7 @@ int ResourceTable_GetSlotIndex(int id);
 TEXDescriptor *TEXGetPaletteEntry(void *pal, unsigned int idx);
 extern const float lbl_806D6D88;
 extern unsigned int lbl_806D6D90;
-extern ResEntry lbl_806573E8[600];
+extern ResEntry SpriteHandle_bss_806573E8[600];
 unsigned int OSGetTick(void);
 void Profiler_RecordFrame(int slot, float value);
 extern SpriteList *lbl_806D1500;
@@ -283,8 +283,8 @@ unsigned int SpriteHandle_bss_80657234[0x18];
 unsigned int lbl_80657294[3];
 unsigned int lbl_806572A0[0x30];
 unsigned int SpriteHandle_bss_80657360[0x10];
-SavedGXState lbl_806573A0;
-ResEntry lbl_806573E8[600];
+SavedGXState SpriteHandle_bss_806573A0;
+ResEntry SpriteHandle_bss_806573E8[600];
 int SpriteHandle_bss_8065B588[600];
 SpriteHandle g_SpriteHandlePool[500];
 void fn_8011EB1C(void);
@@ -496,10 +496,10 @@ extern "C" void fn_8011EB1C(void) {
     GXSetAlphaCompare(7, 0, 0, 7, 0);
     GXSetZCompLoc(1);
     GXSetZMode(1, 3, 1);
-    GXSetScissor(lbl_806573A0.scissor[0], lbl_806573A0.scissor[1], lbl_806573A0.scissor[2], lbl_806573A0.scissor[3]);
-    GXSetViewport(lbl_806573A0.viewport[0], lbl_806573A0.viewport[1], lbl_806573A0.viewport[2], lbl_806573A0.viewport[3], lbl_806573A0.viewport[4], lbl_806573A0.viewport[5]);
-    GXSetProjectionv(lbl_806573A0.proj);
-    GXSetCullMode(lbl_806573A0.cullMode);
+    GXSetScissor(SpriteHandle_bss_806573A0.scissor[0], SpriteHandle_bss_806573A0.scissor[1], SpriteHandle_bss_806573A0.scissor[2], SpriteHandle_bss_806573A0.scissor[3]);
+    GXSetViewport(SpriteHandle_bss_806573A0.viewport[0], SpriteHandle_bss_806573A0.viewport[1], SpriteHandle_bss_806573A0.viewport[2], SpriteHandle_bss_806573A0.viewport[3], SpriteHandle_bss_806573A0.viewport[4], SpriteHandle_bss_806573A0.viewport[5]);
+    GXSetProjectionv(SpriteHandle_bss_806573A0.proj);
+    GXSetCullMode(SpriteHandle_bss_806573A0.cullMode);
     HSD_StateInvalidate(-1);
 }
 #pragma auto_inline reset
@@ -521,10 +521,10 @@ extern "C" void fn_8011EC18(unsigned char a) {
     } else {
         GXSetZMode(0, 7, 1);
     }
-    GXGetCullMode(&lbl_806573A0.cullMode);
-    GXGetProjectionv(lbl_806573A0.proj);
-    GXGetViewportv(lbl_806573A0.viewport);
-    GXGetScissor(&lbl_806573A0.scissor[0], &lbl_806573A0.scissor[1], &lbl_806573A0.scissor[2], &lbl_806573A0.scissor[3]);
+    GXGetCullMode(&SpriteHandle_bss_806573A0.cullMode);
+    GXGetProjectionv(SpriteHandle_bss_806573A0.proj);
+    GXGetViewportv(SpriteHandle_bss_806573A0.viewport);
+    GXGetScissor(&SpriteHandle_bss_806573A0.scissor[0], &SpriteHandle_bss_806573A0.scissor[1], &SpriteHandle_bss_806573A0.scissor[2], &SpriteHandle_bss_806573A0.scissor[3]);
     GXSetCullMode(0);
     GXSetViewport(g_glyphClipMinXY, g_glyphClipMinXY, g_glyphClipMaxX, g_glyphClipMaxY, g_glyphClipMinXY, lbl_806D6D8C);
     if (!a) {
@@ -625,8 +625,8 @@ static inline ResEntry *FindResEntry(int id) {
     int key = ResourceTable_GetGroupKey(id);
     int i;
     for (i = 0; i < 600; i++) {
-        if (key == lbl_806573E8[i].prev) {
-            return &lbl_806573E8[i];
+        if (key == SpriteHandle_bss_806573E8[i].prev) {
+            return &SpriteHandle_bss_806573E8[i];
         }
     }
     return 0;
@@ -824,10 +824,10 @@ extern "C" void fn_8011F870(unsigned int mask) {
     GXSetAlphaCompare(7, 0, 0, 7, 0);
     GXSetZCompLoc(1);
     GXSetZMode(1, 3, 1);
-    GXSetScissor(lbl_806573A0.scissor[0], lbl_806573A0.scissor[1], lbl_806573A0.scissor[2], lbl_806573A0.scissor[3]);
-    GXSetViewport(lbl_806573A0.viewport[0], lbl_806573A0.viewport[1], lbl_806573A0.viewport[2], lbl_806573A0.viewport[3], lbl_806573A0.viewport[4], lbl_806573A0.viewport[5]);
-    GXSetProjectionv(lbl_806573A0.proj);
-    GXSetCullMode(lbl_806573A0.cullMode);
+    GXSetScissor(SpriteHandle_bss_806573A0.scissor[0], SpriteHandle_bss_806573A0.scissor[1], SpriteHandle_bss_806573A0.scissor[2], SpriteHandle_bss_806573A0.scissor[3]);
+    GXSetViewport(SpriteHandle_bss_806573A0.viewport[0], SpriteHandle_bss_806573A0.viewport[1], SpriteHandle_bss_806573A0.viewport[2], SpriteHandle_bss_806573A0.viewport[3], SpriteHandle_bss_806573A0.viewport[4], SpriteHandle_bss_806573A0.viewport[5]);
+    GXSetProjectionv(SpriteHandle_bss_806573A0.proj);
+    GXSetCullMode(SpriteHandle_bss_806573A0.cullMode);
     HSD_StateInvalidate(-1);
 }
 
@@ -842,10 +842,10 @@ extern "C" void fn_8011F994(int type) {
     GXSetAlphaCompare(7, 0, 0, 7, 0);
     GXSetZCompLoc(1);
     GXSetZMode(1, 3, 1);
-    GXSetScissor(lbl_806573A0.scissor[0], lbl_806573A0.scissor[1], lbl_806573A0.scissor[2], lbl_806573A0.scissor[3]);
-    GXSetViewport(lbl_806573A0.viewport[0], lbl_806573A0.viewport[1], lbl_806573A0.viewport[2], lbl_806573A0.viewport[3], lbl_806573A0.viewport[4], lbl_806573A0.viewport[5]);
-    GXSetProjectionv(lbl_806573A0.proj);
-    GXSetCullMode(lbl_806573A0.cullMode);
+    GXSetScissor(SpriteHandle_bss_806573A0.scissor[0], SpriteHandle_bss_806573A0.scissor[1], SpriteHandle_bss_806573A0.scissor[2], SpriteHandle_bss_806573A0.scissor[3]);
+    GXSetViewport(SpriteHandle_bss_806573A0.viewport[0], SpriteHandle_bss_806573A0.viewport[1], SpriteHandle_bss_806573A0.viewport[2], SpriteHandle_bss_806573A0.viewport[3], SpriteHandle_bss_806573A0.viewport[4], SpriteHandle_bss_806573A0.viewport[5]);
+    GXSetProjectionv(SpriteHandle_bss_806573A0.proj);
+    GXSetCullMode(SpriteHandle_bss_806573A0.cullMode);
     HSD_StateInvalidate(-1);
 }
 
@@ -1150,7 +1150,7 @@ extern "C" void fn_801208E0(int id, float *x, float *y) {
 extern "C" void fn_8012094C(void) {
     int i;
     for (i = 0; i < 600; i++) {
-        ResEntry *e = &lbl_806573E8[i];
+        ResEntry *e = &SpriteHandle_bss_806573E8[i];
         if (e->palette != 0 && e->id < 0x2B00) {
             TEXReleasePalette(&e->palette);
         }
@@ -1198,12 +1198,12 @@ extern "C" inline int fn_80120A08(int id) {
         fn_80120A08(n);
     }
     int key = ResourceTable_GetGroupKey(Stub_NoOp_80121c34(a));
-    ResEntry *e = lbl_806573E8;
+    ResEntry *e = SpriteHandle_bss_806573E8;
     for (int i = 0; i < 600; e++, i++) {
         if (key == e->prev) {
             SpriteHandle_bss_8065B588[i]--;
             if (SpriteHandle_bss_8065B588[i] == 0) {
-                fn_8011DC20(&lbl_806573E8[i]);
+                fn_8011DC20(&SpriteHandle_bss_806573E8[i]);
             }
             return 1;
         }
@@ -1223,14 +1223,14 @@ extern "C" inline unsigned char PreloadResource(int id) {
     int key = ResourceTable_GetGroupKey(a);
     int i;
     for (i = 0; i < 600; i++) {
-        if (key == lbl_806573E8[i].prev) {
+        if (key == SpriteHandle_bss_806573E8[i].prev) {
             SpriteHandle_bss_8065B588[i]++;
             return 1;
         }
     }
     for (i = 0; i < 600; i++) {
-        if (lbl_806573E8[i].prev == -1) {
-            unsigned char ok = ResourceSlot_Load(&lbl_806573E8[i], id);
+        if (SpriteHandle_bss_806573E8[i].prev == -1) {
+            unsigned char ok = ResourceSlot_Load(&SpriteHandle_bss_806573E8[i], id);
             if (ok == 1) {
                 SpriteHandle_bss_8065B588[i]++;
             }
@@ -1525,7 +1525,7 @@ extern "C" void fn_80122320(LListImp *l) {
 }
 
 /* __sinit for this unit's static lists: LList[8] (SpriteHandle_bss_80657234), the 16-list
- * holder (lbl_806572A0) and the 600 resource slots (lbl_806573E8), with their
+ * holder (lbl_806572A0) and the 600 resource slots (SpriteHandle_bss_806573E8), with their
  * destructor-chain records. Written out by hand like the other generated
  * helpers here (fn_80122204, fn_80121F54). */
 extern "C" void fn_80122338(void) {
@@ -1533,7 +1533,7 @@ extern "C" void fn_80122338(void) {
     __register_global_object(0, (void *)fn_80122204, SpriteHandle_bss_80657228);
     __construct_array(lbl_806572A0, (void *)fn_801221D4, (void *)fn_80121FB4, 0xC, 0x10);
     __register_global_object(lbl_806572A0, (void *)fn_80121F54, lbl_80657294);
-    __construct_array(lbl_806573E8, (void *)fn_8011DF70, 0, 0x1C, 0x258);
+    __construct_array(SpriteHandle_bss_806573E8, (void *)fn_8011DF70, 0, 0x1C, 0x258);
 }
 
 __declspec(section ".ctors") static void *const fn_80122338_ctor_ref = (void *)fn_80122338;

@@ -46,7 +46,7 @@ typedef struct Camera {
 extern int g_gameMode;
 extern unsigned char g_namCamFlag;
 extern unsigned char g_playerData[];
-extern Int4 lbl_803292E0;
+extern Int4 Kart_rodata_803292E0;
 extern Vec KartPair3ArmUpdate_rodata_803293D0;
 extern Camera lbl_805DF3D0;
 
@@ -76,7 +76,7 @@ static inline void Carrot_InitVoice(Carrots *c)
     kart = c->kart;
     c->voice = -1;
     c->line = -1;
-    lines = lbl_803292E0;
+    lines = Kart_rodata_803292E0;
     character = kart->character;
     if (g_gameMode == 0) {
         if (GetVBlankFlag() && VBlankValue_Get() != 1 && g_playerData[0x19D] && g_namCamFlag &&

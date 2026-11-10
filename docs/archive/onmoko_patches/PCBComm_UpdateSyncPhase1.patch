@@ -41,7 +41,7 @@ index 4c200cb..60e6806 100644
  }
  int PCBComm_UpdateSyncPhase1(void)
  {
--    SlotView *slots = lbl_805A6154;
+-    SlotView *slots = PCBCheckRecv_bss_805A6154;
 -    SlotView *slot = slots;
 -    char *phases = g_pcbSyncPhasePerPcb;
 -    char *phase = phases;
@@ -55,7 +55,7 @@ index 4c200cb..60e6806 100644
      unsigned char truncate = 0;
      unsigned char reset = 0;
      int i;
-+    slot = slots = lbl_805A6154;
++    slot = slots = PCBCheckRecv_bss_805A6154;
 +    phase = phases = g_pcbSyncPhasePerPcb;
      for (i = 0; i < 4;) {
          unsigned int role;

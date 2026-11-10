@@ -4,7 +4,7 @@
  * a breath sound starts and fire/frost particles (two variants, picked by the
  * reverse-course flag) are spawned through pointer-to-member tables. Four
  * smoke puffs rise over the lake. The class data (spawn ranges, member
- * function tables, vtable) lives in lbl_804EDF80 and is addressed off one
+ * function tables, vtable) lives in DNBress_nm3_data_804EDF80 and is addressed off one
  * base; the static initializer (fn_80227FA4) stays in asm.
  */
 
@@ -261,7 +261,7 @@ void fn_802271A4();
 void fn_8022760C();
 void fn_80227490();
 #pragma force_active on
-float lbl_804EDF80[2][3] = {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}};
+float DNBress_nm3_data_804EDF80[2][3] = {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}};
 struct FireRecords { MemberFn spawn; MemberFn upd; } lbl_804EDF98[2] = {
     {{0, -1, fn_80227318}, {0, -1, fn_802271A4}},
     {{0, -1, fn_8022760C}, {0, -1, fn_80227490}}
@@ -280,7 +280,7 @@ static inline const char *DNBressStrings() {
 }
 
 clDNBress::clDNBress() {
-    const char *data = (const char *)lbl_804EDF80;
+    const char *data = (const char *)DNBress_nm3_data_804EDF80;
     const FireFuncs *fireFuncs = (const FireFuncs *)(data + 0x18);
     // The original unit addresses its shared strings from one retained base.
     const char *strings = DNBressStrings();

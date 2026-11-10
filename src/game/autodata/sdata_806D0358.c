@@ -25,7 +25,7 @@ extern char lbl_803C3824[];
 extern char lbl_803C3834[];
 extern char lbl_803C3840[];
 extern char lbl_803C3D8C[];
-extern char lbl_803C3D98[];
+extern char JumpDistanceMode_Init_rodata_803C3D98[];
 extern char lbl_804ECA88[];
 extern char sdata_806D0358_data_804ECA94[];
 extern char lbl_804ECAD4[];
@@ -100,7 +100,7 @@ void *data_804ECA88_data_806D03D4[3] = {
     0
 };
 void *lbl_806D03E0[2] = {
-    (void *)&lbl_803C3D98,
+    (void *)&JumpDistanceMode_Init_rodata_803C3D98,
     0
 };
 void *data_804ECA88_data_806D03E8[2] = {

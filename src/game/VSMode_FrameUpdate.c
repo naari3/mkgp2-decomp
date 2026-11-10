@@ -151,7 +151,7 @@ extern const unsigned int sdata_806CEFE0_rodata_80320D9C[];
 #define g_totalRaceTime g_totalRaceTime_p0
 #define g_weatherSystem g_weatherSystem_p0
 #define VSMode_FrameUpdate_bss_805D2AA8 lbl_805D2AA8_p0
-#define lbl_805D2B00 lbl_805D2B00_p0
+#define RaceScene_PlayerSlots_bss_805D2B00 lbl_805D2B00_p0
 #define lbl_806792D8 lbl_806792D8_p0
 #define lbl_806CF140 lbl_806CF140_p0
 #define VSMode_FrameUpdate_data_806CF148 lbl_806CF148_p0
@@ -240,7 +240,7 @@ extern unsigned char VSMode_FrameUpdate_data_806CF148;
 extern float g_raceTimeRemaining;
 extern int VSMode_FrameUpdate_bss_806D12FC;
 extern char lbl_806792D8[];
-extern int lbl_805D2B00[];
+extern int RaceScene_PlayerSlots_bss_805D2B00[];
 extern char VSMode_FrameUpdate_bss_805D2AA8[];
 extern int g_ccClass;
 extern int lbl_806CF140;
@@ -655,7 +655,7 @@ extern "C" int VSMode_FrameUpdate(char *self)
             VS_F32(slot, 0x8) = 0.0f;
         } else if (VS_U8(CarObject_GetRenderObj(car), 0x2b8) == 1) {
             /* finished: drive automatically */
-            accel = CalcSoundDirection(CarObject_GetRenderObj(car), VSMode_FrameUpdate_bss_806D12F4, &steer, lbl_805D2B00[i]);
+            accel = CalcSoundDirection(CarObject_GetRenderObj(car), VSMode_FrameUpdate_bss_806D12F4, &steer, RaceScene_PlayerSlots_bss_805D2B00[i]);
             brake = 0.0f;
             started = 1;
             h = 0;
@@ -730,8 +730,8 @@ extern "C" int VSMode_FrameUpdate(char *self)
     }
 
     if (IsRaceStarted() == 1) {
-        float *cp0 = Path_LookupCheckpointOffset(VSMode_FrameUpdate_bss_806D12F4, lbl_805D2B00[lbl_806CF140], 0);
-        float *cp1 = Path_LookupCheckpointOffset(VSMode_FrameUpdate_bss_806D12F4, lbl_805D2B00[lbl_806CF140], 1);
+        float *cp0 = Path_LookupCheckpointOffset(VSMode_FrameUpdate_bss_806D12F4, RaceScene_PlayerSlots_bss_805D2B00[lbl_806CF140], 0);
+        float *cp1 = Path_LookupCheckpointOffset(VSMode_FrameUpdate_bss_806D12F4, RaceScene_PlayerSlots_bss_805D2B00[lbl_806CF140], 1);
         VsVec a = *(const VsVec *)(pool + 0x3fc);
         a.x = cp0[1];
         a.z = cp0[3];
@@ -755,8 +755,8 @@ extern "C" int VSMode_FrameUpdate(char *self)
             for (i = 0; i < 4; i++) {
                 if (g_carObjects[i] != 0) {
                     char *render = CarObject_GetRenderObj(g_carObjects[i]);
-                    float *c0 = Path_LookupCheckpointOffset(VSMode_FrameUpdate_bss_806D12F4, lbl_805D2B00[i], 0);
-                    float *c1 = Path_LookupCheckpointOffset(VSMode_FrameUpdate_bss_806D12F4, lbl_805D2B00[i], 1);
+                    float *c0 = Path_LookupCheckpointOffset(VSMode_FrameUpdate_bss_806D12F4, RaceScene_PlayerSlots_bss_805D2B00[i], 0);
+                    float *c1 = Path_LookupCheckpointOffset(VSMode_FrameUpdate_bss_806D12F4, RaceScene_PlayerSlots_bss_805D2B00[i], 1);
                     VsVec p = *(const VsVec *)(pool + 0x414);
                     p.x = c0[1];
                     p.z = c0[3];
@@ -811,7 +811,7 @@ extern "C" int VSMode_FrameUpdate(char *self)
                 VS_INT(render, 0x1b0) = -1;
                 for (j = 0; j < 4; j++) {
                     if (g_carObjects[j] != 0) {
-                        int gap = Race_CompareKartProgress(VSMode_FrameUpdate_bss_806D12F4, lbl_805D2B00[i], lbl_805D2B00[j]);
+                        int gap = Race_CompareKartProgress(VSMode_FrameUpdate_bss_806D12F4, RaceScene_PlayerSlots_bss_805D2B00[i], RaceScene_PlayerSlots_bss_805D2B00[j]);
                         VS_INT(CarObject_GetRenderObj(g_carObjects[j]), 0x1b4) = gap;
                     }
                 }
@@ -821,7 +821,7 @@ extern "C" int VSMode_FrameUpdate(char *self)
                         int rank = VS_INT(render, 0x1bc);
                         if (VS_INT(CarObject_GetRenderObj(g_carObjects[j]), 0x1bc) == rank - 1) {
                             VS_INT(render, 0x1b0) =
-                                Race_CompareKartProgress(VSMode_FrameUpdate_bss_806D12F4, lbl_805D2B00[j], lbl_805D2B00[i]);
+                                Race_CompareKartProgress(VSMode_FrameUpdate_bss_806D12F4, RaceScene_PlayerSlots_bss_805D2B00[j], RaceScene_PlayerSlots_bss_805D2B00[i]);
                         }
                     }
                 }
@@ -1136,7 +1136,7 @@ extern unsigned int g_itemSelects[];
 extern unsigned int g_playerData[];
 
 extern unsigned int VSMode_FrameUpdate_bss_805D2AA8[];
-extern unsigned int lbl_805D2B00[];
+extern unsigned int RaceScene_PlayerSlots_bss_805D2B00[];
 extern unsigned int lbl_806792D8[];
 
 /* --- function index (1 fns, .text 0x8009E0D4..0x8009F47C) ---
@@ -1642,11 +1642,11 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     bl SyncSlot_GetHostSend
     mr r28, r3
     bl OSGetTime
-    lis r6, lbl_805D2B00@ha
+    lis r6, RaceScene_PlayerSlots_bss_805D2B00@ha
     lis r5, g_itemSelects@ha
     mr r30, r3
     lwz r3, 0x7c(r1)
-    addi r14, r6, lbl_805D2B00@l
+    addi r14, r6, RaceScene_PlayerSlots_bss_805D2B00@l
     addi r19, r5, g_itemSelects@l
     mr r29, r4
     mr r26, r20
@@ -1917,19 +1917,19 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     cmplwi r0, 0x1
     bne VSMode_FrameUpdate_L_8009EDC4
     lwz r0, lbl_806CF140(r13)
-    lis r3, lbl_805D2B00@ha
-    addi r4, r3, lbl_805D2B00@l
+    lis r3, RaceScene_PlayerSlots_bss_805D2B00@ha
+    addi r4, r3, RaceScene_PlayerSlots_bss_805D2B00@l
     lwz r3, VSMode_FrameUpdate_bss_806D12F4(r13)
     slwi r0, r0, 2
     li r5, 0x0
     lwzx r4, r4, r0
     bl Path_LookupCheckpointOffset
     lwz r0, lbl_806CF140(r13)
-    lis r4, lbl_805D2B00@ha
+    lis r4, RaceScene_PlayerSlots_bss_805D2B00@ha
     mr r16, r3
     lwz r3, VSMode_FrameUpdate_bss_806D12F4(r13)
     slwi r0, r0, 2
-    addi r4, r4, lbl_805D2B00@l
+    addi r4, r4, RaceScene_PlayerSlots_bss_805D2B00@l
     lwzx r4, r4, r0
     li r5, 0x1
     bl Path_LookupCheckpointOffset
@@ -2670,7 +2670,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
 #undef g_totalRaceTime
 #undef g_weatherSystem
 #undef VSMode_FrameUpdate_bss_805D2AA8
-#undef lbl_805D2B00
+#undef RaceScene_PlayerSlots_bss_805D2B00
 #undef lbl_806792D8
 #undef lbl_806CF140
 #undef VSMode_FrameUpdate_data_806CF148
@@ -3026,9 +3026,9 @@ void *VSMode_FrameUpdate_data_8040E734[5] = {
 #define g_weatherSystem g_weatherSystem_p2
 #define jumptable_8040E748 jumptable_8040E748_p2
 #define lbl_80598A60 lbl_80598A60_p2
-#define lbl_805A6154 lbl_805A6154_p2
+#define PCBCheckRecv_bss_805A6154 lbl_805A6154_p2
 #define VSMode_FrameUpdate_bss_805D2AA8 lbl_805D2AA8_p2
-#define lbl_805D2B00 lbl_805D2B00_p2
+#define RaceScene_PlayerSlots_bss_805D2B00 lbl_805D2B00_p2
 #define lbl_806CF110 lbl_806CF110_p2
 #define lbl_806CF140 lbl_806CF140_p2
 #define VSMode_Init_data_806CF144 lbl_806CF144_p2
@@ -3115,10 +3115,10 @@ struct VSRaceRow { signed char laps; unsigned char pad[3]; float remaining, bonu
 extern "C" {
 
 extern unsigned char lbl_80598A60[];
-extern VSPeer lbl_805A6154[];
+extern VSPeer PCBCheckRecv_bss_805A6154[];
 extern VSCar* g_carObjects[];
 extern VSItems* g_itemSelects[];
-extern int lbl_805D2B00[];
+extern int RaceScene_PlayerSlots_bss_805D2B00[];
 extern unsigned long long VSMode_FrameUpdate_bss_805D2AA8[];
 extern unsigned char VS_MODE[];
 extern const float lbl_806D47A4, lbl_806D47A8, lbl_806D47AC, lbl_806D47C0, lbl_806D47D0;
@@ -3236,7 +3236,7 @@ void VSMode_Init(void* self_)
     SoundDriver_GetOrCreate(GetCourseBgmEntry());
     CoinSystem_Init(0, 2);
 
-    VSPeer* table = lbl_805A6154;
+    VSPeer* table = PCBCheckRecv_bss_805A6154;
     VSMode_FrameUpdate_bss_806D12FC = 0;
     lbl_806CF140 = (signed char)lbl_80598A60[0x21] - 1;
     VSMode_Init_data_806CF144 = g_localPcbRole - 2;
@@ -3301,9 +3301,9 @@ void VSMode_Init(void* self_)
                 VSMode_FrameUpdate_bss_806D12F4 = new VSPath(CourseData_GetDefaultPathKey_Safe(),
                     g_carObjects[i], CarObject_GetRenderObj(g_carObjects[i]),
                     matrix + 12, matrix + 13, matrix + 14);
-                lbl_805D2B00[i] = 0;
+                RaceScene_PlayerSlots_bss_805D2B00[i] = 0;
             } else {
-                lbl_805D2B00[i] = PathManager_RegisterCarObject(VSMode_FrameUpdate_bss_806D12F4,
+                RaceScene_PlayerSlots_bss_805D2B00[i] = PathManager_RegisterCarObject(VSMode_FrameUpdate_bss_806D12F4,
                     matrix + 12, matrix + 13, matrix + 14, g_carObjects[i],
                     CarObject_GetRenderObj(g_carObjects[i]), -1);
             }
@@ -3609,9 +3609,9 @@ void *GameModeBase_vtable_8040E76C[5] = {
 #undef g_weatherSystem
 #undef jumptable_8040E748
 #undef lbl_80598A60
-#undef lbl_805A6154
+#undef PCBCheckRecv_bss_805A6154
 #undef VSMode_FrameUpdate_bss_805D2AA8
-#undef lbl_805D2B00
+#undef RaceScene_PlayerSlots_bss_805D2B00
 #undef lbl_806CF110
 #undef lbl_806CF140
 #undef VSMode_Init_data_806CF144

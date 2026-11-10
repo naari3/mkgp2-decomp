@@ -114,7 +114,7 @@ extern BootConfig lbl_80598A60;
 extern BootHooks lbl_806CED28;
 extern unsigned char lbl_806D0FA1, lbl_806D0F94, vblank_flag;
 extern unsigned char lbl_806D0F99, lbl_806D0F98, lbl_806D0F96, lbl_806D0F97;
-extern unsigned char lbl_806D0FA0, lbl_806D0F8E, lbl_806CED30;
+extern unsigned char Boot_bss_806D0FA0, lbl_806D0F8E, lbl_806CED30;
 extern BootTimer *lbl_806D0F9C;
 extern const float lbl_806D2294, SAFE, lbl_806D22A8;
 extern const char lbl_806D22AC[4];
@@ -449,11 +449,11 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
         lbl_806D0F98=1;
         vblank_flag=0;
         lbl_806D0F99=1;
-        lbl_806D0FA0=0;
+        Boot_bss_806D0FA0=0;
         DebugPrintf(lbl_802E95AC);
-    } else lbl_806D0FA0=1;
+    } else Boot_bss_806D0FA0=1;
     fn_801213EC();
-    if (lbl_806D0FA0==1) {
+    if (Boot_bss_806D0FA0==1) {
         int card=1, other=1;
         if (!lbl_806D0F94 || lbl_806D0F98==1) card=0;
         if (!vblank_flag || lbl_806D0F99==1) other=0;

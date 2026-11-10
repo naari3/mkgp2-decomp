@@ -48,7 +48,7 @@ extern OSTime g_voiceTickTimeHi;
 extern OSTime lbl_806D1728;
 extern OSTime lbl_806D17C8;
 extern OSTime lbl_806D17D0;
-extern OSTime lbl_806D17D8;
+extern OSTime Voice_bss_806D17D8;
 extern OSTime g_voiceStreamTime;
 extern OSTime lbl_806D1798;
 extern OSTime g_bgmStateTimeHi;

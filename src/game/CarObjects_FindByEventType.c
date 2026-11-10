@@ -4,7 +4,7 @@ typedef struct RenderObj {
 } RenderObj;
 
 extern void *g_carObjects[4];
-extern int lbl_805D2B00[4];
+extern int RaceScene_PlayerSlots_bss_805D2B00[4];
 extern RenderObj *CarObject_GetRenderObj(void *);
 
 RenderObj *CarObjects_FindByEventType(int type, int *outIndex) {
@@ -16,7 +16,7 @@ RenderObj *CarObjects_FindByEventType(int type, int *outIndex) {
 
             if (type == render->eventType) {
                 if (outIndex != 0) {
-                    *outIndex = lbl_805D2B00[i];
+                    *outIndex = RaceScene_PlayerSlots_bss_805D2B00[i];
                 }
                 return render;
             }

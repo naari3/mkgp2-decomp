@@ -27,14 +27,14 @@ const char lbl_806DC934[] = "GCAM";
 /* ---- amnet_nm2_rest.c ---- */
 
 static inline void ProbeTraceAdd(u8 op, u8 dir, void* buf, u32 addr, u32 size) {
-    u32 i = lbl_806D1E44 & 7;
-    lbl_806937C0[i].seq = lbl_806D1E44++;
-    lbl_806937C0[i].op = op;
-    lbl_806937C0[i].dir = dir;
-    lbl_806937C0[i].buf = buf;
-    lbl_806937C0[i].addr = addr;
-    lbl_806937C0[i].size = size;
-    memcpy(lbl_806937C0[i].data, buf, 0x20);
+    u32 i = amnet_nm3_bss_806D1E44 & 7;
+    amnet_nm3_bss_806937C0[i].seq = amnet_nm3_bss_806D1E44++;
+    amnet_nm3_bss_806937C0[i].op = op;
+    amnet_nm3_bss_806937C0[i].dir = dir;
+    amnet_nm3_bss_806937C0[i].buf = buf;
+    amnet_nm3_bss_806937C0[i].addr = addr;
+    amnet_nm3_bss_806937C0[i].size = size;
+    memcpy(amnet_nm3_bss_806937C0[i].data, buf, 0x20);
 }
 
 static inline void ProbeDevClear(u32 addr, NetDev* dev) {
@@ -44,14 +44,14 @@ static inline void ProbeDevClear(u32 addr, NetDev* dev) {
     buf = ALIGN32(raw);
     id = dev->id;
     memset(buf, 0, 0x20);
-    if ((lbl_806937C0[0].flags & 2) && id == 0xA9) {
+    if ((amnet_nm3_bss_806937C0[0].flags & 2) && id == 0xA9) {
         ProbeTraceAdd('C', 'L', buf, addr, 0x20);
     }
-    if ((lbl_806937C0[0].flags & 1) && id == 0xA9) {
+    if ((amnet_nm3_bss_806937C0[0].flags & 1) && id == 0xA9) {
         ProbeTraceAdd('W', 'R', buf, addr, 0x20);
     }
     DevWrite(buf, addr, 0x20);
-    if ((lbl_806937C0[0].flags & 4) && id == 0xA9) {
+    if ((amnet_nm3_bss_806937C0[0].flags & 4) && id == 0xA9) {
         DCInvalidateRange(buf, 0x20);
         ProbeTraceAdd('W', '2', buf, -1, -1);
     }
@@ -110,11 +110,11 @@ static inline void WriteDeviceWord(u32 addr, u32 val) {
 }
 
 static inline void InitializeDevSend(void* buf, u32 addr, u8 id) {
-    if ((lbl_806937C0[0].flags & 1) && id == 0xA9) {
+    if ((amnet_nm3_bss_806937C0[0].flags & 1) && id == 0xA9) {
         ProbeTraceAdd('W', 'R', buf, addr, 0x20);
     }
     DevWrite(buf, addr, 0x20);
-    if ((lbl_806937C0[0].flags & 4) && id == 0xA9) {
+    if ((amnet_nm3_bss_806937C0[0].flags & 4) && id == 0xA9) {
         DCInvalidateRange(buf, 0x20);
         ProbeTraceAdd('W', '2', buf, -1, -1);
     }
@@ -127,7 +127,7 @@ static inline void InitializeDevClear(u32 addr, NetDev* dev) {
     buf = ALIGN32(raw);
     id = dev->id;
     memset(buf, 0, 0x20);
-    if ((lbl_806937C0[0].flags & 2) && id == 0xA9) {
+    if ((amnet_nm3_bss_806937C0[0].flags & 2) && id == 0xA9) {
         ProbeTraceAdd('C', 'L', buf, addr, 0x20);
     }
     InitializeDevSend(buf, addr, id);
@@ -142,7 +142,7 @@ static inline void InitializeDevCommand(NetDev* dev) {
     addr = dev->cmdAddr;
     id = dev->id;
     memset(buf, 0, 0x20);
-    if ((lbl_806937C0[0].flags & 2) && id == 0xA9) {
+    if ((amnet_nm3_bss_806937C0[0].flags & 2) && id == 0xA9) {
         ProbeTraceAdd('C', 'L', buf, addr, 0x20);
     }
     InitializeDevSend(buf, addr, id);
@@ -182,14 +182,14 @@ s32 fn_8028D8CC(u8 id, NetBlob* blob) {
         base = BSWAP16(hdr[1]);
         base <<= 16;
         base |= BSWAP16(hdr[0]);
-        lbl_80699140.hwFlags = ReadDeviceHalf(0x80000000);
-        if (lbl_80699140.hwFlags & 0x100) {
-            lbl_80699140.prio = 0;
+        amnet_nm3_bss_80699140.hwFlags = ReadDeviceHalf(0x80000000);
+        if (amnet_nm3_bss_80699140.hwFlags & 0x100) {
+            amnet_nm3_bss_80699140.prio = 0;
         } else {
-            lbl_80699140.prio = 1;
+            amnet_nm3_bss_80699140.prio = 1;
         }
-        lbl_80699140.base[0] = base;
-        lbl_80699140.base[1] = 0;
+        amnet_nm3_bss_80699140.base[0] = base;
+        amnet_nm3_bss_80699140.base[1] = 0;
         dev->kind = 1;
         if (base != 0) {
             off = base - 0x01000000;
@@ -198,18 +198,18 @@ s32 fn_8028D8CC(u8 id, NetBlob* blob) {
             dev->statAddr = off + 0x900020;
             InitializeDevCommand(dev);
             InitializeDevClear(dev->statAddr, dev);
-            memcpy(lbl_80699140.cfgA, amnet_setup_nm_rodata_803F2798, sizeof(lbl_80699140.cfgA));
-            lbl_80699140.cfgA[0] += off;
-            lbl_80699140.cfgA[6] += off;
-            lbl_80699140.cfgA[8] += off;
-            fn_80293070(lbl_80699140.cfgA);
-            memcpy(lbl_80699140.cfgB, lbl_803F27C0, sizeof(lbl_80699140.cfgB));
-            lbl_80699140.cfgB[0] += off;
-            lbl_80699140.cfgB[4] += off;
-            fn_80290F70(lbl_80699140.cfgB);
-            memcpy(lbl_80699140.cfgC, lbl_803F27D8, sizeof(lbl_80699140.cfgC));
-            lbl_80699140.cfgC[0] += off;
-            fn_80291010(lbl_80699140.cfgC);
+            memcpy(amnet_nm3_bss_80699140.cfgA, amnet_setup_nm_rodata_803F2798, sizeof(amnet_nm3_bss_80699140.cfgA));
+            amnet_nm3_bss_80699140.cfgA[0] += off;
+            amnet_nm3_bss_80699140.cfgA[6] += off;
+            amnet_nm3_bss_80699140.cfgA[8] += off;
+            fn_80293070(amnet_nm3_bss_80699140.cfgA);
+            memcpy(amnet_nm3_bss_80699140.cfgB, lbl_803F27C0, sizeof(amnet_nm3_bss_80699140.cfgB));
+            amnet_nm3_bss_80699140.cfgB[0] += off;
+            amnet_nm3_bss_80699140.cfgB[4] += off;
+            fn_80290F70(amnet_nm3_bss_80699140.cfgB);
+            memcpy(amnet_nm3_bss_80699140.cfgC, lbl_803F27D8, sizeof(amnet_nm3_bss_80699140.cfgC));
+            amnet_nm3_bss_80699140.cfgC[0] += off;
+            fn_80291010(amnet_nm3_bss_80699140.cfgC);
         }
         return 0;
     }
@@ -222,8 +222,8 @@ s32 fn_8028D8CC(u8 id, NetBlob* blob) {
             }
             return 5;
         }
-        lbl_80699140.prio = 1;
-        lbl_80699140.hwFlags = ReadDeviceWord(0x80000120);
+        amnet_nm3_bss_80699140.prio = 1;
+        amnet_nm3_bss_80699140.hwFlags = ReadDeviceWord(0x80000120);
         dev->kind = 2;
         dev->flags |= 1;
         dev->cmdAddr = 0x84000000;
@@ -237,22 +237,22 @@ s32 fn_8028D8CC(u8 id, NetBlob* blob) {
         if (v & 1) {
             return 5;
         }
-        lbl_80699140.base[1] = 0x89000000;
+        amnet_nm3_bss_80699140.base[1] = 0x89000000;
         dev->kind = 3;
         dev->flags |= 9;
         dev->cmdAddr = 0x89000000;
         dev->statAddr = 0x89000200;
         InitializeDevClear(dev->cmdAddr, dev);
         InitializeDevClear(dev->statAddr, dev);
-        memcpy(lbl_80699140.cfgA, lbl_803F27E8, sizeof(lbl_80699140.cfgA));
-        lbl_80699140.cfgA[0] += 0x89000000;
-        lbl_80699140.cfgA[6] += 0x89000000;
-        lbl_80699140.cfgA[8] += 0x89000000;
-        fn_80293070(lbl_80699140.cfgA);
-        memcpy(lbl_80699140.cfgB, lbl_803F2810, sizeof(lbl_80699140.cfgB));
-        lbl_80699140.cfgB[0] += 0x89000000;
-        lbl_80699140.cfgB[4] += 0x89000000;
-        fn_80290F70(lbl_80699140.cfgB);
+        memcpy(amnet_nm3_bss_80699140.cfgA, lbl_803F27E8, sizeof(amnet_nm3_bss_80699140.cfgA));
+        amnet_nm3_bss_80699140.cfgA[0] += 0x89000000;
+        amnet_nm3_bss_80699140.cfgA[6] += 0x89000000;
+        amnet_nm3_bss_80699140.cfgA[8] += 0x89000000;
+        fn_80293070(amnet_nm3_bss_80699140.cfgA);
+        memcpy(amnet_nm3_bss_80699140.cfgB, lbl_803F2810, sizeof(amnet_nm3_bss_80699140.cfgB));
+        amnet_nm3_bss_80699140.cfgB[0] += 0x89000000;
+        amnet_nm3_bss_80699140.cfgB[4] += 0x89000000;
+        fn_80290F70(amnet_nm3_bss_80699140.cfgB);
         return 0;
     }
     default:

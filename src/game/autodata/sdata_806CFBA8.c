@@ -78,7 +78,7 @@ void *data_80491988_data_806CFBD0[2] = {
     (void *)&lbl_803773D4,
     (void *)&data_80491988_data_80495C00
 };
-float lbl_806CFBD8[2] = {
+float NokoNoko_data_806CFBD8[2] = {
     1.0f, 0.0f
 };
 void *lbl_806CFBE0 = (void *)&lbl_80377AC4;

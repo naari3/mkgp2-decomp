@@ -15,7 +15,7 @@ extern const float lbl_806D9828, lbl_806D982C;
 extern OSTime g_voiceStreamStartTime, g_voiceStreamLastPollTime;
 extern OSTime lbl_806D17C8;
 extern OSTime lbl_806D17D0;
-extern OSTime lbl_806D17D8;
+extern OSTime Voice_bss_806D17D8;
 
 static inline int RaceEvent_Push(short id, short priority, unsigned char flag, unsigned char flush) {
     if (id == -1) {

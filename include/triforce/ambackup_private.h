@@ -41,8 +41,8 @@ extern void fn_802876F4(s32 chan);
 extern BOOL fn_80294DF8(s32);
 extern BOOL fn_80294E30(s32, s32);
 
-extern u8 lbl_806835E0[0xD800];
-extern BackupState lbl_80690DE0;
+extern u8 ambackup_nm1_bss_806835E0[0xD800];
+extern BackupState ambackup_nm1_bss_80690DE0;
 
 extern const BackupInfo lbl_806DC918[1];
 

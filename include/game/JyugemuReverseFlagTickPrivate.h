@@ -7,7 +7,7 @@ extern "C" const char lbl_806D308C[7], lbl_806D3094[5], lbl_80311DFC[];
 typedef Vec3f Vec3;
 extern "C" {
 extern const float lbl_806D3078, lbl_806D307C, lbl_806D3080, lbl_806D3084, lbl_806D3088, lbl_806D309C, lbl_806D30A0;
-extern unsigned char lbl_806CEFC0[8];
+extern unsigned char Jyugemu_ReverseFlag_data_806CEFC0[8];
 void __assert(const char *, int, const char *);
 HSD_JObj *Archive_GetRootJObj(void *);
 float (*KartDriver_GetKartRootMtx(void *))[4];

@@ -10,7 +10,7 @@ extern "C" int Jyugemu_ReverseFlag_Tick(ReverseFlag *self) {
     Vec3 target, eye, direction;
     if (!self->object) return 0;
     if (!self->driver) return 0;
-    if (!lbl_806CEFC0[0]) return 0;
+    if (!Jyugemu_ReverseFlag_data_806CEFC0[0]) return 0;
     if (self->state == 1) {
         if (self->phase > lbl_806D307C) {
             float phase = self->phase - lbl_806D3080;

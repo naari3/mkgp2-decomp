@@ -3,7 +3,7 @@ extern double cos(double);
 extern double sin(double);
 extern void Mtx4x4_TransposeTo4x3(const void *, void *);
 extern void GXChannel_PushTransform(void *, const void *);
-extern void *lbl_806D10B8;
+extern void *clItemBox_bss_806D10B8;
 
 #include "game/ItemBoxDebrisParticlePrivate.h"
 
@@ -82,6 +82,6 @@ void clItemBoxResponder_DrawDebrisParticle(DebrisParticle *particle)
     m.v[1] *= particle->scale; m.v[5] *= particle->scale; m.v[9] *= particle->scale;
     m.v[2] *= particle->scale; m.v[6] *= particle->scale; m.v[10] *= particle->scale;
     Mtx4x4_TransposeTo4x3(&m, transform);
-    GXChannel_PushTransform(lbl_806D10B8, transform);
+    GXChannel_PushTransform(clItemBox_bss_806D10B8, transform);
 }
 #pragma use_lmw_stmw reset

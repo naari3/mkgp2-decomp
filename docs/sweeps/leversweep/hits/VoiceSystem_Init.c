@@ -60,7 +60,7 @@ int VoiceSystem_Init(void) {
     lbl_806D1728 = now;
     lbl_806D17C8 = now;
     lbl_806D17D0 = now;
-    lbl_806D17D8 = now;
+    Voice_bss_806D17D8 = now;
     g_voiceStreamTime = now;
     lbl_806D1798 = now;
     g_bgmStateTimeHi = now;

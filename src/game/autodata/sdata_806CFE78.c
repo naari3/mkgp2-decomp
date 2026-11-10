@@ -172,7 +172,7 @@ extern char lbl_804E52F0[];
 extern char lbl_804E52FC[];
 extern char lbl_804E5310[];
 extern char data_804E533C_data_804E5350[];
-extern char lbl_804E53BC[];
+extern char DebugOverlay_RaceConfig_data_804E53BC[];
 extern char data_804E5430_data_804E5430[];
 extern char data_804E549C_data_804E54CC[];
 extern char lbl_804E54F0[];
@@ -467,7 +467,7 @@ const char *lbl_806D0054[2] = {
 /* decl: char */
 void *lbl_806D005C[2] = {
     (void *)&lbl_803BEABC,
-    (void *)&lbl_804E53BC
+    (void *)&DebugOverlay_RaceConfig_data_804E53BC
 };
 char *DebugOverlay_RaceConfig_data_806D0064[2] = {
     (char *)&lbl_803BEAE4,

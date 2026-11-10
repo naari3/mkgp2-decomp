@@ -38,7 +38,7 @@ typedef struct ItemObject_Tick_DispatchcTo15_data_80420BC8_Row {
 #pragma force_active on
 
 /* decl: unsigned char */
-void *lbl_8041EEC0[431] = {
+void *ShellPile_data_8041EEC0[431] = {
     (void *)0x6974656D,
     (void *)0x5F686168,
     (void *)0x656E5F74,
@@ -468,7 +468,7 @@ void *lbl_8041EEC0[431] = {
     0,
     0,
     (void *)0x120100,
-    (void *)&lbl_8041EEC0,
+    (void *)&ShellPile_data_8041EEC0,
     (void *)0x3F800000
 };
 /* pointers mixed with values */

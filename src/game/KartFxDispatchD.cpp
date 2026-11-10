@@ -32,7 +32,7 @@ struct RingEffect {
     unsigned char afterFirstPair;
 };
 extern "C" {
-extern const RingResources lbl_80329E20;
+extern const RingResources KartFxExhaustRay_rodata_80329E20;
 extern const float lbl_806D51E8, lbl_806D51C0, lbl_806D51C8;
 extern const float lbl_806D53B0, lbl_806D53B4, lbl_806D52C4;
 extern const float lbl_806D53B8, lbl_806D53BC, lbl_806D53C0;
@@ -49,7 +49,7 @@ void EffectVfx86_BoostRingCenter_Tick(RingEffect *);
 RingEffect *DrawEffect_SpawnDirect(void (*)(RingEffect *));
 
 void KartFx_DispatchGroupD_RingBurst(void *, RingPayload *payload, void *, int enabled) {
-    const RingResources *resources = &lbl_80329E20;
+    const RingResources *resources = &KartFxExhaustRay_rodata_80329E20;
     RingVec position;
     RingColor color;
     RingAngles angles;

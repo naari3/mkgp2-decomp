@@ -284,7 +284,7 @@ static const IconPos s_iconPos[8] = {
     { 545.0f, 419.25f }, { 565.0f, 426.25f }, { 580.0f, 433.25f }, { 598.0f, 433.25f },
 };
 extern "C" const char lbl_80356658[] = "clCGameDK";
-extern "C" const char lbl_80356664[] = "clJobRunner";
+extern "C" const char NokoNoko_801287F8_rodata_80356664[] = "clJobRunner";
 
 extern "C" void TimeTrial_Render(TimeTrialMode *self)
 {

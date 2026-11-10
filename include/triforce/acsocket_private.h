@@ -60,12 +60,12 @@ extern u8 fn_80290810(s32 mask, s32 a0, u32 a1, u32 a2);
 
 extern u8 acsocket_nm7_bss_806992A0[0x4000];
 extern u8 acsocket_nm6_bss_8069D2A0[0x4000];
-extern u8 lbl_806A12A0[0x200];
-extern AcState lbl_806A14A0;
+extern u8 acsocket_nm7_bss_806A12A0[0x200];
+extern AcState acsocket_nm7_bss_806A14A0;
 #define RxBounce acsocket_nm7_bss_806992A0
 #define TxBounce acsocket_nm6_bss_8069D2A0
-#define Buf lbl_806A12A0
-#define State lbl_806A14A0
+#define Buf acsocket_nm7_bss_806A12A0
+#define State acsocket_nm7_bss_806A14A0
 
 static inline u32 SockAddr(AcSock* k, u32 off) {
     return k->bufAddr + off;

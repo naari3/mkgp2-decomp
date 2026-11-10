@@ -6,8 +6,8 @@ s32 fn_80288BCC(BackupConfig* cfg) {
     u32 alignment;
     u32 chan;
 
-    memset(&lbl_80690DE0, 0, 0x3C);
-    OSInitSemaphore(&lbl_80690DE0.sem, 1);
+    memset(&ambackup_nm1_bss_80690DE0, 0, 0x3C);
+    OSInitSemaphore(&ambackup_nm1_bss_80690DE0.sem, 1);
     if (!fn_80294E30(0, 2)) {
         return 1;
     }
@@ -19,7 +19,7 @@ s32 fn_80288BCC(BackupConfig* cfg) {
         }
     } else {
         for (chan = 0; chan < 1; chan++) {
-            e = &lbl_80690DE0.entry[chan][0];
+            e = &ambackup_nm1_bss_80690DE0.entry[chan][0];
             info = &lbl_806DC918[chan];
             e->addr = 0;
             e->cfg = *cfg;

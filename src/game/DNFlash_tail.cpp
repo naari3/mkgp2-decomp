@@ -48,7 +48,7 @@ extern const unsigned int DNFlash_tail_rodata_803D0390[0x102] = {
 extern const float DNFlash_tail_rodata_803D0798[3] = {9.0f, 11.0f, 7.0f};
 extern const float lbl_803D07A4[3] = {2000.0f, 3300.0f, 10000.0f};
 extern const float lbl_803D07B0[3] = {-3700.0f, -5700.0f, -15000.0f};
-extern const TriggerBox lbl_803D07BC[4] = {
+extern const TriggerBox DNFlash_tail_rodata_803D07BC[4] = {
     {{4709.0f, 0.0f, -5895.0f}, {4493.0f, 0.0f, -5820.0f}},
     {{3515.0f, 0.0f, -7468.0f}, {3428.0f, 0.0f, -7700.0f}},
     {{4300.0f, 0.0f, -2580.0f}, {4265.0f, 0.0f, -2455.0f}},

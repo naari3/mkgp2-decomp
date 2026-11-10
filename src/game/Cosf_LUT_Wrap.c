@@ -5,7 +5,7 @@ extern const float lbl_806D2C58;
 extern const float lbl_806D2C5C;
 extern const float lbl_806D2C50;
 extern unsigned short lbl_806CEF18;
-extern const float lbl_802EE580[];
+extern const float LUT_Sine_rodata_802EE580[];
 
 #pragma exceptions on
 float Cosf_LUT_Wrap(float angle)
@@ -20,7 +20,7 @@ float Cosf_LUT_Wrap(float angle)
     if ((unsigned short)idx > 0x7FFF) {
         idx = (0x10000 - idx) & 0xFFFF;
     }
-    return lbl_802EE580[(unsigned short)idx];
+    return LUT_Sine_rodata_802EE580[(unsigned short)idx];
 }
 
 #pragma exceptions reset

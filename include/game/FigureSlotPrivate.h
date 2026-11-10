@@ -20,7 +20,7 @@ struct FigureSlotView {
 };
 struct FigurePosition { short label,sub; float x,y; };
 extern "C" {
-extern FigurePosition lbl_8049AD58[];
+extern FigurePosition clFlowCup_data_8049AD58[];
 extern const float lbl_806D9C7C,lbl_806D9C80,lbl_806D9C70,lbl_806D9C84,lbl_806D9C88;
 extern const float lbl_806D9C74,lbl_806D9C8C,lbl_806D9C90,lbl_806D9C94;
 unsigned char Sprite_AdvanceAnim(FigureSprite*,float);

@@ -597,7 +597,7 @@ the scheduler keeps its load after them. The same source matched as a
 split TU only because there the object was `extern char ItemSelectState_rodata_803DC0C0[]`.
 
 Fix: address the object that really holds the data (`choiceY`,
-`lbl_803DC180`, the message strings as `static const char[]` defined in
+`ItemSelectState_rodata_803DC180`, the message strings as `static const char[]` defined in
 pool order). Inside the pool-owning TU every one of them comes off the same
 section anchor, which is the target's single base register. String
 literals go to .data, so rodata strings in a pool are named static arrays.
@@ -1141,7 +1141,7 @@ No codegen pragmas, asm or fakematches were used (onmokoworks's workers are not 
 | `upvec2roll` | sysdolphin/baselib/cobj_nm2.c | 98.87 | Resolved: initial validation emitted beq plus an extra unconditional b instead of target bne into valid body; +4 text bytes also shifted constant relocation... | Keep camera/eye-object validation in the outer if/else and place the output-pointer failure return inside the valid-camera branch: 100.0%. | 59485ee9 |
 | `acReadResponse` | triforce/acsocket_m8.c | 98.83 |  | Order case 1 locals addr,len,base,lenOff,n to match the two named register pairs: 100.0. | 8544fc12 |
 | `fn_801FC364` | game/anon_801FC1E0.cpp | 98.77 | none; exact | Capture initialTimer before input edge reset and set subState before timer assignment: 98.76744 -> 100.0. | aaa29b32 |
-| `fn_8023B1A8` | game/ItemSelectChoiceInit.cpp | 98.75 | Resolved: table base addi to r0 plus extra mr r29,r0; player address addi destination r4 versus target r0. Extra instruction shifted EH start D8 versus... | Remove both explicit pointer cursors and read lbl_803DC180[row][column]; compiler strength reduction now gives row r29 / item r30 and exact global-address setup: 100%. | 9200c6fe |
+| `fn_8023B1A8` | game/ItemSelectChoiceInit.cpp | 98.75 | Resolved: table base addi to r0 plus extra mr r29,r0; player address addi destination r4 versus target r0. Extra instruction shifted EH start D8 versus... | Remove both explicit pointer cursors and read ItemSelectState_rodata_803DC180[row][column]; compiler strength reduction now gives row r29 / item r30 and exact global-address setup: 100%. | 9200c6fe |
 | `DrawEffect_KartDustRing_Update` | game/DrawEffect_KartDustRing_Update.c | 98.11 | Resolved: external aggregate pointer materialization added mr r30,r4 and used mr instead of addi r4,r30,0 for tier 1. | Integration visibility correction within the same approach: static vectors caused unresolved neighboring ItemHitBurst/ItemHitOriented references in request 1; exporting the vectors preserves 100% text/EH/index/data... | 6668a75d |
 | `Effect_TwoChildRotate_FromPhase150` | game/EffectRotatePair.cpp | 97.30 | Resolved: FP scratch identities in alpha clamp/phase wrap; addi group and lbz enable scheduling at +0x40/+0x44. | Enable belongs to the group view at +0xC4 (parent +0x190); express access through group, restoring addi-before-lbz, 100%. | 3fc53253 |
 | `fn_8022B278` | game/EnemyFace_nm1.cpp | 97.26 | Resolved GPR partition: target textures/palettes/resources/tluts r31/r30/r29/r28, outer i r27, count n r26, inner k r25. Initial indexed inline helper... | Keep natural textures/palettes/resources/tluts increment order: 100.0%, all owned sections exact. | c928fb29 |

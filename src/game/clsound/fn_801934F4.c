@@ -5,7 +5,7 @@ const char lbl_8037D058[288] = { 73, 68, 58, 37, 48, 51, 100, 40, 37, 100, 41, 0
 #pragma opt_dead_assignments off
 #include "game/types/SoundEvent.h"
 extern unsigned char ClSound_Initialized;
-extern SoundEvent lbl_80677F40[37];
+extern SoundEvent ClSound_InitSoundSystem_bss_80677F40[37];
 extern int sprintf(char *, const char *, ...);
 extern void DeadCounter_Set_ced48(int);
 extern void OverlayText(int, int, int, const char *, ...);
@@ -15,7 +15,7 @@ static inline void DrawSoundEvents(void) {
     int i;
     char text[64];
     row = 0;
-    event = lbl_80677F40;
+    event = ClSound_InitSoundSystem_bss_80677F40;
     for (i = row; i < 37; i++, event++) {
         if (event->id == 0xffffffff) break;
         {

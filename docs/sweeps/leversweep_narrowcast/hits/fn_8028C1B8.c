@@ -1,27 +1,27 @@
 #include <triforce/amnet_priv.h>
 
-NetTrace lbl_806937C0[8];
+NetTrace amnet_nm3_bss_806937C0[8];
 u32 amnet_nm3_bss_80693940[0x1000];
-NetChan lbl_80697940[64];
-NetState lbl_80699140;
+NetChan amnet_nm3_bss_80697940[64];
+NetState amnet_nm3_bss_80699140;
 
 /* Debug helper stripped from the final link; fixes the order of the statics. */
 void NetResetTrace(void) {
-    lbl_806937C0[0].flags = 0;
+    amnet_nm3_bss_806937C0[0].flags = 0;
     amnet_nm3_bss_80693940[0] = 0;
-    lbl_80697940[0].dev = 0;
-    lbl_80699140.numDev = 0;
+    amnet_nm3_bss_80697940[0].dev = 0;
+    amnet_nm3_bss_80699140.numDev = 0;
 }
 
-u32 lbl_806D1E44;
+u32 amnet_nm3_bss_806D1E44;
 u32 amnet_nm3_bss_806D1E40;
 
-void (*lbl_804F5800[5])(void) = {NULL, fn_8028F430, fn_8028F3D8, fn_8028F31C, fn_8028F25C};
+void (*amnet_nm3_data_804F5800[5])(void) = {NULL, fn_8028F430, fn_8028F3D8, fn_8028F31C, fn_8028F25C};
 void (*amnet_nm3_data_804F5814[5])(void) = {NULL, fn_8028F404, fn_8028F348, fn_8028F298, NULL};
 
 static inline void TracePacket(u8 op, u8 dir, void* buf, u32 addr, u32 size) {
-    NetTrace* t = lbl_806937C0;
-    u32 n = lbl_806D1E44++;
+    NetTrace* t = amnet_nm3_bss_806937C0;
+    u32 n = amnet_nm3_bss_806D1E44++;
     t += n & 7;
     t->seq = n;
     t->op = op;
@@ -35,9 +35,9 @@ static inline void TracePacket(u8 op, u8 dir, void* buf, u32 addr, u32 size) {
 static inline void SendPacket(void* buf, NetDev* dev) {
     u32 addr = dev->statAddr;
     u8 id = (int)dev->id;
-    if ((lbl_806937C0[0].flags & 1) && id == 0xA9) TracePacket('W', 'R', buf, addr, 0x20);
+    if ((amnet_nm3_bss_806937C0[0].flags & 1) && id == 0xA9) TracePacket('W', 'R', buf, addr, 0x20);
     DevWrite(buf, addr, 0x20);
-    if ((lbl_806937C0[0].flags & 4) && id == 0xA9) {
+    if ((amnet_nm3_bss_806937C0[0].flags & 4) && id == 0xA9) {
         DCInvalidateRange(buf, 0x20);
         TracePacket('W', '2', buf, -1, -1);
     }
@@ -49,18 +49,18 @@ static inline void ClearPacket(NetDev* dev) {
     u32 addr = dev->cmdAddr;
     u8 id = dev->id;
     memset(buf, 0, 0x20);
-    if ((lbl_806937C0[0].flags & 2) && id == 0xA9) TracePacket('C', 'L', buf, addr, 0x20);
+    if ((amnet_nm3_bss_806937C0[0].flags & 2) && id == 0xA9) TracePacket('C', 'L', buf, addr, 0x20);
     DevSend(buf, addr, id);
 }
 
 static inline NetChan* ChannelFor(u32 index) {
-    NetChan* c = lbl_80697940;
+    NetChan* c = amnet_nm3_bss_80697940;
     c += index;
     return c;
 }
 
 static inline u8 ChannelDeviceId(u32 ch) {
-    if (ch <= 0x3F) return lbl_80697940[ch].dev;
+    if (ch <= 0x3F) return amnet_nm3_bss_80697940[ch].dev;
     return 0;
 }
 
@@ -78,7 +78,7 @@ s32 fn_8028C1B8(u8 channel) {
     u8 raw[0x40];
     OSSemaphore* sem;
 
-    LOG((ch << 16) | 0x20000000 | (u16)lbl_80699140.txCount);
+    LOG((ch << 16) | 0x20000000 | (u16)amnet_nm3_bss_80699140.txCount);
     if (ch == 0xFF) {
         return 3;
     }
@@ -87,7 +87,7 @@ s32 fn_8028C1B8(u8 channel) {
     pkt = ALIGN32(raw);
     DevWaitIdle(addr, pkt);
     pkt = TxPacket(ch);
-    if ((lbl_806937C0[0].flags & 2) && devId == 0xA9) {
+    if ((amnet_nm3_bss_806937C0[0].flags & 2) && devId == 0xA9) {
         TracePacket('T', 'R', pkt, dev->statAddr, 0x20);
     }
     SendPacket(pkt, dev);
@@ -97,10 +97,10 @@ s32 fn_8028C1B8(u8 channel) {
             amnet_nm3_data_804F5814[kind]();
         }
     }
-    lbl_80699140.txCount++;
+    amnet_nm3_bss_80699140.txCount++;
     LOG((pkt->id << 16) | 0x30000000 | BSWAP16(pkt->flags));
     if (pkt->flags & 0x80) {
-        sem = &lbl_80699140.sem;
+        sem = &amnet_nm3_bss_80699140.sem;
         OSSignalSemaphore(sem);
         if (ch <= 0x3F) {
             OSWaitSemaphore(sem);
@@ -114,7 +114,7 @@ s32 fn_8028C1B8(u8 channel) {
 
 
 s32 fn_8028C5E4(u8 kind) {
-    OSSemaphore* sem = &lbl_80699140.sem;
+    OSSemaphore* sem = &amnet_nm3_bss_80699140.sem;
     s32 ret;
 
     OSWaitSemaphore(sem);
@@ -131,7 +131,7 @@ static inline u8 OpenChan(NetPacket* pkt, u8 dev) {
         return 0xFF;
     }
     if (ch <= 0x3F) {
-        lbl_80697940[ch].dev = dev;
+        amnet_nm3_bss_80697940[ch].dev = dev;
     }
     HandlerFor(pkt)(ch);
     return ch;
@@ -167,7 +167,7 @@ s32 fn_8028C644(u8 kind) {
 
     buf = ALIGN32(raw);
     ret = 0;
-    LOG((u16)lbl_80699140.rxCount | 0x21000000);
+    LOG((u16)amnet_nm3_bss_80699140.rxCount | 0x21000000);
     if (!fn_8028D750(0, kind, &devId)) {
         return 4;
     }
@@ -192,7 +192,7 @@ s32 fn_8028C644(u8 kind) {
                     memcpy(rx, pkt, 0x20);
                 }
             } else {
-                sem = &lbl_80699140.sem;
+                sem = &amnet_nm3_bss_80699140.sem;
                 OSSignalSemaphore(sem);
                 ch = OpenChan(pkt, devId);
                 OSWaitSemaphore(sem);
@@ -209,7 +209,7 @@ s32 fn_8028C644(u8 kind) {
 s32 fn_8028CB64(u8* out) {
     u16 status;
     u8 kind;
-    OSSemaphore* sem = &lbl_80699140.irqSem;
+    OSSemaphore* sem = &amnet_nm3_bss_80699140.irqSem;
 
     do {
         OSWaitSemaphore(sem);
@@ -223,24 +223,24 @@ s32 fn_8028CB64(u8* out) {
             kind = 1;
         }
         if (kind == 0) {
-            lbl_80699140.rxCount++;
+            amnet_nm3_bss_80699140.rxCount++;
         }
     } while (kind == 0);
     OSSignalSemaphore(sem);
     {
         u32 index = kind;
-        if (index <= 4 && lbl_804F5800[index] != NULL) {
-            lbl_804F5800[index]();
+        if (index <= 4 && amnet_nm3_data_804F5800[index] != NULL) {
+            amnet_nm3_data_804F5800[index]();
         }
     }
     *out = kind;
-    lbl_80699140.rxCount++;
+    amnet_nm3_bss_80699140.rxCount++;
     LOG(0x11000000);
     return 1;
 }
 
 void fn_8028CC80(void) {
-    OSSignalSemaphore(&lbl_80699140.irqSem);
+    OSSignalSemaphore(&amnet_nm3_bss_80699140.irqSem);
 }
 
 BOOL fn_8028CCAC(u8 id) {
@@ -281,14 +281,14 @@ NetPacket* fn_8028CF44(u8 id) {
 }
 
 s32 fn_8028D000(u8 id) {
-    OSSemaphore* sem = &lbl_80699140.sem;
+    OSSemaphore* sem = &amnet_nm3_bss_80699140.sem;
     s32 ret = 1;
     NetChan* c;
 
     OSWaitSemaphore(sem);
     c = FindChan(id);
     if (c != NULL) {
-        LOG((c - lbl_80697940) | 0xC0000000);
+        LOG((c - amnet_nm3_bss_80697940) | 0xC0000000);
         memset(c, 0, sizeof(NetChan));
         ret = 0;
     }
@@ -298,15 +298,15 @@ s32 fn_8028D000(u8 id) {
 
 u8 fn_8028D15C(NetPacket* pkt) {
     NetChan* c;
-    OSSemaphore* sem = &lbl_80699140.sem;
+    OSSemaphore* sem = &amnet_nm3_bss_80699140.sem;
     u8 ret = 0xFF;
     s32 i;
 
     OSWaitSemaphore(sem);
-    for (i = 0, c = lbl_80697940; i < 64; c++, i++) {
+    for (i = 0, c = amnet_nm3_bss_80697940; i < 64; c++, i++) {
         if (c->rx.flags == 0 && c->tx.flags == 0) {
             memcpy(&c->rx, pkt, 0x20);
-            LOG((c - lbl_80697940) | 0xA1000000);
+            LOG((c - amnet_nm3_bss_80697940) | 0xA1000000);
             ret = i;
             break;
         }
@@ -333,7 +333,7 @@ static inline u8 NextChannelId(NetState* state, NetChan* channels) {
 }
 
 u8 fn_8028D234(void) {
-    OSSemaphore* sem = &lbl_80699140.sem;
+    OSSemaphore* sem = &amnet_nm3_bss_80699140.sem;
     u8 ret = 0;
     NetChan* c;
     NetState* state;
@@ -342,18 +342,18 @@ u8 fn_8028D234(void) {
     u8 id;
 
     OSWaitSemaphore(sem);
-    channels = lbl_80697940;
+    channels = amnet_nm3_bss_80697940;
     c = channels;
     for (n = 64; n != 0; n--) {
         if (c->rx.flags == 0 && c->tx.flags == 0) {
-            state = &lbl_80699140;
+            state = &amnet_nm3_bss_80699140;
             id = NextChannelId(state, channels);
             c->tx.id = id;
             c->tx.sub = 0;
             ret = id;
             state->lastId = id;
             c->tx.flags = 0xFF00;
-            LOG((c - lbl_80697940) | 0xA0000000);
+            LOG((c - amnet_nm3_bss_80697940) | 0xA0000000);
             break;
         }
         c++;

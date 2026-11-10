@@ -110,7 +110,7 @@ typedef struct JvsTx {
     /* 0x250 */ JvsRing ring[2];
 } JvsTx;
 
-extern JvsCmd lbl_8067E2A0;
-extern JvsTx lbl_80683280;
+extern JvsCmd jvsio_bss_8067E2A0;
+extern JvsTx jvsio_bss_80683280;
 
 #endif

@@ -48,10 +48,10 @@ extern "C" clItemBoxStep clItemBox_data_803F9CA8[4];
 
 
 extern "C" {
-extern int lbl_806CEEA0;
-extern GXChannel *lbl_806D10B0;
-extern GXChannel *lbl_806D10B4;
-extern GXChannel *lbl_806D10B8;
+extern int clItemBox_data_806CEEA0;
+extern GXChannel *clItemBox_bss_806D10B0;
+extern GXChannel *clItemBox_bss_806D10B4;
+extern GXChannel *clItemBox_bss_806D10B8;
 extern Normal3D *clItemBox_bss_806D10BC;
 extern void *clItemBox_bss_806D10C0;
 extern void *clItemBox_bss_806D10C4;
@@ -77,21 +77,21 @@ void clItemBoxManager_LoadAssets(void);
 
 static inline void clItemBoxManager_UnbindInline(void)
 {
-    switch (lbl_806CEEA0) {
+    switch (clItemBox_data_806CEEA0) {
     case 0:
-        GXChannel_Unbind(lbl_806D10B4);
+        GXChannel_Unbind(clItemBox_bss_806D10B4);
         break;
     case 1:
-        GXChannel_Unbind(lbl_806D10B0);
+        GXChannel_Unbind(clItemBox_bss_806D10B0);
         break;
     case 2:
-        GXChannel_Unbind(lbl_806D10B8);
+        GXChannel_Unbind(clItemBox_bss_806D10B8);
         break;
     default:
         DebugPrintf(lbl_802EDF14);
         break;
     }
-    lbl_806CEEA0 = -1;
+    clItemBox_data_806CEEA0 = -1;
 }
 
 void clItemBoxManager_LoadAssets(void)
@@ -110,19 +110,19 @@ void clItemBoxManager_LoadAssets(void)
         JObj_Hide(clItemBox_bss_806D10C8, ResolveJointByName(clItemBox_bss_806D10C8, strings + 0xC0), 0x10);
         clItemBox_bss_806D10CC = ResolveJointByName(clItemBox_bss_806D10C8, strings + 0x74);
     }
-    lbl_806D10B0 = new GXChannel(clItemBox_bss_806D10C0, HSD_JObjGetDObj(clItemBox_bss_806D10C0), 1, 0);
-    lbl_806D10B4 = new GXChannel(clItemBox_bss_806D10C4, HSD_JObjGetDObj(clItemBox_bss_806D10C4), 1, 0);
-    lbl_806D10B8 = new GXChannel(clItemBox_bss_806D10CC, HSD_JObjGetDObj(clItemBox_bss_806D10CC), 1, 0);
+    clItemBox_bss_806D10B0 = new GXChannel(clItemBox_bss_806D10C0, HSD_JObjGetDObj(clItemBox_bss_806D10C0), 1, 0);
+    clItemBox_bss_806D10B4 = new GXChannel(clItemBox_bss_806D10C4, HSD_JObjGetDObj(clItemBox_bss_806D10C4), 1, 0);
+    clItemBox_bss_806D10B8 = new GXChannel(clItemBox_bss_806D10CC, HSD_JObjGetDObj(clItemBox_bss_806D10CC), 1, 0);
 }
 
 void clItemBoxManager_TeardownAssets(void)
 {
-    dtor_8007D9C4(lbl_806D10B0, 1);
-    lbl_806D10B0 = 0;
-    dtor_8007D9C4(lbl_806D10B4, 1);
-    lbl_806D10B4 = 0;
-    dtor_8007D9C4(lbl_806D10B8, 1);
-    lbl_806D10B8 = 0;
+    dtor_8007D9C4(clItemBox_bss_806D10B0, 1);
+    clItemBox_bss_806D10B0 = 0;
+    dtor_8007D9C4(clItemBox_bss_806D10B4, 1);
+    clItemBox_bss_806D10B4 = 0;
+    dtor_8007D9C4(clItemBox_bss_806D10B8, 1);
+    clItemBox_bss_806D10B8 = 0;
     Object_DtorWithGXSync(clItemBox_bss_806D10BC, 1);
     clItemBox_bss_806D10BC = 0;
     clItemBox_bss_806D10C0 = 0;
@@ -134,25 +134,25 @@ void clItemBoxManager_TeardownAssets(void)
 
 void clItemBoxManager_Bind(int index)
 {
-    if (lbl_806CEEA0 != -1) {
+    if (clItemBox_data_806CEEA0 != -1) {
         DebugPrintf(lbl_802EDEF8);
         clItemBoxManager_UnbindInline();
     }
     switch (index) {
     case 0:
-        GXChannel_Bind(lbl_806D10B4);
+        GXChannel_Bind(clItemBox_bss_806D10B4);
         break;
     case 1:
-        GXChannel_Bind(lbl_806D10B0);
+        GXChannel_Bind(clItemBox_bss_806D10B0);
         break;
     case 2:
-        GXChannel_Bind(lbl_806D10B8);
+        GXChannel_Bind(clItemBox_bss_806D10B8);
         break;
     default:
         DebugPrintf(lbl_802EDF14);
         break;
     }
-    lbl_806CEEA0 = index;
+    clItemBox_data_806CEEA0 = index;
 }
 
 void clItemBoxManager_UnbindCurrent(void)
@@ -361,9 +361,9 @@ typedef struct clItemBox {
 } clItemBox;
 
 
-extern int lbl_806CEEA0;
-extern GXChannel *lbl_806D10B0;
-extern GXChannel *lbl_806D10B4;
+extern int clItemBox_data_806CEEA0;
+extern GXChannel *clItemBox_bss_806D10B0;
+extern GXChannel *clItemBox_bss_806D10B4;
 extern void *clItemBox_bss_806D10BC;
 extern const float lbl_806D29E0;
 extern const double lbl_806D29F0;
@@ -383,10 +383,10 @@ static inline void clItemBox_DrawModel(clItemBox *self, Vec *view)
     Object_SetColorAlphaOnly(clItemBox_bss_806D10BC, 0, self->alpha);
     Object_SetJObjPositionXYZ(clItemBox_bss_806D10BC, self->pos.x, lbl_806D2A0C + self->pos.y, self->pos.z);
     Object_SetJObjRotationY(clItemBox_bss_806D10BC, lbl_806D29F0 * (lbl_806D29E0 * self->spin));
-    if (lbl_806CEEA0 == 0) {
-        GXChannel_PushTransform(lbl_806D10B4, Object_GetJObjLocalMatrix(clItemBox_bss_806D10BC));
+    if (clItemBox_data_806CEEA0 == 0) {
+        GXChannel_PushTransform(clItemBox_bss_806D10B4, Object_GetJObjLocalMatrix(clItemBox_bss_806D10BC));
     } else {
-        GXChannel_PushTransform(lbl_806D10B0, Object_GetJObjLocalMatrix(clItemBox_bss_806D10BC));
+        GXChannel_PushTransform(clItemBox_bss_806D10B0, Object_GetJObjLocalMatrix(clItemBox_bss_806D10BC));
     }
 }
 
@@ -397,7 +397,7 @@ void clItemBox_Draw(clItemBox *self)
     if (self->state == 3) {
         return;
     }
-    if (lbl_806CEEA0 == 2) {
+    if (clItemBox_data_806CEEA0 == 2) {
         clItemBoxResponder_DrawDebris(self->responder);
         return;
     }

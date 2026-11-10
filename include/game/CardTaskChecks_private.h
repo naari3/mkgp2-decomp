@@ -91,7 +91,7 @@ extern CardStep CardTaskWelcome_StepCommCheck_data_803FE5C0, CardTaskWelcome_Sta
 extern CardStep CardTaskChecks_data_803FE6BC, CardPrinterChecker_State_WaitHandle_data_803FE6C8, CardPrinterChecker_State_CleaningSelectInput_data_803FE6D4, CardPrinterChecker_State_CleaningSelectInput_data_803FE6E0;
 extern CardStep CardPrinterChecker_State_WaitStatus_data_803FE71C, CardPrinterChecker_State_WaitStatus_data_803FE728, CardTaskPrintJob_StepStart_data_803FE758, CardPrinterChecker_State_InitPrinter_data_803FE764, CardPrinterChecker_State_InitPrinter_data_803FE770;
 extern CardStep CameraChecker_State_ShutdownTick_data_803FE77C, CameraChecker_State_WaitButton2400_data_803FE788, CameraChecker_State_WaitButton1000_data_803FE794, CameraChecker_State_Entry_data_803FE7C4, CameraChecker_State_WaitVBlank_data_803FE7D0, CameraChecker_State_WaitVBlank_data_803FE7DC;
-extern char lbl_80312850[], lbl_80312DEC[], lbl_80312DFC[], lbl_80312E1C[], CardTaskPrintJob_StepNoCardPrinter_rodata_80312E40[];
+extern char Card_rodata_80312850[], lbl_80312DEC[], lbl_80312DFC[], lbl_80312E1C[], CardTaskPrintJob_StepNoCardPrinter_rodata_80312E40[];
 extern char CardPrinterChecker_State_WaitStatus_rodata_80312E9C[], lbl_80312EF4[], lbl_80312F04[], lbl_80312F14[], lbl_80312F5C[];
 extern char lbl_80312F8C[], lbl_80312FA0[];
 extern const char lbl_806D3310[6], lbl_806D3328[8], lbl_806D3338[7], lbl_806D32EC[3];

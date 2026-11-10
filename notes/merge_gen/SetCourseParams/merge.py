@@ -4,7 +4,7 @@ OUT='src/game/SetCourseParams.c'
 files=open(W+'files.txt').read().split()
 cfg=subprocess.run(['git','show','HEAD:configure.py'],capture_output=True,text=True).stdout
 def orig(f): return subprocess.run(['git','show','HEAD:src/'+f],capture_output=True,text=True).stdout
-POOL={'SetCourseParams_bss_805AC600','KartDriverArray_StaticCtor_bss_805AC6C0','SetCourseParams_bss_805AC6CC','SetCourseParams_bss_805B24CC','RaceResult_StoreLatest_bss_805B256C','SetCourseParams_bss_805B2580','g_playerData','lbl_805D275C','RaceSlot_ResetAll_bss_805D2938','SetCourseParams_bss_805D2948'}
+POOL={'SetCourseParams_bss_805AC600','KartDriverArray_StaticCtor_bss_805AC6C0','SetCourseParams_bss_805AC6CC','SetCourseParams_bss_805B24CC','RaceResult_StoreLatest_bss_805B256C','SetCourseParams_bss_805B2580','g_playerData','SetCourseParams_bss_805D275C','RaceSlot_ResetAll_bss_805D2938','SetCourseParams_bss_805D2948'}
 srcs={f:orig(f) for f in files}
 HAND=json.load(open(W+'hand.json'))
 for f in files:

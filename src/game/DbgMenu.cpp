@@ -320,7 +320,7 @@ extern float Rand_RangeFloat(float lo, float hi);
 extern void SpriteHandle_Destroy(int h);
 extern void DbgScene_PreloadResourceTree(ResNode *tree);
 extern unsigned char DbgMenu_data_8041C8A0[];
-extern Particle lbl_80618C68[500];
+extern Particle DbgScene_bss_80618C68[500];
 extern char DbgMenu_bss_80638068[500];
 extern void *ParticleTestScene_vtable_8041CB14[];
 extern char lbl_806D58CC[8];
@@ -1359,7 +1359,7 @@ static inline int Particle_Spawn(void *anim)
     }
     for (i = 0; i < 500; i++) {
         if (!DbgMenu_bss_80638068[i]) {
-            e = &lbl_80618C68[i];
+            e = &DbgScene_bss_80618C68[i];
             Particle_Reset(e, anim);
             e->handle = 0;
             DbgMenu_bss_80638068[i] = 1;
@@ -1372,8 +1372,8 @@ static inline int Particle_Spawn(void *anim)
 static inline void Particle_SetPos(int h, float x, float y)
 {
     if (h != 0) {
-        lbl_80618C68[h - 1].x = x;
-        lbl_80618C68[h - 1].y = y;
+        DbgScene_bss_80618C68[h - 1].x = x;
+        DbgScene_bss_80618C68[h - 1].y = y;
     }
 }
 
@@ -1421,7 +1421,7 @@ extern "C" unsigned char DbgScene05_TplTest2_Update(void)
     h = Particle_Spawn(DbgMenu_data_8041C8A0);
     Particle_SetPos(h, Rand_RangeFloat(0.0f, 640.0f), Rand_RangeFloat(0.0f, 480.0f));
     Particle_SetState(h, 2);
-    Particle_UpdatePool(DbgMenu_bss_80638068, lbl_80618C68);
+    Particle_UpdatePool(DbgMenu_bss_80638068, DbgScene_bss_80618C68);
     return 0;
 }
 
@@ -1429,8 +1429,8 @@ static inline void ResetParticlePool(void)
 {
     int i;
     for (i = 0; i < 500; i++) {
-        Particle_Reset(&lbl_80618C68[i], 0);
-        lbl_80618C68[i].handle = 0;
+        Particle_Reset(&DbgScene_bss_80618C68[i], 0);
+        DbgScene_bss_80618C68[i].handle = 0;
         DbgMenu_bss_80638068[i] = 0;
     }
 }

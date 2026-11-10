@@ -25,7 +25,7 @@ typedef struct SurfaceSE {
 
 extern const float lbl_806D2940;
 extern SurfaceSE KartAudioChannel_PlayColorMatchSE_rodata_802EDCBC[13];
-extern const Vec lbl_802EDD24;
+extern const Vec KartItemAudio_PlaySEByItemId_rodata_802EDD24;
 extern unsigned int Terrain_ApplyCup2FlagPatch(int flags);
 extern void SoundMgr_PlaySE(unsigned int id);
 extern void fn_8016C394(unsigned int id);
@@ -81,7 +81,7 @@ void KartAudioChannel_PlayColorMatchSE(KartAudioChannel *self, int ground0, int 
         if (self->muted == 0) {
             src = self->source;
             if (src != 0) {
-                Vec pos = lbl_802EDD24;
+                Vec pos = KartItemAudio_PlaySEByItemId_rodata_802EDD24;
                 pos.x = src->x;
                 pos.y = src->y;
                 pos.z = src->z;

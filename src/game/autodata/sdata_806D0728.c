@@ -15,7 +15,7 @@ extern char lbl_803DC364[];
 extern char lbl_803E5D18[];
 extern char lbl_803E5D24[];
 extern char lbl_803EECAC[];
-extern char lbl_803EECB8[];
+extern char JointTracks_rodata_803EECB8[];
 extern char lbl_803EEE58[];
 extern char lbl_803EF408[];
 extern char lbl_803EF418[];
@@ -201,7 +201,7 @@ void *data_804EE638_data_806D07C8[2] = {
 };
 /* decl: char */
 void *lbl_806D07D0[2] = {
-    (void *)&lbl_803EECB8,
+    (void *)&JointTracks_rodata_803EECB8,
     0
 };
 /* decl: char */

@@ -38,7 +38,7 @@ struct CoinProgress { unsigned char opaque[0x18]; int field18, field1c; };
 extern "C" {
 extern CoinNormal *lbl_806D1528, *lbl_806D152C, *lbl_806D1530;
 extern CoinRow *lbl_806D1534;
-extern int lbl_806D1538, lbl_806D153C, lbl_806D1540, lbl_806D1544;
+extern int lbl_806D1538, CoinSystem_bss_806D153C, CoinSystem_bss_806D1540, CoinSystem_bss_806D1544;
 extern unsigned char lbl_806D1548[8];
 extern void *lbl_806D10A0;
 extern int lbl_80677CC8[4];
@@ -132,7 +132,7 @@ extern "C" int CoinSystem_Init(CoinSpawn *table, int mode)
     lbl_806D1534 = (CoinRow *)FUN_8003b120(lbl_806D1538 * sizeof(CoinRow));
     if (!lbl_806D1534) goto fail;
     CoinFill(table, mode);
-    lbl_806D153C = 0; lbl_806D1540 = 0; lbl_806D1544 = 0;
+    CoinSystem_bss_806D153C = 0; CoinSystem_bss_806D1540 = 0; CoinSystem_bss_806D1544 = 0;
     {
         CoinProgress *progress = fn_8024F588();
         progress->field1c = 0;

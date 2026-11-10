@@ -14,7 +14,7 @@ typedef struct {
     PulseKey axis[3];
 } PulseTable;
 
-extern const char lbl_8032E060[];
+extern const char ItemObject_Tick_rodata_8032E060[];
 extern unsigned char lbl_805DF3D0[];
 extern void fn_800D748C(unsigned char *self);
 extern unsigned char *ItemObject_AllocFromPool(void (*fn)(unsigned char *));
@@ -81,7 +81,7 @@ void ItemObject_Tick_Dispatch16To1d(unsigned char *self)
     Vec v2;
     Vec v3;
     Vec d;
-    const char *names = lbl_8032E060;
+    const char *names = ItemObject_Tick_rodata_8032E060;
     PulseKey *k;
     float *out;
     int i;

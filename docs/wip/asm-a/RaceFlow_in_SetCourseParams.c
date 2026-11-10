@@ -54,7 +54,7 @@ extern LapEntry SetCourseParams_bss_805B24CC[10];
 extern struct LapExtra RaceResult_StoreLatest_bss_805B256C;
 extern unsigned char SetCourseParams_bss_805B2580[0x20000];
 extern unsigned char g_playerData[0x1DC];
-extern unsigned char lbl_805D275C[0x1DC];
+extern unsigned char SetCourseParams_bss_805D275C[0x1DC];
 extern int RaceSlot_ResetAll_bss_805D2938[4];
 extern RankSlot SetCourseParams_bss_805D2948[8];
 
@@ -65,7 +65,7 @@ LapEntry SetCourseParams_bss_805B24CC[10];
 struct LapExtra RaceResult_StoreLatest_bss_805B256C;
 unsigned char SetCourseParams_bss_805B2580[0x20000];
 unsigned char g_playerData[0x1DC];
-unsigned char lbl_805D275C[0x1DC];
+unsigned char SetCourseParams_bss_805D275C[0x1DC];
 int RaceSlot_ResetAll_bss_805D2938[4];
 RankSlot SetCourseParams_bss_805D2948[8];
 

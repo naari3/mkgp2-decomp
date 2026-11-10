@@ -69,6 +69,9 @@ def load_symbols():
     return syms, order
 
 
+OWNER = {}   # object -> unit whose asm defines it
+
+
 def xref():
     """lbl -> {"fn": set(function names), "obj": set(object names), "unit": set(units)}"""
     refs = defaultdict(lambda: {"fn": set(), "obj": set(), "unit": set()})
@@ -86,6 +89,7 @@ def xref():
                         continue
                     if line.startswith(".obj "):
                         cur, curkind = line[5:].split(",")[0].strip().strip('"'), "obj"
+                        OWNER[cur] = unit
                         continue
                     if line.startswith((".endfn", ".endobj")):
                         cur = None
@@ -213,6 +217,17 @@ def plan(args):
             u = os.path.basename(next(iter(r["unit"])))
             if not UNNAMED.match(u) and re.fullmatch(r"[A-Za-z_]\w*", u):
                 base, how = u, "one unit"
+        if base is None and len(fns) > 1 and all(fns):
+            # several named functions: their common name prefix (whole words)
+            pre = os.path.commonprefix([f[0] for f in fns])
+            pre = pre[:pre.rfind("_")] if "_" in pre and not pre.endswith("_") else pre.rstrip("_")
+            if len(pre) >= 4 and re.fullmatch(r"[A-Za-z_]\w*", pre) and not UNNAMED.match(pre):
+                base, how = pre, "common prefix of its functions"
+        if base is None and name in OWNER:
+            u = os.path.basename(OWNER[name])
+            if not UNNAMED.match(u) and not u.startswith(("data_", "rodata_", "sdata_", "bss_", "sbss_"))\
+                    and re.fullmatch(r"[A-Za-z_]\w*", u):
+                base, how = u, "unit that defines it"
         if base is None and not r["fn"] and len(r["obj"]) == 1:
             o = next(iter(r["obj"]))
             o = re.sub(r"_(data|bss|rodata|vtable|RTTI)_[0-9A-F]{8}$", "", o)

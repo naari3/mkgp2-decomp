@@ -6,10 +6,10 @@ typedef struct clItemBoxResponder {
     void *debris; /* 0x00 */
 } clItemBoxResponder;
 
-extern int lbl_806CEEA0; /* bound channel index, -1 = none */
-extern GXChannel *lbl_806D10B0;
-extern GXChannel *lbl_806D10B4;
-extern GXChannel *lbl_806D10B8;
+extern int clItemBox_data_806CEEA0; /* bound channel index, -1 = none */
+extern GXChannel *clItemBox_bss_806D10B0;
+extern GXChannel *clItemBox_bss_806D10B4;
+extern GXChannel *clItemBox_bss_806D10B8;
 extern char lbl_802EDEF8[];
 extern char lbl_802EDF14[];
 extern void DebugPrintf(const char *fmt, ...);
@@ -19,31 +19,31 @@ extern void clItemBoxResponder_DrawDebris(void *debris);
 
 static inline void GXChannel_UnbindCurrent(void)
 {
-    switch (lbl_806CEEA0) {
+    switch (clItemBox_data_806CEEA0) {
     case 0:
-        GXChannel_Unbind(lbl_806D10B4);
+        GXChannel_Unbind(clItemBox_bss_806D10B4);
         break;
     case 1:
-        GXChannel_Unbind(lbl_806D10B0);
+        GXChannel_Unbind(clItemBox_bss_806D10B0);
         break;
     case 2:
-        GXChannel_Unbind(lbl_806D10B8);
+        GXChannel_Unbind(clItemBox_bss_806D10B8);
         break;
     default:
         DebugPrintf(lbl_802EDF14);
         break;
     }
-    lbl_806CEEA0 = -1;
+    clItemBox_data_806CEEA0 = -1;
 }
 
 void clItemBoxResponder_Rebind(clItemBoxResponder *self)
 {
-    if (lbl_806CEEA0 != -1) {
+    if (clItemBox_data_806CEEA0 != -1) {
         DebugPrintf(lbl_802EDEF8);
         GXChannel_UnbindCurrent();
     }
-    GXChannel_Bind(lbl_806D10B8);
-    lbl_806CEEA0 = 2;
+    GXChannel_Bind(clItemBox_bss_806D10B8);
+    clItemBox_data_806CEEA0 = 2;
     clItemBoxResponder_DrawDebris(self->debris);
     GXChannel_UnbindCurrent();
 }

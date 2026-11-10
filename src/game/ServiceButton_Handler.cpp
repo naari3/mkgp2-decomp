@@ -33,7 +33,7 @@ static inline void ServiceFrame() {
 }
 extern "C" int ServiceButton_Handler() {
     if (g_currentSceneState==0x35) return 0;
-    if (lbl_806D0F8D==1) return 0;
+    if (ServiceButton_bss_806D0F8D==1) return 0;
     void *card=Sci2Card_Singleton_Get();
     if (card && !Sci2Card_IsIdleOrExhausted(card)) return 0;
     if (InputMgr_GetPlayer(GetInputManager(),0)->Pressed(0x800)) {
