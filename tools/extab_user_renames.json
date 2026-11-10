@@ -6329,7 +6329,7 @@
     "__ct__12clEFaceModelFP10KartRenderiii": "fn_8022D050",
     "Draw__12clEFaceModelFv": "fn_8022CDE4",
     "Update__12clEFaceModelFv": "fn_8022CE04",
-    "Reset__12FaceModelSubFv": "fn_8022FCA8"
+    "Reset__12FaceModelSubFi": "fn_8022FCA8"
   },
   "src/game/EnmyFaceEffect.cpp": {
     "__nwa__FUl": "FUN_8003b120",
@@ -9979,7 +9979,7 @@
     "__ct__12clEFaceModelFP10KartRenderiii": "fn_8022D050",
     "Draw__12clEFaceModelFv": "fn_8022CDE4",
     "Update__12clEFaceModelFv": "fn_8022CE04",
-    "Reset__12FaceModelSubFv": "fn_8022FCA8",
+    "Reset__12FaceModelSubFi": "fn_8022FCA8",
     "@56": "@etb_8001BE74",
     "@57": "@eti_8002A83C"
   },
@@ -10024,7 +10024,7 @@
     "__ct__12clEFaceModelFP10KartRenderiii": "fn_8022D050",
     "Draw__12clEFaceModelFv": "fn_8022CDE4",
     "Update__12clEFaceModelFv": "fn_8022CE04",
-    "Reset__12FaceModelSubFv": "fn_8022FCA8"
+    "Reset__12FaceModelSubFi": "fn_8022FCA8"
   },
   "src/game/EnemyFace_exact2.cpp": {
     "TireSprite_Draw__FP10TireSprite": "fn_8022ACE4",
@@ -10067,7 +10067,7 @@
     "__ct__12clEFaceModelFP10KartRenderiii": "fn_8022D050",
     "Draw__12clEFaceModelFv": "fn_8022CDE4",
     "Update__12clEFaceModelFv": "fn_8022CE04",
-    "Reset__12FaceModelSubFv": "fn_8022FCA8",
+    "Reset__12FaceModelSubFi": "fn_8022FCA8",
     "@101": "@etb_8001BE84",
     "@102": "@eti_8002A854"
   },
@@ -10112,7 +10112,7 @@
     "__ct__12clEFaceModelFP10KartRenderiii": "fn_8022D050",
     "Draw__12clEFaceModelFv": "fn_8022CDE4",
     "Update__12clEFaceModelFv": "fn_8022CE04",
-    "Reset__12FaceModelSubFv": "fn_8022FCA8",
+    "Reset__12FaceModelSubFi": "fn_8022FCA8",
     "@102": "@etb_8001BE8C",
     "@103": "@eti_8002A860",
     "@168": "@etb_8001BE94",
@@ -10159,7 +10159,7 @@
     "__ct__12clEFaceModelFP10KartRenderiii": "fn_8022D050",
     "Draw__12clEFaceModelFv": "fn_8022CDE4",
     "Update__12clEFaceModelFv": "fn_8022CE04",
-    "Reset__12FaceModelSubFv": "fn_8022FCA8",
+    "Reset__12FaceModelSubFi": "fn_8022FCA8",
     "@40": "@etb_8001BEAC",
     "@41": "@eti_8002A878",
     "@48": "@etb_8001BEB4",
@@ -10213,7 +10213,7 @@
     "__ct__12clEFaceModelFP10KartRenderiii": "fn_8022D050",
     "Draw__12clEFaceModelFv": "fn_8022CDE4",
     "Update__12clEFaceModelFv": "fn_8022CE04",
-    "Reset__12FaceModelSubFv": "fn_8022FCA8"
+    "Reset__12FaceModelSubFi": "fn_8022FCA8"
   },
   "src/game/anon_80218F40_nm1.cpp": {
     "__dt__20VHolder<10FlowFaderI>Fv": "dtor_801F2724",
@@ -10434,7 +10434,7 @@
     "__ct__12clEFaceModelFP10KartRenderiii": "fn_8022D050",
     "Draw__12clEFaceModelFv": "fn_8022CDE4",
     "Update__12clEFaceModelFv": "fn_8022CE04",
-    "Reset__12FaceModelSubFv": "fn_8022FCA8"
+    "Reset__12FaceModelSubFi": "fn_8022FCA8"
   },
   "src/game/EnemyFace_exact5.cpp": {
     "TireSprite_Draw__FP10TireSprite": "fn_8022ACE4",
@@ -10477,7 +10477,7 @@
     "__ct__12clEFaceModelFP10KartRenderiii": "fn_8022D050",
     "Draw__12clEFaceModelFv": "fn_8022CDE4",
     "Update__12clEFaceModelFv": "fn_8022CE04",
-    "Reset__12FaceModelSubFv": "fn_8022FCA8",
+    "Reset__12FaceModelSubFi": "fn_8022FCA8",
     "@48": "@etb_8001BFC0",
     "@49": "@eti_8002A8B4"
   },

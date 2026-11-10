@@ -913,3 +913,9 @@ status: note
 
 src/game/EnemyRunType1_Init.c and EnemyRunType2_Init.c: (self, owner, driver, kart, pathIndex, character), forwarded to EnemyRun_BaseInit. Byte-identical. No action needed.
 
+## n3-20261110-1815 | 2026-11-10 18:15Z | from: n3 | wrapper arguments written out
+re: -
+status: note
+
+Touched: auto_ONKARTHIT_block.c, HUD_RegisterOverlay.c, DbgMenu.cpp, EnemyFace_exact5.cpp, include/game/types/FaceModelSub.h (Reset takes int), fn_801B7C1C.c, fn_801B7C40.c, and the key Reset__12FaceModelSubFv -> Reset__12FaceModelSubFi in tools/extab_user_renames.json. Byte-identical. No action needed.
+

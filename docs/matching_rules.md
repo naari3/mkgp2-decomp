@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 18:15Z 2026-11-10 (n3): wrappers that forwarded arguments through registers now name them (HUD_RegisterOverlay third parameter, KartItem_ForwardToCarMovement_8019a4e0 matrix, FaceModelSub::Reset(int), DbgMenu SoundDriver_GetOrCreate, TitleStats call in auto_ONKARTHIT_block.c). Same objects; rename key Reset__12FaceModelSubFv is now ...Fi.
 - 2026-11-10 18:12Z 2026-11-10 (n3): EnemyRunType1_Init / EnemyRunType2_Init take and forward the five constructor arguments (same objects).
 - 2026-11-10 18:06Z 2026-11-10 (n3): five more prototypes with another int/float order than the definition wrapped off MWCC (CarObject_ApplyInput, CarObject_ApplyDriftBoost, fn_802090F0, InputCmd_PushSample, KartMovement_PhysicsStep); AnimState_New/AnimState_Reset have their real second parameter. Same objects.
 - 2026-11-10 17:29Z 2026-11-10 (n3): card-name check patterns (banned words in NameCheck_CardName.c and autodata/sdata2_806D3060.c) are unsigned short arrays of Shift-JIS codes; the byte functions on them are NAMECODE_STRSTR etc. (plain functions under MWCC). Same objects.

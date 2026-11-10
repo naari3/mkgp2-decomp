@@ -491,8 +491,8 @@ extern float Vec3_HorizontalYawTo(Vec3 *a, Vec3 *b);
 extern float Vec3_PitchTo(Vec3 *a, Vec3 *b);
 extern float fn_800D3184(Vec3 *a, Vec3 *b);
 extern float BuildOrientationFromYaw(float a);
-extern void GetCourseBgmEntry(void);
-extern void SoundDriver_GetOrCreate(void);
+extern void *GetCourseBgmEntry(void);
+extern void SoundDriver_GetOrCreate(void *table);
 extern void DebugPrintf(char *fmt, ...);
 extern void CObj_LoadIntoGX(Scene3D *s, Vec3 *v);
 extern void CObj_ApplyViewport(Scene3D *s, Vec3 *v);
@@ -1696,8 +1696,7 @@ extern "C" void DbgScene03_TplTest_UpdateCamera(TplScene *self)
         Vec3_Copy(&self->c, &self->target);
         Vec3_Copy(&self->a, &self->pos);
         Vec3_Copy(&self->b, &self->pos);
-        GetCourseBgmEntry();
-        SoundDriver_GetOrCreate();
+        SoundDriver_GetOrCreate(GetCourseBgmEntry());
         self->inited = 1;
     }
     if (self->next) {

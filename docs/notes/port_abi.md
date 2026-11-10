@@ -105,6 +105,33 @@ different mangled names and cannot link, unless
 `tools/extab_user_renames.json` joins them; `tools/port_abi/rename_order.py`
 checks exactly those (see "Constructors declared in another order").
 
+### Arguments that pass through a wrapper (request 26, 2026-11-10)
+
+A thin wrapper that forwards to another function needs no code for arguments
+it does not touch, so several were written with too few parameters. The
+port's argument-count census (mkgp2-pc docs/port/arg_count_census.txt) listed
+52 callees; what they were:
+
+- real, fixed with plain C that compiles to the same object:
+  `EnemyRunType1_Init` / `EnemyRunType2_Init` (five constructor arguments
+  forwarded to `EnemyRun_BaseInit`), `KartItem_ForwardToCarMovement_8019a4e0`
+  (matrix pointer), `HUD_RegisterOverlay` (third argument to
+  `HudManager::CreatePart`), `clEFaceModel::Trigger` (its `arg` goes to
+  `clEFacePolyEffect::Start`, declared there as `FaceModelSub::Reset(int)`),
+  `SoundDriver_GetOrCreate(GetCourseBgmEntry())` in DbgMenu.cpp,
+  `TitleStats_MarkAllCoursesClearedIfDistance(t, score, self->timerB4)` (the
+  float was still in f1 from the comparison just before), and
+  `fn_801B7C1C` / `fn_801B7C40`, whose unused `int` parameter is gone.
+- about 35 destructors "called with 1, take 2": every one is a C++
+  destructor (`~T()`, `delete`, a member or base) joined to its C definition
+  by `tools/extab_user_renames.json`. MWCC passes the hidden second argument
+  (the delete flag) itself, so r4 is always set by the caller; there is
+  nothing to write in the source. A host C++ compiler has no such argument:
+  that belongs to the port's C++ ABI bridge.
+- not real: `Clear`, `Next`, `Item_Explode`, `RankReached` and
+  `ItemObject_GetGroundTypeAt` are different `static inline` functions that
+  share a name across units.
+
 ### Tools
 
 `tools/port_abi/` holds what found and rewrote these: `types_census.py`

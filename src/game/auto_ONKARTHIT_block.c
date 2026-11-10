@@ -220,7 +220,7 @@ extern void TireEffect_ResetSpin(void *body, float a, float b);
 extern void TitleStats_IncCurrentRaceScore(void *, int, int);
 extern void TitleStats_IncPerfectCount(void *stats, int score, signed char flag);
 extern void TitleStats_IncTotalRaces(void *stats, int score);
-extern void TitleStats_MarkAllCoursesClearedIfDistance(void *, int);
+extern void TitleStats_MarkAllCoursesClearedIfDistance(void *, int, float dist);
 extern void TitleStats_SetEventFlag_806d1420(void *, int);
 extern void TitleTracker_Empty_PreFinalizeHook(unsigned int tracker, int kartSlot);
 extern void TornadoEffect_ApplyItemVisual_Compact(void *, int, int);
@@ -266,7 +266,7 @@ extern void clItemBoxResponder_Ctor();
 extern void dtor_80060024();
 extern void dtor_800AA888();
 extern void dtor_80209180(void *, int);
-extern void fn_8019A4E0(void *);
+extern void fn_8019A4E0(void *, float *);
 extern void fn_8019A6A4(void *, float *); /* ForwardToCarMovement_8019a6a4 forwards its own second argument (r4 is left alone) */
 #ifdef NON_MATCHING
 extern float fn_8019A850(void *movement, int wheel);
@@ -1263,7 +1263,7 @@ unsigned char KartItem_TryArmBoostOnLanding(KartItemOpsView *self, unsigned char
 void KartItem_SetCarObjectField2d4Float(KartItemOpsView *self, float v);
 void KartItem_SetCarObjectField1c8Float(KartItemOpsView *self, float v);
 void CarObject_SetPosition(KartItemOpsView *self, void *pos);
-void KartItem_ForwardToCarMovement_8019a4e0(const KartItemOpsView *self);
+void KartItem_ForwardToCarMovement_8019a4e0(const KartItemOpsView *self, float *mtx);
 void KartItem_ForwardToCarMovement_8019a6a4(const KartItemOpsView *self, float *m);
 void KartItem_OnFallOffOrDeath(KartItemOpsView *self);
 int CarObject_HandleItemEffect(ItemSecondaryLane *self, int itemId);
@@ -4219,7 +4219,7 @@ void KartItem_PerFrameStep(PfsKartView *self, void *arg) { /* 0x8004C320 size:0x
                             t = 0;
                         }
                         if (t != 0) {
-                            TitleStats_MarkAllCoursesClearedIfDistance(t, self->raceScore10);
+                            TitleStats_MarkAllCoursesClearedIfDistance(t, self->raceScore10, self->timerB4);
                         }
                     }
                 }
@@ -4392,7 +4392,7 @@ void KartItem_PerFrameStep(PfsKartView *self, void *arg) { /* 0x8004C320 size:0x
                         t = 0;
                     }
                     if (t != 0) {
-                        TitleStats_MarkAllCoursesClearedIfDistance(t, self->raceScore10);
+                        TitleStats_MarkAllCoursesClearedIfDistance(t, self->raceScore10, self->timerB4);
                     }
                 }
             }
@@ -7632,8 +7632,8 @@ void CarObject_SetPosition(KartItemOpsView *self, void *pos) { /* 0x8004F640 siz
 #pragma exceptions reset
 
 #pragma exceptions off
-void KartItem_ForwardToCarMovement_8019a4e0(const KartItemOpsView *self) { /* 0x8004F668 size:0x24 */
-    fn_8019A4E0(self->movement);
+void KartItem_ForwardToCarMovement_8019a4e0(const KartItemOpsView *self, float *mtx) { /* 0x8004F668 size:0x24 */
+    fn_8019A4E0(self->movement, mtx);
 }
 #pragma exceptions reset
 

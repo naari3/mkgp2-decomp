@@ -4,7 +4,7 @@
 struct FaceModelSub {
     char pad[0x20];
     float scale;
-    void Reset();
+    void Reset(int item); /* clEFacePolyEffect::Start */
 };
 
 #endif /* GAME_TYPES_FACEMODELSUB_H */
