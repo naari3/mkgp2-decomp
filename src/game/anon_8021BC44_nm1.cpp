@@ -114,12 +114,19 @@ void TimeAttackResult::Draw() {
 }
 
 static inline void StripNameSpaces(unsigned short *buf) {
-    for (int i = 0; i < 5; i++, buf++) {
+    for (int i = 0; i < 5; buf++, i++) {
         if (*buf == 0x8162) {
             *buf = 0;
         }
     }
 }
+
+static inline int TA_rev() { return g_reverseRoundFlag; }
+static inline int TA_lng() { return g_longRoundFlag; }
+static inline int TA_cup() { return g_cupId; }
+static inline int TA_cc() { return g_ccClass; }
+static inline int TA_kart() { return g_kartVariant; }
+static inline int TA_chara() { return g_characterId; }
 
 void TimeAttackResult::Update() {
     if (done) {
@@ -343,15 +350,15 @@ void TimeAttackResult::Update() {
     case 19:
         if (coin == 0) {
             fn_8018CC64();
-            int cc, cup, rev, lng;
-            rev = g_reverseRoundFlag;
-            lng = g_longRoundFlag;
-            cup = g_cupId;
-            cc = g_ccClass;
-            int kart = g_kartVariant;
-            int chara = g_characterId;
-            int earned = GetEarnedCoins();
-            fn_8018B31C(&g_playerData, chara, kart, cc, cup, lng, rev, earned + GetCoinMilage(&g_playerData),
+            /* inline getters: these six are coloured before the loop temps
+             * (regalloc_patterns 89) */
+            int rev = TA_rev();
+            int lng = TA_lng();
+            int cup = TA_cup();
+            int cc = TA_cc();
+            int kart = TA_kart();
+            int chara = TA_chara();
+            fn_8018B31C(&g_playerData, chara, kart, cc, cup, lng, rev, GetCoinMilage(&g_playerData) + GetEarnedCoins(),
                         g_playerData.b19B, g_playerData.b19C, g_playerData.b1B1, 1, g_totalRaceTime);
             DebugPrintf(lbl_803C63F8, fn_8018B300());
             coin = new CoinContinue;
