@@ -2301,3 +2301,17 @@ with `tools/mwtrace.py --only COLOR,PCODE`:
    accumulate form gives that: `u32 i = (n & 7) * sizeof(T); i += (u32)table;
    t = (T *)i;` (fakematch). The same change fixed three trace-buffer copies in
    fn_8028C644.
+
+## 86. Scratch registers of a small search inline: declaration order sets the frontend temps, and the masked index must be a real variable (fn_8028C644, 99.88 -> 100, 11-10)
+
+`HandlerFor` (table walk `while ((fns = d->fns) != NULL)`, then
+`fns[idx]`): target `fns` r3, `d` r4, `cmd` r5, `idx` r4; ours `cmd` r3,
+`idx` r3, `fns` r5. `tools/regfix.py diag` named both edits:
+
+- inline locals are coloured in reverse declaration order (last declared
+  first), so `u16 cmd; const NetDispatch* d; const NetHandler* fns;` gives
+  `fns` r3;
+- with `s32 idx = (u8)cmd;` in the inner block the variable disappears and
+  the `clrlwi` is a backend temp, coloured before every frontend temp (it took
+  r3). Declared first at inline scope and written `idx = cmd & 0xFF;` it stays
+  a variable with the lowest number, is coloured last and reuses `d`'s r4.
