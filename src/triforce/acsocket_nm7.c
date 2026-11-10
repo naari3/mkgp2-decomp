@@ -27,9 +27,9 @@ s32 fn_80292D18(u32 off, u8* dst, s32 len, s32 tx, s32 rx) {
         if ((u32)dst & 0x1F || off & 0x1F) {
             mis = 1;
         }
-        p = ReceiveBuffer(dst, off, mis, &al);
+        p = (u8*)(void*)ReceiveBuffer(dst, off, mis, &al);
         dev = State.rxOff + al;
-        size = ((off + (len + 0x1F)) & ~0x1F) - al;
+        size = (((len + off) + 0x1F) & ~0x1F) - al;
         if ((mis && size > 0x4000) || CheckRange(off, len, State.rxSize)) {
             return -1;
         }

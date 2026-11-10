@@ -83,3 +83,8 @@ c23_u147: acBind96.76471 ->97.64706 by ClearBindBuffer returning board byte poin
 Source: Codex worker c25_u98_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c25_u98: acAccept96.11712 ->96.60361 by lifting lenOff/addrOff from inline Accept into acAccept named locals, declared addrOff then lenOff, passed as C pointer outputs. Restores NULL li/li and target saved homes. Initial reverse declaration96.24324. Caller-owned offsets plus AcceptBuffer member projection96.46847; C++ ref outputs invariant96.60361. Missing runtime bufOff addi0 and resulting r4 lifetime/schedule persist;440 vs444B. acBind unsigned-int board address and both-address-output probes invariant97.64706, stopped after two. TU .text97.05612; no A/B exact subset, no flags/ranges/header/data changes. Existing fallback DOL rehash exact; no service request.
+
+## c26_u76_20261110
+Source: Codex worker c26_u76_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c26_u76: fn_80292D18 improves96.268654->99.850746 with p=(u8*)(void*)ReceiveBuffer(...) (rule76 cast-keeps-copy-of-cse-temp) plus rounded end ((len+off)+0x1F) (rule84 three-term-sum-grouping-rotation). Now target268B and exact all but addi/add source operands: ours off+31 then len, target len+31 then off. H3 pointer sum and H4 size inline revert93.1194; H5 named expanded buffer98.283585 adds branch-local mr; H6 signed offset invariant99.850746. BSS94.11732 unchanged. All drafts/JSON build/w/c26_u76. NonMatching, no native gain.
