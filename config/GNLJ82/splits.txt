@@ -9956,6 +9956,8 @@ game/anon_8020314C_nm1.cpp:
 	extab       start:0x80018A2C end:0x80018A44
 	extabindex  start:0x800297A4 end:0x800297B0
 	.text       start:0x80203224 end:0x802035F0
+	.data       start:0x804EC3C4 end:0x804EC3E0
+	.sdata2     start:0x806DAAC8 end:0x806DAAD8
 
 game/anon_8020314C_mid.cpp:
 	extab       start:0x80018A44 end:0x80018B74

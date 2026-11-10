@@ -2153,3 +2153,34 @@ Two levers follow:
 Also in this function: the two table scans must be written as loops in the
 function body (as inlines they share the `li` and take other registers), and
 the result flag is `unsigned char` (int gives `clrlwi` instead of `mr`).
+
+## 81. A pointer returned by a search inline is coloured after every other inline local: return it through a reference out-parameter (fn_8018E6FC, 99.07 -> 100, 11-10)
+
+Target `q` (free particle slot) r7, `p` r8, `point` r9; ours `point` r7, `p` r8,
+`q` r9 whatever the declaration order. mwtrace: `q = freeParticle(o)` makes the
+value live in the inline's RETURN temp (`@197`, created by `CInline_Expand`
+when the nested inline is expanded, i.e. after all locals of the outer inline),
+and temps created later get lower vregs and are coloured later. The outer
+inline's own locals are numbered in declaration order and coloured
+last-declared first.
+
+Fix: let the search inline write the result itself and order the outer locals
+by the wanted colouring, last-declared = first coloured:
+
+```c
+static inline void freeParticle(ViewEmitter *o, ViewBillboardParticle *&out) {
+    for (int i = 0; i < 60; i++) {
+        if (o->particles[i].age < 0.0f) { out = &o->particles[i]; return; }
+    }
+    out = 0;
+}
+...
+    unsigned int point;          /* r9, coloured last  */
+    ViewMatrixParticle *p;       /* r8 */
+    ViewBillboardParticle *q;    /* r7, coloured first */
+    ...
+    freeParticle(o, q);
+```
+
+Sign: a value assigned from an inline's return sits one or two volatile
+registers too high and no declaration order moves it.

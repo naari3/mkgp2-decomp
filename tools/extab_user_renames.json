@@ -16972,5 +16972,10 @@
     "__dt__3HUDFv": "fn_80254134",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/KartPreview.c": {
+    "__ct__6KPCtorFiUc": "fn_8013CC24",
+    "__ct__10KPNormal3DFPCvUc": "clNormal3D_Construct",
+    "__dt__6KPBaseFv": "dtor_8013DCBC"
   }
 }
