@@ -4,8 +4,14 @@ extern void *memset(void *, int, unsigned long);
 extern void SetCardVolumeFlagByte(unsigned char);
 extern unsigned char lbl_806D12E4[3];
 
-void fn_801D7610(PlayerDataReset *self, unsigned char updateVolume) {
+/* fakematch (trace, post-RA scheduler): natural code is a void function with three
+ * direct lbl_806D12E4[n] = 0 stores. Returning the loop's base pointer adds a
+ * `mr r3, base` to the last block; register allocation coalesces and deletes it,
+ * which makes MWCC schedule that block again after allocation and gives the
+ * target's epilogue order (lwz r31 / lwz r0 / lwz r30). regalloc_patterns 96. */
+unsigned char *fn_801D7610(PlayerDataReset *self, unsigned char updateVolume) {
     int i;
+    unsigned char *p;
     int j;
     for (i = 0; i < 6; i++) self->name[i] = 0;
     for (i = 0; i < 0x79; i++) self->unlockFlags[i] = 0;
@@ -71,11 +77,10 @@ void fn_801D7610(PlayerDataReset *self, unsigned char updateVolume) {
     self->cupRank[2][5] = 0;
     self->cupRank[2][6] = 0;
     self->cupRank[2][7] = 0;
-    lbl_806D12E4[0] = 0;
-    lbl_806D12E4[1] = 0;
-    lbl_806D12E4[2] = 0;
+    for (p = lbl_806D12E4, i = 0; i < 3; i++) p[i] = 0;
     self->raceCount = 0;
     self->field1A8 = 0;
     self->field1B0 = 0;
     self->field1A0 = 0;
+    return p;
 }

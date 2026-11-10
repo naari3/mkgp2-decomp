@@ -2577,3 +2577,111 @@ object to one reused block-local pointer before each call. Rule
 Also: float arguments in the wrong load order from `extern const float`
 (`lfs f5` before `lfs f1`): literals (see 83), `postprocess_sdata2.py` renames
 them.
+
+## 95. Two saved parameters swapped: advance the index through a `long` local, read the base through an inline getter (fn_80243074, 36 -> 14 diff lines, not matched yet, 11-10)
+
+**Symptom:** `index` (r4) and `position` (r5) are both kept across calls and
+land in r28/r29 instead of r29/r28. Parameters are numbered in declaration
+order and the higher one is coloured first, so `position` always wins; copies
+of a parameter into an `int` local are propagated back onto the parameter.
+
+**Lever:** two changes that only work together.
+
+```cpp
+static inline RivalPath *PathOf(RivalMarkerHud *self) { return self->path; }
+...
+RivalPath *path = PathOf(self);       /* inline temp instead of a named local */
+int total = Path_GetTotalCount(path);
+long i = index;                       /* long, not int */
+long old = i;
+i = (i + 1) % total;
+a = Path_GetWaypointPtr(path, old);
+b = Path_GetWaypointPtr(path, i);
+```
+
+With `long i` the advanced value is a frontend temp (numbered above every
+named local and parameter) while `old` stays on the parameter; the two ranges
+do not overlap. `path` as an inline temp is coloured before that temp and
+reuses r31 (free after `b`), so the temp opens r29, `position` takes r28 and
+the old index, coloured last, takes the lowest free register in use, r29.
+With `int i` (any spelling) or with `path` as a named local nothing moves.
+
+**Check:** regfix diag says a parameter must be numbered above a later
+parameter, and the parameter is reassigned once (`index = f(index)`).
+
+## 96. Epilogue restores in the wrong order, everything else equal: the last block must be scheduled again after register allocation (fn_801D7610, 99.94 -> 100, fakematch, 11-10)
+
+Target epilogue `lwz r31; lwz r0; lwz r30`, ours `lwz r31; lwz r30; lwz r0`.
+`mwsched.py resched` said the diff disappears when the last block is scheduled
+again after register allocation (mwcc_internals "Post-RA scheduler": a block
+is rescheduled when an instruction in it was deleted or inserted after the
+first scheduling, for example a coalesced `mr`). About 60 source shapes of the
+tail left the block untouched, because the frontend forwards every local.
+
+What deletes an instruction there: a copy into the return register. Writing
+the three `lbl_806D12E4[n] = 0` stores as
+`for (p = lbl_806D12E4, i = 0; i < 3; i++) p[i] = 0;` and ending with
+`return p;` (function type `unsigned char *`) emits `mr r3, p` in the last
+block; allocation coalesces it away (p already wants r3), the block loses an
+instruction and is scheduled again. Instructions are unchanged. Both parts are
+needed: `return lbl_806D12E4;` without the loop pointer loads the address
+twice (no copy), and the loop pointer in a void function is forwarded.
+
+Marked fakematch (callers use it as void). The same symptom in
+CardData_InitDefaults is not fixed by it yet (there r3 holds the zero constant
+at the exit and constants are forwarded, so no copy is left).
+
+**Check:** only the epilogue `lwz` order differs and `mwsched.py resched`
+reports a match for the last block: make the function return a value that the
+last block already holds in r3 through a named multi-def local. Rule
+`return-copy-reschedules-last-block`.
+
+
+## 97. Ordering several block values at once: outer inline parameter > nested inline locals > CSE temps > named locals (AI_CalcLapSpeedBonus, 99.88 -> 100, 11-10)
+
+Symptom: a short block computes three or four values (an index copy that is
+wrapped, two offsets, a table base) and they get the right instructions in the
+wrong volatile registers. mwtrace shows the numbering: named locals lowest, then
+SplitOffRange and CSE temps (with `opt_dead_assignments off` every propagated
+initialiser becomes a CSE temp), then inline temps, where an EARLIER created
+temp has the HIGHER number and is coloured first.
+
+Levers, all read off `python3 tools/mwtrace.py UNIT FN` (`VREG` lines and
+`PCODE pre`):
+
+- A value that must be coloured first: make it a parameter that the inline
+  modifies (`if (section >= 4) section -= 4;`). Moving the statement up instead
+  changes the block shape (the `if` is emitted before the other values).
+- To get it numbered above other inline temps without moving its statement,
+  make it the parameter of an OUTER inline and compute the other values through
+  NESTED inlines called inside it; the outer argument temp is created first.
+- A single-use value survives as an inline temp only as a local of the nested
+  inline (`int o = ...; return o;`). A plain `return expr;` getter is propagated
+  and the value falls back to a CSE or backend temp.
+- A value that must stay lowest (here `g_ccClass * 128`) stays a local of the
+  outer inline; CSE replaces it with a temp below every inline temp.
+- A caller local that must be assigned late (its `extsb` belongs after the
+  branch join) can be written through a pointer parameter at the right place in
+  the inline; pass the inline call directly as the argument so that its result
+  stays a parameter temp (a named `rules` local swapped two more registers).
+
+```c
+static inline int CupOffset(int cup) { int offset = (cup - 1) * 16; return offset; }
+static inline const char *Table(void) { const char *table = (const char *)kTable; return table; }
+static inline const Rule *Rules(int section, int cup, signed char *cc) {
+    int courseOffset; const char *courseBase; int ccOffset;
+    courseOffset = CupOffset(cup);
+    ccOffset = g_ccClass * 128;
+    courseBase = Table();
+    courseOffset = ccOffset + courseOffset;
+    if (section >= 4) section -= 4;
+    *cc = g_ccClass;
+    return *(const Rule *const *)(courseBase + courseOffset + section * 4);
+}
+...
+signed char cc;
+FindBonus(cc, Rules(round, cup, &cc), ...);
+```
+
+Blind sweeps did not find this (24 declaration orders, 24 parameter orders, 40
+statement orders); each step came from reading which value had which vreg.
