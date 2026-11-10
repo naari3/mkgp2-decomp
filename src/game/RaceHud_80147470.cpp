@@ -178,9 +178,30 @@ void fn_8013CA04(void *m);
 void fn_8013CA70(void *m);
 void fn_8013CC24(void *m, int kart, int flag);
 void fn_801680A0(int layer, const unsigned short *s, float x, float y, ...);
+#ifdef __MWERKS__
 void fn_80169468(int layer, int id, int flag, float x, float y, float r, float g, float b, float a);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_80169468(int, int, float, float, float, float, float, float, int);
+static inline void fn_80169468_Reordered(int layer, int id, int flag, float x, float y, float r, float g, float b, float a) { fn_80169468(layer, id, x, y, r, g, b, a, flag); }
+#define fn_80169468 fn_80169468_Reordered
+#endif
+#ifdef __MWERKS__
 void fn_801697C0(int layer, int id, int flag, float x, float y, float sx, float sy);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_801697C0(int, int, float, float, float, float, int);
+static inline void fn_801697C0_Reordered(int layer, int id, int flag, float x, float y, float sx, float sy) { fn_801697C0(layer, id, x, y, sx, sy, flag); }
+#define fn_801697C0 fn_801697C0_Reordered
+#endif
+#ifdef __MWERKS__
 void fn_801698B4(int layer, int id, int flag, float x, float y);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_801698B4(int, int, float, float, int);
+static inline void fn_801698B4_Reordered(int layer, int id, int flag, float x, float y) { fn_801698B4(layer, id, x, y, flag); }
+#define fn_801698B4 fn_801698B4_Reordered
+#endif
 float fn_80186960(float a);
 int fn_80231BD4(int a, int b, int c);
 extern const float lbl_806D6DE4;

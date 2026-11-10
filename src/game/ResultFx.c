@@ -90,8 +90,22 @@ struct ResCtrl {
 
 extern "C" {
 extern void fn_801678FC(int layer, float r, float g, float b, float a);
+#ifdef __MWERKS__
 extern void fn_801695E0(int obj, int id, int flag, float x, float y, float a);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_801695E0(int, int, float, float, float, int);
+static inline void fn_801695E0_Reordered(int obj, int id, int flag, float x, float y, float a) { fn_801695E0(obj, id, x, y, a, flag); }
+#define fn_801695E0 fn_801695E0_Reordered
+#endif
+#ifdef __MWERKS__
 extern void fn_8016918C(int obj, int id, int flag, float x, float y, float sx, float sy, float r, float g, float b, float a);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_8016918C(int, int, float, float, float, float, float, float, float, float, int);
+static inline void fn_8016918C_Reordered(int obj, int id, int flag, float x, float y, float sx, float sy, float r, float g, float b, float a) { fn_8016918C(obj, id, x, y, sx, sy, r, g, b, a, flag); }
+#define fn_8016918C fn_8016918C_Reordered
+#endif
 extern void fn_8011FAFC(void *res, int n);
 extern const char *fn_8013BFF8(int cup, int line, int lang);
 extern unsigned char IsCardValid(void);

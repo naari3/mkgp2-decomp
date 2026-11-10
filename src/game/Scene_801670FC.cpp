@@ -5,7 +5,14 @@
 extern "C" {
 extern char Scene_801670FC_rodata_8036A37C[];
 void fn_80120A08(int);
+#ifdef __MWERKS__
 void fn_801698B4(void *, float, float, int, unsigned int);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_801698B4(void *, int, float, float, unsigned int);
+static inline void fn_801698B4_Reordered(void *a0, float a1, float a2, int a3, unsigned int a4) { fn_801698B4(a0, a3, a1, a2, a4); }
+#define fn_801698B4 fn_801698B4_Reordered
+#endif
 void fn_80168EFC(void *, char *, float, float, ...);
 #pragma exceptions on
 void fn_801670FC(SoundDebugScene *self) {

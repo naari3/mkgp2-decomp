@@ -38,8 +38,22 @@ extern const float lbl_806D79D8, lbl_806D79DC, lbl_806D79E0, lbl_806D79E4;
 extern const float lbl_806D79E8, lbl_806D79EC, lbl_806D79F0, lbl_806D79F4;
 extern const float lbl_806D79F8, lbl_806D79FC, lbl_806D7A00, lbl_806D7A04;
 extern const float lbl_806D7A08, lbl_806D7A0C, lbl_806D7A10;
+#ifdef __MWERKS__
 extern void fn_8016918C(void *obj, int id, int flag, float x, float y, float sx, float sy, float r, float g, float b, float a);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_8016918C(void *, int, float, float, float, float, float, float, float, float, int);
+static inline void fn_8016918C_Reordered(void *obj, int id, int flag, float x, float y, float sx, float sy, float r, float g, float b, float a) { fn_8016918C(obj, id, x, y, sx, sy, r, g, b, a, flag); }
+#define fn_8016918C fn_8016918C_Reordered
+#endif
+#ifdef __MWERKS__
 extern void fn_80169334(void *obj, int id, int flag, float x, float y, float sx, float sy, float a);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_80169334(void *, int, float, float, float, float, float, int);
+static inline void fn_80169334_Reordered(void *obj, int id, int flag, float x, float y, float sx, float sy, float a) { fn_80169334(obj, id, x, y, sx, sy, a, flag); }
+#define fn_80169334 fn_80169334_Reordered
+#endif
 extern void fn_801681E8(void *obj, const char *text, float x, float y, float sx, float sy, float r, float g, float b, float a, ...);
 extern int vsprintf(char *buf, const char *fmt, va_list args);
 extern void fn_80167440(void *p);

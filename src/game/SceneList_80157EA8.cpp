@@ -91,7 +91,14 @@ int WeatherSystem_PickVariant(int sel);
 void clStream_setVolume(int ch, int vol);
 void fn_8015A6E4(OptionMenu *self, int layer, float x, float y, float alpha);
 void fn_801678FC(int layer, float r, float g, float b, float a);
+#ifdef __MWERKS__
 void fn_801698B4(int layer, int id, int flag, float x, float y);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_801698B4(int, int, float, float, int);
+static inline void fn_801698B4_Reordered(int layer, int id, int flag, float x, float y) { fn_801698B4(layer, id, x, y, flag); }
+#define fn_801698B4 fn_801698B4_Reordered
+#endif
 unsigned char fn_8019083C(int ch);
 int fn_801932F8(void);
 void fn_801FE27C(int t);
@@ -119,8 +126,22 @@ const char *GetTextureByIdAndLang(int id, int lang);
 int fn_80167744(int digit, float v);
 void fn_80168798(int layer, const void *s, float x, float y, float a, ...);
 void fn_80168D84(int layer, const void *s, float x, float y, float a, ...);
+#ifdef __MWERKS__
 void fn_80169334(int layer, int id, int f, float x, float y, float sx, float sy, float a);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_80169334(int, int, float, float, float, float, float, int);
+static inline void fn_80169334_Reordered(int layer, int id, int f, float x, float y, float sx, float sy, float a) { fn_80169334(layer, id, x, y, sx, sy, a, f); }
+#define fn_80169334 fn_80169334_Reordered
+#endif
+#ifdef __MWERKS__
 void fn_801695E0(int layer, int id, int f, float x, float y, float a);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_801695E0(int, int, float, float, float, int);
+static inline void fn_801695E0_Reordered(int layer, int id, int f, float x, float y, float a) { fn_801695E0(layer, id, x, y, a, f); }
+#define fn_801695E0 fn_801695E0_Reordered
+#endif
 int isJapanese(void);
 extern const float lbl_806D83CC;
 extern const float lbl_806D83D0;
@@ -176,7 +197,14 @@ extern unsigned char PlayerData_GetUnlockedItemIdByIndex_U8(int);
 struct ItemColor;
 extern ItemColor *fn_8013BEC8(int);
 void fn_80168B90(int layer, const void *s, float x, float y, float r, float g, float b, float a, ...);
+#ifdef __MWERKS__
 void fn_8016918C(int layer, int id, int f, float x, float y, float sx, float sy, float r, float g, float b, float a);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_8016918C(int, int, float, float, float, float, float, float, float, float, int);
+static inline void fn_8016918C_Reordered(int layer, int id, int f, float x, float y, float sx, float sy, float r, float g, float b, float a) { fn_8016918C(layer, id, x, y, sx, sy, r, g, b, a, f); }
+#define fn_8016918C fn_8016918C_Reordered
+#endif
 extern const char *fn_8023D938(int, int);
 extern const char *fn_8023DAA8(int);
 extern const float lbl_806D84DC;

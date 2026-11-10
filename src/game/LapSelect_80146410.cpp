@@ -46,7 +46,14 @@ extern const float lbl_806D7B58;
 extern const float lbl_806D7B5C;
 void fn_801674AC(void *p);
 extern void fn_801675A4(void *p);
+#ifdef __MWERKS__
 void fn_8016918C(int ctx, int a, int b, float x, float y, float sx, float sy, float c0, float c1, float c2, float c3);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_8016918C(int, int, float, float, float, float, float, float, float, float, int);
+static inline void fn_8016918C_Reordered(int ctx, int a, int b, float x, float y, float sx, float sy, float c0, float c1, float c2, float c3) { fn_8016918C(ctx, a, x, y, sx, sy, c0, c1, c2, c3, b); }
+#define fn_8016918C fn_8016918C_Reordered
+#endif
 extern void fn_801FEF18(struct Countdown *c, int timer);
 extern unsigned int lbl_806D7B60;
 extern unsigned int lbl_806D7B64;

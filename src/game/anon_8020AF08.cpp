@@ -42,7 +42,14 @@ void fn_8011FAB8(void);
 void fn_80120A08(int res);
 void PreloadResource(int res);
 void *ItemRes_LookupByKey_Thunk(int key);
+#ifdef __MWERKS__
 void fn_80169334(int a, int res, int b, float x, float y, float sx, float sy, float alpha);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_80169334(int, int, float, float, float, float, float, int);
+static inline void fn_80169334_Reordered(int a, int res, int b, float x, float y, float sx, float sy, float alpha) { fn_80169334(a, res, x, y, sx, sy, alpha, b); }
+#define fn_80169334 fn_80169334_Reordered
+#endif
 void fn_8013D4B0(ShowModel *m, float alpha);
 void fn_8013D50C(ShowModel *m, float r, float g, float b, float alpha);
 void fn_8013D59C(ShowModel *m, float x, float y, float z);

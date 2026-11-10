@@ -148,7 +148,14 @@ extern void DrawEffect_Free(void *effect);
 extern void EffectVfx7F_PulseFan_Tick(void);
 extern void ItemObject_DecrementCategoryBudget(void *self);
 extern int Item_AdvanceTetherToJoint13(void *self, float *time, float scale, float a, float b);
+#ifdef __MWERKS__
 extern int Item_OrbitAnchorKart(void *self, Vec3 *anchor, float a, float b, int timer);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern int Item_OrbitAnchorKart(void *, Vec3 *, int, float, float);
+static inline int Item_OrbitAnchorKart_Reordered(void *self, Vec3 *anchor, float a, float b, int timer) { return Item_OrbitAnchorKart(self, anchor, timer, a, b); }
+#define Item_OrbitAnchorKart Item_OrbitAnchorKart_Reordered
+#endif
 extern void Matrix4_Identity(Mtx44 m);
 extern void Mtx44_Scale_Uniform(Mtx44 dst, const Mtx44 src, float scale);
 extern void Matrix4_PreMultiplyRotZ(Mtx44 dst, const Mtx44 src, float angle);

@@ -61,10 +61,24 @@ void clNormal3D_Exec(clNormal3D *n);
 /* The frame comes before the anim pointer: same registers (r4/f1) as
  * (n, anim, t, ...), but the arguments are evaluated in this order, which
  * decides the schedule of the anim load (regalloc_patterns, arg-order). */
+#ifdef __MWERKS__
 void clNormal3D_SetScale(clNormal3D *n, float t, void *anim, float a, float b, float c);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void clNormal3D_SetScale(clNormal3D *, void *, float, float, float, float);
+static inline void clNormal3D_SetScale_Reordered(clNormal3D *n, float t, void *anim, float a, float b, float c) { clNormal3D_SetScale(n, anim, t, a, b, c); }
+#define clNormal3D_SetScale clNormal3D_SetScale_Reordered
+#endif
 void clNormal3D_SetFlags(clNormal3D *n, unsigned int flags, int a);
 HSD_JObj *Archive_GetRootJObj(clNormal3D *n);
+#ifdef __MWERKS__
 void ObjectTree_BlendOrCopy_Timed(clNormal3D *n, HSD_JObj *src, HSD_JObj *dst, float t, int a);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void ObjectTree_BlendOrCopy_Timed(clNormal3D *, HSD_JObj *, HSD_JObj *, int, float);
+static inline void ObjectTree_BlendOrCopy_Timed_Reordered(clNormal3D *n, HSD_JObj *src, HSD_JObj *dst, float t, int a) { ObjectTree_BlendOrCopy_Timed(n, src, dst, a, t); }
+#define ObjectTree_BlendOrCopy_Timed ObjectTree_BlendOrCopy_Timed_Reordered
+#endif
 HSD_JObj *ResolveJointByName(clNormal3D *n, const char *name);
 const char **GetKartModelNameEntry(int character, int variant);
 CharData *GetCharacterDataEntry(int character);

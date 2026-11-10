@@ -84,8 +84,8 @@ static inline void DrawEffect_KartWheel_TripleChildUpdate_ByValue(void *child, V
 extern void DrawEffect_ApplyScaleAndIntensity(void *e, Vec pos, float scale, float alpha);
 #else
 /* The definition takes these structs by address; see docs/notes/port_abi.md. */
-extern void DrawEffect_ApplyScaleAndIntensity(void *, Vec *, float, float);
-static inline void DrawEffect_ApplyScaleAndIntensity_ByValue(void *e, Vec pos, float scale, float alpha) { DrawEffect_ApplyScaleAndIntensity(e, &pos, scale, alpha); }
+extern void DrawEffect_ApplyScaleAndIntensity(void *, float, float, Vec *); /* also the definition's order */
+static inline void DrawEffect_ApplyScaleAndIntensity_ByValue(void *e, Vec pos, float scale, float alpha) { DrawEffect_ApplyScaleAndIntensity(e, scale, alpha, &pos); }
 #define DrawEffect_ApplyScaleAndIntensity DrawEffect_ApplyScaleAndIntensity_ByValue
 #endif
 

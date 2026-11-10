@@ -30,7 +30,14 @@ SmokeEffect* DrawEffect_SpawnDirect(void (*)(SmokeEffect*));
 void DrawEffect_Free(SmokeEffect*);
 void VfxSlot_BindResourceEx(void*, int, int);
 void VfxSlot_SetScaleUniform(void*, float);
+#ifdef __MWERKS__
 void VfxSlot_SetPositionFromVec(void*, SmokeVec);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetPositionFromVec(void*, SmokeVec*);
+static inline void VfxSlot_SetPositionFromVec_ByValue(void* slot, SmokeVec pos) { VfxSlot_SetPositionFromVec(slot, &pos); }
+#define VfxSlot_SetPositionFromVec VfxSlot_SetPositionFromVec_ByValue
+#endif
 float BuildOrientationFromYaw(float);
 void GetSpawnPosition(SmokeVec*, float, float, float);
 void Vec2_RotateY(SmokeVec*, const SmokeVec*, float);

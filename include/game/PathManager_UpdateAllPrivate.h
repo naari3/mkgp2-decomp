@@ -50,12 +50,26 @@ float *GetFinishLineSegment(void);
 int GetDisplayBufferIndex(void);
 int PathManager_HasPathLoaded(UpdateManager *);
 int Path_GetTotalCount(UpdateManager *);
+#ifdef __MWERKS__
 int Waypoint_FindBestAhead(UpdateManager *, int, int, int, float, float, float, float *);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern int Waypoint_FindBestAhead(UpdateManager *, float, float, float, int, int, int, float *);
+static inline int Waypoint_FindBestAhead_Reordered(UpdateManager *a0, int a1, int a2, int a3, float a4, float a5, float a6, float *a7) { return Waypoint_FindBestAhead(a0, a4, a5, a6, a1, a2, a3, a7); }
+#define Waypoint_FindBestAhead Waypoint_FindBestAhead_Reordered
+#endif
 signed char CommBroadcast_GetKartLap(int);
 void CommBroadcast_SetKartLap(int, signed char);
 int CommBroadcast_GetKartRankNibble(int);
 void CommBroadcast_SetKartRankNibble(int, int);
+#ifdef __MWERKS__
 unsigned char Math_Segment2DIntersect(float, float, float, float, float, float, float, float, float *, float *);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern unsigned char Math_Segment2DIntersect(float *, float *, float, float, float, float, float, float, float, float);
+static inline unsigned char Math_Segment2DIntersect_Reordered(float a0, float a1, float a2, float a3, float a4, float a5, float a6, float a7, float *a8, float *a9) { return Math_Segment2DIntersect(a8, a9, a0, a1, a2, a3, a4, a5, a6, a7); }
+#define Math_Segment2DIntersect Math_Segment2DIntersect_Reordered
+#endif
 void CoinEvent_PlaySE_0x13(void *);
 int KartMovement_CalcFinishPosition(UpdateKart *, int);
 void KartMovement_ResetOnGoal(UpdateKart *);

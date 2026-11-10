@@ -14,7 +14,14 @@ extern void Matrix4_PreMultiplyRotX(float *m, float *src, float a);
 extern void Matrix4_PreMultiplyRotY(float *m, float *src, float a);
 extern void Mtx44_Translate(float *m, float *src, Vec3 *v);
 extern void DbgScene_CopyMatrix3x4Transpose(void *dst, float *src);
+#ifdef __MWERKS__
 extern void TripleBladeRing_SetWorldYaw(unsigned char *e, void *mtx, float yaw);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void TripleBladeRing_SetWorldYaw(unsigned char *, float, void *);
+static inline void TripleBladeRing_SetWorldYaw_Reordered(unsigned char *e, void *mtx, float yaw) { TripleBladeRing_SetWorldYaw(e, yaw, mtx); }
+#define TripleBladeRing_SetWorldYaw TripleBladeRing_SetWorldYaw_Reordered
+#endif
 extern void SpriteSlot_Container_Free(void *self);
 extern unsigned char lbl_805DF3D0[];
 extern float lbl_806D6BF0;

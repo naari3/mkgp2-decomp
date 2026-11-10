@@ -18,7 +18,14 @@ extern void Vec3_Add_DestFirst(void *dst, void *a, void *b);
 extern void SpriteSlot_SetTransform(void *slot, float *pos, float *rot, float scale);
 extern void SpriteSlot_TickAnim(void *slot);
 extern void JointByName_GetWorldPosition(Vec3 *out, void *slot, const char *name);
+#ifdef __MWERKS__
 extern void VfxEffect_UpdateChildPosScaleAlpha_Helper(void *e, Vec3 *pos, float scale, float alpha);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void VfxEffect_UpdateChildPosScaleAlpha_Helper(void *, float, float, Vec3 *);
+static inline void VfxEffect_UpdateChildPosScaleAlpha_Helper_Reordered(void *e, Vec3 *pos, float scale, float alpha) { VfxEffect_UpdateChildPosScaleAlpha_Helper(e, scale, alpha, pos); }
+#define VfxEffect_UpdateChildPosScaleAlpha_Helper VfxEffect_UpdateChildPosScaleAlpha_Helper_Reordered
+#endif
 extern void VfxEffect_UpdateChildVisScale_Helper(void *e, Vec3 *pos, float scale, float alpha);
 
 extern const char lbl_80331698[];

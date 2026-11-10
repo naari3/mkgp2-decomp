@@ -1135,8 +1135,15 @@ void fn_8015E928(void) ;
 extern "C" {
 extern const float resultscene_rodata_80368704[][4];
 extern const float lbl_806D8758, lbl_806D875C, lbl_806D8760;
+#ifdef __MWERKS__
 extern void fn_80169468(int mode, int resource, int flags, float x, float y,
                         float r, float g, float b, float alpha);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_80169468(int, int, float, float, float, float, float, float, int);
+static inline void fn_80169468_Reordered(int mode, int resource, int flags, float x, float y, float r, float g, float b, float alpha) { fn_80169468(mode, resource, x, y, r, g, b, alpha, flags); }
+#define fn_80169468 fn_80169468_Reordered
+#endif
 
 void fn_8015D4F8(void *unused, float x, float y, int color, const char *text) ;
 }
@@ -1346,8 +1353,22 @@ extern void KartDriver_TriggerSlotC3Action(ResultDriver *d, float t);
 extern void KartDriver_TickAction_79234(ResultDriver *d, float t);
 extern void RenderObj_ItemStateMachine_Timed(ResultDriver *d, int n, float a, float b);
 extern float Saturate_Double(float v, float lo, float hi);
+#ifdef __MWERKS__
 extern void fn_801695E0(int obj, int id, int flag, float x, float y, float a);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_801695E0(int, int, float, float, float, int);
+static inline void fn_801695E0_Reordered(int obj, int id, int flag, float x, float y, float a) { fn_801695E0(obj, id, x, y, a, flag); }
+#define fn_801695E0 fn_801695E0_Reordered
+#endif
+#ifdef __MWERKS__
 extern void fn_80169334(int obj, int id, int flag, float x, float y, float z, float a, float b);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_80169334(int, int, float, float, float, float, float, int);
+static inline void fn_80169334_Reordered(int obj, int id, int flag, float x, float y, float z, float a, float b) { fn_80169334(obj, id, x, y, z, a, b, flag); }
+#define fn_80169334 fn_80169334_Reordered
+#endif
 extern void fn_80190A70(int a, int b);
 extern const float lbl_806D86DC, lbl_806D86E0, lbl_806D86E4, lbl_806D86F4, lbl_806D86F8, lbl_806D86FC;
 extern const float lbl_806D8700, lbl_806D8704, lbl_806D8708, lbl_806D870C, lbl_806D8710, lbl_806D8714;

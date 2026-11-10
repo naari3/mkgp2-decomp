@@ -9,7 +9,14 @@ extern void *lbl_806D158C;
 extern ViewerVec lbl_80677CD8;
 void fn_8015BCC4(const char *, float);
 void fn_80168EFC(int, float, float, const char *, ...);
+#ifdef __MWERKS__
 void fn_80169040(void *, float,float,float,float,float,float,int,unsigned int);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_80169040(void *, int, float, float, float, float, float, float, unsigned int);
+static inline void fn_80169040_Reordered(void *a0, float a1, float a2, float a3, float a4, float a5, float a6, int a7, unsigned int a8) { fn_80169040(a0, a7, a1, a2, a3, a4, a5, a6, a8); }
+#define fn_80169040 fn_80169040_Reordered
+#endif
 void Object_SetJObjPositionX(void *, float);
 void Object_SetJObjField40(void *, float);
 void HSD_CObjSetEyePosition(void *, const ViewerVec *);

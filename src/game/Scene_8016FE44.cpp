@@ -15,7 +15,14 @@ void Object_SetJObjRotationX(clNormal3D *, float);
 void Object_SetJObjRotationY(clNormal3D *, float);
 void Object_SetJObjRotationZ(clNormal3D *, float);
 void Object_RenderJObjTree(clNormal3D *, int);
+#ifdef __MWERKS__
 void Object_SetColorAlphaOnly(clNormal3D *, float, int);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Object_SetColorAlphaOnly(clNormal3D *, int, float);
+static inline void Object_SetColorAlphaOnly_Reordered(clNormal3D *a0, float a1, int a2) { Object_SetColorAlphaOnly(a0, a2, a1); }
+#define Object_SetColorAlphaOnly Object_SetColorAlphaOnly_Reordered
+#endif
 }
 static inline RenderJoint *Child(RenderJoint *j) {
     if (j == 0) {

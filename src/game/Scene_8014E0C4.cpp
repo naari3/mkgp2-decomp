@@ -377,7 +377,14 @@ extern void ServiceMode_UpdateScheduleGate(void);
 extern unsigned char ServiceValue_Get(void);
 extern void __cvt_fp2unsigned();
 void fn_8011F994(int layer);
+#ifdef __MWERKS__
 extern void fn_80169334(int a, int res, int b, float x, float y, float sx, float sy, float alpha);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_80169334(int, int, float, float, float, float, float, int);
+static inline void fn_80169334_Reordered(int a, int res, int b, float x, float y, float sx, float sy, float alpha) { fn_80169334(a, res, x, y, sx, sy, alpha, b); }
+#define fn_80169334 fn_80169334_Reordered
+#endif
 extern unsigned int lbl_806D8084;
 extern unsigned int lbl_806D8088;
 extern unsigned int lbl_806D808C;
@@ -475,7 +482,14 @@ extern unsigned char PcbSync_AllKartsInValidSelectState(void);
 extern void ResCtrl_Init();
 void fn_8011FAFC(struct ResCtrl *c, int layer);
 extern void fn_80121E10(struct ResCtrl *c);
+#ifdef __MWERKS__
 extern void fn_801698B4(int layer, int id, int flag, float x, float y);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_801698B4(int, int, float, float, int);
+static inline void fn_801698B4_Reordered(int layer, int id, int flag, float x, float y) { fn_801698B4(layer, id, x, y, flag); }
+#define fn_801698B4 fn_801698B4_Reordered
+#endif
 void fn_801A0004(void *p);
 void fn_801A1280(void);
 extern unsigned int lbl_806D80B8;
@@ -551,7 +565,14 @@ void clDrawMan_Buckets_Dispatch(VObj *dm);
 void clDrawMan_Buckets_Reset(VObj *dm);
 void clDrawMan_EndFrame_NoOp(VObj *dm);
 void fn_8013D940(int layer);
+#ifdef __MWERKS__
 void fn_801695E0(int layer, int id, int c, float x, float y, float s);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_801695E0(int, int, float, float, float, int);
+static inline void fn_801695E0_Reordered(int layer, int id, int c, float x, float y, float s) { fn_801695E0(layer, id, x, y, s, c); }
+#define fn_801695E0 fn_801695E0_Reordered
+#endif
 void fn_802BD6AC(float u, float v);
 void fn_802BD6C0(void);
 extern const float lbl_806D7F58[2];
@@ -737,7 +758,14 @@ void TornadoEffect_ApplyItemVisual_Primary(void *e, int item);
 void TornadoEffect_ApplyItemVisual_Secondary(void *e, int item, int a);
 void TornadoEffect_ClearFlagC0AndSetC4(void *e, float v);
 void fn_80140344(void *o);
+#ifdef __MWERKS__
 void fn_80169468(int layer, int id, int flags, float x, float y, float sx, float sy, float a, float b);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_80169468(int, int, float, float, float, float, float, float, int);
+static inline void fn_80169468_Reordered(int layer, int id, int flags, float x, float y, float sx, float sy, float a, float b) { fn_80169468(layer, id, x, y, sx, sy, a, b, flags); }
+#define fn_80169468 fn_80169468_Reordered
+#endif
 extern unsigned int lbl_806D80D0;
 extern unsigned int lbl_806D8248;
 extern unsigned int lbl_806D824C;
@@ -839,8 +867,22 @@ extern unsigned int lbl_806D834C;
 void clItemBoxManager_Draw(VObj *m);
 void fn_80139810(void);
 void fn_801737CC(void *p);
+#ifdef __MWERKS__
 extern void fn_801696E4(int layer, int id, int flag, float x, float y, float rot);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_801696E4(int, int, float, float, float, int);
+static inline void fn_801696E4_Reordered(int layer, int id, int flag, float x, float y, float rot) { fn_801696E4(layer, id, x, y, rot, flag); }
+#define fn_801696E4 fn_801696E4_Reordered
+#endif
+#ifdef __MWERKS__
 extern void fn_801697C0(int layer, int id, int flag, float x, float y, float sx, float sy);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_801697C0(int, int, float, float, float, float, int);
+static inline void fn_801697C0_Reordered(int layer, int id, int flag, float x, float y, float sx, float sy) { fn_801697C0(layer, id, x, y, sx, sy, flag); }
+#define fn_801697C0 fn_801697C0_Reordered
+#endif
 extern unsigned int lbl_806D8350;
 extern unsigned int lbl_806D8354;
 extern unsigned int lbl_806D8358;

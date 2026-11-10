@@ -45,7 +45,14 @@ extern void *ItemTracker_GetTargetKart(char *self);
 extern void ItemTracker_ReleaseLock(char *self);
 extern void ItemTracker_SetTrackPhase(char *self, int phase);
 extern void Item_AccelClampVelocity(char *self, float accel, float maxv);
+#ifdef __MWERKS__
 extern int Item_AdvanceFallingDrop(char *self, float gravity, int *landed, float *groundY);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern int Item_AdvanceFallingDrop(char *, int *, float *, float);
+static inline int Item_AdvanceFallingDrop_Reordered(char *self, float gravity, int *landed, float *groundY) { return Item_AdvanceFallingDrop(self, landed, groundY, gravity); }
+#define Item_AdvanceFallingDrop Item_AdvanceFallingDrop_Reordered
+#endif
 extern int Item_AdvanceProjectileSimple(char *self, void *groundY, float a, float b);
 #ifdef __MWERKS__
 extern void Item_BendVelocityByGroundProbe(void *vel, Vec3 pos, float yaw, float speed, float pitch);
