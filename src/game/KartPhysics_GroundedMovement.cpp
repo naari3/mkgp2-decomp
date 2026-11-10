@@ -239,8 +239,9 @@ extern "C" void KartPhysics_GroundedMovement(GroundedMovementState *self) {
                         }
                     }
                 }
+                float pathSide=direction.x*(other.z-start.z)-direction.z*(other.x-start.x);
                 self->previousSelectedPath=self->selectedPath;
-                if (direction.x*(other.z-start.z)-direction.z*(other.x-start.x)>lbl_806DA42C) {
+                if (pathSide>lbl_806DA42C) {
                     if (self->avoidanceMode==2) self->selectedPath=left;
                     else self->selectedPath=right;
                 } else {
