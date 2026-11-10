@@ -11,9 +11,10 @@
 const float sndSqrt_rodata_803F2A88[3] = {
     3.0f, 0.5f, 0.0f
 };
-const unk32 sndCos_rodata_803F2A94[9] = {
-    0xBE2AAAAB, 0x3C088887, 0xB9500C03, 0x3638B94F, 0x3F22F983, 0x3FC90FDB, 0x00000000, 0x32CD4CA8,
-    0x00000000
+/* element type read off the values (all floats), not from code */
+const float sndCos_rodata_803F2A94[9] = {
+    -0.16666667f, 0.008333332f, -0.000198409f, 2.7526e-06f, 0.63661975f, 1.5707964f, 0.0f, 2.39e-08f,
+    0.0f
 };
 
 #pragma force_active reset

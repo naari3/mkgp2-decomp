@@ -11,11 +11,12 @@ extern char data_804EC754_data_806D02E8[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-unk32 data_804EC754_data_804EC754[32] = {
-    0x00000073, 0x00000071, 0x0000003C, 0x0000002C, 0x0000003E, 0x00000022, 0x0000009B, 0x0000001D,
-    0x00000069, 0x00000040, 0x0000006C, 0x00000052, 0x00000031, 0x00000096, 0x00000019, 0x00000030,
-    0x00000072, 0x0000006D, 0x0000001C, 0x00000059, 0x00000074, 0x0000006E, 0x00000023, 0x00000055,
-    0x00000094, 0x00000093, 0x00000095, 0x00000099, 0x00000098, 0x0000009D, 0x00000097, 0x0000009A
+/* element type read off the values (all small integers), not from code */
+int data_804EC754_data_804EC754[32] = {
+    115, 113, 60, 44, 62, 34, 155, 29,
+    105, 64, 108, 82, 49, 150, 25, 48,
+    114, 109, 28, 89, 116, 110, 35, 85,
+    148, 147, 149, 153, 152, 157, 151, 154
 };
 /* decl: ItemList */
 void *CardSnapshot_ResolveCommonItems_data_804EC7D4[5] = {

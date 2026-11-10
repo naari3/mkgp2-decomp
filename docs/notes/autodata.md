@@ -108,6 +108,19 @@ the original target in a comment.
 
 `python3 tools/cstruct.py src/game/Foo.c TypeName` prints a layout.
 
+## Row types read off the values (`autodata.py infer`)
+
+For `unk32` word tables nobody declares: finds the smallest row length where
+every column is either all floats or all small integers and writes
+`struct <name>_Row { float f_00; int i_04; ... }` (or a plain `float`/`int`
+array). The comment above the type says it was read off the values, not from
+code; member names are offsets. A column that is neither stays `unk32`, so
+packed bytes or shorts are never guessed. 2026-11-10: 14 KB.
+
+An embedded file image is typed as bytes on purpose: the 31.8 KB object at
+0x80412158 is a `*_line.bin` course file (dtk had cut it in two), read by
+`CourseLookup::LoadMemory`. A port swaps it with the loader, like the files.
+
 ## Symbol fixes that were needed (symbols.txt)
 
 - An object that starts on an odd address right after another one is a wrong

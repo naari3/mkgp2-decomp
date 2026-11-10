@@ -243,16 +243,19 @@ const unk32 lbl_806D34B8[2] = {
     0x00000000, 0x0006003A
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D34C0[2] = {
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int lbl_806D34C0[2] = {
+    0, 0
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D34C8[2] = {
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int lbl_806D34C8[2] = {
+    0, 0
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D34D0[2] = {
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int lbl_806D34D0[2] = {
+    0, 0
 };
 /* decl: ItemEffectMask */
 const unk32 lbl_806D34D8[2] = {
@@ -263,8 +266,9 @@ const unk32 lbl_806D34E0[2] = {
     0x00000180, 0x300004C0
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D34E8[2] = {
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int lbl_806D34E8[2] = {
+    0, 0
 };
 /* decl: ItemEffectMask */
 const unk32 lbl_806D34F0[2] = {
@@ -275,28 +279,33 @@ const unsigned int lbl_806D34FC = 0x80;
 const unsigned int lbl_806D3500 = 0x20;
 const unsigned int lbl_806D3504 = 0x10;
 /* decl: ItemEffectMask */
-const unk32 lbl_806D3508[2] = {
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int lbl_806D3508[2] = {
+    0, 0
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D3510[2] = {
-    0x00000000, 0x00000040
+/* element type read off the values (all small integers), not from code */
+const int lbl_806D3510[2] = {
+    0, 64
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D3518[2] = {
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int lbl_806D3518[2] = {
+    0, 0
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D3520[2] = {
-    0x00000000, 0x00001000
+/* element type read off the values (all small integers), not from code */
+const int lbl_806D3520[2] = {
+    0, 4096
 };
 /* decl: ItemEffectMask */
 const unk32 lbl_806D3528[2] = {
     0x00000000, 0x01000000
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D3530[2] = {
-    0x00000000, 0x00000400
+/* element type read off the values (all small integers), not from code */
+const int lbl_806D3530[2] = {
+    0, 1024
 };
 /* decl: ItemEffectMask */
 const unk32 lbl_806D3538[2] = {
@@ -307,24 +316,28 @@ const unk32 lbl_806D3540[2] = {
     0x00000000, 0x10000000
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D3548[2] = {
-    0x00002000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int lbl_806D3548[2] = {
+    8192, 0
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D3550[2] = {
-    0x00008000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int lbl_806D3550[2] = {
+    32768, 0
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D3558[2] = {
-    0x00004000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int lbl_806D3558[2] = {
+    16384, 0
 };
 /* decl: ItemEffectMask */
 const unk32 lbl_806D3560[2] = {
     0x00010000, 0x00000000
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D3568[2] = {
-    0x00000400, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int lbl_806D3568[2] = {
+    1024, 0
 };
 /* decl: ItemEffectMask */
 const unk32 lbl_806D3570[2] = {

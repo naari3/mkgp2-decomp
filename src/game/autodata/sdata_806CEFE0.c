@@ -127,8 +127,9 @@ char *Sci2Card_BuildRetryReceiptLine_data_806CF0F0[2] = {
     (char *)&lbl_806D3584,
     (char *)&lbl_806D358C
 };
-unk32 card_eject_state_machine_data_806CF0F8[2] = {
-    0x00000005, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int card_eject_state_machine_data_806CF0F8[2] = {
+    5, 0
 };
 void *DebugOverlay_GetLongRoundLabel_data_806CF100[2] = {
     (void *)&lbl_806D46BC,

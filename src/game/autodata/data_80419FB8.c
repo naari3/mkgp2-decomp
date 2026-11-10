@@ -94,8 +94,9 @@ Vec CarrotItemEffect_Update_data_8041A000[13] = {
     { 0.0f, 3.0f, 0.0f },
     { 0.0f, 1.7f, -1.0f }
 };
-unk32 data_80419FB8_data_8041A09C[5] = {
-    0x00000000, 0x00000002, 0x00000096, 0x000000D2, 0xFFFFFFFF
+/* element type read off the values (all small integers), not from code */
+int data_80419FB8_data_8041A09C[5] = {
+    0, 2, 150, 210, -1
 };
 float data_80419FB8_data_8041A0B0[4] = {
     1.0f, 1.4f, 1.4f, 1.4f
@@ -119,8 +120,9 @@ void *TwinSpriteOverlay_Update_data_8041A0E0[10] = {
     (void *)0xD000000,
     0
 };
-unk32 data_80419FB8_data_8041A108[4] = {
-    0x00000000, 0x00000007, 0x000000D2, 0xFFFFFFFF
+/* element type read off the values (all small integers), not from code */
+int data_80419FB8_data_8041A108[4] = {
+    0, 7, 210, -1
 };
 float data_80419FB8_data_8041A118[3] = {
     0.1f, 1.0f, 1.0f
@@ -128,8 +130,9 @@ float data_80419FB8_data_8041A118[3] = {
 float data_80419FB8_data_8041A124[3] = {
     0.1f, 1.0f, 2.0f
 };
-unk32 data_80419FB8_data_8041A130[4] = {
-    0x00000000, 0x00000096, 0x000000D2, 0xFFFFFFFF
+/* element type read off the values (all small integers), not from code */
+int data_80419FB8_data_8041A130[4] = {
+    0, 150, 210, -1
 };
 float data_80419FB8_data_8041A140[3] = {
     1.0f, 1.0f, 0.0f

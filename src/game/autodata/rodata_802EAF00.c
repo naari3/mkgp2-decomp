@@ -9,8 +9,9 @@
 #pragma force_active on
 
 /* decl: Vec3 */
-const unk32 Path_CountWaypointsAndSnapGround_rodata_802EAF00[4] = {
-    0x00000000, 0x00000000, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int Path_CountWaypointsAndSnapGround_rodata_802EAF00[4] = {
+    0, 0, 0, 0
 };
 
 #pragma force_active reset

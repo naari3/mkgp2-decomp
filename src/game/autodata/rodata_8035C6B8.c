@@ -21,8 +21,9 @@ typedef struct Entry10 {
 #pragma force_active on
 
 /* decl: CourseTexTables */
-const unk32 CourseTables_rodata_8035C6B8[3] = {
-    0x00000000, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int CourseTables_rodata_8035C6B8[3] = {
+    0, 0, 0
 };
 const Entry1C CourseTables_rodata_8035C6C4[1] = {
     { { 0, 0, 0, 0, 0, 0, 1065353216 } }

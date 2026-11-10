@@ -102,9 +102,10 @@ unsigned short *lbl_8049A8C4[13] = {
     (unsigned short *)&lbl_80399E50
 };
 /* decl: KeyTable */
-unk32 lbl_8049A8F8[12] = {
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int lbl_8049A8F8[12] = {
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0
 };
 void *data_8049A844_data_8049A928[3] = {
     (void *)&data_8049A844_data_806CFD90,

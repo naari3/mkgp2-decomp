@@ -96,101 +96,125 @@ float *lbl_8048DAA8[8][3][2] = {
     (float *)&lbl_803553D0,
     (float *)&lbl_803553D4
 };
-unk32 rodata_80355078_data_8048DB68[12] = {
-    0x00000014, 0x00000002, 0x00000028, 0x00000004, 0x0000003C, 0x00000006, 0x00000050, 0x0000000A,
-    0x00000064, 0x0000000F, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DB68[12] = {
+    20, 2, 40, 4, 60, 6, 80, 10,
+    100, 15, 0, 0
 };
-unk32 rodata_80355078_data_8048DB98[12] = {
-    0x00000014, 0x00000002, 0x00000028, 0x00000004, 0x0000003C, 0x00000006, 0x00000050, 0x0000000A,
-    0x00000064, 0x0000000F, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DB98[12] = {
+    20, 2, 40, 4, 60, 6, 80, 10,
+    100, 15, 0, 0
 };
-unk32 rodata_80355078_data_8048DBC8[12] = {
-    0x00000014, 0x00000002, 0x00000028, 0x00000004, 0x0000003C, 0x00000006, 0x00000050, 0x0000000A,
-    0x00000064, 0x0000000F, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DBC8[12] = {
+    20, 2, 40, 4, 60, 6, 80, 10,
+    100, 15, 0, 0
 };
-unk32 rodata_80355078_data_8048DBF8[12] = {
-    0x00000014, 0x00000002, 0x00000028, 0x00000004, 0x0000003C, 0x00000006, 0x00000050, 0x0000000A,
-    0x00000064, 0x0000000F, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DBF8[12] = {
+    20, 2, 40, 4, 60, 6, 80, 10,
+    100, 15, 0, 0
 };
-unk32 rodata_80355078_data_8048DC28[12] = {
-    0x00000014, 0x00000002, 0x00000028, 0x00000004, 0x0000003C, 0x00000006, 0x00000050, 0x0000000A,
-    0x00000064, 0x0000000F, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DC28[12] = {
+    20, 2, 40, 4, 60, 6, 80, 10,
+    100, 15, 0, 0
 };
-unk32 rodata_80355078_data_8048DC58[12] = {
-    0x00000014, 0x00000002, 0x00000028, 0x00000004, 0x0000003C, 0x00000006, 0x00000050, 0x0000000A,
-    0x00000064, 0x0000000F, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DC58[12] = {
+    20, 2, 40, 4, 60, 6, 80, 10,
+    100, 15, 0, 0
 };
-unk32 rodata_80355078_data_8048DC88[10] = {
-    0x0000000F, 0x0000000F, 0x00000014, 0x0000000A, 0x00000019, 0x00000006, 0x0000001E, 0x00000003,
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DC88[10] = {
+    15, 15, 20, 10, 25, 6, 30, 3,
+    0, 0
 };
-unk32 rodata_80355078_data_8048DCB0[10] = {
-    0x0000000F, 0x0000000F, 0x00000014, 0x0000000A, 0x00000019, 0x00000006, 0x0000001E, 0x00000003,
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DCB0[10] = {
+    15, 15, 20, 10, 25, 6, 30, 3,
+    0, 0
 };
-unk32 rodata_80355078_data_8048DCD8[10] = {
-    0x0000000F, 0x0000000F, 0x00000014, 0x0000000A, 0x00000019, 0x00000006, 0x0000001E, 0x00000003,
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DCD8[10] = {
+    15, 15, 20, 10, 25, 6, 30, 3,
+    0, 0
 };
-unk32 rodata_80355078_data_8048DD00[10] = {
-    0x0000000F, 0x0000000F, 0x00000014, 0x0000000A, 0x00000019, 0x00000006, 0x0000001E, 0x00000003,
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DD00[10] = {
+    15, 15, 20, 10, 25, 6, 30, 3,
+    0, 0
 };
-unk32 rodata_80355078_data_8048DD28[10] = {
-    0x0000000F, 0x0000000F, 0x00000014, 0x0000000A, 0x00000019, 0x00000006, 0x0000001E, 0x00000003,
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DD28[10] = {
+    15, 15, 20, 10, 25, 6, 30, 3,
+    0, 0
 };
-unk32 rodata_80355078_data_8048DD50[10] = {
-    0x0000000F, 0x0000000F, 0x00000014, 0x0000000A, 0x00000019, 0x00000006, 0x0000001E, 0x00000003,
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DD50[10] = {
+    15, 15, 20, 10, 25, 6, 30, 3,
+    0, 0
 };
-unk32 rodata_80355078_data_8048DD78[10] = {
-    0x0000001E, 0x0000000F, 0x00000023, 0x0000000A, 0x00000028, 0x00000006, 0x0000002D, 0x00000003,
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DD78[10] = {
+    30, 15, 35, 10, 40, 6, 45, 3,
+    0, 0
 };
-unk32 rodata_80355078_data_8048DDA0[10] = {
-    0x0000001E, 0x0000000F, 0x00000023, 0x0000000A, 0x00000028, 0x00000006, 0x0000002D, 0x00000003,
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DDA0[10] = {
+    30, 15, 35, 10, 40, 6, 45, 3,
+    0, 0
 };
-unk32 rodata_80355078_data_8048DDC8[10] = {
-    0x0000001E, 0x0000000F, 0x00000023, 0x0000000A, 0x00000028, 0x00000006, 0x0000002D, 0x00000003,
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DDC8[10] = {
+    30, 15, 35, 10, 40, 6, 45, 3,
+    0, 0
 };
-unk32 rodata_80355078_data_8048DDF0[10] = {
-    0x0000001E, 0x0000000F, 0x00000023, 0x0000000A, 0x00000028, 0x00000006, 0x0000002D, 0x00000003,
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DDF0[10] = {
+    30, 15, 35, 10, 40, 6, 45, 3,
+    0, 0
 };
-unk32 rodata_80355078_data_8048DE18[10] = {
-    0x0000001E, 0x0000000F, 0x00000023, 0x0000000A, 0x00000028, 0x00000006, 0x0000002D, 0x00000003,
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DE18[10] = {
+    30, 15, 35, 10, 40, 6, 45, 3,
+    0, 0
 };
-unk32 rodata_80355078_data_8048DE40[10] = {
-    0x0000001E, 0x0000000F, 0x00000023, 0x0000000A, 0x00000028, 0x00000006, 0x0000002D, 0x00000003,
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DE40[10] = {
+    30, 15, 35, 10, 40, 6, 45, 3,
+    0, 0
 };
-unk32 rodata_80355078_data_8048DE68[14] = {
-    0x00000001, 0x00000002, 0x0000001E, 0x00000004, 0x00000028, 0x00000006, 0x00000032, 0x00000008,
-    0x0000003C, 0x0000000A, 0x00000046, 0x0000000F, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DE68[14] = {
+    1, 2, 30, 4, 40, 6, 50, 8,
+    60, 10, 70, 15, 0, 0
 };
-unk32 rodata_80355078_data_8048DEA0[14] = {
-    0x00000001, 0x00000002, 0x0000001E, 0x00000004, 0x00000028, 0x00000006, 0x00000032, 0x00000008,
-    0x0000003C, 0x0000000A, 0x00000046, 0x0000000F, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DEA0[14] = {
+    1, 2, 30, 4, 40, 6, 50, 8,
+    60, 10, 70, 15, 0, 0
 };
-unk32 rodata_80355078_data_8048DED8[14] = {
-    0x00000001, 0x00000002, 0x0000001E, 0x00000004, 0x00000028, 0x00000006, 0x00000032, 0x00000008,
-    0x0000003C, 0x0000000A, 0x00000046, 0x0000000F, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DED8[14] = {
+    1, 2, 30, 4, 40, 6, 50, 8,
+    60, 10, 70, 15, 0, 0
 };
-unk32 rodata_80355078_data_8048DF10[14] = {
-    0x00000001, 0x00000002, 0x0000001E, 0x00000004, 0x00000028, 0x00000006, 0x00000032, 0x00000008,
-    0x0000003C, 0x0000000A, 0x00000046, 0x0000000F, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DF10[14] = {
+    1, 2, 30, 4, 40, 6, 50, 8,
+    60, 10, 70, 15, 0, 0
 };
-unk32 rodata_80355078_data_8048DF48[14] = {
-    0x00000001, 0x00000002, 0x0000001E, 0x00000004, 0x00000028, 0x00000006, 0x00000032, 0x00000008,
-    0x0000003C, 0x0000000A, 0x00000046, 0x0000000F, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DF48[14] = {
+    1, 2, 30, 4, 40, 6, 50, 8,
+    60, 10, 70, 15, 0, 0
 };
-unk32 rodata_80355078_data_8048DF80[14] = {
-    0x00000001, 0x00000002, 0x0000001E, 0x00000004, 0x00000028, 0x00000006, 0x00000032, 0x00000008,
-    0x0000003C, 0x0000000A, 0x00000046, 0x0000000F, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80355078_data_8048DF80[14] = {
+    1, 2, 30, 4, 40, 6, 50, 8,
+    60, 10, 70, 15, 0, 0
 };
 
 #pragma force_active reset

@@ -19,6 +19,33 @@ typedef struct Quad {
     Vec v[4];
 } Quad;
 
+/* row layout read off the values (each column all floats or all small integers), not from code */
+typedef struct lbl_8037754C_Row {
+    int i_00;
+    int i_04;
+    int i_08;
+    float f_0C;
+    float f_10;
+} lbl_8037754C_Row;
+
+/* row layout read off the values (each column all floats or all small integers), not from code */
+typedef struct lbl_80377588_Row {
+    int i_00;
+    int i_04;
+    int i_08;
+    float f_0C;
+    float f_10;
+} lbl_80377588_Row;
+
+/* row layout read off the values (each column all floats or all small integers), not from code */
+typedef struct lbl_803775C4_Row {
+    int i_00;
+    int i_04;
+    int i_08;
+    float f_0C;
+    float f_10;
+} lbl_803775C4_Row;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -61,18 +88,21 @@ const Vec NokoNoko_InitEntity_rodata_80377450[21] = {
     { -16.69406f, 0.0f, 1000.6227f },
     { -6.274629f, 0.0f, 512.3508f }
 };
-const unk32 lbl_8037754C[15] = {
-    0x00000003, 0x00000002, 0x00000258, 0x3ECCCCCD, 0x3C2B92A4, 0x00000003, 0x00000002, 0x00000258,
-    0x3ECCCCCD, 0xBC2B92A4, 0xFFFFFFFF, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+const lbl_8037754C_Row lbl_8037754C[3] = {
+    { 3, 2, 600, 0.4f, 0.010471974f },
+    { 3, 2, 600, 0.4f, -0.010471974f },
+    { -1, 0, 0, 0.0f, 0.0f }
 };
-const unk32 lbl_80377588[15] = {
-    0x00000002, 0x00000001, 0x0000012C, 0x3E4CCCCD, 0x00000000, 0x00000001, 0x00000001, 0x00000078,
-    0x00000000, 0x3CD6774D, 0xFFFFFFFF, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+const lbl_80377588_Row lbl_80377588[3] = {
+    { 2, 1, 300, 0.2f, 0.0f },
+    { 1, 1, 120, 0.0f, 0.026179934f },
+    { -1, 0, 0, 0.0f, 0.0f }
 };
-const unk32 lbl_803775C4[20] = {
-    0x00000003, 0x00000002, 0x0000012C, 0x3ECCCCCD, 0x00000000, 0x00000000, 0x00000000, 0x00000078,
-    0x00000000, 0x00000000, 0x00000001, 0x00000001, 0x00000078, 0x00000000, 0x3CD6774D, 0xFFFFFFFF,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000
+const lbl_803775C4_Row lbl_803775C4[4] = {
+    { 3, 2, 300, 0.4f, 0.0f },
+    { 0, 0, 120, 0.0f, 0.0f },
+    { 1, 1, 120, 0.0f, 0.026179934f },
+    { -1, 0, 0, 0.0f, 0.0f }
 };
 const char lbl_80377614[] = "nokonoko_tamb.dat";
 const char lbl_80377628[] = "nokonoko_work.dat";
@@ -82,9 +112,10 @@ const Quad NokoNoko_Update_rodata_80377664[1] = {
     { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } }
 };
 /* decl: Quad */
-const unk32 NokoNoko_Update_rodata_80377694[13] = {
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int NokoNoko_Update_rodata_80377694[13] = {
+    0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0
 };
 
 #pragma force_active reset

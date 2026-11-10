@@ -62,32 +62,38 @@ unsigned int g_itemIdToIndexTable[328] = {
     0x13D, 0x13E, 0x13F, 0x140, 0x141, 0x142, 0x143, 0x144,
     0x145, 0x18, 0x1B, 0x7C, 0x7D, 0x7E, 0x7F, 0x0
 };
-unk32 lbl_804EBBD0[14] = {
-    0x00000039, 0x00000012, 0x0000002B, 0x00000012, 0x0000002D, 0x00000010, 0x0000005D, 0x00000010,
-    0x0000005C, 0x00000010, 0x0000005B, 0x00000010, 0xFFFFFFFF, 0xFFFFFFFF
+/* element type read off the values (all small integers), not from code */
+int lbl_804EBBD0[14] = {
+    57, 18, 43, 18, 45, 16, 93, 16,
+    92, 16, 91, 16, -1, -1
 };
-unk32 lbl_804EBC08[10] = {
-    0x00000032, 0x00000019, 0x00000046, 0x00000019, 0x0000004A, 0x00000019, 0x00000050, 0x00000019,
-    0xFFFFFFFF, 0xFFFFFFFF
+/* element type read off the values (all small integers), not from code */
+int lbl_804EBC08[10] = {
+    50, 25, 70, 25, 74, 25, 80, 25,
+    -1, -1
 };
-unk32 lbl_804EBC30[10] = {
-    0x00000008, 0x00000014, 0x0000003D, 0x00000023, 0x0000004E, 0x00000023, 0x0000002E, 0x0000000A,
-    0xFFFFFFFF, 0xFFFFFFFF
+/* element type read off the values (all small integers), not from code */
+int lbl_804EBC30[10] = {
+    8, 20, 61, 35, 78, 35, 46, 10,
+    -1, -1
 };
-unk32 lbl_804EBC58[18] = {
-    0x0000002B, 0x0000000F, 0x0000002D, 0x0000000F, 0x0000005D, 0x0000000F, 0x0000005C, 0x0000000F,
-    0x0000005B, 0x0000000F, 0x00000073, 0x00000006, 0x00000072, 0x00000006, 0x00000071, 0x0000000D,
-    0xFFFFFFFF, 0xFFFFFFFF
+/* element type read off the values (all small integers), not from code */
+int lbl_804EBC58[18] = {
+    43, 15, 45, 15, 93, 15, 92, 15,
+    91, 15, 115, 6, 114, 6, 113, 13,
+    -1, -1
 };
-unk32 lbl_804EBCA0[24] = {
-    0x00000039, 0x0000000C, 0x0000006C, 0x0000000C, 0x0000003C, 0x0000000C, 0x00000055, 0x0000000C,
-    0x0000004E, 0x0000000B, 0x0000003D, 0x0000000C, 0x0000003E, 0x0000000C, 0x0000003A, 0x00000002,
-    0x0000002E, 0x00000005, 0x00000030, 0x00000005, 0x00000031, 0x00000005, 0xFFFFFFFF, 0xFFFFFFFF
+/* element type read off the values (all small integers), not from code */
+int lbl_804EBCA0[24] = {
+    57, 12, 108, 12, 60, 12, 85, 12,
+    78, 11, 61, 12, 62, 12, 58, 2,
+    46, 5, 48, 5, 49, 5, -1, -1
 };
-unk32 lbl_804EBD00[20] = {
-    0x00000032, 0x0000000E, 0x00000069, 0x0000000D, 0x0000004A, 0x0000000D, 0x00000040, 0x0000000D,
-    0x00000050, 0x0000000E, 0x00000008, 0x0000000D, 0x0000001C, 0x00000009, 0x00000019, 0x00000009,
-    0x0000001D, 0x00000002, 0xFFFFFFFF, 0xFFFFFFFF
+/* element type read off the values (all small integers), not from code */
+int lbl_804EBD00[20] = {
+    50, 14, 105, 13, 74, 13, 64, 13,
+    80, 14, 8, 13, 28, 9, 25, 9,
+    29, 2, -1, -1
 };
 /* decl: ObjEntry * */
 void *lbl_804EBD50[3] = {

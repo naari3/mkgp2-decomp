@@ -13,39 +13,99 @@ typedef struct MapEffectDef {
     void *animation;
 } MapEffectDef;
 
+/* row layout read off the values (each column all floats or all small integers), not from code */
+typedef struct rodata_8036DD8C_rodata_8036DD8C_Row {
+    int i_00;
+    float f_04;
+    float f_08;
+    float f_0C;
+    int i_10;
+} rodata_8036DD8C_rodata_8036DD8C_Row;
+
+/* row layout read off the values (each column all floats or all small integers), not from code */
+typedef struct rodata_8036DD8C_rodata_8036DDC8_Row {
+    int i_00;
+    float f_04;
+    float f_08;
+    float f_0C;
+    float f_10;
+} rodata_8036DD8C_rodata_8036DDC8_Row;
+
+/* row layout read off the values (each column all floats or all small integers), not from code */
+typedef struct rodata_8036DD8C_rodata_8036DE2C_Row {
+    int i_00;
+    float f_04;
+    float f_08;
+    float f_0C;
+    int i_10;
+} rodata_8036DD8C_rodata_8036DE2C_Row;
+
+/* row layout read off the values (each column all floats or all small integers), not from code */
+typedef struct rodata_8036DD8C_rodata_8036DE90_Row {
+    int i_00;
+    float f_04;
+    float f_08;
+    float f_0C;
+    int i_10;
+} rodata_8036DD8C_rodata_8036DE90_Row;
+
+/* row layout read off the values (each column all floats or all small integers), not from code */
+typedef struct rodata_8036DD8C_rodata_8036DEE0_Row {
+    int i_00;
+    float f_04;
+    float f_08;
+    float f_0C;
+    int i_10;
+} rodata_8036DD8C_rodata_8036DEE0_Row;
+
+/* row layout read off the values (each column all floats or all small integers), not from code */
+typedef struct rodata_8036DD8C_rodata_8036DF30_Row {
+    int i_00;
+    float f_04;
+    float f_08;
+    float f_0C;
+    int i_10;
+} rodata_8036DD8C_rodata_8036DF30_Row;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const unk32 rodata_8036DD8C_rodata_8036DD8C[15] = {
-    0x00000001, 0x42380000, 0x3F800000, 0x3F000000, 0x00000000, 0x00000001, 0x41600000, 0x3F800000,
-    0x3F000000, 0x00000000, 0x00000002, 0x00000000, 0x3F800000, 0x3FC00000, 0x00000000
+const rodata_8036DD8C_rodata_8036DD8C_Row rodata_8036DD8C_rodata_8036DD8C[3] = {
+    { 1, 46.0f, 1.0f, 0.5f, 0 },
+    { 1, 14.0f, 1.0f, 0.5f, 0 },
+    { 2, 0.0f, 1.0f, 1.5f, 0 }
 };
-const unk32 rodata_8036DD8C_rodata_8036DDC8[25] = {
-    0x00000000, 0x42480000, 0x00000000, 0x00000000, 0x00000000, 0x00000001, 0x40800000, 0x3F800000,
-    0x3E99999A, 0x00000000, 0x00000001, 0x41200000, 0x3F800000, 0x3FC00000, 0x3E3CBAEA, 0x00000001,
-    0x40400000, 0x3F800000, 0x40333333, 0x3F250CAC, 0x00000002, 0x00000000, 0x00000000, 0x40400000,
-    0x3F490FDB
+const rodata_8036DD8C_rodata_8036DDC8_Row rodata_8036DD8C_rodata_8036DDC8[5] = {
+    { 0, 50.0f, 0.0f, 0.0f, 0.0f },
+    { 1, 4.0f, 1.0f, 0.3f, 0.0f },
+    { 1, 10.0f, 1.0f, 1.5f, 0.18430677f },
+    { 1, 3.0f, 1.0f, 2.8f, 0.6447246f },
+    { 2, 0.0f, 0.0f, 3.0f, 0.7853982f }
 };
-const unk32 rodata_8036DD8C_rodata_8036DE2C[25] = {
-    0x00000000, 0x42380000, 0x00000000, 0x00000000, 0x00000000, 0x00000001, 0x40800000, 0x3F800000,
-    0x3E99999A, 0x00000000, 0x00000001, 0x41500000, 0x3F800000, 0x3FC00000, 0x00000000, 0x00000001,
-    0x40400000, 0x3F800000, 0x3E99999A, 0x00000000, 0x00000002, 0x00000000, 0x00000000, 0x40400000,
-    0x00000000
+const rodata_8036DD8C_rodata_8036DE2C_Row rodata_8036DD8C_rodata_8036DE2C[5] = {
+    { 0, 46.0f, 0.0f, 0.0f, 0 },
+    { 1, 4.0f, 1.0f, 0.3f, 0 },
+    { 1, 13.0f, 1.0f, 1.5f, 0 },
+    { 1, 3.0f, 1.0f, 0.3f, 0 },
+    { 2, 0.0f, 0.0f, 3.0f, 0 }
 };
-const unk32 rodata_8036DD8C_rodata_8036DE90[20] = {
-    0x00000000, 0x42440000, 0x00000000, 0x00000000, 0x00000000, 0x00000001, 0x41300000, 0x3F800000,
-    0x3E4CCCCD, 0x00000000, 0x00000001, 0x40400000, 0x3F800000, 0x40333333, 0x00000000, 0x00000002,
-    0x00000000, 0x00000000, 0x40400000, 0x00000000
+const rodata_8036DD8C_rodata_8036DE90_Row rodata_8036DD8C_rodata_8036DE90[4] = {
+    { 0, 49.0f, 0.0f, 0.0f, 0 },
+    { 1, 11.0f, 1.0f, 0.2f, 0 },
+    { 1, 3.0f, 1.0f, 2.8f, 0 },
+    { 2, 0.0f, 0.0f, 3.0f, 0 }
 };
-const unk32 rodata_8036DD8C_rodata_8036DEE0[20] = {
-    0x00000000, 0x423C0000, 0x00000000, 0x00000000, 0x00000000, 0x00000001, 0x41300000, 0x3F800000,
-    0x3E4CCCCD, 0x00000000, 0x00000001, 0x40400000, 0x3F800000, 0x40333333, 0x00000000, 0x00000002,
-    0x00000000, 0x3F800000, 0x3FC00000, 0x00000000
+const rodata_8036DD8C_rodata_8036DEE0_Row rodata_8036DD8C_rodata_8036DEE0[4] = {
+    { 0, 47.0f, 0.0f, 0.0f, 0 },
+    { 1, 11.0f, 1.0f, 0.2f, 0 },
+    { 1, 3.0f, 1.0f, 2.8f, 0 },
+    { 2, 0.0f, 1.0f, 1.5f, 0 }
 };
-const unk32 rodata_8036DD8C_rodata_8036DF30[20] = {
-    0x00000000, 0x42480000, 0x00000000, 0x00000000, 0x00000000, 0x00000001, 0x41300000, 0x3F800000,
-    0x3E4CCCCD, 0x00000000, 0x00000001, 0x40400000, 0x3F800000, 0x40333333, 0x00000000, 0x00000002,
-    0x00000000, 0x3F800000, 0x3FC00000, 0x00000000
+const rodata_8036DD8C_rodata_8036DF30_Row rodata_8036DD8C_rodata_8036DF30[4] = {
+    { 0, 50.0f, 0.0f, 0.0f, 0 },
+    { 1, 11.0f, 1.0f, 0.2f, 0 },
+    { 1, 3.0f, 1.0f, 2.8f, 0 },
+    { 2, 0.0f, 1.0f, 1.5f, 0 }
 };
 const char lbl_8036DF80[] = "ef_magic_magic_stick_joint";
 const char lbl_8036DF9C[] = "ef_magic_pink_inazuma_joint";

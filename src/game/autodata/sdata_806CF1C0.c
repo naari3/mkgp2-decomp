@@ -214,8 +214,9 @@ void *rodata_80324B10_data_806CF1D8[2] = {
     (void *)&sdata_806CF1C0_data_80410CD4,
     (void *)0x24
 };
-unk32 rodata_80324B10_data_806CF1E0[2] = {
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int rodata_80324B10_data_806CF1E0[2] = {
+    0, 0
 };
 char *RankLog_data_806CF1E8 = (char *)&lbl_806D4A44;
 int g_rankingPosition = -1;

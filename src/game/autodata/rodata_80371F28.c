@@ -5,6 +5,36 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* row layout read off the values (each column all floats or all small integers), not from code */
+typedef struct lbl_803733A0_Row {
+    int i_00;
+    float f_04;
+} lbl_803733A0_Row;
+
+/* row layout read off the values (each column all floats or all small integers), not from code */
+typedef struct lbl_80373410_Row {
+    int i_00;
+    float f_04;
+} lbl_80373410_Row;
+
+/* row layout read off the values (each column all floats or all small integers), not from code */
+typedef struct lbl_80373448_Row {
+    int i_00;
+    float f_04;
+} lbl_80373448_Row;
+
+/* row layout read off the values (each column all floats or all small integers), not from code */
+typedef struct lbl_80373480_Row {
+    int i_00;
+    float f_04;
+} lbl_80373480_Row;
+
+/* row layout read off the values (each column all floats or all small integers), not from code */
+typedef struct lbl_803734B8_Row {
+    int i_00;
+    float f_04;
+} lbl_803734B8_Row;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -1077,27 +1107,57 @@ void *const lbl_80373368[14] = {
     0,
     0
 };
-const unk32 lbl_803733A0[28] = {
-    0x00000000, 0x00000000, 0x00000000, 0x43B38000, 0x00000007, 0x00000000, 0xFFFFFFFF, 0x00000000,
-    0xFFFFFFFF, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x43B38000, 0x00000007, 0x00000000, 0x00000002, 0x00000000, 0xFFFFFFFF, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000
+const lbl_803733A0_Row lbl_803733A0[14] = {
+    { 0, 0.0f },
+    { 0, 359.0f },
+    { 7, 0.0f },
+    { -1, 0.0f },
+    { -1, 0.0f },
+    { 0, 0.0f },
+    { 0, 0.0f },
+    { 0, 0.0f },
+    { 0, 359.0f },
+    { 7, 0.0f },
+    { 2, 0.0f },
+    { -1, 0.0f },
+    { 0, 0.0f },
+    { 0, 0.0f }
 };
-const unk32 lbl_80373410[14] = {
-    0x00000000, 0x00000000, 0x00000000, 0x43B38000, 0x00000007, 0x00000000, 0xFFFFFFFF, 0x00000000,
-    0xFFFFFFFF, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+const lbl_80373410_Row lbl_80373410[7] = {
+    { 0, 0.0f },
+    { 0, 359.0f },
+    { 7, 0.0f },
+    { -1, 0.0f },
+    { -1, 0.0f },
+    { 0, 0.0f },
+    { 0, 0.0f }
 };
-const unk32 lbl_80373448[14] = {
-    0x00000000, 0x00000000, 0x00000000, 0x446FC000, 0x00000007, 0x00000000, 0x00000001, 0x00000000,
-    0xFFFFFFFF, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+const lbl_80373448_Row lbl_80373448[7] = {
+    { 0, 0.0f },
+    { 0, 959.0f },
+    { 7, 0.0f },
+    { 1, 0.0f },
+    { -1, 0.0f },
+    { 0, 0.0f },
+    { 0, 0.0f }
 };
-const unk32 lbl_80373480[14] = {
-    0x00000000, 0x00000000, 0x00000000, 0x43C78000, 0x00000007, 0x00000000, 0xFFFFFFFF, 0x00000000,
-    0xFFFFFFFF, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+const lbl_80373480_Row lbl_80373480[7] = {
+    { 0, 0.0f },
+    { 0, 399.0f },
+    { 7, 0.0f },
+    { -1, 0.0f },
+    { -1, 0.0f },
+    { 0, 0.0f },
+    { 0, 0.0f }
 };
-const unk32 lbl_803734B8[14] = {
-    0x00000000, 0x00000000, 0x00000000, 0x43C78000, 0x00000007, 0x00000000, 0xFFFFFFFF, 0x00000000,
-    0xFFFFFFFF, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+const lbl_803734B8_Row lbl_803734B8[7] = {
+    { 0, 0.0f },
+    { 0, 399.0f },
+    { 7, 0.0f },
+    { -1, 0.0f },
+    { -1, 0.0f },
+    { 0, 0.0f },
+    { 0, 0.0f }
 };
 const char lbl_803734F0[] = "PCA_anim_a.dat";
 /* pointers mixed with values */
@@ -2025,14 +2085,17 @@ void *const lbl_803745D0[35] = {
     0,
     0
 };
-const unk32 lbl_8037465C[7] = {
-    0x00000000, 0xFFFFFFFF, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int lbl_8037465C[7] = {
+    0, -1, 0, 0, 0, 0, 0
 };
-const unk32 lbl_80374678[7] = {
-    0x00000000, 0xFFFFFFFF, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int lbl_80374678[7] = {
+    0, -1, 0, 0, 0, 0, 0
 };
-const unk32 lbl_80374694[7] = {
-    0x00000000, 0xFFFFFFFF, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int lbl_80374694[7] = {
+    0, -1, 0, 0, 0, 0, 0
 };
 const char lbl_803746B0[] = "RBA_anim_as_kino_a_joint";
 const char lbl_803746CC[] = "RBA_anim_as_kino_b_joint";

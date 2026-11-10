@@ -2391,8 +2391,9 @@ int DbgScene01_SprMng2Test_InputCheck_data_8041C860[13] = {
     5305, 144, 239, 333, 423, 7885, 9189, 1014,
     5047, 5049, 1267, 7052, 5041
 };
-unk32 data_8041A4F8_data_8041C894[3] = {
-    0x00000000, 0x0000001D, 0xFFFFFFFE
+/* element type read off the values (all small integers), not from code */
+int data_8041A4F8_data_8041C894[3] = {
+    0, 29, -2
 };
 /* decl: unsigned char */
 void *DbgMenu_data_8041C8A0[8] = {

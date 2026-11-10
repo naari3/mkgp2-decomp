@@ -139,8 +139,9 @@ const float lbl_806D2C38 = 0.9f;
 const float lbl_806D2C3C = 0.6f;
 const float lbl_806D2C40 = 6e+01f;
 const float lbl_806D2C44 = 1.0f;
-const unk32 lbl_806D2C48[2] = {
-    0x00000000, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int lbl_806D2C48[2] = {
+    0, 0
 };
 const float lbl_806D2C50 = 182.04445f;
 const float lbl_806D2C54 = 7.6293945e-06f;
@@ -179,8 +180,9 @@ const char *const lbl_806D2D08[1] = {
 const char *const lbl_806D2D0C[1] = {
     (const char *)&lbl_806D2D00
 };
-const unk32 lbl_806D2D10[2] = {
-    0x00000005, 0x00000000
+/* element type read off the values (all small integers), not from code */
+const int lbl_806D2D10[2] = {
+    5, 0
 };
 const char lbl_806D2D18[] = "SUN";
 const char lbl_806D2D1C[] = "MON";

@@ -8,8 +8,9 @@
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-unk32 sndRand_data_806D0C58[2] = {
-    0x00000001, 0x00000000
+/* element type read off the values (all small integers), not from code */
+int sndRand_data_806D0C58[2] = {
+    1, 0
 };
 
 #pragma force_active reset
