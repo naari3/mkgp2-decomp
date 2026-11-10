@@ -973,6 +973,7 @@ extern unsigned int lbl_806D123C_p3;
 extern unsigned int g_playerData_p3[];
 extern unsigned int lbl_80598A60_p3[];
 extern unsigned int lbl_805AC55C_p3[];
+#ifndef NON_MATCHING /* C version: end of this file */
 asm void card_rw_state_machine_short(void);
 
 #pragma section R".extab_user"
@@ -1707,6 +1708,7 @@ mtlr r0
 addi r1, r1, 0x80
 blr
 }
+#endif
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
 
@@ -1753,6 +1755,7 @@ extern unsigned int lbl_806D123C_p4;
 extern unsigned int g_playerData_p4[];
 extern unsigned int lbl_80598A60_p4[];
 extern unsigned int lbl_805AC55C_p4[];
+#ifndef NON_MATCHING /* C version: end of this file */
 asm void card_rw_state_machine(void);
 
 #pragma section R".extab_user"
@@ -2547,6 +2550,7 @@ mtlr r0
 addi r1, r1, 0x80
 blr
 }
+#endif
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
 
@@ -2654,6 +2658,7 @@ extern unsigned int g_playerData_p6[];
 extern unsigned int lbl_80598A60_p6[];
 extern unsigned int lbl_805AC55C_p6[];
 extern unsigned int lbl_805D275C_p6[];
+#ifndef NON_MATCHING /* C version: end of this file */
 asm void card_read_state_machine(void);
 
 #pragma section R".extab_user"
@@ -3482,6 +3487,7 @@ mtlr r0
 addi r1, r1, 0x140
 blr
 }
+#endif
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
 
@@ -4409,3 +4415,377 @@ return lbl_80401018_p22[page_p22];
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
 
+#ifdef NON_MATCHING
+/*
+ * Equivalent C for the PC port (docs/nonmatching_c.md) of the three card
+ * state machines that are inline asm above. They are built from the same
+ * steps that exist as separate functions in this unit
+ * (Sci2Card_WriteTrackData_*, Sci2Card_PrintReceipt_*, Sci2Card_EjectAndFinalize_Step);
+ * the target inlines them and then takes the backup snapshot of g_playerData.
+ */
+#pragma inline_max_size(10000)
+#pragma cplusplus on
+extern "C" {
+extern unsigned char lbl_806D1224;
+extern unsigned char lbl_806D1225;
+extern struct CardPlayerSnapshot_p14 lbl_805D275C;
+extern int Backup_PublishShadowCopy_Inline(void);
+extern void Sci2Card_GetResponsePayload(void *card, void *payload);
+extern unsigned char fn_801D4FF4(void *player, const void *raw, unsigned char publish);
+extern void PlayerData_ResetForFlow(void);
+unsigned char card_rw_state_machine_short(void);
+unsigned char card_rw_state_machine(void);
+unsigned char card_read_state_machine(void);
+
+extern int lbl_806CF0EC;
+extern int lbl_806D1218;
+extern int lbl_806D123C;
+extern unsigned char Sci2Card_IsStatus3Zero(void *card);
+extern int Sci2Card_BuildScoreReceiptLine(int line);
+
+/* same as the Receipt_* inlines of the receipt units above */
+static inline unsigned char CardSM_ReceiptIsDone(int line)
+{
+    unsigned char done = 0;
+    if (line >= 9 && lbl_806CF0EC == 1) {
+        done = 1;
+    } else if (line >= 10) {
+        done = 1;
+    } else if (line >= 2 && lbl_806CF0EC == 0) {
+        done = 1;
+    }
+    return done;
+}
+
+static inline void CardSM_ReceiptBuildLine(int line)
+{
+    int next;
+    if (lbl_806D122B_p2 == 0) {
+        next = Sci2Card_BuildScoreReceiptLine(line);
+    } else {
+        next = Sci2Card_BuildRetryReceiptLine(line);
+    }
+    lbl_806D1218 = next;
+}
+
+static inline unsigned char CardSM_ReceiptAdvance(void)
+{
+    int line = lbl_806D1218;
+    if (CardSM_ReceiptIsDone(line) == 1) {
+        lbl_806D122A_p2 = 0;
+        lbl_806D1210_p2 = 1;
+        lbl_806D122B_p2 = 0;
+        return 1;
+    }
+    CardSM_ReceiptBuildLine(line);
+    return 0;
+}
+
+static inline unsigned char CardSM_ReceiptStart(int mode, unsigned char header, unsigned char retry)
+{
+    lbl_806D122B_p2 = retry;
+    if (!ServiceLatch_CheckTriggered_p2()) {
+        lbl_806D122A_p2 = 1;
+        lbl_806D121C_p2 = 0;
+        lbl_806CF0E4_p2 = 5;
+        lbl_806D1210_p2 = 1;
+        return 1;
+    }
+    lbl_806CF0EC = mode;
+    lbl_806D1210_p2 = 0;
+    lbl_806D122A_p2 = 1;
+    lbl_806D121C_p2 = 0;
+    lbl_806CF0E4_p2 = 5;
+    lbl_806D1218 = 0;
+    lbl_806D123C = 0;
+    Sci2Card_Singleton_Get_p2();
+    if (lbl_806CF0EC == 0 || lbl_806CF0EC == 3) {
+        if (header == 1) {
+            CardSM_ReceiptBuildLine(-3);
+        } else {
+            CardSM_ReceiptBuildLine(0);
+        }
+    } else {
+        lbl_806D1218 = lbl_806CF0EC == 2 ? 9 : 2;
+        if (CardSM_ReceiptAdvance() == 1) {
+            return 1;
+        }
+    }
+    return 1;
+}
+
+static inline unsigned char CardSM_ReceiptPoll(void)
+{
+    void *card;
+    unsigned char status1;
+    unsigned char status2;
+    unsigned char status3;
+
+    if (!ServiceLatch_CheckTriggered_p2()) {
+        lbl_806D1210_p2 = 1;
+        return 1;
+    }
+    if (lbl_806D1210_p2 != 0) {
+        return 1;
+    }
+    card = Sci2Card_Singleton_Get_p2();
+    Sci2Card_GetResponseStatus_p2(Sci2Card_Singleton_Get_p2(), &status1, &status2, &status3);
+    if (Sci2Card_IsIdleOrExhausted_p2(card) == 1) {
+        if (!Sci2Card_IsStatusOkNonTerm_p2(card)) {
+            Sci2Card_SetFailCode_p2();
+            return 1;
+        }
+        if (Sci2Card_IsStatus3Zero(card) == 1) {
+            if (CardSM_ReceiptAdvance() == 1) {
+                lbl_806D122A_p2 = 0;
+                lbl_806D1210_p2 = 1;
+                lbl_806D122B_p2 = 0;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+static inline void CardSM_Snapshot(void)
+{
+    lbl_80598A60_p14.captured_p14 = 1;
+    lbl_80598A60_p14.player_p14 = g_playerData_p14;
+    card_backup_p14();
+}
+
+static inline void CardSM_WriteStart(void)
+{
+    lbl_806D1210_p2 = 0;
+    lbl_806D122A_p2 = 1;
+    lbl_806D121C_p2 = 0;
+    lbl_806CF0E4_p2 = 5;
+    if (!ServiceLatch_CheckTriggered_p2()) {
+        lbl_806D1210_p2 = 1;
+        return;
+    }
+    card_pack_p2(g_playerData_p2, lbl_805AC55C_p2, 1);
+    lbl_806D121C_p2 = card_send_track_data_p2(Sci2Card_Singleton_Get_p2(), lbl_805AC55C_p2, 0x45, 0);
+}
+
+static inline unsigned char CardSM_WritePoll(void)
+{
+    void *card;
+
+    if (!ServiceLatch_CheckTriggered_p2()) {
+        lbl_806D1210_p2 = 1;
+        return 1;
+    }
+    if (lbl_806D1210_p2 != 0) {
+        return 1;
+    }
+    card = Sci2Card_Singleton_Get_p2();
+    if (lbl_806D121C_p2 == 0) {
+        lbl_806D121C_p2 = card_send_track_data_p2(card, lbl_805AC55C_p2, 0x45, 0);
+        return 0;
+    }
+    if (Sci2Card_IsIdleOrExhausted_p2(card) == 1) {
+        if (!Sci2Card_IsStatusOkNonTerm_p2(card)) {
+            Sci2Card_SetFailCode_p2();
+            return 1;
+        }
+        lbl_806D122A_p2 = 0;
+        lbl_806D1210_p2 = 1;
+        lbl_806D122B_p2 = 0;
+        return 1;
+    }
+    return 0;
+}
+
+/* states 0..3 of both write machines; returns -1 to fall into the next state */
+static inline int CardSM_WriteAndPrint(int doneState)
+{
+    switch (lbl_806D1220_p2) {
+    case 0:
+        CardSM_WriteStart();
+        lbl_806CF0D0_p2 = 0;
+        lbl_806D1220_p2++;
+        /* fall through */
+    case 1:
+        if (CardSM_WritePoll() != 1) {
+            return 0;
+        }
+        if (lbl_806D1210_p2 != 1) {
+            return 1;
+        }
+        lbl_806CF0D0_p2 = 1;
+        lbl_806D1220_p2++;
+        /* fall through */
+    case 2:
+        CardSM_ReceiptStart(lbl_806CF0E8_p2, lbl_806CF0D4_p2 != 1, 0);
+        lbl_806D1220_p2++;
+        /* fall through */
+    case 3:
+        if (CardSM_ReceiptPoll() != 1) {
+            return 0;
+        }
+        if (lbl_806D1210_p2 != 1) {
+            return 1;
+        }
+        {
+            int *count = (int *)((char *)&lbl_80598A60_p14 + 0x26c);
+            *count = *count + 1;
+            if (*count > 200) {
+                *count = 200;
+            }
+        }
+        Backup_PublishShadowCopy_Inline();
+        if (lbl_806D1225 == 1) {
+            g_playerData_p14.byte1A0_p14 = 0;
+            g_playerData_p14.byte199_p14 = 0;
+            g_playerData_p14.byte198_p14 = 50;
+            CardSM_Snapshot();
+        }
+        return doneState;
+    }
+    return -2;
+}
+
+unsigned char card_rw_state_machine_short(void)
+{
+    int r;
+
+    if (!ServiceLatch_CheckTriggered_p2()) {
+        lbl_806D1210_p2 = 1;
+        return 1;
+    }
+    if (lbl_806D1210_p2 != 0) {
+        return 1;
+    }
+    r = CardSM_WriteAndPrint(-1);
+    if (r == -2) {
+        return 1; /* state out of range */
+    }
+    if (r != -1) {
+        return r;
+    }
+    lbl_806CF0E8_p2 = 3;
+    lbl_806CF0D0_p2 = 5;
+    lbl_806D1220_p2++;
+    return 1;
+}
+
+unsigned char card_rw_state_machine(void)
+{
+    int r;
+
+    if (!ServiceLatch_CheckTriggered_p2()) {
+        lbl_806D1210_p2 = 1;
+        return 1;
+    }
+    if (lbl_806D1210_p2 != 0) {
+        return 1;
+    }
+    switch (lbl_806D1220_p2) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+        r = CardSM_WriteAndPrint(-1);
+        if (r != -1) {
+            return r;
+        }
+        lbl_806CF0D0_p2 = 2;
+        lbl_806D1220_p2++;
+        /* fall through */
+    case 4:
+        lbl_806D1210_p2 = 0;
+        lbl_806D122A_p2 = 1;
+        lbl_806D121C_p2 = 0;
+        lbl_806CF0E4_p2 = 5;
+        if (!ServiceLatch_CheckTriggered_p2()) {
+            lbl_806D1210_p2 = 1;
+        } else {
+            lbl_806D1227_p2 = 0;
+            lbl_806D121C_p2 = card_eject_p2(Sci2Card_Singleton_Get_p2());
+            lbl_806CF0D4_p2 = 0;
+        }
+        lbl_806CF0D8_p2 = 1;
+        lbl_806D1220_p2++;
+        /* fall through */
+    case 5:
+        if (Eject_IsPending_p2() == 1) {
+            lbl_806CF0D0_p2 = 3;
+        }
+        if (card_eject_state_machine_p2() == 1) {
+            if (lbl_806D1210_p2 != 0 && lbl_806D1210_p2 != 1) {
+                lbl_806D1220_p2--;
+                return 0;
+            }
+            lbl_806CF0E8_p2 = 3;
+            lbl_806CF0D0_p2 = 5;
+            lbl_806CF0D8_p2 = 2;
+            return 1;
+        }
+        break;
+    default:
+        return 1;
+    }
+    return 0;
+}
+
+unsigned char card_read_state_machine(void)
+{
+    void *card;
+
+    if (!ServiceLatch_CheckTriggered_p2()) {
+        lbl_806D1210_p2 = 1;
+        return 1;
+    }
+    if (lbl_806D1210_p2 != 0) {
+        return 1;
+    }
+    card = Sci2Card_Singleton_Get_p2();
+    if (lbl_806D121C_p2 == 0) {
+        lbl_806D121C_p2 = Sci2Card_SendCmdOptions_p5(card, 1, 0);
+        return 0;
+    }
+    if (Sci2Card_IsIdleOrExhausted_p2(card) == 1) {
+        if (!Sci2Card_IsStatusOkNonTerm_p2(card)) {
+            Sci2Card_SetFailCode_p2();
+            return 1;
+        }
+        if (Sci2Card_IsStatusOkNonTerm_p2(card) == 1) {
+            lbl_806D1224 = 1;
+            memset_p0(lbl_805AC55C_p2, 0, 0x45);
+            Sci2Card_GetResponsePayload(card, lbl_805AC55C_p2);
+            if (fn_801D4FF4(&g_playerData_p14, lbl_805AC55C_p2, 1) == 1) {
+                lbl_805D275C = g_playerData_p14;
+                if ((signed char)g_playerData_p14.byte198_p14 > 0 && g_playerData_p14.byte199_p14 == 0) {
+                    lbl_806D1214_p15 = 2;
+                    lbl_806D122A_p2 = 0;
+                    lbl_806D1210_p2 = 1;
+                    lbl_806D122B_p2 = 0;
+                    CardSM_Snapshot();
+                } else {
+                    lbl_806D122A_p2 = 0;
+                    lbl_806D1210_p2 = 3;
+                    lbl_806D122B_p2 = 0;
+                    if (g_playerData_p14.byte199_p14 == 1) {
+                        g_playerData_p14.byte198_p14 = 0;
+                        lbl_806D1214_p15 = 6;
+                    } else {
+                        lbl_806D1214_p15 = 5;
+                        CardSM_Snapshot();
+                    }
+                }
+            } else {
+                PlayerData_ResetForFlow();
+                lbl_806D122A_p2 = 0;
+                lbl_806D1210_p2 = 4;
+                lbl_806D122B_p2 = 0;
+            }
+            return 1;
+        }
+        Sci2Card_SendCmdOptions_p5(card, 1, 0);
+    }
+    return 0;
+}
+}
+#pragma cplusplus reset
+#endif
