@@ -24,6 +24,11 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 03:35Z (n3 technique): regalloc_patterns §87: a local vector
+  loaded twice in one block (instruction count 3 short). No spelling of `d[i]`
+  keeps the loads apart; an access through the neighbouring object
+  (`&mtx[-3]`) does, volatile gives wrong registers. Plus literal doubles in
+  the sqrt inline (KartItem_ApplyImpactImpulseAndRumble asm -> C).
 - 2026-11-10 03:15Z (n3 structure, SETUP CHANGE, naari3's decision "for now"):
   seven TUs now compile against the genuine Metrowerks MSL C++ headers
   (`MslObject(...)` in configure.py, +11 functions). The headers stay out of

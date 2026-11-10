@@ -2315,3 +2315,37 @@ with `tools/mwtrace.py --only COLOR,PCODE`:
   the `clrlwi` is a backend temp, coloured before every frontend temp (it took
   r3). Declared first at inline scope and written `idx = cmd & 0xFF;` it stays
   a variable with the lowest number, is coloured last and reuses `d`'s r4.
+
+## 87. A local vector loaded twice in one block: MWCC only keeps two load sets when one access goes through another object (KartItem_ApplyImpactImpulseAndRumble, asm -> C, 92.4 -> 100, 11-10)
+
+Target: the dot product `row . d` loads `d` (f1, f0, f2, multiplied in place),
+and `r = d * len` / `d += w` load `d` again (f13, f11, f9), with no store in
+between. In C every spelling of `d[i]` is merged into one load set (351
+instead of 354 instructions): pointer locals, struct casts, integer casts,
+putting w/r/d/mtx in one struct, named scalar copies, a different statement
+order, stores through an unknown pointer (locals are never killed by those).
+What keeps the loads apart:
+
+- `volatile float *pd = d;` gives the count but the wrong registers and
+  schedule (products not in place), a dead end;
+- an access through a neighbouring object: `float *pd = &mtx[-3];` (d sits
+  right below mtx on the stack). The instruction selection is then the natural
+  one and only the statement order was left: r, rumble store, row copy into w,
+  dot (row through `q = &mtx[8]`), k, `w *= k`, `d += w`.
+
+Marked fakematch; the original is probably a C++ Vec3/matrix-row expression we
+cannot spell in this C TU. Other levers of the same function:
+
+- `x - q[12]` etc. through a value-parameter inline
+  (`KI_sub3(out, x, y, z, q)`) followed by a pointer length inline: the
+  differences are coloured before the 16 unrolled matrix copy temps (250 ->
+  164 lines). Written in the body they come last (f11-f13).
+- sqrt inline with LITERAL `0.5` / `3.0` instead of the extern doubles: sum
+  f4, constants f3/f2 as in the target (§83 lever 1 for doubles, 164 -> 76).
+- `bne; b` after the 64-bit flag test = the shared `ItemBus_TestFlags(...) == 1`
+  inline (result variable with if/else), not an open-coded test.
+- three stores to `self->movement->...` with one pointer load: take
+  `float *rp = &self->movement->rumbleX310;` first.
+
+Sign: instruction count 3 short in a vector block and the target has two
+`lfs` runs from the same stack slots.
