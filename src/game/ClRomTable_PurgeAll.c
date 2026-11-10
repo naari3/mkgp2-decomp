@@ -14,47 +14,32 @@ extern ClRomEntry lbl_80598678[40];
 extern int strcmp(const char *a, const char *b);
 extern void clRom_DtorForce(void *rom, int flag);
 
-static inline ClRomEntry *ClRomTable_FindByPath(ClRomEntry *table, const char *path)
-{
-    ClRomEntry *entry = table;
-    int i;
-
-    for (i = 0; i < 40; i++, entry++) {
-        if (entry->path != 0 && strcmp(entry->path, path) == 0) {
-            return &lbl_80598678[i];
-        }
-    }
-    return 0;
-}
-
+#pragma cplusplus on
 #pragma exceptions on
 
-#pragma opt_propagation off
-/* fakematch (trace, regalloc_patterns 72): the natural code is
- *     ClRomEntry *table = lbl_80598678; int count = 0;
- *     for (i = 0; i < 40; i++) if (table[i].path != 0) { found = Find(table, table[i].path); ... }
- * The target colours walker, path, table in that order and gives `table`
- * the direct addi (`mr walker,table`), which needs all three to be split-off
- * lifetime ranges (declaration order = colour order). The chain of zero
- * dummies costs no instructions. */
-int ClRomTable_PurgeAll(void)
+static inline void ClRomTable_PurgeEntries(int &count, int &i)
 {
-    ClRomEntry *e;
-    const char *path;
     ClRomEntry *table;
+    const char *path;
+    ClRomEntry *e;
+    ClRomEntry *entry;
+    int j;
     ClRomEntry *found;
-    int count;
-    int i;
 
-    e = 0;
-    path = (const char *)e;
-    table = (ClRomEntry *)path;
-    count = (int)table;
     table = lbl_80598678;
+    count = 0;
     for (i = 0, e = table; i < 40; i++, e++) {
         path = e->path;
         if (path != 0) {
-            found = ClRomTable_FindByPath(table, path);
+            entry = table;
+            for (j = 0; j < 40; j++, entry++) {
+                if (entry->path != 0 && strcmp(entry->path, path) == 0) {
+                    found = &lbl_80598678[j];
+                    goto found_entry;
+                }
+            }
+            found = 0;
+found_entry:
             if (found != 0) {
                 clRom_DtorForce(found->rom, 1);
                 found->rom = 0;
@@ -63,7 +48,14 @@ int ClRomTable_PurgeAll(void)
             count++;
         }
     }
+}
+
+extern "C" int ClRomTable_PurgeAll(void)
+{
+    int count;
+    int i;
+    ClRomTable_PurgeEntries(count, i);
     return count;
 }
-#pragma opt_propagation reset
 #pragma exceptions reset
+#pragma cplusplus reset
