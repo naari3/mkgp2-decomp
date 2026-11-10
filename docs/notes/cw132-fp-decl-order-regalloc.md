@@ -538,3 +538,8 @@ c26_u8 PhysicsStep 97.84962 -> 99.48855. Integration schedule recovered by snaps
 Source: Codex worker c26_u48_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c26_u48: KartPhysics_ApplyCollisionForce 801EDFEC 98.64286 ->98.70982 using regalloc_patterns 91 lever 3. apply_push reads owner push.z/y/x into separately declared dx/dy/dz instead of caller scalar arguments/vector_x getter. Scaled X/Z result exchange fixed, initial push residual now X/Y plus z/y load order. Extern const 0.009 gain invariant98.64286; collision_angle inline float local regresses98.55357. 896B/EH24/index12 unchanged; EH100. Singleton remains NM; B unavailable. Coordinator full build SHA1ea30f3b1cd90b133ce9affa3ffe3bb26408e7e65 OK, source_inputfalse, zero native gain.
+
+## c26_u60_20261110
+Source: Codex worker c26_u60_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c26_u60 fn_8019ADF4: GC/2.7 baseline96.04908 ->96.073616/652B by caller-owned volatile Newton-result slots declared initialRoot,impulseRoot,normalRoot and passed to a TU-private root macro. Repairs all four root slot rows (normal8, impulseC); projection instruction text unchanged. Named dot partial sum invariant; literal0.001f projection96.0184 regresses. No flag/range changes; full service DOL SHA1ea30f3b1 exact; native gain0. Remaining projection graph/load order needs fresh compiler evidence, not slot permutations.
