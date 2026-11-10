@@ -2636,3 +2636,52 @@ reports a match for the last block: make the function return a value that the
 last block already holds in r3 through a named multi-def local. Rule
 `return-copy-reschedules-last-block`.
 
+
+## 97. Ordering several block values at once: outer inline parameter > nested inline locals > CSE temps > named locals (AI_CalcLapSpeedBonus, 99.88 -> 100, 11-10)
+
+Symptom: a short block computes three or four values (an index copy that is
+wrapped, two offsets, a table base) and they get the right instructions in the
+wrong volatile registers. mwtrace shows the numbering: named locals lowest, then
+SplitOffRange and CSE temps (with `opt_dead_assignments off` every propagated
+initialiser becomes a CSE temp), then inline temps, where an EARLIER created
+temp has the HIGHER number and is coloured first.
+
+Levers, all read off `python3 tools/mwtrace.py UNIT FN` (`VREG` lines and
+`PCODE pre`):
+
+- A value that must be coloured first: make it a parameter that the inline
+  modifies (`if (section >= 4) section -= 4;`). Moving the statement up instead
+  changes the block shape (the `if` is emitted before the other values).
+- To get it numbered above other inline temps without moving its statement,
+  make it the parameter of an OUTER inline and compute the other values through
+  NESTED inlines called inside it; the outer argument temp is created first.
+- A single-use value survives as an inline temp only as a local of the nested
+  inline (`int o = ...; return o;`). A plain `return expr;` getter is propagated
+  and the value falls back to a CSE or backend temp.
+- A value that must stay lowest (here `g_ccClass * 128`) stays a local of the
+  outer inline; CSE replaces it with a temp below every inline temp.
+- A caller local that must be assigned late (its `extsb` belongs after the
+  branch join) can be written through a pointer parameter at the right place in
+  the inline; pass the inline call directly as the argument so that its result
+  stays a parameter temp (a named `rules` local swapped two more registers).
+
+```c
+static inline int CupOffset(int cup) { int offset = (cup - 1) * 16; return offset; }
+static inline const char *Table(void) { const char *table = (const char *)kTable; return table; }
+static inline const Rule *Rules(int section, int cup, signed char *cc) {
+    int courseOffset; const char *courseBase; int ccOffset;
+    courseOffset = CupOffset(cup);
+    ccOffset = g_ccClass * 128;
+    courseBase = Table();
+    courseOffset = ccOffset + courseOffset;
+    if (section >= 4) section -= 4;
+    *cc = g_ccClass;
+    return *(const Rule *const *)(courseBase + courseOffset + section * 4);
+}
+...
+signed char cc;
+FindBonus(cc, Rules(round, cup, &cc), ...);
+```
+
+Blind sweeps did not find this (24 declaration orders, 24 parameter orders, 40
+statement orders); each step came from reading which value had which vreg.
