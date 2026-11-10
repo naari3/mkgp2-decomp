@@ -1,1 +1,0 @@
-11-08 07:55 mid: regalloc_patterns pass: dir z/y/x loads, in-loop products, ctor(InputVec*), pointer walker, int i: no gain (127-306). msweep decl order -> 117 lines (SpawnDebris_cpp_draft_117.diff). Leftover: GPR param coloring (target position r30 reused for debris walker, new result r31 then i) and FPR f14-f18 order.
