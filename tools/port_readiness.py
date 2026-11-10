@@ -84,7 +84,24 @@ def data_numbers(syms, ranges):
         else: k = 'in_tu'
         res[sec][k] += size
     tot = {k: sum(r[k] for r in res.values()) for k in ('no_c', 'unk', 'typed', 'in_tu')}
-    return {'sections': res, 'total': tot}
+    return {'sections': res, 'total': tot, 'raw_word_arrays': raw_word_arrays()}
+
+
+RAWARR = re.compile(r'^(?:static |const |volatile )*(unsigned int|u32|unsigned long|uint|undefined4)\s+(\w+)\[(\d*)\]'
+                    r'\s*(?:ATTRIBUTE_ALIGN\(\d+\)|__attribute__\(\(aligned\(\d+\)\)\))?\s*=\s*\{(.*?)\};', re.M | re.S)
+
+
+def raw_word_arrays():
+    """Initialised `unsigned int x[] = {...}` of 64 bytes or more in normal TUs: word dumps whose
+    real element type (floats, shorts, records) is not written down yet."""
+    files = subprocess.run(['git', 'ls-files', '--', 'src/game'], cwd=ROOT, capture_output=True, text=True).stdout.split('\n')
+    n = size = 0
+    for f in files:
+        if not f.endswith(('.c', '.cpp', '.cp')) or f.startswith('src/game/autodata/'): continue
+        for m in RAWARR.finditer(read(f)):
+            b = 4 * (int(m.group(3)) if m.group(3) else m.group(4).count(',') + 1)
+            if b >= 64: n += 1; size += b
+    return {'objects': n, 'bytes': size}
 
 
 def type_numbers():
@@ -145,11 +162,13 @@ def pct(a, b):
 
 def rows(d):
     t = d['data']['total']
-    all_data = sum(t.values())
+    all_data = sum(t[k] for k in ('no_c', 'unk', 'typed', 'in_tu'))
     ty, sy, a = d['types'], d['symbols'], d['asm']
     out = [
         ('Initialised data defined in the TU that uses it', '%s / %s bytes' % (f'{t["in_tu"]:,}', f'{all_data:,}'),
          pct(t['in_tu'], all_data), 'element types there are not audited yet'),
+        ('  of that, still a plain unsigned int array (64 bytes or more)', f'{d["data"]["raw_word_arrays"]["bytes"]:,} bytes',
+         pct(d['data']['raw_word_arrays']['bytes'], all_data), '%d objects; word dumps inside normal TUs' % d['data']['raw_word_arrays']['objects']),
         ('Initialised data in data-only TUs with a real type', f'{t["typed"]:,} bytes', pct(t['typed'], all_data), 'src/game/autodata'),
         ('Initialised data in data-only TUs, layout unknown (unk)', f'{t["unk"]:,} bytes', pct(t['unk'], all_data), 'to do: give it a type'),
         ('Initialised data with no C definition', f'{t["no_c"]:,} bytes', pct(t['no_c'], all_data), 'compiler jump tables once this is small'),
