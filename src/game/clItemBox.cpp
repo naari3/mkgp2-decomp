@@ -1,3 +1,4 @@
+#include "game/types/pmf.h"
 /* --- owned .rodata 0x802EDF20..0x802EDFD8 (tools/own_data.py) --- */
 #include "game/types/size_t.h"
 #pragma force_active on
@@ -36,7 +37,7 @@ struct clItemBox {
     int Debris();
     int Idle();
 };
-typedef int (clItemBox::*clItemBoxStep)();
+PMF_TYPE(clItemBoxStep, clItemBox, int, ());
 
 extern "C" clItemBoxStep clItemBox_data_803F9CA8[4];
 
@@ -212,7 +213,7 @@ typedef char GroundItemBoxSize[(sizeof(GroundItemBox) == 0x34) ? 1 : -1];
 
 GroundItemBox::GroundItemBox(float x, float z)
     : height(lbl_806D29A8), debris(0), position(x, lbl_806D29A8, z),
-      timer(lbl_806D29A8), step(&clItemBox::PopOut)
+      timer(lbl_806D29A8), step(PMF_OF(&clItemBox::PopOut))
 {
     motion.flag = 0;
     if (!Terrain_GetGroundHeight(&position, &position.y, 0, 0)) DebugPrintf(clItemBox_Ctor_GroundSnap_rodata_802EDF20);
@@ -268,7 +269,7 @@ struct ItemBoxXYZ {
 
 ItemBoxXYZ::ItemBoxXYZ(float x, float y, float z)
     : height(lbl_806D29A8), debris(0), position(x, y, z),
-      spin(lbl_806D29A8), step(&clItemBox::PopOut), state(0),
+      spin(lbl_806D29A8), step(PMF_OF(&clItemBox::PopOut)), state(0),
       velocity(lbl_806D29A8, lbl_806D29A8, lbl_806D29A8)
 {
     state = 0;
@@ -329,7 +330,7 @@ struct clItemBoxT {
 
 extern "C" int clItemBox_Tick(clItemBoxT *self)
 {
-    self->state = (((clItemBox *)self)->*self->step)();
+    self->state = PMF_CALL((clItemBox *)self, self->step)();
     self->step = clItemBox_data_803F9CA8[self->state];
     if (self->state == 1 || self->state == 0 || self->state == 3) {
         return 1;
@@ -496,9 +497,9 @@ void clItemBox_TransitionToDebris(clItemBox *self, float hx, float hy, float hz)
 }
 extern "C" {
 clItemBoxStep clItemBox_data_803F9CA8[4] = {
-    &clItemBox::PopOut,
-    &clItemBox::Bobbing,
-    &clItemBox::Debris,
-    &clItemBox::Idle,
+    PMF_OF(&clItemBox::PopOut),
+    PMF_OF(&clItemBox::Bobbing),
+    PMF_OF(&clItemBox::Debris),
+    PMF_OF(&clItemBox::Idle),
 };
 }

@@ -1,3 +1,4 @@
+#include "game/types/pmf.h"
 /*
  * 0x80226954..0x80227FA4: clDNBress (dnBress.cpp), the ice dinosaur's breath
  * on Dino Dino Jungle. When a kart comes close, the dinosaur animation plays,
@@ -37,8 +38,8 @@ struct HSD_JObj {
 #include "game/types/clMapEffectParts.h"
 
 struct clDNBress;
-typedef void (clDNBress::*SpawnFn)();
-typedef void (clDNBress::*UpdFn)(Particle *p);
+PMF_TYPE(SpawnFn, clDNBress, void, ());
+PMF_TYPE(UpdFn, clDNBress, void, (Particle *p));
 
 struct FireFuncs {
     SpawnFn spawn;
@@ -227,7 +228,7 @@ void clDNBress::Tick() {
         if (!parts[i].active) {
             freeSlot = &parts[i];
         } else {
-            (this->*upd)(&parts[i]);
+            PMF_CALL(this, upd)(&parts[i]);
             if (parts[i].alpha <= lbl_806DB400) {
                 parts[i].active = 0;
             }

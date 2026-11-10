@@ -116,6 +116,41 @@ generated wrappers themselves.
   arguments the definition does not read; harmless where the caller cleans
   the stack.
 
+## Pointers to member functions (item 14)
+
+MWCC's pointer to member function is 12 bytes, `{ long thisDelta; long
+vtableOffset; union { void *func; long vptrOffset; }; }`, with
+`vtableOffset == -1` for a non-virtual function and all zero for null
+(`src/Runtime.PPCEABI.H/ptmf.c`). Clang and GCC use 8 bytes with another
+meaning. The game's tables are hand-written in MWCC's layout
+(`void *x[3] = { 0, (void *)-1, fn }` in `src/game/autodata`) and read
+through real pointer-to-member types, and the objects holding one are laid
+out for 12 bytes.
+
+`include/game/types/pmf.h` gives four macros that are the plain C++ forms
+under MWCC and keep the 12-byte layout elsewhere:
+
+| macro | MWCC | elsewhere |
+|---|---|---|
+| `PMF_TYPE(Name, Class, Ret, Args);` | `typedef Ret (Class::*Name) Args;` | `typedef PortPmf<Ret (Class::*) Args> Name;` (12-byte struct) |
+| `PMF_CALL(obj, pmf)(args)` | `((obj)->*(pmf))(args)` | adds `thisDelta`, takes `func` or the vtable entry at `*(this + vptrOffset) + vtableOffset`, calls it with `this` first |
+| `PMF_OF(&Class::Method)` | the constant | built at run time from the host's `{ ptr, adj }` (Itanium ABI; a virtual function gets `vptrOffset` 0) |
+| `PMF_IS_SET(pmf)` | `(pmf)` | any of the three words non-zero |
+
+All 12 typedefs (24 with the per-unit copies in the `DNBress_*` units), the
+two in-struct declarations (`ItemEffectMgr::poll`,
+`CardTaskPrintJob::is_running`), the 10 call sites and the constants in
+`clItemBox.cpp` and `fn_801F27B4.cpp` use them. Write new ones the same way;
+`grep -rnE '::\s*\*|->\*' src/game include/game` should only find
+`include/game/types/pmf.h`.
+
+Limits of the non-MWCC side: up to three arguments; the object pointer is
+reinterpreted rather than converted (the game calls through view structs
+unrelated to the class named in the type), which is right for the single
+inheritance the game uses; the call assumes member functions take `this` as
+an ordinary first argument (true for Itanium-ABI targets, not for 32-bit
+MSVC `thiscall`).
+
 ## Bit-field order (item 12)
 
 MWCC for PowerPC allocates bit-fields from the most significant bit, x86
