@@ -1341,6 +1341,53 @@ def gen_narrowcast(fx):
     return fx.scoped(f)
 
 
+_S3T = r'(?:(?:\d\w*|[A-Za-z_][\w.]*(?:->[\w.]+)*(?:\[[^\[\]+]*\])*)(?:\s*(?:\*|<<)\s*(?:\d\w*|[A-Za-z_][\w.]*))?|\([^()+]*\)\s*\*\s*\d\w*)'
+_S3PRE = r'(?:(?<=[=(,\[{;?:<>!&|])|(?<=return))\s*'
+_S3POST = r'\s*(?=[;),\]?:<>=!&|])'
+SUM3_RES = [
+    re.compile(_S3PRE + r'(?P<a>%s)\s*\+\s*(?P<b>%s)\s*\+\s*(?P<c>%s)' % (_S3T, _S3T, _S3T) + _S3POST),
+    re.compile(_S3PRE + r'(?P<a>%s)\s*\+\s*\(\s*(?P<b>%s)\s*\+\s*(?P<c>%s)\s*\)' % (_S3T, _S3T, _S3T) + _S3POST),
+    re.compile(_S3PRE + r'\(\s*(?P<a>%s)\s*\+\s*(?P<b>%s)\s*\)\s*\+\s*(?P<c>%s)' % (_S3T, _S3T, _S3T) + _S3POST),
+]
+
+
+@lever('sum3-regroup', 'three-term-sum-grouping', 'auto', '3bf2c6a',
+       'a three-term sum `a + b + c` (index or offset) in all 12 orders/groupings: the frontend rotates the add '
+       'tree, so the emitted grouping is not the written one (regalloc_patterns 84, CalcEarnedCoins)')
+def gen_sum3(fx):
+    def f(body):
+        sites, seen = [], set()
+        for rx in SUM3_RES:
+            for m in rx.finditer(body):
+                a0 = m.start('a') if rx is not SUM3_RES[2] else body.rfind('(', 0, m.start('a') + 1)
+                a0 = min(a0, m.start('a')) if rx is SUM3_RES[2] else a0
+                e = m.end()
+                while e > 0 and body[e - 1].isspace():
+                    e -= 1
+                if any(a0 < s1 and s0 < e for s0, s1 in seen):
+                    continue
+                terms = [m.group('a').strip(), m.group('b').strip(), m.group('c').strip()]
+                if len(set(terms)) < 3 or all(re.fullmatch(r'\d\w*', t) for t in terms[1:]):
+                    continue
+                seen.add((a0, e))
+                sites.append((a0, e, terms))
+        if not sites or len(sites) > 6:
+            return []
+        res = []
+        for k, (s0, s1, t) in enumerate(sites):
+            cur = re.sub(r'\s+', '', body[s0:s1])
+            for o in range(3):
+                x = t[o]
+                y, z = [t[i] for i in range(3) if i != o]
+                for p, q in ((y, z), (z, y)):
+                    for form in (f'({p} + {q}) + {x}', f'{x} + ({p} + {q})'):
+                        if re.sub(r'\s+', '', form) == cur:
+                            continue
+                        res.append((f'sum {k} as `{form}`', body[:s0] + form + body[s1:]))
+        return res
+    return fx.scoped(f)
+
+
 # --------------------------------------------------------------------------
 # runner
 
