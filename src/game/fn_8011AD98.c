@@ -15,6 +15,9 @@ extern void ItemHit_Dispatch(void *self, int a, void *pos, void *target);
 extern unsigned char *DrawEffect_SpawnDirect(void *fn);
 extern void Effect_ExplosionPiece_Update(void);
 extern float Rand_RangeFloat(float lo, float hi);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, Vec3 *pos, int flag);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *obj);
 extern void Item_DecayVelocityScalar(void *self, float k);

@@ -1,3 +1,4 @@
+#include "game/types/reg_args.h"
 #include "game/AIFramePairPrivate.h"
 static inline FramePairRecord *FramePairs() {
     return reinterpret_cast<FramePairRecord *>(lbl_806793D8);
@@ -151,7 +152,7 @@ extern "C" void AI_UpdatePerFrameState(AIFrameOwner *self) {
     int mode=fn_801DCCE4();
     if (mode >= 0) {
         int count=0;
-        float radius=fn_801DCCBC();
+        float radius=fn_801DCCBC(REG_ARGS1(mode)); /* r3 still holds mode */
         float radius2=radius*radius;
         int state[8];
         for (int i=0;i<8;++i) {

@@ -42,6 +42,9 @@ extern float *KartDriver_GetJointByIdx(void *kart, int idx);
 extern float *KartDriver_GetKartRootMtx(void *kart);
 extern void Mtx44_GetTranslation_RowMajor(float *out, float *mtx);
 extern int SoundMgr_CountActiveSEInstances(int se);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, float *pos, int ch);
 extern void SoundMgr_PlaySE_WithChannel(int se, float *pos, int ch);
 extern void SoundMgr_StopSE_OrSpecial(int se, int ch);

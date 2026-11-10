@@ -17,6 +17,9 @@ extern void fn_801B158C(void *driver, void *target);
 extern void ItemHit_Dispatch(void *self, int a, void *pos, void *b);
 extern char *DrawEffect_SpawnDirect(void *fn);
 extern void TwinSpriteOverlay_Update(void);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, float *pos, int flag);
 extern void Item_ComputeYawRelativeApproach(float *vel, void *target, float *pos, float *outVel);
 extern float Vec3_ToYaw(float *v);

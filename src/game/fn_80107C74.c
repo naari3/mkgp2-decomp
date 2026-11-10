@@ -12,6 +12,9 @@ extern unsigned char ItemHitRegistry_RemoveEntry(unsigned char *self, int id, in
 extern void Vec3_Scale(void *dst, void *src, float k);
 extern void *KartDriver_GetKartRootMtx(void *kart);
 extern void Mtx44_GetTranslation_RowMajor(void *dst, void *mtx);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, Vec3 *pos, int flag);
 extern void Vec3_Subtract_DestFirst(void *dst, void *a, void *b);
 extern void Vec3_Add_DestFirst(void *dst, void *a, void *b);

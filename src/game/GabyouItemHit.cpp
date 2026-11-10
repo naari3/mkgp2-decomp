@@ -35,6 +35,9 @@ void GetSpawnPosition(GabyouHitVec *, float, float, float);
 void Vec2_RotateX(GabyouHitVec *, const GabyouHitVec *, float);
 void Vec2_RotateY(GabyouHitVec *, const GabyouHitVec *, float);
 float Rand_RangeFloat(float, float);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 void SoundMgr_PlaySE_Positional(int, const GabyouHitVec *, int);
 int KartItem_QueryEffectStateFromIse(void *);
 void ItemHit_Dispatch(GabyouHitItem *, signed char, const GabyouHitVec *, void *);

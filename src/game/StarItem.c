@@ -310,6 +310,9 @@ extern void Item_SpawnHitBurstParticles();
 extern void JointByName_GetWorldPosition();
 void *KartDriver_GetJointByIdx();
 extern void Mtx44_GetTranslation_RowMajor();
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional();
 extern void SpriteSlot_SetAnimFrameAndApplyScale();
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed();

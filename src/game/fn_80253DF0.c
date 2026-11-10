@@ -4,6 +4,6 @@ typedef struct Obj {
 
 extern void fn_80254360(int, int);
 
-void fn_80253DF0(void *p0, int p1) {
+void fn_80253DF0(void *p0) {
     fn_80254360(((Obj *)p0)->f_0, 15);
 }

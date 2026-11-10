@@ -141,7 +141,7 @@ void *GetRaceContextPtr(void);
 extern void HUD_FrameUpdate(void *hud);
 extern InputPlayer *InputMgr_GetPlayer(void *mgr, int index);
 extern unsigned char IsRaceStarted(void);
-extern void ItemObjectManager_PerFrameUpdate(void);
+extern void ItemObjectManager_PerFrameUpdate(void *);
 extern void ItemObjectManager_Update(void);
 extern float (*KartDriver_GetKartRootMtx(void *drv))[4];
 extern float KartItem_GetCurrentSpeedWithBonus(void *car);
@@ -725,8 +725,7 @@ extern "C" int SuikaBall_Update(SuikaBall *self)
         fn_80192688(0xd5, 1);
         self->bgmOn = 0;
     }
-    GetRaceContextPtr();
-    ItemObjectManager_PerFrameUpdate();
+    ItemObjectManager_PerFrameUpdate(GetRaceContextPtr());
     pad = InputMgr_GetPlayer(GetInputManager(), 0);
     if (g_raceEnded != 1 && self->state >= 0) {
         float accel;

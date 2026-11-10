@@ -17,7 +17,7 @@ void fn_801FD800(void *); void fn_801FD830(void *);
 unsigned char fn_801FD924(void *);
 void fn_8011F994(int); void fn_8013D940(int);
 void CGameCoin_ProcessInput(InputState *);
-void fn_801DABFC(); void fn_80232550(ItemMsgWnd *,int);
+void fn_801DABFC(void *); void fn_80232550(ItemMsgWnd *,int);
 void fn_8011F86C(); void fn_801DAE54(); void fn_8021A2B4();
 void ItemDisplay_Destroy(); void dtor_801FD958(void *,int);
 void MemoryManager_TimedFree(void *);

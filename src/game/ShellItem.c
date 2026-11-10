@@ -38,6 +38,9 @@ extern void *ItemObject_AllocGabyou(void);
 extern void ItemObject_DecrementCategoryBudget(void *self);
 extern void Item_PrepareHitRebound(void *self, float *pos, float *vel, int *timer);
 extern void ItemHit_Dispatch(void *self, int a, float *pos, void *target);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, float *pos, int flag);
 extern void Item_SpawnGroundExplosionAndFX(void *self);
 extern void Item_RenderFlyingFromKart(void *self, void *gabyou, int flag, float k1, float k2, float k3);

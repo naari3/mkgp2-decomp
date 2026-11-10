@@ -18,6 +18,6 @@ extern "C" void fn_80249130(HudMethodScene *self) {
             self->position=7;
         }
         fn_801FD830(&self->host);
-        fn_801DAEC0(); fn_801DABFC();
+        fn_801DABFC(fn_801DAEC0());
     }
 }

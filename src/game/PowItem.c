@@ -56,6 +56,9 @@ extern void Item_HomingScanAndSteer(void *self, float *yaw, int mode);
 extern void Item_InitLaunchFromKart(void *self, int mode, float a, float b);
 extern float Item_ProbeForwardGroundPitch(Vec3 *pos, float yaw, float a, float b);
 extern float Rand_RangeFloat(float lo, float hi);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int id, Vec3 *pos, int flag);
 extern void Vec2_RotateX(float *dst, float *src, float angle);
 extern void Vec2_RotateY(float *dst, float *src, float angle);

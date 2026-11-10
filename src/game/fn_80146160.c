@@ -5,6 +5,6 @@ typedef struct Obj {
 
 extern void fn_8013B4FC(int, int);
 
-void fn_80146160(void *p0, int p1) {
+void fn_80146160(void *p0) {
     fn_8013B4FC(((Obj *)p0)->f_18, 1);
 }

@@ -12,6 +12,9 @@ extern const FloatTriple ItemObject_TickHornBlastShockwave_rodata_8032E54C;
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int en);
 extern void SpriteSlot_Container_Free(void *self);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, Vec *pos, int ch);
 extern void SoundMgr_StopSE_OrSpecial(int se, int ch);
 extern void ItemObject_DecrementCategoryBudget(unsigned char *self);

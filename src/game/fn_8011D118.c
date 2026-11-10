@@ -13,6 +13,9 @@ extern double cos(double);
 extern float Vec3_HorizontalDistance(void *a, void *b);
 extern void Item_DecayVelocityScalar(void *self, float k);
 extern int SoundMgr_CountActiveSEInstances(int se);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, Vec3 *pos, int ch);
 extern void SoundMgr_PlaySE_WithChannel(int se, Vec3 *pos, int ch);
 extern void SoundMgr_StopSE_OrSpecial(int se, int ch);

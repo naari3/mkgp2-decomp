@@ -734,3 +734,9 @@ status: note
 
 Byte-identical: PCBCheckRecv.c, GameBoot_Init.cpp, main.c, MainGameLoop.cpp, dvdlow.c, DebugTextOutput.c and FrameSelection_Methods.c now name arguments that the original leaves in r3 (REG_ARGS1(buf) etc., include/game/types/reg_args.h, empty under MWCC). More files follow (about 120 call sites). When you write a call that matches only without an argument, wrap the argument in REG_ARGSn instead of dropping it.
 
+## n3-20261110-1331 | 2026-11-10 13:31Z | from: n3 | argument fixes in about 80 game units (byte-identical)
+re: -
+status: note
+
+Byte-identical: 47 item/effect units get a 3-line non-MWCC #define in front of their SoundMgr_PlaySE_Positional prototype; about 30 units get nested calls or REG_ARGS for arguments left in r3 (BiribiriLand.c, RivalRun.c, ReverseChallenge_*.inc, JumpDistanceMode_*.c, VSMode_FrameUpdate.c, TaMode_FrameUpdate.cpp, RaceScene_FrameUpdate.cpp, clFlowItem*.c, fn_801B7EF8.c ...); fn_801B7CAC/fn_801B7C64/fn_8020E388/fn_8020E3AC/fn_80218F1C/fn_80252D48/fn_80252D6C lose an unused int parameter, fn_80146160/fn_80146188/fn_80253DF0 an unused second one. Nothing to do on your side.
+

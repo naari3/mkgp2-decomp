@@ -11,6 +11,9 @@ extern void ItemHit_Dispatch(unsigned char *self, int a, void *pos, void *b);
 extern void Vec3_Copy(void *dst, void *src);
 extern void EffectVfx88_DustHelix_Tick(void);
 extern unsigned char *DrawEffect_SpawnDirect(void (*fn)(void));
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int id, Vec3 *pos, int a);
 extern void Item_DecayVelocityScalar(unsigned char *self, float k);
 extern const float lbl_806D6948;

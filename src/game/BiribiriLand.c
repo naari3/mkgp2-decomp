@@ -224,11 +224,11 @@ void ChallengeGoalCamera_Update(void *cam, void *scene, void *mtx);
 void CourseEnvironment_UpdateAndCullZones_Timed(void *env);
 void Fog_UpdateFromCourseScene3D(void);
 void *GetInputManager(void);
-void GetRaceContextPtr();
+void *GetRaceContextPtr();
 void HUD_FrameUpdate(void *hud);
 BiribiriInput *InputMgr_GetPlayer(void *mgr, int idx);
 unsigned char IsRaceStarted(void);
-void ItemObjectManager_PerFrameUpdate();
+void ItemObjectManager_PerFrameUpdate(void *);
 void ItemObjectManager_Update(void);
 BiribiriMtx *KartDriver_GetKartRootMtx(void *obj);
 void KartItem_CancelActiveEffect(void *car);
@@ -314,8 +314,7 @@ extern "C" int BiribiriLand_Update(BiribiriState *self)
     if (self->visible == 0) {
         self->visible = 1;
     }
-    GetRaceContextPtr();
-    ItemObjectManager_PerFrameUpdate();
+    ItemObjectManager_PerFrameUpdate(GetRaceContextPtr());
     input = InputMgr_GetPlayer(GetInputManager(), 0);
     if (g_raceEnded != 1) {
         float accelerator;
@@ -520,12 +519,12 @@ extern const char lbl_803580E0[] = "jyugemu_start.dat";
 /* refine if the real prototype matters for header consumers. */
 extern void ClRomTable_PurgeAll();
 extern void CourseEnvironment_Dtor(void *, int);
-extern void GetRaceContextPtr();
+extern void *GetRaceContextPtr();
 extern void ItemObjectManager_Reset();
 extern void LakituStart_Dtor(void *, int);
 extern void MemoryManager_TimedFree(void *);
 extern void Object_DtorWithGXSync(void *, int);
-extern void RankingTable_Init();
+extern void RankingTable_Init(void *);
 extern void SceneDrawList_Reset();
 extern void SetActiveCamera(int, void *);
 extern void SetPlayerCarObject(void *);
@@ -629,8 +628,7 @@ extern "C" void *BiribiriLand_Destroy(BiribiriState *self, short freeMemory)
         ItemObjectManager_Reset();
         VfxSlotMgr_Shutdown();
         ClRomTable_PurgeAll();
-        GetRaceContextPtr();
-        RankingTable_Init();
+        RankingTable_Init(GetRaceContextPtr());
         delete (BiribiriVirtual *)lbl_806D10D0;
         lbl_806D10D0 = 0;
         SceneDrawList_Reset();
@@ -824,8 +822,7 @@ BiribiriLand::BiribiriLand() {
     SetActiveCamera(0, camera);
     *(BLCamera **)&g_raceCamera = camera;
     ProcessSystemTick(0);
-    GetRaceContextPtr();
-    RankingTable_Init();
+    RankingTable_Init(GetRaceContextPtr());
     lbl_806D12BC = 0;
     SoundDriver_GetOrCreate(0);
     GetStartPosition(0, &pos.x, &pos.y, &pos.z);

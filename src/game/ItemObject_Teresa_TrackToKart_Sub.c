@@ -9,6 +9,9 @@ extern const char lbl_8032E630[];
 extern void GetSpawnPosition(Vec *out, float x, float y, float z);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float f);
 extern void SpriteSlot_SetScale(void *slot, float s);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, Vec *pos, int ch);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *driver);
 extern void JointByName_GetWorldPosition(Vec *out, void *slot, const char *name);

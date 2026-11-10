@@ -15,6 +15,9 @@ extern void ItemObject_DecrementCategoryBudget(unsigned char *self);
 extern void ItemObject_Teresa_GrabAndArc_Sub(unsigned char *self, unsigned char *sub);
 extern void ItemObject_Teresa_TrackToKart_Sub(unsigned char *self, unsigned char *sub);
 extern void GetSpawnPosition(Vec *out, float x, float y, float z);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, Vec *pos, int ch);
 extern void JointByName_GetWorldPosition(Vec *out, void *slot, const char *name);
 extern unsigned char *DrawEffect_SpawnDirect(void (*callback)(unsigned char *));

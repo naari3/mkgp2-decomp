@@ -76,3 +76,16 @@ void SoundMgr_PlaySE_Positional(u32 se, Vec pos, int ch)
     fn_8016C120(se, (int)pan_z);
 }
 #pragma exceptions reset
+
+#ifndef __MWERKS__
+/* MWCC passes a struct argument as the address of a copy the caller makes.
+ * Many callers were written from the disassembly and do exactly that by hand:
+ * they declare the position as a pointer and pass the address of their own
+ * copy. Under MWCC that is the same call. Elsewhere those units are pointed
+ * at this entry (`#define SoundMgr_PlaySE_Positional
+ * SoundMgr_PlaySE_Positional_ByAddress` in front of their prototype). */
+void SoundMgr_PlaySE_Positional_ByAddress(u32 se, const Vec *pos, int ch)
+{
+    SoundMgr_PlaySE_Positional(se, *pos, ch);
+}
+#endif

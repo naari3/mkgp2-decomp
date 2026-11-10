@@ -76,8 +76,7 @@ void CardModeRoot::Update() {
         state = 5;
     }
     UpdateScenes();
-    fn_801DAEC0();
-    fn_801DABFC();
+    fn_801DABFC(fn_801DAEC0());
 }
 
 void CardModeRoot::Destroy() {

@@ -27,6 +27,9 @@ extern void Vec3_Copy(Vec *dst, const Vec *src);
 extern void Item_PropagateHitToDriversInRadius(void *item, void *driver);
 extern unsigned char *DrawEffect_SpawnDirect(void (*callback)(unsigned char *));
 extern void Effect_KartTrailRes3A_Update(unsigned char *self);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, Vec *pos, int ch);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *driver);
 

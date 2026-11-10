@@ -192,6 +192,9 @@ int Item_AdvanceProjectileSimple(ItemMotionView *item, float *height,
     return 0;
 }
 
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(unsigned int sound, const Vec3 *position,
                                        int mode);
 extern void DrawEffect_TrailDot_Spawn(const Vec3 *position, const Vec3 *velocity,

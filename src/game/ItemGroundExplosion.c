@@ -44,6 +44,9 @@ extern const void* KartDriver_GetKartRootMtx(void*);
 extern void Mtx_TransposeToMtx44(float [4][4], const void*);
 extern void Mtx44_Inverse_GaussJordan(float [4][4], const float [4][4]);
 extern void Mtx44_TransformVec3(Vec3*, const float [4][4], const Vec3*);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int, const Vec3*, int);
 
 void Item_SpawnGroundExplosionAndFX(ItemExplosionView* self)

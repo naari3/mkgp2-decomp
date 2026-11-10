@@ -19,6 +19,9 @@ extern unsigned char *DrawEffect_SpawnDirect(void *fn);
 extern void SpawnRisingTextAndBurst(void);
 extern void DebrisArray_Update(void);
 extern void Vec3_Copy(void *dst, void *src);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, Vec3 *pos, int flag);
 extern void GetSpawnPosition(void *out, float x, float y, float z);
 extern void Vec3_Subtract_DestFirst(void *dst, void *a, void *b);

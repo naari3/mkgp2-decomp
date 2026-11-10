@@ -2,6 +2,9 @@
 
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);
 extern void fn_80108484(unsigned char *self, unsigned char *ctx);
+#ifndef __MWERKS__ /* this unit passes the position as the address of its own copy (SoundMgr_PlaySE_Positional.c) */
+#define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
+#endif
 extern void SoundMgr_PlaySE_Positional(int se, Vec3 *pos, int flag);
 extern unsigned char *DrawEffect_SpawnDirect(void *fn);
 extern void Effect_KartAttach_Res59_Update(void);

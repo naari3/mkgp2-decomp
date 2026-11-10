@@ -12,8 +12,8 @@ extern int lbl_806D15F8;
 extern unsigned char lbl_806CFBA1;
 void fn_80202BCC();
 void fn_80202A24();
-void fn_801DAEC0();
-void fn_801DABFC();
+void *fn_801DAEC0();
+void fn_801DABFC(void *);
 void fn_8014F5E0();
 void fn_80181144();
 }
@@ -35,8 +35,7 @@ extern "C" int fn_8017FB5C() {
         } else {
             fn_80202A24();
             lbl_806D15FC->Update();
-            fn_801DAEC0();
-            fn_801DABFC();
+            fn_801DABFC(fn_801DAEC0());
         }
         fn_8014F5E0();
     } else {

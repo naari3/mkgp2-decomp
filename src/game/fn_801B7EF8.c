@@ -1184,7 +1184,7 @@ struct MenuTaPleaseScene_p15 : MenuChildView_p15 { char state_p15[0x3c - 4]; Men
 struct Menuranking_displayScene_p15 : MenuChildView_p15 { char state_p15[0x3c - 4]; Menuranking_displayScene_p15(); };
 extern "C"{
 void CGameCoin_ProcessInput_p15(InputState_p15 *);
-void fn_801A1280_p15(); void fn_8020F290_p15(); void fn_801DAEC0_p15(); void fn_801DABFC_p15();
+void fn_801A1280_p15(); void fn_8020F290_p15(); void *fn_801DAEC0_p15(); void fn_801DABFC_p15(void *);
 void GXDrawDone_p15(); void fn_80121210_p15(); void clRom_PurgeAll_p15();
 void Sprite_SetupAnim_p15(Sprite_p15 *, int, int, int);
 void Sprite_SetAnimParam_p15(Sprite_p15 *, int, short);
@@ -1208,8 +1208,7 @@ if (self_p15->finished_p15) return 4;
 if (GetInput_p15()) CGameCoin_ProcessInput_p15(GetInput_p15());
 fn_801A1280_p15();
 fn_8020F290_p15();
-fn_801DAEC0_p15();
-fn_801DABFC_p15();
+fn_801DABFC_p15(fn_801DAEC0_p15());
 int next_p15 = -1;
 if (self_p15->child_p15) next_p15 = self_p15->child_p15->Update_p15();
 if (next_p15 != -1) {

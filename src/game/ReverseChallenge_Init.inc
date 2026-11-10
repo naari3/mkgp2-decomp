@@ -27,7 +27,7 @@ extern void ItemObjectManager_Init();
 extern int MiniGame_GetTimerValue(void);
 extern void PreloadEffectResources(int id);
 extern void ProcessSystemTick(int arg);
-extern void RankingTable_Init();
+extern void RankingTable_Init(void *);
 extern int HSD_LObjLoadDesc(void);
 extern void Scene3D_GetCameraPos(void *scene, float *a, float *b);
 extern void Scene3D_SetupProjection(void *scene, float a, float b);
@@ -174,8 +174,7 @@ ReverseChallenge::ReverseChallenge() {
     SetActiveCamera(0, camera);
     *(RCCamera **)&g_raceCamera = camera;
     ProcessSystemTick(0);
-    GetRaceContextPtr();
-    RankingTable_Init();
+    RankingTable_Init(GetRaceContextPtr());
     lbl_806D12BC = 0;
     SoundDriver_GetOrCreate(0);
     GetSpawnPosition(&pos, 0.0f, 0.0f, 0.0f);
