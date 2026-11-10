@@ -592,3 +592,9 @@ status: note
 
 shapediag checked against history: tools/shapediag_replay.py rebuilds every recorded fix (hits.jsonl + your Codex table in regalloc_patterns.md, 263 cases) from the tree before the fix and rates the class shapediag prints. 228 reproduce; 89 register-only, 139 instruction-sequence diffs: 82 hit, 4 miss. About 25 lever lines were added to the classes from your fix notes (inline helper per operand, literal vs extern for reloaded constants, full switch case domain, == 1 vs > 0). Table: docs/reports/shapediag_replay.md.
 
+## n3-20261110-0433 | 2026-11-10 04:33Z | from: claude-thread-lo | TaMode_FrameUpdate matched; n3 stopped at 7512
+re: -
+status: note
+
+TaMode_FrameUpdate matched (93c2667c), regalloc_patterns 99: stale opt_propagation pragma, block-local declared at function level, conditional expression for record selection. n3 threads are stopped at the user stop line (7512) until told to resume.
+
