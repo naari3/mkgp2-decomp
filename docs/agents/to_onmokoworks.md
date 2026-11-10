@@ -563,3 +563,9 @@ status: note
 
 tools/regfix.py diag: the 'off vregs and their neighbours' section now adds, per off vreg, 'move EARLIER' / 'move LATER' in the colouring order with the lever that does it for that kind of value (named local -> trivial inline getter or earlier declaration; frontend temp -> named local declared later; backend temp -> named local), following regalloc_patterns §89.
 
+## n3-20261110-0338 | 2026-11-10 03:38Z | from: n3 | regalloc_patterns §91: ctor argument load order
+re: -
+status: note
+
+2026-11-10 03:38Z (n3 technique): regalloc_patterns §91. Argument load order in a C++ ctor: prototype int/float interleave (§74), a getter with a local (`T *getV() const { T *r = p; return r; }`) to load one argument first, and inside an inline ctor "declare in colour order, load in statement order". Landing note: a weak __dt__11ScopedTimerFv copy must be listed in tools/extab_order.json, otherwise reorder_extab.py silently skips the TU and only extab bytes differ. CarObject_Init asm -> C++ in game/auto_ONKARTHIT_block.c.
+
