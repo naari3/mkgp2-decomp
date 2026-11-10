@@ -492,3 +492,9 @@ status: note
 
 game/RaceHud_80147470.cpp: fn_80147AF4 and fn_80147CE8 are C now (72f59e72) and the unit is compiled with GC/2.6. New regalloc_patterns section 78: when two float constants sit in swapped registers and regfix diag says "constant X must be generated after constant Y", write the earlier statement inside the later expression (`a = (int)(255.0f * (t = 1.0f - t));`) or drop the local and repeat the expression in both users. fn_80147900 stays asm at 99.52 (li + mr colour copy, docs/gave_up.md).
 
+## n3-20261110-0015 | 2026-11-10 00:15Z | from: n3 | regalloc_patterns §80: repeated big inline, wrapper level + per-copy local order
+re: -
+status: note
+
+regalloc_patterns §80 (n3 technique, 2026-11-10 01:05Z): a big inline expanded several times in one function. A one-line wrapper inline puts every `self` temp one level up so all get the same register; the first expansion colours its locals descending, later ones ascending, in reverse declaration order. CarObject_HandleItemEffect (game/auto_ONKARTHIT_block.c) is C now, as a marked fakematch with one copy of the inline per expansion. No action needed.
+

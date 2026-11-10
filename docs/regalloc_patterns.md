@@ -2096,3 +2096,48 @@ Things that do NOT work: passing `dist` after a separate `dist = K;`
 Follow-up: the change renumbers the float locals of the SECOND inline
 instance; that instance needed its own copy of the inline with the float
 declarations in the order `pz, py, px, bestDist` (24 orders swept, one hit).
+
+## 80. Several expansions of one big inline in one function: wrapper level fixes `self`, per-copy local order fixes the rest (CarObject_HandleItemEffect, asm -> C, 214 -> 0 lines, 11-10)
+
+Function: three switch case groups each expand the same "cancel active
+effect" routine (7 saved-register locals plus `self`), and three cases expand
+the small boost routine. Instruction stream identical, only r22..r29 differ
+per expansion.
+
+What the trace (`tools/mwtrace.py ... --only VREG,COLOR`) shows:
+
+- Inline temps are created level by level. All parameter temps of the
+  inlines called directly from the function body are created first, for
+  every call site; the locals of an inline that is called from inside
+  another inline come later. Later created = lower vreg = coloured later.
+- The first node that needs a new saved register takes the next fresh one
+  (r29 after the two arguments). Every later node takes the LOWEST already
+  handed-out register that is free for it.
+- Locals of one inline body are created in REVERSE declaration order.
+- So the first coloured expansion gets its locals descending from the fresh
+  end (creation order = r28, r27, ... r22) and every later expansion gets
+  them ascending (creation order = r22, r23, ...).
+
+Two levers follow:
+
+1. Target has the same register (r29) for `self` in every expansion, also in
+   the small boost inlines that have no other locals: call the big body
+   through a one-line wrapper inline (`static inline int Cancel(T *self)
+   { return CancelBody(self); }`). The wrapper's parameter temps are level 1,
+   created together with the boost parameter temps, so all of them are
+   coloured before any body local and all take r29. With the body called
+   directly, `self` is coloured with the body locals and lands on r22 in
+   every expansion but the first (214 lines -> 172).
+2. Remaining per-expansion order: read each expansion's registers from high
+   to low. For the first expansion that list is the creation order, so
+   declare the locals in the reverse of it. For the later expansions the
+   list read from LOW to high is the creation order. If the three lists do
+   not come from one declaration order (here they did not), the function
+   only matches with one copy of the inline per expansion, each with its own
+   declaration order. That is a fakematch and is marked so in the source;
+   the more likely original is three different member functions or a deeper
+   inline nesting that nobody found yet.
+
+Also in this function: the two table scans must be written as loops in the
+function body (as inlines they share the `li` and take other registers), and
+the result flag is `unsigned char` (int gives `clrlwi` instead of `mr`).
