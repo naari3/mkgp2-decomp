@@ -657,3 +657,10 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   at its own source position (it is still compiled; mwld strips the unused copy). Line numbers that DEscend with
   the address (0x1ED, 0x1B1, 0x18E, 0x164) are the sign of a deferred TU: reverse the source order and put the
   helpers between the functions. A TU without `-rostr` puts literals in .data, not .rodata.
+- ExplosionTumble_Init 97.91 -> 98.90 (11-10): count asm diff lines, not the objdiff percent, while
+  hunting registers: the NormalizeCopy form that makes both expansions register-exact LOWERED the
+  percent (97.18) until the other blocks were fixed too. Frontend CSE temps of repeated loads
+  (`up.x`, `v.y`, ...) are numbered by STATEMENT order, so permute the statements of a cross product
+  (6 orders) before anything else; result locals are propagated and do nothing. Values that overflow
+  the volatile FPRs go to saved registers lowest-first, so "w in f29" means w is coloured first of the
+  overflowers: an inline return value plus direct `q->x` reads did it.
