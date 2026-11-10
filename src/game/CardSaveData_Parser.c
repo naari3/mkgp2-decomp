@@ -40,19 +40,23 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
     u32 rank, wins, cleared, visited, award;
     u32 grid, extra, unlock, counter, enabled, selection, selectedFlag;
     u32 mileage, total;
-    int i;
-    unsigned int group;
+    u8 *cupCursor;
+    u8 *cupRow;
+    const char *const *cupFields;
+    unsigned int cupGroup;
+    int nameIndex;
     const char *const *fields;
+    int cupIndex;
+    int i;
     const CardUnlockRule *rule;
     bitpack_read_field_by_name(pack, lbl_806D3448, &locale, 0);
     if (locale != isJapanese()) return 0;
     memset(dest, 0, 12);
     {
-        int i;
         u16 *cardName = (u16 *)dest;
-        for (i = 0; i < 5; i++) {
-            bitpack_read_field_by_name(pack, lbl_806D3460, &name, i);
-            cardName[i] = fn_801F8D58((u8)name);
+        for (nameIndex = 0; nameIndex < 5; nameIndex++) {
+            bitpack_read_field_by_name(pack, lbl_806D3460, &name, nameIndex);
+            cardName[nameIndex] = fn_801F8D58((u8)name);
         }
     }
     if (NameCheck_CardName((u16 *)dest) == 1) {
@@ -71,20 +75,13 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
     bitpack_read_field_by_name(pack, lbl_806D3450, &value, 0); dest[0x16C] = value;
     bitpack_read_field_by_name(pack, lbl_806D3458, &value, 0); dest[0x16D] = value != 0;
     bitpack_read_field_by_name(pack, (const char *)lbl_8031739C, &value, 0); dest[0x17D] = value != 0;
-    {
-        u8 *cursor;
-        u8 *row;
-        const char *const *fields;
-        unsigned int group;
-        int i, j;
-    row = dest;
-    fields = lbl_80317454;
-    for (group = 0; group < 6; row += 4, group++, fields++) {
-        for (i = 0, cursor = row; i < 4; i++, cursor++) {
-            bitpack_read_field_by_name(pack, *fields, &cupRank, i);
-            cursor[0xF] = cupRank;
+    cupRow = dest;
+    cupFields = lbl_80317454;
+    for (cupGroup = 0; cupGroup < 6; cupRow += 4, cupGroup++, cupFields++) {
+        for (cupIndex = 0, cupCursor = cupRow; cupIndex < 4; cupIndex++, cupCursor++) {
+            bitpack_read_field_by_name(pack, *cupFields, &cupRank, cupIndex);
+            cupCursor[0xF] = cupRank;
         }
-    }
     }
     {
         u8 *row;
@@ -147,9 +144,12 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
     }
     }
     unlock = 0;
-    for (i = 0; i < 100; i++) {
-        bitpack_read_field_by_name(pack, (const char *)lbl_80317130, &unlock, i);
-        dest[0xF0+i] = unlock != 0;
+    {
+    int unlockIndex;
+    for (unlockIndex = 0; unlockIndex < 100; unlockIndex++) {
+        bitpack_read_field_by_name(pack, (const char *)lbl_80317130, &unlock, unlockIndex);
+        dest[0xF0+unlockIndex] = unlock != 0;
+    }
     }
     rule = (const CardUnlockRule *)lbl_803160C0;
     for (i = 0; i < 203; i++, rule++) {
@@ -177,6 +177,8 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
     enabled = 0;
     bitpack_read_field_by_name(pack, lbl_806D3494, &enabled, 0);
     dest[0x16E] = enabled != 0;
+    {
+    unsigned int group;
     fields = lbl_80317514;
     for (group = 0; group < 6; group++, fields += 2) {
         selection = 0; selectedFlag = 0;
@@ -184,6 +186,7 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
         bitpack_read_field_by_name(pack, fields[1], &selectedFlag, 0);
         dest[0x16F+group] = selection;
         dest[0x175+group] = selectedFlag != 0;
+    }
     }
     mileage = 0;
     bitpack_read_field_by_name(pack, (const char *)lbl_803173B8, &mileage, 0); *(u32 *)(dest+0x18C) = mileage;

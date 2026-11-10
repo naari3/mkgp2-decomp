@@ -28,3 +28,8 @@ c25_u22 (base5949f8a5): merged Parser unchanged99.0751%, v1 unchanged100%; Check
 Source: Codex worker c26_u15_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c26_u15: Parser99.0751->99.58154,1864B; initialize grid i before cursor with for(i=0,cursor=row;...), then counter block group declared before fields and for(group=0,fields=lbl_806D349C;...). Both supplied constant-order runs fixed, counter group/fields targetr23/r24. Other functions unchanged; data/EH100. Progress inline return/constant-parameter forms invariant; sharing outer fields across grid/extra/counter regresses99.28111. Checksum signed inline accumulator reaches99.07801 but560B (target564), zeroCSE still merges checksum0/sum0; reverted. Full coordinator fallback DOL SHA1OK,zero native gain. Rules: decl-order, regalloc_patterns7 initialization order; no need to invoke dead-truncation scheduling hypothesis for grid.
+
+## c28_u5_20261111
+Source: Codex worker c28_u5_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c28_u5: Parser99.58154->99.80687,1864B/EH/data unchanged. Independent block unlockIndex gives99.64592. Function declarations cupCursor,cupRow,cupFields,cupGroup,nameIndex,fields,cupIndex,i plus late final group fix all saved homes. Remaining18 instructions are only regular/extended progress r4 and bool load scratch r3 vs target3/4. u32/unsigned-long explicit flag load locals and shared regular/extended result-store inline invariant. Checksum accumulator with initial sum argument emits568B and copies despite raw/sum home fix; reverted. Full fallback DOL SHA1OK; zero native gain.
