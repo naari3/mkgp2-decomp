@@ -1,3 +1,4 @@
+#include "game/types/arg_order.h"
 #include "game/types/c_region.h"
 C_REGION_BEGIN
 
@@ -6736,7 +6737,7 @@ struct Owned80052AD4 {
 };
 struct Owned80052B50 {
     char opaque[0x154];
-    Owned80052B50(int, struct Owned80052C48 *, float, float, int, int, float);
+    Owned80052B50 ARGS_ORDER((int, struct Owned80052C48 *, float, float, int, int, float), (int, struct Owned80052C48 *, int, int, float, float, float));
     ~Owned80052B50();
 };
 struct Owned80052BCC {
@@ -7177,7 +7178,7 @@ CarObject::CarObject(int slot, int character, int a18, int a1c, unsigned char is
       driver(new ((const char *)lbl_806D27DC, 0x182) Owned80052C48(slot10, character14, matrix,
             ((int (*)(int))GetKartStartSlot)(slot10), 0, a1c)),
       input(new ((const char *)lbl_806D27DC, 0x183) Owned80052BCC(0x3c)),
-      tornado(new ((const char *)lbl_806D27DC, 0x184) Owned80052B50(1, driver.get(), x, 0.0f, character14, isPlayer20, y)),
+      tornado(new ((const char *)lbl_806D27DC, 0x184) Owned80052B50 ARGS_ORDER((1, driver.get(), x, 0.0f, character14, isPlayer20, y), (1, driver.get(), character14, isPlayer20, x, 0.0f, y))),
       camera(new ((const char *)lbl_806D27DC, 0x185) Owned80052AD4(character14, a1c,
             ((int (*)(int))GetKartStartSlot)(slot10), movement.get(), isPlayer, camArg, 0, z)),
       fade(new ((const char *)lbl_806D27DC, 0x186) Owned80052A58(movement.p, tornado.p, camera.getV(), isPlayer)),

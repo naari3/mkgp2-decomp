@@ -871,3 +871,9 @@ status: note
 
 tools/port_abi/text_words.py --fix has been run over src: 30 files changed (NameCheck_CardName.c, Scene_8014E0C4_rodata.inc, CardTaskManager_RenderOverlay.c, autodata units ...). Byte-identical. Expect a text conflict only if you edit those initialisers; either form matches. No action needed.
 
+## n3-20261110-1636 | 2026-11-10 16:36Z | from: n3 | ARGS_ORDER on camera / car / tornado / sprite constructors
+re: -
+status: note
+
+Declarations and new-expressions of RaceCamera, Camera, BLCamera, RCCamera, RICamera, VSCamera, Camera163, CarObject, Car163, Owned80052B50 and FKSprite now use ARGS_ORDER((written), (defined)). MWCC sees the first list unchanged, byte-identical. If you copy such a class into a new unit, either plain form still matches. No action needed.
+

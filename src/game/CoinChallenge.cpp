@@ -1,3 +1,4 @@
+#include "game/types/arg_order.h"
 /*
  * Coin challenge mini game (clCGameYI), .text 0x802143E4..0x802151C8.
  * One TU: Draw, Update, destructor, constructor; it owns the coin course
@@ -62,7 +63,7 @@ struct CarObject {
     unsigned char pad[0xF9]; unsigned char fd, fe; unsigned char tail[0x19];
 };
 struct Camera {
-    Camera(int, int, float, float, void *);
+    Camera ARGS_ORDER((int, int, float, float, void *), (int, int, void *, float, float));
     virtual ~Camera();
     unsigned char opaque[0x28];
 };
@@ -273,7 +274,7 @@ clCGameYI::clCGameYI() {
     CourseObjectManager_Init(); SetReverseRoundFlag(0);
     env=new CourseEnvironment;
     lights=HSD_LObjLoadDesc(GetCourseDataPtr());
-    camera=new Camera(256,256,1000.0f,0.1f,lights);
+    camera=new Camera ARGS_ORDER((256, 256, 1000.0f, 0.1f, lights), (256, 256, lights, 1000.0f, 0.1f));
     SetActiveCamera(0,camera); g_raceCamera=camera; ProcessSystemTick(0);
     RankingTable_Init(GetRaceContextPtr()); lbl_806D12BC=0; SoundDriver_GetOrCreate(0);
     float x,z; GetStartPosition(0,&x,0,&z);

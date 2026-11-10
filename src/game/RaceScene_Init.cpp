@@ -1,3 +1,4 @@
+#include "game/types/arg_order.h"
 /* RaceScene_Init (0x800A1D80): constructor of the race scene. Builds the
  * course, camera, player kart, path manager, Lakitu, HUD and the per-race
  * managers, logging the heap use after each step, then preloads the
@@ -17,8 +18,7 @@ struct GameModeBase {
 
 struct CarObject {
     unsigned char data[0x118];
-    CarObject(int displayIdx, int charId, float x, float y, float yaw, int ccClass, int variant, int human,
-              int team, int local, int ghost);
+    CarObject ARGS_ORDER((int displayIdx, int charId, float x, float y, float yaw, int ccClass, int variant, int human, int team, int local, int ghost), (int displayIdx, int charId, int ccClass, int variant, int human, int team, int local, int ghost, float x, float y, float yaw));
 };
 
 #include "game/types/PathManager.h"
@@ -281,7 +281,7 @@ RaceScene::RaceScene()
     heap = HeapStats_DumpForTag(log + 0x57C, heap);
     g_raceRenderTarget = HSD_LObjLoadDesc(GetCourseDataPtr());
     heap = HeapStats_DumpForTag(lbl_806D4804, heap);
-    camera = new RaceCamera(lbl_806D47E0, 0x200, lbl_806D47DC, 0x200, g_raceRenderTarget);
+    camera = new RaceCamera ARGS_ORDER((lbl_806D47E0, 0x200, lbl_806D47DC, 0x200, g_raceRenderTarget), (0x200, 0x200, g_raceRenderTarget, lbl_806D47E0, lbl_806D47DC));
     SetActiveCamera(0, camera);
     g_raceCamera = camera;
     heap = HeapStats_DumpForTag(log + 0x588, heap);
@@ -294,8 +294,7 @@ RaceScene::RaceScene()
     g_playerKartSlot = GetKartStartSlot(GetDisplayBufferIndex());
     g_kartStartSlot = g_playerKartSlot;
     GetStartPosition(g_playerKartSlot, &startX, 0, &startY);
-    g_carObjects[0] = new CarObject(GetDisplayBufferIndex(), GetKartSlotCharId(g_playerKartSlot), startX, startY,
-                                    GetCourseStartYaw(), CcClass_Get(), KartVariant_Get(), 1, -1, 1, 0);
+    g_carObjects[0] = new CarObject ARGS_ORDER((GetDisplayBufferIndex(), GetKartSlotCharId(g_playerKartSlot), startX, startY, GetCourseStartYaw(), CcClass_Get(), KartVariant_Get(), 1, -1, 1, 0), (GetDisplayBufferIndex(), GetKartSlotCharId(g_playerKartSlot), CcClass_Get(), KartVariant_Get(), 1, -1, 1, 0, startX, startY, GetCourseStartYaw()));
     {
         char *render = (char *)CarObject_GetRenderObj(g_carObjects[0]);
         *(int *)(render + 0x238) = 1;

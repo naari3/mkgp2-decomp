@@ -196,6 +196,35 @@ in `autodata/data_803F57E0.c` (a byte table typed as 30 words). Single words
 of one to three characters outside a run are left as numbers unless they
 follow the rules above; check a table by eye when one misbehaves.
 
+## Constructors declared in another order (request 22, 2026-11-10)
+
+A unit that only uses a class declares its constructor itself, and
+`tools/extab_user_renames.json` joins the mangled name to the real symbol.
+Several such declarations list floats and integers in another order than the
+definition: `RaceCamera(float, int, float, int, void *)` for
+`clShadow::clShadow(int width, int height, HSD_LObj *lobj, float far, float
+near)` (`Camera_Create`). PowerPC does not care; another ABI does.
+
+The written order cannot simply be corrected: it decides the order in which
+MWCC loads the arguments at the call (tried on `RaceSceneC`; the three loads
+swap). So both orders are written with `ARGS_ORDER((as written), (as
+defined))` from `include/game/types/arg_order.h`, in the declaration and in
+every `new` expression. MWCC sees the first list, everything else the second.
+The keys in the rename table stay the MWCC names.
+
+`python3 tools/port_abi/rename_order.py -v` lists the targets reached under
+differing orders (constructors and member functions). Four, all fixed:
+
+| target | definition | declarations rewritten |
+|---|---|---|
+| `Camera_Create` | (int, int, lobj, float, float) | `Camera` (types/Camera.h, CoinChallenge.cpp), `RaceCamera` (types/RaceCamera.h, Scene_8014E0C4.cpp), `BLCamera`, `RCCamera`, `RICamera`, `VSCamera`, `Camera163` |
+| `CarObject_Init` | 8 integers, then x, y, yaw | `CarObject` (RaceScene_Init.cpp, TaModeInitPrivate.h), `Car163` |
+| `TornadoEffect_Ctor` | 4 integers, then 3 floats | `Owned80052B50` (auto_ONKARTHIT_block.c) |
+| `fn_801A08B8` | (int id, unsigned char flag, float x, float y) | `FKSprite` (clFlowKart_Init.c) |
+
+Floats keep their relative order and integers theirs, which is exactly what
+the registers do.
+
 ## Pointers to member functions (item 14)
 
 MWCC's pointer to member function is 12 bytes, `{ long thisDelta; long

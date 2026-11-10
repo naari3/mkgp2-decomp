@@ -1,3 +1,4 @@
+#include "game/types/arg_order.h"
 /* JumpDistanceMode_Init (0x80213210): constructor of the jump-distance
  * minigame mode. Builds the player kart, camera, HUD, goal lines and
  * landing-grid objects. */
@@ -364,7 +365,7 @@ JumpDistanceMode::JumpDistanceMode() {
     input = new InputManager;
     GetCourseDataPtr();
     renderTarget = HSD_LObjLoadDesc();
-    camera = new Camera(lbl_806DAE08, lbl_806DAD88, 0x100, 0x100, renderTarget);
+    camera = new Camera ARGS_ORDER((lbl_806DAE08, lbl_806DAD88, 0x100, 0x100, renderTarget), (0x100, 0x100, renderTarget, lbl_806DAE08, lbl_806DAD88));
     SetActiveCamera(0, camera);
     g_raceCamera = camera;
     ProcessSystemTick(0);

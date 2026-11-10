@@ -1,3 +1,4 @@
+#include "game/types/arg_order.h"
 
 #include "game/types/size_t.h"
 #include "game/singleton.h"
@@ -999,7 +1000,7 @@ NokoNokoChallenge::NokoNokoChallenge() {
     input = new InputManager;
     GetCourseDataPtr();
     renderTarget = HSD_LObjLoadDesc();
-    camera = new Camera(lbl_806D70BC, lbl_806D706C, 0x100, 0x100, renderTarget);
+    camera = new Camera ARGS_ORDER((lbl_806D70BC, lbl_806D706C, 0x100, 0x100, renderTarget), (0x100, 0x100, renderTarget, lbl_806D70BC, lbl_806D706C));
     SetActiveCamera(0, camera);
     g_raceCamera = camera;
     ProcessSystemTick(0);

@@ -1,9 +1,10 @@
 #ifndef GAME_SCENE_80164614_PRIVATE_H
 #define GAME_SCENE_80164614_PRIVATE_H
+#include "game/types/arg_order.h"
 #include "game/Scene_80163EF4Private.h"
 struct Env163 { char opaque[0x37c]; Env163(); };
-struct Camera163 { char opaque[0x2c]; Camera163(int, int, float, float, void *); };
-struct Car163 { char opaque[0x118]; Car163(int, int, float, float, float, int, int, int, int, int, int); };
+struct Camera163 { char opaque[0x2c]; Camera163 ARGS_ORDER((int, int, float, float, void *), (int, int, void *, float, float)); };
+struct Car163 { char opaque[0x118]; Car163 ARGS_ORDER((int, int, float, float, float, int, int, int, int, int, int), (int, int, int, int, int, int, int, int, float, float, float)); };
 struct Path163 { char opaque[0x4e8]; Path163(void *, void *, void *, void *, void *, void *); };
 struct Scene163 { char opaque[0x3084]; Scene163(const char *); };
 struct Lakitu163 { char opaque[0x58]; Lakitu163(const char *, int, float, float, float); };

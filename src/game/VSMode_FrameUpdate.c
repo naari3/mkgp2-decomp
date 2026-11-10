@@ -1,3 +1,4 @@
+#include "game/types/arg_order.h"
 #include "game/types/reg_args.h"
 #include "game/types/bitfields.h"
 #include "game/types/c_region.h"
@@ -3082,7 +3083,7 @@ void* operator new(size_t);
 void operator delete(void*);
 
 struct VSInput { unsigned char bytes[0x37C]; VSInput(); };
-struct VSCamera { unsigned char bytes[0x2C]; VSCamera(float, int, float, int, void*); };
+struct VSCamera { unsigned char bytes[0x2C]; VSCamera ARGS_ORDER((float, int, float, int, void*), (int, int, void*, float, float)); };
 struct VSCar {
     unsigned char prefix[0x104]; void* itemSelect; unsigned char suffix[0x10];
     VSCar(int, int, int, int, unsigned char, int, int, unsigned char, float, float, float);
@@ -3246,7 +3247,7 @@ void VSMode_Init(void* self_)
     ProcessSystemTick(pool + 0x5B8);
     CourseData_GetOrCreate(g_cupId, g_longRoundFlag, g_reverseRoundFlag);
     VSMode_FrameUpdate_bss_806D12F8 = HSD_LObjLoadDesc(GetCourseDataPtr());
-    self->camera = new VSCamera(lbl_806D47AC, 0x100, lbl_806D47A8, 0x100, VSMode_FrameUpdate_bss_806D12F8);
+    self->camera = new VSCamera ARGS_ORDER((lbl_806D47AC, 0x100, lbl_806D47A8, 0x100, VSMode_FrameUpdate_bss_806D12F8), (0x100, 0x100, VSMode_FrameUpdate_bss_806D12F8, lbl_806D47AC, lbl_806D47A8));
     SetActiveCamera(0, self->camera);
     g_raceCamera = self->camera;
     ProcessSystemTick(pool + 0x5C4);

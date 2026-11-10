@@ -1,5 +1,6 @@
 #ifndef GAME_TA_MODE_INIT_PRIVATE_H
 #define GAME_TA_MODE_INIT_PRIVATE_H
+#include "game/types/arg_order.h"
 #include "game/types/size_t.h"
 void *operator new(size_t);
 void operator delete(void *);
@@ -18,8 +19,7 @@ struct GameModeBase {
 
 struct CarObject {
     unsigned char data[0x118];
-    CarObject(int displayIdx, int charId, float x, float y, float yaw, int ccClass, int variant, int human,
-              int team, int local, int ghost);
+    CarObject ARGS_ORDER((int displayIdx, int charId, float x, float y, float yaw, int ccClass, int variant, int human, int team, int local, int ghost), (int displayIdx, int charId, int ccClass, int variant, int human, int team, int local, int ghost, float x, float y, float yaw));
 };
 
 #include "game/types/PathManager.h"

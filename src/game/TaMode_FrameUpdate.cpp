@@ -1,3 +1,4 @@
+#include "game/types/arg_order.h"
 #include "game/types/port_hooks.h"
 /* clGameTimeAttack (time-attack mode scene): one TU, 0x800A2B90..0x800A4578.
  * Built with -inline deferred, so functions are written in reverse address
@@ -417,7 +418,7 @@ TaMode::TaMode() {
     environment = new EnvironmentMgr;
     CourseData_GetOrCreate(g_cupId, g_longRoundFlag, g_reverseRoundFlag);
     TaMode_FrameUpdate_bss_806D13C8 = HSD_LObjLoadDesc(GetCourseDataPtr());
-    camera = new RaceCamera(lbl_806D483C, 0x200, lbl_806D4838, 0x200, TaMode_FrameUpdate_bss_806D13C8);
+    camera = new RaceCamera ARGS_ORDER((lbl_806D483C, 0x200, lbl_806D4838, 0x200, TaMode_FrameUpdate_bss_806D13C8), (0x200, 0x200, TaMode_FrameUpdate_bss_806D13C8, lbl_806D483C, lbl_806D4838));
     SetActiveCamera(0, camera);
     g_raceCamera = camera;
     ProcessSystemTick(lbl_80322048);
@@ -427,7 +428,7 @@ TaMode::TaMode() {
     TaMode_FrameUpdate_bss_806D13A8 = GetKartStartSlot(GetDisplayBufferIndex());
     g_kartStartSlot = TaMode_FrameUpdate_bss_806D13A8;
     GetStartPosition(TaMode_FrameUpdate_bss_806D13A8, &startX, 0, &startY);
-    g_carObjects[0] = new CarObject(GetDisplayBufferIndex(), GetKartSlotCharId(TaMode_FrameUpdate_bss_806D13A8), startX, startY, GetCourseStartYaw(), CcClass_Get(), KartVariant_Get(), 1, -1, 0, 0);
+    g_carObjects[0] = new CarObject ARGS_ORDER((GetDisplayBufferIndex(), GetKartSlotCharId(TaMode_FrameUpdate_bss_806D13A8), startX, startY, GetCourseStartYaw(), CcClass_Get(), KartVariant_Get(), 1, -1, 0, 0), (GetDisplayBufferIndex(), GetKartSlotCharId(TaMode_FrameUpdate_bss_806D13A8), CcClass_Get(), KartVariant_Get(), 1, -1, 0, 0, startX, startY, GetCourseStartYaw()));
     Render_SetReady(CarObject_GetRenderObj(g_carObjects[0]));
     KartItem_SetShortArray34a(CarObject_GetRenderObj(g_carObjects[0]), g_playerData);
     if (GetVBlankFlag() && !g_playerData[0x19d]) KartItem_SetField358(CarObject_GetRenderObj(g_carObjects[0]), 0);
@@ -452,7 +453,7 @@ TaMode::TaMode() {
         const TaGhostSource &ghost = !reverse
             ? *(const TaGhostSource *)&tafu::taNormalRecords[cup][g_longRoundFlag]
             : *(const TaGhostSource *)&tafu::taReverseRecords[cup][g_longRoundFlag];
-        g_taGhostCar = new CarObject(4, ghost.character, startX, startY, GetCourseStartYaw(), 2, 3, 0, -1, 0, 0);
+        g_taGhostCar = new CarObject ARGS_ORDER((4, ghost.character, startX, startY, GetCourseStartYaw(), 2, 3, 0, -1, 0, 0), (4, ghost.character, 2, 3, 0, -1, 0, 0, startX, startY, GetCourseStartYaw()));
         float *matrix = CarObject_GetTransformMatrix(g_taGhostCar);
         TaMode_FrameUpdate_bss_806D139C = RegisterGhost(matrix, CarObject_GetRenderObj(g_taGhostCar));
         TaMode_FrameUpdate_data_806CF198 = 3;

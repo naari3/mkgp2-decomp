@@ -1,3 +1,4 @@
+#include "game/types/arg_order.h"
 /* clFlowKart_Init: FlowKart constructor (C++, compiled with -lang=c++).
  * The TU owns .rodata 0x8039E508..0x8039E9F8 so the pooled base register is
  * hoisted to the prologue like the target. Unused objects stay global so they
@@ -129,7 +130,7 @@ unsigned char InitRumbleController(unsigned char);
 typedef struct FKParams { int v[5]; } FKParams;
 struct FKSprite {
     unsigned char data[0x30];
-    FKSprite(int id, float x, float y, int flag);
+    FKSprite ARGS_ORDER((int id, float x, float y, int flag), (int id, int flag, float x, float y));
 };
 struct FKDisplay {
     unsigned char pad00[0x4];
@@ -166,9 +167,9 @@ extern "C" void clFlowKart_UpdateDisplay(FKDisplay *self, int kart)
     Sprite_Destroy(self->rank[0], 1);
     Sprite_Destroy(self->rank[1], 1);
     Sprite_Destroy(self->rank[2], 1);
-    self->rank[0] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA124, 1);
-    self->rank[1] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA128, 1);
-    self->rank[2] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA12C, 1);
+    self->rank[0] = new FKSprite ARGS_ORDER((0x16B, lbl_806DA120, lbl_806DA124, 1), (0x16B, 1, lbl_806DA120, lbl_806DA124));
+    self->rank[1] = new FKSprite ARGS_ORDER((0x16B, lbl_806DA120, lbl_806DA128, 1), (0x16B, 1, lbl_806DA120, lbl_806DA128));
+    self->rank[2] = new FKSprite ARGS_ORDER((0x16B, lbl_806DA120, lbl_806DA12C, 1), (0x16B, 1, lbl_806DA120, lbl_806DA12C));
     {
     int arr[5] = {0x16B4, 0x16B3, 0x16B2, 0x16B1, 0x16B0};
     for (int a = 0; a < 5 - clFlowKart_UpdateDisplay_data_8049BB30[level][kart][0]; a++) Sprite_SetAnimParam(self->rank[0], arr[a], -1);

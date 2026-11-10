@@ -1,3 +1,4 @@
+#include "game/types/arg_order.h"
 #include "game/types/c_region.h"
 C_REGION_BEGIN
 #include "game/types/size_t.h"
@@ -696,7 +697,7 @@ extern char lbl_8048E144[];
 
 #pragma exceptions on
 struct BLInputManager { char data[0x37C]; BLInputManager(); };
-struct BLCamera { char data[0x2C]; BLCamera(float a, float b, int w, int h, int target); };
+struct BLCamera { char data[0x2C]; BLCamera ARGS_ORDER((float a, float b, int w, int h, int target), (int w, int h, int target, float a, float b)); };
 struct BLCarObject {
     char data[0x118];
     BLCarObject(int disp, int chara, int cc, int a, int b, int c, int d, int e, float x, float z, float yaw);
@@ -825,7 +826,7 @@ BiribiriLand::BiribiriLand() {
     input = new BLInputManager;
     GetCourseDataPtr();
     renderTarget = HSD_LObjLoadDesc();
-    camera = new BLCamera(1000.0f, 0.1f, 0x100, 0x100, renderTarget);
+    camera = new BLCamera ARGS_ORDER((1000.0f, 0.1f, 0x100, 0x100, renderTarget), (0x100, 0x100, renderTarget, 1000.0f, 0.1f));
     SetActiveCamera(0, camera);
     *(BLCamera **)&g_raceCamera = camera;
     ProcessSystemTick(0);

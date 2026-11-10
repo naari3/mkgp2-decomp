@@ -1,3 +1,4 @@
+#include "game/types/arg_order.h"
 #include "game/types/c_region.h"
 C_REGION_BEGIN
 /* === extracted from auto_ReverseChallenge_Ini_text === */
@@ -78,7 +79,7 @@ void operator delete(void *p);
 
 typedef struct RCVec { float x, y, z; } RCVec;
 struct RCInputManager { char data[0x37C]; RCInputManager(); };
-struct RCCamera { char data[0x2C]; RCCamera(float a, float b, int w, int h, int target); };
+struct RCCamera { char data[0x2C]; RCCamera ARGS_ORDER((float a, float b, int w, int h, int target), (int w, int h, int target, float a, float b)); };
 struct RCCarObject {
     char data[0x118];
     RCCarObject(int disp, int chara, int a, int b, int c, int d, int e, int f, float x, float z, float yaw);
@@ -170,7 +171,7 @@ ReverseChallenge::ReverseChallenge() {
     input = new RCInputManager;
     GetCourseDataPtr();
     renderTarget = HSD_LObjLoadDesc();
-    camera = new RCCamera(1000.0f, 0.1f, 0x100, 0x100, renderTarget);
+    camera = new RCCamera ARGS_ORDER((1000.0f, 0.1f, 0x100, 0x100, renderTarget), (0x100, 0x100, renderTarget, 1000.0f, 0.1f));
     SetActiveCamera(0, camera);
     *(RCCamera **)&g_raceCamera = camera;
     ProcessSystemTick(0);

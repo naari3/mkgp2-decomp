@@ -1,3 +1,4 @@
+#include "game/types/arg_order.h"
 #include "game/types/c_region.h"
 C_REGION_BEGIN
 /* Exact asm_fn implementation for the remaining RivalRun unit members. */
@@ -1863,7 +1864,7 @@ void operator delete(void *p);
 
 typedef struct RIVec { float x, y, z; } RIVec;
 struct RIInputManager { char data[0x37C]; RIInputManager(); };
-struct RICamera { char data[0x2C]; RICamera(float a, float b, int w, int h, int target); };
+struct RICamera { char data[0x2C]; RICamera ARGS_ORDER((float a, float b, int w, int h, int target), (int w, int h, int target, float a, float b)); };
 struct RICarObject {
     char data[0x118];
     RICarObject(int disp, int chara, int cc, int a, int b, int c, int d, int e, float x, float z, float yaw);
@@ -1982,7 +1983,7 @@ RivalRun::RivalRun() {
     CourseData_GetOrCreate(6, 0, 0);
     GetCourseDataPtr();
     renderTarget = HSD_LObjLoadDesc();
-    camera = new RICamera(1000.0f, 0.1f, 0x100, 0x100, renderTarget);
+    camera = new RICamera ARGS_ORDER((1000.0f, 0.1f, 0x100, 0x100, renderTarget), (0x100, 0x100, renderTarget, 1000.0f, 0.1f));
     SetActiveCamera(0, camera);
     *(RICamera **)&g_raceCamera = camera;
     ProcessSystemTick(0);

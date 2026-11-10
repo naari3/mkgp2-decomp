@@ -1,3 +1,4 @@
+#include "game/types/arg_order.h"
 
 /* sdata symbols referenced from asm */
 extern unsigned char lbl_806D7280[7];
@@ -1152,7 +1153,7 @@ SuikaBallMode::SuikaBallMode() {
     input = new InputManager;
     GetCourseDataPtr();
     renderTarget = HSD_LObjLoadDesc();
-    camera = new Camera(lbl_806D72F8, lbl_806D72B4, 0x100, 0x100, renderTarget);
+    camera = new Camera ARGS_ORDER((lbl_806D72F8, lbl_806D72B4, 0x100, 0x100, renderTarget), (0x100, 0x100, renderTarget, lbl_806D72F8, lbl_806D72B4));
     SetActiveCamera(0, camera);
     g_raceCamera = camera;
     ProcessSystemTick(0);

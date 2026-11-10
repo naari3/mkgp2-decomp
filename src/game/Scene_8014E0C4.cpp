@@ -1,3 +1,4 @@
+#include "game/types/arg_order.h"
 #include "game/types/bitfields.h"
 #include "game/types/size_t.h"
 #include "game/singleton.h"
@@ -4838,7 +4839,7 @@ public:
 class RaceCamera {
 public:
     char data[0x2C];
-    RaceCamera(float a, int w, float b, int h, void *lights);
+    RaceCamera ARGS_ORDER((float a, int w, float b, int h, void *lights), (int w, int h, void *lights, float a, float b));
 };
 
 class RaceDriver {
@@ -4962,7 +4963,7 @@ RaceSceneC::RaceSceneC(unsigned char card, int mode) {
     g_courseVariantIdx = 0;
     input = new RaceInputManager;
     lights = HSD_LObjLoadDesc(GetCourseDataPtr());
-    camera = new RaceCamera(lbl_806D80C0, 0x200, lbl_806D8184, 0x200, lights);
+    camera = new RaceCamera ARGS_ORDER((lbl_806D80C0, 0x200, lbl_806D8184, 0x200, lights), (0x200, 0x200, lights, lbl_806D80C0, lbl_806D8184));
     SetActiveCamera(0, (int)camera);
     g_raceCamera = camera;
     for (i = 0; i < 11; i++) {

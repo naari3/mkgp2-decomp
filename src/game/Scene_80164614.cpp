@@ -1,3 +1,4 @@
+#include "game/types/arg_order.h"
 #include "game/types/port_hooks.h"
 #include "game/Scene_80164614Private.h"
 
@@ -150,7 +151,7 @@ extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
     ProcessSystemTick(0);
     CourseData_GetOrCreate(g_cupId, g_longRoundFlag, g_reverseRoundFlag);
     s->resource = HSD_LObjLoadDesc(GetCourseDataPtr());
-    s->child = new Camera163(512, 512, lbl_806D8908, lbl_806D890C, s->resource);
+    s->child = new Camera163 ARGS_ORDER((512, 512, lbl_806D8908, lbl_806D890C, s->resource), (512, 512, s->resource, lbl_806D8908, lbl_806D890C));
     SetActiveCamera(0, (int)s->child);
     g_raceCamera = s->child;
     RankingTable_Init(GetRaceContextPtr());
@@ -165,9 +166,9 @@ extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
     float x, z;
     GetStartPosition(s->slot, &x, 0, &z);
     if (s->recording == 1)
-        g_carObjects[0] = new Car163(0, GetKartSlotCharId(s->slot), x, z, GetCourseStartYaw(), 0, 0, 1, -1, 0, 0);
+        g_carObjects[0] = new Car163 ARGS_ORDER((0, GetKartSlotCharId(s->slot), x, z, GetCourseStartYaw(), 0, 0, 1, -1, 0, 0), (0, GetKartSlotCharId(s->slot), 0, 0, 1, -1, 0, 0, x, z, GetCourseStartYaw()));
     else
-        g_carObjects[0] = new Car163(0, GetKartSlotCharId(s->slot), x, z, GetCourseStartYaw(), 0, 0, 0, -1, 0, 1);
+        g_carObjects[0] = new Car163 ARGS_ORDER((0, GetKartSlotCharId(s->slot), x, z, GetCourseStartYaw(), 0, 0, 0, -1, 0, 1), (0, GetKartSlotCharId(s->slot), 0, 0, 0, -1, 0, 1, x, z, GetCourseStartYaw()));
     char *render = (char *)CarObject_GetRenderObj(g_carObjects[0]);
     *(int *)(render + 0x238) = 1;
     KartItem_SetShortArray34a(CarObject_GetRenderObj(g_carObjects[0]), g_playerData);
