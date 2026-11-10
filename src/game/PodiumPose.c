@@ -105,6 +105,7 @@ extern void clNormal3D_Construct();
 extern unsigned int lbl_806D7A78;
 extern unsigned int lbl_806D7A88;
 extern void MemoryManager_TimedFree();
+#ifndef NON_MATCHING
 asm void __ct__8PoseCharFiiP4Vec3P4Vec3Pf(void);
 
 #pragma section R ".extab_user"
@@ -115,6 +116,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&__ct__8PoseCharFiiP4Vec3P4Vec3Pf, 0x00000430, (void *)&extab_fn_80143450
 };
 
+#endif
 }
 
 static inline unsigned char JObjMtxIsDirty(JObj *jobj) {
@@ -616,6 +618,88 @@ void PoseChar::Draw() {
     }
 }
 
+#ifdef NON_MATCHING
+/* Equivalent C++ for the PC port (docs/nonmatching_c.md); 13 FPR instructions
+ * off the target (docs/gave_up.md). */
+static inline void PoseVecSet(Vec3 *v, float x, float y, float z) {
+    v->x = x;
+    v->y = y;
+    v->z = z;
+}
+
+PoseChar::PoseChar(int kind, int mode, Vec3 *pos, Vec3 *rot, float *scale) {
+    char nameA[32];
+    char nameB[32];
+    char nameC[32];
+    char nameD[32];
+    float s;
+
+    if (s_propRef == 0) {
+        s_propA = 0;
+        s_propB = 0;
+        s_jointA = 0;
+        s_jointB = 0;
+        s_propA = new clNormal3D(sTrophyFile, 0);
+        s_propB = new clNormal3D(sFlowerFile, 0);
+        if (s_propA) {
+            s_jointA = Archive_GetRootJObj(s_propA);
+        }
+        if (s_propB) {
+            s_jointB = Archive_GetRootJObj(s_propB);
+        }
+    }
+    s_propRef++;
+    this->kind = kind;
+    this->mode = mode;
+    PoseVecSet(&this->pos, pos->x, pos->y, pos->z);
+    PoseVecSet(&this->rot, rot->x, rot->y, rot->z);
+    model = 0;
+    head = 0;
+    propJointB = 0;
+    propJointA = 0;
+    frame = 0.0f;
+    if (this->kind < 0 || this->kind >= 13) {
+        return;
+    }
+    s = *scale * sPoseScale[this->kind];
+    model = new clNormal3D(lbl_8048ED70[this->kind], 0);
+    Object_SetJObjScaleXYZ(model, s, s, s);
+    clNormal3D_SetScale(model, 0, 0.0f, 1.0f, 0.0f, 0.0f);
+    sprintf(nameA, sPoseJointFmt[0], lbl_8048EDA4[kind]);
+    sprintf(nameB, sPoseJointFmt[2], lbl_8048EDA4[kind]);
+    sprintf(nameC, sPoseJointFmt[1], lbl_8048EDA4[kind]);
+    sprintf(nameD, sPoseJointFmt[3], lbl_8048EDA4[kind]);
+    if (this->mode == 0) {
+        head = ResolveJointByName(model, nameA);
+        propJointB = ResolveJointByName(model, sPoseJointFmt[4]);
+        propJointA = ResolveJointByName(model, sPoseJointFmt[5]);
+        HSD_JObjSetFlagsAll(ResolveJointByName(model, nameB), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(model, nameC), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(model, nameD), 0x10);
+    } else if (this->mode == 1) {
+        head = ResolveJointByName(model, nameB);
+        propJointB = ResolveJointByName(model, sPoseJointFmt[8]);
+        propJointA = ResolveJointByName(model, sPoseJointFmt[9]);
+        HSD_JObjSetFlagsAll(ResolveJointByName(model, nameA), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(model, nameC), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(model, nameD), 0x10);
+    } else if (this->mode == 2) {
+        head = ResolveJointByName(model, nameC);
+        propJointB = ResolveJointByName(model, sPoseJointFmt[6]);
+        propJointA = ResolveJointByName(model, sPoseJointFmt[7]);
+        HSD_JObjSetFlagsAll(ResolveJointByName(model, nameA), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(model, nameB), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(model, nameD), 0x10);
+    } else {
+        head = ResolveJointByName(model, nameD);
+        propJointB = ResolveJointByName(model, sPoseJointFmt[10]);
+        propJointA = ResolveJointByName(model, sPoseJointFmt[11]);
+        HSD_JObjSetFlagsAll(ResolveJointByName(model, nameA), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(model, nameB), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(model, nameC), 0x10);
+    }
+}
+#else
 extern "C" asm void __ct__8PoseCharFiiP4Vec3P4Vec3Pf(void) { /* 0x80143450 size:0x430 */
     nofralloc
     stwu r1, -0xc0(r1)
@@ -899,6 +983,7 @@ extern "C" asm void __ct__8PoseCharFiiP4Vec3P4Vec3Pf(void) { /* 0x80143450 size:
     addi r1, r1, 0xc0
     blr
 }
+#endif
 
 void WinPose::m0C() {
     started = 1;
