@@ -1855,6 +1855,18 @@ needed there.
   locals at their declared position.
 
 
+Third use (fn_8017DF00, map debug path editor, 11-10, 99.85 -> 100): one
+local `node` r28 where the target has r29. `regfix diag` printed the
+colouring sequence `@242 r29, @243 r28, ..., node r28->want r29` and the
+solver asked for `node` to be numbered right above `@243`. `@241..@243` are
+the locals `i, node, point` of the path-printing inline, so the editing
+`node` had to sit BETWEEN two locals of that inline: the `else if (left)`
+print branch and the final `else` edit branch are one inline
+(`if (left) { print } else { edit }`) whose locals are declared
+`point, sel, node, i`. Function-scope positions for `node`, an inline for
+the edit branch alone, or the print loop written out in the function never
+put it there.
+
 ## 71. Inline RETURN TYPE as a lever: u8 flag coloured one slot off, and `li r0,-1 / addi r0,n,K / mr rX,r0` (fn_80159BD0, option menu item page, 11-09)
 
 fn_80159BD0 (game/SceneList_80157EA8, 0xB14) went 97.2 -> 100 % with literal
