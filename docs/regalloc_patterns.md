@@ -2240,3 +2240,34 @@ lines). The integer tail needed the id/flag pair copied as ONE struct
 assignment (`*(Pair *)&self->activeId = *(const Pair *)&tbl[idx].valC;`)
 instead of two int locals: the struct copy's temps are backend temps, coloured
 before the owner chain (target valC r3, valD r0, chain r4/r5).
+
+## 84. Add tree of a three-term index is wrong whatever grouping you pick: enumerate all 12 groupings, the frontend rotates them (CalcEarnedCoins, 99.81 -> 100, 11-10)
+
+Symptom: only the two `add`s (and the order of the two `slwi`s) of an index
+`a*4 + b*2 + c` differ. Target `r0 = a*4 + b*2; r4 = c + r0`, ours
+`r0 = b*2 + c; r4 = a*4 + r0`. Writing the grouping the target shows
+(`c + (a*4 + b*2)`) does NOT give it: MWCC's frontend re-associates the sum
+before codegen, so the emitted tree is a rotation of the source tree.
+
+What produced the target here:
+
+```c
+static inline int CourseClearIndex(int course, int reverse, int isLong) {
+    return isLong + course * 4 + reverse * 2;   /* (isLong + course*4) + reverse*2 */
+}
+```
+
+Measured table (diff lines; 0 = match), terms a=`course*4`, b=`reverse*2`, c=`isLong`:
+
+| source | lines |
+| --- | --- |
+| `(c + a) + b`, `(a + c) + b` | 0 |
+| `c + (a + b)`, `(a + b) + c` | 4 |
+| `a + (b + c)`, `a + (c + b)` | 5 |
+| every form starting with `b` or ending in `+ a` | 9-10 |
+
+Rule of thumb: the term that the target adds LAST (here `c`) must sit in the
+inner sum together with the first-shifted term in the source, and the term
+with the smaller shift goes outside. Do not reason about it; a 12-form sweep
+takes one minute (script shape: replace the return expression, `ninja` the
+object, count diff lines).
