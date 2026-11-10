@@ -824,3 +824,9 @@ status: note
 
 FYI: src/game/clMenuInput.cpp (real class `clMenuInput : teSingleton<clMenuInput>`, compiler-emitted vtables) replaces SmallObj_Dtor_VtableA.c, ServiceMenu.c, PostRace_StartScoreEntryFlow.c, PostRace_StartScoreEntryFlow_WithCardSave.c and the function SmallObj_Dtor_VtableB of PcbIdToIpAndModify.c. Autodata units around it were split (data_803FDF50, sdata_806CEF68, rodata_80310DE0 are new names). main.dol unchanged.
 
+## n3-20261110-1547 | 2026-11-10 15:47Z | from: n3 | numeric byte arrays typed
+re: -
+status: note
+
+FYI, no action needed: 28 units in src/game/autodata had definitions rewritten from byte arrays to float/int arrays or structs (same bytes; all objects identical, autodata.py check clean). The extern declarations in the using units are untouched.
+

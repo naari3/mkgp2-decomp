@@ -400,11 +400,13 @@ void *resultscene_nm1_data_806CF908[2] = {
 char resultscene_nm1_data_806CF910[4] = {
     0, 0, 0, 0
 };
-char resultscene_nm1_data_806CF914[4] = {
-    0, 0, 0, -101
+/* element type read off the value (a small integer), not from code */
+int resultscene_nm1_data_806CF914[1] = {
+    155
 };
-char resultscene_nm1_data_806CF918[4] = {
-    0, 0, 0, -103
+/* element type read off the value (a small integer), not from code */
+int resultscene_nm1_data_806CF918[1] = {
+    153
 };
 char resultscene_nm1_data_806CF91C[4] = {
     0, 0, 0, -56

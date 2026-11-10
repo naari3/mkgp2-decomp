@@ -43,6 +43,98 @@ typedef struct Rodata80355078_Row13 {
     int i_14[8];
 } Rodata80355078_Row13;
 
+/* was a byte array; cut into strings, floats and small integers by value and by how the code
+ * reaches it (address taken: a new member; block copy: numbers). x_ members are bytes that fit
+ * none of these and are still in the console's byte order if they are wider than a byte. */
+typedef struct NokoNokoChallenge_GetCoinDivisor_rodata_80355674_Pool {
+    int i_000;
+    float f_004;
+    int i_008[3];
+} NokoNokoChallenge_GetCoinDivisor_rodata_80355674_Pool;
+
+/* was a byte array; cut into strings, floats and small integers by value and by how the code
+ * reaches it (address taken: a new member; block copy: numbers). x_ members are bytes that fit
+ * none of these and are still in the console's byte order if they are wider than a byte. */
+typedef struct NokoNokoChallenge_GetCoinDivisor_rodata_8035569C_Pool {
+    int i_000;
+    float f_004;
+    int i_008[3];
+} NokoNokoChallenge_GetCoinDivisor_rodata_8035569C_Pool;
+
+/* was a byte array; cut into strings, floats and small integers by value and by how the code
+ * reaches it (address taken: a new member; block copy: numbers). x_ members are bytes that fit
+ * none of these and are still in the console's byte order if they are wider than a byte. */
+typedef struct NokoNokoChallenge_GetCoinDivisor_rodata_803556B0_Pool {
+    int i_000;
+    float f_004;
+    int i_008[2];
+    unsigned char x_010[4];
+} NokoNokoChallenge_GetCoinDivisor_rodata_803556B0_Pool;
+
+/* was a byte array; cut into strings, floats and small integers by value and by how the code
+ * reaches it (address taken: a new member; block copy: numbers). x_ members are bytes that fit
+ * none of these and are still in the console's byte order if they are wider than a byte. */
+typedef struct NokoNokoChallenge_GetCoinDivisor_rodata_803556C4_Pool {
+    int i_000;
+    float f_004;
+    int i_008[2];
+    unsigned char x_010[4];
+} NokoNokoChallenge_GetCoinDivisor_rodata_803556C4_Pool;
+
+/* was a byte array; cut into strings, floats and small integers by value and by how the code
+ * reaches it (address taken: a new member; block copy: numbers). x_ members are bytes that fit
+ * none of these and are still in the console's byte order if they are wider than a byte. */
+typedef struct NokoNokoChallenge_GetCoinDivisor_rodata_803556D8_Pool {
+    int i_000;
+    float f_004[4];
+    int i_014[8];
+} NokoNokoChallenge_GetCoinDivisor_rodata_803556D8_Pool;
+
+/* was a byte array; cut into strings, floats and small integers by value and by how the code
+ * reaches it (address taken: a new member; block copy: numbers). x_ members are bytes that fit
+ * none of these and are still in the console's byte order if they are wider than a byte. */
+typedef struct NokoNokoChallenge_GetCoinDivisor_rodata_8035570C_Pool {
+    int i_000;
+    float f_004[4];
+    int i_014[8];
+} NokoNokoChallenge_GetCoinDivisor_rodata_8035570C_Pool;
+
+/* was a byte array; cut into strings, floats and small integers by value and by how the code
+ * reaches it (address taken: a new member; block copy: numbers). x_ members are bytes that fit
+ * none of these and are still in the console's byte order if they are wider than a byte. */
+typedef struct NokoNokoChallenge_GetCoinDivisor_rodata_80355740_Pool {
+    int i_000;
+    float f_004[4];
+    int i_014[8];
+} NokoNokoChallenge_GetCoinDivisor_rodata_80355740_Pool;
+
+/* was a byte array; cut into strings, floats and small integers by value and by how the code
+ * reaches it (address taken: a new member; block copy: numbers). x_ members are bytes that fit
+ * none of these and are still in the console's byte order if they are wider than a byte. */
+typedef struct NokoNokoChallenge_GetCoinDivisor_rodata_80355774_Pool {
+    int i_000;
+    float f_004[4];
+    int i_014[8];
+} NokoNokoChallenge_GetCoinDivisor_rodata_80355774_Pool;
+
+/* was a byte array; cut into strings, floats and small integers by value and by how the code
+ * reaches it (address taken: a new member; block copy: numbers). x_ members are bytes that fit
+ * none of these and are still in the console's byte order if they are wider than a byte. */
+typedef struct NokoNokoChallenge_GetCoinDivisor_rodata_803557A8_Pool {
+    int i_000;
+    float f_004[4];
+    int i_014[8];
+} NokoNokoChallenge_GetCoinDivisor_rodata_803557A8_Pool;
+
+/* was a byte array; cut into strings, floats and small integers by value and by how the code
+ * reaches it (address taken: a new member; block copy: numbers). x_ members are bytes that fit
+ * none of these and are still in the console's byte order if they are wider than a byte. */
+typedef struct NokoNokoChallenge_GetCoinDivisor_rodata_803557DC_Pool {
+    int i_000;
+    float f_004[4];
+    int i_014[8];
+} NokoNokoChallenge_GetCoinDivisor_rodata_803557DC_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -146,83 +238,101 @@ const float lbl_803553D0[1] = {
 const float lbl_803553D4[1] = {
     7e+01f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_803553D8[4] = {
-    0, 0, 0, 1
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_803553D8[1] = {
+    1
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_803553DC[4] = {
-    0, 0, 0, 1
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_803553DC[1] = {
+    1
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_803553E0[4] = {
-    0, 0, 0, 1
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_803553E0[1] = {
+    1
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_803553E4[4] = {
-    0, 0, 0, 1
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_803553E4[1] = {
+    1
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_803553E8[4] = {
-    0, 0, 0, 1
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_803553E8[1] = {
+    1
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_803553EC[4] = {
-    0, 0, 0, 1
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_803553EC[1] = {
+    1
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_803553F0[16] = {
-    0, 0, 0, 3, 0, 0, 0, 6, 0, 0, 0, 9,
-    0, 0, 0, 15
+/* element type read off the values (all small integers), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_803553F0[4] = {
+    3, 6, 9, 15
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355400[16] = {
-    0, 0, 0, 3, 0, 0, 0, 6, 0, 0, 0, 9,
-    0, 0, 0, 15
+/* element type read off the values (all small integers), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_80355400[4] = {
+    3, 6, 9, 15
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355410[16] = {
-    0, 0, 0, 3, 0, 0, 0, 6, 0, 0, 0, 9,
-    0, 0, 0, 15
+/* element type read off the values (all small integers), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_80355410[4] = {
+    3, 6, 9, 15
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355420[16] = {
-    0, 0, 0, 3, 0, 0, 0, 6, 0, 0, 0, 9,
-    0, 0, 0, 15
+/* element type read off the values (all small integers), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_80355420[4] = {
+    3, 6, 9, 15
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355430[16] = {
-    0, 0, 0, 3, 0, 0, 0, 6, 0, 0, 0, 9,
-    0, 0, 0, 15
+/* element type read off the values (all small integers), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_80355430[4] = {
+    3, 6, 9, 15
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355440[16] = {
-    0, 0, 0, 3, 0, 0, 0, 6, 0, 0, 0, 9,
-    0, 0, 0, 15
+/* element type read off the values (all small integers), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_80355440[4] = {
+    3, 6, 9, 15
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355450[4] = {
-    0, 0, 0, 15
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_80355450[1] = {
+    15
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355454[4] = {
-    0, 0, 0, 15
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_80355454[1] = {
+    15
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355458[4] = {
-    0, 0, 0, 15
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_80355458[1] = {
+    15
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_8035545C[4] = {
-    0, 0, 0, 15
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_8035545C[1] = {
+    15
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355460[4] = {
-    0, 0, 0, 15
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_80355460[1] = {
+    15
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355464[4] = {
-    0, 0, 0, 15
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_80355464[1] = {
+    15
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355468[4] = {
-    0, 0, 0, 5
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_80355468[1] = {
+    5
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_8035546C[4] = {
-    0, 0, 0, 5
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_8035546C[1] = {
+    5
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355470[4] = {
-    0, 0, 0, 5
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_80355470[1] = {
+    5
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355474[4] = {
-    0, 0, 0, 5
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_80355474[1] = {
+    5
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355478[4] = {
-    0, 0, 0, 5
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_80355478[1] = {
+    5
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_8035547C[4] = {
-    0, 0, 0, 5
+/* element type read off the value (a small integer), not from code */
+const int NokoNokoChallenge_GetCoinDivisor_rodata_8035547C[1] = {
+    5
 };
 /* decl: char */
 void *const NokoNokoChallenge_GetCoinDivisor_rodata_80355480[1] = {
@@ -330,149 +440,161 @@ const int MiniGame_GetTimerValue_rodata_803554E0[8][3][2] = {
     { { 60, 50 }, { 60, 50 }, { 60, 50 } },
     { { 30, 30 }, { 30, 30 }, { 30, 30 } }
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_803555A0[24] = {
-    62, -82, 20, 123, 62, -26, 102, 102, 63, 61, 112, -92,
-    61, -52, -52, -51, 63, 122, -31, 72, 63, 122, -31, 72
+/* element type read off the values (all floats), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_803555A0[6] = {
+    0.34f, 0.45f, 0.74f, 0.1f, 0.98f, 0.98f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_803555B8[24] = {
-    62, -128, 0, 0, 62, -26, 102, 102, 63, 71, -82, 20,
-    61, -52, -52, -51, 63, 122, -31, 72, 63, 102, 102, 102
+/* element type read off the values (all floats), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_803555B8[6] = {
+    0.25f, 0.45f, 0.78f, 0.1f, 0.98f, 0.9f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_803555D0[24] = {
-    62, -82, 20, 123, 62, -26, 102, 102, 63, 61, 112, -92,
-    61, -52, -52, -51, 63, 122, -31, 72, 63, 122, -31, 72
+/* element type read off the values (all floats), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_803555D0[6] = {
+    0.34f, 0.45f, 0.74f, 0.1f, 0.98f, 0.98f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_803555E8[24] = {
-    62, -128, 0, 0, 62, -26, 102, 102, 63, 71, -82, 20,
-    61, -52, -52, -51, 63, 122, -31, 72, 63, 102, 102, 102
+/* element type read off the values (all floats), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_803555E8[6] = {
+    0.25f, 0.45f, 0.78f, 0.1f, 0.98f, 0.9f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355600[24] = {
-    62, -82, 20, 123, 62, -26, 102, 102, 63, 61, 112, -92,
-    61, -52, -52, -51, 63, 122, -31, 72, 63, 122, -31, 72
+/* element type read off the values (all floats), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_80355600[6] = {
+    0.34f, 0.45f, 0.74f, 0.1f, 0.98f, 0.98f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355618[24] = {
-    62, -128, 0, 0, 62, -26, 102, 102, 63, 71, -82, 20,
-    61, -52, -52, -51, 63, 122, -31, 72, 63, 102, 102, 102
+/* element type read off the values (all floats), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_80355618[6] = {
+    0.25f, 0.45f, 0.78f, 0.1f, 0.98f, 0.9f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355630[8] = {
-    63, 0, 0, 0, 0, 0, 0, 15
+/* element type read off the values (16-bit pairs), not from code */
+const short NokoNokoChallenge_GetCoinDivisor_rodata_80355630[4] = {
+    16128, 0, 0, 15
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355638[8] = {
-    63, -128, 0, 0, 0, 0, 0, 15
+/* element type read off the values (16-bit pairs), not from code */
+const short NokoNokoChallenge_GetCoinDivisor_rodata_80355638[4] = {
+    16256, 0, 0, 15
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355640[8] = {
-    63, 0, 0, 0, 0, 0, 0, 15
+/* element type read off the values (16-bit pairs), not from code */
+const short NokoNokoChallenge_GetCoinDivisor_rodata_80355640[4] = {
+    16128, 0, 0, 15
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355648[8] = {
-    63, -128, 0, 0, 0, 0, 0, 15
+/* element type read off the values (16-bit pairs), not from code */
+const short NokoNokoChallenge_GetCoinDivisor_rodata_80355648[4] = {
+    16256, 0, 0, 15
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355650[8] = {
-    63, 0, 0, 0, 0, 0, 0, 15
+/* element type read off the values (16-bit pairs), not from code */
+const short NokoNokoChallenge_GetCoinDivisor_rodata_80355650[4] = {
+    16128, 0, 0, 15
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355658[8] = {
-    63, -128, 0, 0, 0, 0, 0, 15
+/* element type read off the values (16-bit pairs), not from code */
+const short NokoNokoChallenge_GetCoinDivisor_rodata_80355658[4] = {
+    16256, 0, 0, 15
 };
 const char NokoNokoChallenge_GetCoinDivisor_rodata_80355660[20] = {
     0, 0, 0, 0, 64, -64, 0, 0, 0, 0, 0, 70,
     0, 0, 0, 120, 0, 0, 0, 0
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355674[20] = {
-    0, 0, 0, 0, 64, -96, 0, 0, 0, 0, 0, 60,
-    0, 0, 0, 120, 0, 0, 0, 0
+const NokoNokoChallenge_GetCoinDivisor_rodata_80355674_Pool NokoNokoChallenge_GetCoinDivisor_rodata_80355674 = {
+    0,
+    5.0f,
+    { 60, 120, 0 }
 };
 const char NokoNokoChallenge_GetCoinDivisor_rodata_80355688[20] = {
     0, 0, 0, 0, 64, -64, 0, 0, 0, 0, 0, 50,
     0, 0, 0, 120, 0, 0, 0, 0
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_8035569C[20] = {
-    0, 0, 0, 0, 64, -96, 0, 0, 0, 0, 0, 40,
-    0, 0, 0, 120, 0, 0, 0, 0
+const NokoNokoChallenge_GetCoinDivisor_rodata_8035569C_Pool NokoNokoChallenge_GetCoinDivisor_rodata_8035569C = {
+    0,
+    5.0f,
+    { 40, 120, 0 }
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_803556B0[20] = {
-    0, 0, 0, 0, 64, -64, 0, 0, 0, 0, 0, 50,
-    0, 0, 0, 120, 1, 0, 0, 0
+const NokoNokoChallenge_GetCoinDivisor_rodata_803556B0_Pool NokoNokoChallenge_GetCoinDivisor_rodata_803556B0 = {
+    0,
+    6.0f,
+    { 50, 120 },
+    { 0x01, 0x00, 0x00, 0x00 }
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_803556C4[20] = {
-    0, 0, 0, 0, 64, -96, 0, 0, 0, 0, 0, 40,
-    0, 0, 0, 120, 1, 0, 0, 0
+const NokoNokoChallenge_GetCoinDivisor_rodata_803556C4_Pool NokoNokoChallenge_GetCoinDivisor_rodata_803556C4 = {
+    0,
+    5.0f,
+    { 40, 120 },
+    { 0x01, 0x00, 0x00, 0x00 }
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_803556D8[52] = {
-    0, 0, 0, 0, 64, 64, 0, 0, 63, 38, 102, 102,
-    63, 64, 0, 0, 63, 89, -103, -102, 0, 0, 0, -76,
-    0, 0, 0, 60, 0, 0, 0, 1, 0, 0, 0, 2,
-    0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 1,
-    0, 0, 0, 2
+const NokoNokoChallenge_GetCoinDivisor_rodata_803556D8_Pool NokoNokoChallenge_GetCoinDivisor_rodata_803556D8 = {
+    0,
+    { 3.0f, 0.65f, 0.75f, 0.85f },
+    { 180, 60, 1, 2, 3, 3, 1, 2 }
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_8035570C[52] = {
-    0, 0, 0, 0, 64, -112, 0, 0, 63, 51, 51, 51,
-    63, 64, 0, 0, 63, 107, -123, 31, 0, 0, 0, 90,
-    0, 0, 0, 60, 0, 0, 0, 1, 0, 0, 0, 3,
-    0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 3,
-    0, 0, 0, 2
+const NokoNokoChallenge_GetCoinDivisor_rodata_8035570C_Pool NokoNokoChallenge_GetCoinDivisor_rodata_8035570C = {
+    0,
+    { 4.5f, 0.7f, 0.75f, 0.92f },
+    { 90, 60, 1, 3, 2, 1, 3, 2 }
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355740[52] = {
-    0, 0, 0, 0, 64, 64, 0, 0, 63, 64, 0, 0,
-    63, 115, 51, 51, 63, 115, 51, 51, 0, 0, 0, 90,
-    0, 0, 0, 60, 0, 0, 0, 1, 0, 0, 0, 2,
-    0, 0, 0, 3, 0, 0, 0, 2, 0, 0, 0, 3,
-    0, 0, 0, 1
+const NokoNokoChallenge_GetCoinDivisor_rodata_80355740_Pool NokoNokoChallenge_GetCoinDivisor_rodata_80355740 = {
+    0,
+    { 3.0f, 0.75f, 0.95f, 0.95f },
+    { 90, 60, 1, 2, 3, 2, 3, 1 }
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355774[52] = {
-    0, 0, 0, 0, 64, -112, 0, 0, 63, 76, -52, -51,
-    63, -128, 0, 0, 63, -128, 0, 0, 0, 0, 0, 60,
-    0, 0, 0, 60, 0, 0, 0, 1, 0, 0, 0, 3,
-    0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 3,
-    0, 0, 0, 2
+const NokoNokoChallenge_GetCoinDivisor_rodata_80355774_Pool NokoNokoChallenge_GetCoinDivisor_rodata_80355774 = {
+    0,
+    { 4.5f, 0.8f, 1.0f, 1.0f },
+    { 60, 60, 1, 3, 2, 1, 3, 2 }
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_803557A8[52] = {
-    0, 0, 0, 0, 64, 64, 0, 0, 63, 89, -103, -102,
-    63, -128, 0, 0, 63, -128, 0, 0, 0, 0, 0, 90,
-    0, 0, 0, 60, 0, 0, 0, 1, 0, 0, 0, 2,
-    0, 0, 0, 3, 0, 0, 0, 2, 0, 0, 0, 3,
-    0, 0, 0, 1
+const NokoNokoChallenge_GetCoinDivisor_rodata_803557A8_Pool NokoNokoChallenge_GetCoinDivisor_rodata_803557A8 = {
+    0,
+    { 3.0f, 0.85f, 1.0f, 1.0f },
+    { 90, 60, 1, 2, 3, 2, 3, 1 }
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_803557DC[52] = {
-    0, 0, 0, 0, 64, -112, 0, 0, 63, 102, 102, 102,
-    63, -128, 0, 0, 63, -128, 0, 0, 0, 0, 0, 60,
-    0, 0, 0, 60, 0, 0, 0, 1, 0, 0, 0, 3,
-    0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 3,
-    0, 0, 0, 2
+const NokoNokoChallenge_GetCoinDivisor_rodata_803557DC_Pool NokoNokoChallenge_GetCoinDivisor_rodata_803557DC = {
+    0,
+    { 4.5f, 0.9f, 1.0f, 1.0f },
+    { 60, 60, 1, 3, 2, 1, 3, 2 }
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355810[4] = {
-    66, -106, 0, 0
+/* element type read off the value (a float), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_80355810[1] = {
+    75.0f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355814[4] = {
-    66, -106, 0, 0
+/* element type read off the value (a float), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_80355814[1] = {
+    75.0f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355818[4] = {
-    66, -106, 0, 0
+/* element type read off the value (a float), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_80355818[1] = {
+    75.0f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_8035581C[4] = {
-    66, -106, 0, 0
+/* element type read off the value (a float), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_8035581C[1] = {
+    75.0f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355820[4] = {
-    66, -106, 0, 0
+/* element type read off the value (a float), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_80355820[1] = {
+    75.0f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355824[4] = {
-    66, -106, 0, 0
+/* element type read off the value (a float), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_80355824[1] = {
+    75.0f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355828[4] = {
-    66, -116, 0, 0
+/* element type read off the value (a float), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_80355828[1] = {
+    70.0f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_8035582C[4] = {
-    66, -116, 0, 0
+/* element type read off the value (a float), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_8035582C[1] = {
+    70.0f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355830[4] = {
-    66, -116, 0, 0
+/* element type read off the value (a float), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_80355830[1] = {
+    70.0f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355834[4] = {
-    66, -116, 0, 0
+/* element type read off the value (a float), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_80355834[1] = {
+    70.0f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_80355838[4] = {
-    66, -116, 0, 0
+/* element type read off the value (a float), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_80355838[1] = {
+    70.0f
 };
-const char NokoNokoChallenge_GetCoinDivisor_rodata_8035583C[4] = {
-    66, -116, 0, 0
+/* element type read off the value (a float), not from code */
+const float NokoNokoChallenge_GetCoinDivisor_rodata_8035583C[1] = {
+    70.0f
 };
 
 #pragma force_active reset

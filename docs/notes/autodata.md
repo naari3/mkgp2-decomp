@@ -136,6 +136,43 @@ and others became `float` arrays or row structs). Build afterwards: a TU that
 indexes the array as integers would change or fail, then revert that file.
 `tools/port_readiness.py` counts what is left as "plain unsigned int array".
 
+## Byte arrays that hold numbers (`tools/autodata_bytes.py`, 2026-11-10)
+
+`gen` keeps the declared type, so every object a unit declares as
+`extern const unsigned char x[]` and reads through casts
+(`*(float *)(x + 0x10)`, a struct copied out of `x + 0x3FC`) was written as
+bytes in the console's order: right under MWCC, wrong for every number on a
+little-endian build (mkgp2-pc upstream request 15; first seen in
+`clFlowClass_Update`, whose animation ids came out byte-swapped).
+
+`python3 tools/autodata_bytes.py --evidence bytes_evidence.pkl` rewrites
+those definitions. 886 byte arrays: about 700 are text (ASCII, Shift-JIS,
+half-width katakana) and stay; 25 KB in 28 units became numbers:
+
+- one column kind per row (`autodata.py infer` on the words): `float` /
+  `int` arrays and row structs;
+- otherwise a `<name>_Pool` struct cut into `char s_XXX[]` strings,
+  `float f_XXX[]`, `int i_XXX[]`, `double d_XXX` and `unsigned char x_XXX[]`
+  for bytes that fit none of these (three objects, 36 bytes: byte-wide fields,
+  left as they were).
+
+The cut uses how the code reaches the object, collected by
+`tools/port_abi/bytes_evidence.py` from clang's optimised IR of every unit:
+an offset whose address is passed on starts a new member (and is what lets a
+string start there), a block copy marks numbers, a byte-wide load or store on
+a member that would become a number vetoes the object. Where bytes read as
+text and as floats alike (`42 85 55 56 44 7A 00 00` is 66.6667, 1000.0, and
+also "B\x85UVDz"), they are text only when the code takes that address.
+`0x43300000 00000000` / `...80000000` are doubles (the int-to-float conversion
+constants). Everything else is read off the values, as in `infer`: a small
+word is an `int`, which is a guess when nothing reads it directly.
+
+Still bytes on purpose: text, all-zero objects, sizes that are not a multiple
+of 4, and six small-data objects whose values fit nothing
+(`autodata_bytes.py --list`). The units that declare these objects still say
+`unsigned char[]`; only the definition changed, so nothing else in the
+matching build moves (all objects and `autodata.py check` identical).
+
 An embedded file image is typed as bytes on purpose: the 31.8 KB object at
 0x80412158 is a `*_line.bin` course file (dtk had cut it in two), read by
 `CourseLookup::LoadMemory`. A port swaps it with the loader, like the files.

@@ -23,12 +23,14 @@ const float lbl_806D24C4 = 1e+06f;
 const double lbl_806D24C8 = 4503599627370496.0;
 const char lbl_806D24D0[] = "0";
 const float lbl_806D24D4 = 0.0f;
-const unsigned char lbl_806D24D8[4] = {
-    0x49, 0x74, 0x24, 0x0
+/* element type read off the value (a float), not from code */
+const float lbl_806D24D8[1] = {
+    1000000.0f
 };
 /* 8-aligned in the original: probably the first object of a TU */
-const unsigned char lbl_806D24E0[8] __attribute__((aligned(8))) = {
-    0x43, 0x30, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
+/* a double (int-to-float conversion constant or read as one) */
+const double lbl_806D24E0[1] __attribute__((aligned(8))) = {
+    4503599627370496.0
 };
 const float lbl_806D24E8 = 0.0f;
 const double lbl_806D24F0 = 0.5;

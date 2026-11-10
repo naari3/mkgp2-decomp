@@ -35,15 +35,24 @@ typedef struct lbl_803734B8_Row {
     float f_04;
 } lbl_803734B8_Row;
 
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_80371F28_Row {
+    int i_00;
+    float f_04;
+} lbl_80371F28_Row;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const char lbl_80371F28[56] = {
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    68, 22, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0,
-    -1, -1, -1, -1, 0, 0, 0, 0, -1, -1, -1, -1,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0
+const lbl_80371F28_Row lbl_80371F28[7] = {
+    { 0, 0.0f },
+    { 0, 600.0f },
+    { 7, 0.0f },
+    { -1, 0.0f },
+    { -1, 0.0f },
+    { 0, 0.0f },
+    { 0, 0.0f }
 };
 const float lbl_80371F60[48] = {
     2e+03f, -3.3e+02f, -1.78e+03f, 1.45e+03f, -3.3e+02f, -1.55e+03f, 1.2e+03f, -3.3e+02f,

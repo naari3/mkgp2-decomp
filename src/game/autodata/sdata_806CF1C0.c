@@ -687,8 +687,9 @@ char ResultFx_data_806CF688[4] = {
 char ResultFx_data_806CF68C[4] = {
     0, 0, 0, 67
 };
-char ResultFx_data_806CF690[4] = {
-    0, 0, 1, 79
+/* element type read off the value (a small integer), not from code */
+int ResultFx_data_806CF690[1] = {
+    335
 };
 const char *data_8048E548_data_806CF694[2] = {
     (const char *)&lbl_8036050C, 0
@@ -701,8 +702,9 @@ void *data_8048E548_data_806CF69C[3] = {
 unsigned char ResultFxScene_data_806CF6A8[4] = {
     0x0, 0x0, 0x0, 0x7A
 };
-unsigned char ResultFxScene_data_806CF6AC[4] = {
-    0x0, 0x0, 0x1, 0xBB
+/* element type read off the value (a small integer), not from code */
+int ResultFxScene_data_806CF6AC[1] = {
+    443
 };
 unsigned char ResultFxScene_data_806CF6B0[4] = {
     0x0, 0x0, 0x0, 0x43

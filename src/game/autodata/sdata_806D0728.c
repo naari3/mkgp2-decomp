@@ -131,23 +131,29 @@ float ItemSelectState_data_806D0738 = 1.8e+02f;
 char ItemSelectState_data_806D073C[4] = {
     0, 0, 0, 73
 };
-char ItemSelectState_data_806D0740[4] = {
-    0, 0, 1, -88
+/* element type read off the value (a small integer), not from code */
+int ItemSelectState_data_806D0740[1] = {
+    424
 };
-char ItemSelectState_data_806D0744[4] = {
-    0, 0, 1, -89
+/* element type read off the value (a small integer), not from code */
+int ItemSelectState_data_806D0744[1] = {
+    423
 };
-char ItemSelectState_data_806D0748[4] = {
-    0, 0, 1, -97
+/* element type read off the value (a small integer), not from code */
+int ItemSelectState_data_806D0748[1] = {
+    415
 };
-char ItemSelectState_data_806D074C[4] = {
-    0, 0, 1, -97
+/* element type read off the value (a small integer), not from code */
+int ItemSelectState_data_806D074C[1] = {
+    415
 };
-char ItemSelectState_data_806D0750[4] = {
-    0, 0, 1, -97
+/* element type read off the value (a small integer), not from code */
+int ItemSelectState_data_806D0750[1] = {
+    415
 };
-char ItemSelectState_data_806D0754[4] = {
-    0, 0, 0, -100
+/* element type read off the value (a small integer), not from code */
+int ItemSelectState_data_806D0754[1] = {
+    156
 };
 char clFlowItem_Update_data_806D0758[4] = {
     0, 0, 0, 77

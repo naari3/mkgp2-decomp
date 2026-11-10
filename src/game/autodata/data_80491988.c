@@ -609,8 +609,9 @@ float lbl_80491988[4096] = {
     -0.012271f, -0.010738f, -0.009204f, -0.00767f, -0.006136f, -0.004602f, -0.003068f, -0.001534f
 };
 /* decl: char / unsigned char */
-unsigned char lbl_80495988[12] = {
-    0x19, 0x0, 0x0, 0x0, 0x1, 0x4, 0x1, 0x1, 0x3, 0x7, 0x0, 0x7
+/* element type read off the values (16-bit pairs), not from code */
+short lbl_80495988[6] = {
+    6400, 0, 260, 257, 775, 7
 };
 /* decl: float / unsigned int */
 float lbl_80495994[64] = {

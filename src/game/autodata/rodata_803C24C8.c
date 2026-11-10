@@ -34,21 +34,14 @@ const char lbl_803C2558[] = "clYTaskManager<clMnTaskInterface>";
 const char lbl_803C257C[] = "clYTaskInterface";
 const char lbl_803C2590[] = "clMnTaskInterface";
 /* 8-aligned in the original: probably the first object of a TU */
-const char lbl_803C25A8[168] __attribute__((aligned(8))) = {
-    0, 0, 0, 96, 0, 0, 0, -1, 0, 0, 0, 0,
-    0, 0, 0, -56, 0, 0, 0, 64, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 96, 0, 0, 0, -1,
-    0, 0, 0, 0, 0, 0, 0, 96, 0, 0, 0, -1,
-    0, 0, 0, 0, 0, 0, 0, 96, 0, 0, 0, -1,
-    0, 0, 0, 0, 0, 0, 0, 96, 0, 0, 0, -1,
-    0, 0, 0, 0, 0, 0, 0, 96, 0, 0, 0, -1,
-    0, 0, 0, 0, 0, 0, 0, 96, 0, 0, 0, -1,
-    0, 0, 0, 0, 0, 0, 0, 96, 0, 0, 0, -1,
-    0, 0, 0, 0, 0, 0, 0, 96, 0, 0, 0, -1,
-    0, 0, 0, 0, 0, 0, 0, 96, 0, 0, 0, -1,
-    0, 0, 0, 0, 0, 0, 0, 96, 0, 0, 0, -1,
-    0, 0, 0, 0, 0, 0, 0, 96, 0, 0, 0, -1,
-    0, 0, 0, 0, 0, 0, 0, 96, 0, 0, 0, -1
+/* element type read off the values (all small integers), not from code */
+const int lbl_803C25A8[42] __attribute__((aligned(8))) = {
+    96, 255, 0, 200, 64, 0, 0, 96,
+    255, 0, 96, 255, 0, 96, 255, 0,
+    96, 255, 0, 96, 255, 0, 96, 255,
+    0, 96, 255, 0, 96, 255, 0, 96,
+    255, 0, 96, 255, 0, 96, 255, 0,
+    96, 255
 };
 const char lbl_803C2650[] = "clMnYesNoWindow";
 const char lbl_803C2660[] = "clYTaskInterface";

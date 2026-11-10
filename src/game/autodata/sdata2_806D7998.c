@@ -425,8 +425,9 @@ const int lbl_806D7F64 = -256;
 const float lbl_806D7F68[2] = {
     3.2e+02f, -5e+01f
 };
-const unsigned char lbl_806D7F70[8] = {
-    0x0, 0x0, 0x0, 0xFF, 0xFF, 0xFF, 0x0, 0x0
+/* element type read off the values (all small integers), not from code */
+const int lbl_806D7F70[2] = {
+    255, -65536
 };
 const char lbl_806D7F78[] = "cut0";
 const char lbl_806D7F80[] = "cut1";
