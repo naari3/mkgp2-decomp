@@ -11,7 +11,7 @@ void *memset(void *, int, unsigned long);
 void AnimStatePool_ZeroInit(void);
 void ItemHitRegistry_Reset(void);
 extern void *lbl_8041BC00[];
-extern unsigned char lbl_80638300[];
+extern unsigned char g_itemObjectManager[];
 
 /* Each slot is reset independently before the shared model is created. */
 static inline void ResetSlots(unsigned char *slot) {
@@ -24,10 +24,10 @@ static inline void ResetSlots(unsigned char *slot) {
 }
 
 void ItemObjectManager_Init(void) {
-    ResetSlots(lbl_80638300);
-    *(clNormal3D **)(lbl_80638300 + 0x1EC00) = new clNormal3D(lbl_8041BC00[0xAB4 / 4], 1);
+    ResetSlots(g_itemObjectManager);
+    *(clNormal3D **)(g_itemObjectManager + 0x1EC00) = new clNormal3D(lbl_8041BC00[0xAB4 / 4], 1);
     AnimStatePool_ZeroInit();
-    *(int *)(lbl_80638300 + 0x1EC04) = 0;
+    *(int *)(g_itemObjectManager + 0x1EC04) = 0;
     ItemHitRegistry_Reset();
 }
 }

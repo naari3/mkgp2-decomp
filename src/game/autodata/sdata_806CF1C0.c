@@ -115,13 +115,13 @@ extern char sdata_806CF1C0_data_8040F168[];
 extern char sdata_806CF1C0_data_8041051C[];
 extern char sdata_806CF1C0_data_804108F8[];
 extern char sdata_806CF1C0_data_80410CD4[];
-extern char lbl_80411DA8[];
+extern char TitleTracker_data_80411DA8[];
 extern char sdata_806CF1C0_data_80411DF8[];
 extern char sdata_806CF1C0_data_80419DA4[];
 extern char lbl_80419DD4[];
 extern char sdata_806CF1C0_data_80419DF0[];
 extern char sdata_806CF1C0_data_80419E10[];
-extern char lbl_80419E30[];
+extern char GameMode_Title_data_80419E30[];
 extern char sdata_806CF1C0_data_80419E50[];
 extern char sdata_806CF1C0_data_80419E5C[];
 extern char lbl_80419EB8[];
@@ -243,16 +243,16 @@ void *DetermineTitle_data_806CF224[1] = {
 const char *lbl_806CF228[2] = {
     (const char *)&lbl_80326B3C, 0
 };
-void *lbl_806CF230[2] = {
+void *TitleTracker_data_806CF230[2] = {
     (void *)&lbl_80326B30,
-    (void *)&lbl_80411DA8
+    (void *)&TitleTracker_data_80411DA8
 };
 /* decl: WarpDashMgr * */
-void *lbl_806CF238[2] = {
+void *g_warpDashMgrs[2] = {
     0,
     0
 };
-const char *lbl_806CF240[2] = {
+const char *WarpZone_data_806CF240[2] = {
     (const char *)&lbl_80328560, 0
 };
 const char *lbl_806CF248[2] = {
@@ -294,9 +294,9 @@ void *data_80412158_data_806CF2A0[2] = {
     (void *)&lbl_80328DA8,
     (void *)&sdata_806CF1C0_data_80419E10
 };
-void *lbl_806CF2A8[2] = {
+void *GameMode_Title_data_806CF2A8[2] = {
     (void *)&lbl_806D4F34,
-    (void *)&lbl_80419E30
+    (void *)&GameMode_Title_data_80419E30
 };
 const char *lbl_806CF2B0[2] = {
     (const char *)&lbl_80328E04, 0

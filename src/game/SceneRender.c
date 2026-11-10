@@ -3,7 +3,7 @@
  *
  * Same trivial CW C++ ABI deleting dtor pattern as ObjectBase_Dtor
  * (game/ObjectBase.c, commit 9807e6c). Only the vtable address differs:
- *   ObjectBase_Dtor : *this = &lbl_803F5658
+ *   ObjectBase_Dtor : *this = &ObjectBase_vtable_803F5658
  *   SceneRender_BaseDtor : *this = &clCallback_vtable_803F58E0
  *
  * Body:

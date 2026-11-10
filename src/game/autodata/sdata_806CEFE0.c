@@ -115,14 +115,14 @@ unsigned int lbl_806CF0D0 = 0x5;
 /* decl: unsigned char / unsigned int */
 unsigned char lbl_806CF0D4 = 0x1;
 /* decl: int / unsigned int */
-unsigned int lbl_806CF0D8 = 0x1;
+unsigned int g_cardRwSubState = 0x1;
 int lbl_806CF0DC = -1;
 int lbl_806CF0E0 = -1;
 /* decl: int / unsigned int */
 int lbl_806CF0E4 = 2;
 /* decl: int / unsigned int */
 int lbl_806CF0E8 = 3;
-int lbl_806CF0EC = 3;
+int g_cardReceiptMode = 3;
 char *Sci2Card_BuildRetryReceiptLine_data_806CF0F0[2] = {
     (char *)&lbl_806D3584,
     (char *)&lbl_806D358C

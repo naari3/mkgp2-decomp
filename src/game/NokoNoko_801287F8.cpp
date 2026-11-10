@@ -846,7 +846,7 @@ struct PlayerCar : CarObject {
 struct MapWaterEffect { char data[0x10]; MapWaterEffect(); };
 #include "game/types/HUD.h"
 #include "game/types/WeatherSystem.h"
-struct clNormal3D { char data[0x5C]; clNormal3D(const char *file, int arg); };
+#include "game/types/clNormal3D.h"
 
 struct ResCtrl {
     int id;

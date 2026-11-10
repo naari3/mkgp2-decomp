@@ -15,10 +15,7 @@
 
 #include "game/types/DrawScene.h"
 
-struct InputView {
-    char pad[0x14];
-    int dir;
-};
+#include "game/types/InputView.h"
 
 #include "game/types/MenuTarget.h"
 

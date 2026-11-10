@@ -12,7 +12,7 @@ typedef struct ItemClassEntry {
 } ItemClassEntry;
 
 extern ItemAliasEntry g_itemAliasTable[155];
-extern ItemClassEntry lbl_8041CBA8[];
+extern ItemClassEntry g_itemClassTable[];
 extern void *memcpy(void *dst, const void *src, unsigned long n);
 
 static inline int ItemAlias_FindSource(int id, signed char *found)
@@ -41,20 +41,20 @@ void ItemTable_PopulateAliasedSlots(void)
         signed char found;
         int src = ItemAlias_FindSource(id, &found);
         if (found) {
-            memcpy(&lbl_8041CBA8[id], &lbl_8041CBA8[src], sizeof(ItemClassEntry));
+            memcpy(&g_itemClassTable[id], &g_itemClassTable[src], sizeof(ItemClassEntry));
         }
     }
-    memcpy(&lbl_8041CBA8[0x109], &lbl_8041CBA8[0x4F], sizeof(ItemClassEntry));
-    memcpy(&lbl_8041CBA8[0x10A], &lbl_8041CBA8[0x53], sizeof(ItemClassEntry));
-    memcpy(&lbl_8041CBA8[0x10B], &lbl_8041CBA8[0x65], sizeof(ItemClassEntry));
-    memcpy(&lbl_8041CBA8[0x10C], &lbl_8041CBA8[0x4B], sizeof(ItemClassEntry));
-    memcpy(&lbl_8041CBA8[0x10D], &lbl_8041CBA8[0x57], sizeof(ItemClassEntry));
-    memcpy(&lbl_8041CBA8[0x10E], &lbl_8041CBA8[0x45], sizeof(ItemClassEntry));
-    memcpy(&lbl_8041CBA8[0x10F], &lbl_8041CBA8[0x70], sizeof(ItemClassEntry));
-    memcpy(&lbl_8041CBA8[0x110], &lbl_8041CBA8[0x67], sizeof(ItemClassEntry));
-    memcpy(&lbl_8041CBA8[0x111], &lbl_8041CBA8[0x66], sizeof(ItemClassEntry));
-    memcpy(&lbl_8041CBA8[0x112], &lbl_8041CBA8[0x62], sizeof(ItemClassEntry));
-    memcpy(&lbl_8041CBA8[0x113], &lbl_8041CBA8[0x68], sizeof(ItemClassEntry));
-    memcpy(&lbl_8041CBA8[0x114], &lbl_8041CBA8[0x63], sizeof(ItemClassEntry));
-    lbl_8041CBA8[0x115].flag1 = -1;
+    memcpy(&g_itemClassTable[0x109], &g_itemClassTable[0x4F], sizeof(ItemClassEntry));
+    memcpy(&g_itemClassTable[0x10A], &g_itemClassTable[0x53], sizeof(ItemClassEntry));
+    memcpy(&g_itemClassTable[0x10B], &g_itemClassTable[0x65], sizeof(ItemClassEntry));
+    memcpy(&g_itemClassTable[0x10C], &g_itemClassTable[0x4B], sizeof(ItemClassEntry));
+    memcpy(&g_itemClassTable[0x10D], &g_itemClassTable[0x57], sizeof(ItemClassEntry));
+    memcpy(&g_itemClassTable[0x10E], &g_itemClassTable[0x45], sizeof(ItemClassEntry));
+    memcpy(&g_itemClassTable[0x10F], &g_itemClassTable[0x70], sizeof(ItemClassEntry));
+    memcpy(&g_itemClassTable[0x110], &g_itemClassTable[0x67], sizeof(ItemClassEntry));
+    memcpy(&g_itemClassTable[0x111], &g_itemClassTable[0x66], sizeof(ItemClassEntry));
+    memcpy(&g_itemClassTable[0x112], &g_itemClassTable[0x62], sizeof(ItemClassEntry));
+    memcpy(&g_itemClassTable[0x113], &g_itemClassTable[0x68], sizeof(ItemClassEntry));
+    memcpy(&g_itemClassTable[0x114], &g_itemClassTable[0x63], sizeof(ItemClassEntry));
+    g_itemClassTable[0x115].flag1 = -1;
 }

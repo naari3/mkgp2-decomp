@@ -446,7 +446,7 @@ typedef struct NameEntry {
 
 extern "C" {
 extern char DbgMenu_rodata_8032CB38[];
-extern void *lbl_8041AC24[];
+extern void *g_itemDescriptorTable[];
 extern DbgModel *lbl_806D10D0;
 extern DbgModel *lbl_806D10AC;
 extern char lbl_806D58F8[8];
@@ -1683,7 +1683,7 @@ extern "C" void DbgScene03_TplTest_UpdateCamera(TplScene *self)
         self->dist = 100.0f;
         OrbitOffset(&self->target, self, self->dist);
         Vec3_Add_DestFirst(&self->target, &self->pos, &self->target);
-        self->obj = new MenuNormalModel((char *)lbl_8041AC24[0x46], 1);
+        self->obj = new MenuNormalModel((char *)g_itemDescriptorTable[0x46], 1);
         self->mode = 0;
         Vec3_Copy(&self->c, &self->target);
         Vec3_Copy(&self->a, &self->pos);

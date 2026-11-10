@@ -36,7 +36,7 @@ typedef struct NamCamWork {
     NamCamConn conn;
 } NamCamWork;
 
-#define NAMCAM_CONN (&lbl_806D1070->conn)
+#define NAMCAM_CONN (&g_namCam->conn)
 
 /* fd_set words are kept in network (big/little swapped) order. */
 #define NAMCAM_SWAP32(x) (((x) << 24) | (((x) << 8) & 0xFF0000) | (((x) >> 8) & 0xFF00) | (((x) >> 24) & 0xFF))
@@ -57,7 +57,7 @@ extern unsigned int fn_802929BC(NamCamRequest *req, unsigned int offset, unsigne
 extern void fn_80292BFC(int a, char *dst, int len);
 extern void *memset(void *dst, int c, unsigned int n);
 
-extern NamCamWork *lbl_806D1070;
+extern NamCamWork *g_namCam;
 extern int NamCam_GetImageHandle_bss_806D1074;
 extern char NamCam_GetImageHandle_bss_806D1078;
 extern const char lbl_806D26C0[8]; /* "%d %d \n" */
@@ -92,7 +92,7 @@ int NamCam_GetImageHandle(char **outData, unsigned int *outSize)
         if (--NAMCAM_CONN->retry > 0) {
             return 0;
         }
-        memset(lbl_806D1070->buffer, 0, NAMCAM_BUFFER_SIZE);
+        memset(g_namCam->buffer, 0, NAMCAM_BUFFER_SIZE);
         NAMCAM_CONN->state = 1;
         break;
     case 1:
@@ -208,7 +208,7 @@ int NamCam_GetImageHandle(char **outData, unsigned int *outSize)
             }
             n = acReadResponse(NAMCAM_CONN->sock);
             if (n > 0) {
-                fn_80292BFC(0, lbl_806D1070->buffer + NAMCAM_CONN->received, n);
+                fn_80292BFC(0, g_namCam->buffer + NAMCAM_CONN->received, n);
             }
             if (n < 0) {
                 DebugPrintf(strings + 0x47c, n);
@@ -223,7 +223,7 @@ int NamCam_GetImageHandle(char **outData, unsigned int *outSize)
                 return 0;
             }
             {
-                NamCamWork *work = lbl_806D1070;
+                NamCamWork *work = g_namCam;
                 char *end = work->buffer + work->conn.received;
                 if (end[-2] == -1 && end[-1] == -0x27) {
                     for (*outData = work->buffer + 3;

@@ -27,10 +27,7 @@ extern const float lbl_806D94DC;
 void DebugPrintf(const char *fmt, ...);
 }
 
-struct clNormal3D {
-    unsigned char data[0x5c];
-    clNormal3D(const char *name, int arg);
-};
+#include "game/types/clNormal3D.h"
 
 extern "C" {
 HSD_JObj *Archive_GetRootJObj(clNormal3D *model);

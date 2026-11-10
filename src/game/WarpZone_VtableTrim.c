@@ -1,8 +1,8 @@
-extern char lbl_80411DD0[];  /* WarpZone vtable */
+extern char WarpZone_vtable_80411DD0[];  /* WarpZone vtable */
 
 void WarpZone_VtableTrim(void *self)
 {
-    *(char **)self = lbl_80411DD0;
+    *(char **)self = WarpZone_vtable_80411DD0;
 }
 
 int fn_800AA8E0(void)

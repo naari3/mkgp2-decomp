@@ -6,10 +6,10 @@
 #pragma inline_max_size(10000)
 #include "game/CardLoadShadowPrivate.h"
 extern "C" {
-extern unsigned char lbl_806D122A, lbl_806D121C, lbl_806D1225, lbl_806D1248;
+extern unsigned char lbl_806D122A, g_cardCmdResult, lbl_806D1225, lbl_806D1248;
 extern unsigned char lbl_806D1228, lbl_806D1227, lbl_806CF0D4;
-extern unsigned int lbl_806D122C;
-extern int lbl_806D1210, lbl_806CF0E4, lbl_806D1220, lbl_806CF0D8;
+extern unsigned int g_cardSaveStartTick;
+extern int lbl_806D1210, lbl_806CF0E4, lbl_806D1220, g_cardRwSubState;
 extern int lbl_806D124C, lbl_806CF0D0, lbl_806CF0E8;
 unsigned int OSGetTick(void);
 unsigned char ServiceLatch_CheckTriggered(void);
@@ -34,7 +34,7 @@ static inline bool BeginRW(void)
 {
     lbl_806D1210 = 0;
     lbl_806D122A = 1;
-    lbl_806D121C = 0;
+    g_cardCmdResult = 0;
     lbl_806CF0E4 = 5;
     if (!ServiceLatch_CheckTriggered()) {
         lbl_806D1210 = 1;
@@ -49,7 +49,7 @@ extern "C" unsigned char card_save_trigger(unsigned char mode)
 
     lbl_806D1210 = 0;
     lbl_806D122A = 1;
-    lbl_806D121C = 0;
+    g_cardCmdResult = 0;
     lbl_806CF0E4 = 5;
     if (!ServiceLatch_CheckTriggered()) {
         lbl_806D1210 = 1;
@@ -62,11 +62,11 @@ extern "C" unsigned char card_save_trigger(unsigned char mode)
         CaptureSnapshot();
         g_playerData.byte199 = 1;
         if (lbl_806D1228 != 1) {
-            lbl_806D122C = OSGetTick();
+            g_cardSaveStartTick = OSGetTick();
             if (BeginRW()) {
                 lbl_806D1227 = 0;
                 lbl_806D1220 = 0;
-                lbl_806CF0D8 = 0;
+                g_cardRwSubState = 0;
                 card_rw_state_machine();
             }
         }
@@ -74,7 +74,7 @@ extern "C" unsigned char card_save_trigger(unsigned char mode)
         lbl_806CF0D4 = 1;
     } else {
         bool a, b, c;
-        lbl_806D121C = Sci2Card_SendCmdCleaning(card);
+        g_cardCmdResult = Sci2Card_SendCmdCleaning(card);
         lbl_806D124C = 1;
         lbl_806CF0D0 = 4;
         lbl_806CF0D4 = 1;

@@ -6,7 +6,7 @@ typedef struct RomOverlayNode {
     struct RomOverlayNode *next;
 } RomOverlayNode;
 
-extern RomOverlayNode *lbl_806D0FE0;
+extern RomOverlayNode *g_romListHead;
 extern const char lbl_802E9810[];
 extern void OverlayText(int layer, int x, int y, const char *format, ...);
 
@@ -14,7 +14,7 @@ extern void OverlayText(int layer, int x, int y, const char *format, ...);
 void clRom_DumpListOverlay(void)
 {
     int index = 0;
-    RomOverlayNode *node = lbl_806D0FE0;
+    RomOverlayNode *node = g_romListHead;
 
     while (node != 0) {
         OverlayText(3, 1, index + 1, lbl_802E9810,

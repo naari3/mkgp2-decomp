@@ -10,7 +10,7 @@ extern void dtor_8005FF74();
 extern void dtor_80060024();
 extern char lbl_806CEEA8[];
 extern char data_803F9CD8_data_806CEEB0[];
-extern char lbl_806CEEB8[];
+extern char clItemBoxResponder_data_806CEEB8[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -32,8 +32,8 @@ void *clItemBoxManagerBase_vtable_803F9CF0[4] = {
     0
 };
 /* decl: char / void * */
-void *lbl_803F9D00[4] = {
-    (void *)&lbl_806CEEB8,
+void *clItemBoxResponder_vtable_803F9D00[4] = {
+    (void *)&clItemBoxResponder_data_806CEEB8,
     0,
     0,
     (void *)dtor_80060024

@@ -13,7 +13,7 @@ struct ItemHitSink {
 };
 
 extern "C" {
-extern ItemClassEntry lbl_8041AC24[];
+extern ItemClassEntry g_itemDescriptorTable[];
 extern void *lbl_806D10A0;
 
 extern void *GetRaceContextPtr(void);
@@ -54,7 +54,7 @@ static inline int ItemCollision_IsContactActive(unsigned char *self)
     if (slot == -1) {
         return 0;
     }
-    r = 0.05f * (F(0xC4) * lbl_8041AC24[self[0x1C]].radius);
+    r = 0.05f * (F(0xC4) * g_itemDescriptorTable[self[0x1C]].radius);
     if (r < 1.0f) {
         r = 1.0f;
     }

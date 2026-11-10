@@ -43,10 +43,10 @@ extern unsigned int lbl_806D4E18;
 extern const float lbl_806D4E1C;
 extern unsigned int lbl_806D4E20;
 
-/* WarpDashMgr instance array: lbl_806CF238 (sdata, size 0x8 = 2 entries). */
+/* WarpDashMgr instance array: g_warpDashMgrs (sdata, size 0x8 = 2 entries). */
 /* Indexed by `(u8)id != 0` -> 0 or 1, so a 2-element pointer array fits the */
 /* sda21 1-instr base load that the bundle relies on. */
-extern struct WarpDashMgr *lbl_806CF238[2];
+extern struct WarpDashMgr *g_warpDashMgrs[2];
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -272,23 +272,23 @@ struct WarpDashMgrObj {
 
 extern "C" void WarpDashMgr_Cleanup(void) {
     for (int i = 0; i < 2; i++) {
-        delete (WarpDashMgrObj *)lbl_806CF238[i];
-        lbl_806CF238[i] = 0;
+        delete (WarpDashMgrObj *)g_warpDashMgrs[i];
+        g_warpDashMgrs[i] = 0;
     }
 }
 #pragma cplusplus off
 
 WarpDashMgr *WarpDashMgr_GetInstance(unsigned char id) {
-    return lbl_806CF238[id != 0];
+    return g_warpDashMgrs[id != 0];
 }
 
 #pragma cplusplus on
 #pragma use_lmw_stmw on
 extern "C" WarpDashMgr *WarpDashMgr_GetOrCreate(int cup, unsigned char course, unsigned char reverse, unsigned char id) {
-    if (lbl_806CF238[id != 0] == 0) {
-        lbl_806CF238[id != 0] = (WarpDashMgr *)new WarpDashMgrObj(cup, course, reverse, id);
+    if (g_warpDashMgrs[id != 0] == 0) {
+        g_warpDashMgrs[id != 0] = (WarpDashMgr *)new WarpDashMgrObj(cup, course, reverse, id);
     }
-    return lbl_806CF238[id != 0];
+    return g_warpDashMgrs[id != 0];
 }
 #pragma use_lmw_stmw reset
 #pragma cplusplus off
@@ -421,7 +421,7 @@ static inline unsigned char WarpAutoRun_FindZone(WarpAutoRun *self, float x, flo
     WarpDashMgr *mgr;
     int i;
     int zone;
-    mgr = lbl_806CF238[self->mgrId != 0];
+    mgr = g_warpDashMgrs[self->mgrId != 0];
     if (mgr == 0) {
         return 0;
     }

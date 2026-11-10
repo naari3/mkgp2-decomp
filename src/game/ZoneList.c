@@ -502,10 +502,7 @@ struct ModeTask : ModeTaskBase {
     unsigned char done;
 };
 
-struct GameModeBase {
-    GameModeBase();
-    virtual ~GameModeBase();
-};
+#include "game/types/GameModeBase.h"
 
 struct TaskMode : GameModeBase {
     ModeTask *task;

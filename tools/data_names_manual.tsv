@@ -1,0 +1,57 @@
+# old	new	why (names chosen by reading the users; python3 tools/data_names.py apply --manual)
+lbl_8041AC24	g_itemDescriptorTable	ItemDescriptor[] indexed by item kind/class (radius, anims): ItemCollision_Check, SpriteSlot anim lookups
+lbl_8041CBA8	g_itemClassTable	ItemClassEntry[] returned by GetItemDataEntry; ItemClass_GetFlagByte0/1, alias slots copied by ItemTable_PopulateAliasedSlots
+lbl_805DF468	g_drawEffectSlots	slot pool of DrawEffect_Spawn*/DrawEffect_TickAndCull
+lbl_80638300	g_itemObjectManager	the ItemObject pool (0x1EC each) plus manager fields: ItemObjectManager_*, ItemObject_AllocFromPool
+lbl_805A5EA0	g_operationClock	OperationClockState used by OperationClock_Commit/GetLifetimeSeconds
+lbl_806D0F94	g_serviceEnable	ServiceEnable_Get/Set
+lbl_806D0F98	g_serviceValue	ServiceValue_Get/Set
+lbl_806D0F99	g_vblankValue	VBlankValue_Get/Set
+lbl_806CF238	g_warpDashMgrs	WarpDashMgr *[2], WarpDashMgr_GetOrCreate/GetInstance/Cleanup
+lbl_806D0FE0	g_romListHead	head of the clRom / FileLoader list
+lbl_806D0FE4	g_romListTail	tail of the clRom / FileLoader list
+lbl_806D0FE8	g_romActiveCount	live clRom count (++ in FileLoader_Open, -- in clRom_Release)
+lbl_806D0FEC	g_romActiveCountPeak	highest g_romActiveCount seen
+lbl_805987E0	g_transparentDrawSlots	TDrawSlot[32] of TransparentDraw_SortAndDispatch / SceneDrawList
+lbl_8059F480	g_backupShadowCopy	copy of the backup block written by Backup_PublishShadowCopy
+lbl_806CED58	g_collisionData	the two pointers set by Collision_SetGlobalData, read by Terrain_*
+lbl_806D1060	g_shadowAreaMgr	ShadowAreaMgr singleton
+lbl_806D1070	g_namCam	NamCam work area singleton
+lbl_806D11A0	g_ringWriteIdx	write index of the PCB broadcast ring (pairs with g_ringReadIdx)
+lbl_80594080	g_bootState	struct returned by BootStateStruct_Get
+lbl_806D121C	g_cardCmdResult	result of the last Sci2Card_SendCmd*
+lbl_806CF0D8	g_cardRwSubState	returned by CardRW_GetSubState / card_rw_get_substate
+lbl_806D1226	g_cardReceiptTestFlag	Sci2Card_FlagReceiptTestEnable / Sci2Card_GetReceiptTestFlag
+lbl_806D122C	g_cardSaveStartTick	OSGetTick() at the start of a card save
+lbl_806D1218	g_cardReceiptLine	receipt line being printed
+lbl_806CF0EC	g_cardReceiptMode	receipt layout selected by Sci2Card_PrintReceipt_StartFlow
+lbl_806D1140	g_dvdLastReadPage	last DVD offset >> 10 (DVDLoad_WaitIfSamePage)
+lbl_806D1144	g_dvdLastReadTick	OSGetTick() of the last DVD read
+lbl_806D1148	g_dvdLastReadSec	DVDLoad_GetLastReadSec
+lbl_806D114C	g_dvdMaxReadSec	DVDLoad_GetMaxReadSec
+lbl_806CEF18	g_sineLutIndexMask	mask applied to the angle index in LUT_Sine/LUT_Cosine
+lbl_803F7690	CarObjectManager_vtable_803F7690	vptr stored by the CarObjectManager ctor/dtor
+lbl_803FE068	clDrawMan_vtable_803FE068	vptr stored by DrawManager_GetOrCreate / clDrawMan_Dtor
+lbl_803FE0B8	SpecialFaceMesh_vtable_803FE0B8	vptr stored by SpecialFaceMesh_Ctor/Dtor
+lbl_803FE3C0	TransitionEffect_vtable_803FE3C0	vptr stored by TransitionEffect ctor/dtor
+lbl_803F9D00	clItemBoxResponder_vtable_803F9D00	vptr stored by clItemBoxResponder_Ctor
+lbl_80411DD0	WarpZone_vtable_80411DD0	vptr restored by WarpZone_VtableTrim / dtor
+lbl_803F5658	ObjectBase_vtable_803F5658	base vptr stored by GameMode_BaseInit / ObjectBase_Dtor
+lbl_803F7738	KartItemSubObject_vtable_803F7738	base vptr stored by KartItemSubObject_Ctor and the ItemEffect* dtors
+lbl_806D14A8	g_normal3DWrapMgr	cLNormal3DWrap_Mgr singleton (VfxSlot_BindResource acquires slots from it)
+lbl_803F57E0	g_mjobjClassInfo	HSD class info initialised by model_jobj_ClassInit
+lbl_803F5888	g_mobj1ClassInfo	HSD class info initialised by MObj1_ClassInit
+lbl_806D0F9C	g_bootTimer	BootTimer pointer read by BootStateStruct_RefreshIfDue / Frame_UpdatePerFrameState
+lbl_806D1398	g_taGhostCar	ghost CarObject of time attack mode (TaMode_Init)
+lbl_806D13B4	g_taSound	TaSound object of time attack mode
+lbl_806D2238	g_dvdLoadCallback	function pointer called around DVD loads (DVDLoad_ReadChunkHandle)
+lbl_804FE080	g_backupBufferTexture	640x480 framebuffer copy (BackupBuffer_InitAsTexture, GXCopyTex)
+lbl_80677CC8	g_coinsCollectedBySlot	per kart slot coin counters (CoinSystem_UpdateAll)
+lbl_806D0F90	g_cardTaskManager	CardTaskManager destroyed by Game_Shutdown / ServiceButton_Handler
+lbl_806D10F4	g_sceneDrawListNextId	next archive id handed out by SceneDrawList_RegisterArchive
+lbl_803FE7E8	g_cardTaskFactories	{text, create} table used by card_task_manager_create
+lbl_80598678	g_clRomTable	table cleared by ClRomTable_PurgeAll
+lbl_806CEFA0	g_texPaletteHeap	heap handle used by TEXLoadPalette / TEXReleasePalette
+lbl_806D11F8	g_texPaletteTotalLoadedSize	TEXPalette_GetTotalLoadedSize
+lbl_806D1130	g_sceneLights	HSD_LObj list loaded by SceneModel_Init, freed by LObjList_Destroy
+lbl_806D1244	g_cardFontTransferStartTick	OSGetTick() when the print font transfer starts

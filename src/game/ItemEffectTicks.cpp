@@ -107,7 +107,7 @@ struct FxOwners {
 };
 
 /* Init is declared first and never defined, so this TU does not emit the
- * base vtable (lbl_803F7738). */
+ * base vtable (KartItemSubObject_vtable_803F7738). */
 struct FxBase {
     virtual void Init();
     virtual bool Tick();

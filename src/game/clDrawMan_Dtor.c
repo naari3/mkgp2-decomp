@@ -5,7 +5,7 @@ extern void *clDrawMan_Buckets_Free(void *self, short flag);
 extern void *clDrawMan_NodePool_Free(void *self, short flag);
 
 extern void *lbl_803FE05C[];
-extern void *lbl_803FE068[];
+extern void *clDrawMan_vtable_803FE068[];
 extern char lbl_80311B5C[];
 
 typedef struct clDrawMan {
@@ -25,7 +25,7 @@ clDrawMan *clDrawMan_Dtor(clDrawMan *self, short flag)
         __destroy_new_array(self->nodes, clDrawMan_NodePool_Free);
         self->nodes = 0;
         if (self != 0) {
-            self->vtbl = lbl_803FE068;
+            self->vtbl = clDrawMan_vtable_803FE068;
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);

@@ -40,27 +40,27 @@ unsigned char Sci2Card_PrintReceipt_StartFlow(int mode, unsigned char header, un
     lbl_806D122B = retry;
     if (!ServiceLatch_CheckTriggered()) {
         lbl_806D122A = 1;
-        lbl_806D121C = 0;
+        g_cardCmdResult = 0;
         lbl_806CF0E4 = 5;
         lbl_806D1210 = 1;
         return 1;
     }
-    lbl_806CF0EC = mode;
+    g_cardReceiptMode = mode;
     lbl_806D1210 = 0;
     lbl_806D122A = 1;
-    lbl_806D121C = 0;
+    g_cardCmdResult = 0;
     lbl_806CF0E4 = 5;
-    lbl_806D1218 = 0;
+    g_cardReceiptLine = 0;
     lbl_806D123C = 0;
     Sci2Card_Singleton_Get();
-    if (lbl_806CF0EC == 0 || lbl_806CF0EC == 3) {
+    if (g_cardReceiptMode == 0 || g_cardReceiptMode == 3) {
         if (header == 1) {
             Receipt_BuildLine(-3);
         } else {
             Receipt_BuildLine(0);
         }
     } else {
-        lbl_806D1218 = lbl_806CF0EC == 2 ? 9 : 2;
+        g_cardReceiptLine = g_cardReceiptMode == 2 ? 9 : 2;
         if (Receipt_Advance() == 1) {
             return 1;
         }

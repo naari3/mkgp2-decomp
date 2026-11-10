@@ -220,11 +220,11 @@ struct TaGhostSource { int character; const char *file; unsigned long size; int 
 extern "C" {
 extern int TaMode_Init_bss_806D13CC, g_characterId, TaMode_FrameUpdate_bss_806D13A8, TaMode_FrameUpdate_bss_806D1394, TaMode_FrameUpdate_bss_806D139C, TaMode_FrameUpdate_data_806CF198, TaMode_FrameUpdate_bss_806D13AC, TaMode_FrameUpdate_bss_806D13B0;
 extern unsigned char TaMode_FrameUpdate_bss_806D13A0, lbl_806D13A1, TaMode_FrameUpdate_bss_806D13B8;
-extern CarObject *lbl_806D1398;
+extern CarObject *g_taGhostCar;
 extern PathManager *TaMode_FrameUpdate_bss_806D13A4;
 extern void *TaMode_FrameUpdate_bss_806D1390, *TaMode_FrameUpdate_bss_806D1388, *TaMode_FrameUpdate_bss_806D13C8;
 extern unsigned long TaMode_FrameUpdate_bss_806D138C;
-extern TaSound *lbl_806D13B4;
+extern TaSound *g_taSound;
 extern float TaMode_FrameUpdate_data_806CF19C;
 extern unsigned long TaMode_FrameUpdate_bss_806D13C0, TaMode_FrameUpdate_bss_806D13C4;
 void RaceSlot_ResetAll();

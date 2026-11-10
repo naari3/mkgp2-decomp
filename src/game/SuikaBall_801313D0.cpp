@@ -39,14 +39,7 @@ struct HsdClass {
 
 #include "game/types/HSD_JObj.h"
 
-struct InputPlayer {
-    virtual void v0();
-    virtual void v1();
-    virtual float v2();
-    virtual void v3();
-    virtual float StickRight();
-    virtual float StickLeft();
-};
+#include "game/types/InputPlayer.h"
 
 struct SuikaBallObj {
     void *archive;          /* 0x00 */
@@ -1003,7 +996,7 @@ struct PlayerCar : CarObject {
 #include "game/types/ChallengeGoalCamera.h"
 #include "game/types/HUD.h"
 #include "game/types/WeatherSystem.h"
-struct clNormal3D { char data[0x5C]; clNormal3D(const char *file, int arg); };
+#include "game/types/clNormal3D.h"
 
 struct ShotVec {
     float x, y, z;

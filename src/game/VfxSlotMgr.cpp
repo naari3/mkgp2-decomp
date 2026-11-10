@@ -29,8 +29,8 @@ void Vec3_ToYawPitch(const Vec*,float*,float*);
 void Mtx44_FromEulerXYZTrans(Matrix*,Vec,EulerAngles);
 void Mtx44_Inverse_GaussJordan(Matrix*,const Matrix*);
 void Vec3_Copy(Vec*,const Vec*);
-extern Slot lbl_805DF468[512];
-extern Resource *lbl_806D14A8;
+extern Slot g_drawEffectSlots[512];
+extern Resource *g_normal3DWrapMgr;
 extern Camera lbl_805DF3D0;
 extern const float lbl_806D4FDC,lbl_806D4FE8,lbl_806D4FEC,lbl_806D4FF0;
 }
@@ -86,5 +86,5 @@ static inline void UpdateSlots(Slot *slot) {
 extern "C" void VfxSlotMgr_Update(const Vec *position,const Vec *target) {
     ScopedTimer timer(25);
     SetCamera(position,target);
-    UpdateSlots(lbl_805DF468);
+    UpdateSlots(g_drawEffectSlots);
 }

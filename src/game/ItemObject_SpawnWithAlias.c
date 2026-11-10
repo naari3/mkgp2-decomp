@@ -20,8 +20,8 @@ typedef struct ItemObject {
 } ItemObject;
 
 extern ItemAliasEntry g_itemAliasTable[155];
-extern ItemClassEntry lbl_8041CBA8[];
-extern ItemObject lbl_80638300[256];
+extern ItemClassEntry g_itemClassTable[];
+extern ItemObject g_itemObjectManager[256];
 extern int ItemObject_bss_806D14D0;
 extern void *memset(void *dst, int c, unsigned long n);
 
@@ -32,8 +32,8 @@ static inline ItemObject *ItemPool_Alloc(void)
 
     for (i = 0; i < 256; i++) {
         int idx = (cur + 1) % 256;
-        if (lbl_80638300[idx].active == 0) {
-            ItemObject *obj = &lbl_80638300[idx];
+        if (g_itemObjectManager[idx].active == 0) {
+            ItemObject *obj = &g_itemObjectManager[idx];
             memset(obj, 0, sizeof(ItemObject));
             ItemObject_bss_806D14D0 = idx;
             obj->active = 1;
@@ -77,7 +77,7 @@ static inline ItemObject *ItemObject_CreateSpecial(int id, int arg)
     ItemObject *obj = 0;
 
     if (id == 0x10E || (id == 0x45 && arg == 0x10E)) {
-        obj = ItemObject_Create(lbl_8041CBA8[0x45].def);
+        obj = ItemObject_Create(g_itemClassTable[0x45].def);
         obj->kind = 0x45;
         obj->aliased = 1;
     }
@@ -91,7 +91,7 @@ static inline ItemObject *ItemObject_CreateAliased(int id, int arg)
 
     found = 0;
     id = ItemAlias_FindSource(id, &found);
-    obj = ItemObject_Create(lbl_8041CBA8[id].def);
+    obj = ItemObject_Create(g_itemClassTable[id].def);
     if (obj) {
         obj->unkC = 0;
         obj->kind = id;

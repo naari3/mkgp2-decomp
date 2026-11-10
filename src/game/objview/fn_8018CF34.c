@@ -1,7 +1,4 @@
-typedef struct ObjView {
-    void *vt;
-    void *child;
-} ObjView;
+#include "game/types/ObjView.h"
 
 extern char S22Single_vtable_80495DDC[];
 extern char lbl_80490FE0[];

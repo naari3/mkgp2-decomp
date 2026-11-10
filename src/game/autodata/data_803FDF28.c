@@ -35,10 +35,10 @@ extern char data_803FDF28_data_806CEF74[];
 extern char lbl_806CEF78[];
 extern char lbl_806CEF80[];
 extern char lbl_806CEF88[];
-extern char lbl_806CEF90[];
+extern char SpecialFaceMesh_data_806CEF90[];
 extern char lbl_806CEF98[];
 extern char lbl_806CEFA8[];
-extern char lbl_806CEFB0[];
+extern char TransitionEffect_data_806CEFB0[];
 extern char lbl_806D2EA0[];
 extern char lbl_806D2EA8[];
 
@@ -137,7 +137,7 @@ void *lbl_803FE05C[3] = {
     0,
     (void *)clDrawMan_Dtor
 };
-void *lbl_803FE068[4] = {
+void *clDrawMan_vtable_803FE068[4] = {
     (void *)&lbl_806CEF78,
     0,
     (void *)dtor_8007AD78,
@@ -156,19 +156,19 @@ void *ItemEffectState_Init_data_803FE078[10] = {
     (void *)KartItem_FindRearTarget_v1,
     0
 };
-void *lbl_803FE0A0[3] = {
+void *SpecialFaceMesh_data_803FE0A0[3] = {
     (void *)&lbl_806CEF88,
     0,
     0
 };
 /* decl: unsigned int */
 void *SpecialFaceMesh_data_803FE0AC[3] = {
-    (void *)&lbl_806CEF90,
+    (void *)&SpecialFaceMesh_data_806CEF90,
     0,
     (void *)SpecialFaceMesh_Dtor
 };
 /* decl: unsigned int */
-void *lbl_803FE0B8[4] = {
+void *SpecialFaceMesh_vtable_803FE0B8[4] = {
     (void *)&lbl_806CEF88,
     0,
     (void *)dtor_8007CC54,
@@ -222,13 +222,13 @@ TransitionTextureVertex TransitionEffect_DrawCarRouletteOverlay_data_803FE230[16
     { 390.0f, 270.0f, 390.0f, 270.0f, 0xFFFFFF40 },
     { 390.0f, 210.0f, 390.0f, 210.0f, 0xFFFFFF40 }
 };
-void *lbl_803FE370[3] = {
+void *TransitionEffect_data_803FE370[3] = {
     (void *)&lbl_806CEFA8,
     0,
     0
 };
 void *TransitionEffect_data_803FE37C[3] = {
-    (void *)&lbl_806CEFB0,
+    (void *)&TransitionEffect_data_806CEFB0,
     0,
     (void *)TransitionEffect_Dtor
 };

@@ -5,7 +5,7 @@
  * 9807e6c, src/game/ObjectBase.c) and the rest of the
  * ObjectBase_Dtor-shaped sibling set. Only the vtable address differs:
  *
- *   ObjectBase_Dtor          : *this = &lbl_803F5658
+ *   ObjectBase_Dtor          : *this = &ObjectBase_vtable_803F5658
  *   SceneRender_BaseDtor     : *this = &clCallback_vtable_803F58E0
  *   dtor_801BA14C (here)     : *this = &clFlowProcess_vtable_8049A844  (PTR_PTR_8049A844)
  *

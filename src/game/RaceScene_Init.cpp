@@ -48,10 +48,7 @@ struct JyugemuFlag {
 
 #include "game/types/ItemSelect.h"
 
-struct WeatherSystem {
-    unsigned char data[0x1B4];
-    WeatherSystem(int flag);
-};
+#include "game/types/WeatherSystem.h"
 
 #include "game/types/RaceHud.h"
 

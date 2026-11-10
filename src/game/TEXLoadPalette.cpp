@@ -7,8 +7,8 @@ struct TPLClut { unsigned short entries; u8 unpacked, pad; u32 format; void* dat
 #include "game/types/TPLDescriptor.h"
 #include "game/types/TPLPalette.h"
 extern "C" {
-extern int lbl_806CEFA0[2], lbl_806CF010;
-extern u32 lbl_806D11F8[2];
+extern int g_texPaletteHeap[2], lbl_806CF010;
+extern u32 g_texPaletteTotalLoadedSize[2];
 extern const u8 lbl_806D2FB0;
 extern const char lbl_80313008[], lbl_80313018[];
 int DVDOpen(const char*, DVDFileInfo*);
@@ -47,7 +47,7 @@ void TEXLoadPalette(TPLPalette** out, const char* path) {
     if (!DVDOpen(path, &file)) return;
     int heap;
     u32 diskSize = (file.length + 31) & ~31;
-    heap = lbl_806CEFA0[0];
+    heap = g_texPaletteHeap[0];
     u32* header = (u32*)OSAllocFromHeap(lbl_806CF010, 0x41);
     if (!FUN_8007dfe4(path, header, 0x20, 0, 9)) {
         *out = 0; OSFreeToHeap(lbl_806CF010, header); return;
@@ -61,7 +61,7 @@ void TEXLoadPalette(TPLPalette** out, const char* path) {
     if (!*out) { DVDClose(&file); return; }
     void* compressed = OSAllocFromHeap(lbl_806CF010, diskSize);
     if (lbl_806D2FB0 == 1) DVDClose(&file);
-    lbl_806D11F8[0] += size;
+    g_texPaletteTotalLoadedSize[0] += size;
     if (lbl_806D2FB0 == 0) {
         if (!DVDLoad_ReadChunkHandle(&file, *out, size, 0, 9)) {
             OSFreeToHeap(lbl_806CF010, *out); *out = 0; DVDClose(&file); return;

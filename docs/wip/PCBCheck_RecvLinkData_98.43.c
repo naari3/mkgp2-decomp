@@ -19,7 +19,7 @@ typedef struct PcbRecvSlot {
 } PcbRecvSlot;
 extern unsigned char PCBCheckRecv_bss_805A5EC0[];
 extern unsigned char g_pcbCommEnabled, g_isCommHost;
-extern int g_ringReadIdx, lbl_806D11A0;
+extern int g_ringReadIdx, g_ringWriteIdx;
 extern void* memcpy(void*, const void*, unsigned long);
 extern int TCPConn_PollRecvComplete(void*);
 extern unsigned short TCPConn_PeekRxMessage(void*, unsigned short*, unsigned char**);
@@ -73,8 +73,8 @@ int PCBCheck_RecvLinkData(unsigned char advanceRead)
                                 slot->writeIndex = (slot->writeIndex + 1) % 64;
                             }
                             if (type == 2) {
-                                memcpy(((unsigned char (*)[0xDC])(base + 0x2C98))[lbl_806D11A0], payload, 0xDC);
-                                lbl_806D11A0 = (lbl_806D11A0 + 1) % 64;
+                                memcpy(((unsigned char (*)[0xDC])(base + 0x2C98))[g_ringWriteIdx], payload, 0xDC);
+                                g_ringWriteIdx = (g_ringWriteIdx + 1) % 64;
                             }
                             if (type == 3) {
                                 unsigned char* packet = payload;
@@ -120,7 +120,7 @@ int PCBCheck_RecvLinkData(unsigned char advanceRead)
     }
     if (advanceRead != 0 && g_isCommHost == 0) {
         int next = (g_ringReadIdx + 1) % 64;
-        if (next != lbl_806D11A0) {
+        if (next != g_ringWriteIdx) {
             g_ringReadIdx = next;
         }
     }

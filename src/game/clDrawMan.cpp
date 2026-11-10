@@ -81,5 +81,5 @@ extern "C" int clDrawMan_AddSorted_DepthRange(DrawManager *self, DrawCallback ca
 
 DrawManagerBase::~DrawManagerBase()
 {
-    vtable = lbl_803FE068;
+    vtable = clDrawMan_vtable_803FE068;
 }

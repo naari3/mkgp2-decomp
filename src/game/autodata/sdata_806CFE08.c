@@ -14,7 +14,7 @@ extern char lbl_8039B430[];
 extern char lbl_8039B450[];
 extern char lbl_8039B96C[];
 extern char lbl_8039B97C[];
-extern char lbl_8049B13C[];
+extern char clFlowItemSelect_data_8049B13C[];
 extern char sdata_806CFE08_data_8049B160[];
 extern char sdata_806CFE08_data_8049B180[];
 extern char lbl_8049B1A0[];
@@ -30,12 +30,12 @@ int clFlowItemSelect_Init_data_806CFE14 = 71;
 char clFlowItemSelect_Update_data_806CFE18[4] = {
     0, 0, 0, 85
 };
-const char *lbl_806CFE1C[2] = {
+const char *clFlowItemSelect_data_806CFE1C[2] = {
     (const char *)&lbl_8039B3E4, 0
 };
-void *lbl_806CFE24[3] = {
+void *clFlowItemSelect_data_806CFE24[3] = {
     (void *)&clFlowRoulette,
-    (void *)&lbl_8049B13C,
+    (void *)&clFlowItemSelect_data_8049B13C,
     0
 };
 const char *data_8049AFD0_data_806CFE30[2] = {

@@ -26,11 +26,11 @@ struct ServiceVI { unsigned char pad[0x48]; unsigned char r,g,b,a; };
 struct ServiceColor { unsigned char r,g,b,a; };
 extern "C" {
 extern int g_currentSceneState;
-extern unsigned char ServiceButton_bss_806D0F8D,lbl_806D0F8E,lbl_806D0F94,lbl_806D0F98;
-extern void *lbl_806D0F90,*lbl_806D0FD8,*lbl_806D0FC8;
+extern unsigned char ServiceButton_bss_806D0F8D,lbl_806D0F8E,g_serviceEnable,g_serviceValue;
+extern void *g_cardTaskManager,*lbl_806D0FD8,*lbl_806D0FC8;
 extern ServiceOwned *lbl_806D12DC;
-extern unsigned int *lbl_806D0F9C;
-extern ServiceMode lbl_80594080;
+extern unsigned int *g_bootTimer;
+extern ServiceMode g_bootState;
 extern ServiceVI HSD_VIData;
 extern ServiceColor lbl_806CED34;
 extern char lbl_802E9568[],lbl_802E9578[];

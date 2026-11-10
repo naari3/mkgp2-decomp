@@ -574,7 +574,7 @@ void *ResultPartY_vtable_804909F8[6] = {
     (void *)fn_8015DEBC,
     (void *)fn_8015CD40
 };
-void *lbl_80490A10[3] = {
+void *data_8048FE08_data_80490A10[3] = {
     (void *)&data_8048FE08_data_806CF8E8,
     0,
     0
@@ -587,7 +587,7 @@ void *lbl_80490A1C[6] = {
     (void *)fn_8015E48C,
     (void *)fn_8015E1D4
 };
-void *lbl_80490A34[3] = {
+void *data_8048FE08_data_80490A34[3] = {
     (void *)&data_8048FE08_data_806CF8E8,
     0,
     0

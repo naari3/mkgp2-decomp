@@ -7,10 +7,10 @@
 #pragma inline_max_size(10000)
 #include "game/CardLoadShadowPrivate.h"
 
-extern unsigned char lbl_806D122A, lbl_806D121C, lbl_806D1225, lbl_806D1248;
+extern unsigned char lbl_806D122A, g_cardCmdResult, lbl_806D1225, lbl_806D1248;
 extern unsigned char lbl_806D1228, lbl_806D1227, lbl_806CF0D4;
-extern unsigned int lbl_806D122C;
-extern int lbl_806D1210, lbl_806CF0E4, lbl_806D1220, lbl_806CF0D8;
+extern unsigned int g_cardSaveStartTick;
+extern int lbl_806D1210, lbl_806CF0E4, lbl_806D1220, g_cardRwSubState;
 extern int lbl_806D124C, lbl_806CF0D0, lbl_806CF0E8;
 unsigned int OSGetTick(void);
 unsigned char ServiceLatch_CheckTriggered(void);
@@ -34,7 +34,7 @@ static inline int BeginRW(void)
 {
     lbl_806D1210 = 0;
     lbl_806D122A = 1;
-    lbl_806D121C = 0;
+    g_cardCmdResult = 0;
     lbl_806CF0E4 = 5;
     if (!ServiceLatch_CheckTriggered()) {
         lbl_806D1210 = 1;
@@ -49,7 +49,7 @@ unsigned char card_save_trigger(unsigned char mode)
 
     lbl_806D1210 = 0;
     lbl_806D122A = 1;
-    lbl_806D121C = 0;
+    g_cardCmdResult = 0;
     lbl_806CF0E4 = 5;
     if (!ServiceLatch_CheckTriggered()) {
         lbl_806D1210 = 1;
@@ -62,11 +62,11 @@ unsigned char card_save_trigger(unsigned char mode)
         CaptureSnapshot();
         g_playerData.byte199 = 1;
         if (lbl_806D1228 != 1) {
-            lbl_806D122C = OSGetTick();
+            g_cardSaveStartTick = OSGetTick();
             if (BeginRW()) {
                 lbl_806D1227 = 0;
                 lbl_806D1220 = 0;
-                lbl_806CF0D8 = 0;
+                g_cardRwSubState = 0;
                 card_rw_state_machine();
             }
         }
@@ -74,7 +74,7 @@ unsigned char card_save_trigger(unsigned char mode)
         lbl_806CF0D4 = 1;
     } else {
         unsigned char a, b, c;
-        lbl_806D121C = Sci2Card_SendCmdCleaning(card);
+        g_cardCmdResult = Sci2Card_SendCmdCleaning(card);
         lbl_806D124C = 1;
         lbl_806CF0D0 = 4;
         lbl_806CF0D4 = 1;
@@ -126,17 +126,17 @@ extern void rand();
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806CF0D0;
 extern unsigned int lbl_806CF0D4;
-extern unsigned int lbl_806CF0D8;
+extern unsigned int g_cardRwSubState;
 extern unsigned int lbl_806CF0E4;
 extern unsigned int lbl_806CF0E8;
 extern unsigned int lbl_806D1210;
-extern unsigned int lbl_806D121C;
+extern unsigned int g_cardCmdResult;
 extern unsigned int lbl_806D1220;
 extern unsigned int lbl_806D1225;
 extern unsigned int lbl_806D1227;
 extern unsigned int lbl_806D1228;
 extern unsigned int lbl_806D122A;
-extern unsigned int lbl_806D122C;
+extern unsigned int g_cardSaveStartTick;
 extern unsigned int lbl_806D1248;
 extern unsigned int lbl_806D124C;
 
@@ -178,7 +178,7 @@ asm void card_save_trigger(void) { /* 0x80093C28 size:0x8E4 */
     mr r14, r3
     stw r5, lbl_806D1210(r13)
     stb r4, lbl_806D122A(r13)
-    stb r5, lbl_806D121C(r13)
+    stb r5, g_cardCmdResult(r13)
     stw r0, lbl_806CF0E4(r13)
     bl ServiceLatch_CheckTriggered
     clrlwi. r0, r3, 24
@@ -423,10 +423,10 @@ asm void card_save_trigger(void) { /* 0x80093C28 size:0x8E4 */
     li r5, 0x0
     li r4, 0x1
     li r0, 0x5
-    stw r3, lbl_806D122C(r13)
+    stw r3, g_cardSaveStartTick(r13)
     stw r5, lbl_806D1210(r13)
     stb r4, lbl_806D122A(r13)
-    stb r5, lbl_806D121C(r13)
+    stb r5, g_cardCmdResult(r13)
     stw r0, lbl_806CF0E4(r13)
     bl ServiceLatch_CheckTriggered
     clrlwi. r0, r3, 24
@@ -438,7 +438,7 @@ asm void card_save_trigger(void) { /* 0x80093C28 size:0x8E4 */
     li r0, 0x0
     stb r0, lbl_806D1227(r13)
     stw r0, lbl_806D1220(r13)
-    stw r0, lbl_806CF0D8(r13)
+    stw r0, g_cardRwSubState(r13)
     bl card_rw_state_machine
     card_save_trigger_L_80094060:
     li r3, 0x0
@@ -450,7 +450,7 @@ asm void card_save_trigger(void) { /* 0x80093C28 size:0x8E4 */
     bl Sci2Card_SendCmdCleaning
     li r4, 0x1
     li r0, 0x4
-    stb r3, lbl_806D121C(r13)
+    stb r3, g_cardCmdResult(r13)
     stw r4, lbl_806D124C(r13)
     stw r0, lbl_806CF0D0(r13)
     stb r4, lbl_806CF0D4(r13)

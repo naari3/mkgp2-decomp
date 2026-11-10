@@ -13,15 +13,7 @@
 void *operator new(unsigned long size);
 void operator delete(void *p) throw();
 
-struct InputState {
-    char pad00[4];
-    unsigned char enabled;
-    char pad05[0xF];
-    int dir;
-    int held;
-    int edge;
-    bool IsHeld() { return held == 1; }
-};
+#include "game/types/InputState.h"
 
 struct ResCtrl {
     int resId;

@@ -20,7 +20,7 @@ typedef struct HeapDesc {
     Cell *allocated;
 } HeapDesc;
 
-extern void *lbl_806D11F8; /* TEXPalette total loaded size */
+extern void *g_texPaletteTotalLoadedSize; /* TEXPalette total loaded size */
 extern HeapDesc *OSAlloc_Game_bss_806D1200; /* HeapArray */
 extern int OSAlloc_Game_bss_806D1204; /* NumHeaps */
 extern void *OSAlloc_Game_bss_806D1208; /* ArenaStart */
@@ -44,7 +44,7 @@ void DebugPrintf(const char *fmt, ...);
 
 void *TEXPalette_GetTotalLoadedSize(void)
 {
-    return lbl_806D11F8;
+    return g_texPaletteTotalLoadedSize;
 }
 
 void MemoryHeap_GetStats(int heap, long *total, long *largest, long *count)

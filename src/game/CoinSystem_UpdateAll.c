@@ -57,7 +57,7 @@ extern int CoinSystem_bss_806D1540;
 extern int CoinSystem_bss_806D1544;
 extern unsigned char lbl_806D1548;
 extern unsigned char g_raceEnded;
-extern int lbl_80677CC8[];
+extern int g_coinsCollectedBySlot[];
 extern float lbl_80495994[64];
 extern float lbl_80495A94[48];
 
@@ -201,7 +201,7 @@ void CoinSystem_UpdateAll(void)
         case 3:
             if (0.0f == c->timer) {
                 if (c->mode == 2) {
-                    lbl_80677CC8[c->owner->slot]++;
+                    g_coinsCollectedBySlot[c->owner->slot]++;
                     if (c->owner->human == 1 && !g_raceEnded) {
                         fn_8024F588()->coinsGot++;
                     }

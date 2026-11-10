@@ -463,7 +463,7 @@ typedef struct NameEntry {
 
 extern "C" {
 extern char DbgMenu_rodata_8032CB38[];
-extern void *lbl_8041AC24[];
+extern void *g_itemDescriptorTable[];
 extern DbgModel *lbl_806D10D0;
 extern DbgModel *lbl_806D10AC;
 extern char lbl_806D58F8[8];
@@ -1678,7 +1678,7 @@ extern "C" void DbgScene03_TplTest_UpdateCamera(TplScene *self)
         Vec3_Add_DestFirst(&self->target, &self->pos, &self->target);
         m = Alloc(0x5C);
         if (m != 0) {
-            clNormal3D_Construct(m, (char *)lbl_8041AC24[0x46], 1);
+            clNormal3D_Construct(m, (char *)g_itemDescriptorTable[0x46], 1);
         }
         self->obj = m;
         self->mode = 0;

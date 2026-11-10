@@ -33,5 +33,5 @@ index cacc015..5899011 100644
 +    Vec origin=*position;
 +    Vec at=*target;
 +    BuildCamera(origin,at);
-     UpdateSlots(lbl_805DF468);
+     UpdateSlots(g_drawEffectSlots);
  }

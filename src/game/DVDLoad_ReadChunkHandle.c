@@ -6,28 +6,28 @@ extern int DVDReadAsyncPrio(DVDLoadFile *, void *, s32, s32, void *, int);
 extern int DVDGetCommandBlockStatus(void *);
 extern u32 OSGetTick(void);
 #define OS_TIMER_CLOCK (*(volatile u32 *)0x800000F8 / 4)
-extern u32 lbl_806D1140, lbl_806D1144;
-extern void (*lbl_806D2238)(void *);
+extern u32 g_dvdLastReadPage, g_dvdLastReadTick;
+extern void (*g_dvdLoadCallback)(void *);
 #pragma exceptions on
 #pragma use_lmw_stmw on
 int DVDLoad_ReadChunkHandle(DVDLoadFile *file, void *dst, s32 length, s32 offset, void *arg)
 {
     u32 end = file->startAddr + file->length - 1;
     int countdown;
-    if (lbl_806D1140 == (file->startAddr >> 10)) {
-        while (((OSGetTick() - lbl_806D1144) * 8 / (OS_TIMER_CLOCK / 125000)) < 66) {}
+    if (g_dvdLastReadPage == (file->startAddr >> 10)) {
+        while (((OSGetTick() - g_dvdLastReadTick) * 8 / (OS_TIMER_CLOCK / 125000)) < 66) {}
     }
     if (!DVDReadAsyncPrio(file, dst, length, offset, 0, 2)) return 0;
     countdown = 16;
     while (DVDGetCommandBlockStatus(file) == 1) {
         if (--countdown < 0) {
-            lbl_806D2238(arg);
+            g_dvdLoadCallback(arg);
             countdown = 16;
         }
     }
-    lbl_806D2238(arg);
-    lbl_806D1140 = end >> 10;
-    lbl_806D1144 = OSGetTick();
+    g_dvdLoadCallback(arg);
+    g_dvdLastReadPage = end >> 10;
+    g_dvdLastReadTick = OSGetTick();
     return 1;
 }
 #pragma use_lmw_stmw reset

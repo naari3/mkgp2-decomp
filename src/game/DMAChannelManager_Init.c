@@ -2,7 +2,7 @@
  * DMAChannelManager_Init @ 0x800662B4 size 0x9C - real C++ retrofit
  * (2026-07-19, docs/notes/cpp-ctor-retrofit-mangled-bridge.md recipe).
  *
- * Init routine for the 32-entry transparent-draw slot pool at lbl_805987E0
+ * Init routine for the 32-entry transparent-draw slot pool at g_transparentDrawSlots
  * (stride 0x14). The per-slot allocation is a genuine new-expression:
  * `slot->entry = new TDrawEntry;` with operator new = Alloc(0x84) and the
  * ctor = TransparentDraw_ResetEntry. The DELETEPOINTER(r27 ->
@@ -24,10 +24,10 @@ struct TDrawEntry {
  /* stride 0x14 */
 
 extern "C" {
-extern TDrawSlot lbl_805987E0[0x20];
+extern TDrawSlot g_transparentDrawSlots[0x20];
 extern unsigned int DMAChannelManager_Init_data_806CEF20;
 extern unsigned char lbl_806D10F0;
-extern unsigned int lbl_806D10F4;
+extern unsigned int g_sceneDrawListNextId;
 extern unsigned int lbl_806D10F8;
 }
 
@@ -40,14 +40,14 @@ extern "C" void DMAChannelManager_Init(void) {
         return;
     }
     for (i = 0; i < 0x20; i++) {
-        if (lbl_805987E0[i].owner != -1) {
-            lbl_805987E0[i].owner = -1;
-            lbl_805987E0[i].state = 5;
+        if (g_transparentDrawSlots[i].owner != -1) {
+            g_transparentDrawSlots[i].owner = -1;
+            g_transparentDrawSlots[i].state = 5;
         }
-        lbl_805987E0[i].entry = new TDrawEntry;
+        g_transparentDrawSlots[i].entry = new TDrawEntry;
     }
     DMAChannelManager_Init_data_806CEF20 = 8;
-    lbl_806D10F4 = 0;
+    g_sceneDrawListNextId = 0;
     lbl_806D10F8 = 0;
     lbl_806D10F0 = 1;
 }

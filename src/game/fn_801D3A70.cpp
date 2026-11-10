@@ -1,12 +1,5 @@
 /* clFlowCC debug overlay: shows the selected course entry while the stick is held left. */
-struct InputPlayer {
-    virtual void v0();
-    virtual void v1();
-    virtual float v2();
-    virtual void v3();
-    virtual float StickRight();
-    virtual float StickLeft();
-};
+#include "game/types/InputPlayer.h"
 
 struct FlowCC {
     void *vtable;

@@ -1,6 +1,6 @@
-extern void *lbl_806CED58[2];
+extern void *g_collisionData[2];
 
 void Collision_SetGlobalData(void *a, void *b) {
-    lbl_806CED58[0] = a;
-    lbl_806CED58[1] = b;
+    g_collisionData[0] = a;
+    g_collisionData[1] = b;
 }

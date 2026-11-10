@@ -19,7 +19,7 @@ void *GetCourseScene3D(void);
 void CObj_UnprojectPoint(void *, float, float, float, float *, float *, float *);
 extern const float lbl_806D2F20, lbl_806D2F24, lbl_806D2F28, lbl_806D2F2C, lbl_806D2F30;
 extern const char lbl_80311B74[], lbl_80311B90[];
-extern void *lbl_803FE05C[], *lbl_803FE068[];
+extern void *lbl_803FE05C[], *clDrawMan_vtable_803FE068[];
 }
 
 typedef void (*DrawCallback)(void *);
@@ -88,7 +88,7 @@ extern "C" DrawManager *lbl_806D10AC;
 struct DrawManagerBase {
     void **vtable;
     DrawManagerBase() {
-        vtable = lbl_803FE068;
+        vtable = clDrawMan_vtable_803FE068;
         lbl_806D10AC = (DrawManager *)this;
     }
     ~DrawManagerBase();

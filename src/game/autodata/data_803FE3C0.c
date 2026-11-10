@@ -11,7 +11,7 @@ extern char lbl_806CEFA8[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_803FE3C0[4] = {
+void *TransitionEffect_vtable_803FE3C0[4] = {
     (void *)&lbl_806CEFA8,
     0,
     (void *)dtor_8008068C,

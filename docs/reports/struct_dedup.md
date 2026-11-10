@@ -5,26 +5,26 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | Item | Count |
 |---|---|
 | Files scanned (src/game, src/ui, src/sound, src/util, src/resource, include/game) | 3104 |
-| struct/union/class definitions at file scope | 6287 in 1427 files |
+| struct/union/class definitions at file scope | 6236 in 1417 files |
 | Distinct type names | 5202 |
 | Names defined in more than one file | 319 |
 | Types already in `include/game/types` | 605 |
-| Class A groups (same name, same members, 2+ files) | 57 groups, 166 definitions |
-| ... of which movable right now | 26 groups, 81 definitions |
-| Definitions whose byte layout the tool can compute | 3757 (not computable: 231) |
-| Class B (same name, same layout, different member spelling) | 33 name/layout pairs, 76 spellings |
-| Class C (same layout of 16+ bytes and 3+ fields, different names) | 147 layouts, 606 definitions |
+| Class A groups (same name, same members, 2+ files) | 54 groups, 159 definitions |
+| ... of which movable right now | 23 groups, 74 definitions |
+| Definitions whose byte layout the tool can compute | 3745 (not computable: 231) |
+| Class B (same name, same layout, different member spelling) | 32 name/layout pairs, 74 spellings |
+| Class C (same layout of 16+ bytes and 3+ fields, different names) | 147 layouts, 604 definitions |
 
 ## Why a definition is not movable yet
 
 | Reason | Definitions |
 |---|---|
-| non-plain member (method, nested type, access label) | 1431 |
-| needs another type (not shared yet) | 656 |
+| non-plain member (method, nested type, access label) | 1398 |
+| needs another type (not shared yet) | 657 |
 | has base class | 586 |
-| has storage/qualifier prefix | 256 |
-| class | 204 |
-| needs another type (file has its own) | 100 |
+| has storage/qualifier prefix | 252 |
+| class | 198 |
+| needs another type (file has its own) | 98 |
 | forward declaration in file | 41 |
 | separate typedef in file | 38 |
 | name defined twice in file | 37 |
@@ -41,43 +41,40 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | Name | Definitions | Distinct member lists | Largest identical group | Movable now |
 |---|---|---|---|---|
 | Obj | 41 | 28 | 3 | 3 |
-| ResCtrl | 30 | 2 | 1 | 1 |
 | ScopedTimer | 30 | 0 | 0 | 0 |
 | HSD_JObj | 29 | 15 | 13 | 13 |
-| clNormal3D | 27 | 0 | 0 | 0 |
-| Sprite | 21 | 5 | 1 | 1 |
-| InputPlayer | 20 | 0 | 0 | 0 |
+| ResCtrl | 29 | 2 | 1 | 1 |
+| Sprite | 20 | 4 | 1 | 1 |
 | __va_list_struct | 18 | 0 | 0 | 0 |
-| GameModeBase | 16 | 1 | 2 | 0 |
-| VObj | 15 | 0 | 0 | 0 |
+| InputPlayer | 16 | 0 | 0 | 0 |
 | SndSlot | 15 | 9 | 4 | 0 |
-| TextManager | 14 | 0 | 0 | 0 |
-| ObjView | 12 | 10 | 2 | 2 |
-| Vec | 12 | 1 | 3 | 0 |
+| clNormal3D | 13 | 0 | 0 | 0 |
+| VObj | 12 | 0 | 0 | 0 |
 | JObj | 11 | 8 | 2 | 2 |
 | PtrVecBase | 11 | 0 | 0 | 0 |
 | Scene3D | 10 | 2 | 1 | 1 |
+| GameModeBase | 10 | 1 | 2 | 0 |
+| ObjView | 10 | 9 | 1 | 1 |
+| Vec | 10 | 1 | 3 | 0 |
 | PtrVec | 10 | 0 | 0 | 0 |
 | PlayerData | 9 | 9 | 1 | 1 |
-| InputState | 9 | 7 | 2 | 2 |
 | CarObject | 9 | 1 | 1 | 1 |
 | PtrVecData | 9 | 0 | 0 | 0 |
 | FireFuncs | 9 | 1 | 9 | 0 |
 | clDNBress | 9 | 0 | 0 | 0 |
 | Buf256 | 9 | 1 | 9 | 9 |
 | GXChannel | 8 | 2 | 1 | 0 |
-| Normal3D | 8 | 2 | 2 | 0 |
-| WeatherSystem | 8 | 4 | 1 | 1 |
 | Particle | 8 | 8 | 1 | 1 |
 | Owner | 8 | 8 | 1 | 0 |
-| Vec3 | 8 | 1 | 3 | 0 |
 | KartRender | 7 | 3 | 3 | 1 |
+| InputState | 7 | 7 | 1 | 1 |
+| TextManager | 7 | 0 | 0 | 0 |
 | ListNode | 7 | 4 | 1 | 1 |
+| Normal3D | 7 | 2 | 2 | 0 |
+| WeatherSystem | 7 | 4 | 1 | 1 |
 | SceneBase | 7 | 0 | 0 | 0 |
-| InputView | 7 | 4 | 3 | 3 |
 | CoinPopupDetail | 6 | 0 | 0 | 0 |
-| ItemKart | 6 | 5 | 1 | 1 |
-| TexMgr | 6 | 3 | 1 | 1 |
+| Vec3 | 6 | 1 | 3 | 0 |
 | SpriteObj | 6 | 1 | 1 | 1 |
 | Group | 6 | 2 | 1 | 1 |
 | GameCfg | 6 | 1 | 6 | 6 |
@@ -88,6 +85,8 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | ModelEntry | 5 | 5 | 1 | 1 |
 | DVDFileInfo | 5 | 4 | 2 | 2 |
 | Item | 5 | 3 | 1 | 1 |
+| ItemKart | 5 | 4 | 1 | 1 |
+| TexMgr | 5 | 3 | 1 | 1 |
 | HsdObj | 5 | 2 | 4 | 0 |
 | PcbSlot | 5 | 4 | 1 | 1 |
 | GXColor | 5 | 2 | 4 | 4 |
@@ -100,6 +99,7 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | MenuModeBase | 4 | 0 | 0 | 0 |
 | CardTask | 4 | 0 | 0 | 0 |
 | Vec3c | 4 | 0 | 0 | 0 |
+| FlowPanel | 4 | 0 | 0 | 0 |
 
 ## Class C: largest same-layout sets with different names (candidates only)
 
@@ -116,10 +116,10 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | 0x10 | 4 | 11 | AssetRow, CardPointers, CourseObj8016AABC, HSD_DObj, ItemSelectSlotLabels, JointTable, ObjView, Owner ... |
 | 0x68 | 13 | 11 | SpriteVoiceRaceEntry, SpriteVoiceRaceEntry_p14, SpriteVoiceRaceEntry_p15, SpriteVoiceRaceEntry_p16, SpriteVoiceRaceEntry_p17, SpriteVoiceRaceEntry_p18, SpriteVoiceRaceEntry_p19, SpriteVoiceRaceEntry_p20 ... |
 | 0x2C | 11 | 11 | CSAnimKey, CSPartsResultRank_rodata_80360C70_Row, ShowAnimCommand, lbl_80360FE0_Row, lbl_803610E8_Row, lbl_803611F0_Row, lbl_80361274_Row, lbl_80361400_Row ... |
-| 0x20 | 3 | 9 | C8Input, CoinProgress, FKInput, FlowInputView, InputRec, InputState, InputView, SprFile |
 | 0x20 | 8 | 9 | ArchiveHeader, CarrotUvIdx, DebugTexObj, FlowAdvance1C, LapTable_p37, NamCamFdSet, RibbonUvIdx, RingOrder ... |
 | 0x1FC | 3 | 9 | CarrotKart, RaceVoiceDriver, RaceVoiceDriver_p11, RaceVoiceDriver_p13, RaceVoiceDriver_p34, RaceVoiceDriver_p47, RaceVoiceDriver_p50, RaceVoiceDriver_p52 ... |
 | 0x2C | 11 | 9 | CSPartsResultStage_rodata_80361970_Row, lbl_80360D78_Row, lbl_80360DFC_Row, lbl_80360EAC_Row, lbl_80360F30_Row, lbl_803619F4_Row, lbl_80361A78_Row, lbl_803622CC_Row ... |
+| 0x20 | 3 | 8 | C8Input, CoinProgress, FKInput, FlowInputView, InputRec, InputState, SprFile |
 | 0x20 | 4 | 8 | InputState, InputState_p14, InputState_p15, InputState_p17, PopupInputState |
 | 0x10 | 4 | 8 | CoinEntry, CoinSpawn, ItemBoxSpawnEntry, ParticleDirection, SpawnEntry, SpawnPoint, Trace162, TraceInput163 |
 | 0x14 | 5 | 8 | RaceVoiceCourseLine, RaceVoiceCourseLine_p11, RaceVoiceCourseLine_p13, RaceVoiceCourseLine_p34, RaceVoiceCourseLine_p47, RaceVoiceCourseLine_p50, RaceVoiceCourseLine_p52, lbl_80499F98_Row |
@@ -128,7 +128,6 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | 0x10 | 4 | 7 | Checkpoint163, CoinTrail, DebrisSpawn, PropKind, RYSub, RivalWaypoint, Waypoint |
 | 0x1540 | 330 | 7 | RaceVoiceData, RaceVoiceData_p11, RaceVoiceData_p13, RaceVoiceData_p34, RaceVoiceData_p47, RaceVoiceData_p50, RaceVoiceData_p52 |
 | 0x68 | 12 | 7 | SpriteVoiceRaceEntry, SpriteVoiceRaceEntry_p10, SpriteVoiceRaceEntry_p12, SpriteVoiceRaceEntry_p5, SpriteVoiceRaceEntry_p6, SpriteVoiceRaceEntry_p7, SpriteVoiceRaceEntry_p8 |
-| 0x14 | 3 | 7 | Label, Obj, Pair, Sprite, SpriteObj_p10, SpriteObj_p9 |
 | 0x1C | 7 | 6 | GPSpeedParams, GtItemPose, KartPose, ParamEntry, ParamValues, ScaleVec |
 | 0x28 | 10 | 6 | CardCheckSettings, CardCheckSettings_p18, CardCheckSettings_p21, OSCalendarTime_p1, OSCalendarTime_p10, OSCalendarTime_p27 |
 | 0x14 | 5 | 6 | CardUnlockRule, FKParams, FlowAdvance10, FrameStatBlock, Int5, ItemUnlockEntry |
@@ -136,6 +135,7 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | 0x118C | 327 | 6 | RaceVoiceTables, RaceVoiceTables_p14, RaceVoiceTables_p15, RaceVoiceTables_p16, RaceVoiceTables_p19, RaceVoiceTables_p9 |
 | 0x68 | 14 | 6 | RaceVoiceEntry, RaceVoiceEntry_p11, RaceVoiceEntry_p13, RaceVoiceEntry_p34, RaceVoiceEntry_p50, RaceVoiceEntry_p52 |
 | 0x30 | 12 | 6 | BallProbes, DListQuad, DirTable, EffectJointMatrix, GoalLinePair, Mtx34 |
+| 0x14 | 3 | 6 | Label, Obj, Pair, SpriteObj_p10, SpriteObj_p9 |
 | 0x14 | 5 | 6 | TDrawVecBlk, rodata_8036DD8C_rodata_8036DD8C_Row, rodata_8036DD8C_rodata_8036DE2C_Row, rodata_8036DD8C_rodata_8036DE90_Row, rodata_8036DD8C_rodata_8036DEE0_Row, rodata_8036DD8C_rodata_8036DF30_Row |
 | 0x14 | 5 | 5 | CardTaskManager, ItemDisplay, ModelEntry, RoundSlot, SceneWords |
 | 0x18 | 6 | 5 | KartSlot, NMKartSlot, RaceKartSlot |

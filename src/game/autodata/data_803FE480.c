@@ -593,7 +593,7 @@ void *CameraChecker_State_WaitVBlank_data_803FE7DC[3] = {
     (void *)0xFFFFFFFF,
     (void *)CameraChecker_State_Entry
 };
-CardTaskFactory lbl_803FE7E8[4] = {
+CardTaskFactory g_cardTaskFactories[4] = {
     { (void *)CardTaskWelcome_New, (void *)&lbl_806D32AC },
     { (void *)CardTaskWaitInput_New, (void *)&lbl_806D32B4 },
     { (void *)CardTaskPrintJob_New, (void *)&lbl_806D32BC },

@@ -663,7 +663,7 @@ C source から target asm を再現できなかった idiom。**再試行の前
 | `WarpAutoRun_OnEnter` | 7-float-arg force `(self, f1, f2, f3, f4, vx, vy, vz)` | leaf 関数で `stfs f5/f6/f7` を出すために 7 個の float 引数を要求。先頭 4 つは unused だが signature 上必要 |
 | `dtor_800A9D2C` | `#pragma exceptions off` で extab auto-emit 抑制 | §14.1 approach B 参照 |
 | `dtor_800A9CC8` | extab manual 削除で CW auto-emit に委譲 | §14.1 approach A 参照 |
-| `lbl_806CF238[2]` open array | `extern void *lbl_806CF238[2];` (`WarpDashMgr_instances`) | sdata 上の 2-entry pointer array、`(u8 idx != 0) ? 1 : 0` indexing で `lwzx` reproduce — `WarpDashMgr_GetInstance` (pilot) |
+| `g_warpDashMgrs[2]` open array | `extern void *g_warpDashMgrs[2];` (`WarpDashMgr_instances`) | sdata 上の 2-entry pointer array、`(u8 idx != 0) ? 1 : 0` indexing で `lwzx` reproduce — `WarpDashMgr_GetInstance` (pilot) |
 
 ### 14.4 sibling pattern unlock の活用
 

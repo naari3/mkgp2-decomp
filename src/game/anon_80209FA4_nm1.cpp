@@ -57,12 +57,7 @@ extern const char lbl_806DABCC[8];
 #define OS_TIMER_CLOCK (OS_BUS_CLOCK / 4)
 #define OSTicksToMicroseconds(ticks) (((ticks) * 8) / (OS_TIMER_CLOCK / 125000))
 
-struct GameModeBase {
-    GameModeBase();
-    virtual int Update();
-    virtual void Draw();
-    virtual ~GameModeBase();
-};
+#include "game/types/GameModeBase.h"
 
 #include "game/types/JobRunnerMode.h"
 

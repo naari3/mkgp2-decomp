@@ -176,3 +176,17 @@ Limits: a name whose shared header is included by another header is skipped
 ("by hand"); classes with methods, bitfields and unions are left alone; the
 member-name test is `GENERIC_RE` in struct_merge.py (struct_dedup's version
 counts all-hex words such as `eff` as placeholders, do not reuse it).
+
+### C++ classes: `struct_merge.py classes Name...`
+
+A class with methods or virtuals cannot be merged member by member. `classes`
+tries the shared header's spelling (or, without one, each of the most common
+spellings) in every other file that has a copy and keeps the files whose
+object stays byte-identical. Result on 2026-11-10 over the first 26 class
+names: about 50 copies, most classes 0-3. What stops the rest: every TU
+declares only the virtuals it calls and gives the others placeholder names
+and `void` returns (InputPlayer has 14 spellings of one vtable), inline
+bodies name a per-TU constant (`ScopedTimer` divides by a different
+`lbl_806D....` in each file), and data members are spelled differently.
+These need one hand-written class per name, tried file by file; the loop
+costs about a minute per class (it rebuilds the big units twice).

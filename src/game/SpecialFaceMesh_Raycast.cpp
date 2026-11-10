@@ -203,6 +203,6 @@ extern "C" void PtrVec_Reserve(void *storage, unsigned int capacity) {
 }
 
 extern "C" FaceMeshBase *dtor_8007CC54(FaceMeshBase *self, short release) {
-    if (self) { self->vptr = lbl_803FE0B8; if (release > 0) operator delete(self); }
+    if (self) { self->vptr = SpecialFaceMesh_vtable_803FE0B8; if (release > 0) operator delete(self); }
     return self;
 }

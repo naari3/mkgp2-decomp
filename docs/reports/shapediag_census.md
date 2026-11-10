@@ -82,7 +82,7 @@ Class meanings and levers: `python3 tools/shapediag.py classes`; details per fun
 | 99.01 | thp/THPDec | `fn_80299D58` | 395/395 | 65 | imm (5) | imm: target `vaddeuqm v10,v1,v13,v27` / ours `vaddeuqm v10,v1,v13,v31` |
 | 98.97 | triforce/amsrv_nm1 | `fn_80291134` | 58/58 | 8 | register-only |  |
 | 98.92 | game/HudFlow20Update | `fn_80245E6C` | 185/185 | 0 | order:args (1) | order:args: before `bl fn_8020A6CC` |
-| 98.91 | game/Terrain_GetGroundHeight | `Terrain_GetGroundHeightWithPenetration` | 294/294 | 0 | order:const (1), order:load (1) | order:load: registers are identical too: only the schedule differs; global `lbl_806CED58` involved |
+| 98.91 | game/Terrain_GetGroundHeight | `Terrain_GetGroundHeightWithPenetration` | 294/294 | 0 | order:const (1), order:load (1) | order:load: registers are identical too: only the schedule differs; global `g_collisionData` involved |
 | 98.90 | game/ExplosionTumble_Init | `ExplosionTumble_Init` | 434/434 | 5 | order:store (2), order:load (2) | order:store: target loads BEFORE the store (no alias assumed in the target) |
 | 98.79 | game/anon_8021F088_nm_80221C94_nm1_nm1 | `fn_80222968` | 470/470 | 9 | load:const-vs-copy (2), order:store (2) | load:const-vs-copy: target `mr r5,r4` / ours `li r5,-256` |
 | 98.71 | game/Scene_801661FC | `fn_801661FC` | 587/587 | 152 | register-only |  |

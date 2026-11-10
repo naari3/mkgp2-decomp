@@ -1262,7 +1262,7 @@ straight from the table (no getter inline, no parameter), declared **before** `i
 
     static inline unsigned char FindZone(WarpAutoRun *self, float x, float y, float z) {
         WarpDashMgr *mgr; int i; int zone;
-        mgr = lbl_806CF238[self->mgrId != 0];
+        mgr = g_warpDashMgrs[self->mgrId != 0];
         ...
             for (i = 0; i < mgr->obbCount; i++)
                 if (Contains(zoneAt(mgr, i), p) == true) { zone = i; goto done; }

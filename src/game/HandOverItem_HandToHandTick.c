@@ -27,7 +27,7 @@ extern void Vec3_Copy(void *dst, Vec *src);
 extern float Vec3_HorizontalYawTo(Vec *a, Vec *b);
 extern void ItemObject_DispatchVtable1C_IfBoundedItem(void *kart, int state, int arg);
 
-extern unsigned char lbl_80638300[];
+extern unsigned char g_itemObjectManager[];
 extern Vec HandOverItem_HandToHandTick_rodata_8032FF50;
 
 static inline float LerpF(float a, float b, float t)
@@ -107,7 +107,7 @@ void HandOverItem_HandToHandTick(unsigned char *self, unsigned char *sub)
             SF(0x14) = -1.570796f;
             SF(0x18) = 0.0f;
             for (i = 0; i < 0x100; i++) {
-                it = lbl_80638300 + i * 0x1EC;
+                it = g_itemObjectManager + i * 0x1EC;
                 if (*(signed char *)it && *(int *)(it + 0xC) == 0 && it != self && *(int *)(it + 0x8) == 0x54) {
                     unsigned char *isub = it + 0xEC;
                     if (SP(0x98) == *(void **)(isub + 0x98) && (char)it[0xC8] == 1 && (char)it[0xC9] == 2 && (char)it[0xCA] == 1) {

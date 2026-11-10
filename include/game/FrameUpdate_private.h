@@ -24,7 +24,7 @@ struct FrameBackup {
     struct BackupWords3840 block31E0;
 };
 typedef char CheckFrameBackupSize[sizeof(struct FrameBackup) == 0x6A20 ? 1 : -1];
-extern struct FrameBackup lbl_80598A60, lbl_8059F480;
+extern struct FrameBackup lbl_80598A60, g_backupShadowCopy;
 extern unsigned char g_jvsOperatorBits[];
 extern unsigned char lbl_806D1120;
 extern int lbl_806D1124, lbl_806D1128, lbl_806D1114, lbl_806D1110;

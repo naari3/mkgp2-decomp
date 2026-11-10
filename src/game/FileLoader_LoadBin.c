@@ -1,9 +1,9 @@
 #include "game/types/FileLoader.h"
 
-extern int lbl_806D0FE8;
-extern int lbl_806D0FEC;
-extern FileLoader *lbl_806D0FE0;
-extern FileLoader *lbl_806D0FE4;
+extern int g_romActiveCount;
+extern int g_romActiveCountPeak;
+extern FileLoader *g_romListHead;
+extern FileLoader *g_romListTail;
 extern char lbl_802E9800[];
 extern void *DVDLoad_OpenAllocReadRelocSync(char *path);
 extern void DebugPrintf(const char *, ...);
@@ -11,9 +11,9 @@ extern void DebugPrintf(const char *, ...);
 FileLoader *FileLoader_LoadBin(FileLoader *loader, char *path) {
     int attempt;
 
-    lbl_806D0FE8++;
-    if (lbl_806D0FEC < lbl_806D0FE8) {
-        lbl_806D0FEC = lbl_806D0FE8;
+    g_romActiveCount++;
+    if (g_romActiveCountPeak < g_romActiveCount) {
+        g_romActiveCountPeak = g_romActiveCount;
     }
     loader->done = 0;
     loader->state = 1;
@@ -26,13 +26,13 @@ FileLoader *FileLoader_LoadBin(FileLoader *loader, char *path) {
         attempt++;
         DebugPrintf(lbl_802E9800, attempt);
     }
-    if (lbl_806D0FE0 == 0) {
-        lbl_806D0FE0 = loader;
-        lbl_806D0FE4 = loader;
+    if (g_romListHead == 0) {
+        g_romListHead = loader;
+        g_romListTail = loader;
     } else {
-        loader->prev = lbl_806D0FE4;
-        lbl_806D0FE4->next = loader;
-        lbl_806D0FE4 = loader;
+        loader->prev = g_romListTail;
+        g_romListTail->next = loader;
+        g_romListTail = loader;
     }
     return loader;
 }

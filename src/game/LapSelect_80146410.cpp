@@ -4,16 +4,7 @@
 #pragma cplusplus on
 #include "libc/stdarg.h"
 
-class InputPlayer {
-public:
-    virtual void v8();
-    virtual void vC();
-    virtual void v10();
-    virtual void v14();
-    virtual void v18();
-    virtual void v1C();
-    virtual unsigned char Pressed(int mask);
-};
+#include "game/types/InputPlayer.h"
 #include "game/types/VObjC.h"
 #include "game/types/Countdown.h"
 #include "game/types/SelSlot.h"

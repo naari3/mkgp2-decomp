@@ -293,10 +293,7 @@ struct QuadFade {
 };
 
 
-class VObj {
-public:
-    virtual ~VObj();
-};
+#include "game/types/VObj.h"
 
 struct Base {
     void *vt;

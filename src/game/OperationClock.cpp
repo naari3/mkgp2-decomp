@@ -6,7 +6,7 @@ struct OperationClockStatsView {
 };
 extern "C" {
 extern unsigned char lbl_806D1120;
-extern OperationClockState lbl_805A5EA0;
+extern OperationClockState g_operationClock;
 extern OperationClockStatsView lbl_80598A60;
 void OperationClockState_CommitDelta(OperationClockState*);
 void OperationClockState_RefreshCurrent(OperationClockState*);
@@ -17,18 +17,18 @@ void PlayStats_PublishStatsBlockShadow(void);
 
 void OperationClock_Commit(void) {
     if (lbl_806D1120) {
-        OperationClockState_CommitDelta(&lbl_805A5EA0);
-        PlayStats_AddTotalPlaySeconds(lbl_805A5EA0.deltaSeconds);
+        OperationClockState_CommitDelta(&g_operationClock);
+        PlayStats_AddTotalPlaySeconds(g_operationClock.deltaSeconds);
         PlayStats_PublishStatsBlockShadow();
-        OperationClockState_Reset(&lbl_805A5EA0);
-        OperationClockState_StartTick(&lbl_805A5EA0);
+        OperationClockState_Reset(&g_operationClock);
+        OperationClockState_StartTick(&g_operationClock);
     }
 }
 
 unsigned int OperationClock_GetLifetimeSeconds(void) {
     unsigned int seconds = lbl_80598A60.totalPlaySeconds;
-    OperationClockState_RefreshCurrent(&lbl_805A5EA0);
-    seconds += lbl_805A5EA0.currentSeconds;
+    OperationClockState_RefreshCurrent(&g_operationClock);
+    seconds += g_operationClock.currentSeconds;
     if (seconds > 99999999U) seconds = 99999999U;
     return seconds;
 }

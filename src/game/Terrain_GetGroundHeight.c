@@ -16,7 +16,7 @@ void Profiler_RecordFrame(int slot, float value);
 #include "game/types/TerrainGrid.h"
 
 extern "C" {
-extern TerrainGrid *lbl_806CED58;
+extern TerrainGrid *g_collisionData;
 extern const float lbl_806D2388;
 extern const float lbl_806D238C;
 extern const float lbl_806D2398;
@@ -96,11 +96,11 @@ extern "C" unsigned char Terrain_GetGroundHeightWithPenetration(float *pos, floa
     float bestNormal[3];
     unsigned int bestAttr;
 
-    if (lbl_806CED58 == 0) {
+    if (g_collisionData == 0) {
         return 0;
     }
     x = Terrain_InitHeight(pos[0], outHeight);
-    grid = lbl_806CED58;
+    grid = g_collisionData;
     col = (x + grid->offsetX) / grid->cellWidth;
     row = (pos[2] + grid->offsetZ) / grid->cellDepth;
     if (col < 0 || row < 0 || col >= grid->width || row >= grid->height) {

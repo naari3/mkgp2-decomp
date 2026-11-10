@@ -42,9 +42,9 @@ extern void fn_8018F4A4();
 extern void fn_8018FBF4();
 extern void fn_8018FC24();
 extern void fn_8018FDA4();
-extern char lbl_8037754C[];
-extern char lbl_80377588[];
-extern char lbl_803775C4[];
+extern char NokoNoko_rodata_8037754C[];
+extern char NokoNoko_rodata_80377588[];
+extern char NokoNoko_rodata_803775C4[];
 extern char lbl_80377614[];
 extern char lbl_80377628[];
 extern char lbl_8037763C[];
@@ -722,9 +722,9 @@ SpawnRow NokoNoko_Init_data_80495C28[16] = {
 };
 /* decl: NokoKind * */
 void *NokoNoko_data_80495D28[3] = {
-    (void *)&lbl_8037754C,
-    (void *)&lbl_80377588,
-    (void *)&lbl_803775C4
+    (void *)&NokoNoko_rodata_8037754C,
+    (void *)&NokoNoko_rodata_80377588,
+    (void *)&NokoNoko_rodata_803775C4
 };
 void *NokoNoko_Init_data_80495D34[5] = {
     (void *)&lbl_80377614,

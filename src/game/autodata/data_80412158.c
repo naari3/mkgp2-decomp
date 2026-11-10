@@ -37,7 +37,7 @@ extern char lbl_806CF284[];
 extern char lbl_806CF290[];
 extern char data_80412158_data_806CF298[];
 extern char data_80412158_data_806CF2A0[];
-extern char lbl_806CF2A8[];
+extern char GameMode_Title_data_806CF2A8[];
 extern char lbl_806CF2B0[];
 extern char data_80412158_data_806CF2B8[];
 extern char data_80412158_data_806CF2C0[];
@@ -2102,14 +2102,14 @@ void *GameMode_TitleSelect_data_80419E1C[5] = {
     (void *)GameMode_StageSelect_DrawDebugLabel,
     (void *)GameMode_StageSelect_Dtor
 };
-void *lbl_80419E30[3] = {
+void *GameMode_Title_data_80419E30[3] = {
     (void *)&lbl_806CF290,
     0,
     0
 };
 /* decl: char */
 void *GameMode_Title_data_80419E3C[5] = {
-    (void *)&lbl_806CF2A8,
+    (void *)&GameMode_Title_data_806CF2A8,
     0,
     (void *)fn_800AC9AC,
     (void *)GameMode_Title_DrawDebugLabel,

@@ -15,11 +15,7 @@ extern unsigned char lbl_806D7E8C[7];
  */
 #pragma cplusplus on
 
-class VObj {
-public:
-    VObj(const char *name, int flag);
-    virtual ~VObj();
-};
+#include "game/types/VObj.h"
 
 #include "game/types/VObjC.h"
 

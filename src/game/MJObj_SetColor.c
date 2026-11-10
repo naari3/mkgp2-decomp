@@ -3,7 +3,7 @@
 
 extern unsigned char lbl_806D24A0[8]; /* source file name */
 extern char lbl_802E9D04[];           /* assert condition */
-extern unsigned int lbl_803F57E0[];   /* MJObj class info */
+extern unsigned int g_mjobjClassInfo[];   /* MJObj class info */
 extern int hsdObjIsDescendantOf(void *obj, void *info);
 extern void __assert(const char *file, int line, const char *cond);
 
@@ -18,7 +18,7 @@ extern void __assert(const char *file, int line, const char *cond);
 
 void MJObj_SetColorRGBA(MJObj *self, int r, int g, int b, int a)
 {
-    if (!hsdObjIsDescendantOf(self, lbl_803F57E0)) {
+    if (!hsdObjIsDescendantOf(self, g_mjobjClassInfo)) {
         __assert((const char *)lbl_806D24A0, 0x31, lbl_802E9D04);
     }
     CLAMP_U8(self->rgba[0], r);

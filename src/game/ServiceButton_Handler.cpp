@@ -1,15 +1,15 @@
 #include "game/ServiceButtonPrivate.h"
 static inline unsigned char CardReady() {
-    if (lbl_806D0F94==0) return 0;
-    if (lbl_806D0F98==1) return 0;
+    if (g_serviceEnable==0) return 0;
+    if (g_serviceValue==1) return 0;
     return 1;
 }
 static inline void ServiceFrame() {
     Timer_Decrement();
     PCBComm_Process(1,1);
     if (lbl_806D0F8E==1) {
-        OverlayText(1,12,28,lbl_802E9568,lbl_80594080.v18);
-        OverlayText(1,12,29,lbl_802E9578,lbl_80594080.v2C);
+        OverlayText(1,12,28,lbl_802E9568,g_bootState.v18);
+        OverlayText(1,12,29,lbl_802E9578,g_bootState.v2C);
     }
     GXDrawDone();
     fn_8018F14C();
@@ -22,8 +22,8 @@ static inline void ServiceFrame() {
     if (card && CardReady()==1) Sci2Card_Tick(card);
     fn_802554DC();
     ServiceMode *mode=fn_80293BBC();
-    unsigned int *tick=lbl_806D0F9C;
-    lbl_80594080=*mode;
+    unsigned int *tick=g_bootTimer;
+    g_bootState=*mode;
     *tick=OSGetTick();
     void *input=GetInputManager();
     if (input) InputObj_TickAndDispatch(input);
@@ -46,7 +46,7 @@ extern "C" int ServiceButton_Handler() {
             }
             delete menu;
             GXDrawDone(); PcbComm_Shutdown(); FreeMediaBuffers();
-            CardTaskManager_Dtor(lbl_806D0F90,1); lbl_806D0F90=0;
+            CardTaskManager_Dtor(g_cardTaskManager,1); g_cardTaskManager=0;
             Sci2Card_Shutdown(); fn_80193838(); InputMgr_Shutdown(); StrPcb_Shutdown();
             if (lbl_806D0FD8) MemoryManager_TimedFree(lbl_806D0FD8);
             lbl_806D0FD8=0;

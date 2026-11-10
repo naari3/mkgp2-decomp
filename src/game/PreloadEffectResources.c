@@ -1,7 +1,7 @@
 /* Resource-set dependencies, 0x800DEF74..0x800DF56C. */
 extern void FileLoader_Open(const char *);
 extern const char *lbl_8041BC00[];
-extern const char *lbl_8041AC24[];
+extern const char *g_itemDescriptorTable[];
 
 void PreloadEffectResources(int set) {
     switch (set) {
@@ -59,7 +59,7 @@ void PreloadEffectResources(int set) {
         FileLoader_Open(lbl_8041BC00[0xB4]);
         FileLoader_Open(lbl_8041BC00[0x87]);
         FileLoader_Open(lbl_8041BC00[0x46]);
-        FileLoader_Open(lbl_8041AC24[0x30C]);
+        FileLoader_Open(g_itemDescriptorTable[0x30C]);
         PreloadEffectResources(21);
         break;
     case 12:

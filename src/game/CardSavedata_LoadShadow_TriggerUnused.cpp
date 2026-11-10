@@ -1,9 +1,9 @@
 #pragma inline_max_size(10000)
 #include "game/CardLoadShadowMatchPrivate.h"
 extern "C" {
-extern unsigned char lbl_806D1228, lbl_806D122A, lbl_806D121C, lbl_806D1227;
-extern unsigned int lbl_806D122C;
-extern int lbl_806D1210, lbl_806CF0E4, lbl_806D1220, lbl_806CF0D8;
+extern unsigned char lbl_806D1228, lbl_806D122A, g_cardCmdResult, lbl_806D1227;
+extern unsigned int g_cardSaveStartTick;
+extern int lbl_806D1210, lbl_806CF0E4, lbl_806D1220, g_cardRwSubState;
 unsigned int OSGetTick(void);
 unsigned char ServiceLatch_CheckTriggered(void);
 unsigned char card_rw_state_machine(void);
@@ -14,17 +14,17 @@ unsigned char CardSavedata_LoadShadow_TriggerUnused(void)
     struct ShadowPlayerSnapshot *source = &lbl_80598A60.player;
     g_playerData = *source;
     if (lbl_806D1228 != 1) {
-        lbl_806D122C = OSGetTick();
+        g_cardSaveStartTick = OSGetTick();
         lbl_806D1210 = 0;
         lbl_806D122A = 1;
-        lbl_806D121C = 0;
+        g_cardCmdResult = 0;
         lbl_806CF0E4 = 5;
         if (!ServiceLatch_CheckTriggered()) {
             lbl_806D1210 = 1;
         } else {
             lbl_806D1227 = 0;
             lbl_806D1220 = 0;
-            lbl_806CF0D8 = 0;
+            g_cardRwSubState = 0;
             card_rw_state_machine();
         }
     }

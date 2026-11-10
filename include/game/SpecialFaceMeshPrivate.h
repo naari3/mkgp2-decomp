@@ -4,7 +4,7 @@
 void *operator new(unsigned long);
 void operator delete(void *) throw();
 extern "C" {
-extern unsigned int SpecialFaceMesh_data_803FE0AC[], lbl_803FE0B8[];
+extern unsigned int SpecialFaceMesh_data_803FE0AC[], SpecialFaceMesh_vtable_803FE0B8[];
 void PtrVec_Reserve(void *, unsigned int);
 void PtrVec_InsertFill(void *, SpecialFaceNative **, unsigned int, SpecialFaceNative **);
 }
@@ -20,8 +20,8 @@ struct FacePtrMid : FacePtrStorage { ~FacePtrMid() {} };
 struct FacePtrVec : FacePtrMid { ~FacePtrVec() {} };
 struct FaceMeshBase {
     unsigned int *vptr;
-    FaceMeshBase() { vptr = lbl_803FE0B8; lbl_806D1138 = (SpecialFaceMeshNative *)this; vptr = SpecialFaceMesh_data_803FE0AC; }
-    ~FaceMeshBase() { vptr = lbl_803FE0B8; }
+    FaceMeshBase() { vptr = SpecialFaceMesh_vtable_803FE0B8; lbl_806D1138 = (SpecialFaceMeshNative *)this; vptr = SpecialFaceMesh_data_803FE0AC; }
+    ~FaceMeshBase() { vptr = SpecialFaceMesh_vtable_803FE0B8; }
 };
 struct SpecialFaceMeshNative : FaceMeshBase {
     FacePtrVec faces;

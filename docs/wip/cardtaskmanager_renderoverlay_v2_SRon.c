@@ -42,7 +42,7 @@ extern float lbl_806D32E8;
 extern float lbl_806D32F0;
 extern float lbl_806D32F4;
 extern char Card_rodata_80312850[];          /* .rodata string pool base */
-extern CardTaskDesc lbl_803FE7E8[];
+extern CardTaskDesc g_cardTaskFactories[];
 
 void CardTaskManager_RenderOverlay(CardTaskManager *m);
 }
@@ -70,7 +70,7 @@ void CardTaskManager_RenderOverlay(CardTaskManager *m) {
     for (int i = 0; i < m->count; i++) {
         CardTaskEntry *e = &m->entries[i];
         CardTask *t = e->task;
-        const char *desc = lbl_803FE7E8[e->desc].text;
+        const char *desc = g_cardTaskFactories[e->desc].text;
         const char *name = names[t->kind];
         if (i > m->current) {
             name = lbl_806D32E0;

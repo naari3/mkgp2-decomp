@@ -44,13 +44,7 @@ extern const char lbl_806D9DFC[5];
 extern const int clFlowItemSelect_Init_data_806CFE08, clFlowItemSelect_Init_data_806CFE0C, clFlowItemSelect_Init_data_806CFE10, clFlowItemSelect_Init_data_806CFE14;
 extern int g_characterId;
 extern unsigned int g_playerData[0x1DC / 4];
-struct InputView {
-    unsigned char opaque[4];
-    unsigned char enabled;
-    unsigned char opaque5[0x13];
-    int held;
-    int edge;
-};
+#include "game/types/InputView.h"
 extern InputView* g_pInputState[2];
 void SetSyncTarget(int);
 int InitBGM();

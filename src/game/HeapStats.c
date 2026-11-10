@@ -72,19 +72,19 @@ BootState *fn_80293BBC(void);
 
 extern const float SAFE;
 extern void *lbl_806CF010;
-extern BootTimer *lbl_806D0F9C;
+extern BootTimer *g_bootTimer;
 extern int BootStateStruct_RefreshIfDue_bss_806D0FA4;
 extern signed char BootStateStruct_RefreshIfDue_bss_806D0FA8;
 extern void *lbl_806D1880;
 extern const float lbl_806D2294;
 extern const float lbl_806D22B4;
 extern const char lbl_802E8F48[];
-extern BootState lbl_80594080;
+extern BootState g_bootState;
 }
 
 static inline unsigned char BootState_IsDue(void)
 {
-    BootTimer *timer = lbl_806D0F9C;
+    BootTimer *timer = g_bootTimer;
     if ((float)((OSGetTick() - timer->lastTick) * 8 /
                 (*(unsigned int *)0x800000F8 / 4 / 125000)) /
             lbl_806D2294 >= SAFE) {
@@ -102,8 +102,8 @@ extern "C" void BootStateStruct_RefreshIfDue(void)
     if (BootState_IsDue() == 1) {
         BootTimer *timer;
         fn_802554DC();
-        lbl_80594080 = *fn_80293BBC();
-        timer = lbl_806D0F9C;
+        g_bootState = *fn_80293BBC();
+        timer = g_bootTimer;
         timer->lastTick = OSGetTick();
     }
 }

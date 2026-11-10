@@ -6,10 +6,7 @@ void DebugPrintf(const char *fmt, ...);
 void *FUN_8003b120(unsigned long size);
 }
 
-struct clNormal3D {
-    unsigned char data[0x5c];
-    clNormal3D(const char *name, int arg);
-};
+#include "game/types/clNormal3D.h"
 
 #include "game/types/ObjBase.h"
 

@@ -6,7 +6,7 @@ extern const float lbl_806D2C50;
 extern const float lbl_806D2C54;
 extern const float lbl_806D2C58;
 extern const float lbl_806D2C5C;
-extern unsigned short lbl_806CEF18;
+extern unsigned short g_sineLutIndexMask;
 extern const float LUT_Sine_rodata_802EE580[];
 
 #pragma exceptions on
@@ -14,7 +14,7 @@ float Sinf_LUT_Wrap(float angle) {
     float scale = lbl_806D2C50;
     float bias = (angle > lbl_806D2C5C) ? lbl_806D2C54 : lbl_806D2C58;
     unsigned int idx = (int)(scale * angle + bias);
-    idx &= lbl_806CEF18;
+    idx &= g_sineLutIndexMask;
     if ((unsigned short)idx > 0x7FFF) {
         idx = (0x10000 - idx) & 0xFFFF;
     }

@@ -3,15 +3,15 @@
 static inline void ClearBootStats() {
     memset(&lbl_80598A60.stats, 0, 0x26c);
     PlayStats_Clear();
-    OperationClockState_CommitDelta(&lbl_805A5EA0);
-    OperationClockState_Reset(&lbl_805A5EA0);
-    OperationClockState_StartTick(&lbl_805A5EA0);
+    OperationClockState_CommitDelta(&g_operationClock);
+    OperationClockState_Reset(&g_operationClock);
+    OperationClockState_StartTick(&g_operationClock);
 }
 static inline void SnapshotBootBackup() {
-    lbl_8059F480.head = lbl_80598A60.head;
-    lbl_8059F480.stats = lbl_80598A60.stats;
-    lbl_8059F480.large = lbl_80598A60.large;
-    lbl_8059F480.tail = lbl_80598A60.tail;
+    g_backupShadowCopy.head = lbl_80598A60.head;
+    g_backupShadowCopy.stats = lbl_80598A60.stats;
+    g_backupShadowCopy.large = lbl_80598A60.large;
+    g_backupShadowCopy.tail = lbl_80598A60.tail;
 }
 static inline void ConfigureBootIP(BootBackup *backup, const char *messages) {
     int cabinet = ((signed char *)backup)[0x21];
@@ -37,8 +37,8 @@ static inline void FinishBootBackup(char *backup) {
 }
 extern "C" void GameBoot_Init() {
     const char *messages = lbl_80310DE0;
-    OperationClockState_Reset(&lbl_805A5EA0);
-    OperationClockState_StartTick(&lbl_805A5EA0);
+    OperationClockState_Reset(&g_operationClock);
+    OperationClockState_StartTick(&g_operationClock);
     lbl_806CEF68 = 1; lbl_806CEF69 = 0;
     lbl_806D1124 = 0; lbl_806D1120 = 1;
     lbl_806D1114 = 0x708; lbl_806D1110 = 0;

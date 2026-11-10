@@ -107,21 +107,21 @@ void SetSyncTarget(int);
 void DisplayContext_Flush(void *);
 void fn_8011F994(int);
 void fn_801DB68C(void *,int);
-extern void (*lbl_806D2238)();
+extern void (*g_dvdLoadCallback)();
 
-extern BootState lbl_80594080;
+extern BootState g_bootState;
 extern BootConfig lbl_80598A60;
 extern BootHooks lbl_806CED28;
-extern unsigned char lbl_806D0FA1, lbl_806D0F94, vblank_flag;
-extern unsigned char lbl_806D0F99, lbl_806D0F98, lbl_806D0F96, lbl_806D0F97;
+extern unsigned char lbl_806D0FA1, g_serviceEnable, vblank_flag;
+extern unsigned char g_vblankValue, g_serviceValue, lbl_806D0F96, lbl_806D0F97;
 extern unsigned char Boot_bss_806D0FA0, lbl_806D0F8E, lbl_806CED30;
-extern BootTimer *lbl_806D0F9C;
+extern BootTimer *g_bootTimer;
 extern const float lbl_806D2294, SAFE, lbl_806D22A8;
 extern const char lbl_806D22AC[4];
-extern char lbl_804FE080[];
+extern char g_backupBufferTexture[];
 extern BootVI HSD_VIData;
 extern BootColor lbl_806CED34;
-extern void *lbl_806D0F90, *lbl_806D1880, *lbl_806D12DC;
+extern void *g_cardTaskManager, *lbl_806D1880, *lbl_806D12DC;
 extern char *lbl_806D0FC8;
 extern unsigned int BootDispatcher_bss_806D0FCC, BootDispatcher_bss_806D0FD0, BootDispatcher_bss_806D0FD4;
 extern const char lbl_806D2290[4];
@@ -263,14 +263,14 @@ struct BootShutdownObject { virtual void Destroy(int); };
 static inline void RefreshBootState() {
     fn_802554DC();
     BootState *src=fn_80293BBC();
-    BootTimer *timer=lbl_806D0F9C;
-    lbl_80594080=*src;
+    BootTimer *timer=g_bootTimer;
+    g_bootState=*src;
     timer->lastTick=OSGetTick();
 }
 static inline void CopyFrame() {
     if (lbl_806CED30==1) {
         ScopedTimer timer(21);
-        if ((unsigned int)lbl_804FE080 & 31) {
+        if ((unsigned int)g_backupBufferTexture & 31) {
             DebugPrintf(lbl_802E950C);
             return;
         }
@@ -280,7 +280,7 @@ static inline void CopyFrame() {
         }
         GXSetTexCopySrc(0,0,640,480);
         GXSetTexCopyDst(640,480,4,0);
-        GXCopyTex(lbl_804FE080,0);
+        GXCopyTex(g_backupBufferTexture,0);
     }
 }
 static inline void SetBootColor(BootColor color) {
@@ -288,8 +288,8 @@ static inline void SetBootColor(BootColor color) {
 }
 static inline void FinishFrame() {
     if (lbl_806D0F8E==1) {
-        OverlayText(1,12,28,lbl_802E9568,&lbl_80594080.f18);
-        OverlayText(1,12,29,lbl_802E9578,&lbl_80594080.f2C);
+        OverlayText(1,12,28,lbl_802E9568,&g_bootState.f18);
+        OverlayText(1,12,29,lbl_802E9578,&g_bootState.f2C);
     }
     GXDrawDone();
     fn_8018F14C();
@@ -301,8 +301,8 @@ static inline void FinishFrame() {
     void *card=Sci2Card_Singleton_Get();
     if (card) {
         unsigned char active;
-        if (!lbl_806D0F94) active=0;
-        else if (lbl_806D0F98==1) active=0;
+        if (!g_serviceEnable) active=0;
+        else if (g_serviceValue==1) active=0;
         else active=1;
         if (active==1) Sci2Card_Tick(card);
     }
@@ -319,8 +319,8 @@ static inline void Shutdown() {
     GXDrawDone();
     PcbComm_Shutdown();
     FreeMediaBuffers();
-    CardTaskManager_Dtor(lbl_806D0F90,1);
-    lbl_806D0F90=0;
+    CardTaskManager_Dtor(g_cardTaskManager,1);
+    g_cardTaskManager=0;
     Sci2Card_Shutdown();
     fn_80193838();
     InputMgr_Shutdown();
@@ -352,7 +352,7 @@ static inline int IsServiceBoot(unsigned int mode) {
 
 extern "C" void BootDispatcher(unsigned char *serviceMode)
 {
-    lbl_806D2238=BootStateStruct_RefreshIfDue;
+    g_dvdLoadCallback=BootStateStruct_RefreshIfDue;
     PPCMthid0(PPCMfhid0()|0x200);
     *serviceMode=0;
     unsigned char service=0;
@@ -373,7 +373,7 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
         component=fn_80287EC4((~fn_8028B090()>>5)&1);
         BootState *state=fn_80293BBC();
         fn_80289D4C(255);
-        lbl_80594080=*state;
+        g_bootState=*state;
     }
     SceneFlow_InitCleanupList();
     SceneFlow_SetCleanupTag(0);
@@ -384,15 +384,15 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
     lbl_806D0FA1=1;
     HSD_SetInitParameter(0,0x40000);
     HSD_SetInitParameter(1,2);
-    lbl_806D0F94=0;
+    g_serviceEnable=0;
     vblank_flag=0;
-    lbl_806D0F99=1;
-    lbl_806D0F98=1;
+    g_vblankValue=1;
+    g_serviceValue=1;
     lbl_806D0F96=0;
     lbl_806D0F97=0;
     HSD_InitComponent(component);
     VIWaitForRetrace(); VIWaitForRetrace();
-    lbl_806D0F9C=(BootTimer *)Alloc(4);
+    g_bootTimer=(BootTimer *)Alloc(4);
     while (!fn_80293BCC()) {
         BootWait wait;
         while (wait.Done()==0) {}
@@ -405,12 +405,12 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
     BootConfig *config=&lbl_80598A60;
     BootConfig *calibration=&lbl_80598A60;
     unsigned char enabled=config->card;
-    lbl_806D0F94=enabled;
-    if (!enabled) lbl_806D0F98=1;
+    g_serviceEnable=enabled;
+    if (!enabled) g_serviceValue=1;
     vblank_flag=1;
     int disabled=BootOptionDisabled(config->cardDisabled);
-    lbl_806D0F98=enabled ? disabled : 1;
-    lbl_806D0F99=BootOptionDisabled(config->otherDisabled);
+    g_serviceValue=enabled ? disabled : 1;
+    g_vblankValue=BootOptionDisabled(config->otherDisabled);
     InputMgr_Init();
     StrPcb_EnsureInstance();
     JvsInput_SetSteeringCalibration(calibration->steering);
@@ -445,29 +445,29 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
         return;
     }
     if ((~fn_8028B090())&1) {
-        lbl_806D0F94=0;
-        lbl_806D0F98=1;
+        g_serviceEnable=0;
+        g_serviceValue=1;
         vblank_flag=0;
-        lbl_806D0F99=1;
+        g_vblankValue=1;
         Boot_bss_806D0FA0=0;
         DebugPrintf(lbl_802E95AC);
     } else Boot_bss_806D0FA0=1;
     fn_801213EC();
     if (Boot_bss_806D0FA0==1) {
         int card=1, other=1;
-        if (!lbl_806D0F94 || lbl_806D0F98==1) card=0;
-        if (!vblank_flag || lbl_806D0F99==1) other=0;
-        lbl_806D0F90=new BootCardManager(lbl_80598A60.intensity!=0,card,other);
-        int state=CardTaskManager_Tick(lbl_806D0F90);
+        if (!g_serviceEnable || g_serviceValue==1) card=0;
+        if (!vblank_flag || g_vblankValue==1) other=0;
+        g_cardTaskManager=new BootCardManager(lbl_80598A60.intensity!=0,card,other);
+        int state=CardTaskManager_Tick(g_cardTaskManager);
         while (state==2) {
             if (lbl_806CED28.begin) lbl_806CED28.begin->Tick();
             HSD_StartRender(0);
-            CardTaskManager_RenderOverlay(lbl_806D0F90);
+            CardTaskManager_RenderOverlay(g_cardTaskManager);
             fn_802D47E8(); SpriteHandlePool_GC();
             if (lbl_806CED28.end) lbl_806CED28.end->Tick();
             CopyFrame();
             FinishFrame();
-            state=CardTaskManager_Tick(lbl_806D0F90);
+            state=CardTaskManager_Tick(g_cardTaskManager);
             if (ServiceButton_Handler()==1) {
                 DebugPrintf(lbl_802E95C0);
                 state=3;
@@ -475,8 +475,8 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
         }
         if (state==3) Shutdown();
     }
-    CardTaskManager_Dtor(lbl_806D0F90,1);
-    lbl_806D0F90=0;
+    CardTaskManager_Dtor(g_cardTaskManager,1);
+    g_cardTaskManager=0;
     fn_80121210();
     DebugPrintf(lbl_802E95DC,DVDGetFSTLocation());
     for (;;) {

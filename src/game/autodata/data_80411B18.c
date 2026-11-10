@@ -93,8 +93,8 @@ extern char data_80411B18_rodata_8032512C[];
 extern char data_80411B18_rodata_80325138[];
 extern char lbl_80325144[];
 extern char lbl_806CF228[];
-extern char lbl_806CF230[];
-extern char lbl_806CF240[];
+extern char TitleTracker_data_806CF230[];
+extern char WarpZone_data_806CF240[];
 extern char lbl_806CF248[];
 extern char data_80411B18_data_806CF250[];
 extern char lbl_806D4910[];
@@ -227,14 +227,14 @@ NameEntry RankLog_data_80411B18[82] = {
     { (void *)fn_800A7C0C, (void *)TitleCheck_MidpointMilestone },
     { (void *)TitleCheck_CupCleared, (void *)TitleCheck_AlwaysFalse }
 };
-void *lbl_80411DA8[3] = {
+void *TitleTracker_data_80411DA8[3] = {
     (void *)&lbl_806CF228,
     0,
     0
 };
 /* decl: char / void * */
 void *TitleTracker_data_80411DB4[3] = {
-    (void *)&lbl_806CF230,
+    (void *)&TitleTracker_data_806CF230,
     0,
     (void *)TitleTracker_Dtor
 };
@@ -246,8 +246,8 @@ void *TitleTracker_data_80411DC0[4] = {
     0
 };
 /* decl: char */
-void *lbl_80411DD0[10] = {
-    (void *)&lbl_806CF240,
+void *WarpZone_vtable_80411DD0[10] = {
+    (void *)&WarpZone_data_806CF240,
     0,
     (void *)fn_800AA8F4,
     (void *)fn_800AA8F0,

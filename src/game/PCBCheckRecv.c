@@ -98,7 +98,7 @@ unsigned char g_ringBufferBase[64][0xDC];
 unsigned char PCBCheckRecv_bss_805AC258[2][0x1C];
 #pragma cplusplus reset
 extern unsigned char g_pcbCommEnabled, g_isCommHost;
-extern int g_ringReadIdx, lbl_806D11A0;
+extern int g_ringReadIdx, g_ringWriteIdx;
 extern void* memcpy(void*, const void*, unsigned long);
 extern int TCPConn_PollRecvComplete(void*);
 extern unsigned short TCPConn_PeekRxMessage(void*, unsigned short*, unsigned char**);
@@ -160,8 +160,8 @@ int PCBCheck_RecvLinkData(unsigned char advanceRead)
                                 slot->writeIndex = (slot->writeIndex + 1) % 64;
                             }
                             if (type == 2) {
-                                memcpy(g_ringBufferBase[lbl_806D11A0], payload, 0xDC);
-                                lbl_806D11A0 = (lbl_806D11A0 + 1) % 64;
+                                memcpy(g_ringBufferBase[g_ringWriteIdx], payload, 0xDC);
+                                g_ringWriteIdx = (g_ringWriteIdx + 1) % 64;
                             }
                             if (type == 3) {
                                 unsigned char* packet = payload;
@@ -206,7 +206,7 @@ int PCBCheck_RecvLinkData(unsigned char advanceRead)
     }
     if (advanceRead != 0 && g_isCommHost == 0) {
         int next = (g_ringReadIdx + 1) % 64;
-        if (next != lbl_806D11A0) {
+        if (next != g_ringWriteIdx) {
             g_ringReadIdx = next;
         }
     }
@@ -809,7 +809,7 @@ int PCBComm_UpdateSyncPhase1(void)
 #define CommRankNibbles CommRankNibbles_p3
 #define g_isCommHost g_isCommHost_p3
 #define g_ringReadIdx g_ringReadIdx_p3
-#define lbl_806D11A0 lbl_806D11A0_p3
+#define g_ringWriteIdx lbl_806D11A0_p3
 #define g_ringBufferBase ((CommEntry *)g_ringBufferBase)
 #pragma exceptions off
 #pragma use_lmw_stmw off
@@ -833,7 +833,7 @@ typedef struct CommEntry {
 
 extern unsigned char g_isCommHost;
 extern int g_ringReadIdx;
-extern int lbl_806D11A0;
+extern int g_ringWriteIdx;
 
 static inline CommEntry *CommBroadcast_CurrentEntry(void)
 {
@@ -891,7 +891,7 @@ unsigned char CommBroadcast_ScanForMySyncMatch(void)
 {
     unsigned char i = 0;
 
-    while (lbl_806D11A0 != (g_ringReadIdx + i) % 64) {
+    while (g_ringWriteIdx != (g_ringReadIdx + i) % 64) {
         i++;
     }
     return i;
@@ -901,7 +901,7 @@ unsigned char CommBroadcast_ScanForMySyncMatch(void)
 #undef CommRankNibbles
 #undef g_isCommHost
 #undef g_ringReadIdx
-#undef lbl_806D11A0
+#undef g_ringWriteIdx
 #undef g_ringBufferBase
 
 /* ==== BootPCBCheck.cpp ==== */
@@ -1379,7 +1379,7 @@ void SyncSlot_Reset(void) {
 /* ==== CommBroadcast_ClearTable.c ==== */
 #define CommEntry CommEntry_p12
 #define g_ringReadIdx g_ringReadIdx_p12
-#define lbl_806D11A0 lbl_806D11A0_p12
+#define g_ringWriteIdx lbl_806D11A0_p12
 #define memset memset_p12
 #define g_ringBufferBase ((CommEntry *)g_ringBufferBase)
 #pragma exceptions on
@@ -1390,14 +1390,14 @@ typedef struct CommEntry {
 } CommEntry;
 
 extern int g_ringReadIdx;
-extern int lbl_806D11A0;
+extern int g_ringWriteIdx;
 extern void *memset(void *dst, int c, unsigned long n);
 
 void CommBroadcast_ClearTable(void)
 {
     int i;
 
-    lbl_806D11A0 = 1;
+    g_ringWriteIdx = 1;
     g_ringReadIdx = 0;
     for (i = 0; i < 0x40; i++) {
         memset(&g_ringBufferBase[i], 0, sizeof(CommEntry));
@@ -1405,7 +1405,7 @@ void CommBroadcast_ClearTable(void)
 }
 #undef CommEntry
 #undef g_ringReadIdx
-#undef lbl_806D11A0
+#undef g_ringWriteIdx
 #undef memset
 #undef g_ringBufferBase
 
@@ -2229,7 +2229,7 @@ extern void fn_8011F994(int arg);
 #define PCBCheckRecv_bss_806D1188 lbl_806D1188_p23
 #define lbl_806D1191 lbl_806D1191_p23
 #define lbl_806D1193 lbl_806D1193_p23
-#define lbl_806D11A0 lbl_806D11A0_p23
+#define g_ringWriteIdx lbl_806D11A0_p23
 #define lbl_806D11A4 lbl_806D11A4_p23
 #define lbl_806D11A8 lbl_806D11A8_p23
 #define PCBComm_Init_bss_806D11AC lbl_806D11AC_p23
@@ -2307,7 +2307,7 @@ extern u8 lbl_80598A60[0x2A];
 extern u8 g_pcbCommEnabled, lbl_806D1191, g_pcbSyncReady;
 extern u8 PCBCheckRecv_data_806CEFC8, lbl_806D1193, g_confirmFlag, PCBComm_Init_bss_806D11AC;
 extern u8 g_isCommHost;
-extern int g_gameMode, g_myPcbId, g_ringReadIdx, lbl_806D11A0;
+extern int g_gameMode, g_myPcbId, g_ringReadIdx, g_ringWriteIdx;
 extern u32 PCBCheckRecv_bss_806D1188, lbl_806D11A4, lbl_806D11A8;
 extern void *PCBCheckRecv_bss_806D11B0;
 extern LifecycleListener *g_pcbListener;
@@ -2412,7 +2412,7 @@ static inline void CopyHostSnapshot(u8 *snapshots, int next) {
 #undef PCBCheckRecv_bss_806D1188
 #undef lbl_806D1191
 #undef lbl_806D1193
-#undef lbl_806D11A0
+#undef g_ringWriteIdx
 #undef lbl_806D11A4
 #undef lbl_806D11A8
 #undef PCBComm_Init_bss_806D11AC
@@ -2515,7 +2515,7 @@ extern "C" int DrawLinkErrorOverlay(void)
 #define PCBCheckRecv_bss_806D1188 lbl_806D1188_p23
 #define lbl_806D1191 lbl_806D1191_p23
 #define lbl_806D1193 lbl_806D1193_p23
-#define lbl_806D11A0 lbl_806D11A0_p23
+#define g_ringWriteIdx lbl_806D11A0_p23
 #define lbl_806D11A4 lbl_806D11A4_p23
 #define lbl_806D11A8 lbl_806D11A8_p23
 #define PCBComm_Init_bss_806D11AC lbl_806D11AC_p23
@@ -2697,7 +2697,7 @@ extern "C" int PCBComm_Init(void)
         }
     }
     u8 *ring;
-    lbl_806D11A0 = 1;
+    g_ringWriteIdx = 1;
     g_ringReadIdx = 0;
     ring = g_ring[0];
     ClearRing(ring);
@@ -2731,7 +2731,7 @@ extern "C" int PCBComm_Init(void)
 #undef PCBCheckRecv_bss_806D1188
 #undef lbl_806D1191
 #undef lbl_806D1193
-#undef lbl_806D11A0
+#undef g_ringWriteIdx
 #undef lbl_806D11A4
 #undef lbl_806D11A8
 #undef PCBComm_Init_bss_806D11AC

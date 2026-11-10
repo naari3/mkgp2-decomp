@@ -10,7 +10,7 @@ typedef struct THPDecHandle {
 
 extern const char lbl_802EB4E0[]; /* string pool */
 extern const char lbl_806D26B8[8]; /* "[%02X]\n" */
-extern unsigned char *lbl_806D1070;
+extern unsigned char *g_namCam;
 extern volatile int lbl_806CF010; /* __OSCurrHeap */
 
 void DebugPrintf(const char *fmt, ...);
@@ -35,7 +35,7 @@ int Asset_LoadAndDecompressByType(unsigned char *data, void *desc, void *dst, vo
     unsigned char status;
     void *work;
 
-    if ((signed char)lbl_806D1070[0x80018] == 0) {
+    if ((signed char)g_namCam[0x80018] == 0) {
         return 0;
     }
     if ((int)data[0] == 0x3C) {

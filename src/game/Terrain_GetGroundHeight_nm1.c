@@ -15,7 +15,7 @@ void Profiler_RecordFrame(int slot, float value);
 #include "game/types/TerrainGrid.h"
 
 extern "C" {
-extern TerrainGrid *lbl_806CED58;
+extern TerrainGrid *g_collisionData;
 extern const float lbl_806D2388;
 extern const float lbl_806D238C;
 extern const float lbl_806D2398;
@@ -68,7 +68,7 @@ static inline int Terrain_OutsideEdges(TerrainTri *tri, float x, float z)
 extern "C" unsigned char Terrain_GetGroundHeight(float *pos, float *outHeight, float *outNormal, unsigned int *outAttr)
 {
     ScopedTimer timer(0x10);
-    TerrainGrid *grid = lbl_806CED58;
+    TerrainGrid *grid = g_collisionData;
     int col;
     int row;
     TerrainTri *tri;

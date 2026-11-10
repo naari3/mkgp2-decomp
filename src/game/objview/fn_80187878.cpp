@@ -5,10 +5,7 @@ void DebugPrintf(const char *fmt, ...);
 void Object_SetJObjPositionXYZ(void *jobj, float x, float y, float z);
 }
 
-struct clNormal3D {
-    unsigned char data[0x5c];
-    clNormal3D(const char *name, int arg);
-};
+#include "game/types/clNormal3D.h"
 
 #include "game/types/ObjBase.h"
 

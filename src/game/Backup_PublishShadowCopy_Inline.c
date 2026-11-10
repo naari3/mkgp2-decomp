@@ -1,5 +1,5 @@
 /* Backup_PublishShadowCopy_Inline @ 0x80075470 (size 0x220).
- * Publishes the backup working copy (lbl_80598A60) to lbl_8059F480 when
+ * Publishes the backup working copy (lbl_80598A60) to g_backupShadowCopy when
  * backup is available and idle; returns 1 on publish, 0 otherwise. */
 #pragma use_lmw_stmw on
 

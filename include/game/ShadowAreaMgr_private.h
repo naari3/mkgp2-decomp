@@ -87,7 +87,7 @@ struct ShadowAreaMgr {
     ShadowAreaEntry entries[0x40];
     int count;
 };
-extern "C" ShadowAreaMgr *lbl_806D1060;
+extern "C" ShadowAreaMgr *g_shadowAreaMgr;
 
 /* PObj has no public layout header yet; only its next link is used here. */
 struct HSD_PObj {

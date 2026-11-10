@@ -35,3 +35,22 @@ untracked files) or `fixup FILE...`.
 
 Do not use the mangled `__vt__...` name for a vtable symbol: a TU that emits
 its own weak copy of that vtable then defines it twice (link error).
+
+## Names chosen by reading the users (2026-11-10)
+
+`tools/data_names_manual.tsv` (old, new, why) holds names a person picked
+after reading every user of the object: globals as `g_<what>` (the existing
+convention, e.g. `g_itemObjectManager`, `g_itemClassTable`), vtables as
+`<Class>_vtable_<ADDR>`. `python3 tools/data_names.py apply --manual` applies
+the lines whose old name still exists; a plain `apply` afterwards names what
+those objects point to. Add a line, do not rename by hand, so the map
+(`data_names_map.tsv`, used by `fixup`) stays complete.
+
+Where the candidates are: `python3 tools/data_names.py plan` prints nothing
+for them, so list the `lbl_` objects whose users are all named functions in
+more than one unit (about 85 left) and read the users; objects used only by
+`fn_` functions need the function named first.
+
+The "one unit" rule no longer takes the name of a data-only unit
+(`src/game/autodata/data_804EEFE4.c` would have produced
+`data_804EEFE4_data_806D09B0` for about 1,760 objects).

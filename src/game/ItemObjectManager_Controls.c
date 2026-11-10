@@ -51,27 +51,27 @@ static inline void DestroySlots(ItemSlot *first)
     }
 }
 extern "C" {
-extern ManagerView lbl_80638300;
+extern ManagerView g_itemObjectManager;
 void ItemObjectManager_RenderImpl(ManagerView *manager);
 void ItemObjectManager_TickActiveItems(ManagerView *manager);
 void ItemObjectManager_Render(void)
 {
     ScopedTimer timer(0x1D);
-    ItemObjectManager_RenderImpl(&lbl_80638300);
+    ItemObjectManager_RenderImpl(&g_itemObjectManager);
 }
 void ItemObjectManager_Reset(void)
 {
-    DestroySlots(lbl_80638300.slots);
-    if (lbl_80638300.object != 0) {
-        delete lbl_80638300.object;
+    DestroySlots(g_itemObjectManager.slots);
+    if (g_itemObjectManager.object != 0) {
+        delete g_itemObjectManager.object;
     }
-    lbl_80638300.object = 0;
+    g_itemObjectManager.object = 0;
     AnimStatePool_FreeAll();
 }
 void ItemObjectManager_Update(void)
 {
     ScopedTimer timer(0x1C);
-    ItemObjectManager_TickActiveItems(&lbl_80638300);
+    ItemObjectManager_TickActiveItems(&g_itemObjectManager);
 }
 }
 #pragma cplusplus off

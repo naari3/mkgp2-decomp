@@ -100,15 +100,15 @@ extern void HSD_StartRender(int arg);
 extern void __dt__11ScopedTimerFv(void);
 
 extern u8 lbl_806D0F8E;
-extern u8 lbl_806D0F94;
-extern u8 lbl_806D0F98;
-extern u32 *lbl_806D0F9C;
-extern FrameIOSnapshot lbl_80594080;
+extern u8 g_serviceEnable;
+extern u8 g_serviceValue;
+extern u32 *g_bootTimer;
+extern FrameIOSnapshot g_bootState;
 extern DrawCtx HSD_VIData;
 extern FrameHookPair lbl_806CED28;
 extern u8 lbl_806CED30;
 extern u32 lbl_806CED34;
-extern unsigned char lbl_804FE080[0x1F748]; /* backup framebuffer */
+extern unsigned char g_backupBufferTexture[0x1F748]; /* backup framebuffer */
 extern const char lbl_802E950C[]; /* "not aligned" debug string */
 extern const char lbl_802E9538[]; /* "too large" debug string */
 extern const char lbl_802E9568[]; /* overlay fmt A */
@@ -163,9 +163,9 @@ void Frame_UpdatePerFrameState(void) { /* 0x8002D7DC size:0x19C */
 
     card = Sci2Card_Singleton_Get();
     if (card != 0) {
-        if (lbl_806D0F94 == 0) {
+        if (g_serviceEnable == 0) {
             doTick = 0;
-        } else if (lbl_806D0F98 == 1) {
+        } else if (g_serviceValue == 1) {
             doTick = 0;
         } else {
             doTick = 1;
@@ -175,8 +175,8 @@ void Frame_UpdatePerFrameState(void) { /* 0x8002D7DC size:0x19C */
         }
     }
     fn_802554DC();
-    lbl_80594080 = *fn_80293BBC();
-    tickDst = lbl_806D0F9C;
+    g_bootState = *fn_80293BBC();
+    tickDst = g_bootTimer;
     *tickDst = OSGetTick();
     {
         void **mgr = GetInputManager();
@@ -197,8 +197,8 @@ void Frame_UpdatePerFrameState(void) { /* 0x8002D7DC size:0x19C */
 
 void Frame_PostDrawOverlay(void) { /* 0x8002D978 size:0xC4 */
     if (lbl_806D0F8E == 1) {
-        OverlayText(1, 12, 0x1C, lbl_802E9568, &lbl_80594080.statA);
-        OverlayText(1, 12, 0x1D, lbl_802E9578, &lbl_80594080.statB);
+        OverlayText(1, 12, 0x1C, lbl_802E9568, &g_bootState.statA);
+        OverlayText(1, 12, 0x1D, lbl_802E9578, &g_bootState.statB);
     }
     GXDrawDone();
     fn_8018F14C();
@@ -228,7 +228,7 @@ void Frame_PostDraw_BackupBuffer(void) { /* 0x8002DA3C size:0x200 */
     if (lbl_806CED30 == 1) {
         tm.id = 0x15;
         tm.start = OSGetTick();
-        if (((u32)lbl_804FE080 & 0x1F) != 0) {
+        if (((u32)g_backupBufferTexture & 0x1F) != 0) {
             DebugPrintf(lbl_802E950C);
             Profiler_RecordFrame(
                 tm.id,
@@ -245,7 +245,7 @@ void Frame_PostDraw_BackupBuffer(void) { /* 0x8002DA3C size:0x200 */
         } else {
             GXSetTexCopySrc(0, 0, 0x280, 0x1E0);
             GXSetTexCopyDst(0x280, 0x1E0, 4, 0);
-            GXCopyTex(lbl_804FE080, 0);
+            GXCopyTex(g_backupBufferTexture, 0);
             Profiler_RecordFrame(
                 tm.id,
                 (float)(((OSGetTick() - tm.start) * 8) /

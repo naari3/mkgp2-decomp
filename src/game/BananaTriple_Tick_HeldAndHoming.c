@@ -10,11 +10,7 @@
 
 extern "C" {
 
-typedef struct Vec3 {
-    float x;
-    float y;
-    float z;
-} Vec3;
+#include "game/types/Vec3.h"
 
 extern float AngleStepTowards_Shortest(float cur, float target, float step);
 extern float BuildOrientationFromYaw(float yaw);

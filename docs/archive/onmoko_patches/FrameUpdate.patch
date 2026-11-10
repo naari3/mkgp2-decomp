@@ -40,15 +40,15 @@ index 07392e1..5975fd3 100644
          unsigned int word24 = lbl_80598A60.word24;
          unsigned short half28 = lbl_80598A60.half28;
 @@ -35,8 +34,7 @@ static inline void FrameBackup_Copy(void)
-         lbl_8059F480.word08 = word08;
-         lbl_8059F480.word0C = word0C;
-         lbl_8059F480.word10 = word10;
--        lbl_8059F480.word1C = word1C;
--        lbl_8059F480.word18 = word18;
-+        lbl_8059F480.qw18 = qw18;
-         lbl_8059F480.word20 = word20;
-         lbl_8059F480.word24 = word24;
-         lbl_8059F480.half28 = half28;
+         g_backupShadowCopy.word08 = word08;
+         g_backupShadowCopy.word0C = word0C;
+         g_backupShadowCopy.word10 = word10;
+-        g_backupShadowCopy.word1C = word1C;
+-        g_backupShadowCopy.word18 = word18;
++        g_backupShadowCopy.qw18 = qw18;
+         g_backupShadowCopy.word20 = word20;
+         g_backupShadowCopy.word24 = word24;
+         g_backupShadowCopy.half28 = half28;
 @@ -65,6 +63,8 @@ static inline void FrameBackup_Copy(void)
  }
  

@@ -26,11 +26,11 @@ extern long DVDGetCommandBlockStatus(void *block);
 extern u32 OSGetTick(void);
 extern s64 OSGetTime(void);
 
-extern u32 lbl_806D1140; /* last read end sector (>> 10) */
-extern u32 lbl_806D1144; /* tick of the last read */
-extern float lbl_806D1148; /* last read seconds */
-extern float lbl_806D114C; /* max read seconds */
-extern void (*lbl_806D2238)(void *arg); /* idle callback while reading */
+extern u32 g_dvdLastReadPage; /* last read end sector (>> 10) */
+extern u32 g_dvdLastReadTick; /* tick of the last read */
+extern float g_dvdLastReadSec; /* last read seconds */
+extern float g_dvdMaxReadSec; /* max read seconds */
+extern void (*g_dvdLoadCallback)(void *arg); /* idle callback while reading */
 
 #pragma exceptions on
 
@@ -45,8 +45,8 @@ int FUN_8007dfe4(const char *path, void *buf, long len, long offset, void *arg)
         return 0;
     }
     end = info.startAddr + info.length - 1;
-    if (lbl_806D1140 == info.startAddr >> 10) {
-        while (OSTicksToMicroseconds(OSGetTick() - lbl_806D1144) < 66) {
+    if (g_dvdLastReadPage == info.startAddr >> 10) {
+        while (OSTicksToMicroseconds(OSGetTick() - g_dvdLastReadTick) < 66) {
         }
     }
     if (DVDReadAsyncPrio(&info, buf, len, offset, 0, 2) == 0) {
@@ -56,17 +56,17 @@ int FUN_8007dfe4(const char *path, void *buf, long len, long offset, void *arg)
     start = OSGetTime();
     while (DVDGetCommandBlockStatus(&info) == 1) {
         if (--count < 0) {
-            lbl_806D2238(arg);
+            g_dvdLoadCallback(arg);
             count = 16;
         }
     }
-    lbl_806D1148 = (float)OSTicksToMilliseconds(OSGetTime() - start) / 1000.0f;
-    lbl_806D2238(arg);
-    lbl_806D1140 = end >> 10;
-    lbl_806D1144 = OSGetTick();
+    g_dvdLastReadSec = (float)OSTicksToMilliseconds(OSGetTime() - start) / 1000.0f;
+    g_dvdLoadCallback(arg);
+    g_dvdLastReadPage = end >> 10;
+    g_dvdLastReadTick = OSGetTick();
     DVDClose(&info);
-    if (lbl_806D114C <= lbl_806D1148) {
-        lbl_806D114C = lbl_806D1148;
+    if (g_dvdMaxReadSec <= g_dvdLastReadSec) {
+        g_dvdMaxReadSec = g_dvdLastReadSec;
     }
     return 1;
 }

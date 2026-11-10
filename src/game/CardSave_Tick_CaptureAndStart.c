@@ -5,9 +5,9 @@
 #pragma cplusplus on
 extern "C" {
 #include "game/CardLoadShadowPrivate.h"
-extern unsigned char lbl_806D1228, lbl_806D122A, lbl_806D121C, lbl_806D1227;
-extern unsigned int lbl_806D122C;
-extern int lbl_806D1210, lbl_806CF0E4, lbl_806D1220, lbl_806CF0D8;
+extern unsigned char lbl_806D1228, lbl_806D122A, g_cardCmdResult, lbl_806D1227;
+extern unsigned int g_cardSaveStartTick;
+extern int lbl_806D1210, lbl_806CF0E4, lbl_806D1220, g_cardRwSubState;
 extern int lbl_806D124C, lbl_806CF0D0;
 unsigned int OSGetTick(void);
 unsigned char ServiceLatch_CheckTriggered(void);
@@ -28,17 +28,17 @@ unsigned char CardSave_Tick_CaptureAndStart(void)
         case 0:
         case 7:
             if (lbl_806D1228 != 1) {
-                lbl_806D122C = OSGetTick();
+                g_cardSaveStartTick = OSGetTick();
                 lbl_806D1210 = 0;
                 lbl_806D122A = 1;
-                lbl_806D121C = 0;
+                g_cardCmdResult = 0;
                 lbl_806CF0E4 = 5;
                 if (!ServiceLatch_CheckTriggered()) {
                     lbl_806D1210 = 1;
                 } else {
                     lbl_806D1227 = 0;
                     lbl_806D1220 = 0;
-                    lbl_806CF0D8 = 0;
+                    g_cardRwSubState = 0;
                     card_rw_state_machine();
                 }
             }
@@ -53,9 +53,9 @@ unsigned char CardSave_Tick_CaptureAndStart(void)
             lbl_806D124C = 1;
             lbl_806D1210 = 0;
             lbl_806D122A = 1;
-            lbl_806D121C = 0;
+            g_cardCmdResult = 0;
             lbl_806CF0E4 = 5;
-            lbl_806D121C = Sci2Card_SendCmdCleaning(Sci2Card_Singleton_Get());
+            g_cardCmdResult = Sci2Card_SendCmdCleaning(Sci2Card_Singleton_Get());
             lbl_806CF0D0 = 4;
             break;
         case 2:
@@ -90,15 +90,15 @@ extern void __copy();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806CF0D0;
-extern unsigned int lbl_806CF0D8;
+extern unsigned int g_cardRwSubState;
 extern unsigned int lbl_806CF0E4;
 extern unsigned int lbl_806D1210;
-extern unsigned int lbl_806D121C;
+extern unsigned int g_cardCmdResult;
 extern unsigned int lbl_806D1220;
 extern unsigned int lbl_806D1227;
 extern unsigned int lbl_806D1228;
 extern unsigned int lbl_806D122A;
-extern unsigned int lbl_806D122C;
+extern unsigned int g_cardSaveStartTick;
 extern unsigned int lbl_806D124C;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
@@ -177,10 +177,10 @@ asm void CardSave_Tick_CaptureAndStart(void) { /* 0x800937D4 size:0x454 */
     li r5, 0x0
     li r4, 0x1
     li r0, 0x5
-    stw r3, lbl_806D122C(r13)
+    stw r3, g_cardSaveStartTick(r13)
     stw r5, lbl_806D1210(r13)
     stb r4, lbl_806D122A(r13)
-    stb r5, lbl_806D121C(r13)
+    stb r5, g_cardCmdResult(r13)
     stw r0, lbl_806CF0E4(r13)
     bl ServiceLatch_CheckTriggered
     clrlwi. r0, r3, 24
@@ -192,7 +192,7 @@ asm void CardSave_Tick_CaptureAndStart(void) { /* 0x800937D4 size:0x454 */
     li r0, 0x0
     stb r0, lbl_806D1227(r13)
     stw r0, lbl_806D1220(r13)
-    stw r0, lbl_806CF0D8(r13)
+    stw r0, g_cardRwSubState(r13)
     bl card_rw_state_machine
     b CardSave_Tick_CaptureAndStart_L_80093C08
     CardSave_Tick_CaptureAndStart_L_800938C8:
@@ -394,12 +394,12 @@ asm void CardSave_Tick_CaptureAndStart(void) { /* 0x800937D4 size:0x454 */
     stw r4, lbl_806D124C(r13)
     stw r3, lbl_806D1210(r13)
     stb r4, lbl_806D122A(r13)
-    stb r3, lbl_806D121C(r13)
+    stb r3, g_cardCmdResult(r13)
     stw r0, lbl_806CF0E4(r13)
     bl Sci2Card_Singleton_Get
     bl Sci2Card_SendCmdCleaning
     li r0, 0x4
-    stb r3, lbl_806D121C(r13)
+    stb r3, g_cardCmdResult(r13)
     stw r0, lbl_806CF0D0(r13)
     b CardSave_Tick_CaptureAndStart_L_80093C08
     CardSave_Tick_CaptureAndStart_L_80093C00:

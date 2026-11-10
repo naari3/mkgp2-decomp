@@ -93,7 +93,7 @@ extern unsigned char lbl_806D1264[3];
 extern int g_localPcbRole, lbl_806D129C, g_currentSceneState;
 extern int lbl_806D11A4, lbl_806D11A8, lbl_806CF12C, lbl_806D12BC;
 extern int g_reverseRoundFlag, g_characterId, g_ccClass, g_kartVariant;
-extern int g_consecutiveWinsTier, g_ringReadIdx, lbl_806D11A0;
+extern int g_consecutiveWinsTier, g_ringReadIdx, g_ringWriteIdx;
 extern float PCBComm_BuildBroadcastSlot_bss_806D12A8;
 extern float lbl_806D3148;
 extern BroadcastInput** GetInputManager(void);
@@ -159,7 +159,7 @@ void PCBComm_BuildBroadcastSlot(void)
     slot->buttons = input->PressedMasked(0xE7FF);
     unsigned char count = 0;
     int read = g_ringReadIdx;
-    int write = lbl_806D11A0;
+    int write = g_ringWriteIdx;
     while ((read + count) % 64 != write) ++count;
     slot->queued = count;
 }

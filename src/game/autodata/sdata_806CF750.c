@@ -150,8 +150,8 @@ extern char sdata_806CF750_data_80490030[];
 extern char sdata_806CF750_data_80490058[];
 extern char sdata_806CF750_data_804909C8[];
 extern char sdata_806CF750_data_804909EC[];
-extern char lbl_80490A10[];
-extern char lbl_80490A34[];
+extern char data_8048FE08_data_80490A10[];
+extern char data_8048FE08_data_80490A34[];
 extern char sdata_806CF750_data_80490A70[];
 extern char sdata_806CF750_data_80490A7C[];
 extern char sdata_806CF750_data_80490ACC[];
@@ -386,11 +386,11 @@ void *data_8048FE08_data_806CF8F0[2] = {
 };
 void *data_8048FE08_data_806CF8F8[2] = {
     (void *)&lbl_80368D5C,
-    (void *)&lbl_80490A10
+    (void *)&data_8048FE08_data_80490A10
 };
 void *data_8048FE08_data_806CF900[2] = {
     (void *)&lbl_80368D6C,
-    (void *)&lbl_80490A34
+    (void *)&data_8048FE08_data_80490A34
 };
 /* decl: PopupInfo * */
 void *resultscene_nm1_data_806CF908[2] = {

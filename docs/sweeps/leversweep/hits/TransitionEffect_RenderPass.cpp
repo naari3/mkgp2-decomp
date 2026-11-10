@@ -6,7 +6,7 @@
 
 void operator delete(void *) throw();
 extern "C" void Object_DtorWithGXSync(void *, int);
-extern "C" void *lbl_803FE3C0[];
+extern "C" void *TransitionEffect_vtable_803FE3C0[];
 extern "C" const float lbl_806D2FD0, lbl_806D2FDC, lbl_806D3054, lbl_806D3058;
 extern "C" {
 unsigned long OSGetTick();
@@ -181,7 +181,7 @@ template <class T> struct TransitionOwner {
 struct TransitionInitBase {
     void **vtable;
     TransitionInitBase(void **derivedVtable) {
-        vtable = lbl_803FE3C0;
+        vtable = TransitionEffect_vtable_803FE3C0;
         lbl_806D109C = (TransitionEffectView *)this;
         vtable = derivedVtable;
     }
@@ -718,7 +718,7 @@ BUFFER_DTOR(dtor_80080630)
 extern "C" void *dtor_8008068C(TransitionEffectView *self, short flag)
 {
     if (self) {
-        self->vtable = lbl_803FE3C0;
+        self->vtable = TransitionEffect_vtable_803FE3C0;
         if (flag > 0) operator delete(self);
     }
     return self;

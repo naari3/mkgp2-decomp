@@ -64,7 +64,7 @@ extern char lbl_80311D78[];
 extern char lbl_80311D88[];
 extern char data_803F57E0_data_803F58F0[];
 extern char data_803F75D0_data_803F75EC[];
-extern char lbl_803F769C[];
+extern char CarObject_data_803F769C[];
 extern char data_803F7690_data_803F76B8[];
 extern char data_803F7690_data_803F76D8[];
 extern char data_803F7690_data_803F76F8[];
@@ -85,8 +85,8 @@ extern char data_803F9F2C_data_803FBF5C[];
 extern char CardCreate_Page_data_803FDE58[];
 extern char lbl_803FDF34[];
 extern char lbl_803FE050[];
-extern char lbl_803FE0A0[];
-extern char lbl_803FE370[];
+extern char SpecialFaceMesh_data_803FE0A0[];
+extern char TransitionEffect_data_803FE370[];
 extern char lbl_806D2A44[];
 extern char lbl_806D2A48[];
 extern char lbl_806D2A4C[];
@@ -153,9 +153,9 @@ void *data_803F75D0_data_806CEE08[2] = {
 const char *lbl_806CEE10[2] = {
     (const char *)&lbl_802EDA54, 0
 };
-void *lbl_806CEE18[2] = {
+void *CarObject_data_806CEE18[2] = {
     (void *)&lbl_802EDA70,
-    (void *)&lbl_803F769C
+    (void *)&CarObject_data_803F769C
 };
 const char *lbl_806CEE20[2] = {
     (const char *)&lbl_802EDB90, 0
@@ -229,7 +229,7 @@ void *data_803F9CD8_data_806CEEB0[2] = {
     (void *)&lbl_802EDFD8,
     (void *)&data_803F9CD8_data_803F9CD8
 };
-const char *lbl_806CEEB8[2] = {
+const char *clItemBoxResponder_data_806CEEB8[2] = {
     (const char *)&lbl_802EE010, 0
 };
 char *clMiyoshiCardCreate_Draw_data_806CEEC0[2] = {
@@ -273,7 +273,7 @@ void *data_803F9F2C_data_806CEF10[2] = {
     (void *)&lbl_802EE558,
     (void *)&data_803F9F2C_data_803FBF5C
 };
-unsigned short lbl_806CEF18[4] = {
+unsigned short g_sineLutIndexMask[4] = {
     0xFFFF, 0x0, 0x0, 0x0
 };
 unsigned int DMAChannelManager_Init_data_806CEF20[2] = {
@@ -324,22 +324,22 @@ void *lbl_806CEF80[2] = {
 const char *lbl_806CEF88[2] = {
     (const char *)&lbl_80311BBC, 0
 };
-void *lbl_806CEF90[2] = {
+void *SpecialFaceMesh_data_806CEF90[2] = {
     (void *)&lbl_80311BA8,
-    (void *)&lbl_803FE0A0
+    (void *)&SpecialFaceMesh_data_803FE0A0
 };
 const char *lbl_806CEF98[2] = {
     (const char *)&lbl_80311C50, 0
 };
-int lbl_806CEFA0[2] = {
+int g_texPaletteHeap[2] = {
     -1, 0
 };
 const char *lbl_806CEFA8[2] = {
     (const char *)&lbl_80311D88, 0
 };
-void *lbl_806CEFB0[2] = {
+void *TransitionEffect_data_806CEFB0[2] = {
     (void *)&lbl_80311D78,
-    (void *)&lbl_803FE370
+    (void *)&TransitionEffect_data_803FE370
 };
 float Jyugemu_Flag_Ctor_data_806CEFB8 = 1.0f;
 float Jyugemu_Flag_Ctor_data_806CEFBC = 1.2e+02f;

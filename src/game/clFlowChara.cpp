@@ -935,11 +935,7 @@ struct ResCtrl {
     ~ResCtrl();
 }; /* size 0x34 */
 
-struct TexMgr {
-    char _opaque[0x230];
-    TexMgr();
-    ~TexMgr() {}
-};
+#include "game/types/TexMgr.h"
 
 struct Scene3D {
     char _opaque[0x3084];

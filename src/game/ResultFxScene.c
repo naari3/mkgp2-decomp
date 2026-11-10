@@ -119,22 +119,7 @@ static const int s_cupParam[8][3] = {
 
 #include "game/types/InputPlayer.h"
 
-struct ResCtrl {
-    int resId;
-    int field4, mode, fieldc;
-    unsigned char flag, pad11[3];
-    float x, y, z, width, height, field28, scaleX, scaleY;
-    unsigned int colors[4];
-    int tail[5];
-    ResCtrl();
-    ~ResCtrl() {}
-    void SetColor(unsigned int c) {
-        colors[0] = c;
-        colors[1] = c;
-        colors[2] = c;
-        colors[3] = c;
-    }
-};
+#include "game/types/ResCtrl.h"
 
 extern "C" {
 extern void fn_801678FC(int layer, float r, float g, float b, float a);

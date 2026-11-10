@@ -124,7 +124,7 @@ extern char data_803F57E0_data_806CEDB0[];
 #pragma force_active on
 
 /* decl: HSD_ClassInfo / char / unsigned int */
-void *lbl_803F57E0[21] = {
+void *g_mjobjClassInfo[21] = {
     (void *)model_jobj_ClassInit,
     0,
     0,
@@ -172,7 +172,7 @@ void *MObj_data_803F5834[21] = {
     0
 };
 /* decl: MObj1ClassView / char */
-void *lbl_803F5888[22] = {
+void *g_mobj1ClassInfo[22] = {
     (void *)MObj1_ClassInit,
     0,
     0,

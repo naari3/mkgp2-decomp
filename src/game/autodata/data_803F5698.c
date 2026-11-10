@@ -44,7 +44,7 @@ extern char lbl_806CED68[];
 extern char lbl_806CED70[];
 extern char data_803F5698_data_806CED78[];
 extern char data_803F5698_data_806CED80[];
-extern char lbl_806CED88[];
+extern char JvsInput_data_806CED88[];
 
 /* layout as declared in src/game/InputObj_ReadRawInput.c */
 #include "game/types/RawButtonMap.h"
@@ -136,7 +136,7 @@ void *g_InputObjectVtable[13] = {
     (void *)InputObj_ReadRawInput
 };
 void *JvsInput_data_803F5788[14] = {
-    (void *)&lbl_806CED88,
+    (void *)&JvsInput_data_806CED88,
     0,
     (void *)JvsInput_DtorAndFree,
     (void *)InputObj_Update_Stub,

@@ -1,7 +1,7 @@
 #include "game/types/ModelDesc.h"
 
-extern char lbl_803F57E0[];
-extern char lbl_803F5888[];
+extern char g_mjobjClassInfo[];
+extern char g_mobj1ClassInfo[];
 extern char *lbl_806D1038;
 extern char *hsdNew(void *);
 extern void *HSD_MObjGetDefaultClass(void);
@@ -16,9 +16,9 @@ void clModelM_Construct(ModelDesc *desc, void **outModel, void **outJObj) {
     char *model;
     char *saved;
 
-    model = hsdNew(lbl_803F57E0);
+    model = hsdNew(g_mjobjClassInfo);
     heap = HSD_MObjGetDefaultClass();
-    HSD_MObjSetDefaultClass(lbl_803F5888);
+    HSD_MObjSetDefaultClass(g_mobj1ClassInfo);
     saved = lbl_806D1038;
     lbl_806D1038 = model + 0x88;
     jobj = HSD_JObjLoadJoint(desc->jobjDesc);

@@ -1,7 +1,7 @@
 /* If the read lands on the same 1 KiB page as the previous one, spin until
  * 66 us have passed since it. Returns the number of spins. */
-extern unsigned int lbl_806D1140;
-extern unsigned int lbl_806D1144;
+extern unsigned int g_dvdLastReadPage;
+extern unsigned int g_dvdLastReadTick;
 extern unsigned int OSGetTick(void);
 
 #define OS_BUS_CLOCK (*(unsigned int *)0x800000F8)
@@ -12,9 +12,9 @@ int DVDLoad_WaitIfSamePage(unsigned int offset)
 {
     int spins = 0;
 
-    if (lbl_806D1140 == (offset >> 10)) {
+    if (g_dvdLastReadPage == (offset >> 10)) {
         while (1) {
-            if (OSTicksToMicroseconds(OSGetTick() - lbl_806D1144) >= 0x42) {
+            if (OSTicksToMicroseconds(OSGetTick() - g_dvdLastReadTick) >= 0x42) {
                 break;
             }
             spins++;

@@ -65,7 +65,7 @@ extern u8 lbl_80598A60[0x2A];
 extern u8 g_pcbCommEnabled, lbl_806D1191, g_pcbSyncReady;
 extern u8 PCBCheckRecv_data_806CEFC8, lbl_806D1193, g_confirmFlag, PCBComm_Init_bss_806D11AC;
 extern u8 g_isCommHost;
-extern int g_gameMode, g_myPcbId, g_ringReadIdx, lbl_806D11A0;
+extern int g_gameMode, g_myPcbId, g_ringReadIdx, g_ringWriteIdx;
 extern u32 PCBCheckRecv_bss_806D1188, lbl_806D11A4, lbl_806D11A8;
 extern void *PCBCheckRecv_bss_806D11B0;
 extern LifecycleListener *g_pcbListener;
@@ -300,7 +300,7 @@ extern "C" int PCBComm_Init(void)
             ResetScratch(slot, i);
         }
     }
-    lbl_806D11A0 = 1;
+    g_ringWriteIdx = 1;
     g_ringReadIdx = 0;
     ClearRing(storage->ring[0]);
     memset(&storage->sync, 0, 0x1C);

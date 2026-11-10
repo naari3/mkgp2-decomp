@@ -1,9 +1,9 @@
 /* Observed intrusive archive owner layout, not a complete runtime class. */
 struct RomLifecycle;
 extern "C" {
-extern RomLifecycle* lbl_806D0FE0;
-extern RomLifecycle* lbl_806D0FE4;
-extern int lbl_806D0FE8;
+extern RomLifecycle* g_romListHead;
+extern RomLifecycle* g_romListTail;
+extern int g_romActiveCount;
 void HSD_ArchiveFree(void* archive);
 void HSD_Free(void* block);
 }
@@ -18,7 +18,7 @@ struct RomLifecycle {
 
     ~RomLifecycle()
     {
-        --lbl_806D0FE8;
+        --g_romActiveCount;
         if (archive != 0) {
             if (rawBlock == 0) {
                 HSD_ArchiveFree(archive);
@@ -27,12 +27,12 @@ struct RomLifecycle {
             }
         }
         if (previous == 0) {
-            lbl_806D0FE0 = next;
+            g_romListHead = next;
         } else {
             previous->next = next;
         }
         if (next == 0) {
-            lbl_806D0FE4 = previous;
+            g_romListTail = previous;
         } else {
             next->previous = previous;
         }
@@ -42,7 +42,7 @@ struct RomLifecycle {
 extern "C" int clRom_PurgeAll(void)
 {
     int count = 0;
-    RomLifecycle* cursor = lbl_806D0FE0;
+    RomLifecycle* cursor = g_romListHead;
     while (cursor != 0) {
         RomLifecycle* next = cursor->next;
         delete cursor;

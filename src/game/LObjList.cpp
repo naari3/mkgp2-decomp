@@ -5,7 +5,7 @@ void HSD_LObjAddCurrent(void*);
 void HSD_LObjRemoveAll(void*);
 void clRom_Release(void*);
 void MemoryManager_TimedFree(void*);
-extern void* lbl_806D1130[2];
+extern void* g_sceneLights[2];
 
 int LObjList_ApplyForCObj(LObjList* self) {
     if (!self->archive) return 0;
@@ -23,9 +23,9 @@ LObjList* LObjList_Destroy(LObjList* self, short freeMemory) {
             }
             clRom_Release(self->archive);
         }
-        if (lbl_806D1130[0]) {
-            HSD_LObjRemoveAll(lbl_806D1130[0]);
-            lbl_806D1130[0] = 0;
+        if (g_sceneLights[0]) {
+            HSD_LObjRemoveAll(g_sceneLights[0]);
+            g_sceneLights[0] = 0;
         }
         if (freeMemory > 0) MemoryManager_TimedFree(self);
     }

@@ -16,7 +16,7 @@ extern void *OSGetArenaHi(void);
 extern void *memset(void *dst, int value, unsigned int size);
 extern void fn_80287EE4(int, void *);
 
-extern void *lbl_806D0F90;
+extern void *g_cardTaskManager;
 extern void *lbl_806D0FC8;
 extern void *lbl_806D0FD8;
 extern void *lbl_806D12DC;
@@ -36,8 +36,8 @@ void Game_Shutdown(void)
     GXDrawDone();
     PcbComm_Shutdown();
     FreeMediaBuffers();
-    CardTaskManager_Dtor(lbl_806D0F90, 1);
-    lbl_806D0F90 = 0;
+    CardTaskManager_Dtor(g_cardTaskManager, 1);
+    g_cardTaskManager = 0;
     Sci2Card_Shutdown();
     fn_80193838();
     InputMgr_Shutdown();

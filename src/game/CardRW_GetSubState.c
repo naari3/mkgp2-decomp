@@ -1,6 +1,6 @@
-extern int lbl_806CF0D8;
+extern int g_cardRwSubState;
 
 int CardRW_GetSubState(void)
 {
-    return lbl_806CF0D8;
+    return g_cardRwSubState;
 }

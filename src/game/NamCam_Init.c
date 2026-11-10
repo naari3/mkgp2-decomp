@@ -23,7 +23,7 @@ typedef struct NamCam {
     NamCamSocket sock; /* 0x80000 */
 } NamCam;
 
-extern NamCam *lbl_806D1070;
+extern NamCam *g_namCam;
 extern char lbl_802EBA04[];
 extern void *Alloc(unsigned long size);
 extern char *PcbIdToIpString(int pcb);
@@ -32,18 +32,18 @@ extern void DebugPrintf(const char *fmt, ...);
 
 int NamCam_Init(void)
 {
-    lbl_806D1070 = Alloc(sizeof(NamCam));
-    lbl_806D1070->sock.family = 2;
-    lbl_806D1070->sock.port = 0x50;
-    lbl_806D1070->sock.addr = acInetAddr(PcbIdToIpString(0));
-    lbl_806D1070->sock.flag10 = 0;
-    lbl_806D1070->sock.flag11 = 0;
-    lbl_806D1070->sock.flag12 = 0;
-    lbl_806D1070->sock.flag13 = 0;
-    lbl_806D1070->sock.socket = -1;
-    lbl_806D1070->sock.connected = 0;
-    lbl_806D1070->sock.received = 0;
-    lbl_806D1070->sock.frames = 0;
+    g_namCam = Alloc(sizeof(NamCam));
+    g_namCam->sock.family = 2;
+    g_namCam->sock.port = 0x50;
+    g_namCam->sock.addr = acInetAddr(PcbIdToIpString(0));
+    g_namCam->sock.flag10 = 0;
+    g_namCam->sock.flag11 = 0;
+    g_namCam->sock.flag12 = 0;
+    g_namCam->sock.flag13 = 0;
+    g_namCam->sock.socket = -1;
+    g_namCam->sock.connected = 0;
+    g_namCam->sock.received = 0;
+    g_namCam->sock.frames = 0;
     DebugPrintf(lbl_802EBA04);
     return 1;
 }

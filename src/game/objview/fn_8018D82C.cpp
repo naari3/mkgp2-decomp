@@ -3,10 +3,7 @@ struct HSD_MObj;
 #include "game/types/HSD_TObj.h"
 #include "game/types/HSD_DObj.h"
 
-struct clNormal3D {
-    unsigned char data[0x5c];
-    clNormal3D(const char *name, int arg);
-};
+#include "game/types/clNormal3D.h"
 
 #include "game/types/TexWrap.h"
 

@@ -28,8 +28,8 @@ extern "C" {
 extern unsigned char lbl_806D13A1;
 extern int g_cupId;
 extern void *g_carObjects[];
-extern void *lbl_806D1398;
-extern void *lbl_806D13B4;
+extern void *g_taGhostCar;
+extern void *g_taSound;
 extern void *lbl_806D10AC;
 extern void *lbl_806D10D0;
 extern void *lbl_806D109C;
@@ -121,14 +121,14 @@ extern "C" void BtMode_RenderFrame(BtScene *self)
                 IsTimerModeEnabled();
             }
             KartItem_RenderPipelinedWithEffects(g_carObjects[0], 0);
-            if (lbl_806D1398 != 0) {
+            if (g_taGhostCar != 0) {
                 if (!IsRaceStarted()) {
-                    unsigned char *ise = KartItem_GetCurrentISESlot(CarObject_GetRenderObj(lbl_806D1398))->iseState;
+                    unsigned char *ise = KartItem_GetCurrentISESlot(CarObject_GetRenderObj(g_taGhostCar))->iseState;
                     if (ise != 0) {
                         ise[0x28] = 0;
                     }
                 }
-                KartItem_RenderPipelinedWithEffects(lbl_806D1398, 0);
+                KartItem_RenderPipelinedWithEffects(g_taGhostCar, 0);
             }
             Stub_NoOp_80030aec(self->camera);
             Object_RenderJObjIfWithinRange(self->object);
@@ -147,8 +147,8 @@ extern "C" void BtMode_RenderFrame(BtScene *self)
             Subsystem36c_DispatchPass4_Timed(self->environment);
             TransitionEffect_RenderPass(Transition(), 5);
             fn_80253448(self->hud, lbl_806DC190 | lbl_806DC188 | lbl_806DC18C | lbl_806DC184 | lbl_806DC198 | lbl_806DC19C);
-            if (lbl_806D13B4 != 0) {
-                fn_8023E2F8(lbl_806D13B4);
+            if (g_taSound != 0) {
+                fn_8023E2F8(g_taSound);
             }
             fn_80253448(self->hud, lbl_806DC180 | lbl_806DC17C | lbl_806DC1A0 | lbl_806DC1A4 | lbl_806DC1AC |
                                        lbl_806DC194 | lbl_806DC1B0 | lbl_806DC1B4 | lbl_806DC1B8);

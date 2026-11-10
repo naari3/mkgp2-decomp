@@ -467,7 +467,7 @@ void *SpriteTestScene_vtable_8041CB94[5] = {
     (void *)DbgScene01_SprMng2Test_Dtor
 };
 /* decl: ItemClassEntry / ItemKindEntry */
-void *lbl_8041CBA8[1390] = {
+void *g_itemClassTable[1390] = {
     (void *)ItemObject_Tick_AwaitInitThenFree,
     0,
     (void *)0xFF000000,

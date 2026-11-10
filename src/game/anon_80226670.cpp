@@ -9,10 +9,7 @@
 void *operator new(unsigned long size);
 void operator delete(void *p) throw();
 
-struct InputState {
-    char pad00[0x18];
-    int held;
-};
+#include "game/types/InputState.h"
 
 struct FlowPanel {
     int state;

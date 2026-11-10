@@ -7,7 +7,7 @@ extern unsigned int OSGetTick(void);
 
 extern int lbl_806D1220;
 extern int CardPrintJob_bss_806D1240;
-extern unsigned int lbl_806D1244;
+extern unsigned int g_cardFontTransferStartTick;
 
 /* 0x8009450C: send the receipt font to the printer one page at a time. */
 unsigned char CardPrintJob_TickFontTransfer(void)
@@ -46,7 +46,7 @@ unsigned char CardPrintJob_TickFontTransfer(void)
             lbl_806D122B = 0;
             return 1;
         }
-        lbl_806D1244 = OSGetTick();
+        g_cardFontTransferStartTick = OSGetTick();
         Sci2Card_SendCmdPrint(card, CardPrintJob_bss_806D1240 + 1, payload);
         lbl_806D1220++;
         break;

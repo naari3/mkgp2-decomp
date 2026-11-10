@@ -34,7 +34,7 @@ index 5f503f3..924a219 100644
 -asm void WarpZone_CheckEntry(void) {
 -    nofralloc
 -    stwu r1, -0x20(r1)
--    la r4, lbl_806CF238(r13)  /* lbl_806CF238 */
+-    la r4, g_warpDashMgrs(r13)  /* g_warpDashMgrs */
 -    lbz r5, 0x20(r3)
 -    neg r0, r5
 -    or r0, r0, r5

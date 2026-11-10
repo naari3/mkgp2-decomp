@@ -14,7 +14,7 @@ extern void Backup_PublishShadowCopy_Inline();
 extern int lbl_806D1210;
 extern int lbl_806D1214;
 extern unsigned char lbl_806D1224;
-extern unsigned char lbl_806D1226;
+extern unsigned char g_cardReceiptTestFlag;
 extern unsigned char lbl_806D122A;
 extern unsigned char lbl_806D122B;
 extern unsigned char lbl_80598A60[];
@@ -74,12 +74,12 @@ unsigned char Sci2Card_WaitResetComplete(void)
         lbl_806D122A = 0;
         lbl_806D1210 = 1;
         lbl_806D122B = 0;
-        lbl_806D1226 = 0;
+        g_cardReceiptTestFlag = 0;
         lbl_80598A60[0x270] = 0;
         Backup_PublishShadowCopy_Inline(lbl_80598A60);
         return 1;
     }
-    lbl_806D1226 = 1;
+    g_cardReceiptTestFlag = 1;
     lbl_80598A60[0x270] = 1;
     Backup_PublishShadowCopy_Inline(lbl_80598A60);
     Sci2Card_SetFailCode();

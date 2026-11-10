@@ -1,6 +1,6 @@
 /* Backup_PublishShadowCopy @ 0x80074370 (size 0x21C).
  * Stamps the backup working copy with OSGetTime() and, when backup is
- * available and idle, publishes it to lbl_8059F480. */
+ * available and idle, publishes it to g_backupShadowCopy. */
 #pragma use_lmw_stmw on
 
 #include "game/BackupShadowCopy.h"

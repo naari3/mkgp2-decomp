@@ -31,8 +31,8 @@ typedef char BootBackupSizeCheck[sizeof(BootBackup) == 0x6a20 ? 1 : -1];
 struct BootDescriptor { unsigned int words[2]; int size, type; };
 struct BootClock { char bytes[16]; };
 extern "C" {
-extern BootBackup lbl_80598A60, lbl_8059F480;
-extern BootClock lbl_805A5EA0;
+extern BootBackup lbl_80598A60, g_backupShadowCopy;
+extern BootClock g_operationClock;
 extern BootDescriptor GameBoot_Init_bss_805A5EB0;
 extern unsigned char lbl_806CEF68, lbl_806CEF69, lbl_806D1120;
 extern int lbl_806D1124, lbl_806D1114, lbl_806D1110, lbl_806D1128;

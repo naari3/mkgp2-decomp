@@ -16,13 +16,13 @@ typedef struct ItemObject {
     unsigned char pad_18C[0x60];
 } ItemObject;
 
-extern ItemObject lbl_80638300[0x100];
+extern ItemObject g_itemObjectManager[0x100];
 
 static inline ItemObject *find_homing(ItemObject *self, void *target) {
     int i;
 
     for (i = 0; i < 0x100; i++) {
-        ItemObject *item = &lbl_80638300[i];
+        ItemObject *item = &g_itemObjectManager[i];
 
         if (item->inUse && item->released == 0 && item != self) {
             unsigned char kind = item->kind;

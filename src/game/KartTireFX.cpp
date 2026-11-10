@@ -28,14 +28,7 @@ struct HSD_JObj {
     Mtx mtx;            /* 0x44 */
 };
 
-class clNormal3D {
-public:
-    clNormal3D(const char *filename, int useSkinModel);
-    ~clNormal3D();
-
-private:
-    char data[0x5c];
-};
+#include "game/types/clNormal3D.h"
 
 void *operator new(unsigned long);
 void operator delete(void *);

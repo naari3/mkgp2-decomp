@@ -26,7 +26,7 @@ struct DrawEffectCull {
     unsigned char pad0c9[0x1CC - 0xC9];
 };
 
-extern "C" DrawEffectCull lbl_805DF468[0x200];
+extern "C" DrawEffectCull g_drawEffectSlots[0x200];
 
 class ScopedTimer {
 public:
@@ -55,21 +55,21 @@ static inline void TickDrawEffectPool(void)
     int i;
 
     for (i = 0; i < 0x200; i++) {
-        if (lbl_805DF468[i].active) {
-            if (lbl_805DF468[i].slot[0] & 1) {
-                lbl_805DF468[i].visible = 1;
+        if (g_drawEffectSlots[i].active) {
+            if (g_drawEffectSlots[i].slot[0] & 1) {
+                g_drawEffectSlots[i].visible = 1;
             } else {
-                lbl_805DF468[i].visible = fn_80137718(lbl_805DF468[i].sphere, view, lbl_805DF468[i].radius);
-                if (lbl_805DF468[i].visible && view[2] < lbl_806D4FD8) {
-                    lbl_805DF468[i].visible = 0;
+                g_drawEffectSlots[i].visible = fn_80137718(g_drawEffectSlots[i].sphere, view, g_drawEffectSlots[i].radius);
+                if (g_drawEffectSlots[i].visible && view[2] < lbl_806D4FD8) {
+                    g_drawEffectSlots[i].visible = 0;
                 }
             }
-            VfxSlot_TickAnim(lbl_805DF468[i].slot, lbl_805DF468[i].visible);
-            if (lbl_805DF468[i].visible && lbl_805DF468[i].hook != 0) {
-                if (lbl_805DF468[i].hookArg != 0) {
-                    lbl_805DF468[i].hook(lbl_805DF468[i].hookArg);
+            VfxSlot_TickAnim(g_drawEffectSlots[i].slot, g_drawEffectSlots[i].visible);
+            if (g_drawEffectSlots[i].visible && g_drawEffectSlots[i].hook != 0) {
+                if (g_drawEffectSlots[i].hookArg != 0) {
+                    g_drawEffectSlots[i].hook(g_drawEffectSlots[i].hookArg);
                 } else {
-                    lbl_805DF468[i].hook(lbl_805DF468[i].slot);
+                    g_drawEffectSlots[i].hook(g_drawEffectSlots[i].slot);
                 }
             }
         }

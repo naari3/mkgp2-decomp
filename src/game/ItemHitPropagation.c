@@ -36,7 +36,7 @@ extern void Mtx_TransposeToMtx44(HitMtx44 *dest, const void *source);
 extern void Mtx44_TransformVec3(HitVec3 *dest, const HitMtx44 *matrix,
                               const HitVec3 *source);
 extern float fn_800D3184(const HitVec3 *a, const HitVec3 *b);
-extern HitDescriptor lbl_8041AC24[];
+extern HitDescriptor g_itemDescriptorTable[];
 extern const HitVec3 Item_PropagateHitToDriversInRadius_rodata_8032DDF4;
 extern const float lbl_806D5B24;
 
@@ -124,7 +124,7 @@ void Item_PropagateHitToDriversInRadius(HitItem *item, HitDriver *excluded)
     if (item == 0) {
         return;
     }
-    radius = item->radiusScale * lbl_8041AC24[item->kind_01C].radius;
+    radius = item->radiusScale * g_itemDescriptorTable[item->kind_01C].radius;
     radius = lbl_806D5B24 + radius;
     for (i = 0; i < 128; i++) {
         HitRaceSlot *slot = RaceContextSlot_GetIfAlive(GetRaceContextPtr(), i);

@@ -6,13 +6,13 @@ extern void Backup_PublishShadowCopy_Inline(void);
 extern int lbl_806CF0D0;
 extern unsigned char lbl_806D1224;
 extern unsigned char lbl_806D1225;
-extern unsigned char lbl_806D1226;
+extern unsigned char g_cardReceiptTestFlag;
 extern unsigned char lbl_806D1248;
 extern unsigned char lbl_80598A60[];
 
 static inline void Cleaning_MarkFailed(void)
 {
-    lbl_806D1226 = 1;
+    g_cardReceiptTestFlag = 1;
     lbl_80598A60[0x270] = 1;
     Backup_PublishShadowCopy_Inline();
 }
@@ -33,8 +33,8 @@ int CardSave_Tick_PollCleaningResult(void)
     if (lbl_806D1210 != 0) {
         return 1;
     }
-    if (lbl_806D121C == 0) {
-        lbl_806D121C = Sci2Card_SendCmdCleaning(card);
+    if (g_cardCmdResult == 0) {
+        g_cardCmdResult = Sci2Card_SendCmdCleaning(card);
         return 0;
     }
     if (!Sci2Card_IsIdleOrExhausted(card)) {
@@ -69,7 +69,7 @@ int CardSave_Tick_PollCleaningResult(void)
         lbl_806D1224 = 1;
         lbl_806D1214 = lbl_806D1225 == 1 ? 4 : 1;
         lbl_806D1225 = 0;
-        lbl_806D121C = Sci2Card_SendCmdCleaning(card);
+        g_cardCmdResult = Sci2Card_SendCmdCleaning(card);
         lbl_806D1248 = 1;
         lbl_806D1210 = 0;
         if (ServiceLatch_CheckTriggered()) {

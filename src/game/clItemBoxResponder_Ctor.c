@@ -8,7 +8,7 @@ typedef struct clItemBoxResponder {
 } clItemBoxResponder;
 
 extern void *lbl_806D10D0;
-extern void *lbl_803F9D00[];
+extern void *clItemBoxResponder_vtable_803F9D00[];
 extern void clItemBoxManager_RegisterResponder(void *manager, clItemBoxResponder *responder);
 
 static inline void *clItemBoxManager_Get(void)
@@ -18,7 +18,7 @@ static inline void *clItemBoxManager_Get(void)
 
 clItemBoxResponder *clItemBoxResponder_Ctor(clItemBoxResponder *self, void *owner)
 {
-    self->vtable = lbl_803F9D00;
+    self->vtable = clItemBoxResponder_vtable_803F9D00;
     self->owner = owner;
     self->registered = 0;
     if (clItemBoxManager_Get() == 0) {

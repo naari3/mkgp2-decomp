@@ -1,10 +1,10 @@
 extern unsigned int OSGetTick(void);
 
-extern unsigned int lbl_806D1140;
-extern unsigned int lbl_806D1144;
+extern unsigned int g_dvdLastReadPage;
+extern unsigned int g_dvdLastReadTick;
 
 void DVDLoad_RecordOpStart(unsigned int offset)
 {
-    lbl_806D1140 = offset >> 10;
-    lbl_806D1144 = OSGetTick();
+    g_dvdLastReadPage = offset >> 10;
+    g_dvdLastReadTick = OSGetTick();
 }

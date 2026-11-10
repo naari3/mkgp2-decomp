@@ -56,7 +56,7 @@ extern int JointByName_GetWorldPosition(ItemVec3 *out, void *sprite, void *joint
 extern void SpriteSlot_TickAnim(void *sprite);
 extern void Vec3_Copy(ItemVec3 *dst, const ItemVec3 *src);
 
-extern ItemDescriptor lbl_8041AC24[];
+extern ItemDescriptor g_itemDescriptorTable[];
 
 #pragma use_lmw_stmw on
 void ItemObjectManager_TickActiveItems(ItemObjectManager *m)
@@ -84,7 +84,7 @@ void ItemObjectManager_TickActiveItems(ItemObjectManager *m)
     for (i = 0; i < 256; i++) {
         a = &m->items[i];
         if (a->active) {
-            ItemDescriptor *desc = &lbl_8041AC24[a->kind];
+            ItemDescriptor *desc = &g_itemDescriptorTable[a->kind];
             if (desc->hasJoint) {
                 if (JointByName_GetWorldPosition(&a->pos, &a->sprite, desc->joint) == 0) {
                     Vec3_Copy(&a->pos, &a->basePos);
@@ -92,7 +92,7 @@ void ItemObjectManager_TickActiveItems(ItemObjectManager *m)
             } else {
                 Vec3_Copy(&a->pos, &a->basePos);
             }
-            a->radius = a->radiusScale * lbl_8041AC24[a->kind].radius;
+            a->radius = a->radiusScale * g_itemDescriptorTable[a->kind].radius;
             if (a->radius < 0.0f) {
                 a->radius = 1.0f;
             }

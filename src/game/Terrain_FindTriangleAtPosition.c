@@ -27,7 +27,7 @@ typedef struct TerrainStepper {
     int index;
 } TerrainStepper;
 
-extern TerrainGrid *lbl_806CED58;
+extern TerrainGrid *g_collisionData;
 extern const float lbl_806D2388;
 
 static inline int Terrain_EdgeSide(TerrainTri *tri, int e, float x, float z)
@@ -54,8 +54,8 @@ static inline int Terrain_OutsideEdges(TerrainTri *tri, float x, float z)
 #pragma exceptions on
 unsigned char Terrain_FindTriangleAtPosition(TerrainStepper *stepper, float x, float y, float z)
 {
-    int col = (x + lbl_806CED58->offsetX) / lbl_806CED58->cellWidth;
-    int row = (z + lbl_806CED58->offsetZ) / lbl_806CED58->cellDepth;
+    int col = (x + g_collisionData->offsetX) / g_collisionData->cellWidth;
+    int row = (z + g_collisionData->offsetZ) / g_collisionData->cellDepth;
     TerrainTri *tri;
     TerrainTri *triangles;
     int count;
@@ -63,12 +63,12 @@ unsigned char Terrain_FindTriangleAtPosition(TerrainStepper *stepper, float x, f
 
     stepper->samples[stepper->index].cell = 0;
     stepper->samples[stepper->index].triangle = 0;
-    if (col < 0 || row < 0 || col >= lbl_806CED58->width || row >= lbl_806CED58->height) {
+    if (col < 0 || row < 0 || col >= g_collisionData->width || row >= g_collisionData->height) {
         return 0;
     }
-    stepper->samples[stepper->index].cell = &lbl_806CED58->cells[row * lbl_806CED58->width + col];
-    triangles = lbl_806CED58->cells[row * lbl_806CED58->width + col].tris;
-    count = lbl_806CED58->cells[row * lbl_806CED58->width + col].triCount;
+    stepper->samples[stepper->index].cell = &g_collisionData->cells[row * g_collisionData->width + col];
+    triangles = g_collisionData->cells[row * g_collisionData->width + col].tris;
+    count = g_collisionData->cells[row * g_collisionData->width + col].triCount;
     for (i = 0; i < count; i++) {
         tri = &triangles[i];
         if (tri->minX <= x && tri->maxX >= x && tri->minZ <= z && tri->maxZ >= z) {

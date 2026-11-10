@@ -15,7 +15,7 @@ struct LObjDesc {
 };
 #include "game/types/LObjList.h"
 extern "C" {
-extern void* lbl_806D1130[2];
+extern void* g_sceneLights[2];
 extern const char lbl_803114C0[]; /* "scene_data" */
 extern unsigned char SceneModel_Init_data_803FDFF8[]; /* default LObj desc */
 void* FileLoader_Open(const char*);
@@ -45,7 +45,7 @@ static inline void LoadSceneLights(LObjList* self, unsigned char chainLights) {
         } else {
             LoadSeparateLights(self);
         }
-        if (!lbl_806D1130[0]) lbl_806D1130[0] = HSD_LObjLoadDesc(SceneModel_Init_data_803FDFF8);
+        if (!g_sceneLights[0]) g_sceneLights[0] = HSD_LObjLoadDesc(SceneModel_Init_data_803FDFF8);
     }
 }
 

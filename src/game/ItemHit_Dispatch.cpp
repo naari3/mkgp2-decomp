@@ -19,8 +19,8 @@ struct KartHitSink {
 };
 
 extern "C" {
-extern ItemClassEntry lbl_8041AC24[];
-extern ItemKindEntry lbl_8041CBA8[];
+extern ItemClassEntry g_itemDescriptorTable[];
+extern ItemKindEntry g_itemClassTable[];
 extern unsigned char lbl_805DF3D0[];
 extern unsigned char g_finalLapCoinJumpEnabled;
 
@@ -148,14 +148,14 @@ extern "C" void ItemHit_Dispatch(unsigned char *self, signed char kind, Vec *pos
     }
     if (pos == 0) {
         Mtx44_GetTranslation_RowMajor(&kp, KartDriver_GetKartRootMtx(target));
-        if (lbl_8041AC24[self[0x1C]].hasJoint) {
-            if (!JointByName_GetWorldPosition(&jp, self + 0x14, lbl_8041AC24[self[0x1C]].joint)) {
+        if (g_itemDescriptorTable[self[0x1C]].hasJoint) {
+            if (!JointByName_GetWorldPosition(&jp, self + 0x14, g_itemDescriptorTable[self[0x1C]].joint)) {
                 Vec3_Copy(&jp, self + 0xA0);
             }
         } else {
             Vec3_Copy(&jp, self + 0xA0);
         }
-        r = F(0xC4) * lbl_8041AC24[self[0x1C]].radius;
+        r = F(0xC4) * g_itemDescriptorTable[self[0x1C]].radius;
         if (r < 0.0f) {
             r = 1.0f;
         }
@@ -236,7 +236,7 @@ extern "C" void ItemHit_Dispatch(unsigned char *self, signed char kind, Vec *pos
         return;
     }
     e = 0;
-    switch (lbl_8041CBA8[KIND].effect) {
+    switch (g_itemClassTable[KIND].effect) {
     case 2:
         e = DrawEffect_SpawnByType(2);
         break;

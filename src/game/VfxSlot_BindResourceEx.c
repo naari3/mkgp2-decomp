@@ -2,7 +2,7 @@
  * slot (lit == 0) also gets render flag 0x800. */
 #include "game/types/VfxSlot.h"
 
-extern void *lbl_806D14A8;
+extern void *g_normal3DWrapMgr;
 extern const float lbl_806D4FF8;
 extern const float lbl_806D5008;
 extern void *cLNormal3DWrap_Mgr_AcquireSlot(void *mgr, unsigned char resource, int flag);
@@ -22,7 +22,7 @@ void VfxSlot_BindResourceEx(VfxSlot *self, int resource, int lit)
         self->kind = 0x11;
     }
     self->resource = resource;
-    self->slot = cLNormal3DWrap_Mgr_AcquireSlot(lbl_806D14A8, resource, 1);
+    self->slot = cLNormal3DWrap_Mgr_AcquireSlot(g_normal3DWrapMgr, resource, 1);
     slot = self->slot;
     if (lit == 0) {
         cLNormal3DWrap_Slot_SetRenderFlags(slot, 0x800);

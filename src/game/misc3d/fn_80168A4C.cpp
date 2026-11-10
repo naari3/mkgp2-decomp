@@ -14,13 +14,7 @@ typedef struct Buf256 {
     char c[0x100];
 } Buf256;
 
-struct TextManager {
-    TextManager();
-    ~TextManager() {}
-    unsigned char pad0[0x18];
-    int x18;
-    unsigned char pad1c[0x234 - 0x1c];
-};
+#include "game/types/TextManager.h"
 
 extern "C" {
 extern int vsprintf(char *, const char *, va_list);

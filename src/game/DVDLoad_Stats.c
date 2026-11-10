@@ -1,10 +1,10 @@
-extern float lbl_806D1148;
-extern float lbl_806D114C;
+extern float g_dvdLastReadSec;
+extern float g_dvdMaxReadSec;
 
 float DVDLoad_GetMaxReadSec(void) {
-    return lbl_806D114C;
+    return g_dvdMaxReadSec;
 }
 
 float DVDLoad_GetLastReadSec(void) {
-    return lbl_806D1148;
+    return g_dvdLastReadSec;
 }

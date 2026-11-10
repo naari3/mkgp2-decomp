@@ -314,7 +314,7 @@ CarObjectManager *CarObjectManager_Dtor(CarObjectManager *self, short flag) { /*
         self->vtable = CarObject_data_803F76A8;
         StlList_DtorInline(&self->list);
         if (self) {
-            self->vtable = lbl_803F7690;
+            self->vtable = CarObjectManager_vtable_803F7690;
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);

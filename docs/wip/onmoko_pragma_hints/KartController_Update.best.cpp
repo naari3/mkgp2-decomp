@@ -106,7 +106,7 @@ extern "C" void KartController_Update(AIKart *self) {
     TornadoEffect_SetMatrixRow0_5c(tornado,offset.x,offset.y,offset.z);
     TornadoEffect_SetMatrix1c(tornado,&mat);
     TornadoEffect_Tick(self->tornado.p,6);
-    if(ShadowAreaMgr_QueryPoint(lbl_806D1060,mat.m[3][0],mat.m[3][1],mat.m[3][2])==1) TornadoEffect_TriggerField140(self->tornado.p);
+    if(ShadowAreaMgr_QueryPoint(g_shadowAreaMgr,mat.m[3][0],mat.m[3][1],mat.m[3][2])==1) TornadoEffect_TriggerField140(self->tornado.p);
     AI_UpdateItemEffects(self);
     ItemEffectBus_TickTornadoCooldown(bus);
     if(fn_801DE6E0(GetEnemyParam())) {

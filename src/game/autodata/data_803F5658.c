@@ -6,14 +6,14 @@
 #include "game/autodata.h"
 
 extern void dtor_8002CDF4();
-extern char lbl_806CED20[];
+extern char ObjectBase_data_806CED20[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
 /* decl: char */
-void *lbl_803F5658[6] = {
-    (void *)&lbl_806CED20,
+void *ObjectBase_vtable_803F5658[6] = {
+    (void *)&ObjectBase_data_806CED20,
     0,
     0,
     0,

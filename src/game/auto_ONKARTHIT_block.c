@@ -289,7 +289,7 @@ extern void *g_objCollChecker;
 extern unsigned int g_playerCarObject;
 extern unsigned int g_raceCamera;
 extern unsigned int lbl_806D0051;
-extern void *lbl_806D1060;
+extern void *g_shadowAreaMgr;
 extern float KartMovement_UpdateBoostVisualBlend_bss_806D1080;
 extern float KartMovement_UpdateBoostVisualBlend_bss_806D1084;
 extern void *lbl_806D109C;
@@ -367,7 +367,7 @@ extern unsigned int lbl_803F5700[];
 extern unsigned int lbl_803F5710[];
 extern unsigned int CarObject_HandleItemEffect_data_803F75D0[];
 extern unsigned int CarObject_vtable_803F75F8[];
-extern unsigned int lbl_803F7690[];
+extern unsigned int CarObjectManager_vtable_803F7690[];
 extern unsigned int CarObject_data_803F76A8[];
 
 /* --- function index (107 fns, .text 0x8004A238..0x80052F20) ---
@@ -3245,7 +3245,7 @@ void KartItem_Tick(KartItemTickView *self) { /* 0x8004BAAC size:0x874 */
             self->postFxV = 1.0f + self->postFxV;
         }
     }
-    if (ShadowAreaMgr_QueryPoint(lbl_806D1060, mtx[12], mtx[13], mtx[14]) == 1) {
+    if (ShadowAreaMgr_QueryPoint(g_shadowAreaMgr, mtx[12], mtx[13], mtx[14]) == 1) {
         TornadoEffect_TriggerField140(self->effectObj);
     }
     {
@@ -3609,7 +3609,7 @@ asm void KartItem_Tick(void) { /* 0x8004BAAC size:0x874 */
     fcmpo cr0, f1, f0
     blt KartItem_Tick_L_8004BDAC
     KartItem_Tick_L_8004BDC0:
-    lwz r3, lbl_806D1060(r13)
+    lwz r3, g_shadowAreaMgr(r13)
     lfs f1, 0x30(r30)
     lfs f2, 0x34(r30)
     lfs f3, 0x38(r30)
@@ -7149,7 +7149,7 @@ inline CarBlend4c::CarBlend4c(CarObject *o) {
 }
 #define gCarList (*(CarList **)&g_carObjectList)
 inline CarListBase::CarListBase() {
-    vptr = (void *)lbl_803F7690;
+    vptr = (void *)CarObjectManager_vtable_803F7690;
     gCarList = (CarList *)this;
 }
 CarObject::CarObject(int slot, int character, int a18, int a1c, unsigned char isPlayer, int pathId,
@@ -9171,7 +9171,7 @@ extern "C" CarObjectManager *CarObjectManager_Dtor(CarObjectManager *self, short
         self->vtable = CarObject_data_803F76A8;
         StlList_DtorInline(&self->list);
         if (self) {
-            self->vtable = lbl_803F7690;
+            self->vtable = CarObjectManager_vtable_803F7690;
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);
@@ -9488,7 +9488,7 @@ void StlList_InitEmpty(StlList *l) { /* 0x8005272C size:0x18 */
 /* CarObjectManager base-subobject deleting dtor: demote vtable, free when flag > 0 */
 void *dtor_80052744(void *self, short flag) { /* 0x80052744 size:0x48 */
     if (self) {
-        *(void **)self = (void *)lbl_803F7690;
+        *(void **)self = (void *)CarObjectManager_vtable_803F7690;
         if (flag > 0) {
             MemoryManager_TimedFree(self);
         }

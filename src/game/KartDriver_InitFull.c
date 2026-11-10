@@ -1179,7 +1179,7 @@ struct HUD28 { unsigned char pad00[8]; float x,y; unsigned char pad10[12]; HUD28
 struct HUD16 { unsigned char pad00[8]; float x,y; HUD16(); };
 struct HUD12 { unsigned char opaque[12]; HUD12(); };
 struct HUD36 { unsigned char opaque[36]; HUD36(); };
-struct Normal3D { unsigned char opaque[92]; Normal3D(const char *, int); };
+#include "game/types/Normal3D.h"
 #include "game/types/EffectBus.h"
 #include "game/types/TireFX.h"
 #include "game/types/DriverTail.h"

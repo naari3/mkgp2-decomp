@@ -19,7 +19,7 @@ extern unsigned int lbl_806D32E8;
 extern unsigned int lbl_806D32F0;
 extern unsigned int lbl_806D32F4;
 extern unsigned int Card_rodata_80312850[];
-extern unsigned int lbl_803FE7E8[];
+extern unsigned int g_cardTaskFactories[];
 }
 
 #define CTM_F(x) (*(float *)&(x))
@@ -80,7 +80,7 @@ extern "C" void CardTaskManager_RenderOverlay(CardTaskManager *m) {
         const char *st;
         const char *name;
         t = e->task;
-        name = ((CardTaskName *)lbl_803FE7E8)[e->name].name;
+        name = ((CardTaskName *)g_cardTaskFactories)[e->name].name;
         st = stTbl[t->status];
         if (i > m->cur) {
             st = lbl_806D32E0;

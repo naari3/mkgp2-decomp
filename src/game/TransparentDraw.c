@@ -2,7 +2,7 @@
  * TransparentDraw @ 0x80065990..0x8006609C (.text)
  *
  * Transparent-draw entry registration / destruction / sort-and-dispatch.
- * A global slot table (lbl_805987E0, 32 slots of 0x14 bytes in .bss) holds
+ * A global slot table (g_transparentDrawSlots, 32 slots of 0x14 bytes in .bss) holds
  * registered entries; SortAndDispatch links their draw objects into a chain
  * (head in lbl_806D10F8) ordered by squared XZ camera distance.
  *
@@ -115,7 +115,7 @@ typedef struct TDrawCase3 {
 
 extern unsigned char lbl_806D10F0;  /* .sbss: transparent draw system active */
 extern TDrawObj *lbl_806D10F8;      /* .sbss: draw chain head */
-extern TDrawSlot lbl_805987E0[32];  /* .bss: slot table */
+extern TDrawSlot g_transparentDrawSlots[32];  /* .bss: slot table */
 extern const float lbl_806D2C68;    /* .sdata2: 0.0f */
 
 extern TDrawObj *HSD_LObjLoadDesc(void *);
@@ -273,8 +273,8 @@ int TransparentDraw_SortAndDispatch(void) {
     {
         int n;
         for (n = 0; n < 32; n++) {
-            if (lbl_805987E0[n].owner != -1 && lbl_805987E0[n].state == 0) {
-                lbl_806D10F8 = lbl_805987E0[n].entry->handle;
+            if (g_transparentDrawSlots[n].owner != -1 && g_transparentDrawSlots[n].state == 0) {
+                lbl_806D10F8 = g_transparentDrawSlots[n].entry->handle;
                 chain = lbl_806D10F8;
                 break;
             }
@@ -295,31 +295,31 @@ int TransparentDraw_SortAndDispatch(void) {
 
     for (i = 0; i < 32; i++) {
         TDrawPos *pos;
-        if (lbl_805987E0[i].owner != -1 && (pos = lbl_805987E0[i].entry->handle->pos) != 0) {
+        if (g_transparentDrawSlots[i].owner != -1 && (pos = g_transparentDrawSlots[i].entry->handle->pos) != 0) {
             v.x = pos->x - cam.x;
             v.y = lbl_806D2C68;
             v.z = pos->z - cam.z;
             PSMTXMultVec(mtx, &v, &v);
-            lbl_805987E0[i].dist = v.x * v.x + v.z * v.z;
-            lbl_805987E0[i].rank = 0;
+            g_transparentDrawSlots[i].dist = v.x * v.x + v.z * v.z;
+            g_transparentDrawSlots[i].rank = 0;
         } else {
-            lbl_805987E0[i].rank = -1;
+            g_transparentDrawSlots[i].rank = -1;
         }
     }
 
     {
         int k;
         for (k = 0; k < 31; k++) {
-            TDrawSlot *a = &lbl_805987E0[k];
+            TDrawSlot *a = &g_transparentDrawSlots[k];
             if (a->rank != -1) {
                 if (a->state == 2 || a->state == 3 || a->state == 4) {
                     int j;
                     for (j = k + 1; j < 32; j++) {
-                        if (lbl_805987E0[j].rank != -1) {
-                            if (a->dist > lbl_805987E0[j].dist) {
+                        if (g_transparentDrawSlots[j].rank != -1) {
+                            if (a->dist > g_transparentDrawSlots[j].dist) {
                                 a->rank = a->rank + 1;
                             } else {
-                                lbl_805987E0[j].rank = lbl_805987E0[j].rank + 1;
+                                g_transparentDrawSlots[j].rank = g_transparentDrawSlots[j].rank + 1;
                             }
                         }
                     }
@@ -331,9 +331,9 @@ int TransparentDraw_SortAndDispatch(void) {
     }
 
     for (i = 0; i < 32; i++) {
-        if (lbl_805987E0[i].owner != -1 && lbl_805987E0[i].state == 1) {
-            chain->next = lbl_805987E0[i].entry->handle;
-            chain = lbl_805987E0[i].entry->handle;
+        if (g_transparentDrawSlots[i].owner != -1 && g_transparentDrawSlots[i].state == 1) {
+            chain->next = g_transparentDrawSlots[i].entry->handle;
+            chain = g_transparentDrawSlots[i].entry->handle;
             break;
         }
     }
@@ -346,10 +346,10 @@ int TransparentDraw_SortAndDispatch(void) {
                 break;
             }
             for (i = 0; i < 32; i++) {
-                if (lbl_805987E0[i].owner != -1 && order == lbl_805987E0[i].rank) {
+                if (g_transparentDrawSlots[i].owner != -1 && order == g_transparentDrawSlots[i].rank) {
                     count++;
-                    chain->next = lbl_805987E0[i].entry->handle;
-                    chain = lbl_805987E0[i].entry->handle;
+                    chain->next = g_transparentDrawSlots[i].entry->handle;
+                    chain = g_transparentDrawSlots[i].entry->handle;
                     break;
                 }
             }
@@ -372,9 +372,9 @@ int TransparentDraw_RemoveByOwner(int owner) {
     }
 
     for (i = 0; i < 32; i++) {
-        if (owner == lbl_805987E0[i].owner && lbl_805987E0[i].owner != -1) {
-            lbl_805987E0[i].owner = -1;
-            lbl_805987E0[i].state = 5;
+        if (owner == g_transparentDrawSlots[i].owner && g_transparentDrawSlots[i].owner != -1) {
+            g_transparentDrawSlots[i].owner = -1;
+            g_transparentDrawSlots[i].state = 5;
         }
     }
     return 1;

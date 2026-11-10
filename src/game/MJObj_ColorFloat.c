@@ -1,7 +1,7 @@
 /* Set an MJObj's RGBA colour from float channels (0.0 .. 1.0). */
 typedef struct MJObj MJObj;
 
-extern unsigned int lbl_803F57E0[]; /* MJObj class info */
+extern unsigned int g_mjobjClassInfo[]; /* MJObj class info */
 extern int hsdObjIsDescendantOf(void *obj, void *info);
 extern void MJObj_SetColorRGBA(MJObj *self, unsigned char r, unsigned char g,
                                unsigned char b, unsigned char a);
@@ -19,7 +19,7 @@ void MJObj_SetColorRGBA_Float(MJObj *self, float r, float g, float b, float a)
     a = (a < 0.0f) ? 0.0f : a;
     ia = 255.0f * a;
 
-    if (hsdObjIsDescendantOf(self, lbl_803F57E0)) {
+    if (hsdObjIsDescendantOf(self, g_mjobjClassInfo)) {
         MJObj_SetColorRGBA(self, ir, ig, ib, ia);
     }
 }

@@ -11,7 +11,7 @@ typedef struct DObjLinkView {
     struct DObjLinkView* next;
 } DObjLinkView;
 
-extern unsigned int lbl_806D0FEC;
+extern unsigned int g_romActiveCountPeak;
 
 JObjLinkView* JObj_GetNext(JObjLinkView* self)
 {
@@ -39,5 +39,5 @@ DObjLinkView* DObj_GetNext(DObjLinkView* self)
 
 unsigned int clRom_GetActiveCount(void)
 {
-    return lbl_806D0FEC;
+    return g_romActiveCountPeak;
 }

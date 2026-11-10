@@ -65,7 +65,7 @@ index 9d028a2..47e0217 100644
 -/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 -/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
 -extern unsigned int Card_rodata_80312850[];
--extern unsigned int lbl_803FE7E8[];
+-extern unsigned int g_cardTaskFactories[];
 +struct CardTaskDesc {
 +    int id;
 +    const char *text;
@@ -90,7 +90,7 @@ index 9d028a2..47e0217 100644
 +extern float lbl_806D32F0;
 +extern float lbl_806D32F4;
 +extern char Card_rodata_80312850[];          /* .rodata string pool base */
-+extern CardTaskDesc lbl_803FE7E8[];
++extern CardTaskDesc g_cardTaskFactories[];
  
 -/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 -#pragma section R ".extab_user"
@@ -165,9 +165,9 @@ index 9d028a2..47e0217 100644
 -    blt CardTaskManager_RenderOverlay_L_80089D08
 -    b CardTaskManager_RenderOverlay_L_80089E50
 -    CardTaskManager_RenderOverlay_L_80089D20:
--    lis r3, lbl_803FE7E8@ha
+-    lis r3, g_cardTaskFactories@ha
 -    lfd f31, lbl_806D32F8(r2)
--    addi r31, r3, lbl_803FE7E8@l
+-    addi r31, r3, g_cardTaskFactories@l
 -    addi r23, r30, 0xc
 -    li r27, 0x0
 -    li r29, 0x0
@@ -275,7 +275,7 @@ index 9d028a2..47e0217 100644
 +    for (int i = 0; i < m->count; y += 0x26, i++) {
 +        CardTaskEntry *e = &m->entries[i];
 +        CardTask *t = e->task;
-+        const char *desc = lbl_803FE7E8[e->desc].text;
++        const char *desc = g_cardTaskFactories[e->desc].text;
 +        const char *name = names[t->kind];
 +        if (i > m->current) {
 +            name = lbl_806D32E0;

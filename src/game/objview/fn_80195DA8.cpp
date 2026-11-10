@@ -1,10 +1,7 @@
 #include "game/types/Vec3.h"
 typedef struct HSD_JObj HSD_JObj;
 
-struct clNormal3D {
-    clNormal3D(const char *name, int flags);
-    unsigned char pad[0x5c];
-};
+#include "game/types/clNormal3D.h"
 
 #include "game/types/ItemParams.h"
 

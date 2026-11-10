@@ -1,7 +1,7 @@
 #ifndef GAME_DRAWEFFECTPOOL_H
 #define GAME_DRAWEFFECTPOOL_H
 
-/* DrawEffect pool entry (0x1CC bytes, 0x200 entries at lbl_805DF468).
+/* DrawEffect pool entry (0x1CC bytes, 0x200 entries at g_drawEffectSlots).
  * Narrow target-observed layout. */
 typedef struct DrawEffectVec3 {
     float x, y, z;
@@ -26,7 +26,7 @@ typedef struct DrawEffect {
     unsigned char pad0b5[0x1CC - 0xB5];
 } DrawEffect;
 
-extern DrawEffect lbl_805DF468[0x200];
+extern DrawEffect g_drawEffectSlots[0x200];
 extern void *memset(void *, int, unsigned long);
 
 static inline int DrawEffect_AllocSlot(void)
@@ -34,8 +34,8 @@ static inline int DrawEffect_AllocSlot(void)
     DrawEffect *e;
     int i;
     for (i = 0; i < 0x200; i++) {
-        if (lbl_805DF468[i].active == 0) {
-            e = &lbl_805DF468[i];
+        if (g_drawEffectSlots[i].active == 0) {
+            e = &g_drawEffectSlots[i];
             memset(e, 0, sizeof(DrawEffect));
             e->active = 1;
             return i;
@@ -56,7 +56,7 @@ static inline DrawEffect *DrawEffect_SpawnInline(void *callback)
     if (i < 0) {
         return 0;
     }
-    e = &lbl_805DF468[i];
+    e = &g_drawEffectSlots[i];
     e->callback = callback;
     return e;
 }

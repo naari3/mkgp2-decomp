@@ -4,7 +4,7 @@
 
 #include "game/CardTaskManagerCreatePrivate.h"
 
-extern "C" CardTaskFactory lbl_803FE7E8[];
+extern "C" CardTaskFactory g_cardTaskFactories[];
 extern "C" void *FUN_8003b120(unsigned long);
 
 static inline void AddTask(CardTaskManager *self, CardTask *task, int kind)
@@ -31,10 +31,10 @@ extern "C" CardTaskManager *card_task_manager_create(CardTaskManager *self,
     self->frame = 0;
     self->linger = 60;
     Initialize(self);
-    if (welcome == 1) AddTask(self, lbl_803FE7E8[0].create(), 0);
-    AddTask(self, lbl_803FE7E8[1].create(), 1);
-    if (card == 1) AddTask(self, lbl_803FE7E8[2].create(), 2);
-    if (other == 1) AddTask(self, lbl_803FE7E8[3].create(), 3);
+    if (welcome == 1) AddTask(self, g_cardTaskFactories[0].create(), 0);
+    AddTask(self, g_cardTaskFactories[1].create(), 1);
+    if (card == 1) AddTask(self, g_cardTaskFactories[2].create(), 2);
+    if (other == 1) AddTask(self, g_cardTaskFactories[3].create(), 3);
     self->entries[self->current].task->Start();
     return self;
 }

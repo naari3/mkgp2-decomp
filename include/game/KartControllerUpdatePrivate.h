@@ -49,7 +49,7 @@ struct KCDispatch {
 };
 extern "C" {
 extern int g_cupId;
-extern void *lbl_806D1060;
+extern void *g_shadowAreaMgr;
 unsigned char fn_801DF358(void *),fn_801DF318(void *),fn_801DEC5C(void *),fn_801DEC3C(void *);
 float fn_801DF310(void *),fn_801DEC44(void *),fn_801DEC54(void *),fn_801DEC4C(void *);
 int fn_801DF398(void *),fn_801DF308(void *),fn_801EC784(void *);

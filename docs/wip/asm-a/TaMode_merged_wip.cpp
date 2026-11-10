@@ -165,7 +165,7 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
     signed char coins;
     signed char started;
     ItemObjectManager_PerFrameUpdate(GetRaceContextPtr());
-    if (lbl_806D13B4) fn_8023E324(lbl_806D13B4, __ptmf_test(taMemberFunction) != 0);
+    if (g_taSound) fn_8023E324(g_taSound, __ptmf_test(taMemberFunction) != 0);
     if (g_raceEnded != 1) {
         long long now = OSGetTime();
         steer = QuantizeInput(pad->Steer());
@@ -200,10 +200,10 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
                         if (stats) RankLog_OnPlayerVictory(stats, GetDisplayBufferIndex(), 0);
                         CarObject_ApplyDriftBoost(g_carObjects[0], 5, 3.0f);
                         --TaMode_FrameUpdate_bss_806D13AC;
-                        if (lbl_806D13B4) {
-                            if (TaMode_FrameUpdate_bss_806D13AC == 2) fn_8023E1E4(lbl_806D13B4, 0x116, 0);
-                            if (TaMode_FrameUpdate_bss_806D13AC == 1) fn_8023E1E4(lbl_806D13B4, 0x17, 0);
-                            if (TaMode_FrameUpdate_bss_806D13AC == 0) fn_8023E1E4(lbl_806D13B4, -1, 0);
+                        if (g_taSound) {
+                            if (TaMode_FrameUpdate_bss_806D13AC == 2) fn_8023E1E4(g_taSound, 0x116, 0);
+                            if (TaMode_FrameUpdate_bss_806D13AC == 1) fn_8023E1E4(g_taSound, 0x17, 0);
+                            if (TaMode_FrameUpdate_bss_806D13AC == 0) fn_8023E1E4(g_taSound, -1, 0);
                         }
                         TaMode_FrameUpdate_bss_806D13B0 = 30;
                     }
@@ -231,31 +231,31 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
             signed char item = frame->item;
             coins = frame->coins;
             ++TaMode_FrameUpdate_bss_806D1394;
-            if (lbl_806D1398 && TaMode_FrameUpdate_data_806CF198 > 0) {
-                TaRender *render = CarObject_GetRenderObj(lbl_806D1398);
+            if (g_taGhostCar && TaMode_FrameUpdate_data_806CF198 > 0) {
+                TaRender *render = CarObject_GetRenderObj(g_taGhostCar);
                 if (KartMovement_GetCurrentItemId(render) != -1) {
                     if (item == 1) {
                         RenderObj_UseItem(render, 0, 0);
-                        CarObject_ApplyDriftBoost(lbl_806D1398, 5, 3.0f);
+                        CarObject_ApplyDriftBoost(g_taGhostCar, 5, 3.0f);
                         --TaMode_FrameUpdate_data_806CF198;
                     }
                 } else KartMovement_EquipItem(render, 0x17);
             }
-        } else if (lbl_806D1398) {
-            accel = CalcSoundDirection(CarObject_GetRenderObj(lbl_806D1398), TaMode_FrameUpdate_bss_806D13A4, &steer, TaMode_FrameUpdate_bss_806D139C);
+        } else if (g_taGhostCar) {
+            accel = CalcSoundDirection(CarObject_GetRenderObj(g_taGhostCar), TaMode_FrameUpdate_bss_806D13A4, &steer, TaMode_FrameUpdate_bss_806D139C);
             brake = 0.0f;
             started = IsRaceStarted();
         }
-        if (lbl_806D1398) {
+        if (g_taGhostCar) {
             if (IsRaceStarted() == 1) {
-                void *bus = CarObject_GetRenderObj(lbl_806D1398)->itemBus;
-                if (!CarObject_GetRenderObj(lbl_806D1398)->effectActive)
+                void *bus = CarObject_GetRenderObj(g_taGhostCar)->itemBus;
+                if (!CarObject_GetRenderObj(g_taGhostCar)->effectActive)
                     ItemEffectBus_ClearMask(bus, 0x8000000000ULL);
                 else ItemEffectBus_OrMask(bus, 0x8000000000ULL);
             }
-            CarObject_ApplyInput(lbl_806D1398, accel, steer, brake, started != 0);
-            CarObject_FrameUpdate(lbl_806D1398, 0);
-            TaRender *render = CarObject_GetRenderObj(lbl_806D1398);
+            CarObject_ApplyInput(g_taGhostCar, accel, steer, brake, started != 0);
+            CarObject_FrameUpdate(g_taGhostCar, 0);
+            TaRender *render = CarObject_GetRenderObj(g_taGhostCar);
             render->coins += coins;
         }
     }
@@ -504,7 +504,7 @@ extern "C" void *TaMode_vtable_8040F0B0[5] = {TaMode_RTTI_806CF1A8, 0, (void *)T
 
 /* ==== TaMode_Dtor (0x800A38F8) ==== */
 #define g_carObjects (*(TaDtorCar *(*)[4])&g_carObjects)
-#define lbl_806D1398 (*(TaDtorCar **)&lbl_806D1398)
+#define g_taGhostCar (*(TaDtorCar **)&g_taGhostCar)
 #define lbl_806D10D0 (*(Deletable **)&lbl_806D10D0)
 #define lbl_806D109C (*(Deletable **)&lbl_806D109C)
 #define TaMode_FrameUpdate_bss_806D13C8 (*(HsdRefObj **)&TaMode_FrameUpdate_bss_806D13C8)
@@ -561,7 +561,7 @@ extern void *g_weatherSystem;
 extern void *g_itemSelects[];
 extern void *TaMode_FrameUpdate_bss_806D13A4;
 extern void *TaMode_FrameUpdate_bss_806D1390;
-extern void *lbl_806D13B4;
+extern void *g_taSound;
 extern Deletable *g_courseData;
 extern void *g_raceCamera;
 
@@ -634,11 +634,11 @@ extern "C" TaDtorScene *TaMode_Dtor(TaDtorScene *self, short flag)
             g_weatherSystem = 0;
         }
         SetActiveCamera(0, 0);
-        if (lbl_806D1398 != 0) {
-            lbl_806D1398->Destroy(1);
+        if (g_taGhostCar != 0) {
+            g_taGhostCar->Destroy(1);
         }
         MemoryManager_Free(TaMode_FrameUpdate_bss_806D1390);
-        lbl_806D1398 = 0;
+        g_taGhostCar = 0;
         TaMode_FrameUpdate_bss_806D1390 = 0;
         ProcessSystemTick(log + 0x63C);
         Tachometer_Destroy();
@@ -657,7 +657,7 @@ extern "C" TaDtorScene *TaMode_Dtor(TaDtorScene *self, short flag)
         }
         ProcessSystemTick(log + 0x648);
         CourseEnvironment_Dtor(self->environment, 1);
-        fn_8023E808(lbl_806D13B4, 1);
+        fn_8023E808(g_taSound, 1);
         ProcessSystemTick(log + 0x664);
         if (TaMode_FrameUpdate_bss_806D13C8 != 0) {
             HsdRef_Unref(TaMode_FrameUpdate_bss_806D13C8);
@@ -675,7 +675,7 @@ extern "C" TaDtorScene *TaMode_Dtor(TaDtorScene *self, short flag)
         TaMode_FrameUpdate_bss_806D13A4 = 0;
         self->camera = 0;
         self->environment = 0;
-        lbl_806D13B4 = 0;
+        g_taSound = 0;
         SetPlayerCarObject(0);
         delete lbl_806D10D0;
         lbl_806D10D0 = 0;
@@ -702,7 +702,7 @@ extern "C" TaDtorScene *TaMode_Dtor(TaDtorScene *self, short flag)
 }
 #pragma pop
 #undef g_carObjects
-#undef lbl_806D1398
+#undef g_taGhostCar
 #undef lbl_806D10D0
 #undef lbl_806D109C
 #undef TaMode_FrameUpdate_bss_806D13C8
@@ -716,7 +716,7 @@ static inline int KartVariant_Get() { return g_kartVariant; }
 static inline void Render_SetReady(void *p) { *(int *)((char *)p + 0x238) = 1; }
 
 static inline int RegisterGhost(float *matrix, void *render) {
-    return PathManager_RegisterCarObject(TaMode_FrameUpdate_bss_806D13A4, matrix + 12, matrix + 13, matrix + 14, lbl_806D1398, render, 1);
+    return PathManager_RegisterCarObject(TaMode_FrameUpdate_bss_806D13A4, matrix + 12, matrix + 13, matrix + 14, g_taGhostCar, render, 1);
 }
 
 TaMode::TaMode() {
@@ -781,18 +781,18 @@ TaMode::TaMode() {
     if (cc == 2 && TaMode_FrameUpdate_bss_806D13A0) {
         const TaGhostSource *ghost = (const TaGhostSource *)(data + 0x540 + cup * 32 + round * 16);
         if (!reverse) ghost = (const TaGhostSource *)(data + 0x340 + cup * 32 + round * 16);
-        lbl_806D1398 = new CarObject(4, ghost->character, startX, startY, GetCourseStartYaw(), 2, 3, 0, -1, 0, 0);
-        float *matrix = CarObject_GetTransformMatrix(lbl_806D1398);
-        TaMode_FrameUpdate_bss_806D139C = RegisterGhost(matrix, CarObject_GetRenderObj(lbl_806D1398));
+        g_taGhostCar = new CarObject(4, ghost->character, startX, startY, GetCourseStartYaw(), 2, 3, 0, -1, 0, 0);
+        float *matrix = CarObject_GetTransformMatrix(g_taGhostCar);
+        TaMode_FrameUpdate_bss_806D139C = RegisterGhost(matrix, CarObject_GetRenderObj(g_taGhostCar));
         TaMode_FrameUpdate_data_806CF198 = 3;
         TaMode_FrameUpdate_bss_806D1390 = DVDFile_LoadSync(ghost->file);
         TaMode_FrameUpdate_bss_806D1388 = TaMode_FrameUpdate_bss_806D1390;
         TaMode_FrameUpdate_bss_806D138C = ghost->size;
-        if (lbl_806D1398) {
-            KartMovement_EquipItem(CarObject_GetRenderObj(lbl_806D1398), 0x17);
-            ItemEffectBus_OrMask(*(void **)((char *)CarObject_GetRenderObj(lbl_806D1398) + 0x304), 0x8000000000ULL);
+        if (g_taGhostCar) {
+            KartMovement_EquipItem(CarObject_GetRenderObj(g_taGhostCar), 0x17);
+            ItemEffectBus_OrMask(*(void **)((char *)CarObject_GetRenderObj(g_taGhostCar) + 0x304), 0x8000000000ULL);
         }
-    } else { lbl_806D1398 = 0; TaMode_FrameUpdate_bss_806D1390 = 0; }
+    } else { g_taGhostCar = 0; TaMode_FrameUpdate_bss_806D1390 = 0; }
     ProcessSystemTick(log + 0x6e4);
     lakitu = new LakituStart(log + 0x6f0, TaMode_FrameUpdate_bss_806D13A8, lbl_806D4830, lbl_806D4830, lbl_806D4830);
     scene = new Scene3D(*GetKartModelNameEntry(GetKartSlotCharId(TaMode_FrameUpdate_bss_806D13A8), -1));
@@ -858,8 +858,8 @@ TaMode::TaMode() {
     TaMode_FrameUpdate_bss_806D13AC = 3;
     PreloadItemResources(0x17);
     KartMovement_EquipItem(CarObject_GetRenderObj(g_carObjects[0]), 0x17);
-    lbl_806D13B4 = new TaSound(0);
-    if (lbl_806D13B4) fn_8023E1E4(lbl_806D13B4, 0x117, 0);
+    g_taSound = new TaSound(0);
+    if (g_taSound) fn_8023E1E4(g_taSound, 0x117, 0);
     StrPcb_SetStatusBits(StrPcb_GetInstance(), 4, 0);
     StrPcb_SetStatusBits(StrPcb_GetInstance(), 8, 0);
     ProcessSystemTick(log + 0x740);

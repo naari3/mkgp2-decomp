@@ -77,15 +77,15 @@ extern "C" int ShadowAreaMgr_QueryPoint(ShadowAreaMgr *self, float x, float y, f
 
 extern "C" int ShadowAreaMgr_Destroy(void)
 {
-    delete lbl_806D1060;
-    lbl_806D1060 = 0;
+    delete g_shadowAreaMgr;
+    g_shadowAreaMgr = 0;
     return 1;
 }
 
 extern "C" int ShadowAreaMgr_GetOrCreate(void *archive)
 {
-    if (lbl_806D1060 == 0) {
-        lbl_806D1060 = new ShadowAreaMgr(archive);
+    if (g_shadowAreaMgr == 0) {
+        g_shadowAreaMgr = new ShadowAreaMgr(archive);
     }
     return 1;
 }

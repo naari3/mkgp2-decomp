@@ -218,8 +218,8 @@ index 3ccec05..a8797c5 100644
  extern unsigned int g_playerCarObject;
  extern unsigned int g_raceCamera;
  extern unsigned int lbl_806D0051;
--extern unsigned int lbl_806D1060;
-+extern void *lbl_806D1060;
+-extern unsigned int g_shadowAreaMgr;
++extern void *g_shadowAreaMgr;
  extern float KartMovement_UpdateBoostVisualBlend_bss_806D1080;
  extern float KartMovement_UpdateBoostVisualBlend_bss_806D1084;
  extern unsigned int lbl_806D109C;
@@ -816,7 +816,7 @@ void KartItem_Tick(KartItemTickView *self) { /* 0x8004BAAC size:0x874 */
             self->postFxV = lbl_806D26FC + self->postFxV;
         }
     }
-    if (ShadowAreaMgr_QueryPoint(lbl_806D1060, mtx[12], mtx[13], mtx[14]) == 1) {
+    if (ShadowAreaMgr_QueryPoint(g_shadowAreaMgr, mtx[12], mtx[13], mtx[14]) == 1) {
         TornadoEffect_TriggerField140(self->effectObj);
     }
     {

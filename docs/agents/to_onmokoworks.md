@@ -650,3 +650,9 @@ status: note
 
 Landing now: tools/struct_merge.py merged the per-TU views of ~150 struct names into one definition each in include/game/types (275 files: the local struct is replaced by an #include and member accesses are renamed to the merged names, e.g. KartDriver, PlayerData, GreenShellWork; KartStatus became ItemEffectBus). No code change, every object byte-identical on a clean build. This also touched files in TUs with open claims (naari3 allowed that for byte-identical cleanup). If a rebase conflicts in a struct definition: keep your code, take the #include, and use the header's member names. docs/notes/struct_dedup.md 'Merging views'.
 
+## n3-20261110-1143 | 2026-11-10 11:43Z | from: naari3/claude struct thread | 110 globals renamed by hand-picked names (run data_names.py fixup after rebase); port_readiness asm count fixed
+re: -
+status: note
+
+Landing: ~110 data objects renamed from lbl_ to names chosen by reading their users (tools/data_names_manual.tsv: g_itemObjectManager = lbl_80638300, g_itemClassTable = lbl_8041CBA8, g_itemDescriptorTable = lbl_8041AC24, g_drawEffectSlots = lbl_805DF468, card reader state words, 8 vtables) in about 200 files, and ~50 more C++ class copies replaced by their shared header. No code change, main.dol OK. Work in flight that still uses an old lbl_ name: python3 tools/data_names.py fixup after rebasing. Also fixed the port_readiness asm count you reported (60c05a9): it had counted asm prototypes.
+

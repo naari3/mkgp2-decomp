@@ -724,6 +724,118 @@ def cmd_run(args):
         print(f"{name}: {left[name]} files use the merged definition")
 
 
+def _build_bad():
+    """Build; -> (objects that failed to compile, objects whose hash changed)."""
+    r = subprocess.run(["ninja", "-k", "0"], cwd=ROOT, capture_output=True, text=True)
+    failed = set(re.findall(r"^FAILED: (build/GNLJ82/src/\S+\.o)", r.stdout, re.M))
+    h = subprocess.run([sys.executable, "tools/struct_dedup.py", "hashes", "diff"], cwd=ROOT,
+                       capture_output=True, text=True)
+    changed = set(re.findall(r"^CHANGED (\S+)", h.stdout, re.M))
+    if r.returncode and not failed and not changed:
+        print(r.stdout[-2000:])
+        sys.exit("classes: build failed with no object to blame")
+    return {src_of(o) for o in failed}, {src_of(o) for o in changed}
+
+
+def cmd_classes(args):
+    """C++ classes (methods, virtuals, bases) cannot be merged member by
+    member.  Try each existing spelling of the class as THE definition in
+    every other file that has a copy; keep the spelling the most files accept
+    byte-identically, share it and leave the rest."""
+    if subprocess.run(["git", "status", "--porcelain", "--untracked-files=no"], cwd=ROOT,
+                      capture_output=True, text=True).stdout.strip() and not args.dirty:
+        sys.exit("classes: tree not clean")
+    if subprocess.run(["ninja"], cwd=ROOT, capture_output=True).returncode:
+        sys.exit("classes: baseline build failed")
+    subprocess.run([sys.executable, "tools/struct_dedup.py", "hashes", "save"], cwd=ROOT, check=True,
+                   capture_output=True)
+    claimed = S.open_claim_paths() if not args.include_claimed else set()
+    total = 0
+    sc = S.Scan()
+    type_names = {d.name for d in sc.defs if d.name}
+    for name in args.names:
+        defs = [d for d in sc.defs if d.name == name and d.file.endswith((".c", ".cpp"))
+                and sum(1 for x in sc.by_file[d.file] if x.name == name) == 1
+                and "#" not in d.body and d.file.replace("src/", "", 1) not in claimed]
+        raws = {}
+        for d in defs:
+            with open(os.path.join(ROOT, d.file), encoding="latin-1", newline="") as fh:
+                raws[d.file] = fh.read()
+        defs = [d for d in defs if len(raws[d.file]) == len(sc.text[d.file])]
+        if not defs:
+            print(f"{name}: no copies in source files")
+            continue
+        hp = os.path.join(ROOT, S.TYPES_DIR, name + ".h")
+        cands = []      # (label, text of the definition, files that already have it)
+        if os.path.exists(hp):
+            hd = [d for d in S.scan_file(f"{S.TYPES_DIR}/{name}.h")[0] if d.name == name]
+            if not hd:
+                print(f"{name}: shared header has no definition of it")
+                continue
+            with open(hp, encoding="latin-1") as fh:
+                ht = fh.read()
+            cands.append(("shared header", ht[hd[0].start:hd[0].end], set()))
+        else:
+            groups = defaultdict(list)
+            for d in defs:
+                groups[S.ctx_key(d)].append(d)
+            for k, v in sorted(groups.items(), key=lambda kv: (-len(kv[1]), -len(kv[1][0].raw)))[:args.variants]:
+                d = v[0]
+                cands.append((f"{d.file}:{d.line}", raws[d.file][d.start:d.end], {x.file for x in v}))
+        best = None
+        for label, text, own in cands:
+            targets = [d for d in defs if d.file not in own]
+            for d in targets:
+                eol = S.eol_of(raws[d.file])
+                new = raws[d.file][:d.start] + text.replace("\r\n", "\n").replace("\n", eol) + raws[d.file][d.end:]
+                with open(os.path.join(ROOT, d.file), "w", encoding="latin-1", newline="") as fh:
+                    fh.write(new)
+            failed, changed = _build_bad()
+            ok = [d for d in targets if d.file not in failed and d.file not in changed]
+            for d in targets:
+                with open(os.path.join(ROOT, d.file), "w", encoding="latin-1", newline="") as fh:
+                    fh.write(raws[d.file])
+            print(f"{name}: spelling of {label}: {len(ok)}/{len(targets)} other files accept it"
+                  f" ({len(failed)} do not compile, {len(changed)} change)")
+            if best is None or len(ok) + len(own) > best[0]:
+                best = (len(ok) + len(own), label, text, own, ok)
+            if len(ok) == len(targets):
+                break
+        n, label, text, own, ok = best
+        if n < 2 and not os.path.exists(hp):
+            _build_bad()
+            print(f"{name}: no spelling is accepted by a second file; left alone")
+            continue
+        if not os.path.exists(hp):
+            src = next(d for d in defs if d.file in own)
+            with open(hp, "w", encoding="latin-1", newline="\n") as fh:
+                fh.write(S.ctx_header_text(src, sc, type_names))
+        inc = f'#include "{S.TYPES_INC}/{name}.h"'
+        moved = [d for d in defs if d.file in own] + ok
+        for d in moved:
+            t = raws[d.file]
+            with open(os.path.join(ROOT, d.file), "w", encoding="latin-1", newline="") as fh:
+                fh.write(t[:d.start] + inc + S._pad_lines(t, d, 0) + t[d.end:])
+        for rnd in range(4):
+            failed, changed = _build_bad()
+            bad = (failed | changed) & {d.file for d in moved}
+            if (failed | changed) - bad:
+                sys.exit(f"classes: unrelated objects changed: {sorted((failed | changed) - bad)[:5]}")
+            if not bad:
+                break
+            for f in bad:
+                with open(os.path.join(ROOT, f), "w", encoding="latin-1", newline="") as fh:
+                    fh.write(raws[f])
+            moved = [d for d in moved if d.file not in bad]
+        if not moved and not subprocess.run(["git", "ls-files", "--error-unmatch", hp], cwd=ROOT,
+                                            capture_output=True).returncode == 0:
+            os.remove(hp)
+        total += len(moved)
+        print(f"{name}: {len(moved)} of {len(defs)} copies now take the shared definition ({label})", flush=True)
+        refresh(sc, [d.file for d in moved], name)
+    print(f"classes: {total} copies replaced")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -735,9 +847,14 @@ def main():
             a.add_argument("--dirty", action="store_true", help="allow uncommitted changes")
             a.add_argument("--no-baseline", action="store_true", help="hashes already saved")
             a.add_argument("--include-claimed", action="store_true")
+    a = sub.add_parser("classes")
+    a.add_argument("names", nargs="+")
+    a.add_argument("--variants", type=int, default=6, help="spellings to try per class")
+    a.add_argument("--dirty", action="store_true")
+    a.add_argument("--include-claimed", action="store_true")
     args = ap.parse_args()
-    args.rename = [tuple(x.split("=", 1)) for x in args.rename]
-    {"show": cmd_show, "run": cmd_run}[args.cmd](args)
+    args.rename = [tuple(x.split("=", 1)) for x in getattr(args, "rename", [])]
+    {"show": cmd_show, "run": cmd_run, "classes": cmd_classes}[args.cmd](args)
 
 
 if __name__ == "__main__":

@@ -28,10 +28,7 @@ struct SparkBurst {
     Spark sparks[10];
 };
 
-struct clNormal3D {
-    char _opaque[0x5C];
-    clNormal3D(const char *res, int flags);
-};
+#include "game/types/clNormal3D.h"
 
 typedef float Mtx[3][4];
 

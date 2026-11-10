@@ -7,7 +7,7 @@ struct ItemObject {
     unsigned char pad_08[0x1E4];
 };
 
-extern ItemObject lbl_80638300[0x100];
+extern ItemObject g_itemObjectManager[0x100];
 extern "C" int ItemObject_bss_806D14D0;
 
 static inline ItemObject *pool_alloc(void) {
@@ -16,7 +16,7 @@ static inline ItemObject *pool_alloc(void) {
 
     for (i = 0; i < 0x100; i++) {
         int index = (cursor + 1) % 0x100;
-        ItemObject *item = &lbl_80638300[index];
+        ItemObject *item = &g_itemObjectManager[index];
 
         if (item->inUse == 0) {
             memset(item, 0, sizeof(ItemObject));

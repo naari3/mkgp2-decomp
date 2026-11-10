@@ -15,10 +15,10 @@ struct ShadowAreaEntry {
 };
 
 struct ShadowAreaBase;
-extern "C" ShadowAreaBase *lbl_806D1060;
+extern "C" ShadowAreaBase *g_shadowAreaMgr;
 
 struct ShadowAreaBase {
-    ShadowAreaBase() { lbl_806D1060 = this; }
+    ShadowAreaBase() { g_shadowAreaMgr = this; }
     virtual ~ShadowAreaBase();
 };
 

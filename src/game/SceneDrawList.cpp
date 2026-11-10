@@ -3,9 +3,9 @@ struct DrawRoot { DrawNode* nodes; };
 struct DrawArchive { void* a; void* b; DrawRoot** roots; };
 struct DrawSlot { int id; int a; int b; int mode; void* entry; };
 extern "C" {
-extern DrawSlot lbl_805987E0[32];
+extern DrawSlot g_transparentDrawSlots[32];
 extern unsigned char lbl_806D10F0;
-extern int lbl_806D10F4, lbl_806D10F8;
+extern int g_sceneDrawListNextId, lbl_806D10F8;
 extern char lbl_8030E588[];
 void* Archive_GetCurrent(void*);
 DrawArchive* HSD_ArchiveGetPublicAddress(void*, const char*);
@@ -14,8 +14,8 @@ void TransparentDraw_DestroyEntry(void*, int);
 }
 static inline DrawSlot* FindSlot() {
     for (int i=0;i<32;i++) {
-        if (lbl_805987E0[i].id == -1 && lbl_805987E0[i].entry)
-            return &lbl_805987E0[i];
+        if (g_transparentDrawSlots[i].id == -1 && g_transparentDrawSlots[i].entry)
+            return &g_transparentDrawSlots[i];
     }
     return 0;
 }
@@ -38,27 +38,27 @@ extern "C" int SceneDrawList_RegisterArchive(void* archive, int mode) {
             if (selected!=5) {
                 DrawSlot* slot=FindSlot();
                 if (!slot) {
-                    if (count) return lbl_806D10F4++;
+                    if (count) return g_sceneDrawListNextId++;
                     return -1;
                 }
                 TransparentDraw_InitEntry(slot->entry,node);
-                slot->id=lbl_806D10F4;
+                slot->id=g_sceneDrawListNextId;
                 slot->mode=selected;
                 count++;
             }
         }
     }
-    return lbl_806D10F4++;
+    return g_sceneDrawListNextId++;
 }
 extern "C" void SceneDrawList_Reset() {
     if (lbl_806D10F0) {
         for (int i=0;i<32;i++) {
-            DrawSlot* slot=&lbl_805987E0[i];
+            DrawSlot* slot=&g_transparentDrawSlots[i];
             if (slot->id!=-1) { slot->id=-1; slot->mode=5; }
             if (slot->entry) TransparentDraw_DestroyEntry(slot->entry,1);
             slot->entry=0;
         }
-        lbl_806D10F4=0;
+        g_sceneDrawListNextId=0;
         lbl_806D10F8=0;
         lbl_806D10F0=0;
     }

@@ -4482,8 +4482,8 @@ unsigned char card_rw_state_machine_short(void);
 unsigned char card_rw_state_machine(void);
 unsigned char card_read_state_machine(void);
 
-extern int lbl_806CF0EC;
-extern int lbl_806D1218;
+extern int g_cardReceiptMode;
+extern int g_cardReceiptLine;
 extern int lbl_806D123C;
 extern unsigned char Sci2Card_IsStatus3Zero(void *card);
 extern int Sci2Card_BuildScoreReceiptLine(int line);
@@ -4492,11 +4492,11 @@ extern int Sci2Card_BuildScoreReceiptLine(int line);
 static inline unsigned char CardSM_ReceiptIsDone(int line)
 {
     unsigned char done = 0;
-    if (line >= 9 && lbl_806CF0EC == 1) {
+    if (line >= 9 && g_cardReceiptMode == 1) {
         done = 1;
     } else if (line >= 10) {
         done = 1;
-    } else if (line >= 2 && lbl_806CF0EC == 0) {
+    } else if (line >= 2 && g_cardReceiptMode == 0) {
         done = 1;
     }
     return done;
@@ -4510,12 +4510,12 @@ static inline void CardSM_ReceiptBuildLine(int line)
     } else {
         next = Sci2Card_BuildRetryReceiptLine(line);
     }
-    lbl_806D1218 = next;
+    g_cardReceiptLine = next;
 }
 
 static inline unsigned char CardSM_ReceiptAdvance(void)
 {
-    int line = lbl_806D1218;
+    int line = g_cardReceiptLine;
     if (CardSM_ReceiptIsDone(line) == 1) {
         lbl_806D122A_p2 = 0;
         lbl_806D1210_p2 = 1;
@@ -4536,22 +4536,22 @@ static inline unsigned char CardSM_ReceiptStart(int mode, unsigned char header, 
         lbl_806D1210_p2 = 1;
         return 1;
     }
-    lbl_806CF0EC = mode;
+    g_cardReceiptMode = mode;
     lbl_806D1210_p2 = 0;
     lbl_806D122A_p2 = 1;
     lbl_806D121C_p2 = 0;
     lbl_806CF0E4_p2 = 5;
-    lbl_806D1218 = 0;
+    g_cardReceiptLine = 0;
     lbl_806D123C = 0;
     Sci2Card_Singleton_Get_p2();
-    if (lbl_806CF0EC == 0 || lbl_806CF0EC == 3) {
+    if (g_cardReceiptMode == 0 || g_cardReceiptMode == 3) {
         if (header == 1) {
             CardSM_ReceiptBuildLine(-3);
         } else {
             CardSM_ReceiptBuildLine(0);
         }
     } else {
-        lbl_806D1218 = lbl_806CF0EC == 2 ? 9 : 2;
+        g_cardReceiptLine = g_cardReceiptMode == 2 ? 9 : 2;
         if (CardSM_ReceiptAdvance() == 1) {
             return 1;
         }

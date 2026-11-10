@@ -19,8 +19,8 @@ extern void fn_801CDCE0();
 extern void fn_801CDDC4();
 extern void fn_801CDF10();
 extern void fn_801CE1EC();
-extern char lbl_806CFE1C[];
-extern char lbl_806CFE24[];
+extern char clFlowItemSelect_data_806CFE1C[];
+extern char clFlowItemSelect_data_806CFE24[];
 extern char data_8049AFD0_data_806CFE30[];
 extern char data_8049AFD0_data_806CFE38[];
 extern char lbl_806CFE40[];
@@ -59,13 +59,13 @@ void *clFlowItemSelect_Init_data_8049B130[3] = {
     (void *)&data_8049AFD0_data_8049B020,
     (void *)&data_8049AFD0_data_8049B0A0
 };
-void *lbl_8049B13C[3] = {
-    (void *)&lbl_806CFE1C,
+void *clFlowItemSelect_data_8049B13C[3] = {
+    (void *)&clFlowItemSelect_data_806CFE1C,
     0,
     0
 };
 void *clFlowItemSelect_data_8049B148[6] = {
-    (void *)&lbl_806CFE24,
+    (void *)&clFlowItemSelect_data_806CFE24,
     0,
     (void *)clFlowItemSelect_Dtor,
     (void *)clFlowItemSelect_Update,

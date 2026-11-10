@@ -29,7 +29,7 @@ extern char lbl_806D22C0[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const char *lbl_806CED20[2] = {
+const char *ObjectBase_data_806CED20[2] = {
     (const char *)&lbl_802E8F38, 0
 };
 BootHooks lbl_806CED28[1] = {
@@ -54,7 +54,7 @@ const char *data_803F5698_data_806CED50[2] = {
     (const char *)&lbl_802E96C4, 0
 };
 /* decl: CollData * / TerrainGrid * / void * */
-void *lbl_806CED58[2] = {
+void *g_collisionData[2] = {
     0,
     0
 };
@@ -76,7 +76,7 @@ void *data_803F5698_data_806CED80[2] = {
     (void *)&lbl_802E98E0,
     (void *)&sdata_806CED20_data_803F5748
 };
-const char *lbl_806CED88[2] = {
+const char *JvsInput_data_806CED88[2] = {
     (const char *)&lbl_802E9950, 0
 };
 

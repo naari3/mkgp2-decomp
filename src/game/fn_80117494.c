@@ -9,7 +9,7 @@
 
 extern "C" {
 
-typedef struct Vec { float x, y, z; } Vec;
+#include "game/types/Vec.h"
 
 extern void ItemTracker_AcquireLock(unsigned char *self);
 extern void ItemTracker_SetTrackPhase(unsigned char *self, int phase);

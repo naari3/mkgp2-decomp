@@ -157,7 +157,7 @@ struct TaBookend { Vec eye, target; };
 extern "C" {
 struct TaRecord { int character; const char *name; int score; float time; };
 extern Vec TaMode_FrameUpdate_bss_805D2B28, TaMode_FrameUpdate_bss_805D2B34;
-extern void *lbl_806D13B4, *TaMode_FrameUpdate_bss_806D13A4, *lbl_806D1398;
+extern void *g_taSound, *TaMode_FrameUpdate_bss_806D13A4, *g_taGhostCar;
 extern void *g_raceCamera;
 extern TaGhostFrame *TaMode_FrameUpdate_bss_806D1388;
 extern unsigned int TaMode_FrameUpdate_bss_806D138C, TaMode_FrameUpdate_bss_806D1394;

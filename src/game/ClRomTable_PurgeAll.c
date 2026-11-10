@@ -6,7 +6,7 @@
 
 #include "game/types/ClRomEntry.h"
 
-extern ClRomEntry lbl_80598678[40];
+extern ClRomEntry g_clRomTable[40];
 
 extern int strcmp(const char *a, const char *b);
 extern void clRom_DtorForce(void *rom, int flag);
@@ -23,7 +23,7 @@ static inline void ClRomTable_PurgeEntries(int &count, int &i)
     int j;
     ClRomEntry *found;
 
-    table = lbl_80598678;
+    table = g_clRomTable;
     count = 0;
     for (i = 0, e = table; i < 40; i++, e++) {
         path = e->path;
@@ -31,7 +31,7 @@ static inline void ClRomTable_PurgeEntries(int &count, int &i)
             entry = table;
             for (j = 0; j < 40; j++, entry++) {
                 if (entry->path != 0 && strcmp(entry->path, path) == 0) {
-                    found = &lbl_80598678[j];
+                    found = &g_clRomTable[j];
                     goto found_entry;
                 }
             }

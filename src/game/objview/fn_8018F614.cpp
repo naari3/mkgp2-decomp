@@ -39,7 +39,7 @@ static const char lbl_803784D0[17] = "clMapEffectParts";
 static const char lbl_803784E4[29] = " DeleteMapEffect : clRipple\n";
 static const char lbl_80378504[29] = " CreateMapEffect : clRipple\n";
 
-struct clNormal3D { char data[0x5c]; clNormal3D(const char *,int); };
+#include "game/types/clNormal3D.h"
 extern "C" HSD_JObj *ResolveJointByName(clNormal3D *,const char *);
 struct MorphNode { char data[0x38]; MorphNode(HSD_JObj *,HSD_JObj *); };
 struct MorphBase { MorphBase() {} virtual ~MorphBase(); };

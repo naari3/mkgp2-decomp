@@ -1284,7 +1284,7 @@ unsigned char fn_800A7D20(void)
 }
 
 
-extern int lbl_80677CC8[4];
+extern int g_coinsCollectedBySlot[4];
 extern int *fn_8016CB44(void);
 extern int g_kartVariant;
 extern int GetCoinMilage(PlayerData *p);
@@ -1303,7 +1303,7 @@ unsigned char TitleCheck_AllRecordsCleared(void)
     int i;
 
     for (i = 0; i < 4; i++) {
-        sum += lbl_80677CC8[i];
+        sum += g_coinsCollectedBySlot[i];
     }
 
     if (sum == fn_8024F588()->lapB - 1) {

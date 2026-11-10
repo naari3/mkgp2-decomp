@@ -5,7 +5,7 @@
 
 #include "game/types/NamCam.h"
 
-extern NamCam *lbl_806D1070;
+extern NamCam *g_namCam;
 extern char lbl_802EB9E4[];
 extern void DebugPrintf(const char *fmt, ...);
 extern void MemoryManager_TimedFree(void *p);
@@ -21,35 +21,35 @@ int NamCam_End(void)
     unsigned char ok;
 
     DebugPrintf(lbl_802EB9F8);
-    if (lbl_806D1070 == 0) {
+    if (g_namCam == 0) {
         DebugPrintf(lbl_802EB9E4);
         return 1;
     }
-    lbl_806D1070->sock.countdown = 0x78;
+    g_namCam->sock.countdown = 0x78;
     ok = 1;
-    while (lbl_806D1070->sock.busy != 0) {
+    while (g_namCam->sock.busy != 0) {
         Frame_PostDrawOverlay();
         NamCam_GetImageHandle(&handle1, 0);
         Frame_UpdatePerFrameState();
-        lbl_806D1070->sock.countdown--;
-        if (lbl_806D1070->sock.countdown <= 0) {
+        g_namCam->sock.countdown--;
+        if (g_namCam->sock.countdown <= 0) {
             ok = 0;
             break;
         }
     }
     if (ok == 1) {
-        lbl_806D1070->sock.countdown = 0x78;
-        while (lbl_806D1070->sock.busy == 0) {
+        g_namCam->sock.countdown = 0x78;
+        while (g_namCam->sock.busy == 0) {
             Frame_PostDrawOverlay();
             NamCam_GetImageHandle(&handle2, 0);
             Frame_UpdatePerFrameState();
-            lbl_806D1070->sock.countdown--;
-            if (lbl_806D1070->sock.countdown <= 0) {
+            g_namCam->sock.countdown--;
+            if (g_namCam->sock.countdown <= 0) {
                 break;
             }
         }
     }
-    MemoryManager_TimedFree(lbl_806D1070);
-    lbl_806D1070 = 0;
+    MemoryManager_TimedFree(g_namCam);
+    g_namCam = 0;
     return 1;
 }

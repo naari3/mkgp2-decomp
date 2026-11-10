@@ -215,7 +215,9 @@ def plan(args):
                     base, how = cls.pop(), "one class"
         if base is None and len(r["unit"]) == 1:
             u = os.path.basename(next(iter(r["unit"])))
-            if not UNNAMED.match(u) and re.fullmatch(r"[A-Za-z_]\w*", u):
+            # a data-only unit (src/game/autodata) is named after an address: no name to give
+            if not UNNAMED.match(u) and re.fullmatch(r"[A-Za-z_]\w*", u) \
+                    and not u.startswith(("data_", "rodata_", "sdata_", "sdata2_", "bss_", "sbss_")):
                 base, how = u, "one unit"
         if base is None and len(fns) > 1 and all(fns):
             # several named functions: their common name prefix (whole words)
@@ -253,11 +255,30 @@ def tracked_files():
                          check=True).stdout.split("\n")
     skip_ext = (".png", ".jpg", ".zip", ".iso", ".bin", ".o", ".a", ".dol", ".elf")
     return [f for f in out if f and not f.startswith("docs/agents/")
-            and not f.endswith(skip_ext) and os.path.join(ROOT, f) != MAP]
+            and not f.endswith(skip_ext) and os.path.join(ROOT, f) not in (MAP, MANUAL)]
+
+
+MANUAL = os.path.join(ROOT, "tools", "data_names_manual.tsv")
+
+
+def manual(args):
+    """Names a person chose by reading the users: tools/data_names_manual.tsv
+    (old <tab> new <tab> why).  Lines whose old name is gone are done."""
+    syms, _ = load_symbols()
+    ren = {}
+    for line in open(MANUAL):
+        if line.startswith("#") or "\t" not in line:
+            continue
+        old, new = line.rstrip("\n").split("\t")[:2]
+        if old in syms and new not in syms and re.fullmatch(r"[A-Za-z_]\w*", new):
+            ren[old] = new
+        elif old in syms:
+            print(f"skip {old} -> {new}: name taken or not an identifier")
+    return ren, Counter({"chosen by reading the users (data_names_manual.tsv)": len(ren)})
 
 
 def apply(args):
-    ren, why = plan(args)
+    ren, why = manual(args) if getattr(args, "manual", False) else plan(args)
     if not ren:
         print("nothing to rename")
         return
@@ -359,6 +380,9 @@ def main():
         p.add_argument("--range", type=lambda s: tuple(int(x, 16) for x in s.split("-")))
         p.add_argument("--limit", type=int, default=0)
         p.set_defaults(fn=fn)
+        if name == "apply":
+            p.add_argument("--manual", action="store_true",
+                           help="apply tools/data_names_manual.tsv instead of the rules")
     args = ap.parse_args()
     if args.cmd == "plan":
         ren, why = plan(args)

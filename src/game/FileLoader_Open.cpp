@@ -10,10 +10,10 @@ void operator delete(void *ptr);
 struct FileLoader;
 
 extern "C" {
-extern FileLoader *lbl_806D0FE0; /* head */
-extern FileLoader *lbl_806D0FE4; /* tail */
-extern int lbl_806D0FE8; /* live count */
-extern int lbl_806D0FEC; /* peak count */
+extern FileLoader *g_romListHead; /* head */
+extern FileLoader *g_romListTail; /* tail */
+extern int g_romActiveCount; /* live count */
+extern int g_romActiveCountPeak; /* peak count */
 extern unsigned char g_resourceLoadingFlag;
 extern char lbl_802E9800[];
 int strcmp(const char *a, const char *b);
@@ -36,9 +36,9 @@ struct FileLoader {
     {
         int attempt;
 
-        lbl_806D0FE8++;
-        if (lbl_806D0FEC < lbl_806D0FE8) {
-            lbl_806D0FEC = lbl_806D0FE8;
+        g_romActiveCount++;
+        if (g_romActiveCountPeak < g_romActiveCount) {
+            g_romActiveCountPeak = g_romActiveCount;
         }
         rawBlock = 0;
         references = 1;
@@ -51,19 +51,19 @@ struct FileLoader {
             attempt++;
             DebugPrintf(lbl_802E9800, attempt);
         }
-        if (lbl_806D0FE0 == 0) {
-            lbl_806D0FE0 = this;
-            lbl_806D0FE4 = this;
+        if (g_romListHead == 0) {
+            g_romListHead = this;
+            g_romListTail = this;
         } else {
-            previous = lbl_806D0FE4;
-            lbl_806D0FE4->next = this;
-            lbl_806D0FE4 = this;
+            previous = g_romListTail;
+            g_romListTail->next = this;
+            g_romListTail = this;
         }
     }
 
     ~FileLoader()
     {
-        --lbl_806D0FE8;
+        --g_romActiveCount;
         if (archive != 0) {
             if (rawBlock == 0) {
                 HSD_ArchiveFree(archive);
@@ -72,12 +72,12 @@ struct FileLoader {
             }
         }
         if (previous == 0) {
-            lbl_806D0FE0 = next;
+            g_romListHead = next;
         } else {
             previous->next = next;
         }
         if (next == 0) {
-            lbl_806D0FE4 = previous;
+            g_romListTail = previous;
         } else {
             next->previous = previous;
         }
@@ -88,7 +88,7 @@ static inline FileLoader *FileLoader_Find(const char *name)
 {
     FileLoader *p;
 
-    for (p = lbl_806D0FE0; p != 0; p = p->next) {
+    for (p = g_romListHead; p != 0; p = p->next) {
         if (strcmp(p->path, name) == 0) {
             return p;
         }
@@ -155,7 +155,7 @@ struct SpecialFaceMesh;
 
 extern "C" {
 extern SpecialFaceMesh *lbl_806D1138;
-extern CollData *lbl_806CED58;
+extern CollData *g_collisionData;
 void SpecialFaceMesh_AddFace(SpecialFaceMesh *mesh, SpecialFace *face);
 }
 
@@ -179,7 +179,7 @@ extern "C" int Collision_RegisterSpecialFaces(void)
         return -1;
     }
     mesh = SpecialFaceMesh_Get();
-    cd = lbl_806CED58;
+    cd = g_collisionData;
     count = 0;
     for (i = 0; cd->groups[i].faces != 0; i++) {
         CollFace *f = cd->groups[i].faces;

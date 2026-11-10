@@ -3,7 +3,7 @@
  *
  * CW C++ ABI trivial deleting dtor for the ObjectBase root class:
  *   1. if (this != NULL) demote *this back to the ObjectBase vtable
- *      (&lbl_803F5658) so any derived dtor chain that follows sees a
+ *      (&ObjectBase_vtable_803F5658) so any derived dtor chain that follows sees a
  *      cleanly typed base subobject.
  *   2. if the second arg (delete-flag, passed as a short) is > 0, call
  *      `MemoryManager_TimedFree(this)` (= MemoryManager_TimedFree) to release the
@@ -23,12 +23,12 @@
  */
 
 extern void MemoryManager_TimedFree(void *);
-extern char lbl_803F5658[];  /* ObjectBase vtable @ 0x803F5658 */
+extern char ObjectBase_vtable_803F5658[];  /* ObjectBase vtable @ 0x803F5658 */
 
 #pragma exceptions on
 void *dtor_8002CDF4(void *this, short flag) {
     if (this != 0) {
-        *(char **)this = lbl_803F5658;
+        *(char **)this = ObjectBase_vtable_803F5658;
         if (flag > 0) {
             MemoryManager_TimedFree(this);
         }

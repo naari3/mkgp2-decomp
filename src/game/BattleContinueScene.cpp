@@ -25,11 +25,7 @@ struct CoinCounter {
     CoinCounter(int s);
 };
 
-struct Sprite {
-    char pad00[0xC];
-    float x;
-    float y;
-};
+#include "game/types/Sprite.h"
 
 struct CoinPopupDetail {
     int pad00;

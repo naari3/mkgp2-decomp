@@ -45,7 +45,7 @@ extern void HSD_ArchiveFree(Archive *archive);
 extern void *memcpy(void *dst, const void *src, u32 n);
 extern void *memset(void *dst, int c, u32 n);
 extern u32 strlen(const char *s);
-extern void (*lbl_806D2238)(int stage); /* idle callback while reading */
+extern void (*g_dvdLoadCallback)(int stage); /* idle callback while reading */
 
 #define ROUND32(x) (((x) + 0x1F) & ~0x1F)
 
@@ -70,8 +70,8 @@ Archive *DVDLoad_OpenAllocReadRelocSync(const char *path)
     u32 size;
     u32 data_size;
 
-    lbl_806D2238(0);
-    lbl_806D2238(1);
+    g_dvdLoadCallback(0);
+    g_dvdLoadCallback(1);
     archive = HSD_MemAlloc(sizeof(Archive));
     if (archive == 0) {
         goto fail;
@@ -151,7 +151,7 @@ Archive *DVDLoad_OpenAllocReadRelocSync(const char *path)
     memcpy(archive->name, path, length + 1);
 
     ArchiveRelocate(archive);
-    lbl_806D2238(8);
+    g_dvdLoadCallback(8);
     return archive;
 
 fail:

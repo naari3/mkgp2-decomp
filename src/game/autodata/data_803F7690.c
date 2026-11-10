@@ -25,7 +25,7 @@ extern void dtor_80052744();
 extern void dtor_80054B2C();
 extern char data_803F7690_data_803F7820[];
 extern char lbl_806CEE10[];
-extern char lbl_806CEE18[];
+extern char CarObject_data_806CEE18[];
 extern char lbl_806CEE20[];
 extern char data_803F7690_data_806CEE28[];
 extern char data_803F7690_data_806CEE30[];
@@ -37,19 +37,19 @@ extern char data_803F7690_data_806CEE48[];
 #pragma force_active on
 
 /* decl: unsigned int */
-void *lbl_803F7690[3] = {
+void *CarObjectManager_vtable_803F7690[3] = {
     (void *)&lbl_806CEE10,
     0,
     (void *)dtor_80052744
 };
-void *lbl_803F769C[3] = {
+void *CarObject_data_803F769C[3] = {
     (void *)&lbl_806CEE10,
     0,
     0
 };
 /* decl: unsigned int */
 void *CarObject_data_803F76A8[4] = {
-    (void *)&lbl_806CEE18,
+    (void *)&CarObject_data_806CEE18,
     0,
     (void *)CarObjectManager_Dtor,
     0
@@ -102,7 +102,7 @@ void *C7Quake_vtable_803F7724[5] = {
     (void *)ItemEffectQuake_Tick,
     (void *)ItemEffectQuake_Dtor
 };
-void *lbl_803F7738[5] = {
+void *KartItemSubObject_vtable_803F7738[5] = {
     (void *)&lbl_806CEE20,
     0,
     0,
