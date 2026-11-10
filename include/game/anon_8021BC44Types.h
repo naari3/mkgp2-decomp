@@ -269,6 +269,7 @@ struct TaEntry {
     int cc;
     int chara;
     int kart;
+    void Set(int k, int ch, int c, bool rev, bool lng, int cu, int t) { time = t; cup = cu; longRound = lng; reverse = rev; cc = c; chara = ch; kart = k; }
 };
 
 struct PlayerData {
@@ -575,7 +576,7 @@ struct Blink {
     unsigned char active;
     unsigned char closing;
     int t;
-    Blink() : active(0), closing(0), t(0) { spr = new Sprite(0x9E, 1, lbl_806DB080, lbl_806DB080, lbl_806DB07C, lbl_806DB07C, lbl_806DB074, lbl_806DB074); }
+    Blink() : active(0), closing(0), t(0) { spr = new Sprite(0x9E, 1, 394.0f, 394.0f, 1.0f, 1.0f, 0.0f, 0.0f); }
     ~Blink() { delete spr; }
     void Open() {
         if (active == 1 && closing == 0) {
