@@ -2692,3 +2692,39 @@ FindBonus(cc, Rules(round, cup, &cc), ...);
 
 Blind sweeps did not find this (24 declaration orders, 24 parameter orders, 40
 statement orders); each step came from reading which value had which vreg.
+
+## 98. One saved register off for a late inline `this` temp: move two named locals of an earlier block into a level-1 inline (fn_801BE170 = NameEntry::Update, 23 -> 0 lines, fakematch, 11-10)
+
+Symptom: the owner pointer of `(*it)->Tick()` at the end of the function sits
+in r28 where the target has r26; everything else is equal. `mwtrace`
+(`Update__9NameEntryFv`, the mangled name is needed) shows the order of the
+low-degree group: all temps in descending vreg, then the named locals. The
+owner is the inline `this` temp of Tick; it is coloured before the named
+`dx`, `btn`, `vert` and takes the lowest saved register obtained so far (r28).
+Target r26 means: `dx` (r27) and `btn` (r26) are coloured BEFORE the owner and
+`vert` (r25) after it, i.e. dx and btn are temps numbered above the Tick temp.
+
+What does not work:
+
+- A named `FadeObj *n` declared between btn and vert has the right number but
+  degree 29 = available registers, so `simplifygraph` (one ascending sweep, a
+  node is pushed only when degree < 29 at that moment) leaves it for round 2
+  and it gets r31.
+- Parameters of a nested (level-2) inline: nested inlines are expanded after
+  all level-1 inlines of the function, so their temps are created after the
+  Tick temp and are numbered below it.
+- Two parameters of one inline: the arguments are evaluated right to left, so
+  the order that numbers dx above btn loads `held` before `dir`.
+
+What works: the whole block becomes one inline member whose ONLY locals are dx
+and btn (declared `int btn; int dx;`, the later declaration is created first
+and gets the higher number), assigned in the original order inside it. Every
+other local of the block (vert, c, r, wrap) stays a named local of the caller
+and is passed by reference, so its number and code do not change (as inline
+locals c/r swap registers and the `r = 0` constant merges with another zero).
+`#pragma inline_max_size(100000)` is needed for the block to expand.
+
+**Check:** a saved register differs only for a value defined late; the trace
+shows named locals of an earlier block coloured after it that the target
+colours before it. Rule `named-locals-to-level1-inline-temps`.
+
