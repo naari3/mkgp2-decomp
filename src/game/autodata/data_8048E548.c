@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/hsd_desc.h"
 
 extern void dtor_8013DCBC();
 extern void dtor_8013EB50();
@@ -669,29 +670,21 @@ void *lbl_8048E548[160][2] = {
     (void *)&lbl_8035D99C,
     (void *)&lbl_8035D9B4
 };
-float data_8048E548_data_8048EA48[5] = {
-    0.0f, 0.0f, 0.0f, 1.0f, 0.0f
+BuiltinWObjDesc data_8048E548_data_8048EA48 = {
+    0, { 0.0f, 0.0f, 1.0f }, 0
 };
-/* pointers mixed with values */
-void *data_8048E548_data_8048EA5C[7] = {
-    0,
-    0,
-    (void *)0xD0000,
-    (void *)0xFFFFFFFF,
-    (void *)&data_8048E548_data_8048EA48,
-    0,
-    (void *)&data_8048E548_data_806CF648
+BuiltinLightDesc data_8048E548_data_8048EA5C = {
+    0, 0, 0x000D, 0, { 0xFF, 0xFF, 0xFF, 0xFF },
+    &data_8048E548_data_8048EA48, 0, (void *)&data_8048E548_data_806CF648
 };
-/* decl: char */
-void *RenderTargetSingleton_data_8048EA78[8] = {
-    0,
-    (void *)&data_8048E548_data_8048EA5C,
-    (void *)0x40000,
-    (void *)0x808080FF,
-    0,
-    0,
-    0,
-    0
+/* a light descriptor followed by one zero word */
+typedef struct BuiltinLightDescPad {
+    BuiltinLightDesc desc;
+    unsigned int pad1C;
+} BuiltinLightDescPad;
+BuiltinLightDescPad RenderTargetSingleton_data_8048EA78 = {
+    { 0, &data_8048E548_data_8048EA5C, 0x0004, 0, { 0x80, 0x80, 0x80, 0xFF },
+    0, 0, 0 }, 0
 };
 char *KartPreview_data_8048EA98[13] = {
     (char *)&lbl_806D7670,

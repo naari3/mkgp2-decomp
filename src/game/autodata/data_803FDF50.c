@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/hsd_desc.h"
 
 extern void KartItem_FindRearTarget_v1();
 extern void KartItem_FindRearTarget_v2();
@@ -68,42 +69,28 @@ void *Backup_ClearHiScores_data_803FDF70[10] = {
     (void *)&data_803FDF28_rodata_80311280,
     0
 };
-float data_803FDF28_data_803FDF98[5] = {
-    0.0f, -1.0f, 1.0f, -1.0f, 0.0f
+BuiltinWObjDesc data_803FDF28_data_803FDF98 = {
+    0, { -1.0f, 1.0f, -1.0f }, 0
 };
-/* pointers mixed with values */
-void *data_803FDF28_data_803FDFAC[7] = {
-    0,
-    0,
-    (void *)0xD0000,
-    (void *)0x7F7F7F00,
-    (void *)&data_803FDF28_data_803FDF98,
-    0,
-    (void *)&data_803FDF28_data_806CEF70
+BuiltinLightDesc data_803FDF28_data_803FDFAC = {
+    0, 0, 0x000D, 0, { 0x7F, 0x7F, 0x7F, 0x00 },
+    &data_803FDF28_data_803FDF98, 0, (void *)&data_803FDF28_data_806CEF70
 };
-float data_803FDF28_data_803FDFC8[5] = {
-    0.0f, 1.0f, 1.0f, 1.0f, 0.0f
+BuiltinWObjDesc data_803FDF28_data_803FDFC8 = {
+    0, { 1.0f, 1.0f, 1.0f }, 0
 };
-/* pointers mixed with values */
-void *data_803FDF28_data_803FDFDC[7] = {
-    0,
-    (void *)&data_803FDF28_data_803FDFAC,
-    (void *)0xD0000,
-    (void *)0x7F7F7F00,
-    (void *)&data_803FDF28_data_803FDFC8,
-    0,
-    (void *)&data_803FDF28_data_806CEF74
+BuiltinLightDesc data_803FDF28_data_803FDFDC = {
+    0, &data_803FDF28_data_803FDFAC, 0x000D, 0, { 0x7F, 0x7F, 0x7F, 0x00 },
+    &data_803FDF28_data_803FDFC8, 0, (void *)&data_803FDF28_data_806CEF74
 };
-/* decl: unsigned char */
-void *SceneModel_Init_data_803FDFF8[8] = {
-    0,
-    (void *)&data_803FDF28_data_803FDFDC,
-    (void *)0x40000,
-    (void *)0xFFFFFFFF,
-    0,
-    0,
-    0,
-    0
+/* a light descriptor followed by one zero word */
+typedef struct BuiltinLightDescPad {
+    BuiltinLightDesc desc;
+    unsigned int pad1C;
+} BuiltinLightDescPad;
+BuiltinLightDescPad SceneModel_Init_data_803FDFF8 = {
+    { 0, &data_803FDF28_data_803FDFDC, 0x0004, 0, { 0xFF, 0xFF, 0xFF, 0xFF },
+    0, 0, 0 }, 0
 };
 float KartTireFX_Ctor_data_803FE018[14] = {
     1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,

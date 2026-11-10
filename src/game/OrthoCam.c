@@ -2,24 +2,19 @@
 C_REGION_BEGIN
 /* --- owned .data 0x8048E4E8..0x8048E548 (tools/own_data.py) --- */
 #include "game/types/size_t.h"
+#include "game/types/hsd_desc.h"
 #pragma force_active on
-unsigned int OrthoCam_data_8048E4E8[5] = { 0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x00000000 };
-unsigned int OrthoCam_data_8048E4FC[5] = { 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000 };
-void *OrthoCam_data_8048E510[14] = {
-    (void *)0x0,
-    (void *)0x1,
-    (void *)0x280,
-    (void *)0x1E0,
-    (void *)0x280,
-    (void *)0x1E0,
-    (void *)&OrthoCam_data_8048E4E8,
-    (void *)&OrthoCam_data_8048E4FC,
-    (void *)0x0,
-    (void *)0x0,
-    (void *)0x3DCCCCCD,
-    (void *)0x47000000,
-    (void *)0x42262863,
-    (void *)0x3F970A3D
+BuiltinWObjDesc OrthoCam_data_8048E4E8 = { 0, { 0.0f, 0.0f, 1.0f }, 0 };   /* eye */
+BuiltinWObjDesc OrthoCam_data_8048E4FC = { 0, { 0.0f, 0.0f, 0.0f }, 0 };   /* interest */
+BuiltinCObjDesc OrthoCam_data_8048E510 = {
+    0, 0, 1,
+    { 0, 640, 0, 480 },
+    { 0, 640, 0, 480 },
+    &OrthoCam_data_8048E4E8,
+    &OrthoCam_data_8048E4FC,
+    0.0f, 0,
+    0.1f, 32768.0f,
+    41.539440155029296875f, 1.18f
 };
 #pragma force_active reset
 /*
@@ -194,7 +189,7 @@ struct OrthoCamObj {
         float sy;
         float aspect;
         active = 0;
-        cobj = HSD_CObjLoadDesc(OrthoCam_data_8048E510);
+        cobj = HSD_CObjLoadDesc(&OrthoCam_data_8048E510);
         if (cobj) {
             HSD_CObjGetPerspective(cobj, &sx, &sy);
             aspect = HSD_CObjGetNear(cobj);

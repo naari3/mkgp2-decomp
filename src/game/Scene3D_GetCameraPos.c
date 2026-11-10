@@ -1,12 +1,12 @@
-extern void HSD_CObjGetPerspective(void *p);
+extern void HSD_CObjGetPerspective(void *cobj, float *fov, float *aspect);
 
 /* 0x800302EC, size 0x30. Conditional tail-call wrapper.
  * If scene3d->_28 != 0, call HSD_CObjGetPerspective(scene3d->_04).
  * Has extab/extabindex entry (large-frame flag): emit via #pragma exceptions on/reset. */
 #pragma exceptions on
-void Scene3D_GetCameraPos(void *scene3d) {
+void Scene3D_GetCameraPos(void *scene3d, float *fov, float *aspect) {
     if (*(unsigned int *)((char *)scene3d + 0x28) != 0) {
-        HSD_CObjGetPerspective(*(void **)((char *)scene3d + 0x4));
+        HSD_CObjGetPerspective(*(void **)((char *)scene3d + 0x4), fov, aspect);
     }
 }
 #pragma exceptions reset

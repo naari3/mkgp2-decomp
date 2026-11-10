@@ -225,6 +225,42 @@ differing orders (constructors and member functions). Four, all fixed:
 Floats keep their relative order and integers theirs, which is exactly what
 the registers do.
 
+## Static HSD descriptors (request 23, 2026-11-10)
+
+The game defines a few HSD descriptors as static data and hands them to
+`HSD_LObjLoadDesc` / `HSD_CObjLoadDesc`. Written as arrays of words
+(`(void *)0xD0000, (void *)0x7F7F7F00` for `u16 flags = 0x000D; u16 attnflags
+= 0; GXColor = {7F,7F,7F,00}`) they read wrongly on a little-endian host.
+They are now structs from `include/game/types/hsd_desc.h` (`BuiltinWObjDesc`,
+`BuiltinLightDesc`, `BuiltinCObjDesc`; melee's layouts, plain C types):
+
+- `g_courseDataInstance` and its position (autodata/data_8040E780.c)
+- the two-light chain behind `SceneModel_Init_data_803FDFF8`
+  (autodata/data_803FDF50.c)
+- `RenderTargetSingleton_data_8048EA78` and its second light
+  (autodata/data_8048E548.c)
+- `OrthoCam_data_8048E510` with its eye and interest (OrthoCam.c)
+
+These are all the static descriptors passed to an HSD `LoadDesc` in game code;
+the other calls pass descriptors read from files. Other tables that keep
+16-bit or 8-bit fields inside pointer words exist (words such as
+`(void *)0x10000` in "pointers mixed with values" objects); they are typed
+when one is found to matter.
+
+## Arguments left in a register for a library function
+
+`mkgp2-pc port/tools/arity_census.py` cannot see callees in the library
+directories. `python3 tools/port_abi/lib_arity.py` is a text scan for calls
+from game code that pass fewer arguments than the library definition. It
+found eight, all fixed with plain C that compiles to the same object:
+
+- six `GetCourseDataPtr(); x = HSD_LObjLoadDesc();` pairs, now
+  `HSD_LObjLoadDesc(GetCourseDataPtr())`;
+- `Scene3D_GetCameraPos` and `Scene3D_SetupProjection` were defined with one
+  parameter although every caller passes three; the two extra ones went
+  straight through to `HSD_CObjGetPerspective` / `HSD_CObjSetPerspective`.
+  They are parameters now.
+
 ## Pointers to member functions (item 14)
 
 MWCC's pointer to member function is 12 bytes, `{ long thisDelta; long

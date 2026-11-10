@@ -4,6 +4,7 @@
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
 #include "game/autodata.h"
+#include "game/types/hsd_desc.h"
 #include "game/types/RaceParams.h"
 
 extern void GameModeBase_Dtor();
@@ -25,22 +26,6 @@ extern char typeinfo[];
  * an HSD_WObjDesc for its position and an HSD_LightDesc (layouts as in
  * libs/melee/src/sysdolphin/baselib/wobj.h and lobj.h). flags 0x000D with
  * attnflags 0; the union member is the pointer to the shininess float. */
-typedef struct BuiltinWObjDesc {
-    /* 0x00 */ char *class_name;
-    /* 0x04 */ float pos[3];
-    /* 0x10 */ void *robjdesc;
-} BuiltinWObjDesc;
-typedef struct BuiltinLightDesc {
-    /* 0x00 */ char *class_name;
-    /* 0x04 */ struct BuiltinLightDesc *next;
-    /* 0x08 */ unsigned short flags;
-    /* 0x0A */ unsigned short attnflags;
-    /* 0x0C */ unsigned char color[4];
-    /* 0x10 */ BuiltinWObjDesc *position;
-    /* 0x14 */ BuiltinWObjDesc *interest;
-    /* 0x18 */ void *u;
-} BuiltinLightDesc;
-
 BuiltinWObjDesc data_8040E780_data_8040E780 = {
     0, { 0.0f, 1e+04f, 0.0f }, 0
 };

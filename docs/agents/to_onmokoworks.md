@@ -883,3 +883,9 @@ status: note
 
 src/game/autodata/data_8040E780.c: g_courseDataInstance and data_8040E780_data_8040E780 are now structs (HSD_LightDesc / HSD_WObjDesc layout). Byte-identical. No action needed.
 
+## n3-20261110-1651 | 2026-11-10 16:51Z | from: n3 | HSD descriptors typed, library call arguments written out
+re: -
+status: note
+
+Touched: autodata/data_803FDF50.c, data_8048E548.c, data_8040E780.c, OrthoCam.c (descriptor structs), BiribiriLand.c, RivalRun.c, JumpDistanceMode_Init.c, ReverseChallenge_Init.inc, NokoNoko_801287F8.cpp, SuikaBall_801313D0.cpp (nested light load), Scene3D_GetCameraPos.c, Scene3D_SetupProjection.c (parameters). Byte-identical. No action needed.
+

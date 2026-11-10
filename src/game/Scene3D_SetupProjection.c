@@ -11,20 +11,20 @@ typedef struct Scene3D {
 
 extern char lbl_802E96D0[];
 extern char lbl_802E96FC[];
-extern void HSD_CObjSetPerspective(void *);
+extern void HSD_CObjSetPerspective(void *cobj, float fov, float aspect);
 extern int HSD_CObjGetProjectionType(void *);
 extern float HSD_CObjGetAspect(void *);
 extern float HSD_CObjGetFov(void *);
 extern void fn_8013879C(void *, float, float, float, float);
 extern void DebugPrintf(const char *, ...);
 
-int Scene3D_SetupProjection(Scene3D *scene) {
+int Scene3D_SetupProjection(Scene3D *scene, float fov, float aspectIn) {
     float aspect;
 
     if (scene->active == 0) {
         return 0;
     }
-    HSD_CObjSetPerspective(scene->camera);
+    HSD_CObjSetPerspective(scene->camera, fov, aspectIn);
     if (HSD_CObjGetProjectionType(scene->camera) == 1) {
         aspect = HSD_CObjGetAspect(scene->camera);
         fn_8013879C(scene->projection, 0.017453292f * HSD_CObjGetFov(scene->camera), aspect,
