@@ -293,7 +293,7 @@ int TaRecord_GetLastInsertedRank(void);
 extern void fn_8014403C();
 extern void fn_80144308();
 char *fn_80167744(int n, float t);
-int fn_80169DF0(void);
+unsigned char fn_80169DF0(void);
 void fn_8023CCF8(struct StrBox *p, float x, float y);
 void fn_8023CD3C(struct StrBox *p, float x, float y);
 void fn_8023CEB4(struct StrBox *p);
@@ -1687,7 +1687,7 @@ struct Runner {
     virtual void m0C();
     virtual void m10();
     virtual void m14();
-    virtual void m18();
+    virtual unsigned char m18();
 };
 
 struct RunnerOwner {
@@ -1829,8 +1829,8 @@ extern "C" void fn_8014D4B8(RunnerOwner *o) {
     HSD_StateInvalidate(-1);
 }
 
-extern "C" void fn_8014D4F0(RunnerOwner *o) {
+extern "C" unsigned char fn_8014D4F0(RunnerOwner *o) {
     o->runner->m10();
-    o->runner->m18();
+    return o->runner->m18();
 }
 #pragma use_lmw_stmw reset

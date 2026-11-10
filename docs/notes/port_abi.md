@@ -116,6 +116,45 @@ generated wrappers themselves.
   arguments the definition does not read; harmless where the caller cleans
   the stack.
 
+## Results read from a function defined `void` (request 19, 2026-11-10)
+
+On the console a caller may read r3 after calling a function whose definition
+says `void`: the register still holds whatever the callee left there. A host
+compiler returns garbage. Fifteen such functions were listed by the port
+census (definition `void`, some caller declares a result). For every one of
+them the plain C form, returning the value the code leaves in r3, compiles to
+the same object under MWCC, so no macro was needed:
+
+| function | now returns |
+|---|---|
+| `CollisionFile_FixupPointers` | its argument (the file base) |
+| `Allocator_Identity_VoidVoid` | its argument |
+| `CourseData_GetDefaultPathKey_Safe` | result of `CourseData_GetDefaultPathKey` |
+| `DrawEffect_SetU32CC` | `self` |
+| `HSD_MemCallback4` | result of the callback (`s32`) |
+| `NamCam_LoadImage` | result of `Asset_LoadAndDecompressByType` |
+| `TCPConn_LogError` | `acGetLastError(socket)` when result is -1, otherwise `result` |
+| `Vtable_CallSlot2` | result of the virtual call |
+| `fn_8014D4F0` | result of `runner->m18()` |
+| `fn_80169DF0` | result of `Sci2Card_GetByteFlag1224` (`unsigned char`; the two callers that declared `int` now declare `unsigned char`) |
+| `fn_801E6594` | result of `fn_801E9290` (`unsigned char`) |
+| `fn_80241C08` | its argument (it is a constructor passed to `__construct_array`) |
+
+Three were the caller's mistake, and the caller was corrected instead; their
+definitions stay `void`:
+
+- `fn_801A1128`, `fn_801A1174`: `fn_801DA46C.c` nested the three calls
+  (`fn_801A0DF0(fn_801A1128(fn_801A1174(...), x, y))`) although
+  `fn_801A1128` takes two floats and `fn_801A0DF0` takes nothing. Written as
+  three statements it gives the same object.
+- `fn_801E93A0`: `Scene_80164614.cpp` passed its "result" to
+  `ReplayRandCursor_Reset`, which ignores its parameter. Now
+  `fn_801E93A0(); ReplayRandCursor_Reset(REG_ARGS1(0));`.
+
+When a new case turns up: read the tail of the callee's asm for what r3 holds
+at `blr`, write that as the return value, and check the object hash. If r3 is
+only a leftover that the callee never set, correct the caller.
+
 ## Pointers to member functions (item 14)
 
 MWCC's pointer to member function is 12 bytes, `{ long thisDelta; long

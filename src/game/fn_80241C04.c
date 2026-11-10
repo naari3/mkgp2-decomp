@@ -7,8 +7,9 @@ typedef struct Obj {
 void fn_80241C04(void) {
 }
 
-void fn_80241C08(Obj *obj) {
+Obj *fn_80241C08(Obj *obj) {
     obj->f_0 = 0;
     obj->f_4 = 0;
     obj->f_8 = 0;
+    return obj;
 }

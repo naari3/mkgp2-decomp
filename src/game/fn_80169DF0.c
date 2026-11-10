@@ -1,5 +1,5 @@
-extern void Sci2Card_GetByteFlag1224(void);
+extern unsigned char Sci2Card_GetByteFlag1224(void);
 
-void fn_80169DF0(void) {
-    Sci2Card_GetByteFlag1224();
+unsigned char fn_80169DF0(void) {
+    return Sci2Card_GetByteFlag1224();
 }

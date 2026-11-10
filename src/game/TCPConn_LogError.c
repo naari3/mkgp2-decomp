@@ -1,9 +1,10 @@
 extern int acGetLastError(unsigned int socket);
 
 #pragma exceptions on
-void TCPConn_LogError(int result, unsigned int socket, const char *context) {
+int TCPConn_LogError(int result, unsigned int socket, const char *context) {
     if (result <= 0 && result == -1) {
-        acGetLastError(socket);
+        return acGetLastError(socket);
     }
+    return result;
 }
 #pragma exceptions reset

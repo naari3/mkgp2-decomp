@@ -52,9 +52,10 @@ void DrawEffect_SetFloat108Avg(DrawEffectParamView *self, float a, float b)
     }
 }
 
-void DrawEffect_SetU32CC(DrawEffectParamView *self, int value)
+DrawEffectParamView *DrawEffect_SetU32CC(DrawEffectParamView *self, int value)
 {
     if (self != 0) {
         self->fieldCC = value;
     }
+    return self;
 }

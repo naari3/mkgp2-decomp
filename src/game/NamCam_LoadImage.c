@@ -20,7 +20,7 @@ extern int Asset_LoadAndDecompressByType(
     int alt7, int type, int alt9, int alt10, int stack_arg);
 
 #pragma exceptions on
-void NamCam_LoadImage(void *imageData, int imageId, void *pParams) {
-    Asset_LoadAndDecompressByType(imageData, pParams, (void *)imageId, 0, 0, 3, 0, 0, 0xFF);
+int NamCam_LoadImage(void *imageData, int imageId, void *pParams) {
+    return Asset_LoadAndDecompressByType(imageData, pParams, (void *)imageId, 0, 0, 3, 0, 0, 0xFF);
 }
 #pragma exceptions reset

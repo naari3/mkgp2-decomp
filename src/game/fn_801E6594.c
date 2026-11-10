@@ -3,8 +3,8 @@ typedef struct Obj {
     int f_24;
 } Obj;
 
-extern void fn_801E9290(int);
+extern unsigned char fn_801E9290(int);
 
-void fn_801E6594(void *p0) {
-    fn_801E9290(((Obj *)p0)->f_24);
+unsigned char fn_801E6594(void *p0) {
+    return fn_801E9290(((Obj *)p0)->f_24);
 }

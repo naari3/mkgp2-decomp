@@ -38,8 +38,9 @@ extern const float lbl_806D8908, lbl_806D890C, lbl_806D8910;
 extern RaceLimits163 DEMO[6][6];
 extern float g_currentLapTime, g_lapBonusTimeDelta;
 void fn_80121210();
-void *fn_801E93A0();
-void ReplayRandCursor_Reset(void *);
+#include "game/types/reg_args.h"
+void fn_801E93A0();
+void ReplayRandCursor_Reset(REG_ARGS1(void *)); /* the callee ignores its parameter */
 void srand(unsigned int);
 void Rand_SetSeedDebug(int);
 unsigned char RandSeedDebug_SetEnable(unsigned char);

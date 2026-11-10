@@ -3,8 +3,9 @@ void *AssocTree_GetHeaderField4(void *tree)
     return (char *)tree + 4;
 }
 
-void Allocator_Identity_VoidVoid(void)
+void *Allocator_Identity_VoidVoid(void *self)
 {
+    return self;
 }
 
 void AssocTree_Init(char *__restrict tree, const unsigned char *__restrict flags)
