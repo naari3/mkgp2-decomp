@@ -68,3 +68,8 @@ c25_u74: nested double-return SpriteAnim_Magnitude(float)->__fabs(scale), called
 Source: Codex worker c25_u103_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c25_u103: named caller float x, assigned after identity initialization immediately before translation transform fill, improves fn_801A0004 95.92466->96.9863 (584B,extab/index100). Same early load before identity regresses91.58904 through scheduling. Final146 opcodes/order and all non-FPR operands exact;62 FPR-only rows versus80 initially. Compose wrapper invariant; Dot2 pointer-out82.863014/index91.66667 rejected. No A/B rescue or native gain.
+
+## c26_u40_20261110
+Source: Codex worker c26_u40_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c26_u40: fn_8019F5BC 97.73684 -> 97.789474%, 1140B/EH100/index100. Sentinel init only in SpriteAnim_InitLayers (same helper as sibling fn_8019FA30) removes initialization lifetime from shared i and restores append cursor r10; 40 -> 38 aligned formatted diff rows. Named red int carrier after explicit short cast is invariant. Explicit named search pointer + dedicated collection counter gets target collection GPR homes but adds address rematerialization/step schedule differences, 97.13333%; pointer reuse in initializer 93.45263%, rejected. Compiler mechanism: CInline_Expand makes inline locals frontend temps, IRO_SplitLifetimes splits reused outer i; named/temp coalescing restriction in InterferenceGraph.c coalescenodes (mwcc_internals, patterns 46/57/89). Three approaches, no unlock; retained NonMatching. No full-build request, flags/ranges unchanged.

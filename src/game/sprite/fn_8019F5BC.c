@@ -23,6 +23,11 @@ static inline float SpriteAnim_ScaleTranslate(float value, float scale, float tr
     return value * (float)magnitude + translation;
 }
 
+static inline void SpriteAnim_InitLayers(int *ids, int *sorted) {
+    int i;
+    for (i = 0; i < 120; i++) { ids[i] = -1; sorted[i] = -1; }
+}
+
 unsigned char fn_8019F5BC(SpriteAnim *s, SpriteAnimFrame *frames,
                              int r, int g, int b, int a, int wanted, SpriteAnimSample *out,
                              float x, float y, float sx, float sy, float angle, float alpha) {
@@ -31,7 +36,7 @@ unsigned char fn_8019F5BC(SpriteAnim *s, SpriteAnimFrame *frames,
     int count = 0, i, j, rank;
     SpriteAnimFrame *scan;
     short red, green, blue, opacity;
-    for (i = 0; i < 120; i++) { ids[i] = -1; sorted[i] = -1; }
+    SpriteAnim_InitLayers(ids, sorted);
     nextId = &ids[count]; /* not `ids`: target copies the CSE-d ids address into nextId */
     for (scan = frames;; scan++) {
         for (i = 0; i < count; i++) { if (ids[i] == scan->layer) break; }
