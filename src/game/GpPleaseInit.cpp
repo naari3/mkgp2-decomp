@@ -14,53 +14,45 @@ clFlowGpPlease::clFlowGpPlease() {
     fn_801A0550(sprite);
     sprite->layer=0;
     GpPanelBase *panel=new GpPanelBase(sprite,0);
-    list.Append(panel);
+    list.push_back(panel);
     sprite=new CourseSprite(0x193,1,0);
     sprite->x=lbl_806D9E30; sprite->y=lbl_806D9E38;
     panel=new GpPanelBase(sprite,10);
     panel->Fade();
-    list.Append(panel);
-    GpInitNode *textEnd;
-    unsigned char *ids;
-    int x;
-    GpInitList *textList=&list;
-    int i;
-    textEnd=textList->End().node;
-    i=0; ids=lbl_806D1264; x=118;
-    for(;i<3;i++) {
-        panel=new GpTextPanel(*ids,x);
+    list.push_back(panel);
+    for(int i=0;i<3;i++) {
+        panel=new GpTextPanel(lbl_806D1264[i],118+i*202);
         panel->Fade();
         fn_801D8AA0(((GpTextPanel *)panel)->holder.p,5);
         fn_801D8A98(((GpTextPanel *)panel)->holder.p,6);
-        textList->InsertAt(textEnd,panel);
-        ids++; x+=202;
+        list.push_back(panel);
     }
     sprite=new CourseSprite(0x195,1,0);
     sprite->x=lbl_806D9E30; sprite->y=lbl_806D9E44;
     Sprite_SetAnimParam(sprite,0x1732,fn_801D8D8C(g_roundIndex));
     panel=new GpPanelBase(sprite,20);
-    list.Append(panel);
+    list.push_back(panel);
     sprite=new CourseSprite(0x194,1,0);
     sprite->x=lbl_806D9E30; sprite->y=lbl_806D9E48;
     sprite->scaleX=lbl_806D9E4C; sprite->scaleY=lbl_806D9E24;
     panel=new GpPanelBase(sprite,20);
-    list.Append(panel);
+    list.push_back(panel);
     panel=new GpLabelPanel(0x17ae,lbl_806D9E30,lbl_806D9E50);
     panel->tween[1].Set(lbl_806D9E20,lbl_806D9E4C,lbl_806D9E54,lbl_806D9E20,lbl_806D9E20);
     panel->Fade();
-    list.Append(panel);
+    list.push_back(panel);
     panel=new GpLabelPanel(fn_801D8DA0(g_cupId),lbl_806D9E30,lbl_806D9E58);
     panel->Fade();
-    list.Append(panel);
+    list.push_back(panel);
     if(g_roundIndex>=4) {
         panel->tween[3].Set(lbl_806D9E5C,lbl_806D9E5C,lbl_806D9E60,lbl_806D9E20,lbl_806D9E5C);
         panel=new GpLabelPanel(0x15f4,lbl_806D9E64,lbl_806D9E58);
         panel->Fade();
-        list.Append(panel);
+        list.push_back(panel);
     }
     panel=new GpColorPanel;
     panel->tween[0].Set(lbl_806D9E20,lbl_806D9E68,lbl_806D9E3C,lbl_806D9E20,lbl_806D9E20);
-    list.Append(panel);
+    list.push_back(panel);
     fn_80209C88();
     fn_80209AC4(g_cupId,g_roundIndex);
 }
