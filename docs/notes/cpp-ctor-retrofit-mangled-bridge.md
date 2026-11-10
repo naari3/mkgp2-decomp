@@ -2214,3 +2214,8 @@ c26_u26 fn_8018B31C: EncodeNameChar unsigned-char-returning inline around wchar_
 Source: Codex worker c26_u41_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c26_u41 EnemyFace8022ACE4: raw98.579506->98.98586 by moving the existing vertex loop verbatim into static inline DrawTireVertices(s,color,u,v), declared before inherited opt_lifetimes-off region. First fadds now precedes uv[1] load. FPR homes, cursor r4/r5 swap and uv[2]/uv[3] load order remain. In-place UV load/add96.36042 rejected; function-scope tu/tv invariant98.579506. text1132B; rodata/extab/index100. Onefn NonMatching, no A/B/no native gain; object-only verified, no new full link.
+
+## c26_u62_20261110
+Source: Codex worker c26_u62_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c26_u62 DNStartDino Spawn: removing the stale #pragma auto_inline off after c25 scalar snapshot/vz improvement raises direct objdiff 95.48993 -> 99.02685 (149/149 insns), extab/extabindex both100. Initial jump, bottom test, continuation island and pointer-before-count step now exact. Residual 20 register-only lines +0xB4..+0x120: random table/scale address r9/r10 swapped; half, multiplier, scale snapshots/products in different FPR webs. Whole body helper did not inline but emitted target loop shape, motivating pragma removal. Explicit completion return90.89262; inline second Rand+position block invariant99.02685; scalar in-place multiplication95.48993; aggregate snapshot87.845634. Six-hypothesis cap. No native gain; singleton remains NonMatching.

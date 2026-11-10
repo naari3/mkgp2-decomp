@@ -1196,7 +1196,6 @@ static inline float (*JObjGetMtx(HSD_JObj *jobj))[4] {
     return jobj->mtx;
 }
 
-#pragma auto_inline off
 void Hinoko::Spawn() {
     int k = 0;
     for (int i = 0; i < 2; i++) {
