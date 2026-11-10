@@ -979,6 +979,16 @@ def unit_mw_version(unit):
     return m.group(1) if m else None
 
 
+def shape_report(ours_obj, tgt_obj, fn, P=print):
+    """Diffs in the instruction sequence itself are tools/shapediag.py's job:
+    class of every differing run + the source levers for that class."""
+    try:
+        import shapediag
+        shapediag.report(tgt_obj, ours_obj, fn, out=P)
+    except Exception as e:      # the register diagnosis must not die on this
+        P(f"  (shapediag failed: {e})")
+
+
 def diagnose_dir(out: Path, ours_obj, tgt_obj, fn, quiet=False, depth=2, src_lines=None):
     want, sites, info = want_map(out, Path(ours_obj), Path(tgt_obj), fn)
     rep = {"fn": fn, "info": info, "classes": {}}
@@ -993,9 +1003,12 @@ def diagnose_dir(out: Path, ours_obj, tgt_obj, fn, quiet=False, depth=2, src_lin
         P(f"  not a register-only diff ({info['ours']} vs {info['tgt']} insns, {info['opcode_diffs']} opcode "
           f"diffs): fix the instruction sequence first (objdiff / `tools/mwsched.py explain`); "
           f"set REGFIX_FORCE=1 to diagnose anyway")
+        shape_report(ours_obj, tgt_obj, fn, P)
         if not os.environ.get("REGFIX_FORCE"):
             rep["not_reg_only"] = True
             return rep
+    elif info["opcode_diffs"]:
+        shape_report(ours_obj, tgt_obj, fn, P)
     for rc in ("gpr", "fpr"):
         g = Graph.load(out, rc)
         if g is None:

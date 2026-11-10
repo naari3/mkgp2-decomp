@@ -683,3 +683,39 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   First run on all near misses: only fn_801A6538, and those were symbols.txt splitting 8-byte OSTime objects and a
   6-byte struct into halves (merged; objdiff % unchanged because it resolves by address). So §90 has no further
   candidates among today's near misses; rerun after new asm -> C conversions (`--md docs/sweeps/oob_read.md`).
+
+## shapediag: what kind of diff is it, when it is not register-only (2026-11-10)
+
+`python3 tools/regfix.py diag UNIT FN` used to stop with "not a register-only
+diff". It now prints the output of `tools/shapediag.py` at that point, so one
+command gives hints for any near miss. Standalone:
+
+    python3 tools/shapediag.py fn UNIT FN [-v] [--src ALT_SOURCE] [--ours OBJ]
+    python3 tools/shapediag.py batch --md docs/reports/shapediag_census.md
+    python3 tools/shapediag.py classes | selftest | replay
+
+It needs no compiler model: objdump of both objects, alignment with register
+names abstracted, then every differing run is put in a class (about 40:
+`order:args`, `order:const`, `order:store`, `order:load`, `order:expr`,
+`order:loopstep`, `order:epilogue`, `order:regswap`, `copy:target-extra`,
+`copy:direction`, `load:target-reloads`, `address:pool`, `saved-regs`,
+`select:*`, `loop:ctr`, `call:inline`, `reloc:symbol`, `stack:offset`, ...)
+and each class prints the levers that fixed it before, with the
+regalloc_patterns / matching_rules section. `--src FILE` compiles a variant
+with the unit's command, so you can ask "what kind of diff does this rewrite
+leave" without touching the tree.
+
+- Read the classes top down: structural ones (saved registers, calls, loops,
+  pools) are printed first because they usually cause the others.
+- `opcode counts, target minus ours` in the header is the quick sign
+  (`lfs+3` = a second load set, section 87; `mr+1` = a kept copy, section 76).
+- Relocations are compared by where they point (name, or position in the
+  object's own section), so an anchor / `@N` on our side is not a diff. A
+  `reloc:symbol` row that names a `jumptable_*` for a float load means stale
+  `@N` renames in tools/extab_user_renames.json (found and fixed for
+  clFlowCourse.cpp this way).
+- It is a clue, not a rewriter, and big shuffled blocks (below about 95%)
+  produce noise after the first two or three classes.
+- New pattern: add a lever line (or a detector) to `CLASSES` in the tool and a
+  case to `SELFTESTS` / `REPLAY`; update docs/regfix_coverage.md.
+- Census of all current non-matching functions: docs/reports/shapediag_census.md.

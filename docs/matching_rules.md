@@ -24,6 +24,13 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 04:02Z (n3 tool): `python3 tools/regfix.py diag UNIT FN` now also
+  diagnoses near misses whose instruction sequence differs (extra `mr`,
+  reload, argument/constant/store order, pool addressing, saved-register
+  count, instruction selection, ...): it calls the new `tools/shapediag.py`,
+  which classifies every differing run and prints the levers and sections for
+  that class. Census of all non-matching functions by class:
+  docs/reports/shapediag_census.md; notes in docs/thread_tips.md (last section).
 - 2026-11-10 03:38Z (n3 technique): regalloc_patterns §91: argument load order
   in a C++ ctor. Prototype int/float interleave (§74), a getter with a local
   to load one argument first, and "declare in colour order, load in statement
@@ -513,7 +520,8 @@ without those flags ninja tries to download tools and fails.
 permuter, about 1950 rule applications) gave 2 matches; reading the diagnosis
 and picking one rewrite gives about 3 an hour. Before the list below, run
 `python3 tools/regfix.py diag UNIT FN` (first vreg coloured differently, the
-source line, fitting rules), `python3 tools/mwsched.py explain|coalesce UNIT FN
+source line, fitting rules; for a diff in the instruction sequence itself the
+class of each differing run and its levers, from `tools/shapediag.py`), `python3 tools/mwsched.py explain|coalesce UNIT FN
 --run` (order, kept copies) and `python3 tools/asmgrep.py similar UNIT FN
 --src` (how matched functions wrote the same shape); the compiler rules are in
 `docs/mwcc_internals.md`. First ask whether it is a register problem at all:
