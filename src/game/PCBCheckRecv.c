@@ -2565,8 +2565,6 @@ extern "C" int DrawLinkErrorOverlay(void)
 #define g_pcbSyncTable (*(Sync *)g_pcbSyncTable)
 #pragma exceptions on
 #pragma use_lmw_stmw on
-#pragma push
-#pragma opt_lifetimes off
 extern "C" int PCBComm_Process(u8 receive, u8 send)
 {
     if (g_pcbCommEnabled == 0) return 0;
@@ -2654,7 +2652,6 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
     }
     return 1;
 }
-#pragma pop
 
 extern "C" int PcbComm_Shutdown(void)
 {
