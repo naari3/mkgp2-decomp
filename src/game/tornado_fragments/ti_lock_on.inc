@@ -19,7 +19,7 @@ extern void Item_AccelClampVelocity();
 extern int Item_AdvanceFallingDrop();
 extern int Item_CheckWallCollision();
 extern void Item_ComputeYawRelativeApproach();
-extern void Item_DecayVelocityScalar();
+extern void Item_DecayVelocityScalar(void *, float);
 extern void fn_801B129C();
 extern void fn_801B14B8();
 extern void fn_801B158C();

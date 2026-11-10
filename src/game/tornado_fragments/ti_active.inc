@@ -5,7 +5,7 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern float AngleStepTowards_Shortest();
+extern float AngleStepTowards_Shortest(float, float, float);
 extern float BuildOrientationFromYaw();
 extern void DrawEffect_ItemHitBurst_Spawn();
 extern unsigned char FinalLapCoinJump_CheckActiveForObject();
@@ -24,7 +24,7 @@ extern void Item_BendVelocityByGroundProbe();
 extern void Item_BounceOffWall();
 extern int Item_CheckWallCollision();
 extern void Item_ComputeYawRelativeApproach();
-extern void Item_DecayVelocityScalar();
+extern void Item_DecayVelocityScalar(void *, float);
 extern void Item_HomingScanAndSteer();
 extern void Item_InitLaunchFromKart();
 extern float *KartDriver_GetJointByIdx();

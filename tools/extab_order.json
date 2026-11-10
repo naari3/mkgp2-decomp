@@ -3470,5 +3470,13 @@
       "dtor_801419C8",
       "__dt__9ResultTopFv"
     ]
-  }
+  },
+  "src/game/TornadoItem.c": [
+    "TornadoItem_TickActive",
+    "TornadoLaunch_Tick",
+    "Tornado_HomingChildTick",
+    "Tornado_LockOnHomingTick",
+    "Tornado_FlightTick",
+    "TornadoItem_HoldTick"
+  ]
 }

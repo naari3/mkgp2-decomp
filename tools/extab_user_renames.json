@@ -1534,7 +1534,10 @@
     "extabindex_Tornado_HomingChildTick": "@eti_80023FC0",
     "extabindex_Tornado_LockOnHomingTick": "@eti_80023FCC",
     "extabindex_Tornado_FlightTick": "@eti_80023FD8",
-    "extabindex_TornadoItem_HoldTick": "@eti_80023FE4"
+    "extabindex_TornadoItem_HoldTick": "@eti_80023FE4",
+    "@286": "jumptable_804217D8",
+    "@287": "@etb_8000B714",
+    "@288": "@eti_80023FB4"
   },
   "src/game/StarItem.c": {
     "extab_StarItem_BoundToVictimTick": "@etb_8000B794",

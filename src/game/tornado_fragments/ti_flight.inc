@@ -8,11 +8,7 @@
 
 extern char *ItemObject_AllocFromPool();
 extern int Item_AdvanceFallingDrop();
-#ifdef NON_MATCHING
-extern int Item_AdvanceTetherToJoint13();
-#else
-extern void Item_AdvanceTetherToJoint13();
-#endif
+extern int Item_AdvanceTetherToJoint13(void *, void *, float, float, float);
 #ifdef NON_MATCHING
 extern int SoundMgr_CountActiveSEInstances(int se);
 #else
