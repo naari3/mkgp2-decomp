@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 16:45Z 2026-11-10 (n3): autodata/data_8040E780.c: g_courseDataInstance typed as an HSD light descriptor struct (u16 flags, colour bytes) instead of pointer words. Same object.
 - 2026-11-10 16:36Z 2026-11-10 (n3): constructor declarations whose float/int order differs from the definition are written ARGS_ORDER((as written), (as defined)) (include/game/types/arg_order.h); MWCC uses the first list. 18 files, same objects. docs/notes/port_abi.md.
 - 2026-11-10 16:32Z 2026-11-10 (n3): all text held inside word arrays is now TEXT_WORD(...) (30 files, incl. NameCheck_CardName.c banned-word tables and many autodata units). Same objects.
 - 2026-11-10 16:29Z 2026-11-10 (n3): text held inside word/pointer arrays is written TEXT_WORD('e','f','_','s') (include/game/types/text_word.h) instead of 0x65665F73; same object, needed off MWCC. tools/port_abi/text_words.py lists and rewrites them. docs/notes/port_abi.md "Text stored as words".

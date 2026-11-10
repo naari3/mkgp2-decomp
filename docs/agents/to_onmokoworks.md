@@ -877,3 +877,9 @@ status: note
 
 Declarations and new-expressions of RaceCamera, Camera, BLCamera, RCCamera, RICamera, VSCamera, Camera163, CarObject, Car163, Owned80052B50 and FKSprite now use ARGS_ORDER((written), (defined)). MWCC sees the first list unchanged, byte-identical. If you copy such a class into a new unit, either plain form still matches. No action needed.
 
+## n3-20261110-1645 | 2026-11-10 16:45Z | from: n3 | built-in light descriptor typed
+re: -
+status: note
+
+src/game/autodata/data_8040E780.c: g_courseDataInstance and data_8040E780_data_8040E780 are now structs (HSD_LightDesc / HSD_WObjDesc layout). Byte-identical. No action needed.
+

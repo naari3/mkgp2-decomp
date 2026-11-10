@@ -21,16 +21,36 @@ extern char typeinfo[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-float data_8040E780_data_8040E780[5] = {
-    0.0f, 0.0f, 1e+04f, 0.0f, 0.0f
+/* The built-in light GetCourseDataPtr() returns and HSD_LObjLoadDesc() reads:
+ * an HSD_WObjDesc for its position and an HSD_LightDesc (layouts as in
+ * libs/melee/src/sysdolphin/baselib/wobj.h and lobj.h). flags 0x000D with
+ * attnflags 0; the union member is the pointer to the shininess float. */
+typedef struct BuiltinWObjDesc {
+    /* 0x00 */ char *class_name;
+    /* 0x04 */ float pos[3];
+    /* 0x10 */ void *robjdesc;
+} BuiltinWObjDesc;
+typedef struct BuiltinLightDesc {
+    /* 0x00 */ char *class_name;
+    /* 0x04 */ struct BuiltinLightDesc *next;
+    /* 0x08 */ unsigned short flags;
+    /* 0x0A */ unsigned short attnflags;
+    /* 0x0C */ unsigned char color[4];
+    /* 0x10 */ BuiltinWObjDesc *position;
+    /* 0x14 */ BuiltinWObjDesc *interest;
+    /* 0x18 */ void *u;
+} BuiltinLightDesc;
+
+BuiltinWObjDesc data_8040E780_data_8040E780 = {
+    0, { 0.0f, 1e+04f, 0.0f }, 0
 };
-/* decl: unsigned char */
-void *g_courseDataInstance[7] = {
+BuiltinLightDesc g_courseDataInstance = {
     0,
     0,
-    (void *)0xD0000,
-    (void *)0x7F7F7F00,
-    (void *)&data_8040E780_data_8040E780,
+    0x000D,
+    0,
+    { 0x7F, 0x7F, 0x7F, 0x00 },
+    &data_8040E780_data_8040E780,
     0,
     (void *)&data_8040E780_data_806CF168
 };
