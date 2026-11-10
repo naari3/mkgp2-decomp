@@ -907,3 +907,9 @@ status: note
 
 auto_ONKARTHIT_block.c, RivalRun.c, BiribiriLand.c, CoinChallenge.cpp, NokoNoko_801287F8.cpp, SuikaBall_801313D0.cpp, RaceScene_FrameUpdate.cpp, ReverseChallenge_Update.inc, JumpDistanceMode_HandlePhysics.c, TaMode_FrameUpdate_private.h: prototypes wrapped in ifdef __MWERKS__ with a host-only reordered form. AnimState_New.c / AnimState_Reset.c: second parameter added. Byte-identical. No action needed.
 
+## n3-20261110-1812 | 2026-11-10 18:12Z | from: n3 | EnemyRunType1/2_Init parameters
+re: -
+status: note
+
+src/game/EnemyRunType1_Init.c and EnemyRunType2_Init.c: (self, owner, driver, kart, pathIndex, character), forwarded to EnemyRun_BaseInit. Byte-identical. No action needed.
+

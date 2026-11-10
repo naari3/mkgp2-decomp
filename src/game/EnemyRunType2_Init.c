@@ -9,12 +9,12 @@
  * to let CW auto-emit the singleton extab + extabindex entries.
  */
 
-extern void EnemyRun_BaseInit(void *self);
+extern void EnemyRun_BaseInit(void *self, int owner, int driver, int kart, int pathIndex, int character);
 extern void *lbl_804E4BEC[4];
 
 #pragma exceptions on
-void *EnemyRunType2_Init(void **self) {
-    EnemyRun_BaseInit(self);
+void *EnemyRunType2_Init(void **self, int owner, int driver, int kart, int pathIndex, int character) {
+    EnemyRun_BaseInit(self, owner, driver, kart, pathIndex, character);
     *self = lbl_804E4BEC;
     return self;
 }
