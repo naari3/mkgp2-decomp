@@ -1,7 +1,4 @@
-typedef struct SpriteSlot {
-    unsigned char pad0[4];
-    void *object;
-} SpriteSlot;
+#include "game/types/SpriteSlot.h"
 
 extern void Object_SetJObjScaleXYZ(void *object, float x, float y, float z);
 

@@ -26,7 +26,7 @@ struct PcbSlot {
 };
 
 struct KartState {
-    char pad00[0x10];
+    unsigned char pad00[0x10];
     unsigned long long flags;
 };
 

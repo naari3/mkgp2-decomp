@@ -26,9 +26,9 @@ void *OrthoCam_data_8048E510[14] = {
  */
 
 typedef struct HSDClassInfo {
-    char pad[0x30];
-    void (*release)(void *obj);
-    void (*destroy)(void *obj);
+    unsigned char pad[0x30];
+    void (*release) (void *obj);
+    void (*destroy) (void *obj);
 } HSDClassInfo;
 
 typedef struct HSDObj {

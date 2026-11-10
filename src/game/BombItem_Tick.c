@@ -40,8 +40,8 @@ typedef struct BombItem {
 } BombItem;
 
 typedef struct KartFlags {
-    unsigned char pad00[0x10];
-    unsigned long long flags; /* 0x10 */
+    char pad[0x10];
+    unsigned long long bits;
 } KartFlags;
 
 extern void BombExplosion_InitOrDestroy(BombItem *self);
@@ -134,7 +134,7 @@ void BombItem_Tick(BombItem *self)
                 }
                 break;
             case 2:
-                if ((KART_FLAGS(self->driver)->flags & 0x4000000) == 0) {
+                if ((KART_FLAGS(self->driver)->bits & 0x4000000) == 0) {
                     self->timers[0] = 0;
                 }
                 if (self->timers[0] == 0) {

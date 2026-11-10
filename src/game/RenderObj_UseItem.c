@@ -3,13 +3,7 @@
  * 0x8003F77C..0x8003FFD0.
  */
 
-typedef struct ItemData {
-    unsigned char pad0[5];
-    unsigned char kind; /* 0x5 */
-    signed char throwable; /* 0x6 */
-    signed char throwType; /* 0x7 */
-    unsigned char effect; /* 0x8 */
-} ItemData;
+#include "game/types/ItemData.h"
 
 typedef struct UseStats {
     unsigned char pad00[4];

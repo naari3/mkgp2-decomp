@@ -21,7 +21,8 @@ extern int ItemAlias_DestToSource(unsigned int itemDestId, void *aliasOut);
 extern unsigned int g_itemIdToIndexTable[0x148];
 
 struct ItemDescriptor {
-    unsigned int pad[2];
+    unsigned int nameMsgId;
+    unsigned int field_4;
     unsigned int field_8;
     unsigned int field_C;
 };

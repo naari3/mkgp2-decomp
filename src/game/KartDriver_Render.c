@@ -8,8 +8,8 @@
 #include "game/types/Vec.h"
 
 typedef struct KartStatus {
-    unsigned char pad00[0x10];
-    unsigned long long bits; /* 0x10 */
+    unsigned char pad[0x10];
+    unsigned long long flags;
 } KartStatus;
 
 typedef struct KartDriver {
@@ -54,7 +54,7 @@ extern void fn_80245700(void *obj);
 
 static inline unsigned char KartDriver_IsHidden(KartDriver *self)
 {
-    return (self->status->bits & 0x8000000000ULL) == 0 ? 0 : 1;
+    return (self->status->flags & 0x8000000000ULL) == 0 ? 0 : 1;
 }
 
 #pragma exceptions on

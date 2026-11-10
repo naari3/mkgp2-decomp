@@ -1,5 +1,5 @@
 typedef struct MediaBuffer {
-    unsigned char inUse;
+    unsigned char busy;
     void *data;
 } MediaBuffer;
 
@@ -26,7 +26,7 @@ void InitGlobalTimer(void) {
     int j;
 
     for (i = 0; i < 6; i++) {
-        g_mediaBuffers[i].inUse = 0;
+        g_mediaBuffers[i].busy = 0;
         g_mediaBuffers[i].data = FUN_8003b120(0xA000);
     }
     addr = 0xE000;

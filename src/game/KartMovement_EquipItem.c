@@ -2,13 +2,7 @@
  * Equip an item on the kart, 0x8003FFD0..0x800404C4.
  */
 
-typedef struct ItemData {
-    unsigned char pad0[5];
-    unsigned char kind; /* 0x5 */
-    unsigned char pad6;
-    signed char throwType; /* 0x7 */
-    unsigned char effect; /* 0x8 */
-} ItemData;
+#include "game/types/ItemData.h"
 
 typedef struct EquipFlag {
     unsigned char pad0[4];

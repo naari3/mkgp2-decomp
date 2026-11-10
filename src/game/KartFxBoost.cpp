@@ -1,6 +1,8 @@
 /* Boost callbacks; local field views are limited to the observed ABI. */
 #include "game/types/Vec3.h"
-struct Mtx44 { float value[16]; };
+struct Mtx44 {
+    float m[4][4];
+};
 struct BoostFlags { unsigned char pad00[0x10]; unsigned long long bits; };
 struct BoostKart {
     unsigned char pad00[0x304];

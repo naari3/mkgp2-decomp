@@ -45,8 +45,11 @@ extern const int clFlowItemSelect_Init_data_806CFE08, clFlowItemSelect_Init_data
 extern int g_characterId;
 extern unsigned int g_playerData[0x1DC / 4];
 struct InputView {
-    unsigned char pad[4], enabled, pad5[0x13];
-    int held, edge;
+    unsigned char opaque[4];
+    unsigned char enabled;
+    unsigned char opaque5[0x13];
+    int held;
+    int edge;
 };
 extern InputView* g_pInputState[2];
 void SetSyncTarget(int);

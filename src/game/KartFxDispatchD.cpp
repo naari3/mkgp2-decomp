@@ -2,7 +2,9 @@
  * Local declaration order preserves the target stack layout. Native EH is
  * compiler-generated; no resource is owned here.
  */
-struct RingVec { float x, y, z; };
+struct RingVec {
+    float value[3];
+};
 struct RingAngles { float value[8]; };
 struct RingColor { float value[3]; };
 struct RingOrder { int value[8]; };
