@@ -1,5 +1,5 @@
-extern void ItemRes_LookupDatPathByKey(void);
+extern const char *ItemRes_LookupDatPathByKey(int key);
 
-void fn_8023D8F8(void) {
-    ItemRes_LookupDatPathByKey();
+const char *fn_8023D8F8(int key) {
+    return ItemRes_LookupDatPathByKey(key);
 }

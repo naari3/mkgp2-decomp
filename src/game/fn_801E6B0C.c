@@ -1,8 +1,8 @@
-extern void fn_801EC820(void *phys);
+extern void fn_801EC820(void *phys, float v);
 
-void fn_801E6B0C(char *self) {
+void fn_801E6B0C(char *self, float v) {
     void *phys = *(void **)(self + 0x20);
     if (phys != 0) {
-        fn_801EC820(phys);
+        fn_801EC820(phys, v);
     }
 }

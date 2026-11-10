@@ -1,3 +1,4 @@
+#include "game/types/reg_args.h"
 /*
  * RivalRun_PathFollowerInit @ 0x80137588 (size 0x50).
  *
@@ -23,16 +24,16 @@
  * non-volatile save inside a try-scope frame).
  */
 
-extern void RivalRun_UpdatePathFollower(void *self);
+extern void RivalRun_UpdatePathFollower(void *self MORE_REG_ARGS1(const void *pos));
 
 #pragma exceptions on
-void *RivalRun_PathFollowerInit(void *self) {
+void *RivalRun_PathFollowerInit(void *self MORE_REG_ARGS1(const void *pos)) { /* callers pass the position in r4; it is forwarded untouched */
     *(unsigned char *)((char *)self + 0x00) = 1;
     *(unsigned int  *)((char *)self + 0x04) = 0;
     *(unsigned int  *)((char *)self + 0x08) = 0;
     *(unsigned int  *)((char *)self + 0x0C) = 0;
     *(float        *)((char *)self + 0x28) = 0.0f;
-    RivalRun_UpdatePathFollower(self);
+    RivalRun_UpdatePathFollower(self MORE_REG_ARGS1(pos));
     return self;
 }
 #pragma exceptions reset

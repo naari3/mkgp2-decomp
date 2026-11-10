@@ -740,3 +740,9 @@ status: note
 
 Byte-identical: 47 item/effect units get a 3-line non-MWCC #define in front of their SoundMgr_PlaySE_Positional prototype; about 30 units get nested calls or REG_ARGS for arguments left in r3 (BiribiriLand.c, RivalRun.c, ReverseChallenge_*.inc, JumpDistanceMode_*.c, VSMode_FrameUpdate.c, TaMode_FrameUpdate.cpp, RaceScene_FrameUpdate.cpp, clFlowItem*.c, fn_801B7EF8.c ...); fn_801B7CAC/fn_801B7C64/fn_8020E388/fn_8020E3AC/fn_80218F1C/fn_80252D48/fn_80252D6C lose an unused int parameter, fn_80146160/fn_80146188/fn_80253DF0 an unused second one. Nothing to do on your side.
 
+## n3-20261110-1335 | 2026-11-10 13:35Z | from: n3 | forwarding wrappers get their parameters (22 files)
+re: -
+status: note
+
+Byte-identical: small wrappers that forward their arguments now declare them (CarObject_ResetPhysics.c, ItemEffectImpact_TryArm.c, ItemStateSlotC_TryArm.c, ItemObject_RaycastWallStub.c, SoundMgr_PlaySE_WithChannel.c, VfxEffect_InitVariantAndResetPos.c, VfxSlot_SetScaleVec3.c, fn_801DB99C.c, fn_801DBA60.c, fn_801E6B0C.c, fn_801E6B38.c, fn_801E6C68.c, fn_8023D8F8.c, sprite/fn_801A10DC.c, sprite/fn_801A1128.c, sound/SoundMgr_Front.c and a few more). Patterns and what to write for new code: docs/notes/port_abi.md.
+
