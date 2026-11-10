@@ -607,7 +607,7 @@ game/autodata/sdata2_806D2490.c:
 	.sdata2     start:0x806D2490 end:0x806D299C
 
 game/autodata/sdata_806CEDA0.c:
-	.sdata      start:0x806CEDA0 end:0x806CEFD0
+	.sdata      start:0x806CEDA0 end:0x806CEF58
 
 game/autodata/data_803F57E0.c:
 	.data       start:0x803F57E0 end:0x803F5BF4
@@ -1763,7 +1763,7 @@ game/LUT_Sine.c:
 	.rodata     start:0x802EE580 end:0x8030E584
 
 game/autodata/rodata_8030E588.c:
-	.rodata     start:0x8030E588 end:0x803114CC
+	.rodata     start:0x8030E588 end:0x80310DB8
 
 game/TransparentDraw.c:
 	extab       start:0x800080B0 end:0x800080C8
@@ -1791,33 +1791,27 @@ game/CardCreate_Page.cpp:
 	.text       start:0x800668FC end:0x80073E20
 	.data       start:0x803FBF80 end:0x803FDF28
 
-game/autodata/data_803FDF28.c:
-	.data       start:0x803FDF28 end:0x803FE388
+game/clMenuInput.cpp:
+	extab       start:0x800082A0 end:0x800082D8
+	extabindex  start:0x800211B8 end:0x800211F4
+	.text       start:0x80073E20 end:0x80073F6C
+	.rodata     start:0x80310DB8 end:0x80310DE0
+	.data       start:0x803FDF28 end:0x803FDF50
+	.sdata      start:0x806CEF58 end:0x806CEF68
 
-game/SmallObj_Dtor_VtableA.c:
-	extab       start:0x800082A0 end:0x800082A8
-	extabindex  start:0x800211B8 end:0x800211C4
-	.text       start:0x80073E20 end:0x80073E7C
+game/autodata/sdata_806CEF68.c:
+	.sdata      start:0x806CEF68 end:0x806CEFA8
 
-game/ServiceMenu.c:
-	extab       start:0x800082A8 end:0x800082C0
-	extabindex  start:0x800211C4 end:0x800211D0
-	.text       start:0x80073E7C end:0x80073ECC
+game/autodata/data_803FDF50.c:
+	.data       start:0x803FDF50 end:0x803FE370
 
-game/PostRace_StartScoreEntryFlow.c:
-	extab       start:0x800082C0 end:0x800082C8
-	extabindex  start:0x800211D0 end:0x800211DC
-	.text       start:0x80073ECC end:0x80073EF8
-
-game/PostRace_StartScoreEntryFlow_WithCardSave.c:
-	extab       start:0x800082C8 end:0x800082D0
-	extabindex  start:0x800211DC end:0x800211E8
-	.text       start:0x80073EF8 end:0x80073F24
+game/autodata/rodata_80310DE0.c:
+	.rodata     start:0x80310DE0 end:0x803114CC
 
 game/PcbIdToIpAndModify.c:
-	extab       start:0x800082D0 end:0x800082E0
-	extabindex  start:0x800211E8 end:0x80021200
-	.text       start:0x80073F24 end:0x800740BC
+	extab       start:0x800082D8 end:0x800082E0
+	extabindex  start:0x800211F4 end:0x80021200
+	.text       start:0x80073F6C end:0x800740BC
 
 game/PcbIdToIp.c:
 	extab       start:0x800082E0 end:0x800082E8
@@ -2061,7 +2055,7 @@ game/GXChannel_PushChannelColors.c:
 	.rodata     start:0x80311C68 end:0x80311CA0
 
 game/autodata/rodata_80311CA0.c:
-	.rodata     start:0x80311CA0 end:0x80311E38
+	.rodata     start:0x80311CA0 end:0x80311D78
 
 game/GXChannel_Unbind.c:
 	extab       start:0x800087B8 end:0x800087C0
@@ -2131,23 +2125,23 @@ game/FUN_8007e344.c:
 	extabindex  start:0x8002162C end:0x80021638
 	.text       start:0x8007E344 end:0x8007E390
 
-game/TransitionEffect_Dtor.cpp:
-	extab       start:0x80008820 end:0x80008848
-	extabindex  start:0x80021638 end:0x80021644
-	.text       start:0x8007E390 end:0x8007E4CC
-
 game/TransitionEffect.cpp:
-	extab       start:0x80008848 end:0x800089FC
-	extabindex  start:0x80021644 end:0x800216F8
-	.text       start:0x8007E4CC end:0x800806D4
-	.data       start:0x803FE388 end:0x803FE3C0
+	extab       start:0x80008820 end:0x800089FC
+	extabindex  start:0x80021638 end:0x800216F8
+	.text       start:0x8007E390 end:0x800806D4
+	.rodata     start:0x80311D78 end:0x80311DB0
+	.data       start:0x803FE370 end:0x803FE3D0
+	.sdata      start:0x806CEFA8 end:0x806CEFB8
 	.sdata2     start:0x806D2FD0 end:0x806D3060
 
 game/autodata/sdata2_806D3060.c:
 	.sdata2     start:0x806D3060 end:0x806D47D8
 
-game/autodata/data_803FE3C0.c:
-	.data       start:0x803FE3C0 end:0x803FE3D0
+game/autodata/sdata_806CEFB8.c:
+	.sdata      start:0x806CEFB8 end:0x806CEFD0
+
+game/autodata/rodata_80311DB0.c:
+	.rodata     start:0x80311DB0 end:0x80311E38
 
 game/Jyugemu_Flag_SetKartDriver.c:
 	.text       start:0x800806D4 end:0x800806F4

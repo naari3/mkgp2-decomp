@@ -37,22 +37,79 @@ are `clYTaskInterface` (47 classes), `clSceneInterface` (35), `clJobRunner`
 `tools/port_readiness.py` reports "Vtables written out by hand as data" and
 "Vtables whose symbol carries the real class name" from the same data.
 
-## What a real class needs (measured on clScreenEffect)
+## Turning one hand-written vtable into a real class: clScreenEffect
 
-The table says where each class really lives. For `clScreenEffect`:
+Done 2026-11-10 (`src/game/TransitionEffect.cpp`), main.dol unchanged. It took
+about 35 minutes and 22 compiles, most of them spent finding the rules below;
+with the rules known the next class of this shape should be much quicker.
 
-- its destructor is `TransitionEffect_Dtor` (unit `TransitionEffect_Dtor.cpp`),
-  the first function of the original file; the rest of that file is
-  `TransitionEffect.cpp`, which ends with the weak destructors of its member
-  templates and of `teSingleton<clScreenEffect>`;
-- `.data` of the original file runs from the vertex tables through the base
-  list, the vtable, two jump tables and the weak `teSingleton<clScreenEffect>`
-  table (0x803FDF28..0x803FE3D0, today three units);
-- the two class-name strings and `"warp.dat"` are consecutive in `.rodata`.
+What the RTTI table said: `TransitionEffect_data_803FE37C` is the vtable of
+`clScreenEffect : teSingleton<clScreenEffect>`, its only slot is the
+destructor `TransitionEffect_Dtor`, which was a unit of its own in front of
+`TransitionEffect.cpp`; the weak table of the template base sits after that
+unit's jump tables, and the two class-name strings sit just before its
+`"warp.dat"` literal.
 
-So letting MWCC emit this one table means: merge two units, own their data
-and strings, switch the unit to `-RTTI on`, write the class, its template
-base and its members as real C++ (constructors and destructors are C
-functions with a hand-stored table and a flag parameter today), and
-renumber the unit's `@NNN` rows in `extab_user_renames.json`. That is the
-size of one hard matching job per class, not a mechanical edit.
+Steps:
+
+1. Merge the destructor's unit into the unit that follows it (splits.txt,
+   configure.py, extab_user_renames.json).
+2. Take the class data out of the data-only units with
+   `python3 tools/autodata_carve.py SEC LO HI` (base list + vtable, the weak
+   base vtable, the two RTTI records in `.sdata`, the name strings in
+   `.rodata`) and add the ranges to the unit. String literals that follow
+   the names up to the next 8-byte boundary have to come along, written as
+   literals in the code.
+3. Write the classes: `template <class T> struct teSingleton { teSingleton();
+   virtual ~teSingleton(); }`, `class clScreenEffect : public
+   teSingleton<clScreenEffect>` with its members as member objects, an inline
+   constructor and `virtual ~clScreenEffect();` defined in the unit.
+4. Flags: `-RTTI on -rostr -inline deferred,auto`.
+5. Renames for `__dt__`, `__vt__`, `__RTTI__` and the `@N` data labels, then
+   `python3 tools/extab_renumber.py <unit> --write`.
+
+Rules found on the way (GC/1.3.2):
+
+- **Data order tells the mode.** Without `-inline deferred` the compiler emits
+  vtables, base lists and RTTI names at the very end of the unit, after all
+  jump tables, in every compiler version. With it they come first. A base
+  list and vtable in front of the unit's jump tables therefore means
+  deferred code generation (the same sign as matching_rules section 6).
+- **Deferred means reverse source order** for ordinary functions, and an
+  inline function that is needed out of line (here: member destructors named
+  in exception tables) is emitted right after the function that first needs
+  it. Explicit instantiation, defining the destructors out of class, or an
+  earlier unused user of them does not move them.
+- In the target those ten destructors are the last functions of the unit, in
+  destruction order. The only arrangement found that gives this is to make
+  them ordinary functions at the top of the file (explicit specializations,
+  marked fakematch) and let `-inline deferred,auto` inline them into
+  `~clScreenEffect`. `auto` then also wants to inline a large function into
+  its caller; `#pragma dont_inline on` around that callee stops it.
+- `delete p` of a class with a destructor has its own null check;
+  `if (p != 0) delete p` adds a second one (4 bytes).
+- Under `-RTTI on` the unit owns the RTTI records of every class it emits,
+  and the linker keeps one copy of a weak table per unit that needs it.
+
+### Second class: clMenuInput (4 minutes, 2 compiles)
+
+`src/game/clMenuInput.cpp` replaces four one-function units and the first
+function of a fifth. Differences from clScreenEffect:
+
+- **Not deferred.** The data order is weak base vtable, base list, vtable,
+  and the functions are in source order with the weak base destructor last,
+  which is what the compiler does without `-inline deferred`. So the mode is
+  per unit; read it from the data order before starting.
+- `OpenFullServiceMenu` had a hand-written exception table to imitate an
+  allocation that is freed when the constructor throws. As
+  `new ServiceMenu(-1)` the compiler writes that table itself.
+- Where the unit ends: the weak destructor of `teSingleton<X>` is the last
+  function of X's file (slot 0 of the `teSingleton<X>` vtable in
+  `rtti_classes.py`), so the file runs from X's own destructor to there.
+  For the ten singleton classes this gives 1 to 5 of today's units each.
+
+What this says about the other 351: each needs the unit that holds the
+class's first non-inline virtual function to own the class data, which often
+means merging units first, and the constructors and destructors written as
+real ones. That is matching-grade work per class, helped by the table but
+not mechanical.
