@@ -522,13 +522,21 @@ HudPanel *dtor_80147584(HudPanel *self, short flag);
 void fn_80147778(void);
 void fn_801477BC(void);
 void fn_801478B0(StepHolder *self);
+#ifdef NON_MATCHING
+extern "C" void fn_80147900(HudResSet *set);
+#else
 asm void fn_80147900(struct HudResSet *o);
+#endif
 void fn_80147AF4(struct HudResSet *o);
 void fn_80147CE8(struct HudResSet *o);
 void fn_80147EE8(StepHolder *self);
 void fn_8014816C(StepHolder *self);
 struct RecordPanel *fn_80148648(struct RecordPanel *self, short flag);
+#ifdef NON_MATCHING
+extern "C" HudResSet *fn_80148A44(HudResSet *set, int coins, int param, int ly);
+#else
 asm void fn_80148A44(void);
+#endif
 void *dtor_8014917C(void *self, short flag);
 void fn_801491DC(VObj *p);
 void *fn_80149214(void *t);
@@ -1084,6 +1092,7 @@ extern "C" void fn_801478B0(StepHolder *self) {
 }
 #pragma auto_inline reset
 
+#ifndef NON_MATCHING /* C version: end of this file */
 extern "C" asm void fn_80147900(struct HudResSet *o) { /* 0x80147900 size:0x1F4 */
     nofralloc
     stwu r1, -0x20(r1)
@@ -1223,6 +1232,7 @@ extern "C" asm void fn_80147900(struct HudResSet *o) { /* 0x80147900 size:0x1F4 
     addi r1, r1, 0x20
     blr
 }
+#endif
 
 /* Views of the HudResSet sub-objects touched by the intro steps. */
 static inline unsigned int HudColor_SetAlpha(unsigned int c, int a) {
@@ -1672,6 +1682,7 @@ RecordHud::RecordHud(int ly, unsigned char act, int md, int id)
 }
 #pragma use_lmw_stmw reset
 
+#ifndef NON_MATCHING /* C version: end of this file */
 extern "C" asm void fn_80148A44(void) { /* 0x80148A44 size:0x738 */
     nofralloc
     stwu r1, -0x60(r1)
@@ -2155,6 +2166,7 @@ extern "C" asm void fn_80148A44(void) { /* 0x80148A44 size:0x738 */
     addi r1, r1, 0x60
     blr
 }
+#endif
 
 extern "C" void *dtor_8014917C(void *self, short flag) {
     if (self != 0) {
@@ -2830,3 +2842,232 @@ extern "C" void fn_8014AD7C(VObj *p) {
 
 
 __declspec(section ".ctors") static void *const fn_80147778_ctor_ref = (void *)fn_80147778;
+
+#ifdef NON_MATCHING
+/* NON_MATCHING: equivalent C++, 99.52 % (target shares one 0xFFFFFF00 constant via mr; docs/gave_up.md). */
+extern "C" void fn_80147900(HudResSet *set) {
+    HudResSetView *o = (HudResSetView *)set;
+
+    switch (o->state) {
+    case 0:
+        if (o->timer <= 15) {
+            HudTail_SetScale(o, 1.0f, o->timer / 15.0f);
+        } else if (o->timer >= 45) {
+            o->state = 1;
+            o->timer = 0;
+        }
+        break;
+    case 1:
+        if (o->timer <= 20) {
+            int a = (int)(255.0f * (o->timer / 20.0f));
+            int textColor = 0xFFFFFF00;
+            textColor = (textColor & ~0xFF) | (a & 0xFF);
+            for (int i = 0; i < 3; i++) {
+                o->texts[i].color = textColor;
+            }
+            unsigned int color = HudColor_SetAlpha(0xFFFFFF00, a);
+            o->res[0].colors[0] = color;
+            o->res[0].colors[1] = color;
+            o->res[0].colors[2] = color;
+            o->res[0].colors[3] = color;
+        } else if (o->timer >= 80) {
+            o->state = 2;
+            o->timer = 0;
+            if (o->skipCheck == 0) {
+                o->state = 3;
+            }
+        }
+        break;
+    case 2:
+        fn_80147CE8(set);
+        break;
+    case 3:
+        fn_80147AF4(set);
+        break;
+    case 4: {
+        HudInput *in = InputMgr_GetPlayer(GetInputManager(), 0);
+        if (!(in->v18() >= 0.7f)) {
+            in->Pressed(0x2000);
+        }
+        o->state = 5;
+        o->timer = 0;
+        break;
+    }
+    case 5:
+        return;
+    }
+    o->timer++;
+}
+#endif
+
+#ifdef NON_MATCHING
+/* NON_MATCHING: equivalent C++ for the HudResSet ctor (coins, record value, layer).
+ * Written as a plain function over a view; the 99.4 % class version is
+ * docs/wip/HudResSet_ctor_fn_80148A44_99.4.patch. */
+struct NMHudRes {
+    int resId;          /* 0x00 */
+    int field4;
+    int mode;           /* 0x08 */
+    int fieldc;
+    unsigned char flag; /* 0x10 */
+    char pad11[3];
+    float x, y, z;      /* 0x14 */
+    float width, height;
+    float field28;
+    float scaleX, scaleY; /* 0x2C */
+    unsigned int colors[4]; /* 0x34 */
+    char pad44[0x58 - 0x44];
+    void Show(float px, float py, float pz) { flag = 1; x = px; y = py; z = pz; }
+    void SetColors(unsigned int c) { for (int j = 0; j < 4; j++) colors[j] = c; }
+};
+struct NMHudText {
+    char pad0[0x18];
+    int x18;
+    int x1c;
+    unsigned int color; /* 0x20 */
+    char pad24[0x22C - 0x24];
+    float y;            /* 0x22C */
+};
+struct NMHudSet {
+    int state;
+    int layer;
+    int field8;
+    unsigned char flagC;
+    char padD[3];
+    NMHudRes res[11];   /* 0x10 */
+    NMHudText texts[3]; /* 0x3D8 */
+    NMHudRes tail[3];   /* 0xA68 */
+};
+#define NM_Printf ((void (*)(const char *, ...))DebugPrintf)
+#define NM_ConstructArray ((void (*)(void *, void *, void *, unsigned long, unsigned long))__construct_array)
+#define NM_TextSetPos ((void (*)(void *, float, float))fn_801F93EC)
+#define NM_TextApply ((void (*)(void *))fn_801F8E90)
+#define NM_strlen ((unsigned long (*)(const char *))strlen)
+#define NMCC0 lbl_806D7CC0
+extern "C" HudResSet *fn_80148A44(HudResSet *set, int coins, int param, int ly) {
+    int i;
+    short v;
+    int idx;
+    NMHudSet *o = (NMHudSet *)set;
+
+    o->state = 0;
+    o->layer = ly;
+    o->field8 = 0;
+    o->flagC = 0;
+    NM_ConstructArray(o->res, (void *)ResCtrl_Init, (void *)dtor_80082960, 0x58, 11);
+    NM_ConstructArray(o->texts, (void *)fn_80149214, (void *)dtor_800869D0, 0x230, 3);
+    NM_ConstructArray(o->tail, (void *)ResCtrl_Init, (void *)dtor_80082960, 0x58, 3);
+    NM_Printf(sRecordParamFmt, param, coins);
+    idx = g_cupId - 8;
+    o->tail[0].resId = 0x1D56;
+    o->tail[1].resId = 0x1D57;
+    o->tail[2].resId = 0x1D58;
+    o->tail[0].Show(156.5f, 360.0f, 1.0f);
+    o->tail[1].Show(412.5f, 360.0f, 1.0f);
+    o->tail[2].Show(576.0f, 360.0f, 1.0f);
+    o->tail[0].scaleX = 1.0f;
+    o->tail[0].scaleY = 0.0f;
+    o->tail[1].scaleX = 1.0f;
+    o->tail[1].scaleY = 0.0f;
+    o->tail[2].scaleX = 1.0f;
+    o->tail[2].scaleY = 0.0f;
+    o->res[0].resId = 0x16D8;
+    o->res[0].Show(535.0f, 380.0f, 1.0f);
+    v = coins / 10 + 0x14BA;
+    if (coins / 10 == 0) v = 0x1ECD;
+    o->res[1].resId = v;
+    o->res[1].Show(400.0f, 375.0f, 1.0f);
+    o->res[3].resId = v;
+    o->res[3].Show(400.0f, 375.0f, 1.0f);
+    o->res[3].mode = 3;
+    v = coins % 10 + 0x14BA;
+    o->res[2].resId = v;
+    o->res[2].Show(450.0f, 375.0f, 1.0f);
+    o->res[4].resId = v;
+    o->res[4].Show(450.0f, 375.0f, 1.0f);
+    o->res[4].mode = 3;
+    v = sRecordDigitTex[param / 100];
+    if (param / 100 == 0) v = 0x1ECD;
+    o->res[5].resId = v;
+    o->res[8].resId = v;
+    o->res[8].mode = 3;
+    v = sRecordDigitTex[(param / 10) % 10];
+    if (param / 10 == 0) v = 0x1ECD;
+    o->res[6].resId = v;
+    o->res[9].resId = v;
+    o->res[9].mode = 3;
+    v = sRecordDigitTex[param % 10];
+    o->res[7].resId = v;
+    o->res[10].resId = v;
+    o->res[10].mode = 3;
+    for (i = 0; i < 11; i++) {
+        o->res[i].SetColors(0xFFFFFF00);
+    }
+    TexMgr_SetTexture((TextManager *)&o->texts[0], GetTextureByIdAndLang(0x8A, -1));
+    NM_TextSetPos(&o->texts[0], 80.0f, 380.0f);
+    if (idx == 1 || idx == 6) {
+        o->flagC = 0;
+        TexMgr_SetTexture((TextManager *)&o->texts[1], (const char *)NMCC0);
+        TexMgr_SetTexture((TextManager *)&o->texts[2], (const char *)NMCC0);
+        o->res[5].resId = 0x1ECD;
+        o->res[6].resId = 0x1ECD;
+        o->res[7].resId = 0x1ECD;
+        o->res[8].resId = 0x1ECD;
+        o->res[9].resId = 0x1ECD;
+        o->res[10].resId = 0x1ECD;
+        NM_TextSetPos(&o->texts[0], 80.0f, 360.0f);
+        o->res[1].Show(400.0f, 355.0f, 1.0f);
+        o->res[3].Show(400.0f, 355.0f, 1.0f);
+        o->res[2].Show(450.0f, 355.0f, 1.0f);
+        o->res[4].Show(450.0f, 355.0f, 1.0f);
+        o->res[0].Show(535.0f, 360.0f, 1.0f);
+    } else {
+        float w = isJapanese() == 0 ? 12.0f : 20.0f;
+        int len1, len2, n, m, total;
+        float x0, x;
+        o->flagC = 1;
+        len1 = NM_strlen(GetTextureByIdAndLang(lbl_80362790[idx - 1].a, -1));
+        len2 = NM_strlen(GetTextureByIdAndLang(lbl_80362790[idx - 1].b, -1));
+        n = 1;
+        if (param / 10 > 0) n = 2;
+        if (param / 100 > 0) n = 3;
+        m = n;
+        if (!isJapanese()) m = n * 2;
+        x0 = 320.0f - 0.5f * (w * (float)(len1 + m + len2 + 1));
+        NM_TextSetPos(&o->texts[1], x0, 330.0f);
+        x = (float)(len1 + 1) * w + x0;
+        switch (n) {
+        case 3:
+            o->res[5].Show(x, 330.0f, 1.0f);
+            o->res[8].Show(x, 330.0f, 1.0f);
+            x += (float)m * w / (float)n;
+        case 2:
+            o->res[6].Show(x, 330.0f, 1.0f);
+            o->res[9].Show(x, 330.0f, 1.0f);
+            x += (float)m * w / (float)n;
+        case 1:
+            o->res[7].Show(x, 330.0f, 1.0f);
+            o->res[10].Show(x, 330.0f, 1.0f);
+            x += (float)m * w / (float)n;
+        }
+        NM_TextSetPos(&o->texts[2], x, 330.0f);
+        TexMgr_SetTexture((TextManager *)&o->texts[1], GetTextureByIdAndLang(lbl_80362790[idx - 1].a, -1));
+        TexMgr_SetTexture((TextManager *)&o->texts[2], GetTextureByIdAndLang(lbl_80362790[idx - 1].b, -1));
+    }
+    if (isJapanese() == 1) {
+        o->texts[0].y = -4.0f;
+    }
+    for (i = 0; i < 3; i++) {
+        o->texts[i].color = 0xFFFFFF00;
+        o->texts[i].x18 = 1;
+        NM_TextApply(&o->texts[i]);
+    }
+    return set;
+}
+#undef NM_Printf
+#undef NM_ConstructArray
+#undef NM_TextSetPos
+#undef NM_TextApply
+#undef NM_strlen
+#undef NMCC0
+#endif

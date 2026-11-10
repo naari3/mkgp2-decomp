@@ -25,6 +25,11 @@ asm void Foo_Update(Foo *self) { /* 0x80012345 size:0x1F0 */
 #endif
 ```
 
+- When the C side needs types or helpers that are defined further down the
+  file, wrap the asm in `#ifndef NON_MATCHING` ... `#endif` and put the C in an
+  `#ifdef NON_MATCHING` block at the end of the file; a forward declaration
+  `asm void Foo(void);` gets the same guard with the C prototype in the other
+  arm. The check tool understands both layouts.
 - The default build never defines `NON_MATCHING`: it still assembles the asm,
   main.dol stays byte-identical, the report does not change. Nothing in
   configure.py, splits.txt or symbols.txt may change for the C side.

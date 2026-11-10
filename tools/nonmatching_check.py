@@ -37,7 +37,8 @@ from concurrent.futures import ThreadPoolExecutor
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BUILD = "build/GNLJ82"
 OUTROOT = BUILD + "/nonmatching"
-GUARD_RE = re.compile(r"^[ \t]*#[ \t]*if(?:def[ \t]+NON_MATCHING\b|[ \t]+defined[ \t]*\(?[ \t]*NON_MATCHING\b)", re.M)
+GUARD_RE = re.compile(r"^[ \t]*#[ \t]*if(?:n?def[ \t]+NON_MATCHING\b|[ \t]+!?\s*defined[ \t]*\(?[ \t]*NON_MATCHING\b)", re.M)
+IFDEF_RE = re.compile(r"^[ \t]*#[ \t]*if(?:def[ \t]+NON_MATCHING\b|[ \t]+defined[ \t]*\(?[ \t]*NON_MATCHING\b)")
 ASM_DEF_RE = re.compile(r"^[^\n;{}#]*\basm\b[^\n;{}]*?\b([A-Za-z_]\w*)\s*\([^;{}]*\)\s*\{", re.M)
 
 
@@ -57,27 +58,35 @@ def guarded_units():
     return sorted(out)
 
 
+NOT_GUARD_RE = re.compile(r"^[ \t]*#[ \t]*if(?:ndef[ \t]+NON_MATCHING\b|[ \t]+!\s*defined[ \t]*\(?[ \t]*NON_MATCHING\b)")
+ASM_LINE_RE = re.compile(r"\s*(?:extern\s+\"C\"\s+)?(?:[\w\*]+\s+)*asm\s+[^;{}(]*?\b([A-Za-z_]\w*)\s*\([^;{}]*\)\s*\{")
+
+
 def guarded_functions(src):
-    """Names of asm functions defined in the #else arm of a NON_MATCHING block."""
+    """Names of asm functions that are compiled only without NON_MATCHING:
+    the #else arm of `#ifdef NON_MATCHING`, or the body of `#ifndef NON_MATCHING`."""
     text = open(os.path.join(ROOT, src), encoding="utf-8", errors="replace").read()
     names = []
-    depth = []  # stack of [is_nm_block, in_else]
-    pos = 0
+    depth = []  # True = this arm is the asm side
     for line in text.splitlines(True):
         s = line.strip()
         if s.startswith("#"):
             d = s[1:].strip()
             if d.startswith("if"):
-                depth.append([bool(GUARD_RE.match(line)), False])
-            elif d.startswith("else") and depth:
-                depth[-1][1] = True
+                if IFDEF_RE.match(line):
+                    depth.append([False, True])
+                elif NOT_GUARD_RE.match(line):
+                    depth.append([True, True])
+                else:
+                    depth.append([False, False])
+            elif d.startswith("else") and depth and depth[-1][1]:
+                depth[-1][0] = not depth[-1][0]
             elif d.startswith("endif") and depth:
                 depth.pop()
-        elif any(nm and el for nm, el in depth):
-            m = re.match(r"\s*(?:[\w\*]+\s+)*asm\s+[^;{}(]*?\b([A-Za-z_]\w*)\s*\([^;{}]*\)\s*\{", line)
+        elif any(x[0] for x in depth):
+            m = ASM_LINE_RE.match(line)
             if m:
                 names.append(m.group(1))
-        pos += len(line)
     return names
 
 
