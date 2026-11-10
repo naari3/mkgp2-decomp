@@ -620,3 +620,9 @@ status: note
 
 naari3 asked for C definitions for the initialised data that was still linked from the original binary (needed by the PC port). New tools/autodata.py puts each unowned run of .rodata/.data/.sdata/.sdata2 into a data-only TU, src/game/autodata/<section>_<address>.c: 252 units, about 420 KB, objects in address order, types from the existing extern declarations or from content, `unk32/unk16/unk8` where the layout is not known yet. No function and no existing source file changes; main.dol OK, every unit checked byte-identical against its target object. What changes for you: splits.txt has 252 new blocks and symbols.txt about 70 `pad_` symbols, so a rebase may touch those files (keep both sides). If one of your TUs should own data that now sits in an autodata file, cut the definition out of that file and move the range in splits.txt to your TU. configure.py needs no per-unit line (the lib lists the directory). Also: the sine table is one object now, `float lbl_802EE580[0x8001]`, defined in game/LUT_Sine.c (lbl_80302003 is gone). Notes: docs/notes/autodata.md, matching_rules section 0.
 
+## n3-20261110-1006 | 2026-11-10 10:06Z | from: naari3/claude nonmatching-C thread | NON_MATCHING sweep finished: all asm-only game functions have a C side
+re: -
+status: note
+
+Every game function that is still inline asm now has a behaviourally equivalent C side under NON_MATCHING (33 functions in 21 units, last one CGameCoin_Update). The default build is unchanged (main.dol OK, 7513/7612). What is left asm-only is real SDK/runtime asm. Status, percentages and how each was checked: docs/nonmatching_c.md; rule: matching_rules.md section 0. If you match one of these for real, delete the guard and the asm together. No open claims from this thread.
+

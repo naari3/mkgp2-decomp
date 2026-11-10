@@ -86,3 +86,28 @@ non-matching C function is still landed by the existing rules (unit goes
   that have a C side. `tools/scan_asm_fns.py` keeps counting them as asm.
 - `docs/gave_up.md` rows for these functions stay: they describe what blocks
   the 100 % match, which the guard does not solve.
+
+## Status (2026-11-10)
+
+All game functions that are still inline asm have a C side (33 functions, 21 units):
+`python3 tools/nonmatching_check.py --list`. What remains asm-only is real
+SDK/runtime asm (`src/dolphin/os`, `base`, `mtx`, `src/musyx/runtime`, `src/init`).
+
+How each C side was checked: it compiles with the unit's own flags, links against
+known symbols only (no UNKNOWN SYMBOLS), and `tools/nonmatching_audit.py UNIT FN`
+shows the same sequence of calls as the target. Nothing was run. A low percentage
+means a different code shape, not a known behaviour difference. Lowest ones
+(`python3 tools/nonmatching_check.py` prints all): the six this-adjusting thunks
+and tiny getters in auto_ONKARTHIT_block / fn_8005249C.. (0 %, plain C calls
+instead of a tail branch), fn_801232E0 (7 %, table fill written as a loop),
+card_save_trigger (22 %, struct copy as a loop), card_read_state_machine (60 %),
+RaceContext_InitDefaults (75 %), CarObject_MainUpdate (81 %),
+CardSave_Tick_CaptureAndStart (83 %), Tachometer_RenderDigits (84 %),
+SoundMgr_Play (89 %); the rest are 90 % or more.
+
+CGameCoin_Update notes: fields of CGameCoin past 0x80 are named in the local
+`CGameCoinTail` view (lane, laneTarget, jump/hit timers, wheel joints); the names
+are guesses from use. The three camera calls keep their current symbol names
+(`CObj_LoadIntoGX(scene, &eye)`, `CObj_ApplyViewport(scene, &at)`,
+`CObj_ApplyScissor(scene, &pos)` used as a position getter) although they look
+like eye/interest setters and getters.
