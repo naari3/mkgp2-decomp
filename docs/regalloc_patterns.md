@@ -1926,6 +1926,14 @@ register already in use (see 70), and r29 was opened by the split temp, so
 whichever of `p` / `i` is coloured first now gets r29. Declare `i` before
 `p` to give `i` r29 and `p` r30.
 
+Same rule the other way round (fn_80170B5C, clKPTrap ctor, 11-10): the
+target has `li r29,0; mr r30,r29` (bit counter, then the strength-reduced
+`entries[used]` offset) and ours `li r30,0`. The earlier clear loop was
+written `for (int i = 0; ...)`; sharing the later loop's counter
+(`for (bit = 0; bit < count; bit++)`) makes `bit` multi-def and the `mr`
+appears. Diagnostic: `li rA,0; mr rB,rA` at a loop preheader = the loop
+counter is reused from an earlier loop.
+
 ## 74. Float arguments evaluated BEFORE an int argument: redeclare the callee with the floats first (fn_80158CE4 / fn_8015915C, option menu record pages, 11-09)
 
 Symptom: everything matches except the order in which the arguments of one
