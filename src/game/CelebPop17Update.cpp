@@ -1,3 +1,4 @@
+#include "game/types/text_word.h"
 /* CelebPop17_Update. This TU owns the shared effect .rodata block
  * (0x80328EB8..0x80329908): the original effects file addressed it from one
  * section anchor, so the per-pop tables must live here to get the target's
@@ -94,7 +95,7 @@ extern "C" const char lbl_803295A0[0x13] = "chara_pop_10_joint";
 extern "C" const char lbl_803295B4[0x13] = "chara_pop_11_joint";
 extern "C" const char lbl_803295C8[0x13] = "chara_pop_12_joint";
 extern "C" const char lbl_803295DC[0x12] = "chara_null1_joint";
-extern "C" const unsigned int data_80419FB8_rodata_803295F0[5] = {0x63686172, 0x615F706F, 0x705F3030, 0x5F6A6F69, 0x6E740000};
+extern "C" const unsigned int data_80419FB8_rodata_803295F0[5] = {TEXT_WORD('c', 'h', 'a', 'r'), TEXT_WORD('a', '_', 'p', 'o'), TEXT_WORD('p', '_', '0', '0'), TEXT_WORD('_', 'j', 'o', 'i'), TEXT_WORD('n', 't', 0, 0)};
 static const int celebDelay[17] = {1, 2, 3, 5, 7, 9, 13, 16, 18, 10, 10, 10, 10, 18, 27, 36, 47};
 static const int celebAnim[17] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1};
 static const int celebDuration[17] = {15, 15, 15, 15, 15, 15, 22, 24, 24, 15, 30, 30, 30, 30, 30, 30, 30};

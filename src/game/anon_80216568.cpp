@@ -1,3 +1,4 @@
+#include "game/types/text_word.h"
 /*
  * 0x80216568..0x80216908: post-race coin reward calculation.
  * The constant pool also supplies the coin display and time trial records.
@@ -105,14 +106,14 @@ static const float kParTime[8][2] = {
 extern const int lbl_803C4440[13] = { 0, 3, 6, 9, 11, 7, 4, 12, 8, 10, 2, 5, 1 };
 extern const int lbl_803C4474[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 extern const int lbl_803C449C[10] = { 3140, 3136, 3135, 3137, 3138, 3141, 3143, 3139, 3144, 3142 };
-extern const int lbl_803C44C4[3] = { 2193588965, 2196865756, 2192572416 };
-extern const int lbl_803C44D0[4] = { 2202370888, 2207482725, 2204271464, 0 };
-extern const int lbl_803C44E0[3] = { 2192605858, 2192933601, 0 };
-extern const int lbl_803C44EC[3] = { 2192147106, 2193392301, 0 };
-extern const int lbl_803C44F8[3] = { 2192409308, 2193588961, 2196832256 };
-extern const int lbl_803C4504[3] = { 2204926802, 2206106494, 0 };
-extern const int lbl_803C4510[3] = { 2206040919, 2203485059, 2207449088 };
-extern const int lbl_803C451C[4] = { 2192278245, 2191819496, 2195948196, 0 };
+extern const int lbl_803C44C4[3] = { TEXT_WORD(0x82, 0xBF, 0x82, 0xE5), TEXT_WORD(0x82, 0xF1, 0x82, 0xDC), TEXT_WORD(0x82, 0xB0, 0, 0) };
+extern const int lbl_803C44D0[4] = { TEXT_WORD(0x83, 'E', 0x83, 'H'), TEXT_WORD(0x83, 0x93, 0x83, 'e'), TEXT_WORD(0x83, 'b', 0x83, 'h'), 0 };
+extern const int lbl_803C44E0[3] = { TEXT_WORD(0x82, 0xB0, 0x82, 0xA2), TEXT_WORD(0x82, 0xB5, 0x82, 0xE1), 0 };
+extern const int lbl_803C44EC[3] = { TEXT_WORD(0x82, 0xA9, 0x82, 0xA2), TEXT_WORD(0x82, 0xBC, 0x82, 0xAD), 0 };
+extern const int lbl_803C44F8[3] = { TEXT_WORD(0x82, 0xAD, 0x82, 0xDC), TEXT_WORD(0x82, 0xBF, 0x82, 0xE1), TEXT_WORD(0x82, 0xF1, 0, 0) };
+extern const int lbl_803C4504[3] = { TEXT_WORD(0x83, 'l', 0x83, 'R'), TEXT_WORD(0x83, '~', 0x83, '~'), 0 };
+extern const int lbl_803C4510[3] = { TEXT_WORD(0x83, '}', 0x83, 'W'), TEXT_WORD(0x83, 'V', 0x83, 0x83), TEXT_WORD(0x83, 0x93, 0, 0) };
+extern const int lbl_803C451C[4] = { TEXT_WORD(0x82, 0xAB, 0x82, 0xE5), TEXT_WORD(0x82, 0xA4, 0x82, 0xE8), TEXT_WORD(0x82, 0xE3, 0x82, 0xA4), 0 };
 extern const char lbl_803C452C[16] = "ta_mr_short.bin";
 extern const char lbl_803C453C[15] = "ta_mr_long.bin";
 extern const char lbl_803C454C[16] = "ta_dk_short.bin";

@@ -1,3 +1,4 @@
+#include "game/types/text_word.h"
 
 /* sdata symbols referenced from asm */
 extern char lbl_806D7174[7];
@@ -1079,10 +1080,10 @@ static const unsigned int s_defaultCourse[5] = {
 };
 extern "C" const char lbl_80356BF4[12] = "clCGameKP";
 extern "C" const unsigned int CGameCoin_8012BF5C_rodata_80356C00[0x16] = {
-    0x636C4A6F, 0x6252756E, 0x6E657200, 0x48697420, 0x4E6F203D, 0x2025640A,
-    0x00000000, 0x53746172, 0x7420746F, 0x204B5043, 0x6F696E2E, 0x20436F69,
-    0x6E206B69, 0x6E642069, 0x73202564, 0x2E202025, 0x73202D20, 0x25640A00,
-    0x4347616D, 0x65436F69, 0x6E2E6870, 0x70000000,
+    TEXT_WORD('c', 'l', 'J', 'o'), TEXT_WORD('b', 'R', 'u', 'n'), TEXT_WORD('n', 'e', 'r', 0), TEXT_WORD('H', 'i', 't', ' '), TEXT_WORD('N', 'o', ' ', '='), TEXT_WORD(' ', '%', 'd', '\n'),
+    0x00000000, TEXT_WORD('S', 't', 'a', 'r'), TEXT_WORD('t', ' ', 't', 'o'), TEXT_WORD(' ', 'K', 'P', 'C'), TEXT_WORD('o', 'i', 'n', '.'), TEXT_WORD(' ', 'C', 'o', 'i'),
+    TEXT_WORD('n', ' ', 'k', 'i'), TEXT_WORD('n', 'd', ' ', 'i'), TEXT_WORD('s', ' ', '%', 'd'), TEXT_WORD('.', ' ', ' ', '%'), TEXT_WORD('s', ' ', '-', ' '), TEXT_WORD('%', 'd', '\n', 0),
+    TEXT_WORD('C', 'G', 'a', 'm'), TEXT_WORD('e', 'C', 'o', 'i'), TEXT_WORD('n', '.', 'h', 'p'), TEXT_WORD('p', 0, 0, 0),
 };
 extern "C" const char DefeatDemo_Update_rodata_80356C58[40] = "!(jobj->flags & JOBJ_USE_QUATERNION)";
 static const char s_lakituFile[20] = "jyugemu_start.dat";
@@ -1095,37 +1096,37 @@ static const char s_skycloudJoint[32] = "KP_castle_kp03_skycloud_joint";
 static const char s_coinFile[16] = "mario_coin.dat";
 static const char s_kiraFile[16] = "k_kira13.dat";
 extern "C" const unsigned int lbl_80356D60[0x9C] = {
-    0x6368616C, 0x6C656E67, 0x655F6465, 0x6D6F5F4B, 0x505F656E, 0x642E6461,
-    0x74000000, 0x626F7373, 0x5F6D656B, 0x615F6B6F, 0x6F70615F, 0x656E642E,
-    0x64617400, 0x626F7373, 0x5F6B6F6F, 0x70615F65, 0x6E642E64, 0x61740000,
-    0x6B6F6F70, 0x61646561, 0x642E6461, 0x74000000, 0x4B505F63, 0x616C6C65,
-    0x6E67655F, 0x7A796F75, 0x67616E30, 0x315F6A6F, 0x696E7400, 0x4B505F63,
-    0x616C6C65, 0x6E67655F, 0x7A796F75, 0x67616E30, 0x325F6A6F, 0x696E7400,
-    0x4B505F63, 0x616C6C65, 0x6E67655F, 0x7A796F75, 0x67616E30, 0x335F6A6F,
-    0x696E7400, 0x4B505F63, 0x616C6C65, 0x6E67655F, 0x6B703031, 0x5F736B79,
-    0x646F6D65, 0x5F6A6F69, 0x6E740000, 0x4B505F63, 0x616C6C65, 0x6E67655F,
-    0x6B703033, 0x5F736B79, 0x636C6F75, 0x645F6A6F, 0x696E7400, 0x6B706368,
-    0x5F6D6167, 0x756D615F, 0x666C7569, 0x645F7061, 0x7274735F, 0x63686D66,
-    0x5F696E5F, 0x6A6F696E, 0x74000000, 0x6B6F6F70, 0x615F6669, 0x72652E64,
-    0x61740000, 0x626F7373, 0x5F6D656B, 0x615F6B6F, 0x6F70615F, 0x74616D62,
-    0x2E646174, 0x00000000, 0x626F7373, 0x5F6D656B, 0x615F6B6F, 0x6F70615F,
-    0x6672616D, 0x652E6461, 0x74000000, 0x626F7373, 0x5F6D656B, 0x615F6B6F,
-    0x6F70615F, 0x64616D61, 0x67655F6C, 0x2E646174, 0x00000000, 0x626F7373,
-    0x5F6D656B, 0x615F6B6F, 0x6F70615F, 0x64616D61, 0x67655F72, 0x2E646174,
-    0x00000000, 0x5F326368, 0x616C6C65, 0x6E67655F, 0x6D656B61, 0x5F6B6F6F,
-    0x70615F66, 0x6C616D65, 0x5F6E756C, 0x6C5F6A6F, 0x696E7400, 0x626F7373,
-    0x5F6B6F6F, 0x70615F74, 0x616D622E, 0x64617400, 0x626F7373, 0x5F6B6F6F,
-    0x70615F66, 0x72616D65, 0x2E646174, 0x00000000, 0x626F7373, 0x5F6B6F6F,
-    0x70615F64, 0x616D6167, 0x655F6C2E, 0x64617400, 0x626F7373, 0x5F6B6F6F,
-    0x70615F64, 0x616D6167, 0x655F722E, 0x64617400, 0x5F326368, 0x616C6C65,
-    0x6E67655F, 0x6B6F6F70, 0x615F666C, 0x616D655F, 0x6E756C6C, 0x5F315F6A,
-    0x6F696E74, 0x00000000, 0x636C4D65, 0x6E75496E, 0x70757400, 0x74655369,
-    0x6E676C65, 0x746F6E3C, 0x636C4D65, 0x6E75496E, 0x7075743E, 0x00000000,
+    TEXT_WORD('c', 'h', 'a', 'l'), TEXT_WORD('l', 'e', 'n', 'g'), TEXT_WORD('e', '_', 'd', 'e'), TEXT_WORD('m', 'o', '_', 'K'), TEXT_WORD('P', '_', 'e', 'n'), TEXT_WORD('d', '.', 'd', 'a'),
+    TEXT_WORD('t', 0, 0, 0), TEXT_WORD('b', 'o', 's', 's'), TEXT_WORD('_', 'm', 'e', 'k'), TEXT_WORD('a', '_', 'k', 'o'), TEXT_WORD('o', 'p', 'a', '_'), TEXT_WORD('e', 'n', 'd', '.'),
+    TEXT_WORD('d', 'a', 't', 0), TEXT_WORD('b', 'o', 's', 's'), TEXT_WORD('_', 'k', 'o', 'o'), TEXT_WORD('p', 'a', '_', 'e'), TEXT_WORD('n', 'd', '.', 'd'), TEXT_WORD('a', 't', 0, 0),
+    TEXT_WORD('k', 'o', 'o', 'p'), TEXT_WORD('a', 'd', 'e', 'a'), TEXT_WORD('d', '.', 'd', 'a'), TEXT_WORD('t', 0, 0, 0), TEXT_WORD('K', 'P', '_', 'c'), TEXT_WORD('a', 'l', 'l', 'e'),
+    TEXT_WORD('n', 'g', 'e', '_'), TEXT_WORD('z', 'y', 'o', 'u'), TEXT_WORD('g', 'a', 'n', '0'), TEXT_WORD('1', '_', 'j', 'o'), TEXT_WORD('i', 'n', 't', 0), TEXT_WORD('K', 'P', '_', 'c'),
+    TEXT_WORD('a', 'l', 'l', 'e'), TEXT_WORD('n', 'g', 'e', '_'), TEXT_WORD('z', 'y', 'o', 'u'), TEXT_WORD('g', 'a', 'n', '0'), TEXT_WORD('2', '_', 'j', 'o'), TEXT_WORD('i', 'n', 't', 0),
+    TEXT_WORD('K', 'P', '_', 'c'), TEXT_WORD('a', 'l', 'l', 'e'), TEXT_WORD('n', 'g', 'e', '_'), TEXT_WORD('z', 'y', 'o', 'u'), TEXT_WORD('g', 'a', 'n', '0'), TEXT_WORD('3', '_', 'j', 'o'),
+    TEXT_WORD('i', 'n', 't', 0), TEXT_WORD('K', 'P', '_', 'c'), TEXT_WORD('a', 'l', 'l', 'e'), TEXT_WORD('n', 'g', 'e', '_'), TEXT_WORD('k', 'p', '0', '1'), TEXT_WORD('_', 's', 'k', 'y'),
+    TEXT_WORD('d', 'o', 'm', 'e'), TEXT_WORD('_', 'j', 'o', 'i'), TEXT_WORD('n', 't', 0, 0), TEXT_WORD('K', 'P', '_', 'c'), TEXT_WORD('a', 'l', 'l', 'e'), TEXT_WORD('n', 'g', 'e', '_'),
+    TEXT_WORD('k', 'p', '0', '3'), TEXT_WORD('_', 's', 'k', 'y'), TEXT_WORD('c', 'l', 'o', 'u'), TEXT_WORD('d', '_', 'j', 'o'), TEXT_WORD('i', 'n', 't', 0), TEXT_WORD('k', 'p', 'c', 'h'),
+    TEXT_WORD('_', 'm', 'a', 'g'), TEXT_WORD('u', 'm', 'a', '_'), TEXT_WORD('f', 'l', 'u', 'i'), TEXT_WORD('d', '_', 'p', 'a'), TEXT_WORD('r', 't', 's', '_'), TEXT_WORD('c', 'h', 'm', 'f'),
+    TEXT_WORD('_', 'i', 'n', '_'), TEXT_WORD('j', 'o', 'i', 'n'), TEXT_WORD('t', 0, 0, 0), TEXT_WORD('k', 'o', 'o', 'p'), TEXT_WORD('a', '_', 'f', 'i'), TEXT_WORD('r', 'e', '.', 'd'),
+    TEXT_WORD('a', 't', 0, 0), TEXT_WORD('b', 'o', 's', 's'), TEXT_WORD('_', 'm', 'e', 'k'), TEXT_WORD('a', '_', 'k', 'o'), TEXT_WORD('o', 'p', 'a', '_'), TEXT_WORD('t', 'a', 'm', 'b'),
+    TEXT_WORD('.', 'd', 'a', 't'), 0x00000000, TEXT_WORD('b', 'o', 's', 's'), TEXT_WORD('_', 'm', 'e', 'k'), TEXT_WORD('a', '_', 'k', 'o'), TEXT_WORD('o', 'p', 'a', '_'),
+    TEXT_WORD('f', 'r', 'a', 'm'), TEXT_WORD('e', '.', 'd', 'a'), TEXT_WORD('t', 0, 0, 0), TEXT_WORD('b', 'o', 's', 's'), TEXT_WORD('_', 'm', 'e', 'k'), TEXT_WORD('a', '_', 'k', 'o'),
+    TEXT_WORD('o', 'p', 'a', '_'), TEXT_WORD('d', 'a', 'm', 'a'), TEXT_WORD('g', 'e', '_', 'l'), TEXT_WORD('.', 'd', 'a', 't'), 0x00000000, TEXT_WORD('b', 'o', 's', 's'),
+    TEXT_WORD('_', 'm', 'e', 'k'), TEXT_WORD('a', '_', 'k', 'o'), TEXT_WORD('o', 'p', 'a', '_'), TEXT_WORD('d', 'a', 'm', 'a'), TEXT_WORD('g', 'e', '_', 'r'), TEXT_WORD('.', 'd', 'a', 't'),
+    0x00000000, TEXT_WORD('_', '2', 'c', 'h'), TEXT_WORD('a', 'l', 'l', 'e'), TEXT_WORD('n', 'g', 'e', '_'), TEXT_WORD('m', 'e', 'k', 'a'), TEXT_WORD('_', 'k', 'o', 'o'),
+    TEXT_WORD('p', 'a', '_', 'f'), TEXT_WORD('l', 'a', 'm', 'e'), TEXT_WORD('_', 'n', 'u', 'l'), TEXT_WORD('l', '_', 'j', 'o'), TEXT_WORD('i', 'n', 't', 0), TEXT_WORD('b', 'o', 's', 's'),
+    TEXT_WORD('_', 'k', 'o', 'o'), TEXT_WORD('p', 'a', '_', 't'), TEXT_WORD('a', 'm', 'b', '.'), TEXT_WORD('d', 'a', 't', 0), TEXT_WORD('b', 'o', 's', 's'), TEXT_WORD('_', 'k', 'o', 'o'),
+    TEXT_WORD('p', 'a', '_', 'f'), TEXT_WORD('r', 'a', 'm', 'e'), TEXT_WORD('.', 'd', 'a', 't'), 0x00000000, TEXT_WORD('b', 'o', 's', 's'), TEXT_WORD('_', 'k', 'o', 'o'),
+    TEXT_WORD('p', 'a', '_', 'd'), TEXT_WORD('a', 'm', 'a', 'g'), TEXT_WORD('e', '_', 'l', '.'), TEXT_WORD('d', 'a', 't', 0), TEXT_WORD('b', 'o', 's', 's'), TEXT_WORD('_', 'k', 'o', 'o'),
+    TEXT_WORD('p', 'a', '_', 'd'), TEXT_WORD('a', 'm', 'a', 'g'), TEXT_WORD('e', '_', 'r', '.'), TEXT_WORD('d', 'a', 't', 0), TEXT_WORD('_', '2', 'c', 'h'), TEXT_WORD('a', 'l', 'l', 'e'),
+    TEXT_WORD('n', 'g', 'e', '_'), TEXT_WORD('k', 'o', 'o', 'p'), TEXT_WORD('a', '_', 'f', 'l'), TEXT_WORD('a', 'm', 'e', '_'), TEXT_WORD('n', 'u', 'l', 'l'), TEXT_WORD('_', '1', '_', 'j'),
+    TEXT_WORD('o', 'i', 'n', 't'), 0x00000000, TEXT_WORD('c', 'l', 'M', 'e'), TEXT_WORD('n', 'u', 'I', 'n'), TEXT_WORD('p', 'u', 't', 0), TEXT_WORD('t', 'e', 'S', 'i'),
+    TEXT_WORD('n', 'g', 'l', 'e'), TEXT_WORD('t', 'o', 'n', '<'), TEXT_WORD('c', 'l', 'M', 'e'), TEXT_WORD('n', 'u', 'I', 'n'), TEXT_WORD('p', 'u', 't', '>'), 0x00000000,
 };
 extern "C" const char lbl_80356FD0[16] = "clCGameCoinBase";
 extern "C" const unsigned int sdata_806CF1C0_rodata_80356FE0[0xA] = {
-    0x636C4347, 0x616D654B, 0x50436F69, 0x6E000000, 0x636C4143, 0x616D6572,
-    0x61000000, 0x636C4361, 0x6D657261, 0x00000000,
+    TEXT_WORD('c', 'l', 'C', 'G'), TEXT_WORD('a', 'm', 'e', 'K'), TEXT_WORD('P', 'C', 'o', 'i'), TEXT_WORD('n', 0, 0, 0), TEXT_WORD('c', 'l', 'A', 'C'), TEXT_WORD('a', 'm', 'e', 'r'),
+    TEXT_WORD('a', 0, 0, 0), TEXT_WORD('c', 'l', 'C', 'a'), TEXT_WORD('m', 'e', 'r', 'a'), 0x00000000,
 };
 
 #ifndef NON_MATCHING /* C version: end of this file */

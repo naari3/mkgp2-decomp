@@ -1,3 +1,4 @@
+#include "game/types/text_word.h"
 #include "game/types/c_region.h"
 C_REGION_BEGIN
 /* 23 TUs merged by tools/merge_tus.py, .text 0x80094d80..0x80099994.
@@ -92,12 +93,12 @@ static const char lbl_80318054[] = "%s%s%s Gold Item Get!    ";
 static const char lbl_80318070[] = "%s%s%s Plus Item Get!    ";
 static const char lbl_8031808C[] = "%s%s%s SP Item Get!      ";
 static const char lbl_803180A8[] = "%s%s%s %s more left      ";
-static const unsigned int Sci2Card_BuildRetryReceiptLine_rodata_803180C4[7] = { 0x82508250, 0x82552069, 0x74656D20, 0x636F6D70, 0x6C657465, 0x20202020, 0x20000000 };
-static const unsigned int lbl_803180E0[7] = { 0x25732573, 0x25732074, 0x7269706C, 0x65206974, 0x656D2067, 0x65742020, 0x20000000 };
-static const unsigned int lbl_803180FC[3] = { 0x826D8260, 0x826C8262, 0x826E0000 };
-static const unsigned int Sci2Card_BuildScoreReceiptLine_rodata_80318108[3] = { 0x91CE90ED, 0x838C815B, 0x83580000 };
-static const unsigned int lbl_80318114[3] = { 0x54455354, 0x20505249, 0x4E540000 };
-static const unsigned int lbl_80318120[6] = { 0x82738264, 0x82728273, 0x8140826F, 0x82718268, 0x826D8273, 0x00000000 };
+static const unsigned int Sci2Card_BuildRetryReceiptLine_rodata_803180C4[7] = { TEXT_WORD(0x82, 'P', 0x82, 'P'), TEXT_WORD(0x82, 'U', ' ', 'i'), TEXT_WORD('t', 'e', 'm', ' '), TEXT_WORD('c', 'o', 'm', 'p'), TEXT_WORD('l', 'e', 't', 'e'), TEXT_WORD(' ', ' ', ' ', ' '), TEXT_WORD(' ', 0, 0, 0) };
+static const unsigned int lbl_803180E0[7] = { TEXT_WORD('%', 's', '%', 's'), TEXT_WORD('%', 's', ' ', 't'), TEXT_WORD('r', 'i', 'p', 'l'), TEXT_WORD('e', ' ', 'i', 't'), TEXT_WORD('e', 'm', ' ', 'g'), TEXT_WORD('e', 't', ' ', ' '), TEXT_WORD(' ', 0, 0, 0) };
+static const unsigned int lbl_803180FC[3] = { TEXT_WORD(0x82, 'm', 0x82, '`'), TEXT_WORD(0x82, 'l', 0x82, 'b'), TEXT_WORD(0x82, 'n', 0, 0) };
+static const unsigned int Sci2Card_BuildScoreReceiptLine_rodata_80318108[3] = { TEXT_WORD(0x91, 0xCE, 0x90, 0xED), TEXT_WORD(0x83, 0x8C, 0x81, '['), TEXT_WORD(0x83, 'X', 0, 0) };
+static const unsigned int lbl_80318114[3] = { TEXT_WORD('T', 'E', 'S', 'T'), TEXT_WORD(' ', 'P', 'R', 'I'), TEXT_WORD('N', 'T', 0, 0) };
+static const unsigned int lbl_80318120[6] = { TEXT_WORD(0x82, 's', 0x82, 'd'), TEXT_WORD(0x82, 'r', 0x82, 's'), TEXT_WORD(0x81, '@', 0x82, 'o'), TEXT_WORD(0x82, 'q', 0x82, 'h'), TEXT_WORD(0x82, 'm', 0x82, 's'), 0x00000000 };
 static const unsigned int Sci2Card_GetReceiptStringEntry_rodata_80318138[78] = { 0x1B67011B, 0x67020000, 0x00000000, 0x001B6707, 0x1B670800, 0x00000000, 0x00001B67, 0x091B670A, 0x00000000, 0x0000001B, 0x670B1B67, 0x0C000000, 0x00000000, 0x1B670D1B, 0x670E0000, 0x00000000, 0x001B670F, 0x1B671000, 0x00000000, 0x00001B67, 0x031B6704, 0x00000000, 0x0000001B, 0x67051B67, 0x06000000, 0x00000000, 0x1B67111B, 0x67120000, 0x00000000, 0x001B6717, 0x1B671800, 0x00000000, 0x00001B67, 0x191B671A, 0x00000000, 0x0000001B, 0x671B1B67, 0x1C000000, 0x00000000, 0x1B671D1B, 0x671E0000, 0x00000000, 0x001B671F, 0x1B672000, 0x00000000, 0x00001B67, 0x131B6714, 0x00000000, 0x0000001B, 0x67151B67, 0x16000000, 0x00000000, 0x1B67211B, 0x67221B67, 0x231B6724, 0x001B6725, 0x1B67261B, 0x67271B67, 0x28001B67, 0x291B672A, 0x1B672B1B, 0x672C001B, 0x672D1B67, 0x2E1B672F, 0x1B673000, 0x1B67311B, 0x67321B67, 0x331B6734, 0x001B6735, 0x1B67361B, 0x67371B67, 0x38001B67, 0x391B673A, 0x1B673B00, 0x0000001B, 0x673C1B67, 0x3D1B673E, 0x00000000 };
 
 /* ItemGet receipt tables (.data 0x803FFDF0): defined before the first function so they precede the switch tables. */

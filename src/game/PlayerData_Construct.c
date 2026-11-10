@@ -1,25 +1,26 @@
+#include "game/types/text_word.h"
 #include "game/PlayerDataConstructPrivate.h"
 #include "game/CoinMilestone.h"
 /* --- owned .rodata 0x8039D8C0..0x8039D9A4 (tools/own_data.py) --- */
 #pragma force_active on
-const unsigned int data_8049B530_rodata_8039D8C0[3] = { 0x828D8281, 0x82928289, 0x828F0000 };
-const unsigned int data_8049B530_rodata_8039D8CC[3] = { 0x828C8295, 0x82898287, 0x82890000 };
-const unsigned int data_8049B530_rodata_8039D8D8[3] = { 0x82978281, 0x82928289, 0x828F0000 };
-const unsigned int data_8049B530_rodata_8039D8E4[3] = { 0x82908285, 0x82818283, 0x82880000 };
-const unsigned int data_8049B530_rodata_8039D8F0[3] = { 0x828B8289, 0x828E8287, 0x00000000 };
-const unsigned int data_8049B530_rodata_8039D8FC[3] = { 0x82AB82CC, 0x82D282A8, 0x00000000 };
-const unsigned int data_8049B530_rodata_8039D908[3] = { 0x8294828F, 0x82818284, 0x00000000 };
-const unsigned int data_8049B530_rodata_8039D914[3] = { 0x82C782F1, 0x82AB815B, 0x00000000 };
-const unsigned int data_8049B530_rodata_8039D920[3] = { 0x82E682C1, 0x82B5815B, 0x00000000 };
-const unsigned int data_8049B530_rodata_8039D92C[3] = { 0x8299828F, 0x82938288, 0x82890000 };
-const unsigned int data_8049B530_rodata_8039D938[3] = { 0x82CF82C1, 0x82AD82DC, 0x82F10000 };
-const unsigned int data_8049B530_rodata_8039D944[3] = { 0x82DD82B8, 0x82DC82C1, 0x82AD0000 };
-const unsigned int data_8049B530_rodata_8039D950[3] = { 0x826C8293, 0x81448290, 0x00000000 };
-const unsigned int data_8049B530_rodata_8039D95C[3] = { 0x82A082A9, 0x82D782A2, 0x00000000 };
-const unsigned int data_8049B530_rodata_8039D968[3] = { 0x82ED82E9, 0x82A2815B, 0x82B60000 };
-const unsigned int data_8049B530_rodata_8039D974[3] = { 0x82978281, 0x828C8295, 0x00000000 };
-const unsigned int data_8049B530_rodata_8039D980[3] = { 0x82DC82DF, 0x82C182BF, 0x00000000 };
-const unsigned int data_8049B530_rodata_8039D98C[6] = { 0x828D8281, 0x828D8285, 0x00000000, 0x00000000, 0x00000000, 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D8C0[3] = { TEXT_WORD(0x82, 0x8D, 0x82, 0x81), TEXT_WORD(0x82, 0x92, 0x82, 0x89), TEXT_WORD(0x82, 0x8F, 0, 0) };
+const unsigned int data_8049B530_rodata_8039D8CC[3] = { TEXT_WORD(0x82, 0x8C, 0x82, 0x95), TEXT_WORD(0x82, 0x89, 0x82, 0x87), TEXT_WORD(0x82, 0x89, 0, 0) };
+const unsigned int data_8049B530_rodata_8039D8D8[3] = { TEXT_WORD(0x82, 0x97, 0x82, 0x81), TEXT_WORD(0x82, 0x92, 0x82, 0x89), TEXT_WORD(0x82, 0x8F, 0, 0) };
+const unsigned int data_8049B530_rodata_8039D8E4[3] = { TEXT_WORD(0x82, 0x90, 0x82, 0x85), TEXT_WORD(0x82, 0x81, 0x82, 0x83), TEXT_WORD(0x82, 0x88, 0, 0) };
+const unsigned int data_8049B530_rodata_8039D8F0[3] = { TEXT_WORD(0x82, 0x8B, 0x82, 0x89), TEXT_WORD(0x82, 0x8E, 0x82, 0x87), 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D8FC[3] = { TEXT_WORD(0x82, 0xAB, 0x82, 0xCC), TEXT_WORD(0x82, 0xD2, 0x82, 0xA8), 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D908[3] = { TEXT_WORD(0x82, 0x94, 0x82, 0x8F), TEXT_WORD(0x82, 0x81, 0x82, 0x84), 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D914[3] = { TEXT_WORD(0x82, 0xC7, 0x82, 0xF1), TEXT_WORD(0x82, 0xAB, 0x81, '['), 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D920[3] = { TEXT_WORD(0x82, 0xE6, 0x82, 0xC1), TEXT_WORD(0x82, 0xB5, 0x81, '['), 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D92C[3] = { TEXT_WORD(0x82, 0x99, 0x82, 0x8F), TEXT_WORD(0x82, 0x93, 0x82, 0x88), TEXT_WORD(0x82, 0x89, 0, 0) };
+const unsigned int data_8049B530_rodata_8039D938[3] = { TEXT_WORD(0x82, 0xCF, 0x82, 0xC1), TEXT_WORD(0x82, 0xAD, 0x82, 0xDC), TEXT_WORD(0x82, 0xF1, 0, 0) };
+const unsigned int data_8049B530_rodata_8039D944[3] = { TEXT_WORD(0x82, 0xDD, 0x82, 0xB8), TEXT_WORD(0x82, 0xDC, 0x82, 0xC1), TEXT_WORD(0x82, 0xAD, 0, 0) };
+const unsigned int data_8049B530_rodata_8039D950[3] = { TEXT_WORD(0x82, 'l', 0x82, 0x93), TEXT_WORD(0x81, 'D', 0x82, 0x90), 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D95C[3] = { TEXT_WORD(0x82, 0xA0, 0x82, 0xA9), TEXT_WORD(0x82, 0xD7, 0x82, 0xA2), 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D968[3] = { TEXT_WORD(0x82, 0xED, 0x82, 0xE9), TEXT_WORD(0x82, 0xA2, 0x81, '['), TEXT_WORD(0x82, 0xB6, 0, 0) };
+const unsigned int data_8049B530_rodata_8039D974[3] = { TEXT_WORD(0x82, 0x97, 0x82, 0x81), TEXT_WORD(0x82, 0x8C, 0x82, 0x95), 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D980[3] = { TEXT_WORD(0x82, 0xDC, 0x82, 0xDF), TEXT_WORD(0x82, 0xC1, 0x82, 0xBF), 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D98C[6] = { TEXT_WORD(0x82, 0x8D, 0x82, 0x81), TEXT_WORD(0x82, 0x8D, 0x82, 0x85), 0x00000000, 0x00000000, 0x00000000, 0x00000000 };
 #pragma force_active reset
 extern int isJapanese(void);
 extern char *strcpy(char *, const char *);

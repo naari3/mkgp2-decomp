@@ -865,3 +865,9 @@ status: note
 
 Word arrays that hold text inline (file names between pointers) are being rewritten from hex words to TEXT_WORD('a','b','c','d'); same bytes under MWCC. Mechanical, many units over the next landings (tools/port_abi/text_words.py --fix). If you add such a table, either form matches. No action needed.
 
+## n3-20261110-1632 | 2026-11-10 16:32Z | from: n3 | TEXT_WORD applied to all word-array text
+re: -
+status: note
+
+tools/port_abi/text_words.py --fix has been run over src: 30 files changed (NameCheck_CardName.c, Scene_8014E0C4_rodata.inc, CardTaskManager_RenderOverlay.c, autodata units ...). Byte-identical. Expect a text conflict only if you edit those initialisers; either form matches. No action needed.
+

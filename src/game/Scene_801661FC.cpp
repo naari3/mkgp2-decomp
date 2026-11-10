@@ -1,3 +1,4 @@
+#include "game/types/text_word.h"
 #include "game/TestMenuPage.h"
 #include "game/Scene_801661FC_private.h"
 /* --- owned .rodata 0x80369D78..0x8036A390 (tools/own_data.py) --- */
@@ -7,11 +8,11 @@ extern "C" const char lbl_8036A174[] = "clCSSceneTest";
 extern "C" const char lbl_8036A184[] = "clSceneInterface";
 extern "C" const char lbl_8036A198[] = "clCSPartsTest";
 extern "C" const char lbl_8036A1A8[] = "clYTaskInterface";
-extern "C" const unsigned int Scene_801661FC_rodata_8036A1BC[10] = { 0x636C4354, 0x61736B49, 0x6E746572, 0x66616365, 0x00000000, 0x636C4353, 0x50617274, 0x73496E65, 0x72666163, 0x65000000 };
+extern "C" const unsigned int Scene_801661FC_rodata_8036A1BC[10] = { TEXT_WORD('c', 'l', 'C', 'T'), TEXT_WORD('a', 's', 'k', 'I'), TEXT_WORD('n', 't', 'e', 'r'), TEXT_WORD('f', 'a', 'c', 'e'), 0x00000000, TEXT_WORD('c', 'l', 'C', 'S'), TEXT_WORD('P', 'a', 'r', 't'), TEXT_WORD('s', 'I', 'n', 'e'), TEXT_WORD('r', 'f', 'a', 'c'), TEXT_WORD('e', 0, 0, 0) };
 extern "C" const char lbl_8036A1E4[] = "clCSPartsRankTest";
 extern "C" const char lbl_8036A1F8[] = "clCSPartsGetItemTest";
 extern "C" const char lbl_8036A210[] = "static const stCSItemData CSData_ItemData[ SI_END ] = {\n";
-extern "C" const unsigned int lbl_8036A24C[12] = { 0x20204954, 0x454D5F44, 0x41544128, 0x20256666, 0x2C256666, 0x2C256666, 0x2C202566, 0x662C2566, 0x662C2566, 0x662C2025, 0x66662029, 0x2C0A0000 };
+extern "C" const unsigned int lbl_8036A24C[12] = { TEXT_WORD(' ', ' ', 'I', 'T'), TEXT_WORD('E', 'M', '_', 'D'), TEXT_WORD('A', 'T', 'A', '('), TEXT_WORD(' ', '%', 'f', 'f'), TEXT_WORD(',', '%', 'f', 'f'), TEXT_WORD(',', '%', 'f', 'f'), TEXT_WORD(',', ' ', '%', 'f'), TEXT_WORD('f', ',', '%', 'f'), TEXT_WORD('f', ',', '%', 'f'), TEXT_WORD('f', ',', ' ', '%'), TEXT_WORD('f', 'f', ' ', ')'), TEXT_WORD(',', '\n', 0, 0) };
 #pragma force_active reset
 extern "C" {
 extern char lbl_806D8958[4];
@@ -171,7 +172,7 @@ void ParamEditScene::Update() {
 }
 #pragma readonly_strings reset
 #pragma force_active on
-extern "C" const unsigned int sdata_806CF750_rodata_8036A308[24] = { 0x636C4353, 0x50617274, 0x73546974, 0x6C655465, 0x73740000, 0x82628267, 0x82608271, 0x82602081, 0x46202573, 0x00000000, 0x82738268, 0x8273826B, 0x82642081, 0x46202564, 0x00000000, 0x826F8260, 0x82718260, 0x826C2081, 0x46202564, 0x00000000, 0x8FCC8D86, 0x81752025, 0x73208176, 0x00000000 };
+extern "C" const unsigned int sdata_806CF750_rodata_8036A308[24] = { TEXT_WORD('c', 'l', 'C', 'S'), TEXT_WORD('P', 'a', 'r', 't'), TEXT_WORD('s', 'T', 'i', 't'), TEXT_WORD('l', 'e', 'T', 'e'), TEXT_WORD('s', 't', 0, 0), TEXT_WORD(0x82, 'b', 0x82, 'g'), TEXT_WORD(0x82, '`', 0x82, 'q'), TEXT_WORD(0x82, '`', ' ', 0x81), TEXT_WORD('F', ' ', '%', 's'), 0x00000000, TEXT_WORD(0x82, 's', 0x82, 'h'), TEXT_WORD(0x82, 's', 0x82, 'k'), TEXT_WORD(0x82, 'd', ' ', 0x81), TEXT_WORD('F', ' ', '%', 'd'), 0x00000000, TEXT_WORD(0x82, 'o', 0x82, '`'), TEXT_WORD(0x82, 'q', 0x82, '`'), TEXT_WORD(0x82, 'l', ' ', 0x81), TEXT_WORD('F', ' ', '%', 'd'), 0x00000000, 0x8FCC8D86, 0x81752025, 0x73208176, 0x00000000 };
 extern "C" const char lbl_8036A368[] = "clCSPartsSpriteTest";
-extern "C" const unsigned int Scene_801670FC_rodata_8036A37C[5] = { 0x83588376, 0x83898343, 0x83674944, 0x20253034, 0x64000000 };
+extern "C" const unsigned int Scene_801670FC_rodata_8036A37C[5] = { TEXT_WORD(0x83, 'X', 0x83, 'v'), TEXT_WORD(0x83, 0x89, 0x83, 'C'), TEXT_WORD(0x83, 'g', 'I', 'D'), TEXT_WORD(' ', '%', '0', '4'), TEXT_WORD('d', 0, 0, 0) };
 #pragma force_active reset
