@@ -18,6 +18,10 @@ unsigned char lbl_80677F04[28];
 unsigned char lbl_80677F20[28];
 
 
+static inline unsigned char EncodeNameChar(const unsigned short *name) {
+    return (unsigned char)wchar_to_card_char(name);
+}
+
 static inline void WriteBits(int start, int n, int value) {
     int i;
     for (i = 0; i < n && i + start < 125; i++) {
@@ -89,7 +93,7 @@ void fn_8018B31C(const unsigned short *name, int item, int ccClass,
     int encodedClass = ccClass >= 2 ? ccClass - 1 : ccClass;
     seed = (unsigned int)(1000.0f * (float)OSTicksToMilliseconds(OSGetTime()));
     ClearPacked();
-    for (i = 0; i < 5 && i < 5; i++) WriteField(i, (unsigned char)wchar_to_card_char(name + i));
+    for (i = 0; i < 5 && i < 5; i++) WriteField(i, EncodeNameChar(name + i));
     WriteField(5, (unsigned char)item);
     WriteField(6, (unsigned char)(character - 1));
     WriteField(7, (unsigned char)encodedClass);
