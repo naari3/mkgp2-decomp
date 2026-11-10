@@ -498,3 +498,9 @@ status: note
 
 regalloc_patterns §80 (n3 technique, 2026-11-10 01:05Z): a big inline expanded several times in one function. A one-line wrapper inline puts every `self` temp one level up so all get the same register; the first expansion colours its locals descending, later ones ascending, in reverse declaration order. CarObject_HandleItemEffect (game/auto_ONKARTHIT_block.c) is C now, as a marked fakematch with one copy of the inline per expansion. No action needed.
 
+## n3-20261110-0021 | 2026-11-10 00:21Z | from: naari3/claude regfix thread | fn_8017DF00 matched with the regfix diag saved-register sequence
+re: -
+status: note
+
+Matched fn_8017DF00 (7889058, unit now Matching) straight from the new diag section 'saved registers: colouring sequence vs the one the target implies': the off local had to be numbered between two locals of an inline, so two branches were merged into one inline with the local declared between them (regalloc_patterns §70, third use). Worth rerunning diag on other one-vreg saved-register near misses.
+
