@@ -1926,6 +1926,14 @@ register already in use (see 70), and r29 was opened by the split temp, so
 whichever of `p` / `i` is coloured first now gets r29. Declare `i` before
 `p` to give `i` r29 and `p` r30.
 
+Same rule the other way round (fn_80170B5C, clKPTrap ctor, 11-10): the
+target has `li r29,0; mr r30,r29` (bit counter, then the strength-reduced
+`entries[used]` offset) and ours `li r30,0`. The earlier clear loop was
+written `for (int i = 0; ...)`; sharing the later loop's counter
+(`for (bit = 0; bit < count; bit++)`) makes `bit` multi-def and the `mr`
+appears. Diagnostic: `li rA,0; mr rB,rA` at a loop preheader = the loop
+counter is reused from an earlier loop.
+
 ## 74. Float arguments evaluated BEFORE an int argument: redeclare the callee with the floats first (fn_80158CE4 / fn_8015915C, option menu record pages, 11-09)
 
 Symptom: everything matches except the order in which the arguments of one
@@ -2008,8 +2016,7 @@ propagation when it is not a plain `local = temp` statement:
 - the copy goes through a cast node: `previousBus = (HeldEffectBus *)(void *)E`,
   `void *previousBus = E`, `(T *)((char *)E + 0)` all keep it. This is the one
   that puts the `mr` inside the branch.
-Also write the first call with the expression itself (`f(context->target->effects)`)
-so that it takes the temp (r3) without a reload.
+The first call may name the local; it still takes the temp (r3) without a reload.
 Tried and useless here: reusing a multi-def variable, an inline for the three
 calls, assignment in the condition, `#pragma opt_propagation off` (breaks 30+
 lines elsewhere in a big function).
@@ -2038,3 +2045,99 @@ hence coloured last. Same instructions, 100 -> 4 register diff lines. The
 function is still asm (docs/gave_up.md, draft
 docs/wip/RivalRun_CalcPathDistance_regonly.patch); the rest is one `lfs`/`fmr`
 direction of a shared zero load.
+
+## 78. Two float constants swap registers (`1.0f` and `255.0f`): the order the constants are CREATED follows expression order, so put the first use inside the later expression (fn_80147AF4 / fn_80147CE8, RaceHud intro fade, 11-10)
+
+Target (GC/2.6): `lfs f2,1.0; ... lfs f3,255.0; fsubs f2,f2,f4; fmadds f1,f1,f2,f0; fmuls f0,f3,f2`.
+Ours had f2/f3 swapped with
+
+```c
+float t = (o->timer - 30) / 15.0f;
+t = 1.0f - t;
+int a = (int)(255.0f * t);
+float s = 0.2f * t + 1.1f;
+```
+
+`regfix diag` said: "backend temp (1.0f load) must be generated AFTER the 255.0f load". Constants are backend
+temps, numbered in the order the expressions are walked; the load instructions are scheduled later, so the
+instruction order tells nothing. 36 variants of statement order, operand order and inline helpers stayed at
+99.72. What matches is the assignment written inside the product, so `255.0f` is walked first:
+
+```c
+float t = (o->timer - 30) / 15.0f;
+int a = (int)(255.0f * (t = 1.0f - t));     /* fn_80147AF4 */
+float s = 0.2f * t + 1.1f;
+```
+
+In the sister function fn_80147CE8 (the same `1.0f` is also the scale offset) the ratio has no local at all
+and the frontend shares it:
+
+```c
+int a = (int)(255.0f * (1.0f - (o->timer - 30) / 15.0f));
+float s = 0.2f * (1.0f - (o->timer - 30) / 15.0f) + 1.0f;
+```
+
+(`float t; a = (int)(255.0f * (t = 1.0f - (o->timer - 30) / 15.0f));` matches too.) The same repeated form
+is 99.6 in AF4 and the AF4 form is 99.1 in CE8, so try both. When diag asks for "constant X generated after
+constant Y", move the statement that uses X into the expression that uses Y.
+
+## 79. `lfs fA,K; fmr fB,fA` direction between a named accumulator and an inline local with the same initial constant (RivalRun_CalcPathDistance, 11-10)
+
+Target `lfs f31,K` (dist) + `fmr f27,f31` (the inline's bestDist), ours the
+reverse. Mechanism: IRO forwards `dist = K` into the inline's `bestDist = K`,
+CSEs the two loads into a temp T, and the first coalescible copy
+(`bestDist <- T`, temp-temp) takes T; `dist <- T` is named and stays a copy.
+Fix (the 78 lever): give the inline an `init` parameter and write the
+assignment inside the argument, `a = Find(pts, count, from, dist = K);`.
+Then dist is defined by the load itself and bestDist is the copy.
+Things that do NOT work: passing `dist` after a separate `dist = K;`
+(forwarded), casts (76 is for pointers), `#pragma opt_propagation off`
+(fixes the pair, breaks 220 lines).
+Follow-up: the change renumbers the float locals of the SECOND inline
+instance; that instance needed its own copy of the inline with the float
+declarations in the order `pz, py, px, bestDist` (24 orders swept, one hit).
+
+## 80. Several expansions of one big inline in one function: wrapper level fixes `self`, per-copy local order fixes the rest (CarObject_HandleItemEffect, asm -> C, 214 -> 0 lines, 11-10)
+
+Function: three switch case groups each expand the same "cancel active
+effect" routine (7 saved-register locals plus `self`), and three cases expand
+the small boost routine. Instruction stream identical, only r22..r29 differ
+per expansion.
+
+What the trace (`tools/mwtrace.py ... --only VREG,COLOR`) shows:
+
+- Inline temps are created level by level. All parameter temps of the
+  inlines called directly from the function body are created first, for
+  every call site; the locals of an inline that is called from inside
+  another inline come later. Later created = lower vreg = coloured later.
+- The first node that needs a new saved register takes the next fresh one
+  (r29 after the two arguments). Every later node takes the LOWEST already
+  handed-out register that is free for it.
+- Locals of one inline body are created in REVERSE declaration order.
+- So the first coloured expansion gets its locals descending from the fresh
+  end (creation order = r28, r27, ... r22) and every later expansion gets
+  them ascending (creation order = r22, r23, ...).
+
+Two levers follow:
+
+1. Target has the same register (r29) for `self` in every expansion, also in
+   the small boost inlines that have no other locals: call the big body
+   through a one-line wrapper inline (`static inline int Cancel(T *self)
+   { return CancelBody(self); }`). The wrapper's parameter temps are level 1,
+   created together with the boost parameter temps, so all of them are
+   coloured before any body local and all take r29. With the body called
+   directly, `self` is coloured with the body locals and lands on r22 in
+   every expansion but the first (214 lines -> 172).
+2. Remaining per-expansion order: read each expansion's registers from high
+   to low. For the first expansion that list is the creation order, so
+   declare the locals in the reverse of it. For the later expansions the
+   list read from LOW to high is the creation order. If the three lists do
+   not come from one declaration order (here they did not), the function
+   only matches with one copy of the inline per expansion, each with its own
+   declaration order. That is a fakematch and is marked so in the source;
+   the more likely original is three different member functions or a deeper
+   inline nesting that nobody found yet.
+
+Also in this function: the two table scans must be written as loops in the
+function body (as inlines they share the `li` and take other registers), and
+the result flag is `unsigned char` (int gives `clrlwi` instead of `mr`).

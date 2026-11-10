@@ -233,6 +233,9 @@ The table above is the list as of 13:15Z. Since then (`tools/scan_asm_fns.py`):
 | fn_8015915C | game/fn_80157DE0.cpp | C, 100 %, in game/SceneList_80157EA8.cpp (regalloc_patterns §74) | n3 |
 | fn_80159BD0 | game/fn_80157DE0.cpp | C, 100 %, in game/SceneList_80157EA8.cpp (regalloc_patterns §71) | n3 |
 | fn_8015A6E4 | game/SceneList_80157EA8.cpp | C, 100 % (literal floats) | n3 |
+| fn_80147AF4 | game/RaceHud_80147470.cpp | C, 100 % (72f59e72, unit now GC/2.6, regalloc_patterns §78) | n3 |
+| fn_80147CE8 | game/RaceHud_80147470.cpp | C, 100 % (72f59e72, regalloc_patterns §78) | n3 |
+| fn_80147900 | game/RaceHud_80147470.cpp | still asm, 99.52 (`li`+`mr` colour copy; docs/gave_up.md) | n3 parked |
 
 The four `n3` conversions and the two merges touched group C although
 n3-20261109-1338 said n3 would stay out of it: they came out of TU merges and

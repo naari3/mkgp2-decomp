@@ -523,8 +523,8 @@ void fn_80147778(void);
 void fn_801477BC(void);
 void fn_801478B0(StepHolder *self);
 asm void fn_80147900(struct HudResSet *o);
-asm void fn_80147AF4(void);
-asm void fn_80147CE8(void);
+void fn_80147AF4(struct HudResSet *o);
+void fn_80147CE8(struct HudResSet *o);
 void fn_80147EE8(StepHolder *self);
 void fn_8014816C(StepHolder *self);
 struct RecordPanel *fn_80148648(struct RecordPanel *self, short flag);
@@ -562,13 +562,7 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80147900[8
     0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80147AF4[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80147CE8[8] = {
-    0x00, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 
@@ -609,13 +603,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_80147900, 0x000001F4, (void *)extab_fn_80147900
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80147AF4 = {
-    (void *)&fn_80147AF4, 0x000001F4, (void *)extab_fn_80147AF4
-};
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80147CE8 = {
-    (void *)&fn_80147CE8, 0x00000200, (void *)extab_fn_80147CE8
-};
 
 
 
@@ -1236,274 +1224,137 @@ extern "C" asm void fn_80147900(struct HudResSet *o) { /* 0x80147900 size:0x1F4 
     blr
 }
 
-extern "C" asm void fn_80147AF4(void) { /* 0x80147AF4 size:0x1F4 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r3
-    lwz r0, 0x8(r3)
-    cmpwi r0, 0x1
-    bne fn_80147AF4_L_80147B1C
-    li r3, 0x71
-    bl SoundMgr_Play
-    fn_80147AF4_L_80147B1C:
-    lwz r3, 0x8(r31)
-    cmpwi r3, 0x14
-    bge fn_80147AF4_L_80147BEC
-    xoris r3, r3, 0x8000
-    lis r0, 0x4330
-    stw r3, 0xc(r1)
-    lfd f3, lbl_806D7C20(r2)
-    stw r0, 0x8(r1)
-    lfs f2, lbl_806D7C40(r2)
-    lfd f1, 0x8(r1)
-    lfs f0, lbl_806D7C3C(r2)
-    fsubs f3, f1, f3
-    lfs f1, lbl_806D7C48(r2)
-    fdivs f2, f3, f2
-    fmuls f0, f0, f2
-    fmuls f0, f1, f0
-    fctiwz f0, f0
-    stfd f0, 0x10(r1)
-    lwz r3, 0x14(r1)
-    cmpwi r3, 0xff
-    ble fn_80147AF4_L_80147B74
-    li r3, 0xff
-    fn_80147AF4_L_80147B74:
-    lfs f1, lbl_806D7C50(r2)
-    li r0, -0x100
-    lfs f0, lbl_806D7C4C(r2)
-    rlwimi r0, r3, 0, 24, 31
-    fmadds f0, f1, f2, f0
-    stfs f0, 0x94(r31)
-    stfs f0, 0x98(r31)
-    stfs f0, 0xec(r31)
-    stfs f0, 0xf0(r31)
-    stfs f0, 0x144(r31)
-    stfs f0, 0x148(r31)
-    stfs f0, 0x19c(r31)
-    stfs f0, 0x1a0(r31)
-    stw r0, 0x9c(r31)
-    stw r0, 0xa0(r31)
-    stw r0, 0xa4(r31)
-    stw r0, 0xa8(r31)
-    stw r0, 0xf4(r31)
-    stw r0, 0xf8(r31)
-    stw r0, 0xfc(r31)
-    stw r0, 0x100(r31)
-    stw r0, 0x14c(r31)
-    stw r0, 0x150(r31)
-    stw r0, 0x154(r31)
-    stw r0, 0x158(r31)
-    stw r0, 0x1a4(r31)
-    stw r0, 0x1a8(r31)
-    stw r0, 0x1ac(r31)
-    stw r0, 0x1b0(r31)
-    b fn_80147AF4_L_80147CD4
-    fn_80147AF4_L_80147BEC:
-    cmpwi r3, 0x1e
-    blt fn_80147AF4_L_80147CD4
-    cmpwi r3, 0x2d
-    bge fn_80147AF4_L_80147CBC
-    subi r3, r3, 0x1e
-    lis r0, 0x4330
-    xoris r3, r3, 0x8000
-    stw r0, 0x10(r1)
-    lfd f1, lbl_806D7C20(r2)
-    li r0, -0x1
-    stw r3, 0x14(r1)
-    li r3, -0x100
-    lfs f4, lbl_806D7C34(r2)
-    lfd f0, 0x10(r1)
-    lfs f2, lbl_806D7C38(r2)
-    fsubs f5, f0, f1
-    lfs f1, lbl_806D7C50(r2)
-    lfs f0, lbl_806D7C4C(r2)
-    lfs f3, lbl_806D7C3C(r2)
-    fdivs f4, f5, f4
-    fsubs f2, f2, f4
-    fmadds f1, f1, f2, f0
-    fmuls f0, f3, f2
-    stfs f1, 0x94(r31)
-    fctiwz f0, f0
-    stfs f1, 0x98(r31)
-    stfs f1, 0xec(r31)
-    stfs f1, 0xf0(r31)
-    stfs f1, 0x144(r31)
-    stfs f1, 0x148(r31)
-    stfs f1, 0x19c(r31)
-    stfs f1, 0x1a0(r31)
-    stw r0, 0x9c(r31)
-    stw r0, 0xa0(r31)
-    stw r0, 0xa4(r31)
-    stw r0, 0xa8(r31)
-    stw r0, 0xf4(r31)
-    stw r0, 0xf8(r31)
-    stfd f0, 0x8(r1)
-    stw r0, 0xfc(r31)
-    lwz r4, 0xc(r1)
-    stw r0, 0x100(r31)
-    rlwimi r3, r4, 0, 24, 31
-    stw r3, 0x14c(r31)
-    stw r3, 0x150(r31)
-    stw r3, 0x154(r31)
-    stw r3, 0x158(r31)
-    stw r3, 0x1a4(r31)
-    stw r3, 0x1a8(r31)
-    stw r3, 0x1ac(r31)
-    stw r3, 0x1b0(r31)
-    b fn_80147AF4_L_80147CD4
-    fn_80147AF4_L_80147CBC:
-    cmpwi r3, 0x5a
-    blt fn_80147AF4_L_80147CD4
-    li r3, 0x4
-    li r0, 0x0
-    stw r3, 0x0(r31)
-    stw r0, 0x8(r31)
-    fn_80147AF4_L_80147CD4:
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+/* Views of the HudResSet sub-objects touched by the intro steps. */
+static inline unsigned int HudColor_SetAlpha(unsigned int c, int a) {
+    return (c & ~0xFF) | (a & 0xFF);
+}
+struct HudResCtrlView {
+    char pad0[0x2C];
+    float scaleX;
+    float scaleY;
+    unsigned int colors[4];
+    char pad44[0x58 - 0x44];
+};
+
+struct HudTextView {
+    char pad0[0x20];
+    unsigned int color;
+    char pad24[0x230 - 0x24];
+};
+
+struct HudResSetView {
+    int state;
+    int layer;
+    int timer;
+    unsigned char skipCheck;
+    char padD[3];
+    HudResCtrlView res[11];
+    HudTextView texts[3];
+    HudResCtrlView tail[3];
+};
+static inline void HudTexts_SetColor(HudResSetView *o, int c, int a) {
+    c = (c & ~0xFF) | (a & 0xFF);
+    for (int i = 0; i < 3; i++) {
+        o->texts[i].color = c;
+    }
+}
+static inline void HudRes_SetColor(HudResCtrlView *r, unsigned int c) {
+    r->colors[0] = c;
+    r->colors[1] = c;
+    r->colors[2] = c;
+    r->colors[3] = c;
 }
 
-extern "C" asm void fn_80147CE8(void) { /* 0x80147CE8 size:0x200 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    lwz r4, 0x8(r3)
-    cmpwi r4, 0x14
-    bge fn_80147CE8_L_80147DDC
-    xoris r4, r4, 0x8000
-    lis r0, 0x4330
-    stw r4, 0xc(r1)
-    lfd f3, lbl_806D7C20(r2)
-    stw r0, 0x8(r1)
-    lfs f2, lbl_806D7C40(r2)
-    lfd f1, 0x8(r1)
-    lfs f0, lbl_806D7C3C(r2)
-    fsubs f3, f1, f3
-    lfs f1, lbl_806D7C48(r2)
-    fdivs f2, f3, f2
-    fmuls f0, f0, f2
-    fmuls f0, f1, f0
-    fctiwz f0, f0
-    stfd f0, 0x10(r1)
-    lwz r4, 0x14(r1)
-    cmpwi r4, 0xff
-    ble fn_80147CE8_L_80147D44
-    li r4, 0xff
-    fn_80147CE8_L_80147D44:
-    lfs f1, lbl_806D7C50(r2)
-    li r0, -0x100
-    lfs f0, lbl_806D7C38(r2)
-    rlwimi r0, r4, 0, 24, 31
-    fmadds f0, f1, f2, f0
-    stfs f0, 0x1f4(r3)
-    stfs f0, 0x1f8(r3)
-    stfs f0, 0x24c(r3)
-    stfs f0, 0x250(r3)
-    stfs f0, 0x2a4(r3)
-    stfs f0, 0x2a8(r3)
-    stfs f0, 0x2fc(r3)
-    stfs f0, 0x300(r3)
-    stw r0, 0x1fc(r3)
-    stw r0, 0x200(r3)
-    stw r0, 0x204(r3)
-    stw r0, 0x208(r3)
-    stw r0, 0x254(r3)
-    stw r0, 0x258(r3)
-    stw r0, 0x25c(r3)
-    stw r0, 0x260(r3)
-    stw r0, 0x2ac(r3)
-    stw r0, 0x2b0(r3)
-    stw r0, 0x2b4(r3)
-    stw r0, 0x2b8(r3)
-    stw r0, 0x304(r3)
-    stw r0, 0x308(r3)
-    stw r0, 0x30c(r3)
-    stw r0, 0x310(r3)
-    stw r0, 0x35c(r3)
-    stw r0, 0x360(r3)
-    stw r0, 0x364(r3)
-    stw r0, 0x368(r3)
-    stw r0, 0x3b4(r3)
-    stw r0, 0x3b8(r3)
-    stw r0, 0x3bc(r3)
-    stw r0, 0x3c0(r3)
-    b fn_80147CE8_L_80147EE0
-    fn_80147CE8_L_80147DDC:
-    cmpwi r4, 0x1e
-    blt fn_80147CE8_L_80147EE0
-    cmpwi r4, 0x2d
-    bge fn_80147CE8_L_80147EC8
-    subi r4, r4, 0x1e
-    lis r0, 0x4330
-    xoris r4, r4, 0x8000
-    stw r0, 0x10(r1)
-    lfd f2, lbl_806D7C20(r2)
-    li r0, -0x1
-    stw r4, 0x14(r1)
-    li r4, -0x100
-    lfs f1, lbl_806D7C34(r2)
-    lfd f0, 0x10(r1)
-    lfs f3, lbl_806D7C38(r2)
-    fsubs f2, f0, f2
-    lfs f0, lbl_806D7C50(r2)
-    lfs f4, lbl_806D7C3C(r2)
-    fdivs f1, f2, f1
-    fsubs f1, f3, f1
-    fmadds f2, f0, f1, f3
-    fmuls f0, f4, f1
-    stfs f2, 0x1f4(r3)
-    fctiwz f0, f0
-    stfs f2, 0x1f8(r3)
-    stfs f2, 0x24c(r3)
-    stfs f2, 0x250(r3)
-    stfs f2, 0x2a4(r3)
-    stfs f2, 0x2a8(r3)
-    stfs f2, 0x2fc(r3)
-    stfs f2, 0x300(r3)
-    stw r0, 0x1fc(r3)
-    stw r0, 0x200(r3)
-    stw r0, 0x204(r3)
-    stw r0, 0x208(r3)
-    stw r0, 0x254(r3)
-    stw r0, 0x258(r3)
-    stw r0, 0x25c(r3)
-    stw r0, 0x260(r3)
-    stw r0, 0x2ac(r3)
-    stw r0, 0x2b0(r3)
-    stfd f0, 0x8(r1)
-    stw r0, 0x2b4(r3)
-    lwz r5, 0xc(r1)
-    stw r0, 0x2b8(r3)
-    rlwimi r4, r5, 0, 24, 31
-    stw r4, 0x304(r3)
-    stw r4, 0x308(r3)
-    stw r4, 0x30c(r3)
-    stw r4, 0x310(r3)
-    stw r4, 0x35c(r3)
-    stw r4, 0x360(r3)
-    stw r4, 0x364(r3)
-    stw r4, 0x368(r3)
-    stw r4, 0x3b4(r3)
-    stw r4, 0x3b8(r3)
-    stw r4, 0x3bc(r3)
-    stw r4, 0x3c0(r3)
-    b fn_80147CE8_L_80147EE0
-    fn_80147CE8_L_80147EC8:
-    cmpwi r4, 0x5a
-    blt fn_80147CE8_L_80147EE0
-    li r4, 0x3
-    li r0, 0x0
-    stw r4, 0x0(r3)
-    stw r0, 0x8(r3)
-    fn_80147CE8_L_80147EE0:
-    addi r1, r1, 0x20
-    blr
+static inline void HudTail_SetScale(HudResSetView *o, float sx, float sy) {
+    for (int i = 0; i < 3; i++) {
+        o->tail[i].scaleX = sx;
+        o->tail[i].scaleY = sy;
+    }
+}
+
+extern "C" void fn_80147AF4(HudResSet *set) {
+    HudResSetView *o = (HudResSetView *)set;
+
+    if (1 == o->timer) {
+        SoundMgr_Play(0x71);
+    }
+    if (o->timer < 20) {
+        float t = o->timer / 20.0f;
+        int a = (int)(3.0f * (255.0f * t));
+        if (a > 255) {
+            a = 255;
+        }
+        float s = 0.2f * t + 1.1f;
+        for (int i = 1; i < 5; i++) {
+            o->res[i].scaleX = s;
+            o->res[i].scaleY = s;
+        }
+        unsigned int color;
+        color = HudColor_SetAlpha(0xFFFFFF00, a);
+        for (int i = 1; i < 5; i++) {
+            HudRes_SetColor(&o->res[i], color);
+        }
+    } else if (o->timer >= 30) {
+        if (o->timer < 45) {
+            float t = (o->timer - 30) / 15.0f;
+            int a = (int)(255.0f * (t = 1.0f - t));
+            float s = 0.2f * t + 1.1f;
+            for (int i = 1; i < 5; i++) {
+                o->res[i].scaleX = s;
+                o->res[i].scaleY = s;
+            }
+            for (int i = 1; i < 3; i++) {
+                HudRes_SetColor(&o->res[i], 0xFFFFFFFF);
+            }
+            unsigned int color = HudColor_SetAlpha(0xFFFFFF00, a);
+            for (int i = 3; i < 5; i++) {
+                HudRes_SetColor(&o->res[i], color);
+            }
+        } else if (o->timer >= 90) {
+            { o->state = 4;
+            o->timer = 0; }
+        }
+    }
+}
+
+extern "C" void fn_80147CE8(HudResSet *set) {
+    HudResSetView *o = (HudResSetView *)set;
+
+    if (o->timer < 20) {
+        float t = o->timer / 20.0f;
+        int a = (int)(3.0f * (255.0f * t));
+        if (a > 255) {
+            a = 255;
+        }
+        float s = 0.2f * t + 1.0f;
+        for (int i = 5; i < 9; i++) {
+            o->res[i].scaleX = s;
+            o->res[i].scaleY = s;
+        }
+        unsigned int color = HudColor_SetAlpha(0xFFFFFF00, a);
+        for (int i = 5; i < 11; i++) {
+            HudRes_SetColor(&o->res[i], color);
+        }
+    } else if (o->timer >= 30) {
+        if (o->timer < 45) {
+            int a = (int)(255.0f * (1.0f - (o->timer - 30) / 15.0f));
+            float s = 0.2f * (1.0f - (o->timer - 30) / 15.0f) + 1.0f;
+            for (int i = 5; i < 9; i++) {
+                o->res[i].scaleX = s;
+                o->res[i].scaleY = s;
+            }
+            for (int i = 5; i < 8; i++) {
+                HudRes_SetColor(&o->res[i], 0xFFFFFFFF);
+            }
+            unsigned int color = HudColor_SetAlpha(0xFFFFFF00, a);
+            for (int i = 8; i < 11; i++) {
+                HudRes_SetColor(&o->res[i], color);
+            }
+        } else if (o->timer >= 90) {
+            o->state = 3;
+            o->timer = 0;
+        }
+    }
 }
 
 struct ResCtrl {
