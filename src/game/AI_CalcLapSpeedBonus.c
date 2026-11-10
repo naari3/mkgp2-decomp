@@ -50,10 +50,38 @@ static inline unsigned char FindBonusCommon(signed char cc, signed char round,
     }
     return 0;
 }
+/* fakematch (hand, regalloc_patterns 97): the non-race row lookup is written
+ * as an outer inline with two nested helper inlines so that the register
+ * allocator numbers section > cup offset > table base > cc offset (the wrapped
+ * section is the outer inline's parameter, the other two are single-use locals
+ * of nested inlines). cc is written through a pointer after the wrap so that
+ * its sign extension is emitted after the branch join.
+ * natural: int courseOffset = (cup - 1) * 16 + g_ccClass * 128;
+ *          int section = round; if (section >= 4) section -= 4;
+ *          FindBonus(g_ccClass, table[courseOffset / 4 + section], ...); */
+static inline int NonRaceCupOffset(int cup) {
+    int offset = (cup - 1) * 16;
+    return offset;
+}
+static inline const char *NonRaceTable(void) {
+    const char *table = (const char *)kAILapBonusRuleTable_NonRace;
+    return table;
+}
+static inline const AILapRule *NonRaceRules(int section, int cup, signed char *cc) {
+    int courseOffset;
+    const char *courseBase;
+    int ccOffset;
+    courseOffset = NonRaceCupOffset(cup);
+    ccOffset = g_ccClass * 128;
+    courseBase = NonRaceTable();
+    courseOffset = ccOffset + courseOffset;
+    if (section >= 4) section -= 4;
+    *cc = g_ccClass;
+    return *(const AILapRule *const *)(courseBase + courseOffset + section * 4);
+}
 /* fakematch (leversweep dead-def-split): opt_dead_assignments off gives the
- * target address math in the non-race path (99.09 -> 99.88).
- * natural: no pragma. Left: the `g_ccClass * 128` temp and `section` swap r12/r8
- * (regfix diag: section must be numbered above that temp). */
+ * target address math in the non-race path.
+ * natural: no pragma. */
 #pragma push
 #pragma opt_dead_assignments off
 float AI_CalcLapSpeedBonus(int kart, int lapsArg, int difference, int rankArg) {
@@ -76,16 +104,8 @@ float AI_CalcLapSpeedBonus(int kart, int lapsArg, int difference, int rankArg) {
         }
     } else {
         if (!FindBonusCommon(g_ccClass, round, kart, laps, difference, rank, &bonus)) {
-            int courseOffset = (cup - 1) * 16;
-            int ccOffset = g_ccClass * 128;
-            const char *courseBase = (const char *)kAILapBonusRuleTable_NonRace;
-            int section = round;
-            courseOffset = ccOffset + courseOffset;
-            if (section >= 4) section -= 4;
-            {
-                signed char cc = g_ccClass;
-                FindBonus(cc, *(const AILapRule *const *)(courseBase + courseOffset + section * 4), round, kart, laps, difference, rank, &bonus);
-            }
+            signed char cc;
+            FindBonus(cc, NonRaceRules(round, cup, &cc), round, kart, laps, difference, rank, &bonus);
         }
     }
     return bonus;

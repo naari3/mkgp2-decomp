@@ -8,15 +8,22 @@ points at. Update this table when a section or a hint is added.
 | diag prints a dedicated hint | 54, 57, 58, 59, 61, 64, 66, 67, 69, 70, 71, 72, 73, 75, 77, 78, 79, 81, 83, 85 (operand order), 89, 93, 94 (1) |
 | diag shows the leversweep lever | 62, 74 (arg-order-prototype), 84 |
 | readable from the colouring-sequence / neighbour sections (70, 89), no dedicated hint | 56, 65, 68, 80, 86, 88, 92 |
-| not detected | 55, 60, 63, 76, 82, 87, 90, 91, 94 (2, 3) |
+| instruction sequence differs: `tools/shapediag.py` (diag calls it by itself) | 55 (`saved-regs`), 63 lever 3 (`order:regswap`), 76 (`copy:target-extra` / `copy:direction`), 82 and 91 (`order:args`), 87 (`load:target-reloads`, "stack float loaded twice"), 90 (`order:copyrun`) |
+| not detected | 60 (the near miss is a pure register rotation; `select:indexed` only fires once ours has the walker instead of the `add`), 63 levers 1-2, 94 (2, 3) |
 
-Why the last row is hard: diag only diagnoses register-only diffs (same
-instruction count, at most a few opcode diffs). 55, 76, 87, 90 change the
-instruction sequence (extra saved register, an extra `mr`, a second load
-set, another struct-copy shape); 60, 63, 82, 91 are scheduling or
-multi-step shapes with no single signature. 90 is partly caught by the
-anchor-offset hint (an object starts where the target adds a constant to an
-anchor).
+Since 2026-11-10 diag no longer stops at "not a register-only diff": it
+prints the `shapediag` classes of every differing run with the levers for
+each class (`python3 tools/shapediag.py classes` lists all of them). How the
+rows above were checked (`python3 tools/shapediag.py replay`, which rebuilds
+the source just before the fix commit): 63, 76 and the older rules 7.8
+(`__restrict` -> `order:load`, loop step order -> `order:loopstep`), 84
+(`order:expr`), 40/69 (VoiceSystem_Init) fire on the real pre-fix source. 82
+and 87 were checked by undoing the lever in today's source
+(`shapediag.py fn UNIT FN --src FILE`). 55, 90 and 91 only have synthetic
+cases in `shapediag.py selftest` (their pre-fix sources were never
+committed, or no longer build). The pre-fix states of 60, AI_CalcGPTargetSpeed,
+PtrVec_InsertFill and DetermineTitle are register-only diffs, so they stay
+with the allocator model.
 
 Hints older than 54 that diag also prints: 35 (inline wrapper, named
 locals), 40 (anchor offsets inside a symbol), 46 (shared loop counter),

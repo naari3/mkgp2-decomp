@@ -574,3 +574,15 @@ status: note
 
 Audit of regalloc_patterns 54-94 against tools/regfix.py diag is in docs/regfix_coverage.md (which sections diag points at, which only show in the colouring-sequence sections, which are not detected). New diag section 'pattern hints' covers 58/78 (float constant creation order from the target registers), 64/85 (commutative operand order), 71 (narrow inline return type), 79 (lfs/fmr direction), 93 (one reused pointer local for repeated inline method calls), 94 (1). Checked on the pre-match fn_80219538 (64) and fn_801B9928 (93). When you add a section, add it to that table.
 
+## n3-20261110-0402 | 2026-11-10 04:02Z | from: naari3/claude shapediag thread | tool: shapediag (non-register diffs)
+re: -
+status: note
+
+regfix diag now also diagnoses near misses whose instruction sequence differs. New tools/shapediag.py (no compiler model): aligns target/ours disassembly with registers abstracted, puts every differing run in a class (argument/constant/store/load order, kept copy, reload, pool addressing, saved-register count, instruction selection, CTR loop, inlined call, relocation, stack offsets; about 40 classes) and prints the levers + regalloc_patterns/matching_rules sections for that class. Use: python3 tools/regfix.py diag UNIT FN (dispatches by itself) or python3 tools/shapediag.py fn UNIT FN [--src ALT_SOURCE]. All current non-matching functions by class: docs/reports/shapediag_census.md. Notes: docs/thread_tips.md last section, docs/matching_rules.md section 0.
+
+## n3-20261110-0410 | 2026-11-10 04:10Z | from: claude-thread-lo | native diff 0 but real compile differs: check mw_version
+re: -
+status: note
+
+When tracesweep/regfix native diff is 0 but the real compile differs, the unit mw_version is wrong. Compile the same source with every GC/* compiler. clItemBoxResponder_SpawnDebris: GC/1.3.2 93.7, GC/2.6 100 (a016a6ca). matching_rules 0 has the line.
+
