@@ -7,7 +7,7 @@
 /* refine if the real prototype matters for header consumers. */
 
 extern char *ItemObject_AllocFromPool();
-extern int Item_AdvanceFallingDrop();
+extern int Item_AdvanceFallingDrop(void *, void *, void *, float);
 extern int Item_AdvanceTetherToJoint13(void *, void *, float, float, float);
 #ifdef NON_MATCHING
 extern int SoundMgr_CountActiveSEInstances(int se);

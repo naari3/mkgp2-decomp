@@ -132,7 +132,14 @@ extern void Item_BounceOffWall(void *self, Vec3 *normal, int a, int b, float f1,
 extern float Item_ProbeForwardGroundPitch(Vec3 *pos, float yaw, float a, float b);
 extern float Item_ProbeLateralGroundPitch(Vec3 *pos, float yaw, float a, float b);
 extern float AngleStepForward_OrSnap(float current, float target, float step);
+/* The definition takes three floats. Declaring `target` as double is what
+ * makes MWCC pass the double sums below without rounding them first; on
+ * PowerPC both travel in the same register, elsewhere they do not. */
+#ifdef __MWERKS__
 extern float AngleStepTowards_Shortest(float current, double target, float step);
+#else
+extern float AngleStepTowards_Shortest(float current, float target, float step);
+#endif
 extern double atan(double x);
 extern double sin(double x);
 extern void DrawEffect_ItemHitOriented_Spawn(Vec3 *pos, Vec3 *vel, int mode);

@@ -41,7 +41,7 @@ struct SmokePuff {
 extern void Vec3_Add_DestFirst(SmokeVec *dst, const SmokeVec *a, const SmokeVec *b);
 extern void Vec3_Copy();
 extern float Vec3_Magnitude_Wrapper(const SmokeVec *v);
-extern void Vec3_Scale();
+extern void Vec3_Scale(void *, void *, float);
 extern void Vec3_Subtract_DestFirst(SmokeVec *dst, const SmokeVec *a, const SmokeVec *b);
 extern void VfxSlot_SetPositionFromVec(void *slot, SmokeVec pos);
 extern void VfxSlot_SetScaleUniform(void *slot, float scale);

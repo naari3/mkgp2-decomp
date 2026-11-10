@@ -1,14 +1,14 @@
 #include "game/objview/item_state_private.h"
 
 extern float AngleStepTowards_Shortest(float, float, float);
-extern float BuildOrientationFromYaw();
+extern float BuildOrientationFromYaw(float);
 extern void *DrawEffect_SpawnDirect();
 extern unsigned char FinalLapCoinJump_CheckActiveForObject();
 extern void GetSpawnPosition(Vec3 *, float, float, float);
 extern short ItemAlias_HitRemapLookup();
 extern void ItemHit_Dispatch();
 extern int Item_AdvanceTetherToJoint13(Item *, float *, float, float, float);
-extern void Item_DecayVelocityScalar();
+extern void Item_DecayVelocityScalar(void *, float);
 extern int KartCharacterParam_GetIdentityIndex();
 extern void *KartDriver_GetJointByIdx();
 extern void *KartDriver_GetKartRootMtx();
@@ -22,7 +22,7 @@ extern void Mtx44_GetTranslation_RowMajor();
 extern void SoundMgr_PlaySE_Positional();
 extern void Vec3_Add_DestFirst();
 extern void Vec3_Copy();
-extern void Vec3_Lerp();
+extern void Vec3_Lerp(void *, void *, void *, float);
 extern void Vec3_Subtract_DestFirst();
 extern void fn_801B14B8();
 extern void fn_801B158C();
@@ -45,15 +45,15 @@ extern const float lbl_806D5EA8;
 extern const float lbl_806D5EAC;
 extern unsigned int Effect_KartJoint15_Res7B_Update[];
 extern unsigned int MukadeItem_Tick_HeldAndHoming_3839_rodata_8032F4C8[];
-extern void *FindNearestDriverWithinConeAndRadius();
+extern void *FindNearestDriverWithinConeAndRadius(void *, void *, int, float, float, float);
 extern signed char ItemObject_GetGroundTypeAt();
-extern void Item_AccelClampVelocity();
-extern int Item_AdvanceProjectileSimple();
-extern void Item_BendVelocityByGroundProbe();
-extern void Item_BounceOffWall();
+extern void Item_AccelClampVelocity(void *, float, float);
+extern int Item_AdvanceProjectileSimple(void *, void *, float, float);
+extern void Item_BendVelocityByGroundProbe(void *, void *, float, float, float);
+extern void Item_BounceOffWall(void *, void *, int, int, float, float);
 extern int Item_CheckWallCollision();
 extern void Item_HomingScanAndSteer();
-extern void Item_InitLaunchFromKart();
+extern void Item_InitLaunchFromKart(void *, void *, float, float);
 #ifdef __MWERKS__
 extern void Item_RenderCharacterScaledFromJoint12();
 #else /* this unit passes the two vectors as addresses of its own copies (ItemCharacterRender.c) */
@@ -77,10 +77,10 @@ extern const float lbl_806D5ECC;
 extern const Vec3 MukadeItem_TickHeldOrSnake_3839_rodata_8032F4B0;
 extern const Vec3 MukadeItem_TickHeldOrSnake_3839_rodata_8032F4BC;
 extern void ItemObject_DecrementCategoryBudget();
-extern int Item_OrbitAnchorKart();
+extern int Item_OrbitAnchorKart(void *, void *, void *, float, float);
 extern void SpriteSlot_Container_Free();
 extern void SpriteSlot_InitNonLoop();
-extern void SpriteSlot_SetTransform();
+extern void SpriteSlot_SetTransform(void *, void *, void *, float);
 
 /* Enter the retreat phase with the requested number of remaining tethers. */
 static inline void MukadeItem_BeginRetreat(Item *item, State *state, unsigned char count)
@@ -460,7 +460,7 @@ void MukadeItem_Dispatch_3839(Item *item)
                 break;
             }
             Item_DecayVelocityScalar(item, lbl_806D5E7C);
-            if (Item_OrbitAnchorKart(item, &state->delta, state->timer, lbl_806D5E80, lbl_806D5E80)) {
+            if (Item_OrbitAnchorKart(item, &state->delta, (void *)state->timer, lbl_806D5E80, lbl_806D5E80)) {
                 item->visible = 0;
                 item->phase = 3;
                 item->subphase = 0;

@@ -12,7 +12,7 @@ extern signed char ItemObject_GetGroundTypeAt(void *, void *, int);
 extern int Item_AdvanceTetherToJoint13(void *, void *, float, float, float);
 extern void Item_DecayVelocityScalar(void *, float);
 extern void SpriteSlot_InitNonLoop();
-extern void SpriteSlot_SetTransform();
+extern void SpriteSlot_SetTransform(void *, void *, void *, float);
 extern void TornadoItem_TickActive();
 
 

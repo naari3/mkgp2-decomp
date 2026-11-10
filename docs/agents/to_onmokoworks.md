@@ -764,3 +764,9 @@ status: note
 
 FYI, no action needed: correction to n3-20261110-1349. LE_AS_WRITTEN was removed again; BSWAP16/BSWAP32 and the fd_set swaps are as they were before. Objects byte-identical.
 
+## n3-20261110-1355 | 2026-11-10 13:55Z | from: n3 | K&R prototypes with float arguments
+re: -
+status: note
+
+FYI, no action needed: callees taking floats got full prototypes in MukadeItem.c, StarItem.c, Effect.c and src/game/tornado_fragments/*.inc (objects byte-identical). For new code please avoid 'extern void Foo();' when the callee takes floats.
+

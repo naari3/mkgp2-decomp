@@ -7,12 +7,12 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern float BuildOrientationFromYaw();
+extern float BuildOrientationFromYaw(float);
 float FAbs_FloatAsDouble(float);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject();
 extern void GetSpawnPosition(Vec3 *, float, float, float);
 extern void Item_DecayVelocityScalar(Item *, float);
-extern void Item_SpawnHitBurstParticles();
+extern void Item_SpawnHitBurstParticles(void *, void *, int, float);
 extern void JointByName_GetMatrix4x4Transposed();
 void *KartDriver_GetJointByIdx();
 extern void * KartDriver_GetKartRootMtx();
@@ -24,12 +24,12 @@ float Mtx44_GetYawOfPosZ();
 extern void Mtx44_Inverse_GaussJordan();
 extern void Mtx44_TransformVec3();
 extern void Mtx_TransposeToMtx44();
-extern void SpriteSlot_SetAnimFrameAndApplyScale();
-extern void SpriteSlot_SetScale();
-extern void Vec2_RotateY();
+extern void SpriteSlot_SetAnimFrameAndApplyScale(void *, int, float);
+extern void SpriteSlot_SetScale(void *, float);
+extern void Vec2_RotateY(void *, void *, float);
 extern void Vec3_Add_DestFirst(Vec3 *, const Vec3 *, const Vec3 *);
 extern void Vec3_Copy(Vec3 *, const Vec3 *);
-extern void Vec3_Lerp();
+extern void Vec3_Lerp(void *, void *, void *, float);
 extern void Vec3_Subtract_DestFirst(Vec3 *, const Vec3 *, const Vec3 *);
 float Vec3_ToYaw();
 
@@ -197,7 +197,7 @@ void StarItem_BoundToVictimTick(Item *item, StarWork *work)
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-extern float BuildOrientationFromYaw();
+extern float BuildOrientationFromYaw(float);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject();
 extern void GetSpawnPosition(Vec3 *, float, float, float);
 extern signed char ItemObject_GetGroundTypeAt();
@@ -298,20 +298,20 @@ extern void ItemTracker_AcquireLock();
 void *ItemTracker_GetTargetKart();
 extern void ItemTracker_ReleaseLock();
 extern void ItemTracker_SetTrackPhase();
-extern void Item_AccelClampVelocity();
-int Item_AdvanceProjectileSimple();
+extern void Item_AccelClampVelocity(void *, float, float);
+int Item_AdvanceProjectileSimple(void *, void *, float, float);
 int Item_CheckWallCollision();
 extern void Item_ComputeYawRelativeApproach();
 extern void Item_DecayVelocityScalar(Item *, float);
 extern void Item_HomingScanAndSteer();
-extern void Item_InitLaunchFromKart();
+extern void Item_InitLaunchFromKart(void *, void *, float, float);
 #ifdef __MWERKS__
 extern void Item_RenderCharacterScaledFromJoint12();
 #else /* this unit passes the two vectors as addresses of its own copies (ItemCharacterRender.c) */
 #define Item_RenderCharacterScaledFromJoint12 Item_RenderCharacterScaledFromJoint12_ByAddress
 extern void Item_RenderCharacterScaledFromJoint12(void *item, const void *offset, const void *euler, int mode, float scale);
 #endif
-extern void Item_SpawnHitBurstParticles();
+extern void Item_SpawnHitBurstParticles(void *, void *, int, float);
 extern void JointByName_GetWorldPosition();
 void *KartDriver_GetJointByIdx();
 extern void Mtx44_GetTranslation_RowMajor();
@@ -319,13 +319,13 @@ extern void Mtx44_GetTranslation_RowMajor();
 #define SoundMgr_PlaySE_Positional SoundMgr_PlaySE_Positional_ByAddress
 #endif
 extern void SoundMgr_PlaySE_Positional();
-extern void SpriteSlot_SetAnimFrameAndApplyScale();
+extern void SpriteSlot_SetAnimFrameAndApplyScale(void *, int, float);
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed();
-extern void SpriteSlot_SetScale();
+extern void SpriteSlot_SetScale(void *, float);
 extern void Vec3_Add_DestFirst(Vec3 *, const Vec3 *, const Vec3 *);
 extern void Vec3_Copy(Vec3 *, const Vec3 *);
 float Vec3_HorizontalMagnitude();
-extern void Vec3_Scale();
+extern void Vec3_Scale(void *, void *, float);
 extern void Vec3_Subtract_DestFirst(Vec3 *, const Vec3 *, const Vec3 *);
 extern float Vec3_ToPitch();
 float Vec3_ToYaw();
@@ -564,7 +564,7 @@ void StarItem_FlightAndLockOnTick(Item *item, StarWork *work)
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
 extern float AngleStepTowards_Shortest(float, float, float);
-extern float BuildOrientationFromYaw();
+extern float BuildOrientationFromYaw(float);
 extern void GetSpawnPosition(Vec3 *, float, float, float);
 extern void ItemObject_DecrementCategoryBudget(Item *);
 extern int Item_AdvanceTetherToJoint13(Item *, float *, float, float, float);
