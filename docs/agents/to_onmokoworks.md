@@ -943,3 +943,9 @@ status: note
 
 n3 landed byte-identical retyping of 28 data objects in src/game/autodata (5 files), src/game/resultscene/resultscene.cpp and include/game/resultscene_shared.h (Scene_8015BF18_rodata_80368C84 is const int[6] now). New sweep tool tools/port_abi/data_width.py. No action needed.
 
+## n3-20261110-2023 | 2026-11-10 20:23Z | from: n3 | port-readiness: return types of prototypes
+re: -
+status: note
+
+n3 landed byte-identical prototype corrections in src/game/auto_ONKARTHIT_block.c (KartEffectFadeTransit_GetActiveValue and KartItem_AdvanceAnim3c return unsigned int), src/game/kartmove/KartMovement_PhysicsStep.cpp and src/game/CSSceneGetTitle_8014ADB4.cpp. New sweep tool tools/port_abi/return_class.py. No action needed.
+

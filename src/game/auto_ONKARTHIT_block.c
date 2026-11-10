@@ -135,7 +135,7 @@ extern void KartDriver_SetJointPosY_Slot3d(void *, float);
 extern void KartDriver_TickAction_79260(void *, float);
 extern void KartDriver_TickAction_79268_AndSetSlot5aEulerZ(void *, float);
 extern void KartEffectFadeTransit_Dtor();
-extern float KartEffectFadeTransit_GetActiveValue(void *);
+extern unsigned int KartEffectFadeTransit_GetActiveValue(void *);
 extern void KartEffectFadeTransit_Init();
 extern unsigned char KartEffectFadeTransit_IsActive(void *obj);
 extern void KartEffectFadeTransit_Tick(void *);
@@ -1235,7 +1235,7 @@ extern "C" void *KartItem_Dtor(KartItemObj *self, short flag);
 #pragma cplusplus off
 C_REGION_BEGIN
 void KartItem_UpdateShadowBillboardAndViewport(KartItemOpsView *self, int arg2, int arg3);
-float KartItem_AdvanceAnim3c(const KartItemOpsView *self);
+unsigned int KartItem_AdvanceAnim3c(const KartItemOpsView *self);
 float CarObject_CalcSpeedRatio(KartItemOpsView *self);
 float KartItem_GetMaxSpeedWithBonus(KartItemOpsView *self);
 float KartItem_GetCurrentSpeedWithBonus(const KartItemOpsView *self);
@@ -7327,7 +7327,7 @@ void KartItem_UpdateShadowBillboardAndViewport(KartItemOpsView *self, int arg2, 
  * hoists the field load above the LR save, as in the target. 1.3.2 never
  * does, and the rest of this TU compiles identically under both. */
 #pragma exceptions off
-float KartItem_AdvanceAnim3c(const KartItemOpsView *self) { /* 0x8004EFD8 size:0x24 */
+unsigned int KartItem_AdvanceAnim3c(const KartItemOpsView *self) { /* 0x8004EFD8 size:0x24 */
     return KartEffectFadeTransit_GetActiveValue(self->boostObj);
 }
 #pragma exceptions reset

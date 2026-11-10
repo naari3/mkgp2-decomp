@@ -233,7 +233,7 @@ void fn_80143DB0(void);
 extern int g_gameMode;
 void fn_8023CD54(void *p);
 void RumbleUpdate(void);
-extern void Saturate_Double();
+extern float Saturate_Double(float, float, float);
 void *StrPcb_GetInstance(void);
 extern void StrPcb_SetStatusBits();
 extern void TaRecord_GetEntry_Current();

@@ -465,3 +465,25 @@ reports 0 now. It does not see a byte pool that is read through a local
 pointer plus offset (`strings + 0x4E8`) when the bytes at that offset look
 like text. `lbl_802EB4E0` (declared `NamCamPool` by one user) is all text
 bytes and stays `char`.
+
+## Prototypes whose return class differs from the definition
+
+A float result that the caller does not expect (or expects and does not get)
+costs nothing on PowerPC; on 32-bit x86 it unbalances the x87 register stack
+and later float loads give NaN. Fixed, all with unchanged objects:
+
+- `fn_8019EA8C` returns float; KartMovement_PhysicsStep.cpp declared it void.
+- `KartEffectFadeTransit_GetActiveValue` returns the timer in r3 (`lwz r3,
+  24(r3)`); auto_ONKARTHIT_block.c declared it float, and
+  `KartItem_AdvanceAnim3c`, which only passes that result on, was float too
+  while its callers compare the result with 4. Both are `unsigned int` now.
+- `Saturate_Double`: an inline-asm `extern void` list entry, now the real
+  prototype.
+
+`python3 tools/port_abi/return_class.py` compares every non-member definition
+with all prototypes of the name and of its `name_pN` aliases (classes: float /
+double, void, anything else) and reports 0. `-a` adds void against
+integer/pointer (611 names; harmless for the calling convention). Not read:
+prototypes inside class bodies, in src/game/autodata, and the
+`extern void name();` lists of inline-asm blocks in files that also carry the
+right prototype.
