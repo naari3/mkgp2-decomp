@@ -39,6 +39,7 @@ struct GpPanelBase {
     int layer;
     GpTween tween[5];
     unsigned char state, flag;
+    unsigned char pad86[2]; /* spelled out: other ABIs would put a derived member here (docs/notes/rtti_classes.md) */
     GpPanelBase(CourseSprite *s,int l):sprite(s),layer(l) {
         state=0; flag=0;
         tween[0].active=0; tween[1].active=0; tween[2].active=0;
