@@ -2271,3 +2271,33 @@ inner sum together with the first-shifted term in the source, and the term
 with the smaller shift goes outside. Do not reason about it; a 12-form sweep
 takes one minute (script shape: replace the return expression, `ninja` the
 object, count diff lines).
+
+## 85. `add rT, rBase, rT` vs `add rT, rT, rIdx`, a u8 parameter coloured first, and an aligned buffer that must be coloured before the address (fn_8028C1B8, 98.37 -> 100, 11-10)
+
+Three independent levers in one function (triforce/amnet_nm3.c), each found
+with `tools/mwtrace.py --only COLOR,PCODE`:
+
+1. **u8 parameter wants r31, a `u32 ch = channel;` local gets the last saved
+   register.** The named local has a low vreg number and is pushed first.
+   Use the `u8` parameter directly where the integer promotion happens
+   (`channel << 16`, `channel == 0xFF`): the `clrlwi` result is then a backend
+   temp numbered above the .bss anchor and is coloured first. Uses that would
+   re-extend the raw parameter after a call (u8 inline parameters, later
+   compares) get an explicit `(u32)channel`, otherwise the raw parameter stays
+   live and takes one more saved register.
+2. **A loop-invariant expression passed to an inline is numbered last.**
+   `DevWaitIdle(addr, ALIGN32(raw))` hoists the align out of the inline's
+   loop into a late IRO temp (lowest number, coloured after `addr`). Wrapping
+   it in a one-line inline (`AlignPacket(raw)`) in the argument creates the
+   temp at expansion time, before the callee's parameter temps; it is then
+   coloured before `addr` and shares the register of the later `pkt`.
+   Calling a nested search inline directly (`FindDev(ChannelDeviceId(ch))`
+   written as two statements instead of through a wrapper inline) moves its
+   walker one expansion level up in the same way.
+3. **`&table[n & 7]` always computes the base into the destination**
+   (`addi rT,anchor,0; add rT,rT,rIdx`), whatever the C form (`t += i`,
+   `&t[i]`, `(u8 *)t + i * size`). The target had the scaled index in the
+   destination and the base in a scratch (`add r8, r3, r8`). Only the integer
+   accumulate form gives that: `u32 i = (n & 7) * sizeof(T); i += (u32)table;
+   t = (T *)i;` (fakematch). The same change fixed three trace-buffer copies in
+   fn_8028C644.
