@@ -116,6 +116,76 @@ generated wrappers themselves.
   arguments the definition does not read; harmless where the caller cleans
   the stack.
 
+## Results read from a function defined `void` (request 19, 2026-11-10)
+
+On the console a caller may read r3 after calling a function whose definition
+says `void`: the register still holds whatever the callee left there. A host
+compiler returns garbage. Fifteen such functions were listed by the port
+census (definition `void`, some caller declares a result). For every one of
+them the plain C form, returning the value the code leaves in r3, compiles to
+the same object under MWCC, so no macro was needed:
+
+| function | now returns |
+|---|---|
+| `CollisionFile_FixupPointers` | its argument (the file base) |
+| `Allocator_Identity_VoidVoid` | its argument |
+| `CourseData_GetDefaultPathKey_Safe` | result of `CourseData_GetDefaultPathKey` |
+| `DrawEffect_SetU32CC` | `self` |
+| `HSD_MemCallback4` | result of the callback (`s32`) |
+| `NamCam_LoadImage` | result of `Asset_LoadAndDecompressByType` |
+| `TCPConn_LogError` | `acGetLastError(socket)` when result is -1, otherwise `result` |
+| `Vtable_CallSlot2` | result of the virtual call |
+| `fn_8014D4F0` | result of `runner->m18()` |
+| `fn_80169DF0` | result of `Sci2Card_GetByteFlag1224` (`unsigned char`; the two callers that declared `int` now declare `unsigned char`) |
+| `fn_801E6594` | result of `fn_801E9290` (`unsigned char`) |
+| `fn_80241C08` | its argument (it is a constructor passed to `__construct_array`) |
+
+Three were the caller's mistake, and the caller was corrected instead; their
+definitions stay `void`:
+
+- `fn_801A1128`, `fn_801A1174`: `fn_801DA46C.c` nested the three calls
+  (`fn_801A0DF0(fn_801A1128(fn_801A1174(...), x, y))`) although
+  `fn_801A1128` takes two floats and `fn_801A0DF0` takes nothing. Written as
+  three statements it gives the same object.
+- `fn_801E93A0`: `Scene_80164614.cpp` passed its "result" to
+  `ReplayRandCursor_Reset`, which ignores its parameter. Now
+  `fn_801E93A0(); ReplayRandCursor_Reset(REG_ARGS1(0));`.
+
+When a new case turns up: read the tail of the callee's asm for what r3 holds
+at `blr`, write that as the return value, and check the object hash. If r3 is
+only a leftover that the callee never set, correct the caller.
+
+## `new T[n]` must be freed with `delete[]` (request 20, 2026-11-10)
+
+MWCC's `new T[n]` writes a 16-byte header (element size, count) in front of
+the array and `delete[]` calls `__destroy_new_array(p, dtor)`. A host compiler
+keeps its own cookie, so an explicit `__destroy_new_array(arr, dtor)` on an
+array made with `new T[n]` frees a wrong pointer there. Write `delete[]
+(T *)arr;` with the element class: it compiles to the same call. The two
+sites in `Scene_8014E0C4.cpp` (`fn_8014FE10` and the demo scene destructor)
+were changed this way; the code and relocations are identical, only the order
+of two undefined symbols in the object's symbol table moved, and main.dol is
+unchanged. No other source calls `__destroy_new_array` or
+`__construct_new_array` explicitly. `__construct_array` / `__destroy_arr` on
+member arrays carry no header and are fine as they are.
+
+## Text stored as words (request 21, 2026-11-10)
+
+Some tables keep a file name or a label inline between pointers and numbers,
+and the source describes the table as an array of words (`void *const
+lbl_8037D7DC[9] = { 0x65665F73, ... }` is "ef_st_dino_sazanami.dat" followed
+by three words). A little-endian host stores each word reversed, so the text
+is scrambled. Such words are written with `TEXT_WORD('e', 'f', '_', 's')`
+(`include/game/types/text_word.h`): the same number under MWCC, the bytes in
+reading order on any host. The object's type and every use of it stay as
+they are.
+
+`python3 tools/port_abi/text_words.py` lists the runs it recognises (two or
+more words that decode as ASCII or Shift-JIS text, start at a boundary and
+end in a NUL; floats that look like text, such as 0x3F333333 0x3F666666, are
+kept out). `--fix <files>` rewrites them. Bytes outside ASCII are written as
+numbers (`TEXT_WORD(0x83, 0x5E, 0x83, 0x43)`).
+
 ## Pointers to member functions (item 14)
 
 MWCC's pointer to member function is 12 bytes, `{ long thisDelta; long

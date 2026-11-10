@@ -270,7 +270,7 @@ int TaRecord_GetLastInsertedRank(void);
 extern void fn_8014403C();
 extern void fn_80144308();
 char *fn_80167744(int n, float t);
-int fn_80169DF0(void);
+unsigned char fn_80169DF0(void);
 void fn_8023CCF8(struct StrBox *p, float x, float y);
 void fn_8023CD3C(struct StrBox *p, float x, float y);
 void fn_8023CEB4(struct StrBox *p);

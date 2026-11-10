@@ -9,7 +9,7 @@ typedef struct __mem_cb {
     void (*free)(void* ptr);
     void* cb2;
     void* cb3;
-    void (*cb4)(void* arg);
+    s32 (*cb4)(void* arg);
 } __mem_cb;
 
 static __mem_cb mem_cb;
@@ -20,9 +20,9 @@ void HSD_MemSetCallbacks(__mem_cb* cb, u32 size)
     mem_cb = *cb;
 }
 
-void HSD_MemCallback4(void* arg)
+s32 HSD_MemCallback4(void* arg)
 {
-    mem_cb.cb4(arg);
+    return mem_cb.cb4(arg);
 }
 
 void HSD_Free(void* ptr)

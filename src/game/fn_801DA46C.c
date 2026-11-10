@@ -1,7 +1,7 @@
 extern void fn_801A0004(void *obj);
-extern void *fn_801A1174(int id, int a, int b, int c, int d);
-extern void *fn_801A1128(void *obj, float x, float y);
-extern void fn_801A0DF0(void *obj);
+extern void fn_801A1174(int id, int a, int b, int c, int d);
+extern void fn_801A1128(float x, float y);
+extern void fn_801A0DF0(void);
 
 extern const float lbl_806DA210;
 extern const float lbl_806DA214;
@@ -28,10 +28,16 @@ void fn_801DA46C(ItemFx *self) {
     if (self->fx2C != 0) {
         fn_801A0004(self->fx2C);
     } else {
-        fn_801A0DF0(fn_801A1128(fn_801A1174(0x1E86, 4, 0, 0, 0), lbl_806DA210, lbl_806DA214));
-        fn_801A0DF0(fn_801A1128(fn_801A1174(0x1B4C, 4, 0, 0, 0), lbl_806DA210, lbl_806DA218));
+        fn_801A1174(0x1E86, 4, 0, 0, 0);
+        fn_801A1128(lbl_806DA210, lbl_806DA214);
+        fn_801A0DF0();
+        fn_801A1174(0x1B4C, 4, 0, 0, 0);
+        fn_801A1128(lbl_806DA210, lbl_806DA218);
+        fn_801A0DF0();
         if (self->fx30 != 0) {
-            fn_801A0DF0(fn_801A1128(fn_801A1174(0x1597, 4, 0, 0, 0), lbl_806DA21C, lbl_806DA220));
+            fn_801A1174(0x1597, 4, 0, 0, 0);
+        fn_801A1128(lbl_806DA21C, lbl_806DA220);
+        fn_801A0DF0();
             fn_801A0004(self->fx30);
         }
     }

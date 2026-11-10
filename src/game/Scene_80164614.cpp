@@ -71,7 +71,8 @@ static inline int *GetDemoItemList() {
 extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
     fn_80121210();
     DrawManager_GetOrCreate();
-    ReplayRandCursor_Reset(fn_801E93A0());
+    fn_801E93A0();
+    ReplayRandCursor_Reset(REG_ARGS1(0));
     ProcessSystemTick(0);
     unsigned int *seed = HSD_RandSeedPtr;
     HSD_RandSeedPtr = (unsigned int *)s;

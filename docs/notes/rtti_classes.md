@@ -162,6 +162,19 @@ written. Went straight through with the rules above:
 - The weak `ScopedTimer` destructor lands in the middle of the object and
   the linker drops it, as before.
 
+### Fifth: clTPLLoad / clTPLexp, parked after 75 minutes
+
+Code, vtables, RTTI and strings match as one deferred unit, but mwld puts
+the constructor's exception table entry 4 bytes late and the cause was not
+found. Draft, findings and every test: `docs/wip/real_classes/clTPLLoad.md`.
+Two rules from it that hold in general:
+
+- MWCC puts the vtable pointer where the first virtual function is
+  declared, so declare the virtual destructor before the data members of a
+  class without bases (also what other ABIs expect).
+- A member that the constructor stores before it stores the class's own
+  vtable pointer belongs to the base class.
+
 ### Rules for every converted class
 
 - **Check with clang before landing**; compiling off MWCC is the point.

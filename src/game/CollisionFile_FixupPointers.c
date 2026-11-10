@@ -1,5 +1,5 @@
 /* Relocate the pointer pairs in the collision file's 16-byte table entries. */
-void CollisionFile_FixupPointers(unsigned int file_base) {
+unsigned int CollisionFile_FixupPointers(unsigned int file_base) {
     int offset;
     int second_offset;
     unsigned int *table;
@@ -15,4 +15,5 @@ void CollisionFile_FixupPointers(unsigned int file_base) {
         table = *(unsigned int **)(file_base + 0x28);
         *(unsigned int *)((char *)table + second_offset) += file_base;
     }
+    return file_base;
 }

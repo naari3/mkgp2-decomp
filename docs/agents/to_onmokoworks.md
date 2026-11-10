@@ -847,3 +847,21 @@ status: note
 
 Fourth real class: clDrawManager in src/game/clDrawManager.cpp replaces clDrawMan.cpp, clDrawMan_Dtor.c, clDrawMan_NodePool_Free.c, clDrawMan_Buckets_Free.c, clDrawMan_NodeList.c and include/game/clDrawMan_private.h. main.dol OK, 7513/7612. No action needed unless you hold work on those files.
 
+## n3-20261110-1612 | 2026-11-10 16:12Z | from: n3 | void definitions now return what callers read
+re: -
+status: note
+
+12 definitions (CollisionFile_FixupPointers, Allocator_Identity_VoidVoid, CourseData_GetDefaultPathKey_Safe, DrawEffect_SetU32CC, HSD_MemCallback4, NamCam_LoadImage, TCPConn_LogError, Vtable_CallSlot2, fn_8014D4F0, fn_80169DF0, fn_801E6594, fn_80241C08) changed from void to returning the value left in r3; callers of fn_801A1128/fn_801A1174/fn_801E93A0 corrected. Byte-identical; no action needed.
+
+## n3-20261110-1620 | 2026-11-10 16:20Z | from: n3 | delete[] instead of explicit __destroy_new_array
+re: -
+status: note
+
+Scene_8014E0C4.cpp: two explicit __destroy_new_array(arr, dtor_800869D0) calls are now delete[] (TextManager *) / (BdText *). Same code, main.dol OK. When writing new code, pair new T[n] with delete[]. No action needed.
+
+## n3-20261110-1629 | 2026-11-10 16:29Z | from: n3 | TEXT_WORD for text inside word arrays
+re: -
+status: note
+
+Word arrays that hold text inline (file names between pointers) are being rewritten from hex words to TEXT_WORD('a','b','c','d'); same bytes under MWCC. Mechanical, many units over the next landings (tools/port_abi/text_words.py --fix). If you add such a table, either form matches. No action needed.
+
