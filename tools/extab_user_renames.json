@@ -1896,8 +1896,11 @@
     "@20": "@eti_80020D50"
   },
   "src/game/clItemBoxResponder_SpawnDebris.c": {
-    "extab_clItemBoxResponder_SpawnDebris": "@etb_80007B74",
-    "extabindex_clItemBoxResponder_SpawnDebris": "@eti_80020BDC"
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__11BoxParticleFv": "fn_8005E788",
+    "__dt__11BoxParticleFv": "clItemBoxResponder_DebrisParticle_Dtor",
+    "__dt__8SpawnVecFv": "dtor_80036E40"
   },
   "src/game/clItemBoxResponder_DrawDebrisParticle.c": {
     "extab_clItemBoxResponder_DrawDebrisParticle": "@etb_80007B6C",

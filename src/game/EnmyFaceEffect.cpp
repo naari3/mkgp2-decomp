@@ -1157,21 +1157,55 @@ static inline void WriteFaceVertexPlain(FaceDrawVec *p, float *uv, unsigned int 
 }
 static inline void DrawFaceQuad(FaceDrawVec *p, float *uv, FaceDrawVec *offset, unsigned int color) {
     GXBegin(0x80,0,4);
-    float x=offset->x, z=offset->z;
-    WriteFaceVertex(p,uv,x,z,color);
-    WriteFaceVertex(p+1,uv+2,x,z,color);
-    WriteFaceVertex(p+2,uv+4,x,z,color);
-    WriteFaceVertex(p+3,uv+6,x,z,color);
+    float z, x; x=offset->x; z=offset->z;
+    float f, u, v;
+    u = uv[0]; v = uv[1];
+    f = p[0].x; f = x + f; FIFO.f32=f;
+    f = p[0].y; FIFO.f32=f;
+    f = p[0].z; f = z + f; FIFO.f32=f;
+    FIFO.u32=color; FIFO.f32=u; FIFO.f32=v;
+    u = uv[2]; v = uv[3];
+    f = p[1].x; f = x + f; FIFO.f32=f;
+    f = p[1].y; FIFO.f32=f;
+    f = p[1].z; f = z + f; FIFO.f32=f;
+    FIFO.u32=color; FIFO.f32=u; FIFO.f32=v;
+    u = uv[4]; v = uv[5];
+    f = p[2].x; f = x + f; FIFO.f32=f;
+    f = p[2].y; FIFO.f32=f;
+    f = p[2].z; f = z + f; FIFO.f32=f;
+    FIFO.u32=color; FIFO.f32=u; FIFO.f32=v;
+    u = uv[6]; v = uv[7];
+    f = p[3].x; f = x + f; FIFO.f32=f;
+    f = p[3].y; FIFO.f32=f;
+    f = p[3].z; f = z + f; FIFO.f32=f;
+    FIFO.u32=color; FIFO.f32=u; FIFO.f32=v;
 }
 static inline void DrawFaceQuadCached(FaceDrawVec *p, float *uv, FaceDrawVec *offset, unsigned int color) {
     DrawFaceQuad(p,uv,offset,color);
 }
 static inline void DrawFaceQuadPlain(FaceDrawVec *p, float *uv, FaceDrawVec *offset, unsigned int color) {
     GXBegin(0x80,0,4);
-    WriteFaceVertexPlain(p,uv,color);
-    WriteFaceVertexPlain(p+1,uv+2,color);
-    WriteFaceVertexPlain(p+2,uv+4,color);
-    WriteFaceVertexPlain(p+3,uv+6,color);
+    float f, u, v;
+    u = uv[0]; v = uv[1];
+    f = p[0].x; FIFO.f32=f;
+    f = p[0].y; FIFO.f32=f;
+    f = p[0].z; FIFO.f32=f;
+    FIFO.u32=color; FIFO.f32=u; FIFO.f32=v;
+    u = uv[2]; v = uv[3];
+    f = p[1].x; FIFO.f32=f;
+    f = p[1].y; FIFO.f32=f;
+    f = p[1].z; FIFO.f32=f;
+    FIFO.u32=color; FIFO.f32=u; FIFO.f32=v;
+    u = uv[4]; v = uv[5];
+    f = p[2].x; FIFO.f32=f;
+    f = p[2].y; FIFO.f32=f;
+    f = p[2].z; FIFO.f32=f;
+    FIFO.u32=color; FIFO.f32=u; FIFO.f32=v;
+    u = uv[6]; v = uv[7];
+    f = p[3].x; FIFO.f32=f;
+    f = p[3].y; FIFO.f32=f;
+    f = p[3].z; FIFO.f32=f;
+    FIFO.u32=color; FIFO.f32=u; FIFO.f32=v;
 }
 
 extern "C" void fn_8022BFA8(FaceDrawModel *self);
@@ -1179,6 +1213,13 @@ extern "C" void fn_8022CDE4(FaceDrawModel *self) {
     fn_8022BFA8(self);
 }
 
+/* The quad writers reuse `f`, `u`, `v` for every vertex and the target keeps
+   one register per variable (v f0, u f1, f f2, x f3, z f4 = declaration order
+   z, x, f, u, v), with the next u/v loaded right after the previous one is
+   stored: live ranges are not split and the copies are not propagated. */
+#pragma push
+#pragma opt_lifetimes off
+#pragma opt_propagation off
 extern "C" void fn_8022BFA8(FaceDrawModel *self) {
     FaceDrawVec vertices[8];
     FaceMtx world[2], view, temporary, scale, translation, projection;
@@ -1340,6 +1381,7 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
         Object_RenderJObjTree(self->models[anim],7);
     }
 }
+#pragma pop
 
 /*
  * Never called, so the linker strips the code, but its format string

@@ -635,7 +635,7 @@ config.libs = [
             Object(Matching, "game/clItemBoxResponder_DrawDebris.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/clItemBoxResponder_DrawDebrisParticle.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clItemBoxResponder_TickDebris.c"),
-            Object(Matching, "game/clItemBoxResponder_SpawnDebris.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/clItemBoxResponder_SpawnDebris.c", mw_version="GC/2.6", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clItemBoxResponder.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/clItemBoxResponder_Ctor.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/KartAudioChannel.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),

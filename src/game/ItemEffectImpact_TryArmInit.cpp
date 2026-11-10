@@ -1,4 +1,4 @@
-/* NonMatching (99.6): instruction sequence and frame match, the quaternion-to-matrix block is register-exact. Left (44 diff lines): register colours in the cross product (the up.x/up.y/up.z copies want f5/f6/f7 and v.z is loaded before v.y) and ay/ax of the axis-angle step (target f31/f30, here f28/f27). Attempts in docs/gave_up.md. */
+/* NonMatching (99.8): instruction sequence and frame match. Left (24 diff lines): in the cross product up.y and v.z sit in f8/f6 (target f6/f8), and ay/ax of the axis-angle step sit in f28/f27 (target f31/f30). Attempts in docs/gave_up.md. */
 #include "game/ItemEffectImpactArmPrivate.h"
 
 // Scalar length arguments preserve the matrix-row evaluation boundary.
@@ -34,8 +34,9 @@ static inline void ArmAxisNormalize(C7Vec* v) {
     else { float inv=lbl_806D27FC/length; v->x*=inv; v->y*=inv; v->z*=inv; }
 }
 
-static inline void ArmCross(C7Vec* a, const C7Vec* o) {
-    float tx=o->y*a->z-o->z*a->y; float ty=o->z*a->x-o->x*a->z; float tz=o->x*a->y-o->y*a->x;
+static inline void ArmCross(C7Vec* a, const C7Vec* o, const C7Vec* u) {
+    float ty, tz, tx;
+    ty=o->z*u->x-o->x*u->z; tz=o->x*u->y-o->y*u->x; tx=o->y*u->z-o->z*u->y;
     a->x=tx; a->y=ty; a->z=tz;
 }
 static inline void ArmSet(C7Vec* v,float x,float y,float z){v->x=x;v->y=y;v->z=z;}
@@ -64,6 +65,7 @@ static inline void ArmQuatMatrix(ImpactArmMatrix* m, const ImpactArmQuat* q) {
     m->m[1][2]=lbl_806D281C*(yz+wx);
     m->m[2][2]=lbl_806D27FC-lbl_806D281C*(xx+yy);
 }
+struct ArmVec : C7Vec { ArmVec(float ax, float ay, float az) { x=ax; z=az; y=ay; } };
 extern "C" void ItemEffectImpact_TryArmInit(ImpactArmState* __restrict self, C7Vec* __restrict velocity, ImpactArmMatrix* __restrict pose, int timer) {
     self->Reset();
     self->pos=*velocity;
@@ -83,8 +85,8 @@ extern "C" void ItemEffectImpact_TryArmInit(ImpactArmState* __restrict self, C7V
     self->pos.x-=up.x; self->pos.y-=up.y; self->pos.z-=up.z;
     C7Vec v=self->pos;
     Normalize(&v);
-    C7Vec axis=up;
-    ArmCross(&axis,&v);
+    ArmVec axis(up.x, up.y, up.z);
+    ArmCross(&axis,&v,&up);
     float length2=axis.z*axis.z+(axis.x*axis.x+axis.y*axis.y);
     if(length2>0.0f) { ArmAxisNormalize(&axis); self->axis=axis; }
     else ArmSet(&self->axis,self->start.m[0][0],self->start.m[0][1],self->start.m[0][2]);

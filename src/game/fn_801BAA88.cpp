@@ -1224,12 +1224,18 @@ extern "C" void fn_801C043C(CoinWait *self) {
     }
 }
 
+/* fakematch (hand): opt_propagation off keeps `dir` a local, so its load is
+ * emitted before the panel load (the scheduler keeps block order for the two
+ * equal-key loads). natural: no pragma, fn_80160588(self->panel.p, in->dir, press). */
+#pragma push
+#pragma opt_propagation off
 extern "C" void fn_801C0568(CoinWait *self) {
     InputState *in = GetInput();
     InputMgr_GetPlayer(GetInputManager(), 0);
     /* fakematch: the (unsigned char) cast forces the extrwi truncation. Natural code: bool press = in->held == 1; */
     bool press = (unsigned char)(in->held == 1);
-    fn_80160588(self->panel.p, in->dir, press);
+    int dir = in->dir;
+    fn_80160588(self->panel.p, dir, press);
     if (press == 1) {
         SetRumbleMode(0, 1, 1);
     }
@@ -1272,6 +1278,7 @@ extern "C" void fn_801C0568(CoinWait *self) {
         fn_801C03D0(self);
     }
 }
+#pragma pop
 
 extern "C" void fn_801C07C8(CoinWait *self) {
     if (self->panel->state == 1) {
