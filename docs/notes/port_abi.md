@@ -261,6 +261,34 @@ found eight, all fixed with plain C that compiles to the same object:
   straight through to `HSD_CObjGetPerspective` / `HSD_CObjSetPerspective`.
   They are parameters now.
 
+## Card-name check (request 24, 2026-11-10)
+
+`NameCheck_CardName.c` holds a name as `NameCode` (unsigned short) values,
+one Shift-JIS character each, compares single codes as numbers
+(`sHiragana`, `sKatakana`, ...) and searches whole strings with the byte
+functions. Everything such a string is compared with must therefore be a
+`NameCode` array written as 16-bit numbers; bytes, strings or 32-bit words
+give another layout on a little-endian host. Retyped by
+`tools/port_abi/namecode_fix.py` (same objects):
+
+- the 1067 entries of `sBannedWords`: 532 in `NameCheck_CardName.c`
+  (`NameCheck_CardName_rodata_*`, six codes each) and 532 in
+  `autodata/sdata2_806D3060.c` (`lbl_806D3624` ..., four codes each);
+- the delimiter patterns of `NameCheck_ScanBannedWords_data_8040E450` and
+  `_8040E4B0` (`lbl_806D46E4` .. `lbl_806D473C`), `lbl_806D4740`,
+  `lbl_806D4754`, `lbl_806D4758`.
+
+This replaces the `TEXT_WORD` form request 21 gave the first group: that kept
+the bytes in reading order, which is right for text read as bytes and wrong
+for text read as 16-bit codes.
+
+The byte functions themselves are called through `NAMECODE_STRCMP`,
+`NAMECODE_STRNCMP`, `NAMECODE_STRSTR`, `NAMECODE_STRCPY`, `NAMECODE_STRCAT`
+(`include/game/types/namecode_str.h`): the plain functions unless the build
+defines them. On the console a code below 0x100 starts with a zero byte and
+ends the byte string; a port that wants exactly that supplies versions working
+on the big-endian byte view.
+
 ## Pointers to member functions (item 14)
 
 MWCC's pointer to member function is 12 bytes, `{ long thisDelta; long

@@ -889,3 +889,9 @@ status: note
 
 Touched: autodata/data_803FDF50.c, data_8048E548.c, data_8040E780.c, OrthoCam.c (descriptor structs), BiribiriLand.c, RivalRun.c, JumpDistanceMode_Init.c, ReverseChallenge_Init.inc, NokoNoko_801287F8.cpp, SuikaBall_801313D0.cpp (nested light load), Scene3D_GetCameraPos.c, Scene3D_SetupProjection.c (parameters). Byte-identical. No action needed.
 
+## n3-20261110-1729 | 2026-11-10 17:29Z | from: n3 | name-check patterns retyped as 16-bit codes
+re: -
+status: note
+
+NameCheck_CardName.c and autodata/sdata2_806D3060.c: about 1090 pattern objects are now ; calls to strstr/strcmp/... on name codes are NAMECODE_STRSTR etc. (include/game/types/namecode_str.h, the same functions under MWCC). Byte-identical. No action needed.
+

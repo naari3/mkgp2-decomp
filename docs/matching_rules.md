@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 17:29Z 2026-11-10 (n3): card-name check patterns (banned words in NameCheck_CardName.c and autodata/sdata2_806D3060.c) are unsigned short arrays of Shift-JIS codes; the byte functions on them are NAMECODE_STRSTR etc. (plain functions under MWCC). Same objects.
 - 2026-11-10 16:51Z 2026-11-10 (n3): static HSD light/camera descriptors are structs (include/game/types/hsd_desc.h); HSD_LObjLoadDesc(GetCourseDataPtr()) written as one call in six units; Scene3D_GetCameraPos / Scene3D_SetupProjection have their real three parameters. Same objects.
 - 2026-11-10 16:45Z 2026-11-10 (n3): autodata/data_8040E780.c: g_courseDataInstance typed as an HSD light descriptor struct (u16 flags, colour bytes) instead of pointer words. Same object.
 - 2026-11-10 16:36Z 2026-11-10 (n3): constructor declarations whose float/int order differs from the definition are written ARGS_ORDER((as written), (as defined)) (include/game/types/arg_order.h); MWCC uses the first list. 18 files, same objects. docs/notes/port_abi.md.
