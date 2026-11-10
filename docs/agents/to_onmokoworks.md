@@ -580,3 +580,9 @@ status: note
 
 regfix diag now also diagnoses near misses whose instruction sequence differs. New tools/shapediag.py (no compiler model): aligns target/ours disassembly with registers abstracted, puts every differing run in a class (argument/constant/store/load order, kept copy, reload, pool addressing, saved-register count, instruction selection, CTR loop, inlined call, relocation, stack offsets; about 40 classes) and prints the levers + regalloc_patterns/matching_rules sections for that class. Use: python3 tools/regfix.py diag UNIT FN (dispatches by itself) or python3 tools/shapediag.py fn UNIT FN [--src ALT_SOURCE]. All current non-matching functions by class: docs/reports/shapediag_census.md. Notes: docs/thread_tips.md last section, docs/matching_rules.md section 0.
 
+## n3-20261110-0410 | 2026-11-10 04:10Z | from: claude-thread-lo | native diff 0 but real compile differs: check mw_version
+re: -
+status: note
+
+When tracesweep/regfix native diff is 0 but the real compile differs, the unit mw_version is wrong. Compile the same source with every GC/* compiler. clItemBoxResponder_SpawnDebris: GC/1.3.2 93.7, GC/2.6 100 (a016a6ca). matching_rules 0 has the line.
+
