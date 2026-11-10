@@ -25,6 +25,7 @@ Details: docs/notes/port_readiness.md.
 import argparse, collections, json, os, re, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, 'tools'))
 VER = 'GNLJ82'
 DATA_SECS = ('.rodata', '.data', '.sdata', '.sdata2')
 SYM = re.compile(r'^(\S+) = (\.?\w+):0x([0-9A-Fa-f]+); // (.*)$')
@@ -150,10 +151,27 @@ def asm_numbers():
         return {'error': repr(e)}
 
 
+def vtable_numbers(syms):
+    """Vtables of the original program (tools/rtti_classes.py reads them from
+    main.dol), how many a data-only unit still writes out by hand, and how many
+    class names the sources use for them. mkgp2-pc docs/port/cxx_abi_decision.md."""
+    try:
+        import rtti_classes
+        vts, records = rtti_classes.collect()
+    except BaseException as e:   # no main.dol: the page must not fail because of this
+        return {'error': repr(e)}
+    pairs = re.findall(r'"(__vt__[^"]+)"\s*:\s*"([^"]+)"', read('tools/extab_user_renames.json'))
+    hand = [v for v in vts if (v['data_unit'] or '').startswith('game/autodata/')]
+    real = {v['class'] for v in vts}
+    named = sum(1 for v in vts if v['class'].split('<')[0].split('::')[-1] in v['symbol'])
+    return {'tables': len(vts), 'hand_written': len(hand), 'real_classes': len(real),
+            'symbol_has_real_name': named, 'source_class_names': len({c for c, _ in pairs}), 'uses': len(pairs)}
+
+
 def collect():
     syms = symbols()
     return {'data': data_numbers(syms, splits_ranges()), 'types': type_numbers(),
-            'symbols': symbol_numbers(syms), 'asm': asm_numbers()}
+            'symbols': symbol_numbers(syms), 'asm': asm_numbers(), 'vtables': vtable_numbers(syms)}
 
 
 def pct(a, b):
@@ -187,6 +205,17 @@ def rows(d):
         out.append(('Asm-only game functions with an equivalent C body', '%d / %d' % (a['with_c_body'], a['asm_functions']),
                     pct(a['with_c_bytes'], a['asm_bytes']) + ' of bytes',
                     'left: ' + (', '.join(a['without_c_body'][:6]) + (' ...' if len(a['without_c_body']) > 6 else '') or 'none')))
+    v = d['vtables']
+    if 'error' in v:
+        out.append(('Vtables written out by hand as data', 'n/a', '', v['error']))
+    else:
+        out.append(('Vtables written out by hand as data', '%s / %s' % (f'{v["hand_written"]:,}', f'{v["tables"]:,}'),
+                    pct(v['hand_written'], v['tables']),
+                    'to do: real classes, table from the compiler (0 = the port needs no ABI bridge); tools/rtti_classes.py'))
+        out.append(('Vtables whose symbol carries the real class name', '%s / %s' % (f'{v["symbol_has_real_name"]:,}', f'{v["tables"]:,}'),
+                    pct(v['symbol_has_real_name'], v['tables']),
+                    '%s real classes (from RTTI); the sources use %s class names in %s declarations' % (
+                        f'{v["real_classes"]:,}', f'{v["source_class_names"]:,}', f'{v["uses"]:,}')))
     return out
 
 
