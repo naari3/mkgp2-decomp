@@ -2728,3 +2728,28 @@ locals c/r swap registers and the `r = 0` constant merges with another zero).
 shows named locals of an earlier block coloured after it that the target
 colours before it. Rule `named-locals-to-level1-inline-temps`.
 
+
+## 99. Three stale-lever checks that finished TaMode_FrameUpdate (99.65 -> 100, 11-10)
+
+1. **A leftover `#pragma opt_propagation off` around the function.** It had been
+   added to keep a local alive; later it was the cause of a diff: the `&temp`
+   of by-value struct arguments (`VfxSlotMgr_Update(vecA, vecB)`) stayed in
+   `LinearizeExpr1` temps (`ADDI r84,r1,..; MR r4,r84` in `PCODE pre`), so
+   `addi r3,r1,0x18` was scheduled late and the two `lis` registers swapped.
+   The same statement matched in the sibling RaceScene_FrameUpdate without the
+   pragma. When a block that matches elsewhere differs, check for function-wide
+   pragmas first.
+2. **Named local one saved register too high (`started` r28, target r26).**
+   The target register was first handed out to a later block-local pointer
+   (`void *camera = g_raceCamera;`, a LinearizeExpr1 temp numbered below the
+   named locals). Declaring `void *camera;` at function level just before
+   `started` numbers it above `started`; r26 is then already handed out when
+   `started` is coloured and the lowest free register wins (section 89).
+3. **`x = B; if (!c) x = A;` versus `x = !c ? A : B;`.** Both compute B first
+   and branch over A, but with the conditional expression the inline arguments
+   keep their evaluation order (cup, reversed, then the global read in the
+   body) and `cmpwi` stays early; the assignment form loads the condition last.
+   `c ? B : A` computes A first and inverts the branch.
+
+Rule `stale-propagation-pragma-and-cond-expr`.
+
