@@ -1,4 +1,3 @@
-#include "game/types/le.h"
 /* Observed receive fields only; no complete TCPConn layout is claimed. */
 typedef struct TCPConnRecvView {
     int socket;
@@ -58,9 +57,8 @@ int TCPConn_PollRecvComplete(TCPConnRecvView *self)
 
 static inline unsigned int TCPConn_SelectMask(unsigned int bit)
 {
-    /* fd_set words are little-endian for the media board's socket layer */
-    return LE_AS_WRITTEN(((bit << 24) & 0xFF000000U) | ((bit << 8) & 0x00FF0000U)
-         | ((bit >> 8) & 0x0000FF00U) | ((bit >> 24) & 0x000000FFU), bit);
+    return ((bit << 24) & 0xFF000000U) | ((bit << 8) & 0x00FF0000U)
+         | ((bit >> 8) & 0x0000FF00U) | ((bit >> 24) & 0x000000FFU);
 }
 
 static inline void TCPConn_AddReadSocket(unsigned int *set, int socket)

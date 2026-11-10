@@ -93,21 +93,26 @@ replacement), and texture images follow the rule in the TPL row.
 
 | macro | meaning | big-endian (MWCC) | little-endian |
 |---|---|---|---|
-| `LE32(x)`, `LE16(x)` | `x` was stored little-endian | swap | `x` |
-| `LE_AS_WRITTEN(swap, x)` | the original swaps only because the target is big-endian and the other side is not | `swap` | `x` |
+| `LE32(x)`, `LE16(x)` | `x` was stored little-endian in a file | swap | `x` |
 
 Sites, which is all of them outside the SDK and MusyX:
 
-| site | what is swapped | now |
+| site | what is swapped | on a little-endian host |
 |---|---|---|
-| `src/game/TEXLoadPalette.cpp` | size word at the end of the 0x20-byte header of a compressed .tpl: the inflated size, little-endian | `LE32` |
-| `src/game/NamCam_GetImageHandle.c` (`NAMCAM_SWAP32`) | fd_set bit words passed to the media board's `select` | `LE_AS_WRITTEN` |
-| `src/game/TCPConnSend.c` (`TCPConn_SendMask`), `src/game/TCPConnRecv.c` (`TCPConn_SelectMask`) | same | `LE_AS_WRITTEN` |
-| `include/triforce/acsocket_private.h`, `amnet_priv.h`, `amsrv_private.h`, `src/triforce/amsock.c` (`BSWAP16` / `BSWAP32`) | words exchanged with the little-endian media board (socket addresses, fd_sets) | `LE_AS_WRITTEN` |
+| `src/game/TEXLoadPalette.cpp` | size word at the end of the 0x20-byte header of a compressed .tpl: the inflated size, little-endian | `LE32`: no swap |
+| `src/game/NamCam_GetImageHandle.c` (`NAMCAM_SWAP32`) | fd_set bit words passed to the media board's `select` | swap stays |
+| `src/game/TCPConnSend.c` (`TCPConn_SendMask`), `src/game/TCPConnRecv.c` (`TCPConn_SelectMask`) | same | swap stays |
+| `include/triforce/acsocket_private.h`, `amnet_priv.h`, `amsrv_private.h`, `src/triforce/amsock.c` (`BSWAP16` / `BSWAP32`) | words exchanged with the media board (socket addresses, fd_sets, packet flags) | swap stays |
 
-The media-board swaps matter only to a port that keeps the am* socket layer
-talking to a real or emulated media board; one that replaces that layer with
-host sockets never runs them.
+Do not make the media-board swaps conditional on the host. The am* code
+mixes swapped accesses with raw constants on the same fields
+(`amnet_nm3.c`: `pkt->flags != 0x180`, `pkt->flags & 0x80`; `amsock.c`:
+`p->flags = 0x100` next to `BSWAP16(p->flags) == 0x8000`), so it is only
+self-consistent when every swap happens. On a little-endian host the library
+then runs as a mirror image of the console, and the port's media board
+emulation is written against exactly that. (An earlier revision, 1dd95f3,
+wrapped these in a `LE_AS_WRITTEN` macro that dropped the swap off-target;
+that was wrong and was taken back out.)
 
 Things that look like swaps and are not: `(r << 24) | (g << 16) | (b << 8) | a`
 is colour packing, and `src/util/bitpack_read.c` builds values from single

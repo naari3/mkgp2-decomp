@@ -1,4 +1,3 @@
-#include "game/types/le.h"
 #ifndef AMNET_PRIV_H
 #define AMNET_PRIV_H
 /* Triforce baseboard network transport: packet channels exchanged with the
@@ -131,8 +130,8 @@ extern const char lbl_806DC934[5];
 
 #define LOG(v) (amnet_nm3_bss_80693940[amnet_nm3_bss_806D1E40++ & 0xFFF] = (v))
 #define ALIGN32(p) ((void*)(((u32)(p) + 0x1F) & ~0x1F))
-#define BSWAP16(v) LE_AS_WRITTEN(((((v) << 8) & 0xFF00) | (((v) >> 8) & 0xFF)), (v))
-#define BSWAP32(v) LE_AS_WRITTEN((((v) << 24) | (((v) << 8) & 0xFF0000) | (((v) >> 8) & 0xFF00) | ((v) >> 24)), (v))
+#define BSWAP16(v) ((((v) << 8) & 0xFF00) | (((v) >> 8) & 0xFF))
+#define BSWAP32(v) (((v) << 24) | (((v) << 8) & 0xFF0000) | (((v) >> 8) & 0xFF00) | ((v) >> 24))
 
 static inline void TraceAdd(u8 op, u8 dir, void* buf, u32 addr, u32 size) {
     NetTrace* t;

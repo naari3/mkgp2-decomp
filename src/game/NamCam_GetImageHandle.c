@@ -1,4 +1,3 @@
-#include "game/types/le.h"
 /* NamCam image fetch: HTTP GET over the AC socket layer into the capture
  * buffer, polled once per frame. Returns 1 when a complete JPEG arrived. */
 
@@ -40,7 +39,7 @@ typedef struct NamCamWork {
 #define NAMCAM_CONN (&g_namCam->conn)
 
 /* fd_set words are kept in network (big/little swapped) order. */
-#define NAMCAM_SWAP32(x) LE_AS_WRITTEN((((x) << 24) | (((x) << 8) & 0xFF0000) | (((x) >> 8) & 0xFF00) | (((x) >> 24) & 0xFF)), (x))
+#define NAMCAM_SWAP32(x) (((x) << 24) | (((x) << 8) & 0xFF0000) | (((x) >> 8) & 0xFF00) | (((x) >> 24) & 0xFF))
 #define NAMCAM_FD_BIT(fd) NAMCAM_SWAP32((unsigned int)1 << ((fd) & 31))
 
 extern void AcError_LogIfError(int sock, int err);

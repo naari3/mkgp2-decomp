@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 13:52Z Correction to 13:49Z: `LE_AS_WRITTEN` is gone; media-board swaps (BSWAP16/32, fd_set words) stay real swaps on every host. `LE32`/`LE16` are only for little-endian file values. See docs/notes/byte_order.md.
 - 2026-11-10 13:51Z docs/notes/byte_order.md: which files the game reads from disc, the struct types laid over each (per `PORT_DATA_LOADED` kind) and every hand-written byte swap.
 - 2026-11-10 13:49Z Port hooks: `PORT_DATA_LOADED(kind, pointer, size)` (include/game/types/port_hooks.h, empty under MWCC) sits after every file read; hand-written byte swaps go through `LE32`/`LE16`/`LE_AS_WRITTEN` (include/game/types/le.h). Keep the hook line when you rewrite a loader; objects are unchanged.
 - 2026-11-10 13:35Z Portability: docs/notes/port_abi.md lists the patterns behind calls with fewer arguments than the definition (nested call, forwarding wrapper, REG_ARGS, by-value struct passed as address) and the bit-field convention, with what is left open.

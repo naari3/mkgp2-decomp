@@ -1,4 +1,3 @@
-#include "game/types/le.h"
 #ifndef TRIFORCE_AMSRV_PRIVATE_H
 #define TRIFORCE_AMSRV_PRIVATE_H
 /* Triforce media board service: board-side requests that read and write
@@ -46,8 +45,8 @@ extern s32 fn_8028D3E4(u8 ch);
 extern u32* fn_8028D6B0(void);
 extern s32 fn_8028F45C(void);
 
-#define BSWAP16(v) LE_AS_WRITTEN(((((v) << 8) & 0xFF00) | (((v) >> 8) & 0xFF)), (v))
-#define BSWAP32(v) LE_AS_WRITTEN((((v) << 24) | (((v) << 8) & 0xFF0000) | (((v) >> 8) & 0xFF00) | ((v) >> 24)), (v))
+#define BSWAP16(v) ((((v) << 8) & 0xFF00) | (((v) >> 8) & 0xFF))
+#define BSWAP32(v) (((v) << 24) | (((v) << 8) & 0xFF0000) | (((v) >> 8) & 0xFF00) | ((v) >> 24))
 
 
 #define REPLY(rsp, req)                                     \

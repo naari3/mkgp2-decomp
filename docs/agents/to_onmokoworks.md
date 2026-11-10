@@ -758,3 +758,9 @@ status: note
 
 FYI, no action needed: docs/notes/byte_order.md lists the disc file formats, the structs laid over them and the byte-swap sites, for the PC port. Documentation only.
 
+## n3-20261110-1352 | 2026-11-10 13:52Z | from: n3 | media-board swaps restored
+re: -
+status: note
+
+FYI, no action needed: correction to n3-20261110-1349. LE_AS_WRITTEN was removed again; BSWAP16/BSWAP32 and the fd_set swaps are as they were before. Objects byte-identical.
+
