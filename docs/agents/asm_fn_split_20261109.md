@@ -208,3 +208,49 @@ So group A has no C work left.
 | 801D7920 | 560 | game/clFlowKart_UpdateDisplay.c | clFlowKart_UpdateDisplay |
 | 80211E6C | 1680 | game/JumpDistanceMode_Update.c | JumpDistanceMode_Update |
 
+
+## Status of group C at 2026-11-09 20:50Z (main 8e38341)
+
+The table above is the list as of 13:15Z. Since then (`tools/scan_asm_fns.py`):
+
+| function | was in | now | by |
+|---|---|---|---|
+| ShadowBillboard_Tick | game/ShadowBillboard.c | C, 100 % (52a998d) | om |
+| NokoNokoChallenge_Update | game/NokoNoko_801287F8.cpp | C, 100 % (45398a4) | om |
+| clMiyoshiCardCreate_Draw | game/clMiyoshiCardCreate.c | C, 100 % (ce9aa1f) | om |
+| Bitset_Init | game/auto_ONKARTHIT_block.c | C, 100 % (8a5f463) | om |
+| JumpDistanceMode_Update | game/JumpDistanceMode_Update.c | C, 100 % (d38113c) | n3 |
+| clFlowKart_UpdateDisplay | game/clFlowKart_UpdateDisplay.c | C, 100 %, inside the merged game/clFlowKart_Init.c (5eca6fc) | n3 |
+| clFlowRound_Update | game/clFlowRound.c | C, 100 % (3f6d3c7) | n3 |
+| fn_801502AC | game/Scene_8014E0C4.cpp | C, 100 % (cf30eee) | n3 |
+| fn_80154304 | game/Scene_8014E0C4.cpp | C, 100 % (regalloc_patterns §48) | n3 |
+| fn_801500F4 | game/Scene_8014E0C4.cpp | C, 100 % since 163c054f (`TextPanelC::TextPanelC`; the init template is placed by an inline function defined among the pool statics in Scene_8014E0C4_rodata.inc). The list still showed it because of a stale `asm void fn_801500F4(void);` declaration, now removed | om |
+| RaceContext_InitDefaults | game/RaceContext_InitDefaults.c | still asm; the file is now part of game/SetCourseParams.c (887c513, 14-TU merge) | n3 merge |
+| SoundMgr_Play | game/SoundMgr_Play.c | still asm; the file is now part of game/clsound/fn_801913B0.c (a4d82de, 19-TU merge) | n3 merge |
+| WarpZone_CheckEntry | game/auto_800A8F4C_block.c | C, 100 % (regalloc_patterns §50) | n3 |
+| fn_80141454 | game/LogoAnim.c | C, 100 % (regalloc_patterns §51) | n3 |
+| fn_80158CE4 | game/fn_80157DE0.cpp | C, 100 %, in game/SceneList_80157EA8.cpp (regalloc_patterns §74) | n3 |
+| fn_8015915C | game/fn_80157DE0.cpp | C, 100 %, in game/SceneList_80157EA8.cpp (regalloc_patterns §74) | n3 |
+| fn_80159BD0 | game/fn_80157DE0.cpp | C, 100 %, in game/SceneList_80157EA8.cpp (regalloc_patterns §71) | n3 |
+| fn_8015A6E4 | game/SceneList_80157EA8.cpp | C, 100 % (literal floats) | n3 |
+| fn_80147AF4 | game/RaceHud_80147470.cpp | C, 100 % (72f59e72, unit now GC/2.6, regalloc_patterns §78) | n3 |
+| fn_80147CE8 | game/RaceHud_80147470.cpp | C, 100 % (72f59e72, regalloc_patterns §78) | n3 |
+| fn_80147900 | game/RaceHud_80147470.cpp | still asm, 99.52 (`li`+`mr` colour copy; docs/gave_up.md) | n3 parked |
+
+The four `n3` conversions and the two merges touched group C although
+n3-20261109-1338 said n3 would stay out of it: they came out of TU merges and
+hand threads working by address range. None of the TUs had an open claim.
+See n3-20261109-2050 on the board. 52 group C functions are unchanged
+(same TU, still asm); the corrections in om-20261109-1608 (fn_80157DE0 /
+SceneList_80157EA8 rows, fn_8015A6E4 is NonMatching) still apply.
+
+## Group C is open to both sides (naari3, 2026-11-09 20:55Z)
+
+The split "om takes group C, n3 stays out" (n3-20261109-1338) no longer
+holds. Either side may convert any group C function. The only coordination
+is the unit-claim: open `[unit-claim] retrofit:<TU>` right before working a
+TU, close it on leaving, and never touch a TU the other side has claimed.
+Check the open claims and the latest `main` first (a function may already be
+C; `python3 tools/scan_asm_fns.py` gives the current list). Partial drafts go
+to `docs/wip/` / `docs/notes/` so the other side can pick them up. asm -> C
+still lands only at 100 %. Groups A and B are unchanged (A is finished).

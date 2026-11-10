@@ -143,7 +143,7 @@ void Sprite_SetAnimParam(void *spr, int a, int b);
 void fn_801A0550(void *spr);
 void fn_801B8540(int);
 void fn_801B85DC(int, int, int);
-void fn_801C9288(clFlowRound *self, int i, int flag);
+int fn_801C9288(clFlowRound *self, int i, int flag);
 extern int g_ccClass;
 extern int g_cupId;
 extern InputState *g_pInputState;
@@ -187,39 +187,6 @@ void Sprite_Destroy(void *, int);
 void fn_80120A08(int);
 void fn_80169C44(void);
 void fn_801A1678(void);
-void Alloc();
-void GetInputManager();
-void InputMgr_GetPlayer();
-void IsItemSelectAllowed();
-void RumbleUpdate();
-void SetCourseParams();
-void SetRumbleMode();
-void Sprite_AdvanceAnim();
-void Sprite_SetupAnim();
-void fn_801699D8();
-void fn_8019FF6C();
-void fn_801B7C64();
-void fn_801B7CAC();
-void fn_801B8434();
-void fn_801B87D8();
-void fn_801BA060();
-void targets();
-void clFlowRound_Update(void);
-extern unsigned int lbl_806D184C;
-extern unsigned int lbl_806D184D;
-extern unsigned int lbl_806D9D08;
-extern unsigned int lbl_806D9D18;
-extern unsigned int lbl_806D9D1C;
-extern unsigned int lbl_806D9D20;
-extern unsigned int lbl_806D9D24;
-extern unsigned int lbl_806D9D30;
-extern unsigned int lbl_806D9D44;
-extern unsigned int lbl_806D9D7C;
-extern unsigned int lbl_806D9D84;
-extern unsigned int lbl_806D9D88;
-extern unsigned int lbl_806D9D8C;
-extern unsigned int lbl_806D9D90;
-extern unsigned int lbl_806D9D94;
 void clFlowRound_Draw(RoundView *self);
 
 /* === .data 0x8049AE70..0x8049AFD0 === */
@@ -231,20 +198,24 @@ struct RoundPos {
 };
 
 RoundPos lbl_8049AE70[4] = { { 6481, 6476, 84.0f, 200.0f }, { 6482, 6477, 208.0f, 260.0f }, { 6483, 6478, 323.0f, 200.0f }, { 6484, 6479, 456.0f, 260.0f } };
-static short s_roundRes[8][8] = {
-        6758, 6624, 6759, 6625, 6758, 6624, 6759, 6625,
-        6686, 6576, 6687, 6577, 6686, 6576, 6687, 6577,
-        6741, 6612, 6740, 6613, 6741, 6612, 6740, 6613,
-        6650, 6552, 6651, 6553, 6650, 6552, 6651, 6553,
-        6632, 6540, 6633, 6541, 6632, 6540, 6633, 6541,
-        6704, 6588, 6705, 6589, 6704, 6588, 6705, 6589,
-        6668, 6564, 6669, 6565, 6668, 6564, 6669, 6565,
-        6722, 6600, 6723, 6601, 6722, 6600, 6723, 6601
+struct RoundResPair {
+    short a;
+    short b;
 };
-static int s_roundB0[22] = {
-        0, 0, 0, 0, 401, 446, 442, 60,
-        128, 60, 62, 130, 62, 61, 129, 61,
-        59, 127, 114, 400, 445, 441
+
+static RoundResPair s_roundRes[8][4] = {
+    { { 6758, 6624 }, { 6759, 6625 }, { 6758, 6624 }, { 6759, 6625 } },
+    { { 6686, 6576 }, { 6687, 6577 }, { 6686, 6576 }, { 6687, 6577 } },
+    { { 6741, 6612 }, { 6740, 6613 }, { 6741, 6612 }, { 6740, 6613 } },
+    { { 6650, 6552 }, { 6651, 6553 }, { 6650, 6552 }, { 6651, 6553 } },
+    { { 6632, 6540 }, { 6633, 6541 }, { 6632, 6540 }, { 6633, 6541 } },
+    { { 6704, 6588 }, { 6705, 6589 }, { 6704, 6588 }, { 6705, 6589 } },
+    { { 6668, 6564 }, { 6669, 6565 }, { 6668, 6564 }, { 6669, 6565 } },
+    { { 6722, 6600 }, { 6723, 6601 }, { 6722, 6600 }, { 6723, 6601 } }
+};
+static int s_roundB0[4] = { 0, 0, 0, 0 };
+static int s_roundAnim[18] = {
+    401, 446, 442, 60, 128, 60, 62, 130, 62, 61, 129, 61, 59, 127, 114, 400, 445, 441
 };
 static short s_roundTitle[10] = { 6511, 6512, 6513, 6514, 6515, 6516, 6517, 6518, 0, 0 };
 short lbl_8049AF8C[10] = {
@@ -260,15 +231,23 @@ short lbl_806CFDF0[4] = { 0x1977, 0x1978, 0x1979, 0x197A };
 
 /* === .rodata 0x8039B308..0x8039B3C8 (class names and the debug string follow) === */
 extern const short lbl_8039B308[8][3];
-extern const float lbl_8039B338[24];
+struct RoundArrow {
+    float lx;
+    float ly;
+    float lrot;
+    float rx;
+    float ry;
+    float rrot;
+};
+extern const RoundArrow lbl_8039B338[4];
 const short lbl_8039B308[8][3] = {
     { 0x1A24, 0x1A25, 0x1A26 }, { 0x1A00, 0x1A01, 0x1A02 }, { 0x19EE, 0x19EF, 0x19F0 },
     { 0x1A36, 0x1A37, 0x1A38 }, { 0x1A12, 0x1A13, 0x1A14 }, { 0x1A48, 0x1A49, 0x1A4A },
     { 0x1A6C, 0x1A6D, 0x1A6E }, { 0x1A5A, 0x1A5B, 0x1A5C },
 };
-const float lbl_8039B338[24] = {
-    0.0f, 0.0f, 0.0f, 144.0f, 204.0f, -40.0f, 124.0f, 195.0f, 150.0f, 260.0f, 195.0f, 40.0f,
-    254.0f, 204.0f, -150.0f, 388.0f, 204.0f, -40.0f, 384.0f, 195.0f, 150.0f, 0.0f, 0.0f, 0.0f,
+const RoundArrow lbl_8039B338[4] = {
+    { 0.0f, 0.0f, 0.0f, 144.0f, 204.0f, -40.0f }, { 124.0f, 195.0f, 150.0f, 260.0f, 195.0f, 40.0f },
+    { 254.0f, 204.0f, -150.0f, 388.0f, 204.0f, -40.0f }, { 384.0f, 195.0f, 150.0f, 0.0f, 0.0f, 0.0f },
 };
 }
 
@@ -279,6 +258,232 @@ static inline InputState *input_state(void) {
         return 0;
     }
     return state;
+}
+
+
+/* fn_801C9288: sets one round tile's state and (re)creates its sprite. It reads the TU's
+ * .data tables through the section anchor, so it lives here, ahead of Draw. */
+namespace tile {
+struct Spr {
+    char opaque[0xC];
+    float x, y, sx, sy;
+    void Position(float px, float py) { x = px; y = py; }
+    void Scale(float s) { sx = s; sy = s; }
+};
+struct Slot { int state, variant, timer, frame; Spr *sprite; };
+struct Owner { char opaque[0x2C]; Slot slots[5]; };
+}
+extern "C" {
+void Sprite_SetupAnim(void *spr, int id, int a, int b);
+void fn_8019FF6C(void *spr, int flag);
+extern const float lbl_806D9D40;
+#pragma defer_codegen off
+/* fakematch (pragma): the target loads the offset constant again for the negated arm
+ * (`lfs f31,C; ... lfs f0,C; fneg f31,f0`); natural code has no pragma and CSEs the load. */
+#pragma push
+#pragma opt_common_subs off
+int fn_801C9288(::clFlowRound *self_, int index, int state) {
+    tile::Owner *self = (tile::Owner *)self_;
+    tile::Slot *slot = &self->slots[index];
+    if (state == 1) { if (slot->state != 0) return 0; }
+    else { if (slot->state == 0) return 0; }
+    slot->state = state;
+    slot->timer = 0;
+    slot->frame = 0;
+    switch (state) {
+    case 1: {
+        int anim;
+        RoundResPair *param;
+        RoundPos *pos;
+        pos = &lbl_8049AE70[index];
+        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        anim = s_roundAnim[slot->variant];
+        float offset = lbl_806D9D38;
+        if (index == 2 || index == 4) offset = -lbl_806D9D38;
+        if (!slot->sprite) slot->sprite = (tile::Spr *)new ::Sprite(anim, 0, 0);
+        else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
+        switch (slot->variant) {
+        case 0:
+            Sprite_SetAnimParam(slot->sprite, 0x1951, pos->id0);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 1:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 2:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        }
+        Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->a);
+        fn_801A0550(slot->sprite);
+        slot->sprite->Position(pos->x, pos->y + offset);
+        slot->sprite->Scale(lbl_806D9D3C);
+        break;
+    }
+    case 2: {
+        int anim;
+        RoundResPair *param;
+        RoundPos *pos;
+        pos = &lbl_8049AE70[index];
+        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        anim = s_roundAnim[15 + slot->variant];
+        float offset = lbl_806D9D38;
+        if (index == 2 || index == 4) offset = -lbl_806D9D38;
+        if (!slot->sprite) slot->sprite = (tile::Spr *)new ::Sprite(anim, 0, 0);
+        else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
+        switch (slot->variant) {
+        case 0:
+            Sprite_SetAnimParam(slot->sprite, 0x1951, pos->id0);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 1:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 2:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        }
+        Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->a);
+        fn_801A0550(slot->sprite);
+        slot->sprite->Position(pos->x, pos->y + offset);
+        slot->sprite->Scale(lbl_806D9D3C);
+        fn_8019FF6C(slot->sprite, 1);
+        break;
+    }
+    case 3: {
+        int anim;
+        RoundResPair *param;
+        RoundPos *pos;
+        pos = &lbl_8049AE70[index];
+        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        anim = s_roundAnim[12 + slot->variant];
+        float offset = lbl_806D9D38;
+        if (index == 2 || index == 4) offset = -lbl_806D9D38;
+        if (!slot->sprite) slot->sprite = (tile::Spr *)new ::Sprite(anim, 0, 0);
+        else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
+        switch (slot->variant) {
+        case 0:
+            Sprite_SetAnimParam(slot->sprite, 0x1951, pos->id0);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 1:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 2:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        }
+        Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->a);
+        fn_801A0550(slot->sprite);
+        slot->sprite->Position(pos->x, pos->y + offset);
+        slot->sprite->Scale(lbl_806D9D3C);
+        break;
+    }
+    case 4: {
+        int anim;
+        RoundResPair *param;
+        RoundPos *pos;
+        pos = &lbl_8049AE70[index];
+        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        anim = s_roundAnim[9 + slot->variant];
+        float offset = lbl_806D9D40;
+        if (index == 2 || index == 4) offset = -lbl_806D9D40;
+        if (!slot->sprite) slot->sprite = (tile::Spr *)new ::Sprite(anim, 0, 0);
+        else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
+        switch (slot->variant) {
+        case 0:
+            Sprite_SetAnimParam(slot->sprite, 0x1951, pos->id0);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 1:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 2:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        }
+        Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->a);
+        fn_801A0550(slot->sprite);
+        slot->sprite->Position(pos->x, pos->y + offset);
+        slot->sprite->Scale(lbl_806D9D28);
+        fn_8019FF6C(slot->sprite, 1);
+        break;
+    }
+    case 5: {
+        int anim;
+        RoundResPair *param;
+        RoundPos *pos;
+        pos = &lbl_8049AE70[index];
+        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        anim = s_roundAnim[6 + slot->variant];
+        float offset = lbl_806D9D40;
+        if (index == 2 || index == 4) offset = -lbl_806D9D40;
+        if (!slot->sprite) slot->sprite = (tile::Spr *)new ::Sprite(anim, 0, 0);
+        else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
+        switch (slot->variant) {
+        case 0:
+            Sprite_SetAnimParam(slot->sprite, 0x1951, pos->id0);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 1:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 2:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        }
+        Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->a);
+        fn_801A0550(slot->sprite);
+        slot->sprite->Position(pos->x, pos->y + offset);
+        slot->sprite->Scale(lbl_806D9D28);
+        break;
+    }
+    case 6: {
+        int anim;
+        RoundResPair *param;
+        RoundPos *pos;
+        pos = &lbl_8049AE70[index];
+        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        anim = s_roundAnim[3 + slot->variant];
+        float offset = lbl_806D9D38;
+        if (index == 2 || index == 4) offset = -lbl_806D9D38;
+        if (!slot->sprite) slot->sprite = (tile::Spr *)new ::Sprite(anim, 0, 0);
+        else Sprite_SetupAnim(slot->sprite, anim, 0, 0);
+        switch (slot->variant) {
+        case 0:
+            Sprite_SetAnimParam(slot->sprite, 0x1951, pos->id0);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 1:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        case 2:
+            Sprite_SetAnimParam(slot->sprite, 0x194C, pos->id1);
+            Sprite_SetAnimParam(slot->sprite, 0x19B0, param->b);
+            break;
+        }
+        Sprite_SetAnimParam(slot->sprite, 0x1A1E, param->a);
+        fn_801A0550(slot->sprite);
+        slot->sprite->Position(pos->x, pos->y + offset);
+        slot->sprite->Scale(lbl_806D9D3C);
+        break;
+    }
+    }
+    return 1;
+}
+#pragma pop
+#pragma defer_codegen reset
 }
 
 /* Draw is generated in place; with -inline deferred the rest of the TU is
@@ -361,1089 +566,532 @@ void clFlowRound_Draw(RoundView *self) {
 }
 
 
-/* === extracted from auto_clFlowRound_Update_text === */
-/* Copy into the TU between forward decls and function bodies; */
-/* keep emit order = target section layout (do not sort). */
-
-/* --- extern decls: branch callees (bl/b targets) --- */
-/* Open prototype (`extern void Foo();`) accepts any call signature; */
-/* refine if the real prototype matters for header consumers. */
-
-/* --- extern decls: sda21-referenced data --- */
-
-/* --- extern decls: large-data refs (@ha/@l pairs) --- */
-/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
-/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-
-/* --- function index (1 fns, .text 0x801C9EAC..0x801CADBC) ---
- * [  0] 0x801C9EAC size:0xF10   global clFlowRound_Update
- */
-
-/* --- forward decls --- */
-asm void clFlowRound_Update(void);
-
-/* --- extern decls: extab symbolic refs (dtors / typeids) --- */
-
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_clFlowRound_Update = { 0x488A0000, 0x00000CF4, 0x00000010, 0x00000000, 0x8A800017, (void *)&MemoryManager_TimedFree };
-
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_clFlowRound_Update = {
-    (void *)&clFlowRound_Update, 0x00000F10, (void *)&extab_clFlowRound_Update
+}
+/* clFlowRound_Update (0x801C9EAC). The vtable reaches it by rename; it works on
+ * its own field view of the object. */
+namespace upd {
+struct InputState {
+    unsigned char pad_00[4];
+    unsigned char active;
+    unsigned char pad_05[0xF];
+    int delta;
+    int value18;
+    int value1C;
 };
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void clFlowRound_Update(void) { /* 0x801C9EAC size:0xF10 */
-    nofralloc
-    stwu r1, -0x60(r1)
-    mflr r0
-    stw r0, 0x64(r1)
-    stfd f31, 0x50(r1)
-    psq_st f31, 0x58(r1), 0, 0
-    stfd f30, 0x40(r1)
-    psq_st f30, 0x48(r1), 0, 0
-    stmw r23, 0x1c(r1)
-    lis r4, lbl_8049AE70@ha
-    mr r31, r3
-    addi r30, r4, lbl_8049AE70@l
-    bl RumbleUpdate
-    lbz r0, 0x20(r31)
-    cmplwi r0, 0x0
-    beq clFlowRound_Update_L_801C9EFC
-    lwz r3, 0x1c(r31)
-    li r0, 0x0
-    addi r3, r3, 0x1
-    stw r3, 0x1c(r31)
-    stb r0, 0x20(r31)
-    clFlowRound_Update_L_801C9EFC:
-    lwz r3, 0x24(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x24(r31)
-    lwz r0, 0x1c(r31)
-    cmpwi r0, 0x2
-    beq clFlowRound_Update_L_801CA654
-    bge clFlowRound_Update_L_801C9F28
-    cmpwi r0, 0x0
-    beq clFlowRound_Update_L_801C9F34
-    bge clFlowRound_Update_L_801CA230
-    b clFlowRound_Update_L_801CA914
-    clFlowRound_Update_L_801C9F28:
-    cmpwi r0, 0x4
-    bge clFlowRound_Update_L_801CA914
-    b clFlowRound_Update_L_801CA834
-    clFlowRound_Update_L_801C9F34:
-    lwz r0, 0x24(r31)
-    cmpwi r0, 0xc
-    bgt clFlowRound_Update_L_801C9FCC
-    xoris r0, r0, 0x8000
-    lis r3, 0x4330
-    stw r0, 0xc(r1)
-    li r0, 0x1
-    lfd f1, lbl_806D9D30(r2)
-    stw r3, 0x8(r1)
-    lfs f4, lbl_806D9D1C(r2)
-    lfd f0, 0x8(r1)
-    lfs f3, lbl_806D9D20(r2)
-    fsubs f0, f0, f1
-    lfs f2, lbl_806D9D68(r2)
-    stb r0, 0xa4(r31)
-    lfs f1, lbl_806D9D6C(r2)
-    fmuls f4, f4, f0
-    lfs f0, lbl_806D9D28(r2)
-    fdivs f3, f4, f3
-    fsubs f2, f2, f3
-    stfs f2, 0xa8(r31)
-    stfs f1, 0xac(r31)
-    stfs f0, 0xb0(r31)
-    lwz r3, 0xf0(r31)
-    cmplwi r3, 0x0
-    beq clFlowRound_Update_L_801C9FA8
-    lfs f0, lbl_806D9D70(r2)
-    fadds f0, f0, f3
-    stfs f0, 0xc(r3)
-    clFlowRound_Update_L_801C9FA8:
-    lfs f0, lbl_806D9D74(r2)
-    li r0, 0x1
-    stb r0, 0x104(r31)
-    fadds f2, f0, f3
-    lfs f1, lbl_806D9D78(r2)
-    lfs f0, lbl_806D9D28(r2)
-    stfs f2, 0x108(r31)
-    stfs f1, 0x10c(r31)
-    stfs f0, 0x110(r31)
-    clFlowRound_Update_L_801C9FCC:
-    lwz r3, 0x24(r31)
-    cmpwi r3, 0x3
-    blt clFlowRound_Update_L_801CA00C
-    cmpwi r3, 0x8
-    bgt clFlowRound_Update_L_801CA00C
-    subi r3, r3, 0x3
-    lis r0, 0x4330
-    xoris r3, r3, 0x8000
-    stw r0, 0x8(r1)
-    lfd f2, lbl_806D9D30(r2)
-    stw r3, 0xc(r1)
-    lfs f0, lbl_806D9D7C(r2)
-    lfd f1, 0x8(r1)
-    fsubs f1, f1, f2
-    fdivs f0, f1, f0
-    stfs f0, 0x150(r31)
-    clFlowRound_Update_L_801CA00C:
-    lwz r0, 0x24(r31)
-    cmpwi r0, 0x14
-    blt clFlowRound_Update_L_801CA05C
-    cmpwi r0, 0x19
-    bgt clFlowRound_Update_L_801CA05C
-    xoris r3, r0, 0x8000
-    lis r0, 0x4330
-    stw r3, 0xc(r1)
-    lwz r3, 0x28(r31)
-    stw r0, 0x8(r1)
-    lfd f2, lbl_806D9D30(r2)
-    cmplwi r3, 0x0
-    lfd f0, 0x8(r1)
-    lfs f1, lbl_806D9D80(r2)
-    fsubs f2, f0, f2
-    lfs f0, lbl_806D9D7C(r2)
-    fsubs f1, f2, f1
-    fdivs f0, f1, f0
-    beq clFlowRound_Update_L_801CA05C
-    stfs f0, 0x20(r3)
-    clFlowRound_Update_L_801CA05C:
-    lwz r3, 0x24(r31)
-    cmpwi r3, 0x19
-    blt clFlowRound_Update_L_801CA0A8
-    subi r3, r3, 0x19
-    lis r0, 0x4330
-    xoris r3, r3, 0x8000
-    lwz r4, 0xec(r31)
-    stw r3, 0xc(r1)
-    lfd f2, lbl_806D9D30(r2)
-    cmplwi r4, 0x0
-    stw r0, 0x8(r1)
-    lfs f0, lbl_806D9D7C(r2)
-    lfd f1, 0x8(r1)
-    fsubs f1, f1, f2
-    fdivs f0, f1, f0
-    beq clFlowRound_Update_L_801CA0A0
-    stfs f0, 0x20(r4)
-    clFlowRound_Update_L_801CA0A0:
-    stfs f0, 0x154(r31)
-    stfs f0, 0x158(r31)
-    clFlowRound_Update_L_801CA0A8:
-    lwz r0, 0x24(r31)
-    cmpwi r0, 0x1e
-    bne clFlowRound_Update_L_801CA914
-    lwz r4, 0x4(r31)
-    mr r3, r31
-    li r5, 0x4
-    bl fn_801C9288
-    lfs f1, 0x90(r31)
-    bl SetScreenBrightness
-    li r5, 0x1
-    li r0, 0x0
-    stb r5, lbl_806D184C(r13)
-    stb r0, lbl_806D184D(r13)
-    stb r0, 0x164(r31)
-    lwz r6, 0x15c(r31)
-    cmplwi r6, 0x0
-    beq clFlowRound_Update_L_801CA144
-    lwz r0, 0x4(r31)
-    lis r3, lbl_8039B338@ha
-    addi r4, r3, lbl_8039B338@l
-    lfd f1, lbl_806D9D08(r2)
-    mulli r0, r0, 0x18
-    lfsx f0, r4, r0
-    add r3, r4, r0
-    lfs f2, 0x4(r3)
-    stfs f0, 0xc(r6)
-    stfs f2, 0x10(r6)
-    lwz r0, 0x4(r31)
-    lwz r3, 0x15c(r31)
-    mulli r0, r0, 0x18
-    add r4, r4, r0
-    lfs f0, 0x8(r4)
-    fmul f0, f1, f0
-    frsp f0, f0
-    stfs f0, 0x1c(r3)
-    lwz r0, 0x4(r31)
-    cmpwi r0, 0x0
-    beq clFlowRound_Update_L_801CA144
-    stb r5, 0x164(r31)
-    clFlowRound_Update_L_801CA144:
-    li r0, 0x0
-    stb r0, 0x165(r31)
-    lwz r5, 0x160(r31)
-    cmplwi r5, 0x0
-    beq clFlowRound_Update_L_801CA1C4
-    lwz r0, 0x4(r31)
-    lis r3, lbl_8039B338@ha
-    addi r4, r3, lbl_8039B338@l
-    lfd f1, lbl_806D9D08(r2)
-    mulli r0, r0, 0x18
-    add r3, r4, r0
-    lfs f0, 0xc(r3)
-    lfs f2, 0x10(r3)
-    stfs f0, 0xc(r5)
-    stfs f2, 0x10(r5)
-    lwz r0, 0x4(r31)
-    lwz r3, 0x160(r31)
-    mulli r0, r0, 0x18
-    add r4, r4, r0
-    lfs f0, 0x14(r4)
-    fmul f0, f1, f0
-    frsp f0, f0
-    stfs f0, 0x1c(r3)
-    lwz r4, 0x4(r31)
-    cmpwi r4, 0x3
-    beq clFlowRound_Update_L_801CA1C4
-    lwz r3, 0x8(r31)
-    subi r0, r3, 0x1
-    cmpw r4, r0
-    bge clFlowRound_Update_L_801CA1C4
-    li r0, 0x1
-    stb r0, 0x165(r31)
-    clFlowRound_Update_L_801CA1C4:
-    li r0, 0x1
-    li r3, 0x0
-    stb r0, 0x8c(r31)
-    li r4, 0x1
-    stb r0, 0x20(r31)
-    bl fn_801699D8
-    lbz r0, 0x14c(r31)
-    cmplwi r0, 0x1
-    bne clFlowRound_Update_L_801CA914
-    lwz r0, 0x4(r31)
-    cmpwi r0, 0x1
-    bgt clFlowRound_Update_L_801CA914
-    lwz r4, 0x168(r31)
-    cmplwi r4, 0x0
-    beq clFlowRound_Update_L_801CA914
-    lbz r0, 0x4(r4)
-    cmplwi r0, 0x1
-    bne clFlowRound_Update_L_801CA218
-    lbz r0, 0x5(r4)
-    cmplwi r0, 0x0
-    beq clFlowRound_Update_L_801CA914
-    clFlowRound_Update_L_801CA218:
-    li r3, 0x1
-    li r0, 0x0
-    stb r3, 0x4(r4)
-    stb r0, 0x5(r4)
-    stw r0, 0x8(r4)
-    b clFlowRound_Update_L_801CA914
-    clFlowRound_Update_L_801CA230:
-    lwz r5, g_pInputState(r13)
-    lwz r4, 0x4(r31)
-    cmplwi r5, 0x0
-    bne clFlowRound_Update_L_801CA248
-    li r0, 0x0
-    b clFlowRound_Update_L_801CA24C
-    clFlowRound_Update_L_801CA248:
-    mr r0, r5
-    clFlowRound_Update_L_801CA24C:
-    cmplwi r0, 0x0
-    beq clFlowRound_Update_L_801CA29C
-    cmplwi r5, 0x0
-    bne clFlowRound_Update_L_801CA260
-    li r5, 0x0
-    clFlowRound_Update_L_801CA260:
-    lwz r3, 0x4(r31)
-    lwz r0, 0x14(r5)
-    add r0, r3, r0
-    stw r0, 0x4(r31)
-    lwz r3, 0x8(r31)
-    lwz r0, 0x4(r31)
-    subi r3, r3, 0x1
-    cmpw r0, r3
-    ble clFlowRound_Update_L_801CA288
-    stw r3, 0x4(r31)
-    clFlowRound_Update_L_801CA288:
-    lwz r0, 0x4(r31)
-    cmpwi r0, 0x0
-    bge clFlowRound_Update_L_801CA29C
-    li r0, 0x0
-    stw r0, 0x4(r31)
-    clFlowRound_Update_L_801CA29C:
-    lwz r0, 0x4(r31)
-    cmpw r4, r0
-    beq clFlowRound_Update_L_801CA4AC
-    mr r3, r31
-    li r5, 0x2
-    bl fn_801C9288
-    lwz r4, 0x4(r31)
-    mr r3, r31
-    li r5, 0x4
-    bl fn_801C9288
-    li r0, 0x0
-    stb r0, 0x164(r31)
-    lwz r5, 0x15c(r31)
-    cmplwi r5, 0x0
-    beq clFlowRound_Update_L_801CA334
-    lwz r0, 0x4(r31)
-    lis r3, lbl_8039B338@ha
-    addi r4, r3, lbl_8039B338@l
-    lfd f1, lbl_806D9D08(r2)
-    mulli r0, r0, 0x18
-    lfsx f0, r4, r0
-    add r3, r4, r0
-    lfs f2, 0x4(r3)
-    stfs f0, 0xc(r5)
-    stfs f2, 0x10(r5)
-    lwz r0, 0x4(r31)
-    lwz r3, 0x15c(r31)
-    mulli r0, r0, 0x18
-    add r4, r4, r0
-    lfs f0, 0x8(r4)
-    fmul f0, f1, f0
-    frsp f0, f0
-    stfs f0, 0x1c(r3)
-    lwz r0, 0x4(r31)
-    cmpwi r0, 0x0
-    beq clFlowRound_Update_L_801CA334
-    li r0, 0x1
-    stb r0, 0x164(r31)
-    clFlowRound_Update_L_801CA334:
-    li r0, 0x0
-    stb r0, 0x165(r31)
-    lwz r5, 0x160(r31)
-    cmplwi r5, 0x0
-    beq clFlowRound_Update_L_801CA3B4
-    lwz r0, 0x4(r31)
-    lis r3, lbl_8039B338@ha
-    addi r4, r3, lbl_8039B338@l
-    lfd f1, lbl_806D9D08(r2)
-    mulli r0, r0, 0x18
-    add r3, r4, r0
-    lfs f0, 0xc(r3)
-    lfs f2, 0x10(r3)
-    stfs f0, 0xc(r5)
-    stfs f2, 0x10(r5)
-    lwz r0, 0x4(r31)
-    lwz r3, 0x160(r31)
-    mulli r0, r0, 0x18
-    add r4, r4, r0
-    lfs f0, 0x14(r4)
-    fmul f0, f1, f0
-    frsp f0, f0
-    stfs f0, 0x1c(r3)
-    lwz r4, 0x4(r31)
-    cmpwi r4, 0x3
-    beq clFlowRound_Update_L_801CA3B4
-    lwz r3, 0x8(r31)
-    subi r0, r3, 0x1
-    cmpw r4, r0
-    bge clFlowRound_Update_L_801CA3B4
-    li r0, 0x1
-    stb r0, 0x165(r31)
-    clFlowRound_Update_L_801CA3B4:
-    lwz r0, 0x88(r31)
-    lwz r3, 0x4(r31)
-    cmplwi r0, 0x0
-    beq clFlowRound_Update_L_801CA424
-    lwz r0, 0x80(r31)
-    cmpwi r0, 0x1
-    bne clFlowRound_Update_L_801CA424
-    stw r3, 0x84(r31)
-    li r4, 0x1bf
-    li r5, 0x0
-    li r6, 0x0
-    lwz r3, 0x88(r31)
-    bl Sprite_SetupAnim
-    lwz r0, g_cupId(r13)
-    addi r6, r30, 0x11c
-    addi r5, r30, 0x108
-    lwz r3, 0x88(r31)
-    slwi r0, r0, 1
-    li r4, 0x1970
-    lhax r0, r6, r0
-    slwi r0, r0, 1
-    lhax r5, r5, r0
-    bl Sprite_SetAnimParam
-    lwz r3, 0x88(r31)
-    bl fn_801A0550
-    lwz r3, 0x88(r31)
-    li r4, 0x1
-    bl fn_8019FF6C
-    clFlowRound_Update_L_801CA424:
-    bl fn_801B7CAC
-    lwz r4, 0x168(r31)
-    cmplwi r4, 0x0
-    beq clFlowRound_Update_L_801CA4AC
-    lbz r0, 0x14c(r31)
-    cmplwi r0, 0x1
-    bne clFlowRound_Update_L_801CA484
-    lwz r0, 0x4(r31)
-    cmpwi r0, 0x1
-    bgt clFlowRound_Update_L_801CA484
-    lbz r0, 0x4(r4)
-    cmplwi r0, 0x0
-    bne clFlowRound_Update_L_801CA4AC
-    cmplwi r0, 0x1
-    bne clFlowRound_Update_L_801CA46C
-    lbz r0, 0x5(r4)
-    cmplwi r0, 0x0
-    beq clFlowRound_Update_L_801CA4AC
-    clFlowRound_Update_L_801CA46C:
-    li r3, 0x1
-    li r0, 0x0
-    stb r3, 0x4(r4)
-    stb r0, 0x5(r4)
-    stw r0, 0x8(r4)
-    b clFlowRound_Update_L_801CA4AC
-    clFlowRound_Update_L_801CA484:
-    lbz r0, 0x4(r4)
-    cmplwi r0, 0x0
-    beq clFlowRound_Update_L_801CA4AC
-    lbz r0, 0x5(r4)
-    cmplwi r0, 0x1
-    beq clFlowRound_Update_L_801CA4AC
-    li r3, 0x1
-    li r0, 0x0
-    stb r3, 0x5(r4)
-    stw r0, 0x8(r4)
-    clFlowRound_Update_L_801CA4AC:
-    lwz r0, 0x7c(r31)
-    cmpwi r0, -0x1
-    beq clFlowRound_Update_L_801CA4BC
-    b clFlowRound_Update_L_801CA5D8
-    clFlowRound_Update_L_801CA4BC:
-    lfs f1, 0x90(r31)
-    lfs f0, lbl_806D9D44(r2)
-    fsubs f0, f1, f0
-    stfs f0, 0x90(r31)
-    bl GetInputManager
-    li r4, 0x0
-    bl InputMgr_GetPlayer
-    lwz r4, g_pInputState(r13)
-    cmplwi r4, 0x0
-    bne clFlowRound_Update_L_801CA4EC
-    li r3, 0x0
-    b clFlowRound_Update_L_801CA4F0
-    clFlowRound_Update_L_801CA4EC:
-    mr r3, r4
-    clFlowRound_Update_L_801CA4F0:
-    lwz r0, 0x18(r3)
-    cmpwi r0, 0x1
-    beq clFlowRound_Update_L_801CA50C
-    lfs f1, 0x90(r31)
-    lfs f0, lbl_806D9D38(r2)
-    fcmpo cr0, f1, f0
-    bge clFlowRound_Update_L_801CA5CC
-    clFlowRound_Update_L_801CA50C:
-    cmplwi r4, 0x0
-    bne clFlowRound_Update_L_801CA51C
-    li r0, 0x0
-    b clFlowRound_Update_L_801CA520
-    clFlowRound_Update_L_801CA51C:
-    mr r0, r4
-    clFlowRound_Update_L_801CA520:
-    cmplwi r0, 0x0
-    beq clFlowRound_Update_L_801CA544
-    cmplwi r4, 0x0
-    bne clFlowRound_Update_L_801CA534
-    li r4, 0x0
-    clFlowRound_Update_L_801CA534:
-    li r0, 0x0
-    stb r0, 0x4(r4)
-    stw r0, 0x18(r4)
-    stw r0, 0x1c(r4)
-    clFlowRound_Update_L_801CA544:
-    li r3, 0x0
-    li r4, 0x1
-    li r5, 0x1
-    bl SetRumbleMode
-    lbz r0, 0x14c(r31)
-    li r3, 0x0
-    lwz r4, 0x4(r31)
-    cmplwi r0, 0x1
-    bne clFlowRound_Update_L_801CA56C
-    li r3, 0x4
-    clFlowRound_Update_L_801CA56C:
-    add r26, r4, r3
-    mr r3, r26
-    bl fn_801BA060
-    stw r26, g_roundIndex(r13)
-    mr r6, r3
-    lwz r3, g_cupId(r13)
-    lwz r4, 0x0(r6)
-    lwz r5, 0x4(r6)
-    lwz r6, 0x8(r6)
-    bl SetCourseParams
-    bl IsItemSelectAllowed
-    clrlwi. r0, r3, 24
-    beq clFlowRound_Update_L_801CA5AC
-    li r0, 0x21
-    stw r0, 0x7c(r31)
-    b clFlowRound_Update_L_801CA5B4
-    clFlowRound_Update_L_801CA5AC:
-    li r0, 0x25
-    stw r0, 0x7c(r31)
-    clFlowRound_Update_L_801CA5B4:
-    lfs f0, lbl_806D9D48(r2)
-    stfs f0, 0x90(r31)
-    bl fn_801B7C64
-    li r0, 0x0
-    stb r0, 0x164(r31)
-    stb r0, 0x165(r31)
-    clFlowRound_Update_L_801CA5CC:
-    lfs f1, 0x90(r31)
-    bl SetScreenBrightness
-    lwz r0, 0x7c(r31)
-    clFlowRound_Update_L_801CA5D8:
-    cmpwi r0, -0x1
-    beq clFlowRound_Update_L_801CA914
-    li r24, 0x0
-    clFlowRound_Update_L_801CA5E4:
-    lwz r0, 0x4(r31)
-    cmpw r24, r0
-    bne clFlowRound_Update_L_801CA604
-    mr r3, r31
-    mr r4, r24
-    li r5, 0x5
-    bl fn_801C9288
-    b clFlowRound_Update_L_801CA614
-    clFlowRound_Update_L_801CA604:
-    mr r3, r31
-    mr r4, r24
-    li r5, 0x3
-    bl fn_801C9288
-    clFlowRound_Update_L_801CA614:
-    addi r24, r24, 0x1
-    cmpwi r24, 0x4
-    blt clFlowRound_Update_L_801CA5E4
-    lwz r3, 0x28(r31)
-    li r4, 0x1
-    bl Sprite_Destroy
-    bl fn_801B87D8
-    li r0, -0x1
-    li r3, 0x0
-    stb r0, lbl_806D184C(r13)
-    li r0, 0x1
-    stw r3, 0x28(r31)
-    stw r3, 0x24(r31)
-    stb r3, 0x8c(r31)
-    stb r0, 0x20(r31)
-    b clFlowRound_Update_L_801CA914
-    clFlowRound_Update_L_801CA654:
-    lwz r0, 0x24(r31)
-    cmpwi r0, 0x5
-    bgt clFlowRound_Update_L_801CA6D8
-    xoris r3, r0, 0x8000
-    lis r0, 0x4330
-    stw r3, 0xc(r1)
-    lwz r3, 0xec(r31)
-    stw r0, 0x8(r1)
-    lfd f2, lbl_806D9D30(r2)
-    cmplwi r3, 0x0
-    lfd f1, 0x8(r1)
-    lfs f0, lbl_806D9D7C(r2)
-    fsubs f1, f1, f2
-    lfs f2, lbl_806D9D28(r2)
-    fdivs f0, f1, f0
-    fsubs f1, f2, f0
-    beq clFlowRound_Update_L_801CA69C
-    stfs f1, 0x20(r3)
-    clFlowRound_Update_L_801CA69C:
-    lwz r3, 0x28(r31)
-    cmplwi r3, 0x0
-    beq clFlowRound_Update_L_801CA6AC
-    stfs f1, 0x20(r3)
-    clFlowRound_Update_L_801CA6AC:
-    lfs f0, lbl_806D9D84(r2)
-    li r3, -0x100
-    fmuls f0, f0, f1
-    fctiwz f0, f0
-    stfd f0, 0x8(r1)
-    lwz r0, 0xc(r1)
-    rlwimi r3, r0, 0, 24, 31
-    stw r3, 0xc8(r31)
-    stw r3, 0xcc(r31)
-    stw r3, 0xd0(r31)
-    stw r3, 0xd4(r31)
-    clFlowRound_Update_L_801CA6D8:
-    lwz r3, 0x24(r31)
-    cmpwi r3, 0x28
-    blt clFlowRound_Update_L_801CA740
-    subi r3, r3, 0x28
-    lis r0, 0x4330
-    xoris r3, r3, 0x8000
-    stw r0, 0x8(r1)
-    lfd f2, lbl_806D9D30(r2)
-    li r4, -0x100
-    stw r3, 0xc(r1)
-    lfs f0, lbl_806D9D7C(r2)
-    lfd f1, 0x8(r1)
-    lfs f3, lbl_806D9D28(r2)
-    fsubs f1, f1, f2
-    lfs f2, lbl_806D9D84(r2)
-    fdivs f0, f1, f0
-    fsubs f0, f3, f0
-    fmuls f0, f2, f0
-    fctiwz f0, f0
-    stfd f0, 0x10(r1)
-    lwz r0, 0x14(r1)
-    rlwimi r4, r0, 0, 24, 31
-    stw r4, 0x128(r31)
-    stw r4, 0x12c(r31)
-    stw r4, 0x130(r31)
-    stw r4, 0x134(r31)
-    clFlowRound_Update_L_801CA740:
-    lwz r0, 0x24(r31)
-    cmpwi r0, 0x2d
-    bne clFlowRound_Update_L_801CA914
-    lwz r3, 0xf0(r31)
-    li r4, 0xc7
-    li r5, 0x1
-    li r6, 0x0
-    bl Sprite_SetupAnim
-    lwz r3, 0xf0(r31)
-    li r4, 0x1ad4
-    li r5, 0x1ae4
-    bl Sprite_SetAnimParam
-    lwz r4, 0x4(r31)
-    mr r3, r31
-    li r5, 0x6
-    bl fn_801C9288
-    bl fn_801B8434
-    lwz r0, 0x88(r31)
-    cmplwi r0, 0x0
-    beq clFlowRound_Update_L_801CA7E8
-    lwz r0, 0x80(r31)
-    cmpwi r0, 0x1
-    bne clFlowRound_Update_L_801CA7E8
-    li r0, 0x2
-    li r4, 0x83
-    stw r0, 0x80(r31)
-    li r5, 0x0
-    li r6, 0x0
-    lwz r3, 0x88(r31)
-    bl Sprite_SetupAnim
-    lwz r0, g_cupId(r13)
-    addi r6, r30, 0x11c
-    addi r5, r30, 0x108
-    lwz r3, 0x88(r31)
-    slwi r0, r0, 1
-    li r4, 0x1970
-    lhax r0, r6, r0
-    slwi r0, r0, 1
-    lhax r5, r5, r0
-    bl Sprite_SetAnimParam
-    lwz r3, 0x88(r31)
-    bl fn_801A0550
-    clFlowRound_Update_L_801CA7E8:
-    li r4, 0x0
-    li r3, 0x1
-    stw r4, 0x24(r31)
-    stb r3, 0x20(r31)
-    lwz r5, 0x168(r31)
-    cmplwi r5, 0x0
-    beq clFlowRound_Update_L_801CA824
-    lbz r0, 0x4(r5)
-    cmplwi r0, 0x0
-    beq clFlowRound_Update_L_801CA824
-    lbz r0, 0x5(r5)
-    cmplwi r0, 0x1
-    beq clFlowRound_Update_L_801CA824
-    stb r3, 0x5(r5)
-    stw r4, 0x8(r5)
-    clFlowRound_Update_L_801CA824:
-    li r3, 0x0
-    li r4, 0x0
-    bl fn_801699D8
-    b clFlowRound_Update_L_801CA914
-    clFlowRound_Update_L_801CA834:
-    lwz r0, 0x24(r31)
-    cmpwi r0, 0x5
-    bgt clFlowRound_Update_L_801CA870
-    xoris r3, r0, 0x8000
-    lis r0, 0x4330
-    stw r3, 0x14(r1)
-    lfd f2, lbl_806D9D30(r2)
-    stw r0, 0x10(r1)
-    lfs f0, lbl_806D9D7C(r2)
-    lfd f1, 0x10(r1)
-    lfs f3, lbl_806D9D28(r2)
-    fsubs f1, f1, f2
-    fdivs f0, f1, f0
-    fsubs f0, f3, f0
-    stfs f0, 0x154(r31)
-    clFlowRound_Update_L_801CA870:
-    lwz r0, 0x24(r31)
-    cmpwi r0, 0x6
-    bgt clFlowRound_Update_L_801CA8AC
-    xoris r3, r0, 0x8000
-    lis r0, 0x4330
-    stw r3, 0x14(r1)
-    lfd f2, lbl_806D9D30(r2)
-    stw r0, 0x10(r1)
-    lfs f0, lbl_806D9D88(r2)
-    lfd f1, 0x10(r1)
-    lfs f3, lbl_806D9D28(r2)
-    fsubs f1, f1, f2
-    fdivs f0, f1, f0
-    fsubs f0, f3, f0
-    stfs f0, 0x150(r31)
-    clFlowRound_Update_L_801CA8AC:
-    lwz r0, 0x24(r31)
-    cmpwi r0, 0x7
-    bgt clFlowRound_Update_L_801CA8E8
-    xoris r3, r0, 0x8000
-    lis r0, 0x4330
-    stw r3, 0x14(r1)
-    lfd f2, lbl_806D9D30(r2)
-    stw r0, 0x10(r1)
-    lfs f0, lbl_806D9D8C(r2)
-    lfd f1, 0x10(r1)
-    lfs f3, lbl_806D9D28(r2)
-    fsubs f1, f1, f2
-    fdivs f0, f1, f0
-    fsubs f0, f3, f0
-    stfs f0, 0x158(r31)
-    clFlowRound_Update_L_801CA8E8:
-    lwz r0, 0x24(r31)
-    cmpwi r0, 0xf
-    bne clFlowRound_Update_L_801CA900
-    lfs f0, lbl_806D9D90(r2)
-    lwz r3, 0xf0(r31)
-    stfs f0, 0xc(r3)
-    clFlowRound_Update_L_801CA900:
-    lwz r0, 0x24(r31)
-    cmpwi r0, 0x2d
-    bne clFlowRound_Update_L_801CA914
-    lwz r3, 0x7c(r31)
-    b clFlowRound_Update_L_801CAD98
-    clFlowRound_Update_L_801CA914:
-    lwz r4, 0x168(r31)
-    cmplwi r4, 0x0
-    beq clFlowRound_Update_L_801CA9D4
-    lbz r0, 0x4(r4)
-    cmplwi r0, 0x0
-    beq clFlowRound_Update_L_801CA9D4
-    lwz r3, 0x8(r4)
-    cmpwi r3, 0x8
-    bgt clFlowRound_Update_L_801CA9C8
-    lbz r0, 0x5(r4)
-    cmplwi r0, 0x0
-    bne clFlowRound_Update_L_801CA96C
-    xoris r3, r3, 0x8000
-    lis r0, 0x4330
-    stw r3, 0x14(r1)
-    lfd f2, lbl_806D9D30(r2)
-    stw r0, 0x10(r1)
-    lfs f0, lbl_806D9D94(r2)
-    lfd f1, 0x10(r1)
-    fsubs f1, f1, f2
-    fmuls f0, f1, f0
-    b clFlowRound_Update_L_801CA994
-    clFlowRound_Update_L_801CA96C:
-    xoris r3, r3, 0x8000
-    lis r0, 0x4330
-    stw r3, 0xc(r1)
-    lfd f3, lbl_806D9D30(r2)
-    stw r0, 0x8(r1)
-    lfs f1, lbl_806D9D94(r2)
-    lfd f2, 0x8(r1)
-    lfs f0, lbl_806D9D28(r2)
-    fsubs f2, f2, f3
-    fnmsubs f0, f2, f1, f0
-    clFlowRound_Update_L_801CA994:
-    lwz r3, 0x0(r4)
-    stfs f0, 0x20(r3)
-    lwz r3, 0x8(r4)
-    addi r0, r3, 0x1
-    cmpwi r3, 0x8
-    stw r0, 0x8(r4)
-    bne clFlowRound_Update_L_801CA9C8
-    lbz r0, 0x5(r4)
-    cmplwi r0, 0x0
-    beq clFlowRound_Update_L_801CA9C8
-    li r0, 0x0
-    stb r0, 0x4(r4)
-    stb r0, 0x5(r4)
-    clFlowRound_Update_L_801CA9C8:
-    lwz r3, 0x0(r4)
-    lfs f1, lbl_806D9D18(r2)
-    bl Sprite_AdvanceAnim
-    clFlowRound_Update_L_801CA9D4:
-    lwz r3, 0x15c(r31)
-    cmplwi r3, 0x0
-    beq clFlowRound_Update_L_801CA9E8
-    lfs f1, lbl_806D9D18(r2)
-    bl Sprite_AdvanceAnim
-    clFlowRound_Update_L_801CA9E8:
-    lwz r3, 0x160(r31)
-    cmplwi r3, 0x0
-    beq clFlowRound_Update_L_801CA9FC
-    lfs f1, lbl_806D9D18(r2)
-    bl Sprite_AdvanceAnim
-    clFlowRound_Update_L_801CA9FC:
-    lwz r3, 0xf0(r31)
-    cmplwi r3, 0x0
-    beq clFlowRound_Update_L_801CAA10
-    lfs f1, lbl_806D9D18(r2)
-    bl Sprite_AdvanceAnim
-    clFlowRound_Update_L_801CAA10:
-    lwz r3, 0xec(r31)
-    cmplwi r3, 0x0
-    beq clFlowRound_Update_L_801CAA24
-    lfs f1, lbl_806D9D18(r2)
-    bl Sprite_AdvanceAnim
-    clFlowRound_Update_L_801CAA24:
-    lwz r3, 0x28(r31)
-    cmplwi r3, 0x0
-    beq clFlowRound_Update_L_801CAA38
-    lfs f1, lbl_806D9D18(r2)
-    bl Sprite_AdvanceAnim
-    clFlowRound_Update_L_801CAA38:
-    lfs f0, lbl_806D9D24(r2)
-    mr r29, r31
-    addi r28, r30, 0x0
-    li r26, 0x0
-    fneg f30, f0
-    li r27, 0x0
-    clFlowRound_Update_L_801CAA50:
-    lwz r3, 0x3c(r29)
-    cmplwi r3, 0x0
-    beq clFlowRound_Update_L_801CACB0
-    lfs f1, lbl_806D9D18(r2)
-    bl Sprite_AdvanceAnim
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    beq clFlowRound_Update_L_801CACB0
-    lwz r0, 0x2c(r29)
-    cmpwi r0, 0x4
-    beq clFlowRound_Update_L_801CACB0
-    bge clFlowRound_Update_L_801CAA98
-    cmpwi r0, 0x2
-    beq clFlowRound_Update_L_801CACB0
-    bge clFlowRound_Update_L_801CAC98
-    cmpwi r0, 0x1
-    bge clFlowRound_Update_L_801CAAA8
-    b clFlowRound_Update_L_801CACB0
-    clFlowRound_Update_L_801CAA98:
-    cmpwi r0, 0x6
-    beq clFlowRound_Update_L_801CAC98
-    bge clFlowRound_Update_L_801CACB0
-    b clFlowRound_Update_L_801CAB2C
-    clFlowRound_Update_L_801CAAA8:
-    lwz r0, 0x34(r29)
-    cmpwi r0, 0x0
-    bne clFlowRound_Update_L_801CACB0
-    lwz r3, 0x38(r29)
-    lis r0, 0x4330
-    stw r0, 0x10(r1)
-    addi r0, r3, 0x1
-    lfd f2, lbl_806D9D30(r2)
-    stw r0, 0x38(r29)
-    lfs f4, lbl_806D9D1C(r2)
-    lwz r0, 0x38(r29)
-    lfs f1, 0x4(r28)
-    xoris r0, r0, 0x8000
-    lfs f0, lbl_806D9D20(r2)
-    stw r0, 0x14(r1)
-    fadds f3, f4, f1
-    lwz r3, 0x3c(r29)
-    lfd f1, 0x10(r1)
-    fsubs f1, f1, f2
-    fmuls f1, f4, f1
-    fdivs f0, f1, f0
-    fsubs f0, f3, f0
-    stfs f0, 0xc(r3)
-    lwz r0, 0x38(r29)
-    cmpwi r0, 0xc
-    blt clFlowRound_Update_L_801CACB0
-    lwz r3, 0x34(r29)
-    li r4, 0x1
-    addi r0, r3, 0x1
-    stw r0, 0x34(r29)
-    lwz r3, 0x3c(r29)
-    bl fn_8019FF6C
-    b clFlowRound_Update_L_801CACB0
-    clFlowRound_Update_L_801CAB2C:
-    lwz r3, g_cupId(r13)
-    addi r4, r30, 0x11c
-    lwz r0, 0x30(r29)
-    cmpwi r26, 0x2
-    slwi r5, r3, 1
-    addi r3, r30, 0xc0
-    lhax r5, r4, r5
-    slwi r0, r0, 2
-    addi r4, r30, 0x30
-    lfs f31, lbl_806D9D24(r2)
-    slwi r5, r5, 4
-    lwzx r25, r3, r0
-    add r24, r5, r27
-    add r24, r4, r24
-    beq clFlowRound_Update_L_801CAB70
-    cmpwi r26, 0x4
-    bne clFlowRound_Update_L_801CAB74
-    clFlowRound_Update_L_801CAB70:
-    fmr f31, f30
-    clFlowRound_Update_L_801CAB74:
-    lwz r3, 0x3c(r29)
-    cmplwi r3, 0x0
-    bne clFlowRound_Update_L_801CABA8
-    li r3, 0x30
-    bl Alloc
-    mr. r23, r3
-    beq clFlowRound_Update_L_801CABA0
-    mr r4, r25
-    li r5, 0x0
-    li r6, 0x0
-    bl Sprite_InitWithAnim
-    clFlowRound_Update_L_801CABA0:
-    stw r23, 0x3c(r29)
-    b clFlowRound_Update_L_801CABB8
-    clFlowRound_Update_L_801CABA8:
-    mr r4, r25
-    li r5, 0x0
-    li r6, 0x0
-    bl Sprite_SetupAnim
-    clFlowRound_Update_L_801CABB8:
-    lwz r0, 0x30(r29)
-    cmpwi r0, 0x1
-    beq clFlowRound_Update_L_801CAC04
-    bge clFlowRound_Update_L_801CABD4
-    cmpwi r0, 0x0
-    bge clFlowRound_Update_L_801CABE0
-    b clFlowRound_Update_L_801CAC48
-    clFlowRound_Update_L_801CABD4:
-    cmpwi r0, 0x3
-    bge clFlowRound_Update_L_801CAC48
-    b clFlowRound_Update_L_801CAC28
-    clFlowRound_Update_L_801CABE0:
-    lwz r3, 0x3c(r29)
-    li r4, 0x1951
-    lha r5, 0x0(r28)
-    bl Sprite_SetAnimParam
-    lwz r3, 0x3c(r29)
-    li r4, 0x19b0
-    lha r5, 0x2(r24)
-    bl Sprite_SetAnimParam
-    b clFlowRound_Update_L_801CAC48
-    clFlowRound_Update_L_801CAC04:
-    lwz r3, 0x3c(r29)
-    li r4, 0x194c
-    lha r5, 0x2(r28)
-    bl Sprite_SetAnimParam
-    lwz r3, 0x3c(r29)
-    li r4, 0x19b0
-    lha r5, 0x2(r24)
-    bl Sprite_SetAnimParam
-    b clFlowRound_Update_L_801CAC48
-    clFlowRound_Update_L_801CAC28:
-    lwz r3, 0x3c(r29)
-    li r4, 0x194c
-    lha r5, 0x2(r28)
-    bl Sprite_SetAnimParam
-    lwz r3, 0x3c(r29)
-    li r4, 0x19b0
-    lha r5, 0x2(r24)
-    bl Sprite_SetAnimParam
-    clFlowRound_Update_L_801CAC48:
-    lwz r3, 0x3c(r29)
-    li r4, 0x1a1e
-    lha r5, 0x0(r24)
-    bl Sprite_SetAnimParam
-    lwz r3, 0x3c(r29)
-    bl fn_801A0550
-    lfs f0, 0x8(r28)
-    li r4, 0x1
-    lwz r3, 0x3c(r29)
-    lfs f1, 0x4(r28)
-    fadds f2, f0, f31
-    lfs f0, lbl_806D9D28(r2)
-    stfs f1, 0xc(r3)
-    stfs f2, 0x10(r3)
-    lwz r3, 0x3c(r29)
-    stfs f0, 0x14(r3)
-    stfs f0, 0x18(r3)
-    lwz r3, 0x3c(r29)
-    bl fn_8019FF6C
-    b clFlowRound_Update_L_801CACB0
-    clFlowRound_Update_L_801CAC98:
-    lwz r3, 0x3c(r29)
-    li r4, 0x1
-    bl Sprite_Destroy
-    li r0, 0x0
-    stw r0, 0x2c(r29)
-    stw r0, 0x3c(r29)
-    clFlowRound_Update_L_801CACB0:
-    addi r26, r26, 0x1
-    addi r28, r28, 0xc
-    cmpwi r26, 0x4
-    addi r27, r27, 0x4
-    addi r29, r29, 0x14
-    blt clFlowRound_Update_L_801CAA50
-    lwz r3, 0x88(r31)
-    cmplwi r3, 0x0
-    beq clFlowRound_Update_L_801CAD94
-    lfs f1, lbl_806D9D18(r2)
-    bl Sprite_AdvanceAnim
-    clrlwi. r0, r3, 24
-    bne clFlowRound_Update_L_801CAD94
-    lwz r3, 0x80(r31)
-    cmpwi r3, 0x0
-    bne clFlowRound_Update_L_801CAD68
-    addi r0, r3, 0x1
-    stw r0, 0x80(r31)
-    lwz r0, 0x88(r31)
-    lwz r3, 0x84(r31)
-    cmplwi r0, 0x0
-    beq clFlowRound_Update_L_801CAD68
-    lwz r0, 0x80(r31)
-    cmpwi r0, 0x1
-    bne clFlowRound_Update_L_801CAD68
-    stw r3, 0x84(r31)
-    li r4, 0x1bf
-    li r5, 0x0
-    li r6, 0x0
-    lwz r3, 0x88(r31)
-    bl Sprite_SetupAnim
-    lwz r0, g_cupId(r13)
-    addi r6, r30, 0x11c
-    addi r5, r30, 0x108
-    lwz r3, 0x88(r31)
-    slwi r0, r0, 1
-    li r4, 0x1970
-    lhax r0, r6, r0
-    slwi r0, r0, 1
-    lhax r5, r5, r0
-    bl Sprite_SetAnimParam
-    lwz r3, 0x88(r31)
-    bl fn_801A0550
-    lwz r3, 0x88(r31)
-    li r4, 0x1
-    bl fn_8019FF6C
-    clFlowRound_Update_L_801CAD68:
-    lwz r0, 0x80(r31)
-    cmpwi r0, 0x2
-    bne clFlowRound_Update_L_801CAD94
-    lwz r3, 0x88(r31)
-    li r4, 0x1
-    bl Sprite_Destroy
-    li r0, 0x0
-    stw r0, 0x88(r31)
-    lwz r3, 0x80(r31)
-    addi r0, r3, 0x1
-    stw r0, 0x80(r31)
-    clFlowRound_Update_L_801CAD94:
-    li r3, -0x1
-    clFlowRound_Update_L_801CAD98:
-    psq_l f31, 0x58(r1), 0, 0
-    lfd f31, 0x50(r1)
-    psq_l f30, 0x48(r1), 0, 0
-    lfd f30, 0x40(r1)
-    lmw r23, 0x1c(r1)
-    lwz r0, 0x64(r1)
-    mtlr r0
-    addi r1, r1, 0x60
-    blr
+struct ResCtrl {
+    void Show(float px, float py, float pz) {
+        flag = 1;
+        x = px;
+        y = py;
+        z = pz;
+    }
+    void SetColor(unsigned int c) {
+        colors[0] = c;
+        colors[1] = c;
+        colors[2] = c;
+        colors[3] = c;
+    }
+    int resId;
+    int field4, mode, fieldc;
+    unsigned char flag, pad11[3];
+    float x, y, z, width, height, field28, scaleX, scaleY;
+    unsigned int colors[4];
+    unsigned char flipX;
+    unsigned char flipY;
+    char pad46[2];
+    int tail[4];
+};
+
+struct Sprite {
+    char pad0[0xC];
+    float x;
+    float y;
+    float sx;
+    float sy;
+    float rot;
+    float alpha;
+};
+
+struct RoundSlot {
+    int mode;
+    int state;
+    int step;
+    int count;
+    Sprite *spr;
+};
+
+struct SprFlag {
+    Sprite *spr;
+    unsigned char visible;
+    unsigned char x5;
+    int x8;
+};
+
+struct clFlowRound {
+    void *vtbl;
+    int round;
+    int unlocked;
+    char padC[0x1C - 0xC];
+    int x1C;
+    unsigned char x20;
+    int x24;
+    Sprite *spr28;
+    RoundSlot slots[4];
+    int x7C;
+    int x80;
+    int x84;
+    Sprite *spr88;
+    unsigned char x8C;
+    float x90;
+    ResCtrl layer94;
+    Sprite *sprEC;
+    Sprite *sprF0;
+    ResCtrl layerF4;
+    unsigned char mode;
+    float alpha150;
+    float alpha154;
+    float alpha158;
+    Sprite *spr15C;
+    Sprite *spr160;
+    unsigned char show164;
+    unsigned char show165;
+    SprFlag *flag168;
+};
+
+extern "C" {
+void *Alloc(unsigned long size);
+}
+struct CourseParams {
+    int a;
+    int b;
+    int c;
+};
+
+extern "C" {
+void RumbleUpdate(void);
+void *GetInputManager(void);
+void InputMgr_GetPlayer(void *mgr, int idx);
+unsigned char IsItemSelectAllowed(void);
+void SetCourseParams(int cup, int a, int b, int c);
+void SetRumbleMode(int a, int b, int c);
+unsigned char Sprite_AdvanceAnim(void *spr, float dt);
+void Sprite_Destroy(void *spr, int flag);
+void Sprite_SetupAnim(void *spr, int id, int a, int b);
+void fn_801699D8(int a, int b);
+void fn_8019FF6C(void *spr, int flag);
+void fn_801B7C64(void);
+void fn_801B7CAC(void);
+void fn_801B8434(void);
+void fn_801B87D8(void);
+CourseParams *fn_801BA060(int round);
+extern signed char lbl_806D184C;
+extern signed char lbl_806D184D;
+extern const double lbl_806D9D08;
+extern const float lbl_806D9D18;
+extern const float lbl_806D9D1C;
+extern const float lbl_806D9D20;
+extern const float lbl_806D9D24;
+extern const float lbl_806D9D44;
+extern const float lbl_806D9D7C;
+extern const float lbl_806D9D84;
+extern const float lbl_806D9D88;
+extern const float lbl_806D9D8C;
+extern const float lbl_806D9D90;
+extern const float lbl_806D9D94;
 }
 
+
+#pragma exceptions on
+static inline InputState *input_state(void) {
+    InputState *state = (InputState *)g_pInputState;
+
+    if (state == 0) {
+        return 0;
+    }
+    return state;
+}
+
+union RoundColor {
+    unsigned int rgba;
+    struct {
+        unsigned int rgb : 24;
+        unsigned int a : 8;
+    } c;
+};
+
+static inline void SetPos(Sprite *spr, float x, float y) {
+    spr->x = x;
+    spr->y = y;
+}
+
+static inline void SetScale(Sprite *spr, float x, float y) {
+    spr->sx = x;
+    spr->sy = y;
+}
+
+static inline void PlaceArrows(clFlowRound *self) {
+    self->show164 = 0;
+    if (self->spr15C != 0) {
+        SetPos(self->spr15C, lbl_8039B338[self->round].lx, lbl_8039B338[self->round].ly);
+        self->spr15C->rot = lbl_806D9D08 * lbl_8039B338[self->round].lrot;
+        if (self->round != 0) {
+            self->show164 = 1;
+        }
+    }
+    self->show165 = 0;
+    if (self->spr160 != 0) {
+        SetPos(self->spr160, lbl_8039B338[self->round].rx, lbl_8039B338[self->round].ry);
+        self->spr160->rot = lbl_806D9D08 * lbl_8039B338[self->round].rrot;
+        if (self->round != 3 && self->round < self->unlocked - 1) {
+            self->show165 = 1;
+        }
+    }
+}
+
+static inline void SetTitle(clFlowRound *self, int idx) {
+    if (self->spr88 != 0 && self->x80 == 1) {
+        self->x84 = idx;
+        Sprite_SetupAnim(self->spr88, 0x1BF, 0, 0);
+        Sprite_SetAnimParam(self->spr88, 0x1970, s_roundTitle[lbl_8049AF8C[g_cupId]]);
+        fn_801A0550(self->spr88);
+        fn_8019FF6C(self->spr88, 1);
+    }
+}
+
+static inline void ShowFlag(SprFlag *flag) {
+    if (flag->visible != 1 || flag->x5 != 0) {
+        flag->visible = 1;
+        flag->x5 = 0;
+        flag->x8 = 0;
+    }
+}
+
+static inline void HideFlag(SprFlag *flag) {
+    if (flag->visible != 0 && flag->x5 != 1) {
+        flag->x5 = 1;
+        flag->x8 = 0;
+    }
+}
+
+extern "C" int clFlowRound_Update(clFlowRound *self) {
+    int prev;
+    int next;
+    int round;
+    int anim;
+    RoundResPair *res;
+    float dy;
+    float t;
+    float ndy;
+    RoundSlot *slot;
+    RoundPos *pos;
+    SprFlag *flag;
+
+    RumbleUpdate();
+    if (self->x20 != 0) {
+        self->x1C++;
+        self->x20 = 0;
+    }
+    self->x24++;
+    switch (self->x1C) {
+    case 0:
+        if (self->x24 <= 12) {
+            t = (lbl_806D9D1C * (float)self->x24) / lbl_806D9D20;
+            self->layer94.Show(lbl_806D9D68 - t, lbl_806D9D6C, lbl_806D9D28);
+            if (self->sprF0 != 0) {
+                self->sprF0->x = lbl_806D9D70 + t;
+            }
+            self->layerF4.Show(lbl_806D9D74 + t, lbl_806D9D78, lbl_806D9D28);
+        }
+        if (self->x24 >= 3 && self->x24 <= 8) {
+            self->alpha150 = (float)(self->x24 - 3) / lbl_806D9D7C;
+        }
+        if (self->x24 >= 20 && self->x24 <= 25) {
+            t = ((float)self->x24 - lbl_806D9D80) / lbl_806D9D7C;
+            if (self->spr28 != 0) {
+                self->spr28->alpha = t;
+            }
+        }
+        if (self->x24 >= 25) {
+            t = (float)(self->x24 - 25) / lbl_806D9D7C;
+            if (self->sprEC != 0) {
+                self->sprEC->alpha = t;
+            }
+            self->alpha154 = t;
+            self->alpha158 = t;
+        }
+        if (self->x24 == 30) {
+            fn_801C9288((::clFlowRound *)self, self->round, 4);
+            SetScreenBrightness(self->x90);
+            lbl_806D184C = 1;
+            lbl_806D184D = 0;
+            PlaceArrows(self);
+            self->x8C = 1;
+            self->x20 = 1;
+            fn_801699D8(0, 1);
+            if (self->mode == 1 && self->round <= 1) {
+                flag = self->flag168;
+                if (flag != 0) {
+                    ShowFlag(flag);
+                }
+            }
+        }
+        break;
+    case 1:
+        prev = self->round;
+        if (input_state() != 0) {
+            { InputState *st = input_state(); self->round += st->delta; }
+            if (self->round > self->unlocked - 1) {
+                self->round = self->unlocked - 1;
+            }
+            if (self->round < 0) {
+                self->round = 0;
+            }
+        }
+        if (prev != self->round) {
+            fn_801C9288((::clFlowRound *)self, prev, 2);
+            fn_801C9288((::clFlowRound *)self, self->round, 4);
+            PlaceArrows(self);
+            SetTitle(self, self->round);
+            fn_801B7CAC();
+            flag = self->flag168;
+            if (flag != 0) {
+                if (self->mode == 1 && self->round <= 1) {
+                    if (flag->visible == 0) {
+                        ShowFlag(flag);
+                    }
+                } else {
+                    HideFlag(flag);
+                }
+            }
+        }
+        next = self->x7C;
+        switch (next) {
+        case -1:
+            self->x90 -= lbl_806D9D44;
+            InputMgr_GetPlayer(GetInputManager(), 0);
+            if (input_state()->value18 == 1 || self->x90 < lbl_806D9D38) {
+                if (input_state() != 0) {
+                    InputState *state = input_state();
+
+                    state->active = 0;
+                    state->value18 = 0;
+                    state->value1C = 0;
+                }
+                SetRumbleMode(0, 1, 1);
+                {
+                    int base = 0;
+                    int r = self->round;
+                    CourseParams *p;
+
+                    if (self->mode == 1) {
+                        base = 4;
+                    }
+                    round = r + base;
+                    p = fn_801BA060(round);
+                    g_roundIndex = round;
+                    SetCourseParams(g_cupId, p->a, p->b, p->c);
+                }
+                if (IsItemSelectAllowed()) {
+                    self->x7C = 0x21;
+                } else {
+                    self->x7C = 0x25;
+                }
+                self->x90 = lbl_806D9D48;
+                fn_801B7C64();
+                self->show164 = 0;
+                self->show165 = 0;
+            }
+            SetScreenBrightness(self->x90);
+            next = self->x7C;
+            break;
+        }
+        if (next != -1) {
+            for (int i = 0; i < 4; i++) {
+                if (i == self->round) {
+                    fn_801C9288((::clFlowRound *)self, i, 5);
+                } else {
+                    fn_801C9288((::clFlowRound *)self, i, 3);
+                }
+            }
+            Sprite_Destroy(self->spr28, 1);
+            fn_801B87D8();
+            lbl_806D184C = -1;
+            self->spr28 = 0;
+            self->x24 = 0;
+            self->x8C = 0;
+            self->x20 = 1;
+        }
+        break;
+    case 2:
+        if (self->x24 <= 5) {
+            t = lbl_806D9D28 - (float)self->x24 / lbl_806D9D7C;
+            if (self->sprEC != 0) {
+                self->sprEC->alpha = t;
+            }
+            if (self->spr28 != 0) {
+                self->spr28->alpha = t;
+            }
+            {
+                unsigned char al = (int)(lbl_806D9D84 * t);
+                unsigned int c = 0xFFFFFF00 | al;
+
+                self->layer94.SetColor(c);
+            }
+        }
+        if (self->x24 >= 40) {
+            t = lbl_806D9D28 - (float)(self->x24 - 40) / lbl_806D9D7C;
+            {
+                unsigned char al = (int)(lbl_806D9D84 * t);
+                unsigned int c = 0xFFFFFF00 | al;
+
+                self->layerF4.SetColor(c);
+            }
+        }
+        if (self->x24 == 45) {
+            Sprite_SetupAnim(self->sprF0, 0xC7, 1, 0);
+            Sprite_SetAnimParam(self->sprF0, 0x1AD4, 0x1AE4);
+            fn_801C9288((::clFlowRound *)self, self->round, 6);
+            fn_801B8434();
+            if (self->spr88 != 0 && self->x80 == 1) {
+                self->x80 = 2;
+                Sprite_SetupAnim(self->spr88, 0x83, 0, 0);
+                Sprite_SetAnimParam(self->spr88, 0x1970, s_roundTitle[lbl_8049AF8C[g_cupId]]);
+                fn_801A0550(self->spr88);
+            }
+            self->x24 = 0;
+            self->x20 = 1;
+            flag = self->flag168;
+            if (flag != 0) {
+                HideFlag(flag);
+            }
+            fn_801699D8(0, 0);
+        }
+        break;
+    case 3:
+        if (self->x24 <= 5) {
+            self->alpha154 = lbl_806D9D28 - (float)self->x24 / lbl_806D9D7C;
+        }
+        if (self->x24 <= 6) {
+            self->alpha150 = lbl_806D9D28 - (float)self->x24 / lbl_806D9D88;
+        }
+        if (self->x24 <= 7) {
+            self->alpha158 = lbl_806D9D28 - (float)self->x24 / lbl_806D9D8C;
+        }
+        if (self->x24 == 15) {
+            self->sprF0->x = lbl_806D9D90;
+        }
+        if (self->x24 == 45) {
+            return self->x7C;
+        }
+        break;
+    }
+    flag = self->flag168;
+    if (flag != 0 && flag->visible != 0) {
+        if (flag->x8 <= 8) {
+            if (flag->x5 == 0) {
+                t = (float)flag->x8 * lbl_806D9D94;
+            } else {
+                t = lbl_806D9D28 - (float)flag->x8 * lbl_806D9D94;
+            }
+            flag->spr->alpha = t;
+            if (flag->x8++ == 8 && flag->x5 != 0) {
+                flag->visible = 0;
+                flag->x5 = 0;
+            }
+        }
+        Sprite_AdvanceAnim(flag->spr, lbl_806D9D18);
+    }
+    if (self->spr15C != 0) {
+        Sprite_AdvanceAnim(self->spr15C, lbl_806D9D18);
+    }
+    if (self->spr160 != 0) {
+        Sprite_AdvanceAnim(self->spr160, lbl_806D9D18);
+    }
+    if (self->sprF0 != 0) {
+        Sprite_AdvanceAnim(self->sprF0, lbl_806D9D18);
+    }
+    if (self->sprEC != 0) {
+        Sprite_AdvanceAnim(self->sprEC, lbl_806D9D18);
+    }
+    if (self->spr28 != 0) {
+        Sprite_AdvanceAnim(self->spr28, lbl_806D9D18);
+    }
+    ndy = -lbl_806D9D24;
+    for (int j = 0; j < 4; j++) {
+        if (self->slots[j].spr != 0 && Sprite_AdvanceAnim(self->slots[j].spr, lbl_806D9D18) != 1) {
+            switch (self->slots[j].mode) {
+            case 1:
+                if (self->slots[j].step == 0) {
+                    self->slots[j].count++;
+                    self->slots[j].spr->x = (lbl_806D9D1C + lbl_8049AE70[j].x) - (lbl_806D9D1C * (float)self->slots[j].count) / lbl_806D9D20;
+                    if (self->slots[j].count >= 12) {
+                        self->slots[j].step++;
+                        fn_8019FF6C(self->slots[j].spr, 1);
+                    }
+                }
+                break;
+            case 5: {
+                dy = lbl_806D9D24;
+                res = &s_roundRes[lbl_8049AF8C[g_cupId]][j];
+                anim = s_roundAnim[self->slots[j].state];
+                if (j == 2 || j == 4) {
+                    dy = ndy;
+                }
+                if (self->slots[j].spr == 0) {
+                    self->slots[j].spr = (Sprite *)new ::Sprite(anim, 0, 0);
+                } else {
+                    Sprite_SetupAnim(self->slots[j].spr, anim, 0, 0);
+                }
+                switch (self->slots[j].state) {
+                case 0:
+                    Sprite_SetAnimParam(self->slots[j].spr, 0x1951, lbl_8049AE70[j].id0);
+                    Sprite_SetAnimParam(self->slots[j].spr, 0x19B0, res->b);
+                    break;
+                case 1:
+                    Sprite_SetAnimParam(self->slots[j].spr, 0x194C, lbl_8049AE70[j].id1);
+                    Sprite_SetAnimParam(self->slots[j].spr, 0x19B0, res->b);
+                    break;
+                case 2:
+                    Sprite_SetAnimParam(self->slots[j].spr, 0x194C, lbl_8049AE70[j].id1);
+                    Sprite_SetAnimParam(self->slots[j].spr, 0x19B0, res->b);
+                    break;
+                }
+                Sprite_SetAnimParam(self->slots[j].spr, 0x1A1E, res->a);
+                fn_801A0550(self->slots[j].spr);
+                /* fakematch: natural code is `lbl_8049AE70[j].y + dy`; `y - -dy`
+                 * keeps the operands in source order (fadds f2,f0,f31). */
+                SetPos(self->slots[j].spr, lbl_8049AE70[j].x, lbl_8049AE70[j].y - -dy);
+                SetScale(self->slots[j].spr, lbl_806D9D28, lbl_806D9D28);
+                fn_8019FF6C(self->slots[j].spr, 1);
+                break;
+            }
+            case 3:
+            case 6:
+                Sprite_Destroy(self->slots[j].spr, 1);
+                self->slots[j].mode = 0;
+                self->slots[j].spr = 0;
+                break;
+            }
+        }
+    }
+    if (self->spr88 != 0 && Sprite_AdvanceAnim(self->spr88, lbl_806D9D18) == 0) {
+        if (self->x80 == 0) {
+            self->x80++;
+            SetTitle(self, self->x84);
+        }
+        if (self->x80 == 2) {
+            Sprite_Destroy(self->spr88, 1);
+            self->spr88 = 0;
+            self->x80++;
+        }
+    }
+    return -1;
+}
+
+#pragma exceptions off
+}
+extern "C" {
 }
 #pragma exceptions reset
 #pragma defer_codegen reset
@@ -1469,14 +1117,14 @@ clFlowRound::clFlowRound() {
     SetSyncTarget(0x1B);
     PreloadResource(lbl_8049AFA0[cup]);
     PreloadResource(lbl_8049AFA0[cup] + 12);
-    PreloadResource(s_roundRes[cup][1]);
-    PreloadResource(s_roundRes[cup][1] + 6);
-    PreloadResource(s_roundRes[cup][0]);
-    PreloadResource(s_roundRes[cup][0] + 9);
-    PreloadResource(s_roundRes[cup][3]);
-    PreloadResource(s_roundRes[cup][3] + 6);
-    PreloadResource(s_roundRes[cup][2]);
-    PreloadResource(s_roundRes[cup][2] + 9);
+    PreloadResource(s_roundRes[cup][0].b);
+    PreloadResource(s_roundRes[cup][0].b + 6);
+    PreloadResource(s_roundRes[cup][0].a);
+    PreloadResource(s_roundRes[cup][0].a + 9);
+    PreloadResource(s_roundRes[cup][1].b);
+    PreloadResource(s_roundRes[cup][1].b + 6);
+    PreloadResource(s_roundRes[cup][1].a);
+    PreloadResource(s_roundRes[cup][1].a + 9);
     PreloadResource(lbl_8039B308[cup][0]);
     PreloadResource(lbl_8039B308[cup][0] + 9);
     PreloadResource(0x194C);
@@ -1511,7 +1159,7 @@ clFlowRound::clFlowRound() {
         } else {
             self->slots[i].state = 2;
         }
-        fn_801C9288(self, i, 1);
+        fn_801C9288((::clFlowRound *)self, i, 1);
     }
     self->round = 0;
     self->x7C = -1;

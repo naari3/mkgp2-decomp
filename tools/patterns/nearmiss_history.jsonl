@@ -1,1 +1,2 @@
 {"ts": "2026-11-09T11:33:41+00:00", "bands": {"100": 7391, "97-99": 51, "99-100": 99, "90-97": 59, "0-90": 12}, "census_kinds": {"reg+other": 100, "reg+sched": 25, "reg_only": 71, "no_reg": 13}, "census_claimed": {}}
+{"ts": "2026-11-09T21:33:45+00:00", "bands": {"100": 7455, "99-100": 74, "97-99": 36, "90-97": 40, "0-90": 7}, "census_kinds": {"reg+other": 110, "reg+sched": 25, "reg_only": 71, "no_reg": 13}, "census_claimed": {}}

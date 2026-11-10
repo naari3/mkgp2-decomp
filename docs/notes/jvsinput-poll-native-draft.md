@@ -8,3 +8,8 @@ c19_u290: fresh direct baseline 90.138725/696B (assignment 64.71 stale). Volatil
 Source: Codex worker c22_u172_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c22_u172: direct baseline91.28902/696B (report91.97). Delay operatorBits conversion until snapshots complete ->92.6185/696B. Whole PublishEdges inline boundary invariant. Reuse operatorBits for raw input and converted input, removing separate raw ->93.25433/692B (report94.56069); retained. Extra mr removed; extab/extabindex now100%. Loops remain exact. Entry snapshot scheduling and final edge-buffer/scratch register homes plus operator CURRENT/RELEASED store order remain. Target uses separate global relocations, no common pool anchor; single fn prevents B. No config/range changes; full coordinator fallback DOL SHA1 exact, zero native gain. Three-approach cap reached.
+
+## c25_u114_20261110
+Source: Codex worker c25_u114_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+c25: direct baseline 93.25433/692B. Direct-destination edge helper equivalent to old code. Four-player edge loop with first-iteration operator writes retains partial-unroll branches (76.45087/724B). Keeping player 0 explicit and rolling players 1..3 fully unrolls (93.36994/692B), retained; changes six operands in two later pressed-edge groups, extab/extabindex stay100. Last three snapshots as loop are invariant, not retained. Source temp structure still differs under compiler coalescing/numbering rules; no flag flip or native gain. Three structural approaches exhausted.

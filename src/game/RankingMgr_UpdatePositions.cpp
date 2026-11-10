@@ -38,10 +38,13 @@ static inline void UpdateKart(RankingManager *self, int i) {
 static inline void UpdateAll(RankingManager *self) {
     for (int i = 0; i < 8; ++i) UpdateKart(self, i);
 }
+static inline RankingThinkBox *GetThinkBox(RankingManager *self) {
+    return self->box;
+}
 void RankingMgr_UpdatePositions(RankingManager *self) {
     if (g_gameMode == 1) return;
     if (IsRaceStarted()) {
-        RankingThinkBox *box = self->box;
+        RankingThinkBox *box = GetThinkBox(self);
         box->lastCar = FindLast();
         box->firstCar = FindFirst();
         self->box->Update();

@@ -10,7 +10,6 @@ static inline u16 ChecksumFrom(u8* p, u16 sum, u32 n) {
 
 #pragma opt_common_subs off
 #pragma push
-#pragma opt_propagation off
 s32 BackupReadRecord(u32 chan, void* data, BackupEntry* e) {
     u8* buffer;
     BOOL* valid;
@@ -20,7 +19,6 @@ s32 BackupReadRecord(u32 chan, void* data, BackupEntry* e) {
     u32 i;
     u32 size;
     u32 recSize;
-    u32 alignment;
     const BackupInfo* info;
     BOOL ok[2];
     s32 k;
@@ -32,8 +30,7 @@ s32 BackupReadRecord(u32 chan, void* data, BackupEntry* e) {
     }
     size = (e->cfg.size + 3) & ~3;
     info = &lbl_806DC918[chan];
-    alignment = info->align;
-    recSize = -alignment & (size + 0xC + alignment - 1);
+    recSize = (size + 0xC + info->align - 1) & -info->align;
     if (fn_8028812C(chan, (e->cfg.flags >> 4) & 1, e->addr, lbl_806835E0,
                       (e->cfg.flags & 2) ? recSize * 2 : recSize)) {
         return 1;

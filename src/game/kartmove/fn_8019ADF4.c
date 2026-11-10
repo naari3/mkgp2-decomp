@@ -31,9 +31,9 @@ static inline void ApplyHorizontalForce(KartForceState *k, volatile Vec3 *v, con
 }
 
 #pragma exceptions on
-void fn_8019ADF4(KartForceState *__restrict k, Vec3 *__restrict input) {
-    volatile Vec3 v;
-    volatile Vec3 n;
+void fn_8019ADF4(KartForceState *k, Vec3 *__restrict input) {
+    Vec3 v;
+    Vec3 n;
     float len;
     float vx, vy, vz;
     float nx, ny, nz;

@@ -1,6 +1,4 @@
-/* Native reconstruction of the clKPTrap (GrowSet) constructor.
- * NonMatching: the entry-offset initialization is li r30, 0 rather
- * than the target mr r30, r29. */
+/* Native reconstruction of the clKPTrap (GrowSet) constructor. */
 #include "game/Scene_80170B5C_private.h"
 
 extern "C" {
@@ -118,15 +116,18 @@ GrowSet::GrowSet() {
     if (count==0) return;
     used=0;
     entries=(GrowEntry *)FUN_8003b120(count*sizeof(GrowEntry));
-    for (int i=0;i<count;i++) {
-        entries[i].jobj=0;
-        entries[i].faces=0;
-        entries[i].faceCount=0;
-        entries[i].anim=0;
-        entries[i].state=0;
-        entries[i].t=0.0f;
-        entries[i].scale=0.0f;
-        entries[i].sub=0;
+    /* The clear loop shares `bit` with the bit loop below: only a multi-def
+     * counter keeps `li r29,0; mr r30,r29` for the entry offset
+     * (regalloc_patterns 73). */
+    for (bit=0;bit<count;bit++) {
+        entries[bit].jobj=0;
+        entries[bit].faces=0;
+        entries[bit].faceCount=0;
+        entries[bit].anim=0;
+        entries[bit].state=0;
+        entries[bit].t=0.0f;
+        entries[bit].scale=0.0f;
+        entries[bit].sub=0;
     }
     for (bit=0;bit<32;bit++) {
         if (mask & (1<<bit)) {

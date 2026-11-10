@@ -163,6 +163,29 @@ jobs:
           path: ci-tools/wibo
           key: tool-${{ runner.os }}-wibo-${{ steps.tools.outputs.wibo }}
 
+      # Genuine Metrowerks MSL C++ headers (std::deque/list/vector TUs, see
+      # docs/notes/msl_cpp.md). Not in the repo (Metrowerks copyright):
+      # fetched from archive.org once, then served from the cache.
+      - name: Restore MSL headers
+        id: cache-msl
+        uses: actions/cache/restore@v5
+        with:
+          path: build/msl_cw25
+          key: msl-cw25-${{ hashFiles('tools/fetch_msl.py') }}
+
+      - name: Fetch MSL headers
+        if: steps.cache-msl.outputs.cache-hit != 'true'
+        run: |
+          rm -rf build/msl_cw25
+          python tools/fetch_msl.py
+
+      - name: Save MSL headers
+        if: steps.cache-msl.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v5
+        with:
+          path: build/msl_cw25
+          key: msl-cw25-${{ hashFiles('tools/fetch_msl.py') }}
+
       - name: Build
         run: |
           python configure.py --map --version ${{ matrix.version }} \

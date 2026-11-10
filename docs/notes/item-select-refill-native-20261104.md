@@ -49,3 +49,8 @@ c23_u7: inherited opt_propagation off removed (direct97.61905 -> natural94.10714
 Source: Codex worker c23_u67_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 c23_u67: pool checked FIRST; owner remains out-of-scope ChoiceUpdate, eight-TU minimum merge as c22. Direct93.94181->94.125/report94.155174->94.33836,1856B,data28/EH28/index12 all100. H1 actual array indexing + canonical Sprite_AdvanceAnim int return93.98492; H2 ChoiceColumn accessor with existing row/i fixes selected column/row homes94.081894; H3 complete ApplyFade inline fixes four alpha r22->r24 instructions94.125. All retained, no optimization pragmas added. Foreign pool folds and tail count/cursor homes remain. Single nonexact function prevents B; no flag/range/shared-header/bridge edits. Coordinator full fallback DOL SHA1 exact; nativegain0.
+
+## c25_u34_20261110
+Source: Codex worker c25_u34_20261110 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 11 fn / 1636 B.
+
+c25_u34 fresh direct fn_802386E0 97.39881 ->97.440475,672B. Snapshot assigned in CompleteChoice argument plus direct pool arrays preserves both g_playerData copies; all other functions/sections invariant. Outer resource-ref97.309525 and named first choice lifetime97.291664 rejected. Anchor/saved-GPR residual persists. Already owns whole pool; no safe B cut without undoing original-TU merge. Full service SHA1 exact, no native gain.

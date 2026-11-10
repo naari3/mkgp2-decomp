@@ -326,7 +326,6 @@ extern unsigned int lbl_806D7D2C;
 extern unsigned int lbl_806D7D30;
 extern unsigned int lbl_806D7D34;
 extern unsigned int lbl_806D7D38;
-extern const float lbl_806D7D3C;
 extern unsigned int lbl_806D7D40;
 extern unsigned int lbl_806D7D44;
 extern unsigned int lbl_806D7D48;
@@ -342,57 +341,20 @@ void fn_80143DB0(void);
 extern int g_gameMode;
 void fn_8023CD54(void *p);
 void RumbleUpdate(void);
-extern void Saturate_Double();
+float Saturate_Double(float v, float lo, float hi);
 void *StrPcb_GetInstance(void);
-extern void StrPcb_SetStatusBits();
-extern void TaRecord_GetEntry_Current();
-extern void fn_801420DC();
+void StrPcb_SetStatusBits(void *p, int bits, int flag);
+struct TaEntry *TaRecord_GetEntry_Current(int rank);
+void fn_801420DC(void *self);
 void fn_801678FC(int layer, float r, float g, float b, float a);
-extern void fn_8023CDA8();
-extern void fn_8023CFC8();
-extern void fn_8023CFD4();
-extern void get_title_result();
-extern void wcscpy();
-extern unsigned int lbl_806D10A0;
-extern unsigned int lbl_806D7D58;
-extern unsigned int lbl_806D7D5C;
+void fn_8023CDA8(void *box);
+void fn_8023CFC8(void *box);
+void fn_8023CFD4(void *box);
+unsigned char get_title_result(void *p, int *a, int *b, int flag);
+void wcscpy(void *dst, const short *src);
+extern void *lbl_806D10A0;
 extern const float lbl_806D7D60;
-extern unsigned int lbl_806D7D64;
 extern const float lbl_806D7D68;
-extern unsigned int lbl_806D7D6C;
-extern unsigned int lbl_806D7D70;
-extern unsigned int lbl_806D7D74;
-extern unsigned int lbl_806D7D78;
-extern unsigned int lbl_806D7D7C;
-extern unsigned int lbl_806D7D80;
-extern unsigned int lbl_806D7D84;
-extern unsigned int lbl_806D7D88;
-extern unsigned int lbl_806D7D8C;
-extern unsigned int lbl_806D7D90;
-extern unsigned int lbl_806D7D94;
-extern unsigned int lbl_806D7D98;
-extern unsigned int lbl_806D7D9C;
-extern unsigned int lbl_806D7DA0;
-extern unsigned int lbl_806D7DA4;
-extern unsigned int lbl_806D7DA8;
-extern unsigned int lbl_806D7DAC;
-extern unsigned int lbl_806D7DB0;
-extern unsigned int lbl_806D7DB4;
-extern unsigned int lbl_806D7DB8;
-extern unsigned int lbl_806D7DBC;
-extern unsigned int lbl_806D7DC0;
-extern unsigned int lbl_806D7DC4;
-extern unsigned int lbl_806D7DC8;
-extern unsigned int lbl_806D7DCC;
-extern unsigned int lbl_806D7DD0;
-extern unsigned int lbl_806D7DD4;
-extern unsigned int lbl_806D7DD8;
-extern unsigned int lbl_806D7DDC;
-extern unsigned int lbl_806D7DE0;
-extern unsigned int lbl_806D7DE4;
-extern unsigned int lbl_806D7DE8;
-extern unsigned int lbl_806D7DEC;
-extern unsigned int lbl_806D7DF0;
 extern unsigned int lbl_806D7DF8;
 extern unsigned int lbl_8048F0C8[];
 void fn_8014205C(void *self, int flag);
@@ -561,8 +523,8 @@ void fn_80147778(void);
 void fn_801477BC(void);
 void fn_801478B0(StepHolder *self);
 asm void fn_80147900(struct HudResSet *o);
-asm void fn_80147AF4(void);
-asm void fn_80147CE8(void);
+void fn_80147AF4(struct HudResSet *o);
+void fn_80147CE8(struct HudResSet *o);
 void fn_80147EE8(StepHolder *self);
 void fn_8014816C(StepHolder *self);
 struct RecordPanel *fn_80148648(struct RecordPanel *self, short flag);
@@ -579,7 +541,6 @@ struct CountListFull *fn_80149A88(struct CountListFull *self, short flag);
 void fn_80149CD8(void);
 void fn_80149D58(VObj *p);
 void fn_80149D90(CdHolder2 *self);
-asm void fn_80149E44(void);
 HudPanel *fn_8014A890(HudPanel *self, short flag);
 struct StrPanel *fn_8014A8FC(struct StrPanel *self, short flag);
 void fn_8014AC48(void *self);
@@ -601,13 +562,7 @@ __declspec(section ".extab_user") static const unsigned char extab_fn_80147900[8
     0x10, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80147AF4[8] = {
-    0x08, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
-__declspec(section ".extab_user") static const unsigned char extab_fn_80147CE8[8] = {
-    0x00, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 
 
@@ -629,7 +584,6 @@ __declspec(section ".extab_user") static const struct { unsigned int f0; unsigne
 
 
 
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; void *f5; } extab_fn_80149E44 = { 0x214A0000, 0x000005E4, 0x00000010, 0x00000000, 0x8A80001C, (void *)&MemoryManager_TimedFree };
 
 
 
@@ -649,13 +603,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&fn_80147900, 0x000001F4, (void *)extab_fn_80147900
 };
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80147AF4 = {
-    (void *)&fn_80147AF4, 0x000001F4, (void *)extab_fn_80147AF4
-};
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80147CE8 = {
-    (void *)&fn_80147CE8, 0x00000200, (void *)extab_fn_80147CE8
-};
 
 
 
@@ -679,9 +627,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 
 
 
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_80149E44 = {
-    (void *)&fn_80149E44, 0x00000A4C, (void *)&extab_fn_80149E44
-};
 
 
 
@@ -1279,274 +1224,137 @@ extern "C" asm void fn_80147900(struct HudResSet *o) { /* 0x80147900 size:0x1F4 
     blr
 }
 
-extern "C" asm void fn_80147AF4(void) { /* 0x80147AF4 size:0x1F4 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r3
-    lwz r0, 0x8(r3)
-    cmpwi r0, 0x1
-    bne fn_80147AF4_L_80147B1C
-    li r3, 0x71
-    bl SoundMgr_Play
-    fn_80147AF4_L_80147B1C:
-    lwz r3, 0x8(r31)
-    cmpwi r3, 0x14
-    bge fn_80147AF4_L_80147BEC
-    xoris r3, r3, 0x8000
-    lis r0, 0x4330
-    stw r3, 0xc(r1)
-    lfd f3, lbl_806D7C20(r2)
-    stw r0, 0x8(r1)
-    lfs f2, lbl_806D7C40(r2)
-    lfd f1, 0x8(r1)
-    lfs f0, lbl_806D7C3C(r2)
-    fsubs f3, f1, f3
-    lfs f1, lbl_806D7C48(r2)
-    fdivs f2, f3, f2
-    fmuls f0, f0, f2
-    fmuls f0, f1, f0
-    fctiwz f0, f0
-    stfd f0, 0x10(r1)
-    lwz r3, 0x14(r1)
-    cmpwi r3, 0xff
-    ble fn_80147AF4_L_80147B74
-    li r3, 0xff
-    fn_80147AF4_L_80147B74:
-    lfs f1, lbl_806D7C50(r2)
-    li r0, -0x100
-    lfs f0, lbl_806D7C4C(r2)
-    rlwimi r0, r3, 0, 24, 31
-    fmadds f0, f1, f2, f0
-    stfs f0, 0x94(r31)
-    stfs f0, 0x98(r31)
-    stfs f0, 0xec(r31)
-    stfs f0, 0xf0(r31)
-    stfs f0, 0x144(r31)
-    stfs f0, 0x148(r31)
-    stfs f0, 0x19c(r31)
-    stfs f0, 0x1a0(r31)
-    stw r0, 0x9c(r31)
-    stw r0, 0xa0(r31)
-    stw r0, 0xa4(r31)
-    stw r0, 0xa8(r31)
-    stw r0, 0xf4(r31)
-    stw r0, 0xf8(r31)
-    stw r0, 0xfc(r31)
-    stw r0, 0x100(r31)
-    stw r0, 0x14c(r31)
-    stw r0, 0x150(r31)
-    stw r0, 0x154(r31)
-    stw r0, 0x158(r31)
-    stw r0, 0x1a4(r31)
-    stw r0, 0x1a8(r31)
-    stw r0, 0x1ac(r31)
-    stw r0, 0x1b0(r31)
-    b fn_80147AF4_L_80147CD4
-    fn_80147AF4_L_80147BEC:
-    cmpwi r3, 0x1e
-    blt fn_80147AF4_L_80147CD4
-    cmpwi r3, 0x2d
-    bge fn_80147AF4_L_80147CBC
-    subi r3, r3, 0x1e
-    lis r0, 0x4330
-    xoris r3, r3, 0x8000
-    stw r0, 0x10(r1)
-    lfd f1, lbl_806D7C20(r2)
-    li r0, -0x1
-    stw r3, 0x14(r1)
-    li r3, -0x100
-    lfs f4, lbl_806D7C34(r2)
-    lfd f0, 0x10(r1)
-    lfs f2, lbl_806D7C38(r2)
-    fsubs f5, f0, f1
-    lfs f1, lbl_806D7C50(r2)
-    lfs f0, lbl_806D7C4C(r2)
-    lfs f3, lbl_806D7C3C(r2)
-    fdivs f4, f5, f4
-    fsubs f2, f2, f4
-    fmadds f1, f1, f2, f0
-    fmuls f0, f3, f2
-    stfs f1, 0x94(r31)
-    fctiwz f0, f0
-    stfs f1, 0x98(r31)
-    stfs f1, 0xec(r31)
-    stfs f1, 0xf0(r31)
-    stfs f1, 0x144(r31)
-    stfs f1, 0x148(r31)
-    stfs f1, 0x19c(r31)
-    stfs f1, 0x1a0(r31)
-    stw r0, 0x9c(r31)
-    stw r0, 0xa0(r31)
-    stw r0, 0xa4(r31)
-    stw r0, 0xa8(r31)
-    stw r0, 0xf4(r31)
-    stw r0, 0xf8(r31)
-    stfd f0, 0x8(r1)
-    stw r0, 0xfc(r31)
-    lwz r4, 0xc(r1)
-    stw r0, 0x100(r31)
-    rlwimi r3, r4, 0, 24, 31
-    stw r3, 0x14c(r31)
-    stw r3, 0x150(r31)
-    stw r3, 0x154(r31)
-    stw r3, 0x158(r31)
-    stw r3, 0x1a4(r31)
-    stw r3, 0x1a8(r31)
-    stw r3, 0x1ac(r31)
-    stw r3, 0x1b0(r31)
-    b fn_80147AF4_L_80147CD4
-    fn_80147AF4_L_80147CBC:
-    cmpwi r3, 0x5a
-    blt fn_80147AF4_L_80147CD4
-    li r3, 0x4
-    li r0, 0x0
-    stw r3, 0x0(r31)
-    stw r0, 0x8(r31)
-    fn_80147AF4_L_80147CD4:
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+/* Views of the HudResSet sub-objects touched by the intro steps. */
+static inline unsigned int HudColor_SetAlpha(unsigned int c, int a) {
+    return (c & ~0xFF) | (a & 0xFF);
+}
+struct HudResCtrlView {
+    char pad0[0x2C];
+    float scaleX;
+    float scaleY;
+    unsigned int colors[4];
+    char pad44[0x58 - 0x44];
+};
+
+struct HudTextView {
+    char pad0[0x20];
+    unsigned int color;
+    char pad24[0x230 - 0x24];
+};
+
+struct HudResSetView {
+    int state;
+    int layer;
+    int timer;
+    unsigned char skipCheck;
+    char padD[3];
+    HudResCtrlView res[11];
+    HudTextView texts[3];
+    HudResCtrlView tail[3];
+};
+static inline void HudTexts_SetColor(HudResSetView *o, int c, int a) {
+    c = (c & ~0xFF) | (a & 0xFF);
+    for (int i = 0; i < 3; i++) {
+        o->texts[i].color = c;
+    }
+}
+static inline void HudRes_SetColor(HudResCtrlView *r, unsigned int c) {
+    r->colors[0] = c;
+    r->colors[1] = c;
+    r->colors[2] = c;
+    r->colors[3] = c;
 }
 
-extern "C" asm void fn_80147CE8(void) { /* 0x80147CE8 size:0x200 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    lwz r4, 0x8(r3)
-    cmpwi r4, 0x14
-    bge fn_80147CE8_L_80147DDC
-    xoris r4, r4, 0x8000
-    lis r0, 0x4330
-    stw r4, 0xc(r1)
-    lfd f3, lbl_806D7C20(r2)
-    stw r0, 0x8(r1)
-    lfs f2, lbl_806D7C40(r2)
-    lfd f1, 0x8(r1)
-    lfs f0, lbl_806D7C3C(r2)
-    fsubs f3, f1, f3
-    lfs f1, lbl_806D7C48(r2)
-    fdivs f2, f3, f2
-    fmuls f0, f0, f2
-    fmuls f0, f1, f0
-    fctiwz f0, f0
-    stfd f0, 0x10(r1)
-    lwz r4, 0x14(r1)
-    cmpwi r4, 0xff
-    ble fn_80147CE8_L_80147D44
-    li r4, 0xff
-    fn_80147CE8_L_80147D44:
-    lfs f1, lbl_806D7C50(r2)
-    li r0, -0x100
-    lfs f0, lbl_806D7C38(r2)
-    rlwimi r0, r4, 0, 24, 31
-    fmadds f0, f1, f2, f0
-    stfs f0, 0x1f4(r3)
-    stfs f0, 0x1f8(r3)
-    stfs f0, 0x24c(r3)
-    stfs f0, 0x250(r3)
-    stfs f0, 0x2a4(r3)
-    stfs f0, 0x2a8(r3)
-    stfs f0, 0x2fc(r3)
-    stfs f0, 0x300(r3)
-    stw r0, 0x1fc(r3)
-    stw r0, 0x200(r3)
-    stw r0, 0x204(r3)
-    stw r0, 0x208(r3)
-    stw r0, 0x254(r3)
-    stw r0, 0x258(r3)
-    stw r0, 0x25c(r3)
-    stw r0, 0x260(r3)
-    stw r0, 0x2ac(r3)
-    stw r0, 0x2b0(r3)
-    stw r0, 0x2b4(r3)
-    stw r0, 0x2b8(r3)
-    stw r0, 0x304(r3)
-    stw r0, 0x308(r3)
-    stw r0, 0x30c(r3)
-    stw r0, 0x310(r3)
-    stw r0, 0x35c(r3)
-    stw r0, 0x360(r3)
-    stw r0, 0x364(r3)
-    stw r0, 0x368(r3)
-    stw r0, 0x3b4(r3)
-    stw r0, 0x3b8(r3)
-    stw r0, 0x3bc(r3)
-    stw r0, 0x3c0(r3)
-    b fn_80147CE8_L_80147EE0
-    fn_80147CE8_L_80147DDC:
-    cmpwi r4, 0x1e
-    blt fn_80147CE8_L_80147EE0
-    cmpwi r4, 0x2d
-    bge fn_80147CE8_L_80147EC8
-    subi r4, r4, 0x1e
-    lis r0, 0x4330
-    xoris r4, r4, 0x8000
-    stw r0, 0x10(r1)
-    lfd f2, lbl_806D7C20(r2)
-    li r0, -0x1
-    stw r4, 0x14(r1)
-    li r4, -0x100
-    lfs f1, lbl_806D7C34(r2)
-    lfd f0, 0x10(r1)
-    lfs f3, lbl_806D7C38(r2)
-    fsubs f2, f0, f2
-    lfs f0, lbl_806D7C50(r2)
-    lfs f4, lbl_806D7C3C(r2)
-    fdivs f1, f2, f1
-    fsubs f1, f3, f1
-    fmadds f2, f0, f1, f3
-    fmuls f0, f4, f1
-    stfs f2, 0x1f4(r3)
-    fctiwz f0, f0
-    stfs f2, 0x1f8(r3)
-    stfs f2, 0x24c(r3)
-    stfs f2, 0x250(r3)
-    stfs f2, 0x2a4(r3)
-    stfs f2, 0x2a8(r3)
-    stfs f2, 0x2fc(r3)
-    stfs f2, 0x300(r3)
-    stw r0, 0x1fc(r3)
-    stw r0, 0x200(r3)
-    stw r0, 0x204(r3)
-    stw r0, 0x208(r3)
-    stw r0, 0x254(r3)
-    stw r0, 0x258(r3)
-    stw r0, 0x25c(r3)
-    stw r0, 0x260(r3)
-    stw r0, 0x2ac(r3)
-    stw r0, 0x2b0(r3)
-    stfd f0, 0x8(r1)
-    stw r0, 0x2b4(r3)
-    lwz r5, 0xc(r1)
-    stw r0, 0x2b8(r3)
-    rlwimi r4, r5, 0, 24, 31
-    stw r4, 0x304(r3)
-    stw r4, 0x308(r3)
-    stw r4, 0x30c(r3)
-    stw r4, 0x310(r3)
-    stw r4, 0x35c(r3)
-    stw r4, 0x360(r3)
-    stw r4, 0x364(r3)
-    stw r4, 0x368(r3)
-    stw r4, 0x3b4(r3)
-    stw r4, 0x3b8(r3)
-    stw r4, 0x3bc(r3)
-    stw r4, 0x3c0(r3)
-    b fn_80147CE8_L_80147EE0
-    fn_80147CE8_L_80147EC8:
-    cmpwi r4, 0x5a
-    blt fn_80147CE8_L_80147EE0
-    li r4, 0x3
-    li r0, 0x0
-    stw r4, 0x0(r3)
-    stw r0, 0x8(r3)
-    fn_80147CE8_L_80147EE0:
-    addi r1, r1, 0x20
-    blr
+static inline void HudTail_SetScale(HudResSetView *o, float sx, float sy) {
+    for (int i = 0; i < 3; i++) {
+        o->tail[i].scaleX = sx;
+        o->tail[i].scaleY = sy;
+    }
+}
+
+extern "C" void fn_80147AF4(HudResSet *set) {
+    HudResSetView *o = (HudResSetView *)set;
+
+    if (1 == o->timer) {
+        SoundMgr_Play(0x71);
+    }
+    if (o->timer < 20) {
+        float t = o->timer / 20.0f;
+        int a = (int)(3.0f * (255.0f * t));
+        if (a > 255) {
+            a = 255;
+        }
+        float s = 0.2f * t + 1.1f;
+        for (int i = 1; i < 5; i++) {
+            o->res[i].scaleX = s;
+            o->res[i].scaleY = s;
+        }
+        unsigned int color;
+        color = HudColor_SetAlpha(0xFFFFFF00, a);
+        for (int i = 1; i < 5; i++) {
+            HudRes_SetColor(&o->res[i], color);
+        }
+    } else if (o->timer >= 30) {
+        if (o->timer < 45) {
+            float t = (o->timer - 30) / 15.0f;
+            int a = (int)(255.0f * (t = 1.0f - t));
+            float s = 0.2f * t + 1.1f;
+            for (int i = 1; i < 5; i++) {
+                o->res[i].scaleX = s;
+                o->res[i].scaleY = s;
+            }
+            for (int i = 1; i < 3; i++) {
+                HudRes_SetColor(&o->res[i], 0xFFFFFFFF);
+            }
+            unsigned int color = HudColor_SetAlpha(0xFFFFFF00, a);
+            for (int i = 3; i < 5; i++) {
+                HudRes_SetColor(&o->res[i], color);
+            }
+        } else if (o->timer >= 90) {
+            { o->state = 4;
+            o->timer = 0; }
+        }
+    }
+}
+
+extern "C" void fn_80147CE8(HudResSet *set) {
+    HudResSetView *o = (HudResSetView *)set;
+
+    if (o->timer < 20) {
+        float t = o->timer / 20.0f;
+        int a = (int)(3.0f * (255.0f * t));
+        if (a > 255) {
+            a = 255;
+        }
+        float s = 0.2f * t + 1.0f;
+        for (int i = 5; i < 9; i++) {
+            o->res[i].scaleX = s;
+            o->res[i].scaleY = s;
+        }
+        unsigned int color = HudColor_SetAlpha(0xFFFFFF00, a);
+        for (int i = 5; i < 11; i++) {
+            HudRes_SetColor(&o->res[i], color);
+        }
+    } else if (o->timer >= 30) {
+        if (o->timer < 45) {
+            int a = (int)(255.0f * (1.0f - (o->timer - 30) / 15.0f));
+            float s = 0.2f * (1.0f - (o->timer - 30) / 15.0f) + 1.0f;
+            for (int i = 5; i < 9; i++) {
+                o->res[i].scaleX = s;
+                o->res[i].scaleY = s;
+            }
+            for (int i = 5; i < 8; i++) {
+                HudRes_SetColor(&o->res[i], 0xFFFFFFFF);
+            }
+            unsigned int color = HudColor_SetAlpha(0xFFFFFF00, a);
+            for (int i = 8; i < 11; i++) {
+                HudRes_SetColor(&o->res[i], color);
+            }
+        } else if (o->timer >= 90) {
+            o->state = 3;
+            o->timer = 0;
+        }
+    }
 }
 
 struct ResCtrl {
@@ -2651,711 +2459,269 @@ extern "C" void fn_80149D90(CdHolder2 *self) {
     }
 }
 
-extern "C" asm void fn_80149E44(void) { /* 0x80149E44 size:0xA4C */
-    nofralloc
-    stwu r1, -0x80(r1)
-    mflr r0
-    stw r0, 0x84(r1)
-    stfd f31, 0x70(r1)
-    psq_st f31, 0x78(r1), 0, 0
-    stfd f30, 0x60(r1)
-    psq_st f30, 0x68(r1), 0, 0
-    stfd f29, 0x50(r1)
-    psq_st f29, 0x58(r1), 0, 0
-    stfd f28, 0x40(r1)
-    psq_st f28, 0x48(r1), 0, 0
-    stfd f27, 0x30(r1)
-    psq_st f27, 0x38(r1), 0, 0
-    stw r31, 0x2c(r1)
-    stw r30, 0x28(r1)
-    stw r29, 0x24(r1)
-    stw r28, 0x20(r1)
-    mr r31, r3
-    lwz r0, 0x20(r3)
-    cmpwi r0, 0x3
-    beq fn_80149E44_L_8014A4F8
-    bge fn_80149E44_L_80149EB4
-    cmpwi r0, 0x1
-    beq fn_80149E44_L_8014A174
-    bge fn_80149E44_L_8014A3F0
-    cmpwi r0, 0x0
-    bge fn_80149E44_L_80149EC4
-    b fn_80149E44_L_8014A7D8
-    fn_80149E44_L_80149EB4:
-    cmpwi r0, 0x5
-    beq fn_80149E44_L_8014A720
-    bge fn_80149E44_L_8014A7D8
-    b fn_80149E44_L_8014A620
-    fn_80149E44_L_80149EC4:
-    lfs f1, lbl_806D7D58(r2)
-    lfs f0, 0x1c(r31)
-    fmuls f1, f1, f0
-    bl LUT_Sin12Bit
-    lfs f1, 0x18(r31)
-    lfs f0, lbl_806D7D5C(r2)
-    fcmpo cr0, f1, f0
-    ble fn_80149E44_L_80149F30
-    fsubs f1, f1, f0
-    lfs f0, lbl_806D7D64(r2)
-    lfs f2, lbl_806D7D68(r2)
-    lfs f3, lbl_806D7D60(r2)
-    fdivs f1, f1, f0
-    bl Saturate_Double
-    lfs f3, lbl_806D7D60(r2)
-    li r4, 0x9a4
-    lfs f7, lbl_806D7D70(r2)
-    li r5, 0x0
-    fsubs f1, f3, f1
-    lfs f0, lbl_806D7D6C(r2)
-    fmr f4, f3
-    lwz r3, 0x10(r31)
-    fmr f5, f3
-    lfs f2, lbl_806D7D74(r2)
-    fmr f6, f3
-    fnmsubs f1, f7, f1, f0
-    bl fn_80169468
-    fn_80149E44_L_80149F30:
-    lfs f31, lbl_806D7D5C(r2)
-    mr r28, r31
-    lfs f30, lbl_806D7D78(r2)
-    li r29, 0x0
-    lfd f29, lbl_806D7DF8(r2)
-    lis r30, 0x4330
-    fn_80149E44_L_80149F48:
-    xoris r0, r29, 0x8000
-    stw r30, 0x10(r1)
-    lfs f4, 0x18(r31)
-    stw r0, 0x14(r1)
-    lfd f0, 0x10(r1)
-    fsubs f0, f0, f29
-    fmuls f2, f30, f0
-    fadds f0, f31, f2
-    fcmpo cr0, f4, f0
-    blt fn_80149E44_L_8014A02C
-    lfs f1, lbl_806D7D7C(r2)
-    lfs f0, lbl_806D7D64(r2)
-    fadds f1, f1, f2
-    lfs f2, lbl_806D7D68(r2)
-    lfs f3, lbl_806D7D60(r2)
-    fsubs f1, f4, f1
-    fdivs f1, f1, f0
-    bl Saturate_Double
-    fmr f27, f1
-    lfs f0, lbl_806D7D68(r2)
-    fcmpu cr0, f0, f27
-    bne fn_80149E44_L_80149FB4
-    lwz r3, 0x3c(r28)
-    lwz r12, 0x14(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    fn_80149E44_L_80149FB4:
-    xoris r3, r29, 0x8000
-    lis r0, 0x4330
-    stw r3, 0x14(r1)
-    lfs f4, lbl_806D7D60(r2)
-    stw r0, 0x10(r1)
-    lfd f1, lbl_806D7DF8(r2)
-    fsubs f3, f4, f27
-    lfd f0, 0x10(r1)
-    lfs f2, lbl_806D7D84(r2)
-    fsubs f1, f0, f1
-    lfs f0, lbl_806D7D80(r2)
-    lfs f5, lbl_806D7D70(r2)
-    lwz r3, 0x3c(r28)
-    fmadds f1, f2, f1, f0
-    lfs f0, lbl_806D7D88(r2)
-    fnmsubs f1, f5, f3, f1
-    stfs f1, 0x8(r3)
-    stfs f0, 0xc(r3)
-    lwz r3, 0x3c(r28)
-    stfs f4, 0x10(r3)
-    lwz r3, 0x3c(r28)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x3c(r28)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    fn_80149E44_L_8014A02C:
-    addi r29, r29, 0x1
-    addi r28, r28, 0x4
-    cmpwi r29, 0x9
-    blt fn_80149E44_L_80149F48
-    lfs f1, 0x18(r31)
-    lfs f2, lbl_806D7D60(r2)
-    lfs f0, lbl_806D7D8C(r2)
-    fadds f1, f1, f2
-    stfs f1, 0x18(r31)
-    lfs f1, 0x1c(r31)
-    fadds f1, f1, f2
-    stfs f1, 0x1c(r31)
-    lfs f1, 0x1c(r31)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_80149E44_L_8014A074
-    lfs f0, lbl_806D7D68(r2)
-    stfs f0, 0x1c(r31)
-    fn_80149E44_L_8014A074:
-    lfs f0, lbl_806D7D60(r2)
-    lwz r3, 0x38(r31)
-    stfs f0, 0x10(r3)
-    lwz r3, 0x38(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x38(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lfs f1, lbl_806D7D90(r2)
-    lfs f0, 0x14(r31)
-    fcmpu cr0, f1, f0
-    bne fn_80149E44_L_8014A0D0
-    bl StrPcb_GetInstance
-    li r4, 0x4
-    li r5, 0x0
-    bl StrPcb_SetStatusBits
-    lwz r3, 0x68(r31)
-    bl fn_8023CFD4
-    fn_80149E44_L_8014A0D0:
-    lfs f2, 0x14(r31)
-    lfs f1, lbl_806D7D60(r2)
-    lfs f0, lbl_806D7D94(r2)
-    fadds f1, f2, f1
-    fcmpo cr0, f1, f0
-    stfs f1, 0x14(r31)
-    cror eq, gt, eq
-    beq fn_80149E44_L_8014A150
-    lfs f1, 0x14(r31)
-    lfs f0, lbl_806D7D90(r2)
-    fcmpo cr0, f1, f0
-    ble fn_80149E44_L_8014A7D8
-    bl GetInputManager
-    li r4, 0x0
-    bl InputMgr_GetPlayer
-    lwz r12, 0x0(r3)
-    li r4, 0x100
-    lwz r12, 0x20(r12)
-    mtctr r12
-    bctrl
-    clrlwi. r0, r3, 24
-    bne fn_80149E44_L_8014A150
-    bl GetInputManager
-    li r4, 0x0
-    bl InputMgr_GetPlayer
-    lwz r12, 0x0(r3)
-    li r4, 0x2000
-    lwz r12, 0x20(r12)
-    mtctr r12
-    bctrl
-    clrlwi. r0, r3, 24
-    beq fn_80149E44_L_8014A7D8
-    fn_80149E44_L_8014A150:
-    lwz r3, 0x68(r31)
-    bl fn_8023CFC8
-    lfs f0, lbl_806D7D68(r2)
-    li r3, 0x1
-    li r0, 0x5
-    stfs f0, 0x14(r31)
-    stw r3, 0xc(r31)
-    stw r0, 0x20(r31)
-    b fn_80149E44_L_8014A7D8
-    fn_80149E44_L_8014A174:
-    lfs f1, 0x14(r31)
-    lfs f0, lbl_806D7D98(r2)
-    lfs f3, lbl_806D7D60(r2)
-    fdivs f2, f1, f0
-    lfs f1, lbl_806D7D58(r2)
-    lfs f0, 0x1c(r31)
-    fsubs f28, f3, f2
-    fmuls f1, f1, f0
-    bl LUT_Sin12Bit
-    lfs f1, 0x18(r31)
-    lfs f0, lbl_806D7D5C(r2)
-    fcmpo cr0, f1, f0
-    ble fn_80149E44_L_8014A1F4
-    fsubs f1, f1, f0
-    lfs f0, lbl_806D7D64(r2)
-    lfs f2, lbl_806D7D68(r2)
-    lfs f3, lbl_806D7D60(r2)
-    fdivs f1, f1, f0
-    bl Saturate_Double
-    lfs f3, lbl_806D7D60(r2)
-    fmr f6, f28
-    lfs f2, lbl_806D7D70(r2)
-    li r4, 0x9a4
-    fsubs f1, f3, f1
-    lfs f0, lbl_806D7D6C(r2)
-    fmr f4, f3
-    fmr f5, f3
-    lwz r3, 0x10(r31)
-    fnmsubs f1, f2, f1, f0
-    lfs f2, lbl_806D7D74(r2)
-    li r5, 0x0
-    bl fn_80169468
-    fn_80149E44_L_8014A1F4:
-    lfs f29, lbl_806D7D5C(r2)
-    mr r28, r31
-    lfs f30, lbl_806D7D78(r2)
-    li r29, 0x0
-    lfd f31, lbl_806D7DF8(r2)
-    lis r30, 0x4330
-    fn_80149E44_L_8014A20C:
-    xoris r0, r29, 0x8000
-    stw r30, 0x10(r1)
-    lfs f4, 0x18(r31)
-    stw r0, 0x14(r1)
-    lfd f0, 0x10(r1)
-    fsubs f0, f0, f31
-    fmuls f2, f30, f0
-    fadds f0, f29, f2
-    fcmpo cr0, f4, f0
-    blt fn_80149E44_L_8014A2F0
-    lfs f1, lbl_806D7D7C(r2)
-    lfs f0, lbl_806D7D64(r2)
-    fadds f1, f1, f2
-    lfs f2, lbl_806D7D68(r2)
-    lfs f3, lbl_806D7D60(r2)
-    fsubs f1, f4, f1
-    fdivs f1, f1, f0
-    bl Saturate_Double
-    fmr f27, f1
-    lfs f0, lbl_806D7D68(r2)
-    fcmpu cr0, f0, f27
-    bne fn_80149E44_L_8014A278
-    lwz r3, 0x3c(r28)
-    lwz r12, 0x14(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    fn_80149E44_L_8014A278:
-    xoris r3, r29, 0x8000
-    lis r0, 0x4330
-    stw r3, 0x14(r1)
-    lfs f0, lbl_806D7D60(r2)
-    stw r0, 0x10(r1)
-    lfd f1, lbl_806D7DF8(r2)
-    fsubs f3, f0, f27
-    lfd f0, 0x10(r1)
-    lfs f2, lbl_806D7D84(r2)
-    fsubs f1, f0, f1
-    lfs f0, lbl_806D7D80(r2)
-    lfs f4, lbl_806D7D70(r2)
-    lwz r3, 0x3c(r28)
-    fmadds f1, f2, f1, f0
-    lfs f0, lbl_806D7D88(r2)
-    fnmsubs f1, f4, f3, f1
-    stfs f1, 0x8(r3)
-    stfs f0, 0xc(r3)
-    lwz r3, 0x3c(r28)
-    stfs f28, 0x10(r3)
-    lwz r3, 0x3c(r28)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x3c(r28)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    fn_80149E44_L_8014A2F0:
-    addi r29, r29, 0x1
-    addi r28, r28, 0x4
-    cmpwi r29, 0x9
-    blt fn_80149E44_L_8014A20C
-    lfs f1, 0x18(r31)
-    lfs f2, lbl_806D7D60(r2)
-    lfs f0, lbl_806D7D8C(r2)
-    fadds f1, f1, f2
-    stfs f1, 0x18(r31)
-    lfs f1, 0x1c(r31)
-    fadds f1, f1, f2
-    stfs f1, 0x1c(r31)
-    lfs f1, 0x1c(r31)
-    fcmpo cr0, f1, f0
-    cror eq, gt, eq
-    bne fn_80149E44_L_8014A338
-    lfs f0, lbl_806D7D68(r2)
-    stfs f0, 0x1c(r31)
-    fn_80149E44_L_8014A338:
-    lwz r3, 0x38(r31)
-    stfs f28, 0x10(r3)
-    lwz r3, 0x38(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x38(r31)
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    lfs f0, lbl_806D7D60(r2)
-    lfs f1, lbl_806D7D68(r2)
-    fsubs f0, f0, f28
-    lfs f4, lbl_806D7D9C(r2)
-    fmr f2, f1
-    lwz r3, 0x10(r31)
-    fmr f3, f1
-    fmuls f4, f4, f0
-    bl fn_801678FC
-    lfs f2, 0x14(r31)
-    lfs f1, lbl_806D7D60(r2)
-    lfs f0, lbl_806D7D98(r2)
-    fadds f1, f2, f1
-    fcmpo cr0, f1, f0
-    stfs f1, 0x14(r31)
-    cror eq, gt, eq
-    bne fn_80149E44_L_8014A7D8
-    lfs f0, lbl_806D7D68(r2)
-    stfs f0, 0x14(r31)
-    lbz r0, 0x29(r31)
-    cmplwi r0, 0x1
-    bne fn_80149E44_L_8014A3CC
-    li r0, 0x2
-    stw r0, 0x20(r31)
-    b fn_80149E44_L_8014A7D8
-    fn_80149E44_L_8014A3CC:
-    lbz r0, 0x28(r31)
-    cmplwi r0, 0x0
-    bne fn_80149E44_L_8014A3E4
-    li r0, 0x3
-    stw r0, 0x20(r31)
-    b fn_80149E44_L_8014A7D8
-    fn_80149E44_L_8014A3E4:
-    li r0, 0x5
-    stw r0, 0x20(r31)
-    b fn_80149E44_L_8014A7D8
-    fn_80149E44_L_8014A3F0:
-    lfs f1, lbl_806D7D68(r2)
-    lwz r3, 0x10(r31)
-    fmr f2, f1
-    lfs f4, lbl_806D7D9C(r2)
-    fmr f3, f1
-    bl fn_801678FC
-    lwz r3, 0x60(r31)
-    cmplwi r3, 0x0
-    bne fn_80149E44_L_8014A460
-    li r3, 0x48
-    bl Alloc
-    mr. r28, r3
-    beq fn_80149E44_L_8014A434
-    bl fn_801420DC
-    lis r3, lbl_8048F0C8@ha
-    addi r0, r3, lbl_8048F0C8@l
-    stw r0, 0x14(r28)
-    fn_80149E44_L_8014A434:
-    cmplwi r28, 0x0
-    stw r28, 0x60(r31)
-    beq fn_80149E44_L_8014A7D8
-    lwz r0, 0x10(r31)
-    lwz r3, 0x60(r31)
-    cmpwi r0, 0x0
-    blt fn_80149E44_L_8014A7D8
-    cmpwi r0, 0x8
-    bge fn_80149E44_L_8014A7D8
-    stw r0, 0x0(r3)
-    b fn_80149E44_L_8014A7D8
-    fn_80149E44_L_8014A460:
-    lwz r12, 0x14(r3)
-    lwz r12, 0x14(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x60(r31)
-    lbz r0, 0x4(r3)
-    cmplwi r0, 0x0
-    beq fn_80149E44_L_8014A7D8
-    cmplwi r3, 0x0
-    beq fn_80149E44_L_8014A49C
-    lwz r12, 0x14(r3)
-    li r4, 0x1
-    lwz r12, 0x8(r12)
-    mtctr r12
-    bctrl
-    fn_80149E44_L_8014A49C:
-    li r0, 0x0
-    lfs f0, lbl_806D7D68(r2)
-    stw r0, 0x60(r31)
-    stfs f0, 0x14(r31)
-    lwz r0, 0x24(r31)
-    cmpwi r0, 0x0
-    blt fn_80149E44_L_8014A4E4
-    cmpwi r0, 0xa
-    bge fn_80149E44_L_8014A4E4
-    lbz r0, 0x28(r31)
-    cmplwi r0, 0x0
-    bne fn_80149E44_L_8014A4D8
-    li r0, 0x3
-    stw r0, 0x20(r31)
-    b fn_80149E44_L_8014A7D8
-    fn_80149E44_L_8014A4D8:
-    li r0, 0x5
-    stw r0, 0x20(r31)
-    b fn_80149E44_L_8014A7D8
-    fn_80149E44_L_8014A4E4:
-    li r3, 0x1
-    li r0, 0x6
-    stw r3, 0xc(r31)
-    stw r0, 0x20(r31)
-    b fn_80149E44_L_8014A7D8
-    fn_80149E44_L_8014A4F8:
-    lfs f2, 0x14(r31)
-    lfs f0, lbl_806D7D60(r2)
-    lfs f1, lbl_806D7D68(r2)
-    fadds f0, f2, f0
-    lfs f4, lbl_806D7D9C(r2)
-    fmr f2, f1
-    fmr f3, f1
-    stfs f0, 0x14(r31)
-    lwz r3, 0x10(r31)
-    bl fn_801678FC
-    lfs f3, 0x14(r31)
-    lfs f0, lbl_806D7D5C(r2)
-    lfs f1, lbl_806D7DA0(r2)
-    fcmpo cr0, f3, f0
-    bge fn_80149E44_L_8014A540
-    lfs f0, lbl_806D7DA4(r2)
-    fadds f1, f1, f0
-    b fn_80149E44_L_8014A59C
-    fn_80149E44_L_8014A540:
-    lfs f2, lbl_806D7D64(r2)
-    fcmpo cr0, f3, f2
-    bge fn_80149E44_L_8014A570
-    fsubs f2, f3, f0
-    lfs f3, lbl_806D7DA8(r2)
-    lfs f0, lbl_806D7DAC(r2)
-    lfs f4, lbl_806D7DA4(r2)
-    fmuls f2, f3, f2
-    fdivs f0, f2, f0
-    fadds f0, f4, f0
-    fadds f1, f1, f0
-    b fn_80149E44_L_8014A59C
-    fn_80149E44_L_8014A570:
-    lfs f0, lbl_806D7D98(r2)
-    fcmpo cr0, f3, f0
-    bge fn_80149E44_L_8014A59C
-    fsubs f2, f3, f2
-    lfs f3, lbl_806D7DB4(r2)
-    lfs f0, lbl_806D7DB8(r2)
-    lfs f4, lbl_806D7DB0(r2)
-    fmuls f2, f3, f2
-    fdivs f0, f2, f0
-    fadds f0, f4, f0
-    fadds f1, f1, f0
-    fn_80149E44_L_8014A59C:
-    lwz r3, 0x10(r31)
-    li r4, 0x8ae
-    lfs f2, lbl_806D7D8C(r2)
-    li r5, 0x0
-    bl fn_801698B4
-    li r0, 0x0
-    stw r0, 0x6c(r31)
-    lwz r3, 0x24(r31)
-    bl TaRecord_GetEntry_Current
-    mr r30, r3
-    addi r4, r31, 0x70
-    bl wcscpy
-    lwz r3, lbl_806D10A0(r13)
-    cmplwi r3, 0x0
-    bne fn_80149E44_L_8014A5DC
-    li r3, 0x0
-    fn_80149E44_L_8014A5DC:
-    cmplwi r3, 0x0
-    beq fn_80149E44_L_8014A60C
-    addi r4, r1, 0xc
-    addi r5, r1, 0x8
-    li r6, 0x0
-    bl get_title_result
-    clrlwi. r0, r3, 24
-    beq fn_80149E44_L_8014A60C
-    lwz r0, 0xc(r1)
-    stb r0, 0xd(r30)
-    lwz r0, 0x8(r1)
-    stb r0, 0xe(r30)
-    fn_80149E44_L_8014A60C:
-    li r0, 0x4
-    lfs f0, lbl_806D7D68(r2)
-    stw r0, 0x20(r31)
-    stfs f0, 0x14(r31)
-    b fn_80149E44_L_8014A7D8
-    fn_80149E44_L_8014A620:
-    lfs f2, 0x14(r31)
-    lfs f0, lbl_806D7D60(r2)
-    lfs f1, lbl_806D7D68(r2)
-    fadds f0, f2, f0
-    lfs f4, lbl_806D7D9C(r2)
-    fmr f2, f1
-    fmr f3, f1
-    stfs f0, 0x14(r31)
-    lwz r3, 0x10(r31)
-    bl fn_801678FC
-    lfs f2, 0x14(r31)
-    lfs f1, lbl_806D7DBC(r2)
-    fcmpo cr0, f2, f1
-    bge fn_80149E44_L_8014A66C
-    fdivs f1, f2, f1
-    lfs f2, lbl_806D7DC0(r2)
-    lfs f0, lbl_806D7DA0(r2)
-    fmadds f1, f2, f1, f0
-    b fn_80149E44_L_8014A6E8
-    fn_80149E44_L_8014A66C:
-    lfs f0, lbl_806D7DC4(r2)
-    fcmpo cr0, f2, f0
-    bge fn_80149E44_L_8014A694
-    fsubs f2, f2, f1
-    lfs f1, lbl_806D7DD0(r2)
-    lfs f3, lbl_806D7DCC(r2)
-    lfs f0, lbl_806D7DC8(r2)
-    fdivs f1, f2, f1
-    fnmsubs f1, f3, f1, f0
-    b fn_80149E44_L_8014A6E8
-    fn_80149E44_L_8014A694:
-    lfs f1, lbl_806D7DD4(r2)
-    fcmpo cr0, f2, f1
-    bge fn_80149E44_L_8014A6BC
-    fsubs f2, f2, f0
-    lfs f1, lbl_806D7DDC(r2)
-    lfs f3, lbl_806D7DD8(r2)
-    lfs f0, lbl_806D7DCC(r2)
-    fmuls f1, f2, f1
-    fnmsubs f1, f3, f1, f0
-    b fn_80149E44_L_8014A6E8
-    fn_80149E44_L_8014A6BC:
-    lfs f0, lbl_806D7DE0(r2)
-    fcmpo cr0, f2, f0
-    bge fn_80149E44_L_8014A6E4
-    fsubs f2, f2, f1
-    lfs f1, lbl_806D7D58(r2)
-    lfs f3, lbl_806D7DE8(r2)
-    lfs f0, lbl_806D7DE4(r2)
-    fdivs f1, f2, f1
-    fnmsubs f1, f3, f1, f0
-    b fn_80149E44_L_8014A6E8
-    fn_80149E44_L_8014A6E4:
-    lfs f1, lbl_806D7DEC(r2)
-    fn_80149E44_L_8014A6E8:
-    lwz r3, 0x10(r31)
-    li r4, 0x8ae
-    lfs f2, lbl_806D7D8C(r2)
-    li r5, 0x0
-    bl fn_801698B4
-    lfs f1, 0x14(r31)
-    lfs f0, lbl_806D7DE0(r2)
-    fcmpo cr0, f1, f0
-    ble fn_80149E44_L_8014A7D8
-    li r0, 0x5
-    lfs f0, lbl_806D7D68(r2)
-    stw r0, 0x20(r31)
-    stfs f0, 0x14(r31)
-    b fn_80149E44_L_8014A7D8
-    fn_80149E44_L_8014A720:
-    lfs f1, lbl_806D7D68(r2)
-    lfs f0, 0x14(r31)
-    fcmpu cr0, f1, f0
-    bne fn_80149E44_L_8014A738
-    li r3, 0x8ae
-    bl fn_80120A08
-    fn_80149E44_L_8014A738:
-    lfs f1, lbl_806D7D68(r2)
-    lwz r3, 0x10(r31)
-    fmr f2, f1
-    lfs f4, lbl_806D7D9C(r2)
-    fmr f3, f1
-    bl fn_801678FC
-    lfs f2, 0x14(r31)
-    lfs f1, lbl_806D7D60(r2)
-    lfs f0, lbl_806D7DF0(r2)
-    fadds f1, f2, f1
-    fcmpo cr0, f1, f0
-    stfs f1, 0x14(r31)
-    cror eq, gt, eq
-    beq fn_80149E44_L_8014A7C0
-    bl GetInputManager
-    li r4, 0x0
-    bl InputMgr_GetPlayer
-    lwz r12, 0x0(r3)
-    li r4, 0x100
-    lwz r12, 0x20(r12)
-    mtctr r12
-    bctrl
-    clrlwi. r0, r3, 24
-    bne fn_80149E44_L_8014A7C0
-    bl GetInputManager
-    li r4, 0x0
-    bl InputMgr_GetPlayer
-    lwz r12, 0x0(r3)
-    li r4, 0x2000
-    lwz r12, 0x20(r12)
-    mtctr r12
-    bctrl
-    clrlwi. r0, r3, 24
-    beq fn_80149E44_L_8014A7D8
-    fn_80149E44_L_8014A7C0:
-    li r0, 0x1
-    lfs f0, lbl_806D7D68(r2)
-    stw r0, 0xc(r31)
-    li r0, 0x6
-    stfs f0, 0x14(r31)
-    stw r0, 0x20(r31)
-    fn_80149E44_L_8014A7D8:
-    lwz r3, 0x68(r31)
-    bl fn_8023CDA8
-    lwz r3, 0x34(r31)
-    cmplwi r3, 0x0
-    beq fn_80149E44_L_8014A828
-    lwz r0, 0x8(r3)
-    cmpwi r0, 0x0
-    ble fn_80149E44_L_8014A800
-    li r0, 0x0
-    b fn_80149E44_L_8014A810
-    fn_80149E44_L_8014A800:
-    lwz r0, 0xc(r3)
-    li r4, 0x1
-    cntlzw r0, r0
-    rlwnm r0, r4, r0, 31, 31
-    fn_80149E44_L_8014A810:
-    clrlwi. r0, r0, 24
-    beq fn_80149E44_L_8014A828
-    lwz r12, 0x0(r3)
-    lwz r12, 0x10(r12)
-    mtctr r12
-    bctrl
-    fn_80149E44_L_8014A828:
-    lwz r3, 0x60(r31)
-    cmplwi r3, 0x0
-    beq fn_80149E44_L_8014A844
-    lwz r12, 0x14(r3)
-    lwz r12, 0x18(r12)
-    mtctr r12
-    bctrl
-    fn_80149E44_L_8014A844:
-    bl RumbleUpdate
-    psq_l f31, 0x78(r1), 0, 0
-    lfd f31, 0x70(r1)
-    psq_l f30, 0x68(r1), 0, 0
-    lfd f30, 0x60(r1)
-    psq_l f29, 0x58(r1), 0, 0
-    lfd f29, 0x50(r1)
-    psq_l f28, 0x48(r1), 0, 0
-    lfd f28, 0x40(r1)
-    psq_l f27, 0x38(r1), 0, 0
-    lfd f27, 0x30(r1)
-    lwz r31, 0x2c(r1)
-    lwz r30, 0x28(r1)
-    lwz r29, 0x24(r1)
-    lwz r0, 0x84(r1)
-    lwz r28, 0x20(r1)
-    mtlr r0
-    addi r1, r1, 0x80
-    blr
+struct StrMsg;
+class StrDigit : public HudGauge {
+public:
+    int f18;
+    StrDigit(char *res);
+};
+
+class StrGauge : public HudGauge {
+public:
+    char pad18[0x10];
+    StrGauge();
+};
+
+struct StrBox {
+    char pad0[0x20];
+    StrBox(int a, int b, int c, int d, int e);
+};
+
+class StrHud : public HudTask {
+public:
+    int layer;
+    float f14;
+    float f18;
+    float f1C;
+    int f20;
+    int rank;
+    unsigned char f28;
+    unsigned char f29;
+    float time;
+    float f30;
+    CountText *text;
+    StrGauge *gauge;
+    StrDigit *digits[9];
+    struct StrMsg *f60;
+    int f64;
+    StrBox *box;
+    int f6C;
+    short f70[6];
+    StrHud(int layer, int id);
+    virtual ~StrHud();
+};
+
+struct StrMsg {
+    int kind;
+    unsigned char done;
+    char pad5[0xF];
+    void *vt14;
+    char pad18[0x30];
+    StrMsg() {
+        fn_801420DC(this);
+        vt14 = lbl_8048F0C8;
+    }
+    void SetKind(int v) {
+        if (v >= 0 && v < 8) {
+            kind = v;
+        }
+    }
+};
+
+struct GaugePos {
+    int kind;
+    unsigned char done;
+    char pad5[3];
+    float x;
+    float y;
+    float alpha;
+    void SetPos(float px, float py) {
+        x = px;
+        y = py;
+    }
+};
+
+inline bool Countdown_IsDone(Countdown *c) {
+    if (c->delay > 0) {
+        return 0;
+    }
+    return c->state <= 0;
 }
+
+struct TaEntry {
+    char pad0[0xD];
+    unsigned char fD;
+    unsigned char fE;
+};
+
+inline void *StrTitle_GetInstance() {
+    if (lbl_806D10A0 == 0) {
+        return 0;
+    }
+    return lbl_806D10A0;
+}
+
+inline unsigned char StrHud_Pressed(int mask) {
+    return InputMgr_GetPlayer(GetInputManager(), 0)->Pressed(mask);
+}
+
+inline void StrHud_DrawRank(StrHud *self, float a) {
+    int i;
+    float t;
+    LUT_Sin12Bit(3.0f * self->f1C);
+    if (self->f18 > 10.0f) {
+        t = Saturate_Double((self->f18 - 10.0f) / 25.0f, 0.0f, 1.0f);
+        fn_80169468(self->layer, 0x9A4, 0, 173.0f - 320.0f * (1.0f - t), 112.0f, 1.0f, 1.0f, 1.0f, a);
+    }
+    for (i = 0; i < 9; i++) {
+        if (!(self->f18 < 10.0f + 2.0f * (float)i)) {
+            t = Saturate_Double((self->f18 - (8.0f + 2.0f * (float)i)) / 25.0f, 0.0f, 1.0f);
+            if (0.0f == t) {
+                self->digits[i]->Start();
+            }
+            ((GaugePos *)self->digits[i])->SetPos((40.0f * (float)i + 139.0f) - 320.0f * (1.0f - t), 155.0f);
+            ((GaugePos *)self->digits[i])->alpha = a;
+            ((VObj14 *)self->digits[i])->v14();
+            ((VObj14 *)self->digits[i])->v18();
+        }
+    }
+    self->f18 += 1.0f;
+    self->f1C += 1.0f;
+    if (self->f1C >= 60.0f) {
+        self->f1C = 0.0f;
+    }
+    ((GaugePos *)self->gauge)->alpha = a;
+    ((VObj14 *)self->gauge)->v14();
+    ((VObj14 *)self->gauge)->v18();
+}
+
+extern "C" void fn_80149E44(StrHud *self) {
+    int i;
+    float a;
+    float t;
+    float x;
+    switch (self->f20) {
+    case 0:
+        StrHud_DrawRank(self, 1.0f);
+        if (145.0f == self->f14) {
+            StrPcb_SetStatusBits(StrPcb_GetInstance(), 4, 0);
+            fn_8023CFD4(self->box);
+        }
+        if ((self->f14 += 1.0f) >= 450.0f || (self->f14 > 145.0f && (StrHud_Pressed(0x100) || StrHud_Pressed(0x2000)))) {
+            fn_8023CFC8(self->box);
+            self->f14 = 0.0f;
+            self->fC = 1;
+            self->f20 = 5;
+        }
+        break;
+    case 1:
+        a = 1.0f - self->f14 / 30.0f;
+        StrHud_DrawRank(self, a);
+        fn_801678FC(self->layer, 0.0f, 0.0f, 0.0f, 0.5f * (1.0f - a));
+        if ((self->f14 += 1.0f) >= 30.0f) {
+            self->f14 = 0.0f;
+            if (self->f29 == 1) {
+                self->f20 = 2;
+            } else if (self->f28 == 0) {
+                self->f20 = 3;
+            } else {
+                self->f20 = 5;
+            }
+        }
+        break;
+    case 2:
+        fn_801678FC(self->layer, 0.0f, 0.0f, 0.0f, 0.5f);
+        if (self->f60 == 0) {
+            StrMsg *m = new StrMsg;
+            self->f60 = m;
+            if (m != 0) {
+                self->f60->SetKind(self->layer);
+            }
+        } else {
+            ((VObj14 *)self->f60)->v14();
+            if (self->f60->done) {
+                delete (VObj14 *)self->f60;
+                self->f60 = 0;
+                self->f14 = 0.0f;
+                if (self->rank >= 0 && self->rank < 10) {
+                    if (self->f28 == 0) {
+                        self->f20 = 3;
+                    } else {
+                        self->f20 = 5;
+                    }
+                } else {
+                    self->fC = 1;
+                    self->f20 = 6;
+                }
+            }
+        }
+        break;
+    case 3: {
+        TaEntry *e;
+        void *p;
+        self->f14 += 1.0f;
+        fn_801678FC(self->layer, 0.0f, 0.0f, 0.0f, 0.5f);
+        t = self->f14;
+        x = 284.0f;
+        if (t < 10.0f) {
+            x += 640.0f;
+        } else if (t < 25.0f) {
+            x += 640.0f + -660.0f * (t - 10.0f) / 15.0f;
+        } else if (t < 30.0f) {
+            x += -20.0f + 21.0f * (t - 25.0f) / 5.0f;
+        }
+        fn_801698B4(self->layer, 0x8AE, 0, x, 60.0f);
+        self->f6C = 0;
+        e = TaRecord_GetEntry_Current(self->rank);
+        wcscpy(e, self->f70);
+        p = StrTitle_GetInstance();
+        if (p != 0) {
+            int ra;
+            int rb;
+            if (get_title_result(p, &ra, &rb, 0)) {
+                e->fD = ra;
+                e->fE = rb;
+            }
+        }
+        self->f20 = 4;
+        self->f14 = 0.0f;
+        break;
+    }
+    case 4:
+        self->f14 += 1.0f;
+        fn_801678FC(self->layer, 0.0f, 0.0f, 0.0f, 0.5f);
+        t = self->f14;
+        if (t < 7.0f) {
+            x = 50.0f * (t / 7.0f) + 284.0f;
+        } else if (t < 13.0f) {
+            x = 334.0f - 167.0f * ((t - 7.0f) / 6.0f);
+        } else if (t < 17.0f) {
+            x = 167.0f - 192.0f * ((t - 13.0f) / 4.0f);
+        } else if (t < 20.0f) {
+            x = -25.0f - 331.0f * ((t - 17.0f) / 3.0f);
+        } else {
+            x = -356.0f;
+        }
+        fn_801698B4(self->layer, 0x8AE, 0, x, 60.0f);
+        if (self->f14 > 20.0f) {
+            self->f20 = 5;
+            self->f14 = 0.0f;
+        }
+        break;
+    case 5:
+        if (0.0f == self->f14) {
+            fn_80120A08(0x8AE);
+        }
+        fn_801678FC(self->layer, 0.0f, 0.0f, 0.0f, 0.5f);
+        if ((self->f14 += 1.0f) >= 600.0f || StrHud_Pressed(0x100) || StrHud_Pressed(0x2000)) {
+            self->fC = 1;
+            self->f14 = 0.0f;
+            self->f20 = 6;
+        }
+        break;
+    }
+    fn_8023CDA8(self->box);
+    if (self->text != 0) {
+        if (Countdown_IsDone((Countdown *)self->text)) {
+            ((VObjC *)self->text)->v10();
+        }
+    }
+    if (self->f60 != 0) {
+        ((VObj14 *)self->f60)->v18();
+    }
+    RumbleUpdate();
+}
+
 
 extern "C" HudPanel *fn_8014A890(HudPanel *self, short flag) {
     if (self != 0) {
@@ -3408,47 +2774,6 @@ extern "C" StrPanel *fn_8014A8FC(StrPanel *self, short flag) {
     }
     return self;
 }
-
-class StrDigit : public HudGauge {
-public:
-    int f18;
-    StrDigit(char *res);
-};
-
-class StrGauge : public HudGauge {
-public:
-    char pad18[0x10];
-    StrGauge();
-};
-
-struct StrBox {
-    char pad0[0x20];
-    StrBox(int a, int b, int c, int d, int e);
-};
-
-class StrHud : public HudTask {
-public:
-    int layer;
-    float f14;
-    float f18;
-    float f1C;
-    int f20;
-    int rank;
-    unsigned char f28;
-    unsigned char f29;
-    float time;
-    float f30;
-    CountText *text;
-    StrGauge *gauge;
-    StrDigit *digits[9];
-    int f60;
-    int f64;
-    StrBox *box;
-    int f6C;
-    short f70[6];
-    StrHud(int layer, int id);
-    virtual ~StrHud();
-};
 
 #pragma use_lmw_stmw on
 StrHud::StrHud(int ly, int id) : HudTask(id) {

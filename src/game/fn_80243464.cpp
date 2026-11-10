@@ -21,6 +21,8 @@ static inline float ScaleFromOffset(float offset, float range, float factor, flo
 }
 
 extern "C" void fn_80243464(RivalMarkerHud *self) {
+    float value;
+    float offset;
     float fade = fn_8020A6CC(self->fade);
     void *player = GetPlayerCarObject();
     if (player) {
@@ -52,7 +54,13 @@ extern "C" void fn_80243464(RivalMarkerHud *self) {
                 float ratio = (120.0f - (otherDistance - playerDistance)) / 120.0f;
                 float x = 261.0f * ratio;
                 float scale = ScaleFromOffset((float)(delta[i] - 1), 29.0f, 0.6f, 0.4f);
-                x = AddOffset(x, 46.0f);
+                /* fakematch (leversweep inline-to-named-locals): natural code is
+                 * x = AddOffset(x, 46.0f); function-scope value/offset are named
+                 * locals, numbered below the frontend temps (regalloc_patterns 38). */
+                value = x;
+                offset = 46.0f;
+                value = value + offset;
+                x = value;
                 self->markers[i]->scale = scale;
                 if (delta[i] <= 30 && delta[i] >= 1 && x >= 46.0f && x <= 568.0f && self->karts[i]->active != 0) active = 1;
                 SetPosition(self->markers[i], x, y);

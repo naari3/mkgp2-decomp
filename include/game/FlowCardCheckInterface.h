@@ -8,7 +8,7 @@ public:
         f8 = 0.0f;
     }
     virtual ~clFlowCCInterface();
-    virtual void Update() = 0;
+    virtual int Update() = 0;
     virtual void Draw() = 0;
     virtual void Unk14() = 0;
     virtual void SlideIn(int t);

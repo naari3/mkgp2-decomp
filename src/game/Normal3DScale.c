@@ -1,6 +1,6 @@
-/* Native C++ draft: 99.8048% text, exact 1332-byte primary size.
- * Kept NonMatching: request count/cursor and animation count/cursor
- * register allocation remain different from the target. */
+/* Native C++ draft: 99.90991% text, exact 1332-byte primary size.
+ * Kept NonMatching: final animation count/cursor register allocation
+ * remains different from the target. */
 #pragma cplusplus on
 struct JObj;
 typedef void (*AnimCallback)(void);
@@ -71,20 +71,20 @@ static inline void Request(Normal3D *self, Normal3D *source) {
             HSD_JObjReqAnimByFlags(*cursor, 0x7FF, frame);
     }
 }
-static inline int HasDObj(JObj *node) { if (node->flags & 0x4020) return 0; return 1; }
-static inline void Animate(JObj **table, int count) {
-    if (table != 0) {
-        JObj **cursor = table;
-        for (int i = 0; i < count; ++cursor, ++i) {
-            JObj *node = *cursor;
-            if (node != 0) {
-                HSD_AObjInterpretAnim(node->aobj, node, node->klass->animate);
-                if (HasDObj(node)) HSD_DObjAnimAll(node->dobj);
-            }
-        }
-        HSD_JObjCheckDepend(*table);
+static inline void RequestSelf(Normal3D *self) {
+    JObj **cursor;
+    float frame;
+    int i;
+    int count;
+    cursor = self->table;
+    frame = self->frame;
+    count = self->count;
+    if (cursor != 0) {
+        for (i = 0; i < count; ++cursor, ++i)
+            HSD_JObjReqAnimByFlags(*cursor, 0x7FF, frame);
     }
 }
+static inline int HasDObj(JObj *node) { if (node->flags & 0x4020) return 0; return 1; }
 extern "C" int clNormal3D_SetScale(Normal3D *self, Normal3D *source,
     float frame, float x, float y, float z)
 {
@@ -103,7 +103,7 @@ extern "C" int clNormal3D_SetScale(Normal3D *self, Normal3D *source,
             }
             {
                 ScopedTimer timer(11);
-                Request(self, self);
+                RequestSelf(self);
             }
             self->animated = 1;
             updated = 1;
@@ -125,11 +125,28 @@ extern "C" int clNormal3D_SetScale(Normal3D *self, Normal3D *source,
     }
     if (updated == 1) {
         ScopedTimer timer(7);
-        JObj **table = self->table;
-        int count = self->count;
+        /* Animate() written out: cursor has to be a named local declared
+           after table and count so that it is coloured last (opens r27). */
+        JObj *node;
+        int i;
+        JObj **table;
+        int count;
+        JObj **cursor;
+        table = self->table;
+        count = self->count;
         if (table != 0) {
             HSD_AObjInitEndCallBack();
-            Animate(table, count);
+            if (table != 0) {
+                cursor = table;
+                for (i = 0; i < count; ++cursor, ++i) {
+                    node = *cursor;
+                    if (node != 0) {
+                        HSD_AObjInterpretAnim(node->aobj, node, node->klass->animate);
+                        if (HasDObj(node)) HSD_DObjAnimAll(node->dobj);
+                    }
+                }
+                HSD_JObjCheckDepend(*table);
+            }
             HSD_AObjInvokeCallBacks();
         }
     }

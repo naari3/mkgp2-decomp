@@ -56,6 +56,22 @@ matches over 51 fns, the wins came from diagnosis + a hand rewrite):
    Instruction-ORDER diffs (same opcodes, different order): `regfix diag UNIT FN --sched`
    traces the real GC/2.6 scheduler (tools/mwsched.py) and says why ours picked A before B
    (dependence / uncovering / height ...), with the source lines.
+   The diag output also ends with two lever sections: source levers that landed by hand
+   (inline-wrapper-named-locals, indexed-vs-walking-pointer, base-init-in-body) and the
+   leversweep levers whose triggers fire (rule ids, with the `leversweep.py fn` command).
+   `regfix diag UNIT FN --tracesweep [--run]` writes a tracesweep template whose axes are the
+   diagnosed lines (hoist into a named local, call with named locals, walking -> indexed)
+   and whose `// want:` predicate is the diag conclusion. Batch over gave_up rows:
+   `tools/regfix_diagsweep.py` (11-09: 163 fns, 0 new matches, 3 improved; results in
+   docs/sweeps/regfix/diagsweep_shard*.jsonl). So: use it for one function, not as a sweep.
+   diag also prints target `addi rX,anchor,N` whose address lands inside a symbol (rule
+   anchor-addi-object-boundary, regalloc_patterns 40): split the symbol there.
+   (since 11-09 22:00Z the address is resolved from symbols.txt; before that the hint could name
+   the wrong base symbol), and function-level counters that drive >= 2 `for` loops when a saved
+   GPR is off (rule later-loops-block-local-counter, regalloc_patterns 46).
+   Not register-only? `python3 tools/nonreg_classify.py LIST` says what the other diff is
+   (length:copy/address/extend/load/branch/mixed, order, opcode, stack, symbol);
+   counts for the 11-09 gave_up rows are in docs/nonreg_census.md.
 3. `python3 tools/regfix.py fix UNIT FN` still runs the catalog moves (inline[ / boolnorm /
    expand-void / unname / pragma-*) with the solver; worth one run, not a sweep.
 
@@ -163,7 +179,6 @@ Remaining in range (not done, why), as of PR #247:
   - clFlowRound_Update: instruction stream equal (normalized 0 apart from the regalloc-driven scheduling in PlaceArrows); only self=r31 vs pool base fails, see the regalloc tip above. Drafts: notes/clFlowRound_Update_draft.cpp (user-pointer form), notes/clFlowRound_Update_draft_paramself.cpp. Needs `__rlwimi(c, a, 0, 24, 31)` for the alpha insert and a `switch (x7C) { case -1: ... }` for the beq/b shape.
   - clFlowCup_Init: not attempted. It has the same offset-IV `addi r0,rI,0x124; stwx` slot loop that blocks clFlowRound_Init, plus a ctr-unrolled zeroing loop. The pool (.data 0x8049AD58) is already owned by clFlowCup.c.
   - Done in PR #291: JumpDistanceMode_HandlePhysics, JumpDistanceMode_UpdateGameplay, clFlowCup_Update.
-  - JumpDistanceMode_Update: 6 lines off, only the sqrt fp regs (target x² in f1, z in f2, unfused). Draft notes/r4-6/JumpDistanceMode_Update_draft.cpp.
   - CopyKartMovement: needs `__restrict`-like aliasing plus GPR parity; not solved.
 
 ## NonMatching sweep, SDK/libs 0x8024D764..end (2026-10-25)
@@ -453,7 +468,7 @@ That one is still open (opt_lifetimes off gets acModifyMyIPaddr to 97.88
 with only that addi left).
 
 ## TU boundary audit (tools/tu_audit.py, main 935a1487, 2026-11-08)
-- `python3 tools/tu_audit.py --claims claims.txt` (after ninja) writes docs/tu_boundary_audit.md: MERGE (private .rodata/.sdata2 literals, jump tables, static fns used by >1 TU => one original TU; "smallest merge" per near-miss fn), SPLIT (TU data clusters line up with a function cut), OWN (unowned data used by one TU), SINIT, CC (prologue style vs mw_version; currently clean). `validate` re-finds the tobj/cobj/lobj/texpdag merges, RaceHud split and RankPanel rodata. Merges flagged DEMOTES risk Matching TUs (clFlowCourse lesson): do them on a branch and land only if the merged TU matches. OWN rows are the cheapest wins.
+- `python3 tools/tu_audit.py --claims claims.txt` (after ninja) writes docs/tu_boundary_audit.md: MERGE (private .rodata/.sdata2 literals, jump tables, static fns used by >1 TU => one original TU; "smallest merge" per near-miss fn), SPLIT (TU data clusters line up with a function cut), OWN (unowned data used by one TU), SINIT, CC (prologue style vs mw_version; currently clean). `validate` re-finds the tobj/cobj/lobj/texpdag merges, RaceHud split and RankPanel rodata. (Superseded 2026-11-09 18:47Z: a merge that takes the Matching flag from some TUs is no longer held back or discounted. Land it when main.dol is OK and the count of 100% functions rises, matching_rules section 2 rule 5; clFlowCourse itself was merged in 5d5f466.) OWN rows are the cheapest wins.
 
 - (mid-range 2026-11-08, 5154888 DNFlash Spawn) Target walks a const table with a real pointer (`addi rP, rBase, 0x414; lfs 0(rP); lfsu 4(rP); lfs 4(rP)`) and `addi r4, rBase, 0x408; lfsx` while ours folds everything to `lfs 0x414(rBase)`: the tables are separate objects in a pooled .rodata that another TU owns (splits: which TU's .rodata covers the label). Merge the function into the owner TU and index the real objects (`lbl_X[i]`, not a struct overlay or a pointer param of an inline). A struct overlay of the same bytes always folds the offsets.
 
@@ -504,3 +519,222 @@ copy/assign ctors on the element type, separate pointer variables. If you crack 
 ## mwcc-debugger: why a register went where it did (2026-11-09)
 `python3 tools/mwccdbg_install.py` once, then `python3 tools/mwccdbg.py <unit> <fn>` (about 10 s, one run at a time: fixed gdb port).
 It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugged with GC/2.6: identical output checked on dtor_801F8214) and lists, in colouring order, the virtual registers whose register differs from the target, with the first one marked. Colouring goes from the highest vreg number down and picks the lowest free register, so the fix is about vreg NUMBERING (creation order in the backend), not decl order of inlined locals (renamed to @NN temps). Dumps: build/mwccdbg/out/<fn>/.
+
+## leversweep: today's hand levers as triggered rewrites (11-09)
+
+- `python3 tools/leversweep.py fn UNIT FN --show` tries every lever whose trigger fits the objdiff
+  diagnosis; `batch --min 90` runs all near misses (174 fns in about 4 minutes); `selftest` replays
+  three past landings; `summary` rewrites `docs/sweeps/leversweep/summary.md`.
+- Levers work per scope: the function body and every TU inline it calls (3 levels deep).
+- Result of the first batch: 1 match (PCBCheck_ProcessLinks, dead-def-split, a5a84ae), about 30
+  line-count improvements, of which only 8 raise objdiff %. Fewer diff lines often LOWERS objdiff %.
+- Added 19:50: `mul-fuse` (§39, both directions: products through an inline mul helper, or helpers /
+  single-use product locals written back so they fuse, plus fp_contract on/off) and `local-array-init`
+  (5eca6fc, both directions; only tables defined in the TU, extern tables would need their values).
+  Batch over 169 near misses: 0 matches, 1 small objdiff gain (ExplosionTumble_Init).
+- Added 21:20: lever `single-expr` (0b362350; local assigned once and read once -> one expression,
+  also inside TU inlines) and `leversweep.py detect` (regalloc_patterns 40, detect only): lists near
+  misses whose target forms `addi rX, anchor, N` for an N our build never forms, in
+  `docs/sweeps/leversweep/anchor_detect.md`. Full rerun after the TU merges (169 fns): 0 matches;
+  TaMode_Init 99.63 -> 99.66 landed.
+- Not automated (need a decision a regex cannot make): rolled loop + unroll budget (which loop),
+  base vtable store in the ctor body, avoiding IRO CSE temps, pool-owner TU merges.
+- Do not run bare `python3 configure.py`: it regenerates build.ninja with the compiler download
+  rule (blocked host). Use `--binutils build/binutils --compilers build/compilers --wrapper build/tools/wibo`.
+
+### tools/merge_tus.py: merging a run of over-split C TUs (2026-11-09, race voice unit)
+- `python3 tools/merge_tus.py plan --first ADDR --last ADDR` lists the TUs and flag differences; `apply` writes one source (each TU preprocessed with its own flags, identifiers suffixed `_pN`), and rewrites splits.txt, configure.py, extab_user_renames.json and extab_order.json; `prune-renames` after the first ninja. The docstring has the details.
+- merge_tus.py lessons from the Sci2Card 23-TU merge (11-09): (1) the merged Object line needs `extab_padding=b""`, otherwise the extab postprocess never runs and the `_pN` renames are not applied; (2) `prune-renames` must be given an object built BEFORE the renames took effect (it is now safe to run twice); (3) `--pool file.c --pool-sec .rodata:START:END` puts a data2c pool at the top, then fix the object boundaries by hand: every `addi rX,anchor,N` in the target is an object start (§40), so split the data2c blobs there and add the symbols to symbols.txt; (4) tables the functions use with a real type must be defined with that type in the pool (drop the per-section typedef/extern), casts through `&lbl` compile differently; (5) inline asm bodies and each TU's own `#pragma` lines survive the merge now.
+- merge_tus.py and C++ (test-menu merge, 11-09): `.c` and `.cpp` TUs can be mixed; each section is wrapped in `#pragma cplusplus on/off`, declarations inside `extern "C" { }` count as top-level, C++ keywords are never suffixed. `--pool-global` keeps data2c's scope instead of making every pool object `static`: use it when most functions name ONE pool object (`lis/addi sym`, must stay a global) and only a few use the anchor; then make just the anchored objects `static` by hand (CardCreate_Page). data2c lists the externs the pool needs on stderr: prepend `void f();` / `extern char lbl[];` lines. A merge does not have to cover the whole original TU: units that own no data section can stay split and reference the pool by extern (13 of 36 merged). Classes with mangled members are not handled (the `_pN` suffix would change the mangled names).
+- merge_tus.py, fn_801B7EF8 merge (11-09, 18 units, C/C++ with classes): (1) exceptions / lmw / -O4,s of each section now come from the TU's real compile command, because a lib group can set `-Cpp_exceptions on` for every unit (missing this gave `new` without the exception-safe saved register and dropped extab entries); (2) `prune-renames` also maps mangled names whose class names got the `_pN` suffix (`__ct__16CourseSprite_p17Fiii` -> the TU's old rename of `__ct__12CourseSpriteFiii`), so run it after the first ninja and build again; (3) a .bss pool shared by sections goes at the top, unsuffixed, inside `#pragma cplusplus on` + `extern "C" { }`: a C TU lays .bss out in first-use order, C++ in definition order; sections that declared the objects with their own types get `#define name_pN ((T **)name)`.
+- Inline-wrapper lever seen three times in `Sci2Card_BuildRetryReceiptLine`: when the target keeps call results in the "wrong" saved registers or does not coalesce a copy, wrap the call (or a two-arm `if` returning a pointer) in a `static inline` returning the value; the inline result is a frontend temp numbered differently from named locals (414 -> 114 -> 4 diff lines). The last 4 lines (address of the scratch buffer created before the destination address) went away by writing 25 unrolled byte stores as `for (i = 0; i < 25; i++) buf[i] = 'A'; buf[i] = 0;`.
+- The 53 race voice TUs (0x801A1798..0x801B70EC) are now `game/sprite/fn_801A1798.c`. The merged text is preprocessed output: tidy a section only when you work on it, and keep the `_pN` suffix on names that differ between sections.
+- After a merge, read the target's `addi rX,anchor,N` offsets to find the real object boundaries of the pool (regalloc_patterns 40) before touching the functions. tools/data2c.py emits the pool objects (now also `.string16` and mixed word/relocation objects).
+- Editing symbols.txt triggers a full resplit (more than 2 minutes): run ninja with a long timeout.
+- Rebase conflicts in the two extab json files are per-TU keys: take origin/main and re-apply only your TU's key.
+- regfix model (11-09 late): three more allocator rules, all local dumps (276) now
+  reproduce. (a) r31 reserved as frame pointer (it shows up as a neighbour) = 28
+  free GPRs, not 29 (fn_801E4AF4). (b) a function that spills is coloured twice;
+  the dumps now hold the LAST pass, and spill temporaries of that pass are never
+  the stuck-simplify pick (`regalloc-*-meta.txt`, fn_8018B31C). (c) inline asm that
+  names machine registers retains them: fewer free registers, detected from spill
+  costs being present (THPDec fn_80299D58). Old dumps: delete
+  `build/mwccdbg/out/FN` or rerun diag to regenerate.
+
+### tools/reloc_only_detect.py: near misses that differ only in relocations (11-09)
+- `python3 tools/reloc_only_detect.py [--min 90] [--md docs/sweeps/reloc_only.md]` compares our object with the target per function (instruction words with the relocated bits masked). A hit has identical code and only a relocation symbol/addend differs: split the pool symbol in symbols.txt at the listed offsets (6cbe52d8) or fix pool ownership. After 6cbe52d8 the whole project has 0 such functions; rerun after symbols.txt or pool changes.
+- §43 (`new T(...)` written as Alloc + ctor call) has no candidate left among the >= 80% near misses (scan of `x = Alloc(..); if (x) ...` in near-miss bodies: CardCreate_Page only, and its diff is the .data anchor, see gave_up). No leversweep lever added.
+- leversweep lever `block-local-counter` (regalloc_patterns 46, 11-09): wraps the later loops of a shared function-level counter in `{ int i; for (...) }` (plus per-loop variants and "first counter declared last"). Batch over the >= 85% near misses: fires on 2 functions only (fn_8018E538, fn_8018B31C), 0 matches. fn_8018E538 gets every register (24 -> 4 lines) but objdiff drops to 96.4 because the `li r29,0; mr r31,r29` IV-init copy is still missing (same finding as the gave_up row).
+- `python3 tools/fmt_args_detect.py [--all] [--md docs/sweeps/fmt_args.md]` (rule debug-format-arg-count, regalloc_patterns 49): compares the `%` conversions of each varargs call's format string (read from the DOL through the literal, `lbl_X`, or `pool + 0xNN`) with the arguments passed. 11-09: 0 mismatches inside near-miss functions; `--all` lists 26 in matched code (mostly calls whose first `%` string is not the format, plus `"%s retry %d"` with one argument in FileLoader_LoadBin/Open, harmless there).
+- fn_801C9288 merged into game/clFlowRound.c (11-09, Matching): a near miss that sits right before its data owner's TU is worth retrying after the owner's compiler/flags were corrected. On GC/1.3.2 as its own TU it was 91.3% and the 11-08 merge draft 89.7%; inside the TU on its real flags (GC/2.6, -inline deferred, defined ahead of Draw under `#pragma defer_codegen off`) the same source gave 96.8%, and the rest was a declaration-order sweep of the three case-block locals (`int anim; param; pos;`, assigned pos, param, anim) plus `opt_common_subs off` for the reloaded offset constant. The callers in the TU kept calling it (no auto-inline).
+
+- merge_tus.py `--suffix-base N` + `--pool-external` (11-09): extend an already merged TU. Run `apply` on the
+  new range into a scratch unit with the same pool file, then append its sections to the merged file, join the two
+  splits.txt blocks and the two entries in extab_user_renames.json / extab_order.json, drop the scratch Object line,
+  build, `prune-renames`, build. Pool tables indexed as `table[i].field` need the real element type at the
+  definition (hoist the section's struct above the pool); `(*(T (*)[])&lbl)[i]` over a `void *[]` definition
+  gives `addi r0,r3,0 / slwi r3,r4,3` instead of `addi r3,r3,0 / slwi r0,r0,3`.
+- Unreferenced string literals in the target's .rodata (debug format strings between two referenced objects): put them in a never-called `static` function at the right source position. MWCC emits the function and its strings, mwld strips the function; keep the strings with an `"@N": "active:lbl_XXXXXXXX"` rename (tools/postprocess_extab_user.py sets the force_active flag in .comment; `scope:global`/`force_active` in symbols.txt gets rewritten away by dtk). `"#align4": ".rodata"` in the same rename block pins a section to 4-byte alignment. Example: src/game/EnmyFaceEffect.cpp.
+- Vtable sits between two functions' switch tables in .data (not at the end of the TU's .data): the TU was built with `-inline deferred -RTTI on`, where each vtable/RTTI name is emitted with the class's key function. Reverse the function order in the source (deferred emits last-defined first). Example: src/game/EnmyFaceEffect.cpp (clEFacePoly vtable, jump tables, clEFacePolyEffect vtable). Rule `deferred-vtable-key-function-order`.
+- A unit whose functions are all 100% but which cannot be flipped: compare exception tables per function with the split object (`objdump -t/-r` on `build/GNLJ82/obj/UNIT.o` vs `build/GNLJ82/src/UNIT.o`, entry size per function). Smaller entries on our side mean missing actions: DELETEPOINTER = the site is a real `new T(args)` (declare a small class whose ctor is renamed to the init function), DESTROYBASE = the class has a base with a dtor, DESTROYLOCAL with no dtor call in the code = the local's class has an empty inline dtor (`ResCtrl` / dtor_80082960); the PC range of that action gives the block scope of the local. A weak dtor whose table entry sits first in the target goes into tools/extab_order.json. Worked example: src/game/DbgMenu.cpp.
+- Flip fails with main.dol LONGER than the target: a weak inline copy (`__dt__...` in `objdump -t`, flag `w`) has no rename to the address of the shared copy, so mwld keeps it as a new function. Rename it in tools/extab_user_renames.json (template arguments change the mangled length, e.g. `__dt__21VHolder<10FlowFaderI>Fv`). Flip fails with main.dol SHORTER: an unreferenced object was stripped; a file-scope `const` array is internal in C++ (write `extern const`) and needs `#pragma force_active on/reset`. Examples: DNLensflare.cpp, FAllDisp.cpp (11-09).
+- float literals, not `extern const float lbl_806Dxxxx` (FlashFadeOverlay_Draw 99.65 -> 100, 11-09): a constant read
+  through an extern is a memory load the optimizer cannot treat as a constant, so its vreg is created and coloured
+  differently (14 FPR operand rows here). tools/postprocess_sdata2.py renames the anonymous literal symbols to the
+  target's `lbl_` names, so literals need no .sdata2 split. With literals the natural shape matched:
+  `u0 = k * (16.0f - u); pu = k * (16.0f + u); u1 = 1.0f - pu;` (a named product local stops the fnmsubs fusion).
+- tools/float_literal_sweep.py (11-09): blanket `extern float` -> literal over 56 near misses: 1 better
+  (KartMovement_Init 782 -> 739), 0 matches, most slightly worse, because those bodies were shaped around the extern
+  loads (named `one`/`scale` locals, split statements). The literal is a precondition, not the fix: on
+  FlashFadeOverlay_Draw the plain swap changed nothing (44 diff lines), the match came from rewriting the block in
+  its natural form afterwards (statement groups in 6 orders x named/unnamed product, scored with objdiff).
+  Use `float_literal_sweep.py UNIT FN` to get the literal text, then reshape by hand. Table: docs/sweeps/float_literal.md.
+- `python3 -I tools/flagsweep.py [flags]` recompiles every NonMatching unit with extra compiler flags and lists functions that get closer. 11-09 run with `-inline deferred` over 126 units: no function improves (most get worse), so the EnmyFaceEffect gain (fn_8022D9E4 99.81 -> 100) needs the full recipe (deferred + reversed function order + real classes), not the flag alone. Try other flags (`-use_lmw_stmw on`, `-RTTI on`, `-opt ...`) with the same tool.
+- merge_tus append pitfalls (last test-menu pages, 11-10): (1) never run `prune-renames` before the merged file compiles: it
+  prunes against the stale object and drops every new rename (rebuild them from `nm` + `merge_tus.unsuffix_mangled`, chaining
+  through the unsuffixed entry, e.g. `__ct__15ServiceMenu_p34Fi` -> `ServiceMenu_Init`); (2) `__declspec(weak)` gets suffixed
+  (`weak_p27`): strip it; (3) a section that switches to `#pragma cplusplus off` half way needs `struct T_pN` in the pool casts.
+- The containers in the game are the real Metrowerks MSL C++ (`std::deque`, `Metrowerks::cdeque`, `std::vector`, `std::length_error`); the genuine CW GC 2.5 headers compiled with GC/2.6 reproduce them exactly (7 stuck deque functions at once). Do not hand-write them: `python3 tools/fetch_msl.py`, name mapping and instantiation-order rules in `docs/notes/msl_cpp.md`.
+- KartMovement_RotateByYaw 100% (11-10), matrix/vector inline shapes worth porting to other kartmove near misses:
+  (1) vector transform: copy the input first and store straight into the vector, one expression per component with the
+  translation on the left, `float x = v->x, y = v->y, z = v->z; v->x = m->m[3][0] + (z*m->m[2][0] + (m->m[0][0]*x + y*m->m[1][0]));`
+  (named `rx/ry/rz` accumulators with `+=` statements gave 26 FPR vregs off; matrix loads are CSE'd over two inlined
+  calls, so every numbering detail shows); (2) Identity = 2-D zero loop + `a->m[0][0] = a->m[1][1] = a->m[2][2] = a->m[3][3] = 1.0f;`;
+  (3) Multiply with `Matrix44 product; float *out = (float *)product.m; int j; int index; int i; float value;` and
+  `out[index+j] = value` / `index += 4`; (4) `float c, s;` declared before `double radians`; (5) the member update
+  (`k->yaw += angle`) before the first inline call.
+- leversweep lever `chain-assign-split` (11-10): `a = b = c = K;` as separate statements in both orders. Fired on 7 near
+  misses, 2 small gains, 0 matches.
+- fn_8019A9BC 98.11 -> 100 (11-10), FPR-only diff with more live floats than volatile registers. Read the target's
+  saved registers as "coloured last = lowest number": (1) float literals (constants become shared temps);
+  (2) statements whose loads/constants sit in LOW volatile registers were created LATE: `QuatMatrix(&rotation, &q)`
+  moved above the block that saves `position` and zeroes the translation (189 -> 104); (3) the nine quaternion
+  products are declared in the classic order `xx yy zz xy xz yz wx wy wz` (the fmuls order in the asm is the
+  scheduler's, not the source's; the saved/volatile split gives the decl order) (104 -> 43); (4) the value in the
+  LAST saved register (`w`, f25) is a function-level named local, not an inline local: `float c = (float)cos(..); q.w = c;`
+  in the caller (43 -> 0).
+- Empty counted loop that the target keeps (`li r0,12; mtctr; bdnz` with no body, fn_8019C6B4): write it counting DOWN,
+  `for (int i = 12; i > 0; i--) {}` (or `i != 12`, `while (n--)`). The `i < 12; i++` form is deleted by IRO, the others
+  survive to the backend, which turns them into the bare ctr loop.
+- PCBComm_Process 95.8 -> 99.22 (11-10), recipes: (1) `li rX,1; mulli rX,rX,SIZE` (a constant index that was not
+  folded) = the statement sits in a one-trip loop whose counter feeds the index with an offset:
+  `for (n = 0; n < 1; n++) f(base, n + 1);` (`g[n]` alone folds; `n - 1` gives `li 0; mulli`); (2) `add rP,base,off;
+  lwzu rV,FIELD(rP)` = a pointer local that is reassigned to the field address (`sel = base + off; sel = (T *)&sel->field;`),
+  a fresh `T **p = &sel->field` folds into `lwzx`; (3) `addi rB,anchor,OBJ; addi r0,off,FIELD; lhzx` = the field offset
+  written before the index: `(u8 *)obj + FIELD + i * sizeof(T)`; `obj + (off + FIELD)` folds FIELD into the anchor offset;
+  (4) saved registers of locals that live in two blocks: declare them once at function top, before the first
+  initialised local (`update`), in the order of the target's registers (r30 first). Tool: scratch `opd.py`-style scoring
+  (diff with registers masked) finds the instruction shape first; objdiff score only after the shape is right.
+- `leversweep.py fn|batch --pairs N` (11-10, regalloc_patterns 62): after the single-lever pass, 3-way merges the best N
+  variants per lever that changed the diff with those of every other lever (non-overlapping edits only) and scores the
+  pairs. Results of the 99.x run: docs/sweeps/leversweep_pairs/.
+- leversweep lever `void-to-int` (11-10, regalloc_patterns 66): `void f()` -> `int f()` / `unsigned char f()` with no
+  return statement (TU prototypes rewritten; a header prototype makes the variant fail, change the header by hand).
+  Run over every 99.x near miss + gave_up row with a void definition: 63 void functions fired, 0 better; 17 could not be tested because a header declares them.
+- leversweep `--pairs 3` over the 99.x set + gave_up rows (11-10): 134 functions, 514 pair variants, 0 matches; 4
+  functions had a pair as their best asm-line score, none of them a better objdiff percentage. Table:
+  docs/sweeps/leversweep_pairs/summary.md.
+
+- ExplosionTumble_Init 94.86 -> 97.91 (11-10): the fn_8019A9BC recipe transfers to other kart-movement
+  TUs (cos in the caller as a named local, classic product order, NormalizeCopy reading y and x before
+  the struct copy). Naming the quaternion components as locals `x, z, y, w` in the matrix inline gave
+  the last few points; the tail's saved FPR order (w=f29 in the target) did not move with any
+  declaration order.
+- PCBComm_Process 99.22 -> 99.31 (11-10): read the target's saved-register sharing to get the colouring
+  order (here `off` shares r24 with `accepted`, whose 0 value is dead inside the accept block, so
+  `accepted` was coloured before `off`), then move declarations until mwtrace COLOR lines show that
+  order. A walking pointer declared as a block local after the other block locals went last as wanted.
+  Open: a frontend CSE temp cannot be numbered below a named local with any lever known so far.
+- PCBComm_Process 99.31 -> 99.95 (11-10): three small recipes.
+  (a) A CSE temp that must colour after a named local: make it a named block local declared right
+  after that local, and write every use so that nothing folds: `(u8 *)&arr[0].field + off` gives
+  `addi r0,base; add rX,r0,off` + displacement, `(u8 *)arr + K + off` gives `addi r4,base; addi r0,off,K; lhzx`.
+  (b) r4/r5 swapped between an address temp and a value used three times: drop the value's named
+  local and repeat the expression (the CSE temp colours before the address temp).
+  (c) `addi r4,base; mr r3,r4; add r4,r4,n` for memcpy(dst, base + n): `src = base; dst = src; src += n;`.
+- `-inline deferred` string order (JointTracks / MapAnim.cpp, 11-10): a `static inline` helper pools its string
+  literals where the CALLER is generated; a plain `static` helper that deferred auto-inlining swallows pools them
+  at its own source position (it is still compiled; mwld strips the unused copy). Line numbers that DEscend with
+  the address (0x1ED, 0x1B1, 0x18E, 0x164) are the sign of a deferred TU: reverse the source order and put the
+  helpers between the functions. A TU without `-rostr` puts literals in .data, not .rodata.
+- ExplosionTumble_Init 97.91 -> 98.90 (11-10): count asm diff lines, not the objdiff percent, while
+  hunting registers: the NormalizeCopy form that makes both expansions register-exact LOWERED the
+  percent (97.18) until the other blocks were fixed too. Frontend CSE temps of repeated loads
+  (`up.x`, `v.y`, ...) are numbered by STATEMENT order, so permute the statements of a cross product
+  (6 orders) before anything else; result locals are propagated and do nothing. Values that overflow
+  the volatile FPRs go to saved registers lowest-first, so "w in f29" means w is coloured first of the
+  overflowers: an inline return value plus direct `q->x` reads did it.
+
+- 11-10 clNormal3D_SetScale 100: three saved values (table r31, count r30, loop cursor r27) where the cursor
+  must OPEN a new saved register. An inline local (frontend temp) is always coloured before the caller's named
+  locals, so the cursor took the freed r30. Fix: write the inline's loop out in the function and declare its
+  locals as named locals `node; i; table; count; cursor;` (last declared = lowest vreg = coloured last).
+  Sweep all declaration orders (120 here, 2 gave 0 diff lines). leversweep inline-to-named-locals could not
+  do it (all variants failed to compile in this `.c` + `#pragma cplusplus` TU), so try by hand when it reports compile_fail.
+
+- 11-10 leversweep `inline-to-named-locals` now has a `deep` mode (nested block locals and `for (int i` of the inline
+  become named locals; first k at the function front, the rest right before the expanded code, all orders) and no
+  longer renames struct members. It reproduces the clNormal3D_SetScale match by itself. Batch over 106 near misses:
+  0 matches, clNormal3D_Exec 130 -> 94 lines (by hand 78, 99.47). Hill-climbing the declaration order of ALL
+  inline locals written out was worse than writing out only the inline the diag points at.
+  Sweep pitfall: check that the variant compiled (grep FAILED), a stale .o gives a constant score.
+- 11-10 `tools/oob_read_detect.py` (regalloc_patterns 90 detector): lists .text relocations `symbol+addend` in our
+  objects whose addend is past the symbol's size in symbols.txt (a struct/array view laid over a neighbour).
+  First run on all near misses: only fn_801A6538, and those were symbols.txt splitting 8-byte OSTime objects and a
+  6-byte struct into halves (merged; objdiff % unchanged because it resolves by address). So §90 has no further
+  candidates among today's near misses; rerun after new asm -> C conversions (`--md docs/sweeps/oob_read.md`).
+
+## shapediag: what kind of diff is it, when it is not register-only (2026-11-10)
+
+`python3 tools/regfix.py diag UNIT FN` used to stop with "not a register-only
+diff". It now prints the output of `tools/shapediag.py` at that point, so one
+command gives hints for any near miss. Standalone:
+
+    python3 tools/shapediag.py fn UNIT FN [-v] [--src ALT_SOURCE] [--ours OBJ]
+    python3 tools/shapediag.py batch --md docs/reports/shapediag_census.md
+    python3 tools/shapediag.py classes | selftest | replay
+
+It needs no compiler model: objdump of both objects, alignment with register
+names abstracted, then every differing run is put in a class (about 40:
+`order:args`, `order:const`, `order:store`, `order:load`, `order:expr`,
+`order:loopstep`, `order:epilogue`, `order:regswap`, `copy:target-extra`,
+`copy:direction`, `load:target-reloads`, `address:pool`, `saved-regs`,
+`select:*`, `loop:ctr`, `call:inline`, `reloc:symbol`, `stack:offset`, ...)
+and each class prints the levers that fixed it before, with the
+regalloc_patterns / matching_rules section. `--src FILE` compiles a variant
+with the unit's command, so you can ask "what kind of diff does this rewrite
+leave" without touching the tree.
+
+- Read the classes top down: structural ones (saved registers, calls, loops,
+  pools) are printed first because they usually cause the others.
+- `opcode counts, target minus ours` in the header is the quick sign
+  (`lfs+3` = a second load set, section 87; `mr+1` = a kept copy, section 76).
+- Relocations are compared by where they point (name, or position in the
+  object's own section), so an anchor / `@N` on our side is not a diff. A
+  `reloc:symbol` row that names a `jumptable_*` for a float load means stale
+  `@N` renames in tools/extab_user_renames.json (found and fixed for
+  clFlowCourse.cpp this way).
+- It is a clue, not a rewriter, and big shuffled blocks (below about 95%)
+  produce noise after the first two or three classes.
+- New pattern: add a lever line (or a detector) to `CLASSES` in the tool and a
+  case to `SELFTESTS` / `REPLAY`; update docs/regfix_coverage.md.
+- Census of all current non-matching functions: docs/reports/shapediag_census.md.
+
+### shapediag replay over every recorded fix (2026-11-10)
+
+`python3 tools/shapediag_replay.py run` takes every landed fix that has a
+commit (tools/patterns/hits.jsonl + the Codex table in regalloc_patterns.md,
+263 cases), extracts the tree just before the fix, compiles the TU with that
+tree's own command and asks shapediag what the diff was. `report` rates it
+against `EXPECT` (rule -> classes that carry that lever). Result in
+docs/reports/shapediag_replay.md, rows in docs/sweeps/shapediag/replay.jsonl:
+228 of 263 reproduce; 89 of those are register-only (regfix territory), 139
+differ in the instruction sequence. Rated: 82 hit, 4 miss, 15 colouring levers
+where shapediag showed another (real, but secondary) class, 3 structural
+levers invisible in the code (pool/data merges). The Codex notes were used to
+add about 25 lever lines to the classes (inline helper per operand, literal
+vs extern for reloaded constants, full switch case domain, `== 1` vs `> 0`).
+When a new fix lands with a hits.jsonl row, rerun `run` (restartable) and
+check that its row is a hit; if not, add the lever to the class it fired.
+Needs history: `git fetch --shallow-since=2026-10-24 origin main`; the
+trees take about 10 GB with `--keep`.

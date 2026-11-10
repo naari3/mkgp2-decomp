@@ -5,9 +5,9 @@
 extern "C" unsigned char SpecialFaceMesh_Raycast(SpecialFaceMeshNative *self,
         const Vec3f *from, const Vec3f *to, Vec3f *out, Vec3f *normal) {
     FaceRaySegment ray;
-    ray.delta.x = to->x; ray.delta.y = to->y; ray.delta.z = to->z;
     ray.endpoints[0].x = from->x; ray.endpoints[0].y = from->y; ray.endpoints[0].z = from->z;
     ray.endpoints[1].x = to->x; ray.endpoints[1].y = to->y; ray.endpoints[1].z = to->z;
+    ray.delta.x = to->x; ray.delta.y = to->y; ray.delta.z = to->z;
     ray.delta.x -= from->x; ray.delta.y -= from->y; ray.delta.z -= from->z;
     float minZ, maxZ = ray.endpoints[1].z;
     if (ray.endpoints[0].z < maxZ) minZ = ray.endpoints[0].z;

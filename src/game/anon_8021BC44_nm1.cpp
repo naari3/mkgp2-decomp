@@ -1,5 +1,22 @@
 #include "game/anon_8021BC44Types.h"
+
+// Integer and floating-point arguments occupy independent ABI register banks.
+void DrawResultSprite(int layer, float x, float y, float alpha, int resource, int flags);
 #include "src/game/anon_8021BC44_nm1_rodata.inc"
+
+static inline int TA_isReverse() { return g_reverseRoundFlag == 1 ? 1 : 0; }
+/* The digit loop is an inline in the original: only then is the strength-
+ * reduced offset counter initialised with `mr` from `i` (regalloc_patterns 94).
+ * `res` is the caller's local (reference parameter), so it is coloured after
+ * the inline temps. */
+static inline void TA_makeDigits(TimeAttackResult *self, int &res) {
+    for (int i = 0; i < 9; i++) {
+        res = fn_80167744(8 - i, self->time) + 0x1531;
+        self->digits[i] = new clCSPartsResultTimeNum(res);
+        self->digits[i]->obj = 1;
+        self->digits[i]->m0C();
+    }
+}
 
 TimeAttackResult::TimeAttackResult()
     : state(0), timer(lbl_806DB074), x18(0), noRecord(0), rank(-1), showBanner(0), time(lbl_806DB074), best(lbl_806DB078), fade(lbl_806DB07C),
@@ -16,14 +33,7 @@ TimeAttackResult::TimeAttackResult()
     name.c[4] = 0;
     name.c[5] = 0;
     best = time;
-    TaEntry *e = &lbl_80679C88;
-    e->time = lbl_806DB084 * g_totalRaceTime;
-    e->cup = g_cupId;
-    e->longRound = g_longRoundFlag;
-    e->reverse = g_reverseRoundFlag == 1;
-    e->cc = g_ccClass;
-    e->chara = g_characterId;
-    e->kart = g_kartVariant;
+    lbl_80679C88.Set(g_kartVariant, g_characterId, g_ccClass, TA_isReverse(), g_longRoundFlag, g_cupId, lbl_806DB084 * g_totalRaceTime);
     if (fn_8018B300() != 0) {
         DebugPrintf(lbl_806DB088, fn_8018B300());
         unsigned short buf[5];
@@ -42,12 +52,7 @@ TimeAttackResult::TimeAttackResult()
         g_playerData.last = lbl_80679C88;
     }
     int res;
-    for (int i = 0; i < 9; i++) {
-        res = fn_80167744(8 - i, time) + 0x1531;
-        digits[i] = new clCSPartsResultTimeNum(res);
-        digits[i]->obj = 1;
-        digits[i]->m0C();
-    }
+    TA_makeDigits(this, res);
     record = new clCSPartsResultRecord;
     record->obj = 1;
     record->m0C();
@@ -111,12 +116,19 @@ void TimeAttackResult::Draw() {
 }
 
 static inline void StripNameSpaces(unsigned short *buf) {
-    for (int i = 0; i < 5; i++) {
-        if (buf[i] == 0x8162) {
-            buf[i] = 0;
+    for (int i = 0; i < 5; buf++, i++) {
+        if (*buf == 0x8162) {
+            *buf = 0;
         }
     }
 }
+
+static inline int TA_rev() { return g_reverseRoundFlag; }
+static inline int TA_lng() { return g_longRoundFlag; }
+static inline int TA_cup() { return g_cupId; }
+static inline int TA_cc() { return g_ccClass; }
+static inline int TA_kart() { return g_kartVariant; }
+static inline int TA_chara() { return g_characterId; }
 
 void TimeAttackResult::Update() {
     if (done) {
@@ -227,8 +239,9 @@ void TimeAttackResult::Update() {
         if (entry->Done() == 1) {
             unsigned short buf[5];
             wcsncpy(buf, entry->name, 5);
-            StripNameSpaces(buf);
-            name.c[0] = buf[0];
+            unsigned short *p = buf;
+            StripNameSpaces(p);
+            name.c[0] = *p;
             name.c[1] = buf[1];
             name.c[2] = buf[2];
             name.c[3] = buf[3];
@@ -339,15 +352,15 @@ void TimeAttackResult::Update() {
     case 19:
         if (coin == 0) {
             fn_8018CC64();
-            int cc, cup, rev, lng;
-            rev = g_reverseRoundFlag;
-            lng = g_longRoundFlag;
-            cup = g_cupId;
-            cc = g_ccClass;
-            int kart = g_kartVariant;
-            int chara = g_characterId;
-            int earned = GetEarnedCoins();
-            fn_8018B31C(&g_playerData, chara, kart, cc, cup, lng, rev, earned + GetCoinMilage(&g_playerData),
+            /* inline getters: these six are coloured before the loop temps
+             * (regalloc_patterns 89) */
+            int rev = TA_rev();
+            int lng = TA_lng();
+            int cup = TA_cup();
+            int cc = TA_cc();
+            int kart = TA_kart();
+            int chara = TA_chara();
+            fn_8018B31C(&g_playerData, chara, kart, cc, cup, lng, rev, GetCoinMilage(&g_playerData) + GetEarnedCoins(),
                         g_playerData.b19B, g_playerData.b19C, g_playerData.b1B1, 1, g_totalRaceTime);
             DebugPrintf(lbl_803C63F8, fn_8018B300());
             coin = new CoinContinue;
@@ -529,8 +542,8 @@ void TimeAttackResult::DrawResult(float alpha) {
     float k;
     float pulse = 1.0f - LUT_Sin12Bit(3.0f * x14);
     fn_80169334(1, 0x152F, 0, 320.0f, 154.0f, 1.25f, 1.0f, alpha);
-    fn_801695E0(1, s_courseRes[g_cupId - 1][g_longRoundFlag], 0, lbl_806DB158, lbl_806DB0A4, alpha);
-    fn_801695E0(1, 0x1530, 0, 173.0f, 132.0f, alpha);
+    DrawResultSprite(1, lbl_806DB158, lbl_806DB0A4, alpha, s_courseRes[g_cupId - 1][g_longRoundFlag], 0);
+    DrawResultSprite(1, 173.0f, 132.0f, alpha, 0x1530, 0);
     for (int i = 0; i < 9; i++) {
         if (0.0f == k) {
             digits[i]->m0C();
@@ -591,9 +604,9 @@ void TimeAttackResult::DrawResult(float alpha) {
         }
     }
     if (rank == 0) {
-        fn_801695E0(1, 0x153D, 0, 298.0f, 363.0f, alpha);
-        fn_801695E0(1, 0x153E, 0, 504.0f, 363.0f, alpha);
-        fn_801695E0(1, 0x153F, 0, 320.0f, 362.0f, alpha);
+        DrawResultSprite(1, 298.0f, 363.0f, alpha, 0x153D, 0);
+        DrawResultSprite(1, 504.0f, 363.0f, alpha, 0x153E, 0);
+        DrawResultSprite(1, 320.0f, 362.0f, alpha, 0x153F, 0);
     }
 }
 

@@ -88,6 +88,27 @@ codegen):
 7. registers created by the backend loop optimiser (CTR counters, strength
    reduced IVs, hoisted `lis`).
 
+Details measured on fn_801A6538 (voice TU, 11-09, `tools/mwtrace.py`):
+
+- A parameter of an inline function is an `@temp` created when the inline is
+  PARSED, so it gets a high number among the frontend temps (r130 there); a
+  local of the inline is created at expansion and gets a low one (r43..r46).
+- `short a[10] = {...};` inside a loop: the rodata words are loaded into
+  backend temps (one per 4 bytes, numbered where the declaration is generated),
+  stored to a hidden stack temp in the preheader and copied to `a` in the
+  loop. `List cur = list;` with `list` initialised before the loop gives the
+  same code and the same temp numbers.
+- A single-use local (`int idx = (g + i) % 10;` before the array) is forwarded
+  into its use by the frontend, so the modulo temps are still numbered after
+  the array copy temps. A function-scope `idx`, an inline returning the index
+  and a nested block do the same; `opt_propagation off` / `opt_lifetimes off`
+  change the whole function.
+- simplifygraph rounds: a node is pushed when `degree < 29`, and pushing drops
+  the neighbours' degree at once, so within one round a node only profits
+  from neighbours with a LOWER number. Copy temps numbered below their
+  short-lived neighbours (compare and modulo temps) therefore survive into
+  round 2 and keep everything they interfere with there too.
+
 Backend CSE (`ValueNumbering.c`, per extended basic block) creates no
 registers: a CSE'd value keeps the number of its first computation.
 
@@ -132,6 +153,37 @@ copy propagation and dead-store removal (TitleCheck_NewClearedRecord_Race; a
 `mode = pd->b19A` used once is propagated away, used twice it changes the
 code). Only DLOCALs not live across a call, not volatile and not address-taken
 are split (`usedAtCall`, `noregister`).
+
+Notes from NameCheck_ScanBannedWords (11-09, read from IROUseDef.c / Coloring.c /
+InterferenceGraph.c and checked against traces):
+
+- `FindDefsAndUses` ends with `MakeDef(var, NULL, NULL, TRUE)` for every
+  variable, so the head of each def list is an ENTRY def. The first range
+  collected is the one reachable from function entry (normally empty); after it
+  every range is split off except the last one collected, the earliest in the
+  function. A function-level `word` with 7 loops kept its name only in the first
+  loop; the other 6 were `SplitOffRange` temps, created latest loop first.
+  Variables are processed in order of first appearance in the IR.
+- `colorgraph` takes the LOWEST-numbered free register among volatiles plus
+  the saved registers already handed out (r19 before r21), and only then a new
+  saved register (r31 downward). So which loop counter gets r19/r20/r21 is
+  decided by when its node is coloured relative to the first allocation of
+  each register. A loop counter that must take the register allocated in the
+  middle needs a split temp created in that window: run the loop on the
+  variable whose split temps are created there (found-block loop on `k`).
+- The value of a call wrapped in a trivial `static inline` lives in an inline
+  fe temp, numbered above every IRO temp, so it is coloured before FindLoops
+  IV temps. `close = find_code(...)` instead of `close = strstr(...)` moved
+  `close` ahead of the delimiter-pair IV with no code change.
+- `named = &global` for a global outside the anchor pool and outside sdata is
+  always `addi tmp; mr named,tmp` (Operands.c makes a fresh temp, and
+  `coalescenodes` never merges named with temp). A target `addi rN,r3,x@l`
+  straight into the register means the holder is a temp (IV or split range).
+- Simplify degree counts coalesced-away vregs: a neighbour that was merged
+  into another node stays in the adjacency array and is never decremented.
+  Each merged copy (call-result temp, inline argument copy) that is live while
+  a long-lived node is live adds 1 to that node's degree for good, which
+  decides whether it falls to a later sweep (= coloured earlier).
 
 A def range does not need a use: `IRO_SplitLifetimes` collects ranges from the
 def list, so a DEAD store still forms a range if it is still there. Dead stores

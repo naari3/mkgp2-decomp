@@ -15,6 +15,197 @@ hints on the other side's claimed TUs, requests, questions) go on the board in
 first (`python3 tools/agent_board.py open --for om` or `--for n3`), answer with
 a `re:` entry in your own outbox. Append only.
 
+## 0. What changed recently (read this first)
+
+The rules below are current practice, not permanent law: naari3 changes them
+as the project moves, and the newest dated line wins over older text anywhere
+in `docs/`. Whoever changes a rule adds ONE line here (newest on top, date in
+UTC, where the full text is) and posts the same line on the agent board
+(`docs/agents/`). Drop lines older than about two weeks once the sections
+below say the same thing.
+
+- 2026-11-10 04:14Z: when the native tracer (tracesweep/regfix) reports diff 0 but the real compile still differs, the unit's `mw_version` is wrong: compile the same source with every GC/* compiler (clItemBoxResponder_SpawnDebris: GC/1.3.2 93.7, GC/2.6 100, a016a6ca).
+- 2026-11-10 04:02Z (n3 tool): `python3 tools/regfix.py diag UNIT FN` now also
+  diagnoses near misses whose instruction sequence differs (extra `mr`,
+  reload, argument/constant/store order, pool addressing, saved-register
+  count, instruction selection, ...): it calls the new `tools/shapediag.py`,
+  which classifies every differing run and prints the levers and sections for
+  that class. Census of all non-matching functions by class:
+  docs/reports/shapediag_census.md; notes in docs/thread_tips.md (last section).
+- 2026-11-10 03:38Z (n3 technique): regalloc_patterns §91: argument load order
+  in a C++ ctor. Prototype int/float interleave (§74), a getter with a local
+  to load one argument first, and "declare in colour order, load in statement
+  order" inside an inline ctor. Also: a weak `__dt__11ScopedTimerFv` must be
+  listed in tools/extab_order.json or reorder_extab skips the TU (CarObject_Init).
+- 2026-11-10 03:35Z: the board's `open` list no longer shows receipts
+  (seen/done/declined), so anything it prints still wants a reaction.
+  `agent_board.py open --fetch` reads a fresh `origin/main`. n3 threads see
+  it on every wake (`.claude/settings.json`); whoever sees an open message
+  tells naari3, acts, and answers it so it stops showing
+  (`docs/agents/README.md`).
+- 2026-11-10 04:10Z (n3 technique): regalloc_patterns §90: a struct view
+  laid over a pool base and read past the end of that object changes copy
+  shape and scheduling. Declare the real objects (symbols.txt split) and let
+  the compiler pool them; `base + big offset` in asm is usually pooling
+  (CarObjectManager_RunKartKartCollisionSweep asm -> C).
+- 2026-11-10 03:35Z (n3 technique): regalloc_patterns §87: a local vector
+  loaded twice in one block (instruction count 3 short). No spelling of `d[i]`
+  keeps the loads apart; an access through the neighbouring object
+  (`&mtx[-3]`) does, volatile gives wrong registers. Plus literal doubles in
+  the sqrt inline (KartItem_ApplyImpactImpulseAndRumble asm -> C).
+- 2026-11-10 03:36Z (n3 technique): regalloc_patterns §89: r20..r24 permuted
+  over many loops (VSMode_Init 99.60 -> 100). Print the colouring order with
+  `tracesweep.py trace ... --want`, then use an inline getter (coloured first)
+  or a later-declared named local (coloured later) per value. tracesweep on the
+  native compiler is 4 s per 24 variants even when the real TU takes 2 min.
+- 2026-11-10 03:15Z (n3 structure, SETUP CHANGE, naari3's decision "for now"):
+  seven TUs now compile against the genuine Metrowerks MSL C++ headers
+  (`MslObject(...)` in configure.py, +11 functions). The headers stay out of
+  the repo: run `python3 tools/fetch_msl.py` once (standard library only,
+  downloads to git-ignored `build/msl_cw25`), then rerun configure. Without
+  them configure prints a notice, those TUs link the target objects, main.dol
+  is still OK and the report shows about 165 functions fewer. Never commit
+  anything from `build/msl_cw25`. CI and `tools/cloud_setup.sh` fetch them.
+  Details: `docs/notes/msl_cpp.md`; board n3-20261110-0308.
+- 2026-11-10 01:25Z (n3 technique): regalloc_patterns §83: vector block
+  (copy, length, scale) with only f-registers permuted. Literal instead of
+  `extern const float`, multiplier through a pointer inline, load statement
+  order, and reuse of named locals with the sum in the last-coloured one;
+  the four only match together (ItemEffect_Projectile 98.9 -> 100).
+- 2026-11-10 01:05Z (n3 technique): regalloc_patterns §80: a big inline
+  expanded several times in one function. A one-line wrapper inline puts
+  every `self` temp one level up (all get the same register), the first
+  expansion colours its locals descending and the later ones ascending, in
+  reverse declaration order. CarObject_HandleItemEffect asm -> C (fakematch:
+  one copy of the inline per expansion).
+- 2026-11-10 00:50Z (n3 technique): regalloc_patterns §78: two float constants in
+  swapped registers = constant temps are numbered in expression walk order.
+  Write the earlier statement inside the later expression
+  (`a = (int)(255.0f * (t = 1.0f - t));`) or repeat the expression in both
+  users. game/RaceHud_80147470.cpp is GC/2.6 now (72f59e72).
+- 2026-11-09 23:50Z (n3 technique): regalloc_patterns §74: when only the
+  evaluation order of one call's arguments differs (target computes the float
+  args before an int arg), redeclare the callee with the float parameters
+  first (`namespace alt { extern "C" ... }`). Int and float argument registers
+  are numbered separately, so the guessed prototype order is a free lever.
+- 2026-11-09 23:35Z (n3 structure): TU merge, 3 -> 1: game/EnemyFaceDraw.cpp +
+  game/fn_8022CDE4.c + game/EnmyFaceEffect.cpp -> game/EnmyFaceEffect.cpp
+  (.text 0x8022BFA8..0x802300C8, .rodata from 0x803DA710). The unit is
+  NonMatching until fn_8022BFA8 (88.65%) matches; see docs/gave_up.md.
+- 2026-11-09 22:55Z (n3 structure): TU merge, 4 -> 1: CoinChallengeRender /
+  CoinChallengeUpdate / anon_80214B3C / CoinChallengeInit are now
+  `game/CoinChallenge.cpp` (clCGameYI, GC/2.6 `-inline deferred -RTTI on -rostr`).
+- 2026-11-10 04:30Z (n3 regfix): audit of regalloc_patterns §54-§94 against
+  `tools/regfix.py diag` in docs/regfix_coverage.md; new diag hints for §58/§78
+  (float constant creation order), §64/§85 (commutative operand order), §71
+  (inline return type), §79 (lfs/fmr direction), §93 (reused pointer local for
+  inline `this`), §94 (1). Add a row there when you add a section
+- 2026-11-10 04:05Z (n3 regfix): `tools/regfix.py diag` neighbour section now
+  says per off vreg whether it must move EARLIER or LATER in the colouring
+  order and which lever does that for its kind (named local / frontend temp /
+  backend temp: inline getter, named local, declaration order;
+  regalloc_patterns §89)
+- 2026-11-10 00:45Z (n3 regfix): `tools/regfix.py diag` flags an off `@temp`
+  that may be an inline's RETURN temp (regalloc_patterns §81: return through a
+  reference out-parameter); checked on the pre-match fn_8018E6FC. fn_8017DF00
+  matched from the §70 diag section (7889058)
+- 2026-11-10 00:10Z (n3 regfix): `tools/regfix.py diag` hint for two saved
+  GPRs swapped between a pointer local and a shared loop counter
+  (regalloc_patterns §73) or between two split-off temps (§57/§72); checked on
+  the pre-match fn_8018E538
+- 2026-11-09 23:59Z (n3 regfix): `tools/regfix.py diag` lists, for every off
+  vreg (up to 8), its neighbours split into coloured-before/after with their
+  registers and says who holds the wanted register
+- 2026-11-09 23:55Z (n3 regfix): `tools/regfix.py diag` prints, when a saved
+  register is off, the colouring sequence of all saved-register vregs and the
+  sequence the target implies (who opens r31, r30, ... first), plus a
+  declaration order for inline locals (regalloc_patterns §70)
+- 2026-11-09 23:40Z (n3 regfix): `tools/regfix.py diag` hint for
+  regalloc_patterns §69: a run of 2-6 differing instructions that is a pure
+  reordering (same registers) points at a block scheduled twice (dead
+  truncation deleted after regalloc); checked on VoiceSystem_Init
+- 2026-11-09 23:25Z (n3 regfix): `tools/regfix.py diag` hints for
+  regalloc_patterns §66 (vreg in r3 the target avoids, `void` function: missing
+  non-void return type) and §67 (target `li; mr` vs ours `li; li`: variables
+  are locals of an inline); the copy-direction hint (§57) now also works for
+  C++ units whose target symbol is still `fn_ADDR`
+- 2026-11-09 23:20Z: `game/Scene_8015AE3C.cpp` and `game/Scene_8015AFCC.cpp` are merged into `game/SceneList_80157EA8.cpp`
+  (.text 0x80157EA8..0x8015B698, still Matching). Evidence: the three shared one .sdata2 literal pool (0x806D8390..0x806D85E4; the next
+  TU restarts with the same 0.7f/0.0f at 0x806D85E8). Shared float literals across adjacent splits = one original TU.
+  The TU cannot own .sdata2 (literals) until its four asm functions are C.
+- 2026-11-09 23:05Z (n3 regfix): regalloc_patterns §65 (new): saved GPRs
+  permuted between switch cases = declare the per-case value locals first at
+  function scope and the payload pointer as a block local per case; one case's
+  stack objects misplaced = move its setup into a nested inline owning them
+- 2026-11-09 22:37Z (n3 regfix): `tools/regfix.py diag` prints a hint when a
+  bad vreg is a frontend CSE temp (`@NNN`): numbering rule regalloc_patterns
+  §59, and §61 (new) for shared float constants: literals + the zero passed as
+  inline parameters + reverse-declared locals
+  (TransitionEffect_DrawCarRouletteOverlay matched).
+- 2026-11-09 22:20Z (n3 structure): the game's containers are the genuine
+  Metrowerks MSL C++ (`std::deque`, `cdeque`, `vector`, `length_error`); the
+  CW GC 2.5 headers compiled with GC/2.6 match exactly. Headers are not in
+  the repo (`tools/fetch_msl.py` downloads them to `build/msl_cw25`); main
+  does not depend on them yet (naari3 decides). Details and the name mapping:
+  `docs/notes/msl_cpp.md`.
+- 2026-11-09 21:55Z (n3 structure): TU merge `game/EnmyFaceEffect.cpp` +
+  `game/EnmyFaceEffect_nm1.cpp` -> `game/EnmyFaceEffect.cpp` landed (2ce236c2,
+  Matching, owns both vtables/RTTI; board n3-20261109-2105). New rename
+  directives in `tools/extab_user_renames.json`: `"@N": "active:lbl_X"` keeps
+  an unreferenced literal alive, `"#align4": ".rodata"` pins a section to
+  4-byte alignment (`docs/thread_tips.md`, last two bullets).
+- 2026-11-09 22:25Z (n3 regfix): `regfix.py diag` prints two more sections. "copy direction between an address and its walker" fires when ours has `addi rA,..; mr rB,rA` and the target `addi rB,..; mr rA,rB` at the same place (regalloc_patterns 57). "source-shape hints" fires for: FPR registers off while the TU reads extern float constants (float_literal_sweep.py, then reshape by hand); a vreg in r3 that the target has in r4 in a value-returning function without a valueless `return;` (regalloc_patterns 54); saved GPRs off in a TU with begin()/end()/`&x->head` (regalloc_patterns 52/53). Hints are clues, not fixes.
+- 2026-11-09 22:00Z (n3 regfix): `regfix.py diag` now (1) prints a section "loop counters shared by
+  several loops" when a saved GPR is off and a function-level counter drives >= 2 `for` loops: try
+  regalloc_patterns §46 (block-local counter per later loop) first; (2) resolves the §40 anchor
+  hint from symbols.txt. Hints printed before 6759bb0 could name the wrong base symbol, so
+  re-run diag before splitting a symbol on an old hint.
+- 2026-11-10 01:10Z: the last 8 test-menu units (`FlashFadeOverlay_Draw.c` .. `ServiceMenu_Page.c`, .text 0x80070EA8..0x80073E20)
+  are appended to `game/CardCreate_Page.cpp`: the test-menu TU is complete (40 functions, .text 0x800668FC..0x80073E20, Matching).
+- 2026-11-09 22:45Z: 14 more test-menu units (`CardRW_Renew_Page.c` .. `CameraTest_Page.cpp`, .text 0x8006B32C..0x80070EA8)
+  are appended to `game/CardCreate_Page.cpp` (27 units, still Matching). The 9 remaining pages from
+  `FlashFadeOverlay_Draw.c` on stay split until their two near misses match.
+- 2026-11-09 22:15Z: `game/fn_801C9288.cpp` is merged into `game/clFlowRound.c` (Matching).
+- 2026-11-09 21:50Z: when merging TUs, take each TU's flags from its real compile command
+  (`ninja -t commands`): lib groups such as `game_extab`, `game_ai`, `game_801077C8` set
+  `-Cpp_exceptions on` for every unit, and a section merged with exceptions off loses its extab
+  entries and the exception-safe `new`. `tools/merge_tus.py` does this since 3edd2cdc; check a
+  merged unit by comparing its extabindex function list with the target object.
+- 2026-11-09 21:40Z: 18 units 0x801B7EF8..fn_801B9928 are one TU, `game/fn_801B7EF8.c`
+  (board n3-20261109-2110).
+- 2026-11-09 21:15Z: test-menu pages UI_PageDispatcher..CardCreate_Page (13 units) are one TU,
+  `game/CardCreate_Page.cpp`; the 23 pages after it belong to the same TU and are not merged yet
+  (`docs/gave_up.md`, board n3-20261109-2053).
+- 2026-11-09 21:10Z (n3 regfix): two things for `regfix.py diag` users. (1) The
+  allocator model changed (r31 frame pointer, spilling functions, inline asm):
+  old dumps are stale, rerun diag before trusting an earlier diagnosis; on
+  GC/1.0-1.2.5 units diag now prints a warning because the trace is a newer
+  stand-in. (2) New `docs/regalloc_patterns.md` 45: registers of values loaded
+  inside an inlined helper are steered by naming them as uninitialised locals
+  of the inline; inline locals number in FORWARD declaration order.
+- 2026-11-09 20:55Z (naari3): the game inline-asm functions (group C of
+  `docs/agents/asm_fn_split_20261109.md`) are open to BOTH sides. Only
+  unit-claims coordinate them: claim the TU right before working it, never
+  touch a TU the other side has claimed. This replaces the 13:38Z line below
+  for group C.
+- 2026-11-09 21:10Z: `tools/tu_audit.py` no longer discounts merges that take
+  the `Matching` flag from some TUs; `docs/reports/tu_boundary_audit.md`
+  regenerated with that ranking (follows the 18:47Z rule).
+- 2026-11-09 20:50Z: big changes (TU merges, tools, build rules) are announced
+  on the board no later than the push that lands them (section 1).
+- 2026-11-09 18:47Z: the original TU structure wins over the `Matching` flag;
+  a merge may leave a TU `NonMatching` if `main.dol` is OK and the count of
+  100% functions rises (section 2, rule 5; section 5 "Over-split TUs").
+- 2026-11-09 18:39Z: pool ownership is checked before moving data
+  (`pool_audit.py`, `own_data.py` guard; section 5).
+- 2026-11-09 15:19Z: diagnose before guessing; a new `docs/gave_up.md` row
+  names the compiler rule (section 7, `AGENTS.md`).
+- 2026-11-09 13:38Z: the 158 inline-asm functions are shared out (n3: SDK and
+  card, om: game group C); claims stay the binding rule
+  (`docs/agents/asm_fn_split_20261109.md`).
+- 2026-11-09 12:20Z: messages between the two sides go on the agent board
+  instead of through naari3.
+
 ## 1. Coordination
 
 - **Claim before you start.** Right before touching a TU, open a GitHub issue
@@ -30,10 +221,14 @@ a `re:` entry in your own outbox. Append only.
 - **Never touch a TU with someone else's open claim**, even indirectly (for
   example as part of a TU merge, a shared `splits.txt` block, or a rename in
   `tools/extab_user_renames.json` that belongs to that TU).
-- **Big changes get announced first.** Changes to `tools/`, the build rules in
-  `configure.py`, TU splits/merges that cross several claims, and anything
-  that renumbers shared data should be mentioned in the commit/PR description
-  and to the other side before landing. Small per-TU edits do not need this.
+- **Big changes get announced on the board.** Changes to `tools/`, the build
+  rules in `configure.py`, TU splits/merges, and anything that renumbers
+  shared data get a post on the agent board (`docs/agents/`) no later than the
+  push that lands them, naming the old and new TU paths and the address range,
+  so the other side can re-point its work lists. Small per-TU edits do not
+  need this. (naari3's threads landed about fifteen merges on 2026-11-09
+  between 18:20Z and 20:50Z with only a late summary, n3-20261109-2050; that
+  was a miss on our side, not the rule.)
 - **Shared lists:** insert new entries next to neighbours from the same address
   range in `configure.py`, `config/GNLJ82/splits.txt`, `symbols.txt`,
   `tools/extab_user_renames.json`, `tools/extab_order.json`,
@@ -59,6 +254,21 @@ A change can land on `main` (directly or by PR) when all of these hold:
 4. A TU flips to `Matching` only when every function in it is 100% and the DOL
    still links byte-identical. A TU with one unmatched function stays
    `NonMatching` even if the rest is perfect.
+5. **The original TU structure wins over the Matching flag** (naari3,
+   2026-11-09 18:47Z). When the evidence says several split files were one
+   original source file (shared section anchor / pool, link-order cycle, weak
+   inline copy placement, section 5 and 6), merge them even if the merged TU
+   becomes `NonMatching` and TUs that were `Matching` lose that flag, as long
+   as `main.dol` is OK and the number of 100% functions goes up. A merge that
+   is right but raises no function count yet is not landed: its evidence and
+   recipe go into `docs/gave_up.md` until a function matches with it. The
+   report's "matched code %" can therefore go down in a commit that is
+   progress; compare function counts. onmokoworks's side may count this
+   differently in its own numbers; the rule is about what may land on `main`.
+6. **asm -> C lands only at 100%.** A function that is inline asm in a
+   `Matching` TU is replaced by C/C++ only when the C matches; a partial draft
+   goes to `docs/wip/` with a row in `docs/gave_up.md`. Both sides work this
+   way (om-20261109-1418).
 
 ## 3. What source is acceptable
 
@@ -107,6 +317,7 @@ Defaults per lib block in `configure.py`: game `GC/1.3.2`, Dolphin SDK
 | Loads hoisted over stores / interleaved `lfs; lwz; lfs` before stores | `GC/2.6` |
 | `x \| ~0xFF` as `li rN, -0x100; or` (1.3.2 gives `oris/ori`); `li -0x100; rlwimi` colour inserts | `GC/2.6` |
 | `stmw`/`lmw` prologues instead of `_savegpr` calls | `GC/2.6` + `-use_lmw_stmw on` |
+| Everything matches except one `mr` and one `lfs` swapped in a loop preheader (`mr r29,r28; lfs f30; mr r27,r31` in the target, `mr; mr; lfs` from 1.3/1.3.2/1.3.2r) | `GC/2.0` or later (RivalRun.c uses `GC/2.6`). `for v in 1.3.2 2.0 2.6` on the unit's ninja command line is a 5 second probe |
 | Target does not auto-inline earlier-defined functions | add `-inline noauto` |
 | Leaf with `addi rX, rY, 0` for an offset-0 member (no `mr`) | `GC/1.2.5n` |
 | Some byte-compare / extab-order shapes (StrPcb) | `GC/1.3` (then check `tools/extab_order.json`) |
@@ -163,7 +374,25 @@ without those flags ninja tries to download tools and fails.
   file. Merge the split TUs back into one (concatenate sources, merge the
   `splits.txt` blocks, delete stale `build/GNLJ82/asm/*.s`). Keep the original
   file name (it matters for `__FILE__` strings). Only do this when no part of
-  the merge is claimed by someone else, and announce it (rule 1).
+  the merge is claimed by someone else, and announce it (rule 1). The merged
+  TU may end up `NonMatching` (section 2, rule 5). `tools/merge_tus.py`
+  (`plan` / `apply` / `prune-renames`, see its docstring and
+  `docs/thread_tips.md`) does the mechanical part for C TUs: it rewrites
+  `splits.txt`, `configure.py` and the two extab json files. Worked examples
+  and what had to change on the way: `docs/regalloc_patterns.md` §32 (item
+  select, ten files), §40 (race voice, 53 files).
+- **Which TU owns a pool: check before moving data.** `tools/pool_audit.py`
+  (output `docs/reports/pool_audit.md`) lists functions whose target reaches
+  several objects from one base; an `OTHER` or `UNOWNED` row on a near miss is
+  an ownership bug, not a register problem. Never give the middle of another
+  TU's anchor pool to a different TU: `tools/own_data.py apply` refuses such a
+  range since 7653d99 (NameCheck_CardName sat at 99.81% for exactly this).
+- **Object boundaries inside a pool.** Every distinct `N` in the target's
+  `addi rX, anchor, N` is the first byte of a real source object; split the
+  pool there (in the source and in `symbols.txt`) and index that object
+  directly instead of `base + CONST` (`docs/regalloc_patterns.md` §40;
+  `python3 tools/leversweep.py detect` lists candidates in
+  `docs/sweeps/leversweep/anchor_detect.md`).
 - **Identical instruction, still `DIFF_ARG_MISMATCH` (pooled offsets).**
   objdiff resolves `addi/lfs rX, rBase, OFF` inside an owned pool to the data
   symbol at that address. If `symbols.txt` has one big target object
@@ -179,6 +408,14 @@ without those flags ninja tries to download tools and fails.
 - **Jump tables** need the TU to own the table (`.data start:end:` in
   `splits.txt`). If the owned range starts at 4 mod 8, add the TU to
   `DATA_ALIGN4_TUS` (`.sdata2` equivalent: `SDATA2_ALIGN4_TUS`).
+- **Pooled `.bss` order (multi-TU merges):** a C TU emits pooled `.bss`
+  objects in first-use order, a C++ TU in definition order. When one merged TU
+  must own a `.bss` pool in address order, define the objects up front inside
+  `#pragma cplusplus on` / `extern "C" { ... }` / `#pragma cplusplus off`
+  and leave the functions in C (SetCourseParams merge, .bss
+  0x805AC600..0x805D2AA8). Give each object its real element type: a
+  `((T *)lbl)[i]` cast macro over an `unsigned char` blob changes regalloc in
+  small indexed accessors (addi/add operand order, 91-99%).
 - **Read-only tables:** `extern const T tbl[N]`. Non-const changes load
   scheduling.
 - **s64 globals** split by dtk into `XHi`/`XLo`: merge into one 8-byte symbol in
@@ -257,10 +494,39 @@ without those flags ninja tries to download tools and fails.
   clCSOrgKartModel (`src/game/anon_8021A7C8.cpp`: pure-virtual slots are
   0 in the vtable; string literals in the deferred ctor land after the RTTI
   names, file-scope named arrays before them; owns the RTTI .sdata).
+- **Where a weak inline copy lands is TU-boundary evidence.** A weak copy
+  that is referenced by address only (an inline destructor named in an extab
+  cleanup) is not generated where it is used: it waits on a LIFO export list
+  (mweppc `frontend/CInline.c` `cinline_exportlist`, flushed by
+  `CParser_GlobalCleanup` -> `CInline_GenerateDeferredFuncs`). Measured with
+  toy files on GC/1.3.2: the list is flushed at the next declaration of ANY
+  kind that is not a function definition (class/struct/union definition,
+  typedef, forward or `extern` declaration, a `static inline` definition,
+  `#pragma cplusplus on/off`). Function definitions, `#pragma push/pop`,
+  `#pragma exceptions`, `#define`/`#undef` do not flush. With only function
+  definitions after the use, the copies come at the very end of the TU, last
+  used first. So: a weak dtor several functions after its only user means
+  those functions are the same TU as the user and no declaration separates
+  them (headers first, then code). Worked example: `dtor_800869D0`
+  (`FKTex::~FKTex() {}`) is used by `DrawLinkErrorOverlay` but sits after
+  `PCBComm_Init`; merging 24 TUs into `src/game/PCBCheckRecv.c` with every
+  C++ declaration hoisted above `DrawLinkErrorOverlay` reproduces it (and
+  PCBComm_Init went 96.97 -> 100 from the shared .bss anchor alone).
 - Mangled names: map them to the project's names through
   `tools/extab_user_renames.json`, never by editing symbols to mangled names.
 
 ## 7. Before you give up on a function
+
+**Diagnose first (since 2026-11-09).** Blind sweeps (pragma x decl order x
+permuter, about 1950 rule applications) gave 2 matches; reading the diagnosis
+and picking one rewrite gives about 3 an hour. Before the list below, run
+`python3 tools/regfix.py diag UNIT FN` (first vreg coloured differently, the
+source line, fitting rules; for a diff in the instruction sequence itself the
+class of each differing run and its levers, from `tools/shapediag.py`), `python3 tools/mwsched.py explain|coalesce UNIT FN
+--run` (order, kept copies) and `python3 tools/asmgrep.py similar UNIT FN
+--src` (how matched functions wrote the same shape); the compiler rules are in
+`docs/mwcc_internals.md`. First ask whether it is a register problem at all:
+a `reloc` / anchor diff is TU or pool ownership (section 5).
 
 Things that solved "only registers/schedule differ" cases on this project,
 roughly in the order worth trying:
@@ -276,9 +542,10 @@ roughly in the order worth trying:
    `opt_dead_assignments off` / `opt_strength_reduction off` (mark fakematch),
    then re-create the one CSE you lost by hand with a named local.
 7. Permuter. decomp-permuter works for C TUs; naari3's side also has a text
-   permuter for C++ (`cperm.py`, kept outside the repo, ask if you want it).
-   In practice it rarely moved the last register swaps here; new source ideas
-   did.
+   permuter for C++ (`tools/helpers/cperm.py`) and a template permuter that
+   only keeps variants passing a trace predicate (`tools/tracesweep.py`).
+   In practice permuters rarely moved the last register swaps here; new
+   source ideas did.
 8. Shapes that closed 2-line diffs on 2026-11-08:
    - Loop step order (target bumps the pointer before the count): walk with
      a separate index, `int count = 0, i = 0; while (t[i].name) { i++; count++; }`
@@ -307,7 +574,10 @@ roughly in the order worth trying:
    bigger, e.g. 16 bytes with a pad member. Two adjacent int fields copied with
    `lwz,lwz,stw,stw` are one 8-byte struct copy.
 10. More shapes, with commits: `docs/regalloc_patterns.md` (numbered fixes
-    §1..§17 plus the onmokoworks Codex fixes). Functions others already
+    §1..§43 plus the onmokoworks Codex fixes; §18 onwards are from
+    2026-11-09 and each names its rule in `tools/patterns/rules.jsonl`).
+    `python3 tools/leversweep.py fn UNIT FN --show` tries the hand levers of
+    that day whose trigger fits the diff. Functions others already
     tried, with their best % and WIP location: `docs/gave_up.md`.
 
 When you stop, record the function in `docs/gave_up.md` with the current %,

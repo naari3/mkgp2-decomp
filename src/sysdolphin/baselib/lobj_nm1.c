@@ -93,7 +93,7 @@ void LObjUpdateFunc(void* obj, enum_t type, HSD_ObjData* val)
 
 static inline int LObjNormalize(Vec3* src, Vec3* dst)
 {
-    if (src == NULL || dst == NULL) {
+    if (!src || !dst) {
         return -1;
     }
     if (fabsf(src->x) <= LOBJ_FLT_MIN && fabsf(src->y) <= LOBJ_FLT_MIN &&

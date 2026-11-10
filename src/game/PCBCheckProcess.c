@@ -121,12 +121,20 @@ static inline void PCBCheck_InitSlot(PcbLinkSlot* slot, int i)
     PCBCheck_ClearSlotData(slot, i);
 }
 
+/* fakematch (leversweep dead-def-split): the dead `base = 0;` kept alive by
+ * opt_dead_assignments off splits base's live range and fixes the saved
+ * register numbering.
+ * natural: no dead def and no pragma (base is only assigned after the
+ * g_pcbCommEnabled check). */
+#pragma push
+#pragma opt_dead_assignments off
 int PCBCheck_ProcessLinks(void)
 {
     PcbLinkSlot* slot;
     PcbLinkSlot* base;
     int candidate = -1;
     int i;
+    base = 0;
     if (g_pcbCommEnabled == 0) return 0;
     base = lbl_805A6154;
     for (i = 0; i < 4; ++i) {
@@ -168,3 +176,4 @@ int PCBCheck_ProcessLinks(void)
     else g_pcbSyncReady = 0;
     return 1;
 }
+#pragma pop

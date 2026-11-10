@@ -3,19 +3,20 @@
 struct PopupTextCursor {
     int dy;
     int byteOffset;
-    int line;
-    PopupTextCursor() : dy(0), byteOffset(0), line(0) {}
+    PopupTextCursor() : dy(0), byteOffset(0) {}
     TextManager *Get(TextManager *texts) const {
         return (TextManager *)((char *)texts + byteOffset);
     }
     void Next() {
         dy += 30;
-        ++line;
         byteOffset += sizeof(TextManager);
     }
 };
 
-static inline void LayoutPopupTexts(MsgPopup *popup, float s) {
+/* `line` is a local of Tick passed by reference: a named local of the compiled
+ * function keeps its own `li 0`, an inline local would be CSEd into `mr`
+ * (regalloc_patterns 67). */
+static inline void LayoutPopupTexts(MsgPopup *popup, float s, int &line) {
     float ts = s;
     if (popup->msgId == 4) {
         ts = s * lbl_806DAAC0;
@@ -23,7 +24,7 @@ static inline void LayoutPopupTexts(MsgPopup *popup, float s) {
     PopupTextCursor cursor;
     float ox = lbl_806DAAC4 * s;
     float base = -40.0f;
-    for (; cursor.line < 4; cursor.Next()) {
+    for (line = 0; line < 4; cursor.Next(), ++line) {
         float yy = s * (base + (float)cursor.dy);
         fn_801F93EC(cursor.Get(popup->texts), popup->x + ox, popup->y + yy);
         fn_801F93D0(cursor.Get(popup->texts), ts, ts);
@@ -31,6 +32,7 @@ static inline void LayoutPopupTexts(MsgPopup *popup, float s) {
 }
 
 void MsgPopup::Tick() {
+    int line;
     switch (state) {
     case 0:
         state = 1;
@@ -95,7 +97,7 @@ void MsgPopup::Tick() {
         ctrls[2].Show(px, py, lbl_806DAAAC);
     }
     UpdateBadge();
-    LayoutPopupTexts(this, s);
+    LayoutPopupTexts(this, s, line);
     fade.p->Step();
     scaleX.p->Step();
     scaleY.p->Step();

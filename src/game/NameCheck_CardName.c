@@ -3238,13 +3238,17 @@ static inline NameBool contains(unsigned int c, const NameCode *set, int count)
     return 0;
 }
 
+static inline NameCode *find_code(NameCode *s, const void *t) { return (NameCode *)strstr(s, t); }
 static inline NameBool contains_at(const NameCode *p, const NameCode *set, int count)
 {
-    NameBool found = 0;
+    NameBool found;
     int i;
+    const NameCode *q;
+    q = set;
+    found = 0;
     for (i = 0; i < count; i++) {
-        if (*p == *set) { found = 1; break; }
-        set++;
+        if (*p == *q) { found = 1; break; }
+        q++;
     }
     return found;
 }
@@ -3301,7 +3305,7 @@ static inline int extract_two(const NameCode *buf, NameCode *out, int position,
     }
 
 #define SPLIT_PARTS(WITH_SYMBOLS) \
-    for (part = 0; part < 5; part++) memset(parts[part], 0, 10); \
+    for (word = 0; word < 5; word++) memset(parts[word], 0, 10); \
     position = 0; \
     for (part = 0; part < 5; part++) { \
         length = 0; \
@@ -3320,7 +3324,7 @@ static inline int extract_two(const NameCode *buf, NameCode *out, int position,
 
 #define CHECK_WORD(WORD) \
     for (word = 0; word < 1067; word++) { \
-        if (strcmp(banned[word], (WORD)) == 0) return 1; \
+        if (strcmp(sBannedWords[word], (WORD)) == 0) return 1; \
     }
 
 #define PRINT_PARTS() \
@@ -3330,6 +3334,27 @@ static inline int extract_two(const NameCode *buf, NameCode *out, int position,
     DebugPrintf(lbl_806D4780, parts[3]); \
     DebugPrintf(lbl_806D4788, parts[4])
 
+#define CHECK_WORD_V(W, WORD) \
+    for (W = 0; W < 1067; W++) { \
+        if (strcmp(sBannedWords[W], (WORD)) == 0) return 1; \
+    }
+
+#define CHECK_PARTS(WITH_SYMBOLS) { NameBool found; int position, length, part; \
+    SPLIT_PARTS(WITH_SYMBOLS); \
+    PRINT_PARTS(); \
+    for (k = 0; k < 5; k++) { \
+        memset(first, 0, 12); \
+        strcpy(first, parts[k]); \
+        DebugPrintf(lbl_806D4750, first); \
+        CHECK_WORD(first); \
+        for (j = k + 1; j < 5; j++) { \
+            strcat(first, parts[j]); \
+            DebugPrintf(lbl_806D4750, first); \
+            CHECK_WORD(first); \
+        } \
+    } \
+}
+
 #pragma use_lmw_stmw on
 #pragma exceptions on
 NameBool NameCheck_ScanBannedWords(NameCode *name)
@@ -3338,39 +3363,42 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
     NameCode first[6], second[6];
     NameCode parts[5][5];
     NameCode single[2];
-    const char *const *banned = sBannedWords;
 #define upper sUpper
 #define lower sLower
 #define katakana sHiragana /* this function's names were swapped: 0x80320728 holds hiragana */
 #define hiragana sKatakana
 #define digits sDigits
 #define symbols sSymbols
-    const NameCharacterSets *sets;
+    NameCode *open;
     const NameCode *boundary_set;
-    NameCode *open, *close, *p, *next;
+    NameCode *close, *p, *next;
+    int j;
     NameBool found, invalid;
-    int word, i, j, k, part, position, length, count, boundary_count;
+    int word, i, k, part, position, length, count;
     unsigned int group;
+    int boundary_count;
     wcscpy(buf, name);
     buf[5] = 0;
     CHECK_WORD(buf);
-    sets = sCharacterSets;
-    for (group = 0; group < 10; group++, sets++) {
-        for (i = 0; i < 6; i++) { second[i] = 0; first[i] = 0; }
-        if (!sets->second) {
-            position = extract_one(buf, first, 0, sets->first, sets->first_count);
-            extract_one(buf, second, position, sets->first, sets->first_count);
+    for (group = 0; group < 10; group++) {
+        for (k = 0; k < 6; k++) { second[k] = 0; first[k] = 0; }
+        if (!sCharacterSets[group].second) {
+            position = extract_one(buf, first, 0, sCharacterSets[group].first, sCharacterSets[group].first_count);
+            extract_one(buf, second, position, sCharacterSets[group].first, sCharacterSets[group].first_count);
         } else {
-            position = extract_two(buf, first, 0, sets->first, sets->first_count,
-                                   sets->second, sets->second_count);
-            extract_two(buf, first, position, sets->first, sets->first_count,
-                        sets->second, sets->second_count);
+            position = extract_two(buf, first, 0, sCharacterSets[group].first, sCharacterSets[group].first_count,
+                                   sCharacterSets[group].second, sCharacterSets[group].second_count);
+            extract_two(buf, first, position, sCharacterSets[group].first, sCharacterSets[group].first_count,
+                        sCharacterSets[group].second, sCharacterSets[group].second_count);
         }
         DebugPrintf(sMsgFirst, group, first);
         DebugPrintf(sMsgSecond, group, second);
-        for (word = 0; word < 1067; word++) {
-            if (strcmp(banned[word], first) == 0) return 1;
-            if (strcmp(banned[word], second) == 0) return 1;
+        {
+            int word;
+            for (word = 0; word < 1067; word++) {
+                if (strcmp(sBannedWords[word], first) == 0) return 1;
+                if (strcmp(sBannedWords[word], second) == 0) return 1;
+            }
         }
     }
     for (group = 0; group < 12; group++) {
@@ -3379,9 +3407,9 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
         if ((int)group >= 11) { boundary_set = lower; boundary_count = 26; }
         else if ((int)group >= 10) { boundary_set = upper; boundary_count = 26; }
         else if ((int)group >= 5) { boundary_set = hiragana; boundary_count = 81; }
-        open = (NameCode *)strstr(buf, lbl_8040E450[group].open);
-        if (open) {
-            next = open;
+        next = (NameCode *)strstr(buf, lbl_8040E450[group].open);
+        open = next;
+        if (next) {
             while (next) {
                 next = (NameCode *)strstr(open + 1, lbl_8040E450[group].open);
                 if (next) open = next;
@@ -3389,13 +3417,14 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
             DebugPrintf(sMsgHead);
             if (open != buf && contains_at(open - 1, boundary_set, boundary_count) == 1) break;
             DebugPrintf(sMsgBack);
-            close = (NameCode *)strstr(open, lbl_8040E450[group].close);
+            close = find_code(open, lbl_8040E450[group].close);
             if (close) {
                 /* The original guard tests byte-address + 1, then reads a code unit. */
                 if ((char *)close + 1 && contains_at(close + 1, boundary_set, boundary_count) == 1) break;
                 DebugPrintf(sMsgPair, group, open, close);
                 invalid = 0;
                 for (p = open + 1; *p != *close; p++) {
+                    NameBool found;
                     single[0] = *p; single[1] = 0;
                     DebugPrintf(lbl_806D4750, single);
                     found = 0;
@@ -3405,9 +3434,12 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
                     if (!found) { invalid = 1; break; }
                 }
                 if (invalid == 1) break;
-                for (p = open + 1; *p != *close; p++) {
-                    for (i = 0; (unsigned int)i < 5; i++) {
-                        if (strncmp(p, lbl_8040E4B0[i], 2) == 0) return 1;
+                {
+                    NameCode *p; int j;
+                    for (p = open + 1; *p != *close; p++) {
+                        for (j = 0; (unsigned int)j < 5; j++) {
+                            if (strncmp(p, lbl_8040E4B0[j], 2) == 0) return 1;
+                        }
                     }
                 }
                 break;
@@ -3416,7 +3448,7 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
     }
     open = (NameCode *)strstr(buf, lbl_806D4754);
     if (open) {
-        NameBool prefix_found;
+        NameCode *p; int count; NameBool prefix_found; const NameCode *q; NameBool found; int j; const NameCode *set; int bcount;
         count = 0; prefix_found = 0;
         for (p = buf; *p != *open; p++) {
             for (j = 0; j < 3; j++) {
@@ -3433,15 +3465,23 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
                 if (*open == upper[j]) { prefix_found = 1; break; }
                 if (prefix_found == 1) break;
             }
-            boundary_set = upper; boundary_count = 26;
-            if (prefix_found == 1) { boundary_set = lower; boundary_count = 26; }
-            if (!at_boundary(open + 1, boundary_set, boundary_count)) return 1;
+            set = upper; bcount = 26;
+            if (prefix_found == 1) { set = lower; bcount = 26; }
+            found = 0;
+            if (open + 1) {
+                q = set;
+                for (i = 0; i < bcount; i++) {
+                    if (open[1] == *q) { found = 1; break; }
+                    q++;
+                }
+            }
+            if (!found) return 1;
         }
     }
     open = (NameCode *)strstr(buf, lbl_806D4758);
     DebugPrintf(lbl_806D4760, open);
     if (open) {
-        NameBool prefix_found;
+        NameCode *p; int count; NameBool prefix_found; const NameCode *q; NameBool found; int j; const NameCode *set; int bcount;
         count = 0; prefix_found = 0;
         for (p = buf; *p != *open; p++) {
             for (j = 0; j < 3; j++) {
@@ -3459,83 +3499,67 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
                 if (*open == upper[j]) { prefix_found = 1; break; }
                 if (prefix_found == 1) break;
             }
-            boundary_set = upper; boundary_count = 26;
-            if (prefix_found == 1) { boundary_set = lower; boundary_count = 26; }
-            if (!at_boundary(open + 2, boundary_set, boundary_count)) return 1;
+            set = upper; bcount = 26;
+            if (prefix_found == 1) { set = lower; bcount = 26; }
+            found = 0;
+            if (open + 2) {
+                q = set;
+                for (i = 0; i < bcount; i++) {
+                    if (open[2] == *q) { found = 1; break; }
+                    q++;
+                }
+            }
+            if (!found) return 1;
         }
     }
-    SPLIT_PARTS(1);
-    PRINT_PARTS();
-    for (i = 0; i < 5; i++) {
-        memset(first, 0, 12);
-        strcpy(first, parts[i]);
-        DebugPrintf(lbl_806D4750, first);
-        CHECK_WORD(first);
-        for (k = i + 1; k < 5; k++) {
-            strcat(first, parts[k]);
-            DebugPrintf(lbl_806D4750, first);
-            CHECK_WORD(first);
-        }
-    }
+    CHECK_PARTS(1);
     found = 0;
-    for (i = 0; i < 5; i++) {
+    for (k = 0; k < 5; k++) {
         for (j = 0; j < 81; j++) {
-            if (buf[i] == katakana[j]) { found = 1; break; }
+            if (buf[k] == katakana[j]) { found = 1; break; }
         }
         if (found) break;
     }
-    for (i = 0; i < 5; i++) {
+    for (k = 0; k < 5; k++) {
         for (j = 0; j < 81; j++) {
-            if (buf[i] == hiragana[j]) { found = 1; break; }
+            if (buf[k] == hiragana[j]) { found = 1; break; }
         }
         if (found) break;
     }
     if (!found) {
         count = 0;
-        for (i = 0; i < 5; i++) {
-            for (j = 0; j < 26; j++) if (buf[i] == upper[j]) { count++; break; }
+        for (k = 0; k < 5; k++) {
+            for (j = 0; j < 26; j++) if (buf[k] == upper[j]) { count++; break; }
         }
         if (count >= 2) found = 1;
     }
     if (!found) {
         count = 0;
-        for (i = 0; i < 5; i++) {
-            for (j = 0; j < 26; j++) if (buf[i] == lower[j]) { count++; break; }
+        for (k = 0; k < 5; k++) {
+            for (j = 0; j < 26; j++) if (buf[k] == lower[j]) { count++; break; }
         }
         if (count >= 2) found = 1;
     }
     if (!found) {
         count = 0;
-        for (i = 0; i < 5; i++) {
-            for (j = 0; j < 10; j++) if (buf[i] == digits[j]) { count++; break; }
+        for (k = 0; k < 5; k++) {
+            for (j = 0; j < 10; j++) if (buf[k] == digits[j]) { count++; break; }
         }
         if (count >= 2) found = 1;
     }
     if (found) {
-        for (i = 0; i < 5;) {
+        for (k = 0; k < 5;) {
             for (j = 0; j < 25; j++) {
-                if (buf[i] == symbols[j]) {
-                    for (j = i; j < 5; j++) buf[j] = buf[j + 1];
+                if (buf[k] == symbols[j]) {
+                    for (j = k; j < 5; j++) buf[j] = buf[j + 1];
                     break;
                 }
             }
-            if ((unsigned int)j >= 25) i++;
+            if ((unsigned int)j >= 25) k++;
         }
-        CHECK_WORD(buf);
+        CHECK_WORD_V(k, buf);
     }
-    SPLIT_PARTS(0);
-    PRINT_PARTS();
-    for (i = 0; i < 5; i++) {
-        memset(first, 0, 12);
-        strcpy(first, parts[i]);
-        DebugPrintf(lbl_806D4750, first);
-        CHECK_WORD(first);
-        for (k = i + 1; k < 5; k++) {
-            strcat(first, parts[k]);
-            DebugPrintf(lbl_806D4750, first);
-            CHECK_WORD(first);
-        }
-    }
+    CHECK_PARTS(0);
     return 0;
 }
 #pragma exceptions reset

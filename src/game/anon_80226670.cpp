@@ -2,7 +2,8 @@
 /*
  * 0x80226670..0x80226954: single-play join message scene (vtable
  * lbl_804EDF64, base clSceneInterface lbl_803FE0C8). Shows one FlowPanel
- * message and counts the join. Draw (fn_8022664C) lives in its own TU.
+ * message and counts the join. RTTI names: clCSSceneNextRaceGP : clSceneInterface.
+ * The TU owns the vtable and RTTI (0x804EDF58..0x804EDF80, .sdata 0x806D0530).
  */
 
 void *operator new(unsigned long size);
@@ -36,6 +37,7 @@ void clFlowKart_SetupTextLayout(FlowPanel *self, int layout);
 void RankLog_OnRoundComplete(RankLog *log);
 void TitleStats_ResetRaceStagingState(RankLog *log);
 void PlayStats_IncSinglePlayJoin(void);
+void fn_801D9A2C(FlowPanel *panel);
 }
 
 static inline InputState *GetInput() {
@@ -46,27 +48,31 @@ static inline RankLog *GetRankLog() {
     return SINGLETON_INSTANCE(lbl_806D10A0);
 }
 
-struct SceneBase {
-    virtual ~SceneBase() {}
+struct clSceneInterface {
+    virtual ~clSceneInterface() {}
     virtual void Destroy();
     virtual void Update();
     virtual void Draw();
     unsigned char done;
-    SceneBase() : done(false) {}
+    clSceneInterface() : done(false) {}
 };
 
-struct clCSSceneJoinMsg : SceneBase {
+struct clCSSceneNextRaceGP : clSceneInterface {
     int state;
     float time;
     FlowPanel *panel;
-    clCSSceneJoinMsg();
-    ~clCSSceneJoinMsg();
+    clCSSceneNextRaceGP();
+    ~clCSSceneNextRaceGP();
     void Destroy();
     void Update();
     void Draw();
 };
 
-void clCSSceneJoinMsg::Update() {
+void clCSSceneNextRaceGP::Draw() {
+    fn_801D9A2C(panel);
+}
+
+void clCSSceneNextRaceGP::Update() {
     int pressed = GetInput()->held == 1 ? 1 : 0;
     if (done == 1) {
         return;
@@ -100,18 +106,18 @@ void clCSSceneJoinMsg::Update() {
     fn_801D9B70(panel, pressed);
 }
 
-clCSSceneJoinMsg::~clCSSceneJoinMsg() {
+clCSSceneNextRaceGP::~clCSSceneNextRaceGP() {
     if (panel) {
         fn_801D9F88(panel, 1);
         panel = 0;
     }
 }
 
-void clCSSceneJoinMsg::Destroy() {
+void clCSSceneNextRaceGP::Destroy() {
     delete this;
 }
 
-inline clCSSceneJoinMsg::clCSSceneJoinMsg() {
+inline clCSSceneNextRaceGP::clCSSceneNextRaceGP() {
     state = 0;
     time = lbl_806DB3D8;
     panel = 0;
@@ -127,6 +133,6 @@ inline clCSSceneJoinMsg::clCSSceneJoinMsg() {
     PlayStats_IncSinglePlayJoin();
 }
 
-extern "C" clCSSceneJoinMsg *fn_80226860(void) {
-    return new clCSSceneJoinMsg;
+extern "C" clCSSceneNextRaceGP *fn_80226860(void) {
+    return new clCSSceneNextRaceGP;
 }

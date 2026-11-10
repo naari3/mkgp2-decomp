@@ -268,9 +268,12 @@ public:
         return path->points[i];
     }
     void LoadSegment() {
-        p0 = Point(index);
-        p1 = Point(index + 1);
-        p2 = Point(index + 2);
+        /* p0..p2 are filled by a 3-trip loop that the compiler unrolls: the
+         * copies then share one pointer/float variable, so the registers
+         * agree in all three (regalloc_patterns 75). */
+        for (int k = 0; k < 3; k++) {
+            (&p0)[k] = Point(index + k);
+        }
         p0.x = 0.5f * (p0.x + p1.x);
         p0.y = 0.5f * (p0.y + p1.y);
         p0.z = 0.5f * (p0.z + p1.z);

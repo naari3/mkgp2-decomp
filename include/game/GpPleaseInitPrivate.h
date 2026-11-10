@@ -1,5 +1,6 @@
 #ifndef GAME_GP_PLEASE_INIT_PRIVATE_H
 #define GAME_GP_PLEASE_INIT_PRIVATE_H
+#include <list>
 #include "game/clFlowCourse.h"
 #include "game/FlowCardCheckScene.h"
 #include "game/PanelCda40Private.h"
@@ -82,21 +83,8 @@ struct GpColorPanel:GpPanelBase {
         rgb[0]=60; rgb[1]=40; rgb[2]=10; colorLayer=1;
     }
 };
-struct GpInitNode { GpInitNode *prev,*next; GpPanelBase *obj; };
-struct GpInitIter { GpInitNode *node; GpInitIter(GpInitNode *n):node(n){} };
-struct GpInitList {
-    int size; GpInitNode *last,*first;
-    GpInitList();
-    ~GpInitList();
-    GpInitIter Insert(const GpInitIter &,GpPanelBase * const &);
-    GpInitIter End() {return GpInitIter((GpInitNode *)&last);}
-    void InsertAt(GpInitNode *where,GpPanelBase * const &p) {
-        GpInitIter result=Insert(GpInitIter(where),p);
-    }
-    void Append(GpPanelBase * const &p) {
-        GpInitIter result=Insert(End(),p);
-    }
-};
+/* The panel list is a std::list from the genuine MSL C++ header (docs/notes/msl_cpp.md). */
+typedef std::list<GpPanelBase *> GpInitList;
 struct clFlowGpPlease:clFlowProcess {
     virtual void _keyGp();
     GpInitList list;

@@ -22,6 +22,9 @@ struct Class {
     nb: Vec<Vec<usize>>,
     locals: Vec<(usize, usize)>, // (node, nameid)
     cost: Vec<f64>,              // spill cost (dump `cost:`), for the stuck-simplify pick
+    k: i32,                      // free registers (0 = class default; 28 when r31 is reserved)
+    ftemp: f64,                  // first spill-temporary vreg number of a later pass (-1 = none)
+    vnum: Vec<f64>,              // original vreg number per node
 }
 
 const K_GPR: i32 = 29;
@@ -33,7 +36,7 @@ impl Class {
         sorted.clear();
         sorted.extend(0..n);
         sorted.sort_by(|&a, &b| key[a].partial_cmp(&key[b]).unwrap());
-        let k = if self.gpr { K_GPR } else { K_FPR };
+        let k = if self.k > 0 { self.k } else if self.gpr { K_GPR } else { K_FPR };
         for v in 0..n {
             deg[v] = self.permn[v] + self.nb[v].len() as i32;
             removed[v] = false;
@@ -53,15 +56,22 @@ impl Class {
                 }
             }
             if !prog {
-                // MWCC pushes the cheapest spill candidate: lowest cost/degree, ties -> lowest key
+                // MWCC (Coloring.c simplifygraph) pushes the cheapest spill candidate:
+                // lowest (float)cost/(float)degree; candidates are scanned from the
+                // highest number down with a strict <, so ties go to the HIGHEST key
                 let mut v = usize::MAX;
-                let mut best = f64::INFINITY;
-                for &u in sorted.iter() {
+                let mut best = f32::INFINITY;
+                for &u in sorted.iter().rev() {
                     if removed[u] {
                         continue;
                     }
-                    let c = self.cost.get(u).copied().unwrap_or(0.0) / (deg[u].max(1) as f64);
-                    if c < best {
+                    // spill temporaries of a later colouring pass score FLT_MAX
+                    let c = if self.ftemp >= 0.0 && self.vnum[u] >= self.ftemp {
+                        f32::MAX
+                    } else {
+                        (self.cost.get(u).copied().unwrap_or(0.0) as f32) / (deg[u].max(1) as f32)
+                    };
+                    if v == usize::MAX || c < best {
                         best = c;
                         v = u;
                     }
@@ -168,7 +178,7 @@ fn main() {
             "tlimit" => tlimit = t[1].parse().unwrap(),
             "names" => names = t[1..].iter().map(|x| x.parse().unwrap()).collect(),
             "free" => free = t[1..].iter().map(|x| x.parse().unwrap()).collect(),
-            "class" => cls.push(Class { gpr: t[1] == "gpr", key: vec![], permn: vec![], fixed: vec![], want: vec![], nb: vec![], locals: vec![], cost: vec![] }),
+            "class" => cls.push(Class { gpr: t[1] == "gpr", key: vec![], permn: vec![], fixed: vec![], want: vec![], nb: vec![], locals: vec![], cost: vec![], k: 0, ftemp: -1.0, vnum: vec![] }),
             "node" => {
                 let c = cls.last_mut().unwrap();
                 let i: usize = t[1].parse().unwrap();
@@ -180,11 +190,17 @@ fn main() {
                     c.nb.push(vec![]);
                 }
                 c.key[i] = t[2].parse().unwrap();
+                while c.vnum.len() <= i {
+                    c.vnum.push(0.0);
+                }
+                c.vnum[i] = c.key[i];
                 c.permn[i] = t[3].parse().unwrap();
                 c.fixed[i] = t[4].parse().unwrap();
                 c.want[i] = t[5].parse().unwrap();
                 c.nb[i] = t[6..].iter().map(|x| x.parse().unwrap()).collect();
             }
+            "k" => cls.last_mut().unwrap().k = t[1].parse().unwrap(),
+            "ftemp" => cls.last_mut().unwrap().ftemp = t[1].parse().unwrap(),
             "cost" => {
                 let c = cls.last_mut().unwrap();
                 let i: usize = t[1].parse().unwrap();

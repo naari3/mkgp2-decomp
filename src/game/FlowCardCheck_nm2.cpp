@@ -174,21 +174,7 @@ void clFlowCCBattle::Draw() {
     }
 }
 
-static inline void ShiftBattleGrid(clFlowCCBattle *page) {
-    for (int y = 4; y >= 0; y--) {
-        for (int x = 19; x >= 0; x--) {
-            int src = 100;
-            if (y > 0) {
-                src = x + (y - 1) * 20;
-            } else if (x > 0) {
-                src = (x - 1) + y * 20;
-            }
-            page->grid[x + y * 20] = page->grid[src];
-        }
-    }
-}
-
-void clFlowCCBattle::Update() {
+int clFlowCCBattle::Update() {
     InputPlayer &pl = *InputMgr_GetPlayer(GetInputManager(), 0);
     UpdateSlide();
     if (IsIdle() != 1) {
@@ -216,7 +202,18 @@ void clFlowCCBattle::Update() {
             grid[100] = 0.0165f * blink;
         }
     }
-    ShiftBattleGrid(this);
+    for (int y = 4; y >= 0; y--) {
+        for (int x = 19; x >= 0; x--) {
+            int dst = x + y * 20;
+            int src = 100;
+            if (y > 0) {
+                src = x + (y - 1) * 20;
+            } else if (x > 0) {
+                src = (x - 1) + y * 20;
+            }
+            grid[dst] = grid[src];
+        }
+    }
     for (int i = 0; i < 3; i++) {
         if (grp[i] != 0) {
             Sprite_AdvanceAnim(*grp[i], 0.0165f);
@@ -332,7 +329,7 @@ void clFlowCCGP::Draw() {
     fn_8011FAFC(&rc, 4);
 }
 
-void clFlowCCGP::Update() {
+int clFlowCCGP::Update() {
     PlayerData *pd = &g_playerData;
     InputPlayer *pl = InputMgr_GetPlayer(GetInputManager(), 0);
     UpdateSlide();
@@ -670,7 +667,7 @@ void clFlowCCItem::Select(int delta) {
     }
 }
 
-void clFlowCCCharaItem::Update() {
+int clFlowCCCharaItem::Update() {
     InputPlayer *pl = InputMgr_GetPlayer(GetInputManager(), 0);
     UpdateSlide();
     if (IsIdle() == 1) {
@@ -704,7 +701,7 @@ static inline void ProcessItemInput(clFlowCCItem *page) {
     if (delta != 0) fn_801FE36C();
 }
 
-void clFlowCCItem::Update() {
+int clFlowCCItem::Update() {
     InputPlayer *pl = InputMgr_GetPlayer(GetInputManager(), 0);
     UpdateSlide();
     if (IsIdle() == 1) {
@@ -835,12 +832,12 @@ clFlowCCItem::clFlowCCItem() : field1C(0), field20(0), resId(0x13B9), paramId(0x
     Select(1);
 }
 
-static inline void SetCharaGroupForPlayer(Sprite **group, const int &which, int index, PlayerData *pd) {
+static inline void SetCharaGroupForPlayer(Sprite ***groups, int slot, const int &which, int index, PlayerData *pd, int &j) {
     int id = kCharaGroups[which][index];
-    unsigned char special = 0;
-    if ((which == 1 && index == 5) || id < 0) special = 1;
+    Sprite **group = groups[slot];
+    unsigned char special = (which == 1 && index == 5) || id < 0;
     if (!special) {
-        for (int j = 0; j < 5; j++) {
+        for (j = 0; j < 5; j++) {
             int res = 0x1422;
             int unlocked = fn_8023D844(id, j + 1);
             if (pd->unlocked[unlocked] == 1) res = (short)Item_GetDescriptorField0(PlayerData_ResolveUnlockedIdByIndex(pd, unlocked), 0);
@@ -859,13 +856,13 @@ static inline void SetCharaGroupForPlayer(Sprite **group, const int &which, int 
     SpriteAnimParamBlock_SetAnimParamCached(group, 0x1D24, kCharaFrames[which][index][1]);
 }
 
-static inline void SetCharaGroup(Sprite **group, const int &which, int index) {
+static inline void SetCharaGroup(Sprite ***groups, int slot, const int &which, int index, int &j) {
     PlayerData *pd = &g_playerData;
-    SetCharaGroupForPlayer(group, which, index, pd);
+    SetCharaGroupForPlayer(groups, slot, which, index, pd, j);
 }
 
 /* Unused slots on the sentinel character row do not contain cards. */
-static inline unsigned char CharaCardState(PlayerData *pd, int group, const int &slot) {
+static inline unsigned int CharaCardState(PlayerData *pd, int group, const int &slot) {
     if (group == -1 && slot >= 1) return 0;
     return pd->unlocked[fn_8023D844(group, slot + 1)];
 }
@@ -928,8 +925,9 @@ void clFlowCCCharaItem::Select(int delta) {
         if (oldGroup != field24) {
             SpriteAnimParamBlock_Reload(grp[oldGroup + 2], 0x15E);
             SpriteAnimParamBlock_Reload(grp[field24 + 2], 0x15F);
-            SetCharaGroupForPlayer(grp[oldGroup + 2], which, oldGroup, pd);
-            SetCharaGroupForPlayer(grp[field24 + 2], which, field24, pd);
+            int j;
+            SetCharaGroupForPlayer(grp, oldGroup + 2, which, oldGroup, pd, j);
+            SetCharaGroupForPlayer(grp, field24 + 2, which, field24, pd, j);
         }
     }
 }
@@ -970,9 +968,9 @@ clFlowCCCharaItem::clFlowCCCharaItem(int which) : which(which), field20(0), fiel
     fn_8019FF8C(*grp[3], 0x13BD, &out);
     slots[1][4] = out.x;
     for (int i = 0; i < 6; i++) {
+        int j;
         int group = i + 2;
-        Sprite **sprites = grp[group];
-        SetCharaGroup(sprites, this->which, i);
+        SetCharaGroup(grp, group, this->which, i, j);
     }
     int i;
     for (i = 0; i < 8; i++) text[i] = new TextMgr();
@@ -1026,7 +1024,7 @@ static inline void PositionOffsetText(TextMgr *text, const Vec2 &position, float
     fn_801F93EC(text, x + slide, position.y);
 }
 
-void clFlowCCDate::Update() {
+int clFlowCCDate::Update() {
     InputPlayer *pl = InputMgr_GetPlayer(GetInputManager(), 0);
     UpdateSlide();
     if (IsIdle() == 1) {

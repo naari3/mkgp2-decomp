@@ -1,4 +1,4 @@
-/* NonMatching (98.05): quaternion-to-matrix block colours 4 saved FPRs, target 5 (x/z/w + yy/xx saved). */
+/* NonMatching (99.8): instruction sequence and frame match. Left (24 diff lines): in the cross product up.y and v.z sit in f8/f6 (target f6/f8), and ay/ax of the axis-angle step sit in f28/f27 (target f31/f30). Attempts in docs/gave_up.md. */
 #include "game/ItemEffectImpactArmPrivate.h"
 
 // Scalar length arguments preserve the matrix-row evaluation boundary.
@@ -21,9 +21,9 @@ static inline float ArmAxisRoot(float x) {
     volatile float y;
     if(x>0.0f) {
         double guess=__frsqrte(x);
-        guess=lbl_806D2808*guess*(lbl_806D2810-x*(guess*guess));
-        guess=lbl_806D2808*guess*(lbl_806D2810-x*(guess*guess));
-        guess=lbl_806D2808*guess*(lbl_806D2810-x*(guess*guess));
+        guess=0.5*guess*(3.0-x*(guess*guess));
+        guess=0.5*guess*(3.0-x*(guess*guess));
+        guess=0.5*guess*(3.0-x*(guess*guess));
         y=(float)(x*guess); return y;
     }
     return x;
@@ -34,6 +34,38 @@ static inline void ArmAxisNormalize(C7Vec* v) {
     else { float inv=lbl_806D27FC/length; v->x*=inv; v->y*=inv; v->z*=inv; }
 }
 
+static inline void ArmCross(C7Vec* a, const C7Vec* o, const C7Vec* u) {
+    float ty, tz, tx;
+    ty=o->z*u->x-o->x*u->z; tz=o->x*u->y-o->y*u->x; tx=o->y*u->z-o->z*u->y;
+    a->x=tx; a->y=ty; a->z=tz;
+}
+static inline void ArmSet(C7Vec* v,float x,float y,float z){v->x=x;v->y=y;v->z=z;}
+static inline float ArmHalfCos() { return (float)cos(lbl_806D2828); }
+static inline void ArmAxisAngle(ImpactArmQuat* q, float x, float y, float z) {
+    float sine=(float)sin(lbl_806D2828);
+    q->x=x*sine; q->y=y*sine; q->z=z*sine;
+}
+static inline void ArmQuatMatrix(ImpactArmMatrix* m, const ImpactArmQuat* q) {
+    float xx=q->x*q->x;
+    float yy=q->y*q->y;
+    float zz=q->z*q->z;
+    float xy=q->x*q->y;
+    float xz=q->x*q->z;
+    float yz=q->y*q->z;
+    float wx=q->w*q->x;
+    float wy=q->w*q->y;
+    float wz=q->w*q->z;
+    m->m[0][0]=lbl_806D27FC-lbl_806D281C*(yy+zz);
+    m->m[1][0]=lbl_806D281C*(xy-wz);
+    m->m[2][0]=lbl_806D281C*(xz+wy);
+    m->m[0][1]=lbl_806D281C*(xy+wz);
+    m->m[1][1]=lbl_806D27FC-lbl_806D281C*(xx+zz);
+    m->m[2][1]=lbl_806D281C*(yz-wx);
+    m->m[0][2]=lbl_806D281C*(xz-wy);
+    m->m[1][2]=lbl_806D281C*(yz+wx);
+    m->m[2][2]=lbl_806D27FC-lbl_806D281C*(xx+yy);
+}
+struct ArmVec : C7Vec { ArmVec(float ax, float ay, float az) { x=ax; z=az; y=ay; } };
 extern "C" void ItemEffectImpact_TryArmInit(ImpactArmState* __restrict self, C7Vec* __restrict velocity, ImpactArmMatrix* __restrict pose, int timer) {
     self->Reset();
     self->pos=*velocity;
@@ -53,31 +85,19 @@ extern "C" void ItemEffectImpact_TryArmInit(ImpactArmState* __restrict self, C7V
     self->pos.x-=up.x; self->pos.y-=up.y; self->pos.z-=up.z;
     C7Vec v=self->pos;
     Normalize(&v);
-    C7Vec axis=up;
-    axis.y=v.z*up.x-v.x*up.z;
-    axis.z=v.x*up.y-v.y*up.x;
-    axis.x=v.y*up.z-v.z*up.y;
+    ArmVec axis(up.x, up.y, up.z);
+    ArmCross(&axis,&v,&up);
     float length2=axis.z*axis.z+(axis.x*axis.x+axis.y*axis.y);
     if(length2>0.0f) { ArmAxisNormalize(&axis); self->axis=axis; }
-    else { float x=self->start.m[0][0], y=self->start.m[0][1], z=self->start.m[0][2]; self->axis.x=x; self->axis.y=y; self->axis.z=z; }
+    else ArmSet(&self->axis,self->start.m[0][0],self->start.m[0][1],self->start.m[0][2]);
     ImpactArmQuat q;
     q.w=lbl_806D27F8; q.z=lbl_806D27F8; q.y=lbl_806D27F8; q.x=lbl_806D27F8;
-    float ay,ax,az;
+    float ax,ay,az;
     az=self->axis.z; ay=self->axis.y; ax=self->axis.x;
     float sine=(float)sin(lbl_806D2828);
     q.x=ax*sine; q.y=ay*sine; q.z=az*sine;
-    q.w=(float)cos(lbl_806D2828);
-    float x=q.x,y=q.y,z=q.z,w=q.w;
-    float yz=y*z, wx=w*x, wy=w*y, xz=x*z, xy=x*y, xx=x*x, wz=w*z, yy=y*y, zz=z*z;
-    self->rotation.m[0][0]=lbl_806D27FC-lbl_806D281C*(yy+zz);
-    self->rotation.m[1][0]=lbl_806D281C*(xy-wz);
-    self->rotation.m[2][0]=lbl_806D281C*(xz+wy);
-    self->rotation.m[0][1]=lbl_806D281C*(xy+wz);
-    self->rotation.m[1][1]=lbl_806D27FC-lbl_806D281C*(xx+zz);
-    self->rotation.m[2][1]=lbl_806D281C*(yz-wx);
-    self->rotation.m[0][2]=lbl_806D281C*(xz-wy);
-    self->rotation.m[1][2]=lbl_806D281C*(yz+wx);
-    self->rotation.m[2][2]=lbl_806D27FC-lbl_806D281C*(xx+yy);
+    q.w=ArmHalfCos();
+    ArmQuatMatrix(&self->rotation,&q);
     self->elapsed=lbl_806D27F8;
     self->flags=0;
     self->pos.x*=lbl_806D2824;

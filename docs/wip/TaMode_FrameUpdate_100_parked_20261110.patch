@@ -1,0 +1,48 @@
+diff --git a/src/game/TaMode_FrameUpdate.cpp b/src/game/TaMode_FrameUpdate.cpp
+index 7d98a186..f757a864 100644
+--- a/src/game/TaMode_FrameUpdate.cpp
++++ b/src/game/TaMode_FrameUpdate.cpp
+@@ -207,8 +207,7 @@ static unsigned int taMemberFunction[3] = { 0, 16, 0 };
+ 
+ static inline void SelectTaRecord(TaRecord *&record, int reversed, int cup)
+ {
+-    record = &taReverseRecords[cup - 1][g_longRoundFlag];
+-    if (!reversed) record = &taNormalRecords[cup - 1][g_longRoundFlag];
++    record = !reversed ? &taNormalRecords[cup - 1][g_longRoundFlag] : &taReverseRecords[cup - 1][g_longRoundFlag];
+ }
+ 
+ 
+@@ -566,8 +565,6 @@ TaMode::~TaMode()
+     tadtor::SetCourseScene3D(0);
+ }
+ 
+-#pragma push
+-#pragma opt_propagation off
+ int TaMode::FrameUpdate()
+ {
+     using namespace tafu;
+@@ -582,6 +579,7 @@ int TaMode::FrameUpdate()
+     float steer = 0.0f;
+     float accel, brake;
+     signed char coins;
++    void *camera;
+     signed char started;
+     ItemObjectManager_PerFrameUpdate(tafu::GetRaceContextPtr());
+     if (tafu::lbl_806D13B4) fn_8023E324(tafu::lbl_806D13B4, __ptmf_test(taMemberFunction) != 0);
+@@ -709,7 +707,7 @@ int TaMode::FrameUpdate()
+             CObj_LoadIntoGX(self->scene, &direction);
+             CObj_ApplyViewport(self->scene, &book->target);
+         }
+-        void *camera = tafu::g_raceCamera;
++        camera = tafu::g_raceCamera;
+         SceneRender_SetViewportRect(camera,
+             CarObject_GetTransformMatrix(tafu::g_carObjects[0])[12],
+             CarObject_GetTransformMatrix(tafu::g_carObjects[0])[13],
+@@ -809,7 +807,6 @@ int TaMode::FrameUpdate()
+     if (!lbl_806D0051 && pad->Pressed(0x400) == 1) return 2;
+     return -2;
+ }
+-#pragma pop
+ 
+ 
+ #pragma readonly_strings on

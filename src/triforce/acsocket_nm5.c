@@ -45,9 +45,7 @@ s32 acBind(s32 s, const void* addr, s32 len) {
     return k->result;
 }
 
-static inline s32 Accept(s32 s, void* addr, u32* len) {
-    u32 lenOff;
-    u32 addrOff;
+static inline s32 Accept(s32 s, void* addr, u32* len, u32* lenOut, u32* addrOut) {
     AcSock* k = SOCK(s);
     OSSemaphore* sem;
     u32 v;
@@ -67,23 +65,23 @@ static inline s32 Accept(s32 s, void* addr, u32* len) {
     memset(&k->addrOff, 0, 0x10);
     OSSignalSemaphore(sem);
     if (addr == NULL) {
-        addrOff = 0;
-        lenOff = 0;
+        (*addrOut) = 0;
+        (*lenOut) = 0;
     } else {
         v = *len;
         b = (u8*)k->bufAddr;
-        lenOff = (u32)(b + State.bufOff);
+        (*lenOut) = (u32)(b + State.bufOff);
         *(u32*)Buf = BSWAP32(v);
-        addrOff = (u32)((b + 4) + State.bufOff);
+        (*addrOut) = (u32)((b + 4) + State.bufOff);
         memset(Buf + 4, 0, 0x40);
         fn_8028D530(Buf, k->bufAddr + State.bufOff, 0x60);
     }
-    k->addrOff = addrOff;
+    k->addrOff = (*addrOut);
     k->addr = addr;
-    k->lenOff = lenOff;
+    k->lenOff = (*lenOut);
     k->len = len;
     k->cmd = 1;
-    k->id = fn_80290810(8, s, State.devBase + addrOff, State.devBase + lenOff);
+    k->id = fn_80290810(8, s, State.devBase + (*addrOut), State.devBase + (*lenOut));
     if (k->id == 0) {
         k->result = -2;
         OSWaitSemaphore(sem);
@@ -95,5 +93,7 @@ static inline s32 Accept(s32 s, void* addr, u32* len) {
 }
 
 s32 acAccept(s32 s, void* addr, u32* len) {
-    return Accept(s, addr, len);
+    u32 addrOff;
+    u32 lenOff;
+    return Accept(s, addr, len, &lenOff, &addrOff);
 }

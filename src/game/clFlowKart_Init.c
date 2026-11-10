@@ -6,6 +6,7 @@
  * tools/extab_user_renames.json.
  */
 #pragma readonly_strings on
+#include "game/singleton.h"
 
 void* operator new(unsigned long);
 void operator delete(void*);
@@ -15,9 +16,9 @@ struct FKTex;
 struct FKVec { float x, y, z; };
 /* .rodata 0x8039E508..0x8039E9F8 */
 extern "C" {
-extern const unsigned int lbl_8039E508[0x10C];
+extern const unsigned int lbl_8039E508[0xFF];
 /* tables used by other clFlowKart functions */
-const unsigned int lbl_8039E508[0x10C] = {
+const unsigned int lbl_8039E508[0xFF] = {
     0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000,
     0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
     0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
@@ -60,7 +61,12 @@ const unsigned int lbl_8039E508[0x10C] = {
     0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000,
     0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000,
     0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000,
-    0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x0000001E, 0x000005BE, 0x000004CE,
+    0x42A6AAAB, 0x459C4000, 0x42A6AAAB,
+};
+/* coin mileage for the first enhancement level per character */
+extern const int lbl_8039E904[13];
+const int lbl_8039E904[13] = {
+    0x0000001E, 0x000005BE, 0x000004CE,
     0x00000096, 0x000002EE, 0x00000546, 0x0000010E, 0x00000276, 0x000003DE,
     0x00000186, 0x00000456, 0x000001FE, 0x00000366,
 };
@@ -85,12 +91,8 @@ const int lbl_8039E9A0[3] = {
 }
 static const FKVec s_position = { 10.0f, -5.5f, 3.0f };
 extern "C" {
-extern const int lbl_8039E9B8[5];
-const int lbl_8039E9B8[5] = { 0x16B4, 0x16B3, 0x16B2, 0x16B1, 0x16B0 };
 extern const char clFlowKart[];
-const char clFlowKart[] = "clFlowKart";
 extern const char clFlowProcess[];
-const char clFlowProcess[] = "clFlowProcess";
 }
 struct FKInput {
     unsigned char opaque0[4], enabled, opaque5[0x13];
@@ -122,6 +124,470 @@ void fn_801F93EC(FKTex*, float, float);
 int isJapanese();
 int GetCoinMilage(const void*);
 unsigned char InitRumbleController(unsigned char);
+}
+typedef struct FKParams { int v[5]; } FKParams;
+struct FKSprite {
+    unsigned char data[0x30];
+    FKSprite(int id, float x, float y, int flag);
+};
+struct FKDisplay {
+    unsigned char pad00[0x4];
+    int unlocked;
+    unsigned char pad08[0x74 - 0x08];
+    FKSprite *rank[3];
+};
+extern "C" {
+unsigned char IsCardValid(void);
+void Sprite_Destroy(FKSprite *sprite, int flag);
+void Sprite_SetAnimParam(FKSprite *sprite, short param, short key);
+extern const float lbl_806DA120;
+extern const float lbl_806DA124;
+extern const float lbl_806DA128;
+extern const float lbl_806DA12C;
+extern signed char lbl_8049BB30[][13][3];
+}
+static inline void HideParams(FKDisplay *self, int idx, int *p, signed char *n) {
+    for (int i = 0; i < 5 - *n; i++) {
+        Sprite_SetAnimParam(self->rank[idx], p[i], -1);
+    }
+}
+#pragma push
+#pragma use_lmw_stmw on
+extern "C" void clFlowKart_UpdateDisplay(FKDisplay *self, int kart)
+{
+    int level = 0;
+    FKParams params;
+    if (self->unlocked >= 1) {
+        if (GetCoinMilage(g_playerData) >= lbl_8039E904[kart]) level = 1;
+        if (GetCoinMilage(g_playerData) >= g_kartEnhancedUnlockThreshold[kart]) level = 2;
+        if (!IsCardValid()) level = 1;
+    }
+    Sprite_Destroy(self->rank[0], 1);
+    Sprite_Destroy(self->rank[1], 1);
+    Sprite_Destroy(self->rank[2], 1);
+    self->rank[0] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA124, 1);
+    self->rank[1] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA128, 1);
+    self->rank[2] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA12C, 1);
+    {
+    int arr[5] = {0x16B4, 0x16B3, 0x16B2, 0x16B1, 0x16B0};
+    for (int a = 0; a < 5 - lbl_8049BB30[level][kart][0]; a++) Sprite_SetAnimParam(self->rank[0], arr[a], -1);
+    for (int b = 0; b < 5 - lbl_8049BB30[level][kart][1]; b++) Sprite_SetAnimParam(self->rank[1], arr[b], -1);
+    for (int d = 0; d < 5 - lbl_8049BB30[level][kart][2]; d++) Sprite_SetAnimParam(self->rank[2], arr[d], -1);
+    }
+}
+#pragma pop
+const char clFlowKart[] = "clFlowKart";
+const char clFlowProcess[] = "clFlowProcess";
+
+/* ---- clFlowKart_HandleConfirm (0x801D7B50) ---- */
+namespace fk_confirm {
+/* clFlowKart_HandleConfirm (0x801D7B50): kart select confirm; sets the kart variant and next flow state. */
+
+typedef struct {
+    char pad00[0x4];
+    int cursor;
+    int next;
+    char pad0C[0x18 - 0xC];
+    float timer;
+} clFlowKart;
+
+extern "C" {
+extern const float lbl_806DA13C;
+extern const float lbl_806DA140;
+extern const float lbl_806DA144;
+extern char *g_pInputState;
+extern int g_characterId;
+extern int g_gameMode;
+extern unsigned char g_playerData[];
+extern int g_kartEnhancedUnlockThreshold[];
+extern void *GetInputManager(void);
+extern void InputMgr_GetPlayer(void *mgr, int idx);
+extern void SetRumbleMode(int a, int b, int c);
+extern int GetCoinMilage(void *pd);
+extern void SetKartVariant(int v);
+extern void fn_801B7C64(void);
+extern void SetScreenBrightness(float b);
+
+}
+#pragma exceptions on
+extern "C" int clFlowKart_HandleConfirm(clFlowKart *self) {
+    char *input;
+    unsigned char *pd;
+    unsigned char flag;
+
+    if (self->next != -1) {
+        return self->next;
+    }
+    self->timer -= lbl_806DA140;
+    InputMgr_GetPlayer(GetInputManager(), 0);
+    if ((input = g_pInputState) == 0) {
+        input = 0;
+    }
+    if (*(int *)(input + 0x18) == 1 || self->timer < lbl_806DA13C) {
+        SetRumbleMode(0, 1, 1);
+        if (self->cursor == 0) {
+            SetKartVariant(0);
+        } else {
+            int chara = g_characterId;
+            if (GetCoinMilage(g_playerData) >= g_kartEnhancedUnlockThreshold[chara]) {
+                SetKartVariant(3);
+            } else {
+                SetKartVariant(2);
+            }
+        }
+        pd = g_playerData;
+        flag = 0;
+        if (g_gameMode != 2) {
+            if (pd[0x19F] == 0) {
+                flag = 1;
+            }
+            if (pd[0x19D] == 1) {
+                flag = 1;
+            }
+        } else {
+            flag = 1;
+        }
+        if (!flag) {
+            if (g_gameMode == 0) {
+                self->next = 0x15;
+            } else {
+                self->next = 0x17;
+            }
+        } else {
+            self->next = 0x13;
+        }
+        self->timer = lbl_806DA144;
+        fn_801B7C64();
+    }
+    SetScreenBrightness(self->timer);
+    return self->next;
+}
+#pragma exceptions reset
+}
+
+/* ---- fn_801D7CC4 ---- */
+#pragma push
+namespace fk_draw {
+class Scene { public: virtual void v0(); virtual bool Begin(); virtual void End(); };
+typedef struct FlowKartDraw {
+    int unk0;
+    int selection;
+    int unk8;
+    int state;
+    char pad10[0xC];
+    Scene *scene;
+    void *lobj;
+    void *drivers[2];
+    char pad2C[0x3C];
+    void *sprites[6];
+    void *text;
+    char ctrl[4];
+} FlowKartDraw;
+extern "C" {
+extern int g_characterId;
+extern short lbl_8049BBA8[];
+extern const float lbl_806DA148, lbl_806DA14C, lbl_806DA150, lbl_806DA154;
+void fn_8011FAB8(void);
+void fn_801A1280(void);
+void SetCourseScene3D(void *);
+void LObjList_ApplyForCObj(void *);
+void CObj_DebugVizPathFlush(void *);
+void KartDriver_RenderTimed(void *, int, int);
+void fn_801A1174(int, int, int, int, int);
+void fn_801A1128(float, float);
+void fn_801A0DF0(void);
+void *fn_801F8E58(void);
+void fn_801F8A34(void *, void *, int);
+void fn_8011FAFC(void *, int);
+void fn_801A0004(void *);
+}
+
+extern "C" void fn_801D7CC4(FlowKartDraw *self)
+{
+    fn_8011FAB8();
+    fn_801A1280();
+    if (self->scene != 0) {
+        SetCourseScene3D(self->scene);
+        if ((unsigned char)self->scene->Begin()) {
+            LObjList_ApplyForCObj(self->lobj);
+            CObj_DebugVizPathFlush(self->scene);
+            if (self->drivers[self->selection] != 0) {
+                KartDriver_RenderTimed(self->drivers[self->selection], 0, 1);
+            }
+            self->scene->End();
+        }
+        SetCourseScene3D(0);
+    }
+    if (self->state == 0 || self->state == 1 || self->state == 2) {
+        fn_801A1174(0x16ad, 4, 0, 0, 0);
+        fn_801A1128(lbl_806DA148, lbl_806DA14C);
+        fn_801A0DF0();
+        fn_801A1174(lbl_8049BBA8[g_characterId], 4, 0, 0, 0);
+        fn_801A1128(lbl_806DA150, lbl_806DA154);
+        fn_801A0DF0();
+        fn_801F8A34(fn_801F8E58(), self->text, 5);
+        if (self->selection == 1) {
+            fn_8011FAFC(self->ctrl, 5);
+        }
+    }
+    if (self->sprites[0] != 0) fn_801A0004(self->sprites[0]);
+    if (self->selection == 0) {
+        if (self->sprites[2] != 0) fn_801A0004(self->sprites[2]);
+    } else {
+        if (self->sprites[1] != 0) fn_801A0004(self->sprites[1]);
+    }
+    if (self->sprites[3] != 0) fn_801A0004(self->sprites[3]);
+    if (self->sprites[4] != 0) fn_801A0004(self->sprites[4]);
+    if (self->sprites[5] != 0) fn_801A0004(self->sprites[5]);
+}
+}
+#pragma pop
+
+/* ---- clFlowKart_Update (0x801D7E84) ---- */
+#pragma push
+namespace fk_update {
+/* Observed FlowKart update layout only; Sprite lifetime supplies automatic EH. */
+class FlowSprite {
+    unsigned char observed[48];
+public:
+    FlowSprite(int id, int loop, float x, float y, float sx, float sy, float yaw, float step);
+};
+struct FlowInput {
+    unsigned char pad[0x14];
+    int delta;
+};
+struct FlowUpdateView {
+    unsigned int unknown;
+    int selection;
+    int result;
+    int state;
+    unsigned char pending;
+    unsigned char pad11[3];
+    int frame;
+    float brightness;
+    unsigned char pad1C[8];
+    void* drivers[2];
+    unsigned char pad2C[0x3C];
+    FlowSprite* sprites[6];
+};
+extern "C" {
+extern FlowInput* g_pInputState;
+extern int g_characterId;
+extern signed char lbl_806D184C, lbl_806D184D;
+extern const float lbl_806DA13C, lbl_806DA148, lbl_806DA158, lbl_806DA15C;
+extern const float lbl_806DA160, lbl_806DA164, lbl_806DA168, lbl_806DA16C, lbl_806DA170;
+void RumbleUpdate();
+void fn_801699D8(unsigned int, unsigned char);
+int SetScreenBrightness(float);
+void fn_801B7CAC();
+int fn_801B87D8();
+int fn_801B8398(int);
+int clFlowKart_HandleConfirm(FlowUpdateView*);
+void clFlowKart_UpdateDisplay(FlowUpdateView*, int);
+void KartMovement_ResetOnGoal(void*);
+void* KartDriver_Dtor(void*, short);
+FlowSprite* Sprite_Destroy(FlowSprite*, short);
+int Sprite_AdvanceAnim(FlowSprite*, float);
+int RenderObj_ItemStateMachine_Timed(void*, int, float, float);
+}
+static inline FlowInput* CurrentFlowInput()
+{
+    return SINGLETON_INSTANCE(g_pInputState);
+}
+/* Evaluate the nullable input getter before reading the current selection. */
+static inline void ApplyFlowInput(FlowUpdateView* self, FlowInput* input)
+{
+    self->selection += input->delta;
+}
+extern "C" int clFlowKart_Update(FlowUpdateView* self)
+{
+    RumbleUpdate();
+    if (self->pending) {
+        self->state += 1;
+        self->pending = 0;
+    }
+    self->frame += 1;
+    switch (self->state) {
+    case 0:
+        if (self->frame == 1) {
+            self->sprites[0] = new FlowSprite(0x16A, 1, lbl_806DA148, lbl_806DA158,
+                lbl_806DA15C, lbl_806DA15C, lbl_806DA13C, lbl_806DA15C);
+            self->sprites[1] = new FlowSprite(0x9C, 1, lbl_806DA160, lbl_806DA164,
+                lbl_806DA15C, lbl_806DA15C, lbl_806DA168, lbl_806DA15C);
+            self->sprites[2] = new FlowSprite(0x9C, 1, lbl_806DA16C, lbl_806DA164,
+                lbl_806DA15C, lbl_806DA15C, lbl_806DA13C, lbl_806DA15C);
+            clFlowKart_UpdateDisplay(self, g_characterId);
+            SetScreenBrightness(self->brightness);
+        }
+        if (self->frame > 30) {
+            fn_801699D8(0, 1);
+            lbl_806D184C = 1;
+            lbl_806D184D = 0;
+            self->pending = 1;
+        }
+        break;
+    case 1: {
+        int previous = self->selection;
+        if (CurrentFlowInput()) {
+            ApplyFlowInput(self, CurrentFlowInput());
+            if (self->selection > 1)
+                self->selection = 1;
+            if (self->selection < 0)
+                self->selection = 0;
+            if (previous != self->selection)
+                fn_801B7CAC();
+            clFlowKart_UpdateDisplay(self, g_characterId);
+        }
+        if (clFlowKart_HandleConfirm(self) != -1) {
+            self->frame = 0;
+            self->pending = 1;
+            KartMovement_ResetOnGoal(self->drivers[self->selection]);
+            fn_801B87D8();
+            lbl_806D184C = -1;
+            Sprite_Destroy(self->sprites[1], 1);
+            Sprite_Destroy(self->sprites[2], 1);
+            self->sprites[1] = 0;
+            self->sprites[2] = 0;
+        }
+        break;
+    }
+    case 2:
+        if (self->frame == 50) {
+            fn_801B87D8();
+            fn_801B8398(0);
+            KartDriver_Dtor(self->drivers[0], 1);
+            KartDriver_Dtor(self->drivers[1], 1);
+            Sprite_Destroy(self->sprites[0], 1);
+            Sprite_Destroy(self->sprites[1], 1);
+            Sprite_Destroy(self->sprites[2], 1);
+            Sprite_Destroy(self->sprites[3], 1);
+            Sprite_Destroy(self->sprites[4], 1);
+            Sprite_Destroy(self->sprites[5], 1);
+            self->drivers[0] = 0;
+            self->drivers[1] = 0;
+            self->sprites[0] = 0;
+            self->sprites[1] = 0;
+            self->sprites[2] = 0;
+            self->frame = 0;
+            self->sprites[3] = 0;
+            self->sprites[4] = 0;
+            self->sprites[5] = 0;
+            self->pending = 1;
+            fn_801699D8(0, 0);
+        }
+        break;
+    case 3:
+        if (self->frame == 52)
+            self->pending = 1;
+        break;
+    case 4:
+        return self->result;
+    }
+    if (self->sprites[0])
+        Sprite_AdvanceAnim(self->sprites[0], lbl_806DA170);
+    if (self->sprites[1])
+        Sprite_AdvanceAnim(self->sprites[1], lbl_806DA170);
+    if (self->sprites[2])
+        Sprite_AdvanceAnim(self->sprites[2], lbl_806DA170);
+    if (self->drivers[0])
+        RenderObj_ItemStateMachine_Timed(self->drivers[0], 0, lbl_806DA13C, lbl_806DA13C);
+    if (self->drivers[1])
+        RenderObj_ItemStateMachine_Timed(self->drivers[1], 0, lbl_806DA13C, lbl_806DA13C);
+    if (self->sprites[3])
+        Sprite_AdvanceAnim(self->sprites[3], lbl_806DA170);
+    if (self->sprites[4])
+        Sprite_AdvanceAnim(self->sprites[4], lbl_806DA170);
+    if (self->sprites[5])
+        Sprite_AdvanceAnim(self->sprites[5], lbl_806DA170);
+    return -1;
+}
+
+}
+#pragma pop
+
+/* ---- dtor (0x801D8284) ---- */
+namespace fk_dtor {
+class Deletable {
+public:
+    virtual ~Deletable();
+};
+
+struct InputState {
+    unsigned char pad_00[4];
+    unsigned char active;
+    unsigned char pad_05[0x13];
+    int value18;
+    int value1C;
+};
+
+struct SceneObject {
+    void *vtbl;
+    unsigned char pad_04[0x18];
+    Deletable *child;
+    void *lobjList;
+    void *driverA;
+    void *driverB;
+    unsigned char pad_2C[0x3C];
+    void *sprites[3];
+    void *sprites2[3];
+    void *buffer;
+};
+
+extern "C" {
+extern char lbl_8049BBD0[];
+extern InputState *g_pInputState;
+void fn_80169C44(void);
+void SetScreenBrightness(float);
+void Sprite_Destroy(void *, int);
+void KartDriver_Dtor(void *, int);
+void LObjList_Destroy(void *, int);
+void MemoryManager_TimedFree(void *);
+void fn_80120A08(int);
+void dtor_801BA14C(void *, int);
+}
+
+static inline InputState *input_state(void) {
+    InputState *state = g_pInputState;
+
+    if (state == 0) {
+        return 0;
+    }
+    return state;
+}
+
+extern "C" SceneObject *dtor(SceneObject *self, short flags) {
+    if (self != 0) {
+        self->vtbl = lbl_8049BBD0;
+        fn_80169C44();
+        if (input_state() != 0) {
+            InputState *state = input_state();
+
+            state->active = 0;
+            state->value18 = 0;
+            state->value1C = 0;
+        }
+        SetScreenBrightness(lbl_806DA144);
+        Sprite_Destroy(self->sprites[0], 1);
+        Sprite_Destroy(self->sprites[1], 1);
+        Sprite_Destroy(self->sprites[2], 1);
+        KartDriver_Dtor(self->driverA, 1);
+        KartDriver_Dtor(self->driverB, 1);
+        delete self->child;
+        LObjList_Destroy(self->lobjList, 1);
+        Sprite_Destroy(self->sprites2[0], 1);
+        Sprite_Destroy(self->sprites2[1], 1);
+        Sprite_Destroy(self->sprites2[2], 1);
+        if (self->buffer != 0) {
+            MemoryManager_TimedFree(self->buffer);
+        }
+        fn_80120A08(0x167F);
+        dtor_801BA14C(self, 0);
+        if (flags > 0) {
+            MemoryManager_TimedFree(self);
+        }
+    }
+    return self;
+}
 }
 struct FKBase {
     FKBase();

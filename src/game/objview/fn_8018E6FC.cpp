@@ -20,11 +20,11 @@ static inline void setup(ViewJoint *j) {
         if (dirty) HSD_JObjSetupMatrixSub(j);
     }
 }
-static inline ViewBillboardParticle *freeParticle(ViewEmitter *o) {
+static inline void freeParticle(ViewEmitter *o, ViewBillboardParticle *&out) {
     for (int i = 0; i < 60; i++) {
-        if (o->particles[i].age < 0.0f) return &o->particles[i];
+        if (o->particles[i].age < 0.0f) { out = &o->particles[i]; return; }
     }
-    return 0;
+    out = 0;
 }
 static inline void updateParticle(ViewBillboardParticle *q) {
     if (q->age < 0.0f) return;
@@ -45,19 +45,18 @@ static inline void initializeMatrix(ViewEmitter *o, void *scene, int index) {
     o->matrices[index].matrix[2][3] = joint->matrix[2][3];
     o->delay = (int)(30.0f + 30.0f * variation(o));
 }
-static inline void updateMatrices(ViewEmitter *o) {
-    int i;
-    unsigned int matrixOffset;
-    ViewBillboardParticle *q;
+static inline void updateMatrices(ViewEmitter *o, int &i, unsigned int &matrixOffset) {
+    unsigned int point;
     ViewMatrixParticle *p;
+    ViewBillboardParticle *q;
     for (i = 0, matrixOffset = 0; i < o->count; matrixOffset += sizeof(ViewMatrixParticle), i++) {
         p = (ViewMatrixParticle *)((char *)o->matrices + matrixOffset);
         if (p->age < 0.0f) continue;
         if ((p->age += 1.0f) >= 89.0f) { p->age = -1.0f; continue; }
         if (p->age >= 20.0f) {
-            unsigned int point = ((int)(p->age - 20.0f)) >> 1;
+            point = ((int)(p->age - 20.0f)) >> 1;
             if (point < 12) {
-                q = freeParticle(o);
+                freeParticle(o, q);
                 if (q) {
                     q->age = 0.0f;
                     q->scale = 0.0f;
@@ -81,6 +80,8 @@ static inline void updateBillboards(ViewEmitter *o) {
 }
 extern "C" void fn_8018E6FC(ViewEmitter *o) {
     int index;
+    int matrixIndex;
+    unsigned int matrixOffset;
     void *scene;
     if (o->count == 0) return;
     if (o->delay > 0) o->delay--;
@@ -93,7 +94,7 @@ extern "C" void fn_8018E6FC(ViewEmitter *o) {
             initializeMatrix(o, scene, index);
         }
     }
-    updateMatrices(o);
+    updateMatrices(o, matrixIndex, matrixOffset);
     updateBillboards(o);
 }
 

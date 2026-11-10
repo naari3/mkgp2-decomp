@@ -15,7 +15,7 @@ Layout:
 
 - top level and `<topic>/`: drafts from rounds 2-3 (asm->C, TU merges, takeover leftovers).
   `asm-a/` = asm->C thread A, `r2/` = R2 range thread, `onmoko_pragma_hints/` and
-  `onkarthit_ap*/` = 2026-11-08 takeover leftovers, `clsound_merge/` = clsound TU merge WIP.
+  `onkarthit_ap*/` = 2026-11-08 takeover leftovers.
 - `notes/`: older per-range notes and drafts (`r1/`, `r4/`, `r4_wip/`, `shard1-3/` permuter
   shards, `gaveup-retry/`, `fn_8019EB9C/` regalloc study with its search scripts,
   `leftover_survey.md`, `nonmatching_r1-3.md`, `onmoko_takeover_20261108.txt`,

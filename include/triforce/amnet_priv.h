@@ -134,8 +134,14 @@ extern const char lbl_806DC934[5];
 #define BSWAP32(v) (((v) << 24) | (((v) << 8) & 0xFF0000) | (((v) >> 8) & 0xFF00) | ((v) >> 24))
 
 static inline void TraceAdd(u8 op, u8 dir, void* buf, u32 addr, u32 size) {
+    NetTrace* t;
     u32 n = lbl_806D1E44++;
-    NetTrace* t = &lbl_806937C0[n & 7];
+    /* fakematch (hand): natural code is `t = &lbl_806937C0[n & 7];`. The integer
+     * accumulate form computes the scaled index into t's register and the table
+     * address into a scratch (`add r8, r3, r8` instead of `add r8, r8, r3`). */
+    u32 i = (n & 7) * sizeof(NetTrace);
+    i += (u32)lbl_806937C0;
+    t = (NetTrace*)i;
     t->seq = n;
     t->op = op;
     t->dir = dir;

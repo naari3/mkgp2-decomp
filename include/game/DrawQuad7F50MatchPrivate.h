@@ -34,6 +34,41 @@ struct DrawQuad7F50 {
         x3 = left - wx;
         y3 = sinPart + top;
     }
+    /* fn_801F8404 form (the tag only selects the overload). */
+    DrawQuad7F50(DrawDesc801F *d, int) {
+        float h, w, top, left, sinPart, wx, dx, right, bottom, cosPart, dy, centerX, centerY;
+        double width = __fabs(d->width * d->scaleX);
+        double height = __fabs(d->height * d->scaleY);
+        w = width;
+        h = height;
+        float zero = lbl_806DA718;
+        if (zero == d->angle) {
+            dx = zero;
+            sinPart = dx;
+            cosPart = lbl_806DA734;
+        } else {
+            float sine = 0.5f * d->anchorX;
+            cosPart = 0.5f * d->anchorY;
+            sinPart = w * sine;
+            dx = h * sine;
+        }
+        dy = h * cosPart;
+        wx = w * cosPart;
+        centerX = d->x;
+        centerY = d->y;
+        left = centerX - dx;
+        top = centerY - dy;
+        right = centerX + dx;
+        bottom = centerY + dy;
+        x0 = wx + left;
+        y0 = top - sinPart;
+        x1 = wx + right;
+        y1 = bottom - sinPart;
+        x2 = right - wx;
+        y2 = sinPart + bottom;
+        x3 = left - wx;
+        y3 = sinPart + top;
+    }
     ~DrawQuad7F50() {}
 };
 

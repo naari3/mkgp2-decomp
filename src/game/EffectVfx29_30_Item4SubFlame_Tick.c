@@ -1,8 +1,8 @@
 /* EffectVfx29_30_Item4SubFlame_Tick (0x800BF174): flame jet (resource 0x1D
  * or 0x1E) on the kart root while the linked item is in state 4. Its height
  * follows a 5-key piecewise-linear curve over the frame counter.
- * NonMatching: curve base and segment cursor use exchanged GPR homes.
- * Instruction count, floating-point operations and owned EH are exact. */
+ * The segment loop is unrolled by the compiler and the curve is passed as an
+ * expression (regalloc_patterns 62). */
 #include "game/DrawEffectAccess.h"
 
 typedef struct FlameCurve {
@@ -33,10 +33,11 @@ static inline float FlameCurve_Evaluate(FlameCurve *curve, float t)
     if (curve->keys[4] <= t) {
         height = curve->values[4];
     } else {
-        FlameCurve_Segment((float (*)[5])curve, t, &height);
-        FlameCurve_Segment((float (*)[5])((char *)curve + 1 * sizeof(float)), t, &height);
-        FlameCurve_Segment((float (*)[5])((char *)curve + 2 * sizeof(float)), t, &height);
-        FlameCurve_Segment((float (*)[5])((char *)curve + 3 * sizeof(float)), t, &height);
+        int i;
+
+        for (i = 0; i < 4; i++) {
+            FlameCurve_Segment((float (*)[5])((char *)curve + i * sizeof(float)), t, &height);
+        }
     }
     return height;
 }
@@ -98,11 +99,10 @@ void EffectVfx29_30_Item4SubFlame_Tick(unsigned char *self)
     }
 
     if (S8(0x28)) {
-        FlameCurve *curve = lbl_8041A224;
         float height;
+        int idx = I(0x10);
 
-        curve += I(0x10);
-        height = FlameCurve_Evaluate(curve, F(0x150));
+        height = FlameCurve_Evaluate(lbl_8041A224 + idx, F(0x150));
 
         height /= lbl_806D5344;
         if (height == lbl_806D51C0) {

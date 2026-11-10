@@ -250,14 +250,14 @@ static inline int TimeRank(float d) {
 }
 
 static inline int CourseClearIndex(int course, int reverse, int isLong) {
-    return isLong + (course * 4 + reverse * 2);
+    return isLong + course * 4 + reverse * 2;
 }
 
 static inline unsigned char IsCourseCleared(int index) {
     return g_playerData.cleared[index];
 }
 
-void CalcEarnedCoins(void) {
+int CalcEarnedCoins(void) {
     int cc;
     int rank;
     int i;

@@ -28,28 +28,32 @@ struct RivalVector {
     float Length() const { float xx=x*x; float yy=y*y; float zz=z*z; float xy=xx+yy; return Root(zz+xy); }
     float Dot(const RivalVector &v) const { float xx=x*v.x; float yy=y*v.y; float zz=z*v.z; float xy=xx+yy; return zz+xy; }
 };
-static inline float RotatedAngle(float x, float z, double angle) {
-    float s = (float)sin(angle);
-    float c = (float)cos(angle);
+static inline float AngleSin(double angle) { return (float)sin(angle); }
+static inline float AngleCos(double angle) { return (float)cos(angle); }
+static inline float RotatedAngle(float ax, float az, float bx, float bz, double angle) {
+    float x = ax - bx;
+    float z = az - bz;
+    float s = AngleSin(angle);
+    float c = AngleCos(angle);
     return (float)atan2(x*c-z*s, x*s+z*c);
 }
+static inline RivalPath *PathOf(RivalMarkerHud *self) { return self->path; }
 extern "C" float fn_80243074(RivalMarkerHud *self, int index, const RivalPosition *position) {
-    RivalPath *path = self->path;
+    RivalPath *path = PathOf(self);
     int total = Path_GetTotalCount(path);
-    int old = index;
-    index = (index + 1) % total;
+    /* `long`: the advanced index becomes its own temp numbered above `position`
+       (regalloc_patterns 95); with `int` it stays the parameter and r28/r29 swap. */
+    long i = index;
+    long old = i;
+    i = (i + 1) % total;
     RivalWaypoint *a = Path_GetWaypointPtr(path, old);
-    RivalWaypoint *b = Path_GetWaypointPtr(path, index);
+    RivalWaypoint *b = Path_GetWaypointPtr(path, i);
     if (!a || !b) {
         DebugPrintf(lbl_803EF600);
         return 0.0f;
     }
-    float x = a->x - b->x;
-    float z = a->z - b->z;
-    float angle = RotatedAngle(x, z, lbl_806DBE68);
-    x = a->x - position->x;
-    z = a->z - position->z;
-    float side = RotatedAngle(x, z, angle);
+    float angle = RotatedAngle(a->x, a->z, b->x, b->z, lbl_806DBE68);
+    float side = RotatedAngle(a->x, a->z, position->x, position->z, angle);
     RivalVector end(b->x, b->y, b->z);
     RivalVector start(a->x, a->y, a->z);
     RivalVector point(position->x, position->y, position->z);

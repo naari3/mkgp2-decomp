@@ -16,8 +16,10 @@ static inline float SpriteAnim_RotateY(float x, float y, float angle) {
     return x * sn + y * c;
 }
 
+static inline double SpriteAnim_Magnitude(float scale) { return __fabs(scale); }
+
 static inline float SpriteAnim_ScaleTranslate(float value, float scale, float translation) {
-    double magnitude = __fabs(scale);
+    double magnitude = SpriteAnim_Magnitude(scale);
     return value * (float)magnitude + translation;
 }
 

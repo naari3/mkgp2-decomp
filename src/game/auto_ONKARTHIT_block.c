@@ -921,15 +921,6 @@ typedef struct BitsetRef {
 unsigned char Bitset_TestBit(Bitset *self, unsigned long idx);
 void Bitset_SetBit(Bitset *self, unsigned long idx, unsigned char val);
 
-/* sweep AABB config inside the lbl_802EBA18 rodata blob */
-typedef struct SweepCfgView {
-    char pad_0x0[0x41c];
-    Vec3 halfA;             /* 0x41c */
-    Vec3 centerA;           /* 0x428 */
-    Vec3 halfB;             /* 0x434 */
-    Vec3 centerB;           /* 0x440 */
-} SweepCfgView;
-
 /* --- views for ItemEffect_Trap / ItemEffect_Projectile --- */
 
 /* trap effect table entry (stride 0x18, lbl_802ED7BC) */
@@ -1153,7 +1144,8 @@ void KartItem_PlayHitSE_DifferentVictim(KartItemHitSEView *self, void *victim, i
 int CarObject_OnItemHit(KartItemOpsView *self, void *itemObj, int itemIdArg);
 int CarObject_HandleObstacleHit(KartItemOpsView *self, ObstacleHitEvent *evt);
 void KartItem_PlaySE_0x09(KartItemHitSEView *self);
-asm void KartItem_ApplyImpactReflectAndDampVelocity(void);
+typedef struct KartItemOpsView KartItemOpsView;
+int KartItem_ApplyImpactReflectAndDampVelocity(KartItemOpsView *self, float *ox, float *oy, float *oz);
 unsigned char KartItem_TryDropCoinsAndPlaySE(KartItemDropView *self, int count, unsigned char force);
 int KartItem_TryCancelIfDropAllowed(KartItemDropView *self);
 void KartItem_ApplyImpactImpulseAndRumble(KartItemOpsView *self, int mode, float x, float y, float z);
@@ -1170,7 +1162,6 @@ void CarObject_ApplyInput(CarObjInputAIView *self, unsigned char active, float i
 struct KartItemObj;
 extern "C" void *KartItem_Dtor(KartItemObj *self, short flag);
 #pragma cplusplus off
-asm void CarObject_Init(void);
 void KartItem_UpdateShadowBillboardAndViewport(KartItemOpsView *self, int arg2, int arg3);
 float KartItem_AdvanceAnim3c(const KartItemOpsView *self);
 float CarObject_CalcSpeedRatio(KartItemOpsView *self);
@@ -1203,7 +1194,7 @@ void CarObject_SetPosition(KartItemOpsView *self, void *pos);
 void KartItem_ForwardToCarMovement_8019a4e0(const KartItemOpsView *self);
 void KartItem_ForwardToCarMovement_8019a6a4(const KartItemOpsView *self);
 void KartItem_OnFallOffOrDeath(KartItemOpsView *self);
-asm void CarObject_HandleItemEffect(void);
+int CarObject_HandleItemEffect(ItemSecondaryLane *self, int itemId);
 int ItemEffect_SelectAndDispatch_Wrap(ItemEffectTable *self, int itemId, void *itemObj, int arg4);
 int ItemEffect_SelectAndDispatch(ItemEffectTable *self, int itemId, void *itemObj, int arg4);
 int ItemEffect_GenericHandler(ItemEffectTable *self, int itemId, void *itemObj, int arg4);
@@ -1285,9 +1276,16 @@ static const unsigned int lbl_802EBA18[255] = {
     0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000,
     0x42A6AAAB, 0x459C4000, 0x42A6AAAB,
 };
-static const float lbl_802EBE14[20] = {
-    0.625f, 0.5555556f, 0.1f, 0.0325f, 1.25f, 0.5555556f, 0.2f, 0.065f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f
+static const float lbl_802EBE14[8] = {
+    0.625f, 0.5555556f, 0.1f, 0.0325f, 1.25f, 0.5555556f, 0.2f, 0.065f
 };
+/* Initial values of the half-extent / centre vectors in
+ * CarObjectManager_RunKartKartCollisionSweep (kart A, then kart B). They are four
+ * separate objects: the function addresses them from the pooled .rodata base. */
+static const Vec3 lbl_802EBE34 = { 0.0f, 0.0f, 0.0f };
+static const Vec3 lbl_802EBE40 = { 0.0f, 0.0f, 0.0f };
+static const Vec3 lbl_802EBE4C = { 0.0f, 0.0f, 0.0f };
+static const Vec3 lbl_802EBE58 = { 0.0f, 0.0f, 0.0f };
 static const ItemRemapEntry lbl_802EBE64[7] = {
     {1, 119, 3, {23, 43, 62}},
     {0, 71, 2, {279, 23, -1}},
@@ -1444,15 +1442,15 @@ static const char lbl_802EDA80[34] = "vector::construction length error";
 int ItemEffect_TryStartByCategory_Wrap(ItemStateBlock *self, int itemId, void *arg);
 int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *arg);
 void ItemEffect_Explosion(ItemStateBlock *self, int idx, const void *arg);
-asm void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg);
-asm void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg);
+void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg);
+void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg);
 int ItemTable_FindEntryByIdStride16(ItemCatEntry16 *tbl, int count, int itemId);
 int ItemTable_FindEntryByIdStride12_v1(ItemCatEntry12 *tbl, int count, int itemId);
 int ItemTable_FindEntryByIdStride12_v2(ItemCatEntry12 *tbl, int count, int itemId);
 int ItemTable_FindEntryByIdStride24(ItemCatEntry24 *tbl, int count, int itemId);
 int ItemTable_FindEntryByIdStride20(ItemCatEntry20 *tbl, int count, int itemId);
 void CarObject_GetField304Vec3(Vec3 *out, CarObjAux304View *car);
-asm void CarObjectManager_RunKartKartCollisionSweep(void);
+void CarObjectManager_RunKartKartCollisionSweep(CarObjectManager *self);
 CarObjectManager *CarObjectManager_Dtor(CarObjectManager *self, short flag);
 Bitset *dtor_80052200(Bitset *self, short flag);
 unsigned char Bitset_TestBit(Bitset *self, unsigned long idx);
@@ -1597,7 +1595,6 @@ __declspec(section ".extab_user") static const unsigned char extab_CarObject_App
 __declspec(section ".extab_user") static const unsigned char extab_CarObjectManager_Dtor[8] = {
     0x10, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; unsigned int f29; unsigned int f30; unsigned int f31; unsigned int f32; unsigned int f33; unsigned int f34; unsigned int f35; unsigned int f36; unsigned int f37; unsigned int f38; unsigned int f39; unsigned int f40; unsigned int f41; unsigned int f42; unsigned int f43; unsigned int f44; void *f45; unsigned int f46; unsigned int f47; void *f48; unsigned int f49; unsigned int f50; void *f51; unsigned int f52; unsigned int f53; void *f54; unsigned int f55; unsigned int f56; void *f57; unsigned int f58; unsigned int f59; void *f60; unsigned int f61; unsigned int f62; void *f63; unsigned int f64; unsigned int f65; void *f66; unsigned int f67; unsigned int f68; void *f69; unsigned int f70; unsigned int f71; void *f72; unsigned int f73; unsigned int f74; void *f75; unsigned int f76; void *f77; unsigned int f78; unsigned int f79; void *f80; unsigned int f81; unsigned int f82; void *f83; unsigned int f84; unsigned int f85; void *f86; unsigned int f87; unsigned int f88; void *f89; unsigned int f90; unsigned int f91; void *f92; unsigned int f93; unsigned int f94; void *f95; unsigned int f96; unsigned int f97; void *f98; unsigned int f99; unsigned int f100; void *f101; unsigned int f102; } extab_CarObject_Init = { 0x48CA0000, 0x00000068, 0x00000118, 0x000000A4, 0x000B010C, 0x000000E8, 0x00100100, 0x00000140, 0x000C00F4, 0x00000188, 0x000400E8, 0x000001B0, 0x000A00DC, 0x000001F0, 0x000F00D0, 0x00000244, 0x000700C4, 0x00000278, 0x000500B8, 0x0000029C, 0x000000B0, 0x000002C8, 0x00050180, 0x000002F4, 0x00040174, 0x0000031C, 0x00000168, 0x000003A8, 0x0000015C, 0x000003E0, 0x00110150, 0x0000043C, 0x00100144, 0x00000594, 0x00210138, 0x00000644, 0x00000124, 0x00000694, 0x00030138, 0x000006B0, 0x00170190, 0x00000710, 0x00150138, 0x00000000, 0x0A800017, (void *)&MemoryManager_TimedFree, 0x0780001F, 0x0000003C, (void *)&dtor_80052A58, 0x0780001F, 0x00000038, (void *)&dtor_80052AD4, 0x0780001F, 0x00000034, (void *)&dtor_80052B50, 0x0780001F, 0x00000030, (void *)&dtor_80052BCC, 0x0780001F, 0x0000002C, (void *)&dtor_80052C48, 0x0780001F, 0x00000028, (void *)&dtor_80052CC4, 0x0780001F, 0x00000024, (void *)&dtor_80052D40, 0x0680001F, 0x0000000C, (void *)&dtor_800AA888, 0x8680001F, 0x00000000, (void *)&dtor_80060024, 0x06800017, 0x00000000, (void *)&dtor_80052744, 0x0A800017, (void *)&MemoryManager_TimedFree, 0x0780001F, 0x00000090, (void *)&dtor_80036E40, 0x0780001F, 0x00000054, (void *)&dtor_8005278C, 0x0780001F, 0x00000050, (void *)&dtor_80052808, 0x0780001F, 0x0000004C, (void *)&dtor_8005285C, 0x0780001F, 0x00000048, (void *)&dtor_800528B0, 0x0780001F, 0x00000044, (void *)&dtor_8005292C, 0x0780001F, 0x00000040, (void *)&dtor_800529A8, 0x010000B8, 0x02000014, (void *)&__dt__11ScopedTimerFv, 0x01000138 };
 __declspec(section ".extab_user") static const unsigned char extab_dtor_80052744[8] = {
     0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
@@ -1738,9 +1735,6 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CarObject_ApplyInput = {
     (void *)&CarObject_ApplyInput, 0x0000015C, (void *)extab_CarObject_ApplyInput
-};
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_CarObject_Init = {
-    (void *)&CarObject_Init, 0x000007BC, (void *)&extab_CarObject_Init
 };
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_KartItem_UpdateShadowBillboardAndViewport = {
     (void *)&KartItem_UpdateShadowBillboardAndViewport, 0x00000204, (void *)extab_KartItem_UpdateShadowBillboardAndViewport
@@ -2637,175 +2631,81 @@ void KartItem_PlaySE_0x09(KartItemHitSEView *self) { /* 0x8004B118 size:0x28 */
 }
 #pragma exceptions reset
 
-asm void KartItem_ApplyImpactReflectAndDampVelocity(void) { /* 0x8004B140 size:0x254 */
-    nofralloc
-    stwu r1, -0x20(r1)
-    mflr r0
-    stw r0, 0x24(r1)
-    stw r31, 0x1c(r1)
-    mr r31, r6
-    stw r30, 0x18(r1)
-    mr r30, r5
-    stw r29, 0x14(r1)
-    mr r29, r4
-    stw r28, 0x10(r1)
-    mr r28, r3
-    lwz r3, 0x2c(r3)
-    lbz r0, 0x2b8(r3)
-    cmplwi r0, 0x1
-    bne KartItem_ApplyImpactReflectAndDampVelocity_L_8004B184
-    li r3, 0x0
-    b KartItem_ApplyImpactReflectAndDampVelocity_L_8004B374
-    KartItem_ApplyImpactReflectAndDampVelocity_L_8004B184:
-    lwz r5, 0x50(r28)
-    lis r3, lbl_802ED9E4@ha
-    addi r4, r3, lbl_802ED9E4@l
-    li r6, 0x0
-    lwz r3, 0x8(r5)
-    lwz r0, 0x0(r4)
-    cmpw r3, r0
-    bne KartItem_ApplyImpactReflectAndDampVelocity_L_8004B1A8
-    b KartItem_ApplyImpactReflectAndDampVelocity_L_8004B1DC
-    KartItem_ApplyImpactReflectAndDampVelocity_L_8004B1A8:
-    lwzu r0, 0x4(r4)
-    cmpw r3, r0
-    bne KartItem_ApplyImpactReflectAndDampVelocity_L_8004B1B8
-    b KartItem_ApplyImpactReflectAndDampVelocity_L_8004B1DC
-    KartItem_ApplyImpactReflectAndDampVelocity_L_8004B1B8:
-    lwzu r0, 0x4(r4)
-    cmpw r3, r0
-    bne KartItem_ApplyImpactReflectAndDampVelocity_L_8004B1C8
-    b KartItem_ApplyImpactReflectAndDampVelocity_L_8004B1DC
-    KartItem_ApplyImpactReflectAndDampVelocity_L_8004B1C8:
-    lwz r0, 0x4(r4)
-    cmpw r3, r0
-    bne KartItem_ApplyImpactReflectAndDampVelocity_L_8004B1D8
-    b KartItem_ApplyImpactReflectAndDampVelocity_L_8004B1DC
-    KartItem_ApplyImpactReflectAndDampVelocity_L_8004B1D8:
-    li r6, 0x1
-    KartItem_ApplyImpactReflectAndDampVelocity_L_8004B1DC:
-    clrlwi. r0, r6, 24
-    bne KartItem_ApplyImpactReflectAndDampVelocity_L_8004B1EC
-    li r3, 0x0
-    b KartItem_ApplyImpactReflectAndDampVelocity_L_8004B374
-    KartItem_ApplyImpactReflectAndDampVelocity_L_8004B1EC:
-    lbz r0, 0x20(r28)
-    cmplwi r0, 0x0
-    beq KartItem_ApplyImpactReflectAndDampVelocity_L_8004B204
-    lwz r3, 0x24(r28)
-    li r4, 0x4c
-    bl SoundObj_PlaySE_Direct
-    KartItem_ApplyImpactReflectAndDampVelocity_L_8004B204:
-    lwz r3, 0x28(r28)
-    lfs f0, lbl_806D26EC(r2)
-    lfs f2, 0x17c(r3)
-    lfs f1, 0x180(r3)
-    fmuls f2, f2, f2
-    lfs f3, 0x184(r3)
-    fmuls f1, f1, f1
-    fmuls f3, f3, f3
-    fadds f1, f2, f1
-    fadds f4, f3, f1
-    fcmpo cr0, f4, f0
-    ble KartItem_ApplyImpactReflectAndDampVelocity_L_8004B280
-    frsqrte f1, f4
-    lfd f3, lbl_806D2720(r2)
-    lfd f2, lbl_806D2728(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f4, f0
-    frsp f0, f0
-    stfs f0, 0x8(r1)
-    lfs f4, 0x8(r1)
-    KartItem_ApplyImpactReflectAndDampVelocity_L_8004B280:
-    lfs f0, lbl_806D26EC(r2)
-    fcmpo cr0, f4, f0
-    ble KartItem_ApplyImpactReflectAndDampVelocity_L_8004B2C8
-    lfs f1, lbl_806D2730(r2)
-    lfs f0, 0x17c(r3)
-    lfs f2, lbl_806D2714(r2)
-    fmuls f0, f1, f0
-    fmuls f0, f2, f0
-    stfs f0, 0x0(r29)
-    lfs f0, 0x180(r3)
-    fmuls f0, f1, f0
-    fmuls f0, f2, f0
-    stfs f0, 0x0(r30)
-    lfs f0, 0x184(r3)
-    fmuls f0, f1, f0
-    fmuls f0, f2, f0
-    stfs f0, 0x0(r31)
-    b KartItem_ApplyImpactReflectAndDampVelocity_L_8004B2E4
-    KartItem_ApplyImpactReflectAndDampVelocity_L_8004B2C8:
-    lwz r3, 0x28(r28)
-    lfs f0, 0xb8(r3)
-    stfs f0, 0x0(r29)
-    lfs f0, 0xbc(r3)
-    stfs f0, 0x0(r30)
-    lfs f0, 0xc0(r3)
-    stfs f0, 0x0(r31)
-    KartItem_ApplyImpactReflectAndDampVelocity_L_8004B2E4:
-    lwz r3, lbl_806D10A0(r13)
-    cmplwi r3, 0x0
-    bne KartItem_ApplyImpactReflectAndDampVelocity_L_8004B2F4
-    li r3, 0x0
-    KartItem_ApplyImpactReflectAndDampVelocity_L_8004B2F4:
-    cmplwi r3, 0x0
-    beq KartItem_ApplyImpactReflectAndDampVelocity_L_8004B304
-    lwz r4, 0x10(r28)
-    bl TitleStats_SetEventFlag_806d1420
-    KartItem_ApplyImpactReflectAndDampVelocity_L_8004B304:
-    lwz r3, 0x2c(r28)
-    bl KartMovement_GetCurrentItemId
-    cmpwi r3, 0x0
-    blt KartItem_ApplyImpactReflectAndDampVelocity_L_8004B31C
-    li r3, 0x1
-    b KartItem_ApplyImpactReflectAndDampVelocity_L_8004B374
-    KartItem_ApplyImpactReflectAndDampVelocity_L_8004B31C:
-    lwz r3, 0x104(r28)
-    cmplwi r3, 0x0
-    beq KartItem_ApplyImpactReflectAndDampVelocity_L_8004B364
-    lwz r4, 0x2c(r28)
-    li r5, 0x1
-    li r6, 0x0
-    bl ItemSelect_StartRouletteSpin
-    cmpwi r3, 0x0
-    blt KartItem_ApplyImpactReflectAndDampVelocity_L_8004B364
-    lwz r3, lbl_806D10A0(r13)
-    cmplwi r3, 0x0
-    bne KartItem_ApplyImpactReflectAndDampVelocity_L_8004B350
-    li r3, 0x0
-    KartItem_ApplyImpactReflectAndDampVelocity_L_8004B350:
-    cmplwi r3, 0x0
-    beq KartItem_ApplyImpactReflectAndDampVelocity_L_8004B364
-    lwz r4, 0x10(r28)
-    li r5, 0x0
-    bl TitleStats_IncCurrentRaceScore
-    KartItem_ApplyImpactReflectAndDampVelocity_L_8004B364:
-    lwz r3, 0x10(r28)
-    bl GetKartStartSlot
-    bl fn_801B5B60
-    li r3, 0x1
-    KartItem_ApplyImpactReflectAndDampVelocity_L_8004B374:
-    lwz r0, 0x24(r1)
-    lwz r31, 0x1c(r1)
-    lwz r30, 0x18(r1)
-    lwz r29, 0x14(r1)
-    lwz r28, 0x10(r1)
-    mtlr r0
-    addi r1, r1, 0x20
-    blr
+/* The lane pointer has to be a later temp than the inlined result flag (lane r5,
+ * flag r6): it comes from a getter inside a wrapper inline. Passing
+ * self->secondary directly swaps the two registers (regalloc_patterns 56). */
+static inline ItemSecondaryLane *KartItem_GetSecondary(KartItemOpsView *self) {
+    return self->secondary;
 }
+static inline unsigned char KartItem_IsReflectLane(ItemSecondaryLane *sec) {
+    const unsigned int *t = lbl_802ED9E4;
+    int i;
+    for (i = 0; i < 4; i++) {
+        if (sec->itemId == (int)t[i]) return 0;
+    }
+    return 1;
+}
+static inline unsigned char KartItem_IsReflectItem(KartItemOpsView *self) {
+    return KartItem_IsReflectLane(KartItem_GetSecondary(self));
+}
+
+#pragma exceptions off
+int KartItem_ApplyImpactReflectAndDampVelocity(KartItemOpsView *self, float *ox, float *oy, float *oz) { /* 0x8004B140 size:0x254 */
+    KartMovementSpeedView *mv;
+    void *stats;
+    float sq;
+    if (self->ownerDriver->deathState2b8 == 1) {
+        return 0;
+    }
+    if ((unsigned char)KartItem_IsReflectItem(self) == 0) {
+        return 0;
+    }
+    if (self->strPcbGate20 != 0) {
+        SoundObj_PlaySE_Direct(self->soundCtrl, 0x4c);
+    }
+    mv = self->movement;
+    sq = mv->velX * mv->velX + mv->velY * mv->velY + mv->velZ * mv->velZ;
+    if (sq > lbl_806D26EC) {
+        volatile float y;
+        double guess = __frsqrte(sq);
+        guess = lbl_806D2720 * guess * (lbl_806D2728 - sq * (guess * guess));
+        guess = lbl_806D2720 * guess * (lbl_806D2728 - sq * (guess * guess));
+        guess = lbl_806D2720 * guess * (lbl_806D2728 - sq * (guess * guess));
+        y = (float)(sq * guess);
+        sq = y;
+    }
+    if (sq > lbl_806D26EC) {
+        float k = lbl_806D2714;
+        *ox = k * (lbl_806D2730 * mv->velX);
+        *oy = k * (lbl_806D2730 * mv->velY);
+        *oz = k * (lbl_806D2730 * mv->velZ);
+    } else {
+        KartMovementSpeedView *rest = self->movement;
+        *ox = rest->restVelX;
+        *oy = rest->restVelY;
+        *oz = rest->restVelZ;
+    }
+    if ((stats = lbl_806D10A0) == 0) {
+        stats = 0;
+    }
+    if (stats != 0) {
+        TitleStats_SetEventFlag_806d1420(stats, self->raceScore10);
+    }
+    if (KartMovement_GetCurrentItemId(self->ownerDriver) >= 0) {
+        return 1;
+    }
+    if (self->itemSelect104 != 0 && ItemSelect_StartRouletteSpin(self->itemSelect104, self->ownerDriver, 1, 0) >= 0) {
+        if ((stats = lbl_806D10A0) == 0) {
+            stats = 0;
+        }
+        if (stats != 0) {
+            TitleStats_IncCurrentRaceScore(stats, self->raceScore10, 0);
+        }
+    }
+    fn_801B5B60(GetKartStartSlot(self->raceScore10));
+    return 1;
+}
+#pragma exceptions reset
 
 #pragma exceptions off
 unsigned char KartItem_TryDropCoinsAndPlaySE(KartItemDropView *self, int count, unsigned char force) { /* 0x8004B394 size:0x9C */
@@ -2839,352 +2739,118 @@ int KartItem_TryCancelIfDropAllowed(KartItemDropView *self) { /* 0x8004B430 size
 }
 #pragma exceptions reset
 
-asm void KartItem_ApplyImpactImpulseAndRumble(KartItemOpsView *self, int mode, float x, float y, float z) { /* 0x8004B49C size:0x520 */
-    nofralloc
-    stwu r1, -0xa0(r1)
-    mflr r0
-    stw r0, 0xa4(r1)
-    stfd f31, 0x90(r1)
-    psq_st f31, 0x98(r1), 0, 0
-    stfd f30, 0x80(r1)
-    psq_st f30, 0x88(r1), 0, 0
-    stw r31, 0x7c(r1)
-    stw r30, 0x78(r1)
-    mr r31, r3
-    lfs f0, lbl_806D26EC(r2)
-    lwz r3, 0x28(r3)
-    mr r30, r4
-    lfs f9, 0x68(r3)
-    lfs f8, 0x6c(r3)
-    stfs f9, 0x48(r1)
-    lfs f9, 0x88(r3)
-    stfs f8, 0x4c(r1)
-    lfs f8, 0x8c(r3)
-    frsp f5, f9
-    lfs f7, 0x70(r3)
-    frsp f4, f8
-    lfs f13, 0x58(r3)
-    fsubs f6, f1, f5
-    stfs f7, 0x50(r1)
-    lfs f7, 0x90(r3)
-    fsubs f5, f2, f4
-    frsp f4, f7
-    lfs f12, 0x5c(r3)
-    fmuls f2, f6, f6
-    lfs f11, 0x60(r3)
-    fmuls f1, f5, f5
-    fsubs f3, f3, f4
-    lfs f10, 0x64(r3)
-    lfs f4, 0x74(r3)
-    fadds f1, f2, f1
-    fmuls f2, f3, f3
-    stfs f13, 0x38(r1)
-    lfs f13, 0x78(r3)
-    stfs f12, 0x3c(r1)
-    fadds f31, f2, f1
-    lfs f12, 0x7c(r3)
-    stfs f11, 0x40(r1)
-    lfs f11, 0x80(r3)
-    stfs f10, 0x44(r1)
-    fcmpo cr0, f31, f0
-    lfs f10, 0x84(r3)
-    stfs f4, 0x54(r1)
-    lfs f4, 0x94(r3)
-    stfs f13, 0x58(r1)
-    stfs f12, 0x5c(r1)
-    stfs f11, 0x60(r1)
-    stfs f10, 0x64(r1)
-    stfs f9, 0x68(r1)
-    stfs f8, 0x6c(r1)
-    stfs f7, 0x70(r1)
-    stfs f4, 0x74(r1)
-    stfs f6, 0x2c(r1)
-    stfs f5, 0x30(r1)
-    stfs f3, 0x34(r1)
-    ble KartItem_ApplyImpactImpulseAndRumble_L_8004B5DC
-    frsqrte f1, f31
-    lfd f3, lbl_806D2720(r2)
-    lfd f2, lbl_806D2728(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f31, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f31, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f31, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f31, f0
-    frsp f0, f0
-    stfs f0, 0x10(r1)
-    lfs f31, 0x10(r1)
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B5DC:
-    lwz r3, 0x44(r31)
-    bl EffectState_HasContent
-    clrlwi. r0, r3, 24
-    bne KartItem_ApplyImpactImpulseAndRumble_L_8004B644
-    lfs f1, 0x30(r1)
-    lfs f0, 0x3c(r1)
-    lbz r0, 0x20(r31)
-    fmuls f0, f1, f0
-    lfs f2, 0x2c(r1)
-    lfs f1, 0x38(r1)
-    cmplwi r0, 0x1
-    lfs f3, 0x34(r1)
-    fmadds f0, f2, f1, f0
-    lfs f1, 0x40(r1)
-    fmadds f1, f3, f1, f0
-    bne KartItem_ApplyImpactImpulseAndRumble_L_8004B644
-    lfs f0, lbl_806D26EC(r2)
-    fcmpo cr0, f1, f0
-    ble KartItem_ApplyImpactImpulseAndRumble_L_8004B630
-    lfs f30, lbl_806D2734(r2)
-    b KartItem_ApplyImpactImpulseAndRumble_L_8004B634
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B630:
-    lfs f30, lbl_806D2738(r2)
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B634:
-    bl StrPcb_GetInstance
-    fmr f1, f30
-    li r4, 0xc
-    bl StrPcb_SetTimer3c40
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B644:
-    lfs f0, lbl_806D26FC(r2)
-    lis r0, 0x1000
-    lwz r3, 0x2c(r31)
-    li r5, 0x0
-    fdivs f0, f0, f31
-    lfs f2, 0x2c(r1)
-    lwz r4, 0x304(r3)
-    lfs f1, 0x30(r1)
-    lwz r3, 0x10(r4)
-    lwz r4, 0x14(r4)
-    fneg f3, f0
-    lfs f0, 0x34(r1)
-    and r0, r4, r0
-    and r4, r3, r5
-    xor r3, r0, r5
-    fmuls f2, f2, f3
-    fmuls f1, f1, f3
-    xor r0, r4, r5
-    fmuls f0, f0, f3
-    or. r0, r3, r0
-    stfs f2, 0x2c(r1)
-    stfs f1, 0x30(r1)
-    stfs f0, 0x34(r1)
-    beq KartItem_ApplyImpactImpulseAndRumble_L_8004B6AC
-    clrlwi. r0, r30, 24
-    bne KartItem_ApplyImpactImpulseAndRumble_L_8004B7D4
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B6AC:
-    lfs f0, lbl_806D273C(r2)
-    lwz r3, 0x28(r31)
-    fmuls f5, f0, f31
-    lfs f1, 0x2c(r1)
-    lfs f0, 0x30(r1)
-    lfs f2, 0x34(r1)
-    fmuls f4, f1, f5
-    lfs f1, 0x1ac(r3)
-    fmuls f3, f0, f5
-    lfs f0, lbl_806D26EC(r2)
-    fmuls f2, f2, f5
-    fadds f1, f1, f4
-    stfs f4, 0x2c(r1)
-    stfs f1, 0x1ac(r3)
-    lfs f1, 0x1b0(r3)
-    stfs f3, 0x30(r1)
-    fadds f1, f1, f3
-    stfs f2, 0x34(r1)
-    stfs f1, 0x1b0(r3)
-    lfs f1, 0x1b4(r3)
-    fadds f1, f1, f2
-    stfs f1, 0x1b4(r3)
-    lfs f2, 0x1ac(r3)
-    lfs f1, 0x1b0(r3)
-    fmuls f2, f2, f2
-    lfs f3, 0x1b4(r3)
-    fmuls f1, f1, f1
-    fmuls f3, f3, f3
-    fadds f1, f2, f1
-    fadds f4, f3, f1
-    fcmpo cr0, f4, f0
-    ble KartItem_ApplyImpactImpulseAndRumble_L_8004B778
-    frsqrte f1, f4
-    lfd f3, lbl_806D2720(r2)
-    lfd f2, lbl_806D2728(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f4, f0
-    frsp f0, f0
-    stfs f0, 0xc(r1)
-    lfs f4, 0xc(r1)
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B778:
-    lfs f0, 0x1b8(r3)
-    fcmpo cr0, f4, f0
-    ble KartItem_ApplyImpactImpulseAndRumble_L_8004B7AC
-    fdivs f1, f0, f4
-    lfs f0, 0x1ac(r3)
-    fmuls f0, f0, f1
-    stfs f0, 0x1ac(r3)
-    lfs f0, 0x1b0(r3)
-    fmuls f0, f0, f1
-    stfs f0, 0x1b0(r3)
-    lfs f0, 0x1b4(r3)
-    fmuls f0, f0, f1
-    stfs f0, 0x1b4(r3)
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B7AC:
-    lfs f1, lbl_806D2740(r2)
-    lfs f0, lbl_806D26EC(r2)
-    fsubs f1, f1, f31
-    fmr f31, f1
-    fcmpo cr0, f1, f0
-    bge KartItem_ApplyImpactImpulseAndRumble_L_8004B7C8
-    lfs f31, lbl_806D26FC(r2)
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B7C8:
-    lfs f0, lbl_806D273C(r2)
-    fmuls f31, f31, f0
-    b KartItem_ApplyImpactImpulseAndRumble_L_8004B818
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B7D4:
-    xor r0, r4, r5
-    or. r0, r3, r0
-    bne KartItem_ApplyImpactImpulseAndRumble_L_8004B7E4
-    b KartItem_ApplyImpactImpulseAndRumble_L_8004B7E8
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B7E4:
-    li r5, 0x1
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B7E8:
-    clrlwi r0, r5, 24
-    cmplwi r0, 0x1
-    bne KartItem_ApplyImpactImpulseAndRumble_L_8004B818
-    lfs f1, lbl_806D2740(r2)
-    lfs f0, lbl_806D26EC(r2)
-    fsubs f1, f1, f31
-    fmr f31, f1
-    fcmpo cr0, f1, f0
-    bge KartItem_ApplyImpactImpulseAndRumble_L_8004B810
-    lfs f31, lbl_806D26FC(r2)
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B810:
-    lfs f0, lbl_806D273C(r2)
-    fmuls f31, f31, f0
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B818:
-    lfs f5, 0x58(r1)
-    lfs f3, 0x5c(r1)
-    lfs f1, 0x2c(r1)
-    lfs f0, 0x30(r1)
-    lfs f4, 0x60(r1)
-    fmuls f1, f5, f1
-    fmuls f0, f3, f0
-    lfs f2, 0x34(r1)
-    lfs f13, 0x2c(r1)
-    fmuls f2, f4, f2
-    lfs f11, 0x30(r1)
-    fadds f0, f1, f0
-    fmuls f12, f13, f31
-    lwz r3, 0x28(r31)
-    fmuls f10, f11, f31
-    fadds f0, f2, f0
-    lfs f9, 0x34(r1)
-    lfs f2, lbl_806D2744(r2)
-    stfs f12, 0x310(r3)
-    fmuls f8, f9, f31
-    fneg f1, f0
-    stfs f10, 0x314(r3)
-    lfs f0, lbl_806D26EC(r2)
-    fmuls f2, f2, f1
-    stfs f8, 0x318(r3)
-    lwz r3, 0x28(r31)
-    fmuls f7, f5, f2
-    stfs f5, 0x14(r1)
-    lfs f1, 0x1ac(r3)
-    fmuls f6, f3, f2
-    fmuls f2, f4, f2
-    stfs f3, 0x18(r1)
-    fadds f3, f13, f7
-    stfs f4, 0x1c(r1)
-    fadds f5, f11, f6
-    fadds f4, f9, f2
-    stfs f12, 0x20(r1)
-    fadds f1, f1, f3
-    stfs f10, 0x24(r1)
-    stfs f1, 0x1ac(r3)
-    lfs f1, 0x1b0(r3)
-    stfs f8, 0x28(r1)
-    fadds f1, f1, f5
-    stfs f7, 0x14(r1)
-    stfs f1, 0x1b0(r3)
-    lfs f1, 0x1b4(r3)
-    stfs f6, 0x18(r1)
-    fadds f1, f1, f4
-    stfs f2, 0x1c(r1)
-    stfs f1, 0x1b4(r3)
-    lfs f2, 0x1ac(r3)
-    lfs f1, 0x1b0(r3)
-    lfs f6, 0x1b4(r3)
-    fmuls f2, f2, f2
-    fmuls f1, f1, f1
-    stfs f3, 0x2c(r1)
-    fmuls f3, f6, f6
-    stfs f5, 0x30(r1)
-    fadds f1, f2, f1
-    stfs f4, 0x34(r1)
-    fadds f4, f3, f1
-    fcmpo cr0, f4, f0
-    ble KartItem_ApplyImpactImpulseAndRumble_L_8004B960
-    frsqrte f1, f4
-    lfd f3, lbl_806D2720(r2)
-    lfd f2, lbl_806D2728(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f4, f0
-    frsp f0, f0
-    stfs f0, 0x8(r1)
-    lfs f4, 0x8(r1)
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B960:
-    lfs f0, 0x1b8(r3)
-    fcmpo cr0, f4, f0
-    ble KartItem_ApplyImpactImpulseAndRumble_L_8004B994
-    fdivs f1, f0, f4
-    lfs f0, 0x1ac(r3)
-    fmuls f0, f0, f1
-    stfs f0, 0x1ac(r3)
-    lfs f0, 0x1b0(r3)
-    fmuls f0, f0, f1
-    stfs f0, 0x1b0(r3)
-    lfs f0, 0x1b4(r3)
-    fmuls f0, f0, f1
-    stfs f0, 0x1b4(r3)
-    KartItem_ApplyImpactImpulseAndRumble_L_8004B994:
-    psq_l f31, 0x98(r1), 0, 0
-    lfd f31, 0x90(r1)
-    psq_l f30, 0x88(r1), 0, 0
-    lfd f30, 0x80(r1)
-    lwz r31, 0x7c(r1)
-    lwz r0, 0xa4(r1)
-    lwz r30, 0x78(r1)
-    mtlr r0
-    addi r1, r1, 0xa0
-    blr
+/* 0.5 / 3.0 are literals on purpose: with the extern doubles the sum is coloured before
+ * the two constants (f2 instead of f4), regalloc_patterns 83. */
+static inline float KartItem_sqrtf(float x) {
+    volatile float y;
+    if (x > 0.0f) {
+        double guess = __frsqrte(x);
+        guess = 0.5 * guess * (3.0 - x * (guess * guess));
+        guess = 0.5 * guess * (3.0 - x * (guess * guess));
+        guess = 0.5 * guess * (3.0 - x * (guess * guess));
+        y = (float)(x * guess);
+        x = y;
+    }
+    return x;
 }
+static inline void KartItem_AddImpactClamped(KartMovementSpeedView *mv, const float *v) {
+    float len;
+    mv->impact1ac += v[0];
+    mv->impact1b0 += v[1];
+    mv->impact1b4 += v[2];
+    len = KartItem_sqrtf(mv->impact1ac * mv->impact1ac + mv->impact1b0 * mv->impact1b0 + mv->impact1b4 * mv->impact1b4);
+    if (len > mv->impactCap1b8) {
+        float k = mv->impactCap1b8 / len;
+        mv->impact1ac *= k;
+        mv->impact1b0 *= k;
+        mv->impact1b4 *= k;
+    }
+}
+
+#pragma exceptions off
+static inline void KI_sub3(float *o, float x, float y, float z, const float *q) { o[0] = x - q[12]; o[1] = y - q[13]; o[2] = z - q[14]; }
+static inline float KI_len3(const float *p) { return KartItem_sqrtf(p[2] * p[2] + (p[0] * p[0] + p[1] * p[1])); }
+void KartItem_ApplyImpactImpulseAndRumble(KartItemOpsView *self, int mode, float x, float y, float z) { /* 0x8004B49C size:0x520 */
+    float mtx[16];
+    float d[3];
+    float r[3];
+    float w[3];
+    float len;
+    float *t = self->movement->transform;
+    int i;
+    for (i = 0; i < 16; i++) mtx[i] = t[i];
+    {
+        float *q = mtx;
+        float *pd = d;
+        KI_sub3(pd, x, y, z, q); len = KI_len3(pd);
+    }
+    if (!EffectState_HasContent(self->effectState44)) {
+        float dot = d[0] * mtx[0] + d[1] * mtx[1] + d[2] * mtx[2];
+        if (self->strPcbGate20 == 1) {
+            float tm;
+            if (dot > lbl_806D26EC) {
+                tm = lbl_806D2734;
+            } else {
+                tm = lbl_806D2738;
+            }
+            StrPcb_SetTimer3c40(StrPcb_GetInstance(), tm, 0xc);
+        }
+    }
+    {
+        float inv = -(lbl_806D26FC / len);
+        d[0] *= inv;
+        d[1] *= inv;
+        d[2] *= inv;
+    }
+    if (!(self->ownerDriver->itemBus->flags & 0x10000000ULL) || !(unsigned char)mode) {
+        float s = lbl_806D273C * len;
+        d[0] *= s;
+        d[1] *= s;
+        d[2] *= s;
+        KartItem_AddImpactClamped(self->movement, d);
+        len = lbl_806D2740 - len;
+        if (len < lbl_806D26EC) len = 1.0f;
+        len *= lbl_806D273C;
+    } else if (ItemBus_TestFlags((ItemBusFlagsView *)self->ownerDriver->itemBus, 0x10000000ULL) == 1) {
+        len = lbl_806D2740 - len;
+        if (len < lbl_806D26EC) len = 1.0f;
+        len *= lbl_806D273C;
+    }
+    {
+        float proj;
+        float k;
+        float *pr = r;
+        float *pw = w;
+        pr[0] = d[0] * len;
+        pr[1] = d[1] * len;
+        pr[2] = d[2] * len;
+        { float *rp = &self->movement->rumbleX310; rp[0] = pr[0]; rp[1] = pr[1]; rp[2] = pr[2]; }
+        pw[0] = mtx[8];
+        pw[1] = mtx[9];
+        pw[2] = mtx[10];
+        {
+            /* fakematch (hand): natural code reads `d` here. The target loads d a second
+             * time for this dot product (separate from the loads used for r and d += w),
+             * which MWCC only does when the access goes through another object. */
+            float *pd = &mtx[-3];
+            float *q = &mtx[8];
+            float t0 = q[0] * pd[0];
+            float t1 = q[1] * pd[1];
+            float sum = t0 + t1;
+            float t2 = q[2] * pd[2];
+            proj = -(t2 + sum);
+        }
+        k = lbl_806D2744 * proj;
+        pw[0] *= k;
+        pw[1] *= k;
+        pw[2] *= k;
+        d[0] += pw[0];
+        d[1] += pw[1];
+        d[2] += pw[2];
+        KartItem_AddImpactClamped(self->movement, d);
+    }
+}
+#pragma exceptions reset
 
 #pragma exceptions off
 void KartItem_RenderPipelinedWithEffects(KartItemRenderView *self) { /* 0x8004B9BC size:0xF0 */
@@ -5638,33 +5304,55 @@ void CarObject_ApplyInput(CarObjInputAIView *self, unsigned char active, float i
 #pragma cplusplus on
 #pragma exceptions on
 struct Owned8005278C {
+    char opaque[0x24];
+    Owned8005278C(bool);
     ~Owned8005278C();
 };
 struct Owned800528B0 {
+    char opaque[0x28];
+    Owned800528B0(struct CarObject *);
     ~Owned800528B0();
 };
 struct Owned8005292C {
+    char opaque[0x4c];
+    Owned8005292C(struct CarObject *, unsigned char);
     ~Owned8005292C();
 };
 struct Owned80052A58 {
+    char opaque[0x1c];
+    Owned80052A58(struct Owned80052CC4 *, struct Owned80052B50 *, struct Owned80052AD4 *, unsigned char);
     ~Owned80052A58();
 };
 struct Owned80052AD4 {
+    char opaque[0xd4];
+    Owned80052AD4(int, int, int, struct Owned80052CC4 *, unsigned char, int, int, float);
     ~Owned80052AD4();
 };
 struct Owned80052B50 {
+    char opaque[0x154];
+    Owned80052B50(int, struct Owned80052C48 *, float, float, int, int, float);
     ~Owned80052B50();
 };
 struct Owned80052BCC {
+    char opaque[0x30];
+    Owned80052BCC(int);
     ~Owned80052BCC();
 };
 struct Owned80052C48 {
+    char opaque[0x308];
+    struct CarWarpResponder *warp;
+    char tail[0x384 - 0x30c];
+    Owned80052C48(int, int, float *, int, int, int);
     ~Owned80052C48();
 };
 struct Owned80052CC4 {
+    char opaque[0x324];
+    Owned80052CC4(int, void *, struct Owned80052D40 *, float, float, float);
     ~Owned80052CC4();
 };
 struct Owned80052D40 {
+    char opaque[0x38];
+    Owned80052D40(int, unsigned char, unsigned char, int, float *);
     ~Owned80052D40();
 };
 struct KartItemSubHolder {
@@ -5822,534 +5510,330 @@ extern "C" void *KartItem_Dtor(KartItemObj *self, short flag) { /* 0x8004E2B0 si
 #pragma exceptions reset
 #pragma cplusplus off
 
-asm void CarObject_Init(void) { /* 0x8004E618 size:0x7BC */
-    nofralloc
-    stwu r1, -0x80(r1)
-    mflr r0
-    stw r0, 0x84(r1)
-    stfd f31, 0x70(r1)
-    psq_st f31, 0x78(r1), 0, 0
-    stfd f30, 0x60(r1)
-    psq_st f30, 0x68(r1), 0, 0
-    stfd f29, 0x50(r1)
-    psq_st f29, 0x58(r1), 0, 0
-    stmw r23, 0x2c(r1)
-    fmr f29, f1
-    mr r31, r3
-    fmr f30, f2
-    lbz r25, 0x8b(r1)
-    mr r23, r4
-    fmr f31, f3
-    mr r24, r5
-    mr r26, r6
-    mr r29, r7
-    mr r30, r8
-    mr r28, r9
-    mr r27, r10
-    addi r4, r31, 0x90
-    bl clItemBoxResponder_Ctor
-    addi r3, r31, 0xc
-    bl WarpZone_VtableTrim
-    lis r4, lbl_803F75F8@ha
-    li r3, 0x38
-    addi r5, r4, lbl_803F75F8@l
-    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
-    stw r5, 0x0(r31)
-    addi r0, r5, 0x10
-    li r5, 0x180
-    stw r0, 0xc(r31)
-    stw r23, 0x10(r31)
-    stw r24, 0x14(r31)
-    stw r26, 0x18(r31)
-    stw r29, 0x1c(r31)
-    stb r30, 0x20(r31)
-    stb r25, 0x21(r31)
-    bl MemoryManager_AllocTagged
-    mr. r26, r3
-    beq CarObject_Init_L_8004E6EC
-    lwz r3, 0x10(r31)
-    bl GetKartStartSlot
-    lwz r4, 0x14(r31)
-    mr r7, r3
-    mr r3, r26
-    mr r5, r30
-    mr r6, r30
-    addi r8, r31, 0x60
-    bl KartAudioChannel_Init
-    mr r26, r3
-    CarObject_Init_L_8004E6EC:
-    stw r26, 0x24(r31)
-    li r3, 0x324
-    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
-    li r5, 0x181
-    bl MemoryManager_AllocTagged
-    mr. r26, r3
-    beq CarObject_Init_L_8004E744
-    lwz r25, 0x24(r31)
-    mr r6, r28
-    lwz r3, 0x14(r31)
-    lwz r4, 0x18(r31)
-    lwz r5, 0x1c(r31)
-    bl GetKartParamBlock
-    fmr f1, f29
-    mr r5, r3
-    fmr f2, f30
-    lwz r4, 0x10(r31)
-    fmr f3, f31
-    mr r3, r26
-    mr r6, r25
-    bl KartMovement_Init
-    mr r26, r3
-    CarObject_Init_L_8004E744:
-    stw r26, 0x28(r31)
-    li r3, 0x384
-    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
-    li r5, 0x182
-    bl MemoryManager_AllocTagged
-    mr. r25, r3
-    beq CarObject_Init_L_8004E78C
-    lwz r3, 0x10(r31)
-    bl GetKartStartSlot
-    lwz r4, 0x10(r31)
-    mr r7, r3
-    lwz r5, 0x14(r31)
-    mr r3, r25
-    mr r9, r29
-    addi r6, r31, 0x60
-    li r8, 0x0
-    bl KartDriver_New_Full
-    mr r25, r3
-    CarObject_Init_L_8004E78C:
-    stw r25, 0x2c(r31)
-    li r3, 0x30
-    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
-    li r5, 0x183
-    bl MemoryManager_AllocTagged
-    mr. r0, r3
-    beq CarObject_Init_L_8004E7B4
-    li r4, 0x3c
-    bl InputCmd_Init
-    mr r0, r3
-    CarObject_Init_L_8004E7B4:
-    stw r0, 0x30(r31)
-    li r3, 0x154
-    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
-    li r5, 0x184
-    bl MemoryManager_AllocTagged
-    mr. r0, r3
-    beq CarObject_Init_L_8004E7F4
-    fmr f1, f29
-    lwz r5, 0x2c(r31)
-    fmr f3, f30
-    lfs f2, lbl_806D26EC(r2)
-    lwz r6, 0x14(r31)
-    li r4, 0x1
-    lbz r7, 0x20(r31)
-    bl TornadoEffect_Ctor
-    mr r0, r3
-    CarObject_Init_L_8004E7F4:
-    stw r0, 0x34(r31)
-    li r3, 0xd4
-    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
-    li r5, 0x185
-    bl MemoryManager_AllocTagged
-    mr. r25, r3
-    beq CarObject_Init_L_8004E848
-    lwz r26, 0x28(r31)
-    lwz r3, 0x10(r31)
-    bl GetKartStartSlot
-    fmr f1, f31
-    mr r6, r3
-    lwz r4, 0x14(r31)
-    mr r3, r25
-    mr r5, r29
-    mr r7, r26
-    mr r8, r30
-    mr r9, r27
-    li r10, 0x0
-    bl PlayCamera_Init
-    mr r25, r3
-    CarObject_Init_L_8004E848:
-    stw r25, 0x38(r31)
-    li r3, 0x1c
-    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
-    li r5, 0x186
-    bl MemoryManager_AllocTagged
-    mr. r0, r3
-    beq CarObject_Init_L_8004E87C
-    lwz r6, 0x38(r31)
-    mr r7, r30
-    lwz r4, 0x28(r31)
-    lwz r5, 0x34(r31)
-    bl KartEffectFadeTransit_Init
-    mr r0, r3
-    CarObject_Init_L_8004E87C:
-    stw r0, 0x3c(r31)
-    li r3, 0x14
-    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
-    li r5, 0x187
-    bl MemoryManager_AllocTagged
-    mr. r27, r3
-    beq CarObject_Init_L_8004E8CC
-    stw r31, 0x0(r27)
-    li r3, 0x1c
-    bl Alloc
-    mr. r23, r3
-    beq CarObject_Init_L_8004E8B4
-    mr r4, r31
-    bl KartItemSubObject_Ctor
-    CarObject_Init_L_8004E8B4:
-    stw r23, 0x4(r27)
-    li r3, -0x1
-    li r0, 0x0
-    stw r3, 0x8(r27)
-    stw r3, 0xc(r27)
-    stw r0, 0x10(r27)
-    CarObject_Init_L_8004E8CC:
-    stw r27, 0x40(r31)
-    li r3, 0x4c
-    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
-    li r5, 0x188
-    bl MemoryManager_AllocTagged
-    mr. r0, r3
-    beq CarObject_Init_L_8004E8F8
-    lbz r5, 0x20(r31)
-    mr r4, r31
-    bl EffectSteering_Ctor
-    mr r0, r3
-    CarObject_Init_L_8004E8F8:
-    stw r0, 0x44(r31)
-    li r3, 0x28
-    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
-    li r5, 0x189
-    bl MemoryManager_AllocTagged
-    mr. r0, r3
-    beq CarObject_Init_L_8004E920
-    mr r4, r31
-    bl EffectSpeed_Init
-    mr r0, r3
-    CarObject_Init_L_8004E920:
-    stw r0, 0x48(r31)
-    li r3, 0x58
-    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
-    li r5, 0x18a
-    bl MemoryManager_AllocTagged
-    cmplwi r3, 0x0
-    beq CarObject_Init_L_8004E9AC
-    lwz r5, 0x44(r31)
-    li r4, 0x0
-    lwz r6, 0x48(r31)
-    li r0, -0x1
-    lbz r7, 0x20(r31)
-    lfs f1, lbl_806D26FC(r2)
-    stw r31, 0x0(r3)
-    lfs f0, lbl_806D26EC(r2)
-    stw r5, 0x4(r3)
-    stw r6, 0x8(r3)
-    stb r7, 0xc(r3)
-    stfs f1, 0x10(r3)
-    stw r4, 0x14(r3)
-    stw r4, 0x1c(r3)
-    stfs f0, 0x20(r3)
-    stfs f0, 0x24(r3)
-    stw r0, 0x28(r3)
-    stw r0, 0x2c(r3)
-    stw r4, 0x30(r3)
-    stw r4, 0x34(r3)
-    stw r4, 0x38(r3)
-    stfs f1, 0x3c(r3)
-    stw r0, 0x40(r3)
-    stw r0, 0x44(r3)
-    stw r4, 0x48(r3)
-    stw r4, 0x4c(r3)
-    stw r4, 0x50(r3)
-    stfs f1, 0x54(r3)
-    CarObject_Init_L_8004E9AC:
-    stw r3, 0x4c(r31)
-    li r3, 0x10
-    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
-    li r5, 0x18c
-    bl MemoryManager_AllocTagged
-    cmplwi r3, 0x0
-    beq CarObject_Init_L_8004E9E4
-    lbz r4, 0x20(r31)
-    li r0, -0x1
-    lfs f0, lbl_806D26EC(r2)
-    stw r31, 0x0(r3)
-    stb r4, 0x4(r3)
-    stw r0, 0x8(r3)
-    stfs f0, 0xc(r3)
-    CarObject_Init_L_8004E9E4:
-    stw r3, 0x50(r31)
-    li r3, 0x24
-    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
-    li r5, 0x18b
-    bl MemoryManager_AllocTagged
-    mr. r0, r3
-    beq CarObject_Init_L_8004EA40
-    cmpwi r28, -0x1
-    li r4, 0x0
-    bne CarObject_Init_L_8004EA28
-    lwz r0, 0x10(r31)
-    cmpwi r0, 0x4
-    bne CarObject_Init_L_8004EA28
-    lwz r0, g_gameMode(r13)
-    cmpwi r0, 0x1
-    bne CarObject_Init_L_8004EA28
-    li r4, 0x1
-    CarObject_Init_L_8004EA28:
-    clrlwi r4, r4, 24
-    neg r0, r4
-    or r0, r0, r4
-    srwi r4, r0, 31
-    bl WarpAutoRun_Init
-    mr r0, r3
-    CarObject_Init_L_8004EA40:
-    stw r0, 0x54(r31)
-    li r3, 0x58
-    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
-    li r5, 0x18d
-    bl MemoryManager_AllocTagged
-    mr. r0, r3
-    beq CarObject_Init_L_8004EA6C
-    li r4, -0x1
-    li r5, 0x0
-    bl fn_802091BC
-    mr r0, r3
-    CarObject_Init_L_8004EA6C:
-    stw r0, 0x58(r31)
-    li r3, 0x58
-    la r4, lbl_806D27DC(r2)  /* lbl_806D27DC */
-    li r5, 0x18e
-    bl MemoryManager_AllocTagged
-    mr. r0, r3
-    beq CarObject_Init_L_8004EA98
-    li r4, -0x1
-    li r5, 0x0
-    bl fn_802091BC
-    mr r0, r3
-    CarObject_Init_L_8004EA98:
-    stw r0, 0x5c(r31)
-    li r5, 0x0
-    lfs f1, lbl_806D26EC(r2)
-    li r4, 0x3c
-    lfs f0, lbl_806D26FC(r2)
-    li r3, 0x1
-    stfs f1, 0x9c(r31)
-    li r0, -0x1
-    cmpwi r28, -0x1
-    stfs f1, 0xa0(r31)
-    stfs f1, 0xa4(r31)
-    stb r5, 0xa8(r31)
-    stfs f1, 0xac(r31)
-    stb r5, 0xb0(r31)
-    stb r5, 0xb1(r31)
-    stfs f1, 0xb4(r31)
-    stfs f1, 0xb8(r31)
-    stfs f0, 0xbc(r31)
-    stw r4, 0xc0(r31)
-    stw r5, 0xc4(r31)
-    stw r5, 0xc8(r31)
-    stfs f1, 0xcc(r31)
-    stw r5, 0xd0(r31)
-    stb r3, 0xd4(r31)
-    stb r5, 0xd5(r31)
-    stw r5, 0xd8(r31)
-    stb r5, 0xdc(r31)
-    stw r5, 0xe0(r31)
-    stfs f0, 0xe4(r31)
-    stfs f1, 0xe8(r31)
-    stw r5, 0xec(r31)
-    stw r0, 0xf0(r31)
-    stb r5, 0xf4(r31)
-    stw r5, 0xf8(r31)
-    stb r5, 0xfc(r31)
-    stb r3, 0xfd(r31)
-    stb r3, 0xfe(r31)
-    stb r5, 0xff(r31)
-    stw r5, 0x100(r31)
-    bne CarObject_Init_L_8004EB54
-    lwz r0, 0x10(r31)
-    cmpwi r0, 0x4
-    bne CarObject_Init_L_8004EB54
-    lwz r0, g_gameMode(r13)
-    cmpwi r0, 0x1
-    bne CarObject_Init_L_8004EB54
-    mr r5, r3
-    CarObject_Init_L_8004EB54:
-    clrlwi r4, r5, 24
-    li r0, 0x0
-    neg r3, r4
-    lfs f1, lbl_806D275C(r2)
-    or r3, r3, r4
-    lfs f0, lbl_806D26EC(r2)
-    srwi r3, r3, 31
-    stb r3, 0x108(r31)
-    stb r0, 0x109(r31)
-    stfs f1, 0x10c(r31)
-    stfs f0, 0x110(r31)
-    stfs f0, 0x114(r31)
-    lbz r0, 0x20(r31)
-    cmplwi r0, 0x1
-    bne CarObject_Init_L_8004EBF8
-    lbz r0, 0x21(r31)
-    cmplwi r0, 0x0
-    bne CarObject_Init_L_8004EBF8
-    lbz r0, lbl_806D0051(r13)
-    cmplwi r0, 0x0
-    bne CarObject_Init_L_8004EBBC
-    bl StrPcb_GetInstance
-    bl StrPcb_ForceRun_Neutral
-    bl StrPcb_GetInstance
-    li r4, 0x1
-    bl StrPcb_ResetCommands_Neutral
-    CarObject_Init_L_8004EBBC:
-    lbz r0, 0x20(r31)
-    cmplwi r0, 0x0
-    beq CarObject_Init_L_8004EBF8
-    bl StrPcb_GetInstance
-    li r4, 0x28
-    bl StrPcb_SetCmdByte2d
-    bl StrPcb_GetInstance
-    li r4, 0x1e
-    bl StrPcb_SetCmdByte2e
-    bl StrPcb_GetInstance
-    li r4, 0x0
-    bl StrPcb_SetCounterField14
-    bl StrPcb_GetInstance
-    li r4, 0x0
-    bl StrPcb_SetCmdByte2f
-    CarObject_Init_L_8004EBF8:
-    cmplwi r31, 0x0
-    mr r0, r31
-    beq CarObject_Init_L_8004EC08
-    addi r0, r31, 0xc
-    CarObject_Init_L_8004EC08:
-    lwz r3, 0x2c(r31)
-    stw r0, 0x308(r3)
-    lwz r0, g_carObjectList(r13)
-    cmplwi r0, 0x0
-    bne CarObject_Init_L_8004EC20
-    li r0, 0x0
-    CarObject_Init_L_8004EC20:
-    cmplwi r0, 0x0
-    bne CarObject_Init_L_8004EC64
-    li r3, 0x14
-    bl Alloc
-    mr. r23, r3
-    beq CarObject_Init_L_8004EC64
-    lis r3, lbl_803F7690@ha
-    addi r0, r3, lbl_803F7690@l
-    stw r0, 0x0(r23)
-    lis r3, lbl_803F76A8@ha
-    addi r0, r3, lbl_803F76A8@l
-    stw r23, g_carObjectList(r13)
-    addi r3, r23, 0x4
-    stw r0, 0x0(r23)
-    bl StlList_InitEmpty
-    li r0, 0x0
-    stw r0, 0x10(r23)
-    CarObject_Init_L_8004EC64:
-    lwz r3, g_carObjectCount(r13)
-    lwz r0, g_gameMode(r13)
-    addi r3, r3, 0x1
-    cmpwi r0, 0x1
-    stw r3, g_carObjectCount(r13)
-    beq CarObject_Init_L_8004ECAC
-    lwz r4, g_carObjectList(r13)
-    stw r31, 0x10(r1)
-    cmplwi r4, 0x0
-    bne CarObject_Init_L_8004EC90
-    li r4, 0x0
-    CarObject_Init_L_8004EC90:
-    addi r0, r4, 0x8
-    addi r3, r1, 0x8
-    stw r0, 0xc(r1)
-    addi r4, r4, 0x4
-    addi r5, r1, 0xc
-    addi r6, r1, 0x10
-    bl StlList_InsertBefore
-    CarObject_Init_L_8004ECAC:
-    li r0, 0x28
-    stw r0, 0x18(r1)
-    bl OSGetTick
-    stw r3, 0x14(r1)
-    mr r3, r31
-    li r4, 0x0
-    bl CarObject_MainUpdate
-    lwz r3, lbl_806D10A0(r13)
-    cmplwi r3, 0x0
-    bne CarObject_Init_L_8004ECD8
-    li r3, 0x0
-    CarObject_Init_L_8004ECD8:
-    cmplwi r3, 0x0
-    beq CarObject_Init_L_8004ECE8
-    lwz r4, 0x10(r31)
-    bl TitleTracker_Empty_PreFinalizeHook
-    CarObject_Init_L_8004ECE8:
-    lbz r0, 0x20(r31)
-    cmplwi r0, 0x1
-    bne CarObject_Init_L_8004ED24
-    lwz r25, 0x28(r31)
-    li r4, 0x1
-    mr r3, r25
-    bl KartMovement_CalcMaxSpeed
-    fmr f31, f1
-    mr r3, r25
-    li r4, 0x1
-    bl KartMovement_CalcCurrentSpeed
-    fmr f2, f31
-    bl Tachometer_UpdateDisplaySpeed
-    lwz r3, 0xc8(r31)
-    bl Tachometer_SetCoinCount
-    CarObject_Init_L_8004ED24:
-    bl OSGetTick
-    lis r5, 0x8000
-    lis r4, 0x431c
-    lwz r5, 0xf8(r5)
-    lis r0, 0x4330
-    subi r6, r4, 0x217d
-    lwz r7, 0x14(r1)
-    srwi r4, r5, 2
-    stw r0, 0x20(r1)
-    mulhwu r0, r6, r4
-    subf r3, r7, r3
-    lfd f2, lbl_806D27D0(r2)
-    slwi r4, r3, 3
-    lfs f0, lbl_806D27C8(r2)
-    lwz r3, 0x18(r1)
-    srwi r0, r0, 15
-    divwu r0, r4, r0
-    stw r0, 0x24(r1)
-    lfd f1, 0x20(r1)
-    fsubs f1, f1, f2
-    fdivs f1, f1, f0
-    bl Profiler_RecordFrame
-    lwz r0, g_gameMode(r13)
-    cmpwi r0, 0x1
-    beq CarObject_Init_L_8004EDA0
-    lwz r3, g_carObjectList(r13)
-    cmplwi r3, 0x0
-    bne CarObject_Init_L_8004ED98
-    li r3, 0x0
-    CarObject_Init_L_8004ED98:
-    li r0, 0x0
-    stw r0, 0x10(r3)
-    CarObject_Init_L_8004EDA0:
-    stw r31, g_playerCarObject(r13)
-    mr r3, r31
-    psq_l f31, 0x78(r1), 0, 0
-    lfd f31, 0x70(r1)
-    psq_l f30, 0x68(r1), 0, 0
-    lfd f30, 0x60(r1)
-    psq_l f29, 0x58(r1), 0, 0
-    lfd f29, 0x50(r1)
-    lmw r23, 0x2c(r1)
-    lwz r0, 0x84(r1)
-    mtlr r0
-    addi r1, r1, 0x80
-    blr
+/* CarObject_Init: native C++ constructor (exceptions on). Members are
+ * owned-pointer holders built from tagged new-expressions; the compiler
+ * extab destroys the built members/bases when a later ctor throws.
+ * Mangled names are bridged in tools/extab_user_renames.json. */
+#pragma cplusplus on
+#pragma exceptions on
+void *operator new(unsigned long);
+void operator delete(void *) throw();
+void *operator new(unsigned long, const char *, int);
+struct Holder8005278C {
+    Owned8005278C *p; /* 0x0 */
+    Holder8005278C(Owned8005278C *q) : p(q) {}
+    Owned8005278C *get() const { return p; }
+    ~Holder8005278C() throw();
+};
+struct Holder800528B0 {
+    Owned800528B0 *p; /* 0x0 */
+    Holder800528B0(Owned800528B0 *q) : p(q) {}
+    Owned800528B0 *get() const { return p; }
+    ~Holder800528B0() throw();
+};
+struct Holder8005292C {
+    Owned8005292C *p; /* 0x0 */
+    Holder8005292C(Owned8005292C *q) : p(q) {}
+    Owned8005292C *get() const { return p; }
+    ~Holder8005292C() throw();
+};
+struct Holder80052A58 {
+    Owned80052A58 *p; /* 0x0 */
+    Holder80052A58(Owned80052A58 *q) : p(q) {}
+    Owned80052A58 *get() const { return p; }
+    ~Holder80052A58() throw();
+};
+struct Holder80052AD4 {
+    Owned80052AD4 *p; /* 0x0 */
+    Holder80052AD4(Owned80052AD4 *q) : p(q) {}
+    Owned80052AD4 *get() const { return p; }
+    /* getter with a local: the camera argument of the fade ctor is then evaluated (loaded)
+     * before the plain .p arguments, as in the target (regalloc_patterns 91). */
+    Owned80052AD4 *getV() const { Owned80052AD4 *r = p; return r; }
+    ~Holder80052AD4() throw();
+};
+struct Holder80052B50 {
+    Owned80052B50 *p; /* 0x0 */
+    Holder80052B50(Owned80052B50 *q) : p(q) {}
+    Owned80052B50 *get() const { return p; }
+    ~Holder80052B50() throw();
+};
+struct Holder80052BCC {
+    Owned80052BCC *p; /* 0x0 */
+    Holder80052BCC(Owned80052BCC *q) : p(q) {}
+    Owned80052BCC *get() const { return p; }
+    ~Holder80052BCC() throw();
+};
+struct Holder80052C48 {
+    Owned80052C48 *p; /* 0x0 */
+    Holder80052C48(Owned80052C48 *q) : p(q) {}
+    Owned80052C48 *get() const { return p; }
+    ~Holder80052C48() throw();
+};
+struct Holder80052CC4 {
+    Owned80052CC4 *p; /* 0x0 */
+    Holder80052CC4(Owned80052CC4 *q) : p(q) {}
+    Owned80052CC4 *get() const { return p; }
+    ~Holder80052CC4() throw();
+};
+struct Holder80052D40 {
+    Owned80052D40 *p; /* 0x0 */
+    Holder80052D40(Owned80052D40 *q) : p(q) {}
+    Owned80052D40 *get() const { return p; }
+    ~Holder80052D40() throw();
+};
+struct CarSubObject {
+    char opaque[0x1c];
+    CarSubObject(struct CarObject *);
+};
+struct CarSubObjectHolder {
+    CarSubObject *p;
+    CarSubObjectHolder(CarSubObject *q) : p(q) {}
+};
+struct CarSubOwned {
+    struct CarObject *owner;
+    CarSubObjectHolder sub;
+    int a8;
+    int ac;
+    int a10;
+    CarSubOwned(struct CarObject *o) : owner(o), sub(new CarSubObject(o)), a8(-1), ac(-1), a10(0) {}
+};
+struct CarSubHolder {
+    CarSubOwned *p;
+    CarSubHolder(CarSubOwned *q) : p(q) {}
+    ~CarSubHolder() throw();
+};
+struct CarBlend4c {
+    struct CarObject *owner;
+    Owned8005292C *steering;
+    Owned800528B0 *speed;
+    unsigned char active;
+    float f10;
+    int f14;
+    int f18;
+    int f1c;
+    float f20;
+    float f24;
+    int f28;
+    int f2c;
+    int f30;
+    int f34;
+    int f38;
+    float f3c;
+    int f40;
+    int f44;
+    int f48;
+    int f4c;
+    int f50;
+    float f54;
+    inline CarBlend4c(struct CarObject *o);
+};
+struct CarBlend4cHolder {
+    CarBlend4c *p;
+    CarBlend4cHolder(CarBlend4c *q) : p(q) {}
+    ~CarBlend4cHolder() throw();
+};
+struct CarState50 {
+    struct CarObject *owner;
+    unsigned char active;
+    int f8;
+    float fc;
+    CarState50(struct CarObject *o, unsigned char act) : owner(o), active(act), f8(-1), fc(lbl_806D26EC) {}
+};
+struct CarState50Holder {
+    CarState50 *p;
+    CarState50Holder(CarState50 *q) : p(q) {}
+    ~CarState50Holder() throw();
+};
+struct CarProbe {
+    char opaque[0x58];
+    CarProbe(int, int);
+};
+struct CarResponder {
+    virtual void OnItemBoxHit();
+    virtual ~CarResponder();
+    char state[8];
+    CarResponder(Vec3c *);
+};
+struct CarWarpResponder {
+    virtual void OnWarp();
+    virtual ~CarWarpResponder();
+    CarWarpResponder();
+};
+struct CarListBase {
+    void *vptr;
+    CarListBase();
+    ~CarListBase();
+};
+struct CarList : CarListBase {
+    StlList list;
+    int f10;
+    CarList() {
+        vptr = (void *)lbl_803F76A8;
+        StlList_InitEmpty(&list);
+        f10 = 0;
+    }
+};
+class ScopedTimer {
+public:
+    inline ScopedTimer(int slot) {
+        m_slot = slot;
+        m_startTick = OSGetTick();
+    }
+    inline ~ScopedTimer() {
+        Profiler_RecordFrame(m_slot,
+            (float)(((OSGetTick() - m_startTick) * 8) /
+                ((*(unsigned int *)0x800000F8 / 4) / 125000)) / lbl_806D27C8);
+    }
+private:
+    unsigned int m_startTick;
+    volatile int m_slot;
+};
+struct CarObject : CarResponder, CarWarpResponder {
+    int slot10;                         /* 0x10 */
+    int character14;                    /* 0x14 */
+    int arg18;                          /* 0x18 */
+    int arg1c;                          /* 0x1c */
+    unsigned char isPlayer20;           /* 0x20 */
+    unsigned char flag21;               /* 0x21 */
+    Holder80052D40 audio;               /* 0x24 */
+    Holder80052CC4 movement;            /* 0x28 */
+    Holder80052C48 driver;              /* 0x2c */
+    Holder80052BCC input;               /* 0x30 */
+    Holder80052B50 tornado;             /* 0x34 */
+    Holder80052AD4 camera;              /* 0x38 */
+    Holder80052A58 fade;                /* 0x3c */
+    CarSubHolder sub;                   /* 0x40 */
+    Holder8005292C steering;            /* 0x44 */
+    Holder800528B0 speed;               /* 0x48 */
+    CarBlend4cHolder blend;             /* 0x4c */
+    CarState50Holder state;             /* 0x50 */
+    Holder8005278C autoRun;             /* 0x54 */
+    CarProbe *probe58;                  /* 0x58 */
+    CarProbe *probe5c;                  /* 0x5c */
+    float matrix[12];                   /* 0x60 */
+    Vec3c position;                     /* 0x90 */
+    float f9c, fa0, fa4;                /* 0x9c */
+    unsigned char fa8;                  /* 0xa8 */
+    float fac;                          /* 0xac */
+    unsigned char fb0, fb1;             /* 0xb0 */
+    float fb4, fb8, fbc;                /* 0xb4 */
+    int fc0, fc4, coinCountC8;          /* 0xc0 */
+    float fcc;                          /* 0xcc */
+    int fd0;                            /* 0xd0 */
+    unsigned char fd4, fd5;             /* 0xd4 */
+    int fd8;                            /* 0xd8 */
+    unsigned char fdc;                  /* 0xdc */
+    int fe0;                            /* 0xe0 */
+    float fe4, fe8;                     /* 0xe4 */
+    int fec, ff0;                       /* 0xec */
+    unsigned char ff4;                  /* 0xf4 */
+    int ff8;                            /* 0xf8 */
+    unsigned char ffc, ffd, ffe, fff;   /* 0xfc */
+    int f100;                           /* 0x100 */
+    int f104;                           /* 0x104 */
+    bool autoRun108;
+    unsigned char f109;     /* 0x108 */
+    float f10c, f110, f114;             /* 0x10c */
+    unsigned char autoRunMode(int pathId) const {
+        return pathId == -1 && slot10 == 4 && (int)g_gameMode == 1;
+    }
+    CarObject(int slot, int character, int a18, int a1c, unsigned char isPlayer, int pathId,
+              int camArg, unsigned char flag21, float x, float y, float z);
+    virtual void OnItemBoxHit();
+    virtual ~CarObject();
+};
+/* The payload reads its three values from the owner. Declaration order (act, sp, st) sets the
+ * colouring (last declared first: st r5, sp r6, act r7), the assignment order sets the load
+ * order (regalloc_patterns 91). */
+inline CarBlend4c::CarBlend4c(CarObject *o) {
+    unsigned char act; Owned800528B0 *sp; Owned8005292C *st;
+    st = o->steering.p; sp = o->speed.p; act = o->isPlayer20;
+    owner = o; steering = st; speed = sp; active = act;
+    f10 = lbl_806D26FC; f14 = 0; f1c = 0; f20 = lbl_806D26EC; f24 = lbl_806D26EC; f28 = -1; f2c = -1; f30 = 0; f34 = 0; f38 = 0;
+    f3c = lbl_806D26FC; f40 = -1; f44 = -1; f48 = 0; f4c = 0; f50 = 0; f54 = lbl_806D26FC;
 }
+#define gCarList (*(CarList **)&g_carObjectList)
+inline CarListBase::CarListBase() {
+    vptr = (void *)lbl_803F7690;
+    gCarList = (CarList *)this;
+}
+CarObject::CarObject(int slot, int character, int a18, int a1c, unsigned char isPlayer, int pathId,
+                     int camArg, unsigned char flag, float x, float y, float z)
+    : CarResponder(&position), CarWarpResponder(),
+      slot10(slot), character14(character), arg18(a18), arg1c(a1c), isPlayer20(isPlayer), flag21(flag),
+      audio(new ((const char *)lbl_806D27DC, 0x180) Owned80052D40(character14, isPlayer, isPlayer,
+            ((int (*)(int))GetKartStartSlot)(slot10), matrix)),
+      movement(new ((const char *)lbl_806D27DC, 0x181) Owned80052CC4(slot10,
+            ((void *(*)(int, int, int, int))GetKartParamBlock)(character14, arg18, arg1c, pathId), audio.get(), x, y, z)),
+      driver(new ((const char *)lbl_806D27DC, 0x182) Owned80052C48(slot10, character14, matrix,
+            ((int (*)(int))GetKartStartSlot)(slot10), 0, a1c)),
+      input(new ((const char *)lbl_806D27DC, 0x183) Owned80052BCC(0x3c)),
+      tornado(new ((const char *)lbl_806D27DC, 0x184) Owned80052B50(1, driver.get(), x, 0.0f, character14, isPlayer20, y)),
+      camera(new ((const char *)lbl_806D27DC, 0x185) Owned80052AD4(character14, a1c,
+            ((int (*)(int))GetKartStartSlot)(slot10), movement.get(), isPlayer, camArg, 0, z)),
+      fade(new ((const char *)lbl_806D27DC, 0x186) Owned80052A58(movement.p, tornado.p, camera.getV(), isPlayer)),
+      sub(new ((const char *)lbl_806D27DC, 0x187) CarSubOwned(this)),
+      steering(new ((const char *)lbl_806D27DC, 0x188) Owned8005292C(this, isPlayer20)),
+      speed(new ((const char *)lbl_806D27DC, 0x189) Owned800528B0(this)),
+      blend(new ((const char *)lbl_806D27DC, 0x18a) CarBlend4c(this)),
+      state(new ((const char *)lbl_806D27DC, 0x18c) CarState50(this, isPlayer20)),
+      autoRun(new ((const char *)lbl_806D27DC, 0x18b) Owned8005278C(autoRunMode(pathId))),
+      probe58(new ((const char *)lbl_806D27DC, 0x18d) CarProbe(-1, 0)),
+      probe5c(new ((const char *)lbl_806D27DC, 0x18e) CarProbe(-1, 0)),
+      f9c(lbl_806D26EC), fa0(lbl_806D26EC), fa4(lbl_806D26EC), fa8(0), fac(lbl_806D26EC),
+      fb0(0), fb1(0), fb4(lbl_806D26EC), fb8(lbl_806D26EC), fbc(lbl_806D26FC),
+      fc0(0x3c), fc4(0), coinCountC8(0), fcc(lbl_806D26EC), fd0(0), fd4(1), fd5(0), fd8(0), fdc(0),
+      fe0(0), fe4(lbl_806D26FC), fe8(lbl_806D26EC), fec(0), ff0(-1), ff4(0), ff8(0),
+      ffc(0), ffd(1), ffe(1), fff(0), f100(0),
+      autoRun108(autoRunMode(pathId)), f109(0),
+      f10c(lbl_806D275C), f110(lbl_806D26EC), f114(lbl_806D26EC)
+{
+    if (isPlayer20 == 1 && flag21 == 0) {
+        if (*(unsigned char *)&lbl_806D0051 == 0) {
+            StrPcb_ForceRun_Neutral(StrPcb_GetInstance());
+            StrPcb_ResetCommands_Neutral(StrPcb_GetInstance(), 1);
+        }
+        if (isPlayer20 != 0) {
+            StrPcb_SetCmdByte2d(StrPcb_GetInstance(), 0x28);
+            StrPcb_SetCmdByte2e(StrPcb_GetInstance(), 0x1e);
+            StrPcb_SetCounterField14(StrPcb_GetInstance(), 0);
+            StrPcb_SetCmdByte2f(StrPcb_GetInstance(), 0);
+        }
+    }
+    driver.p->warp = this;
+    if ((gCarList == 0 ? (CarList *)0 : gCarList) == 0) {
+        new CarList();
+    }
+    g_carObjectCount++;
+    if ((int)g_gameMode != 1) {
+        CarObject *me = this;
+        CarList *l = gCarList == 0 ? (CarList *)0 : gCarList;
+        StlInsIter end((StlInsNode *)&l->list.head);
+        StlList_InsertBefore(&l->list, end, *(StlInsValue *)&me);
+    }
+    {
+        ScopedTimer timer(0x28);
+        CarObject_MainUpdate(this, 0);
+        void *tracker = lbl_806D10A0 == 0 ? (void *)0 : lbl_806D10A0;
+        if (tracker) {
+            TitleTracker_Empty_PreFinalizeHook((unsigned int)tracker, slot10);
+        }
+        if (isPlayer20 == 1) {
+            void *mv = movement.p;
+            float max = KartMovement_CalcMaxSpeed(mv, 1);
+            Tachometer_UpdateDisplaySpeed(KartMovement_CalcCurrentSpeed(mv, 1), max);
+            Tachometer_SetCoinCount(coinCountC8);
+        }
+    }
+    if ((int)g_gameMode != 1) {
+        (gCarList == 0 ? (CarList *)0 : gCarList)->f10 = 0;
+    }
+    g_playerCarObject = (unsigned int)this;
+}
+#undef gCarList
+#pragma exceptions reset
+#pragma cplusplus off
 
 static inline float KartItem_CalcKeySpeedFromTable(KartMovementSpeedView *mv) {
     SpeedTableEntry *e;
@@ -6790,561 +6274,292 @@ void KartItem_OnFallOffOrDeath(KartItemOpsView *self) { /* 0x8004F6B0 size:0x1A8
 }
 #pragma exceptions reset
 
-asm void CarObject_HandleItemEffect(void) { /* 0x8004F858 size:0x7B8 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    lis r5, lbl_802ED94C@ha
-    stw r0, 0x34(r1)
-    li r0, 0x13
-    addi r5, r5, lbl_802ED94C@l
-    stmw r22, 0x8(r1)
-    mr r30, r3
-    mr r31, r4
-    li r3, 0x0
-    li r4, 0x0
-    mtctr r0
-    CarObject_HandleItemEffect_L_8004F888:
-    lwz r0, 0x0(r5)
-    cmpw r31, r0
-    bne CarObject_HandleItemEffect_L_8004F89C
-    li r3, 0x1
-    b CarObject_HandleItemEffect_L_8004F8BC
-    CarObject_HandleItemEffect_L_8004F89C:
-    lwzu r0, 0x4(r5)
-    cmpw r31, r0
-    bne CarObject_HandleItemEffect_L_8004F8B0
-    li r3, 0x1
-    b CarObject_HandleItemEffect_L_8004F8BC
-    CarObject_HandleItemEffect_L_8004F8B0:
-    addi r5, r5, 0x4
-    addi r4, r4, 0x1
-    bdnz CarObject_HandleItemEffect_L_8004F888
-    CarObject_HandleItemEffect_L_8004F8BC:
-    clrlwi. r0, r3, 24
-    bne CarObject_HandleItemEffect_L_8004F8CC
-    li r3, 0x0
-    b CarObject_HandleItemEffect_L_8004FFFC
-    CarObject_HandleItemEffect_L_8004F8CC:
-    lwz r3, 0x0(r30)
-    lwz r3, 0x40(r3)
-    lwz r3, 0x4(r3)
-    bl ItemStateGuard_IsActive
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne CarObject_HandleItemEffect_L_8004F8F0
-    li r3, 0x1
-    b CarObject_HandleItemEffect_L_8004FFFC
-    CarObject_HandleItemEffect_L_8004F8F0:
-    lis r3, lbl_803F75D0@ha
-    li r0, 0xd
-    addi r3, r3, lbl_803F75D0@l
-    li r4, 0x0
-    mtctr r0
-    CarObject_HandleItemEffect_L_8004F904:
-    lha r0, 0x0(r3)
-    cmpw r31, r0
-    bne CarObject_HandleItemEffect_L_8004F918
-    li r4, 0x1
-    b CarObject_HandleItemEffect_L_8004F920
-    CarObject_HandleItemEffect_L_8004F918:
-    addi r3, r3, 0x2
-    bdnz CarObject_HandleItemEffect_L_8004F904
-    CarObject_HandleItemEffect_L_8004F920:
-    lwz r5, 0x0(r30)
-    lwz r3, 0x4c(r5)
-    lwz r0, 0x18(r3)
-    cmpwi r0, 0x98
-    bne CarObject_HandleItemEffect_L_8004F93C
-    li r0, 0x1
-    b CarObject_HandleItemEffect_L_8004F950
-    CarObject_HandleItemEffect_L_8004F93C:
-    cmpwi r0, 0x92
-    bne CarObject_HandleItemEffect_L_8004F94C
-    li r0, 0x1
-    b CarObject_HandleItemEffect_L_8004F950
-    CarObject_HandleItemEffect_L_8004F94C:
-    li r0, 0x0
-    CarObject_HandleItemEffect_L_8004F950:
-    clrlwi r0, r0, 24
-    cmplwi r0, 0x1
-    bne CarObject_HandleItemEffect_L_8004F96C
-    clrlwi. r0, r4, 24
-    bne CarObject_HandleItemEffect_L_8004F96C
-    li r3, 0x1
-    b CarObject_HandleItemEffect_L_8004FFFC
-    CarObject_HandleItemEffect_L_8004F96C:
-    lwz r4, 0x8(r30)
-    li r22, 0x1
-    cmpwi r4, 0x0
-    blt CarObject_HandleItemEffect_L_8004F9BC
-    blt CarObject_HandleItemEffect_L_8004F9BC
-    lwz r3, 0x34(r5)
-    bl TornadoEffect_ApplyItemVisual_Primary
-    lwz r3, 0x0(r30)
-    lwz r4, 0x8(r30)
-    lwz r3, 0x24(r3)
-    bl KartItemAudio_StopSEByItemId
-    lwz r3, 0x0(r30)
-    lwz r4, 0x8(r30)
-    lwz r3, 0x2c(r3)
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ApplyItemEventClear
-    li r0, -0x1
-    lfs f0, lbl_806D26EC(r2)
-    stw r0, 0x8(r30)
-    stfs f0, 0xc(r30)
-    CarObject_HandleItemEffect_L_8004F9BC:
-    lfs f0, lbl_806D26EC(r2)
-    cmpwi r31, 0x24
-    stfs f0, 0xc(r30)
-    beq CarObject_HandleItemEffect_L_8004FB4C
-    bge CarObject_HandleItemEffect_L_8004FA68
-    cmpwi r31, 0x18
-    beq CarObject_HandleItemEffect_L_8004FC44
-    bge CarObject_HandleItemEffect_L_8004FA2C
-    cmpwi r31, 0x11
-    beq CarObject_HandleItemEffect_L_8004FC44
-    bge CarObject_HandleItemEffect_L_8004FA0C
-    cmpwi r31, 0xe
-    beq CarObject_HandleItemEffect_L_8004FB4C
-    bge CarObject_HandleItemEffect_L_8004FA00
-    cmpwi r31, 0xc
-    bge CarObject_HandleItemEffect_L_8004FC44
-    b CarObject_HandleItemEffect_L_8004FFA4
-    CarObject_HandleItemEffect_L_8004FA00:
-    cmpwi r31, 0x10
-    bge CarObject_HandleItemEffect_L_8004FB4C
-    b CarObject_HandleItemEffect_L_8004FC44
-    CarObject_HandleItemEffect_L_8004FA0C:
-    cmpwi r31, 0x15
-    bge CarObject_HandleItemEffect_L_8004FA20
-    cmpwi r31, 0x13
-    bge CarObject_HandleItemEffect_L_8004FC44
-    b CarObject_HandleItemEffect_L_8004FFA4
-    CarObject_HandleItemEffect_L_8004FA20:
-    cmpwi r31, 0x17
-    bge CarObject_HandleItemEffect_L_8004FAE8
-    b CarObject_HandleItemEffect_L_8004FB4C
-    CarObject_HandleItemEffect_L_8004FA2C:
-    cmpwi r31, 0x1d
-    beq CarObject_HandleItemEffect_L_8004FF38
-    bge CarObject_HandleItemEffect_L_8004FA50
-    cmpwi r31, 0x1b
-    beq CarObject_HandleItemEffect_L_8004FEA4
-    bge CarObject_HandleItemEffect_L_8004FF2C
-    cmpwi r31, 0x1a
-    bge CarObject_HandleItemEffect_L_8004FEB0
-    b CarObject_HandleItemEffect_L_8004FD3C
-    CarObject_HandleItemEffect_L_8004FA50:
-    cmpwi r31, 0x22
-    beq CarObject_HandleItemEffect_L_8004FF50
-    bge CarObject_HandleItemEffect_L_8004FF44
-    cmpwi r31, 0x21
-    bge CarObject_HandleItemEffect_L_8004FF20
-    b CarObject_HandleItemEffect_L_8004FB4C
-    CarObject_HandleItemEffect_L_8004FA68:
-    cmpwi r31, 0x99
-    beq CarObject_HandleItemEffect_L_8004FF68
-    bge CarObject_HandleItemEffect_L_8004FAB4
-    cmpwi r31, 0x8b
-    beq CarObject_HandleItemEffect_L_8004FC44
-    bge CarObject_HandleItemEffect_L_8004FA9C
-    cmpwi r31, 0x52
-    beq CarObject_HandleItemEffect_L_8004FF5C
-    bge CarObject_HandleItemEffect_L_8004FFA4
-    cmpwi r31, 0x28
-    beq CarObject_HandleItemEffect_L_8004FB4C
-    bge CarObject_HandleItemEffect_L_8004FFA4
-    b CarObject_HandleItemEffect_L_8004FC44
-    CarObject_HandleItemEffect_L_8004FA9C:
-    cmpwi r31, 0x91
-    beq CarObject_HandleItemEffect_L_8004FC44
-    bge CarObject_HandleItemEffect_L_8004FFA4
-    cmpwi r31, 0x8d
-    bge CarObject_HandleItemEffect_L_8004FFA4
-    b CarObject_HandleItemEffect_L_8004FF80
-    CarObject_HandleItemEffect_L_8004FAB4:
-    cmpwi r31, 0x9d
-    beq CarObject_HandleItemEffect_L_8004FF8C
-    bge CarObject_HandleItemEffect_L_8004FAD0
-    cmpwi r31, 0x9b
-    beq CarObject_HandleItemEffect_L_8004FF98
-    bge CarObject_HandleItemEffect_L_8004FFA4
-    b CarObject_HandleItemEffect_L_8004FF74
-    CarObject_HandleItemEffect_L_8004FAD0:
-    cmpwi r31, 0x142
-    beq CarObject_HandleItemEffect_L_8004FEBC
-    bge CarObject_HandleItemEffect_L_8004FFA4
-    cmpwi r31, 0x141
-    bge CarObject_HandleItemEffect_L_8004FD58
-    b CarObject_HandleItemEffect_L_8004FFA4
-    CarObject_HandleItemEffect_L_8004FAE8:
-    lwz r29, 0x0(r30)
-    lwz r3, 0x40(r29)
-    lwz r3, 0x4(r3)
-    bl ItemStateGuard_IsActive
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne CarObject_HandleItemEffect_L_8004FB0C
-    li r0, 0x0
-    b CarObject_HandleItemEffect_L_8004FB44
-    CarObject_HandleItemEffect_L_8004FB0C:
-    lwz r3, 0x24(r29)
-    li r4, 0x5
-    bl SoundObj_PlaySE
-    lwz r3, 0x24(r29)
-    li r4, 0x55
-    bl SoundObj_PlaySE_Direct
-    lwz r3, 0x3c(r29)
-    li r4, 0x5
-    lfs f1, lbl_806D26F0(r2)
-    bl SpeedBoost_Apply
-    li r0, 0x1
-    lfs f0, lbl_806D26F4(r2)
-    stb r0, 0xdc(r29)
-    stfs f0, 0x10c(r29)
-    CarObject_HandleItemEffect_L_8004FB44:
-    mr r22, r0
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FB4C:
-    lfs f0, lbl_806D26F8(r2)
-    li r0, -0x1
-    li r27, 0x0
-    stfs f0, 0xc(r30)
-    lwz r29, 0x0(r30)
-    lwz r3, 0x40(r29)
-    stw r0, 0xc(r3)
-    stw r27, 0x10(r3)
-    lwz r28, 0x4c(r29)
-    mr r23, r28
-    CarObject_HandleItemEffect_L_8004FB74:
-    lwz r22, 0x28(r23)
-    lwz r24, 0x8(r28)
-    cmpwi r22, 0x0
-    lwz r25, 0x4(r28)
-    lwz r26, 0x0(r28)
-    blt CarObject_HandleItemEffect_L_8004FBF4
-    lwz r3, 0x34(r26)
-    mr r4, r22
-    bl TornadoEffect_ApplyItemVisual_Primary
-    lwz r3, 0x24(r26)
-    mr r4, r22
-    bl KartItemAudio_StopSEByItemId
-    lwz r3, 0x2c(r26)
-    mr r4, r22
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ApplyItemEventClear
-    mr r3, r25
-    bl EffectState_ReleaseAndClear
-    mr r3, r24
-    bl MediaBoard_SendAndCheck
-    lwz r3, 0x38(r26)
-    lfs f1, lbl_806D26EC(r2)
-    bl ShadowBillboard_SetField0xA4
-    li r3, -0x1
-    li r0, 0x0
-    stw r3, 0x28(r23)
-    lfs f0, lbl_806D26FC(r2)
-    stw r3, 0x2c(r23)
-    stw r0, 0x30(r23)
-    stw r0, 0x34(r23)
-    stw r0, 0x38(r23)
-    stfs f0, 0x3c(r23)
-    CarObject_HandleItemEffect_L_8004FBF4:
-    addi r27, r27, 0x1
-    addi r23, r23, 0x18
-    cmplwi r27, 0x2
-    blt CarObject_HandleItemEffect_L_8004FB74
-    li r0, 0x0
-    lfs f0, lbl_806D26EC(r2)
-    stw r0, 0x14(r28)
-    li r6, -0x1
-    li r5, -0x1
-    stw r0, 0x1c(r28)
-    stfs f0, 0x20(r28)
-    stfs f0, 0x24(r28)
-    lwz r3, 0x2c(r29)
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ClearMask
-    lwz r3, 0x24(r29)
-    li r4, 0x64
-    bl SoundObj_PlaySE_Direct
-    li r22, 0x1
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FC44:
-    lfs f0, lbl_806D2700(r2)
-    li r0, -0x1
-    li r28, 0x0
-    stfs f0, 0xc(r30)
-    lwz r29, 0x0(r30)
-    lwz r3, 0x40(r29)
-    stw r0, 0xc(r3)
-    stw r28, 0x10(r3)
-    lwz r27, 0x4c(r29)
-    mr r23, r27
-    CarObject_HandleItemEffect_L_8004FC6C:
-    lwz r22, 0x28(r23)
-    lwz r26, 0x8(r27)
-    cmpwi r22, 0x0
-    lwz r25, 0x4(r27)
-    lwz r24, 0x0(r27)
-    blt CarObject_HandleItemEffect_L_8004FCEC
-    lwz r3, 0x34(r24)
-    mr r4, r22
-    bl TornadoEffect_ApplyItemVisual_Primary
-    lwz r3, 0x24(r24)
-    mr r4, r22
-    bl KartItemAudio_StopSEByItemId
-    lwz r3, 0x2c(r24)
-    mr r4, r22
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ApplyItemEventClear
-    mr r3, r25
-    bl EffectState_ReleaseAndClear
-    mr r3, r26
-    bl MediaBoard_SendAndCheck
-    lwz r3, 0x38(r24)
-    lfs f1, lbl_806D26EC(r2)
-    bl ShadowBillboard_SetField0xA4
-    li r3, -0x1
-    li r0, 0x0
-    stw r3, 0x28(r23)
-    lfs f0, lbl_806D26FC(r2)
-    stw r3, 0x2c(r23)
-    stw r0, 0x30(r23)
-    stw r0, 0x34(r23)
-    stw r0, 0x38(r23)
-    stfs f0, 0x3c(r23)
-    CarObject_HandleItemEffect_L_8004FCEC:
-    addi r28, r28, 0x1
-    addi r23, r23, 0x18
-    cmplwi r28, 0x2
-    blt CarObject_HandleItemEffect_L_8004FC6C
-    li r0, 0x0
-    lfs f0, lbl_806D26EC(r2)
-    stw r0, 0x14(r27)
-    li r6, -0x1
-    li r5, -0x1
-    stw r0, 0x1c(r27)
-    stfs f0, 0x20(r27)
-    stfs f0, 0x24(r27)
-    lwz r3, 0x2c(r29)
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ClearMask
-    lwz r3, 0x24(r29)
-    li r4, 0x64
-    bl SoundObj_PlaySE_Direct
-    li r22, 0x1
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FD3C:
-    lfs f1, lbl_806D2704(r2)
-    lfs f0, lbl_806D2708(r2)
-    stfs f1, 0xc(r30)
-    lwz r3, 0x0(r30)
-    lwz r3, 0x28(r3)
-    stfs f0, 0x300(r3)
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FD58:
-    lwz r29, 0x0(r30)
-    li r0, -0x1
-    li r27, 0x0
-    lwz r3, 0x40(r29)
-    stw r0, 0xc(r3)
-    stw r27, 0x10(r3)
-    lwz r28, 0x4c(r29)
-    mr r23, r28
-    CarObject_HandleItemEffect_L_8004FD78:
-    lwz r22, 0x28(r23)
-    lwz r26, 0x8(r28)
-    cmpwi r22, 0x0
-    lwz r25, 0x4(r28)
-    lwz r24, 0x0(r28)
-    blt CarObject_HandleItemEffect_L_8004FDF8
-    lwz r3, 0x34(r24)
-    mr r4, r22
-    bl TornadoEffect_ApplyItemVisual_Primary
-    lwz r3, 0x24(r24)
-    mr r4, r22
-    bl KartItemAudio_StopSEByItemId
-    lwz r3, 0x2c(r24)
-    mr r4, r22
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ApplyItemEventClear
-    mr r3, r25
-    bl EffectState_ReleaseAndClear
-    mr r3, r26
-    bl MediaBoard_SendAndCheck
-    lwz r3, 0x38(r24)
-    lfs f1, lbl_806D26EC(r2)
-    bl ShadowBillboard_SetField0xA4
-    li r3, -0x1
-    li r0, 0x0
-    stw r3, 0x28(r23)
-    lfs f0, lbl_806D26FC(r2)
-    stw r3, 0x2c(r23)
-    stw r0, 0x30(r23)
-    stw r0, 0x34(r23)
-    stw r0, 0x38(r23)
-    stfs f0, 0x3c(r23)
-    CarObject_HandleItemEffect_L_8004FDF8:
-    addi r27, r27, 0x1
-    addi r23, r23, 0x18
-    cmplwi r27, 0x2
-    blt CarObject_HandleItemEffect_L_8004FD78
-    li r0, 0x0
-    lfs f0, lbl_806D26EC(r2)
-    stw r0, 0x14(r28)
-    li r6, -0x1
-    li r5, -0x1
-    stw r0, 0x1c(r28)
-    stfs f0, 0x20(r28)
-    stfs f0, 0x24(r28)
-    lwz r3, 0x2c(r29)
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ClearMask
-    lwz r3, 0x24(r29)
-    li r4, 0x64
-    bl SoundObj_PlaySE_Direct
-    lwz r29, 0x0(r30)
-    lwz r3, 0x40(r29)
-    lwz r3, 0x4(r3)
-    bl ItemStateGuard_IsActive
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne CarObject_HandleItemEffect_L_8004FE64
-    li r0, 0x0
-    b CarObject_HandleItemEffect_L_8004FE9C
-    CarObject_HandleItemEffect_L_8004FE64:
-    lwz r3, 0x24(r29)
-    li r4, 0x5
-    bl SoundObj_PlaySE
-    lwz r3, 0x24(r29)
-    li r4, 0x55
-    bl SoundObj_PlaySE_Direct
-    lwz r3, 0x3c(r29)
-    li r4, 0x6
-    lfs f1, lbl_806D26F0(r2)
-    bl SpeedBoost_Apply
-    li r0, 0x1
-    lfs f0, lbl_806D26F4(r2)
-    stb r0, 0xdc(r29)
-    stfs f0, 0x10c(r29)
-    CarObject_HandleItemEffect_L_8004FE9C:
-    mr r22, r0
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FEA4:
-    lfs f0, lbl_806D2704(r2)
-    stfs f0, 0xc(r30)
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FEB0:
-    lfs f0, lbl_806D2704(r2)
-    stfs f0, 0xc(r30)
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FEBC:
-    lwz r29, 0x0(r30)
-    lwz r3, 0x40(r29)
-    lwz r3, 0x4(r3)
-    bl ItemStateGuard_IsActive
-    clrlwi r0, r3, 24
-    cmplwi r0, 0x1
-    bne CarObject_HandleItemEffect_L_8004FEE0
-    li r0, 0x0
-    b CarObject_HandleItemEffect_L_8004FF18
-    CarObject_HandleItemEffect_L_8004FEE0:
-    lwz r3, 0x24(r29)
-    li r4, 0x5
-    bl SoundObj_PlaySE
-    lwz r3, 0x24(r29)
-    li r4, 0x55
-    bl SoundObj_PlaySE_Direct
-    lwz r3, 0x3c(r29)
-    li r4, 0x6
-    lfs f1, lbl_806D26F0(r2)
-    bl SpeedBoost_Apply
-    li r0, 0x1
-    lfs f0, lbl_806D26F4(r2)
-    stb r0, 0xdc(r29)
-    stfs f0, 0x10c(r29)
-    CarObject_HandleItemEffect_L_8004FF18:
-    mr r22, r0
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FF20:
-    lfs f0, lbl_806D270C(r2)
-    stfs f0, 0xc(r30)
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FF2C:
-    lfs f0, lbl_806D2704(r2)
-    stfs f0, 0xc(r30)
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FF38:
-    lfs f0, lbl_806D270C(r2)
-    stfs f0, 0xc(r30)
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FF44:
-    lfs f0, lbl_806D270C(r2)
-    stfs f0, 0xc(r30)
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FF50:
-    lfs f0, lbl_806D2710(r2)
-    stfs f0, 0xc(r30)
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FF5C:
-    lfs f0, lbl_806D2714(r2)
-    stfs f0, 0xc(r30)
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FF68:
-    lfs f0, lbl_806D2714(r2)
-    stfs f0, 0xc(r30)
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FF74:
-    lfs f0, lbl_806D2714(r2)
-    stfs f0, 0xc(r30)
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FF80:
-    lfs f0, lbl_806D270C(r2)
-    stfs f0, 0xc(r30)
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FF8C:
-    lfs f0, lbl_806D2714(r2)
-    stfs f0, 0xc(r30)
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FF98:
-    lfs f0, lbl_806D2714(r2)
-    stfs f0, 0xc(r30)
-    b CarObject_HandleItemEffect_L_8004FFAC
-    CarObject_HandleItemEffect_L_8004FFA4:
-    li r3, 0x0
-    b CarObject_HandleItemEffect_L_8004FFFC
-    CarObject_HandleItemEffect_L_8004FFAC:
-    clrlwi. r0, r22, 24
-    bne CarObject_HandleItemEffect_L_8004FFBC
-    li r3, 0x1
-    b CarObject_HandleItemEffect_L_8004FFFC
-    CarObject_HandleItemEffect_L_8004FFBC:
-    stw r31, 0x8(r30)
-    li r5, 0x1
-    lwz r3, 0x0(r30)
-    lwz r4, 0x8(r30)
-    lwz r3, 0x34(r3)
-    bl TornadoEffect_ApplyItemVisual_Compact
-    lwz r3, 0x0(r30)
-    lwz r4, 0x8(r30)
-    lwz r3, 0x24(r3)
-    bl KartItemAudio_PlayThrowConfirmSE
-    lwz r3, 0x0(r30)
-    lwz r4, 0x8(r30)
-    lwz r3, 0x2c(r3)
-    lwz r3, 0x304(r3)
-    bl ItemEffectBus_ApplyItemConfirm
-    li r3, 0x2
-    CarObject_HandleItemEffect_L_8004FFFC:
-    lmw r22, 0x8(r1)
-    lwz r0, 0x34(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+/* CarObject_HandleItemEffect inlines the cancel routine (same statements as
+ * KartItem_CancelActiveEffect) three times through a one-line wrapper.
+ * fakematch (hand): the three expansions only colour like the original when
+ * each copy declares its locals in a different order (HIE_CancelBodyA/B/C).
+ * The natural code is one inline with a single declaration order, called
+ * from all three case groups; that gives 172 register-only diff lines.
+ * See docs/regalloc_patterns.md (wrapper level puts the inline's `self`
+ * temps ahead of every body local). */
+static inline int HIE_CancelBodyA(KartItemOpsView *self) {
+    int itemId;
+    ItemLaneCursor *cursor;
+    void *mediaReq;
+    void *effectState;
+    KartItemOpsView *owner;
+    unsigned int i;
+    ItemEffectTable *tbl;
+    ItemStateBlock *q;
+
+    q = self->stateBlock;
+    q->activeId = -1;
+    q->activeFlag = i = 0;
+    tbl = self->effectTable;
+    cursor = (ItemLaneCursor *)tbl;
+    for (; i < 2; i++) {
+        itemId = cursor->itemId;
+        mediaReq = tbl->mediaReq;
+        effectState = tbl->effectState;
+        owner = tbl->owner;
+        if (itemId >= 0) {
+            TornadoEffect_ApplyItemVisual_Primary(owner->effectObj, itemId);
+            KartItemAudio_StopSEByItemId(owner->soundCtrl, itemId);
+            ItemEffectBus_ApplyItemEventClear(owner->ownerDriver->itemBus, itemId);
+            EffectState_ReleaseAndClear(effectState);
+            MediaBoard_SendAndCheck(mediaReq);
+            ShadowBillboard_SetField0xA4(owner->billboard, lbl_806D26EC);
+            cursor->itemId = -1;
+            cursor->itemKind = -1;
+            cursor->state8 = 0;
+            cursor->stateC = 0;
+            cursor->state10 = 0;
+            cursor->blend = lbl_806D26FC;
+        }
+        cursor = (ItemLaneCursor *)((char *)cursor + 0x18);
+    }
+    tbl->run14 = 0;
+    tbl->run1c = 0;
+    tbl->runBlend20 = lbl_806D26EC;
+    tbl->runBlend24 = lbl_806D26EC;
+    ItemEffectBus_ClearMask(self->ownerDriver->itemBus, 0xFFFFFFFFFFFFFFFFULL);
+    SoundObj_PlaySE_Direct(self->soundCtrl, 0x64);
+    return 1;
 }
+
+static inline int HIE_CancelA(KartItemOpsView *self) {
+    return HIE_CancelBodyA(self);
+}
+static inline int HIE_CancelBodyB(KartItemOpsView *self) {
+    unsigned int i;
+    ItemEffectTable *tbl;
+    void *mediaReq;
+    void *effectState;
+    KartItemOpsView *owner;
+    ItemLaneCursor *cursor;
+    int itemId;
+    ItemStateBlock *q;
+
+    q = self->stateBlock;
+    q->activeId = -1;
+    q->activeFlag = i = 0;
+    tbl = self->effectTable;
+    cursor = (ItemLaneCursor *)tbl;
+    for (; i < 2; i++) {
+        itemId = cursor->itemId;
+        mediaReq = tbl->mediaReq;
+        effectState = tbl->effectState;
+        owner = tbl->owner;
+        if (itemId >= 0) {
+            TornadoEffect_ApplyItemVisual_Primary(owner->effectObj, itemId);
+            KartItemAudio_StopSEByItemId(owner->soundCtrl, itemId);
+            ItemEffectBus_ApplyItemEventClear(owner->ownerDriver->itemBus, itemId);
+            EffectState_ReleaseAndClear(effectState);
+            MediaBoard_SendAndCheck(mediaReq);
+            ShadowBillboard_SetField0xA4(owner->billboard, lbl_806D26EC);
+            cursor->itemId = -1;
+            cursor->itemKind = -1;
+            cursor->state8 = 0;
+            cursor->stateC = 0;
+            cursor->state10 = 0;
+            cursor->blend = lbl_806D26FC;
+        }
+        cursor = (ItemLaneCursor *)((char *)cursor + 0x18);
+    }
+    tbl->run14 = 0;
+    tbl->run1c = 0;
+    tbl->runBlend20 = lbl_806D26EC;
+    tbl->runBlend24 = lbl_806D26EC;
+    ItemEffectBus_ClearMask(self->ownerDriver->itemBus, 0xFFFFFFFFFFFFFFFFULL);
+    SoundObj_PlaySE_Direct(self->soundCtrl, 0x64);
+    return 1;
+}
+
+static inline int HIE_CancelB(KartItemOpsView *self) {
+    return HIE_CancelBodyB(self);
+}
+static inline int HIE_CancelBodyC(KartItemOpsView *self) {
+    ItemEffectTable *tbl;
+    unsigned int i;
+    void *mediaReq;
+    void *effectState;
+    KartItemOpsView *owner;
+    ItemLaneCursor *cursor;
+    int itemId;
+    ItemStateBlock *q;
+
+    q = self->stateBlock;
+    q->activeId = -1;
+    q->activeFlag = i = 0;
+    tbl = self->effectTable;
+    cursor = (ItemLaneCursor *)tbl;
+    for (; i < 2; i++) {
+        itemId = cursor->itemId;
+        mediaReq = tbl->mediaReq;
+        effectState = tbl->effectState;
+        owner = tbl->owner;
+        if (itemId >= 0) {
+            TornadoEffect_ApplyItemVisual_Primary(owner->effectObj, itemId);
+            KartItemAudio_StopSEByItemId(owner->soundCtrl, itemId);
+            ItemEffectBus_ApplyItemEventClear(owner->ownerDriver->itemBus, itemId);
+            EffectState_ReleaseAndClear(effectState);
+            MediaBoard_SendAndCheck(mediaReq);
+            ShadowBillboard_SetField0xA4(owner->billboard, lbl_806D26EC);
+            cursor->itemId = -1;
+            cursor->itemKind = -1;
+            cursor->state8 = 0;
+            cursor->stateC = 0;
+            cursor->state10 = 0;
+            cursor->blend = lbl_806D26FC;
+        }
+        cursor = (ItemLaneCursor *)((char *)cursor + 0x18);
+    }
+    tbl->run14 = 0;
+    tbl->run1c = 0;
+    tbl->runBlend20 = lbl_806D26EC;
+    tbl->runBlend24 = lbl_806D26EC;
+    ItemEffectBus_ClearMask(self->ownerDriver->itemBus, 0xFFFFFFFFFFFFFFFFULL);
+    SoundObj_PlaySE_Direct(self->soundCtrl, 0x64);
+    return 1;
+}
+
+static inline int HIE_CancelC(KartItemOpsView *self) {
+    return HIE_CancelBodyC(self);
+}
+static inline unsigned char HIE_IsRunKind(ItemEffectTable *tbl) {
+    if (tbl->run18 == 0x98) {
+        return 1;
+    }
+    if (tbl->run18 == 0x92) {
+        return 1;
+    }
+    return 0;
+}
+
+static inline void HIE_Clear(ItemSecondaryLane *self) {
+    if (self->itemId >= 0) {
+        TornadoEffect_ApplyItemVisual_Primary(self->owner->effectObj, self->itemId);
+        KartItemAudio_StopSEByItemId(self->owner->soundCtrl, self->itemId);
+        ItemEffectBus_ApplyItemEventClear(self->owner->ownerDriver->itemBus, self->itemId);
+        self->itemId = -1;
+        self->blend = lbl_806D26EC;
+    }
+}
+
+#pragma exceptions off
+int CarObject_HandleItemEffect(ItemSecondaryLane *self, int itemId) { /* 0x8004F858 size:0x7B8 */
+    unsigned char found;
+    unsigned int i;
+    unsigned char found2;
+    short *p;
+    int j;
+    unsigned char ok;
+
+    found = 0;
+    for (i = 0; i < 38; i++) {
+        if (itemId == (int)lbl_802ED94C[i]) {
+            found = 1;
+            break;
+        }
+    }
+    if (!found) {
+        return 0;
+    }
+    if (ItemStateGuard_IsActive(self->owner->stateBlock->guard) == 1) {
+        return 1;
+    }
+    found2 = 0;
+    p = (short *)lbl_803F75D0;
+    for (j = 0; j < 13; j++) {
+        if (itemId == *p) {
+            found2 = 1;
+            break;
+        }
+        p++;
+    }
+    if (HIE_IsRunKind(self->owner->effectTable) == 1 && !found2) {
+        return 1;
+    }
+    ok = 1;
+    if (self->itemId >= 0) {
+        HIE_Clear(self);
+    }
+    self->blend = lbl_806D26EC;
+    switch (itemId) {
+    case 0x17:
+        ok = CarObject_ApplyDriftBoost(self->owner, lbl_806D26F0, 5);
+        break;
+    case 0x24: case 0x15: case 0x1F: case 0x1E: case 0x20: case 0x16: case 0x10: case 0x0E: case 0x28:
+        self->blend = *(float *)&lbl_806D26F8;
+        ok = HIE_CancelA(self->owner);
+        break;
+    case 0x26: case 0x25: case 0x0C: case 0x14: case 0x0D: case 0x11: case 0x18: case 0x13: case 0x27: case 0x0F: case 0x8B: case 0x91:
+        self->blend = lbl_806D2700;
+        ok = HIE_CancelB(self->owner);
+        break;
+    case 0x19:
+        self->blend = lbl_806D2704;
+        *(float *)((char *)self->owner->movement + 0x300) = lbl_806D2708;
+        break;
+    case 0x141:
+        HIE_CancelC(self->owner);
+        ok = CarObject_ApplyDriftBoost(self->owner, lbl_806D26F0, 6);
+        break;
+    case 0x1B:
+        self->blend = lbl_806D2704;
+        break;
+    case 0x1A:
+        self->blend = lbl_806D2704;
+        break;
+    case 0x142:
+        ok = CarObject_ApplyDriftBoost(self->owner, lbl_806D26F0, 6);
+        break;
+    case 0x21:
+        self->blend = *(float *)&lbl_806D270C;
+        break;
+    case 0x1C:
+        self->blend = lbl_806D2704;
+        break;
+    case 0x1D:
+        self->blend = *(float *)&lbl_806D270C;
+        break;
+    case 0x23:
+        self->blend = *(float *)&lbl_806D270C;
+        break;
+    case 0x22:
+        self->blend = *(float *)&lbl_806D2710;
+        break;
+    case 0x52:
+        self->blend = lbl_806D2714;
+        break;
+    case 0x99:
+        self->blend = lbl_806D2714;
+        break;
+    case 0x9A:
+        self->blend = lbl_806D2714;
+        break;
+    case 0x8C:
+        self->blend = *(float *)&lbl_806D270C;
+        break;
+    case 0x9D:
+        self->blend = lbl_806D2714;
+        break;
+    case 0x9B:
+        self->blend = lbl_806D2714;
+        break;
+    default:
+        return 0;
+    }
+    if (!ok) {
+        return 1;
+    }
+    self->itemId = itemId;
+    TornadoEffect_ApplyItemVisual_Compact(self->owner->effectObj, self->itemId, 1);
+    KartItemAudio_PlayThrowConfirmSE(self->owner->soundCtrl, self->itemId);
+    ItemEffectBus_ApplyItemConfirm(self->owner->ownerDriver->itemBus, self->itemId);
+    return 2;
+}
+#pragma exceptions reset
 
 #pragma auto_inline off
 #pragma exceptions off
@@ -8208,330 +7423,127 @@ void ItemEffect_Explosion(ItemStateBlock *self, int idx, const void *arg) { /* 0
 }
 #pragma exceptions reset
 
-/* Precan park (2026-06-10, batch_promote_80051648_effectsrun, 0 probes):
- * ItemEffect_Trap carries TWO documented hard-block classes at once.
- * (1) class-2 frsp store-forward interleave: the 16-float transform copy
- * (0x58..0x94 -> sp+0x38..0x74) stores RAW lfs values while the dot-product
- * consumes frsp'd copies of the same loads (frsp f0,f9 etc.) - CW 1.3.2
- * tracks lfs-derived singles through cast chains and always elides the frsp
- * (see cw132-frsp-store-forward-negative-probes.md, 6-probe ledger).
- * (2) cross-call product-only callee-saved: mulli r30,r4,0x18 is kept in r30
- * across the ItemEffectDamp_TryArm call while the lbl_802ED7BC table base is
- * rematerialized (lis/addi) per use region - the TryStartByCategory
- * addressing-reassociation family; CW saves the full pointer instead. */
-#define VF(x) (*(volatile float *)&(x))
-asm void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg) { /* 0x80051834 size:0x23C */
-    nofralloc
-    stwu r1, -0xb0(r1)
-    mflr r0
-    stw r0, 0xb4(r1)
-    stfd f31, 0xa0(r1)
-    psq_st f31, 0xa8(r1), 0, 0
-    stfd f30, 0x90(r1)
-    psq_st f30, 0x98(r1), 0, 0
-    stfd f29, 0x80(r1)
-    psq_st f29, 0x88(r1), 0, 0
-    stw r31, 0x7c(r1)
-    stw r30, 0x78(r1)
-    cmplwi r5, 0x0
-    lfs f31, lbl_806D26FC(r2)
-    mr r31, r3
-    beq ItemEffect_Trap_L_8005197C
-    lwz r3, 0x0(r31)
-    lfs f3, 0xa4(r5)
-    lwz r3, 0x28(r3)
-    lfs f1, 0xa0(r5)
-    lfs f9, 0x68(r3)
-    lfs f8, 0x6c(r3)
-    stfs f9, 0x48(r1)
-    lfs f9, 0x88(r3)
-    stfs f8, 0x4c(r1)
-    lfs f8, 0x8c(r3)
-    frsp f0, f9
-    lfs f13, 0x58(r3)
-    frsp f2, f8
-    lfs f12, 0x5c(r3)
-    fsubs f5, f1, f0
-    lfs f7, 0x70(r3)
-    frsp f4, f13
-    lfs f11, 0x60(r3)
-    fsubs f30, f3, f2
-    stfs f7, 0x50(r1)
-    frsp f3, f12
-    lfs f7, 0x90(r3)
-    fmuls f1, f4, f5
-    lfs f10, 0x64(r3)
-    fmuls f0, f3, f30
-    stfs f13, 0x38(r1)
-    frsp f2, f11
-    lfs f13, 0x78(r3)
-    frsp f6, f7
-    stfs f12, 0x3c(r1)
-    fadds f0, f1, f0
-    lfs f1, 0xa8(r5)
-    stfs f11, 0x40(r1)
-    fsubs f29, f1, f6
-    lfs f6, 0x74(r3)
-    stfs f10, 0x44(r1)
-    lfs f12, 0x7c(r3)
-    fmuls f1, f2, f29
-    stfs f6, 0x54(r1)
-    lfs f11, 0x80(r3)
-    lfs f10, 0x84(r3)
-    fadds f1, f1, f0
-    lfs f0, lbl_806D26EC(r2)
-    lfs f6, 0x94(r3)
-    stfs f13, 0x58(r1)
-    fcmpo cr0, f1, f0
-    stfs f12, 0x5c(r1)
-    stfs f11, 0x60(r1)
-    stfs f10, 0x64(r1)
-    stfs f9, 0x68(r1)
-    stfs f8, 0x6c(r1)
-    stfs f7, 0x70(r1)
-    stfs f6, 0x74(r1)
-    stfs f5, 0x2c(r1)
-    stfs f30, 0x30(r1)
-    stfs f29, 0x34(r1)
-    stfs f4, 0x20(r1)
-    stfs f3, 0x24(r1)
-    stfs f2, 0x28(r1)
-    bge ItemEffect_Trap_L_80051964
-    lfs f31, lbl_806D26E4(r2)
-    ItemEffect_Trap_L_80051964:
-    mulli r0, r4, 0x18
-    lis r3, lbl_802ED7BC@ha
-    addi r3, r3, lbl_802ED7BC@l
-    add r3, r3, r0
-    lfs f0, 0x8(r3)
-    fmuls f31, f31, f0
-    ItemEffect_Trap_L_8005197C:
-    lwz r5, 0x0(r31)
-    mulli r30, r4, 0x18
-    lis r3, lbl_802ED7BC@ha
-    lfs f3, lbl_806D2730(r2)
-    lwz r6, 0x28(r5)
-    fmr f2, f31
-    addi r0, r3, lbl_802ED7BC@l
-    lfs f10, 0x184(r6)
-    add r3, r0, r30
-    lfs f9, 0x180(r6)
-    addi r4, r1, 0x14
-    lfs f7, 0x17c(r6)
-    frsp f0, f10
-    frsp f1, f9
-    lfs f8, 0x4(r3)
-    frsp f6, f7
-    stfs f7, 0x14(r1)
-    fmuls f4, f0, f3
-    fmuls f5, f1, f3
-    fmuls f1, f6, f3
-    stfs f9, 0x18(r1)
-    fmuls f0, f4, f8
-    lwz r5, 0xc(r3)
-    stfs f10, 0x1c(r1)
-    fmuls f3, f1, f8
-    stfs f1, 0x14(r1)
-    fmuls f1, f5, f8
-    stfs f5, 0x18(r1)
-    stfs f4, 0x1c(r1)
-    stfs f3, 0x14(r1)
-    stfs f1, 0x18(r1)
-    stfs f0, 0x1c(r1)
-    stfs f7, 0x8(r1)
-    lwz r3, 0x4(r31)
-    stfs f9, 0xc(r1)
-    lfs f1, 0x1c8(r6)
-    stfs f10, 0x10(r1)
-    bl ItemEffectDamp_TryArm
-    lwz r4, 0x0(r31)
-    lis r3, lbl_802ED7BC@ha
-    addi r0, r3, lbl_802ED7BC@l
-    lwz r5, 0x2c(r4)
-    add r4, r0, r30
-    lwz r3, 0x10(r4)
-    lwz r5, 0x304(r5)
-    lwz r0, 0x14(r4)
-    stfs f31, 0x28(r5)
-    stw r3, 0xc(r31)
-    stw r0, 0x10(r31)
-    psq_l f31, 0xa8(r1), 0, 0
-    lfd f31, 0xa0(r1)
-    psq_l f30, 0x98(r1), 0, 0
-    lfd f30, 0x90(r1)
-    psq_l f29, 0x88(r1), 0, 0
-    lfd f29, 0x80(r1)
-    lwz r31, 0x7c(r1)
-    lwz r0, 0xb4(r1)
-    lwz r30, 0x78(r1)
-    mtlr r0
-    addi r1, r1, 0xb0
-    blr
+/* ItemEffect_Trap / ItemEffect_Projectile: matched 2026-11-10, see regalloc_patterns §83
+ * (literal 1/60, multiplier through Proj_scale, id/flag pair copied as a struct). */
+#pragma exceptions off
+static inline void Proj_scale(float *v, float k) { v[0] = v[0] * k; v[1] = v[1] * k; v[2] = v[2] * k; }
+void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg) { /* 0x80051834 size:0x23C */
+    float scale = lbl_806D26FC;
+    int i;
+    if (arg != 0) {
+        ItemObjectPosView *o = (ItemObjectPosView *)arg;
+        float mtx[16];
+        float d[3];
+        float dir[3];
+        float *t = self->owner->movement->transform;
+        for (i = 0; i < 16; i++) mtx[i] = t[i];
+        {
+            float *q = mtx;
+            float *pd = d;
+            float *pr = dir;
+            {
+                float dy = o->posY - q[13];
+                float dx = o->posX - q[12];
+                float dz = o->posZ - q[14];
+                pd[0] = dx; pd[1] = dy; pd[2] = dz;
+            }
+            pr[0] = q[0]; pr[1] = q[1]; pr[2] = q[2];
+            {
+                float t0 = pr[0] * pd[0];
+                float t1 = pr[1] * pd[1];
+                float sum = t0 + t1;
+                float t2 = pr[2] * pd[2];
+                if (t2 + sum < lbl_806D26EC) scale = lbl_806D26E4;
+            }
+        }
+        scale *= lbl_802ED7BC[idx].scaleB;
+    }
+    {
+        KartMovementSpeedView *mv = self->owner->movement;
+        float v[3];
+        float w[3];
+        float *vel = &mv->velX;
+        { float vx, vy, vz;
+          vz = vel[2]; vx = vel[0]; vy = vel[1];
+          w[0] = vx; w[1] = vy; w[2] = vz; }
+        { float *q = w; v[0] = q[0]; v[1] = q[1]; v[2] = q[2]; }
+        {
+            float *p = v;
+            Proj_scale(v, 1.0f / 60.0f);
+        }
+        {
+            float *p = v;
+            Proj_scale(v, lbl_802ED7BC[idx].scaleA);
+        }
+        /* the declared sixth float (k) is not set up by this caller: f3 holds a leftover product */
+        ((void (*)(void *, float *, int, float, float))ItemEffectDamp_TryArm)(self->guard, v, lbl_802ED7BC[idx].mode, mv->accel1c8, scale);
+    }
+    {
+        typedef struct { int a, b; } TrapPair;
+        *(float *)((char *)self->owner->ownerDriver->itemBus + 0x28) = scale;
+        *(TrapPair *)&self->activeId = *(const TrapPair *)&lbl_802ED7BC[idx].valC;
+    }
 }
-#undef VF
+#pragma exceptions reset
 
-/* Precan park (2026-06-10, batch_promote_80051648_effectsrun, 0 probes):
- * ItemEffect_Projectile has the same two classes as ItemEffect_Trap above:
- * (1) class-2 frsp interleave in the velocity-magnitude block (raw stfs of
- * velX/Y/Z to TWO stack regions interleaved with frsp'd squares); (2)
- * mulli r31,r4,0x14 kept callee-saved across ItemEffectImpact_TryArm with
- * the lbl_802ED5B4 base rematerialized per region. The first normalize
- * block (from arg+0xb8, no frsp) is solvable with the Explosion recipe. */
-#define VF(x) (*(volatile float *)&(x))
-asm void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg) { /* 0x80051A70 size:0x248 */
-    nofralloc
-    stwu r1, -0x40(r1)
-    mflr r0
-    lfs f0, lbl_806D26EC(r2)
-    stw r0, 0x44(r1)
-    stw r31, 0x3c(r1)
-    stw r30, 0x38(r1)
-    mr r30, r3
-    lfs f5, 0xbc(r5)
-    lfs f4, 0xb8(r5)
-    fmuls f1, f5, f5
-    lfs f6, 0xc0(r5)
-    fmuls f2, f4, f4
-    fmuls f3, f6, f6
-    stfs f4, 0x28(r1)
-    fadds f1, f2, f1
-    stfs f5, 0x2c(r1)
-    stfs f6, 0x30(r1)
-    fadds f4, f3, f1
-    fcmpo cr0, f4, f0
-    ble ItemEffect_Projectile_L_80051B0C
-    frsqrte f1, f4
-    lfd f3, lbl_806D2720(r2)
-    lfd f2, lbl_806D2728(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f4, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f4, f0
-    frsp f0, f0
-    stfs f0, 0xc(r1)
-    lfs f4, 0xc(r1)
-    ItemEffect_Projectile_L_80051B0C:
-    lfs f0, lbl_806D26EC(r2)
-    fcmpo cr0, f4, f0
-    cror eq, lt, eq
-    bne ItemEffect_Projectile_L_80051B2C
-    stfs f0, 0x30(r1)
-    stfs f0, 0x2c(r1)
-    stfs f0, 0x28(r1)
-    b ItemEffect_Projectile_L_80051B58
-    ItemEffect_Projectile_L_80051B2C:
-    lfs f0, lbl_806D26FC(r2)
-    lfs f2, 0x28(r1)
-    fdivs f3, f0, f4
-    lfs f1, 0x2c(r1)
-    lfs f0, 0x30(r1)
-    fmuls f2, f2, f3
-    fmuls f1, f1, f3
-    fmuls f0, f0, f3
-    stfs f2, 0x28(r1)
-    stfs f1, 0x2c(r1)
-    stfs f0, 0x30(r1)
-    ItemEffect_Projectile_L_80051B58:
-    lwz r3, 0x0(r30)
-    lfs f0, lbl_806D26EC(r2)
-    lwz r3, 0x28(r3)
-    lfs f5, 0x180(r3)
-    lfs f4, 0x17c(r3)
-    frsp f1, f5
-    lfs f6, 0x184(r3)
-    frsp f2, f4
-    stfs f4, 0x10(r1)
-    frsp f3, f6
-    fmuls f1, f1, f1
-    fmuls f2, f2, f2
-    stfs f5, 0x14(r1)
-    fmuls f3, f3, f3
-    stfs f6, 0x18(r1)
-    fadds f1, f2, f1
-    stfs f4, 0x1c(r1)
-    fadds f7, f3, f1
-    stfs f5, 0x20(r1)
-    stfs f6, 0x24(r1)
-    fcmpo cr0, f7, f0
-    ble ItemEffect_Projectile_L_80051BFC
-    frsqrte f1, f7
-    lfd f3, lbl_806D2720(r2)
-    lfd f2, lbl_806D2728(r2)
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f7, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f7, f0, f2
-    fmul f1, f1, f0
-    fmul f0, f1, f1
-    fmul f1, f3, f1
-    fnmsub f0, f7, f0, f2
-    fmul f0, f1, f0
-    fmul f0, f7, f0
-    frsp f0, f0
-    stfs f0, 0x8(r1)
-    lfs f7, 0x8(r1)
-    ItemEffect_Projectile_L_80051BFC:
-    lfs f2, 0x28(r1)
-    mulli r31, r4, 0x14
-    lfs f1, 0x2c(r1)
-    lis r3, lbl_802ED5B4@ha
-    lfs f0, 0x30(r1)
-    fmuls f4, f2, f7
-    fmuls f3, f1, f7
-    lfs f1, lbl_806D2730(r2)
-    fmuls f2, f0, f7
-    addi r0, r3, lbl_802ED5B4@l
-    stfs f4, 0x28(r1)
-    add r3, r0, r31
-    fmuls f0, f4, f1
-    lfs f5, 0x4(r3)
-    fmuls f4, f3, f1
-    stfs f3, 0x2c(r1)
-    fmuls f3, f2, f1
-    lwz r6, 0x8(r3)
-    stfs f2, 0x30(r1)
-    fmuls f2, f0, f5
-    fmuls f1, f4, f5
-    addi r4, r1, 0x28
-    stfs f0, 0x28(r1)
-    fmuls f0, f3, f5
-    stfs f4, 0x2c(r1)
-    stfs f3, 0x30(r1)
-    stfs f2, 0x28(r1)
-    stfs f1, 0x2c(r1)
-    stfs f0, 0x30(r1)
-    lwz r5, 0x0(r30)
-    lwz r3, 0x4(r30)
-    lwz r5, 0x28(r5)
-    addi r5, r5, 0x58
-    bl ItemEffectImpact_TryArm
-    lis r3, lbl_802ED5B4@ha
-    addi r0, r3, lbl_802ED5B4@l
-    add r4, r0, r31
-    lwz r3, 0xc(r4)
-    lwz r0, 0x10(r4)
-    stw r3, 0xc(r30)
-    stw r0, 0x10(r30)
-    lwz r31, 0x3c(r1)
-    lwz r30, 0x38(r1)
-    lwz r0, 0x44(r1)
-    mtlr r0
-    addi r1, r1, 0x40
-    blr
+#pragma exceptions off
+void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg) { /* 0x80051A70 size:0x248 */
+    const ItemObjectPosView *obj = (const ItemObjectPosView *)arg;
+    float mag2;
+    float mag;
+    struct { float x, y, z, pad; } d;
+    float w2[3];
+    float w[3];
+    float vx;
+    float vy;
+    KartMovementSpeedView *mv;
+    float vz;
+    float s;
+
+    vy = obj->velY;
+    vx = obj->velX;
+    vz = obj->velZ;
+    d.x = vx;
+    d.y = vy;
+    d.z = vz;
+    vx = d.z * d.z + (d.x * d.x + d.y * d.y); mag = ItemEffect_sqrtf(vx);
+    {
+        float *dp = &d.x;
+        if (mag <= lbl_806D26EC) {
+            dp[0] = dp[1] = dp[2] = lbl_806D26EC;
+        } else {
+            float inv = lbl_806D26FC / mag;
+            dp[0] = dp[0] * inv;
+            dp[1] = dp[1] * inv;
+            dp[2] = dp[2] * inv;
+        }
+    }
+    mv = self->owner->movement;
+    {
+        float *vel = &mv->velX;
+        float *p;
+        /* fakematch (hand): the natural code is C++ `Vec3 v = mv->velocity; float len = v.length();`
+         * (two Vec3 objects with destructors, see extab). The TU builds as C, so the copies are
+         * spelled out; the three loads reuse s/vy/vx and the sum reuses vz so that the sum is
+         * coloured after the y and z values (target f7), and 1/60 is a literal, not the extern,
+         * so its load is a backend temp coloured before the products. */
+        s = vel[0]; vy = vel[1]; vx = vel[2]; w[0] = s; w[1] = vy; w[2] = vx;
+        { float *q = w; w2[0] = q[0]; w2[1] = q[1]; w2[2] = q[2]; }
+        p = w2;
+        vz = p[2] * p[2] + (p[0] * p[0] + p[1] * p[1]); mag2 = ItemEffect_sqrtf(vz);
+    }
+    d.x = d.x * mag2;
+    d.y = d.y * mag2;
+    d.z = d.z * mag2;
+    Proj_scale(&d.x, 1.0f / 60.0f);
+    Proj_scale(&d.x, lbl_802ED5B4[idx].scaleA);
+    ItemEffectImpact_TryArm(self->guard, &d.x, self->owner->movement->transform, lbl_802ED5B4[idx].mode8);
+    {
+        typedef struct { int a, b; } ProjPair;
+        *(ProjPair *)&self->activeId = *(const ProjPair *)&lbl_802ED5B4[idx].valC;
+    }
 }
-#undef VF
+#pragma exceptions reset
 
 #pragma exceptions off
 int ItemTable_FindEntryByIdStride16(ItemCatEntry16 *tbl, int count, int itemId) { /* 0x80051CB8 size:0x38 */
@@ -8604,247 +7616,139 @@ void CarObject_GetField304Vec3(Vec3 *out, CarObjAux304View *car) { /* 0x80051DD0
 }
 #pragma exceptions reset
 
-/* parked at 98.95% (5 probes): all 219 instructions content-identical, residue is a
- * 6-web callee-saved permutation (target bp2=r31 cfg=r30 na=r29 nb=r28 sent=r27 i=r26 vs
- * CW cfg=r31 i=r30 bp2=r29 na=r28 nb=r27 sent=r26; cfg/i pinned across decl orders and
- * scoping = allocator-internal ranking, ProcessWarpAndDash family) + r12 vcall chain temp
- * + one stw r4-vs-r23 copy pick. 98.95% paste-ready C in batch HANDOFF appendix A.
- * Win idioms proven here: volatile-field BitsetRef proxy pair keeps the dead ctor stores;
- * scr out-vec is float[4] (slot layout); half=cfg copy -> K*scr fills -> center=cfg copy
- * -> mt row fills statement order locks the fp webs. */
-asm void CarObjectManager_RunKartKartCollisionSweep(void) { /* 0x80051DEC size:0x36C */
-    nofralloc
-    stwu r1, -0x1d0(r1)
-    mflr r0
-    lis r4, lbl_802EBA18@ha
-    stw r0, 0x1d4(r1)
-    stmw r23, 0x1ac(r1)
-    mr r24, r3
-    addi r30, r4, lbl_802EBA18@l
-    lwz r3, 0x10(r3)
-    addi r0, r3, 0x1
-    stw r0, 0x10(r24)
-    lwz r3, 0x10(r24)
-    lwz r0, g_carObjectCount(r13)
-    cmpw r3, r0
-    blt CarObjectManager_RunKartKartCollisionSweep_L_80052144
-    li r0, 0x0
-    addi r3, r1, 0x84
-    stw r0, 0x10(r24)
-    addi r5, r1, 0x8
-    stb r0, 0x8(r1)
-    lwz r4, 0x4(r24)
-    stw r0, 0x84(r1)
-    stw r0, 0x88(r1)
-    stw r0, 0x8c(r1)
-    bl Bitset_Init
-    addi r25, r1, 0x84
-    li r23, 0x0
-    b CarObjectManager_RunKartKartCollisionSweep_L_80051E70
-    CarObjectManager_RunKartKartCollisionSweep_L_80051E58:
-    stw r25, 0x2c(r1)
-    mr r3, r25
-    li r5, 0x0
-    stw r4, 0x30(r1)
-    bl Bitset_SetBit
-    addi r23, r23, 0x1
-    CarObjectManager_RunKartKartCollisionSweep_L_80051E70:
-    lwz r0, 0x4(r24)
-    mr r4, r23
-    cmplw r23, r0
-    blt CarObjectManager_RunKartKartCollisionSweep_L_80051E58
-    lwz r29, 0xc(r24)
-    addi r27, r24, 0x8
-    addi r31, r1, 0x84
-    li r26, 0x0
-    b CarObjectManager_RunKartKartCollisionSweep_L_8005212C
-    CarObjectManager_RunKartKartCollisionSweep_L_80051E94:
-    stw r31, 0x24(r1)
-    mr r3, r31
-    lwz r28, 0xc(r24)
-    mr r4, r26
-    stw r26, 0x28(r1)
-    bl Bitset_TestBit
-    clrlwi. r0, r3, 24
-    bne CarObjectManager_RunKartKartCollisionSweep_L_80052124
-    addi r3, r1, 0x148
-    li r25, 0x0
-    li r4, -0x1
-    li r5, 0x0
-    bl fn_802091BC
-    lwz r3, 0x8(r29)
-    addi r4, r1, 0xc0
-    lwz r3, 0x28(r3)
-    addi r23, r3, 0x58
-    mr r3, r23
-    bl Mtx4x4_TransposeTo4x3
-    addi r3, r1, 0xc0
-    addi r4, r1, 0x74
-    bl HSD_MtxGetRotation
-    lfs f4, lbl_806D27AC(r2)
-    addi r3, r1, 0x148
-    lfs f2, 0x74(r1)
-    addi r4, r1, 0x5c
-    lfs f1, 0x78(r1)
-    addi r5, r1, 0x68
-    lfs f0, 0x7c(r1)
-    fmuls f3, f4, f2
-    lwz r7, 0x41c(r30)
-    fmuls f2, f4, f1
-    lwz r6, 0x420(r30)
-    fmuls f0, f4, f0
-    lwz r0, 0x424(r30)
-    stw r7, 0x68(r1)
-    lwz r7, 0x428(r30)
-    stw r6, 0x6c(r1)
-    lwz r6, 0x42c(r30)
-    stw r0, 0x70(r1)
-    lwz r0, 0x430(r30)
-    stfs f3, 0x68(r1)
-    lfs f1, lbl_806D2704(r2)
-    stfs f2, 0x6c(r1)
-    lfs f2, lbl_806D27B0(r2)
-    stfs f0, 0x70(r1)
-    lfs f3, lbl_806D2714(r2)
-    stw r7, 0x5c(r1)
-    stw r6, 0x60(r1)
-    stw r0, 0x64(r1)
-    lfs f0, 0x30(r23)
-    stfs f0, 0x5c(r1)
-    lfs f0, 0x34(r23)
-    stfs f0, 0x60(r1)
-    lfs f0, 0x38(r23)
-    stfs f0, 0x64(r1)
-    bl fn_802090F0
-    b CarObjectManager_RunKartKartCollisionSweep_L_80052110
-    CarObjectManager_RunKartKartCollisionSweep_L_80051F7C:
-    cmpw r26, r25
-    beq CarObjectManager_RunKartKartCollisionSweep_L_80052108
-    addi r3, r1, 0x84
-    stw r25, 0x20(r1)
-    mr r4, r25
-    stw r3, 0x1c(r1)
-    bl Bitset_TestBit
-    clrlwi. r0, r3, 24
-    bne CarObjectManager_RunKartKartCollisionSweep_L_80052108
-    addi r3, r1, 0xf0
-    li r4, -0x1
-    li r5, 0x0
-    bl fn_802091BC
-    lwz r3, 0x8(r28)
-    addi r4, r1, 0x90
-    lwz r3, 0x28(r3)
-    addi r23, r3, 0x58
-    mr r3, r23
-    bl Mtx4x4_TransposeTo4x3
-    addi r3, r1, 0x90
-    addi r4, r1, 0x4c
-    bl HSD_MtxGetRotation
-    lfs f4, lbl_806D27AC(r2)
-    addi r3, r1, 0xf0
-    lfs f2, 0x4c(r1)
-    addi r4, r1, 0x34
-    lfs f1, 0x50(r1)
-    addi r5, r1, 0x40
-    lfs f0, 0x54(r1)
-    fmuls f3, f4, f2
-    lwz r7, 0x434(r30)
-    fmuls f2, f4, f1
-    lwz r6, 0x438(r30)
-    fmuls f0, f4, f0
-    lwz r0, 0x43c(r30)
-    stw r7, 0x40(r1)
-    lwz r7, 0x440(r30)
-    stw r6, 0x44(r1)
-    lwz r6, 0x444(r30)
-    stw r0, 0x48(r1)
-    lwz r0, 0x448(r30)
-    stfs f3, 0x40(r1)
-    lfs f1, lbl_806D2704(r2)
-    stfs f2, 0x44(r1)
-    lfs f2, lbl_806D27B0(r2)
-    stfs f0, 0x48(r1)
-    lfs f3, lbl_806D2714(r2)
-    stw r7, 0x34(r1)
-    stw r6, 0x38(r1)
-    stw r0, 0x3c(r1)
-    lfs f0, 0x30(r23)
-    stfs f0, 0x34(r1)
-    lfs f0, 0x34(r23)
-    stfs f0, 0x38(r1)
-    lfs f0, 0x38(r23)
-    stfs f0, 0x3c(r1)
-    bl fn_802090F0
-    lwz r3, g_objCollChecker(r13)
-    cmplwi r3, 0x0
-    beq CarObjectManager_RunKartKartCollisionSweep_L_800520FC
-    addi r4, r1, 0x148
-    addi r5, r1, 0xf0
-    bl CollisionTest_CalcPenetration
-    lfs f0, lbl_806D26EC(r2)
-    fcmpo cr0, f1, f0
-    ble CarObjectManager_RunKartKartCollisionSweep_L_800520FC
-    lwz r3, 0x8(r29)
-    lwz r4, 0x8(r28)
-    lwz r12, 0x0(r3)
-    lwz r4, 0x2c(r4)
-    lwz r12, 0x3c(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x8(r28)
-    lwz r4, 0x8(r29)
-    lwz r12, 0x0(r3)
-    lwz r4, 0x2c(r4)
-    lwz r12, 0x3c(r12)
-    mtctr r12
-    bctrl
-    addi r3, r1, 0x84
-    stw r26, 0x18(r1)
-    mr r4, r26
-    li r5, 0x1
-    stw r3, 0x14(r1)
-    bl Bitset_SetBit
-    addi r3, r1, 0x84
-    stw r25, 0x10(r1)
-    mr r4, r25
-    li r5, 0x1
-    stw r3, 0xc(r1)
-    bl Bitset_SetBit
-    addi r3, r1, 0xf0
-    li r4, -0x1
-    bl dtor_80209180
-    b CarObjectManager_RunKartKartCollisionSweep_L_80052118
-    CarObjectManager_RunKartKartCollisionSweep_L_800520FC:
-    addi r3, r1, 0xf0
-    li r4, -0x1
-    bl dtor_80209180
-    CarObjectManager_RunKartKartCollisionSweep_L_80052108:
-    lwz r28, 0x4(r28)
-    addi r25, r25, 0x1
-    CarObjectManager_RunKartKartCollisionSweep_L_80052110:
-    cmplw r28, r27
-    bne CarObjectManager_RunKartKartCollisionSweep_L_80051F7C
-    CarObjectManager_RunKartKartCollisionSweep_L_80052118:
-    addi r3, r1, 0x148
-    li r4, -0x1
-    bl dtor_80209180
-    CarObjectManager_RunKartKartCollisionSweep_L_80052124:
-    lwz r29, 0x4(r29)
-    addi r26, r26, 0x1
-    CarObjectManager_RunKartKartCollisionSweep_L_8005212C:
-    cmplw r29, r27
-    bne CarObjectManager_RunKartKartCollisionSweep_L_80051E94
-    lwz r3, 0x8c(r1)
-    cmplwi r3, 0x0
-    beq CarObjectManager_RunKartKartCollisionSweep_L_80052144
-    bl MemoryManager_TimedFree
-    CarObjectManager_RunKartKartCollisionSweep_L_80052144:
-    lmw r23, 0x1ac(r1)
-    lwz r0, 0x1d4(r1)
-    mtlr r0
-    addi r1, r1, 0x1d0
-    blr
+/* Matched 2026-11-10 (regalloc_patterns 90). Levers: the four start vectors are separate
+ * .rodata objects addressed from the pooled base (an out-of-bounds view of lbl_802EBA18
+ * changes the 12-byte copies), the collide callback is a real virtual call, the index
+ * of the outer loop reaches the bitset calls as int so no shared (unsigned long)i temp
+ * is coalesced with it, and &bs is written at each use instead of a pointer local. */
+#pragma cplusplus on
+struct SweepKartBase {
+    virtual void v08(); virtual void v0C(); virtual void v10(); virtual void v14();
+    virtual void v18(); virtual void v1C(); virtual void v20(); virtual void v24();
+    virtual void v28(); virtual void v2C(); virtual void v30(); virtual void v34();
+    virtual void v38();
+    virtual void OnKartCollide(void *other);
+};
+#pragma exceptions off
+void CarObjectManager_RunKartKartCollisionSweep(CarObjectManager *self) {
+    CollProbe objA;
+    CollProbe objB;
+    float mtxA[12];
+    float mtxB[12];
+    Bitset bs;
+    float scrA[4];
+    Vec3 halfA;
+    Vec3 centerA;
+    float scrB[4];
+    Vec3 halfB;
+    Vec3 centerB;
+    BitsetRef ref1;
+    BitsetRef ref2;
+    BitsetRef ref3;
+    BitsetRef ref4;
+    BitsetRef ref5;
+    unsigned char flagFalse;
+    StlListNode *na;
+    StlListNode *nb;
+    StlListNode *sent;
+    int i;
+    int j;
+    float *mt;
+    int k;
+    Bitset *bp;
+    unsigned long n;                /* count temp for Bitset_Init */
+
+    self->frame = self->frame + 1;
+    if (self->frame < g_carObjectCount) {
+        return;
+    }
+    self->frame = 0;
+    flagFalse = 0;
+    n = self->list.count;
+    bs.cap = 0;
+    bs.size = 0;
+    bs.data = 0;
+    Bitset_Init(&bs, n, &flagFalse);
+    bp = &bs;
+    for (k = 0; k < self->list.count; k++) {
+        unsigned long uk = k;
+        ref1.b = bp;
+        ref1.i = uk;
+        Bitset_SetBit(bp, uk, 0);
+    }
+    {
+    na = self->list.tail;
+    sent = (StlListNode *)&self->list.head;
+        i = 0;
+    while (na != sent) {
+        ref2.b = &bs;
+        *(volatile int *)&ref2.i = i;
+        nb = self->list.tail;
+        if (!((unsigned char (*)(Bitset *, int))Bitset_TestBit)(&bs, i)) {
+            j = 0;
+            fn_802091BC(&objA, -1, 0);
+            mt = (float *)((char *)na->obj->body28 + 0x58);
+            Mtx4x4_TransposeTo4x3(mt, mtxA);
+            HSD_MtxGetRotation(mtxA, scrA);
+            halfA = lbl_802EBE34;
+            halfA.x = lbl_806D27AC * scrA[0];
+            halfA.y = lbl_806D27AC * scrA[1];
+            halfA.z = lbl_806D27AC * scrA[2];
+            centerA = lbl_802EBE40;
+            centerA.x = mt[12];
+            centerA.y = mt[13];
+            centerA.z = mt[14];
+            fn_802090F0(&objA, &centerA, &halfA, lbl_806D2704, lbl_806D27B0, lbl_806D2714);
+            while (nb != sent) {
+                if (i != j) {
+                    ref3.i = j;
+                    ref3.b = &bs;
+                    if (!Bitset_TestBit(&bs, j)) {
+                        fn_802091BC(&objB, -1, 0);
+                        mt = (float *)((char *)nb->obj->body28 + 0x58);
+                        Mtx4x4_TransposeTo4x3(mt, mtxB);
+                        HSD_MtxGetRotation(mtxB, scrB);
+                        halfB = lbl_802EBE4C;
+                        halfB.x = lbl_806D27AC * scrB[0];
+                        halfB.y = lbl_806D27AC * scrB[1];
+                        halfB.z = lbl_806D27AC * scrB[2];
+                        centerB = lbl_802EBE58;
+                        centerB.x = mt[12];
+                        centerB.y = mt[13];
+                        centerB.z = mt[14];
+                        fn_802090F0(&objB, &centerB, &halfB, lbl_806D2704, lbl_806D27B0, lbl_806D2714);
+                        if (g_objCollChecker) {
+                            if (CollisionTest_CalcPenetration(g_objCollChecker, &objA, &objB) > lbl_806D26EC) {
+                                ((SweepKartBase *)na->obj)->OnKartCollide(nb->obj->coll2c);
+                                ((SweepKartBase *)nb->obj)->OnKartCollide(na->obj->coll2c);
+                                *(volatile int *)&ref4.i = i;
+                                ref4.b = &bs;
+                                ((void (*)(Bitset *, int, unsigned char))Bitset_SetBit)(&bs, i, 1);
+                                ref5.i = j;
+                                ref5.b = &bs;
+                                Bitset_SetBit(&bs, j, 1);
+                                dtor_80209180(&objB, -1);
+                                break;
+                            }
+                        }
+                        dtor_80209180(&objB, -1);
+                    }
+                }
+                nb = nb->next;
+                j++;
+            }
+            dtor_80209180(&objA, -1);
+        }
+        na = na->next;
+        i++;
+    }
+    }
+    if (bs.data) {
+        MemoryManager_TimedFree(bs.data);
+    }
 }
+#pragma exceptions reset
+#pragma cplusplus off
 
 #pragma cplusplus on
 /* inlined std-list dtor chain: each inline level re-guards its `this` */
@@ -9172,10 +8076,6 @@ void *dtor_80052744(void *self, short flag) { /* 0x80052744 size:0x48 */
  */
 #pragma cplusplus on
 #pragma exceptions on
-struct Holder8005278C {
-    Owned8005278C *p; /* 0x0 */
-    ~Holder8005278C() throw();
-};
 Holder8005278C::~Holder8005278C() throw() {
     delete p;
 }
@@ -9210,10 +8110,6 @@ void *dtor_8005285C(void *self, short flag) { /* 0x8005285C size:0x54 */
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Holder800528B0 {
-    Owned800528B0 *p; /* 0x0 */
-    ~Holder800528B0() throw();
-};
 Holder800528B0::~Holder800528B0() throw() {
     delete p;
 }
@@ -9223,10 +8119,6 @@ Holder800528B0::~Holder800528B0() throw() {
 /* dtor_8005292C: EffectSteering owned-pointer holder deleting dtor. */
 #pragma cplusplus on
 #pragma exceptions on
-struct Holder8005292C {
-    Owned8005292C *p; /* 0x0 */
-    ~Holder8005292C() throw();
-};
 Holder8005292C::~Holder8005292C() throw() {
     delete p;
 }
@@ -9248,24 +8140,15 @@ struct Owned800529A8 {
 struct Holder800529A8 {
     Owned800529A8 *p; /* 0x0 */
 };
-extern "C" void *dtor_800529A8(void *self, short flag) throw() { /* 0x800529A8 size:0xB0 */
-    if (self) {
-        delete ((Holder800529A8 *)self)->p;
-        if (flag > 0) {
-            ::operator delete(self);
-        }
-    }
-    return self;
+/* dtor_800529A8 */
+CarSubHolder::~CarSubHolder() throw() {
+    delete (Owned800529A8 *)p;
 }
 #pragma exceptions reset
 #pragma cplusplus off
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Holder80052A58 {
-    Owned80052A58 *p; /* 0x0 */
-    ~Holder80052A58() throw();
-};
 Holder80052A58::~Holder80052A58() throw() {
     delete p;
 }
@@ -9275,10 +8158,6 @@ Holder80052A58::~Holder80052A58() throw() {
 /* dtor_80052AD4: PlayCamera owned-pointer holder deleting dtor. */
 #pragma cplusplus on
 #pragma exceptions on
-struct Holder80052AD4 {
-    Owned80052AD4 *p; /* 0x0 */
-    ~Holder80052AD4() throw();
-};
 Holder80052AD4::~Holder80052AD4() throw() {
     delete p;
 }
@@ -9287,10 +8166,6 @@ Holder80052AD4::~Holder80052AD4() throw() {
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Holder80052B50 {
-    Owned80052B50 *p; /* 0x0 */
-    ~Holder80052B50() throw();
-};
 Holder80052B50::~Holder80052B50() throw() {
     delete p;
 }
@@ -9299,10 +8174,6 @@ Holder80052B50::~Holder80052B50() throw() {
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Holder80052BCC {
-    Owned80052BCC *p; /* 0x0 */
-    ~Holder80052BCC() throw();
-};
 Holder80052BCC::~Holder80052BCC() throw() {
     delete p;
 }
@@ -9312,10 +8183,6 @@ Holder80052BCC::~Holder80052BCC() throw() {
 /* dtor_80052C48: KartDriver owned-pointer holder deleting dtor. */
 #pragma cplusplus on
 #pragma exceptions on
-struct Holder80052C48 {
-    Owned80052C48 *p; /* 0x0 */
-    ~Holder80052C48() throw();
-};
 Holder80052C48::~Holder80052C48() throw() {
     delete p;
 }
@@ -9324,10 +8191,6 @@ Holder80052C48::~Holder80052C48() throw() {
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Holder80052CC4 {
-    Owned80052CC4 *p; /* 0x0 */
-    ~Holder80052CC4() throw();
-};
 Holder80052CC4::~Holder80052CC4() throw() {
     delete p;
 }
@@ -9336,10 +8199,6 @@ Holder80052CC4::~Holder80052CC4() throw() {
 
 #pragma cplusplus on
 #pragma exceptions on
-struct Holder80052D40 {
-    Owned80052D40 *p; /* 0x0 */
-    ~Holder80052D40() throw();
-};
 Holder80052D40::~Holder80052D40() throw() {
     delete p;
 }

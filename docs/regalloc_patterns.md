@@ -731,6 +731,214 @@ float, float, float)` matched at once.
 an int and a float argument. Swap their order in the prototype (keeping each
 class's order) and at every call site in the TU.
 
+## 38. Named locals must be numbered between inline temps: write the inline bodies directly and let the per-branch reuse split (DrawEffect_ItemHitBurst_Spawn, 11-09)
+
+`regfix diag` said "pitch/roll are named locals numbered below every temp;
+target colours them before the helper temps". Two `static inline` helpers
+(one per switch case) held `yaw`/`spread`; their locals are frontend temps
+and always sit above the caller's locals. Fix: paste both helper bodies into
+the caller, declare every float in the wanted colouring order (later
+declaration = lower vreg = coloured later), and give the second case its own
+`yaw2`/`spread2` (the frontend splits a reused local per branch anyway, and
+the split copies become temps). The clamp was also written directly so
+`speed` stays a named local. Declaration order that matched:
+`spread2, spread, pitch, roll, speed, yaw2, yaw`. Stack objects are the
+opposite case: a `Vec local = *v;` copy that must sit below the by-value
+argument temps has to stay in a tiny inline (`TransformVelocity`), because
+inline locals are created after the caller's temps.
+
+## 39. Unfused `fmuls; fmuls; fadds` where other code in the function fuses: multiply through an inline helper (JumpDistanceMode_Update, 11-09)
+
+Target (the rest of the function has `fmadds`, so `fp_contract off` is not it):
+
+```
+lfs f0,x; lfs f2,z; fmuls f1,f0,f0; fmuls f2,f2,f2; fadds f4,f1,f2
+```
+
+- `x*x + z*z` (named or direct) fuses into `fmadds`.
+- `float xx = x*x; float zz = z*z; xx + zz` does not fuse, but the loads come
+  out in the other order / other registers (3 to 5 lines off in ~80 variants).
+- `#pragma fp_contract off` around an *inline* does nothing: the pragma state
+  of the function the inline lands in decides.
+
+Fix: `static inline float mul(float a, float b) { return a * b; }` and
+`sqrtf(mul(d.x, d.x) + mul(d.z, d.z))` with the members passed directly (no
+named x/z locals). The inline results are temps that are not fused, and their
+numbering gives the target order. An inline `sq(float v)` or named locals as
+arguments stay 3 lines off.
+
+## 40. `addi rX,anchor,N` marks the start of a real object: split the pool there and index the object directly (Voice merge, 11-09)
+
+MWCC never folds a constant offset into the address of an anchored object.
+With the pool anchor in r31:
+
+- `&obj[i]` where `obj` starts at anchor+N gives `addi rX,r31,N` followed by
+  the index arithmetic.
+- `(char *)base_obj + CONST` (a pointer into a bigger object, or a struct of
+  the whole pool) gives two `addi`, or folds CONST into the load displacement.
+
+So every distinct N in the target's `addi rX,r31,N` is the first byte of an
+object of the original source. Read them off the target before writing the
+pool: in the race voice unit that gave 0x80497BC4 (`addi r3,r31,3980`) and
+0x804975C4 (`addi r8,r31,2444`) inside what looked like one 0xE00 float
+table, and the item map at 0x80497DC4. An `addi rX,r31,N; lbz D(rX)` pair
+with a large D is the opposite sign: a constant element index of the object
+at N, not another object.
+
+Once the objects are split and typed, the natural expression matches and
+the Advance-pointer style inline helpers written to imitate the base+offset
+form can go:
+
+```c
+return &lbl_80497BC4[(g_cupId - 1) * 16 + g_longRoundFlag * 8 + g_reverseRoundFlag * 4];
+```
+
+Related details from the same three functions (fn_801AC208, fn_801AECF4,
+fn_801B1D5C):
+
+- A single named static used in a function is not anchored (it gets its own
+  `lis/addi`), so convert every pool use of the function at once; converting
+  one use makes the diff worse first.
+- `&(&obj[a * 128])[b]` keeps `a*128*4` and `b*4` as two shifts added
+  separately (`slwi r5,r9,9` + `slwi r3,r3,2`); `&obj[a * 128 + b]` merges
+  them into one index.
+- A table pointer kept in a saved register across a call, copied for the
+  first search loop (`mr r4,r29`) and walked in place by the second
+  (`addi r29,r29,6`): a block local `VoiceItemMap *maps = table; int item = v;`
+  passed by value to the first inline and by address (`&maps`) to the second.
+
+## 41. A per-slot pointer that must be numbered below the `this`/self parameter: compute it inside a static inline taking (self, index) (fn_801502AC, 11-09)
+
+Target keeps `self` in r27 and `slot = (char *)self + mode * 4` in r26; a named
+local in the function itself gives the swap (slot r27, self r26), in every
+declaration order. `regfix.py diag` says "create slot after r32 (temp)": the
+slot must sit among the inline-expansion temps, below the parameters.
+
+Fix: move the block that uses the slot into a `static inline` that takes the
+ORIGINAL arguments and computes the slot itself:
+
+```cpp
+static inline void LoadCam_(RaceScene *self, int mode, const char *path) {
+    RaceScene *slot = (RaceScene *)((char *)self + mode * 4);
+    if (slot->objs[0] == 0) { ... }
+}
+```
+
+Passing the computed slot as the inline's argument does not work: the argument
+expression is propagated and the accesses turn into `lwzx/stwx`. Also in this
+function: `lwzu r0,4(rN)` on a table field comes from using
+`table[mode].id` directly at every use (CSE pointer temp), not from a named
+pointer local. Rule: `shared-local-into-inline`.
+
+## 42. `slwi; addi rI,rI,OFF; lhzx rBase,rI` (member offset added to the index): add the offset after the index (fn_801BDB60, AI_CalcLapSpeedBonus, 11-09)
+
+Target folds a constant into the index register and loads indexed; ours forms
+`add rP,rBase,rI; lhz OFF(rP)`. Every member/array spelling (`name.c[i + 1]`,
+inline getters, `base + (idx + OFF)` with parentheses or an int local) gives
+ours: the frontend folds or reassociates them the same way. What gives the
+target is the constant added LAST, without parentheses:
+
+```c
+ch = *(unsigned short *)((char *)this + (i + 1) * 2 + 0x28);   /* (this + index) + offset */
+bonus = ((const float *)table)[i * 5 + 4];                    /* float view: element index carries the offset */
+```
+
+Both are fakematch-marked: the natural source is not known. Found by
+`leversweep.py detect` (the addi is not an anchor here; the detect heuristic
+also catches this shape).
+## 43. `x = new T(args)` vs `x = Alloc(); if (x) ctor(x, args)`, and three small shape levers (clFlowRound_Update, 11-09)
+
+clFlowRound_Update went from 243 differing lines to 0 with these, no pragma:
+
+- **new-expression.** A hand-expanded `p = Alloc(0x30); if (p) Sprite_InitWithAnim(p, ...)` stored into a
+  member gives the result a backend temp that is coloured early. The real `self->slots[j].spr = new Sprite(anim, 0, 0)`
+  gives a temp that is coloured late, and that moved `self` to r31 and shifted every saved register into place.
+  Symptom: the pool base or a loop pointer holds r31 and `self` sits several registers lower. If the view struct
+  lives in a namespace, write `(T *)new ::Sprite(...)` so the ctor symbol stays the global one.
+- **for-scope counters.** `for (int i = 0; ...)` in each loop instead of one function-level `int i` (C++ scoping
+  gives each loop its own vreg, declared later = lower number).
+- **`a - -b`** compiles to `fadds a,b` in source order. `a + b` and `b + a` both get canonicalised the other way.
+  Fakematch; use it only for the last operand-order line.
+- **switch value reused after the switch.** Target `beq +8; b L+4` where L is `lwz r0,N(self)` and the branch
+  lands on the compare after it: the source is `next = self->st; switch (next) { case -1: ...; next = self->st; break; }
+  if (next != -1)`. objdiff shows this only as a 99.99% branch-target diff.
+
+Diagnostic used: `#pragma opt_lifetimes off` cut the diff 243 -> 82, which showed that one more level-1 node
+interfering with `self` was all that was missing. The pragma is not in the final source.
+
+## 44. A base-address local survives only with two uses, and the first copy of an unrolled loop picks it up (Race_PerFrameTickAndAudio, 11-09)
+
+Target, inside an inlined helper followed by a fully unrolled 8-way search:
+
+```
+addi r5,r30,400        ; base = &g_raceEntryArray (anchor + 400)
+mulli r0,r0,104
+add  r4,r5,r0          ; &base[idx]
+...                    ; first unrolled copy
+mulli r0,r3,104
+add  r3,r5,r0          ; reuses r5
+...                    ; copies 2..8
+addi r3,r30,400        ; fresh address every time
+add  r3,r3,r0
+```
+
+Rules read off the experiments (mweppc frontend, IroPropagate + CSE):
+
+- `base = &g; entry = &base[idx];` with ONE use of `base` in the block is propagated away: the base
+  address is folded into `entry` and the first copy gets its own `addi` (one instruction too many).
+- With TWO uses of `base` the assignment stays a real variable, and a later direct `&g[...]` in the
+  same extended block is replaced by that variable. Only the first unrolled copy is in that block,
+  so copies 2..8 keep the fresh `addi`.
+- The natural source is "no cached element pointer": `if (!base[idx].kart->finished) { if (base[idx].rank != 0)`.
+  CSE builds the element pointer itself (r4), and `base` has two uses.
+- A base passed into the search inline as a parameter is used by all eight copies (no `addi` at all).
+  A base assigned before an earlier branch (other block) also survives, but its `addi` sits before
+  that branch.
+
+Other levers the same function needed, all register-only symptoms:
+
+- **Inner search loop indexed, not walked.** `for (j...) if (entries[j].id != -1 && entries[j].rank == ...)`
+  instead of a named `other++` pointer: the walking pointer becomes a strength-reduction temp that is
+  coloured before the hoisted `&entry->rank` temp and the counter (target r5/r6/r7 vs ours r7/r5/r6).
+- **Walk the base local itself in the last loop.** `for (k = 0; k < 8; entries++, k++) { entry = entries; ... }`
+  when the target's last loop steps the register that held the base all function long. A copy
+  (`entry = entries` before the loop) coalesces to the same register but leaves the base local with a
+  lower cost than the section anchor, and the two swap r30/r31 everywhere.
+- **Block-scoped counter for a `li rN,0` that ours turns into `mr rN,rZero`.** The last loop's counter
+  as its own `{ int k; for (k = 0; ...) }` keeps its own `li`; the shared function-level `i` was
+  value-numbered to the zero already held for the stores before the loop (rule `split-loop-counter`).
+- **Increment order** `entry++, i++` vs `i++, entry++` swaps the two `addi` of one unrolled copy.
+- **`signed char` lvalue for `extsb` from the raw byte**: field typed `signed char`, or
+  `*(signed char *)&g_var`; an inline getter or a cast of an `unsigned char` read gets CSE'd differently.
+- **Duplicated `li rX,1` for a result flag**: the if/else chain is an inline with `return 1` / `return 0`.
+
+## 45. Locals of an inlined function are numbered in FORWARD declaration order (fn_80179F60, 11-09)
+
+Symptom: instructions identical, only the registers of values loaded inside an
+inlined helper rotate (here four `lfs` in `InQuad`: q[1] f6 / q[3] f9 / pos.z
+f10 / q[5] f12, target f12 / f6 / f9 / f10), and `regfix diag` finds no
+depth-2 edit. With the loads written inline in the call expressions they are
+CSE temps whose numbers you cannot steer.
+
+Fix: give every loaded value a named local in the inline, declare them all
+WITHOUT initialisers at the top, and assign each at its first use (so no load
+moves). The declaration order then sets the vreg numbers, and for the locals
+of an inlined function the order is forward: first declared = lowest number =
+coloured last (the caller's own locals are the other way round: last declared
+= lowest). Read the wanted colouring order off the target: the value that
+holds the lowest free register is coloured first, so it is declared LAST.
+
+```cpp
+static unsigned char InQuad(const float *q, const Vec3f *p) {
+    float z0, x3, z3, x2, z2, pz, px, x1, z1, x0;   // target colours x0, z1, x1, px, pz, z2, x2, ..., z0
+    x0 = q[0]; px = p->x; z0 = q[1]; z1 = q[3]; x1 = q[2]; pz = p->z;
+    if ((QuadCross(x1 - x0, pz - z0, z1 - z0, px - x0) <= 0.0f) == 0) return 0;
+    z2 = q[5]; x2 = q[4];
+    ...
+```
+
+fn_80179F60 99.15 -> 100 (15 FPR vregs, three inlined copies at once).
+
 ## Still open (same shape, no fix found yet)
 
 - r0 coloring quirk with a `0xFFFFFF00` rlwimi colour: clFlowCourse,
@@ -937,4 +1145,1586 @@ No codegen pragmas, asm or fakematches were used (onmokoworks's workers are not 
 | `DrawEffect_KartDustRing_Update` | game/DrawEffect_KartDustRing_Update.c | 98.11 | Resolved: external aggregate pointer materialization added mr r30,r4 and used mr instead of addi r4,r30,0 for tier 1. | Integration visibility correction within the same approach: static vectors caused unresolved neighboring ItemHitBurst/ItemHitOriented references in request 1; exporting the vectors preserves 100% text/EH/index/data... | 6668a75d |
 | `Effect_TwoChildRotate_FromPhase150` | game/EffectRotatePair.cpp | 97.30 | Resolved: FP scratch identities in alpha clamp/phase wrap; addi group and lbz enable scheduling at +0x40/+0x44. | Enable belongs to the group view at +0xC4 (parent +0x190); express access through group, restoring addi-before-lbz, 100%. | 3fc53253 |
 | `fn_8022B278` | game/EnemyFace_nm1.cpp | 97.26 | Resolved GPR partition: target textures/palettes/resources/tluts r31/r30/r29/r28, outer i r27, count n r26, inner k r25. Initial indexed inline helper... | Keep natural textures/palettes/resources/tluts increment order: 100.0%, all owned sections exact. | c928fb29 |
+
+## 46. A loop counter reused by later loops takes the newest saved register: give the later loops block-local counters (TitleCheck_NewClearedRecord_Race, 11-09)
+
+Symptom: register-only diff; the FIRST loop of a variable sits in the lowest saved register
+(ours `li r24,0`, target `li r28,0`), and the same low register is the counter of later,
+unrelated loops (`i` in loops 4 and 5).
+
+Why: `IRO_SplitLifetimes` keeps the name only on the earliest range of a variable; every later
+range is a `SplitOffRange` temp, and temps are coloured before all named locals. `colorgraph`
+gives a node the lowest free saved register already handed out, else a new one (r31 downward).
+With one function-level `i` for loops 4 and 5, the loop-5 range is a temp, is coloured early and
+is the first to allocate r24; the named loop-1 `mode`, coloured late, then finds r24 free and takes
+it. In the target r24 does not exist yet when `mode` is coloured, so it takes r28 (r25..r27 are held
+by j/cur/prev, which must be coloured before it).
+
+Fix: each later loop gets its own block-scoped counter (`{ int i; for (i = 0; ...) }`): a
+single-range named local declared later than everything else, so it is coloured last and is the one
+that allocates the new register. Declare the first loop's counter AFTER the locals whose registers it
+must not take (`int j; int cur; int prev; int mode;`). 12 lines -> 0. Diagnose with
+`tools/mwtrace.py --only COLOR,VREG`: find which node first allocates the low register and whether
+it is a temp (`@9xx` from SplitOffRange) or a named local.
+
+
+## 47. Loop over a global object's members: put the loop in an inline that takes the pointer (fn_8013DA00, 11-09)
+
+Target loads the global straight into the LOWEST saved register and walks it, while the counter
+gets the highest: `lwz r29,g; cmplwi r29,0; li r31,0; ... addi r31,r31,1; addi r29,r29,12`.
+Writing the loop in the function itself (`T *p = g; if (p) for (i...) p->lists[i]`) gives the
+pointer r31 and the counter r30. Moving the loop into an inline whose parameter is the pointer
+(`if (g) RenderAll(g);`) gives the target's order: the inline's parameter copy is a later virtual
+register than the loop's own locals. Explicit `l++` pointer walks are worse (one extra insn).
+
+Same function, stack slots: `CIter b = l.begin(); RenderRange(b, l.end());` (named iterator passed
+by value) puts `b` below the by-value parameter copy; the target has them the other way round,
+which is `RenderRange(l.begin(), l.end())` with the temporary as the argument.
+Rule name in hits.jsonl: `loop-in-inline-param`.
+
+## 48. Big update function with several loops: which locals must be inline temps, and a table loop driven by the function-level counter (fn_80154304, 11-09)
+
+`fn_80154304` (CourseScene update, 3244 bytes, `src/game/Scene_8014E0C4.cpp`)
+went 98.8 % -> 100 % with four source-shape levers. None needed a pragma.
+
+1. **A loop whose walkers must be coloured AFTER the other saved registers
+   goes into a `static inline` helper.** Locals of an inlined function are
+   inline temps (high vreg numbers), named locals of the outer function are
+   always low, even when block-local. `CourseScene_UpdateJoints(self)` (the
+   6-joint loop) and `VObjPair::Update()` fixed two groups this way.
+2. **HSD-style nested accessor keeps the object in one register.**
+   `PSMTXCopy(JObjGetMtxPtr(self->jobjs[i]), self->mtx[i])` with
+   `static inline void *JObjGetMtxPtr(void *j) { JObjSetupMatrix(j); return (char *)j + 0x44; }`
+   removed a reload of `self->jobjs[i]`. Passing the destination matrix as a
+   second inline parameter evaluates it too early (worse).
+3. **Mixed case: one variable low, the others high.** The sprite-cache sweep
+   needs the end sentinel `e` as an outer named local but `spr` and the node
+   walker as inline temps. `static inline void SprScene_Sweep(CourseScene *self, SprNodeBase *&e)`
+   with `e` declared in the caller (right after `int i;`) and the helper
+   locals declared in the order `n2, spr` gives exactly that. A named `e`
+   inside the helper, a hoisted `&spr->cache.end`, or `spr` as a parameter all
+   swap registers.
+4. **Loop-invariant constant loaded BEFORE the table pointer** (`lfs f31, 0.0f`
+   then `addi r30, rAnchor, off`; ours had the two swapped): the original
+   indexes the table with the function-level counter,
+   `for (i = 0;; i++) { if (tbl[i].time < 0.0f) break; ... tbl[i].x ... }`.
+   Strength reduction creates the pointer after the constant is hoisted. A
+   walking pointer (`for (ev = tbl;; ev++)`), a block-local `int k` index, a
+   named `float zero`, and an inline helper all keep the wrong order;
+   `while (!(ev->time < 0.0f))` fixes the order but rotates the loop.
+
+Also: a class-specific `operator delete` that only forwards to the global one
+is emitted out of line (weak `__dl__5ClassFPv`) as soon as a `new Class`
+expression needs it for its DELETEPOINTER extab action. If the target's action
+names the global delete, drop the class operator.
+
+Speed tip for a 15 kLoC TU (2.5 min per compile): take the compile command
+from `ninja -t commands <obj>`, write each variant to its own directory, add
+`-i src/<dir>` so the `.inc` files resolve, and run all variants in parallel;
+compare `dtk elf disasm` bodies with symbols normalised.
+
+## 49. A `long` loop index passed as an `int` argument gets a hoisted copy that is numbered late; and count the `%d` of debug strings (DetermineTitle, 11-09)
+
+Two independent fixes, 18 lines -> 0:
+
+- Inlined `CurrentNameScore`: the outer index of a nested loop is passed to a call in the inner
+  loop. Declared `long`, the `(int)` conversion is a loop-invariant expression, so `IRO_FindLoops`
+  hoists it into a temp (`MR @536,i` in the preheader, seen with `tools/mwtrace.py`) and the index
+  is coalesced into that temp: its node takes the LOW number of the FindLoops temp and is coloured
+  after the other inline locals. Declared `int`, there is no copy and the node keeps the inline
+  local's number. The target had the first loop's `i` late (r20, `long`) and the second loop's `cup`
+  early (r21, `int`). After that, inline locals are numbered in forward declaration order (§45), so
+  `int j; int k;` vs `int k; int j;` picks which of the two takes the register freed by `cup`.
+- `addi r5,r3,0x2d; stw r5,...; cmpw r5,r0` where ours computes into r3: the value is also the third
+  argument of the following `DebugPrintf`. Read the format string from the DOL
+  ("Fixed TitleID loop No : %d, id : %d") and pass every argument it names.
+
+## 50. Pointer fetched through an inline getter is coloured after the temps of the inline that uses it; make it a directly loaded local of that inline (WarpZone_CheckEntry, 11-09)
+
+Target `i` r5, `mgr` r6, zone pointer r7. Ours (99.2 %, a 24-line plateau since 11-07)
+had `mgr` r7 and the zone pointer r6 with
+
+    WarpDashMgr *mgr = WarpDashMgr_GetInstance(self->mgrId);   // inline getter
+    if (mgr == 0) return 0;
+    int zone = WarpZone_FindContainingOBB(mgr, x, y, z);       // inlined
+
+`regfix diag` said: the two vregs are level with each other, and `mgr` (the getter's return
+temp, `@364`) is numbered after the zone pointer (the reference parameter of the inner
+`Contains` inline, `@354`) because the search inline is expanded before the getter's result
+temp is made. About 40 forms that keep `mgr` as a parameter or a getter result do not move
+it (reference / `this` / wrapper inline / local copy `m = mgr` in any decl order / defining
+`Contains` after its caller): the copy is coalesced back into the late temp. A named local of
+the function itself (`mgr = table[id != 0]` at function level) is numbered below everything
+and gets r8.
+
+What works: the whole body is one `static inline` whose **own local** `mgr` is loaded
+straight from the table (no getter inline, no parameter), declared **before** `i`:
+
+    static inline unsigned char FindZone(WarpAutoRun *self, float x, float y, float z) {
+        WarpDashMgr *mgr; int i; int zone;
+        mgr = lbl_806CF238[self->mgrId != 0];
+        ...
+            for (i = 0; i < mgr->obbCount; i++)
+                if (Contains(zoneAt(mgr, i), p) == true) { zone = i; goto done; }
+            zone = -1;
+        ...
+    done:
+        self->zone = zone;
+        return zone != -1;
+    }
+
+Inline locals are coloured latest-declared first (`mgr; i` gives i r5, mgr r6; `i; mgr`
+swaps them), and both come before the parameter temps of inlines expanded inside. The
+`{ zone = i; goto done; }` exit reproduces the `bne next; b found` pair of an inlined
+`return i`; `goto found; ... found: zone = i;` gives a single `beq`.
+
+Also: when an asm function with a manual `.extab_user` entry becomes C++ with a
+destructible local, delete its manual extab/extabindex entries (the compiler emits them;
+keeping both grows main.dol by 0x14).
+Rule name in hits.jsonl: `inline-own-local-direct-load`.
+
+## 51. Saved registers of two disjoint blocks: declare every block temp at function scope under its own name, in colouring order (fn_80141454 LogoAnim, 11-09)
+
+Target, two unrelated `else if` blocks that each keep floats across calls:
+
+    block A (t < 105):   a f30, sy f29, sx f28      (t itself sits in f31)
+    block B (t >= 105):  y f31, a f30, sy f29, sx f28
+
+With block-scope locals ours gave block A `sx` f31 (3 lines off; 960 decl orders and 22 min of
+cperm did not move it). Sharing one function-scope `a/sx/sy` between the blocks is much worse.
+
+Why, from the allocator model (`Graph.colour` in tools/regfix.py, which reproduced the real
+colouring here): named locals are numbered in reverse declaration order over the whole
+function, and vregs are coloured highest number first. A vreg that needs a saved register takes
+the **lowest-numbered saved register already in use** that its neighbours do not hold, and only
+then opens a new one, from f31 down. Block-scope locals of A are declared before those of B,
+so A is coloured first: `sx` reuses f31 (free, `t` is dead), `a` opens f30, `sy` opens f29.
+The target has B coloured first (y reuses f31, then a/sy/sx open f30/f29/f28) and A afterwards,
+each taking the lowest used register: sx f28, sy f29, a f30.
+
+So B's temps must be declared before A's, which block scope cannot express. Fix: seven
+distinct locals at function scope, in exactly the colouring order
+
+    float t; float a; float s;
+    float splitY, splitT, splitSy, splitSx, outSx, outSy, outT;   // B's four, then A's three
+
+How to read the order off the target: list the saved registers per block; the block whose
+registers were opened in descending order (f31, f30, f29, f28 = declaration order) comes
+first; a later block fills from the lowest register up (f28 first = declared first).
+`python3 tools/regfix.py diag` prints one line ("f31 -> want f28") and finds no edit, because
+the fix is a renumbering across two groups; print `Graph.colour()` order with keys to see it.
+
+Also in this TU: the C body must stay after the empty `fn_80141450` (text order), the float
+literals need the `.sdata2` range in splits.txt (0x806D7900..0x806D7998, the ctor's 0.0f
+included), and the manual extab entry and its two extab_user_renames go away.
+Rule name in hits.jsonl: `fn-scope-distinct-temps-order`.
+
+## 52. Loop-invariant `&member` hoisted by the backend takes the newest saved register: name it as a local of the inline (SoundDriver_GetOrCreate, 11-09)
+
+Diff: two saved registers swapped between a loop cursor and a hoisted
+address (`mr r31,r28; addi r30,r29,4` in the target, r30/r31 the other way
+round in ours). mwtrace shows the address (`&list.head`, written inline as
+`insert(end(), v)`) is a *backend* temp (`ADDI r53!,r36,4`, off=-1, moved to
+the preheader after code generation). Backend temps are numbered above every
+IRO temp and named local, so it is coloured first and takes r31.
+
+Fix: give the address a name inside the inline, so it is an inline local
+(numbered with the IRO temps, below the caller's cursor):
+
+```cpp
+void push_back(const T &v) { Node *n = (Node *)&head; insert(iterator(n), v); }
+```
+
+`iterator e = end(); insert(e, v)` and a `ListHead *` local do NOT work (the
+first changes the stack temps, the second stays a backend temp); the local
+must have the exact type the iterator constructor takes.
+
+## 53. List walker / sentinel saved registers swapped: `begin()` as `iterator(((Node *)&head)->next)` instead of `++end()` (clItemBoxManager_Dtor, 11-09)
+
+Diff: `for (it = l.begin(); it != l.end(); ++it)` gives walker r28 / sentinel
+r29, the target has walker r29 / sentinel r28 (`addi r28,r30,0x14;
+lwz r29,0x18(r30)`). With `begin() { return ++end(); }` the walker starts as
+a copy of the sentinel temp, so the sentinel is the later-numbered value and
+is coloured first. Loading `head.next` directly in `begin()` makes the walker
+independent of the sentinel:
+
+```cpp
+iterator begin() { return iterator(((Node *)&head)->next); }
+```
+
+Same family as section 52 (who names / creates the `&head` value decides the
+saved register). Naming the sentinel in `end()` alone made it worse (50 lines).
+
+
+## 54. Volatile temps after a call start at r4 instead of r3: the block leaves through a valueless `return;` (fn_801B4548, 11-09)
+
+Diff: after a call near the end of a block (here `OSGetTime`), ours puts the
+following short temps in r3, r4, .. while the target uses r4, r5, .. and never
+touches r3 until the shared epilogue; the opcodes are identical.
+
+Cause: the original source leaves the block with `return;` (no value) in a
+function that returns `int` (MWCC C accepts it with a warning). A valueless
+return emits no `li r3,N`, but the exit block still "uses" r3 as the return
+register, so physical r3 stays live from its last definition (the call) to the
+exit and interferes with every temp in between. With `return 1;` or a `goto`
+to the shared `return 1;` r3 is free and the temps take it.
+
+Fix: write `return;` for those exits and keep the final `return 1;` of the
+function (dropping that one too removes the `li r3,1` and shifts the length).
+Returning the call's own value (`return (int)hi;`) is not the same shape.
+
+Not fixed in the same function (16 lines left): saved registers of four
+vregs. regfix diag: entry temp @9778 r25 (want r28), FindNearest result r28
+(want r26), its counter r26 (want r25), `maps` r23 (want r25). In
+simplifygraph (Coloring.c) all of them fall into the second round and are
+pushed in ascending vreg order, so the inline local (170) is coloured before
+the optimizer temps 65..67; the target needs it coloured between 66 and 65.
+Tried without change: inline local orders, `maps` at function scope, entry in
+an inline, block-local loop counter, search written in the body or with
+reference parameters (adds a `mr`).
+
+Also seen here: MWCC does not CSE two loads of the same address that have
+different types. A union read as `.s` for the compares and `.u` for the call
+arguments reproduces the target's reloads of the same word.
+
+## 55. In-place `x = x / N` is recomputed at its first use (extra saved register): opt_propagation off (SwitchTest_Page, 11-09)
+
+Diff: the target computes a difference straight into a saved register and
+divides it in place (`subf r28,..; ...; srawi r0,r28,6; addze r28,r0`), so
+difference and quotient are ONE variable. Writing `st = steer / 64` gives the
+difference a volatile register; writing `steer = steer / 64` (or `/=`, or an
+inline) moves the division down to the first use and costs one more saved
+register (`stmw r26`). mwtrace: the SRAWI/ADDZE pair appears in the block of
+the first use with a fresh destination vreg.
+
+`#pragma opt_propagation off` keeps the division where it is written. Side
+effect: inline helpers that rely on constant propagation change shape (here
+the shared `for (i = 0; it[i].text; i++)` loop became `mulli` of a zero
+index); write those loops as an explicit pointer walk (`it++, i++`) in a
+local copy. opt_lifetimes / opt_dead_assignments off do not help.
+
+
+Also fixes argument load order (fn_801C0568, 11-10, bf46559): when two argument
+loads before a call come out reversed and `mwsched.py explain` says they have
+equal keys (block order wins), assign the later argument to a local first
+(`int dir = in->dir; f(self->panel.p, dir, press);`). Without the pragma the
+local is propagated back into the call and nothing changes; with it the load
+stays where the local is assigned. Fakematch-marked.
+
+## 56. Optimizer temp takes the wrong already-used saved register: load a pointer local through an inline getter; and share float locals across switch cases (CoinSystem_UpdateAll, 11-09)
+
+Rule observed with tools/mwccdbg.py `--all`: named locals get the lowest
+vreg numbers (reverse declaration order), optimizer temps (CSE of
+`&c->sparks[i]`, hoisted values) come next, inline return/parameter temps
+last. Colouring runs from the highest vreg down, and a saved-register node
+takes the lowest saved register already handed out before it opens a new one.
+
+- GPR: target kept `c + i*16` in r28 (the register of `flags` from an earlier
+  loop), ours in r29 (register of `p`). `flags` was a named local, so it was
+  coloured AFTER the temp and opened r28 too late. `flags = CoinKart_GetFlags(kart);`
+  (static inline returning `kart->flags`) turns the value into a late temp,
+  coloured before the CSE temp. Declaration order of `flags` has no effect.
+- FPR: target reused one saved FPR for "range" in loop 1, "t" in cases 2/3
+  and one of the homing targets in cases 7/10 (x in one case, y in the other).
+  Separate locals (`range`, `t`, `tx`, `ty`) gave f30 instead of f28. Two
+  function-level floats `a`, `b` reused for all of them match; read from the
+  target which case uses which.
+- Moving the whole pickup test into an inline also fixed the GPR but its
+  float local became a late temp (f30 again) and its Vec moved on the stack.
+
+Same rule, volatile registers (KartItem_ApplyImpactReflectAndDampVelocity, 11-09): an inline
+`bool IsReflectLane(Lane *lane)` called as `IsReflectLane(self->secondary)` gave lane r6 / result
+flag r5, target lane r5 / flag r6. `mwccdbg --all` showed the flag (inline return temp) with a
+higher vreg than the lane (argument temp), so the flag was coloured first and took the lower
+register. Wrapping the call as `inline bool IsReflectItem(Self *self) { return
+IsReflectLane(GetSecondary(self)); }` creates the getter's return temp after the wrapper's result
+temp: the lane is coloured first and gets r5. A getter at the call site without the wrapper, a
+getter inside the loop inline, an id getter and an in-body flag did not work.
+
+## 57. `addi rBase,..; mr rWalker,rBase` versus `addi rWalker,..; mr rBase,rWalker`: the base must be a split-off lifetime range (fn_801E96BC, 11-09)
+
+Diff: only the direction of the copy between a table base (`base = table;`,
+kept for an inner loop) and the strength-reduced walker of `&base[i]`.
+mwtrace (ours): `ADDI r54,..; MR base,r54; MR walker,r54`. The copy into the
+NAMED local `base` is never coalesced, the walker temp merges with r54, so the
+address lands in the walker. The target needs `base` itself to merge with the
+address temp; then `MR walker,base` stays because the two interfere.
+
+Only vregs in the temp range coalesce. A variable's FIRST lifetime range is
+the named local; every later range is a SplitOffRange temp (mwcc_internals,
+IRO_SplitLifetimes). So `base` has to be the second range of a variable that
+was used for something else earlier:
+
+```c
+base = (AIPairRecord *)lbl_806D1920;            /* first range: the cap */
+self->frame++;
+if ((int)base < self->frame) self->frame = (int)base;
+base = lbl_806793D8;                            /* second range: a temp */
+```
+
+A dead first assignment (`base = 0;` / the same assignment twice) is removed
+and does not count; an inline parameter is constant-propagated and the address
+is rematerialised in the loop; a named walker gives `addi r0; mr; mr`.
+When a diff is exactly this copy direction, look for a variable the original
+may have reused (same register in two unrelated places in the target).
+
+## 58. Volatile FPRs of an int-to-float divide chain: read the creation order off the registers and write it as one expression (fn_8015DEBC, 11-09)
+
+Symptom (99.62, 6 volatile FPR rows): `t = 1 - (float)n / 15; ssc = 0.035 * t` written as
+separate statements gives `0.035 -> f0, bias -> f1, 15.0 -> f2, 1.0 -> f3, diff -> f4`; the target
+has `15.0 -> f0, double -> f1, bias/diff -> f2, 1.0 -> f3, 0.035 -> f4`.
+
+Volatile temps are coloured highest virtual register first and take the lowest free register, so the
+register numbers give the creation order backwards: here 0.035 was created FIRST and 15.0 LAST.
+That is the evaluation order of one expression, left operand first:
+
+```c
+float t;
+float ssc = 0.035f * (t = 1.0f - (float)e->subs[j].n / 15.0f);
+```
+
+(0.035, then 1.0, then the conversion bias and stack double, then 15.0.) Splitting the statements
+(§26) had fixed the saved pair but put the constants in statement order. Float literals, not
+`extern const float`, are needed for this to work. Rule: when only volatile registers differ in a
+straight-line float computation, sort the temps by target register number descending; that is the
+order in which the source must create them.
+
+
+## 59. `lwz rT,4(rF); mr rL,rT` where rT < rF < rL: frontend CSE temps are numbered in reverse discovery order, and the pointer must be a function-scope local declared before the value local (RivalRun_RivalTactics, 11-09)
+
+Symptom (3 diff lines, 1 instruction short): the target has
+
+```
+lwz r4,40(r31)     ; f = self->follower
+lwz r3,4(r4)       ; temp = f->lane
+mr  r5,r3          ; lane = temp
+...
+lwz r0,4(r4)       ; SetLane re-reads f->lane
+cmpwi r0,1
+```
+
+and the build either loads `lane` straight into its register (no `mr`) or puts `f` in r3.
+
+Rules read off `mwccdbg --all --trace`:
+
+- `lane = f->lane` only goes through a temp when the frontend shares the load with a later
+  `f->lane` expression (here the `== 2`, `- 1`, `+ 1` uses). Without a shared use the load
+  goes straight into the named local.
+- Frontend CSE temps are numbered in reverse order of discovery: the group whose second
+  occurrence comes later in the source gets the lower virtual register.
+- Volatiles are coloured highest vreg first, lowest free register first. For r3/r4/r5 the order
+  must be temp > f > lane, so `f` has to be a named local declared BEFORE `lane` at function
+  scope (a block-scope or inline-parameter `f` is a temp numbered above the CSE temp and takes r3).
+- The re-read in the inlined SetLane must not join the shared group (the backend then folds it to
+  `cmpwi r3,1`). Only a different frontend expression kept it: `*(int *)((char *)f + 4) != 1`
+  (fakematch; a getter inline, `self->follower` as the argument and a second SetLane type all
+  lost either the reload or the register order).
+
+```c
+RRPathFollower *f;   /* before lane */
+int lane;
+...
+f = self->follower;
+lane = f->lane;
+... if (*(int *)((char *)f + 4) != 1) { f->lane = 1; f->needsSearch = 1; }   /* fakematch */
+... if (f->lane == 2) lane = f->lane - 1; else lane = f->lane + 1;
+```
+
+## 60. Loop with `add rP,rBase,rOff` per iteration: the byte offset is a named variable added in the INTEGER domain (ItemObject_Tick_Kind29_LightAttachment, 11-09)
+
+Diff: three volatile registers rotated in a keyframe loop (target base r3,
+`t[]` walker r4 = `mr r4,r3`, byte offset r5; ours offset r3, base r4, walker
+r5). mwtrace: with `(char *)c + i * sizeof(float)` the offset is a temp the
+BACKEND creates after code generation (`LI r90,0 ... ADDI r90,r90,4`), so it
+has the highest vreg and is coloured first.
+
+The target's offset is coloured last, so it is a named local. But every
+pointer form (`(char *)c + off`, `&c->x[i]`, `i * 4`, unsigned `i`) is strength
+reduced by IRO into a second walker (no `add`, 36 lines). Adding it as an
+integer keeps both the named offset and the per-iteration `add`:
+
+```c
+int off;
+...
+off = 0;
+for (i = 0; i < 4; i++, off += 4) {
+    if (c->t[i] <= t && t <= c->t[i + 1]) {
+        ScaleCurve *segment = (ScaleCurve *)((unsigned long)c + off);
+```
+
+`(int)c + off` and an `unsigned long off` do not work (walker again); it has
+to be `int off` added to `(unsigned long)c`.
+
+## 61. Shared float constant in the wrong FPR, and `fadds` with 0.0f that literals fold away: literals everywhere, the zero passed into the inline as parameters, constants loaded once through reverse-declared locals (TransitionEffect, 11-09)
+
+Target (unrolled table loop): `lfs f6,240; lfs f5,0.0; lfs f4,320; ...; fsubs f0,f0,f4; fsubs f2,f2,f6;
+fadds f0,f0,f5; fadds f2,f2,f5`. Three sources, three results:
+
+- `extern const float` for every constant: the frontend CSEs the zero that is read twice into a
+  temp (`@541` in the trace) and the FPRs come out permuted. regfix diag now prints a hint when a
+  bad vreg is a frontend `@` temp.
+- the same with `#pragma opt_common_subs off`: registers right, but the unrolled loop bumps the
+  walker twice.
+- float literals: `x + 0.0f` is folded away completely, so the `fadds` disappears.
+
+The target keeps `fadds` with zero, so the zero reached the expression as a VALUE, not as a
+literal: the quad helper took offsets. Literals everywhere plus the zero as inline parameters
+matches exactly (a hybrid of externs with a literal zero does not):
+
+```c
+static inline void ScreenRouletteTableQuad(float ox, float oy)
+{
+    ...
+    for (int i = 0; i < 16; ++i) {
+        ScreenPosition((v[0].x - 320.0f) + ox, (v[0].y - 240.0f) + oy);
+        ...
+    }
+}
+... ScreenRouletteTableQuad(0.0f, 0.0f);
+```
+
+Side effects of going to literals in the rest of the TU, and their fixes:
+
+- Literals are not CSE'd: every `ScreenPosition(-320.0f, -240.0f)` reloads its constants. Where
+  the target loads each constant once, give them named locals. Block-scope locals are numbered
+  in reverse declaration order, so declare them in reverse of the assignment order to get
+  f3,f2,f1,f0:
+  `float y1, x1, y0, x0; x0 = -320.0f; y0 = -240.0f; x1 = 320.0f; y1 = 240.0f;`
+- The TU must own the constants: add its `.sdata2` range to `config/GNLJ82/splits.txt`.
+
+## 62. Hand-unrolled segment calls with base/cursor registers swapped: write the real loop AND pass the base as an expression (EffectVfx29_30_Item4SubFlame_Tick, 11-09)
+
+Diff: four copies of a piecewise-linear segment test; target base r3 and
+`addi r4,r3,4*n` cursors, ours base r4 and cursors r3. Each lever alone fails:
+
+- named outer `FlameCurve *curve` + hand-unrolled calls: curve is coloured
+  last, r3/r4 swapped (99.42);
+- curve passed as an expression + hand-unrolled calls: base r3, but the dead
+  base merges into the last cursor (`lfsu f2,0xc(r3)`);
+- named outer curve + real loop: strength-reduced `lfsu` walk (95%).
+
+Both together match: with the base as a temp expression the compiler fully
+unrolls the constant 4-trip loop itself and keeps one base with `addi`
+cursors, the last one included.
+
+```c
+for (i = 0; i < 4; i++) {
+    FlameCurve_Segment((float (*)[5])((char *)curve + i * sizeof(float)), t, &height);
+}
+...
+int idx = I(0x10);
+height = FlameCurve_Evaluate(lbl_8041A224 + idx, F(0x150));
+```
+
+Lesson: when a row in gave_up lists "loop tried" and "expression tried"
+separately, try the combination before giving up.
+
+## 63. Two loop-long FPRs swapped (hoisted stack float vs hoisted constant), then volatile pairs in an unrolled classify loop (fn_801E9E74, 11-09)
+
+Three separate swaps, each with its own cause in the trace:
+
+1. `lfs f30,0x28(r1); lfs f31,zero` vs ours f31/f30. Both values live across
+   the whole loop with degree >= K. `position.z` was an IRO hoist temp
+   (`@121`, low vreg); the zero was hoisted by the BACKEND (highest vreg). In
+   the first simplify sweep the low temp is skipped and the backend temp is
+   pushed (its neighbours in between are already gone), so the low temp is
+   pushed last and coloured first. Fix: both as named locals, the one that
+   needs the higher register declared FIRST, and passed into the inline:
+   `float zero; float pz; ... pz = position.z; zero = lbl_806DA3F4;`
+   (a named zero alone flips the load order instead).
+2. `range` (named, coloured after the inline's `previous`) f2 vs f1: compute
+   it in a small inline so it becomes a frontend inline temp:
+   `static inline float GetRangeSq(void) { float range = fn(); range *= range; return range; }`.
+   A `Square(float v) { return v * v; }` helper does not do it.
+3. Strength-reduction walkers for `&base[i]` and `&states[i]` r4/r5 swapped:
+   they are numbered in creation order and the inline touches `*result`
+   first. Assigning the record to the existing function-level local first
+   (`record = &base[i]; ClassifyRecord(record, ...)`) creates its walker
+   first. Swapping the inline's parameter order has no effect.
+
+## 64. One-line `fmuls fD,fA,fB` operand swap where swapping the source operands also swaps the registers (fn_80219538, 11-09)
+
+Diff: target `lfs f2,K; ...; lfs f3,0x10(r22); fmuls f31,f2,f3`, ours
+`fmuls f31,f3,f2`. Writing `K * mi->rot` instead of `mi->rot * K` flips the
+instruction AND the registers (3 lines), because the backend evaluates the
+left operand first and the first-evaluated value has the lower virtual
+register (coloured later, higher FPR). Literal constants, `*=` forms and
+inline helpers (`Mul(a, b)`, `DegToRad(deg)`) all behave the same: first
+operand = first evaluated.
+
+The target has the SECOND operand in the lower vreg, so `rot` already was
+in a register when the multiply was generated: a named local that survived.
+
+```c
+float rot = mi->rot;
+float ang = lbl_806DAF54 * rot;
+```
+
+The frontend propagates the single-use local straight back into the
+expression, so this needs `#pragma opt_propagation off` around the function
+(`opt_dead_assignments off` works too). Marked fakematch.
+
+## 65. Saved GPRs of a switch permuted between cases, and one case's stack objects in the wrong place: declaration order of the value locals vs block-local payload pointers; the case's setup in its own nested inline (TransitionEffect_RenderPass, 11-09)
+
+Symptom 1: a `switch` whose cases each keep a payload pointer and a few
+colour values across calls; all instructions equal, only r27/r29/r31 permuted
+between cases. The colourer handles higher vregs first and gives each the
+lowest free saved register already handed out, else a new one from r31 down.
+Named locals are numbered by source position, so the one declared EARLIER is
+coloured first. The target coloured the values before the payload pointers.
+Fix: declare every case's value locals at function scope, first, each case
+with its own names (`unsigned int a1; unsigned int r, g, b, a; unsigned int
+r5, g5, b5, a5;`), assign them in the cases, and make the pointer a block
+local in each case (`case 3: { void *payload; payload = self->flash; ...`).
+One function-scope `payload` shared by all cases gives the permuted registers.
+
+Symptom 2: the same function with the matrices/Vecs of one case at the wrong
+stack offsets (the target had case 3's objects lowest although it is in the
+middle of the source). Stack objects are laid out in creation order, first
+created = highest address, and inline locals are created level by level. Put
+that case's setup into its own inline that owns the objects, so they are
+created one level later than everything else:
+
+```c
+static inline void ScreenFlashSetup(const Vec *camera)
+{
+    Mtx44 projection3;
+    Mtx view3;
+    ScreenProjection(projection3);
+    ScreenCamera(view3, camera, 9, 1.5707963705062866);
+}
+```
+
+The order of the two declarations inside it matters too. Wrapping the whole
+case in an inline does not work: it is over the inline size limit and
+`#pragma always_inline on` does not change that.
+
+## 66. A temp avoids r3 for no visible reason near the END of a function: the function returns non-void and has no return statement (clFlowCC*::Update, 11-09)
+
+Diff: the last loop of the function,
+
+```
+target: lwz r4,0x58(r28); cmplwi r4,0; beq skip; lwz r3,0(r4); bl Sprite_AdvanceAnim
+ours:   lwz r3,0x58(r28); cmplwi r3,0; beq skip; lwz r3,0(r3); bl ...
+```
+
+The temp has three neighbours and r3 looks free, yet the target does not
+use it. The same source loop gives r3 in sibling functions where more
+calls follow the loop, and r4 where the loop is the last statement.
+
+Cause: the function is declared with a return value (`virtual int Update()`)
+and falls off the end. The epilogue then USES r3, so r3 is live from its
+last definition to the exit. On the path that skips the call (`beq skip`)
+r3 is live across the temp, they interfere, and the temp gets r4. With
+unconditional calls after the loop r3 is redefined and nothing shows.
+
+Fix: declare the function with the non-void return type and no `return`.
+For a virtual, change the base and every override (mangled names do not
+contain the return type, callers that ignore the value are unchanged).
+
+Where to look: any `rX` vs r3 swap for a short-lived temp in the tail of a
+`void` function, on a path that can reach the exit without a call; also
+`li r3,N`-free tails where a value seems to be kept away from r3.
+
+## 67. `li rA,0; ... mr rB,rA` for two variables that both start at zero: they are locals of an INLINED function (RivalRun_UpdatePathFollower, 11-10)
+
+Target (search loop preheader): `li r28,0; stb r28,0(r30); mr r29,r28` for
+`best = 0; i = 0`. Written as two locals of the function itself we always got
+`li r28,0; li r29,0`, whatever the statements (`i = best`, `pf->flag = best`,
+shared constant local).
+
+Why (GlobalOptimizer.c `optimizelevel4`, ValueNumbering.c `isCSEop`):
+constant propagation turns every `mr x,y` whose `y` has the single reaching
+definition `li` back into an `li`. The later *aggressive* value numbering pass
+does merge two equal `li`, but only when the destination register is a
+compiler temporary (`>= first_fe_temporary_register`), never a named local of
+the function being compiled. Locals of an inlined function are such
+temporaries. So a surviving `li; mr` pair for two same-valued variables says
+the variables live in an inline.
+
+What else the two inlines (`RR_FindNearest(pts, count, pos)`,
+`RR_Follow(pf, pts, last, pos, &rel)`) fixed, in the order the diff shrank
+(124 -> 0 lines):
+
+- Arguments copied into an inline are coalesced copies that still raise the
+  interference degree of the outer locals: `pts` reaches degree >= 29 and is
+  coloured before `pf` (r31 / r30 as in the target).
+- Inline locals are numbered above the outer named locals, last declared =
+  coloured first: declare the floats of each helper in reverse of the wanted
+  f31, f30, ... order.
+- `count - 1` passed as the argument (not `last = count - 1` inside the helper)
+  puts `last` in r29.
+- A stack object declared in the outer function and passed by pointer
+  (`RRVec3 rel`) sits above the helper's own stack objects (d at 8(r1), rel at
+  20(r1)).
+- The table row read through an inline getter (`RR_Routes(pf->lane)[pf->route].pts`)
+  becomes a late temp, which fixes a volatile r4/r5 swap (same idea as §56).
+- The last two lines were the compiler version, not the source: see
+  matching_rules §4 (preheader `mr`/`lfs` order, GC/2.0 or later).
+
+Rule name in hits.jsonl: `li-cse-inline-locals`.
+
+## 68. Loop counters take the LAST volatile registers in the target: the loop is not inside an inline (clFlowCCBattle::Update, 11-09)
+
+Diff: a 5x20 grid shift loop with five volatile registers rotated. Target
+y=r9, x=r10, walkers r6/r7/r8; ours x=r6, y=r7, walkers above.
+
+Reading: in the target the two counters are coloured after every temp, so
+they are named locals of the function (lowest virtual registers). In ours
+the loop lived in a `static inline ShiftBattleGrid(page)`, which turns its
+locals into frontend inline temps (highest numbers, coloured first).
+
+Fix: write the loop straight into the function body (66 -> 17 lines). The
+remaining walker swap (dst `x + y*20` vs src `x + (y-1)*20`) follows
+creation order of the strength-reduction temps: name the destination index
+first (`int dst = x + y * 20;` before `src`), 17 -> 0.
+
+Rule of thumb: counters in the highest volatile registers = plain locals;
+counters in the lowest = an inline's locals.
+
+
+## 69. Dead truncation makes a block get scheduled twice (VoiceSystem_Init)
+
+Symptom: two independent instructions swapped inside one long straight-line
+block (here `lfd f0,8(r1)` / `or r0,r0,r6`), everything else identical.
+`python3 tools/mwsched.py log UNIT FN` shows the pre-RA schedule of that block
+already equals the target, and the post-RA pass (`scheduleinstructions(TRUE)`,
+Scheduler.c) schedules it again with one instruction fewer and flips the pair
+(`selectinstruction`: `or` uncovers 2 successors against 1 for the load). A
+block is only scheduled again when its `fScheduled` flag was cleared, i.e.
+something was deleted or inserted in it after the first pass (see
+mwcc_internals "Post-RA scheduling: which blocks are scheduled twice").
+
+Find the instruction the pre-RA block has and the post-RA block lacks. Here it
+was `rlwinm r139,r4,0,24,31`, the dead `(unsigned char)` truncation produced by
+
+```c
+lbl_806D1750 = (int)now;      /* s64 -> int -> u8: emits rlwinm, deleted later */
+```
+
+Writing the conversion in one step emits no rlwinm, so nothing is deleted, the
+block keeps its first schedule, and the function matches:
+
+```c
+lbl_806D1750 = now;           /* s64 -> u8 directly (also `(unsigned char)now`) */
+```
+
+`(unsigned int)now`, `(char)now` and a `*(char *)&` store all keep the dead
+instruction. General form: when the post-RA schedule is the wrong one, remove
+whatever dies in that block (dead truncations/extensions from chained casts,
+copies that coalesce) rather than trying to change the dependences.
+
+Two companion levers from the same function (54 -> 4 -> 2 -> 0 diff lines):
+
+- Anchor addressing (§40) only appears when the function names enough distinct
+  defined objects of the section. A base-pointer local plus offsets
+  (`data + 0x1534`) gives per-symbol `lis/addi`. Split the pool object into its
+  real pieces (symbols.txt and source) and name each piece directly.
+- A loop counter that must be `li rN,0` rather than a copy of an existing zero
+  register needs its own block-local variable (`{ int j; for (j = 0; ...) }`,
+  see §46), not the reused function-level `i` and not an inline.
+
+## 70. Saved register chosen "too low" for a value in one branch: where the vreg sits among ALL inline locals decides it (AI_CalcVSTargetSpeed, 11-09)
+
+Two facts measured with mwtrace on this function:
+
+- A saved-register candidate takes the LOWEST-numbered free register among
+  the saved registers already in use, and only opens a new one (r31
+  downward) when none is free. So "target r27, ours r24" for a value with
+  three neighbours means: the target coloured it when exactly r27..r31 were
+  in use, i.e. its virtual register sits between two specific locals.
+- Locals of an inlined function are numbered in REVERSE declaration order
+  (last declared = coloured first). Block-scoped locals inside the inline
+  come before all of them.
+
+The start-of-race branch (`VSInitialSpeed`) and the normal branch were two
+inlines; the target's `kart * 4` of the first branch is coloured between
+`param` and `ctrl` of the second. That is only possible when both branches
+share one local list: one inline with `if/else`, `int off` declared between
+them, the first branch's `ctrl/cup/round` declared last (so they colour
+first and take r31/r30/r29), and the distance rank as a listed local
+instead of a nested inline's local (fixes `lwz r28` vs r24 too).
+
+Recipe: read the COLOR lines in order, write the saved registers as a
+sequence, and place each declaration so that the list reads backwards.
+
+Follow-up (AI_CalcTargetSpeed_PairTracking, same shape): two more rules were
+needed there.
+
+- Which nodes survive the FIRST simplify sweep decides who gets r31/r30. A
+  high-degree local that is declared late in the inline (high vreg) sees its
+  lower neighbours already removed and is pushed in sweep 1, so the
+  arguments end up in r31/r30 instead. Declaring `record`/`ctrl` FIRST in
+  the list (low vregs) keeps them for sweep 2, after `self`/`kart`, and they
+  are coloured first.
+- `cup = g_cupId` is propagated into a CSE temp (lowest vreg, coloured last)
+  unless the file has `#pragma opt_propagation off`; then cup/round stay
+  locals at their declared position.
+
+
+Third use (fn_8017DF00, map debug path editor, 11-10, 99.85 -> 100): one
+local `node` r28 where the target has r29. `regfix diag` printed the
+colouring sequence `@242 r29, @243 r28, ..., node r28->want r29` and the
+solver asked for `node` to be numbered right above `@243`. `@241..@243` are
+the locals `i, node, point` of the path-printing inline, so the editing
+`node` had to sit BETWEEN two locals of that inline: the `else if (left)`
+print branch and the final `else` edit branch are one inline
+(`if (left) { print } else { edit }`) whose locals are declared
+`point, sel, node, i`. Function-scope positions for `node`, an inline for
+the edit branch alone, or the print loop written out in the function never
+put it there.
+
+## 71. Inline RETURN TYPE as a lever: u8 flag coloured one slot off, and `li r0,-1 / addi r0,n,K / mr rX,r0` (fn_80159BD0, option menu item page, 11-09)
+
+fn_80159BD0 (game/SceneList_80157EA8, 0xB14) went 97.2 -> 100 % with literal
+floats. The draft cannot land until the TU owns its .sdata2 (see gave_up.md),
+it is kept in docs/wip/notes/r1/fn_80159BD0_match_literals.cpp. Levers, each
+worth 0.1 to 1 %:
+
+- `unsigned char special` read after several calls: assign it from an inline
+  that returns **int** (`static inline int Item_IsSpecial(int id) { return
+  id >= 0x9f; }`). The u8 truncation then happens at the assignment and the
+  flag is coloured before the int-to-float conversion constant (r29 vs r28).
+  The same inline returning `unsigned char` swaps the two; `bool` and no
+  inline are worse.
+- Target `li r0,-1; blt; addi r0,n,0x4f3; mr r25,r0` (value built in r0, then
+  copied to the saved register): the inline returns **unsigned int** and is
+  assigned to an `int` local, or the caller uses a block temp
+  (`int t; if (n < 0) t = -1; else t = n + 0x4f3; spr = t;`). Ternary,
+  if/return and an int-returning inline all coalesce the copy away.
+- Function-level loop ints in the order `idx, j, i, page` (reverse of the
+  natural order) give the loop GPRs.
+- Block-level floats: the declaration order decides the saved FPRs and even
+  HOW MANY are saved (frame 0xe0 vs 0xf0). Declare all of them at the top of
+  the block and reorder (§70 rule: last declared colours first, lowest free
+  used register). A temp only used as a call argument can be assigned inside
+  the call (`f(..., tx = K + px, ...)`).
+- A product used only inside the innermost `if` is written there; the
+  compiler hoists it itself. Hoisting it by hand changes the FPR.
+- `d / 4.0f`, not `d * 0.25f`, when the target loads 0.25 late.
+
+## 72. Two split-lifetime temps in a fixed colour order (RankingMgr_UpdatePositions, 11-09)
+
+Follow-up to 57: two values had to be
+split temps coloured in a given order (`box` before the table walker, both
+r26). Measured: split ranges of ONE variable are created last range first
+(the later range is coloured first); split ranges of two variables follow
+declaration order, first declared first. A single-use dummy first range
+(`b = (void **)g_gameMode; if ((int)b == 1) return;`) is propagated away
+and then the next range becomes the named one, so the function needs
+`#pragma opt_propagation off`. The dummy ranges cost nothing (r0 / r3).
+
+Three in a row (ClRomTable_PurgeAll, 11-09): target colours walker, path,
+table (r29, r28, r27) and has `addi table; mr walker,table`. Named `table`
+never merges with the address temp, and a named walker is coloured last.
+All three as second ranges, declared `e, path, table`, with a chain of zero
+dummies that folds into the existing `li count,0`:
+`e = 0; path = (const char *)e; table = (ClRomEntry *)path; count = (int)table;
+table = lbl; for (i = 0, e = table; ...) { path = e->path; ... }` under
+`#pragma opt_propagation off`. The `table[i]` form fails under that pragma
+(walker init becomes `slwi; add` because `i = 0` is not propagated), so the
+walker has to be explicit.
+
+## 73. Pointer local vs shared loop counter in the SECOND loop: make the pointer a CSE temp (fn_8018E538, 11-10)
+
+Two loops share `int i`; in the second loop the target has the element
+pointer in r30 and `i` in r29, ours the reverse. Trace: the second range of
+`i` is a split-off temp (created after every IRO temp), and a named pointer
+`q` is always coloured after it. Split temps are created in the order of
+their defining statements, so `q` cannot be made an earlier split temp
+(`i = 0` always precedes the loop body). What works: spell the element out
+once more next to the named pointer,
+`q = &o->particles[i]; if (!(o->particles[i].age < x) && f(&q->pos, ...))`.
+IRO_CommonSubs then holds the address in a CSE temp, `q` is propagated into
+it, and CSE temps are numbered above split temps. Keeping the shared `i`
+matters: only a multi-def counter keeps the `li rI,0; mr rIV,rI` IV init (a
+fresh single-def `j` propagates to `li rIV,0`).
+
+Side effect on the FIRST loop: named locals take the lowest free saved
+register already in use (see 70), and r29 was opened by the split temp, so
+whichever of `p` / `i` is coloured first now gets r29. Declare `i` before
+`p` to give `i` r29 and `p` r30.
+
+Same rule the other way round (fn_80170B5C, clKPTrap ctor, 11-10): the
+target has `li r29,0; mr r30,r29` (bit counter, then the strength-reduced
+`entries[used]` offset) and ours `li r30,0`. The earlier clear loop was
+written `for (int i = 0; ...)`; sharing the later loop's counter
+(`for (bit = 0; bit < count; bit++)`) makes `bit` multi-def and the `mr`
+appears. Diagnostic: `li rA,0; mr rB,rA` at a loop preheader = the loop
+counter is reused from an earlier loop.
+
+## 74. Float arguments evaluated BEFORE an int argument: redeclare the callee with the floats first (fn_80158CE4 / fn_8015915C, option menu record pages, 11-09)
+
+Symptom: everything matches except the order in which the arguments of one
+call are computed. The target computes the float arguments (`fsubs`, `fadds`,
+int -> float conversion with `xoris` / `0x4330`) first and the int sprite id
+(`slwi` / `add` / `addi r4,r0,0x7e4`) last; ours computes the id first. In
+fn_8015915C the same thing showed up as `xoris r3` / `addi r0` swapped inside
+the digit loops.
+
+Cause: MWCC evaluates arguments in prototype order. GPR and FPR arguments are
+numbered independently (r3.. and f1..), so `f(int, int, float, float, float,
+int)` and `f(int, float, float, float, int, int)` pass exactly the same
+registers. The prototype guessed from the asm (ints first) is therefore not
+the only possible one, and the order of int versus float parameters is a free
+lever for scheduling and for vreg creation order.
+
+Fix: declare the same symbol a second time with another parameter order and
+call that. In C++ with C linkage this can be done without changing the other
+callers:
+
+```cpp
+namespace alt { extern "C" void fn_801695E0(int, float, float, float, int, int); }
+...
+alt::fn_801695E0(layer, x, y, alpha, 0x7e4 + self->course[i] * 2 + self->mode[i], 0);
+```
+
+A cast function pointer does NOT work (it becomes an indirect `bctrl` call).
+When every caller turns out to want the float-first order, change the real
+prototype instead.
+
+Other levers that were needed in the same two functions:
+
+- fn_8015915C: a named float (`baseX`) took a saved FPR one off. regfix diag
+  said "turn the named local into a temp via inline argument": the digit loops
+  went into `static inline void DrawDigits(int layer, signed char *digits,
+  float x, float y, float alpha)` and the value is passed as an expression.
+- fn_8015915C: `float colX; float gridY;` declared first at function level,
+  `rowY` as a block local in each branch (colX f25 / gridY f24).
+- fn_80158CE4: `#pragma opt_loop_invariants off` around the function, and the
+  id written as `0x7e4 + course * 2 + mode` (`(course << 1) + mode + 0x7e4`
+  gives 98.39 %).
+- Float constants the target reloads per call must be literals, not
+  `extern const float` (postprocess_sdata2.py maps the anonymous literals back
+  to the shared `lbl_806D....` symbols, so the TU need not own .sdata2).
+
+Landing note: when the last asm function with a manual `.extab_user` /
+`.extabindex_user` entry becomes C, delete the manual entries and their lines
+in tools/extab_user_renames.json; otherwise the compiler-generated entries are
+duplicated and main.dol fails.
+
+## 75. Repeated inline copies use a "busy-avoiding" register where nothing is busy: the copies are one unrolled loop (fn_8017BCF8, clModelM ctor, 11-10)
+
+Three inlined `pN = Point(index + N)` struct copies. The target uses r4 / f1
+for the temporaries in all three; ours r3 / f0 in the first two and r4 / f1
+only in the third, where r3 (`mr r3,r30` for the return) and f0 (a constant
+kept for a later store) really are live. A register that is avoided where
+nothing interferes means the temporaries of all copies are ONE variable
+whose interference is the union over the copies, i.e. the source is a
+constant-trip loop that the compiler unrolled:
+`for (int k = 0; k < 3; k++) (&p0)[k] = Point(index + k);`.
+The other user of the same inline (Update, fn_8017BF90) has no interference
+in any copy and stays matched. Check: the first copy has no `addi`
+(`index + 0`), the others reload the member and add 1, 2.
+
+## 76. Target copies a CSE temp into a saved register INSIDE a branch (`lwz r3; ...; beq; mr r27,r3`), ours keeps one register (GabyouItem_Tick_HeldAndHoming_2Eto31, 11-10)
+
+```
+lwz r3, 0x304(r3)      ; T = context->target->effects
+lwz r28, 0x8(r3)       ; nextTarget = T->nextTarget
+cmplwi r28, 0 ; beq
+mr r27, r3             ; previousBus = T   (first call below still uses r3)
+```
+Source shape: `nextTarget = E->nextTarget; if (nextTarget) { previousBus = E; f(E); g(previousBus); ... }`.
+Written plainly, IRO turns the second `E` into a copy of the CSE temp and
+then propagates that copy away: one saved register, no `mr`. A copy survives
+propagation when it is not a plain `local = temp` statement:
+- the local's definition is the FIRST occurrence of the expression (the CSE
+  temp is created inside it: `previousBus = (T = E)`), which puts the `mr`
+  where the local is defined (before the `if` here: 2 lines left), or
+- the copy goes through a cast node: `previousBus = (HeldEffectBus *)(void *)E`,
+  `void *previousBus = E`, `(T *)((char *)E + 0)` all keep it. This is the one
+  that puts the `mr` inside the branch.
+The first call may name the local; it still takes the temp (r3) without a reload.
+Tried and useless here: reusing a multi-def variable, an inline for the three
+calls, assignment in the condition, `#pragma opt_propagation off` (breaks 30+
+lines elsewhere in a big function).
+
+## 77. Two instances of one search inline: walking pointers coloured AFTER both instances' counters: index the array in the inline (RivalRun_CalcPathDistance, near miss 100 -> 4 lines, 11-10)
+
+Target (two calls of the same nearest-point inline) colours `i1, best1, i2,
+best2` first and only then the two pointers that walk the point array, so the
+second counter reuses the first one's register and the second `best` opens a
+new one. With a pointer local in the inline (`RRVec3 *p = pts; ... p++`) the
+locals are numbered `p < best < i` per instance, so `p1` is coloured before
+`i2` and every saved GPR of the second search is off.
+
+Lever: no pointer local in the inline; index instead.
+
+```c
+for (i = 0; i < count; i++) {
+    d.x = pts[i].x - px;   /* not: p->x - px; p++ */
+    ...
+}
+```
+
+Strength reduction turns `pts[i]` into a walking pointer, but that pointer is
+a backend temp created after every frontend local of BOTH inline instances,
+hence coloured last. Same instructions, 100 -> 4 register diff lines. The
+function is still asm (docs/gave_up.md, draft
+docs/wip/RivalRun_CalcPathDistance_regonly.patch); the rest is one `lfs`/`fmr`
+direction of a shared zero load.
+
+## 78. Two float constants swap registers (`1.0f` and `255.0f`): the order the constants are CREATED follows expression order, so put the first use inside the later expression (fn_80147AF4 / fn_80147CE8, RaceHud intro fade, 11-10)
+
+Target (GC/2.6): `lfs f2,1.0; ... lfs f3,255.0; fsubs f2,f2,f4; fmadds f1,f1,f2,f0; fmuls f0,f3,f2`.
+Ours had f2/f3 swapped with
+
+```c
+float t = (o->timer - 30) / 15.0f;
+t = 1.0f - t;
+int a = (int)(255.0f * t);
+float s = 0.2f * t + 1.1f;
+```
+
+`regfix diag` said: "backend temp (1.0f load) must be generated AFTER the 255.0f load". Constants are backend
+temps, numbered in the order the expressions are walked; the load instructions are scheduled later, so the
+instruction order tells nothing. 36 variants of statement order, operand order and inline helpers stayed at
+99.72. What matches is the assignment written inside the product, so `255.0f` is walked first:
+
+```c
+float t = (o->timer - 30) / 15.0f;
+int a = (int)(255.0f * (t = 1.0f - t));     /* fn_80147AF4 */
+float s = 0.2f * t + 1.1f;
+```
+
+In the sister function fn_80147CE8 (the same `1.0f` is also the scale offset) the ratio has no local at all
+and the frontend shares it:
+
+```c
+int a = (int)(255.0f * (1.0f - (o->timer - 30) / 15.0f));
+float s = 0.2f * (1.0f - (o->timer - 30) / 15.0f) + 1.0f;
+```
+
+(`float t; a = (int)(255.0f * (t = 1.0f - (o->timer - 30) / 15.0f));` matches too.) The same repeated form
+is 99.6 in AF4 and the AF4 form is 99.1 in CE8, so try both. When diag asks for "constant X generated after
+constant Y", move the statement that uses X into the expression that uses Y.
+
+## 79. `lfs fA,K; fmr fB,fA` direction between a named accumulator and an inline local with the same initial constant (RivalRun_CalcPathDistance, 11-10)
+
+Target `lfs f31,K` (dist) + `fmr f27,f31` (the inline's bestDist), ours the
+reverse. Mechanism: IRO forwards `dist = K` into the inline's `bestDist = K`,
+CSEs the two loads into a temp T, and the first coalescible copy
+(`bestDist <- T`, temp-temp) takes T; `dist <- T` is named and stays a copy.
+Fix (the 78 lever): give the inline an `init` parameter and write the
+assignment inside the argument, `a = Find(pts, count, from, dist = K);`.
+Then dist is defined by the load itself and bestDist is the copy.
+Things that do NOT work: passing `dist` after a separate `dist = K;`
+(forwarded), casts (76 is for pointers), `#pragma opt_propagation off`
+(fixes the pair, breaks 220 lines).
+Follow-up: the change renumbers the float locals of the SECOND inline
+instance; that instance needed its own copy of the inline with the float
+declarations in the order `pz, py, px, bestDist` (24 orders swept, one hit).
+
+## 80. Several expansions of one big inline in one function: wrapper level fixes `self`, per-copy local order fixes the rest (CarObject_HandleItemEffect, asm -> C, 214 -> 0 lines, 11-10)
+
+Function: three switch case groups each expand the same "cancel active
+effect" routine (7 saved-register locals plus `self`), and three cases expand
+the small boost routine. Instruction stream identical, only r22..r29 differ
+per expansion.
+
+What the trace (`tools/mwtrace.py ... --only VREG,COLOR`) shows:
+
+- Inline temps are created level by level. All parameter temps of the
+  inlines called directly from the function body are created first, for
+  every call site; the locals of an inline that is called from inside
+  another inline come later. Later created = lower vreg = coloured later.
+- The first node that needs a new saved register takes the next fresh one
+  (r29 after the two arguments). Every later node takes the LOWEST already
+  handed-out register that is free for it.
+- Locals of one inline body are created in REVERSE declaration order.
+- So the first coloured expansion gets its locals descending from the fresh
+  end (creation order = r28, r27, ... r22) and every later expansion gets
+  them ascending (creation order = r22, r23, ...).
+
+Two levers follow:
+
+1. Target has the same register (r29) for `self` in every expansion, also in
+   the small boost inlines that have no other locals: call the big body
+   through a one-line wrapper inline (`static inline int Cancel(T *self)
+   { return CancelBody(self); }`). The wrapper's parameter temps are level 1,
+   created together with the boost parameter temps, so all of them are
+   coloured before any body local and all take r29. With the body called
+   directly, `self` is coloured with the body locals and lands on r22 in
+   every expansion but the first (214 lines -> 172).
+2. Remaining per-expansion order: read each expansion's registers from high
+   to low. For the first expansion that list is the creation order, so
+   declare the locals in the reverse of it. For the later expansions the
+   list read from LOW to high is the creation order. If the three lists do
+   not come from one declaration order (here they did not), the function
+   only matches with one copy of the inline per expansion, each with its own
+   declaration order. That is a fakematch and is marked so in the source;
+   the more likely original is three different member functions or a deeper
+   inline nesting that nobody found yet.
+
+Also in this function: the two table scans must be written as loops in the
+function body (as inlines they share the `li` and take other registers), and
+the result flag is `unsigned char` (int gives `clrlwi` instead of `mr`).
+
+## 81. A pointer returned by a search inline is coloured after every other inline local: return it through a reference out-parameter (fn_8018E6FC, 99.07 -> 100, 11-10)
+
+Target `q` (free particle slot) r7, `p` r8, `point` r9; ours `point` r7, `p` r8,
+`q` r9 whatever the declaration order. mwtrace: `q = freeParticle(o)` makes the
+value live in the inline's RETURN temp (`@197`, created by `CInline_Expand`
+when the nested inline is expanded, i.e. after all locals of the outer inline),
+and temps created later get lower vregs and are coloured later. The outer
+inline's own locals are numbered in declaration order and coloured
+last-declared first.
+
+Fix: let the search inline write the result itself and order the outer locals
+by the wanted colouring, last-declared = first coloured:
+
+```c
+static inline void freeParticle(ViewEmitter *o, ViewBillboardParticle *&out) {
+    for (int i = 0; i < 60; i++) {
+        if (o->particles[i].age < 0.0f) { out = &o->particles[i]; return; }
+    }
+    out = 0;
+}
+...
+    unsigned int point;          /* r9, coloured last  */
+    ViewMatrixParticle *p;       /* r8 */
+    ViewBillboardParticle *q;    /* r7, coloured first */
+    ...
+    freeParticle(o, q);
+```
+
+Sign: a value assigned from an inline's return sits one or two volatile
+registers too high and no declaration order moves it.
+
+## 82. Sum passed as a float argument is scheduled after the other argument loads: load the operand into a local, then add in place (fn_8014ADB4, asm -> C, 96.9 -> 100, 11-10)
+
+Target computes `dy + pos.y` (`lfs f0; ...; fadds f2,f31,f0`) before the
+`lfs f1` / `fmr f4` of the neighbouring arguments, and keeps `dy` in f31.
+Writing the sum inside the call, in a fresh local (`yy = dy + pos.y`), or
+in an inline all gave the same late `fadds`; `dy += pos.y` put the result
+in f31 plus an extra `fmr`. What matched:
+
+```c
+yy = sRankPortraitPos[kart][i].y;
+yy = dy + yy;
+SPR(0, voice, 0, pos.x, yy, k, k, self->t);
+```
+
+The same function needed two more things: the section 74 prototype lever
+(all five float params declared before `obj, id, flag`, so `id` is loaded
+last), and float literals instead of `extern const float` for the
+`t += 0.05f; if (t > 1.0f) t = 1.0f;` clamp (extern constants numbered the
+FPRs t=f1/step=f0/max=f2, literals give t=f2/step=f1/max=f0).
+
+
+## 83. Float register order of a "copy vector, take length, scale" block: literal constant, multiplier through a pointer inline, and which reused local holds the sum (ItemEffect_Projectile, 98.9 -> 100, 11-10)
+
+Same instructions as the target, only f-registers permuted (48 lines). Four
+levers were needed together; each alone moved the count up or sideways
+(48 -> 50 -> 44 -> 38 -> 0), so do not judge them one at a time (see §62).
+
+1. `extern const float lbl_806D2730` (1/60) -> the literal `1.0f / 60.0f`.
+   The extern load is a frontend CSE temp; the literal load is a backend temp
+   and is coloured before the products (target f1). `postprocess_sdata2.py`
+   renames the anonymous `@N` literal to the target symbol, no split needed.
+2. The multiplier goes through a small pointer inline, also for the table
+   value: `static inline void Proj_scale(float *v, float k) { v[0] = v[0] * k; ... }`.
+3. Named locals: first declared = highest vreg = coloured first. Declare
+   `vx; vy; mv; vz; s;` and write the LOADS in the order the target schedules
+   them (`vy = obj->velY;` before `vx = obj->velX;`).
+4. Second block (velocity copy + length): reuse existing locals instead of
+   fresh ones, and choose the roles: `s, vy, vx` take the three loads, `vz`
+   takes the sum `p[2]*p[2] + (p[0]*p[0] + p[1]*p[1])`. The sum must be the
+   local coloured after the y and z values, and it must stay coalesced with the
+   sqrt inline's argument; a fresh local (or reusing the result local) for the
+   sum breaks the coalescing and adds an `fmr`.
+
+Do not replace the hand-written copies by `Proj_cpy`/`Proj_len` style inlines:
+stores and `frsp` disappear (70-200 lines).
+
+Sign: vector math block at 98-99% with only f0-f7 permuted, constants loaded
+from `extern const float`.
+
+Addendum (ItemEffect_Trap, 98.5 -> 100, same day): the same two levers
+(literal 1/60 passed to `Proj_scale(v, k)`) fix the float half (36 -> 20
+lines). The integer tail needed the id/flag pair copied as ONE struct
+assignment (`*(Pair *)&self->activeId = *(const Pair *)&tbl[idx].valC;`)
+instead of two int locals: the struct copy's temps are backend temps, coloured
+before the owner chain (target valC r3, valD r0, chain r4/r5).
+
+## 84. Add tree of a three-term index is wrong whatever grouping you pick: enumerate all 12 groupings, the frontend rotates them (CalcEarnedCoins, 99.81 -> 100, 11-10)
+
+Symptom: only the two `add`s (and the order of the two `slwi`s) of an index
+`a*4 + b*2 + c` differ. Target `r0 = a*4 + b*2; r4 = c + r0`, ours
+`r0 = b*2 + c; r4 = a*4 + r0`. Writing the grouping the target shows
+(`c + (a*4 + b*2)`) does NOT give it: MWCC's frontend re-associates the sum
+before codegen, so the emitted tree is a rotation of the source tree.
+
+What produced the target here:
+
+```c
+static inline int CourseClearIndex(int course, int reverse, int isLong) {
+    return isLong + course * 4 + reverse * 2;   /* (isLong + course*4) + reverse*2 */
+}
+```
+
+Measured table (diff lines; 0 = match), terms a=`course*4`, b=`reverse*2`, c=`isLong`:
+
+| source | lines |
+| --- | --- |
+| `(c + a) + b`, `(a + c) + b` | 0 |
+| `c + (a + b)`, `(a + b) + c` | 4 |
+| `a + (b + c)`, `a + (c + b)` | 5 |
+| every form starting with `b` or ending in `+ a` | 9-10 |
+
+Rule of thumb: the term that the target adds LAST (here `c`) must sit in the
+inner sum together with the first-shifted term in the source, and the term
+with the smaller shift goes outside. Do not reason about it; a 12-form sweep
+takes one minute (script shape: replace the return expression, `ninja` the
+object, count diff lines).
+
+## 85. `add rT, rBase, rT` vs `add rT, rT, rIdx`, a u8 parameter coloured first, and an aligned buffer that must be coloured before the address (fn_8028C1B8, 98.37 -> 100, 11-10)
+
+Three independent levers in one function (triforce/amnet_nm3.c), each found
+with `tools/mwtrace.py --only COLOR,PCODE`:
+
+1. **u8 parameter wants r31, a `u32 ch = channel;` local gets the last saved
+   register.** The named local has a low vreg number and is pushed first.
+   Use the `u8` parameter directly where the integer promotion happens
+   (`channel << 16`, `channel == 0xFF`): the `clrlwi` result is then a backend
+   temp numbered above the .bss anchor and is coloured first. Uses that would
+   re-extend the raw parameter after a call (u8 inline parameters, later
+   compares) get an explicit `(u32)channel`, otherwise the raw parameter stays
+   live and takes one more saved register.
+2. **A loop-invariant expression passed to an inline is numbered last.**
+   `DevWaitIdle(addr, ALIGN32(raw))` hoists the align out of the inline's
+   loop into a late IRO temp (lowest number, coloured after `addr`). Wrapping
+   it in a one-line inline (`AlignPacket(raw)`) in the argument creates the
+   temp at expansion time, before the callee's parameter temps; it is then
+   coloured before `addr` and shares the register of the later `pkt`.
+   Calling a nested search inline directly (`FindDev(ChannelDeviceId(ch))`
+   written as two statements instead of through a wrapper inline) moves its
+   walker one expansion level up in the same way.
+3. **`&table[n & 7]` always computes the base into the destination**
+   (`addi rT,anchor,0; add rT,rT,rIdx`), whatever the C form (`t += i`,
+   `&t[i]`, `(u8 *)t + i * size`). The target had the scaled index in the
+   destination and the base in a scratch (`add r8, r3, r8`). Only the integer
+   accumulate form gives that: `u32 i = (n & 7) * sizeof(T); i += (u32)table;
+   t = (T *)i;` (fakematch). The same change fixed three trace-buffer copies in
+   fn_8028C644.
+
+## 86. Scratch registers of a small search inline: declaration order sets the frontend temps, and the masked index must be a real variable (fn_8028C644, 99.88 -> 100, 11-10)
+
+`HandlerFor` (table walk `while ((fns = d->fns) != NULL)`, then
+`fns[idx]`): target `fns` r3, `d` r4, `cmd` r5, `idx` r4; ours `cmd` r3,
+`idx` r3, `fns` r5. `tools/regfix.py diag` named both edits:
+
+- inline locals are coloured in reverse declaration order (last declared
+  first), so `u16 cmd; const NetDispatch* d; const NetHandler* fns;` gives
+  `fns` r3;
+- with `s32 idx = (u8)cmd;` in the inner block the variable disappears and
+  the `clrlwi` is a backend temp, coloured before every frontend temp (it took
+  r3). Declared first at inline scope and written `idx = cmd & 0xFF;` it stays
+  a variable with the lowest number, is coloured last and reuses `d`'s r4.
+
+## 87. A local vector loaded twice in one block: MWCC only keeps two load sets when one access goes through another object (KartItem_ApplyImpactImpulseAndRumble, asm -> C, 92.4 -> 100, 11-10)
+
+Target: the dot product `row . d` loads `d` (f1, f0, f2, multiplied in place),
+and `r = d * len` / `d += w` load `d` again (f13, f11, f9), with no store in
+between. In C every spelling of `d[i]` is merged into one load set (351
+instead of 354 instructions): pointer locals, struct casts, integer casts,
+putting w/r/d/mtx in one struct, named scalar copies, a different statement
+order, stores through an unknown pointer (locals are never killed by those).
+What keeps the loads apart:
+
+- `volatile float *pd = d;` gives the count but the wrong registers and
+  schedule (products not in place), a dead end;
+- an access through a neighbouring object: `float *pd = &mtx[-3];` (d sits
+  right below mtx on the stack). The instruction selection is then the natural
+  one and only the statement order was left: r, rumble store, row copy into w,
+  dot (row through `q = &mtx[8]`), k, `w *= k`, `d += w`.
+
+Marked fakematch; the original is probably a C++ Vec3/matrix-row expression we
+cannot spell in this C TU. Other levers of the same function:
+
+- `x - q[12]` etc. through a value-parameter inline
+  (`KI_sub3(out, x, y, z, q)`) followed by a pointer length inline: the
+  differences are coloured before the 16 unrolled matrix copy temps (250 ->
+  164 lines). Written in the body they come last (f11-f13).
+- sqrt inline with LITERAL `0.5` / `3.0` instead of the extern doubles: sum
+  f4, constants f3/f2 as in the target (§83 lever 1 for doubles, 164 -> 76).
+- `bne; b` after the 64-bit flag test = the shared `ItemBus_TestFlags(...) == 1`
+  inline (result variable with if/else), not an open-coded test.
+- three stores to `self->movement->...` with one pointer load: take
+  `float *rp = &self->movement->rumbleX310;` first.
+
+Sign: instruction count 3 short in a vector block and the target has two
+`lfs` runs from the same stack slots.
+
+## 88. Named locals must be coloured in the middle of an inline's temporaries: the surrounding code belongs to the same inline (fn_8019C6B4, 99.79 -> 100, 11-10)
+
+Symptom (regfix diag / `tools/mwtrace.py`): the target equals our interference
+graph, but a function-level named local (`angle`) must be coloured BETWEEN two
+temporaries of an inlined helper (the `y` and `z` of QuatMatrix), and backend
+temps of an argument expression (`target.z*scale`) must be coloured after an
+earlier call-result temp. No function-level spelling can do that: named locals
+of the function always have the lowest vregs (coloured last), and locals of an
+OUTER inline are created before those of a nested inline (coloured first).
+
+Rules read from the trace (`VREG`, `TEMPNEW`, `COLOR` lines) and Coloring.c:
+
+- `colorgraph` takes the lowest-numbered register in "volatile + already
+  obtained nonvolatile" that no coloured neighbour holds; a new nonvolatile
+  (f31, f30, ...) is obtained only when that mask is empty. So WHEN a node is
+  coloured relative to the nodes that obtain new nonvolatiles decides its
+  register (here: angle = f28 needs f29/f28 obtained, f27/f26 not yet).
+- Locals of ONE inline become frontend temps created in REVERSE declaration
+  order (last declared = created first = highest vreg = coloured first).
+- A single-use local of an inline survives as its own temp (a single-use named
+  local of the function is propagated away), so `qz = target.z*scale;` in the
+  inline gives a frontend temp numbered below every backend temp.
+
+Fix: the `if (angle != 0)` block, the quaternion set and the hand-expanded
+matrix build are one inline (`Turn(k, target, q, z + (x+y))`), with all locals
+in one list: `float half, scale, sw; float w, z, angle, y, x; float xx, ...,
+wz; float qz, qy, qx;` and the products assigned in the order z, y, x, stored
+x, y, z, w. The inline is too big for the default limit: `#pragma
+inline_max_size(100000)` (marked fakematch; a whole-body inline also expands
+with it). 11 -> 7 (angle) -> 0 lines (products).
+
+Sign: the diag says "must be numbered between inline temps @N and @M".
+## 89. Saved registers r20..r24 permuted over many short loops: read the colouring order, then move each value to the right side of the first hand-out (VSMode_Init, 99.60 -> 100, 11-10)
+
+Big init function, `stmw r19`, 879 instructions all equal, 112 lines of
+r20..r24 renumbering over ten loops. A 6144-variant `for (int i)` x declaration
+order sweep had found nothing. What worked was reading the order from the
+trace and using the colour rule (lowest free register among those already
+handed out, a new one r31 downward only when none is free):
+
+    python3 tools/tracesweep.py trace UNIT FN --want \
+      "print([(v,T.phys.get(v)) for v in T.order if 19 <= T.phys.get(v,0) <= 24]) or True"
+
+Order is: high-degree nodes first, then everything else by DESCENDING vreg
+(inline temps > FindLoops temps > CSE temps > SplitOffRange temps > named
+locals, first declared = highest). Five separate fixes, each read off that list:
+
+1. Three block locals of one loop in swapped saved registers (target slot r21,
+   cameraPeer r22, human r24; ours reversed): they are coloured in declaration
+   order, each taking a NEW register. Declare them without initializers in the
+   order of descending target register (`human; cameraPeer; slot; lap;`) and
+   assign below in the order of the target's loads. A function-level `slot`
+   shared with another loop had to become two block locals. 112 -> 88.
+2. Everything that wants the last register (r20) got r21+: r20 was first
+   handed out too late. Its first holder in the target is the value live
+   across the widest point (`cc` during `new VSCar(...)`). A named local is
+   coloured after all temps; a trivial getter `static inline int VS_cc()
+   { return g_ccClass; }` makes it an inline temp, coloured before them. 88 -> 50.
+3. Loop counter must take the register ABOVE three loop-body locals (target
+   round r20, cup r21, mode r22, i r23): the counter must be a named local
+   declared AFTER them. `{ int round, cup, mode; ...; for (int i = 0; ...)
+   { round = ...; cup = ...; mode = ...; } }`. The function-level `i` is a
+   split-range temp there and is always coloured first. 50 -> 14.
+4. `clrlwi. r3,r3,24; beq; mr r20,r3` (target) vs `clrlwi. r20,r3,24; beq;
+   mr r3,r20`: the local holding a u8 call result is `unsigned int`, not
+   `unsigned char`. 14 -> 8.
+5. Volatile pair swapped between a named table-row pointer and the CSE temp
+   of `flag * 12` (row r4 in target): the row comes from an inline
+   (`VS_row(g_cupId)`), so it is coloured before the CSE temps. 8 -> 0.
+
+All five were found with tracesweep templates on the native compiler (4 s per
+24 variants; the real GC/1.3.2 compile of this TU takes 2 min), then confirmed
+once with the real compiler.
+
+Sign: `stmw r19/r20`, many loops, only r20..r24 differ, regfix diag lists
+"want r20" for several unrelated temps.
+
+## 90. 12-byte struct copy comes out as load-load-store-store-load-store: the source is read out of bounds of its object (CarObjectManager_RunKartKartCollisionSweep, asm -> C, 98.95 parked -> 100, 11-10)
+
+Target copies each `Vec3` start value with three loads then three stores
+(`lwz r7/r6/r0 ... stw r7/r6/r0`, interleaved with the next copy and with the
+float multiplies). Ours gave `lwz, lwz, stw, stw, lwz, stw` with two
+registers, and the multiplies were scheduled after it. Source was the same
+`half = cfg->halfA;` in both cases. Cause: `cfg` was a struct view laid over
+`lbl_802EBA18[255]` and the fields sat at +0x41c, past the end of that array
+(inside the next object). For a load the compiler cannot place inside the
+object, the stack stores become dependencies of the third load (mwtrace:
+`LWZ ... preds=2`), which fixes the pairwise order.
+
+Fix = the real data layout: the values are separate `static const Vec3`
+objects (symbols.txt split of the neighbouring float table), referenced by
+name. Four objects in one function are addressed from the pooled `.rodata`
+base, so the code still uses `lbl_802EBA18 + 0x41c..`, as the target does.
+A `base + big offset` access in asm is usually this pooling, not a struct
+view of the first object.
+
+Other levers of the same function:
+
+- `lwz r12,0(r3); lwz r12,0x3c(r12)`: real virtual call, a base struct with
+  the virtuals inside `#pragma cplusplus on` (matching_rules 6).
+- loop counter `i` coloured second instead of last: it was coalesced with
+  the frontend CSE temp of `(unsigned long)i` shared by two call sites (mwtrace
+  `COALESCE r48 <- r38 named`). Passing `i` as int (function pointer cast for
+  those calls) removes the temp and `i` is coloured as a plain named local.
+  The first loop needs the opposite: `unsigned long uk = k;` used for both the
+  store and the call (target stores the argument copy r4).
+- `bp2 = &bs` as a local took a callee-saved register before the pool base;
+  writing `&bs` at each use lets the compiler hoist it itself (r31 first).
+
+Sign: struct copies in a different shape from an otherwise identical
+standalone probe; check whether the pointer really points inside its object.
+
+## 91. Argument load order at three call sites of a big C++ ctor (CarObject_Init, asm -> C++, 99.4 -> 100, 11-10)
+
+All three were "same instructions, loads in another order / other argument
+registers". Each needed a different lever:
+
+1. `new Tornado(1, driver, character, isPlayer, x, 0.0f, y)`: target emits the
+   float constant and `li r4,1` BEFORE the two member loads. §74 again: the
+   arguments are evaluated in prototype order, so the callee prototype
+   interleaves ints and floats: `(int, Driver *, float, float, int, int, float)`.
+   Sweep all 35 positions of the three floats; several match, take the most
+   natural one. The mangled name changes: update `extab_user_renames.json`.
+2. `new Fade(movement.p, tornado.p, camera.get(), isPlayer)`: target loads the
+   camera first. `get()`, `.p`, conversion operators and `operator->` all give
+   the same code. A getter WITH A LOCAL (`T *getV() const { T *r = p; return r; }`)
+   makes that argument a temp that is loaded first.
+3. Inline payload ctor `Blend(this, isPlayer20, speed.p, steering.p)`: with
+   parameters, the first parameter gets the lowest register AND arguments are
+   loaded right to left, so register order and load order are always opposite;
+   the target has both ascending (st r5, sp r6, act r7, loaded st, sp, act).
+   Fix: the ctor takes only the owner and reads the values itself, with the
+   declarations separated from the loads:
+   `unsigned char act; Speed *sp; Steering *st; st = o->steering.p; sp = o->speed.p; act = o->isPlayer20;`
+   then the member stores. Declaration order sets the colouring (last declared
+   first), statement order sets the load order. Brute-force the 6 declaration
+   orders.
+
+Landing notes for a ctor converted inside an asm + manual extab TU:
+`main.dol` failed with every function at 100% twice. (a) A holder dtor kept as
+an `extern "C"` function next to a declared-only `~Holder()` renamed to the same
+symbol was emitted after the following function; defining the real
+`Holder::~Holder()` at that place fixed the order. (b) The ctor uses a
+ScopedTimer, so the TU gets a weak `__dt__11ScopedTimerFv` with its own
+extabindex row; `reorder_extab.py` silently skips a TU whose function set
+differs from `tools/extab_order.json`, so add the weak dtor to both lists.
+Check with `objdump -r -j extabindex` against the json when only extab bytes
+differ.
+
+## 92. Inline counter below the caller's named loop counter, flag coloured before backend temps, table address created after another one (fn_802353EC, 42 -> 10 diff lines, not matched yet, 11-10)
+
+clFlowCCCharaItem ctor with the inlined SetCharaGroup; each lever read from
+`tools/mwtrace.py --only COLOR` (saved registers in colouring order):
+
+1. Target `j` (loop counter inside the inline) in the LAST saved register,
+   below the ctor's named `i`: an inline local is a frontend temp and always
+   outranks named locals. Declare `int j;` as a block local of the caller's
+   loop body and pass it by reference (`int &j`, `for (j = 0; ...)`).
+2. `unsigned char special = 0; if (cond) special = 1;` puts the flag in a
+   frontend temp (coloured after the backend temps of the neighbouring index
+   math, it got r4). `unsigned char special = (a && b) || c;` materialises
+   the boolean in a backend temp created after them: flag in r0, the index
+   temps in r3/r4 as in the target.
+3. Two address computations swapped r3/r4 (`grp[i + 2]` vs
+   `kCharaGroups[which][index]`): the one that must take the lower register
+   has to be CREATED later. Pass the array and the slot (`groups, slot`) and
+   load `Sprite **group = groups[slot];` inside the inline after the `id`
+   line; keep `int group = i + 2;` as a named local in the caller or the
+   `+ 2` is folded into the displacement.
+
+Left: the special branch's `res` takes j's free register (r19) instead of
+the walker's (r23). `j` has degree 29 (survives the first simplify round and
+opens r19 before `res` is coloured); see docs/gave_up.md.
+
+## 93. Inline `this` temps coloured before an address CSE temp: call the method through one reused named pointer local (fn_801B9928, 99.77 -> 100, 11-10)
+
+Seven `arr[i]->SetPosition(x, y)` calls after `arr[i] = new Sprite(...)`. The
+target keeps `&arr2[3]` (a CSE temp, reused by the 7th call) in r4 and every
+sprite pointer in r5; ours the other way (40 lines). `regfix diag`: the seven
+loads are the inline's `this` temps (@657..@667, frontend temps, high vreg,
+coloured first, so they took r4) and the address is CSE temp @715 below them;
+"they must be coloured after it".
+
+A named local is numbered below every temp, so loading each sprite into ONE
+block-local pointer and calling through it moves all seven below the CSE temp:
+
+    { CourseSprite *s;
+      s = arr[0]; s->SetPosition(x, y);
+      s = arr[1]; s->SetPosition(x, y);  ... }
+
+(the frontend forwards `s` into the inline `this`, the value keeps the named
+local's number). Not the same: one local per call or a local declared at the
+store (tried 11-09, no gain), direct field stores without a local or a static
+inline taking the pointer (46-57 lines).
+
+**Check:** regfix diag says a short-lived `this` / pointer temp of repeated
+inline calls holds the register an address or CSE temp wants: assign the
+object to one reused block-local pointer before each call. Rule
+`inline-this-via-reused-named-local`.
+
+
+## 94. Three small levers from TimeAttackResult's ctor (fn_8021C070, 96.27 -> 100, 11-10)
+
+1. **`li rA,0; mr rB,rA` at a loop entry (ours `li; li`)**: rB is the
+   strength-reduced offset counter of `arr[i]`, rA is `i`. The copy only
+   appears when the loop sits in an INLINE (`static inline void
+   TA_makeDigits(TimeAttackResult *self, int &res) { for (int i = 0; ...) }`).
+   Written in the function body the two `LI` stay separate (mwtrace: source
+   line vs line -1 in one block); comma inits, a second counter, `j = i`,
+   declaration orders and the opt_* pragmas do not change that. A local that
+   must be coloured after the inline's temps goes in as a reference parameter
+   (the caller's named local, see 81).
+2. **Double bool conversion** (`subfic/cntlzw/srwi 5` then `neg/or/srwi 31`
+   for `x == 1` stored to a bool field; ours stored the compare directly or
+   with `rlwinm ...,24,31`): the value is an `int`-returning inline
+   (`return g_flag == 1 ? 1 : 0;`) passed to a `bool` PARAMETER of an inline
+   MEMBER function. A static inline setter, a cast or a bool local do not
+   convert twice.
+3. **Volatile registers of a field-by-field fill in descending order**
+   (target time r8, cup r7, ..., kart r0 with stores in field order): the
+   setter's parameters are in REVERSE field order
+   (`Set(int k, int ch, int c, bool rev, bool lng, int cu, int t)`), the body
+   stores in field order, called on the global directly (no `T *e` local).
+
+Also: float arguments in the wrong load order from `extern const float`
+(`lfs f5` before `lfs f1`): literals (see 83), `postprocess_sdata2.py` renames
+them.
+
+## 95. Two saved parameters swapped: advance the index through a `long` local, read the base through an inline getter (fn_80243074, 36 -> 14 diff lines, not matched yet, 11-10)
+
+**Symptom:** `index` (r4) and `position` (r5) are both kept across calls and
+land in r28/r29 instead of r29/r28. Parameters are numbered in declaration
+order and the higher one is coloured first, so `position` always wins; copies
+of a parameter into an `int` local are propagated back onto the parameter.
+
+**Lever:** two changes that only work together.
+
+```cpp
+static inline RivalPath *PathOf(RivalMarkerHud *self) { return self->path; }
+...
+RivalPath *path = PathOf(self);       /* inline temp instead of a named local */
+int total = Path_GetTotalCount(path);
+long i = index;                       /* long, not int */
+long old = i;
+i = (i + 1) % total;
+a = Path_GetWaypointPtr(path, old);
+b = Path_GetWaypointPtr(path, i);
+```
+
+With `long i` the advanced value is a frontend temp (numbered above every
+named local and parameter) while `old` stays on the parameter; the two ranges
+do not overlap. `path` as an inline temp is coloured before that temp and
+reuses r31 (free after `b`), so the temp opens r29, `position` takes r28 and
+the old index, coloured last, takes the lowest free register in use, r29.
+With `int i` (any spelling) or with `path` as a named local nothing moves.
+
+**Check:** regfix diag says a parameter must be numbered above a later
+parameter, and the parameter is reassigned once (`index = f(index)`).
+
+## 96. Epilogue restores in the wrong order, everything else equal: the last block must be scheduled again after register allocation (fn_801D7610, 99.94 -> 100, fakematch, 11-10)
+
+Target epilogue `lwz r31; lwz r0; lwz r30`, ours `lwz r31; lwz r30; lwz r0`.
+`mwsched.py resched` said the diff disappears when the last block is scheduled
+again after register allocation (mwcc_internals "Post-RA scheduler": a block
+is rescheduled when an instruction in it was deleted or inserted after the
+first scheduling, for example a coalesced `mr`). About 60 source shapes of the
+tail left the block untouched, because the frontend forwards every local.
+
+What deletes an instruction there: a copy into the return register. Writing
+the three `lbl_806D12E4[n] = 0` stores as
+`for (p = lbl_806D12E4, i = 0; i < 3; i++) p[i] = 0;` and ending with
+`return p;` (function type `unsigned char *`) emits `mr r3, p` in the last
+block; allocation coalesces it away (p already wants r3), the block loses an
+instruction and is scheduled again. Instructions are unchanged. Both parts are
+needed: `return lbl_806D12E4;` without the loop pointer loads the address
+twice (no copy), and the loop pointer in a void function is forwarded.
+
+Marked fakematch (callers use it as void). The same symptom in
+CardData_InitDefaults is not fixed by it yet (there r3 holds the zero constant
+at the exit and constants are forwarded, so no copy is left).
+
+**Check:** only the epilogue `lwz` order differs and `mwsched.py resched`
+reports a match for the last block: make the function return a value that the
+last block already holds in r3 through a named multi-def local. Rule
+`return-copy-reschedules-last-block`.
+
+
+## 97. Ordering several block values at once: outer inline parameter > nested inline locals > CSE temps > named locals (AI_CalcLapSpeedBonus, 99.88 -> 100, 11-10)
+
+Symptom: a short block computes three or four values (an index copy that is
+wrapped, two offsets, a table base) and they get the right instructions in the
+wrong volatile registers. mwtrace shows the numbering: named locals lowest, then
+SplitOffRange and CSE temps (with `opt_dead_assignments off` every propagated
+initialiser becomes a CSE temp), then inline temps, where an EARLIER created
+temp has the HIGHER number and is coloured first.
+
+Levers, all read off `python3 tools/mwtrace.py UNIT FN` (`VREG` lines and
+`PCODE pre`):
+
+- A value that must be coloured first: make it a parameter that the inline
+  modifies (`if (section >= 4) section -= 4;`). Moving the statement up instead
+  changes the block shape (the `if` is emitted before the other values).
+- To get it numbered above other inline temps without moving its statement,
+  make it the parameter of an OUTER inline and compute the other values through
+  NESTED inlines called inside it; the outer argument temp is created first.
+- A single-use value survives as an inline temp only as a local of the nested
+  inline (`int o = ...; return o;`). A plain `return expr;` getter is propagated
+  and the value falls back to a CSE or backend temp.
+- A value that must stay lowest (here `g_ccClass * 128`) stays a local of the
+  outer inline; CSE replaces it with a temp below every inline temp.
+- A caller local that must be assigned late (its `extsb` belongs after the
+  branch join) can be written through a pointer parameter at the right place in
+  the inline; pass the inline call directly as the argument so that its result
+  stays a parameter temp (a named `rules` local swapped two more registers).
+
+```c
+static inline int CupOffset(int cup) { int offset = (cup - 1) * 16; return offset; }
+static inline const char *Table(void) { const char *table = (const char *)kTable; return table; }
+static inline const Rule *Rules(int section, int cup, signed char *cc) {
+    int courseOffset; const char *courseBase; int ccOffset;
+    courseOffset = CupOffset(cup);
+    ccOffset = g_ccClass * 128;
+    courseBase = Table();
+    courseOffset = ccOffset + courseOffset;
+    if (section >= 4) section -= 4;
+    *cc = g_ccClass;
+    return *(const Rule *const *)(courseBase + courseOffset + section * 4);
+}
+...
+signed char cc;
+FindBonus(cc, Rules(round, cup, &cc), ...);
+```
+
+Blind sweeps did not find this (24 declaration orders, 24 parameter orders, 40
+statement orders); each step came from reading which value had which vreg.
+
+## 98. One saved register off for a late inline `this` temp: move two named locals of an earlier block into a level-1 inline (fn_801BE170 = NameEntry::Update, 23 -> 0 lines, fakematch, 11-10)
+
+Symptom: the owner pointer of `(*it)->Tick()` at the end of the function sits
+in r28 where the target has r26; everything else is equal. `mwtrace`
+(`Update__9NameEntryFv`, the mangled name is needed) shows the order of the
+low-degree group: all temps in descending vreg, then the named locals. The
+owner is the inline `this` temp of Tick; it is coloured before the named
+`dx`, `btn`, `vert` and takes the lowest saved register obtained so far (r28).
+Target r26 means: `dx` (r27) and `btn` (r26) are coloured BEFORE the owner and
+`vert` (r25) after it, i.e. dx and btn are temps numbered above the Tick temp.
+
+What does not work:
+
+- A named `FadeObj *n` declared between btn and vert has the right number but
+  degree 29 = available registers, so `simplifygraph` (one ascending sweep, a
+  node is pushed only when degree < 29 at that moment) leaves it for round 2
+  and it gets r31.
+- Parameters of a nested (level-2) inline: nested inlines are expanded after
+  all level-1 inlines of the function, so their temps are created after the
+  Tick temp and are numbered below it.
+- Two parameters of one inline: the arguments are evaluated right to left, so
+  the order that numbers dx above btn loads `held` before `dir`.
+
+What works: the whole block becomes one inline member whose ONLY locals are dx
+and btn (declared `int btn; int dx;`, the later declaration is created first
+and gets the higher number), assigned in the original order inside it. Every
+other local of the block (vert, c, r, wrap) stays a named local of the caller
+and is passed by reference, so its number and code do not change (as inline
+locals c/r swap registers and the `r = 0` constant merges with another zero).
+`#pragma inline_max_size(100000)` is needed for the block to expand.
+
+**Check:** a saved register differs only for a value defined late; the trace
+shows named locals of an earlier block coloured after it that the target
+colours before it. Rule `named-locals-to-level1-inline-temps`.
 

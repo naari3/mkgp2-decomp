@@ -205,10 +205,10 @@ static TaRecord taReverseRecords[8][2] = {
 
 static unsigned int taMemberFunction[3] = { 0, 16, 0 };
 
-static inline void SelectTaRecord(TaRecord *&record, int round, int reversed, int cup)
+static inline void SelectTaRecord(TaRecord *&record, int reversed, int cup)
 {
-    record = &taReverseRecords[cup - 1][round];
-    if (!reversed) record = &taNormalRecords[cup - 1][round];
+    record = &taReverseRecords[cup - 1][g_longRoundFlag];
+    if (!reversed) record = &taNormalRecords[cup - 1][g_longRoundFlag];
 }
 
 
@@ -393,8 +393,8 @@ TaMode::TaMode() {
     }
     lbl_806D1394 = 0;
     if (cc == 2 && lbl_806D13A0) {
-        const TaGhostSource *ghost = (const TaGhostSource *)&tafu::taReverseRecords[cup][round];
-        if (!reverse) ghost = (const TaGhostSource *)&tafu::taNormalRecords[cup][round];
+        const TaGhostSource *ghost = (const TaGhostSource *)&tafu::taReverseRecords[cup][g_longRoundFlag];
+        if (!reverse) ghost = (const TaGhostSource *)&tafu::taNormalRecords[cup][g_longRoundFlag];
         lbl_806D1398 = new CarObject(4, ghost->character, startX, startY, GetCourseStartYaw(), 2, 3, 0, -1, 0, 0);
         float *matrix = CarObject_GetTransformMatrix(lbl_806D1398);
         lbl_806D139C = RegisterGhost(matrix, CarObject_GetRenderObj(lbl_806D1398));
@@ -446,23 +446,19 @@ TaMode::TaMode() {
     ai = 0;
     flag38 = 0;
     /* Cups are one-based; one cup contains six (class, round) records. */
-    const RaceParams *params = (const RaceParams *)&tafu::BATTLE; params += g_cupId * 6; params += g_ccClass * 2; params += g_longRoundFlag;
+    const RaceParams (*row)[3][2] = (const RaceParams (*)[3][2])&tafu::BATTLE + g_cupId;
     g_bestLapTime = lbl_806D4830;
     g_currentLapTime = lbl_806D4830;
     g_totalRaceTime = lbl_806D4830;
     lbl_806D13A1 = 0;
     g_finalRacePosition = 0;
-    int laps = params[-6].laps;
-    float bonus, time;
-    time = params[-6].timeLimit;
-    bonus = params[-6].lapBonus;
     g_currentLap = 1;
     g_raceResultCode = -2;
     g_finalLapBannerShown = 0;
     g_lapChangePending = 0;
-    g_totalLaps = laps;
-    g_raceTimeRemaining = time;
-    g_lapBonusTimeDelta = bonus;
+    g_totalLaps = row[-1][g_ccClass][g_longRoundFlag].laps;
+    g_raceTimeRemaining = row[-1][g_ccClass][g_longRoundFlag].timeLimit;
+    g_lapBonusTimeDelta = row[-1][g_ccClass][g_longRoundFlag].lapBonus;
     lbl_806CF19C = lbl_806D4834;
     HUD_SetTotalLaps(hud, g_totalLaps);
     ProcessSystemTick(lbl_803220AC);
@@ -771,7 +767,7 @@ int TaMode::FrameUpdate()
                 } else {
                     float time = tafu::g_totalRaceTime;
                     TaRecord *record;
-                    SelectTaRecord(record, tafu::g_longRoundFlag, tafu::g_reverseRoundFlag, tafu::g_cupId);
+                    SelectTaRecord(record, tafu::g_reverseRoundFlag, tafu::g_cupId);
                     if (time < record->time) {
                         fn_801D676C(tafu::g_playerData);
                         PlayStats_IncTaBestRecord();

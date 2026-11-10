@@ -11,13 +11,14 @@
  *
  * Still asm: the model ctor (a real C++ ctor matches except that weak-copy
  * placement; an extern "C" version with `new` matches the code but gets an
- * auto extab without the DESTROYBASE action), and fn_8013DA00.
+ * auto extab without the DESTROYBASE action).
  *
  * fn_8013D940 keeps its iterator in a stack slot: that happens when the
  * iterator is a derived class (CIter : CBase) passed by value to an inline
  * helper. fn_8013DA00 has the same body looped over all eight lists; the
- * same C++ form reaches 98.4% there (only the counter, list pointer and end
- * registers are rotated), so it stays asm for now.
+ * loop has to live in an inline taking the PreviewLists pointer (counter
+ * r31, end r30, list r29), and begin() goes to RenderRange as a temporary
+ * (a named CIter swaps the two iterator stack slots).
  */
 #pragma cplusplus on
 
@@ -80,16 +81,12 @@ extern const float lbl_806D76E0;
 extern const float lbl_806D76E4;
 
 void fn_8013D940(int layer);
-asm void fn_8013DA00(void);
+void fn_8013DA00(void);
 struct PreviewBase;
 PreviewBase *dtor_8013DCBC(PreviewBase *self, short flag);
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
-
-__declspec(section ".extab_user") static const unsigned char extab_fn_8013DA00[8] = {
-    0x18, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
 
 __declspec(section ".extab_user") static const unsigned char extab_dtor_8013DCBC[8] = {
     0x08, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -97,10 +94,6 @@ __declspec(section ".extab_user") static const unsigned char extab_dtor_8013DCBC
 
 /* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
 #pragma section R ".extabindex_user"
-
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8013DA00 = {
-    (void *)&fn_8013DA00, 0x000000C8, (void *)extab_fn_8013DA00
-};
 
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_dtor_8013DCBC = {
     (void *)&dtor_8013DCBC, 0x00000048, (void *)extab_dtor_8013DCBC
@@ -331,63 +324,17 @@ extern "C" void fn_8013D940(int layer) {
     }
 }
 
-extern "C" asm void fn_8013DA00(void) { /* 0x8013DA00 size:0xC8 */
-    nofralloc
-    stwu r1, -0x30(r1)
-    mflr r0
-    stw r0, 0x34(r1)
-    stw r31, 0x2c(r1)
-    stw r30, 0x28(r1)
-    stw r29, 0x24(r1)
-    lwz r29, lbl_806D1560(r13)
-    cmplwi r29, 0x0
-    beq fn_8013DA00_L_8013DAAC
-    li r31, 0x0
-    fn_8013DA00_L_8013DA28:
-    lwz r0, 0x0(r29)
-    cmplwi r0, 0x0
-    beq fn_8013DA00_L_8013DA9C
-    lwz r0, 0x8(r29)
-    addi r30, r29, 0x4
-    stw r0, 0x18(r1)
-    stw r0, 0x14(r1)
-    b fn_8013DA00_L_8013DA6C
-    fn_8013DA00_L_8013DA48:
-    lwz r3, 0x14(r1)
-    lwz r3, 0x8(r3)
-    lwz r12, 0x0(r3)
-    lwz r12, 0xc(r12)
-    mtctr r12
-    bctrl
-    lwz r3, 0x14(r1)
-    lwz r0, 0x4(r3)
-    stw r0, 0x14(r1)
-    fn_8013DA00_L_8013DA6C:
-    lwz r0, 0x14(r1)
-    cmplw r0, r30
-    bne fn_8013DA00_L_8013DA48
-    addi r0, r29, 0x4
-    mr r4, r29
-    stw r0, 0x10(r1)
-    addi r3, r1, 0x8
-    addi r5, r1, 0xc
-    addi r6, r1, 0x10
-    lwz r0, 0x8(r29)
-    stw r0, 0xc(r1)
-    bl DoublyLinkedList_EraseRange
-    fn_8013DA00_L_8013DA9C:
-    addi r31, r31, 0x1
-    addi r29, r29, 0xc
-    cmpwi r31, 0x8
-    blt fn_8013DA00_L_8013DA28
-    fn_8013DA00_L_8013DAAC:
-    lwz r0, 0x34(r1)
-    lwz r31, 0x2c(r1)
-    lwz r30, 0x28(r1)
-    lwz r29, 0x24(r1)
-    mtlr r0
-    addi r1, r1, 0x30
-    blr
+static inline void RenderAll(PreviewLists *p) {
+    for (int i = 0; i < 8; i++) {
+        PreviewList &l = p->lists[i];
+        if (!l.empty()) {
+            RenderRange(l.begin(), l.end());
+            l.clear();
+        }
+    }
+}
+extern "C" void fn_8013DA00(void) {
+    if (lbl_806D1560) RenderAll(lbl_806D1560);
 }
 
 extern "C" void fn_8013DAC8(PreviewModel *m, int layer) {

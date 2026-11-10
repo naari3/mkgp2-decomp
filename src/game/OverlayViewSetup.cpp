@@ -3,7 +3,8 @@
  * 0x80679698..0x806796F0, addressed from one section base.
  * The indexed rotation assignment retains the local snapshot; subsequent
  * coefficient reads produce the target single-precision rounding.
- * NonMatching: origin and rounded-coefficient FPR homes remain exchanged.
+ * Named rounded coefficients preserve the single-precision snapshot and
+ * keep origin, offset and coefficient lifetimes distinct.
  * Primary text is 520 bytes; owned EH, EH index and .bss are exact. */
 struct RotData {
     float values[4];
@@ -54,7 +55,7 @@ extern "C" void fn_801F6588(unsigned int mode) {
     lbl_80679698.x=0; lbl_80679698.y=0; lbl_80679698.width=640; lbl_80679698.height=480;
     GXSetScissor(0,0,640,480);
     {
-        float dy; float dx; float d; float c; float a; float b;
+        float dy; float d; float c; float dx; float cosine; float sine; float a; float b;
         dx=((640-lbl_80679698.width)>>1)-lbl_80679698.x;
         dy=((480-lbl_80679698.height)>>1)-lbl_80679698.y;
         a=lbl_806DA6C0; b=lbl_806DA6EC; c=lbl_806DA6D8; d=lbl_806DA6CC;
@@ -62,8 +63,9 @@ extern "C" void fn_801F6588(unsigned int mode) {
         float target[3]; float up[3]; float eye[3];
         lbl_806796B0=rotation;
         up[0]=a; up[1]=lbl_806DA6EC; up[2]=lbl_806DA6C0;
-        eye[0]=c-lbl_806796B0.values[2]*dy-lbl_806796B0.values[3]*dx;
-        eye[1]=d+lbl_806796B0.values[2]*dx-lbl_806796B0.values[3]*dy;
+        sine=lbl_806796B0.values[2]; cosine=lbl_806796B0.values[3];
+        eye[0]=c-sine*dy-cosine*dx;
+        eye[1]=d+sine*dx-cosine*dy;
         eye[2]=lbl_806DA6F0;
         target[0]=eye[0]; target[1]=eye[1]; target[2]=a;
         C_MTXLookAt(lbl_806796C0,eye,up,target);

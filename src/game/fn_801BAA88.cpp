@@ -1,4 +1,6 @@
 #include "game/singleton.h"
+#include <new>
+#include <vector>
 /*
  * 0x801BAA88..0x801C1F88: clFlowCard, the card flow that runs after
  * credits go in: it reads (or cleans) the player's magnetic card, offers
@@ -96,47 +98,16 @@ template <class T> OwnX<T>::~OwnX() throw() {
     delete p;
 }
 
-template <class T> struct PtrVecData {
-    int cap;
-    int count;
-    T *data;
-    PtrVecData() : cap(0), count(0), data(0) {}
-    ~PtrVecData() {
-        if (data) {
-            operator delete(data);
-        }
-    }
-};
-
-template <class T> struct PtrVecBase : PtrVecData<T> {
-    PtrVecBase() {}
-    ~PtrVecBase() {}
-};
-
-extern "C" {
-void PtrVec_InsertFill(void *v, void *pos, int n, const void *val);
-void **fn_80146000(void *vec, int index);
-}
-
-template <class T> struct PtrVec : PtrVecBase<T> {
-    PtrVec() {}
-    ~PtrVec() {}
-    T *begin() { return this->data; }
-    T *end() { return this->data + this->count; }
-    void push_back(const T &v) { PtrVec_InsertFill(this, end(), 1, &v); }
-    T &at(int i) { return *(T *)fn_80146000(this, i); }
-};
-
 /* 0x8C-byte two-button yes/no panel (ctor fn_80161914, dtor fn_80161F28). */
 struct ChoicePanel {
     int x0;
-    PtrVec<Sprite *> buttons;
+    std::vector<Sprite *> buttons;
     int state;
     int x14;
     int result;
     float ax, ay, bx, by;
     char pad2C[0x50 - 0x2C];
-    PtrVec<TextSprite *> labels;
+    std::vector<TextSprite *> labels;
     int x5C;
     Sprite *cursor;
     int x64;
@@ -471,7 +442,7 @@ struct CardEntry {
     Own<MsgWindow> msg;
     OwnX<ChoicePanel> panel;
     Own<CreditView> credit;
-    PtrVec<FadeObj *> nodes;
+    std::vector<FadeObj *> nodes;
     unsigned char ok;
     unsigned char withItems;
     int errCode;
@@ -757,7 +728,7 @@ CardEntry::CardEntry(unsigned char items)
     if (isJapanese() == 1) {
         static const char *quote = "\x27";
         n = new TextNode(*pX - lbl_806D9ACC, lbl_806D9AE8, quote);
-        PtrVec<FadeObj *> *list = &nodes;
+        std::vector<FadeObj *> *list = &nodes;
         n->layer = 4;
         n->tracks[0].Set(lbl_806D9A74, lbl_806D9A34, lbl_806D9AC0);
         n->scale = *pScale;
@@ -1253,12 +1224,18 @@ extern "C" void fn_801C043C(CoinWait *self) {
     }
 }
 
+/* fakematch (hand): opt_propagation off keeps `dir` a local, so its load is
+ * emitted before the panel load (the scheduler keeps block order for the two
+ * equal-key loads). natural: no pragma, fn_80160588(self->panel.p, in->dir, press). */
+#pragma push
+#pragma opt_propagation off
 extern "C" void fn_801C0568(CoinWait *self) {
     InputState *in = GetInput();
     InputMgr_GetPlayer(GetInputManager(), 0);
     /* fakematch: the (unsigned char) cast forces the extrwi truncation. Natural code: bool press = in->held == 1; */
     bool press = (unsigned char)(in->held == 1);
-    fn_80160588(self->panel.p, in->dir, press);
+    int dir = in->dir;
+    fn_80160588(self->panel.p, dir, press);
     if (press == 1) {
         SetRumbleMode(0, 1, 1);
     }
@@ -1301,6 +1278,7 @@ extern "C" void fn_801C0568(CoinWait *self) {
         fn_801C03D0(self);
     }
 }
+#pragma pop
 
 extern "C" void fn_801C07C8(CoinWait *self) {
     if (self->panel->state == 1) {
@@ -1870,9 +1848,6 @@ extern const char lbl_8039A484[];
 extern const char lbl_8039A4EC[];
 }
 
-inline void *operator new(unsigned long, void *p) {
-    return p;
-}
 
 struct ClStrRef {
     char *ptr;
@@ -2012,7 +1987,7 @@ static inline int PickCol(const KeyGroup &kg, const int &col) {
 
 struct KeyBoard {
     unsigned char ascii;
-    KeyVec<KeyGroup> groups;
+    std::vector<KeyGroup> groups;
     int group;
     int page;
     unsigned char shift;
@@ -2021,12 +1996,8 @@ struct KeyBoard {
     int saveRow;
     bool Navigate();
     void SelectGroupOf(int col) {
-        KeyGroup *g;
-        unsigned long i = 0;
-        unsigned long offset = 0;
-        for (; i < groups.count; i++, offset += sizeof(KeyGroup)) {
-            g = (KeyGroup *)((char *)groups.data + offset);
-            if (g->HasCol(col) == 1) {
+        for (int i = 0; i < groups.size(); i++) {
+            if (groups[i].HasCol(col) == 1) {
                 group = i;
                 return;
             }
@@ -2057,15 +2028,13 @@ struct KeyBoard {
         }
         return page = lbl_80399E6C[page][group];
     }
-    KeyBoard(int a) : ascii(a), groups(5, lbl_806792B8) {
+    KeyBoard(int a) : ascii(a), groups(5) {
         group = -1;
         page = (unsigned char)a == 1 ? 0 : 2;
         shift = 0;
         lastCol = -1;
-        const KeyGroup *src = lbl_80399E9C;
-        for (unsigned long i = 0; i < groups.count; i++) {
-            groups.at(i) = *src;
-            src++;
+        for (int i = 0; i < groups.size(); i++) {
+            groups.at(i) = lbl_80399E9C[i];
         }
     }
 };
@@ -2124,13 +2093,14 @@ struct NameEntry {
     int col;
     int row;
     float bright;
-    PtrVec<FadeObj *> nodes;
+    std::vector<FadeObj *> nodes;
     NameEntry(int ascii);
     void BuildKeys();
     void Draw();
     void DrawKeys();
     void Commit();
     void Update();
+    void MoveKeys(int &vert, int &c, int &r, bool &wrap);
     ~NameEntry() {
         for (FadeObj **it = nodes.begin(); it != nodes.end(); it++) {
             delete *it;
@@ -2513,7 +2483,7 @@ bool KeyBoard::Navigate() {
             saveCol = 14;
             saveRow = 3;
             g = -1;
-        } else if ((unsigned long)g > groups.count - 1) {
+        } else if ((unsigned long)g > groups.size() - 1) {
             saveCol = 0;
             saveRow = 0;
             g = -1;
@@ -2708,7 +2678,7 @@ static inline void DrawKeyGroups(KeyBoard &board) {
     if (board.ascii == 0) {
         g = 2;
     }
-    for (; (unsigned long)g < (unsigned long)board.groups.count; g++) {
+    for (; (unsigned long)g < (unsigned long)board.groups.size(); g++) {
         DrawKeyGroup(board, g);
     }
 }
@@ -2718,7 +2688,10 @@ void NameEntry::Draw() {
     DrawKeys();
     for (int i = 0; i < 5; i++) {
         ResCtrl rc;
-        unsigned int ch = name.Get(i);
+        /* fakematch (hand): the target adds the member offset after the index
+         * (`slwi; addi 0x28; lhzx`), i.e. (this + index) + offsetof(name).
+         * natural: unsigned int ch = name.Get(i); */
+        unsigned int ch = *(unsigned short *)((char *)this + (i + 1) * 2 + 0x28);
         if (ch == 0x8140) {
             rc.resId = 0x2AF7;
         } else if (ch != 0x8162) {
@@ -2804,7 +2777,85 @@ void NameEntry::Commit() {
 
 extern "C" void fn_801FE2DC(void);
 
+/* fakematch (hand, regalloc_patterns 98): the key-move block is an inline member
+ * whose only locals are dx and btn, so that both are frontend temps numbered
+ * above the `this` temp of the FadeObj::Tick loop at the end of Update (dx
+ * declared last = created first). vert, c, r and wrap stay named locals of
+ * Update and are passed by reference. inline_max_size lets the block expand.
+ * natural: the block written out in Update with `int dx = GetInput()->dir;
+ * int btn = GetInput()->held; int vert; ... int c = col; int r = row;`. */
+#pragma push
+#pragma inline_max_size(100000)
+inline void NameEntry::MoveKeys(int &vert, int &c, int &r, bool &wrap) {
+    int btn;
+    int dx;
+    dx = GetInput()->dir;
+    btn = GetInput()->held;
+    if (dx != 0) {
+        vert = 0;
+    } else {
+        vert = btn == 3 ? 1 : 0;
+    }
+    c = col;
+    r = row;
+    if (btn == 1) {
+        SetRumbleMode(0, 1, 1);
+    }
+    if (btn == 3) {
+        SetRumbleMode(1, 1, 1);
+    }
+    if (dx != 0 || vert != 0) {
+        PlayCursorMoveSE();
+    }
+    do {
+        c += dx;
+        r += vert;
+        if (c < 0) {
+            c = 14;
+            r--;
+        } else if (c > 14) {
+            c = 0;
+            r++;
+        }
+    } while (r >= 0 && r <= 3 && keys[r][c]->res == 0x2B00);
+    if (r < 0 || r > 3) {
+        wrap = false;
+        if (started == 0 && c < 5) {
+            if (vert == 0) {
+                c = 5;
+            } else {
+                wrap = true;
+            }
+        }
+        if (wrap == 1) {
+            keys[0][c]->Select();
+            r = 0;
+        } else {
+            state = 3;
+            board.SelectGroupOf(c);
+            board.lastCol = c;
+        }
+        keys[row][col]->Deselect();
+    } else if (dx != 0 || vert != 0) {
+        keys[row][col]->Deselect();
+        keys[r][c]->Select();
+    } else if (btn == 1) {
+        if (!name.Add(keys[r][c]->code)) {
+            state = 3;
+            board.SelectGroupOf(14);
+            board.lastCol = 14;
+            keys[row][col]->Deselect();
+        }
+        fn_801B7C40();
+    }
+    col = c;
+    row = r;
+}
 void NameEntry::Update() {
+    int vert;
+    int c;
+    int r;
+    bool wrap;
     if (state == 0) {
         if (Sprite_AdvanceAnim(frame.p, lbl_806D9A70) == 1) {
             return;
@@ -2815,68 +2866,7 @@ void NameEntry::Update() {
         fn_801699D8(0, 1);
         fn_801699D8(1, 1);
     } else if (state == 1) {
-        int dx = GetInput()->dir;
-        int btn = GetInput()->held;
-        int vert;
-        if (dx != 0) {
-            vert = 0;
-        } else {
-            vert = btn == 3 ? 1 : 0;
-        }
-        int c = col;
-        int r = row;
-        if (btn == 1) {
-            SetRumbleMode(0, 1, 1);
-        }
-        if (btn == 3) {
-            SetRumbleMode(1, 1, 1);
-        }
-        if (dx != 0 || vert != 0) {
-            PlayCursorMoveSE();
-        }
-        do {
-            c += dx;
-            r += vert;
-            if (c < 0) {
-                c = 14;
-                r--;
-            } else if (c > 14) {
-                c = 0;
-                r++;
-            }
-        } while (r >= 0 && r <= 3 && keys[r][c]->res == 0x2B00);
-        if (r < 0 || r > 3) {
-            bool wrap = false;
-            if (started == 0 && c < 5) {
-                if (vert == 0) {
-                    c = 5;
-                } else {
-                    wrap = true;
-                }
-            }
-            if (wrap == 1) {
-                keys[0][c]->Select();
-                r = 0;
-            } else {
-                state = 3;
-                board.SelectGroupOf(c);
-                board.lastCol = c;
-            }
-            keys[row][col]->Deselect();
-        } else if (dx != 0 || vert != 0) {
-            keys[row][col]->Deselect();
-            keys[r][c]->Select();
-        } else if (btn == 1) {
-            if (!name.Add(keys[r][c]->code)) {
-                state = 3;
-                board.SelectGroupOf(14);
-                board.lastCol = 14;
-                keys[row][col]->Deselect();
-            }
-            fn_801B7C40();
-        }
-        col = c;
-        row = r;
+        MoveKeys(vert, c, r, wrap);
     } else if (state == 3) {
         if (!board.Navigate()) {
             int oc = col;
@@ -2929,6 +2919,7 @@ void NameEntry::Update() {
         (*it)->Tick();
     }
 }
+#pragma pop
 
 /* Initialize the shared keyboard tables before the card flow starts. */
 extern "C" {

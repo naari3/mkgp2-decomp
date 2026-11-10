@@ -50,6 +50,7 @@ tools/mwccdbg.py):
 from __future__ import annotations
 
 import argparse
+import struct
 import glob
 import subprocess
 import hashlib
@@ -67,6 +68,7 @@ import mwccdbg as md  # noqa: E402
 
 ROOT = md.ROOT
 K_FREE = {"gpr": 29, "fpr": 32}
+FLT_MAX = 3.4028234663852886e38
 RS_MAXN = 11      # locals permuted exhaustively by the Rust solver
 
 
@@ -99,6 +101,10 @@ def parse_dump(path: Path):
         if m:
             cur["nb"] = m.group(1).split()
     return out, order
+
+
+def _f32(x):
+    return struct.unpack("f", struct.pack("f", float(x)))[0]
 
 
 class Graph:
@@ -143,18 +149,45 @@ class Graph:
                     g.params.add(m.group(2))
         g.real_order = order
         g.allv = allv
+        # r31 named as a neighbour = it is reserved (frame pointer for a dynamic
+        # frame / alloca), so one register fewer is free (fn_801E4AF4)
+        g.K = K_FREE[rc] - (1 if rc == "gpr" and any("r31" in f for _, f in perm.values()) else 0)
+        # spill temporaries of a second colouring pass never get picked as the
+        # stuck-simplify candidate (Coloring.c: reg >= used_regs_before_coloring -> FLT_MAX)
+        g.first_temp = None
+        mf = out / f"regalloc-{rc}-meta.txt"
+        if mf.exists():
+            m = re.search(r"first_temp (\d+)", mf.read_text())
+            g.first_temp = int(m.group(1)) if m else None
         g.cost = {v: (allv.get(v) or asg[v]).get("cost", 0) for v in order}
+        # spill costs are only computed when simplify got stuck. Costs in the dump
+        # but no stuck in the model = fewer registers were free than the default
+        # (inline asm that names machine registers retains them, THPDec fn_80299D58):
+        # take the largest K that gets stuck
+        if any(g.cost.values()):
+            k0 = g.K
+            while g.K > 1:
+                g.was_stuck = False
+                g.simplify()
+                if g.was_stuck:
+                    break
+                g.K -= 1
+            else:
+                g.K = k0
         return g
 
     def copy(self):
         g = Graph(self.rc, self.nodes, self.key, self.nb, self.perm, dict(self.names), self.phys)
         g.params = getattr(self, "params", set())
         g.cost = getattr(self, "cost", {})
+        g.K = getattr(self, "K", K_FREE[self.rc])
+        g.first_temp = getattr(self, "first_temp", None)
         return g
 
     # --- the model ---
     def simplify(self):
-        K = K_FREE[self.rc]
+        K = getattr(self, "K", K_FREE[self.rc])
+        ft = getattr(self, "first_temp", None)
         nodes = sorted(self.nodes, key=lambda v: self.key[v])
         deg = {v: self.perm[v][0] + len(self.nb[v]) for v in nodes}
         removed, push = set(), []
@@ -170,11 +203,23 @@ class Graph:
                     for x in self.nb[v]:
                         deg[x] -= 1
             if not prog:
-                # stuck: MWCC (mweppc Coloring.c) pushes the cheapest spill
-                # candidate, lowest cost/degree; ties -> lowest number
+                self.was_stuck = True
+                # stuck: MWCC (mweppc Coloring.c simplifygraph) pushes the cheapest
+                # spill candidate, lowest (float)cost/(float)degree. The candidate
+                # list is built by prepending in ascending order and compared with
+                # a strict <, so ties go to the HIGHEST number (fn_8019F5BC)
                 cost = getattr(self, "cost", {})
-                v = min((v for v in nodes if v not in removed),
-                        key=lambda v: (cost.get(v, 0) / max(deg[v], 1), self.key[v]))
+                best, bs = None, None
+                for u in reversed(nodes):
+                    if u in removed:
+                        continue
+                    if ft is not None and num(u) >= ft:
+                        sc = FLT_MAX
+                    else:
+                        sc = _f32(_f32(cost.get(u, 0)) / _f32(max(deg[u], 1)))
+                    if bs is None or sc < bs:
+                        best, bs = u, sc
+                v = best
                 removed.add(v)
                 push.append(v)
                 for x in self.nb[v]:
@@ -382,8 +427,16 @@ class Edit:
         if self.kind == "phantom":
             return f"give {d(self.a)} {self.extra:+d} neighbour(s) (an extra coalesced copy, e.g. `t = x;`), moving it one simplify level"
         if self.kind == "name":
-            return (f"hold {d(self.a)} in a NAMED local (named locals get the lowest vreg numbers, so it is "
-                    f"pushed in simplify sweep 1; rule low-numbered-neighbours-sweep1)")
+            da = d(self.a)
+            note = ""
+            if re.search(r"`(?:lis|addi|addis) r\d+,(?:r\d+,)?-?\w*\(\w+\)`", da):
+                # Card_VerifyChecksum (gave_up 6d14fee): `const T *p = lbl;` is copy-propagated away
+                note = (" NOTE: this temp is an ADDRESS CONSTANT; a plain pointer local holding it is removed by "
+                        "copy propagation and nothing changes. The local survives only if it is modified "
+                        "(walking pointer / assigned on two paths) or with `#pragma opt_propagation off` around "
+                        "the function; otherwise prefer another solution in this list")
+            return (f"hold {da} in a NAMED local (named locals get the lowest vreg numbers, so it is "
+                    f"pushed in simplify sweep 1; rule low-numbered-neighbours-sweep1)" + note)
         if self.kind == "lownb":
             return (f"add {self.extra} named local(s) declared FIRST (lowest vreg numbers) that are live while "
                     f"{d(self.a)} is live (e.g. keep a value used across its range in a named local): they are "
@@ -588,6 +641,9 @@ def sim_input(classes, names=None):
         g, w = c[0], c[1]
         locs = set(c[2]) if len(c) > 2 else set(decl_locals(g))
         out.append(f"class {g.rc}")
+        out.append(f"k {getattr(g, 'K', K_FREE[g.rc])}")
+        if getattr(g, "first_temp", None) is not None:
+            out.append(f"ftemp {g.first_temp}")
         nodes = list(g.nodes)
         ix = {v: i for i, v in enumerate(nodes)}
         idxs.append(nodes)
@@ -637,7 +693,7 @@ def rs_solve_decl(names, free, classes, maxn, tlimit):
 
 def levels(g: Graph):
     """vreg -> simplify level (0 = pushed in the first sweep = coloured last)."""
-    K = K_FREE[g.rc]
+    K = getattr(g, "K", K_FREE[g.rc])
     nodes = sorted(g.nodes, key=lambda v: g.key[v])
     deg = {v: g.perm[v][0] + len(g.nb[v]) for v in nodes}
     removed, lv, L = set(), {}, 0
@@ -817,6 +873,11 @@ def diagnose(unit, fn, out: Path, rerun=True, quiet=False, depth=2, sched=False)
         print_schedule(sched_src, ROOT / f"build/{md.VERSION}/src/{unit}.o", ROOT / f"build/{md.VERSION}/obj/{unit}.o",
                        ps.Unit(unit).compiled_name(fn), open(src, errors="replace").read().splitlines())
         print_coalesce(out, open(src, errors="replace").read().splitlines())
+    ver = unit_mw_version(unit)
+    if not quiet and ver and re.match(r"GC/1\.[0-2](\.|$)", ver):
+        print(f"WARNING: {unit} builds with {ver} (old backend); the trace comes from a newer stand-in "
+              "compiler, so vreg numbers and proposals below may not hold in the real build "
+              "(THPDec fn_80299D58: proposed decl order changed nothing). See tools/mwcc1x.")
     return diagnose_dir(out, ROOT / f"build/{md.VERSION}/src/{unit}.o",
                         ROOT / f"build/{md.VERSION}/obj/{unit}.o", fn, quiet, depth,
                         src_lines=open(src, errors="replace").read().splitlines())
@@ -908,6 +969,26 @@ def show_context(P, bad, sites, info, src_lines, maxl=12):
                 P(f"    {mark}{j * 4:>5x}  {O[j]:<32} | {T[j]}")
 
 
+def unit_mw_version(unit):
+    """mw_version of the unit's compile edge in build.ninja (None if not found)."""
+    try:
+        txt = (ROOT / "build.ninja").read_text(errors="replace")
+    except OSError:
+        return None
+    m = re.search(r"^build build/[^/]+/src/" + re.escape(unit) + r"\.o:.*?^  mw_version = (\S+)", txt, re.M | re.S)
+    return m.group(1) if m else None
+
+
+def shape_report(ours_obj, tgt_obj, fn, P=print):
+    """Diffs in the instruction sequence itself are tools/shapediag.py's job:
+    class of every differing run + the source levers for that class."""
+    try:
+        import shapediag
+        shapediag.report(tgt_obj, ours_obj, fn, out=P)
+    except Exception as e:      # the register diagnosis must not die on this
+        P(f"  (shapediag failed: {e})")
+
+
 def diagnose_dir(out: Path, ours_obj, tgt_obj, fn, quiet=False, depth=2, src_lines=None):
     want, sites, info = want_map(out, Path(ours_obj), Path(tgt_obj), fn)
     rep = {"fn": fn, "info": info, "classes": {}}
@@ -922,9 +1003,12 @@ def diagnose_dir(out: Path, ours_obj, tgt_obj, fn, quiet=False, depth=2, src_lin
         P(f"  not a register-only diff ({info['ours']} vs {info['tgt']} insns, {info['opcode_diffs']} opcode "
           f"diffs): fix the instruction sequence first (objdiff / `tools/mwsched.py explain`); "
           f"set REGFIX_FORCE=1 to diagnose anyway")
+        shape_report(ours_obj, tgt_obj, fn, P)
         if not os.environ.get("REGFIX_FORCE"):
             rep["not_reg_only"] = True
             return rep
+    elif info["opcode_diffs"]:
+        shape_report(ours_obj, tgt_obj, fn, P)
     for rc in ("gpr", "fpr"):
         g = Graph.load(out, rc)
         if g is None:
@@ -1033,6 +1117,7 @@ def trace_to_dumps(lines, d: Path):
     color = {"r": [], "f": []}
     seen_ig, seen_col = {"r": set(), "f": set()}, {"r": set(), "f": set()}
     done_ig, done_col = {"r": False, "f": False}, {"r": False, "f": False}
+    first_temp = {}           # class -> used_regs_before_coloring when a 2nd pass ran
     for l in lines:
         t = l.split(" ", 4)
         if t[0] == "PCODE" and len(t) >= 5:
@@ -1048,11 +1133,13 @@ def trace_to_dumps(lines, d: Path):
                 continue
             k, c, v, col, rest = m.group(1), m.group(2), int(m.group(3)), int(m.group(4)), m.group(5)
             seen, done = (seen_ig, done_ig) if k == "IGNODE" else (seen_col, done_col)
-            if done[c]:
-                continue
-            if v in seen[c]:          # next colouring attempt: keep pass 1 only
-                done[c] = True
-                continue
+            if v in seen[c]:          # next colouring attempt (after spill code):
+                seen[c].clear()       # the LAST pass decides the registers
+                if k == "IGNODE":
+                    first_temp.setdefault(c, max(nodes[c]) + 1)
+                    nodes[c] = {}
+                else:
+                    color[c] = []
             seen[c].add(v)
             f = dict(re.findall(r"(\w+)=(\S*)", rest))
             rec = {"v": v, "col": col if "[spilled]" not in rest else 99, "cost": f.get("cost", "0"),
@@ -1073,6 +1160,11 @@ def trace_to_dumps(lines, d: Path):
         if nodes[c] or color[c]:
             (d / f"regalloc-{rc}-pass-1-all.txt").write_text("".join(fmt(r) for r in sorted(nodes[c].values(), key=lambda r: r["v"])))
             (d / f"regalloc-{rc}-pass-1-assigned.txt").write_text("".join(fmt(r) for r in color[c]))
+            meta = d / f"regalloc-{rc}-meta.txt"
+            if c in first_temp:
+                meta.write_text(f"first_temp {first_temp[c]}\n")
+            elif meta.exists():
+                meta.unlink()
     (d / "variables.txt").write_text("arguments:\n" + "".join(f"    {v} -> {v}   {n}\n" for v, n in var_args))
 
 
@@ -1938,6 +2030,705 @@ def fix(a, rep0):
     return best
 
 
+def anchor_hints(unit, fn):
+    """Target `addi rX,anchor,N` whose address is not the start of a symbol
+    (docs/regalloc_patterns.md 40, rule anchor-addi-object-boundary).
+    -> [(insn text, symbol, addend)]"""
+    import regswap_classify as rc
+    units = {u["name"]: u for u in json.loads((ROOT / "objdiff.json").read_text())["units"]}
+    u = units.get(unit) or next((v for k, v in units.items() if k.endswith("/" + unit)), None)
+    if not u or "base_path" not in u:
+        return []
+    r = subprocess.run([rc.OBJDIFF, "diff", "-1", str(ROOT / u["target_path"]), "-2", str(ROOT / u["base_path"]),
+                        "-o", "-", fn], capture_output=True, text=True, timeout=120, cwd=ROOT)
+    left = json.loads(r.stdout).get("left", {})
+    syms = left.get("symbols", [])
+    sym = next((x for x in syms if x.get("instructions") and (x["name"] == fn or x["name"].startswith(fn + "__"))), None)
+    if not sym:
+        return []
+    import bisect
+    starts, size_of, addr_of = {}, {}, {}
+    for l in (ROOT / "config/GNLJ82/symbols.txt").read_text().splitlines():
+        m = re.match(r"(\S+) = \.(\w+):0x([0-9A-Fa-f]+);(.*)", l)
+        if m and m.group(2) not in ("text", "init"):
+            m = re.match(r"(\S+) = \.\w+:0x([0-9A-Fa-f]+);(.*)", l)
+            ad = int(m.group(2), 16)
+            sz = re.search(r"size:0x([0-9A-Fa-f]+)", m.group(3))
+            starts[ad] = m.group(1)
+            addr_of[m.group(1)] = ad
+            size_of[ad] = int(sz.group(1), 16) if sz else 0
+    order = sorted(starts)
+
+    def src_splits(addr):
+        # the source already defines an object at this address (the target
+        # symbol table is just coarser than ours)
+        r = subprocess.run(["git", "grep", "-lE", f"_{addr:08X}\\b", "--", "src", "include"],
+                           capture_output=True, text=True, cwd=ROOT)
+        return bool(r.stdout.strip())
+
+    anchors, out, seen = {}, [], set()
+    for row in sym["instructions"]:
+        ins = row.get("instruction")
+        if not ins:
+            continue
+        mn, ar = rc.ops(ins)
+        rel = ins.get("relocation") or {}
+        dst = ar[0] if ar and rc.REG.match(ar[0]) else None
+        if mn == "addi" and len(ar) == 3 and rel.get("type_name") == "R_PPC_ADDR16_LO":
+            # the relocation's target_symbol does not index this symbol list;
+            # take the name from the formatted operand
+            m = re.search(r",\s*([^\s,@+]+)(?:\+(0x[0-9a-fA-F]+|\d+))?@l", ins.get("formatted", ""))
+            nm = m.group(1) if m else None
+            if nm in addr_of:
+                anchors[dst] = addr_of[nm] + (int(m.group(2), 0) if m.group(2) else 0)
+            else:
+                anchors.pop(dst, None)
+            continue
+        if mn in ("addis", "mr") and len(ar) >= 2 and ar[1] in anchors:
+            anchors[dst] = anchors[ar[1]]
+            continue
+        if mn == "addi" and len(ar) == 3 and ar[1] in anchors and dst != ar[1] and rel.get("type_name") == "R_PPC_NONE":
+            # objdiff's pooled-reference guess can name the wrong base symbol
+            # (mapeffect fn_80179F60), so resolve the address ourselves
+            try:
+                addr = anchors[ar[1]] + int(ar[2], 0)
+            except ValueError:
+                addr = None
+            if addr is not None and addr not in starts and addr not in seen:
+                seen.add(addr)
+                i = bisect.bisect_right(order, addr) - 1
+                if i >= 0 and addr < order[i] + max(size_of[order[i]], 1) and not src_splits(addr):
+                    out.append((ins["formatted"], starts[order[i]], addr - order[i]))
+        if dst and not mn.startswith(("st", "cmp", "b")):
+            anchors.pop(dst, None)
+    return out
+
+
+def shared_loop_counters(a, rep, src_text):
+    """Function-level locals that are the counter of >= 2 `for` loops, when a
+    saved GPR is off (docs/regalloc_patterns.md 46). -> [(name, loops)]"""
+    c = rep.get("classes", {}).get("gpr")
+    if not c or not c.get("bad"):
+        return []
+
+    def regno(x):
+        m = re.search(r"(\d+)$", str(x))
+        return int(m.group(1)) if m else -1
+    g, w = c["g"], c["w"]
+    if not any(regno(g.phys.get(v)) >= 14 or regno(w.get(v)) >= 14 for v in c["bad"]):
+        return []
+    import pragmasweep as ps
+    u = ps.Unit(a.unit)
+    span = ps.find_def(src_text, a.fn, mangled=u.compiled_name(a.fn))
+    if not span:
+        return []
+    body = src_text[span[1]:span[2]]
+    cnt = {}
+    for m in re.finditer(r"\bfor\s*\(\s*([A-Za-z_]\w*)\s*=[^=]", body):
+        cnt[m.group(1)] = cnt.get(m.group(1), 0) + 1
+    out = []
+    for nm, n in cnt.items():
+        # declared once in the function (a block-local redeclaration per loop is the fix already)
+        decls = len(re.findall(r"\b(?:int|long|short|char|unsigned|u8|u16|u32|s8|s16|s32|size_t)\s+(?:\w+\s*,\s*)*"
+                               + re.escape(nm) + r"\s*[;,=]", body))
+        if n >= 2 and decls <= 1:
+            out.append((nm, n))
+    return out
+
+
+def _listings(ours_obj, tgt_obj, sym, fn):
+    """objdump text of the function in both objects; the target object may
+    still carry the fn_ADDR name where ours has the mangled one."""
+    def one(o):
+        for n in (sym, fn):
+            l = [str(x) for x in md.objdump_fn(o, n)]
+            if l:
+                return l
+        return []
+    return one(ours_obj), one(tgt_obj)
+
+
+def copy_direction_hint(a, d):
+    """`addi rA,..; mr rB,rA` (ours) against `addi rB,..; mr rA,rB` (target):
+    regalloc_patterns 57. -> [(index, ours pair, target pair)]"""
+    import pragmasweep as ps
+    u = ps.Unit(a.unit)
+    sym = u.compiled_name(a.fn)
+    oo = Path(d) / "ours.o"
+    if not oo.exists():
+        oo = ROOT / f"build/{md.VERSION}/src/{u.obj}.o"
+    ours, tgt = _listings(oo, ROOT / f"build/{md.VERSION}/obj/{u.obj}.o", sym, a.fn)
+    if len(ours) != len(tgt) or not ours:
+        return []
+
+    def pair(x, y):
+        m1 = re.match(r"\s*addi\s+(r\d+),(.*)$", x)
+        m2 = re.match(r"\s*mr\s+(r\d+),(r\d+)\s*$", y)
+        if m1 and m2 and m2.group(2) == m1.group(1):
+            return m1.group(1), m2.group(1), m1.group(2).strip()
+        return None
+    out = []
+    for i in range(len(ours) - 1):
+        po, pt = pair(ours[i], ours[i + 1]), pair(tgt[i], tgt[i + 1])
+        if po and pt and po[0] == pt[1] and po[1] == pt[0] and po[0] != po[1]:
+            out.append((i, f"{ours[i].strip()}; {ours[i + 1].strip()}", f"{tgt[i].strip()}; {tgt[i + 1].strip()}"))
+    return out
+
+
+def li_mr_hint(a, d):
+    """Target `li rA,N; ... mr rB,rA` where ours has two `li` (or the reverse):
+    regalloc_patterns 67. -> [(index, ours insn, target insn)]"""
+    import pragmasweep as ps
+    u = ps.Unit(a.unit)
+    sym = u.compiled_name(a.fn)
+    oo = Path(d) / "ours.o"
+    if not oo.exists():
+        oo = ROOT / f"build/{md.VERSION}/src/{u.obj}.o"
+    ours, tgt = _listings(oo, ROOT / f"build/{md.VERSION}/obj/{u.obj}.o", sym, a.fn)
+    if len(ours) != len(tgt) or not ours:
+        return []
+    li, mr = r"\s*li\s+(r\d+),(-?\w+)\s*$", r"\s*mr\s+(r\d+),(r\d+)\s*$"
+    out = []
+    for i, (x, y) in enumerate(zip(ours, tgt)):
+        for p1, p2, kind in ((li, mr, "li-mr"), (mr, li, "mr-li")):
+            m1, m2 = re.match(p1, x), re.match(p2, y)
+            if m1 and m2 and m1.group(1) == m2.group(1):
+                out.append((i, x.strip(), y.strip(), kind))
+    return out
+
+
+def reorder_hint(a, d):
+    """Runs of differing instructions that are a pure reordering of the same
+    instructions (same registers): regalloc_patterns 69. -> [(index, ours, target)]"""
+    import pragmasweep as ps
+    u = ps.Unit(a.unit)
+    sym = u.compiled_name(a.fn)
+    oo = Path(d) / "ours.o"
+    if not oo.exists():
+        oo = ROOT / f"build/{md.VERSION}/src/{u.obj}.o"
+    ours, tgt = _listings(oo, ROOT / f"build/{md.VERSION}/obj/{u.obj}.o", sym, a.fn)
+    if len(ours) != len(tgt) or not ours:
+        return []
+    norm = lambda x: re.sub(r"\s+", " ", x.strip())
+    ours, tgt = [norm(x) for x in ours], [norm(x) for x in tgt]
+    out, i, n = [], 0, len(ours)
+    while i < n:
+        if ours[i] == tgt[i]:
+            i += 1
+            continue
+        j = i
+        while j < n and ours[j] != tgt[j]:
+            j += 1
+        if 2 <= j - i <= 6 and sorted(ours[i:j]) == sorted(tgt[i:j]):
+            out.append((i, "; ".join(ours[i:j]), "; ".join(tgt[i:j])))
+        i = j
+    return out
+
+
+def saved_order_hint(rep):
+    """regalloc_patterns 70: the colouring sequence of the vregs that hold or
+    want a saved register, and the sequence the target implies (a saved
+    candidate takes the lowest free register already in use, else opens the
+    next one from r31/f31 down, so the FIRST vreg wanting each register must be
+    coloured in descending register order). -> [text lines]"""
+    out = []
+    for rc, c in rep.get("classes", {}).items():
+        g, w, bad = c.get("g"), c.get("w"), c.get("bad")
+        if not g or not bad:
+            continue
+        ph, order = g.colour()
+        issaved = lambda r: bool(r) and re.fullmatch(r"[rf]\d+", str(r)) and num(str(r)) >= 14
+        if not any(issaved(ph.get(v)) or issaved(w.get(v)) for v in bad):
+            continue
+        rows = [v for v in order if issaved(ph.get(v)) or issaved(w.get(v))]
+        if len(rows) < 2 or len(rows) > 40:
+            continue
+        nm = lambda v: g.names.get(v) or "temp"
+        out.append(f"  {rc.upper()} colouring sequence now (first coloured first): "
+                   + ", ".join(f"{v}({nm(v)}) {ph.get(v)}" + (f"->want {w[v]}" if v in w and w[v] != ph.get(v) else "")
+                               for v in rows))
+        first = {}
+        for v in rows:                      # keep ours as the tie-break inside one register
+            t = w.get(v, ph.get(v))
+            if issaved(t):
+                first.setdefault(t, []).append(v)
+        seq = [v for r in sorted(first, key=lambda r: -num(r)) for v in first[r][:1]]
+        rest = [v for v in rows if v not in seq]
+        out.append(f"  {rc.upper()} sequence the target implies for the register openers: "
+                   + ", ".join(f"{v}({nm(v)}) {w.get(v, ph.get(v))}" for v in seq)
+                   + (f"; reusers (must come after the opener of their register, while it is free): "
+                      + ", ".join(f"{v}({nm(v)}) {w.get(v, ph.get(v))}" for v in rest) if rest else ""))
+        named = [nm(v) for v in seq if nm(v) != "temp" and not nm(v).startswith("@")]
+        if len(named) >= 3:
+            out.append(f"  if these are locals of ONE inlined function (coloured from the last declared), declare them "
+                       f"in this order: {', '.join(reversed(named))}; for function-level locals check with the "
+                       f"declaration-order solver above.")
+    return out
+
+
+def neighbour_hint(rep):
+    """For each off vreg: its neighbours with their registers, and what would
+    have to hold the register ours took for the target register to be the
+    first free one. -> [text lines]"""
+    out = []
+    for rc, c in rep.get("classes", {}).items():
+        g, w, bad = c.get("g"), c.get("w"), c.get("bad")
+        if not g or not bad or len(bad) > 8:
+            continue
+        ph, order = g.colour()
+        pos = {v: i for i, v in enumerate(order)}
+        nm = lambda v: g.names.get(v) or "temp"
+        for v in bad:
+            nb = sorted(g.nb[v], key=lambda x: pos.get(x, 1 << 30))
+            before = [x for x in nb if pos.get(x, 1 << 30) < pos.get(v, -1)]
+            after = [x for x in nb if x not in before]
+            out.append(f"  {v}({nm(v)}) {ph.get(v)} -> want {w.get(v)}; coloured #{pos.get(v)} of {len(order)}; "
+                       f"neighbours coloured before it: "
+                       + (", ".join(f"{x}({nm(x)})={ph.get(x)}" for x in before[:10]) or "none")
+                       + "; after it: " + (", ".join(f"{x}({nm(x)})={ph.get(x)}" for x in after[:10]) or "none"))
+            # which way must v move in the colouring order, and how (regalloc_patterns 89)
+            kind = ("named" if nm(v) != "temp" and not str(nm(v)).startswith("@") else
+                    "cse" if str(nm(v)).startswith("@") else "backend")
+            later = [x for x in after if w.get(x, ph.get(x)) == ph.get(v)]      # they should take ours first
+            earlier = [x for x in before if ph.get(x) == w.get(v) and w.get(x, ph.get(x)) != w.get(v)]
+            if later:
+                how = {"backend": "it is a backend temp (coloured before all frontend temps and locals): give the value a "
+                                  "named local, or a local of the inline, declared so that it comes later",
+                       "cse": "it is a frontend temp: make it a named local of the function (coloured after all temps), "
+                              "declared after the others; a loop counter that must sit above body locals is a named "
+                              "local declared AFTER them",
+                       "named": "declare it later (first declared = coloured first among function locals; in an inline "
+                                "the last declared is coloured first)"}[kind]
+                out.append(f"      move LATER: {', '.join(f'{x}({nm(x)})' for x in later[:3])} should take {ph.get(v)} before "
+                           f"it; {how}")
+            if earlier:
+                how = {"named": "a named local is coloured after every temp: return the value from a trivial inline getter "
+                                "(`static inline int get() { return g; }`) or make it a local of an inline so it becomes "
+                                "an inline temp, or declare it earlier among the named locals",
+                       "cse": "write the expression so its temp is created earlier (CSE temps: the group whose second "
+                              "occurrence comes later gets the lower vreg), or compute it through an inline",
+                       "backend": "it already is a backend temp; the neighbour must become a later one (named local)"}[kind]
+                out.append(f"      move EARLIER: it must be coloured before {', '.join(f'{x}({nm(x)})' for x in earlier[:3])} "
+                           f"(which holds the wanted {w.get(v)}); {how}")
+            holders = [x for x in after if ph.get(x) == w.get(v)] + [x for x in before if ph.get(x) == w.get(v)]
+            if holders:
+                out.append(f"      the wanted {w.get(v)} is held by neighbour(s) " + ", ".join(f"{x}({nm(x)})" for x in holders[:4])
+                           + ": they must be coloured after it or stop interfering")
+            elif ph.get(v) != w.get(v):
+                out.append(f"      no neighbour holds {ph.get(v)} before it: in the target some vreg already in {ph.get(v)} "
+                           f"interferes with it (a longer live range next to it, or it is the same vreg as a later value). "
+                           f"If the same code is repeated and only the last copy has a real conflict, the copies are one "
+                           f"constant-trip loop the compiler unrolled: one variable, interference = union over the copies "
+                           f"(regalloc_patterns 75)")
+    return out
+
+
+def late_pattern_hints(a, rep, src_text, d):
+    """Hints for regalloc_patterns 58/78 (float constant creation order), 64/85
+    (commutative operand order), 71 (inline return type), 79 (lfs/fmr copy
+    direction), 93 (inline `this` temps), from the listings, the diag report and
+    the source. -> [text]"""
+    import pragmasweep as ps
+    out = []
+    u = ps.Unit(a.unit)
+    sym = u.compiled_name(a.fn)
+    oo = Path(d) / "ours.o"
+    if not oo.exists():
+        oo = ROOT / f"build/{md.VERSION}/src/{u.obj}.o"
+    ours, tgt = _listings(oo, ROOT / f"build/{md.VERSION}/obj/{u.obj}.o", sym, a.fn)
+    norm = lambda x: re.sub(r"\s+", " ", x.strip())
+    if ours and len(ours) == len(tgt):
+        ours, tgt = [norm(x) for x in ours], [norm(x) for x in tgt]
+        # 64 / 85: same commutative instruction with the two sources exchanged
+        comm = r"(add|fmuls|fmul|fadds|fadd|mullw|and|or|xor) ([rf]\d+),([rf]\d+),([rf]\d+)$"
+        sw = []
+        for i, (x, y) in enumerate(zip(ours, tgt)):
+            m1, m2 = re.match(comm, x), re.match(comm, y)
+            if m1 and m2 and m1.group(1) == m2.group(1) and m1.group(3) != m1.group(4) \
+                    and (m1.group(3), m1.group(4)) == (m2.group(4), m2.group(3)):
+                sw.append((i, x, y))
+        if sw:
+            out.append("commutative instruction with its two sources exchanged: "
+                       + "; ".join(f"insn {i}: ours `{x}` | target `{y}`" for i, x, y in sw[:4])
+                       + ". The backend evaluates the LEFT operand first, and the first-evaluated value has the lower "
+                       "vreg. Swap the operands in the source; if that also swaps the registers, the target's second "
+                       "operand was already in a register: a named local that survived (`float rot = p->rot; a = K * "
+                       "rot;` under `#pragma opt_propagation off`, regalloc_patterns 64). For `add rT,rBase,rT` vs "
+                       "`add rT,rT,rIdx` on a table address see regalloc_patterns 85 (3), and for a three-term index "
+                       "enumerate all 12 groupings (84, leversweep).")
+        # 79: lfs fA,K ; fmr fB,fA  against  lfs fB,K ; fmr fA,fB (not necessarily adjacent)
+        def fcopies(lst):
+            last, res = {}, []
+            for i, x in enumerate(lst):
+                m = re.match(r"lfs (f\d+),", x)
+                if m:
+                    last[m.group(1)] = i
+                m = re.match(r"fmr (f\d+),(f\d+)$", x)
+                if m and m.group(2) in last and i - last[m.group(2)] <= 6:
+                    res.append((i, m.group(2), m.group(1)))
+            return res
+        fo, ft = {i: (s_, d_) for i, s_, d_ in fcopies(ours)}, {i: (s_, d_) for i, s_, d_ in fcopies(tgt)}
+        rev = [(i, fo[i], ft[i]) for i in fo if i in ft and fo[i] == ft[i][::-1]]
+        if rev:
+            out.append("float constant loaded into one variable and copied to the other, direction reversed ("
+                       + "; ".join(f"insn {i}: ours lfs {o[0]} + fmr {o[1]},{o[0]} | target lfs {t[0]} + fmr {t[1]},{t[0]}"
+                                   for i, o, t in rev[:3])
+                       + "): the frontend shares the two `= K` loads in a temp and the first coalescible copy takes it; "
+                       "a named variable stays the copy. Make the variable that must own the load the place where K "
+                       "is written: pass it as `Inline(..., dist = K)` with an `init` parameter in the inline "
+                       "(regalloc_patterns 79, the 78 lever). Casts and opt_propagation off do not help.")
+    cl = rep.get("classes", {})
+    sites = rep.get("sites", {})
+    span = ps.find_def(src_text, a.fn, mangled=sym)
+    body = src_text[span[1]:span[2]] if span else ""
+    f = cl.get("fpr")
+    if f and f.get("bad"):
+        g, w = f["g"], f["w"]
+        vol = [v for v in f["bad"] if re.fullmatch(r"f\d+", str(w.get(v))) and num(str(w.get(v))) < 14]
+        consts = [v for v in vol if any(x[1] in ("lfs", "lfd") and ("lbl_" in x[2] or "@" in x[2])
+                                        and md.pc_regs(x[1], x[2])[:1] == [v] for x in sites.get(v, []))]
+        if len(consts) >= 1 and len(vol) >= 2:
+            order = sorted(vol, key=lambda v: -num(str(w[v])))
+            out.append("volatile FPRs of float constants/temps are off (" + ", ".join(f"{v}->{w[v]}" for v in vol[:6])
+                       + "). Volatile temps are coloured highest vreg first and take the lowest free register, so the "
+                       "target registers sorted DESCENDING give the order in which the source must create the values: "
+                       + ", ".join(f"{v}({w[v]})" for v in order[:6])
+                       + ". Constants are created in expression order (left operand first), the loads are scheduled "
+                       "later. Write the computation as one expression in that order, or put the earlier statement's "
+                       "assignment inside the later expression (`a = (int)(255.0f * (t = 1.0f - t));`), with float "
+                       "literals rather than extern constants (regalloc_patterns 58, 78).")
+    gp = cl.get("gpr")
+    if gp and gp.get("bad"):
+        g = gp["g"]
+        temps = [v for v in gp["bad"] if str(g.names.get(v) or "").startswith("@") or not g.names.get(v)]
+        calls = re.findall(r"\b(\w+)\s*\[[^\]]+\]\s*->\s*(\w+)\s*\(", body)
+        from collections import Counter
+        rep_m = [f"{k[0]}[i]->{k[1]}()" for k, n in Counter(calls).items() if n >= 3]
+        if temps and rep_m:
+            out.append(f"repeated inline method calls on array elements ({', '.join(rep_m[:3])}): each call's `this` is a "
+                       "frontend temp (high vreg, coloured first) and can take the register an address/CSE temp wants. "
+                       "Load each object into ONE reused block-local pointer and call through it "
+                       "(`{ T *s; s = arr[0]; s->Set(x, y); s = arr[1]; s->Set(x, y); ... }`): a named local is numbered "
+                       "below every temp. One local per call does not work (regalloc_patterns 93).")
+        narrow = sorted({m.group(2) for m in re.finditer(
+            r"\bstatic\s+inline\s+(unsigned\s+char|bool|u8|char|unsigned\s+short|u16)\s+(\w+)\s*\(", src_text)
+            if re.search(r"\b" + re.escape(m.group(2)) + r"\s*\(", body)})
+        if narrow:
+            out.append(f"the function uses inline(s) with a narrow return type ({', '.join(narrow[:4])}): the return type is a "
+                       "lever. Returning `int` moves the truncation to the assignment and the flag is coloured one slot "
+                       "earlier; returning `unsigned int` into an `int` local keeps a `mr rSaved,r0` copy that a "
+                       "ternary or an int-returning inline coalesces away (regalloc_patterns 71; double bool "
+                       "conversion through a `bool` parameter of an inline member: 94 (2)).")
+    return out
+
+
+def shape_hints(a, rep, src_text):
+    """Cheap source-shape hints for patterns landed 11-09 (regalloc_patterns 52-54,
+    float literals). -> [text]"""
+    import pragmasweep as ps
+    cl = rep.get("classes", {})
+    gbad = bool(cl.get("gpr") and cl["gpr"].get("bad"))
+    fbad = bool(cl.get("fpr") and cl["fpr"].get("bad"))
+    if not (gbad or fbad):
+        return []
+    u = ps.Unit(a.unit)
+    span = ps.find_def(src_text, a.fn, mangled=u.compiled_name(a.fn))
+    if not span:
+        return []
+    head, body = src_text[span[0]:span[1]], src_text[span[1]:span[2]]
+    out = []
+    if fbad:
+        txt = src_text
+        for inc in re.findall(r'#include\s+"([^"]+)"', src_text):
+            for base in ("include", "src"):
+                f = ROOT / base / inc
+                if f.exists():
+                    txt += "\n" + f.read_text(errors="replace")
+                    break
+        ext = set()
+        for m in re.finditer(r"\bextern\s+(?:const\s+)?(?:float|f32|double|f64)\s+(?:const\s+)?([^;()\[\]]+);", txt):
+            ext.update(x.strip() for x in m.group(1).split(",") if re.fullmatch(r"\s*[A-Za-z_]\w*\s*", x))
+        # the function or any inline of the TU (a use is a mention outside an extern declaration)
+        nodecl = re.sub(r"\bextern\b[^;]*;", "", src_text)
+        used = sorted(n for n in ext if re.search(r"\b" + re.escape(n) + r"\b", nodecl))
+        if used:
+            out.append(f"FPR registers are off and the TU reads {len(used)} extern float constant(s) "
+                       f"({', '.join(used[:6])}{'...' if len(used) > 6 else ''}): an extern is a memory load the optimizer "
+                       f"cannot fold, so its vreg is numbered and coloured differently. Get the literal text with "
+                       f"`python3 tools/float_literal_sweep.py {a.unit} {a.fn}`, then rewrite the expressions in their "
+                       f"natural form (docs/thread_tips.md, FlashFadeOverlay_Draw). In a vector block the literal is one of several "
+                       f"levers that only work together: multiplier through a pointer inline, named locals declared in "
+                       f"colour order with the loads written in the target's order, reused locals for the sum "
+                       f"(regalloc_patterns 83; do not judge the levers one at a time).")
+    if gbad:
+        g, w = cl["gpr"]["g"], cl["gpr"]["w"]
+        regs = {str(g.phys.get(v)) for v in cl["gpr"]["bad"]} | {str(w.get(v)) for v in cl["gpr"]["bad"]}
+        nums = {int(m.group(1)) for r in regs for m in [re.search(r"(\d+)$", r)] if m}
+        r3r4 = any(re.search(r"(?<!\d)3$", str(g.phys.get(v))) and re.search(r"(?<!\d)4$", str(w.get(v)))
+                   for v in cl["gpr"]["bad"])
+        if r3r4 and not re.search(r"\bvoid\s+[\w:~]*\s*$", head.split("(")[0]) \
+                and "return" in body and not re.search(r"\breturn\s*;", body):
+            out.append("volatile GPRs are off in a function that returns a value: if the target avoids r3 after a call "
+                       "until the epilogue, the original left that block with a valueless `return;` (r3 stays live to the "
+                       "exit); regalloc_patterns 54.")
+        off3 = any(re.search(r"(?<!\d)3$", str(g.phys.get(v))) and not re.search(r"(?<!\d)3$", str(w.get(v)))
+                   for v in cl["gpr"]["bad"])
+        if off3 and re.search(r"\bvoid\s+[\w:~]*\s*$", head.split("(")[0]):
+            out.append("a vreg gets r3 where the target avoids it, in a function declared `void`: if this is near the "
+                       "end of the function on a path that reaches the exit without a call, the original returns a "
+                       "value (e.g. `virtual int Update()`) and falls off the end, so r3 stays live to the epilogue. "
+                       "Declare the non-void return type with no `return` (base and every override for a virtual); "
+                       "regalloc_patterns 66.")
+        ph_ = {v: str(g.phys.get(v)) for v in cl["gpr"]["bad"]}
+        swaps = [(x, y) for x in cl["gpr"]["bad"] for y in cl["gpr"]["bad"]
+                 if str(x) < str(y) and ph_[x] == str(w.get(y)) and ph_[y] == str(w.get(x))
+                 and all(re.search(r"(\d+)$", r) and int(re.search(r"(\d+)$", r).group(1)) >= 14 for r in (ph_[x], ph_[y]))]
+        for x, y in swaps[:3]:
+            nx, ny = str(g.names.get(x) or ""), str(g.names.get(y) or "")
+            named = [n for n in (nx, ny) if n and not n.startswith("@")]
+            fors = re.findall(r"\bfor\s*\(\s*(?:int\s+)?(\w+)\s*=", body)
+            shared = sorted({n for n in fors if fors.count(n) >= 2})
+            ctr = [n for n in named if n in shared] or (shared if len(named) == 1 else [])
+            if ctr and named and [n for n in named if n not in ctr]:
+                other = [n for n in named if n not in ctr]
+                out.append(f"saved registers of `{ctr[0]}` (a counter shared by several loops) and `{other[0]}` are swapped "
+                           f"({ph_[x]}/{ph_[y]}): the later range of the counter is a split-off temp and a named local is "
+                           f"always coloured after it. Spell the expression assigned to `{other[0]}` out once more next to "
+                           f"its use (`q = &o->arr[i]; if (o->arr[i].x ... q->y)`) so the address becomes a CSE temp "
+                           f"(numbered above split temps), keep the shared counter, and if the first loop moves declare "
+                           f"the counter before the pointer; regalloc_patterns 73.")
+            elif not named or len(named) == 1:
+                out.append(f"saved registers {ph_[x]}/{ph_[y]} are swapped between {x}({nx or 'temp'}) and {y}({ny or 'temp'}): "
+                           "if both are later ranges of reused variables (split-off temps), ranges of ONE variable are "
+                           "created last range first, ranges of two variables follow declaration order (first declared "
+                           "first). A value can be turned into a second range with a dummy first assignment under "
+                           "`#pragma opt_propagation off`; regalloc_patterns 57 and 72.")
+        if any(n >= 14 for n in nums) and re.search(r"\bend\s*\(\s*\)|\bbegin\s*\(\s*\)|\bsentinel\b|&\s*\w+(?:->|\.)head\b", src_text):
+            out.append("saved GPRs are off around a list walk: the sentinel `&head` hoisted by the backend takes the newest "
+                       "saved register. Name it as a local of the inline (regalloc_patterns 52) or build begin() as "
+                       "`iterator(((Node *)&head)->next)` instead of `++end()` (regalloc_patterns 53).")
+    cse = []
+    for c in ("gpr", "fpr"):
+        if cl.get(c) and cl[c].get("bad"):
+            cse += [f"{v}({cl[c]['g'].names[v]})" for v in cl[c]["bad"]
+                    if str(cl[c]["g"].names.get(v, "")).startswith("@")]
+    if cse:
+        out.append(f"{', '.join(cse[:4])}: a frontend temp is off. If it is a shared load (the same expression read twice), "
+                   "CSE temps are numbered in REVERSE discovery order (the group whose second occurrence comes later "
+                   "gets the lower vreg) and all sit below backend temps; a named function-scope local sits below them "
+                   "(regalloc_patterns 59). To make it a backend temp instead, stop the frontend from seeing one shared "
+                   "expression: for a float constant, write literals and pass the shared value into the inline as "
+                   "separate parameters (TransitionEffect_DrawCarRouletteOverlay: `Quad(0.0f, 0.0f)`, "
+                   "regalloc_patterns 61).")
+    if cse:
+        inl = [m.group(1) for m in re.finditer(
+            r"\bstatic\s+inline\s+(?!void\s+\w+\s*\()[\w\s\*&:<>]+?\b(\w+)\s*\([^;{]*\)\s*\{", src_text)]
+        scopes = body + "".join(src_text[m.start():m.start() + 4000] for n in inl
+                                for m in re.finditer(r"\b" + re.escape(n) + r"\s*\([^;{]*\)\s*\{", src_text))
+        used = sorted({n for n in inl if re.search(r"[^=!<>]=\s*(?:\([^()]*\)\s*)?" + re.escape(n) + r"\s*\(", scopes)})
+        if used:
+            out.append(f"an off @temp may be the RETURN temp of an inline (assigned from: {', '.join(used[:5])}): it is "
+                       "created when the nested inline is expanded, after every local of the outer inline, so it is "
+                       "coloured after them and no declaration order moves it. Return the value through a reference "
+                       "out-parameter (`static inline void find(T *o, U *&out)`) and order the outer locals instead; "
+                       "regalloc_patterns 81.")
+    return out
+
+
+def print_levers(a, rep, src_text, d, ext):
+    """Hand-landed source levers whose shape fits (tools/diag2sweep.levers)."""
+    try:
+        ah = anchor_hints(a.unit, a.fn)
+    except Exception as e:  # noqa: BLE001 - advice only
+        ah = []
+        print(f"[regfix] anchor hint: {e}")
+    if ah:
+        print("\n== anchor offsets that land inside a symbol (rule anchor-addi-object-boundary, regalloc_patterns 40) ==")
+        for txt, nm, add in ah[:12]:
+            print(f"  target `{txt}` = {nm}+0x{add:x}: MWCC never folds a constant into an anchored object's address, "
+                  f"so an object of the original source starts there. Split {nm} at +0x{add:x} in symbols.txt and "
+                  f"index the new object directly.")
+    try:
+        cd = copy_direction_hint(a, d)
+    except Exception as e:  # noqa: BLE001 - advice only
+        cd = []
+        print(f"[regfix] copy direction hint: {e}")
+    if cd:
+        print("\n== copy direction between an address and its walker (rule addi-mr-copy-direction, regalloc_patterns 57) ==")
+        for i, o, t in cd[:6]:
+            print(f"  insn {i}: ours `{o}` | target `{t}`. A copy into a NAMED local is never coalesced, so the address "
+                  f"lands in the temp. The target's base is a split-off range: make the base the SECOND use of a "
+                  f"variable that held something else earlier (look for the same register in two unrelated places).")
+    try:
+        lm = li_mr_hint(a, d)
+    except Exception as e:  # noqa: BLE001 - advice only
+        lm = []
+        print(f"[regfix] li/mr hint: {e}")
+    if lm:
+        print("\n== constant loaded twice vs loaded once and copied (regalloc_patterns 67) ==")
+        for i, o, t, kind in lm[:6]:
+            print(f"  insn {i}: ours `{o}` | target `{t}`")
+        if any(k == "li-mr" for *_, k in lm):
+            print("  The target keeps `li; mr` for two variables with the same constant. Constant propagation turns the "
+                  "copy back into `li` for named locals of the function; equal `li` are merged again only for compiler "
+                  "temporaries, and locals of an INLINED function are such temporaries. Move the two variables (and the "
+                  "code using them) into a static inline. A chained assignment `d = c = N` with both modified in place "
+                  "also gives the pair (fn_80222968 note in docs/gave_up.md). At a loop entry (`li i,0; mr off,i` for the "
+                  "strength-reduced offset of `arr[i]`) the loop itself sits in an inline (regalloc_patterns 94 (1)).")
+        if any(k == "mr-li" for *_, k in lm):
+            print("  Ours copies where the target loads the constant twice: the two variables are named locals of the "
+                  "function itself in the original, not locals of an inline.")
+    try:
+        ro = reorder_hint(a, d)
+    except Exception as e:  # noqa: BLE001 - advice only
+        ro = []
+        print(f"[regfix] reorder hint: {e}")
+    if ro:
+        print("\n== same instructions in another order (rule dead-truncation-reschedules-block, regalloc_patterns 69) ==")
+        for i, o, t in ro[:6]:
+            print(f"  insn {i}: ours `{o}` | target `{t}`")
+        print(f"  Registers are equal, only the schedule differs. Run `python3 tools/mwsched.py log {a.unit} {a.fn}`: if "
+              "the pre-RA schedule of the block already equals the target, the block was scheduled a second time "
+              "after register allocation because an instruction in it was deleted. Find the instruction the pre-RA "
+              "block has and the final code lacks (typically a dead `rlwinm`/`extsb` from a chained cast such as "
+              "`u8var = (int)x`, or a copy that coalesced) and write the source so it is never emitted "
+              "(`u8var = x`). If the pre-RA schedule is already wrong, change the dependences instead "
+              "(statement order, docs/mwcc_internals.md scheduler notes).")
+    try:
+        nh = neighbour_hint(rep)
+    except Exception as e:  # noqa: BLE001 - advice only
+        nh = []
+        print(f"[regfix] neighbour hint: {e}")
+    if nh:
+        print("\n== off vregs and their neighbours (colouring order, registers ours) ==")
+        print("\n".join(nh))
+    try:
+        so = saved_order_hint(rep)
+    except Exception as e:  # noqa: BLE001 - advice only
+        so = []
+        print(f"[regfix] saved order hint: {e}")
+    if so:
+        print("\n== saved registers: colouring sequence vs the one the target implies (regalloc_patterns 70) ==")
+        print("\n".join(so))
+        print("  A saved candidate takes the lowest free saved register already in use, else opens the next one from "
+              "r31 down. Inline locals are numbered in reverse declaration order; block locals inside the inline come "
+              "before them; two inlines never interleave, so a vreg coloured BETWEEN locals of another inline means "
+              "both belong to one inline (merge the branches into one inline with if/else).")
+    try:
+        lp = late_pattern_hints(a, rep, src_text, d)
+    except Exception as e:  # noqa: BLE001 - advice only
+        lp = []
+        print(f"[regfix] pattern hint: {e}")
+    if lp:
+        print("\n== pattern hints (regalloc_patterns 58, 64, 71, 78, 79, 85, 93) ==")
+        for t in lp:
+            print("  " + t)
+    try:
+        sh = shape_hints(a, rep, src_text)
+    except Exception as e:  # noqa: BLE001 - advice only
+        sh = []
+        print(f"[regfix] shape hint: {e}")
+    if sh:
+        print("\n== source-shape hints (patterns landed 11-09) ==")
+        for t in sh:
+            print("  " + t)
+    try:
+        sl = shared_loop_counters(a, rep, src_text)
+    except Exception as e:  # noqa: BLE001 - advice only
+        sl = []
+        print(f"[regfix] shared loop counter hint: {e}")
+    if sl:
+        print("\n== loop counters shared by several loops (rule later-loops-block-local-counter, regalloc_patterns 46) ==")
+        for nm, n in sl:
+            print(f"  `{nm}` drives {n} loops and a saved register is off: only its earliest range keeps the name; the "
+                  f"later ranges are SplitOffRange temps, coloured before every named local, so they allocate the new "
+                  f"(lowest) saved register early. Give each later loop its own block-local counter "
+                  f"(`{{ int {nm}; for ({nm} = ...) }}`) and declare the first loop's counter after the locals whose "
+                  f"registers it must not take.")
+    try:
+        import diag2sweep as d2s
+        import pragmasweep as ps
+        u = ps.Unit(a.unit)
+        tf = Path(d) / "trace.txt"
+        tl = tf.read_text(errors="replace").splitlines() if tf.exists() else []
+        lv = d2s.levers(src_text, a.fn, rep, tl, lambda t, f: ps.find_def(t, f, mangled=u.compiled_name(f)),
+                        ext in (".cpp", ".cp", ".cc"))
+    except Exception as e:  # noqa: BLE001 - advice only
+        print(f"[regfix] levers: {e}")
+        return []
+    if lv:
+        print("\n== source levers that fit this function's shape ==")
+        for rid, text in lv:
+            print(f"  [{rid}] {text}")
+        print("  (try them together with:  regfix diag ... --tracesweep --run)")
+    # levers of tools/leversweep.py (levers thread): its own source + diff triggers,
+    # on the built object, so not with --start-tu
+    if not getattr(a, "start_tu", None) and (ROOT / "tools" / "leversweep.py").exists():
+        try:
+            import leversweep as lsw
+            cwd = os.getcwd()
+            os.chdir(ROOT)
+            try:
+                fx = lsw.Fx(a.unit, a.fn)
+                fx.diagnose()
+                fired = []
+                for name, l in lsw.LEVERS.items():
+                    try:
+                        n = sum(1 for _, t in l["gen"](fx) if t)
+                    except Exception:  # noqa: BLE001
+                        n = 0
+                    if n:
+                        fired.append((name, l, n))
+            finally:
+                os.chdir(cwd)
+            if fired:
+                print("\n== leversweep levers whose triggers fire (rule ids in tools/patterns/rules.jsonl) ==")
+                for name, l, n in fired:
+                    print(f"  [{l['rule']}] {name}: {n} variant(s). {l['desc']}")
+                    lv.append((l["rule"], l["desc"]))
+                print(f"  run: python3 tools/leversweep.py fn {a.unit} {a.fn} --levers "
+                      + ",".join(n for n, _, _ in fired) + " --show")
+        except Exception as e:  # noqa: BLE001 - advice only
+            print(f"[regfix] leversweep levers: {e}")
+    return lv
+
+
+def emit_tracesweep(a, rep, src_text, d: Path, ext):
+    """diag -> tracesweep template + --want (tools/diag2sweep.py); --run runs it."""
+    import diag2sweep as d2s
+    import pragmasweep as ps
+    tf = Path(d) / "trace.txt"
+    if not rep or rep.get("not_reg_only"):
+        print("\n== tracesweep: not a register-only diff, nothing generated ==")
+        return None
+    if not tf.exists():
+        print("\n== tracesweep: needs the native trace (sh tools/install_mweppc.sh --build) ==")
+        return None
+    u = ps.Unit(a.unit)
+    g = d2s.generate(src_text, a.fn, rep, tf.read_text(errors="replace").splitlines(),
+                     lambda t, f: ps.find_def(t, f, mangled=u.compiled_name(f)), ext in (".cpp", ".cp", ".cc"))
+    if not g:
+        print("\n== tracesweep: no diag solution / definition found, nothing generated ==")
+        return None
+    TMPDIR.mkdir(parents=True, exist_ok=True)
+    path = TMPDIR / f"{a.fn}.diag.tmpl"
+    head = f"// unit: {a.unit}\n// fn: {a.fn}\n" + (f"// want: {g['want']}\n" if g["want"] else "")
+    head += "".join(f"// note: {n}\n" for n in g["notes"])
+    path.write_text(head + g["template"])
+    print(f"\n== tracesweep template (diag lines {g['lines']}): {path} ==")
+    for n in g["notes"]:
+        print("   " + n)
+    print(f"   want: {g['want']}")
+    print(f"   run: python3 tools/tracesweep.py run {a.unit} {a.fn} {path}")
+    if getattr(a, "run", False):
+        import tracesweep as ts
+        res, axes = ts.run(a.unit, a.fn, ts.strip_header(path.read_text()), g["want"], a.jobs,
+                           sample=a.sample, confirm=3, show=10, log_name=f"{a.fn}.diag",
+                           base_text=src_text if getattr(a, "start_tu", None) else None)
+        g["best"] = res[0] if res else None
+    return g
+
+
 def suggest_rules(unit, fn, n=4):
     """Top rewrite rules from the shared catalog (tools/rewrite_rules.py, catalog thread)."""
     rr = ROOT / "tools" / "rewrite_rules.py"
@@ -2179,6 +2970,12 @@ def main():
         p.add_argument("--start-tu", help="full TU source to start from")
         p.add_argument("--pragma", action="append")
         p.add_argument("--cc")
+        if name == "diag":
+            p.add_argument("--tracesweep", action="store_true",
+                           help="write a tracesweep template + --want from the diag solutions (tools/diag2sweep.py)")
+            p.add_argument("--run", action="store_true", help="with --tracesweep: run it (native compiles)")
+            p.add_argument("--sample", type=int, default=3000, help="with --run: max variants")
+            p.add_argument("-j", "--jobs", type=int, default=os.cpu_count() or 4)
         p.add_argument("--sched", action="store_true",
                        help="trace the real scheduler too and explain order differences (GC/2.6; tools/mwsched.py)")
         if name == "fix":
@@ -2239,11 +3036,19 @@ def main():
             print_schedule(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{sw.u.obj}.o", sw.sym or a.fn,
                            sw.render(sw.init).splitlines())
             print_coalesce(d, sw.render(sw.init).splitlines())
-        diagnose_dir(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{sw.u.obj}.o", a.fn, depth=a.depth,
-                     src_lines=sw.render(sw.init).splitlines())
+        rep = diagnose_dir(d, d / "ours.o", ROOT / f"build/{md.VERSION}/obj/{sw.u.obj}.o", a.fn, depth=a.depth,
+                           src_lines=sw.render(sw.init).splitlines())
+        print_levers(a, rep, sw.render(sw.init), d, sw.u.ext)
+        if a.tracesweep:
+            emit_tracesweep(a, rep, sw.render(sw.init), d, sw.u.ext)
     elif a.cmd == "diag":
-        diagnose(a.unit, a.fn, out, rerun=not a.no_run, depth=a.depth, sched=a.sched)
+        rep = diagnose(a.unit, a.fn, out, rerun=not a.no_run, depth=a.depth, sched=a.sched)
         suggest_rules(a.unit, a.fn)
+        import pragmasweep as ps
+        u = ps.Unit(a.unit)
+        print_levers(a, rep, open(u.src, errors="replace").read(), out, u.ext)
+        if a.tracesweep:
+            emit_tracesweep(a, rep, open(u.src, errors="replace").read(), out, u.ext)
     else:
         fix(a, None)
 
