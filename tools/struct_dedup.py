@@ -1172,6 +1172,199 @@ def cmd_unify(args):
         print(f"  skipped {v}: {k}")
 
 
+def member_offsets(d, local):
+    """[(member, offset, size)] or None (bitfields, unknown types)."""
+    out = []
+    off = 0
+    for m in d.members:
+        if m.bits is not None:
+            return None
+        t = canon_type(" ".join(x for x in m.type.split() if x not in ("const", "volatile")))
+        t = KNOWN_TYPEDEF.get(t, t)
+        if m.ptr or m.fnptr:
+            size = al = 4
+        elif t in PRIM_SIZE:
+            size = al = PRIM_SIZE[t]
+        else:
+            ld = local.get(t.replace("struct ", "").replace("union ", ""))
+            if ld is None or ld is d or ld.members is None:
+                return None
+            sub = layout(ld, local)
+            if sub is None:
+                return None
+            size, al = sub[0], sub[2]
+        count = 1
+        for dim in m.dims:
+            v = const_eval(dim)
+            if v is None:
+                return None
+            count *= v
+        if d.kind == "union":
+            out.append((m, 0, size * count))
+        else:
+            off = (off + al - 1) // al * al
+            out.append((m, off, size * count))
+            off += size * count
+    return out
+
+
+def _local_types(sc, f):
+    local = dict(sc.shared_defs)
+    for g in sc.closure_files(f):
+        for x in sc.by_file.get(g, []):
+            if x.name and x.members is not None:
+                local.setdefault(x.name, x)
+    for x in sc.by_file.get(f, []):
+        if x.name and x.members is not None:
+            local[x.name] = x
+    return local
+
+
+def _msig(m):
+    return (canon_type(m.type), m.ptr, tuple(m.dims), m.fnptr, m.raw if m.fnptr else None)
+
+
+def cmd_relayout(args):
+    """Same name, same byte layout, members cut differently (pads, names).
+    Replace a minority copy by the canonical member list when every member
+    the file accesses (`.x` / `->x`) exists in the canonical copy at the same
+    offset with the same type; accesses are renamed, unaccessed members
+    (padding) disappear.  Run `apply` afterwards to share the result."""
+    sc = Scan()
+    claimed = open_claim_paths()
+    by_name = defaultdict(list)
+    for d in sc.defs:
+        if d.skip or d.members is None or not d.name or d.kind == "union":
+            continue
+        if any(m.name is None for m in d.members):
+            continue
+        by_name[d.name].append(d)
+    edits = defaultdict(list)
+    skipped = Counter()
+    for name, ds in sorted(by_name.items()):
+        if args.name and name not in args.name:
+            continue
+        lays = {}
+        for d in ds:
+            lo = layout(d, _local_types(sc, d.file))
+            if lo is not None:
+                lays[id(d)] = (lo[0], tuple(lo[1]))
+        shared = sc.shared_defs.get(name)
+        cands = [d for d in ds if id(d) in lays]
+        if not cands:
+            continue
+        if shared is not None:
+            if shared.members is None:
+                continue
+            slo = layout(shared, _local_types(sc, cands[0].file))
+            if slo is None:
+                continue
+            canon, clay = shared, (slo[0], tuple(slo[1]))
+        else:
+            groups = defaultdict(list)
+            for d in cands:
+                groups[lays[id(d)]].append(d)
+            # the layout most copies agree on; inside it the best-named variant
+            clay, members = max(groups.items(), key=lambda kv: (len(kv[1]), kv[0][0]))
+            variants = defaultdict(list)
+            for d in members:
+                variants[d.key()].append(d)
+            if len(variants) < 2:
+                continue
+            canon = max(variants.values(), key=lambda v: (_descriptive(v[0]), len(v), -min(x.line for x in v)))[0]
+        coffs = member_offsets(canon, _local_types(sc, canon.file if canon is not shared else cands[0].file))
+        if coffs is None:
+            continue
+        cby = {(o, _msig(m)): m.name for m, o, _ in coffs}
+        cnames = {m.name for m in canon.members}
+        for d in cands:
+            if d.key() == canon.key() or lays[id(d)] != clay:
+                continue
+            if d.file.replace("src/", "", 1) in claimed and not args.include_claimed:
+                skipped["claimed"] += 1
+                continue
+            if not d.file.endswith((".c", ".cpp")):
+                skipped["copy in a header"] += 1
+                continue
+            if any(x is not d and x.name == name for x in sc.by_file[d.file]):
+                skipped["name defined twice"] += 1
+                continue
+            doffs = member_offsets(d, _local_types(sc, d.file))
+            if doffs is None:
+                skipped["offsets unknown"] += 1
+                continue
+            with open(os.path.join(ROOT, d.file), encoding="latin-1", newline="") as fh:
+                raw = strip_comments(fh.read(), keep_strings=True)
+            if len(raw) != len(sc.text[d.file]):
+                skipped["decode"] += 1
+                continue
+            outside = raw[:d.start] + " " * (d.end - d.start) + raw[d.end:]
+            if re.search(r"\b%s\b[^;{}()]*=\s*\{" % re.escape(name), outside):
+                skipped["aggregate initialiser in file"] += 1
+                continue
+            others = {n for (x, n) in _member_names_in(sc, d.file) if x is not d and x.name != name}
+            ren = {}
+            why = None
+            for m, o, _ in doffs:
+                used = False
+                for mm in re.finditer(r"\b%s\b" % re.escape(m.name), outside):
+                    pre = outside[:mm.start()].rstrip()
+                    if pre.endswith(".") or pre.endswith("->"):
+                        used = True
+                    elif m.name not in cnames or cby.get((o, _msig(m))) != m.name:
+                        why = "member name used outside member access"
+                        break
+                if why:
+                    break
+                if not used:
+                    continue
+                target = cby.get((o, _msig(m)))
+                if target is None:
+                    why = "accessed member has no counterpart"
+                    break
+                if target != m.name:
+                    if m.name in others or target in others:
+                        why = "renamed member name shared with another struct"
+                        break
+                    ren[m.name] = target
+            if why:
+                skipped[why] += 1
+                continue
+            edits[d.file].append((d, ren, canon))
+    nfiles = 0
+    for f, items in edits.items():
+        with open(os.path.join(ROOT, f), encoding="latin-1", newline="") as fh:
+            text = fh.read()
+        eol = eol_of(text)
+        allren = {}
+        for d, ren, canon in items:
+            allren.update(ren)
+        for d, ren, canon in sorted(items, key=lambda x: -x[0].start):
+            ob = text.index("{", d.start)
+            cb = d.end - len(text[:d.end].rstrip(";").rstrip()) + 0
+            close = text.rindex("}", d.start, d.end)
+            body = eol + "".join(f"    {m.type} {_fmt_decl(m.decl)};{eol}" for m in canon.members)
+            text = text[:ob + 1] + body + text[close:]
+        if allren:
+            pat = re.compile(r"(\.|->)(\s*)(%s)\b" % "|".join(map(re.escape, allren)))
+            # only outside the rewritten definitions: they already carry the new names
+            text = pat.sub(lambda m: m.group(1) + m.group(2) + allren[m.group(3)], text)
+        if not args.dry:
+            with open(os.path.join(ROOT, f), "w", encoding="latin-1", newline="") as fh:
+                fh.write(text)
+        nfiles += 1
+    print(f"{sum(len(v) for v in edits.values())} copies re-cut in {nfiles} files"
+          + (" (dry run)" if args.dry else ""))
+    for k, v in skipped.most_common():
+        print(f"  skipped {v}: {k}")
+
+
+def _fmt_decl(decl):
+    decl = decl.replace(" [ ", "[").replace(" ]", "]").replace("[ ", "[")
+    decl = re.sub(r"\* (?=[\w*(])", "*", decl)
+    return decl.replace("( *", "(*").replace(" )", ")").replace("( ", "(").replace(" ,", ",")
+
+
 def _pad_lines(text, d, nl):
     """What follows the #include: nothing, or a line break when more code
     follows the definition on its last line.  (Line numbers are not kept:
@@ -1251,6 +1444,11 @@ def main():
     p.add_argument("--dry", action="store_true")
     p.add_argument("--include-claimed", action="store_true")
     p.set_defaults(fn=cmd_unify)
+    p = sub.add_parser("relayout")
+    p.add_argument("--name", action="append")
+    p.add_argument("--dry", action="store_true")
+    p.add_argument("--include-claimed", action="store_true")
+    p.set_defaults(fn=cmd_relayout)
     p = sub.add_parser("hashes")
     p.add_argument("mode", choices=["save", "diff"])
     p.add_argument("--revert", action="store_true",

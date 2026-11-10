@@ -3,6 +3,7 @@
 # object byte-identical (sources of changed objects are reverted and the
 # build repeated).  Run from a clean tree on top of origin/main.
 #   bash tools/helpers/struct_dedup_batch.sh [struct_dedup.py apply args...]
+#   bash tools/helpers/struct_dedup_batch.sh unify|relayout [args...]
 # Leaves the result uncommitted for review; see docs/notes/struct_dedup.md.
 set -u
 cd "$(git rev-parse --show-toplevel)" || exit 2
@@ -11,7 +12,10 @@ if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
 fi
 ninja > build/struct_dedup_base.log 2>&1 || { echo "batch: baseline build failed"; tail -5 build/struct_dedup_base.log; exit 1; }
 python3 tools/struct_dedup.py hashes save || exit 1
-python3 tools/struct_dedup.py apply "$@" | tail -3
+case "${1:-}" in
+  unify|relayout) python3 tools/struct_dedup.py "$@" | tail -6;;
+  *) python3 tools/struct_dedup.py apply "$@" | tail -3;;
+esac
 for round in 1 2 3 4 5 6; do
   ninja -k 0 > build/struct_dedup.log 2>&1
   rc=$?
