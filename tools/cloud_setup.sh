@@ -48,6 +48,17 @@ if [ $RESTORED = 0 ] || [ ! -x build/tools/wibo ]; then
   python3 tools/download_tool.py sjiswrap build/tools/sjiswrap --tag v1.2.2
   chmod +x build/tools/* build/binutils/*
 fi
+# 4b) Genuine Metrowerks MSL C++ headers (docs/notes/msl_cpp.md). Never committed:
+#     taken from the shared folder when a copy is there, else fetched from archive.org.
+#     Without them the MSL TUs link the target objects (main.dol still OK, fewer functions).
+if [ ! -f "build/msl_cw25/MSL_C++/MSL_Common/Include/deque" ]; then
+  if [ -f "$SHARE/msl_cw25.tar.gz" ]; then
+    mkdir -p build && tar -xzf "$SHARE/msl_cw25.tar.gz" -C build
+  elif python3 tools/fetch_msl.py; then
+    tar -czf "$STAGE/msl_cw25.tar.gz" -C build msl_cw25 && cp "$STAGE/msl_cw25.tar.gz" "$SHARE/" || true
+  fi
+  RESTORED=0  # build.ninja must be regenerated with the MSL units
+fi
 # 5) configure + build + SHA-1 check. Without the cache the first run splits for ~150 s
 #    and compiles for ~145 s; after a restore ninja regenerates build.ninja itself if needed.
 if [ $RESTORED = 0 ]; then

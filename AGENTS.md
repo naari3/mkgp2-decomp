@@ -30,3 +30,8 @@ in the background and read the docs above meanwhile (`docs/thread_tips.md`).
 
 Never comment on the other side's `[unit-claim]` issues and never edit a TU
 someone else has claimed; post a hint on the board instead.
+
+MSL C++ headers (2026-11-10): seven TUs include the genuine Metrowerks headers,
+which are not in the repo. Run `python3 tools/fetch_msl.py` once and rerun
+configure; without them main.dol still builds OK but those TUs fall back to the
+target objects. Never commit files from `build/msl_cw25`.

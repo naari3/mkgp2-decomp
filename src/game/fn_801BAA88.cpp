@@ -1,4 +1,6 @@
 #include "game/singleton.h"
+#include <new>
+#include <vector>
 /*
  * 0x801BAA88..0x801C1F88: clFlowCard, the card flow that runs after
  * credits go in: it reads (or cleans) the player's magnetic card, offers
@@ -96,47 +98,16 @@ template <class T> OwnX<T>::~OwnX() throw() {
     delete p;
 }
 
-template <class T> struct PtrVecData {
-    int cap;
-    int count;
-    T *data;
-    PtrVecData() : cap(0), count(0), data(0) {}
-    ~PtrVecData() {
-        if (data) {
-            operator delete(data);
-        }
-    }
-};
-
-template <class T> struct PtrVecBase : PtrVecData<T> {
-    PtrVecBase() {}
-    ~PtrVecBase() {}
-};
-
-extern "C" {
-void PtrVec_InsertFill(void *v, void *pos, int n, const void *val);
-void **fn_80146000(void *vec, int index);
-}
-
-template <class T> struct PtrVec : PtrVecBase<T> {
-    PtrVec() {}
-    ~PtrVec() {}
-    T *begin() { return this->data; }
-    T *end() { return this->data + this->count; }
-    void push_back(const T &v) { PtrVec_InsertFill(this, end(), 1, &v); }
-    T &at(int i) { return *(T *)fn_80146000(this, i); }
-};
-
 /* 0x8C-byte two-button yes/no panel (ctor fn_80161914, dtor fn_80161F28). */
 struct ChoicePanel {
     int x0;
-    PtrVec<Sprite *> buttons;
+    std::vector<Sprite *> buttons;
     int state;
     int x14;
     int result;
     float ax, ay, bx, by;
     char pad2C[0x50 - 0x2C];
-    PtrVec<TextSprite *> labels;
+    std::vector<TextSprite *> labels;
     int x5C;
     Sprite *cursor;
     int x64;
@@ -471,7 +442,7 @@ struct CardEntry {
     Own<MsgWindow> msg;
     OwnX<ChoicePanel> panel;
     Own<CreditView> credit;
-    PtrVec<FadeObj *> nodes;
+    std::vector<FadeObj *> nodes;
     unsigned char ok;
     unsigned char withItems;
     int errCode;
@@ -757,7 +728,7 @@ CardEntry::CardEntry(unsigned char items)
     if (isJapanese() == 1) {
         static const char *quote = "\x27";
         n = new TextNode(*pX - lbl_806D9ACC, lbl_806D9AE8, quote);
-        PtrVec<FadeObj *> *list = &nodes;
+        std::vector<FadeObj *> *list = &nodes;
         n->layer = 4;
         n->tracks[0].Set(lbl_806D9A74, lbl_806D9A34, lbl_806D9AC0);
         n->scale = *pScale;
@@ -1870,9 +1841,6 @@ extern const char lbl_8039A484[];
 extern const char lbl_8039A4EC[];
 }
 
-inline void *operator new(unsigned long, void *p) {
-    return p;
-}
 
 struct ClStrRef {
     char *ptr;
@@ -2012,7 +1980,7 @@ static inline int PickCol(const KeyGroup &kg, const int &col) {
 
 struct KeyBoard {
     unsigned char ascii;
-    KeyVec<KeyGroup> groups;
+    std::vector<KeyGroup> groups;
     int group;
     int page;
     unsigned char shift;
@@ -2021,12 +1989,8 @@ struct KeyBoard {
     int saveRow;
     bool Navigate();
     void SelectGroupOf(int col) {
-        KeyGroup *g;
-        unsigned long i = 0;
-        unsigned long offset = 0;
-        for (; i < groups.count; i++, offset += sizeof(KeyGroup)) {
-            g = (KeyGroup *)((char *)groups.data + offset);
-            if (g->HasCol(col) == 1) {
+        for (int i = 0; i < groups.size(); i++) {
+            if (groups[i].HasCol(col) == 1) {
                 group = i;
                 return;
             }
@@ -2057,15 +2021,13 @@ struct KeyBoard {
         }
         return page = lbl_80399E6C[page][group];
     }
-    KeyBoard(int a) : ascii(a), groups(5, lbl_806792B8) {
+    KeyBoard(int a) : ascii(a), groups(5) {
         group = -1;
         page = (unsigned char)a == 1 ? 0 : 2;
         shift = 0;
         lastCol = -1;
-        const KeyGroup *src = lbl_80399E9C;
-        for (unsigned long i = 0; i < groups.count; i++) {
-            groups.at(i) = *src;
-            src++;
+        for (int i = 0; i < groups.size(); i++) {
+            groups.at(i) = lbl_80399E9C[i];
         }
     }
 };
@@ -2124,7 +2086,7 @@ struct NameEntry {
     int col;
     int row;
     float bright;
-    PtrVec<FadeObj *> nodes;
+    std::vector<FadeObj *> nodes;
     NameEntry(int ascii);
     void BuildKeys();
     void Draw();
@@ -2513,7 +2475,7 @@ bool KeyBoard::Navigate() {
             saveCol = 14;
             saveRow = 3;
             g = -1;
-        } else if ((unsigned long)g > groups.count - 1) {
+        } else if ((unsigned long)g > groups.size() - 1) {
             saveCol = 0;
             saveRow = 0;
             g = -1;
@@ -2708,7 +2670,7 @@ static inline void DrawKeyGroups(KeyBoard &board) {
     if (board.ascii == 0) {
         g = 2;
     }
-    for (; (unsigned long)g < (unsigned long)board.groups.count; g++) {
+    for (; (unsigned long)g < (unsigned long)board.groups.size(); g++) {
         DrawKeyGroup(board, g);
     }
 }

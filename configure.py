@@ -13,6 +13,7 @@
 ###
 
 import argparse
+import os
 import sys
 from pathlib import Path
 from typing import Any, Dict, List
@@ -192,6 +193,17 @@ config.scratch_preset_id = None
 
 # Base flags, common to most GC/Wii games.
 # Generally leave untouched, with overrides added below.
+# Genuine Metrowerks MSL C++ headers (CodeWarrior for GameCube 2.5), fetched
+# by tools/fetch_msl.py into build/msl_cw25 (not committed).  Units that use
+# real std::deque / Metrowerks::cdeque etc. append these to extra_cflags.
+cflags_msl_cpp = [
+    "-i build/msl_cw25/MSL_C++/MSL_Common/Include",
+    "-i build/msl_cw25/MSL_C/MSL_Common/Include",
+    "-i build/msl_cw25/MSL_C/PPC_EABI/Include",
+    "-i build/msl_cw25/MSL_C/MSL_Common_Embedded/Include",
+    "-i build/msl_cw25/MSL_C/MSL_Common_Embedded/Math/Include",
+]
+
 cflags_base = [
     "-nodefaults",
     "-proc gekko",
@@ -394,6 +406,22 @@ def Rel(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
 Matching = True                   # Object matches and should be linked
 NonMatching = False               # Object does not match and should not be linked
 Equivalent = config.non_matching  # Object should be linked when configured with --non-matching
+
+
+# TUs that include the genuine Metrowerks MSL C++ headers (std::deque, list,
+# vector; docs/notes/msl_cpp.md). The headers are not in the repo: without
+# build/msl_cw25 (python3 tools/fetch_msl.py, then rerun configure) these TUs
+# are left out of the build and the target objects are linked instead, so
+# main.dol stays OK and only their functions are missing from the report.
+HAVE_MSL_CPP = os.path.isfile("build/msl_cw25/MSL_C++/MSL_Common/Include/deque")
+_msl_skipped = []
+
+
+def MslObject(status, name, **options):
+    if HAVE_MSL_CPP:
+        return Object(status, name, **options)
+    _msl_skipped.append(name)
+    return Object(NonMatching, name, source="_no_msl_headers/" + name, **options)
 
 
 # Object is only matching for specific versions
@@ -785,9 +813,9 @@ config.libs = [
             Object(Matching, "game/fn_801E4524.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801E4824.cpp", mw_version="GC/2.7", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801E4544.cpp", mw_version="GC/2.7", extab_padding=b"\x02\x55", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-rostr"]),
-            Object(NonMatching, "game/fn_801E4AF4.cpp", mw_version="GC/2.7", extab_padding=b"\x02\x55", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            MslObject(Matching, "game/fn_801E4AF4.cpp", mw_version="GC/2.6", extab_padding=b"\x02\x55" * 40, extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-rostr", *cflags_msl_cpp]),
             Object(Matching, "game/fn_801E5A00.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/fn_801E5454.cpp", mw_version="GC/2.7", extab_padding=b"\x02\x55", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            MslObject(Matching, "game/fn_801E5454.cpp", mw_version="GC/2.6", extab_padding=b"\x02\x55" * 40, extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-rostr", *cflags_msl_cpp]),
             Object(Matching, "game/fn_801E5724.cpp", mw_version="GC/2.7", extab_padding=b"\x02\x55", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801DAA84.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80169DF0.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -1804,7 +1832,7 @@ config.libs = [
             Object(Matching, "game/anon_80203EA0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-inline noauto"], mw_version="GC/2.6"),
             Object(Matching, "game/anon_80203EA0_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-inline noauto"], mw_version="GC/2.6"),
             Object(Matching, "game/anon_80203EA0_m1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-inline noauto"], mw_version="GC/2.6"),
-            Object(NonMatching, "game/anon_80203EA0_nm2.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-inline noauto"], mw_version="GC/1.3"),
+            MslObject(Matching, "game/anon_80203EA0_nm2.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", *cflags_msl_cpp], mw_version="GC/2.6"),
             Object(Matching, "game/anon_80203EA0_m2.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-inline noauto"], mw_version="GC/2.6"),
             Object(Matching, "game/anon_80204474.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             Object(Matching, "game/anon_80204474_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
@@ -1867,7 +1895,7 @@ config.libs = [
             Object(Matching, "game/anon_8020E3D0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"]),
             Object(Matching, "game/anon_8020E3D0_nm2.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"]),
             Object(Matching, "game/anon_8020E3D0_sort.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"]),
-            Object(NonMatching, "game/anon_8020E3D0_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"]),
+            MslObject(Matching, "game/anon_8020E3D0_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", *cflags_msl_cpp], mw_version="GC/2.6"),
             Object(Matching, "game/anon_8020E3D0_update.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"]),
             Object(Matching, "game/anon_8020F220.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/anon_8020F290.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
@@ -2546,14 +2574,14 @@ config.libs = [
             Object(Matching, "game/fn_801E8D98.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/fn_801CDDC4.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801CDF10.cpp", extab_padding=b""),
-            Object(NonMatching, "game/GpPleaseInit.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on"]),
+            MslObject(Matching, "game/GpPleaseInit.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on", *cflags_msl_cpp]),
             Object(Matching, "game/fn_801FB634.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801F6EEC.c"),
             Object(Matching, "game/fn_801EB708.c", extra_cflags=["-use_lmw_stmw on", "-inline auto,deferred"]),
             Object(Matching, "game/fn_801D898C.c"),
             Object(Matching, "game/fn_801FB418.cpp"),
-            Object(NonMatching, "game/fn_801DEF94.cpp", extab_padding=b"\x02\x55" * 5, extra_cflags=["-use_lmw_stmw on"], mw_version="GC/2.6"),
-            Object(NonMatching, "game/fn_801BAA88.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on", "-inline noauto"], mw_version="GC/2.6"),
+            MslObject(NonMatching, "game/fn_801DEF94.cpp", extab_padding=b"\x02\x55" * 40, extra_cflags=["-use_lmw_stmw on", "-rostr", *cflags_msl_cpp], mw_version="GC/2.6"),
+            MslObject(NonMatching, "game/fn_801BAA88.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on", "-inline noauto", *cflags_msl_cpp], mw_version="GC/2.6"),
         ],
     },
     {
@@ -3824,6 +3852,9 @@ def _inject_extab_align4_tus() -> None:
     build_ninja.write_text(text, encoding="utf-8")
 
 if args.mode == "configure":
+    if _msl_skipped:
+        print("MSL C++ headers missing (python3 tools/fetch_msl.py): "
+              f"{len(_msl_skipped)} TUs use the target objects")
     # Write build.ninja and objdiff.json
     generate_build(config)
     _inject_sdata2_postprocess(config)
