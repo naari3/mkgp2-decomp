@@ -13536,6 +13536,12 @@ triforce/amsrv.c:
 	.text       start:0x80290ED8 end:0x80291134
 	.bss        start:0x80699220 end:0x806992A0
 
+triforce/acsocket_nm7_storage.c:
+	.bss        start:0x806992A0 end:0x806A1CE0
+
+triforce/amuart_state.c:
+	.bss        start:0x806A1CE0 end:0x806A1DB8
+
 triforce/amsrv_nm1.c:
 	.text       start:0x80291134 end:0x8029121C
 
@@ -13587,10 +13593,6 @@ triforce/acsocket_m7.c:
 
 triforce/acsocket_nm7.c:
 	.text       start:0x80292D18 end:0x80292E24
-	.bss        start:0x806992A0 end:0x806A1CE0
-
-triforce/amuart_state.c:
-	.bss        start:0x806A1CE0 end:0x806A1DB8
 
 triforce/acsocket_m8.c:
 	.text       start:0x80292E24 end:0x80293070
