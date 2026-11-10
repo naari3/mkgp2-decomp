@@ -144,14 +144,15 @@ static inline u8 OpenChan(NetPacket* pkt, u8 dev) {
 }
 
 static inline NetHandler HandlerFor(NetPacket* pkt) {
-    const NetHandler* fns;
-    const NetDispatch* d;
+    s32 idx;
     u16 cmd;
+    const NetDispatch* d;
+    const NetHandler* fns;
     cmd = BSWAP16(pkt->flags);
     d = lbl_803F2868;
     while ((fns = d->fns) != NULL) {
         if ((cmd & 0x7F00) == d->key) {
-            s32 idx = (u8)cmd;
+            idx = cmd & 0xFF;
             if (idx < d->count) return fns[idx];
             break;
         }
