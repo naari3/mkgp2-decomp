@@ -2320,7 +2320,10 @@ def shape_hints(a, rep, src_text):
                        f"({', '.join(used[:6])}{'...' if len(used) > 6 else ''}): an extern is a memory load the optimizer "
                        f"cannot fold, so its vreg is numbered and coloured differently. Get the literal text with "
                        f"`python3 tools/float_literal_sweep.py {a.unit} {a.fn}`, then rewrite the expressions in their "
-                       f"natural form (docs/thread_tips.md, FlashFadeOverlay_Draw).")
+                       f"natural form (docs/thread_tips.md, FlashFadeOverlay_Draw). In a vector block the literal is one of several "
+                       f"levers that only work together: multiplier through a pointer inline, named locals declared in "
+                       f"colour order with the loads written in the target's order, reused locals for the sum "
+                       f"(regalloc_patterns 83; do not judge the levers one at a time).")
     if gbad:
         g, w = cl["gpr"]["g"], cl["gpr"]["w"]
         regs = {str(g.phys.get(v)) for v in cl["gpr"]["bad"]} | {str(w.get(v)) for v in cl["gpr"]["bad"]}
