@@ -1,9 +1,12 @@
 #include "game/mapobject/mapobject17b_debug_private.h"
 
-static inline void MapDebugPrintPath(const char *base) {
+static inline void MapDebugEditOrPrint(const char *base, MapDebugInput *input, unsigned char left) {
     Vec3f *point;
+    clPathNode *sel;
     clPathNode *node;
     int i;
+    if (left) {
+        if (lbl_806D163C) {
                 DebugPrintf(base + 0x8C0);
                 DebugPrintf(base + 0x8F8);
                 node = lbl_806D163C;
@@ -18,6 +21,29 @@ static inline void MapDebugPrintPath(const char *base) {
                 }
                 DebugPrintf(lbl_806D91A4);
                 DebugPrintf(base + 0x8C0);
+        }
+    } else {
+            sel = lbl_806D1640;
+            if (input->Pressed(2)) {
+                if (sel) {
+                    sel->index++;
+                    if (sel->index > 3) sel->index = 0;
+                    lbl_80677D00.x = sel->points[sel->index].x;
+                    lbl_80677D00.z = sel->points[sel->index].z;
+                }
+            } else if (input->Held(1)) {
+                if (sel) {
+                    float axis = input->AxisX();
+                    if (axis > lbl_806D9188 || axis < lbl_806D918C) {
+                        sel->points[sel->index].x += lbl_806D91A8 * (lbl_806D9190 * axis);
+                    }
+                    axis = input->AxisY();
+                    if (axis > lbl_806D9188 || axis < lbl_806D918C) {
+                        sel->points[sel->index].z -= lbl_806D91A8 * (lbl_806D9190 * axis);
+                    }
+                }
+            } else MapDebugMoveCamera(input);
+    }
 }
 
 extern "C" void fn_8017DF00() {
@@ -82,31 +108,8 @@ extern "C" void fn_8017DF00() {
                 else lbl_806D1640 = lbl_806D1640->next;
             }
             MapDebugSelectStart();
-        } else if (left) {
-            if (lbl_806D163C) {
-                MapDebugPrintPath(base);
-            }
         } else {
-            clPathNode *node = lbl_806D1640;
-            if (input->Pressed(2)) {
-                if (node) {
-                    node->index++;
-                    if (node->index > 3) node->index = 0;
-                    lbl_80677D00.x = node->points[node->index].x;
-                    lbl_80677D00.z = node->points[node->index].z;
-                }
-            } else if (input->Held(1)) {
-                if (node) {
-                    float axis = input->AxisX();
-                    if (axis > lbl_806D9188 || axis < lbl_806D918C) {
-                        node->points[node->index].x += lbl_806D91A8 * (lbl_806D9190 * axis);
-                    }
-                    axis = input->AxisY();
-                    if (axis > lbl_806D9188 || axis < lbl_806D918C) {
-                        node->points[node->index].z -= lbl_806D91A8 * (lbl_806D9190 * axis);
-                    }
-                }
-            } else MapDebugMoveCamera(input);
+            MapDebugEditOrPrint(base, input, left);
         }
     }
     void *camera = lbl_806D1618->cobj;
