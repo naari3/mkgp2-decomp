@@ -1046,7 +1046,11 @@ extern unsigned int lbl_80678378[];
  */
 
 /* --- forward decls --- */
+#ifdef NON_MATCHING
+int SoundMgr_Play(unsigned int id);
+#else
 asm void SoundMgr_Play(void);
+#endif
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -1061,6 +1065,199 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
+#ifdef NON_MATCHING
+/* NON_MATCHING: equivalent C, register-only differences left (docs/gave_up.md,
+ * docs/wip/SoundMgr_Play_104lines.c). Starts a sound request by id. */
+typedef struct SPDefInfo {
+    unsigned char group;
+    unsigned char type;
+    unsigned char pad2[0x12 - 0x6];
+    unsigned short x12;
+    unsigned char x14;
+    unsigned char x15;
+    unsigned char pad16[2];
+    unsigned int x18;
+} SPDefInfo;
+
+typedef struct SPDef {
+    unsigned int x0;
+    SPDefInfo info;
+} SPDef;
+
+typedef struct SPInfo {
+    unsigned int id;
+    unsigned char group;
+    unsigned char pad9[3];
+    int xC;
+    unsigned char x10;
+    unsigned char x11;
+    unsigned char x12;
+    unsigned char x13;
+    unsigned short x14;
+    unsigned short x16;
+    unsigned char x18;
+    unsigned char x19;
+    unsigned char pad1A[2];
+} SPInfo;
+
+typedef struct SPSlot {
+    unsigned int flags;
+    SPInfo info;
+} SPSlot;
+
+typedef struct SPQueue {
+    unsigned int id;
+    int state;
+    int timer;
+} SPQueue;
+
+
+#define SP_DEFS ((SPDef *)lbl_80379554)
+#define SP_QUEUE ((SPQueue *)lbl_80677F40)
+#define SP_SLOTS ((SPSlot *)lbl_80678378)
+static inline void SoundQueue_Stop(unsigned int id) {
+    int i;
+    for (i = 0; i < 37; i++) {
+        if (SP_QUEUE[i].id == 0xFFFFFFFF) break;
+        if (id == SP_QUEUE[i].id) {
+            SPQueue *q;
+            SPQueue *e;
+            SP_QUEUE[i].state = 3;
+            SP_QUEUE[i].timer = 0;
+            q = SP_QUEUE;
+            e = &q[i];
+            for (; i > 0; e--) {
+                SPQueue t;
+                int k;
+                if (e[-1].state == 3) break;
+                k = i - 1;
+                t = *e;
+                i--;
+                e->id = q[k].id;
+                e->state = q[k].state;
+                e->timer = q[k].timer;
+                q[k] = t;
+            }
+            break;
+        }
+    }
+}
+
+static inline int SoundQueue_Find(SPQueue *q, unsigned int id) {
+    int i;
+    for (i = 0; i < 37; i++) {
+        if (q[i].id == 0xFFFFFFFF) return -1;
+        if (id == q[i].id) return i;
+    }
+    return -1;
+}
+
+static inline void SoundQueue_Push(SPQueue *q, SPInfo *info) {
+    unsigned int id = info->id;
+    int i;
+
+    i = SoundQueue_Find(q, id);
+    if (i >= 0) {
+        SPQueue *p = &q[i];
+        for (; i < 36; i++) {
+            SPQueue *n = &SP_QUEUE[i + 1];
+            p->id = n->id;
+            p->state = n->state;
+            p->timer = n->timer;
+            p++;
+        }
+        SP_QUEUE[36].id = 0xFFFFFFFF;
+    }
+    for (i = 0; i < 37; i++, q++) {
+        if (q->id == 0xFFFFFFFF) {
+            SP_QUEUE[i].id = id;
+            SP_QUEUE[i].state = 1;
+            SP_QUEUE[i].timer = 10;
+            break;
+        }
+    }
+}
+
+static inline int SoundSlot_Find(SPSlot *s, unsigned int id) {
+    int i;
+
+    for (i = 0; i < 32; i++) {
+        if (id == s[i].info.id && (s[i].flags & 6) == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int SoundMgr_Play(unsigned int id) {
+    SPSlot *s;
+    SPDefInfo *info;
+    int i;
+    SPSlot *slots;
+    int j;
+    unsigned int index;
+    int slot;
+    SPDef *def;
+    unsigned int category;
+
+    if (*(unsigned char *)&ClSound_Initialized == 0) {
+        return 0;
+    }
+    index = id & 0x87FFFFFF;
+    category = id & 0x78000000;
+    if (index >= 0x1EA) {
+        return 0;
+    }
+    slots = SP_SLOTS;
+    slot = SoundSlot_Find(slots, id);
+    if (slot >= 0) {
+        if (SP_SLOTS[slot].info.x19 != 0) {
+            return 1;
+        }
+        SoundQueue_Stop(SP_SLOTS[slot].info.id);
+        SP_SLOTS[slot].flags = (SP_SLOTS[slot].flags & ~6) | 4;
+    }
+    if (SP_DEFS[index].info.type == 2) {
+        info = &SP_DEFS[index].info;
+        s = slots;
+        for (j = 0; j < 32; j++, s++) {
+            if (s->info.id != 0xFFFFFFFF && s->info.group == info->group &&
+                category == (s->info.id & 0x78000000) && (s->flags & 6) == 0) {
+                SoundQueue_Stop(s->info.id);
+                s->flags = (s->flags & ~6) | 4;
+            }
+        }
+    }
+    for (i = 0; i < 32; i++, slots++) {
+        if (slots->flags == 0) {
+            break;
+        }
+    }
+    if (i >= 32) {
+        return 0;
+    }
+    SP_SLOTS[i].flags = (((SP_DEFS[index].info.x18 >> 1) & 1) ? 0 : 0x200) | 0x11;
+    SP_SLOTS[i].info.id = id;
+    SP_SLOTS[i].info.group = SP_DEFS[index].info.group;
+    SP_SLOTS[i].info.x18 = SP_DEFS[index].info.x15;
+    SP_SLOTS[i].info.xC = -1;
+    SP_SLOTS[i].info.x10 = 0x80;
+    SP_SLOTS[i].info.x11 = 0x7F;
+    SP_SLOTS[i].info.x12 = 0x40;
+    SP_SLOTS[i].info.x13 = 0x40;
+    SP_SLOTS[i].info.x14 = SP_DEFS[index].info.x12;
+    SP_SLOTS[i].info.x16 = 0x2000;
+    SP_SLOTS[i].info.x19 = SP_DEFS[index].info.x14;
+    if (SP_SLOTS[i].info.x14 != 0x2000) {
+        SP_SLOTS[i].flags |= 0x80;
+    }
+    SoundQueue_Push(SP_QUEUE, &SP_SLOTS[i].info);
+    return 1;
+}
+#undef SP_DEFS
+#undef SP_QUEUE
+#undef SP_SLOTS
+#else
 asm void SoundMgr_Play(void) { /* 0x80192884 size:0x680 */
     nofralloc
     stwu r1, -0x30(r1)
@@ -1518,6 +1715,7 @@ asm void SoundMgr_Play(void) { /* 0x80192884 size:0x680 */
     addi r1, r1, 0x30
     blr
 }
+#endif
 #pragma exceptions reset
 #undef ClSound_Initialized
 #undef lbl_80379554
