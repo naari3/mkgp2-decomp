@@ -23,10 +23,13 @@ config/GNLJ82/{symbols,splits}.txt:
 
 Classes:
   static     owner defines a local (static) object exactly at that address
-  postbuild  owner defines a static that tools/postprocess_extab_user.py
-             renames to the shared name and makes global after compiling
-             ("global:" entries of tools/extab_user_renames.json); MWCC
-             links, a compiler without that step has no definition
+  postbuild  owner defines the object under a source name that
+             tools/postprocess_extab_user.py renames to the shared name after
+             compiling (tools/extab_user_renames.json); MWCC links, a
+             compiler without that step has no definition
+  unnamed    the same, but the renamed symbol is compiler-generated (string
+             literal pool, vtable, RTTI record): the source has no object to
+             put the name on
   renamed    owner defines a global object at that address under another name
   inside     the address lies inside a larger object of the owner
   undefined  the owner's compiled object has nothing there (e.g. .bss that no
@@ -37,7 +40,8 @@ Pairs the owner already defines once for other compilers, with the SHARED_*
 storage classes of include/game/types/shared_data.h, are counted separately
 and left out of the list.
 
-Not seen by this tool: code that reaches an object through another object's
+Not seen by this tool: float literals that tools/postprocess_sdata2.py names
+after compiling and another unit reads by that name, and code that reaches an object through another object's
 name plus an offset (for example CardUnpackLegacy.cpp, which MWCC makes
 address its messages from the start of the previous unit's .rodata).
 """
@@ -108,7 +112,7 @@ def obj_path(unit):
 
 
 def load_postbuild():
-    """-> {unit: {global name: source name}} from the "global:" renames"""
+    """-> {unit: {name after the build: source name}} from the rename table"""
     import json
     out = collections.defaultdict(dict)
     path = os.path.join(ROOT, 'tools', 'extab_user_renames.json')
@@ -117,8 +121,9 @@ def load_postbuild():
         if not isinstance(m, list):
             continue
         for k, v in m:
-            if isinstance(v, str) and v.startswith('global:'):
-                out[tu[4:] if tu.startswith('src/') else tu][v[7:]] = k
+            if isinstance(v, str) and not v.startswith(('@', 'extern:', 'active:')):
+                # a "global:" rename of a name to itself still turns a static into a global
+                out[tu[4:] if tu.startswith('src/') else tu][v.split(':', 1)[-1]] = k + ('\0' if v.startswith('global:') else '')
     return out
 
 
@@ -146,7 +151,7 @@ def is_shared(unit, name, src):
     text = unit_text(unit)
     for n in {name, src}:
         if n and re.match(r'\w+$', n) and re.search(
-                r'(SHARED_(STATIC|BSS|EXTERN)\b[^;=(]*\b%s\b|#define\s+\w+\s+%s\b|#define\s+%s\s+\w+)' % (n, n, n), text):
+                r'(SHARED_(STATIC|BSS|EXTERN)\b[^;=(]*\b%s\b|#define\s+\w+\s+%s\b|#define\s+%s\b)' % (n, n, n), text):
             return True
     return False
 
@@ -182,11 +187,17 @@ def census():
                 defined.add(n)
     rows = []
     post = load_postbuild()
+    seen = set()
     for ounit in sorted(post):
         for n, src in sorted(post[ounit].items()):
-            us = sorted(users.get(n, set()) - {ounit})
-            if n in symbols and not symbols[n][3] and us and not n.startswith('@'):
-                rows.append((n, symbols[n][1], symbols[n][0], ounit, 'postbuild', src, 0, us))
+            made_global = src.endswith('\0')
+            src = src.rstrip('\0')
+            us = sorted(users.get(n, set()))
+            if n in symbols and not symbols[n][3] and us and not n.startswith('@') and (src != n or made_global) \
+                    and not re.search(r'_p\d+$', src):   # per-unit copies of one object, a separate matter
+                kind = 'postbuild' if re.match(r'[A-Za-z_]\w*$', src) and not src.startswith(('__vt__', '__RTTI__')) else 'unnamed'
+                rows.append((n, symbols[n][1], symbols[n][0], ounit, kind, src, 0, us))
+                seen.add(n)
     for n in sorted(users):
         if n in defined or n not in symbols:
             continue
@@ -227,6 +238,7 @@ def main():
     ap.add_argument('--list', action='store_true')
     ap.add_argument('--unit', help='only names owned by this unit')
     ap.add_argument('--tsv')
+    ap.add_argument('--unnamed', action='store_true', help='also list compiler-generated objects (vtables, RTTI, literal pools)')
     ap.add_argument('--unowned', action='store_true', help='also list names whose address no unit owns (linker and SDK symbols)')
     args = ap.parse_args()
     rows = census()
@@ -234,11 +246,15 @@ def main():
     rows = [r for r in rows if r not in done]
     if not args.unowned:
         rows = [r for r in rows if r[4] != 'unowned']
+    unnamed = [r for r in rows if r[4] == 'unnamed']
+    if not args.unnamed:
+        rows = [r for r in rows if r[4] != 'unnamed']
     if args.unit:
         rows = [r for r in rows if r[3] == args.unit]
     cls = collections.Counter(r[4] for r in rows)
     print('pairs already shared through SHARED_* definitions: %d' % len(done))
-    print('names used by a unit and defined by no compiled object: %d' % len(rows))
+    print('compiler-generated objects named after the build (--unnamed): %d' % len(unnamed))
+    print('names used by a unit that the owner defines under another name: %d' % len(rows))
     for k in ('static', 'postbuild', 'renamed', 'inside', 'undefined', 'unowned'):
         print('  %-10s %d' % (k, cls.get(k, 0)))
     if args.list or args.unit:

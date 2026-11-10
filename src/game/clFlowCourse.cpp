@@ -354,7 +354,11 @@ static inline void DeactivatePulse(CoursePulse *p) {
 }
 static inline void ShowPulse(CoursePulse *p) { if (p) ActivatePulse(p); }
 static inline void HidePulse(CoursePulse *p) { if (p) DeactivatePulse(p); }
+#ifdef __MWERKS__ /* a float literal of this unit, named after compiling (tools/postprocess_sdata2.py) */
 extern "C" const float lbl_806D9F30;
+#else
+extern "C" const float lbl_806D9F30 = 0.125f;
+#endif
 static inline float PulseAlpha(CoursePulse *p) {
     if (p->flag == 0) return (float)p->timer * lbl_806D9F30;
     return (1.0f) - (float)p->timer * (0.125f);

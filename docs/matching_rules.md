@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 13:03Z Portability: docs/notes/shared_data.md lists every way a unit's data is used by other units under another name or linkage, the convention for each (SHARED_*, non-MWCC definitions for float literals read by name), and what stays open (vtables, RTTI, string-literal pools).
 - 2026-11-10 12:55Z Portability: a data object that its unit defines as `static` (or internal C++ const) while other units use its symbols.txt name is defined with SHARED_STATIC / SHARED_BSS / SHARED_EXTERN (include/game/types/shared_data.h), plus `#ifndef __MWERKS__ #define local Shared_Name` when the names differ. Nothing changes under MWCC. `python3 tools/alias_census.py --list` shows pairs still open.
 - 2026-11-10 12:47Z Portability: file-scope `const` definitions with an initializer in .c units compiled as C++ are written `extern const T x = ...;` (tools/extern_const.py, `--check` lists the ones lacking it). Byte-identical under MWCC; other compilers otherwise treat them as internal.
 - 2026-11-10 12:29Z (n3 portability, 1 file, default build unchanged): the NON_MATCHING C++ side of KartDriver_InitFull compiles again (it had stopped compiling when its structs were merged into the shared KartDriver header); 96.26 % now. After merging or renaming shared structs, run `python3 tools/nonmatching_check.py`: the default build does not compile those sides.

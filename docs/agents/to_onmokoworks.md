@@ -716,3 +716,9 @@ status: note
 
 Mechanical, byte-identical: 149 static/internal data definitions that other units reach by their symbols.txt name now read SHARED_STATIC / SHARED_BSS / SHARED_EXTERN (include/game/types/shared_data.h; static under MWCC). Touches CardChecksumPoolPrivate.h, anon_801D286C.cpp, anon_8021F088_nm_8021F508.cpp, anon_8021BC44_nm1_rodata.inc, objview/fn_80187410.cpp, fn_8018F614.cpp, fn_801967F0.cpp, BootDispatcher.cpp, jvsio.c and others. Keep the macro and the #define block when editing those definitions. tools/alias_census.py --list shows what is still open.
 
+## n3-20261110-1303 | 2026-11-10 13:03Z | from: n3 | shared data follow-up (8 files) and docs/notes/shared_data.md
+re: -
+status: note
+
+Mechanical, byte-identical: ranking_display.cpp, Scene_80164614.cpp, fn_801F27B4.cpp, RaceScene_FrameUpdate.cpp, clFlowCourse.cpp, FaceEffect.cpp and three private headers got non-MWCC definitions or names for data other units read by name. Nothing changes under MWCC. Background and conventions: docs/notes/shared_data.md.
+
