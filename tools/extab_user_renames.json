@@ -2569,7 +2569,16 @@
   },
   "src/game/KartDriver_InitFull.c": {
     "extab_KartDriver_InitFull": "@etb_800064E0",
-    "extabindex_KartDriver_InitFull": "@eti_8001FF7C"
+    "extabindex_KartDriver_InitFull": "@eti_8001FF7C",
+    "__ct__8Normal3DFPCci": "clNormal3D_Construct",
+    "__ct__9AccessoryFP6Driver": "fn_80173DB4",
+    "__ct__9EffectBusFP6Driver": "ItemEffectBus_Init",
+    "__ct__5HUD28Fv": "fn_80232070",
+    "__ct__5HUD16Fv": "fn_802457E0",
+    "__ct__6TireFXFiiPvPvPvPv": "KartTireFX_Ctor",
+    "__ct__11EffectStateFP6Driver": "ItemEffectState_DefaultInit",
+    "__ct__5HUD12Fv": "fn_8024F81C",
+    "__ct__5HUD36Fv": "fn_80250D1C"
   },
   "src/game/ItemCharacterRender.c": {
     "@30": "jumptable_8041E8E4"
