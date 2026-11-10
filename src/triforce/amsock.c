@@ -1,3 +1,4 @@
+#include "game/types/le.h"
 /* Triforce media board socket commands: each call sends a request packet on
  * a fresh channel and waits for the board's reply. */
 #include <dolphin.h>
@@ -21,8 +22,8 @@ extern s32 fn_8028D460(u8 id);
 extern s32 fn_8028D6A0(void);
 extern s32 fn_8028D7E8(s32 mask, u8* out);
 
-#define BSWAP16(v) ((((v) << 8) & 0xFF00) | (((v) >> 8) & 0xFF))
-#define BSWAP32(v) (((v) << 24) | (((v) << 8) & 0xFF0000) | (((v) >> 8) & 0xFF00) | ((v) >> 24))
+#define BSWAP16(v) LE_AS_WRITTEN(((((v) << 8) & 0xFF00) | (((v) >> 8) & 0xFF)), (v))
+#define BSWAP32(v) LE_AS_WRITTEN((((v) << 24) | (((v) << 8) & 0xFF0000) | (((v) >> 8) & 0xFF00) | ((v) >> 24)), (v))
 
 static inline s32 NetReply(u8 id) {
     NetPacket* p;

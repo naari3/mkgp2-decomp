@@ -1,3 +1,4 @@
+#include "game/types/port_hooks.h"
 /* Course path-table constructor; memory-table and file loading paths. */
 #include "game/CoursePathTablePrivate.h"
 static const char pathFile0[] = "mr_highway_short_line.bin";
@@ -110,6 +111,7 @@ static inline void LoadFileData(CourseLookup *self, const char *file, unsigned l
         self->keys = FUN_8003b120(size);
         DebugPrintf(fileFormat, file, size);
         FUN_8007dfe4(file, self->keys, size, 0, 0);
+        PORT_DATA_LOADED(PORT_DATA_PATH_TABLE, self->keys, size);
         unsigned long *base = (unsigned long *)self->keys;
         int count = 0;
         while (base[count]) {

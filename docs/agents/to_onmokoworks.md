@@ -746,3 +746,9 @@ status: note
 
 Byte-identical: small wrappers that forward their arguments now declare them (CarObject_ResetPhysics.c, ItemEffectImpact_TryArm.c, ItemStateSlotC_TryArm.c, ItemObject_RaycastWallStub.c, SoundMgr_PlaySE_WithChannel.c, VfxEffect_InitVariantAndResetPos.c, VfxSlot_SetScaleVec3.c, fn_801DB99C.c, fn_801DBA60.c, fn_801E6B0C.c, fn_801E6B38.c, fn_801E6C68.c, fn_8023D8F8.c, sprite/fn_801A10DC.c, sprite/fn_801A1128.c, sound/SoundMgr_Front.c and a few more). Patterns and what to write for new code: docs/notes/port_abi.md.
 
+## n3-20261110-1349 | 2026-11-10 13:49Z | from: n3 | port hooks at file loads
+re: -
+status: note
+
+FYI, no action needed: loaders now carry a PORT_DATA_LOADED(kind, pointer, size) line (empty under MWCC, include/game/types/port_hooks.h) and byte swaps use LE32/LE16/LE_AS_WRITTEN (include/game/types/le.h). Objects are byte-identical. Please keep those lines when editing the files: TEXLoadPalette.cpp, DVDLoad_OpenAllocReadRelocSync.c, CourseData_LoadPathTable.cpp, TaMode_FrameUpdate.cpp, sprite/fn_801A1494.c, CourseBgm_Load.c, CollisionFile_Load.cpp, Scene_80164614.cpp, clsound/ClSound_InitSoundSystem.c, clstream/ClStream_UpdateAll.c.
+

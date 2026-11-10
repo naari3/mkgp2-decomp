@@ -1,3 +1,4 @@
+#include "game/types/port_hooks.h"
 #include "game/clsound_s25_private.h"
 #include "game/clsound_spatial_private.h"
 
@@ -40,6 +41,7 @@ static inline int ReadSoundFile(DVDFileInfo *file, void *data, unsigned int size
     DVDLoad_WaitIfSamePage(start);
     result = DVDReadPrio(file, data, size, 0, 2);
     DVDLoad_RecordOpStart(end);
+    PORT_DATA_LOADED(PORT_DATA_SOUND_FILE, data, size);
     return result;
 }
 
@@ -71,6 +73,7 @@ static inline void LoadSoundFile(const char *strings, unsigned int offset, void 
             DVDLoad_WaitIfSamePage(file.startAddr);
             result_ = DVDReadPrio(file_, data, size, 0, 2);
             DVDLoad_RecordOpStart(end);
+            PORT_DATA_LOADED(PORT_DATA_SOUND_FILE, data, size);
             result = result_;
             if (result <= 0) {
                 DebugPrintf(strings + 0x401c, strings + offset);

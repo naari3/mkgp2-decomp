@@ -1,3 +1,4 @@
+#include "game/types/port_hooks.h"
 #include "game/types/SpriteAnimData.h"
 
 extern int lbl_806D16EC;
@@ -44,6 +45,7 @@ SpriteAnimData *fn_801A1494(const char *name, unsigned char preload, unsigned in
     lbl_806D16EC++;
     if (name == 0) return 0;
     d = DVDFile_LoadSync(name);
+    PORT_DATA_LOADED(PORT_DATA_SPRITE_ANIM, d, 0);
     fn_801A0D90(d, params);
     if (preload) PreloadParams(d);
     return d;

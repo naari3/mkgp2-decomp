@@ -1,3 +1,4 @@
+#include "game/types/le.h"
 #ifndef TRIFORCE_ACSOCKET_PRIVATE_H
 #define TRIFORCE_ACSOCKET_PRIVATE_H
 
@@ -56,7 +57,7 @@ extern s32 fn_802904C0(s32 a0);
 extern s32 fn_80290644(s32 a0, u32 a1, u32 a2);
 extern u8 fn_80290810(s32 mask, s32 a0, u32 a1, u32 a2);
 
-#define BSWAP32(v) (((v) << 24) | (((v) << 8) & 0xFF0000) | (((v) >> 8) & 0xFF00) | ((v) >> 24))
+#define BSWAP32(v) LE_AS_WRITTEN((((v) << 24) | (((v) << 8) & 0xFF0000) | (((v) >> 8) & 0xFF00) | ((v) >> 24)), (v))
 
 extern u8 acsocket_nm7_bss_806992A0[0x4000];
 extern u8 acsocket_nm6_bss_8069D2A0[0x4000];

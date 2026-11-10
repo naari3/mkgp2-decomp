@@ -1,3 +1,4 @@
+#include "game/types/port_hooks.h"
 #include "game/Scene_80164614Private.h"
 
 // Course demo speed curves, followed by the replay configuration pool.
@@ -108,6 +109,7 @@ extern "C" LoaderInit163 *fn_80164614(LoaderInit163 *s, int index, int record) {
                     DVDLoad_WaitIfSamePage(file.start);
                     int count = DVDReadPrio(&file, buffer, size, 0, 2);
                     DVDLoad_RecordOpStart(end);
+                    PORT_DATA_LOADED(PORT_DATA_DEMO_INPUT, buffer, size);
                     DebugPrintf(demoReadFormat, count);
                     if (count > 43200) count = 43200;
                     count -= (unsigned int)count % 16;

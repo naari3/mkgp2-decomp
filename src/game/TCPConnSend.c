@@ -1,3 +1,4 @@
+#include "game/types/le.h"
 /* Only fields observed by the send path are modeled. */
 typedef struct TCPConnSendView {
     int socket;
@@ -29,8 +30,9 @@ extern void *memset(void *destination, int fill, unsigned long length);
 
 static inline unsigned int TCPConn_SendMask(unsigned int bit)
 {
-    return ((bit << 24) & 0xFF000000U) | ((bit << 8) & 0x00FF0000U)
-         | ((bit >> 8) & 0x0000FF00U) | ((bit >> 24) & 0x000000FFU);
+    /* fd_set words are little-endian for the media board's socket layer */
+    return LE_AS_WRITTEN(((bit << 24) & 0xFF000000U) | ((bit << 8) & 0x00FF0000U)
+         | ((bit >> 8) & 0x0000FF00U) | ((bit >> 24) & 0x000000FFU), bit);
 }
 
 static inline void TCPConn_AddWriteSocket(unsigned int *set, int socket)
