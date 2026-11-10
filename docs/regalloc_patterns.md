@@ -2609,3 +2609,30 @@ With `int i` (any spelling) or with `path` as a named local nothing moves.
 **Check:** regfix diag says a parameter must be numbered above a later
 parameter, and the parameter is reassigned once (`index = f(index)`).
 
+## 96. Epilogue restores in the wrong order, everything else equal: the last block must be scheduled again after register allocation (fn_801D7610, 99.94 -> 100, fakematch, 11-10)
+
+Target epilogue `lwz r31; lwz r0; lwz r30`, ours `lwz r31; lwz r30; lwz r0`.
+`mwsched.py resched` said the diff disappears when the last block is scheduled
+again after register allocation (mwcc_internals "Post-RA scheduler": a block
+is rescheduled when an instruction in it was deleted or inserted after the
+first scheduling, for example a coalesced `mr`). About 60 source shapes of the
+tail left the block untouched, because the frontend forwards every local.
+
+What deletes an instruction there: a copy into the return register. Writing
+the three `lbl_806D12E4[n] = 0` stores as
+`for (p = lbl_806D12E4, i = 0; i < 3; i++) p[i] = 0;` and ending with
+`return p;` (function type `unsigned char *`) emits `mr r3, p` in the last
+block; allocation coalesces it away (p already wants r3), the block loses an
+instruction and is scheduled again. Instructions are unchanged. Both parts are
+needed: `return lbl_806D12E4;` without the loop pointer loads the address
+twice (no copy), and the loop pointer in a void function is forwarded.
+
+Marked fakematch (callers use it as void). The same symptom in
+CardData_InitDefaults is not fixed by it yet (there r3 holds the zero constant
+at the exit and constants are forwarded, so no copy is left).
+
+**Check:** only the epilogue `lwz` order differs and `mwsched.py resched`
+reports a match for the last block: make the function return a value that the
+last block already holds in r3 through a named multi-def local. Rule
+`return-copy-reschedules-last-block`.
+
