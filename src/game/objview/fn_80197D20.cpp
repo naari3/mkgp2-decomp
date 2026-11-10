@@ -1,5 +1,6 @@
+#include "game/types/size_t.h"
 #include "game/mapobject/mapobject.h"
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *) throw();
 struct clMapEffectParts {
     virtual ~clMapEffectParts();

@@ -1,4 +1,5 @@
 
+#include "game/types/size_t.h"
 #include "game/singleton.h"
 /* sdata symbols referenced from asm */
 extern unsigned char lbl_806D7084[7];
@@ -9,7 +10,7 @@ extern unsigned char lbl_806D708C[5];
 #pragma cplusplus on
 
 typedef struct { float x, y, z; } Vec;
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p);
 
 #include "game/types/Vec3.h"

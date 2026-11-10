@@ -5,6 +5,7 @@
  * prop models (s_propA/s_propB) are reference-counted across PoseChars and
  * have their matrices copied from character joints each frame.
  */
+#include "game/types/size_t.h"
 #pragma cplusplus on
 
 typedef float Mtx[3][4];
@@ -41,7 +42,7 @@ struct SceneModel {
 };
 
 
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 
 extern "C" {

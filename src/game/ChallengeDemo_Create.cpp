@@ -1,8 +1,9 @@
 /* fn_80124DF8: creates the challenge demo scene for the current challenge
  * cup (cups 9..16). */
+#include "game/types/size_t.h"
 #pragma cplusplus on
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 
 struct ChallengeDemo {
     virtual int Update();

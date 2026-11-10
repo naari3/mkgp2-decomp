@@ -1,3 +1,4 @@
+#include "game/types/size_t.h"
 #include "game/singleton.h"
 #include <new>
 #include <vector>
@@ -10,7 +11,7 @@
  * captions.
  */
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 #include "game/types/InputState.h"

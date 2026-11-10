@@ -1,5 +1,6 @@
 
 /* sdata symbols referenced from asm */
+#include "game/types/size_t.h"
 extern "C" const char lbl_806D2264[4];
 /* === extracted from auto_FlowDispatcher_Creat_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -8,7 +9,7 @@ extern "C" const char lbl_806D2264[4];
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p);
 extern "C" void DebugLog_LvIdMsg(int lv, int id, const char *msg);
 extern "C" void DebugPrintf(const char *fmt, ...);

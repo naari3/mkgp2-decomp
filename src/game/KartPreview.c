@@ -10,6 +10,7 @@
  * compiler emits its exception table.
  */
 
+#include "game/types/size_t.h"
 #pragma cplusplus on
 
 extern "C" {
@@ -433,7 +434,7 @@ static inline void KP_SetTranslate(KPJObj *j, float x, float y, float z) {
 }
 
 /* --- asm function bodies (.text order = fn address order) --- */
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p);
 
 struct KPNormal3D {

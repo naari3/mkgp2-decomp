@@ -1,7 +1,8 @@
 /* Indivisible lookup group. Only observed vptr and pointer fields are modeled.
  * The external constructor publishes this through g_courseData itself. */
+#include "game/types/size_t.h"
 #pragma cplusplus on
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 extern "C" {
 void MemoryManager_Free(void *);

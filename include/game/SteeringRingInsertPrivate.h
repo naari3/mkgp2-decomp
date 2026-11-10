@@ -1,5 +1,6 @@
 #ifndef STEERING_RING_INSERT_TYPES_PRIVATE_H
 #define STEERING_RING_INSERT_TYPES_PRIVATE_H
+#include "game/types/size_t.h"
 extern "C" {
 unsigned long strlen(const char *);
 char *strcpy(char *, const char *);
@@ -10,7 +11,7 @@ void *Alloc(unsigned long);
 extern const char lbl_803BD2DC[], lbl_803BD2FC[];
 extern unsigned long lbl_806CFF84, lbl_806CFF80;
 }
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 #include "game/types/RingShared.h"
 namespace std {

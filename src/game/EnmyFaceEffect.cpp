@@ -12,7 +12,8 @@
  * why .rodata is pinned to 4-byte alignment in extab_user_renames.json).
  */
 
-void *operator new(unsigned long size);
+#include "game/types/size_t.h"
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 typedef float Mtx[3][4];

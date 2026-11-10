@@ -1,5 +1,6 @@
 #ifndef GAME_JOINT_TRACKS_PRIVATE_H
 #define GAME_JOINT_TRACKS_PRIVATE_H
+#include "game/types/size_t.h"
 
 extern "C" {
 #include "sysdolphin/baselib/jobj.h"
@@ -25,7 +26,7 @@ extern const unsigned char lbl_804EE6C0[], JointTracks_data_804EE68C[], lbl_804E
 extern int g_cupId;
 }
 
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 
 // The canonical JObj header leaves the transform portion opaque.

@@ -4,6 +4,7 @@
  * for up to two seconds (or until the button is pressed) and fades out.
  */
 
+#include "game/types/size_t.h"
 struct ResCtrl {
     int resId;
     int field4, mode, fieldc;
@@ -33,7 +34,7 @@ struct ResCtrl {
         colors[3] = c;
     }
 };
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 struct InputState {

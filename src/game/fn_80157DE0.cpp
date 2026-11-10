@@ -1,6 +1,7 @@
 /*
  * 0x80157940..0x8015A6E4: list helpers and the scene updates that use them.
  */
+#include "game/types/size_t.h"
 #pragma cplusplus on
 
 #include "game/types/ListNode.h"
@@ -257,7 +258,7 @@ struct LGuard {
     ~LGuard() { if (node) MemoryManager_TimedFree(node); } /* weak copy = dtor_80157EC0 */
     LValueNode *Release() { LValueNode *p = node; node = 0; return p; }
 };
-inline void *operator new(unsigned long, void *p) { return p; }
+inline void *operator new(size_t, void *p) { return p; }
 inline void operator delete(void *, void *) {}
 
 static inline LPos LInsert(LList *l, LNode *at, LValueNode *node)

@@ -2,6 +2,7 @@
  * 0x8011EB1C..0x801223E8: sprite handles (creation, per-handle setters,
  * resource preload and pool GC) and the ResCtrl resource list.
  */
+#include "game/types/size_t.h"
 #pragma cplusplus on
 
 struct TexObjData {
@@ -70,8 +71,8 @@ struct ProfTimer {
 };
 
 #include "game/types/SpriteNode.h"
-void *operator new(unsigned long size);
-void *operator new[](unsigned long size);
+void *operator new(size_t size);
+void *operator new[](size_t size);
 void operator delete(void *p) throw();
 
 struct SpriteList {

@@ -2,9 +2,10 @@
  * minigame mode. Builds the player kart, camera, HUD, goal lines and
  * landing-grid objects. */
 
+#include "game/types/size_t.h"
 typedef struct { float x, y, z; } Vec;
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p);
 
 extern "C" {

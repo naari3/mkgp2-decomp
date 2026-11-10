@@ -5,6 +5,7 @@
  * Draw and Update stay C/asm functions that the vtable reaches by rename.
  */
 
+#include "game/types/size_t.h"
 struct InputState {
     unsigned char pad_00[4];
     unsigned char active;
@@ -121,7 +122,7 @@ struct RoundView {
     SprFlag *flag168;
 };
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p);
 
 extern "C" {

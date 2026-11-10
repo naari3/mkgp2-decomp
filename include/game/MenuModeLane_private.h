@@ -1,6 +1,7 @@
 #ifndef MENU_MODE_LANE_PRIVATE_H
 #define MENU_MODE_LANE_PRIVATE_H
-void *operator new(unsigned long);
+#include "game/types/size_t.h"
+void *operator new(size_t);
 void operator delete(void *) throw();
 #include "game/types/SceneBase.h"
 struct MenuModeBase : SceneBase {

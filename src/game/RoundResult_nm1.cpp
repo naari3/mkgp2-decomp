@@ -5,6 +5,7 @@
  * through a class operator new); lbl_806D1AC8 points at it while alive.
  */
 
+#include "game/types/size_t.h"
 extern "C" {
 extern unsigned char lbl_80679E00[0x24];
 extern const char lbl_803F0A40[];
@@ -54,7 +55,7 @@ struct RoundResult {
         DebugPrintf(lbl_803F0A58);
     }
     ~RoundResult() { DebugPrintf(lbl_803F0A40); }
-    static void *operator new(unsigned long) { void *p = lbl_80679E00; return p; }
+    static void *operator new(size_t) { void *p = lbl_80679E00; return p; }
     /* Clears the static buffer (dtor_8024F40C). */
     static void operator delete(void *);
 };

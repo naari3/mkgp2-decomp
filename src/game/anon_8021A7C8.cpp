@@ -8,6 +8,7 @@
  * (lbl_804EDC88 + 0x74), like TaMode (docs/matching_rules.md section 6).
  */
 
+#include "game/types/size_t.h"
 #include "game/types/HSD_JObj.h"
 
 #include "game/types/Vec3.h"
@@ -26,7 +27,7 @@ struct CharData {
     const char **anims;
 };
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 extern "C" {

@@ -1,6 +1,7 @@
 /* Native C++ ownership for the input manager and its virtual input object. */
+#include "game/types/size_t.h"
 #pragma cplusplus on
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 extern "C" void JvsInput_ResetCalibration(void);
 extern "C" void InputMgr_TeardownStub(void);

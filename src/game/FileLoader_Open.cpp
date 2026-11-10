@@ -4,7 +4,8 @@
  *
  * Object_ReleaseAnimResource_Impl: the target `bne; b exit` after the
  * archive test is the last term of `if (a == 0 || b == 1) return;`. */
-void *operator new(unsigned long size);
+#include "game/types/size_t.h"
+void *operator new(size_t size);
 void operator delete(void *ptr);
 
 struct FileLoader;

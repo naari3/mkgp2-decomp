@@ -1,3 +1,4 @@
+#include "game/types/size_t.h"
 #include "game/singleton.h"
 
 /* sdata symbols referenced from asm */
@@ -2041,7 +2042,7 @@ extern "C" void *fn_8014DD5C(void *p0, int p1) {
  * scene model, named by the id's archive path) and appends it to the cache.
  */
 
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 
 

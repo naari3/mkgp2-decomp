@@ -10,9 +10,10 @@
  * Merged 2026-11-09 from CoinChallengeRender.cpp, CoinChallengeUpdate.cpp,
  * anon_80214B3C.cpp and CoinChallengeInit.cpp.
  */
+#include "game/types/size_t.h"
 #include "game/singleton.h"
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 /* --- owned .data 0x804ECC20..0x804EDA78 (tools/own_data.py) --- */

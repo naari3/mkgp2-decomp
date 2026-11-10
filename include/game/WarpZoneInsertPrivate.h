@@ -1,5 +1,6 @@
 #ifndef GAME_WARP_ZONE_INSERT_PRIVATE_H
 #define GAME_WARP_ZONE_INSERT_PRIVATE_H
+#include "game/types/size_t.h"
 
 extern "C" {
 unsigned long strlen(const char *);
@@ -9,7 +10,7 @@ void *Alloc(unsigned long);
 void MemoryManager_TimedFree(void *);
 extern const char lbl_803284A4[];
 }
-inline void *operator new(unsigned long, void *p) { return p; }
+inline void *operator new(size_t, void *p) { return p; }
 inline void operator delete(void *, void *) {}
 
 /* Four corners have nontrivial lifetime; the two remaining vectors are plain. */

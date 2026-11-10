@@ -3,6 +3,7 @@
 /* Keep function/extab/extabindex order aligned with the target ranges. */
 
 /* --- shared types for the native C members --- */
+#include "game/types/size_t.h"
 typedef struct RRVec3 {
     float x, y, z;
 } RRVec3;
@@ -1841,7 +1842,7 @@ extern unsigned int RivalRun_vtable_8048E4A0[];
 
 /* --- native C++ ctor (same shape as ReverseChallenge_Init / JumpDistanceMode_Init) --- */
 #pragma cplusplus on
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p);
 
 typedef struct RIVec { float x, y, z; } RIVec;

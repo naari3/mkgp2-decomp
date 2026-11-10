@@ -1,7 +1,8 @@
 /* Constructor-only observed lifetime views; no complete HUD class claimed.
  * Nontrivial owner and new expression generate the original cleanup actions. */
+#include "game/types/size_t.h"
 #pragma cplusplus on
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 extern "C" {
 void DoublyLinkedList_Init(void *list);

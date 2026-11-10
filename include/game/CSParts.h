@@ -1,5 +1,6 @@
 #ifndef GAME_CSPARTS_H
 #define GAME_CSPARTS_H
+#include "game/types/size_t.h"
 
 /*
  * Result-screen model parts (clCSParts family). clCSPartsInerface is the
@@ -9,7 +10,7 @@
  * names in .rodata and records in .sdata.
  */
 
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 
 struct clCSModel {

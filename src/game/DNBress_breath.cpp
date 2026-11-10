@@ -1,4 +1,5 @@
 /* --- owned .rodata 0x803D0300..0x803D0390 (tools/own_data.py) --- */
+#include "game/types/size_t.h"
 #pragma force_active on
 extern "C" const char DNBress_breath_rodata_803D0300[144] = { 32, 68, 101, 108, 101, 116, 101, 77, 97, 112, 69, 102, 102, 101, 99, 116, 32, 58, 32, 99, 108, 68, 78, 66, 114, 101, 115, 115, 10, 0, 0, 0, 32, 67, 114, 101, 97, 116, 101, 77, 97, 112, 69, 102, 102, 101, 99, 116, 32, 58, 32, 99, 108, 68, 78, 66, 114, 101, 115, 115, 10, 0, 0, 0, 68, 78, 65, 95, 101, 102, 95, 105, 99, 101, 95, 106, 111, 105, 110, 116, 0, 0, 0, 0, 103, 101, 116, 74, 111, 105, 110, 116, 69, 114, 114, 111, 114, 33, 33, 32, 45, 32, 100, 110, 66, 114, 101, 115, 115, 46, 99, 112, 112, 32, 76, 105, 110, 101, 58, 50, 50, 50, 10, 0, 101, 102, 95, 100, 105, 110, 111, 95, 98, 114, 101, 115, 115, 46, 100, 97, 116, 0, 0, 0 };
 #pragma force_active reset
@@ -12,7 +13,7 @@ extern "C" /*
  * base; the static initializer (fn_80227FA4) stays in asm.
  */
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 typedef float Mtx[3][4];

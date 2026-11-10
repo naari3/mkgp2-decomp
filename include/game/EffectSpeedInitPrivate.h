@@ -1,12 +1,13 @@
 #ifndef EFFECT_SPEED_INIT_PRIVATE_H
 #define EFFECT_SPEED_INIT_PRIVATE_H
+#include "game/types/size_t.h"
 extern "C" {
 void *MemoryManager_AllocTagged(unsigned long, const char *, int);
 void *CarObject_GetRenderObj(void *);
 void ItemEffectBus_ClearMask(void *, unsigned long long);
 extern const char lbl_802EE510[];
 }
-inline void *operator new(unsigned long n, const char *file, int line) { return MemoryManager_AllocTagged(n,file,line); }
+inline void *operator new(size_t n, const char *file, int line) { return MemoryManager_AllocTagged(n,file,line); }
 struct SpeedInitOwner;
 struct SpeedInitAction {
     SpeedInitAction() {}

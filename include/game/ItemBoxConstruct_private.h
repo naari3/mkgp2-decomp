@@ -1,4 +1,4 @@
-typedef unsigned long size_t;
+#include "game/types/size_t.h"
 struct BoxVec { float x,y,z; };
 struct BoxJoint { char pad[8]; BoxJoint *next; BoxJoint *parent; BoxJoint *child; char pad14[0x24]; BoxVec pos; };
 struct BoxDObj { void *vptr; BoxDObj *next; };

@@ -1,8 +1,9 @@
 #ifndef GAME_FLOW_CARD_CHECK_PAGES_PRIVATE_H
 #define GAME_FLOW_CARD_CHECK_PAGES_PRIVATE_H
+#include "game/types/size_t.h"
 /* Private layouts and declarations shared by the scene-update and page TUs. */
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 #include "game/types/Vec2.h"

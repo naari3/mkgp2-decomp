@@ -1,6 +1,7 @@
+#include "game/types/size_t.h"
 #include "game/RaceDigitListPrivate.h"
 
-inline void *operator new(unsigned long, void *p) { return p; }
+inline void *operator new(size_t, void *p) { return p; }
 inline void operator delete(void *, void *) {}
 
 struct RaceDigitFloat {

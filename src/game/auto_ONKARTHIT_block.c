@@ -1,5 +1,6 @@
 
 /* sdata symbols referenced from asm */
+#include "game/types/size_t.h"
 extern unsigned char lbl_806D27DC[8];
 #include "game/singleton.h"
 /*
@@ -6910,9 +6911,9 @@ extern "C" void *KartItem_Dtor(KartItemObj *self, short flag) { /* 0x8004E2B0 si
  * Mangled names are bridged in tools/extab_user_renames.json. */
 #pragma cplusplus on
 #pragma exceptions on
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *) throw();
-void *operator new(unsigned long, const char *, int);
+void *operator new(size_t, const char *, int);
 struct Holder8005278C {
     Owned8005278C *p; /* 0x0 */
     Holder8005278C(Owned8005278C *q) : p(q) {}
@@ -9444,7 +9445,7 @@ extern "C" StlEraseIter StlList_EraseRange(StlList *l, StlEraseIter first, StlEr
  * excluded by the 14.1 mix rule (manual-extab asm fns precede). Same class as
  * dtor_8005278C/800528B0 (exceptions-on-eh-scaffolding-unpromotable). */
 #pragma cplusplus on
-inline void *operator new(unsigned long, void *p) { return p; }
+inline void *operator new(size_t, void *p) { return p; }
 inline void operator delete(void *, void *) {}
 
 struct StlInsNodeGuard {

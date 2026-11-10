@@ -1,3 +1,4 @@
+#include "game/types/size_t.h"
 #include "game/singleton.h"
 /*
  * 0x80226670..0x80226954: single-play join message scene (vtable
@@ -6,7 +7,7 @@
  * The TU owns the vtable and RTTI (0x804EDF58..0x804EDF80, .sdata 0x806D0530).
  */
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 #include "game/types/InputState.h"

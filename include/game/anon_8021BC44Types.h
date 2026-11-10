@@ -1,5 +1,6 @@
 #ifndef GAME_ANON_8021BC44_TYPES_H
 #define GAME_ANON_8021BC44_TYPES_H
+#include "game/types/size_t.h"
 #include "game/singleton.h"
 #include "game/anon_8021BC44Private.h"
 
@@ -12,7 +13,7 @@
  * (src/game/anon_8021BC44_nm1_rodata.inc); its statics give the section anchor.
  */
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 #include "game/types/InputState.h"

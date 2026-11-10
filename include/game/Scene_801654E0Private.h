@@ -1,7 +1,8 @@
 #ifndef GAME_SCENE_801654E0_PRIVATE_H
 #define GAME_SCENE_801654E0_PRIVATE_H
+#include "game/types/size_t.h"
 
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *) throw();
 extern "C" {
 void fn_80121210();

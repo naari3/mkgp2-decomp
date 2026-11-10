@@ -1,5 +1,6 @@
 #ifndef GAME_DEMOKARTSCENE_H
 #define GAME_DEMOKARTSCENE_H
+#include "game/types/size_t.h"
 
 /*
  * Kart demo scenes (0x8020F44C..0x80210A50): a course scene, a kart driver
@@ -10,7 +11,7 @@
  *     DemoBase (vtable lbl_80419F0C, inline)
  */
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 typedef float Mtx[3][4];

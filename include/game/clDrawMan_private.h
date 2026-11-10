@@ -1,12 +1,13 @@
 #ifndef CLDRAWMAN_PRIVATE_H
 #define CLDRAWMAN_PRIVATE_H
+#include "game/types/size_t.h"
 
 /* Private complete layout of the draw-manager singleton and its sorted lists.
  * Existing callers use an opaque DrawMan view. Array constructors/destructors
  * are supplied by the adjacent NodeList/Free TUs through the symbol bridge. */
 
-void *operator new(unsigned long);
-void *operator new[](unsigned long);
+void *operator new(size_t);
+void *operator new[](size_t);
 void operator delete(void *);
 void operator delete[](void *);
 

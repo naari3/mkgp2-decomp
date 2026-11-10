@@ -1,5 +1,6 @@
 /* Observed layout only; the sample constructor belongs to another TU. */
-void *operator new[](unsigned long);
+#include "game/types/size_t.h"
+void *operator new[](size_t);
 void operator delete[](void *);
 void operator delete(void *);
 extern "C" void *InputCmd_data_806CEE50;

@@ -1,7 +1,8 @@
 // TU-private constructor view; layouts follow fn_8022BBC8 and its EH actions.
 // Kept separate from EnemyFace_private.h to preserve other TUs.
 
-void *operator new(unsigned long size);
+#include "game/types/size_t.h"
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 typedef float Mtx[3][4];

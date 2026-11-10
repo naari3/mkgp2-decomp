@@ -1,3 +1,4 @@
+#include "game/types/size_t.h"
 #include "game/BiribiriLand_private.h"
 
 /* BiribiriLand: Render/Update/UpdateObstacles/Destroy native; Init retains its original asm. */
@@ -645,7 +646,7 @@ extern "C" void *BiribiriLand_Destroy(BiribiriState *self, short freeMemory)
 
 /* === BiribiriLand_Init: C++ ctor (same template as ReverseChallenge_Init / RivalRun_Init) === */
 #pragma cplusplus on
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p);
 
 extern "C" {

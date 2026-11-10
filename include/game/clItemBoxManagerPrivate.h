@@ -1,11 +1,12 @@
 #ifndef GAME_CLITEMBOXMANAGER_PRIVATE_H
 #define GAME_CLITEMBOXMANAGER_PRIVATE_H
+#include "game/types/size_t.h"
 
 #include "game/singleton.h"
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *ptr);
-inline void *operator new(unsigned long, void *p) { return p; }
+inline void *operator new(size_t, void *p) { return p; }
 
 extern "C" {
 unsigned int OSGetTick(void);

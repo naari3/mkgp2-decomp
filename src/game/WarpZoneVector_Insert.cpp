@@ -5,6 +5,7 @@
  * -inline noauto,deferred emits the functions in reverse source order,
  * so they are written from the last address to the first.
  */
+#include "game/types/size_t.h"
 extern "C" {
 unsigned long strlen(const char *);
 char *strcpy(char *, const char *);
@@ -14,14 +15,14 @@ void MemoryManager_TimedFree(void *);
 extern const char lbl_803284A4[];
 extern const char WarpZoneVector_Reserve_rodata_803284F8[];
 }
-inline void *operator new(unsigned long, void *p) { return p; }
+inline void *operator new(size_t, void *p) { return p; }
 inline void operator delete(void *, void *) {}
 
 /* Four corners have nontrivial lifetime; the two remaining vectors are plain. */
 #include "game/types/WarpPlainVector.h"
 #include "game/types/WarpCorner.h"
 #include "game/types/WarpZoneValue.h"
-inline void *operator new(unsigned long, WarpZoneValue *p) throw() { return p; }
+inline void *operator new(size_t, WarpZoneValue *p) throw() { return p; }
 inline void operator delete(void *, WarpZoneValue *) throw() {}
 
 #include "game/types/WarpErrorString.h"

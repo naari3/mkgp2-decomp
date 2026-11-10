@@ -1,5 +1,6 @@
 #ifndef DNFLASH_PRIVATE_H
 #define DNFLASH_PRIVATE_H
+#include "game/types/size_t.h"
 /*
  * 0x802280F8..0x80228D64: clDNFlash (Dino Dino Jungle camera flashes).
  * Flash points are read from DNA_cameraF_trans.dat into a 3x3 grid of
@@ -11,7 +12,7 @@
  * helpers stay in asm.
  */
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 typedef float Mtx[3][4];

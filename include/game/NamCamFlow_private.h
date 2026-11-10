@@ -1,5 +1,6 @@
 #ifndef GAME_NAMCAMFLOW_PRIVATE_H
 #define GAME_NAMCAMFLOW_PRIVATE_H
+#include "game/types/size_t.h"
 #include "game/FlowScene.h"
 extern "C" const float lbl_806DA59C, lbl_806DA5C4, lbl_806DA5C8;
 extern "C" void PreloadResource(int);
@@ -122,7 +123,7 @@ struct NamCamBase : NamCamRoot {
 };
 /* Text arrays use the UI allocator's untimed array cleanup. */
 struct NamCamText : TextManager {
-    static void *operator new[](unsigned long);
+    static void *operator new[](size_t);
     static void operator delete[](void *) throw();
     NamCamText();
     ~NamCamText();

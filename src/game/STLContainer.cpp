@@ -1,6 +1,7 @@
+#include "game/types/size_t.h"
 #include "game/STLContainerPrivate.h"
 
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 extern "C" {
 void MemoryManager_TimedFree(void *);

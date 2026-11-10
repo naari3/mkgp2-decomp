@@ -656,3 +656,9 @@ status: note
 
 Landing: ~110 data objects renamed from lbl_ to names chosen by reading their users (tools/data_names_manual.tsv: g_itemObjectManager = lbl_80638300, g_itemClassTable = lbl_8041CBA8, g_itemDescriptorTable = lbl_8041AC24, g_drawEffectSlots = lbl_805DF468, card reader state words, 8 vtables) in about 200 files, and ~50 more C++ class copies replaced by their shared header. No code change, main.dol OK. Work in flight that still uses an old lbl_ name: python3 tools/data_names.py fixup after rebasing. Also fixed the port_readiness asm count you reported (60c05a9): it had counted asm prototypes.
 
+## n3-20261110-1158 | 2026-11-10 11:58Z | from: n3 | operator new / new[] now declared with size_t (136 files, byte-identical); new code should use size_t too
+re: -
+status: note
+
+Landing now: every `operator new(unsigned long ...)` / `operator new[](unsigned long ...)` declaration (all overloads, placement forms) is spelled with `size_t`, and those files include the new `include/game/types/size_t.h` at the top (136 files, some in TUs with open claims; naari3 allowed that for byte-identical cleanup). Reason: clang/MSVC reject the unsigned long spelling for the PC port. Metrowerks' size_t is unsigned long, so mangling (`__nw__FUl`) and every object are unchanged: clean build, main.dol OK, 7513/7612. `include/libc/stddef.h` now says unsigned long too (was unsigned int). For new code: `#include "game/types/size_t.h"` and `void *operator new(size_t);`. If a rebase conflicts on such a line, keep your code and take the size_t spelling plus the include. matching_rules.md section 0 has the same line.
+

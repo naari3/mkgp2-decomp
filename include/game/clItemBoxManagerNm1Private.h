@@ -1,13 +1,14 @@
 #ifndef GAME_CLITEMBOXMANAGER_NM1_PRIVATE_H
 #define GAME_CLITEMBOXMANAGER_NM1_PRIVATE_H
+#include "game/types/size_t.h"
 
 /* Private layout for the unlock TU. The value-construction wrapper must not
  * change the list types used by the separately matched manager destructors. */
 #include "game/singleton.h"
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *ptr);
-inline void *operator new(unsigned long, void *p) { return p; }
+inline void *operator new(size_t, void *p) { return p; }
 
 extern "C" {
 unsigned int OSGetTick(void);

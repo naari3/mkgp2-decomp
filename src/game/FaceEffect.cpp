@@ -5,7 +5,8 @@
  * Owns .rodata 0x803DAF98..0x803DB630 and .data 0x804EE248..0x804EE398.
  */
 
-void *operator new(unsigned long size);
+#include "game/types/size_t.h"
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 typedef float Mtx[3][4];

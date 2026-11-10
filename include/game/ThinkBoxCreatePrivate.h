@@ -1,7 +1,8 @@
 #ifndef GAME_THINKBOX_CREATE_PRIVATE_H
 #define GAME_THINKBOX_CREATE_PRIVATE_H
+#include "game/types/size_t.h"
 #include "game/AIPairPrivate.h"
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *) throw();
 extern "C" {
 extern int g_gameMode;

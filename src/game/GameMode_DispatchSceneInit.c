@@ -1,10 +1,11 @@
+#include "game/types/size_t.h"
 #include "game/singleton.h"
 /* GameMode_DispatchSceneInit (0x800A0950): builds the race game mode.
  * Cups 9..16 go to the mini-game path. Otherwise it refreshes the player
  * record, saves the backup, and creates the BtMode / TaMode / RaceScene
  * child for the current game mode. */
 #pragma cplusplus on
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 
 struct GMPlayerRecord;

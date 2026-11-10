@@ -5,6 +5,7 @@
 /* --- extern decls: branch callees (bl/b targets) --- */
 /* Open prototype (`extern void Foo();`) accepts any call signature; */
 /* refine if the real prototype matters for header consumers. */
+#include "game/types/size_t.h"
 extern float BuildOrientationFromYaw(float yaw);
 extern void *CarObject_GetRenderObj(void *car);
 extern void CarObject_ResetPhysics(void *car, int arg);
@@ -69,7 +70,7 @@ extern unsigned int lbl_8048E144[];
 
 /* --- native C++ ctor (same shape as JumpDistanceMode_Init.c) --- */
 #pragma cplusplus on
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p);
 
 typedef struct RCVec { float x, y, z; } RCVec;

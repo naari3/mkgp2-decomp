@@ -1,3 +1,4 @@
+#include "game/types/size_t.h"
 #include "game/CourseEnvironmentPrivate.h"
 /* --- owned .rodata 0x802EAF10..0x802EB03A (tools/own_data.py) --- */
 #pragma force_active on
@@ -339,7 +340,7 @@ extern void *CourseScene_Load_rodata_80324B10[][2];
 extern int lbl_806D1694, lbl_806D1690;
 extern const char lbl_806D26AC[4];
 }
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 
 static inline int IsReverseRound() { return g_reverseRoundFlag != 0; }

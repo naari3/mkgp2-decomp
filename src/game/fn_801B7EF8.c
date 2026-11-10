@@ -3,6 +3,7 @@
  * (tools/extab_user_renames.json maps the symbols back). */
 /* ==== .bss pool: countdown sprites, used through the section anchor by fn_801B7EF8 and fn_801B9928 ==== */
 /* defined in C++ mode: a C++ TU lays .bss out in definition order, a C TU in first-use order */
+#include "game/types/size_t.h"
 #pragma cplusplus on
 extern "C" {
 void *lbl_80679280[3];
@@ -587,9 +588,9 @@ return 1;
 #pragma exceptions on
 #pragma use_lmw_stmw off
 #pragma cplusplus on
-void *operator new(unsigned long size_p14);
+void *operator new(size_t size_p14);
 void operator delete(void *p_p14) throw();
-void *operator new[](unsigned long size_p14);
+void *operator new[](size_t size_p14);
 void operator delete[](void *p_p14) throw();
 struct VObject_p14 {
 virtual ~VObject_p14();
@@ -892,9 +893,9 @@ fn_8011FA98_p14();
 #pragma exceptions on
 #pragma use_lmw_stmw off
 #pragma cplusplus on
-void *operator new(unsigned long size_p15);
+void *operator new(size_t size_p15);
 void operator delete(void *p_p15) throw();
-void *operator new[](unsigned long size_p15);
+void *operator new[](size_t size_p15);
 void operator delete[](void *p_p15) throw();
 struct VObject_p15 {
 virtual ~VObject_p15();
@@ -1497,7 +1498,7 @@ clRom_PurgeAll_p16();
 #pragma use_lmw_stmw on
 #pragma cplusplus on
 #pragma optimize_for_size on
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *) throw();
 struct SceneBase_p17 {
 virtual ~SceneBase_p17() {}
@@ -1576,9 +1577,9 @@ void fn_80121210_p17(); void clRom_PurgeAll_p17();
 void MemoryManager_TimedFree_p17(void *);
 void dtor_8002CDF4_p17(void *, int);
 }
-void *operator new(unsigned long size_p17);
+void *operator new(size_t size_p17);
 void operator delete(void *p_p17) throw();
-void *operator new[](unsigned long size_p17);
+void *operator new[](size_t size_p17);
 void operator delete[](void *p_p17) throw();
 struct VObject_p17 {
 virtual ~VObject_p17();

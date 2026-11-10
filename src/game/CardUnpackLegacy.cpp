@@ -1,4 +1,5 @@
 /* --- owned .data 0x803FED70..0x803FF4E0 (tools/own_data.py) --- */
+#include "game/types/size_t.h"
 extern "C" char lbl_803170FC[];
 extern "C" char lbl_80317108[];
 extern "C" char lbl_80317114[];
@@ -567,7 +568,7 @@ extern const char CardSaveData_Parser_rodata_80315378[0x3FC];
 extern u8 g_playerData[0x1DC];
 extern u8 lbl_806D12AF;
 }
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 
 class CardBitpack {

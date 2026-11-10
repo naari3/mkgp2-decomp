@@ -1,5 +1,6 @@
 #ifndef GAME_ANON_801FC1E0_PRIVATE_H
 #define GAME_ANON_801FC1E0_PRIVATE_H
+#include "game/types/size_t.h"
 #include "game/cxc_card_flow.h"
 #include "game/singleton.h"
 
@@ -12,7 +13,7 @@
  * undeclared key virtual keeps CW from emitting them here.
  */
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 extern "C" {

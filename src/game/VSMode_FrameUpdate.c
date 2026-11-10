@@ -2,6 +2,7 @@
  * Merged from the per-function files (VSMode_FrameUpdate, BtMode_Dtor, VSMode_Init,
  * BtMode_Init) so the TU owns its .rodata pool. Each part keeps its own
  * declarations, renamed with `_pN` (tools/extab_user_renames.json maps them back). */
+#include "game/types/size_t.h"
 extern const unsigned int VSMode_FrameUpdate_rodata_80320960[];
 extern const char lbl_80320D8C[];
 extern const unsigned int sdata_806CEFE0_rodata_80320D9C[];
@@ -3056,7 +3057,7 @@ void *VSMode_FrameUpdate_data_8040E734[5] = {
 #define lbl_806D47D0 lbl_806D47D0_p2
 /* VSMode_Init in C++. Layouts describe only the bytes this caller touches. */
 #pragma cplusplus on
-void* operator new(unsigned long);
+void* operator new(size_t);
 void operator delete(void*);
 
 struct VSInput { unsigned char bytes[0x37C]; VSInput(); };

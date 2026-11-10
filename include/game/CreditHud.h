@@ -1,5 +1,6 @@
 #ifndef GAME_CREDITHUD_H
 #define GAME_CREDITHUD_H
+#include "game/types/size_t.h"
 
 /*
  * Coin / credit counter HUD (0x80218B5C..0x80218F40): an animated sprite
@@ -7,7 +8,7 @@
  * patched through the short pointers returned by fn_801A0310.
  */
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 struct AnimSprite {

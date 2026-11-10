@@ -3,6 +3,7 @@
  * and new/delete extab actions belong to this TU. Retrofitted constructors
  * use native new/base cleanup; the remaining C views share the target layout. */
 
+#include "game/types/size_t.h"
 class InputPlayer {
 public:
     virtual void v8();
@@ -557,7 +558,7 @@ extern "C" int DbgMenu_HandleInput(DbgMenu *self)
     return -2;
 }
 
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 
 // Undefined key methods keep the original external vtables authoritative.

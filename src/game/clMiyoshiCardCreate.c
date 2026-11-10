@@ -1,3 +1,4 @@
+#include "game/types/size_t.h"
 #include "game/DebugTextPrivate.h"
 
 /* .rodata 0x802EE028..0x802EE320 belongs to this file (pool_audit): Draw
@@ -85,7 +86,7 @@ const void *__vt__11MiyoshiMode[5] = { clMiyoshiCardCreate_data_806CEEE8, 0, (vo
 #pragma force_active reset
 /* Only observed lifetime/layout: 4B mode, 44B state, 216B display context. */
 #pragma cplusplus on
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 struct MiyoshiState;
 struct MiyoshiDisplay;

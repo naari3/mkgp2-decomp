@@ -5,10 +5,11 @@
  * Mangled names are mapped to the original symbols in
  * tools/extab_user_renames.json.
  */
+#include "game/types/size_t.h"
 #pragma readonly_strings on
 #include "game/singleton.h"
 
-void* operator new(unsigned long);
+void* operator new(size_t);
 void operator delete(void*);
 struct FKScene;
 struct FKDriver;

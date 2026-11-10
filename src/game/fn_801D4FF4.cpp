@@ -1,3 +1,4 @@
+#include "game/types/size_t.h"
 #include "game/PlayerCardBitpackPendingPrivate.h"
 extern "C" {
 void DebugPrintf(const char *, ...);
@@ -16,7 +17,7 @@ extern char lbl_8039C718[];
 extern u8 lbl_8049B6A0[];
 extern u8 lbl_806D12AF;
 }
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 extern "C" u8 fn_801D4FF4(u8 *self, const void *raw, u8 publish) {
     const char *messages = lbl_8039C718;

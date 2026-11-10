@@ -1,7 +1,8 @@
 /* SuikaBallObj_Init (0x80124984): loads the suika ball model and sizes it
  * from its bounding box. The bounds are copied as words like the target. */
+#include "game/types/size_t.h"
 #pragma cplusplus on
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 #include "game/types/Vec3.h"
 struct W3 { int a, b, c; };
 struct SuikaNormal {

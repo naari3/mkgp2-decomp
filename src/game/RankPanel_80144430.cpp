@@ -1,3 +1,4 @@
+#include "game/types/size_t.h"
 #include "game/singleton.h"
 
 /* sdata symbols referenced from asm */
@@ -217,7 +218,7 @@ struct ExcObj *fn_801460D0(struct ExcObj *self, short flag);
 }
 
 /* C++ view of the record panel for its constructors (fn_801458B4, fn_80145AF4). */
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p);
 
 struct Sprite {

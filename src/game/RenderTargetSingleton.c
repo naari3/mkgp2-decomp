@@ -3,6 +3,7 @@
  * (0x8013C334..0x8013C4A4), same shape as OrthoCam.
  */
 
+#include "game/types/size_t.h"
 #include "game/types/HSD_JObj.h"
 
 #include "game/types/RenderTargetHolder.h"
@@ -94,7 +95,7 @@ void fn_8013C3C0(void) {
 }
 
 #pragma cplusplus on
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p);
 struct RenderTargetObj {
     unsigned char active;

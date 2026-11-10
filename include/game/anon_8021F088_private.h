@@ -13,7 +13,8 @@
  * clCoinPerfect (the "perfect" bonus) and clGetCoinSum (the mileage total).
  */
 
-void *operator new(unsigned long size);
+#include "game/types/size_t.h"
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 #include "game/types/InputState.h"

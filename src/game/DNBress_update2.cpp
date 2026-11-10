@@ -8,7 +8,8 @@
  * base; the static initializer (fn_80227FA4) stays in asm.
  */
 
-void *operator new(unsigned long size);
+#include "game/types/size_t.h"
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 typedef float Mtx[3][4];

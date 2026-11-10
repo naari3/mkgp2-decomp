@@ -1,6 +1,7 @@
 /* Observed constructor and JObj field views; full runtime layouts unverified. */
+#include "game/types/size_t.h"
 #pragma cplusplus on
-void* operator new(unsigned long);
+void* operator new(size_t);
 void operator delete(void*);
 struct ReverseNormal3D {
     unsigned char opaque[0x5C];

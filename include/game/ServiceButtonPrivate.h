@@ -1,5 +1,6 @@
 #ifndef SERVICE_BUTTON_PRIVATE_H
 #define SERVICE_BUTTON_PRIVATE_H
+#include "game/types/size_t.h"
 struct ServiceInput {
     virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
     virtual void v4(); virtual void v5();
@@ -59,6 +60,6 @@ void PlayStats_ShutdownStub(); void Backup_Shutdown(); void fn_80255620();
 void *OSGetArenaHi(); void *memset(void *,int,unsigned long);
 void fn_80287EE4(int,void *);
 }
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 #endif

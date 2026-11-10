@@ -1,6 +1,7 @@
 /* Native work in progress for the indivisible 8007E4CC..800806D4 group.
  * All owned EH and data match; RenderPass and the roulette overlay retain
  * register/stack residuals, so the reversed group remains NonMatching. */
+#include "game/types/size_t.h"
 #include "game/TransitionEffectPrivate.h"
 #include "game/singleton.h"
 
@@ -126,7 +127,7 @@ extern TransitionEffectView *lbl_806D109C;
 extern void *TransitionEffect_data_803FE37C[];
 extern const char lbl_80311DA4[];
 }
-void *operator new(unsigned long);
+void *operator new(size_t);
 
 struct TransitionFadeInit : TransitionFade {
     TransitionFadeInit() { delay = 0.0f; remaining = 0.0f; }

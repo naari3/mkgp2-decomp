@@ -1,11 +1,12 @@
 #ifndef STEERING_QUEUE_MATCH_PRIVATE_H
 #define STEERING_QUEUE_MATCH_PRIVATE_H
+#include "game/types/size_t.h"
 
 /* TU-owned queue views use the existing two-pointer RingString exception
  * model without changing the queue views consumed by other TUs. */
 #include "game/SteeringRingInsertPrivate.h"
 
-inline void *operator new(unsigned long size, void *p) { return p; }
+inline void *operator new(size_t size, void *p) { return p; }
 inline void operator delete(void *memory, void *place) {}
 
 #include "game/types/SteeringQueueValue.h"

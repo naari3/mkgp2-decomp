@@ -5,6 +5,7 @@
  */
 
 /* sdata symbols referenced from asm */
+#include "game/types/size_t.h"
 extern unsigned char lbl_806CF810[8];
 extern unsigned char CSSceneGetTitle_8014ADB4_data_806CF818[8];
 extern unsigned char lbl_806D7CC0[4];
@@ -1636,7 +1637,7 @@ CSSceneGetTitle::CSSceneGetTitle() { /* 0x8014C53C size:0x938 */
  * sPumpFile through the section anchor, docs/regalloc_patterns.md §13). */
 #pragma use_lmw_stmw on
 
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 
 struct CSPVObj {

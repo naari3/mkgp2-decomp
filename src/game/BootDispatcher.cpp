@@ -1,3 +1,4 @@
+#include "game/types/size_t.h"
 #pragma inline_max_size(10000)
 #pragma inline_max_total_size(100000)
 #include "game/BootDispatcher_private.h"
@@ -191,7 +192,7 @@ static const char *BootDispatcher_data_803F5670[10] = {
     lbl_802E901C, lbl_802E9040
 };
 
-inline void *operator new(unsigned long n) { return Alloc(n); }
+inline void *operator new(size_t n) { return Alloc(n); }
 inline void operator delete(void *p) { MemoryManager_TimedFree(p); }
 
 class ScopedTimer {

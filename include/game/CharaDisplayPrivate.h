@@ -1,6 +1,7 @@
 #ifndef CHARA_DISPLAY_PRIVATE_H
 #define CHARA_DISPLAY_PRIVATE_H
-void *operator new(unsigned long);
+#include "game/types/size_t.h"
+void *operator new(size_t);
 void operator delete(void *);
 struct DisplaySprite {
     char storage[0x30];

@@ -1,4 +1,5 @@
 /* AnimState pool management, 0x800AF240..0x800AF4F8. */
+#include "game/types/size_t.h"
 extern void AnimState_Init(void*, void*);
 extern void MemoryManager_TimedFree(void*);
 extern unsigned int AnimStatePool_bss_805DF350[];
@@ -7,7 +8,7 @@ extern const float lbl_806D4FCC;
 
 #pragma cplusplus on
 #pragma exceptions on
-void* operator new(unsigned long);
+void* operator new(size_t);
 void operator delete(void*) throw();
 
 struct PoolAnimState {

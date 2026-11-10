@@ -4,7 +4,8 @@
  * plus vtable in .data 0x804EE1C8..0x804EE23C.
  */
 
-void *operator new(unsigned long size);
+#include "game/types/size_t.h"
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 extern "C" {

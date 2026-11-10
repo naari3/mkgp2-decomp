@@ -1,9 +1,10 @@
 /* clFlowItemSelect_Init @ 0x801CC2EC: FlowItemSelect constructor (item
  * select scene). Real C++ ctor; extab comes from the base/member/new
  * cleanups. Mangled names are bridged in tools/extab_user_renames.json. */
+#include "game/types/size_t.h"
 #pragma cplusplus on
 #pragma exceptions on
-void* operator new(unsigned long);
+void* operator new(size_t);
 void operator delete(void*) throw();
 struct ResCtrl {
     int resource, field4, field8, fieldC;

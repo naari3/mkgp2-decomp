@@ -1,6 +1,7 @@
 #ifndef C7_ITEM_OWNERS_PRIVATE_H
 #define C7_ITEM_OWNERS_PRIVATE_H
-void *operator new(unsigned long);
+#include "game/types/size_t.h"
+void *operator new(size_t);
 void operator delete(void*);
 /* Each effect has its own owning-pointer type and throw() EH region.
  * The virtual interface is shared: reset, tick, deleting destructor. */

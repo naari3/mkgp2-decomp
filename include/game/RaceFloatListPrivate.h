@@ -1,5 +1,6 @@
 #ifndef GAME_RACE_FLOAT_LIST_PRIVATE_H
 #define GAME_RACE_FLOAT_LIST_PRIVATE_H
+#include "game/types/size_t.h"
 struct RaceFloatNode {
     RaceFloatNode *prev, *next;
     float value;
@@ -11,7 +12,7 @@ struct RaceFloatList {
 };
 extern "C" void *Alloc(unsigned long);
 extern "C" void MemoryManager_TimedFree(void *);
-inline void *operator new(unsigned long, void *p) { return p; }
+inline void *operator new(size_t, void *p) { return p; }
 inline void operator delete(void *, void *) {}
 struct RaceFloatNodeGuard {
     RaceFloatNode **allocator;

@@ -1,7 +1,8 @@
 #ifndef GAME_FIGURESLOTPRIVATE_H
 #define GAME_FIGURESLOTPRIVATE_H
+#include "game/types/size_t.h"
 /* Observed Sprite and clFlowCup ABI; compatible with clFlowCup.c. */
-void* operator new(unsigned long);
+void* operator new(size_t);
 void operator delete(void*) throw();
 struct FigureSprite {
     int field0, layer, field8;

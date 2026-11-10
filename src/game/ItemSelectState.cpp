@@ -5,11 +5,12 @@
    anchor offsets turn into separate lis/addi pairs, and a pointer past the end
    of a sized array gets a worst-case alias (optimizer/Alias.c make_alias), so
    fn_80238D9C and the ctor only match with the data owned here. */
+#include "game/types/size_t.h"
 #include "game/singleton.h"
 #include "game/ItemSelectState.h"
 #include "game/SpriteAnimTraversal_private.h"
 
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *) throw();
 
 #include "game/types/RefillSprite.h"

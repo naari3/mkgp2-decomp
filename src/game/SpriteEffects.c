@@ -8,6 +8,7 @@
  * offset overlay; their float literals are written inline (the shared
  * Effect_DrawSprite helper mirrors the repeated draw call).
  */
+#include "game/types/size_t.h"
 #pragma cplusplus on
 
 extern "C" {
@@ -32,8 +33,8 @@ extern void fn_8016918C(void *obj, int id, int flag, float x, float y, float sx,
 extern void fn_801A0004(void *p);
 }
 
-void *operator new(unsigned long size);
-inline void *operator new(unsigned long, void *p) { return p; }
+void *operator new(size_t size);
+inline void *operator new(size_t, void *p) { return p; }
 void operator delete(void *p);
 
 struct EffectBase {

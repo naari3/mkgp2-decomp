@@ -1,10 +1,11 @@
 /* Item-object slot pool initialization, 0x800D81E0 (168 bytes).
  * clNormal3D allocation cleanup is emitted by the C++ new expression.
  */
+#include "game/types/size_t.h"
 #pragma cplusplus on
 #include "game/ObjViewA70C_private.h"
 
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 extern "C" {
 void *memset(void *, int, unsigned long);

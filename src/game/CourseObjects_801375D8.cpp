@@ -2,6 +2,7 @@
  * 0x801375D8..0x80138CE4: course object culling and occluder setup.
  * Activation and the per-frame update live in CourseObjects_80138CE4.cpp.
  */
+#include "game/types/size_t.h"
 #pragma cplusplus on
 
 #include "game/types/Vec3f.h"
@@ -280,7 +281,7 @@ extern "C" void fn_80138578(void)
     CourseObjects_801375D8_bss_806D1524 = 0;
 }
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p);
 
 inline Occluder::Occluder(const Vec3f *a, const Vec3f *b, const Vec3f *c, const Vec3f *d)

@@ -1,4 +1,5 @@
 /* --- owned .data 0x8048E4E8..0x8048E548 (tools/own_data.py) --- */
+#include "game/types/size_t.h"
 #pragma force_active on
 unsigned int OrthoCam_data_8048E4E8[5] = { 0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x00000000 };
 unsigned int OrthoCam_data_8048E4FC[5] = { 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000 };
@@ -174,7 +175,7 @@ void fn_8013BCA0(void) {
 
 #pragma cplusplus on
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p);
 
 struct OrthoCamObj {

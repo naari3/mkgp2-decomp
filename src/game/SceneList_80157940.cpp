@@ -1,6 +1,7 @@
 /*
  * 0x80157940..0x8015A6E4: list helpers and the scene updates that use them.
  */
+#include "game/types/size_t.h"
 #pragma cplusplus on
 
 #include "game/types/ListNode.h"
@@ -14,7 +15,7 @@ void MemoryManager_TimedFree(void *p);
 void *Alloc(unsigned long size);
 }
 
-inline void *operator new(unsigned long, void *p) { return p; }
+inline void *operator new(size_t, void *p) { return p; }
 inline void operator delete(void *, void *) {}
 
 /* Iterator passed and returned by value (copy ctor: hidden pointer ABI). */

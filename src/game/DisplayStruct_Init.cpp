@@ -1,7 +1,8 @@
 /* DisplayStruct_Init @ 0x80045B50..0x80045E20: constructor of the 0x380
  * byte kart display block that KartDriver_New_Full.c forwards to. Field
  * names are offsets until the layout is known. */
-void *operator new(unsigned long size);
+#include "game/types/size_t.h"
+void *operator new(size_t size);
 void operator delete(void *ptr);
 
 extern "C" {

@@ -1,5 +1,6 @@
 #ifndef GAME_MAP_SWITCH_BOUNDS_PRIVATE_H
 #define GAME_MAP_SWITCH_BOUNDS_PRIVATE_H
+#include "game/types/size_t.h"
 #include "sysdolphin/baselib/jobj.h"
 struct SwitchVec { float x,y,z; };
 extern "C" {
@@ -11,7 +12,7 @@ void HSD_JObjSetFlags(HSD_JObj *, unsigned int);
 unsigned char fn_801847DC(HSD_JObj *, SwitchVec *, SwitchVec *);
 float Vec3_Magnitude(SwitchVec *);
 }
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 struct SwitchNode {
     SwitchNode *next;

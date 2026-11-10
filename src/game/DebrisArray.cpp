@@ -1,8 +1,9 @@
 /* Narrow layout from target access and existing DrawForward ABI. */
+#include "game/types/size_t.h"
 #include "game/types/DebrisVec.h"
 #include "game/types/DebrisResponder.h"
 #include "game/types/DebrisArray.h"
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 extern "C" {
 extern void *lbl_806D10AC;

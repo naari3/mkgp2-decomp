@@ -10,6 +10,7 @@
  * Still asm: the colour table init (dynamic init of tables this unit does
  * not own).
  */
+#include "game/types/size_t.h"
 #pragma cplusplus on
 
 #include "game/types/Vec3.h"
@@ -67,7 +68,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 }
 
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 
 void operator delete(void *p);
 

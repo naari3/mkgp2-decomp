@@ -1,3 +1,4 @@
+#include "game/types/size_t.h"
 #include "game/singleton.h"
 /*
  * 0x8021ED88..0x8021F088: clCSSceneChangeSingle (vtable clCSSceneChangeSingle_vtable_804EDE1C, base
@@ -5,7 +6,7 @@
  * the local PCB role back to 0.
  */
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 #include "game/types/InputState.h"

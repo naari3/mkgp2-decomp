@@ -20,6 +20,7 @@
  * r31, end r30, list r29), and begin() goes to RenderRange as a temporary
  * (a named CIter swaps the two iterator stack slots).
  */
+#include "game/types/size_t.h"
 #pragma cplusplus on
 
 struct Normal3D {
@@ -57,7 +58,7 @@ extern int fn_8013C428(void);
 extern void fn_8013C3C0(void);
 }
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p);
 
 struct PreviewBase {

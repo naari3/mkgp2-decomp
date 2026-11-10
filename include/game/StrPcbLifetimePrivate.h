@@ -1,5 +1,6 @@
 #ifndef GAME_STRPCB_LIFETIME_PRIVATE_H
 #define GAME_STRPCB_LIFETIME_PRIVATE_H
+#include "game/types/size_t.h"
 
 typedef unsigned char u8;
 
@@ -23,7 +24,7 @@ extern u8 StrPcb_bss_806D1000[3];
 extern int StrPcb_bss_806D1004;
 }
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *ptr);
 
 class Stopwatch {

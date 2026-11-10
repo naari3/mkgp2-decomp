@@ -1,5 +1,6 @@
+#include "game/types/size_t.h"
 #pragma cplusplus on
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 
 extern "C" {

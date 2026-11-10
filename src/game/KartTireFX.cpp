@@ -11,6 +11,7 @@
  * parse order. That is what puts the three local {1, 1, 1} scale
  * initializers first in .rodata (SetVisibleAll4Wheels, 84_8c, 88_90), then
  * the ResolveJoints strings, and the inline assert string last. */
+#include "game/types/size_t.h"
 #pragma readonly_strings on
 
 typedef float Mtx[3][4];
@@ -30,7 +31,7 @@ struct HSD_JObj {
 
 #include "game/types/clNormal3D.h"
 
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *);
 
 extern "C" {

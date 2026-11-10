@@ -1,5 +1,6 @@
 #ifndef GAME_JUMPDISTANCEMODE_H
 #define GAME_JUMPDISTANCEMODE_H
+#include "game/types/size_t.h"
 
 /*
  * Jump-distance minigame mode (ctor JumpDistanceMode_Init, vtable
@@ -10,7 +11,7 @@
  *       JumpDistanceMode
  */
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p) throw();
 
 struct CarObject;

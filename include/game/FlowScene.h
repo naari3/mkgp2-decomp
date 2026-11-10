@@ -1,5 +1,6 @@
 #ifndef GAME_FLOWSCENE_H
 #define GAME_FLOWSCENE_H
+#include "game/types/size_t.h"
 
 /*
  * Card / continue / result flow scene hierarchy (0x801FC1E0..0x80207324).
@@ -13,9 +14,9 @@
  * tools/extab_user_renames.json.
  */
 
-void *operator new(unsigned long size);
+void *operator new(size_t size);
 void operator delete(void *p) throw();
-void *operator new[](unsigned long size);
+void *operator new[](size_t size);
 void operator delete[](void *p) throw();
 
 #include "game/types/VObject.h"

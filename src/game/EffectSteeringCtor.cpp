@@ -2,8 +2,9 @@
  * Local observed-layout views, not a verified full runtime class definition.
  * Target and cleanup callees reconstructed from complete original assembly.
  */
-void *operator new(unsigned long);
-void *operator new[](unsigned long);
+#include "game/types/size_t.h"
+void *operator new(size_t);
+void *operator new[](size_t);
 void operator delete(void *);
 struct ESCtor;
 

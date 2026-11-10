@@ -3,7 +3,12 @@
 
 #define offsetof(type, member)	((size_t) &(((type *) 0)->member))
 
-typedef unsigned int size_t;
+/* Metrowerks' size_t is unsigned long (operator new mangles as __nw__FUl). */
+#if defined(__MWERKS__) || !defined(__SIZE_TYPE__)
+typedef unsigned long size_t;
+#else
+typedef __SIZE_TYPE__ size_t;
+#endif
 
 #ifndef NULL
 #define NULL 0L

@@ -1,7 +1,8 @@
 /* clItemBox_FactoryCreate: allocate one item box for a spawn-table entry.
  * Flag bit 0 picks the ground-snapped (x, z) constructor. GC/2.7 (like
  * Vec3_ToYaw.c): the flag load schedules ahead of the r30 save. */
-void *operator new(unsigned long size);
+#include "game/types/size_t.h"
+void *operator new(size_t size);
 void operator delete(void *p);
 
 struct ItemBoxSpawnEntry {

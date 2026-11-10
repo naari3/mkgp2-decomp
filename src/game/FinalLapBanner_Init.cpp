@@ -1,7 +1,8 @@
 /* FinalLapBanner ctor @ 0x80088700..0x80088880. Builds the final-lap banner
  * model (Japanese or overseas variant) used by LapBannerScene.c and places
  * its root JObj. */
-void *operator new(unsigned long size);
+#include "game/types/size_t.h"
+void *operator new(size_t size);
 void operator delete(void *ptr);
 
 /* The word overlay keeps the copy in integer registers. */

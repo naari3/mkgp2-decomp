@@ -1,7 +1,8 @@
 #ifndef SPECIAL_FACE_MESH_PRIVATE_H
 #define SPECIAL_FACE_MESH_PRIVATE_H
+#include "game/types/size_t.h"
 #include "game/SpecialFacePrivate.h"
-void *operator new(unsigned long);
+void *operator new(size_t);
 void operator delete(void *) throw();
 extern "C" {
 extern unsigned int SpecialFaceMesh_data_803FE0AC[], SpecialFaceMesh_vtable_803FE0B8[];
