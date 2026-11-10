@@ -2550,3 +2550,30 @@ inline calls holds the register an address or CSE temp wants: assign the
 object to one reused block-local pointer before each call. Rule
 `inline-this-via-reused-named-local`.
 
+
+## 94. Three small levers from TimeAttackResult's ctor (fn_8021C070, 96.27 -> 100, 11-10)
+
+1. **`li rA,0; mr rB,rA` at a loop entry (ours `li; li`)**: rB is the
+   strength-reduced offset counter of `arr[i]`, rA is `i`. The copy only
+   appears when the loop sits in an INLINE (`static inline void
+   TA_makeDigits(TimeAttackResult *self, int &res) { for (int i = 0; ...) }`).
+   Written in the function body the two `LI` stay separate (mwtrace: source
+   line vs line -1 in one block); comma inits, a second counter, `j = i`,
+   declaration orders and the opt_* pragmas do not change that. A local that
+   must be coloured after the inline's temps goes in as a reference parameter
+   (the caller's named local, see 81).
+2. **Double bool conversion** (`subfic/cntlzw/srwi 5` then `neg/or/srwi 31`
+   for `x == 1` stored to a bool field; ours stored the compare directly or
+   with `rlwinm ...,24,31`): the value is an `int`-returning inline
+   (`return g_flag == 1 ? 1 : 0;`) passed to a `bool` PARAMETER of an inline
+   MEMBER function. A static inline setter, a cast or a bool local do not
+   convert twice.
+3. **Volatile registers of a field-by-field fill in descending order**
+   (target time r8, cup r7, ..., kart r0 with stores in field order): the
+   setter's parameters are in REVERSE field order
+   (`Set(int k, int ch, int c, bool rev, bool lng, int cu, int t)`), the body
+   stores in field order, called on the global directly (no `T *e` local).
+
+Also: float arguments in the wrong load order from `extern const float`
+(`lfs f5` before `lfs f1`): literals (see 83), `postprocess_sdata2.py` renames
+them.

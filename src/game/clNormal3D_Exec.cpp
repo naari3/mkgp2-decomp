@@ -202,6 +202,12 @@ static inline void RestoreAnimationState(Normal3D *self) {
 }
 extern "C" int clNormal3D_Exec(Normal3D *self)
 {
+    JObj **cursor1;
+    JObj *node1;
+    int i1;
+    JObj *node2;
+    int i2;
+    JObj **cursor2;
     if (!self->root) return 0;
     if (self->frame < lbl_806D2340) return 0;
     if (self->changed) {
@@ -220,7 +226,17 @@ extern "C" int clNormal3D_Exec(Normal3D *self)
             int count=self->count;
             if (table) {
                 HSD_AObjInitEndCallBack();
-                AnimateExec(table,count);
+                if (table != 0) {
+                    cursor1 = table;
+                    for (i1 = 0; i1 < count; ++cursor1, ++i1) {
+                        node1 = *cursor1;
+                        if (node1 != 0) {
+                            HSD_AObjInterpretAnim(node1->aobj, node1, node1->klass->animate);
+                            if (HasDObjExec(node1)) HSD_DObjAnimAll(node1->dobj);
+                        }
+                    }
+                    HSD_JObjCheckDepend(*table);
+                }
                 HSD_AObjInvokeCallBacks();
             }
         }
@@ -234,7 +250,17 @@ extern "C" int clNormal3D_Exec(Normal3D *self)
             int count=self->count;
             if (table) {
                 HSD_AObjInitEndCallBack();
-                AnimateExec(table,count);
+                if (table != 0) {
+                    cursor2 = table;
+                    for (i2 = 0; i2 < count; ++cursor2, ++i2) {
+                        node2 = *cursor2;
+                        if (node2 != 0) {
+                            HSD_AObjInterpretAnim(node2->aobj, node2, node2->klass->animate);
+                            if (HasDObjExec(node2)) HSD_DObjAnimAll(node2->dobj);
+                        }
+                    }
+                    HSD_JObjCheckDepend(*table);
+                }
                 HSD_AObjInvokeCallBacks();
             }
         }

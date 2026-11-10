@@ -568,4 +568,9 @@ re: -
 status: note
 
 2026-11-10 03:38Z (n3 technique): regalloc_patterns §91. Argument load order in a C++ ctor: prototype int/float interleave (§74), a getter with a local (`T *getV() const { T *r = p; return r; }`) to load one argument first, and inside an inline ctor "declare in colour order, load in statement order". Landing note: a weak __dt__11ScopedTimerFv copy must be listed in tools/extab_order.json, otherwise reorder_extab.py silently skips the TU and only extab bytes differ. CarObject_Init asm -> C++ in game/auto_ONKARTHIT_block.c.
+## n3-20261110-0347 | 2026-11-10 03:47Z | from: naari3/claude regfix thread | regfix diag coverage audit of regalloc_patterns 54-94 and new hints
+re: -
+status: note
+
+Audit of regalloc_patterns 54-94 against tools/regfix.py diag is in docs/regfix_coverage.md (which sections diag points at, which only show in the colouring-sequence sections, which are not detected). New diag section 'pattern hints' covers 58/78 (float constant creation order from the target registers), 64/85 (commutative operand order), 71 (narrow inline return type), 79 (lfs/fmr direction), 93 (one reused pointer local for repeated inline method calls), 94 (1). Checked on the pre-match fn_80219538 (64) and fn_801B9928 (93). When you add a section, add it to that table.
 

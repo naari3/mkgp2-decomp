@@ -671,3 +671,10 @@ It dumps MWCC's AST / per-pass PCode / colouring order (GC/1.3.2 code is debugge
   locals as named locals `node; i; table; count; cursor;` (last declared = lowest vreg = coloured last).
   Sweep all declaration orders (120 here, 2 gave 0 diff lines). leversweep inline-to-named-locals could not
   do it (all variants failed to compile in this `.c` + `#pragma cplusplus` TU), so try by hand when it reports compile_fail.
+
+- 11-10 leversweep `inline-to-named-locals` now has a `deep` mode (nested block locals and `for (int i` of the inline
+  become named locals; first k at the function front, the rest right before the expanded code, all orders) and no
+  longer renames struct members. It reproduces the clNormal3D_SetScale match by itself. Batch over 106 near misses:
+  0 matches, clNormal3D_Exec 130 -> 94 lines (by hand 78, 99.47). Hill-climbing the declaration order of ALL
+  inline locals written out was worse than writing out only the inline the diag points at.
+  Sweep pitfall: check that the variant compiled (grep FAILED), a stale .o gives a constant score.

@@ -87,6 +87,11 @@ below say the same thing.
 - 2026-11-09 22:55Z (n3 structure): TU merge, 4 -> 1: CoinChallengeRender /
   CoinChallengeUpdate / anon_80214B3C / CoinChallengeInit are now
   `game/CoinChallenge.cpp` (clCGameYI, GC/2.6 `-inline deferred -RTTI on -rostr`).
+- 2026-11-10 04:30Z (n3 regfix): audit of regalloc_patterns §54-§94 against
+  `tools/regfix.py diag` in docs/regfix_coverage.md; new diag hints for §58/§78
+  (float constant creation order), §64/§85 (commutative operand order), §71
+  (inline return type), §79 (lfs/fmr direction), §93 (reused pointer local for
+  inline `this`), §94 (1). Add a row there when you add a section
 - 2026-11-10 04:05Z (n3 regfix): `tools/regfix.py diag` neighbour section now
   says per off vreg whether it must move EARLIER or LATER in the colouring
   order and which lever does that for its kind (named local / frontend temp /
