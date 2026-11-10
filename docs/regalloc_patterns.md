@@ -1404,6 +1404,13 @@ index); write those loops as an explicit pointer walk (`it++, i++`) in a
 local copy. opt_lifetimes / opt_dead_assignments off do not help.
 
 
+Also fixes argument load order (fn_801C0568, 11-10, bf46559): when two argument
+loads before a call come out reversed and `mwsched.py explain` says they have
+equal keys (block order wins), assign the later argument to a local first
+(`int dir = in->dir; f(self->panel.p, dir, press);`). Without the pragma the
+local is propagated back into the call and nothing changes; with it the load
+stays where the local is assigned. Fakematch-marked.
+
 ## 56. Optimizer temp takes the wrong already-used saved register: load a pointer local through an inline getter; and share float locals across switch cases (CoinSystem_UpdateAll, 11-09)
 
 Rule observed with tools/mwccdbg.py `--all`: named locals get the lowest
