@@ -796,6 +796,77 @@ def cmd_retype(a):
     print('%d bytes now have a struct type' % done_bytes)
 
 
+# ---------------------------------------------------------------- rows inferred from the values (infer)
+
+UNK32_DEF = re.compile(r'^((?:/\* [^\n]* \*/\n)?)((?:static )?(?:const )?)unk32 (\w+)\[(\d+)\]( __attribute__\(\(aligned\(8\)\)\))? = \{\n(.*?)\n\};', re.M | re.S)
+
+
+def column_kind(vals):
+    """'f' float column, 'i' small-integer column, None when the values do not decide."""
+    nz = [v for v in vals if v]
+    if not nz: return 'i'
+    wide = [v for v in nz if not floatlike(v)]   # -0.0 and very small/large magnitudes: fine next to ordinary floats
+    if len(wide) * 5 <= len(nz) and all(v == 0x80000000 or 0x40 <= ((v >> 23) & 0xFF) <= 0xC0 for v in wide) \
+            and all(fmt_float(v) for v in vals): return 'f'
+    if all(v < 0x10000 or v >= 0xFFFF0000 for v in nz): return 'i'
+    return None
+
+
+def infer_rows(words):
+    """-> (period, kinds) for the smallest period whose every column is float or small int."""
+    n = len(words)
+    for p in range(1, min(64, n // 2) + 1):
+        if n % p: continue
+        kinds = [column_kind(words[c::p]) for c in range(p)]
+        if all(kinds): return p, kinds
+    return None
+
+
+def cmd_infer(a):
+    """Give unk32 word tables a row type read off the values: every column all floats or all small integers."""
+    files = [os.path.join(OUTDIR, os.path.basename(u) if u.endswith('.c') else os.path.basename(u) + '.c') for u in a.units] \
+        or sorted(glob.glob(os.path.join(OUTDIR, '*.c')))
+    total = 0
+    for f in files:
+        text = open(f, encoding='utf-8').read()
+        types = []
+
+        def repl(m):
+            nonlocal total
+            note, quals, name, cnt, attr, body = m.groups()
+            words = [int(x, 16) for x in re.findall(r'0x[0-9A-Fa-f]+', body)]
+            if len(words) != int(cnt) or len(words) < a.min_words: return m.group(0)
+            r = infer_rows(words)
+            if r is None: return m.group(0)
+            p, kinds = r
+
+            def val(w, k):
+                return fmt_float(w) if k == 'f' else str(w if w < 0x80000000 else w - (1 << 32))
+            total += 4 * len(words)
+            attr = attr or ''
+            if p == 1:
+                ty = 'float' if kinds[0] == 'f' else 'int'
+                vals = [val(w, kinds[0]) for w in words]
+                return '%s/* element type read off the values (all %s), not from code */\n%s%s %s[%d]%s = {\n%s\n};' % (
+                    note, 'floats' if ty == 'float' else 'small integers', quals, ty, name, len(words), attr, wrap(vals))
+            tn = name + '_Row'
+            members = '\n'.join('    %s %s_%02X;' % ('float' if k == 'f' else 'int', k, 4 * c) for c, k in enumerate(kinds))
+            types.append('/* row layout read off the values (each column all floats or all small integers), not from code */\n'
+                         'typedef struct %s {\n%s\n} %s;' % (tn, members, tn))
+            rows = ['    { ' + ', '.join(val(words[i + c], kinds[c]) for c in range(p)) + ' }' for i in range(0, len(words), p)]
+            return '%s%s%s %s[%d]%s = {\n%s\n};' % (note, quals, tn, name, len(words) // p, attr, ',\n'.join(rows))
+
+        new = UNK32_DEF.sub(repl, text)
+        if new == text: continue
+        if types:
+            prag = '\n#pragma explicit_zero_data on'
+            i = new.index(prag)
+            new = new[:i].rstrip('\n') + '\n\n' + '\n\n'.join(types) + '\n' + new[i:]
+        open(f, 'w', encoding='utf-8').write(new)
+        print('inferred', os.path.relpath(f, ROOT))
+    print('%d bytes typed from their values' % total)
+
+
 # ---------------------------------------------------------------- check (ELF compare)
 
 def elf_sections(path):
@@ -924,10 +995,11 @@ def main():
     p = sub.add_parser('check'); p.add_argument('units', nargs='*')
     p = sub.add_parser('drop'); p.add_argument('units', nargs='+')
     p = sub.add_parser('retype'); p.add_argument('units', nargs='*')
+    p = sub.add_parser('infer'); p.add_argument('units', nargs='*'); p.add_argument('--min-words', type=int, default=2)
     p = sub.add_parser('report'); p.add_argument('--md')
     a = ap.parse_args()
     if a.cmd == 'gen' and a.sec_opt: a.sec = a.sec_opt
-    return {'runs': cmd_runs, 'gen': cmd_gen, 'check': cmd_check, 'drop': cmd_drop, 'report': cmd_report, 'retype': cmd_retype}[a.cmd](a)
+    return {'runs': cmd_runs, 'gen': cmd_gen, 'check': cmd_check, 'drop': cmd_drop, 'report': cmd_report, 'retype': cmd_retype, 'infer': cmd_infer}[a.cmd](a)
 
 
 if __name__ == '__main__':
