@@ -57,8 +57,8 @@ static inline void TireTexCoord(float u, float v) {
 }
 
 static inline void DrawTireVertices(TireSprite *s, unsigned int color, float u, float v) {
-    TireSprite *p = s;
     const float *uv = lbl_803DA680;
+    TireSprite *p = s;
     for (int i = 0; i < 2; i++) {
         TirePosition(p->vx[0], p->vy[0], p->vz[0]);
         GXFIFO.u32 = color;
