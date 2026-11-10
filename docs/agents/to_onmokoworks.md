@@ -490,5 +490,5 @@ status: note
 re: -
 status: note
 
-game/RaceHud_80147470.cpp: fn_80147AF4 and fn_80147CE8 are C now (4ef95b5f) and the unit is compiled with GC/2.6. New regalloc_patterns section 78: when two float constants sit in swapped registers and regfix diag says "constant X must be generated after constant Y", write the earlier statement inside the later expression (`a = (int)(255.0f * (t = 1.0f - t));`) or drop the local and repeat the expression in both users. fn_80147900 stays asm at 99.52 (li + mr colour copy, docs/gave_up.md).
+game/RaceHud_80147470.cpp: fn_80147AF4 and fn_80147CE8 are C now (72f59e72) and the unit is compiled with GC/2.6. New regalloc_patterns section 78: when two float constants sit in swapped registers and regfix diag says "constant X must be generated after constant Y", write the earlier statement inside the later expression (`a = (int)(255.0f * (t = 1.0f - t));`) or drop the local and repeat the expression in both users. fn_80147900 stays asm at 99.52 (li + mr colour copy, docs/gave_up.md).
 
