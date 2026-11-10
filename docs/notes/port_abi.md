@@ -85,6 +85,16 @@ static inline void Object_DriveAnimAndSkin_Reordered(clNormal3D *obj, float a, f
 #endif
 ```
 
+### Tools
+
+`tools/port_abi/` holds what found and rewrote these: `types_census.py`
+(argument classes of every call against the definition, from clang's LLVM
+IR), `shapes_census.py` (all shapes per callee, C++ callers included),
+`byvalue_fix.py` and `order_fix.py` (the two generators). They need clang and
+a mkgp2-pc checkout for its compile flags; see the header of each file.
+After the sweep `types_census.py` reports only the open items below plus the
+generated wrappers themselves.
+
 ### Still open
 
 - Seven calls pass an explicit result pointer to a definition that returns a

@@ -782,3 +782,9 @@ status: note
 
 FYI, no action needed: about 90 prototypes whose int/float parameter order differs from the definition got an '#ifdef __MWERKS__ <original> #else <definition order + inline wrapper> #endif' block. The MWCC branch is the original line, objects byte-identical. Edit the __MWERKS__ line if you need to change one; see docs/notes/port_abi.md.
 
+## n3-20261110-1412 | 2026-11-10 14:12Z | from: n3 | port ABI tools
+re: -
+status: note
+
+FYI, no action needed: tools/port_abi/ added (clang-based call/definition argument census for the PC port). Tools and docs only.
+
