@@ -80,7 +80,11 @@ extern void fn_8011FAFC(void *res, void *arg);
 extern void OSPanic(const char *file, int line, const char *msg, ...);
 extern void ResCtrl_Init(void *res);
 
+#ifdef NON_MATCHING
+void fn_8013AE20(CSAnim *n, float x, float y, float alpha);
+#else
 asm void fn_8013AE20(void);
+#endif
 
 inline void fn_8013BA78(CSAnim *n) {
     n->flags = 2;
@@ -110,6 +114,130 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
+#ifdef NON_MATCHING
+/* NON_MATCHING: equivalent C, 312/312 instructions, float register numbering differs
+ * (docs/wip/csanim/csAnim_fn_8013AE20_146lines.c). clCSAnim::update. */
+static inline unsigned int CSAnim_Pack2(float r, float g, float b, float a) {
+    return ((unsigned char)(int)(255.0f * r) << 24) | ((unsigned char)(int)(255.0f * g) << 16) |
+           ((unsigned char)(int)(255.0f * b) << 8) | (unsigned char)(int)a;
+}
+
+void fn_8013AE20(CSAnim *n, float x, float y, float alpha) {
+    CSAnimKey *k;
+    CSAnimKey *k2;
+    int i;
+    float t;
+    unsigned int c;
+    float px;
+    float py;
+    float r;
+    float g;
+    float b;
+    float a;
+    float u10;
+    float u14;
+    float u18;
+
+    if (n->next) {
+        fn_8013AE20(n->next, x, y, alpha);
+    }
+    if (n->keys && (n->flags & 1)) {
+        k = &n->keys[n->index];
+        for (;;) {
+            if (k->type == 0) {
+                n->index++;
+                n->frame = 0;
+                k = &n->keys[n->index];
+            } else if (k->type == 1) {
+                if (n->frame < k->count) {
+                    n->flags &= ~4;
+                    if (n->flags & 2) {
+                        n->flags &= ~2;
+                    } else {
+                        n->frame++;
+                    }
+                    return;
+                }
+                n->index++;
+                n->frame = 0;
+                k = &n->keys[n->index];
+            } else if (k->type == 2) {
+                if (n->frame < k->count) {
+                    if (n->flags & 2) {
+                        n->flags &= ~2;
+                    } else {
+                        n->frame++;
+                    }
+                    break;
+                }
+                n->index++;
+                n->frame = 0;
+                k = &n->keys[n->index];
+            } else if (k->type == 3) {
+                for (i = 0;; i++) {
+                    if (n->keys[i].type == 5) {
+                        OSPanic(lbl_8035C678, 0x86, lbl_8035C684);
+                    }
+                    if (n->keys[i].type == 0 && k->count == n->keys[i].count) {
+                        n->index = i;
+                        n->frame = 0;
+                        k = &n->keys[n->index];
+                        goto next;
+                    }
+                }
+            } else if (k->type == 4) {
+                n->flags |= lbl_806D7480;
+                px = k->x;
+                py = k->y;
+                px += x;
+                py += y;
+                n->visible = 1;
+                n->x = px;
+                n->y = py;
+                n->z = 1.0f;
+                u10 = k->u10;
+                u14 = k->u14;
+                n->u44 = u10;
+                n->u48 = u14;
+                c = CSAnim_Pack2(k->r, k->g, k->b, 255.0f * k->a * alpha);
+                n->color[0] = c;
+                n->color[1] = c;
+                n->color[2] = c;
+                n->color[3] = c;
+                return;
+            } else {
+                fn_8013BA78(n);
+                return;
+            }
+        next:;
+        }
+        n->flags |= lbl_806D7480;
+        t = (float)n->frame / (float)k->count;
+        k2 = &n->keys[n->index + 1];
+        px = k->x + t * (k2->x - k->x);
+        r = k->r + t * (k2->r - k->r);
+        py = k->y + t * (k2->y - k->y);
+        u10 = k->u10 + t * (k2->u10 - k->u10);
+        g = k->g + t * (k2->g - k->g);
+        u18 = k->u18 + t * (k2->u18 - k->u18);
+        u14 = k->u14 + t * (k2->u14 - k->u14);
+        b = k->b + t * (k2->b - k->b);
+        a = k->a + t * (k2->a - k->a);
+        n->visible = 1;
+        n->x = px + x;
+        n->y = py + y;
+        n->z = 1.0f;
+        n->u44 = u10;
+        n->u48 = u14;
+        n->u40 = u18;
+        c = CSAnim_Pack2(r, g, b, alpha * (255.0f * a));
+        n->color[0] = c;
+        n->color[1] = c;
+        n->color[2] = c;
+        n->color[3] = c;
+    }
+}
+#else
 asm void fn_8013AE20(void) { /* 0x8013AE20 size:0x4E0 */
     nofralloc
     stwu r1, -0xc0(r1)
@@ -441,6 +569,7 @@ asm void fn_8013AE20(void) { /* 0x8013AE20 size:0x4E0 */
     addi r1, r1, 0xc0
     blr
 }
+#endif
 
 void fn_8013B300(CSAnim *n, int id) {
     if (id < 0 || n->id == id) {
