@@ -316,7 +316,14 @@ extern void fn_8011FAB8(void);
 extern void fn_8013D940(int i);
 extern void fn_8014095C(void *p);
 extern void fn_80167F24(int layer, const unsigned short *s, float x, float y, ...);
+#ifdef __MWERKS__
 void fn_80169334(void *obj, int id, int flag, float x, float y, float sx, float sy, float a);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_80169334(void *, int, float, float, float, float, float, int);
+static inline void fn_80169334_Reordered(void *obj, int id, int flag, float x, float y, float sx, float sy, float a) { fn_80169334(obj, id, x, y, sx, sy, a, flag); }
+#define fn_80169334 fn_80169334_Reordered
+#endif
 extern void fn_801A0004(void *spr);
 extern unsigned char fn_80231644(int *a, int *b, int *c, int chr, int kart);
 extern unsigned char fn_802317E0(int *a, int *b, int *c, int chr, int kart, int special);
@@ -352,7 +359,14 @@ float *fn_8013BEC8(int a);
 const char *fn_8013C26C(int id, int lang);
 void fn_801685A4(void *obj, const char *s, float x, float y, float r, float g, float b, float a, ...);
 void fn_80168798(void *obj, const char *s, float x, float y, float a, ...);
+#ifdef __MWERKS__
 void fn_801695E0(void *obj, int id, int flag, float x, float y, float a);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_801695E0(void *, int, float, float, float, int);
+static inline void fn_801695E0_Reordered(void *obj, int id, int flag, float x, float y, float a) { fn_801695E0(obj, id, x, y, a, flag); }
+#define fn_801695E0 fn_801695E0_Reordered
+#endif
 void fn_801F93D0(void *tm, float x, float y);
 const char *fn_8023DAA8(int item);
 extern const float lbl_806D7E58;

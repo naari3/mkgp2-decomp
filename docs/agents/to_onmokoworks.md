@@ -776,3 +776,9 @@ status: note
 
 FYI, no action needed: in about 180 files, prototypes that take a Vec/Vec3 by value while the definition takes a pointer are now wrapped in '#ifdef __MWERKS__ <original> #else <real prototype + inline wrapper> #endif'. The MWCC branch is the original line, objects are byte-identical. If you edit such a prototype, edit the line in the __MWERKS__ branch; see docs/notes/port_abi.md.
 
+## n3-20261110-1411 | 2026-11-10 14:11Z | from: n3 | int/float parameter order wrapped
+re: -
+status: note
+
+FYI, no action needed: about 90 prototypes whose int/float parameter order differs from the definition got an '#ifdef __MWERKS__ <original> #else <definition order + inline wrapper> #endif' block. The MWCC branch is the original line, objects byte-identical. Edit the __MWERKS__ line if you need to change one; see docs/notes/port_abi.md.
+

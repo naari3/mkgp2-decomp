@@ -19,8 +19,22 @@ extern float AngleStepTowards_Shortest(float cur, float target, float step);
 extern float BuildOrientationFromYaw(float yaw);
 extern float FAbs_FloatAsDouble(float x);
 extern void Item_AccelClampVelocity(void *self, float accel, float maxv);
+#ifdef __MWERKS__
 extern int Item_AdvanceFallingDrop(void *self, float gravity, int *landed, float *groundY);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern int Item_AdvanceFallingDrop(void *, int *, float *, float);
+static inline int Item_AdvanceFallingDrop_Reordered(void *self, float gravity, int *landed, float *groundY) { return Item_AdvanceFallingDrop(self, landed, groundY, gravity); }
+#define Item_AdvanceFallingDrop Item_AdvanceFallingDrop_Reordered
+#endif
+#ifdef __MWERKS__
 extern void Item_BounceOffWall(float k1, float k2, void *self, float *normal, int se, int flag);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Item_BounceOffWall(void *, float *, int, int, float, float);
+static inline void Item_BounceOffWall_Reordered(float k1, float k2, void *self, float *normal, int se, int flag) { Item_BounceOffWall(self, normal, se, flag, k1, k2); }
+#define Item_BounceOffWall Item_BounceOffWall_Reordered
+#endif
 extern int Item_CheckWallCollision(void *self, float *out, int flag);
 extern void Item_DecayVelocityScalar(void *item, float scalar);
 extern float Item_ProbeLateralGroundPitch(float *pos, float yaw, float a, float b);
@@ -28,8 +42,22 @@ extern void Vec2_RotateY(float *dst, float *src, float yaw);
 extern float Vec3_ToYaw(float *v);
 extern void DrawEffect_ItemHitOriented_Spawn(float *pos, float *vel, int mode);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *kart);
+#ifdef __MWERKS__
 extern void GabyouItem_BuildLocalTransformFromHandJoint(float k1, float k2, float k3, void *self, int flag);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void GabyouItem_BuildLocalTransformFromHandJoint(void *, int, float, float, float);
+static inline void GabyouItem_BuildLocalTransformFromHandJoint_Reordered(float k1, float k2, float k3, void *self, int flag) { GabyouItem_BuildLocalTransformFromHandJoint(self, flag, k1, k2, k3); }
+#define GabyouItem_BuildLocalTransformFromHandJoint GabyouItem_BuildLocalTransformFromHandJoint_Reordered
+#endif
+#ifdef __MWERKS__
 extern void GetSpawnPosition(float x, float y, float z, float *out);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void GetSpawnPosition(float *, float, float, float);
+static inline void GetSpawnPosition_Reordered(float x, float y, float z, float *out) { GetSpawnPosition(out, x, y, z); }
+#define GetSpawnPosition GetSpawnPosition_Reordered
+#endif
 extern int ItemAlias_HitRemapLookup(int itemId);
 extern int ItemCollision_Check(void *self);
 extern void ItemTracker_AcquireLock(void *self);
@@ -37,7 +65,14 @@ extern void *ItemTracker_GetTargetKart(void *self);
 extern void ItemTracker_ReleaseLock(void *self);
 extern void ItemTracker_SetTrackPhase(void *self, int enable);
 extern void Item_ComputeYawRelativeApproach(float *vel, void *target, float *pos, float *outVel);
+#ifdef __MWERKS__
 extern void Item_InitLaunchFromKart(float k1, float k2, void *self, float *vel);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Item_InitLaunchFromKart(void *, float *, float, float);
+static inline void Item_InitLaunchFromKart_Reordered(float k1, float k2, void *self, float *vel) { Item_InitLaunchFromKart(self, vel, k1, k2); }
+#define Item_InitLaunchFromKart Item_InitLaunchFromKart_Reordered
+#endif
 extern float *KartDriver_GetJointByIdx(void *kart, int idx);
 extern float *KartDriver_GetKartRootMtx(void *kart);
 extern void Mtx44_GetTranslation_RowMajor(float *out, float *mtx);
@@ -56,7 +91,14 @@ extern void fn_801B1660(void *driver, void *target);
 extern void fn_801B1D5C(void *driver, void *target, int remap, int flag);
 extern void ItemHit_Dispatch(void *self, int a, float *pos, void *target);
 extern void ItemObject_DecrementCategoryBudget(void *self);
+#ifdef __MWERKS__
 extern int Item_AdvanceTetherToJoint13(float anchor, float k2, float k3, void *self, float *state);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern int Item_AdvanceTetherToJoint13(void *, float *, float, float, float);
+static inline int Item_AdvanceTetherToJoint13_Reordered(float anchor, float k2, float k3, void *self, float *state) { return Item_AdvanceTetherToJoint13(self, state, anchor, k2, k3); }
+#define Item_AdvanceTetherToJoint13 Item_AdvanceTetherToJoint13_Reordered
+#endif
 extern void Item_PrepareHitRebound(void *self, float *pos, float *vel, int *timer);
 extern void ShellPile_Spawn(void *self, void *sub);
 extern void SpriteSlot_Container_Free(void *self);

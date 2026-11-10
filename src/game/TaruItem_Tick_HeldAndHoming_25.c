@@ -17,7 +17,14 @@ static inline void DrawEffect_ItemHitOriented_Spawn_ByValue(Vec3 pos, Vec3 vel, 
 #endif
 extern float FAbs_FloatAsDouble(float x);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *kart);
+#ifdef __MWERKS__
 extern void GetSpawnPosition(float x, float y, float z, float *out);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void GetSpawnPosition(float *, float, float, float);
+static inline void GetSpawnPosition_Reordered(float x, float y, float z, float *out) { GetSpawnPosition(out, x, y, z); }
+#define GetSpawnPosition GetSpawnPosition_Reordered
+#endif
 extern int ItemAlias_HitRemapLookup(int itemId);
 extern int ItemCollision_Check(void *self);
 extern void ItemTracker_AcquireLock(void *self);
@@ -25,7 +32,14 @@ extern void *ItemTracker_GetTargetKart(void *self);
 extern void ItemTracker_ReleaseLock(void *self);
 extern void ItemTracker_SetTrackPhase(void *self, int enable);
 extern void Item_AccelClampVelocity(void *self, float accel, float maxv);
+#ifdef __MWERKS__
 extern int Item_AdvanceFallingDrop(void *self, float gravity, int *landed, float *groundY);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern int Item_AdvanceFallingDrop(void *, int *, float *, float);
+static inline int Item_AdvanceFallingDrop_Reordered(void *self, float gravity, int *landed, float *groundY) { return Item_AdvanceFallingDrop(self, landed, groundY, gravity); }
+#define Item_AdvanceFallingDrop Item_AdvanceFallingDrop_Reordered
+#endif
 extern void Item_BounceOffWall(float k1, float k2, void *self, Vec3 normal, int se, int flag);
 extern int Item_CheckWallCollision(void *self, float *out, int flag);
 #ifdef __MWERKS__
@@ -37,7 +51,14 @@ static inline void Item_ComputeYawRelativeApproach_ByValue(float *vel, void *tar
 #define Item_ComputeYawRelativeApproach Item_ComputeYawRelativeApproach_ByValue
 #endif
 extern void Item_DecayVelocityScalar(void *item, float scalar);
+#ifdef __MWERKS__
 extern void Item_InitLaunchFromKart(float k1, float k2, void *self, float *vel);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Item_InitLaunchFromKart(void *, float *, float, float);
+static inline void Item_InitLaunchFromKart_Reordered(float k1, float k2, void *self, float *vel) { Item_InitLaunchFromKart(self, vel, k1, k2); }
+#define Item_InitLaunchFromKart Item_InitLaunchFromKart_Reordered
+#endif
 #ifdef __MWERKS__
 extern float Item_ProbeLateralGroundPitch(Vec3 pos, float yaw, float a, float b);
 #else

@@ -58,7 +58,14 @@ float *CarObject_GetTransformMatrix(void *);
 void *CarObject_GetRenderObj(void *);
 void Mtx4x4_TransposeTo4x3(const void *, void *);
 void HSD_MtxGetRotation(const void *, void *);
+#ifdef __MWERKS__
 void fn_802090F0(PhysicsCollisionShape *, PhysicsPlainVec *, PhysicsPlainVec *, float, float, float);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_802090F0(PhysicsCollisionShape *, float, float, float, PhysicsPlainVec *, PhysicsPlainVec *);
+static inline void fn_802090F0_Reordered(PhysicsCollisionShape *a0, PhysicsPlainVec *a1, PhysicsPlainVec *a2, float a3, float a4, float a5) { fn_802090F0(a0, a3, a4, a5, a1, a2); }
+#define fn_802090F0 fn_802090F0_Reordered
+#endif
 float CollisionTest_CalcPenetration(void *, PhysicsCollisionShape *, void *);
 void Vec3_Subtract(const void *, const void *, void *);
 void Vec3_Normalize(const void *, void *);

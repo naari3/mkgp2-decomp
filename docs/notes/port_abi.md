@@ -63,6 +63,28 @@ did this (`MukadeItem.c`, `StarItem.c`, `Effect.c`, the `TornadoItem`
 fragments) now declare the parameter lists. Do not use empty parentheses for
 a callee that takes floats.
 
+### int and float parameters in another order
+
+About 90 prototypes list the same parameters as the definition but with the
+floats moved (`fn_80181790`: caller `(ptr, int, float, int, int, int, int)`,
+definition `(ptr, int, int, int, int, float, int)`). PowerPC numbers integer
+and float argument registers separately, so only the order inside each class
+matters and the declared order is free; it is sometimes a matching lever
+(matching_rules §74). The same is true of x86-64 System V, but not of Win64
+or 32-bit x86. Same shape of fix, pairing the n-th integer and the n-th float
+of the caller with the n-th of each in the definition:
+
+```c
+#ifdef __MWERKS__
+extern void Object_DriveAnimAndSkin(clNormal3D *obj, float a, float b, clNormal3D *src);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Object_DriveAnimAndSkin(clNormal3D *, clNormal3D *, float, float);
+static inline void Object_DriveAnimAndSkin_Reordered(clNormal3D *obj, float a, float b, clNormal3D *src) { Object_DriveAnimAndSkin(obj, src, a, b); }
+#define Object_DriveAnimAndSkin Object_DriveAnimAndSkin_Reordered
+#endif
+```
+
 ### Still open
 
 - Seven calls pass an explicit result pointer to a definition that returns a
@@ -72,6 +94,14 @@ a callee that takes floats.
   Itanium-style ABIs pass and return them by address like MWCC does; the only
   difference is 32-bit x86, where a struct-returning callee pops the result
   pointer. Left as they are.
+- `AnimState_New.c` and `AnimState_Reset.c` call `AnimState_Init(self, 0.0f)`
+  through a `(AnimState *, float)` prototype; the definition
+  (`AnimState_Step.c`) takes `(AnimState *, AnimEntry *entries)`. On PowerPC
+  the callee therefore reads whatever r4 held. Not changed: what the
+  original passes there is not known from the callers alone.
+- Units that do not compile with clang yet (7 in `src/game`, for example
+  `auto_ONKARTHIT_block.c`) were not seen by the census; they may hold more
+  of all three kinds.
 - The remaining `arity_census.py --all` pairs are calls with trailing
   arguments the definition does not read; harmless where the caller cleans
   the stack.

@@ -18,10 +18,38 @@ extern "C" {
 extern char LogoAnim_data_8048ECE0[];
 extern char lbl_8048ECF8[];
 extern char lbl_8048ED10[];
+#ifdef __MWERKS__
 extern void fn_8016918C(void *obj, int id, int flag, float x, float y, float sx, float sy, float r, float g, float b, float a);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_8016918C(void *, int, float, float, float, float, float, float, float, float, int);
+static inline void fn_8016918C_Reordered(void *obj, int id, int flag, float x, float y, float sx, float sy, float r, float g, float b, float a) { fn_8016918C(obj, id, x, y, sx, sy, r, g, b, a, flag); }
+#define fn_8016918C fn_8016918C_Reordered
+#endif
+#ifdef __MWERKS__
 extern void fn_80169468(void *obj, int id, int flag, float x, float y, float sx, float sy, float sz, float a);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_80169468(void *, int, float, float, float, float, float, float, int);
+static inline void fn_80169468_Reordered(void *obj, int id, int flag, float x, float y, float sx, float sy, float sz, float a) { fn_80169468(obj, id, x, y, sx, sy, sz, a, flag); }
+#define fn_80169468 fn_80169468_Reordered
+#endif
+#ifdef __MWERKS__
 extern void fn_801697C0(void *obj, int id, int flag, float x, float y, float sx, float sy);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_801697C0(void *, int, float, float, float, float, int);
+static inline void fn_801697C0_Reordered(void *obj, int id, int flag, float x, float y, float sx, float sy) { fn_801697C0(obj, id, x, y, sx, sy, flag); }
+#define fn_801697C0 fn_801697C0_Reordered
+#endif
+#ifdef __MWERKS__
 extern void fn_801698B4(void *obj, int id, int flag, float x, float y);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_801698B4(void *, int, float, float, int);
+static inline void fn_801698B4_Reordered(void *obj, int id, int flag, float x, float y) { fn_801698B4(obj, id, x, y, flag); }
+#define fn_801698B4 fn_801698B4_Reordered
+#endif
 extern void PreloadResource(int resId);
 extern void MemoryManager_TimedFree(void *p);
 }

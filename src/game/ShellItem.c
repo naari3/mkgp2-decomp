@@ -26,7 +26,14 @@ extern void Vec3_AddNormalizedXZ(void *self, float *a, float *b);
 extern float Vec3_HorizontalMagnitude(float *v);
 extern void Vec3_ScaleXZ(float *dst, float *src, float k);
 extern float Vec3_ToYaw(float *v);
+#ifdef __MWERKS__
 extern void GetSpawnPosition(float x, float y, float z, float *out);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void GetSpawnPosition(float *, float, float, float);
+static inline void GetSpawnPosition_Reordered(float x, float y, float z, float *out) { GetSpawnPosition(out, x, y, z); }
+#define GetSpawnPosition GetSpawnPosition_Reordered
+#endif
 extern float BuildOrientationFromYaw(float yaw);
 extern void Item_DecayVelocityScalar(void *item, float scalar);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *kart);
@@ -44,7 +51,14 @@ extern void ItemHit_Dispatch(void *self, int a, float *pos, void *target);
 extern void SoundMgr_PlaySE_Positional(int se, float *pos, int flag);
 extern void Item_SpawnGroundExplosionAndFX(void *self);
 extern void Item_RenderFlyingFromKart(void *self, void *gabyou, int flag, float k1, float k2, float k3);
+#ifdef __MWERKS__
 extern void Item_InitLaunchFromKart(float k1, float k2, void *self, float *vel);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Item_InitLaunchFromKart(void *, float *, float, float);
+static inline void Item_InitLaunchFromKart_Reordered(float k1, float k2, void *self, float *vel) { Item_InitLaunchFromKart(self, vel, k1, k2); }
+#define Item_InitLaunchFromKart Item_InitLaunchFromKart_Reordered
+#endif
 extern void ItemTracker_AcquireLock(void *self);
 extern void ItemTracker_SetTrackPhase(void *self, int enable);
 extern void ItemTracker_ReleaseLock(void *self);
@@ -55,10 +69,38 @@ extern void Item_AccelClampVelocity(void *self, float accel, float maxv);
 extern void Item_HomingScanAndSteer(void *self, float *heading, int flag);
 extern void Item_ComputeYawRelativeApproach(float *vel, void *target, float *pos, float *outVel);
 extern int Item_CheckWallCollision(void *self, float *out, int flag);
+#ifdef __MWERKS__
 extern void Item_BounceOffWall(float k1, float k2, void *self, float *normal, int se, int flag);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Item_BounceOffWall(void *, float *, int, int, float, float);
+static inline void Item_BounceOffWall_Reordered(float k1, float k2, void *self, float *normal, int se, int flag) { Item_BounceOffWall(self, normal, se, flag, k1, k2); }
+#define Item_BounceOffWall Item_BounceOffWall_Reordered
+#endif
+#ifdef __MWERKS__
 extern int Item_AdvanceProjectileSimple(float k1, float k2, void *self, float *anchor);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern int Item_AdvanceProjectileSimple(void *, float *, float, float);
+static inline int Item_AdvanceProjectileSimple_Reordered(float k1, float k2, void *self, float *anchor) { return Item_AdvanceProjectileSimple(self, anchor, k1, k2); }
+#define Item_AdvanceProjectileSimple Item_AdvanceProjectileSimple_Reordered
+#endif
+#ifdef __MWERKS__
 extern int Item_AdvanceTetherToJoint13(float anchor, float k2, float k3, void *self, float *state);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern int Item_AdvanceTetherToJoint13(void *, float *, float, float, float);
+static inline int Item_AdvanceTetherToJoint13_Reordered(float anchor, float k2, float k3, void *self, float *state) { return Item_AdvanceTetherToJoint13(self, state, anchor, k2, k3); }
+#define Item_AdvanceTetherToJoint13 Item_AdvanceTetherToJoint13_Reordered
+#endif
+#ifdef __MWERKS__
 extern int Item_OrbitAnchorKart(float k1, float k2, void *self, float *offset, int timer);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern int Item_OrbitAnchorKart(void *, float *, int, float, float);
+static inline int Item_OrbitAnchorKart_Reordered(float k1, float k2, void *self, float *offset, int timer) { return Item_OrbitAnchorKart(self, offset, timer, k1, k2); }
+#define Item_OrbitAnchorKart Item_OrbitAnchorKart_Reordered
+#endif
 extern void fn_801B129C(float *pos);
 extern void fn_801B14B8(void *driver, void *target);
 extern void fn_801B158C(void *driver, void *target);

@@ -59,7 +59,14 @@ void PhysicsState_SetField90(void *,float),PhysicsState_SetField94(void *,float)
 void PhysicsState_SetGrounded(void *,int),PhysicsState_SetFlag188(void *,int);
 void *WarpDashMgr_GetInstance(int);
 int WarpZone_FindContaining(void *,float,float,float);
+#ifdef __MWERKS__
 void WarpZone_CalcExitPosition(void *,int,float *,float *,float *,float *,float,float,float);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void WarpZone_CalcExitPosition(void *, int, float, float, float, float *, float *, float *, float *);
+static inline void WarpZone_CalcExitPosition_Reordered(void *a0, int a1, float *a2, float *a3, float *a4, float *a5, float a6, float a7, float a8) { WarpZone_CalcExitPosition(a0, a1, a6, a7, a8, a2, a3, a4, a5); }
+#define WarpZone_CalcExitPosition WarpZone_CalcExitPosition_Reordered
+#endif
 void PhysicsState_SetPosition(void *,AIPosition *),fn_801EC830(void *,float),fn_801ECA14(void *);
 void RenderObj_ToggleLapSegment(void *,int),KartPhysics_UpdateSmoothing(void *);
 void fn_801EC7B4(void *,int),fn_801DF008(void *,int),fn_801DF3B0(void *),fn_801DEC74(void *),fn_801ECB04(void *);
@@ -70,7 +77,14 @@ AIPosition *PhysicsState_GetPositionPtr(void *);
 void *KartDriver_GetKartRootMtx(void *),*KartDriver_GetJObjRootIfReady(void *);
 void PSMTXMultVec(const void *,const void *,void *),PSVECAdd(const void *,const void *,void *),PSVECScale(const void *,void *,float);
 float Object_GetJObjRotationZ(void *),Object_GetJObjRotationX(void *),PhysicsState_GetHeading(void *);
+#ifdef __MWERKS__
 void CollisionObject_SetPosAndBounds(void *,const void *,const void *,float,float,float);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void CollisionObject_SetPosAndBounds(void *, float, float, float, const void *, const void *);
+static inline void CollisionObject_SetPosAndBounds_Reordered(void *a0, const void *a1, const void *a2, float a3, float a4, float a5) { CollisionObject_SetPosAndBounds(a0, a3, a4, a5, a1, a2); }
+#define CollisionObject_SetPosAndBounds CollisionObject_SetPosAndBounds_Reordered
+#endif
 void PhysicsState_SetCollidedObject(void *,void *),Mtx4x4_TransposeTo4x3(const void *,void *);
 float PhysicsState_GetSpeed(void *),PhysicsState_GetAngularVelocity(void *);
 void RenderObj_ItemStateMachine_Timed(void *,int,float,float);

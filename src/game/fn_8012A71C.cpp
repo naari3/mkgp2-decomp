@@ -57,7 +57,14 @@ void JObj_Hide(void *obj, void *part, int flag);
 void JObj_Show(void *obj, void *part, int flag);
 float LUT_Sin12Bit(float deg);
 void ObjectTree_BlendOrCopy_Timed(void *obj, void *a, void *b, void *c, float t);
+#ifdef __MWERKS__
 void Object_DriveAnimAndSkin(void *obj, float frame, float rate, void *anim);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Object_DriveAnimAndSkin(void *, void *, float, float);
+static inline void Object_DriveAnimAndSkin_Reordered(void *obj, float frame, float rate, void *anim) { Object_DriveAnimAndSkin(obj, anim, frame, rate); }
+#define Object_DriveAnimAndSkin Object_DriveAnimAndSkin_Reordered
+#endif
 void Object_DriveAnimMatrix(void *obj);
 float Object_GetField8(void *obj);
 void Object_SetAnimBinding(void *obj, float (*mtx)[4], int flag);

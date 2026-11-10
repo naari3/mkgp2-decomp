@@ -36,7 +36,14 @@ void *fn_801DBA2C(void *);
 int PathIndex_AdvanceCircular(void *, int);
 GroundedWaypoint *Path_GetWaypointPtr(void *, int);
 float fn_800D3184(const PhysicsPlainVec *, const PhysicsPlainVec *);
+#ifdef __MWERKS__
 void Vec3_Lerp(PhysicsPlainVec *, PhysicsPlainVec, PhysicsPlainVec, float);
+#else
+/* The definition takes these structs by address; see docs/notes/port_abi.md. */
+extern void Vec3_Lerp(PhysicsPlainVec *, PhysicsPlainVec *, PhysicsPlainVec *, float);
+static inline void Vec3_Lerp_ByValue(PhysicsPlainVec *out, PhysicsPlainVec a, PhysicsPlainVec b, float t) { Vec3_Lerp(out, &a, &b, t); }
+#define Vec3_Lerp Vec3_Lerp_ByValue
+#endif
 float Vec3_HorizontalYawTo(const PhysicsPlainVec *, const PhysicsPlainVec *);
 void Vec3_Copy(PhysicsPlainVec *, const PhysicsPlainVec *);
 float LUT_Sine(float);

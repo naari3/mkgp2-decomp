@@ -202,7 +202,14 @@ extern void fn_8013D4B0(DbgModel *p, float t);
 extern void fn_8013DAC8(DbgModel *p, int a);
 extern void fn_8013D940(int a);
 extern int Item_GetDescriptorField0(int item, int a);
+#ifdef __MWERKS__
 extern void fn_801695E0(int a, int id, int b, float x, float y, float z);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_801695E0(int, int, float, float, float, int);
+static inline void fn_801695E0_Reordered(int a, int id, int b, float x, float y, float z) { fn_801695E0(a, id, x, y, z, b); }
+#define fn_801695E0 fn_801695E0_Reordered
+#endif
 extern void fn_8020B234(void *p, int a);
 extern void fn_8020AF08(void *p, int flag);
 extern void fn_8020AFD4(void *p);

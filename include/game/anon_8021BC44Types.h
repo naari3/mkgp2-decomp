@@ -392,7 +392,14 @@ void fn_80161888(CoinPopupDetail *p);
 int fn_80167744(int digit, float time);
 void fn_80167A24(int a, int b, float x, float y, float s, float sx, float sy, float alpha, float time);
 void fn_801685A4(int a, void *tex, float x, float y, float s, float sx, float sy, float alpha, ...);
+#ifdef __MWERKS__
 void fn_80169334(int a, int res, int c, float x, float y, float z, float s, float alpha);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_80169334(int, int, float, float, float, float, float, int);
+static inline void fn_80169334_Reordered(int a, int res, int c, float x, float y, float z, float s, float alpha) { fn_80169334(a, res, x, y, z, s, alpha, c); }
+#define fn_80169334 fn_80169334_Reordered
+#endif
 void fn_801695E0(int a, int res, int c, float x, float y, float alpha);
 void fn_801699D8(int a, int b);
 unsigned char fn_80169DF0(void);

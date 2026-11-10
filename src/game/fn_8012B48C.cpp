@@ -78,7 +78,14 @@ void fn_8012BDF4(struct ChallengeScene *s);
 KartModelEntry *GetKartModelNameEntry(int id, int variant);
 CharacterDataEntry *GetCharacterDataEntry(int id);
 void Object_SetAnimBinding(clNormal3D *obj, void *anim, int flags);
+#ifdef __MWERKS__
 void Object_DriveAnimAndSkin(clNormal3D *obj, float a, float b, clNormal3D *src);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Object_DriveAnimAndSkin(clNormal3D *, clNormal3D *, float, float);
+static inline void Object_DriveAnimAndSkin_Reordered(clNormal3D *obj, float a, float b, clNormal3D *src) { Object_DriveAnimAndSkin(obj, src, a, b); }
+#define Object_DriveAnimAndSkin Object_DriveAnimAndSkin_Reordered
+#endif
 JObj *Archive_GetRootJObj(clNormal3D *obj);
 void ObjectTree_BlendOrCopy_Timed(clNormal3D *obj, JObj *src, JObj *dst, int flags, float t);
 JObj *ResolveJointByName(clNormal3D *obj, const char *name);

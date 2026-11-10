@@ -27,9 +27,30 @@ extern void cLNormal3DWrap_Slot_SetRotationQuat(void *slot, float x, float y, fl
 extern void cLNormal3DWrap_Slot_SetMatrixSource(void *slot, float *mtx3x4);
 extern void cLNormal3DWrap_Slot_Render(void *slot);
 extern void Matrix4_Identity(float *m);
+#ifdef __MWERKS__
 extern void Matrix4_PreMultiplyTranslation(float x, float y, float z, float *dst, float *src);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Matrix4_PreMultiplyTranslation(float *, float *, float, float, float);
+static inline void Matrix4_PreMultiplyTranslation_Reordered(float x, float y, float z, float *dst, float *src) { Matrix4_PreMultiplyTranslation(dst, src, x, y, z); }
+#define Matrix4_PreMultiplyTranslation Matrix4_PreMultiplyTranslation_Reordered
+#endif
+#ifdef __MWERKS__
 extern void Matrix4_PreMultiplyRotZ(float angle, float *dst, float *src);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Matrix4_PreMultiplyRotZ(float *, float *, float);
+static inline void Matrix4_PreMultiplyRotZ_Reordered(float angle, float *dst, float *src) { Matrix4_PreMultiplyRotZ(dst, src, angle); }
+#define Matrix4_PreMultiplyRotZ Matrix4_PreMultiplyRotZ_Reordered
+#endif
+#ifdef __MWERKS__
 extern void Mtx44_Scale_Uniform(float scale, float *dst, float *src);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Mtx44_Scale_Uniform(float *, float *, float);
+static inline void Mtx44_Scale_Uniform_Reordered(float scale, float *dst, float *src) { Mtx44_Scale_Uniform(dst, src, scale); }
+#define Mtx44_Scale_Uniform Mtx44_Scale_Uniform_Reordered
+#endif
 extern void Matrix4_Multiply(float *dst, float *a, float *b);
 extern void DbgScene_CopyMatrix3x4Transpose(float *dst, float *src);
 extern void Vec3_Subtract_DestFirst(TBRVec3 *dst, TBRVec3 *a, TBRVec3 *b);

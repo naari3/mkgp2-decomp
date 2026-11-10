@@ -12,7 +12,14 @@ void C_MTXTrans(Mtx, float, float, float);
 void C_MTXConcat(const Mtx, const Mtx, Mtx);
 void PSMTXCopy(const Mtx, Mtx);
 void Object_DriveAnimMatrix(void *);
+#ifdef __MWERKS__
 void Object_DriveAnimAndSkin(void *, float, float, void *);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Object_DriveAnimAndSkin(void *, void *, float, float);
+static inline void Object_DriveAnimAndSkin_Reordered(void *a0, float a1, float a2, void *a3) { Object_DriveAnimAndSkin(a0, a3, a1, a2); }
+#define Object_DriveAnimAndSkin Object_DriveAnimAndSkin_Reordered
+#endif
 HSD_JObj *Archive_GetRootJObj(void *);
 void ObjectTree_BlendOrCopy_Timed(void *, HSD_JObj *, HSD_JObj *, HSD_JObj *, float);
 void *GetCharacterDataEntry(int);

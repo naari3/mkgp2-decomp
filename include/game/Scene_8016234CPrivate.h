@@ -73,8 +73,22 @@ ItemTransform162 *fn_8013BEC8(int);
 int Item_GetDescriptorField0(int, int);
 int GetTextureByIdAndLang(int, int);
 int fn_8023DAA8(int);
+#ifdef __MWERKS__
 void fn_801695E0(int, int, int, float, float, float);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_801695E0(int, int, float, float, float, int);
+static inline void fn_801695E0_Reordered(int a0, int a1, int a2, float a3, float a4, float a5) { fn_801695E0(a0, a1, a3, a4, a5, a2); }
+#define fn_801695E0 fn_801695E0_Reordered
+#endif
+#ifdef __MWERKS__
 void fn_801698B4(int, int, int, float, float);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_801698B4(int, int, float, float, int);
+static inline void fn_801698B4_Reordered(int a0, int a1, int a2, float a3, float a4) { fn_801698B4(a0, a1, a3, a4, a2); }
+#define fn_801698B4 fn_801698B4_Reordered
+#endif
 void fn_80168798(int, const char *, float, float, float, ...);
 void fn_80168D84(int, int, float, float, float, ...);
 void fn_80168B90(int, int, float, float, float, float, float, float, ...);

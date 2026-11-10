@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 14:11Z Prototypes that order int and float parameters differently from the definition (a PowerPC-only freedom, sometimes a matching lever) are wrapped for other compilers with a `Foo_Reordered` inline in the `#else` branch (docs/notes/port_abi.md). ~90 prototypes, objects unchanged.
 - 2026-11-10 14:06Z By-value struct prototypes (`Foo(Mtx44, Vec3)` against a definition taking `Vec3 *`) are wrapped for non-MWCC compilers: the original line stays under `#ifdef __MWERKS__`, the `#else` branch has the real prototype and a `Foo_ByValue` inline (docs/notes/port_abi.md). ~330 pairs, objects unchanged. Copy the block when a new unit declares such a callee.
 - 2026-11-10 13:55Z Empty-parenthesis prototypes (`extern void Foo();`) must not be used for callees that take floats: the call promotes float to double, which breaks off PowerPC. Write the parameter list. Fixed in MukadeItem.c, StarItem.c, Effect.c, tornado_fragments.
 - 2026-11-10 13:52Z Correction to 13:49Z: `LE_AS_WRITTEN` is gone; media-board swaps (BSWAP16/32, fd_set words) stay real swaps on every host. `LE32`/`LE16` are only for little-endian file values. See docs/notes/byte_order.md.

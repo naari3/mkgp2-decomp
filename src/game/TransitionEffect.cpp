@@ -232,7 +232,14 @@ float (*CObj_GetProjMatrix_Cached(void *))[4];
 void Object_SetJObjPositionXYZ(void *, float, float, float);
 void Object_SetJObjScaleXYZ(void *, float, float, float);
 void Object_SetColorRGBA(void *, int, float, float, float, float);
+#ifdef __MWERKS__
 void JObjTree_TranslateAndMul(void *, int, float, float);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void JObjTree_TranslateAndMul(void *, float, float, int);
+static inline void JObjTree_TranslateAndMul_Reordered(void *a0, int a1, float a2, float a3) { JObjTree_TranslateAndMul(a0, a2, a3, a1); }
+#define JObjTree_TranslateAndMul JObjTree_TranslateAndMul_Reordered
+#endif
 void Object_RenderJObjTree(void *, int);
 GXTexObj *BackupBuffer_InitAsTexture();
 float Saturate_Double(float, float, float);

@@ -67,7 +67,14 @@ extern void Object_DriveAnimMatrix(void *obj);
  * (obj, anim, frame, a, b, c) (Normal3DScale.c). Declaring the first float
  * before the anim pointer keeps the same argument registers but makes the
  * ctor evaluate `1.0f` before `anims14[0]`, as the target does. */
+#ifdef __MWERKS__
 extern void clNormal3D_SetScale(void *obj, float frame, void *anim, float a, float b, float c);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void clNormal3D_SetScale(void *, void *, float, float, float, float);
+static inline void clNormal3D_SetScale_Reordered(void *obj, float frame, void *anim, float a, float b, float c) { clNormal3D_SetScale(obj, anim, frame, a, b, c); }
+#define clNormal3D_SetScale clNormal3D_SetScale_Reordered
+#endif
 extern void *Archive_GetRootJObj(void *obj);
 extern void ObjectTree_BlendOrCopy_Timed(void *obj, void *a, void *b, int, float t);
 extern void clNormal3D_Exec(void *obj);

@@ -130,7 +130,14 @@ extern unsigned char InputCmd_GetDetectedFlag(void *);
 extern void InputCmd_GetDetectedFlag();
 #endif
 #ifdef NON_MATCHING
+#ifdef __MWERKS__
 extern void InputCmd_PushSample(void *, int, float, float, float);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void InputCmd_PushSample(void *, float, float, float, int);
+static inline void InputCmd_PushSample_Reordered(void *a0, int a1, float a2, float a3, float a4) { InputCmd_PushSample(a0, a2, a3, a4, a1); }
+#define InputCmd_PushSample InputCmd_PushSample_Reordered
+#endif
 #else
 extern void InputCmd_PushSample();
 #endif

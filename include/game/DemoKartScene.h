@@ -210,7 +210,14 @@ void CObj_DebugVizPathFlush(DemoSceneBase *scene);
 void CObj_LoadProjMatrix(DemoSceneBase *scene, Vec *out);
 void CObj_ApplyScissor(DemoSceneBase *scene, Vec *out);
 void fn_8016B0C4(void);
+#ifdef __MWERKS__
 void fn_80181790(DemoSceneBase *scene, int a, float f, int b, int c, unsigned char alpha, int d);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_80181790(DemoSceneBase *, int, int, int, unsigned char, float, int);
+static inline void fn_80181790_Reordered(DemoSceneBase *scene, int a, float f, int b, int c, unsigned char alpha, int d) { fn_80181790(scene, a, b, c, alpha, f, d); }
+#define fn_80181790 fn_80181790_Reordered
+#endif
 void KartDriver_RenderTimed(DemoDriver *driver, int a, int b);
 void KartDriver_Dtor(DemoDriver *driver, int del);
 void RenderObj_ItemStateMachine_Timed(DemoDriver *driver, int a, float b, float c);

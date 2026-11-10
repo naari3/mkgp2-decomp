@@ -15,21 +15,70 @@ extern void Mtx44_GetTranslation_RowMajor(float *out, float *mtx);
 extern void Vec3_Subtract_DestFirst(float *dst, float *a, float *b);
 extern void Vec3_Add_DestFirst(float *dst, float *a, float *b);
 extern void Vec3_Copy(float *dst, float *src);
+#ifdef __MWERKS__
 extern void GetSpawnPosition(float x, float y, float z, float *out);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void GetSpawnPosition(float *, float, float, float);
+static inline void GetSpawnPosition_Reordered(float x, float y, float z, float *out) { GetSpawnPosition(out, x, y, z); }
+#define GetSpawnPosition GetSpawnPosition_Reordered
+#endif
 extern float BuildOrientationFromYaw(float yaw);
 extern void Item_DecayVelocityScalar(void *item, float scalar);
 extern unsigned char FinalLapCoinJump_CheckActiveForObject(void *kart);
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int enabled);
+#ifdef __MWERKS__
 extern int Item_AdvanceTetherToJoint13(float anchor, float k2, float k3, void *self, float *state);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern int Item_AdvanceTetherToJoint13(void *, float *, float, float, float);
+static inline int Item_AdvanceTetherToJoint13_Reordered(float anchor, float k2, float k3, void *self, float *state) { return Item_AdvanceTetherToJoint13(self, state, anchor, k2, k3); }
+#define Item_AdvanceTetherToJoint13 Item_AdvanceTetherToJoint13_Reordered
+#endif
+#ifdef __MWERKS__
 extern int Item_OrbitAnchorKart(float k1, float k2, void *self, float *offset, int timer);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern int Item_OrbitAnchorKart(void *, float *, int, float, float);
+static inline int Item_OrbitAnchorKart_Reordered(float k1, float k2, void *self, float *offset, int timer) { return Item_OrbitAnchorKart(self, offset, timer, k1, k2); }
+#define Item_OrbitAnchorKart Item_OrbitAnchorKart_Reordered
+#endif
 extern void ItemObject_DecrementCategoryBudget(void *self);
 extern void SpriteSlot_Container_Free(void *self);
 extern void Matrix4_Identity(float *mtx);
+#ifdef __MWERKS__
 extern void Mtx44_Scale_Uniform(float scale, float *mtx, float *dst);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Mtx44_Scale_Uniform(float *, float *, float);
+static inline void Mtx44_Scale_Uniform_Reordered(float scale, float *mtx, float *dst) { Mtx44_Scale_Uniform(mtx, dst, scale); }
+#define Mtx44_Scale_Uniform Mtx44_Scale_Uniform_Reordered
+#endif
+#ifdef __MWERKS__
 extern void Matrix4_PreMultiplyRotZ(float angle, float *mtx, float *dst);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Matrix4_PreMultiplyRotZ(float *, float *, float);
+static inline void Matrix4_PreMultiplyRotZ_Reordered(float angle, float *mtx, float *dst) { Matrix4_PreMultiplyRotZ(mtx, dst, angle); }
+#define Matrix4_PreMultiplyRotZ Matrix4_PreMultiplyRotZ_Reordered
+#endif
+#ifdef __MWERKS__
 extern void Matrix4_PreMultiplyRotX(float angle, float *mtx, float *dst);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Matrix4_PreMultiplyRotX(float *, float *, float);
+static inline void Matrix4_PreMultiplyRotX_Reordered(float angle, float *mtx, float *dst) { Matrix4_PreMultiplyRotX(mtx, dst, angle); }
+#define Matrix4_PreMultiplyRotX Matrix4_PreMultiplyRotX_Reordered
+#endif
+#ifdef __MWERKS__
 extern void Matrix4_PreMultiplyRotY(float angle, float *mtx, float *dst);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Matrix4_PreMultiplyRotY(float *, float *, float);
+static inline void Matrix4_PreMultiplyRotY_Reordered(float angle, float *mtx, float *dst) { Matrix4_PreMultiplyRotY(mtx, dst, angle); }
+#define Matrix4_PreMultiplyRotY Matrix4_PreMultiplyRotY_Reordered
+#endif
 extern void Mtx44_Translate(float *mtx, float *dst, float *pos);
 extern void DbgScene_CopyMatrix3x4Transpose(float *dst, float *src);
 

@@ -8,7 +8,14 @@ extern void *lbl_806D10AC;
 extern const float lbl_806D5960;
 extern void SpriteSlot_Render(void *object);
 extern void Object_SetColorRGBA(void *object, int joint, float r, float g, float b, float a);
+#ifdef __MWERKS__
 extern void JObjTree_TranslateAndMul(void *object, int joint, float u, float v);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void JObjTree_TranslateAndMul(void *, float, float, int);
+static inline void JObjTree_TranslateAndMul_Reordered(void *object, int joint, float u, float v) { JObjTree_TranslateAndMul(object, u, v, joint); }
+#define JObjTree_TranslateAndMul JObjTree_TranslateAndMul_Reordered
+#endif
 extern void Object_GetJObjPositionVec(void *object, Vec *out);
 extern void clDrawMan_AddSorted_DepthRange(void *man, void (*draw)(void *), void *obj,
                                            float x, float y, float z, float depth);

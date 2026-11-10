@@ -14,7 +14,14 @@ typedef struct SpeedBoost {
 extern void *lbl_806D109C;
 extern void KartBody_SetWarpTransitFlag(void *, int);
 extern void ShadowBillboard_BeginBoostScale(void *);
+#ifdef __MWERKS__
 extern void CameraEffect_Apply(void *, float, int);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void CameraEffect_Apply(void *, int, float);
+static inline void CameraEffect_Apply_Reordered(void *a0, float a1, int a2) { CameraEffect_Apply(a0, a2, a1); }
+#define CameraEffect_Apply CameraEffect_Apply_Reordered
+#endif
 extern void ShadowBillboard_SetField0xA4(void *, float);
 
 static inline void kart_set_level(BoostKart *kart, int level, float minTimer) {

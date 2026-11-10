@@ -36,8 +36,15 @@ typedef struct RaceContextSlot {
 
 extern unsigned char IsRaceStarted(void);
 extern signed char ItemClass_GetFlagByte1(int itemId);
+#ifdef __MWERKS__
 extern void ItemObject_TryAcquireTarget(RaceContextSlot *self, int selfIndex, int otherIndex,
                                         RaceContextSlot *other, float range, float radius);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void ItemObject_TryAcquireTarget(RaceContextSlot *, float, float, int, int, RaceContextSlot *);
+static inline void ItemObject_TryAcquireTarget_Reordered(RaceContextSlot *self, int selfIndex, int otherIndex, RaceContextSlot *other, float range, float radius) { ItemObject_TryAcquireTarget(self, range, radius, selfIndex, otherIndex, other); }
+#define ItemObject_TryAcquireTarget ItemObject_TryAcquireTarget_Reordered
+#endif
 extern void PSMTXIdentity(Mtx *m);
 extern void PSMTXCopy(Mtx *src, Mtx *dst);
 extern void PSMTXTranspose(Mtx *src, Mtx *dst);

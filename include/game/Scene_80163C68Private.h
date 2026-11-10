@@ -51,7 +51,14 @@ void clItemBoxManager_Draw(void *);
 void TransitionEffect_RenderPass(void *, int);
 void ItemSelect_DrawUIHelperIfActive(void *);
 void HSD_LObjDeleteCurrentAll(int);
+#ifdef __MWERKS__
 void fn_80181790(DemoSceneBase *, int, float, int, int, int, int);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void fn_80181790(DemoSceneBase *, int, int, int, int, float, int);
+static inline void fn_80181790_Reordered(DemoSceneBase *a0, int a1, float a2, int a3, int a4, int a5, int a6) { fn_80181790(a0, a1, a3, a4, a5, a2, a6); }
+#define fn_80181790 fn_80181790_Reordered
+#endif
 }
 
 static inline void *BoxManager() { return lbl_806D10D0 == 0 ? 0 : lbl_806D10D0; }

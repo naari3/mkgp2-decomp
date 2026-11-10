@@ -56,10 +56,31 @@ extern void Vec3_Subtract_DestFirst(Vec *,const Vec *,const Vec *);
 extern void Vec3_Add_DestFirst(Vec *,const Vec *,const Vec *);
 extern float fn_800D3184(const Vec *,const Vec *);
 extern float Vec3_Magnitude_Wrapper(const Vec *);
+#ifdef __MWERKS__
 extern void Vec3_Scale(float,Vec *,const Vec *);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void Vec3_Scale(Vec *, const Vec *, float);
+static inline void Vec3_Scale_Reordered(float a0, Vec *a1, const Vec *a2) { Vec3_Scale(a1, a2, a0); }
+#define Vec3_Scale Vec3_Scale_Reordered
+#endif
 extern void VfxSlot_SetPositionFromVec(void *,const Vec *);
+#ifdef __MWERKS__
 extern void VfxSlot_SetRotationZ(float,void *);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetRotationZ(void *, float);
+static inline void VfxSlot_SetRotationZ_Reordered(float a0, void *a1) { VfxSlot_SetRotationZ(a1, a0); }
+#define VfxSlot_SetRotationZ VfxSlot_SetRotationZ_Reordered
+#endif
+#ifdef __MWERKS__
 extern void VfxSlot_SetScaleUniform(float,void *);
+#else
+/* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
+extern void VfxSlot_SetScaleUniform(void *, float);
+static inline void VfxSlot_SetScaleUniform_Reordered(float a0, void *a1) { VfxSlot_SetScaleUniform(a1, a0); }
+#define VfxSlot_SetScaleUniform VfxSlot_SetScaleUniform_Reordered
+#endif
 extern void DrawEffect_Free(void *);
 #define F(o) (*(float *)(self+(o)))
 #define V(o) ((Vec *)(self+(o)))
