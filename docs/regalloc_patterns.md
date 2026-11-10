@@ -2045,3 +2045,38 @@ hence coloured last. Same instructions, 100 -> 4 register diff lines. The
 function is still asm (docs/gave_up.md, draft
 docs/wip/RivalRun_CalcPathDistance_regonly.patch); the rest is one `lfs`/`fmr`
 direction of a shared zero load.
+
+## 78. Two float constants swap registers (`1.0f` and `255.0f`): the order the constants are CREATED follows expression order, so put the first use inside the later expression (fn_80147AF4 / fn_80147CE8, RaceHud intro fade, 11-10)
+
+Target (GC/2.6): `lfs f2,1.0; ... lfs f3,255.0; fsubs f2,f2,f4; fmadds f1,f1,f2,f0; fmuls f0,f3,f2`.
+Ours had f2/f3 swapped with
+
+```c
+float t = (o->timer - 30) / 15.0f;
+t = 1.0f - t;
+int a = (int)(255.0f * t);
+float s = 0.2f * t + 1.1f;
+```
+
+`regfix diag` said: "backend temp (1.0f load) must be generated AFTER the 255.0f load". Constants are backend
+temps, numbered in the order the expressions are walked; the load instructions are scheduled later, so the
+instruction order tells nothing. 36 variants of statement order, operand order and inline helpers stayed at
+99.72. What matches is the assignment written inside the product, so `255.0f` is walked first:
+
+```c
+float t = (o->timer - 30) / 15.0f;
+int a = (int)(255.0f * (t = 1.0f - t));     /* fn_80147AF4 */
+float s = 0.2f * t + 1.1f;
+```
+
+In the sister function fn_80147CE8 (the same `1.0f` is also the scale offset) the ratio has no local at all
+and the frontend shares it:
+
+```c
+int a = (int)(255.0f * (1.0f - (o->timer - 30) / 15.0f));
+float s = 0.2f * (1.0f - (o->timer - 30) / 15.0f) + 1.0f;
+```
+
+(`float t; a = (int)(255.0f * (t = 1.0f - (o->timer - 30) / 15.0f));` matches too.) The same repeated form
+is 99.6 in AF4 and the AF4 form is 99.1 in CE8, so try both. When diag asks for "constant X generated after
+constant Y", move the statement that uses X into the expression that uses Y.
