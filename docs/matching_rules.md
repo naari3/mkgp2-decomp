@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 04:14Z: when the native tracer (tracesweep/regfix) reports diff 0 but the real compile still differs, the unit's `mw_version` is wrong: compile the same source with every GC/* compiler (clItemBoxResponder_SpawnDebris: GC/1.3.2 93.7, GC/2.6 100, a016a6ca).
 - 2026-11-10 04:02Z (n3 tool): `python3 tools/regfix.py diag UNIT FN` now also
   diagnoses near misses whose instruction sequence differs (extra `mr`,
   reload, argument/constant/store order, pool addressing, saved-register
