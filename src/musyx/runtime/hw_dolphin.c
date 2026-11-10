@@ -643,7 +643,7 @@ void *salAiGetDest() {
   return (void *)((u8 *)salAIBufferBase + index * DMA_BUFFER_LEN);
 }
 
-u32 salInitDsp() {
+bool salInitDsp(u32 flags) {
   u8 _[8];
   dsp_task.iram_mmem_addr = (u16 *)dspSlave;
   dsp_task.iram_length = dspSlaveLength;

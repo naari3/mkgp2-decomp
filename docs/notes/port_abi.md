@@ -521,3 +521,16 @@ game definition, declaration and call in the host IR (mkgp2-pc
 port/tools/mwcc_byvalue.py), so a struct argument is always the address of the
 caller's copy, as under MWCC, and both spellings meet. The tool is a census
 only.
+
+## src/musyx on a host compiler
+
+All 27 units pass the port's `compile_census.py musyx` (clang, gnu99) after
+four declaration fixes, objects unchanged:
+
+- `salInitDsp` is defined `bool salInitDsp(u32 flags)` as include/musyx/sal.h
+  declares it; `salStartDsp` is static in hw_dolphin.c and no longer declared
+  in sal.h.
+- `extern VS vs;` in vsamples.h only for non-Dolphin targets (static in
+  synth_vsamples.c on Dolphin).
+- debugger.h includes `<stdint.h>` for `uintptr_t`.
+- snd3d.c's own inline `sqrtf` is under `#ifdef __MWERKS__`.

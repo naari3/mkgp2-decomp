@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 21:46Z Port readiness (n3): src/musyx compiles on a host compiler (27 of 27): declaration fixes in include/musyx/sal.h, vsamples.h, debugger.h and src/musyx/runtime/hw_dolphin.c, snd3d.c. Byte-identical.
 - 2026-11-10 20:55Z Port readiness (n3): StlList_RemoveByValueField takes its key struct by value, as its caller passes it; census tool tools/port_abi/byvalue_struct.py for struct-by-value against pointer mismatches between prototypes or casts and definitions (369 places, listed in docs/notes/port_abi.md, not changed). Same code, main.dol OK.
 - 2026-11-10 20:23Z Port readiness (n3): prototypes whose return class (float vs integer vs void) differed from the definition are corrected (fn_8019EA8C, KartEffectFadeTransit_GetActiveValue, KartItem_AdvanceAnim3c, Saturate_Double); sweep tool tools/port_abi/return_class.py, notes in docs/notes/port_abi.md. Byte-identical.
 - 2026-11-10 19:53Z Port readiness (n3): data that was defined as bytes or shorts but read as wider types is defined with the read type (lbl_806D97E8, sprite resource ids, records in autodata/rodata_80355078.c, Scene_8015BF18_rodata_80368C84); sweep tool tools/port_abi/data_width.py, notes in docs/notes/port_abi.md. Byte-identical.

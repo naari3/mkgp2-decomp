@@ -5,6 +5,8 @@
 #include "musyx/synth.h"
 
 // mkgp2: this unit was built with the libc math.h inline sqrtf
+// (a host compiler takes sqrtf from its own math.h)
+#ifdef __MWERKS__
 extern inline float sqrtf(float x) {
   static const double _half = .5;
   static const double _three = 3.0;
@@ -19,6 +21,7 @@ extern inline float sqrtf(float x) {
   }
   return x;
 }
+#endif
 
 static u8 s3dCallCnt;
 static SND_EMITTER *s3dEmitterRoot;

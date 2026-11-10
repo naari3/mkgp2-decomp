@@ -41,7 +41,9 @@ typedef struct _VS {
                   const SND_VIRTUALSAMPLE_INFO*); // offset 0x94C, size 0x4
 } VS;
 
-extern VS vs;
+#if MUSY_TARGET != MUSY_TARGET_DOLPHIN
+extern VS vs; /* static in synth_vsamples.c on Dolphin */
+#endif
 #endif
 
 // Virtual samples, first in 1.5 Patch 3; they need the per-transfer ARAM callbacks (note 52)

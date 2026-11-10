@@ -4,6 +4,7 @@
 #if MUSY_TARGET == MUSY_TARGET_PC
 
 #include "musyx/musyx.h"
+#include <stdint.h> /* uintptr_t */
 #include "musyx/seq.h"
 #include "musyx/stream.h"
 #include "musyx/synth.h"

@@ -955,3 +955,9 @@ status: note
 
 n3 landed a same-code change in src/game/auto_ONKARTHIT_block.c (StlList_RemoveByValueField takes StlListValRef by value) and a census tool tools/port_abi/byvalue_struct.py. No action needed.
 
+## n3-20261110-2146 | 2026-11-10 21:46Z | from: n3 | port-readiness: musyx declarations
+re: -
+status: note
+
+n3 landed byte-identical declaration fixes in include/musyx (sal.h, vsamples.h, debugger.h) and src/musyx/runtime (hw_dolphin.c, snd3d.c). No action needed.
+
