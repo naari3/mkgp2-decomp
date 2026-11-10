@@ -491,7 +491,8 @@ def levers(src_text, fn, rep, trace_lines, find_def, cpp):
                         + (f' (from `{init}`)' if init else '')
                         + ': a named local, so it gets a low number and is created at its assignment. If diag wants '
                         'that base created later / as a temp, index the base directly (`BASE[i + K]`) and drop the '
-                        'pointer. Landed 025713e.'))
+                        'pointer. Landed 025713e. In an inline called more than once the indexed form makes the walker a backend '
+                        'temp coloured after the locals of EVERY instance (regalloc_patterns 77, fdd5188).'))
             break
         gi = re.search(r'\b(for|while)\b[^{;]*[{;]?[^}]*?\b([A-Za-z_]\w*)\[\s*\w+\s*\+\s*\d+\s*\]', b, re.S)
         if gi and not walking_pointers(b) and kinds:
