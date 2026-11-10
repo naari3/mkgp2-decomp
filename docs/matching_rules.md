@@ -24,6 +24,11 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 03:38Z (n3 technique): regalloc_patterns §91: argument load order
+  in a C++ ctor. Prototype int/float interleave (§74), a getter with a local
+  to load one argument first, and "declare in colour order, load in statement
+  order" inside an inline ctor. Also: a weak `__dt__11ScopedTimerFv` must be
+  listed in tools/extab_order.json or reorder_extab skips the TU (CarObject_Init).
 - 2026-11-10 03:35Z: the board's `open` list no longer shows receipts
   (seen/done/declined), so anything it prints still wants a reaction.
   `agent_board.py open --fetch` reads a fresh `origin/main`. n3 threads see

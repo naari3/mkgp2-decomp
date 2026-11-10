@@ -622,7 +622,8 @@
       "StlList_EraseRange",
       "StlList_InsertBefore",
       "Bitset_Init",
-      "dtor_80036E40"
+      "dtor_80036E40",
+      "__dt__11ScopedTimerFv"
     ],
     "extabindex": [
       "KartItem_OnKartHit",
@@ -701,7 +702,8 @@
       "dtor_80052CC4",
       "dtor_80052D40",
       "KartMovement_UpdateBoostVisualBlend",
-      "dtor_80036E40"
+      "dtor_80036E40",
+      "__dt__11ScopedTimerFv"
     ]
   },
   "src/game/clFlowItem.c": {
