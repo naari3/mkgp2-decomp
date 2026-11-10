@@ -2008,8 +2008,7 @@ propagation when it is not a plain `local = temp` statement:
 - the copy goes through a cast node: `previousBus = (HeldEffectBus *)(void *)E`,
   `void *previousBus = E`, `(T *)((char *)E + 0)` all keep it. This is the one
   that puts the `mr` inside the branch.
-Also write the first call with the expression itself (`f(context->target->effects)`)
-so that it takes the temp (r3) without a reload.
+The first call may name the local; it still takes the temp (r3) without a reload.
 Tried and useless here: reusing a multi-def variable, an inline for the three
 calls, assignment in the condition, `#pragma opt_propagation off` (breaks 30+
 lines elsewhere in a big function).
