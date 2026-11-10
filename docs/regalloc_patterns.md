@@ -2013,3 +2013,28 @@ so that it takes the temp (r3) without a reload.
 Tried and useless here: reusing a multi-def variable, an inline for the three
 calls, assignment in the condition, `#pragma opt_propagation off` (breaks 30+
 lines elsewhere in a big function).
+
+## 77. Two instances of one search inline: walking pointers coloured AFTER both instances' counters: index the array in the inline (RivalRun_CalcPathDistance, near miss 100 -> 4 lines, 11-10)
+
+Target (two calls of the same nearest-point inline) colours `i1, best1, i2,
+best2` first and only then the two pointers that walk the point array, so the
+second counter reuses the first one's register and the second `best` opens a
+new one. With a pointer local in the inline (`RRVec3 *p = pts; ... p++`) the
+locals are numbered `p < best < i` per instance, so `p1` is coloured before
+`i2` and every saved GPR of the second search is off.
+
+Lever: no pointer local in the inline; index instead.
+
+```c
+for (i = 0; i < count; i++) {
+    d.x = pts[i].x - px;   /* not: p->x - px; p++ */
+    ...
+}
+```
+
+Strength reduction turns `pts[i]` into a walking pointer, but that pointer is
+a backend temp created after every frontend local of BOTH inline instances,
+hence coloured last. Same instructions, 100 -> 4 register diff lines. The
+function is still asm (docs/gave_up.md, draft
+docs/wip/RivalRun_CalcPathDistance_regonly.patch); the rest is one `lfs`/`fmr`
+direction of a shared zero load.
