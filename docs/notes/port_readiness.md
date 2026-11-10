@@ -30,5 +30,5 @@ When you land port-prerequisite work, put the before and after of your row in
 the commit message or landing report.
 
 Baseline, 2026-11-10 09:00Z (before the data-typing thread): no C definition
-about 688,000 bytes, autodata 0. At 10:20Z: no C 1,604, unk 69,827, typed
+about 688,000 bytes, autodata 0. At 10:10Z: no C 1,604, unk 69,827, typed
 484,901, in its TU 1,658,867.
