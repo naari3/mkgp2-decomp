@@ -2184,3 +2184,24 @@ static inline void freeParticle(ViewEmitter *o, ViewBillboardParticle *&out) {
 
 Sign: a value assigned from an inline's return sits one or two volatile
 registers too high and no declaration order moves it.
+
+## 82. Sum passed as a float argument is scheduled after the other argument loads: load the operand into a local, then add in place (fn_8014ADB4, asm -> C, 96.9 -> 100, 11-10)
+
+Target computes `dy + pos.y` (`lfs f0; ...; fadds f2,f31,f0`) before the
+`lfs f1` / `fmr f4` of the neighbouring arguments, and keeps `dy` in f31.
+Writing the sum inside the call, in a fresh local (`yy = dy + pos.y`), or
+in an inline all gave the same late `fadds`; `dy += pos.y` put the result
+in f31 plus an extra `fmr`. What matched:
+
+```c
+yy = sRankPortraitPos[kart][i].y;
+yy = dy + yy;
+SPR(0, voice, 0, pos.x, yy, k, k, self->t);
+```
+
+The same function needed two more things: the section 74 prototype lever
+(all five float params declared before `obj, id, flag`, so `id` is loaded
+last), and float literals instead of `extern const float` for the
+`t += 0.05f; if (t > 1.0f) t = 1.0f;` clamp (extern constants numbered the
+FPRs t=f1/step=f0/max=f2, literals give t=f2/step=f1/max=f0).
+
