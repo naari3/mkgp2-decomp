@@ -1,15 +1,7 @@
 extern int Path_GetTotalCount(void *self);
 extern int abs(int x);
 
-typedef struct PathParticipant {
-    unsigned char pad_0[0x14];
-    int node;
-    unsigned char pad_18[0x42];
-    unsigned short segment;
-    unsigned char pad_5C[4];
-    int lap;
-    unsigned char pad_64[0x34];
-} PathParticipant;
+#include "game/types/PathParticipant.h"
 
 /* 0x8003CDD8: progress of kart a minus kart b, in path nodes. */
 int Race_CompareKartProgress(PathParticipant *karts, int a, int b)

@@ -5,25 +5,7 @@
  * state on a kart hit, a wall stop, a fall or a timeout. */
 #include "game/types/Vec.h"
 
-typedef struct GreenShellWork {
-    unsigned char bounces;
-    unsigned char pad1[3];
-    unsigned int timers[4];
-    float groundY;
-    float spin;
-    float phase;
-    unsigned char pad20[0x30 - 0x20];
-    int seCh;
-    Vec launchPos;
-    unsigned char pad40[0x4C - 0x40];
-    unsigned char *eff;
-    unsigned char pad50[0x5C - 0x50];
-    void *gabyou;
-    unsigned char pad60[0x98 - 0x60];
-    void *driver;
-    void *target;
-    signed char launch;
-} GreenShellWork;
+#include "game/types/GreenShellWork.h"
 
 extern int g_ccClass;
 extern void Item_BendVelocityByGroundProbe(void *vel, Vec pos, float yaw, float speed, float pitch);

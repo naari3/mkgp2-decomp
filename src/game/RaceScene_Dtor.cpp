@@ -23,10 +23,7 @@ struct HsdObj {
     unsigned short pad4;
 };
 
-struct HsdRefObj {
-    HsdClass *klass;
-    unsigned short ref;
-};
+#include "game/types/HsdRefObj.h"
 
 struct RaceScene {
     void *vtable;

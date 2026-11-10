@@ -14,11 +14,7 @@
  * isolating the exact methods into independently linked TUs.
  */
 
-typedef struct RoundInfo {
-    unsigned char pad0[0x18];
-    int lapA;
-    int lapB;
-} RoundInfo;
+#include "game/types/RoundInfo.h"
 
 typedef struct KartResult {
     unsigned char pad0[0x1F8];
@@ -150,12 +146,7 @@ extern NameEntry RankLog_data_80411B18[0x26];
 
 typedef unsigned char (*TitleCheckFn)(void);
 
-typedef struct DisplayState {
-    unsigned char pad[0x20];
-    signed char mode;
-    unsigned char pad21[3];
-    unsigned char flag24;
-} DisplayState;
+#include "game/types/DisplayState.h"
 
 #include "game/types/OSCalendarTime.h"
 

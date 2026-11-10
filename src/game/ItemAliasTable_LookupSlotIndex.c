@@ -1,11 +1,6 @@
 #include "game/types/ItemAliasEntry.h"
 
-typedef struct ItemClassEntry {
-    unsigned char pad0[4];
-    unsigned char flag0;
-    unsigned char flag1;
-    unsigned char pad6[0x14 - 6];
-} ItemClassEntry;
+#include "game/types/ItemClassEntry.h"
 
 extern ItemAliasEntry g_itemAliasTable[155];
 extern ItemClassEntry lbl_8041CBA8[];

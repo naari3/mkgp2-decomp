@@ -25,30 +25,7 @@ typedef struct HSD_JObj {
 
 #include "game/types/CharacterData.h"
 
-typedef struct KartPreview {
-    void *vtbl;
-    void *kart;
-    void *obj8;
-    void *driver;
-    void *obj10;
-    void *anims14[4];
-    void *obj24;
-    HSD_JObj *jobj28;
-    HSD_JObj *jobj2C;
-    HSD_JObj *jobj30;
-    HSD_JObj *jobj34;
-    HSD_JObj *jobj38;
-    HSD_JObj *jobj3C;
-    HSD_JObj *jobj40;
-    HSD_JObj *jobj44;
-    int chara;
-    int anim_state;
-    float frame;
-    float end_frame;
-    unsigned char pad58[0x88 - 0x58];
-    float view_x;
-    float view_y;
-} KartPreview;
+#include "game/types/KartPreview.h"
 
 extern unsigned int RenderTargetSingleton_bss_806D1558;
 extern RenderTargetHolder *RenderTargetSingleton_bss_806D155C;

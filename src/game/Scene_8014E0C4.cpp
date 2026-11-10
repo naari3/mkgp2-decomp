@@ -122,12 +122,7 @@ struct CoursePanel {
 };
 
 
-struct NamCamObj {
-    unsigned char active;
-    unsigned char loaded;
-    char pad2[2];
-    void *buf;
-};
+#include "game/types/NamCamObj.h"
 
 struct CamPanel {
     void *vt;
@@ -282,15 +277,9 @@ struct StatusInfo {
 };
 
 struct LNode;
-struct LIter {
-    LNode *n;
-};
+#include "game/types/LIter.h"
 
-struct ListHead {
-    int count;
-    LNode *f4;
-    LNode *head;
-};
+#include "game/types/ListHead.h"
 
 struct FadeHolder {
     char pad0[0x10];

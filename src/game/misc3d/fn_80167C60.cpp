@@ -21,9 +21,7 @@ struct GXColor {
     unsigned int a : 8;
 };
 
-struct Buf256 {
-    unsigned short c[0x100];
-};
+#include "game/types/Buf256.h"
 
 struct TextManager {
     TextManager();

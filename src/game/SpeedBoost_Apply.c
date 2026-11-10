@@ -1,12 +1,4 @@
-typedef struct BoostKart {
-    unsigned char pad_00[8];
-    int level;
-    float timer;
-    unsigned char pad_10[0x18];
-    int levelCount;
-    unsigned char pad_2C[0x1AC];
-    float accelScale;
-} BoostKart;
+#include "game/types/BoostKart.h"
 
 typedef struct SpeedBoost {
     unsigned char isPlayer;

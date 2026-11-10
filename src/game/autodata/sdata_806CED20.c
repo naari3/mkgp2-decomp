@@ -21,10 +21,7 @@ extern char sdata_806CED20_data_803F5748[];
 extern char lbl_806D22C0[];
 
 /* layout as declared in src/game/BootDispatcher.cpp */
-typedef struct BootHooks {
-    void *begin;   /* ? * */
-    void *end;   /* ? * */
-} BootHooks;
+#include "game/types/BootHooks.h"
 
 /* layout as declared in src/game/BootDispatcher.cpp */
 #include "game/types/BootColor.h"

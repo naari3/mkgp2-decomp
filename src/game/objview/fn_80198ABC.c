@@ -1,12 +1,5 @@
 #include "game/objview/item_state_private.h"
-typedef struct HitEffect {
-    unsigned char pad0[0x8c];
-    Vec3 pos;
-    unsigned char pad98[0xb0 - 0x98];
-    float param;
-    unsigned char padb4[0x11c - 0xb4];
-    void *target;
-} HitEffect;
+#include "game/types/HitEffect.h"
 extern const float lbl_8037DD48[];
 extern void *KartDriver_GetKartRootMtx(void *);
 extern void Mtx44_GetTranslation_RowMajor(Vec3 *, void *);
@@ -88,8 +81,8 @@ void fn_80198ABC(Item *self, State *state) {
                 SoundMgr_PlaySE_Positional(0xCB, self->pos, 0);
                 effect = DrawEffect_SpawnDirect(Effect_KartJoint15_Res7B_Update);
                 if (effect != 0) {
-                    Vec3_Copy(&effect->pos, &self->pos);
-                    effect->param = self->param;
+                    Vec3_Copy(&effect->position, &self->pos);
+                    effect->scale = self->param;
                     effect->target = state->target;
                 }
                 break;

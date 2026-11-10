@@ -14,14 +14,7 @@ void operator delete(void *) throw();
 
 #include "game/types/RefillSprite.h"
 #include "game/types/RefillGroup.h"
-struct RefillChoice {
-    RefillGroup *groups[4];
-    TextManager *text[4];
-    int phase, timer, row, column;
-    unsigned char active, selected, done, pad33;
-    int resource, count;
-    int slots[3][2];
-};
+#include "game/types/RefillChoice.h"
 struct ItemSelectPresentation {
     RefillGroup *groups[7];
     int handle;
@@ -37,7 +30,7 @@ struct ResCtrl {
     unsigned int colors[4]; int tail[5];
     ResCtrl(); ~ResCtrl() {}
 };
-struct PlayerData { unsigned char pad[0x18c]; int selected[3]; };
+#include "game/types/PlayerData.h"
 struct ItemSelectInput { char pad00[0x14]; int dir, held; };
 struct RefillSingleton { char opaque[0x5c]; RefillSingleton(); };
 
@@ -711,14 +704,7 @@ extern "C" void fn_8023A148(ItemSelectPresentation *self) {
     }
     SpriteHandle_RecomputeCull(self->handle);
 }
-struct GridInitState {
-    void *groups[7];
-    int handle;
-    TextManager *texts[3][4];
-    int selected, timer, phase;
-    unsigned char done, automatic, pad5e[2];
-    int itemIndices[3], resources[3];
-};
+#include "game/types/GridInitState.h"
 #pragma use_lmw_stmw on
 static inline void InitializeGridItem(GridInitState *self, unsigned char *player, int *ids, int i) {
     int id;

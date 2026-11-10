@@ -8,16 +8,10 @@
 #include "game/types/FloatTriple.h"
 
 /* layout as declared in src/game/DbgMenu.cpp */
-typedef struct JointEntry {
-    char name[16];
-    int a;
-    int b;
-} JointEntry;
+#include "game/types/JointEntry.h"
 
 /* layout as declared in src/game/DbgMenu.cpp */
-typedef struct JointTable {
-    JointEntry e[34];
-} JointTable;
+#include "game/types/JointTable.h"
 
 /* layout as declared in src/game/ItemHoming.c */
 #include "game/types/Float3.h"

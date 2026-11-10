@@ -1,14 +1,4 @@
-typedef struct DisplayContext {
-    void *fifo;
-    int f4;
-    int f8;
-    unsigned char alpha;
-    char padD[3];
-    float f10;
-    char f14[0x74];
-    void *buf88;
-    int f8C;
-} DisplayContext;
+#include "game/types/DisplayContext.h"
 
 extern void *lbl_806CF010;
 extern const float lbl_806DA288;
@@ -25,7 +15,7 @@ DisplayContext *DisplayContext_Init(DisplayContext *self) {
     self->alpha = 0xFF;
     self->f10 = lbl_806DA288;
     memset(self->f14, 0, 0x74);
-    self->f8C = 0;
+    self->count = 0;
     if (self->fifo == 0) {
         if (OSGetFontEncode() == 1) {
             self->fifo = OSAllocFromHeap(lbl_806CF010, 0x120F00);
@@ -38,6 +28,6 @@ DisplayContext *DisplayContext_Init(DisplayContext *self) {
         }
     }
     memset(&self->f4, 0, 0x84);
-    self->buf88 = OSAllocFromHeap(lbl_806CF010, 0x4200);
+    self->entries = OSAllocFromHeap(lbl_806CF010, 0x4200);
     return self;
 }

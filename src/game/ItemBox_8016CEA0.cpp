@@ -26,17 +26,7 @@ struct ItemBoxSlot {
     int randIdx;
 };
 
-struct ItemBoxSet {
-    void *vtable;
-    void *sound;
-    void *modelA;
-    void *modelB;
-    void *archive;
-    void *nodes;
-    int selected;
-    ItemBoxSlot *slots;
-    int count;
-};
+#include "game/types/ItemBoxSet.h"
 
 extern "C" {
 extern char BoxConstruct_vtable_8049110C[];

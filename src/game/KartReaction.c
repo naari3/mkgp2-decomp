@@ -27,14 +27,7 @@
 typedef unsigned char u8;
 typedef int s32;
 
-typedef struct KartItem {
-    u8 _pad_000[0x1F0];
-    s32 currentState;        /* 0x1F0 */
-    u8 _pad_1F4[0x204 - 0x1F4];
-    u8 flag204;              /* 0x204 */
-    u8 _pad_205[0x2C0 - 0x205];
-    s32 currentItemId;       /* 0x2C0 */
-} KartItem;
+#include "game/types/KartItem.h"
 
 extern void SetAnimState(KartItem *self, int anim_id, int unk_zero, int trigger_flag,
                          float f1, float f2, float f3, float f4);

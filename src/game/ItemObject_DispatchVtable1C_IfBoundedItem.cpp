@@ -8,10 +8,7 @@ public:
     virtual void Dispatch(int id, int arg);
 };
 
-struct ItemObject {
-    unsigned char pad[0x308];
-    ItemBehavior *behavior;
-};
+#include "game/types/ItemObject.h"
 
 extern "C" {
 int ItemAlias_DestToSource(int, int);

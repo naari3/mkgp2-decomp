@@ -594,55 +594,9 @@ struct ResultFader {
 
 #include "game/types/HudInput.h"
 
-struct ResultPanel {
-    void *vt;
-    unsigned char done;
-    char pad5[3];
-    VObj14 *f8;
-    VObj14 *fC;
-    VObj14 *f10;
-    void *f14;
-    void *f18;
-    char pad1C[4];
-    unsigned char f20;
-    unsigned char f21;
-    char pad22[2];
-    int state;
-    float t;
-    char pad2C[8];
-    unsigned char f34;
-    char pad35[3];
-    int item;
-    VObj *f3C;
-    unsigned char f40;
-    char pad41[3];
-    VObj14F *f44;
-    char pad48[4];
-    unsigned char f4C;
-    char pad4D[3];
-    VObj14 *f50;
-    VObjCF *f54;
-    unsigned char f58;
-    char pad59[3];
-    float f5C;
-    char pad60[4];
-    ResultFader *f64;
-    ObjTrio *f68;
-    ObjPair *f6C;
-    unsigned char f70;
-};
+#include "game/types/ResultPanel.h"
 
-struct HudRankSlot {
-    unsigned char active;
-    char pad1;
-    unsigned short name[7];
-    int chr;
-    int kart;
-    char pad18[4];
-    int icon;
-    char pad20[8];
-    unsigned char f28;
-};
+#include "game/types/HudRankSlot.h"
 
 #include "game/types/HudModel.h"
 

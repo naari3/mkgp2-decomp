@@ -6,7 +6,10 @@
 #include "game/autodata.h"
 
 /* layout as declared in src/game/ItemObject_Tick_Kind2c_Horn.c */
-#include "game/types/ScaleKey.h"
+typedef struct ScaleKey {
+    float t[5];
+    float v[5];
+} ScaleKey;
 
 /* layout as declared in src/game/ItemObject_Tick_Kind2d_ChainShellPair.c */
 #include "game/types/ChainScaleKey.h"

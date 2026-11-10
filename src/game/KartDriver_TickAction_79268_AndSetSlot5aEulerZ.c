@@ -7,17 +7,7 @@ typedef struct HSD_JObj {
     float rotZ;         /* 0x24 */
 } HSD_JObj;
 
-typedef struct KartDriver {
-    void *model;  /* 0x000 */
-    unsigned char pad004[0x8];
-    void *loaded; /* 0x00C */
-    unsigned char pad010[0x158];
-    HSD_JObj *joint; /* 0x168 */
-    unsigned char pad16c[0x4];
-    float baseRotZ;  /* 0x170 */
-    unsigned char pad174[0x198];
-    void *tireFX;    /* 0x30C */
-} KartDriver;
+#include "game/types/KartDriver.h"
 
 extern char lbl_806D2548[7]; /* "jobj.h" */
 extern char lbl_806D2550[5]; /* "jobj" */
@@ -59,13 +49,13 @@ int KartDriver_TickAction_79268_AndSetSlot5aEulerZ(KartDriver *self, float pitch
 {
     HSD_JObj *jobj;
 
-    if (self->model == 0 || self->loaded == 0) {
+    if (self->model == 0 || self->driver == 0) {
         return 0;
     }
     if (self->tireFX != 0) {
         KartTireFX_SetPitch(self->tireFX, pitch);
     }
-    jobj = self->joint;
+    jobj = self->joint_168;
     if (jobj != 0) {
         HSD_JObjSetRotationZ(jobj, self->baseRotZ + pitch);
     }

@@ -4,10 +4,7 @@
 
 #include "game/types/ItemAliasEntry.h"
 
-typedef struct ItemClassEntry {
-    int def;
-    unsigned char pad4[0x14 - 4];
-} ItemClassEntry;
+#include "game/types/ItemClassEntry.h"
 
 typedef struct ItemObject {
     signed char active;

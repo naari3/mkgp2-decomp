@@ -1,9 +1,5 @@
 // Session-time commit and lifetime statistics facade.
-struct OperationClockState {
-    unsigned char tick[8];
-    unsigned int currentSeconds;
-    unsigned int deltaSeconds;
-};
+#include "game/types/OperationClockState.h"
 struct OperationClockStatsView {
     unsigned char prefix[0x274];
     unsigned int totalPlaySeconds;

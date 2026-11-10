@@ -4,9 +4,7 @@ struct Viewer {
     virtual ~Viewer();
 };
 
-struct ViewerScene {
-    void *vtable;
-};
+#include "game/types/ViewerScene.h"
 
 extern "C" {
 extern Viewer *lbl_806D1588;

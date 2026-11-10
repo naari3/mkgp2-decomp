@@ -1,7 +1,4 @@
-typedef struct HsdHandle {
-    char pad[8];
-    int x8;
-} HsdHandle;
+#include "game/types/HsdHandle.h"
 
 typedef struct Child8018FDA4 {
     char pad[0x24];

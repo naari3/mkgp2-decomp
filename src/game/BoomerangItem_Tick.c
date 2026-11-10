@@ -9,23 +9,7 @@ const char BoomerangItem_Tick_rodata_80330398[1020] = { 63, -128, 0, 0, 63, 51, 
  * item's "boomerang" joint, scaled by the spin pace. */
 #include "game/types/Vec.h"
 
-typedef struct BoomerangWork {
-    unsigned char thrown;
-    unsigned char pad1[3];
-    unsigned int timers[4];
-    float pace;
-    float tether;
-    float tetherScale;
-    unsigned char pad20[0x5C - 0x20];
-    unsigned char *sub;
-    unsigned char pad60[0x90 - 0x60];
-    unsigned char spawned;
-    unsigned char pad91[3];
-    void *owner;
-    void *driver;
-    unsigned char pad9C[0xF0 - 0x9C];
-    unsigned char shellColor;
-} BoomerangWork;
+#include "game/types/BoomerangWork.h"
 
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);
 extern void SpriteSlot_SetJointVisibilityByName(void *slot, const char *name, int a, int b);

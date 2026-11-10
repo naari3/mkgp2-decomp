@@ -353,22 +353,10 @@ extern char lbl_806D32C4[];
 extern char lbl_806D3440[];
 
 /* layout as declared in src/game/CardTaskChecks.cpp */
-typedef struct CardTextLine {
-    float x;
-    float y;
-    char *format;
-    int font;
-    int r;
-    int g;
-    int b;
-    int a;
-} CardTextLine;
+#include "game/types/CardTextLine.h"
 
 /* layout as declared in src/game/card_task_manager_create.c */
-typedef struct CardTaskFactory {
-    void *create;   /* function * */
-    void *other;
-} CardTaskFactory;
+#include "game/types/CardTaskFactory.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

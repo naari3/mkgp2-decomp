@@ -9,9 +9,7 @@ typedef struct DebrisBlock {
     DebrisParticle particles[15];
 } DebrisBlock;
 
-typedef struct DebrisArray {
-    DebrisBlock *block;
-} DebrisArray;
+#include "game/types/DebrisArray.h"
 
 extern void MemoryManager_TimedFree(void *p);
 extern void __destroy_arr(void *block, void *dtor, unsigned long size, unsigned long count);

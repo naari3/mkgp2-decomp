@@ -1,12 +1,4 @@
-typedef struct ClStream {
-    unsigned char state;
-    unsigned char pad1[3];
-    struct ClStream *pair;
-    struct ClStream *pair2;
-    unsigned char padc[4];
-    unsigned int flags;
-    unsigned char pad14[0x78 - 0x14];
-} ClStream;
+#include "game/types/ClStream.h"
 
 extern unsigned char g_ClStream_Initialized;
 extern ClStream g_ClStreams[];

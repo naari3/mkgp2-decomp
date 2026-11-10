@@ -13,10 +13,7 @@ typedef struct CardTaskEntry {
     int kind;
 } CardTaskEntry;
 
-typedef struct CardTaskManager {
-    CardTaskEntry *entries; /* 0x00 */
-    int count;              /* 0x04 */
-} CardTaskManager;
+#include "game/types/CardTaskManager.h"
 
 extern "C" void MemoryManager_Free(void *p);
 extern "C" void MemoryManager_TimedFree(void *p);

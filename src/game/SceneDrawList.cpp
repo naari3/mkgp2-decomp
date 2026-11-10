@@ -1,4 +1,4 @@
-struct DrawNode { void* unknown; DrawNode* next; unsigned short flags; };
+#include "game/types/DrawNode.h"
 struct DrawRoot { DrawNode* nodes; };
 struct DrawArchive { void* a; void* b; DrawRoot** roots; };
 struct DrawSlot { int id; int a; int b; int mode; void* entry; };

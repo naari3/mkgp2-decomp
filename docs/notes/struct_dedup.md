@@ -135,3 +135,44 @@ in the copy's own file and skip copies in headers, files with an aggregate
 initialiser of the type, and names other structs in reach also use. Run
 `apply` afterwards. What is left differs in method signatures or layout:
 changing those changes mangled names or code, so each needs a human.
+
+## Merging views: tools/struct_merge.py (2026-11-10)
+
+What `struct_dedup.py` leaves behind are *views*: every TU declares only the
+members it touches, pads the rest and invents its own member names. For a
+name that is one real type, `struct_merge.py` builds the union of the views
+(member by offset, typed pointer over `void *`, the most used descriptive
+name), writes `include/game/types/<Name>.h` with offsets in comments,
+replaces each copy by the `#include` and renames the accesses in that file.
+
+    python3 tools/struct_merge.py show Name     # merged layout + CONFLICT / TYPES / NAMES lines
+    python3 tools/struct_merge.py run Name...   # clean tree; builds and checks every object hash
+
+`run` puts back every file that no longer compiles or whose object changed
+(a file that used the old shared header gets the old definition as a local
+copy), so what stays is byte-identical by construction. It still needs the
+clean build before pushing (stale header deps, see above).
+
+What to read in `show` before running a name:
+- `NAMES 0x.. -> a: a x6, b x3`: the views disagree about a member name.
+  Synonyms (`pos`/`position`) are fine. Different meanings (`model` vs
+  `state`) usually mean two different types share the name: do not merge,
+  split the name instead.
+- `TYPES`: different member types at one offset. Pointer targets are
+  resolved (typed beats `void *`, spelled `struct T *` with a forward
+  declaration so files with their own `T` still compile); int/float
+  disagreements make the minority file fall out at the hash check.
+- `CONFLICT`: overlapping members of different extent. An array or embedded
+  struct that the scalars tile exactly wins and the scalar accesses become
+  `name[i]` / `name.x`; anything else leaves the minority copies local.
+
+Decisions a human made are recorded in `tools/struct_merge_hints.json`, per
+type: `names` (offset -> member name), `fields` (offset -> full declaration),
+`aliases` (other type names that are the same real object, e.g. `KartStatus`
+= `ItemEffectBus`), `header` (an existing header already has the full
+definition; views move onto it), `exclude`, `size`, and `why`.
+
+Limits: a name whose shared header is included by another header is skipped
+("by hand"); classes with methods, bitfields and unions are left alone; the
+member-name test is `GENERIC_RE` in struct_merge.py (struct_dedup's version
+counts all-hex words such as `eff` as placeholders, do not reuse it).

@@ -3,13 +3,7 @@ typedef struct Entry {
     unsigned char pad[0xc];
 } Entry;
 
-typedef struct ObjList {
-    void *vt;
-    Entry *items;
-    int count;
-    void *child;
-    void *buf;
-} ObjList;
+#include "game/types/ObjList.h"
 
 extern char Obj987_vtable_804963A4[];
 extern char lbl_80490FE0[];

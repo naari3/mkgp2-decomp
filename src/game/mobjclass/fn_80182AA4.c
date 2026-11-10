@@ -1,10 +1,6 @@
 #include "game/types/TObjView.h"
 
-typedef struct DObjView {
-    void *parent;
-    struct DObjView *next;
-    void *mobj;
-} DObjView;
+#include "game/types/DObjView.h"
 
 extern const float lbl_806D927C;
 extern void PSMTXTrans(float m[3][4], float x, float y, float z);

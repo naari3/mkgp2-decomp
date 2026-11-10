@@ -5,12 +5,7 @@
 
 #include "game/types/Vec.h"
 
-typedef struct RenderObj {
-    unsigned char pad0[0x23C];
-    int airState;
-    unsigned char pad240[0x2CC - 0x240];
-    int section;
-} RenderObj;
+#include "game/types/RenderObj.h"
 
 extern const float lbl_806D4DC8; /* 0.0 */
 extern const float lbl_806D4DCC; /* 0.5 */

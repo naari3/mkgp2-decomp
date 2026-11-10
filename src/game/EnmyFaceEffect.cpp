@@ -1090,18 +1090,7 @@ struct FaceDrawSub {
     int overlay;
     FaceVecView offset;
 };
-struct FaceDrawModel {
-    char pad00[4];
-    unsigned char variant;
-    char pad05[3];
-    int face, left, right;
-    float x, y, z, scale;
-    char pad24[4];
-    FaceDrawKart *kart;
-    FaceDrawSub *sub;
-    void *models[2];
-    int timer;
-};
+#include "game/types/FaceDrawModel.h"
 union FaceDrawPipe { float f32; unsigned int u32; };
 volatile FaceDrawPipe GXWGFifo : 0xCC008000;
 #define FIFO GXWGFifo

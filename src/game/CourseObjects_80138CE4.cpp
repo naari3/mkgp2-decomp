@@ -96,9 +96,7 @@ static inline JObj *JObjNext(JObj *j)
 /* 4x4 matrix helpers, compiled as C. */
 #pragma cplusplus off
 
-struct Matrix44 {
-    float v[16];
-};
+#include "game/types/Matrix44.h"
 
 static inline void Mtx44Identity(struct Matrix44 *m)
 {

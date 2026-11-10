@@ -1,7 +1,4 @@
-typedef struct DebrisArray {
-    unsigned char _pad[0xCC];
-    void *responder;
-} DebrisArray;
+#include "game/types/DebrisArray.h"
 
 extern void clItemBoxResponder_Rebind(void *responder);
 

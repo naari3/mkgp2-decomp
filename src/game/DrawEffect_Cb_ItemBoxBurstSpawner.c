@@ -1,9 +1,4 @@
-typedef struct BurstEffect {
-    unsigned char pad000[0x8C];
-    float pos[3];                /* 0x08C */
-    unsigned char pad098[4];
-    float yaw;                   /* 0x09C */
-} BurstEffect;
+#include "game/types/BurstEffect.h"
 
 extern BurstEffect *DrawEffect_SpawnDirect(void (*callback)(BurstEffect *));
 extern void DrawEffect_Cb_ItemBoxBurstFlash_Tick(BurstEffect *);
@@ -21,14 +16,14 @@ void DrawEffect_Cb_ItemBoxBurstSpawner(BurstEffect *self)
 
     e = DrawEffect_SpawnDirect(DrawEffect_Cb_ItemBoxBurstFlash_Tick);
     if (e != 0) {
-        Vec3_Copy(e->pos, self->pos);
+        Vec3_Copy(e->position, self->position);
     }
     yaw = 0.0f;
     step = 0.785398f;
     for (i = 0; i < 8; i++) {
         e = DrawEffect_SpawnDirect(DrawEffect_Cb_CircleFlare_Tick);
         if (e != 0) {
-            Vec3_Copy(e->pos, self->pos);
+            Vec3_Copy(e->position, self->position);
             e->yaw = yaw;
         }
         yaw = BuildOrientationFromYaw(step + yaw);

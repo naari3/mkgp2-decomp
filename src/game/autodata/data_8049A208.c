@@ -22,14 +22,10 @@ extern char lbl_806CFD64[];
 extern char lbl_806CFD6C[];
 
 /* layout as declared in src/game/GetCourseSelectEntry.c */
-typedef struct CupCourseEntry {
-    char data[12];
-} CupCourseEntry;
+#include "game/types/CupCourseEntry.h"
 
 /* layout as declared in src/game/GetCourseSelectEntry.c */
-typedef struct CourseSelectEntry {
-    char data[24];
-} CourseSelectEntry;
+#include "game/types/CourseSelectEntry.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

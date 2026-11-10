@@ -4,13 +4,7 @@
  * C++ for the virtual-call sequence on the kart's hit sink (vtable +0x8). */
 #include "game/types/Vec.h"
 
-typedef struct ItemClassEntry {
-    unsigned char pad0[8];
-    float radius;
-    signed char hasJoint;
-    unsigned char padD[3];
-    const char *joint;
-} ItemClassEntry;
+#include "game/types/ItemClassEntry.h"
 
 typedef struct ItemKindEntry {
     unsigned char pad0[0x10];

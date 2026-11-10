@@ -1,5 +1,10 @@
 /* Per-kart AI tick: drives speed before the race starts, then the AI logic. */
-#include "game/types/PathSlot.h"
+typedef struct PathSlot {
+    float v[3];
+    float speed;
+    float accel;
+    int ids[3];
+} PathSlot;
 
 #include "game/types/KartAI.h"
 

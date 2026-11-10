@@ -1,10 +1,7 @@
 #include "game/mapobject/mapobject.h"
 
 #include "game/types/CoursePropData.h"
-struct CoursePropResource {
-    const char *resource;
-    float radius, height, scale;
-};
+#include "game/types/CoursePropResource.h"
 extern "C" {
 extern char lbl_80490FE0[], lbl_8036D8BC[];
 extern const CoursePropResource lbl_8036D75C[3];

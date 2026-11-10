@@ -1,5 +1,5 @@
 /* Target-observed local views; live Ghidra type lookup was unavailable. */
-typedef struct JointVec { float x, y, z; } JointVec;
+#include "game/types/JointVec.h"
 typedef struct JointEffect {
     char pad00[0x14];
     char slot[0x14];

@@ -38,13 +38,7 @@ extern int PathManager_HasPathLoaded(void *self);
 extern int Path_GetTotalCount(void *self);
 extern void *Path_GetWaypointPtr(void *self, int waypointIndex);
 
-typedef struct PathSlot {
-    char _pad0[0x14];
-    int checkpoint;
-    char _pad18[0x80 - 0x18];
-    int maxProgress;
-    char _pad84[0x98 - 0x84];
-} PathSlot;
+#include "game/types/PathSlot.h"
 
 #pragma exceptions on
 void *Path_LookupCheckpointOffset(void *self, int kartIndex, int offsetDelta) {
@@ -63,7 +57,7 @@ void *Path_LookupCheckpointOffset(void *self, int kartIndex, int offsetDelta) {
     {
         PathSlot *slot = (PathSlot *)self;
         slot += kartIndex;
-        iv = slot->checkpoint + offsetDelta;
+        iv = slot->ids[0] + offsetDelta;
     }
     if (offsetDelta < 0) goto neg_loop;
     do {

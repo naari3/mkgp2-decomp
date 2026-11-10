@@ -23,11 +23,7 @@ struct GrowEntry {
     void *sub;
 };
 
-struct GrowSet {
-    char pad00[0x8];
-    GrowEntry *entries;
-    int count;
-};
+#include "game/types/GrowSet.h"
 
 extern "C" {
 extern char lbl_806D8CD8[7];

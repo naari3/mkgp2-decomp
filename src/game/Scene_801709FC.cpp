@@ -14,12 +14,7 @@ struct GrowEntry {
     void *sub;
 };
 
-struct GrowSet {
-    void *vtable;
-    void *model;
-    GrowEntry *entries;
-    int count;
-};
+#include "game/types/GrowSet.h"
 
 extern "C" {
 extern char GrowSet_vtable_8049128C[];

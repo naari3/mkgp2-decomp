@@ -52,9 +52,7 @@ typedef struct CardPackRecord {
     signed char rankin; /* +0x1DA */
 } CardPackRecord;
 
-typedef struct CardBitpack {
-    u8 opaque[0x18];
-} CardBitpack;
+#include "game/types/CardBitpack.h"
 
 extern "C" {
 extern void DebugPrintf(const char *, ...);

@@ -86,11 +86,7 @@ struct PcbSlot {
     unsigned short h6_11 : 5;
 };
 
-struct KartStatus {
-    char pad0[0x10];
-    unsigned long long bits;
-    unsigned long long bits2;
-};
+#include "game/ItemEffectBusPrivate.h"
 
 struct KartRender {
     char pad0[0x1F4];
@@ -99,7 +95,7 @@ struct KartRender {
     char pad1FC[0x2D0 - 0x1FC];
     unsigned char special;
     char pad2D1[0x304 - 0x2D1];
-    KartStatus *status;
+    ItemEffectBus *status;
 };
 
 extern "C" int fn_8023D1B4(KartRender *kart);
@@ -263,12 +259,12 @@ public:
     void UpdateIcon(unsigned char draw, float px, float py);
 
     void UpdateSprites(unsigned char draw, float px, float py) {
-        KartStatus *st = kart->status;
+        ItemEffectBus *st = kart->status;
         if (!fn_8019FE78(sprL)) {
             animOn = 0;
         }
-        unsigned long long b = st->bits;
-        b |= st->bits2;
+        unsigned long long b = st->mask;
+        b |= st->snapshot;
         if (b & 0x10000) {
             Sprite_SetAnimTime(sprL, 0.0f);
             Sprite_SetAnimTime(sprR, 0.0f);
@@ -288,9 +284,9 @@ public:
     }
 };
 
-static inline unsigned char TestBits(KartStatus *st, unsigned long long mask) {
+static inline unsigned char TestBits(ItemEffectBus *st, unsigned long long mask) {
     unsigned char hit;
-    if ((st->bits & mask) == 0) {
+    if ((st->mask & mask) == 0) {
         hit = 0;
     } else {
         hit = 1;
@@ -572,7 +568,7 @@ clFaceEffect::~clFaceEffect() {
 }
 
 void clFaceEffect::UpdateIcon(unsigned char draw, float px, float py) {
-    KartStatus *st = kart->status;
+    ItemEffectBus *st = kart->status;
     int prev = mode;
     if (TestBits(st, 0x10000) == 1) {
         mode = -1;
@@ -581,17 +577,17 @@ void clFaceEffect::UpdateIcon(unsigned char draw, float px, float py) {
     }
     if (TestBits(st, 0x800000000ULL)) {
         mode = 0;
-    } else if (st->bits & 0x1000000000ULL) {
+    } else if (st->mask & 0x1000000000ULL) {
         mode = 4;
-    } else if (st->bits & 0x4000000000000ULL) {
+    } else if (st->mask & 0x4000000000000ULL) {
         mode = 5;
-    } else if (st->bits & 0x8000000000000ULL) {
+    } else if (st->mask & 0x8000000000000ULL) {
         mode = 6;
-    } else if (st->bits & 0x200ULL) {
+    } else if (st->mask & 0x200ULL) {
         mode = 2;
-    } else if (st->bits & 0x80000000000ULL) {
+    } else if (st->mask & 0x80000000000ULL) {
         mode = 3;
-    } else if (st->bits & 0x10000000000000ULL) {
+    } else if (st->mask & 0x10000000000000ULL) {
         int n = fn_8023D1B4(kart);
         if (n < 0) {
             mode = 7;

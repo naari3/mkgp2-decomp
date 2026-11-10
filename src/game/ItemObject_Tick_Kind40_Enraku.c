@@ -5,24 +5,7 @@
  * cloud effect follows the item's "enraku_smoke" joint. */
 #include "game/types/Vec.h"
 
-typedef struct EnrakuWork {
-    unsigned char pad0[4];
-    unsigned int timers[4];
-    float tether;
-    float tetherScale;
-    unsigned char pad1C[0x34 - 0x1C];
-    Vec anchor;
-    unsigned char pad40[0x4C - 0x40];
-    unsigned char *eff;
-    unsigned char pad50[0x94 - 0x50];
-    void *owner;
-    void *driver;
-    void *target;
-    unsigned char padA0[0xF0 - 0xA0];
-    unsigned char shellColor;
-    unsigned char padF1[3];
-    int shellTimer;
-} EnrakuWork;
+#include "game/types/EnrakuWork.h"
 
 extern const char lbl_8032F530[];
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);

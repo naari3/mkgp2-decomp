@@ -43,14 +43,7 @@ typedef struct BitpackEntry {
     int offset;      /* 0x0C bit offset (filled by bitpack_init) */
 } BitpackEntry;
 
-typedef struct Bitpack {
-    BitpackEntry *schema;  /* 0x00 */
-    int count;             /* 0x04 */
-    unsigned char *dest;   /* 0x08 */
-    unsigned char clear;   /* 0x0C */
-    int total_bits;        /* 0x10 */
-    int total_bytes;       /* 0x14 */
-} Bitpack;
+#include "game/types/Bitpack.h"
 
 extern int strcmp(const char *a, const char *b);
 extern void *memset(void *dst, int c, unsigned long n);
@@ -126,7 +119,7 @@ int bitpack_write_field(Bitpack *self, unsigned int value, const char *tag, int 
     if (index < entry->slots) {
         bitpack_put_bits(entry, dest, entry->offset + (index + 1) * entry->width, value);
     }
-    if (self->clear == 0) {
+    if (self->options == 0) {
         return 0;
     }
     return 1;
@@ -158,14 +151,14 @@ Bitpack *bitpack_init(Bitpack *self, BitpackEntry *schema, int count, unsigned c
     self->schema = schema;
     self->count = count;
     self->dest = dest;
-    self->clear = clear;
+    self->options = clear;
     for (; i < self->count; i++, ofs += sizeof(BitpackEntry)) {
         BITPACK_ENTRY_AT(self, ofs)->offset = bits;
         bits += BITPACK_ENTRY_AT(self, ofs)->width * BITPACK_ENTRY_AT(self, ofs)->slots;
     }
     self->total_bits = bits;
     self->total_bytes = self->total_bits / 8 + (self->total_bits != 0 ? 1 : 0);
-    if (self->clear == 1) {
+    if (self->options == 1) {
         memset(self->dest, 0, self->total_bytes);
     }
     return self;

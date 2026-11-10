@@ -7,37 +7,9 @@
  */
 #include "game/types/Vec.h"
 
-typedef struct KartStatus {
-    unsigned char pad[0x10];
-    unsigned long long flags;
-} KartStatus;
+#include "game/ItemEffectBusPrivate.h"
 
-typedef struct KartDriver {
-    void *model;        /* 0x000 */
-    void *lodMid;       /* 0x004 */
-    void *lodFar;       /* 0x008 */
-    void *driver;       /* 0x00C */
-    unsigned char pad010[0x1c - 0x10];
-    void *accessory;    /* 0x01C */
-    void *extra;        /* 0x020 */
-    unsigned char pad024[0x150 - 0x24];
-    void *extraEnabled; /* 0x150 */
-    unsigned char pad154[0x174 - 0x154];
-    unsigned char showAccessory; /* 0x174 */
-    unsigned char pad175[0x17c - 0x175];
-    void *matrixSource; /* 0x17C */
-    unsigned char pad180[0x1e8 - 0x180];
-    int visible;        /* 0x1E8 */
-    unsigned char pad1ec[0x2d0 - 0x1ec];
-    unsigned char forceDraw; /* 0x2D0 */
-    unsigned char pad2d1[0x304 - 0x2d1];
-    KartStatus *status; /* 0x304 */
-    unsigned char pad308[0x30c - 0x308];
-    void *tireFx;       /* 0x30C */
-    unsigned char pad310[0x35c - 0x310];
-    void *helper35C;    /* 0x35C */
-    void *helper360;    /* 0x360 */
-} KartDriver;
+#include "game/types/KartDriver.h"
 
 extern void *GetCourseScene3D(void);
 extern void CObj_LoadProjMatrix(void *scene, Vec *out);
@@ -54,7 +26,7 @@ extern void fn_80245700(void *obj);
 
 static inline unsigned char KartDriver_IsHidden(KartDriver *self)
 {
-    return (self->status->flags & 0x8000000000ULL) == 0 ? 0 : 1;
+    return (self->itemBus->mask & 0x8000000000ULL) == 0 ? 0 : 1;
 }
 
 #pragma exceptions on
@@ -87,8 +59,8 @@ int KartDriver_Render(KartDriver *self, int mode)
     if (!IsRaceStarted()) {
         if (mode == 0 || mode == 1 || mode == 4) {
             Object_RenderJObjTree(self->model, 7);
-            if (self->tireFx != 0) {
-                KartTireFX_ApplyAndRender(self->tireFx);
+            if (self->tireFX != 0) {
+                KartTireFX_ApplyAndRender(self->tireFX);
             }
         }
     } else if (self->lodFar != 0 && dist >= 78400.0f) {
@@ -108,8 +80,8 @@ int KartDriver_Render(KartDriver *self, int mode)
             Object_RenderJObjTree(self->model, 7);
         }
         if (mode == 0 || mode == 2) {
-            if (self->tireFx != 0) {
-                KartTireFX_ApplyAndRender(self->tireFx);
+            if (self->tireFX != 0) {
+                KartTireFX_ApplyAndRender(self->tireFX);
             }
         }
     }

@@ -6,17 +6,9 @@ struct clNormal3D {
     unsigned char pad[0x5c];
 };
 
-struct ItemParams {
-    const char *name;
-    float x4;
-    float x8;
-};
+#include "game/types/ItemParams.h"
 
-struct GroupParams {
-    const char *model;
-    ItemParams *items;
-    int count;
-};
+#include "game/types/GroupParams.h"
 
 extern "C" {
 extern void DebugPrintf(const char *fmt, ...);

@@ -11,15 +11,7 @@ int lbl_804221C8[16] = {
 #include "game/types/TEXHeader.h"
 #include "game/types/TEXDescriptor.h"
 
-typedef struct ResourceSlot {
-    int id;
-    int group;
-    void *palette;
-    int count;
-    GXTexObj *texObjs;
-    GXTlutObj *tlutObjs;
-    unsigned char *tlutNames;
-} ResourceSlot;
+#include "game/types/ResourceSlot.h"
 
 extern unsigned char IsValidResourceId(int id);
 extern int ResourceTable_GetSlotIndex(int id);

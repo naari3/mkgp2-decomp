@@ -1,11 +1,4 @@
-typedef struct SndSlot {
-    unsigned int flags;
-    unsigned int id;
-    unsigned char group;
-    unsigned char pad9[0x18 - 0x9];
-    unsigned char x18;
-    unsigned char pad19[0x1c - 0x19];
-} SndSlot;
+#include "game/types/SndSlot.h"
 
 #include "game/types/ClStreamSlot.h"
 

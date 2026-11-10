@@ -21,24 +21,7 @@ extern unsigned char fn_801375D8(Vec3 *pos, float radius);
 
 extern const float lbl_806D5AB0; /* -pi/2 */
 
-typedef struct ItemSlot {
-    signed char active;
-    char pad01[0x13];
-    unsigned char sprite[0x14];
-    signed char shadow;
-    char pad29[3];
-    float alpha;
-    char pad30[0xC];
-    signed char shadowEnabled;
-    char pad3D[0x3B];
-    void (*draw)(void *arg);
-    void *drawArg;
-    char pad80[0x4C];
-    Vec3 pos;
-    float radius;
-    signed char visible;
-    char padDD[0x1EC - 0xDD];
-} ItemSlot;
+#include "game/types/ItemSlot.h"
 
 typedef struct ItemObjectManager {
     ItemSlot slots[256];

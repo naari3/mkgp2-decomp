@@ -1,7 +1,4 @@
-typedef struct MediaBuffer {
-    unsigned char busy;
-    void *data;
-} MediaBuffer;
+#include "game/types/MediaBuffer.h"
 
 typedef struct MediaRange {
     int start;
@@ -10,10 +7,7 @@ typedef struct MediaRange {
 
 extern MediaBuffer g_mediaBuffers[6];
 extern MediaRange lbl_805AC2C0[4];
-typedef struct GameSettings {
-    unsigned char pad[0x21];
-    signed char mediaSlot;
-} GameSettings;
+#include "game/types/GameSettings.h"
 
 extern GameSettings lbl_80598A60;
 extern int g_globalTimer;

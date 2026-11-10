@@ -7,16 +7,7 @@
 #include "game/types/Vec.h"
 
 /* layout as declared in src/game/ItemObject_Tick_DispatchShellGroup.c */
-typedef struct ShellPose {
-    int anim;
-    int se;
-    float scale;
-    Vec near;
-    Vec rot;
-    unsigned char pad[12];
-    Vec far;
-    unsigned char pad2[12];
-} ShellPose;
+#include "game/types/ShellPose.h"
 
 /* layout as declared in src/game/ItemObject_Tick_DispatchcTo15.c */
 #include "game/types/EffectAnchor.h"

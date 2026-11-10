@@ -1,13 +1,4 @@
-typedef struct ItemObject {
-    unsigned char pad_000[0xA0];
-    float position[3];
-    unsigned char pad_0AC[0x40];
-    unsigned char bytes[4];
-    unsigned char pad_0F0[0x78];
-    int field168;
-    unsigned char pad_16C[0x14];
-    int pair180[2];
-} ItemObject;
+#include "game/types/ItemObject.h"
 
 unsigned char ItemObject_GetByteAt0xEC(ItemObject *item, int index) {
     if (item == 0) {

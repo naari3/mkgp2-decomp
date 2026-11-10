@@ -1,10 +1,5 @@
 /* Reset a path cursor onto the path with the given key. */
-typedef struct PathCursor {
-    void *path;    /* 0x00 */
-    int segment;   /* 0x04 */
-    unsigned char pad08[0x4];
-    void *key;     /* 0x0C */
-} PathCursor;
+#include "game/types/PathCursor.h"
 
 extern void *g_courseData;
 extern void *CourseData_ResolveByKey(void *courseData, void *key);

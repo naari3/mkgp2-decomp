@@ -10,12 +10,7 @@ extern "C" void fn_80203BEC(void);
 extern "C" void fn_80207810(void);
 extern "C" void HSD_StateInvalidate(int);
 
-struct SceneOwner {
-    char pad_0[4];
-    unsigned char done;
-    char pad_5[3];
-    VObj *obj;
-};
+#include "game/types/SceneOwner.h"
 
 extern "C" void fn_801F9F04(SceneOwner *self) {
     if (self->done == 0) {

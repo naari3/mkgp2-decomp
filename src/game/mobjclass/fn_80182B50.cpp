@@ -1,7 +1,4 @@
-struct HSD_TObj {
-    unsigned char pad[0x74];
-    float mtx[3][4];
-};
+#include "game/types/HSD_TObj.h"
 
 #include "game/types/HSD_DObj.h"
 

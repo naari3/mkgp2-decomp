@@ -1,6 +1,4 @@
-typedef struct ItemBoxResponder {
-    void *vtbl;
-} ItemBoxResponder;
+#include "game/types/ItemBoxResponder.h"
 
 extern char lbl_803F9D00[];
 extern void *lbl_806D10D0;

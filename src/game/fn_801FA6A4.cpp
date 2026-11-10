@@ -1,7 +1,7 @@
 /* Card scene's second step: track result, then select the next sequence. */
 struct StepSeq { void Add(void *, int); };
 struct Obj801FA6A4 { char pad[0x48]; Obj801FA6A4(int, int); };
-struct CardScene { char pad[0x10]; StepSeq *seq; void *fade; int state, result; };
+#include "game/types/CardScene.h"
 extern "C" {
 extern int lbl_806D00C8, lbl_806D00D0, lbl_806D00F0;
 void *fn_801F4DC0(void *, int);

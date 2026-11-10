@@ -10,14 +10,7 @@ typedef struct SpeedTable {
     unsigned char pad[0xc];
 } SpeedTable;
 
-typedef struct KartMove {
-    unsigned char pad0[8];
-    int table;
-    unsigned char padc[0x22 - 0xc];
-    unsigned char limited;
-    unsigned char pad23;
-    SpeedTable *tables;
-} KartMove;
+#include "game/types/KartMove.h"
 
 extern const float lbl_806D96D0;
 extern const float lbl_806D96D4;

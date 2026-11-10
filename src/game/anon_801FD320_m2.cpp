@@ -4,10 +4,7 @@
 
 #include "game/FlowScene.h"
 
-struct FlowController {
-    void *vt;
-    FlowSceneList *owner;
-};
+#include "game/types/FlowController.h"
 
 extern "C" {
 extern int lbl_806D19C8;

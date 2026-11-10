@@ -2,37 +2,7 @@
  * (first free one when slot == -1) for a car and reset its progress.
  * The free-slot search is a plain loop; mwcc fully unrolls it. */
 
-typedef struct PathEntry {
-    int field0;
-    int node;
-    int field8;
-    float *px;
-    float *py;
-    float *pz;
-    float hist[10];
-    float field40;
-    unsigned char field44;
-    unsigned char field45;
-    unsigned char field46;
-    unsigned char pad47;
-    short field48;
-    short total;
-    float field4C;
-    int field50;
-    float dist;
-    int field58;
-    int field5C;
-    int field60;
-    unsigned char pad64[0x70 - 0x64];
-    int field70;
-    int field74;
-    int field78;
-    int field7C;
-    float pos[3];
-    void *field8C;
-    void *kart;
-    int field94;
-} PathEntry;
+#include "game/types/PathEntry.h"
 
 typedef struct PathMgr {
     unsigned char pad0[0x10];
@@ -79,7 +49,7 @@ int PathManager_RegisterCarObject(PathMgr *self, float *px, float *py, float *pz
     e->pos[0] = *px;
     e->pos[1] = *py;
     e->pos[2] = *pz;
-    e->field70 = 0;
+    e->segment = 0;
     e->field74 = 0;
     e->field94 = 0;
     e->field44 = 0;

@@ -4,18 +4,7 @@
  * leaves the flying state on a kart hit, a landing or a timeout. */
 #include "game/types/Vec.h"
 
-typedef struct BombWork {
-    unsigned char pad0[4];
-    unsigned int timers[4];
-    unsigned char pad14[0x4C - 0x14];
-    unsigned char *eff;
-    unsigned char pad50[0x7C - 0x50];
-    int approach;
-    unsigned char pad80[0x98 - 0x80];
-    void *driver;
-    void *target;
-    signed char launch;
-} BombWork;
+#include "game/types/BombWork.h"
 
 extern const Vec BombItem_TickActive_rodata_8032FA48;
 extern const Vec BombItem_TickActive_rodata_8032FA54;
@@ -109,7 +98,7 @@ void BombItem_TickActive(unsigned char *self, BombWork *w)
             self[0x8D] = 1;
             self[0x3C] = 1;
             SpriteSlot_SetAnimFrameAndApplyScale(self + 0x14, 1, 0.0f);
-            w->eff = DrawEffect_SpawnDirect(Effect_TwoChild_Res8F_Update);
+            w->fx[0] = DrawEffect_SpawnDirect(Effect_TwoChild_Res8F_Update);
             w->timers[0] = 900;
             w->timers[1] = 0;
             self[0xCA]++;
@@ -207,10 +196,10 @@ void BombItem_TickActive(unsigned char *self, BombWork *w)
         if (ItemHitRegistry_RemoveEntry(self, w->timers[0], 0)) {
             ItemTracker_ReleaseLock(self);
             self[0x8D] = 0;
-            if (w->eff != 0) {
-                w->eff[0xC9] = 1;
+            if (w->fx[0] != 0) {
+                w->fx[0][0xC9] = 1;
             }
-            w->eff = 0;
+            w->fx[0] = 0;
             ItemObject_DecrementCategoryBudget(self);
             SpriteSlot_Container_Free(self);
         }

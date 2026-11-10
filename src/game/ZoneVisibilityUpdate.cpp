@@ -9,12 +9,7 @@ struct Zone {
 
     unsigned int GetMask() const { return mask; }
 };
-struct ZoneVisibility {
-    Zone *zones;
-    HSD_JObj **joints;
-    int count;
-    int cur;
-};
+#include "game/types/ZoneVisibility.h"
 extern "C" {
 void *GetCourseScene3D();
 void CObj_LoadProjMatrix(void *, Vec3f *);

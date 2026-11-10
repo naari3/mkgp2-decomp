@@ -19,19 +19,10 @@ extern char data_804E21B0_data_806CFF28[];
 #include "game/types/LateralOffsetEntry.h"
 
 /* layout as declared in src/game/fn_801DDA8C.c */
-typedef struct Entry_804E21C4 {
-    char pad0[20];
-    int f14;
-    int f18;
-    float f1C;
-} Entry_804E21C4;
+#include "game/types/Entry_804E21C4.h"
 
 /* layout as declared in src/game/fn_801DD8E4.c */
-typedef struct Entry_804E2404 {
-    char pad0[12];
-    int fC;
-    float f10;
-} Entry_804E2404;
+#include "game/types/Entry_804E2404.h"
 
 /* layout as declared in src/game/AI_CheckItemSuppression.c */
 #include "game/types/ItemSuppressionEntry.h"
@@ -49,22 +40,13 @@ typedef struct Entry_804E2404 {
 #include "game/types/DistanceBonusEntry.h"
 
 /* layout as declared in src/game/fn_801DCC6C.c */
-typedef struct Entry_804E3644 {
-    char pad0[8];
-    float f8;
-    int fC;
-    float f10;
-} Entry_804E3644;
+#include "game/types/Entry_804E3644.h"
 
 /* layout as declared in src/game/PathVariant_Select.c */
 #include "game/types/PathVariantEntry.h"
 
 /* layout as declared in src/game/fn_801DC9AC.c */
-typedef struct Entry_804E3C5C {
-    char pad0[12];
-    int fC;
-    int f10;
-} Entry_804E3C5C;
+#include "game/types/Entry_804E3C5C.h"
 
 /* layout as declared in src/game/AI_GetHitCooldown.c */
 #include "game/types/HitCooldownEntry.h"

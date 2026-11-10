@@ -41,12 +41,7 @@ struct SharedRef {
     }
 };
 
-struct EffectHandle {
-    SharedRef *ref;
-    Vec3f anchor;
-    Vec3f cur;
-    float blend;
-};
+#include "game/types/EffectHandle.h"
 
 extern "C" {
 void *GetCourseScene3D(void);

@@ -1,15 +1,5 @@
 #include "game/types/Vec3.h"
-struct RaceSlot {
-    char pad0[0x90];
-    int targetId;
-    int sourceId;
-    int hitCount;
-    void *target;
-    float distance;
-    char padA4[0x10];
-    void *driver;
-    void *targetDriver;
-};
+#include "game/types/RaceSlot.h"
 extern "C" {
 extern int g_gameMode;
 extern unsigned char g_isCommHost;

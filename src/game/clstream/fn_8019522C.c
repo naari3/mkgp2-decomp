@@ -1,13 +1,4 @@
-typedef struct ClStream {
-    unsigned char state;
-    unsigned char pad1[0xb];
-    unsigned int handle;
-    unsigned char pad10[0x54 - 0x10];
-    void *buf0;
-    unsigned char pad58[4];
-    void *buf1;
-    unsigned char pad60[0x78 - 0x60];
-} ClStream;
+#include "game/types/ClStream.h"
 
 extern unsigned char g_ClStream_Initialized;
 extern ClStream g_ClStreams[];
@@ -27,12 +18,12 @@ void fn_8019522C(void) {
     }
     for (i = 0; i < 5; i++) {
         sndStreamFree(g_ClStreams[i].handle);
-        OSFreeToHeap(lbl_806CF010, g_ClStreams[i].buf0);
-        OSFreeToHeap(lbl_806CF010, g_ClStreams[i].buf1);
+        OSFreeToHeap(lbl_806CF010, g_ClStreams[i].info);
+        OSFreeToHeap(lbl_806CF010, g_ClStreams[i].base);
         g_ClStreams[i].state = 0;
-        g_ClStreams[i].buf0 = 0;
+        g_ClStreams[i].info = 0;
         g_ClStreams[i].handle = -1;
-        g_ClStreams[i].buf1 = 0;
+        g_ClStreams[i].base = 0;
     }
     g_ClStream_Initialized = 0;
 }

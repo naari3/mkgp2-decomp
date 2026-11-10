@@ -18,13 +18,13 @@ static inline float sinf(float x)
     return sin(x);
 }
 
-#include "game/types/KartStatus.h"
+#include "game/ItemEffectBusPrivate.h"
 
-static inline unsigned char has_flag(KartStatus *st, unsigned long long mask)
+static inline unsigned char has_flag(ItemEffectBus *st, unsigned long long mask)
 {
     unsigned char result;
 
-    if ((st->flags & mask) == 0) {
+    if ((st->mask & mask) == 0) {
         result = 0;
     } else {
         result = 1;
@@ -63,12 +63,12 @@ void DrawEffect_Cb_KartWheel_DualSpawn(unsigned char *self)
         return;
     }
     {
-        KartStatus *st = *(KartStatus **)(d->driver + 0x304);
+        ItemEffectBus *st = *(ItemEffectBus **)(d->driver + 0x304);
         int active = 0;
         if (has_flag(st, 8ULL)) {
             active = 1;
         }
-        if (st->flags & 0x10ULL) {
+        if (st->mask & 0x10ULL) {
             active = 1;
         }
         if (active != 0) {

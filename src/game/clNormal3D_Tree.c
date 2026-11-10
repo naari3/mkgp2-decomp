@@ -14,11 +14,7 @@ typedef struct MObjView {
     unsigned int rendermode; /* 0x04 */
 } MObjView;
 
-typedef struct DObjView {
-    unsigned char pad00[4];
-    struct DObjView *next; /* 0x04 */
-    MObjView *mobj; /* 0x08 */
-} DObjView;
+#include "game/types/DObjView.h"
 
 typedef struct JObjView {
     unsigned char pad00[8];

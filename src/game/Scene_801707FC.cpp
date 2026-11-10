@@ -6,11 +6,7 @@
 
 #include "game/types/Vec3f.h"
 
-struct GrowSub {
-    char pad00[0x10];
-    unsigned char started;
-    unsigned char done;
-};
+#include "game/types/GrowSub.h"
 
 struct GrowFace {
     char pad00[0x34];
@@ -27,16 +23,9 @@ struct GrowEntry {
     GrowSub *sub;
 };
 
-struct GrowSet {
-    char pad00[0x8];
-    GrowEntry *entries;
-    int count;
-};
+#include "game/types/GrowSet.h"
 
-struct KartDriver {
-    char pad00[0x240];
-    int lap;
-};
+#include "game/types/KartDriver.h"
 
 extern "C" {
 extern int g_totalLaps;

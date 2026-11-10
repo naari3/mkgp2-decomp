@@ -4,13 +4,7 @@
  * pile, or keep rolling while it fades out. */
 #include "game/types/Vec.h"
 
-typedef struct KuppaShellWork {
-    unsigned char bounces;
-    unsigned char pad1[3];
-    unsigned int timers[4];
-    float tether;
-    float tetherScale;
-} KuppaShellWork;
+#include "game/types/KuppaShellWork.h"
 
 extern const char lbl_8032F548[];
 extern const char lbl_8032F564[];

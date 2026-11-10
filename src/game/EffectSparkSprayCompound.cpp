@@ -1,13 +1,7 @@
 /* Narrow target-observed local views; no canonical Ghidra type lookup performed. */
 struct SprayVec3 { float x, y, z; };
 struct SprayEffect;
-struct SprayGroup {
-    unsigned char pad00[0x10];
-    SprayEffect *children[8];
-    unsigned char pad30[0x84];
-    unsigned int timers[4];
-    signed char variant;
-};
+#include "game/types/SprayGroup.h"
 struct SprayEffect {
     unsigned char pad00[0x10];
     int kind;

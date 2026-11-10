@@ -69,11 +69,7 @@ struct ProfTimer {
     unsigned int start;
 };
 
-struct SpriteNode {
-    int index;
-    SpriteNode *prev;
-    SpriteNode *next;
-};
+#include "game/types/SpriteNode.h"
 void *operator new(unsigned long size);
 void *operator new[](unsigned long size);
 void operator delete(void *p) throw();
@@ -1474,9 +1470,7 @@ extern "C" void *dtor_80122120(void *self, short flag) {
     return self;
 }
 
-struct LIter {
-    LNode *n;
-};
+#include "game/types/LIter.h"
 
 extern "C" void fn_8012215C(LIter *ret, LListImp *l, LIter *it) {
     LNode *p = it->n;

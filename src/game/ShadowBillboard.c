@@ -14,14 +14,7 @@
 extern char lbl_806D2BCC[7];
 extern char lbl_806D2BD4[5];
 
-typedef struct ShadowBillboardSrc {
-    unsigned char pad000[0x58];
-    float mtx58[16]; /* 0x58 */
-    unsigned char pad098[0xD8 - 0x98];
-    float mtx[16]; /* 0xD8 */
-    unsigned char pad118[0x1D8 - 0x118];
-    float lerpT; /* 0x1D8 */
-} ShadowBillboardSrc;
+#include "game/types/ShadowBillboardSrc.h"
 
 typedef struct SBShake {
     int timer;

@@ -228,10 +228,7 @@ struct JumpGauge {
     }
 };
 
-struct GridSlot {
-    int id;
-    int pad[3];
-};
+#include "game/types/GridSlot.h"
 
 struct GridCell {
     float x, y, z, w;

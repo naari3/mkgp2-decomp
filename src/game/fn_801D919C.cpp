@@ -13,19 +13,7 @@ struct TexMgr {
     int color;
 };
 
-struct FlowPanel {
-    int state;
-    int field4;
-    int field8;
-    int fieldC;
-    int alpha;
-    int layer;
-    char pad18[0x30];
-    void *labelB;
-    Sprite *labelA;
-    void *icons[3];
-    TexMgr *texts[3];
-};
+#include "game/types/FlowPanel.h"
 
 extern "C" {
 void Sprite_SetupAnim(Sprite *sprite, int anim, int loop, int flags);

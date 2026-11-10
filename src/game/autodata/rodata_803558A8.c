@@ -8,9 +8,7 @@
 #include "game/types/Vec.h"
 
 /* layout as declared in src/game/SuikaBallObj_UpdatePhysics.c */
-typedef struct BallProbes {
-    Vec v[4];
-} BallProbes;
+#include "game/types/BallProbes.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

@@ -1,11 +1,7 @@
 #include "game/types/Vec3.h"
 typedef struct HSD_JObj HSD_JObj;
 
-typedef struct ItemParams {
-    float x0;
-    float x4;
-    float x8;
-} ItemParams;
+#include "game/types/ItemParams.h"
 
 typedef struct Item {
     struct Item *next;

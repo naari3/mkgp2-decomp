@@ -5440,10 +5440,7 @@ extern "C" void CarObject_ProcessWarpAndDash(CarObjWarpView *self) { /* 0x8004D1
 /* NON_MATCHING: equivalent C, 82 % when written (docs/archive/drafts/CarObject_MainUpdate_82pct.handoff.md);
  * the 4x4 matrix-multiply loop is strength-reduced differently, the rest follows from it. */
 /* --- struct views for CarObject_MainUpdate --- */
-typedef struct ItemEffectBusView {
-    char pad_0x0[0x10];
-    unsigned long long flags;        /* 0x10 (u64) */
-} ItemEffectBusView;
+#include "game/types/ItemEffectBusView.h"
 
 typedef struct KartDriverAuxView {
     char pad_0x0[0x2cc];

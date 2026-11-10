@@ -4,10 +4,7 @@
 
 #include "game/FlowScene.h"
 
-struct FlowController {
-    void *vt;
-    FlowSceneList *owner;
-};
+#include "game/types/FlowController.h"
 
 /* Holds the scene list at +4 (vtable FlowSceneHost_vtable_804EC190). */
 #include "game/types/FlowSceneHost.h"

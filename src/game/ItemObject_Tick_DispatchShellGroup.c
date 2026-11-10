@@ -5,16 +5,7 @@
  * drives a trail effect with a looping SE, kind 0xB animates its chain. */
 #include "game/types/Vec.h"
 
-typedef struct ShellPose {
-    int anim;
-    int se;
-    float scale;
-    Vec near;
-    Vec rot;
-    unsigned char pad[0xC];
-    Vec far;
-    unsigned char pad2[0xC];
-} ShellPose;
+#include "game/types/ShellPose.h"
 
 extern const char lbl_8032E618[];
 extern ShellPose ItemObject_Tick_DispatchShellGroup_data_80420808[];

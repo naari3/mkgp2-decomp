@@ -52,16 +52,11 @@ typedef struct GroupObj {
 } GroupObj;
 
 /* Anim handle target: y-threshold checked by the Draw pass. */
-typedef struct AnimObj {
-    char _pad0[0x20];
-    f32 y;       /* 0x20 */
-} AnimObj;
+#include "game/types/AnimObj.h"
 
 /* Roulette cell payload: typed so `delete` emits its own null check (the
  * second beq of the double-beq idiom). */
-typedef struct GridCell {
-    char _opaque[4];
-} GridCell;
+#include "game/types/GridCell.h"
 
 /* new'd payload: item selection state (0x180 bytes). */
 struct ItemSelectState {
@@ -85,12 +80,7 @@ struct ItemSelectState {
     ItemSelectState();
 }; /* size 0x180 */
 
-struct IconPack {
-    void *handles[4];         /* 0x00..0x0C */
-    void *vals[4];            /* 0x10..0x1C */
-    char _pad20[0x38 - 0x20];
-    int mode;                 /* 0x38 */
-};
+#include "game/types/IconPack.h"
 
 extern "C" void SpriteAnimHandle_Destroy(void *h, int flag);
 extern "C" void SpriteHandle_Destroy(void *h);

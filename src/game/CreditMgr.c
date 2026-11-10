@@ -3,13 +3,7 @@
  * 0x80081184..0x8008299C.
  */
 
-typedef struct CoinCounters {
-    unsigned char pad00[0x10];
-    unsigned int coins; /* 0x10 */
-    unsigned char pad14[0x04];
-    unsigned int credits; /* 0x18 */
-    unsigned char pad1C[0x24];
-} CoinCounters;
+#include "game/types/CoinCounters.h"
 
 typedef struct CreditCfg {
     unsigned char pad00[0x0C];
@@ -325,12 +319,12 @@ void CreditMgr_PollInsertAndPlay(unsigned char silent) {
     }
     cfg = &lbl_80598A60;
     fn_80289A90(&cnt);
-    while (cfg->coinsSeen != cnt.coins) {
+    while (cfg->coinsSeen != cnt.totalCoins) {
         PlayStats_IncCoinInserted();
         event = 1;
         cfg->coinsSeen++;
     }
-    while (cfg->creditsSeen != cnt.credits) {
+    while (cfg->creditsSeen != cnt.serviceCredits) {
         PlayStats_IncCreditAdded();
         event = 2;
         cfg->creditsSeen++;

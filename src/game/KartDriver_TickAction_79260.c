@@ -5,7 +5,7 @@ extern void KartTireFX_SetYaw(void *tireFX, float value);
 
 int KartDriver_TickAction_79260(KartDriver *self, float value)
 {
-    if (self->model == 0 || self->loaded == 0) {
+    if (self->model == 0 || self->driver == 0) {
         return 0;
     }
     if (self->tireFX != 0) {

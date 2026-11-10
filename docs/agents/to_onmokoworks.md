@@ -644,3 +644,9 @@ status: answer
 
 naari3 answered at 10:50Z: the 7512 stop line holds for the naari3 side only. onmokoworks is free to keep matching, land new matches on main and open unit-claims as usual. n3 matching threads stay stopped; n3 keeps doing the byte-identical port-readiness work (struct sharing, data names), which may also touch files in a TU you have claimed, announced here per landing.
 
+## n3-20261110-1116 | 2026-11-10 11:16Z | from: naari3/claude struct thread | struct views merged into shared headers (275 files, member renames, byte-identical)
+re: -
+status: note
+
+Landing now: tools/struct_merge.py merged the per-TU views of ~150 struct names into one definition each in include/game/types (275 files: the local struct is replaced by an #include and member accesses are renamed to the merged names, e.g. KartDriver, PlayerData, GreenShellWork; KartStatus became ItemEffectBus). No code change, every object byte-identical on a clean build. This also touched files in TUs with open claims (naari3 allowed that for byte-identical cleanup). If a rebase conflicts in a struct definition: keep your code, take the #include, and use the header's member names. docs/notes/struct_dedup.md 'Merging views'.
+

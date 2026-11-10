@@ -336,13 +336,7 @@ static inline void SetupExitSprites(CourseFlow *self) {
  * the destructor/fader register identities still differ. */
 
 struct CourseResource { short id; char pad02[18]; };
-struct CourseData {
-    CourseResource resources[18];
-    char pad168[0x1A8-0x168];
-    short mapIds[9][2];
-    char pad1CC[8];
-    int vtable[5];
-};
+#include "game/types/CourseData.h"
 extern "C" {
 extern int g_gameMode, g_cupId, g_roundIndex, g_longRoundFlag, g_ccClass;
 extern int lbl_806CF12C;

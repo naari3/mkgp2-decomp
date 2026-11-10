@@ -4,7 +4,10 @@
 
 #include "game/types/Remap.h"
 
-#include "game/types/GameCfg.h"
+typedef struct GameCfg {
+    unsigned char pad[0x20];
+    signed char region;
+} GameCfg;
 
 extern GameCfg lbl_80598A60;
 extern Remap lbl_806CFD00[1];

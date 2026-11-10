@@ -18,10 +18,7 @@ typedef struct Marker {
     float rotY;
 } Marker;
 
-typedef struct KartDriver {
-    char pad[0x2D0];
-    unsigned char active;
-} KartDriver;
+#include "game/types/KartDriver.h"
 
 struct clNormal3D {
     char _opaque[0x5C];
@@ -91,7 +88,7 @@ void fn_80169EFC(CourseMarker *self) {
 
     for (i = 0; i < 8; i++) {
         kart = GetKartSlotKartVariant(i);
-        if (kart && kart->active) {
+        if (kart && kart->forceDraw) {
             kp.x = KartDriver_GetKartRootMtx(kart)[3];
             kp.y = KartDriver_GetKartRootMtx(kart)[7];
             kp.z = KartDriver_GetKartRootMtx(kart)[11];

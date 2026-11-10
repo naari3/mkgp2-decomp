@@ -12,19 +12,7 @@ typedef struct PaceKey {
     float v[4];
 } PaceKey;
 
-typedef struct BoomerangWork {
-    unsigned char thrown;
-    unsigned char hits;
-    unsigned char pad2[2];
-    unsigned int timers[4];
-    float pace;
-    unsigned char pad18[0x5C - 0x18];
-    unsigned char *sub;
-    unsigned char pad60[0x98 - 0x60];
-    void *driver;
-    void *target;
-    signed char launch;
-} BoomerangWork;
+#include "game/types/BoomerangWork.h"
 
 extern const PaceKey Boomerang_LaunchAndTickStateMachine_rodata_80330794;
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float f);

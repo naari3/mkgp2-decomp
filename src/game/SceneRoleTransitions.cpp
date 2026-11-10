@@ -5,14 +5,7 @@ struct TransitionChild {
     virtual ~TransitionChild();
     virtual void Finish();
 };
-struct TransitionOwner {
-    void *vtable;
-    int flags;
-    TransitionChild *child;
-    int route;
-    int field10;
-    FlowFaderI *fader;
-};
+#include "game/types/TransitionOwner.h"
 extern "C" {
 extern unsigned char lbl_806D17F0, lbl_806D17F1;
 unsigned char ServiceEnable_Get();

@@ -10,15 +10,7 @@ struct SuikaNormal {
 };
 extern "C" {
 
-typedef struct SuikaBallObj {
-    SuikaNormal *obj;
-    float scale;
-    float mtx[3][4];
-    float f38[10];
-    unsigned char b60;
-    unsigned char b61;
-    float f64[6];
-} SuikaBallObj;
+#include "game/types/SuikaBallObj.h"
 
 extern void *Archive_GetRootJObj(void *obj);
 extern unsigned char fn_801847DC(void *jobj, Vec3 *min, Vec3 *max);

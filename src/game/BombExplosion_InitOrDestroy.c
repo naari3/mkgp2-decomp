@@ -2,10 +2,7 @@
 
 extern const float lbl_806D63AC; /* 0.3 */
 
-typedef struct BombWork {
-    unsigned char pad00[0x4C];
-    unsigned char *fx[4];        /* 0x138 */
-} BombWork;
+#include "game/types/BombWork.h"
 
 extern void fn_800AF4F8(unsigned char *self);
 extern void VfxSlot_SetAnimSpeed(void *slot, float speed);

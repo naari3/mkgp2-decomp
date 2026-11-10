@@ -1,9 +1,5 @@
 /* World position of a kart joint (-1 = the kart root). */
-typedef struct KartDriver {
-    void *model;   /* 0x00 */
-    unsigned char pad04[0x8];
-    void *loaded;  /* 0x0C */
-} KartDriver;
+#include "game/types/KartDriver.h"
 
 typedef float Mtx[3][4];
 
@@ -12,7 +8,7 @@ extern float (*KartDriver_GetJointByIdx(KartDriver *self, int idx))[4];
 
 static inline float (*KartDriver_GetRootMtx(KartDriver *self))[4]
 {
-    if (self->model == 0 || self->loaded == 0) {
+    if (self->model == 0 || self->driver == 0) {
         return 0;
     }
     return Object_GetJObjLocalMatrix(self->model);

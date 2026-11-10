@@ -52,11 +52,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&__dt__11ScopedTimerFv, 0x000000A4, (void *)extab___dt__11ScopedTimerFv
 };
 
-struct FlowEntry {
-    void *(*create)(void);
-    int arg0;
-    int arg1;
-};
+#include "game/types/FlowEntry.h"
 
 struct SeqMenuScene {
     char pad[0x14];

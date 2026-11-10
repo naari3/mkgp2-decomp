@@ -8,36 +8,15 @@
 
 #include "game/types/SlotDesc.h"
 
-struct EffectObj {
-    char pad00[0x4];
-};
+#include "game/types/EffectObj.h"
 
-struct EffectSlot {
-    char pad00[0x2C];
-    int mode;
-    char pad30[0x64];
-};
+#include "game/types/EffectSlot.h"
 
-struct SharedEffect {
-    EffectObj *objs[2];
-    EffectSlot slots[4];
-};
+#include "game/types/SharedEffect.h"
 
-struct RefSub {
-    unsigned char on;
-    float sx;
-    float sy;
-    float rot;
-    float color[4];
-};
+#include "game/types/RefSub.h"
 
-struct SharedRef {
-    int id;
-    float t;
-    unsigned char active;
-    Vec3f pos;
-    RefSub subs[5];
-};
+#include "game/types/SharedRef.h"
 
 extern "C" {
 extern const SlotDesc Scene_80172844_rodata_8036E8D4[4];

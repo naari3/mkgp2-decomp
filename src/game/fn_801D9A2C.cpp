@@ -1,18 +1,6 @@
 #include "game/types/ResCtrl.h"
 
-struct FlowPanel {
-    int state;
-    char pad04[0xC];
-    int alpha;
-    int layer;
-    char pad18[8];
-    unsigned char showBg;
-    char pad21[0x27];
-    void *labelB;
-    void *labelA;
-    ResCtrl *icons[3];
-    void *texts[3];
-};
+#include "game/types/FlowPanel.h"
 
 extern "C" {
 void fn_8011FAFC(ResCtrl *rc, int layer);

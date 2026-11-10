@@ -4,10 +4,7 @@
 
 #include "game/MathInline.h"
 
-typedef struct ShadowBillboard {
-    unsigned char pad00[0x5C];
-    float *mtx; /* 4x4 */
-} ShadowBillboard;
+#include "game/types/ShadowBillboard.h"
 
 extern const float lbl_806D2B88;
 extern const float lbl_806D2B8C;

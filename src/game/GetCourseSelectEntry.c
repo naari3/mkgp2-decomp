@@ -1,10 +1,6 @@
-typedef struct CourseSelectEntry {
-    char data[0x18];
-} CourseSelectEntry;
+#include "game/types/CourseSelectEntry.h"
 
-typedef struct CupCourseEntry {
-    char data[0xC];
-} CupCourseEntry;
+#include "game/types/CupCourseEntry.h"
 
 extern CourseSelectEntry GetCourseSelectEntry_data_8049A5A8[];
 extern CupCourseEntry GetCourseSelectEntry_data_8049A248[][8];

@@ -15,7 +15,7 @@ extern int g_roundIndex;
 extern int g_ccClass;
 extern int g_finalRacePosition;
 extern unsigned char g_raceEnded;
-struct PlayerData { char body[0x1DC]; };
+#include "game/types/PlayerData.h"
 extern PlayerData g_playerData;
 void DebugPrintf(const char *fmt, ...);
 void *memset(void *dst, int c, unsigned long n);

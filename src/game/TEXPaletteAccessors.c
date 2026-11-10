@@ -1,8 +1,4 @@
-typedef struct TEXPalette {
-    void *data;
-    unsigned int pad;
-    struct TEXPaletteEntry *entries;
-} TEXPalette;
+#include "game/types/TEXPalette.h"
 
 typedef struct TEXPaletteEntry {
     unsigned int words[2];

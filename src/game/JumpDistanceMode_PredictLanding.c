@@ -2,15 +2,7 @@
  * lands and places the landing marker/camera target accordingly. */
 
 #include "game/types/Vec.h"
-typedef struct {
-    char pad00[0x8];
-    void *car;
-    char pad0C[0x40 - 0xC];
-    float *marker;
-    char pad44[0x70 - 0x44];
-    char *sim;
-    float launchTimer;
-} JumpDistanceMode;
+#include "game/types/JumpDistanceMode.h"
 
 extern const float lbl_806DAD70;
 extern const float lbl_806DAD74;

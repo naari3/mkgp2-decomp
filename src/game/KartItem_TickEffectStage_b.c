@@ -76,11 +76,7 @@ static inline void ClearCurrentItem(ItemKart *kart)
 
 #include "game/types/Vec3f.h"
 
-typedef struct ItemPick {
-    ItemKart *kart;
-    int field4;
-    int field8;
-} ItemPick;
+#include "game/types/ItemPick.h"
 
 extern const float lbl_806D255C;
 extern const float lbl_806D259C;

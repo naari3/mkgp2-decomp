@@ -5,18 +5,7 @@
  * timeout. */
 #include "game/types/Vec.h"
 
-typedef struct EnrakuWork {
-    unsigned char pad0[4];
-    unsigned int timers[4];
-    unsigned char pad14[0x4C - 0x14];
-    unsigned char *eff;
-    unsigned char pad50[0x7C - 0x50];
-    int approach;
-    unsigned char pad80[0x98 - 0x80];
-    void *driver;
-    void *target;
-    signed char launch;
-} EnrakuWork;
+#include "game/types/EnrakuWork.h"
 
 extern const Vec Enraku_State1_Held_rodata_8032F518;
 extern const Vec Enraku_State1_Held_rodata_8032F524;

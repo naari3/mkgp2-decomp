@@ -1,8 +1,4 @@
-struct LObjList {
-    void* archive;
-    unsigned int unknown04;
-    void* lights[8];
-};
+#include "game/types/LObjList.h"
 extern "C" {
 void HSD_LObjDeleteCurrentAll(void*);
 void HSD_LObjAddCurrent(void*);

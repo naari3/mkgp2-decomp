@@ -26,12 +26,7 @@ void fn_8020A7CC(void *fade, int a, int b, int c);
 void *fn_80271340(void *p, int a, void *b, void *c, int d);
 }
 
-struct CardScene {
-    char pad_0[0x10];
-    StepSeq *seq;
-    void *fade;
-    int state;
-};
+#include "game/types/CardScene.h"
 
 extern "C" void fn_801FA864(CardScene *self) {
     int mode;

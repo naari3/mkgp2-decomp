@@ -34,13 +34,7 @@ typedef struct MenuEntry {
     unsigned char hidden;  /* 0x9 */
 } MenuEntry;
 
-typedef struct SeqMenuScene {
-    char *vtable;       /* 0x00 */
-    MenuEntry *entries; /* 0x04 */
-    int count;          /* 0x08 */
-    int cursor;         /* 0x0C */
-    int blink;          /* 0x10 */
-} SeqMenuScene;
+#include "game/types/SeqMenuScene.h"
 
 /* Input player object: virtual button-state query at vtable +0x20. */
 struct InputObject {

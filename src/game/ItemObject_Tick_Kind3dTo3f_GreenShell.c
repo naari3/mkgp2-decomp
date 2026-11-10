@@ -5,27 +5,7 @@
  * also drives a spark spray, and the shell's trail effect follows it. */
 #include "game/types/Vec.h"
 
-typedef struct GreenShellWork {
-    unsigned char bounces;
-    unsigned char pad1[3];
-    unsigned int timers[4];
-    float groundY;
-    float spin;
-    float phase;
-    unsigned char pad20[0x34 - 0x20];
-    Vec anchor;
-    Vec rebound;
-    unsigned char *eff;
-    unsigned char *spark;
-    unsigned char pad54[0x94 - 0x54];
-    void *owner;
-    void *driver;
-    void *target;
-    unsigned char padA0[0xF0 - 0xA0];
-    unsigned char shellColor;
-    unsigned char padF1[3];
-    int shellTimer;
-} GreenShellWork;
+#include "game/types/GreenShellWork.h"
 
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);
 extern void Effect_SparkSprayCompound_Update(unsigned char *self);
@@ -137,7 +117,7 @@ static inline void GreenShell_Rebound(unsigned char *self, GreenShellWork *w)
 
     switch (S8(0xC9)) {
     case 0:
-        Item_PrepareHitRebound(self, &w->rebound, &w->anchor, &w->timers[0]);
+        Item_PrepareHitRebound(self, &w->rebound, &w->launchPos, &w->timers[0]);
         self[0xC9]++;
     case 1:
         break;
@@ -149,7 +129,7 @@ static inline void GreenShell_Rebound(unsigned char *self, GreenShellWork *w)
         GreenShell_Shatter(self, w, 1);
         return;
     }
-    Vec3_AddNormalizedXZ(self, &w->rebound, w->anchor);
+    Vec3_AddNormalizedXZ(self, &w->rebound, w->launchPos);
     Mtx44_GetTranslation_RowMajor(&root, KartDriver_GetKartRootMtx(w->target));
     Vec3_Add_DestFirst(self + 0xA0, &root, &w->rebound);
     GreenShell_Spin(self, w);
@@ -250,14 +230,14 @@ void ItemObject_Tick_Kind3dTo3f_GreenShell(unsigned char *self)
             case 0:
                 GetSpawnPosition(self + 0xB8, 0.0f, 0.0f, 0.0f);
                 self[0x3C] = 0;
-                Vec3_Subtract_DestFirst(&w->anchor, self + 0xA0, *(unsigned char **)(self + 0x9C) + 0xA0);
+                Vec3_Subtract_DestFirst(&w->launchPos, self + 0xA0, *(unsigned char **)(self + 0x9C) + 0xA0);
                 w->timers[0] = 30;
                 self[0xC9]++;
             case 1:
                 break;
             }
             Item_DecayVelocityScalar(self, 1.75f);
-            if (Item_OrbitAnchorKart(self, &w->anchor, w->timers[0], 0.2617993f, 0.2617993f)) {
+            if (Item_OrbitAnchorKart(self, &w->launchPos, w->timers[0], 0.2617993f, 0.2617993f)) {
                 self[0x28] = 0;
                 self[0xC8] = 3;
                 self[0xC9] = 0;

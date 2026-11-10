@@ -1,10 +1,6 @@
 #include "game/types/InputView.h"
 
-typedef struct ClassFlow {
-    void *vt;
-    char pad_4[0x28];
-    void *sprites[4];
-} ClassFlow;
+#include "game/types/ClassFlow.h"
 
 extern InputView *g_pInputState;
 extern int g_ccClass;

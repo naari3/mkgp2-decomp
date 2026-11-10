@@ -68,7 +68,7 @@ int fn_801D5E80(PlayerData *p) {
 }
 
 int fn_801D5F40(PlayerData *p) {
-    if (p->extraFlags[0] == 1 || p->extraFlags[1] == 1 || p->extraFlags[2] == 1) {
+    if (p->unk_121[0] == 1 || p->unk_121[1] == 1 || p->unk_121[2] == 1) {
         return 1;
     }
     return 0;

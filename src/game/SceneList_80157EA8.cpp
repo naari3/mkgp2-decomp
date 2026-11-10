@@ -70,56 +70,7 @@ public:
     virtual void Draw();
 };
 
-struct OptionMenu {
-    char pad0[4];
-    unsigned char done;
-    char pad5[3];
-    unsigned char started;
-    char pad9[3];
-    int state;
-    float timer;
-    int page;
-    int nextPage;
-    unsigned char stickHeld;
-    unsigned char toggleEnabled;
-    char pad1E[2];
-    MenuTarget *target;
-    char pad24[4];
-    int timeout;
-    DrawObj *bg;
-    DrawObj *frame;
-    Widget *w34;
-    Widget *w38;
-    Widget *w3C;
-    Widget *w40;
-    float blink;
-    char pad48[4];
-    bool toggle;
-    char pad4D[3];
-    float fade50;
-    float fade54;
-    unsigned char sel;
-    char pad59[3];
-    float blink2;
-    int count;
-    int value;
-    int equipped;
-    int rule;
-    unsigned char flags[6];
-    char pad76[2];
-    unsigned short wins;
-    unsigned short losses;
-    signed char digitsA[3];
-    signed char digitsB[3];
-    char pad82[2];
-    int scroll;
-    int scrollTimer;
-    float time[6];
-    int course[6];
-    int mode[6];
-    int isNew[6];
-    int kind[6];
-};
+#include "game/types/OptionMenu.h"
 
 /* TOP-END */
 

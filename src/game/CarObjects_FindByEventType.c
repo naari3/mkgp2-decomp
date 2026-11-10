@@ -1,7 +1,4 @@
-typedef struct RenderObj {
-    unsigned char pad[0x1F4];
-    int eventType;
-} RenderObj;
+#include "game/types/RenderObj.h"
 
 extern void *g_carObjects[4];
 extern int RaceScene_PlayerSlots_bss_805D2B00[4];

@@ -9,8 +9,8 @@
 
 struct CarObject;
 #include "game/types/GoalPlane.h"
-struct JDLanding { unsigned char active; unsigned char slowed; char pad2[2]; int x4; int x8; };
-struct JDCoins { char pad[8]; int base; int earned; };
+#include "game/types/JDLanding.h"
+#include "game/types/JDCoins.h"
 
 struct JDMode {
     void *vtbl;

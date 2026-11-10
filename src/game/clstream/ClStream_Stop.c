@@ -1,19 +1,6 @@
 #include "game/types/DVDFileInfo.h"
 
-typedef struct ClStream {
-    unsigned char state;
-    unsigned char pad1[3];
-    struct ClStream *pair;
-    struct ClStream *pair2;
-    unsigned int handle;
-    unsigned int flags;
-    unsigned char pad14;
-    unsigned char volume;
-    unsigned char pan;
-    unsigned char pad17;
-    DVDFileInfo file;
-    unsigned char pad54[0x78 - 0x54];
-} ClStream;
+#include "game/types/ClStream.h"
 
 extern unsigned char g_ClStream_Initialized;
 extern ClStream g_ClStreams[];

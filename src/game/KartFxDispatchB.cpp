@@ -1,19 +1,8 @@
 /* Dispatch views contain only fields observed by this callback.
  * The timer only enables the star variant; a zero timer does not clear it.
  */
-struct DispatchKart {
-    unsigned char pad00[0x238];
-    int wingEnabled;
-    unsigned char pad23c[0x94];
-    unsigned char mode2Enabled;
-};
-struct DispatchPayload {
-    DispatchKart *kart;
-    unsigned char pad04[0x3C];
-    signed char active;
-    unsigned char pad41[0x3F];
-    unsigned char timer, previousActive;
-};
+#include "game/types/DispatchKart.h"
+#include "game/types/DispatchPayload.h"
 struct DispatchEffect {
     unsigned char pad00[0x10];
     unsigned int index;

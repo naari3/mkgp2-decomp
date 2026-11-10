@@ -24,14 +24,7 @@ struct KartModelEntry {
     void *model;
 };
 
-struct CharacterDataEntry {
-    void *data0;
-    void *body;
-    void *hand;
-    void *effect;
-    unsigned char pad10[8];
-    void **parts;
-};
+#include "game/types/CharacterDataEntry.h"
 
 struct ChallengeScene {
     clNormal3D *kart;

@@ -12,13 +12,7 @@ struct AnimDef {
     unsigned int flags;
 };
 
-struct AnimObj {
-    void *next;
-    AnimDef *def;
-    HSD_JObj *jobj;
-    float frame;
-    Vec3f offset;
-};
+#include "game/types/AnimObj.h"
 
 extern "C" {
 extern char lbl_806D8EA8[7];

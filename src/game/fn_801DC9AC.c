@@ -1,8 +1,4 @@
-typedef struct Entry_804E3C5C {
-    char pad0[0xC];
-    int fC;
-    int f10;
-} Entry_804E3C5C;
+#include "game/types/Entry_804E3C5C.h"
 
 extern Entry_804E3C5C lbl_804E3C5C[];
 

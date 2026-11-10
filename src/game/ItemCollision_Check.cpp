@@ -5,11 +5,7 @@
  * The team accessor mirrors the inline getter used by the hit path. */
 #include "game/types/Vec.h"
 
-typedef struct ItemClassEntry {
-    unsigned char pad0[8];
-    float radius;
-    unsigned char padC[8];
-} ItemClassEntry;
+#include "game/types/ItemClassEntry.h"
 
 struct ItemHitSink {
     virtual void f0();

@@ -1,18 +1,13 @@
 #include "game/types/SpriteAnimData.h"
 
-typedef struct SpriteAnim {
-    unsigned char flag;
-    unsigned char pad1[3];
-    int mode;
-    float time;
-    float c[6];
-    const char *name;
-    SpriteAnimData *data;
-} SpriteAnim;
+#include "game/types/SpriteAnim.h"
 
 #include "game/types/Remap.h"
 
-#include "game/types/GameCfg.h"
+typedef struct GameCfg {
+    unsigned char pad[0x20];
+    signed char region;
+} GameCfg;
 
 extern GameCfg lbl_80598A60;
 extern Remap lbl_806CFD00[1];

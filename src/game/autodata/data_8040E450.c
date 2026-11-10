@@ -32,10 +32,7 @@ extern char lbl_806D4738[];
 extern char lbl_806D473C[];
 
 /* layout as declared in src/game/NameCheck_CardName.c */
-typedef struct NameDelimiterPair {
-    char *open;
-    char *close;
-} NameDelimiterPair;
+#include "game/types/NameDelimiterPair.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

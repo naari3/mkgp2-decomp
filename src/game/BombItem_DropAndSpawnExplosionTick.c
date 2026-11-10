@@ -5,28 +5,9 @@
  * frees the bomb.  All four item timers tick down every frame. */
 #include "game/types/Vec.h"
 
-typedef struct DrawEffect {
-    unsigned char pad000[0x11C];
-    void *driver; /* 0x11C */
-} DrawEffect;
+#include "game/types/DrawEffect.h"
 
-typedef struct BombItem {
-    unsigned char pad000[0xA0];
-    Vec pos;                  /* 0x0A0 */
-    unsigned char pad0AC[0xC8 - 0xAC];
-    signed char state;        /* 0x0C8 */
-    unsigned char pad0C9[0xF0 - 0xC9];
-    unsigned int timers[4];   /* 0x0F0 */
-    unsigned char pad100[0x180 - 0x100];
-    void *owner;              /* 0x180 */
-    void *driver;             /* 0x184 */
-    unsigned char pad188[0x18C - 0x188];
-    signed char armed;        /* 0x18C */
-    unsigned char pad18D[0x1DC - 0x18D];
-    unsigned char team;       /* 0x1DC */
-    unsigned char pad1DD[0x1E0 - 0x1DD];
-    unsigned int tag;         /* 0x1E0 */
-} BombItem;
+#include "game/types/BombItem.h"
 
 extern unsigned int Effect_KartWaveGlow_Update[];
 extern const Vec BombItem_DropAndSpawnExplosionTick_rodata_8032FF40;

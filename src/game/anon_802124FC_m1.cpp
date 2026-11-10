@@ -95,12 +95,8 @@ struct TimerDisplay {
         }
     }
 };
-struct GoalLine {
-    char pad[0x1C];
-};
-struct ScenePos {
-    char pad[0x24];
-};
+#include "game/types/GoalLine.h"
+#include "game/types/ScenePos.h"
 
 extern "C" WeatherSystem *g_weatherSystem;
 

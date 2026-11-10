@@ -1,11 +1,4 @@
-typedef struct KartItem {
-    unsigned char pad_000[0x248];
-    int slot;
-    unsigned char pad_24C[0x50];
-    void *driver;
-    unsigned char pad_2A0[0x98];
-    float velocity[3];
-} KartItem;
+#include "game/types/KartItem.h"
 
 extern int g_kartStartSlot;
 extern void fn_801737CC(void *);

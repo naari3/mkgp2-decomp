@@ -4,10 +4,7 @@
  * in use.
  */
 
-typedef struct ClRomEntry {
-    void *rom;        /* +0x00 */
-    const char *path; /* +0x04 */
-} ClRomEntry;
+#include "game/types/ClRomEntry.h"
 
 extern ClRomEntry lbl_80598678[40];
 

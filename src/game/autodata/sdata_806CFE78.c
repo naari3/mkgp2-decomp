@@ -238,10 +238,7 @@ extern char lbl_806DA63C[];
 extern char lbl_806DA6A0[];
 
 /* layout as declared in src/game/anon_8020314C_nm2.cpp */
-typedef struct MsgPopupState {
-    int cur;
-    int pending;
-} MsgPopupState;
+#include "game/types/MsgPopupState.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

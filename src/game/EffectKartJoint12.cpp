@@ -3,7 +3,7 @@
 extern "C" float Effect_KartJoint12_3Stage_Update_data_8041A428[3][9] = { 0.0f, 2.0f, 4.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f, 2.0f, 3.0f, 4.0f, 0.0f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 4.0f, 5.5f, 7.0f, 1.0f, 1.5f, 2.0f, 1.0f, 0.5f, 0.0f };
 #pragma force_active reset
 extern "C" /* Target-observed local views; live Ghidra types were unavailable. */
-struct JointVec { float x, y, z; };
+#include "game/types/JointVec.h"
 struct Joint12Effect;
 struct Joint12Group {
  char pad00[0x10]; Joint12Effect *children[3]; char pad1C[0x34];

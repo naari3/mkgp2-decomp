@@ -494,14 +494,7 @@ extern "C" void PtrVec_InsertFill(EntryVec *v, PanelItem **pos, int n, PanelItem
 inline void EntryVec::push_back(PanelItem *const &x) { PtrVec_InsertFill(this, end(), 1, &x); }
 
 /* time attack record row (TaRecord_GetEntry_Current) */
-struct TaEntry {
-    unsigned short parts[5]; /* 0x00 */
-    char padA[2];
-    signed char chara;       /* 0x0C */
-    unsigned char titleA;    /* 0x0D */
-    unsigned char titleB;    /* 0x0E */
-    unsigned char titleC;    /* 0x0F */
-};
+#include "game/types/TaEntry.h"
 
 extern "C" {
 int TaRecord_GetLastInsertedRank(void);
@@ -728,7 +721,7 @@ extern "C" void fn_80145E14(PanelIcon *self)
     fn_8011FAFC(&rc, self->layer);
 }
 
-struct SpriteBox { void *sprite; };
+#include "game/types/SpriteBox.h"
 struct SpriteBoxPtr { SpriteBox *p; };
 
 /* deleting destructor of a sprite owner pointer: ~SpriteBoxPtr() throw() { delete p; } */

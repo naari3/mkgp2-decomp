@@ -8,9 +8,7 @@
 typedef struct Sprite Sprite;
 typedef struct TextManager TextManager;
 
-typedef struct SpriteAnimParamBlock {
-    Sprite *sprite; /* 0x00 */
-} SpriteAnimParamBlock;
+#include "game/types/SpriteAnimParamBlock.h"
 
 typedef struct TextColorView {
     char pad00[0x20];
@@ -28,11 +26,7 @@ typedef struct clFlowItemSelect {
 } clFlowItemSelect;
 
 /* Sprite node record filled by fn_8019FF8C (position first). */
-typedef struct SpriteNodeInfo {
-    float x;
-    float y;
-    float rest[10];
-} SpriteNodeInfo;
+#include "game/types/SpriteNodeInfo.h"
 
 extern int Item_GetDescriptorField0(int item, unsigned char *outAlias);
 extern int Item_GetDescriptorField8(int item);

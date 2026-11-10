@@ -1,10 +1,7 @@
 /* fn_8012BDA4: starts the kart preview's character pose animation. */
 #include "game/types/KartPreviewParts.h"
 
-typedef struct CharacterDataEntry {
-    unsigned char pad[0x28];
-    unsigned char pose;
-} CharacterDataEntry;
+#include "game/types/CharacterDataEntry.h"
 
 extern CharacterDataEntry *GetCharacterDataEntry(int id);
 

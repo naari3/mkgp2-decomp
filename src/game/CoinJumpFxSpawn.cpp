@@ -1,10 +1,7 @@
 /* Narrow target-observed layout; live Ghidra types unavailable in this worker. */
 #include "game/types/CoinJumpVec.h"
 struct CoinJumpEffect;
-struct CoinJumpGroup {
-    char pad00[0x10]; CoinJumpEffect *children[5];
-    char pad24[0x60]; float phase[5];
-};
+#include "game/types/CoinJumpGroup.h"
 struct CoinJumpEffect {
     char pad00[0x10]; int extra;
     char slot[0x14]; unsigned char visible; char pad29[3]; float alpha;

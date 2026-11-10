@@ -1,13 +1,4 @@
-typedef struct ClStream {
-    unsigned char state;
-    unsigned char pad1[0xb];
-    unsigned int handle;
-    unsigned char pad10[0x54 - 0x10];
-    void *buf0;
-    unsigned char pad58[4];
-    void *buf1;
-    unsigned char pad60[0x78 - 0x60];
-} ClStream;
+#include "game/types/ClStream.h"
 
 extern unsigned char g_ClStream_Initialized;
 extern ClStream g_ClStreams[];
@@ -29,18 +20,18 @@ void fn_801952EC(void) {
     if (g_ClStream_Initialized) return;
     for (i = 0; i < 5; i++) {
         g_ClStreams[i].state = 0;
-        g_ClStreams[i].buf0 = 0;
+        g_ClStreams[i].info = 0;
         g_ClStreams[i].handle = -1;
-        g_ClStreams[i].buf1 = 0;
+        g_ClStreams[i].base = 0;
     }
     lbl_806D16DC = OSAllocFromHeap(lbl_806CF010, 0x35c0);
     if (lbl_806D16DC == 0) goto fail;
     for (i = 0; i < 5; i++) {
-        g_ClStreams[i].buf0 = OSAllocFromHeap(lbl_806CF010, 0x60);
-        if (g_ClStreams[i].buf0 == 0) goto fail;
-        g_ClStreams[i].buf1 = OSAllocFromHeap(lbl_806CF010, 0xd680);
-        if (g_ClStreams[i].buf1 == 0) goto fail;
-        g_ClStreams[i].handle = sndStreamAllocEx(0xff, g_ClStreams[i].buf1,
+        g_ClStreams[i].info = OSAllocFromHeap(lbl_806CF010, 0x60);
+        if (g_ClStreams[i].info == 0) goto fail;
+        g_ClStreams[i].base = OSAllocFromHeap(lbl_806CF010, 0xd680);
+        if (g_ClStreams[i].base == 0) goto fail;
+        g_ClStreams[i].handle = sndStreamAllocEx(0xff, g_ClStreams[i].base,
             0x17760, 0xbb80, 0x7f, 0x40, 0x40, 0, 0, 0, 0x30001,
             fn_80194184, &g_ClStreams[i], 0);
         if (g_ClStreams[i].handle == -1) {
@@ -56,13 +47,13 @@ fail:
         lbl_806D16DC = 0;
     }
     for (i = 0; i < 5; i++) {
-        if (g_ClStreams[i].buf0 != 0) OSFreeToHeap(lbl_806CF010, g_ClStreams[i].buf0);
-        if (g_ClStreams[i].buf1 != 0) OSFreeToHeap(lbl_806CF010, g_ClStreams[i].buf1);
+        if (g_ClStreams[i].info != 0) OSFreeToHeap(lbl_806CF010, g_ClStreams[i].info);
+        if (g_ClStreams[i].base != 0) OSFreeToHeap(lbl_806CF010, g_ClStreams[i].base);
         g_ClStreams[i].state = 0;
-        g_ClStreams[i].buf0 = 0;
+        g_ClStreams[i].info = 0;
         if (g_ClStreams[i].handle != -1) sndStreamFree(g_ClStreams[i].handle);
         g_ClStreams[i].handle = -1;
-        g_ClStreams[i].buf1 = 0;
+        g_ClStreams[i].base = 0;
     }
     g_ClStream_Initialized = 0;
 }

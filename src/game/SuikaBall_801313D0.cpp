@@ -33,10 +33,7 @@ struct HsdClass {
     void (*destroy)(void *obj);
 };
 
-struct HsdRefObj {
-    HsdClass *klass;
-    unsigned short ref;
-};
+#include "game/types/HsdRefObj.h"
 
 #include "game/types/Quat.h"
 
@@ -91,35 +88,7 @@ struct SuikaSlot {
     int count;
 };
 
-struct SuikaBall {
-    void *vtable;
-    char pad4[8];
-    Destroyable *car;       /* 0x0C */
-    void *lakitu;           /* 0x10 */
-    void *environment;      /* 0x14 */
-    Deletable *m18;
-    void *m1C;
-    Deletable *m20;
-    HsdRefObj *m24;
-    char pad28[4];
-    void *hud;              /* 0x2C */
-    unsigned char active;   /* 0x30 */
-    unsigned char bgmOn;    /* 0x31 */
-    unsigned char finished; /* 0x32 */
-    unsigned char goalReached; /* 0x33 */
-    int state;              /* 0x34 */
-    char pad38[4];
-    SuikaBallObj *m3C;
-    Gate *m40;
-    Deletable *m44;
-    Deletable *m48;
-    float speedScale;       /* 0x4C */
-    Vec3 prevPos;           /* 0x50 */
-    SuikaSlot *slots;       /* 0x5C */
-    Deletable *m60;
-    GateList *bufs;         /* 0x64 */
-    int coins;              /* 0x68 */
-};
+#include "game/types/SuikaBall.h"
 
 /* TOP-END */
 
@@ -1026,10 +995,7 @@ extern "C" SuikaBall *fn_80133008(SuikaBall *self, short flag)
     return self;
 }
 
-struct RenderObj {
-    char pad0[0x238];
-    int x238;
-};
+#include "game/types/RenderObj.h"
 
 #include "game/types/InputManager.h"
 #include "game/types/Camera.h"

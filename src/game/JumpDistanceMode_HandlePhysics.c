@@ -20,28 +20,11 @@ struct Pad {
     virtual int GetButton(int mask);
 };
 
-struct KartMove { char pad[0x1c8]; float heading; };
+#include "game/types/KartMove.h"
 struct CarObject { char pad[0x28]; KartMove *move; };
 #include "game/types/GoalPlane.h"
 
-struct JumpDistanceMode {
-    void *vtbl;
-    int x4;
-    CarObject *car;
-    int xC;
-    int x10;
-    void *x14;
-    void *camera;
-    void *x1C;
-    char pad20[0x18];
-    GoalPlane *goal;
-    char pad3C[0x14];
-    int state;
-    char pad54[0x14];
-    float speed;
-    char pad6C[0x1C];
-    unsigned char reached;
-};
+#include "game/types/JumpDistanceMode.h"
 
 extern "C" {
 extern unsigned char g_raceEnded;
@@ -163,7 +146,7 @@ extern "C" void JumpDistanceMode_HandlePhysics(JumpDistanceMode *self) {
             self->speed = KartMovement_GetVelocityMagnitude(CarObject_GetRenderObj(self->car));
         }
         steer = 0.0f;
-        heading = self->car->move->heading;
+        heading = self->car->move->yaw;
         heading = WrapAngle(heading);
         if (g_reverseRoundFlag == 0) {
             if (heading <= lbl_806DADB8) {

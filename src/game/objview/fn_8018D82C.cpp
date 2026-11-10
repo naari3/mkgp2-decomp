@@ -1,29 +1,14 @@
 struct HSD_JObj;
 struct HSD_MObj;
-struct HSD_TObj {
-    unsigned char pad[0x40];
-    int wrap_s;
-    int wrap_t;
-    unsigned char repeat_s;
-    unsigned char repeat_t;
-};
-struct HSD_DObj {
-    void *parent;
-    HSD_DObj *next;
-    HSD_MObj *mobj;
-};
+#include "game/types/HSD_TObj.h"
+#include "game/types/HSD_DObj.h"
 
 struct clNormal3D {
     unsigned char data[0x5c];
     clNormal3D(const char *name, int arg);
 };
 
-struct TexWrap {
-    int pad0;
-    unsigned char s;
-    unsigned char t;
-    unsigned char pad6[0xa];
-};
+#include "game/types/TexWrap.h"
 
 extern "C" {
 extern const char lbl_80377F60[];

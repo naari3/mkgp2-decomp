@@ -1,13 +1,8 @@
 /* Boost callbacks; local field views are limited to the observed ABI. */
 #include "game/types/Vec3.h"
-struct Mtx44 {
-    float m[4][4];
-};
+#include "game/types/Mtx44.h"
 struct BoostFlags { unsigned char pad00[0x10]; unsigned long long bits; };
-struct BoostKart {
-    unsigned char pad00[0x304];
-    BoostFlags *flags;
-};
+#include "game/types/BoostKart.h"
 struct BoostEffect;
 struct BoostPayload {
     unsigned char pad00[0x10];

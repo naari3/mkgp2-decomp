@@ -842,34 +842,7 @@ struct CoinShellSet {
     void *shells;
 };
 
-struct CGameCoin {
-    void *vt;
-    unsigned char pad4[0x4];
-    void *input;
-    void *driver;
-    void *effects;
-    void *audio;
-    unsigned char pad18[0x30];
-    void *m48;
-    CoinShellSet *shellSet;
-    void *lakitu;
-    void *env;
-    CoinScene3D *scene;
-    void *goalCam;
-    CoinVObj *m60;
-    CoinHsdObj *lights;
-    void *hud;
-    BossKoopa *koopa;
-    void *m70;
-    void *m74;
-    DefeatDemo *defeatDemo;
-    unsigned char active;
-    unsigned char m7D;
-    unsigned char demoMode;
-    unsigned char defeated;
-    unsigned char pad80[0x40];
-    CoinVObj *particles;
-};
+#include "game/types/CGameCoin.h"
 
 
 

@@ -1,7 +1,4 @@
-typedef struct PathEntry {
-    unsigned char pad[0x70];
-    int segment;
-} PathEntry;
+#include "game/types/PathEntry.h"
 
 typedef struct PathPoint {
     unsigned char pad[4];

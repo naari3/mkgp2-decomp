@@ -12,11 +12,7 @@ struct HSD_JObj {
     Vec3f translate;
 };
 
-struct MarkerChain {
-    void *vtable;
-    void *model;
-    HSD_JObj *chain;
-};
+#include "game/types/MarkerChain.h"
 
 extern "C" {
 extern char lbl_806D8B48[7];

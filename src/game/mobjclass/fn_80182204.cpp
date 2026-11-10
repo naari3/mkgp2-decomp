@@ -1,13 +1,6 @@
-struct HSD_MObj {
-    unsigned char pad[0x23];
-    unsigned char x23;
-};
+#include "game/types/HSD_MObj.h"
 
-struct HSD_DObj {
-    void *parent;
-    HSD_DObj *next;
-    HSD_MObj *mobj;
-};
+#include "game/types/HSD_DObj.h"
 
 struct HSD_JObj {
     unsigned char pad[0x8];

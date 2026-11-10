@@ -7,12 +7,7 @@
 long long OSGetTime(void);
 void OSTicksToCalendarTime(long long ticks, OSCalendarTime *td);
 
-typedef struct OperationClockState {
-    int state; /* 0 idle, 1 ready, 2 ticking, 3 committed */
-    unsigned int start; /* 0x04, seconds of day */
-    unsigned int current; /* 0x08 */
-    unsigned int delta; /* 0x0C */
-} OperationClockState;
+#include "game/types/OperationClockState.h"
 
 static inline unsigned int SecondsOfDay(void) {
     OSCalendarTime t;
@@ -35,11 +30,11 @@ int OperationClockState_CommitDelta(OperationClockState *st) {
     }
     OSTicksToCalendarTime(OSGetTime(), &t);
     st->state = 3;
-    st->delta = t.hour * 3600 + t.min * 60 + t.sec;
-    if (st->delta < st->start) {
-        st->delta += 86400;
+    st->deltaSeconds = t.hour * 3600 + t.min * 60 + t.sec;
+    if (st->deltaSeconds < st->start) {
+        st->deltaSeconds += 86400;
     }
-    st->delta -= st->start;
+    st->deltaSeconds -= st->start;
     return 1;
 }
 
@@ -47,11 +42,11 @@ int OperationClockState_RefreshCurrent(OperationClockState *st) {
     if (st->state != 2) {
         return 0;
     }
-    st->current = SecondsOfDay();
-    if (st->current < st->start) {
-        st->current += 86400;
+    st->currentSeconds = SecondsOfDay();
+    if (st->currentSeconds < st->start) {
+        st->currentSeconds += 86400;
     }
-    st->current -= st->start;
+    st->currentSeconds -= st->start;
     return 1;
 }
 
@@ -72,6 +67,6 @@ int OperationClockState_StartTick(OperationClockState *st) {
 void OperationClockState_Reset(OperationClockState *st) {
     st->state = 1;
     st->start = 0;
-    st->current = 0;
-    st->delta = 0;
+    st->currentSeconds = 0;
+    st->deltaSeconds = 0;
 }

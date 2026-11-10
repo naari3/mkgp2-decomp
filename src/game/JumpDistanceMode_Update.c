@@ -17,8 +17,8 @@ struct JDTimer {
     void *sprite[7];
 };
 
-struct JDLanding { unsigned char pad0; unsigned char slowed; char pad2[10]; float scale; };
-struct JDCoins { int pad0; int pad4; int base; int earned; };
+#include "game/types/JDLanding.h"
+#include "game/types/JDCoins.h"
 
 struct JDMode {
     void *vptr;

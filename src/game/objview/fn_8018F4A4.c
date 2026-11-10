@@ -1,8 +1,4 @@
-typedef struct HsdHandle {
-    char pad[8];
-    int x8;
-    void *xc;
-} HsdHandle;
+#include "game/types/HsdHandle.h"
 
 typedef struct Layer {
     HsdHandle *h;

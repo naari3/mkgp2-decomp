@@ -7,11 +7,7 @@
 #include "game/types/Vec3f.h"
 
 /* layout as declared in src/game/mapeffect/EffectFA_Update.cpp */
-typedef struct MapEffectDef {
-    int model;
-    char *joint;
-    void *animation;
-} MapEffectDef;
+#include "game/types/MapEffectDef.h"
 
 /* row layout read off the values (each column all floats or all small integers), not from code */
 typedef struct rodata_8036DD8C_rodata_8036DD8C_Row {

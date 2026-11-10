@@ -3,12 +3,7 @@
  * 0x80040608..0x80040C24.
  */
 
-typedef struct CharacterEntry {
-    unsigned char pad00[0x20];
-    unsigned char goalAnim; /* 0x20 */
-    unsigned char pad21[7];
-    unsigned char timeoutAnim; /* 0x28 */
-} CharacterEntry;
+#include "game/types/CharacterEntry.h"
 
 typedef struct ResetFlag {
     unsigned char pad0[4];

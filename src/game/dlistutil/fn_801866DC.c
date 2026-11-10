@@ -7,10 +7,7 @@ typedef struct VtxDesc {
     void *array;
 } VtxDesc;
 
-typedef struct VtxAttrEntry {
-    VtxDesc *desc;
-    unsigned int offset;
-} VtxAttrEntry;
+#include "game/types/VtxAttrEntry.h"
 
 extern VtxAttrEntry lbl_80677E18[22];
 extern unsigned int lbl_806D1678;

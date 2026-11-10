@@ -15,20 +15,7 @@ extern void GXInitTexObjCI(GXTexObj *obj, void *image, unsigned short w, unsigne
 extern void GXInitTexObjLOD(GXTexObj *obj, unsigned int minFilt, unsigned int magFilt, float minLOD, float maxLOD,
                             float lodBias, unsigned char clamp, unsigned char edgeLOD, unsigned int aniso);
 
-typedef struct TEXHeader {
-    unsigned short height;
-    unsigned short width;
-    unsigned int format;
-    void *data;
-    unsigned int wrapS;
-    unsigned int wrapT;
-    unsigned int minFilter;
-    unsigned int magFilter;
-    float lodBias;
-    unsigned char edgeLODEnable;
-    unsigned char minLOD;
-    unsigned char maxLOD;
-} TEXHeader;
+#include "game/types/TEXHeader.h"
 
 typedef struct CLUTHeader {
     unsigned short numEntries;
@@ -37,25 +24,11 @@ typedef struct CLUTHeader {
     void *data;
 } CLUTHeader;
 
-typedef struct TEXDescriptor {
-    TEXHeader *tex;
-    CLUTHeader *clut;
-} TEXDescriptor;
+#include "game/types/TEXDescriptor.h"
 
-typedef struct TEXPalette {
-    void *data;
-    unsigned int numDescriptors;
-} TEXPalette;
+#include "game/types/TEXPalette.h"
 
-typedef struct ResourceSlot {
-    int id;
-    int group;
-    TEXPalette *palette;
-    int count;
-    GXTexObj *texObjs;
-    GXTlutObj *tlutObjs;
-    unsigned char *tlutNames;
-} ResourceSlot;
+#include "game/types/ResourceSlot.h"
 
 extern void TEXReleasePalette(TEXPalette **palette);
 extern void TEXLoadPalette_Retry(TEXPalette **palette, const char *path);

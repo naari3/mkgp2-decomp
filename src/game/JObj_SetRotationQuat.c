@@ -7,10 +7,7 @@ typedef struct HSD_JObj {
     Quat rotation;
 } HSD_JObj;
 
-typedef struct ObjectJObjView {
-    unsigned char pad[0x2C];
-    HSD_JObj *jobj;
-} ObjectJObjView;
+#include "game/types/ObjectJObjView.h"
 
 extern const Quat JObj_SetRotationQuat_rodata_802E9780;
 extern char lbl_806D2348[7];

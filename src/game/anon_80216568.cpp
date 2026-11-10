@@ -188,7 +188,9 @@ static const CoinTimeTable kTimesRev = {{
 } /* extern "C" */
 #include "game/types/RaceResult.h"
 
-#include "game/types/RankSlot.h"
+typedef struct RankSlot {
+    unsigned char active;
+} RankSlot;
 
 typedef struct PlayerData {
     char pad00[0x48];

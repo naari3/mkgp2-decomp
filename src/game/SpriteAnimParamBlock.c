@@ -35,11 +35,7 @@ typedef struct Sprite {
     SpriteAnimRes *res; /* +0x28 */
 } Sprite;
 
-typedef struct SpriteAnimParamBlock {
-    Sprite *sprite;   /* +0x00 */
-    short keys[50];   /* +0x04 */
-    short params[50]; /* +0x68 */
-} SpriteAnimParamBlock;
+#include "game/types/SpriteAnimParamBlock.h"
 
 extern void Sprite_SetAnimParam(Sprite *sprite, short oldParam, short newParam);
 extern void fn_801A0500(Sprite *sprite);

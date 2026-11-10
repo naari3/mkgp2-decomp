@@ -19,14 +19,7 @@ typedef struct HitRaceSlot {
     unsigned char pad_04[0xB0];
     HitDriver *driver;
 } HitRaceSlot;
-typedef struct HitItem {
-    unsigned char pad_00[0x1C];
-    unsigned char kind;
-    unsigned char pad_1D[0x83];
-    HitVec3 position;
-    unsigned char pad_AC[0x18];
-    float radiusScale;
-} HitItem;
+#include "game/types/HitItem.h"
 typedef struct HitDescriptor {
     unsigned char pad_00[8];
     float radius;
@@ -131,7 +124,7 @@ void Item_PropagateHitToDriversInRadius(HitItem *item, HitDriver *excluded)
     if (item == 0) {
         return;
     }
-    radius = item->radiusScale * lbl_8041AC24[item->kind].radius;
+    radius = item->radiusScale * lbl_8041AC24[item->kind_01C].radius;
     radius = lbl_806D5B24 + radius;
     for (i = 0; i < 128; i++) {
         HitRaceSlot *slot = RaceContextSlot_GetIfAlive(GetRaceContextPtr(), i);

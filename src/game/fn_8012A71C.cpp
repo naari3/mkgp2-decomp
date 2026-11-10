@@ -15,12 +15,7 @@ typedef struct HSD_JObj {
     float mtx[3][4];    /* 0x44 */
 } HSD_JObj;
 
-typedef struct CharacterData {
-    unsigned char pad00[0x1c];
-    float leanEnd;      /* 0x1C */
-    unsigned char pad20[0x4];
-    float leanEnd2;     /* 0x24 */
-} CharacterData;
+#include "game/types/CharacterData.h"
 
 typedef struct ChallengeDriver {
     void *kart;         /* 0x000 */
@@ -167,9 +162,9 @@ extern "C" int fn_8012A71C(ChallengeDriver *s, float target)
         Object_DriveAnimAndSkin(s->base, s->frame, 0.0f, s->anim[action]);
         ObjectTree_BlendOrCopy_Timed(s->driver, Archive_GetRootJObj(s->base), Archive_GetRootJObj(s->driver), 0, 0.0f);
         if (s->action == 0x2a) {
-            end = GetCharacterDataEntry(s->charId)->leanEnd;
+            end = GetCharacterDataEntry(s->charId)->anim1C;
         } else {
-            end = GetCharacterDataEntry(s->charId)->leanEnd2;
+            end = GetCharacterDataEntry(s->charId)->anim24;
         }
         if ((s->frame += s->speed) >= end) {
             s->frame = 0.0f;

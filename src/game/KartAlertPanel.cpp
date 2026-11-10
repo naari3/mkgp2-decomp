@@ -10,9 +10,7 @@
 
 #include "game/types/Vec2.h"
 
-struct NameBuf {
-    int w[3];
-};
+#include "game/types/NameBuf.h"
 
 struct PcbSlot {
     unsigned char b0_0 : 1;

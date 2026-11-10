@@ -5,15 +5,9 @@
  * scaled by 2 and offset per character. */
 #include "game/types/Vec.h"
 
-typedef struct ItemEffectBus {
-    unsigned char pad00[0x10];
-    unsigned long long mask; /* 0x10 */
-} ItemEffectBus;
+#include "game/ItemEffectBusPrivate.h"
 
-typedef struct KartDriver {
-    unsigned char pad000[0x304];
-    ItemEffectBus *itemBus; /* 0x304 */
-} KartDriver;
+#include "game/types/KartDriver.h"
 
 typedef struct CarrotItemEffect {
     unsigned char pad000[0x14];

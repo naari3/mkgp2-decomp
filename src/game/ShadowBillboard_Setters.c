@@ -4,28 +4,9 @@
 
 #include "game/MathInline.h"
 
-typedef struct ShadowBillboardSrc {
-    unsigned char pad000[0xF8];
-    float axisX;
-    float padFC;
-    float axisZ;
-} ShadowBillboardSrc;
+#include "game/types/ShadowBillboardSrc.h"
 
-typedef struct ShadowBillboard {
-    unsigned char pad00[0x14];
-    ShadowBillboardSrc *src;
-    unsigned char pad18[0x5C - 0x18];
-    float *mtx; /* 4x4 */
-    unsigned char pad60[0x6C - 0x60];
-    int field6C;
-    Vec3f vec70;
-    Vec3f camPos;
-    Vec3f axis;
-    float field94;
-    unsigned char pad98[0xA0 - 0x98];
-    float renderAlpha;
-    float fieldA4;
-} ShadowBillboard;
+#include "game/types/ShadowBillboard.h"
 
 extern const float lbl_806D2B88;
 extern const float lbl_806D2B8C;
@@ -39,7 +20,7 @@ void CObj_LoadProjMatrix(void *scene, Vec3f *out);
 
 void ShadowBillboard_SetField0xA4(ShadowBillboard *sb, float value)
 {
-    sb->fieldA4 = value;
+    sb->heightA4 = value;
 }
 
 int ShadowBillboard_IsRenderReady(ShadowBillboard *sb)

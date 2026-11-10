@@ -38,13 +38,7 @@ extern void fn_8016C4CC();                  /* global SE stop / reset (mode) */
 /* Shared zero Vec3 in .rodata (0x802EDD24). */
 extern const Vec3 KartItemAudio_PlaySEByItemId_rodata_802EDD24;
 
-typedef struct KartItemAudio {
-    unsigned char pad_0[4];
-    unsigned char playerType; /* 0x4: 1 = local player */
-    unsigned char pad_5[3];
-    unsigned int channel;     /* 0x8: low 4 bits = SE channel (encoded << 27) */
-    float *mtx;               /* 0xC: 3x4 matrix; translation column at [3],[7],[11] */
-} KartItemAudio;
+#include "game/types/KartItemAudio.h"
 
 #define KIA_SE_ID(self, base) (((self->channel & 0xF) << 27) | (base))
 

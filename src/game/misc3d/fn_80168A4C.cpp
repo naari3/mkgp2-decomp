@@ -10,7 +10,9 @@ typedef __va_list va_list;
 #define va_start(ap, fmt) ((void)fmt, __builtin_va_info(&ap))
 #define va_end(ap)        ((void)0)
 
-#include "game/types/Buf256.h"
+typedef struct Buf256 {
+    char c[0x100];
+} Buf256;
 
 struct TextManager {
     TextManager();

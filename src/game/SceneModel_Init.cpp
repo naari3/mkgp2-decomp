@@ -13,11 +13,7 @@ struct LObjDesc {
     void* unk00;
     void* next;
 };
-struct LObjList {
-    void* archive;
-    LObjScene* scene;
-    void* lights[8];
-};
+#include "game/types/LObjList.h"
 extern "C" {
 extern void* lbl_806D1130[2];
 extern const char lbl_803114C0[]; /* "scene_data" */

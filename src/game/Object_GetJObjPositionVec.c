@@ -8,17 +8,7 @@ typedef struct HSD_JObj {
     float mtx[3][4];
 } HSD_JObj;
 
-typedef struct ObjectJObjView {
-    unsigned char pad_00[2];
-    unsigned char dirty;
-    unsigned char pad_03[5];
-    float frame;
-    unsigned char pad_0C[8];
-    float end_frame;
-    void *override;
-    unsigned char pad_1C[0x10];
-    HSD_JObj *jobj;
-} ObjectJObjView;
+#include "game/types/ObjectJObjView.h"
 
 extern char lbl_806D2348[7];
 extern char lbl_806D2350[5];

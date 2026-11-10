@@ -427,10 +427,7 @@ extern char lbl_806D5868[];
 #include "game/types/ScrollEntry.h"
 
 /* layout as declared in src/game/DbgMenu.cpp */
-typedef struct DbgMenuEntry {
-    void *ctor;   /* function * */
-    char *name;
-} DbgMenuEntry;
+#include "game/types/DbgMenuEntry.h"
 
 /* row layout read off the values (per column: all floats, all small integers, one byte, or
  * two 16-bit values), not from code */

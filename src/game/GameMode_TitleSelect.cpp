@@ -17,10 +17,7 @@ typedef struct InputView {
     int fields[8];
 } InputView;
 
-typedef struct GameModeTitle {
-    void *vtable;
-    int counter;
-} GameModeTitle;
+#include "game/types/GameModeTitle.h"
 
 typedef struct GameModeSelect {
     void *vtable;

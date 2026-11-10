@@ -1,0 +1,11 @@
+{
+  "ItemEffectBus": {
+    "why": "KartDriver+0x304. The u64 at 0x10 that the KartStatus views test is ItemEffectBus.mask (ItemEffectBus_* functions set it); KartStatus was a second name for the same object.",
+    "header": "include/game/ItemEffectBusPrivate.h",
+    "aliases": ["KartStatus"]
+  },
+  "KartDriver": {
+    "why": "names at 0x0-0x20 from KartDriver_Render (LOD selection, driver/accessory trees) and KartDriver_Dtor; 0xE8 is the four wheel joints (KartDriver_SetUniformScale_4Wheels).",
+    "names": {"0x0": "model", "0x4": "lodMid", "0x8": "lodFar", "0xC": "driver", "0x18": "obj18", "0x1C": "accessory", "0x20": "extra", "0x2D0": "forceDraw", "0x304": "itemBus", "0x30C": "tireFX"}
+  }
+}

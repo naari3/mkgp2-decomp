@@ -8,12 +8,7 @@ typedef struct BitpackEntry {
     int offset;
 } BitpackEntry;
 
-typedef struct Bitpack {
-    BitpackEntry *schema;
-    int count;
-    unsigned char *buf;
-    unsigned char options;
-} Bitpack;
+#include "game/types/Bitpack.h"
 
 extern char lbl_806D3278[7]; /* "UPDATE" */
 int strcmp(const char *a, const char *b);
@@ -46,7 +41,7 @@ static inline unsigned char bitpack_read_slot(Bitpack *ctx, int i, unsigned int 
 
     *out = 0;
     e = &ctx->schema[i];
-    buf = ctx->buf;
+    buf = ctx->dest;
     if (index >= e->count) {
         return 0;
     }

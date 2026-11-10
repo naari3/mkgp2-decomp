@@ -111,16 +111,9 @@ extern SpriteHandle g_SpriteHandlePool[];
 extern int SpriteHandlePool_bss_80677C38[];
 }
 
-typedef struct SpriteNode {
-    int index;
-    int pad;
-    struct SpriteNode *next;
-} SpriteNode;
+#include "game/types/SpriteNode.h"
 
-typedef struct SpriteList {
-    char pad[0x14];
-    SpriteNode *head;
-} SpriteList;
+#include "game/types/SpriteList.h"
 
 extern "C" SpriteList *lbl_806D1500;
 

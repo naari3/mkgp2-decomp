@@ -1,8 +1,4 @@
-typedef struct Entry_804E2404 {
-    char pad0[0xC];
-    int fC;
-    float f10;
-} Entry_804E2404;
+#include "game/types/Entry_804E2404.h"
 
 extern Entry_804E2404 lbl_804E2404[];
 extern const float FLOAT_defaultBonus;

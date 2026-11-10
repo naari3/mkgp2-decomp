@@ -1,21 +1,6 @@
 /* Race/session accessors and setters (0x8009B98C..0x8009B9D0). */
 
-typedef struct RankSlot {
-    unsigned char active;
-    unsigned char pad1;
-    unsigned short count;
-    unsigned char pad4[0xC];
-    int target;
-    int source;
-    unsigned char flag18;
-    unsigned char flag19;
-    unsigned char pad1A[2];
-    int timer;
-    float value20;
-    float value24;
-    unsigned char enabled;
-    unsigned char pad29[3];
-} RankSlot;
+#include "game/types/RankSlot.h"
 
 extern int g_cupId;
 extern int g_longRoundFlag;

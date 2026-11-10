@@ -1,9 +1,4 @@
-typedef struct ModelDesc {
-    void *jobjDesc;
-    void **animJoint;
-    void **matAnimJoint;
-    void **shapeAnimJoint;
-} ModelDesc;
+#include "game/types/ModelDesc.h"
 
 extern char lbl_803F57E0[];
 extern char lbl_803F5888[];

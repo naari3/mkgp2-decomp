@@ -4,8 +4,8 @@ typedef unsigned char u8;
 struct DVDFileInfo { u8 command[0x30]; u32 start; u32 length; void* callback; };
 struct TPLImage { u32 dimensions, format; void* data; u8 settings[0x17]; u8 unpacked; };
 struct TPLClut { unsigned short entries; u8 unpacked, pad; u32 format; void* data; };
-struct TPLDescriptor { TPLImage* image; TPLClut* clut; };
-struct TPLPalette { u32 version, count; TPLDescriptor* descriptors; };
+#include "game/types/TPLDescriptor.h"
+#include "game/types/TPLPalette.h"
 extern "C" {
 extern int lbl_806CEFA0[2], lbl_806CF010;
 extern u32 lbl_806D11F8[2];

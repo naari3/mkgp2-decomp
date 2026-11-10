@@ -14,10 +14,7 @@ typedef struct HSD_JObj {
     float position_z;
 } HSD_JObj;
 
-typedef struct ObjectJObjView {
-    unsigned char pad[0x2C];
-    HSD_JObj *jobj;
-} ObjectJObjView;
+#include "game/types/ObjectJObjView.h"
 
 extern char lbl_806D2348[7];
 extern char lbl_806D2350[5];

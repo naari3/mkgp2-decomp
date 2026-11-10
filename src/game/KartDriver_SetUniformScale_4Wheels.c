@@ -8,13 +8,7 @@ typedef struct HSD_JObj {
     float scaleZ; /* 0x34 */
 } HSD_JObj;
 
-typedef struct KartDriver {
-    void *model;  /* 0x00 */
-    unsigned char pad04[0x8];
-    void *loaded; /* 0x0C */
-    unsigned char pad10[0xe8 - 0x10];
-    HSD_JObj *wheel[4]; /* 0xE8 */
-} KartDriver;
+#include "game/types/KartDriver.h"
 
 extern char lbl_806D2548[7]; /* "jobj.h" */
 extern char lbl_806D2550[5]; /* "jobj" */
@@ -51,7 +45,7 @@ static inline void HSD_JObjSetScaleUniform(HSD_JObj *jobj, float s)
 
 int KartDriver_SetUniformScale_4Wheels(KartDriver *self, float s)
 {
-    if (self->model == 0 || self->loaded == 0) {
+    if (self->model == 0 || self->driver == 0) {
         return 0;
     }
     if (self->wheel[0] != 0) {

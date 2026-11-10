@@ -7,12 +7,7 @@
 #include "game/types/Vec3f.h"
 
 /* layout as declared in src/game/mapeffect/CoursePropCtor.cpp */
-typedef struct CoursePropResource {
-    char *resource;
-    float radius;
-    float height;
-    float scale;
-} CoursePropResource;
+#include "game/types/CoursePropResource.h"
 
 /* layout as declared in src/game/mapeffect/CoursePropCtor.cpp */
 #include "game/types/CoursePropData.h"

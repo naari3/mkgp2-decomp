@@ -3,10 +3,7 @@
 extern void HSD_JObjClearFlagsAll(void *jobj, unsigned int flags);
 extern void HSD_JObjSetFlagsAll(void *jobj, unsigned int flags);
 
-typedef struct ObjectJObjView {
-    unsigned char pad[0x2C];
-    void *jobj;
-} ObjectJObjView;
+#include "game/types/ObjectJObjView.h"
 
 #pragma exceptions on
 void Object_JObjUpdate_be4(ObjectJObjView *object, unsigned int flags) {

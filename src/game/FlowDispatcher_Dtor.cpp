@@ -2,12 +2,7 @@ extern "C" void MemoryManager_TimedFree(void *p);
 
 #include "game/types/FlowObject.h"
 
-struct FlowDispatcher {
-    unsigned char pad_0[8];
-    FlowObject *current;
-    unsigned char pad_C[4];
-    FlowObject *next;
-};
+#include "game/types/FlowDispatcher.h"
 
 /* 0x8002C554: deleting destructor of the flow dispatcher. */
 extern "C" FlowDispatcher *FlowDispatcher_Dtor(FlowDispatcher *self, short flag)

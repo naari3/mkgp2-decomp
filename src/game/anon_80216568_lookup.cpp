@@ -22,9 +22,7 @@ extern "C" char lbl_806DAEA8[];
 extern "C" const char * lbl_804EDB40[10][2] = { (const char *)&lbl_803C44C4, (const char *)&lbl_806DAE98, (const char *)&lbl_803C44D0, (const char *)&lbl_806DAE98, (const char *)&lbl_806DAEA0, (const char *)&lbl_806DAE98, (const char *)&lbl_803C44E0, (const char *)&lbl_806DAE98, (const char *)&lbl_803C44EC, (const char *)&lbl_806DAE98, (const char *)&lbl_806DAEA8, (const char *)&lbl_806DAE98, (const char *)&lbl_803C44F8, (const char *)&lbl_806DAE98, (const char *)&lbl_803C4504, (const char *)&lbl_806DAE98, (const char *)&lbl_803C4510, (const char *)&lbl_806DAE98, (const char *)&lbl_803C451C, (const char *)&lbl_806DAE98 };
 #pragma force_active reset
 extern "C" 
-typedef struct CoinTimeTable {
-    float t[8][2][4];
-} CoinTimeTable;
+#include "game/types/CoinTimeTable.h"
 
 /*
  * Coin reward tables inside the rodata pool at CalcEarnedCoins_rodata_803C3F50. The original

@@ -6,9 +6,7 @@
 #include "game/autodata.h"
 
 /* layout as declared in src/game/PushPrompt.c */
-typedef struct TextBuf {
-    char c[256];
-} TextBuf;
+#include "game/types/TextBuf.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

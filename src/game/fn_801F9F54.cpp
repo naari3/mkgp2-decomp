@@ -16,13 +16,7 @@ extern "C" void *fn_80271340(void *, int, void *, void *, int);
 extern int lbl_806D00C8;
 extern int lbl_806D0108;
 
-struct SceneOwner {
-    char pad_0[4];
-    unsigned char done;
-    char pad_5[3];
-    VObj *obj;
-    int value;
-};
+#include "game/types/SceneOwner.h"
 
 extern "C" void fn_801F9F54(SceneOwner *self) {
     if (self->done == 0) {

@@ -1,6 +1,4 @@
-typedef struct Entry_806792D8 {
-    char pad0[0x20];
-} Entry_806792D8;
+#include "game/types/Entry_806792D8.h"
 
 extern Entry_806792D8 lbl_806792D8[];
 extern void *memcpy(void *dst, const void *src, unsigned long n);

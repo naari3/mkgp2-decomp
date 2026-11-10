@@ -5,12 +5,7 @@
  * (kinds 0x14/0x15 play an SE when dropped). */
 #include "game/types/Vec.h"
 
-typedef struct HandheldPose {
-    signed char onKart;
-    float scale;
-    Vec ofs;
-    Vec rot;
-} HandheldPose;
+#include "game/types/HandheldPose.h"
 
 #include "game/types/EffectAnchor.h"
 

@@ -50,17 +50,14 @@ struct PcbSlot {
     unsigned char role : 3;
 };
 
-struct KartStatus {
-    char pad0[0x10];
-    unsigned long long bits;
-};
+#include "game/ItemEffectBusPrivate.h"
 
 struct KartRender {
     char pad0[0x1F4];
     int slot;
     int chara;
     char pad1FC[0x304 - 0x1FC];
-    KartStatus *status;
+    ItemEffectBus *status;
 };
 
 /* Badge position; its empty inline dtor is the shared dtor_80036E40. */
@@ -87,7 +84,7 @@ public:
 void clENo3D::Draw() {
     if (enabled) {
         unsigned char hidden;
-        if ((kart->status->bits & 0x8000000000ULL) == 0) {
+        if ((kart->status->mask & 0x8000000000ULL) == 0) {
             hidden = 0;
         } else {
             hidden = 1;

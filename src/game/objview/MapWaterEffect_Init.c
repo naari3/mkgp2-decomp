@@ -10,13 +10,9 @@ const char MapWaterEffect_Init_rodata_8037D220[1020] = { 63, -128, 0, 0, 63, 51,
  * new'd Group, DESTROYBASE dtor_8016A270) is emitted by hand. The empty
  * cases 0/1/3/4 make MWCC pick the jump table (jumptable_80495F6C); with only
  * cases 2/8/10 it emits a compare tree. */
-typedef struct GroupParams { const char *model; void *items; int count; } GroupParams;
+#include "game/types/GroupParams.h"
 typedef struct Group { struct Group *next; void *model; void *items; } Group;
-typedef struct MapWaterEffect {
-    void **vt;
-    Group *groups;
-    int type;
-} MapWaterEffect;
+#include "game/types/MapWaterEffect.h"
 
 extern void *lbl_80490FE0[];
 extern void *lbl_80495F54[];

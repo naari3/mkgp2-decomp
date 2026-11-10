@@ -20,13 +20,7 @@ struct CardTaskEntry {
     int kind;
 };
 
-struct CardTaskManager {
-    CardTaskEntry *entries; /* 0x00 */
-    int count;              /* 0x04 */
-    int current;            /* 0x08 */
-    int frame;              /* 0x0C */
-    int linger;             /* 0x10 */
-};
+#include "game/types/CardTaskManager.h"
 
 extern "C" void ServiceButtonExtra_Set(int value);
 

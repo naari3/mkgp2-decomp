@@ -5,14 +5,7 @@
  * backup is unavailable or busy. */
 #include "game/os_time.h"
 
-typedef struct CoinCounters {
-    unsigned int coins[4];      /* 0x00 */
-    unsigned int totalCoins;    /* 0x10 */
-    unsigned int paidCredits;   /* 0x14 */
-    unsigned int serviceCredits; /* 0x18 */
-    unsigned int allCredits;    /* 0x1C */
-    unsigned int pad[8];        /* 0x20 */
-} CoinCounters;
+#include "game/types/CoinCounters.h"
 
 typedef struct BackupSettings {
     unsigned char version;      /* 0x000 */

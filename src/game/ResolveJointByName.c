@@ -1,6 +1,4 @@
-typedef struct ModelDesc {
-    void ***root;
-} ModelDesc;
+#include "game/types/ModelDesc.h"
 
 typedef struct JointOwner {
     unsigned char pad[0x24];
@@ -28,7 +26,7 @@ void *ResolveJointByName(JointOwner *owner, char *name) {
     if (jobj == 0) {
         jobj = 0;
     }
-    result = fn_802CFB68(HSD_ArchiveGetPublicAddress(archive, name), **model->root, jobj);
+    result = fn_802CFB68(HSD_ArchiveGetPublicAddress(archive, name), **model->jobjDesc, jobj);
     if (result == owner->jobj) {
         return 0;
     }

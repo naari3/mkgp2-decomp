@@ -42,17 +42,7 @@ const int KartAudioChannel_PlayColorMatchSE_rodata_802EDCBC[26] = {
 };
 const Vec3 KartItemAudio_PlaySEByItemId_rodata_802EDD24 = { 0.0f, 0.0f, 0.0f };
 
-typedef struct KartItemAudio {
-    int charId;               /* 0x0 */
-    unsigned char playerType; /* 0x4: 1 = local player */
-    unsigned char pad_5;
-    unsigned char voiceOn;    /* 0x6 */
-    unsigned char pad_7;
-    unsigned int channel;     /* 0x8: low 4 bits = SE channel (encoded << 27) */
-    float *mtx;               /* 0xC: 3x4 matrix; translation column at [3],[7],[11] */
-    unsigned char pad_10[0x18];
-    int voiceHandle;          /* 0x28 */
-} KartItemAudio;
+#include "game/types/KartItemAudio.h"
 
 static inline unsigned char KartItemAudio_IsVoicedItem(int itemId) {
     const int *p = IsAudioMutedItem_rodata_802EDCA4;

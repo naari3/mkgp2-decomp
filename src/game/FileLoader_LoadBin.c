@@ -1,11 +1,4 @@
-typedef struct FileLoader {
-    int state;
-    char *path;
-    struct FileLoader *prev;
-    struct FileLoader *next;
-    void *data;
-    unsigned char done;
-} FileLoader;
+#include "game/types/FileLoader.h"
 
 extern int lbl_806D0FE8;
 extern int lbl_806D0FEC;

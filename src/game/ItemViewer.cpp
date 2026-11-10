@@ -21,10 +21,7 @@ struct ShowModel {
 
 #include "game/types/ShowXform.h"
 
-struct ViewerEntry {
-    const char *file;
-    ShowXform xf;
-};
+#include "game/types/ViewerEntry.h"
 
 #include "game/types/InputPlayer.h"
 

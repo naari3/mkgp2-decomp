@@ -11,11 +11,7 @@
  *   ItemHitRegistry_bss_806D14DC/E0/E4 (.sbss): per-kind-family counters
  */
 
-typedef struct HitItem {
-    signed char state;    /* 0x0 */
-    unsigned char pad[7]; /* 0x1 */
-    int kind;             /* 0x8 */
-} HitItem;
+#include "game/types/HitItem.h"
 
 typedef struct ItemHitEntry {
     HitItem *item;       /* 0x0 */

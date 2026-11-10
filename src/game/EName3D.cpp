@@ -26,27 +26,17 @@ extern int g_gameMode;
 extern int g_localPcbRole;
 }
 
-struct KartStatus {
-    char pad0[0x10];
-    unsigned long long bits;
-};
+#include "game/ItemEffectBusPrivate.h"
 
 struct KartRender {
     char pad0[0x1F4];
     int slot;
     int chara;
     char pad1FC[0x304 - 0x1FC];
-    KartStatus *status;
+    ItemEffectBus *status;
 };
 
-struct PcbSlot {
-    unsigned char b0;
-    unsigned char b1;
-    unsigned char b2;
-    unsigned char b3;
-    char pad4[0x16 - 4];
-    unsigned short name[6];
-};
+#include "game/types/PcbSlot.h"
 
 struct TexMgr {
     char pad[0x230];
@@ -150,7 +140,7 @@ void clEName3D::SetPos(const float *v) {
 void clEName3D::Draw() {
     unsigned char hidden;
     float s = 1.5300002f * scale;
-    if ((kart->status->bits & 0x8000000000ULL) == 0) {
+    if ((kart->status->mask & 0x8000000000ULL) == 0) {
         hidden = 0;
     } else {
         hidden = 1;

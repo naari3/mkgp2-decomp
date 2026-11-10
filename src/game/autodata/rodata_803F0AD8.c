@@ -8,10 +8,7 @@
 #include "game/types/ShowXform.h"
 
 /* layout as declared in src/game/ItemViewer.cpp */
-typedef struct ViewerEntry {
-    char *file;
-    ShowXform xf;
-} ViewerEntry;
+#include "game/types/ViewerEntry.h"
 
 /* anchor pool cut into its strings and numbers by value (text, floats, small integers),
  * not from code */

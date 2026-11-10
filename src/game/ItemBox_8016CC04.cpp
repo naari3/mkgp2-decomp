@@ -28,16 +28,7 @@ struct ListNode {
     ListNode *next;
 };
 
-struct ItemBoxSet {
-    char pad00[0x8];
-    void *modelA;
-    void *modelB;
-    void *archive;
-    ListNode *nodes;
-    int selected;
-    ItemBoxSlot *slots;
-    int count;
-};
+#include "game/types/ItemBoxSet.h"
 
 #include "game/types/GXChannel.h"
 

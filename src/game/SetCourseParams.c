@@ -562,10 +562,7 @@ typedef struct CourseData {
 
 typedef RaceKartSlot KartSlot;
 
-typedef struct CharacterData {
-    void *name;
-    unsigned char rest[0x28];
-} CharacterData;
+#include "game/types/CharacterData.h"
 
 typedef struct DisplayState {
     unsigned char pad[0x21];
@@ -1852,10 +1849,7 @@ struct RaceContext : RaceContextBase {
     RaceContext();
     virtual ~RaceContext();
 };
-struct RaceSlot {
-    int type, selection, enabled, pending, count;
-    unsigned char item[3], unused;
-};
+#include "game/types/RaceSlot.h"
 struct RaceAux {
     int value, enabled;
     float current, limit;

@@ -1,4 +1,4 @@
-typedef struct HudSprite2457 { void *vtable; } HudSprite2457;
+#include "game/types/HudSprite2457.h"
 extern unsigned int lbl_804EE7B8[];
 void fn_80120A08(int);
 void MemoryManager_TimedFree(void *);

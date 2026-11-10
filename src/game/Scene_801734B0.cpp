@@ -89,10 +89,7 @@ extern SharedEffect *lbl_806D15E0;
 extern int Scene_801734B0_bss_806D15E4;
 }
 
-struct RefSub {
-    unsigned char on;
-    char pad01[0x1F];
-};
+#include "game/types/RefSub.h"
 
 struct SharedRef {
     int id;

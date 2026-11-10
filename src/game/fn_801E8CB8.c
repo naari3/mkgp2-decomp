@@ -1,10 +1,4 @@
-typedef struct ItemUser {
-    char pad[0x18];
-    int unk18;
-    int unk1C;
-    int unk20;
-    int unk24;
-} ItemUser;
+#include "game/types/ItemUser.h"
 
 int fn_801E8CB8(void) {
     return 1;

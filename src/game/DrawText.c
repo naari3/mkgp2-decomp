@@ -19,11 +19,7 @@ typedef struct TextEntry {
     char text[0x74];
 } TextEntry;
 
-typedef struct DisplayContext {
-    char pad00[0x88];
-    TextEntry *entries;
-    int count;
-} DisplayContext;
+#include "game/types/DisplayContext.h"
 
 extern int OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(int);

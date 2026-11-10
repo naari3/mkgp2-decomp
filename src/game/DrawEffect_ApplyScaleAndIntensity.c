@@ -1,13 +1,4 @@
-typedef struct DrawEffect {
-    unsigned char pad_00[0x28];
-    unsigned char active;
-    unsigned char pad_29[3];
-    float intensity;
-    unsigned char pad_30[0x5C];
-    float position[3];
-    unsigned char pad_98[0x18];
-    float scale;
-} DrawEffect;
+#include "game/types/DrawEffect.h"
 
 extern void Vec3_Copy(float *dst, float *src);
 

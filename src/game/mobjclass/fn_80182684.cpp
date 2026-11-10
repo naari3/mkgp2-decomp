@@ -5,15 +5,8 @@
  * the functions in reverse source order (target: 80182684, 801826F8,
  * 80182954, 80182990), and inline_depth(3) reproduces the target's expansion
  * depth (the deepest level calls the out-of-line copies). */
-struct HSD_MObj {
-    unsigned char pad[0x10];
-    void *buf;
-};
-struct HSD_DObj {
-    void *parent;
-    HSD_DObj *next;
-    HSD_MObj *mobj;
-};
+#include "game/types/HSD_MObj.h"
+#include "game/types/HSD_DObj.h"
 struct HSD_JObj {
     unsigned char pad[0x8];
     HSD_JObj *next;

@@ -172,12 +172,7 @@ struct CardTaskEntry {
     int desc;
 };
 
-struct CardTaskManager {
-    CardTaskEntry *entries;
-    int count;
-    int current;
-    int frame;
-};
+#include "game/types/CardTaskManager.h"
 
 struct CardTaskDesc {
     int id;

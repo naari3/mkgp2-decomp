@@ -1,4 +1,11 @@
-#include "game/types/SprCtx.h"
+typedef struct SprCtx {
+    float a;
+    float b;
+    float c;
+    float d;
+    float e;
+    float f;
+} SprCtx;
 extern int lbl_80678A0C[];
 extern int lbl_806D16E8;
 extern SprCtx lbl_8067897C;

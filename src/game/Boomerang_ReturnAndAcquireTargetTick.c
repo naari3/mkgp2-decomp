@@ -4,11 +4,7 @@
  * swings back (10 deg/frame) until the tracker reports the return. */
 #include "game/DrawEffectAccess.h"
 
-typedef struct RaceSlot {
-    int type;
-    unsigned char pad4[0xB4 - 4];
-    unsigned char *kart;
-} RaceSlot;
+#include "game/types/RaceSlot.h"
 
 extern const float lbl_806D6478; /* 0.0 */
 extern const float lbl_806D647C; /* 300.0 */
@@ -55,7 +51,7 @@ void Boomerang_ReturnAndAcquireTargetTick(unsigned char *kart, unsigned char *it
                     float yaw;
                     float dist;
 
-                    kart = slot->kart;
+                    kart = slot->driver;
                     Mtx_TransposeToMtx44(m, KartDriver_GetKartRootMtx(kart));
                     Mtx44_GetTranslation_ColMajor(&pos, m);
                     yaw = Mtx44_GetYawOfPosZ(m);

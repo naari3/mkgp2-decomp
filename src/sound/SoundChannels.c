@@ -15,10 +15,7 @@
  * pad at +0x00 just to fix the 8-byte stride.
  */
 
-struct ClRomEntry {
-    unsigned int unk0; /* +0x00 */
-    void *path;        /* +0x04 */
-};
+#include "game/types/ClRomEntry.h"
 
 extern struct ClRomEntry lbl_80598678[40];
 
