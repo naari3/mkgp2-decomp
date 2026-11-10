@@ -4059,9 +4059,9 @@ const char lbl_803E2508[] = "Broken Wheel+";
 const char lbl_803E2518[] = "Needle Bomb+";
 const char lbl_803E2528[] = "Sticky Oil+";
 const char lbl_803E2534[] = "Thunder Stick+";
-const unk32 ItemLocalizedName_rodata_803E2544[4] = {
-    0x82736875, 0x6E646572, 0x636C6F75, 0x642B0000
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char ItemLocalizedName_rodata_803E2544[16] =
+    "\202shundercloud+";
 const char lbl_803E2554[] = "Snow Cloud+";
 const char lbl_803E2560[] = "Fire Cracker+";
 const char lbl_803E2570[] = "Trash Can+";
@@ -4544,9 +4544,9 @@ const char lbl_803E342C[] = "Tire slips.";
 const char lbl_803E3438[] = "Tires become ";
 const char lbl_803E3448[] = "slippery.";
 const char lbl_803E3454[] = "Cannot use items";
-const unk32 ItemAliasLocalizedVariant_rodata_803E3468[5] = {
-    0x44726F70, 0x73206261, 0x636B7761, 0x72648142, 0x00000000
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char ItemAliasLocalizedVariant_rodata_803E3468[20] =
+    "Drops backward\201B";
 const char lbl_803E347C[] = "Something comes";
 const char lbl_803E348C[] = "out randomly.";
 const char lbl_803E349C[] = "Blind enemy";

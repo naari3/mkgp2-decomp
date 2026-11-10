@@ -437,149 +437,490 @@ typedef struct DbgMenuEntry {
     char *name;
 } DbgMenuEntry;
 
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A4F8_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A4F8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A594_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A594_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A5B8_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+} lbl_8041A5B8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A5D0_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A5D0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A5E8_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A5E8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A60C_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A60C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A654_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    int i_04;
+    float f_08;
+} lbl_8041A654_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A66C_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A66C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A6B4_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A6B4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A6FC_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A6FC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A744_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A744_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A7BC_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A7BC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A804_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A804_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A84C_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A84C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A8A0_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A8A0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A8E8_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A8E8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A918_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A918_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A93C_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A93C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A990_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A990_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041A9C0_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041A9C0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041AA14_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041AA14_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041AA44_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041AA44_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041AA80_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041AA80_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041AABC_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041AABC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041AAEC_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041AAEC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041AB1C_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041AB1C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041AB7C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_8041AB7C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041AB94_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041AB94_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041ABC4_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041ABC4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_8041ABE8_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+} lbl_8041ABE8_Row;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-unk32 lbl_8041A4F8[33] = {
-    0x01000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x421C0000, 0x00000000, 0x00000000,
-    0x41E80000, 0x00000000, 0x00000000, 0x426C0000, 0x00000000, 0x00000000, 0x4560F000, 0x00000000,
-    0x00000000, 0x42C60000, 0x00000000, 0x00000000, 0x41600000, 0x00000000, 0x00000000, 0x42EE0000,
-    0x00000000, 0x3F800000, 0x429E0000, 0x00000000, 0x00000000, 0x428C0000, 0x00000000, 0x00000000,
-    0x41A00000
+lbl_8041A4F8_Row lbl_8041A4F8[11] = {
+    { 1, { 0, 0, 0 }, 0.0f, 0.0f },
+    { 0, { 0, 0, 0 }, 0.0f, 39.0f },
+    { 0, { 0, 0, 0 }, 0.0f, 29.0f },
+    { 0, { 0, 0, 0 }, 0.0f, 59.0f },
+    { 0, { 0, 0, 0 }, 0.0f, 3599.0f },
+    { 0, { 0, 0, 0 }, 0.0f, 99.0f },
+    { 0, { 0, 0, 0 }, 0.0f, 14.0f },
+    { 0, { 0, 0, 0 }, 0.0f, 119.0f },
+    { 0, { 0, 0, 0 }, 1.0f, 79.0f },
+    { 0, { 0, 0, 0 }, 0.0f, 70.0f },
+    { 0, { 0, 0, 0 }, 0.0f, 20.0f }
 };
 float lbl_8041A57C[6] = {
     0.0f, 1.0f, 6e+01f, 0.0f, 71.0f, 1.1e+02f
 };
-unk32 lbl_8041A594[9] = {
-    0x01000000, 0x00000000, 0x00000000, 0x01000000, 0x00000000, 0x41700000, 0x00000000, 0x42B60000,
-    0x43160000
+lbl_8041A594_Row lbl_8041A594[3] = {
+    { 1, { 0, 0, 0 }, 0.0f, 0.0f },
+    { 1, { 0, 0, 0 }, 0.0f, 15.0f },
+    { 0, { 0, 0, 0 }, 91.0f, 150.0f }
 };
-unk32 lbl_8041A5B8[6] = {
-    0x01000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x421C0000
+lbl_8041A5B8_Row lbl_8041A5B8[3] = {
+    { 1, { 0, 0, 0 }, 0.0f },
+    { 0, { 0, 0, 0 }, 0.0f },
+    { 0, { 0, 0, 0 }, 39.0f }
 };
-unk32 lbl_8041A5D0[6] = {
-    0x00000000, 0x3F800000, 0x42700000, 0x01000000, 0x42F20000, 0x43820000
+lbl_8041A5D0_Row lbl_8041A5D0[2] = {
+    { 0, { 0, 0, 0 }, 1.0f, 60.0f },
+    { 1, { 0, 0, 0 }, 121.0f, 260.0f }
 };
-unk32 lbl_8041A5E8[9] = {
-    0x00000000, 0x3F800000, 0x42700000, 0x01000000, 0x42A00000, 0x42F00000, 0x00000000, 0x430C0000,
-    0x43480000
+lbl_8041A5E8_Row lbl_8041A5E8[3] = {
+    { 0, { 0, 0, 0 }, 1.0f, 60.0f },
+    { 1, { 0, 0, 0 }, 80.0f, 120.0f },
+    { 0, { 0, 0, 0 }, 140.0f, 200.0f }
 };
-unk32 lbl_8041A60C[18] = {
-    0x01000000, 0x42A20000, 0x430C0000, 0x00000000, 0x430D0000, 0x432A0000, 0x01000000, 0x432B0000,
-    0x43480000, 0x00000000, 0x43490000, 0x43A00000, 0x01000000, 0x43A08000, 0x43C30000, 0x00000000,
-    0x3F800000, 0x42200000
+lbl_8041A60C_Row lbl_8041A60C[6] = {
+    { 1, { 0, 0, 0 }, 81.0f, 140.0f },
+    { 0, { 0, 0, 0 }, 141.0f, 170.0f },
+    { 1, { 0, 0, 0 }, 171.0f, 200.0f },
+    { 0, { 0, 0, 0 }, 201.0f, 320.0f },
+    { 1, { 0, 0, 0 }, 321.0f, 390.0f },
+    { 0, { 0, 0, 0 }, 1.0f, 40.0f }
 };
-unk32 lbl_8041A654[6] = {
-    0x01000000, 0x00000000, 0x00000000, 0x01000000, 0x00000000, 0x41600000
+lbl_8041A654_Row lbl_8041A654[2] = {
+    { 1, { 0, 0, 0 }, 0, 0.0f },
+    { 1, { 0, 0, 0 }, 0, 14.0f }
 };
-unk32 lbl_8041A66C[18] = {
-    0x00000000, 0x00000000, 0x428A0000, 0x01000000, 0x428E0000, 0x42A00000, 0x01000000, 0x42A20000,
-    0x430C0000, 0x00000000, 0x430D0000, 0x43520000, 0x01000000, 0x43530000, 0x43948000, 0x01000000,
-    0x43948000, 0x43948000
+lbl_8041A66C_Row lbl_8041A66C[6] = {
+    { 0, { 0, 0, 0 }, 0.0f, 69.0f },
+    { 1, { 0, 0, 0 }, 71.0f, 80.0f },
+    { 1, { 0, 0, 0 }, 81.0f, 140.0f },
+    { 0, { 0, 0, 0 }, 141.0f, 210.0f },
+    { 1, { 0, 0, 0 }, 211.0f, 297.0f },
+    { 1, { 0, 0, 0 }, 297.0f, 297.0f }
 };
-unk32 lbl_8041A6B4[18] = {
-    0x00000000, 0x3F800000, 0x42700000, 0x01000000, 0x42740000, 0x42F00000, 0x00000000, 0x42F20000,
-    0x43820000, 0x01000000, 0x43828000, 0x43910000, 0x01000000, 0x43918000, 0x43A00000, 0x00000000,
-    0x43A50000, 0x43B38000
+lbl_8041A6B4_Row lbl_8041A6B4[6] = {
+    { 0, { 0, 0, 0 }, 1.0f, 60.0f },
+    { 1, { 0, 0, 0 }, 61.0f, 120.0f },
+    { 0, { 0, 0, 0 }, 121.0f, 260.0f },
+    { 1, { 0, 0, 0 }, 261.0f, 290.0f },
+    { 1, { 0, 0, 0 }, 291.0f, 320.0f },
+    { 0, { 0, 0, 0 }, 330.0f, 359.0f }
 };
-unk32 lbl_8041A6FC[18] = {
-    0x00000000, 0x3F800000, 0x42700000, 0x01000000, 0x42740000, 0x42F00000, 0x00000000, 0x42F20000,
-    0x43910000, 0x01000000, 0x43918000, 0x43A00000, 0x01000000, 0x43A08000, 0x43AF0000, 0x00000000,
-    0x43B40000, 0x43D18000
+lbl_8041A6FC_Row lbl_8041A6FC[6] = {
+    { 0, { 0, 0, 0 }, 1.0f, 60.0f },
+    { 1, { 0, 0, 0 }, 61.0f, 120.0f },
+    { 0, { 0, 0, 0 }, 121.0f, 290.0f },
+    { 1, { 0, 0, 0 }, 291.0f, 320.0f },
+    { 1, { 0, 0, 0 }, 321.0f, 350.0f },
+    { 0, { 0, 0, 0 }, 360.0f, 419.0f }
 };
-unk32 lbl_8041A744[30] = {
-    0x01000000, 0x00000000, 0x40800000, 0x01000000, 0x40A00000, 0x41100000, 0x01000000, 0x41200000,
-    0x41600000, 0x01000000, 0x41700000, 0x41980000, 0x01000000, 0x41A00000, 0x41C00000, 0x01000000,
-    0x41C80000, 0x41E80000, 0x01000000, 0x41F00000, 0x42080000, 0x01000000, 0x420C0000, 0x421C0000,
-    0x01000000, 0x42200000, 0x42300000, 0x01000000, 0x42340000, 0x42440000
+lbl_8041A744_Row lbl_8041A744[10] = {
+    { 1, { 0, 0, 0 }, 0.0f, 4.0f },
+    { 1, { 0, 0, 0 }, 5.0f, 9.0f },
+    { 1, { 0, 0, 0 }, 10.0f, 14.0f },
+    { 1, { 0, 0, 0 }, 15.0f, 19.0f },
+    { 1, { 0, 0, 0 }, 20.0f, 24.0f },
+    { 1, { 0, 0, 0 }, 25.0f, 29.0f },
+    { 1, { 0, 0, 0 }, 30.0f, 34.0f },
+    { 1, { 0, 0, 0 }, 35.0f, 39.0f },
+    { 1, { 0, 0, 0 }, 40.0f, 44.0f },
+    { 1, { 0, 0, 0 }, 45.0f, 49.0f }
 };
-unk32 lbl_8041A7BC[18] = {
-    0x00000000, 0x3F800000, 0x42700000, 0x01000000, 0x42740000, 0x430C0000, 0x00000000, 0x3F800000,
-    0x42700000, 0x01000000, 0x430D0000, 0x432A0000, 0x01000000, 0x432B0000, 0x43480000, 0x00000000,
-    0x43530000, 0x436F0000
+lbl_8041A7BC_Row lbl_8041A7BC[6] = {
+    { 0, { 0, 0, 0 }, 1.0f, 60.0f },
+    { 1, { 0, 0, 0 }, 61.0f, 140.0f },
+    { 0, { 0, 0, 0 }, 1.0f, 60.0f },
+    { 1, { 0, 0, 0 }, 141.0f, 170.0f },
+    { 1, { 0, 0, 0 }, 171.0f, 200.0f },
+    { 0, { 0, 0, 0 }, 211.0f, 239.0f }
 };
-unk32 lbl_8041A804[18] = {
-    0x00000000, 0x3F800000, 0x42B40000, 0x01000000, 0x42B60000, 0x432A0000, 0x00000000, 0x3F800000,
-    0x42B40000, 0x01000000, 0x432B0000, 0x43480000, 0x01000000, 0x43490000, 0x43660000, 0x00000000,
-    0x43710000, 0x43958000
+lbl_8041A804_Row lbl_8041A804[6] = {
+    { 0, { 0, 0, 0 }, 1.0f, 90.0f },
+    { 1, { 0, 0, 0 }, 91.0f, 170.0f },
+    { 0, { 0, 0, 0 }, 1.0f, 90.0f },
+    { 1, { 0, 0, 0 }, 171.0f, 200.0f },
+    { 1, { 0, 0, 0 }, 201.0f, 230.0f },
+    { 0, { 0, 0, 0 }, 241.0f, 299.0f }
 };
-unk32 lbl_8041A84C[21] = {
-    0x01000000, 0x00000000, 0x41F00000, 0x00000000, 0x41F80000, 0x428A0000, 0x01000000, 0x428C0000,
-    0x42B40000, 0x00000000, 0x42B60000, 0x42F00000, 0x01000000, 0x42F20000, 0x43190000, 0x01000000,
-    0x42FE0000, 0x42FE0000, 0x01000000, 0x42F60000, 0x42F60000
+lbl_8041A84C_Row lbl_8041A84C[7] = {
+    { 1, { 0, 0, 0 }, 0.0f, 30.0f },
+    { 0, { 0, 0, 0 }, 31.0f, 69.0f },
+    { 1, { 0, 0, 0 }, 70.0f, 90.0f },
+    { 0, { 0, 0, 0 }, 91.0f, 120.0f },
+    { 1, { 0, 0, 0 }, 121.0f, 153.0f },
+    { 1, { 0, 0, 0 }, 127.0f, 127.0f },
+    { 1, { 0, 0, 0 }, 123.0f, 123.0f }
 };
-unk32 lbl_8041A8A0[9] = {
-    0x00000000, 0x00000000, 0x40800000, 0x01000000, 0x40800000, 0x41400000, 0x01000000, 0x41400000,
-    0x41880000
+lbl_8041A8A0_Row lbl_8041A8A0[3] = {
+    { 0, { 0, 0, 0 }, 0.0f, 4.0f },
+    { 1, { 0, 0, 0 }, 4.0f, 12.0f },
+    { 1, { 0, 0, 0 }, 12.0f, 17.0f }
 };
 float lbl_8041A8C4[9] = {
     0.0f, 1.0f, 6e+01f, 0.0f, 91.0f, 1.5e+02f, 0.0f, 191.0f,
     308.0f
 };
-unk32 lbl_8041A8E8[12] = {
-    0x01000000, 0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x42A00000, 0x00000000, 0x42A20000,
-    0x43200000, 0x00000000, 0x43210000, 0x43700000
+lbl_8041A8E8_Row lbl_8041A8E8[4] = {
+    { 1, { 0, 0, 0 }, 0.0f, 0.0f },
+    { 0, { 0, 0, 0 }, 1.0f, 80.0f },
+    { 0, { 0, 0, 0 }, 81.0f, 160.0f },
+    { 0, { 0, 0, 0 }, 161.0f, 240.0f }
 };
-unk32 lbl_8041A918[9] = {
-    0x00000000, 0x3F800000, 0x42F00000, 0x01000000, 0x43710000, 0x43870000, 0x00000000, 0x43A50000,
-    0x43C28000
+lbl_8041A918_Row lbl_8041A918[3] = {
+    { 0, { 0, 0, 0 }, 1.0f, 120.0f },
+    { 1, { 0, 0, 0 }, 241.0f, 270.0f },
+    { 0, { 0, 0, 0 }, 330.0f, 389.0f }
 };
-unk32 lbl_8041A93C[21] = {
-    0x00000000, 0x00000000, 0x42200000, 0x01000000, 0x42A20000, 0x42B40000, 0x00000000, 0x43030000,
-    0x43280000, 0x01000000, 0x43530000, 0x43660000, 0x00000000, 0x43670000, 0x43870000, 0x01000000,
-    0x439B8000, 0x43A50000, 0x00000000, 0x43A58000, 0x43B90000
+lbl_8041A93C_Row lbl_8041A93C[7] = {
+    { 0, { 0, 0, 0 }, 0.0f, 40.0f },
+    { 1, { 0, 0, 0 }, 81.0f, 90.0f },
+    { 0, { 0, 0, 0 }, 131.0f, 168.0f },
+    { 1, { 0, 0, 0 }, 211.0f, 230.0f },
+    { 0, { 0, 0, 0 }, 231.0f, 270.0f },
+    { 1, { 0, 0, 0 }, 311.0f, 330.0f },
+    { 0, { 0, 0, 0 }, 331.0f, 370.0f }
 };
-unk32 lbl_8041A990[12] = {
-    0x00000000, 0x3F800000, 0x42700000, 0x01000000, 0x42700000, 0x42A00000, 0x00000000, 0x42A20000,
-    0x430C0000, 0x01000000, 0x43200000, 0x433D0000
+lbl_8041A990_Row lbl_8041A990[4] = {
+    { 0, { 0, 0, 0 }, 1.0f, 60.0f },
+    { 1, { 0, 0, 0 }, 60.0f, 80.0f },
+    { 0, { 0, 0, 0 }, 81.0f, 140.0f },
+    { 1, { 0, 0, 0 }, 160.0f, 189.0f }
 };
-unk32 lbl_8041A9C0[21] = {
-    0x00000000, 0x3F800000, 0x42700000, 0x01000000, 0x43070000, 0x43480000, 0x00000000, 0x43670000,
-    0x43820000, 0x01000000, 0x43968000, 0x43B40000, 0x01000000, 0x43B48000, 0x43BE0000, 0x01000000,
-    0x43BE8000, 0x43F00000, 0x01000000, 0x43F08000, 0x44020000
+lbl_8041A9C0_Row lbl_8041A9C0[7] = {
+    { 0, { 0, 0, 0 }, 1.0f, 60.0f },
+    { 1, { 0, 0, 0 }, 135.0f, 200.0f },
+    { 0, { 0, 0, 0 }, 231.0f, 260.0f },
+    { 1, { 0, 0, 0 }, 301.0f, 360.0f },
+    { 1, { 0, 0, 0 }, 361.0f, 380.0f },
+    { 1, { 0, 0, 0 }, 381.0f, 480.0f },
+    { 1, { 0, 0, 0 }, 481.0f, 520.0f }
 };
-unk32 lbl_8041AA14[12] = {
-    0x00000000, 0x3F800000, 0x42700000, 0x00000000, 0x43A08000, 0x43DC0000, 0x01000000, 0x440C4000,
-    0x44228000, 0x01000000, 0x43030000, 0x433E0000
+lbl_8041AA14_Row lbl_8041AA14[4] = {
+    { 0, { 0, 0, 0 }, 1.0f, 60.0f },
+    { 0, { 0, 0, 0 }, 321.0f, 440.0f },
+    { 1, { 0, 0, 0 }, 561.0f, 650.0f },
+    { 1, { 0, 0, 0 }, 131.0f, 190.0f }
 };
-unk32 lbl_8041AA44[15] = {
-    0x00000000, 0x3F800000, 0x42700000, 0x01000000, 0x42F20000, 0x430C0000, 0x00000000, 0x43490000,
-    0x43820000, 0x00000000, 0x43DC0000, 0x440B8000, 0x01000000, 0x442A0000, 0x44338000
+lbl_8041AA44_Row lbl_8041AA44[5] = {
+    { 0, { 0, 0, 0 }, 1.0f, 60.0f },
+    { 1, { 0, 0, 0 }, 121.0f, 140.0f },
+    { 0, { 0, 0, 0 }, 201.0f, 260.0f },
+    { 0, { 0, 0, 0 }, 440.0f, 558.0f },
+    { 1, { 0, 0, 0 }, 680.0f, 718.0f }
 };
-unk32 lbl_8041AA80[15] = {
-    0x00000000, 0x43B90000, 0x43D68000, 0x01000000, 0x3F800000, 0x42700000, 0x00000000, 0x3F800000,
-    0x42700000, 0x00000000, 0x3F800000, 0x42700000, 0x01000000, 0x3F800000, 0x42700000
+lbl_8041AA80_Row lbl_8041AA80[5] = {
+    { 0, { 0, 0, 0 }, 370.0f, 429.0f },
+    { 1, { 0, 0, 0 }, 1.0f, 60.0f },
+    { 0, { 0, 0, 0 }, 1.0f, 60.0f },
+    { 0, { 0, 0, 0 }, 1.0f, 60.0f },
+    { 1, { 0, 0, 0 }, 1.0f, 60.0f }
 };
-unk32 lbl_8041AABC[12] = {
-    0x00000000, 0x3F800000, 0x43C80000, 0x01000000, 0x43C88000, 0x43E60000, 0x00000000, 0x43E68000,
-    0x43F90000, 0x01000000, 0x00000000, 0x00000000
+lbl_8041AABC_Row lbl_8041AABC[4] = {
+    { 0, { 0, 0, 0 }, 1.0f, 400.0f },
+    { 1, { 0, 0, 0 }, 401.0f, 460.0f },
+    { 0, { 0, 0, 0 }, 461.0f, 498.0f },
+    { 1, { 0, 0, 0 }, 0.0f, 0.0f }
 };
-unk32 lbl_8041AAEC[12] = {
-    0x00000000, 0x3F800000, 0x430C0000, 0x01000000, 0x430D0000, 0x43480000, 0x00000000, 0x43490000,
-    0x43700000, 0x01000000, 0x00000000, 0x00000000
+lbl_8041AAEC_Row lbl_8041AAEC[4] = {
+    { 0, { 0, 0, 0 }, 1.0f, 140.0f },
+    { 1, { 0, 0, 0 }, 141.0f, 200.0f },
+    { 0, { 0, 0, 0 }, 201.0f, 240.0f },
+    { 1, { 0, 0, 0 }, 0.0f, 0.0f }
 };
-unk32 lbl_8041AB1C[9] = {
-    0x00000000, 0x3F800000, 0x43700000, 0x01000000, 0x43710000, 0x43960000, 0x00000000, 0x43968000,
-    0x43AA0000
+lbl_8041AB1C_Row lbl_8041AB1C[3] = {
+    { 0, { 0, 0, 0 }, 1.0f, 240.0f },
+    { 1, { 0, 0, 0 }, 241.0f, 300.0f },
+    { 0, { 0, 0, 0 }, 301.0f, 340.0f }
 };
 float lbl_8041AB40[15] = {
     0.0f, 431.0f, 509.0f, 0.0f, 6.8e+02f, 7.7e+02f, 0.0f, 1.0f,
     4e+01f, 0.0f, 171.0f, 2.6e+02f, 0.0f, 8.3e+02f, 919.0f
 };
-unk32 lbl_8041AB7C[6] = {
-    0x01000000, 0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x429E0000
+lbl_8041AB7C_Row lbl_8041AB7C[3] = {
+    { 256, 0, 0.0f },
+    { 0, 0, 0.0f },
+    { 16256, 0, 79.0f }
 };
-unk32 lbl_8041AB94[12] = {
-    0x00000000, 0x3F800000, 0x42700000, 0x01000000, 0x42F20000, 0x43160000, 0x00000000, 0x43530000,
-    0x43870000, 0x01000000, 0x43A58000, 0x43B40000
+lbl_8041AB94_Row lbl_8041AB94[4] = {
+    { 0, { 0, 0, 0 }, 1.0f, 60.0f },
+    { 1, { 0, 0, 0 }, 121.0f, 150.0f },
+    { 0, { 0, 0, 0 }, 211.0f, 270.0f },
+    { 1, { 0, 0, 0 }, 331.0f, 360.0f }
 };
-unk32 lbl_8041ABC4[9] = {
-    0x00000000, 0x3F800000, 0x42700000, 0x01000000, 0x430C0000, 0x432A0000, 0x00000000, 0x43490000,
-    0x43650000
+lbl_8041ABC4_Row lbl_8041ABC4[3] = {
+    { 0, { 0, 0, 0 }, 1.0f, 60.0f },
+    { 1, { 0, 0, 0 }, 140.0f, 170.0f },
+    { 0, { 0, 0, 0 }, 201.0f, 229.0f }
 };
-unk32 lbl_8041ABE8[9] = {
-    0x01000000, 0x00000000, 0x41F00000, 0x00000000, 0x42700000, 0x42B40000, 0x00000000, 0x00000000,
-    0x41F00000
+lbl_8041ABE8_Row lbl_8041ABE8[3] = {
+    { 1, { 0, 0, 0 }, 0.0f, 30.0f },
+    { 0, { 0, 0, 0 }, 60.0f, 90.0f },
+    { 0, { 0, 0, 0 }, 0.0f, 30.0f }
 };
 float lbl_8041AC0C[6] = {
     0.0f, 1.0f, 8e+01f, 0.0f, 8e+01f, 158.0f

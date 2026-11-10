@@ -239,8 +239,9 @@ const unsigned int lbl_806D34B0[2] = {
     0x0, 0x0
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D34B8[2] = {
-    0x00000000, 0x0006003A
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_806D34B8[4] = {
+    0, 0, 6, 58
 };
 /* decl: ItemEffectMask */
 /* element type read off the values (all small integers), not from code */
@@ -258,12 +259,14 @@ const int lbl_806D34D0[2] = {
     0, 0
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D34D8[2] = {
-    0x01000004, 0x000A0000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_806D34D8[4] = {
+    256, 4, 10, 0
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D34E0[2] = {
-    0x00000180, 0x300004C0
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_806D34E0[4] = {
+    0, 384, 12288, 1216
 };
 /* decl: ItemEffectMask */
 /* element type read off the values (all small integers), not from code */
@@ -271,8 +274,9 @@ const int lbl_806D34E8[2] = {
     0, 0
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D34F0[2] = {
-    0x00000000, 0x02700000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_806D34F0[4] = {
+    0, 0, 624, 0
 };
 const unsigned int lbl_806D34F8 = 0x1;
 const unsigned int lbl_806D34FC = 0x80;
@@ -331,8 +335,9 @@ const int lbl_806D3558[2] = {
     16384, 0
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D3560[2] = {
-    0x00010000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_806D3560[4] = {
+    1, 0, 0, 0
 };
 /* decl: ItemEffectMask */
 /* element type read off the values (all small integers), not from code */
@@ -340,8 +345,9 @@ const int lbl_806D3568[2] = {
     1024, 0
 };
 /* decl: ItemEffectMask */
-const unk32 lbl_806D3570[2] = {
-    0x00000000, 0x00010000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_806D3570[4] = {
+    0, 0, 1, 0
 };
 const char lbl_806D3578[] = "  %s";
 const char lbl_806D3580[] = " %s";

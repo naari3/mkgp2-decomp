@@ -23,11 +23,15 @@ const unk32 lbl_8039C5E8[28] = {
     0x6C746572, 0x4E6F6465, 0x00000000, 0x00000000
 };
 const char clFlowCupBattle[] = "clFlashViewer";
-const unk32 lbl_8039C668[22] = {
-    0x636C4A6F, 0x6252756E, 0x6E657200, 0x5B464C41, 0x53482054, 0x45535420, 0x4D4F4445, 0x5D000000,
-    0x204E414D, 0x452D2530, 0x3364203A, 0x20257300, 0x20465241, 0x4D452020, 0x20203A20, 0x25662028,
-    0x4D415820, 0x25662900, 0x204C4F4F, 0x50202020, 0x20203A20, 0x25730000
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char lbl_8039C668[88] =
+    "clJobRunner" "\0"
+    "[FLASH TEST MODE]" "\0"
+    "" "\0"
+    "" "\0"
+    " NAME-%03d : %s" "\0"
+    " FRAME    : %f (MAX %f)" "\0"
+    " LOOP     : %s";
 const char clFlowCCInterface[] = "clSpriteViewer";
 const unk32 lbl_8039C6D0[18] = {
     0x636C4A6F, 0x6252756E, 0x6E657200, 0x5B535052, 0x49544520, 0x54455354, 0x204D4F44, 0x455D0000,

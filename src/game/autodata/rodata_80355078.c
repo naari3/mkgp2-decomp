@@ -61,23 +61,29 @@ const float lbl_80355198[6] = {
 const float lbl_803551B0[6] = {
     0.25f, 0.45f, 0.78f, 0.1f, 0.98f, 0.9f
 };
-const unk32 lbl_803551C8[2] = {
-    0x3F000000, 0x0000000F
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803551C8[4] = {
+    16128, 0, 0, 15
 };
-const unk32 lbl_803551D0[2] = {
-    0x3F800000, 0x0000000F
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803551D0[4] = {
+    16256, 0, 0, 15
 };
-const unk32 lbl_803551D8[2] = {
-    0x3F000000, 0x0000000F
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803551D8[4] = {
+    16128, 0, 0, 15
 };
-const unk32 lbl_803551E0[2] = {
-    0x3F800000, 0x0000000F
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803551E0[4] = {
+    16256, 0, 0, 15
 };
-const unk32 lbl_803551E8[2] = {
-    0x3F000000, 0x0000000F
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803551E8[4] = {
+    16128, 0, 0, 15
 };
-const unk32 lbl_803551F0[2] = {
-    0x3F800000, 0x0000000F
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803551F0[4] = {
+    16256, 0, 0, 15
 };
 const unk32 lbl_803551F8[5] = {
     0x00000000, 0x40C00000, 0x00000046, 0x00000078, 0x00000000

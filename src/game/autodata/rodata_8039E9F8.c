@@ -9,8 +9,9 @@
 #pragma force_active on
 
 /* decl: FKDrawEntry / KartInfoEntry */
-const unk32 lbl_8039E9F8[6] = {
-    0x0000019F, 0x17A41E1D, 0x13B91ECD, 0x1ECF1ED1, 0x1ED30000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_8039E9F8[12] = {
+    0, 415, 6052, 7709, 5049, 7885, 7887, 7889, 7891, 0, 0, 0
 };
 
 #pragma force_active reset

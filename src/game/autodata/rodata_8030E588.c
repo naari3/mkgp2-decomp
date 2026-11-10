@@ -257,9 +257,10 @@ void *const CardCreate_Page_rodata_80310084[26] = {
     (void *)&lbl_806D2D40
 };
 const char lbl_803100EC[] = "clTestMode";
-const unk32 CardCreate_Page_rodata_803100F8[8] = {
-    0x636C4A6F, 0x6252756E, 0x6E657200, 0x43415244, 0x20522F57, 0x204C494E, 0x4B204552, 0x524F5200
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char CardCreate_Page_rodata_803100F8[32] =
+    "clJobRunner" "\0"
+    "CARD R/W LINK ERROR";
 const unk32 CardRW_TestTopMenu_Page_rodata_80310118[204] = {
     0x504C4541, 0x53452050, 0x52455353, 0x20544553, 0x54204255, 0x54544F4E, 0x00000000, 0x43415244,
     0x20522F57, 0x20444154, 0x41205752, 0x49544520, 0x4552524F, 0x52000000, 0x43415244, 0x20522F57,

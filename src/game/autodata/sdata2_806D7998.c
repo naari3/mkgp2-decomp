@@ -2068,9 +2068,9 @@ const float lbl_806D9980[2] = {
     -1.0f, 0.0f
 };
 const char lbl_806D9988[] = " ";
-const unk32 lbl_806D998C[2] = {
-    0x25643030, 0x897E0000
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char lbl_806D998C[8] =
+    "%d00\211~";
 const unk32 lbl_806D9994[2] = {
     0x8DEC82E9, 0x00000000
 };

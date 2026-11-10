@@ -109,11 +109,14 @@ const char lbl_80362CD4[] = "clYTaskInterface";
 const char lbl_80362CE8[] = "clCTaskInterface";
 const char lbl_80362CFC[] = "clCSPartsAppearGhost";
 const char lbl_80362D14[] = "clCSPartsInerface";
-const unk32 sdata_806CF750_rodata_80362D28[26] = {
-    0x636C4353, 0x50617274, 0x734D7367, 0x57696E64, 0x6F770000, 0x53746166, 0x66206768, 0x6F737420,
-    0x63617200, 0x20202020, 0x20697320, 0x61766169, 0x6C61626C, 0x65202100, 0x8358835E, 0x83628374,
-    0x8353815B, 0x83588367, 0x82AA8F6F, 0x8CBB0000, 0x82B782E9, 0x82E682A4, 0x82C982C8, 0x82E882DC,
-    0x82B582BD, 0x81490000
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char sdata_806CF750_rodata_80362D28[104] =
+    "clCSPartsMsgWindow" "\0"
+    "" "\0"
+    "Staff ghost car" "\0"
+    "     is available !" "\0"
+    "\203X\203^\203b\203t\203S\201[\203X\203g\202\252\217o\214\273" "\0"
+    "" "\0"
+    "\202\267\202\351\202\346\202\244\202\311\202\310\202\350\202\334\202\265\202\275\201I";
 
 #pragma force_active reset

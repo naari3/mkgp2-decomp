@@ -22,9 +22,9 @@ const float lbl_806DBE00[2] = {
     0.017453292f, 0.0f
 };
 const char lbl_806DBE08[] = " ";
-const unk32 lbl_806DBE0C[2] = {
-    0x25643030, 0x897E0000
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char lbl_806DBE0C[8] =
+    "%d00\211~";
 const unk32 lbl_806DBE14[2] = {
     0x8DEC82E9, 0x00000000
 };
@@ -155,9 +155,9 @@ const float lbl_806DBFD4 = 3.2e+02f;
 const float lbl_806DBFD8 = 2.4e+02f;
 const float lbl_806DBFDC = 1.0f;
 const char lbl_806DBFE0[] = " ";
-const unk32 lbl_806DBFE4[2] = {
-    0x25643030, 0x897E0000
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char lbl_806DBFE4[8] =
+    "%d00\211~";
 const unk32 lbl_806DBFEC[2] = {
     0x8DEC82E9, 0x00000000
 };

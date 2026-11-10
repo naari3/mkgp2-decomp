@@ -32,6 +32,16 @@ typedef struct ScaleCurve {
     float t[5];
 } ScaleCurve;
 
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct ItemObject_Tick_DispatchcTo15_data_80420BC8_Row {
+    unsigned char b_00;
+    unsigned char pad_01[3];
+    float f_04;
+    float f_08;
+    float f_0C;
+} ItemObject_Tick_DispatchcTo15_data_80420BC8_Row;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -1691,17 +1701,27 @@ Vec ItemObject_Tick_DispatchShellGroup_data_80420BB0[2] = {
     { -1.0f, 0.0f, 0.0f }
 };
 /* decl: HandheldPose */
-unk32 ItemObject_Tick_DispatchcTo15_data_80420BC8[80] = {
-    0x00000000, 0x3FA66666, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x41F00000, 0x00000000,
-    0x00000000, 0x3F000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x3F8CCCCD, 0x00000000, 0x40400000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x3F8CCCCD, 0x00000000, 0x40400000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x3F4CCCCD, 0x00000000, 0x40000000, 0x00000000, 0x00000000, 0x42F00000, 0x00000000,
-    0x00000000, 0x3F8CCCCD, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x3F99999A, 0x00000000, 0x3F800000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x01000000, 0x3F800000, 0xBFC00000, 0x3F800000, 0x00000000, 0xC2B40000, 0x00000000, 0xC2C80000,
-    0x00000000, 0x3ECCCCCD, 0x00000000, 0x40800000, 0x00000000, 0x00000000, 0xC2480000, 0x00000000,
-    0x00000000, 0x3F4CCCCD, 0x00000000, 0x3F800000, 0x00000000, 0x00000000, 0xC1F00000, 0x00000000
+ItemObject_Tick_DispatchcTo15_data_80420BC8_Row ItemObject_Tick_DispatchcTo15_data_80420BC8[20] = {
+    { 0, { 0, 0, 0 }, 1.3f, 0.0f, 0.0f },
+    { 0, { 0, 0, 0 }, 0.0f, 30.0f, 0.0f },
+    { 0, { 0, 0, 0 }, 0.5f, 0.0f, 0.0f },
+    { 0, { 0, 0, 0 }, 0.0f, 0.0f, 0.0f },
+    { 0, { 0, 0, 0 }, 1.1f, 0.0f, 3.0f },
+    { 0, { 0, 0, 0 }, 0.0f, 0.0f, 0.0f },
+    { 0, { 0, 0, 0 }, 1.1f, 0.0f, 3.0f },
+    { 0, { 0, 0, 0 }, 0.0f, 0.0f, 0.0f },
+    { 0, { 0, 0, 0 }, 0.8f, 0.0f, 2.0f },
+    { 0, { 0, 0, 0 }, 0.0f, 120.0f, 0.0f },
+    { 0, { 0, 0, 0 }, 1.1f, 0.0f, 0.0f },
+    { 0, { 0, 0, 0 }, 0.0f, 0.0f, 0.0f },
+    { 0, { 0, 0, 0 }, 1.2f, 0.0f, 1.0f },
+    { 0, { 0, 0, 0 }, 0.0f, 0.0f, 0.0f },
+    { 1, { 0, 0, 0 }, 1.0f, -1.5f, 1.0f },
+    { 0, { 0, 0, 0 }, -90.0f, 0.0f, -100.0f },
+    { 0, { 0, 0, 0 }, 0.4f, 0.0f, 4.0f },
+    { 0, { 0, 0, 0 }, 0.0f, -50.0f, 0.0f },
+    { 0, { 0, 0, 0 }, 0.8f, 0.0f, 1.0f },
+    { 0, { 0, 0, 0 }, 0.0f, -30.0f, 0.0f }
 };
 EffectAnchor ItemObject_Tick_DispatchcTo15_data_80420D08[10] = {
     { 1.0f, 2.0f },

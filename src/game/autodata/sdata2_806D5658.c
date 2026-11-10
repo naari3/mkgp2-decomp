@@ -2015,9 +2015,9 @@ const char lbl_806D764C[] = "meter";
 const unsigned int lbl_806D7654 = 0x95430000;
 const unsigned int lbl_806D7658 = 0x95620000;
 const char lbl_806D765C[] = "sec";
-const unk32 lbl_806D7660[2] = {
-    0x2F34967B, 0x00000000
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char lbl_806D7660[8] =
+    "/4\226{";
 const char lbl_806D7668[] = "/4 pole";
 const char lbl_806D7670[] = "mario";
 const char lbl_806D7678[] = "luigi";

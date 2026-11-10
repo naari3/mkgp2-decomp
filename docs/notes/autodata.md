@@ -114,8 +114,15 @@ For `unk32` word tables nobody declares: finds the smallest row length where
 every column is either all floats or all small integers and writes
 `struct <name>_Row { float f_00; int i_04; ... }` (or a plain `float`/`int`
 array). The comment above the type says it was read off the values, not from
-code; member names are offsets. A column that is neither stays `unk32`, so
-packed bytes or shorts are never guessed. 2026-11-10: 14 KB.
+code; member names are offsets. 2026-11-10: 14 KB.
+
+Second pass (same day, 18 KB more): two more column kinds and text.
+- `b`: every word is `0xNN000000`: `unsigned char b_XX; unsigned char pad_XX[3];`
+- `s`: both halves are small signed 16-bit values: `short s_XX; short s_XX+2;`
+- an object that is nothing but text (strings back to back, dtk merged them
+  because the code reaches them through one anchor) becomes one `char[]` of
+  string literals joined by `"\0"`. Text needs no byte swap, so one object is fine.
+A column that fits none of these stays `unk32`.
 
 An embedded file image is typed as bytes on purpose: the 31.8 KB object at
 0x80412158 is a `*_line.bin` course file (dtk had cut it in two), read by

@@ -65,13 +65,17 @@ const char lbl_802EB3F4[] = "DNA_dino_alr.dat";
 const char lbl_802EB408[] = "DNA_BtunnelA_a.dat";
 const char lbl_802EB41C[] = "DNA_dino_d.dat";
 const char lbl_802EB42C[] = "DNA_dino_d_ef.dat";
-const unk32 lbl_802EB440[36] = {
-    0x444E415F, 0x526C616D, 0x705F612E, 0x64617400, 0x2020636C, 0x4F637472, 0x65652020, 0x20203A25,
-    0x64282564, 0x62797465, 0x290A0000, 0x2020636C, 0x4F637472, 0x65654F62, 0x6A203A25, 0x64282564,
-    0x62797465, 0x290A0000, 0x45787465, 0x6E64496E, 0x7374616E, 0x63650A00, 0x20204853, 0x445F4A4F,
-    0x626A2020, 0x20203A25, 0x64282564, 0x62797465, 0x290A0000, 0x20204853, 0x445F444F, 0x626A2020,
-    0x20203A25, 0x64282564, 0x62797465, 0x290A0000
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char lbl_802EB440[144] =
+    "DNA_Rlamp_a.dat" "\0"
+    "  clOctree    :%d(%dbyte)\n" "\0"
+    "" "\0"
+    "  clOctreeObj :%d(%dbyte)\n" "\0"
+    "" "\0"
+    "ExtendInstance\n" "\0"
+    "  HSD_JObj    :%d(%dbyte)\n" "\0"
+    "" "\0"
+    "  HSD_DObj    :%d(%dbyte)\n";
 const char lbl_802EB4D0[] = "clMapEffect";
 
 #pragma force_active reset

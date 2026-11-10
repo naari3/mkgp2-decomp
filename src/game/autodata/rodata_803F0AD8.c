@@ -166,10 +166,13 @@ const unk32 KartAlertPanel_rodata_803F0FC4[11] = {
     0x00000000, 0x00000000, 0xC2940000, 0xC1600000, 0xC2580000, 0xC1200000, 0x42300000, 0xC1200000,
     0xFFFF0000, 0x00000000, 0x00000000
 };
-const unk32 sdata_806D09E8_rodata_803F0FF0[12] = {
-    0x636C5275, 0x62537461, 0x72000000, 0x53757065, 0x72205374, 0x61722045, 0x6E640A00, 0x53757065,
-    0x72205374, 0x61722053, 0x74617274, 0x21210A00
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char sdata_806D09E8_rodata_803F0FF0[48] =
+    "clRubStar" "\0"
+    "" "\0"
+    "" "\0"
+    "Super Star End\n" "\0"
+    "Super Star Start!!\n";
 const char lbl_803F1020[] = "Super Star Restart\n";
 const char KartAlertPanel_rodata_803F1034[60] = {
     83, 117, 112, 101, 114, 32, 83, 116, 97, 114, 32, 83,

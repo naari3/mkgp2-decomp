@@ -518,9 +518,12 @@ const char DbgScene08_AtrTest_Ctor_rodata_8032D098[472] = {
     122, 111, 110, 101, 58, 77, 73, 68, 78, 73, 71, 72,
     84, 0, 0, 0
 };
-const unk32 lbl_8032D270[8] = {
-    0x636C4869, 0x64616B61, 0x5F626173, 0x65000000, 0x636C4869, 0x64616B61, 0x5F746573, 0x74393900
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char lbl_8032D270[32] =
+    "clHidaka_base" "\0"
+    "" "\0"
+    "" "\0"
+    "clHidaka_test99";
 const char lbl_8032D290[] = "clHidaka_test13";
 const char lbl_8032D2A0[] = "clHidaka_test12";
 const char lbl_8032D2B0[] = "clHidaka_test11";

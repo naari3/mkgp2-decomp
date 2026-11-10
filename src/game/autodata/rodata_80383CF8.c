@@ -5,6 +5,32 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct rodata_803175A0_rodata_80383F28_Row {
+    float f_00;
+    float f_04;
+    float f_08;
+    short s_0C;
+    short s_0E;
+    float f_10;
+    float f_14;
+    float f_18;
+    float f_1C;
+    float f_20;
+    float f_24;
+    float f_28;
+    float f_2C;
+    float f_30;
+    float f_34;
+    float f_38;
+    float f_3C;
+    float f_40;
+    float f_44;
+    float f_48;
+    float f_4C;
+} rodata_803175A0_rodata_80383F28_Row;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -81,15 +107,10 @@ void *const lbl_80383E80[42] = {
     (void *)0x3DCCCCCD,
     (void *)0x3E4CCCCD
 };
-const unk32 rodata_803175A0_rodata_80383F28[60] = {
-    0x3F800000, 0x3F4CCCCD, 0x00000000, 0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44BB8000,
-    0x43960000, 0x43520000, 0x3E570A3E, 0x3C83126F, 0x3F800000, 0x3F800000, 0x3F800000, 0x41700000,
-    0x3F800000, 0x3F333333, 0x42340000, 0x3EE66666, 0x3F800000, 0x3F800000, 0x40000000, 0x00000001,
-    0x3A91A2B4, 0x41A00000, 0x00000000, 0x41B00000, 0x3CF5C28F, 0x38D1B717, 0x3F19999A, 0x3BE56042,
-    0x3BA3D70A, 0x00000000, 0x3FDA3C75, 0x4003CCA3, 0x40C00000, 0x00000000, 0x41000000, 0xC0C00000,
-    0x00000000, 0x41000000, 0x40C00000, 0x00000000, 0xC1000000, 0xC0C00000, 0x00000000, 0xC1000000,
-    0x40C00000, 0x00000000, 0x41000000, 0xC0C00000, 0x00000000, 0x41000000, 0x40C00000, 0x00000000,
-    0xC1000000, 0xC0C00000, 0x00000000, 0xC1000000
+const rodata_803175A0_rodata_80383F28_Row rodata_803175A0_rodata_80383F28[3] = {
+    { 1.0f, 0.8f, 0.0f, 16256, 0, 1.0f, 1.0f, 1.0f, 1500.0f, 300.0f, 210.0f, 0.21000001f, 0.016f, 1.0f, 1.0f, 1.0f, 15.0f, 1.0f, 0.7f, 45.0f, 0.45f },
+    { 1.0f, 1.0f, 2.0f, 0, 1, 0.0011111111f, 20.0f, 0.0f, 22.0f, 0.03f, 0.0001f, 0.6f, 0.007f, 0.005f, 0.0f, 1.70497f, 2.059365f, 6.0f, 0.0f, 8.0f, -6.0f },
+    { 0.0f, 8.0f, 6.0f, 0, 0, -8.0f, -6.0f, 0.0f, -8.0f, 6.0f, 0.0f, 8.0f, -6.0f, 0.0f, 8.0f, 6.0f, 0.0f, -8.0f, -6.0f, 0.0f, -8.0f }
 };
 /* pointers mixed with values */
 void *const lbl_80384018[2] = {

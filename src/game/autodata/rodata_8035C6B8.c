@@ -86,9 +86,9 @@ const unk32 lbl_8035C7D8[4] = {
     0x837D838A, 0x8349834A, 0x83628376, 0x00000000
 };
 const char lbl_8035C7E8[] = "MARIO CUP";
-const unk32 lbl_8035C7F4[3] = {
-    0x444B834A, 0x83628376, 0x00000000
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char lbl_8035C7F4[12] =
+    "DK\203J\203b\203v";
 const unk32 lbl_8035C800[4] = {
     0x838F838A, 0x8349834A, 0x83628376, 0x00000000
 };
@@ -117,9 +117,9 @@ const unk32 lbl_8035C8B4[4] = {
     0x837D838A, 0x83498358, 0x8365815B, 0x83570000
 };
 const char lbl_8035C8C4[] = "MARIO STAGE";
-const unk32 lbl_8035C8D0[3] = {
-    0x444B8358, 0x8365815B, 0x83570000
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char lbl_8035C8D0[12] =
+    "DK\203X\203e\201[\203W";
 const char lbl_8035C8DC[] = "DK STAGE";
 const unk32 lbl_8035C8E8[4] = {
     0x838F838A, 0x83498358, 0x8365815B, 0x83570000
@@ -209,9 +209,9 @@ const unk32 lbl_8035CBB8[6] = {
     0x838F838B, 0x8343815B, 0x83578358, 0x835E8357, 0x83418380, 0x00000000
 };
 const char lbl_8035CBD0[] = "WALUIGI STADIUM";
-const unk32 lbl_8035CBE0[3] = {
-    0x25326488, 0xCA2F3530, 0x88CA0000
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char lbl_8035CBE0[12] =
+    "%2d\210\312/50\210\312";
 const unk32 lbl_8035CBEC[5] = {
     0xE29E91CC, 0x838C8352, 0x815B8368, 0x835E8343, 0x83800000
 };

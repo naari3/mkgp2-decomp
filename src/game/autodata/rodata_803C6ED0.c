@@ -8,6 +8,1662 @@
 
 extern char lbl_806DB3E0[];
 
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C72FC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C72FC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C732C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C732C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C7380_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C7380_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C73C0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C73C0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C7444_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C7444_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C7484_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C7484_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C7508_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C7508_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C76E0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C76E0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C79A8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C79A8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C7CFC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C7CFC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C7D38_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C7D38_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C7DB0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C7DB0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C7DEC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C7DEC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C7E0C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C7E0C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C7E60_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C7E60_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C7E80_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C7E80_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C7FD8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C7FD8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C80DC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C80DC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C8168_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C8168_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C81F4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C81F4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C8288_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C8288_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C831C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C831C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C83B0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C83B0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C8470_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C8470_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C850C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C850C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C8544_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C8544_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C85A0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C85A0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C85E0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C85E0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C8930_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C8930_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C8DD8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C8DD8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C8E6C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C8E6C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C8F90_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C8F90_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C8FD4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C8FD4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9020_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9020_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C906C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C906C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C90B8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C90B8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9104_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9104_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9200_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9200_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9278_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9278_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C956C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C956C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C95E0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C95E0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9664_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9664_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C97E0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C97E0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9A14_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9A14_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9A58_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9A58_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9A94_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9A94_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9AD4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9AD4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9AFC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9AFC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9BEC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9BEC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9C40_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9C40_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9C94_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9C94_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9CD8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9CD8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9D1C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9D1C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9E90_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9E90_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9F00_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9F00_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9FB0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9FB0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803C9FE0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803C9FE0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA000_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA000_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA068_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA068_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA0AC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA0AC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA110_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA110_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA130_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA130_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA194_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA194_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA1D4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA1D4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA258_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA258_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA278_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA278_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA2BC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA2BC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA320_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA320_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA340_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA340_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA384_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA384_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA3B4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA3B4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA3E4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA3E4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA434_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA434_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA478_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA478_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA4BC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA4BC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA500_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA500_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA530_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA530_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CA560_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CA560_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CAAF4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CAAF4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CAB38_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CAB38_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CAB74_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CAB74_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CABB0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CABB0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CAF64_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CAF64_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CAFA8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CAFA8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CAFEC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CAFEC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CB048_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CB048_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CB0A4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CB0A4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CB100_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CB100_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CB15C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CB15C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CB1B0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CB1B0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CB248_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CB248_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CB294_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CB294_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CB2D8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CB2D8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CB2F0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CB2F0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CB4D8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CB4D8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CB500_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CB500_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CB528_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CB528_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CB720_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CB720_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CB7F4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CB7F4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CB878_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CB878_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CB8FC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CB8FC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CBCD8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CBCD8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CBD28_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CBD28_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CBD78_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CBD78_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CBDC8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CBDC8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CBE64_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CBE64_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CBEA8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CBEA8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CBF44_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CBF44_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CBF98_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CBF98_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CC040_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CC040_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CC0C4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CC0C4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CC138_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CC138_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CC1B4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CC1B4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CC230_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CC230_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CC2B4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CC2B4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CC3F4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CC3F4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CC448_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CC448_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CC4CC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CC4CC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CC520_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CC520_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CC594_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CC594_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CC940_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CC940_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CCA18_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CCA18_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CCA6C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CCA6C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CCAF0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CCAF0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CCB44_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CCB44_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CCBC8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CCBC8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CCC1C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CCC1C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CCCA0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CCCA0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CD038_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CD038_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CD160_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CD160_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CD288_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CD288_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CD3D4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CD3D4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CD490_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CD490_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CD524_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CD524_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CD5B8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CD5B8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CD5E8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CD5E8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CD618_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CD618_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CD66C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CD66C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CD69C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CD69C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CD6F0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CD6F0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CD870_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CD870_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CD8A0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CD8A0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CD948_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CD948_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CD978_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CD978_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CD9CC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CD9CC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDA20_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDA20_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDA74_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDA74_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDAD8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDAD8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDB80_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDB80_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDBD4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDBD4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDC28_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDC28_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDC7C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDC7C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDCD0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDCD0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDD00_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDD00_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDD30_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDD30_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDD7C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDD7C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDDD0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDDD0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDDF8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDDF8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDE44_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDE44_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDE7C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDE7C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDEC8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDEC8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDF54_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDF54_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDF84_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDF84_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CDFD0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CDFD0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE034_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE034_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE0DC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE0DC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE130_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE130_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE184_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE184_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE1E0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE1E0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE544_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE544_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE574_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE574_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE5C8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE5C8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE614_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE614_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE664_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE664_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE6D0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE6D0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE724_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE724_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE76C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE76C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE7D8_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE7D8_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE834_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE834_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE894_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE894_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE8F4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE8F4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CE978_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CE978_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CEB0C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CEB0C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CED08_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CED08_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CED64_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CED64_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CEDBC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CEDBC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CEE0C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CEE0C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CEE80_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CEE80_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CF00C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CF00C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CF0AC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CF0AC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CF0F0_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CF0F0_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CF1BC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CF1BC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CF288_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CF288_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CF3D4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CF3D4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CF414_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CF414_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CF478_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CF478_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CF514_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CF514_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CF57C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CF57C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CF648_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CF648_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CF748_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CF748_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CF8BC_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CF8BC_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CFA24_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CFA24_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CFA88_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CFA88_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CFAE4_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CFAE4_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CFB3C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CFB3C_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CFC78_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CFC78_Row;
+
+/* row layout read off the values (per column: all floats, all small integers, one byte, or
+ * two 16-bit values), not from code */
+typedef struct lbl_803CFD9C_Row {
+    short s_00;
+    short s_02;
+    float f_04;
+} lbl_803CFD9C_Row;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -104,13 +1760,21 @@ const int lbl_803C72D8[9] = {
     0, 0, 0, 0, 0, 0, 0, 0,
     0
 };
-const unk32 lbl_803C72FC[12] = {
-    0x00000000, 0x00000000, 0x003C0000, 0xC351D99A, 0x00780000, 0x00000000, 0x00B40000, 0x4363028F,
-    0x00F00000, 0x3FEF5C29, 0xFFFF0000, 0x00000000
+const lbl_803C72FC_Row lbl_803C72FC[6] = {
+    { 0, 0, 0.0f },
+    { 60, 0, -209.85f },
+    { 120, 0, 0.0f },
+    { 180, 0, 227.01f },
+    { 240, 0, 1.87f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803C732C[12] = {
-    0x00000000, 0x00000000, 0x003C0000, 0x427AE148, 0x00780000, 0x00000000, 0x00B40000, 0x427AE148,
-    0x00F00000, 0x3F051EB8, 0xFFFF0000, 0x00000000
+const lbl_803C732C_Row lbl_803C732C[6] = {
+    { 0, 0, 0.0f },
+    { 60, 0, 62.72f },
+    { 120, 0, 0.0f },
+    { 180, 0, 62.72f },
+    { 240, 0, 0.52f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C735C[9] = {
     (void *)&lbl_803C72FC,
@@ -123,14 +1787,29 @@ void *const lbl_803C735C[9] = {
     0,
     0
 };
-const unk32 lbl_803C7380[16] = {
-    0x00000000, 0x3F800000, 0x000A0000, 0x3F8147AE, 0x00630000, 0x3F947AE1, 0x00780000, 0x3F970A3D,
-    0x008C0000, 0x3F947AE1, 0x00DE0000, 0x3F828F5C, 0x00F00000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803C7380_Row lbl_803C7380[8] = {
+    { 0, 0, 1.0f },
+    { 10, 0, 1.01f },
+    { 99, 0, 1.16f },
+    { 120, 0, 1.18f },
+    { 140, 0, 1.16f },
+    { 222, 0, 1.02f },
+    { 240, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803C73C0[24] = {
-    0x00000000, 0x3F3D70A4, 0x00110000, 0x3F2E147B, 0x00200000, 0x3F07AE14, 0x005C0000, 0xBF0A3D71,
-    0x006A0000, 0xBF2E147B, 0x00780000, 0xBF3851EC, 0x00860000, 0xBF28F5C3, 0x00920000, 0xBF0A3D71,
-    0x00D50000, 0x3F0CCCCD, 0x00E20000, 0x3F2E147B, 0x00F00000, 0x3F3D70A4, 0xFFFF0000, 0x00000000
+const lbl_803C73C0_Row lbl_803C73C0[12] = {
+    { 0, 0, 0.74f },
+    { 17, 0, 0.68f },
+    { 32, 0, 0.53f },
+    { 92, 0, -0.54f },
+    { 106, 0, -0.68f },
+    { 120, 0, -0.72f },
+    { 134, 0, -0.66f },
+    { 146, 0, -0.54f },
+    { 213, 0, 0.55f },
+    { 226, 0, 0.68f },
+    { 240, 0, 0.74f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C7420[9] = {
     0,
@@ -143,14 +1822,29 @@ void *const lbl_803C7420[9] = {
     0,
     (void *)&lbl_803C73C0
 };
-const unk32 lbl_803C7444[16] = {
-    0x00000000, 0x3F800000, 0x000A0000, 0x3F7D70A4, 0x00630000, 0x3F51EB85, 0x00780000, 0x3F4CCCCD,
-    0x008C0000, 0x3F51EB85, 0x00DE0000, 0x3F7AE148, 0x00F00000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803C7444_Row lbl_803C7444[8] = {
+    { 0, 0, 1.0f },
+    { 10, 0, 0.99f },
+    { 99, 0, 0.82f },
+    { 120, 0, 0.8f },
+    { 140, 0, 0.82f },
+    { 222, 0, 0.98f },
+    { 240, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803C7484[24] = {
-    0x00000000, 0xBF400000, 0x00110000, 0xBF30A3D7, 0x00200000, 0xBF07AE14, 0x005C0000, 0x3F0A3D71,
-    0x006A0000, 0x3F2E147B, 0x00780000, 0x3F3AE148, 0x00860000, 0x3F2B851F, 0x00920000, 0x3F0A3D71,
-    0x00D50000, 0xBF0F5C29, 0x00E20000, 0xBF30A3D7, 0x00F00000, 0xBF400000, 0xFFFF0000, 0x00000000
+const lbl_803C7484_Row lbl_803C7484[12] = {
+    { 0, 0, -0.75f },
+    { 17, 0, -0.69f },
+    { 32, 0, -0.53f },
+    { 92, 0, 0.54f },
+    { 106, 0, 0.68f },
+    { 120, 0, 0.73f },
+    { 134, 0, 0.67f },
+    { 146, 0, 0.54f },
+    { 213, 0, -0.56f },
+    { 226, 0, -0.69f },
+    { 240, 0, -0.75f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C74E4[9] = {
     0,
@@ -163,10 +1857,19 @@ void *const lbl_803C74E4[9] = {
     0,
     (void *)&lbl_803C7484
 };
-const unk32 lbl_803C7508[24] = {
-    0x00000000, 0xC1C80000, 0x000C0000, 0xC1B80000, 0x00140000, 0xC1880000, 0x00280000, 0x41880000,
-    0x00300000, 0x41B80000, 0x003C0000, 0x41C80000, 0x00480000, 0x41B80000, 0x00500000, 0x41880000,
-    0x00640000, 0xC1880000, 0x006C0000, 0xC1B80000, 0x00780000, 0xC1C80000, 0xFFFF0000, 0x00000000
+const lbl_803C7508_Row lbl_803C7508[12] = {
+    { 0, 0, -25.0f },
+    { 12, 0, -23.0f },
+    { 20, 0, -17.0f },
+    { 40, 0, 17.0f },
+    { 48, 0, 23.0f },
+    { 60, 0, 25.0f },
+    { 72, 0, 23.0f },
+    { 80, 0, 17.0f },
+    { 100, 0, -17.0f },
+    { 108, 0, -23.0f },
+    { 120, 0, -25.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C7568[9] = {
     0,
@@ -213,8 +1916,10 @@ void *const lbl_803C76D0[4] = {
     0,
     0
 };
-const unk32 lbl_803C76E0[6] = {
-    0x00000000, 0x00000000, 0x00F00000, 0x43B40000, 0xFFFF0000, 0x00000000
+const lbl_803C76E0_Row lbl_803C76E0[3] = {
+    { 0, 0, 0.0f },
+    { 240, 0, 360.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C76F8[9] = {
     0,
@@ -227,8 +1932,9 @@ void *const lbl_803C76F8[9] = {
     0,
     0
 };
-const unk32 lbl_803C771C[6] = {
-    0x00000000, 0x00000000, 0x00F00000, 0xC3B40000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803C771C[12] = {
+    0, 0, 0, 0, 240, 0, -15436, 0, -1, 0, 0, 0
 };
 void *const lbl_803C7734[9] = {
     0,
@@ -296,9 +2002,15 @@ void *const lbl_803C7998[4] = {
     0,
     0
 };
-const unk32 lbl_803C79A8[16] = {
-    0x00000000, 0x3F800000, 0x000A0000, 0x3F8147AE, 0x00630000, 0x3F947AE1, 0x00780000, 0x3F970A3D,
-    0x008C0000, 0x3F947AE1, 0x00DE0000, 0x3F828F5C, 0x00F00000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803C79A8_Row lbl_803C79A8[8] = {
+    { 0, 0, 1.0f },
+    { 10, 0, 1.01f },
+    { 99, 0, 1.16f },
+    { 120, 0, 1.18f },
+    { 140, 0, 1.16f },
+    { 222, 0, 1.02f },
+    { 240, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C79E8[9] = {
     0,
@@ -375,8 +2087,10 @@ void *const lbl_803C7CEC[4] = {
     0,
     0
 };
-const unk32 lbl_803C7CFC[6] = {
-    0x00000000, 0x42480000, 0x01680000, 0xC4278000, 0xFFFF0000, 0x00000000
+const lbl_803C7CFC_Row lbl_803C7CFC[3] = {
+    { 0, 0, 50.0f },
+    { 360, 0, -670.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C7D14[9] = {
     0,
@@ -389,8 +2103,10 @@ void *const lbl_803C7D14[9] = {
     0,
     0
 };
-const unk32 lbl_803C7D38[6] = {
-    0x00000000, 0x42700000, 0x01680000, 0x44430000, 0xFFFF0000, 0x00000000
+const lbl_803C7D38_Row lbl_803C7D38[3] = {
+    { 0, 0, 60.0f },
+    { 360, 0, 780.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C7D50[9] = {
     0,
@@ -403,8 +2119,9 @@ void *const lbl_803C7D50[9] = {
     0,
     0
 };
-const unk32 lbl_803C7D74[6] = {
-    0x00000000, 0x00000000, 0x00F00000, 0xC3B40000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803C7D74[12] = {
+    0, 0, 0, 0, 240, 0, -15436, 0, -1, 0, 0, 0
 };
 void *const lbl_803C7D8C[9] = {
     0,
@@ -417,8 +2134,10 @@ void *const lbl_803C7D8C[9] = {
     0,
     0
 };
-const unk32 lbl_803C7DB0[6] = {
-    0x00000000, 0x00000000, 0x00F00000, 0x43B40000, 0xFFFF0000, 0x00000000
+const lbl_803C7DB0_Row lbl_803C7DB0[3] = {
+    { 0, 0, 0.0f },
+    { 240, 0, 360.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C7DC8[9] = {
     0,
@@ -431,12 +2150,19 @@ void *const lbl_803C7DC8[9] = {
     0,
     0
 };
-const unk32 lbl_803C7DEC[8] = {
-    0x00000000, 0xC1700000, 0x00780000, 0x41700000, 0x00F00000, 0xC1700000, 0xFFFF0000, 0x00000000
+const lbl_803C7DEC_Row lbl_803C7DEC[4] = {
+    { 0, 0, -15.0f },
+    { 120, 0, 15.0f },
+    { 240, 0, -15.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803C7E0C[12] = {
-    0x00000000, 0x43356666, 0x003C0000, 0x43200000, 0x00780000, 0x43356666, 0x00B40000, 0x43200000,
-    0x00F00000, 0x43356666, 0xFFFF0000, 0x00000000
+const lbl_803C7E0C_Row lbl_803C7E0C[6] = {
+    { 0, 0, 181.4f },
+    { 60, 0, 160.0f },
+    { 120, 0, 181.4f },
+    { 180, 0, 160.0f },
+    { 240, 0, 181.4f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C7E3C[9] = {
     0,
@@ -449,12 +2175,19 @@ void *const lbl_803C7E3C[9] = {
     (void *)&lbl_803C7E0C,
     0
 };
-const unk32 lbl_803C7E60[8] = {
-    0x00000000, 0x41700000, 0x00780000, 0xC1700000, 0x00F00000, 0x41700000, 0xFFFF0000, 0x00000000
+const lbl_803C7E60_Row lbl_803C7E60[4] = {
+    { 0, 0, 15.0f },
+    { 120, 0, -15.0f },
+    { 240, 0, 15.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803C7E80[12] = {
-    0x00000000, 0x42E19EB8, 0x003C0000, 0x42D20000, 0x00780000, 0x42E19EB8, 0x00B40000, 0x42D20000,
-    0x00F00000, 0x42E19EB8, 0xFFFF0000, 0x00000000
+const lbl_803C7E80_Row lbl_803C7E80[6] = {
+    { 0, 0, 112.81f },
+    { 60, 0, 105.0f },
+    { 120, 0, 112.81f },
+    { 180, 0, 105.0f },
+    { 240, 0, 112.81f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C7EB0[9] = {
     0,
@@ -498,10 +2231,19 @@ void *const lbl_803C7F88[20] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803C7FD8[24] = {
-    0x00000000, 0x41200000, 0x00280000, 0xC1200000, 0x002D0000, 0xC1000000, 0x00320000, 0xC1200000,
-    0x00370000, 0xC1100000, 0x003C0000, 0xC1200000, 0x00640000, 0x41200000, 0x00690000, 0x41000000,
-    0x006E0000, 0x41200000, 0x00730000, 0x41100000, 0x00780000, 0x41200000, 0xFFFF0000, 0x00000000
+const lbl_803C7FD8_Row lbl_803C7FD8[12] = {
+    { 0, 0, 10.0f },
+    { 40, 0, -10.0f },
+    { 45, 0, -8.0f },
+    { 50, 0, -10.0f },
+    { 55, 0, -9.0f },
+    { 60, 0, -10.0f },
+    { 100, 0, 10.0f },
+    { 105, 0, 8.0f },
+    { 110, 0, 10.0f },
+    { 115, 0, 9.0f },
+    { 120, 0, 10.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C8038[9] = {
     0,
@@ -528,13 +2270,20 @@ void *const lbl_803C8094[4] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803C80A4[14] = {
-    0x00000000, 0x3F800000, 0x00120000, 0x3F800000, 0x00210000, 0x3F970A3D, 0x00260000, 0x3F800000,
-    0x002B0000, 0x3F8CCCCD, 0x00300000, 0x3F800000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803C80A4[28] = {
+    0, 0, 16256, 0, 18, 0, 16256, 0, 33, 0, 16279, 2621,
+    38, 0, 16256, 0, 43, 0, 16268, -13107, 48, 0, 16256, 0,
+    -1, 0, 0, 0
 };
-const unk32 lbl_803C80DC[14] = {
-    0x00000000, 0x3F800000, 0x00120000, 0x3F800000, 0x00210000, 0x3F3851EC, 0x00260000, 0x3F800000,
-    0x002B0000, 0x3F547AE1, 0x00300000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803C80DC_Row lbl_803C80DC[7] = {
+    { 0, 0, 1.0f },
+    { 18, 0, 1.0f },
+    { 33, 0, 0.72f },
+    { 38, 0, 1.0f },
+    { 43, 0, 0.83f },
+    { 48, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C8114[9] = {
     0,
@@ -547,13 +2296,18 @@ void *const lbl_803C8114[9] = {
     (void *)&lbl_803C80DC,
     0
 };
-const unk32 lbl_803C8138[12] = {
-    0x00000000, 0x3F800000, 0x000F0000, 0x3F970A3D, 0x00140000, 0x3F800000, 0x00190000, 0x3F8CCCCD,
-    0x001E0000, 0x3F800000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803C8138[24] = {
+    0, 0, 16256, 0, 15, 0, 16279, 2621, 20, 0, 16256, 0,
+    25, 0, 16268, -13107, 30, 0, 16256, 0, -1, 0, 0, 0
 };
-const unk32 lbl_803C8168[12] = {
-    0x00000000, 0x3F800000, 0x000F0000, 0x3F3851EC, 0x00140000, 0x3F800000, 0x00190000, 0x3F547AE1,
-    0x001E0000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803C8168_Row lbl_803C8168[6] = {
+    { 0, 0, 1.0f },
+    { 15, 0, 0.72f },
+    { 20, 0, 1.0f },
+    { 25, 0, 0.83f },
+    { 30, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C8198[9] = {
     0,
@@ -566,13 +2320,20 @@ void *const lbl_803C8198[9] = {
     (void *)&lbl_803C8168,
     0
 };
-const unk32 lbl_803C81BC[14] = {
-    0x00000000, 0x3F800000, 0x00290000, 0x3F800000, 0x00380000, 0x3F970A3D, 0x003D0000, 0x3F800000,
-    0x00420000, 0x3F8CCCCD, 0x00470000, 0x3F800000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803C81BC[28] = {
+    0, 0, 16256, 0, 41, 0, 16256, 0, 56, 0, 16279, 2621,
+    61, 0, 16256, 0, 66, 0, 16268, -13107, 71, 0, 16256, 0,
+    -1, 0, 0, 0
 };
-const unk32 lbl_803C81F4[14] = {
-    0x00000000, 0x3F800000, 0x00290000, 0x3F800000, 0x00380000, 0x3F3851EC, 0x003D0000, 0x3F800000,
-    0x00420000, 0x3F547AE1, 0x00470000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803C81F4_Row lbl_803C81F4[7] = {
+    { 0, 0, 1.0f },
+    { 41, 0, 1.0f },
+    { 56, 0, 0.72f },
+    { 61, 0, 1.0f },
+    { 66, 0, 0.83f },
+    { 71, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C822C[9] = {
     0,
@@ -585,13 +2346,20 @@ void *const lbl_803C822C[9] = {
     (void *)&lbl_803C81F4,
     0
 };
-const unk32 lbl_803C8250[14] = {
-    0x00000000, 0x3F800000, 0x00560000, 0x3F800000, 0x00650000, 0x3F970A3D, 0x006A0000, 0x3F800000,
-    0x006F0000, 0x3F8CCCCD, 0x00740000, 0x3F800000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803C8250[28] = {
+    0, 0, 16256, 0, 86, 0, 16256, 0, 101, 0, 16279, 2621,
+    106, 0, 16256, 0, 111, 0, 16268, -13107, 116, 0, 16256, 0,
+    -1, 0, 0, 0
 };
-const unk32 lbl_803C8288[14] = {
-    0x00000000, 0x3F800000, 0x00560000, 0x3F800000, 0x00650000, 0x3F3851EC, 0x006A0000, 0x3F800000,
-    0x006F0000, 0x3F547AE1, 0x00740000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803C8288_Row lbl_803C8288[7] = {
+    { 0, 0, 1.0f },
+    { 86, 0, 1.0f },
+    { 101, 0, 0.72f },
+    { 106, 0, 1.0f },
+    { 111, 0, 0.83f },
+    { 116, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C82C0[9] = {
     0,
@@ -604,13 +2372,20 @@ void *const lbl_803C82C0[9] = {
     (void *)&lbl_803C8288,
     0
 };
-const unk32 lbl_803C82E4[14] = {
-    0x00000000, 0x3F800000, 0x00090000, 0x3F800000, 0x00180000, 0x3F970A3D, 0x001D0000, 0x3F800000,
-    0x00220000, 0x3F8CCCCD, 0x00270000, 0x3F800000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803C82E4[28] = {
+    0, 0, 16256, 0, 9, 0, 16256, 0, 24, 0, 16279, 2621,
+    29, 0, 16256, 0, 34, 0, 16268, -13107, 39, 0, 16256, 0,
+    -1, 0, 0, 0
 };
-const unk32 lbl_803C831C[14] = {
-    0x00000000, 0x3F800000, 0x00090000, 0x3F800000, 0x00180000, 0x3F3851EC, 0x001D0000, 0x3F800000,
-    0x00220000, 0x3F547AE1, 0x00270000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803C831C_Row lbl_803C831C[7] = {
+    { 0, 0, 1.0f },
+    { 9, 0, 1.0f },
+    { 24, 0, 0.72f },
+    { 29, 0, 1.0f },
+    { 34, 0, 0.83f },
+    { 39, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C8354[9] = {
     0,
@@ -623,13 +2398,20 @@ void *const lbl_803C8354[9] = {
     (void *)&lbl_803C831C,
     0
 };
-const unk32 lbl_803C8378[14] = {
-    0x00000000, 0x3F800000, 0x00250000, 0x3F800000, 0x00340000, 0x3F970A3D, 0x00390000, 0x3F800000,
-    0x003E0000, 0x3F8CCCCD, 0x00430000, 0x3F800000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803C8378[28] = {
+    0, 0, 16256, 0, 37, 0, 16256, 0, 52, 0, 16279, 2621,
+    57, 0, 16256, 0, 62, 0, 16268, -13107, 67, 0, 16256, 0,
+    -1, 0, 0, 0
 };
-const unk32 lbl_803C83B0[14] = {
-    0x00000000, 0x3F800000, 0x00250000, 0x3F800000, 0x00340000, 0x3F3851EC, 0x00390000, 0x3F800000,
-    0x003E0000, 0x3F547AE1, 0x00430000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803C83B0_Row lbl_803C83B0[7] = {
+    { 0, 0, 1.0f },
+    { 37, 0, 1.0f },
+    { 52, 0, 0.72f },
+    { 57, 0, 1.0f },
+    { 62, 0, 0.83f },
+    { 67, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C83E8[9] = {
     0,
@@ -642,9 +2424,11 @@ void *const lbl_803C83E8[9] = {
     (void *)&lbl_803C83B0,
     0
 };
-const unk32 lbl_803C840C[16] = {
-    0x00000000, 0x00000000, 0x00120000, 0x00000000, 0x001B0000, 0x3F51EB85, 0x00200000, 0x3F75C28F,
-    0x00280000, 0x3F800000, 0x00290000, 0x00000000, 0x00780000, 0x00000000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803C840C[32] = {
+    0, 0, 0, 0, 18, 0, 0, 0, 27, 0, 16209, -5243,
+    32, 0, 16245, -15729, 40, 0, 16256, 0, 41, 0, 0, 0,
+    120, 0, 0, 0, -1, 0, 0, 0
 };
 void *const lbl_803C844C[9] = {
     0,
@@ -657,11 +2441,22 @@ void *const lbl_803C844C[9] = {
     (void *)&lbl_803C840C,
     (void *)&lbl_803C840C
 };
-const unk32 lbl_803C8470[30] = {
-    0x00000000, 0x00000000, 0x00120000, 0x00000000, 0x00220000, 0x3F8A3D71, 0x00270000, 0x3F68F5C3,
-    0x002D0000, 0x3F87AE14, 0x00340000, 0x3F733333, 0x003C0000, 0x3F866666, 0x00440000, 0x3F7851EC,
-    0x004E0000, 0x3F828F5C, 0x00580000, 0x3F7D70A4, 0x00610000, 0x3F8147AE, 0x00680000, 0x3F7D70A4,
-    0x006E0000, 0x3F800000, 0x00780000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803C8470_Row lbl_803C8470[15] = {
+    { 0, 0, 0.0f },
+    { 18, 0, 0.0f },
+    { 34, 0, 1.08f },
+    { 39, 0, 0.91f },
+    { 45, 0, 1.06f },
+    { 52, 0, 0.95f },
+    { 60, 0, 1.05f },
+    { 68, 0, 0.97f },
+    { 78, 0, 1.02f },
+    { 88, 0, 0.99f },
+    { 97, 0, 1.01f },
+    { 104, 0, 0.99f },
+    { 110, 0, 1.0f },
+    { 120, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C84E8[9] = {
     0,
@@ -674,13 +2469,23 @@ void *const lbl_803C84E8[9] = {
     (void *)&lbl_803C8470,
     (void *)&lbl_803C8470
 };
-const unk32 lbl_803C850C[14] = {
-    0x00000000, 0x3F800000, 0x000A0000, 0x3FBD70A4, 0x00100000, 0x3FD9999A, 0x00140000, 0x3F2147AE,
-    0x00170000, 0x3F800000, 0x00780000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803C850C_Row lbl_803C850C[7] = {
+    { 0, 0, 1.0f },
+    { 10, 0, 1.48f },
+    { 16, 0, 1.7f },
+    { 20, 0, 0.63f },
+    { 23, 0, 1.0f },
+    { 120, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803C8544[14] = {
-    0x00000000, 0x3F800000, 0x000A0000, 0x3F51EB85, 0x00100000, 0x3F451EB8, 0x00140000, 0x3FA147AE,
-    0x00170000, 0x3F800000, 0x00780000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803C8544_Row lbl_803C8544[7] = {
+    { 0, 0, 1.0f },
+    { 10, 0, 0.82f },
+    { 16, 0, 0.77f },
+    { 20, 0, 1.26f },
+    { 23, 0, 1.0f },
+    { 120, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C857C[9] = {
     0,
@@ -693,13 +2498,25 @@ void *const lbl_803C857C[9] = {
     (void *)&lbl_803C8544,
     0
 };
-const unk32 lbl_803C85A0[16] = {
-    0x00000000, 0x42700000, 0x00140000, 0x42700000, 0x00170000, 0x42E57AE1, 0x00190000, 0x430423D7,
-    0x001D0000, 0x430A4CCD, 0x006E0000, 0x430A4CCD, 0x00780000, 0x42700000, 0xFFFF0000, 0x00000000
+const lbl_803C85A0_Row lbl_803C85A0[8] = {
+    { 0, 0, 60.0f },
+    { 20, 0, 60.0f },
+    { 23, 0, 114.74f },
+    { 25, 0, 132.14f },
+    { 29, 0, 138.3f },
+    { 110, 0, 138.3f },
+    { 120, 0, 60.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803C85E0[16] = {
-    0x00000000, 0x00000000, 0x00140000, 0x00000000, 0x00170000, 0x00000000, 0x00190000, 0xC16BAE14,
-    0x001D0000, 0xC195C28F, 0x006E0000, 0xC195C28F, 0x00780000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803C85E0_Row lbl_803C85E0[8] = {
+    { 0, 0, 0.0f },
+    { 20, 0, 0.0f },
+    { 23, 0, 0.0f },
+    { 25, 0, -14.73f },
+    { 29, 0, -18.72f },
+    { 110, 0, -18.72f },
+    { 120, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C8620[9] = {
     0,
@@ -785,11 +2602,20 @@ void *const lbl_803C8870[48] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803C8930[26] = {
-    0x00000000, 0x00000000, 0x00120000, 0x00000000, 0x00220000, 0x3F8CCCCD, 0x00270000, 0x3F68F5C3,
-    0x002D0000, 0x3F87AE14, 0x00340000, 0x3F733333, 0x003C0000, 0x3F866666, 0x00440000, 0x3F7851EC,
-    0x004E0000, 0x3F828F5C, 0x00580000, 0x3F800000, 0x006E0000, 0x3F800000, 0x00780000, 0x00000000,
-    0xFFFF0000, 0x00000000
+const lbl_803C8930_Row lbl_803C8930[13] = {
+    { 0, 0, 0.0f },
+    { 18, 0, 0.0f },
+    { 34, 0, 1.1f },
+    { 39, 0, 0.91f },
+    { 45, 0, 1.06f },
+    { 52, 0, 0.95f },
+    { 60, 0, 1.05f },
+    { 68, 0, 0.97f },
+    { 78, 0, 1.02f },
+    { 88, 0, 1.0f },
+    { 110, 0, 1.0f },
+    { 120, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C8998[9] = {
     0,
@@ -899,11 +2725,21 @@ void *const lbl_803C8CD8[64] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803C8DD8[28] = {
-    0x00000000, 0x41000000, 0x00060000, 0x41000000, 0x00100000, 0x40E00000, 0x001A0000, 0x40A00000,
-    0x00340000, 0xC0E00000, 0x00380000, 0xC0C00000, 0x003C0000, 0xC0E00000, 0x00420000, 0xC0E00000,
-    0x004C0000, 0xC0C00000, 0x00560000, 0xC0800000, 0x00700000, 0x41000000, 0x00740000, 0x40E00000,
-    0x00780000, 0x41000000, 0xFFFF0000, 0x00000000
+const lbl_803C8DD8_Row lbl_803C8DD8[14] = {
+    { 0, 0, 8.0f },
+    { 6, 0, 8.0f },
+    { 16, 0, 7.0f },
+    { 26, 0, 5.0f },
+    { 52, 0, -7.0f },
+    { 56, 0, -6.0f },
+    { 60, 0, -7.0f },
+    { 66, 0, -7.0f },
+    { 76, 0, -6.0f },
+    { 86, 0, -4.0f },
+    { 112, 0, 8.0f },
+    { 116, 0, 7.0f },
+    { 120, 0, 8.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C8E48[9] = {
     0,
@@ -916,11 +2752,21 @@ void *const lbl_803C8E48[9] = {
     0,
     0
 };
-const unk32 lbl_803C8E6C[28] = {
-    0x00000000, 0xC0800000, 0x00060000, 0xC0800000, 0x00100000, 0xC0600000, 0x001A0000, 0xC0000000,
-    0x00340000, 0x40800000, 0x00380000, 0x40400000, 0x003C0000, 0x40800000, 0x00420000, 0x40800000,
-    0x004C0000, 0x40600000, 0x00560000, 0x40000000, 0x00700000, 0xC0800000, 0x00740000, 0xC0400000,
-    0x00780000, 0xC0800000, 0xFFFF0000, 0x00000000
+const lbl_803C8E6C_Row lbl_803C8E6C[14] = {
+    { 0, 0, -4.0f },
+    { 6, 0, -4.0f },
+    { 16, 0, -3.5f },
+    { 26, 0, -2.0f },
+    { 52, 0, 4.0f },
+    { 56, 0, 3.0f },
+    { 60, 0, 4.0f },
+    { 66, 0, 4.0f },
+    { 76, 0, 3.5f },
+    { 86, 0, 2.0f },
+    { 112, 0, -4.0f },
+    { 116, 0, -3.0f },
+    { 120, 0, -4.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C8EDC[9] = {
     0,
@@ -955,8 +2801,11 @@ void *const lbl_803C8F80[4] = {
     0,
     0
 };
-const unk32 lbl_803C8F90[8] = {
-    0x00000000, 0x00000000, 0x01040000, 0x00000000, 0x01680000, 0x43B40000, 0xFFFF0000, 0x00000000
+const lbl_803C8F90_Row lbl_803C8F90[4] = {
+    { 0, 0, 0.0f },
+    { 260, 0, 0.0f },
+    { 360, 0, 360.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C8FB0[9] = {
     0,
@@ -969,9 +2818,12 @@ void *const lbl_803C8FB0[9] = {
     0,
     0
 };
-const unk32 lbl_803C8FD4[10] = {
-    0x00000000, 0x00000000, 0x00E60000, 0x00000000, 0x014A0000, 0x43B40000, 0x01680000, 0x43B40000,
-    0xFFFF0000, 0x00000000
+const lbl_803C8FD4_Row lbl_803C8FD4[5] = {
+    { 0, 0, 0.0f },
+    { 230, 0, 0.0f },
+    { 330, 0, 360.0f },
+    { 360, 0, 360.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C8FFC[9] = {
     0,
@@ -984,9 +2836,12 @@ void *const lbl_803C8FFC[9] = {
     0,
     0
 };
-const unk32 lbl_803C9020[10] = {
-    0x00000000, 0x00000000, 0x00D20000, 0x00000000, 0x01360000, 0x43B40000, 0x01680000, 0x43B40000,
-    0xFFFF0000, 0x00000000
+const lbl_803C9020_Row lbl_803C9020[5] = {
+    { 0, 0, 0.0f },
+    { 210, 0, 0.0f },
+    { 310, 0, 360.0f },
+    { 360, 0, 360.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C9048[9] = {
     0,
@@ -999,9 +2854,12 @@ void *const lbl_803C9048[9] = {
     0,
     0
 };
-const unk32 lbl_803C906C[10] = {
-    0x00000000, 0x00000000, 0x00BE0000, 0x00000000, 0x01220000, 0x43B40000, 0x01680000, 0x43B40000,
-    0xFFFF0000, 0x00000000
+const lbl_803C906C_Row lbl_803C906C[5] = {
+    { 0, 0, 0.0f },
+    { 190, 0, 0.0f },
+    { 290, 0, 360.0f },
+    { 360, 0, 360.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C9094[9] = {
     0,
@@ -1014,9 +2872,12 @@ void *const lbl_803C9094[9] = {
     0,
     0
 };
-const unk32 lbl_803C90B8[10] = {
-    0x00000000, 0x00000000, 0x00AA0000, 0x00000000, 0x010E0000, 0x43B40000, 0x01680000, 0x43B40000,
-    0xFFFF0000, 0x00000000
+const lbl_803C90B8_Row lbl_803C90B8[5] = {
+    { 0, 0, 0.0f },
+    { 170, 0, 0.0f },
+    { 270, 0, 360.0f },
+    { 360, 0, 360.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C90E0[9] = {
     0,
@@ -1029,9 +2890,12 @@ void *const lbl_803C90E0[9] = {
     0,
     0
 };
-const unk32 lbl_803C9104[10] = {
-    0x00000000, 0x00000000, 0x00960000, 0x00000000, 0x00FA0000, 0x43B40000, 0x01680000, 0x43B40000,
-    0xFFFF0000, 0x00000000
+const lbl_803C9104_Row lbl_803C9104[5] = {
+    { 0, 0, 0.0f },
+    { 150, 0, 0.0f },
+    { 250, 0, 360.0f },
+    { 360, 0, 360.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C912C[9] = {
     0,
@@ -1066,11 +2930,14 @@ void *const lbl_803C91C8[14] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803C9200[6] = {
-    0x00000000, 0x00000000, 0x02D00000, 0x43B40000, 0xFFFF0000, 0x00000000
+const lbl_803C9200_Row lbl_803C9200[3] = {
+    { 0, 0, 0.0f },
+    { 720, 0, 360.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803C9218[6] = {
-    0x00000000, 0x00000000, 0x02D00000, 0xC3B40000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803C9218[12] = {
+    0, 0, 0, 0, 720, 0, -15436, 0, -1, 0, 0, 0
 };
 void *const lbl_803C9230[9] = {
     0,
@@ -1094,8 +2961,11 @@ void *const lbl_803C9254[9] = {
     0,
     0
 };
-const unk32 lbl_803C9278[8] = {
-    0x00000000, 0x42C80000, 0x002D0000, 0x430C0000, 0x005A0000, 0x42C80000, 0xFFFF0000, 0x00000000
+const lbl_803C9278_Row lbl_803C9278[4] = {
+    { 0, 0, 100.0f },
+    { 45, 0, 140.0f },
+    { 90, 0, 100.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C9298[9] = {
     0,
@@ -1188,10 +3058,17 @@ void *const lbl_803C9504[26] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803C956C[20] = {
-    0x00000000, 0x41F00000, 0x00820000, 0xC1F00000, 0x00870000, 0xC1E00000, 0x008C0000, 0xC1F00000,
-    0x00960000, 0xC1F00000, 0x01180000, 0x41F00000, 0x011D0000, 0x41E00000, 0x01220000, 0x41F00000,
-    0x012C0000, 0x41F00000, 0xFFFF0000, 0x00000000
+const lbl_803C956C_Row lbl_803C956C[10] = {
+    { 0, 0, 30.0f },
+    { 130, 0, -30.0f },
+    { 135, 0, -28.0f },
+    { 140, 0, -30.0f },
+    { 150, 0, -30.0f },
+    { 280, 0, 30.0f },
+    { 285, 0, 28.0f },
+    { 290, 0, 30.0f },
+    { 300, 0, 30.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C95BC[9] = {
     0,
@@ -1204,10 +3081,19 @@ void *const lbl_803C95BC[9] = {
     0,
     0
 };
-const unk32 lbl_803C95E0[24] = {
-    0x00000000, 0xC1A00000, 0x00140000, 0xC1980000, 0x00270000, 0xC1800000, 0x006E0000, 0x41700000,
-    0x00820000, 0x41980000, 0x00960000, 0x41A00000, 0x00AA0000, 0x41980000, 0x00BD0000, 0x41700000,
-    0x01040000, 0xC1700000, 0x01180000, 0xC1980000, 0x012C0000, 0xC1A00000, 0xFFFF0000, 0x00000000
+const lbl_803C95E0_Row lbl_803C95E0[12] = {
+    { 0, 0, -20.0f },
+    { 20, 0, -19.0f },
+    { 39, 0, -16.0f },
+    { 110, 0, 15.0f },
+    { 130, 0, 19.0f },
+    { 150, 0, 20.0f },
+    { 170, 0, 19.0f },
+    { 189, 0, 15.0f },
+    { 260, 0, -15.0f },
+    { 280, 0, -19.0f },
+    { 300, 0, -20.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C9640[9] = {
     0,
@@ -1220,10 +3106,19 @@ void *const lbl_803C9640[9] = {
     0,
     0
 };
-const unk32 lbl_803C9664[24] = {
-    0x00000000, 0x41A00000, 0x00140000, 0x41980000, 0x00270000, 0x41700000, 0x006E0000, 0xC1700000,
-    0x00820000, 0xC1980000, 0x00960000, 0xC1A00000, 0x00AA0000, 0xC1980000, 0x00BD0000, 0xC1800000,
-    0x01040000, 0x41700000, 0x01180000, 0x41980000, 0x012C0000, 0x41A00000, 0xFFFF0000, 0x00000000
+const lbl_803C9664_Row lbl_803C9664[12] = {
+    { 0, 0, 20.0f },
+    { 20, 0, 19.0f },
+    { 39, 0, 15.0f },
+    { 110, 0, -15.0f },
+    { 130, 0, -19.0f },
+    { 150, 0, -20.0f },
+    { 170, 0, -19.0f },
+    { 189, 0, -16.0f },
+    { 260, 0, 15.0f },
+    { 280, 0, 19.0f },
+    { 300, 0, 20.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C96C4[9] = {
     0,
@@ -1262,8 +3157,10 @@ void *const lbl_803C97C0[8] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803C97E0[6] = {
-    0x00000000, 0x00000000, 0x02580000, 0x43340000, 0xFFFF0000, 0x00000000
+const lbl_803C97E0_Row lbl_803C97E0[3] = {
+    { 0, 0, 0.0f },
+    { 600, 0, 180.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C97F8[9] = {
     0,
@@ -1276,8 +3173,9 @@ void *const lbl_803C97F8[9] = {
     0,
     0
 };
-const unk32 lbl_803C981C[6] = {
-    0x00000000, 0x00000000, 0x02580000, 0xC3340000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803C981C[12] = {
+    0, 0, 0, 0, 600, 0, -15564, 0, -1, 0, 0, 0
 };
 void *const lbl_803C9834[9] = {
     0,
@@ -1345,8 +3243,11 @@ void *const lbl_803C9A04[4] = {
     0,
     0
 };
-const unk32 lbl_803C9A14[8] = {
-    0x00000000, 0x41C80000, 0x000F0000, 0xC1C80000, 0x001E0000, 0x41C80000, 0xFFFF0000, 0x00000000
+const lbl_803C9A14_Row lbl_803C9A14[4] = {
+    { 0, 0, 25.0f },
+    { 15, 0, -25.0f },
+    { 30, 0, 25.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C9A34[9] = {
     0,
@@ -1359,8 +3260,10 @@ void *const lbl_803C9A34[9] = {
     0,
     0
 };
-const unk32 lbl_803C9A58[6] = {
-    0x00000000, 0x00000000, 0x012C0000, 0x44340000, 0xFFFF0000, 0x00000000
+const lbl_803C9A58_Row lbl_803C9A58[3] = {
+    { 0, 0, 0.0f },
+    { 300, 0, 720.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C9A70[9] = {
     0,
@@ -1373,17 +3276,29 @@ void *const lbl_803C9A70[9] = {
     0,
     0
 };
-const unk32 lbl_803C9A94[16] = {
-    0x00000000, 0x41F00000, 0x00460000, 0x41F00000, 0x00560000, 0xC2EA999A, 0x00660000, 0xC3F3E666,
-    0x00780000, 0xC4A84B85, 0x00950000, 0xC53BC000, 0x00960000, 0x41F00000, 0xFFFF0000, 0x00000000
+const lbl_803C9A94_Row lbl_803C9A94[8] = {
+    { 0, 0, 30.0f },
+    { 70, 0, 30.0f },
+    { 86, 0, -117.3f },
+    { 102, 0, -487.8f },
+    { 120, 0, -1346.36f },
+    { 149, 0, -3004.0f },
+    { 150, 0, 30.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803C9AD4[10] = {
-    0x00000000, 0xC48FC000, 0x004B0000, 0x433A0000, 0x00950000, 0x433A0000, 0x00960000, 0xC48FC000,
-    0xFFFF0000, 0x00000000
+const lbl_803C9AD4_Row lbl_803C9AD4[5] = {
+    { 0, 0, -1150.0f },
+    { 75, 0, 186.0f },
+    { 149, 0, 186.0f },
+    { 150, 0, -1150.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803C9AFC[10] = {
-    0x00000000, 0x00000000, 0x00460000, 0x00000000, 0x008C0000, 0x42200000, 0x00960000, 0x00000000,
-    0xFFFF0000, 0x00000000
+const lbl_803C9AFC_Row lbl_803C9AFC[5] = {
+    { 0, 0, 0.0f },
+    { 70, 0, 0.0f },
+    { 140, 0, 40.0f },
+    { 150, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C9B24[9] = {
     0,
@@ -1413,9 +3328,13 @@ void *const lbl_803C9BA8[10] = {
     (void *)&lbl_803C72D8
 };
 const char lbl_803C9BD0[] = "YIA_c_waterfall_UV_joint";
-const unk32 lbl_803C9BEC[12] = {
-    0x00000000, 0xC1A00000, 0x004B0000, 0x41A00000, 0x00960000, 0xC1A00000, 0x00E10000, 0x41A00000,
-    0x012C0000, 0xC1A00000, 0xFFFF0000, 0x00000000
+const lbl_803C9BEC_Row lbl_803C9BEC[6] = {
+    { 0, 0, -20.0f },
+    { 75, 0, 20.0f },
+    { 150, 0, -20.0f },
+    { 225, 0, 20.0f },
+    { 300, 0, -20.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C9C1C[9] = {
     0,
@@ -1428,9 +3347,13 @@ void *const lbl_803C9C1C[9] = {
     0,
     0
 };
-const unk32 lbl_803C9C40[12] = {
-    0x00000000, 0x41A00000, 0x004B0000, 0xC1A00000, 0x00960000, 0x41A00000, 0x00E10000, 0xC1A00000,
-    0x012C0000, 0x41A00000, 0xFFFF0000, 0x00000000
+const lbl_803C9C40_Row lbl_803C9C40[6] = {
+    { 0, 0, 20.0f },
+    { 75, 0, -20.0f },
+    { 150, 0, 20.0f },
+    { 225, 0, -20.0f },
+    { 300, 0, 20.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C9C70[9] = {
     0,
@@ -1443,8 +3366,11 @@ void *const lbl_803C9C70[9] = {
     0,
     0
 };
-const unk32 lbl_803C9C94[8] = {
-    0x00000000, 0x41B80000, 0x00960000, 0x41800000, 0x012C0000, 0x41B80000, 0xFFFF0000, 0x00000000
+const lbl_803C9C94_Row lbl_803C9C94[4] = {
+    { 0, 0, 23.0f },
+    { 150, 0, 16.0f },
+    { 300, 0, 23.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C9CB4[9] = {
     (void *)&lbl_803C9C94,
@@ -1457,8 +3383,11 @@ void *const lbl_803C9CB4[9] = {
     0,
     0
 };
-const unk32 lbl_803C9CD8[8] = {
-    0x00000000, 0xC1000000, 0x009E0000, 0xBF4CCCCD, 0x012C0000, 0xC1000000, 0xFFFF0000, 0x00000000
+const lbl_803C9CD8_Row lbl_803C9CD8[4] = {
+    { 0, 0, -8.0f },
+    { 158, 0, -0.8f },
+    { 300, 0, -8.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C9CF8[9] = {
     (void *)&lbl_803C9CD8,
@@ -1471,11 +3400,23 @@ void *const lbl_803C9CF8[9] = {
     0,
     0
 };
-const unk32 lbl_803C9D1C[32] = {
-    0x00000000, 0xC2700000, 0x00110000, 0xC266AE14, 0x00220000, 0xC247851F, 0x00300000, 0xC21651EC,
-    0x00650000, 0x4217B852, 0x00720000, 0x4249F5C3, 0x00830000, 0x4266C28F, 0x00960000, 0x42700000,
-    0x00A90000, 0x426547AE, 0x00B90000, 0x42458F5C, 0x00C90000, 0x42083D71, 0x00FA0000, 0xC218CCCD,
-    0x01070000, 0xC249147B, 0x01180000, 0xC266A3D7, 0x012C0000, 0xC2700000, 0xFFFF0000, 0x00000000
+const lbl_803C9D1C_Row lbl_803C9D1C[16] = {
+    { 0, 0, -60.0f },
+    { 17, 0, -57.67f },
+    { 34, 0, -49.88f },
+    { 48, 0, -37.58f },
+    { 101, 0, 37.93f },
+    { 114, 0, 50.49f },
+    { 131, 0, 57.69f },
+    { 150, 0, 60.0f },
+    { 169, 0, 57.32f },
+    { 185, 0, 49.39f },
+    { 201, 0, 34.06f },
+    { 250, 0, -38.2f },
+    { 263, 0, -50.27f },
+    { 280, 0, -57.66f },
+    { 300, 0, -60.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C9D9C[9] = {
     0,
@@ -1510,14 +3451,27 @@ void *const lbl_803C9E58[14] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803C9E90[28] = {
-    0x00000000, 0x413BD70A, 0x001E0000, 0xC13BD70A, 0x003C0000, 0x413BD70A, 0x005A0000, 0xC13BD70A,
-    0x00780000, 0x413BD70A, 0x00960000, 0xC13BD70A, 0x00B40000, 0x413BD70A, 0x00D20000, 0xC13BD70A,
-    0x00F00000, 0x413BD70A, 0x010E0000, 0xC13BD70A, 0x012C0000, 0x413BD70A, 0x014A0000, 0xC13BD70A,
-    0x01680000, 0x413BD70A, 0xFFFF0000, 0x00000000
+const lbl_803C9E90_Row lbl_803C9E90[14] = {
+    { 0, 0, 11.74f },
+    { 30, 0, -11.74f },
+    { 60, 0, 11.74f },
+    { 90, 0, -11.74f },
+    { 120, 0, 11.74f },
+    { 150, 0, -11.74f },
+    { 180, 0, 11.74f },
+    { 210, 0, -11.74f },
+    { 240, 0, 11.74f },
+    { 270, 0, -11.74f },
+    { 300, 0, 11.74f },
+    { 330, 0, -11.74f },
+    { 360, 0, 11.74f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803C9F00[8] = {
-    0x00000000, 0x3F800000, 0x000A0000, 0x3FA66666, 0x001E0000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803C9F00_Row lbl_803C9F00[4] = {
+    { 0, 0, 1.0f },
+    { 10, 0, 1.3f },
+    { 30, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803C9F20[27] = {
     0,
@@ -1559,15 +3513,25 @@ void *const lbl_803C9F8C[9] = {
     (void *)&lbl_803C9F00,
     0
 };
-const unk32 lbl_803C9FB0[12] = {
-    0x00000000, 0x00000000, 0x00A00000, 0x00000000, 0x00B40000, 0x43340000, 0x01540000, 0x43340000,
-    0x01680000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803C9FB0_Row lbl_803C9FB0[6] = {
+    { 0, 0, 0.0f },
+    { 160, 0, 0.0f },
+    { 180, 0, 180.0f },
+    { 340, 0, 180.0f },
+    { 360, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803C9FE0[8] = {
-    0x00000000, 0x3F800000, 0x001E0000, 0x3FA66666, 0x003C0000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803C9FE0_Row lbl_803C9FE0[4] = {
+    { 0, 0, 1.0f },
+    { 30, 0, 1.3f },
+    { 60, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CA000[8] = {
-    0x00000000, 0xC38A0000, 0x00B40000, 0x43B3999A, 0x01680000, 0xC38A0000, 0xFFFF0000, 0x00000000
+const lbl_803CA000_Row lbl_803CA000[4] = {
+    { 0, 0, -276.0f },
+    { 180, 0, 359.2f },
+    { 360, 0, -276.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CA020[9] = {
     (void *)&lbl_803CA000,
@@ -1591,8 +3555,11 @@ void *const lbl_803CA044[9] = {
     (void *)&lbl_803C9F00,
     0
 };
-const unk32 lbl_803CA068[8] = {
-    0x00000000, 0x43890000, 0x00B40000, 0xC38D3EB8, 0x01680000, 0x43890000, 0xFFFF0000, 0x00000000
+const lbl_803CA068_Row lbl_803CA068[4] = {
+    { 0, 0, 274.0f },
+    { 180, 0, -282.49f },
+    { 360, 0, 274.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CA088[9] = {
     (void *)&lbl_803CA068,
@@ -1605,9 +3572,15 @@ void *const lbl_803CA088[9] = {
     (void *)&lbl_803C9FE0,
     0
 };
-const unk32 lbl_803CA0AC[16] = {
-    0x00000000, 0x4018F5C3, 0x003C0000, 0xC16BAE14, 0x00780000, 0x401147AE, 0x00B40000, 0xC1673333,
-    0x00F00000, 0x400EB852, 0x012D0000, 0xC160A3D7, 0x01680000, 0x4018F5C3, 0xFFFF0000, 0x00000000
+const lbl_803CA0AC_Row lbl_803CA0AC[8] = {
+    { 0, 0, 2.39f },
+    { 60, 0, -14.73f },
+    { 120, 0, 2.27f },
+    { 180, 0, -14.45f },
+    { 240, 0, 2.23f },
+    { 301, 0, -14.04f },
+    { 360, 0, 2.39f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CA0EC[9] = {
     0,
@@ -1620,12 +3593,21 @@ void *const lbl_803CA0EC[9] = {
     (void *)&lbl_803C9FE0,
     0
 };
-const unk32 lbl_803CA110[8] = {
-    0x00000000, 0x43890000, 0x00B40000, 0xC3AA051F, 0x01680000, 0x43890000, 0xFFFF0000, 0x00000000
+const lbl_803CA110_Row lbl_803CA110[4] = {
+    { 0, 0, 274.0f },
+    { 180, 0, -340.04f },
+    { 360, 0, 274.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CA130[16] = {
-    0x00000000, 0xC3087333, 0x00130000, 0xC1700000, 0x00A00000, 0xC1700000, 0x00B40000, 0xC3087333,
-    0x00C70000, 0xC1880000, 0x01530000, 0xC1600000, 0x01680000, 0xC3087333, 0xFFFF0000, 0x00000000
+const lbl_803CA130_Row lbl_803CA130[8] = {
+    { 0, 0, -136.45f },
+    { 19, 0, -15.0f },
+    { 160, 0, -15.0f },
+    { 180, 0, -136.45f },
+    { 199, 0, -17.0f },
+    { 339, 0, -14.0f },
+    { 360, 0, -136.45f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CA170[9] = {
     (void *)&lbl_803CA110,
@@ -1638,14 +3620,29 @@ void *const lbl_803CA170[9] = {
     (void *)&lbl_803C9FE0,
     0
 };
-const unk32 lbl_803CA194[16] = {
-    0x00000000, 0x43890000, 0x00050000, 0x43880000, 0x00AF0000, 0xC3AD0000, 0x00B40000, 0xC3ADBEB8,
-    0x00B90000, 0xC3AD0000, 0x01630000, 0x43898000, 0x01680000, 0x43890000, 0xFFFF0000, 0x00000000
+const lbl_803CA194_Row lbl_803CA194[8] = {
+    { 0, 0, 274.0f },
+    { 5, 0, 272.0f },
+    { 175, 0, -346.0f },
+    { 180, 0, -347.49f },
+    { 185, 0, -346.0f },
+    { 355, 0, 275.0f },
+    { 360, 0, 274.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CA1D4[24] = {
-    0x00000000, 0xC3AC028F, 0x001F0000, 0xC2EE0000, 0x00400000, 0xC31B0000, 0x007E0000, 0xC31B0000,
-    0x00970000, 0xC2FE0000, 0x00B40000, 0xC3B98000, 0x00D30000, 0xC2EE0000, 0x00F40000, 0xC31B0000,
-    0x01320000, 0xC31B0000, 0x014B0000, 0xC2FE0000, 0x01680000, 0xC3AC028F, 0xFFFF0000, 0x00000000
+const lbl_803CA1D4_Row lbl_803CA1D4[12] = {
+    { 0, 0, -344.02f },
+    { 31, 0, -119.0f },
+    { 64, 0, -155.0f },
+    { 126, 0, -155.0f },
+    { 151, 0, -127.0f },
+    { 180, 0, -371.0f },
+    { 211, 0, -119.0f },
+    { 244, 0, -155.0f },
+    { 306, 0, -155.0f },
+    { 331, 0, -127.0f },
+    { 360, 0, -344.02f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CA234[9] = {
     (void *)&lbl_803CA194,
@@ -1658,11 +3655,17 @@ void *const lbl_803CA234[9] = {
     (void *)&lbl_803C9FE0,
     0
 };
-const unk32 lbl_803CA258[8] = {
-    0x00000000, 0xC38A0000, 0x00B40000, 0x43B3999A, 0x01680000, 0xC38A0000, 0xFFFF0000, 0x00000000
+const lbl_803CA258_Row lbl_803CA258[4] = {
+    { 0, 0, -276.0f },
+    { 180, 0, 359.2f },
+    { 360, 0, -276.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CA278[8] = {
-    0x00000000, 0xC2EB75C3, 0x00B40000, 0xC390E8F6, 0x01680000, 0xC2EB75C3, 0xFFFF0000, 0x00000000
+const lbl_803CA278_Row lbl_803CA278[4] = {
+    { 0, 0, -117.73f },
+    { 180, 0, -289.82f },
+    { 360, 0, -117.73f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CA298[9] = {
     (void *)&lbl_803CA258,
@@ -1675,9 +3678,15 @@ void *const lbl_803CA298[9] = {
     (void *)&lbl_803C9FE0,
     0
 };
-const unk32 lbl_803CA2BC[16] = {
-    0x00000000, 0xC40B08F6, 0x000C0000, 0xC4098000, 0x00220000, 0xC3220000, 0x00A80000, 0xC2E5E666,
-    0x01370000, 0xC3380000, 0x01490000, 0xC40F0000, 0x01680000, 0xC40B08F6, 0xFFFF0000, 0x00000000
+const lbl_803CA2BC_Row lbl_803CA2BC[8] = {
+    { 0, 0, -556.14f },
+    { 12, 0, -550.0f },
+    { 34, 0, -162.0f },
+    { 168, 0, -114.95f },
+    { 311, 0, -184.0f },
+    { 329, 0, -572.0f },
+    { 360, 0, -556.14f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CA2FC[9] = {
     0,
@@ -1690,11 +3699,17 @@ void *const lbl_803CA2FC[9] = {
     (void *)&lbl_803C9FE0,
     0
 };
-const unk32 lbl_803CA320[8] = {
-    0x00000000, 0x43890000, 0x00B40000, 0xC3ADBEB8, 0x01680000, 0x43890000, 0xFFFF0000, 0x00000000
+const lbl_803CA320_Row lbl_803CA320[4] = {
+    { 0, 0, 274.0f },
+    { 180, 0, -347.49f },
+    { 360, 0, 274.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CA340[8] = {
-    0x00000000, 0xC30947AE, 0x00B40000, 0x424ED70A, 0x01680000, 0xC30947AE, 0xFFFF0000, 0x00000000
+const lbl_803CA340_Row lbl_803CA340[4] = {
+    { 0, 0, -137.28f },
+    { 180, 0, 51.71f },
+    { 360, 0, -137.28f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CA360[9] = {
     (void *)&lbl_803CA320,
@@ -1707,21 +3722,39 @@ void *const lbl_803CA360[9] = {
     (void *)&lbl_803C9FE0,
     0
 };
-const unk32 lbl_803CA384[12] = {
-    0x00000000, 0x430707AE, 0x005A0000, 0xC32B4000, 0x00B40000, 0x430707AE, 0x010E0000, 0xC32B4000,
-    0x01680000, 0x430707AE, 0xFFFF0000, 0x00000000
+const lbl_803CA384_Row lbl_803CA384[6] = {
+    { 0, 0, 135.03f },
+    { 90, 0, -171.25f },
+    { 180, 0, 135.03f },
+    { 270, 0, -171.25f },
+    { 360, 0, 135.03f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CA3B4[12] = {
-    0x00000000, 0xC3185C29, 0x005A0000, 0xC29B8F5C, 0x00B40000, 0xC3185C29, 0x010E0000, 0xC2996B85,
-    0x01680000, 0xC3185C29, 0xFFFF0000, 0x00000000
+const lbl_803CA3B4_Row lbl_803CA3B4[6] = {
+    { 0, 0, -152.36f },
+    { 90, 0, -77.78f },
+    { 180, 0, -152.36f },
+    { 270, 0, -76.71f },
+    { 360, 0, -152.36f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CA3E4[20] = {
-    0x00000000, 0x00000000, 0x00510000, 0x00000000, 0x005B0000, 0x43340000, 0x00AA0000, 0x43340000,
-    0x00B40000, 0x00000000, 0x01050000, 0x00000000, 0x010F0000, 0x43340000, 0x015E0000, 0x43340000,
-    0x01680000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CA3E4_Row lbl_803CA3E4[10] = {
+    { 0, 0, 0.0f },
+    { 81, 0, 0.0f },
+    { 91, 0, 180.0f },
+    { 170, 0, 180.0f },
+    { 180, 0, 0.0f },
+    { 261, 0, 0.0f },
+    { 271, 0, 180.0f },
+    { 350, 0, 180.0f },
+    { 360, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CA434[8] = {
-    0x00000000, 0x3F800000, 0x000F0000, 0x3FA66666, 0x001E0000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803CA434_Row lbl_803CA434[4] = {
+    { 0, 0, 1.0f },
+    { 15, 0, 1.3f },
+    { 30, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CA454[9] = {
     (void *)&lbl_803CA384,
@@ -1734,8 +3767,11 @@ void *const lbl_803CA454[9] = {
     (void *)&lbl_803CA434,
     0
 };
-const unk32 lbl_803CA478[8] = {
-    0x00000000, 0x431C2E14, 0x00B40000, 0xC34611EC, 0x01680000, 0x431C2E14, 0xFFFF0000, 0x00000000
+const lbl_803CA478_Row lbl_803CA478[4] = {
+    { 0, 0, 156.18f },
+    { 180, 0, -198.07f },
+    { 360, 0, 156.18f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CA498[9] = {
     (void *)&lbl_803CA478,
@@ -1748,8 +3784,11 @@ void *const lbl_803CA498[9] = {
     (void *)&lbl_803C9FE0,
     0
 };
-const unk32 lbl_803CA4BC[8] = {
-    0x00000000, 0x3F800000, 0x000D0000, 0x3FAF5C29, 0x00140000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803CA4BC_Row lbl_803CA4BC[4] = {
+    { 0, 0, 1.0f },
+    { 13, 0, 1.37f },
+    { 20, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CA4DC[9] = {
     0,
@@ -1762,16 +3801,26 @@ void *const lbl_803CA4DC[9] = {
     (void *)&lbl_803CA4BC,
     0
 };
-const unk32 lbl_803CA500[12] = {
-    0x00000000, 0x3F800000, 0x000D0000, 0x3F170A3D, 0x00140000, 0x3FAF5C29, 0x00210000, 0x3F400000,
-    0x00280000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803CA500_Row lbl_803CA500[6] = {
+    { 0, 0, 1.0f },
+    { 13, 0, 0.59f },
+    { 20, 0, 1.37f },
+    { 33, 0, 0.75f },
+    { 40, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CA530[12] = {
-    0x00000000, 0x3F800000, 0x000D0000, 0x401F5C29, 0x00140000, 0x3F07AE14, 0x00210000, 0x3FE51EB8,
-    0x00280000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803CA530_Row lbl_803CA530[6] = {
+    { 0, 0, 1.0f },
+    { 13, 0, 2.49f },
+    { 20, 0, 0.53f },
+    { 33, 0, 1.79f },
+    { 40, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CA560[6] = {
-    0x00000000, 0x00000000, 0x00B40000, 0x44340000, 0xFFFF0000, 0x00000000
+const lbl_803CA560_Row lbl_803CA560[3] = {
+    { 0, 0, 0.0f },
+    { 180, 0, 720.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CA578[9] = {
     0,
@@ -1890,8 +3939,11 @@ const char *const lbl_803CAAC8[11] = {
     (const char *)&lbl_803CAAA0, (const char *)&lbl_803CAAB4,
     0
 };
-const unk32 lbl_803CAAF4[8] = {
-    0x00000000, 0x41C80000, 0x000F0000, 0xC1C80000, 0x001E0000, 0x41C80000, 0xFFFF0000, 0x00000000
+const lbl_803CAAF4_Row lbl_803CAAF4[4] = {
+    { 0, 0, 25.0f },
+    { 15, 0, -25.0f },
+    { 30, 0, 25.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CAB14[9] = {
     0,
@@ -1904,8 +3956,10 @@ void *const lbl_803CAB14[9] = {
     0,
     0
 };
-const unk32 lbl_803CAB38[6] = {
-    0x00000000, 0x00000000, 0x01680000, 0x44B40000, 0xFFFF0000, 0x00000000
+const lbl_803CAB38_Row lbl_803CAB38[3] = {
+    { 0, 0, 0.0f },
+    { 360, 0, 1440.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CAB50[9] = {
     0,
@@ -1918,8 +3972,10 @@ void *const lbl_803CAB50[9] = {
     0,
     0
 };
-const unk32 lbl_803CAB74[6] = {
-    0x00000000, 0x00000000, 0x01680000, 0x43B40000, 0xFFFF0000, 0x00000000
+const lbl_803CAB74_Row lbl_803CAB74[3] = {
+    { 0, 0, 0.0f },
+    { 360, 0, 360.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CAB8C[9] = {
     0,
@@ -1932,8 +3988,10 @@ void *const lbl_803CAB8C[9] = {
     0,
     0
 };
-const unk32 lbl_803CABB0[6] = {
-    0x00000000, 0x00000000, 0x02D00000, 0x43B40000, 0xFFFF0000, 0x00000000
+const lbl_803CABB0_Row lbl_803CABB0[3] = {
+    { 0, 0, 0.0f },
+    { 720, 0, 360.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CABC8[9] = {
     0,
@@ -2028,8 +4086,11 @@ void *const lbl_803CAE8C[54] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803CAF64[8] = {
-    0x00000000, 0x40A00000, 0x00150000, 0xC0A00000, 0x002A0000, 0x40A00000, 0xFFFF0000, 0x00000000
+const lbl_803CAF64_Row lbl_803CAF64[4] = {
+    { 0, 0, 5.0f },
+    { 21, 0, -5.0f },
+    { 42, 0, 5.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CAF84[9] = {
     0,
@@ -2042,8 +4103,11 @@ void *const lbl_803CAF84[9] = {
     0,
     0
 };
-const unk32 lbl_803CAFA8[8] = {
-    0x00000000, 0xC0A00000, 0x00150000, 0x40A00000, 0x002A0000, 0xC0A00000, 0xFFFF0000, 0x00000000
+const lbl_803CAFA8_Row lbl_803CAFA8[4] = {
+    { 0, 0, -5.0f },
+    { 21, 0, 5.0f },
+    { 42, 0, -5.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CAFC8[9] = {
     0,
@@ -2056,9 +4120,14 @@ void *const lbl_803CAFC8[9] = {
     0,
     0
 };
-const unk32 lbl_803CAFEC[14] = {
-    0x00000000, 0x40E6147B, 0x001B0000, 0x42200000, 0x001C0000, 0xBF3D70A4, 0x00220000, 0x3F4A3D71,
-    0x00270000, 0x408051EC, 0x002A0000, 0x40E6147B, 0xFFFF0000, 0x00000000
+const lbl_803CAFEC_Row lbl_803CAFEC[7] = {
+    { 0, 0, 7.19f },
+    { 27, 0, 40.0f },
+    { 28, 0, -0.74f },
+    { 34, 0, 0.79f },
+    { 39, 0, 4.01f },
+    { 42, 0, 7.19f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CB024[9] = {
     (void *)&lbl_803CAFEC,
@@ -2071,9 +4140,14 @@ void *const lbl_803CB024[9] = {
     0,
     0
 };
-const unk32 lbl_803CB048[14] = {
-    0x00000000, 0x401A3D71, 0x00070000, 0x4038F5C3, 0x001B0000, 0x400F5C29, 0x001C0000, 0x3F19999A,
-    0x00240000, 0x4001EB85, 0x002A0000, 0x401A3D71, 0xFFFF0000, 0x00000000
+const lbl_803CB048_Row lbl_803CB048[7] = {
+    { 0, 0, 2.41f },
+    { 7, 0, 2.89f },
+    { 27, 0, 2.24f },
+    { 28, 0, 0.6f },
+    { 36, 0, 2.03f },
+    { 42, 0, 2.41f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CB080[9] = {
     0,
@@ -2086,9 +4160,14 @@ void *const lbl_803CB080[9] = {
     (void *)&lbl_803CB048,
     0
 };
-const unk32 lbl_803CB0A4[14] = {
-    0x00000000, 0x41BB0A3D, 0x000D0000, 0x42200000, 0x000E0000, 0xC00A3D71, 0x00140000, 0xBF2147AE,
-    0x00190000, 0x4025C28F, 0x002A0000, 0x41BB0A3D, 0xFFFF0000, 0x00000000
+const lbl_803CB0A4_Row lbl_803CB0A4[7] = {
+    { 0, 0, 23.38f },
+    { 13, 0, 40.0f },
+    { 14, 0, -2.16f },
+    { 20, 0, -0.63f },
+    { 25, 0, 2.59f },
+    { 42, 0, 23.38f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CB0DC[9] = {
     (void *)&lbl_803CB0A4,
@@ -2101,9 +4180,14 @@ void *const lbl_803CB0DC[9] = {
     0,
     0
 };
-const unk32 lbl_803CB100[14] = {
-    0x00000000, 0x40247AE1, 0x000D0000, 0x400F5C29, 0x000E0000, 0x3F19999A, 0x00150000, 0x40170A3D,
-    0x001D0000, 0x4038F5C3, 0x002A0000, 0x40247AE1, 0xFFFF0000, 0x00000000
+const lbl_803CB100_Row lbl_803CB100[7] = {
+    { 0, 0, 2.57f },
+    { 13, 0, 2.24f },
+    { 14, 0, 0.6f },
+    { 21, 0, 2.36f },
+    { 29, 0, 2.89f },
+    { 42, 0, 2.57f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CB138[9] = {
     0,
@@ -2116,9 +4200,13 @@ void *const lbl_803CB138[9] = {
     (void *)&lbl_803CB100,
     0
 };
-const unk32 lbl_803CB15C[12] = {
-    0x00000000, 0xBFCF5C29, 0x00070000, 0xBDA3D70A, 0x000C0000, 0x404851EC, 0x00290000, 0x42200000,
-    0x002A0000, 0xBFCF5C29, 0xFFFF0000, 0x00000000
+const lbl_803CB15C_Row lbl_803CB15C[6] = {
+    { 0, 0, -1.62f },
+    { 7, 0, -0.08f },
+    { 12, 0, 3.13f },
+    { 41, 0, 40.0f },
+    { 42, 0, -1.62f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CB18C[9] = {
     (void *)&lbl_803CB15C,
@@ -2131,9 +4219,13 @@ void *const lbl_803CB18C[9] = {
     0,
     0
 };
-const unk32 lbl_803CB1B0[12] = {
-    0x00000000, 0x3F19999A, 0x00070000, 0x40170A3D, 0x000E0000, 0x4038F5C3, 0x00290000, 0x401CCCCD,
-    0x002A0000, 0x3F19999A, 0xFFFF0000, 0x00000000
+const lbl_803CB1B0_Row lbl_803CB1B0[6] = {
+    { 0, 0, 0.6f },
+    { 7, 0, 2.36f },
+    { 14, 0, 2.89f },
+    { 41, 0, 2.45f },
+    { 42, 0, 0.6f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CB1E0[9] = {
     0,
@@ -2146,8 +4238,10 @@ void *const lbl_803CB1E0[9] = {
     (void *)&lbl_803CB1B0,
     0
 };
-const unk32 lbl_803CB204[8] = {
-    0x00000000, 0x00000000, 0x000B0000, 0xC1C80000, 0x00150000, 0x00000000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CB204[16] = {
+    0, 0, 0, 0, 11, 0, -15928, 0, 21, 0, 0, 0,
+    -1, 0, 0, 0
 };
 void *const lbl_803CB224[9] = {
     0,
@@ -2160,9 +4254,12 @@ void *const lbl_803CB224[9] = {
     0,
     0
 };
-const unk32 lbl_803CB248[10] = {
-    0x00000000, 0x3F400000, 0x00010000, 0x3F8CCCCD, 0x000D0000, 0x3F147AE1, 0x000E0000, 0x3F400000,
-    0xFFFF0000, 0x00000000
+const lbl_803CB248_Row lbl_803CB248[5] = {
+    { 0, 0, 0.75f },
+    { 1, 0, 1.1f },
+    { 13, 0, 0.58f },
+    { 14, 0, 0.75f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CB270[9] = {
     0,
@@ -2175,8 +4272,11 @@ void *const lbl_803CB270[9] = {
     (void *)&lbl_803CB248,
     0
 };
-const unk32 lbl_803CB294[8] = {
-    0x00000000, 0x40A00000, 0x00150000, 0xC0A00000, 0x002A0000, 0x40A00000, 0xFFFF0000, 0x00000000
+const lbl_803CB294_Row lbl_803CB294[4] = {
+    { 0, 0, 5.0f },
+    { 21, 0, -5.0f },
+    { 42, 0, 5.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CB2B4[9] = {
     0,
@@ -2189,11 +4289,15 @@ void *const lbl_803CB2B4[9] = {
     0,
     0
 };
-const unk32 lbl_803CB2D8[6] = {
-    0x00000000, 0x45BD587B, 0x01A40000, 0x46153D48, 0xFFFF0000, 0x00000000
+const lbl_803CB2D8_Row lbl_803CB2D8[3] = {
+    { 0, 0, 6059.06f },
+    { 420, 0, 9551.32f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CB2F0[6] = {
-    0x00000000, 0x45601333, 0x01A40000, 0xC69649FB, 0xFFFF0000, 0x00000000
+const lbl_803CB2F0_Row lbl_803CB2F0[3] = {
+    { 0, 0, 3585.2f },
+    { 420, 0, -19236.99f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CB308[9] = {
     (void *)&lbl_803CB2D8,
@@ -2246,17 +4350,26 @@ void *const lbl_803CB470[26] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803CB4D8[10] = {
-    0x00000000, 0x45942B5C, 0x00C00000, 0xC5907985, 0x01680000, 0xC6484148, 0x01A40000, 0xC64C3E29,
-    0xFFFF0000, 0x00000000
+const lbl_803CB4D8_Row lbl_803CB4D8[5] = {
+    { 0, 0, 4741.42f },
+    { 192, 0, -4623.19f },
+    { 360, 0, -12816.32f },
+    { 420, 0, -13071.54f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CB500[10] = {
-    0x00000000, 0xC6BA527B, 0x00B60000, 0xC6AF347B, 0x01370000, 0xC66B17E1, 0x01A40000, 0xC5A9E266,
-    0xFFFF0000, 0x00000000
+const lbl_803CB500_Row lbl_803CB500[5] = {
+    { 0, 0, -23849.24f },
+    { 182, 0, -22426.24f },
+    { 311, 0, -15045.97f },
+    { 420, 0, -5436.3f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CB528[10] = {
-    0x00000000, 0x410051EC, 0x00A10000, 0x41600000, 0x00D60000, 0x42578F5C, 0x01A40000, 0x42B03D71,
-    0xFFFF0000, 0x00000000
+const lbl_803CB528_Row lbl_803CB528[5] = {
+    { 0, 0, 8.02f },
+    { 161, 0, 14.0f },
+    { 214, 0, 53.89f },
+    { 420, 0, 88.12f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CB550[9] = {
     (void *)&lbl_803CB4D8,
@@ -2309,13 +4422,29 @@ void *const lbl_803CB6B8[26] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803CB720[44] = {
-    0x00000000, 0x44BA0052, 0x000B0000, 0x44BA14CD, 0x00140000, 0x44BA44CD, 0x002A0000, 0x44BB7D71,
-    0x00310000, 0x44BBAD1F, 0x003C0000, 0x44BBBF0A, 0x00470000, 0x44BBB19A, 0x004E0000, 0x44BB8333,
-    0x00650000, 0x44BA4614, 0x006E0000, 0x44BA128F, 0x00780000, 0x44BA0052, 0x00820000, 0x44BA10F6,
-    0x008B0000, 0x44BA3BD7, 0x00A20000, 0x44BB0852, 0x00AA0000, 0x44BB2F5C, 0x00B40000, 0x44BB3D1F,
-    0x00BE0000, 0x44BB2F5C, 0x00C60000, 0x44BB09EC, 0x00DA0000, 0x44BA47AE, 0x00E40000, 0x44BA11EC,
-    0x00F00000, 0x44BA0052, 0xFFFF0000, 0x00000000
+const lbl_803CB720_Row lbl_803CB720[22] = {
+    { 0, 0, 1488.01f },
+    { 11, 0, 1488.65f },
+    { 20, 0, 1490.15f },
+    { 42, 0, 1499.92f },
+    { 49, 0, 1501.41f },
+    { 60, 0, 1501.97f },
+    { 71, 0, 1501.55f },
+    { 78, 0, 1500.1f },
+    { 101, 0, 1490.19f },
+    { 110, 0, 1488.58f },
+    { 120, 0, 1488.01f },
+    { 130, 0, 1488.53f },
+    { 139, 0, 1489.87f },
+    { 162, 0, 1496.26f },
+    { 170, 0, 1497.48f },
+    { 180, 0, 1497.91f },
+    { 190, 0, 1497.48f },
+    { 198, 0, 1496.31f },
+    { 218, 0, 1490.24f },
+    { 228, 0, 1488.56f },
+    { 240, 0, 1488.01f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CB7D0[9] = {
     0,
@@ -2328,10 +4457,19 @@ void *const lbl_803CB7D0[9] = {
     0,
     0
 };
-const unk32 lbl_803CB7F4[24] = {
-    0x00000000, 0x3F800000, 0x000F0000, 0x3F800000, 0x001E0000, 0x3F7D70A4, 0x005A0000, 0x3F68F5C3,
-    0x00690000, 0x3F666666, 0x00780000, 0x3F666666, 0x00870000, 0x3F666666, 0x00960000, 0x3F68F5C3,
-    0x00D20000, 0x3F7D70A4, 0x00E10000, 0x3F800000, 0x00F00000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803CB7F4_Row lbl_803CB7F4[12] = {
+    { 0, 0, 1.0f },
+    { 15, 0, 1.0f },
+    { 30, 0, 0.99f },
+    { 90, 0, 0.91f },
+    { 105, 0, 0.9f },
+    { 120, 0, 0.9f },
+    { 135, 0, 0.9f },
+    { 150, 0, 0.91f },
+    { 210, 0, 0.99f },
+    { 225, 0, 1.0f },
+    { 240, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CB854[9] = {
     0,
@@ -2344,10 +4482,19 @@ void *const lbl_803CB854[9] = {
     (void *)&lbl_803CB7F4,
     0
 };
-const unk32 lbl_803CB878[24] = {
-    0x00000000, 0x3F666666, 0x000F0000, 0x3F666666, 0x001E0000, 0x3F68F5C3, 0x005A0000, 0x3F7D70A4,
-    0x00690000, 0x3F800000, 0x00780000, 0x3F800000, 0x00870000, 0x3F800000, 0x00960000, 0x3F7D70A4,
-    0x00D20000, 0x3F68F5C3, 0x00E10000, 0x3F666666, 0x00F00000, 0x3F666666, 0xFFFF0000, 0x00000000
+const lbl_803CB878_Row lbl_803CB878[12] = {
+    { 0, 0, 0.9f },
+    { 15, 0, 0.9f },
+    { 30, 0, 0.91f },
+    { 90, 0, 0.99f },
+    { 105, 0, 1.0f },
+    { 120, 0, 1.0f },
+    { 135, 0, 1.0f },
+    { 150, 0, 0.99f },
+    { 210, 0, 0.91f },
+    { 225, 0, 0.9f },
+    { 240, 0, 0.9f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CB8D8[9] = {
     0,
@@ -2360,10 +4507,19 @@ void *const lbl_803CB8D8[9] = {
     (void *)&lbl_803CB878,
     0
 };
-const unk32 lbl_803CB8FC[24] = {
-    0x00000000, 0x3F800000, 0x000F0000, 0x3F800000, 0x001E0000, 0x3F7D70A4, 0x005A0000, 0x3F68F5C3,
-    0x00690000, 0x3F666666, 0x00780000, 0x3F666666, 0x00870000, 0x3F666666, 0x00960000, 0x3F68F5C3,
-    0x00D20000, 0x3F7D70A4, 0x00E10000, 0x3F800000, 0x00F00000, 0x3F800000, 0xFFFF0000, 0x00000000
+const lbl_803CB8FC_Row lbl_803CB8FC[12] = {
+    { 0, 0, 1.0f },
+    { 15, 0, 1.0f },
+    { 30, 0, 0.99f },
+    { 90, 0, 0.91f },
+    { 105, 0, 0.9f },
+    { 120, 0, 0.9f },
+    { 135, 0, 0.9f },
+    { 150, 0, 0.91f },
+    { 210, 0, 0.99f },
+    { 225, 0, 1.0f },
+    { 240, 0, 1.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CB95C[9] = {
     0,
@@ -2513,26 +4669,58 @@ void *const lbl_803CBB54[97] = {
     0,
     0
 };
-const unk32 lbl_803CBCD8[20] = {
-    0x00000000, 0x451C6F33, 0x02320000, 0x44400333, 0x04650000, 0x441A1EB8, 0x064C0000, 0x4469951F,
-    0x08CA0000, 0x451C6F33, 0x0AB10000, 0x458B0052, 0x0C990000, 0x458F8D0A, 0x0ECB0000, 0x45661214,
-    0x11940000, 0x451C6F33, 0xFFFF0000, 0x00000000
+const lbl_803CBCD8_Row lbl_803CBCD8[10] = {
+    { 0, 0, 2502.95f },
+    { 562, 0, 768.05f },
+    { 1125, 0, 616.48f },
+    { 1612, 0, 934.33f },
+    { 2250, 0, 2502.95f },
+    { 2737, 0, 4448.04f },
+    { 3225, 0, 4593.63f },
+    { 3787, 0, 3681.13f },
+    { 4500, 0, 2502.95f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CBD28[20] = {
-    0x00000000, 0x43A28000, 0x02320000, 0x43C80000, 0x04650000, 0x43A28000, 0x064C0000, 0x43C80000,
-    0x08CA0000, 0x43A28000, 0x0AB10000, 0x43C80000, 0x0C990000, 0x43A28000, 0x0ECB0000, 0x43C80000,
-    0x11940000, 0x43A28000, 0xFFFF0000, 0x00000000
+const lbl_803CBD28_Row lbl_803CBD28[10] = {
+    { 0, 0, 325.0f },
+    { 562, 0, 400.0f },
+    { 1125, 0, 325.0f },
+    { 1612, 0, 400.0f },
+    { 2250, 0, 325.0f },
+    { 2737, 0, 400.0f },
+    { 3225, 0, 325.0f },
+    { 3787, 0, 400.0f },
+    { 4500, 0, 325.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CBD78[20] = {
-    0x00000000, 0xC5EDBB5C, 0x02320000, 0xC5E6D11F, 0x04650000, 0xC57CDA8F, 0x064C0000, 0xC44B8D71,
-    0x08CA0000, 0xC48BC7AE, 0x0AB10000, 0xC4F8EE14, 0x0C990000, 0xC57D028F, 0x0ECB0000, 0xC5CD4D48,
-    0x11940000, 0xC5EDBB5C, 0xFFFF0000, 0x00000000
+const lbl_803CBD78_Row lbl_803CBD78[10] = {
+    { 0, 0, -7607.42f },
+    { 562, 0, -7386.14f },
+    { 1125, 0, -4045.66f },
+    { 1612, 0, -814.21f },
+    { 2250, 0, -1118.24f },
+    { 2737, 0, -1991.44f },
+    { 3225, 0, -4048.16f },
+    { 3787, 0, -6569.66f },
+    { 4500, 0, -7607.42f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CBDC8[30] = {
-    0x00000000, 0xC2B40000, 0x012C0000, 0xC2B40000, 0x02320000, 0xC21F147B, 0x02D50000, 0x00000000,
-    0x04650000, 0x00000000, 0x05910000, 0x00000000, 0x064C0000, 0x42748F5C, 0x079E0000, 0x42DD0000,
-    0x08CA0000, 0x42DD0000, 0x09F60000, 0x42DD0000, 0x0AB10000, 0x43119C29, 0x0B6D0000, 0x43340000,
-    0x0C990000, 0x43340000, 0x11940000, 0x43870000, 0xFFFF0000, 0x00000000
+const lbl_803CBDC8_Row lbl_803CBDC8[15] = {
+    { 0, 0, -90.0f },
+    { 300, 0, -90.0f },
+    { 562, 0, -39.77f },
+    { 725, 0, 0.0f },
+    { 1125, 0, 0.0f },
+    { 1425, 0, 0.0f },
+    { 1612, 0, 61.14f },
+    { 1950, 0, 110.5f },
+    { 2250, 0, 110.5f },
+    { 2550, 0, 110.5f },
+    { 2737, 0, 145.61f },
+    { 2925, 0, 180.0f },
+    { 3225, 0, 180.0f },
+    { 4500, 0, 270.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CBE40[9] = {
     (void *)&lbl_803CBCD8,
@@ -2545,8 +4733,11 @@ void *const lbl_803CBE40[9] = {
     0,
     0
 };
-const unk32 lbl_803CBE64[8] = {
-    0x00000000, 0x41A00000, 0x007D0000, 0xC1A00000, 0x00FA0000, 0x41A00000, 0xFFFF0000, 0x00000000
+const lbl_803CBE64_Row lbl_803CBE64[4] = {
+    { 0, 0, 20.0f },
+    { 125, 0, -20.0f },
+    { 250, 0, 20.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CBE84[9] = {
     0,
@@ -2559,8 +4750,10 @@ void *const lbl_803CBE84[9] = {
     0,
     0
 };
-const unk32 lbl_803CBEA8[6] = {
-    0x00000000, 0x00000000, 0x11940000, 0x46D2F000, 0xFFFF0000, 0x00000000
+const lbl_803CBEA8_Row lbl_803CBEA8[3] = {
+    { 0, 0, 0.0f },
+    { 4500, 0, 27000.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CBEC0[9] = {
     0,
@@ -2589,9 +4782,13 @@ void *const lbl_803CBF1C[10] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803CBF44[12] = {
-    0x00000000, 0x40400000, 0x003C0000, 0x00000000, 0x00B40000, 0xBF800000, 0x012C0000, 0x00000000,
-    0x01680000, 0x40400000, 0xFFFF0000, 0x00000000
+const lbl_803CBF44_Row lbl_803CBF44[6] = {
+    { 0, 0, 3.0f },
+    { 60, 0, 0.0f },
+    { 180, 0, -1.0f },
+    { 300, 0, 0.0f },
+    { 360, 0, 3.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CBF74[9] = {
     0,
@@ -2604,9 +4801,13 @@ void *const lbl_803CBF74[9] = {
     0,
     0
 };
-const unk32 lbl_803CBF98[12] = {
-    0x00000000, 0x41100000, 0x003C0000, 0x00000000, 0x00B40000, 0xC0200000, 0x012C0000, 0x00000000,
-    0x01680000, 0x41100000, 0xFFFF0000, 0x00000000
+const lbl_803CBF98_Row lbl_803CBF98[6] = {
+    { 0, 0, 9.0f },
+    { 60, 0, 0.0f },
+    { 180, 0, -2.5f },
+    { 300, 0, 0.0f },
+    { 360, 0, 9.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CBFC8[9] = {
     0,
@@ -2619,9 +4820,10 @@ void *const lbl_803CBFC8[9] = {
     0,
     0
 };
-const unk32 lbl_803CBFEC[12] = {
-    0x00000000, 0xC0400000, 0x003C0000, 0xC0C00000, 0x00B40000, 0xC0E00000, 0x012C0000, 0xC0C00000,
-    0x01680000, 0xC0400000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CBFEC[24] = {
+    0, 0, -16320, 0, 60, 0, -16192, 0, 180, 0, -16160, 0,
+    300, 0, -16192, 0, 360, 0, -16320, 0, -1, 0, 0, 0
 };
 void *const lbl_803CC01C[9] = {
     0,
@@ -2634,10 +4836,19 @@ void *const lbl_803CC01C[9] = {
     0,
     0
 };
-const unk32 lbl_803CC040[24] = {
-    0x00000000, 0x41C80000, 0x001E0000, 0x40400000, 0x00640000, 0x00000000, 0x00780000, 0x41100000,
-    0x008C0000, 0x00000000, 0x00A00000, 0x41100000, 0x00B40000, 0x00000000, 0x00C80000, 0x41100000,
-    0x00DC0000, 0x00000000, 0x012C0000, 0x00000000, 0x01680000, 0x41C80000, 0xFFFF0000, 0x00000000
+const lbl_803CC040_Row lbl_803CC040[12] = {
+    { 0, 0, 25.0f },
+    { 30, 0, 3.0f },
+    { 100, 0, 0.0f },
+    { 120, 0, 9.0f },
+    { 140, 0, 0.0f },
+    { 160, 0, 9.0f },
+    { 180, 0, 0.0f },
+    { 200, 0, 9.0f },
+    { 220, 0, 0.0f },
+    { 300, 0, 0.0f },
+    { 360, 0, 25.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CC0A0[9] = {
     0,
@@ -2650,10 +4861,17 @@ void *const lbl_803CC0A0[9] = {
     0,
     0
 };
-const unk32 lbl_803CC0C4[20] = {
-    0x00000000, 0x00000000, 0x001E0000, 0x40C00000, 0x003C0000, 0xC1A00000, 0x008C0000, 0xC1C80000,
-    0x00DC0000, 0xC1A00000, 0x00F00000, 0x00000000, 0x01040000, 0x40C00000, 0x011D0000, 0x00000000,
-    0x01680000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CC0C4_Row lbl_803CC0C4[10] = {
+    { 0, 0, 0.0f },
+    { 30, 0, 6.0f },
+    { 60, 0, -20.0f },
+    { 140, 0, -25.0f },
+    { 220, 0, -20.0f },
+    { 240, 0, 0.0f },
+    { 260, 0, 6.0f },
+    { 285, 0, 0.0f },
+    { 360, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CC114[9] = {
     0,
@@ -2666,10 +4884,18 @@ void *const lbl_803CC114[9] = {
     0,
     0
 };
-const unk32 lbl_803CC138[22] = {
-    0x00000000, 0x00000000, 0x001E0000, 0xC1000000, 0x003C0000, 0x41400000, 0x00DC0000, 0x41400000,
-    0x00F00000, 0x00000000, 0x01040000, 0x40800000, 0x01180000, 0x40800000, 0x012C0000, 0xC0400000,
-    0x01540000, 0x00000000, 0x01680000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CC138_Row lbl_803CC138[11] = {
+    { 0, 0, 0.0f },
+    { 30, 0, -8.0f },
+    { 60, 0, 12.0f },
+    { 220, 0, 12.0f },
+    { 240, 0, 0.0f },
+    { 260, 0, 4.0f },
+    { 280, 0, 4.0f },
+    { 300, 0, -3.0f },
+    { 340, 0, 0.0f },
+    { 360, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CC190[9] = {
     0,
@@ -2682,10 +4908,18 @@ void *const lbl_803CC190[9] = {
     0,
     0
 };
-const unk32 lbl_803CC1B4[22] = {
-    0x00000000, 0x00000000, 0x001E0000, 0xC0C00000, 0x003C0000, 0x41400000, 0x00DC0000, 0x41400000,
-    0x00F00000, 0xC0400000, 0x01040000, 0x40400000, 0x01180000, 0x40400000, 0x012C0000, 0xC0400000,
-    0x01540000, 0x00000000, 0x01680000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CC1B4_Row lbl_803CC1B4[11] = {
+    { 0, 0, 0.0f },
+    { 30, 0, -6.0f },
+    { 60, 0, 12.0f },
+    { 220, 0, 12.0f },
+    { 240, 0, -3.0f },
+    { 260, 0, 3.0f },
+    { 280, 0, 3.0f },
+    { 300, 0, -3.0f },
+    { 340, 0, 0.0f },
+    { 360, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CC20C[9] = {
     0,
@@ -2698,10 +4932,19 @@ void *const lbl_803CC20C[9] = {
     0,
     0
 };
-const unk32 lbl_803CC230[24] = {
-    0x00000000, 0x40400000, 0x001E0000, 0x00000000, 0x00640000, 0x41E00000, 0x00780000, 0x42000000,
-    0x008C0000, 0x41800000, 0x00B40000, 0x42000000, 0x00DC0000, 0x42000000, 0x010E0000, 0x00000000,
-    0x012C0000, 0x00000000, 0x014A0000, 0x40C00000, 0x01680000, 0x40400000, 0xFFFF0000, 0x00000000
+const lbl_803CC230_Row lbl_803CC230[12] = {
+    { 0, 0, 3.0f },
+    { 30, 0, 0.0f },
+    { 100, 0, 28.0f },
+    { 120, 0, 32.0f },
+    { 140, 0, 16.0f },
+    { 180, 0, 32.0f },
+    { 220, 0, 32.0f },
+    { 270, 0, 0.0f },
+    { 300, 0, 0.0f },
+    { 330, 0, 6.0f },
+    { 360, 0, 3.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CC290[9] = {
     0,
@@ -2714,14 +4957,24 @@ void *const lbl_803CC290[9] = {
     0,
     0
 };
-const unk32 lbl_803CC2B4[22] = {
-    0x00000000, 0x00000000, 0x001E0000, 0x00000000, 0x005A0000, 0x40C00000, 0x00780000, 0x420C0000,
-    0x00960000, 0x420C0000, 0x00AA0000, 0x00000000, 0x00BE0000, 0x42000000, 0x00C80000, 0x42000000,
-    0x00E60000, 0x00000000, 0x01680000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CC2B4_Row lbl_803CC2B4[11] = {
+    { 0, 0, 0.0f },
+    { 30, 0, 0.0f },
+    { 90, 0, 6.0f },
+    { 120, 0, 35.0f },
+    { 150, 0, 35.0f },
+    { 170, 0, 0.0f },
+    { 190, 0, 32.0f },
+    { 200, 0, 32.0f },
+    { 230, 0, 0.0f },
+    { 360, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CC30C[16] = {
-    0x00000000, 0xC0400000, 0x001E0000, 0x3F4CCCCD, 0x003C0000, 0xC0400000, 0x00F00000, 0xC0400000,
-    0x01040000, 0x3F4CCCCD, 0x011D0000, 0xC0400000, 0x01680000, 0xC0400000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CC30C[32] = {
+    0, 0, -16320, 0, 30, 0, 16204, -13107, 60, 0, -16320, 0,
+    240, 0, -16320, 0, 260, 0, 16204, -13107, 285, 0, -16320, 0,
+    360, 0, -16320, 0, -1, 0, 0, 0
 };
 void *const lbl_803CC34C[9] = {
     0,
@@ -2734,10 +4987,12 @@ void *const lbl_803CC34C[9] = {
     0,
     0
 };
-const unk32 lbl_803CC370[24] = {
-    0x00000000, 0x00000000, 0x001E0000, 0x00000000, 0x005A0000, 0xC2200000, 0x00780000, 0xC1200000,
-    0x00960000, 0xC1200000, 0x00AA0000, 0xC2100000, 0x00BE0000, 0xC1400000, 0x00D20000, 0xC2100000,
-    0x00DC0000, 0xC2100000, 0x00F00000, 0x00000000, 0x01680000, 0x00000000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CC370[48] = {
+    0, 0, 0, 0, 30, 0, 0, 0, 90, 0, -15840, 0,
+    120, 0, -16096, 0, 150, 0, -16096, 0, 170, 0, -15856, 0,
+    190, 0, -16064, 0, 210, 0, -15856, 0, 220, 0, -15856, 0,
+    240, 0, 0, 0, 360, 0, 0, 0, -1, 0, 0, 0
 };
 void *const lbl_803CC3D0[9] = {
     0,
@@ -2750,9 +5005,13 @@ void *const lbl_803CC3D0[9] = {
     0,
     0
 };
-const unk32 lbl_803CC3F4[12] = {
-    0x00000000, 0xBF800000, 0x00780000, 0x00000000, 0x00B40000, 0x40400000, 0x00F00000, 0x00000000,
-    0x01680000, 0xBF800000, 0xFFFF0000, 0x00000000
+const lbl_803CC3F4_Row lbl_803CC3F4[6] = {
+    { 0, 0, -1.0f },
+    { 120, 0, 0.0f },
+    { 180, 0, 3.0f },
+    { 240, 0, 0.0f },
+    { 360, 0, -1.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CC424[9] = {
     0,
@@ -2765,9 +5024,13 @@ void *const lbl_803CC424[9] = {
     0,
     0
 };
-const unk32 lbl_803CC448[12] = {
-    0x00000000, 0xC0200000, 0x00780000, 0x00000000, 0x00B40000, 0x41100000, 0x00F00000, 0x00000000,
-    0x01680000, 0xC0200000, 0xFFFF0000, 0x00000000
+const lbl_803CC448_Row lbl_803CC448[6] = {
+    { 0, 0, -2.5f },
+    { 120, 0, 0.0f },
+    { 180, 0, 9.0f },
+    { 240, 0, 0.0f },
+    { 360, 0, -2.5f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CC478[9] = {
     0,
@@ -2780,13 +5043,18 @@ void *const lbl_803CC478[9] = {
     0,
     0
 };
-const unk32 lbl_803CC49C[12] = {
-    0x00000000, 0xC0E00000, 0x00780000, 0xC0C00000, 0x00B40000, 0xC0400000, 0x00F00000, 0xC0C00000,
-    0x01680000, 0xC0E00000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CC49C[24] = {
+    0, 0, -16160, 0, 120, 0, -16192, 0, 180, 0, -16320, 0,
+    240, 0, -16192, 0, 360, 0, -16160, 0, -1, 0, 0, 0
 };
-const unk32 lbl_803CC4CC[12] = {
-    0x00000000, 0x41100000, 0x00780000, 0x41800000, 0x00B40000, 0x41800000, 0x00F00000, 0x41100000,
-    0x01680000, 0x41100000, 0xFFFF0000, 0x00000000
+const lbl_803CC4CC_Row lbl_803CC4CC[6] = {
+    { 0, 0, 9.0f },
+    { 120, 0, 16.0f },
+    { 180, 0, 16.0f },
+    { 240, 0, 9.0f },
+    { 360, 0, 9.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CC4FC[9] = {
     0,
@@ -2799,10 +5067,17 @@ void *const lbl_803CC4FC[9] = {
     0,
     0
 };
-const unk32 lbl_803CC520[20] = {
-    0x00000000, 0x00000000, 0x00780000, 0x00000000, 0x00B40000, 0x41C80000, 0x00D20000, 0x40400000,
-    0x01180000, 0x00000000, 0x012C0000, 0x41100000, 0x01400000, 0x00000000, 0x01540000, 0x41100000,
-    0x01680000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CC520_Row lbl_803CC520[10] = {
+    { 0, 0, 0.0f },
+    { 120, 0, 0.0f },
+    { 180, 0, 25.0f },
+    { 210, 0, 3.0f },
+    { 280, 0, 0.0f },
+    { 300, 0, 9.0f },
+    { 320, 0, 0.0f },
+    { 340, 0, 9.0f },
+    { 360, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CC570[9] = {
     0,
@@ -2815,8 +5090,11 @@ void *const lbl_803CC570[9] = {
     0,
     0
 };
-const unk32 lbl_803CC594[8] = {
-    0x00000000, 0x400CCCCD, 0x003C0000, 0x3FC00000, 0x005A0000, 0x400CCCCD, 0xFFFF0000, 0x00000000
+const lbl_803CC594_Row lbl_803CC594[4] = {
+    { 0, 0, 2.2f },
+    { 60, 0, 1.5f },
+    { 90, 0, 2.2f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CC5B4[9] = {
     0,
@@ -2943,9 +5221,13 @@ void *const lbl_803CC8A8[38] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803CC940[12] = {
-    0x00000000, 0x40400000, 0x003C0000, 0x00000000, 0x00B40000, 0xBF800000, 0x012C0000, 0x00000000,
-    0x01680000, 0x40400000, 0xFFFF0000, 0x00000000
+const lbl_803CC940_Row lbl_803CC940[6] = {
+    { 0, 0, 3.0f },
+    { 60, 0, 0.0f },
+    { 180, 0, -1.0f },
+    { 300, 0, 0.0f },
+    { 360, 0, 3.0f },
+    { -1, 0, 0.0f }
 };
 /* pointers mixed with values */
 void *const lbl_803CC970[21] = {
@@ -2982,13 +5264,18 @@ void *const lbl_803CC9C4[9] = {
     0,
     0
 };
-const unk32 lbl_803CC9E8[12] = {
-    0x00000000, 0xC0400000, 0x003C0000, 0xC0C00000, 0x00B40000, 0xC0E00000, 0x012C0000, 0xC0C00000,
-    0x01680000, 0xC0400000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CC9E8[24] = {
+    0, 0, -16320, 0, 60, 0, -16192, 0, 180, 0, -16160, 0,
+    300, 0, -16192, 0, 360, 0, -16320, 0, -1, 0, 0, 0
 };
-const unk32 lbl_803CCA18[12] = {
-    0x00000000, 0x00000000, 0x003C0000, 0x00000000, 0x00B40000, 0x41400000, 0x012C0000, 0x41400000,
-    0x01680000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CCA18_Row lbl_803CCA18[6] = {
+    { 0, 0, 0.0f },
+    { 60, 0, 0.0f },
+    { 180, 0, 12.0f },
+    { 300, 0, 12.0f },
+    { 360, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CCA48[9] = {
     0,
@@ -3001,10 +5288,19 @@ void *const lbl_803CCA48[9] = {
     0,
     0
 };
-const unk32 lbl_803CCA6C[24] = {
-    0x00000000, 0x41C80000, 0x001E0000, 0x40400000, 0x00640000, 0x00000000, 0x00780000, 0x41100000,
-    0x008C0000, 0x00000000, 0x00A00000, 0x41100000, 0x00B40000, 0x00000000, 0x00C80000, 0x41100000,
-    0x00DC0000, 0x00000000, 0x012C0000, 0x00000000, 0x01680000, 0x41C80000, 0xFFFF0000, 0x00000000
+const lbl_803CCA6C_Row lbl_803CCA6C[12] = {
+    { 0, 0, 25.0f },
+    { 30, 0, 3.0f },
+    { 100, 0, 0.0f },
+    { 120, 0, 9.0f },
+    { 140, 0, 0.0f },
+    { 160, 0, 9.0f },
+    { 180, 0, 0.0f },
+    { 200, 0, 9.0f },
+    { 220, 0, 0.0f },
+    { 300, 0, 0.0f },
+    { 360, 0, 25.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CCACC[9] = {
     0,
@@ -3017,9 +5313,13 @@ void *const lbl_803CCACC[9] = {
     0,
     0
 };
-const unk32 lbl_803CCAF0[12] = {
-    0x00000000, 0x40400000, 0x003C0000, 0x00000000, 0x00B40000, 0xBF800000, 0x012C0000, 0x00000000,
-    0x01680000, 0x40400000, 0xFFFF0000, 0x00000000
+const lbl_803CCAF0_Row lbl_803CCAF0[6] = {
+    { 0, 0, 3.0f },
+    { 60, 0, 0.0f },
+    { 180, 0, -1.0f },
+    { 300, 0, 0.0f },
+    { 360, 0, 3.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CCB20[9] = {
     0,
@@ -3032,9 +5332,13 @@ void *const lbl_803CCB20[9] = {
     0,
     0
 };
-const unk32 lbl_803CCB44[12] = {
-    0x00000000, 0x41100000, 0x003C0000, 0x00000000, 0x00B40000, 0xC0200000, 0x012C0000, 0x00000000,
-    0x01680000, 0x41100000, 0xFFFF0000, 0x00000000
+const lbl_803CCB44_Row lbl_803CCB44[6] = {
+    { 0, 0, 9.0f },
+    { 60, 0, 0.0f },
+    { 180, 0, -2.5f },
+    { 300, 0, 0.0f },
+    { 360, 0, 9.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CCB74[9] = {
     0,
@@ -3047,13 +5351,18 @@ void *const lbl_803CCB74[9] = {
     0,
     0
 };
-const unk32 lbl_803CCB98[12] = {
-    0x00000000, 0xC0400000, 0x003C0000, 0xC0C00000, 0x00B40000, 0xC0E00000, 0x012C0000, 0xC0C00000,
-    0x01680000, 0xC0400000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CCB98[24] = {
+    0, 0, -16320, 0, 60, 0, -16192, 0, 180, 0, -16160, 0,
+    300, 0, -16192, 0, 360, 0, -16320, 0, -1, 0, 0, 0
 };
-const unk32 lbl_803CCBC8[12] = {
-    0x00000000, 0x00000000, 0x003C0000, 0x00000000, 0x00B40000, 0x41400000, 0x012C0000, 0x41400000,
-    0x01680000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CCBC8_Row lbl_803CCBC8[6] = {
+    { 0, 0, 0.0f },
+    { 60, 0, 0.0f },
+    { 180, 0, 12.0f },
+    { 300, 0, 12.0f },
+    { 360, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CCBF8[9] = {
     0,
@@ -3066,10 +5375,19 @@ void *const lbl_803CCBF8[9] = {
     0,
     0
 };
-const unk32 lbl_803CCC1C[24] = {
-    0x00000000, 0x41C80000, 0x001E0000, 0x40400000, 0x00640000, 0x00000000, 0x00780000, 0x41100000,
-    0x008C0000, 0x00000000, 0x00A00000, 0x41100000, 0x00B40000, 0x00000000, 0x00C80000, 0x41100000,
-    0x00DC0000, 0x00000000, 0x012C0000, 0x00000000, 0x01680000, 0x41C80000, 0xFFFF0000, 0x00000000
+const lbl_803CCC1C_Row lbl_803CCC1C[12] = {
+    { 0, 0, 25.0f },
+    { 30, 0, 3.0f },
+    { 100, 0, 0.0f },
+    { 120, 0, 9.0f },
+    { 140, 0, 0.0f },
+    { 160, 0, 9.0f },
+    { 180, 0, 0.0f },
+    { 200, 0, 9.0f },
+    { 220, 0, 0.0f },
+    { 300, 0, 0.0f },
+    { 360, 0, 25.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CCC7C[9] = {
     0,
@@ -3082,8 +5400,11 @@ void *const lbl_803CCC7C[9] = {
     0,
     0
 };
-const unk32 lbl_803CCCA0[8] = {
-    0x00000000, 0x408CCCCD, 0x003C0000, 0x4019999A, 0x005A0000, 0x408CCCCD, 0xFFFF0000, 0x00000000
+const lbl_803CCCA0_Row lbl_803CCCA0[4] = {
+    { 0, 0, 4.4f },
+    { 60, 0, 2.4f },
+    { 90, 0, 4.4f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CCCC0[9] = {
     0,
@@ -3164,9 +5485,10 @@ void *const lbl_803CCDD4[54] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803CCEAC[12] = {
-    0x00000000, 0x00000000, 0x003C0000, 0x00000000, 0x00B40000, 0xC1400000, 0x012C0000, 0xC1400000,
-    0x01680000, 0x00000000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CCEAC[24] = {
+    0, 0, 0, 0, 60, 0, 0, 0, 180, 0, -16064, 0,
+    300, 0, -16064, 0, 360, 0, 0, 0, -1, 0, 0, 0
 };
 void *const lbl_803CCEDC[9] = {
     0,
@@ -3239,41 +5561,122 @@ void *const lbl_803CCF60[54] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803CD038[74] = {
-    0x00000000, 0x459888F6, 0x003C0000, 0x4590A9AE, 0x00780000, 0x45878252, 0x00B40000, 0x457F06B8,
-    0x00F00000, 0x4578651F, 0x012C0000, 0x45770971, 0x01680000, 0x456A107B, 0x01A40000, 0x455326E1,
-    0x01E00000, 0x45378AE1, 0x021C0000, 0x451E68A4, 0x02580000, 0x4505A4CD, 0x02940000, 0x44D2EF5C,
-    0x02D00000, 0x449A7666, 0x030C0000, 0x4447E28F, 0x03480000, 0x440988F6, 0x03840000, 0x4416399A,
-    0x03C00000, 0x447A6D71, 0x03FC0000, 0x44AB1F5C, 0x04380000, 0x44C69B85, 0x04740000, 0x44E35A8F,
-    0x04B00000, 0x45086B5C, 0x04EC0000, 0x4521D852, 0x05280000, 0x453CD052, 0x05640000, 0x455864F6,
-    0x05A00000, 0x45711CA4, 0x05DC0000, 0x458245EC, 0x06180000, 0x4587C71F, 0x06540000, 0x4587B8F6,
-    0x06900000, 0x4583C266, 0x06CC0000, 0x457C3B85, 0x07080000, 0x45750AE1, 0x07440000, 0x457D3971,
-    0x07800000, 0x458A9E66, 0x07BC0000, 0x459736B8, 0x07F80000, 0x459A8B5C, 0x08160000, 0x459888F6,
-    0xFFFF0000, 0x00000000
+const lbl_803CD038_Row lbl_803CD038[37] = {
+    { 0, 0, 4881.12f },
+    { 60, 0, 4629.21f },
+    { 120, 0, 4336.29f },
+    { 180, 0, 4080.42f },
+    { 240, 0, 3974.32f },
+    { 300, 0, 3952.59f },
+    { 360, 0, 3745.03f },
+    { 420, 0, 3378.43f },
+    { 480, 0, 2936.68f },
+    { 540, 0, 2534.54f },
+    { 600, 0, 2138.3f },
+    { 660, 0, 1687.48f },
+    { 720, 0, 1235.7f },
+    { 780, 0, 799.54f },
+    { 840, 0, 550.14f },
+    { 900, 0, 600.9f },
+    { 960, 0, 1001.71f },
+    { 1020, 0, 1368.98f },
+    { 1080, 0, 1588.86f },
+    { 1140, 0, 1818.83f },
+    { 1200, 0, 2182.71f },
+    { 1260, 0, 2589.52f },
+    { 1320, 0, 3021.02f },
+    { 1380, 0, 3462.31f },
+    { 1440, 0, 3857.79f },
+    { 1500, 0, 4168.74f },
+    { 1560, 0, 4344.89f },
+    { 1620, 0, 4343.12f },
+    { 1680, 0, 4216.3f },
+    { 1740, 0, 4035.72f },
+    { 1800, 0, 3920.68f },
+    { 1860, 0, 4051.59f },
+    { 1920, 0, 4435.8f },
+    { 1980, 0, 4838.84f },
+    { 2040, 0, 4945.42f },
+    { 2070, 0, 4881.12f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CD160[74] = {
-    0x00000000, 0x4401C47B, 0x003C0000, 0x44160C29, 0x00780000, 0x43F1A3D7, 0x00B40000, 0x433B35C3,
-    0x00F00000, 0x430C170A, 0x012C0000, 0x4347547B, 0x01680000, 0x439C1D71, 0x01A40000, 0x43CDD333,
-    0x01E00000, 0x43F848F6, 0x021C0000, 0x4407B1EC, 0x02580000, 0x440810A4, 0x02940000, 0x43F72F5C,
-    0x02D00000, 0x43D963D7, 0x030C0000, 0x43DD03D7, 0x03480000, 0x440B4F5C, 0x03840000, 0x44358333,
-    0x03C00000, 0x4442E47B, 0x03FC0000, 0x442A4F5C, 0x04380000, 0x43F5A3D7, 0x04740000, 0x436523D7,
-    0x04B00000, 0x43188A3D, 0x04EC0000, 0x43713D71, 0x05280000, 0x43B67EB8, 0x05640000, 0x43E96148,
-    0x05A00000, 0x4402851F, 0x05DC0000, 0x44092CCD, 0x06180000, 0x440D05C3, 0x06540000, 0x4410270A,
-    0x06900000, 0x44124E14, 0x06CC0000, 0x441357AE, 0x07080000, 0x44138000, 0x07440000, 0x44138000,
-    0x07800000, 0x44138000, 0x07BC0000, 0x44136C29, 0x07F80000, 0x440BC1EC, 0x08160000, 0x4401C47B,
-    0xFFFF0000, 0x00000000
+const lbl_803CD160_Row lbl_803CD160[37] = {
+    { 0, 0, 519.07f },
+    { 60, 0, 600.19f },
+    { 120, 0, 483.28f },
+    { 180, 0, 187.21f },
+    { 240, 0, 140.09f },
+    { 300, 0, 199.33f },
+    { 360, 0, 312.23f },
+    { 420, 0, 411.65f },
+    { 480, 0, 496.57f },
+    { 540, 0, 542.78f },
+    { 600, 0, 544.26f },
+    { 660, 0, 494.37f },
+    { 720, 0, 434.78f },
+    { 780, 0, 442.03f },
+    { 840, 0, 557.24f },
+    { 900, 0, 726.05f },
+    { 960, 0, 779.57f },
+    { 1020, 0, 681.24f },
+    { 1080, 0, 491.28f },
+    { 1140, 0, 229.14f },
+    { 1200, 0, 152.54f },
+    { 1260, 0, 241.24f },
+    { 1320, 0, 364.99f },
+    { 1380, 0, 466.76f },
+    { 1440, 0, 522.08f },
+    { 1500, 0, 548.7f },
+    { 1560, 0, 564.09f },
+    { 1620, 0, 576.61f },
+    { 1680, 0, 585.22f },
+    { 1740, 0, 589.37f },
+    { 1800, 0, 590.0f },
+    { 1860, 0, 590.0f },
+    { 1920, 0, 590.0f },
+    { 1980, 0, 589.69f },
+    { 2040, 0, 559.03f },
+    { 2070, 0, 519.07f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CD288[74] = {
-    0x00000000, 0xC532A59A, 0x003C0000, 0xC51BA1EC, 0x00780000, 0xC506A9C3, 0x00B40000, 0xC4DF8DC3,
-    0x00F00000, 0xC4A8628F, 0x012C0000, 0xC45F1EB8, 0x01680000, 0xC3FC6666, 0x01A40000, 0xC379970A,
-    0x01E00000, 0xC34E0000, 0x021C0000, 0xC3D268F6, 0x02580000, 0xC4234148, 0x02940000, 0xC42DFB85,
-    0x02D00000, 0xC41DAA3D, 0x030C0000, 0xC4382148, 0x03480000, 0xC488DE66, 0x03840000, 0xC4BC71EC,
-    0x03C00000, 0xC4CF46B8, 0x03FC0000, 0xC4B18F5C, 0x04380000, 0xC4852571, 0x04740000, 0xC43FC852,
-    0x04B00000, 0xC3FE628F, 0x04EC0000, 0xC39D51EC, 0x05280000, 0xC35A8A3D, 0x05640000, 0xC38C0148,
-    0x05A00000, 0xC3FC799A, 0x05DC0000, 0xC452470A, 0x06180000, 0xC49DD852, 0x06540000, 0xC4D715C3,
-    0x06900000, 0xC5072785, 0x06CC0000, 0xC521A029, 0x07080000, 0xC53D4CCD, 0x07440000, 0xC5586971,
-    0x07800000, 0xC5668266, 0x07BC0000, 0xC55B5852, 0x07F80000, 0xC5402D71, 0x08160000, 0xC532A59A,
-    0xFFFF0000, 0x00000000
+const lbl_803CD288_Row lbl_803CD288[37] = {
+    { 0, 0, -2858.35f },
+    { 60, 0, -2490.12f },
+    { 120, 0, -2154.61f },
+    { 180, 0, -1788.43f },
+    { 240, 0, -1347.08f },
+    { 300, 0, -892.48f },
+    { 360, 0, -504.8f },
+    { 420, 0, -249.59f },
+    { 480, 0, -206.0f },
+    { 540, 0, -420.82f },
+    { 600, 0, -653.02f },
+    { 660, 0, -695.93f },
+    { 720, 0, -630.66f },
+    { 780, 0, -736.52f },
+    { 840, 0, -1094.95f },
+    { 900, 0, -1507.56f },
+    { 960, 0, -1658.21f },
+    { 1020, 0, -1420.48f },
+    { 1080, 0, -1065.17f },
+    { 1140, 0, -767.13f },
+    { 1200, 0, -508.77f },
+    { 1260, 0, -314.64f },
+    { 1320, 0, -218.54f },
+    { 1380, 0, -280.01f },
+    { 1440, 0, -504.95f },
+    { 1500, 0, -841.11f },
+    { 1560, 0, -1262.76f },
+    { 1620, 0, -1720.68f },
+    { 1680, 0, -2162.47f },
+    { 1740, 0, -2586.01f },
+    { 1800, 0, -3028.8f },
+    { 1860, 0, -3462.59f },
+    { 1920, 0, -3688.15f },
+    { 1980, 0, -3509.52f },
+    { 2040, 0, -3074.84f },
+    { 2070, 0, -2858.35f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CD3B0[9] = {
     (void *)&lbl_803CD038,
@@ -3286,12 +5689,26 @@ void *const lbl_803CD3B0[9] = {
     0,
     0
 };
-const unk32 lbl_803CD3D4[38] = {
-    0x00000000, 0xC1C80000, 0x00780000, 0xC2180000, 0x00F00000, 0xC1700000, 0x01680000, 0xC2240000,
-    0x01E00000, 0xC2DC0000, 0x02580000, 0xC2C80000, 0x02D00000, 0xC2B40000, 0x03480000, 0xC3250000,
-    0x03C00000, 0xC38C0000, 0x04380000, 0xC3A68000, 0x04B00000, 0xC3940000, 0x05280000, 0xC3898000,
-    0x05A00000, 0xC36B0000, 0x06180000, 0xC33E0000, 0x06900000, 0xC3200000, 0x07080000, 0xC32C0000,
-    0x07800000, 0xC3898000, 0x08160000, 0xC3C08000, 0xFFFF0000, 0x00000000
+const lbl_803CD3D4_Row lbl_803CD3D4[19] = {
+    { 0, 0, -25.0f },
+    { 120, 0, -38.0f },
+    { 240, 0, -15.0f },
+    { 360, 0, -41.0f },
+    { 480, 0, -110.0f },
+    { 600, 0, -100.0f },
+    { 720, 0, -90.0f },
+    { 840, 0, -165.0f },
+    { 960, 0, -280.0f },
+    { 1080, 0, -333.0f },
+    { 1200, 0, -296.0f },
+    { 1320, 0, -275.0f },
+    { 1440, 0, -235.0f },
+    { 1560, 0, -190.0f },
+    { 1680, 0, -160.0f },
+    { 1800, 0, -172.0f },
+    { 1920, 0, -275.0f },
+    { 2070, 0, -385.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CD46C[9] = {
     0,
@@ -3304,11 +5721,21 @@ void *const lbl_803CD46C[9] = {
     0,
     0
 };
-const unk32 lbl_803CD490[28] = {
-    0x00000000, 0x41F00000, 0x00780000, 0x40A00000, 0x00F00000, 0xC1F00000, 0x01680000, 0x42200000,
-    0x01E00000, 0x42200000, 0x02580000, 0xC1700000, 0x02D00000, 0x41F00000, 0x03C00000, 0x42340000,
-    0x04380000, 0x00000000, 0x05280000, 0xC1F00000, 0x06900000, 0xC1C80000, 0x07080000, 0x42340000,
-    0x08160000, 0x41F00000, 0xFFFF0000, 0x00000000
+const lbl_803CD490_Row lbl_803CD490[14] = {
+    { 0, 0, 30.0f },
+    { 120, 0, 5.0f },
+    { 240, 0, -30.0f },
+    { 360, 0, 40.0f },
+    { 480, 0, 40.0f },
+    { 600, 0, -15.0f },
+    { 720, 0, 30.0f },
+    { 960, 0, 45.0f },
+    { 1080, 0, 0.0f },
+    { 1320, 0, -30.0f },
+    { 1680, 0, -25.0f },
+    { 1800, 0, 45.0f },
+    { 2070, 0, 30.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CD500[9] = {
     0,
@@ -3321,11 +5748,21 @@ void *const lbl_803CD500[9] = {
     0,
     0
 };
-const unk32 lbl_803CD524[28] = {
-    0x00000000, 0x41A00000, 0x00F00000, 0x40400000, 0x01680000, 0xC0C00000, 0x01E00000, 0x00000000,
-    0x02580000, 0x40C00000, 0x02D00000, 0x41100000, 0x03480000, 0xC1700000, 0x03C00000, 0x40C00000,
-    0x04380000, 0x42200000, 0x04EC0000, 0xC0400000, 0x05640000, 0xC0400000, 0x06180000, 0x00000000,
-    0x07300000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CD524_Row lbl_803CD524[14] = {
+    { 0, 0, 20.0f },
+    { 240, 0, 3.0f },
+    { 360, 0, -6.0f },
+    { 480, 0, 0.0f },
+    { 600, 0, 6.0f },
+    { 720, 0, 9.0f },
+    { 840, 0, -15.0f },
+    { 960, 0, 6.0f },
+    { 1080, 0, 40.0f },
+    { 1260, 0, -3.0f },
+    { 1380, 0, -3.0f },
+    { 1560, 0, 0.0f },
+    { 1840, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CD594[9] = {
     0,
@@ -3338,17 +5775,29 @@ void *const lbl_803CD594[9] = {
     0,
     0
 };
-const unk32 lbl_803CD5B8[12] = {
-    0x00000000, 0xC09AE148, 0x000A0000, 0xC0BAE148, 0x001E0000, 0x00000000, 0x004B0000, 0x409C28F6,
-    0x005A0000, 0xC09AE148, 0xFFFF0000, 0x00000000
+const lbl_803CD5B8_Row lbl_803CD5B8[6] = {
+    { 0, 0, -4.84f },
+    { 10, 0, -5.84f },
+    { 30, 0, 0.0f },
+    { 75, 0, 4.88f },
+    { 90, 0, -4.84f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CD5E8[12] = {
-    0x00000000, 0x40E0F5C3, 0x000A0000, 0x40C75C29, 0x001E0000, 0x41087AE1, 0x004B0000, 0x40DA8F5C,
-    0x005A0000, 0x40E0F5C3, 0xFFFF0000, 0x00000000
+const lbl_803CD5E8_Row lbl_803CD5E8[6] = {
+    { 0, 0, 7.03f },
+    { 10, 0, 6.23f },
+    { 30, 0, 8.53f },
+    { 75, 0, 6.83f },
+    { 90, 0, 7.03f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CD618[12] = {
-    0x00000000, 0xC20AB852, 0x000A0000, 0xC22D28F6, 0x001E0000, 0x00000000, 0x004B0000, 0x420F0A3D,
-    0x005A0000, 0xC20AB852, 0xFFFF0000, 0x00000000
+const lbl_803CD618_Row lbl_803CD618[6] = {
+    { 0, 0, -34.68f },
+    { 10, 0, -43.29f },
+    { 30, 0, 0.0f },
+    { 75, 0, 35.76f },
+    { 90, 0, -34.68f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CD648[9] = {
     0,
@@ -3361,13 +5810,21 @@ void *const lbl_803CD648[9] = {
     0,
     0
 };
-const unk32 lbl_803CD66C[12] = {
-    0x00000000, 0xC0E0F5C3, 0x000A0000, 0xC0C75C29, 0x001E0000, 0xC1087AE1, 0x004B0000, 0xC0DA8F5C,
-    0x005A0000, 0xC0E0F5C3, 0xFFFF0000, 0x00000000
+const lbl_803CD66C_Row lbl_803CD66C[6] = {
+    { 0, 0, -7.03f },
+    { 10, 0, -6.23f },
+    { 30, 0, -8.53f },
+    { 75, 0, -6.83f },
+    { 90, 0, -7.03f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CD69C[12] = {
-    0x00000000, 0x420AB852, 0x000A0000, 0x422D28F6, 0x001E0000, 0x00000000, 0x004B0000, 0xC20F0A3D,
-    0x005A0000, 0x420AB852, 0xFFFF0000, 0x00000000
+const lbl_803CD69C_Row lbl_803CD69C[6] = {
+    { 0, 0, 34.68f },
+    { 10, 0, 43.29f },
+    { 30, 0, 0.0f },
+    { 75, 0, -35.76f },
+    { 90, 0, 34.68f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CD6CC[9] = {
     0,
@@ -3380,9 +5837,12 @@ void *const lbl_803CD6CC[9] = {
     0,
     0
 };
-const unk32 lbl_803CD6F0[10] = {
-    0x00000000, 0x40800000, 0x00140000, 0x40A00000, 0x004B0000, 0xC0A00000, 0x005A0000, 0x40800000,
-    0xFFFF0000, 0x00000000
+const lbl_803CD6F0_Row lbl_803CD6F0[5] = {
+    { 0, 0, 4.0f },
+    { 20, 0, 5.0f },
+    { 75, 0, -5.0f },
+    { 90, 0, 4.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CD718[9] = {
     0,
@@ -3395,9 +5855,10 @@ void *const lbl_803CD718[9] = {
     0,
     0
 };
-const unk32 lbl_803CD73C[10] = {
-    0x00000000, 0xC1100000, 0x000A0000, 0xC1080000, 0x00410000, 0x00000000, 0x004B0000, 0x00000000,
-    0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CD73C[20] = {
+    0, 0, -16112, 0, 10, 0, -16120, 0, 65, 0, 0, 0,
+    75, 0, 0, 0, -1, 0, 0, 0
 };
 void *const lbl_803CD764[9] = {
     0,
@@ -3438,13 +5899,21 @@ void *const lbl_803CD828[18] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803CD870[12] = {
-    0x00000000, 0x4558AC29, 0x00780000, 0x45552052, 0x00F00000, 0x455400A4, 0x01680000, 0x45579A14,
-    0x01E00000, 0x4558AC29, 0xFFFF0000, 0x00000000
+const lbl_803CD870_Row lbl_803CD870[6] = {
+    { 0, 0, 3466.76f },
+    { 120, 0, 3410.02f },
+    { 240, 0, 3392.04f },
+    { 360, 0, 3449.63f },
+    { 480, 0, 3466.76f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CD8A0[12] = {
-    0x00000000, 0xC595D4F6, 0x00780000, 0xC598970A, 0x00F00000, 0xC595B533, 0x01680000, 0xC593AB1F,
-    0x01E00000, 0xC595D4F6, 0xFFFF0000, 0x00000000
+const lbl_803CD8A0_Row lbl_803CD8A0[6] = {
+    { 0, 0, -4794.62f },
+    { 120, 0, -4882.88f },
+    { 240, 0, -4790.65f },
+    { 360, 0, -4725.39f },
+    { 480, 0, -4794.62f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CD8D0[9] = {
     (void *)&lbl_803CD870,
@@ -3457,9 +5926,10 @@ void *const lbl_803CD8D0[9] = {
     0,
     0
 };
-const unk32 lbl_803CD8F4[12] = {
-    0x00000000, 0xC0A00000, 0x00780000, 0xC17E3D71, 0x00F00000, 0xC0A00000, 0x01680000, 0xC17E3D71,
-    0x01E00000, 0xC0A00000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CD8F4[24] = {
+    0, 0, -16224, 0, 120, 0, -16002, 15729, 240, 0, -16224, 0,
+    360, 0, -16002, 15729, 480, 0, -16224, 0, -1, 0, 0, 0
 };
 void *const lbl_803CD924[9] = {
     0,
@@ -3472,13 +5942,21 @@ void *const lbl_803CD924[9] = {
     0,
     0
 };
-const unk32 lbl_803CD948[12] = {
-    0x00000000, 0x42040000, 0x00780000, 0x420C0000, 0x00F00000, 0x42040000, 0x01680000, 0x420C0000,
-    0x01E00000, 0x42040000, 0xFFFF0000, 0x00000000
+const lbl_803CD948_Row lbl_803CD948[6] = {
+    { 0, 0, 33.0f },
+    { 120, 0, 35.0f },
+    { 240, 0, 33.0f },
+    { 360, 0, 35.0f },
+    { 480, 0, 33.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CD978[12] = {
-    0x00000000, 0x40A00000, 0x00780000, 0xC0A00000, 0x00F00000, 0x40A00000, 0x01680000, 0x41200000,
-    0x01E00000, 0x40A00000, 0xFFFF0000, 0x00000000
+const lbl_803CD978_Row lbl_803CD978[6] = {
+    { 0, 0, 5.0f },
+    { 120, 0, -5.0f },
+    { 240, 0, 5.0f },
+    { 360, 0, 10.0f },
+    { 480, 0, 5.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CD9A8[9] = {
     0,
@@ -3491,9 +5969,13 @@ void *const lbl_803CD9A8[9] = {
     0,
     0
 };
-const unk32 lbl_803CD9CC[12] = {
-    0x00000000, 0x41900000, 0x00780000, 0x41A00000, 0x00F00000, 0x41900000, 0x01680000, 0x41A00000,
-    0x01E00000, 0x41900000, 0xFFFF0000, 0x00000000
+const lbl_803CD9CC_Row lbl_803CD9CC[6] = {
+    { 0, 0, 18.0f },
+    { 120, 0, 20.0f },
+    { 240, 0, 18.0f },
+    { 360, 0, 20.0f },
+    { 480, 0, 18.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CD9FC[9] = {
     0,
@@ -3506,9 +5988,13 @@ void *const lbl_803CD9FC[9] = {
     0,
     0
 };
-const unk32 lbl_803CDA20[12] = {
-    0x00000000, 0xC0A00000, 0x00780000, 0x40A00000, 0x00F00000, 0x00000000, 0x01680000, 0xC0A00000,
-    0x01E00000, 0xC0A00000, 0xFFFF0000, 0x00000000
+const lbl_803CDA20_Row lbl_803CDA20[6] = {
+    { 0, 0, -5.0f },
+    { 120, 0, 5.0f },
+    { 240, 0, 0.0f },
+    { 360, 0, -5.0f },
+    { 480, 0, -5.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CDA50[9] = {
     0,
@@ -3521,9 +6007,15 @@ void *const lbl_803CDA50[9] = {
     0,
     0
 };
-const unk32 lbl_803CDA74[16] = {
-    0x00000000, 0x00000000, 0x003C0000, 0x00000000, 0x00780000, 0x41700000, 0x00B40000, 0x40400000,
-    0x00F00000, 0x40400000, 0x014A0000, 0x41700000, 0x01E00000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CDA74_Row lbl_803CDA74[8] = {
+    { 0, 0, 0.0f },
+    { 60, 0, 0.0f },
+    { 120, 0, 15.0f },
+    { 180, 0, 3.0f },
+    { 240, 0, 3.0f },
+    { 330, 0, 15.0f },
+    { 480, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CDAB4[9] = {
     0,
@@ -3536,9 +6028,13 @@ void *const lbl_803CDAB4[9] = {
     0,
     0
 };
-const unk32 lbl_803CDAD8[12] = {
-    0x00000000, 0x42200000, 0x00780000, 0x425C0000, 0x01040000, 0x42200000, 0x01680000, 0x425C0000,
-    0x01E00000, 0x42200000, 0xFFFF0000, 0x00000000
+const lbl_803CDAD8_Row lbl_803CDAD8[6] = {
+    { 0, 0, 40.0f },
+    { 120, 0, 55.0f },
+    { 260, 0, 40.0f },
+    { 360, 0, 55.0f },
+    { 480, 0, 40.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CDB08[9] = {
     0,
@@ -3551,9 +6047,10 @@ void *const lbl_803CDB08[9] = {
     0,
     0
 };
-const unk32 lbl_803CDB2C[12] = {
-    0x00000000, 0xC1200000, 0x00780000, 0x00000000, 0x00F00000, 0xC1200000, 0x01680000, 0x00000000,
-    0x01E00000, 0xC1200000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CDB2C[24] = {
+    0, 0, -16096, 0, 120, 0, 0, 0, 240, 0, -16096, 0,
+    360, 0, 0, 0, 480, 0, -16096, 0, -1, 0, 0, 0
 };
 void *const lbl_803CDB5C[9] = {
     0,
@@ -3566,9 +6063,13 @@ void *const lbl_803CDB5C[9] = {
     0,
     0
 };
-const unk32 lbl_803CDB80[12] = {
-    0x00000000, 0x41200000, 0x00780000, 0xC1200000, 0x00F00000, 0x41200000, 0x01680000, 0xC1200000,
-    0x01E00000, 0x41200000, 0xFFFF0000, 0x00000000
+const lbl_803CDB80_Row lbl_803CDB80[6] = {
+    { 0, 0, 10.0f },
+    { 120, 0, -10.0f },
+    { 240, 0, 10.0f },
+    { 360, 0, -10.0f },
+    { 480, 0, 10.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CDBB0[9] = {
     0,
@@ -3581,9 +6082,13 @@ void *const lbl_803CDBB0[9] = {
     0,
     0
 };
-const unk32 lbl_803CDBD4[12] = {
-    0x00000000, 0xC1200000, 0x00780000, 0x41200000, 0x00F00000, 0xC1200000, 0x01680000, 0x41200000,
-    0x01E00000, 0xC1200000, 0xFFFF0000, 0x00000000
+const lbl_803CDBD4_Row lbl_803CDBD4[6] = {
+    { 0, 0, -10.0f },
+    { 120, 0, 10.0f },
+    { 240, 0, -10.0f },
+    { 360, 0, 10.0f },
+    { 480, 0, -10.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CDC04[9] = {
     0,
@@ -3596,9 +6101,13 @@ void *const lbl_803CDC04[9] = {
     0,
     0
 };
-const unk32 lbl_803CDC28[12] = {
-    0x00000000, 0xC1A00000, 0x00780000, 0x41700000, 0x00F00000, 0xC1A00000, 0x01680000, 0x40A00000,
-    0x01E00000, 0xC1A00000, 0xFFFF0000, 0x00000000
+const lbl_803CDC28_Row lbl_803CDC28[6] = {
+    { 0, 0, -20.0f },
+    { 120, 0, 15.0f },
+    { 240, 0, -20.0f },
+    { 360, 0, 5.0f },
+    { 480, 0, -20.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CDC58[9] = {
     0,
@@ -3611,9 +6120,13 @@ void *const lbl_803CDC58[9] = {
     0,
     0
 };
-const unk32 lbl_803CDC7C[12] = {
-    0x00000000, 0x41700000, 0x00780000, 0xC1A00000, 0x00F00000, 0x41A00000, 0x01680000, 0xC1F00000,
-    0x01E00000, 0x41700000, 0xFFFF0000, 0x00000000
+const lbl_803CDC7C_Row lbl_803CDC7C[6] = {
+    { 0, 0, 15.0f },
+    { 120, 0, -20.0f },
+    { 240, 0, 20.0f },
+    { 360, 0, -30.0f },
+    { 480, 0, 15.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CDCAC[9] = {
     0,
@@ -3626,17 +6139,28 @@ void *const lbl_803CDCAC[9] = {
     0,
     0
 };
-const unk32 lbl_803CDCD0[12] = {
-    0x00000000, 0x44F9CA3D, 0x00780000, 0x44F170A4, 0x00F00000, 0x44EDDC7B, 0x01680000, 0x44F78A3D,
-    0x01E00000, 0x44F9CA3D, 0xFFFF0000, 0x00000000
+const lbl_803CDCD0_Row lbl_803CDCD0[6] = {
+    { 0, 0, 1998.32f },
+    { 120, 0, 1931.52f },
+    { 240, 0, 1902.89f },
+    { 360, 0, 1980.32f },
+    { 480, 0, 1998.32f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CDD00[12] = {
-    0x00000000, 0xC5AA71C3, 0x00780000, 0xC5ABC948, 0x00F00000, 0xC5A83533, 0x01680000, 0xC5A73D0A,
-    0x01E00000, 0xC5AA71C3, 0xFFFF0000, 0x00000000
+const lbl_803CDD00_Row lbl_803CDD00[6] = {
+    { 0, 0, -5454.22f },
+    { 120, 0, -5497.16f },
+    { 240, 0, -5382.65f },
+    { 360, 0, -5351.63f },
+    { 480, 0, -5454.22f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CDD30[10] = {
-    0x00000000, 0x43070000, 0x00780000, 0x43110000, 0x01680000, 0x42FA0000, 0x01E00000, 0x43070000,
-    0xFFFF0000, 0x00000000
+const lbl_803CDD30_Row lbl_803CDD30[5] = {
+    { 0, 0, 135.0f },
+    { 120, 0, 145.0f },
+    { 360, 0, 125.0f },
+    { 480, 0, 135.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CDD58[9] = {
     (void *)&lbl_803CDCD0,
@@ -3649,9 +6173,13 @@ void *const lbl_803CDD58[9] = {
     0,
     0
 };
-const unk32 lbl_803CDD7C[12] = {
-    0x00000000, 0x00000000, 0x00780000, 0x41700000, 0x00F00000, 0x40A00000, 0x01680000, 0x41200000,
-    0x01E00000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CDD7C_Row lbl_803CDD7C[6] = {
+    { 0, 0, 0.0f },
+    { 120, 0, 15.0f },
+    { 240, 0, 5.0f },
+    { 360, 0, 10.0f },
+    { 480, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CDDAC[9] = {
     0,
@@ -3664,13 +6192,19 @@ void *const lbl_803CDDAC[9] = {
     0,
     0
 };
-const unk32 lbl_803CDDD0[10] = {
-    0x00000000, 0x42200000, 0x012C0000, 0x420C0000, 0x01680000, 0x420C0000, 0x01E00000, 0x42200000,
-    0xFFFF0000, 0x00000000
+const lbl_803CDDD0_Row lbl_803CDDD0[5] = {
+    { 0, 0, 40.0f },
+    { 300, 0, 35.0f },
+    { 360, 0, 35.0f },
+    { 480, 0, 40.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CDDF8[10] = {
-    0x00000000, 0xC0A00000, 0x012C0000, 0x40A00000, 0x01680000, 0x00000000, 0x01E00000, 0xC0A00000,
-    0xFFFF0000, 0x00000000
+const lbl_803CDDF8_Row lbl_803CDDF8[5] = {
+    { 0, 0, -5.0f },
+    { 300, 0, 5.0f },
+    { 360, 0, 0.0f },
+    { 480, 0, -5.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CDE20[9] = {
     0,
@@ -3683,13 +6217,21 @@ void *const lbl_803CDE20[9] = {
     0,
     0
 };
-const unk32 lbl_803CDE44[14] = {
-    0x00000000, 0x41A00000, 0x00780000, 0x41C80000, 0x00B40000, 0x41C80000, 0x012C0000, 0x41900000,
-    0x01680000, 0x41900000, 0x01E00000, 0x41A00000, 0xFFFF0000, 0x00000000
+const lbl_803CDE44_Row lbl_803CDE44[7] = {
+    { 0, 0, 20.0f },
+    { 120, 0, 25.0f },
+    { 180, 0, 25.0f },
+    { 300, 0, 18.0f },
+    { 360, 0, 18.0f },
+    { 480, 0, 20.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CDE7C[10] = {
-    0x00000000, 0xC0A00000, 0x00F00000, 0x40A00000, 0x01680000, 0x00000000, 0x01E00000, 0xC0A00000,
-    0xFFFF0000, 0x00000000
+const lbl_803CDE7C_Row lbl_803CDE7C[5] = {
+    { 0, 0, -5.0f },
+    { 240, 0, 5.0f },
+    { 360, 0, 0.0f },
+    { 480, 0, -5.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CDEA4[9] = {
     0,
@@ -3702,9 +6244,14 @@ void *const lbl_803CDEA4[9] = {
     0,
     0
 };
-const unk32 lbl_803CDEC8[14] = {
-    0x00000000, 0x41A00000, 0x00780000, 0x41B80000, 0x00B40000, 0x41B80000, 0x012C0000, 0x41900000,
-    0x01680000, 0x41900000, 0x01E00000, 0x41A00000, 0xFFFF0000, 0x00000000
+const lbl_803CDEC8_Row lbl_803CDEC8[7] = {
+    { 0, 0, 20.0f },
+    { 120, 0, 23.0f },
+    { 180, 0, 23.0f },
+    { 300, 0, 18.0f },
+    { 360, 0, 18.0f },
+    { 480, 0, 20.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CDF00[9] = {
     0,
@@ -3717,17 +6264,25 @@ void *const lbl_803CDF00[9] = {
     0,
     0
 };
-const unk32 lbl_803CDF24[12] = {
-    0x00000000, 0xC2960000, 0x00780000, 0xC2960000, 0x00F00000, 0xC25C0000, 0x01680000, 0xC25C0000,
-    0x01E00000, 0xC2960000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CDF24[24] = {
+    0, 0, -15722, 0, 120, 0, -15722, 0, 240, 0, -15780, 0,
+    360, 0, -15780, 0, 480, 0, -15722, 0, -1, 0, 0, 0
 };
-const unk32 lbl_803CDF54[12] = {
-    0x00000000, 0xC1700000, 0x00780000, 0x41200000, 0x00F00000, 0x00000000, 0x01680000, 0x00000000,
-    0x01E00000, 0xC1700000, 0xFFFF0000, 0x00000000
+const lbl_803CDF54_Row lbl_803CDF54[6] = {
+    { 0, 0, -15.0f },
+    { 120, 0, 10.0f },
+    { 240, 0, 0.0f },
+    { 360, 0, 0.0f },
+    { 480, 0, -15.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CDF84[10] = {
-    0x00000000, 0x00000000, 0x00F00000, 0x41A00000, 0x01680000, 0xC1200000, 0x01E00000, 0x00000000,
-    0xFFFF0000, 0x00000000
+const lbl_803CDF84_Row lbl_803CDF84[5] = {
+    { 0, 0, 0.0f },
+    { 240, 0, 20.0f },
+    { 360, 0, -10.0f },
+    { 480, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CDFAC[9] = {
     0,
@@ -3740,9 +6295,15 @@ void *const lbl_803CDFAC[9] = {
     0,
     0
 };
-const unk32 lbl_803CDFD0[16] = {
-    0x00000000, 0x41B00000, 0x003E0000, 0x40A00000, 0x00780000, 0x41B00000, 0x00B40000, 0x00000000,
-    0x00F00000, 0x40400000, 0x01A40000, 0x00000000, 0x01E00000, 0x41B00000, 0xFFFF0000, 0x00000000
+const lbl_803CDFD0_Row lbl_803CDFD0[8] = {
+    { 0, 0, 22.0f },
+    { 62, 0, 5.0f },
+    { 120, 0, 22.0f },
+    { 180, 0, 0.0f },
+    { 240, 0, 3.0f },
+    { 420, 0, 0.0f },
+    { 480, 0, 22.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CE010[9] = {
     0,
@@ -3755,9 +6316,13 @@ void *const lbl_803CE010[9] = {
     0,
     0
 };
-const unk32 lbl_803CE034[12] = {
-    0x00000000, 0x425C0000, 0x00780000, 0x42340000, 0x00F00000, 0x425C0000, 0x01680000, 0x42200000,
-    0x01E00000, 0x425C0000, 0xFFFF0000, 0x00000000
+const lbl_803CE034_Row lbl_803CE034[6] = {
+    { 0, 0, 55.0f },
+    { 120, 0, 45.0f },
+    { 240, 0, 55.0f },
+    { 360, 0, 40.0f },
+    { 480, 0, 55.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CE064[9] = {
     0,
@@ -3770,9 +6335,10 @@ void *const lbl_803CE064[9] = {
     0,
     0
 };
-const unk32 lbl_803CE088[12] = {
-    0x00000000, 0x00000000, 0x00780000, 0xC1700000, 0x00F00000, 0x00000000, 0x01680000, 0xC1700000,
-    0x01E00000, 0x00000000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CE088[24] = {
+    0, 0, 0, 0, 120, 0, -16016, 0, 240, 0, 0, 0,
+    360, 0, -16016, 0, 480, 0, 0, 0, -1, 0, 0, 0
 };
 void *const lbl_803CE0B8[9] = {
     0,
@@ -3785,9 +6351,13 @@ void *const lbl_803CE0B8[9] = {
     0,
     0
 };
-const unk32 lbl_803CE0DC[12] = {
-    0x00000000, 0x41200000, 0x00780000, 0xC1200000, 0x00F00000, 0x41200000, 0x01680000, 0xC1200000,
-    0x01E00000, 0x41200000, 0xFFFF0000, 0x00000000
+const lbl_803CE0DC_Row lbl_803CE0DC[6] = {
+    { 0, 0, 10.0f },
+    { 120, 0, -10.0f },
+    { 240, 0, 10.0f },
+    { 360, 0, -10.0f },
+    { 480, 0, 10.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CE10C[9] = {
     0,
@@ -3800,9 +6370,13 @@ void *const lbl_803CE10C[9] = {
     0,
     0
 };
-const unk32 lbl_803CE130[12] = {
-    0x00000000, 0xC1200000, 0x00780000, 0x41200000, 0x00F00000, 0xC1200000, 0x01680000, 0x41200000,
-    0x01E00000, 0xC1200000, 0xFFFF0000, 0x00000000
+const lbl_803CE130_Row lbl_803CE130[6] = {
+    { 0, 0, -10.0f },
+    { 120, 0, 10.0f },
+    { 240, 0, -10.0f },
+    { 360, 0, 10.0f },
+    { 480, 0, -10.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CE160[9] = {
     0,
@@ -3815,9 +6389,14 @@ void *const lbl_803CE160[9] = {
     0,
     0
 };
-const unk32 lbl_803CE184[14] = {
-    0x00000000, 0x41C80000, 0x001E0000, 0x41F00000, 0x00780000, 0xC1200000, 0x00F00000, 0x40A00000,
-    0x01860000, 0xC1A00000, 0x01E00000, 0x41C80000, 0xFFFF0000, 0x00000000
+const lbl_803CE184_Row lbl_803CE184[7] = {
+    { 0, 0, 25.0f },
+    { 30, 0, 30.0f },
+    { 120, 0, -10.0f },
+    { 240, 0, 5.0f },
+    { 390, 0, -20.0f },
+    { 480, 0, 25.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CE1BC[9] = {
     0,
@@ -3830,9 +6409,13 @@ void *const lbl_803CE1BC[9] = {
     0,
     0
 };
-const unk32 lbl_803CE1E0[12] = {
-    0x00000000, 0x41C80000, 0x00780000, 0xC1700000, 0x00F00000, 0x41200000, 0x01680000, 0xC1A00000,
-    0x01E00000, 0x41C80000, 0xFFFF0000, 0x00000000
+const lbl_803CE1E0_Row lbl_803CE1E0[6] = {
+    { 0, 0, 25.0f },
+    { 120, 0, -15.0f },
+    { 240, 0, 10.0f },
+    { 360, 0, -20.0f },
+    { 480, 0, 25.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CE210[9] = {
     0,
@@ -3927,17 +6510,26 @@ void *const lbl_803CE43C[54] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803CE514[12] = {
-    0x00000000, 0xC28C0000, 0x003C0000, 0xC2820000, 0x00780000, 0xC25C0000, 0x01680000, 0xC2900000,
-    0x01A40000, 0xC28C0000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CE514[24] = {
+    0, 0, -15732, 0, 60, 0, -15742, 0, 120, 0, -15780, 0,
+    360, 0, -15728, 0, 420, 0, -15732, 0, -1, 0, 0, 0
 };
-const unk32 lbl_803CE544[12] = {
-    0x00000000, 0x41400000, 0x003C0000, 0x41400000, 0x00780000, 0x41A00000, 0x01680000, 0x41600000,
-    0x01A40000, 0x41400000, 0xFFFF0000, 0x00000000
+const lbl_803CE544_Row lbl_803CE544[6] = {
+    { 0, 0, 12.0f },
+    { 60, 0, 12.0f },
+    { 120, 0, 20.0f },
+    { 360, 0, 14.0f },
+    { 420, 0, 12.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CE574[12] = {
-    0x00000000, 0x41400000, 0x003C0000, 0x41A00000, 0x00780000, 0x41700000, 0x01680000, 0x41700000,
-    0x01A40000, 0x41400000, 0xFFFF0000, 0x00000000
+const lbl_803CE574_Row lbl_803CE574[6] = {
+    { 0, 0, 12.0f },
+    { 60, 0, 20.0f },
+    { 120, 0, 15.0f },
+    { 360, 0, 15.0f },
+    { 420, 0, 12.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CE5A4[9] = {
     0,
@@ -3950,9 +6542,12 @@ void *const lbl_803CE5A4[9] = {
     0,
     0
 };
-const unk32 lbl_803CE5C8[10] = {
-    0x00000000, 0x41A00000, 0x003C0000, 0x41F00000, 0x01680000, 0x41C80000, 0x01A40000, 0x41A00000,
-    0xFFFF0000, 0x00000000
+const lbl_803CE5C8_Row lbl_803CE5C8[5] = {
+    { 0, 0, 20.0f },
+    { 60, 0, 30.0f },
+    { 360, 0, 25.0f },
+    { 420, 0, 20.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CE5F0[9] = {
     0,
@@ -3965,15 +6560,28 @@ void *const lbl_803CE5F0[9] = {
     0,
     0
 };
-const unk32 lbl_803CE614[20] = {
-    0x00000000, 0x41C80000, 0x003C0000, 0xC1200000, 0x00780000, 0xC1A00000, 0x00B40000, 0xC2200000,
-    0x00D20000, 0xC2340000, 0x00F00000, 0xC2200000, 0x012C0000, 0xC1900000, 0x01680000, 0x41A00000,
-    0x01A40000, 0x41C80000, 0xFFFF0000, 0x00000000
+const lbl_803CE614_Row lbl_803CE614[10] = {
+    { 0, 0, 25.0f },
+    { 60, 0, -10.0f },
+    { 120, 0, -20.0f },
+    { 180, 0, -40.0f },
+    { 210, 0, -45.0f },
+    { 240, 0, -40.0f },
+    { 300, 0, -18.0f },
+    { 360, 0, 20.0f },
+    { 420, 0, 25.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CE664[18] = {
-    0x00000000, 0x42200000, 0x003C0000, 0x42480000, 0x00780000, 0x42480000, 0x00B40000, 0x42700000,
-    0x00F00000, 0x42700000, 0x012C0000, 0x42180000, 0x01680000, 0x42340000, 0x01A40000, 0x42200000,
-    0xFFFF0000, 0x00000000
+const lbl_803CE664_Row lbl_803CE664[9] = {
+    { 0, 0, 40.0f },
+    { 60, 0, 50.0f },
+    { 120, 0, 50.0f },
+    { 180, 0, 60.0f },
+    { 240, 0, 60.0f },
+    { 300, 0, 38.0f },
+    { 360, 0, 45.0f },
+    { 420, 0, 40.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CE6AC[9] = {
     0,
@@ -3986,9 +6594,13 @@ void *const lbl_803CE6AC[9] = {
     0,
     0
 };
-const unk32 lbl_803CE6D0[12] = {
-    0x00000000, 0x41700000, 0x00B40000, 0x41F00000, 0x00D20000, 0x41F00000, 0x01680000, 0x41A00000,
-    0x01A40000, 0x41700000, 0xFFFF0000, 0x00000000
+const lbl_803CE6D0_Row lbl_803CE6D0[6] = {
+    { 0, 0, 15.0f },
+    { 180, 0, 30.0f },
+    { 210, 0, 30.0f },
+    { 360, 0, 20.0f },
+    { 420, 0, 15.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CE700[9] = {
     0,
@@ -4001,15 +6613,27 @@ void *const lbl_803CE700[9] = {
     0,
     0
 };
-const unk32 lbl_803CE724[18] = {
-    0x00000000, 0x41700000, 0x003C0000, 0xC1C80000, 0x00780000, 0xC1200000, 0x00B40000, 0xC1A00000,
-    0x00D20000, 0xC1A00000, 0x012C0000, 0xC10451EC, 0x01680000, 0xC1200000, 0x01A40000, 0x41700000,
-    0xFFFF0000, 0x00000000
+const lbl_803CE724_Row lbl_803CE724[9] = {
+    { 0, 0, 15.0f },
+    { 60, 0, -25.0f },
+    { 120, 0, -10.0f },
+    { 180, 0, -20.0f },
+    { 210, 0, -20.0f },
+    { 300, 0, -8.27f },
+    { 360, 0, -10.0f },
+    { 420, 0, 15.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CE76C[18] = {
-    0x00000000, 0x41F00000, 0x003C0000, 0x41F00000, 0x00780000, 0x41C80000, 0x00B40000, 0x42340000,
-    0x00D20000, 0x42340000, 0x012C0000, 0x41F00000, 0x01680000, 0x42040000, 0x01A40000, 0x41F00000,
-    0xFFFF0000, 0x00000000
+const lbl_803CE76C_Row lbl_803CE76C[9] = {
+    { 0, 0, 30.0f },
+    { 60, 0, 30.0f },
+    { 120, 0, 25.0f },
+    { 180, 0, 45.0f },
+    { 210, 0, 45.0f },
+    { 300, 0, 30.0f },
+    { 360, 0, 33.0f },
+    { 420, 0, 30.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CE7B4[9] = {
     0,
@@ -4022,9 +6646,14 @@ void *const lbl_803CE7B4[9] = {
     0,
     0
 };
-const unk32 lbl_803CE7D8[14] = {
-    0x00000000, 0x41C80000, 0x00780000, 0x41A00000, 0x00B40000, 0xC1700000, 0x00D20000, 0xC1A00000,
-    0x012C0000, 0x41A00000, 0x01A40000, 0x41C80000, 0xFFFF0000, 0x00000000
+const lbl_803CE7D8_Row lbl_803CE7D8[7] = {
+    { 0, 0, 25.0f },
+    { 120, 0, 20.0f },
+    { 180, 0, -15.0f },
+    { 210, 0, -20.0f },
+    { 300, 0, 20.0f },
+    { 420, 0, 25.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CE810[9] = {
     0,
@@ -4037,20 +6666,47 @@ void *const lbl_803CE810[9] = {
     0,
     0
 };
-const unk32 lbl_803CE834[24] = {
-    0x00000000, 0xC2200000, 0x003C0000, 0xC195999A, 0x005A0000, 0xC1F00000, 0x00780000, 0xC1A00000,
-    0x00B40000, 0xC1200000, 0x00E10000, 0xC1B00000, 0x00FF0000, 0xC1700000, 0x011D0000, 0xC1C13333,
-    0x012C0000, 0xC1700000, 0x01680000, 0xC1F00000, 0x01A40000, 0xC2200000, 0xFFFF0000, 0x00000000
+const lbl_803CE834_Row lbl_803CE834[12] = {
+    { 0, 0, -40.0f },
+    { 60, 0, -18.7f },
+    { 90, 0, -30.0f },
+    { 120, 0, -20.0f },
+    { 180, 0, -10.0f },
+    { 225, 0, -22.0f },
+    { 255, 0, -15.0f },
+    { 285, 0, -24.15f },
+    { 300, 0, -15.0f },
+    { 360, 0, -30.0f },
+    { 420, 0, -40.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CE894[24] = {
-    0x00000000, 0x42700000, 0x003C0000, 0xC0F51EB8, 0x00780000, 0xC0551EB8, 0x00B40000, 0xC1A00000,
-    0x00D20000, 0xC1F00000, 0x00E10000, 0xC1E651EC, 0x00F00000, 0xC1470A3D, 0x011D0000, 0x409851EC,
-    0x012C0000, 0x41200000, 0x01680000, 0x41F00000, 0x01A40000, 0x42700000, 0xFFFF0000, 0x00000000
+const lbl_803CE894_Row lbl_803CE894[12] = {
+    { 0, 0, 60.0f },
+    { 60, 0, -7.66f },
+    { 120, 0, -3.33f },
+    { 180, 0, -20.0f },
+    { 210, 0, -30.0f },
+    { 225, 0, -28.79f },
+    { 240, 0, -12.44f },
+    { 285, 0, 4.76f },
+    { 300, 0, 10.0f },
+    { 360, 0, 30.0f },
+    { 420, 0, 60.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CE8F4[24] = {
-    0x00000000, 0x00000000, 0x003C0000, 0x428A3D71, 0x00780000, 0x425128F6, 0x00B40000, 0x42820000,
-    0x00D20000, 0x42960000, 0x00E10000, 0x4298851F, 0x00F00000, 0x42A00000, 0x011D0000, 0x4269EB85,
-    0x012C0000, 0x42480000, 0x01680000, 0x41700000, 0x01A40000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CE8F4_Row lbl_803CE8F4[12] = {
+    { 0, 0, 0.0f },
+    { 60, 0, 69.12f },
+    { 120, 0, 52.29f },
+    { 180, 0, 65.0f },
+    { 210, 0, 75.0f },
+    { 225, 0, 76.26f },
+    { 240, 0, 80.0f },
+    { 285, 0, 58.48f },
+    { 300, 0, 50.0f },
+    { 360, 0, 15.0f },
+    { 420, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CE954[9] = {
     0,
@@ -4063,12 +6719,24 @@ void *const lbl_803CE954[9] = {
     0,
     0
 };
-const unk32 lbl_803CE978[34] = {
-    0x00000000, 0x00000000, 0x000F0000, 0x40400000, 0x001E0000, 0x00000000, 0x002D0000, 0x41700000,
-    0x003C0000, 0x4050A3D7, 0x004B0000, 0x41900000, 0x005A0000, 0x41AACCCD, 0x00780000, 0x00000000,
-    0x00D20000, 0x40400000, 0x00E10000, 0x00000000, 0x00F00000, 0x41700000, 0x00FF0000, 0x41500000,
-    0x010E0000, 0x41900000, 0x01680000, 0x00000000, 0x01770000, 0x40400000, 0x01A40000, 0x00000000,
-    0xFFFF0000, 0x00000000
+const lbl_803CE978_Row lbl_803CE978[17] = {
+    { 0, 0, 0.0f },
+    { 15, 0, 3.0f },
+    { 30, 0, 0.0f },
+    { 45, 0, 15.0f },
+    { 60, 0, 3.26f },
+    { 75, 0, 18.0f },
+    { 90, 0, 21.35f },
+    { 120, 0, 0.0f },
+    { 210, 0, 3.0f },
+    { 225, 0, 0.0f },
+    { 240, 0, 15.0f },
+    { 255, 0, 13.0f },
+    { 270, 0, 18.0f },
+    { 360, 0, 0.0f },
+    { 375, 0, 3.0f },
+    { 420, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CEA00[9] = {
     0,
@@ -4109,13 +6777,18 @@ void *const lbl_803CEAC4[18] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803CEB0C[12] = {
-    0x00000000, 0x00000000, 0x003C0000, 0x00000000, 0x00780000, 0xC1000000, 0x01680000, 0xC0000000,
-    0x01A40000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CEB0C_Row lbl_803CEB0C[6] = {
+    { 0, 0, 0.0f },
+    { 60, 0, 0.0f },
+    { 120, 0, -8.0f },
+    { 360, 0, -2.0f },
+    { 420, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CEB3C[12] = {
-    0x00000000, 0xC1100000, 0x003C0000, 0xC1700000, 0x00780000, 0xC1400000, 0x01680000, 0xC1400000,
-    0x01A40000, 0xC1100000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CEB3C[24] = {
+    0, 0, -16112, 0, 60, 0, -16016, 0, 120, 0, -16064, 0,
+    360, 0, -16064, 0, 420, 0, -16112, 0, -1, 0, 0, 0
 };
 void *const lbl_803CEB6C[9] = {
     0,
@@ -4128,9 +6801,10 @@ void *const lbl_803CEB6C[9] = {
     0,
     0
 };
-const unk32 lbl_803CEB90[10] = {
-    0x00000000, 0xC1A00000, 0x003C0000, 0xC1F00000, 0x01680000, 0xC1C80000, 0x01A40000, 0xC1A00000,
-    0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CEB90[20] = {
+    0, 0, -15968, 0, 60, 0, -15888, 0, 360, 0, -15928, 0,
+    420, 0, -15968, 0, -1, 0, 0, 0
 };
 void *const lbl_803CEBB8[9] = {
     0,
@@ -4143,10 +6817,11 @@ void *const lbl_803CEBB8[9] = {
     0,
     0
 };
-const unk32 lbl_803CEBDC[18] = {
-    0x00000000, 0xC2200000, 0x003C0000, 0xC2480000, 0x00780000, 0xC2480000, 0x00B40000, 0xC2700000,
-    0x00F00000, 0xC2700000, 0x012C0000, 0xC2180000, 0x01680000, 0xC2340000, 0x01A40000, 0xC2200000,
-    0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CEBDC[36] = {
+    0, 0, -15840, 0, 60, 0, -15800, 0, 120, 0, -15800, 0,
+    180, 0, -15760, 0, 240, 0, -15760, 0, 300, 0, -15848, 0,
+    360, 0, -15820, 0, 420, 0, -15840, 0, -1, 0, 0, 0
 };
 void *const lbl_803CEC24[9] = {
     0,
@@ -4159,9 +6834,10 @@ void *const lbl_803CEC24[9] = {
     0,
     0
 };
-const unk32 lbl_803CEC48[12] = {
-    0x00000000, 0xC1700000, 0x00B40000, 0xC1F00000, 0x00D20000, 0xC1F00000, 0x01680000, 0xC1A00000,
-    0x01A40000, 0xC1700000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CEC48[24] = {
+    0, 0, -16016, 0, 180, 0, -15888, 0, 210, 0, -15888, 0,
+    360, 0, -15968, 0, 420, 0, -16016, 0, -1, 0, 0, 0
 };
 void *const lbl_803CEC78[9] = {
     0,
@@ -4174,10 +6850,11 @@ void *const lbl_803CEC78[9] = {
     0,
     0
 };
-const unk32 lbl_803CEC9C[18] = {
-    0x00000000, 0xC1F00000, 0x003C0000, 0xC1F00000, 0x00780000, 0xC1C80000, 0x00B40000, 0xC2340000,
-    0x00D20000, 0xC2340000, 0x012C0000, 0xC1F00000, 0x01680000, 0xC2040000, 0x01A40000, 0xC1F00000,
-    0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CEC9C[36] = {
+    0, 0, -15888, 0, 60, 0, -15888, 0, 120, 0, -15928, 0,
+    180, 0, -15820, 0, 210, 0, -15820, 0, 300, 0, -15888, 0,
+    360, 0, -15868, 0, 420, 0, -15888, 0, -1, 0, 0, 0
 };
 void *const lbl_803CECE4[9] = {
     0,
@@ -4190,9 +6867,14 @@ void *const lbl_803CECE4[9] = {
     0,
     0
 };
-const unk32 lbl_803CED08[14] = {
-    0x00000000, 0xC1C80000, 0x00780000, 0xC1A00000, 0x00B40000, 0x41700000, 0x00D20000, 0x41A00000,
-    0x012C0000, 0xC1A00000, 0x01A40000, 0xC1C80000, 0xFFFF0000, 0x00000000
+const lbl_803CED08_Row lbl_803CED08[7] = {
+    { 0, 0, -25.0f },
+    { 120, 0, -20.0f },
+    { 180, 0, 15.0f },
+    { 210, 0, 20.0f },
+    { 300, 0, -20.0f },
+    { 420, 0, -25.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CED40[9] = {
     0,
@@ -4205,20 +6887,42 @@ void *const lbl_803CED40[9] = {
     0,
     0
 };
-const unk32 lbl_803CED64[22] = {
-    0x00000000, 0xC2200000, 0x003C0000, 0xC1B5AE14, 0x005A0000, 0xC1F00000, 0x00780000, 0xC1A00000,
-    0x00B40000, 0xC1200000, 0x00E10000, 0xC1B00000, 0x00FF0000, 0xC1700000, 0x012C0000, 0xC1700000,
-    0x01680000, 0xC1F00000, 0x01A40000, 0xC2200000, 0xFFFF0000, 0x00000000
+const lbl_803CED64_Row lbl_803CED64[11] = {
+    { 0, 0, -40.0f },
+    { 60, 0, -22.71f },
+    { 90, 0, -30.0f },
+    { 120, 0, -20.0f },
+    { 180, 0, -10.0f },
+    { 225, 0, -22.0f },
+    { 255, 0, -15.0f },
+    { 300, 0, -15.0f },
+    { 360, 0, -30.0f },
+    { 420, 0, -40.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CEDBC[20] = {
-    0x00000000, 0xC2700000, 0x003C0000, 0x40D051EC, 0x00780000, 0xC1700000, 0x00B40000, 0x41A00000,
-    0x00D20000, 0x41F00000, 0x00F00000, 0x41470A3D, 0x012C0000, 0xC1200000, 0x01680000, 0xC1F00000,
-    0x01A40000, 0xC2700000, 0xFFFF0000, 0x00000000
+const lbl_803CEDBC_Row lbl_803CEDBC[10] = {
+    { 0, 0, -60.0f },
+    { 60, 0, 6.51f },
+    { 120, 0, -15.0f },
+    { 180, 0, 20.0f },
+    { 210, 0, 30.0f },
+    { 240, 0, 12.44f },
+    { 300, 0, -10.0f },
+    { 360, 0, -30.0f },
+    { 420, 0, -60.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CEE0C[20] = {
-    0x00000000, 0x00000000, 0x003C0000, 0xC2746666, 0x00780000, 0xC2480000, 0x00B40000, 0xC2820000,
-    0x00D20000, 0xC2960000, 0x00F00000, 0xC2A00000, 0x012C0000, 0xC282F0A4, 0x01680000, 0xC1700000,
-    0x01A40000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CEE0C_Row lbl_803CEE0C[10] = {
+    { 0, 0, 0.0f },
+    { 60, 0, -61.1f },
+    { 120, 0, -50.0f },
+    { 180, 0, -65.0f },
+    { 210, 0, -75.0f },
+    { 240, 0, -80.0f },
+    { 300, 0, -65.47f },
+    { 360, 0, -15.0f },
+    { 420, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CEE5C[9] = {
     0,
@@ -4231,11 +6935,23 @@ void *const lbl_803CEE5C[9] = {
     0,
     0
 };
-const unk32 lbl_803CEE80[32] = {
-    0x00000000, 0x00000000, 0x000F0000, 0x40400000, 0x001E0000, 0x00000000, 0x002D0000, 0x41700000,
-    0x003C0000, 0x41500000, 0x004B0000, 0x41900000, 0x00780000, 0x00000000, 0x00D20000, 0x40400000,
-    0x00E10000, 0x00000000, 0x00F00000, 0x41700000, 0x00FF0000, 0x41500000, 0x010E0000, 0x41900000,
-    0x01680000, 0x00000000, 0x01770000, 0x40400000, 0x01A40000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CEE80_Row lbl_803CEE80[16] = {
+    { 0, 0, 0.0f },
+    { 15, 0, 3.0f },
+    { 30, 0, 0.0f },
+    { 45, 0, 15.0f },
+    { 60, 0, 13.0f },
+    { 75, 0, 18.0f },
+    { 120, 0, 0.0f },
+    { 210, 0, 3.0f },
+    { 225, 0, 0.0f },
+    { 240, 0, 15.0f },
+    { 255, 0, 13.0f },
+    { 270, 0, 18.0f },
+    { 360, 0, 0.0f },
+    { 375, 0, 3.0f },
+    { 420, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CEF00[9] = {
     0,
@@ -4276,8 +6992,10 @@ void *const lbl_803CEFC4[18] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803CF00C[6] = {
-    0x00000000, 0x00000000, 0x003C0000, 0x44870000, 0xFFFF0000, 0x00000000
+const lbl_803CF00C_Row lbl_803CF00C[3] = {
+    { 0, 0, 0.0f },
+    { 60, 0, 1080.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CF024[9] = {
     0,
@@ -4306,8 +7024,11 @@ void *const lbl_803CF084[10] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803CF0AC[8] = {
-    0x00000000, 0x41700000, 0x00B40000, 0x42D20000, 0x01680000, 0x41700000, 0xFFFF0000, 0x00000000
+const lbl_803CF0AC_Row lbl_803CF0AC[4] = {
+    { 0, 0, 15.0f },
+    { 180, 0, 105.0f },
+    { 360, 0, 15.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CF0CC[9] = {
     0,
@@ -4320,8 +7041,11 @@ void *const lbl_803CF0CC[9] = {
     0,
     0
 };
-const unk32 lbl_803CF0F0[8] = {
-    0x00000000, 0x42960000, 0x00B40000, 0xC1700000, 0x01680000, 0x42960000, 0xFFFF0000, 0x00000000
+const lbl_803CF0F0_Row lbl_803CF0F0[4] = {
+    { 0, 0, 75.0f },
+    { 180, 0, -15.0f },
+    { 360, 0, 75.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CF110[9] = {
     0,
@@ -4334,8 +7058,10 @@ void *const lbl_803CF110[9] = {
     0,
     0
 };
-const unk32 lbl_803CF134[8] = {
-    0x00000000, 0xC3250000, 0x00B40000, 0xC2960000, 0x01680000, 0xC3250000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CF134[16] = {
+    0, 0, -15579, 0, 180, 0, -15722, 0, 360, 0, -15579, 0,
+    -1, 0, 0, 0
 };
 void *const lbl_803CF154[9] = {
     0,
@@ -4348,8 +7074,10 @@ void *const lbl_803CF154[9] = {
     0,
     0
 };
-const unk32 lbl_803CF178[8] = {
-    0x00000000, 0xC2D20000, 0x00B40000, 0xC3480000, 0x01680000, 0xC2D20000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CF178[16] = {
+    0, 0, -15662, 0, 180, 0, -15544, 0, 360, 0, -15662, 0,
+    -1, 0, 0, 0
 };
 void *const lbl_803CF198[9] = {
     0,
@@ -4362,8 +7090,11 @@ void *const lbl_803CF198[9] = {
     0,
     0
 };
-const unk32 lbl_803CF1BC[8] = {
-    0x00000000, 0x41700000, 0x00B40000, 0xC2960000, 0x01680000, 0x41700000, 0xFFFF0000, 0x00000000
+const lbl_803CF1BC_Row lbl_803CF1BC[4] = {
+    { 0, 0, 15.0f },
+    { 180, 0, -75.0f },
+    { 360, 0, 15.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CF1DC[9] = {
     0,
@@ -4376,8 +7107,10 @@ void *const lbl_803CF1DC[9] = {
     0,
     0
 };
-const unk32 lbl_803CF200[8] = {
-    0x00000000, 0xC2D20000, 0x00B40000, 0xC1700000, 0x01680000, 0xC2D20000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CF200[16] = {
+    0, 0, -15662, 0, 180, 0, -16016, 0, 360, 0, -15662, 0,
+    -1, 0, 0, 0
 };
 void *const lbl_803CF220[9] = {
     0,
@@ -4390,8 +7123,10 @@ void *const lbl_803CF220[9] = {
     0,
     0
 };
-const unk32 lbl_803CF244[8] = {
-    0x00000000, 0xC31B0000, 0x00B40000, 0xC3820000, 0x01680000, 0xC31B0000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CF244[16] = {
+    0, 0, -15589, 0, 180, 0, -15486, 0, 360, 0, -15589, 0,
+    -1, 0, 0, 0
 };
 void *const lbl_803CF264[9] = {
     0,
@@ -4404,8 +7139,11 @@ void *const lbl_803CF264[9] = {
     0,
     0
 };
-const unk32 lbl_803CF288[8] = {
-    0x00000000, 0x428C0000, 0x00B40000, 0x43250000, 0x01680000, 0x428C0000, 0xFFFF0000, 0x00000000
+const lbl_803CF288_Row lbl_803CF288[4] = {
+    { 0, 0, 70.0f },
+    { 180, 0, 165.0f },
+    { 360, 0, 70.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CF2A8[9] = {
     0,
@@ -4446,13 +7184,25 @@ void *const lbl_803CF38C[18] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803CF3D4[16] = {
-    0x00000000, 0x45691DC3, 0x003C0000, 0x456D45C3, 0x00460000, 0x456CF5C3, 0x004E0000, 0x456D15C3,
-    0x01180000, 0x456D15C3, 0x01360000, 0x456D45C3, 0x01540000, 0x45691DC3, 0xFFFF0000, 0x00000000
+const lbl_803CF3D4_Row lbl_803CF3D4[8] = {
+    { 0, 0, 3729.86f },
+    { 60, 0, 3796.36f },
+    { 70, 0, 3791.36f },
+    { 78, 0, 3793.36f },
+    { 280, 0, 3793.36f },
+    { 310, 0, 3796.36f },
+    { 340, 0, 3729.86f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CF414[16] = {
-    0x00000000, 0xC528B948, 0x003C0000, 0xC52D9A14, 0x00460000, 0xC52D4A14, 0x004E0000, 0xC52D69EC,
-    0x01180000, 0xC52D6A14, 0x01360000, 0xC52D9A14, 0x01540000, 0xC528B948, 0xFFFF0000, 0x00000000
+const lbl_803CF414_Row lbl_803CF414[8] = {
+    { 0, 0, -2699.58f },
+    { 60, 0, -2777.63f },
+    { 70, 0, -2772.63f },
+    { 78, 0, -2774.62f },
+    { 280, 0, -2774.63f },
+    { 310, 0, -2777.63f },
+    { 340, 0, -2699.58f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CF454[9] = {
     (void *)&lbl_803CF3D4,
@@ -4465,11 +7215,22 @@ void *const lbl_803CF454[9] = {
     0,
     0
 };
-const unk32 lbl_803CF478[30] = {
-    0x00000000, 0x41400000, 0x001E0000, 0x41400000, 0x003C0000, 0x41600000, 0x005A0000, 0x00000000,
-    0x006E0000, 0x00000000, 0x00820000, 0x41400000, 0x00AF0000, 0x41500000, 0x00DC0000, 0x41400000,
-    0x00F00000, 0x41100000, 0x00FA0000, 0x41100000, 0x010E0000, 0x41380000, 0x01180000, 0x41400000,
-    0x01360000, 0x41580000, 0x01540000, 0x41400000, 0xFFFF0000, 0x00000000
+const lbl_803CF478_Row lbl_803CF478[15] = {
+    { 0, 0, 12.0f },
+    { 30, 0, 12.0f },
+    { 60, 0, 14.0f },
+    { 90, 0, 0.0f },
+    { 110, 0, 0.0f },
+    { 130, 0, 12.0f },
+    { 175, 0, 13.0f },
+    { 220, 0, 12.0f },
+    { 240, 0, 9.0f },
+    { 250, 0, 9.0f },
+    { 270, 0, 11.5f },
+    { 280, 0, 12.0f },
+    { 310, 0, 13.5f },
+    { 340, 0, 12.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CF4F0[9] = {
     0,
@@ -4482,15 +7243,29 @@ void *const lbl_803CF4F0[9] = {
     0,
     0
 };
-const unk32 lbl_803CF514[26] = {
-    0x00000000, 0x41100000, 0x001E0000, 0x41100000, 0x003C0000, 0x41400000, 0x005A0000, 0x40400000,
-    0x006E0000, 0x40400000, 0x00820000, 0x40C00000, 0x00A00000, 0x41100000, 0x00DC0000, 0x40C00000,
-    0x00FA0000, 0x41400000, 0x01180000, 0x40C00000, 0x01360000, 0x41400000, 0x01540000, 0x41100000,
-    0xFFFF0000, 0x00000000
+const lbl_803CF514_Row lbl_803CF514[13] = {
+    { 0, 0, 9.0f },
+    { 30, 0, 9.0f },
+    { 60, 0, 12.0f },
+    { 90, 0, 3.0f },
+    { 110, 0, 3.0f },
+    { 130, 0, 6.0f },
+    { 160, 0, 9.0f },
+    { 220, 0, 6.0f },
+    { 250, 0, 12.0f },
+    { 280, 0, 6.0f },
+    { 310, 0, 12.0f },
+    { 340, 0, 9.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CF57C[14] = {
-    0x00000000, 0x40C00000, 0x00820000, 0x40C00000, 0x00A00000, 0x40C00000, 0x00D20000, 0x00000000,
-    0x00F00000, 0x00000000, 0x01180000, 0x40C00000, 0xFFFF0000, 0x00000000
+const lbl_803CF57C_Row lbl_803CF57C[7] = {
+    { 0, 0, 6.0f },
+    { 130, 0, 6.0f },
+    { 160, 0, 6.0f },
+    { 210, 0, 0.0f },
+    { 240, 0, 0.0f },
+    { 280, 0, 6.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CF5B4[9] = {
     0,
@@ -4503,16 +7278,25 @@ void *const lbl_803CF5B4[9] = {
     0,
     0
 };
-const unk32 lbl_803CF5D8[28] = {
-    0x00000000, 0xC1B80000, 0x001E0000, 0xC1B80000, 0x003C0000, 0xC1980000, 0x005A0000, 0xC1D00000,
-    0x006E0000, 0xC1D00000, 0x00820000, 0xC1B80000, 0x00A00000, 0xC1F00000, 0x00BE0000, 0xC1E00000,
-    0x00DC0000, 0xC1C00000, 0x00FA0000, 0xC1A00000, 0x01180000, 0xC1B80000, 0x01360000, 0xC1400000,
-    0x01540000, 0xC1B80000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CF5D8[56] = {
+    0, 0, -15944, 0, 30, 0, -15944, 0, 60, 0, -15976, 0,
+    90, 0, -15920, 0, 110, 0, -15920, 0, 130, 0, -15944, 0,
+    160, 0, -15888, 0, 190, 0, -15904, 0, 220, 0, -15936, 0,
+    250, 0, -15968, 0, 280, 0, -15944, 0, 310, 0, -16064, 0,
+    340, 0, -15944, 0, -1, 0, 0, 0
 };
-const unk32 lbl_803CF648[20] = {
-    0x00000000, 0x40C00000, 0x003C0000, 0x40C00000, 0x006E0000, 0x41900000, 0x00820000, 0x41C80000,
-    0x00A00000, 0x41C80000, 0x00D20000, 0xC0C00000, 0x00F00000, 0xC0C00000, 0x01180000, 0x41C80000,
-    0x01360000, 0x40C00000, 0xFFFF0000, 0x00000000
+const lbl_803CF648_Row lbl_803CF648[10] = {
+    { 0, 0, 6.0f },
+    { 60, 0, 6.0f },
+    { 110, 0, 18.0f },
+    { 130, 0, 25.0f },
+    { 160, 0, 25.0f },
+    { 210, 0, -6.0f },
+    { 240, 0, -6.0f },
+    { 280, 0, 25.0f },
+    { 310, 0, 6.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CF698[9] = {
     0,
@@ -4525,11 +7309,13 @@ void *const lbl_803CF698[9] = {
     0,
     0
 };
-const unk32 lbl_803CF6BC[26] = {
-    0x00000000, 0xC1F00000, 0x001E0000, 0xC1F00000, 0x003C0000, 0xC1E40000, 0x005A0000, 0xC2220000,
-    0x006E0000, 0xC2220000, 0x00820000, 0xC2320000, 0x00960000, 0xC2320000, 0x00BE0000, 0xC2220000,
-    0x00DC0000, 0xC22C0000, 0x00FA0000, 0xC21A0000, 0x01180000, 0xC2320000, 0x01360000, 0xC1F00000,
-    0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CF6BC[52] = {
+    0, 0, -15888, 0, 30, 0, -15888, 0, 60, 0, -15900, 0,
+    90, 0, -15838, 0, 110, 0, -15838, 0, 130, 0, -15822, 0,
+    150, 0, -15822, 0, 190, 0, -15838, 0, 220, 0, -15828, 0,
+    250, 0, -15846, 0, 280, 0, -15822, 0, 310, 0, -15888, 0,
+    -1, 0, 0, 0
 };
 void *const lbl_803CF724[9] = {
     0,
@@ -4542,11 +7328,20 @@ void *const lbl_803CF724[9] = {
     0,
     0
 };
-const unk32 lbl_803CF748[26] = {
-    0x00000000, 0x40400000, 0x001E0000, 0x40400000, 0x003C0000, 0x00000000, 0x005A0000, 0x41C00000,
-    0x006E0000, 0x41C00000, 0x00820000, 0x42000000, 0x00960000, 0x42000000, 0x00BE0000, 0x41C00000,
-    0x00DC0000, 0x41E80000, 0x00FA0000, 0x41A00000, 0x01180000, 0x42000000, 0x01360000, 0x40400000,
-    0xFFFF0000, 0x00000000
+const lbl_803CF748_Row lbl_803CF748[13] = {
+    { 0, 0, 3.0f },
+    { 30, 0, 3.0f },
+    { 60, 0, 0.0f },
+    { 90, 0, 24.0f },
+    { 110, 0, 24.0f },
+    { 130, 0, 32.0f },
+    { 150, 0, 32.0f },
+    { 190, 0, 24.0f },
+    { 220, 0, 29.0f },
+    { 250, 0, 20.0f },
+    { 280, 0, 32.0f },
+    { 310, 0, 3.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CF7B0[9] = {
     0,
@@ -4559,10 +7354,12 @@ void *const lbl_803CF7B0[9] = {
     0,
     0
 };
-const unk32 lbl_803CF7D4[20] = {
-    0x00000000, 0xC1980000, 0x00280000, 0xC1980000, 0x00460000, 0xC0400000, 0x00640000, 0xC1C00000,
-    0x00820000, 0xC1980000, 0x00AF0000, 0xC1800000, 0x00DC0000, 0xC1980000, 0x00FA0000, 0xC1000000,
-    0x01180000, 0xC1980000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CF7D4[40] = {
+    0, 0, -15976, 0, 40, 0, -15976, 0, 70, 0, -16320, 0,
+    100, 0, -15936, 0, 130, 0, -15976, 0, 175, 0, -16000, 0,
+    220, 0, -15976, 0, 250, 0, -16128, 0, 280, 0, -15976, 0,
+    -1, 0, 0, 0
 };
 void *const lbl_803CF824[9] = {
     0,
@@ -4575,10 +7372,12 @@ void *const lbl_803CF824[9] = {
     0,
     0
 };
-const unk32 lbl_803CF848[20] = {
-    0x00000000, 0xC2480000, 0x00280000, 0xC2480000, 0x00460000, 0xC2200000, 0x00640000, 0xC2480000,
-    0x00820000, 0xC2480000, 0x00AF0000, 0xC2340000, 0x00DC0000, 0xC2480000, 0x00FA0000, 0xC2540000,
-    0x01180000, 0xC2480000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CF848[40] = {
+    0, 0, -15800, 0, 40, 0, -15800, 0, 70, 0, -15840, 0,
+    100, 0, -15800, 0, 130, 0, -15800, 0, 175, 0, -15820, 0,
+    220, 0, -15800, 0, 250, 0, -15788, 0, 280, 0, -15800, 0,
+    -1, 0, 0, 0
 };
 void *const lbl_803CF898[9] = {
     0,
@@ -4591,9 +7390,15 @@ void *const lbl_803CF898[9] = {
     0,
     0
 };
-const unk32 lbl_803CF8BC[16] = {
-    0x00000000, 0x00000000, 0x00140000, 0x41A00000, 0x00280000, 0x41A00000, 0x003C0000, 0x00000000,
-    0x01360000, 0x00000000, 0x01450000, 0xC1200000, 0x01540000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CF8BC_Row lbl_803CF8BC[8] = {
+    { 0, 0, 0.0f },
+    { 20, 0, 20.0f },
+    { 40, 0, 20.0f },
+    { 60, 0, 0.0f },
+    { 310, 0, 0.0f },
+    { 325, 0, -10.0f },
+    { 340, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CF8FC[9] = {
     0,
@@ -4637,9 +7442,15 @@ void *const lbl_803CF9D4[20] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803CFA24[16] = {
-    0x00000000, 0x43B50000, 0x001E0000, 0x43670000, 0x002D0000, 0x43710000, 0x003C0000, 0x43670000,
-    0x00DC0000, 0x43670000, 0x00F00000, 0x43620000, 0x010E0000, 0x43B50000, 0xFFFF0000, 0x00000000
+const lbl_803CFA24_Row lbl_803CFA24[8] = {
+    { 0, 0, 362.0f },
+    { 30, 0, 231.0f },
+    { 45, 0, 241.0f },
+    { 60, 0, 231.0f },
+    { 220, 0, 231.0f },
+    { 240, 0, 226.0f },
+    { 270, 0, 362.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CFA64[9] = {
     0,
@@ -4652,9 +7463,14 @@ void *const lbl_803CFA64[9] = {
     0,
     0
 };
-const unk32 lbl_803CFA88[14] = {
-    0x00000000, 0x42340000, 0x003C0000, 0x42340000, 0x00640000, 0x42400000, 0x008C0000, 0x42340000,
-    0x00B40000, 0x42280000, 0x00DC0000, 0x42340000, 0xFFFF0000, 0x00000000
+const lbl_803CFA88_Row lbl_803CFA88[7] = {
+    { 0, 0, 45.0f },
+    { 60, 0, 45.0f },
+    { 100, 0, 48.0f },
+    { 140, 0, 45.0f },
+    { 180, 0, 42.0f },
+    { 220, 0, 45.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CFAC0[9] = {
     0,
@@ -4667,14 +7483,27 @@ void *const lbl_803CFAC0[9] = {
     0,
     0
 };
-const unk32 lbl_803CFAE4[22] = {
-    0x00000000, 0x41F00000, 0x002D0000, 0x42340000, 0x003C0000, 0x42200000, 0x00640000, 0x42180000,
-    0x008C0000, 0x42200000, 0x00B40000, 0x42180000, 0x00DC0000, 0x42200000, 0x00F00000, 0x42200000,
-    0x00FF0000, 0x42480000, 0x010E0000, 0x41F00000, 0xFFFF0000, 0x00000000
+const lbl_803CFAE4_Row lbl_803CFAE4[11] = {
+    { 0, 0, 30.0f },
+    { 45, 0, 45.0f },
+    { 60, 0, 40.0f },
+    { 100, 0, 38.0f },
+    { 140, 0, 40.0f },
+    { 180, 0, 38.0f },
+    { 220, 0, 40.0f },
+    { 240, 0, 40.0f },
+    { 255, 0, 50.0f },
+    { 270, 0, 30.0f },
+    { -1, 0, 0.0f }
 };
-const unk32 lbl_803CFB3C[14] = {
-    0x00000000, 0x00000000, 0x003C0000, 0x00000000, 0x00640000, 0x40C00000, 0x008C0000, 0x00000000,
-    0x00B40000, 0xC0C00000, 0x00DC0000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CFB3C_Row lbl_803CFB3C[7] = {
+    { 0, 0, 0.0f },
+    { 60, 0, 0.0f },
+    { 100, 0, 6.0f },
+    { 140, 0, 0.0f },
+    { 180, 0, -6.0f },
+    { 220, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CFB74[9] = {
     0,
@@ -4687,10 +7516,11 @@ void *const lbl_803CFB74[9] = {
     0,
     0
 };
-const unk32 lbl_803CFB98[18] = {
-    0x00000000, 0xC2820000, 0x002D0000, 0xC2700000, 0x003C0000, 0xC2820000, 0x00DC0000, 0xC2820000,
-    0x00E60000, 0xC28C0000, 0x00F00000, 0xC2820000, 0x00FF0000, 0xC25C0000, 0x010E0000, 0xC2820000,
-    0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CFB98[36] = {
+    0, 0, -15742, 0, 45, 0, -15760, 0, 60, 0, -15742, 0,
+    220, 0, -15742, 0, 230, 0, -15732, 0, 240, 0, -15742, 0,
+    255, 0, -15780, 0, 270, 0, -15742, 0, -1, 0, 0, 0
 };
 void *const lbl_803CFBE0[9] = {
     0,
@@ -4703,10 +7533,12 @@ void *const lbl_803CFBE0[9] = {
     0,
     0
 };
-const unk32 lbl_803CFC04[20] = {
-    0x00000000, 0xC1F00000, 0x001E0000, 0xC2200000, 0x002D0000, 0xC2160000, 0x003C0000, 0xC2200000,
-    0x00640000, 0xC2160000, 0x008C0000, 0xC2200000, 0x00B40000, 0xC2160000, 0x00DC0000, 0xC2200000,
-    0x00F00000, 0xC1F00000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CFC04[40] = {
+    0, 0, -15888, 0, 30, 0, -15840, 0, 45, 0, -15850, 0,
+    60, 0, -15840, 0, 100, 0, -15850, 0, 140, 0, -15840, 0,
+    180, 0, -15850, 0, 220, 0, -15840, 0, 240, 0, -15888, 0,
+    -1, 0, 0, 0
 };
 void *const lbl_803CFC54[9] = {
     0,
@@ -4719,10 +7551,17 @@ void *const lbl_803CFC54[9] = {
     0,
     0
 };
-const unk32 lbl_803CFC78[20] = {
-    0x00000000, 0x00000000, 0x001E0000, 0x41F00000, 0x002D0000, 0x41700000, 0x003C0000, 0x41A00000,
-    0x00640000, 0x41700000, 0x008C0000, 0x41A00000, 0x00B40000, 0x41700000, 0x00DC0000, 0x41A00000,
-    0x00F00000, 0x00000000, 0xFFFF0000, 0x00000000
+const lbl_803CFC78_Row lbl_803CFC78[10] = {
+    { 0, 0, 0.0f },
+    { 30, 0, 30.0f },
+    { 45, 0, 15.0f },
+    { 60, 0, 20.0f },
+    { 100, 0, 15.0f },
+    { 140, 0, 20.0f },
+    { 180, 0, 15.0f },
+    { 220, 0, 20.0f },
+    { 240, 0, 0.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CFCC8[9] = {
     0,
@@ -4757,8 +7596,11 @@ void *const lbl_803CFD64[14] = {
     0,
     (void *)&lbl_803C72D8
 };
-const unk32 lbl_803CFD9C[8] = {
-    0x00000000, 0x41200000, 0x003C0000, 0x41C80000, 0x00780000, 0x41200000, 0xFFFF0000, 0x00000000
+const lbl_803CFD9C_Row lbl_803CFD9C[4] = {
+    { 0, 0, 10.0f },
+    { 60, 0, 25.0f },
+    { 120, 0, 10.0f },
+    { -1, 0, 0.0f }
 };
 void *const lbl_803CFDBC[9] = {
     0,
@@ -4771,8 +7613,10 @@ void *const lbl_803CFDBC[9] = {
     0,
     0
 };
-const unk32 lbl_803CFDE0[8] = {
-    0x00000000, 0xC1F00000, 0x003C0000, 0xC20C0000, 0x00780000, 0xC1F00000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CFDE0[16] = {
+    0, 0, -15888, 0, 60, 0, -15860, 0, 120, 0, -15888, 0,
+    -1, 0, 0, 0
 };
 void *const lbl_803CFE00[9] = {
     0,
@@ -4785,8 +7629,10 @@ void *const lbl_803CFE00[9] = {
     0,
     0
 };
-const unk32 lbl_803CFE24[8] = {
-    0x00000000, 0x3FC00000, 0x00190000, 0x3F800000, 0x00280000, 0x3FC00000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CFE24[16] = {
+    0, 0, 16320, 0, 25, 0, 16256, 0, 40, 0, 16320, 0,
+    -1, 0, 0, 0
 };
 void *const lbl_803CFE44[9] = {
     0,
@@ -4799,8 +7645,10 @@ void *const lbl_803CFE44[9] = {
     (void *)&lbl_803CFE24,
     0
 };
-const unk32 lbl_803CFE68[8] = {
-    0x00000000, 0xC1C80000, 0x003C0000, 0xC1A00000, 0x00780000, 0xC1C80000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CFE68[16] = {
+    0, 0, -15928, 0, 60, 0, -15968, 0, 120, 0, -15928, 0,
+    -1, 0, 0, 0
 };
 void *const lbl_803CFE88[9] = {
     0,
@@ -4813,8 +7661,10 @@ void *const lbl_803CFE88[9] = {
     0,
     0
 };
-const unk32 lbl_803CFEAC[8] = {
-    0x00000000, 0xC1200000, 0x003C0000, 0xC1C80000, 0x00780000, 0xC1200000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CFEAC[16] = {
+    0, 0, -16096, 0, 60, 0, -15928, 0, 120, 0, -16096, 0,
+    -1, 0, 0, 0
 };
 void *const lbl_803CFECC[9] = {
     0,
@@ -4827,8 +7677,10 @@ void *const lbl_803CFECC[9] = {
     0,
     0
 };
-const unk32 lbl_803CFEF0[8] = {
-    0x00000000, 0xC1F00000, 0x003C0000, 0xC20C0000, 0x00780000, 0xC1F00000, 0xFFFF0000, 0x00000000
+/* element type read off the values (16-bit pairs), not from code */
+const short lbl_803CFEF0[16] = {
+    0, 0, -15888, 0, 60, 0, -15860, 0, 120, 0, -15888, 0,
+    -1, 0, 0, 0
 };
 void *const lbl_803CFF10[9] = {
     0,
@@ -4995,9 +7847,9 @@ const float DNBressInit_rodata_803D02B8[10] = {
     3.75e+03f, 2.3e+02f, -2971.0f, 4049.0f, 2.3e+02f, -2.8e+03f, 3122.0f, 4412.0f,
     -3.7e+03f, -2.39e+03f
 };
-const unk32 sdata_806D0540_rodata_803D02E0[3] = {
-    0x636C444E, 0x42726573, 0x73000000
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char sdata_806D0540_rodata_803D02E0[12] =
+    "clDNBress";
 const char lbl_803D02EC[] = "clMapEffectParts";
 
 #pragma force_active reset

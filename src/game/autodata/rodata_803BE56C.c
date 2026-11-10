@@ -10,11 +10,27 @@
 
 const char lbl_803BE56C[] = "clEzNamCamCount";
 const char lbl_803BE57C[] = "clYTaskInterface";
-const unk32 lbl_803BE590[17] = {
-    0x636C4D6E, 0x5461736B, 0x496E7465, 0x72666163, 0x65000000, 0x43200000, 0x43C80000, 0x432A0000,
-    0x43D20000, 0x43480000, 0x43C80000, 0x434F8000, 0x43D20000, 0x636C457A, 0x4E616D43, 0x616D4465,
-    0x62756700
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char lbl_803BE590[68] =
+    "clMnTaskInterface" "\0"
+    "" "\0"
+    "" "\0"
+    "C " "\0"
+    "" "\0"
+    "C\310" "\0"
+    "" "\0"
+    "C*" "\0"
+    "" "\0"
+    "C\322" "\0"
+    "" "\0"
+    "CH" "\0"
+    "" "\0"
+    "C\310" "\0"
+    "" "\0"
+    "CO\200" "\0"
+    "C\322" "\0"
+    "" "\0"
+    "clEzNamCamDebug";
 const char lbl_803BE5D4[] = "clSceneInterface";
 const unk32 lbl_803BE5E8[28] = {
     0x636C4E61, 0x6D63616D, 0x4D656E75, 0x496E7465, 0x72666163, 0x65000000, 0x50484F54, 0x4F205343,
@@ -22,11 +38,16 @@ const unk32 lbl_803BE5E8[28] = {
     0x00000000, 0x50484F54, 0x4F20504F, 0x53205920, 0x3D202564, 0x00000000, 0x4652414D, 0x45205343,
     0x414C4520, 0x3D202537, 0x2E336681, 0x93000000
 };
-const unk32 lbl_803BE658[22] = {
-    0x636C5954, 0x61736B4D, 0x616E6167, 0x65723C63, 0x6C4D6E54, 0x61736B49, 0x6E746572, 0x66616365,
-    0x3E000000, 0x636C466C, 0x6F617443, 0x6F756E74, 0x65720000, 0x636C436F, 0x756E7465, 0x72496E74,
-    0x65726661, 0x63650000, 0x636C496E, 0x74436F75, 0x6E746572, 0x00000000
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char lbl_803BE658[88] =
+    "clYTaskManager<clMnTaskInterface>" "\0"
+    "" "\0"
+    "" "\0"
+    "clFloatCounter" "\0"
+    "" "\0"
+    "clCounterInterface" "\0"
+    "" "\0"
+    "clIntCounter";
 const char lbl_803BE6B0[] = "clEzNamCam2";
 
 #pragma force_active reset

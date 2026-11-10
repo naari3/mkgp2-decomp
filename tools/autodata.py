@@ -801,19 +801,26 @@ def cmd_retype(a):
 UNK32_DEF = re.compile(r'^((?:/\* [^\n]* \*/\n)?)((?:static )?(?:const )?)unk32 (\w+)\[(\d+)\]( __attribute__\(\(aligned\(8\)\)\))? = \{\n(.*?)\n\};', re.M | re.S)
 
 
+def s16(x):
+    return x - 0x10000 if x >= 0x8000 else x
+
+
 def column_kind(vals):
-    """'f' float column, 'i' small-integer column, None when the values do not decide."""
+    """'f' float column, 'i' small integers, 'b' one byte then three zero bytes, 's' two 16-bit values;
+    None when the values do not decide."""
     nz = [v for v in vals if v]
     if not nz: return 'i'
     wide = [v for v in nz if not floatlike(v)]   # -0.0 and very small/large magnitudes: fine next to ordinary floats
     if len(wide) * 5 <= len(nz) and all(v == 0x80000000 or 0x40 <= ((v >> 23) & 0xFF) <= 0xC0 for v in wide) \
             and all(fmt_float(v) for v in vals): return 'f'
     if all(v < 0x10000 or v >= 0xFFFF0000 for v in nz): return 'i'
+    if all(v & 0xFFFFFF == 0 for v in nz): return 'b'
+    if all(abs(s16(v >> 16)) < 0x4000 and abs(s16(v & 0xFFFF)) < 0x4000 for v in nz): return 's'
     return None
 
 
 def infer_rows(words):
-    """-> (period, kinds) for the smallest period whose every column is float or small int."""
+    """-> (period, kinds) for the smallest period whose every column has a kind."""
     n = len(words)
     for p in range(1, min(64, n // 2) + 1):
         if n % p: continue
@@ -822,11 +829,26 @@ def infer_rows(words):
     return None
 
 
+def text_pool(words):
+    """The object as a list of C string literals when it is nothing but text (a string pool), else None."""
+    bs = b''.join(w.to_bytes(4, 'big') for w in words)
+    body = bs.rstrip(b'\0')
+    if len(body) < 4 or len(bs) - len(body) > 4: return None
+    printable = sum(1 for x in body if 32 <= x < 127)
+    if any(not (32 <= x < 127 or x in (0, 9, 10, 13) or x >= 0x80) for x in body): return None
+    if printable * 10 < len(body) * 6 or b'\0\0\0\0' in body: return None
+    parts = body.split(b'\0')
+    if any(len(x) == 1 for x in parts if x) and len(parts) > 2 and sum(len(x) <= 1 for x in parts) * 2 > len(parts): return None
+    return parts
+
+
 def cmd_infer(a):
-    """Give unk32 word tables a row type read off the values: every column all floats or all small integers."""
+    """Give unk32 word tables a type read off the values: text pools, and rows whose every column is
+    all floats, all small integers, single bytes or 16-bit pairs."""
     files = [os.path.join(OUTDIR, os.path.basename(u) if u.endswith('.c') else os.path.basename(u) + '.c') for u in a.units] \
         or sorted(glob.glob(os.path.join(OUTDIR, '*.c')))
     total = 0
+    CT = {'f': 'float', 'i': 'int'}
     for f in files:
         text = open(f, encoding='utf-8').read()
         types = []
@@ -836,23 +858,44 @@ def cmd_infer(a):
             note, quals, name, cnt, attr, body = m.groups()
             words = [int(x, 16) for x in re.findall(r'0x[0-9A-Fa-f]+', body)]
             if len(words) != int(cnt) or len(words) < a.min_words: return m.group(0)
+            attr = attr or ''
+            parts = text_pool(words)
+            if parts is not None:
+                total += 4 * len(words)
+                lit = ' "\\0"\n    '.join(D.c_string(x) for x in parts)
+                return '%s/* text only: a string pool (strings back to back, the code points into it) */\n%schar %s[%d]%s =\n    %s;' % (
+                    note, quals, name, 4 * len(words), attr, lit)
             r = infer_rows(words)
             if r is None: return m.group(0)
             p, kinds = r
 
             def val(w, k):
-                return fmt_float(w) if k == 'f' else str(w if w < 0x80000000 else w - (1 << 32))
-            total += 4 * len(words)
-            attr = attr or ''
+                if k == 'f': return fmt_float(w)
+                if k == 'i': return str(w if w < 0x80000000 else w - (1 << 32))
+                if k == 'b': return '%d, { 0, 0, 0 }' % (w >> 24)
+                return '%d, %d' % (s16(w >> 16), s16(w & 0xFFFF))
             if p == 1:
-                ty = 'float' if kinds[0] == 'f' else 'int'
+                if kinds[0] == 'b': return m.group(0)
+                total += 4 * len(words)
+                if kinds[0] == 's':
+                    vals = [val(w, 's') for w in words]
+                    return '%s/* element type read off the values (16-bit pairs), not from code */\n%sshort %s[%d]%s = {\n%s\n};' % (
+                        note, quals, name, 2 * len(words), attr, wrap(vals, 6))
+                ty = CT[kinds[0]]
                 vals = [val(w, kinds[0]) for w in words]
                 return '%s/* element type read off the values (all %s), not from code */\n%s%s %s[%d]%s = {\n%s\n};' % (
                     note, 'floats' if ty == 'float' else 'small integers', quals, ty, name, len(words), attr, wrap(vals))
+            total += 4 * len(words)
             tn = name + '_Row'
-            members = '\n'.join('    %s %s_%02X;' % ('float' if k == 'f' else 'int', k, 4 * c) for c, k in enumerate(kinds))
-            types.append('/* row layout read off the values (each column all floats or all small integers), not from code */\n'
-                         'typedef struct %s {\n%s\n} %s;' % (tn, members, tn))
+            mem = []
+            for c, k in enumerate(kinds):
+                o = 4 * c
+                if k in CT: mem.append('    %s %s_%02X;' % (CT[k], k, o))
+                elif k == 'b': mem.append('    unsigned char b_%02X;\n    unsigned char pad_%02X[3];' % (o, o + 1))
+                else: mem.append('    short s_%02X;\n    short s_%02X;' % (o, o + 2))
+            types.append('/* row layout read off the values (per column: all floats, all small integers, one byte, or\n'
+                         ' * two 16-bit values), not from code */\n'
+                         'typedef struct %s {\n%s\n} %s;' % (tn, '\n'.join(mem), tn))
             rows = ['    { ' + ', '.join(val(words[i + c], kinds[c]) for c in range(p)) + ' }' for i in range(0, len(words), p)]
             return '%s%s%s %s[%d]%s = {\n%s\n};' % (note, quals, tn, name, len(words) // p, attr, ',\n'.join(rows))
 

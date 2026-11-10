@@ -452,16 +452,17 @@ const char lbl_8039A33C[248] = {
     79, 84, 72, 73, 78, 71, 10, 0
 };
 const char lbl_8039A434[] = "nsMenuUtil::clStringNode";
-const unk32 lbl_8039A450[13] = {
-    0x6E734D65, 0x6E755574, 0x696C3A3A, 0x636C4D65, 0x6E754E6F, 0x64650000, 0x6E734D65, 0x6E755574,
-    0x696C3A3A, 0x636C5370, 0x72697465, 0x4E6F6465, 0x00000000
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char lbl_8039A450[52] =
+    "nsMenuUtil::clMenuNode" "\0"
+    "" "\0"
+    "nsMenuUtil::clSpriteNode";
 const char lbl_8039A484[] = "vector length error";
-const unk32 lbl_8039A498[21] = {
-    0x21737464, 0x3A3A6578, 0x63657074, 0x696F6E21, 0x21737464, 0x3A3A6C6F, 0x6769635F, 0x6572726F,
-    0x72212173, 0x74643A3A, 0x6C656E67, 0x74685F65, 0x72726F72, 0x21210000, 0x76656374, 0x6F723A3A,
-    0x696E7365, 0x7274206C, 0x656E6774, 0x68206572, 0x726F7200
-};
+/* text only: a string pool (strings back to back, the code points into it) */
+const char lbl_8039A498[84] =
+    "!std::exception!!std::logic_error!!std::length_error!!" "\0"
+    "" "\0"
+    "vector::insert length error";
 const char lbl_8039A4EC[] = "vector::at index out of range";
 const unk32 lbl_8039A50C[37] = {
     0x21737464, 0x3A3A6578, 0x63657074, 0x696F6E21, 0x21737464, 0x3A3A6C6F, 0x6769635F, 0x6572726F,
