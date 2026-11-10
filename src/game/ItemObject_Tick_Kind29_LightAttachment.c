@@ -5,12 +5,7 @@
  * its scale pulses along a 4-segment keyframe curve. */
 #include "game/types/Vec.h"
 
-typedef struct ScaleCurve {
-    float x[5];
-    float y[5];
-    float z[5];
-    float t[5];
-} ScaleCurve;
+#include "game/types/ScaleCurve.h"
 
 extern Vec ItemObject_Tick_Kind29_LightAttachment_rodata_8032E534;
 extern ScaleCurve ItemObject_Tick_Kind29_LightAttachment_data_80420ED8;

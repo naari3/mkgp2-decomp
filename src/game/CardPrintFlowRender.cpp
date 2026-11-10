@@ -4,7 +4,7 @@ extern "C" {
 extern const float lbl_806DBFA0, lbl_806DBFA4, lbl_806DBFA8, lbl_806DBFAC;
 extern const float lbl_806DBFB0, lbl_806DBFB4, lbl_806DBFB8, lbl_806DBFBC;
 extern const char lbl_806DBFC0[4];
-struct PrintErrorCaption { int code; int texture; };
+#include "game/types/PrintErrorCaption.h"
 extern PrintErrorCaption CardPrintFlowRender_rodata_803EFD6C[];
 void fn_8011FAFC(ResCtrl *, int);
 const char *GetTextureByIdAndLang(int, int);

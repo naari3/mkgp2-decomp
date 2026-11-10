@@ -5,11 +5,7 @@
  * the two hoisted function addresses of the spawn loop). */
 #include "game/DrawEffectAccess.h"
 
-typedef struct HornBlastCurve {
-    float keys[3];
-    float scale[3];
-    float alpha[3];
-} HornBlastCurve;
+#include "game/types/HornBlastCurve.h"
 
 typedef struct HornBlastExt {
     unsigned char pad0[0x10];

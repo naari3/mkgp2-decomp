@@ -47,10 +47,7 @@ extern char data_803F5698_data_806CED80[];
 extern char lbl_806CED88[];
 
 /* layout as declared in src/game/InputObj_ReadRawInput.c */
-typedef struct RawButtonMap {
-    unsigned int mask;
-    unsigned int bit;
-} RawButtonMap;
+#include "game/types/RawButtonMap.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

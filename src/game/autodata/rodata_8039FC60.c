@@ -6,10 +6,7 @@
 #include "game/autodata.h"
 
 /* layout as declared in src/game/fn_801D8E28.cpp */
-typedef struct FKPosition {
-    float x;
-    float y;
-} FKPosition;
+#include "game/types/FKPosition.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

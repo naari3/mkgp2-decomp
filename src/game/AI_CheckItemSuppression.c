@@ -5,12 +5,7 @@ extern int g_cupId;
 extern int g_ccClass;
 extern int g_roundIndex;
 
-typedef struct ItemSuppressionEntry {
-    KartCond cond;
-    int item;
-    int minValue;
-    int maxValue;
-} ItemSuppressionEntry;
+#include "game/types/ItemSuppressionEntry.h"
 
 extern int g_itemSuppressionCount;
 extern ItemSuppressionEntry g_itemSuppressionTable[];

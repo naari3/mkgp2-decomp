@@ -38,22 +38,13 @@ extern char lbl_8032A6FC[];
 extern char lbl_8032A714[];
 
 /* layout as declared in src/game/EffectVfx55_HornBlastTrio_Tick.c */
-typedef struct HornBlastCurve {
-    float keys[3];
-    float scale[3];
-    float alpha[3];
-} HornBlastCurve;
+#include "game/types/HornBlastCurve.h"
 
 /* layout as declared in src/game/EffectVfx29_30_Item4SubFlame_Tick.c */
-typedef struct FlameCurve {
-    float keys[5];
-    float values[5];
-} FlameCurve;
+#include "game/types/FlameCurve.h"
 
 /* layout as declared in src/game/KartFxExhaustRay.c */
-typedef struct RayColors {
-    Vec entries[2];
-} RayColors;
+#include "game/types/RayColors.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

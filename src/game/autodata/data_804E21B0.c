@@ -16,12 +16,7 @@ extern char lbl_806CFF20[];
 extern char data_804E21B0_data_806CFF28[];
 
 /* layout as declared in src/game/LateralOffset_GetMagnitude.c */
-typedef struct LateralOffsetEntry {
-    PathCond cond;
-    int kart;
-    float magnitude;
-    int unk10;
-} LateralOffsetEntry;
+#include "game/types/LateralOffsetEntry.h"
 
 /* layout as declared in src/game/fn_801DDA8C.c */
 typedef struct Entry_804E21C4 {
@@ -39,39 +34,19 @@ typedef struct Entry_804E2404 {
 } Entry_804E2404;
 
 /* layout as declared in src/game/AI_CheckItemSuppression.c */
-typedef struct ItemSuppressionEntry {
-    KartCond cond;
-    int item;
-    int minValue;
-    int maxValue;
-} ItemSuppressionEntry;
+#include "game/types/ItemSuppressionEntry.h"
 
 /* layout as declared in src/game/fn_801DD1B0.c */
-typedef struct RangeEntry {
-    KartCond cond;
-    int minValue;
-    int maxValue;
-} RangeEntry;
+#include "game/types/RangeEntry.h"
 
 /* layout as declared in src/game/AI_CheckTargetInRange.c */
-typedef struct ItemTargeting {
-    int mode;
-    float range;
-    float angle;
-} ItemTargeting;
+#include "game/types/ItemTargeting.h"
 
 /* layout as declared in src/game/AI_RollItemUseProbability.c */
-typedef struct ItemUseProbEntry {
-    KartCond cond;
-    int kart;
-    float probability;
-} ItemUseProbEntry;
+#include "game/types/ItemUseProbEntry.h"
 
 /* layout as declared in src/game/AI_CalcDistanceSpeedBonus.c */
-typedef struct DistanceBonusEntry {
-    KartCond cond;
-    float bonus[6][6];
-} DistanceBonusEntry;
+#include "game/types/DistanceBonusEntry.h"
 
 /* layout as declared in src/game/fn_801DCC6C.c */
 typedef struct Entry_804E3644 {
@@ -82,12 +57,7 @@ typedef struct Entry_804E3644 {
 } Entry_804E3644;
 
 /* layout as declared in src/game/PathVariant_Select.c */
-typedef struct PathVariantEntry {
-    KartCond cond;
-    int kart;
-    int variantA;
-    int variantB;
-} PathVariantEntry;
+#include "game/types/PathVariantEntry.h"
 
 /* layout as declared in src/game/fn_801DC9AC.c */
 typedef struct Entry_804E3C5C {
@@ -97,21 +67,13 @@ typedef struct Entry_804E3C5C {
 } Entry_804E3C5C;
 
 /* layout as declared in src/game/AI_GetHitCooldown.c */
-typedef struct HitCooldownEntry {
-    KartCond cond;
-    int cooldown;
-} HitCooldownEntry;
+#include "game/types/HitCooldownEntry.h"
 
 /* layout as declared in src/game/AI_GetItemList.c */
-typedef struct ItemList {
-    int ids[4];
-} ItemList;
+#include "game/types/ItemList.h"
 
 /* layout as declared in src/game/clEnemyParam_FillItemListIds.c */
-typedef struct EnemyItemListEntry {
-    KartCond cond;
-    int itemIds[8];
-} EnemyItemListEntry;
+#include "game/types/EnemyItemListEntry.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

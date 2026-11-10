@@ -4,9 +4,7 @@
 
 #include "game/types/PcbIpEntry.h"
 
-typedef struct SmallObj {
-    void *vtable;
-} SmallObj;
+#include "game/types/SmallObj.h"
 
 extern unsigned char lbl_803FDF28[]; /* vtable */
 extern const char lbl_80310DE0[]; /* string pool */
@@ -23,7 +21,7 @@ int acModifyMyIPaddr(unsigned int ip, unsigned int mask);
 SmallObj *SmallObj_Dtor_VtableB(SmallObj *self, short flag)
 {
     if (self != 0) {
-        self->vtable = lbl_803FDF28;
+        self->vtbl = lbl_803FDF28;
         if (flag > 0) {
             MemoryManager_TimedFree(self);
         }

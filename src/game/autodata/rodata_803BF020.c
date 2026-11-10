@@ -6,12 +6,7 @@
 #include "game/autodata.h"
 
 /* layout as declared in src/game/fn_801F9628.c */
-typedef struct GlyphPos {
-    short x;
-    short y;
-    short w;
-    short h;
-} GlyphPos;
+#include "game/types/GlyphPos.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

@@ -9,9 +9,7 @@ typedef struct BaseSpeed {
     float min;
 } BaseSpeed;
 
-typedef struct ItemList {
-    int ids[4];
-} ItemList;
+#include "game/types/ItemList.h"
 
 extern int g_gameMode;
 extern int g_ccClass;

@@ -1,11 +1,6 @@
 #include "game/types/PathCond.h"
 
-typedef struct LateralOffsetEntry {
-    PathCond cond;
-    int kart;
-    float magnitude;
-    int unk10;
-} LateralOffsetEntry;
+#include "game/types/LateralOffsetEntry.h"
 
 extern int g_gameMode;
 extern int g_cupId;

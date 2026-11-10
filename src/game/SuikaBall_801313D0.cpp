@@ -12,15 +12,7 @@ extern unsigned char lbl_806D7288[5];
 #include "game/types/Trail.h"
 #include "game/types/Shot.h"
 #include "game/types/ShotSet.h"
-struct ShotOwner {
-    char pad0[4];
-    void *model;
-    void *trailModel;
-    int sinIdx;
-    int cosIdx;
-    char pad14[0x89c - 0x14];
-    int trailCount;
-};
+#include "game/types/ShotOwner.h"
 
 #include "game/types/ModelPair.h"
 

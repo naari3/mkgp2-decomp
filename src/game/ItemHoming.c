@@ -8,9 +8,7 @@
  */
 #include "game/types/Vec3.h"
 
-typedef struct Float3 {
-    float value[3];
-} Float3;
+#include "game/types/Float3.h"
 
 typedef struct ItemHomingView {
     char pad0[0xA0];

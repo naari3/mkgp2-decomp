@@ -6,14 +6,7 @@
 #include "game/autodata.h"
 
 /* layout as declared in src/game/clFlowCup.c */
-typedef struct CupSide {
-    float x0;
-    float y0;
-    float rot0;
-    float x1;
-    float y1;
-    float rot1;
-} CupSide;
+#include "game/types/CupSide.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

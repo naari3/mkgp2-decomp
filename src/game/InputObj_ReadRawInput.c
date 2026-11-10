@@ -20,10 +20,7 @@ typedef struct InputObj {
     float brake;              /* 0x24 */
 } InputObj;
 
-typedef struct RawButtonMap {
-    unsigned int mask;
-    unsigned int bit;
-} RawButtonMap;
+#include "game/types/RawButtonMap.h"
 
 extern unsigned short g_jvsOperatorBits[16];
 extern unsigned short g_jvsPlayerButtons[16];

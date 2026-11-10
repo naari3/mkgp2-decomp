@@ -18,20 +18,10 @@ extern char data_803F9F2C_data_806CEF08[];
 extern char data_803F9F2C_data_806CEF10[];
 
 /* layout as declared in src/game/ShadowBillboard.c */
-typedef struct PCPathSeg {
-    Vec3f a;
-    Vec3f b;
-    Vec3f c;
-} PCPathSeg;
+#include "game/types/PCPathSeg.h"
 
 /* layout as declared in src/game/ShadowBillboard.c */
-typedef struct PCCourseCamEntry {
-    int gameMode;
-    int cupId;
-    int ccClass;
-    int roundType;
-    PCPathSeg seg[3];
-} PCCourseCamEntry;
+#include "game/types/PCCourseCamEntry.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

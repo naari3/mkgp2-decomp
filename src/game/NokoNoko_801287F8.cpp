@@ -17,15 +17,7 @@ void operator delete(void *p);
 #include "game/types/Trail.h"
 #include "game/types/Shot.h"
 #include "game/types/ShotSet.h"
-struct ShotOwner {
-    char pad0[4];
-    void *model;
-    void *trailModel;
-    int phaseA;
-    int phaseB;
-    char pad14[0x89c - 0x14];
-    int trailCount;
-};
+#include "game/types/ShotOwner.h"
 
 #include "game/types/ModelPair.h"
 
@@ -1126,18 +1118,18 @@ extern "C" void fn_8012A22C(ShotOwner *self)
             }
             if ((s->timer & 3) == 0) {
                 for (j = 0; j < self->trailCount; j++) {
-                    if (Trail_Spawn(&trails[j], lbl_80495994[self->phaseA], lbl_80495A94[self->phaseB]) == 1) {
+                    if (Trail_Spawn(&trails[j], lbl_80495994[self->sinIdx], lbl_80495A94[self->cosIdx]) == 1) {
                         trails[j].pos.x += s->pos.x;
                         trails[j].pos.y += s->pos.y;
                         trails[j].pos.z += s->pos.z;
                         break;
                     }
                 }
-                if (++self->phaseA >= 0x40) {
-                    self->phaseA = 0;
+                if (++self->sinIdx >= 0x40) {
+                    self->sinIdx = 0;
                 }
-                if (++self->phaseB >= 0x30) {
-                    self->phaseB = 0;
+                if (++self->cosIdx >= 0x30) {
+                    self->cosIdx = 0;
                 }
             }
             if (++s->timer >= 0x5a) {

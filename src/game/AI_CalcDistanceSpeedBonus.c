@@ -5,10 +5,7 @@ extern int g_cupId;
 extern int g_ccClass;
 extern int g_roundIndex;
 
-typedef struct DistanceBonusEntry {
-    KartCond cond;
-    float bonus[6][6];
-} DistanceBonusEntry;
+#include "game/types/DistanceBonusEntry.h"
 
 extern int AI_CalcDistanceSpeedBonus_data_806CFF08;
 extern DistanceBonusEntry AI_CalcDistanceSpeedBonus_data_804E3184[];

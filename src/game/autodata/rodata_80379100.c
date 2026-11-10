@@ -6,21 +6,7 @@
 #include "game/autodata.h"
 
 /* layout as declared in src/game/clsound/fn_80190D24.c */
-typedef struct ClSoundDef {
-    unsigned int effect;
-    unsigned char group;
-    unsigned char mode;
-    unsigned char reserved6[2];
-    float near_distance;
-    float far_distance;
-    unsigned char volume;
-    unsigned char reserved11;
-    unsigned short pitch;
-    unsigned char reserved14;
-    unsigned char category;
-    unsigned char reserved16[2];
-    unsigned int attributes;
-} ClSoundDef;
+#include "game/types/ClSoundDef.h"
 
 /* anchor pool cut into its strings and numbers by value (text, floats, small integers),
  * not from code */

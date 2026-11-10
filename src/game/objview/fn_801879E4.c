@@ -9,11 +9,7 @@ typedef struct Slot {
     int timer;
 } Slot;
 
-typedef struct Path {
-    Vec3 p0;
-    Vec3 p1;
-    Vec3 p2;
-} Path;
+#include "game/types/Path.h"
 
 typedef struct Obj801879E4 {
     void *vt;

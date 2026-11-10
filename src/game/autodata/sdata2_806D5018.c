@@ -6,14 +6,10 @@
 #include "game/autodata.h"
 
 /* layout as declared in src/game/TwinSpriteOverlay.c */
-typedef struct TwinYaws {
-    float y[2];
-} TwinYaws;
+#include "game/types/TwinYaws.h"
 
 /* layout as declared in src/game/KartFxDispatchE.cpp */
-typedef struct StatePair {
-    signed char value[2];
-} StatePair;
+#include "game/types/StatePair.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

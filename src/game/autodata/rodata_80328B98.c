@@ -37,14 +37,10 @@ extern char lbl_806D4F24[];
 extern char lbl_806D4F2C[];
 
 /* layout as declared in src/game/HitMessageOverlay_Show.c */
-typedef struct LineTable {
-    int lines[4];
-} LineTable;
+#include "game/types/LineTable.h"
 
 /* layout as declared in src/game/ReverseChallenge.c */
-typedef struct RCQuadPtsC {
-    float p[4][2];
-} RCQuadPtsC;
+#include "game/types/RCQuadPtsC.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

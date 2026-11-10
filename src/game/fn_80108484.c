@@ -1,5 +1,5 @@
 #include "game/types/Vec3.h"
-typedef struct ItemBendParam { float a, b, c; } ItemBendParam;
+#include "game/types/ItemBendParam.h"
 
 extern float KartFxParam_GetConst1p5(void *kart);
 extern void *KartDriver_GetJointByIdx(void *kart, int idx);

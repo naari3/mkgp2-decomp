@@ -6,9 +6,7 @@
 #include "game/autodata.h"
 
 /* layout as declared in src/game/EffectDustBurst4.cpp */
-typedef struct DustCurve {
-    float values[9];
-} DustCurve;
+#include "game/types/DustCurve.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

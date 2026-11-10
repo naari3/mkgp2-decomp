@@ -4,7 +4,7 @@
  * MiniGame_CoinChallenge_Update. */
 
 typedef struct RCVec3 { float x, y, z; } RCVec3;
-typedef struct RCQuadPtsC { float p[4][2]; } RCQuadPtsC;
+#include "game/types/RCQuadPtsC.h"
 
 #pragma cplusplus on
 struct RCInput {

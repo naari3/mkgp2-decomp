@@ -1,9 +1,6 @@
 #include "game/types/KartCond.h"
 
-typedef struct HitCooldownEntry {
-    KartCond cond;
-    int cooldown;
-} HitCooldownEntry;
+#include "game/types/HitCooldownEntry.h"
 
 extern int g_gameMode;
 extern int g_cupId;

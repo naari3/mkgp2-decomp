@@ -1,8 +1,4 @@
-typedef struct ItemTargeting {
-    int mode;
-    float range;
-    float angle;
-} ItemTargeting;
+#include "game/types/ItemTargeting.h"
 
 extern ItemTargeting g_itemTargetingTable[];
 extern const float FLOAT_defaultBonus;

@@ -12,7 +12,7 @@ struct DustEffect {
 };
 /* Time, scale and alpha triples share one array so the shifted interval
  * view can index all three without crossing a subarray boundary. */
-struct DustCurve { float values[9]; };
+#include "game/types/DustCurve.h"
 extern "C" {
 extern DustCurve Effect_DustBurst4_Update_data_8041A398[4];
 extern unsigned char lbl_805DF3D0[0x98];

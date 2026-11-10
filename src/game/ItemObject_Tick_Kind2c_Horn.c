@@ -11,10 +11,7 @@ const unsigned char ItemObject_Tick_Kind2c_Horn_rodata_8032E648[1104] = { 0x3F, 
 typedef struct { float v[6]; } FloatSix;
 #include "game/types/ItemObjectCopy.h"
 
-typedef struct ScaleKey {
-    float t[5];
-    float v[5];
-} ScaleKey;
+#include "game/types/ScaleKey.h"
 
 extern ScaleKey ItemObject_Tick_Kind2c_Horn_data_80421030[2][3];
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);

@@ -17,7 +17,7 @@ public:
 
 struct CardTaskEntry {
     CardTask *task;
-    int pad04;
+    int kind;
 };
 
 struct CardTaskManager {

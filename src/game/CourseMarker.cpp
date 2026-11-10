@@ -8,11 +8,7 @@
 
 #include "game/types/Vec3f.h"
 
-typedef struct MarkerPath {
-    Vec3f start;
-    Vec3f trigger;
-    Vec3f end;
-} MarkerPath;
+#include "game/types/MarkerPath.h"
 
 typedef struct Marker {
     int state;

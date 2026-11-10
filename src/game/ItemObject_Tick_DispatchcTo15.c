@@ -12,10 +12,7 @@ typedef struct HandheldPose {
     Vec rot;
 } HandheldPose;
 
-typedef struct EffectAnchor {
-    float y;
-    float scale;
-} EffectAnchor;
+#include "game/types/EffectAnchor.h"
 
 extern const char ItemObject_Tick_DispatchcTo15_rodata_8032E5EC[];
 extern HandheldPose ItemObject_Tick_DispatchcTo15_data_80420BC8[];

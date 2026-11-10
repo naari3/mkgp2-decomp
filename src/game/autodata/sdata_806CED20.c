@@ -27,12 +27,7 @@ typedef struct BootHooks {
 } BootHooks;
 
 /* layout as declared in src/game/BootDispatcher.cpp */
-typedef struct BootColor {
-    unsigned char r;
-    unsigned char g;
-    unsigned char b;
-    unsigned char a;
-} BootColor;
+#include "game/types/BootColor.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

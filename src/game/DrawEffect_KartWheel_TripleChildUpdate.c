@@ -5,7 +5,7 @@
  * flicker phase. */
 #include "game/DrawEffectAccess.h"
 
-typedef struct { float v[3]; } ChildOffsets;
+#include "game/types/ChildOffsets.h"
 
 extern unsigned char lbl_805DF3D0[];
 extern const ChildOffsets DrawEffect_KartWheel_TripleChildUpdate_rodata_8032A76C;

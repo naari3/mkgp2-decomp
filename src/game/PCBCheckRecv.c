@@ -700,10 +700,10 @@ typedef struct {
     unsigned char unusedLow : 4;
 } RoleByte;
 typedef struct {
-    unsigned char unusedHigh : 5;
+    unsigned char high : 5;
     unsigned char flag2 : 1;
     unsigned char flag1 : 1;
-    unsigned char unused0 : 1;
+    unsigned char low : 1;
 } PhaseFlags;
 typedef union {
     unsigned int word;

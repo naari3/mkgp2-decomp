@@ -1,7 +1,7 @@
 // Three-child smoke ring. Views contain only fields observed in target code.
 // Honest native draft: 556B, text 96.97122%; compiler-generated EH/index 100%.
 // Remaining difference is the transient child pointer register and copy scheduling.
-struct SmokeVec { float v[3]; };
+#include "game/types/SmokeVec.h"
 struct SmokeEffect;
 struct SmokeGroup {
     unsigned char pad00[0x10];

@@ -144,10 +144,7 @@ typedef struct TitleEntry {
     char *jp;
 } TitleEntry;
 
-typedef struct NameEntry {
-    char *en;
-    char *jp;
-} NameEntry;
+#include "game/types/NameEntry.h"
 
 extern NameEntry RankLog_data_80411B18[0x26];
 

@@ -8,7 +8,7 @@ struct ClassExit {
     int field24, next;
     void *help, *items[3], *title;
 };
-struct AnimIds { int values[3]; };
+#include "game/types/AnimIds.h"
 extern "C" {
 extern AnimIds lbl_8039AA08, lbl_8039AA14;
 extern const float lbl_806D9AF0, lbl_806D9AF4, lbl_806D9AF8;

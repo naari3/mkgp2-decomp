@@ -6,13 +6,7 @@
 #include "game/autodata.h"
 
 /* layout as declared in src/game/anon_80218F40_nm1_tail.cpp */
-typedef struct MapInfo {
-    float ox;
-    float oy;
-    float sx;
-    float sy;
-    float rot;
-} MapInfo;
+#include "game/types/MapInfo.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

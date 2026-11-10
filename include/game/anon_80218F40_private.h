@@ -32,13 +32,7 @@ struct PathEntry {
 
 struct PathManager;
 
-struct MapInfo {
-    float ox;
-    float oy;
-    float sx;
-    float sy;
-    float rot;
-};
+#include "game/types/MapInfo.h"
 
 extern "C" {
 extern const float lbl_803C4BF8[3][2];

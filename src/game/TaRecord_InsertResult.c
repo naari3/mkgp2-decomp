@@ -2,17 +2,9 @@
  * current course's best-time list and, for a top-10 time, its name record. */
 typedef unsigned short wchar;
 
-typedef struct HiScoreName {
-    wchar name[6];          /* 0x0 */
-    unsigned char kart;     /* 0xC */
-    unsigned char extra[3]; /* 0xD */
-} HiScoreName;
+#include "game/types/HiScoreName.h"
 
-typedef struct BackupHiScores {
-    unsigned char pad000[0x4E0];
-    HiScoreName names[2][9][2][2][10]; /* 0x04E0 */
-    float times[2][9][2][2][50];       /* 0x31E0 */
-} BackupHiScores;
+#include "game/types/BackupHiScores.h"
 
 extern int g_ccClass;
 extern int g_cupId;

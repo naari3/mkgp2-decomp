@@ -19,18 +19,10 @@ typedef struct ShellPose {
 } ShellPose;
 
 /* layout as declared in src/game/ItemObject_Tick_DispatchcTo15.c */
-typedef struct EffectAnchor {
-    float y;
-    float scale;
-} EffectAnchor;
+#include "game/types/EffectAnchor.h"
 
 /* layout as declared in src/game/ItemObject_Tick_Kind29_LightAttachment.c */
-typedef struct ScaleCurve {
-    float x[5];
-    float y[5];
-    float z[5];
-    float t[5];
-} ScaleCurve;
+#include "game/types/ScaleCurve.h"
 
 /* row layout read off the values (per column: all floats, all small integers, one byte, or
  * two 16-bit values), not from code */

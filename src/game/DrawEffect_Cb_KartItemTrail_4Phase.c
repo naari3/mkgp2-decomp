@@ -6,7 +6,7 @@
  * the camera. */
 #include "game/DrawEffectAccess.h"
 
-typedef struct { float v[4]; } PeriodTable;
+#include "game/types/PeriodTable.h"
 
 extern PeriodTable DrawEffect_Cb_KartItemTrail_4Phase_rodata_8032A7D0;
 extern unsigned char lbl_805DF3D0[];

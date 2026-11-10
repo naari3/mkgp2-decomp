@@ -81,12 +81,7 @@ extern char data_80491988_data_806CFC90[];
 extern char data_80491988_data_806CFC98[];
 
 /* layout as declared in src/game/NokoNoko_Init.c */
-typedef struct SpawnRow {
-    float x;
-    float y;
-    float z;
-    unsigned int flags;
-} SpawnRow;
+#include "game/types/SpawnRow.h"
 
 /* layout as declared in src/game/objview/fn_8018D82C.cpp */
 typedef struct TexWrap {

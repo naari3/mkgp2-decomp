@@ -7,11 +7,7 @@
 #include "game/types/Vec3f.h"
 
 /* layout as declared in src/game/CourseMarker.cpp */
-typedef struct MarkerPath {
-    Vec3f start;
-    Vec3f trigger;
-    Vec3f end;
-} MarkerPath;
+#include "game/types/MarkerPath.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

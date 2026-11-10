@@ -19,33 +19,19 @@ extern char lbl_806DBFFC[];
 extern char lbl_806DC004[];
 
 /* layout as declared in src/game/HudFlow20Update.cpp */
-typedef struct HudPosition {
-    float x;
-    float y;
-} HudPosition;
+#include "game/types/HudPosition.h"
 
 /* layout as declared in src/game/HudSelectionUpdate.cpp */
-typedef struct HudSelectionPosition {
-    float x;
-    float y;
-} HudSelectionPosition;
+#include "game/types/HudSelectionPosition.h"
 
 /* layout as declared in src/game/RaceDigitUpdate.cpp */
-typedef struct DigitPosition {
-    float x;
-    float y;
-} DigitPosition;
+#include "game/types/DigitPosition.h"
 
 /* layout as declared in src/game/RaceDigits.cpp */
-typedef struct DigitMap {
-    int digits[10];
-} DigitMap;
+#include "game/types/DigitMap.h"
 
 /* layout as declared in src/game/CardPrintFlowRender.cpp */
-typedef struct PrintErrorCaption {
-    int code;
-    int texture;
-} PrintErrorCaption;
+#include "game/types/PrintErrorCaption.h"
 
 /* anchor pool cut into its strings and numbers by value (text, floats, small integers),
  * not from code */

@@ -30,7 +30,7 @@ typedef struct NokoNoko {
 } NokoNoko;
 
 extern NokoNoko *g_nokonokoHead;
-typedef struct { Vec v[4]; } Quad;
+#include "game/types/Quad.h"
 
 extern const Quad NokoNoko_Update_rodata_80377664;
 extern const Quad NokoNoko_Update_rodata_80377694;

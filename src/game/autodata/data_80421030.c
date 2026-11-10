@@ -6,16 +6,10 @@
 #include "game/autodata.h"
 
 /* layout as declared in src/game/ItemObject_Tick_Kind2c_Horn.c */
-typedef struct ScaleKey {
-    float t[5];
-    float v[5];
-} ScaleKey;
+#include "game/types/ScaleKey.h"
 
 /* layout as declared in src/game/ItemObject_Tick_Kind2d_ChainShellPair.c */
-typedef struct ChainScaleKey {
-    float t[4];
-    float v[4];
-} ChainScaleKey;
+#include "game/types/ChainScaleKey.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

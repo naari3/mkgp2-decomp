@@ -1,7 +1,7 @@
 #ifndef GAME_FLOWKARTPOSITION_PRIVATE_H
 #define GAME_FLOWKARTPOSITION_PRIVATE_H
 struct TextManager;
-struct FKPosition { float x, y; };
+#include "game/types/FKPosition.h"
 static inline FKPosition operator+(const FKPosition &a, const FKPosition &b) {
     FKPosition r; r.x = a.x + b.x; r.y = a.y + b.y; return r;
 }

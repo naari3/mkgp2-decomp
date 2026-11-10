@@ -8,14 +8,10 @@
 extern char lbl_806D74C0[];
 
 /* layout as declared in src/game/CourseTables.c */
-typedef struct Entry1C {
-    int v[7];
-} Entry1C;
+#include "game/types/Entry1C.h"
 
 /* layout as declared in src/game/CourseTables.c */
-typedef struct Entry10 {
-    int v[4];
-} Entry10;
+#include "game/types/Entry10.h"
 
 /* anchor pool cut into its strings and numbers by value (text, floats, small integers),
  * not from code */

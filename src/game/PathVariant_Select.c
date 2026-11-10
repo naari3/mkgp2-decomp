@@ -5,12 +5,7 @@ extern int g_cupId;
 extern int g_ccClass;
 extern int g_roundIndex;
 
-typedef struct PathVariantEntry {
-    KartCond cond;
-    int kart;
-    int variantA;
-    int variantB;
-} PathVariantEntry;
+#include "game/types/PathVariantEntry.h"
 
 extern int g_PathVariantTableCount;
 extern PathVariantEntry g_PathVariantTable[];

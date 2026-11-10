@@ -20,16 +20,10 @@ typedef struct JointTable {
 } JointTable;
 
 /* layout as declared in src/game/ItemHoming.c */
-typedef struct Float3 {
-    float value[3];
-} Float3;
+#include "game/types/Float3.h"
 
 /* layout as declared in src/game/ItemHitPropagation.c */
-typedef struct HitVec3 {
-    float x;
-    float y;
-    float z;
-} HitVec3;
+#include "game/types/HitVec3.h"
 
 /* anchor pool cut into its strings and numbers by value (text, floats, small integers),
  * not from code */

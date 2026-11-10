@@ -11,9 +11,7 @@ typedef struct HitKart {
     unsigned char state;
 } HitKart;
 
-typedef struct LineTable {
-    int lines[4];
-} LineTable;
+#include "game/types/LineTable.h"
 
 extern const float lbl_806D4E90; /* 0.0 */
 extern const float lbl_806D4E94; /* 1.0 */

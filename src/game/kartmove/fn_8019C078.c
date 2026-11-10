@@ -1,12 +1,6 @@
 #include "game/types/Vec3.h"
 
-typedef struct SuspParam {
-    float pad0;
-    float target;
-    float rateUp;
-    float rateDown;
-    unsigned char pad10[8];
-} SuspParam;
+#include "game/types/SuspParam.h"
 
 typedef struct Car {
     unsigned char pad0[0x6c];

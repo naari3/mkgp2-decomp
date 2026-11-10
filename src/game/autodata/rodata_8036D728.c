@@ -15,11 +15,7 @@ typedef struct CoursePropResource {
 } CoursePropResource;
 
 /* layout as declared in src/game/mapeffect/CoursePropCtor.cpp */
-typedef struct CoursePropData {
-    Vec3f position;
-    float yaw;
-    int kind;
-} CoursePropData;
+#include "game/types/CoursePropData.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

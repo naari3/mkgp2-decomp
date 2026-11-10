@@ -4,7 +4,7 @@
  * The complete control flow and native EH/index are otherwise exact.
  */
 struct StateVec { float x, y, z; };
-struct StatePair { signed char value[2]; };
+#include "game/types/StatePair.h"
 union StateTriple {
     struct { StatePair pair; signed char last; } parts;
     signed char value[3];

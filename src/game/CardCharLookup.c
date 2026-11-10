@@ -1,7 +1,4 @@
-typedef struct CardCharEntry {
-    unsigned short card, code;
-    int width, height, advance;
-} CardCharEntry;
+#include "game/types/CardCharEntry.h"
 extern CardCharEntry lbl_804E5590[];
 unsigned short wchar_to_card_char(const unsigned short *text) {
     unsigned short result = 0;

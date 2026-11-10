@@ -138,10 +138,7 @@ extern char lbl_806D4A34[];
 extern char lbl_806D4A3C[];
 
 /* layout as declared in src/game/RankLog.c */
-typedef struct NameEntry {
-    char *en;
-    char *jp;
-} NameEntry;
+#include "game/types/NameEntry.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

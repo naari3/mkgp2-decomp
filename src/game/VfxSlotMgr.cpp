@@ -11,7 +11,7 @@ struct Vec {
     Vec(const Vec& other) { *(int*)&x=*(const int*)&other.x; *(int*)&y=*(const int*)&other.y; *(int*)&z=*(const int*)&other.z; }
 };
 struct EulerAngles { float x,y,z; };
-struct Matrix { float m[16]; };
+#include "game/types/Matrix.h"
 struct Camera { Matrix view,inverse; Vec position,target; };
 struct Slot {
     signed char active; char pad1[3]; void (*tick)(Slot*);

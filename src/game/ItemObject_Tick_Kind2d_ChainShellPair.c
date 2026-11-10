@@ -8,10 +8,7 @@
  * a keyframe curve of the parent's animation. */
 #include "game/types/Vec.h"
 
-typedef struct ChainScaleKey {
-    float t[4];
-    float v[4];
-} ChainScaleKey;
+#include "game/types/ChainScaleKey.h"
 
 extern const char lbl_8032EA98[];
 extern ChainScaleKey ItemObject_Tick_Kind2d_ChainShellPair_data_80421120[2];

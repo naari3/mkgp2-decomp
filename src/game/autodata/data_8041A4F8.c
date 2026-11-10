@@ -424,12 +424,7 @@ extern char lbl_806D5860[];
 extern char lbl_806D5868[];
 
 /* layout as declared in src/game/DbgMenu.cpp */
-typedef struct ScrollEntry {
-    int id;
-    float x;
-    float y;
-    float w;
-} ScrollEntry;
+#include "game/types/ScrollEntry.h"
 
 /* layout as declared in src/game/DbgMenu.cpp */
 typedef struct DbgMenuEntry {

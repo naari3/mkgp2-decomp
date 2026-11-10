@@ -43,13 +43,7 @@ extern char lbl_806D2EA0[];
 extern char lbl_806D2EA8[];
 
 /* layout as declared in src/game/TransitionEffect.cpp */
-typedef struct TransitionTextureVertex {
-    float x;
-    float y;
-    float u;
-    float v;
-    unsigned int color;
-} TransitionTextureVertex;
+#include "game/types/TransitionTextureVertex.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

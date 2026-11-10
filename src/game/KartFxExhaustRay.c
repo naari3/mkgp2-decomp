@@ -55,7 +55,7 @@ const float KartFx_BurnoutChargeTick_rodata_8032A30C[15] = {
     1.05999994f, 1.10000002f, 1.0f, 1.01999998f, 1.0f, 1.04999995f, 1.0f, 1.0f, 1.01999998f, 1.0f, 1.0f, 1.08000004f, 1.0f, 0.0f, 0.0f,
 };
 const Vec EffectVfx9_DriftSpark_Tick_rodata_8032A348 = { 1.0f, 0.200000003f, 0.200000003f };
-typedef struct RayColors { Vec entries[2]; } RayColors;
+#include "game/types/RayColors.h"
 const RayColors lbl_8032A354 = { {
     { 1.20000005f, 0.400000006f, 0.400000006f },
     { 0.800000012f, 0.600000024f, 0.0f },

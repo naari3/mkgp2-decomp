@@ -13,10 +13,7 @@ typedef struct TerrainState {
     int j;                       /* 0x94 */
 } TerrainState;
 
-typedef struct TerrainTypeEntry {
-    unsigned int mask;
-    signed char id;
-} TerrainTypeEntry;
+#include "game/types/TerrainTypeEntry.h"
 
 extern TerrainTypeEntry Terrain_FlagsToTypeId_data_8040F100[9];
 extern int g_cupId;

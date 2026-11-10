@@ -20,10 +20,7 @@ extern char lbl_806D0864[];
 extern char lbl_806D086C[];
 
 /* layout as declared in src/game/RaceDigitLap.cpp */
-typedef struct DigitPosition {
-    float x;
-    float y;
-} DigitPosition;
+#include "game/types/DigitPosition.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

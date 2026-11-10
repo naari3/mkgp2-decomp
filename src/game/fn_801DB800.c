@@ -1,13 +1,4 @@
-typedef struct TableEntry_8049BC30 {
-    int f0;
-    int f4;
-    int f8;
-    float fC;
-    int f10;
-    int f14;
-    int f18;
-    int f1C;
-} TableEntry_8049BC30;
+#include "game/types/TableEntry_8049BC30.h"
 
 extern TableEntry_8049BC30 lbl_8049BC30[];
 

@@ -8,16 +8,10 @@
 #include "game/types/Vec.h"
 
 /* layout as declared in src/game/objview/fn_801879E4.c */
-typedef struct Path {
-    Vec3 p0;
-    Vec3 p1;
-    Vec3 p2;
-} Path;
+#include "game/types/Path.h"
 
 /* layout as declared in src/game/NokoNoko_Update.c */
-typedef struct Quad {
-    Vec v[4];
-} Quad;
+#include "game/types/Quad.h"
 
 /* row layout read off the values (each column all floats or all small integers), not from code */
 typedef struct lbl_8037754C_Row {

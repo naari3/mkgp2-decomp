@@ -6,56 +6,31 @@
 #include "game/autodata.h"
 
 /* layout as declared in src/game/KartFxDriftSparkParticle.cpp */
-typedef struct SparkVec3 {
-    float x;
-    float y;
-    float z;
-} SparkVec3;
+#include "game/types/SparkVec3.h"
 
 /* layout as declared in src/game/KartFxChargeIcon.cpp */
-typedef struct ChargeVec3 {
-    float x;
-    float y;
-    float z;
-} ChargeVec3;
+#include "game/types/ChargeVec3.h"
 
 /* layout as declared in src/game/KartFxChargeIcon.cpp */
-typedef struct ChargePlacement {
-    ChargeVec3 offset;
-    ChargeVec3 scale;
-} ChargePlacement;
+#include "game/types/ChargePlacement.h"
 
 /* layout as declared in src/game/DrawEffect_Cb_KartWheel_DualSpawn.c */
-typedef struct PhaseTable {
-    float v[4];
-} PhaseTable;
+#include "game/types/PhaseTable.h"
 
 /* layout as declared in src/game/EffectSmokeRing3.cpp */
-typedef struct SmokeVec {
-    float v[3];
-} SmokeVec;
+#include "game/types/SmokeVec.h"
 
 /* layout as declared in src/game/EffectKartWaveGlow.cpp */
-typedef struct WaveGlowVec3 {
-    float x;
-    float y;
-    float z;
-} WaveGlowVec3;
+#include "game/types/WaveGlowVec3.h"
 
 /* layout as declared in src/game/EffectCompoundRing.cpp */
-typedef struct RingVec {
-    float value[3];
-} RingVec;
+#include "game/types/RingVec.h"
 
 /* layout as declared in src/game/DrawEffect_KartWheel_TripleChildUpdate.c */
-typedef struct ChildOffsets {
-    float v[3];
-} ChildOffsets;
+#include "game/types/ChildOffsets.h"
 
 /* layout as declared in src/game/DrawEffect_Cb_KartItemTrail_4Phase.c */
-typedef struct PeriodTable {
-    float v[4];
-} PeriodTable;
+#include "game/types/PeriodTable.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

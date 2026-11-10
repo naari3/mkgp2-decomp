@@ -6,10 +6,7 @@
 #include "game/autodata.h"
 
 /* layout as declared in src/game/Terrain_FlagsToTypeId.c */
-typedef struct TerrainTypeEntry {
-    unsigned int mask;
-    signed char id;
-} TerrainTypeEntry;
+#include "game/types/TerrainTypeEntry.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

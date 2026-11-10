@@ -180,13 +180,7 @@ const float ShadowBillboard_LerpMtx4x4_rodata_802EE4CC[3] = {0.075f, 0.075f, 0.0
 
 
 /* per-course play camera overrides (0x7C-byte entries) */
-typedef struct PCCourseCamEntry {
-    int gameMode;
-    int cupId;
-    int ccClass;
-    int roundType;
-    PCPathSeg seg[3]; /* 0x10 */
-} PCCourseCamEntry;
+#include "game/types/PCCourseCamEntry.h"
 
 extern PCCourseCamEntry ShadowBillboard_data_803F9F30[];
 

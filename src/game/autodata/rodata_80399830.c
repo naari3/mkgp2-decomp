@@ -13,9 +13,7 @@ extern char lbl_806D99A4[];
 extern char lbl_806D99AC[];
 
 /* layout as declared in src/game/fn_801C1F88.cpp */
-typedef struct AnimIds {
-    int values[3];
-} AnimIds;
+#include "game/types/AnimIds.h"
 
 /* anchor pool cut into its strings and numbers by value (text, floats, small integers),
  * not from code */

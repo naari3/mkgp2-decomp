@@ -3,7 +3,7 @@
 // Matching: the tilt assignment sits inside the orientation expression in
 // both modes, which gives the target its i/3, i%3 register order.
 // Unsupported mode values deliberately leave orientation/tilt live, as in target.
-struct RingVec { float value[3]; };
+#include "game/types/RingVec.h"
 struct RingPair { float value[2]; };
 struct RingEffect;
 struct RingChildren {

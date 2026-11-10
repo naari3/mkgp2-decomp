@@ -143,12 +143,7 @@ typedef struct ResCtrl {
     unsigned char pad44[0x14];
 } ResCtrl;
 
-typedef struct ScrollEntry {
-    int id;
-    float x;
-    float y;
-    float w;
-} ScrollEntry;
+#include "game/types/ScrollEntry.h"
 
 typedef struct ScaleVec {
     float a[3];

@@ -5,7 +5,7 @@ extern "C" {
 extern char HudFlow24_vtable_804EE83C[], lbl_804EDB28[];
 extern int g_countdownPhase;
 extern const float lbl_806DBF18, lbl_806DBF1C, lbl_806DBF20, lbl_806DBF24;
-struct HudSelectionPosition { float x,y; };
+#include "game/types/HudSelectionPosition.h"
 extern HudSelectionPosition HudSelectionUpdate_rodata_803EF75C[];
 void fn_801F8E54();
 void MemoryManager_TimedFree(void *);

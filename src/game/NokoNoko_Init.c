@@ -14,7 +14,7 @@ struct NokoEntity {
     NokoEntity(const Vec3 *);
     ~NokoEntity() {}
 };
-struct SpawnRow { float x, y, z; unsigned int flags; };
+#include "game/types/SpawnRow.h"
 extern "C" {
 extern unsigned char g_nokonokoEnable;
 extern NokoEntity *g_nokonokoHead;

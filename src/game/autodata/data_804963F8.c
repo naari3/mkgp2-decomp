@@ -499,13 +499,7 @@ extern char lbl_80381078[];
 extern char lbl_8038108C[];
 
 /* layout as declared in src/game/kartmove/fn_8019C078.c */
-typedef struct SuspParam {
-    float pad0;
-    float target;
-    float rateUp;
-    float rateDown;
-    unsigned char pad10[8];
-} SuspParam;
+#include "game/types/SuspParam.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

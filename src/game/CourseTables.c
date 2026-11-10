@@ -6,13 +6,9 @@
  * needs `#pragma opt_propagation off` and a named row pointer.
  */
 
-typedef struct Entry1C {
-    int v[7];
-} Entry1C;
+#include "game/types/Entry1C.h"
 
-typedef struct Entry10 {
-    int v[4];
-} Entry10;
+#include "game/types/Entry10.h"
 
 extern Entry1C CourseTables_rodata_8035C6C4;
 extern Entry1C CourseTables_rodata_8035E260[];

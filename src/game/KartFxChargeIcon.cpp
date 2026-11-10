@@ -1,5 +1,5 @@
 /* Charge icon: local views describe only fields observed in this callback. */
-struct ChargeVec3 { float x, y, z; };
+#include "game/types/ChargeVec3.h"
 struct ChargeKart { unsigned char pad00[0x1F8]; unsigned int identity; };
 struct ChargeEffect {
     unsigned char pad00[0x14];
@@ -20,7 +20,7 @@ struct ChargeEffect {
     unsigned char pad138[0x58];
     signed char identity;
 };
-struct ChargePlacement { ChargeVec3 offset, scale; };
+#include "game/types/ChargePlacement.h"
 extern "C" {
 extern const ChargePlacement KartFx_BoostChargeIconTick_rodata_8032A4A8[11];
 extern const float lbl_806D51C0, lbl_806D51C4;

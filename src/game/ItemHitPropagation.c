@@ -1,4 +1,4 @@
-typedef struct HitVec3 { float x, y, z; } HitVec3;
+#include "game/types/HitVec3.h"
 typedef struct HitMtx44 { float m[16]; } HitMtx44;
 typedef struct HitEffectBus {
     unsigned char pad_00[0x10];

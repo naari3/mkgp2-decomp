@@ -236,7 +236,7 @@ void Object_RenderJObjTree(void *, int);
 GXTexObj *BackupBuffer_InitAsTexture();
 float Saturate_Double(float, float, float);
 }
-struct TransitionTextureVertex { float x, y, u, v; unsigned int color; };
+#include "game/types/TransitionTextureVertex.h"
 extern "C" TransitionTextureVertex TransitionEffect_DrawCarRouletteOverlay_data_803FE230[16];
 
 static inline void ScreenProjection(Mtx44 projection)

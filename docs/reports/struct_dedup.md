@@ -4,31 +4,31 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 
 | Item | Count |
 |---|---|
-| Files scanned (src/game, src/ui, src/sound, src/util, src/resource, include/game) | 2840 |
-| struct/union/class definitions at file scope | 5482 in 1537 files |
-| Distinct type names | 4112 |
-| Names defined in more than one file | 459 |
-| Types already in `include/game/types` | 366 |
-| Class A groups (same name, same members, 2+ files) | 80 groups, 210 definitions |
-| ... of which movable right now | 33 groups, 88 definitions |
-| Definitions whose byte layout the tool can compute | 2949 (not computable: 236) |
-| Class B (same name, same layout, different member spelling) | 65 name/layout pairs, 145 spellings |
-| Class C (same layout of 16+ bytes and 3+ fields, different names) | 170 layouts, 686 definitions |
+| Files scanned (src/game, src/ui, src/sound, src/util, src/resource, include/game) | 3104 |
+| struct/union/class definitions at file scope | 5442 in 1531 files |
+| Distinct type names | 4064 |
+| Names defined in more than one file | 467 |
+| Types already in `include/game/types` | 438 |
+| Class A groups (same name, same members, 2+ files) | 81 groups, 213 definitions |
+| ... of which movable right now | 32 groups, 86 definitions |
+| Definitions whose byte layout the tool can compute | 2912 (not computable: 231) |
+| Class B (same name, same layout, different member spelling) | 76 name/layout pairs, 165 spellings |
+| Class C (same layout of 16+ bytes and 3+ fields, different names) | 168 layouts, 659 definitions |
 
 ## Why a definition is not movable yet
 
 | Reason | Definitions |
 |---|---|
-| non-plain member (method, nested type, access label) | 1429 |
-| needs another type (not shared yet) | 762 |
+| non-plain member (method, nested type, access label) | 1431 |
+| needs another type (not shared yet) | 771 |
 | has base class | 586 |
 | has storage/qualifier prefix | 259 |
 | class | 204 |
-| needs another type (file has its own) | 131 |
-| forward declaration in file | 43 |
+| needs another type (file has its own) | 120 |
+| forward declaration in file | 44 |
 | name defined twice in file | 37 |
 | separate typedef in file | 32 |
-| anonymous typedef in C++ (name mangling) | 29 |
+| anonymous typedef in C++ (name mangling) | 31 |
 | typedef without exactly one plain name | 21 |
 | tag differs from typedef name | 13 |
 | preprocessor in body | 10 |
@@ -106,42 +106,42 @@ Regenerate with `python3 tools/struct_dedup.py scan`. How the tool decides: docs
 | Size | Fields | Definitions | Names |
 |---|---|---|---|
 | 0x278 | 12 | 32 | TestPage, TestPage_p1, TestPage_p10, TestPage_p11, TestPage_p12, TestPage_p13, TestPage_p14, TestPage_p15 ... |
-| 0x40 | 16 | 25 | Anim5AMatrix, ArmMtx, BurnMtx, C7Matrix, ChildPairMatrix, Drift79Matrix, DriftMtx, FxMatrix ... |
-| 0x10 | 4 | 21 | BootDescriptor, DrawFormatS56, Entry10, GridSlot, HudSelectionStep, ItemCatEntry16, ItemDescriptor, ItemList ... |
-| 0x10 | 4 | 15 | CoinQuat, CoinSpark, CourseObjTrail, FaceRayBounds, ItemColor, ItemTransform162, MenuRect801F, Obj987Position ... |
+| 0x40 | 16 | 23 | Anim5AMatrix, ArmMtx, BurnMtx, C7Matrix, ChildPairMatrix, Drift79Matrix, DriftMtx, FxMatrix ... |
+| 0x10 | 4 | 17 | BootDescriptor, DrawFormatS56, GridSlot, HudSelectionStep, ItemCatEntry16, ItemDescriptor, ItemSpriteResource, JDCoins ... |
 | 0x38 | 3 | 14 | BiribiriLightInfo, CoinHsdClassInfo, HSDClassInfo, HSDObjMethods, HsdClass, HsdClassInfo, RCLightInfo, RRLightInfo ... |
+| 0x10 | 4 | 13 | CoinQuat, CoinSpark, CourseObjTrail, FaceRayBounds, ItemColor, ItemTransform162, MenuRect801F, Obj987Position ... |
 | 0x18 | 6 | 13 | (anon), DemoEntry163, VtxDesc |
 | 0x18 | 6 | 12 | CardBitpackState, CardPackedWords, CardPackedWords_p14, ItemRemapEntry, PackedWords, RankDispControls, RepairPackedWords_p16, ResultPackedWords ... |
-| 0x18 | 6 | 12 | ChargePlacement, CupSide, FloatSix, ItemPose, ParticleEmitter, RayColors, RoundArrow, ShardAngles ... |
 | 0x10 | 4 | 12 | AssetRow, CardPointers, CourseObj8016AABC, HSD_DObj, ItemSelectSlotLabels, JointTable, ModelDesc, ObjView ... |
 | 0x68 | 13 | 11 | SpriteVoiceRaceEntry, SpriteVoiceRaceEntry_p14, SpriteVoiceRaceEntry_p15, SpriteVoiceRaceEntry_p16, SpriteVoiceRaceEntry_p17, SpriteVoiceRaceEntry_p18, SpriteVoiceRaceEntry_p19, SpriteVoiceRaceEntry_p20 ... |
 | 0x20 | 3 | 10 | C8Input, CoinProgress, FKInput, FlowInputView, InputRec, InputState, InputView, RoundInfo ... |
-| 0x20 | 8 | 10 | ChainScaleKey, PaceKey, RCQuadPts, RCQuadPtsC, RankingPlacement, RingAngles, ScalarCurve4, Spark ... |
+| 0x18 | 6 | 9 | FloatSix, ItemPose, ParticleEmitter, RoundArrow, ShardAngles, SuspensionParam, TaBookend, TextureRect801F ... |
 | 0x20 | 8 | 9 | ArchiveHeader, CarrotUvIdx, DebugTexObj, FlowAdvance1C, LapTable_p37, NamCamFdSet, RibbonUvIdx, RingOrder ... |
 | 0x20 | 4 | 9 | Entry_806792D8, InputState, InputState_p14, InputState_p15, InputState_p17, PopupInputState |
-| 0x10 | 4 | 9 | CoinEntry, CoinSpawn, ItemBoxSpawnEntry, ParticleDirection, SpawnEntry, SpawnPoint, SpawnRow, Trace162 ... |
 | 0x1FC | 3 | 9 | CarrotKart, RaceVoiceDriver, RaceVoiceDriver_p11, RaceVoiceDriver_p13, RaceVoiceDriver_p34, RaceVoiceDriver_p47, RaceVoiceDriver_p50, RaceVoiceDriver_p52 ... |
-| 0x24 | 9 | 9 | CamVecs, ClSoundListener, DustCurve, HornBlastCurve, MarkerPath, PCPathSeg, Path, SparkOffsets ... |
-| 0x10 | 4 | 8 | Checkpoint163, CoinTrail, DebrisSpawn, PropKind, RYSub, RivalWaypoint, ScrollEntry, Waypoint |
-| 0x30 | 12 | 8 | BallProbes, DListQuad, DirTable, EffectJointMatrix, GoalLinePair, Mtx34, Quad, SpriteNodeInfo |
-| 0x28 | 10 | 7 | CardCheckSettings, CardCheckSettings_p18, CardCheckSettings_p21, DigitMap, OSCalendarTime_p1, OSCalendarTime_p10, OSCalendarTime_p27 |
+| 0x10 | 4 | 8 | CoinEntry, CoinSpawn, ItemBoxSpawnEntry, ParticleDirection, SpawnEntry, SpawnPoint, Trace162, TraceInput163 |
+| 0x20 | 8 | 8 | PaceKey, RCQuadPts, RankingPlacement, RingAngles, ScalarCurve4, Spark, TerrainWall, ViewBillboardParticle |
+| 0x30 | 12 | 8 | BallProbes, DListQuad, DirTable, EffectJointMatrix, GoalLinePair, Mtx34, SpriteNodeInfo |
 | 0x1DC | 62 | 7 | CardPlayerSnapshot, CardPlayerSnapshot_p14, PlayerData, RepairPlayerData_p16, ResultPlayerSnapshot, SetupPlayerSnapshot, ShadowPlayerSnapshot |
+| 0x10 | 4 | 7 | Checkpoint163, CoinTrail, DebrisSpawn, PropKind, RYSub, RivalWaypoint, Waypoint |
 | 0x1540 | 330 | 7 | RaceVoiceData, RaceVoiceData_p11, RaceVoiceData_p13, RaceVoiceData_p34, RaceVoiceData_p47, RaceVoiceData_p50, RaceVoiceData_p52 |
 | 0x14 | 5 | 7 | RaceVoiceCourseLine, RaceVoiceCourseLine_p11, RaceVoiceCourseLine_p13, RaceVoiceCourseLine_p34, RaceVoiceCourseLine_p47, RaceVoiceCourseLine_p50, RaceVoiceCourseLine_p52 |
 | 0x68 | 12 | 7 | SpriteVoiceRaceEntry, SpriteVoiceRaceEntry_p10, SpriteVoiceRaceEntry_p12, SpriteVoiceRaceEntry_p5, SpriteVoiceRaceEntry_p6, SpriteVoiceRaceEntry_p7, SpriteVoiceRaceEntry_p8 |
 | 0x14 | 3 | 7 | Label, Obj, Pair, Sprite, SpriteObj_p10, SpriteObj_p9 |
 | 0x1C | 7 | 6 | GPSpeedParams, GtItemPose, KartPose, ParamEntry, ParamValues, ScaleVec |
+| 0x28 | 10 | 6 | CardCheckSettings, CardCheckSettings_p18, CardCheckSettings_p21, OSCalendarTime_p1, OSCalendarTime_p10, OSCalendarTime_p27 |
 | 0x14 | 5 | 6 | CardUnlockRule, FKParams, FlowAdvance10, FrameStatBlock, Int5, ItemUnlockEntry |
 | 0x14 | 5 | 6 | CardTaskManager, ItemDisplay, ModelEntry, RoundSlot, SceneWords |
+| 0x48 | 18 | 6 | BurstPos, ObjParticle, Particle, PulseKey, ScaleKey |
 | 0x118C | 327 | 6 | RaceVoiceTables, RaceVoiceTables_p14, RaceVoiceTables_p15, RaceVoiceTables_p16, RaceVoiceTables_p19, RaceVoiceTables_p9 |
 | 0x68 | 14 | 6 | RaceVoiceEntry, RaceVoiceEntry_p11, RaceVoiceEntry_p13, RaceVoiceEntry_p34, RaceVoiceEntry_p50, RaceVoiceEntry_p52 |
 | 0x2C | 10 | 6 | NMRaceWideRow, RaceEntry, RaceWideRow, RankSlot |
 | 0x18 | 6 | 6 | KartSlot, NMKartSlot, RaceKartSlot, RaceSlot |
 | 0x10 | 4 | 5 | AISpeedOwner, Entry, GrowSet, JointSetDesc, Obj987Entry |
-| 0x48 | 18 | 5 | BurstPos, ObjParticle, Particle, PulseKey, ScaleKey |
 | 0x308 | 5 | 5 | BurnKart, Kart, KartRender |
 | 0x38 | 14 | 4 | BtModeView, RefVtable162, VSOwner, VsScene |
 | 0x3C | 4 | 4 | CollisionDVDFileInfo, DVDFileInfo |
 | 0x14 | 5 | 4 | DrawSlot, RaceScriptEntry, RoundTileSlot, TDrawSlot |
 | 0x1C | 4 | 4 | DampArmSlot, PlaceE4Group, SprayInitGroup, WheelWork |
 | 0x14 | 4 | 4 | FlowDispatcher, JObjLinkView, JObjView, SparkJoint |
+| 0x44 | 4 | 4 | GrowJoint, HSD_JObj, Joint |

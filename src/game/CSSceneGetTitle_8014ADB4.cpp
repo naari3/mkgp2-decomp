@@ -37,63 +37,19 @@ public:
 
 #include "game/types/Spark.h"
 
-struct StepHolder {
-    char pad0[0xC];
-    int done;
-    unsigned char active;
-    char pad11[3];
-    int layer;
-    int state;
-    float t;
-    char pad20[4];
-    VObjC *m24;
-    VObjC *m28;
-    float cx;
-    float cy;
-    char pad34[4];
-    float rot;
-    float rotSpeed;
-    Spark sparks[5];
-    void *f90;
-    RecordCounter *counter;
-    struct HudResSet *step;
-    unsigned char glow;
-};
+#include "game/types/StepHolder.h"
 
 #include "game/types/KartVariant.h"
 
-struct CountEntry {
-    int count;
-    int f4;
-    VObjC *obj;
-};
+#include "game/types/CountEntry.h"
 
-struct CountList {
-    char pad0[0x18];
-    unsigned char on;
-    char pad19[0x2C - 0x19];
-    CountEntry e[6];
-};
+#include "game/types/CountList.h"
 
-struct HudPanel {
-    char pad0[0x14];
-    void *vt14;
-    char pad18[0x60];
-    VObjC *f78;
-    void *f7C;
-    VObj14 *f80;
-};
+#include "game/types/HudPanel.h"
 
 #include "game/types/CdHolder.h"
 
-struct CdHolder2 {
-    char pad0[0x34];
-    Countdown *cd;
-    char pad38[0x28];
-    VObj14 *f60;
-    char pad64[4];
-    void *f68;
-};
+#include "game/types/CdHolder2.h"
 
 inline bool Countdown_Tick(Countdown *c) {
     if (c->delay > 0) {

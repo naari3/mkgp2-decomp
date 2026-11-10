@@ -5,10 +5,7 @@
  * expression (regalloc_patterns 62). */
 #include "game/DrawEffectAccess.h"
 
-typedef struct FlameCurve {
-    float keys[5];
-    float values[5];
-} FlameCurve;
+#include "game/types/FlameCurve.h"
 
 extern FlameCurve EffectVfx29_30_Item4SubFlame_Tick_data_8041A224[];
 extern const float lbl_806D51BC; /* 2.0 */

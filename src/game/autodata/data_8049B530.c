@@ -133,16 +133,7 @@ extern char lbl_806DA100[];
 extern char lbl_806DA108[];
 
 /* layout as declared in src/game/fn_801DB800.c */
-typedef struct TableEntry_8049BC30 {
-    int f0;
-    int f4;
-    int f8;
-    float fC;
-    int f10;
-    int f14;
-    int f18;
-    int f1C;
-} TableEntry_8049BC30;
+#include "game/types/TableEntry_8049BC30.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

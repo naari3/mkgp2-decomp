@@ -5,11 +5,7 @@ extern int g_cupId;
 extern int g_ccClass;
 extern int g_roundIndex;
 
-typedef struct ItemUseProbEntry {
-    KartCond cond;
-    int kart;
-    float probability;
-} ItemUseProbEntry;
+#include "game/types/ItemUseProbEntry.h"
 
 extern int AI_RollItemUseProbability_data_806CFF04;
 extern ItemUseProbEntry g_itemUseProbTable[];

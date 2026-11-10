@@ -37,12 +37,7 @@ extern char data_80490ACC_data_806CF970[];
 extern char data_80490ACC_data_806CF978[];
 
 /* layout as declared in src/game/Scene_80164614.cpp */
-typedef struct RaceLimits163 {
-    signed char laps;
-    char pad1[3];
-    float time;
-    float bonus;
-} RaceLimits163;
+#include "game/types/RaceLimits163.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

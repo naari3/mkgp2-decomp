@@ -2,7 +2,7 @@
 extern "C" {
 extern int g_countdownPhase;
 extern const float lbl_806DBF18, lbl_806DBF1C, lbl_806DBF20, lbl_806DBF24;
-struct HudPosition { float x, y; };
+#include "game/types/HudPosition.h"
 extern const HudPosition HudFlow20Update_rodata_803EF74C[];
 void SpriteHandle_SetActiveFlag(void *, int);
 void SpriteHandle_RecomputeCull(void *);

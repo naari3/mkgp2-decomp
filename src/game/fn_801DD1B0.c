@@ -5,11 +5,7 @@ extern int g_cupId;
 extern int g_ccClass;
 extern int g_roundIndex;
 
-typedef struct RangeEntry {
-    KartCond cond;
-    int minValue;
-    int maxValue;
-} RangeEntry;
+#include "game/types/RangeEntry.h"
 
 typedef struct SyncSlot {
     char pad[0x1B];

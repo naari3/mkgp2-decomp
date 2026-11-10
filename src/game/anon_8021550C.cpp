@@ -130,11 +130,7 @@ struct CountBase {
     CountBase() : delay(-1) {}
 };
 
-struct CountPos {
-    float x;
-    float y;
-    float scale;
-};
+#include "game/types/CountPos.h"
 
 extern "C" const CountPos lbl_803C3EA0[2][6];
 

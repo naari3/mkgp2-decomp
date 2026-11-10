@@ -10,7 +10,7 @@ public:
 
 typedef struct CardTaskEntry {
     CardTask *task;
-    int pad04;
+    int kind;
 } CardTaskEntry;
 
 typedef struct CardTaskManager {

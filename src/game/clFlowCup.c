@@ -45,14 +45,7 @@ struct CupPair {
     CupSpr *b;
 };
 
-struct CupSide {
-    float x0;
-    float y0;
-    float rot0;
-    float x1;
-    float y1;
-    float rot1;
-};
+#include "game/types/CupSide.h"
 
 struct clFlowCup {
     void *vtbl;

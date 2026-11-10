@@ -1,15 +1,7 @@
 #ifndef CLSOUND_SPATIAL_PRIVATE_H
 #define CLSOUND_SPATIAL_PRIVATE_H
 typedef struct ClSoundVec { float x, y, z; } ClSoundVec;
-typedef struct ClSoundDef {
-    unsigned int effect;
-    unsigned char group, mode, reserved6[2];
-    float near_distance, far_distance;
-    unsigned char volume, reserved11;
-    unsigned short pitch;
-    unsigned char reserved14, category, reserved16[2];
-    unsigned int attributes;
-} ClSoundDef;
+#include "game/types/ClSoundDef.h"
 typedef struct ClSoundVoice {
     unsigned int flags, id;
     unsigned char group, reserved9[3];

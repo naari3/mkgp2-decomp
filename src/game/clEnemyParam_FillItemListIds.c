@@ -5,10 +5,7 @@ extern int g_cupId;
 extern int g_ccClass;
 extern int g_roundIndex;
 
-typedef struct EnemyItemListEntry {
-    KartCond cond;
-    int itemIds[8];
-} EnemyItemListEntry;
+#include "game/types/EnemyItemListEntry.h"
 
 typedef struct clEnemyParam {
     int itemListIds[6];

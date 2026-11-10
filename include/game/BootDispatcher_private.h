@@ -80,6 +80,6 @@ struct BootError {
 };
 struct BootHook { virtual void unused(); virtual void Tick(); };
 struct BootHooks { BootHook *begin, *end; };
-struct BootColor { unsigned char r,g,b,a; };
+#include "game/types/BootColor.h"
 struct BootVI { unsigned char pad00[0x48]; BootColor color; };
 #endif

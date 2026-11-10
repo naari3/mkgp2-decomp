@@ -13,9 +13,7 @@ typedef struct TwinOffsets {
     Vec3 v[3];
 } TwinOffsets;
 
-typedef struct TwinYaws {
-    float y[2];
-} TwinYaws;
+#include "game/types/TwinYaws.h"
 
 typedef float Mtx44[4][4];
 typedef float Mtx34[3][4];

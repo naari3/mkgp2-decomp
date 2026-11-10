@@ -1,6 +1,4 @@
-typedef struct SmallObj {
-    void *vtbl;
-} SmallObj;
+#include "game/types/SmallObj.h"
 
 extern char lbl_803FDF40[];
 extern char lbl_803FDF28[];

@@ -7,9 +7,9 @@ extern const float lbl_806DBF28, lbl_806DBF2C, lbl_806DBF30, lbl_806DBF34, lbl_8
 extern int g_gameMode, g_countdownPhase;
 extern const int RaceDigits_data_806D0860[1];
 extern float lbl_804EE8F0[3][10][2];
-struct DigitPosition { float x,y; };
+#include "game/types/DigitPosition.h"
 extern DigitPosition lbl_804EE9E0[2][10];
-struct DigitMap { int digits[10]; };
+#include "game/types/DigitMap.h"
 extern const DigitMap RaceDigits_rodata_803EF800;
 void PreloadResource(int);
 void *SpriteHandle_CreateDefault(ResCtrl *, int);

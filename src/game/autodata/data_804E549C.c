@@ -32,13 +32,7 @@ extern char lbl_806D00B0[];
 extern char lbl_806D00B8[];
 
 /* layout as declared in src/game/CardCharLookup.c */
-typedef struct CardCharEntry {
-    unsigned short card;
-    unsigned short code;
-    int width;
-    int height;
-    int advance;
-} CardCharEntry;
+#include "game/types/CardCharEntry.h"
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on

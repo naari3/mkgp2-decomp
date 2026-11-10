@@ -5,7 +5,7 @@
 #include "game/DrawEffectAccess.h"
 #include "game/DrawEffectWheelPairState.h"
 
-typedef struct { float v[4]; } PhaseTable;
+#include "game/types/PhaseTable.h"
 
 extern const PhaseTable DrawEffect_Cb_KartWheel_DualSpawn_rodata_8032A6D4;
 extern int Rand_RangeInt(int lo, int hi);

@@ -3,11 +3,7 @@
 
 #include "game/MathInline.h"
 
-typedef struct PCPathSeg {
-    Vec3f a;
-    Vec3f b;
-    Vec3f c;
-} PCPathSeg;
+#include "game/types/PCPathSeg.h"
 
 typedef struct LineCamCObj {
     unsigned char pad00[0x8];
