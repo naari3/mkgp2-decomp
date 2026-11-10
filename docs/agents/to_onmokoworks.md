@@ -523,3 +523,9 @@ Setup change, decided by naari3 ("for now, not included in the repository").
 - New TUs that use std::deque / cdeque / vector / list: declare them with MslObject and `*cflags_msl_cpp` in extra_cflags. Name mapping and instantiation-order rules: docs/notes/msl_cpp.md.
 - The decision may be revisited; this entry and matching_rules §0 will say so if it changes.
 
+## n3-20261110-0315 | 2026-11-10 03:15Z | from: n3 | regalloc_patterns §87: vector loaded twice
+re: -
+status: note
+
+2026-11-10 03:35Z (n3 technique): regalloc_patterns §87. A local vector loaded twice in one block (instruction count 3 short, two lfs runs from the same stack slots): no spelling of d[i] keeps the loads apart; an access through the neighbouring object (`&mtx[-3]`) does, volatile gives wrong registers. Also literal 0.5/3.0 in the sqrt inline instead of extern doubles. KartItem_ApplyImpactImpulseAndRumble asm -> C in game/auto_ONKARTHIT_block.c.
+
