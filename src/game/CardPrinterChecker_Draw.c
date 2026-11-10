@@ -1,3 +1,4 @@
+#include "game/types/text_word.h"
 /* --- owned .rodata 0x803134C0..0x80313648 (tools/own_data.py) --- */
 extern char lbl_806D33D8[];
 extern char lbl_806D33E0[];
@@ -5,15 +6,15 @@ extern char lbl_806D33E8[];
 extern char lbl_806D33F0[];
 extern char lbl_806D33F8[];
 #pragma force_active on
-const unsigned int CardPrinterChecker_Draw_rodata_803134C0[10] = { 0x838A815B, 0x835F8389, 0x8343835E, 0x82CC90DA, 0x91B182F0, 0x8A6D9446, 0x82B582C4, 0x82AD82BE, 0x82B382A2, 0x00000000 };
+const unsigned int CardPrinterChecker_Draw_rodata_803134C0[10] = { TEXT_WORD(0x83, 0x8A, 0x81, '['), TEXT_WORD(0x83, '_', 0x83, 0x89), TEXT_WORD(0x83, 'C', 0x83, '^'), TEXT_WORD(0x82, 0xCC, 0x90, 0xDA), TEXT_WORD(0x91, 0xB1, 0x82, 0xF0), TEXT_WORD(0x8A, 'm', 0x94, 'F'), TEXT_WORD(0x82, 0xB5, 0x82, 0xC4), TEXT_WORD(0x82, 0xAD, 0x82, 0xBE), TEXT_WORD(0x82, 0xB3, 0x82, 0xA2), 0x00000000 };
 const char lbl_803134E8[] = "Please confirm card R/W connections.";
-const unsigned int CardPrinterChecker_Draw_rodata_80313510[9] = { 0x8366815B, 0x835E82F0, 0x90B382B5, 0x82AD95DB, 0x91B682C5, 0x82AB82DC, 0x82B982F1, 0x82C582B5, 0x82BD0000 };
+const unsigned int CardPrinterChecker_Draw_rodata_80313510[9] = { TEXT_WORD(0x83, 'f', 0x81, '['), TEXT_WORD(0x83, '^', 0x82, 0xF0), TEXT_WORD(0x90, 0xB3, 0x82, 0xB5), TEXT_WORD(0x82, 0xAD, 0x95, 0xDB), TEXT_WORD(0x91, 0xB6, 0x82, 0xC5), TEXT_WORD(0x82, 0xAB, 0x82, 0xDC), TEXT_WORD(0x82, 0xB9, 0x82, 0xF1), TEXT_WORD(0x82, 0xC5, 0x82, 0xB5), TEXT_WORD(0x82, 0xBD, 0, 0) };
 const char lbl_80313534[] = "Data save failure";
-const unsigned int CardPrinterChecker_Draw_rodata_80313548[6] = { 0x834A815B, 0x836882AA, 0x8B6C82DC, 0x82E882DC, 0x82B582BD, 0x00000000 };
+const unsigned int CardPrinterChecker_Draw_rodata_80313548[6] = { TEXT_WORD(0x83, 'J', 0x81, '['), TEXT_WORD(0x83, 'h', 0x82, 0xAA), TEXT_WORD(0x8B, 'l', 0x82, 0xDC), TEXT_WORD(0x82, 0xE8, 0x82, 0xDC), TEXT_WORD(0x82, 0xB5, 0x82, 0xBD), 0x00000000 };
 const char lbl_80313560[] = "Card jam.";
-const unsigned int CardPrinterChecker_Draw_rodata_8031356C[10] = { 0x8366815B, 0x835E82F0, 0x90B382B5, 0x82AD8376, 0x838A8393, 0x836782C5, 0x82AB82DC, 0x82B982F1, 0x82C582B5, 0x82BD0000 };
+const unsigned int CardPrinterChecker_Draw_rodata_8031356C[10] = { TEXT_WORD(0x83, 'f', 0x81, '['), TEXT_WORD(0x83, '^', 0x82, 0xF0), TEXT_WORD(0x90, 0xB3, 0x82, 0xB5), TEXT_WORD(0x82, 0xAD, 0x83, 'v'), TEXT_WORD(0x83, 0x8A, 0x83, 0x93), TEXT_WORD(0x83, 'g', 0x82, 0xC5), TEXT_WORD(0x82, 0xAB, 0x82, 0xDC), TEXT_WORD(0x82, 0xB9, 0x82, 0xF1), TEXT_WORD(0x82, 0xC5, 0x82, 0xB5), TEXT_WORD(0x82, 0xBD, 0, 0) };
 const char lbl_80313594[] = "Card printing has failed";
-const unsigned int CardPrinterChecker_Draw_rodata_803135B0[9] = { 0x838A815B, 0x835F8389, 0x8343835E, 0x82C988D9, 0x8FED82AA, 0x94AD90B6, 0x82B582DC, 0x82B582BD, 0x00000000 };
+const unsigned int CardPrinterChecker_Draw_rodata_803135B0[9] = { TEXT_WORD(0x83, 0x8A, 0x81, '['), TEXT_WORD(0x83, '_', 0x83, 0x89), TEXT_WORD(0x83, 'C', 0x83, '^'), TEXT_WORD(0x82, 0xC9, 0x88, 0xD9), TEXT_WORD(0x8F, 0xED, 0x82, 0xAA), TEXT_WORD(0x94, 0xAD, 0x90, 0xB6), TEXT_WORD(0x82, 0xB5, 0x82, 0xDC), TEXT_WORD(0x82, 0xB5, 0x82, 0xBD), 0x00000000 };
 const char lbl_803135D4[] = "Card writer error";
 const char *const CardPrinterChecker_DrawStatusErrorLabel_rodata_803135E8[6][2][2] = { (const char *)&CardPrinterChecker_Draw_rodata_803134C0, (const char *)&lbl_806D33D8, (const char *)&lbl_803134E8, (const char *)&lbl_806D33D8, (const char *)&CardPrinterChecker_Draw_rodata_80313510, (const char *)&lbl_806D33E0, (const char *)&lbl_80313534, (const char *)&lbl_806D33E0, (const char *)&CardPrinterChecker_Draw_rodata_80313548, (const char *)&lbl_806D33E8, (const char *)&lbl_80313560, (const char *)&lbl_806D33E8, (const char *)&CardPrinterChecker_Draw_rodata_8031356C, (const char *)&lbl_806D33F0, (const char *)&lbl_80313594, (const char *)&lbl_806D33F0, (const char *)&CardPrinterChecker_Draw_rodata_803135B0, (const char *)&lbl_806D33F8, (const char *)&lbl_803135D4, (const char *)&lbl_806D33F8, 0, 0, 0, 0 };
 #pragma force_active reset

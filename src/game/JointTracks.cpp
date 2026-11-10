@@ -1,3 +1,4 @@
+#include "game/types/text_word.h"
 #include "game/JointTracksPrivate.h"
 /* --- owned .rodata 0x803E5D38..0x803EEE30 (tools/own_data.py) --- */
 extern "C" char lbl_806DBDD8[];
@@ -4051,10 +4052,10 @@ extern "C" const void *const JointTracks_rodata_803EEB68[48] = {
 };
 extern "C" const char lbl_803EEC28[] = "DNA_dino_e.dat";
 extern "C" const void *const lbl_803EEC38[16] = {
-    (void *)0x444E415F,
-    (void *)0x64696E6F,
-    (void *)0x5F65722E,
-    (void *)0x64617400,
+    (void *)TEXT_WORD('D', 'N', 'A', '_'),
+    (void *)TEXT_WORD('d', 'i', 'n', 'o'),
+    (void *)TEXT_WORD('_', 'e', 'r', '.'),
+    (void *)TEXT_WORD('d', 'a', 't', 0),
     (void *)&lbl_803EEC28,
     (void *)&JointTracks_rodata_803EE440,
     (void *)0x0,
@@ -4069,11 +4070,11 @@ extern "C" const void *const lbl_803EEC38[16] = {
     (void *)0x0
 };
 extern "C" const void *const lbl_803EEC78[13] = {
-    (void *)0x444E415F,
-    (void *)0x73746172,
-    (void *)0x74676174,
-    (void *)0x655F612E,
-    (void *)0x64617400,
+    (void *)TEXT_WORD('D', 'N', 'A', '_'),
+    (void *)TEXT_WORD('s', 't', 'a', 'r'),
+    (void *)TEXT_WORD('t', 'g', 'a', 't'),
+    (void *)TEXT_WORD('e', '_', 'a', '.'),
+    (void *)TEXT_WORD('d', 'a', 't', 0),
     (void *)&lbl_803EEC78,
     (void *)&JointTracks_rodata_803EEA60,
     (void *)0x0,

@@ -1,3 +1,4 @@
+#include "game/types/text_word.h"
 /* .rodata 0x80363D30..0x803678D8, owned by game/Scene_8014E0C4.cpp.
  * Generated from the DOL; objects are in link order. Pointer slots are
  * struct fields so the relocations survive. */
@@ -930,7 +931,7 @@ extern const AttractEntry Scene_8014E0C4_rodata_80367488[12] = {
 };
 extern const char lbl_80367518[] = "clCSSceneAttract";
 extern const unsigned int lbl_8036752C[5] = {
-    0x636C5363, 0x656E6549, 0x6E746572, 0x66616365, 0x00000000,
+    TEXT_WORD('c', 'l', 'S', 'c'), TEXT_WORD('e', 'n', 'e', 'I'), TEXT_WORD('n', 't', 'e', 'r'), TEXT_WORD('f', 'a', 'c', 'e'), 0x00000000,
 };
 static const char lbl_80367540[] = "dk_demo_map.dat";
 static const char lbl_80367550[] = "MR_highway_DEMO_A.dat";
@@ -941,81 +942,81 @@ static const char lbl_8036759C[] = "eff_plate_cream_s.dat";
 static const char lbl_803675B4[] = "MAIN  BD ID %s";
 static const char lbl_803675C4[] = "MEDIA BD ID %s";
 static const unsigned int lbl_803675D4[21] = {
-    0x655F6174, 0x5F73705F, 0x6E696E74, 0x656E646F, 0x2E74706C, 0x00000000,
-    0x61745F73, 0x705F6E69, 0x6E74656E, 0x646F5F6A, 0x2E74706C, 0x00000000,
-    0x655F6174, 0x5F73705F, 0x6E616D63, 0x6F2E7470, 0x6C000000, 0x61745F73,
-    0x705F6E61, 0x6D636F2E, 0x74706C00,
+    TEXT_WORD('e', '_', 'a', 't'), TEXT_WORD('_', 's', 'p', '_'), TEXT_WORD('n', 'i', 'n', 't'), TEXT_WORD('e', 'n', 'd', 'o'), TEXT_WORD('.', 't', 'p', 'l'), 0x00000000,
+    TEXT_WORD('a', 't', '_', 's'), TEXT_WORD('p', '_', 'n', 'i'), TEXT_WORD('n', 't', 'e', 'n'), TEXT_WORD('d', 'o', '_', 'j'), TEXT_WORD('.', 't', 'p', 'l'), 0x00000000,
+    TEXT_WORD('e', '_', 'a', 't'), TEXT_WORD('_', 's', 'p', '_'), TEXT_WORD('n', 'a', 'm', 'c'), TEXT_WORD('o', '.', 't', 'p'), TEXT_WORD('l', 0, 0, 0), TEXT_WORD('a', 't', '_', 's'),
+    TEXT_WORD('p', '_', 'n', 'a'), TEXT_WORD('m', 'c', 'o', '.'), TEXT_WORD('t', 'p', 'l', 0),
 };
 static const unsigned int lbl_80367628[4] = {
-    0x4C6F6F70, 0x436F756E, 0x74203A20, 0x25640000,
+    TEXT_WORD('L', 'o', 'o', 'p'), TEXT_WORD('C', 'o', 'u', 'n'), TEXT_WORD('t', ' ', ':', ' '), TEXT_WORD('%', 'd', 0, 0),
 };
 static const unsigned int lbl_80367638[4] = {
-    0x5461736B, 0x496E6465, 0x78203A20, 0x25640000,
+    TEXT_WORD('T', 'a', 's', 'k'), TEXT_WORD('I', 'n', 'd', 'e'), TEXT_WORD('x', ' ', ':', ' '), TEXT_WORD('%', 'd', 0, 0),
 };
 static const unsigned int lbl_80367648[4] = {
-    0x20202054, 0x61736B49, 0x44203A20, 0x25640000,
+    TEXT_WORD(' ', ' ', ' ', 'T'), TEXT_WORD('a', 's', 'k', 'I'), TEXT_WORD('D', ' ', ':', ' '), TEXT_WORD('%', 'd', 0, 0),
 };
 static const unsigned int lbl_80367658[4] = {
-    0x20546173, 0x6B4E616D, 0x65203A20, 0x25730000,
+    TEXT_WORD(' ', 'T', 'a', 's'), TEXT_WORD('k', 'N', 'a', 'm'), TEXT_WORD('e', ' ', ':', ' '), TEXT_WORD('%', 's', 0, 0),
 };
 static const unsigned int lbl_80367668[5] = {
-    0x63686172, 0x615F706F, 0x705F3031, 0x5F6A6F69, 0x6E740000,
+    TEXT_WORD('c', 'h', 'a', 'r'), TEXT_WORD('a', '_', 'p', 'o'), TEXT_WORD('p', '_', '0', '1'), TEXT_WORD('_', 'j', 'o', 'i'), TEXT_WORD('n', 't', 0, 0),
 };
 static const unsigned int lbl_8036767C[5] = {
-    0x63686172, 0x615F706F, 0x705F3032, 0x5F6A6F69, 0x6E740000,
+    TEXT_WORD('c', 'h', 'a', 'r'), TEXT_WORD('a', '_', 'p', 'o'), TEXT_WORD('p', '_', '0', '2'), TEXT_WORD('_', 'j', 'o', 'i'), TEXT_WORD('n', 't', 0, 0),
 };
 static const unsigned int lbl_80367690[5] = {
-    0x63686172, 0x615F706F, 0x705F3033, 0x5F6A6F69, 0x6E740000,
+    TEXT_WORD('c', 'h', 'a', 'r'), TEXT_WORD('a', '_', 'p', 'o'), TEXT_WORD('p', '_', '0', '3'), TEXT_WORD('_', 'j', 'o', 'i'), TEXT_WORD('n', 't', 0, 0),
 };
 static const unsigned int lbl_803676A4[5] = {
-    0x63686172, 0x615F706F, 0x705F3034, 0x5F6A6F69, 0x6E740000,
+    TEXT_WORD('c', 'h', 'a', 'r'), TEXT_WORD('a', '_', 'p', 'o'), TEXT_WORD('p', '_', '0', '4'), TEXT_WORD('_', 'j', 'o', 'i'), TEXT_WORD('n', 't', 0, 0),
 };
 static const unsigned int lbl_803676B8[5] = {
-    0x63686172, 0x615F706F, 0x705F3035, 0x5F6A6F69, 0x6E740000,
+    TEXT_WORD('c', 'h', 'a', 'r'), TEXT_WORD('a', '_', 'p', 'o'), TEXT_WORD('p', '_', '0', '5'), TEXT_WORD('_', 'j', 'o', 'i'), TEXT_WORD('n', 't', 0, 0),
 };
 static const unsigned int lbl_803676CC[5] = {
-    0x63686172, 0x615F706F, 0x705F3036, 0x5F6A6F69, 0x6E740000,
+    TEXT_WORD('c', 'h', 'a', 'r'), TEXT_WORD('a', '_', 'p', 'o'), TEXT_WORD('p', '_', '0', '6'), TEXT_WORD('_', 'j', 'o', 'i'), TEXT_WORD('n', 't', 0, 0),
 };
 static const unsigned int lbl_803676E0[5] = {
-    0x63686172, 0x615F706F, 0x705F3037, 0x5F6A6F69, 0x6E740000,
+    TEXT_WORD('c', 'h', 'a', 'r'), TEXT_WORD('a', '_', 'p', 'o'), TEXT_WORD('p', '_', '0', '7'), TEXT_WORD('_', 'j', 'o', 'i'), TEXT_WORD('n', 't', 0, 0),
 };
 static const unsigned int lbl_803676F4[5] = {
-    0x63686172, 0x615F706F, 0x705F3038, 0x5F6A6F69, 0x6E740000,
+    TEXT_WORD('c', 'h', 'a', 'r'), TEXT_WORD('a', '_', 'p', 'o'), TEXT_WORD('p', '_', '0', '8'), TEXT_WORD('_', 'j', 'o', 'i'), TEXT_WORD('n', 't', 0, 0),
 };
 static const unsigned int lbl_80367708[5] = {
-    0x63686172, 0x615F706F, 0x705F3039, 0x5F6A6F69, 0x6E740000,
+    TEXT_WORD('c', 'h', 'a', 'r'), TEXT_WORD('a', '_', 'p', 'o'), TEXT_WORD('p', '_', '0', '9'), TEXT_WORD('_', 'j', 'o', 'i'), TEXT_WORD('n', 't', 0, 0),
 };
 static const unsigned int lbl_8036771C[5] = {
-    0x63686172, 0x615F706F, 0x705F3130, 0x5F6A6F69, 0x6E740000,
+    TEXT_WORD('c', 'h', 'a', 'r'), TEXT_WORD('a', '_', 'p', 'o'), TEXT_WORD('p', '_', '1', '0'), TEXT_WORD('_', 'j', 'o', 'i'), TEXT_WORD('n', 't', 0, 0),
 };
 static const unsigned int lbl_80367730[5] = {
-    0x63686172, 0x615F706F, 0x705F3131, 0x5F6A6F69, 0x6E740000,
+    TEXT_WORD('c', 'h', 'a', 'r'), TEXT_WORD('a', '_', 'p', 'o'), TEXT_WORD('p', '_', '1', '1'), TEXT_WORD('_', 'j', 'o', 'i'), TEXT_WORD('n', 't', 0, 0),
 };
 static const unsigned int lbl_80367744[5] = {
-    0x63686172, 0x615F706F, 0x705F3132, 0x5F6A6F69, 0x6E740000,
+    TEXT_WORD('c', 'h', 'a', 'r'), TEXT_WORD('a', '_', 'p', 'o'), TEXT_WORD('p', '_', '1', '2'), TEXT_WORD('_', 'j', 'o', 'i'), TEXT_WORD('n', 't', 0, 0),
 };
 static const unsigned int lbl_80367758[4] = {
-    0x6D617269, 0x6F5F636F, 0x696E2E64, 0x61740000,
+    TEXT_WORD('m', 'a', 'r', 'i'), TEXT_WORD('o', '_', 'c', 'o'), TEXT_WORD('i', 'n', '.', 'd'), TEXT_WORD('a', 't', 0, 0),
 };
 extern const char lbl_80367768[] = "clCSPartsTitle";
 extern const char lbl_80367778[] = "clCSSceneAttract::clTaskInterface";
 extern const char lbl_8036779C[] = "clCSPartsRanking";
 static const unsigned int Scene_8014E0C4_rodata_803677B0[6] = {
-    0x54494D45, 0x20415454, 0x41434B81, 0x4052414E, 0x4B494E47, 0x00000000,
+    TEXT_WORD('T', 'I', 'M', 'E'), TEXT_WORD(' ', 'A', 'T', 'T'), TEXT_WORD('A', 'C', 'K', 0x81), TEXT_WORD('@', 'R', 'A', 'N'), TEXT_WORD('K', 'I', 'N', 'G'), 0x00000000,
 };
 static const unsigned int Scene_8014E0C4_rodata_803677C8[7] = {
-    0x835E8343, 0x83808341, 0x835E8362, 0x834E8140, 0x83898393, 0x834C8393,
-    0x834F0000,
+    TEXT_WORD(0x83, '^', 0x83, 'C'), TEXT_WORD(0x83, 0x80, 0x83, 'A'), TEXT_WORD(0x83, '^', 0x83, 'b'), TEXT_WORD(0x83, 'N', 0x81, '@'), TEXT_WORD(0x83, 0x89, 0x83, 0x93), TEXT_WORD(0x83, 'L', 0x83, 0x93),
+    TEXT_WORD(0x83, 'O', 0, 0),
 };
 extern const char lbl_803677E4[] = "clCSPartsNamco";
 extern const char lbl_803677F4[] = "clCSPartsNintendo";
 extern const unsigned int sdata_806CF750_rodata_80367808[10] = {
-    0x74655369, 0x6E676C65, 0x746F6E3C, 0x636C4D65, 0x6E75496E, 0x7075743E,
-    0x00000000, 0x636C4D65, 0x6E75496E, 0x70757400,
+    TEXT_WORD('t', 'e', 'S', 'i'), TEXT_WORD('n', 'g', 'l', 'e'), TEXT_WORD('t', 'o', 'n', '<'), TEXT_WORD('c', 'l', 'M', 'e'), TEXT_WORD('n', 'u', 'I', 'n'), TEXT_WORD('p', 'u', 't', '>'),
+    0x00000000, TEXT_WORD('c', 'l', 'M', 'e'), TEXT_WORD('n', 'u', 'I', 'n'), TEXT_WORD('p', 'u', 't', 0),
 };
 extern const unsigned int sdata_806CF750_rodata_80367830[7] = {
-    0x636C4353, 0x50617274, 0x7353616C, 0x65730000, 0x636C4143, 0x616D6572,
-    0x61000000,
+    TEXT_WORD('c', 'l', 'C', 'S'), TEXT_WORD('P', 'a', 'r', 't'), TEXT_WORD('s', 'S', 'a', 'l'), TEXT_WORD('e', 's', 0, 0), TEXT_WORD('c', 'l', 'A', 'C'), TEXT_WORD('a', 'm', 'e', 'r'),
+    TEXT_WORD('a', 0, 0, 0),
 };
 extern const char lbl_8036784C[] = "clCamera";
 extern const char lbl_80367858[] = "clCSPartsKart";

@@ -1,3 +1,4 @@
+#include "game/types/text_word.h"
 /*
  * 0x8014ADB4..0x8014CE74: clCSSceneGetTitle (rank board / prize panel) result-screen
  * controller. Split out of RaceHud_80147470.cpp because this TU owns the pooled
@@ -746,19 +747,19 @@ extern "C" const float lbl_80363C78[3] = {0.0f, 0.0f, 0.0f};
 static const GtVec sPumpPairRot = {0.0f, 39.5f, 1.0f};
 #pragma force_active reset
 extern "C" const unsigned int lbl_80363C90[5] = {
-    0x636C4353, 0x5363656E, 0x65476574, 0x5469746C, 0x65000000,
+    TEXT_WORD('c', 'l', 'C', 'S'), TEXT_WORD('S', 'c', 'e', 'n'), TEXT_WORD('e', 'G', 'e', 't'), TEXT_WORD('T', 'i', 't', 'l'), TEXT_WORD('e', 0, 0, 0),
 };
 extern "C" const unsigned int lbl_80363CA4[5] = {
-    0x636C5363, 0x656E6549, 0x6E746572, 0x66616365, 0x00000000,
+    TEXT_WORD('c', 'l', 'S', 'c'), TEXT_WORD('e', 'n', 'e', 'I'), TEXT_WORD('n', 't', 'e', 'r'), TEXT_WORD('f', 'a', 'c', 'e'), 0x00000000,
 };
 extern "C" const unsigned int lbl_80363CB8[4] = {
-    0x20676F74, 0x20612070, 0x72697A65, 0x20210000,
+    TEXT_WORD(' ', 'g', 'o', 't'), TEXT_WORD(' ', 'a', ' ', 'p'), TEXT_WORD('r', 'i', 'z', 'e'), TEXT_WORD(' ', '!', 0, 0),
 };
 extern "C" const unsigned int data_8048EEE8_rodata_80363CC8[3] = {
-    0x97448F9F, 0x82B582BD, 0x00000000,
+    TEXT_WORD(0x97, 'D', 0x8F, 0x9F), TEXT_WORD(0x82, 0xB5, 0x82, 0xBD), 0x00000000,
 };
 extern "C" const unsigned int data_8048EEE8_rodata_80363CD4[7] = {
-    0x82C982CD, 0x8FDC9569, 0x82AA91A1, 0x82E782EA, 0x82DC82B5, 0x82BD8149, 0x00000000,
+    TEXT_WORD(0x82, 0xC9, 0x82, 0xCD), TEXT_WORD(0x8F, 0xDC, 0x95, 'i'), TEXT_WORD(0x82, 0xAA, 0x91, 0xA1), TEXT_WORD(0x82, 0xE7, 0x82, 0xEA), TEXT_WORD(0x82, 0xDC, 0x82, 0xB5), TEXT_WORD(0x82, 0xBD, 0x81, 'I'), 0x00000000,
 };
 extern "C" const char sdata_806CF750_rodata_80363CF0[0x14] = "clCSSceneAccolade";
 static const char sPumpFile[0x14] = "it_w_09_pump.dat";

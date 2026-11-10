@@ -186,6 +186,16 @@ end in a NUL; floats that look like text, such as 0x3F333333 0x3F666666, are
 kept out). `--fix <files>` rewrites them. Bytes outside ASCII are written as
 numbers (`TEXT_WORD(0x83, 0x5E, 0x83, 0x43)`).
 
+All recognised runs are converted (about 3200 words in 30 files: the map
+effect and joint name tables in the autodata units, the banned-word tables
+in `NameCheck_CardName.c`, the card and printer messages, scene labels). In
+an `int` array that wrote the word as a negative decimal the tool adds
+`(int)`. Not converted, because they are not strings but would need the same
+care on a host that reads them as bytes: `KartDriver_InitFull_data_803F5928`
+in `autodata/data_803F57E0.c` (a byte table typed as 30 words). Single words
+of one to three characters outside a run are left as numbers unless they
+follow the rules above; check a table by eye when one misbehaves.
+
 ## Pointers to member functions (item 14)
 
 MWCC's pointer to member function is 12 bytes, `{ long thisDelta; long

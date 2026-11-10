@@ -1,3 +1,4 @@
+#include "game/types/text_word.h"
 /*
  * 0x80231D50..0x802321D4: clFAllDisp, the pulsing "ALL" banner (resource
  * 0xC6F) that slides in above the face icons.
@@ -15,7 +16,7 @@ void fn_8011FAFC(ResCtrl *r, int prio);
 }
 
 #pragma force_active on
-extern const unsigned int lbl_803DB630[40] = {0x636C466C, 0x6F617443, 0x6F756E74, 0x65720000, 0x636C436F, 0x756E7465, 0x72496E74, 0x65726661, 0x63650000, 0x636C496E, 0x74436F75, 0x6E746572, 0x00000000, 0x636C4354, 0x61736B49, 0x6E746572, 0x66616365, 0x00000000, 0x636C5954, 0x61736B49, 0x6E746572, 0x66616365, 0x00000000, 0x636C4661, 0x63654E52, 0x69676874, 0x45796500, 0x636C4661, 0x63654E61, 0x6D696461, 0x49546173, 0x6B000000, 0x636C4661, 0x63654E4C, 0x65667445, 0x79650000, 0x636C4661, 0x63654E54, 0x65617273, 0x00000000};
+extern const unsigned int lbl_803DB630[40] = {TEXT_WORD('c', 'l', 'F', 'l'), TEXT_WORD('o', 'a', 't', 'C'), TEXT_WORD('o', 'u', 'n', 't'), TEXT_WORD('e', 'r', 0, 0), TEXT_WORD('c', 'l', 'C', 'o'), TEXT_WORD('u', 'n', 't', 'e'), TEXT_WORD('r', 'I', 'n', 't'), TEXT_WORD('e', 'r', 'f', 'a'), TEXT_WORD('c', 'e', 0, 0), TEXT_WORD('c', 'l', 'I', 'n'), TEXT_WORD('t', 'C', 'o', 'u'), TEXT_WORD('n', 't', 'e', 'r'), 0x00000000, TEXT_WORD('c', 'l', 'C', 'T'), TEXT_WORD('a', 's', 'k', 'I'), TEXT_WORD('n', 't', 'e', 'r'), TEXT_WORD('f', 'a', 'c', 'e'), 0x00000000, TEXT_WORD('c', 'l', 'Y', 'T'), TEXT_WORD('a', 's', 'k', 'I'), TEXT_WORD('n', 't', 'e', 'r'), TEXT_WORD('f', 'a', 'c', 'e'), 0x00000000, TEXT_WORD('c', 'l', 'F', 'a'), TEXT_WORD('c', 'e', 'N', 'R'), TEXT_WORD('i', 'g', 'h', 't'), TEXT_WORD('E', 'y', 'e', 0), TEXT_WORD('c', 'l', 'F', 'a'), TEXT_WORD('c', 'e', 'N', 'a'), TEXT_WORD('m', 'i', 'd', 'a'), TEXT_WORD('I', 'T', 'a', 's'), TEXT_WORD('k', 0, 0, 0), TEXT_WORD('c', 'l', 'F', 'a'), TEXT_WORD('c', 'e', 'N', 'L'), TEXT_WORD('e', 'f', 't', 'E'), TEXT_WORD('y', 'e', 0, 0), TEXT_WORD('c', 'l', 'F', 'a'), TEXT_WORD('c', 'e', 'N', 'T'), TEXT_WORD('e', 'a', 'r', 's'), 0x00000000};
 #pragma force_active reset
 
 class clFAllDisp {

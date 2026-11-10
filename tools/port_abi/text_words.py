@@ -12,11 +12,14 @@ usage: python3 tools/port_abi/text_words.py [paths...]          list (default: s
            as TEXT_WORD('a','b','c','d') (include/game/types/text_word.h),
            which is the same number under MWCC and the same bytes on a
            little-endian host.
+       --short (first option) also takes one- and two-character full-width
+           strings; use it on files known to hold text tables, after
+           reading the listing (a lone word can be a number).
 """
 import os, re, struct, sys
 
 DEF = re.compile(r'^((?![ \t]*")[^\n;{}()=#/]*?\b(\w+)[ \t]*(?:\[[^\]\n]*\][ \t]*)*(?:__attribute__\(\(aligned\(\d+\)\)\))?\s*=\s*\{)(.*?)(\s*\};)', re.M | re.S)
-HEX = re.compile(r'^(?:\(\s*[\w \*]+\s*\)\s*)?(0x[0-9A-Fa-f]{6,8}|\d{7,10})[uUlL]*$')
+HEX = re.compile(r'^(?:\(\s*[\w \*]+\s*\)\s*)?(0x[0-9A-Fa-f]{6,8}|-?\d{7,10})[uUlL]*$')
 
 
 ZERO = re.compile(r'^(?:\(\s*[\w \*]+\s*\)\s*)?(?:0x0+|0+|NULL|0\.0f?)[uUlL]*$')
@@ -48,13 +51,15 @@ def items(body):
 
 
 LOOSE = False
+SHORT = False   # --short: also one- and two-character full-width strings
 
 
 def word_of(v):
     m = HEX.match(v) if v else None
     if not m: return None
     w = int(m.group(1), 0)
-    return w if w <= 0xffffffff else None
+    if w < 0: w += 1 << 32          # negative decimal in an int array
+    return w if 0 <= w <= 0xffffffff else None
 
 
 def nice_float(w):
@@ -65,14 +70,16 @@ def nice_float(w):
 
 def valid(cur):
     """cur: [(index, word)]; is it one or more whole strings?"""
-    if len(cur) < 2: return False
+    if len(cur) < 2 and not SHORT: return False
     bs = b''.join(w.to_bytes(4, 'big') for _, w in cur).rstrip(b'\0')
     try: t = bs.decode('cp932')
     except UnicodeDecodeError: return False
     if any((ord(c) < 0x20 and c not in '\t\n\r') or c == '\x7f' for c in t): return False
     # half-width kana, private use and stray bytes: numbers that happen to decode
-    if any(0x80 <= ord(c) < 0x3000 or 0xff61 <= ord(c) <= 0xff9f or 0xe000 <= ord(c) <= 0xf8ff for c in t): return False
-    if sum(1 for c in t if c.isalpha()) < 5: return False
+    if any((0x80 <= ord(c) < 0x3000 and c not in '\u00d7\u00f7\u00b0\u00b1') or 0xff61 <= ord(c) <= 0xff9f or 0xe000 <= ord(c) <= 0xf8ff for c in t): return False
+    wide = all(ord(c) >= 0x80 for c in t) and len(t) >= (1 if SHORT else 3)   # only full-width text
+    if sum(1 for c in t if c.isalnum()) < 5 and not wide: return False
+    if not wide and any(ord(c) >= 0x80 for c in t) and len(t) < 8: return False   # short mixed: likely numbers
     if all(nice_float(w) for _, w in cur): return False
     return True
 
@@ -137,6 +144,7 @@ def fix(path):
                 hm = HEX.match(t)
                 pre = t[:hm.start(1)]
                 new = pre + 'TEXT_WORD(%s)' % ', '.join(ch(c) for c in w.to_bytes(4, 'big'))
+                if hm.group(1).startswith('-'): new = '(int)' + new   # keeps a signed member signed
                 edits.append((a, b, new))
             n += 1
         for a, b, new in sorted(edits, reverse=True):
@@ -164,6 +172,9 @@ def scan(path):
 
 
 def main():
+    global SHORT
+    if sys.argv[1:2] == ['--short']:
+        SHORT = True; del sys.argv[1]
     if sys.argv[1:2] == ['--fix']:
         for f in sys.argv[2:]:
             print('%s: %d runs' % (f, fix(f)))
