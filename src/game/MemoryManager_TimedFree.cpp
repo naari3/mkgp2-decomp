@@ -23,6 +23,12 @@ public:
 
     inline ~ScopedTimer()
     {
+#ifdef NON_MATCHING
+        /* Equivalent C++ for the PC port (docs/nonmatching_c.md). */
+        unsigned int elapsed = ((OSGetTick() - m_startTick) << 3) /
+            (((*(volatile unsigned int *)0x800000F8) >> 2) / 125000);
+        Profiler_RecordFrame(m_slot, (float)elapsed / 1000000.0f);
+#else
         unsigned int endTick;
         register int slot;
         register float value;
@@ -72,6 +78,7 @@ public:
             fmr value, f1
         }
         Profiler_RecordFrame(slot, value);
+#endif
     }
 
 private:

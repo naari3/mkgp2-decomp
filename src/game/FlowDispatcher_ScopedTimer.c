@@ -115,6 +115,16 @@ extern "C" FlowDispatcher *FlowDispatcher_Create(FlowEntry *table, int start) {
 #pragma exceptions reset
 
 #pragma exceptions off
+#ifdef NON_MATCHING
+/* Equivalent C++ for the PC port (docs/nonmatching_c.md): the natural
+ * destructor, as MainGameLoop's inlined copies have it. */
+ScopedTimer::~ScopedTimer()
+{
+    unsigned int elapsed = ((OSGetTick() - m_startTick) << 3) /
+        (((*(volatile unsigned int *)0x800000F8) >> 2) / 125000);
+    Profiler_RecordFrame(m_slot, (float)elapsed / 1000000.0f);
+}
+#else
 ScopedTimer::~ScopedTimer()
 {
     register int slot;
@@ -155,5 +165,6 @@ ScopedTimer::~ScopedTimer()
 
     Profiler_RecordFrame(slot, value);
 }
+#endif
 #pragma exceptions reset
 
