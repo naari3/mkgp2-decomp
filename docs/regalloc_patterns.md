@@ -2498,3 +2498,82 @@ extabindex row; `reorder_extab.py` silently skips a TU whose function set
 differs from `tools/extab_order.json`, so add the weak dtor to both lists.
 Check with `objdump -r -j extabindex` against the json when only extab bytes
 differ.
+
+## 92. Inline counter below the caller's named loop counter, flag coloured before backend temps, table address created after another one (fn_802353EC, 42 -> 10 diff lines, not matched yet, 11-10)
+
+clFlowCCCharaItem ctor with the inlined SetCharaGroup; each lever read from
+`tools/mwtrace.py --only COLOR` (saved registers in colouring order):
+
+1. Target `j` (loop counter inside the inline) in the LAST saved register,
+   below the ctor's named `i`: an inline local is a frontend temp and always
+   outranks named locals. Declare `int j;` as a block local of the caller's
+   loop body and pass it by reference (`int &j`, `for (j = 0; ...)`).
+2. `unsigned char special = 0; if (cond) special = 1;` puts the flag in a
+   frontend temp (coloured after the backend temps of the neighbouring index
+   math, it got r4). `unsigned char special = (a && b) || c;` materialises
+   the boolean in a backend temp created after them: flag in r0, the index
+   temps in r3/r4 as in the target.
+3. Two address computations swapped r3/r4 (`grp[i + 2]` vs
+   `kCharaGroups[which][index]`): the one that must take the lower register
+   has to be CREATED later. Pass the array and the slot (`groups, slot`) and
+   load `Sprite **group = groups[slot];` inside the inline after the `id`
+   line; keep `int group = i + 2;` as a named local in the caller or the
+   `+ 2` is folded into the displacement.
+
+Left: the special branch's `res` takes j's free register (r19) instead of
+the walker's (r23). `j` has degree 29 (survives the first simplify round and
+opens r19 before `res` is coloured); see docs/gave_up.md.
+
+## 93. Inline `this` temps coloured before an address CSE temp: call the method through one reused named pointer local (fn_801B9928, 99.77 -> 100, 11-10)
+
+Seven `arr[i]->SetPosition(x, y)` calls after `arr[i] = new Sprite(...)`. The
+target keeps `&arr2[3]` (a CSE temp, reused by the 7th call) in r4 and every
+sprite pointer in r5; ours the other way (40 lines). `regfix diag`: the seven
+loads are the inline's `this` temps (@657..@667, frontend temps, high vreg,
+coloured first, so they took r4) and the address is CSE temp @715 below them;
+"they must be coloured after it".
+
+A named local is numbered below every temp, so loading each sprite into ONE
+block-local pointer and calling through it moves all seven below the CSE temp:
+
+    { CourseSprite *s;
+      s = arr[0]; s->SetPosition(x, y);
+      s = arr[1]; s->SetPosition(x, y);  ... }
+
+(the frontend forwards `s` into the inline `this`, the value keeps the named
+local's number). Not the same: one local per call or a local declared at the
+store (tried 11-09, no gain), direct field stores without a local or a static
+inline taking the pointer (46-57 lines).
+
+**Check:** regfix diag says a short-lived `this` / pointer temp of repeated
+inline calls holds the register an address or CSE temp wants: assign the
+object to one reused block-local pointer before each call. Rule
+`inline-this-via-reused-named-local`.
+
+
+## 94. Three small levers from TimeAttackResult's ctor (fn_8021C070, 96.27 -> 100, 11-10)
+
+1. **`li rA,0; mr rB,rA` at a loop entry (ours `li; li`)**: rB is the
+   strength-reduced offset counter of `arr[i]`, rA is `i`. The copy only
+   appears when the loop sits in an INLINE (`static inline void
+   TA_makeDigits(TimeAttackResult *self, int &res) { for (int i = 0; ...) }`).
+   Written in the function body the two `LI` stay separate (mwtrace: source
+   line vs line -1 in one block); comma inits, a second counter, `j = i`,
+   declaration orders and the opt_* pragmas do not change that. A local that
+   must be coloured after the inline's temps goes in as a reference parameter
+   (the caller's named local, see 81).
+2. **Double bool conversion** (`subfic/cntlzw/srwi 5` then `neg/or/srwi 31`
+   for `x == 1` stored to a bool field; ours stored the compare directly or
+   with `rlwinm ...,24,31`): the value is an `int`-returning inline
+   (`return g_flag == 1 ? 1 : 0;`) passed to a `bool` PARAMETER of an inline
+   MEMBER function. A static inline setter, a cast or a bool local do not
+   convert twice.
+3. **Volatile registers of a field-by-field fill in descending order**
+   (target time r8, cup r7, ..., kart r0 with stores in field order): the
+   setter's parameters are in REVERSE field order
+   (`Set(int k, int ch, int c, bool rev, bool lng, int cu, int t)`), the body
+   stores in field order, called on the global directly (no `T *e` local).
+
+Also: float arguments in the wrong load order from `extern const float`
+(`lfs f5` before `lfs f1`): literals (see 83), `postprocess_sdata2.py` renames
+them.

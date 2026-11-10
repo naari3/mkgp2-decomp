@@ -4,6 +4,20 @@
 void DrawResultSprite(int layer, float x, float y, float alpha, int resource, int flags);
 #include "src/game/anon_8021BC44_nm1_rodata.inc"
 
+static inline int TA_isReverse() { return g_reverseRoundFlag == 1 ? 1 : 0; }
+/* The digit loop is an inline in the original: only then is the strength-
+ * reduced offset counter initialised with `mr` from `i` (regalloc_patterns 94).
+ * `res` is the caller's local (reference parameter), so it is coloured after
+ * the inline temps. */
+static inline void TA_makeDigits(TimeAttackResult *self, int &res) {
+    for (int i = 0; i < 9; i++) {
+        res = fn_80167744(8 - i, self->time) + 0x1531;
+        self->digits[i] = new clCSPartsResultTimeNum(res);
+        self->digits[i]->obj = 1;
+        self->digits[i]->m0C();
+    }
+}
+
 TimeAttackResult::TimeAttackResult()
     : state(0), timer(lbl_806DB074), x18(0), noRecord(0), rank(-1), showBanner(0), time(lbl_806DB074), best(lbl_806DB078), fade(lbl_806DB07C),
       credit(0), record(0), banner(0), title(0), coin(0), entry(0), prompt(new CoinPrompt(0x74, -1, 0x1872, -1, 4)),
@@ -19,14 +33,7 @@ TimeAttackResult::TimeAttackResult()
     name.c[4] = 0;
     name.c[5] = 0;
     best = time;
-    TaEntry *e = &lbl_80679C88;
-    e->time = lbl_806DB084 * g_totalRaceTime;
-    e->cup = g_cupId;
-    e->longRound = g_longRoundFlag;
-    e->reverse = g_reverseRoundFlag == 1;
-    e->cc = g_ccClass;
-    e->chara = g_characterId;
-    e->kart = g_kartVariant;
+    lbl_80679C88.Set(g_kartVariant, g_characterId, g_ccClass, TA_isReverse(), g_longRoundFlag, g_cupId, lbl_806DB084 * g_totalRaceTime);
     if (fn_8018B300() != 0) {
         DebugPrintf(lbl_806DB088, fn_8018B300());
         unsigned short buf[5];
@@ -45,12 +52,7 @@ TimeAttackResult::TimeAttackResult()
         g_playerData.last = lbl_80679C88;
     }
     int res;
-    for (int i = 0; i < 9; i++) {
-        res = fn_80167744(8 - i, time) + 0x1531;
-        digits[i] = new clCSPartsResultTimeNum(res);
-        digits[i]->obj = 1;
-        digits[i]->m0C();
-    }
+    TA_makeDigits(this, res);
     record = new clCSPartsResultRecord;
     record->obj = 1;
     record->m0C();

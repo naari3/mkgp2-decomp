@@ -655,10 +655,45 @@ def body_decls(body):
     return decls, st
 
 
-def expand_inline(fx, ibody, iparams, args, used_names, subst_simple=True):
+NESTED_DECL = re.compile(r'(?m)^([ \t]+)((?:const\s+|unsigned\s+|signed\s+|struct\s+)*' + ID
+                         + r'(?:\s*\*+\s*|\s+))(' + ID + r')\s*=\s*([^;{}]+);[ \t]*$')
+FOR_DECL = re.compile(r'\bfor\s*\(\s*((?:unsigned\s+|signed\s+)?' + ID + r'(?:\s*\*+\s*|\s+))(' + ID + r')\s*=')
+
+
+def deep_hoist(stmts):
+    """clNormal3D_SetScale (db18fae2): declarations nested in the inline's blocks and loop headers
+    (`JObj **cursor = table;`, `for (int i = 0;`) also become named locals.
+    -> ([(type, name, None)], stmts)"""
+    found, out = [], []
+    for s in stmts:
+        def nd(m):
+            if m.group(2).split()[0] in CKW or m.group(2).strip() in ('return', 'goto', 'else'):
+                return m.group(0)
+            found.append((m.group(2).strip(), m.group(3), None))
+            return f'{m.group(1)}{m.group(3)} = {m.group(4)};'
+
+        def fd(m):
+            if m.group(1).split()[0] in CKW:
+                return m.group(0)
+            found.append((m.group(1).strip(), m.group(2), None))
+            return f'for ({m.group(2)} ='
+        s2 = NESTED_DECL.sub(nd, s) if '\n' in s else s
+        out.append(FOR_DECL.sub(fd, s2))
+    names = [n for _, n, _ in found]
+    if len(set(names)) != len(names):
+        return [], stmts
+    return found, out
+
+
+def expand_inline(fx, ibody, iparams, args, used_names, subst_simple=True, deep=False):
     """-> (new decls [(type,name)], stmts text, return expr or None) or None."""
     decls, st = body_decls(ibody)
     rest = st[len(decls):]
+    deep_found = []
+    if deep:
+        deep_found, rest = deep_hoist(rest)
+        if not deep_found:
+            return None
     # mixed decls later in the body (C++/C99): also hoist simple ones
     hoisted, stmts = [], []
     for s in rest:
@@ -681,6 +716,7 @@ def expand_inline(fx, ibody, iparams, args, used_names, subst_simple=True):
         return None
     newdecls = []
     ren = {}
+    hoisted = hoisted + deep_found
     for t, n, init in decls + hoisted:
         nn = n
         while nn in used_names:
@@ -697,8 +733,8 @@ def expand_inline(fx, ibody, iparams, args, used_names, subst_simple=True):
     # rename locals
     for o, n in ren.items():
         if o != n:
-            code = sub_ident_any(code, o, n)
-            rexp = sub_ident_any(rexp, o, n) if rexp else rexp
+            code = sub_ident(code, o, n)
+            rexp = sub_ident(rexp, o, n) if rexp else rexp
     # parameters
     pdecl, passign = [], []
     for p, a in zip(iparams, args):
@@ -740,7 +776,8 @@ def inline_rewrites(body, inl):
     used = set(re.findall(ID, body))
     out = []
     for name, (ips, ret, ib) in inl.items():
-        if len(split_stmts(ib)) < 2 and not body_decls(ib)[0]:
+        has_nested = bool(deep_hoist(split_stmts(ib))[0])
+        if len(split_stmts(ib)) < 2 and not body_decls(ib)[0] and not has_nested:
             continue  # one-liners are shapesweep 'expand'
         if re.search(r'\b' + re.escape(name) + r'\s*\(', strip_comments(ib)):
             continue  # recursive
@@ -761,9 +798,10 @@ def inline_rewrites(body, inl):
                 continue
             if pre_call.startswith(('if', 'while', 'for', 'switch', 'else', 'case', 'return')) or '(' in pre_call:
                 continue
-            for subst in (True, False):
-                for where in ('front', 'back'):
-                    r = expand_inline(None, ib, ips, args, set(used), subst)
+            for subst, where in [(s_, w_) for s_ in (True, False) for w_ in ('front', 'back')] + \
+                    ([(True, 'deep')] if has_nested else []):
+                    deep = where == 'deep'
+                    r = expand_inline(None, ib, ips, args, set(used), subst, deep)
                     if not r:
                         continue
                     nd, code, rexp = r
@@ -800,6 +838,22 @@ def inline_rewrites(body, inl):
                             if tuple(q) not in seen:
                                 seen.add(tuple(q))
                                 orders.append((' order ' + ','.join(x[1] for x in q), q))
+                    if deep:
+                        # the call-site block's own locals (arguments read into locals) sit between:
+                        # the first k hoisted locals go to the function front, the rest right
+                        # before the expanded code (C++ only), every order when there are <= 4.
+                        perms = list(itertools.permutations(nd)) if len(nd) <= 4 else \
+                            [tuple(nd), tuple(reversed(nd))] + [tuple(nd[k:] + nd[:k]) for k in range(1, len(nd))]
+                        dl = lambda q, ind_: ''.join(  # noqa: E731
+                            f'{ind_}{t_} {n_};\n' if not t_.endswith(('*', '&')) else f'{ind_}{t_}{n_};\n'
+                            for t_, n_, _ in q)
+                        for q in perms:
+                            for k in range(len(q) + 1):
+                                nbk = body[:s0] + '\n' + dl(q[k:], ind) + code_i + body[s1 + 1:]
+                                nbk = '\n' + dl(q[:k], '    ') + nbk.lstrip('\n')
+                                out.append((f'{name}@{m.start()} deep front {",".join(x[1] for x in q[:k])} '
+                                            f'| site {",".join(x[1] for x in q[k:])}', nbk))
+                        continue
                     for olabel, od in orders:
                         nb = nb0
                         decl_txt = ''.join(f'    {t} {n};\n' if not t.endswith(('*', '&')) else f'    {t}{n};\n'
