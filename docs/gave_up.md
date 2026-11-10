@@ -351,7 +351,6 @@ None of these landed. They are listed so the next try skips what failed.
 
 | Function | TU | % | What is left | Tried |
 | --- | --- | --- | --- | --- |
-| `NokoNokoChallenge_Update` | game/NokoNoko_801287F8 | asm (C draft is 1 register off, 10 diff lines incl. a rodata label name) | The draft is `docs/wip/asm-a/nokonoko_update_3insn.patch`, which still applies cleanly on main 0c477b8. It is full C++ with extab_order/renames. The `holding` brake flag is `li r27,0` in ours; the target uses r29, the register it shares with started/shots. The sibling ReverseChallenge_Update (0c477b8) matched an identical input block with a separate `float a` local plus a 4! float-decl-order sweep. That fixes nothing here. | (asm-A) 300 decl perms, type/scope/inline forms, 15 min cperm. (autopipe3) `holding` declared at function top, `unsigned char`, `float a` copy (ReverseChallenge form): all 10. The expression form `holding = (cond)` gives 272. |
 
 
 ## autopipe2 pass 2026-11-08 10:00-11:45
@@ -377,7 +376,6 @@ OptionMenuDraw.cpp was merged into SceneList_80157EA8.cpp (dbc2a11) so the optio
 ## asm-A wind-down 2026-11-08 11:50
 - `AI_SystemDtor` (game/AI_SystemDtor, 99.53 after 62a185a2): writing `driver = 0` before `kartId = -1` in ResetRecord gives the target constant registers (0 in r4, -1 in r3). What's left: the scheduler then puts the `driver` store before the `kartId` store, where the target stores -1 first (8 lines). The cperm best (statement order and block scopes changed) is docs/wip/asm-a/AI_SystemDtor_cperm23.cpp and is not verified as a % gain. 11-10: mwsched log shows this is not a scheduling flip (every unrolled copy stores in source order, the stores are chained), so the target source really has `kartId = -1` first and its `li 0` vreg is created before the `li -1` vreg (hoisted constants are numbered by first use in the loop body). So a 0 has to be used before the -1 without storing first. No gain from: 0 / -1 as inline parameters in both orders, a SetPair inline, named zero locals (inline and function level), chained assignment, pointer-walk / shared-counter / do-while loop forms (all 178 or worse against 86).
 - `Terrain_FindTriangleAtPosition` (98.41): the only real diff is that triCount is loaded into r0 where the target uses r4 (`lwz r4,4(r4); mtctr r4`). The 0.0f literal diff is only @N naming, since the TU owns 0x806D2384. Tried with no gain: pragmasweep all k2, every decl order, cell-pointer, countdown and inline-loop forms, and cperm 36k iterations.
-- `NokoNoko_801287F8` NokoNokoChallenge_Update: 3 instructions from matching. The patch is docs/wip/asm-a/nokonoko_update_3insn.patch (it includes the extab_order/renames changes). Every holding-variable coloring attempt failed (decls, types, scopes, inline, 24k cperm).
 
 ## gaveup-retry wind-down 2026-11-08 11:50
 
