@@ -1123,12 +1123,60 @@ void clNormal3D_Exec(void *); void Object_DriveAnimMatrix(void *);
 void Object_RenderJObjTree(void *,int);
 }
 
+static inline void BuildFaceQuads(FaceDrawModel *self, FaceDrawVec *vertexBase, const FaceDrawVec *alternateBase, FaceMtx *world) {
+    FaceMtx *matrix;
+    const FaceDrawVec *standard;
+    const FaceDrawVec *alternate;
+    const FaceDrawVec *normal;
+    FaceDrawVec *out;
+    const FaceDrawVec *s, *a, *n;
+    int i;
+    out=vertexBase; normal=sQuadNormal; alternate=alternateBase; standard=sQuadStandard; matrix=world;
+    for (i=0;i<2;++i) {
+        int j;
+        FaceDrawVec *q;
+        q=out; n=normal; a=alternate; s=standard;
+        for (j=0;j<4;++j) {
+            if (self->left<0) PSMTXMultVec(*matrix,n,q);
+            else if (self->variant==1) PSMTXMultVec(*matrix,a,q);
+            else PSMTXMultVec(*matrix,s,q);
+            ++q; ++n; ++a; ++s;
+        }
+        out+=4; normal+=4; alternate+=4; standard+=4; ++matrix;
+    }
+}
+static inline void TransformQuads(FaceDrawVec *vertices, const FaceDrawVec *quads, FaceMtx *world, int &i, int &j) {
+    FaceMtx *matrix;
+    const FaceDrawVec *src;
+    FaceDrawVec *out;
+    src=quads; matrix=world; out=vertices;
+    for (i=0;i<2;++i) {
+        const FaceDrawVec *p;
+        FaceDrawVec *q;
+        q=out; p=src;
+        for (j=0;j<4;++j) { PSMTXMultVec(*matrix,p,q); ++q; ++p; }
+        out+=4; src+=4; ++matrix;
+    }
+}
 static inline void FillFaceUV(float *uv, const float *rect) {
     float mid = lbl_806DB5EC * (rect[3] - rect[1]) + rect[1];
     uv[0]=rect[0]; uv[1]=mid; uv[2]=rect[2]; uv[3]=mid;
     uv[4]=rect[2]; uv[5]=rect[1]; uv[6]=rect[0]; uv[7]=rect[1];
     uv[8]=rect[0]; uv[9]=rect[3]; uv[10]=rect[2]; uv[11]=rect[3];
     uv[12]=rect[2]; uv[13]=mid; uv[14]=rect[0]; uv[15]=mid;
+}
+
+static inline void FillFaceUVExpanded(float *uv, const float *rect) {
+    float bottom, left, right, top, factor, mid, difference;
+    top=rect[1]; bottom=rect[3]; left=rect[0];
+    difference=bottom-top;
+    factor=lbl_806DB5EC;
+    mid=factor*difference+top;
+    right=rect[2];
+    uv[0]=left; uv[1]=mid; uv[2]=right; uv[3]=mid;
+    uv[4]=right; uv[5]=top; uv[6]=left; uv[7]=top;
+    uv[8]=left; uv[9]=bottom; uv[10]=right; uv[11]=bottom;
+    uv[12]=right; uv[13]=mid; uv[14]=left; uv[15]=mid;
 }
 
 /* Keep each vertex attribute write together; snapshot displacement after GXBegin. */
@@ -1193,6 +1241,32 @@ static inline void DrawFaceQuadPlain(FaceDrawVec *p, float *uv, FaceDrawVec *off
     FIFO.u32=color; FIFO.f32=u; FIFO.f32=v;
 }
 
+static inline void DrawPlainQuads(FaceDrawVec *&draw, float *tex, FaceDrawVec *offset, int &i) {
+    for (i=0;i<2;++i) { DrawFaceQuadPlain(draw,tex,offset,0xffffffff); tex+=8; draw+=4; }
+}
+static inline void DrawQuads(FaceDrawVec *&draw, float *tex, FaceDrawVec *offset, int &i) {
+    for (i=0;i<2;++i) { DrawFaceQuad(draw,tex,offset,0xffffffff); tex+=8; draw+=4; }
+}
+static inline void BuildOverlayQuads(FaceDrawModel *self, FaceDrawVec *vertexBase, const FaceDrawVec *&alternateBase, FaceMtx scale, FaceMtx translation, FaceMtx temporary, FaceMtx copy) {
+    int j;
+    FaceDrawVec *dstRow=vertexBase;
+    for (int i=0;i<2;++i) {
+        PSMTXCopy(self->sub->m[i],copy);
+        FaceVecView localOffset;
+        localOffset=self->sub->offset;
+        copy[0][3]+=localOffset.value.x; copy[1][3]+=localOffset.value.y; copy[2][3]+=localOffset.value.z;
+        PSMTXConcat(scale,copy,temporary);
+        PSMTXConcat(translation,temporary,temporary);
+        const FaceDrawVec *p;
+        FaceDrawVec *q;
+        q=dstRow; p=alternateBase;
+        for (j=0;j<4;++j) { PSMTXMultVec(temporary,p,q); ++q; ++p; }
+        alternateBase+=4; dstRow+=4;
+    }
+}
+static inline void DrawCachedQuads(FaceDrawVec *&vertexBase, float *&uvBase, FaceDrawVec *offset, unsigned int color) {
+    for (int i=0;i<2;++i) { DrawFaceQuadCached(vertexBase,uvBase,offset,color); uvBase+=8; vertexBase+=4; }
+}
 extern "C" void fn_8022BFA8(FaceDrawModel *self);
 extern "C" void fn_8022CDE4(FaceDrawModel *self) {
     fn_8022BFA8(self);
@@ -1251,72 +1325,39 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
     }
     if (self->left>0) {
         FaceDrawVec *draw=vertices;
-        FaceDrawVec *out=draw;
-        const FaceDrawVec *src=sQuadNormal;
-        FaceMtx *matrix=world;
-        for (int i=0;i<2;++i) {
-            FaceDrawVec *q=out;
-            const FaceDrawVec *p=src;
-            for (int j=0;j<4;++j) { PSMTXMultVec(*matrix,p,q); ++p; ++q; }
-            src+=4; ++matrix; out+=4;
-        }
+        int i, j;
+        TransformQuads(draw,sQuadNormal,world,i,j);
         if (!fn_8011D890(self->left,rect,0)) {
             DebugPrintf("clSprManager::SetTexture Error!! - imamura/EnmyFaceEffect.cpp, %d",0x5e2);
             HSD_StateInvalidate(0x7e); return;
         }
         FillFaceUV(uv,rect);
-        float *tex=uv;
-        for (int i=0;i<2;++i) { DrawFaceQuadPlain(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
+        DrawPlainQuads(draw,uv,&offset,i);
     }
     if (self->right>0) {
         FaceDrawVec *draw=vertices;
-        FaceDrawVec *out=draw;
-        const FaceDrawVec *src=sQuadRight;
-        FaceMtx *matrix=world;
-        for (int i=0;i<2;++i) {
-            FaceDrawVec *q=out;
-            const FaceDrawVec *p=src;
-            for (int j=0;j<4;++j) { PSMTXMultVec(*matrix,p,q); ++p; ++q; }
-            src+=4; ++matrix; out+=4;
-        }
+        int i, j;
+        TransformQuads(draw,sQuadRight,world,i,j);
         fn_8011D890(self->right,rect,0);
         FillFaceUV(uv,rect);
-        float *tex=uv;
-        for (int i=0;i<2;++i) { DrawFaceQuad(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
+        DrawQuads(draw,uv,&offset,i);
     }
     FaceDrawVec *vertexBase=vertices;
     float *uvBase;
     const FaceDrawVec *alternateBase=sQuadWide;
-    {
-        FaceDrawVec *out=vertexBase;
-        const FaceDrawVec *normal=sQuadNormal;
-        const FaceDrawVec *alternate=alternateBase;
-        const FaceDrawVec *standard=sQuadStandard;
-        FaceMtx *matrix=world;
-        for (int i=0;i<2;++i) {
-            FaceDrawVec *q=out;
-            const FaceDrawVec *n=normal, *a=alternate, *s=standard;
-            for (int j=0;j<4;++j) {
-                if (self->left<0) PSMTXMultVec(*matrix,n,q);
-                else if (self->variant==1) PSMTXMultVec(*matrix,a,q);
-                else PSMTXMultVec(*matrix,s,q);
-                ++n; ++a; ++s; ++q;
-            }
-            normal+=4; alternate+=4; standard+=4; ++matrix; out+=4;
-        }
-    }
+    BuildFaceQuads(self,vertexBase,alternateBase,world);
     fn_8011D890(self->face,rect,0);
     uvBase=uv;
-    FillFaceUV(uvBase,rect); offset.x+=offset.x; offset.z+=offset.z;
+    FillFaceUVExpanded(uvBase,rect); offset.x+=offset.x; offset.z+=offset.z;
     {
         FaceDrawVec *draw=vertexBase;
         float *tex=uvBase;
         for (int i=0;i<2;++i) { DrawFaceQuad(draw,tex,&offset,0xffffffff); tex+=8; draw+=4; }
     }
     if (self->kart->state==0) {
-        const FaceDrawVec *p=sQuadTop;
         FaceDrawVec *q=vertexBase;
-        for (int i=0;i<4;++i) { PSMTXMultVec(world[0],p,q); ++p; ++q; }
+        const FaceDrawVec *p=sQuadTop;
+        for (int i=0;i<4;++i) { PSMTXMultVec(world[0],p,q); ++q; ++p; }
         fn_8011D890(sFaceSprites[9],rect,0);
         uvBase[0]=rect[0]; uvBase[1]=rect[3]; uvBase[2]=rect[2]; uvBase[3]=rect[3];
         uvBase[4]=rect[2]; uvBase[5]=rect[1]; uvBase[6]=rect[0]; uvBase[7]=rect[1];
@@ -1325,25 +1366,13 @@ extern "C" void fn_8022BFA8(FaceDrawModel *self) {
     }
     int kind=self->sub->overlay;
     if (kind!=-1) {
-        FaceDrawVec *dstRow=vertexBase;
-        for (int i=0;i<2;++i) {
-            PSMTXCopy(self->sub->m[i],copy);
-            FaceVecView localOffset;
-            localOffset=self->sub->offset;
-            copy[0][3]+=localOffset.value.x; copy[1][3]+=localOffset.value.y; copy[2][3]+=localOffset.value.z;
-            PSMTXConcat(scale,copy,temporary);
-            PSMTXConcat(translation,temporary,temporary);
-            FaceDrawVec *q=dstRow;
-            const FaceDrawVec *p=alternateBase;
-            for (int j=0;j<4;++j) { PSMTXMultVec(temporary,p,q); ++p; ++q; }
-            dstRow+=4; alternateBase+=4;
-        }
+        BuildOverlayQuads(self,vertexBase,alternateBase,scale,translation,temporary,copy);
         fn_8011D890(sFaceSprites[kind],rect,0);
         offset.x+=offset.x; offset.z+=offset.z;
-        FillFaceUV(uvBase,rect);
+        FillFaceUVExpanded(uvBase,rect);
         unsigned int color=0xffffff00;
         color=(color&~0xff)|((int)(lbl_806DB5F0*self->sub->alpha)&0xff);
-        for (int i=0;i<2;++i) { DrawFaceQuadCached(vertexBase,uvBase,&offset,color); uvBase+=8; vertexBase+=4; }
+        DrawCachedQuads(vertexBase,uvBase,&offset,color);
     }
     HSD_StateInvalidate(0x7e); GXSetCullMode(2);
     kind=self->sub->anim;
