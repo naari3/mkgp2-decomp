@@ -61,8 +61,8 @@ index e898b7d..d5b7e45 100644
 -/* --- extern decls: large-data refs (@ha/@l pairs) --- */
 -/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 -/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
--extern unsigned int lbl_80311C68[];
--extern unsigned int lbl_803FE0E0[];
+-extern unsigned int GXChannel_PushChannelColors_rodata_80311C68[];
+-extern unsigned int GXChannel_PushChannelColors_data_803FE0E0[];
 +
 +extern void __assert(const char *file, int line, const char *cond);
 +extern void GXPixModeSync(void);
@@ -71,7 +71,7 @@ index e898b7d..d5b7e45 100644
 +extern void HSD_StateInvalidate(int state);
 +extern const float lbl_806D2FB8;   /* 255.0f */
 +extern const double lbl_806D2FC0;  /* 255.0 */
-+extern int lbl_803FE0E0[4];        /* GX_KCOLOR0..3 */
++extern int GXChannel_PushChannelColors_data_803FE0E0[4];        /* GX_KCOLOR0..3 */
  
  /* --- function index (1 fns, .text 0x8007D2AC..0x8007D7BC) ---
   * [  0] 0x8007D2AC size:0x510   global GXChannel_PushChannelColors
@@ -91,11 +91,11 @@ index e898b7d..d5b7e45 100644
 -    nofralloc
 -    stwu r1, -0x70(r1)
 -    mflr r0
--    lis r4, lbl_80311C68@ha
+-    lis r4, GXChannel_PushChannelColors_rodata_80311C68@ha
 -    stw r0, 0x74(r1)
 -    stmw r26, 0x58(r1)
 -    mr r29, r3
--    addi r31, r4, lbl_80311C68@l
+-    addi r31, r4, GXChannel_PushChannelColors_rodata_80311C68@l
 -    li r30, 0x0
 -    b GXChannel_PushChannelColors_L_8007D6F8
 -    GXChannel_PushChannelColors_L_8007D2D0:
@@ -414,9 +414,9 @@ index e898b7d..d5b7e45 100644
 -    cmplwi r30, 0x0
 -    beq GXChannel_PushChannelColors_L_8007D7A8
 -    bl GXPixModeSync
--    lis r3, lbl_803FE0E0@ha
+-    lis r3, GXChannel_PushChannelColors_data_803FE0E0@ha
 -    addi r28, r1, 0x14
--    addi r27, r3, lbl_803FE0E0@l
+-    addi r27, r3, GXChannel_PushChannelColors_data_803FE0E0@l
 -    li r26, 0x0
 -    li r29, 0x1
 -    GXChannel_PushChannelColors_L_8007D720:
@@ -589,7 +589,7 @@ index e898b7d..d5b7e45 100644
 +        GXPixModeSync();
 +        for (i = 0; i < 4; i++) {
 +            if (changed & (1 << i)) {
-+                GXSetTevKColor(lbl_803FE0E0[i], reg[i]);
++                GXSetTevKColor(GXChannel_PushChannelColors_data_803FE0E0[i], reg[i]);
 +            }
 +        }
 +        for (i = 4; i < 7; i++) {

@@ -96,7 +96,7 @@ struct RoundPos {
     float y;
 };
 
-RoundPos lbl_8049AE70[4] = { { 6481, 6476, 84.0f, 200.0f }, { 6482, 6477, 208.0f, 260.0f }, { 6483, 6478, 323.0f, 200.0f }, { 6484, 6479, 456.0f, 260.0f } };
+RoundPos clFlowRound_data_8049AE70[4] = { { 6481, 6476, 84.0f, 200.0f }, { 6482, 6477, 208.0f, 260.0f }, { 6483, 6478, 323.0f, 200.0f }, { 6484, 6479, 456.0f, 260.0f } };
 struct RoundResPair {
     short a;
     short b;
@@ -117,21 +117,21 @@ static int s_roundAnim[18] = {
     401, 446, 442, 60, 128, 60, 62, 130, 62, 61, 129, 61, 59, 127, 114, 400, 445, 441
 };
 static short s_roundTitle[10] = { 6511, 6512, 6513, 6514, 6515, 6516, 6517, 6518, 0, 0 };
-short lbl_8049AF8C[10] = {
+short clFlowRound_Draw_data_8049AF8C[10] = {
     -1, 1, 3, 4, 5, 6, 7, 0,
     2, 0
 };
-short lbl_8049AFA0[8] = {
+short clFlowRound_Draw_data_8049AFA0[8] = {
     5869, 5870, 5871, 5872, 5893, 5894, 5895, 5896
 };
-extern char lbl_806CFDF8[];
-extern char lbl_806CFE00[];
+extern char clFlowRound_data_806CFDF8[];
+extern char clFlowRound_data_806CFE00[];
 int clFlowRound_Update(void *arg);
 void clFlowRound_Draw(clFlowRound *self);
 clFlowRound *clFlowRound_Dtor(clFlowRound *self, short flags);
-void *lbl_8049AFB0[3] = { lbl_806CFDF8, 0, 0 };
+void *clFlowRound_data_8049AFB0[3] = { clFlowRound_data_806CFDF8, 0, 0 };
 static void *clFlowRound_vtbl[5] = {
-    lbl_806CFE00, 0, (void *)clFlowRound_Dtor, (void *)clFlowRound_Update, (void *)clFlowRound_Draw
+    clFlowRound_data_806CFE00, 0, (void *)clFlowRound_Dtor, (void *)clFlowRound_Update, (void *)clFlowRound_Draw
 };
 
 void *Alloc(unsigned long size);
@@ -177,7 +177,7 @@ extern const float lbl_806D9DA4;
 extern const float lbl_806D9DA8;
 extern const float lbl_806D9DAC;
 extern char g_playerData[];
-extern short lbl_8039B308[][3];
+extern short clFlowRound_Init_rodata_8039B308[][3];
 extern char lbl_8039B3B4[];
 }
 
@@ -228,7 +228,7 @@ extern const float lbl_806D9D88;
 extern const float lbl_806D9D8C;
 extern const float lbl_806D9D90;
 extern const float lbl_806D9D94;
-extern RoundArrow lbl_8039B338[];
+extern RoundArrow clFlowRound_Update_rodata_8039B338[];
 }
 
 static inline InputState *input_state(void) {
@@ -261,16 +261,16 @@ static inline void SetScale(Sprite *spr, float x, float y) {
 static inline void PlaceArrows(clFlowRound *self) {
     self->show164 = 0;
     if (self->spr15C != 0) {
-        { float x = lbl_8039B338[self->round].lx; float y = lbl_8039B338[self->round].ly; SetPos(self->spr15C, x, y); }
-        self->spr15C->rot = lbl_806D9D08 * lbl_8039B338[self->round].lrot;
+        { float x = clFlowRound_Update_rodata_8039B338[self->round].lx; float y = clFlowRound_Update_rodata_8039B338[self->round].ly; SetPos(self->spr15C, x, y); }
+        self->spr15C->rot = lbl_806D9D08 * clFlowRound_Update_rodata_8039B338[self->round].lrot;
         if (self->round != 0) {
             self->show164 = 1;
         }
     }
     self->show165 = 0;
     if (self->spr160 != 0) {
-        { float x = lbl_8039B338[self->round].rx; float y = lbl_8039B338[self->round].ry; SetPos(self->spr160, x, y); }
-        self->spr160->rot = lbl_806D9D08 * lbl_8039B338[self->round].rrot;
+        { float x = clFlowRound_Update_rodata_8039B338[self->round].rx; float y = clFlowRound_Update_rodata_8039B338[self->round].ry; SetPos(self->spr160, x, y); }
+        self->spr160->rot = lbl_806D9D08 * clFlowRound_Update_rodata_8039B338[self->round].rrot;
         if (self->round != 3 && self->round < self->unlocked - 1) {
             self->show165 = 1;
         }
@@ -281,7 +281,7 @@ static inline void SetTitle(clFlowRound *self, int idx) {
     if (self->spr88 != 0 && self->x80 == 1) {
         self->x84 = idx;
         Sprite_SetupAnim(self->spr88, 0x1BF, 0, 0);
-        Sprite_SetAnimParam(self->spr88, 0x1970, s_roundTitle[lbl_8049AF8C[g_cupId]]);
+        Sprite_SetAnimParam(self->spr88, 0x1970, s_roundTitle[clFlowRound_Draw_data_8049AF8C[g_cupId]]);
         fn_801A0550(self->spr88);
         fn_8019FF6C(self->spr88, 1);
     }
@@ -482,7 +482,7 @@ extern "C" int clFlowRound_Update(void *arg) {
             if (self->spr88 != 0 && self->x80 == 1) {
                 self->x80 = 2;
                 Sprite_SetupAnim(self->spr88, 0x83, 0, 0);
-                Sprite_SetAnimParam(self->spr88, 0x1970, s_roundTitle[lbl_8049AF8C[g_cupId]]);
+                Sprite_SetAnimParam(self->spr88, 0x1970, s_roundTitle[clFlowRound_Draw_data_8049AF8C[g_cupId]]);
                 fn_801A0550(self->spr88);
             }
             self->x24 = 0;
@@ -544,7 +544,7 @@ extern "C" int clFlowRound_Update(void *arg) {
         Sprite_AdvanceAnim(self->spr28, lbl_806D9D18);
     }
     ndy = -lbl_806D9D24;
-    pos = lbl_8049AE70;
+    pos = clFlowRound_data_8049AE70;
     p = self;
     for (j = 0; j < 4; j++, pos++, p = (clFlowRound *)((char *)p + sizeof(RoundSlot))) {
         if (p->slots[0].spr != 0 && Sprite_AdvanceAnim(p->slots[0].spr, lbl_806D9D18) != 1) {
@@ -566,7 +566,7 @@ extern "C" int clFlowRound_Update(void *arg) {
 
                 dy = lbl_806D9D24;
                 anim = s_roundAnim[p->slots[0].state];
-                res = &s_roundRes[lbl_8049AF8C[g_cupId]][j];
+                res = &s_roundRes[clFlowRound_Draw_data_8049AF8C[g_cupId]][j];
                 if (j == 2 || j == 4) {
                     dy = ndy;
                 }

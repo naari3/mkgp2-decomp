@@ -1,6 +1,6 @@
 /*
  * A "push button" prompt effect on the shared sprite-effect base
- * (vtable lbl_8048ED34): it zooms in, waits for a button press (or a
+ * (vtable PushPrompt_vtable_8048ED34): it zooms in, waits for a button press (or a
  * timeout), then zooms out and finishes. The base declares a virtual
  * that is not defined here first, so neither vtable is emitted.
  */
@@ -21,8 +21,8 @@ extern "C" void *__va_arg(va_list v_list, int type);
 
 extern "C" {
 extern char lbl_8048EB44[];
-extern char lbl_8048ED34[];
-extern const TextBuf lbl_803607A8;
+extern char PushPrompt_vtable_8048ED34[];
+extern const TextBuf PushPrompt_rodata_803607A8;
 extern const float lbl_806D7998, lbl_806D799C, lbl_806D79A0, lbl_806D79A4;
 extern const float lbl_806D79A8, lbl_806D79AC, lbl_806D79B0, lbl_806D79B4;
 extern const float lbl_806D79B8, lbl_806D79BC, lbl_806D79C0, lbl_806D79C4;
@@ -216,7 +216,7 @@ extern "C" void fn_80141B08(PushPrompt *self)
 
 void PushPrompt::Print(float x, float y, float w, float h, float r, float g, float b, float a, const char *fmt, ...) {
     va_list args;
-    TextBuf buf = lbl_803607A8;
+    TextBuf buf = PushPrompt_rodata_803607A8;
     va_start(args, fmt);
     vsprintf(buf.c, fmt, args);
     fn_801681E8(obj, buf.c, x * sx + px, y * sy + py, w * sy, h * sy, r, g, b, a * fade);

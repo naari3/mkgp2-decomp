@@ -10,37 +10,37 @@ extern char s_clCDispInterface[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804F2060[3] = {
+void *sdata_806D09E8_data_804F2060[3] = {
     (void *)&s_clCDispInterface,
     0,
     0
 };
-void *lbl_804F206C[3] = {
+void *sdata_806D09E8_data_804F206C[3] = {
     (void *)&s_clCDispInterface,
     0,
     0
 };
-void *lbl_804F2078[3] = {
+void *sdata_806D09E8_data_804F2078[3] = {
     (void *)&s_clCDispInterface,
     0,
     0
 };
-void *lbl_804F2084[3] = {
+void *sdata_806D09E8_data_804F2084[3] = {
     (void *)&s_clCDispInterface,
     0,
     0
 };
-void *lbl_804F2090[3] = {
+void *sdata_806D09E8_data_804F2090[3] = {
     (void *)&s_clCDispInterface,
     0,
     0
 };
-void *lbl_804F209C[3] = {
+void *sdata_806D09E8_data_804F209C[3] = {
     (void *)&s_clCDispInterface,
     0,
     0
 };
-void *lbl_804F20A8[3] = {
+void *sdata_806D09E8_data_804F20A8[3] = {
     (void *)&s_clCDispInterface,
     0,
     0

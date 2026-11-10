@@ -6,12 +6,12 @@
  * ObjectBase_Dtor-shaped sibling set. Only the vtable address differs:
  *
  *   ObjectBase_Dtor          : *this = &lbl_803F5658
- *   SceneRender_BaseDtor     : *this = &lbl_803F58E0
- *   dtor_801BA14C (here)     : *this = &lbl_8049A844  (PTR_PTR_8049A844)
+ *   SceneRender_BaseDtor     : *this = &clCallback_vtable_803F58E0
+ *   dtor_801BA14C (here)     : *this = &clFlowProcess_vtable_8049A844  (PTR_PTR_8049A844)
  *
  * Body:
  *   1. if (this != NULL) demote *this back to the base vtable
- *      (&lbl_8049A844) so any derived dtor chain that follows sees a
+ *      (&clFlowProcess_vtable_8049A844) so any derived dtor chain that follows sees a
  *      cleanly typed base subobject.
  *   2. if the second arg (delete-flag, passed as a short) is > 0, call
  *      `MemoryManager_TimedFree(this)` (= MemoryManager_TimedFree placeholder) to
@@ -24,7 +24,7 @@
  * #pragma exceptions on so CW 1.3.2 auto-emits the matching extab body
  * (Large Frame: Yes / Saved GPR: r31, body 0x08080000 / 0x00000000).
  *
- * Parent class for &lbl_8049A844 is currently unidentified; keeping the
+ * Parent class for &clFlowProcess_vtable_8049A844 is currently unidentified; keeping the
  * function name as the placeholder `dtor_801BA14C` (no rename in this
  * commit).
  *
@@ -33,12 +33,12 @@
  */
 
 extern void MemoryManager_TimedFree(void *);
-extern char lbl_8049A844[];  /* unidentified base vtable @ 0x8049A844 */
+extern char clFlowProcess_vtable_8049A844[];  /* unidentified base vtable @ 0x8049A844 */
 
 #pragma exceptions on
 void *dtor_801BA14C(void *this, short flag) {
     if (this != 0) {
-        *(char **)this = lbl_8049A844;
+        *(char **)this = clFlowProcess_vtable_8049A844;
         if (flag > 0) {
             MemoryManager_TimedFree(this);
         }

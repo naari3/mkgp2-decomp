@@ -19,8 +19,8 @@ extern const float lbl_806D4E90; /* 0.0 */
 extern const float lbl_806D4E94; /* 1.0 */
 extern const float lbl_806D4E98; /* 140.0 */
 extern unsigned char lbl_806D1478;
-extern int lbl_80328B98[];
-extern LineTable lbl_80328BD0;
+extern int HitMessageOverlay_Show_rodata_80328B98[];
+extern LineTable HitMessageOverlay_Show_rodata_80328BD0;
 extern int g_gameMode;
 extern unsigned char g_namCamFlag;
 extern int lbl_806CF274;
@@ -59,10 +59,10 @@ int HitMessageOverlay_Show(HitKart *src, HitKart *dst, unsigned char playSe)
         return 0;
     }
     if (playSe == 1) {
-        SoundMgr_PlaySE(lbl_80328B98[src->character]);
+        SoundMgr_PlaySE(HitMessageOverlay_Show_rodata_80328B98[src->character]);
     }
     line = -1;
-    voices = lbl_80328BD0;
+    voices = HitMessageOverlay_Show_rodata_80328BD0;
     set = src->lineSet;
     if (g_gameMode == 0) {
         if (set != 6 && g_namCamFlag == 1) {

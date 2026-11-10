@@ -28,7 +28,7 @@ extern const unsigned char lbl_803682B0[0x408];
 extern const int lbl_803686B8[13];
 extern const float lbl_803686EC[3];
 extern const float lbl_803686F8[3];
-extern const float lbl_80368704[3][4];
+extern const float resultscene_rodata_80368704[3][4];
 extern const char lbl_80368734[];
 extern const char lbl_80368748[];
 extern const char lbl_8036875C[];
@@ -64,7 +64,7 @@ extern const char lbl_8036894C[];
 extern const char lbl_80368958[];
 extern const char lbl_8036896C[];
 extern const char lbl_8036897C[];
-extern const unsigned char lbl_80368990[0x10];
+extern const unsigned char data_8048FE08_rodata_80368990[0x10];
 extern const char lbl_803689A0[];
 extern const char lbl_803689B0[];
 extern const char lbl_803689C0[];
@@ -110,7 +110,7 @@ extern const char lbl_80368C40[];
 extern const char lbl_80368C50[];
 extern const char lbl_80368C60[];
 extern const char lbl_80368C74[];
-extern const unsigned char lbl_80368C84[0x18];
+extern const unsigned char Scene_8015BF18_rodata_80368C84[0x18];
 extern const char lbl_80368C9C[];
 extern const char lbl_80368CAC[0x14];
 extern const char lbl_80368CC0[0xC];
@@ -121,26 +121,26 @@ extern const char lbl_80368D28[];
 extern const char lbl_80368D38[];
 extern const char lbl_80368D5C[];
 extern const char lbl_80368D6C[];
-extern const PopupAnim lbl_80368D80[4] __attribute__((aligned(8)));
-extern const unsigned char lbl_80368DF0[0xC];
-extern const unsigned char lbl_80368DFC[0x10];
-extern const unsigned char lbl_80368E0C[0x10];
-extern const unsigned char lbl_80368E1C[0x10];
-extern const unsigned char lbl_80368E2C[0xC];
-extern const unsigned char lbl_80368E38[0xC];
-extern const unsigned char lbl_80368E44[0xC];
-extern const unsigned char lbl_80368E50[0xC];
-extern const unsigned char lbl_80368E5C[0x10];
-extern const unsigned char lbl_80368E6C[0x10];
-extern const unsigned char lbl_80368E7C[0xC];
-extern const unsigned char lbl_80368E88[0xC];
-extern const unsigned char lbl_80368E94[0xC];
-extern const unsigned char lbl_80368EA0[0xC];
-extern const void *const lbl_80368EAC[96];
+extern const PopupAnim resultscene_nm1_rodata_80368D80[4] __attribute__((aligned(8)));
+extern const unsigned char resultscene_rodata_80368DF0[0xC];
+extern const unsigned char resultscene_rodata_80368DFC[0x10];
+extern const unsigned char resultscene_rodata_80368E0C[0x10];
+extern const unsigned char resultscene_rodata_80368E1C[0x10];
+extern const unsigned char resultscene_rodata_80368E2C[0xC];
+extern const unsigned char resultscene_rodata_80368E38[0xC];
+extern const unsigned char resultscene_rodata_80368E44[0xC];
+extern const unsigned char resultscene_rodata_80368E50[0xC];
+extern const unsigned char resultscene_rodata_80368E5C[0x10];
+extern const unsigned char resultscene_rodata_80368E6C[0x10];
+extern const unsigned char resultscene_rodata_80368E7C[0xC];
+extern const unsigned char resultscene_rodata_80368E88[0xC];
+extern const unsigned char resultscene_rodata_80368E94[0xC];
+extern const unsigned char resultscene_rodata_80368EA0[0xC];
+extern const void *const sdata_806CF750_rodata_80368EAC[96];
 extern const char lbl_8036902C[];
 extern const char lbl_80369038[];
 extern const char lbl_80369048[];
-extern const void *const lbl_80369054[96];
+extern const void *const sdata_806CF750_rodata_80369054[96];
 extern const char lbl_803691D4[];
 extern const char lbl_803691E8[];
 extern const char lbl_803691FC[];
@@ -212,7 +212,7 @@ struct ResultSceneX : SceneBase {
 
 extern "C" {
 extern void fn_8016219C(void *, int, void *);
-extern char lbl_806CF910[4];
+extern char resultscene_nm1_data_806CF910[4];
 }
 
 struct ResultBuf {
@@ -221,7 +221,7 @@ struct ResultBuf {
     void **data;
     ResultBuf(int count) {
         a = 0; b = 0; data = 0;
-        fn_8016219C(this, count, lbl_806CF910);
+        fn_8016219C(this, count, resultscene_nm1_data_806CF910);
     }
     ~ResultBuf() { if (data) delete data; }
 };
@@ -576,7 +576,7 @@ extern void fn_8011FAFC(void *p, int n);
 extern void fn_801A0004(void *p);
 extern void fn_80160588(void *self, int n, bool confirm);
 extern void fn_80161720(CoinPopupDetail *self);
-extern char lbl_80490A58[];
+extern char ResultPart_vtable_80490A58[];
 extern const float lbl_806D86A4;
 extern const float lbl_806D86D8;
 
@@ -697,8 +697,8 @@ typedef struct {
 
 
 
-extern PopupInfo *lbl_806CF908[2];
-extern const PopupAnim lbl_80368D80[];
+extern PopupInfo *resultscene_nm1_data_806CF908[2];
+extern const PopupAnim resultscene_nm1_rodata_80368D80[];
 extern int isJapanese(void);
 extern void **fn_80146000(void *v, int i);
 extern unsigned char fn_801A024C(void *s);
@@ -706,7 +706,7 @@ extern void Sprite_SetupAnim(void *sprite, int anim, int loop, int arg);
 extern void fn_80161128(CoinPopupDetail *o);
 
 static inline PopupInfo *PopupInfo_Get(int k) {
-    return &lbl_806CF908[isJapanese()][k];
+    return &resultscene_nm1_data_806CF908[isJapanese()][k];
 }
 
 void fn_80161444(CoinPopupDetail *o) ;
@@ -982,7 +982,7 @@ extern void PreloadResource(int id);
 extern const float lbl_806D8828, lbl_806D8858, lbl_806D885C;
 extern const float lbl_806D8860, lbl_806D8864, lbl_806D8868, lbl_806D886C, lbl_806D8870;
 extern const float lbl_806D8874, lbl_806D8878;
-extern const char lbl_806CF914[4], lbl_806CF918[4], lbl_806CF91C[4];
+extern const char resultscene_nm1_data_806CF914[4], resultscene_nm1_data_806CF918[4], resultscene_nm1_data_806CF91C[4];
 extern int g_characterId;
 extern const char *get_title_name(void *, int, unsigned char, int, int);
 extern const char *get_title_name_global(void *);
@@ -1065,7 +1065,7 @@ static inline void RSSub_DeletePrompt(ResultSub *s) {
     }
 }
 
-/* ResultSub::Update (vtable slot of lbl_80490A90). NonMatching: only the
+/* ResultSub::Update (vtable slot of resultscene_nm1_data_80490A90). NonMatching: only the
  * input pointer (r29) and the ItemMsgWnd singleton temp (r30) are swapped. */
 void result_screen_update(ResultSub *s) ;
 
@@ -1133,7 +1133,7 @@ void fn_8015E928(void) ;
 
 
 extern "C" {
-extern const float lbl_80368704[][4];
+extern const float resultscene_rodata_80368704[][4];
 extern const float lbl_806D8758, lbl_806D875C, lbl_806D8760;
 extern void fn_80169468(int mode, int resource, int flags, float x, float y,
                         float r, float g, float b, float alpha);

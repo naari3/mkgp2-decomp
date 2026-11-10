@@ -3,7 +3,7 @@
 
 /*
  * Jump-distance minigame mode (ctor JumpDistanceMode_Init, vtable
- * lbl_804ECC08). Field names follow src/game/JumpDistanceMode_Init.c.
+ * JumpDistanceMode_vtable_804ECC08). Field names follow src/game/JumpDistanceMode_Init.c.
  *
  *   GameModeBase (ctor GameMode_BaseInit, dtor dtor_8002CDF4)
  *     ModeBase (vtable lbl_8048E144, dtor dtor_80122FD8)

@@ -54,10 +54,10 @@ extern void fn_8016B0C4(void);
 extern void fn_8016DA30(void *);
 extern void fn_8016EACC(void *);
 extern void fn_8017218C(void *);
-extern float lbl_806CF58C;
-extern float lbl_806CF590;
-extern float lbl_806CF594;
-extern float lbl_806CF598;
+extern float CGameCoin_8012BF5C_data_806CF58C;
+extern float CGameCoin_8012BF5C_data_806CF590;
+extern float CGameCoin_8012BF5C_data_806CF594;
+extern float CGameCoin_8012BF5C_data_806CF598;
 extern CoinVObj *lbl_806D109C;
 extern CoinVObj *lbl_806D10AC;
 extern unsigned int lbl_806D7138;
@@ -473,7 +473,7 @@ extern unsigned int lbl_806D7200;
 extern unsigned int lbl_806D7204;
 extern unsigned int lbl_806D7208;
 
-extern const char lbl_80356730[];
+extern const char CGameCoin_8012BF5C_rodata_80356730[];
 extern void HSD_CObjAnim(void *);
 extern void HSD_CObjReqAnim(void *, float);
 extern void HSD_JObjClearFlagsAll(struct CoinJObj *, int);
@@ -491,7 +491,7 @@ extern unsigned int lbl_806D7220;
 extern unsigned int lbl_806D7224;
 extern unsigned int lbl_806D7228;
 extern unsigned int lbl_806D722C;
-extern const char lbl_80356C58[];
+extern const char DefeatDemo_Update_rodata_80356C58[];
 extern unsigned int lbl_806D7134;
 extern unsigned int lbl_806D7234;
 extern unsigned int lbl_806D7238;
@@ -505,12 +505,12 @@ extern float lbl_80495994[];
 extern float lbl_80495A94[];
 extern void PSMTXMultVec(float (*)[4], struct CoinVec *, struct CoinVec *);
 extern float Vec3_Dot(struct CoinVec *, struct CoinVec *);
-extern float lbl_806CF578;
-extern float lbl_806CF57C;
-extern float lbl_806CF580;
-extern float lbl_806CF584;
-extern float lbl_806CF588;
-extern int lbl_806D1510;
+extern float KoopaFireball_Update_data_806CF578;
+extern float KoopaFireball_Update_data_806CF57C;
+extern float KoopaFireball_Update_data_806CF580;
+extern float KoopaFireball_Update_data_806CF584;
+extern float KoopaFireball_Update_data_806CF588;
+extern int KoopaFireball_Update_bss_806D1510;
 extern unsigned int lbl_806D7254;
 extern unsigned int lbl_806D7258;
 extern unsigned int lbl_806D725C;
@@ -594,16 +594,16 @@ extern int lbl_806D12BC;
 extern void *lbl_803FDF28[];
 extern void *lbl_803FDF40[];
 extern unsigned int lbl_8048E144[];
-extern unsigned int lbl_8048E34C[];
-extern unsigned int lbl_8048E3C0[];
+extern unsigned int CoinShotBase_vtable_8048E34C[];
+extern unsigned int KPCoinShots_vtable_8048E3C0[];
 extern void HSD_CObjAddAnim(void *, void *);
 extern struct CoinJObj *ResolveJointByName(void *, const char *);
 extern void clNormal3D_SetScale(void *, int, float, float, float, float);
 extern unsigned int lbl_80419EF8[];
 extern unsigned long OSGetTick(void);
 extern void Object_SetJObjPositionXYZ(void *, float, float, float);
-extern float lbl_806CF570;
-extern float lbl_806CF574;
+extern float BossKoopa_Init_data_806CF570;
+extern float BossKoopa_Init_data_806CF574;
 extern void PSMTXIdentity(float (*)[4]);
 extern void *LinkedNode_GetField10_OrFallback(void *, int);
 extern void Object_RenderJObjEx(void *, void *, int);
@@ -904,8 +904,8 @@ static inline void KoopaFireball_Draw(KoopaFireball *self) {
         if (self->flames[i].life < 0.0f) {
             continue;
         }
-        scale = self->flames[i].scale * lbl_806CF58C;
-        alpha = self->flames[i].alpha * lbl_806CF590;
+        scale = self->flames[i].scale * CGameCoin_8012BF5C_data_806CF58C;
+        alpha = self->flames[i].alpha * CGameCoin_8012BF5C_data_806CF590;
         PSMTXScale(m, scale, scale, 1.0f);
         PSMTXConcat(m, proj, m);
         PSMTXRotRad(rot, 'X', -0.7853982f);
@@ -915,8 +915,8 @@ static inline void KoopaFireball_Draw(KoopaFireball *self) {
         m[2][3] = self->flames[i].pos.z;
         Object_SetColorAlphaOnly(self->model, 0, alpha);
         GXChannel_PushTransform(&channel, m);
-        scale = self->flames[i].scale * lbl_806CF594;
-        alpha = self->flames[i].alpha * lbl_806CF598;
+        scale = self->flames[i].scale * CGameCoin_8012BF5C_data_806CF594;
+        alpha = self->flames[i].alpha * CGameCoin_8012BF5C_data_806CF598;
         if (self->flames[i].life < 10.0f) {
             alpha *= 0.1f * self->flames[i].life;
         }
@@ -1017,7 +1017,7 @@ extern "C" void CGameCoin_Draw(CGameCoin *self) { /* 0x8012C2CC size:0x26C */
 }
 
 /* .rodata pool 0x80356730..0x80357008: defined before the Update asm references it */
-extern "C" const char lbl_80356730[0x418] = {
+extern "C" const char CGameCoin_8012BF5C_rodata_80356730[0x418] = {
     0x3F, 0x80, 0x00, 0x00, 0x3F, 0x33, 0x33, 0x33, 0x3F, 0x66, 0x66, 0x66, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x00, 0x00,
     0x42, 0x85, 0x55, 0x56, 0x44, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x3B, 0x80, 0x00,
@@ -1104,7 +1104,7 @@ extern "C" const unsigned int lbl_80356C00[0x16] = {
     0x6E206B69, 0x6E642069, 0x73202564, 0x2E202025, 0x73202D20, 0x25640A00,
     0x4347616D, 0x65436F69, 0x6E2E6870, 0x70000000,
 };
-extern "C" const char lbl_80356C58[40] = "!(jobj->flags & JOBJ_USE_QUATERNION)";
+extern "C" const char DefeatDemo_Update_rodata_80356C58[40] = "!(jobj->flags & JOBJ_USE_QUATERNION)";
 static const char s_lakituFile[20] = "jyugemu_start.dat";
 static const char s_shellFile[24] = "it_a_03_black_shell.dat";
 static const char s_lavaJoint1[28] = "KP_castle_zyougan01_joint";
@@ -1143,7 +1143,7 @@ extern "C" const unsigned int lbl_80356D60[0x9C] = {
     0x6E676C65, 0x746F6E3C, 0x636C4D65, 0x6E75496E, 0x7075743E, 0x00000000,
 };
 extern "C" const char lbl_80356FD0[16] = "clCGameCoinBase";
-extern "C" const unsigned int lbl_80356FE0[0xA] = {
+extern "C" const unsigned int sdata_806CF1C0_rodata_80356FE0[0xA] = {
     0x636C4347, 0x616D654B, 0x50436F69, 0x6E000000, 0x636C4143, 0x616D6572,
     0x61000000, 0x636C4361, 0x6D657261, 0x00000000,
 };
@@ -1162,9 +1162,9 @@ extern "C" asm void CGameCoin_Update(void) { /* 0x8012C538 size:0x2164 */
     psq_st f29, 0x198(r1), 0, 0
     stmw r25, 0x174(r1)
     mr r28, r3
-    lis r3, lbl_80356730@ha
+    lis r3, CGameCoin_8012BF5C_rodata_80356730@ha
     lbz r0, 0x7c(r28)
-    addi r31, r3, lbl_80356730@l
+    addi r31, r3, CGameCoin_8012BF5C_rodata_80356730@l
     cmplwi r0, 0x0
     bne CGameCoin_Update_L_8012C580
     li r0, 0x1
@@ -3487,7 +3487,7 @@ static inline void CoinJObj_SetRotationY(CoinJObj *jobj, float y) {
         __assert(lbl_806D7174, 0x2B8, lbl_806D717C);
     }
     if (jobj->flags & 0x00020000) {
-        __assert(lbl_806D7174, 0x2B9, lbl_80356C58);
+        __assert(lbl_806D7174, 0x2B9, DefeatDemo_Update_rodata_80356C58);
     }
     jobj->rotate.y = y;
     if (!(jobj->flags & 0x02000000)) {
@@ -3795,8 +3795,8 @@ extern "C" void KoopaFireball_Update(KoopaFireball *self) { /* 0x8012F07C size:0
                 self->flames[i].vel.z = mtx[2][2];
                 PSMTXRotRad(m, 'X', 0.017453292f * self->angle);
                 PSMTXMultVec(m, &self->flames[i].vel, &self->flames[i].vel);
-                self->flames[i].scale = lbl_806CF57C * KoopaFireball_Rand64(self) + lbl_806CF578;
-                self->flames[i].grow = lbl_806CF588 * KoopaFireball_Rand48(self) + lbl_806CF584;
+                self->flames[i].scale = KoopaFireball_Update_data_806CF57C * KoopaFireball_Rand64(self) + KoopaFireball_Update_data_806CF578;
+                self->flames[i].grow = KoopaFireball_Update_data_806CF588 * KoopaFireball_Rand48(self) + KoopaFireball_Update_data_806CF584;
                 self->flames[i].alpha = 1.0f - 0.2f * KoopaFireball_Rand48(self);
                 if (self->cooldown != 0) {
                     self->flames[i].alpha *= 0.5f;
@@ -3804,7 +3804,7 @@ extern "C" void KoopaFireball_Update(KoopaFireball *self) { /* 0x8012F07C size:0
                 self->flames[i].life = 0.0f;
                 if (self->cooldown == 0) {
                     if (self->first) {
-                        self->cooldown = lbl_806D1510;
+                        self->cooldown = KoopaFireball_Update_bss_806D1510;
                         self->first = 0;
                         self->dir.x = mtx[0][2];
                         self->dir.y = mtx[1][2];
@@ -3820,7 +3820,7 @@ extern "C" void KoopaFireball_Update(KoopaFireball *self) { /* 0x8012F07C size:0
                             dot = -dot;
                         }
                         if (dot > 0.999f) {
-                            self->cooldown = lbl_806D1510;
+                            self->cooldown = KoopaFireball_Update_bss_806D1510;
                         } else {
                             self->cooldown = 0;
                         }
@@ -3835,9 +3835,9 @@ extern "C" void KoopaFireball_Update(KoopaFireball *self) { /* 0x8012F07C size:0
     }
     for (i = 0; i < 64; i++) {
         if (self->flames[i].life >= 0.0f) {
-            self->flames[i].pos.x += self->flames[i].vel.x * lbl_806CF580;
-            self->flames[i].pos.y += self->flames[i].vel.y * lbl_806CF580;
-            self->flames[i].pos.z += self->flames[i].vel.z * lbl_806CF580;
+            self->flames[i].pos.x += self->flames[i].vel.x * KoopaFireball_Update_data_806CF580;
+            self->flames[i].pos.y += self->flames[i].vel.y * KoopaFireball_Update_data_806CF580;
+            self->flames[i].pos.z += self->flames[i].vel.z * KoopaFireball_Update_data_806CF580;
             if (self->flames[i].vel.y < 0.5f) {
                 self->flames[i].vel.y += 0.01f;
                 if (self->flames[i].vel.y > 0.5f) {
@@ -4371,7 +4371,7 @@ KPCoinMode::KPCoinMode() {
 }
 
 DefeatDemo::DefeatDemo() { /* 0x801303E4 size:0x2A8 */
-    const char *pool = lbl_80356730;
+    const char *pool = CGameCoin_8012BF5C_rodata_80356730;
 
     body = 0;
     hand = 0;
@@ -4413,7 +4413,7 @@ DefeatDemo::DefeatDemo() { /* 0x801303E4 size:0x2A8 */
 #define OSTicksToSeconds(ticks) ((ticks) / OS_TIMER_CLOCK)
 
 BossKoopa::BossKoopa(int waitMin, int waitMax) { /* 0x8013068C size:0x3FC */
-    const char *pool = lbl_80356730;
+    const char *pool = CGameCoin_8012BF5C_rodata_80356730;
 
     anims[0] = 0;
     anims[1] = 0;
@@ -4438,14 +4438,14 @@ BossKoopa::BossKoopa(int waitMin, int waitMax) { /* 0x8013068C size:0x3FC */
         anims[2] = new CoinNormal3D(pool + 0x78C, 0);
         anims[3] = new CoinNormal3D(pool + 0x7AC, 0);
         fireball->jobj = ResolveJointByName(anims[1], pool + 0x7CC);
-        fireball->angle = lbl_806CF574;
+        fireball->angle = BossKoopa_Init_data_806CF574;
     } else {
         anims[0] = new CoinNormal3D(pool + 0x7F4, 0);
         anims[1] = new CoinNormal3D(pool + 0x808, 0);
         anims[2] = new CoinNormal3D(pool + 0x820, 0);
         anims[3] = new CoinNormal3D(pool + 0x838, 0);
         fireball->jobj = ResolveJointByName(anims[1], pool + 0x850);
-        fireball->angle = lbl_806CF570;
+        fireball->angle = BossKoopa_Init_data_806CF570;
     }
     clNormal3D_SetScale(anims[0], 0, 0.0f, 1.0f, 0.0f, 0.0f);
     Object_SetJObjPositionXYZ(anims[0], 0.0f, 15.0f, 40.0f);
@@ -4645,7 +4645,7 @@ extern "C" void CoinParticle_Update(CoinParticleManager *self) { /* 0x80130D2C s
 
 static inline void CoinParticleManagerBase_Dtor(CoinParticleManager *self) {
     if (self != 0) {
-        self->vtbl = lbl_8048E34C;
+        self->vtbl = CoinShotBase_vtable_8048E34C;
         Object_DtorWithGXSync(self->jobj, 1);
         Object_DtorWithGXSync(self->trailJobj, 1);
     }
@@ -4653,7 +4653,7 @@ static inline void CoinParticleManagerBase_Dtor(CoinParticleManager *self) {
 
 extern "C" CoinParticleManager *CoinParticleManager_Destroy(CoinParticleManager *self, short flag) { /* 0x80130FDC size:0x80 */
     if (self != 0) {
-        self->vtbl = lbl_8048E3C0;
+        self->vtbl = KPCoinShots_vtable_8048E3C0;
         CoinParticleManagerBase_Dtor(self);
         if (flag > 0) {
             MemoryManager_TimedFree(self);

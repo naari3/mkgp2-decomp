@@ -21,7 +21,7 @@ extern PlayerData g_playerData;
 extern int g_roundIndex;
 extern int lbl_806D02E4;
 extern const int lbl_804EC5E8[];
-extern const ItemList lbl_804EC7D4[2];
+extern const ItemList CardSnapshot_ResolveCommonItems_data_804EC7D4[2];
 unsigned char fn_801D6F30(PlayerData *pd, int item, int mode);
 void fn_801D7610(PlayerData *pd, int a);
 unsigned char fn_801D4FF4(PlayerData *pd, void *src, int a);

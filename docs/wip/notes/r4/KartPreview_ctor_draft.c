@@ -56,15 +56,15 @@ typedef struct KartPreview {
     float view_y;
 } KartPreview;
 
-extern unsigned int lbl_806D1558;
-extern RenderTargetHolder *lbl_806D155C;
-extern char lbl_8048EA78[];
+extern unsigned int RenderTargetSingleton_bss_806D1558;
+extern RenderTargetHolder *RenderTargetSingleton_bss_806D155C;
+extern char RenderTargetSingleton_data_8048EA78[];
 extern char lbl_806D76D0[7];
 extern char lbl_806D76D8[5];
 extern const float lbl_806D76E0;
 extern const float lbl_806D76E4;
-extern char lbl_8048EAD8[];
-extern char lbl_8048EAE8[];
+extern char KartPreview_data_8048EAD8[];
+extern char clCSModelInterface_vtable_8048EAE8[];
 
 extern void HSD_LObjDeleteCurrentAll(int);
 extern void HSD_LObjAddCurrent(void *rt);
@@ -286,7 +286,7 @@ void fn_8013CA70(KartPreview *p) {
 KartPreview *fn_8013CB10(KartPreview *p, short flag) {
     int i;
     if (p) {
-        p->vtbl = lbl_8048EAD8;
+        p->vtbl = KartPreview_data_8048EAD8;
         if (p->kart) {
             Object_DtorWithGXSync(p->kart, 1);
         }
@@ -310,7 +310,7 @@ KartPreview *fn_8013CB10(KartPreview *p, short flag) {
         fn_8013BCA0();
         fn_8013C3C0();
         if (p) {
-            p->vtbl = lbl_8048EAE8;
+            p->vtbl = clCSModelInterface_vtable_8048EAE8;
         }
         if (flag > 0) {
             MemoryManager_TimedFree(p);
@@ -367,8 +367,8 @@ extern void HSD_JObjSetFlagsAll(void *jobj, int flags);
 extern void HSD_JObjSetMtxDirtySub(KPJObj *jobj);
 extern const float lbl_806D76E8;
 extern const float lbl_806D76EC;
-extern KPStrings lbl_803600E0;
-extern char *lbl_8048EA98[];
+extern KPStrings KartPreview_rodata_803600E0;
+extern char *KartPreview_data_8048EA98[];
 extern void dtor_8013DCBC();
 KartPreview *fn_8013CC24(KartPreview *p, int chara, int flag);
 
@@ -444,9 +444,9 @@ KartPreview *fn_8013CC24(KartPreview *p, int chara, int flag) {
     KPJObj *src;
     int i;
 
-    str = &lbl_803600E0;
-    p->vtbl = lbl_8048EAE8;
-    p->vtbl = lbl_8048EAD8;
+    str = &KartPreview_rodata_803600E0;
+    p->vtbl = clCSModelInterface_vtable_8048EAE8;
+    p->vtbl = KartPreview_data_8048EAD8;
     fn_8013BD7C();
     fn_8013C428();
     p->view_x = lbl_806D76E0;
@@ -482,11 +482,11 @@ KartPreview *fn_8013CC24(KartPreview *p, int chara, int flag) {
             clNormal3D_SetScale(p->obj24, 0, lbl_806D76E0, lbl_806D76E4, lbl_806D76E0, lbl_806D76EC);
             break;
         }
-        sprintf(buf, str->fmtHead, lbl_8048EA98[p->chara]);
+        sprintf(buf, str->fmtHead, KartPreview_data_8048EA98[p->chara]);
         p->jobj3C = (HSD_JObj *)ResolveJointByName(p->driver, buf);
-        sprintf(buf, str->fmtHandL, lbl_8048EA98[p->chara]);
+        sprintf(buf, str->fmtHandL, KartPreview_data_8048EA98[p->chara]);
         p->jobj40 = (HSD_JObj *)ResolveJointByName(p->driver, buf);
-        sprintf(buf, str->fmtHandR, lbl_8048EA98[p->chara]);
+        sprintf(buf, str->fmtHandR, KartPreview_data_8048EA98[p->chara]);
         p->jobj44 = (HSD_JObj *)ResolveJointByName(p->driver, buf);
         HSD_JObjSetFlags(p->jobj40, 0x10);
         HSD_JObjSetFlags(p->jobj44, 0x10);
@@ -500,7 +500,7 @@ KartPreview *fn_8013CC24(KartPreview *p, int chara, int flag) {
             float x;
             float y;
             float z;
-            sprintf(buf, str->fmtDriver[0], lbl_8048EA98[p->chara]);
+            sprintf(buf, str->fmtDriver[0], KartPreview_data_8048EA98[p->chara]);
             src = ResolveJointByName(p->kart, buf);
             if (!src) {
                 __assert(lbl_806D76D0, 0x3e4, lbl_806D76D8);
@@ -514,7 +514,7 @@ KartPreview *fn_8013CC24(KartPreview *p, int chara, int flag) {
             float x;
             float y;
             float z;
-            sprintf(buf, str->fmtDriver[1], lbl_8048EA98[p->chara]);
+            sprintf(buf, str->fmtDriver[1], KartPreview_data_8048EA98[p->chara]);
             src = ResolveJointByName(p->kart, buf);
             if (!src) {
                 __assert(lbl_806D76D0, 0x3e4, lbl_806D76D8);
@@ -528,7 +528,7 @@ KartPreview *fn_8013CC24(KartPreview *p, int chara, int flag) {
             float x;
             float y;
             float z;
-            sprintf(buf, str->fmtDriver[2], lbl_8048EA98[p->chara]);
+            sprintf(buf, str->fmtDriver[2], KartPreview_data_8048EA98[p->chara]);
             src = ResolveJointByName(p->kart, buf);
             if (!src) {
                 __assert(lbl_806D76D0, 0x3e4, lbl_806D76D8);
@@ -542,7 +542,7 @@ KartPreview *fn_8013CC24(KartPreview *p, int chara, int flag) {
             float x;
             float y;
             float z;
-            sprintf(buf, str->fmtDriver[3], lbl_8048EA98[p->chara]);
+            sprintf(buf, str->fmtDriver[3], KartPreview_data_8048EA98[p->chara]);
             src = ResolveJointByName(p->kart, buf);
             if (!src) {
                 __assert(lbl_806D76D0, 0x3e4, lbl_806D76D8);

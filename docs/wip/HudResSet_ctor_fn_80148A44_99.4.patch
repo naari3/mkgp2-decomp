@@ -186,7 +186,7 @@ index 403f831..a18dda9 100644
  };
  
  struct HudResHolder {
-@@ -1101,7 +1147,7 @@ extern const TexIdPair lbl_80362790[8] = {
+@@ -1101,7 +1147,7 @@ extern const TexIdPair RaceHud_80147470_rodata_80362790[8] = {
      {0, 0}, {0x8D, 0x92}, {0x8E, 0x93}, {0x8E, 0x93},
      {0x8F, 0x94}, {0, 0}, {0x8B, 0x90}, {0x8C, 0x91},
  };
@@ -278,7 +278,7 @@ index 403f831..a18dda9 100644
 -    stw r8, 0x0(r3)
 -    lis r7, ResCtrl_Init@ha
 -    lis r3, dtor_80082960@ha
--    lis r9, lbl_80362778@ha
+-    lis r9, RaceHud_80147470_rodata_80362778@ha
 -    stw r6, 0x4(r31)
 -    addi r6, r7, ResCtrl_Init@l
 -    mr r28, r4
@@ -288,7 +288,7 @@ index 403f831..a18dda9 100644
 -    mr r4, r6
 -    mr r5, r0
 -    stb r8, 0xc(r31)
--    addi r30, r9, lbl_80362778@l
+-    addi r30, r9, RaceHud_80147470_rodata_80362778@l
 -    addi r3, r31, 0x10
 -    li r6, 0x58
 -    li r7, 0xb
@@ -826,8 +826,8 @@ index 403f831..a18dda9 100644
 +        int len1, len2, n, m, total;
 +        float x0, x;
 +        flagC = 1;
-+        len1 = strlen(GetTextureByIdAndLang(lbl_80362790[idx - 1].a, -1));
-+        len2 = strlen(GetTextureByIdAndLang(lbl_80362790[idx - 1].b, -1));
++        len1 = strlen(GetTextureByIdAndLang(RaceHud_80147470_rodata_80362790[idx - 1].a, -1));
++        len2 = strlen(GetTextureByIdAndLang(RaceHud_80147470_rodata_80362790[idx - 1].b, -1));
 +        n = 1;
 +        if (param / 10 > 0) n = 2;
 +        if (param / 100 > 0) n = 3;
@@ -851,8 +851,8 @@ index 403f831..a18dda9 100644
 +            x += (float)m * w / (float)n;
          }
 +        fn_801F93EC(&texts[2], x, lbl_806D7CD0);
-+        TexMgr_SetTexture((TextManager *)&texts[1], GetTextureByIdAndLang(lbl_80362790[idx - 1].a, -1));
-+        TexMgr_SetTexture((TextManager *)&texts[2], GetTextureByIdAndLang(lbl_80362790[idx - 1].b, -1));
++        TexMgr_SetTexture((TextManager *)&texts[1], GetTextureByIdAndLang(RaceHud_80147470_rodata_80362790[idx - 1].a, -1));
++        TexMgr_SetTexture((TextManager *)&texts[2], GetTextureByIdAndLang(RaceHud_80147470_rodata_80362790[idx - 1].b, -1));
 +    }
 +    if (isJapanese() == 1) {
 +        texts[0].y = lbl_806D7CD4;

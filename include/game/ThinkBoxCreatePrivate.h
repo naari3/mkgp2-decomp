@@ -9,10 +9,10 @@ extern unsigned char g_isCommHost;
 extern void *g_pathSystem;
 extern const float lbl_806DA3F4;
 extern AIPairRecord lbl_806793D8[8];
-extern void *lbl_804E4B88[];
-extern void *lbl_804E4BC8[];
-extern void *lbl_804E4BA8[];
-extern void *lbl_804E4B74[];
+extern void *ThinkBox_Create_data_804E4B88[];
+extern void *ThinkBox_Create_data_804E4BC8[];
+extern void *ThinkBox_Create_data_804E4BA8[];
+extern void *ThinkBox_Create_data_804E4B74[];
 int GetKartSlotCharId(int);
 int Path_GetTotalCount(void *);
 void fn_801DC778();
@@ -22,7 +22,7 @@ struct ThinkBoxBase {
     void *vptr;
     int field04, field08, field0C, characterCount;
     ThinkBoxBase() {
-        vptr = lbl_804E4B88;
+        vptr = ThinkBox_Create_data_804E4B88;
         field04 = 0;
         field08 = 0;
         field0C = 0;
@@ -40,7 +40,7 @@ struct ThinkBoxRace : ThinkBoxBase {
     float field28;
     int selectedKart;
     ThinkBoxRace() {
-        vptr = lbl_804E4BC8;
+        vptr = ThinkBox_Create_data_804E4BC8;
         pathInterval = Path_GetTotalCount(g_pathSystem) / 10;
         flag18 = 0;
         flag19 = 0;
@@ -60,9 +60,9 @@ struct ThinkBoxRace : ThinkBoxBase {
     }
 };
 struct ThinkBoxHost : ThinkBoxBase {
-    ThinkBoxHost() { vptr = lbl_804E4BA8; fn_801DC778(); }
+    ThinkBoxHost() { vptr = ThinkBox_Create_data_804E4BA8; fn_801DC778(); }
 };
 struct ThinkBoxClient : ThinkBoxBase {
-    ThinkBoxClient() { vptr = lbl_804E4B74; fn_801DC778(); }
+    ThinkBoxClient() { vptr = ThinkBox_Create_data_804E4B74; fn_801DC778(); }
 };
 #endif

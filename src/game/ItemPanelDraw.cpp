@@ -28,26 +28,26 @@ extern "C" void fn_80243C70(ItemPanel *self) {
     int layer=self->layer;
     fn_80121E10(&rc);
     rc.resId=0xC2E;
-    rc.Show(lbl_803EF5B0[0]*scale+x,lbl_803EF5B0[1]*scale+y,lbl_806DBE90);
+    rc.Show(ItemPanelDraw_rodata_803EF5B0[0]*scale+x,ItemPanelDraw_rodata_803EF5B0[1]*scale+y,lbl_806DBE90);
     rc.SetScale(scale);
     if (visible) fn_8011FAFC(&rc,layer);
     if (self->overlay!=-1) {
         ResCtrl overlay;
         fn_80121E10(&overlay);
         overlay.resId=self->overlay;
-        overlay.Show(lbl_803EF5B0[2]*scale+x,lbl_803EF5B0[3]*scale+y,lbl_806DBE90);
+        overlay.Show(ItemPanelDraw_rodata_803EF5B0[2]*scale+x,ItemPanelDraw_rodata_803EF5B0[3]*scale+y,lbl_806DBE90);
         overlay.SetScaleXY(scale*lbl_806D6DE4,scale*lbl_806D6DE8);
         if (visible) fn_8011FAFC(&overlay,layer);
     }
     if (self->extra!=-1) {
         ResCtrl extra;
         extra.resId=self->extra;
-        extra.Show(lbl_803EF5B0[10]*scale+x,lbl_803EF5B0[11]*scale+y,lbl_806DBE90);
+        extra.Show(ItemPanelDraw_rodata_803EF5B0[10]*scale+x,ItemPanelDraw_rodata_803EF5B0[11]*scale+y,lbl_806DBE90);
         extra.SetScaleXY(lbl_806DBEB0*scale,lbl_806DBEB4*scale);
         if (visible) fn_8011FAFC(&extra,self->layer);
     }
-    float px=lbl_803EF5B0[4]*self->scale+x;
-    float py=lbl_803EF5B0[5]*self->scale+y;
+    float px=ItemPanelDraw_rodata_803EF5B0[4]*self->scale+x;
+    float py=ItemPanelDraw_rodata_803EF5B0[5]*self->scale+y;
     float size;
     if (self->overlay<0) size=self->scale;
     else if (self->variant==0) {
@@ -59,15 +59,15 @@ extern "C" void fn_80243C70(ItemPanel *self) {
     rc.Show(px,py,lbl_806DBE90);
     rc.SetScale(size);
     if (visible) fn_8011FAFC(&rc,self->layer);
-    fn_80244128(self,lbl_803EF5B0[4]*scale+x,lbl_803EF5B0[5]*scale+y,scale);
-    fn_80244128(self,lbl_803EF5B0[4]*scale+x,lbl_803EF5B0[5]*scale+y,scale);
-    float mx=lbl_803EF5B0[6]*scale+x;
-    float my=lbl_803EF5B0[7]*scale+y;
+    fn_80244128(self,ItemPanelDraw_rodata_803EF5B0[4]*scale+x,ItemPanelDraw_rodata_803EF5B0[5]*scale+y,scale);
+    fn_80244128(self,ItemPanelDraw_rodata_803EF5B0[4]*scale+x,ItemPanelDraw_rodata_803EF5B0[5]*scale+y,scale);
+    float mx=ItemPanelDraw_rodata_803EF5B0[6]*scale+x;
+    float my=ItemPanelDraw_rodata_803EF5B0[7]*scale+y;
     if (self->mark) {
         DrawPanelMark(self,self->enabled,mx,my,scale);
     }
-    x=lbl_803EF5B0[8]*scale+x;
-    px=lbl_803EF5B0[9]*scale+y;
+    x=ItemPanelDraw_rodata_803EF5B0[8]*scale+x;
+    px=ItemPanelDraw_rodata_803EF5B0[9]*scale+y;
     DrawPanelItem(self,x,px,scale);
     if (PanelSuppressed(self->kart)==1) self->enabled=saved;
 }

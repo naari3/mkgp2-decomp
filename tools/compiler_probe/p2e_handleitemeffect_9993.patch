@@ -59,10 +59,10 @@ index b65cbb3..d4d3306 100644
 -    nofralloc
 -    stwu r1, -0x30(r1)
 -    mflr r0
--    lis r5, lbl_802ED94C@ha
+-    lis r5, CarObject_HandleItemEffect_rodata_802ED94C@ha
 -    stw r0, 0x34(r1)
 -    li r0, 0x13
--    addi r5, r5, lbl_802ED94C@l
+-    addi r5, r5, CarObject_HandleItemEffect_rodata_802ED94C@l
 -    stmw r22, 0x8(r1)
 -    mr r30, r3
 -    mr r31, r4
@@ -101,9 +101,9 @@ index b65cbb3..d4d3306 100644
 -    li r3, 0x1
 -    b CarObject_HandleItemEffect_L_8004FFFC
 -    CarObject_HandleItemEffect_L_8004F8F0:
--    lis r3, lbl_803F75D0@ha
+-    lis r3, CarObject_HandleItemEffect_data_803F75D0@ha
 -    li r0, 0xd
--    addi r3, r3, lbl_803F75D0@l
+-    addi r3, r3, CarObject_HandleItemEffect_data_803F75D0@l
 -    li r4, 0x0
 -    mtctr r0
 -    CarObject_HandleItemEffect_L_8004F904:
@@ -625,7 +625,7 @@ index b65cbb3..d4d3306 100644
 +
 +    found = 0;
 +    i = 0;
-+    p = (const int *)lbl_802ED94C;
++    p = (const int *)CarObject_HandleItemEffect_rodata_802ED94C;
 +    for (n = 0; n < 0x13; n++) {
 +        if (itemId == *p) {
 +            found = 1;
@@ -644,7 +644,7 @@ index b65cbb3..d4d3306 100644
 +    if (ItemStateGuard_IsActive(self->owner->stateBlock->guard, i) == 1) {
 +        return 1;
 +    }
-+    p2 = (const short *)lbl_803F75D0;
++    p2 = (const short *)CarObject_HandleItemEffect_data_803F75D0;
 +    found2 = 0;
 +    for (n = 0; n < 0xd; n++) {
 +        if (itemId == *p2) {

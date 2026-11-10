@@ -56,7 +56,7 @@ struct CountdownGaugePart {
 
 extern "C" void fn_8020157C(CountdownGaugePart *self);
 
-/* Gauge task (vtable lbl_804EC2E8). */
+/* Gauge task (vtable CountdownGauge_vtable_804EC2E8). */
 struct CountdownGauge : FlowTask {
     int layer;
     int state;
@@ -91,7 +91,7 @@ struct CcNormal3D {
     ~CcNormal3D();
 };
 
-/* Character-class 3D badge (vtable lbl_804EC320). */
+/* Character-class 3D badge (vtable CcClassModel_vtable_804EC320). */
 struct CcClassModel : FlowTask {
     VHolder<CcScene> scene;
     VHolder<CcLObjList> lobj;

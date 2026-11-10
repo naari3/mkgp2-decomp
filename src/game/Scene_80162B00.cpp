@@ -1,6 +1,6 @@
 /*
  * 0x80162B00..0x80162C3C: deleting destructors of a scene (vtable
- * lbl_80490AFC) and of a credit-slot holder (vtable lbl_80490B34), plus a
+ * Scene80162C3C_vtable_80490AFC) and of a credit-slot holder (vtable CreditChild162_vtable_80490B34), plus a
  * virtual-delete thunk.
  */
 
@@ -24,8 +24,8 @@ struct CreditHolder {
 };
 
 extern "C" {
-extern char lbl_80490AFC[];
-extern char lbl_80490B34[];
+extern char Scene80162C3C_vtable_80490AFC[];
+extern char CreditChild162_vtable_80490B34[];
 extern char lbl_803FE0C8[];
 extern void fn_80121210(void);
 extern void fn_80169C44(void);
@@ -37,7 +37,7 @@ extern void MemoryManager_TimedFree(void *);
 
 Scene80162B00 *fn_80162B00(Scene80162B00 *self, short flag) {
     if (self) {
-        self->vtable = lbl_80490AFC;
+        self->vtable = Scene80162C3C_vtable_80490AFC;
         fn_80121210();
         if (self->model) {
             delete self->model;
@@ -55,7 +55,7 @@ Scene80162B00 *fn_80162B00(Scene80162B00 *self, short flag) {
 
 CreditHolder *fn_80162B98(CreditHolder *self, short flag) {
     if (self) {
-        self->vtable = lbl_80490B34;
+        self->vtable = CreditChild162_vtable_80490B34;
         CreditMgr_SetActiveSlot(0);
         dtor_80147584(self, 0);
         if (flag > 0) {

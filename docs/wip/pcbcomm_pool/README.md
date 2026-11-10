@@ -1,7 +1,7 @@
 # PCBComm .bss pool (mid-range thread, 2026-11-08)
 
 Target code addresses the PCB comm buffers through one pooled base
-(`lis/addi lbl_805A5EC0` then `addi rX, base, 0x294` / `addi rY, base, 0x6398; addi rY, rY, 0x1c`).
+(`lis/addi PCBCheckRecv_bss_805A5EC0` then `addi rX, base, 0x294` / `addi rY, base, 0x6398; addi rY, rY, 0x1c`).
 So the .bss objects 0x805A5EC0..0x805AC290 are separate objects owned by ONE TU (the pcbcomm
 module, .text ~0x8008299C..0x800862xx, ~35 split TUs today, 6 NonMatching:
 PCBCommBroadcast, PCBCheckProcess, PCBCheckRecv, PCBCommSendPeers, PCBCommCompute, PCBCommLifecycle).
@@ -29,8 +29,8 @@ In the winning SendToAllPeers version the locals are declared peer, snapshot, bl
 ## 2026-11-08 06:15 status: PARKED (blocked)
 onmokoworks holds claims on PCBCommCompute (#2896), PCBCheckRecv (#2865), PCBCheckProcess (#2807),
 so we will not merge the module. Hint for them (relay via user):
-- ComputeSyncState: defining the objects for real (BlockMsg lbl_805A5EC0, u8 lbl_805A60C4[0x54], g_pcbSyncTable[0x1C],
-  lbl_805A6134[0x20], PeerSlot lbl_805A6154[4], CardRow lbl_805A8A44[4], g_ringBufferBase[0x3700],
-  SnapshotMsg lbl_805AC258 {SyncOutput header, body}) + using them directly instead of the CommStorage overlay
+- ComputeSyncState: defining the objects for real (BlockMsg PCBCheckRecv_bss_805A5EC0, u8 PCBComm_BuildBroadcastSlot_bss_805A60C4[0x54], g_pcbSyncTable[0x1C],
+  PCBCheck_ProcessLinks_bss_805A6134[0x20], PeerSlot lbl_805A6154[4], CardRow PCBComm_PackAndTriggerCardSnapshot_bss_805A8A44[4], g_ringBufferBase[0x3700],
+  SnapshotMsg PCBCheckRecv_bss_805AC258 {SyncOutput header, body}) + using them directly instead of the CommStorage overlay
   takes it from 92.15% to 94.9% (remaining = PeersReady reg colouring r5/r6 vs r6/r5).
-- The same applies to every PCBComm function that does `addi rX, base, off` off lbl_805A5EC0.
+- The same applies to every PCBComm function that does `addi rX, base, off` off PCBCheckRecv_bss_805A5EC0.

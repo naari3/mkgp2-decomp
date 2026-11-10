@@ -21,7 +21,7 @@ index 0e8719f..e8a67ec 100644
 +#pragma opt_loop_invariants off
  s32 fn_8028D8CC(u8 id, NetBlob* blob) {
      NetDev* dev;
-     const u32* configs = lbl_803F2798;
+     const u32* configs = amnet_setup_nm_rodata_803F2798;
 @@ -136,11 +138,9 @@ s32 fn_8028D8CC(u8 id, NetBlob* blob) {
              WriteDeviceCommand(0x80000040, cmd);
              return 5;

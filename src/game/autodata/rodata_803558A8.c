@@ -22,22 +22,22 @@ const char lbl_803558C8[] = "clAreaData";
 const char lbl_803558D4[] = "clAreaDataSimple";
 const char lbl_803558E8[] = "clAttract";
 const char lbl_803558F4[] = "clJobRunner";
-const Vec3 lbl_80355900[1] = {
+const Vec3 SuikaBallObj_Init_rodata_80355900[1] = {
     { 0.0f, 0.0f, 0.0f }
 };
-const Vec3 lbl_8035590C[1] = {
+const Vec3 SuikaBallObj_Init_rodata_8035590C[1] = {
     { 0.0f, 0.0f, 0.0f }
 };
-const BallProbes lbl_80355918[1] = {
+const BallProbes SuikaBallObj_UpdatePhysics_rodata_80355918[1] = {
     { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } }
 };
-const BallProbes lbl_80355948[1] = {
+const BallProbes SuikaBallObj_UpdatePhysics_rodata_80355948[1] = {
     { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } }
 };
 const char lbl_80355978[] = "cam_challenge_goal.dat";
 const char lbl_80355990[] = "challenge_demo_DK.dat";
 const char lbl_803559A8[] = "DK_challenge_demo_player_set_joint";
-const float lbl_803559CC[10] = {
+const float ChallengeDemoShell_rodata_803559CC[10] = {
     102.0f, 1.2e+02f, 129.0f, 151.0f, 167.0f, 1.7e+02f, 188.0f, 2.1e+02f,
     222.0f, 228.0f
 };

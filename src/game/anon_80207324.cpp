@@ -3,22 +3,22 @@
 /* Reuse the original RTTI records through the CW cast runtime. */
 extern "C" {
 void *fn_80271340(void *, int, void *, void *, int);
-extern unsigned char lbl_806D02A0[8];
-extern unsigned char lbl_806D02A8[8];
-extern unsigned char lbl_806D02C0[8];
-extern unsigned char lbl_806D02C8[8];
+extern unsigned char FlowTask_RTTI_806D02A0[8];
+extern unsigned char YesNoTask_RTTI_806D02A8[8];
+extern unsigned char YesNoButtonL_RTTI_806D02C0[8];
+extern unsigned char YesNoButtonR_RTTI_806D02C8[8];
 }
 
 static inline YesNoTask *CastYesNoTask(FlowTask *task) {
-    return (YesNoTask *)fn_80271340(task, 0, lbl_806D02A8, lbl_806D02A0, 0);
+    return (YesNoTask *)fn_80271340(task, 0, YesNoTask_RTTI_806D02A8, FlowTask_RTTI_806D02A0, 0);
 }
 
 static inline YesNoButtonL *CastYesNoButtonL(FlowTask *task) {
-    return (YesNoButtonL *)fn_80271340(task, 0, lbl_806D02C0, lbl_806D02A0, 0);
+    return (YesNoButtonL *)fn_80271340(task, 0, YesNoButtonL_RTTI_806D02C0, FlowTask_RTTI_806D02A0, 0);
 }
 
 static inline YesNoButtonR *CastYesNoButtonR(FlowTask *task) {
-    return (YesNoButtonR *)fn_80271340(task, 0, lbl_806D02C8, lbl_806D02A0, 0);
+    return (YesNoButtonR *)fn_80271340(task, 0, YesNoButtonR_RTTI_806D02C8, FlowTask_RTTI_806D02A0, 0);
 }
 
 /*

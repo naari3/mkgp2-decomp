@@ -10,7 +10,7 @@
 
 const char lbl_803604F8[] = "clCSPartsChallenge";
 const char lbl_8036050C[] = "clCSPartsInerface";
-const unsigned int lbl_80360520[6] = {
+const unsigned int ConfettiField_rodata_80360520[6] = {
     0xFFFFFFBF, 0xFF0000BF, 0xFF00BF, 0xFFBF, 0xFFFF00BF, 0xFF00FFBF
 };
 

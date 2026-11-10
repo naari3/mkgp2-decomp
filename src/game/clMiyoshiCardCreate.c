@@ -57,7 +57,7 @@ static const char sMiyItem[] = "NORMAL ITEM   %s";
 /* .data 0x803F9E18..0x803F9F2C is this file's too: Draw indexes the name
  * tables from one data base (addi rX, base, 0x24 / 0x0 / 0xC / 0x18 / 0x58). */
 extern const char lbl_806D2A28[], lbl_806D2A2C[], lbl_806D2A34[], lbl_806D2A3C[], lbl_806D2A54[], lbl_806D2A5C[], lbl_806D2A64[], lbl_806D2A6C[], lbl_806D2A74[], lbl_806D2A7C[], lbl_806D2A84[], lbl_806D2A8C[], lbl_806D2A94[], lbl_806D2A9C[], lbl_806D2AA4[], lbl_806D2B38[], lbl_806D2B40[], lbl_806D2B48[], lbl_806D2B50[];
-extern const char lbl_806CEEE0[], lbl_806CEEE8[];
+extern const char clMiyoshiCardCreate_data_806CEEE0[], clMiyoshiCardCreate_data_806CEEE8[];
 int clMiyoshiCardCreate_Tick(void *);
 extern void card_eject_init(), card_eject_state_machine(), card_send_cleaning_cmd_init(),
     card_cleaning_state_machine(), card_send_read_cmd_init_dup_unused(), card_read_state_machine(),
@@ -65,13 +65,13 @@ extern void card_eject_init(), card_eject_state_machine(), card_send_cleaning_cm
 extern void __dt__11MiyoshiModeFv();
 extern void clMiyoshiCardCreate_Draw(void *);
 #pragma force_active on
-const char *lbl_803F9E18[3] = { lbl_806D2A28, lbl_806D2A2C, lbl_802EE028 };
+const char *clMiyoshiCardCreate_Draw_data_803F9E18[3] = { lbl_806D2A28, lbl_806D2A2C, lbl_802EE028 };
 static const char *sMiyCC1[3] = { lbl_806D2A28, lbl_806D2A34, lbl_802EE034 };
 static const char *sMiyCC2[3] = { lbl_806D2A28, lbl_806D2A3C, lbl_802EE040 };
 static const char *sMiyChara[13] = {
     lbl_806D2A54, lbl_806D2A5C, lbl_806D2A64, lbl_806D2A6C, lbl_806D2A74, lbl_806D2A7C, lbl_802EE074, lbl_806D2A84, lbl_806D2A8C, lbl_802EE080, lbl_806D2A94, lbl_806D2A9C, lbl_806D2AA4
 };
-int lbl_803F9E70[16] = { 0, 4, 9, 14, 19, 24, 29, 34, 39, 44, 49, 59, 69, 79, 89, 99 };
+int clMiyoshiCardCreate_Tick_data_803F9E70[16] = { 0, 4, 9, 14, 19, 24, 29, 34, 39, 44, 49, 59, 69, 79, 89, 99 };
 struct MiyoshiCardCmd { void (*init)(); void (*poll)(); const char *name; };
 struct MiyoshiCardCmd lbl_803F9EB0[4] = {
     { card_eject_init, card_eject_state_machine, lbl_806D2B38 },
@@ -79,8 +79,8 @@ struct MiyoshiCardCmd lbl_803F9EB0[4] = {
     { card_send_read_cmd_init_dup_unused, card_read_state_machine, lbl_806D2B48 },
     { Sci2Card_WriteTrackData_StartFlow, Sci2Card_WriteTrackData_PollState, lbl_806D2B50 },
 };
-const void *lbl_803F9EE0[3] = { lbl_806CEEE0, 0, 0 };
-const void *__vt__11MiyoshiMode[5] = { lbl_806CEEE8, 0, (void *)clMiyoshiCardCreate_Tick,
+const void *clMiyoshiCardCreate_data_803F9EE0[3] = { clMiyoshiCardCreate_data_806CEEE0, 0, 0 };
+const void *__vt__11MiyoshiMode[5] = { clMiyoshiCardCreate_data_806CEEE8, 0, (void *)clMiyoshiCardCreate_Tick,
     (void *)clMiyoshiCardCreate_Draw, (void *)__dt__11MiyoshiModeFv };
 #pragma force_active reset
 /* Only observed lifetime/layout: 4B mode, 44B state, 216B display context. */
@@ -90,7 +90,7 @@ void operator delete(void *);
 struct MiyoshiState;
 struct MiyoshiDisplay;
 extern "C" {
-extern MiyoshiState *lbl_806D10D8;
+extern MiyoshiState *clMiyoshiCardCreate_bss_806D10D8;
 extern MiyoshiDisplay *lbl_806D1880;
 void MemoryManager_TimedFree(void *);
 void *fn_801DB68C(void *, short);
@@ -114,16 +114,16 @@ struct MiyoshiBase {
 };
 struct MiyoshiMode : MiyoshiBase {
     virtual void key();
-    MiyoshiMode() { lbl_806D10D8 = new MiyoshiState; }
+    MiyoshiMode() { clMiyoshiCardCreate_bss_806D10D8 = new MiyoshiState; }
     ~MiyoshiMode();
 };
 extern "C" {
 void DrawText(void *, int, int, int, float, const char *, ...);
 void DisplayContext_Flush(void *);
-extern const char *const lbl_806CEEC0[2];
-extern const char *const lbl_806CEEC8[2];
-extern const char *const lbl_806CEED0[2];
-extern const char *const lbl_806CEED8[2];
+extern const char *const clMiyoshiCardCreate_Draw_data_806CEEC0[2];
+extern const char *const clMiyoshiCardCreate_Draw_data_806CEEC8[2];
+extern const char *const clMiyoshiCardCreate_Draw_data_806CEED0[2];
+extern const char *const clMiyoshiCardCreate_Draw_data_806CEED8[2];
 extern const float lbl_806D2B58;
 extern const char lbl_806D2B5C[5];
 extern const char lbl_806D2B64[2];
@@ -142,23 +142,23 @@ static inline void Miyoshi_DrawMenu(MiyoshiDisplay *context) {
     int points;
     int y;
 
-    state = lbl_806D10D8;
+    state = clMiyoshiCardCreate_bss_806D10D8;
     DrawText(context, 14, 24, 7, lbl_806D2B58, sMiyTitle);
     DrawText(context, 28, 72, 7, lbl_806D2B58, sMiyChr, sMiyChara[state->character]);
-    DrawText(context, 28, 96, 7, lbl_806D2B58, sMiy50, lbl_803F9E18[state->cc0]);
+    DrawText(context, 28, 96, 7, lbl_806D2B58, sMiy50, clMiyoshiCardCreate_Draw_data_803F9E18[state->cc0]);
     DrawText(context, 28, 120, 7, lbl_806D2B58, sMiy100, sMiyCC1[state->cc1]);
     DrawText(context, 28, 144, 7, lbl_806D2B58, sMiy150, sMiyCC2[state->cc2]);
-    DrawText(context, 28, 168, 7, lbl_806D2B58, sMiyUsed, lbl_806CEEC0[state->flag0 != 0]);
-    DrawText(context, 28, 192, 7, lbl_806D2B58, sMiyGold, lbl_806CEEC8[state->flag1 != 0]);
-    DrawText(context, 28, 216, 7, lbl_806D2B58, sMiyLoc, lbl_806CEED0[state->flag2 != 0]);
-    DrawText(context, 28, 240, 7, lbl_806D2B58, sMiyWins, lbl_803F9E70[state->kart]);
+    DrawText(context, 28, 168, 7, lbl_806D2B58, sMiyUsed, clMiyoshiCardCreate_Draw_data_806CEEC0[state->flag0 != 0]);
+    DrawText(context, 28, 192, 7, lbl_806D2B58, sMiyGold, clMiyoshiCardCreate_Draw_data_806CEEC8[state->flag1 != 0]);
+    DrawText(context, 28, 216, 7, lbl_806D2B58, sMiyLoc, clMiyoshiCardCreate_Draw_data_806CEED0[state->flag2 != 0]);
+    DrawText(context, 28, 240, 7, lbl_806D2B58, sMiyWins, clMiyoshiCardCreate_Tick_data_803F9E70[state->kart]);
     if (state->points <= 0) {
         points = 0;
     } else {
         points = state->points * 100 - 1;
     }
     DrawText(context, 28, 264, 7, lbl_806D2B58, sMiyMilage, points);
-    DrawText(context, 28, 288, 7, lbl_806D2B58, sMiyItem, lbl_806CEED8[state->flag3 != 0]);
+    DrawText(context, 28, 288, 7, lbl_806D2B58, sMiyItem, clMiyoshiCardCreate_Draw_data_806CEED8[state->flag3 != 0]);
     DrawText(context, 28, 312, 7, lbl_806D2B58, lbl_806D2B5C);
     if (state->selection == 10) {
         y = 312;
@@ -202,7 +202,7 @@ extern "C" int clMiyoshiCardCreate_Tick(void *) {
     MiyoshiInput *input = InputMgr_GetPlayer(GetInputManager(), 0);
     unsigned char decide = input->IsTriggered(1);
     unsigned char next = input->IsTriggered(0x80);
-    MiyoshiState *state = lbl_806D10D8;
+    MiyoshiState *state = clMiyoshiCardCreate_bss_806D10D8;
 
     if (state->status == 0) {
         if (next == 1) {
@@ -247,7 +247,7 @@ extern "C" int clMiyoshiCardCreate_Tick(void *) {
                     points = state->points * 100 - 1;
                 }
                 PlayerData_Construct(g_playerData, state->character, state->cc0, state->cc1, state->cc2, state->flag0,
-                                     state->flag1, state->flag2, lbl_803F9E70[state->kart], points, state->flag3);
+                                     state->flag1, state->flag2, clMiyoshiCardCreate_Tick_data_803F9E70[state->kart], points, state->flag3);
                 card_save_trigger(0);
                 state->status = 1;
                 break;
@@ -277,8 +277,8 @@ running:
     return -2;
 }
 MiyoshiMode::~MiyoshiMode() {
-    MemoryManager_TimedFree((void *)lbl_806D10D8);
-    lbl_806D10D8 = 0;
+    MemoryManager_TimedFree((void *)clMiyoshiCardCreate_bss_806D10D8);
+    clMiyoshiCardCreate_bss_806D10D8 = 0;
     /* Counterintuitive but authoritative: call when the pointer is NULL. */
     if (lbl_806D1880 == 0) {
         fn_801DB68C((void *)lbl_806D1880, 1);

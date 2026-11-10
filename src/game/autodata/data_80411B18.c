@@ -55,48 +55,48 @@ extern void fn_800AA8E0();
 extern void fn_800AA8E8();
 extern void fn_800AA8F0();
 extern void fn_800AA8F4();
-extern char lbl_80324F94[];
-extern char lbl_80324FA0[];
+extern char data_80411B18_rodata_80324F94[];
+extern char data_80411B18_rodata_80324FA0[];
 extern char lbl_80324FAC[];
-extern char lbl_80324FB8[];
-extern char lbl_80324FC4[];
-extern char lbl_80324FD0[];
-extern char lbl_80324FDC[];
-extern char lbl_80324FE8[];
-extern char lbl_80324FF4[];
-extern char lbl_80325000[];
-extern char lbl_8032500C[];
-extern char lbl_80325018[];
-extern char lbl_80325024[];
-extern char lbl_80325030[];
-extern char lbl_8032503C[];
+extern char data_80411B18_rodata_80324FB8[];
+extern char data_80411B18_rodata_80324FC4[];
+extern char data_80411B18_rodata_80324FD0[];
+extern char data_80411B18_rodata_80324FDC[];
+extern char data_80411B18_rodata_80324FE8[];
+extern char data_80411B18_rodata_80324FF4[];
+extern char data_80411B18_rodata_80325000[];
+extern char data_80411B18_rodata_8032500C[];
+extern char data_80411B18_rodata_80325018[];
+extern char data_80411B18_rodata_80325024[];
+extern char data_80411B18_rodata_80325030[];
+extern char data_80411B18_rodata_8032503C[];
 extern char lbl_80325048[];
-extern char lbl_80325054[];
-extern char lbl_80325060[];
+extern char data_80411B18_rodata_80325054[];
+extern char data_80411B18_rodata_80325060[];
 extern char lbl_8032506C[];
-extern char lbl_80325078[];
+extern char data_80411B18_rodata_80325078[];
 extern char lbl_80325084[];
 extern char lbl_80325090[];
-extern char lbl_8032509C[];
+extern char data_80411B18_rodata_8032509C[];
 extern char lbl_803250A8[];
 extern char lbl_803250B4[];
 extern char lbl_803250C0[];
 extern char lbl_803250CC[];
-extern char lbl_803250D8[];
-extern char lbl_803250E4[];
+extern char data_80411B18_rodata_803250D8[];
+extern char data_80411B18_rodata_803250E4[];
 extern char lbl_803250F0[];
-extern char lbl_803250FC[];
+extern char data_80411B18_rodata_803250FC[];
 extern char lbl_80325108[];
-extern char lbl_80325114[];
+extern char data_80411B18_rodata_80325114[];
 extern char lbl_80325120[];
-extern char lbl_8032512C[];
-extern char lbl_80325138[];
+extern char data_80411B18_rodata_8032512C[];
+extern char data_80411B18_rodata_80325138[];
 extern char lbl_80325144[];
 extern char lbl_806CF228[];
 extern char lbl_806CF230[];
 extern char lbl_806CF240[];
 extern char lbl_806CF248[];
-extern char lbl_806CF250[];
+extern char data_80411B18_data_806CF250[];
 extern char lbl_806D4910[];
 extern char lbl_806D4918[];
 extern char lbl_806D4920[];
@@ -146,45 +146,45 @@ typedef struct NameEntry {
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-NameEntry lbl_80411B18[82] = {
-    { (void *)&lbl_80324F94, (void *)&lbl_806D4910 },
-    { (void *)&lbl_80324FA0, (void *)&lbl_80324FAC },
-    { (void *)&lbl_80324FB8, (void *)&lbl_806D4918 },
-    { (void *)&lbl_80324FC4, (void *)&lbl_806D4920 },
-    { (void *)&lbl_80324FD0, (void *)&lbl_806D4928 },
+NameEntry RankLog_data_80411B18[82] = {
+    { (void *)&data_80411B18_rodata_80324F94, (void *)&lbl_806D4910 },
+    { (void *)&data_80411B18_rodata_80324FA0, (void *)&lbl_80324FAC },
+    { (void *)&data_80411B18_rodata_80324FB8, (void *)&lbl_806D4918 },
+    { (void *)&data_80411B18_rodata_80324FC4, (void *)&lbl_806D4920 },
+    { (void *)&data_80411B18_rodata_80324FD0, (void *)&lbl_806D4928 },
     { (void *)&lbl_806D4930, (void *)&lbl_806D4938 },
     { (void *)&lbl_806D493C, (void *)&lbl_806D4944 },
-    { (void *)&lbl_80324FDC, (void *)&lbl_806D494C },
-    { (void *)&lbl_80324FE8, (void *)&lbl_806D4954 },
-    { (void *)&lbl_80324FF4, (void *)&lbl_806D495C },
-    { (void *)&lbl_80325000, (void *)&lbl_806D4964 },
-    { (void *)&lbl_8032500C, (void *)&lbl_806D496C },
+    { (void *)&data_80411B18_rodata_80324FDC, (void *)&lbl_806D494C },
+    { (void *)&data_80411B18_rodata_80324FE8, (void *)&lbl_806D4954 },
+    { (void *)&data_80411B18_rodata_80324FF4, (void *)&lbl_806D495C },
+    { (void *)&data_80411B18_rodata_80325000, (void *)&lbl_806D4964 },
+    { (void *)&data_80411B18_rodata_8032500C, (void *)&lbl_806D496C },
     { (void *)&lbl_806D4974, (void *)&lbl_806D497C },
-    { (void *)&lbl_80325018, (void *)&lbl_806D4984 },
-    { (void *)&lbl_80325024, (void *)&lbl_806D498C },
-    { (void *)&lbl_80325030, (void *)&lbl_806D4994 },
-    { (void *)&lbl_8032503C, (void *)&lbl_80325048 },
+    { (void *)&data_80411B18_rodata_80325018, (void *)&lbl_806D4984 },
+    { (void *)&data_80411B18_rodata_80325024, (void *)&lbl_806D498C },
+    { (void *)&data_80411B18_rodata_80325030, (void *)&lbl_806D4994 },
+    { (void *)&data_80411B18_rodata_8032503C, (void *)&lbl_80325048 },
     { (void *)&lbl_806D499C, (void *)&lbl_806D49A4 },
-    { (void *)&lbl_80325054, (void *)&lbl_806D49AC },
-    { (void *)&lbl_80325060, (void *)&lbl_8032506C },
-    { (void *)&lbl_80325078, (void *)&lbl_806D49B4 },
+    { (void *)&data_80411B18_rodata_80325054, (void *)&lbl_806D49AC },
+    { (void *)&data_80411B18_rodata_80325060, (void *)&lbl_8032506C },
+    { (void *)&data_80411B18_rodata_80325078, (void *)&lbl_806D49B4 },
     { (void *)&lbl_806D49BC, (void *)&lbl_806D49C4 },
     { (void *)&lbl_806D49CC, (void *)&lbl_80325084 },
     { (void *)&lbl_806D49D4, (void *)&lbl_806D49DC },
     { (void *)&lbl_806D49E4, (void *)&lbl_806D49EC },
     { (void *)&lbl_806D49F4, (void *)&lbl_806D49FC },
     { (void *)&lbl_806D4A04, (void *)&lbl_80325090 },
-    { (void *)&lbl_8032509C, (void *)&lbl_803250A8 },
+    { (void *)&data_80411B18_rodata_8032509C, (void *)&lbl_803250A8 },
     { (void *)&lbl_806D4A0C, (void *)&lbl_806D4A14 },
     { (void *)&lbl_806D4A1C, (void *)&lbl_803250B4 },
     { (void *)&lbl_806D4A24, (void *)&lbl_803250C0 },
     { (void *)&lbl_806D4A2C, (void *)&lbl_803250CC },
-    { (void *)&lbl_803250D8, (void *)&lbl_806D4A34 },
-    { (void *)&lbl_803250E4, (void *)&lbl_803250F0 },
-    { (void *)&lbl_803250FC, (void *)&lbl_80325108 },
-    { (void *)&lbl_80325114, (void *)&lbl_80325120 },
-    { (void *)&lbl_8032512C, (void *)&lbl_806D4A3C },
-    { (void *)&lbl_80325138, (void *)&lbl_80325144 },
+    { (void *)&data_80411B18_rodata_803250D8, (void *)&lbl_806D4A34 },
+    { (void *)&data_80411B18_rodata_803250E4, (void *)&lbl_803250F0 },
+    { (void *)&data_80411B18_rodata_803250FC, (void *)&lbl_80325108 },
+    { (void *)&data_80411B18_rodata_80325114, (void *)&lbl_80325120 },
+    { (void *)&data_80411B18_rodata_8032512C, (void *)&lbl_806D4A3C },
+    { (void *)&data_80411B18_rodata_80325138, (void *)&lbl_80325144 },
     { (void *)TitleCheck_FirstPlayEver, (void *)CheckTitle_OriginalKartCoinMilage },
     { (void *)TitleCheck_BattleWinsMilestone, (void *)TitleCheck_UndefeatedStreak15 },
     { (void *)fn_800A8438, (void *)fn_800A840C },
@@ -261,19 +261,19 @@ void *lbl_80411DD0[10] = {
     (void *)dtor_800AA888,
     0
 };
-void *lbl_80411DF8[3] = {
+void *sdata_806CF1C0_data_80411DF8[3] = {
     (void *)&lbl_806CF248,
     0,
     0
 };
 /* decl: char */
-void *lbl_80411E04[3] = {
-    (void *)&lbl_806CF250,
+void *ShadowAreaMgr_vtable_80411E04[3] = {
+    (void *)&data_80411B18_data_806CF250,
     0,
     (void *)ShadowAreaMgr_Dtor
 };
 /* decl: char */
-void *lbl_80411E10[4] = {
+void *ShadowAreaBase_vtable_80411E10[4] = {
     (void *)&lbl_806CF248,
     0,
     (void *)dtor_800AB134,

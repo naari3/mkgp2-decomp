@@ -38,7 +38,7 @@ void fn_801F8A34(void *a, TextManager *tm, int layer);
 void fn_801F93D0(TextManager *tm, float sx, float sy);
 }
 
-/* Message popup window (vtable lbl_804EC3E0). */
+/* Message popup window (vtable MsgPopup_vtable_804EC3E0). */
 struct MsgPopup : FlowTask {
     TextManager *texts;
     int msgId;
@@ -67,7 +67,7 @@ struct MsgPopup : FlowTask {
     void UpdateBadge();
 };
 
-/* Popup variant used for message 0x1C (vtable lbl_804EC3AC). */
+/* Popup variant used for message 0x1C (vtable MsgPopupCoin_vtable_804EC3AC). */
 #include "game/types/MsgPopupCoin.h"
 
 extern "C" {

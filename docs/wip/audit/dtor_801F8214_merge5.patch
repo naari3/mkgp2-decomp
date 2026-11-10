@@ -231,7 +231,7 @@ index dd710839..cded8ff1 100644
 +++ b/tools/extab_user_renames.json
 @@ -6912,24 +6912,6 @@
      "__vt__11Path186Base": "lbl_80490FE0",
-     "__vt__11Path186View": "lbl_80495BBC"
+     "__vt__11Path186View": "Path186View_vtable_80495BBC"
    },
 -  "src/game/fn_801F8404.cpp": {
 -    "__dt__12DrawQuad801FFv": "dtor_801F8214",

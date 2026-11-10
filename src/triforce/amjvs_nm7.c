@@ -1,7 +1,7 @@
 #include <triforce/amjvs_internal.h>
 
-u32 lbl_806D1E3C;
-u32 lbl_806D1E38;
+u32 amjvs_nm7_bss_806D1E3C;
+u32 amjvs_nm7_bss_806D1E38;
 
 #define NEXT_STATE()  \
     Mgr.state++;      \

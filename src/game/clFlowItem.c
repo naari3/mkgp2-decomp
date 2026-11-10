@@ -1,6 +1,6 @@
 #include "game/singleton.h"
 /*
- * clFlowItem - item-award flow scene (vtable lbl_804EE52C).
+ * clFlowItem - item-award flow scene (vtable clFlowItem_vtable_804EE52C).
  *
  *   clFlowItem_Draw   @ 0x802379F8 (size 0x1E8)
  *   clFlowItem_Update @ 0x80237BE0 (size 0x5D8)
@@ -30,7 +30,7 @@
  *   __ct__10clFlowItemFv      -> clFlowItem_Init          (our ctor definition)
  *   __ct__10clFlowBaseFv      -> InitializeFrameSelection (base ctor call)
  *   __dt__10clFlowBaseFv      -> dtor_801BA14C            (DESTROYBASE dtor)
- *   __vt__10clFlowItem        -> lbl_804EE52C             (vtable store)
+ *   __vt__10clFlowItem        -> clFlowItem_vtable_804EE52C             (vtable store)
  *   __ct__15ItemSelectStateFv -> ItemSelectState_Init     (new ItemSelectState)
  *   __ct__13ItemGridStateFv   -> ItemGridState_Init       (new ItemGridState)
  *   __ct__10ItemMsgWndFv      -> fn_802325FC              (new ItemMsgWnd)
@@ -150,7 +150,7 @@ struct ItemMsgWnd {
 
 /* C view shared by the three plain (extern "C") member functions. */
 typedef struct clFlowItemRec {
-    void *vtbl;                      /* 0x00 - lbl_804EE52C */
+    void *vtbl;                      /* 0x00 - clFlowItem_vtable_804EE52C */
     int frameCounter;                /* 0x04 */
     int subState;                    /* 0x08 */
     f32 fadeAlpha;                   /* 0x0C */
@@ -222,10 +222,10 @@ extern ItemMsgWnd *lbl_806D1A88;     /* .sbss  - message window singleton */
 extern InputRec *g_pInputState;      /* .sbss */
 extern int g_gameMode;               /* .sbss */
 extern PlayerDataRec g_playerData;   /* .bss */
-extern char lbl_804EE52C[];          /* .data  - clFlowItem vtable */
-extern char lbl_806D0758[4];         /* .sdata - sprite group desc */
-extern char lbl_806D077C[4];         /* .sdata - sprite group desc */
-extern char lbl_806D0780[4];         /* .sdata - sprite group desc */
+extern char clFlowItem_vtable_804EE52C[];          /* .data  - clFlowItem vtable */
+extern char clFlowItem_Update_data_806D0758[4];         /* .sdata - sprite group desc */
+extern char clFlowItem_Init_data_806D077C[4];         /* .sdata - sprite group desc */
+extern char clFlowItem_Init_data_806D0780[4];         /* .sdata - sprite group desc */
 extern const f32 lbl_806DB888;       /* .sdata2 */
 extern const f32 lbl_806DB88C;       /* .sdata2 */
 extern const f32 lbl_806DB890;       /* .sdata2 */
@@ -417,7 +417,7 @@ extern "C" {
  * target.
  */
 static inline void ItemSel_Begin(ItemSelectState *sel) {
-    SpriteGroup_CreateOrInit(&sel->groups[0], lbl_806D0758, 0, lbl_806DB88C, lbl_806DB890);
+    SpriteGroup_CreateOrInit(&sel->groups[0], clFlowItem_Update_data_806D0758, 0, lbl_806DB88C, lbl_806DB890);
     (*sel->groups[0])->mode = 5;
     sel->resultCode = 0;
     sel->phase = 1;
@@ -567,7 +567,7 @@ void *clFlowItem_Dtor(clFlowItemRec *self, short freeFlag) {
     int i;
 
     if (self) {
-        self->vtbl = lbl_804EE52C;
+        self->vtbl = clFlowItem_vtable_804EE52C;
         fn_80169C44();
         ItemMsg_Get()->state = 4;
         ItemMsg_Destroy();
@@ -623,8 +623,8 @@ clFlowItem::clFlowItem() {
     }
     InitBGM();
     SetupBgSprites(1);
-    SpriteGroup_CreateOrInit(&this->bgSpr[1], lbl_806D077C, 1, lbl_806DB8B8, lbl_806DB8BC);
-    SpriteGroup_CreateOrInit(&this->bgSpr[0], lbl_806D0780, 1, lbl_806DB8C0, lbl_806DB8C4);
+    SpriteGroup_CreateOrInit(&this->bgSpr[1], clFlowItem_Init_data_806D077C, 1, lbl_806DB8B8, lbl_806DB8BC);
+    SpriteGroup_CreateOrInit(&this->bgSpr[0], clFlowItem_Init_data_806D0780, 1, lbl_806DB8C0, lbl_806DB8C4);
     (*this->bgSpr[1])->mode = 6;
     (*this->bgSpr[0])->mode = 6;
     {

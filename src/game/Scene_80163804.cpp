@@ -1,6 +1,6 @@
 /*
  * 0x80163804..0x801638B4: factory for the course loader scene (vtable
- * lbl_80490DF8, scene base vtable lbl_803FE0C8 / base dtor dtor_8007D0D4).
+ * CourseLoadScene_vtable_80490DF8, scene base vtable lbl_803FE0C8 / base dtor dtor_8007D0D4).
  * Real C++ new-expressions so CW emits the DELETEPOINTER / DESTROYBASE
  * extab actions; mangled names are bridged in tools/extab_user_renames.json.
  */

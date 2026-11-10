@@ -38,7 +38,7 @@ struct GabyouActiveContext {
 extern "C" {
 extern float lbl_806D6088, lbl_806D608C, lbl_806D6094, lbl_806D6098;
 extern float lbl_806D609C, lbl_806D60A0, lbl_806D60A4, lbl_806D60A8, lbl_806D60AC;
-extern const char lbl_8032F994[], lbl_8032F9AC[];
+extern const char lbl_8032F994[], GabyouItem_TickActive_rodata_8032F9AC[];
 void GabyouItem_BuildLocalTransformFromHandJoint(GabyouActiveView *, int, float, float, float);
 unsigned char FinalLapCoinJump_CheckActiveForObject(void *);
 void Item_InitLaunchFromKart(GabyouActiveView *, const Vec3 *, float, float);
@@ -142,7 +142,7 @@ void GabyouItem_TickActive(GabyouActiveView *item, GabyouActiveContext *context)
         if (item->alias == 0x43)
             JointByName_GetWorldPosition(&jointPosition, item->sprite, lbl_8032F994);
         else
-            JointByName_GetWorldPosition(&jointPosition, item->sprite, lbl_8032F9AC);
+            JointByName_GetWorldPosition(&jointPosition, item->sprite, GabyouItem_TickActive_rodata_8032F9AC);
         item->velocity.y += lbl_806D6098;
         Item_DecayVelocityScalar(item, 3.0f);
         collision = ItemCollision_Check(item);

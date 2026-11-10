@@ -14,8 +14,8 @@ extern void fn_8020B95C();
 extern void fn_8020B9D0();
 extern char lbl_806D02F8[];
 extern char lbl_806D0300[];
-extern char lbl_806D0308[];
-extern char lbl_806D0318[];
+extern char SceneBase_RTTI_806D0308[];
+extern char data_804EC808_data_806D0318[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -32,18 +32,18 @@ void *lbl_804EC814[5] = {
     (void *)fn_8020A584,
     (void *)fn_8020A454
 };
-void *lbl_804EC828[3] = {
-    (void *)&lbl_806D0308,
+void *CardMenuRoot_data_804EC828[3] = {
+    (void *)&SceneBase_RTTI_806D0308,
     0,
     0
 };
-void *lbl_804EC834[3] = {
-    (void *)&lbl_806D0308,
+void *data_804EC808_data_804EC834[3] = {
+    (void *)&SceneBase_RTTI_806D0308,
     0,
     0
 };
-void *lbl_804EC840[6] = {
-    (void *)&lbl_806D0318,
+void *BattleMenu_vtable_804EC840[6] = {
+    (void *)&data_804EC808_data_806D0318,
     0,
     (void *)fn_8020B9D0,
     (void *)fn_8020B95C,

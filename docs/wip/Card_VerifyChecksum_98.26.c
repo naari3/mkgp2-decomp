@@ -2,7 +2,7 @@
 #include "game/CardSaveParserPrivate.h"
 extern void *bitpack_init(void *, void *, int, void *, u8);
 extern void bitpack_write_field(void *, u32, const char *, int);
-extern u8 lbl_803FED40[0x30];
+extern u8 Card_VerifyChecksum_data_803FED40[0x30];
 extern const signed char lbl_806D34A4[1];
 extern const char lbl_806D34A8[3];
 extern const char lbl_806D34AC[2];
@@ -18,7 +18,7 @@ int Card_VerifyChecksum(void *unused, u8 *raw)
     int i;
     const signed char *expected;
     const char *messages = (const char *)lbl_80315378;
-    bitpack_init(pack, lbl_803FED40, 3, raw, 0);
+    bitpack_init(pack, Card_VerifyChecksum_data_803FED40, 3, raw, 0);
     checksum = 0;
     sum = 0;
     bitpack_read_field_by_name(pack, messages + 0x1D90, &checksum, 0);

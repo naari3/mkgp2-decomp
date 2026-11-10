@@ -1,5 +1,5 @@
 extern "C" {
-extern char lbl_80491880[];
+extern char MiyazakiMode_vtable_80491880[];
 void fn_801DAE54(void);
 void fn_8018137C(void);
 void fn_8018013C(void);
@@ -21,7 +21,7 @@ extern VDel *g_pInputState;
 
 extern "C" void *fn_8017FCAC(void **self, short flag) {
     if (self != 0) {
-        *self = lbl_80491880;
+        *self = MiyazakiMode_vtable_80491880;
         fn_801DAE54();
         if (lbl_806D15FC != 0) {
             lbl_806D15FC->Release();

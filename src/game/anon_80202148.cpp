@@ -17,14 +17,14 @@ FlowFaderF::FlowFaderF() : x(lbl_806DA880), y(lbl_806DA880), z(lbl_806DA880) {}
 /* Reuse the original RTTI records through the CW cast runtime. */
 extern "C" {
 void *fn_80271340(void *, int, void *, void *, int);
-extern unsigned char lbl_806D0240[8];
-extern unsigned char lbl_806D0248[8];
+extern unsigned char FlowTask_RTTI_806D0240[8];
+extern unsigned char ClassSelTask_RTTI_806D0248[8];
 }
 
 struct ClassSelTask;
 
 static inline ClassSelTask *CastClassSelTask(FlowTask *task) {
-    return (ClassSelTask *)fn_80271340(task, 0, lbl_806D0248, lbl_806D0240, 0);
+    return (ClassSelTask *)fn_80271340(task, 0, ClassSelTask_RTTI_806D0248, FlowTask_RTTI_806D0240, 0);
 }
 
 extern "C" {
@@ -52,7 +52,7 @@ extern int g_ccClass;
 void fn_80120A08(int id);
 }
 
-/* Character-class selector (vtable lbl_804EC358). */
+/* Character-class selector (vtable ClassSelTask_vtable_804EC358). */
 struct ClassSelTask : FlowTask {
     VHolder<FlowSceneList> list;
     int cur;

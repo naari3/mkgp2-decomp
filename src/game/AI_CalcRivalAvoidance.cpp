@@ -7,8 +7,8 @@ extern AIPairRecord lbl_806793D8[8];
 extern const float lbl_806DA4E0,lbl_806DA4E8,lbl_806DA4EC,lbl_806DA4F0;
 extern const float lbl_806DA4E4;
 extern float lbl_806DA4F4,lbl_806DA4F8,lbl_806DA448;
-extern float lbl_806D1934,lbl_806D1938,lbl_806D194C,lbl_806D1954;
-extern signed char lbl_806D1950,lbl_806D1958;
+extern float lbl_806D1934,lbl_806D1938,AI_CalcRivalAvoidance_bss_806D194C,AI_CalcRivalAvoidance_bss_806D1954;
+extern signed char AI_CalcRivalAvoidance_bss_806D1950,AI_CalcRivalAvoidance_bss_806D1958;
 RivalPathEntry *PathManager_GetEntrySubStruct(void *, int);
 void *fn_801DBA2C(void *);
 int Waypoint_FindNearest(void *, int, float,float,float,float);
@@ -83,10 +83,10 @@ extern "C" float AI_CalcRivalAvoidance(RivalAvoidanceState *self) {
     if(2.7e+05f<candidate.distance || candidate.distance<192.0f) return 0.0f;
     self->avoiding=1;
     float amount=rivalAvoidanceAmount(candidate.distance,192.0f);
-    if(!lbl_806D1950) { lbl_806D194C=0.7f*lbl_806D1934; lbl_806D1950=1; }
-    if(!lbl_806D1958) { lbl_806D1954=-lbl_806D194C; lbl_806D1958=1; }
-    if(candidate.angle>lbl_806D194C) return -amount;
-    if(lbl_806D1954>candidate.angle) return amount;
+    if(!AI_CalcRivalAvoidance_bss_806D1950) { AI_CalcRivalAvoidance_bss_806D194C=0.7f*lbl_806D1934; AI_CalcRivalAvoidance_bss_806D1950=1; }
+    if(!AI_CalcRivalAvoidance_bss_806D1958) { AI_CalcRivalAvoidance_bss_806D1954=-AI_CalcRivalAvoidance_bss_806D194C; AI_CalcRivalAvoidance_bss_806D1958=1; }
+    if(candidate.angle>AI_CalcRivalAvoidance_bss_806D194C) return -amount;
+    if(AI_CalcRivalAvoidance_bss_806D1954>candidate.angle) return amount;
     void *path=fn_801DBA2C(self->follower);
     int nearest=nearestRivalWaypoint(path,candidate.position);
     float yaw;

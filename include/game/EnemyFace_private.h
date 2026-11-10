@@ -219,7 +219,7 @@ unsigned char fn_80231644(int *b, int *a, int *c, int slot, int course);
 int fn_80231BD4(int kind, int course, int z);
 }
 
-extern const unsigned int lbl_803DA278[258];
+extern const unsigned int EnemyFace_rodata_803DA278[258];
 extern const unsigned int lbl_803DA680[8];
 extern const char lbl_803DA6A0[0x20];
 extern const char lbl_803DA6C0[0x20];

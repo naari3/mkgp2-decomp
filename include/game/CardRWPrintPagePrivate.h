@@ -22,8 +22,8 @@ struct PrintPage {
     int error;
 };
 extern "C" {
-extern MenuItem lbl_803FCB40[];
-extern PrintStep lbl_803FDC18[];
+extern MenuItem CardRW_PrintTest_Page_data_803FCB40[];
+extern PrintStep CardRW_PrintTest_Page_data_803FDC18[];
 void CardRW_TestTopMenu_Page(PrintPage *, int, int);
 unsigned char CardRW_ErrorDisplay(PrintPage *, int, int, int);
 int Sci2Card_GetPrintErrorCode();

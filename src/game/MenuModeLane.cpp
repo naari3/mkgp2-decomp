@@ -6,7 +6,7 @@
 
 extern "C" void *fn_801F5A9C(MenuScene *self, short flag) {
     if (self) {
-        *(void **)self = lbl_804E5444;
+        *(void **)self = MenuScene_vtable_804E5444;
         fn_8023E808(self->widgets[2], 1);
         fn_8023E808(self->widgets[1], 1);
         fn_8023E808(self->widgets[0], 1);
@@ -15,7 +15,7 @@ extern "C" void *fn_801F5A9C(MenuScene *self, short flag) {
         g_ccClass = self->cc;
         InputCmd_SetGlobalConfig(self->input);
         if (self) {
-            *(void **)self = lbl_804E549C;
+            *(void **)self = MenuModeBase_vtable_804E549C;
             if (self) *(void **)self = lbl_803FE0C8;
         }
         if (flag > 0) MemoryManager_TimedFree(self);
@@ -42,7 +42,7 @@ inline MenuScene::MenuScene() {
 }
 
 MenuMode::MenuMode() {
-    vt=lbl_804E54D8;
+    vt=MenuModeLane_data_804E54D8;
     scene=0;
     fn_801F6494();
     cup=g_cupId; course=0; variant=0; round=0; startAnim=1; randomItem=0;
@@ -102,7 +102,7 @@ extern "C" int fn_801F6008(MenuMode *self) {
 
 extern "C" void *fn_801F6178(MenuMode *self, short flag) {
     if (self) {
-        self->vt=lbl_804E54D8;
+        self->vt=MenuModeLane_data_804E54D8;
         fn_80218D98(self->display,1);
         SetTimerModeEnabled(self->timer);
         SetCourseParams(self->cup,self->course,self->variant,self->round);
@@ -136,7 +136,7 @@ extern "C" void *fn_801F6178(MenuMode *self, short flag) {
 }
 
 extern "C" MenuMode *fn_801F63A4() {
-    if (lbl_806D0050==1) { lbl_806D0051=0; lbl_806D0050=0; }
+    if (MenuModeLane_data_806D0050==1) { lbl_806D0051=0; MenuModeLane_data_806D0050=0; }
     return new MenuMode;
 }
 

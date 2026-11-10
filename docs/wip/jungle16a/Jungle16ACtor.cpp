@@ -4,7 +4,7 @@
  * through the section anchor, which puts the pool lis ahead of the vtable
  * stores. */
 extern "C" {
-extern const unsigned char lbl_8036CA00[0x3FC] = {
+extern const unsigned char Jungle16ACtor_rodata_8036CA00[0x3FC] = {
     0x3F, 0x80, 0x00, 0x00, 0x3F, 0x33, 0x33, 0x33, 0x3F, 0x66, 0x66, 0x66, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x00, 0x00,
     0x42, 0x85, 0x55, 0x56, 0x44, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x3B, 0x80, 0x00,
@@ -74,7 +74,7 @@ extern const char lbl_8036CDFC[0x10] = "DKA_ostrich.dat";
 extern const float lbl_8036CE0C[15] = {399.75174f, 0.0f, -1432.46533f, 1296.62366f, 0.0f, -1432.46533f, 1296.62366f, 0.0f, 635.944519f, 399.75174f, 0.0f, 635.944519f, 0.0f, 0.0f, 0.0f};
 extern const char lbl_8036CE48[0x20] = "DKA_chara_DKA_ostrich_A_joint";
 extern const char lbl_8036CE68[0x20] = "DKA_chara_DKA_ostrich_B_joint";
-extern const Desc16A lbl_8036CE88[2] = {
+extern const Desc16A Jungle16AUpdate_rodata_8036CE88[2] = {
     {lbl_8036CE48, {817.080872f, 0.0f, -390.742004f}, -0.720000625f, {498.045197f, 0.0f, -307.230011f}, -0.720000625f},
     {lbl_8036CE68, {880.245178f, 0.0f, -417.630005f}, 1.58999836f, {1142.86694f, 0.0f, -343.997009f}, -0.720000625f},
 };
@@ -118,7 +118,7 @@ extern "C" void fn_8016A854(Jungle16A *self) {
     }
     for (i=0; i<2; ++i) {
         Motion16A *m = &self->motions[i];
-        d = &lbl_8036CE88[i];
+        d = &Jungle16AUpdate_rodata_8036CE88[i];
         switch (m->state) {
         case 0:
             if (hit) m->state = 1;
@@ -160,7 +160,7 @@ extern "C" void fn_8016A854(Jungle16A *self) {
 
 /*
  * 0x8016AABC..0x8016AB58: deleting destructor of a course object (vtable
- * lbl_80491054, base vtable lbl_80490FE0).
+ * Jungle16A_vtable_80491054, base vtable lbl_80490FE0).
  */
 
 struct CourseObj8016AABC {
@@ -171,7 +171,7 @@ struct CourseObj8016AABC {
 };
 
 extern "C" {
-extern char lbl_80491054[];
+extern char Jungle16A_vtable_80491054[];
 extern char lbl_80490FE0[];
 extern void Object_DtorWithGXSync(void *, int);
 extern void fn_80123B48(void *, int);
@@ -182,7 +182,7 @@ extern void MemoryManager_TimedFree(void *);
 
 CourseObj8016AABC *fn_8016AABC(CourseObj8016AABC *self, short flag) {
     if (self) {
-        self->vtable = lbl_80491054;
+        self->vtable = Jungle16A_vtable_80491054;
         Object_DtorWithGXSync(self->model, 1);
         fn_80123B48(self->anim, 1);
         MemoryManager_Free(self->buffer);
@@ -202,14 +202,14 @@ CourseObj8016AABC *fn_8016AABC(CourseObj8016AABC *self, short flag) {
 
 Jungle16A::Jungle16A() {
     DebugPrintf(lbl_8036CF44);
-    model = new clNormal3D(lbl_806CFA00, 0);
+    model = new clNormal3D(Jungle16ACtor_data_806CFA00, 0);
     clNormal3D_SetScale(model, 0, lbl_806D8A68, lbl_806D8A54, lbl_806D8A68, lbl_806D8A68);
     zone = new Zone16A(lbl_8036CE0C, 1);
     motions = (Motion16A *)FUN_8003b120(0x40);
     for (int i=0; i<2; ++i) {
-        motions[i].joint = ResolveJointByName(model, lbl_8036CE88[i].name);
-        motions[i].pos = lbl_8036CE88[i].start;
-        motions[i].rot = lbl_8036CE88[i].rot;
+        motions[i].joint = ResolveJointByName(model, Jungle16AUpdate_rodata_8036CE88[i].name);
+        motions[i].pos = Jungle16AUpdate_rodata_8036CE88[i].start;
+        motions[i].rot = Jungle16AUpdate_rodata_8036CE88[i].rot;
         motions[i].state = 0;
         motions[i].unused = lbl_806D8A68;
         motions[i].frame = lbl_806D8A68;

@@ -7,7 +7,7 @@
 
 typedef struct { float v[4]; } PhaseTable;
 
-extern const PhaseTable lbl_8032A6D4;
+extern const PhaseTable DrawEffect_Cb_KartWheel_DualSpawn_rodata_8032A6D4;
 extern int Rand_RangeInt(int lo, int hi);
 extern double sin(double x);
 extern void DrawEffect_KartWheel_TripleChildSpawn(unsigned char *self);
@@ -105,7 +105,7 @@ void DrawEffect_Cb_KartWheel_DualSpawn(unsigned char *self)
             } else {
                 Mtx44_GetTranslation_RowMajor(&wheel, KartDriver_GetJointByIdx(d->driver, 3));
             }
-            offs = lbl_8032A6D4;
+            offs = DrawEffect_Cb_KartWheel_DualSpawn_rodata_8032A6D4;
             k = 0.8f * ((1.0f + sinf(BuildOrientationFromYaw(d->angle + offs.v[i]))) / 2.0f) + 0.2f;
             if (S8(0x28)) {
                 local = wheel;

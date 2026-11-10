@@ -24,8 +24,8 @@ struct CleaningPage {
     int error;
 };
 extern "C" {
-extern MenuItem lbl_803FCA20[];
-extern CleaningStep lbl_803FDB58[];
+extern MenuItem CardRW_CleaningTest_Page_data_803FCA20[];
+extern CleaningStep CardRW_CleaningTest_Page_data_803FDB58[];
 void Backup_PublishShadowCopy();
 void Backup_PublishShadowCopy_Inline();
 void CardRW_TestTopMenu_Page(CleaningPage *, int, int);

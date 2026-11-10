@@ -145,13 +145,13 @@ extern const float lbl_806D7AF0;
 extern unsigned int lbl_806D7AF4;
 extern const float lbl_806D7AF8;
 extern unsigned int lbl_806D7B00;
-extern const float lbl_80361DCC[2][3];
+extern const float RankPanel_80144430_rodata_80361DCC[2][3];
 extern const float lbl_806D7B08;
 void MemoryManager_TimedFree(void *p);
 void Sprite_Destroy(void *s, int flag);
 extern void __unexpected();
 extern unsigned int lbl_8048EB44[];
-extern unsigned int lbl_8048EEF4[];
+extern unsigned int clCSPartsResultRecord_vtable_8048EEF4[];
 extern void Alloc();
 extern void Sprite_InitWithAnim();
 extern void __construct_array();
@@ -170,7 +170,7 @@ extern const float lbl_806D7B30;
 extern const float lbl_806D7B34;
 extern const float lbl_806D7B38;
 extern const float lbl_806D7B3C;
-extern const short lbl_80361D60[][2];
+extern const short RankPanel_80144430_rodata_80361D60[][2];
 extern void *lbl_8048EF20[];
 extern void *lbl_8048EF34[];
 extern void ResCtrl_Init();
@@ -254,7 +254,7 @@ struct Sprite {
 extern "C" {
 extern const float lbl_806D7B40;
 extern const float lbl_806D7B44;
-extern short lbl_80361D80[];
+extern short RankPanel_80144430_rodata_80361D80[];
 void fn_8019FF8C(Sprite *s, int id, struct SpriteNodeInfo *out);
 int isJapanese(void);
 }
@@ -319,7 +319,7 @@ struct clCSPartsResultRecord : clCSPartsInerface {
     void LoadColumns(Sprite *s) {
         for (int i = 0; i < 0x26; i++) {
             SpriteNodeInfo info;
-            fn_8019FF8C(s, lbl_80361D80[i], &info);
+            fn_8019FF8C(s, RankPanel_80144430_rodata_80361D80[i], &info);
             xs[i] = info.x;
         }
     }
@@ -412,10 +412,10 @@ extern "C" asm void fn_80144500(void) { /* 0x80144500 size:0x4D4 */
     cmpw r0, r3
     bne fn_80144500_L_80144630
     mulli r4, r29, 0xc
-    lis r3, lbl_80361DCC@ha
+    lis r3, RankPanel_80144430_rodata_80361DCC@ha
     lfs f31, lbl_806D7AE0(r2)
     mr r29, r30
-    addi r0, r3, lbl_80361DCC@l
+    addi r0, r3, RankPanel_80144430_rodata_80361DCC@l
     lfs f30, lbl_806D7AE4(r2)
     add r27, r0, r4
     li r25, 0x0
@@ -490,10 +490,10 @@ extern "C" asm void fn_80144500(void) { /* 0x80144500 size:0x4D4 */
     cmpw r0, r3
     bne fn_80144500_L_80144754
     mulli r4, r29, 0xc
-    lis r3, lbl_80361DCC@ha
+    lis r3, RankPanel_80144430_rodata_80361DCC@ha
     lfs f30, lbl_806D7AE0(r2)
     mr r28, r30
-    addi r0, r3, lbl_80361DCC@l
+    addi r0, r3, RankPanel_80144430_rodata_80361DCC@l
     lfs f31, lbl_806D7AE4(r2)
     add r3, r0, r4
     li r26, 0x0
@@ -730,7 +730,7 @@ extern "C" void fn_80144ADC(RankPanel *self)
 extern "C" RankPanel *fn_80144AF0(RankPanel *self, short flag)
 {
     if (self) {
-        self->vt14 = (void **)lbl_8048EEF4;
+        self->vt14 = (void **)clCSPartsResultRecord_vtable_8048EEF4;
         for (PanelItem **it = self->vec.begin(); it != self->vec.end(); it++) {
             delete *it;
         }
@@ -832,7 +832,7 @@ extern "C" void fn_80144C1C(RankPanel *self)
         y += lbl_806D7B18;
     }
 
-    item = new PanelIcon(lbl_806D7B1C, lbl_806D7B20, lbl_80361D60[g_cupId - 1][g_longRoundFlag], 5);
+    item = new PanelIcon(lbl_806D7B1C, lbl_806D7B20, RankPanel_80144430_rodata_80361D60[g_cupId - 1][g_longRoundFlag], 5);
     item->tw[0].Start(0.0f, 1.0f, lbl_806D7AE0);
     self->vec.push_back(item);
 

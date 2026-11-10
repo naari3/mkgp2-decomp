@@ -1,12 +1,12 @@
 /*
  * 0x8014ADB4..0x8014CE74: clCSSceneGetTitle (rank board / prize panel) result-screen
  * controller. Split out of RaceHud_80147470.cpp because this TU owns the pooled
- * .rodata 0x80362D90..0x80363D30 (anchor lbl_80362D90).
+ * .rodata 0x80362D90..0x80363D30 (anchor CSSceneGetTitle_8014ADB4_rodata_80362D90).
  */
 
 /* sdata symbols referenced from asm */
 extern unsigned char lbl_806CF810[8];
-extern unsigned char lbl_806CF818[8];
+extern unsigned char CSSceneGetTitle_8014ADB4_data_806CF818[8];
 extern unsigned char lbl_806D7CC0[4];
 extern unsigned char lbl_806D7E8C[7];
 /*
@@ -188,7 +188,7 @@ void fn_801FE27C(int n);
 void MemoryManager_TimedFree(void *p);
 void fn_801676AC(void *p, int flag);
 extern unsigned int lbl_8048EB44[];
-extern unsigned int lbl_8048EFD4[];
+extern unsigned int LapHud_vtable_8048EFD4[];
 extern void Alloc();
 extern void fn_80146260();
 extern void fn_80167730();
@@ -262,7 +262,7 @@ void fn_80140810(void *p, int flag);
 extern void fn_801F8E54();
 extern unsigned int lbl_8048ECF8[];
 extern unsigned int lbl_8048ED10[];
-extern unsigned int lbl_8048F020[];
+extern unsigned int RecordHud_vtable_8048F020[];
 int Clamp_Int(int v, int lo, int hi);
 int GetCoinCount(void);
 void fn_8013D634(void *m, float x, float y, float z);
@@ -341,8 +341,8 @@ extern unsigned int lbl_806D7D44;
 extern unsigned int lbl_806D7D48;
 extern const float lbl_806D7D4C;
 extern const float lbl_806D7D50;
-extern const float lbl_80362858[6];
-extern unsigned int lbl_8048F058[];
+extern const float RaceHud_80147470_rodata_80362858[6];
+extern unsigned int CountHud_vtable_8048F058[];
 extern void fn_80141924();
 extern void fn_8014393C();
 struct KartVariant *GetKartSlotKartVariant(int slot);
@@ -403,11 +403,11 @@ extern unsigned int lbl_806D7DE8;
 extern unsigned int lbl_806D7DEC;
 extern unsigned int lbl_806D7DF0;
 extern unsigned int lbl_806D7DF8;
-extern unsigned int lbl_8048F0C8[];
+extern unsigned int RaceHud_80147470_data_8048F0C8[];
 void fn_8014205C(void *self, int flag);
 void StrPcb_ClearStatusBits(void *p, int bits);
 void fn_8023CFE0(void *p, int flag);
-extern unsigned int lbl_8048F090[];
+extern unsigned int StrHud_vtable_8048F090[];
 int TaRecord_GetLastInsertedRank(void);
 extern void fn_8014403C();
 extern void fn_80144308();
@@ -429,7 +429,7 @@ extern unsigned int lbl_806D7E10;
 extern unsigned int lbl_806D7E14;
 extern unsigned int lbl_806D7E18;
 extern unsigned int lbl_806D7E1C;
-extern char lbl_803628A8[];
+extern char RaceHud_80147470_rodata_803628A8[];
 extern void HSD_StateInvalidate(int n);
 extern void fn_8011FAB8(void);
 extern void fn_8013D940(int i);
@@ -446,7 +446,7 @@ extern const float lbl_806D7E30;
 extern unsigned int lbl_806D7E34;
 extern unsigned int lbl_806D7E38;
 extern unsigned int lbl_806D7E3C;
-extern const unsigned int lbl_80362D90[];
+extern const unsigned int CSSceneGetTitle_8014ADB4_rodata_80362D90[];
 void ClSound_PlayBgmStream(int slot, int id);
 void SetRumbleMode(int a, int b, int c);
 unsigned char Sprite_AdvanceAnim(void *s, float step);
@@ -489,7 +489,7 @@ extern unsigned int lbl_806D7E84;
 extern unsigned int lbl_806D7E88;
 extern unsigned int lbl_806D7E94;
 extern unsigned int lbl_806D7E98;
-extern unsigned int lbl_8048F0FC[];
+extern unsigned int CSSceneGetTitle_8014ADB4_data_8048F0FC[];
 int Item_GetDescriptorFieldC(int item);
 void fn_8013D50C(void *model, float r, float g, float b, float a);
 void fn_8013DAC8(void *model, int a);
@@ -522,7 +522,7 @@ extern void fn_80121210();
 extern void fn_8013DB9C();
 extern void fn_80169C44();
 extern unsigned int lbl_803FE0C8[];
-extern unsigned int lbl_8048F118[];
+extern unsigned int CSSceneGetTitle_vtable_8048F118[];
 void CalcEarnedCoins(void);
 void InitRumbleController(int a);
 void *ItemRes_LookupByKey_Thunk(int key);
@@ -903,7 +903,7 @@ struct RankVec2 {
     float x, y;
 };
 
-extern "C" const unsigned int lbl_80362D90[300] = {
+extern "C" const unsigned int CSSceneGetTitle_8014ADB4_rodata_80362D90[300] = {
     0x00000060, 0x000000FF, 0x00000000, 0x000000C8, 0x00000040, 0x00000000, 0x00000000, 0x00000060,
     0x000000FF, 0x00000000, 0x00000060, 0x000000FF, 0x00000000, 0x00000060, 0x000000FF, 0x00000000,
     0x00000060, 0x000000FF, 0x00000000, 0x00000060, 0x000000FF, 0x00000000, 0x00000060, 0x000000FF,
@@ -1024,13 +1024,13 @@ extern "C" const unsigned int lbl_80363CA4[5] = {
 extern "C" const unsigned int lbl_80363CB8[4] = {
     0x20676F74, 0x20612070, 0x72697A65, 0x20210000,
 };
-extern "C" const unsigned int lbl_80363CC8[3] = {
+extern "C" const unsigned int data_8048EEE8_rodata_80363CC8[3] = {
     0x97448F9F, 0x82B582BD, 0x00000000,
 };
-extern "C" const unsigned int lbl_80363CD4[7] = {
+extern "C" const unsigned int data_8048EEE8_rodata_80363CD4[7] = {
     0x82C982CD, 0x8FDC9569, 0x82AA91A1, 0x82E782EA, 0x82DC82B5, 0x82BD8149, 0x00000000,
 };
-extern "C" const unsigned int lbl_80363CF0[5] = {
+extern "C" const unsigned int sdata_806CF750_rodata_80363CF0[5] = {
     0x636C4353, 0x5363656E, 0x65416363, 0x6F6C6164, 0x65000000,
 };
 extern "C" const char sPumpModel[20] = "it_w_09_pump.dat";
@@ -1068,9 +1068,9 @@ extern "C" asm void fn_8014ADB4(void) { /* 0x8014ADB4 size:0x364 */
     psq_st f31, 0x48(r1), 0, 0
     stmw r24, 0x20(r1)
     mr r29, r3
-    lis r3, lbl_80362D90@ha
+    lis r3, CSSceneGetTitle_8014ADB4_rodata_80362D90@ha
     lbz r0, 0x4(r29)
-    addi r31, r3, lbl_80362D90@l
+    addi r31, r3, CSSceneGetTitle_8014ADB4_rodata_80362D90@l
     cmplwi r0, 0x0
     bne fn_8014ADB4_L_8014B0FC
     lwz r0, 0x24(r29)
@@ -1603,9 +1603,9 @@ extern "C" void fn_8014BBE4(ResultPanel *self, float alpha) {
     if (name[0] != 0) {
         TexMgr_Init(&tm);
         if (!isJapanese()) {
-            TexMgr_SetTexture(&tm, (const char *)lbl_806D7E8C, ((const char **)lbl_8048F0FC)[2], name, ((const char **)lbl_8048F0FC)[3]);
+            TexMgr_SetTexture(&tm, (const char *)lbl_806D7E8C, ((const char **)CSSceneGetTitle_8014ADB4_data_8048F0FC)[2], name, ((const char **)CSSceneGetTitle_8014ADB4_data_8048F0FC)[3]);
         } else {
-            TexMgr_SetTexture(&tm, (const char *)lbl_806D7E8C, ((const char **)lbl_8048F0FC)[0], name, ((const char **)lbl_8048F0FC)[1]);
+            TexMgr_SetTexture(&tm, (const char *)lbl_806D7E8C, ((const char **)CSSceneGetTitle_8014ADB4_data_8048F0FC)[0], name, ((const char **)CSSceneGetTitle_8014ADB4_data_8048F0FC)[1]);
         }
         tm.visible = 1;
         fn_801F93EC(&tm, FK(lbl_806D7E94), FK(lbl_806D7E98));
@@ -1666,7 +1666,7 @@ extern "C" void fn_8014BF80(ResultPanel *self, float alpha) {
 #pragma use_lmw_stmw on
 extern "C" ResultPanel *fn_8014C308(ResultPanel *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_8048F118;
+        self->vt = CSSceneGetTitle_vtable_8048F118;
         fn_8013DB9C();
         if (self->f64 != 0) {
             Sprite_Destroy(self->f64, 1);
@@ -1821,7 +1821,7 @@ clCSSceneGetTitle::clCSSceneGetTitle() {
     f48 = -1;
     f4C = 0;
     f50 = 0;
-    f54 = fn_80271340(fn_80160238(), 0, lbl_806CF818, lbl_806CF810, 0);
+    f54 = fn_80271340(fn_80160238(), 0, CSSceneGetTitle_8014ADB4_data_806CF818, lbl_806CF810, 0);
     f58 = 0;
     f5C = lbl_806D7E30;
     f60 = lbl_806D7E30;

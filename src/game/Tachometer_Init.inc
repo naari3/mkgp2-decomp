@@ -4,14 +4,14 @@
 
 extern void PreloadResource(int id);
 extern unsigned int g_ccClass;
-extern int lbl_806D145C;
+extern int Tachometer_Init_bss_806D145C;
 extern const float lbl_806D4E78;
 extern const float lbl_806D4E7C;
 extern const float lbl_806D4E80;
 extern unsigned char lbl_80598A60[];
-#define TACH_IDX (*(unsigned char *)&lbl_806D1459)
+#define TACH_IDX (*(unsigned char *)&Tachometer_bss_806D1459)
 typedef struct TachResTable { int body[4]; int needle[4]; char pad20[0xE0 - 0x20]; int digit[4]; } TachResTable;
-#define TACH_RES (*(TachResTable *)lbl_80411E20)
+#define TACH_RES (*(TachResTable *)Tachometer_data_80411E20)
 #define TACH_ZERO (*(const float *)&lbl_806D4E68)
 
 #pragma cplusplus on
@@ -36,7 +36,7 @@ extern "C" int Tachometer_Init(void)
     }
     g_tachometer_isInitialized = 1;
     TACH_IDX = lbl_80598A60[0x26];
-    lbl_806D145C = (g_ccClass == 0) ? 0 : 6;
+    Tachometer_Init_bss_806D145C = (g_ccClass == 0) ? 0 : 6;
     g_tachometer_coinTier = 0;
     g_tachometer_coinCount = 0;
     *(float *)&FLOAT_806d1468 = TACH_ZERO;
@@ -54,23 +54,23 @@ extern "C" int Tachometer_Init(void)
     {
         ResCtrl rc;
         rc.resId = TACH_RES.body[TACH_IDX];
-        lbl_805D3320[1] = (unsigned int)SpriteHandle_CreateDefault(&rc, 4);
+        Tachometer_bss_805D3320[1] = (unsigned int)SpriteHandle_CreateDefault(&rc, 4);
     }
     {
         ResCtrl rc;
         rc.resId = needle[TACH_IDX];
-        lbl_805D3320[0] = (unsigned int)SpriteHandle_CreateDefault(&rc, 4);
+        Tachometer_bss_805D3320[0] = (unsigned int)SpriteHandle_CreateDefault(&rc, 4);
     }
     {
         ResCtrl rc;
         rc.resId = digit[TACH_IDX];
         for (i = 2; i < 5; i++) {
-            lbl_805D3320[i] = (unsigned int)SpriteHandle_CreateDefault(&rc, 4);
+            Tachometer_bss_805D3320[i] = (unsigned int)SpriteHandle_CreateDefault(&rc, 4);
         }
     }
     for (i = 0; i < 5; i++) {
-        SpriteHandle_SetActiveFlag(lbl_805D3320[i], 0);
-        SpriteHandle_RecomputeCull(lbl_805D3320[i]);
+        SpriteHandle_SetActiveFlag(Tachometer_bss_805D3320[i], 0);
+        SpriteHandle_RecomputeCull(Tachometer_bss_805D3320[i]);
     }
     return 1;
 }

@@ -5,7 +5,7 @@ extern const float lbl_806D9FA8, lbl_806D9FAC, lbl_806D9FC0;
 extern const float lbl_806DA004, lbl_806DA008, lbl_806DA00C, lbl_806DA010;
 extern const float lbl_806DA014, lbl_806DA018, lbl_806DA01C;
 extern const float lbl_806D6DE4, lbl_806D6DE8;
-extern void *lbl_8049B53C[], *lbl_8048EF34[];
+extern void *RankingSpriteOwnerCtor_vtable_8049B53C[], *lbl_8048EF34[];
 void Sprite_AdvanceAnim(RankingSprite *, float);
 void fn_801A0004(RankingSprite *);
 void fn_801A1280();
@@ -110,7 +110,7 @@ extern "C" void fn_801D3354(RankingTrack *self) {
 
 extern "C" void *fn_801D3364(RankingSpriteOwnerView *self, short flag) {
     if (self) {
-        self->vtable = lbl_8049B53C;
+        self->vtable = RankingSpriteOwnerCtor_vtable_8049B53C;
         self->driver.~RankingDriverSlot();
         self->mark.~RankingSpriteSlot();
         self->front.~RankingSpriteSlot();

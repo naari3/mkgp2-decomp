@@ -70,29 +70,29 @@ extern void fn_801E8CA0();
 extern void fn_801E8CA8();
 extern void fn_801E8CB0();
 extern char lbl_806CFF20[];
-extern char lbl_806CFF30[];
-extern char lbl_806CFF38[];
-extern char lbl_806CFF40[];
-extern char lbl_806CFF48[];
-extern char lbl_806CFF50[];
-extern char lbl_806CFF58[];
-extern char lbl_806CFF60[];
-extern char lbl_806CFF68[];
-extern char lbl_806CFF70[];
-extern char lbl_806CFF78[];
+extern char data_804E4878_data_806CFF30[];
+extern char data_804E4878_data_806CFF38[];
+extern char data_804E4878_data_806CFF40[];
+extern char data_804E4878_data_806CFF48[];
+extern char data_804E4878_data_806CFF50[];
+extern char data_804E4878_data_806CFF58[];
+extern char data_804E4878_data_806CFF60[];
+extern char data_804E4878_data_806CFF68[];
+extern char data_804E4878_data_806CFF70[];
+extern char data_804E4878_data_806CFF78[];
 extern char lbl_806CFF90[];
 extern char lbl_806CFF98[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804E4878[3] = {
+void *data_804E4878_data_804E4878[3] = {
     (void *)&lbl_806CFF20,
     0,
     0
 };
-void *lbl_804E4884[7] = {
-    (void *)&lbl_806CFF30,
+void *SteerJump_vtable_804E4884[7] = {
+    (void *)&data_804E4878_data_806CFF30,
     0,
     (void *)fn_801E0BB4,
     (void *)fn_801E0B9C,
@@ -100,13 +100,13 @@ void *lbl_804E4884[7] = {
     (void *)fn_801E0B8C,
     (void *)fn_801E0998
 };
-void *lbl_804E48A0[3] = {
+void *data_804E4878_data_804E48A0[3] = {
     (void *)&lbl_806CFF20,
     0,
     0
 };
-void *lbl_804E48AC[7] = {
-    (void *)&lbl_806CFF38,
+void *SteerTurn_vtable_804E48AC[7] = {
+    (void *)&data_804E4878_data_806CFF38,
     0,
     (void *)fn_801E0FDC,
     (void *)fn_801E0FCC,
@@ -114,13 +114,13 @@ void *lbl_804E48AC[7] = {
     (void *)fn_801E0FBC,
     (void *)fn_801E0C10
 };
-void *lbl_804E48C8[3] = {
+void *data_804E4878_data_804E48C8[3] = {
     (void *)&lbl_806CFF20,
     0,
     0
 };
-void *lbl_804E48D4[7] = {
-    (void *)&lbl_806CFF40,
+void *SteerHold_vtable_804E48D4[7] = {
+    (void *)&data_804E4878_data_806CFF40,
     0,
     (void *)fn_801E1060,
     (void *)fn_801E104C,
@@ -128,13 +128,13 @@ void *lbl_804E48D4[7] = {
     (void *)fn_801E103C,
     (void *)fn_801E1038
 };
-void *lbl_804E48F0[3] = {
+void *data_804E4878_data_804E48F0[3] = {
     (void *)&lbl_806CFF20,
     0,
     0
 };
-void *lbl_804E48FC[7] = {
-    (void *)&lbl_806CFF48,
+void *SteerSquash_vtable_804E48FC[7] = {
+    (void *)&data_804E4878_data_806CFF48,
     0,
     (void *)fn_801E125C,
     (void *)fn_801E124C,
@@ -142,13 +142,13 @@ void *lbl_804E48FC[7] = {
     (void *)fn_801E123C,
     (void *)fn_801E10BC
 };
-void *lbl_804E4918[3] = {
+void *data_804E4878_data_804E4918[3] = {
     (void *)&lbl_806CFF20,
     0,
     0
 };
-void *lbl_804E4924[7] = {
-    (void *)&lbl_806CFF50,
+void *SteerSpinOut_vtable_804E4924[7] = {
+    (void *)&data_804E4878_data_806CFF50,
     0,
     (void *)fn_801E1814,
     (void *)fn_801E17C8,
@@ -156,13 +156,13 @@ void *lbl_804E4924[7] = {
     (void *)fn_801E17B8,
     (void *)fn_801E12B8
 };
-void *lbl_804E4940[3] = {
+void *data_804E4878_data_804E4940[3] = {
     (void *)&lbl_806CFF20,
     0,
     0
 };
-void *lbl_804E494C[7] = {
-    (void *)&lbl_806CFF58,
+void *SteerHop_vtable_804E494C[7] = {
+    (void *)&data_804E4878_data_806CFF58,
     0,
     (void *)fn_801E1C74,
     (void *)fn_801E1C64,
@@ -170,13 +170,13 @@ void *lbl_804E494C[7] = {
     (void *)fn_801E1C54,
     (void *)fn_801E1870
 };
-void *lbl_804E4968[3] = {
+void *data_804E4878_data_804E4968[3] = {
     (void *)&lbl_806CFF20,
     0,
     0
 };
-void *lbl_804E4974[7] = {
-    (void *)&lbl_806CFF60,
+void *SteerFlip_vtable_804E4974[7] = {
+    (void *)&data_804E4878_data_806CFF60,
     0,
     (void *)fn_801E212C,
     (void *)fn_801E211C,
@@ -184,13 +184,13 @@ void *lbl_804E4974[7] = {
     (void *)fn_801E210C,
     (void *)fn_801E1CD0
 };
-void *lbl_804E4990[3] = {
+void *data_804E4878_data_804E4990[3] = {
     (void *)&lbl_806CFF20,
     0,
     0
 };
-void *lbl_804E499C[7] = {
-    (void *)&lbl_806CFF68,
+void *SteerRollA_vtable_804E499C[7] = {
+    (void *)&data_804E4878_data_806CFF68,
     0,
     (void *)fn_801E25E4,
     (void *)fn_801E25D4,
@@ -198,13 +198,13 @@ void *lbl_804E499C[7] = {
     (void *)fn_801E25C4,
     (void *)fn_801E2188
 };
-void *lbl_804E49B8[3] = {
+void *data_804E4878_data_804E49B8[3] = {
     (void *)&lbl_806CFF20,
     0,
     0
 };
-void *lbl_804E49C4[7] = {
-    (void *)&lbl_806CFF70,
+void *SteerRollB_vtable_804E49C4[7] = {
+    (void *)&data_804E4878_data_806CFF70,
     0,
     (void *)fn_801E2AB4,
     (void *)fn_801E2AA4,
@@ -212,13 +212,13 @@ void *lbl_804E49C4[7] = {
     (void *)fn_801E2A94,
     (void *)fn_801E2640
 };
-void *lbl_804E49E0[3] = {
+void *data_804E4878_data_804E49E0[3] = {
     (void *)&lbl_806CFF20,
     0,
     0
 };
-void *lbl_804E49EC[7] = {
-    (void *)&lbl_806CFF78,
+void *SteerNone_vtable_804E49EC[7] = {
+    (void *)&data_804E4878_data_806CFF78,
     0,
     (void *)fn_801E2B2C,
     (void *)fn_801E2B24,
@@ -226,7 +226,7 @@ void *lbl_804E49EC[7] = {
     (void *)fn_801E2B14,
     (void *)fn_801E2B10
 };
-void *lbl_804E4A08[8] = {
+void *SteerBase_vtable_804E4A08[8] = {
     (void *)&lbl_806CFF20,
     0,
     (void *)fn_801E2B88,

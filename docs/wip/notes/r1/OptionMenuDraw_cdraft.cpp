@@ -2,7 +2,7 @@
 #include "game/singleton.h"
 
 // Shared curve, color and layout tables, followed by the scene text pool.
-extern "C" const float lbl_803678D8[255] = {
+extern "C" const float SceneList_80157EA8_rodata_803678D8[255] = {
     1.0f, 0.699999988f, 0.899999976f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f,
     66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f, 66.6666718f, 5000.0f,
     66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f, 1000.0f, 66.6666718f, 2000.0f,

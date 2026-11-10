@@ -42,14 +42,14 @@ extern "C" void fn_80248A08(HudRoot *self, unsigned int state) {
 }
 extern "C" HudRoot *fn_80248BA8(HudRoot *self, short flag) {
     if (self) {
-        self->vptr=lbl_804EEBA8; self->hostVptr=lbl_804EEBA8+6;
+        self->vptr=HudResultFlow_data_804EEBA8; self->hostVptr=HudResultFlow_data_804EEBA8+6;
         dtor_80249274(self,0);
         if (flag > 0) MemoryManager_TimedFree(self);
     }
     return self;
 }
 HudResultFlow::HudResultFlow() {
-    vptr=lbl_804EEBA8; hostVptr=lbl_804EEBA8+6;
+    vptr=HudResultFlow_data_804EEBA8; hostVptr=HudResultFlow_data_804EEBA8+6;
     CalcEarnedCoins();
     if (g_raceEnded == 1) state=0;
     else if (has_title_changed() == 1) state=1;

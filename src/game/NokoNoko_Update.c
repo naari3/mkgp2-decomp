@@ -32,8 +32,8 @@ typedef struct NokoNoko {
 extern NokoNoko *g_nokonokoHead;
 typedef struct { Vec v[4]; } Quad;
 
-extern const Quad lbl_80377664;
-extern const Quad lbl_80377694;
+extern const Quad NokoNoko_Update_rodata_80377664;
+extern const Quad NokoNoko_Update_rodata_80377694;
 extern NokoKind *lbl_80495D28[];
 extern Vec lbl_80677ED8;
 extern const float lbl_806CFBD8;
@@ -170,7 +170,7 @@ void NokoNoko_Update(NokoNoko *self) {
             self->model = -1;
         }
     }
-    from = lbl_80377664;
+    from = NokoNoko_Update_rodata_80377664;
     from.v[0].x = lbl_806D933C + x0;
     from.v[0].y = y0;
     from.v[0].z = z0;
@@ -183,7 +183,7 @@ void NokoNoko_Update(NokoNoko *self) {
     from.v[3].x = x0;
     from.v[3].y = y0;
     from.v[3].z = z0 - lbl_806D933C;
-    to = lbl_80377694;
+    to = NokoNoko_Update_rodata_80377694;
     to.v[0].x = lbl_806D933C + self->pos.x;
     to.v[0].y = self->pos.y;
     to.v[0].z = self->pos.z;

@@ -4,8 +4,8 @@
 extern "C" {
 extern char lbl_806D4FB0[7], lbl_806D4FB8[5];
 extern const float lbl_806D4FA8, lbl_806D4FAC, lbl_806D4FC0;
-extern float lbl_80419E88[];
-extern int lbl_80419EA0[];
+extern float clCGameDemoWC_Tick_data_80419E88[];
+extern int clCGameDemoWC_Tick_data_80419EA0[];
 void KartItem_CancelAndQueueDefault(DemoDriver *);
 void SetAnimWallHitA(DemoDriver *);
 void SetAnimWallHitB(DemoDriver *);
@@ -58,9 +58,9 @@ extern "C" int clCGameDemoWC_Tick(DemoWCTick *self)
     current.z = self->matrix[2][3];
     Vec3_Subtract(&current, &previous, &delta);
     distance = lbl_806D4FA8 * Vec3_Magnitude(&delta);
-    if (0.0f <= lbl_80419E88[self->event] && lbl_80419E88[self->event] <= self->frame) {
+    if (0.0f <= clCGameDemoWC_Tick_data_80419E88[self->event] && clCGameDemoWC_Tick_data_80419E88[self->event] <= self->frame) {
         DemoDriver *driver = self->driver;
-        switch (lbl_80419EA0[self->event]) {
+        switch (clCGameDemoWC_Tick_data_80419EA0[self->event]) {
         case 0: KartItem_CancelAndQueueDefault(driver); break;
         case 1: SetAnimWallHitB(driver); break;
         case 2: SetAnimWallHitA(driver); break;

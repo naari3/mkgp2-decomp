@@ -415,9 +415,9 @@ extern char lbl_8032D018[];
 extern char lbl_8032D024[];
 extern char lbl_8032D030[];
 extern char lbl_8032D03C[];
-extern char lbl_806CF324[];
-extern char lbl_806CF334[];
-extern char lbl_806CF33C[];
+extern char data_8041A4F8_data_806CF324[];
+extern char data_8041A4F8_data_806CF334[];
+extern char data_8041A4F8_data_806CF33C[];
 extern char lbl_806D5850[];
 extern char lbl_806D5858[];
 extern char lbl_806D5860[];
@@ -2365,11 +2365,11 @@ char *lbl_8041BC00[760] = {
     0,
     0
 };
-int lbl_8041C7E0[16] = {
+int DbgMenu_data_8041C7E0[16] = {
     0, 1, 2, 3, 4, 5, 6, 7,
     8, 9, 10, 11, 12, 13, 14, 15
 };
-void *lbl_8041C820[16] = {
+void *DbgScene_DrawTexturedQuad_data_8041C820[16] = {
     0,
     0,
     0,
@@ -2387,25 +2387,25 @@ void *lbl_8041C820[16] = {
     0,
     0
 };
-int lbl_8041C860[13] = {
+int DbgScene01_SprMng2Test_InputCheck_data_8041C860[13] = {
     5305, 144, 239, 333, 423, 7885, 9189, 1014,
     5047, 5049, 1267, 7052, 5041
 };
-unk32 lbl_8041C894[3] = {
+unk32 data_8041A4F8_data_8041C894[3] = {
     0x00000000, 0x0000001D, 0xFFFFFFFE
 };
 /* decl: unsigned char */
-void *lbl_8041C8A0[8] = {
+void *DbgMenu_data_8041C8A0[8] = {
     0,
-    (void *)&lbl_8041C894,
+    (void *)&data_8041A4F8_data_8041C894,
     (void *)0x8000000,
-    (void *)&lbl_806CF324,
+    (void *)&data_8041A4F8_data_806CF324,
     (void *)0x9000000,
-    (void *)&lbl_806CF324,
+    (void *)&data_8041A4F8_data_806CF324,
     (void *)0xD000000,
     0
 };
-ScrollEntry lbl_8041C8C0[6] = {
+ScrollEntry TestMenuScrollList_Update_data_8041C8C0[6] = {
     { 2621, 63.899994f, 239.5f, 0.0f },
     { 2622, 383.9f, 239.5f, 0.0f },
     { 2623, 147.9f, 239.5f, 0.0f },
@@ -2413,7 +2413,7 @@ ScrollEntry lbl_8041C8C0[6] = {
     { 2650, 582.4f, 236.85f, 0.0f },
     { 2650, 419.9f, 421.5f, -1.570796f }
 };
-DbgMenuEntry lbl_8041C920[14] = {
+DbgMenuEntry DbgMenu_HandleInput_data_8041C920[14] = {
     { (void *)DbgScene01_SprMng2Test_Ctor, (void *)&lbl_8032CF94 },
     { (void *)DbgScene02_MapViewer_Ctor, (void *)&lbl_8032CFA4 },
     { (void *)DbgScene03_TplTest_Ctor, (void *)&lbl_8032CFB4 },
@@ -2429,14 +2429,14 @@ DbgMenuEntry lbl_8041C920[14] = {
     { (void *)DbgScene13_PrxTest2_Ctor, (void *)&lbl_8032D030 },
     { (void *)TestMenuRaceStart_Ctor, (void *)&lbl_8032D03C }
 };
-void *lbl_8041C990[3] = {
-    (void *)&lbl_806CF334,
+void *sdata_806CF1C0_data_8041C990[3] = {
+    (void *)&data_8041A4F8_data_806CF334,
     0,
     0
 };
 /* decl: char / void * */
-void *lbl_8041C99C[5] = {
-    (void *)&lbl_806CF33C,
+void *SpriteViewerScene_vtable_8041C99C[5] = {
+    (void *)&data_8041A4F8_data_806CF33C,
     0,
     (void *)DbgMenu_HandleInput,
     (void *)DbgMenu_TickSubScene,

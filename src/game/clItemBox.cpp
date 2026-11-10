@@ -1,13 +1,13 @@
 /* --- owned .rodata 0x802EDF20..0x802EDFD8 (tools/own_data.py) --- */
 #pragma force_active on
-extern "C" const char lbl_802EDF20[184] = { 99, 108, 73, 116, 101, 109, 66, 111, 120, 58, 58, 115, 101, 116, 117, 112, 58, 58, 99, 108, 71, 114, 111, 117, 110, 100, 67, 111, 108, 108, 58, 58, 99, 104, 107, 80, 111, 105, 110, 116, 32, 110, 111, 32, 103, 114, 111, 117, 110, 100, 32, 115, 101, 97, 114, 99, 104, 10, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 46, 100, 97, 116, 0, 0, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 95, 104, 97, 104, 101, 110, 95, 110, 117, 108, 108, 49, 95, 106, 111, 105, 110, 116, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 95, 98, 95, 98, 111, 120, 95, 106, 111, 105, 110, 116, 0, 0, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 95, 97, 95, 98, 111, 120, 95, 106, 111, 105, 110, 116, 0, 0, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 95, 105, 116, 101, 109, 95, 98, 111, 120, 95, 110, 117, 108, 108, 95, 106, 111, 105, 110, 116, 0, 0, 0, 0 };
+extern "C" const char clItemBox_Ctor_GroundSnap_rodata_802EDF20[184] = { 99, 108, 73, 116, 101, 109, 66, 111, 120, 58, 58, 115, 101, 116, 117, 112, 58, 58, 99, 108, 71, 114, 111, 117, 110, 100, 67, 111, 108, 108, 58, 58, 99, 104, 107, 80, 111, 105, 110, 116, 32, 110, 111, 32, 103, 114, 111, 117, 110, 100, 32, 115, 101, 97, 114, 99, 104, 10, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 46, 100, 97, 116, 0, 0, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 95, 104, 97, 104, 101, 110, 95, 110, 117, 108, 108, 49, 95, 106, 111, 105, 110, 116, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 95, 98, 95, 98, 111, 120, 95, 106, 111, 105, 110, 116, 0, 0, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 95, 97, 95, 98, 111, 120, 95, 106, 111, 105, 110, 116, 0, 0, 0, 0, 105, 116, 101, 109, 95, 98, 111, 120, 95, 105, 116, 101, 109, 95, 98, 111, 120, 95, 110, 117, 108, 108, 95, 106, 111, 105, 110, 116, 0, 0, 0, 0 };
 #pragma force_active reset
 extern "C" /*
  * clItemBox: item box objects and the manager's assets, 0x8005EA94..0x8005F5CC.
  * The parts below were separate split TUs. The .data at 0x803F9C60 holds the
  * compiler's member-function-pointer constants (&clItemBox::PopOut, ...): two
  * from the constructors, four from the step table initializer, which the
- * __sinit (clItemBoxManager_InitStateTable) copies into lbl_803F9CA8.
+ * __sinit (clItemBoxManager_InitStateTable) copies into clItemBox_data_803F9CA8.
  * Built with -inline deferred, which emits functions in reverse source order,
  * so the source runs from the asset functions down to TransitionToDebris.
  * The PMF temporaries are created at parse time, which puts the GroundSnap
@@ -37,7 +37,7 @@ struct clItemBox {
 };
 typedef int (clItemBox::*clItemBoxStep)();
 
-extern "C" clItemBoxStep lbl_803F9CA8[4];
+extern "C" clItemBoxStep clItemBox_data_803F9CA8[4];
 
 /*
  * clItemBoxManager channel binding and asset lifetime, 0x8005F194..0x8005F53C.
@@ -52,11 +52,11 @@ extern int lbl_806CEEA0;
 extern GXChannel *lbl_806D10B0;
 extern GXChannel *lbl_806D10B4;
 extern GXChannel *lbl_806D10B8;
-extern Normal3D *lbl_806D10BC;
-extern void *lbl_806D10C0;
-extern void *lbl_806D10C4;
-extern Normal3D *lbl_806D10C8;
-extern void *lbl_806D10CC;
+extern Normal3D *clItemBox_bss_806D10BC;
+extern void *clItemBox_bss_806D10C0;
+extern void *clItemBox_bss_806D10C4;
+extern Normal3D *clItemBox_bss_806D10C8;
+extern void *clItemBox_bss_806D10CC;
 extern char lbl_802EDEF8[];
 extern char lbl_802EDF14[];
 
@@ -98,21 +98,21 @@ void clItemBoxManager_LoadAssets(void)
 {
     char *strings = lbl_802EDEF8;
 
-    if (lbl_806D10BC == 0) {
-        lbl_806D10BC = new Normal3D(strings + 0x64, 1);
-        JObj_Hide(lbl_806D10BC, ResolveJointByName(lbl_806D10BC, strings + 0x74), 0x10);
-        lbl_806D10C0 = ResolveJointByName(lbl_806D10BC, strings + 0x90);
-        lbl_806D10C4 = ResolveJointByName(lbl_806D10BC, strings + 0xA8);
-        HSD_JObjSetFlags(lbl_806D10C4, 0x400);
+    if (clItemBox_bss_806D10BC == 0) {
+        clItemBox_bss_806D10BC = new Normal3D(strings + 0x64, 1);
+        JObj_Hide(clItemBox_bss_806D10BC, ResolveJointByName(clItemBox_bss_806D10BC, strings + 0x74), 0x10);
+        clItemBox_bss_806D10C0 = ResolveJointByName(clItemBox_bss_806D10BC, strings + 0x90);
+        clItemBox_bss_806D10C4 = ResolveJointByName(clItemBox_bss_806D10BC, strings + 0xA8);
+        HSD_JObjSetFlags(clItemBox_bss_806D10C4, 0x400);
     }
-    if (lbl_806D10C8 == 0) {
-        lbl_806D10C8 = new Normal3D(strings + 0x64, 0);
-        JObj_Hide(lbl_806D10C8, ResolveJointByName(lbl_806D10C8, strings + 0xC0), 0x10);
-        lbl_806D10CC = ResolveJointByName(lbl_806D10C8, strings + 0x74);
+    if (clItemBox_bss_806D10C8 == 0) {
+        clItemBox_bss_806D10C8 = new Normal3D(strings + 0x64, 0);
+        JObj_Hide(clItemBox_bss_806D10C8, ResolveJointByName(clItemBox_bss_806D10C8, strings + 0xC0), 0x10);
+        clItemBox_bss_806D10CC = ResolveJointByName(clItemBox_bss_806D10C8, strings + 0x74);
     }
-    lbl_806D10B0 = new GXChannel(lbl_806D10C0, HSD_JObjGetDObj(lbl_806D10C0), 1, 0);
-    lbl_806D10B4 = new GXChannel(lbl_806D10C4, HSD_JObjGetDObj(lbl_806D10C4), 1, 0);
-    lbl_806D10B8 = new GXChannel(lbl_806D10CC, HSD_JObjGetDObj(lbl_806D10CC), 1, 0);
+    lbl_806D10B0 = new GXChannel(clItemBox_bss_806D10C0, HSD_JObjGetDObj(clItemBox_bss_806D10C0), 1, 0);
+    lbl_806D10B4 = new GXChannel(clItemBox_bss_806D10C4, HSD_JObjGetDObj(clItemBox_bss_806D10C4), 1, 0);
+    lbl_806D10B8 = new GXChannel(clItemBox_bss_806D10CC, HSD_JObjGetDObj(clItemBox_bss_806D10CC), 1, 0);
 }
 
 void clItemBoxManager_TeardownAssets(void)
@@ -123,13 +123,13 @@ void clItemBoxManager_TeardownAssets(void)
     lbl_806D10B4 = 0;
     dtor_8007D9C4(lbl_806D10B8, 1);
     lbl_806D10B8 = 0;
-    Object_DtorWithGXSync(lbl_806D10BC, 1);
-    lbl_806D10BC = 0;
-    lbl_806D10C0 = 0;
-    lbl_806D10C4 = 0;
-    Object_DtorWithGXSync(lbl_806D10C8, 1);
-    lbl_806D10C8 = 0;
-    lbl_806D10CC = 0;
+    Object_DtorWithGXSync(clItemBox_bss_806D10BC, 1);
+    clItemBox_bss_806D10BC = 0;
+    clItemBox_bss_806D10C0 = 0;
+    clItemBox_bss_806D10C4 = 0;
+    Object_DtorWithGXSync(clItemBox_bss_806D10C8, 1);
+    clItemBox_bss_806D10C8 = 0;
+    clItemBox_bss_806D10CC = 0;
 }
 
 void clItemBoxManager_Bind(int index)
@@ -212,7 +212,7 @@ GroundItemBox::GroundItemBox(float x, float z)
       timer(lbl_806D29A8), step(&clItemBox::PopOut)
 {
     motion.flag = 0;
-    if (!Terrain_GetGroundHeight(&position, &position.y, 0, 0)) DebugPrintf(lbl_802EDF20);
+    if (!Terrain_GetGroundHeight(&position, &position.y, 0, 0)) DebugPrintf(clItemBox_Ctor_GroundSnap_rodata_802EDF20);
     height = position.y;
     if (!debris) debris = new GroundDebris;
 }
@@ -327,7 +327,7 @@ struct clItemBoxT {
 extern "C" int clItemBox_Tick(clItemBoxT *self)
 {
     self->state = (((clItemBox *)self)->*self->step)();
-    self->step = lbl_803F9CA8[self->state];
+    self->step = clItemBox_data_803F9CA8[self->state];
     if (self->state == 1 || self->state == 0 || self->state == 3) {
         return 1;
     }
@@ -364,7 +364,7 @@ typedef struct clItemBox {
 extern int lbl_806CEEA0;
 extern GXChannel *lbl_806D10B0;
 extern GXChannel *lbl_806D10B4;
-extern void *lbl_806D10BC;
+extern void *clItemBox_bss_806D10BC;
 extern const float lbl_806D29E0;
 extern const double lbl_806D29F0;
 extern const float lbl_806D2A04;
@@ -380,13 +380,13 @@ extern void GXChannel_PushTransform(GXChannel *ch, void *mtx);
 
 static inline void clItemBox_DrawModel(clItemBox *self, Vec *view)
 {
-    Object_SetColorAlphaOnly(lbl_806D10BC, 0, self->alpha);
-    Object_SetJObjPositionXYZ(lbl_806D10BC, self->pos.x, lbl_806D2A0C + self->pos.y, self->pos.z);
-    Object_SetJObjRotationY(lbl_806D10BC, lbl_806D29F0 * (lbl_806D29E0 * self->spin));
+    Object_SetColorAlphaOnly(clItemBox_bss_806D10BC, 0, self->alpha);
+    Object_SetJObjPositionXYZ(clItemBox_bss_806D10BC, self->pos.x, lbl_806D2A0C + self->pos.y, self->pos.z);
+    Object_SetJObjRotationY(clItemBox_bss_806D10BC, lbl_806D29F0 * (lbl_806D29E0 * self->spin));
     if (lbl_806CEEA0 == 0) {
-        GXChannel_PushTransform(lbl_806D10B4, Object_GetJObjLocalMatrix(lbl_806D10BC));
+        GXChannel_PushTransform(lbl_806D10B4, Object_GetJObjLocalMatrix(clItemBox_bss_806D10BC));
     } else {
-        GXChannel_PushTransform(lbl_806D10B0, Object_GetJObjLocalMatrix(lbl_806D10BC));
+        GXChannel_PushTransform(lbl_806D10B0, Object_GetJObjLocalMatrix(clItemBox_bss_806D10BC));
     }
 }
 
@@ -484,7 +484,7 @@ static inline void DebrisSet_Burst(DebrisSet *debris, const float *pos, float dx
 void clItemBox_TransitionToDebris(clItemBox *self, float hx, float hy, float hz)
 {
     self->state = 2;
-    self->step = lbl_803F9CA8[self->state];
+    self->step = clItemBox_data_803F9CA8[self->state];
     self->timer = 0.0f;
     DebrisSet_Burst(self->debris, self->pos, hx, hy, hz);
 }
@@ -492,7 +492,7 @@ void clItemBox_TransitionToDebris(clItemBox *self, float hx, float hy, float hz)
 }
 }
 extern "C" {
-clItemBoxStep lbl_803F9CA8[4] = {
+clItemBoxStep clItemBox_data_803F9CA8[4] = {
     &clItemBox::PopOut,
     &clItemBox::Bobbing,
     &clItemBox::Debris,

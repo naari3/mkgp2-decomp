@@ -32,40 +32,40 @@ const CoursePropResource lbl_8036D75C[3] = {
     { (void *)&lbl_8036D738, 20.0f, 15.0f, 1.0f },
     { (void *)&lbl_8036D748, 15.0f, 7.0f, 5.0f }
 };
-const CoursePropData lbl_8036D78C[1] = {
+const CoursePropData CoursePropCtor_rodata_8036D78C[1] = {
     { { 734.0f, 23.5f, -1962.5f }, -0.2617994f, 1 }
 };
-const CoursePropData lbl_8036D7A0[1] = {
+const CoursePropData CoursePropCtor_rodata_8036D7A0[1] = {
     { { 153.0f, 24.0f, 2282.5f }, 3.1415927f, 1 }
 };
-const CoursePropData lbl_8036D7B4[1] = {
+const CoursePropData CoursePropCtor_rodata_8036D7B4[1] = {
     { { 972.0f, 23.5f, -1797.0f }, -1.5707964f, 1 }
 };
-const CoursePropData lbl_8036D7C8[1] = {
+const CoursePropData CoursePropCtor_rodata_8036D7C8[1] = {
     { { 931.0f, 42.5f, -1614.0f }, -2.3561945f, 1 }
 };
-const CoursePropData lbl_8036D7DC[1] = {
+const CoursePropData CoursePropCtor_rodata_8036D7DC[1] = {
     { { 795.5f, 23.5f, -1944.0f }, -0.2617994f, 0 }
 };
-const CoursePropData lbl_8036D7F0[1] = {
+const CoursePropData CoursePropCtor_rodata_8036D7F0[1] = {
     { { 184.5f, 24.0f, 2279.0f }, 3.8397243f, 0 }
 };
-const CoursePropData lbl_8036D804[1] = {
+const CoursePropData CoursePropCtor_rodata_8036D804[1] = {
     { { 963.5f, 23.5f, -1742.0f }, -1.5707964f, 0 }
 };
-const CoursePropData lbl_8036D818[1] = {
+const CoursePropData CoursePropCtor_rodata_8036D818[1] = {
     { { 901.5f, 41.0f, -1528.0f }, -2.3561945f, 0 }
 };
-const CoursePropData lbl_8036D82C[1] = {
+const CoursePropData CoursePropCtor_rodata_8036D82C[1] = {
     { { -674.0f, 111.0f, -420.0f }, 0.0f, 2 }
 };
-const CoursePropData lbl_8036D840[1] = {
+const CoursePropData CoursePropCtor_rodata_8036D840[1] = {
     { { -590.5f, 111.0f, -515.5f }, 1.5707964f, 2 }
 };
-const CoursePropData lbl_8036D854[1] = {
+const CoursePropData CoursePropCtor_rodata_8036D854[1] = {
     { { -568.0f, 111.0f, 481.0f }, 3.4906585f, 2 }
 };
-const CoursePropData lbl_8036D868[1] = {
+const CoursePropData CoursePropCtor_rodata_8036D868[1] = {
     { { -461.5f, 111.5f, 555.0f }, 2.3561945f, 2 }
 };
 const char lbl_8036D87C[] = "clKPChara";

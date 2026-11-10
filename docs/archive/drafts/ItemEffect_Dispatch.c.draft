@@ -6,14 +6,14 @@
  *   ItemEffect_GenericHandler         @ 0x800501B0 (size 0x140)
  *
  * SelectAndDispatch scans the 7-entry x 0x18-byte effect descriptor table at
- * lbl_802EBE64 to remap an incoming item id (type 0 = random pick via
+ * ItemEffect_SelectAndDispatch_rodata_802EBE64 to remap an incoming item id (type 0 = random pick via
  * fn_802DCA5C, type 1 = indexed by the ItemObject byte at +0xEC). The
  * remapped id is then checked against the 1-entry sentinel list at
  * lbl_806D26E0; ids on the list are dispatched through the kart object's
  * vtable slot 13 with a large stack parameter block, everything else falls
  * through to ItemEffect_GenericHandler. GenericHandler special-cases item
  * 0x17 (mushroom boost SE + SpeedBoost_Apply) and otherwise scans the
- * 58-entry x 0x64-byte descriptor table at lbl_802EBF0C, forwarding hits to
+ * 58-entry x 0x64-byte descriptor table at ItemEffect_GenericHandler_rodata_802EBF0C, forwarding hits to
  * ItemEffect_OnHit (extern; member of the large extab group, separate lane).
  *
  * Built with CW 1.3.2 + `-Cpp_exceptions on` so the extab/extabindex entries
@@ -29,9 +29,9 @@ extern void SpeedBoost_Apply(float scale, void *movement, int frames);
 extern int ItemEffect_OnHit(void *self, const void *desc, int itemId, void *itemObj, int arg4);
 
 /* 7-entry x 6-word effect remap descriptor table (.rodata) */
-extern int const lbl_802EBE64[42];
+extern int const ItemEffect_SelectAndDispatch_rodata_802EBE64[42];
 /* 58-entry x 0x64-byte item effect descriptor table (.rodata) */
-extern unsigned char const lbl_802EBF0C[0x16A8];
+extern unsigned char const ItemEffect_GenericHandler_rodata_802EBF0C[0x16A8];
 /* 1-entry sentinel id list (.sdata2) */
 extern int const lbl_806D26E0[1];
 extern float const lbl_806D26F0;
@@ -57,7 +57,7 @@ int ItemEffect_SelectAndDispatch(void *self, int itemId, void *itemObj, int arg4
     int i2;
     int found;
 
-    desc = lbl_802EBE64;
+    desc = ItemEffect_SelectAndDispatch_rodata_802EBE64;
     i = 7;
     do {
         if (itemId != desc[1]) {
@@ -144,7 +144,7 @@ int ItemEffect_GenericHandler(void *self, int itemId, void *itemObj, int arg4) {
         return 2;
     }
 
-    desc = lbl_802EBF0C;
+    desc = ItemEffect_GenericHandler_rodata_802EBF0C;
     i = 0x3A;
     do {
         if ((unsigned char)(itemId == *(int *)(desc + 4)) == 1) {

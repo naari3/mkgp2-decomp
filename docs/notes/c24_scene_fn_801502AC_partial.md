@@ -84,11 +84,11 @@ Best natural C++ partial: 97.068184%, 880 B. Reuses the existing matched SceneCa
 -    nofralloc
 -    stwu r1, -0x30(r1)
 -    mflr r0
--    lis r5, lbl_80363D30@ha
+-    lis r5, Scene_8014E0C4_rodata_80363D30@ha
 -    stw r0, 0x34(r1)
 -    mulli r0, r4, 0x18
 -    stmw r25, 0x14(r1)
--    addi r31, r5, lbl_80363D30@l
+-    addi r31, r5, Scene_8014E0C4_rodata_80363D30@l
 -    mr r27, r3
 -    addi r3, r31, 0x31c0
 -    add r29, r3, r0
@@ -320,11 +320,11 @@ Best natural C++ partial: 97.068184%, 880 B. Reuses the existing matched SceneCa
 -}
 +#pragma use_lmw_stmw on
 +extern "C" void fn_801502AC(RaceScene *self, int part) {
-+    const CourseModeInfo *info = &lbl_80366EF0[part];
++    const CourseModeInfo *info = &Scene_8014E0C4_rodata_80366EF0[part];
 +    const char *name;
 +    SceneCacheAnimScene *cam;
 +    if (info->id == -1) return;
-+    name = ((const char *const *)&lbl_80364368)[info->id];
++    name = ((const char *const *)&Scene_8014E0C4_rodata_80364368)[info->id];
 +    if (self->objs[part] == 0) {
 +        self->objs[part] = (RaceCam *)new SceneCacheAnimScene(name);
 +        cam = (SceneCacheAnimScene *)self->objs[part];

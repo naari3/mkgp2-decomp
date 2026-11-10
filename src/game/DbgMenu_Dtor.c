@@ -14,13 +14,13 @@ struct DbgMenu {
 extern "C" {
 extern void MemoryManager_TimedFree(void *);
 extern void dtor_8002CDF4(void *, int);
-extern char lbl_8041C99C[];  /* DbgMenu vtable */
+extern char SpriteViewerScene_vtable_8041C99C[];  /* DbgMenu vtable */
 
 #pragma exceptions on
 DbgMenu *DbgMenu_Dtor(DbgMenu *self, short flag)
 {
     if (self != 0) {
-        self->vtable = lbl_8041C99C;
+        self->vtable = SpriteViewerScene_vtable_8041C99C;
         if (self->child != 0) {
             delete self->child;
         }

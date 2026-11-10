@@ -22,7 +22,7 @@ struct SmokeEffect {
     SmokeGroup group;
 };
 extern "C" {
-extern const SmokeVec lbl_8032A730, lbl_8032A73C;
+extern const SmokeVec Effect_SmokeRing3_Update_rodata_8032A730, Effect_SmokeRing3_Update_rodata_8032A73C;
 extern const float lbl_806D5478, lbl_806D5400, lbl_806D5498;
 extern const float lbl_806D5450, lbl_806D5480;
 void fn_800AF4F8(SmokeEffect*);
@@ -69,8 +69,8 @@ void Effect_SmokeRing3_Update(SmokeEffect* effect) {
     for (i = 0; i < 3; ++i) {
         SmokeEffect* child = group->child[i];
         if (child) {
-            angles = lbl_8032A730;
-            tilts = lbl_8032A73C;
+            angles = Effect_SmokeRing3_Update_rodata_8032A730;
+            tilts = Effect_SmokeRing3_Update_rodata_8032A73C;
             GetSpawnPosition(&child->position, 0.0f, 0.0f, lbl_806D5450);
             Vec2_RotateY(&group->child[i]->position, &group->child[i]->position, group->phase + angles.v[i]);
             Vec2_RotateX(&group->child[i]->position, &group->child[i]->position, tilts.v[i]);

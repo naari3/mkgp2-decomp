@@ -155,7 +155,7 @@ extern unsigned int lbl_806DC190;
 extern unsigned int lbl_806DC1B0;
 extern unsigned int lbl_806DC1B8;
 extern const float lbl_806D7054;
-extern const unsigned int lbl_803561E8[0x10C];
+extern const unsigned int NokoNoko_801287F8_rodata_803561E8[0x10C];
 extern void dtor_80036E40();
 void ClRomTable_PurgeAll(void);
 void CourseEnvironment_Dtor(void *env, int del);
@@ -173,7 +173,7 @@ void fn_8016C634(void *w, int del);
 void fn_80188DA8(void);
 void fn_80254134(void *hud, int del);
 void dtor_80082960(void);
-extern void *lbl_8048E338[];
+extern void *NokoNokoChallenge_vtable_8048E338[];
 extern void Alloc();
 extern void Camera_Create();
 extern void CarObject_Init();
@@ -190,8 +190,8 @@ extern void clNormal3D_Construct();
 extern unsigned int lbl_806D7060;
 extern unsigned int ResCtrl_Init[];
 extern unsigned int lbl_8048E144[];
-extern void *lbl_8048E34C[];
-extern void *lbl_8048E36C[];
+extern void *CoinShotBase_vtable_8048E34C[];
+extern void *CoinShots_vtable_8048E36C[];
 extern void dtor_8012A5AC();
 struct LNode *LinkedNode_GetField10_OrFallback(void *o, int idx);
 void Object_RenderJObjEx(void *o, void *node, int mask);
@@ -240,7 +240,7 @@ ModelPair *fn_8012A52C(ModelPair *self, short flag);
 /* .rodata 0x803561E8..0x80356708, owned by this TU (pool base of the mode ctor). */
 struct IconPos { float x, y; };
 
-extern "C" const unsigned int lbl_803561E8[0x10C] = {
+extern "C" const unsigned int NokoNoko_801287F8_rodata_803561E8[0x10C] = {
     0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000,
     0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
     0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
@@ -404,7 +404,7 @@ extern "C" {
 extern unsigned char lbl_806D1290;
 extern const float lbl_806D7074, lbl_806D7078, lbl_806D707C, lbl_806D7080, lbl_806D7094;
 extern const float lbl_806D7098, lbl_806D709C, lbl_806D70A0, lbl_806D70A4, lbl_806D70A8;
-extern Vec3 lbl_80677C58, lbl_80677C64;
+extern Vec3 NokoNokoChallenge_Update_bss_80677C58, NokoNokoChallenge_Update_bss_80677C64;
 void ItemObjectManager_PerFrameUpdate(void *);
 void *GetInputManager();
 NkInput *InputMgr_GetPlayer(void *, int);
@@ -690,10 +690,10 @@ extern "C" int NokoNokoChallenge_Update(NkView *self)
         }
     }
     self->shots->Update();
-    CObj_LoadProjMatrix(self->camera, &lbl_80677C58);
-    CObj_ApplyScissor(self->camera, &lbl_80677C64);
+    CObj_LoadProjMatrix(self->camera, &NokoNokoChallenge_Update_bss_80677C58);
+    CObj_ApplyScissor(self->camera, &NokoNokoChallenge_Update_bss_80677C64);
     ItemObjectManager_Update();
-    VfxSlotMgr_Update(lbl_80677C58, lbl_80677C64);
+    VfxSlotMgr_Update(NokoNokoChallenge_Update_bss_80677C58, NokoNokoChallenge_Update_bss_80677C64);
     if (IsRaceStarted() == 1 && g_raceEnded != 1) {
         if (g_raceTimeRemaining >= 0.0f) {
             g_raceTimeRemaining -= lbl_806D70A0;
@@ -781,7 +781,7 @@ static inline void ObjUnref(HsdObj *o)
 extern "C" TimeTrialMode *TimeTrial_Destroy(TimeTrialMode *self, short flag)
 {
     if (self) {
-        self->vt = lbl_8048E338;
+        self->vt = NokoNokoChallenge_vtable_8048E338;
         if (g_weatherSystem != 0) {
             fn_8016C634(g_weatherSystem, 1);
             g_weatherSystem = 0;
@@ -1150,9 +1150,9 @@ extern "C" void fn_8012A22C(ShotOwner *self)
 extern "C" ModelPair *fn_8012A52C(ModelPair *self, short flag)
 {
     if (self) {
-        self->vt = lbl_8048E36C;
+        self->vt = CoinShots_vtable_8048E36C;
         if (self) {
-            self->vt = lbl_8048E34C;
+            self->vt = CoinShotBase_vtable_8048E34C;
             Object_DtorWithGXSync(self->a, 1);
             Object_DtorWithGXSync(self->b, 1);
         }

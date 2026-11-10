@@ -29,7 +29,7 @@ void fn_80121E10(ResCtrl *ctrl);
 int fn_8020A900(int value, int digit);
 }
 
-/* One of the fifteen blinking timer dots (vtable lbl_804EC260). */
+/* One of the fifteen blinking timer dots (vtable CountdownDot_vtable_804EC260). */
 struct CountdownDot : FlowTask {
     int active;
     int index;
@@ -58,7 +58,7 @@ struct CountdownDot : FlowTask {
     virtual void _key3();
 };
 
-/* Big seconds numeral (vtable lbl_804EC278). */
+/* Big seconds numeral (vtable CountdownDigit_vtable_804EC278). */
 struct CountdownDigit : FlowTask {
     int layer;
     float x;
@@ -88,7 +88,7 @@ struct CountdownDigit : FlowTask {
     virtual void _key3();
 };
 
-/* Countdown host (vtable lbl_804EC248). */
+/* Countdown host (vtable Countdown_vtable_804EC248). */
 struct Countdown : FlowTask {
     VHolder<FlowSceneList> list;
     int layer;

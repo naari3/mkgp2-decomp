@@ -21,7 +21,7 @@ void DebugPrintf(const char *, ...);
 int strcmp(const char *, const char *);
 extern const char lbl_806DBDE4[7], lbl_806DBDEC[5], lbl_806DBDF4[4];
 extern const float lbl_806DBDE0, lbl_806DBE00;
-extern const unsigned char lbl_804EE6C0[], lbl_804EE68C[], lbl_804EE6AC[];
+extern const unsigned char lbl_804EE6C0[], JointTracks_data_804EE68C[], lbl_804EE6AC[];
 extern int g_cupId;
 }
 
@@ -93,7 +93,7 @@ struct TrackTask : JointTask {
     TrackState state[9];
     ChildVector children;
     TrackTask(HSD_JObj *j, const TrackSet *t) : JointTask(j) {
-        vtable = lbl_804EE68C;
+        vtable = JointTracks_data_804EE68C;
         tracks = t;
         children.allocation = 0; children.count = 0; children.start = 0;
         state[0].frame = 0; state[0].key = 0;

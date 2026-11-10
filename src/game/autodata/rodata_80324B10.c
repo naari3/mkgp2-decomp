@@ -7,11 +7,11 @@
 #include "game/types/Int4.h"
 #include "game/types/Vec.h"
 
-extern char lbl_806CF1C0[];
-extern char lbl_806CF1C8[];
-extern char lbl_806CF1D0[];
-extern char lbl_806CF1D8[];
-extern char lbl_806CF1E0[];
+extern char rodata_80324B10_data_806CF1C0[];
+extern char rodata_80324B10_data_806CF1C8[];
+extern char rodata_80324B10_data_806CF1D0[];
+extern char rodata_80324B10_data_806CF1D8[];
+extern char rodata_80324B10_data_806CF1E0[];
 extern char lbl_806D4A44[];
 extern char lbl_806D4A48[];
 extern char lbl_806D4A50[];
@@ -130,43 +130,43 @@ extern char lbl_806D4DC0[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void * const lbl_80324B10[17][2] = {
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1C0,
-    (void *)&lbl_806CF1C8,
-    (void *)&lbl_806CF1D0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1D8,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1D8,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0,
-    (void *)&lbl_806CF1E0
+void * const CourseScene_Load_rodata_80324B10[17][2] = {
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1C0,
+    (void *)&rodata_80324B10_data_806CF1C8,
+    (void *)&rodata_80324B10_data_806CF1D0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1D8,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1D8,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0,
+    (void *)&rodata_80324B10_data_806CF1E0
 };
-const unsigned char lbl_80324B98[1020] = {
+const unsigned char RankLog_rodata_80324B98[1020] = {
     0x3F, 0x80, 0x0, 0x0, 0x3F, 0x33, 0x33, 0x33, 0x3F, 0x66, 0x66, 0x66,
     0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x43, 0xFA, 0x0, 0x0,
     0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x0, 0x0, 0x42, 0x85, 0x55, 0x56,
@@ -253,88 +253,88 @@ const unsigned char lbl_80324B98[1020] = {
     0x45, 0x3B, 0x80, 0x0, 0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x7A, 0x0, 0x0,
     0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x9C, 0x40, 0x0, 0x42, 0xA6, 0xAA, 0xAB
 };
-const unk32 lbl_80324F94[3] = {
+const unk32 data_80411B18_rodata_80324F94[3] = {
     0x838B815B, 0x834C815B, 0x00000000
 };
-const unk32 lbl_80324FA0[3] = {
+const unk32 data_80411B18_rodata_80324FA0[3] = {
     0x8341835E, 0x8362834A, 0x815B0000
 };
 const char lbl_80324FAC[] = "Attacker";
-const unk32 lbl_80324FB8[3] = {
+const unk32 data_80411B18_rodata_80324FB8[3] = {
     0x83688389, 0x8343836F, 0x815B0000
 };
-const unk32 lbl_80324FC4[3] = {
+const unk32 data_80411B18_rodata_80324FC4[3] = {
     0x838C815B, 0x8354815B, 0x00000000
 };
-const unk32 lbl_80324FD0[3] = {
+const unk32 data_80411B18_rodata_80324FD0[3] = {
     0x838A815B, 0x835F815B, 0x00000000
 };
-const unk32 lbl_80324FDC[3] = {
+const unk32 data_80411B18_rodata_80324FDC[3] = {
     0x83748340, 0x8343835E, 0x815B0000
 };
-const unk32 lbl_80324FE8[3] = {
+const unk32 data_80411B18_rodata_80324FE8[3] = {
     0x837D8358, 0x835E815B, 0x00000000
 };
-const unk32 lbl_80324FF4[3] = {
+const unk32 data_80411B18_rodata_80324FF4[3] = {
     0x83608383, 0x83938376, 0x00000000
 };
-const unk32 lbl_80325000[3] = {
+const unk32 data_80411B18_rodata_80325000[3] = {
     0x83438369, 0x8359837D, 0x00000000
 };
-const unk32 lbl_8032500C[3] = {
+const unk32 data_80411B18_rodata_8032500C[3] = {
     0x83548380, 0x83898343, 0x00000000
 };
-const unk32 lbl_80325018[3] = {
+const unk32 data_80411B18_rodata_80325018[3] = {
     0x8371815B, 0x838D815B, 0x00000000
 };
-const unk32 lbl_80325024[3] = {
+const unk32 data_80411B18_rodata_80325024[3] = {
     0x8371838D, 0x83438393, 0x00000000
 };
-const unk32 lbl_80325030[3] = {
+const unk32 data_80411B18_rodata_80325030[3] = {
     0x8376838A, 0x83938358, 0x00000000
 };
-const unk32 lbl_8032503C[3] = {
+const unk32 data_80411B18_rodata_8032503C[3] = {
     0x8376838A, 0x8393835A, 0x83580000
 };
 const char lbl_80325048[] = "Princess";
-const unk32 lbl_80325054[3] = {
+const unk32 data_80411B18_rodata_80325054[3] = {
     0x834E8343, 0x815B8393, 0x00000000
 };
-const unk32 lbl_80325060[3] = {
+const unk32 data_80411B18_rodata_80325060[3] = {
     0x834A8343, 0x8355815B, 0x00000000
 };
 const char lbl_8032506C[] = "Conqueror";
-const unk32 lbl_80325078[3] = {
+const unk32 data_80411B18_rodata_80325078[3] = {
     0x837D838A, 0x834A96BC, 0x906C0000
 };
 const char lbl_80325084[] = "Lone Wolf";
 const char lbl_80325090[] = "WarMachine";
-const unk32 lbl_8032509C[3] = {
+const unk32 data_80411B18_rodata_8032509C[3] = {
     0x965C9196, 0x97F18ED4, 0x00000000
 };
 const char lbl_803250A8[] = "TrainFleet";
 const char lbl_803250B4[] = "Lion King";
 const char lbl_803250C0[] = "Blast King";
 const char lbl_803250CC[] = "Speed King";
-const unk32 lbl_803250D8[3] = {
+const unk32 data_80411B18_rodata_803250D8[3] = {
     0x837D838A, 0x834A91E5, 0x89A40000
 };
-const unk32 lbl_803250E4[3] = {
+const unk32 data_80411B18_rodata_803250E4[3] = {
     0x837D838A, 0x834A9465, 0x89A40000
 };
 const char lbl_803250F0[] = "MK Kaiser";
-const unk32 lbl_803250FC[3] = {
+const unk32 data_80411B18_rodata_803250FC[3] = {
     0x837D838A, 0x834A92E9, 0x89A40000
 };
 const char lbl_80325108[] = "MK Emperor";
-const unk32 lbl_80325114[3] = {
+const unk32 data_80411B18_rodata_80325114[3] = {
     0x837D838A, 0x834A9682, 0x89A40000
 };
 const char lbl_80325120[] = "MK Demon";
-const unk32 lbl_8032512C[3] = {
+const unk32 data_80411B18_rodata_8032512C[3] = {
     0x837D838A, 0x834A8B53, 0x905F0000
 };
-const unk32 lbl_80325138[3] = {
+const unk32 data_80411B18_rodata_80325138[3] = {
     0x8DC58BAD, 0x936090E0, 0x00000000
 };
 const char lbl_80325144[] = "Legendary";
@@ -1465,22 +1465,22 @@ void *const lbl_803260AC[576] = {
     (void *)0x430AD3B6,
     (void *)0x430F8CCD
 };
-const int lbl_803269AC[8] = {
+const int TitleCheck_CupCleared_rodata_803269AC[8] = {
     7, 1, 8, 2, 3, 4, 5, 6
 };
-const int lbl_803269CC[18] = {
+const int RankLog_rodata_803269CC[18] = {
     1, 3, 5, 7, 10, 15, 20, 25,
     30, 35, 40, 45, 50, 60, 70, 80,
     90, 100
 };
-const int lbl_80326A14[4] = {
+const int RankLog_rodata_80326A14[4] = {
     100, 30, 10, 5
 };
-const int lbl_80326A24[16] = {
+const int TitleCheck_NewClearedCountStep_rodata_80326A24[16] = {
     0, 2, 4, 7, 9, 14, 19, 24,
     29, 34, 39, 44, 49, 54, 59, 63
 };
-const int lbl_80326A64[13][2] = {
+const int CheckTitle_OriginalKartCoinMilage_rodata_80326A64[13][2] = {
     { 30, 70 },
     { 1470, 1510 },
     { 1230, 1270 },
@@ -1495,24 +1495,24 @@ const int lbl_80326A64[13][2] = {
     { 510, 550 },
     { 870, 920 }
 };
-const Int4 lbl_80326ACC[1] = {
+const Int4 TitleCheck_BattleWinsMilestone_rodata_80326ACC[1] = {
     { { 20, 15, 10, 5 } }
 };
-const int lbl_80326ADC[10] = {
+const int RankLog_rodata_80326ADC[10] = {
     96, 103, 95, 97, 99, 101, 100, 98,
     102, 104
 };
-const int lbl_80326B04[8] = {
+const int TitleCheck_NewClearedRecord_Race_rodata_80326B04[8] = {
     7, 1, 8, 2, 3, 4, 5, 6
 };
-const Vec lbl_80326B24[1] = {
+const Vec RankLog_UpdatePerFrame_rodata_80326B24[1] = {
     { 0.0f, 0.0f, 0.0f }
 };
 const char lbl_80326B30[] = "clRankLog";
 const char lbl_80326B3C[] = "teSingleton<clRankLog>";
 const char lbl_80326B54[] = "BeforeRank : %d, Rank : %d\n";
 const char lbl_80326B70[] = "clRanklog::Reset\n";
-const char lbl_80326B84[300] = {
+const char RankLog_InitStartRace_rodata_80326B84[300] = {
     99, 108, 82, 97, 110, 107, 108, 111, 103, 58, 58, 105,
     110, 105, 116, 83, 116, 97, 114, 116, 82, 97, 99, 101,
     10, 0, 0, 0, 84, 105, 116, 108, 101, 73, 68, 32,

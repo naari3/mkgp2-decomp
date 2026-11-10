@@ -20,7 +20,7 @@ typedef struct ChainScaleKey {
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-ScaleKey lbl_80421030[6] = {
+ScaleKey ItemObject_Tick_Kind2c_Horn_data_80421030[6] = {
     { { 0.0f, 9.0f, 15.0f, -1.0f, -1.0f }, { 1.0f, 1.3f, 1.0f, 0.0f, 0.0f } },
     { { 0.0f, 4.0f, 10.0f, 15.0f, -1.0f }, { 1.0f, 2.0f, 1.0f, 1.0f, 0.0f } },
     { { 0.0f, 6.0f, 10.0f, 13.0f, 15.0f }, { 1.0f, 2.0f, 1.2f, 1.0f, 1.0f } },
@@ -28,7 +28,7 @@ ScaleKey lbl_80421030[6] = {
     { { 0.0f, 5.0f, 10.0f, 12.0f, 15.0f }, { 1.0f, 0.25f, 1.625f, 0.84f, 1.0f } },
     { { 0.0f, 5.0f, 10.0f, 12.0f, 15.0f }, { 1.0f, 0.36f, 1.33f, 1.0f, 1.0f } }
 };
-ChainScaleKey lbl_80421120[2] = {
+ChainScaleKey ItemObject_Tick_Kind2d_ChainShellPair_data_80421120[2] = {
     { { 0.0f, 10.0f, 14.0f, 24.0f }, { 0.85f, 0.43f, 1.3f, 1.0f } },
     { { 0.0f, 12.0f, 18.0f, 28.0f }, { 0.85f, 0.4f, 1.25f, 1.0f } }
 };

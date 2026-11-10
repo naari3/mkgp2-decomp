@@ -12,22 +12,22 @@ extern void fn_8016D208();
 extern void fn_8016D79C();
 extern void fn_8016D864();
 extern void fn_8016D890();
-extern char lbl_806CFA30[];
-extern char lbl_806CFA38[];
-extern char lbl_806CFA40[];
-extern char lbl_806CFA48[];
+extern char data_80491100_data_806CFA30[];
+extern char data_80491100_data_806CFA38[];
+extern char data_80491100_data_806CFA40[];
+extern char data_80491100_data_806CFA48[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_80491100[3] = {
-    (void *)&lbl_806CFA30,
+void *sdata_806CF750_data_80491100[3] = {
+    (void *)&data_80491100_data_806CFA30,
     0,
     0
 };
 /* decl: char */
-void *lbl_8049110C[7] = {
-    (void *)&lbl_806CFA38,
+void *BoxConstruct_vtable_8049110C[7] = {
+    (void *)&data_80491100_data_806CFA38,
     0,
     (void *)fn_8016D208,
     (void *)fn_8016CEA0,
@@ -35,14 +35,14 @@ void *lbl_8049110C[7] = {
     (void *)fn_8016A26C,
     0
 };
-void *lbl_80491128[3] = {
-    (void *)&lbl_806CFA40,
+void *sdata_806CF750_data_80491128[3] = {
+    (void *)&data_80491100_data_806CFA40,
     0,
     0
 };
 /* decl: char */
-void *lbl_80491134[7] = {
-    (void *)&lbl_806CFA48,
+void *MarkerChain_vtable_80491134[7] = {
+    (void *)&data_80491100_data_806CFA48,
     0,
     (void *)fn_8016D890,
     (void *)fn_8016D864,

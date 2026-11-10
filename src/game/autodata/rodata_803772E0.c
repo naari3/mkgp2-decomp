@@ -38,7 +38,7 @@ const char lbl_803773E4[] = "clMapEffectParts";
 const char lbl_803773F8[] = " DeleteMapEffect : clMRPukupuku\n";
 const char lbl_8037741C[] = " CreateMapEffect : clMRPukupuku\n";
 const char lbl_80377440[] = "MRA_puku.dat";
-const Vec lbl_80377450[21] = {
+const Vec NokoNoko_InitEntity_rodata_80377450[21] = {
     { 0.0f, 0.0f, 0.0f },
     { 1.493047f, 0.0f, -242.65889f },
     { 4.056378f, 0.0f, -601.4776f },
@@ -78,11 +78,11 @@ const char lbl_80377614[] = "nokonoko_tamb.dat";
 const char lbl_80377628[] = "nokonoko_work.dat";
 const char lbl_8037763C[] = "nokonoko_run.dat";
 const char lbl_80377650[] = "nokonoko_damage.dat";
-const Quad lbl_80377664[1] = {
+const Quad NokoNoko_Update_rodata_80377664[1] = {
     { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } }
 };
 /* decl: Quad */
-const unk32 lbl_80377694[13] = {
+const unk32 NokoNoko_Update_rodata_80377694[13] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000
 };

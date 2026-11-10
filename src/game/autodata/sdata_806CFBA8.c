@@ -41,103 +41,103 @@ extern char lbl_80378580[];
 extern char lbl_80378590[];
 extern char lbl_803785AC[];
 extern char lbl_8037D810[];
-extern char lbl_80495BB0[];
-extern char lbl_80495BD8[];
-extern char lbl_80495C00[];
-extern char lbl_80495DA8[];
-extern char lbl_80495DD0[];
-extern char lbl_80495E0C[];
-extern char lbl_80495E5C[];
-extern char lbl_80495E80[];
-extern char lbl_80495EA8[];
-extern char lbl_80495ED0[];
-extern char lbl_80495EF8[];
+extern char data_80491988_data_80495BB0[];
+extern char data_80491988_data_80495BD8[];
+extern char data_80491988_data_80495C00[];
+extern char data_80491988_data_80495DA8[];
+extern char data_80491988_data_80495DD0[];
+extern char data_80491988_data_80495E0C[];
+extern char data_80491988_data_80495E5C[];
+extern char data_80491988_data_80495E80[];
+extern char data_80491988_data_80495EA8[];
+extern char data_80491988_data_80495ED0[];
+extern char data_80491988_data_80495EF8[];
 extern char lbl_806D94C0[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const char *lbl_806CFBA8[2] = {
+const char *data_80491988_data_806CFBA8[2] = {
     (const char *)&lbl_80377218, 0
 };
-void *lbl_806CFBB0[2] = {
+void *data_80491988_data_806CFBB0[2] = {
     (void *)&lbl_8037720C,
-    (void *)&lbl_80495BB0
+    (void *)&data_80491988_data_80495BB0
 };
-const char *lbl_806CFBB8[2] = {
+const char *data_80491988_data_806CFBB8[2] = {
     (const char *)&lbl_803772F0, 0
 };
-void *lbl_806CFBC0[2] = {
+void *data_80491988_data_806CFBC0[2] = {
     (void *)&lbl_803772E0,
-    (void *)&lbl_80495BD8
+    (void *)&data_80491988_data_80495BD8
 };
-const char *lbl_806CFBC8[2] = {
+const char *data_80491988_data_806CFBC8[2] = {
     (const char *)&lbl_803773E4, 0
 };
-void *lbl_806CFBD0[2] = {
+void *data_80491988_data_806CFBD0[2] = {
     (void *)&lbl_803773D4,
-    (void *)&lbl_80495C00
+    (void *)&data_80491988_data_80495C00
 };
 float lbl_806CFBD8[2] = {
     1.0f, 0.0f
 };
 void *lbl_806CFBE0 = (void *)&lbl_80377AC4;
 void *lbl_806CFBE4 = (void *)&lbl_80377AF0;
-const char *lbl_806CFBE8[2] = {
+const char *data_80491988_data_806CFBE8[2] = {
     (const char *)&lbl_80377B60, 0
 };
-void *lbl_806CFBF0[2] = {
+void *data_80491988_data_806CFBF0[2] = {
     (void *)&lbl_80377B50,
-    (void *)&lbl_80495DA8
+    (void *)&data_80491988_data_80495DA8
 };
-const char *lbl_806CFBF8[2] = {
+const char *data_80491988_data_806CFBF8[2] = {
     (const char *)&lbl_80377E6C, 0
 };
-void *lbl_806CFC00[2] = {
+void *data_80491988_data_806CFC00[2] = {
     (void *)&lbl_80377E60,
-    (void *)&lbl_80495DD0
+    (void *)&data_80491988_data_80495DD0
 };
-const char *lbl_806CFC08[2] = {
+const char *data_80491988_data_806CFC08[2] = {
     (const char *)&lbl_80377F4C, 0
 };
-void *lbl_806CFC10[2] = {
+void *data_80491988_data_806CFC10[2] = {
     (void *)&lbl_80377F40,
-    (void *)&lbl_80495E0C
+    (void *)&data_80491988_data_80495E0C
 };
 char *lbl_806CFC18 = (char *)&lbl_80377FF4;
-const char *lbl_806CFC1C[2] = {
+const char *data_80491988_data_806CFC1C[2] = {
     (const char *)&lbl_80378024, 0
 };
-void *lbl_806CFC24[3] = {
+void *data_80491988_data_806CFC24[3] = {
     (void *)&lbl_80378018,
-    (void *)&lbl_80495E5C,
+    (void *)&data_80491988_data_80495E5C,
     0
 };
-const char *lbl_806CFC30[2] = {
+const char *data_80491988_data_806CFC30[2] = {
     (const char *)&lbl_80378088, 0
 };
-void *lbl_806CFC38[2] = {
+void *data_80491988_data_806CFC38[2] = {
     (void *)&lbl_80378078,
-    (void *)&lbl_80495E80
+    (void *)&data_80491988_data_80495E80
 };
 void *lbl_806CFC40 = (void *)&lbl_803780C8;
 void *lbl_806CFC44 = (void *)&lbl_803780DC;
-const char *lbl_806CFC48[2] = {
+const char *data_80491988_data_806CFC48[2] = {
     (const char *)&lbl_80378190, 0
 };
-void *lbl_806CFC50[2] = {
+void *data_80491988_data_806CFC50[2] = {
     (void *)&lbl_8037817C,
-    (void *)&lbl_80495EA8
+    (void *)&data_80491988_data_80495EA8
 };
 char *lbl_806CFC58 = (char *)&lbl_80378210;
 char *lbl_806CFC5C = (char *)&lbl_803782F4;
 char *lbl_806CFC60 = (char *)&lbl_803783DC;
-const char *lbl_806CFC64[2] = {
+const char *data_80491988_data_806CFC64[2] = {
     (const char *)&lbl_803784D0, 0
 };
-void *lbl_806CFC6C[3] = {
+void *data_80491988_data_806CFC6C[3] = {
     (void *)&lbl_803784C4,
-    (void *)&lbl_80495ED0,
+    (void *)&data_80491988_data_80495ED0,
     0
 };
 char *lbl_806CFC78 = (char *)&lbl_80378528;
@@ -146,12 +146,12 @@ char *lbl_806CFC80 = (char *)&lbl_8037854C;
 char *lbl_806CFC84 = (char *)&lbl_80378560;
 char *lbl_806CFC88 = (char *)&lbl_80378580;
 char *lbl_806CFC8C = (char *)&lbl_80378590;
-const char *lbl_806CFC90[2] = {
+const char *data_80491988_data_806CFC90[2] = {
     (const char *)&lbl_803785AC, 0
 };
-void *lbl_806CFC98[2] = {
+void *data_80491988_data_806CFC98[2] = {
     (void *)&lbl_806D94C0,
-    (void *)&lbl_80495EF8
+    (void *)&data_80491988_data_80495EF8
 };
 unsigned char lbl_806CFCA0 = 0x80;
 unsigned char lbl_806CFCA1 = 0x80;

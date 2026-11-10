@@ -18,8 +18,8 @@ extern void fn_80249130();
 extern char lbl_806D0878[];
 extern char lbl_806D0880[];
 extern char lbl_806D0888[];
-extern char lbl_806D0890[];
-extern char lbl_806D0898[];
+extern char data_804EEAE0_data_806D0890[];
+extern char data_804EEAE0_data_806D0898[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -36,26 +36,26 @@ void *lbl_804EEAEC[5] = {
     (void *)fn_80248028,
     (void *)fn_80248150
 };
-void *lbl_804EEB00[3] = {
+void *sdata_806D0728_data_804EEB00[3] = {
     (void *)&lbl_806D0888,
     0,
     0
 };
-void *lbl_804EEB0C[5] = {
+void *sdata_806D0728_data_804EEB0C[5] = {
     (void *)&lbl_806D0888,
     0,
-    (void *)&lbl_806D0890,
+    (void *)&data_804EEAE0_data_806D0890,
     0,
     0
 };
-void *lbl_804EEB20[11] = {
-    (void *)&lbl_806D0898,
+void *HudFlow_data_804EEB20[11] = {
+    (void *)&data_804EEAE0_data_806D0898,
     0,
     (void *)fn_80248778,
     (void *)fn_802488C4,
     (void *)fn_80249130,
     (void *)fn_80249054,
-    (void *)&lbl_806D0898,
+    (void *)&data_804EEAE0_data_806D0898,
     (void *)0xFFFFFFF8,
     (void *)fn_802488FC,
     (void *)fn_8024858C,

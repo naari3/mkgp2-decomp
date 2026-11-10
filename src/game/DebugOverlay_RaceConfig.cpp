@@ -4,12 +4,12 @@
  * retain one base register for each pool throughout the overlay.
  * String arrays include their terminators; inter-string gaps are alignment.
  */
-#define lbl_803BE6C0 lbl_803BE6C0_legacy_declaration
+#define DebugOverlay_RaceConfig_rodata_803BE6C0 lbl_803BE6C0_legacy_declaration
 #include "game/RaceConfig801FPrivate.h"
-#undef lbl_803BE6C0
+#undef DebugOverlay_RaceConfig_rodata_803BE6C0
 
 extern "C" {
-extern const float lbl_803BE6C0[255] = {
+extern const float DebugOverlay_RaceConfig_rodata_803BE6C0[255] = {
     1.0f, 0.699999988079071f, 0.8999999761581421f, 0.0f, 0.0f, 500.0f, 66.66667f,
     1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f,
     66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f,
@@ -114,13 +114,13 @@ extern "C" void DebugOverlay_RaceConfig(RaceConfig801F *self) {
     OverlayText(2, 0, self->state, lbl_806DA68C);
     OverlayText(2, 3, 0, lbl_803BEB98, self->cup, DebugOverlay_GetCupLabel(self->cup));
     OverlayText(2, 3, 1, lbl_803BEBB0, self->course, DebugOverlay_GetLongRoundLabel(self->course));
-    OverlayText(2, 3, 2, lbl_803BEBC8, self->round, lbl_806D0064[self->round]);
+    OverlayText(2, 3, 2, lbl_803BEBC8, self->round, DebugOverlay_RaceConfig_data_806D0064[self->round]);
     OverlayText(2, 3, 3, lbl_803BEBE0, self->variant, DebugOverlay_GetDaytimeLabel(self->variant));
     OverlayText(2, 3, 4, lbl_803BEBF8, self->character, GetCharacterName(self->character));
     OverlayText(2, 3, 5, lbl_803BEC10, self->kart, lbl_804E53D4[self->kart]);
     OverlayText(2, 3, 6, lbl_803BEC28, self->mode, lbl_804E5414[self->mode]);
     OverlayText(2, 3, 7, lbl_803BEC40, self->itemCount, 7);
-    OverlayText(2, 3, 8, lbl_803BEC60, self->gate, lbl_806D006C[self->gate]);
+    OverlayText(2, 3, 8, lbl_803BEC60, self->gate, DebugOverlay_RaceConfig_data_806D006C[self->gate]);
     OverlayText(2, 3, 9, lbl_803BEC78, self->roundIndex, self->roundIndex + 1);
     OverlayText(2, 3, 10, lbl_803BEC98, self->cc, lbl_804E53C8[self->cc]);
     OverlayText(2, 3, 11, lbl_803BECB0, self->input, lbl_803BEB7C[(int)self->input]);

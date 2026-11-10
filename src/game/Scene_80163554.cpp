@@ -12,7 +12,7 @@ struct Holder80163554 {
 };
 
 extern "C" {
-extern char lbl_80490DAC[];
+extern char LoaderHolder_vtable_80490DAC[];
 extern char lbl_8048FF80[];
 extern void MemoryManager_TimedFree(void *);
 extern void fn_801638B4(void *, int);
@@ -21,7 +21,7 @@ extern void fn_801638B4(void *, int);
 
 Holder80163554 *fn_80163554(Holder80163554 *self, short flag) {
     if (self) {
-        self->vtable = lbl_80490DAC;
+        self->vtable = LoaderHolder_vtable_80490DAC;
         if (self->child) {
             fn_801638B4(self->child, 1);
         }

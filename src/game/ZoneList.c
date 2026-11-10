@@ -18,12 +18,12 @@ extern "C" {
 extern int g_cupId;
 extern int g_roundIndex;
 extern int g_ccClass;
-extern int lbl_80355078[][3][2];
-extern int lbl_803554E0[][3][2];
-extern char lbl_8048E184[];
-extern char lbl_8048E1A0[];
-extern char lbl_8048E1B0[];
-extern char lbl_8048E1CC[];
+extern int MiniGame_GetTimerValue_rodata_80355078[][3][2];
+extern int MiniGame_GetTimerValue_rodata_803554E0[][3][2];
+extern char QuadZone_vtable_8048E184[];
+extern char BoxZone_vtable_8048E1A0[];
+extern char Zone_vtable_8048E1B0[];
+extern char TaskMode_vtable_8048E1CC[];
 extern const float lbl_806D6E50;
 extern unsigned char IsCardValid(void);
 extern float Vec3_Magnitude(const Vec3 *v);
@@ -101,9 +101,9 @@ extern "C" int MiniGame_GetTimerValue(void) {
         return 0;
     }
     if (IsCardValid() == 0) {
-        return lbl_803554E0[cup][cc][ura];
+        return MiniGame_GetTimerValue_rodata_803554E0[cup][cc][ura];
     }
-    return lbl_80355078[cup][cc][ura];
+    return MiniGame_GetTimerValue_rodata_80355078[cup][cc][ura];
 }
 
 extern "C" void fn_801232D8(void) {

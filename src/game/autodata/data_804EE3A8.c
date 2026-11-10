@@ -8,8 +8,8 @@
 extern void fn_80232884();
 extern void fn_80232924();
 extern void fn_80232E64();
-extern char lbl_806D06E4[];
-extern char lbl_806D06EC[];
+extern char data_804EE3A8_data_806D06E4[];
+extern char data_804EE3A8_data_806D06EC[];
 extern char lbl_806DB788[];
 extern char lbl_806DB790[];
 extern char lbl_806DB798[];
@@ -17,18 +17,18 @@ extern char lbl_806DB798[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-char *lbl_804EE3A8[3] = {
+char *FlowCardCheck_nm2_data_804EE3A8[3] = {
     (char *)&lbl_806DB788,
     (char *)&lbl_806DB790,
     (char *)&lbl_806DB798
 };
-void *lbl_804EE3B4[3] = {
-    (void *)&lbl_806D06E4,
+void *FlowCardCheck_nm2_data_804EE3B4[3] = {
+    (void *)&data_804EE3A8_data_806D06E4,
     0,
     0
 };
-void *lbl_804EE3C0[5] = {
-    (void *)&lbl_806D06EC,
+void *clFlowCardCheck_vtable_804EE3C0[5] = {
+    (void *)&data_804EE3A8_data_806D06EC,
     0,
     (void *)fn_80232E64,
     (void *)fn_80232924,

@@ -17,7 +17,7 @@ typedef struct PcbRecvSlot {
     signed char readIndex, writeIndex;
     unsigned char padA3A[2];
 } PcbRecvSlot;
-extern unsigned char lbl_805A5EC0[];
+extern unsigned char PCBCheckRecv_bss_805A5EC0[];
 extern unsigned char g_pcbCommEnabled, g_isCommHost;
 extern int g_ringReadIdx, lbl_806D11A0;
 extern void* memcpy(void*, const void*, unsigned long);
@@ -34,7 +34,7 @@ static inline unsigned char* PCBCheck_LocalSample(unsigned char* packet)
 
 int PCBCheck_RecvLinkData(unsigned char advanceRead)
 {
-    unsigned char* base = lbl_805A5EC0;
+    unsigned char* base = PCBCheckRecv_bss_805A5EC0;
     PcbRecvSlot* slot;
     unsigned char* output;
     unsigned char* status;

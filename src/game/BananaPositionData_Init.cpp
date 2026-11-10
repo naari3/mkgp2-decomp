@@ -32,7 +32,7 @@ struct BananaPositionData {
     BananaPositionData(int course);
 };
 
-extern SpawnEntry *lbl_806CFCD0[2];
+extern SpawnEntry *BananaPositionData_Init_data_806CFCD0[2];
 
 BananaPositionData::BananaPositionData(int course) {
     SpawnEntry *spawn;
@@ -49,7 +49,7 @@ BananaPositionData::BananaPositionData(int course) {
     clNormal3D_SetScale(model, 0, 0.0f, 1.0f, 0.0f, 0.0f);
     Object_SetField8_AndDirty(model, 153.0f);
     clNormal3D_Exec(model);
-    spawn = lbl_806CFCD0[course];
+    spawn = BananaPositionData_Init_data_806CFCD0[course];
     count = 0;
     while (1) {
         if (IsSpawnTableTerminator(&spawn[count])) {

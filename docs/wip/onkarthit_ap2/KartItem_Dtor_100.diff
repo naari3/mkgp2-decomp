@@ -101,9 +101,9 @@ index 3a68648..f21afdb 100644
 -    mr. r29, r3
 -    stw r28, 0x140(r1)
 -    beq KartItem_Dtor_L_8004E5EC
--    lis r3, lbl_803F75F8@ha
+-    lis r3, CarObject_vtable_803F75F8@ha
 -    li r0, 0x0
--    addi r3, r3, lbl_803F75F8@l
+-    addi r3, r3, CarObject_vtable_803F75F8@l
 -    stw r3, 0x0(r29)
 -    addi r3, r3, 0x10
 -    stw r3, 0xc(r29)
@@ -429,8 +429,8 @@ index 3a68648..f21afdb 100644
 +#define gCarList (*(KartItemCarList **)&g_carObjectList)
 +extern "C" void *KartItem_Dtor(KartItemObj *self, short flag) { /* 0x8004E2B0 size:0x368 */
 +    if (self) {
-+        self->vptr = (void *)lbl_803F75F8;
-+        self->warpVptr = (char *)lbl_803F75F8 + 0x10;
++        self->vptr = (void *)CarObject_vtable_803F75F8;
++        self->warpVptr = (char *)CarObject_vtable_803F75F8 + 0x10;
 +        g_playerCarObject = 0;
 +        if (self->f20 == 1 && self->f21 == 0 && self->f20 != 0) {
 +            StrPcb_SetCmdByte2d(StrPcb_GetInstance(), 0x28);

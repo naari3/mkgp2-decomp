@@ -9,7 +9,7 @@
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_802EDC30[];
+extern unsigned int TornadoEffect_rodata_802EDC30[];
 
 /* --- function index (1 fns, .text 0x80057960..0x800579D8) ---
  * [  0] 0x80057960 size:0x78    global fn_80057960

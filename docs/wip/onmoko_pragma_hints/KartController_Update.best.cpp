@@ -10,7 +10,7 @@ static inline void TransformOffset(const KCMatrix *matrix, KCVec *offset) {
 #pragma push
 #pragma opt_common_subs off
 extern "C" void KartController_Update(AIKart *self) {
-    const char *data=lbl_803BD320;
+    const char *data=KartController_Update_rodata_803BD320;
     if (!self->path) return;
     self->previous.x=self->position.x;
     self->previous.y=self->position.y;

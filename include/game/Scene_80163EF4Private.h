@@ -39,7 +39,7 @@ extern unsigned char g_raceEnded, g_rendererGateFlag, g_finalLapBannerShown, g_l
 extern float g_raceTimeRemaining, g_bestLapTime, g_totalRaceTime;
 extern void *g_weatherSystem;
 extern const float lbl_806D88FC, lbl_806D8900, lbl_806D8904, lbl_806D8060;
-extern Vec lbl_80369C44, lbl_80369C50, lbl_80677CE8, lbl_80677CF4;
+extern Vec Scene_80163EF4_rodata_80369C44, Scene_80163EF4_rodata_80369C50, Scene_80163EF4_bss_80677CE8, Scene_80163EF4_bss_80677CF4;
 int BattleRoulette_TickAndGetCounter();
 void *GetRaceContextPtr();
 void ItemObjectManager_PerFrameUpdate(void *);

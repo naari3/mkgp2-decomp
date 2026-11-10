@@ -18,26 +18,26 @@ extern char lbl_803C6CFC[];
 extern char lbl_803C6D14[];
 extern char lbl_803C6D24[];
 extern char lbl_803C6D34[];
-extern char lbl_803C6D44[];
-extern char lbl_804EDD20[];
+extern char sdata_806D0498_rodata_803C6D44[];
+extern char sdata_806D0498_data_804EDD20[];
 extern char lbl_804EDD80[];
-extern char lbl_804EDD8C[];
-extern char lbl_804EDE10[];
-extern char lbl_804EDE38[];
+extern char sdata_806D0498_data_804EDD8C[];
+extern char sdata_806D0498_data_804EDE10[];
+extern char sdata_806D0498_data_804EDE38[];
 extern char lbl_804EDE80[];
-extern char lbl_804EDEA0[];
-extern char lbl_804EDEC8[];
-extern char lbl_804EDEE8[];
+extern char sdata_806D0498_data_804EDEA0[];
+extern char sdata_806D0498_data_804EDEC8[];
+extern char sdata_806D0498_data_804EDEE8[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const char *lbl_806D0498[2] = {
+const char *data_804EDD20_data_806D0498[2] = {
     (const char *)&lbl_803C53E8, 0
 };
-void *lbl_806D04A0[2] = {
+void *data_804EDD20_data_806D04A0[2] = {
     (void *)&lbl_803C53D0,
-    (void *)&lbl_804EDD20
+    (void *)&sdata_806D0498_data_804EDD20
 };
 /* decl: char */
 const char *lbl_806D04A8[2] = {
@@ -48,23 +48,23 @@ void *lbl_806D04B0[2] = {
     (void *)&lbl_803C6364,
     (void *)&lbl_804EDD80
 };
-void *lbl_806D04B8[2] = {
+void *data_804EDD20_data_806D04B8[2] = {
     (void *)&lbl_803C638C,
-    (void *)&lbl_804EDD8C
+    (void *)&sdata_806D0498_data_804EDD8C
 };
-const char *lbl_806D04C0[2] = {
+const char *data_804EDE10_data_806D04C0[2] = {
     (const char *)&lbl_803C65F8, 0
 };
-void *lbl_806D04C8[2] = {
+void *data_804EDE10_data_806D04C8[2] = {
     (void *)&lbl_803C65E0,
-    (void *)&lbl_804EDE10
+    (void *)&sdata_806D0498_data_804EDE10
 };
-const char *lbl_806D04D0[2] = {
+const char *data_804EDE10_data_806D04D0[2] = {
     (const char *)&lbl_803C6C18, 0
 };
-void *lbl_806D04D8[2] = {
+void *data_804EDE10_data_806D04D8[2] = {
     (void *)&lbl_803C6C04,
-    (void *)&lbl_804EDE38
+    (void *)&sdata_806D0498_data_804EDE38
 };
 const char *lbl_806D04E0[2] = {
     (const char *)&lbl_803C6CFC, 0
@@ -73,17 +73,17 @@ void *lbl_806D04E8[2] = {
     (void *)&lbl_803C6D14,
     (void *)&lbl_804EDE80
 };
-void *lbl_806D04F0[2] = {
+void *data_804EDE80_data_806D04F0[2] = {
     (void *)&lbl_803C6D24,
-    (void *)&lbl_804EDEA0
+    (void *)&sdata_806D0498_data_804EDEA0
 };
-void *lbl_806D04F8[2] = {
+void *data_804EDE80_data_806D04F8[2] = {
     (void *)&lbl_803C6D34,
-    (void *)&lbl_804EDEC8
+    (void *)&sdata_806D0498_data_804EDEC8
 };
-void *lbl_806D0500[2] = {
-    (void *)&lbl_803C6D44,
-    (void *)&lbl_804EDEE8
+void *data_804EDE80_data_806D0500[2] = {
+    (void *)&sdata_806D0498_rodata_803C6D44,
+    (void *)&sdata_806D0498_data_804EDEE8
 };
 
 #pragma force_active reset

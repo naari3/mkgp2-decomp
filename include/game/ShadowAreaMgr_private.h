@@ -76,7 +76,7 @@ void fn_800AB130(void);
 extern int ShadowAreaEntry_ComputeEdgeNormals(ShadowAreaEntry *self, ShadowAreaSrc *src);
 
 
-extern char lbl_80411E10[];
+extern char ShadowAreaBase_vtable_80411E10[];
 #ifdef __cplusplus
 }
 #endif

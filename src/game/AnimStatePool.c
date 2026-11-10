@@ -1,7 +1,7 @@
 /* AnimState pool management, 0x800AF240..0x800AF4F8. */
 extern void AnimState_Init(void*, void*);
 extern void MemoryManager_TimedFree(void*);
-extern unsigned int lbl_805DF350[];
+extern unsigned int AnimStatePool_bss_805DF350[];
 extern const float lbl_806D4FC8;
 extern const float lbl_806D4FCC;
 
@@ -43,9 +43,9 @@ struct PoolAnimState {
 void AnimStatePool_Free(void* state) {
     int i;
     for (i = 0; i < 32; ++i) {
-        if ((void*)lbl_805DF350[i] == state) {
-            MemoryManager_TimedFree((void*)lbl_805DF350[i]);
-            lbl_805DF350[i] = 0;
+        if ((void*)AnimStatePool_bss_805DF350[i] == state) {
+            MemoryManager_TimedFree((void*)AnimStatePool_bss_805DF350[i]);
+            AnimStatePool_bss_805DF350[i] = 0;
             break;
         }
     }
@@ -54,9 +54,9 @@ void AnimStatePool_Free(void* state) {
 #pragma cplusplus on
 extern "C" void* AnimStatePool_Alloc(void* data) {
     for (int i = 0; i < 32; ++i) {
-        if (lbl_805DF350[i] == 0) {
-            lbl_805DF350[i] = (unsigned int)new PoolAnimState(data);
-            return (void*)lbl_805DF350[i];
+        if (AnimStatePool_bss_805DF350[i] == 0) {
+            AnimStatePool_bss_805DF350[i] = (unsigned int)new PoolAnimState(data);
+            return (void*)AnimStatePool_bss_805DF350[i];
         }
     }
     return 0;
@@ -64,9 +64,9 @@ extern "C" void* AnimStatePool_Alloc(void* data) {
 
 extern "C" void AnimStatePool_FreeAll(void) {
     for (int i = 0; i < 32; ++i) {
-        if (lbl_805DF350[i] != 0) {
-            MemoryManager_TimedFree((void*)lbl_805DF350[i]);
-            lbl_805DF350[i] = 0;
+        if (AnimStatePool_bss_805DF350[i] != 0) {
+            MemoryManager_TimedFree((void*)AnimStatePool_bss_805DF350[i]);
+            AnimStatePool_bss_805DF350[i] = 0;
         }
     }
 }
@@ -74,36 +74,36 @@ extern "C" void AnimStatePool_FreeAll(void) {
 #pragma exceptions off
 
 void AnimStatePool_ZeroInit(void) {
-    lbl_805DF350[0] = 0;
-    lbl_805DF350[1] = 0;
-    lbl_805DF350[2] = 0;
-    lbl_805DF350[3] = 0;
-    lbl_805DF350[4] = 0;
-    lbl_805DF350[5] = 0;
-    lbl_805DF350[6] = 0;
-    lbl_805DF350[7] = 0;
-    lbl_805DF350[8] = 0;
-    lbl_805DF350[9] = 0;
-    lbl_805DF350[10] = 0;
-    lbl_805DF350[11] = 0;
-    lbl_805DF350[12] = 0;
-    lbl_805DF350[13] = 0;
-    lbl_805DF350[14] = 0;
-    lbl_805DF350[15] = 0;
-    lbl_805DF350[16] = 0;
-    lbl_805DF350[17] = 0;
-    lbl_805DF350[18] = 0;
-    lbl_805DF350[19] = 0;
-    lbl_805DF350[20] = 0;
-    lbl_805DF350[21] = 0;
-    lbl_805DF350[22] = 0;
-    lbl_805DF350[23] = 0;
-    lbl_805DF350[24] = 0;
-    lbl_805DF350[25] = 0;
-    lbl_805DF350[26] = 0;
-    lbl_805DF350[27] = 0;
-    lbl_805DF350[28] = 0;
-    lbl_805DF350[29] = 0;
-    lbl_805DF350[30] = 0;
-    lbl_805DF350[31] = 0;
+    AnimStatePool_bss_805DF350[0] = 0;
+    AnimStatePool_bss_805DF350[1] = 0;
+    AnimStatePool_bss_805DF350[2] = 0;
+    AnimStatePool_bss_805DF350[3] = 0;
+    AnimStatePool_bss_805DF350[4] = 0;
+    AnimStatePool_bss_805DF350[5] = 0;
+    AnimStatePool_bss_805DF350[6] = 0;
+    AnimStatePool_bss_805DF350[7] = 0;
+    AnimStatePool_bss_805DF350[8] = 0;
+    AnimStatePool_bss_805DF350[9] = 0;
+    AnimStatePool_bss_805DF350[10] = 0;
+    AnimStatePool_bss_805DF350[11] = 0;
+    AnimStatePool_bss_805DF350[12] = 0;
+    AnimStatePool_bss_805DF350[13] = 0;
+    AnimStatePool_bss_805DF350[14] = 0;
+    AnimStatePool_bss_805DF350[15] = 0;
+    AnimStatePool_bss_805DF350[16] = 0;
+    AnimStatePool_bss_805DF350[17] = 0;
+    AnimStatePool_bss_805DF350[18] = 0;
+    AnimStatePool_bss_805DF350[19] = 0;
+    AnimStatePool_bss_805DF350[20] = 0;
+    AnimStatePool_bss_805DF350[21] = 0;
+    AnimStatePool_bss_805DF350[22] = 0;
+    AnimStatePool_bss_805DF350[23] = 0;
+    AnimStatePool_bss_805DF350[24] = 0;
+    AnimStatePool_bss_805DF350[25] = 0;
+    AnimStatePool_bss_805DF350[26] = 0;
+    AnimStatePool_bss_805DF350[27] = 0;
+    AnimStatePool_bss_805DF350[28] = 0;
+    AnimStatePool_bss_805DF350[29] = 0;
+    AnimStatePool_bss_805DF350[30] = 0;
+    AnimStatePool_bss_805DF350[31] = 0;
 }

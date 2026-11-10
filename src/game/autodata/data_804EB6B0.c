@@ -12,8 +12,8 @@ extern void fn_801FA214();
 extern char lbl_806D00C0[];
 extern char lbl_806D00C8[];
 extern char lbl_806D00E8[];
-extern char lbl_806D0110[];
-extern char lbl_806D0118[];
+extern char data_804EB6B0_data_806D0110[];
+extern char data_804EB6B0_data_806D0118[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -168,13 +168,13 @@ void *lbl_804EBE18[5] = {
     0,
     0
 };
-void *lbl_804EBE2C[3] = {
-    (void *)&lbl_806D0110,
+void *data_804EB6B0_data_804EBE2C[3] = {
+    (void *)&data_804EB6B0_data_806D0110,
     0,
     0
 };
-void *lbl_804EBE38[6] = {
-    (void *)&lbl_806D0118,
+void *CardOwner_vtable_804EBE38[6] = {
+    (void *)&data_804EB6B0_data_806D0118,
     0,
     (void *)fn_801FA214,
     (void *)fn_801F9FEC,

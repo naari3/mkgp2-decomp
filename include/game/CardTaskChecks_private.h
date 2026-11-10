@@ -81,18 +81,18 @@ struct CardSettingsView {
 };
 extern "C" {
 void *Alloc(unsigned long);
-extern void *lbl_803FE8B8[], *lbl_803FE86C[];
-extern unsigned char lbl_803FE480[];
-extern CardTextLine lbl_803FE5FC[][2];
-extern CardTextLine lbl_80312CC4[][2];
-extern const char *lbl_80312BA8[];
+extern void *CardTaskObject_vtable_803FE8B8[], *WaitInputObject_vtable_803FE86C[];
+extern unsigned char CardTaskChecks_data_803FE480[];
+extern CardTextLine CardTaskWaitInput_DrawByButtons_data_803FE5FC[][2];
+extern CardTextLine CameraChecker_Draw_rodata_80312CC4[][2];
+extern const char *CardPrinterChecker_Draw_rodata_80312BA8[];
 extern CardSettingsView lbl_80598A60;
-extern CardStep lbl_803FE5C0, lbl_803FE5F0;
-extern CardStep lbl_803FE6BC, lbl_803FE6C8, lbl_803FE6D4, lbl_803FE6E0;
-extern CardStep lbl_803FE71C, lbl_803FE728, lbl_803FE758, lbl_803FE764, lbl_803FE770;
-extern CardStep lbl_803FE77C, lbl_803FE788, lbl_803FE794, lbl_803FE7C4, lbl_803FE7D0, lbl_803FE7DC;
-extern char lbl_80312850[], lbl_80312DEC[], lbl_80312DFC[], lbl_80312E1C[], lbl_80312E40[];
-extern char lbl_80312E9C[], lbl_80312EF4[], lbl_80312F04[], lbl_80312F14[], lbl_80312F5C[];
+extern CardStep CardTaskWelcome_StepCommCheck_data_803FE5C0, CardTaskWelcome_StateInit_data_803FE5F0;
+extern CardStep CardTaskChecks_data_803FE6BC, CardPrinterChecker_State_WaitHandle_data_803FE6C8, CardPrinterChecker_State_CleaningSelectInput_data_803FE6D4, CardPrinterChecker_State_CleaningSelectInput_data_803FE6E0;
+extern CardStep CardPrinterChecker_State_WaitStatus_data_803FE71C, CardPrinterChecker_State_WaitStatus_data_803FE728, CardTaskPrintJob_StepStart_data_803FE758, CardPrinterChecker_State_InitPrinter_data_803FE764, CardPrinterChecker_State_InitPrinter_data_803FE770;
+extern CardStep CameraChecker_State_ShutdownTick_data_803FE77C, CameraChecker_State_WaitButton2400_data_803FE788, CameraChecker_State_WaitButton1000_data_803FE794, CameraChecker_State_Entry_data_803FE7C4, CameraChecker_State_WaitVBlank_data_803FE7D0, CameraChecker_State_WaitVBlank_data_803FE7DC;
+extern char lbl_80312850[], lbl_80312DEC[], lbl_80312DFC[], lbl_80312E1C[], CardTaskPrintJob_StepNoCardPrinter_rodata_80312E40[];
+extern char CardPrinterChecker_State_WaitStatus_rodata_80312E9C[], lbl_80312EF4[], lbl_80312F04[], lbl_80312F14[], lbl_80312F5C[];
 extern char lbl_80312F8C[], lbl_80312FA0[];
 extern const char lbl_806D3310[6], lbl_806D3328[8], lbl_806D3338[7], lbl_806D32EC[3];
 void DebugPrintf(const char *, ...);
@@ -152,7 +152,7 @@ static inline void CardDrawLine(CardTextLine *line) {
         line->r, line->g, line->b, line->a, line->format);
 }
 static inline void CardDrawWelcome(unsigned int offset) {
-    CardDrawLine((CardTextLine *)(lbl_803FE480 + offset) + isJapanese());
+    CardDrawLine((CardTextLine *)(CardTaskChecks_data_803FE480 + offset) + isJapanese());
 }
 static inline void CardDrawFrame() {
     ResCtrl rc;
@@ -170,9 +170,9 @@ static inline void CardDrawLeftChoice(PrintObject *self) {
 }
 #define CardMicroseconds(ticks) (((ticks) * 8) / ((*(unsigned int *)0x800000F8 / 4) / 125000))
 static inline void CardDrawWait(unsigned int offset) {
-    CardDrawLine((CardTextLine *)((unsigned char *)lbl_803FE5FC + offset) + isJapanese());
+    CardDrawLine((CardTextLine *)((unsigned char *)CardTaskWaitInput_DrawByButtons_data_803FE5FC + offset) + isJapanese());
 }
 static inline void CardDrawCamera(unsigned int offset) {
-    CardDrawLine((CardTextLine *)((unsigned char *)lbl_80312CC4 + offset) + isJapanese());
+    CardDrawLine((CardTextLine *)((unsigned char *)CameraChecker_Draw_rodata_80312CC4 + offset) + isJapanese());
 }
 #endif

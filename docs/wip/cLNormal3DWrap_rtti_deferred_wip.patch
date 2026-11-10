@@ -35,10 +35,10 @@ index 7c439a6..71873d3 100644
      "__nwa__FUl": "FUN_8003b120",
 -    "__dla__FPv": "MemoryManager_Free"
 +    "__dla__FPv": "MemoryManager_Free",
-+    "__vt__21clNormal3DNodeManager": "lbl_803FE464",
-+    "__vt__31clNodeManager<Pc,P10clNormal3D>": "lbl_803FE470",
-+    "__RTTI__21clNormal3DNodeManager": "lbl_806CEFD8",
-+    "__RTTI__31clNodeManager<Pc,P10clNormal3D>": "lbl_806CEFD0"
++    "__vt__21clNormal3DNodeManager": "clNormal3DNodeManager_vtable_803FE464",
++    "__vt__31clNodeManager<Pc,P10clNormal3D>": "cLNormal3DWrap_data_803FE470",
++    "__RTTI__21clNormal3DNodeManager": "clNormal3DNodeManager_RTTI_806CEFD8",
++    "__RTTI__31clNodeManager<Pc,P10clNormal3D>": "cLNormal3DWrap_data_806CEFD0"
    },
    "src/game/ContinueScene.cpp": {
      "__ct__11CoinCounterFi": "fn_8024E2A4",

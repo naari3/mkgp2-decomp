@@ -5,7 +5,7 @@
 #include "game/FlowCardCheckScene.h"
 #include "game/PanelCda40Private.h"
 extern "C" {
-extern void *lbl_8049B16C[], *lbl_8048EF20[];
+extern void *clFlowGpPlease_vtable_8049B16C[], *lbl_8048EF20[];
 extern int g_cupId, g_roundIndex;
 extern unsigned char lbl_806D1264[3];
 extern const float lbl_806D9E38, lbl_806D9E3C, lbl_806D9E40, lbl_806D9E44;

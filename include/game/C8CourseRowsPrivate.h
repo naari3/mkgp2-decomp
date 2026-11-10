@@ -7,8 +7,8 @@ struct RowLayout { short a,b,c,pad; float x,y,alternateY; };
 struct RowAnimation { int resource; float scale; };
 struct RowSpriteView { int a,b,c; float x,y,scaleX,scaleY; };
 extern "C" {
-extern RowLayout lbl_8049B1E0[];
-extern RowAnimation lbl_8049B348[];
+extern RowLayout clFlowCourse_data_8049B1E0[];
+extern RowAnimation clFlowCourse_data_8049B348[];
 extern const float lbl_806D9EF0;
 unsigned char Sprite_AdvanceAnim(AnimSprite *, float);
 void Sprite_SetupAnim(AnimSprite *, int, int, int);

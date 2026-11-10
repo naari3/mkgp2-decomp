@@ -35,7 +35,7 @@ extern void GXSetTevKColor(int id, GXColor color);
 extern void HSD_StateInvalidate(int state);
 extern const float lbl_806D2FB8;   /* 255.0f */
 extern const double lbl_806D2FC0;  /* 255.0 */
-extern int lbl_803FE0E0[4];        /* GX_KCOLOR0..3 */
+extern int GXChannel_PushChannelColors_data_803FE0E0[4];        /* GX_KCOLOR0..3 */
 
 /* --- function index (1 fns, .text 0x8007D2AC..0x8007D7BC) ---
  * [  0] 0x8007D2AC size:0x510   global GXChannel_PushChannelColors
@@ -181,7 +181,7 @@ void GXChannel_PushChannelColors(TECnst *clist)
         GXPixModeSync();
         for (i = 0; i < 4; i++) {
             if (changed & (1 << i)) {
-                GXSetTevKColor(lbl_803FE0E0[i], reg[i]);
+                GXSetTevKColor(GXChannel_PushChannelColors_data_803FE0E0[i], reg[i]);
             }
         }
         for (i = 4; i < 7; i++) {

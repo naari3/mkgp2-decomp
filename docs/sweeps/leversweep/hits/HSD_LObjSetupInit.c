@@ -186,7 +186,7 @@ char lbl_806D0D28[2] = "0";
 char lbl_806D0D2C[7] = "lobj.h";
 char lbl_806D0D34[5] = "lobj";
 char lbl_806D0D3C[4] = "new";
-char lbl_806D0D40[1] = "";
+char LObjLoad_data_806D0D40[1] = "";
 char lbl_806D0D44[3] = "*p";
 
 HSD_LObjInfo* lobj_default_class = NULL;
@@ -836,7 +836,7 @@ bool HSD_LObjGetInterest(HSD_LObj* lobj, Vec3* interest)
 
 extern char lbl_806D0D20[7];
 extern char lbl_806D0D3C[4];
-extern char lbl_806D0D40[1];
+extern char LObjLoad_data_806D0D40[1];
 extern char lbl_806D0D44[3];
 extern char lbl_804FC480[];
 
@@ -993,7 +993,7 @@ int LObjLoad(HSD_LObj* lobj, HSD_LightDesc* ldesc)
         break;
     default:
         OSReport(lbl_804FC480, ldesc->flags);
-        HSD_Panic(lbl_806D0D20, 1632, lbl_806D0D40);
+        HSD_Panic(lbl_806D0D20, 1632, LObjLoad_data_806D0D40);
         break;
     }
     return 0;

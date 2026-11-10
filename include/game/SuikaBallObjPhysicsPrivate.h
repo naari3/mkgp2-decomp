@@ -17,7 +17,7 @@ typedef struct {
  float inner, outer, restitution, gravity, air_drag, ground_drag;
 } SuikaBallPhysics;
 typedef struct { Vec v[4]; } BallProbes;
-extern const BallProbes lbl_80355918, lbl_80355948;
+extern const BallProbes SuikaBallObj_UpdatePhysics_rodata_80355918, SuikaBallObj_UpdatePhysics_rodata_80355948;
 extern void Vec3_Subtract(const Vec *, const Vec *, Vec *);
 extern float Vec3_Magnitude(const Vec *);
 extern float Vec3_Dot(const Vec *, const Vec *);

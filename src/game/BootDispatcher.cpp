@@ -123,7 +123,7 @@ extern BootVI HSD_VIData;
 extern BootColor lbl_806CED34;
 extern void *lbl_806D0F90, *lbl_806D1880, *lbl_806D12DC;
 extern char *lbl_806D0FC8;
-extern unsigned int lbl_806D0FCC, lbl_806D0FD0, lbl_806D0FD4;
+extern unsigned int BootDispatcher_bss_806D0FCC, BootDispatcher_bss_806D0FD0, BootDispatcher_bss_806D0FD4;
 extern const char lbl_806D2290[4];
 
 }
@@ -185,7 +185,7 @@ static const char lbl_802E9634[0xE] = "max   %d[kb]\n";
 static const char lbl_802E9644[0xA] = "block %d\n";
 #pragma force_active reset
 
-static const char *lbl_803F5670[10] = {
+static const char *BootDispatcher_data_803F5670[10] = {
     lbl_802E8F48, lbl_806D2290, lbl_802E8F5C, lbl_802E8F80,
     lbl_802E8F8C, lbl_802E8FB0, lbl_802E8FD4, lbl_802E8FF8,
     lbl_802E901C, lbl_802E9040
@@ -247,7 +247,7 @@ public:
     void Draw() {
         if (display) {
             for (unsigned int i=0, y=32;i<10;++i,y+=36)
-                DrawText(display,78,y,7,lbl_806D22A8,lbl_803F5670[i]);
+                DrawText(display,78,y,7,lbl_806D22A8,BootDispatcher_data_803F5670[i]);
             DrawText(display,588,24,7,lbl_806D22A8,lbl_806D22AC,remaining/60);
             DisplayContext_Flush(display);
         }
@@ -428,11 +428,11 @@ extern "C" void BootDispatcher(unsigned char *serviceMode)
     HSD_VISetBlack(0);
     if (!lbl_806D0FD8) {
         lbl_806D0FD8=new BootTextBuffer;
-        lbl_806D0FCC=640/lbl_806D0FD8->width+1;
-        lbl_806D0FD0=480/lbl_806D0FD8->height;
-        lbl_806D0FD4=lbl_806D0FCC*lbl_806D0FD0;
-        lbl_806D0FC8=(char *)FUN_8003b120(lbl_806D0FD4);
-        memset(lbl_806D0FC8,0,lbl_806D0FD4);
+        BootDispatcher_bss_806D0FCC=640/lbl_806D0FD8->width+1;
+        BootDispatcher_bss_806D0FD0=480/lbl_806D0FD8->height;
+        BootDispatcher_bss_806D0FD4=BootDispatcher_bss_806D0FCC*BootDispatcher_bss_806D0FD0;
+        lbl_806D0FC8=(char *)FUN_8003b120(BootDispatcher_bss_806D0FD4);
+        memset(lbl_806D0FC8,0,BootDispatcher_bss_806D0FD4);
     }
     fn_801F8E58();
     int effect=lbl_80598A60.effect-1;

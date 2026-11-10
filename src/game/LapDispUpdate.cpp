@@ -10,7 +10,7 @@ struct LapDispView {
 extern "C" {
 extern int g_countdownPhase;
 extern const float lbl_806DBDC8,lbl_806DBDCC,lbl_806DBDD0,lbl_806DBDD4;
-extern const float lbl_803E5CE8[][2],lbl_803E5D00[][2];
+extern const float LapDispUpdate_rodata_803E5CE8[][2],LapDispUpdate_rodata_803E5D00[][2];
 void fn_8020A734(FlowFaderF *,int,float,float);
 float fn_8020A6CC(FlowFaderF *);
 void SpriteHandle_SetActiveFlag(int,int);
@@ -60,7 +60,7 @@ void fn_8023F790(LapDispView *p) {
         float offset=fn_8020A6CC(p->fade);
         float scale=fn_8020A6CC(p->scale);
         for(int i=0;i<3;i++) {
-            fn_8011F804(p->sprites[i],lbl_803E5CE8[position][0]+lbl_803E5D00[i][0]-offset,lbl_803E5CE8[position][1]+lbl_803E5D00[i][1]);
+            fn_8011F804(p->sprites[i],LapDispUpdate_rodata_803E5CE8[position][0]+LapDispUpdate_rodata_803E5D00[i][0]-offset,LapDispUpdate_rodata_803E5CE8[position][1]+LapDispUpdate_rodata_803E5D00[i][1]);
             fn_8011F744(p->sprites[i],scale,scale);
         }
     }

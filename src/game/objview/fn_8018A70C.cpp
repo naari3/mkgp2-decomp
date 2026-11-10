@@ -102,7 +102,7 @@ typedef struct ObjView {
 } ObjView;
 
 extern "C" {
-extern char lbl_80495DB4[];
+extern char SoundProp_vtable_80495DB4[];
 extern char lbl_80490FE0[];
 void Object_DtorWithGXSync(void *obj, int flag);
 void MemoryManager_Free(void *p);
@@ -111,7 +111,7 @@ void MemoryManager_TimedFree(void *p);
 
 extern "C" ObjView *fn_8018A66C(ObjView *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_80495DB4;
+        self->vt = SoundProp_vtable_80495DB4;
         if (self->child != 0) {
             Object_DtorWithGXSync(self->child, 1);
         }

@@ -60,17 +60,17 @@ struct Storage {
     u8 hostSnapshots[2][0x1C];
 };
 extern "C" {
-extern Storage lbl_805A5EC0;
+extern Storage PCBCheckRecv_bss_805A5EC0;
 extern u8 lbl_80598A60[0x2A];
 extern u8 g_pcbCommEnabled, lbl_806D1191, g_pcbSyncReady;
-extern u8 lbl_806CEFC8, lbl_806D1193, g_confirmFlag, lbl_806D11AC;
+extern u8 PCBCheckRecv_data_806CEFC8, lbl_806D1193, g_confirmFlag, PCBComm_Init_bss_806D11AC;
 extern u8 g_isCommHost;
 extern int g_gameMode, g_myPcbId, g_ringReadIdx, lbl_806D11A0;
-extern u32 lbl_806D1188, lbl_806D11A4, lbl_806D11A8;
-extern void *lbl_806D11B0;
+extern u32 PCBCheckRecv_bss_806D1188, lbl_806D11A4, lbl_806D11A8;
+extern void *PCBCheckRecv_bss_806D11B0;
 extern LifecycleListener *g_pcbListener;
-extern float lbl_806D11C0[2];
-extern long long lbl_806D11C8;
+extern float PCBCheckRecv_bss_806D11C0[2];
+extern long long PCBCheckRecv_bss_806D11C8;
 extern signed char g_pcbSyncPhasePerPcb[4];
 extern const float lbl_806D3168, lbl_806D316C, lbl_806D3198;
 u32 OSGetTick(void);
@@ -142,15 +142,15 @@ static inline void CopyHostSnapshot(u8 *snapshots, int next) {
 
 extern "C" int PCBComm_Process(u8 receive, u8 send)
 {
-    Storage *storage = &lbl_805A5EC0;
+    Storage *storage = &PCBCheckRecv_bss_805A5EC0;
     if (g_pcbCommEnabled == 0) return 0;
     if (lbl_806D1191 == 1) return 0;
     u8 update = 0;
     u32 tick = OSGetTick();
     if (g_gameMode == 2 ||
-        (tick - lbl_806D1188) / ((*(u32 *)0x800000F8 / 4) / 1000) >= 15) {
+        (tick - PCBCheckRecv_bss_806D1188) / ((*(u32 *)0x800000F8 / 4) / 1000) >= 15) {
         update = 1;
-        lbl_806D1188 = tick;
+        PCBCheckRecv_bss_806D1188 = tick;
     }
     ScopedTimer timer(38);
     if (update) {
@@ -227,7 +227,7 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
 
 extern "C" int PcbComm_Shutdown(void)
 {
-    Storage *storage = &lbl_805A5EC0;
+    Storage *storage = &PCBCheckRecv_bss_805A5EC0;
     if (g_pcbCommEnabled == 0) return 0;
     Slot *slot = storage->slots;
     LifecycleConn **outgoing = storage->outgoing;
@@ -251,25 +251,25 @@ extern "C" int PcbComm_Shutdown(void)
 
 extern "C" int PCBComm_Init(void)
 {
-    Storage *storage = &lbl_805A5EC0;
+    Storage *storage = &PCBCheckRecv_bss_805A5EC0;
     if (g_pcbCommEnabled == 1) return 0;
     int myId = (signed char)lbl_80598A60[0x21];
     g_pcbCommEnabled = 1;
     lbl_806D1191 = 0;
     g_pcbSyncReady = 0;
-    lbl_806CEFC8 = 1;
+    PCBCheckRecv_data_806CEFC8 = 1;
     lbl_806D1193 = 0;
     g_confirmFlag = 0;
     g_myPcbId = myId;
     g_pcbListener = new LifecycleListener;
-    lbl_806D11B0 = 0;
+    PCBCheckRecv_bss_806D11B0 = 0;
     lbl_806D11A4 = 0;
     lbl_806D11A8 = 0;
-    lbl_806D11AC = 0;
-    lbl_806D1188 = OSGetTick();
-    lbl_806D11C0[0] = lbl_806D316C;
-    lbl_806D11C0[1] = lbl_806D3168;
-    lbl_806D11C8 = OSGetTime();
+    PCBComm_Init_bss_806D11AC = 0;
+    PCBCheckRecv_bss_806D1188 = OSGetTick();
+    PCBCheckRecv_bss_806D11C0[0] = lbl_806D316C;
+    PCBCheckRecv_bss_806D11C0[1] = lbl_806D3168;
+    PCBCheckRecv_bss_806D11C8 = OSGetTime();
     LifecycleConn **outgoing = storage->outgoing;
     LifecycleConn **incoming = storage->incoming;
     Slot *slot = storage->slots;

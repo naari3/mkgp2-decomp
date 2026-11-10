@@ -29,7 +29,7 @@ static int specialRows[4] = {
 static int specialCols[4] = {
     2, 1, 3, 1
 };
-int lbl_804EC71C[14] = {
+int data_804EC754_data_804EC71C[14] = {
     123, 124, 127, 128, 129, 126, 130, 131,
     132, 133, 134, 135, 94, 47
 };
@@ -49,14 +49,14 @@ void fn_80209C88(void) {
     int round = g_roundIndex;
     if (g_ccClass == 2) {
         if (round >= 4) {
-            tbl = lbl_804EC71C;
+            tbl = data_804EC754_data_804EC71C;
             n = 14;
         } else {
             tbl = lbl_804EC568;
             n = 32;
         }
     } else if (round >= 4) {
-        tbl = lbl_804EC71C;
+        tbl = data_804EC754_data_804EC71C;
         n = 14;
     } else {
         {

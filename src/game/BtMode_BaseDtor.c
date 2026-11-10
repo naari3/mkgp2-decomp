@@ -4,7 +4,7 @@
  * Trivial deleting-dtor for the BtMode base class. Same shape as
  * ObjectBase_Dtor (commit 9807e6c):
  *   1. if (this != NULL) demote *this back to the BtMode base vtable
- *      (&lbl_8040E76C) so any derived dtor chain that follows sees a
+ *      (&GameModeBase_vtable_8040E76C) so any derived dtor chain that follows sees a
  *      cleanly typed base subobject.
  *   2. if the second arg (delete-flag, passed as a short) is > 0, call
  *      `MemoryManager_TimedFree(this)` (= MemoryManager_TimedFree) to release the
@@ -25,12 +25,12 @@
  */
 
 extern void MemoryManager_TimedFree(void *);
-extern char lbl_8040E76C[];  /* BtMode base vtable @ 0x8040E76C */
+extern char GameModeBase_vtable_8040E76C[];  /* BtMode base vtable @ 0x8040E76C */
 
 #pragma exceptions on
 void *dtor_800A0688(void *this, short flag) {
     if (this != 0) {
-        *(char **)this = lbl_8040E76C;
+        *(char **)this = GameModeBase_vtable_8040E76C;
         if (flag > 0) {
             MemoryManager_TimedFree(this);
         }

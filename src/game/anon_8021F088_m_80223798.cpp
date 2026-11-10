@@ -1,7 +1,7 @@
 #include "game/anon_8021F088_private.h"
 
 clCSSceneCoinMilage::clCSSceneCoinMilage()
-    : numCoins(0), model(new Model(lbl_803C6CD0, 1)), x3d0(0), perfectCoins(0), hasPerfect(0), hasBonus1(0),
+    : numCoins(0), model(new Model(CoinResultScene_Init_rodata_803C6CD0, 1)), x3d0(0), perfectCoins(0), hasPerfect(0), hasBonus1(0),
       hasBonus2(0), counter(0), itemIndex(-1), state(0), sub(0), timer(0), wait(0), sum(0), wnd(0), next(0) {
     if (!IsCardValid()) {
         state = 8;
@@ -68,7 +68,7 @@ clCSSceneCoinMilage::clCSSceneCoinMilage()
     if (perfectCoins > 0) {
         hasPerfect = 1;
     }
-    fn_8013D59C(model, lbl_806DB1D8 * lbl_803C6A18[0], lbl_806DB1D8 * lbl_803C6A18[1], lbl_806DB1D8 * lbl_803C6A18[2]);
+    fn_8013D59C(model, lbl_806DB1D8 * CoinResultScene_Init_rodata_803C6A18[0], lbl_806DB1D8 * CoinResultScene_Init_rodata_803C6A18[1], lbl_806DB1D8 * CoinResultScene_Init_rodata_803C6A18[2]);
     fn_8013D608(model, lbl_806DB2C4, lbl_806DB2C4, lbl_806DB2C4);
     fn_8013D4B0(model, lbl_806DB194);
     fn_8013D738(model, lbl_806DB190, lbl_806DB194);

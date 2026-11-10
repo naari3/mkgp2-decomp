@@ -3,10 +3,10 @@
  * StrPcb_Init addresses them all from one base register, which MWCC only
  * does for data defined in the same TU. */
 extern "C" {
-u8 lbl_80598100[0x200];
+u8 StrPcb_Init_bss_80598100[0x200];
 u8 lbl_80598300[0x200];
-u8 lbl_80598500[0xC];
-u8 lbl_8059850C[0x24];
+u8 StrPcb_OutputTick_bss_80598500[0xC];
+u8 StrPcb_InputTick_bss_8059850C[0x24];
 }
 
 static inline void StrPcb_SetPositionTargetInline(StrPcb *pcb, int target)
@@ -26,10 +26,10 @@ StrPcb::StrPcb(int target) : buffer(new int)
     position28 = 0x1FF;
     counter14 = 0;
     receivedPosData = 0x1FF;
-    memset(&lbl_80598500[0], 0, 4);
-    memset(&lbl_8059850C[0], 0, 4);
+    memset(&StrPcb_OutputTick_bss_80598500[0], 0, 4);
+    memset(&StrPcb_InputTick_bss_8059850C[0], 0, 4);
     memset(lbl_80598300, 0, 4);
-    memset(lbl_80598100, 0, 4);
+    memset(StrPcb_Init_bss_80598100, 0, 4);
     memset(lbl_806D1000, 0, 3);
     memset(this, 0, 3);
     flags.bit40 = 0;
@@ -40,11 +40,11 @@ StrPcb::StrPcb(int target) : buffer(new int)
     flags.id = 0x35;
     flags.bit01 = 0;
     lbl_806D1004 = 0;
-    lbl_80598500[0] = 0xFF;
-    lbl_80598500[1] = 0xFF;
-    lbl_80598500[5] = 0;
-    lbl_80598500[7] = 0;
-    lbl_80598500[9] = 0;
+    StrPcb_OutputTick_bss_80598500[0] = 0xFF;
+    StrPcb_OutputTick_bss_80598500[1] = 0xFF;
+    StrPcb_OutputTick_bss_80598500[5] = 0;
+    StrPcb_OutputTick_bss_80598500[7] = 0;
+    StrPcb_OutputTick_bss_80598500[9] = 0;
     StrPcb_SetPositionTargetInline(this, positionTarget);
     dirty18 = 1; command2D = 0;
     dirty18 = 1; command2E = 0;
@@ -67,7 +67,7 @@ StrPcb::StrPcb(int target) : buffer(new int)
     errorCode[1] = 0;
     errorCode[2] = 0;
     stickyError5C = 0;
-    fn_802939F0(lbl_80598300, 0x200, lbl_80598100, 0x200, this);
+    fn_802939F0(lbl_80598300, 0x200, StrPcb_Init_bss_80598100, 0x200, this);
     {
         Stopwatch sw;
         sw.Start();

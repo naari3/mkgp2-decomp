@@ -6,11 +6,11 @@
 #include "game/DemoKartScene.h"
 
 extern "C" {
-extern const char *lbl_806CF528;
-extern const char *lbl_806CF52C;
+extern const char *ChallengeDemoUra_data_806CF528;
+extern const char *ChallengeDemoUra_data_806CF52C;
 int IsUraCourseFromSubMode(void);
-extern const char *lbl_806CF520;
-extern const char *lbl_806CF524;
+extern const char *ChallengeDemoUra_data_806CF520;
+extern const char *ChallengeDemoUra_data_806CF524;
 void TireEffect_ResetSpin(DemoTornado *t, float a, float b);
 void TornadoEffect_SetColorPairC8CC(DemoTornado *t, int a, int b);
 void ItemEffectBus_TickTornadoCooldown(void *bus);
@@ -185,21 +185,21 @@ UraDemoScene::UraDemoScene() {
     SoundChannels_ClearAll();
     ItemObjectManager_Init();
     CourseObjectManager_Init();
-    scene = new DemoScene(lbl_806CF520, -1.0f, 0.0f);
+    scene = new DemoScene(ChallengeDemoUra_data_806CF520, -1.0f, 0.0f);
     scene->Start(0.0f, 1.0f);
-    normal = new DemoNormal(lbl_806CF520, 0);
+    normal = new DemoNormal(ChallengeDemoUra_data_806CF520, 0);
     clNormal3D_SetScale(normal, 0, 0.0f, 1.0f, 0.0f, 0.0f);
     ProcessSystemTick(0);
     driver = new DemoDriver(g_characterId, matrix);
     tornado = new DemoTornado(0, driver, g_characterId, 1, 0.0f, 0.0f, 0.0f);
     TireEffect_ResetSpin(tornado, 0.0f, 1.0f);
     TornadoEffect_SetColorPairC8CC(tornado, 1, 1);
-    joint = ResolveJointByName(normal, lbl_806CF524);
+    joint = ResolveJointByName(normal, ChallengeDemoUra_data_806CF524);
     ProcessSystemTick(0);
     if (IsUraCourseFromSubMode() == 0) {
-        obj = new DemoNormal(lbl_806CF528, 0);
+        obj = new DemoNormal(ChallengeDemoUra_data_806CF528, 0);
     } else {
-        obj = new DemoNormal(lbl_806CF52C, 0);
+        obj = new DemoNormal(ChallengeDemoUra_data_806CF52C, 0);
     }
     clNormal3D_SetScale(obj, 0, 0.0f, 1.0f, 0.0f, 0.0f);
     g_raceCamera = 0;

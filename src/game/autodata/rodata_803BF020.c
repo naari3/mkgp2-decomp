@@ -105,7 +105,7 @@ const char lbl_803BF38C[] = "rb_road_short.bin";
 const char lbl_803BF3A0[] = "rb_road_long.bin";
 const char lbl_803BF3B4[] = "mr_highway_challenge.bin";
 /* decl: CollisionTypeEntry */
-const char *const lbl_803BF3D0[28] = {
+const char *const CollisionFile_Load_rodata_803BF3D0[28] = {
     (const char *)&lbl_803BF2A0, (const char *)&lbl_803BF2B0,
     (const char *)&lbl_803BF2C0, (const char *)&lbl_803BF2D8,
     (const char *)&lbl_803BF2EC, (const char *)&lbl_803BF300,

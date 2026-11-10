@@ -83,8 +83,8 @@ static const ArrowLayout courseArrows[16] = {
     };
 
 extern "C" {
-extern CourseLayout lbl_8049B1E0[];
-extern short lbl_8049B388[][2];
+extern CourseLayout clFlowCourse_data_8049B1E0[];
+extern short clFlowCourse_data_8049B388[][2];
 extern int g_gameMode, g_roundIndex, g_localPcbRole, lbl_806CF12C;
 extern signed char lbl_806D184C, lbl_806D184D;
 extern unsigned char g_playerData[];
@@ -143,8 +143,8 @@ static inline int CourseCup(int i) {
 }
 static inline void UpdatePreview(CourseFlow *self, int selection) {
     int cup = selection / 2;
-    *self->mapIdA = lbl_8049B388[cup][0];
-    *self->mapIdB = lbl_8049B388[cup][1];
+    *self->mapIdA = clFlowCourse_data_8049B388[cup][0];
+    *self->mapIdB = clFlowCourse_data_8049B388[cup][1];
     fn_80121E10(&self->preview);
     self->preview.resId = GetCourseShortIdByCupAndMirror(CourseCup(cup), selection % 2);
     self->preview.Show(lbl_806D9EE8, lbl_806D9EEC, lbl_806D9EDC);
@@ -202,7 +202,7 @@ static inline void UpdateRemoteIcons(CourseFlow *self) {
             if (((PcbSlot_GetByIndex(i)[0] >> 4) & 7) == role) {
                 CourseLayout *layout;
                 int selected = (PcbSlot_GetByIndex(i)[5] >> 1) & 0x7F;
-                layout = &lbl_8049B1E0[selected];
+                layout = &clFlowCourse_data_8049B1E0[selected];
                 float x = layout->x;
                 float a;
                 if (self->selection >= 8) x -= lbl_806D9ED8;
@@ -378,7 +378,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
         if (self->timer <= 30) {
             CourseLayout *p;
             float t = (float)(self->timer - 20) / lbl_806D9F04;
-            p = &lbl_8049B1E0[self->selected];
+            p = &clFlowCourse_data_8049B1E0[self->selected];
             float y = p->y + t * (lbl_806D9F18 - p->y);
             float x;
             if (self->selection > 8) {
@@ -419,7 +419,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
     case 98:
         self->field14 = -(lbl_806D9F1C * (float)self->timer);
         for (int i = 0; i < 18; i++)
-            if (self->slots[i].sprite) self->slots[i].sprite->x = self->field14 + lbl_8049B1E0[i].x;
+            if (self->slots[i].sprite) self->slots[i].sprite->x = self->field14 + clFlowCourse_data_8049B1E0[i].x;
         if (self->field12C) self->field12C->x = lbl_806D9F20 + self->field14;
         if (self->field130) self->field130->x = lbl_806D9F24 + self->field14;
         if (self->timer >= 20) { self->state = 1; UpdateArrows(self, courseArrows); }
@@ -427,7 +427,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
     case 99:
         self->field14 = lbl_806D9F1C * (float)self->timer + lbl_806D9F28;
         for (int i = 0; i < 18; i++)
-            if (self->slots[i].sprite) self->slots[i].sprite->x = self->field14 + lbl_8049B1E0[i].x;
+            if (self->slots[i].sprite) self->slots[i].sprite->x = self->field14 + clFlowCourse_data_8049B1E0[i].x;
         if (self->field12C) self->field12C->x = lbl_806D9F20 + self->field14;
         if (self->field130) self->field130->x = lbl_806D9F24 + self->field14;
         if (self->timer >= 20) { self->state = 1; UpdateArrows(self, courseArrows); }

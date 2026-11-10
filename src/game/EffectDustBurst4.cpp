@@ -14,7 +14,7 @@ struct DustEffect {
  * view can index all three without crossing a subarray boundary. */
 struct DustCurve { float values[9]; };
 extern "C" {
-extern DustCurve lbl_8041A398[4];
+extern DustCurve Effect_DustBurst4_Update_data_8041A398[4];
 extern unsigned char lbl_805DF3D0[0x98];
 extern const float lbl_806D5400, lbl_806D540C, lbl_806D5424, lbl_806D549C, lbl_806D54A0;
 void fn_800AF4F8(void *);
@@ -107,7 +107,7 @@ void Effect_DustBurst4_Update(DustEffect *self) {
         DrawEffect_Free(self);
         return;
     }
-    UpdateChildren(self, group, delta, cursor, lbl_8041A398,
+    UpdateChildren(self, group, delta, cursor, Effect_DustBurst4_Update_data_8041A398,
         (const DustVec *)(lbl_805DF3D0+0x80));
 }
 }

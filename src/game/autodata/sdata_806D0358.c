@@ -27,16 +27,16 @@ extern char lbl_803C3840[];
 extern char lbl_803C3D8C[];
 extern char lbl_803C3D98[];
 extern char lbl_804ECA88[];
-extern char lbl_804ECA94[];
+extern char sdata_806D0358_data_804ECA94[];
 extern char lbl_804ECAD4[];
-extern char lbl_804ECAE8[];
+extern char sdata_806D0358_data_804ECAE8[];
 extern char lbl_804ECB38[];
-extern char lbl_804ECB7C[];
-extern char lbl_804ECB88[];
-extern char lbl_804ECBB0[];
-extern char lbl_804ECBBC[];
-extern char lbl_804ECBE8[];
-extern char lbl_804ECBF4[];
+extern char sdata_806D0358_data_804ECB7C[];
+extern char sdata_806D0358_data_804ECB88[];
+extern char sdata_806D0358_data_804ECBB0[];
+extern char sdata_806D0358_data_804ECBBC[];
+extern char sdata_806D0358_data_804ECBE8[];
+extern char sdata_806D0358_data_804ECBF4[];
 extern char lbl_806DAD68[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
@@ -49,9 +49,9 @@ void *lbl_806D0360[2] = {
     (void *)&lbl_803C3614,
     (void *)&lbl_804ECA88
 };
-void *lbl_806D0368[2] = {
+void *data_804ECA88_data_806D0368[2] = {
     (void *)&lbl_803C35F0,
-    (void *)&lbl_804ECA94
+    (void *)&sdata_806D0358_data_804ECA94
 };
 const char *lbl_806D0370[2] = {
     (const char *)&lbl_803C3628, 0
@@ -60,9 +60,9 @@ void *lbl_806D0378[2] = {
     (void *)&lbl_803C365C,
     (void *)&lbl_804ECAD4
 };
-void *lbl_806D0380[2] = {
+void *data_804ECA88_data_806D0380[2] = {
     (void *)&lbl_803C364C,
-    (void *)&lbl_804ECAE8
+    (void *)&sdata_806D0358_data_804ECAE8
 };
 const char *lbl_806D0388[2] = {
     (const char *)&lbl_803C3680, 0
@@ -76,13 +76,13 @@ char *lbl_806D039C = (char *)&lbl_803C36C0;
 const char *lbl_806D03A0[2] = {
     (const char *)&lbl_803C37A4, 0
 };
-void *lbl_806D03A8[2] = {
+void *data_804ECA88_data_806D03A8[2] = {
     (void *)&lbl_803C37B0,
-    (void *)&lbl_804ECB7C
+    (void *)&sdata_806D0358_data_804ECB7C
 };
-void *lbl_806D03B0[2] = {
+void *data_804ECA88_data_806D03B0[2] = {
     (void *)&lbl_803C3794,
-    (void *)&lbl_804ECB88
+    (void *)&sdata_806D0358_data_804ECB88
 };
 char *lbl_806D03B8 = (char *)&lbl_803C37D8;
 char *lbl_806D03BC = (char *)&lbl_803C37F0;
@@ -90,26 +90,26 @@ char *lbl_806D03C0 = (char *)&lbl_803C3810;
 const char *lbl_806D03C4[2] = {
     (const char *)&lbl_803C3834, 0
 };
-void *lbl_806D03CC[2] = {
+void *data_804ECA88_data_806D03CC[2] = {
     (void *)&lbl_803C3840,
-    (void *)&lbl_804ECBB0
+    (void *)&sdata_806D0358_data_804ECBB0
 };
-void *lbl_806D03D4[3] = {
+void *data_804ECA88_data_806D03D4[3] = {
     (void *)&lbl_803C3824,
-    (void *)&lbl_804ECBBC,
+    (void *)&sdata_806D0358_data_804ECBBC,
     0
 };
 void *lbl_806D03E0[2] = {
     (void *)&lbl_803C3D98,
     0
 };
-void *lbl_806D03E8[2] = {
+void *data_804ECA88_data_806D03E8[2] = {
     (void *)&lbl_806DAD68,
-    (void *)&lbl_804ECBE8
+    (void *)&sdata_806D0358_data_804ECBE8
 };
-void *lbl_806D03F0[2] = {
+void *data_804ECA88_data_806D03F0[2] = {
     (void *)&lbl_803C3D8C,
-    (void *)&lbl_804ECBF4
+    (void *)&sdata_806D0358_data_804ECBF4
 };
 
 #pragma force_active reset

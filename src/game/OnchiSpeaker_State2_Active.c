@@ -60,7 +60,7 @@ extern double sin(double);
 
 extern void DrawEffect_Cb_KartWheelSmokeOrbital_Tick();
 extern void DrawEffect_Cb_UVScroll_Tick();
-extern const Vec3 lbl_8032F4F8;
+extern const Vec3 OnchiSpeaker_State2_Active_rodata_8032F4F8;
 extern const char lbl_8032F504[];
 extern const float lbl_806D5F18, lbl_806D5F2C, lbl_806D5F30;
 extern const float lbl_806D5F34, lbl_806D5F38, lbl_806D5F3C, lbl_806D5F40;
@@ -134,7 +134,7 @@ void OnchiSpeaker_State2_Active(Item *item, OnchiActiveState *state)
         state->wobble = BuildOrientationFromYaw(lbl_806D5F34 + state->wobble);
         Mtx_TransposeToMtx44(m, KartDriver_GetKartRootMtx(state->driver));
         Mtx44_GetTranslation_ColMajor(&root, m);
-        local = lbl_8032F4F8;
+        local = OnchiSpeaker_State2_Active_rodata_8032F4F8;
         Vec2_RotateY(&local, &local, lbl_806D5F38 * (float)sin(state->wobble));
         Mtx44_TransformVec3(&local, m, local);
         yaw = Vec3_HorizontalYawTo(&item->pos, &root);

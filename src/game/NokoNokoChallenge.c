@@ -26,7 +26,7 @@ extern unsigned char *fn_8024F588(void);
 #include "game/singleton.h"
 /* --- owned .rodata 0x80355840..0x803558A8 (tools/own_data.py) --- */
 #pragma force_active on
-const int lbl_80355840[13][2] = { 234, 219, 255, 249, 268, 270, 297, 293, 318, 303, 340, 338, 361, 345, 382, 367, 403, 397, 424, 420, 445, 441, 467, 452, 488, 473 };
+const int NokoNokoChallenge_SaveResult_rodata_80355840[13][2] = { 234, 219, 255, 249, 268, 270, 297, 293, 318, 303, 340, 338, 361, 345, 382, 367, 403, 397, 424, 420, 445, 441, 467, 452, 488, 473 };
 #pragma force_active reset
 
 #pragma exceptions on
@@ -40,13 +40,13 @@ void NokoNokoChallenge_SaveResult(void *param_1, int param_2, unsigned int param
         if (g_cupId == 0xe) {
             fn_80192208(g_characterId + 9);
         }
-        SoundMgr_PlaySE(lbl_80355840[characterId][0]);
+        SoundMgr_PlaySE(NokoNokoChallenge_SaveResult_rodata_80355840[characterId][0]);
     } else {
         fn_8016C554(0);
         if (g_cupId == 0xe) {
             fn_80192208(g_characterId + 9);
         }
-        SoundMgr_PlaySE(lbl_80355840[characterId][1]);
+        SoundMgr_PlaySE(NokoNokoChallenge_SaveResult_rodata_80355840[characterId][1]);
     }
 }
 

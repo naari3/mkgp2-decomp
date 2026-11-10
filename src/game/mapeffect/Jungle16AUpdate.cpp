@@ -16,7 +16,7 @@ extern "C" void fn_8016A854(Jungle16A *self) {
     }
     for (i=0; i<2; ++i) {
         Motion16A *m = &self->motions[i];
-        d = &((const Desc16A *)lbl_8036CE88)[i];
+        d = &((const Desc16A *)Jungle16AUpdate_rodata_8036CE88)[i];
         switch (m->state) {
         case 0:
             if (hit) m->state = 1;

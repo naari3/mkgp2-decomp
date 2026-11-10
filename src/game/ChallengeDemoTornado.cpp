@@ -7,8 +7,8 @@
 
 extern "C" {
 extern const char lbl_80356150[];
-extern const char *lbl_806CF500;
-extern const char *lbl_806CF504;
+extern const char *ChallengeDemoTornado_data_806CF500;
+extern const char *ChallengeDemoTornado_data_806CF504;
 void TireEffect_ResetSpin(DemoTornado *t, float a, float b);
 void TornadoEffect_SetColorPairC8CC(DemoTornado *t, int a, int b);
 void ItemEffectBus_TickTornadoCooldown(void *bus);
@@ -196,16 +196,16 @@ RoboDemoScene::RoboDemoScene() {
     SoundChannels_ClearAll();
     ItemObjectManager_Init();
     CourseObjectManager_Init();
-    scene = new DemoScene(lbl_806CF500, -1.0f, 0.0f);
+    scene = new DemoScene(ChallengeDemoTornado_data_806CF500, -1.0f, 0.0f);
     scene->Start(0.0f, 1.0f);
-    normal = new DemoNormal(lbl_806CF500, 0);
+    normal = new DemoNormal(ChallengeDemoTornado_data_806CF500, 0);
     clNormal3D_SetScale(normal, 0, 0.0f, 1.0f, 0.0f, 0.0f);
     ProcessSystemTick(0);
     driver = new DemoDriver(g_characterId, matrix);
     tornado = new DemoTornado(0, driver, g_characterId, 1, 0.0f, 0.0f, 0.0f);
     TireEffect_ResetSpin(tornado, 0.0f, 1.0f);
     TornadoEffect_SetColorPairC8CC(tornado, 1, 1);
-    joint = ResolveJointByName(normal, lbl_806CF504);
+    joint = ResolveJointByName(normal, ChallengeDemoTornado_data_806CF504);
     ProcessSystemTick(0);
     obj = new DemoNormal(lbl_80356150, 0);
     clNormal3D_SetScale(obj, 0, 0.0f, 1.0f, 0.0f, 0.0f);

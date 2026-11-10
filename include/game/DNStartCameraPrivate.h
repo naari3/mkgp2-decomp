@@ -96,8 +96,8 @@ int sprintf(char *buf, const char *fmt, ...);
 int rand(void);
 }
 
-extern const unsigned int lbl_803D08F0[0x102];
-extern const float lbl_803D0CF8[4];
+extern const unsigned int DNStartCamera_m2_rodata_803D08F0[0x102];
+extern const float DNStartCamera_nm1_rodata_803D0CF8[4];
 extern const char lbl_803D0D08[0x10];
 extern const char lbl_803D0D18[0x11];
 extern const char lbl_803D0D2C[0x25];

@@ -20,7 +20,7 @@ void Sprite_Destroy(FKSprite *sprite, int flag);
 void Sprite_SetAnimParam(FKSprite *sprite, short param, short key);
 extern const float lbl_806DA120, lbl_806DA124, lbl_806DA128, lbl_806DA12C;
 extern unsigned char g_playerData[];
-extern signed char lbl_8049BB30[3][13][3];
+extern signed char clFlowKart_UpdateDisplay_data_8049BB30[3][13][3];
 }
 #pragma use_lmw_stmw on
 extern "C" void clFlowKart_UpdateDisplay(FKDisplay *self, int kart)
@@ -51,7 +51,7 @@ extern "C" void clFlowKart_UpdateDisplay(FKDisplay *self, int kart)
     self->rank[1] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA128, 1);
     self->rank[2] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA12C, 1);
     params = *(const FKParams *)statAnims;
-    for (int a = 0; a < 5 - lbl_8049BB30[level][kart][0]; a++) Sprite_SetAnimParam(self->rank[0], params.v[a], -1);
-    for (int b = 0; b < 5 - lbl_8049BB30[level][kart][1]; b++) Sprite_SetAnimParam(self->rank[1], params.v[b], -1);
-    for (int d = 0; d < 5 - lbl_8049BB30[level][kart][2]; d++) Sprite_SetAnimParam(self->rank[2], params.v[d], -1);
+    for (int a = 0; a < 5 - clFlowKart_UpdateDisplay_data_8049BB30[level][kart][0]; a++) Sprite_SetAnimParam(self->rank[0], params.v[a], -1);
+    for (int b = 0; b < 5 - clFlowKart_UpdateDisplay_data_8049BB30[level][kart][1]; b++) Sprite_SetAnimParam(self->rank[1], params.v[b], -1);
+    for (int d = 0; d < 5 - clFlowKart_UpdateDisplay_data_8049BB30[level][kart][2]; d++) Sprite_SetAnimParam(self->rank[2], params.v[d], -1);
 }

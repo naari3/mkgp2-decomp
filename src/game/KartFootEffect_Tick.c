@@ -1,6 +1,6 @@
 /* Actor is opaque in Ghidra; named accessors document the observed layout. */
 #include "game/types/Vec.h"
-const float lbl_80329908[255] = {
+const float KartFootEffect_Tick_rodata_80329908[255] = {
     1.0f, 0.7f, 0.9f, 0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f,
     66.66667f, 2e+03f, 66.66667f, 3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f,
     66.66667f, 0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f,
@@ -41,7 +41,7 @@ static const float footKeys[5][9] = {
     {1.0f, 6.0f, 1e+01f, 0.1f, 0.6f, 1.0f, 1.0f, 1.0f, 0.0f},
     {1.0f, 8.0f, 11.0f, 0.1f, 0.87f, 1.2f, 1.0f, 1.0f, 0.0f}
 };
-const unsigned char lbl_80329DB8[3][3][3] = {{{0x1F, 0x22, 0x00}, {0x23, 0x00, 0x00}, {0x00, 0x00, 0x00}}, {{0x20, 0x22, 0x00}, {0x23, 0x23, 0x00}, {0x24, 0x00, 0x00}}, {{0x21, 0x22, 0x00}, {0x23, 0x23, 0x23}, {0x24, 0x24, 0x00}}};
+const unsigned char KartFootEffect_Spawn_rodata_80329DB8[3][3][3] = {{{0x1F, 0x22, 0x00}, {0x23, 0x00, 0x00}, {0x00, 0x00, 0x00}}, {{0x20, 0x22, 0x00}, {0x23, 0x23, 0x00}, {0x24, 0x00, 0x00}}, {{0x21, 0x22, 0x00}, {0x23, 0x23, 0x23}, {0x24, 0x24, 0x00}}};
 static const unsigned char footKeyIdx[3][3][3] = {{{0x00, 0x00, 0x00}, {0x02, 0x00, 0x00}, {0x00, 0x00, 0x00}}, {{0x01, 0x01, 0x00}, {0x02, 0x02, 0x00}, {0x03, 0x00, 0x00}}, {{0x01, 0x01, 0x00}, {0x02, 0x02, 0x02}, {0x04, 0x04, 0x00}}};
 static const float footRoleScale[3] = {0.0f, 2e+01f, 1e+02f};
 static const float footBase[3][3] = {{0.0f, 0.0f, 0.0f}, {0.0f, 3.0f, 5.0f}, {0.0f, 4.0f, 0.0f}};
@@ -75,7 +75,7 @@ void KartFootEffect_Tick(unsigned char *self) {
     if (DRIVER) Mtx44_GetTranslation_RowMajor(&parent,KartDriver_GetKartRootMtx(DRIVER));
     switch ((signed char)self[0xb4]) {
     case 0:
-        self[0x1c]=lbl_80329DB8[BANK][ROLE][SLOT];
+        self[0x1c]=KartFootEffect_Spawn_rodata_80329DB8[BANK][ROLE][SLOT];
         VfxSlot_BindResourceEx(self+0x14,self[0x1c],0);
         if (ROLE==1) F(0xa0)=lbl_806D5168*footRoleScale[SLOT];
         F(0x150)=lbl_806D516C;

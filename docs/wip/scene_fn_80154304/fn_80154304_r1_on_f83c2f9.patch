@@ -170,9 +170,9 @@ index e5ca16b..fbaa649 100644
 -    psq_st f31, 0x78(r1), 0, 0
 -    stmw r25, 0x54(r1)
 -    mr r29, r3
--    lis r3, lbl_80363D30@ha
+-    lis r3, Scene_8014E0C4_rodata_80363D30@ha
 -    lwz r0, 0x8(r29)
--    addi r31, r3, lbl_80363D30@l
+-    addi r31, r3, Scene_8014E0C4_rodata_80363D30@l
 -    cmpwi r0, 0x9
 -    beq fn_80154304_L_80154F94
 -    lbz r0, 0x28(r29)
@@ -288,9 +288,9 @@ index e5ca16b..fbaa649 100644
 -    fn_80154304_L_801544C8:
 -    lwz r3, 0x18(r29)
 -    bl SetCourseScene3D
--    lis r3, lbl_8048F1A8@ha
+-    lis r3, Scene_8014E0C4_data_8048F1A8@ha
 -    mr r27, r29
--    addi r28, r3, lbl_8048F1A8@l
+-    addi r28, r3, Scene_8014E0C4_data_8048F1A8@l
 -    mr r26, r29
 -    li r30, 0x0
 -    fn_80154304_L_801544E4:
@@ -1157,7 +1157,7 @@ index e5ca16b..fbaa649 100644
 +    }
 +    SetCourseScene3D(self->cam);
 +    for (i = 0; i < 6; i++) {
-+        self->jobjs[i] = ResolveJointByName(self->obj20, (char *)lbl_8048F1A8[i]);
++        self->jobjs[i] = ResolveJointByName(self->obj20, (char *)Scene_8014E0C4_data_8048F1A8[i]);
 +        jobj = self->jobjs[i];
 +        if (jobj != 0) {
 +            JObjSetupMatrix(jobj);
@@ -1393,19 +1393,19 @@ index dce8bdf..33b381e 100644
  extern const char lbl_80364B78[] = "op_demo_monster_joint";
  extern const char lbl_80364B90[] = "op_demo_pacman_joint";
  extern const char lbl_80364BA8[] = "DK_demo_donkey_null_joint";
--extern const unsigned int lbl_80364BC4[35] = {
+-extern const unsigned int sdata_806CF750_rodata_80364BC4[35] = {
 -    0x444B5F64, 0x656D6F5F, 0x6D617269, 0x6F5F6E75, 0x6C6C5F6A, 0x6F696E74,
 -    0x00000000, 0x442DC000, 0x00000002, 0x00000032, 0x01000000, 0x4433C000,
 -    0x00000002, 0x00000032, 0x00000000, 0x443B8000, 0x00000003, 0x00000039,
 -    0x01000000, 0x4442C000, 0x00000003, 0x00000039, 0x00000000, 0x44480000,
 -    0x00000004, 0x00000008, 0x01000000, 0x4451C000, 0x00000004, 0x00000008,
 -    0x00000000, 0xBF800000, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000000,
-+extern const char lbl_80364BC4[] = "DK_demo_mario_null_joint";
++extern const char sdata_806CF750_rodata_80364BC4[] = "DK_demo_mario_null_joint";
 +static const CourseItemEvent lbl_80364BE0[7] = {
 +    {695.0f, 2, 50, 1}, {719.0f, 2, 50, 0}, {750.0f, 3, 57, 1}, {779.0f, 3, 57, 0},
 +    {800.0f, 4, 8, 1}, {839.0f, 4, 8, 0}, {-1.0f, -1, -1, 0},
  };
- static const unsigned int lbl_80364C50[30] = {
+ static const unsigned int Scene_8014E0C4_rodata_80364C50[30] = {
      0x43700000, 0x44900000, 0x43700000, 0x40000000, 0x40000000, 0x00000000,
 @@ -825,23 +818,13 @@ static const unsigned int lbl_80366E34[3] = {
  static const unsigned int lbl_80366E40[3] = {
@@ -1437,7 +1437,7 @@ index dce8bdf..33b381e 100644
 +    {60.0f, 5}, {240.0f, 6}, {300.0f, 7}, {180.0f, 8}, {240.0f, 9},
  };
  static const char lbl_80366ED8[] = "DN_stadium_short_a.dat";
- static const CourseModeInfo lbl_80366EF0[21] = {
+ static const CourseModeInfo Scene_8014E0C4_rodata_80366EF0[21] = {
 diff --git a/tools/extab_user_renames.json b/tools/extab_user_renames.json
 index 62bf998..a6cccb7 100644
 --- a/tools/extab_user_renames.json

@@ -9,19 +9,19 @@ extern void fn_8023B7E4();
 extern void fn_8023B7FC();
 extern void fn_8023B838();
 extern void fn_8023BBB8();
-extern char lbl_806D0798[];
-extern char lbl_806D07A0[];
+extern char data_804EE560_data_806D0798[];
+extern char data_804EE560_data_806D07A0[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804EE560[3] = {
-    (void *)&lbl_806D0798,
+void *sdata_806D0728_data_804EE560[3] = {
+    (void *)&data_804EE560_data_806D0798,
     0,
     0
 };
-void *lbl_804EE56C[6] = {
-    (void *)&lbl_806D07A0,
+void *KartChoiceOwner_vtable_804EE56C[6] = {
+    (void *)&data_804EE560_data_806D07A0,
     0,
     (void *)fn_8023BBB8,
     (void *)fn_8023B838,

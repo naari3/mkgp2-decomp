@@ -33,7 +33,7 @@ static const float cardPool_80315378[255] = {
     83.33333587646484f, 0.0f, 0.0f, 500.0f, 83.33333587646484f, 1000.0f, 83.33333587646484f, 2000.0f,
     83.33333587646484f, 3000.0f, 83.33333587646484f, 4000.0f, 83.33333587646484f, 5000.0f, 83.33333587646484f
 };
-static const int lbl_80315774[61] = {
+static const int CardSaveData_Parser_rodata_80315774[61] = {
     57, 43, 45, 93, 92, 91, 46, 61, 50, 78,
     70, 74, 80, 8, 115, 113, 60, 44, 62, 34,
     27, 29, 105, 64, 109, 82, 49, 26, 25, 90,
@@ -42,37 +42,37 @@ static const int lbl_80315774[61] = {
     64, 82, 28, 25, 29, 49, 26, 34, 35, 89,
     27
 };
-static const int lbl_80315868[5] = {
+static const int CardSaveData_Parser_rodata_80315868[5] = {
     14, 4, 97, 39, 107
 };
-static const int lbl_8031587C[44] = {
+static const int CardSaveData_Parser_rodata_8031587C[44] = {
     256, 169, 172, 176, 173, 174, 175, 185, 159, 160,
     161, 178, 179, 168, 180, 192, 181, 205, 177, 204,
     163, 186, 187, 189, 203, 182, 166, 162, 184, 190,
     191, 183, 170, 167, 197, 199, 200, 188, 196, 201,
     202, 194, 198, 94
 };
-static const int lbl_8031592C[6] = {
+static const int CardSaveData_Parser_rodata_8031592C[6] = {
     258, 252, 254, 253, 257, 254
 };
-static const int lbl_80315944[6] = {
+static const int CardSaveData_Parser_rodata_80315944[6] = {
     123, 124, 127, 128, 129, 126
 };
-static const int lbl_8031595C[6] = {
+static const int CardSaveData_Parser_rodata_8031595C[6] = {
     130, 131, 132, 134, 135, 133
 };
 static const struct CardPoolItemLists { int special[3]; struct { const void *items; int count; } lists[7]; } lbl_80315974 = {
     {63, 51, 58}, {
-        {lbl_80315774, 61},
-        {lbl_8031587C, 44},
-        {lbl_80315944, 6},
-        {lbl_8031595C, 6},
-        {lbl_80315868, 5},
-        {lbl_8031592C, 6},
+        {CardSaveData_Parser_rodata_80315774, 61},
+        {CardSaveData_Parser_rodata_8031587C, 44},
+        {CardSaveData_Parser_rodata_80315944, 6},
+        {CardSaveData_Parser_rodata_8031595C, 6},
+        {CardSaveData_Parser_rodata_80315868, 5},
+        {CardSaveData_Parser_rodata_8031592C, 6},
         {&lbl_80315974, 3},
     }
 };
-static const int lbl_803159B8[60] = {
+static const int Items_rodata_803159B8[60] = {
     57, 43, 45, 93, 92, 91, 61, 78, 50, 70,
     74, 80, 115, 113, 114, 60, 62, 108, 109, 110,
     105, 64, 8, 46, 90, 89, 116, 85, 94, 27,
@@ -80,7 +80,7 @@ static const int lbl_803159B8[60] = {
     281, 282, 26, 25, 28, 82, 49, 48, 123, 127,
     129, 131, 132, 133, 134, 135, 124, 128, 126, 130
 };
-static const int lbl_80315AA8[312] = {
+static const int Items_rodata_80315AA8[312] = {
     61, 0, 63, 50, 1, 51, 57, 2, 58, 61,
     3, 159, 62, 5, 162, 78, 4, 161, 108, 7,
     166, 50, 8, 160, 82, 9, 167, 80, 10, 168,
@@ -114,27 +114,27 @@ static const int lbl_80315AA8[312] = {
     7, 82, 261, 121, 83, 262, 15, 84, 263, 33,
     86, 264
 };
-static const int lbl_80315F88[13] = {
+static const int data_803FE480_rodata_80315F88[13] = {
     36, 36, 30, 21, 31, 22, 16, 32, 14, 14,
     40, 36, 36
 };
-static const int lbl_80315FBC[13] = {
+static const int data_803FE480_rodata_80315FBC[13] = {
     2, 1, 11, 10, 18, 3, 6, 9, 4, 5,
     7, 2, 2
 };
-static const int lbl_80315FF0[13] = {
+static const int data_803FE480_rodata_80315FF0[13] = {
     68, 67, 81, 86, 111, 88, 52, 119, 97, 97,
     121, 68, 68
 };
-static const int lbl_80316024[13] = {
+static const int data_803FE480_rodata_80316024[13] = {
     38, 37, 13, 12, 20, 24, 19, 17, 39, 39,
     15, 38, 38
 };
-static const int lbl_80316058[13] = {
+static const int data_803FE480_rodata_80316058[13] = {
     95, 96, 117, 120, 65, 71, 55, 56, 118, 118,
     106, 95, 95
 };
-static const int lbl_8031608C[13] = {
+static const int data_803FE480_rodata_8031608C[13] = {
     77, 77, 76, 66, 59, 72, 42, 122, 107, 107,
     33, 77, 77,
 };

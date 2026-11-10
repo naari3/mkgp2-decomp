@@ -17,7 +17,7 @@ typedef struct KartPhys {
     float spdScale;
 } KartPhys;
 
-const float lbl_8037DD78[3] = {1.0f, 0.7f, 0.9f};
+const float DebugOverlay_KartPhysics_rodata_8037DD78[3] = {1.0f, 0.7f, 0.9f};
 
 void DebugOverlay_KartPhysics(KartPhys *k) {
     OverlayText(2, 2, 0x12, "left  %s", Terrain_FlagsToDebugString(k->flagsL));

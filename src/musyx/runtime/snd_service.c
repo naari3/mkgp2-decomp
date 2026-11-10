@@ -9,15 +9,15 @@ extern "C" {
 
 /* Data is not split into this unit yet: refer to it by address. */
 #define i2fMagic lbl_806DCB08
-#define sqrtConsts lbl_803F2A88
-#define _sinConsts lbl_803F2A94
-#define sndSintab lbl_804F8950
-#define last_rnd lbl_806D0C58
+#define sqrtConsts sndSqrt_rodata_803F2A88
+#define _sinConsts sndCos_rodata_803F2A94
+#define sndSintab sndSin_data_804F8950
+#define last_rnd sndRand_data_806D0C58
 extern const double i2fMagic;
 extern const float sqrtConsts[3];
 extern const float _sinConsts[8];
 /* Owned .data 0x804F8950..0x804F9150 (the 0x10 after it is alignment padding). */
-s16 lbl_804F8950[1024] = {
+s16 sndSin_data_804F8950[1024] = {
     0, 6, 12, 18, 25, 31, 37, 43, 50, 56, 62, 69, 75, 81, 87, 94,
     100, 106, 113, 119, 125, 131, 138, 144, 150, 157, 163, 169, 175, 182, 188, 194,
     200, 207, 213, 219, 226, 232, 238, 244, 251, 257, 263, 269, 276, 282, 288, 295,

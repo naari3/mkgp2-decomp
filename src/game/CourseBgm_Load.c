@@ -13,7 +13,7 @@
  *   g_courseBgm      (0x806D10E8) = loaded ptr (or 0)
  *   g_courseBgmSize  (0x806D10EC) = loaded ptr again (companion store --
  *                                   misleading legacy symbol name)
- *   lbl_806D10E0     (.sbss)      = number of leading zero header slots
+ *   CourseBgm_Load_bss_806D10E0     (.sbss)      = number of leading zero header slots
  *                                   skipped (stride 16 = 4 ints)
  *   lbl_806D10E4     (.sbss)      = 0 (cursor reset)
  *   lbl_806CEEF8     (.sdata)     = 6 (state)
@@ -33,7 +33,7 @@ extern int  *DVDFile_LoadSync(char *path);    /* DVDFile_LoadSync */
 
 extern int  *g_courseBgm;                /* .sbss 0x806D10E8 */
 extern int  *g_courseBgmSize;            /* .sbss 0x806D10EC (ptr companion) */
-extern int   lbl_806D10E0;               /* .sbss 0x806D10E0 (skip count) */
+extern int   CourseBgm_Load_bss_806D10E0;               /* .sbss 0x806D10E0 (skip count) */
 extern int   lbl_806D10E4;               /* .sbss 0x806D10E4 (cursor reset) */
 extern int   lbl_806CEEF8;               /* .sdata 0x806CEEF8 (state) */
 extern int   lbl_806CEEFC;               /* .sdata 0x806CEEFC (reset) */
@@ -47,14 +47,14 @@ void CourseBgm_Load(void) {
     if (path != 0) {
         g_courseBgm = DVDFile_LoadSync(path);
         g_courseBgmSize = g_courseBgm;
-        lbl_806D10E0 = 0;
+        CourseBgm_Load_bss_806D10E0 = 0;
         for (p = g_courseBgm; *p == 0; p += 4) {
-            lbl_806D10E0 = lbl_806D10E0 + 1;
+            CourseBgm_Load_bss_806D10E0 = CourseBgm_Load_bss_806D10E0 + 1;
         }
     } else {
         g_courseBgm = 0;
         g_courseBgmSize = 0;
-        lbl_806D10E0 = 0;
+        CourseBgm_Load_bss_806D10E0 = 0;
     }
     lbl_806CEEF8 = 6;
     lbl_806CEEFC = -1;

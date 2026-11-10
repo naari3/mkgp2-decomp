@@ -16,16 +16,16 @@ extern void fn_8024EE10();
 extern char lbl_806D0978[];
 extern char lbl_806D0980[];
 extern char lbl_806D0988[];
-extern char lbl_806D09A0[];
+extern char data_804EEFE4_data_806D09A0[];
 extern char lbl_806D09A8[];
 extern char lbl_806D09B0[];
-extern char lbl_806D09B8[];
-extern char lbl_806D09C0[];
+extern char data_804EEFE4_data_806D09B8[];
+extern char data_804EEFE4_data_806D09C0[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804EEFE4[7] = {
+void *sdata_806D0728_data_804EEFE4[7] = {
     (void *)&lbl_806D0978,
     0,
     (void *)&lbl_806D0980,
@@ -34,8 +34,8 @@ void *lbl_804EEFE4[7] = {
     0,
     0
 };
-void *lbl_804EF000[6] = {
-    (void *)&lbl_806D09A0,
+void *ContinueScene_vtable_804EF000[6] = {
+    (void *)&data_804EEFE4_data_806D09A0,
     0,
     (void *)fn_8024DD50,
     (void *)fn_8024DCCC,
@@ -47,24 +47,24 @@ void *lbl_804EF018[3] = {
     0,
     0
 };
-void *lbl_804EF024[5] = {
+void *sdata_806D0728_data_804EF024[5] = {
     (void *)&lbl_806D09A8,
     0,
     (void *)&lbl_806D09B0,
     0,
     0
 };
-void *lbl_804EF038[7] = {
+void *sdata_806D0728_data_804EF038[7] = {
     (void *)&lbl_806D09A8,
     0,
     (void *)&lbl_806D09B0,
     0,
-    (void *)&lbl_806D09B8,
+    (void *)&data_804EEFE4_data_806D09B8,
     0,
     0
 };
-void *lbl_804EF054[6] = {
-    (void *)&lbl_806D09C0,
+void *BattleContinueScene_vtable_804EF054[6] = {
+    (void *)&data_804EEFE4_data_806D09C0,
     0,
     (void *)fn_8024EE10,
     (void *)fn_8024ED8C,

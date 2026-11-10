@@ -11,8 +11,8 @@ extern void fn_801FD1D4();
 extern void fn_801FD2E8();
 extern char lbl_806D0160[];
 extern char lbl_806D0168[];
-extern char lbl_806D0170[];
-extern char lbl_806D0178[];
+extern char data_804EBFF0_data_806D0170[];
+extern char data_804EBFF0_data_806D0178[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -22,24 +22,24 @@ void *lbl_804EBFF0[3] = {
     0,
     0
 };
-void *lbl_804EBFFC[5] = {
+void *data_804EBFF0_data_804EBFFC[5] = {
     (void *)&lbl_806D0160,
     0,
     (void *)&lbl_806D0168,
     0,
     0
 };
-void *lbl_804EC010[7] = {
+void *data_804EBFF0_data_804EC010[7] = {
     (void *)&lbl_806D0160,
     0,
     (void *)&lbl_806D0168,
     0,
-    (void *)&lbl_806D0170,
+    (void *)&data_804EBFF0_data_806D0170,
     0,
     0
 };
-void *lbl_804EC02C[6] = {
-    (void *)&lbl_806D0178,
+void *CardFlowScene_vtable_804EC02C[6] = {
+    (void *)&data_804EBFF0_data_806D0178,
     0,
     (void *)fn_801FD1D4,
     (void *)fn_801FD2E8,

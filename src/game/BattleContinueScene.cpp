@@ -2,7 +2,7 @@
 /*
  * Network battle continue scene @ 0x8024E344..0x8024F400.
  *
- * BattleContinueScene derives from FlowScene (vtable lbl_804EF054). It
+ * BattleContinueScene derives from FlowScene (vtable BattleContinueScene_vtable_804EF054). It
  * reuses CoinCounter from ContinueScene.cpp out of line and waits for the
  * host PCB through a SyncWaiter (ctor fn_8021BA20).
  */

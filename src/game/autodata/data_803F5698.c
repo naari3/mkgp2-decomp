@@ -36,14 +36,14 @@ extern void fn_80039A94();
 extern void fn_80039A9C();
 extern void fn_80039AA4();
 extern void fn_80039AB4();
-extern char lbl_806CED38[];
-extern char lbl_806CED40[];
-extern char lbl_806CED50[];
+extern char data_803F5698_data_806CED38[];
+extern char data_803F5698_data_806CED40[];
+extern char data_803F5698_data_806CED50[];
 extern char lbl_806CED60[];
 extern char lbl_806CED68[];
 extern char lbl_806CED70[];
-extern char lbl_806CED78[];
-extern char lbl_806CED80[];
+extern char data_803F5698_data_806CED78[];
+extern char data_803F5698_data_806CED80[];
 extern char lbl_806CED88[];
 
 /* layout as declared in src/game/InputObj_ReadRawInput.c */
@@ -55,22 +55,22 @@ typedef struct RawButtonMap {
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_803F5698[3] = {
-    (void *)&lbl_806CED38,
+void *sdata_806CED20_data_803F5698[3] = {
+    (void *)&data_803F5698_data_806CED38,
     0,
     0
 };
 /* decl: char */
-void *lbl_803F56A4[5] = {
-    (void *)&lbl_806CED40,
+void *SeqMenuScene_data_803F56A4[5] = {
+    (void *)&data_803F5698_data_806CED40,
     0,
     (void *)SeqMenuScene_HandleInput,
     (void *)SeqMenuScene_DrawDebugList,
     (void *)SeqMenuScene_Dtor
 };
 /* decl: char */
-void *lbl_803F56B8[6] = {
-    (void *)&lbl_806CED50,
+void *Scene3D_data_803F56B8[6] = {
+    (void *)&data_803F5698_data_806CED50,
     0,
     (void *)Object_DtorTree_56b8,
     (void *)CObj_RenderPass_Execute,
@@ -117,14 +117,14 @@ RawButtonMap kRawGameMap_Raw0[5] = {
     { 0x2000, 0x6001 },
     { 0x1000, 0x6002 }
 };
-void *lbl_803F5748[3] = {
-    (void *)&lbl_806CED78,
+void *sdata_806CED20_data_803F5748[3] = {
+    (void *)&data_803F5698_data_806CED78,
     0,
     0
 };
 /* decl: char */
 void *g_InputObjectVtable[13] = {
-    (void *)&lbl_806CED80,
+    (void *)&data_803F5698_data_806CED80,
     0,
     (void *)InputObj_Ctor,
     (void *)InputObj_Update_Stub,

@@ -31,9 +31,9 @@ extern char lbl_806CFFA0[];
 extern char lbl_806CFFA8[];
 extern char lbl_806CFFB0[];
 extern char lbl_806CFFB8[];
-extern char lbl_806CFFC0[];
-extern char lbl_806CFFC8[];
-extern char lbl_806CFFD0[];
+extern char data_804E4AF0_data_806CFFC0[];
+extern char data_804E4AF0_data_806CFFC8[];
+extern char data_804E4AF0_data_806CFFD0[];
 extern char lbl_806CFFD8[];
 extern char lbl_806CFFE0[];
 extern char lbl_806CFFE8[];
@@ -52,7 +52,7 @@ void *lbl_804E4AF0[8] = {
     0,
     0
 };
-int lbl_804E4B10[10] = {
+int ItemHolder_SetItem_data_804E4B10[10] = {
     6, 2, 3, 1, 5, 4, 2, 4,
     1, 5
 };
@@ -73,44 +73,44 @@ void *lbl_804E4B44[9] = {
     (void *)fn_801E8CB8,
     0
 };
-void *lbl_804E4B68[3] = {
+void *data_804E4AF0_data_804E4B68[3] = {
     (void *)&lbl_806CFFB8,
     0,
     0
 };
-void *lbl_804E4B74[5] = {
-    (void *)&lbl_806CFFC0,
+void *ThinkBox_Create_data_804E4B74[5] = {
+    (void *)&data_804E4AF0_data_806CFFC0,
     0,
     (void *)fn_801E96BC,
     (void *)fn_801E9594,
     (void *)AI_CalcVSTargetSpeed
 };
-void *lbl_804E4B88[5] = {
+void *ThinkBox_Create_data_804E4B88[5] = {
     (void *)&lbl_806CFFB8,
     0,
     0,
     0,
     0
 };
-void *lbl_804E4B9C[3] = {
+void *data_804E4AF0_data_804E4B9C[3] = {
     (void *)&lbl_806CFFB8,
     0,
     0
 };
-void *lbl_804E4BA8[5] = {
-    (void *)&lbl_806CFFC8,
+void *ThinkBox_Create_data_804E4BA8[5] = {
+    (void *)&data_804E4AF0_data_806CFFC8,
     0,
     (void *)fn_801E9E74,
     (void *)fn_801E9CBC,
     (void *)AI_CalcTargetSpeed_PairTracking
 };
-void *lbl_804E4BBC[3] = {
+void *data_804E4AF0_data_804E4BBC[3] = {
     (void *)&lbl_806CFFB8,
     0,
     0
 };
-void *lbl_804E4BC8[6] = {
-    (void *)&lbl_806CFFD0,
+void *ThinkBox_Create_data_804E4BC8[6] = {
+    (void *)&data_804E4AF0_data_806CFFD0,
     0,
     (void *)AI_UpdatePerFrameState,
     (void *)AI_PerKartUpdate,

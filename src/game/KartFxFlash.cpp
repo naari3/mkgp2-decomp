@@ -23,7 +23,7 @@ struct FlashEffect {
     float phase;
 };
 extern "C" {
-extern const float lbl_8032A5B0[43];
+extern const float KartFx_FlashOrbitTick_rodata_8032A5B0[43];
 extern FlashCamera lbl_805DF3D0;
 extern const float lbl_806D51BC, lbl_806D51C0, lbl_806D51C4, lbl_806D51C8;
 extern const float lbl_806D51D0, lbl_806D51EC, lbl_806D5230, lbl_806D5244, lbl_806D5248;
@@ -49,7 +49,7 @@ void KartFx_FlashOrbitTick(FlashEffect *effect) {
     case 0:
         VfxSlot_BindResourceEx(effect->slot, 0x4C, 0);
         effect->phase = lbl_806D51C0;
-        effect->offset.x = lbl_806D51BC * lbl_8032A5B0[effect->identity]
+        effect->offset.x = lbl_806D51BC * KartFx_FlashOrbitTick_rodata_8032A5B0[effect->identity]
             + Rand_RangeFloat(lbl_806D5230, lbl_806D51C4);
         effect->offset.y = Rand_RangeFloat(lbl_806D5230, lbl_806D51C4) - lbl_806D51D0;
         effect->offset.z = lbl_806D51C8 * Rand_RangeFloat(lbl_806D5230, lbl_806D51C4);

@@ -24,7 +24,7 @@ recipe is expected to apply directly wherever the site is the u64-flag-test fami
 
 **Caveat discovered (new sub-class)**: KartItem_ApplyImpactReflectAndDampVelocity's
 "class-1 site" is NOT the u64 family - it is an int-equality CHAIN
-(`cmpw; bne L1; b LDONE; L1: ...` x4 against the 4-word table lbl_802ED9E4, with a
+(`cmpw; bne L1; b LDONE; L1: ...` x4 against the 4-word table KartItem_ApplyImpactReflectAndDampVelocity_rodata_802ED9E4, with a
 hoisted `li r6,0` and arm re-stores deleted late). The ULL recipe does not transfer;
 see the probe ledger below. Check each remaining site's actual shape (u64 test vs
 equality chain) during precan.
@@ -166,7 +166,7 @@ match count.
       "status": "skipped",
       "src_path": null,
       "objdiff_percent": null,
-      "notes": "Parked at 95.19% best (reverted to asm_fn, paste-ready C in HANDOFF appendix B). The 'class-1 site' here is an int-equality CHAIN variant (4 cmpw against lbl_802ED9E4 words, hoisted li r6,0, arm li-0s deleted late) - the ULL recipe does NOT apply; 4 chain probes negative (ledger in HANDOFF; probe 4 disproves the redundant-li cleanup hypothesis: deletion needs a coalescable independent zero web). Solved-byte-exact pieces worth keeping: in-place sqrtf (sq = y) f4 coalesce, cB-local + inner-literal const split for the f1/f2 scale block, mv reassign in the else arm."
+      "notes": "Parked at 95.19% best (reverted to asm_fn, paste-ready C in HANDOFF appendix B). The 'class-1 site' here is an int-equality CHAIN variant (4 cmpw against KartItem_ApplyImpactReflectAndDampVelocity_rodata_802ED9E4 words, hoisted li r6,0, arm li-0s deleted late) - the ULL recipe does NOT apply; 4 chain probes negative (ledger in HANDOFF; probe 4 disproves the redundant-li cleanup hypothesis: deletion needs a coalescable independent zero web). Solved-byte-exact pieces worth keeping: in-place sqrtf (sq = y) f4 coalesce, cB-local + inner-literal const split for the f1/f2 scale block, mv reassign in the else arm."
     }
   ],
 
@@ -271,7 +271,7 @@ int KartItem_ApplyImpactReflectAndDampVelocity(KartItemOpsView *self, float *out
     if (self->ownerDriver->deathState2b8 == 1) {
         return 0;
     }
-    p = (const int *)lbl_802ED9E4;
+    p = (const int *)KartItem_ApplyImpactReflectAndDampVelocity_rodata_802ED9E4;
     id = self->secondary->itemId;
     b = 0; /* dead-def-eliminated; kept for semantics */
     if (id == *p) {

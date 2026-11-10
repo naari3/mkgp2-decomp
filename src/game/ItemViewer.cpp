@@ -1,12 +1,12 @@
 /*
- * clItemViewer @ 0x80254398..0x80255000 (vtable lbl_804F211C): debug item
+ * clItemViewer @ 0x80254398..0x80255000 (vtable clItemViewer_vtable_804F211C): debug item
  * model viewer scene. The stick edits the selected field (position,
  * rotation, scale, light color, or the item number itself), Y toggles the
  * field list and B leaves.
  *
  * Base class clSceneInterface has vtable lbl_803FE0C8 (dtor dtor_8007D0D4).
- * The longer strings sit in this unit's .rodata pool at lbl_803F1208 and are
- * referenced as lbl_803F1208 + offset, the way the compiler addressed them.
+ * The longer strings sit in this unit's .rodata pool at ItemViewer_rodata_803F1208 and are
+ * referenced as ItemViewer_rodata_803F1208 + offset, the way the compiler addressed them.
  */
 
 #include "game/FlowScene.h"
@@ -38,11 +38,11 @@ struct InfoText {
 };
 
 extern "C" {
-extern const char lbl_803F1208[];
-extern const ViewerEntry lbl_803F1234[];
-extern float lbl_806D0A70;
-extern float lbl_806D0A74;
-extern float lbl_806D0A78;
+extern const char ItemViewer_rodata_803F1208[];
+extern const ViewerEntry ItemViewer_rodata_803F1234[];
+extern float ItemViewer_data_806D0A70;
+extern float ItemViewer_data_806D0A74;
+extern float ItemViewer_data_806D0A78;
 extern const char lbl_806DC1E8[2];
 extern const char lbl_806DC218[8];
 void *ItemRes_LookupByKey_Thunk(int key);
@@ -87,9 +87,9 @@ struct clItemViewer : clSceneInterface {
     float color[3];
 
     clItemViewer() : item(1), model(0), field(0), showInfo(1), printWait(0) {
-        color[0] = lbl_806D0A70;
-        color[1] = lbl_806D0A74;
-        color[2] = lbl_806D0A78;
+        color[0] = ItemViewer_data_806D0A70;
+        color[1] = ItemViewer_data_806D0A74;
+        color[2] = ItemViewer_data_806D0A78;
         LoadModel();
     }
     ~clItemViewer();
@@ -144,7 +144,7 @@ void clItemViewer::LoadModel() {
         rot[2] = xf->rot[2];
         scale = xf->scale;
     } else {
-        const ViewerEntry *e = &lbl_803F1234[item - 0x9F];
+        const ViewerEntry *e = &ItemViewer_rodata_803F1234[item - 0x9F];
         s = 0.02f * e->xf.scale;
         model = new ShowModel((void *)e->file, 0);
         fn_8013D738(model, 0.0f, 1.0f);
@@ -163,7 +163,7 @@ void clItemViewer::LoadModel() {
 }
 
 void clItemViewer::Draw() {
-    const char *strs = lbl_803F1208;
+    const char *strs = ItemViewer_rodata_803F1208;
     ResCtrl rc;
     unsigned int c;
     rc.mode = 2;
@@ -223,7 +223,7 @@ void clItemViewer::Draw() {
 }
 
 void clItemViewer::Update() {
-    const char *strs = lbl_803F1208;
+    const char *strs = ItemViewer_rodata_803F1208;
     InputPlayer *pad;
     float d;
     if (done == 1) {

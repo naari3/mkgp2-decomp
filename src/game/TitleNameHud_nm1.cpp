@@ -60,7 +60,7 @@ TitleNameHud::TitleNameHud(int layer_)
                     break;
                 }
                 s = *ps;
-                rc.resId = lbl_804EF1F0[code].resId;
+                rc.resId = TitleNameHud_nm1_data_804EF1F0[code].resId;
                 rc.scaleX = s;
                 rc.scaleY = s;
                 xs[j] = x;

@@ -39,7 +39,7 @@ struct ItemBoxSet {
 };
 
 extern "C" {
-extern char lbl_8049110C[];
+extern char BoxConstruct_vtable_8049110C[];
 extern char lbl_80490FE0[];
 extern char lbl_8036D5A8[];
 extern const float lbl_80495A94[];
@@ -131,7 +131,7 @@ void fn_8016CEA0(ItemBoxSet *set) {
 
 ItemBoxSet *fn_8016D208(ItemBoxSet *self, short flag) {
     if (self) {
-        self->vtable = lbl_8049110C;
+        self->vtable = BoxConstruct_vtable_8049110C;
         if (self->modelA) {
             Object_DtorWithGXSync(self->modelA, 1);
         }

@@ -41,7 +41,7 @@ extern const float lbl_806D5EA4;
 extern const float lbl_806D5EA8;
 extern const float lbl_806D5EAC;
 extern unsigned int Effect_KartJoint15_Res7B_Update[];
-extern unsigned int lbl_8032F4C8[];
+extern unsigned int MukadeItem_Tick_HeldAndHoming_3839_rodata_8032F4C8[];
 extern void *FindNearestDriverWithinConeAndRadius();
 extern signed char ItemObject_GetGroundTypeAt();
 extern void Item_AccelClampVelocity();
@@ -66,8 +66,8 @@ extern const float lbl_806D5EC0;
 extern const float lbl_806D5EC4;
 extern const float lbl_806D5EC8;
 extern const float lbl_806D5ECC;
-extern const Vec3 lbl_8032F4B0;
-extern const Vec3 lbl_8032F4BC;
+extern const Vec3 MukadeItem_TickHeldOrSnake_3839_rodata_8032F4B0;
+extern const Vec3 MukadeItem_TickHeldOrSnake_3839_rodata_8032F4BC;
 extern void ItemObject_DecrementCategoryBudget();
 extern int Item_OrbitAnchorKart();
 extern void SpriteSlot_Container_Free();
@@ -122,7 +122,7 @@ void MukadeItem_Tick_HeldAndHoming_3839(Item *item, State *state)
             state->lift += state->gravity;
             if (state->lift <= zero) state->lift = zero;
         }
-        heights = *(const struct Heights *)lbl_8032F4C8;
+        heights = *(const struct Heights *)MukadeItem_Tick_HeldAndHoming_3839_rodata_8032F4C8;
         Mtx44_GetTranslation_RowMajor(&joint, KartDriver_GetJointByIdx(state->target, 15));
         joint.y += state->lift + heights.values[KartCharacterParam_GetIdentityIndex(state->target)];
         state->height += 0.20000000298023224f;
@@ -264,11 +264,11 @@ void MukadeItem_TickHeldOrSnake_3839(Item *item, State *state)
         case 1:
             if (FinalLapCoinJump_CheckActiveForObject(state->owner)) item->visible = 0;
             else item->visible = 1;
-            bind = lbl_8032F4B0;
+            bind = MukadeItem_TickHeldOrSnake_3839_rodata_8032F4B0;
             bind.x = lbl_806D5EB8 + KartCharacterParam_GetVfxBindHeightOffset(state->owner);
             {
                 Vec3 offset;
-                Vec3 rotation = lbl_8032F4BC;
+                Vec3 rotation = MukadeItem_TickHeldOrSnake_3839_rodata_8032F4BC;
                 offset = bind;
                 Item_RenderCharacterScaledFromJoint12(item, &offset, &rotation, 1, lbl_806D5E7C);
             }

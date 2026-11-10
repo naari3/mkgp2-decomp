@@ -76,11 +76,11 @@ int VoiceSystem_Init(void) {
     g_voiceQueueMuted = 0;
     g_goalFanfareTriggered = 0;
     lbl_806D178D = 0;
-    lbl_806D178E = 0;
+    VoiceSystem_Init_bss_806D178E = 0;
     lbl_806D17B4 = 0;
     lbl_806D1750 = (int)now;
     g_voiceTickCounter = (int)now;
-    lbl_806D1790 = ((float)(lbl_80598A60.duration * 2));
+    VoiceSystem_Init_bss_806D1790 = ((float)(lbl_80598A60.duration * 2));
     g_voiceCupLongRoundTable = 0;
     state->speaker[1] = 0;
     state->speaker[0] = -1;

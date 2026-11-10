@@ -2,9 +2,9 @@
  * Merged from the per-function files (VSMode_FrameUpdate, BtMode_Dtor, VSMode_Init,
  * BtMode_Init) so the TU owns its .rodata pool. Each part keeps its own
  * declarations, renamed with `_pN` (tools/extab_user_renames.json maps them back). */
-extern const unsigned int lbl_80320960[];
+extern const unsigned int VSMode_FrameUpdate_rodata_80320960[];
 extern const char lbl_80320D8C[];
-extern const unsigned int lbl_80320D9C[];
+extern const unsigned int sdata_806CEFE0_rodata_80320D9C[];
 
 /* ==== VSMode_FrameUpdate ==== */
 #define CObj_ApplyScissor CObj_ApplyScissor_p0
@@ -150,11 +150,11 @@ extern const unsigned int lbl_80320D9C[];
 #define g_totalLaps g_totalLaps_p0
 #define g_totalRaceTime g_totalRaceTime_p0
 #define g_weatherSystem g_weatherSystem_p0
-#define lbl_805D2AA8 lbl_805D2AA8_p0
+#define VSMode_FrameUpdate_bss_805D2AA8 lbl_805D2AA8_p0
 #define lbl_805D2B00 lbl_805D2B00_p0
 #define lbl_806792D8 lbl_806792D8_p0
 #define lbl_806CF140 lbl_806CF140_p0
-#define lbl_806CF148 lbl_806CF148_p0
+#define VSMode_FrameUpdate_data_806CF148 lbl_806CF148_p0
 #define lbl_806CF270 lbl_806CF270_p0
 #define lbl_806D0051 lbl_806D0051_p0
 #define lbl_806D109C lbl_806D109C_p0
@@ -162,16 +162,16 @@ extern const unsigned int lbl_80320D9C[];
 #define lbl_806D10D0 lbl_806D10D0_p0
 #define lbl_806D1191 lbl_806D1191_p0
 #define lbl_806D12E8 lbl_806D12E8_p0
-#define lbl_806D12EC lbl_806D12EC_p0
-#define lbl_806D12F0 lbl_806D12F0_p0
-#define lbl_806D12F4 lbl_806D12F4_p0
-#define lbl_806D12FC lbl_806D12FC_p0
-#define lbl_806D1300 lbl_806D1300_p0
-#define lbl_806D1310 lbl_806D1310_p0
+#define VSMode_FrameUpdate_bss_806D12EC lbl_806D12EC_p0
+#define VSMode_FrameUpdate_bss_806D12F0 lbl_806D12F0_p0
+#define VSMode_FrameUpdate_bss_806D12F4 lbl_806D12F4_p0
+#define VSMode_FrameUpdate_bss_806D12FC lbl_806D12FC_p0
+#define VSMode_FrameUpdate_bss_806D1300 lbl_806D1300_p0
+#define VSMode_FrameUpdate_bss_806D1310 lbl_806D1310_p0
 #define lbl_806D1314 lbl_806D1314_p0
-#define lbl_806D1318 lbl_806D1318_p0
-#define lbl_806D1319 lbl_806D1319_p0
-#define lbl_806D131C lbl_806D131C_p0
+#define VSMode_FrameUpdate_bss_806D1318 lbl_806D1318_p0
+#define VSMode_FrameUpdate_bss_806D1319 lbl_806D1319_p0
+#define VSMode_FrameUpdate_bss_806D131C lbl_806D131C_p0
 #define lbl_806D134C lbl_806D134C_p0
 #define lbl_806D1350 lbl_806D1350_p0
 #define lbl_806D47A0 lbl_806D47A0_p0
@@ -188,8 +188,8 @@ extern const unsigned int lbl_80320D9C[];
 #define race_result_handler race_result_handler_p0
 
 /* sdata symbols referenced from asm */
-extern unsigned char lbl_806D12F0[4];
-extern unsigned char lbl_806D131C[1];
+extern unsigned char VSMode_FrameUpdate_bss_806D12F0[4];
+extern unsigned char VSMode_FrameUpdate_bss_806D131C[1];
 #ifdef NON_MATCHING
 /*
  * Equivalent C++ for the PC port (docs/nonmatching_c.md). VS mode per-frame
@@ -221,27 +221,27 @@ extern unsigned char g_isCommHost;
 extern unsigned int *HSD_RandSeedPtr;
 extern int lbl_806D134C;
 extern int lbl_806D1350;
-extern int lbl_806D1310;
+extern int VSMode_FrameUpdate_bss_806D1310;
 extern int lbl_806D1314;
 extern unsigned char g_raceEnded;
 extern unsigned char g_playerData[];
 extern void *g_carObjects[];
 extern void *g_itemSelects[];
 extern unsigned char lbl_806D1191;
-extern unsigned char lbl_806D1318;
-extern unsigned char lbl_806D1319;
+extern unsigned char VSMode_FrameUpdate_bss_806D1318;
+extern unsigned char VSMode_FrameUpdate_bss_806D1319;
 extern void *lbl_806D10A0;
 extern void *lbl_806D109C;
 extern void *lbl_806D10D0;
 extern int g_finalRacePosition;
 extern int g_sceneTransitionTimer;
-extern void *lbl_806D12F4;
-extern unsigned char lbl_806CF148;
+extern void *VSMode_FrameUpdate_bss_806D12F4;
+extern unsigned char VSMode_FrameUpdate_data_806CF148;
 extern float g_raceTimeRemaining;
-extern int lbl_806D12FC;
+extern int VSMode_FrameUpdate_bss_806D12FC;
 extern char lbl_806792D8[];
 extern int lbl_805D2B00[];
-extern char lbl_805D2AA8[];
+extern char VSMode_FrameUpdate_bss_805D2AA8[];
 extern int g_ccClass;
 extern int lbl_806CF140;
 extern char *g_playerRenderObj;
@@ -256,8 +256,8 @@ extern unsigned char g_finalLapBannerShown;
 extern int g_raceResultCode;
 extern unsigned char g_finalLapCoinJumpEnabled;
 extern unsigned char lbl_806CF270;
-extern int lbl_806D12EC;
-extern int lbl_806D1300;
+extern int VSMode_FrameUpdate_bss_806D12EC;
+extern int VSMode_FrameUpdate_bss_806D1300;
 extern unsigned char g_lakituStartAnimDone;
 extern unsigned char g_lapChangePending;
 extern void *g_weatherSystem;
@@ -404,8 +404,8 @@ static inline float VsQuantizeInput(float v)
 /* both sides seed their random streams from the byte the host sent */
 static inline void VsSeedRandom(void)
 {
-    memset(lbl_806D12F0, 0, 4);
-    HSD_RandSeedPtr = (unsigned int *)lbl_806D12F0;
+    memset(VSMode_FrameUpdate_bss_806D12F0, 0, 4);
+    HSD_RandSeedPtr = (unsigned int *)VSMode_FrameUpdate_bss_806D12F0;
     *HSD_RandSeedPtr = SyncSlot_GetRecv()[0x1b];
     Rand_SetSeedDebug(SyncSlot_GetRecv()[0x1b]);
     lbl_806D134C = SyncSlot_GetRecv()[0x1b];
@@ -415,8 +415,8 @@ static inline void VsSeedRandom(void)
 
 extern "C" int VSMode_FrameUpdate(char *self)
 {
-    const char *pool = (const char *)lbl_80320960;
-    char *shared = lbl_805D2AA8; /* 4 x 64-bit idle timestamps, then two Vecs at +0x20 / +0x2c */
+    const char *pool = (const char *)VSMode_FrameUpdate_rodata_80320960;
+    char *shared = VSMode_FrameUpdate_bss_805D2AA8; /* 4 x 64-bit idle timestamps, then two Vecs at +0x20 / +0x2c */
     VsInputPlayer *pad;
     unsigned int held[4];
     unsigned char *send;
@@ -444,7 +444,7 @@ extern "C" int VSMode_FrameUpdate(char *self)
             PlayStats_IncVsPlay();
             PlayStats_IncVsPeerCount();
             VoiceQueue_Clear(0);
-            lbl_806D1310 = 7;
+            VSMode_FrameUpdate_bss_806D1310 = 7;
             lbl_806D1314 = g_isCommHost ? 0 : 2;
             DebugPrintf(pool + 0x47c);
         }
@@ -518,18 +518,18 @@ extern "C" int VSMode_FrameUpdate(char *self)
     if (SyncSlot_GetHostSend() != 0) {
         Race_PerFrameTickAndAudio();
     }
-    if (!lbl_806D1318 && Live_IsConnectReady()) {
-        lbl_806D1318 = 1;
+    if (!VSMode_FrameUpdate_bss_806D1318 && Live_IsConnectReady()) {
+        VSMode_FrameUpdate_bss_806D1318 = 1;
         if (SyncSlot_GetHostSend() != 0) {
             unsigned char *s = SyncSlot_GetHostSend();
             s[2] = (s[2] & ~0x80) | 0x80;
         }
     }
-    if (lbl_806D1319 && ((SyncSlot_GetRecv()[2] >> 7) & 1) == 1) {
+    if (VSMode_FrameUpdate_bss_806D1319 && ((SyncSlot_GetRecv()[2] >> 7) & 1) == 1) {
         if (VS_PTR(self, 0x4) != 0) {
             LakituStart_SetCountdownHoldFrames(VS_PTR(self, 0x4), -1);
         }
-        lbl_806D1319 = 0;
+        VSMode_FrameUpdate_bss_806D1319 = 0;
     }
     if (VS_PTR(self, 0x34) != 0 && fn_8020B07C(VS_PTR(self, 0x34))) {
         fn_8020AF08(VS_PTR(self, 0x34), 1);
@@ -552,7 +552,7 @@ extern "C" int VSMode_FrameUpdate(char *self)
     } else if (g_sceneTransitionTimer > 0) {
         if (Live_IsConnectReady()) {
             if (--g_sceneTransitionTimer == 0) {
-                PathManager_RefreshFinishPositions(lbl_806D12F4);
+                PathManager_RefreshFinishPositions(VSMode_FrameUpdate_bss_806D12F4);
                 SetSyncTarget(0x2D);
             }
         } else {
@@ -569,8 +569,8 @@ extern "C" int VSMode_FrameUpdate(char *self)
         if (peers != 0 && peers == finished) {
             g_sceneTransitionTimer = 0xB4;
         }
-        if (finished != 0 && lbl_806CF148 != 0) {
-            lbl_806CF148 = 0;
+        if (finished != 0 && VSMode_FrameUpdate_data_806CF148 != 0) {
+            VSMode_FrameUpdate_data_806CF148 = 0;
             if (g_raceTimeRemaining > 15.0f) {
                 g_raceTimeRemaining = 15.0f;
             }
@@ -578,8 +578,8 @@ extern "C" int VSMode_FrameUpdate(char *self)
     }
 
     n = (SyncSlot_GetRecv()[0] >> 3) & 0x1f;
-    if (n != lbl_806D12FC) {
-        lbl_806D12FC = n;
+    if (n != VSMode_FrameUpdate_bss_806D12FC) {
+        VSMode_FrameUpdate_bss_806D12FC = n;
         if (n == 3) {
             fn_8016C600();
         }
@@ -642,9 +642,9 @@ extern "C" int VSMode_FrameUpdate(char *self)
         if (car == 0) {
             continue;
         }
-        if (lbl_806D1310 > 0) {
+        if (VSMode_FrameUpdate_bss_806D1310 > 0) {
             /* first frames after the start sync: no input */
-            lbl_806D1310--;
+            VSMode_FrameUpdate_bss_806D1310--;
             accel = 0.0f;
             brake = 0.0f;
             started = 0;
@@ -655,7 +655,7 @@ extern "C" int VSMode_FrameUpdate(char *self)
             VS_F32(slot, 0x8) = 0.0f;
         } else if (VS_U8(CarObject_GetRenderObj(car), 0x2b8) == 1) {
             /* finished: drive automatically */
-            accel = CalcSoundDirection(CarObject_GetRenderObj(car), lbl_806D12F4, &steer, lbl_805D2B00[i]);
+            accel = CalcSoundDirection(CarObject_GetRenderObj(car), VSMode_FrameUpdate_bss_806D12F4, &steer, lbl_805D2B00[i]);
             brake = 0.0f;
             started = 1;
             h = 0;
@@ -667,18 +667,18 @@ extern "C" int VSMode_FrameUpdate(char *self)
                 if (!IsRaceStarted()) {
                     *idleSince = now;
                 } else if (steer < 0.1f && brake < 0.1f) {
-                    if (!lbl_806D131C[i]) {
+                    if (!VSMode_FrameUpdate_bss_806D131C[i]) {
                         long long ms = (now - *idleSince) / ((*(unsigned int *)0x800000F8 / 4) / 1000);
                         if ((float)ms / 1000.0f >= 4.0f) {
-                            lbl_806D131C[i] = 1;
+                            VSMode_FrameUpdate_bss_806D131C[i] = 1;
                         }
                     }
-                    if (lbl_806D131C[i]) {
+                    if (VSMode_FrameUpdate_bss_806D131C[i]) {
                         steer = 1.0f;
                     }
                 } else {
                     *idleSince = now;
-                    lbl_806D131C[i] = 0;
+                    VSMode_FrameUpdate_bss_806D131C[i] = 0;
                 }
             }
             brake = VS_F32(slot, 0x8);
@@ -730,8 +730,8 @@ extern "C" int VSMode_FrameUpdate(char *self)
     }
 
     if (IsRaceStarted() == 1) {
-        float *cp0 = Path_LookupCheckpointOffset(lbl_806D12F4, lbl_805D2B00[lbl_806CF140], 0);
-        float *cp1 = Path_LookupCheckpointOffset(lbl_806D12F4, lbl_805D2B00[lbl_806CF140], 1);
+        float *cp0 = Path_LookupCheckpointOffset(VSMode_FrameUpdate_bss_806D12F4, lbl_805D2B00[lbl_806CF140], 0);
+        float *cp1 = Path_LookupCheckpointOffset(VSMode_FrameUpdate_bss_806D12F4, lbl_805D2B00[lbl_806CF140], 1);
         VsVec a = *(const VsVec *)(pool + 0x3fc);
         a.x = cp0[1];
         a.z = cp0[3];
@@ -755,8 +755,8 @@ extern "C" int VSMode_FrameUpdate(char *self)
             for (i = 0; i < 4; i++) {
                 if (g_carObjects[i] != 0) {
                     char *render = CarObject_GetRenderObj(g_carObjects[i]);
-                    float *c0 = Path_LookupCheckpointOffset(lbl_806D12F4, lbl_805D2B00[i], 0);
-                    float *c1 = Path_LookupCheckpointOffset(lbl_806D12F4, lbl_805D2B00[i], 1);
+                    float *c0 = Path_LookupCheckpointOffset(VSMode_FrameUpdate_bss_806D12F4, lbl_805D2B00[i], 0);
+                    float *c1 = Path_LookupCheckpointOffset(VSMode_FrameUpdate_bss_806D12F4, lbl_805D2B00[i], 1);
                     VsVec p = *(const VsVec *)(pool + 0x414);
                     p.x = c0[1];
                     p.z = c0[3];
@@ -779,7 +779,7 @@ extern "C" int VSMode_FrameUpdate(char *self)
         lbl_806D12E8 = 1;
     }
     Fog_UpdateFromCourseScene3D();
-    PathManager_UpdateAll(lbl_806D12F4);
+    PathManager_UpdateAll(VSMode_FrameUpdate_bss_806D12F4);
     if (VS_PTR(self, 0x4) != 0 && !LakituStart_UpdateCountdown(VS_PTR(self, 0x4))) {
         LakituStart_Dtor(VS_PTR(self, 0x4), 1);
         VS_PTR(self, 0x4) = 0;
@@ -811,7 +811,7 @@ extern "C" int VSMode_FrameUpdate(char *self)
                 VS_INT(render, 0x1b0) = -1;
                 for (j = 0; j < 4; j++) {
                     if (g_carObjects[j] != 0) {
-                        int gap = Race_CompareKartProgress(lbl_806D12F4, lbl_805D2B00[i], lbl_805D2B00[j]);
+                        int gap = Race_CompareKartProgress(VSMode_FrameUpdate_bss_806D12F4, lbl_805D2B00[i], lbl_805D2B00[j]);
                         VS_INT(CarObject_GetRenderObj(g_carObjects[j]), 0x1b4) = gap;
                     }
                 }
@@ -821,7 +821,7 @@ extern "C" int VSMode_FrameUpdate(char *self)
                         int rank = VS_INT(render, 0x1bc);
                         if (VS_INT(CarObject_GetRenderObj(g_carObjects[j]), 0x1bc) == rank - 1) {
                             VS_INT(render, 0x1b0) =
-                                Race_CompareKartProgress(lbl_806D12F4, lbl_805D2B00[j], lbl_805D2B00[i]);
+                                Race_CompareKartProgress(VSMode_FrameUpdate_bss_806D12F4, lbl_805D2B00[j], lbl_805D2B00[i]);
                         }
                     }
                 }
@@ -883,9 +883,9 @@ extern "C" int VSMode_FrameUpdate(char *self)
             CoinJumpFlasher_SetArmed(g_carObjects[lbl_806CF140], 0);
             ItemSelect_Reset(g_itemSelects[lbl_806CF140], 0);
             g_finalRacePosition = VS_INT(g_playerRenderObj, 0x23c);
-            RaceResult_StoreLatest(GetKartSlotCharId(lbl_806D12EC), g_finalRacePosition, g_bestLapTime,
+            RaceResult_StoreLatest(GetKartSlotCharId(VSMode_FrameUpdate_bss_806D12EC), g_finalRacePosition, g_bestLapTime,
                                    g_totalRaceTime);
-            g_raceResultCode = RaceResult_InsertSortedRank(GetKartSlotCharId(lbl_806D12EC), g_finalRacePosition,
+            g_raceResultCode = RaceResult_InsertSortedRank(GetKartSlotCharId(VSMode_FrameUpdate_bss_806D12EC), g_finalRacePosition,
                                                            g_bestLapTime, g_totalRaceTime);
             SetRaceResultLatestPtr();
             fn_80253D00(VS_PTR(self, 0x24));
@@ -899,7 +899,7 @@ extern "C" int VSMode_FrameUpdate(char *self)
             CoinEvent_PlayResultSE(g_carObjects[lbl_806CF140], g_finalRacePosition);
             g_raceEnded = 1;
             g_lakituStartAnimDone = 0;
-            lbl_806D1300++;
+            VSMode_FrameUpdate_bss_806D1300++;
             stats = VsTitleStats();
             if (stats != 0) {
                 RankLog_SetRaceResult(stats, GetDisplayBufferIndex(), g_finalRacePosition, (int)g_raceTimeRemaining);
@@ -916,8 +916,8 @@ extern "C" int VSMode_FrameUpdate(char *self)
             }
             g_lapChangePending = 0;
         }
-    } else if (lbl_806D1300 != 0) {
-        lbl_806D1300++;
+    } else if (VSMode_FrameUpdate_bss_806D1300 != 0) {
+        VSMode_FrameUpdate_bss_806D1300++;
     }
 
     HUD_FrameUpdate(VS_PTR(self, 0x24));
@@ -1098,7 +1098,7 @@ extern unsigned int g_totalLaps;
 extern unsigned int g_totalRaceTime;
 extern unsigned int g_weatherSystem;
 extern unsigned int lbl_806CF140;
-extern unsigned int lbl_806CF148;
+extern unsigned int VSMode_FrameUpdate_data_806CF148;
 extern unsigned int lbl_806CF270;
 extern unsigned int lbl_806D0051;
 extern unsigned int HSD_RandSeedPtr;
@@ -1107,14 +1107,14 @@ extern unsigned int lbl_806D10A0;
 extern unsigned int lbl_806D10D0;
 extern unsigned int lbl_806D1191;
 extern unsigned int lbl_806D12E8;
-extern unsigned int lbl_806D12EC;
-extern unsigned int lbl_806D12F4;
-extern unsigned int lbl_806D12FC;
-extern unsigned int lbl_806D1300;
-extern unsigned int lbl_806D1310;
+extern unsigned int VSMode_FrameUpdate_bss_806D12EC;
+extern unsigned int VSMode_FrameUpdate_bss_806D12F4;
+extern unsigned int VSMode_FrameUpdate_bss_806D12FC;
+extern unsigned int VSMode_FrameUpdate_bss_806D1300;
+extern unsigned int VSMode_FrameUpdate_bss_806D1310;
 extern unsigned int lbl_806D1314;
-extern unsigned int lbl_806D1318;
-extern unsigned int lbl_806D1319;
+extern unsigned int VSMode_FrameUpdate_bss_806D1318;
+extern unsigned int VSMode_FrameUpdate_bss_806D1319;
 extern unsigned int lbl_806D134C;
 extern unsigned int lbl_806D1350;
 extern unsigned int lbl_806D47A0;
@@ -1135,7 +1135,7 @@ extern unsigned int g_carObjects[];
 extern unsigned int g_itemSelects[];
 extern unsigned int g_playerData[];
 
-extern unsigned int lbl_805D2AA8[];
+extern unsigned int VSMode_FrameUpdate_bss_805D2AA8[];
 extern unsigned int lbl_805D2B00[];
 extern unsigned int lbl_806792D8[];
 
@@ -1170,13 +1170,13 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     psq_st f30, 0xd8(r1), 0, 0
     stmw r14, 0x88(r1)
     lwz r6, g_currentSceneState(r13)
-    lis r5, lbl_805D2AA8@ha
-    addi r0, r5, lbl_805D2AA8@l
-    lis r4, lbl_80320960@ha
+    lis r5, VSMode_FrameUpdate_bss_805D2AA8@ha
+    addi r0, r5, VSMode_FrameUpdate_bss_805D2AA8@l
+    lis r4, VSMode_FrameUpdate_rodata_80320960@ha
     cmpwi r6, 0x2a
     stw r0, 0x7c(r1)
     mr r15, r3
-    addi r27, r4, lbl_80320960@l
+    addi r27, r4, VSMode_FrameUpdate_rodata_80320960@l
     bne VSMode_FrameUpdate_L_8009E14C
     bl IsSyncReached
     clrlwi. r0, r3, 24
@@ -1198,11 +1198,11 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     bl IsSyncReached
     clrlwi. r0, r3, 24
     beq VSMode_FrameUpdate_L_8009E200
-    la r3, lbl_806D12F0(r13)  /* lbl_806D12F0 */
+    la r3, VSMode_FrameUpdate_bss_806D12F0(r13)  /* VSMode_FrameUpdate_bss_806D12F0 */
     li r4, 0x0
     li r5, 0x4
     bl memset
-    la r0, lbl_806D12F0(r13)  /* lbl_806D12F0 */
+    la r0, VSMode_FrameUpdate_bss_806D12F0(r13)  /* VSMode_FrameUpdate_bss_806D12F0 */
     stw r0, HSD_RandSeedPtr(r13)
     bl SyncSlot_GetRecv
     lbz r0, 0x1b(r3)
@@ -1229,7 +1229,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     lbz r5, g_isCommHost(r13)
     li r3, 0x7
     li r0, 0x2
-    stw r3, lbl_806D1310(r13)
+    stw r3, VSMode_FrameUpdate_bss_806D1310(r13)
     neg r4, r5
     addi r3, r27, 0x47c
     or r4, r4, r5
@@ -1248,11 +1248,11 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     subic. r0, r3, 0x1
     stw r0, lbl_806D1314(r13)
     bne VSMode_FrameUpdate_L_8009E270
-    la r3, lbl_806D12F0(r13)  /* lbl_806D12F0 */
+    la r3, VSMode_FrameUpdate_bss_806D12F0(r13)  /* VSMode_FrameUpdate_bss_806D12F0 */
     li r4, 0x0
     li r5, 0x4
     bl memset
-    la r0, lbl_806D12F0(r13)  /* lbl_806D12F0 */
+    la r0, VSMode_FrameUpdate_bss_806D12F0(r13)  /* VSMode_FrameUpdate_bss_806D12F0 */
     stw r0, HSD_RandSeedPtr(r13)
     bl SyncSlot_GetRecv
     lbz r0, 0x1b(r3)
@@ -1398,14 +1398,14 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     beq VSMode_FrameUpdate_L_8009E444
     bl Race_PerFrameTickAndAudio
     VSMode_FrameUpdate_L_8009E444:
-    lbz r0, lbl_806D1318(r13)
+    lbz r0, VSMode_FrameUpdate_bss_806D1318(r13)
     cmplwi r0, 0x0
     bne VSMode_FrameUpdate_L_8009E484
     bl Live_IsConnectReady
     clrlwi. r0, r3, 24
     beq VSMode_FrameUpdate_L_8009E484
     li r0, 0x1
-    stb r0, lbl_806D1318(r13)
+    stb r0, VSMode_FrameUpdate_bss_806D1318(r13)
     bl SyncSlot_GetHostSend
     cmplwi r3, 0x0
     beq VSMode_FrameUpdate_L_8009E484
@@ -1415,7 +1415,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     rlwimi r0, r14, 7, 24, 24
     stb r0, 0x2(r3)
     VSMode_FrameUpdate_L_8009E484:
-    lbz r0, lbl_806D1319(r13)
+    lbz r0, VSMode_FrameUpdate_bss_806D1319(r13)
     cmplwi r0, 0x0
     beq VSMode_FrameUpdate_L_8009E4C0
     bl SyncSlot_GetRecv
@@ -1430,7 +1430,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     bl LakituStart_SetCountdownHoldFrames
     VSMode_FrameUpdate_L_8009E4B8:
     li r0, 0x0
-    stb r0, lbl_806D1319(r13)
+    stb r0, VSMode_FrameUpdate_bss_806D1319(r13)
     VSMode_FrameUpdate_L_8009E4C0:
     lwz r3, 0x34(r15)
     cmplwi r3, 0x0
@@ -1484,7 +1484,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     subic. r0, r3, 0x1
     stw r0, g_sceneTransitionTimer(r13)
     bne VSMode_FrameUpdate_L_8009E62C
-    lwz r3, lbl_806D12F4(r13)
+    lwz r3, VSMode_FrameUpdate_bss_806D12F4(r13)
     bl PathManager_RefreshFinishPositions
     li r3, 0x2d
     bl SetSyncTarget
@@ -1523,25 +1523,25 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     VSMode_FrameUpdate_L_8009E5FC:
     cmpwi r17, 0x0
     beq VSMode_FrameUpdate_L_8009E62C
-    lbz r0, lbl_806CF148(r13)
+    lbz r0, VSMode_FrameUpdate_data_806CF148(r13)
     cmplwi r0, 0x0
     beq VSMode_FrameUpdate_L_8009E62C
     lfs f1, g_raceTimeRemaining(r13)
     li r0, 0x0
     lfs f0, lbl_806D47A0(r2)
-    stb r0, lbl_806CF148(r13)
+    stb r0, VSMode_FrameUpdate_data_806CF148(r13)
     fcmpo cr0, f1, f0
     ble VSMode_FrameUpdate_L_8009E62C
     stfs f0, g_raceTimeRemaining(r13)
     VSMode_FrameUpdate_L_8009E62C:
     bl SyncSlot_GetRecv
     lbz r3, 0x0(r3)
-    lwz r0, lbl_806D12FC(r13)
+    lwz r0, VSMode_FrameUpdate_bss_806D12FC(r13)
     extrwi r14, r3, 5, 24
     cmpw r14, r0
     beq VSMode_FrameUpdate_L_8009E660
     cmpwi r14, 0x3
-    stw r14, lbl_806D12FC(r13)
+    stw r14, VSMode_FrameUpdate_bss_806D12FC(r13)
     bne VSMode_FrameUpdate_L_8009E654
     bl fn_8016C600
     VSMode_FrameUpdate_L_8009E654:
@@ -1654,7 +1654,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     mr r22, r19
     addi r24, r3, 0x0
     li r18, 0x0
-    la r23, lbl_806D131C(r13)  /* lbl_806D131C */
+    la r23, VSMode_FrameUpdate_bss_806D131C(r13)  /* VSMode_FrameUpdate_bss_806D131C */
     VSMode_FrameUpdate_L_8009E7F0:
     mr r3, r18
     bl RingBuffer_GetKartSlot
@@ -1662,12 +1662,12 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     mr r31, r3
     cmplwi r0, 0x0
     beq VSMode_FrameUpdate_L_8009EB14
-    lwz r3, lbl_806D1310(r13)
+    lwz r3, VSMode_FrameUpdate_bss_806D1310(r13)
     cmpwi r3, 0x0
     ble VSMode_FrameUpdate_L_8009E840
     subi r0, r3, 0x1
     lfs f30, lbl_806D47A4(r2)
-    stw r0, lbl_806D1310(r13)
+    stw r0, VSMode_FrameUpdate_bss_806D1310(r13)
     li r17, 0x0
     fmr f31, f30
     li r16, 0x0
@@ -1684,7 +1684,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     bne VSMode_FrameUpdate_L_8009E880
     lwz r3, 0x0(r26)
     bl CarObject_GetRenderObj
-    lwz r4, lbl_806D12F4(r13)
+    lwz r4, VSMode_FrameUpdate_bss_806D12F4(r13)
     addi r5, r1, 0x8
     lwz r6, 0x0(r25)
     bl CalcSoundDirection
@@ -1919,7 +1919,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     lwz r0, lbl_806CF140(r13)
     lis r3, lbl_805D2B00@ha
     addi r4, r3, lbl_805D2B00@l
-    lwz r3, lbl_806D12F4(r13)
+    lwz r3, VSMode_FrameUpdate_bss_806D12F4(r13)
     slwi r0, r0, 2
     li r5, 0x0
     lwzx r4, r4, r0
@@ -1927,7 +1927,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     lwz r0, lbl_806CF140(r13)
     lis r4, lbl_805D2B00@ha
     mr r16, r3
-    lwz r3, lbl_806D12F4(r13)
+    lwz r3, VSMode_FrameUpdate_bss_806D12F4(r13)
     slwi r0, r0, 2
     addi r4, r4, lbl_805D2B00@l
     lwzx r4, r4, r0
@@ -2005,13 +2005,13 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     beq VSMode_FrameUpdate_L_8009EDB0
     bl CarObject_GetRenderObj
     mr r0, r3
-    lwz r3, lbl_806D12F4(r13)
+    lwz r3, VSMode_FrameUpdate_bss_806D12F4(r13)
     lwz r4, 0x0(r18)
     mr r22, r0
     li r5, 0x0
     bl Path_LookupCheckpointOffset
     mr r16, r3
-    lwz r3, lbl_806D12F4(r13)
+    lwz r3, VSMode_FrameUpdate_bss_806D12F4(r13)
     lwz r4, 0x0(r18)
     li r5, 0x1
     bl Path_LookupCheckpointOffset
@@ -2068,7 +2068,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     stb r0, lbl_806D12E8(r13)
     VSMode_FrameUpdate_L_8009EDF0:
     bl Fog_UpdateFromCourseScene3D
-    lwz r3, lbl_806D12F4(r13)
+    lwz r3, VSMode_FrameUpdate_bss_806D12F4(r13)
     bl PathManager_UpdateAll
     lwz r3, 0x4(r15)
     cmplwi r3, 0x0
@@ -2146,7 +2146,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     lwz r0, 0x0(r22)
     cmplwi r0, 0x0
     beq VSMode_FrameUpdate_L_8009EF30
-    lwz r3, lbl_806D12F4(r13)
+    lwz r3, VSMode_FrameUpdate_bss_806D12F4(r13)
     lwz r4, 0x0(r17)
     lwz r5, 0x0(r23)
     bl Race_CompareKartProgress
@@ -2175,7 +2175,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     subi r0, r22, 0x1
     cmpw r3, r0
     bne VSMode_FrameUpdate_L_8009EF8C
-    lwz r3, lbl_806D12F4(r13)
+    lwz r3, VSMode_FrameUpdate_bss_806D12F4(r13)
     lwz r4, 0x0(r24)
     lwz r5, 0x0(r17)
     bl Race_CompareKartProgress
@@ -2358,7 +2358,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     lwzx r3, r3, r0
     bl ItemSelect_Reset
     lwz r4, g_playerRenderObj(r13)
-    lwz r3, lbl_806D12EC(r13)
+    lwz r3, VSMode_FrameUpdate_bss_806D12EC(r13)
     lwz r0, 0x23c(r4)
     stw r0, g_finalRacePosition(r13)
     bl GetKartSlotCharId
@@ -2366,7 +2366,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     lfs f1, g_bestLapTime(r13)
     lfs f2, g_totalRaceTime(r13)
     bl RaceResult_StoreLatest
-    lwz r3, lbl_806D12EC(r13)
+    lwz r3, VSMode_FrameUpdate_bss_806D12EC(r13)
     bl GetKartSlotCharId
     lwz r4, g_finalRacePosition(r13)
     lfs f1, g_bestLapTime(r13)
@@ -2399,7 +2399,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     slwi r0, r0, 2
     lwzx r3, r3, r0
     bl CoinEvent_PlayResultSE
-    lwz r3, lbl_806D1300(r13)
+    lwz r3, VSMode_FrameUpdate_bss_806D1300(r13)
     li r4, 0x1
     lwz r5, lbl_806D10A0(r13)
     li r14, 0x0
@@ -2407,7 +2407,7 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     stb r4, g_raceEnded(r13)
     cmplwi r5, 0x0
     stb r14, g_lakituStartAnimDone(r13)
-    stw r0, lbl_806D1300(r13)
+    stw r0, VSMode_FrameUpdate_bss_806D1300(r13)
     bne VSMode_FrameUpdate_L_8009F2F4
     b VSMode_FrameUpdate_L_8009F2F8
     VSMode_FrameUpdate_L_8009F2F4:
@@ -2456,11 +2456,11 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
     stb r0, g_lapChangePending(r13)
     b VSMode_FrameUpdate_L_8009F3A0
     VSMode_FrameUpdate_L_8009F38C:
-    lwz r3, lbl_806D1300(r13)
+    lwz r3, VSMode_FrameUpdate_bss_806D1300(r13)
     cmpwi r3, 0x0
     beq VSMode_FrameUpdate_L_8009F3A0
     addi r0, r3, 0x1
-    stw r0, lbl_806D1300(r13)
+    stw r0, VSMode_FrameUpdate_bss_806D1300(r13)
     VSMode_FrameUpdate_L_8009F3A0:
     lwz r3, 0x24(r15)
     bl HUD_FrameUpdate
@@ -2669,11 +2669,11 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
 #undef g_totalLaps
 #undef g_totalRaceTime
 #undef g_weatherSystem
-#undef lbl_805D2AA8
+#undef VSMode_FrameUpdate_bss_805D2AA8
 #undef lbl_805D2B00
 #undef lbl_806792D8
 #undef lbl_806CF140
-#undef lbl_806CF148
+#undef VSMode_FrameUpdate_data_806CF148
 #undef lbl_806CF270
 #undef lbl_806D0051
 #undef lbl_806D109C
@@ -2681,16 +2681,16 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
 #undef lbl_806D10D0
 #undef lbl_806D1191
 #undef lbl_806D12E8
-#undef lbl_806D12EC
-#undef lbl_806D12F0
-#undef lbl_806D12F4
-#undef lbl_806D12FC
-#undef lbl_806D1300
-#undef lbl_806D1310
+#undef VSMode_FrameUpdate_bss_806D12EC
+#undef VSMode_FrameUpdate_bss_806D12F0
+#undef VSMode_FrameUpdate_bss_806D12F4
+#undef VSMode_FrameUpdate_bss_806D12FC
+#undef VSMode_FrameUpdate_bss_806D1300
+#undef VSMode_FrameUpdate_bss_806D1310
 #undef lbl_806D1314
-#undef lbl_806D1318
-#undef lbl_806D1319
-#undef lbl_806D131C
+#undef VSMode_FrameUpdate_bss_806D1318
+#undef VSMode_FrameUpdate_bss_806D1319
+#undef VSMode_FrameUpdate_bss_806D131C
 #undef lbl_806D134C
 #undef lbl_806D1350
 #undef lbl_806D47A0
@@ -2736,20 +2736,20 @@ asm void VSMode_FrameUpdate(void) { /* 0x8009E0D4 size:0x13A8 */
 #define fn_80254134 fn_80254134_p1
 #define g_currentSceneState g_currentSceneState_p1
 #define g_weatherSystem g_weatherSystem_p1
-#define lbl_8040E734 lbl_8040E734_p1
-#define lbl_8040E76C lbl_8040E76C_p1
+#define VSMode_FrameUpdate_data_8040E734 lbl_8040E734_p1
+#define GameModeBase_vtable_8040E76C lbl_8040E76C_p1
 #define lbl_806D129C lbl_806D129C_p1
-#define lbl_806D12F4 lbl_806D12F4_p1
-#define lbl_806D12F8 lbl_806D12F8_p1
-#define lbl_80320960 ((const char *)lbl_80320960)
+#define VSMode_FrameUpdate_bss_806D12F4 lbl_806D12F4_p1
+#define VSMode_FrameUpdate_bss_806D12F8 lbl_806D12F8_p1
+#define VSMode_FrameUpdate_rodata_80320960 ((const char *)VSMode_FrameUpdate_rodata_80320960)
 #include "game/BtMode_DtorPrivate.h"
 extern "C" {
 extern void *g_weatherSystem;
 extern int g_currentSceneState, lbl_806D129C;
-extern void *lbl_806D12F4;
-extern RefObject162 *lbl_806D12F8;
+extern void *VSMode_FrameUpdate_bss_806D12F4;
+extern RefObject162 *VSMode_FrameUpdate_bss_806D12F8;
 
-extern int lbl_8040E734[], lbl_8040E76C[];
+extern int VSMode_FrameUpdate_data_8040E734[], GameModeBase_vtable_8040E76C[];
 void fn_801B6B94();
 void fn_8016C634(void *, int);
 void fn_8020AF08(void *, int);
@@ -2764,13 +2764,13 @@ void HitMessageOverlay_Destroy();
 
 }
 static inline void baseDtor(BtModeView *p) {
-    if (p) p->vt = lbl_8040E76C;
+    if (p) p->vt = GameModeBase_vtable_8040E76C;
 }
 #pragma use_lmw_stmw on
 extern "C" BtModeView *BtMode_Dtor(BtModeView *self, short deleting) {
-    const char *messages = lbl_80320960;
+    const char *messages = VSMode_FrameUpdate_rodata_80320960;
     if (self) {
-        self->vt = lbl_8040E734;
+        self->vt = VSMode_FrameUpdate_data_8040E734;
         fn_801B6B94();
         lbl_806D129C = 0;
         if (g_currentSceneState != 0x2a) {
@@ -2800,7 +2800,7 @@ extern "C" BtModeView *BtMode_Dtor(BtModeView *self, short deleting) {
             Jyugemu_Flag_Dtor(self->flag, 1);
             Jyugemu_ReverseFlag_Dtor(self->reverseFlag, 1);
             LapBannerScene_Dtor(self->banner, 1);
-            PathParticipantArray_Dtor(lbl_806D12F4, 1);
+            PathParticipantArray_Dtor(VSMode_FrameUpdate_bss_806D12F4, 1);
             ProcessSystemTick((int)messages + 0x524);
             for (int i=0; i<4; ++i) {
                 if (g_carObjects[i]) delete g_carObjects[i];
@@ -2809,9 +2809,9 @@ extern "C" BtModeView *BtMode_Dtor(BtModeView *self, short deleting) {
             if (self->child20) delete self->child20;
             CourseEnvironment_Dtor(self->environment, 1);
             ProcessSystemTick((int)messages + 0x548);
-            if (lbl_806D12F8) {
-                Release(lbl_806D12F8);
-                lbl_806D12F8 = 0;
+            if (VSMode_FrameUpdate_bss_806D12F8) {
+                Release(VSMode_FrameUpdate_bss_806D12F8);
+                VSMode_FrameUpdate_bss_806D12F8 = 0;
             }
             ItemObjectManager_Reset();
             VfxSlotMgr_Shutdown();
@@ -2821,7 +2821,7 @@ extern "C" BtModeView *BtMode_Dtor(BtModeView *self, short deleting) {
             self->flag = 0;
             self->reverseFlag = 0;
             self->banner = 0;
-            lbl_806D12F4 = 0;
+            VSMode_FrameUpdate_bss_806D12F4 = 0;
             self->child = 0;
             self->environment = 0;
             SetPlayerCarObject(0);
@@ -2875,22 +2875,22 @@ extern "C" BtModeView *BtMode_Dtor(BtModeView *self, short deleting) {
 #undef fn_80254134
 #undef g_currentSceneState
 #undef g_weatherSystem
-#undef lbl_8040E734
-#undef lbl_8040E76C
+#undef VSMode_FrameUpdate_data_8040E734
+#undef GameModeBase_vtable_8040E76C
 #undef lbl_806D129C
-#undef lbl_806D12F4
-#undef lbl_806D12F8
-#undef lbl_80320960
+#undef VSMode_FrameUpdate_bss_806D12F4
+#undef VSMode_FrameUpdate_bss_806D12F8
+#undef VSMode_FrameUpdate_rodata_80320960
 #pragma cplusplus off
 
 /* .data 0x8040E728..0x8040E748 (RTTI + VSMode vtable), then VSMode_Init's switch
  * table (compiler-generated), then the base vtable 0x8040E76C. */
-extern char lbl_806CF150[], lbl_806CF158[];
+extern char VSMode_FrameUpdate_data_806CF150[], VSMode_FrameUpdate_data_806CF158[];
 extern void RaceScene_RenderFrame();
 extern void dtor_800A0688();
-void *lbl_8040E728[3] = { (void *)&lbl_806CF150, (void *)0x0, (void *)0x0 };
-void *lbl_8040E734[5] = {
-    (void *)&lbl_806CF158, (void *)0x0, (void *)&BtMode_Dtor,
+void *sdata_806CEFE0_data_8040E728[3] = { (void *)&VSMode_FrameUpdate_data_806CF150, (void *)0x0, (void *)0x0 };
+void *VSMode_FrameUpdate_data_8040E734[5] = {
+    (void *)&VSMode_FrameUpdate_data_806CF158, (void *)0x0, (void *)&BtMode_Dtor,
     (void *)&VSMode_FrameUpdate, (void *)&RaceScene_RenderFrame
 };
 
@@ -3027,28 +3027,28 @@ void *lbl_8040E734[5] = {
 #define jumptable_8040E748 jumptable_8040E748_p2
 #define lbl_80598A60 lbl_80598A60_p2
 #define lbl_805A6154 lbl_805A6154_p2
-#define lbl_805D2AA8 lbl_805D2AA8_p2
+#define VSMode_FrameUpdate_bss_805D2AA8 lbl_805D2AA8_p2
 #define lbl_805D2B00 lbl_805D2B00_p2
 #define lbl_806CF110 lbl_806CF110_p2
 #define lbl_806CF140 lbl_806CF140_p2
-#define lbl_806CF144 lbl_806CF144_p2
-#define lbl_806CF148 lbl_806CF148_p2
+#define VSMode_Init_data_806CF144 lbl_806CF144_p2
+#define VSMode_FrameUpdate_data_806CF148 lbl_806CF148_p2
 #define lbl_806D1050 lbl_806D1050_p2
 #define lbl_806D10A0 lbl_806D10A0_p2
 #define lbl_806D1264 lbl_806D1264_p2
 #define lbl_806D129C lbl_806D129C_p2
 #define lbl_806D12E8 lbl_806D12E8_p2
-#define lbl_806D12EC lbl_806D12EC_p2
-#define lbl_806D12F0 lbl_806D12F0_p2
-#define lbl_806D12F4 lbl_806D12F4_p2
-#define lbl_806D12F8 lbl_806D12F8_p2
-#define lbl_806D12FC lbl_806D12FC_p2
-#define lbl_806D1300 lbl_806D1300_p2
-#define lbl_806D1304 lbl_806D1304_p2
-#define lbl_806D1308 lbl_806D1308_p2
-#define lbl_806D1318 lbl_806D1318_p2
-#define lbl_806D1319 lbl_806D1319_p2
-#define lbl_806D131C lbl_806D131C_p2
+#define VSMode_FrameUpdate_bss_806D12EC lbl_806D12EC_p2
+#define VSMode_FrameUpdate_bss_806D12F0 lbl_806D12F0_p2
+#define VSMode_FrameUpdate_bss_806D12F4 lbl_806D12F4_p2
+#define VSMode_FrameUpdate_bss_806D12F8 lbl_806D12F8_p2
+#define VSMode_FrameUpdate_bss_806D12FC lbl_806D12FC_p2
+#define VSMode_FrameUpdate_bss_806D1300 lbl_806D1300_p2
+#define VSMode_Init_bss_806D1304 lbl_806D1304_p2
+#define VSMode_Init_bss_806D1308 lbl_806D1308_p2
+#define VSMode_FrameUpdate_bss_806D1318 lbl_806D1318_p2
+#define VSMode_FrameUpdate_bss_806D1319 lbl_806D1319_p2
+#define VSMode_FrameUpdate_bss_806D131C lbl_806D131C_p2
 #define lbl_806D47A4 lbl_806D47A4_p2
 #define lbl_806D47A8 lbl_806D47A8_p2
 #define lbl_806D47AC lbl_806D47AC_p2
@@ -3119,28 +3119,28 @@ extern VSPeer lbl_805A6154[];
 extern VSCar* g_carObjects[];
 extern VSItems* g_itemSelects[];
 extern int lbl_805D2B00[];
-extern unsigned long long lbl_805D2AA8[];
+extern unsigned long long VSMode_FrameUpdate_bss_805D2AA8[];
 extern unsigned char VS_MODE[];
 extern const float lbl_806D47A4, lbl_806D47A8, lbl_806D47AC, lbl_806D47C0, lbl_806D47D0;
 extern int g_cupId, g_longRoundFlag, g_reverseRoundFlag, g_localPcbRole, g_ccClass;
-extern int lbl_806CF110, lbl_806CF140, lbl_806CF144, lbl_806D129C, lbl_806D12F0;
-extern int lbl_806D12EC, lbl_806D12FC, lbl_806D1050, g_kartStartSlot;
+extern int lbl_806CF110, lbl_806CF140, VSMode_Init_data_806CF144, lbl_806D129C, VSMode_FrameUpdate_bss_806D12F0;
+extern int VSMode_FrameUpdate_bss_806D12EC, VSMode_FrameUpdate_bss_806D12FC, lbl_806D1050, g_kartStartSlot;
 extern int g_sceneTransitionTimer, g_finalRacePosition, g_currentLap, g_raceResultCode;
-extern int lbl_806D1304, lbl_806D1308, lbl_806D1300, g_totalLaps;
+extern int VSMode_Init_bss_806D1304, VSMode_Init_bss_806D1308, VSMode_FrameUpdate_bss_806D1300, g_totalLaps;
 extern int g_raceFrameCounterLo2digits, g_roundIndex, g_gameMode, g_humanPlayerCount;
 extern unsigned char g_isCommHost, g_namCamFlag, g_lakituStartAnimDone, g_raceEnded;
-extern unsigned char g_finalLapBannerShown, g_lapChangePending, lbl_806CF148, lbl_806D12E8;
-extern unsigned char lbl_806D1318, lbl_806D1319, lbl_806D131C[4], lbl_806D1264[3];
+extern unsigned char g_finalLapBannerShown, g_lapChangePending, VSMode_FrameUpdate_data_806CF148, lbl_806D12E8;
+extern unsigned char VSMode_FrameUpdate_bss_806D1318, VSMode_FrameUpdate_bss_806D1319, VSMode_FrameUpdate_bss_806D131C[4], lbl_806D1264[3];
 extern float g_bestLapTime, g_currentLapTime, g_totalRaceTime, g_raceTimeRemaining, g_lapBonusTimeDelta;
 extern int* HSD_RandSeedPtr;
 extern void* lbl_806D10A0;
-extern void* lbl_806D12F8;
+extern void* VSMode_FrameUpdate_bss_806D12F8;
 extern void* g_playerRenderObj;
 extern VSCamera* g_raceCamera;
 extern VSCollision* g_objCollChecker;
 extern VSHud* g_raceHud;
 extern VSWeather* g_weatherSystem;
-extern VSPath* lbl_806D12F4;
+extern VSPath* VSMode_FrameUpdate_bss_806D12F4;
 extern VSPath* g_raceRankingPathObject;
 
 void ProcessSystemTick(const char*);
@@ -3211,9 +3211,9 @@ static inline VSRaceRow (*VS_row(int cup))[3][2] { return (VSRaceRow (*)[3][2])V
 void VSMode_Init(void* self_)
 {
     VSOwner* self = (VSOwner*)self_;
-    char* pool = (char*)lbl_80320960;
+    char* pool = (char*)VSMode_FrameUpdate_rodata_80320960;
     ProcessSystemTick(pool + 0x588);
-    HSD_RandSeedPtr = &lbl_806D12F0;
+    HSD_RandSeedPtr = &VSMode_FrameUpdate_bss_806D12F0;
     *HSD_RandSeedPtr = SyncSlot_GetRecv()[0x1B];
     lbl_806D129C = 0;
     SetResourceLoadingFlag(0);
@@ -3223,8 +3223,8 @@ void VSMode_Init(void* self_)
     self->input = new VSInput;
     ProcessSystemTick(pool + 0x5B8);
     CourseData_GetOrCreate(g_cupId, g_longRoundFlag, g_reverseRoundFlag);
-    lbl_806D12F8 = HSD_LObjLoadDesc(GetCourseDataPtr());
-    self->camera = new VSCamera(lbl_806D47AC, 0x100, lbl_806D47A8, 0x100, lbl_806D12F8);
+    VSMode_FrameUpdate_bss_806D12F8 = HSD_LObjLoadDesc(GetCourseDataPtr());
+    self->camera = new VSCamera(lbl_806D47AC, 0x100, lbl_806D47A8, 0x100, VSMode_FrameUpdate_bss_806D12F8);
     SetActiveCamera(0, self->camera);
     g_raceCamera = self->camera;
     ProcessSystemTick(pool + 0x5C4);
@@ -3237,9 +3237,9 @@ void VSMode_Init(void* self_)
     CoinSystem_Init(0, 2);
 
     VSPeer* table = lbl_805A6154;
-    lbl_806D12FC = 0;
+    VSMode_FrameUpdate_bss_806D12FC = 0;
     lbl_806CF140 = (signed char)lbl_80598A60[0x21] - 1;
-    lbl_806CF144 = g_localPcbRole - 2;
+    VSMode_Init_data_806CF144 = g_localPcbRole - 2;
     int i;
     int peers = 0;
     for (i = 0; i < 4; ++i)
@@ -3249,7 +3249,7 @@ void VSMode_Init(void* self_)
     if (peers == 4 && g_isCommHost == 1)
         TitleTracker_OnRaceStart_Stub(lbl_806D10A0 == 0 ? 0 : lbl_806D10A0);
     ProcessSystemTick(pool + 0x5F4);
-    DebugPrintf(pool + 0x608, lbl_806CF140, lbl_806CF144, peers);
+    DebugPrintf(pool + 0x608, lbl_806CF140, VSMode_Init_data_806CF144, peers);
     signed char* packet = (signed char*)SyncSlot_GetRecv();
     peers = 4 - peers;
     for (i = 0; i < peers; ++i)
@@ -3257,8 +3257,8 @@ void VSMode_Init(void* self_)
     for (i = 0; i < 4; ++i)
         if (table[i].teamId ==
             table[lbl_806CF140].teamId && i == lbl_806CF140)
-            lbl_806D12EC = packet[i + 9];
-    g_kartStartSlot = lbl_806D12EC;
+            VSMode_FrameUpdate_bss_806D12EC = packet[i + 9];
+    g_kartStartSlot = VSMode_FrameUpdate_bss_806D12EC;
     ProcessSystemTick(pool + 0x62C);
 
     for (i = 0; i < 4; ++i) {
@@ -3297,13 +3297,13 @@ void VSMode_Init(void* self_)
     for (i = 0; i < 4; ++i) {
         if (g_carObjects[i]) {
             float* matrix = CarObject_GetTransformMatrix(g_carObjects[i]);
-            if (!lbl_806D12F4) {
-                lbl_806D12F4 = new VSPath(CourseData_GetDefaultPathKey_Safe(),
+            if (!VSMode_FrameUpdate_bss_806D12F4) {
+                VSMode_FrameUpdate_bss_806D12F4 = new VSPath(CourseData_GetDefaultPathKey_Safe(),
                     g_carObjects[i], CarObject_GetRenderObj(g_carObjects[i]),
                     matrix + 12, matrix + 13, matrix + 14);
                 lbl_805D2B00[i] = 0;
             } else {
-                lbl_805D2B00[i] = PathManager_RegisterCarObject(lbl_806D12F4,
+                lbl_805D2B00[i] = PathManager_RegisterCarObject(VSMode_FrameUpdate_bss_806D12F4,
                     matrix + 12, matrix + 13, matrix + 14, g_carObjects[i],
                     CarObject_GetRenderObj(g_carObjects[i]), -1);
             }
@@ -3312,10 +3312,10 @@ void VSMode_Init(void* self_)
     ProcessSystemTick(pool + 0x66C);
     if (SyncSlot_GetHostSend())
         ((VSHostFlags*)(SyncSlot_GetHostSend() + 2))->ready = 0;
-    self->lakitu = new VSLakitu(pool + 0x684, lbl_806D12EC,
+    self->lakitu = new VSLakitu(pool + 0x684, VSMode_FrameUpdate_bss_806D12EC,
         lbl_806D47A4, lbl_806D47A4, lbl_806D47A4);
     LakituStart_SetCountdownHoldFrames(self->lakitu, 0x4E20);
-    self->scene = new VSScene(*GetKartModelNameEntry(GetKartSlotCharId(lbl_806D12EC), -1));
+    self->scene = new VSScene(*GetKartModelNameEntry(GetKartSlotCharId(VSMode_FrameUpdate_bss_806D12EC), -1));
     self->flag = new VSFlag(self->scene);
     self->reverse = new VSReverse(g_playerRenderObj);
     self->finalLap = new VSFinalLap(g_playerRenderObj);
@@ -3327,7 +3327,7 @@ void VSMode_Init(void* self_)
     ProcessSystemTick(pool + 0x698);
     self->collision = new VSCollision;
     g_objCollChecker = self->collision;
-    self->ai = new VSAI(lbl_806D12F4, self->collision, 0);
+    self->ai = new VSAI(VSMode_FrameUpdate_bss_806D12F4, self->collision, 0);
     ProcessSystemTick(pool + 0x6AC);
     g_sceneTransitionTimer = -1;
     if (g_isCommHost)
@@ -3335,7 +3335,7 @@ void VSMode_Init(void* self_)
     ProcessSystemTick(pool + 0x6C8);
     Tachometer_Init();
     HitMessageOverlay_Init();
-    self->hud = new VSHud(lbl_806D12F4);
+    self->hud = new VSHud(VSMode_FrameUpdate_bss_806D12F4);
     g_raceHud = self->hud;
     HUD_RegisterOverlay(self->hud, 6, 0);
     HUD_RegisterOverlay(self->hud, 3, 0);
@@ -3402,11 +3402,11 @@ void VSMode_Init(void* self_)
     g_raceResultCode = -2;
     g_finalLapBannerShown = 0;
     g_lapChangePending = 0;
-    lbl_806D1304 = 0;
-    lbl_806D1308 = 0;
-    lbl_806CF148 = 1;
+    VSMode_Init_bss_806D1304 = 0;
+    VSMode_Init_bss_806D1308 = 0;
+    VSMode_FrameUpdate_data_806CF148 = 1;
     lbl_806D12E8 = 0;
-    lbl_806D1300 = 0;
+    VSMode_FrameUpdate_bss_806D1300 = 0;
     g_totalLaps = row[-1][g_ccClass][g_longRoundFlag].laps;
     g_raceTimeRemaining = row[-1][g_ccClass][g_longRoundFlag].remaining;
     g_lapBonusTimeDelta = row[-1][g_ccClass][g_longRoundFlag].bonus;
@@ -3458,24 +3458,24 @@ void VSMode_Init(void* self_)
     }
     }
     ProcessSystemTick(pool + 0x788);
-    lbl_806D1318 = 0;
-    lbl_806D1319 = 1;
+    VSMode_FrameUpdate_bss_806D1318 = 0;
+    VSMode_FrameUpdate_bss_806D1319 = 1;
     unsigned long long time = OSGetTime();
     for (i = 0; i < 4; ++i) {
-        lbl_806D131C[i] = 0;
-        lbl_805D2AA8[i] = time;
+        VSMode_FrameUpdate_bss_806D131C[i] = 0;
+        VSMode_FrameUpdate_bss_805D2AA8[i] = time;
     }
     ProcessSystemTick(pool + 0x7A4);
     g_humanPlayerCount = *(int*)(SyncSlot_GetRecv() + 4);
     self->finalObject = new VSFinalObject(0x168);
     VoiceSystem_SetCheckpointsForTotalLaps(g_totalLaps);
-    g_raceRankingPathObject = lbl_806D12F4;
+    g_raceRankingPathObject = VSMode_FrameUpdate_bss_806D12F4;
 }
 #pragma use_lmw_stmw reset
 }
 #pragma cplusplus off
-void *lbl_8040E76C[5] = {
-    (void *)&lbl_806CF150, (void *)0x0, (void *)&dtor_800A0688, (void *)0x0, (void *)0x0
+void *GameModeBase_vtable_8040E76C[5] = {
+    (void *)&VSMode_FrameUpdate_data_806CF150, (void *)0x0, (void *)&dtor_800A0688, (void *)0x0, (void *)0x0
 };
 #undef AI_GetItemList
 #undef AI_SystemInit
@@ -3610,28 +3610,28 @@ void *lbl_8040E76C[5] = {
 #undef jumptable_8040E748
 #undef lbl_80598A60
 #undef lbl_805A6154
-#undef lbl_805D2AA8
+#undef VSMode_FrameUpdate_bss_805D2AA8
 #undef lbl_805D2B00
 #undef lbl_806CF110
 #undef lbl_806CF140
-#undef lbl_806CF144
-#undef lbl_806CF148
+#undef VSMode_Init_data_806CF144
+#undef VSMode_FrameUpdate_data_806CF148
 #undef lbl_806D1050
 #undef lbl_806D10A0
 #undef lbl_806D1264
 #undef lbl_806D129C
 #undef lbl_806D12E8
-#undef lbl_806D12EC
-#undef lbl_806D12F0
-#undef lbl_806D12F4
-#undef lbl_806D12F8
-#undef lbl_806D12FC
-#undef lbl_806D1300
-#undef lbl_806D1304
-#undef lbl_806D1308
-#undef lbl_806D1318
-#undef lbl_806D1319
-#undef lbl_806D131C
+#undef VSMode_FrameUpdate_bss_806D12EC
+#undef VSMode_FrameUpdate_bss_806D12F0
+#undef VSMode_FrameUpdate_bss_806D12F4
+#undef VSMode_FrameUpdate_bss_806D12F8
+#undef VSMode_FrameUpdate_bss_806D12FC
+#undef VSMode_FrameUpdate_bss_806D1300
+#undef VSMode_Init_bss_806D1304
+#undef VSMode_Init_bss_806D1308
+#undef VSMode_FrameUpdate_bss_806D1318
+#undef VSMode_FrameUpdate_bss_806D1319
+#undef VSMode_FrameUpdate_bss_806D131C
 #undef lbl_806D47A4
 #undef lbl_806D47A8
 #undef lbl_806D47AC
@@ -3652,11 +3652,11 @@ void *lbl_8040E76C[5] = {
 #define g_finalLapCoinJumpEnabled g_finalLapCoinJumpEnabled_p3
 #define g_gameMode g_gameMode_p3
 #define g_spawnedKartCount g_spawnedKartCount_p3
-#define lbl_8040E734 lbl_8040E734_p3
-#define lbl_8040E76C lbl_8040E76C_p3
-#define lbl_806CF14C lbl_806CF14C_p3
+#define VSMode_FrameUpdate_data_8040E734 lbl_8040E734_p3
+#define GameModeBase_vtable_8040E76C lbl_8040E76C_p3
+#define BtMode_Init_data_806CF14C lbl_806CF14C_p3
 #define lbl_806D1050 lbl_806D1050_p3
-#define lbl_806D130C lbl_806D130C_p3
+#define BtMode_Init_bss_806D130C lbl_806D130C_p3
 /* === extracted from auto_BtMode_Init_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -3676,16 +3676,16 @@ extern void VoiceSystem_Init();
 extern unsigned char g_finalLapCoinJumpEnabled;
 extern unsigned int g_gameMode;
 extern unsigned int g_spawnedKartCount;
-extern int lbl_806CF14C;
+extern int BtMode_Init_data_806CF14C;
 extern unsigned int lbl_806D1050;
-extern unsigned char lbl_806D130C;
+extern unsigned char BtMode_Init_bss_806D130C;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
 
-extern unsigned int lbl_8040E734[];
-extern unsigned int lbl_8040E76C[];
+extern unsigned int VSMode_FrameUpdate_data_8040E734[];
+extern unsigned int GameModeBase_vtable_8040E76C[];
 
 /* --- function index (1 fns, .text 0x800A05D0..0x800A0688) ---
  * [  0] 0x800A05D0 size:0xB8    global BtMode_Init
@@ -3710,16 +3710,16 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 /* BtMode_Init @ 0x800A05D0: battle-mode scene constructor. Sets game mode 2
  * (battle), resets the race slots for four karts and starts the voice
  * system, logging each step. Written in C with explicit vtable stores
- * (base lbl_8040E76C, then derived lbl_8040E734): the C++ ctor form loads
+ * (base GameModeBase_vtable_8040E76C, then derived VSMode_FrameUpdate_data_8040E734): the C++ ctor form loads
  * the string-pool base after the derived vtable store instead of between
  * the two. The extab (base dtor cleanup) stays a manual emit above. */
 void *BtMode_Init(void **self)
 {
     const char *log;
 
-    *self = lbl_8040E76C;
-    log = (const char *)lbl_80320960;
-    *self = lbl_8040E734;
+    *self = GameModeBase_vtable_8040E76C;
+    log = (const char *)VSMode_FrameUpdate_rodata_80320960;
+    *self = VSMode_FrameUpdate_data_8040E734;
     g_gameMode = 2;
     SetSyncTarget(0x2a);
     RaceSlot_ResetAll();
@@ -3732,8 +3732,8 @@ void *BtMode_Init(void **self)
     VoiceSystem_Init();
     ProcessSystemTick(log + 0x7cc);
     DebugPrintf(log + 0x7e0);
-    lbl_806CF14C = -1;
-    lbl_806D130C = 0;
+    BtMode_Init_data_806CF14C = -1;
+    BtMode_Init_bss_806D130C = 0;
     return self;
 }
 #undef DebugPrintf
@@ -3747,14 +3747,14 @@ void *BtMode_Init(void **self)
 #undef g_finalLapCoinJumpEnabled
 #undef g_gameMode
 #undef g_spawnedKartCount
-#undef lbl_8040E734
-#undef lbl_8040E76C
-#undef lbl_806CF14C
+#undef VSMode_FrameUpdate_data_8040E734
+#undef GameModeBase_vtable_8040E76C
+#undef BtMode_Init_data_806CF14C
 #undef lbl_806D1050
-#undef lbl_806D130C
+#undef BtMode_Init_bss_806D130C
 
 #pragma exceptions reset
-__declspec(section ".rodata") const unsigned int lbl_80320960[267] = { 0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000 };
+__declspec(section ".rodata") const unsigned int VSMode_FrameUpdate_rodata_80320960[267] = { 0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000 };
 __declspec(section ".rodata") const char lbl_80320D8C[] = "clGameBattle";
-__declspec(section ".rodata") const unsigned int lbl_80320D9C[247] = { 0x636C4761, 0x6D65576F, 0x726C6400, 0x2D2D2D52, 0x41434520, 0x57414954, 0x202D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x0A000000, 0x2D2D2D52, 0x41434520, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x0A000000, 0x2D2D2D52, 0x414E4B49, 0x4E47202D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x0A000000, 0x4F4B2050, 0x72697A65, 0x20667265, 0x65210000, 0x636F6C6C, 0x20667265, 0x65210000, 0x63697465, 0x6D73656C, 0x20746163, 0x686F6D65, 0x74657220, 0x68697466, 0x61636520, 0x66726565, 0x21000000, 0x63646973, 0x70206361, 0x6D657261, 0x206A7567, 0x656D7520, 0x63656E74, 0x65722066, 0x72656521, 0x00000000, 0x63617220, 0x73686164, 0x6F772066, 0x72656521, 0x00000000, 0x65666665, 0x63742061, 0x75746F72, 0x756E206C, 0x69676874, 0x20667265, 0x65210000, 0x616C6C20, 0x726F6D20, 0x66726565, 0x21000000, 0x73746172, 0x74206261, 0x74746C65, 0x206C6F61, 0x64210000, 0x636C5363, 0x7265656E, 0x45666665, 0x63743A3A, 0x63726561, 0x74652829, 0x00000000, 0x4F4B2063, 0x6C4D6170, 0x28290000, 0x4F4B2073, 0x6861646F, 0x77210000, 0x4F4B204F, 0x626A6563, 0x74576F72, 0x6B496E69, 0x74202620, 0x45666665, 0x6374576F, 0x726B496E, 0x69740000, 0x4F4B206D, 0x61737465, 0x72206F72, 0x20736C61, 0x76650000, 0x4D595F50, 0x43422025, 0x64206D61, 0x73746572, 0x20256420, 0x454E454D, 0x59204D41, 0x58202564, 0x0A000000, 0x4F4B2073, 0x65747469, 0x6E672100, 0x50434225, 0x64203A20, 0x67726964, 0x2025642C, 0x20702025, 0x642C2063, 0x68617261, 0x2025640A, 0x00000000, 0x4F4B2050, 0x6C617965, 0x72206361, 0x72000000, 0x4F4B2050, 0x6C617965, 0x72206361, 0x72206365, 0x6E746572, 0x21000000, 0x6A797567, 0x656D755F, 0x73746172, 0x742E6461, 0x74000000, 0x4F4B206A, 0x7567656D, 0x75202620, 0x65746321, 0x21000000, 0x4F4B2063, 0x6C456E65, 0x6D795468, 0x696E6B4D, 0x616E6167, 0x65722829, 0x21000000, 0x4F4B2052, 0x616E6B69, 0x6E672100, 0x4F4B2073, 0x70726974, 0x65206364, 0x69737028, 0x29000000, 0x4F4B2073, 0x70726974, 0x65206974, 0x656D2100, 0x4F4B2054, 0x494D4520, 0x73657474, 0x696E6721, 0x00000000, 0x4F4B2065, 0x74632063, 0x6F757273, 0x65206566, 0x66656374, 0x2066696C, 0x65206C6F, 0x61642100, 0x4F4B2065, 0x66666563, 0x745F4C6F, 0x61644461, 0x74612845, 0x465F4B41, 0x5254293B, 0x00000000, 0x4F4B2065, 0x66666563, 0x745F4C6F, 0x61644461, 0x74612845, 0x465F4954, 0x454D293B, 0x00000000, 0x4F4B2050, 0x6C617965, 0x72204974, 0x656D204D, 0x6F64656C, 0x206C6F61, 0x64210000, 0x4F4B2045, 0x4E454D59, 0x20497465, 0x6D204D6F, 0x64656C20, 0x6C6F6164, 0x21000000, 0x4F4B206C, 0x69766520, 0x73657474, 0x696E6700, 0x4F4B2063, 0x6C47616D, 0x653A3A73, 0x65747469, 0x6E672829, 0x00000000, 0x4F4B2063, 0x6C47616D, 0x653A3A63, 0x6C4C6976, 0x65282900, 0x2D2D2D4C, 0x4F414420, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x0A000000, 0x00000000 };
+__declspec(section ".rodata") const unsigned int sdata_806CEFE0_rodata_80320D9C[247] = { 0x636C4761, 0x6D65576F, 0x726C6400, 0x2D2D2D52, 0x41434520, 0x57414954, 0x202D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x0A000000, 0x2D2D2D52, 0x41434520, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x0A000000, 0x2D2D2D52, 0x414E4B49, 0x4E47202D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x0A000000, 0x4F4B2050, 0x72697A65, 0x20667265, 0x65210000, 0x636F6C6C, 0x20667265, 0x65210000, 0x63697465, 0x6D73656C, 0x20746163, 0x686F6D65, 0x74657220, 0x68697466, 0x61636520, 0x66726565, 0x21000000, 0x63646973, 0x70206361, 0x6D657261, 0x206A7567, 0x656D7520, 0x63656E74, 0x65722066, 0x72656521, 0x00000000, 0x63617220, 0x73686164, 0x6F772066, 0x72656521, 0x00000000, 0x65666665, 0x63742061, 0x75746F72, 0x756E206C, 0x69676874, 0x20667265, 0x65210000, 0x616C6C20, 0x726F6D20, 0x66726565, 0x21000000, 0x73746172, 0x74206261, 0x74746C65, 0x206C6F61, 0x64210000, 0x636C5363, 0x7265656E, 0x45666665, 0x63743A3A, 0x63726561, 0x74652829, 0x00000000, 0x4F4B2063, 0x6C4D6170, 0x28290000, 0x4F4B2073, 0x6861646F, 0x77210000, 0x4F4B204F, 0x626A6563, 0x74576F72, 0x6B496E69, 0x74202620, 0x45666665, 0x6374576F, 0x726B496E, 0x69740000, 0x4F4B206D, 0x61737465, 0x72206F72, 0x20736C61, 0x76650000, 0x4D595F50, 0x43422025, 0x64206D61, 0x73746572, 0x20256420, 0x454E454D, 0x59204D41, 0x58202564, 0x0A000000, 0x4F4B2073, 0x65747469, 0x6E672100, 0x50434225, 0x64203A20, 0x67726964, 0x2025642C, 0x20702025, 0x642C2063, 0x68617261, 0x2025640A, 0x00000000, 0x4F4B2050, 0x6C617965, 0x72206361, 0x72000000, 0x4F4B2050, 0x6C617965, 0x72206361, 0x72206365, 0x6E746572, 0x21000000, 0x6A797567, 0x656D755F, 0x73746172, 0x742E6461, 0x74000000, 0x4F4B206A, 0x7567656D, 0x75202620, 0x65746321, 0x21000000, 0x4F4B2063, 0x6C456E65, 0x6D795468, 0x696E6B4D, 0x616E6167, 0x65722829, 0x21000000, 0x4F4B2052, 0x616E6B69, 0x6E672100, 0x4F4B2073, 0x70726974, 0x65206364, 0x69737028, 0x29000000, 0x4F4B2073, 0x70726974, 0x65206974, 0x656D2100, 0x4F4B2054, 0x494D4520, 0x73657474, 0x696E6721, 0x00000000, 0x4F4B2065, 0x74632063, 0x6F757273, 0x65206566, 0x66656374, 0x2066696C, 0x65206C6F, 0x61642100, 0x4F4B2065, 0x66666563, 0x745F4C6F, 0x61644461, 0x74612845, 0x465F4B41, 0x5254293B, 0x00000000, 0x4F4B2065, 0x66666563, 0x745F4C6F, 0x61644461, 0x74612845, 0x465F4954, 0x454D293B, 0x00000000, 0x4F4B2050, 0x6C617965, 0x72204974, 0x656D204D, 0x6F64656C, 0x206C6F61, 0x64210000, 0x4F4B2045, 0x4E454D59, 0x20497465, 0x6D204D6F, 0x64656C20, 0x6C6F6164, 0x21000000, 0x4F4B206C, 0x69766520, 0x73657474, 0x696E6700, 0x4F4B2063, 0x6C47616D, 0x653A3A73, 0x65747469, 0x6E672829, 0x00000000, 0x4F4B2063, 0x6C47616D, 0x653A3A63, 0x6C4C6976, 0x65282900, 0x2D2D2D4C, 0x4F414420, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x0A000000, 0x00000000 };
 

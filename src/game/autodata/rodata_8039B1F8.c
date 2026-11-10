@@ -20,10 +20,10 @@ typedef struct CupSide {
 
 const char clFlowNamcam[] = "clFlowNamcam";
 const char lbl_8039B208[] = "clFlowProcess";
-const short lbl_8039B218[8] = {
+const short clFlowFigure_Unlocks_rodata_8039B218[8] = {
     7842, 7843, 7844, 7845, 7846, 7847, 7848, 7849
 };
-const CupSide lbl_8039B228[8] = {
+const CupSide clFlowCup_Update_rodata_8039B228[8] = {
     { 52.0f, 192.0f, -130.0f, 132.0f, 192.0f, -50.0f },
     { 114.0f, 195.0f, 130.0f, 210.0f, 195.0f, 50.0f },
     { 183.0f, 192.0f, -130.0f, 263.0f, 192.0f, -50.0f },

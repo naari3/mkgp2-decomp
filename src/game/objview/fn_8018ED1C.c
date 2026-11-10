@@ -7,7 +7,7 @@ typedef struct ObjView {
     void *buf1;
 } ObjView;
 
-extern char lbl_80495EB4[];
+extern char EmitterCtor_vtable_80495EB4[];
 extern char lbl_80490FE0[];
 extern const char lbl_803781A4[];
 extern void Object_DtorWithGXSync(void *obj, int flag);
@@ -17,7 +17,7 @@ extern void DebugPrintf(const char *fmt, ...);
 
 ObjView *fn_8018ED1C(ObjView *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_80495EB4;
+        self->vt = EmitterCtor_vtable_80495EB4;
         if (self->child0 != 0) {
             Object_DtorWithGXSync(self->child0, 1);
         }

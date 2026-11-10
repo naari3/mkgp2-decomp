@@ -45,11 +45,11 @@ index e25e68e..adda9ef 100644
 -    nofralloc
 -    stwu r1, -0x30(r1)
 -    mflr r0
--    lis r5, lbl_80363D30@ha
+-    lis r5, Scene_8014E0C4_rodata_80363D30@ha
 -    stw r0, 0x34(r1)
 -    mulli r0, r4, 0x18
 -    stmw r25, 0x14(r1)
--    addi r31, r5, lbl_80363D30@l
+-    addi r31, r5, Scene_8014E0C4_rodata_80363D30@l
 -    mr r27, r3
 -    addi r3, r31, 0x31c0
 -    add r29, r3, r0
@@ -370,14 +370,14 @@ index e25e68e..adda9ef 100644
  
 +#pragma use_lmw_stmw on
 +extern "C" void fn_801502AC(RaceScene *self, int part) {
-+    const CourseModeInfo *info = &lbl_80366EF0[part];
++    const CourseModeInfo *info = &Scene_8014E0C4_rodata_80366EF0[part];
 +    const char *name;
 +    RaceCam3D *cam;
 +
 +    if (info->id == -1) {
 +        return;
 +    }
-+    name = ((const char *const *)&lbl_80364368)[info->id];
++    name = ((const char *const *)&Scene_8014E0C4_rodata_80364368)[info->id];
 +    if (self->objs[part] == 0) {
 +        self->objs[part] = (RaceCam *)new RaceCam3D(name);
 +        cam = (RaceCam3D *)self->objs[part];
@@ -477,8 +477,8 @@ index 9c633bf..cc34636 100644
  static const char lbl_8036432C[] = "AT_demo_cut15_2.dat";
  static const char lbl_80364340[] = "AT_demo_cut16.dat";
  static const char lbl_80364354[] = "AT_demo_cut17.dat";
--extern const R_80364368 lbl_80364368 = {
-+static const R_80364368 lbl_80364368 = {
+-extern const R_80364368 Scene_8014E0C4_rodata_80364368 = {
++static const R_80364368 Scene_8014E0C4_rodata_80364368 = {
      lbl_806D7F00,
      lbl_806D7F08,
      lbl_806D7F10,

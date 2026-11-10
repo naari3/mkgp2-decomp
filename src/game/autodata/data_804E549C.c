@@ -22,8 +22,8 @@ extern void fn_801F8668();
 extern void fn_801F8728();
 extern void fn_801F894C();
 extern char lbl_806D005C[];
-extern char lbl_806D007C[];
-extern char lbl_806D0084[];
+extern char data_804E549C_data_806D007C[];
+extern char data_804E549C_data_806D0084[];
 extern char lbl_806D0090[];
 extern char lbl_806D0098[];
 extern char lbl_806D00A0[];
@@ -43,7 +43,7 @@ typedef struct CardCharEntry {
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804E549C[12] = {
+void *MenuModeBase_vtable_804E549C[12] = {
     (void *)&lbl_806D005C,
     0,
     (void *)dtor_801F63F8,
@@ -57,13 +57,13 @@ void *lbl_804E549C[12] = {
     0,
     0
 };
-void *lbl_804E54CC[3] = {
-    (void *)&lbl_806D007C,
+void *data_804E549C_data_804E54CC[3] = {
+    (void *)&data_804E549C_data_806D007C,
     0,
     0
 };
-void *lbl_804E54D8[6] = {
-    (void *)&lbl_806D0084,
+void *MenuModeLane_data_804E54D8[6] = {
+    (void *)&data_804E549C_data_806D0084,
     0,
     (void *)fn_801F6008,
     (void *)fn_801F5FB0,

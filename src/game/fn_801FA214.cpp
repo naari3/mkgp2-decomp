@@ -5,7 +5,7 @@ public:
 };
 
 extern "C" {
-extern void *lbl_804EBE38[];
+extern void *CardOwner_vtable_804EBE38[];
 extern void *lbl_803FE0C8[];
 void fn_801F4D3C(void *seq);
 void fn_802040B0(void);
@@ -35,7 +35,7 @@ struct Scene801FA214 : Base801FA214 {
 };
 
 Scene801FA214::~Scene801FA214() {
-    vt = lbl_804EBE38;
+    vt = CardOwner_vtable_804EBE38;
     fn_801F4D3C(seq.p);
     fn_802040B0();
     fn_80207D38();

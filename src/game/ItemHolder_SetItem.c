@@ -4,7 +4,7 @@ extern unsigned char KartMovement_EquipItem(int kart, int item);
 extern char *RaceContextSlot_GetIfAlive(void *ctx, int slot);
 extern int g_gameMode;
 extern unsigned char g_isCommHost;
-extern int lbl_804E4B10[10];
+extern int ItemHolder_SetItem_data_804E4B10[10];
 extern int lbl_806D1918;
 
 typedef struct ItemHolder {
@@ -25,7 +25,7 @@ static inline void ItemHolder_Equip(ItemHolder *self, int item) {
         self->state = 1;
         lbl_806D1918++;
         lbl_806D1918 %= 10;
-        self->cooldown = lbl_804E4B10[lbl_806D1918] * 60 + 120;
+        self->cooldown = ItemHolder_SetItem_data_804E4B10[lbl_806D1918] * 60 + 120;
         self->cooldown = 60;
     }
     *(int *)(obj + 0x90) = -1;
@@ -40,7 +40,7 @@ void ItemHolder_SetItem(ItemHolder *self, int item, int arg) {
             self->state = 1;
             lbl_806D1918++;
             lbl_806D1918 %= 10;
-            self->cooldown = lbl_804E4B10[lbl_806D1918] * 60 + 120;
+            self->cooldown = ItemHolder_SetItem_data_804E4B10[lbl_806D1918] * 60 + 120;
             self->cooldown = 60;
         }
         *(int *)(obj + 0x90) = -1;

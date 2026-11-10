@@ -58,8 +58,8 @@ extern void fn_80292BFC(int a, char *dst, int len);
 extern void *memset(void *dst, int c, unsigned int n);
 
 extern NamCamWork *lbl_806D1070;
-extern int lbl_806D1074;
-extern char lbl_806D1078;
+extern int NamCam_GetImageHandle_bss_806D1074;
+extern char NamCam_GetImageHandle_bss_806D1078;
 extern const char lbl_806D26C0[8]; /* "%d %d \n" */
 extern const NamCamTimeout lbl_806DCF00;
 extern const NamCamTimeout lbl_806DCF08;
@@ -77,9 +77,9 @@ int NamCam_GetImageHandle(char **outData, unsigned int *outSize)
     NamCamRequest request = lbl_802EB4E0.request;
     int n;
 
-    if (!lbl_806D1078) {
-        lbl_806D1074 = 0;
-        lbl_806D1078 = 1;
+    if (!NamCam_GetImageHandle_bss_806D1078) {
+        NamCam_GetImageHandle_bss_806D1074 = 0;
+        NamCam_GetImageHandle_bss_806D1078 = 1;
     }
     switch (NAMCAM_CONN->state) {
     case 0:

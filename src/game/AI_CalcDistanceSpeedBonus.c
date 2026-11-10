@@ -10,8 +10,8 @@ typedef struct DistanceBonusEntry {
     float bonus[6][6];
 } DistanceBonusEntry;
 
-extern int lbl_806CFF08;
-extern DistanceBonusEntry lbl_804E3184[];
+extern int AI_CalcDistanceSpeedBonus_data_806CFF08;
+extern DistanceBonusEntry AI_CalcDistanceSpeedBonus_data_804E3184[];
 extern const float FLOAT_defaultBonus;
 
 static inline unsigned char KartCond_Matches(KartCond c, int kart) {
@@ -36,9 +36,9 @@ static inline unsigned char KartCond_Matches(KartCond c, int kart) {
 float AI_CalcDistanceSpeedBonus(int kart, int row, int col) {
     int i;
 
-    for (i = 0; i < lbl_806CFF08; i++) {
-        if (KartCond_Matches(lbl_804E3184[i].cond, kart)) {
-            return lbl_804E3184[i].bonus[row][col];
+    for (i = 0; i < AI_CalcDistanceSpeedBonus_data_806CFF08; i++) {
+        if (KartCond_Matches(AI_CalcDistanceSpeedBonus_data_804E3184[i].cond, kart)) {
+            return AI_CalcDistanceSpeedBonus_data_804E3184[i].bonus[row][col];
         }
     }
     return FLOAT_defaultBonus;

@@ -31,7 +31,7 @@ const char lbl_802E96FC[132] = {
     69, 95, 69, 78, 68, 40, 37, 100, 41, 44, 10, 0,
     115, 99, 101, 110, 101, 95, 100, 97, 116, 97, 0, 0
 };
-const Quat lbl_802E9780[1] = {
+const Quat JObj_SetRotationQuat_rodata_802E9780[1] = {
     { 0.0f, 0.0f, 0.0f, 0.0f }
 };
 const char lbl_802E9790[] = "!(jobj->flags & JOBJ_USE_QUATERNION)";
@@ -41,10 +41,10 @@ const char lbl_802E97D0[] = "clNormal3D::load::lGetJObjList is over member\n";
 const char lbl_802E9800[] = "%s retry %d\n";
 const char lbl_802E9810[] = "No%02d : %02d : %s";
 /* 8-aligned in the original: probably the first object of a TU */
-const TerrainSegment lbl_802E9828[1] __attribute__((aligned(8))) = {
+const TerrainSegment Terrain_WallEdgeTest_rodata_802E9828[1] __attribute__((aligned(8))) = {
     { 0.0f, 0.0f, 0.0f, 0.0f }
 };
-const int lbl_802E9838[4] = {
+const int StrPcb_BeginEffect_rodata_802E9838[4] = {
     16, 80, 48, 112
 };
 const float lbl_802E9848[3] = {

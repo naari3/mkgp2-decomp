@@ -21,7 +21,7 @@ struct LObjList {
 extern "C" {
 extern void* lbl_806D1130[2];
 extern const char lbl_803114C0[]; /* "scene_data" */
-extern unsigned char lbl_803FDFF8[]; /* default LObj desc */
+extern unsigned char SceneModel_Init_data_803FDFF8[]; /* default LObj desc */
 void* FileLoader_Open(const char*);
 void* Archive_GetCurrent(void*);
 void* HSD_ArchiveGetPublicAddress(void*, const char*);
@@ -49,7 +49,7 @@ static inline void LoadSceneLights(LObjList* self, unsigned char chainLights) {
         } else {
             LoadSeparateLights(self);
         }
-        if (!lbl_806D1130[0]) lbl_806D1130[0] = HSD_LObjLoadDesc(lbl_803FDFF8);
+        if (!lbl_806D1130[0]) lbl_806D1130[0] = HSD_LObjLoadDesc(SceneModel_Init_data_803FDFF8);
     }
 }
 

@@ -15,7 +15,7 @@ struct HudEnterView {
 struct HudConfig { unsigned char mode; char pad1[11]; unsigned char flag; char padD[3]; int index; };
 struct HudSmall { char opaque[0x18]; HudSmall(); };
 extern "C" {
-extern void *lbl_804EEB20[];
+extern void *HudFlow_data_804EEB20[];
 extern int g_cupId, g_roundIndex;
 extern unsigned char g_raceEnded, lbl_806D17F0;
 extern void *lbl_806D1A60;

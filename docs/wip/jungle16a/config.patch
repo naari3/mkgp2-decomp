@@ -56,14 +56,14 @@ index 90ad80f..6793a34 100644
      virtual ~Cave16A();
  };
  extern "C" {
--extern const char lbl_8036CA00[];
--extern const char lbl_8036CE88[];
+-extern const char Jungle16ACtor_rodata_8036CA00[];
+-extern const char Jungle16AUpdate_rodata_8036CE88[];
  extern const float lbl_806D8A40, lbl_806D8A54, lbl_806D8A58, lbl_806D8A5C;
  extern const float lbl_806D8A60, lbl_806D8A64, lbl_806D8A68, lbl_806D8A70;
 -extern char lbl_806D8A44[7], lbl_806D8A4C[5], lbl_8036CEF0[], lbl_8036CEFC[];
 +extern char lbl_806D8A44[7], lbl_806D8A4C[5];
 +extern const char lbl_8036CEF0[], lbl_8036CEFC[];
- extern void *lbl_806CFA00;
+ extern void *Jungle16ACtor_data_806CFA00;
  extern int g_longRoundFlag;
  void *FUN_8003b120(unsigned long);
 @@ -82,13 +81,13 @@ static inline void SetDirty16A(HSD_JObj *j) {

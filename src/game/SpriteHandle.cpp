@@ -235,7 +235,7 @@ extern const float lbl_806D6DC4;
 extern const float lbl_806D6DC8;
 extern const float lbl_806D6DCC;
 extern const float lbl_806D6DD0;
-extern unsigned int lbl_80657360[];
+extern unsigned int SpriteHandle_bss_80657360[];
 extern SpriteHandle g_SpriteHandlePool[];
 unsigned char IsValidResourceId(int id);
 int ResourceTable_GetChainNextId(int id);
@@ -256,7 +256,7 @@ extern float lbl_80657208[];
 extern void __dt__11ScopedTimerFv();
 void MemoryManager_Free(void *p);
 void TEXReleasePalette(void **pal);
-extern int lbl_8065B588[600];
+extern int SpriteHandle_bss_8065B588[600];
 void fn_8011DC20(ResEntry *e);
 unsigned char ResourceSlot_Load(ResEntry *e, int id);
 extern void Alloc();
@@ -268,24 +268,24 @@ float LUT_Cosine(float);
 float LUT_Sine(float);
 signed char ResourceTable_GetFlagsByte(int id);
 void ResourceTable_GetScaleXY(int id, float *x, float *y);
-extern unsigned int lbl_80332528[];
+extern unsigned int SpriteHandle_rodata_80332528[];
 void *memset(void *p, int c, unsigned long n);
 void __destroy_arr(void *, void *, unsigned long, unsigned long);
 void DoublyLinkedList_Init(void *);
-extern unsigned int lbl_80657234[];
+extern unsigned int SpriteHandle_bss_80657234[];
 void __construct_array(void *, void *, void *, unsigned long, unsigned long);
 void *__register_global_object(void *, void *, void *);
 extern unsigned int fn_8011DF70[];
-extern unsigned int lbl_80657228[];
+extern unsigned int SpriteHandle_bss_80657228[];
 /* .bss 0x80657228..0x80677C38 is owned by this unit (definition order). */
-unsigned int lbl_80657228[3];
-unsigned int lbl_80657234[0x18];
+unsigned int SpriteHandle_bss_80657228[3];
+unsigned int SpriteHandle_bss_80657234[0x18];
 unsigned int lbl_80657294[3];
 unsigned int lbl_806572A0[0x30];
-unsigned int lbl_80657360[0x10];
+unsigned int SpriteHandle_bss_80657360[0x10];
 SavedGXState lbl_806573A0;
 ResEntry lbl_806573E8[600];
-int lbl_8065B588[600];
+int SpriteHandle_bss_8065B588[600];
 SpriteHandle g_SpriteHandlePool[500];
 void fn_8011EB1C(void);
 void fn_8011EC18(unsigned char a);
@@ -553,12 +553,12 @@ extern "C" void fn_8011EC18(unsigned char a) {
     GXSetChanCtrl(4, 0, 1, 1, 0, 0, 2);
     lbl_806D14F1 = 5;
     for (i = 0; i < 15; i++) {
-        lbl_80657360[i] = 0;
+        SpriteHandle_bss_80657360[i] = 0;
     }
     lbl_806D14F4 = 0;
     lbl_806D14F8 = 0;
     lbl_806D14FC = 0;
-    lbl_80657360[15] = 0;
+    SpriteHandle_bss_80657360[15] = 0;
 }
 
 extern "C" void SpriteHandle_Destroy(int h) {
@@ -1164,7 +1164,7 @@ extern "C" void fn_8012094C(void) {
         e->data0 = 0;
         e->data1 = 0;
         e->data2 = 0;
-        lbl_8065B588[i] = 0;
+        SpriteHandle_bss_8065B588[i] = 0;
     }
 }
 
@@ -1201,8 +1201,8 @@ extern "C" inline int fn_80120A08(int id) {
     ResEntry *e = lbl_806573E8;
     for (int i = 0; i < 600; e++, i++) {
         if (key == e->prev) {
-            lbl_8065B588[i]--;
-            if (lbl_8065B588[i] == 0) {
+            SpriteHandle_bss_8065B588[i]--;
+            if (SpriteHandle_bss_8065B588[i] == 0) {
                 fn_8011DC20(&lbl_806573E8[i]);
             }
             return 1;
@@ -1224,7 +1224,7 @@ extern "C" inline unsigned char PreloadResource(int id) {
     int i;
     for (i = 0; i < 600; i++) {
         if (key == lbl_806573E8[i].prev) {
-            lbl_8065B588[i]++;
+            SpriteHandle_bss_8065B588[i]++;
             return 1;
         }
     }
@@ -1232,7 +1232,7 @@ extern "C" inline unsigned char PreloadResource(int id) {
         if (lbl_806573E8[i].prev == -1) {
             unsigned char ok = ResourceSlot_Load(&lbl_806573E8[i], id);
             if (ok == 1) {
-                lbl_8065B588[i]++;
+                SpriteHandle_bss_8065B588[i]++;
             }
             return ok;
         }
@@ -1498,7 +1498,7 @@ extern "C" LListImp *fn_801221D4(LListImp *l) {
 }
 
 extern "C" void fn_80122204(void) {
-    __destroy_arr(lbl_80657234, (void *)fn_8012223C, 0xC, 8);
+    __destroy_arr(SpriteHandle_bss_80657234, (void *)fn_8012223C, 0xC, 8);
 }
 
 extern "C" LList *fn_8012223C(LList *l, short flag) {
@@ -1524,13 +1524,13 @@ extern "C" void fn_80122320(LListImp *l) {
     e->prev = e;
 }
 
-/* __sinit for this unit's static lists: LList[8] (lbl_80657234), the 16-list
+/* __sinit for this unit's static lists: LList[8] (SpriteHandle_bss_80657234), the 16-list
  * holder (lbl_806572A0) and the 600 resource slots (lbl_806573E8), with their
  * destructor-chain records. Written out by hand like the other generated
  * helpers here (fn_80122204, fn_80121F54). */
 extern "C" void fn_80122338(void) {
-    __construct_array(lbl_80657234, (void *)fn_801222F0, (void *)fn_8012223C, 0xC, 8);
-    __register_global_object(0, (void *)fn_80122204, lbl_80657228);
+    __construct_array(SpriteHandle_bss_80657234, (void *)fn_801222F0, (void *)fn_8012223C, 0xC, 8);
+    __register_global_object(0, (void *)fn_80122204, SpriteHandle_bss_80657228);
     __construct_array(lbl_806572A0, (void *)fn_801221D4, (void *)fn_80121FB4, 0xC, 0x10);
     __register_global_object(lbl_806572A0, (void *)fn_80121F54, lbl_80657294);
     __construct_array(lbl_806573E8, (void *)fn_8011DF70, 0, 0x1C, 0x258);

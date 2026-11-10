@@ -170,7 +170,7 @@ extern void HSD_ShadowRemove(void *);
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern char lbl_803F58FC[];
+extern char clShadow_vtable_803F58FC[];
 
 /* --- function index (1 fns, .text 0x8003AA58..0x8003AACC) ---
  * [  0] 0x8003AA58 size:0x74    global SceneRender_Dtor
@@ -188,7 +188,7 @@ extern char lbl_803F58FC[];
 #pragma dont_inline on
 void *SceneRender_Dtor(void *this, short flag) {
     if (this != 0) {
-        *(void **)this = lbl_803F58FC;
+        *(void **)this = clShadow_vtable_803F58FC;
         HSD_ShadowRemove(*(void **)((char *)this + 4));
         *(void **)((char *)this + 4) = 0;
         dtor_8003A71C(this, 0);

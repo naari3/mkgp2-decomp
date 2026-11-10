@@ -9,7 +9,7 @@
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const Vec lbl_80311CA0[18] = {
+const Vec TransitionEffect_rodata_80311CA0[18] = {
     { 0.0f, 0.0f, -300.0f },
     { 0.0f, 0.0f, 0.0f },
     { 0.0f, 0.0f, 0.0f },
@@ -37,7 +37,7 @@ const char lbl_80311DB0[] = "!(jobj->flags & JOBJ_USE_QUATERNION)";
 const char lbl_80311DD8[] = "jyugemu_flag.dat";
 /* 8-aligned in the original: probably the first object of a TU */
 /* decl: ReverseVec3 */
-const float lbl_80311DF0[3] __attribute__((aligned(8))) = {
+const float Jyugemu_ReverseFlag_Ctor_rodata_80311DF0[3] __attribute__((aligned(8))) = {
     0.75f, 0.75f, 0.75f
 };
 const char lbl_80311DFC[] = "!(jobj->flags & JOBJ_USE_QUATERNION)";

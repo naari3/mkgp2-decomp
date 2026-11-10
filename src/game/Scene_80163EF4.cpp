@@ -39,10 +39,10 @@ extern "C" int fn_80163EF4(LoaderTick163 *s) {
     if ((unsigned char)IsRaceStarted() == 1) {
         Checkpoint163 *a = Path_LookupCheckpointOffset(s->paths, 0, 0);
         Checkpoint163 *b = Path_LookupCheckpointOffset(s->paths, 0, 1);
-        Vec v = lbl_80369C44;
+        Vec v = Scene_80163EF4_rodata_80369C44;
         v.x = a->x;
         v.z = a->z;
-        Vec w = lbl_80369C50;
+        Vec w = Scene_80163EF4_rodata_80369C50;
         w.x = b->x;
         w.z = b->z;
         if (JObj_IsForwardDotBelowThreshold(CarObject_GetRenderObj(g_carObjects[0]), &v, &w) == 1)
@@ -59,10 +59,10 @@ extern "C" int fn_80163EF4(LoaderTick163 *s) {
     Jyugemu_ReverseFlag_Tick(s->reverseFlag);
     LapBannerScene_UpdateAndDriveAnim(s->banner);
     CourseEnvironment_UpdateAndCullZones_Timed(s->environment);
-    CObj_LoadProjMatrix(s->scene, &lbl_80677CE8);
-    CObj_ApplyScissor(s->scene, &lbl_80677CF4);
+    CObj_LoadProjMatrix(s->scene, &Scene_80163EF4_bss_80677CE8);
+    CObj_ApplyScissor(s->scene, &Scene_80163EF4_bss_80677CF4);
     ItemObjectManager_Update();
-    VfxSlotMgr_Update(lbl_80677CE8, lbl_80677CF4);
+    VfxSlotMgr_Update(Scene_80163EF4_bss_80677CE8, Scene_80163EF4_bss_80677CF4);
     if (g_rendererGateFlag == 1 && (unsigned char)IsRaceStarted() == 1 && !g_raceEnded) {
         float zero = 0.0f;
         float raceTime = g_raceTimeRemaining;

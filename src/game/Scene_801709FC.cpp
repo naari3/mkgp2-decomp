@@ -1,6 +1,6 @@
 /*
  * 0x801709FC..0x80170B5C: deleting destructor of the grow-in entry set
- * (vtable lbl_8049128C, base vtable lbl_80490FE0).
+ * (vtable GrowSet_vtable_8049128C, base vtable lbl_80490FE0).
  */
 
 struct GrowEntry {
@@ -22,7 +22,7 @@ struct GrowSet {
 };
 
 extern "C" {
-extern char lbl_8049128C[];
+extern char GrowSet_vtable_8049128C[];
 extern char lbl_80490FE0[];
 extern char lbl_8036E674[];
 void Object_DtorWithGXSync(void *, int);
@@ -36,7 +36,7 @@ GrowSet *fn_801709FC(GrowSet *self, short flag) {
     int i;
 
     if (self) {
-        self->vtable = lbl_8049128C;
+        self->vtable = GrowSet_vtable_8049128C;
         if (self->model) {
             Object_DtorWithGXSync(self->model, 1);
         }

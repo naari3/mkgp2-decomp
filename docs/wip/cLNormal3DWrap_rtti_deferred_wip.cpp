@@ -4,7 +4,7 @@
  * The base is clNodeManager<char *, clNormal3D *> (an std::map at +4).
  *
  * NonMatching only because of layout: every function is 100%, but the
- * target has virtual dtors with RTTI (vtables lbl_803FE464/lbl_803FE470,
+ * target has virtual dtors with RTTI (vtables clNormal3DNodeManager_vtable_803FE464/cLNormal3DWrap_data_803FE470,
  * type names in .rodata 0x80312810) and emits the base dtor
  * (dtor_800897B8) after ModelHandle_SetInstance. Here the vtable pointers
  * are stored by hand, and CW places the weak base dtor right after the
@@ -20,7 +20,7 @@ void AssocTree_FreeAll(void *tree, void *node);
 extern const float lbl_806D3280; /* 1.0f */
 extern const float lbl_806D3284; /* 0.0f */
 extern const float lbl_806D3288; /* -1.0f */
-extern int lbl_806D11D8; /* active slot count */
+extern int cLNormal3DWrap_bss_806D11D8; /* active slot count */
 extern int lbl_806D11DC; /* peak active slot count */
 
 typedef struct ModelEntry {
@@ -112,16 +112,16 @@ public:
     inline void Deactivate()
     {
         if (active) {
-            lbl_806D11D8--;
+            cLNormal3DWrap_bss_806D11D8--;
             active = 0;
         }
     }
 
     inline void Activate(ModelHandle *h, int index)
     {
-        lbl_806D11D8++;
-        if (lbl_806D11D8 > lbl_806D11DC) {
-            lbl_806D11DC = lbl_806D11D8;
+        cLNormal3DWrap_bss_806D11D8++;
+        if (cLNormal3DWrap_bss_806D11D8 > lbl_806D11DC) {
+            lbl_806D11DC = cLNormal3DWrap_bss_806D11D8;
         }
         active = 1;
         uvMtxValid = 0;
@@ -432,7 +432,7 @@ clNormal3DNodeManager::~clNormal3DNodeManager()
     int i;
     clNormal3D *obj;
 
-    lbl_806D11D8 = 0;
+    cLNormal3DWrap_bss_806D11D8 = 0;
     for (i = 0; i < 0x99; i++) {
         if (m_handles[i] != 0) {
             obj = (clNormal3D *)ModelHandle_GetInstance(m_handles[i]);

@@ -18,7 +18,7 @@ struct WaveGlowEffect {
     void *kart;
 };
 extern "C" {
-extern const WaveGlowVec3 lbl_8032A748;
+extern const WaveGlowVec3 Effect_KartWaveGlow_Update_rodata_8032A748;
 extern const float lbl_806D540C, lbl_806D5424;
 void DrawEffect_Free(WaveGlowEffect *);
 void VfxSlot_BindResourceEx(void *, int, int);
@@ -52,7 +52,7 @@ void Effect_KartWaveGlow_Update(WaveGlowEffect *effect) {
         return;
     }
     Mtx_TransposeToMtx44(matrix, KartDriver_GetKartRootMtx(effect->kart));
-    Mtx44_TransformVec3(&effect->position, matrix, lbl_8032A748);
+    Mtx44_TransformVec3(&effect->position, matrix, Effect_KartWaveGlow_Update_rodata_8032A748);
     VfxSlot_SetPositionFromVec(effect->slot, effect->position);
     if (FinalLapCoinJump_CheckActiveForObject(effect->kart)) effect->visible = 0;
     else effect->visible = 1;

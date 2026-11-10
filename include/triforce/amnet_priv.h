@@ -114,21 +114,21 @@ void fn_8028F404(void);
 void fn_8028F430(void);
 
 extern NetTrace lbl_806937C0[8];
-extern u32 lbl_80693940[0x1000];
+extern u32 amnet_nm3_bss_80693940[0x1000];
 extern NetChan lbl_80697940[64];
 extern NetState lbl_80699140;
-extern u32 lbl_806D1E40;
+extern u32 amnet_nm3_bss_806D1E40;
 extern u32 lbl_806D1E44;
 extern void (*lbl_804F5800[5])(void);
-extern void (*lbl_804F5814[5])(void);
-extern const u32 lbl_803F2798[10];
-extern const NetHandler lbl_803F2828[12];
-extern const NetHandler lbl_803F2858[4];
-extern const NetDispatch lbl_803F2868[3];
+extern void (*amnet_nm3_data_804F5814[5])(void);
+extern const u32 amnet_setup_nm_rodata_803F2798[10];
+extern const NetHandler amnet_setup_nm_rodata_803F2828[12];
+extern const NetHandler amnet_setup_nm_rodata_803F2858[4];
+extern const NetDispatch amnet_nm3_rodata_803F2868[3];
 extern const u8 lbl_806DC930[3];
 extern const char lbl_806DC934[5];
 
-#define LOG(v) (lbl_80693940[lbl_806D1E40++ & 0xFFF] = (v))
+#define LOG(v) (amnet_nm3_bss_80693940[amnet_nm3_bss_806D1E40++ & 0xFFF] = (v))
 #define ALIGN32(p) ((void*)(((u32)(p) + 0x1F) & ~0x1F))
 #define BSWAP16(v) ((((v) << 8) & 0xFF00) | (((v) >> 8) & 0xFF))
 #define BSWAP32(v) (((v) << 24) | (((v) << 8) & 0xFF0000) | (((v) >> 8) & 0xFF00) | ((v) >> 24))
@@ -268,7 +268,7 @@ static inline void FreeChan(NetChan* c) {
 
 static inline NetHandler GetHandler(u16 cmd) {
     const NetDispatch* d;
-    for (d = lbl_803F2868; d->fns != NULL; d++) {
+    for (d = amnet_nm3_rodata_803F2868; d->fns != NULL; d++) {
         if ((cmd & 0x7F00) == d->key) {
             u8 idx = cmd;
             if (idx < d->count) {

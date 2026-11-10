@@ -51,7 +51,7 @@ extern const float lbl_806DAD70, lbl_806DAD7C, lbl_806DAD84, lbl_806DAD88, lbl_8
 extern const float lbl_806DADAC, lbl_806DADB0, lbl_806DADB4, lbl_806DADB8, lbl_806DADBC;
 extern const float lbl_806DADC0, lbl_806DADC4, lbl_806DADC8, lbl_806DADCC, lbl_806DADD0;
 extern const XZ lbl_806DCF68;
-extern const Rect lbl_803C3D64;
+extern const Rect JumpDistanceMode_HandlePhysics_rodata_803C3D64;
 extern const Vec3 lbl_803C3D80;
 
 void *GetInputManager(void);
@@ -220,7 +220,7 @@ extern "C" void JumpDistanceMode_HandlePhysics(JumpDistanceMode *self) {
 
         p.x = mtx[3];
         p.z = mtx[11];
-        if (InRect(&lbl_803C3D64, p) == 1) {
+        if (InRect(&JumpDistanceMode_HandlePhysics_rodata_803C3D64, p) == 1) {
             self->reached = 1;
         }
     }

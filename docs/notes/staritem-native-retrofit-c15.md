@@ -6,7 +6,7 @@ c15_a96_20261106: FallRecoveryTick converted (712 B), exact production compiler 
 
 History: only 74c837bde58bdf309f380bb43edf1b6d5441aa56 (Match Tornado StarItem and MukadeItem units), containing extracted asm with no recorded C blocker. No StarItem-specific docs/notes result.
 
-BoundToVictimTick best natural C 99.933334%, same 1500 B and owned EH 100%. Residual at function offset 0x144: target fdivs f2,f1,f2, ours fdivs f1,f1,f2; limit consequently occupies f2 instead of target f1, affecting five rows. Explicit step/limit locals did not move the residue. A double FAbs return hypothesis worsened to 99.37334%; actual float signature is better. Keep original asm. Best C below uses canonical Item/Vec3 and StarWork plus private StarDriver { pad[0x304]; flags*; } whose flags view has pad[0x10], unsigned long long bits. Required prototypes are the ordinary Vec3/Matrix/Sprite helpers; FAbs_FloatAsDouble returns float. lbl_80330374 is Vec3; all referenced lbl_806D constants are extern const float. The zero-weight term is the ordinary interpolation formula, with external constants retained to reproduce original runtime loads.
+BoundToVictimTick best natural C 99.933334%, same 1500 B and owned EH 100%. Residual at function offset 0x144: target fdivs f2,f1,f2, ours fdivs f1,f1,f2; limit consequently occupies f2 instead of target f1, affecting five rows. Explicit step/limit locals did not move the residue. A double FAbs return hypothesis worsened to 99.37334%; actual float signature is better. Keep original asm. Best C below uses canonical Item/Vec3 and StarWork plus private StarDriver { pad[0x304]; flags*; } whose flags view has pad[0x10], unsigned long long bits. Required prototypes are the ordinary Vec3/Matrix/Sprite helpers; FAbs_FloatAsDouble returns float. StarItem_BoundToVictimTick_rodata_80330374 is Vec3; all referenced lbl_806D constants are extern const float. The zero-weight term is the ordinary interpolation formula, with external constants retained to reproduce original runtime loads.
 
 ```c
 void StarItem_BoundToVictimTick(Item *item, StarWork *work)
@@ -21,7 +21,7 @@ void StarItem_BoundToVictimTick(Item *item, StarWork *work)
         item->step = 0;
     case 1:
         Mtx_TransposeToMtx44(joint, KartDriver_GetJointByIdx(work->target, 15));
-        endpoint = lbl_80330374;
+        endpoint = StarItem_BoundToVictimTick_rodata_80330374;
         switch (item->step) {
         case 0:
             GetSpawnPosition(&item->velocity, lbl_806D63F8, lbl_806D63F8, lbl_806D63F8);
@@ -124,13 +124,13 @@ void StarItem_BoundToVictimTick(Item *item, StarWork *work)
 
 FlightAndLockOnTick best natural C 99.98195%, same 2216 B and owned EH 100%. The sole residual is target fmuls f1,f0,f31 vs ours fmuls f1,f31,f0 at function offset 0x738 (0x800FE924). Swapping source operands, naming reciprocal factor, and accumulating the scale factor did not solve it; accumulator introduced an extra move. Stop after non-discriminating probes; no register permutation/fakematch used. ItemAlias_HitRemapLookup declared int with a short local produced the required extsh r31,r3; short return plus int local instead introduced extsh r0 + mr r31. g_ccClass must be int (cmpwi rather than cmplwi). Keep original asm.
 
-Flight best C below assumes StarWork.contact at +0x7C (split pad4c accordingly), StarFlightConstants { pad[0x3FC]; Vec3 first,second; pad414[0xC]; char jointName[1]; }, extern StarFlightConstants lbl_8032FF60, and extern const float labels. Vec3_HorizontalMagnitude returns float; ItemCollision_Check, Item_CheckWallCollision, Item_AdvanceProjectileSimple return int; ItemTracker_GetTargetKart returns pointer; DrawEffect_SpawnDirect returns unsigned char*. These experiment-only private additions were removed from the final source/header.
+Flight best C below assumes StarWork.contact at +0x7C (split pad4c accordingly), StarFlightConstants { pad[0x3FC]; Vec3 first,second; pad414[0xC]; char jointName[1]; }, extern StarFlightConstants StarItem_FlightAndLockOnTick_rodata_8032FF60, and extern const float labels. Vec3_HorizontalMagnitude returns float; ItemCollision_Check, Item_CheckWallCollision, Item_AdvanceProjectileSimple return int; ItemTracker_GetTargetKart returns pointer; DrawEffect_SpawnDirect returns unsigned char*. These experiment-only private additions were removed from the final source/header.
 
 ```c
 void StarItem_FlightAndLockOnTick(Item *item, StarWork *work)
 {
     Vec3 joint, wallNormal, wallPoint, correction, renderPos, renderRot, groundPos, hitPos, approachPos, approachVelocity, burstPos;
-    StarFlightConstants *constants = &lbl_8032FF60;
+    StarFlightConstants *constants = &StarItem_FlightAndLockOnTick_rodata_8032FF60;
     float distance, speed;
     switch (item->subphase) {
     case 0:

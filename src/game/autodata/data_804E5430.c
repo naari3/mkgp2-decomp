@@ -11,20 +11,20 @@ extern void fn_801F5A64();
 extern void fn_801F5A9C();
 extern char lbl_806D0054[];
 extern char lbl_806D005C[];
-extern char lbl_806D0074[];
+extern char data_804E5430_data_806D0074[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804E5430[5] = {
+void *data_804E5430_data_804E5430[5] = {
     (void *)&lbl_806D0054,
     0,
     (void *)&lbl_806D005C,
     0,
     0
 };
-void *lbl_804E5444[6] = {
-    (void *)&lbl_806D0074,
+void *MenuScene_vtable_804E5444[6] = {
+    (void *)&data_804E5430_data_806D0074,
     0,
     (void *)fn_801F5A9C,
     (void *)fn_801F5A64,

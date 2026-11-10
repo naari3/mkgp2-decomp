@@ -55,7 +55,7 @@ struct clLavaSplash : clMapEffectParts {
     virtual void vKeyFunction2();
 };
 
-extern const char lbl_8036E728[0x18] = {0};
+extern const char LavaSplash_rodata_8036E728[0x18] = {0};
 extern const char lbl_8036E740[0x10] = "clLavaSplash";
 extern const char lbl_8036E750[0x14] = "clMapEffectParts";
 static const char sDeleteMsg[0x24] = " DeleteMapEffect : clLavaSplash\n";
@@ -70,7 +70,7 @@ extern const char lbl_8036E824[0xC] = "clLavaLake";
 extern const char lbl_8036E830[0x10] = "clLavaFalls";
 
 extern "C" {
-extern char lbl_804912B4[];
+extern char clLavaSplash_vtable_804912B4[];
 extern char lbl_80490FE0[];
 extern float lbl_80495994[64];
 void PSVECAdd(Vec3f *, Vec3f *, Vec3f *);
@@ -218,7 +218,7 @@ int fn_801712E4(clLavaSplash *self, float x, float y, float z, float size) {
 
 clLavaSplash *fn_801714E8(clLavaSplash *self, short flag) {
     if (self) {
-        *(void **)self = lbl_804912B4;
+        *(void **)self = clLavaSplash_vtable_804912B4;
         if (self->modelA) {
             Object_DtorWithGXSync(self->modelA, 1);
         }

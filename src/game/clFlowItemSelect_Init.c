@@ -35,13 +35,13 @@ struct TexMgr {
 };
 struct WeightedEntry { int id, weight; };
 extern "C" {
-extern WeightedEntry* lbl_8049B130[3];
-extern const int lbl_8039B3C8[3];
+extern WeightedEntry* clFlowItemSelect_Init_data_8049B130[3];
+extern const int clFlowItemSelect_Init_rodata_8039B3C8[3];
 extern const float lbl_806D9DF8, lbl_806D9E04, lbl_806D9DD8, lbl_806D9DE4;
 extern const float lbl_806D9E08, lbl_806D9E0C, lbl_806D9DC0;
 extern const float lbl_806D9E10, lbl_806D9E14, lbl_806D9E18, lbl_806D9E1C;
 extern const char lbl_806D9DFC[5];
-extern const int lbl_806CFE08, lbl_806CFE0C, lbl_806CFE10, lbl_806CFE14;
+extern const int clFlowItemSelect_Init_data_806CFE08, clFlowItemSelect_Init_data_806CFE0C, clFlowItemSelect_Init_data_806CFE10, clFlowItemSelect_Init_data_806CFE14;
 extern int g_characterId;
 extern unsigned int g_playerData[0x1DC / 4];
 struct InputView {
@@ -185,10 +185,10 @@ FlowItemSelect::FlowItemSelect() : field20(lbl_806D9DF8)
     selected[1] = 0x3D;
     selected[2] = 0x32;
     for (int i = 0; i < 5; ++i) groups[i] = 0;
-    SpriteGroup_CreateOrInit(&groups[0], &lbl_806CFE08, 0, lbl_806D9E04, lbl_806D9DD8);
-    SpriteGroup_CreateOrInit(&groups[1], &lbl_806CFE0C, 0, lbl_806D9DE4, lbl_806D9DD8);
-    SpriteGroup_CreateOrInit(&groups[2], &lbl_806CFE10, 0, lbl_806D9E08, lbl_806D9DD8);
-    SpriteGroup_CreateOrInit(&groups[3], &lbl_806CFE14, 0, lbl_806D9DE4, lbl_806D9E0C);
+    SpriteGroup_CreateOrInit(&groups[0], &clFlowItemSelect_Init_data_806CFE08, 0, lbl_806D9E04, lbl_806D9DD8);
+    SpriteGroup_CreateOrInit(&groups[1], &clFlowItemSelect_Init_data_806CFE0C, 0, lbl_806D9DE4, lbl_806D9DD8);
+    SpriteGroup_CreateOrInit(&groups[2], &clFlowItemSelect_Init_data_806CFE10, 0, lbl_806D9E08, lbl_806D9DD8);
+    SpriteGroup_CreateOrInit(&groups[3], &clFlowItemSelect_Init_data_806CFE14, 0, lbl_806D9DE4, lbl_806D9E0C);
     for (i = 0; i < 3; ++i) {
         SpriteAnimParamBlock_SetAnimParamCached(groups[i], 0x1ECF, 0x1ECD);
         SpriteAnimParamBlock_SetAnimParamCached(groups[i], 0x1ED1, 0x1ECD);
@@ -218,13 +218,13 @@ FlowItemSelect::FlowItemSelect() : field20(lbl_806D9DF8)
     resource.resource = 0x17A3;
     Rand_SetSeedDebug((unsigned char)OSGetTick());
     for (i = 0; i < 3; ++i) {
-        random[i] = new RandomState(lbl_8049B130[i], lbl_8039B3C8[i], unlocked);
+        random[i] = new RandomState(clFlowItemSelect_Init_data_8049B130[i], clFlowItemSelect_Init_rodata_8039B3C8[i], unlocked);
         int sum = 0;
         int roll = Rand15() % 100 + 1;
-        for (int j = 0; j < lbl_8039B3C8[i]; ++j) {
-            sum += lbl_8049B130[i][j].weight;
+        for (int j = 0; j < clFlowItemSelect_Init_rodata_8039B3C8[i]; ++j) {
+            sum += clFlowItemSelect_Init_data_8049B130[i][j].weight;
             if (roll <= sum) {
-                selected[i] = lbl_8049B130[i][j].id;
+                selected[i] = clFlowItemSelect_Init_data_8049B130[i][j].id;
                 switch (selected[i]) {
                 case -2: selected[i] = unlocked[1]; break;
                 case -3: selected[i] = unlocked[2]; break;
@@ -247,8 +247,8 @@ FlowItemSelect::FlowItemSelect() : field20(lbl_806D9DF8)
         for (int j = 0; j < 4; ++j) TexMgr_Apply(textures[i][j]);
     }
     for (i = 0; i < 3; ++i) {
-        for (j = 0; j < lbl_8039B3C8[i]; ++j) {
-            int id = lbl_8049B130[i][j].id;
+        for (j = 0; j < clFlowItemSelect_Init_rodata_8039B3C8[i]; ++j) {
+            int id = clFlowItemSelect_Init_data_8049B130[i][j].id;
             PreloadResource(Item_GetDescriptorField0(id, 0));
             PreloadResource(Item_GetDescriptorFieldC(id) + 0x1E1D);
             PreloadResource(Item_GetDescriptorField8(id) + 0x17A3);

@@ -23,8 +23,8 @@ void __assert(const char *, int, const char *);
  * DeleteMapEffect message in Scene_801709FC). */
 #pragma force_active on
 extern "C" {
-extern const unsigned int lbl_8036E220[0xFF];
-const unsigned int lbl_8036E220[0xFF] = {
+extern const unsigned int Scene_80170B5C_rodata_8036E220[0xFF];
+const unsigned int Scene_80170B5C_rodata_8036E220[0xFF] = {
     0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000,
     0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
     0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,

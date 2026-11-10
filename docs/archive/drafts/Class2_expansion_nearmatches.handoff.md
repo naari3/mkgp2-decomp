@@ -220,8 +220,8 @@ index 3ccec05..a8797c5 100644
  extern unsigned int lbl_806D0051;
 -extern unsigned int lbl_806D1060;
 +extern void *lbl_806D1060;
- extern float lbl_806D1080;
- extern float lbl_806D1084;
+ extern float KartMovement_UpdateBoostVisualBlend_bss_806D1080;
+ extern float KartMovement_UpdateBoostVisualBlend_bss_806D1084;
  extern unsigned int lbl_806D109C;
 @@ -283,14 +283,14 @@ extern const float lbl_806D273C;
  extern const float lbl_806D2740;
@@ -249,20 +249,20 @@ index 3ccec05..a8797c5 100644
 @@ -327,8 +327,7 @@ extern unsigned int jumptable_803F7640[];
  extern unsigned int jumptable_803F7668[];
  extern unsigned int lbl_802EBA18[];
- extern const float lbl_802EBE14[]; /* 8-float boost blend color table */
--extern unsigned int lbl_802ED5B4[];
--extern unsigned int lbl_802ED7BC[];
+ extern const float KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[]; /* 8-float boost blend color table */
+-extern unsigned int ItemEffect_Projectile_rodata_802ED5B4[];
+-extern unsigned int ItemEffect_Trap_rodata_802ED7BC[];
 +
- extern unsigned int lbl_802ED94C[];
- extern unsigned int lbl_802ED9E4[];
- extern unsigned int lbl_802ED9F4[];
+ extern unsigned int CarObject_HandleItemEffect_rodata_802ED94C[];
+ extern unsigned int KartItem_ApplyImpactReflectAndDampVelocity_rodata_802ED9E4[];
+ extern unsigned int KartItem_PerFrameStep_rodata_802ED9F4[];
 @@ -942,6 +941,175 @@ typedef struct SweepCfgView {
      Vec3 centerB;           /* 0x440 */
  } SweepCfgView;
  
 +/* --- views for ItemEffect_Trap / ItemEffect_Projectile --- */
 +
-+/* trap effect table entry (stride 0x18, lbl_802ED7BC) */
++/* trap effect table entry (stride 0x18, ItemEffect_Trap_rodata_802ED7BC) */
 +typedef struct TrapFxEntry {
 +    int id;             /* 0x0 */
 +    float scaleA;       /* 0x4: TryArm vector scale */
@@ -272,9 +272,9 @@ index 3ccec05..a8797c5 100644
 +    int valD;           /* 0x14 */
 +} TrapFxEntry;
 +
-+extern TrapFxEntry lbl_802ED7BC[];
++extern TrapFxEntry ItemEffect_Trap_rodata_802ED7BC[];
 +
-+/* projectile effect table entry (stride 0x14, lbl_802ED5B4) */
++/* projectile effect table entry (stride 0x14, ItemEffect_Projectile_rodata_802ED5B4) */
 +typedef struct ProjFxEntry {
 +    int id;             /* 0x0 */
 +    float scaleA;       /* 0x4 */
@@ -283,7 +283,7 @@ index 3ccec05..a8797c5 100644
 +    int valD;           /* 0x10 */
 +} ProjFxEntry;
 +
-+extern ProjFxEntry lbl_802ED5B4[];
++extern ProjFxEntry ItemEffect_Projectile_rodata_802ED5B4[];
 +
 +/* item bus view exposing the trap scale slot at +0x28 */
 +typedef struct ItemBusTrapView {
@@ -449,7 +449,7 @@ index 3ccec05..a8797c5 100644
  asm void KartItem_PerFrameStep(void) { /* 0x8004C320 size:0xC44 */
      nofralloc
 @@ -9035,6 +9205,7 @@ asm void ItemEffect_Explosion(ItemStateBlock *self, int idx, void *arg) { /* 0x8
-  * across the ItemEffectDamp_TryArm call while the lbl_802ED7BC table base is
+  * across the ItemEffectDamp_TryArm call while the ItemEffect_Trap_rodata_802ED7BC table base is
   * rematerialized (lis/addi) per use region - the TryStartByCategory
   * addressing-reassociation family; CW saves the full pointer instead. */
 +#define VF(x) (*(volatile float *)&(x))
@@ -466,7 +466,7 @@ index 3ccec05..a8797c5 100644
   * ItemEffect_Projectile has the same two classes as ItemEffect_Trap above:
 @@ -9191,6 +9363,7 @@ asm void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg) { /* 0x800518
   * mulli r31,r4,0x14 kept callee-saved across ItemEffectImpact_TryArm with
-  * the lbl_802ED5B4 base rematerialized per region. The first normalize
+  * the ItemEffect_Projectile_rodata_802ED5B4 base rematerialized per region. The first normalize
   * block (from arg+0xb8, no frsp) is solvable with the Explosion recipe. */
 +#define VF(x) (*(volatile float *)&(x))
  asm void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg) { /* 0x80051A70 size:0x248 */
@@ -1093,7 +1093,7 @@ void ItemEffect_Trap(ItemStateBlock *self, int idx, ItemObjectPosView *arg) { /*
                 scale = lbl_806D26E4;
             }
         }
-        scale = scale * lbl_802ED7BC[idx].scaleB;
+        scale = scale * ItemEffect_Trap_rodata_802ED7BC[idx].scaleB;
     }
     {
         KartMovementSpeedView *mv2;
@@ -1105,16 +1105,16 @@ void ItemEffect_Trap(ItemStateBlock *self, int idx, ItemObjectPosView *arg) { /*
         v.vecA[0] = v.vecA[0] * lbl_806D2730;
         v.vecA[1] = v.vecA[1] * lbl_806D2730;
         v.vecA[2] = v.vecA[2] * lbl_806D2730;
-        v.vecA[0] = v.vecA[0] * lbl_802ED7BC[idx].scaleA;
-        v.vecA[1] = v.vecA[1] * lbl_802ED7BC[idx].scaleA;
-        v.vecA[2] = v.vecA[2] * lbl_802ED7BC[idx].scaleA;
+        v.vecA[0] = v.vecA[0] * ItemEffect_Trap_rodata_802ED7BC[idx].scaleA;
+        v.vecA[1] = v.vecA[1] * ItemEffect_Trap_rodata_802ED7BC[idx].scaleA;
+        v.vecA[2] = v.vecA[2] * ItemEffect_Trap_rodata_802ED7BC[idx].scaleA;
         v.vecB[0] = mv2->velX;
         v.vecB[1] = mv2->velY;
         v.vecB[2] = mv2->velZ;
-        ItemEffectDamp_TryArm(self->guard, v.vecA, lbl_802ED7BC[idx].mode, mv2->accel1c8, scale, lbl_806D2730);
+        ItemEffectDamp_TryArm(self->guard, v.vecA, ItemEffect_Trap_rodata_802ED7BC[idx].mode, mv2->accel1c8, scale, lbl_806D2730);
     }
     ((ItemBusTrapView *)self->owner->ownerDriver->itemBus)->trapScale28 = scale;
-    *(IdFlagPair *)&self->activeId = *(const IdFlagPair *)&lbl_802ED7BC[idx].valC;
+    *(IdFlagPair *)&self->activeId = *(const IdFlagPair *)&ItemEffect_Trap_rodata_802ED7BC[idx].valC;
 }
 #pragma exceptions reset
 #undef VF
@@ -1208,11 +1208,11 @@ void ItemEffect_Projectile(ItemStateBlock *self, int idx, ItemObjectPosView *arg
     s.vecA[0] = s.vecA[0] * lbl_806D2730;
     s.vecA[1] = s.vecA[1] * lbl_806D2730;
     s.vecA[2] = s.vecA[2] * lbl_806D2730;
-    s.vecA[0] = s.vecA[0] * lbl_802ED5B4[idx].scaleA;
-    s.vecA[1] = s.vecA[1] * lbl_802ED5B4[idx].scaleA;
-    s.vecA[2] = s.vecA[2] * lbl_802ED5B4[idx].scaleA;
-    ItemEffectImpact_TryArm(self->guard, s.vecA, self->owner->movement->transform, lbl_802ED5B4[idx].mode8);
-    *(IdFlagPair *)&self->activeId = *(const IdFlagPair *)&lbl_802ED5B4[idx].valC;
+    s.vecA[0] = s.vecA[0] * ItemEffect_Projectile_rodata_802ED5B4[idx].scaleA;
+    s.vecA[1] = s.vecA[1] * ItemEffect_Projectile_rodata_802ED5B4[idx].scaleA;
+    s.vecA[2] = s.vecA[2] * ItemEffect_Projectile_rodata_802ED5B4[idx].scaleA;
+    ItemEffectImpact_TryArm(self->guard, s.vecA, self->owner->movement->transform, ItemEffect_Projectile_rodata_802ED5B4[idx].mode8);
+    *(IdFlagPair *)&self->activeId = *(const IdFlagPair *)&ItemEffect_Projectile_rodata_802ED5B4[idx].valC;
 }
 #pragma exceptions reset
 #undef VF

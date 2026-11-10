@@ -29,7 +29,7 @@ struct SparkEffect {
 struct SparkCamera { float world[16], view[16]; SparkVec3 position; };
 extern "C" {
 extern SparkCamera lbl_805DF3D0;
-extern const SparkVec3 lbl_8032A430[7];
+extern const SparkVec3 KartFx_DriftSparkParticleTick_rodata_8032A430[7];
 extern const float lbl_806D51C0, lbl_806D51C4, lbl_806D51D4;
 extern const float lbl_806D5208, lbl_806D521C, lbl_806D5220, lbl_806D5224;
 extern const float lbl_806D5228, lbl_806D5230, lbl_806D5244, lbl_806D5280;
@@ -88,7 +88,7 @@ void KartFx_DriftSparkParticleTick(SparkEffect *effect) {
                 effect->scale * Rand_RangeFloat(lbl_806D5208, lbl_806D5228),
                 effect->scale, effect->scale);
         }
-        Vec3_Copy(&effect->color, &lbl_8032A430[Rand_RangeIntMax(31) % 7]);
+        Vec3_Copy(&effect->color, &KartFx_DriftSparkParticleTick_rodata_8032A430[Rand_RangeIntMax(31) % 7]);
         ++effect->state;
     case 1:
         effect->opacity += lbl_806D51D4 * effect->maximumOpacity;

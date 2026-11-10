@@ -2,7 +2,7 @@ diff --git a/src/game/CourseObjects_801375D8.cpp b/src/game/CourseObjects_801375
 index 836e47a..cc4f083 100644
 --- a/src/game/CourseObjects_801375D8.cpp
 +++ b/src/game/CourseObjects_801375D8.cpp
-@@ -49,14 +49,14 @@ extern Occluder *lbl_806D1520;
+@@ -49,14 +49,14 @@ extern Occluder *CourseObjects_801375D8_bss_806D1520;
  void PSMTXMultVec(const float (*m)[4], const Vec3f *src, Vec3f *dst);
  void PSVECCrossProduct(const Vec3f *a, const Vec3f *b, Vec3f *axb);
  void Vec3_Normalize(const Vec3f *src, Vec3f *dst);

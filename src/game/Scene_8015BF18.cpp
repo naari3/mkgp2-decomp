@@ -4,7 +4,7 @@ extern "C" {
 extern PlayerDataRecord g_playerData;
 extern int g_ccClass,g_characterId;
 extern const float lbl_806D866C,lbl_806D8670,lbl_806D8674,lbl_806D8678,lbl_806D867C,lbl_806D8680;
-extern int lbl_80368C84[];
+extern int Scene_8015BF18_rodata_80368C84[];
 unsigned char IsCardValid(); unsigned char fn_801D5C88(PlayerDataRecord *,int);
 void SoundMgr_Play(int); void fn_80121210(); void fn_801426A0(void *,int,int);
 void GXDrawDone();
@@ -28,7 +28,7 @@ inline ResultIntro::ResultIntro(int i) {
     env=new ResultEnvironment;
     model=new ResultInnerModel(0);
     fn_801426A0(model,0,g_characterId);
-    sprite=new ResultPopupSprite(lbl_80368C84[i],1,0);
+    sprite=new ResultPopupSprite(Scene_8015BF18_rodata_80368C84[i],1,0);
     inner.mode=2; inner.SetSize(lbl_806D867C,lbl_806D8680);
     inner.Show(lbl_806D866C,lbl_806D8670,lbl_806D8674); inner.SetColor(0);
     fade.mode=2; fade.SetSize(lbl_806D867C,lbl_806D8680);

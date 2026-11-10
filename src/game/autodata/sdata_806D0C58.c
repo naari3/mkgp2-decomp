@@ -8,7 +8,7 @@
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-unk32 lbl_806D0C58[2] = {
+unk32 sndRand_data_806D0C58[2] = {
     0x00000001, 0x00000000
 };
 

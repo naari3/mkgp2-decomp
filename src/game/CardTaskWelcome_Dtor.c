@@ -5,7 +5,7 @@
  * trivial C++ deleting dtor with vtable demote + conditional delete.
  *
  *   1. if (this != NULL) demote *this back to the CardTaskWelcome vtable
- *      (&lbl_803FE8B8) so any derived chain that follows sees a cleanly
+ *      (&CardTaskObject_vtable_803FE8B8) so any derived chain that follows sees a cleanly
  *      typed base subobject.
  *   2. if the second arg (delete-flag, passed as a short) is > 0, call
  *      `MemoryManager_TimedFree(this)` (= MemoryManager_TimedFree) to release the
@@ -20,17 +20,17 @@
  *
  * Renames pending (HANDOFF.md):
  *   dtor_8008A058 -> CardTaskWelcome_Dtor
- *   lbl_803FE8B8  -> g_CardTaskWelcomeVtable (left as lbl_ for now,
+ *   CardTaskObject_vtable_803FE8B8  -> g_CardTaskWelcomeVtable (left as lbl_ for now,
  *                    block-level rename is owned by separate batch)
  */
 
 extern void MemoryManager_TimedFree(void *);
-extern char lbl_803FE8B8[];  /* CardTaskWelcome vtable @ 0x803FE8B8 */
+extern char CardTaskObject_vtable_803FE8B8[];  /* CardTaskWelcome vtable @ 0x803FE8B8 */
 
 #pragma exceptions on
 void *dtor_8008A058(void *this, short flag) {
     if (this != 0) {
-        *(char **)this = lbl_803FE8B8;
+        *(char **)this = CardTaskObject_vtable_803FE8B8;
         if (flag > 0) {
             MemoryManager_TimedFree(this);
         }

@@ -4,7 +4,7 @@
 extern "C" {
 extern int g_totalLaps;
 extern const float lbl_806DBF18, lbl_806DBF1C, lbl_806DBF24, lbl_806DBF38;
-extern DigitPosition lbl_803EF7C0[2][4];
+extern DigitPosition RaceDigitUpdate_rodata_803EF7C0[2][4];
 int GetDisplayBufferIndex();
 unsigned char ServiceEnable_Get();
 unsigned char ServiceValue_Get();

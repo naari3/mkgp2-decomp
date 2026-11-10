@@ -138,9 +138,9 @@ void fn_80161444(CoinPopupDetail *o) {
     }
     if (cnt == 2) {
         if (o->mode == 0) {
-            Sprite_SetupAnim(*fn_80146000(&o->sprites, 0), lbl_80368D80[PopupInfo_Get(o->idxA)->a].anim8, 1, 0);
+            Sprite_SetupAnim(*fn_80146000(&o->sprites, 0), resultscene_nm1_rodata_80368D80[PopupInfo_Get(o->idxA)->a].anim8, 1, 0);
         } else {
-            Sprite_SetupAnim(*fn_80146000(&o->sprites, 1), lbl_80368D80[PopupInfo_Get(o->idxB)->b].anim8, 1, 0);
+            Sprite_SetupAnim(*fn_80146000(&o->sprites, 1), resultscene_nm1_rodata_80368D80[PopupInfo_Get(o->idxB)->b].anim8, 1, 0);
         }
         fn_80161128(o);
         o->x40 = 0x80;
@@ -156,15 +156,15 @@ extern "C" {
 void fn_80161720(CoinPopupDetail *o) {
     int anim;
     if (o->mode == 0) {
-        anim = lbl_80368D80[PopupInfo_Get(o->idxA)->a].animC;
+        anim = resultscene_nm1_rodata_80368D80[PopupInfo_Get(o->idxA)->a].animC;
     } else {
-        anim = lbl_80368D80[PopupInfo_Get(o->idxA)->a].anim14;
+        anim = resultscene_nm1_rodata_80368D80[PopupInfo_Get(o->idxA)->a].anim14;
     }
     Sprite_SetupAnim(*fn_80146000(&o->sprites, 0), anim, 1, 0);
     if (o->mode == 1) {
-        anim = lbl_80368D80[PopupInfo_Get(o->idxB)->b].animC;
+        anim = resultscene_nm1_rodata_80368D80[PopupInfo_Get(o->idxB)->b].animC;
     } else {
-        anim = lbl_80368D80[PopupInfo_Get(o->idxB)->b].anim14;
+        anim = resultscene_nm1_rodata_80368D80[PopupInfo_Get(o->idxB)->b].anim14;
     }
     Sprite_SetupAnim(*fn_80146000(&o->sprites, 1), anim, 1, 0);
     fn_80161128(o);
@@ -177,11 +177,11 @@ void fn_801615A4(CoinPopupDetail *o) {
     if (o->active) {
         fn_801FE348();
         if (o->mode == 0) {
-            Sprite_SetupAnim(*fn_80146000(&o->sprites, 1), lbl_80368D80[PopupInfo_Get(o->idxB)->b].anim18, 1, 0);
+            Sprite_SetupAnim(*fn_80146000(&o->sprites, 1), resultscene_nm1_rodata_80368D80[PopupInfo_Get(o->idxB)->b].anim18, 1, 0);
             TexMgr_SetTexture(*fn_80146000(&o->bufs, 2), lbl_806D884C);
             TexMgr_SetTexture(*fn_80146000(&o->bufs, 3), lbl_806D884C);
         } else {
-            Sprite_SetupAnim(*fn_80146000(&o->sprites, 0), lbl_80368D80[PopupInfo_Get(o->idxA)->a].anim18, 1, 0);
+            Sprite_SetupAnim(*fn_80146000(&o->sprites, 0), resultscene_nm1_rodata_80368D80[PopupInfo_Get(o->idxA)->a].anim18, 1, 0);
             TexMgr_SetTexture(*fn_80146000(&o->bufs, 0), lbl_806D884C);
             TexMgr_SetTexture(*fn_80146000(&o->bufs, 1), lbl_806D884C);
         }
@@ -328,10 +328,10 @@ void fn_80160E04(CoinPopupDetail *o) {
             fn_801F8E90(*fn_80146000(&o->bufs, 1));
             if (o->state == 0) {
                 PopupInfo *info = PopupInfo_Get(o->idxA);
-                Sprite_SetupAnim(*fn_80146000(&o->sprites, 0), lbl_80368D80[info->a].pad0, 1, 0);
+                Sprite_SetupAnim(*fn_80146000(&o->sprites, 0), resultscene_nm1_rodata_80368D80[info->a].pad0, 1, 0);
             } else {
                 PopupInfo *info = PopupInfo_Get(o->idxA);
-                Sprite_SetupAnim(*fn_80146000(&o->sprites, 0), lbl_80368D80[info->a].pad4, 1, 0);
+                Sprite_SetupAnim(*fn_80146000(&o->sprites, 0), resultscene_nm1_rodata_80368D80[info->a].pad4, 1, 0);
                 fn_8019FF6C(*fn_80146000(&o->sprites, 0), 1);
             }
             if (PopupInput_Peek()) {
@@ -400,11 +400,11 @@ void fn_80160588(void *self, int step, bool confirm) {
     }
     if (o->pad14 != o->mode && o->state < 3 && o->state > 0) {
         int anim;
-        if (o->mode == 0) anim = lbl_80368D80[PopupInfo_Get(o->idxA)->a].pad4;
-        else anim = lbl_80368D80[PopupInfo_Get(o->idxA)->a].anim14;
+        if (o->mode == 0) anim = resultscene_nm1_rodata_80368D80[PopupInfo_Get(o->idxA)->a].pad4;
+        else anim = resultscene_nm1_rodata_80368D80[PopupInfo_Get(o->idxA)->a].anim14;
         Sprite_SetupAnim(*fn_80146000(&o->sprites, 0), anim, 1, 0);
-        if (o->mode == 1) anim = lbl_80368D80[PopupInfo_Get(o->idxB)->b].pad4;
-        else anim = lbl_80368D80[PopupInfo_Get(o->idxB)->b].anim14;
+        if (o->mode == 1) anim = resultscene_nm1_rodata_80368D80[PopupInfo_Get(o->idxB)->b].pad4;
+        else anim = resultscene_nm1_rodata_80368D80[PopupInfo_Get(o->idxB)->b].anim14;
         Sprite_SetupAnim(*fn_80146000(&o->sprites, 1), anim, 1, 0);
         fn_8019FF6C(*fn_80146000(&o->sprites, 0), 1);
         fn_8019FF6C(*fn_80146000(&o->sprites, 1), 1);
@@ -451,10 +451,10 @@ CoinPopupDetail::CoinPopupDetail(int initialMode, int enabled, int index)
     for (it = sprites.data; it != sprites.data + sprites.b; ++it) *it = 0;
     for (it = bufs.data; it != bufs.data + bufs.b; ++it) *it = 0;
     *fn_80146000(&sprites, 0) = new ResultPopupSprite(
-        mode == 0 ? lbl_80368D80[PopupInfo_Get(idxA)->a].pad0 : lbl_80368D80[PopupInfo_Get(idxA)->a].anim10,
+        mode == 0 ? resultscene_nm1_rodata_80368D80[PopupInfo_Get(idxA)->a].pad0 : resultscene_nm1_rodata_80368D80[PopupInfo_Get(idxA)->a].anim10,
         1, 0);
     *fn_80146000(&sprites, 1) = new ResultPopupSprite(
-        mode == 1 ? lbl_80368D80[PopupInfo_Get(idxB)->b].pad0 : lbl_80368D80[PopupInfo_Get(idxB)->b].anim10,
+        mode == 1 ? resultscene_nm1_rodata_80368D80[PopupInfo_Get(idxB)->b].pad0 : resultscene_nm1_rodata_80368D80[PopupInfo_Get(idxB)->b].anim10,
         1, 0);
     Sprite_SetAnimParam(*fn_80146000(&sprites, 0), 0x23e7, 0x1ecd);
     Sprite_SetAnimParam(*fn_80146000(&sprites, 1), 0x23e7, 0x1ecd);
@@ -518,9 +518,9 @@ ResultSub::ResultSub(int a, int b) : ResultMid(b) {
     anims[0] = 0;
     anims[1] = 0;
     anims[2] = 0;
-    SpriteGroup_CreateOrInit(&anims[0], lbl_806CF914, 0, lbl_806D87D4, lbl_806D87D8);
-    SpriteGroup_CreateOrInit(&anims[1], lbl_806CF918, 0, lbl_806D87D4, lbl_806D87D8);
-    SpriteGroup_CreateOrInit(&anims[2], lbl_806CF91C, 0, lbl_806D8858, lbl_806D885C);
+    SpriteGroup_CreateOrInit(&anims[0], resultscene_nm1_data_806CF914, 0, lbl_806D87D4, lbl_806D87D8);
+    SpriteGroup_CreateOrInit(&anims[1], resultscene_nm1_data_806CF918, 0, lbl_806D87D4, lbl_806D87D8);
+    SpriteGroup_CreateOrInit(&anims[2], resultscene_nm1_data_806CF91C, 0, lbl_806D8858, lbl_806D885C);
     SpriteAnimParamBlock_SetAnimParamCached(anims[2], 0x1ad4, 0x1ad9);
     ((ResultPopupSprite *)*(void **)anims[1])->alpha = lbl_806D87C8;
     fn_8019FF6C(*(void **)anims[1], 1);

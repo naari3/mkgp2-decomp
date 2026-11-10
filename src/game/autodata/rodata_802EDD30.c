@@ -9,7 +9,7 @@
 #pragma force_active on
 
 /* decl: Vec3 */
-const unk32 lbl_802EDD30[10] = {
+const unk32 SoundVolumePan_Update_rodata_802EDD30[10] = {
     0x00000000, 0x00000000, 0x00000000, 0x65206E20, 0x25662074, 0x20256600, 0x73206E20, 0x25662074,
     0x20256600, 0x00000000
 };

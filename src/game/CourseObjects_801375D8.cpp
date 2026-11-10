@@ -39,11 +39,11 @@ struct JObj {
 /* TOP-END */
 
 extern "C" {
-extern float (*lbl_806D1518)[4];
-extern float *lbl_806D151C;
-extern Vec3f lbl_80677CB8;
-extern Occluder *lbl_806D1524;
-extern Occluder *lbl_806D1520;
+extern float (*CourseObjects_801375D8_bss_806D1518)[4];
+extern float *CourseObjects_801375D8_bss_806D151C;
+extern Vec3f CourseObjects_801375D8_bss_80677CB8;
+extern Occluder *CourseObjects_801375D8_bss_806D1524;
+extern Occluder *CourseObjects_801375D8_bss_806D1520;
 void PSMTXMultVec(const float (*m)[4], const Vec3f *src, Vec3f *dst);
 void PSVECCrossProduct(const Vec3f *a, const Vec3f *b, Vec3f *axb);
 void Vec3_Normalize(const Vec3f *src, Vec3f *dst);
@@ -71,25 +71,25 @@ Occluder *fn_80138A50(Occluder *o, const Vec3f *a, const Vec3f *b, const Vec3f *
 
 static inline unsigned char SphereInViewFrustum(const Vec3f *p, Vec3f *v, float r)
 {
-    v->z = lbl_806D1518[2][0] * p->x + lbl_806D1518[2][1] * p->y + lbl_806D1518[2][2] * p->z + lbl_806D1518[2][3];
-    if (v->z - r > lbl_806D151C[16]) {
+    v->z = CourseObjects_801375D8_bss_806D1518[2][0] * p->x + CourseObjects_801375D8_bss_806D1518[2][1] * p->y + CourseObjects_801375D8_bss_806D1518[2][2] * p->z + CourseObjects_801375D8_bss_806D1518[2][3];
+    if (v->z - r > CourseObjects_801375D8_bss_806D151C[16]) {
         return 0;
     }
-    if (v->z + r < lbl_806D151C[17]) {
+    if (v->z + r < CourseObjects_801375D8_bss_806D151C[17]) {
         return 0;
     }
-    v->x = lbl_806D1518[0][0] * p->x + lbl_806D1518[0][1] * p->y + lbl_806D1518[0][2] * p->z + lbl_806D1518[0][3];
-    if (v->x * lbl_806D151C[0] + v->z * lbl_806D151C[2] > r) {
+    v->x = CourseObjects_801375D8_bss_806D1518[0][0] * p->x + CourseObjects_801375D8_bss_806D1518[0][1] * p->y + CourseObjects_801375D8_bss_806D1518[0][2] * p->z + CourseObjects_801375D8_bss_806D1518[0][3];
+    if (v->x * CourseObjects_801375D8_bss_806D151C[0] + v->z * CourseObjects_801375D8_bss_806D151C[2] > r) {
         return 0;
     }
-    if (v->x * lbl_806D151C[4] + v->z * lbl_806D151C[6] > r) {
+    if (v->x * CourseObjects_801375D8_bss_806D151C[4] + v->z * CourseObjects_801375D8_bss_806D151C[6] > r) {
         return 0;
     }
-    v->y = lbl_806D1518[1][0] * p->x + lbl_806D1518[1][1] * p->y + lbl_806D1518[1][2] * p->z + lbl_806D1518[1][3];
-    if (v->y * lbl_806D151C[9] + v->z * lbl_806D151C[10] > r) {
+    v->y = CourseObjects_801375D8_bss_806D1518[1][0] * p->x + CourseObjects_801375D8_bss_806D1518[1][1] * p->y + CourseObjects_801375D8_bss_806D1518[1][2] * p->z + CourseObjects_801375D8_bss_806D1518[1][3];
+    if (v->y * CourseObjects_801375D8_bss_806D151C[9] + v->z * CourseObjects_801375D8_bss_806D151C[10] > r) {
         return 0;
     }
-    if (v->y * lbl_806D151C[13] + v->z * lbl_806D151C[14] > r) {
+    if (v->y * CourseObjects_801375D8_bss_806D151C[13] + v->z * CourseObjects_801375D8_bss_806D151C[14] > r) {
         return 0;
     }
     return 1;
@@ -118,29 +118,29 @@ static inline unsigned char SphereNotOccluded(const Occluder *o, const Vec3f *v,
     return 0;
 }
 
-/* Same frustum test as SphereInViewFrustum, writing the view-space centre to lbl_80677CB8. */
+/* Same frustum test as SphereInViewFrustum, writing the view-space centre to CourseObjects_801375D8_bss_80677CB8. */
 static inline unsigned char SphereInViewFrustumGlobal(const Vec3f *p, float r)
 {
-    lbl_80677CB8.z = lbl_806D1518[2][0] * p->x + lbl_806D1518[2][1] * p->y + lbl_806D1518[2][2] * p->z + lbl_806D1518[2][3];
-    if (lbl_80677CB8.z - r > lbl_806D151C[16]) {
+    CourseObjects_801375D8_bss_80677CB8.z = CourseObjects_801375D8_bss_806D1518[2][0] * p->x + CourseObjects_801375D8_bss_806D1518[2][1] * p->y + CourseObjects_801375D8_bss_806D1518[2][2] * p->z + CourseObjects_801375D8_bss_806D1518[2][3];
+    if (CourseObjects_801375D8_bss_80677CB8.z - r > CourseObjects_801375D8_bss_806D151C[16]) {
         return 0;
     }
-    if (lbl_80677CB8.z + r < lbl_806D151C[17]) {
+    if (CourseObjects_801375D8_bss_80677CB8.z + r < CourseObjects_801375D8_bss_806D151C[17]) {
         return 0;
     }
-    float x = lbl_806D1518[0][0] * p->x + lbl_806D1518[0][1] * p->y + lbl_806D1518[0][2] * p->z + lbl_806D1518[0][3];
-    lbl_80677CB8.x = x;
-    if (x * lbl_806D151C[0] + lbl_80677CB8.z * lbl_806D151C[2] > r) {
+    float x = CourseObjects_801375D8_bss_806D1518[0][0] * p->x + CourseObjects_801375D8_bss_806D1518[0][1] * p->y + CourseObjects_801375D8_bss_806D1518[0][2] * p->z + CourseObjects_801375D8_bss_806D1518[0][3];
+    CourseObjects_801375D8_bss_80677CB8.x = x;
+    if (x * CourseObjects_801375D8_bss_806D151C[0] + CourseObjects_801375D8_bss_80677CB8.z * CourseObjects_801375D8_bss_806D151C[2] > r) {
         return 0;
     }
-    if (x * lbl_806D151C[4] + lbl_80677CB8.z * lbl_806D151C[6] > r) {
+    if (x * CourseObjects_801375D8_bss_806D151C[4] + CourseObjects_801375D8_bss_80677CB8.z * CourseObjects_801375D8_bss_806D151C[6] > r) {
         return 0;
     }
-    lbl_80677CB8.y = lbl_806D1518[1][0] * p->x + lbl_806D1518[1][1] * p->y + lbl_806D1518[1][2] * p->z + lbl_806D1518[1][3];
-    if (lbl_80677CB8.y * lbl_806D151C[9] + lbl_80677CB8.z * lbl_806D151C[10] > r) {
+    CourseObjects_801375D8_bss_80677CB8.y = CourseObjects_801375D8_bss_806D1518[1][0] * p->x + CourseObjects_801375D8_bss_806D1518[1][1] * p->y + CourseObjects_801375D8_bss_806D1518[1][2] * p->z + CourseObjects_801375D8_bss_806D1518[1][3];
+    if (CourseObjects_801375D8_bss_80677CB8.y * CourseObjects_801375D8_bss_806D151C[9] + CourseObjects_801375D8_bss_80677CB8.z * CourseObjects_801375D8_bss_806D151C[10] > r) {
         return 0;
     }
-    if (lbl_80677CB8.y * lbl_806D151C[13] + lbl_80677CB8.z * lbl_806D151C[14] > r) {
+    if (CourseObjects_801375D8_bss_80677CB8.y * CourseObjects_801375D8_bss_806D151C[13] + CourseObjects_801375D8_bss_80677CB8.z * CourseObjects_801375D8_bss_806D151C[14] > r) {
         return 0;
     }
     return 1;
@@ -154,12 +154,12 @@ extern "C" unsigned char fn_801375D8(const Vec3f *p, float r)
 extern "C" unsigned char fn_80137718(const Vec3f *p, Vec3f *out, float r)
 {
     if (out == 0) {
-        out = &lbl_80677CB8;
+        out = &CourseObjects_801375D8_bss_80677CB8;
     }
     if (!SphereInViewFrustum(p, out, r)) {
         return 0;
     }
-    for (Occluder *o = lbl_806D1524; o != 0; o = o->activeNext) {
+    for (Occluder *o = CourseObjects_801375D8_bss_806D1524; o != 0; o = o->activeNext) {
         if (!SphereNotOccluded(o, out, r)) {
             return 0;
         }
@@ -172,8 +172,8 @@ extern "C" unsigned char fn_801379F0(const Vec3f *p, float r)
     if (!SphereInViewFrustumGlobal(p, r)) {
         return 0;
     }
-    for (Occluder *o = lbl_806D1524; o != 0; o = o->activeNext) {
-        if (!SphereNotOccluded(o, &lbl_80677CB8, r)) {
+    for (Occluder *o = CourseObjects_801375D8_bss_806D1524; o != 0; o = o->activeNext) {
+        if (!SphereNotOccluded(o, &CourseObjects_801375D8_bss_80677CB8, r)) {
             return 0;
         }
     }
@@ -184,15 +184,15 @@ extern "C" void fn_80137C8C(float (*m)[4], float *frustum)
 {
     Occluder *o;
     Occluder *tail;
-    lbl_806D1518 = m;
-    lbl_806D151C = frustum;
-    lbl_806D1524 = 0;
+    CourseObjects_801375D8_bss_806D1518 = m;
+    CourseObjects_801375D8_bss_806D151C = frustum;
+    CourseObjects_801375D8_bss_806D1524 = 0;
     tail = 0;
-    for (o = lbl_806D1520; o != 0; o = o->next) {
+    for (o = CourseObjects_801375D8_bss_806D1520; o != 0; o = o->next) {
         Vec3f v;
         if (SphereInViewFrustum(&o->center, &v, o->radius) && fn_80137E50(&o->shape)) {
             if (tail == 0) {
-                lbl_806D1524 = o;
+                CourseObjects_801375D8_bss_806D1524 = o;
                 tail = o;
                 o->activeNext = 0;
             } else {
@@ -229,13 +229,13 @@ extern "C" unsigned char fn_80137E50(OccluderShape *s)
     Vec3f v1;
     Vec3f v2;
     Vec3f v3;
-    if (lbl_806D1518 == 0 || s == 0) {
+    if (CourseObjects_801375D8_bss_806D1518 == 0 || s == 0) {
         return 0;
     }
-    PSMTXMultVec(lbl_806D1518, &s->pts[0], &v0);
-    PSMTXMultVec(lbl_806D1518, &s->pts[1], &v1);
-    PSMTXMultVec(lbl_806D1518, &s->pts[2], &v2);
-    PSMTXMultVec(lbl_806D1518, &s->pts[3], &v3);
+    PSMTXMultVec(CourseObjects_801375D8_bss_806D1518, &s->pts[0], &v0);
+    PSMTXMultVec(CourseObjects_801375D8_bss_806D1518, &s->pts[1], &v1);
+    PSMTXMultVec(CourseObjects_801375D8_bss_806D1518, &s->pts[2], &v2);
+    PSMTXMultVec(CourseObjects_801375D8_bss_806D1518, &s->pts[3], &v3);
     s->zmax = v0.z;
     if (v1.z > s->zmax) {
         s->zmax = v1.z;
@@ -268,7 +268,7 @@ extern "C" unsigned char fn_80137E50(OccluderShape *s)
 
 extern "C" void fn_80138578(void)
 {
-    Occluder *p = lbl_806D1520;
+    Occluder *p = CourseObjects_801375D8_bss_806D1520;
     while (p) {
         Occluder *next = p->next;
         if (p) {
@@ -276,8 +276,8 @@ extern "C" void fn_80138578(void)
         }
         p = next;
     }
-    lbl_806D1520 = 0;
-    lbl_806D1524 = 0;
+    CourseObjects_801375D8_bss_806D1520 = 0;
+    CourseObjects_801375D8_bss_806D1524 = 0;
 }
 
 void *operator new(unsigned long size);
@@ -333,8 +333,8 @@ extern "C" void fn_801385CC(JObj *root)
                     if (fn_80185FE8(jobj, pobj, &v[0], &v[1], &v[2], &v[3])) {
                         Occluder *o = new Occluder(&v[0], &v[1], &v[2], &v[3]);
                         Occluder *p;
-                        if ((p = lbl_806D1520) == 0) {
-                            lbl_806D1520 = o;
+                        if ((p = CourseObjects_801375D8_bss_806D1520) == 0) {
+                            CourseObjects_801375D8_bss_806D1520 = o;
                         } else {
                             while (p->next) {
                                 p = p->next;

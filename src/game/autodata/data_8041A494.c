@@ -24,7 +24,7 @@ extern char lbl_8032A9E0[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_8041A494[15] = {
+void *Effect_DriftExplosion_Res7A_JointChain_Update_data_8041A494[15] = {
     (void *)&lbl_8032A890,
     (void *)&lbl_8032A8A8,
     (void *)&lbl_8032A8C0,

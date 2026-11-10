@@ -19,27 +19,27 @@ extern void fn_8005249C();
 extern void fn_800524AC();
 extern void fn_800524B4();
 extern void fn_800AA8E0();
-extern char lbl_806CEE00[];
-extern char lbl_806CEE08[];
+extern char data_803F75D0_data_806CEE00[];
+extern char data_803F75D0_data_806CEE08[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-unsigned int lbl_803F75D0[7] = {
+unsigned int CarObject_HandleItemEffect_data_803F75D0[7] = {
     0x240026, 0x25000C, 0x14000D, 0x110018, 0x130027, 0xF008B, 0x910000
 };
-void *lbl_803F75EC[3] = {
-    (void *)&lbl_806CEE00,
+void *data_803F75D0_data_803F75EC[3] = {
+    (void *)&data_803F75D0_data_806CEE00,
     0,
     0
 };
 /* decl: unsigned int */
-void *lbl_803F75F8[18] = {
-    (void *)&lbl_806CEE08,
+void *CarObject_vtable_803F75F8[18] = {
+    (void *)&data_803F75D0_data_806CEE08,
     0,
     (void *)KartItem_ApplyImpactReflectAndDampVelocity,
     (void *)KartItem_Dtor,
-    (void *)&lbl_806CEE08,
+    (void *)&data_803F75D0_data_806CEE08,
     (void *)0xFFFFFFF4,
     (void *)KartItem_ApplyEffectToVictim_AdjThunk,
     (void *)KartItem_PlayHitSE_DifferentVictim_AdjThunk,

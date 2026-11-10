@@ -7,8 +7,8 @@
  * rank sprites. The display level comes from the player's coin mileage
  * against two per-kart thresholds (level 1 without a valid card), then
  * each sprite hides (5 - count) of its five anim params, with the counts
- * from the level/kart table lbl_8049BB30. The thresholds and the param
- * list live in clFlowKart_Init.c's pooled .rodata (lbl_8039E508).
+ * from the level/kart table clFlowKart_UpdateDisplay_data_8049BB30. The thresholds and the param
+ * list live in clFlowKart_Init.c's pooled .rodata (clFlowKart_Init_rodata_8039E508).
  * Compiled as C++ (-lang=c++) for the `new` cleanups in the extab. */
 
 void *operator new(unsigned long);
@@ -47,8 +47,8 @@ extern const float lbl_806DA124;
 extern const float lbl_806DA128;
 extern const float lbl_806DA12C;
 extern unsigned char g_playerData[];
-extern FKRodata lbl_8039E508;
-extern signed char lbl_8049BB30[][13][3];
+extern FKRodata clFlowKart_Init_rodata_8039E508;
+extern signed char clFlowKart_UpdateDisplay_data_8049BB30[][13][3];
 }
 
 static inline void HideParams(FKDisplay *self, int idx, int *p, signed char *n) {
@@ -57,12 +57,12 @@ static inline void HideParams(FKDisplay *self, int idx, int *p, signed char *n) 
     }
 }
 /* fakematch (pragma): the natural code is the same body without the pragma;
- * the original TU owned lbl_8039E508, so CW kept the base + offset addi. */
+ * the original TU owned clFlowKart_Init_rodata_8039E508, so CW kept the base + offset addi. */
 
 
 extern "C" void clFlowKart_UpdateDisplay(FKDisplay *self, int kart)
 {
-    FKRodata *rd = &lbl_8039E508;
+    FKRodata *rd = &clFlowKart_Init_rodata_8039E508;
     int level = 0;
     FKParams params;
     signed char *count;
@@ -94,9 +94,9 @@ extern "C" void clFlowKart_UpdateDisplay(FKDisplay *self, int kart)
     self->rank[1] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA128, 1);
     self->rank[2] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA12C, 1);
     params = rd->params;
-    for (int a = 0; a < 5 - lbl_8049BB30[level][kart][0]; a++) Sprite_SetAnimParam(self->rank[0], params.v[a], -1);
-    for (int b = 0; b < 5 - lbl_8049BB30[level][kart][1]; b++) Sprite_SetAnimParam(self->rank[1], params.v[b], -1);
-    for (int d = 0; d < 5 - lbl_8049BB30[level][kart][2]; d++) Sprite_SetAnimParam(self->rank[2], params.v[d], -1);
+    for (int a = 0; a < 5 - clFlowKart_UpdateDisplay_data_8049BB30[level][kart][0]; a++) Sprite_SetAnimParam(self->rank[0], params.v[a], -1);
+    for (int b = 0; b < 5 - clFlowKart_UpdateDisplay_data_8049BB30[level][kart][1]; b++) Sprite_SetAnimParam(self->rank[1], params.v[b], -1);
+    for (int d = 0; d < 5 - clFlowKart_UpdateDisplay_data_8049BB30[level][kart][2]; d++) Sprite_SetAnimParam(self->rank[2], params.v[d], -1);
 }
 
 #pragma opt_propagation reset

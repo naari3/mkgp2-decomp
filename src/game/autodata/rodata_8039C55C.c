@@ -8,7 +8,7 @@
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const float lbl_8039C55C[16] = {
+const float ranking_display_rodata_8039C55C[16] = {
     4.5e+02f, 4.4e+02f, 445.0f, 4.4e+02f, 4.5e+02f, 445.0f, 4.5e+02f, 4.5e+02f,
     4.5e+02f, 4.5e+02f, 4.7e+02f, 4.7e+02f, 4.5e+02f, 4.5e+02f, 4.5e+02f, 4.7e+02f
 };

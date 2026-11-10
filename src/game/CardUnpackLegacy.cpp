@@ -66,7 +66,7 @@ extern "C" char lbl_806D3484[];
 extern "C" char lbl_806D348C[];
 extern "C" char lbl_806D3494[];
 #pragma force_active on
-extern "C" void *lbl_803FED70[220] = {
+extern "C" void *card_unpack_legacy_dispatch_data_803FED70[220] = {
     (void *)&lbl_803170FC,
     (void *)0x8,
     (void *)0x3,
@@ -288,7 +288,7 @@ extern "C" void *lbl_803FED70[220] = {
     (void *)0x1,
     (void *)0x0
 };
-extern "C" void *lbl_803FF0E0[256] = {
+extern "C" void *card_unpack_legacy_dispatch_data_803FF0E0[256] = {
     (void *)&lbl_803170FC,
     (void *)0x8,
     (void *)0x3,
@@ -598,13 +598,13 @@ extern "C" u8 card_unpack_legacy_dispatch(u8 *dest, const void *raw, u8 publish)
     memcpy(copy, raw, 0x45);
     if (version >= 0) {
       if (version == 0) {
-        pack = new CardBitpack(lbl_803FED70, 0x37, copy, 0);
+        pack = new CardBitpack(card_unpack_legacy_dispatch_data_803FED70, 0x37, copy, 0);
         if (bitpack_get_used_bytes(pack) <= 0x45)
             result = card_unpack_v1(dest, pack, publish);
         dest[0x16C] = 0;
         if (publish == 1) g_playerData[0x1A0] = 1;
       } else if (version == 1) {
-        pack = new CardBitpack(lbl_803FF0E0, 0x40, copy, 0);
+        pack = new CardBitpack(card_unpack_legacy_dispatch_data_803FF0E0, 0x40, copy, 0);
         if (bitpack_get_used_bytes(pack) <= 0x45)
             result = CardSaveData_Parser(dest, pack, publish);
       } else {

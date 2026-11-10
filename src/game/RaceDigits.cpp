@@ -90,7 +90,7 @@ void DigitPanel::Update() {
         break;
     default: return;
     }
-    DigitMap map=lbl_803EF800;
+    DigitMap map=RaceDigits_rodata_803EF800;
     int style=0;
     if(g_gameMode==1) {
         style=1;

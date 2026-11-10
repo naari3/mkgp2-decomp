@@ -239,20 +239,20 @@ extern char lbl_8032D9A0[];
 extern char lbl_8032D9AC[];
 extern char lbl_8032D9BC[];
 extern char lbl_806CF344[];
-extern char lbl_806CF34C[];
-extern char lbl_806CF354[];
-extern char lbl_806CF35C[];
-extern char lbl_806CF364[];
-extern char lbl_806CF36C[];
-extern char lbl_806CF374[];
-extern char lbl_806CF37C[];
-extern char lbl_806CF384[];
-extern char lbl_806CF38C[];
-extern char lbl_806CF394[];
-extern char lbl_806CF39C[];
-extern char lbl_806CF3A4[];
-extern char lbl_806CF3AC[];
-extern char lbl_806CF3B4[];
+extern char data_8041C9D4_data_806CF34C[];
+extern char data_8041C9D4_data_806CF354[];
+extern char data_8041C9D4_data_806CF35C[];
+extern char data_8041C9D4_data_806CF364[];
+extern char data_8041C9D4_data_806CF36C[];
+extern char data_8041C9D4_data_806CF374[];
+extern char data_8041C9D4_data_806CF37C[];
+extern char data_8041C9D4_data_806CF384[];
+extern char data_8041C9D4_data_806CF38C[];
+extern char data_8041C9D4_data_806CF394[];
+extern char data_8041C9D4_data_806CF39C[];
+extern char data_8041C9D4_data_806CF3A4[];
+extern char data_8041C9D4_data_806CF3AC[];
+extern char data_8041C9D4_data_806CF3B4[];
 extern char lbl_806D5978[];
 extern char lbl_806D5980[];
 extern char lbl_806D5988[];
@@ -291,176 +291,176 @@ extern char lbl_806D5A78[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_8041C9D4[5] = {
+void *MenuSceneBase_vtable_8041C9D4[5] = {
     (void *)&lbl_806CF344,
     0,
     (void *)fn_800D2BE4,
     (void *)fn_800D2BE0,
     (void *)dtor_800D2B98
 };
-void *lbl_8041C9E8[3] = {
+void *sdata_806CF1C0_data_8041C9E8[3] = {
     (void *)&lbl_806CF344,
     0,
     0
 };
-void *lbl_8041C9F4[5] = {
-    (void *)&lbl_806CF34C,
+void *RaceStartScene_vtable_8041C9F4[5] = {
+    (void *)&data_8041C9D4_data_806CF34C,
     0,
     (void *)TestMenuRaceStart_Update,
     (void *)TestMenuRaceStart_Render,
     (void *)TestMenuRaceStart_Dtor
 };
-void *lbl_8041CA08[3] = {
+void *sdata_806CF1C0_data_8041CA08[3] = {
     (void *)&lbl_806CF344,
     0,
     0
 };
-void *lbl_8041CA14[5] = {
-    (void *)&lbl_806CF354,
+void *ItemTestScene_vtable_8041CA14[5] = {
+    (void *)&data_8041C9D4_data_806CF354,
     0,
     (void *)TestMenuItemDesc_Update,
     (void *)TestMenuItemDesc_Render,
     (void *)TestMenuItemDesc_Dtor
 };
-void *lbl_8041CA28[3] = {
+void *sdata_806CF1C0_data_8041CA28[3] = {
     (void *)&lbl_806CF344,
     0,
     0
 };
-void *lbl_8041CA34[5] = {
-    (void *)&lbl_806CF35C,
+void *PrizeTestScene_vtable_8041CA34[5] = {
+    (void *)&data_8041C9D4_data_806CF35C,
     0,
     (void *)TestMenuScrollList_Update,
     (void *)TestMenuScrollList_Render,
     (void *)TestMenuScrollList_Dtor
 };
-void *lbl_8041CA48[3] = {
+void *sdata_806CF1C0_data_8041CA48[3] = {
     (void *)&lbl_806CF344,
     0,
     0
 };
-void *lbl_8041CA54[5] = {
-    (void *)&lbl_806CF364,
+void *DbgMenu_data_8041CA54[5] = {
+    (void *)&data_8041C9D4_data_806CF364,
     0,
     (void *)TestMenuPageD_Update,
     (void *)fn_800CF754,
     (void *)TestMenuPageD_Dtor
 };
-void *lbl_8041CA68[3] = {
+void *sdata_806CF1C0_data_8041CA68[3] = {
     (void *)&lbl_806CF344,
     0,
     0
 };
-void *lbl_8041CA74[5] = {
-    (void *)&lbl_806CF36C,
+void *TitleTestScene_vtable_8041CA74[5] = {
+    (void *)&data_8041C9D4_data_806CF36C,
     0,
     (void *)TestMenuFourSprite_Update,
     (void *)TestMenuFourSprite_Render,
     (void *)TestMenuFourSprite_Dtor
 };
-void *lbl_8041CA88[3] = {
+void *sdata_806CF1C0_data_8041CA88[3] = {
     (void *)&lbl_806CF344,
     0,
     0
 };
-void *lbl_8041CA94[5] = {
-    (void *)&lbl_806CF374,
+void *DbgMenu_data_8041CA94[5] = {
+    (void *)&data_8041C9D4_data_806CF374,
     0,
     (void *)TestMenuJointBrowser_Update,
     (void *)TestMenuJointBrowser_Render,
     (void *)TestMenuJointBrowser_Dtor
 };
-void *lbl_8041CAA8[3] = {
+void *sdata_806CF1C0_data_8041CAA8[3] = {
     (void *)&lbl_806CF344,
     0,
     0
 };
-void *lbl_8041CAB4[5] = {
-    (void *)&lbl_806CF37C,
+void *AtrTestScene_vtable_8041CAB4[5] = {
+    (void *)&data_8041C9D4_data_806CF37C,
     0,
     (void *)TestMenuModelView_Update,
     (void *)TestMenuModelView_Render,
     (void *)TestMenuModelView_Dtor
 };
-void *lbl_8041CAC8[3] = {
+void *sdata_806CF1C0_data_8041CAC8[3] = {
     (void *)&lbl_806CF344,
     0,
     0
 };
-void *lbl_8041CAD4[5] = {
-    (void *)&lbl_806CF384,
+void *ScreenEffScene_vtable_8041CAD4[5] = {
+    (void *)&data_8041C9D4_data_806CF384,
     0,
     (void *)TestMenuFwp_Update,
     (void *)TestMenuFwp_Render,
     (void *)TestMenuFwp_Dtor
 };
-void *lbl_8041CAE8[3] = {
+void *sdata_806CF1C0_data_8041CAE8[3] = {
     (void *)&lbl_806CF344,
     0,
     0
 };
-void *lbl_8041CAF4[5] = {
-    (void *)&lbl_806CF38C,
+void *PaletteTestScene_vtable_8041CAF4[5] = {
+    (void *)&data_8041C9D4_data_806CF38C,
     0,
     (void *)DbgScene05_TplTest2_InputCheck,
     (void *)TestMenuModelText_Render,
     (void *)TestMenuModelText_Dtor
 };
-void *lbl_8041CB08[3] = {
+void *sdata_806CF1C0_data_8041CB08[3] = {
     (void *)&lbl_806CF344,
     0,
     0
 };
-void *lbl_8041CB14[5] = {
-    (void *)&lbl_806CF394,
+void *ParticleTestScene_vtable_8041CB14[5] = {
+    (void *)&data_8041C9D4_data_806CF394,
     0,
     (void *)DbgScene05_TplTest2_Update,
     (void *)DbgScene05_TplTest2_SetupBlit,
     (void *)DbgScene05_TplTest2_Dtor
 };
-void *lbl_8041CB28[3] = {
+void *sdata_806CF1C0_data_8041CB28[3] = {
     (void *)&lbl_806CF344,
     0,
     0
 };
-void *lbl_8041CB34[5] = {
-    (void *)&lbl_806CF39C,
+void *AnmTestScene_vtable_8041CB34[5] = {
+    (void *)&data_8041C9D4_data_806CF39C,
     0,
     (void *)DbgScene04_AnmTest_InputCheck,
     (void *)DbgScene04_AnmTest_Draw,
     (void *)DbgScene04_AnmTest_Dtor
 };
-void *lbl_8041CB48[3] = {
+void *sdata_806CF1C0_data_8041CB48[3] = {
     (void *)&lbl_806CF344,
     0,
     0
 };
-void *lbl_8041CB54[5] = {
-    (void *)&lbl_806CF3A4,
+void *TplTestScene_vtable_8041CB54[5] = {
+    (void *)&data_8041C9D4_data_806CF3A4,
     0,
     (void *)DbgScene03_TplTest_InputCheck,
     (void *)DbgScene03_TplTest_Draw,
     (void *)DbgScene03_TplTest_Dtor
 };
-void *lbl_8041CB68[3] = {
+void *sdata_806CF1C0_data_8041CB68[3] = {
     (void *)&lbl_806CF344,
     0,
     0
 };
-void *lbl_8041CB74[5] = {
-    (void *)&lbl_806CF3AC,
+void *MapViewerScene_vtable_8041CB74[5] = {
+    (void *)&data_8041C9D4_data_806CF3AC,
     0,
     (void *)DbgScene02_MapViewer_InputCheck,
     (void *)DbgScene02_MapViewer_SetupBlit,
     (void *)DbgScene02_MapViewer_Dtor
 };
-void *lbl_8041CB88[3] = {
+void *sdata_806CF1C0_data_8041CB88[3] = {
     (void *)&lbl_806CF344,
     0,
     0
 };
-void *lbl_8041CB94[5] = {
-    (void *)&lbl_806CF3B4,
+void *SpriteTestScene_vtable_8041CB94[5] = {
+    (void *)&data_8041C9D4_data_806CF3B4,
     0,
     (void *)DbgScene01_SprMng2Test_InputCheck,
     (void *)DbgScene01_SprMng2Test_SetupBlit,

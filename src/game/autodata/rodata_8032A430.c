@@ -60,7 +60,7 @@ typedef struct PeriodTable {
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const SparkVec3 lbl_8032A430[10] = {
+const SparkVec3 KartFx_DriftSparkParticleTick_rodata_8032A430[10] = {
     { 1.0f, 1.0f, 1.0f },
     { 1.0f, 0.8f, 0.8f },
     { 0.8f, 1.0f, 0.8f },
@@ -72,7 +72,7 @@ const SparkVec3 lbl_8032A430[10] = {
     { 1.0f, 0.8f, 0.0f },
     { 0.7f, 0.3f, 1.0f }
 };
-const ChargePlacement lbl_8032A4A8[11] = {
+const ChargePlacement KartFx_BoostChargeIconTick_rodata_8032A4A8[11] = {
     { { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
     { { 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
     { { -1.5f, 2.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
@@ -85,7 +85,7 @@ const ChargePlacement lbl_8032A4A8[11] = {
     { { -1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
     { { 0.5f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } }
 };
-const float lbl_8032A5B0[43] = {
+const float KartFx_FlashOrbitTick_rodata_8032A5B0[43] = {
     0.3f, -0.3f, -1.0f, 1.0f, 0.0f, 2.0943947f, 4.1887894f, -0.17453289f,
     0.0f, 0.17453289f, 0.0f, 5.0f, 4.0f, 0.0f, 5.0f, 4.0f,
     0.0f, 3.0f, 5.0f, 0.0f, 4.0f, 4.0f, 0.0f, 3.0f,
@@ -94,46 +94,46 @@ const float lbl_8032A5B0[43] = {
     0.0f, 3.0f, 4.0f
 };
 /* decl: DustPositions */
-const float lbl_8032A65C[30] = {
+const float KartFx_DustStreamerPieceTick_rodata_8032A65C[30] = {
     0.0f, 0.83f, 0.0f, -0.65f, -0.46f, 0.01f, -0.71f, 0.2f,
     0.02f, -0.63f, 0.57f, 0.03f, 0.42f, 0.43f, 0.04f, 0.64f,
     -0.09f, 0.05f, 0.63f, -0.55f, 0.06f, 1.0f, 0.3f, 0.5f,
     1.0f, 0.8f, 0.0f, 1.0f, 1.0f, 1.0f
 };
-const PhaseTable lbl_8032A6D4[1] = {
+const PhaseTable DrawEffect_Cb_KartWheel_DualSpawn_rodata_8032A6D4[1] = {
     { { 0.0f, 4.712388f, 1.570796f, 3.141592f } }
 };
 const char lbl_8032A6E4[] = "muteki_muteki_b_joint";
 const char lbl_8032A6FC[] = "muteki_muteki_p_joint";
 const char lbl_8032A714[] = "muteki_muteki_y_joint";
 /* 8-aligned in the original: probably the first object of a TU */
-const SmokeVec lbl_8032A730[1] __attribute__((aligned(8))) = {
+const SmokeVec Effect_SmokeRing3_Update_rodata_8032A730[1] __attribute__((aligned(8))) = {
     { { 0.0f, 2.0943947f, 4.1887894f } }
 };
-const SmokeVec lbl_8032A73C[1] = {
+const SmokeVec Effect_SmokeRing3_Update_rodata_8032A73C[1] = {
     { { -0.34906578f, 0.0f, 0.34906578f } }
 };
-const WaveGlowVec3 lbl_8032A748[1] = {
+const WaveGlowVec3 Effect_KartWaveGlow_Update_rodata_8032A748[1] = {
     { 0.0f, 10.0f, -10.0f }
 };
-const RingVec lbl_8032A754[1] = {
+const RingVec Effect_CompoundRing_PlaceChildren_rodata_8032A754[1] = {
     { { 0.8f, 0.6f, 0.4f } }
 };
-const RingVec lbl_8032A760[1] = {
+const RingVec Effect_CompoundRing_PlaceChildren_rodata_8032A760[1] = {
     { { 0.0f, 0.5235987f, 0.87266445f } }
 };
-const ChildOffsets lbl_8032A76C[1] = {
+const ChildOffsets DrawEffect_KartWheel_TripleChildUpdate_rodata_8032A76C[1] = {
     { { -1.0f, -1.0f, -1.0f } }
 };
 const char lbl_8032A778[] = "muteki_muteki_b_joint";
 const char lbl_8032A790[] = "muteki_muteki_p_joint";
 const char lbl_8032A7A8[] = "muteki_muteki_y_joint";
 /* decl: StarJoints */
-const char *const lbl_8032A7C0[4] = {
+const char *const Effect_StarBurst_Update_rodata_8032A7C0[4] = {
     (const char *)&lbl_8032A778, (const char *)&lbl_8032A790,
     (const char *)&lbl_8032A7A8, 0
 };
-const PeriodTable lbl_8032A7D0[1] = {
+const PeriodTable DrawEffect_Cb_KartItemTrail_4Phase_rodata_8032A7D0[1] = {
     { { 30.0f, 45.0f, 60.0f, 75.0f } }
 };
 

@@ -12,16 +12,16 @@ extern void GameModeBase_FrameUpdate2();
 extern void RaceScene_Dtor();
 extern void RaceScene_FrameUpdate();
 extern void RaceScene_RenderPass();
-extern char lbl_806CF168[];
-extern char lbl_806CF174[];
-extern char lbl_806CF17C[];
-extern char lbl_806CF188[];
+extern char data_8040E780_data_806CF168[];
+extern char data_8040E780_data_806CF174[];
+extern char data_8040E780_data_806CF17C[];
+extern char data_8040E780_data_806CF188[];
 extern char typeinfo[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-float lbl_8040E780[5] = {
+float data_8040E780_data_8040E780[5] = {
     0.0f, 0.0f, 1e+04f, 0.0f, 0.0f
 };
 /* decl: unsigned char */
@@ -30,17 +30,17 @@ void *g_courseDataInstance[7] = {
     0,
     (void *)0xD0000,
     (void *)0x7F7F7F00,
-    (void *)&lbl_8040E780,
+    (void *)&data_8040E780_data_8040E780,
     0,
-    (void *)&lbl_806CF168
+    (void *)&data_8040E780_data_806CF168
 };
-void *lbl_8040E7B0[3] = {
-    (void *)&lbl_806CF174,
+void *sdata_806CEFE0_data_8040E7B0[3] = {
+    (void *)&data_8040E780_data_806CF174,
     0,
     0
 };
 void *g_GameModeBaseVtable[5] = {
-    (void *)&lbl_806CF17C,
+    (void *)&data_8040E780_data_806CF17C,
     0,
     (void *)GameModeBase_FrameUpdate,
     (void *)GameModeBase_FrameUpdate2,
@@ -96,8 +96,8 @@ RaceParams kRaceParamsTable[48] = {
     { 5, 100.0f, 30.0f },
     { 5, 100.0f, 30.0f }
 };
-void *lbl_8040EA10[3] = {
-    (void *)&lbl_806CF188,
+void *sdata_806CEFE0_data_8040EA10[3] = {
+    (void *)&data_8040E780_data_806CF188,
     0,
     0
 };

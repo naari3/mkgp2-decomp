@@ -6,7 +6,7 @@ void Sprite_Destroy(void *, int);
 void MemoryManager_TimedFree(void *);
 extern void *lbl_8049B1AC[];
 extern void *lbl_8048EF34[];
-extern void *lbl_8049B18C[];
+extern void *GpTextPanel_vtable_8049B18C[];
 void fn_801D895C(void *, float);
 void fn_801D878C(void *);
 void fn_8011FAFC(ResCtrl *, int);

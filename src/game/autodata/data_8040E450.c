@@ -8,7 +8,7 @@
 extern void RaceContext_Dtor();
 extern void dtor_8009DCE0();
 extern char lbl_806CF130[];
-extern char lbl_806CF138[];
+extern char data_8040E450_data_806CF138[];
 extern char lbl_806D46E4[];
 extern char lbl_806D46E8[];
 extern char lbl_806D46EC[];
@@ -40,7 +40,7 @@ typedef struct NameDelimiterPair {
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-NameDelimiterPair lbl_8040E450[12] = {
+NameDelimiterPair NameCheck_ScanBannedWords_data_8040E450[12] = {
     { (void *)&lbl_806D46E4, (void *)&lbl_806D46E8 },
     { (void *)&lbl_806D46EC, (void *)&lbl_806D46F0 },
     { (void *)&lbl_806D46E8, (void *)&lbl_806D46F0 },
@@ -54,26 +54,26 @@ NameDelimiterPair lbl_8040E450[12] = {
     { (void *)&lbl_806D4714, (void *)&lbl_806D471C },
     { (void *)&lbl_806D4720, (void *)&lbl_806D4728 }
 };
-char *lbl_8040E4B0[5] = {
+char *NameCheck_ScanBannedWords_data_8040E4B0[5] = {
     (char *)&lbl_806D472C,
     (char *)&lbl_806D4730,
     (char *)&lbl_806D4734,
     (char *)&lbl_806D4738,
     (char *)&lbl_806D473C
 };
-void *lbl_8040E4C4[3] = {
+void *sdata_806CEFE0_data_8040E4C4[3] = {
     (void *)&lbl_806CF130,
     0,
     0
 };
 /* decl: unsigned int */
-void *lbl_8040E4D0[3] = {
-    (void *)&lbl_806CF138,
+void *SetCourseParams_data_8040E4D0[3] = {
+    (void *)&data_8040E450_data_806CF138,
     0,
     (void *)RaceContext_Dtor
 };
 /* decl: unsigned int / void * */
-void *lbl_8040E4DC[3] = {
+void *SetCourseParams_data_8040E4DC[3] = {
     (void *)&lbl_806CF130,
     0,
     (void *)dtor_8009DCE0

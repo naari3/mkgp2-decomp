@@ -3,7 +3,7 @@
 #include "game/Scene_801670FC_private.h"
 
 extern "C" {
-extern char lbl_8036A37C[];
+extern char Scene_801670FC_rodata_8036A37C[];
 void fn_80120A08(int);
 void fn_801698B4(void *, float, float, int, unsigned int);
 void fn_80168EFC(void *, char *, float, float, ...);
@@ -32,7 +32,7 @@ void fn_801670FC(SoundDebugScene *self) {
     if (self->soundId >= 0x2b00) self->soundId = 0;
     if (old != self->soundId) fn_80120A08(old);
     fn_801698B4(self->text, 320.0f, 240.0f, self->soundId, 0);
-    fn_80168EFC(self->text, lbl_8036A37C, 20.0f, 20.0f, self->soundId);
+    fn_80168EFC(self->text, Scene_801670FC_rodata_8036A37C, 20.0f, 20.0f, self->soundId);
 }
 #pragma exceptions reset
 }

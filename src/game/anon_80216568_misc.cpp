@@ -15,42 +15,42 @@ extern "C" char fn_80218AB8[];
 extern "C" char fn_80218AF0[];
 extern "C" char lbl_806D0450[];
 extern "C" char lbl_806D0458[];
-extern "C" char lbl_806D0460[];
-extern "C" char lbl_806D0468[];
-extern "C" char lbl_806D0470[];
+extern "C" char CardPrompt_data_806D0460[];
+extern "C" char CardLogoScene_data_806D0468[];
+extern "C" char CardLogo_data_806D0470[];
 #pragma force_active on
-extern "C" void *lbl_804EDBB0[6] = {
-    (void *)&lbl_806D0460,
+extern "C" void *CardPrompt_vtable_804EDBB0[6] = {
+    (void *)&CardPrompt_data_806D0460,
     (void *)0x0,
     (void *)&fn_80217EDC,
     (void *)&fn_80218AB8,
     (void *)&fn_802174F8,
     (void *)&fn_802174F4
 };
-extern "C" void *lbl_804EDBC8[5] = {
+extern "C" void *sdata_806D0410_data_804EDBC8[5] = {
     (void *)&lbl_806D0450,
     (void *)0x0,
     (void *)&lbl_806D0458,
     (void *)0x0,
     (void *)0x0
 };
-extern "C" void *lbl_804EDBDC[6] = {
-    (void *)&lbl_806D0468,
+extern "C" void *CardLogoScene_vtable_804EDBDC[6] = {
+    (void *)&CardLogoScene_data_806D0468,
     (void *)0x0,
     (void *)&fn_802181F4,
     (void *)&fn_80218AF0,
     (void *)&fn_80218134,
     (void *)&fn_80218130
 };
-extern "C" void *lbl_804EDBF4[5] = {
+extern "C" void *sdata_806D0410_data_804EDBF4[5] = {
     (void *)&lbl_806D0450,
     (void *)0x0,
     (void *)&lbl_806D0458,
     (void *)0x0,
     (void *)0x0
 };
-extern "C" void *lbl_804EDC08[6] = {
-    (void *)&lbl_806D0470,
+extern "C" void *CardLogo_vtable_804EDC08[6] = {
+    (void *)&CardLogo_data_806D0470,
     (void *)0x0,
     (void *)&fn_80218514,
     (void *)&fn_802184DC,
@@ -208,7 +208,7 @@ static inline int PromptRes() {
     return IsCardValid() == 1 ? 0xB1A : 0xCD7;
 }
 
-/* Card logo that zooms in, pulses and then glows (vtable lbl_804EDBB0). */
+/* Card logo that zooms in, pulses and then glows (vtable CardPrompt_vtable_804EDBB0). */
 struct CardPrompt : PopupTask {
     virtual void _key();
     int layer;
@@ -386,7 +386,7 @@ CardPrompt::CardPrompt(int layer_, int id_) : PopupTask(id_), layer(layer_), sta
     scale[4].Set(lbl_806DAEEC, lbl_806DAEEC, 1);
 }
 
-/* Task list host that runs one CardLogo (vtable lbl_804EDBDC). */
+/* Task list host that runs one CardLogo (vtable CardLogoScene_vtable_804EDBDC). */
 struct CardLogoScene : PopupTask {
     virtual void _key();
     VHolder<TaskListImpl> list;
@@ -397,7 +397,7 @@ struct CardLogoScene : PopupTask {
     void Draw();
 };
 
-/* Card logo bouncing in (vtable lbl_804EDC08). */
+/* Card logo bouncing in (vtable CardLogo_vtable_804EDC08). */
 struct CardLogo : PopupTask {
     virtual void _key();
     int layer;

@@ -38,7 +38,7 @@ static inline float RingApplyAngle(float value, float sign, float parentAngle)
 }
 
 extern "C" {
-extern const RingVec lbl_8032A754, lbl_8032A760;
+extern const RingVec Effect_CompoundRing_PlaceChildren_rodata_8032A754, Effect_CompoundRing_PlaceChildren_rodata_8032A760;
 extern const RingPair lbl_806D53E0;
 extern const float lbl_806D5484, lbl_806D544C, lbl_806D5488;
 extern const float lbl_806D5464, lbl_806D5410, lbl_806D5400, lbl_806D5404;
@@ -71,8 +71,8 @@ void Effect_CompoundRing_PlaceChildren(RingEffect* effect, const void* source,
     RingEffect* child;
 
     Mtx44_GetTranslation_RowMajor(&translation, source);
-    scales = lbl_8032A754;
-    offsets = lbl_8032A760;
+    scales = Effect_CompoundRing_PlaceChildren_rodata_8032A754;
+    offsets = Effect_CompoundRing_PlaceChildren_rodata_8032A760;
     signs = lbl_806D53E0;
     ring = &effect->children;
     Vec3_Copy(&effect->position, &translation);

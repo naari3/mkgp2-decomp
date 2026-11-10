@@ -1,5 +1,5 @@
 /*
- * Kart alert panel @ 0x802506F8..0x80250F34 (vtable lbl_804EF130).
+ * Kart alert panel @ 0x802506F8..0x80250F34 (vtable KartAlertPanel_vtable_804EF130).
  *
  * Watches the kart slots for a kart carrying the 0x8000 state flag and
  * shows its driver's name (or character name) with two sprites; OnItem
@@ -44,12 +44,12 @@ extern const float lbl_806DC0E8;
 extern const float lbl_806DC0EC;
 extern const float lbl_806DC0F0;
 extern const char lbl_806DC0F4[4];
-extern const char lbl_803F0AD8[];
-extern const Vec2 lbl_803F0FC4[3];
+extern const char KartAlertPanel_rodata_803F0AD8[];
+extern const Vec2 KartAlertPanel_rodata_803F0FC4[3];
 extern const char lbl_803F1020[];
-extern const char lbl_803F1034[];
-extern const char *lbl_804EF0C8[];
-extern const char *lbl_804EF0FC[];
+extern const char KartAlertPanel_rodata_803F1034[];
+extern const char *KartAlertPanel_data_804EF0C8[];
+extern const char *KartAlertPanel_data_804EF0FC[];
 extern Kart *g_playerRenderObj;
 extern int g_localPcbRole;
 Kart *GetKartSlotKartVariant(int slot);
@@ -143,7 +143,7 @@ struct KartAlertPanel {
 };
 
 void KartAlertPanel::Refresh() {
-    const char *base = lbl_803F0AD8;
+    const char *base = KartAlertPanel_rodata_803F0AD8;
     unsigned char found = 0;
     Kart *k;
     int i;
@@ -183,7 +183,7 @@ void KartAlertPanel::Refresh() {
         }
         {
             int chr = kart->chr;
-            tex = isJapanese() == 0 ? lbl_804EF0C8[chr] : lbl_804EF0FC[chr];
+            tex = isJapanese() == 0 ? KartAlertPanel_data_804EF0C8[chr] : KartAlertPanel_data_804EF0FC[chr];
         }
         name = *(const NameBuf *)(base + 0x50C);
         if (local) {
@@ -250,7 +250,7 @@ void KartAlertPanel::OnItem(int id, Kart *k) {
                     }
                     hold = 1;
                     fn_8020A734(fader.p, 10, lbl_806DC0E8, lbl_806DC0E8);
-                    DebugPrintf(lbl_803F1034);
+                    DebugPrintf(KartAlertPanel_rodata_803F1034);
                 }
                 return;
             }
@@ -290,15 +290,15 @@ KartAlertPanel::KartAlertPanel()
       timer(0), item(-1) {
     ResCtrl rc;
     rc.resId = 0x1ECD;
-    rc.Show(lbl_806DC0E0.x + lbl_803F0FC4[0].x, lbl_806DC0E0.y + lbl_803F0FC4[0].y, lbl_806DC0EC);
+    rc.Show(lbl_806DC0E0.x + KartAlertPanel_rodata_803F0FC4[0].x, lbl_806DC0E0.y + KartAlertPanel_rodata_803F0FC4[0].y, lbl_806DC0EC);
     sprites[0] = new SpriteBox(&rc, 4);
     sprites[0]->SetActive(0);
     fn_80121E10(&rc);
     rc.resId = 0x1ECD;
-    rc.Show(lbl_806DC0E0.x + lbl_803F0FC4[1].x, lbl_806DC0E0.y + lbl_803F0FC4[1].y, lbl_806DC0EC);
+    rc.Show(lbl_806DC0E0.x + KartAlertPanel_rodata_803F0FC4[1].x, lbl_806DC0E0.y + KartAlertPanel_rodata_803F0FC4[1].y, lbl_806DC0EC);
     sprites[1] = new SpriteBox(&rc, 4);
     sprites[1]->SetActive(0);
     text = new TextBox;
     TexMgr_SetTexture(text->tm(), lbl_806DC0F4);
-    fn_801F93EC(text->tm(), lbl_806DC0E0.x + lbl_803F0FC4[2].x, lbl_806DC0E0.y + lbl_803F0FC4[2].y);
+    fn_801F93EC(text->tm(), lbl_806DC0E0.x + KartAlertPanel_rodata_803F0FC4[2].x, lbl_806DC0E0.y + KartAlertPanel_rodata_803F0FC4[2].y);
 }

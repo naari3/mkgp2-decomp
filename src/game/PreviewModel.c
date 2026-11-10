@@ -2,7 +2,7 @@
  * 3D preview models drawn through the orthographic camera into the shared
  * render target, plus eight per-layer lists of them.
  *
- * The vtables (lbl_8048EAE8 base, lbl_8048EB04 model) stay in data, so the
+ * The vtables (clCSModelInterface_vtable_8048EAE8 base, PreviewModel_data_8048EB04 model) stay in data, so the
  * vptr stores and the virtual Render call are spelled out by hand.
  *
  * The base dtor (dtor_8013DCBC) is written as a plain deleting-dtor
@@ -29,8 +29,8 @@ struct Normal3D {
 };
 
 extern "C" {
-extern char lbl_8048EAE8[];
-extern char lbl_8048EB04[];
+extern char clCSModelInterface_vtable_8048EAE8[];
+extern char PreviewModel_data_8048EB04[];
 extern void *Alloc(unsigned long size);
 extern void MemoryManager_TimedFree(void *p);
 extern void Object_SetColorRGBA(Normal3D *obj, int, float r, float g, float b, float a);
@@ -62,8 +62,8 @@ void operator delete(void *p);
 
 struct PreviewBase {
     void *vptr;
-    PreviewBase() { vptr = lbl_8048EAE8; }
-    ~PreviewBase() { vptr = lbl_8048EAE8; }
+    PreviewBase() { vptr = clCSModelInterface_vtable_8048EAE8; }
+    ~PreviewBase() { vptr = clCSModelInterface_vtable_8048EAE8; }
 };
 
 struct PreviewModel : PreviewBase {
@@ -177,7 +177,7 @@ extern "C" int fn_8013D738(PreviewModel *p, float sx, float sy) {
 }
 
 PreviewModel::~PreviewModel() {
-    vptr = lbl_8048EB04;
+    vptr = PreviewModel_data_8048EB04;
     if (model) {
         delete model;
     }
@@ -192,7 +192,7 @@ PreviewModel::~PreviewModel() {
  * PreviewModel/PreviewBase. */
 struct PreviewBaseOOL {
     void *vptr;
-    PreviewBaseOOL() { vptr = lbl_8048EAE8; }
+    PreviewBaseOOL() { vptr = clCSModelInterface_vtable_8048EAE8; }
     ~PreviewBaseOOL();
 };
 
@@ -204,7 +204,7 @@ struct PreviewModelCtor : PreviewBaseOOL {
 };
 
 PreviewModelCtor::PreviewModelCtor(void *resource, unsigned char flag) {
-    vptr = lbl_8048EB04;
+    vptr = PreviewModel_data_8048EB04;
     fn_8013BD7C();
     fn_8013C428();
     model = 0;
@@ -300,7 +300,7 @@ struct PreviewLists {
     }
 };
 
-extern "C" PreviewLists *lbl_806D1560;
+extern "C" PreviewLists *PreviewModel_bss_806D1560;
 
 static inline void RenderRange(CIter first, const ListBase::iterator &last) {
     for (; first != last; ++first) {
@@ -313,8 +313,8 @@ static inline void EraseFrom(ListBase &l, ListNodeBase *e) {
 }
 
 extern "C" void fn_8013D940(int layer) {
-    if (lbl_806D1560 && layer >= 0 && layer < 8) {
-        PreviewList &l = lbl_806D1560->lists[layer];
+    if (PreviewModel_bss_806D1560 && layer >= 0 && layer < 8) {
+        PreviewList &l = PreviewModel_bss_806D1560->lists[layer];
         if (!l.empty()) {
             ListNodeBase *e = &l.end_;
             CIter b = ListBase::iterator(e->next);
@@ -334,37 +334,37 @@ static inline void RenderAll(PreviewLists *p) {
     }
 }
 extern "C" void fn_8013DA00(void) {
-    if (lbl_806D1560) RenderAll(lbl_806D1560);
+    if (PreviewModel_bss_806D1560) RenderAll(PreviewModel_bss_806D1560);
 }
 
 extern "C" void fn_8013DAC8(PreviewModel *m, int layer) {
-    if (lbl_806D1560) {
+    if (PreviewModel_bss_806D1560) {
         PreviewModel *v = m;
         if (v && layer >= 0 && layer < 8) {
-            lbl_806D1560->lists[layer].push_back(v);
+            PreviewModel_bss_806D1560->lists[layer].push_back(v);
         }
     }
 }
 
 extern "C" void fn_8013DB2C(void) {
-    PreviewLists *p = lbl_806D1560;
+    PreviewLists *p = PreviewModel_bss_806D1560;
     if (p) {
         p->clearAll();
     }
 }
 
 extern "C" void fn_8013DB9C(void) {
-    if (lbl_806D1560) {
-        delete lbl_806D1560;
-        lbl_806D1560 = 0;
+    if (PreviewModel_bss_806D1560) {
+        delete PreviewModel_bss_806D1560;
+        PreviewModel_bss_806D1560 = 0;
     }
 }
 
 extern "C" int fn_8013DBF8(void) {
-    if (!lbl_806D1560) {
-        lbl_806D1560 = new PreviewLists;
+    if (!PreviewModel_bss_806D1560) {
+        PreviewModel_bss_806D1560 = new PreviewLists;
     }
-    if (!lbl_806D1560) {
+    if (!PreviewModel_bss_806D1560) {
         return 0;
     }
     return 1;
@@ -373,7 +373,7 @@ extern "C" int fn_8013DBF8(void) {
 #pragma exceptions off
 extern "C" PreviewBase *dtor_8013DCBC(PreviewBase *self, short flag) {
     if (self != 0) {
-        self->vptr = lbl_8048EAE8;
+        self->vptr = clCSModelInterface_vtable_8048EAE8;
         if (flag > 0) {
             MemoryManager_TimedFree(self);
         }

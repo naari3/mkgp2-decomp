@@ -21,29 +21,29 @@ extern void fn_801CDF10();
 extern void fn_801CE1EC();
 extern char lbl_806CFE1C[];
 extern char lbl_806CFE24[];
-extern char lbl_806CFE30[];
-extern char lbl_806CFE38[];
+extern char data_8049AFD0_data_806CFE30[];
+extern char data_8049AFD0_data_806CFE38[];
 extern char lbl_806CFE40[];
-extern char lbl_806CFE48[];
+extern char data_8049AFD0_data_806CFE48[];
 extern char lbl_806CFE50[];
-extern char lbl_806CFE58[];
-extern char lbl_806CFE60[];
+extern char data_8049AFD0_data_806CFE58[];
+extern char data_8049AFD0_data_806CFE60[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-unk32 lbl_8049AFD0[20] = {
+unk32 data_8049AFD0_data_8049AFD0[20] = {
     0x0000002B, 0x0000000F, 0x0000002D, 0x0000000E, 0x0000005D, 0x00000000, 0x0000005C, 0x0000000E,
     0x0000005B, 0x0000000E, 0x00000039, 0x0000000E, 0x00000071, 0x0000000C, 0x00000072, 0x00000000,
     0x00000073, 0x0000000C, 0x0000003A, 0x00000005
 };
-unk32 lbl_8049B020[32] = {
+unk32 data_8049AFD0_data_8049B020[32] = {
     0x0000003C, 0x00000009, 0x00000094, 0x00000009, 0x00000093, 0x00000009, 0x00000095, 0x00000009,
     0x00000098, 0x00000009, 0x00000055, 0x00000009, 0x0000006C, 0x00000009, 0x0000003D, 0x00000009,
     0x0000004E, 0x00000008, 0x0000003E, 0x00000008, 0xFFFFFFFC, 0x00000002, 0xFFFFFFFA, 0x00000002,
     0x0000002E, 0x00000002, 0x00000030, 0x00000002, 0x00000031, 0x00000002, 0x0000002F, 0x00000002
 };
-unk32 lbl_8049B0A0[36] = {
+unk32 data_8049AFD0_data_8049B0A0[36] = {
     0x00000032, 0x00000005, 0x00000046, 0x00000005, 0x00000069, 0x00000005, 0x0000004A, 0x00000005,
     0x00000040, 0x00000009, 0x00000050, 0x00000009, 0x00000097, 0x00000009, 0x00000096, 0x00000009,
     0xFFFFFFFD, 0x00000002, 0x00000008, 0x00000008, 0xFFFFFFFE, 0x00000002, 0x0000001C, 0x00000005,
@@ -51,10 +51,10 @@ unk32 lbl_8049B0A0[36] = {
     0x0000002C, 0x00000005, 0x0000009D, 0x00000005
 };
 /* decl: WeightedEntry* */
-void *lbl_8049B130[3] = {
-    (void *)&lbl_8049AFD0,
-    (void *)&lbl_8049B020,
-    (void *)&lbl_8049B0A0
+void *clFlowItemSelect_Init_data_8049B130[3] = {
+    (void *)&data_8049AFD0_data_8049AFD0,
+    (void *)&data_8049AFD0_data_8049B020,
+    (void *)&data_8049AFD0_data_8049B0A0
 };
 void *lbl_8049B13C[3] = {
     (void *)&lbl_806CFE1C,
@@ -69,25 +69,25 @@ void *lbl_8049B148[6] = {
     (void *)clFlowItemSelect_Draw,
     0
 };
-void *lbl_8049B160[3] = {
-    (void *)&lbl_806CFE30,
+void *sdata_806CFE08_data_8049B160[3] = {
+    (void *)&data_8049AFD0_data_806CFE30,
     0,
     0
 };
-void *lbl_8049B16C[5] = {
-    (void *)&lbl_806CFE38,
+void *clFlowGpPlease_vtable_8049B16C[5] = {
+    (void *)&data_8049AFD0_data_806CFE38,
     0,
     (void *)fn_801CCF2C,
     (void *)fn_801CCDA4,
     (void *)fn_801CCD14
 };
-void *lbl_8049B180[3] = {
+void *sdata_806CFE08_data_8049B180[3] = {
     (void *)&lbl_806CFE40,
     0,
     0
 };
-void *lbl_8049B18C[5] = {
-    (void *)&lbl_806CFE48,
+void *GpTextPanel_vtable_8049B18C[5] = {
+    (void *)&data_8049AFD0_data_806CFE48,
     0,
     (void *)fn_801CDCE0,
     (void *)fn_80145DAC,
@@ -105,13 +105,13 @@ void *lbl_8049B1AC[5] = {
     (void *)fn_80145DAC,
     (void *)fn_801CDB00
 };
-void *lbl_8049B1C0[3] = {
-    (void *)&lbl_806CFE58,
+void *sdata_806CFE08_data_8049B1C0[3] = {
+    (void *)&data_8049AFD0_data_806CFE58,
     0,
     0
 };
-void *lbl_8049B1CC[5] = {
-    (void *)&lbl_806CFE60,
+void *C8TaPlease_vtable_8049B1CC[5] = {
+    (void *)&data_8049AFD0_data_806CFE60,
     0,
     (void *)fn_801CE1EC,
     (void *)fn_801CDF10,

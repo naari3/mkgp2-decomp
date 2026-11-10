@@ -39,8 +39,8 @@ struct RoundTable {
 };
 
 extern "C" {
-extern RoundTable lbl_8049AE70;
-extern short lbl_806CFDF0;
+extern RoundTable clFlowRound_data_8049AE70;
+extern short clFlowRound_data_806CFDF0;
 extern const float lbl_806D9D48;
 extern InputState *g_pInputState;
 extern int g_cupId;
@@ -63,7 +63,7 @@ static inline InputState *input_state(void) {
 }
 
 extern "C" clFlowRound *clFlowRound_Dtor(clFlowRound *self, short flags) {
-    RoundTable *tbl = &lbl_8049AE70;
+    RoundTable *tbl = &clFlowRound_data_8049AE70;
     RoundOwned *owned;
     int i;
 
@@ -79,7 +79,7 @@ extern "C" clFlowRound *clFlowRound_Dtor(clFlowRound *self, short flags) {
         }
         SetScreenBrightness(lbl_806D9D48);
         fn_80120A08(tbl->bgmIds[tbl->cupSlot[g_cupId]]);
-        fn_80120A08(lbl_806CFDF0);
+        fn_80120A08(clFlowRound_data_806CFDF0);
         Sprite_Destroy(self->sprite160, 1);
         Sprite_Destroy(self->sprite15C, 1);
         Sprite_Destroy(self->spriteEC, 1);

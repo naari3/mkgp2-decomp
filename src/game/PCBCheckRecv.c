@@ -11,7 +11,7 @@
  * (dtor_800869D0). Merged from 24 over-split files; each part keeps its own
  * local views of the pool behind #define/#undef renames
  * (tools/extab_user_renames.json maps X_pN back to X).
- * `&lbl_805AC258[1]` stays a two-step `addi base,0x6398; addi +0x1c`
+ * `&PCBCheckRecv_bss_805AC258[1]` stays a two-step `addi base,0x6398; addi +0x1c`
  * (mweppc AddPropagation.c refuses to fold a displacement into an add whose
  * alias is a non-local Object).
  * NonMatching: PCBComm_Process (99.95%, see docs/gave_up.md). */
@@ -34,7 +34,7 @@ typedef struct PcbRecvSlot {
     unsigned char padA3A[2];
 } PcbRecvSlot;
 /* .rodata pool 0x80311E38..0x803123B0 (also read by other units). */
-const unsigned int lbl_80311E38[255] = {
+const unsigned int PCBCheckRecv_rodata_80311E38[255] = {
     0x3F800000, 0x3F333333, 0x3F666666, 0x00000000,
     0x00000000, 0x43FA0000, 0x42855556, 0x447A0000,
     0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
@@ -100,7 +100,7 @@ const unsigned int lbl_80311E38[255] = {
     0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000,
     0x42A6AAAB, 0x459C4000, 0x42A6AAAB,
 };
-const unsigned int lbl_80312234[4] = {
+const unsigned int PCBComm_ComputeSyncState_rodata_80312234[4] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
 const char lbl_80312244[15] = "PCB ID : %d OK";
@@ -118,15 +118,15 @@ const char lbl_80312388[24] = "   Link error occurred.";
 const char lbl_803123A0[14] = "PROCESS_ERROR";
 /* Preserve the declaration order of the shared communication buffers. */
 #pragma cplusplus on
-unsigned char lbl_805A5EC0[0x204];
-unsigned char lbl_805A60C4[0x54];
+unsigned char PCBCheckRecv_bss_805A5EC0[0x204];
+unsigned char PCBComm_BuildBroadcastSlot_bss_805A60C4[0x54];
 unsigned char g_pcbSyncTable[0x1C];
-unsigned char lbl_805A6134[0x10];
+unsigned char PCBCheck_ProcessLinks_bss_805A6134[0x10];
 unsigned char lbl_805A6144[0x10];
 PcbRecvSlot lbl_805A6154[4];
-unsigned char lbl_805A8A44[4][0x45];
+unsigned char PCBComm_PackAndTriggerCardSnapshot_bss_805A8A44[4][0x45];
 unsigned char g_ringBufferBase[64][0xDC];
-unsigned char lbl_805AC258[2][0x1C];
+unsigned char PCBCheckRecv_bss_805AC258[2][0x1C];
 #pragma cplusplus reset
 extern unsigned char g_pcbCommEnabled, g_isCommHost;
 extern int g_ringReadIdx, lbl_806D11A0;
@@ -166,11 +166,11 @@ int PCBCheck_RecvLinkData(unsigned char advanceRead)
     }
     slot = lbl_805A6154;
     output = g_ringBufferBase[0];
-    status = lbl_805A8A44[0];
-    localSample = lbl_805A60C4 + 0x2C;
+    status = PCBComm_PackAndTriggerCardSnapshot_bss_805A8A44[0];
+    localSample = PCBComm_BuildBroadcastSlot_bss_805A60C4 + 0x2C;
     for (i = 0; i < 4; ++i, PCBCheck_NextPeer(&slot, &output, &status)) {
         if (slot->flags.local == 1) {
-            memcpy(slot, lbl_805A60C4, 0x2C);
+            memcpy(slot, PCBComm_BuildBroadcastSlot_bss_805A60C4, 0x2C);
             memcpy(slot->samples[slot->writeIndex], localSample, 0x28);
             slot->readIndex = (slot->readIndex + 1) % 64;
             slot->writeIndex = (slot->writeIndex + 1) % 64;
@@ -200,7 +200,7 @@ int PCBCheck_RecvLinkData(unsigned char advanceRead)
                                 memcpy(context + *(int*)packet * 0x200, packet + 4, 0x200);
                             }
                             if (type == 4) {
-                                memcpy(lbl_805AC258, payload, 0x1C);
+                                memcpy(PCBCheckRecv_bss_805AC258, payload, 0x1C);
                             }
                             if (type == 5) {
                                 memcpy(g_pcbSyncTable, payload, 0x1C);
@@ -268,7 +268,7 @@ extern unsigned char g_pcbSyncReady;
 extern int g_currentSceneState;
 extern int g_localPcbRole;
 extern int g_myPcbId;
-extern unsigned char *lbl_806D11B0;
+extern unsigned char *PCBCheckRecv_bss_806D11B0;
 extern void PCBComm_BuildBroadcastSlot(void);
 extern int PcbConn_TryReceiveAck(void *connection);
 extern int TCPConn_EnqueueMessage(void *connection, unsigned short type,
@@ -289,8 +289,8 @@ int PCBComm_SendToAllPeers(void)
     int i;
     if (g_pcbCommEnabled == 0) return 0;
     PCBComm_BuildBroadcastSlot();
-    snapshot = Payload(lbl_805AC258[0], sizeof(lbl_805AC258[0]));
-    block = Payload(lbl_805A5EC0, sizeof(int));
+    snapshot = Payload(PCBCheckRecv_bss_805AC258[0], sizeof(PCBCheckRecv_bss_805AC258[0]));
+    block = Payload(PCBCheckRecv_bss_805A5EC0, sizeof(int));
     scene = g_currentSceneState;
     peer = ((SendPeerSlot *)lbl_805A6154);
     for (i = 0; i < 4; i++, peer++) {
@@ -312,22 +312,22 @@ int PCBComm_SendToAllPeers(void)
         if (g_pcbSyncReady == 1)
             TCPConn_EnqueueMessage(peer->connection, 5, 0x1C, g_pcbSyncTable);
         if (g_isCommHost == 1 && peer->role == g_localPcbRole) {
-            TCPConn_EnqueueMessage(peer->connection, 1, 0x54, lbl_805A60C4);
+            TCPConn_EnqueueMessage(peer->connection, 1, 0x54, PCBComm_BuildBroadcastSlot_bss_805A60C4);
             TCPConn_EnqueueMessage(peer->connection, 2, 0xDC, g_ringBufferBase[0]);
             TCPConn_EnqueueMessage(peer->connection, 4, 0x1C, snapshot);
         } else {
-            TCPConn_EnqueueMessage(peer->connection, 1, 0x54, lbl_805A60C4);
+            TCPConn_EnqueueMessage(peer->connection, 1, 0x54, PCBComm_BuildBroadcastSlot_bss_805A60C4);
         }
         if (peer->blocksRemaining != 0) {
             int index = peer->blocksRemaining - 1;
-            *(int *)lbl_805A5EC0 = index;
-            memcpy(block, lbl_806D11B0 + index * 0x200, 0x200);
-            TCPConn_EnqueueMessage(peer->connection, 3, 0x204, lbl_805A5EC0);
+            *(int *)PCBCheckRecv_bss_805A5EC0 = index;
+            memcpy(block, PCBCheckRecv_bss_806D11B0 + index * 0x200, 0x200);
+            TCPConn_EnqueueMessage(peer->connection, 3, 0x204, PCBCheckRecv_bss_805A5EC0);
             peer->blocksRemaining = peer->blocksRemaining - 1;
         }
         if (peer->cardPending != 0) {
             TCPConn_EnqueueMessage(peer->connection, 6, 0x45,
-                                   (unsigned char *)lbl_805A8A44 +
+                                   (unsigned char *)PCBComm_PackAndTriggerCardSnapshot_bss_805A8A44 +
                                    (g_myPcbId - 1) * 0x45);
             peer->cardPending = 0;
         }
@@ -388,9 +388,9 @@ typedef struct CommStorage {
     SyncOutput output[2];
 } CommStorage;
 
-#define lbl_80312234 ((const CardPointers *)lbl_80312234)
+#define PCBComm_ComputeSyncState_rodata_80312234 ((const CardPointers *)PCBComm_ComputeSyncState_rodata_80312234)
 extern int g_localPcbRole, g_currentSceneState;
-extern u8 lbl_806CEFC8;
+extern u8 PCBCheckRecv_data_806CEFC8;
 /* Actual callee: no incoming arguments, r3 is a 15-bit integer. */
 extern int rand(void);
 /* Actual callee reads four pointer words through r3 and returns an integer. */
@@ -464,7 +464,7 @@ static inline SyncOutput* HostOutput(CommStorage* storage)
 {
     if (g_isCommHost == 0) return 0;
     if (g_localPcbRole == 0) return 0;
-    return &((SyncOutput *)lbl_805AC258)[1];
+    return &((SyncOutput *)PCBCheckRecv_bss_805AC258)[1];
 }
 
 static inline void SelectRoleCards(SyncPeerSlot* peer, CardRow* card,
@@ -495,7 +495,7 @@ int PCBComm_ComputeSyncState(void)
     u8 usedPositions[4];
     int positionCount;
     int characterCount;
-    CommStorage* storage = (CommStorage*)lbl_805A5EC0;
+    CommStorage* storage = (CommStorage*)PCBCheckRecv_bss_805A5EC0;
     SyncPeerSlot* firstPeer;
     SyncOutput* out = HostOutput(storage);
     SyncPeerSlot* peer;
@@ -504,7 +504,7 @@ int PCBComm_ComputeSyncState(void)
 
     if (out == 0) {
         if (g_localPcbRole != 0) return 0;
-        out = &((SyncOutput *)lbl_805AC258)[0];
+        out = &((SyncOutput *)PCBCheckRecv_bss_805AC258)[0];
     }
     ready = 1;
     PeersReady2(g_localPcbRole, &ready);
@@ -537,10 +537,10 @@ int PCBComm_ComputeSyncState(void)
         out->choice.bytes.option = winner;
     }
     if ((int)out->scene == 26 && out->commonItem == -1) {
-        CardRow* card = (CardRow *)lbl_805A8A44;
+        CardRow* card = (CardRow *)PCBComm_PackAndTriggerCardSnapshot_bss_805A8A44;
         firstPeer = ((SyncPeerSlot *)lbl_805A6154);
         peer = firstPeer;
-        cards = lbl_80312234[0];
+        cards = PCBComm_ComputeSyncState_rodata_80312234[0];
         role = g_localPcbRole;
         SelectRoleCards(peer, card, &cards, role);
         out->commonItem = CardSnapshot_ResolveCommonItems(cards.row);
@@ -569,11 +569,11 @@ int PCBComm_ComputeSyncState(void)
             }
         } while (characterCount < 2);
     }
-    if (lbl_806CEFC8 != 0) ++out->sequence;
-    else lbl_806CEFC8 = 1;
+    if (PCBCheckRecv_data_806CEFC8 != 0) ++out->sequence;
+    else PCBCheckRecv_data_806CEFC8 = 1;
     return 1;
 }
-#undef lbl_80312234
+#undef PCBComm_ComputeSyncState_rodata_80312234
 
 /* ==== PCBCommPhase5.c ==== */
 #define OSGetTime OSGetTime_p1
@@ -583,8 +583,8 @@ int PCBComm_ComputeSyncState(void)
 #define SlotView SlotView_p1
 #define __div2i __div2i_p1
 #define g_pcbSyncPhasePerPcb g_pcbSyncPhasePerPcb_p1
-#define lbl_806D11C0 lbl_806D11C0_p1
-#define lbl_806D11C8 lbl_806D11C8_p1
+#define PCBCheckRecv_bss_806D11C0 lbl_806D11C0_p1
+#define PCBCheckRecv_bss_806D11C8 lbl_806D11C8_p1
 #define lbl_806D3158 lbl_806D3158_p1
 #define lbl_806D315C lbl_806D315C_p1
 #define lbl_806D3160 lbl_806D3160_p1
@@ -604,9 +604,9 @@ typedef struct { SlotHeader header; unsigned char remaining[0xA38]; } SlotView;
 
 extern char g_pcbSyncPhasePerPcb[4];
 
-extern float lbl_806D11C0[2];
+extern float PCBCheckRecv_bss_806D11C0[2];
 /* Two adjacent timestamp words: high at 11C8, low at 11CC. */
-extern long long lbl_806D11C8;
+extern long long PCBCheckRecv_bss_806D11C8;
 extern long long OSGetTime(void);
 extern long long __div2i(long long numerator, long long denominator);
 extern const float lbl_806D3158, lbl_806D315C, lbl_806D3160;
@@ -625,11 +625,11 @@ int PCBComm_UpdateSyncPhase5(void)
     SlotView *slot;
     char *phase;
     int i;
-    float elapsed = (float)__div2i(OSGetTime() - lbl_806D11C8,
+    float elapsed = (float)__div2i(OSGetTime() - PCBCheckRecv_bss_806D11C8,
         (long long)((*(volatile unsigned int *)0x800000F8 >> 2) / 1000));
     elapsed /= lbl_806D3158;
     if (elapsed <= lbl_806D315C) {
-        lbl_806D11C0[1] = lbl_806D3160;
+        PCBCheckRecv_bss_806D11C0[1] = lbl_806D3160;
         return 1;
     }
     slot = slots = lbl_805A6154;
@@ -670,16 +670,16 @@ int PCBComm_UpdateSyncPhase5(void)
                 if (slots->header.bytes.role.role == 5) out[4] = 0;
             }
         }
-        lbl_806D11C8 = OSGetTime();
+        PCBCheckRecv_bss_806D11C8 = OSGetTime();
     }
     {
         unsigned char idle = 1;
         if (roleCount > 0) {
             float timer;
-            lbl_806D11C0[1] -= lbl_806D3164;
-            if (truncate) lbl_806D11C0[1] = (int)lbl_806D11C0[1];
-            if (reset) lbl_806D11C0[1] = lbl_806D3168;
-            timer = lbl_806D11C0[1];
+            PCBCheckRecv_bss_806D11C0[1] -= lbl_806D3164;
+            if (truncate) PCBCheckRecv_bss_806D11C0[1] = (int)PCBCheckRecv_bss_806D11C0[1];
+            if (reset) PCBCheckRecv_bss_806D11C0[1] = lbl_806D3168;
+            timer = PCBCheckRecv_bss_806D11C0[1];
             {
                 char *cursor = phases;
                 unsigned char *out = g_pcbSyncTable;
@@ -691,7 +691,7 @@ int PCBComm_UpdateSyncPhase5(void)
                 }
             }
         }
-        if (idle) lbl_806D11C0[1] = lbl_806D3168;
+        if (idle) PCBCheckRecv_bss_806D11C0[1] = lbl_806D3168;
     }
     return 1;
 }
@@ -703,8 +703,8 @@ int PCBComm_UpdateSyncPhase5(void)
 #undef SlotView
 #undef __div2i
 #undef g_pcbSyncPhasePerPcb
-#undef lbl_806D11C0
-#undef lbl_806D11C8
+#undef PCBCheckRecv_bss_806D11C0
+#undef PCBCheckRecv_bss_806D11C8
 #undef lbl_806D3158
 #undef lbl_806D315C
 #undef lbl_806D3160
@@ -718,7 +718,7 @@ int PCBComm_UpdateSyncPhase5(void)
 #define SlotHeader SlotHeader_p2
 #define SlotView SlotView_p2
 #define g_pcbSyncPhasePerPcb g_pcbSyncPhasePerPcb_p2
-#define lbl_806D11C0 lbl_806D11C0_p2
+#define PCBCheckRecv_bss_806D11C0 lbl_806D11C0_p2
 #define lbl_806D3164 lbl_806D3164_p2
 #define lbl_806D316C lbl_806D316C_p2
 #define lbl_805A6154 ((SlotView *)lbl_805A6154)
@@ -744,7 +744,7 @@ typedef struct { SlotHeader header; unsigned char remaining[0xA38]; } SlotView;
 
 extern char g_pcbSyncPhasePerPcb[4];
 
-extern float lbl_806D11C0[2];
+extern float PCBCheckRecv_bss_806D11C0[2];
 extern const float lbl_806D3164;
 extern const float lbl_806D316C;
 
@@ -804,10 +804,10 @@ int PCBComm_UpdateSyncPhase1(void)
         unsigned char idle = 1;
         if (roleCount > 0) {
             float timer;
-            lbl_806D11C0[0] -= lbl_806D3164;
-            if (truncate) lbl_806D11C0[0] = (int)lbl_806D11C0[0];
-            if (reset) lbl_806D11C0[0] = lbl_806D316C;
-            timer = lbl_806D11C0[0];
+            PCBCheckRecv_bss_806D11C0[0] -= lbl_806D3164;
+            if (truncate) PCBCheckRecv_bss_806D11C0[0] = (int)PCBCheckRecv_bss_806D11C0[0];
+            if (reset) PCBCheckRecv_bss_806D11C0[0] = lbl_806D316C;
+            timer = PCBCheckRecv_bss_806D11C0[0];
             {
                 unsigned char *out = g_pcbSyncTable;
                 phase = phases;
@@ -819,7 +819,7 @@ int PCBComm_UpdateSyncPhase1(void)
                 }
             }
         }
-        if (idle) lbl_806D11C0[0] = lbl_806D316C;
+        if (idle) PCBCheckRecv_bss_806D11C0[0] = lbl_806D316C;
     }
     return 1;
 }
@@ -829,7 +829,7 @@ int PCBComm_UpdateSyncPhase1(void)
 #undef SlotHeader
 #undef SlotView
 #undef g_pcbSyncPhasePerPcb
-#undef lbl_806D11C0
+#undef PCBCheckRecv_bss_806D11C0
 #undef lbl_806D3164
 #undef lbl_806D316C
 #undef lbl_805A6154
@@ -944,8 +944,8 @@ unsigned char CommBroadcast_ScanForMySyncMatch(void)
 #define InputMgr_GetPlayer InputMgr_GetPlayer_p4
 #define PcbSlot PcbSlot_p4
 #define ReadyFlags ReadyFlags_p4
-#define lbl_806D11B8 lbl_806D11B8_p4
-#define lbl_806D11BC lbl_806D11BC_p4
+#define PCBCheckRecv_bss_806D11B8 lbl_806D11B8_p4
+#define PCBCheckRecv_bss_806D11BC lbl_806D11BC_p4
 #define lbl_806D315C lbl_806D315C_p4
 #define lbl_806D3170 lbl_806D3170_p4
 #define lbl_806D3178 lbl_806D3178_p4
@@ -983,8 +983,8 @@ typedef struct PcbSlot {
 
 extern "C" {
 
-extern void *lbl_806D11B8;
-extern int lbl_806D11BC;
+extern void *PCBCheckRecv_bss_806D11B8;
+extern int PCBCheckRecv_bss_806D11BC;
 extern const float lbl_806D315C;
 
 extern const char lbl_806D3170[5];
@@ -999,21 +999,21 @@ extern "C" int BootPCBCheck_Display(void)
 {
     int i;
 
-    if (lbl_806D11B8 == 0) {
+    if (PCBCheckRecv_bss_806D11B8 == 0) {
         return 0;
     }
     for (i = 0; i < 4; i++) {
         if (lbl_805A6154[i].flags.disabled == 1) {
-            DrawText(lbl_806D11B8, 0x54, (i + 1) * 0x18, 7, lbl_806D315C, lbl_80312244, i + 1);
+            DrawText(PCBCheckRecv_bss_806D11B8, 0x54, (i + 1) * 0x18, 7, lbl_806D315C, lbl_80312244, i + 1);
         } else if (lbl_805A6154[i].primary != 0 && lbl_805A6154[i].secondary != 0) {
-            DrawText(lbl_806D11B8, 0x54, (i + 1) * 0x18, 7, lbl_806D315C, lbl_80312244, i + 1);
+            DrawText(PCBCheckRecv_bss_806D11B8, 0x54, (i + 1) * 0x18, 7, lbl_806D315C, lbl_80312244, i + 1);
         } else {
-            DrawText(lbl_806D11B8, 0x54, (i + 1) * 0x18, 7, lbl_806D315C, lbl_80312254, i + 1);
+            DrawText(PCBCheckRecv_bss_806D11B8, 0x54, (i + 1) * 0x18, 7, lbl_806D315C, lbl_80312254, i + 1);
         }
     }
-    DrawText(lbl_806D11B8, 0xE, 0x18, 7, lbl_806D315C, lbl_806D3170);
-    DrawText(lbl_806D11B8, 0x24C, 0x18, 7, lbl_806D315C, lbl_806D3178, lbl_806D11BC / 60);
-    DisplayContext_Flush(lbl_806D11B8);
+    DrawText(PCBCheckRecv_bss_806D11B8, 0xE, 0x18, 7, lbl_806D315C, lbl_806D3170);
+    DrawText(PCBCheckRecv_bss_806D11B8, 0x24C, 0x18, 7, lbl_806D315C, lbl_806D3178, PCBCheckRecv_bss_806D11BC / 60);
+    DisplayContext_Flush(PCBCheckRecv_bss_806D11B8);
     return 1;
 }
 
@@ -1023,13 +1023,13 @@ extern "C" int BootPCBCheck_Poll(void)
     int n = 0;
     int i;
 
-    if (lbl_806D11B8 == 0) {
+    if (PCBCheckRecv_bss_806D11B8 == 0) {
         return 0;
     }
-    if (lbl_806D11BC <= 0) {
+    if (PCBCheckRecv_bss_806D11BC <= 0) {
         return 0;
     }
-    lbl_806D11BC--;
+    PCBCheckRecv_bss_806D11BC--;
     for (i = 0; i < 4; i++) {
         if (lbl_805A6154[i].flags.disabled == 1) {
             n++;
@@ -1038,10 +1038,10 @@ extern "C" int BootPCBCheck_Poll(void)
         }
     }
     if (n == 4) {
-        lbl_806D11BC = 0;
+        PCBCheckRecv_bss_806D11BC = 0;
     }
     if (input->IsPressed(0x2000) && input->IsPressed(0x400)) {
-        lbl_806D11BC = 0;
+        PCBCheckRecv_bss_806D11BC = 0;
     }
     return 1;
 }
@@ -1052,8 +1052,8 @@ extern "C" int BootPCBCheck_Poll(void)
 #undef InputMgr_GetPlayer
 #undef PcbSlot
 #undef ReadyFlags
-#undef lbl_806D11B8
-#undef lbl_806D11BC
+#undef PCBCheckRecv_bss_806D11B8
+#undef PCBCheckRecv_bss_806D11BC
 #undef lbl_806D315C
 #undef lbl_806D3170
 #undef lbl_806D3178
@@ -1063,7 +1063,7 @@ extern "C" int BootPCBCheck_Poll(void)
 /* ==== BootNotice_CheckEnterCondition.c ==== */
 #define SetSyncTarget SetSyncTarget_p5
 #define fn_801DB68C fn_801DB68C_p5
-#define lbl_806D11B8 lbl_806D11B8_p5
+#define PCBCheckRecv_bss_806D11B8 lbl_806D11B8_p5
 #define lbl_806D1880 lbl_806D1880_p5
 #pragma exceptions on
 #pragma use_lmw_stmw off
@@ -1075,7 +1075,7 @@ extern "C" int BootPCBCheck_Poll(void)
  * authorize entry, 0 to skip.
  *
  * Behaviour:
- *   - if (g_BootNoticeArm == 0) return 0;            (lbl_806D11B8)
+ *   - if (g_BootNoticeArm == 0) return 0;            (PCBCheckRecv_bss_806D11B8)
  *   - if (g_BootNoticeOverlay == 0)                  (lbl_806D1880)
  *         fn_801DB68C(g_BootNoticeOverlay, 1);       (cleanup, value is 0)
  *         g_BootNoticeOverlay = 0;                   (dead store: emitted)
@@ -1088,28 +1088,28 @@ extern "C" int BootPCBCheck_Poll(void)
  * CW auto-generates them.
  */
 
-extern unsigned int lbl_806D11B8;   // .sbss size 0x4: notice-arm flag
+extern unsigned int PCBCheckRecv_bss_806D11B8;   // .sbss size 0x4: notice-arm flag
 extern unsigned int lbl_806D1880;   // .sbss size 0x8: notice overlay alloc slot
 extern void fn_801DB68C(unsigned int p, int q);
 extern void SetSyncTarget(int target);
 
 #pragma exceptions on
 int BootNotice_CheckEnterCondition(void) {
-    if (lbl_806D11B8 == 0) {
+    if (PCBCheckRecv_bss_806D11B8 == 0) {
         return 0;
     }
     if (lbl_806D1880 == 0) {
         fn_801DB68C(lbl_806D1880, 1);
         lbl_806D1880 = 0;
     }
-    lbl_806D11B8 = 0;
+    PCBCheckRecv_bss_806D11B8 = 0;
     SetSyncTarget(2);
     return 1;
 }
 #pragma exceptions on
 #undef SetSyncTarget
 #undef fn_801DB68C
-#undef lbl_806D11B8
+#undef PCBCheckRecv_bss_806D11B8
 #undef lbl_806D1880
 
 /* ==== BootPCBCheck_Init.c ==== */
@@ -1119,8 +1119,8 @@ int BootNotice_CheckEnterCondition(void) {
 #define PCBCheck_StateSet PCBCheck_StateSet_p6
 #define SetSyncTarget SetSyncTarget_p6
 #define g_pcbListener g_pcbListener_p6
-#define lbl_806D11B8 lbl_806D11B8_p6
-#define lbl_806D11BC lbl_806D11BC_p6
+#define PCBCheckRecv_bss_806D11B8 lbl_806D11B8_p6
+#define PCBCheckRecv_bss_806D11BC lbl_806D11BC_p6
 #define lbl_806D1880 lbl_806D1880_p6
 #pragma exceptions off
 #pragma use_lmw_stmw off
@@ -1133,7 +1133,7 @@ int BootNotice_CheckEnterCondition(void) {
  * (PCBCheck_StateSet) against g_pcbListener, raises the sync target to 0x36
  * and arms the 0xE10 (3600-frame / 60 s) wait counter.
  *
- *   - if (g_BootPCBCheckArm != 0) return 0;            (lbl_806D11B8 -- gate)
+ *   - if (g_BootPCBCheckArm != 0) return 0;            (PCBCheckRecv_bss_806D11B8 -- gate)
  *   - if (g_BootPCBCheckBuf == 0) {                    (lbl_806D1880)
  *         buf = Alloc(0xD8);
  *         if (buf != 0) DisplayContext_Init();
@@ -1163,8 +1163,8 @@ extern void SetSyncTarget(int target);
 extern void PCBCheck_StateSet(unsigned int listener);
 extern void MemoryManager_TimedFree(void *);
 
-extern unsigned int lbl_806D11B8;   // .sbss size 0x4: gate (init done flag, holds buf ptr)
-extern unsigned int lbl_806D11BC;   // .sbss size 0x4: 60s wait counter
+extern unsigned int PCBCheckRecv_bss_806D11B8;   // .sbss size 0x4: gate (init done flag, holds buf ptr)
+extern unsigned int PCBCheckRecv_bss_806D11BC;   // .sbss size 0x4: 60s wait counter
 extern unsigned int lbl_806D1880;   // .sbss size 0x8: allocated state buffer ptr
 extern unsigned int g_pcbListener;  // .sbss size 0x4: PCB listener handle
 
@@ -1207,7 +1207,7 @@ __declspec(section ".extabindex_user") static const struct {
 
 int BootPCBCheck_Init(void) {
     void *buf;
-    if (lbl_806D11B8 != 0) {
+    if (PCBCheckRecv_bss_806D11B8 != 0) {
         return 0;
     }
     buf = (void *)lbl_806D1880;
@@ -1218,13 +1218,13 @@ int BootPCBCheck_Init(void) {
         }
         lbl_806D1880 = (unsigned int)buf;
     }
-    lbl_806D11B8 = lbl_806D1880;
+    PCBCheckRecv_bss_806D11B8 = lbl_806D1880;
     if (lbl_806D1880 == 0) {
         return 0;
     }
     SetSyncTarget(0x36);
     PCBCheck_StateSet(g_pcbListener);
-    lbl_806D11BC = 0xE10;
+    PCBCheckRecv_bss_806D11BC = 0xE10;
     return 1;
 }
 #undef Alloc
@@ -1233,8 +1233,8 @@ int BootPCBCheck_Init(void) {
 #undef PCBCheck_StateSet
 #undef SetSyncTarget
 #undef g_pcbListener
-#undef lbl_806D11B8
-#undef lbl_806D11BC
+#undef PCBCheckRecv_bss_806D11B8
+#undef PCBCheckRecv_bss_806D11BC
 #undef lbl_806D1880
 
 /* ==== SetPcbScratchFlag_806d11a4.c ==== */
@@ -1291,7 +1291,7 @@ extern void* card_pack(void* source, void* destination, int mode);
 int PCBComm_PackAndTriggerCardSnapshot(void)
 {
     if (g_localPcbRole == 0) return 0;
-    card_pack(g_playerData, lbl_805A8A44[g_myPcbId - 1], 1);
+    card_pack(g_playerData, PCBComm_PackAndTriggerCardSnapshot_bss_805A8A44[g_myPcbId - 1], 1);
     if (g_isCommHost == 0) {
         SnapshotSlot* slot = lbl_805A6154;
         int local = g_myPcbId - 1;
@@ -1318,7 +1318,7 @@ int PCBComm_PackAndTriggerCardSnapshot(void)
 #define GetDisplayContext GetDisplayContext_p9
 #define g_localPcbRole g_localPcbRole_p9
 #define g_myPcbId g_myPcbId_p9
-#define lbl_806D11B0 lbl_806D11B0_p9
+#define PCBCheckRecv_bss_806D11B0 lbl_806D11B0_p9
 #define lbl_805A6154 ((ResetIOPort *)lbl_805A6154)
 #pragma exceptions off
 #pragma use_lmw_stmw off
@@ -1327,7 +1327,7 @@ int PCBComm_PackAndTriggerCardSnapshot(void)
 
 extern int g_localPcbRole;
 extern int g_myPcbId;
-extern void *lbl_806D11B0;
+extern void *PCBCheckRecv_bss_806D11B0;
 extern void *GetDisplayContext(int pcbIndex);
 
 #pragma exceptions on
@@ -1339,7 +1339,7 @@ int ResetIOPorts(void) {
     if (g_localPcbRole == 0) {
         return 0;
     }
-    lbl_806D11B0 = GetDisplayContext(g_myPcbId - 1);
+    PCBCheckRecv_bss_806D11B0 = GetDisplayContext(g_myPcbId - 1);
     role = g_localPcbRole;
     port = lbl_805A6154;
     for (i = 0; i < 4; i++, port++) {
@@ -1353,7 +1353,7 @@ int ResetIOPorts(void) {
 #undef GetDisplayContext
 #undef g_localPcbRole
 #undef g_myPcbId
-#undef lbl_806D11B0
+#undef PCBCheckRecv_bss_806D11B0
 #undef lbl_805A6154
 
 /* ==== PcbSyncTable_Ptr.c ==== */
@@ -1368,14 +1368,14 @@ void *PcbSyncTable_Ptr(void)
 #define g_isCommHost g_isCommHost_p11
 #define g_localPcbRole g_localPcbRole_p11
 #define memset memset_p11
-#define lbl_805AC258 ((unsigned char *)lbl_805AC258)
+#define PCBCheckRecv_bss_805AC258 ((unsigned char *)PCBCheckRecv_bss_805AC258)
 #pragma exceptions on
 #pragma use_lmw_stmw off
 /*
  * msg_type 4 sync slot helpers.
  *
- * Two 0x1C-byte slots sit back-to-back at lbl_805AC258 (recv) and
- * lbl_805AC258 + 0x1C (host send).
+ * Two 0x1C-byte slots sit back-to-back at PCBCheckRecv_bss_805AC258 (recv) and
+ * PCBCheckRecv_bss_805AC258 + 0x1C (host send).
  */
 
 extern unsigned char g_isCommHost;
@@ -1386,26 +1386,26 @@ extern void memset(void *dst, int value, unsigned long size);
 void *SyncSlot_GetHostSend(void) {
     unsigned char *p;
     if (g_isCommHost == 0) return (void *)0;
-    p = &lbl_805AC258[0x1c];
+    p = &PCBCheckRecv_bss_805AC258[0x1c];
     if (g_localPcbRole != 0) return p;
     return (void *)0;
 }
 
 void *SyncSlot_GetRecv(void) {
-    return lbl_805AC258;
+    return PCBCheckRecv_bss_805AC258;
 }
 
 void SyncSlot_Reset(void) {
     int i;
 
     for (i = 0; i < 2; i++) {
-        memset(lbl_805AC258 + i * 0x1c, 0, 0x1c);
+        memset(PCBCheckRecv_bss_805AC258 + i * 0x1c, 0, 0x1c);
     }
 }
 #undef g_isCommHost
 #undef g_localPcbRole
 #undef memset
-#undef lbl_805AC258
+#undef PCBCheckRecv_bss_805AC258
 
 /* ==== CommBroadcast_ClearTable.c ==== */
 #define CommEntry CommEntry_p12
@@ -1714,7 +1714,7 @@ int PCBComm_PromoteToClientConfirmed(void) {
 #define g_localPcbRole g_localPcbRole_p19
 #define g_myPcbId g_myPcbId_p19
 #define lbl_805A6154 ((PcbSlot *)lbl_805A6154)
-#define lbl_805AC258 ((signed char *)lbl_805AC258)
+#define PCBCheckRecv_bss_805AC258 ((signed char *)PCBCheckRecv_bss_805AC258)
 #pragma exceptions off
 #pragma use_lmw_stmw off
 /* PCB sync-table and link-slot peer counters, 0x800856F4..0x80085DD8. */
@@ -1893,7 +1893,7 @@ int PcbSync_AllKartsInValidSelectState(void)
 
 int IsSyncReached(void)
 {
-    return lbl_805AC258[8] == g_currentSceneState;
+    return PCBCheckRecv_bss_805AC258[8] == g_currentSceneState;
 }
 
 int PcbSync_AlwaysZero_Stub(void)
@@ -1909,28 +1909,28 @@ int PcbSync_AlwaysZero_Stub(void)
 #undef PCB_CHAR_ID
 #undef PCB_IS_JOINED
 #undef lbl_805A6154
-#undef lbl_805AC258
+#undef PCBCheckRecv_bss_805AC258
 
 /* ==== SyncSlot_ApplyCourseChoice.c ==== */
 #define GetCourseSelectEntry GetCourseSelectEntry_p20
 #define SetCourseParams SetCourseParams_p20
 #define lbl_806CF12C lbl_806CF12C_p20
-#define lbl_805AC258 ((unsigned short *)lbl_805AC258)
+#define PCBCheckRecv_bss_805AC258 ((unsigned short *)PCBCheckRecv_bss_805AC258)
 #pragma exceptions on
 #pragma use_lmw_stmw off
 /*
  * SyncSlot_ApplyCourseChoice
- *   Reads the sync-slot byte at lbl_805AC258 (delivered via msg_type 4) and
+ *   Reads the sync-slot byte at PCBCheckRecv_bss_805AC258 (delivered via msg_type 4) and
  *   applies the selected cup/course/lap-flag to the local race configuration.
  *
- *   Bit layout of lbl_805AC258 (halfword):
+ *   Bit layout of PCBCheckRecv_bss_805AC258 (halfword):
  *     bits[10:4] = cupId  (7-bit, fed to GetCourseSelectEntry)
  *     bit[3]     = "lap shifted" flag (passed as 4th arg to SetCourseParams)
  *
  *   The selected cupId is also cached at lbl_806CF12C for later reads.
  *
  *   Held in its own TU (separate from SyncSlot.c) because SyncSlot.c declares
- *   lbl_805AC258 as an `unsigned char[0x38]` blob to satisfy the manual asm
+ *   PCBCheckRecv_bss_805AC258 as an `unsigned char[0x38]` blob to satisfy the manual asm
  *   prologue in SyncSlot_Reset; this function needs the same address treated
  *   as halfword-aligned storage to reproduce the target's lhz/lbz access mix.
  */
@@ -1941,16 +1941,16 @@ extern int *GetCourseSelectEntry(int cupId);
 extern void SetCourseParams(int arg0, int arg1, int arg2, int lapShifted);
 
 int SyncSlot_ApplyCourseChoice(void) {
-    int *entry = GetCourseSelectEntry((lbl_805AC258[0] >> 4) & 0x7f);
+    int *entry = GetCourseSelectEntry((PCBCheckRecv_bss_805AC258[0] >> 4) & 0x7f);
     SetCourseParams(entry[0], entry[1], entry[2],
-                    (((unsigned char *)lbl_805AC258)[1] >> 3) & 1);
-    lbl_806CF12C = (lbl_805AC258[0] >> 4) & 0x7f;
+                    (((unsigned char *)PCBCheckRecv_bss_805AC258)[1] >> 3) & 1);
+    lbl_806CF12C = (PCBCheckRecv_bss_805AC258[0] >> 4) & 0x7f;
     return 1;
 }
 #undef GetCourseSelectEntry
 #undef SetCourseParams
 #undef lbl_806CF12C
-#undef lbl_805AC258
+#undef PCBCheckRecv_bss_805AC258
 
 /* ==== PcbDebugOverlay.c ==== */
 #define DVDLoad_GetLastReadSec DVDLoad_GetLastReadSec_p21
@@ -2181,7 +2181,7 @@ void DebugOverlay_DumpPcbState(void)
 #define lbl_806D318C lbl_806D318C_p22
 #define lbl_806D3190 lbl_806D3190_p22
 #define lbl_806D3194 lbl_806D3194_p22
-#define lbl_80311E38 ((const unsigned int *)lbl_80311E38)
+#define PCBCheckRecv_rodata_80311E38 ((const unsigned int *)PCBCheckRecv_rodata_80311E38)
 #pragma exceptions on
 #pragma use_lmw_stmw on
 /* Link-error screen, 0x8008604C..0x80086170.
@@ -2231,7 +2231,7 @@ extern void fn_8011F994(int arg);
 #undef lbl_806D318C
 #undef lbl_806D3190
 #undef lbl_806D3194
-#undef lbl_80311E38
+#undef PCBCheckRecv_rodata_80311E38
 /* ==== PCBCommLifecycle.cpp  declarations ==== */
 #define OSGetTick OSGetTick_p23
 #define OSGetTime OSGetTime_p23
@@ -2256,26 +2256,26 @@ extern void fn_8011F994(int arg);
 #define g_pcbSyncReady g_pcbSyncReady_p23
 #define g_ringReadIdx g_ringReadIdx_p23
 #define lbl_80598A60 lbl_80598A60_p23
-#define lbl_806CEFC8 lbl_806CEFC8_p23
-#define lbl_806D1188 lbl_806D1188_p23
+#define PCBCheckRecv_data_806CEFC8 lbl_806CEFC8_p23
+#define PCBCheckRecv_bss_806D1188 lbl_806D1188_p23
 #define lbl_806D1191 lbl_806D1191_p23
 #define lbl_806D1193 lbl_806D1193_p23
 #define lbl_806D11A0 lbl_806D11A0_p23
 #define lbl_806D11A4 lbl_806D11A4_p23
 #define lbl_806D11A8 lbl_806D11A8_p23
-#define lbl_806D11AC lbl_806D11AC_p23
-#define lbl_806D11B0 lbl_806D11B0_p23
-#define lbl_806D11C0 lbl_806D11C0_p23
-#define lbl_806D11C8 lbl_806D11C8_p23
+#define PCBComm_Init_bss_806D11AC lbl_806D11AC_p23
+#define PCBCheckRecv_bss_806D11B0 lbl_806D11B0_p23
+#define PCBCheckRecv_bss_806D11C0 lbl_806D11C0_p23
+#define PCBCheckRecv_bss_806D11C8 lbl_806D11C8_p23
 #define lbl_806D3168 lbl_806D3168_p23
 #define lbl_806D316C lbl_806D316C_p23
 #define lbl_806D3198 lbl_806D3198_p23
 #define memset memset_p23
-#define g_out ((LifecycleConn **)lbl_805A6134)
+#define g_out ((LifecycleConn **)PCBCheck_ProcessLinks_bss_805A6134)
 #define g_in ((LifecycleConn **)lbl_805A6144)
 #define g_slots ((Slot *)lbl_805A6154)
 #define g_ring g_ringBufferBase
-#define g_snaps lbl_805AC258
+#define g_snaps PCBCheckRecv_bss_805AC258
 #define g_pcbSyncTable (*(Sync *)g_pcbSyncTable)
 #pragma exceptions on
 #pragma use_lmw_stmw on
@@ -2336,14 +2336,14 @@ struct Storage {
 extern "C" {
 extern u8 lbl_80598A60[0x2A];
 extern u8 g_pcbCommEnabled, lbl_806D1191, g_pcbSyncReady;
-extern u8 lbl_806CEFC8, lbl_806D1193, g_confirmFlag, lbl_806D11AC;
+extern u8 PCBCheckRecv_data_806CEFC8, lbl_806D1193, g_confirmFlag, PCBComm_Init_bss_806D11AC;
 extern u8 g_isCommHost;
 extern int g_gameMode, g_myPcbId, g_ringReadIdx, lbl_806D11A0;
-extern u32 lbl_806D1188, lbl_806D11A4, lbl_806D11A8;
-extern void *lbl_806D11B0;
+extern u32 PCBCheckRecv_bss_806D1188, lbl_806D11A4, lbl_806D11A8;
+extern void *PCBCheckRecv_bss_806D11B0;
 extern LifecycleListener *g_pcbListener;
-extern float lbl_806D11C0[2];
-extern long long lbl_806D11C8;
+extern float PCBCheckRecv_bss_806D11C0[2];
+extern long long PCBCheckRecv_bss_806D11C8;
 extern signed char g_pcbSyncPhasePerPcb[4];
 extern const float lbl_806D3168, lbl_806D316C, lbl_806D3198;
 u32 OSGetTick(void);
@@ -2439,17 +2439,17 @@ static inline void CopyHostSnapshot(u8 *snapshots, int next) {
 #undef g_pcbSyncReady
 #undef g_ringReadIdx
 #undef lbl_80598A60
-#undef lbl_806CEFC8
-#undef lbl_806D1188
+#undef PCBCheckRecv_data_806CEFC8
+#undef PCBCheckRecv_bss_806D1188
 #undef lbl_806D1191
 #undef lbl_806D1193
 #undef lbl_806D11A0
 #undef lbl_806D11A4
 #undef lbl_806D11A8
-#undef lbl_806D11AC
-#undef lbl_806D11B0
-#undef lbl_806D11C0
-#undef lbl_806D11C8
+#undef PCBComm_Init_bss_806D11AC
+#undef PCBCheckRecv_bss_806D11B0
+#undef PCBCheckRecv_bss_806D11C0
+#undef PCBCheckRecv_bss_806D11C8
 #undef lbl_806D3168
 #undef lbl_806D316C
 #undef lbl_806D3198
@@ -2474,7 +2474,7 @@ static inline void CopyHostSnapshot(u8 *snapshots, int next) {
 #define lbl_806D318C lbl_806D318C_p22
 #define lbl_806D3190 lbl_806D3190_p22
 #define lbl_806D3194 lbl_806D3194_p22
-#define lbl_80311E38 ((const unsigned int *)lbl_80311E38)
+#define PCBCheckRecv_rodata_80311E38 ((const unsigned int *)PCBCheckRecv_rodata_80311E38)
 #pragma exceptions on
 #pragma use_lmw_stmw on
 extern "C" int DrawLinkErrorOverlay(void)
@@ -2517,7 +2517,7 @@ extern "C" int DrawLinkErrorOverlay(void)
 #undef lbl_806D318C
 #undef lbl_806D3190
 #undef lbl_806D3194
-#undef lbl_80311E38
+#undef PCBCheckRecv_rodata_80311E38
 /* ==== PCBCommLifecycle.cpp ==== */
 #define OSGetTick OSGetTick_p23
 #define OSGetTime OSGetTime_p23
@@ -2542,26 +2542,26 @@ extern "C" int DrawLinkErrorOverlay(void)
 #define g_pcbSyncReady g_pcbSyncReady_p23
 #define g_ringReadIdx g_ringReadIdx_p23
 #define lbl_80598A60 lbl_80598A60_p23
-#define lbl_806CEFC8 lbl_806CEFC8_p23
-#define lbl_806D1188 lbl_806D1188_p23
+#define PCBCheckRecv_data_806CEFC8 lbl_806CEFC8_p23
+#define PCBCheckRecv_bss_806D1188 lbl_806D1188_p23
 #define lbl_806D1191 lbl_806D1191_p23
 #define lbl_806D1193 lbl_806D1193_p23
 #define lbl_806D11A0 lbl_806D11A0_p23
 #define lbl_806D11A4 lbl_806D11A4_p23
 #define lbl_806D11A8 lbl_806D11A8_p23
-#define lbl_806D11AC lbl_806D11AC_p23
-#define lbl_806D11B0 lbl_806D11B0_p23
-#define lbl_806D11C0 lbl_806D11C0_p23
-#define lbl_806D11C8 lbl_806D11C8_p23
+#define PCBComm_Init_bss_806D11AC lbl_806D11AC_p23
+#define PCBCheckRecv_bss_806D11B0 lbl_806D11B0_p23
+#define PCBCheckRecv_bss_806D11C0 lbl_806D11C0_p23
+#define PCBCheckRecv_bss_806D11C8 lbl_806D11C8_p23
 #define lbl_806D3168 lbl_806D3168_p23
 #define lbl_806D316C lbl_806D316C_p23
 #define lbl_806D3198 lbl_806D3198_p23
 #define memset memset_p23
-#define g_out ((LifecycleConn **)lbl_805A6134)
+#define g_out ((LifecycleConn **)PCBCheck_ProcessLinks_bss_805A6134)
 #define g_in ((LifecycleConn **)lbl_805A6144)
 #define g_slots ((Slot *)lbl_805A6154)
 #define g_ring g_ringBufferBase
-#define g_snaps lbl_805AC258
+#define g_snaps PCBCheckRecv_bss_805AC258
 #define g_pcbSyncTable (*(Sync *)g_pcbSyncTable)
 #pragma exceptions on
 #pragma use_lmw_stmw on
@@ -2576,9 +2576,9 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
     u8 update = 0;
     u32 tick = OSGetTick();
     if (g_gameMode == 2 ||
-        (tick - lbl_806D1188) / ((*(u32 *)0x800000F8 / 4) / 1000) >= 15) {
+        (tick - PCBCheckRecv_bss_806D1188) / ((*(u32 *)0x800000F8 / 4) / 1000) >= 15) {
         update = 1;
-        lbl_806D1188 = tick;
+        PCBCheckRecv_bss_806D1188 = tick;
     }
     ScopedTimer timer(38);
     if (update) {
@@ -2683,19 +2683,19 @@ extern "C" int PCBComm_Init(void)
     g_pcbCommEnabled = 1;
     lbl_806D1191 = 0;
     g_pcbSyncReady = 0;
-    lbl_806CEFC8 = 1;
+    PCBCheckRecv_data_806CEFC8 = 1;
     lbl_806D1193 = 0;
     g_confirmFlag = 0;
     g_myPcbId = myId;
     g_pcbListener = new LifecycleListener;
-    lbl_806D11B0 = 0;
+    PCBCheckRecv_bss_806D11B0 = 0;
     lbl_806D11A4 = 0;
     lbl_806D11A8 = 0;
-    lbl_806D11AC = 0;
-    lbl_806D1188 = OSGetTick();
-    lbl_806D11C0[0] = lbl_806D316C;
-    lbl_806D11C0[1] = lbl_806D3168;
-    lbl_806D11C8 = OSGetTime();
+    PCBComm_Init_bss_806D11AC = 0;
+    PCBCheckRecv_bss_806D1188 = OSGetTick();
+    PCBCheckRecv_bss_806D11C0[0] = lbl_806D316C;
+    PCBCheckRecv_bss_806D11C0[1] = lbl_806D3168;
+    PCBCheckRecv_bss_806D11C8 = OSGetTime();
     LifecycleConn **outgoing = g_out;
     LifecycleConn **incoming = g_in;
     Slot *slot = g_slots;
@@ -2758,17 +2758,17 @@ extern "C" int PCBComm_Init(void)
 #undef g_pcbSyncReady
 #undef g_ringReadIdx
 #undef lbl_80598A60
-#undef lbl_806CEFC8
-#undef lbl_806D1188
+#undef PCBCheckRecv_data_806CEFC8
+#undef PCBCheckRecv_bss_806D1188
 #undef lbl_806D1191
 #undef lbl_806D1193
 #undef lbl_806D11A0
 #undef lbl_806D11A4
 #undef lbl_806D11A8
-#undef lbl_806D11AC
-#undef lbl_806D11B0
-#undef lbl_806D11C0
-#undef lbl_806D11C8
+#undef PCBComm_Init_bss_806D11AC
+#undef PCBCheckRecv_bss_806D11B0
+#undef PCBCheckRecv_bss_806D11C0
+#undef PCBCheckRecv_bss_806D11C8
 #undef lbl_806D3168
 #undef lbl_806D316C
 #undef lbl_806D3198

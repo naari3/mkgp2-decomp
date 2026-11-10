@@ -27,11 +27,11 @@ extern char lbl_80376778[];
 extern char lbl_80376784[];
 extern char lbl_80376790[];
 extern char lbl_806CFB50[];
-extern char lbl_806CFB58[];
-extern char lbl_806CFB60[];
-extern char lbl_806CFB68[];
-extern char lbl_806CFB88[];
-extern char lbl_806CFB90[];
+extern char data_80491704_data_806CFB58[];
+extern char data_80491704_data_806CFB60[];
+extern char data_80491704_data_806CFB68[];
+extern char data_80491704_data_806CFB88[];
+extern char data_80491704_data_806CFB90[];
 extern char lbl_806D8ED0[];
 extern char lbl_806D8ED8[];
 extern char lbl_806D8EE0[];
@@ -91,40 +91,40 @@ extern char lbl_806D9078[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_80491704[3] = {
+void *data_80491704_data_80491704[3] = {
     (void *)&lbl_806CFB50,
     0,
     0
 };
-void *lbl_80491710[4] = {
-    (void *)&lbl_806CFB58,
+void *clModelM_vtable_80491710[4] = {
+    (void *)&data_80491704_data_806CFB58,
     0,
     (void *)fn_8017BF90,
     (void *)fn_8017C1F4
 };
-void *lbl_80491720[3] = {
+void *data_80491704_data_80491720[3] = {
     (void *)&lbl_806CFB50,
     0,
     0
 };
-void *lbl_8049172C[4] = {
-    (void *)&lbl_806CFB60,
+void *clModelPR_vtable_8049172C[4] = {
+    (void *)&data_80491704_data_806CFB60,
     0,
     (void *)fn_8017ACBC,
     (void *)fn_8017C58C
 };
-void *lbl_8049173C[3] = {
+void *data_80491704_data_8049173C[3] = {
     (void *)&lbl_806CFB50,
     0,
     0
 };
-void *lbl_80491748[4] = {
-    (void *)&lbl_806CFB68,
+void *clModelP_vtable_80491748[4] = {
+    (void *)&data_80491704_data_806CFB68,
     0,
     (void *)fn_8017ACBC,
     (void *)fn_8017CBB0
 };
-void *lbl_80491758[4] = {
+void *clModel_vtable_80491758[4] = {
     (void *)&lbl_806CFB50,
     0,
     (void *)fn_8017ACBC,
@@ -203,14 +203,14 @@ char *lbl_804917E0[37] = {
     (char *)&lbl_806D9070,
     (char *)&lbl_806D9078
 };
-void *lbl_80491874[3] = {
-    (void *)&lbl_806CFB88,
+void *data_80491704_data_80491874[3] = {
+    (void *)&data_80491704_data_806CFB88,
     0,
     0
 };
 /* decl: char */
-void *lbl_80491880[5] = {
-    (void *)&lbl_806CFB90,
+void *MiyazakiMode_vtable_80491880[5] = {
+    (void *)&data_80491704_data_806CFB90,
     0,
     (void *)fn_8017FB5C,
     (void *)fn_8017FAFC,

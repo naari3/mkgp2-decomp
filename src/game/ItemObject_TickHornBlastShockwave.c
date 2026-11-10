@@ -7,8 +7,8 @@
 #include "game/types/FloatTriple.h"
 #include "game/types/ItemObjectCopy.h"
 
-extern const FloatTriple lbl_8032E540;
-extern const FloatTriple lbl_8032E54C;
+extern const FloatTriple ItemObject_TickHornBlastShockwave_rodata_8032E540;
+extern const FloatTriple ItemObject_TickHornBlastShockwave_rodata_8032E54C;
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int en);
 extern void SpriteSlot_Container_Free(void *self);
@@ -101,8 +101,8 @@ void ItemObject_TickHornBlastShockwave(unsigned char *self)
                 }
                 break;
             }
-            rot = lbl_8032E54C;
-            ofs = lbl_8032E540;
+            rot = ItemObject_TickHornBlastShockwave_rodata_8032E54C;
+            ofs = ItemObject_TickHornBlastShockwave_rodata_8032E540;
             Item_RenderHandheldByCharacter(self, &ofs, &rot, 0, 1.4f);
             break;
         case 1:

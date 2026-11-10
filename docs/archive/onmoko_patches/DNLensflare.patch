@@ -17,7 +17,7 @@ index 1bcf5b9..7743794 100644
 +++ b/tools/extab_user_renames.json
 @@ -5728,7 +5728,8 @@
      "__ct__13clDNLensflareFv": "fn_80229180",
-     "__vt__13clDNLensflare": "lbl_804EE09C",
+     "__vt__13clDNLensflare": "clDNLensflare_vtable_804EE09C",
      "__vt__16clMapEffectParts": "lbl_80490FE0",
 -    "__ct__11clLensFlareFPCcfffff": "fn_80171F34"
 +    "__ct__11clLensFlareFPCcfffff": "fn_80171F34",

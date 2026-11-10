@@ -95,7 +95,7 @@ extern const float lbl_806D610C;
 extern const float lbl_806D6110;
 extern const float lbl_806D6114;
 extern const float lbl_806D6118;
-extern const Vec3 lbl_8032FA28;
+extern const Vec3 GabyouTripleChild_Update_rodata_8032FA28;
 
 extern signed char ItemObject_GetGroundTypeAt(Vec3 *pos, float *outGroundY, int mode);
 extern void *KartDriver_GetKartRootMtx(void *kart);
@@ -556,7 +556,7 @@ void GabyouTripleChild_Update(GabyouTripleChild *self)
         DbgScene_CopyMatrix3x4Transpose(self->mtx_48, m44);
     }
     if (sub->effect_4c != 0) {
-        trail = lbl_8032FA28;
+        trail = GabyouTripleChild_Update_rodata_8032FA28;
         Mtx_TransposeToMtx44(m44b, self->mtx_48);
         Mtx44_TransformVec3(&((DrawEffectPartial *)sub->effect_4c)->trailEnd_8c, m44b, trail);
         ((DrawEffectPartial *)sub->effect_4c)->scale_b0 = self->scale_c4;

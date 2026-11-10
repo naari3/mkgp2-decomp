@@ -71,7 +71,7 @@ Native C++ typed16-child group draft retained NonMatching99.05205%. Trial1 97.32
 
 ## KartJoint12 ThreeStage Update (800C7918,756 bytes)
 
-Native C++ draft retained NonMatching98.06879%. Trial1 explicit two helper calls97.14286%/752B; trial2 shared loop index and two-stage inner loop (CW unrolled)98.06879%/756B, automatic EH8/index12 all100. Trial3 explicit table cursor and separate reciprocal local97.96296%/760B; restored best trial2. Residual table/child walker GPR swap and interpolation FP identities; no further scalar/cursor spelling search without new structural evidence. External 9-float stage rows lbl_8041A428 remain owned elsewhere; matrix transform and slot position consume Vec by value. Whole DOL SHA passes through honest target fallback, zero genuine gain. Target-observed narrow views, live Ghidra unavailable, no ASM/manualEH.
+Native C++ draft retained NonMatching98.06879%. Trial1 explicit two helper calls97.14286%/752B; trial2 shared loop index and two-stage inner loop (CW unrolled)98.06879%/756B, automatic EH8/index12 all100. Trial3 explicit table cursor and separate reciprocal local97.96296%/760B; restored best trial2. Residual table/child walker GPR swap and interpolation FP identities; no further scalar/cursor spelling search without new structural evidence. External 9-float stage rows Effect_KartJoint12_3Stage_Update_data_8041A428 remain owned elsewhere; matrix transform and slot position consume Vec by value. Whole DOL SHA passes through honest target fallback, zero genuine gain. Target-observed narrow views, live Ghidra unavailable, no ASM/manualEH.
 
 
 ## ApplyParentToChildPair DcDe (800CC878,260 bytes)

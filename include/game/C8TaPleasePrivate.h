@@ -41,9 +41,9 @@ struct C8TaPlease : C8FlowBase {
     C8TaPlease();
 };
 extern "C" {
-extern void *lbl_8049B1CC[];
+extern void *C8TaPlease_vtable_8049B1CC[];
 struct C8TaTables { char pad[0x3FC]; int labels[8][2][2]; int symbols[8][2]; int rounds[8][2]; };
-extern const C8TaTables lbl_8039B470;
+extern const C8TaTables clFlowTaPlease_Init_rodata_8039B470;
 extern C8Input *g_pInputState;
 extern int g_cupId,g_longRoundFlag,g_reverseRoundFlag;
 extern const float lbl_806D9EB8,lbl_806D9EA8,lbl_806D9EBC;

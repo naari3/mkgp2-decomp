@@ -31,26 +31,26 @@ extern void fn_800ACAC0();
 extern void fn_800AE71C();
 extern void fn_800AE720();
 extern char lbl_806CF260[];
-extern char lbl_806CF268[];
+extern char data_80412158_data_806CF268[];
 extern char lbl_806CF27C[];
 extern char lbl_806CF284[];
 extern char lbl_806CF290[];
-extern char lbl_806CF298[];
-extern char lbl_806CF2A0[];
+extern char data_80412158_data_806CF298[];
+extern char data_80412158_data_806CF2A0[];
 extern char lbl_806CF2A8[];
 extern char lbl_806CF2B0[];
-extern char lbl_806CF2B8[];
-extern char lbl_806CF2C0[];
+extern char data_80412158_data_806CF2B8[];
+extern char data_80412158_data_806CF2C0[];
 extern char lbl_806CF2D0[];
 extern char lbl_806CF2D8[];
-extern char lbl_806CF2E0[];
+extern char data_80412158_data_806CF2E0[];
 extern char lbl_806CF2E8[];
 extern char lbl_806CF2F0[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-unsigned char lbl_80412158[22144] = {
+unsigned char CourseData_LoadPathTable_data_80412158[22144] = {
     0x0, 0x0, 0x0, 0x30, 0x0, 0x0, 0xB, 0x40, 0x0, 0x0, 0x16, 0x70,
     0x0, 0x0, 0x21, 0x70, 0x0, 0x0, 0x2C, 0xE0, 0x0, 0x0, 0x38, 0x20,
     0x0, 0x0, 0x43, 0x80, 0x0, 0x0, 0x4F, 0x10, 0x0, 0x0, 0x5A, 0x50,
@@ -1898,7 +1898,7 @@ unsigned char lbl_80412158[22144] = {
     0x0, 0x0, 0x0, 0x1, 0x44, 0xBF, 0x61, 0xA2, 0x43, 0x8, 0xB8, 0xF6,
     0x43, 0xD8, 0xDA, 0x6F
 };
-unk32 lbl_804177D8[2419] = {
+unk32 crc32_data_804177D8[2419] = {
     0x00000001, 0x44CC110E, 0x4308B8F6, 0x43DF0642, 0x00000001, 0x44D79C29, 0x4308B8F6, 0x43EDA666,
     0x00000001, 0x44E154B4, 0x4308B8F6, 0x4404A00F, 0x00000001, 0x44EB5204, 0x431332CA, 0x442476D6,
     0x00000001, 0x44F0120C, 0x431332CA, 0x443DCC45, 0x00000001, 0x44F30117, 0x431332CA, 0x44564C8B,
@@ -2203,23 +2203,23 @@ unk32 lbl_804177D8[2419] = {
     0x00000001, 0xC4907A14, 0x4399731C, 0x4480EB23, 0xFFFFFF55, 0x00000000, 0x00000000, 0x00000000,
     0x0000000A, 0x0000000A, 0x0000000B
 };
-void *lbl_80419DA4[3] = {
+void *sdata_806CF1C0_data_80419DA4[3] = {
     (void *)&lbl_806CF260,
     0,
     0
 };
-void *lbl_80419DB0[3] = {
-    (void *)&lbl_806CF268,
+void *CourseLookup_vtable_80419DB0[3] = {
+    (void *)&data_80412158_data_806CF268,
     0,
     (void *)HitMessageOverlay_Dtor
 };
-void *lbl_80419DBC[3] = {
+void *CourseLookupBase_vtable_80419DBC[3] = {
     (void *)&lbl_806CF260,
     0,
     (void *)dtor_800ABF10
 };
 /* decl: char / void * */
-void *lbl_80419DC8[3] = {
+void *FlowFader_vtable_80419DC8[3] = {
     (void *)&lbl_806CF27C,
     0,
     (void *)TweenInterp_VtableTrim
@@ -2236,27 +2236,27 @@ void *lbl_80419DE0[4] = {
     (void *)TweenInterp_Dtor,
     0
 };
-void *lbl_80419DF0[3] = {
+void *sdata_806CF1C0_data_80419DF0[3] = {
     (void *)&lbl_806CF290,
     0,
     0
 };
 /* decl: char */
-void *lbl_80419DFC[5] = {
-    (void *)&lbl_806CF298,
+void *GameMode_TitleSelect_data_80419DFC[5] = {
+    (void *)&data_80412158_data_806CF298,
     0,
     (void *)GameMode_CharacterSelect_TickStateMachine,
     (void *)GameMode_CharacterSelect_Draw,
     (void *)GameMode_CharacterSelect_Dtor
 };
-void *lbl_80419E10[3] = {
+void *sdata_806CF1C0_data_80419E10[3] = {
     (void *)&lbl_806CF290,
     0,
     0
 };
 /* decl: char */
-void *lbl_80419E1C[5] = {
-    (void *)&lbl_806CF2A0,
+void *GameMode_TitleSelect_data_80419E1C[5] = {
+    (void *)&data_80412158_data_806CF2A0,
     0,
     (void *)fn_800ACAC0,
     (void *)GameMode_StageSelect_DrawDebugLabel,
@@ -2275,31 +2275,31 @@ void *lbl_80419E3C[5] = {
     (void *)GameMode_Title_DrawDebugLabel,
     (void *)GameMode_Title_Dtor
 };
-void *lbl_80419E50[3] = {
+void *sdata_806CF1C0_data_80419E50[3] = {
     (void *)&lbl_806CF2B0,
     0,
     0
 };
-void *lbl_80419E5C[5] = {
+void *sdata_806CF1C0_data_80419E5C[5] = {
     (void *)&lbl_806CF2B0,
     0,
-    (void *)&lbl_806CF2B8,
+    (void *)&data_80412158_data_806CF2B8,
     0,
     0
 };
 /* decl: unsigned int */
-void *lbl_80419E70[6] = {
-    (void *)&lbl_806CF2C0,
+void *ReverseChallenge_vtable_80419E70[6] = {
+    (void *)&data_80412158_data_806CF2C0,
     0,
     (void *)ReverseChallenge_Update,
     (void *)ReverseChallenge_Render,
     (void *)ReverseChallenge_Dtor,
     0
 };
-float lbl_80419E88[6] = {
+float clCGameDemoWC_Tick_data_80419E88[6] = {
     0.0f, 3e+01f, 1.2e+02f, 1.3e+02f, 2.2e+02f, -1.0f
 };
-int lbl_80419EA0[6] = {
+int clCGameDemoWC_Tick_data_80419EA0[6] = {
     0, 2, 0, 1, 2, 0
 };
 void *lbl_80419EB8[3] = {
@@ -2307,7 +2307,7 @@ void *lbl_80419EB8[3] = {
     0,
     0
 };
-void *lbl_80419EC4[5] = {
+void *sdata_806CF1C0_data_80419EC4[5] = {
     (void *)&lbl_806CF2D0,
     0,
     (void *)&lbl_806CF2D8,
@@ -2315,8 +2315,8 @@ void *lbl_80419EC4[5] = {
     0
 };
 /* decl: unsigned int */
-void *lbl_80419ED8[5] = {
-    (void *)&lbl_806CF2E0,
+void *DemoWCOwner_vtable_80419ED8[5] = {
+    (void *)&data_80412158_data_806CF2E0,
     0,
     (void *)clCGameDemoWC_Tick,
     (void *)clCGameDemoWC_Render,

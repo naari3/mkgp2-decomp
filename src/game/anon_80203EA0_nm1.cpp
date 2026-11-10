@@ -10,8 +10,8 @@
 
 extern "C" {
 void *fn_80271340(void *, int, void *, void *, int);
-extern unsigned char lbl_806D0268[8];
-extern unsigned char lbl_806D0260[8];
+extern unsigned char MsgPopup_RTTI_806D0268[8];
+extern unsigned char FlowTask_RTTI_806D0260[8];
 
 void DebugPrintf(const char *fmt, ...);
 void PreloadResource(int id);
@@ -48,7 +48,7 @@ int fn_80203F5C(int msg) {
         }
         FlowTask *t = fn_801F4DC0(lbl_806D19E8, 0);
         if (t) {
-            MsgPopup *p = (MsgPopup *)fn_80271340(t, 0, lbl_806D0268, lbl_806D0260, 0);
+            MsgPopup *p = (MsgPopup *)fn_80271340(t, 0, MsgPopup_RTTI_806D0268, FlowTask_RTTI_806D0260, 0);
             p->x = lbl_806DAAE8;
             p->y = lbl_806DAAF0;
         }

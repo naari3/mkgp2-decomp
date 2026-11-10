@@ -59,20 +59,20 @@ static const unsigned int lbl_80367758[4] = {
 extern const char lbl_80367768[] = "clCSPartsTitle";
 extern const char lbl_80367778[] = "clCSSceneAttract::clTaskInterface";
 extern const char lbl_8036779C[] = "clCSPartsRanking";
-static const unsigned int lbl_803677B0[6] = {
+static const unsigned int Scene_8014E0C4_rodata_803677B0[6] = {
     0x54494D45, 0x20415454, 0x41434B81, 0x4052414E, 0x4B494E47, 0x00000000,
 };
-static const unsigned int lbl_803677C8[7] = {
+static const unsigned int Scene_8014E0C4_rodata_803677C8[7] = {
     0x835E8343, 0x83808341, 0x835E8362, 0x834E8140, 0x83898393, 0x834C8393,
     0x834F0000,
 };
 extern const char lbl_803677E4[] = "clCSPartsNamco";
 extern const char lbl_803677F4[] = "clCSPartsNintendo";
-extern const unsigned int lbl_80367808[10] = {
+extern const unsigned int sdata_806CF750_rodata_80367808[10] = {
     0x74655369, 0x6E676C65, 0x746F6E3C, 0x636C4D65, 0x6E75496E, 0x7075743E,
     0x00000000, 0x636C4D65, 0x6E75496E, 0x70757400,
 };
-extern const unsigned int lbl_80367830[7] = {
+extern const unsigned int sdata_806CF750_rodata_80367830[7] = {
     0x636C4353, 0x50617274, 0x7353616C, 0x65730000, 0x636C4143, 0x616D6572,
     0x61000000,
 };

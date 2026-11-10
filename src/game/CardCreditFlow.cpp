@@ -7,7 +7,7 @@ extern "C" void fn_80241C1C(CardCreditFlow *s) {
     fn_8023CD54(s->mark);
 }
 extern "C" void fn_80241C88(CardCreditFlow *s) {
-    const char *strings=lbl_803EEF00;
+    const char *strings=CardCreditFlow_rodata_803EEF00;
     InputState *in=GetInput();
     bool pressed=in->held==1;
     int oldState=s->state;
@@ -45,7 +45,7 @@ extern "C" void fn_80241C88(CardCreditFlow *s) {
             if(s->delay!=0) --s->delay;
             else if(s->fader.p->Done() || pressed) {
                 fn_801D919C(s->text); PlayerData_ResetForFlow(); fn_801FE3BC();
-                lbl_806D1A90=0; s->state=9; s->subState=0;
+                CardCreditFlow_bss_806D1A90=0; s->state=9; s->subState=0;
             }
         } break;
     case 3:
@@ -100,7 +100,7 @@ extern "C" void fn_802422B8(CardCreditFlow *s) {
     case 4:
         if(s->text->state==0) {
             card_save_trigger(1); fn_801D919C(s->text); clFlowKart_SetupTextLayout(s->text,10);
-            s->text->flag21=0; s->subState=5; lbl_806D1A90=1; lbl_806D1A94=0;
+            s->text->flag21=0; s->subState=5; CardCreditFlow_bss_806D1A90=1; CardCreditFlow_bss_806D1A94=0;
         } break;
     case 5:
         if(CardSave_Tick()) {
@@ -112,10 +112,10 @@ extern "C" void fn_802422B8(CardCreditFlow *s) {
             if((unsigned char)(s->text->state==0)==1) clFlowKart_SetupTextLayout(s->text,3);
         } else if(card_rw_get_substate()==3) {
             if(s->text->layout!=2) { fn_801D919C(s->text); clFlowKart_SetupTextLayout(s->text,2); }
-        } else if(lbl_806D1A94==0) {
-            if(CardRW_GetSubState()==1) { fn_801D919C(s->text); clFlowKart_SetupTextLayout(s->text,2); lbl_806D1A94=1; }
-        } else if(lbl_806D1A94==1) {
-            if(CardRW_GetSubState()==2) { fn_801D919C(s->text); lbl_806D1A94=2; }
+        } else if(CardCreditFlow_bss_806D1A94==0) {
+            if(CardRW_GetSubState()==1) { fn_801D919C(s->text); clFlowKart_SetupTextLayout(s->text,2); CardCreditFlow_bss_806D1A94=1; }
+        } else if(CardCreditFlow_bss_806D1A94==1) {
+            if(CardRW_GetSubState()==2) { fn_801D919C(s->text); CardCreditFlow_bss_806D1A94=2; }
         } break;
     case 6:
         s->fader.p->Step();
@@ -130,7 +130,7 @@ extern "C" void fn_80242530(CardCreditFlow *s) {
     case 0:
         if((unsigned char)(s->text->state==0)==1) {
             s->text->flag21=0; s->subState=1; s->fader.p->Set(0,lbl_806D1A98,(short)lbl_806D1A98);
-            if(lbl_806D1A90==1) clFlowKart_SetupTextLayout(s->text,3); else clFlowKart_SetupTextLayout(s->text,2);
+            if(CardCreditFlow_bss_806D1A90==1) clFlowKart_SetupTextLayout(s->text,3); else clFlowKart_SetupTextLayout(s->text,2);
             card_eject_init(); fn_801D7610(g_playerData,1);
         } break;
     case 1:
@@ -177,7 +177,7 @@ extern "C" void fn_80242814(CardCreditFlow *s) {
                 if(s->first) { s->first=0; s->timer=1201; }
             }
         } else {
-            fn_801FE348(); fn_801FE3BC(); lbl_806D1A90=0;
+            fn_801FE348(); fn_801FE3BC(); CardCreditFlow_bss_806D1A90=0;
             if((int)g_playerData[0x1d9]==2) { PlayerData_ResetForFlow(); s->state=s->mode==1 ? 9 : 11; }
             else s->state=11;
             s->subState=0; s->timer=-1; fn_8023CFC8(s->mark);
@@ -196,7 +196,7 @@ extern "C" void fn_80242814(CardCreditFlow *s) {
             if((int)g_playerData[0x1d9]==2) { s->state=s->mode==1 ? 9 : 11; s->subState=0; }
             else s->state=11;
         }
-        lbl_806D1A90=0;
+        CardCreditFlow_bss_806D1A90=0;
         CreditMessage *message=lbl_806D1A88 ? lbl_806D1A88 : (lbl_806D1A88=new CreditMessage);
         fn_80232284(message,lbl_806DBE58);
         fn_8023CFC8(s->mark);
@@ -205,7 +205,7 @@ extern "C" void fn_80242814(CardCreditFlow *s) {
 }
 extern "C" CardCreditFlow *fn_80242B88(CardCreditFlow *s,short flags) {
     if(s) {
-        *(void ***)s=lbl_804EE714;
+        *(void ***)s=CardCreditFlow_vtable_804EE714;
         CreditMgr_SetActiveSlot(0); fn_80218D90(0); fn_8024E244(s->prompt,1);
         if(s->text) fn_801D9F88(s->text,1);
         if(s->choice) fn_80161F28(s->choice,1);

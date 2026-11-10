@@ -6,9 +6,9 @@
 #include "game/DrawEffectAccess.h"
 
 extern unsigned char lbl_805DF3D0[];
-Vec lbl_8041A4D0 = { 1.0f, 1.0f, 1.0f };
-Vec lbl_8041A4DC = { 1.0f, 1.0f, 0.9f };
-Vec lbl_8041A4E8 = { 0.65f, 0.55f, 0.25f };
+Vec DrawEffect_KartDustRing_Update_data_8041A4D0 = { 1.0f, 1.0f, 1.0f };
+Vec DrawEffect_ItemHitOriented_Spawn_data_8041A4DC = { 1.0f, 1.0f, 0.9f };
+Vec DrawEffect_ItemHitOriented_Spawn_data_8041A4E8 = { 0.65f, 0.55f, 0.25f };
 extern float fn_800D3184(const Vec *a, const Vec *b);
 extern signed char ItemObject_GetGroundTypeAt(Vec *pos, float *outGroundY, int mode);
 extern float Item_ProbeForwardGroundPitch(Vec *pos, float a, float b, float c);
@@ -68,13 +68,13 @@ static inline void SpawnGroundBurst(Vec *pos, float m[4][4], signed char strengt
             S8(0x193) = 2;
             switch (ground) {
             case 1:
-                Vec3_Copy(V(0x120), &lbl_8041A4D0);
+                Vec3_Copy(V(0x120), &DrawEffect_KartDustRing_Update_data_8041A4D0);
                 break;
             case 2:
-                Vec3_Copy(V(0x120), &lbl_8041A4DC);
+                Vec3_Copy(V(0x120), &DrawEffect_ItemHitOriented_Spawn_data_8041A4DC);
                 break;
             case 3:
-                Vec3_Copy(V(0x120), &lbl_8041A4E8);
+                Vec3_Copy(V(0x120), &DrawEffect_ItemHitOriented_Spawn_data_8041A4E8);
                 break;
             }
         }

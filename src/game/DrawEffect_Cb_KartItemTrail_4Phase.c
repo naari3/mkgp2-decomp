@@ -8,7 +8,7 @@
 
 typedef struct { float v[4]; } PeriodTable;
 
-extern PeriodTable lbl_8032A7D0;
+extern PeriodTable DrawEffect_Cb_KartItemTrail_4Phase_rodata_8032A7D0;
 extern unsigned char lbl_805DF3D0[];
 extern void KartDriver_GetJoint13_WorldPos(Vec *out, void *driver);
 extern int Item_AdvanceTrackedHomingState(void *item, Vec *offset, float k);
@@ -50,7 +50,7 @@ void DrawEffect_Cb_KartItemTrail_4Phase(unsigned char *self)
             F(0x150) = 0.0f;
             F(0x154) = 8.0f * Rand_RangeFloat(0.7f, 1.3f);
             F(0x158) = 0.3f;
-            periods = lbl_8032A7D0;
+            periods = DrawEffect_Cb_KartItemTrail_4Phase_rodata_8032A7D0;
             if (S8(0x192) == 0) {
                 F(0x15C) = 1.0f / (periods.v[S8(0x190)] + Rand_RangeFloat(-10.0f, 10.0f));
             } else {

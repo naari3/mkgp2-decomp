@@ -10,9 +10,9 @@ typedef struct SceneCleanupNode {
     char _pad8[0xC];
 } SceneCleanupNode;
 
-extern SceneCleanupNode lbl_805987B8;
-extern SceneCleanupNode lbl_805987CC;
-extern int lbl_806D1040;
+extern SceneCleanupNode SceneFlow_InitCleanupList_bss_805987B8;
+extern SceneCleanupNode SceneFlow_InitCleanupList_bss_805987CC;
+extern int SceneFlow_SetCleanupTag_bss_806D1040;
 extern unsigned char lbl_806D1048;
 
 int SceneFlow_DefaultGetZero(void) {
@@ -20,12 +20,12 @@ int SceneFlow_DefaultGetZero(void) {
 }
 
 void SceneFlow_SetCleanupTag(int tag) {
-    lbl_806D1040 = tag;
+    SceneFlow_SetCleanupTag_bss_806D1040 = tag;
 }
 
 void SceneFlow_InitCleanupList(void) {
-    SceneCleanupNode *first = &lbl_805987B8;
-    SceneCleanupNode *last = &lbl_805987CC;
+    SceneCleanupNode *first = &SceneFlow_InitCleanupList_bss_805987B8;
+    SceneCleanupNode *last = &SceneFlow_InitCleanupList_bss_805987CC;
 
     first->next = 0;
     first->prev = last;

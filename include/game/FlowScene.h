@@ -5,8 +5,8 @@
  * Card / continue / result flow scene hierarchy (0x801FC1E0..0x80207324).
  *
  *   FlowRoot (vtable lbl_8048ECF8, inline dtor)
- *     FlowTask (ctor fn_80204448, dtor dtor_802043EC, vtable lbl_804EC424)
- *       FlowScene (ctor fn_801FD41C, dtor dtor_801FD32C, vtable lbl_804EC098)
+ *     FlowTask (ctor fn_80204448, dtor dtor_802043EC, vtable FlowTask_vtable_804EC424)
+ *       FlowScene (ctor fn_801FD41C, dtor dtor_801FD32C, vtable FlowScene_vtable_804EC098)
  *
  * Every class carries an undefined `_key` virtual so CW never emits the
  * vtables here; the vptr stores resolve to the real lbl_* tables through

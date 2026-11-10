@@ -15,19 +15,19 @@ extern char lbl_8039B450[];
 extern char lbl_8039B96C[];
 extern char lbl_8039B97C[];
 extern char lbl_8049B13C[];
-extern char lbl_8049B160[];
-extern char lbl_8049B180[];
+extern char sdata_806CFE08_data_8049B160[];
+extern char sdata_806CFE08_data_8049B180[];
 extern char lbl_8049B1A0[];
-extern char lbl_8049B1C0[];
+extern char sdata_806CFE08_data_8049B1C0[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-int lbl_806CFE08 = 415;
-int lbl_806CFE0C = 415;
-int lbl_806CFE10 = 415;
-int lbl_806CFE14 = 71;
-char lbl_806CFE18[4] = {
+int clFlowItemSelect_Init_data_806CFE08 = 415;
+int clFlowItemSelect_Init_data_806CFE0C = 415;
+int clFlowItemSelect_Init_data_806CFE10 = 415;
+int clFlowItemSelect_Init_data_806CFE14 = 71;
+char clFlowItemSelect_Update_data_806CFE18[4] = {
     0, 0, 0, 85
 };
 const char *lbl_806CFE1C[2] = {
@@ -38,30 +38,30 @@ void *lbl_806CFE24[3] = {
     (void *)&lbl_8049B13C,
     0
 };
-const char *lbl_806CFE30[2] = {
+const char *data_8049AFD0_data_806CFE30[2] = {
     (const char *)&lbl_8039B408, 0
 };
-void *lbl_806CFE38[2] = {
+void *data_8049AFD0_data_806CFE38[2] = {
     (void *)&clFlowGpPlease,
-    (void *)&lbl_8049B160
+    (void *)&sdata_806CFE08_data_8049B160
 };
 const char *lbl_806CFE40[2] = {
     (const char *)&lbl_8039B418, 0
 };
-void *lbl_806CFE48[2] = {
+void *data_8049AFD0_data_806CFE48[2] = {
     (void *)&lbl_8039B430,
-    (void *)&lbl_8049B180
+    (void *)&sdata_806CFE08_data_8049B180
 };
 void *lbl_806CFE50[2] = {
     (void *)&lbl_8039B450,
     (void *)&lbl_8049B1A0
 };
-const char *lbl_806CFE58[2] = {
+const char *data_8049AFD0_data_806CFE58[2] = {
     (const char *)&lbl_8039B97C, 0
 };
-void *lbl_806CFE60[2] = {
+void *data_8049AFD0_data_806CFE60[2] = {
     (void *)&lbl_8039B96C,
-    (void *)&lbl_8049B1C0
+    (void *)&sdata_806CFE08_data_8049B1C0
 };
 
 #pragma force_active reset

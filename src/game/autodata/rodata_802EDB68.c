@@ -19,16 +19,16 @@ const char lbl_802EDBB0[] = "nsCarBodyDamage::clSlipDamage";
 const char lbl_802EDBD0[] = "nsCarBodyDamage::clFlyDamage";
 const char lbl_802EDBF0[] = "nsCarBodyDamage::clTornadoDamage";
 const char lbl_802EDC14[] = "nsCarBodyDamage::clDamage";
-const unsigned int lbl_802EDC30[3] = {
+const unsigned int TornadoEffect_rodata_802EDC30[3] = {
     0x0, 0x0, 0x0
 };
-const TEPtr3 lbl_802EDC3C[1] = {
+const TEPtr3 TornadoEffect_Tick_rodata_802EDC3C[1] = {
     { { 0, 0, 0 } }
 };
-const TEPtr3 lbl_802EDC48[1] = {
+const TEPtr3 TornadoEffect_Tick_rodata_802EDC48[1] = {
     { { 0, 0, 0 } }
 };
-const unsigned int lbl_802EDC54[3] = {
+const unsigned int TornadoEffect_InitDetails_rodata_802EDC54[3] = {
     0x0, 0x0, 0x0
 };
 const unsigned int lbl_802EDC60[3] = {

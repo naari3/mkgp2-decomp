@@ -23,7 +23,7 @@ typedef struct OverlayView {
     float left,right,bottom,top;
 } OverlayView;
 extern "C" {
-OverlayView lbl_80679698;
+OverlayView OverlayViewSetup_bss_80679698;
 RotData lbl_806796B0;
 float lbl_806796C0[3][4];
 }
@@ -44,7 +44,7 @@ extern "C" void fn_801F6588(unsigned int mode) {
     float projection[4][4];
     GXSetCullMode(2);
     GXSetViewport(lbl_806DA6C0,lbl_806DA6C0,lbl_806DA6B0,lbl_806DA6B4,lbl_806DA6C0,lbl_806DA6C4);
-    lbl_80679698.left=lbl_806DA6B8; lbl_80679698.right=lbl_806DA6BC; lbl_80679698.bottom=lbl_80679698.right; lbl_80679698.top=lbl_806DA6C8;
+    OverlayViewSetup_bss_80679698.left=lbl_806DA6B8; OverlayViewSetup_bss_80679698.right=lbl_806DA6BC; OverlayViewSetup_bss_80679698.bottom=OverlayViewSetup_bss_80679698.right; OverlayViewSetup_bss_80679698.top=lbl_806DA6C8;
     if (!(mode & 255)) {
         C_MTXOrtho(projection,lbl_806DA6CC,lbl_806DA6D0,lbl_806DA6D4,lbl_806DA6D8,lbl_806DA6DC,lbl_806DA6E0);
         GXSetProjection(projection,1);
@@ -52,12 +52,12 @@ extern "C" void fn_801F6588(unsigned int mode) {
         C_MTXOrtho(projection,lbl_806DA6CC,lbl_806DA6D0,lbl_806DA6D4,lbl_806DA6D8,lbl_806DA6E4,lbl_806DA6E8);
         GXSetProjection(projection,1);
     }
-    lbl_80679698.x=0; lbl_80679698.y=0; lbl_80679698.width=640; lbl_80679698.height=480;
+    OverlayViewSetup_bss_80679698.x=0; OverlayViewSetup_bss_80679698.y=0; OverlayViewSetup_bss_80679698.width=640; OverlayViewSetup_bss_80679698.height=480;
     GXSetScissor(0,0,640,480);
     {
         float dy; float d; float c; float dx; float cosine; float sine; float a; float b;
-        dx=((640-lbl_80679698.width)>>1)-lbl_80679698.x;
-        dy=((480-lbl_80679698.height)>>1)-lbl_80679698.y;
+        dx=((640-OverlayViewSetup_bss_80679698.width)>>1)-OverlayViewSetup_bss_80679698.x;
+        dy=((480-OverlayViewSetup_bss_80679698.height)>>1)-OverlayViewSetup_bss_80679698.y;
         a=lbl_806DA6C0; b=lbl_806DA6EC; c=lbl_806DA6D8; d=lbl_806DA6CC;
         OverlayRotation rotation(c,d,a,b);
         float target[3]; float up[3]; float eye[3];

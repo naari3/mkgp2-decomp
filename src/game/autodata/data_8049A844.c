@@ -31,11 +31,11 @@ extern char lbl_80399E2C[];
 extern char lbl_80399E38[];
 extern char lbl_80399E44[];
 extern char lbl_80399E50[];
-extern char lbl_806CFD74[];
+extern char data_8049A844_data_806CFD74[];
 extern char lbl_806CFD80[];
 extern char lbl_806CFD88[];
-extern char lbl_806CFD90[];
-extern char lbl_806CFD98[];
+extern char data_8049A844_data_806CFD90[];
+extern char data_8049A844_data_806CFD98[];
 extern char lbl_806D99B4[];
 extern char lbl_806D99BC[];
 extern char lbl_806D99C4[];
@@ -48,8 +48,8 @@ extern char lbl_806D99E4[];
 #pragma force_active on
 
 /* decl: char */
-void *lbl_8049A844[5] = {
-    (void *)&lbl_806CFD74,
+void *clFlowProcess_vtable_8049A844[5] = {
+    (void *)&data_8049A844_data_806CFD74,
     0,
     (void *)dtor_801BA14C,
     0,
@@ -106,13 +106,13 @@ unk32 lbl_8049A8F8[12] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000
 };
-void *lbl_8049A928[3] = {
-    (void *)&lbl_806CFD90,
+void *data_8049A844_data_8049A928[3] = {
+    (void *)&data_8049A844_data_806CFD90,
     0,
     0
 };
-void *lbl_8049A934[5] = {
-    (void *)&lbl_806CFD98,
+void *clFlowCard_vtable_8049A934[5] = {
+    (void *)&data_8049A844_data_806CFD98,
     0,
     (void *)fn_801BB06C,
     (void *)fn_801BAA88,

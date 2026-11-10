@@ -68,10 +68,10 @@ extern float lbl_806CF04C;
 extern float lbl_806CF050;
 extern float lbl_806CF054;
 extern float lbl_806CF058;
-extern float lbl_806CF05C;
-extern float lbl_806CF060;
-extern float lbl_806CF064;
-extern float lbl_806CF068;
+extern float KartMovement_Reset_data_806CF05C;
+extern float KartMovement_Reset_data_806CF060;
+extern float KartMovement_Reset_data_806CF064;
+extern float KartMovement_Reset_data_806CF068;
 extern float lbl_806CF06C;
 extern float lbl_806CF070;
 extern float lbl_806CF074;
@@ -190,13 +190,13 @@ int SetAnimWallHitA(ResetKart *kart) {
         return 0;
     }
     if (kart->hitDir == 0) {
-        SetAnimState(kart, 0x21, 0, 1, lbl_806CF05C, lbl_806CF060, lbl_806CF064, lbl_806D2574 + lbl_806CF068);
+        SetAnimState(kart, 0x21, 0, 1, KartMovement_Reset_data_806CF05C, KartMovement_Reset_data_806CF060, KartMovement_Reset_data_806CF064, lbl_806D2574 + KartMovement_Reset_data_806CF068);
     } else if (kart->hitDir == 3) {
-        SetAnimState(kart, 0x23, 0, 1, lbl_806CF05C, lbl_806CF060, lbl_806CF064, lbl_806CF068);
+        SetAnimState(kart, 0x23, 0, 1, KartMovement_Reset_data_806CF05C, KartMovement_Reset_data_806CF060, KartMovement_Reset_data_806CF064, KartMovement_Reset_data_806CF068);
     } else if (kart->hitDir == 4) {
-        SetAnimState(kart, 0x24, 0, 1, lbl_806CF05C, lbl_806CF060, lbl_806CF064, lbl_806CF068);
+        SetAnimState(kart, 0x24, 0, 1, KartMovement_Reset_data_806CF05C, KartMovement_Reset_data_806CF060, KartMovement_Reset_data_806CF064, KartMovement_Reset_data_806CF068);
     } else {
-        SetAnimState(kart, 0x22, 0, 1, lbl_806CF05C, lbl_806CF060, lbl_806CF064, lbl_806D2574 + lbl_806CF068);
+        SetAnimState(kart, 0x22, 0, 1, KartMovement_Reset_data_806CF05C, KartMovement_Reset_data_806CF060, KartMovement_Reset_data_806CF064, lbl_806D2574 + KartMovement_Reset_data_806CF068);
     }
     kart->field1E0 = lbl_806D2574;
     kart->wallHitTimer = 0x3C;
@@ -214,13 +214,13 @@ int SetAnimWallHitB(ResetKart *kart) {
         return 0;
     }
     if (kart->hitDir == 0) {
-        SetAnimState(kart, 0x21, 0, 1, lbl_806CF05C, lbl_806CF060, lbl_806CF064, lbl_806CF068);
+        SetAnimState(kart, 0x21, 0, 1, KartMovement_Reset_data_806CF05C, KartMovement_Reset_data_806CF060, KartMovement_Reset_data_806CF064, KartMovement_Reset_data_806CF068);
     } else if (kart->hitDir == 3) {
-        SetAnimState(kart, 0x23, 0, 1, lbl_806CF05C, lbl_806CF060, lbl_806CF064, lbl_806CF068);
+        SetAnimState(kart, 0x23, 0, 1, KartMovement_Reset_data_806CF05C, KartMovement_Reset_data_806CF060, KartMovement_Reset_data_806CF064, KartMovement_Reset_data_806CF068);
     } else if (kart->hitDir == 4) {
-        SetAnimState(kart, 0x24, 0, 1, lbl_806CF05C, lbl_806CF060, lbl_806CF064, lbl_806CF068);
+        SetAnimState(kart, 0x24, 0, 1, KartMovement_Reset_data_806CF05C, KartMovement_Reset_data_806CF060, KartMovement_Reset_data_806CF064, KartMovement_Reset_data_806CF068);
     } else {
-        SetAnimState(kart, 0x22, 0, 1, lbl_806CF05C, lbl_806CF060, lbl_806CF064, lbl_806CF068);
+        SetAnimState(kart, 0x22, 0, 1, KartMovement_Reset_data_806CF05C, KartMovement_Reset_data_806CF060, KartMovement_Reset_data_806CF064, KartMovement_Reset_data_806CF068);
     }
     kart->field1E0 = lbl_806D2540;
     kart->wallHitTimer = 0x3C;

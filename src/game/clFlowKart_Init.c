@@ -16,9 +16,9 @@ struct FKTex;
 struct FKVec { float x, y, z; };
 /* .rodata 0x8039E508..0x8039E9F8 */
 extern "C" {
-extern const unsigned int lbl_8039E508[0xFF];
+extern const unsigned int clFlowKart_Init_rodata_8039E508[0xFF];
 /* tables used by other clFlowKart functions */
-const unsigned int lbl_8039E508[0xFF] = {
+const unsigned int clFlowKart_Init_rodata_8039E508[0xFF] = {
     0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000,
     0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
     0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
@@ -144,7 +144,7 @@ extern const float lbl_806DA120;
 extern const float lbl_806DA124;
 extern const float lbl_806DA128;
 extern const float lbl_806DA12C;
-extern signed char lbl_8049BB30[][13][3];
+extern signed char clFlowKart_UpdateDisplay_data_8049BB30[][13][3];
 }
 static inline void HideParams(FKDisplay *self, int idx, int *p, signed char *n) {
     for (int i = 0; i < 5 - *n; i++) {
@@ -170,9 +170,9 @@ extern "C" void clFlowKart_UpdateDisplay(FKDisplay *self, int kart)
     self->rank[2] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA12C, 1);
     {
     int arr[5] = {0x16B4, 0x16B3, 0x16B2, 0x16B1, 0x16B0};
-    for (int a = 0; a < 5 - lbl_8049BB30[level][kart][0]; a++) Sprite_SetAnimParam(self->rank[0], arr[a], -1);
-    for (int b = 0; b < 5 - lbl_8049BB30[level][kart][1]; b++) Sprite_SetAnimParam(self->rank[1], arr[b], -1);
-    for (int d = 0; d < 5 - lbl_8049BB30[level][kart][2]; d++) Sprite_SetAnimParam(self->rank[2], arr[d], -1);
+    for (int a = 0; a < 5 - clFlowKart_UpdateDisplay_data_8049BB30[level][kart][0]; a++) Sprite_SetAnimParam(self->rank[0], arr[a], -1);
+    for (int b = 0; b < 5 - clFlowKart_UpdateDisplay_data_8049BB30[level][kart][1]; b++) Sprite_SetAnimParam(self->rank[1], arr[b], -1);
+    for (int d = 0; d < 5 - clFlowKart_UpdateDisplay_data_8049BB30[level][kart][2]; d++) Sprite_SetAnimParam(self->rank[2], arr[d], -1);
     }
 }
 #pragma pop
@@ -285,7 +285,7 @@ typedef struct FlowKartDraw {
 } FlowKartDraw;
 extern "C" {
 extern int g_characterId;
-extern short lbl_8049BBA8[];
+extern short clFlowKart_Init_data_8049BBA8[];
 extern const float lbl_806DA148, lbl_806DA14C, lbl_806DA150, lbl_806DA154;
 void fn_8011FAB8(void);
 void fn_801A1280(void);
@@ -322,7 +322,7 @@ extern "C" void fn_801D7CC4(FlowKartDraw *self)
         fn_801A1174(0x16ad, 4, 0, 0, 0);
         fn_801A1128(lbl_806DA148, lbl_806DA14C);
         fn_801A0DF0();
-        fn_801A1174(lbl_8049BBA8[g_characterId], 4, 0, 0, 0);
+        fn_801A1174(clFlowKart_Init_data_8049BBA8[g_characterId], 4, 0, 0, 0);
         fn_801A1128(lbl_806DA150, lbl_806DA154);
         fn_801A0DF0();
         fn_801F8A34(fn_801F8E58(), self->text, 5);
@@ -534,7 +534,7 @@ struct SceneObject {
 };
 
 extern "C" {
-extern char lbl_8049BBD0[];
+extern char FKOwner_vtable_8049BBD0[];
 extern InputState *g_pInputState;
 void fn_80169C44(void);
 void SetScreenBrightness(float);
@@ -557,7 +557,7 @@ static inline InputState *input_state(void) {
 
 extern "C" SceneObject *dtor(SceneObject *self, short flags) {
     if (self != 0) {
-        self->vtbl = lbl_8049BBD0;
+        self->vtbl = FKOwner_vtable_8049BBD0;
         fn_80169C44();
         if (input_state() != 0) {
             InputState *state = input_state();

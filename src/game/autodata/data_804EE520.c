@@ -8,20 +8,20 @@
 extern void clFlowItem_Draw();
 extern void clFlowItem_Dtor();
 extern void clFlowItem_Update();
-extern char lbl_806D0784[];
-extern char lbl_806D078C[];
+extern char data_804EE520_data_806D0784[];
+extern char data_804EE520_data_806D078C[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804EE520[3] = {
-    (void *)&lbl_806D0784,
+void *sdata_806D0728_data_804EE520[3] = {
+    (void *)&data_804EE520_data_806D0784,
     0,
     0
 };
 /* decl: char */
-void *lbl_804EE52C[5] = {
-    (void *)&lbl_806D078C,
+void *clFlowItem_vtable_804EE52C[5] = {
+    (void *)&data_804EE520_data_806D078C,
     0,
     (void *)clFlowItem_Dtor,
     (void *)clFlowItem_Update,

@@ -8,7 +8,7 @@
 typedef struct { float v[3]; } ChildOffsets;
 
 extern unsigned char lbl_805DF3D0[];
-extern const ChildOffsets lbl_8032A76C;
+extern const ChildOffsets DrawEffect_KartWheel_TripleChildUpdate_rodata_8032A76C;
 extern double sin(double x);
 
 #define CH (*(unsigned char **)(d + 0x10 + i * 4))
@@ -82,7 +82,7 @@ void DrawEffect_KartWheel_TripleChildUpdate(unsigned char *self, Vec *pos, float
                     k = 10.0f;
                     break;
                 }
-                offs = lbl_8032A76C;
+                offs = DrawEffect_KartWheel_TripleChildUpdate_rodata_8032A76C;
                 Vec3_Subtract_DestFirst(&dir, V(0x8C), (Vec *)(lbl_805DF3D0 + 0x80));
                 len = Vec3_Magnitude_Wrapper(&dir);
                 len = 1.0f / len;

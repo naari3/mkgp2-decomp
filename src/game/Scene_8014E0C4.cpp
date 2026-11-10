@@ -1,7 +1,7 @@
 #include "game/singleton.h"
 
 /* sdata symbols referenced from asm */
-extern unsigned char lbl_806CF828[8];
+extern unsigned char Scene_8014E0C4_data_806CF828[8];
 extern unsigned char lbl_806D7F70[8];
 extern unsigned char lbl_806D8134[7];
 extern unsigned char lbl_806D813C[5];
@@ -376,7 +376,7 @@ extern const float lbl_806D807C;
 extern const float lbl_806D8080;
 extern unsigned int dtor_800869D0[];
 extern unsigned int fn_80149214[];
-extern unsigned int lbl_8048FED8[];
+extern unsigned int DemoScene1C0_vtable_8048FED8[];
 extern unsigned int lbl_8048FF80[];
 extern void CreditMgr_DrawCoinCreditBanner(int slot, unsigned int color, int count);
 extern void HSD_StateInvalidate(int mask);
@@ -445,11 +445,11 @@ extern unsigned int lbl_806D12E1;
 extern unsigned char lbl_806D12E1;
 #endif /* NON_MATCHING */
 extern unsigned int jumptable_8048FDCC[];
-extern unsigned int lbl_8048FE14[];
-extern unsigned int lbl_8048FE3C[];
-extern unsigned int lbl_8048FE64[];
-extern unsigned int lbl_8048FE8C[];
-extern unsigned int lbl_8048FF64[];
+extern unsigned int EntryScene_vtable_8048FE14[];
+extern unsigned int CourseDemoScene_vtable_8048FE3C[];
+extern unsigned int StatusNoticeScene_vtable_8048FE64[];
+extern unsigned int StatusLogoScene_vtable_8048FE8C[];
+extern unsigned int AttractScene_vtable_8048FF64[];
 #ifndef NON_MATCHING
 extern void dtor_80080330();
 #endif /* ! NON_MATCHING */
@@ -462,7 +462,7 @@ void clRom_PurgeAll(void);
 void fn_80120A08(int id);
 void fn_80169C44(void);
 void fn_801933D0(int a);
-extern struct StatusInfo *lbl_806D1580;
+extern struct StatusInfo *Scene_8014E0C4_bss_806D1580;
 extern unsigned int lbl_803FE0C8[];
 void InitRumbleController(int on);
 unsigned char PreloadResource(int id);
@@ -474,9 +474,9 @@ extern unsigned char lbl_806D12E2;
 extern int lbl_80598A60[];
 extern void dtor_8007D0D4();
 void OverlayText(int a, int b, int line, const char *fmt, ...);
-extern const char *lbl_8048FD50[];
+extern const char *Scene_8014E0C4_data_8048FD50[];
 void Sprite_Destroy(void *s, int flag);
-extern unsigned int lbl_8048FFC0[];
+extern unsigned int NamCamPanelC_vtable_8048FFC0[];
 void FlashFadeOverlay_Draw(void *h, float a, float b, float c, float d, float e, float f);
 extern unsigned int lbl_806D80A8;
 extern unsigned int lbl_806D80AC;
@@ -506,7 +506,7 @@ extern unsigned int lbl_806D80F0;
 extern unsigned int lbl_806D80F4;
 extern unsigned int lbl_806D80F8;
 void __destroy_new_array(void *p, void *dtor);
-extern unsigned int lbl_8048FFE8[];
+extern unsigned int TextPanelC_vtable_8048FFE8[];
 void fn_8011FAB8(void);
 void fn_801F8A34(void *a, void *b, int c);
 void *fn_801F8E58(void);
@@ -544,7 +544,7 @@ void fn_8013DB9C(void);
 unsigned char fn_8019083C(int slot);
 void fn_801909A4(int slot);
 extern struct VObj *lbl_806D10AC;
-extern unsigned int lbl_80490010[];
+extern unsigned int RaceSceneC_vtable_80490010[];
 void CObj_DebugVizPathFlush(void *c);
 void CourseEnvironment_RenderObjects_Timed(void *env);
 void DrawEffect_TickAndCull(void);
@@ -782,11 +782,11 @@ void HSD_JObjDispAll(void *j, int a, int b, int c);
 void HSD_JObjSetFlagsAll(void *j, int flags);
 void fn_8014017C(void *p);
 void dtor_80060024(void *p, int flag);
-extern unsigned int lbl_8048FF20[];
+extern unsigned int DemoKart_vtable_8048FF20[];
 void fn_8013A6F8(void);
 void fn_80173CC4(void *o, int flag);
 extern VObj *lbl_806D10D0;
-extern unsigned int lbl_8048FF3C[];
+extern unsigned int DemoScene_vtable_8048FF3C[];
 void PSMTXTrans(void *m, float x, float y, float z);
 void clItemBoxManager_Update(void *mgr);
 void fn_8013A534(void);
@@ -1356,16 +1356,16 @@ extern const char lbl_806D8040[];
 extern const char lbl_806D8048[];
 extern const char lbl_806D8050[];
 extern const char lbl_806D8058[];
-extern char lbl_806CF830[];
-extern char lbl_806CF838[];
+extern char Scene_8014E0C4_data_806CF830[];
+extern char Scene_8014E0C4_data_806CF838[];
 
 #pragma push
 #pragma force_active on
-static const char *lbl_8048F178[12] = {
+static const char *Scene_8014E0C4_data_8048F178[12] = {
     lbl_803643DC, lbl_803643F0, lbl_80364404, lbl_80364418, lbl_8036442C, lbl_80364440, lbl_80364454, lbl_80364468, lbl_8036447C, lbl_80364490, lbl_803644A8, lbl_803644BC,
 };
 
-static const char *lbl_8048F1A8[6] = {
+static const char *Scene_8014E0C4_data_8048F1A8[6] = {
     lbl_80364B28, lbl_80364B3C, lbl_80364B50, lbl_80364B64, lbl_80364B78, lbl_80364B90,
 };
 
@@ -1526,13 +1526,13 @@ static RaceScriptEntry lbl_8048F9B8[46] = {
     {0x14, 0x78, 0, 0x2F, 0},
 };
 
-const char *lbl_8048FD50[15] = {
+const char *Scene_8014E0C4_data_8048FD50[15] = {
     lbl_80367438, lbl_806D8020, lbl_806D8028, lbl_806D8030, lbl_806D8038, lbl_806D8040, lbl_806D8048, lbl_806D8050, lbl_80367444, lbl_80367454, lbl_80367464, lbl_80367470, lbl_8036747C, lbl_806D8058, 0,
 };
 
-unsigned int lbl_8048FD8C[3] = { (unsigned int)lbl_806CF830, 0, 0 };
+unsigned int sdata_806CF750_data_8048FD8C[3] = { (unsigned int)Scene_8014E0C4_data_806CF830, 0, 0 };
 
-void *lbl_8048FD98[6] = { (void *)lbl_806CF838, 0, (void *)&fn_8014F2DC, (void *)&fn_8014F5A8, (void *)&fn_8014E804, (void *)&fn_8014E618 };
+void *Scene_8014E0C4_data_8048FD98[6] = { (void *)Scene_8014E0C4_data_806CF838, 0, (void *)&fn_8014F2DC, (void *)&fn_8014F5A8, (void *)&fn_8014E804, (void *)&fn_8014E618 };
 #pragma pop
 
 /* ---- formerly SceneFactory_8014D540.cpp ---- */
@@ -1600,8 +1600,8 @@ extern void fn_80173DB4();
 extern void fn_801F7D50();
 extern unsigned int g_kartStartSlot;
 extern const float lbl_806D8068;
-extern unsigned int lbl_8048FF20[];
-extern unsigned int lbl_8048FF3C[];
+extern unsigned int DemoKart_vtable_8048FF20[];
+extern unsigned int DemoScene_vtable_8048FF3C[];
 void *fn_8014D848(void);
 
 #pragma section R ".extab_user"
@@ -1716,7 +1716,7 @@ struct SceneFactory : clSceneInterface {
 
 SceneFactory::SceneFactory(int mode, void *arg)
 {
-    lbl_806D1580 = (StatusInfo *)this;
+    Scene_8014E0C4_bss_806D1580 = (StatusInfo *)this;
     f14 = 0;
     scene = 0;
     f0C = 0;
@@ -1856,7 +1856,7 @@ static inline void *SprCache_Get(SprList *cache, unsigned int key) {
         SprCacheVal v;
         v.key = key;
         v.ref = 1;
-        v.res = new SprRes((char *)lbl_8048F178[key]);
+        v.res = new SprRes((char *)Scene_8014E0C4_data_8048F178[key]);
         SprCache_Insert(cache, &v);
         return v.res;
     }
@@ -1928,7 +1928,7 @@ public:
 
     void Preload(unsigned int i) {
         if (i < 80) {
-            SprCache_Get(&cache, lbl_803644D0[i].key);
+            SprCache_Get(&cache, Scene_8014E0C4_rodata_803644D0[i].key);
         }
     }
 };
@@ -2176,19 +2176,19 @@ extern "C" void *fn_8014DD80(SceneCacheList *list, unsigned int id, unsigned int
     entry.refCount = 1;
     switch (type) {
     case 0:
-        entry.obj = new SceneCacheNormal(((const char *const *)&lbl_80364368)[id], 0);
+        entry.obj = new SceneCacheNormal(((const char *const *)&Scene_8014E0C4_rodata_80364368)[id], 0);
         if (entry.obj == 0) {
             return 0;
         }
         break;
     case 1:
-        entry.obj = new SceneCacheScene(((const char *const *)&lbl_80364368)[id]);
+        entry.obj = new SceneCacheScene(((const char *const *)&Scene_8014E0C4_rodata_80364368)[id]);
         if (entry.obj == 0) {
             return 0;
         }
         break;
     case 2: {
-        SceneCacheAnimScene *scene = new SceneCacheAnimScene(((const char *const *)&lbl_80364368)[id]);
+        SceneCacheAnimScene *scene = new SceneCacheAnimScene(((const char *const *)&Scene_8014E0C4_rodata_80364368)[id]);
         entry.obj = scene;
         if (scene == 0) {
             return 0;
@@ -2197,7 +2197,7 @@ extern "C" void *fn_8014DD80(SceneCacheList *list, unsigned int id, unsigned int
         break;
     }
     case 3:
-        entry.obj = new SceneCacheModel(((const char *const *)&lbl_80364368)[id], 1);
+        entry.obj = new SceneCacheModel(((const char *const *)&Scene_8014E0C4_rodata_80364368)[id], 1);
         if (entry.obj == 0) {
             return 0;
         }
@@ -2493,7 +2493,7 @@ extern "C" void fn_8014E618(AttractPanel *self) {
             }
         }
         fn_8011F994(0);
-        if (lbl_80367488[self->idx].on) {
+        if (Scene_8014E0C4_rodata_80367488[self->idx].on) {
             float s = LUT_Sin12Bit(Saturate_Double(1.5f * self->t, 0.0f, 180.0f));
             int n = PcbSync_CountJoinedPcbsAdvancedKarts();
             CreditMgr_DrawCoinCreditBanner(0, 0xFFFFFF00 | ((unsigned int)(255.0f * s) & 0xFF), n);
@@ -2518,9 +2518,9 @@ extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
     stw r0, 0x24(r1)
     stw r31, 0x1c(r1)
     mr r31, r3
-    lis r3, lbl_80363D30@ha
+    lis r3, Scene_8014E0C4_rodata_80363D30@ha
     stw r30, 0x18(r1)
-    addi r30, r3, lbl_80363D30@l
+    addi r30, r3, Scene_8014E0C4_rodata_80363D30@l
     li r3, 0x0
     stw r29, 0x14(r1)
     lwz r29, 0x30(r31)
@@ -2664,10 +2664,10 @@ extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
     mr. r29, r3
     beq fn_8014E804_L_8014EAC0
     lis r4, lbl_8048FF80@ha
-    lis r3, lbl_8048FE8C@ha
+    lis r3, StatusLogoScene_vtable_8048FE8C@ha
     addi r0, r4, lbl_8048FF80@l
     stw r0, 0x0(r29)
-    addi r0, r3, lbl_8048FE8C@l
+    addi r0, r3, StatusLogoScene_vtable_8048FE8C@l
     addi r3, r29, 0x34
     stw r0, 0x0(r29)
     bl fn_801F6804
@@ -2713,10 +2713,10 @@ extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
     mr. r29, r3
     beq fn_8014E804_L_8014EB4C
     lis r4, lbl_8048FF80@ha
-    lis r3, lbl_8048FE64@ha
+    lis r3, StatusNoticeScene_vtable_8048FE64@ha
     addi r0, r4, lbl_8048FF80@l
     stw r0, 0x0(r29)
-    addi r0, r3, lbl_8048FE64@l
+    addi r0, r3, StatusNoticeScene_vtable_8048FE64@l
     addi r3, r29, 0x34
     stw r0, 0x0(r29)
     bl fn_801F6804
@@ -2789,11 +2789,11 @@ extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
     mr. r29, r3
     beq fn_8014E804_L_8014EC34
     lis r4, lbl_8048FF80@ha
-    lis r3, lbl_8048FE3C@ha
+    lis r3, CourseDemoScene_vtable_8048FE3C@ha
     addi r0, r4, lbl_8048FF80@l
     lfs f0, lbl_806D8064(r2)
     stw r0, 0x0(r29)
-    addi r3, r3, lbl_8048FE3C@l
+    addi r3, r3, CourseDemoScene_vtable_8048FE3C@l
     li r0, 0x0
     stw r3, 0x0(r29)
     stw r0, 0x4(r29)
@@ -2824,10 +2824,10 @@ extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
     mr. r30, r3
     beq fn_8014E804_L_8014ED58
     lis r4, lbl_8048FF80@ha
-    lis r3, lbl_8048FE14@ha
+    lis r3, EntryScene_vtable_8048FE14@ha
     addi r0, r4, lbl_8048FF80@l
     stw r0, 0x0(r30)
-    addi r0, r3, lbl_8048FE14@l
+    addi r0, r3, EntryScene_vtable_8048FE14@l
     stw r0, 0x0(r30)
     bl fn_80169E20
     stw r3, 0x4(r30)
@@ -2901,10 +2901,10 @@ extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
     mr. r30, r3
     beq fn_8014E804_L_8014EE70
     lis r4, lbl_8048FF80@ha
-    lis r3, lbl_8048FE14@ha
+    lis r3, EntryScene_vtable_8048FE14@ha
     addi r0, r4, lbl_8048FF80@l
     stw r0, 0x0(r30)
-    addi r0, r3, lbl_8048FE14@l
+    addi r0, r3, EntryScene_vtable_8048FE14@l
     stw r0, 0x0(r30)
     bl fn_80169E20
     stw r3, 0x4(r30)
@@ -2968,11 +2968,11 @@ extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
     mr. r30, r3
     beq fn_8014E804_L_8014EF7C
     lis r4, lbl_8048FF80@ha
-    lis r3, lbl_8048FF64@ha
+    lis r3, AttractScene_vtable_8048FF64@ha
     addi r0, r4, lbl_8048FF80@l
     lfs f0, lbl_806D8064(r2)
     stw r0, 0x0(r30)
-    addi r3, r3, lbl_8048FF64@l
+    addi r3, r3, AttractScene_vtable_8048FF64@l
     li r0, 0x0
     stw r3, 0x0(r30)
     stw r0, 0x4(r30)
@@ -3328,7 +3328,7 @@ public:
 
 
 extern "C" void fn_8014E804(StatusView *self) {
-    char *base = (char *)lbl_80363D30;
+    char *base = (char *)Scene_8014E0C4_rodata_80363D30;
     int prev = self->credits;
     self->credits = CreditMgr_GetCreditCount(0);
     if (self->credits != prev) {
@@ -3535,7 +3535,7 @@ extern "C" void fn_8014F164(CreditPanel *self) {
 
 extern "C" DemoPanel *fn_8014F2DC(DemoPanel *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_8048FD98;
+        self->vt = Scene_8014E0C4_data_8048FD98;
         fn_80120A08(0x1553);
         fn_80120A08(0x1554);
         if (self->f8 != 0) {
@@ -3545,7 +3545,7 @@ extern "C" DemoPanel *fn_8014F2DC(DemoPanel *self, short flag) {
         }
         fn_801B7CD0(0);
         CreditMgr_SetActiveSlot(0);
-        lbl_806D1580 = 0;
+        Scene_8014E0C4_bss_806D1580 = 0;
         fn_801933D0(0);
         fn_8002CFB8(0, 0, 0, 0xFF);
         fn_801699D8(0, 0);
@@ -3637,7 +3637,7 @@ StatusScene::StatusScene() {
     SetResourceLoadingFlag(0);
     lbl_806D117C = CreditMgr_GetCreditCount(0) <= 0;
     CreditMgr_SetActiveSlot(0);
-    lbl_806D1580 = (StatusInfo *)this;
+    Scene_8014E0C4_bss_806D1580 = (StatusInfo *)this;
     fn_801933D0(1);
     fn_801B7CD0(0);
     PreloadResource(0x1553);
@@ -3649,12 +3649,12 @@ extern "C" void fn_8014F5A8(VObj *p) {
 }
 
 extern "C" void fn_8014F5E0(void) {
-    char *s = (char *)lbl_80363D30;
-    if (lbl_806D1580 != 0) {
-        OverlayText(1, 1, 2, s + 0x38F8, lbl_806D1580->f14);
-        OverlayText(1, 1, 3, s + 0x3908, lbl_806D1580->fC);
-        OverlayText(1, 1, 4, s + 0x3918, lbl_806D1580->f10);
-        OverlayText(1, 1, 5, s + 0x3928, lbl_8048FD50[lbl_806D1580->f10]);
+    char *s = (char *)Scene_8014E0C4_rodata_80363D30;
+    if (Scene_8014E0C4_bss_806D1580 != 0) {
+        OverlayText(1, 1, 2, s + 0x38F8, Scene_8014E0C4_bss_806D1580->f14);
+        OverlayText(1, 1, 3, s + 0x3908, Scene_8014E0C4_bss_806D1580->fC);
+        OverlayText(1, 1, 4, s + 0x3918, Scene_8014E0C4_bss_806D1580->f10);
+        OverlayText(1, 1, 5, s + 0x3928, Scene_8014E0C4_data_8048FD50[Scene_8014E0C4_bss_806D1580->f10]);
     }
 }
 
@@ -3669,7 +3669,7 @@ extern "C" unsigned char fn_8014F6E0(StateObj *o) {
 extern "C" CamPanel *fn_8014F6F4(CamPanel *self, short flag) {
     if (self != 0) {
         NamCamObj *cam;
-        self->vt = lbl_8048FFC0;
+        self->vt = NamCamPanelC_vtable_8048FFC0;
         if (self->cam != 0) {
             cam = self->cam;
             if (GetVBlankFlag() && cam->active) {
@@ -3903,7 +3903,7 @@ extern "C" unsigned char fn_8014FE08(unsigned char *o) {
 
 extern "C" Base *fn_8014FE10(Base *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_8048FFE8;
+        self->vt = TextPanelC_vtable_8048FFE8;
         if (((void **)self)[2] != 0) {
             Sprite_Destroy(((void **)self)[2], 1);
         }
@@ -4073,10 +4073,10 @@ static inline void LoadCam_(RaceScene *self, int mode, const char *path) {
 extern "C" void fn_801502AC(RaceScene *self, int mode) {
     const char *path;
 
-    if (lbl_80366EF0[mode].id == -1) {
+    if (Scene_8014E0C4_rodata_80366EF0[mode].id == -1) {
         return;
     }
-    path = ((const char *const *)&lbl_80364368)[lbl_80366EF0[mode].id];
+    path = ((const char *const *)&Scene_8014E0C4_rodata_80364368)[Scene_8014E0C4_rodata_80366EF0[mode].id];
     LoadCam_(self, mode, path);
     if (self->lists[mode] == 0) {
         self->lists[mode] = new SceneCacheModel(path, 1);
@@ -4089,7 +4089,7 @@ extern "C" void fn_801502AC(RaceScene *self, int mode) {
         if (self->models[mode] != 0) {
             clNormal3D_Exec(self->models[mode]);
         }
-        if (lbl_80366EF0[mode].id == 0x15) {
+        if (Scene_8014E0C4_rodata_80366EF0[mode].id == 0x15) {
             ((JObjHideFn)JObj_Hide)(self->models[mode], ResolveJointByName(self->models[mode], (char *)lbl_80367668), 0x10);
             ((JObjHideFn)JObj_Hide)(self->models[mode], ResolveJointByName(self->models[mode], (char *)lbl_8036767C), 0x10);
             ((JObjHideFn)JObj_Hide)(self->models[mode], ResolveJointByName(self->models[mode], (char *)lbl_80367690), 0x10);
@@ -4160,7 +4160,7 @@ extern "C" void fn_8015061C(RaceScene *self, int part, int arg) {
         }
         break;
     case 5: {
-        const RaceKartDescR *k = lbl_80367200;
+        const RaceKartDescR *k = Scene_8014E0C4_rodata_80367200;
         for (i = 0; i < 11; i++) {
             if (arg == (int)k[i].character) {
                 self->drivers[i] = new KartDrv;
@@ -4236,7 +4236,7 @@ static inline void ObjUnref(HsdObj *o) {
 extern "C" RaceScene *fn_8015092C(RaceScene *self, short flag) {
     if (self != 0) {
         int i;
-        self->vt = lbl_80490010;
+        self->vt = RaceSceneC_vtable_80490010;
         if (self->obj574 != 0) {
             delete self->obj574;
         }
@@ -4329,11 +4329,11 @@ extern "C" void fn_80150C1C(RaceScene *self) {
             unsigned char wave;
             clDrawMan_Buckets_Reset(SINGLETON_INSTANCE(lbl_806D10AC));
             LObjList_ApplyForCObj(self->lists[self->mode]);
-            if (lbl_80366EF0[self->mode].transparent) {
+            if (Scene_8014E0C4_rodata_80366EF0[self->mode].transparent) {
                 TransparentDraw_SortAndDispatch();
             }
             CObj_DebugVizPathFlush(self->objs[self->mode]);
-            if (self->env != 0 && lbl_80366EF0[self->mode].env) {
+            if (self->env != 0 && Scene_8014E0C4_rodata_80366EF0[self->mode].env) {
                 CourseEnvironment_RenderObjects_Timed(self->env);
                 Subsystem36c_DispatchPass2_Timed(self->env);
             }
@@ -4505,7 +4505,7 @@ extern "C" void fn_80151234(RaceScene *self) {
     if (!self->done) {
         self->timer++;
     }
-    if (lbl_80366EF0[self->mode].time <= self->timer) {
+    if (Scene_8014E0C4_rodata_80366EF0[self->mode].time <= self->timer) {
         if (self->started == 0) {
             int next = self->mode + 1;
             if (next < 21) {
@@ -4553,16 +4553,16 @@ extern "C" void fn_80151234(RaceScene *self) {
         }
     }
     {
-        int k = lbl_80366EF0[self->mode].f10 * 3;
+        int k = Scene_8014E0C4_rodata_80366EF0[self->mode].f10 * 3;
         fn_8002CFB8(lbl_806D7F70[k], lbl_806D7F70[k + 1], lbl_806D7F70[k + 2], 0);
     }
     {
         int next = self->mode + 1;
-        if (next < 21 && lbl_80366EF0[self->mode].time - 15 <= self->timer) {
+        if (next < 21 && Scene_8014E0C4_rodata_80366EF0[self->mode].time - 15 <= self->timer) {
             ((void (*)(RaceScene *, int))fn_801502AC)(self, next);
         }
     }
-    if (lbl_80366EF0[self->mode].id != -1) {
+    if (Scene_8014E0C4_rodata_80366EF0[self->mode].id != -1) {
         if (self->objs[self->mode] != 0) {
             CamAnim_SetFrame((CourseCamAnim *)self->objs[self->mode], (float)self->timer);
             CamAnim_Tick((CourseCamAnim *)self->objs[self->mode]);
@@ -4682,7 +4682,7 @@ extern "C" void fn_80151234(RaceScene *self) {
             if (self->drivers[i] != 0) {
                 void *jobj = 0;
                 if (self->models[self->mode] != 0) {
-                    jobj = ResolveJointByName(self->models[self->mode], (char *)lbl_80367200[i].joint);
+                    jobj = ResolveJointByName(self->models[self->mode], (char *)Scene_8014E0C4_rodata_80367200[i].joint);
                 }
                 if (jobj != 0) {
                     float yaw0;
@@ -4698,7 +4698,7 @@ extern "C" void fn_80151234(RaceScene *self) {
                     dist = fn_800D3184(&from, &to);
                     RenderObj_ItemStateMachine_Timed(self->drivers[i], 0, BuildOrientationFromYaw(yaw1 - yaw0) / 0.017453289f / 90.0f, dist);
                     col = 0;
-                    if (self->timer < lbl_80366EF0[self->mode].fC) {
+                    if (self->timer < Scene_8014E0C4_rodata_80366EF0[self->mode].fC) {
                         col = 0x20;
                     }
                     TornadoEffect_SetScalePairB0BC(self->effects[i], 0.0f, 1.0f);
@@ -4934,12 +4934,12 @@ RaceSceneC::RaceSceneC(unsigned char card, int mode) {
         PSMTXIdentity(mtx[i]);
         uv[i].u = lbl_806D8064;
         uv[i].v = lbl_806D8064;
-        if (lbl_80367200[i].enabled) {
+        if (Scene_8014E0C4_rodata_80367200[i].enabled) {
             drivers[i] = new RaceDriver;
             if (drivers[i] != 0) {
-                KartDriver_Init(drivers[i], 0, lbl_80367200[i].character, mtx[i], i, 0, 0);
+                KartDriver_Init(drivers[i], 0, Scene_8014E0C4_rodata_80367200[i].character, mtx[i], i, 0, 0);
             }
-            effects[i] = new RaceTornado(0, drivers[i], lbl_80367200[i].character, 1, lbl_806D8064, lbl_806D8064, lbl_806D8064);
+            effects[i] = new RaceTornado(0, drivers[i], Scene_8014E0C4_rodata_80367200[i].character, 1, lbl_806D8064, lbl_806D8064, lbl_806D8064);
             TireEffect_ResetSpin(effects[i], lbl_806D8064, lbl_806D8068);
             if (i == 0) {
                 g_playerRenderObj = (unsigned int)drivers[i];
@@ -5031,7 +5031,7 @@ extern "C" void fn_80152930(VObj *p) {
 
 extern "C" Base *fn_80152968(Base *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_8048FE14;
+        self->vt = EntryScene_vtable_8048FE14;
         if (((void **)self)[9] != 0) {
             Sprite_Destroy(((void **)self)[9], 1);
         }
@@ -5082,7 +5082,7 @@ extern "C" void fn_80152B2C(VObj *p) {
 
 extern "C" Base *fn_80152B64(Base *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_8048FE3C;
+        self->vt = CourseDemoScene_vtable_8048FE3C;
         delete lbl_806D10AC;
         lbl_806D10AC = 0;
         fn_80121210();
@@ -5192,9 +5192,9 @@ extern "C" void fn_80152C00(TaPanel *self) {
     fn_801698B4(0, 0x865, 0, 320.0f, 45.0f);
     fn_801698B4(0, course + 0x76C, 0, 110.0f + x0, 60.0f);
     if (isJapanese() == 1) {
-        fn_80168A4C(0, (const char *)lbl_803677B0, 318.0f + x1, 43.0f);
+        fn_80168A4C(0, (const char *)Scene_8014E0C4_rodata_803677B0, 318.0f + x1, 43.0f);
     } else {
-        fn_80168A4C(0, (const char *)lbl_803677C8, 318.0f + x1, 43.0f);
+        fn_80168A4C(0, (const char *)Scene_8014E0C4_rodata_803677C8, 318.0f + x1, 43.0f);
     }
     fn_801698B4(0, 0x76A, 0, 320.0f + x0, 137.0f);
     fn_801698B4(0, course * 2 + 0x750, 0, 144.0f + x0, 127.0f);
@@ -5287,7 +5287,7 @@ extern "C" void fn_80153594(VObj *p) {
 
 extern "C" PalObj *fn_801535CC(PalObj *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_8048FE64;
+        self->vt = StatusNoticeScene_vtable_8048FE64;
         if (self->pal != 0) {
             TEXReleasePalette(&self->pal);
         }
@@ -5384,7 +5384,7 @@ extern "C" void fn_80153A3C(VObj *p) {
 
 extern "C" PalObj *fn_80153A74(PalObj *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_8048FE8C;
+        self->vt = StatusLogoScene_vtable_8048FE8C;
         if (self->pal != 0) {
             TEXReleasePalette(&self->pal);
         }
@@ -5481,7 +5481,7 @@ extern "C" void fn_80153ED0(VObj *p) {
 extern "C" CourseScene *fn_80153F08(CourseScene *self, short flag) {
     if (self != 0) {
         int i;
-        self->vt = lbl_8048FED8;
+        self->vt = DemoScene1C0_vtable_8048FED8;
         SetCourseScene3D(0);
         if (fn_8019083C(0)) {
             fn_801909A4(0);
@@ -5721,7 +5721,7 @@ static inline void SprScene_Sweep(CourseScene *self, SprNodeBase *&e) {
 static inline void CourseScene_UpdateJoints(CourseScene *self) {
     int i;
     for (i = 0; i < 6; i++) {
-        self->jobjs[i] = ResolveJointByName(self->obj20, ((char **)lbl_8048F1A8)[i]);
+        self->jobjs[i] = ResolveJointByName(self->obj20, ((char **)Scene_8014E0C4_data_8048F1A8)[i]);
         if (self->jobjs[i] != 0) {
             PSMTXCopy(JObjGetMtxPtr(self->jobjs[i]), self->mtx[i]);
             if (self->hidden[i]) {
@@ -5969,8 +5969,8 @@ void SprScene::Draw(unsigned int layer, unsigned int id, unsigned int flags, flo
     if (id >= 80) {
         return;
     }
-    hw = sx * (0.5f * lbl_803644D0[id].w);
-    hh = sy * (0.5f * lbl_803644D0[id].h);
+    hw = sx * (0.5f * Scene_8014E0C4_rodata_803644D0[id].w);
+    hh = sy * (0.5f * Scene_8014E0C4_rodata_803644D0[id].h);
     if (rot != 0.0f) {
         float s = LookupSin(rot);
         float c = LookupCos(rot);
@@ -5988,7 +5988,7 @@ void SprScene::Draw(unsigned int layer, unsigned int id, unsigned int flags, flo
     if (x - hw > 640.0f || x + hw < 0.0f || y - hh > 480.0f || x + hw < 0.0f) {
         return;
     }
-    e = (SprEntry *)&lbl_803644D0[id];
+    e = (SprEntry *)&Scene_8014E0C4_rodata_803644D0[id];
     res = SprCache_Get(&cache, e->key);
     if (res == 0) {
         return;
@@ -6060,7 +6060,7 @@ extern "C" void fn_801553AC(CourseScene *self) {
 
 extern "C" Base *fn_801556A0(Base *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_8048FF20;
+        self->vt = DemoKart_vtable_8048FF20;
         VisualEffectHolder_Dtor(((void **)self)[4], 1);
         KartDriver_Dtor(((void **)self)[3], 1);
         dtor_80060024(self, 0);
@@ -6085,7 +6085,7 @@ extern "C" void fn_8015573C(VObj *p) {
 extern "C" CoursePanel *fn_80155774(CoursePanel *self, short flag) {
     if (self != 0) {
         int i;
-        self->vt = lbl_8048FF3C;
+        self->vt = DemoScene_vtable_8048FF3C;
         SetCourseScene3D(0);
         fn_80173CC4(self->obj48, 1);
         for (i = 0; i < 2; i++) {
@@ -6176,7 +6176,7 @@ extern "C" void fn_801558CC(CoursePanel *self) {
 
     for (i = 0; i < 2; i++) {
         ItemEffectBus_SnapshotAndFullReset(*(void **)((char *)self->objs[i]->robj + 0x304));
-        self->jobjs[i] = ResolveJointByName(self->obj20, ((char **)lbl_806CF828)[i]);
+        self->jobjs[i] = ResolveJointByName(self->obj20, ((char **)Scene_8014E0C4_data_806CF828)[i]);
         jobj = self->jobjs[i];
         if (jobj != 0) {
             JObjSetupMatrix(jobj);
@@ -6453,7 +6453,7 @@ extern "C" void fn_80157240(VObj *p) {
 extern "C" CamPanel *fn_80157278(CamPanel *self, short flag) {
     if (self != 0) {
         NamCamObj *cam;
-        self->vt = lbl_8048FF64;
+        self->vt = AttractScene_vtable_8048FF64;
         if (self->cam != 0) {
             cam = self->cam;
             if (GetVBlankFlag() && cam->active) {

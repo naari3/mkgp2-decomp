@@ -18,38 +18,38 @@ void TexMgr_Apply(TextManager *);
 }
 extern "C" {
 extern char lbl_806DBEE0[];
-extern char lbl_803EF668[];
+extern char HudSelectionUpdate_rodata_803EF668[];
 extern char lbl_806DBEE8[];
 extern char lbl_806DBEF0[];
 extern char lbl_806DBEF8[];
-extern char lbl_803EF674[];
-extern char lbl_803EF680[];
-extern char lbl_803EF68C[];
-extern char lbl_803EF698[];
-extern char lbl_803EF6A4[];
-extern char lbl_803EF6B0[];
-extern char lbl_803EF6BC[];
-extern char lbl_803EF6C8[];
-extern char lbl_803EF6D4[];
-extern char lbl_803EF6E0[];
-extern char lbl_803EF6EC[];
-extern char lbl_803EF6F8[];
-extern char lbl_803EF704[];
-extern char lbl_803EF710[];
+extern char HudSelectionUpdate_rodata_803EF674[];
+extern char HudSelectionUpdate_rodata_803EF680[];
+extern char HudSelectionUpdate_rodata_803EF68C[];
+extern char HudSelectionUpdate_rodata_803EF698[];
+extern char HudSelectionUpdate_rodata_803EF6A4[];
+extern char HudSelectionUpdate_rodata_803EF6B0[];
+extern char HudSelectionUpdate_rodata_803EF6BC[];
+extern char HudSelectionUpdate_rodata_803EF6C8[];
+extern char HudSelectionUpdate_rodata_803EF6D4[];
+extern char HudSelectionUpdate_rodata_803EF6E0[];
+extern char HudSelectionUpdate_rodata_803EF6EC[];
+extern char HudSelectionUpdate_rodata_803EF6F8[];
+extern char HudSelectionUpdate_rodata_803EF704[];
+extern char HudSelectionUpdate_rodata_803EF710[];
 extern char lbl_806DBF00[];
-extern char lbl_803EF71C[];
+extern char HudSelectionUpdate_rodata_803EF71C[];
 extern char lbl_806DBF08[];
-extern char lbl_803EF728[];
+extern char HudSelectionUpdate_rodata_803EF728[];
 extern char lbl_806DBF10[];
-extern char lbl_803EF734[];
-extern char lbl_803EF740[];
-extern char lbl_806D0840[],lbl_806D0848[];
+extern char HudSelectionUpdate_rodata_803EF734[];
+extern char HudSelectionUpdate_rodata_803EF740[];
+extern char lbl_806D0840[],HudSelectionUpdate_data_806D0848[];
 void fn_8024584C(); void fn_80245834();
 }
-static const char *internationalLabels[13] = {lbl_806DBEE0,lbl_803EF668,lbl_806DBEE8,lbl_806DBEF0,lbl_806DBEF8,lbl_803EF674,lbl_803EF680,lbl_803EF68C,lbl_803EF698,lbl_803EF6A4,lbl_803EF6B0,lbl_803EF6BC,lbl_803EF6C8};
-static const char *japaneseLabels[13] = {lbl_803EF6D4,lbl_803EF6E0,lbl_803EF6EC,lbl_803EF6F8,lbl_803EF704,lbl_803EF710,lbl_806DBF00,lbl_803EF71C,lbl_806DBF08,lbl_803EF728,lbl_806DBF10,lbl_803EF734,lbl_803EF740};
+static const char *internationalLabels[13] = {lbl_806DBEE0,HudSelectionUpdate_rodata_803EF668,lbl_806DBEE8,lbl_806DBEF0,lbl_806DBEF8,HudSelectionUpdate_rodata_803EF674,HudSelectionUpdate_rodata_803EF680,HudSelectionUpdate_rodata_803EF68C,HudSelectionUpdate_rodata_803EF698,HudSelectionUpdate_rodata_803EF6A4,HudSelectionUpdate_rodata_803EF6B0,HudSelectionUpdate_rodata_803EF6BC,HudSelectionUpdate_rodata_803EF6C8};
+static const char *japaneseLabels[13] = {HudSelectionUpdate_rodata_803EF6D4,HudSelectionUpdate_rodata_803EF6E0,HudSelectionUpdate_rodata_803EF6EC,HudSelectionUpdate_rodata_803EF6F8,HudSelectionUpdate_rodata_803EF704,HudSelectionUpdate_rodata_803EF710,lbl_806DBF00,HudSelectionUpdate_rodata_803EF71C,lbl_806DBF08,HudSelectionUpdate_rodata_803EF728,lbl_806DBF10,HudSelectionUpdate_rodata_803EF734,HudSelectionUpdate_rodata_803EF740};
 static void *hudTypeInfo[3] = {lbl_806D0840,0,0};
-static void *hudVtable[6] = {lbl_806D0848,0,(void*)fn_80245B10,(void*)fn_80245850,(void*)fn_8024584C,(void*)fn_80245834};
+static void *hudVtable[6] = {HudSelectionUpdate_data_806D0848,0,(void*)fn_80245B10,(void*)fn_80245850,(void*)fn_8024584C,(void*)fn_80245834};
 
 extern "C" void fn_80245850(HudSelection *self) {
  switch(self->state) {
@@ -81,7 +81,7 @@ extern "C" void fn_80245850(HudSelection *self) {
   }
  }
  float value=self->position.p->Value();
- fn_801F93EC(self->text,lbl_803EF75C[self->selection].x-value,lbl_803EF75C[self->selection].y);
+ fn_801F93EC(self->text,HudSelectionUpdate_rodata_803EF75C[self->selection].x-value,HudSelectionUpdate_rodata_803EF75C[self->selection].y);
  float alpha=self->alpha.p->Value();
  fn_801F93D0(self->text,alpha,alpha);
  fn_801F8A34(self->context,self->text,self->field08);

@@ -13,7 +13,7 @@ struct DriftEffect {
 extern "C" {
 extern const float lbl_806D555C, lbl_806D556C, lbl_806D5584;
 extern const float lbl_806D55A8, lbl_806D55AC, lbl_806D55B0, lbl_806D55B4, lbl_806D55B8;
-extern void *lbl_8041A494[15];
+extern void *Effect_DriftExplosion_Res7A_JointChain_Update_data_8041A494[15];
 void VfxSlot_BindResource(void *, int);
 void VfxSlot_SetMatrixSourceEnabled(void *, int);
 signed char ItemObject_GetGroundTypeAt(DriftVec, float *, int);
@@ -64,7 +64,7 @@ void Effect_DriftExplosion_Res7A_JointChain_Update(DriftEffect *effect) {
     signed char oldJoint = effect->joint;
     effect->joint = (signed char)(lbl_806D55B8 * effect->growth);
     if ((unsigned int)effect->joint >= 15U) effect->joint = 14;
-    if (oldJoint != effect->joint) VfxSlot_ResolveJoint(effect->slot, lbl_8041A494[effect->joint]);
+    if (oldJoint != effect->joint) VfxSlot_ResolveJoint(effect->slot, Effect_DriftExplosion_Res7A_JointChain_Update_data_8041A494[effect->joint]);
     if (effect->timers[0]) --effect->timers[0];
     if (effect->timers[1]) --effect->timers[1];
     if (effect->timers[2]) --effect->timers[2];

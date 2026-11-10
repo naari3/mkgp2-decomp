@@ -33,7 +33,7 @@ struct BootClock { char bytes[16]; };
 extern "C" {
 extern BootBackup lbl_80598A60, lbl_8059F480;
 extern BootClock lbl_805A5EA0;
-extern BootDescriptor lbl_805A5EB0;
+extern BootDescriptor GameBoot_Init_bss_805A5EB0;
 extern unsigned char lbl_806CEF68, lbl_806CEF69, lbl_806D1120;
 extern int lbl_806D1124, lbl_806D1114, lbl_806D1110, lbl_806D1128;
 extern const char lbl_80310DE0[];

@@ -1,6 +1,6 @@
 #include <triforce/amjvs_internal.h>
 
-s16 lbl_806D1E30[4];
+s16 amjvs_nm3_bss_806D1E30[4];
 
 static inline s32 ReadAnalog(s32 node, s16** out, u8* chans) {
     u8* count = fn_80285778();

@@ -144,7 +144,7 @@ void fn_80121E10(ResCtrl *);
 void fn_8011FAFC(ResCtrl *, int);
 void *fn_801F8E58();
 void fn_801F8A34(void *, TextManager *, int);
-extern const float lbl_803BE434[];
+extern const float NamCamFlow_rodata_803BE434[];
 extern const float lbl_806DA588, lbl_806DA590, lbl_806DA594;
 extern const float lbl_806DA5C8, lbl_806DA5D8, lbl_806DA5DC;
 extern const int lbl_806DA854;
@@ -160,7 +160,7 @@ struct NamCamLayout {
     int icons[11][4];
     int modeLabels[11][2];
 };
-extern const NamCamLayout lbl_803BDF20;
+extern const NamCamLayout NamCamFlow_rodata_803BDF20;
 struct NamCamPlayerInput {
     virtual void key0();
     virtual void key1();
@@ -180,7 +180,7 @@ extern const float lbl_806DA5CC, lbl_806DA5D0, lbl_806DA5D4;
 extern const int lbl_806DA858;
 void fn_80120A08(int);
 void fn_801F8E54();
-extern const int lbl_803BE4F4[][2], lbl_803BE444[][4];
+extern const int NamCamFlow_rodata_803BE4F4[][2], NamCamFlow_rodata_803BE444[][4];
 void *FUN_8003b120(unsigned long);
 void NamCam_Init();
 unsigned char GetVBlankFlag();

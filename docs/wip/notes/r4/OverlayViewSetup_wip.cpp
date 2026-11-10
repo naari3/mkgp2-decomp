@@ -11,8 +11,8 @@ typedef struct OverlayView {
 } OverlayView;
 /* Owned here (.bss 0x80679698..0x806796FC); separate objects so MWCC
  * addresses them from one section anchor. */
-extern "C" OverlayView lbl_80679698;
-OverlayView lbl_80679698;
+extern "C" OverlayView OverlayViewSetup_bss_80679698;
+OverlayView OverlayViewSetup_bss_80679698;
 static struct { float a,b,c,d; } overlayRotation;
 static float overlayView[3][4];
 static inline void SetRot(float a_,float b_,double c_,double d_) { overlayRotation.a=a_; overlayRotation.b=b_; overlayRotation.c=c_; overlayRotation.d=d_; }
@@ -33,7 +33,7 @@ extern "C" void GXSetCurrentMtx(int);
 #pragma exceptions on
 extern "C" void fn_801F6588(unsigned int mode) {
     float projection[4][4];
-#define v (&lbl_80679698)
+#define v (&OverlayViewSetup_bss_80679698)
     GXSetCullMode(2);
     GXSetViewport(lbl_806DA6C0,lbl_806DA6C0,lbl_806DA6B0,lbl_806DA6B4,lbl_806DA6C0,lbl_806DA6C4);
     v->left=lbl_806DA6B8; v->right=1024.0f; v->bottom=1024.0f; v->top=lbl_806DA6C8;

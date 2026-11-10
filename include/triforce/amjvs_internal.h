@@ -154,12 +154,12 @@ extern void fn_80293B74(void);
 extern JvsMgr lbl_806910B8;
 #define Mgr lbl_806910B8
 
-extern s16 lbl_806D1E30[4];
-extern u32 lbl_806D1E38;
-extern u32 lbl_806D1E3C;
-#define AnalogBuf lbl_806D1E30
-#define InitNode lbl_806D1E38
-#define InitTimer lbl_806D1E3C
+extern s16 amjvs_nm3_bss_806D1E30[4];
+extern u32 amjvs_nm7_bss_806D1E38;
+extern u32 amjvs_nm7_bss_806D1E3C;
+#define AnalogBuf amjvs_nm3_bss_806D1E30
+#define InitNode amjvs_nm7_bss_806D1E38
+#define InitTimer amjvs_nm7_bss_806D1E3C
 
 s32 fn_8028A598(s32 node, u8 n, u8* data);
 s32 fn_8028A618(s32 node, u8 n, u8* data);

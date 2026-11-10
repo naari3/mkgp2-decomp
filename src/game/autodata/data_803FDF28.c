@@ -24,14 +24,14 @@ extern char lbl_8031121C[];
 extern char lbl_8031122C[];
 extern char lbl_8031123C[];
 extern char lbl_8031124C[];
-extern char lbl_8031125C[];
-extern char lbl_80311268[];
-extern char lbl_80311274[];
-extern char lbl_80311280[];
+extern char data_803FDF28_rodata_8031125C[];
+extern char data_803FDF28_rodata_80311268[];
+extern char data_803FDF28_rodata_80311274[];
+extern char data_803FDF28_rodata_80311280[];
 extern char lbl_806CEF58[];
 extern char lbl_806CEF60[];
-extern char lbl_806CEF70[];
-extern char lbl_806CEF74[];
+extern char data_803FDF28_data_806CEF70[];
+extern char data_803FDF28_data_806CEF74[];
 extern char lbl_806CEF78[];
 extern char lbl_806CEF80[];
 extern char lbl_806CEF88[];
@@ -80,48 +80,48 @@ const char *g_pcbIpTable[8] = {
     (const char *)&lbl_8031123C, (const char *)&lbl_8031124C
 };
 /* decl: wchar * */
-void *lbl_803FDF70[10] = {
-    (void *)&lbl_8031125C,
-    (void *)&lbl_8031125C,
+void *Backup_ClearHiScores_data_803FDF70[10] = {
+    (void *)&data_803FDF28_rodata_8031125C,
+    (void *)&data_803FDF28_rodata_8031125C,
     (void *)&lbl_806D2EA0,
-    (void *)&lbl_80311268,
+    (void *)&data_803FDF28_rodata_80311268,
     (void *)&lbl_806D2EA8,
-    (void *)&lbl_80311274,
-    (void *)&lbl_80311280,
-    (void *)&lbl_80311280,
-    (void *)&lbl_80311280,
+    (void *)&data_803FDF28_rodata_80311274,
+    (void *)&data_803FDF28_rodata_80311280,
+    (void *)&data_803FDF28_rodata_80311280,
+    (void *)&data_803FDF28_rodata_80311280,
     0
 };
-float lbl_803FDF98[5] = {
+float data_803FDF28_data_803FDF98[5] = {
     0.0f, -1.0f, 1.0f, -1.0f, 0.0f
 };
 /* pointers mixed with values */
-void *lbl_803FDFAC[7] = {
+void *data_803FDF28_data_803FDFAC[7] = {
     0,
     0,
     (void *)0xD0000,
     (void *)0x7F7F7F00,
-    (void *)&lbl_803FDF98,
+    (void *)&data_803FDF28_data_803FDF98,
     0,
-    (void *)&lbl_806CEF70
+    (void *)&data_803FDF28_data_806CEF70
 };
-float lbl_803FDFC8[5] = {
+float data_803FDF28_data_803FDFC8[5] = {
     0.0f, 1.0f, 1.0f, 1.0f, 0.0f
 };
 /* pointers mixed with values */
-void *lbl_803FDFDC[7] = {
+void *data_803FDF28_data_803FDFDC[7] = {
     0,
-    (void *)&lbl_803FDFAC,
+    (void *)&data_803FDF28_data_803FDFAC,
     (void *)0xD0000,
     (void *)0x7F7F7F00,
-    (void *)&lbl_803FDFC8,
+    (void *)&data_803FDF28_data_803FDFC8,
     0,
-    (void *)&lbl_806CEF74
+    (void *)&data_803FDF28_data_806CEF74
 };
 /* decl: unsigned char */
-void *lbl_803FDFF8[8] = {
+void *SceneModel_Init_data_803FDFF8[8] = {
     0,
-    (void *)&lbl_803FDFDC,
+    (void *)&data_803FDF28_data_803FDFDC,
     (void *)0x40000,
     (void *)0xFFFFFFFF,
     0,
@@ -129,7 +129,7 @@ void *lbl_803FDFF8[8] = {
     0,
     0
 };
-float lbl_803FE018[14] = {
+float KartTireFX_Ctor_data_803FE018[14] = {
     1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
     1.0f, 1.0f, 1.0f, 1.0f, 0.75f, 0.0f
 };
@@ -150,7 +150,7 @@ void *lbl_803FE068[4] = {
     0
 };
 /* decl: ItemEffectCallback */
-void *lbl_803FE078[10] = {
+void *ItemEffectState_Init_data_803FE078[10] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)KartItem_FindRearTarget_v3,
@@ -189,10 +189,10 @@ void *lbl_803FE0C8[6] = {
     0,
     0
 };
-int lbl_803FE0E0[4] = {
+int GXChannel_PushChannelColors_data_803FE0E0[4] = {
     0, 1, 2, 3
 };
-TransitionTextureVertex lbl_803FE0F0[16] = {
+TransitionTextureVertex TransitionEffect_RenderPass_data_803FE0F0[16] = {
     { -5.0f, -5.0f, 5.0f, 5.0f, 0xFFFFFFF0 },
     { 645.0f, -5.0f, 635.0f, 5.0f, 0xFFFFFFF0 },
     { 390.0f, 210.0f, 390.0f, 210.0f, 0xFFFFFF40 },
@@ -210,7 +210,7 @@ TransitionTextureVertex lbl_803FE0F0[16] = {
     { 390.0f, 270.0f, 390.0f, 270.0f, 0xFFFFFF40 },
     { 390.0f, 210.0f, 390.0f, 210.0f, 0xFFFFFF40 }
 };
-TransitionTextureVertex lbl_803FE230[16] = {
+TransitionTextureVertex TransitionEffect_DrawCarRouletteOverlay_data_803FE230[16] = {
     { -5.0f, -5.0f, 5.0f, 5.0f, 0xFFFFFFF0 },
     { 645.0f, -5.0f, 635.0f, 5.0f, 0xFFFFFFF0 },
     { 390.0f, 210.0f, 390.0f, 210.0f, 0xFFFFFF40 },

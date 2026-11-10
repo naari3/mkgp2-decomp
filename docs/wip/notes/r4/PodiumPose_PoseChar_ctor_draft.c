@@ -1,7 +1,7 @@
 /*
  * 0x8014219C..0x8014388C: podium pose effect. A camera fly-in over a stage
  * model with up to six posed character models (PoseChar). Vtable
- * lbl_8048EDE4, base FxBase (lbl_8048EB44, see SpriteEffects.c). Two shared
+ * WinPose_vtable_8048EDE4, base FxBase (lbl_8048EB44, see SpriteEffects.c). Two shared
  * prop models (s_propA/s_propB) are reference-counted across PoseChars and
  * have their matrices copied from character joints each frame.
  */
@@ -60,17 +60,17 @@ void operator delete(void *);
 
 extern "C" {
 extern PoseTbl lbl_803608D0;
-extern const char *lbl_8048ED58[6];
-extern const char *lbl_8048ED70[13];
-extern const char *lbl_8048EDA4[13];
-extern int lbl_80360C08[5];
-extern Vec3 lbl_80360BC0[5];
-extern char lbl_80360C44[];
-extern clNormal3D *lbl_806D1568;
-extern clNormal3D *lbl_806D156C;
-extern JObj *lbl_806D1570;
-extern JObj *lbl_806D1574;
-extern int lbl_806D1578;
+extern const char *PodiumPose_data_8048ED58[6];
+extern const char *PodiumPose_data_8048ED70[13];
+extern const char *PodiumPose_data_8048EDA4[13];
+extern int PodiumPose_rodata_80360C08[5];
+extern Vec3 PodiumPose_rodata_80360BC0[5];
+extern char PodiumPose_rodata_80360C44[];
+extern clNormal3D *PodiumPose_bss_806D1568;
+extern clNormal3D *PodiumPose_bss_806D156C;
+extern JObj *PodiumPose_bss_806D1570;
+extern JObj *PodiumPose_bss_806D1574;
+extern int PodiumPose_bss_806D1578;
 
 extern const char lbl_806D7AA0[7]; /* lbl_806D7AA0 */
 extern const char lbl_806D7AA8[5]; /* "jobj" */
@@ -108,11 +108,11 @@ extern void PSMTXScale(Mtx m, float x, float y, float z);
 extern void PSMTXConcat(const Mtx a, const Mtx b, Mtx ab);
 }
 
-#define s_propA lbl_806D1568
-#define s_propB lbl_806D156C
-#define s_jointA lbl_806D1570
-#define s_jointB lbl_806D1574
-#define s_propRef lbl_806D1578
+#define s_propA PodiumPose_bss_806D1568
+#define s_propB PodiumPose_bss_806D156C
+#define s_jointA PodiumPose_bss_806D1570
+#define s_jointB PodiumPose_bss_806D1574
+#define s_propRef PodiumPose_bss_806D1578
 
 extern "C" {
 extern void Alloc();
@@ -378,43 +378,43 @@ void WinPose::Update() {
         CObj_ApplyScissor(cam, &viewport);
         switch (state) {
         case 0:
-            if (timer >= lbl_80360C08[0]) {
+            if (timer >= PodiumPose_rodata_80360C08[0]) {
                 timer = 0;
                 state = 1;
             }
             break;
         case 1: {
-            t = 0.5f * Sinf_LUT_Wrap(180.0f * (1.0f - (float)timer / (float)lbl_80360C08[1])) + 0.5f;
-            p0 = lbl_80360BC0[0];
-            p1 = lbl_80360BC0[2];
-            p2 = lbl_80360BC0[4];
+            t = 0.5f * Sinf_LUT_Wrap(180.0f * (1.0f - (float)timer / (float)PodiumPose_rodata_80360C08[1])) + 0.5f;
+            p0 = PodiumPose_rodata_80360BC0[0];
+            p1 = PodiumPose_rodata_80360BC0[2];
+            p2 = PodiumPose_rodata_80360BC0[4];
             fn_80181F18(&p0, &p1, &p2, &eye, t);
-            if (timer >= lbl_80360C08[1]) {
+            if (timer >= PodiumPose_rodata_80360C08[1]) {
                 timer = 0;
                 state = 4;
             }
             break;
         }
         case 2:
-            if (timer >= lbl_80360C08[2]) {
+            if (timer >= PodiumPose_rodata_80360C08[2]) {
                 timer = 0;
                 state = 3;
             }
             break;
         case 3: {
-            t = 0.5f * ((float)timer / (float)lbl_80360C08[3]) + 0.5f;
-            p0 = lbl_80360BC0[0];
-            p1 = lbl_80360BC0[2];
-            p2 = lbl_80360BC0[4];
+            t = 0.5f * ((float)timer / (float)PodiumPose_rodata_80360C08[3]) + 0.5f;
+            p0 = PodiumPose_rodata_80360BC0[0];
+            p1 = PodiumPose_rodata_80360BC0[2];
+            p2 = PodiumPose_rodata_80360BC0[4];
             fn_80181F18(&p0, &p1, &p2, &eye, t);
-            if (timer >= lbl_80360C08[3]) {
+            if (timer >= PodiumPose_rodata_80360C08[3]) {
                 timer = 0;
                 state = 4;
             }
             break;
         }
         case 4:
-            if (timer >= lbl_80360C08[4]) {
+            if (timer >= PodiumPose_rodata_80360C08[4]) {
                 timer = 0;
                 state = 5;
             }
@@ -451,9 +451,9 @@ unsigned char WinPose::Spawn(int slot, int kind) {
     } else {
         mode = -1;
     }
-    joint = ResolveJointByName(stage, lbl_8048ED58[slot]);
+    joint = ResolveJointByName(stage, PodiumPose_data_8048ED58[slot]);
     JObjGetTranslation(joint, &pos);
-    joint = ResolveJointByName(stage, lbl_8048ED58[slot]);
+    joint = ResolveJointByName(stage, PodiumPose_data_8048ED58[slot]);
     rot.x = 0.0f;
     rot.y = 0.0f;
     rot.z = 0.0f;
@@ -499,21 +499,21 @@ WinPose::WinPose(unsigned char setCam) {
     chars[3] = 0;
     chars[4] = 0;
     chars[5] = 0;
-    stage = new clNormal3D(lbl_80360C44, 0);
+    stage = new clNormal3D(PodiumPose_rodata_80360C44, 0);
     Object_JObjUpdate_be4(stage, 0x10);
     clNormal3D_SetFlags(stage, 0x40000000, 0);
     clNormal3D_SetScale(stage, 0, 0.0f, 1.0f, 0.0f, 0.0f);
-    cam = new Scene3D(lbl_80360C44);
-    lights = new SceneModel(lbl_80360C44, 1);
+    cam = new Scene3D(PodiumPose_rodata_80360C44);
+    lights = new SceneModel(PodiumPose_rodata_80360C44, 1);
     if (setCam == 1) {
         Vec3 v;
-        v.x = lbl_80360BC0[0].x;
-        v.y = lbl_80360BC0[0].y;
-        v.z = lbl_80360BC0[0].z;
+        v.x = PodiumPose_rodata_80360BC0[0].x;
+        v.y = PodiumPose_rodata_80360BC0[0].y;
+        v.z = PodiumPose_rodata_80360BC0[0].z;
         CObj_LoadIntoGX(cam, &v);
-        v.x = lbl_80360BC0[1].x;
-        v.y = lbl_80360BC0[1].y;
-        v.z = lbl_80360BC0[1].z;
+        v.x = PodiumPose_rodata_80360BC0[1].x;
+        v.y = PodiumPose_rodata_80360BC0[1].y;
+        v.z = PodiumPose_rodata_80360BC0[1].z;
         CObj_ApplyViewport(cam, &v);
     }
 }
@@ -625,13 +625,13 @@ PoseChar::PoseChar(int kind, int mode, Vec3 *pos, Vec3 *rot, float *scale) {
         return;
     }
     s = *scale * tbl->scale[this->kind];
-    model = new clNormal3D(lbl_8048ED70[this->kind], 0);
+    model = new clNormal3D(PodiumPose_data_8048ED70[this->kind], 0);
     Object_SetJObjScaleXYZ(model, s, s, s);
     clNormal3D_SetScale(model, 0, 0.0f, 1.0f, 0.0f, 0.0f);
-    sprintf(nameA, tbl->fmt[0], lbl_8048EDA4[kind]);
-    sprintf(nameB, tbl->fmt[2], lbl_8048EDA4[kind]);
-    sprintf(nameC, tbl->fmt[1], lbl_8048EDA4[kind]);
-    sprintf(nameD, tbl->fmt[3], lbl_8048EDA4[kind]);
+    sprintf(nameA, tbl->fmt[0], PodiumPose_data_8048EDA4[kind]);
+    sprintf(nameB, tbl->fmt[2], PodiumPose_data_8048EDA4[kind]);
+    sprintf(nameC, tbl->fmt[1], PodiumPose_data_8048EDA4[kind]);
+    sprintf(nameD, tbl->fmt[3], PodiumPose_data_8048EDA4[kind]);
     if (this->mode == 0) {
         head = ResolveJointByName(model, nameA);
         propJointB = ResolveJointByName(model, tbl->fmt[4]);

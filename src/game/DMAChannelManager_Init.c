@@ -30,7 +30,7 @@ struct TDrawSlot {
 
 extern "C" {
 extern TDrawSlot lbl_805987E0[0x20];
-extern unsigned int lbl_806CEF20;
+extern unsigned int DMAChannelManager_Init_data_806CEF20;
 extern unsigned char lbl_806D10F0;
 extern unsigned int lbl_806D10F4;
 extern unsigned int lbl_806D10F8;
@@ -51,7 +51,7 @@ extern "C" void DMAChannelManager_Init(void) {
         }
         lbl_805987E0[i].entry = new TDrawEntry;
     }
-    lbl_806CEF20 = 8;
+    DMAChannelManager_Init_data_806CEF20 = 8;
     lbl_806D10F4 = 0;
     lbl_806D10F8 = 0;
     lbl_806D10F0 = 1;

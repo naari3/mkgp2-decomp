@@ -9,7 +9,7 @@ void operator delete(void *p);
 
 extern "C" {
 /* .rodata 0x803C3858..0x803C3DD8 (owned by this TU so the pool base matches) */
-static const unsigned int lbl_803C3858[0x102] = {
+static const unsigned int JumpDistanceMode_Init_rodata_803C3858[0x102] = {
     0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x3F333333, 0x3F666666,
     0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556,
     0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556,
@@ -73,8 +73,8 @@ static const float lbl_803C3CF0[14] = {
 static const float s_gridX[5] = { 490.0f, 523.0f, 556.0f, 589.0f, 622.0f };
 static const float s_gridY[3] = { 43.0f, 78.0f, 113.0f };
 static const Vec s_markerScale = { 0.0f, 0.0f, -5.0f };
-static const float lbl_803C3D54[4] = { 300.0f, -7500.0f, 1000.0f, -800.0f };
-static const float lbl_803C3D64[7] = { 1900.0f, -7800.0f, 2100.0f, -7400.0f, 0.0f, 0.0f, 0.0f };
+static const float JumpDistanceMode_UpdateGameplay_rodata_803C3D54[4] = { 300.0f, -7500.0f, 1000.0f, -800.0f };
+static const float JumpDistanceMode_HandlePhysics_rodata_803C3D64[7] = { 1900.0f, -7800.0f, 2100.0f, -7400.0f, 0.0f, 0.0f, 0.0f };
 static const unsigned int lbl_803C3D80[3] = { 0, 0, 0 };
 static const char lbl_803C3D8C[] = "clCGameDN";
 static const char lbl_803C3D98[12] = "clJobRunner";
@@ -83,7 +83,7 @@ static const char s_coinFile[16] = "mario_coin.dat";
 static const char s_kiraFile[16] = "k_kira13.dat";
 
 extern char lbl_8048E144[];
-extern char lbl_804ECC08[];
+extern char JumpDistanceMode_vtable_804ECC08[];
 extern int g_ccClass;
 extern int g_characterId;
 extern int g_kartStartSlot;

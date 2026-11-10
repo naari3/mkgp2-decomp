@@ -19,7 +19,7 @@ index 9fb5d53..4ceb18e 100644
      int x24;
      HUD *hud;
      CoinIcons *icons;
-+    virtual void _key(); /* undefined key stub: vtable lbl_804EDA98 is not owned */
++    virtual void _key(); /* undefined key stub: vtable clCGameYI_vtable_804EDA98 is not owned */
      virtual ~CoinChallengeMode();
  };
  

@@ -1,6 +1,6 @@
 #include "game/types/ObjView.h"
 
-extern char lbl_80495BE4[];
+extern char ObjView_vtable_80495BE4[];
 extern char lbl_80490FE0[];
 extern const char lbl_80377304[];
 extern void Object_DtorWithGXSync(void *obj, int flag);
@@ -10,7 +10,7 @@ extern void DebugPrintf(const char *fmt, ...);
 
 ObjView *fn_801877E8(ObjView *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_80495BE4;
+        self->vt = ObjView_vtable_80495BE4;
         if (self->child != 0) {
             Object_DtorWithGXSync(self->child, 1);
         }

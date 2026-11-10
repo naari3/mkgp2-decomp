@@ -4,7 +4,7 @@
  * Per-frame pose setter: copies the kart world matrix into self->mtx,
  * stores the yaw, derives the world position, and advances the master
  * phase + sin phase + 3 staggered per-arm blade phases (wrap-normalize
- * against sdata2 limits, staggers from rodata lbl_803292D4).
+ * against sdata2 limits, staggers from rodata TripleBladeRing_SetWorldYaw_rodata_803292D4).
  *
  * The constants are read directly (no named locals) and the function is
  * built with opt_common_subs off: the target's FPR homes come from the
@@ -18,7 +18,7 @@ extern void Mtx_TransposeToMtx44(float *dst, void *src);
 extern void Mtx44_GetTranslation_ColMajor(TBRVec3 *dst, float *mtx44);
 extern double sin(double x); /* sin */
 
-extern TBRVec3 lbl_803292D4; /* per-arm phase staggers (rodata, 3 floats) */
+extern TBRVec3 TripleBladeRing_SetWorldYaw_rodata_803292D4; /* per-arm phase staggers (rodata, 3 floats) */
 
 extern const float lbl_806D5028;
 extern const float lbl_806D507C;
@@ -50,7 +50,7 @@ void TripleBladeRing_SetWorldYaw(TripleBladeRing *self, float yaw, void *worldMt
         self->phaseSin = self->phaseSin / lbl_806D50FC;
         self->phaseSin = (float)sin(lbl_806D5138 * self->phaseSin);
 
-        *(TBRVec3 *)stag = lbl_803292D4;
+        *(TBRVec3 *)stag = TripleBladeRing_SetWorldYaw_rodata_803292D4;
 
         for (i = 0; i < 3; ++i) {
             self->phases[i] = self->phase0 + stag[i];

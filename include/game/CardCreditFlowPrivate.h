@@ -24,11 +24,11 @@ struct CardCreditFlow : FlowScene {
 struct CreditDisplay { char pad[8]; int mode; void SetMode(int v) { mode=v; } };
 extern "C" {
 extern char g_playerData[];
-extern unsigned char lbl_806D1A90;
-extern int lbl_806D1A94; extern const int lbl_806D1A98;
+extern unsigned char CardCreditFlow_bss_806D1A90;
+extern int CardCreditFlow_bss_806D1A94; extern const int lbl_806D1A98;
 extern CreditMessage *lbl_806D1A88;
-extern char lbl_803EEF00[];
-extern void *lbl_804EE714[];
+extern char CardCreditFlow_rodata_803EEF00[];
+extern void *CardCreditFlow_vtable_804EE714[];
 extern const float lbl_806DBE34,lbl_806DBE38,lbl_806DBE3C,lbl_806DBE48,lbl_806DBE4C,lbl_806DBE50,lbl_806DBE54,lbl_806DBE58;
 void fn_8016039C(CardChoice*); void fn_801D9A2C(CardText*); void fn_8024E05C(CreditPrompt*); void fn_8023CD54(CreditMark*);
 void fn_801D9B70(CardText*,int); void fn_801D919C(CardText*); void clFlowKart_SetupTextLayout(CardText*,int);

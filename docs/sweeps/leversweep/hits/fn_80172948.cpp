@@ -57,7 +57,7 @@ extern "C" {
 float fn_80173F5C(float, float, float);
 float fn_80173F7C(float, float, float);
 }
-extern const float lbl_8036E924[4], lbl_8036E934[4], lbl_8036E944[4];
+extern const float HomingMarkerUpdate_rodata_8036E924[4], HomingMarkerUpdate_rodata_8036E934[4], HomingMarkerUpdate_rodata_8036E944[4];
 extern const float lbl_806D8D90;
 #define C8D90 0.0f
 extern const float lbl_806D8D94;
@@ -138,14 +138,14 @@ extern "C" void fn_80172948(Marker *self) {
     case 0: {
         if (self->time < C8DA4) {
             float t = Clamp(self->time / C8DA4);
-            self->part[0].Set(C8DA8 * t, C8D90, lbl_8036E924, t);
-            self->part[1].Set(C8DB0 * t + C8DAC, C8D90, lbl_8036E924, C8D94);
-            self->part[2].Set(C8DB0 * t + C8DAC, C8D90, lbl_8036E934, C8D94);
+            self->part[0].Set(C8DA8 * t, C8D90, HomingMarkerUpdate_rodata_8036E924, t);
+            self->part[1].Set(C8DB0 * t + C8DAC, C8D90, HomingMarkerUpdate_rodata_8036E924, C8D94);
+            self->part[2].Set(C8DB0 * t + C8DAC, C8D90, HomingMarkerUpdate_rodata_8036E934, C8D94);
         } else {
             float t = Clamp((self->time - C8DA4) / C8DB4);
-            self->part[0].Set(C8DA8, C8D90, lbl_8036E924, C8D94 - t);
-            self->part[1].Set(C8DB8, C8D90, lbl_8036E924, C8D94);
-            self->part[2].Set(mul__lv(C8DBC, t) + C8DB8, C8D90, lbl_8036E934, C8D94 - t);
+            self->part[0].Set(C8DA8, C8D90, HomingMarkerUpdate_rodata_8036E924, C8D94 - t);
+            self->part[1].Set(C8DB8, C8D90, HomingMarkerUpdate_rodata_8036E924, C8D94);
+            self->part[2].Set(mul__lv(C8DBC, t) + C8DB8, C8D90, HomingMarkerUpdate_rodata_8036E934, C8D94 - t);
         }
         self->part[3].visible = 0; self->part[4].visible = 0;
         float next_time = C8D94 + self->time;
@@ -155,8 +155,8 @@ extern "C" void fn_80172948(Marker *self) {
     }
     case 1: {
         float t = Pulse(self->time);
-        self->part[0].Set(C8DA8, C8D90, lbl_8036E924, t);
-        self->part[1].Set(C8DB8, C8D90, lbl_8036E924, C8D94);
+        self->part[0].Set(C8DA8, C8D90, HomingMarkerUpdate_rodata_8036E924, t);
+        self->part[1].Set(C8DB8, C8D90, HomingMarkerUpdate_rodata_8036E924, C8D94);
         self->part[2].visible = 0; self->part[3].visible = 0; self->part[4].visible = 0;
         float next_time = C8D94 + self->time;
         self->time = next_time;
@@ -166,26 +166,26 @@ extern "C" void fn_80172948(Marker *self) {
     case 2: {
         if (self->time < C8DC0) {
             float t = Pulse(self->time);
-            self->part[0].Set(C8DA8, C8D90, lbl_8036E924, t);
-            self->part[1].Set(C8DB8, C8D90, lbl_8036E924, t);
+            self->part[0].Set(C8DA8, C8D90, HomingMarkerUpdate_rodata_8036E924, t);
+            self->part[1].Set(C8DB8, C8D90, HomingMarkerUpdate_rodata_8036E924, t);
             self->part[2].visible = 0;
         } else {
             float t = Clamp((self->time - C8DC0) / C8DA4);
-            self->part[0].SetInterpolated(C8DC8 * t + C8DA8, C8D90, lbl_8036E924, lbl_8036E934, t, C8D94);
+            self->part[0].SetInterpolated(C8DC8 * t + C8DA8, C8D90, HomingMarkerUpdate_rodata_8036E924, HomingMarkerUpdate_rodata_8036E934, t, C8D94);
             {
                 float alpha = Clamp(C8DCC * (t - C8DD0));
-                self->part[1].SetInterpolated(C8DD4 * t + C8DB8, C8D90, lbl_8036E924, lbl_8036E944, t, alpha);
+                self->part[1].SetInterpolated(C8DD4 * t + C8DB8, C8D90, HomingMarkerUpdate_rodata_8036E924, HomingMarkerUpdate_rodata_8036E944, t, alpha);
             }
             self->part[2].visible = 0;
         }
         if (self->time >= C8DD8) {
             float t = Clamp((self->time - C8DD8) / C8DDC);
-            self->part[3].SetRGBA(C8DE4 * t + C8DE0, C8DE8 * (C8D94 - t), lbl_8036E944);
+            self->part[3].SetRGBA(C8DE4 * t + C8DE0, C8DE8 * (C8D94 - t), HomingMarkerUpdate_rodata_8036E944);
             self->part[3].color[3] = Clamp((self->time - C8DD8) / C8DEC);
         }
         if (self->time >= C8DCC) {
             float t = C8D94 - Clamp((self->time - C8DCC) / C8DF0);
-            if (t > C8D90) self->part[4].Set(C8DF4 * t, C8DE8 * t, lbl_8036E944, t);
+            if (t > C8D90) self->part[4].Set(C8DF4 * t, C8DE8 * t, HomingMarkerUpdate_rodata_8036E944, t);
             else self->part[4].visible = 0;
         }
         float next_time = C8D94 + self->time;
@@ -197,22 +197,22 @@ extern "C" void fn_80172948(Marker *self) {
         float t = fn_80173F7C(self->time, C8D90, C8DA4);
         if (t < C8DB4) {
             t = Clamp(t / C8DB4);
-            self->part[0].SetInterpolated(C8DF8, C8D90, lbl_8036E934, lbl_8036E944, t, C8D94);
+            self->part[0].SetInterpolated(C8DF8, C8D90, HomingMarkerUpdate_rodata_8036E934, HomingMarkerUpdate_rodata_8036E944, t, C8D94);
         } else {
             t = Clamp((t - C8DB4) / C8DB4);
-            self->part[0].SetInterpolated(C8DF8, C8D90, lbl_8036E944, lbl_8036E934, t, C8D94);
+            self->part[0].SetInterpolated(C8DF8, C8D90, HomingMarkerUpdate_rodata_8036E944, HomingMarkerUpdate_rodata_8036E934, t, C8D94);
         }
-        self->part[1].Set(C8DFC, C8D90, lbl_8036E944, C8D94);
+        self->part[1].Set(C8DFC, C8D90, HomingMarkerUpdate_rodata_8036E944, C8D94);
         t = fn_80173F7C(self->time, C8D90, C8DC0);
-        self->part[2].SetRGBA(C8E04 * Clamp(t / C8DA4) + C8E00, C8D90, lbl_8036E934);
+        self->part[2].SetRGBA(C8E04 * Clamp(t / C8DA4) + C8E00, C8D90, HomingMarkerUpdate_rodata_8036E934);
         if (t < C8DEC) self->part[2].color[3] = C8D94;
         else self->part[2].color[3] = C8D94 - Clamp((t - C8DEC) * C8DD0);
         self->part[3].visible = 1;
         self->part[3].sy = C8E08; self->part[3].sx = C8E08;
         t = fn_80173F7C(self->time, C8D90, C8DC4) / C8DC4;
         self->part[3].angle = C8DE8 * t;
-        self->part[3].color[0] = lbl_8036E944[0]; self->part[3].color[1] = lbl_8036E944[1];
-        self->part[3].color[2] = lbl_8036E944[2]; self->part[3].color[3] = lbl_8036E944[3];
+        self->part[3].color[0] = HomingMarkerUpdate_rodata_8036E944[0]; self->part[3].color[1] = HomingMarkerUpdate_rodata_8036E944[1];
+        self->part[3].color[2] = HomingMarkerUpdate_rodata_8036E944[2]; self->part[3].color[3] = HomingMarkerUpdate_rodata_8036E944[3];
         t = fn_80173F7C(self->time, C8D90, C8DC4);
         if (t < C8DC0) self->part[3].color[3] = C8D94 - Clamp(t / C8DC0);
         else self->part[3].color[3] = Clamp((t - C8DC0) / C8DC0);
@@ -224,16 +224,16 @@ extern "C" void fn_80172948(Marker *self) {
     }
     case 4: {
         float t = Clamp(self->time / C8DA4);
-        self->part[0].Blend(C8DA8, C8D90, lbl_8036E924, C8D94, t);
-        self->part[1].Blend(C8DB8, C8D90, lbl_8036E924, C8D94, t);
+        self->part[0].Blend(C8DA8, C8D90, HomingMarkerUpdate_rodata_8036E924, C8D94, t);
+        self->part[1].Blend(C8DB8, C8D90, HomingMarkerUpdate_rodata_8036E924, C8D94, t);
         self->part[3].sx += (C8DE0 - self->part[3].sx) * t;
         self->part[3].sy += (C8DE0 - self->part[3].sy) * t;
         self->part[3].angle += (C8E10 - self->part[3].angle) * t;
-        self->part[3].color[0] = lbl_8036E944[0]; self->part[3].color[1] = lbl_8036E944[1];
-        self->part[3].color[2] = lbl_8036E944[2]; self->part[3].color[3] = lbl_8036E944[3];
+        self->part[3].color[0] = HomingMarkerUpdate_rodata_8036E944[0]; self->part[3].color[1] = HomingMarkerUpdate_rodata_8036E944[1];
+        self->part[3].color[2] = HomingMarkerUpdate_rodata_8036E944[2]; self->part[3].color[3] = HomingMarkerUpdate_rodata_8036E944[3];
         self->part[3].color[3] += -self->part[3].color[3] * t;
         t = Clamp(self->time / C8DB4);
-        self->part[2].Fade(C8DFC, C8D90, lbl_8036E934, t);
+        self->part[2].Fade(C8DFC, C8D90, HomingMarkerUpdate_rodata_8036E934, t);
         self->part[4].visible = 0;
         float next_time = C8D94 + self->time;
         self->time = next_time;

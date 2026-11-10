@@ -233,7 +233,7 @@ extern const float lbl_806D848C;
 extern const float lbl_806D8490;
 extern const float lbl_806D8494;
 extern const float lbl_806D84A0;
-extern unsigned int lbl_803678D8[];
+extern unsigned int SceneList_80157EA8_rodata_803678D8[];
 extern const float lbl_806D84B0;
 extern const float lbl_806D84B4;
 extern const float lbl_806D84B8;
@@ -711,12 +711,12 @@ extern "C" asm void fn_8015915C(OptionMenu *self, int layer, float x, float y, f
     psq_st f24, 0x38(r1), 0, 0
     stmw r26, 0x18(r1)
     fmr f29, f1
-    lis r5, lbl_803678D8@ha
+    lis r5, SceneList_80157EA8_rodata_803678D8@ha
     fmr f30, f2
     mr r26, r3
     fmr f31, f3
     mr r27, r4
-    addi r29, r5, lbl_803678D8@l
+    addi r29, r5, SceneList_80157EA8_rodata_803678D8@l
     bl isJapanese
     cmpwi r3, 0x1
     bne fn_8015915C_L_80159244
@@ -1083,12 +1083,12 @@ extern "C" asm void fn_801596D4(OptionMenu *self, int layer, float x, float y, f
     psq_st f22, 0x48(r1), 0, 0
     stmw r20, 0x10(r1)
     fmr f23, f1
-    lis r5, lbl_803678D8@ha
+    lis r5, SceneList_80157EA8_rodata_803678D8@ha
     fmr f22, f2
     mr r20, r3
     fmr f26, f3
     mr r21, r4
-    addi r30, r5, lbl_803678D8@l
+    addi r30, r5, SceneList_80157EA8_rodata_803678D8@l
     bl isJapanese
     cmpwi r3, 0x1
     bne fn_801596D4_L_801597CC
@@ -1425,12 +1425,12 @@ extern "C" asm void fn_80159BD0(OptionMenu *self, int layer, float x, float y, f
     psq_st f21, 0x48(r1), 0, 0
     stmw r23, 0x1c(r1)
     fmr f24, f1
-    lis r5, lbl_803678D8@ha
+    lis r5, SceneList_80157EA8_rodata_803678D8@ha
     fmr f25, f2
     mr r30, r3
     fmr f26, f3
     mr r31, r4
-    addi r23, r5, lbl_803678D8@l
+    addi r23, r5, SceneList_80157EA8_rodata_803678D8@l
     bl isJapanese
     cmpwi r3, 0x1
     bne fn_80159BD0_L_80159CD8

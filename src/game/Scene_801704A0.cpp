@@ -1,6 +1,6 @@
 /*
  * 0x801704A0..0x80170544: deleting destructor of a two-model course object
- * (vtable lbl_80491264, base vtable lbl_80490FE0).
+ * (vtable SparkModels_vtable_80491264, base vtable lbl_80490FE0).
  */
 
 struct CourseTwoModels {
@@ -11,7 +11,7 @@ struct CourseTwoModels {
 };
 
 extern "C" {
-extern char lbl_80491264[];
+extern char SparkModels_vtable_80491264[];
 extern char lbl_80490FE0[];
 extern char lbl_8036E138[];
 void Object_DtorWithGXSync(void *, int);
@@ -20,7 +20,7 @@ void DebugPrintf(const char *, ...);
 
 CourseTwoModels *fn_801704A0(CourseTwoModels *self, short flag) {
     if (self) {
-        self->vtable = lbl_80491264;
+        self->vtable = SparkModels_vtable_80491264;
         if (self->modelA) {
             Object_DtorWithGXSync(self->modelA, 1);
         }

@@ -1,6 +1,6 @@
 # CW 1.3.2 dead-counter-in-ctr-loop hard-block (2026-06-10, batch_promote_8004f858_handleitemfx)
 
-Target idiom: ctr-converted scan loop that ALSO materializes a never-read up-counter (`li r4,0x0` init + `addi r4,r4,0x1` per iteration, no reads before the register is clobbered). Seen in CarObject_HandleItemEffect 0x8004F858 loop 1 (pair-table scan over lbl_802ED94C, 0x13 iterations, two compares per iteration via lwz/lwzu). Same family as the dead `i` counter in CarObject_MainUpdate's mtx loop (sec 14.2 flavor 5) and the const-prop-escaped `mr r6,r4` init in KartItem_GetMaxSpeedWithBonus.
+Target idiom: ctr-converted scan loop that ALSO materializes a never-read up-counter (`li r4,0x0` init + `addi r4,r4,0x1` per iteration, no reads before the register is clobbered). Seen in CarObject_HandleItemEffect 0x8004F858 loop 1 (pair-table scan over CarObject_HandleItemEffect_rodata_802ED94C, 0x13 iterations, two compares per iteration via lwz/lwzu). Same family as the dead `i` counter in CarObject_MainUpdate's mtx loop (sec 14.2 flavor 5) and the const-prop-escaped `mr r6,r4` init in KartItem_GetMaxSpeedWithBonus.
 
 Probed source forms - ALL get the counter web deleted (or the loop fails to ctr-convert):
 

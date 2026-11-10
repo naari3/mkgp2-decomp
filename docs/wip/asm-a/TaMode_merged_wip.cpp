@@ -173,24 +173,24 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
         brake = accel;
         if (g_ccClass != 2) {
             if (!IsRaceStarted()) {
-                lbl_806D13C4 = (unsigned int)now;
-                lbl_806D13C0 = (unsigned int)(now >> 32);
+                TaMode_FrameUpdate_bss_806D13C4 = (unsigned int)now;
+                TaMode_FrameUpdate_bss_806D13C0 = (unsigned int)(now >> 32);
             } else if (steer < 0.1f && accel < 0.1f) {
-                if (!lbl_806D13B8) {
-                    long long prev = ((long long)lbl_806D13C0 << 32) | lbl_806D13C4;
+                if (!TaMode_FrameUpdate_bss_806D13B8) {
+                    long long prev = ((long long)TaMode_FrameUpdate_bss_806D13C0 << 32) | TaMode_FrameUpdate_bss_806D13C4;
                     long long ms = (now - prev) / ((*(unsigned int *)0x800000f8 / 4) / 1000);
-                    if ((float)ms / 1000.0f >= 4.0f) lbl_806D13B8 = 1;
+                    if ((float)ms / 1000.0f >= 4.0f) TaMode_FrameUpdate_bss_806D13B8 = 1;
                 }
-                if (lbl_806D13B8) steer = 1.0f;
+                if (TaMode_FrameUpdate_bss_806D13B8) steer = 1.0f;
             } else {
-                lbl_806D13C4 = (unsigned int)now;
-                lbl_806D13B8 = 0;
-                lbl_806D13C0 = (unsigned int)(now >> 32);
+                TaMode_FrameUpdate_bss_806D13C4 = (unsigned int)now;
+                TaMode_FrameUpdate_bss_806D13B8 = 0;
+                TaMode_FrameUpdate_bss_806D13C0 = (unsigned int)(now >> 32);
             }
         }
         accel = QuantizeInput(pad->Accel());
         started = IsRaceStarted();
-        if (IsRaceStarted() == 1 && lbl_806D13AC > 0) {
+        if (IsRaceStarted() == 1 && TaMode_FrameUpdate_bss_806D13AC > 0) {
             TaRender *render = CarObject_GetRenderObj(g_carObjects[0]);
             if (KartMovement_GetCurrentItemId(render) != -1) {
                 if (!KartItem_GetByte_f4(g_carObjects[0])) {
@@ -199,19 +199,19 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
                         void *stats = TitleStats();
                         if (stats) RankLog_OnPlayerVictory(stats, GetDisplayBufferIndex(), 0);
                         CarObject_ApplyDriftBoost(g_carObjects[0], 5, 3.0f);
-                        --lbl_806D13AC;
+                        --TaMode_FrameUpdate_bss_806D13AC;
                         if (lbl_806D13B4) {
-                            if (lbl_806D13AC == 2) fn_8023E1E4(lbl_806D13B4, 0x116, 0);
-                            if (lbl_806D13AC == 1) fn_8023E1E4(lbl_806D13B4, 0x17, 0);
-                            if (lbl_806D13AC == 0) fn_8023E1E4(lbl_806D13B4, -1, 0);
+                            if (TaMode_FrameUpdate_bss_806D13AC == 2) fn_8023E1E4(lbl_806D13B4, 0x116, 0);
+                            if (TaMode_FrameUpdate_bss_806D13AC == 1) fn_8023E1E4(lbl_806D13B4, 0x17, 0);
+                            if (TaMode_FrameUpdate_bss_806D13AC == 0) fn_8023E1E4(lbl_806D13B4, -1, 0);
                         }
-                        lbl_806D13B0 = 30;
+                        TaMode_FrameUpdate_bss_806D13B0 = 30;
                     }
                 }
             } else KartMovement_EquipItem(render, 0x17);
         }
     } else {
-        accel = CalcSoundDirection(CarObject_GetRenderObj(g_carObjects[0]), lbl_806D13A4, &steer, 0);
+        accel = CalcSoundDirection(CarObject_GetRenderObj(g_carObjects[0]), TaMode_FrameUpdate_bss_806D13A4, &steer, 0);
         brake = 0.0f;
         started = 1;
     }
@@ -220,29 +220,29 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
     if (!g_raceEnded && pad->Held(0x400) && GetCoinMilage(g_playerData) >= 4000)
         CoinJumpFlasher_Toggle(g_carObjects[0]);
     fn_8013A534();
-    if (lbl_806D13A0) {
+    if (TaMode_FrameUpdate_bss_806D13A0) {
         coins = 0;
-        if (lbl_806D1394 < lbl_806D138C) {
-            accel = ((float *)lbl_806D1388)[lbl_806D1394 * 4];
-            TaGhostFrame *frame = &lbl_806D1388[lbl_806D1394];
+        if (TaMode_FrameUpdate_bss_806D1394 < TaMode_FrameUpdate_bss_806D138C) {
+            accel = ((float *)TaMode_FrameUpdate_bss_806D1388)[TaMode_FrameUpdate_bss_806D1394 * 4];
+            TaGhostFrame *frame = &TaMode_FrameUpdate_bss_806D1388[TaMode_FrameUpdate_bss_806D1394];
             steer = frame->steer;
             brake = frame->brake;
             started = frame->started;
             signed char item = frame->item;
             coins = frame->coins;
-            ++lbl_806D1394;
-            if (lbl_806D1398 && lbl_806CF198 > 0) {
+            ++TaMode_FrameUpdate_bss_806D1394;
+            if (lbl_806D1398 && TaMode_FrameUpdate_data_806CF198 > 0) {
                 TaRender *render = CarObject_GetRenderObj(lbl_806D1398);
                 if (KartMovement_GetCurrentItemId(render) != -1) {
                     if (item == 1) {
                         RenderObj_UseItem(render, 0, 0);
                         CarObject_ApplyDriftBoost(lbl_806D1398, 5, 3.0f);
-                        --lbl_806CF198;
+                        --TaMode_FrameUpdate_data_806CF198;
                     }
                 } else KartMovement_EquipItem(render, 0x17);
             }
         } else if (lbl_806D1398) {
-            accel = CalcSoundDirection(CarObject_GetRenderObj(lbl_806D1398), lbl_806D13A4, &steer, lbl_806D139C);
+            accel = CalcSoundDirection(CarObject_GetRenderObj(lbl_806D1398), TaMode_FrameUpdate_bss_806D13A4, &steer, TaMode_FrameUpdate_bss_806D139C);
             brake = 0.0f;
             started = IsRaceStarted();
         }
@@ -259,16 +259,16 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
             render->coins += coins;
         }
     }
-    if (lbl_806D13B0 != 0) {
-        if (--lbl_806D13B0 == 0) {
-            if (lbl_806D13AC != 0) {
+    if (TaMode_FrameUpdate_bss_806D13B0 != 0) {
+        if (--TaMode_FrameUpdate_bss_806D13B0 == 0) {
+            if (TaMode_FrameUpdate_bss_806D13AC != 0) {
                 StrPcb_SetStatusBits(StrPcb_GetInstance(), 4, 0);
                 StrPcb_SetStatusBits(StrPcb_GetInstance(), 8, 0);
             } else {
                 StrPcb_ClearStatusBits(StrPcb_GetInstance(), 4);
                 StrPcb_ClearStatusBits(StrPcb_GetInstance(), 8);
             }
-        } else if (!(lbl_806D13B0 & 1)) {
+        } else if (!(TaMode_FrameUpdate_bss_806D13B0 & 1)) {
             StrPcb_SetStatusBits(StrPcb_GetInstance(), 4, 0);
             StrPcb_SetStatusBits(StrPcb_GetInstance(), 8, 0);
         } else {
@@ -300,16 +300,16 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
             CarObject_GetTransformMatrix(g_carObjects[0])[10]);
     } else KartItem_UpdateShadowBillboardAndViewport(g_carObjects[0], self->scene, 0);
     Fog_UpdateFromCourseScene3D();
-    PathManager_UpdateAll(lbl_806D13A4);
+    PathManager_UpdateAll(TaMode_FrameUpdate_bss_806D13A4);
     LakituStart_UpdateCountdown(self->lakitu);
     Jyugemu_Flag_Tick(self->jyugemuFlag);
     Jyugemu_ReverseFlag_Tick(self->jyugemuReverse);
     LapBannerScene_UpdateAndDriveAnim(self->lapBanner);
     CourseEnvironment_UpdateAndCullZones_Timed(self->environment);
-    CObj_LoadProjMatrix(self->scene, &lbl_805D2B28);
-    CObj_ApplyScissor(self->scene, &lbl_805D2B34);
+    CObj_LoadProjMatrix(self->scene, &TaMode_FrameUpdate_bss_805D2B28);
+    CObj_ApplyScissor(self->scene, &TaMode_FrameUpdate_bss_805D2B34);
     ItemObjectManager_Update();
-    VfxSlotMgr_Update(lbl_805D2B28, lbl_805D2B34);
+    VfxSlotMgr_Update(TaMode_FrameUpdate_bss_805D2B28, TaMode_FrameUpdate_bss_805D2B34);
     if (g_rendererGateFlag == 1 && IsRaceStarted() == 1 && !g_raceEnded && g_raceTimeRemaining > 0.0f) {
         g_raceTimeRemaining -= 0.016666668f;
         if (g_raceTimeRemaining <= 0.0f) {
@@ -340,10 +340,10 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
             CoinJumpFlasher_SetArmed(g_carObjects[0], 0);
             g_finalRacePosition = ((TaRender *)g_playerRenderObj)->position;
             g_raceResultCode = -1;
-            int rank = TaRecord_InsertResult(g_playerData, g_playerData[0x19b], g_playerData[0x19c], g_playerData[0x1b1], GetKartSlotCharId(lbl_806D13A8), g_totalRaceTime);
+            int rank = TaRecord_InsertResult(g_playerData, g_playerData[0x19b], g_playerData[0x19c], g_playerData[0x1b1], GetKartSlotCharId(TaMode_FrameUpdate_bss_806D13A8), g_totalRaceTime);
             Jyugemu_Flag_SetKartDriver(self->jyugemuFlag, CarObject_GetRenderObj(g_carObjects[0]));
             if (g_ccClass == 2) {
-                if (lbl_806D13A0) {
+                if (TaMode_FrameUpdate_bss_806D13A0) {
                     if (g_finalRacePosition == 0) fn_801D670C(g_playerData);
                 } else {
                     float time = g_totalRaceTime;
@@ -366,7 +366,7 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
             g_raceEnded = 1;
             g_lakituStartAnimDone = 0;
             ++self->finishFrames;
-            lbl_806CF19C = g_totalRaceTime;
+            TaMode_FrameUpdate_data_806CF19C = g_totalRaceTime;
         } else if (g_lapChangePending) {
             if (g_finalLapBannerShown) {
                 fn_8016C598();
@@ -391,7 +391,7 @@ extern "C" int TaMode_FrameUpdate(RaceScene *self)
 }
 
 /* ==== .rodata 0x80321980..0x80322120 ==== */
-extern "C" const unsigned int lbl_80321980[255] = {
+extern "C" const unsigned int TaMode_FrameUpdate_rodata_80321980[255] = {
     0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000,
     0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
     0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
@@ -493,21 +493,21 @@ extern "C" const unsigned int lbl_80321FB0[92] = {
 /* RTTI base record and the TaMode vtable (0x8040F0A4..0x8040F0C4). */
 struct TaDtorScene;
 extern "C" {
-extern char lbl_806CF1A0[];
-extern char lbl_806CF1A8[];
-extern void *lbl_806D13C8;
+extern char GameModeBase_RTTI_806CF1A0[];
+extern char TaMode_RTTI_806CF1A8[];
+extern void *TaMode_FrameUpdate_bss_806D13C8;
 void BtMode_RenderFrame(void);
 TaDtorScene *TaMode_Dtor(TaDtorScene *self, short flag);
 }
-extern "C" void *lbl_8040F0A4[3] = {lbl_806CF1A0, 0, 0};
-extern "C" void *lbl_8040F0B0[5] = {lbl_806CF1A8, 0, (void *)TaMode_Dtor, (void *)TaMode_FrameUpdate, (void *)BtMode_RenderFrame};
+extern "C" void *sdata_806CEFE0_data_8040F0A4[3] = {GameModeBase_RTTI_806CF1A0, 0, 0};
+extern "C" void *TaMode_vtable_8040F0B0[5] = {TaMode_RTTI_806CF1A8, 0, (void *)TaMode_Dtor, (void *)TaMode_FrameUpdate, (void *)BtMode_RenderFrame};
 
 /* ==== TaMode_Dtor (0x800A38F8) ==== */
 #define g_carObjects (*(TaDtorCar *(*)[4])&g_carObjects)
 #define lbl_806D1398 (*(TaDtorCar **)&lbl_806D1398)
 #define lbl_806D10D0 (*(Deletable **)&lbl_806D10D0)
 #define lbl_806D109C (*(Deletable **)&lbl_806D109C)
-#define lbl_806D13C8 (*(HsdRefObj **)&lbl_806D13C8)
+#define TaMode_FrameUpdate_bss_806D13C8 (*(HsdRefObj **)&TaMode_FrameUpdate_bss_806D13C8)
 /* TaMode_Dtor (0x800A38F8): deleting destructor of the time-attack mode
  * scene; the time-attack counterpart of RaceScene_Dtor (ghost kart, ghost
  * buffer and TA HUD instead of the AI and item HUD). */
@@ -556,11 +556,11 @@ struct TaDtorScene {
 };
 
 extern "C" {
-extern char lbl_8040E76C[];
+extern char GameModeBase_vtable_8040E76C[];
 extern void *g_weatherSystem;
 extern void *g_itemSelects[];
-extern void *lbl_806D13A4;
-extern void *lbl_806D1390;
+extern void *TaMode_FrameUpdate_bss_806D13A4;
+extern void *TaMode_FrameUpdate_bss_806D1390;
 extern void *lbl_806D13B4;
 extern Deletable *g_courseData;
 extern void *g_raceCamera;
@@ -625,10 +625,10 @@ static inline void HsdRef_Unref(HsdRefObj *o)
 #pragma use_lmw_stmw off
 extern "C" TaDtorScene *TaMode_Dtor(TaDtorScene *self, short flag)
 {
-    const char *log = (const char *)lbl_80321980;
+    const char *log = (const char *)TaMode_FrameUpdate_rodata_80321980;
 
     if (self != 0) {
-        self->vtable = lbl_8040F0B0;
+        self->vtable = TaMode_vtable_8040F0B0;
         if (g_weatherSystem != 0) {
             fn_8016C634(g_weatherSystem, 1);
             g_weatherSystem = 0;
@@ -637,9 +637,9 @@ extern "C" TaDtorScene *TaMode_Dtor(TaDtorScene *self, short flag)
         if (lbl_806D1398 != 0) {
             lbl_806D1398->Destroy(1);
         }
-        MemoryManager_Free(lbl_806D1390);
+        MemoryManager_Free(TaMode_FrameUpdate_bss_806D1390);
         lbl_806D1398 = 0;
-        lbl_806D1390 = 0;
+        TaMode_FrameUpdate_bss_806D1390 = 0;
         ProcessSystemTick(log + 0x63C);
         Tachometer_Destroy();
         fn_80254134(self->hud, 1);
@@ -648,7 +648,7 @@ extern "C" TaDtorScene *TaMode_Dtor(TaDtorScene *self, short flag)
         Jyugemu_Flag_Dtor(self->jyugemuFlag, 1);
         Jyugemu_ReverseFlag_Dtor(self->jyugemuReverse, 1);
         LapBannerScene_Dtor(self->lapBanner, 1);
-        PathParticipantArray_Dtor(lbl_806D13A4, 1);
+        PathParticipantArray_Dtor(TaMode_FrameUpdate_bss_806D13A4, 1);
         if (g_carObjects[0] != 0) {
             g_carObjects[0]->Destroy(1);
         }
@@ -659,9 +659,9 @@ extern "C" TaDtorScene *TaMode_Dtor(TaDtorScene *self, short flag)
         CourseEnvironment_Dtor(self->environment, 1);
         fn_8023E808(lbl_806D13B4, 1);
         ProcessSystemTick(log + 0x664);
-        if (lbl_806D13C8 != 0) {
-            HsdRef_Unref(lbl_806D13C8);
-            lbl_806D13C8 = 0;
+        if (TaMode_FrameUpdate_bss_806D13C8 != 0) {
+            HsdRef_Unref(TaMode_FrameUpdate_bss_806D13C8);
+            TaMode_FrameUpdate_bss_806D13C8 = 0;
         }
         ItemObjectManager_Reset();
         VfxSlotMgr_Shutdown();
@@ -672,7 +672,7 @@ extern "C" TaDtorScene *TaMode_Dtor(TaDtorScene *self, short flag)
         self->jyugemuReverse = 0;
         self->lapBanner = 0;
         g_carObjects[0] = 0;
-        lbl_806D13A4 = 0;
+        TaMode_FrameUpdate_bss_806D13A4 = 0;
         self->camera = 0;
         self->environment = 0;
         lbl_806D13B4 = 0;
@@ -692,7 +692,7 @@ extern "C" TaDtorScene *TaMode_Dtor(TaDtorScene *self, short flag)
         clRom_PurgeAll();
         SetCourseScene3D(0);
         if (self != 0) {
-            self->vtable = lbl_8040E76C;
+            self->vtable = GameModeBase_vtable_8040E76C;
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);
@@ -705,7 +705,7 @@ extern "C" TaDtorScene *TaMode_Dtor(TaDtorScene *self, short flag)
 #undef lbl_806D1398
 #undef lbl_806D10D0
 #undef lbl_806D109C
-#undef lbl_806D13C8
+#undef TaMode_FrameUpdate_bss_806D13C8
 
 /* ==== TaMode_Init (0x800A3C38) ==== */
 #include "game/TaModeInitPrivate.h"
@@ -716,14 +716,14 @@ static inline int KartVariant_Get() { return g_kartVariant; }
 static inline void Render_SetReady(void *p) { *(int *)((char *)p + 0x238) = 1; }
 
 static inline int RegisterGhost(float *matrix, void *render) {
-    return PathManager_RegisterCarObject(lbl_806D13A4, matrix + 12, matrix + 13, matrix + 14, lbl_806D1398, render, 1);
+    return PathManager_RegisterCarObject(TaMode_FrameUpdate_bss_806D13A4, matrix + 12, matrix + 13, matrix + 14, lbl_806D1398, render, 1);
 }
 
 TaMode::TaMode() {
-    const char *log = (const char *)lbl_80321980;
+    const char *log = (const char *)TaMode_FrameUpdate_rodata_80321980;
     const char *data = (const char *)&BATTLE;
     float startX, startY;
-    HSD_RandSeedPtr = &lbl_806D13CC;
+    HSD_RandSeedPtr = &TaMode_Init_bss_806D13CC;
     *HSD_RandSeedPtr = lbl_806D1110;
     g_gameMode = 1;
     SetSyncTarget(0x2a);
@@ -746,18 +746,18 @@ TaMode::TaMode() {
     ProcessSystemTick(log + 0x6a4);
     environment = new EnvironmentMgr;
     CourseData_GetOrCreate(g_cupId, g_longRoundFlag, g_reverseRoundFlag);
-    lbl_806D13C8 = HSD_LObjLoadDesc(GetCourseDataPtr());
-    camera = new RaceCamera(lbl_806D483C, 0x200, lbl_806D4838, 0x200, lbl_806D13C8);
+    TaMode_FrameUpdate_bss_806D13C8 = HSD_LObjLoadDesc(GetCourseDataPtr());
+    camera = new RaceCamera(lbl_806D483C, 0x200, lbl_806D4838, 0x200, TaMode_FrameUpdate_bss_806D13C8);
     SetActiveCamera(0, camera);
     g_raceCamera = camera;
     ProcessSystemTick(log + 0x6c8);
     RankingTable_Init(GetRaceContextPtr());
     SoundDriver_GetOrCreate(0);
     CoinSystem_Init(0, 2);
-    lbl_806D13A8 = GetKartStartSlot(GetDisplayBufferIndex());
-    g_kartStartSlot = lbl_806D13A8;
-    GetStartPosition(lbl_806D13A8, &startX, 0, &startY);
-    g_carObjects[0] = new CarObject(GetDisplayBufferIndex(), GetKartSlotCharId(lbl_806D13A8), startX, startY, GetCourseStartYaw(), CcClass_Get(), KartVariant_Get(), 1, -1, 0, 0);
+    TaMode_FrameUpdate_bss_806D13A8 = GetKartStartSlot(GetDisplayBufferIndex());
+    g_kartStartSlot = TaMode_FrameUpdate_bss_806D13A8;
+    GetStartPosition(TaMode_FrameUpdate_bss_806D13A8, &startX, 0, &startY);
+    g_carObjects[0] = new CarObject(GetDisplayBufferIndex(), GetKartSlotCharId(TaMode_FrameUpdate_bss_806D13A8), startX, startY, GetCourseStartYaw(), CcClass_Get(), KartVariant_Get(), 1, -1, 0, 0);
     Render_SetReady(CarObject_GetRenderObj(g_carObjects[0]));
     KartItem_SetShortArray34a(CarObject_GetRenderObj(g_carObjects[0]), g_playerData);
     if (GetVBlankFlag() && !g_playerData[0x19d]) KartItem_SetField358(CarObject_GetRenderObj(g_carObjects[0]), 0);
@@ -766,7 +766,7 @@ TaMode::TaMode() {
     SetPlayerCarObject(g_carObjects[0]);
     {
     float *matrix = CarObject_GetTransformMatrix(g_carObjects[0]);
-    lbl_806D13A4 = new PathManager(CourseData_GetDefaultPathKey_Safe(), g_carObjects[0], CarObject_GetRenderObj(g_carObjects[0]), matrix + 12, matrix + 13, matrix + 14);
+    TaMode_FrameUpdate_bss_806D13A4 = new PathManager(CourseData_GetDefaultPathKey_Safe(), g_carObjects[0], CarObject_GetRenderObj(g_carObjects[0]), matrix + 12, matrix + 13, matrix + 14);
     }
     int cup = g_cupId - 1;
     int reverse = g_reverseRoundFlag;
@@ -774,28 +774,28 @@ TaMode::TaMode() {
     int round = g_longRoundFlag;
     int index = round + (cup * 4 + reverse * 2);
     if (cc == 2) {
-        if (g_playerData[0x48 + index] == 1) lbl_806D13A0 = 1;
-        else lbl_806D13A0 = 0;
+        if (g_playerData[0x48 + index] == 1) TaMode_FrameUpdate_bss_806D13A0 = 1;
+        else TaMode_FrameUpdate_bss_806D13A0 = 0;
     }
-    lbl_806D1394 = 0;
-    if (cc == 2 && lbl_806D13A0) {
+    TaMode_FrameUpdate_bss_806D1394 = 0;
+    if (cc == 2 && TaMode_FrameUpdate_bss_806D13A0) {
         const TaGhostSource *ghost = (const TaGhostSource *)(data + 0x540 + cup * 32 + round * 16);
         if (!reverse) ghost = (const TaGhostSource *)(data + 0x340 + cup * 32 + round * 16);
         lbl_806D1398 = new CarObject(4, ghost->character, startX, startY, GetCourseStartYaw(), 2, 3, 0, -1, 0, 0);
         float *matrix = CarObject_GetTransformMatrix(lbl_806D1398);
-        lbl_806D139C = RegisterGhost(matrix, CarObject_GetRenderObj(lbl_806D1398));
-        lbl_806CF198 = 3;
-        lbl_806D1390 = DVDFile_LoadSync(ghost->file);
-        lbl_806D1388 = lbl_806D1390;
-        lbl_806D138C = ghost->size;
+        TaMode_FrameUpdate_bss_806D139C = RegisterGhost(matrix, CarObject_GetRenderObj(lbl_806D1398));
+        TaMode_FrameUpdate_data_806CF198 = 3;
+        TaMode_FrameUpdate_bss_806D1390 = DVDFile_LoadSync(ghost->file);
+        TaMode_FrameUpdate_bss_806D1388 = TaMode_FrameUpdate_bss_806D1390;
+        TaMode_FrameUpdate_bss_806D138C = ghost->size;
         if (lbl_806D1398) {
             KartMovement_EquipItem(CarObject_GetRenderObj(lbl_806D1398), 0x17);
             ItemEffectBus_OrMask(*(void **)((char *)CarObject_GetRenderObj(lbl_806D1398) + 0x304), 0x8000000000ULL);
         }
-    } else { lbl_806D1398 = 0; lbl_806D1390 = 0; }
+    } else { lbl_806D1398 = 0; TaMode_FrameUpdate_bss_806D1390 = 0; }
     ProcessSystemTick(log + 0x6e4);
-    lakitu = new LakituStart(log + 0x6f0, lbl_806D13A8, lbl_806D4830, lbl_806D4830, lbl_806D4830);
-    scene = new Scene3D(*GetKartModelNameEntry(GetKartSlotCharId(lbl_806D13A8), -1));
+    lakitu = new LakituStart(log + 0x6f0, TaMode_FrameUpdate_bss_806D13A8, lbl_806D4830, lbl_806D4830, lbl_806D4830);
+    scene = new Scene3D(*GetKartModelNameEntry(GetKartSlotCharId(TaMode_FrameUpdate_bss_806D13A8), -1));
     jyugemuFlag = new JyugemuFlag(scene);
     jyugemuReverse = new JyugemuReverseFlag(CarObject_GetRenderObj(g_carObjects[0]));
     lapBanner = new FinalLapBanner(CarObject_GetRenderObj(g_carObjects[0]));
@@ -805,7 +805,7 @@ TaMode::TaMode() {
     cameraX += lbl_806D4860;
     Scene3D_SetupProjection(scene, cameraX, cameraY);
     Tachometer_Init();
-    hud = new RaceHud(lbl_806D13A4);
+    hud = new RaceHud(TaMode_FrameUpdate_bss_806D13A4);
     g_raceHud = hud;
     HUD_RegisterOverlay(hud, 6, 0);
     HUD_RegisterOverlay(hud, 3, 0);
@@ -849,13 +849,13 @@ TaMode::TaMode() {
     g_totalLaps = laps;
     g_raceTimeRemaining = time;
     g_lapBonusTimeDelta = bonus;
-    lbl_806CF19C = lbl_806D4834;
+    TaMode_FrameUpdate_data_806CF19C = lbl_806D4834;
     HUD_SetTotalLaps(hud, g_totalLaps);
     ProcessSystemTick(log + 0x72c);
     CourseBgm_Load();
     if (!g_weatherSystem) g_weatherSystem = new WeatherSystem(1);
-    lbl_806D13B0 = 0;
-    lbl_806D13AC = 3;
+    TaMode_FrameUpdate_bss_806D13B0 = 0;
+    TaMode_FrameUpdate_bss_806D13AC = 3;
     PreloadItemResources(0x17);
     KartMovement_EquipItem(CarObject_GetRenderObj(g_carObjects[0]), 0x17);
     lbl_806D13B4 = new TaSound(0);
@@ -878,10 +878,10 @@ TaMode::TaMode() {
     PreloadEffectResources(9);
     PreloadEffectResources(10);
     ProcessSystemTick(log + 0x75c);
-    lbl_806D13B8 = 0;
+    TaMode_FrameUpdate_bss_806D13B8 = 0;
     long long timestamp = OSGetTime();
-    lbl_806D13C0 = (unsigned long)(timestamp >> 32);
-    lbl_806D13C4 = (unsigned long)timestamp;
+    TaMode_FrameUpdate_bss_806D13C0 = (unsigned long)(timestamp >> 32);
+    TaMode_FrameUpdate_bss_806D13C4 = (unsigned long)timestamp;
     SetSyncTarget(0x2c);
     PlayStats_IncTaPlay();
     DebugPrintf(log + 0x76c);

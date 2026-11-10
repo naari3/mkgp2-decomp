@@ -626,3 +626,9 @@ status: note
 
 Every game function that is still inline asm now has a behaviourally equivalent C side under NON_MATCHING (33 functions in 21 units, last one CGameCoin_Update). The default build is unchanged (main.dol OK, 7513/7612). What is left asm-only is real SDK/runtime asm. Status, percentages and how each was checked: docs/nonmatching_c.md; rule: matching_rules.md section 0. If you match one of these for real, delete the guard and the asm together. No open claims from this thread.
 
+## n3-20261110-1011 | 2026-11-10 10:11Z | from: n3 | provisional data symbol names (lbl_ -> Foo_data_ADDR)
+re: -
+status: note
+
+n3 lands provisional data names now: about 6,200 `lbl_XXXXXXXX` data objects in symbols.txt are renamed from their users (`<Function|Class|Unit|Object>_<data|bss|rodata>_<ADDR>`, vtables `<Class>_vtable_<ADDR>`), with every source, inline asm, extab_user_renames.json and doc reference renamed too. main.dol OK, report unchanged. If your work in flight still uses an old `lbl_` name, after rebasing run `python3 tools/data_names.py fixup` (rewrites old names in files that differ from origin/main and untracked files; map: tools/data_names_map.tsv). Strings, .sdata2 literals and compiler literal pools keep `lbl_`. Notes: docs/notes/data_names.md.
+

@@ -2,7 +2,7 @@
  * The two switches preserve the original inline visibility at each cut. */
 /*
  * 0x8021F088..0x80224ECC: csSceneCoinMilage.cpp, clCSSceneCoinMilage
- * (vtable lbl_804EDE44, base clSceneInterface lbl_803FE0C8).
+ * (vtable clCSSceneCoinMilage_vtable_804EDE44, base clSceneInterface lbl_803FE0C8).
  *
  * After a race the scene rains coins, adds up the coins earned this game
  * into the coin mileage, then walks through every item the new mileage
@@ -182,7 +182,7 @@ extern int g_cupId;
 extern int g_characterId;
 extern char g_playerData[];
 extern void *lbl_806D1A60;
-extern const float lbl_803C6A18[3];
+extern const float CoinResultScene_Init_rodata_803C6A18[3];
 extern const float lbl_803C6A24[];
 extern const Int5 lbl_803C6B70;
 extern const char lbl_803C6B84[0x40];
@@ -192,7 +192,7 @@ extern const char lbl_803C6C2C[];
 extern const char lbl_803C6C58[];
 extern const char lbl_803C6C70[];
 extern const char lbl_803C6CBC[];
-extern const char lbl_803C6CD0[];
+extern const char CoinResultScene_Init_rodata_803C6CD0[];
 extern const float lbl_806DB190;
 extern const float lbl_806DB194;
 extern const float lbl_806DB198;

@@ -1,5 +1,5 @@
 /*
- * 0x80218F40..0x80219FF4: course minimap HUD (vtable lbl_804EDC2C, base
+ * 0x80218F40..0x80219FF4: course minimap HUD (vtable MinimapHud_vtable_804EDC2C, base
  * lbl_804EDB28 shared with the start countdown in anon_8021550C.cpp).
  *
  * sprites[0] is the course map, [1] the blinking own-kart ring, [2] the

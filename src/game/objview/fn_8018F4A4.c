@@ -34,7 +34,7 @@ typedef struct Obj8018F4A4 {
     Node *list;
 } Obj8018F4A4;
 
-extern char lbl_80495EDC[];
+extern char MorphView_vtable_80495EDC[];
 extern char lbl_80490FE0[];
 extern char lbl_803784E4[];
 extern void fn_801831F8(void *h, int id, void *buf, int x);
@@ -82,7 +82,7 @@ Obj8018F4A4 *fn_8018F4A4(Obj8018F4A4 *p, short flag) {
     Node *n;
     Node *cur;
     if (p != 0) {
-        p->vt = lbl_80495EDC;
+        p->vt = MorphView_vtable_80495EDC;
         n = p->list;
         while (n != 0) {
             cur = n;

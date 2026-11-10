@@ -12,22 +12,22 @@ extern char lbl_80312FAC[];
 extern char lbl_80312FC8[];
 extern char lbl_803208B4[];
 extern char lbl_80320D8C[];
-extern char lbl_80320D9C[];
+extern char sdata_806CEFE0_rodata_80320D9C[];
 extern char lbl_803211C0[];
 extern char lbl_803211CC[];
 extern char lbl_803215EC[];
-extern char lbl_803215FC[];
+extern char sdata_806CEFE0_rodata_803215FC[];
 extern char lbl_80321F9C[];
 extern char lbl_80321FB0[];
-extern char lbl_803FE808[];
-extern char lbl_803FE834[];
-extern char lbl_803FE860[];
-extern char lbl_803FE88C[];
-extern char lbl_8040E4C4[];
-extern char lbl_8040E728[];
-extern char lbl_8040E7B0[];
-extern char lbl_8040EA10[];
-extern char lbl_8040F0A4[];
+extern char sdata_806CEFE0_data_803FE808[];
+extern char sdata_806CEFE0_data_803FE834[];
+extern char sdata_806CEFE0_data_803FE860[];
+extern char sdata_806CEFE0_data_803FE88C[];
+extern char sdata_806CEFE0_data_8040E4C4[];
+extern char sdata_806CEFE0_data_8040E728[];
+extern char sdata_806CEFE0_data_8040E7B0[];
+extern char sdata_806CEFE0_data_8040EA10[];
+extern char sdata_806CEFE0_data_8040F0A4[];
 extern char lbl_806D3584[];
 extern char lbl_806D358C[];
 extern char lbl_806D46BC[];
@@ -40,21 +40,21 @@ extern char lbl_806D4748[];
 const char *lbl_806CEFE0[2] = {
     (const char *)&lbl_80312F44, 0
 };
-void *lbl_806CEFE8[2] = {
+void *data_803FE480_data_806CEFE8[2] = {
     (void *)&lbl_80312F28,
-    (void *)&lbl_803FE808
+    (void *)&sdata_806CEFE0_data_803FE808
 };
-void *lbl_806CEFF0[2] = {
+void *data_803FE480_data_806CEFF0[2] = {
     (void *)&lbl_80312F6C,
-    (void *)&lbl_803FE834
+    (void *)&sdata_806CEFE0_data_803FE834
 };
-void *lbl_806CEFF8[2] = {
+void *data_803FE480_data_806CEFF8[2] = {
     (void *)&lbl_80312FAC,
-    (void *)&lbl_803FE860
+    (void *)&sdata_806CEFE0_data_803FE860
 };
-void *lbl_806CF000[2] = {
+void *data_803FE480_data_806CF000[2] = {
     (void *)&lbl_80312FC8,
-    (void *)&lbl_803FE88C
+    (void *)&sdata_806CEFE0_data_803FE88C
 };
 unsigned char lbl_806CF008 = 0x1;
 int lbl_806CF00C = -1;
@@ -68,22 +68,22 @@ float lbl_806CF01C = 2.0f;
 float lbl_806CF020 = 0.1f;
 float lbl_806CF024 = 0.1f;
 float lbl_806CF028 = 4e+01f;
-float lbl_806CF02C = 2.0f;
-float lbl_806CF030 = 0.1f;
-float lbl_806CF034 = 0.1f;
-float lbl_806CF038 = 5e+01f;
-float lbl_806CF03C = 2.0f;
-float lbl_806CF040 = 0.1f;
-float lbl_806CF044 = 0.1f;
-float lbl_806CF048 = 5e+01f;
+float KartReaction_Side_data_806CF02C = 2.0f;
+float KartReaction_Side_data_806CF030 = 0.1f;
+float KartReaction_Side_data_806CF034 = 0.1f;
+float KartReaction_Side_data_806CF038 = 5e+01f;
+float KartReaction_Front_data_806CF03C = 2.0f;
+float KartReaction_Front_data_806CF040 = 0.1f;
+float KartReaction_Front_data_806CF044 = 0.1f;
+float KartReaction_Front_data_806CF048 = 5e+01f;
 float lbl_806CF04C = 1.0f;
 float lbl_806CF050 = 0.2f;
 float lbl_806CF054 = 0.2f;
 float lbl_806CF058 = 26.0f;
-float lbl_806CF05C = 1.0f;
-float lbl_806CF060 = 0.3f;
-float lbl_806CF064 = 0.3f;
-float lbl_806CF068 = 24.0f;
+float KartMovement_Reset_data_806CF05C = 1.0f;
+float KartMovement_Reset_data_806CF060 = 0.3f;
+float KartMovement_Reset_data_806CF064 = 0.3f;
+float KartMovement_Reset_data_806CF068 = 24.0f;
 float lbl_806CF06C = 1.0f;
 float lbl_806CF070 = 0.2f;
 float lbl_806CF074 = 0.2f;
@@ -96,18 +96,18 @@ float lbl_806CF08C = 1.0f;
 float lbl_806CF090 = 0.1f;
 float lbl_806CF094 = 0.1f;
 float lbl_806CF098 = 25.0f;
-float lbl_806CF09C = 1.0f;
-float lbl_806CF0A0 = 0.1f;
-float lbl_806CF0A4 = 0.1f;
-float lbl_806CF0A8 = 75.0f;
-float lbl_806CF0AC = 1.0f;
-float lbl_806CF0B0 = 0.3f;
-float lbl_806CF0B4 = 0.3f;
-float lbl_806CF0B8 = 1e+02f;
-float lbl_806CF0BC = 1.0f;
-float lbl_806CF0C0 = 0.3f;
-float lbl_806CF0C4 = 0.3f;
-float lbl_806CF0C8[2] = {
+float RenderObj_UseItem_data_806CF09C = 1.0f;
+float RenderObj_UseItem_data_806CF0A0 = 0.1f;
+float RenderObj_UseItem_data_806CF0A4 = 0.1f;
+float RenderObj_UseItem_data_806CF0A8 = 75.0f;
+float RenderObj_UseItem_data_806CF0AC = 1.0f;
+float RenderObj_UseItem_data_806CF0B0 = 0.3f;
+float RenderObj_UseItem_data_806CF0B4 = 0.3f;
+float RenderObj_UseItem_data_806CF0B8 = 1e+02f;
+float RenderObj_UseItem_data_806CF0BC = 1.0f;
+float RenderObj_UseItem_data_806CF0C0 = 0.3f;
+float RenderObj_UseItem_data_806CF0C4 = 0.3f;
+float RenderObj_UseItem_data_806CF0C8[2] = {
     5e+01f, 0.0f
 };
 /* decl: int / unsigned int */
@@ -123,21 +123,21 @@ int lbl_806CF0E4 = 2;
 /* decl: int / unsigned int */
 int lbl_806CF0E8 = 3;
 int lbl_806CF0EC = 3;
-char *lbl_806CF0F0[2] = {
+char *Sci2Card_BuildRetryReceiptLine_data_806CF0F0[2] = {
     (char *)&lbl_806D3584,
     (char *)&lbl_806D358C
 };
-unk32 lbl_806CF0F8[2] = {
+unk32 card_eject_state_machine_data_806CF0F8[2] = {
     0x00000005, 0x00000000
 };
-void *lbl_806CF100[2] = {
+void *DebugOverlay_GetLongRoundLabel_data_806CF100[2] = {
     (void *)&lbl_806D46BC,
     (void *)&lbl_806D46C4
 };
 /* decl: int / unsigned int */
 int g_cupId = 1;
 /* decl: int / unsigned int */
-int lbl_806CF10C = -1;
+int SetCourseParams_data_806CF10C = -1;
 /* decl: int / unsigned int */
 int lbl_806CF110 = 1;
 /* decl: int / unsigned int */
@@ -158,60 +158,60 @@ int lbl_806CF12C = -1;
 const char *lbl_806CF130[2] = {
     (const char *)&lbl_803208B4, 0
 };
-void *lbl_806CF138[2] = {
+void *data_8040E450_data_806CF138[2] = {
     (void *)&lbl_806D4748,
-    (void *)&lbl_8040E4C4
+    (void *)&sdata_806CEFE0_data_8040E4C4
 };
 /* decl: int / unsigned int */
 int lbl_806CF140 = -1;
-int lbl_806CF144 = -1;
+int VSMode_Init_data_806CF144 = -1;
 /* decl: unsigned char / unsigned int */
-unk8 lbl_806CF148[1] = {
+unk8 VSMode_FrameUpdate_data_806CF148[1] = {
     0x01
 };
-int lbl_806CF14C = -1;
+int BtMode_Init_data_806CF14C = -1;
 /* decl: char */
-void *lbl_806CF150[2] = {
-    (void *)&lbl_80320D9C,
+void *VSMode_FrameUpdate_data_806CF150[2] = {
+    (void *)&sdata_806CEFE0_rodata_80320D9C,
     0
 };
 /* decl: char */
-void *lbl_806CF158[2] = {
+void *VSMode_FrameUpdate_data_806CF158[2] = {
     (void *)&lbl_80320D8C,
-    (void *)&lbl_8040E728
+    (void *)&sdata_806CEFE0_data_8040E728
 };
 unsigned char g_randSeedDebugEnable[8] = {
     0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 };
-float lbl_806CF168 = 16.0f;
+float data_8040E780_data_806CF168 = 16.0f;
 /* decl: int / unsigned int */
 int g_raceResultCode = -2;
 /* decl: int / unsigned int */
 int g_sceneTransitionTimer = -1;
-const char *lbl_806CF174[2] = {
+const char *data_8040E780_data_806CF174[2] = {
     (const char *)&lbl_803211CC, 0
 };
-void *lbl_806CF17C[3] = {
+void *data_8040E780_data_806CF17C[3] = {
     (void *)&lbl_803211C0,
-    (void *)&lbl_8040E7B0,
+    (void *)&sdata_806CEFE0_data_8040E7B0,
     0
 };
-void *lbl_806CF188[2] = {
-    (void *)&lbl_803215FC,
+void *data_8040E780_data_806CF188[2] = {
+    (void *)&sdata_806CEFE0_rodata_803215FC,
     0
 };
 void *typeinfo[2] = {
     (void *)&lbl_803215EC,
-    (void *)&lbl_8040EA10
+    (void *)&sdata_806CEFE0_data_8040EA10
 };
-int lbl_806CF198 = 3;
-float lbl_806CF19C = 1e+04f;
-const char *lbl_806CF1A0[2] = {
+int TaMode_FrameUpdate_data_806CF198 = 3;
+float TaMode_FrameUpdate_data_806CF19C = 1e+04f;
+const char *GameModeBase_RTTI_806CF1A0[2] = {
     (const char *)&lbl_80321FB0, 0
 };
-void *lbl_806CF1A8[2] = {
+void *TaMode_RTTI_806CF1A8[2] = {
     (void *)&lbl_80321F9C,
-    (void *)&lbl_8040F0A4
+    (void *)&sdata_806CEFE0_data_8040F0A4
 };
 
 #pragma force_active reset

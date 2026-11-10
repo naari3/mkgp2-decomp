@@ -44,7 +44,7 @@ extern void Mtx44_TransformVec3(HitVec3 *dest, const HitMtx44 *matrix,
                               const HitVec3 *source);
 extern float fn_800D3184(const HitVec3 *a, const HitVec3 *b);
 extern HitDescriptor lbl_8041AC24[];
-extern const HitVec3 lbl_8032DDF4;
+extern const HitVec3 Item_PropagateHitToDriversInRadius_rodata_8032DDF4;
 extern const float lbl_806D5B24;
 
 /* Private layout views expose only fields read here and by the callees.
@@ -145,7 +145,7 @@ void Item_PropagateHitToDriversInRadius(HitItem *item, HitDriver *excluded)
                 continue;
             }
             Mtx_TransposeToMtx44(&matrix, KartDriver_GetKartRootMtx(driver));
-            position = lbl_8032DDF4;
+            position = Item_PropagateHitToDriversInRadius_rodata_8032DDF4;
             origin = position;
             Mtx44_TransformVec3(&position, &matrix, &origin);
             if (fn_800D3184(&item->position, &position) < radius) {

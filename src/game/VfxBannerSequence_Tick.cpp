@@ -1,5 +1,5 @@
 /* VfxBannerSequence_Tick (0x800B08FC): plays the 68-frame banner flipbook
- * (lbl_803297E0) from frame 82 on, preloading two frames ahead and
+ * (VfxBannerSequence_Tick_rodata_803297E0) from frame 82 on, preloading two frames ahead and
  * releasing the previous one, then fades in a full-screen overlay after
  * frame 110 and tears both sprites down after frame 190. */
 extern "C" {
@@ -18,7 +18,7 @@ extern const float lbl_806D5034; /* 0.0 */
 extern const float lbl_806D503C; /* 255.0 */
 extern const float lbl_806D5040; /* 2.0 */
 extern const float lbl_806D5044; /* 0.1 */
-extern void *lbl_803297E0[68];
+extern void *VfxBannerSequence_Tick_rodata_803297E0[68];
 void fn_80121E10(ResCtrl *rc);
 void *SpriteHandle_CreateDefault(ResCtrl *rc, int layer);
 void SpriteHandle_SetActiveFlag(void *h, int on);
@@ -38,7 +38,7 @@ extern "C" void VfxBannerSequence_Tick(unsigned char *self)
         ResCtrl banner;
 
         fn_80121E10(&banner);
-        banner.resId = lbl_803297E0[0];
+        banner.resId = VfxBannerSequence_Tick_rodata_803297E0[0];
         banner.flag = 1;
         banner.x = lbl_806D5020;
         banner.y = lbl_806D5024;
@@ -83,17 +83,17 @@ extern "C" void VfxBannerSequence_Tick(unsigned char *self)
         ahead = frame + 2;
         behind = frame - 1;
         if (frame >= 0 && frame < 68) {
-            SpriteLayer_SetResource(P(0x170), lbl_803297E0[frame]);
+            SpriteLayer_SetResource(P(0x170), VfxBannerSequence_Tick_rodata_803297E0[frame]);
             SpriteHandle_SetActiveFlag(P(0x170), 1);
             SpriteHandle_RecomputeCull(P(0x170));
         } else {
             SpriteHandle_SetActiveFlag(P(0x170), 0);
         }
         if (ahead >= 0 && ahead < 68) {
-            PreloadResource(lbl_803297E0[ahead]);
+            PreloadResource(VfxBannerSequence_Tick_rodata_803297E0[ahead]);
         }
         if (behind >= 0 && behind < 68) {
-            fn_80120A08(lbl_803297E0[behind]);
+            fn_80120A08(VfxBannerSequence_Tick_rodata_803297E0[behind]);
         }
         if (U32(0x180) > 110) {
             F(0x150) += lbl_806D5044;

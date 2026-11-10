@@ -262,16 +262,16 @@ extern char lbl_8035D980[];
 extern char lbl_8035D99C[];
 extern char lbl_8035D9B4[];
 extern char lbl_803600F0[];
-extern char lbl_806CF648[];
+extern char data_8048E548_data_806CF648[];
 extern char lbl_806CF650[];
-extern char lbl_806CF658[];
-extern char lbl_806CF660[];
+extern char data_8048E548_data_806CF658[];
+extern char data_8048E548_data_806CF660[];
 extern char lbl_806CF668[];
-extern char lbl_806CF670[];
-extern char lbl_806CF678[];
-extern char lbl_806CF680[];
-extern char lbl_806CF694[];
-extern char lbl_806CF69C[];
+extern char data_8048E548_data_806CF670[];
+extern char data_8048E548_data_806CF678[];
+extern char data_8048E548_data_806CF680[];
+extern char data_8048E548_data_806CF694[];
+extern char data_8048E548_data_806CF69C[];
 extern char lbl_806D74C0[];
 extern char lbl_806D74C4[];
 extern char lbl_806D74CC[];
@@ -669,23 +669,23 @@ void *lbl_8048E548[160][2] = {
     (void *)&lbl_8035D99C,
     (void *)&lbl_8035D9B4
 };
-float lbl_8048EA48[5] = {
+float data_8048E548_data_8048EA48[5] = {
     0.0f, 0.0f, 0.0f, 1.0f, 0.0f
 };
 /* pointers mixed with values */
-void *lbl_8048EA5C[7] = {
+void *data_8048E548_data_8048EA5C[7] = {
     0,
     0,
     (void *)0xD0000,
     (void *)0xFFFFFFFF,
-    (void *)&lbl_8048EA48,
+    (void *)&data_8048E548_data_8048EA48,
     0,
-    (void *)&lbl_806CF648
+    (void *)&data_8048E548_data_806CF648
 };
 /* decl: char */
-void *lbl_8048EA78[8] = {
+void *RenderTargetSingleton_data_8048EA78[8] = {
     0,
-    (void *)&lbl_8048EA5C,
+    (void *)&data_8048E548_data_8048EA5C,
     (void *)0x40000,
     (void *)0x808080FF,
     0,
@@ -693,7 +693,7 @@ void *lbl_8048EA78[8] = {
     0,
     0
 };
-char *lbl_8048EA98[13] = {
+char *KartPreview_data_8048EA98[13] = {
     (char *)&lbl_806D7670,
     (char *)&lbl_806D7678,
     (char *)&lbl_806D7680,
@@ -708,46 +708,46 @@ char *lbl_8048EA98[13] = {
     (char *)&lbl_806D76C0,
     (char *)&lbl_806D76C8
 };
-void *lbl_8048EACC[3] = {
+void *sdata_806CF1C0_data_8048EACC[3] = {
     (void *)&lbl_806CF650,
     0,
     0
 };
 /* decl: char */
-void *lbl_8048EAD8[4] = {
-    (void *)&lbl_806CF658,
+void *KartPreview_data_8048EAD8[4] = {
+    (void *)&data_8048E548_data_806CF658,
     0,
     (void *)fn_8013CB10,
     (void *)fn_8013C7BC
 };
 /* decl: char */
-void *lbl_8048EAE8[4] = {
+void *clCSModelInterface_vtable_8048EAE8[4] = {
     (void *)&lbl_806CF650,
     0,
     (void *)dtor_8013DCBC,
     (void *)fn_8013DD04
 };
-void *lbl_8048EAF8[3] = {
+void *sdata_806CF1C0_data_8048EAF8[3] = {
     (void *)&lbl_806CF650,
     0,
     0
 };
 /* decl: char */
-void *lbl_8048EB04[5] = {
-    (void *)&lbl_806CF660,
+void *PreviewModel_data_8048EB04[5] = {
+    (void *)&data_8048E548_data_806CF660,
     0,
     (void *)fn_8013D778,
     (void *)fn_8013D66C,
     0
 };
-void *lbl_8048EB18[3] = {
+void *sdata_806CF1C0_data_8048EB18[3] = {
     (void *)&lbl_806CF668,
     0,
     0
 };
 /* decl: char */
-void *lbl_8048EB24[8] = {
-    (void *)&lbl_806CF670,
+void *SpriteEffects_data_8048EB24[8] = {
+    (void *)&data_8048E548_data_806CF670,
     0,
     (void *)fn_8013DD38,
     (void *)fn_8013EB44,
@@ -767,14 +767,14 @@ void *lbl_8048EB44[8] = {
     (void *)fn_8013EB9C,
     (void *)fn_8013EB4C
 };
-void *lbl_8048EB64[3] = {
+void *sdata_806CF1C0_data_8048EB64[3] = {
     (void *)&lbl_806CF668,
     0,
     0
 };
 /* decl: char */
-void *lbl_8048EB70[8] = {
-    (void *)&lbl_806CF678,
+void *SpriteEffects_data_8048EB70[8] = {
+    (void *)&data_8048E548_data_806CF678,
     0,
     (void *)fn_8013EBA0,
     (void *)fn_8013EB44,
@@ -783,14 +783,14 @@ void *lbl_8048EB70[8] = {
     (void *)fn_8013E194,
     (void *)fn_8013EB4C
 };
-void *lbl_8048EB90[3] = {
+void *sdata_806CF1C0_data_8048EB90[3] = {
     (void *)&lbl_806CF668,
     0,
     0
 };
 /* decl: char */
-void *lbl_8048EB9C[9] = {
-    (void *)&lbl_806CF680,
+void *SpriteEffects_data_8048EB9C[9] = {
+    (void *)&data_8048E548_data_806CF680,
     0,
     (void *)fn_8013EBFC,
     (void *)fn_8013EB44,
@@ -800,14 +800,14 @@ void *lbl_8048EB9C[9] = {
     (void *)fn_8013EB4C,
     0
 };
-void *lbl_8048EBC0[3] = {
-    (void *)&lbl_806CF694,
+void *sdata_806CF1C0_data_8048EBC0[3] = {
+    (void *)&data_8048E548_data_806CF694,
     0,
     0
 };
 /* decl: char */
-void *lbl_8048EBCC[8] = {
-    (void *)&lbl_806CF69C,
+void *TrophyFx_vtable_8048EBCC[8] = {
+    (void *)&data_8048E548_data_806CF69C,
     0,
     (void *)fn_8013FE4C,
     (void *)fn_8013EB44,

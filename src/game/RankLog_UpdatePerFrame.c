@@ -14,7 +14,7 @@ typedef struct RenderObj {
 
 extern const float lbl_806D4DC8; /* 0.0 */
 extern const float lbl_806D4DCC; /* 0.5 */
-extern Vec lbl_80326B24;
+extern Vec RankLog_UpdatePerFrame_rodata_80326B24;
 extern unsigned char g_raceEnded;
 extern int lbl_806CF1F4;  /* previous air state */
 extern int lbl_806CF1F8;  /* frames since air-state change, -1 = unset */
@@ -64,7 +64,7 @@ void RankLog_UpdatePerFrame(void)
     section = CarObject_GetRenderObj(car)->section;
     {
         float *m = KartDriver_GetKartRootMtx(CarObject_GetRenderObj(car));
-        pos = lbl_80326B24;
+        pos = RankLog_UpdatePerFrame_rodata_80326B24;
         pos.x = m[3];
         pos.y = m[7];
         pos.z = m[11];

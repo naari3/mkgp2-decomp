@@ -32,7 +32,7 @@ extern char lbl_803295A0[];
 extern char lbl_803295B4[];
 extern char lbl_803295C8[];
 extern char lbl_803295DC[];
-extern char lbl_803295F0[];
+extern char data_80419FB8_rodata_803295F0[];
 extern char lbl_8032A6E4[];
 extern char lbl_8032A6FC[];
 extern char lbl_8032A714[];
@@ -79,7 +79,7 @@ void *lbl_80419FB8[18] = {
     (void *)VfxSpritePopup_TickType0,
     0
 };
-Vec lbl_8041A000[13] = {
+Vec CarrotItemEffect_Update_data_8041A000[13] = {
     { 0.0f, 3.0f, 0.0f },
     { 0.0f, 4.5f, 0.0f },
     { 0.0f, 2.0f, 0.0f },
@@ -94,62 +94,62 @@ Vec lbl_8041A000[13] = {
     { 0.0f, 3.0f, 0.0f },
     { 0.0f, 1.7f, -1.0f }
 };
-unk32 lbl_8041A09C[5] = {
+unk32 data_80419FB8_data_8041A09C[5] = {
     0x00000000, 0x00000002, 0x00000096, 0x000000D2, 0xFFFFFFFF
 };
-float lbl_8041A0B0[4] = {
+float data_80419FB8_data_8041A0B0[4] = {
     1.0f, 1.4f, 1.4f, 1.4f
 };
-float lbl_8041A0C0[4] = {
+float data_80419FB8_data_8041A0C0[4] = {
     1.0f, 1.4f, 2.4f, 2.4f
 };
-float lbl_8041A0D0[4] = {
+float data_80419FB8_data_8041A0D0[4] = {
     1.0f, 1.0f, 1.0f, 0.0f
 };
 /* decl: unsigned char */
-void *lbl_8041A0E0[10] = {
+void *TwinSpriteOverlay_Update_data_8041A0E0[10] = {
     0,
-    (void *)&lbl_8041A09C,
+    (void *)&data_80419FB8_data_8041A09C,
     (void *)0x8000000,
-    (void *)&lbl_8041A0B0,
+    (void *)&data_80419FB8_data_8041A0B0,
     (void *)0x9000000,
-    (void *)&lbl_8041A0C0,
+    (void *)&data_80419FB8_data_8041A0C0,
     (void *)0xB000000,
-    (void *)&lbl_8041A0D0,
+    (void *)&data_80419FB8_data_8041A0D0,
     (void *)0xD000000,
     0
 };
-unk32 lbl_8041A108[4] = {
+unk32 data_80419FB8_data_8041A108[4] = {
     0x00000000, 0x00000007, 0x000000D2, 0xFFFFFFFF
 };
-float lbl_8041A118[3] = {
+float data_80419FB8_data_8041A118[3] = {
     0.1f, 1.0f, 1.0f
 };
-float lbl_8041A124[3] = {
+float data_80419FB8_data_8041A124[3] = {
     0.1f, 1.0f, 2.0f
 };
-unk32 lbl_8041A130[4] = {
+unk32 data_80419FB8_data_8041A130[4] = {
     0x00000000, 0x00000096, 0x000000D2, 0xFFFFFFFF
 };
-float lbl_8041A140[3] = {
+float data_80419FB8_data_8041A140[3] = {
     1.0f, 1.0f, 0.0f
 };
 /* decl: unsigned char */
-void *lbl_8041A14C[12] = {
+void *TwinSpriteOverlay_Update_data_8041A14C[12] = {
     0,
-    (void *)&lbl_8041A108,
+    (void *)&data_80419FB8_data_8041A108,
     (void *)0x8000000,
-    (void *)&lbl_8041A118,
+    (void *)&data_80419FB8_data_8041A118,
     (void *)0x9000000,
-    (void *)&lbl_8041A124,
+    (void *)&data_80419FB8_data_8041A124,
     0,
-    (void *)&lbl_8041A130,
+    (void *)&data_80419FB8_data_8041A130,
     (void *)0xB000000,
-    (void *)&lbl_8041A140,
+    (void *)&data_80419FB8_data_8041A140,
     (void *)0xD000000,
     0
 };
-char *lbl_8041A17C[15] = {
+char *CharaPop12_Update_data_8041A17C[15] = {
     (char *)&lbl_803294EC,
     (char *)&lbl_80329500,
     (char *)&lbl_80329514,
@@ -163,26 +163,26 @@ char *lbl_8041A17C[15] = {
     (char *)&lbl_803295B4,
     (char *)&lbl_803295C8,
     (char *)&lbl_803295DC,
-    (char *)&lbl_803295F0,
+    (char *)&data_80419FB8_rodata_803295F0,
     0
 };
-HornBlastCurve lbl_8041A1B8[3] = {
+HornBlastCurve EffectVfx55_HornBlastTrio_Tick_data_8041A1B8[3] = {
     { { 0.0f, 2.0f, 4.0f }, { 0.0f, 1.0f, 0.0f }, { 1.0f, 1.0f, 1.0f } },
     { { 2.0f, 3.0f, 4.0f }, { 0.0f, 0.5f, 1.0f }, { 1.0f, 1.0f, 1.0f } },
     { { 4.0f, 5.5f, 7.0f }, { 1.0f, 1.5f, 2.0f }, { 1.0f, 0.5f, 0.0f } }
 };
-FlameCurve lbl_8041A224[2] = {
+FlameCurve EffectVfx29_30_Item4SubFlame_Tick_data_8041A224[2] = {
     { { 0.0f, 1.0f, 10.0f, 22.0f, 29.0f }, { 100.0f, 150.0f, 120.0f, 80.0f, 0.0f } },
     { { 0.0f, 5.0f, 10.0f, 40.0f, 54.0f }, { 60.0f, 80.0f, 100.0f, 50.0f, 30.0f } }
 };
-Vec lbl_8041A274[1] = {
+Vec EffectVfx10_KartTrail_Tick_data_8041A274[1] = {
     { 1.0f, 0.6f, 1.0f }
 };
-RayColors lbl_8041A280[2] = {
+RayColors KartFx_BoostExhaustRayTick_data_8041A280[2] = {
     { { { 0.5f, 1.5f, 0.5f }, { 0.0f, 0.0f, 1.0f } } },
     { { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f } } }
 };
-Vec lbl_8041A2B0[11] = {
+Vec DrawEffect_Cb_KartItemStatus_Bind0C_data_8041A2B0[11] = {
     { 1.0f, 1.0f, 1.0f },
     { 1.0f, 1.0f, 1.0f },
     { 0.9f, 0.9f, 0.9f },

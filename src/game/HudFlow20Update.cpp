@@ -3,7 +3,7 @@ extern "C" {
 extern int g_countdownPhase;
 extern const float lbl_806DBF18, lbl_806DBF1C, lbl_806DBF20, lbl_806DBF24;
 struct HudPosition { float x, y; };
-extern const HudPosition lbl_803EF74C[];
+extern const HudPosition HudFlow20Update_rodata_803EF74C[];
 void SpriteHandle_SetActiveFlag(void *, int);
 void SpriteHandle_RecomputeCull(void *);
 void fn_8011F744(void *,float,float);
@@ -52,10 +52,10 @@ extern "C" void fn_80245E6C(HudFlow20 *self) {
         self->state = 4;
         self->x.p->Set(lbl_806DBF18,lbl_806DBF24,7);
     }
-    float offset = lbl_803EF74C[self->index].x - self->x.p->Value();
+    float offset = HudFlow20Update_rodata_803EF74C[self->index].x - self->x.p->Value();
     FlowFaderF *y = self->y.p;
     fn_8011F744(self->sprite,y->Value(),y->Value());
-    fn_8011F804(self->sprite,offset,lbl_803EF74C[self->index].y);
+    fn_8011F804(self->sprite,offset,HudFlow20Update_rodata_803EF74C[self->index].y);
     SpriteHandle_SetActiveFlag(self->sprite,1);
     SpriteHandle_RecomputeCull(self->sprite);
     self->y.p->Step();

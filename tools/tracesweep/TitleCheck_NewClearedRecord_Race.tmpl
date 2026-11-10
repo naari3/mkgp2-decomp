@@ -23,7 +23,7 @@ unsigned char TitleCheck_NewClearedRecord_Race(void)
             if (fn_801D5B8C(pd, mode, j, 3) == 1) {
                 cur++;
             }
-            if (fn_801D5B8C(&lbl_805D2F40, mode, j, 3) == 1) {
+            if (fn_801D5B8C(&RankLog_bss_805D2F40, mode, j, 3) == 1) {
                 prev++;
             }
         }
@@ -39,7 +39,7 @@ unsigned char TitleCheck_NewClearedRecord_Race(void)
             if (fn_801D5B8C(pd, mode, j, 7) == 1) {
                 cur++;
             }
-            if (fn_801D5B8C(&lbl_805D2F40, mode, j, 7) == 1) {
+            if (fn_801D5B8C(&RankLog_bss_805D2F40, mode, j, 7) == 1) {
                 prev++;
             }
         }
@@ -55,7 +55,7 @@ unsigned char TitleCheck_NewClearedRecord_Race(void)
             if (fn_801D59F8(pd, j, mode) == 1) {
                 cur++;
             }
-            if (fn_801D59F8(&lbl_805D2F40, j, mode) == 1) {
+            if (fn_801D59F8(&RankLog_bss_805D2F40, j, mode) == 1) {
                 prev++;
             }
         }
@@ -68,10 +68,10 @@ unsigned char TitleCheck_NewClearedRecord_Race(void)
         for (j = 0; j < 8; j++) {
             cur = 0;
             prev = 0;
-            if (fn_801D5B8C(pd, i, lbl_80326B04[j], 3) == 1) {
+            if (fn_801D5B8C(pd, i, TitleCheck_NewClearedRecord_Race_rodata_80326B04[j], 3) == 1) {
                 cur = 1;
             }
-            if (fn_801D5B8C(&lbl_805D2F40, i, lbl_80326B04[j], 3) == 1) {
+            if (fn_801D5B8C(&RankLog_bss_805D2F40, i, TitleCheck_NewClearedRecord_Race_rodata_80326B04[j], 3) == 1) {
                 prev = 1;
             }
             if (cur != prev && cur >= 1) {
@@ -84,10 +84,10 @@ unsigned char TitleCheck_NewClearedRecord_Race(void)
         for (j = 0; j < 8; j++) {
             cur = 0;
             prev = 0;
-            if (fn_801D5B8C(pd, i, lbl_80326B04[j], 7) == 1) {
+            if (fn_801D5B8C(pd, i, TitleCheck_NewClearedRecord_Race_rodata_80326B04[j], 7) == 1) {
                 cur = 1;
             }
-            if (fn_801D5B8C(&lbl_805D2F40, i, lbl_80326B04[j], 7) == 1) {
+            if (fn_801D5B8C(&RankLog_bss_805D2F40, i, TitleCheck_NewClearedRecord_Race_rodata_80326B04[j], 7) == 1) {
                 prev = 1;
             }
             if (cur != prev && cur >= 1) {
@@ -99,10 +99,10 @@ unsigned char TitleCheck_NewClearedRecord_Race(void)
     for (j = 0; j < 8; j++) {
         cur = 0;
         prev = 0;
-        if (fn_801D59F8(pd, lbl_80326B04[j], 0) == 1) {
+        if (fn_801D59F8(pd, TitleCheck_NewClearedRecord_Race_rodata_80326B04[j], 0) == 1) {
             cur = 1;
         }
-        if (fn_801D59F8(&lbl_805D2F40, lbl_80326B04[j], 0) == 1) {
+        if (fn_801D59F8(&RankLog_bss_805D2F40, TitleCheck_NewClearedRecord_Race_rodata_80326B04[j], 0) == 1) {
             prev = 1;
         }
         if (cur != prev && cur >= 1) {
@@ -113,10 +113,10 @@ unsigned char TitleCheck_NewClearedRecord_Race(void)
     for (j = 0; j < 8; j++) {
         cur = 0;
         prev = 0;
-        if (fn_801D59F8(pd, lbl_80326B04[j], 1) == 1) {
+        if (fn_801D59F8(pd, TitleCheck_NewClearedRecord_Race_rodata_80326B04[j], 1) == 1) {
             cur = 1;
         }
-        if (fn_801D59F8(&lbl_805D2F40, lbl_80326B04[j], 1) == 1) {
+        if (fn_801D59F8(&RankLog_bss_805D2F40, TitleCheck_NewClearedRecord_Race_rodata_80326B04[j], 1) == 1) {
             prev = 1;
         }
         if (cur != prev && cur >= 1) {

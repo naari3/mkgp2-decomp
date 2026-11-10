@@ -27,7 +27,7 @@ extern "C" void clFlowItemSelect_Update(ItemSelectFlow *self) {
             SpriteAnimParamBlock_Reload(self->groups[3], 70);
             fn_8019FF6C(self->groups[3]->sprite, 1);
             if (self->mode == 0) {
-                SpriteGroup_CreateOrInit(&self->groups[4], lbl_806CFE18, 1, lbl_806D9DE4, lbl_806D9DE8);
+                SpriteGroup_CreateOrInit(&self->groups[4], clFlowItemSelect_Update_data_806CFE18, 1, lbl_806D9DE4, lbl_806D9DE8);
                 self->groups[4]->sprite->layer = 6;
             }
             SpriteHandle_SetCornerAlpha(self->handle, 255);

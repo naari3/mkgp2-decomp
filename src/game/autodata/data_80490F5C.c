@@ -15,13 +15,13 @@ extern void fn_801670FC();
 extern void fn_8016730C();
 extern char lbl_806CF9A0[];
 extern char lbl_806CF9A8[];
-extern char lbl_806CF9C8[];
-extern char lbl_806CF9D0[];
+extern char data_80490F5C_data_806CF9C8[];
+extern char data_80490F5C_data_806CF9D0[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_80490F5C[5] = {
+void *sdata_806CF750_data_80490F5C[5] = {
     (void *)&lbl_806CF9A0,
     0,
     (void *)&lbl_806CF9A8,
@@ -29,15 +29,15 @@ void *lbl_80490F5C[5] = {
     0
 };
 /* decl: char */
-void *lbl_80490F70[6] = {
-    (void *)&lbl_806CF9C8,
+void *DebugName163_vtable_80490F70[6] = {
+    (void *)&data_80490F5C_data_806CF9C8,
     0,
     (void *)fn_80166B64,
     (void *)fn_80166B2C,
     (void *)fn_80166BE8,
     (void *)fn_8016700C
 };
-void *lbl_80490F88[5] = {
+void *sdata_806CF750_data_80490F88[5] = {
     (void *)&lbl_806CF9A0,
     0,
     (void *)&lbl_806CF9A8,
@@ -45,8 +45,8 @@ void *lbl_80490F88[5] = {
     0
 };
 /* decl: char */
-void *lbl_80490F9C[7] = {
-    (void *)&lbl_806CF9D0,
+void *DebugTitle163_vtable_80490F9C[7] = {
+    (void *)&data_80490F5C_data_806CF9D0,
     0,
     (void *)fn_8016707C,
     (void *)fn_80167044,

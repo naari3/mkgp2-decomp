@@ -41,22 +41,22 @@ static inline int cobj_normalize_check(Vec3* src, Vec3* dst)
 extern HSD_CObjInfo hsdCObj;
 extern HSD_ClassInfo* default_class;
 extern HSD_CObj* current;
-extern int lbl_806D0D48;
-extern int lbl_806D0D4C;
-#define ref_width lbl_806D0D48
-#define ref_height lbl_806D0D4C
+extern int HSD_CObjSetCurrent_data_806D0D48;
+extern int HSD_CObjSetCurrent_data_806D0D4C;
+#define ref_width HSD_CObjSetCurrent_data_806D0D48
+#define ref_height HSD_CObjSetCurrent_data_806D0D4C
 extern char lbl_806D0D50[7];
 extern char lbl_806D0D58[5];
 extern char lbl_806D0D60[2];
 extern char lbl_804FC560[29];
 extern char lbl_804FC580[13];
 extern char lbl_804FC590[15];
-extern char lbl_804FC5B8[56];
-extern Vec3 lbl_804FC5A0;
-extern Vec3 lbl_804FC5AC;
-extern Vec3 lbl_804FC5F0;
-#define orig lbl_804FC5A0
-#define uy lbl_804FC5AC
+extern char HSD_CObjSetRoll_data_804FC5B8[56];
+extern Vec3 upvec2roll_data_804FC5A0;
+extern Vec3 upvec2roll_data_804FC5AC;
+extern Vec3 CObjLoad_data_804FC5F0;
+#define orig upvec2roll_data_804FC5A0
+#define uy upvec2roll_data_804FC5AC
 #define DegToRad(a) ((a) * 0.01745329252F)
 #define COBJ_ASSERT(line, cond, text) ((cond) ? (void) 0 : __assert(lbl_806D0D50, line, text))
 void CObjUpdateFunc(void*, int, HSD_ObjData*);

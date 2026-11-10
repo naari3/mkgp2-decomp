@@ -99,17 +99,17 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
         if ((int)group >= 11) { boundary_set = lower; boundary_count = 26; }
         else if ((int)group >= 10) { boundary_set = upper; boundary_count = 26; }
         else if ((int)group >= 5) { boundary_set = hiragana; boundary_count = 81; }
-        next = (NameCode *)strstr(buf, lbl_8040E450[group].open);
+        next = (NameCode *)strstr(buf, NameCheck_ScanBannedWords_data_8040E450[group].open);
         open = next;
         if (next) {
             while (next) {
-                next = (NameCode *)strstr(open + 1, lbl_8040E450[group].open);
+                next = (NameCode *)strstr(open + 1, NameCheck_ScanBannedWords_data_8040E450[group].open);
                 if (next) open = next;
             }
             DebugPrintf(sMsgHead);
             if (open != buf && contains_at(open - 1, boundary_set, boundary_count) == 1) break;
             DebugPrintf(sMsgBack);
-            close = (NameCode *)strstr(open, lbl_8040E450[group].close);
+            close = (NameCode *)strstr(open, NameCheck_ScanBannedWords_data_8040E450[group].close);
             if (close) {
                 /* The original guard tests byte-address + 1, then reads a code unit. */
                 if ((char *)close + 1 && contains_at(close + 1, boundary_set, boundary_count) == 1) break;
@@ -129,7 +129,7 @@ NameBool NameCheck_ScanBannedWords(NameCode *name)
                     NameCode *p;
                     for (p = open + 1; *p != *close; p++) {
                         for (j = 0; (unsigned int)j < 5; j++) {
-                            if (strncmp(p, lbl_8040E4B0[j], 2) == 0) return 1;
+                            if (strncmp(p, NameCheck_ScanBannedWords_data_8040E4B0[j], 2) == 0) return 1;
                         }
                     }
                 }

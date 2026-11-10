@@ -11,7 +11,7 @@ struct CreditLabels162 {
 };
 
 extern "C" {
-extern const char lbl_80369288[];
+extern const char Scene_8016303C_rodata_80369288[];
 extern const char lbl_806D88DC[8];
 extern const float lbl_806D8890;
 extern const float lbl_806D88CC, lbl_806D88D0, lbl_806D88D4;

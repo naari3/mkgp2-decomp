@@ -212,7 +212,7 @@ extern void MemoryManager_TimedFree();
 extern void dtor_8002CDF4();
 extern void fn_8016EFA8();
 extern unsigned int lbl_80419F0C[];
-extern unsigned int lbl_8048E258[];
+extern unsigned int ChallengeDemoBlock_vtable_8048E258[];
 extern void fn_801825C8();
 extern void fn_801825FC();
 
@@ -383,7 +383,7 @@ int ChallengeDemoBlock::Update() {
 extern "C" DemoMode *fn_80126728(DemoMode *self, short free_flag)
 {
     if (self) {
-        self->vtable = lbl_8048E258;
+        self->vtable = ChallengeDemoBlock_vtable_8048E258;
         SetActiveCamera(0, 0);
         if (self->owner >= 0) TransparentDraw_RemoveByOwner(self->owner);
         SetPlayerCarObject(0);

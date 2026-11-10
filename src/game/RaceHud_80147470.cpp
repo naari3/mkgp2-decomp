@@ -1,7 +1,7 @@
 
 /* sdata symbols referenced from asm */
 extern unsigned char lbl_806CF810[8];
-extern unsigned char lbl_806CF818[8];
+extern unsigned char CSSceneGetTitle_8014ADB4_data_806CF818[8];
 extern unsigned char lbl_806D7CC0[4];
 extern unsigned char lbl_806D7E8C[7];
 /*
@@ -110,7 +110,7 @@ void fn_801FE27C(int n);
 void MemoryManager_TimedFree(void *p);
 void fn_801676AC(void *p, int flag);
 extern unsigned int lbl_8048EB44[];
-extern unsigned int lbl_8048EFD4[];
+extern unsigned int LapHud_vtable_8048EFD4[];
 extern void Alloc();
 extern void fn_80146260();
 extern void fn_80167730();
@@ -184,7 +184,7 @@ void fn_80140810(void *p, int flag);
 extern void fn_801F8E54();
 extern unsigned int lbl_8048ECF8[];
 extern unsigned int lbl_8048ED10[];
-extern unsigned int lbl_8048F020[];
+extern unsigned int RecordHud_vtable_8048F020[];
 int Clamp_Int(int v, int lo, int hi);
 int GetCoinCount(void);
 void fn_8013D634(void *m, float x, float y, float z);
@@ -262,8 +262,8 @@ extern unsigned int lbl_806D7D44;
 extern unsigned int lbl_806D7D48;
 extern const float lbl_806D7D4C;
 extern const float lbl_806D7D50;
-extern const float lbl_80362858[6];
-extern unsigned int lbl_8048F058[];
+extern const float RaceHud_80147470_rodata_80362858[6];
+extern unsigned int CountHud_vtable_8048F058[];
 extern void fn_80141924();
 extern void fn_8014393C();
 struct KartVariant *GetKartSlotKartVariant(int slot);
@@ -287,11 +287,11 @@ extern void *lbl_806D10A0;
 extern const float lbl_806D7D60;
 extern const float lbl_806D7D68;
 extern unsigned int lbl_806D7DF8;
-extern unsigned int lbl_8048F0C8[];
+extern unsigned int RaceHud_80147470_data_8048F0C8[];
 void fn_8014205C(void *self, int flag);
 void StrPcb_ClearStatusBits(void *p, int bits);
 void fn_8023CFE0(void *p, int flag);
-extern unsigned int lbl_8048F090[];
+extern unsigned int StrHud_vtable_8048F090[];
 int TaRecord_GetLastInsertedRank(void);
 extern void fn_8014403C();
 extern void fn_80144308();
@@ -313,7 +313,7 @@ extern unsigned int lbl_806D7E10;
 extern unsigned int lbl_806D7E14;
 extern unsigned int lbl_806D7E18;
 extern unsigned int lbl_806D7E1C;
-extern char lbl_803628A8[];
+extern char RaceHud_80147470_rodata_803628A8[];
 extern void HSD_StateInvalidate();
 extern void fn_8011FAB8();
 extern void fn_8013D940();
@@ -330,7 +330,7 @@ extern const float lbl_806D7E30;
 extern unsigned int lbl_806D7E34;
 extern unsigned int lbl_806D7E38;
 extern unsigned int lbl_806D7E3C;
-extern unsigned int lbl_80362D90[];
+extern unsigned int CSSceneGetTitle_8014ADB4_rodata_80362D90[];
 void ClSound_PlayBgmStream(int slot, int id);
 void SetRumbleMode(int a, int b, int c);
 unsigned char Sprite_AdvanceAnim(void *s, float step);
@@ -373,7 +373,7 @@ extern unsigned int lbl_806D7E84;
 extern unsigned int lbl_806D7E88;
 extern unsigned int lbl_806D7E94;
 extern unsigned int lbl_806D7E98;
-extern unsigned int lbl_8048F0FC[];
+extern unsigned int CSSceneGetTitle_8014ADB4_data_8048F0FC[];
 int Item_GetDescriptorFieldC(int item);
 void fn_8013D50C(void *model, float r, float g, float b, float a);
 void fn_8013DAC8(void *model, int a);
@@ -406,7 +406,7 @@ extern void fn_80121210();
 extern void fn_8013DB9C();
 extern void fn_80169C44();
 extern unsigned int lbl_803FE0C8[];
-extern unsigned int lbl_8048F118[];
+extern unsigned int CSSceneGetTitle_vtable_8048F118[];
 extern void CalcEarnedCoins();
 extern void InitRumbleController();
 extern void ItemRes_LookupByKey_Thunk();
@@ -776,7 +776,7 @@ extern "C" void fn_80147574(char *self, int v) {
 
 extern "C" HudPanel *dtor_80147584(HudPanel *self, short flag) {
     if (self != 0) {
-        self->vt14 = lbl_8048EFD4;
+        self->vt14 = LapHud_vtable_8048EFD4;
         if (self->f78 != 0) {
             self->f78->vC();
         }
@@ -910,9 +910,9 @@ struct TexIdPair {
 };
 
 /* .rodata 0x80362778..0x80362858 (record HUD). */
-extern const float lbl_80362778[3] = {0.0f, 0.0f, 0.0f};
+extern const float RaceHud_80147470_rodata_80362778[3] = {0.0f, 0.0f, 0.0f};
 static const float sRecordModelPos[3] = {0.0f, 0.0f, -5.0f};
-extern const TexIdPair lbl_80362790[8] = {
+extern const TexIdPair RaceHud_80147470_rodata_80362790[8] = {
     {0, 0}, {0x8D, 0x92}, {0x8E, 0x93}, {0x8E, 0x93},
     {0x8F, 0x94}, {0, 0}, {0x8B, 0x90}, {0x8C, 0x91},
 };
@@ -937,9 +937,9 @@ extern "C" void fn_801477BC(void) {
     TexMgr_Apply(&tm);
     int idx = g_cupId - 8;
     if (idx != 9 && idx != 6) {
-        TexMgr_SetTexture(&tm, GetTextureByIdAndLang(lbl_80362790[idx - 1].a, -1));
+        TexMgr_SetTexture(&tm, GetTextureByIdAndLang(RaceHud_80147470_rodata_80362790[idx - 1].a, -1));
         TexMgr_Apply(&tm);
-        TexMgr_SetTexture(&tm, GetTextureByIdAndLang(lbl_80362790[idx - 1].b, -1));
+        TexMgr_SetTexture(&tm, GetTextureByIdAndLang(RaceHud_80147470_rodata_80362790[idx - 1].b, -1));
         TexMgr_Apply(&tm);
     }
 }
@@ -1425,7 +1425,7 @@ struct RecordPanel {
 
 extern "C" RecordPanel *fn_80148648(RecordPanel *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_8048F020;
+        self->vt = RecordHud_vtable_8048F020;
         fn_80140810(self->f90, 1);
         self->f94->vC();
         fn_801F8E54();
@@ -1560,7 +1560,7 @@ extern "C" asm void fn_80148A44(void) { /* 0x80148A44 size:0x738 */
     stw r8, 0x0(r3)
     lis r7, ResCtrl_Init@ha
     lis r3, dtor_80082960@ha
-    lis r9, lbl_80362778@ha
+    lis r9, RaceHud_80147470_rodata_80362778@ha
     stw r6, 0x4(r31)
     addi r6, r7, ResCtrl_Init@l
     mr r28, r4
@@ -1570,7 +1570,7 @@ extern "C" asm void fn_80148A44(void) { /* 0x80148A44 size:0x738 */
     mr r4, r6
     mr r5, r0
     stb r8, 0xc(r31)
-    addi r30, r9, lbl_80362778@l
+    addi r30, r9, RaceHud_80147470_rodata_80362778@l
     addi r3, r31, 0x10
     li r6, 0x58
     li r7, 0xb
@@ -2153,8 +2153,8 @@ extern "C" void fn_801494A4(CountListFull *self) {
                     y = 350.0f + LUT_Sin12Bit(45.0f * self->e[i].t);
                     sy = lbl_806D7CE8;
                     sx = -1.570796f;
-                    if (x < off + lbl_80362858[i]) {
-                        x = off + lbl_80362858[i];
+                    if (x < off + RaceHud_80147470_rodata_80362858[i]) {
+                        x = off + RaceHud_80147470_rodata_80362858[i];
                         self->e[i].count++;
                         self->e[i].t = lbl_806D7CE8;
                     }
@@ -2162,7 +2162,7 @@ extern "C" void fn_801494A4(CountListFull *self) {
                 case 3: {
                     float s;
                     self->e[i].t += 1.0f;
-                    x = off + lbl_80362858[i];
+                    x = off + RaceHud_80147470_rodata_80362858[i];
                     y = 350.0f;
                     sy = 0.1f * (0.17453292f * self->e[i].t);
                     sx = 1.4311696f * (self->e[i].t / 10.0f) + -1.570796f;
@@ -2187,7 +2187,7 @@ extern "C" void fn_801494A4(CountListFull *self) {
                     float nx;
                     self->e[i].t += 1.0f;
                     y = 350.0f;
-                    x = off + lbl_80362858[i];
+                    x = off + RaceHud_80147470_rodata_80362858[i];
                     sy = 0.17453292f;
                     sx = -0.13962634f;
                     if (slot->icon >= 0) {
@@ -2226,7 +2226,7 @@ extern "C" void fn_801494A4(CountListFull *self) {
 extern "C" CountListFull *fn_80149A88(CountListFull *self, short flag) {
     if (self != 0) {
         int i;
-        self->vt = lbl_8048F058;
+        self->vt = CountHud_vtable_8048F058;
         if (self->f1C != 0) {
             self->f1C->vC();
         }
@@ -2383,7 +2383,7 @@ struct StrMsg {
     char pad18[0x30];
     StrMsg() {
         fn_801420DC(this);
-        vt14 = lbl_8048F0C8;
+        vt14 = RaceHud_80147470_data_8048F0C8;
     }
     void SetKind(int v) {
         if (v >= 0 && v < 8) {
@@ -2599,7 +2599,7 @@ extern "C" void fn_80149E44(StrHud *self) {
 
 extern "C" HudPanel *fn_8014A890(HudPanel *self, short flag) {
     if (self != 0) {
-        self->vt14 = lbl_8048F0C8;
+        self->vt14 = RaceHud_80147470_data_8048F0C8;
         fn_80120A08(0x580);
         fn_8014205C(self, 0);
         if (flag > 0) {
@@ -2623,7 +2623,7 @@ struct StrPanel {
 extern "C" StrPanel *fn_8014A8FC(StrPanel *self, short flag) {
     if (self != 0) {
         int i;
-        self->vt = lbl_8048F090;
+        self->vt = StrHud_vtable_8048F090;
         StrPcb_ClearStatusBits(StrPcb_GetInstance(), 4);
         if (self->f34 != 0) {
             self->f34->vC();
@@ -2687,7 +2687,7 @@ StrHud::StrHud(int ly, int id) : HudTask(id) {
 #pragma use_lmw_stmw reset
 
 extern "C" void fn_8014AC48(void *self) {
-    char *str = lbl_803628A8;
+    char *str = RaceHud_80147470_rodata_803628A8;
     fn_80142010(self, 0x580, 0, 134.0f, lbl_806D7D68, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60);
     if (isJapanese() == 1) {
         fn_80141E70(self, -212.0f, -52.0f, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, lbl_806D7D60, str + 0x494);
@@ -2888,8 +2888,8 @@ extern "C" HudResSet *fn_80148A44(HudResSet *set, int coins, int param, int ly) 
         int len1, len2, n, m, total;
         float x0, x;
         o->flagC = 1;
-        len1 = NM_strlen(GetTextureByIdAndLang(lbl_80362790[idx - 1].a, -1));
-        len2 = NM_strlen(GetTextureByIdAndLang(lbl_80362790[idx - 1].b, -1));
+        len1 = NM_strlen(GetTextureByIdAndLang(RaceHud_80147470_rodata_80362790[idx - 1].a, -1));
+        len2 = NM_strlen(GetTextureByIdAndLang(RaceHud_80147470_rodata_80362790[idx - 1].b, -1));
         n = 1;
         if (param / 10 > 0) n = 2;
         if (param / 100 > 0) n = 3;
@@ -2913,8 +2913,8 @@ extern "C" HudResSet *fn_80148A44(HudResSet *set, int coins, int param, int ly) 
             x += (float)m * w / (float)n;
         }
         NM_TextSetPos(&o->texts[2], x, 330.0f);
-        TexMgr_SetTexture((TextManager *)&o->texts[1], GetTextureByIdAndLang(lbl_80362790[idx - 1].a, -1));
-        TexMgr_SetTexture((TextManager *)&o->texts[2], GetTextureByIdAndLang(lbl_80362790[idx - 1].b, -1));
+        TexMgr_SetTexture((TextManager *)&o->texts[1], GetTextureByIdAndLang(RaceHud_80147470_rodata_80362790[idx - 1].a, -1));
+        TexMgr_SetTexture((TextManager *)&o->texts[2], GetTextureByIdAndLang(RaceHud_80147470_rodata_80362790[idx - 1].b, -1));
     }
     if (isJapanese() == 1) {
         o->texts[0].y = -4.0f;

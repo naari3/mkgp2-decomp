@@ -285,7 +285,7 @@ u8 card_unpack_v1(u8 *dest, void *pack, u8 publish_character)
 /* Packed card integrity check; the first argument is unused by this format. */
 extern void *bitpack_init(void *, void *, int, void *, u8);
 extern void bitpack_write_field(void *, u32, const char *, int);
-extern u8 lbl_803FED40[0x30];
+extern u8 Card_VerifyChecksum_data_803FED40[0x30];
 extern const signed char lbl_806D34A4[3];
 extern const char lbl_806D34A8[3];
 extern const char lbl_806D34AC[2];
@@ -301,7 +301,7 @@ int Card_VerifyChecksum(void *unused, u8 *raw)
     int j;
     int i;
     const signed char *expected;
-    bitpack_init(pack, lbl_803FED40, 3, raw, 0);
+    bitpack_init(pack, Card_VerifyChecksum_data_803FED40, 3, raw, 0);
     checksum = 0;
     sum = 0;
     bitpack_read_field_by_name(pack, lbl_80317108, &checksum, 0);

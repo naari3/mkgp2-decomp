@@ -15,7 +15,7 @@ extern const char lbl_80367454[] = "NINTENDO_LOGO";
 extern const char lbl_80367464[] = "BNG_NAME";
 extern const char lbl_80367470[] = "NAMCO_LOGO";
 extern const char lbl_8036747C[] = "BNG_LOGO";
-extern const AttractEntry lbl_80367488[12] = {
+extern const AttractEntry Scene_8014E0C4_rodata_80367488[12] = {
     {11, 0, 0},
     {10, 0, 0},
     {13, 0, 0},

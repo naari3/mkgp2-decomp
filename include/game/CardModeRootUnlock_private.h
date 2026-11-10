@@ -19,7 +19,7 @@
 
 #include "game/types/DispFlags.h"
 
-/* Menu mode base (vtable lbl_804E549C, ctor fn_801F5B54). */
+/* Menu mode base (vtable MenuModeBase_vtable_804E549C, ctor fn_801F5B54). */
 struct MenuModeBase : SceneBase {
     int f08;
     int f0C;
@@ -39,7 +39,7 @@ struct MenuModeBase : SceneBase {
     ~MenuModeBase() {}
 };
 
-/* Holds the scene list at +4 (vtable lbl_804EC190). */
+/* Holds the scene list at +4 (vtable FlowSceneHost_vtable_804EC190). */
 struct FlowSceneHost {
     virtual ~FlowSceneHost();
     VHolder<FlowSceneList> list;

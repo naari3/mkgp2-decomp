@@ -21,7 +21,7 @@ static inline s32 RingCount(s32 ch, s32* n) {
     if (ch < 0 || ch > 1 || n == NULL) {
         return 1;
     }
-    c = &lbl_806A1D60.chan[ch];
+    c = &amuart_bss_806A1D60.chan[ch];
     if (c->head >= c->tail) {
         *n = c->head - c->tail;
     } else {
@@ -31,7 +31,7 @@ static inline s32 RingCount(s32 ch, s32* n) {
 }
 
 static inline s32 RingRead(s32 ch, u8* dst, s32 len) {
-    UartChan* c = &lbl_806A1D60.chan[ch];
+    UartChan* c = &amuart_bss_806A1D60.chan[ch];
     s32 n;
 
     if (ch < 0 || ch > 1) {
@@ -69,7 +69,7 @@ static inline s32 UartRead(s32 ch, u8* dst, s32* len) {
 
 u8 fn_8029321C(s32 ch) {
     u8 ret;
-    OSSemaphore* sem = &lbl_806A1D60.sem;
+    OSSemaphore* sem = &amuart_bss_806A1D60.sem;
 
     OSWaitSemaphore(sem);
     if (ch < 0 || ch > 1) {
@@ -83,7 +83,7 @@ u8 fn_8029321C(s32 ch) {
 
 s32 fn_80293290(s32 ch, s32* out) {
     s32 ret;
-    OSSemaphore* sem = &lbl_806A1D60.sem;
+    OSSemaphore* sem = &amuart_bss_806A1D60.sem;
     u16 n;
 
     OSWaitSemaphore(sem);
@@ -104,7 +104,7 @@ s32 fn_80293290(s32 ch, s32* out) {
 }
 
 s32 fn_80293338(s32 ch, u8 b) {
-    OSSemaphore* sem = &lbl_806A1D60.sem;
+    OSSemaphore* sem = &amuart_bss_806A1D60.sem;
     s32 ret;
     s32 n;
     UartChan* c;
@@ -113,7 +113,7 @@ s32 fn_80293338(s32 ch, u8 b) {
     if (RingCount(ch, &n)) {
         ret = 1;
     } else {
-        c = &lbl_806A1D60.chan[ch];
+        c = &amuart_bss_806A1D60.chan[ch];
         if (n >= c->size - 1) {
             ret = 2;
         } else {
@@ -138,13 +138,13 @@ s32 fn_8029345C(s32 ch, u8* data, u32 len) {
     if (ch < 0 || ch > 1) {
         return 1;
     }
-    c = &lbl_806A1D60.chan[ch];
+    c = &amuart_bss_806A1D60.chan[ch];
     if (c->newFirm != 0) {
         port = fn_80285798();
         port += ch;
         if (port->flags & 3) {
             ret = 1;
-            sem = &lbl_806A1D60.sem;
+            sem = &amuart_bss_806A1D60.sem;
             OSWaitSemaphore(sem);
             c->tail = c->head;
             n = fn_80282768(ch);
@@ -170,14 +170,14 @@ s32 fn_8029345C(s32 ch, u8* data, u32 len) {
 
 s32 fn_80293580(void) {
     UartChan* c;
-    OSSemaphore* sem = &lbl_806A1D60.sem;
+    OSSemaphore* sem = &amuart_bss_806A1D60.sem;
     s32 err = 0;
     s32 ch = 0;
     s32 active;
     s32 len;
 
     do {
-        c = &lbl_806A1D60.chan[ch];
+        c = &amuart_bss_806A1D60.chan[ch];
         OSWaitSemaphore(sem);
         if (c->cfgPending != 0) {
             c->cfgPending = 0;
@@ -195,12 +195,12 @@ s32 fn_80293580(void) {
         if (active != 0) {
             OSWaitSemaphore(sem);
             len = c->maxRead;
-            if (UartRead(ch, lbl_806A1CE0, &len)) {
+            if (UartRead(ch, amuart_bss_806A1CE0, &len)) {
                 len = 0;
                 err |= 4 << ch;
             }
             OSSignalSemaphore(sem);
-            if (fn_8029345C(ch, lbl_806A1CE0, len)) {
+            if (fn_8029345C(ch, amuart_bss_806A1CE0, len)) {
                 err |= 4 << ch;
             }
         }
@@ -215,14 +215,14 @@ s32 fn_802937C8(s32 ch, u16 max) {
     if (ch < 0 || ch > 1 || max > 0x7F) {
         return 1;
     }
-    c = &lbl_806A1D60.chan[ch];
+    c = &amuart_bss_806A1D60.chan[ch];
     c->maxRead = max;
     return 0;
 }
 
 s32 fn_80293808(void) {
-    UartChan* c = &lbl_806A1D60.chan[1];
-    OSSemaphore* sem = &lbl_806A1D60.sem;
+    UartChan* c = &amuart_bss_806A1D60.chan[1];
+    OSSemaphore* sem = &amuart_bss_806A1D60.sem;
 
     OSWaitSemaphore(sem);
     c->active = 0;
@@ -233,14 +233,14 @@ s32 fn_80293808(void) {
 
 s32 fn_80293860(u8* txBuf, u16 txSize, u8* rxBuf, u16 rxSize, UartCfg* cfg) {
     OSSemaphore* sem;
-    UartChan* c = &lbl_806A1D60.chan[1];
+    UartChan* c = &amuart_bss_806A1D60.chan[1];
     u8* info;
     u16 ver;
 
     if (rxBuf == NULL || rxSize == 0 || txBuf == NULL || txSize == 0 || cfg == NULL) {
         return 1;
     }
-    sem = &lbl_806A1D60.sem;
+    sem = &amuart_bss_806A1D60.sem;
     OSWaitSemaphore(sem);
     c->active = 1;
     c->cfgPending = 1;
@@ -265,25 +265,25 @@ s32 fn_80293860(u8* txBuf, u16 txSize, u8* rxBuf, u16 rxSize, UartCfg* cfg) {
 }
 
 s32 fn_80293998(void) {
-    OSSemaphore* sem = &lbl_806A1D60.sem;
+    OSSemaphore* sem = &amuart_bss_806A1D60.sem;
 
     OSWaitSemaphore(sem);
-    lbl_806A1D60.chan[0].active = 0;
-    lbl_806A1D60.chan[0].cfgPending = 0;
+    amuart_bss_806A1D60.chan[0].active = 0;
+    amuart_bss_806A1D60.chan[0].cfgPending = 0;
     OSSignalSemaphore(sem);
     return 0;
 }
 
 s32 fn_802939F0(u8* txBuf, u16 txSize, u8* rxBuf, u16 rxSize, u8* cfg) {
     OSSemaphore* sem;
-    UartChan* c = &lbl_806A1D60.chan[0];
+    UartChan* c = &amuart_bss_806A1D60.chan[0];
     u8* info;
     u16 ver;
 
     if (rxBuf == NULL || rxSize == 0 || txBuf == NULL || txSize == 0 || cfg == NULL) {
         return 1;
     }
-    sem = &lbl_806A1D60.sem;
+    sem = &amuart_bss_806A1D60.sem;
     OSWaitSemaphore(sem);
     c->active = 1;
     c->cfgPending = 1;
@@ -303,14 +303,14 @@ s32 fn_802939F0(u8* txBuf, u16 txSize, u8* rxBuf, u16 rxSize, u8* cfg) {
 }
 
 s32 fn_80293AF0(void) {
-    OSSemaphore* sem = &lbl_806A1D60.sem;
+    OSSemaphore* sem = &amuart_bss_806A1D60.sem;
     UartChan* c;
 
     OSWaitSemaphore(sem);
-    lbl_806A1D60.chan[0].active = 0;
-    lbl_806A1D60.chan[0].cfgPending = 0;
+    amuart_bss_806A1D60.chan[0].active = 0;
+    amuart_bss_806A1D60.chan[0].cfgPending = 0;
     OSSignalSemaphore(sem);
-    c = &lbl_806A1D60.chan[1];
+    c = &amuart_bss_806A1D60.chan[1];
     OSWaitSemaphore(sem);
     c->active = 0;
     c->cfgPending = 0;
@@ -319,7 +319,7 @@ s32 fn_80293AF0(void) {
 }
 
 s32 fn_80293B74(void) {
-    memset(&lbl_806A1D60, 0, sizeof(UartState));
-    OSInitSemaphore(&lbl_806A1D60.sem, 1);
+    memset(&amuart_bss_806A1D60, 0, sizeof(UartState));
+    OSInitSemaphore(&amuart_bss_806A1D60.sem, 1);
     return 0;
 }

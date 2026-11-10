@@ -9,10 +9,10 @@
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-Vec3 lbl_804216F8[1] = {
+Vec3 HeartCompoundItem_TickCarryPhase_data_804216F8[1] = {
     { 0.0f, 1.0f, 0.0f }
 };
-Vec3 lbl_80421704[1] = {
+Vec3 HeartCompoundItem_TickCarryPhase_data_80421704[1] = {
     { 0.0f, 2.8797927f, 0.0f }
 };
 

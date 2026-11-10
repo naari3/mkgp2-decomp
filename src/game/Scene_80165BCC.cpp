@@ -38,8 +38,8 @@ struct Scene80165C98 {
 #pragma exceptions on
 
 extern "C" {
-extern char lbl_80490EB4[];
-extern char lbl_80490EE0[];
+extern char DebugModelPage163_vtable_80490EB4[];
+extern char DebugOther163_vtable_80490EE0[];
 extern char lbl_8048ED10[];
 extern char lbl_8048ECF8[];
 extern void fn_80121210(void);
@@ -59,7 +59,7 @@ void fn_80165C60(VObj *p) {
 
 Scene80165C98 *fn_80165C98(Scene80165C98 *self, short flag) {
     if (self) {
-        self->vtable = lbl_80490EB4;
+        self->vtable = DebugModelPage163_vtable_80490EB4;
         if (self->model) {
             delete self->model;
         }
@@ -96,7 +96,7 @@ void fn_80165DD8(VObj *p) {
 
 Scene80165C98 *fn_80165E10(Scene80165C98 *self, short flag) {
     if (self) {
-        self->vtable = lbl_80490EE0;
+        self->vtable = DebugOther163_vtable_80490EE0;
         fn_80121210();
         if (self) {
             self->vtable = lbl_8048ED10;

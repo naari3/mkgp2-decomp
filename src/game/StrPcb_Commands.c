@@ -9,7 +9,7 @@
 
 extern const float lbl_806D241C;
 extern const float lbl_802E9848[3];
-extern int lbl_802E9838[];
+extern int StrPcb_BeginEffect_rodata_802E9838[];
 extern u8 lbl_80598A60[];
 extern unsigned int lbl_806D1008;
 
@@ -150,7 +150,7 @@ void StrPcb_SetIntensityMode(StrPcbCmd *pcb, int mode)
 
 void StrPcb_BeginEffect(StrPcbCmd *pcb, int effect)
 {
-    pcb->effectId = lbl_802E9838[effect];
+    pcb->effectId = StrPcb_BeginEffect_rodata_802E9838[effect];
     pcb->state60 = 1;
 }
 

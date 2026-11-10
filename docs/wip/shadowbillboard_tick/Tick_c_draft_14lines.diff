@@ -80,7 +80,7 @@ index 45cb8c4..84be0ee 100644
  double cos(double x);
  double sin(double x);
  
-@@ -167,19 +177,26 @@ const float lbl_802EE4CC[3] = {0.075f, 0.075f, 0.075f};
+@@ -167,19 +177,26 @@ const float ShadowBillboard_LerpMtx4x4_rodata_802EE4CC[3] = {0.075f, 0.075f, 0.075f};
   * [ 10] 0x80064920 size:0x3B4   global Mtx34_Orthonormalize
   */
  
@@ -100,7 +100,7 @@ index 45cb8c4..84be0ee 100644
 +    PCPathSeg seg[3]; /* 0x10 */
  } PCCourseCamEntry;
  
- extern PCCourseCamEntry lbl_803F9F30[];
+ extern PCCourseCamEntry ShadowBillboard_data_803F9F30[];
  
  /* --- forward decls --- */
 -asm void ShadowBillboard_Tick(void);
@@ -146,11 +146,11 @@ index 45cb8c4..84be0ee 100644
 -    psq_st f27, 0x4f8(r1), 0, 0
 -    stmw r21, 0x4c4(r1)
 -    mr r29, r3
--    lis r3, lbl_802EE320@ha
+-    lis r3, ShadowBillboard_rodata_802EE320@ha
 -    lbz r0, 0xac(r29)
 -    mr r30, r4
 -    mr r31, r5
--    addi r28, r3, lbl_802EE320@l
+-    addi r28, r3, ShadowBillboard_rodata_802EE320@l
 -    cmplwi r0, 0x0
 -    beq ShadowBillboard_Tick_L_80061B38
 -    lfs f2, 0xb4(r29)
@@ -313,11 +313,11 @@ index 45cb8c4..84be0ee 100644
 -    xoris r4, r3, 0x8000
 -    stw r0, 0x4a4(r1)
 -    lwz r0, 0xcc(r29)
--    lis r3, lbl_803F9F30@ha
+-    lis r3, ShadowBillboard_data_803F9F30@ha
 -    stw r6, 0x4a0(r1)
 -    mulli r28, r5, 0x24
 -    lfd f2, lbl_806D2C00(r2)
--    addi r5, r3, lbl_803F9F30@l
+-    addi r5, r3, ShadowBillboard_data_803F9F30@l
 -    lfd f0, 0x4a0(r1)
 -    addi r3, r1, 0x6c
 -    stw r4, 0x4ac(r1)
@@ -358,8 +358,8 @@ index 45cb8c4..84be0ee 100644
 -    addi r4, r1, 0x6c
 -    bl CObj_LoadIntoGX
 -    lwz r4, 0xcc(r29)
--    lis r3, lbl_803F9F30@ha
--    addi r0, r3, lbl_803F9F30@l
+-    lis r3, ShadowBillboard_data_803F9F30@ha
+-    addi r0, r3, ShadowBillboard_data_803F9F30@l
 -    addi r3, r1, 0x60
 -    mulli r4, r4, 0x7c
 -    add r0, r0, r4
@@ -2330,10 +2330,10 @@ index 45cb8c4..84be0ee 100644
 +            {
 +                Vec3f out;
 +                Vec3f at;
-+                PCPath_Lerp(&out, lbl_803F9F30[sb->courseCam].seg[idx].b,
-+                            lbl_803F9F30[sb->courseCam].seg[idx].a, (float)rem / 120.0f);
++                PCPath_Lerp(&out, ShadowBillboard_data_803F9F30[sb->courseCam].seg[idx].b,
++                            ShadowBillboard_data_803F9F30[sb->courseCam].seg[idx].a, (float)rem / 120.0f);
 +                CObj_LoadIntoGX(lineCam, &out);
-+                Vec3_Copy(&at, &lbl_803F9F30[sb->courseCam].seg[idx].c);
++                Vec3_Copy(&at, &ShadowBillboard_data_803F9F30[sb->courseCam].seg[idx].c);
 +                CObj_ApplyViewport(lineCam, &at);
 +            }
 +            if (rem < 20) {

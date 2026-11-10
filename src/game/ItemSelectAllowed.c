@@ -2,7 +2,7 @@
 
 /* .rodata 0x803DC378..0x803DC530: per cup/round item slots, the default
  * slots and the two debug strings, pooled off one base. */
-const int lbl_803DC378[8][4][3] = {
+const int IsItemSelectAllowed_rodata_803DC378[8][4][3] = {
     {{0x5D, 0x2B, 0x39}, {0x2D, 0x5C, 0x73}, {0x5D, 0x5B, 0x71}, {0x73, 0x71, 0x3C}},
     {{0x39, 0x5B, 0x4E}, {0x3D, 0x4E, 0x3E}, {0x8, 0x3E, 0x22}, {0x3E, 0x22, 0x9B}},
     {{0x2B, 0x2D, 0x4A}, {0x39, 0x32, 0x69}, {0x5B, 0x50, 0x40}, {0x2D, 0x40, 0x6C}},
@@ -26,9 +26,9 @@ unsigned char IsItemSelectAllowed(void) {
     if (IsSpecialItemRound() == 1 && lbl_806D12AD == 1) return 1;
     cup = g_cupId;
     round = g_roundIndex;
-    selected[0] = SelectRoundItem(lbl_803DC378, cup, round, 0);
-    selected[1] = SelectRoundItem(lbl_803DC378, cup, round, 1);
-    selected[2] = SelectRoundItem(lbl_803DC378, cup, round, 2);
+    selected[0] = SelectRoundItem(IsItemSelectAllowed_rodata_803DC378, cup, round, 0);
+    selected[1] = SelectRoundItem(IsItemSelectAllowed_rodata_803DC378, cup, round, 1);
+    selected[2] = SelectRoundItem(IsItemSelectAllowed_rodata_803DC378, cup, round, 2);
     lbl_806D1264[0] = selected[0];
     lbl_806D1264[1] = selected[1];
     lbl_806D1264[2] = selected[2];

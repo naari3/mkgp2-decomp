@@ -18,8 +18,8 @@ typedef struct EnrakuWork {
     signed char launch;
 } EnrakuWork;
 
-extern const Vec lbl_8032F518;
-extern const Vec lbl_8032F524;
+extern const Vec Enraku_State1_Held_rodata_8032F518;
+extern const Vec Enraku_State1_Held_rodata_8032F524;
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int en);
 extern void Effect_SmokeCloud_Update(unsigned char *self);
 extern unsigned char *DrawEffect_SpawnDirect(void (*callback)(unsigned char *));
@@ -73,7 +73,7 @@ void Enraku_State1_Held(unsigned char *self, EnrakuWork *w)
             F(0x2C) = 0.0f;
             self[0xCA]++;
         case 1:
-            Item_RenderCharacterScaledFromJoint12(self, lbl_8032F518, lbl_8032F524, 1, 1.2f);
+            Item_RenderCharacterScaledFromJoint12(self, Enraku_State1_Held_rodata_8032F518, Enraku_State1_Held_rodata_8032F524, 1, 1.2f);
             if (FinalLapCoinJump_CheckActiveForObject(w->driver)) {
                 self[0x28] = 0;
             } else {

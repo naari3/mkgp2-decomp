@@ -34,7 +34,7 @@ extern KartRender *g_playerRenderObj;
 const float *KartDriver_GetKartRootMtx(KartRender *k);
 }
 
-extern const float lbl_803D08A8[4] = {5000.0f, -3000.0f, 2000.0f, -8000.0f};
+extern const float DNLensflare_rodata_803D08A8[4] = {5000.0f, -3000.0f, 2000.0f, -8000.0f};
 extern const char lbl_803D08B8[0x10] = "clDNLensflare";
 extern const char lbl_803D08C8[0x14] = "clMapEffectParts";
 extern const char lbl_803D08DC[0x14] = "halation.dat";
@@ -44,16 +44,16 @@ void clDNLensflare::Draw() {
     float x = m[3];
     float z = m[11];
     unsigned char away = 0;
-    if (lbl_803D08A8[0] < x) {
+    if (DNLensflare_rodata_803D08A8[0] < x) {
         away = 1;
     }
-    if (lbl_803D08A8[2] > x) {
+    if (DNLensflare_rodata_803D08A8[2] > x) {
         away = 1;
     }
-    if (lbl_803D08A8[1] < z) {
+    if (DNLensflare_rodata_803D08A8[1] < z) {
         away = 1;
     }
-    if (lbl_803D08A8[3] > z) {
+    if (DNLensflare_rodata_803D08A8[3] > z) {
         away = 1;
     }
     if (away) {

@@ -12,7 +12,7 @@ extern const float lbl_806D5068; /* -0.01 */
 extern const float lbl_806D506C; /* 0.02 */
 extern const float lbl_806D5070; /* -1.0 */
 extern const float lbl_806D5074; /* -0.1 */
-extern const char *lbl_8041A17C[14];
+extern const char *CharaPop12_Update_data_8041A17C[14];
 extern void SpriteSlot_InitNonLoop(void *slot, int id);
 extern void SpriteSlot_SetTransform(void *slot, Vec pos, Vec rot, float scale);
 extern void SpriteSlot_TickAnim(void *slot);
@@ -37,10 +37,10 @@ void CharaPop12_Update(unsigned char *self)
         SpriteSlot_SetMatrixSourceEnabled_WithReseed(SLOT(self), 1);
         for (i = 0; i < 14; i++) {
             if (I(0x10) != i) {
-                SpriteSlot_SetJointVisibilityByName(SLOT(self), lbl_8041A17C[i], 0x10, 1);
+                SpriteSlot_SetJointVisibilityByName(SLOT(self), CharaPop12_Update_data_8041A17C[i], 0x10, 1);
             }
         }
-        JointByName_GetWorldPosition(V(0xA0), SLOT(self), lbl_8041A17C[I(0x10)]);
+        JointByName_GetWorldPosition(V(0xA0), SLOT(self), CharaPop12_Update_data_8041A17C[I(0x10)]);
         F(0xB8) = lbl_806D5044 * F(0xA0);
         F(0xBC) = lbl_806D5038 * F(0xA4);
         F(0xC0) = lbl_806D5044;

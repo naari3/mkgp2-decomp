@@ -19,7 +19,7 @@ typedef struct PcbLinkSlot {
     unsigned char padA3A[2];
 } PcbLinkSlot;
 extern PcbLinkSlot lbl_805A6154[];
-extern PcbConnection* lbl_805A6134[];
+extern PcbConnection* PCBCheck_ProcessLinks_bss_805A6134[];
 extern unsigned char g_pcbCommEnabled, lbl_806D1191, g_pcbSyncReady, lbl_806D1193;
 extern int g_localPcbRole, g_myPcbId;
 extern void* g_pcbListener;
@@ -113,7 +113,7 @@ static inline void PCBCheck_InitSlot(PcbLinkSlot* slot, int i)
         slot->secondary = 0;
     } else {
         slot->flags.byte.local = 0;
-        slot->primary = lbl_805A6134[id - 1];
+        slot->primary = PCBCheck_ProcessLinks_bss_805A6134[id - 1];
         slot->secondary = 0;
         TCPConn_Close(slot->primary);
         TCPConn_Init(slot->primary, i + 1, -1, 0);

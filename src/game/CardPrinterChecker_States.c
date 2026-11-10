@@ -7,10 +7,10 @@
 
 #include "game/types/CardPrinterChecker.h"
 
-extern CardPrinterStatePtr lbl_803FE8E4; /* State_CleaningWait */
-extern CardPrinterStatePtr lbl_803FE8F0; /* State_CardEjectWait */
-extern CardPrinterStatePtr lbl_803FE8FC; /* done */
-extern CardPrinterStatePtr lbl_803FE908; /* failed */
+extern CardPrinterStatePtr CardPrinterChecker_State_CardResetWait_data_803FE8E4; /* State_CleaningWait */
+extern CardPrinterStatePtr CardPrinterChecker_State_CleaningWait_data_803FE8F0; /* State_CardEjectWait */
+extern CardPrinterStatePtr CardPrinterChecker_State_CardEjectWait_data_803FE8FC; /* done */
+extern CardPrinterStatePtr CardPrinterChecker_States_data_803FE908; /* failed */
 
 extern unsigned char lbl_80598A60[];
 
@@ -52,13 +52,13 @@ int CardPrinterChecker_State_CardEjectWait(CardPrinterChecker *self)
             card_eject_init();
             return 0;
         }
-        self->state = lbl_803FE908;
+        self->state = CardPrinterChecker_States_data_803FE908;
         self->stage = 0;
         self->errorCode = Sci2Card_ClassifyStatusToCode();
         return 1;
     }
     DebugPrintf("ccard eject ok\n");
-    self->state = lbl_803FE8FC;
+    self->state = CardPrinterChecker_State_CardEjectWait_data_803FE8FC;
     self->stage = 0;
     return 1;
 }
@@ -76,7 +76,7 @@ int CardPrinterChecker_State_CleaningWait(CardPrinterChecker *self)
     }
     if (Sci2Card_IsStatusOkNonTerm(card) == 1) {
         DebugPrintf("cleaning ok\n");
-        self->state = lbl_803FE8F0;
+        self->state = CardPrinterChecker_State_CleaningWait_data_803FE8F0;
         card_eject_init();
         self->stage = 4;
         *(int *)(lbl_80598A60 + 0x26C) = 0;
@@ -84,7 +84,7 @@ int CardPrinterChecker_State_CleaningWait(CardPrinterChecker *self)
         return 0;
     }
     DebugPrintf("cleaning error\n");
-    self->state = lbl_803FE908;
+    self->state = CardPrinterChecker_States_data_803FE908;
     self->stage = 0;
     self->errorCode = Sci2Card_ClassifyStatusToCode();
     return 1;
@@ -103,12 +103,12 @@ int CardPrinterChecker_State_CardResetWait(CardPrinterChecker *self)
             card_send_cleaning_cmd_init();
             return 0;
         }
-        self->state = lbl_803FE908;
+        self->state = CardPrinterChecker_States_data_803FE908;
         self->stage = 0;
         self->errorCode = Sci2Card_ClassifyStatusToCode();
         return 1;
     }
-    self->state = lbl_803FE8E4;
+    self->state = CardPrinterChecker_State_CardResetWait_data_803FE8E4;
     self->stage = 3;
     Sci2Card_BeginReset();
     return 0;

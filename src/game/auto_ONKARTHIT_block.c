@@ -290,8 +290,8 @@ extern unsigned int g_playerCarObject;
 extern unsigned int g_raceCamera;
 extern unsigned int lbl_806D0051;
 extern void *lbl_806D1060;
-extern float lbl_806D1080;
-extern float lbl_806D1084;
+extern float KartMovement_UpdateBoostVisualBlend_bss_806D1080;
+extern float KartMovement_UpdateBoostVisualBlend_bss_806D1084;
 extern void *lbl_806D109C;
 extern void *lbl_806D10A0;
 extern const int lbl_806D26E0[1];
@@ -365,8 +365,8 @@ extern unsigned int jumptable_803F7668[];
 extern unsigned int lbl_803F56F0[];
 extern unsigned int lbl_803F5700[];
 extern unsigned int lbl_803F5710[];
-extern unsigned int lbl_803F75D0[];
-extern unsigned int lbl_803F75F8[];
+extern unsigned int CarObject_HandleItemEffect_data_803F75D0[];
+extern unsigned int CarObject_vtable_803F75F8[];
 extern unsigned int lbl_803F7690[];
 extern unsigned int lbl_803F76A8[];
 
@@ -787,7 +787,7 @@ struct ItemSecondaryLane {
     float blend;                       /* 0xc */
 };
 
-/* 7-entry x 0x18 item remap descriptor table (.rodata lbl_802EBE64) */
+/* 7-entry x 0x18 item remap descriptor table (.rodata ItemEffect_SelectAndDispatch_rodata_802EBE64) */
 typedef struct ItemRemapEntry {
     int type;                          /* 0x0 */
     int itemId;                        /* 0x4 */
@@ -798,7 +798,7 @@ typedef struct ItemRemapEntry {
 /* vtable slot 13 (offset 0x34) dispatch fn used by ItemEffect_SelectAndDispatch */
 typedef int (*EffectDispatchFn)(void *obj, void *args, int mode);
 
-/* 58-entry x 0x64 item effect descriptor table (.rodata lbl_802EBF0C) */
+/* 58-entry x 0x64 item effect descriptor table (.rodata ItemEffect_GenericHandler_rodata_802EBF0C) */
 struct ItemEffectDesc;
 
 /* per-desc apply hook at +0x50, invoked indirectly by ItemEffect_Dispatch
@@ -951,7 +951,7 @@ void Bitset_SetBit(Bitset *self, unsigned long idx, unsigned char val);
 
 /* --- views for ItemEffect_Trap / ItemEffect_Projectile --- */
 
-/* trap effect table entry (stride 0x18, lbl_802ED7BC) */
+/* trap effect table entry (stride 0x18, ItemEffect_Trap_rodata_802ED7BC) */
 typedef struct TrapFxEntry {
     int id;             /* 0x0 */
     float scaleA;       /* 0x4: TryArm vector scale */
@@ -962,7 +962,7 @@ typedef struct TrapFxEntry {
 } TrapFxEntry;
 
 
-/* projectile effect table entry (stride 0x14, lbl_802ED5B4) */
+/* projectile effect table entry (stride 0x14, ItemEffect_Projectile_rodata_802ED5B4) */
 typedef struct ProjFxEntry {
     int id;             /* 0x0 */
     float scaleA;       /* 0x4 */
@@ -1321,7 +1321,7 @@ static const unsigned int lbl_802EBA18[255] = {
     0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000,
     0x42A6AAAB, 0x459C4000, 0x42A6AAAB,
 };
-static const float lbl_802EBE14[8] = {
+static const float KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[8] = {
     0.625f, 0.5555556f, 0.1f, 0.0325f, 1.25f, 0.5555556f, 0.2f, 0.065f
 };
 /* Initial values of the half-extent / centre vectors in
@@ -1331,7 +1331,7 @@ static const Vec3 lbl_802EBE34 = { 0.0f, 0.0f, 0.0f };
 static const Vec3 lbl_802EBE40 = { 0.0f, 0.0f, 0.0f };
 static const Vec3 lbl_802EBE4C = { 0.0f, 0.0f, 0.0f };
 static const Vec3 lbl_802EBE58 = { 0.0f, 0.0f, 0.0f };
-static const ItemRemapEntry lbl_802EBE64[7] = {
+static const ItemRemapEntry ItemEffect_SelectAndDispatch_rodata_802EBE64[7] = {
     {1, 119, 3, {23, 43, 62}},
     {0, 71, 2, {279, 23, -1}},
     {0, 3, 3, {285, 281, 282}},
@@ -1340,7 +1340,7 @@ static const ItemRemapEntry lbl_802EBE64[7] = {
     {0, 3, 3, {285, 281, 23}},
     {0, 88, 3, {285, 281, 23}},
 };
-static const ItemEffectDesc lbl_802EBF0C[58] = {
+static const ItemEffectDesc ItemEffect_GenericHandler_rodata_802EBF0C[58] = {
     {0, 43, 1, {0, 0, 0}, 30, 480, 0, {0, 0, 0}, 4, 8.0f, 0.8f, 0.8f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
     {0, 48, 1, {0, 0, 0}, 30, 60, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
     {0, 49, 1, {0, 0, 0}, 30, 60, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 0, 0.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
@@ -1400,7 +1400,7 @@ static const ItemEffectDesc lbl_802EBF0C[58] = {
     {0, 282, 0, {0, 0, 0}, 30, 300, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 1, 5.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
     {0, 288, 0, {0, 0, 0}, 30, 600, 0, {0, 0, 0}, 0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0, 0.0f, 0.0f, 1, 10.0f, 0, {0, 0, 0, 0}, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}},
 };
-static const ProjFxEntry lbl_802ED5B4[26] = {
+static const ProjFxEntry ItemEffect_Projectile_rodata_802ED5B4[26] = {
     {95, 0.3f, 1, -1, -1},
     {96, 0.3f, 1, -1, -1},
     {69, 0.5f, 1, -1, -1},
@@ -1428,7 +1428,7 @@ static const ProjFxEntry lbl_802ED5B4[26] = {
     {290, 0.9f, 2, -1, -1},
     {291, 0.9f, 1, -1, -1},
 };
-static const TrapFxEntry lbl_802ED7BC[11] = {
+static const TrapFxEntry ItemEffect_Trap_rodata_802ED7BC[11] = {
     {50, 0.5f, 24.0f, 30, -1, -1},
     {156, 0.5f, 24.0f, 30, -1, -1},
     {98, 0.5f, 24.0f, 45, -1, -1},
@@ -1441,7 +1441,7 @@ static const TrapFxEntry lbl_802ED7BC[11] = {
     {284, 0.5f, 24.0f, 60, -1, -1},
     {97, 0.5f, 24.0f, 30, -1, -1},
 };
-static const ItemCatEntry12 lbl_802ED8C4[9] = {
+static const ItemCatEntry12 ItemEffect_Explosion_rodata_802ED8C4[9] = {
     {112, -1, -1},
     {76, -1, -1},
     {99, -1, -1},
@@ -1458,7 +1458,7 @@ static const ItemCatEntry12 lbl_802ED930[1] = {
 static const ItemCatEntry16 lbl_802ED93C[1] = {
     {107, 60, -1, -1},
 };
-static const unsigned int lbl_802ED94C[38] = {
+static const unsigned int CarObject_HandleItemEffect_rodata_802ED94C[38] = {
     0x00000017, 0x00000024, 0x00000015, 0x0000001F,
     0x0000001E, 0x00000020, 0x00000016, 0x00000010,
     0x0000000E, 0x00000028, 0x00000026, 0x00000025,
@@ -1470,10 +1470,10 @@ static const unsigned int lbl_802ED94C[38] = {
     0x0000008B, 0x00000091, 0x00000099, 0x0000008C,
     0x0000009D, 0x0000009A,
 };
-static const unsigned int lbl_802ED9E4[4] = {
+static const unsigned int KartItem_ApplyImpactReflectAndDampVelocity_rodata_802ED9E4[4] = {
     0x0000009B, 0x0000008C, 0x0000009D, 0x0000009A,
 };
-static const unsigned int lbl_802ED9F4[3] = {
+static const unsigned int KartItem_PerFrameStep_rodata_802ED9F4[3] = {
     0x00000000, 0x00000000, 0x00000000,
 };
 const char lbl_802EDA00[12] = "clCarObject";
@@ -2913,7 +2913,7 @@ static inline ItemSecondaryLane *KartItem_GetSecondary(KartItemOpsView *self) {
     return self->secondary;
 }
 static inline unsigned char KartItem_IsReflectLane(ItemSecondaryLane *sec) {
-    const unsigned int *t = lbl_802ED9E4;
+    const unsigned int *t = KartItem_ApplyImpactReflectAndDampVelocity_rodata_802ED9E4;
     int i;
     for (i = 0; i < 4; i++) {
         if (sec->itemId == (int)t[i]) return 0;
@@ -4130,7 +4130,7 @@ void KartItem_PerFrameStep(PfsKartView *self, void *arg) { /* 0x8004C320 size:0x
     float fwdSpeed;
     float t0, t1, t2, t3, t4, t5, t6, t7;
 
-    G.scaled = *(Vec3 *)lbl_802ED9F4;
+    G.scaled = *(Vec3 *)KartItem_PerFrameStep_rodata_802ED9F4;
     G.scaled.x = 0.016666668f * self->movement->velX;
     G.scaled.y = 0.016666668f * self->movement->velY;
     G.scaled.z = 0.016666668f * self->movement->velZ;
@@ -4489,9 +4489,9 @@ asm void KartItem_PerFrameStep(void) { /* 0x8004C320 size:0xC44 */
     stw r31, 0xfc(r1)
     stw r30, 0xf8(r1)
     stw r29, 0xf4(r1)
-    lis r5, lbl_802ED9F4@ha
+    lis r5, KartItem_PerFrameStep_rodata_802ED9F4@ha
     mr r31, r4
-    addi r6, r5, lbl_802ED9F4@l
+    addi r6, r5, KartItem_PerFrameStep_rodata_802ED9F4@l
     mr r30, r3
     lwz r5, 0x0(r6)
     addi r4, r1, 0x54
@@ -6888,8 +6888,8 @@ typedef void (*KartItemRemoveFn)(void *, KartItemListKey);
 #define gCarList (*(KartItemCarList **)&g_carObjectList)
 extern "C" void *KartItem_Dtor(KartItemObj *self, short flag) { /* 0x8004E2B0 size:0x368 */
     if (self) {
-        self->vptr = (void *)lbl_803F75F8;
-        self->warpVptr = (char *)lbl_803F75F8 + 0x10;
+        self->vptr = (void *)CarObject_vtable_803F75F8;
+        self->warpVptr = (char *)CarObject_vtable_803F75F8 + 0x10;
         g_playerCarObject = 0;
         if (self->f20 == 1 && self->f21 == 0 && self->f20 != 0) {
             StrPcb_SetCmdByte2d(StrPcb_GetInstance(), 0x28);
@@ -7889,7 +7889,7 @@ int CarObject_HandleItemEffect(ItemSecondaryLane *self, int itemId) { /* 0x8004F
 
     found = 0;
     for (i = 0; i < 38; i++) {
-        if (itemId == (int)lbl_802ED94C[i]) {
+        if (itemId == (int)CarObject_HandleItemEffect_rodata_802ED94C[i]) {
             found = 1;
             break;
         }
@@ -7901,7 +7901,7 @@ int CarObject_HandleItemEffect(ItemSecondaryLane *self, int itemId) { /* 0x8004F
         return 1;
     }
     found2 = 0;
-    p = (short *)lbl_803F75D0;
+    p = (short *)CarObject_HandleItemEffect_data_803F75D0;
     for (j = 0; j < 13; j++) {
         if (itemId == *p) {
             found2 = 1;
@@ -8029,7 +8029,7 @@ static inline int RemapPick(const ItemRemapEntry *e, int itemId, void *itemObj) 
     }
 }
 static inline int RemapItem(int itemId, void *itemObj) {
-    const ItemRemapEntry *e = lbl_802EBE64;
+    const ItemRemapEntry *e = ItemEffect_SelectAndDispatch_rodata_802EBE64;
     int n = 7;
     do {
         int s = RemapPick(e, itemId, itemObj);
@@ -8081,7 +8081,7 @@ int ItemEffect_GenericHandler(ItemEffectTable *self, int itemId, void *itemObj, 
         }
         return 2;
     }
-    desc = (ItemEffectDesc *)lbl_802EBF0C;
+    desc = (ItemEffectDesc *)ItemEffect_GenericHandler_rodata_802EBF0C;
     for (n = 0; n < 0x3a; n++) {
         if ((unsigned char)(desc->itemId == itemId) == 1) {
             if (ItemStateGuard_IsActive(self->owner->stateBlock->guard) == 1 ||
@@ -8692,7 +8692,7 @@ int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *arg) {
     int idx;
     Vec3 vt; /* sp+0x14, tornado branch */
 
-    idx = ItemTable_FindEntryByIdStride20((ItemCatEntry20 *)lbl_802ED5B4, 0x1a, itemId);
+    idx = ItemTable_FindEntryByIdStride20((ItemCatEntry20 *)ItemEffect_Projectile_rodata_802ED5B4, 0x1a, itemId);
     if (idx >= 0) {
         if (self->curItemId >= 0) {
             return 2;
@@ -8707,7 +8707,7 @@ int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *arg) {
         ItemEffect_Projectile(self, idx, arg);
         return 0;
     }
-    idx = ItemTable_FindEntryByIdStride24((ItemCatEntry24 *)lbl_802ED7BC, 0xb, itemId);
+    idx = ItemTable_FindEntryByIdStride24((ItemCatEntry24 *)ItemEffect_Trap_rodata_802ED7BC, 0xb, itemId);
     if (idx >= 0) {
         if (self->curItemId >= 0) {
             return 2;
@@ -8716,7 +8716,7 @@ int ItemEffect_TryStartByCategory(ItemStateBlock *self, int itemId, void *arg) {
         ItemEffect_Trap(self, idx, arg);
         return 0;
     }
-    idx = ItemTable_FindEntryByIdStride12_v2((ItemCatEntry12 *)lbl_802ED8C4, 0x9, itemId);
+    idx = ItemTable_FindEntryByIdStride12_v2((ItemCatEntry12 *)ItemEffect_Explosion_rodata_802ED8C4, 0x9, itemId);
     if (idx >= 0) {
         if (self->curItemId >= 0) {
             return 2;
@@ -8851,7 +8851,7 @@ void ItemEffect_Explosion(ItemStateBlock *self, int idx, const void *arg) { /* 0
         p.z = fz;
     }
     ShadowBillboard_SetVec3At0x70(bb, &p);
-    *(IdFlagPair *)&self->activeId = *(const IdFlagPair *)&lbl_802ED8C4[idx].valA;
+    *(IdFlagPair *)&self->activeId = *(const IdFlagPair *)&ItemEffect_Explosion_rodata_802ED8C4[idx].valA;
 }
 #pragma exceptions reset
 
@@ -8888,7 +8888,7 @@ void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg) { /* 0x80051834 s
                 if (t2 + sum < lbl_806D26EC) scale = lbl_806D26E4;
             }
         }
-        scale *= lbl_802ED7BC[idx].scaleB;
+        scale *= ItemEffect_Trap_rodata_802ED7BC[idx].scaleB;
     }
     {
         KartMovementSpeedView *mv = self->owner->movement;
@@ -8905,15 +8905,15 @@ void ItemEffect_Trap(ItemStateBlock *self, int idx, void *arg) { /* 0x80051834 s
         }
         {
             float *p = v;
-            Proj_scale(v, lbl_802ED7BC[idx].scaleA);
+            Proj_scale(v, ItemEffect_Trap_rodata_802ED7BC[idx].scaleA);
         }
         /* the declared sixth float (k) is not set up by this caller: f3 holds a leftover product */
-        ((void (*)(void *, float *, int, float, float))ItemEffectDamp_TryArm)(self->guard, v, lbl_802ED7BC[idx].mode, mv->accel1c8, scale);
+        ((void (*)(void *, float *, int, float, float))ItemEffectDamp_TryArm)(self->guard, v, ItemEffect_Trap_rodata_802ED7BC[idx].mode, mv->accel1c8, scale);
     }
     {
         typedef struct { int a, b; } TrapPair;
         *(float *)((char *)self->owner->ownerDriver->itemBus + 0x28) = scale;
-        *(TrapPair *)&self->activeId = *(const TrapPair *)&lbl_802ED7BC[idx].valC;
+        *(TrapPair *)&self->activeId = *(const TrapPair *)&ItemEffect_Trap_rodata_802ED7BC[idx].valC;
     }
 }
 #pragma exceptions reset
@@ -8968,11 +8968,11 @@ void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg) { /* 0x8005
     d.y = d.y * mag2;
     d.z = d.z * mag2;
     Proj_scale(&d.x, 1.0f / 60.0f);
-    Proj_scale(&d.x, lbl_802ED5B4[idx].scaleA);
-    ItemEffectImpact_TryArm(self->guard, &d.x, self->owner->movement->transform, lbl_802ED5B4[idx].mode8);
+    Proj_scale(&d.x, ItemEffect_Projectile_rodata_802ED5B4[idx].scaleA);
+    ItemEffectImpact_TryArm(self->guard, &d.x, self->owner->movement->transform, ItemEffect_Projectile_rodata_802ED5B4[idx].mode8);
     {
         typedef struct { int a, b; } ProjPair;
-        *(ProjPair *)&self->activeId = *(const ProjPair *)&lbl_802ED5B4[idx].valC;
+        *(ProjPair *)&self->activeId = *(const ProjPair *)&ItemEffect_Projectile_rodata_802ED5B4[idx].valC;
     }
 }
 #pragma exceptions reset
@@ -9677,15 +9677,15 @@ Holder80052D40::~Holder80052D40() throw() {
 void KartMovement_UpdateBoostVisualBlend(KartDriverBusView *drv, KartMovementSpeedView *mv, float *outA, float *outB, int *counter) { /* 0x80052DBC size:0x164 */
     int ticks = drv->boostTicks1b4;
     if (ticks <= 0) {
-        lbl_806D1080 = 0.0f;
-        lbl_806D1084 = 0.0f;
+        KartMovement_UpdateBoostVisualBlend_bss_806D1080 = 0.0f;
+        KartMovement_UpdateBoostVisualBlend_bss_806D1084 = 0.0f;
         if (*counter > 0) {
             (*counter)--;
-            mv->boostBlendR = lbl_802EBE14[1];
-            mv->boostBlendG = lbl_802EBE14[2];
-            mv->boostBlendB = lbl_802EBE14[3];
+            mv->boostBlendR = KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[1];
+            mv->boostBlendG = KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[2];
+            mv->boostBlendB = KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[3];
             mv->accelFactor2c = 1.0f;
-            *outA = lbl_802EBE14[0];
+            *outA = KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[0];
         } else {
             mv->boostBlendR = 0.0f;
             mv->boostBlendG = 0.0f;
@@ -9699,17 +9699,17 @@ void KartMovement_UpdateBoostVisualBlend(KartDriverBusView *drv, KartMovementSpe
         sat = Saturate_Double((float)ticks - 1.0f, 0.0f, 2.0f);
         s = sat * lbl_806D2700;
         inv = 1.0f - s;
-        a = inv * lbl_802EBE14[0] + s * lbl_802EBE14[4];
-        r = inv * lbl_802EBE14[1] + s * lbl_802EBE14[5];
-        g = inv * lbl_802EBE14[2] + s * lbl_802EBE14[6];
-        b = inv * lbl_802EBE14[3] + s * lbl_802EBE14[7];
+        a = inv * KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[0] + s * KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[4];
+        r = inv * KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[1] + s * KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[5];
+        g = inv * KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[2] + s * KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[6];
+        b = inv * KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[3] + s * KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[7];
         mv->boostBlendR = r;
         mv->boostBlendG = g;
         mv->boostBlendB = b;
         mv->accelFactor2c = 1.0f;
         *outA = a;
-        lbl_806D1080 = sat;
-        lbl_806D1084 = s;
+        KartMovement_UpdateBoostVisualBlend_bss_806D1080 = sat;
+        KartMovement_UpdateBoostVisualBlend_bss_806D1084 = s;
     }
 }
 

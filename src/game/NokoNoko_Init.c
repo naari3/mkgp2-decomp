@@ -20,8 +20,8 @@ extern unsigned char g_nokonokoEnable;
 extern NokoEntity *g_nokonokoHead;
 extern Normal3D *lbl_80677EC8[];
 extern Vec3 lbl_80677ED8;
-extern void *lbl_80495D34[];
-extern SpawnRow lbl_80495C28[];
+extern void *NokoNoko_Init_data_80495D34[];
+extern SpawnRow NokoNoko_Init_data_80495C28[];
 extern float lbl_806CFBD8, lbl_806D168C;
 extern int lbl_806D1684;
 extern const float lbl_806D9324, lbl_806D931C, lbl_806D9354;
@@ -59,20 +59,20 @@ extern "C" void NokoNoko_Init(float value) {
     lbl_80677ED8.z = lbl_806D9324;
     lbl_806D168C = lbl_806D9324;
     lbl_806D1684 = seconds % 64;
-    lbl_80677EC8[0] = new Normal3D(lbl_80495D34[0], 0);
+    lbl_80677EC8[0] = new Normal3D(NokoNoko_Init_data_80495D34[0], 0);
     clNormal3D_SetScale(lbl_80677EC8[0], 0, lbl_806D9324, lbl_806D931C, lbl_806D9324, lbl_806D9324);
     Object_SetJObjScaleXYZ(lbl_80677EC8[0], lbl_806D9354, lbl_806D9354, lbl_806D9354);
-    lbl_80677EC8[1] = new Normal3D(lbl_80495D34[1], 0);
+    lbl_80677EC8[1] = new Normal3D(NokoNoko_Init_data_80495D34[1], 0);
     clNormal3D_SetScale(lbl_80677EC8[1], 0, lbl_806D9324, lbl_806D931C, lbl_806D9324, lbl_806D9324);
     Object_SetJObjScaleXYZ(lbl_80677EC8[1], lbl_806D9354, lbl_806D9354, lbl_806D9354);
-    lbl_80677EC8[2] = new Normal3D(lbl_80495D34[2], 0);
+    lbl_80677EC8[2] = new Normal3D(NokoNoko_Init_data_80495D34[2], 0);
     clNormal3D_SetScale(lbl_80677EC8[2], 0, lbl_806D9324, lbl_806D931C, lbl_806D9324, lbl_806D9324);
     Object_SetJObjScaleXYZ(lbl_80677EC8[2], lbl_806D9354, lbl_806D9354, lbl_806D9354);
-    lbl_80677EC8[3] = new Normal3D(lbl_80495D34[3], 1);
+    lbl_80677EC8[3] = new Normal3D(NokoNoko_Init_data_80495D34[3], 1);
     clNormal3D_SetScale(lbl_80677EC8[3], 0, lbl_806D9324, lbl_806D931C, lbl_806D9324, lbl_806D9324);
     Object_SetJObjScaleXYZ(lbl_80677EC8[3], lbl_806D9354, lbl_806D9354, lbl_806D9354);
     NokoEntity *tail = 0;
-    for (SpawnRow *row = lbl_80495C28; !IsSpawnTableTerminator(row); ++row) {
+    for (SpawnRow *row = NokoNoko_Init_data_80495C28; !IsSpawnTableTerminator(row); ++row) {
         Vec3 pos;
         pos.x = row->x;
         pos.y = row->y;

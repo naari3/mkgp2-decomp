@@ -1,24 +1,24 @@
-#define lbl_805B24CC ((RaceAux *)lbl_805B24CC)
-#define lbl_805B256C (*(RaceAux *)lbl_805B256C)
-#define lbl_805D2938 ((int *)lbl_805D2938)
-#define lbl_805D2948 ((RaceWideRow *)lbl_805D2948)
+#define SetCourseParams_bss_805B24CC ((RaceAux *)SetCourseParams_bss_805B24CC)
+#define RaceResult_StoreLatest_bss_805B256C (*(RaceAux *)RaceResult_StoreLatest_bss_805B256C)
+#define RaceSlot_ResetAll_bss_805D2938 ((int *)RaceSlot_ResetAll_bss_805D2938)
+#define SetCourseParams_bss_805D2948 ((RaceWideRow *)SetCourseParams_bss_805D2948)
 static inline void RaceEntries_Reset(RaceWideRow *e) {
     int i;
     for (i = 0; i < 8; i++) {
         InitializeWideRow(&e[i]);
     }
-    lbl_806D12D8 = 0;
+    SetCourseParams_bss_806D12D8 = 0;
 }
 
 RaceContext::RaceContext() {
     int i;
 
     ItemTable_PopulateAliasedSlots();
-    if (lbl_806D1259 != 1) {
+    if (RaceContext_InitDefaults_bss_806D1259 != 1) {
         for (i = 0; i <= 3; i++) {
-            memset(lbl_805B2580 + i * 0x8000, (signed char)((signed char)lbl_80598A60[0x21] - 1), 0x8000);
+            memset(SetCourseParams_bss_805B2580 + i * 0x8000, (signed char)((signed char)lbl_80598A60[0x21] - 1), 0x8000);
         }
-        lbl_806D1259 = 1;
+        RaceContext_InitDefaults_bss_806D1259 = 1;
     }
 
     g_timerModeEnabled = 1;
@@ -27,23 +27,23 @@ RaceContext::RaceContext() {
     g_courseVariantIdx = 0;
     g_reverseRoundFlag = 0;
     for (i = 0; i < 8; i++) {
-        lbl_805AC600[i].driverId = -1;
-        lbl_805AC600[i].charId = -1;
-        lbl_805AC600[i].field8 = 1;
-        lbl_805AC600[i].items[0] = 0x24;
-        lbl_805AC600[i].items[1] = 0x25;
-        lbl_805AC600[i].items[2] = 0x26;
-        lbl_805AC600[i].kartVariant = 0;
-        lbl_805D2938[i] = 0;
+        SetCourseParams_bss_805AC600[i].driverId = -1;
+        SetCourseParams_bss_805AC600[i].charId = -1;
+        SetCourseParams_bss_805AC600[i].field8 = 1;
+        SetCourseParams_bss_805AC600[i].items[0] = 0x24;
+        SetCourseParams_bss_805AC600[i].items[1] = 0x25;
+        SetCourseParams_bss_805AC600[i].items[2] = 0x26;
+        SetCourseParams_bss_805AC600[i].kartVariant = 0;
+        RaceSlot_ResetAll_bss_805D2938[i] = 0;
     }
     if (g_cupId >= 0 && g_longRoundFlag >= 0) {
         g_raceStarted = 0;
     }
 
-    lbl_806CF10C = 0;
-    if (!lbl_806D1258) {
-        RaceAux *row = lbl_805B24CC;
-        RaceWideRow *e = lbl_805D2948;
+    SetCourseParams_data_806CF10C = 0;
+    if (!SetCourseParams_bss_806D1258) {
+        RaceAux *row = SetCourseParams_bss_805B24CC;
+        RaceWideRow *e = SetCourseParams_bss_805D2948;
         for (i = 0; i < 5; i++) {
             row[i].value = 0;
             row[i].enabled = 0;
@@ -56,31 +56,31 @@ RaceContext::RaceContext() {
             row[i].current = lbl_806D4790;
             row[i].limit = lbl_806D4798;
         }
-        lbl_805B256C.value = 0;
-        lbl_805B256C.enabled = 0;
-        lbl_805B256C.current = lbl_806D4790;
-        lbl_805B256C.limit = lbl_806D4798;
-        lbl_806D1280 = 4;
-        lbl_806D1258 = 1;
+        RaceResult_StoreLatest_bss_805B256C.value = 0;
+        RaceResult_StoreLatest_bss_805B256C.enabled = 0;
+        RaceResult_StoreLatest_bss_805B256C.current = lbl_806D4790;
+        RaceResult_StoreLatest_bss_805B256C.limit = lbl_806D4798;
+        SetCourseParams_bss_806D1280 = 4;
+        SetCourseParams_bss_806D1258 = 1;
         RaceEntries_Reset(e);
     }
 
     g_ccClass = 0;
     for (i = 0; i < 7; i++) {
-        lbl_805AC600[i].driverId = 6;
-        lbl_805AC600[i].charId = i + 1;
-        lbl_805AC600[i].field8 = 1;
-        lbl_805AC600[i].fieldC = 0;
-        lbl_805AC600[i].kartVariant = 0;
+        SetCourseParams_bss_805AC600[i].driverId = 6;
+        SetCourseParams_bss_805AC600[i].charId = i + 1;
+        SetCourseParams_bss_805AC600[i].field8 = 1;
+        SetCourseParams_bss_805AC600[i].fieldC = 0;
+        SetCourseParams_bss_805AC600[i].kartVariant = 0;
     }
-    lbl_805AC600[7].driverId = 0;
-    lbl_805AC600[7].charId = 0;
-    lbl_805AC600[7].field8 = 1;
-    lbl_805AC600[7].fieldC = 0;
-    lbl_805AC600[7].kartVariant = 0;
-    lbl_805AC600[7].items[0] = 0x2B;
-    lbl_805AC600[7].items[1] = 0x2D;
-    lbl_805AC600[7].items[2] = 0x32;
+    SetCourseParams_bss_805AC600[7].driverId = 0;
+    SetCourseParams_bss_805AC600[7].charId = 0;
+    SetCourseParams_bss_805AC600[7].field8 = 1;
+    SetCourseParams_bss_805AC600[7].fieldC = 0;
+    SetCourseParams_bss_805AC600[7].kartVariant = 0;
+    SetCourseParams_bss_805AC600[7].items[0] = 0x2B;
+    SetCourseParams_bss_805AC600[7].items[1] = 0x2D;
+    SetCourseParams_bss_805AC600[7].items[2] = 0x32;
     lbl_806D1264[0] = 0x2B;
     lbl_806D1264[1] = 0x2D;
     lbl_806D1264[2] = 0x32;
@@ -109,7 +109,7 @@ RaceContext::RaceContext() {
     lbl_806D12E4[1] = 0;
     lbl_806D12E4[2] = 0;
 }
-#undef lbl_805B24CC
-#undef lbl_805B256C
-#undef lbl_805D2938
-#undef lbl_805D2948
+#undef SetCourseParams_bss_805B24CC
+#undef RaceResult_StoreLatest_bss_805B256C
+#undef RaceSlot_ResetAll_bss_805D2938
+#undef SetCourseParams_bss_805D2948

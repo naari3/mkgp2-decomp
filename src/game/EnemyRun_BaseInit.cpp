@@ -2,7 +2,7 @@
 #include "game/EnemyRunInitPrivate.h"
 extern "C" {
 extern void *lbl_804E4C18[];
-extern PhysicsPlainVec lbl_803BDD58;
+extern PhysicsPlainVec EnemyRun_BaseInit_rodata_803BDD58;
 void GetStartPosition(int,float *,float *,float *);
 unsigned char Terrain_GetGroundHeightWithPenetration(void *,float *,void *,void *,float);
 float GetCourseStartYaw();
@@ -41,7 +41,7 @@ EnemyRunState::EnemyRunState(int owner,int driver,int kart,int pathIndex,int cha
     if(character<0 || character>=10) characterId=0;
     else characterId=character;
     GetStartPosition(kartId,&position.x,&position.y,&position.z);
-    PhysicsPlainVec ground=lbl_803BDD58;
+    PhysicsPlainVec ground=EnemyRun_BaseInit_rodata_803BDD58;
     ground.x=position.x;
     ground.y=position.y;
     ground.z=position.z;

@@ -21,24 +21,24 @@ extern void fn_801DA46C();
 extern void fn_801DA574();
 extern void fn_801DA700();
 extern void fn_801DAB20();
-extern char lbl_8039D8C0[];
-extern char lbl_8039D8CC[];
-extern char lbl_8039D8D8[];
-extern char lbl_8039D8E4[];
-extern char lbl_8039D8F0[];
-extern char lbl_8039D8FC[];
-extern char lbl_8039D908[];
-extern char lbl_8039D914[];
-extern char lbl_8039D920[];
-extern char lbl_8039D92C[];
-extern char lbl_8039D938[];
-extern char lbl_8039D944[];
-extern char lbl_8039D950[];
-extern char lbl_8039D95C[];
-extern char lbl_8039D968[];
-extern char lbl_8039D974[];
-extern char lbl_8039D980[];
-extern char lbl_8039D98C[];
+extern char data_8049B530_rodata_8039D8C0[];
+extern char data_8049B530_rodata_8039D8CC[];
+extern char data_8049B530_rodata_8039D8D8[];
+extern char data_8049B530_rodata_8039D8E4[];
+extern char data_8049B530_rodata_8039D8F0[];
+extern char data_8049B530_rodata_8039D8FC[];
+extern char data_8049B530_rodata_8039D908[];
+extern char data_8049B530_rodata_8039D914[];
+extern char data_8049B530_rodata_8039D920[];
+extern char data_8049B530_rodata_8039D92C[];
+extern char data_8049B530_rodata_8039D938[];
+extern char data_8049B530_rodata_8039D944[];
+extern char data_8049B530_rodata_8039D950[];
+extern char data_8049B530_rodata_8039D95C[];
+extern char data_8049B530_rodata_8039D968[];
+extern char data_8049B530_rodata_8039D974[];
+extern char data_8049B530_rodata_8039D980[];
+extern char data_8049B530_rodata_8039D98C[];
 extern char lbl_8039D9A4[];
 extern char lbl_8039D9B0[];
 extern char lbl_8039D9BC[];
@@ -103,13 +103,13 @@ extern char lbl_8039DD7C[];
 extern char lbl_8039DD94[];
 extern char lbl_8039DDA0[];
 extern char lbl_806CFE88[];
-extern char lbl_806CFE90[];
+extern char data_8049B530_data_806CFE90[];
 extern char lbl_806CFE98[];
 extern char lbl_806CFEA0[];
 extern char lbl_806CFEAC[];
 extern char lbl_806CFEB4[];
-extern char lbl_806CFEC0[];
-extern char lbl_806CFEC8[];
+extern char data_8049B530_data_806CFEC0[];
+extern char data_8049B530_data_806CFEC8[];
 extern char lbl_806CFED8[];
 extern char lbl_806CFEE0[];
 extern char lbl_806CFEE8[];
@@ -147,13 +147,13 @@ typedef struct TableEntry_8049BC30 {
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_8049B530[3] = {
+void *data_8049B530_data_8049B530[3] = {
     (void *)&lbl_806CFE88,
     0,
     0
 };
-void *lbl_8049B53C[35] = {
-    (void *)&lbl_806CFE90,
+void *RankingSpriteOwnerCtor_vtable_8049B53C[35] = {
+    (void *)&data_8049B530_data_806CFE90,
     0,
     (void *)fn_801D3364,
     (void *)fn_801D2F0C,
@@ -215,33 +215,33 @@ void *lbl_8049B5F4[5] = {
     (void *)fn_801D3A70,
     (void *)fn_801D3FF0
 };
-char *lbl_8049B608[13][2] = {
+char *PlayerData_Construct_data_8049B608[13][2] = {
     (char *)&lbl_806DA080,
-    (char *)&lbl_8039D8C0,
+    (char *)&data_8049B530_rodata_8039D8C0,
     (char *)&lbl_806DA088,
-    (char *)&lbl_8039D8CC,
+    (char *)&data_8049B530_rodata_8039D8CC,
     (char *)&lbl_806DA090,
-    (char *)&lbl_8039D8D8,
+    (char *)&data_8049B530_rodata_8039D8D8,
     (char *)&lbl_806DA098,
-    (char *)&lbl_8039D8E4,
+    (char *)&data_8049B530_rodata_8039D8E4,
     (char *)&lbl_806DA0A0,
-    (char *)&lbl_8039D8F0,
-    (char *)&lbl_8039D8FC,
-    (char *)&lbl_8039D908,
-    (char *)&lbl_8039D914,
+    (char *)&data_8049B530_rodata_8039D8F0,
+    (char *)&data_8049B530_rodata_8039D8FC,
+    (char *)&data_8049B530_rodata_8039D908,
+    (char *)&data_8049B530_rodata_8039D914,
     (char *)&lbl_806DA0A8,
-    (char *)&lbl_8039D920,
-    (char *)&lbl_8039D92C,
-    (char *)&lbl_8039D938,
+    (char *)&data_8049B530_rodata_8039D920,
+    (char *)&data_8049B530_rodata_8039D92C,
+    (char *)&data_8049B530_rodata_8039D938,
     (char *)&lbl_806DA0B0,
-    (char *)&lbl_8039D944,
-    (char *)&lbl_8039D950,
-    (char *)&lbl_8039D95C,
+    (char *)&data_8049B530_rodata_8039D944,
+    (char *)&data_8049B530_rodata_8039D950,
+    (char *)&data_8049B530_rodata_8039D95C,
     (char *)&lbl_806DA0B8,
-    (char *)&lbl_8039D968,
-    (char *)&lbl_8039D974,
-    (char *)&lbl_8039D980,
-    (char *)&lbl_8039D98C
+    (char *)&data_8049B530_rodata_8039D968,
+    (char *)&data_8049B530_rodata_8039D974,
+    (char *)&data_8049B530_rodata_8039D980,
+    (char *)&data_8049B530_rodata_8039D98C
 };
 /* decl: u8 */
 void *lbl_8049B670[12] = {
@@ -553,7 +553,7 @@ void *lbl_8049B6A0[292] = {
     (void *)0x5,
     0
 };
-signed char lbl_8049BB30[120] = {
+signed char clFlowKart_UpdateDisplay_data_8049BB30[120] = {
     3, 3, 3, 3, 3, 3, 2, 4, 4, 5, 2, 2,
     2, 4, 4, 4, 2, 3, 2, 4, 4, 5, 2, 2,
     3, 3, 3, 4, 2, 3, 5, 2, 2, 3, 3, 3,
@@ -565,18 +565,18 @@ signed char lbl_8049BB30[120] = {
     2, 4, 5, 5, 2, 3, 3, 3, 4, 4, 2, 4,
     5, 2, 3, 3, 3, 4, 4, 2, 4, 0, 0, 0
 };
-short lbl_8049BBA8[14] = {
+short clFlowKart_Init_data_8049BBA8[14] = {
     5759, 5760, 5769, 5763, 5771, 5768, 5770, 5764, 5761, 5766, 5765, 5762,
     5767, 0
 };
-void *lbl_8049BBC4[3] = {
-    (void *)&lbl_806CFEC0,
+void *data_8049B530_data_8049BBC4[3] = {
+    (void *)&data_8049B530_data_806CFEC0,
     0,
     0
 };
 /* decl: char */
-void *lbl_8049BBD0[6] = {
-    (void *)&lbl_806CFEC8,
+void *FKOwner_vtable_8049BBD0[6] = {
+    (void *)&data_8049B530_data_806CFEC8,
     0,
     (void *)dtor,
     (void *)clFlowKart_Update,

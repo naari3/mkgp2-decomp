@@ -4,7 +4,7 @@
  * the ctor reaches it through the section anchor, which puts the pool lis
  * ahead of the vtable stores. */
 extern "C" {
-extern const char lbl_8036CA00[0x3FC] = {
+extern const char Jungle16ACtor_rodata_8036CA00[0x3FC] = {
     0x3F, 0x80, 0x00, 0x00, 0x3F, 0x33, 0x33, 0x33, 0x3F, 0x66, 0x66, 0x66, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x00, 0x00,
     0x42, 0x85, 0x55, 0x56, 0x44, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x3B, 0x80, 0x00,
@@ -79,7 +79,7 @@ extern const unsigned char lbl_8036CE0C[0x3C] = {
 };
 extern const char lbl_8036CE48[] = "DKA_chara_DKA_ostrich_A_joint";
 extern const char lbl_8036CE68[] = "DKA_chara_DKA_ostrich_B_joint";
-extern const Desc16ARaw lbl_8036CE88[2] = {
+extern const Desc16ARaw Jungle16AUpdate_rodata_8036CE88[2] = {
     {lbl_8036CE48, {0x444C452D, 0x00000000, 0xC3C35EFA, 0xBF3851F6, 0x43F905C9, 0x00000000, 0xC3999D71, 0xBF3851F6}},
     {lbl_8036CE68, {0x445C0FB1, 0x00000000, 0xC3D0D0A4, 0x3FCB8511, 0x448EDBBE, 0x00000000, 0xC3ABFF9E, 0xBF3851F6}},
 };
@@ -97,11 +97,11 @@ extern const char lbl_8036CF44[] = " CreateMapEffect : clDKOstrich\n";
 #pragma opt_common_subs off
 Jungle16A::Jungle16A() {
     DebugPrintf(lbl_8036CF44);
-    model = new clNormal3D(lbl_806CFA00, 0);
+    model = new clNormal3D(Jungle16ACtor_data_806CFA00, 0);
     clNormal3D_SetScale(model, 0, lbl_806D8A68, lbl_806D8A54, lbl_806D8A68, lbl_806D8A68);
     zone = new Zone16A(lbl_8036CE0C, 1);
     motions = (Motion16A *)FUN_8003b120(0x40);
-    const Desc16A *desc = (const Desc16A *)lbl_8036CE88;
+    const Desc16A *desc = (const Desc16A *)Jungle16AUpdate_rodata_8036CE88;
     for (int i = 0; i < 2; ++i) {
         motions[i].joint = ResolveJointByName(model, desc[i].name);
         motions[i].pos = desc[i].start;

@@ -6,7 +6,7 @@
 #pragma cplusplus on
 extern "C" {
 extern int g_cupId;
-extern char lbl_805D2B40[0x400];
+extern char Terrain_FlagsToDebugString_bss_805D2B40[0x400];
 extern void *memset(void *dst, int c, unsigned long n);
 extern char *strcat(char *dst, const char *src);
 
@@ -27,7 +27,7 @@ static inline void Terrain_PatchHi(unsigned int &flags)
 extern "C" char *Terrain_FlagsToDebugString(unsigned int flags)
 {
     unsigned int f;
-    char *buf = lbl_805D2B40;
+    char *buf = Terrain_FlagsToDebugString_bss_805D2B40;
     unsigned int g;
 
     memset(buf, 0, 0x400);

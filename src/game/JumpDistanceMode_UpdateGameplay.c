@@ -46,7 +46,7 @@ extern "C" {
 extern unsigned char g_raceEnded;
 extern const float lbl_806DAD74, lbl_806DAD7C, lbl_806DADA0, lbl_806DADA4, lbl_806DADA8, lbl_806DADAC;
 extern const XZ lbl_806DCF60;
-extern const Rect lbl_803C3D54;
+extern const Rect JumpDistanceMode_UpdateGameplay_rodata_803C3D54;
 extern const Vec3 lbl_803C3D80;
 
 unsigned char CarObject_IsAirborne(CarObject *car);
@@ -111,7 +111,7 @@ static inline unsigned char InStartZone(float *mtx) {
 
     p.x = mtx[3];
     p.z = mtx[11];
-    return InRect(&lbl_803C3D54, p);
+    return InRect(&JumpDistanceMode_UpdateGameplay_rodata_803C3D54, p);
 }
 
 static inline unsigned char IsLeaving(JDMode *self) {

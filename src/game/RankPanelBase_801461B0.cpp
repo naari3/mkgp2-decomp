@@ -2,7 +2,7 @@
  * 0x801461B0..0x8014640C: ranking panel base dtor and ctor.
  *
  * fn_80146260 is the constructor of a clCSParts-derived result panel
- * (vtable lbl_8048EF98): the inlined clCSPartsInerface / clCSParts ctors,
+ * (vtable clCSPartsResultPanel_vtable_8048EF98): the inlined clCSPartsInerface / clCSParts ctors,
  * then four clCSModel children built from this TU's .rodata parameter
  * blocks (0x80361ED0..0x803625E4). Mangled names are bridged to the
  * binary's symbols via tools/extab_user_renames.json; the inline
@@ -32,8 +32,8 @@ extern "C" {
 void MemoryManager_TimedFree(void *p);
 void fn_8013B87C(void *p, int flag);
 extern void *lbl_8048EB44[];
-extern void *lbl_8048EE48[];
-extern void *lbl_8048EF98[];
+extern void *clCSParts_vtable_8048EE48[];
+extern void *clCSPartsResultPanel_vtable_8048EF98[];
 TripleObj *fn_801461B0(TripleObj *self, short flag);
 }
 
@@ -42,13 +42,13 @@ TripleObj *fn_801461B0(TripleObj *self, short flag);
 extern "C" TripleObj *fn_801461B0(TripleObj *self, short flag)
 {
     if (self) {
-        self->vt14 = lbl_8048EF98;
+        self->vt14 = clCSPartsResultPanel_vtable_8048EF98;
         if (self->p18) {
             fn_8013B87C(self->p18, 1);
         }
         self->p18 = 0;
         if (self) {
-            self->vt14 = lbl_8048EE48;
+            self->vt14 = clCSParts_vtable_8048EE48;
             if (self->p18) {
                 fn_8013B87C(self->p18, 1);
             }
@@ -61,7 +61,7 @@ extern "C" TripleObj *fn_801461B0(TripleObj *self, short flag)
     return self;
 }
 
-static const unsigned int lbl_80361ED0[255] = {
+static const unsigned int RankPanelBase_801461B0_rodata_80361ED0[255] = {
     0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000,
     0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
     0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,

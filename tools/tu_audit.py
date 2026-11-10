@@ -479,7 +479,9 @@ class Model:
 
     def is_anon(self, addr):
         n = self.objs[addr]["name"]
-        return n.startswith("lbl_") or n.startswith("@") or n.startswith("jumptable") or "$" in n
+        # provisional names from tools/data_names.py (`Foo_data_80401234`) count as unnamed
+        return (n.startswith("lbl_") or n.startswith("@") or n.startswith("jumptable") or "$" in n
+                or re.search(r"_(data|bss|rodata)_[0-9A-F]{8}$", n) is not None)
 
     # -- per unit info
     def status_of(self, uid):

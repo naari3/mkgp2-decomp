@@ -69,18 +69,18 @@ extern float lbl_806CF08C;
 extern float lbl_806CF090;
 extern float lbl_806CF094;
 extern float lbl_806CF098;
-extern float lbl_806CF09C;
-extern float lbl_806CF0A0;
-extern float lbl_806CF0A4;
-extern float lbl_806CF0A8;
-extern float lbl_806CF0AC;
-extern float lbl_806CF0B0;
-extern float lbl_806CF0B4;
-extern float lbl_806CF0B8;
-extern float lbl_806CF0BC;
-extern float lbl_806CF0C0;
-extern float lbl_806CF0C4;
-extern float lbl_806CF0C8;
+extern float RenderObj_UseItem_data_806CF09C;
+extern float RenderObj_UseItem_data_806CF0A0;
+extern float RenderObj_UseItem_data_806CF0A4;
+extern float RenderObj_UseItem_data_806CF0A8;
+extern float RenderObj_UseItem_data_806CF0AC;
+extern float RenderObj_UseItem_data_806CF0B0;
+extern float RenderObj_UseItem_data_806CF0B4;
+extern float RenderObj_UseItem_data_806CF0B8;
+extern float RenderObj_UseItem_data_806CF0BC;
+extern float RenderObj_UseItem_data_806CF0C0;
+extern float RenderObj_UseItem_data_806CF0C4;
+extern float RenderObj_UseItem_data_806CF0C8;
 
 ItemData *GetItemDataEntry(int id);
 int ISESlot_StopEffect(void *self, int idx, unsigned char value);
@@ -199,13 +199,13 @@ int RenderObj_UseItem(UseKart *kart, unsigned char force, unsigned char throwBac
     } else if ((signed char)data->kind == 7) {
         SetAnimState(kart, 0x1C, data, 0, lbl_806CF08C, lbl_806CF090, lbl_806CF094, lbl_806CF098);
     } else if ((signed char)data->kind == 0xB) {
-        SetAnimState(kart, 0x1D, data, 0, lbl_806CF09C, lbl_806CF0A0, lbl_806CF0A4, lbl_806CF0A8);
+        SetAnimState(kart, 0x1D, data, 0, RenderObj_UseItem_data_806CF09C, RenderObj_UseItem_data_806CF0A0, RenderObj_UseItem_data_806CF0A4, RenderObj_UseItem_data_806CF0A8);
     } else if ((signed char)data->kind == 1) {
-        SetAnimState(kart, 0x28, data, 0, lbl_806CF0AC, lbl_806CF0B0, lbl_806CF0B4, lbl_806CF0B8);
+        SetAnimState(kart, 0x28, data, 0, RenderObj_UseItem_data_806CF0AC, RenderObj_UseItem_data_806CF0B0, RenderObj_UseItem_data_806CF0B4, RenderObj_UseItem_data_806CF0B8);
     } else if ((signed char)data->kind == 3) {
         SetAnimState(kart, 0x26, data, 0, lbl_806CF08C, lbl_806CF090, lbl_806CF094, lbl_806CF098);
     } else if ((signed char)data->kind == 9) {
-        SetAnimState(kart, 0x27, data, 0, lbl_806CF0BC, lbl_806CF0C0, lbl_806CF0C4, lbl_806CF0C8);
+        SetAnimState(kart, 0x27, data, 0, RenderObj_UseItem_data_806CF0BC, RenderObj_UseItem_data_806CF0C0, RenderObj_UseItem_data_806CF0C4, RenderObj_UseItem_data_806CF0C8);
     } else {
         SetAnimState(kart, 0x17, data, 0, lbl_806CF08C, lbl_806CF090, lbl_806CF094, lbl_806CF098);
     }

@@ -5,8 +5,8 @@ struct EffectKey {
     float duration, x, scale, y;
 };
 extern "C" {
-extern MapEffectDef lbl_8036E000[6];
-extern Vec3f lbl_8036E048;
+extern MapEffectDef EffectFA_Update_rodata_8036E000[6];
+extern Vec3f EffectFA_Update_rodata_8036E048;
 extern const float lbl_806D8C34, lbl_806D8C38, lbl_806D8C3C, lbl_806D8C40;
 extern const float lbl_806D8C44, lbl_806D8C48, lbl_806D8C4C, lbl_806D8C50;
 extern const float lbl_806D8C54, lbl_806D8C58, lbl_806D8C5C, lbl_806D8C60;
@@ -68,7 +68,7 @@ void fn_8016F584(MapEffectFA *self) {
         break;
     }
     void *scene = GetCourseScene3D();
-    Vec3f delta = lbl_8036E048;
+    Vec3f delta = EffectFA_Update_rodata_8036E048;
     if (scene) {
         Vec3f camera;
         CObj_LoadProjMatrix(scene, &camera);
@@ -84,7 +84,7 @@ void fn_8016F584(MapEffectFA *self) {
         MapEffectPart *p = &self->parts[i];
         if (p->frame >= 0) {
             for (;;) {
-                EffectKey *k = (EffectKey *)lbl_8036E000[i].animation + p->frame;
+                EffectKey *k = (EffectKey *)EffectFA_Update_rodata_8036E000[i].animation + p->frame;
                 if (k->type == 2) {
                     p->frame = -1;
                     p->time = lbl_806D8C28;
@@ -98,7 +98,7 @@ void fn_8016F584(MapEffectFA *self) {
                 }
                 if (k->type == 1) {
                     float t = p->time / k->duration;
-                    EffectKey *next = (EffectKey *)lbl_8036E000[i].animation + (p->frame + 1);
+                    EffectKey *next = (EffectKey *)EffectFA_Update_rodata_8036E000[i].animation + (p->frame + 1);
                     p->x = t * (next->x - k->x) + k->x;
                     p->scale = t * (next->scale - k->scale) + k->scale;
                     p->y = t * (next->y - k->y) + k->y;

@@ -36,7 +36,7 @@ struct DustEffect {
     unsigned int delay, triggerDelay, timer2, timer3;
 };
 extern "C" {
-extern DustPositions lbl_8032A65C;
+extern DustPositions KartFx_DustStreamerPieceTick_rodata_8032A65C;
 extern float lbl_805DF3D0[16];
 extern const float lbl_806D51C0, lbl_806D51C4, lbl_806D51C8, lbl_806D51D4;
 extern const float lbl_806D51EC, lbl_806D51F8, lbl_806D521C, lbl_806D5220;
@@ -66,7 +66,7 @@ static inline bool Expired(DustEffect *effect, float decay)
 
 void KartFx_DustStreamerPieceTick(DustEffect *effect)
 {
-    DustPositions positions = lbl_8032A65C;
+    DustPositions positions = KartFx_DustStreamerPieceTick_rodata_8032A65C;
     DustVec3 transformed;
     float scale;
     switch (effect->phase) {

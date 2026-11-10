@@ -14,24 +14,24 @@ extern void fn_80244480();
 extern void fn_80244F68();
 extern void fn_802455EC();
 extern void fn_80245780();
-extern char lbl_806D0808[];
-extern char lbl_806D0810[];
-extern char lbl_806D0818[];
-extern char lbl_806D0820[];
-extern char lbl_806D0828[];
+extern char data_804EE760_data_806D0808[];
+extern char data_804EE760_data_806D0810[];
+extern char data_804EE760_data_806D0818[];
+extern char data_804EE760_data_806D0820[];
+extern char data_804EE760_data_806D0828[];
 extern char lbl_806D0830[];
 extern char lbl_806D0838[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804EE760[3] = {
-    (void *)&lbl_806D0808,
+void *sdata_806D0728_data_804EE760[3] = {
+    (void *)&data_804EE760_data_806D0808,
     0,
     0
 };
-void *lbl_804EE76C[6] = {
-    (void *)&lbl_806D0810,
+void *ItemListHud_vtable_804EE76C[6] = {
+    (void *)&data_804EE760_data_806D0810,
     0,
     (void *)fn_80243B78,
     (void *)fn_80242E80,
@@ -39,18 +39,18 @@ void *lbl_804EE76C[6] = {
     (void *)fn_80242DEC
 };
 /* decl: int */
-void *lbl_804EE784[3] = {
-    (void *)&lbl_806D0818,
+void *RivalMarker_vtable_804EE784[3] = {
+    (void *)&data_804EE760_data_806D0818,
     0,
     (void *)fn_80244378
 };
-void *lbl_804EE790[3] = {
-    (void *)&lbl_806D0820,
+void *GaugePulse_vtable_804EE790[3] = {
+    (void *)&data_804EE760_data_806D0820,
     0,
     (void *)fn_80244480
 };
-void *lbl_804EE79C[3] = {
-    (void *)&lbl_806D0828,
+void *ItemUseEffect_vtable_804EE79C[3] = {
+    (void *)&data_804EE760_data_806D0828,
     0,
     (void *)fn_80244F68
 };

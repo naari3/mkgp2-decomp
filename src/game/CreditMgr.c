@@ -39,8 +39,8 @@ typedef struct CoinConfig {
 } CoinConfig;
 
 extern CreditCfg lbl_80598A60;
-extern int lbl_806D1180; /* active slot */
-extern int lbl_806D1184; /* last queried slot */
+extern int CreditMgr_bss_806D1180; /* active slot */
+extern int CreditMgr_bss_806D1184; /* last queried slot */
 extern unsigned char lbl_806D117C;
 extern unsigned char lbl_806D117D; /* polling disabled */
 
@@ -303,8 +303,8 @@ extern "C" void CreditMgr_DrawCoinCreditBanner(int slot, unsigned int color, int
 int CreditMgr_ResetState(void) {
     lbl_806D117C = 0;
     lbl_806D117D = 0;
-    lbl_806D1180 = 0;
-    lbl_806D1184 = 0;
+    CreditMgr_bss_806D1180 = 0;
+    CreditMgr_bss_806D1184 = 0;
     CreditMgr_PollInsertAndPlay(1);
     return 1;
 }
@@ -340,7 +340,7 @@ void CreditMgr_PollInsertAndPlay(unsigned char silent) {
     }
     if (event == 1) {
         coins = CreditMgr_GetCoinCount(1);
-        per = CreditMgr_GetCoinsPerCredit(lbl_806D1184);
+        per = CreditMgr_GetCoinsPerCredit(CreditMgr_bss_806D1184);
         if (per == -1) {
             event = 2;
         } else if (coins % per == 0) {
@@ -393,11 +393,11 @@ int CreditMgr_PollAcceptor(void) {
 }
 
 int CreditMgr_SetActiveSlot(int slot) {
-    if (slot == lbl_806D1180) {
+    if (slot == CreditMgr_bss_806D1180) {
         return 0;
     }
-    lbl_806D1180 = slot;
-    lbl_806D1184 = slot;
+    CreditMgr_bss_806D1180 = slot;
+    CreditMgr_bss_806D1184 = slot;
     return 1;
 }
 
@@ -425,9 +425,9 @@ int CreditMgr_GetCreditCount(int slot) {
     }
     fn_80289B7C(&cfg);
     if (slot == -1) {
-        slot = lbl_806D1180;
+        slot = CreditMgr_bss_806D1180;
     }
-    lbl_806D1184 = slot;
+    CreditMgr_bss_806D1184 = slot;
     if ((unsigned int)st.credits >= cfg.perSlot[slot]) {
         return 0;
     }
@@ -474,9 +474,9 @@ int CreditMgr_GetCoinsPerCredit(int slot) {
     }
     fn_80289B7C(&cfg);
     if (slot == -1) {
-        slot = lbl_806D1180;
+        slot = CreditMgr_bss_806D1180;
     }
-    lbl_806D1184 = slot;
+    CreditMgr_bss_806D1184 = slot;
     if (cfg.mode > 1) {
         n = cfg.perSlot[slot];
     } else {

@@ -12,7 +12,7 @@ typedef struct ItemEffectState {
 } ItemEffectState;
 
 extern ItemEffectCallback lbl_803F1C68;
-extern ItemEffectCallback lbl_803FE078[];
+extern ItemEffectCallback ItemEffectState_Init_data_803FE078[];
 extern const float lbl_806D2F58;
 
 /* 0x8007B44C */
@@ -27,7 +27,7 @@ void *ItemEffectMgr_GetPickedSlot(ItemEffectState *st)
 /* 0x8007B468: init an item effect state and pick its tick callback. */
 void ItemEffectState_Init(ItemEffectState *st, int type)
 {
-    ItemEffectCallback *tbl = lbl_803FE078;
+    ItemEffectCallback *tbl = ItemEffectState_Init_data_803FE078;
 
     st->picked = 0;
     st->scale = lbl_806D2F58;

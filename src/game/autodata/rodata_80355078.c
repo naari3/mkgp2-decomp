@@ -5,35 +5,35 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
-extern char lbl_8048DB68[];
-extern char lbl_8048DB98[];
-extern char lbl_8048DBC8[];
-extern char lbl_8048DBF8[];
-extern char lbl_8048DC28[];
-extern char lbl_8048DC58[];
-extern char lbl_8048DC88[];
-extern char lbl_8048DCB0[];
-extern char lbl_8048DCD8[];
-extern char lbl_8048DD00[];
-extern char lbl_8048DD28[];
-extern char lbl_8048DD50[];
-extern char lbl_8048DD78[];
-extern char lbl_8048DDA0[];
-extern char lbl_8048DDC8[];
-extern char lbl_8048DDF0[];
-extern char lbl_8048DE18[];
-extern char lbl_8048DE40[];
-extern char lbl_8048DE68[];
-extern char lbl_8048DEA0[];
-extern char lbl_8048DED8[];
-extern char lbl_8048DF10[];
-extern char lbl_8048DF48[];
-extern char lbl_8048DF80[];
+extern char rodata_80355078_data_8048DB68[];
+extern char rodata_80355078_data_8048DB98[];
+extern char rodata_80355078_data_8048DBC8[];
+extern char rodata_80355078_data_8048DBF8[];
+extern char rodata_80355078_data_8048DC28[];
+extern char rodata_80355078_data_8048DC58[];
+extern char rodata_80355078_data_8048DC88[];
+extern char rodata_80355078_data_8048DCB0[];
+extern char rodata_80355078_data_8048DCD8[];
+extern char rodata_80355078_data_8048DD00[];
+extern char rodata_80355078_data_8048DD28[];
+extern char rodata_80355078_data_8048DD50[];
+extern char rodata_80355078_data_8048DD78[];
+extern char rodata_80355078_data_8048DDA0[];
+extern char rodata_80355078_data_8048DDC8[];
+extern char rodata_80355078_data_8048DDF0[];
+extern char rodata_80355078_data_8048DE18[];
+extern char rodata_80355078_data_8048DE40[];
+extern char rodata_80355078_data_8048DE68[];
+extern char rodata_80355078_data_8048DEA0[];
+extern char rodata_80355078_data_8048DED8[];
+extern char rodata_80355078_data_8048DF10[];
+extern char rodata_80355078_data_8048DF48[];
+extern char rodata_80355078_data_8048DF80[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const int lbl_80355078[8][3][2] = {
+const int MiniGame_GetTimerValue_rodata_80355078[8][3][2] = {
     { { 20, 15 }, { 20, 15 }, { 20, 15 } },
     { { 35, 30 }, { 35, 30 }, { 35, 30 } },
     { { 30, 25 }, { 30, 20 }, { 30, 15 } },
@@ -157,181 +157,181 @@ const float lbl_803553D0[1] = {
 const float lbl_803553D4[1] = {
     7e+01f
 };
-const char lbl_803553D8[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_803553D8[4] = {
     0, 0, 0, 1
 };
-const char lbl_803553DC[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_803553DC[4] = {
     0, 0, 0, 1
 };
-const char lbl_803553E0[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_803553E0[4] = {
     0, 0, 0, 1
 };
-const char lbl_803553E4[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_803553E4[4] = {
     0, 0, 0, 1
 };
-const char lbl_803553E8[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_803553E8[4] = {
     0, 0, 0, 1
 };
-const char lbl_803553EC[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_803553EC[4] = {
     0, 0, 0, 1
 };
-const char lbl_803553F0[16] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_803553F0[16] = {
     0, 0, 0, 3, 0, 0, 0, 6, 0, 0, 0, 9,
     0, 0, 0, 15
 };
-const char lbl_80355400[16] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355400[16] = {
     0, 0, 0, 3, 0, 0, 0, 6, 0, 0, 0, 9,
     0, 0, 0, 15
 };
-const char lbl_80355410[16] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355410[16] = {
     0, 0, 0, 3, 0, 0, 0, 6, 0, 0, 0, 9,
     0, 0, 0, 15
 };
-const char lbl_80355420[16] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355420[16] = {
     0, 0, 0, 3, 0, 0, 0, 6, 0, 0, 0, 9,
     0, 0, 0, 15
 };
-const char lbl_80355430[16] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355430[16] = {
     0, 0, 0, 3, 0, 0, 0, 6, 0, 0, 0, 9,
     0, 0, 0, 15
 };
-const char lbl_80355440[16] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355440[16] = {
     0, 0, 0, 3, 0, 0, 0, 6, 0, 0, 0, 9,
     0, 0, 0, 15
 };
-const char lbl_80355450[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355450[4] = {
     0, 0, 0, 15
 };
-const char lbl_80355454[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355454[4] = {
     0, 0, 0, 15
 };
-const char lbl_80355458[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355458[4] = {
     0, 0, 0, 15
 };
-const char lbl_8035545C[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_8035545C[4] = {
     0, 0, 0, 15
 };
-const char lbl_80355460[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355460[4] = {
     0, 0, 0, 15
 };
-const char lbl_80355464[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355464[4] = {
     0, 0, 0, 15
 };
-const char lbl_80355468[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355468[4] = {
     0, 0, 0, 5
 };
-const char lbl_8035546C[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_8035546C[4] = {
     0, 0, 0, 5
 };
-const char lbl_80355470[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355470[4] = {
     0, 0, 0, 5
 };
-const char lbl_80355474[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355474[4] = {
     0, 0, 0, 5
 };
-const char lbl_80355478[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355478[4] = {
     0, 0, 0, 5
 };
-const char lbl_8035547C[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_8035547C[4] = {
     0, 0, 0, 5
 };
 /* decl: char */
-void *const lbl_80355480[1] = {
-    (void *)&lbl_8048DB68
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_80355480[1] = {
+    (void *)&rodata_80355078_data_8048DB68
 };
 /* decl: char */
-void *const lbl_80355484[1] = {
-    (void *)&lbl_8048DB98
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_80355484[1] = {
+    (void *)&rodata_80355078_data_8048DB98
 };
 /* decl: char */
-void *const lbl_80355488[1] = {
-    (void *)&lbl_8048DBC8
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_80355488[1] = {
+    (void *)&rodata_80355078_data_8048DBC8
 };
 /* decl: char */
-void *const lbl_8035548C[1] = {
-    (void *)&lbl_8048DBF8
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_8035548C[1] = {
+    (void *)&rodata_80355078_data_8048DBF8
 };
 /* decl: char */
-void *const lbl_80355490[1] = {
-    (void *)&lbl_8048DC28
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_80355490[1] = {
+    (void *)&rodata_80355078_data_8048DC28
 };
 /* decl: char */
-void *const lbl_80355494[1] = {
-    (void *)&lbl_8048DC58
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_80355494[1] = {
+    (void *)&rodata_80355078_data_8048DC58
 };
 /* decl: char */
-void *const lbl_80355498[1] = {
-    (void *)&lbl_8048DC88
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_80355498[1] = {
+    (void *)&rodata_80355078_data_8048DC88
 };
 /* decl: char */
-void *const lbl_8035549C[1] = {
-    (void *)&lbl_8048DCB0
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_8035549C[1] = {
+    (void *)&rodata_80355078_data_8048DCB0
 };
 /* decl: char */
-void *const lbl_803554A0[1] = {
-    (void *)&lbl_8048DCD8
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_803554A0[1] = {
+    (void *)&rodata_80355078_data_8048DCD8
 };
 /* decl: char */
-void *const lbl_803554A4[1] = {
-    (void *)&lbl_8048DD00
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_803554A4[1] = {
+    (void *)&rodata_80355078_data_8048DD00
 };
 /* decl: char */
-void *const lbl_803554A8[1] = {
-    (void *)&lbl_8048DD28
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_803554A8[1] = {
+    (void *)&rodata_80355078_data_8048DD28
 };
 /* decl: char */
-void *const lbl_803554AC[1] = {
-    (void *)&lbl_8048DD50
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_803554AC[1] = {
+    (void *)&rodata_80355078_data_8048DD50
 };
 /* decl: char */
-void *const lbl_803554B0[1] = {
-    (void *)&lbl_8048DD78
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_803554B0[1] = {
+    (void *)&rodata_80355078_data_8048DD78
 };
 /* decl: char */
-void *const lbl_803554B4[1] = {
-    (void *)&lbl_8048DDA0
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_803554B4[1] = {
+    (void *)&rodata_80355078_data_8048DDA0
 };
 /* decl: char */
-void *const lbl_803554B8[1] = {
-    (void *)&lbl_8048DDC8
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_803554B8[1] = {
+    (void *)&rodata_80355078_data_8048DDC8
 };
 /* decl: char */
-void *const lbl_803554BC[1] = {
-    (void *)&lbl_8048DDF0
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_803554BC[1] = {
+    (void *)&rodata_80355078_data_8048DDF0
 };
 /* decl: char */
-void *const lbl_803554C0[1] = {
-    (void *)&lbl_8048DE18
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_803554C0[1] = {
+    (void *)&rodata_80355078_data_8048DE18
 };
 /* decl: char */
-void *const lbl_803554C4[1] = {
-    (void *)&lbl_8048DE40
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_803554C4[1] = {
+    (void *)&rodata_80355078_data_8048DE40
 };
 /* decl: char */
-void *const lbl_803554C8[1] = {
-    (void *)&lbl_8048DE68
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_803554C8[1] = {
+    (void *)&rodata_80355078_data_8048DE68
 };
 /* decl: char */
-void *const lbl_803554CC[1] = {
-    (void *)&lbl_8048DEA0
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_803554CC[1] = {
+    (void *)&rodata_80355078_data_8048DEA0
 };
 /* decl: char */
-void *const lbl_803554D0[1] = {
-    (void *)&lbl_8048DED8
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_803554D0[1] = {
+    (void *)&rodata_80355078_data_8048DED8
 };
 /* decl: char */
-void *const lbl_803554D4[1] = {
-    (void *)&lbl_8048DF10
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_803554D4[1] = {
+    (void *)&rodata_80355078_data_8048DF10
 };
 /* decl: char */
-void *const lbl_803554D8[1] = {
-    (void *)&lbl_8048DF48
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_803554D8[1] = {
+    (void *)&rodata_80355078_data_8048DF48
 };
 /* decl: char */
-void *const lbl_803554DC[1] = {
-    (void *)&lbl_8048DF80
+void *const NokoNokoChallenge_GetCoinDivisor_rodata_803554DC[1] = {
+    (void *)&rodata_80355078_data_8048DF80
 };
-const int lbl_803554E0[8][3][2] = {
+const int MiniGame_GetTimerValue_rodata_803554E0[8][3][2] = {
     { { 20, 15 }, { 20, 15 }, { 20, 15 } },
     { { 35, 30 }, { 35, 30 }, { 35, 30 } },
     { { 30, 25 }, { 30, 20 }, { 30, 15 } },
@@ -341,148 +341,148 @@ const int lbl_803554E0[8][3][2] = {
     { { 60, 50 }, { 60, 50 }, { 60, 50 } },
     { { 30, 30 }, { 30, 30 }, { 30, 30 } }
 };
-const char lbl_803555A0[24] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_803555A0[24] = {
     62, -82, 20, 123, 62, -26, 102, 102, 63, 61, 112, -92,
     61, -52, -52, -51, 63, 122, -31, 72, 63, 122, -31, 72
 };
-const char lbl_803555B8[24] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_803555B8[24] = {
     62, -128, 0, 0, 62, -26, 102, 102, 63, 71, -82, 20,
     61, -52, -52, -51, 63, 122, -31, 72, 63, 102, 102, 102
 };
-const char lbl_803555D0[24] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_803555D0[24] = {
     62, -82, 20, 123, 62, -26, 102, 102, 63, 61, 112, -92,
     61, -52, -52, -51, 63, 122, -31, 72, 63, 122, -31, 72
 };
-const char lbl_803555E8[24] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_803555E8[24] = {
     62, -128, 0, 0, 62, -26, 102, 102, 63, 71, -82, 20,
     61, -52, -52, -51, 63, 122, -31, 72, 63, 102, 102, 102
 };
-const char lbl_80355600[24] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355600[24] = {
     62, -82, 20, 123, 62, -26, 102, 102, 63, 61, 112, -92,
     61, -52, -52, -51, 63, 122, -31, 72, 63, 122, -31, 72
 };
-const char lbl_80355618[24] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355618[24] = {
     62, -128, 0, 0, 62, -26, 102, 102, 63, 71, -82, 20,
     61, -52, -52, -51, 63, 122, -31, 72, 63, 102, 102, 102
 };
-const char lbl_80355630[8] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355630[8] = {
     63, 0, 0, 0, 0, 0, 0, 15
 };
-const char lbl_80355638[8] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355638[8] = {
     63, -128, 0, 0, 0, 0, 0, 15
 };
-const char lbl_80355640[8] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355640[8] = {
     63, 0, 0, 0, 0, 0, 0, 15
 };
-const char lbl_80355648[8] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355648[8] = {
     63, -128, 0, 0, 0, 0, 0, 15
 };
-const char lbl_80355650[8] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355650[8] = {
     63, 0, 0, 0, 0, 0, 0, 15
 };
-const char lbl_80355658[8] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355658[8] = {
     63, -128, 0, 0, 0, 0, 0, 15
 };
-const char lbl_80355660[20] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355660[20] = {
     0, 0, 0, 0, 64, -64, 0, 0, 0, 0, 0, 70,
     0, 0, 0, 120, 0, 0, 0, 0
 };
-const char lbl_80355674[20] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355674[20] = {
     0, 0, 0, 0, 64, -96, 0, 0, 0, 0, 0, 60,
     0, 0, 0, 120, 0, 0, 0, 0
 };
-const char lbl_80355688[20] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355688[20] = {
     0, 0, 0, 0, 64, -64, 0, 0, 0, 0, 0, 50,
     0, 0, 0, 120, 0, 0, 0, 0
 };
-const char lbl_8035569C[20] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_8035569C[20] = {
     0, 0, 0, 0, 64, -96, 0, 0, 0, 0, 0, 40,
     0, 0, 0, 120, 0, 0, 0, 0
 };
-const char lbl_803556B0[20] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_803556B0[20] = {
     0, 0, 0, 0, 64, -64, 0, 0, 0, 0, 0, 50,
     0, 0, 0, 120, 1, 0, 0, 0
 };
-const char lbl_803556C4[20] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_803556C4[20] = {
     0, 0, 0, 0, 64, -96, 0, 0, 0, 0, 0, 40,
     0, 0, 0, 120, 1, 0, 0, 0
 };
-const char lbl_803556D8[52] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_803556D8[52] = {
     0, 0, 0, 0, 64, 64, 0, 0, 63, 38, 102, 102,
     63, 64, 0, 0, 63, 89, -103, -102, 0, 0, 0, -76,
     0, 0, 0, 60, 0, 0, 0, 1, 0, 0, 0, 2,
     0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 1,
     0, 0, 0, 2
 };
-const char lbl_8035570C[52] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_8035570C[52] = {
     0, 0, 0, 0, 64, -112, 0, 0, 63, 51, 51, 51,
     63, 64, 0, 0, 63, 107, -123, 31, 0, 0, 0, 90,
     0, 0, 0, 60, 0, 0, 0, 1, 0, 0, 0, 3,
     0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 3,
     0, 0, 0, 2
 };
-const char lbl_80355740[52] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355740[52] = {
     0, 0, 0, 0, 64, 64, 0, 0, 63, 64, 0, 0,
     63, 115, 51, 51, 63, 115, 51, 51, 0, 0, 0, 90,
     0, 0, 0, 60, 0, 0, 0, 1, 0, 0, 0, 2,
     0, 0, 0, 3, 0, 0, 0, 2, 0, 0, 0, 3,
     0, 0, 0, 1
 };
-const char lbl_80355774[52] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355774[52] = {
     0, 0, 0, 0, 64, -112, 0, 0, 63, 76, -52, -51,
     63, -128, 0, 0, 63, -128, 0, 0, 0, 0, 0, 60,
     0, 0, 0, 60, 0, 0, 0, 1, 0, 0, 0, 3,
     0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 3,
     0, 0, 0, 2
 };
-const char lbl_803557A8[52] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_803557A8[52] = {
     0, 0, 0, 0, 64, 64, 0, 0, 63, 89, -103, -102,
     63, -128, 0, 0, 63, -128, 0, 0, 0, 0, 0, 90,
     0, 0, 0, 60, 0, 0, 0, 1, 0, 0, 0, 2,
     0, 0, 0, 3, 0, 0, 0, 2, 0, 0, 0, 3,
     0, 0, 0, 1
 };
-const char lbl_803557DC[52] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_803557DC[52] = {
     0, 0, 0, 0, 64, -112, 0, 0, 63, 102, 102, 102,
     63, -128, 0, 0, 63, -128, 0, 0, 0, 0, 0, 60,
     0, 0, 0, 60, 0, 0, 0, 1, 0, 0, 0, 3,
     0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 3,
     0, 0, 0, 2
 };
-const char lbl_80355810[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355810[4] = {
     66, -106, 0, 0
 };
-const char lbl_80355814[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355814[4] = {
     66, -106, 0, 0
 };
-const char lbl_80355818[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355818[4] = {
     66, -106, 0, 0
 };
-const char lbl_8035581C[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_8035581C[4] = {
     66, -106, 0, 0
 };
-const char lbl_80355820[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355820[4] = {
     66, -106, 0, 0
 };
-const char lbl_80355824[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355824[4] = {
     66, -106, 0, 0
 };
-const char lbl_80355828[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355828[4] = {
     66, -116, 0, 0
 };
-const char lbl_8035582C[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_8035582C[4] = {
     66, -116, 0, 0
 };
-const char lbl_80355830[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355830[4] = {
     66, -116, 0, 0
 };
-const char lbl_80355834[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355834[4] = {
     66, -116, 0, 0
 };
-const char lbl_80355838[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_80355838[4] = {
     66, -116, 0, 0
 };
-const char lbl_8035583C[4] = {
+const char NokoNokoChallenge_GetCoinDivisor_rodata_8035583C[4] = {
     66, -116, 0, 0
 };
 

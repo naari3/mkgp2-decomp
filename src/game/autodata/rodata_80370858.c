@@ -9,10 +9,10 @@
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const Vec3f lbl_80370858[1] = {
+const Vec3f ShadowCaster_rodata_80370858[1] = {
     { 0.0f, 0.0f, 0.0f }
 };
-const Vec3f lbl_80370864[1] = {
+const Vec3f ShadowCaster_rodata_80370864[1] = {
     { 0.0f, 0.0f, 0.0f }
 };
 

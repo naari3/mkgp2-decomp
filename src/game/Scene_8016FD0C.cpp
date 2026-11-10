@@ -1,6 +1,6 @@
 /*
  * 0x8016FD0C..0x8016FE44: constructor of a single placed course model
- * (vtable lbl_8049123C, base vtable lbl_80490FE0). Real C++ for its EH
+ * (vtable CourseModel_vtable_8049123C, base vtable lbl_80490FE0). Real C++ for its EH
  * actions; mangled names are bridged in tools/extab_user_renames.json.
  */
 

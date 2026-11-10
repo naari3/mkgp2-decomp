@@ -14,8 +14,8 @@ typedef struct clEnemyParam {
     int itemListIds[6];
 } clEnemyParam;
 
-extern int lbl_806CFF1C;
-extern EnemyItemListEntry lbl_804E40A8[];
+extern int clEnemyParam_FillItemListIds_data_806CFF1C;
+extern EnemyItemListEntry clEnemyParam_FillItemListIds_data_804E40A8[];
 extern clEnemyParam *g_clEnemyParam;
 extern int fn_801EB708(void);
 
@@ -41,9 +41,9 @@ static inline unsigned char KartCond_Matches(KartCond c, int kart) {
 static inline int EnemyItemList_Pick(int kart) {
     int i;
 
-    for (i = 0; i < lbl_806CFF1C; i++) {
-        if (KartCond_Matches(lbl_804E40A8[i].cond, kart)) {
-            EnemyItemListEntry *e = &lbl_804E40A8[i];
+    for (i = 0; i < clEnemyParam_FillItemListIds_data_806CFF1C; i++) {
+        if (KartCond_Matches(clEnemyParam_FillItemListIds_data_804E40A8[i].cond, kart)) {
+            EnemyItemListEntry *e = &clEnemyParam_FillItemListIds_data_804E40A8[i];
             int count = 0;
             int j;
             for (j = 0; j < 8; j++) {

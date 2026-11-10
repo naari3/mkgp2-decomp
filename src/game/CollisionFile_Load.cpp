@@ -22,8 +22,8 @@ typedef struct CollisionTypeEntry {
     u32 type;
 } CollisionTypeEntry;
 
-extern CollisionTypeEntry lbl_803BF3D0[];
-extern int lbl_806D19A8;
+extern CollisionTypeEntry CollisionFile_Load_rodata_803BF3D0[];
+extern int CollisionFile_Load_bss_806D19A8;
 extern void *lbl_806CF010;
 extern void OSFreeToHeap(void *, void *);
 extern void *OSAllocFromHeap(void *, u32);
@@ -46,7 +46,7 @@ CECollision::CECollision(const char *path) : size(0), data(0), collision(0) {
     u32 length;
     u32 last;
     int result;
-    lbl_806D19A8 = CountCollisionTypes(lbl_803BF3D0);
+    CollisionFile_Load_bss_806D19A8 = CountCollisionTypes(CollisionFile_Load_rodata_803BF3D0);
     if (DVDOpen(path, &file)) {
         length = (file.length + 31) & ~31;
         if (self->data) {

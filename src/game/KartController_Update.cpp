@@ -3,7 +3,7 @@
 #pragma force_active on
 extern "C" {
 // Shared AI tuning curves, followed by kart bounds and attachment offsets.
-static const float lbl_803BD320[255] = {
+static const float KartController_Update_rodata_803BD320[255] = {
     1.0f, 0.7f, 0.9f, 0.0f, 0.0f, 500.0f, 66.6666718f,
     1000.0f, 66.6666718f, 2000.0f, 66.6666718f, 3000.0f, 66.6666718f, 4000.0f,
     66.6666718f, 5000.0f, 66.6666718f, 0.0f, 0.0f, 500.0f, 66.6666718f,

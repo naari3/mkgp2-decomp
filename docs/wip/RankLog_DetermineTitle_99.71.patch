@@ -24,8 +24,8 @@ index 54275c8..1968942 100644
 -    TitleCheckFn pre = 0;
 +    TitleCheckFn *checks;
      int i;
--    unsigned char *tbl = (unsigned char *)lbl_80411458;
--    unsigned char *pool = lbl_80324B98;
+-    unsigned char *tbl = (unsigned char *)RankLog_data_80411458;
+-    unsigned char *pool = RankLog_rodata_80324B98;
 +    unsigned char *tbl;
 +    int count;
 +    unsigned char *pool;
@@ -33,8 +33,8 @@ index 54275c8..1968942 100644
 +    checks = 0;
 +    count = 0;
 +    pre = 0;
-+    tbl = (unsigned char *)lbl_80411458;
-+    pool = lbl_80324B98;
++    tbl = (unsigned char *)RankLog_data_80411458;
++    pool = RankLog_rodata_80324B98;
  
      if (lbl_80598A60.mode == 2 || (lbl_80598A60.mode == 1 && lbl_80598A60.flag24 == 0)) {
          g_stagingTitleId = 0;

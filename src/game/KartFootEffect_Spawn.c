@@ -1,5 +1,5 @@
 extern void KartFootEffect_Tick(void *);
-extern unsigned char lbl_80329DB8[];
+extern unsigned char KartFootEffect_Spawn_rodata_80329DB8[];
 extern unsigned char *DrawEffect_SpawnDirect(void (*)(void *));
 extern void DrawEffect_Free(void *);
 extern void Vec3_Copy(void *, const void *);
@@ -13,7 +13,7 @@ void KartFootEffect_Spawn(unsigned char *self) {
     case 3: bank = 1; break;
     case 4: bank = 2; break;
     }
-    row = lbl_80329DB8 + bank * 9;
+    row = KartFootEffect_Spawn_rodata_80329DB8 + bank * 9;
     for (role = 0; role < 3; role++, row += 3) {
         cursor = row;
         for (slot = 0; slot < 3; slot++, cursor++) {

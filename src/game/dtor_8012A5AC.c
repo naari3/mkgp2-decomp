@@ -5,14 +5,14 @@ typedef struct PreviewModels {
     void *extra;
 } PreviewModels;
 
-extern char lbl_8048E34C[];
+extern char CoinShotBase_vtable_8048E34C[];
 extern void Object_DtorWithGXSync(void *obj, int del);
 extern void MemoryManager_TimedFree(void *p);
 
 PreviewModels *dtor_8012A5AC(PreviewModels *self, short flag)
 {
     if (self != 0) {
-        self->vtbl = lbl_8048E34C;
+        self->vtbl = CoinShotBase_vtable_8048E34C;
         Object_DtorWithGXSync(self->body, 1);
         Object_DtorWithGXSync(self->extra, 1);
         if (flag > 0) {

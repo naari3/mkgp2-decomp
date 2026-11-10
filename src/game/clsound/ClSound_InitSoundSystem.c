@@ -14,7 +14,7 @@ extern const unsigned int lbl_806D94F0, lbl_806D94F4;
 extern const float lbl_806D9524, lbl_806D9528, lbl_806D952C, lbl_806D9530, lbl_806D950C, lbl_806D9534;
 extern unsigned char ClSound_Initialized, lbl_806CFCA1, lbl_806CFCA2, lbl_806D16B1;
 extern void *lbl_806D16B4, *lbl_806D16B8, *lbl_806D16BC;
-extern unsigned int lbl_806D16C4[2];
+extern unsigned int ClSound_InitSoundSystem_bss_806D16C4[2];
 extern int lbl_806CF010;
 extern void DebugPrintf(const char *, ...);
 extern void *OSAllocFromHeap(int, unsigned long);
@@ -117,7 +117,7 @@ void ClSound_InitSoundSystem(void) {
         samples = 0;
         hooks[0] = lbl_806D94F0;
         hooks[1] = lbl_806D94F4;
-        aramSize = ARInit(lbl_806D16C4, 2);
+        aramSize = ARInit(ClSound_InitSoundSystem_bss_806D16C4, 2);
         DebugPrintf(strings + 0x3f90, aramSize);
         ARQInit();
         AIInit(0);

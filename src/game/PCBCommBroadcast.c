@@ -84,17 +84,17 @@ struct PlayerSnapshot {
     unsigned char tail[0x2A];
 };
 extern "C" {
-extern BroadcastSlot lbl_805A60C4;
+extern BroadcastSlot PCBComm_BuildBroadcastSlot_bss_805A60C4;
 extern PlayerSnapshot g_playerData;
 extern unsigned char lbl_80598A60[0x2A];
-extern unsigned char g_confirmFlag, g_isCommHost, lbl_806D12A0, lbl_806D12AD;
-extern unsigned char g_raceEnded, lbl_806D12C4, lbl_806D12AE, g_isPcbHost;
+extern unsigned char g_confirmFlag, g_isCommHost, PCBComm_BuildBroadcastSlot_bss_806D12A0, lbl_806D12AD;
+extern unsigned char g_raceEnded, PCBComm_BuildBroadcastSlot_bss_806D12C4, lbl_806D12AE, g_isPcbHost;
 extern unsigned char lbl_806D1264[3];
 extern int g_localPcbRole, lbl_806D129C, g_currentSceneState;
 extern int lbl_806D11A4, lbl_806D11A8, lbl_806CF12C, lbl_806D12BC;
 extern int g_reverseRoundFlag, g_characterId, g_ccClass, g_kartVariant;
 extern int g_consecutiveWinsTier, g_ringReadIdx, lbl_806D11A0;
-extern float lbl_806D12A8;
+extern float PCBComm_BuildBroadcastSlot_bss_806D12A8;
 extern float lbl_806D3148;
 extern BroadcastInput** GetInputManager(void);
 extern BroadcastInput* InputMgr_GetPlayer(BroadcastInput**, unsigned int);
@@ -109,7 +109,7 @@ static inline float QuantizeBroadcastInput(float value)
 
 void PCBComm_BuildBroadcastSlot(void)
 {
-    BroadcastSlot* slot = &lbl_805A60C4;
+    BroadcastSlot* slot = &PCBComm_BuildBroadcastSlot_bss_805A60C4;
     BroadcastInput* input = InputMgr_GetPlayer(GetInputManager(), 0);
     unsigned char card = 1;
     unsigned char confirmed = 1;
@@ -119,7 +119,7 @@ void PCBComm_BuildBroadcastSlot(void)
     slot->header.bytes.first.SetActive(1);
     slot->header.bytes.first.SetRole(g_localPcbRole);
     slot->header.bytes.first.SetHost(g_isCommHost);
-    slot->header.bytes.first.SetFlag2(lbl_806D12A0);
+    slot->header.bytes.first.SetFlag2(PCBComm_BuildBroadcastSlot_bss_806D12A0);
     slot->header.bytes.state.SetActive(1);
     slot->header.bytes.state.SetFlag5(lbl_806D129C);
     slot->header.word.scene = g_currentSceneState;
@@ -131,7 +131,7 @@ void PCBComm_BuildBroadcastSlot(void)
     slot->header.bytes.state.SetScratch(lbl_806D11A4);
     slot->header.bytes.state.SetScratchNext(lbl_806D11A8);
     slot->header.bytes.state.SetFlag0(lbl_806D12AE);
-    slot->header.bytes.status.SetFlag2(lbl_806D12C4);
+    slot->header.bytes.status.SetFlag2(PCBComm_BuildBroadcastSlot_bss_806D12C4);
     slot->header.bytes.status.SetHost(g_isPcbHost);
     slot->header.bytes.status.SetDisplayLow(lbl_80598A60[0x29]);
     slot->display.buffer = GetDisplayBufferIndex();
@@ -143,7 +143,7 @@ void PCBComm_BuildBroadcastSlot(void)
     slot->classes.bytes.first.allCleared = fn_801D5C88(&g_playerData, g_ccClass);
     slot->classes.bytes.first.kart = g_kartVariant;
     slot->classes.half.wins = g_consecutiveWinsTier;
-    slot->value = lbl_806D12A8;
+    slot->value = PCBComm_BuildBroadcastSlot_bss_806D12A8;
     slot->counters[0] = lbl_806D1264[0];
     slot->counters[1] = lbl_806D1264[1];
     slot->counters[2] = lbl_806D1264[2];

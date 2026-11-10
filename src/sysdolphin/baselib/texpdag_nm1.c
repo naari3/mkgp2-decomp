@@ -272,7 +272,7 @@ void HSD_TExpSchedule(int num, HSD_TExpDag* list, HSD_TExp** result,
     }
 }
 
-HSD_TEArg lbl_806D0F68 = { 0x00, 0x07, 0xFF };
+HSD_TEArg texpdag_nm1_data_806D0F68 = { 0x00, 0x07, 0xFF };
 
 int SimplifySrc(HSD_TExp* arg0)
 {
@@ -294,7 +294,7 @@ int SimplifySrc(HSD_TExp* arg0)
                 case 0xFF:
                     HSD_TExpUnref(src, sel);
                     result = true;
-                    arg0->tev.c_in[i] = lbl_806D0F68;
+                    arg0->tev.c_in[i] = texpdag_nm1_data_806D0F68;
                     break;
                 case GX_TEV_ADD:
                     if (src->tev.c_in[0].sel == HSD_TE_0 &&
@@ -362,7 +362,7 @@ int SimplifySrc(HSD_TExp* arg0)
                 case 0xFF:
                     HSD_TExpUnref(src, sel);
                     result = true;
-                    arg0->tev.c_in[i] = lbl_806D0F68;
+                    arg0->tev.c_in[i] = texpdag_nm1_data_806D0F68;
                     break;
                 }
             }
@@ -378,7 +378,7 @@ int SimplifySrc(HSD_TExp* arg0)
             case 0xFF:
                 HSD_TExpUnref(src, sel);
                 result = true;
-                arg0->tev.a_in[i] = lbl_806D0F68;
+                arg0->tev.a_in[i] = texpdag_nm1_data_806D0F68;
                 break;
             case GX_TEV_ADD:
                 if (src->tev.a_in[0].sel == HSD_TE_0 &&
@@ -433,7 +433,7 @@ int SimplifySrc(HSD_TExp* arg0)
 
 #define CLEAR_ARG(arg)                                                        \
     do {                                                                      \
-        (arg) = lbl_806D0F68;                                                \
+        (arg) = texpdag_nm1_data_806D0F68;                                                \
     } while (0)
 
 int SimplifyThis(HSD_TExp* arg0)
@@ -491,7 +491,7 @@ int SimplifyThis(HSD_TExp* arg0)
                 for (i = 0; i < 4; i++) {
                     HSD_TExpUnref(arg0->tev.c_in[i].exp,
                                   arg0->tev.c_in[i].sel);
-                    arg0->tev.c_in[i] = lbl_806D0F68;
+                    arg0->tev.c_in[i] = texpdag_nm1_data_806D0F68;
                 }
                 changed = 1;
             }

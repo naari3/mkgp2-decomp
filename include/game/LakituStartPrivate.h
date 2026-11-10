@@ -19,7 +19,7 @@ void Terrain_GetGroundHeight(Vec3f *, float *, int, int);
 void SetRaceStartFlag(int);
 extern unsigned char g_lakituDropStarted;
 extern int g_countdownPhase;
-extern float lbl_806CEDD0, lbl_806CEDC0, lbl_806CEDC8, lbl_806CEDC4;
+extern float LakituStart_Init_data_806CEDD0, lbl_806CEDC0, lbl_806CEDC8, lbl_806CEDC4;
 extern const float lbl_806D2510, lbl_806D2538;
 }
 #endif

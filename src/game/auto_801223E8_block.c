@@ -9614,7 +9614,7 @@ const void *const kResourcePathTable[4804] = {
     (void *)&lbl_803504E0,
     (void *)&lbl_803504F4
 };
-const void *const lbl_80355018[4] = {
+const void *const ResourceTable_GetFilePathPtr_rodata_80355018[4] = {
     (void *)&lbl_806D6DEC,
     (void *)&lbl_806D6DF4,
     (void *)&lbl_806D6DFC,
@@ -10000,7 +10000,7 @@ const char *ResourceTable_GetFilePathPtr(int id) {
         }
         return 0;
     }
-    return (const char *)lbl_80355018[id - 0x2b00];
+    return (const char *)ResourceTable_GetFilePathPtr_rodata_80355018[id - 0x2b00];
 }
 
 short ResourceTable_GetGroupKey(int id) {

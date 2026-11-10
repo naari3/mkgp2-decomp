@@ -7,8 +7,8 @@
 
 extern "C" {
 extern const char lbl_803560D4[];
-extern const char *lbl_806CF4E0;
-extern const char *lbl_806CF4E4;
+extern const char *ChallengeDemoObj_data_806CF4E0;
+extern const char *ChallengeDemoObj_data_806CF4E4;
 extern char lbl_806D6FB0[7];
 extern char lbl_806D6FB8[5];
 }
@@ -176,14 +176,14 @@ MapDemoScene::MapDemoScene() {
     SoundChannels_ClearAll();
     ItemObjectManager_Init();
     CourseObjectManager_Init();
-    scene = new DemoScene(lbl_806CF4E0, -1.0f, 0.0f);
+    scene = new DemoScene(ChallengeDemoObj_data_806CF4E0, -1.0f, 0.0f);
     scene->Start(0.0f, 1.0f);
-    normal = new DemoNormal(lbl_806CF4E0, 0);
+    normal = new DemoNormal(ChallengeDemoObj_data_806CF4E0, 0);
     clNormal3D_SetScale(normal, 0, 0.0f, 1.0f, 0.0f, 0.0f);
     ProcessSystemTick(0);
     driver = new DemoDriver(g_characterId, matrix);
     tornado = new DemoTornado(0, driver, g_characterId, 0, 0.0f, 0.0f, 0.0f);
-    joint = ResolveJointByName(normal, lbl_806CF4E4);
+    joint = ResolveJointByName(normal, ChallengeDemoObj_data_806CF4E4);
     ProcessSystemTick(0);
     obj = new DemoNormal(lbl_803560D4, 0);
     clNormal3D_SetScale(obj, 0, 0.0f, 1.0f, 0.0f, 0.0f);

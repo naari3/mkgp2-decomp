@@ -16,13 +16,13 @@ extern void fn_801FB6C0();
 extern char lbl_806D0108[];
 extern char lbl_806D0120[];
 extern char lbl_806D0128[];
-extern char lbl_806D0130[];
-extern char lbl_806D0138[];
+extern char data_804EBE78_data_806D0130[];
+extern char data_804EBE78_data_806D0138[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804EBE78[6] = {
+void *ReadTask_vtable_804EBE78[6] = {
     (void *)&lbl_806D0108,
     0,
     (void *)fn_801FAA18,
@@ -35,24 +35,24 @@ void *lbl_804EBE90[3] = {
     0,
     0
 };
-void *lbl_804EBE9C[5] = {
+void *data_804EBE78_data_804EBE9C[5] = {
     (void *)&lbl_806D0120,
     0,
     (void *)&lbl_806D0128,
     0,
     0
 };
-void *lbl_804EBEB0[7] = {
+void *data_804EBE78_data_804EBEB0[7] = {
     (void *)&lbl_806D0120,
     0,
     (void *)&lbl_806D0128,
     0,
-    (void *)&lbl_806D0130,
+    (void *)&data_804EBE78_data_806D0130,
     0,
     0
 };
-void *lbl_804EBECC[6] = {
-    (void *)&lbl_806D0138,
+void *WaitFlowScene_vtable_804EBECC[6] = {
+    (void *)&data_804EBE78_data_806D0138,
     0,
     (void *)fn_801FB6C0,
     (void *)fn_801FB5FC,

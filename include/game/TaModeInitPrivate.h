@@ -93,7 +93,7 @@ extern const float lbl_806D47EC;
 extern const float lbl_806D47F4;
 extern const float lbl_806D4824;
 
-extern const char lbl_80321980[];
+extern const char TaMode_FrameUpdate_rodata_80321980[];
 extern const float lbl_806D4830, lbl_806D4834, lbl_806D4838, lbl_806D483C, lbl_806D484C, lbl_806D4860;
 
 extern int *HSD_RandSeedPtr;
@@ -218,15 +218,15 @@ void VoiceQueue_Clear(int flag);
 struct TaSound { char data[0x44]; TaSound(int); };
 struct TaGhostSource { int character; const char *file; unsigned long size; int unused; };
 extern "C" {
-extern int lbl_806D13CC, g_characterId, lbl_806D13A8, lbl_806D1394, lbl_806D139C, lbl_806CF198, lbl_806D13AC, lbl_806D13B0;
-extern unsigned char lbl_806D13A0, lbl_806D13A1, lbl_806D13B8;
+extern int TaMode_Init_bss_806D13CC, g_characterId, TaMode_FrameUpdate_bss_806D13A8, TaMode_FrameUpdate_bss_806D1394, TaMode_FrameUpdate_bss_806D139C, TaMode_FrameUpdate_data_806CF198, TaMode_FrameUpdate_bss_806D13AC, TaMode_FrameUpdate_bss_806D13B0;
+extern unsigned char TaMode_FrameUpdate_bss_806D13A0, lbl_806D13A1, TaMode_FrameUpdate_bss_806D13B8;
 extern CarObject *lbl_806D1398;
-extern PathManager *lbl_806D13A4;
-extern void *lbl_806D1390, *lbl_806D1388, *lbl_806D13C8;
-extern unsigned long lbl_806D138C;
+extern PathManager *TaMode_FrameUpdate_bss_806D13A4;
+extern void *TaMode_FrameUpdate_bss_806D1390, *TaMode_FrameUpdate_bss_806D1388, *TaMode_FrameUpdate_bss_806D13C8;
+extern unsigned long TaMode_FrameUpdate_bss_806D138C;
 extern TaSound *lbl_806D13B4;
-extern float lbl_806CF19C;
-extern unsigned long lbl_806D13C0, lbl_806D13C4;
+extern float TaMode_FrameUpdate_data_806CF19C;
+extern unsigned long TaMode_FrameUpdate_bss_806D13C0, TaMode_FrameUpdate_bss_806D13C4;
 void RaceSlot_ResetAll();
 void RaceSlot_InitSlot(int, int, int, int, int);
 unsigned char GetVBlankFlag();

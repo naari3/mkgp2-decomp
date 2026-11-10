@@ -3,8 +3,8 @@ index 6660632..63af775 100644
 --- a/src/game/PodiumPose.c
 +++ b/src/game/PodiumPose.c
 @@ -114,23 +114,6 @@ extern void PSMTXConcat(const Mtx a, const Mtx b, Mtx ab);
- #define s_jointB lbl_806D1574
- #define s_propRef lbl_806D1578
+ #define s_jointB PodiumPose_bss_806D1574
+ #define s_propRef PodiumPose_bss_806D1578
  
 -extern "C" {
 -extern void Alloc();
@@ -38,7 +38,7 @@ index 6660632..63af775 100644
 -    stfd f31, 0xb0(r1)
 -    psq_st f31, 0xb8(r1), 0, 0
 -    stmw r24, 0x90(r1)
--    lwz r0, lbl_806D1578(r13)
+-    lwz r0, PodiumPose_bss_806D1578(r13)
 -    lis r9, lbl_803608D0@ha
 -    mr r29, r3
 -    mr r30, r4
@@ -51,10 +51,10 @@ index 6660632..63af775 100644
 -    bne fn_80143450_L_80143510
 -    li r0, 0x0
 -    li r3, 0x5c
--    stw r0, lbl_806D1568(r13)
--    stw r0, lbl_806D156C(r13)
--    stw r0, lbl_806D1570(r13)
--    stw r0, lbl_806D1574(r13)
+-    stw r0, PodiumPose_bss_806D1568(r13)
+-    stw r0, PodiumPose_bss_806D156C(r13)
+-    stw r0, PodiumPose_bss_806D1570(r13)
+-    stw r0, PodiumPose_bss_806D1574(r13)
 -    bl Alloc
 -    mr. r24, r3
 -    beq fn_80143450_L_801434C4
@@ -62,7 +62,7 @@ index 6660632..63af775 100644
 -    li r5, 0x0
 -    bl clNormal3D_Construct
 -    fn_80143450_L_801434C4:
--    stw r24, lbl_806D1568(r13)
+-    stw r24, PodiumPose_bss_806D1568(r13)
 -    li r3, 0x5c
 -    bl Alloc
 -    mr. r24, r3
@@ -71,25 +71,25 @@ index 6660632..63af775 100644
 -    li r5, 0x0
 -    bl clNormal3D_Construct
 -    fn_80143450_L_801434E4:
--    lwz r3, lbl_806D1568(r13)
--    stw r24, lbl_806D156C(r13)
+-    lwz r3, PodiumPose_bss_806D1568(r13)
+-    stw r24, PodiumPose_bss_806D156C(r13)
 -    cmplwi r3, 0x0
 -    beq fn_80143450_L_801434FC
 -    bl Archive_GetRootJObj
--    stw r3, lbl_806D1570(r13)
+-    stw r3, PodiumPose_bss_806D1570(r13)
 -    fn_80143450_L_801434FC:
--    lwz r3, lbl_806D156C(r13)
+-    lwz r3, PodiumPose_bss_806D156C(r13)
 -    cmplwi r3, 0x0
 -    beq fn_80143450_L_80143510
 -    bl Archive_GetRootJObj
--    stw r3, lbl_806D1574(r13)
+-    stw r3, PodiumPose_bss_806D1574(r13)
 -    fn_80143450_L_80143510:
--    lwz r3, lbl_806D1578(r13)
+-    lwz r3, PodiumPose_bss_806D1578(r13)
 -    li r0, 0x0
 -    lfs f1, 0x0(r26)
 -    addi r3, r3, 0x1
 -    lfs f0, 0x4(r26)
--    stw r3, lbl_806D1578(r13)
+-    stw r3, PodiumPose_bss_806D1578(r13)
 -    lfs f4, 0x8(r26)
 -    stw r30, 0x0(r29)
 -    lfs f3, 0x0(r27)
@@ -127,8 +127,8 @@ index 6660632..63af775 100644
 -    mr. r24, r3
 -    beq fn_80143450_L_801435CC
 -    lwz r0, 0x0(r29)
--    lis r4, lbl_8048ED70@ha
--    addi r4, r4, lbl_8048ED70@l
+-    lis r4, PodiumPose_data_8048ED70@ha
+-    addi r4, r4, PodiumPose_data_8048ED70@l
 -    li r5, 0x0
 -    slwi r0, r0, 2
 -    lwzx r4, r4, r0
@@ -147,9 +147,9 @@ index 6660632..63af775 100644
 -    lfs f2, lbl_806D7A78(r2)
 -    fmr f4, f1
 -    bl clNormal3D_SetScale
--    lis r3, lbl_8048EDA4@ha
+-    lis r3, PodiumPose_data_8048EDA4@ha
 -    slwi r28, r30, 2
--    addi r30, r3, lbl_8048EDA4@l
+-    addi r30, r3, PodiumPose_data_8048EDA4@l
 -    lwz r4, 0x2b4(r31)
 -    lwzx r5, r30, r28
 -    addi r3, r1, 0x68
@@ -356,13 +356,13 @@ index 6660632..63af775 100644
 +        float *scl = tbl->scale;
 +        s = *scaleArg * scl[kind];
 +    }
-+    model = new clNormal3D(lbl_8048ED70[kind], 0);
++    model = new clNormal3D(PodiumPose_data_8048ED70[kind], 0);
 +    Object_SetJObjScaleXYZ(model, s, s, s);
 +    clNormal3D_SetScale(model, 0, 0.0f, 1.0f, 0.0f, 0.0f);
-+    sprintf(name0, fmt[0], lbl_8048EDA4[kindArg]);
-+    sprintf(name1, fmt[2], lbl_8048EDA4[kindArg]);
-+    sprintf(name2, fmt[1], lbl_8048EDA4[kindArg]);
-+    sprintf(name3, fmt[3], lbl_8048EDA4[kindArg]);
++    sprintf(name0, fmt[0], PodiumPose_data_8048EDA4[kindArg]);
++    sprintf(name1, fmt[2], PodiumPose_data_8048EDA4[kindArg]);
++    sprintf(name2, fmt[1], PodiumPose_data_8048EDA4[kindArg]);
++    sprintf(name3, fmt[3], PodiumPose_data_8048EDA4[kindArg]);
 +    if (mode == 0) {
 +        head = ResolveJointByName(model, name0);
 +        propJointB = ResolveJointByName(model, fmt[4]);

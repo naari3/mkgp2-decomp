@@ -9,23 +9,23 @@ extern void clItemBoxManager_Dtor();
 extern void dtor_8005FF74();
 extern void dtor_80060024();
 extern char lbl_806CEEA8[];
-extern char lbl_806CEEB0[];
+extern char data_803F9CD8_data_806CEEB0[];
 extern char lbl_806CEEB8[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_803F9CD8[3] = {
+void *data_803F9CD8_data_803F9CD8[3] = {
     (void *)&lbl_806CEEA8,
     0,
     0
 };
-void *lbl_803F9CE4[3] = {
-    (void *)&lbl_806CEEB0,
+void *clItemBoxManager_vtable_803F9CE4[3] = {
+    (void *)&data_803F9CD8_data_806CEEB0,
     0,
     (void *)clItemBoxManager_Dtor
 };
-void *lbl_803F9CF0[4] = {
+void *clItemBoxManagerBase_vtable_803F9CF0[4] = {
     (void *)&lbl_806CEEA8,
     0,
     (void *)dtor_8005FF74,
@@ -38,7 +38,7 @@ void *lbl_803F9D00[4] = {
     0,
     (void *)dtor_80060024
 };
-int lbl_803F9D10[39] = {
+int ItemBox_ProcessPickup_data_803F9D10[39] = {
     61, 280, 281, 50, 286, 287, 23, 278,
     279, 80, 284, 285, 57, 282, 283, 64,
     288, 289, 43, 290, 291, 70, 292, 293,

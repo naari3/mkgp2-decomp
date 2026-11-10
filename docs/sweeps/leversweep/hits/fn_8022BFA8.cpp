@@ -3,7 +3,7 @@
 union FaceDrawPipe { float f32; unsigned int u32; };
 #define FIFO (*(volatile FaceDrawPipe *)0xCC008000)
 extern "C" {
-extern const unsigned char lbl_803DA710[0x710];
+extern const unsigned char EnmyFaceEffect_rodata_803DA710[0x710];
 extern const float lbl_806D6DE4, lbl_806D6DE8;
 extern const float lbl_806DB5E0, lbl_806DB5E8, lbl_806DB5EC, lbl_806DB5F0, lbl_806DB5F4;
 void GXSetCullMode(int); void GXClearVtxDesc();
@@ -68,7 +68,7 @@ static inline void DrawFaceQuadPlain(FaceDrawVec *p, float *uv, FaceDrawVec *off
 
 extern "C" void fn_8022BFA8(FaceDrawModel *self) {
     float mid;
-    const unsigned char *data=lbl_803DA710;
+    const unsigned char *data=EnmyFaceEffect_rodata_803DA710;
     FaceDrawVec vertices[8];
     FaceMtx world[2], view, temporary, scale, translation, projection;
     float uv[16];

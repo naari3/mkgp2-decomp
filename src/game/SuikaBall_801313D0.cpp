@@ -178,7 +178,7 @@ extern unsigned int lbl_806D7294;
 extern const unsigned int lbl_806DC190;
 extern const unsigned int lbl_806DC1B0;
 extern const unsigned int lbl_806DC1B8;
-extern const Vec3 lbl_803579F4[4][2];
+extern const Vec3 SuikaBall_Render_rodata_803579F4[4][2];
 extern void CObj_ApplyScissor(void *cobj, Vec3 *v);
 extern void CObj_LoadProjMatrix(void *cobj, Vec3 *v);
 extern void CarObject_ApplyInput(void *car, float steer, float accel, float brake, unsigned char started);
@@ -252,9 +252,9 @@ extern unsigned int lbl_806D72E0;
 extern unsigned int lbl_806D72E4;
 extern unsigned int lbl_806D72E8;
 extern const char lbl_80357A6C[];
-extern const char lbl_80357A88[];
-extern Vec3 lbl_80677C70;
-extern Vec3 lbl_80677C7C;
+extern const char SuikaBall_Update_rodata_80357A88[];
+extern Vec3 SuikaBall_Update_bss_80677C70;
+extern Vec3 SuikaBall_Update_bss_80677C7C;
 extern void ClRomTable_PurgeAll();
 void CourseEnvironment_Dtor(void *p, int flag);
 extern void ItemObjectManager_Reset();
@@ -276,7 +276,7 @@ void fn_8016C634(void *p, int flag);
 void fn_80254134(void *p, int flag);
 extern void *g_raceCamera;
 extern Deletable *lbl_806D10D0;
-extern char lbl_8048E3F8[];
+extern char SuikaBallMode_vtable_8048E3F8[];
 extern const float lbl_806D72FC;
 extern const float lbl_806D72F8;
 extern const float lbl_806D7300;
@@ -318,8 +318,8 @@ void *ResolveJointByName(void *obj, const char *name);
 void SceneRender_CmdB_8aa20(void *cam, void *jobj);
 void Vec3_Normalize(Vec3 *src, Vec3 *dst);
 extern const float lbl_806D729C;
-extern void *lbl_8048E34C[];
-extern void *lbl_8048E418[];
+extern void *CoinShotBase_vtable_8048E34C[];
+extern void *SuikaCoinShots_vtable_8048E418[];
 struct LNode *LinkedNode_GetField10_OrFallback(void *o, int idx);
 void Object_RenderJObjTree(void *o, int mask);
 void Object_SetColorAlphaOnly(void *o, int idx, float a);
@@ -370,7 +370,7 @@ struct JointSetDesc {
     const char *const *joints;
     int count;
 };
-extern "C" const unsigned int lbl_80357008[0x102] = {
+extern "C" const unsigned int SuikaBall_Init_rodata_80357008[0x102] = {
     0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000,
     0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
     0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
@@ -429,7 +429,7 @@ extern "C" const char lbl_80357544[] = "MH_challenge_kino_set_c2_joint";
 extern "C" const char lbl_80357564[] = "MH_challenge_kino_d_joint";
 extern "C" const char lbl_80357580[] = "MH_challenge_kino_set_d1_joint";
 extern "C" const char lbl_803575A0[] = "MH_challenge_kino_set_d2_joint";
-extern "C" const char *const lbl_803575C0[20] = {
+extern "C" const char *const SuikaBall_801313D0_rodata_803575C0[20] = {
     lbl_80357410, lbl_8035742C, lbl_80357410, lbl_8035744C, lbl_80357410, lbl_8035746C, lbl_8035748C, lbl_803574A8, lbl_8035748C, lbl_803574C8, lbl_8035748C, lbl_803574E8, lbl_80357508, lbl_80357524, lbl_80357508, lbl_80357544, lbl_80357564, lbl_80357580, lbl_80357564, lbl_803575A0,
 };
 extern "C" const char lbl_80357610[] = "MH_challenge_monte_a_joint";
@@ -440,7 +440,7 @@ extern "C" const char lbl_8035768C[] = "MH_challenge_monte_b_joint";
 extern "C" const char lbl_803576A8[] = "MH_challenge_monte_set_b1_joint";
 extern "C" const char lbl_803576C8[] = "MH_challenge_monte_set_b2_joint";
 extern "C" const char lbl_803576E8[] = "MH_challenge_monte_set_b3_joint";
-extern "C" const char *const lbl_80357708[12] = {
+extern "C" const char *const SuikaBall_801313D0_rodata_80357708[12] = {
     lbl_80357610, lbl_8035762C, lbl_80357610, lbl_8035764C, lbl_80357610, lbl_8035766C, lbl_8035768C, lbl_803576A8, lbl_8035768C, lbl_803576C8, lbl_8035768C, lbl_803576E8,
 };
 extern "C" const char lbl_80357738[] = "MH_challenge_poihana_a_joint";
@@ -455,7 +455,7 @@ extern "C" const char lbl_8035784C[] = "MH_challenge_poihana_d_joint";
 extern "C" const char lbl_8035786C[] = "MH_challenge_poihana_set_d1_joint";
 extern "C" const char lbl_80357890[] = "MH_challenge_poihana_set_d2_joint";
 extern "C" const char lbl_803578B4[] = "MH_challenge_poihana_set_d3_joint";
-extern "C" const char *const lbl_803578D8[16] = {
+extern "C" const char *const SuikaBall_801313D0_rodata_803578D8[16] = {
     lbl_80357738, lbl_80357758, lbl_80357738, lbl_8035777C, lbl_80357738, lbl_803577A0, lbl_803577C4, lbl_803577E4, lbl_80357808, lbl_80357828, lbl_8035784C, lbl_8035786C, lbl_8035784C, lbl_80357890, lbl_8035784C, lbl_803578B4,
 };
 extern "C" const char lbl_80357918[] = "MH_challenge_kinopio.dat";
@@ -465,11 +465,11 @@ extern "C" const char lbl_8035796C[] = "MH_challenge_monte_set.dat";
 extern "C" const char lbl_80357988[] = "MH_challenge_poihana.dat";
 extern "C" const char lbl_803579A4[] = "MH_challenge_poihana_set.dat";
 static const JointSetDesc s_jointSets[3] = {
-    { lbl_80357918, lbl_80357934, lbl_803575C0, 10 },
-    { lbl_80357954, lbl_8035796C, lbl_80357708, 6 },
-    { lbl_80357988, lbl_803579A4, lbl_803578D8, 8 },
+    { lbl_80357918, lbl_80357934, SuikaBall_801313D0_rodata_803575C0, 10 },
+    { lbl_80357954, lbl_8035796C, SuikaBall_801313D0_rodata_80357708, 6 },
+    { lbl_80357988, lbl_803579A4, SuikaBall_801313D0_rodata_803578D8, 8 },
 };
-extern "C" const Vec3 lbl_803579F4[4][2] = {
+extern "C" const Vec3 SuikaBall_Render_rodata_803579F4[4][2] = {
     { { 1603.87f, 0.0f, 875.05f }, { 1659.19f, 0.0f, 958.76f } },
     { { 1166.56f, 0.0f, 949.29f }, { 1142.48f, 0.0f, 1045.98f } },
     { { 648.89f, 0.0f, 991.32f }, { 684.98f, 0.0f, 1083.0f } },
@@ -478,7 +478,7 @@ extern "C" const Vec3 lbl_803579F4[4][2] = {
 extern "C" const char lbl_80357A54[] = "clCGameMR";
 extern "C" const char lbl_80357A60[] = "clJobRunner";
 extern "C" const char lbl_80357A6C[] = "Start to MRCoin.  %s - %d\n";
-extern "C" const char lbl_80357A88[] = "CGameCoin.hpp";
+extern "C" const char SuikaBall_Update_rodata_80357A88[] = "CGameCoin.hpp";
 static const char s_lakituFile[20] = "jyugemu_start.dat";
 static const char s_ballFile[20] = "MRO_suikaball.dat";
 static const char s_coinFile[16] = "mario_coin.dat";
@@ -629,13 +629,13 @@ static inline void DrawCardWalls(void)
     bottom = -200.0f;
     for (i = 0; i < 4; i++) {
         GXBegin(0x80, 0, 4);
-        GXPosition3f32(lbl_803579F4[i][1].x, top, lbl_803579F4[i][1].z);
+        GXPosition3f32(SuikaBall_Render_rodata_803579F4[i][1].x, top, SuikaBall_Render_rodata_803579F4[i][1].z);
         GXColor1u32(0xE0202000);
-        GXPosition3f32(lbl_803579F4[i][0].x, top, lbl_803579F4[i][0].z);
+        GXPosition3f32(SuikaBall_Render_rodata_803579F4[i][0].x, top, SuikaBall_Render_rodata_803579F4[i][0].z);
         GXColor1u32(0xE0202000);
-        GXPosition3f32(lbl_803579F4[i][0].x, bottom, lbl_803579F4[i][0].z);
+        GXPosition3f32(SuikaBall_Render_rodata_803579F4[i][0].x, bottom, SuikaBall_Render_rodata_803579F4[i][0].z);
         GXColor1u32(0xE0202080);
-        GXPosition3f32(lbl_803579F4[i][1].x, bottom, lbl_803579F4[i][1].z);
+        GXPosition3f32(SuikaBall_Render_rodata_803579F4[i][1].x, bottom, SuikaBall_Render_rodata_803579F4[i][1].z);
         GXColor1u32(0xE0202080);
     }
     GXSetCullMode(2);
@@ -702,7 +702,7 @@ static inline void Fireworks_Launch(ShotSet *fw, Vec3 *pos, float kx, float kz, 
         int i;
         float heading;
         float angle;
-        DebugPrintf(lbl_80357A6C, lbl_80357A88, 0x2d8);
+        DebugPrintf(lbl_80357A6C, SuikaBall_Update_rodata_80357A88, 0x2d8);
         if (fn_8016C360(0xab) == 1) {
             fn_8016C394(0xab);
         }
@@ -881,10 +881,10 @@ extern "C" int SuikaBall_Update(SuikaBall *self)
         clNormal3D_Exec(slot->objB);
     }
     self->m60->Begin();
-    CObj_LoadProjMatrix(self->m18, &lbl_80677C70);
-    CObj_ApplyScissor(self->m18, &lbl_80677C7C);
+    CObj_LoadProjMatrix(self->m18, &SuikaBall_Update_bss_80677C70);
+    CObj_ApplyScissor(self->m18, &SuikaBall_Update_bss_80677C7C);
     ItemObjectManager_Update();
-    VfxSlotMgr_Update(lbl_80677C70, lbl_80677C7C);
+    VfxSlotMgr_Update(SuikaBall_Update_bss_80677C70, SuikaBall_Update_bss_80677C7C);
     if (IsRaceStarted() && self->finished == 0 && g_raceTimeRemaining >= 0.0f) {
         g_raceTimeRemaining -= 0.016666668f;
         if (g_raceTimeRemaining < 0.0f) {
@@ -965,7 +965,7 @@ static inline void FreeBufs(SuikaBall *self)
 extern "C" SuikaBall *fn_80133008(SuikaBall *self, short flag)
 {
     if (self != 0) {
-        self->vtable = lbl_8048E3F8;
+        self->vtable = SuikaBallMode_vtable_8048E3F8;
         delete self->m60;
         FreeBufs(self);
         fn_8016C394(0x24);
@@ -1270,7 +1270,7 @@ SuikaBallMode::SuikaBallMode() {
         }
     }
     shots = new SuikaCoinShots(s_coinFile, s_kiraFile);
-    lines = new GoalLineSet(lbl_803579F4);
+    lines = new GoalLineSet(SuikaBall_Render_rodata_803579F4);
     coins = 0;
     if (g_weatherSystem == 0) {
         g_weatherSystem = new WeatherSystem(1);
@@ -1369,9 +1369,9 @@ extern "C" void fn_80133E64(ShotOwner *self)
 extern "C" ModelPair *fn_80134164(ModelPair *self, short flag)
 {
     if (self) {
-        self->vt = lbl_8048E418;
+        self->vt = SuikaCoinShots_vtable_8048E418;
         if (self) {
-            self->vt = lbl_8048E34C;
+            self->vt = CoinShotBase_vtable_8048E34C;
             Object_DtorWithGXSync(self->a, 1);
             Object_DtorWithGXSync(self->b, 1);
         }

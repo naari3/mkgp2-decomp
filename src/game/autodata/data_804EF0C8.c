@@ -18,32 +18,32 @@ extern void fn_80251CD0();
 extern void fn_80251CE8();
 extern void fn_80251CEC();
 extern void fn_80252514();
-extern char lbl_803F0EE0[];
-extern char lbl_803F0EEC[];
-extern char lbl_803F0EF8[];
-extern char lbl_803F0F04[];
-extern char lbl_803F0F10[];
-extern char lbl_803F0F1C[];
-extern char lbl_803F0F28[];
-extern char lbl_803F0F34[];
-extern char lbl_803F0F40[];
-extern char lbl_803F0F4C[];
-extern char lbl_803F0F58[];
-extern char lbl_803F0F64[];
-extern char lbl_803F0F70[];
-extern char lbl_803F0F7C[];
-extern char lbl_803F0F88[];
-extern char lbl_803F0F94[];
-extern char lbl_803F0FA0[];
-extern char lbl_803F0FAC[];
-extern char lbl_803F0FB8[];
-extern char lbl_806D09E8[];
+extern char data_804EF0C8_rodata_803F0EE0[];
+extern char data_804EF0C8_rodata_803F0EEC[];
+extern char data_804EF0C8_rodata_803F0EF8[];
+extern char data_804EF0C8_rodata_803F0F04[];
+extern char data_804EF0C8_rodata_803F0F10[];
+extern char data_804EF0C8_rodata_803F0F1C[];
+extern char data_804EF0C8_rodata_803F0F28[];
+extern char data_804EF0C8_rodata_803F0F34[];
+extern char data_804EF0C8_rodata_803F0F40[];
+extern char data_804EF0C8_rodata_803F0F4C[];
+extern char data_804EF0C8_rodata_803F0F58[];
+extern char data_804EF0C8_rodata_803F0F64[];
+extern char data_804EF0C8_rodata_803F0F70[];
+extern char data_804EF0C8_rodata_803F0F7C[];
+extern char data_804EF0C8_rodata_803F0F88[];
+extern char data_804EF0C8_rodata_803F0F94[];
+extern char data_804EF0C8_rodata_803F0FA0[];
+extern char data_804EF0C8_rodata_803F0FAC[];
+extern char data_804EF0C8_rodata_803F0FB8[];
+extern char data_804EF0C8_data_806D09E8[];
 extern char lbl_806D09F0[];
 extern char lbl_806D09F8[];
-extern char lbl_806D0A00[];
-extern char lbl_806D0A08[];
-extern char lbl_806D0A10[];
-extern char lbl_806D0A18[];
+extern char data_804EF0C8_data_806D0A00[];
+extern char data_804EF0C8_data_806D0A08[];
+extern char data_804EF0C8_data_806D0A10[];
+extern char data_804EF0C8_data_806D0A18[];
 extern char lbl_806DC0A8[];
 extern char lbl_806DC0B0[];
 extern char lbl_806DC0B8[];
@@ -55,38 +55,38 @@ extern char lbl_806DC0D8[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-char *lbl_804EF0C8[13] = {
+char *KartAlertPanel_data_804EF0C8[13] = {
     (char *)&lbl_806DC0A8,
-    (char *)&lbl_803F0EE0,
+    (char *)&data_804EF0C8_rodata_803F0EE0,
     (char *)&lbl_806DC0B0,
     (char *)&lbl_806DC0B8,
     (char *)&lbl_806DC0C0,
-    (char *)&lbl_803F0EEC,
-    (char *)&lbl_803F0EF8,
-    (char *)&lbl_803F0F04,
-    (char *)&lbl_803F0F10,
-    (char *)&lbl_803F0F1C,
-    (char *)&lbl_803F0F28,
-    (char *)&lbl_803F0F34,
-    (char *)&lbl_803F0F40
+    (char *)&data_804EF0C8_rodata_803F0EEC,
+    (char *)&data_804EF0C8_rodata_803F0EF8,
+    (char *)&data_804EF0C8_rodata_803F0F04,
+    (char *)&data_804EF0C8_rodata_803F0F10,
+    (char *)&data_804EF0C8_rodata_803F0F1C,
+    (char *)&data_804EF0C8_rodata_803F0F28,
+    (char *)&data_804EF0C8_rodata_803F0F34,
+    (char *)&data_804EF0C8_rodata_803F0F40
 };
-char *lbl_804EF0FC[13] = {
-    (char *)&lbl_803F0F4C,
-    (char *)&lbl_803F0F58,
-    (char *)&lbl_803F0F64,
-    (char *)&lbl_803F0F70,
-    (char *)&lbl_803F0F7C,
-    (char *)&lbl_803F0F88,
+char *KartAlertPanel_data_804EF0FC[13] = {
+    (char *)&data_804EF0C8_rodata_803F0F4C,
+    (char *)&data_804EF0C8_rodata_803F0F58,
+    (char *)&data_804EF0C8_rodata_803F0F64,
+    (char *)&data_804EF0C8_rodata_803F0F70,
+    (char *)&data_804EF0C8_rodata_803F0F7C,
+    (char *)&data_804EF0C8_rodata_803F0F88,
     (char *)&lbl_806DC0C8,
-    (char *)&lbl_803F0F94,
+    (char *)&data_804EF0C8_rodata_803F0F94,
     (char *)&lbl_806DC0D0,
-    (char *)&lbl_803F0FA0,
+    (char *)&data_804EF0C8_rodata_803F0FA0,
     (char *)&lbl_806DC0D8,
-    (char *)&lbl_803F0FAC,
-    (char *)&lbl_803F0FB8
+    (char *)&data_804EF0C8_rodata_803F0FAC,
+    (char *)&data_804EF0C8_rodata_803F0FB8
 };
-void *lbl_804EF130[4] = {
-    (void *)&lbl_806D09E8,
+void *KartAlertPanel_vtable_804EF130[4] = {
+    (void *)&data_804EF0C8_data_806D09E8,
     0,
     (void *)fn_80250C18,
     0
@@ -96,30 +96,30 @@ void *lbl_804EF140[3] = {
     0,
     0
 };
-void *lbl_804EF14C[5] = {
+void *sdata_806D09E8_data_804EF14C[5] = {
     (void *)&lbl_806D09F0,
     0,
     (void *)&lbl_806D09F8,
     0,
     0
 };
-void *lbl_804EF160[6] = {
-    (void *)&lbl_806D0A00,
+void *KindPopup_vtable_804EF160[6] = {
+    (void *)&data_804EF0C8_data_806D0A00,
     0,
     (void *)fn_8025147C,
     (void *)fn_80251C60,
     (void *)fn_80250F38,
     (void *)fn_80250F34
 };
-void *lbl_804EF178[5] = {
+void *sdata_806D09E8_data_804EF178[5] = {
     (void *)&lbl_806D09F0,
     0,
     (void *)&lbl_806D09F8,
     0,
     0
 };
-void *lbl_804EF18C[7] = {
-    (void *)&lbl_806D0A08,
+void *FlashPopup_vtable_804EF18C[7] = {
+    (void *)&data_804EF0C8_data_806D0A08,
     0,
     (void *)fn_80251948,
     (void *)fn_80251C98,
@@ -127,13 +127,13 @@ void *lbl_804EF18C[7] = {
     (void *)fn_80251590,
     0
 };
-void *lbl_804EF1A8[3] = {
-    (void *)&lbl_806D0A10,
+void *sdata_806D09E8_data_804EF1A8[3] = {
+    (void *)&data_804EF0C8_data_806D0A10,
     0,
     0
 };
-void *lbl_804EF1B4[6] = {
-    (void *)&lbl_806D0A18,
+void *SpeedHud_vtable_804EF1B4[6] = {
+    (void *)&data_804EF0C8_data_806D0A18,
     0,
     (void *)fn_80252514,
     (void *)fn_80251CEC,

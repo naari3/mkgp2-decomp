@@ -35,8 +35,8 @@ extern const float lbl_806D2924;
 extern const float lbl_806D2928;
 
 typedef struct { float *p[3]; } TEPtr3;
-extern const TEPtr3 lbl_802EDC3C; /* zero templates for the two pointer triples */
-extern const TEPtr3 lbl_802EDC48;
+extern const TEPtr3 TornadoEffect_Tick_rodata_802EDC3C; /* zero templates for the two pointer triples */
+extern const TEPtr3 TornadoEffect_Tick_rodata_802EDC48;
 
 #define TE_U64(p, o) (*(unsigned long long *)((char *)(p) + (o)))
 
@@ -266,11 +266,11 @@ void TornadoEffect_Tick(void *e)
         int i;
         float **tp;
         float **cp;
-        tgt = lbl_802EDC3C;
+        tgt = TornadoEffect_Tick_rodata_802EDC3C;
         tgt.p[0] = &TE_F(e, 0xE0);
         tgt.p[1] = &TE_F(e, 0xE4);
         tgt.p[2] = &TE_F(e, 0xE8);
-        cur = lbl_802EDC48;
+        cur = TornadoEffect_Tick_rodata_802EDC48;
         cur.p[0] = &TE_F(e, 0xEC);
         cur.p[1] = &TE_F(e, 0xF0);
         cur.p[2] = &TE_F(e, 0xF4);

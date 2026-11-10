@@ -18,9 +18,9 @@ extern void fn_802248F8();
 extern void fn_80224E20();
 extern char lbl_806D04E0[];
 extern char lbl_806D04E8[];
-extern char lbl_806D04F0[];
-extern char lbl_806D04F8[];
-extern char lbl_806D0500[];
+extern char data_804EDE80_data_806D04F0[];
+extern char data_804EDE80_data_806D04F8[];
+extern char data_804EDE80_data_806D0500[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -30,46 +30,46 @@ void *lbl_804EDE80[3] = {
     0,
     0
 };
-void *lbl_804EDE8C[5] = {
+void *clGetCoinLine_vtable_804EDE8C[5] = {
     (void *)&lbl_806D04E8,
     0,
     (void *)dtor_80220780,
     (void *)fn_80224260,
     (void *)fn_80224300
 };
-void *lbl_804EDEA0[5] = {
+void *sdata_806D0498_data_804EDEA0[5] = {
     (void *)&lbl_806D04E0,
     0,
     (void *)&lbl_806D04E8,
     0,
     0
 };
-void *lbl_804EDEB4[5] = {
-    (void *)&lbl_806D04F0,
+void *clGetSumLine_vtable_804EDEB4[5] = {
+    (void *)&data_804EDE80_data_806D04F0,
     0,
     (void *)fn_80224484,
     (void *)fn_80224260,
     (void *)fn_8022459C
 };
-void *lbl_804EDEC8[3] = {
+void *sdata_806D0498_data_804EDEC8[3] = {
     (void *)&lbl_806D04E0,
     0,
     0
 };
-void *lbl_804EDED4[5] = {
-    (void *)&lbl_806D04F8,
+void *clCoinPerfect_vtable_804EDED4[5] = {
+    (void *)&data_804EDE80_data_806D04F8,
     0,
     (void *)fn_802246A4,
     (void *)fn_80224734,
     (void *)fn_802247A0
 };
-void *lbl_804EDEE8[3] = {
+void *sdata_806D0498_data_804EDEE8[3] = {
     (void *)&lbl_806D04E0,
     0,
     0
 };
-void *lbl_804EDEF4[5] = {
-    (void *)&lbl_806D0500,
+void *clGetCoinSum_vtable_804EDEF4[5] = {
+    (void *)&data_804EDE80_data_806D0500,
     0,
     (void *)fn_80224800,
     (void *)fn_802248F8,

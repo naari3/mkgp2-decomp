@@ -21,8 +21,8 @@ extern char lbl_806D07D8[];
 extern char lbl_806D07E0[];
 extern char lbl_806D07E8[];
 extern char lbl_806D07F0[];
-extern char lbl_806D07F8[];
-extern char lbl_806D0800[];
+extern char data_804EE680_data_806D07F8[];
+extern char data_804EE680_data_806D0800[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -33,7 +33,7 @@ void *lbl_804EE680[3] = {
     0
 };
 /* decl: unsigned char */
-void *lbl_804EE68C[5] = {
+void *JointTracks_data_804EE68C[5] = {
     (void *)&lbl_806D07D8,
     0,
     (void *)fn_80241A5C,
@@ -67,24 +67,24 @@ void *lbl_804EE6D8[3] = {
     0,
     0
 };
-void *lbl_804EE6E4[5] = {
+void *sdata_806D0728_data_804EE6E4[5] = {
     (void *)&lbl_806D07E8,
     0,
     (void *)&lbl_806D07F0,
     0,
     0
 };
-void *lbl_804EE6F8[7] = {
+void *sdata_806D0728_data_804EE6F8[7] = {
     (void *)&lbl_806D07E8,
     0,
     (void *)&lbl_806D07F0,
     0,
-    (void *)&lbl_806D07F8,
+    (void *)&data_804EE680_data_806D07F8,
     0,
     0
 };
-void *lbl_804EE714[6] = {
-    (void *)&lbl_806D0800,
+void *CardCreditFlow_vtable_804EE714[6] = {
+    (void *)&data_804EE680_data_806D0800,
     0,
     (void *)fn_80242B88,
     (void *)fn_80242DA8,

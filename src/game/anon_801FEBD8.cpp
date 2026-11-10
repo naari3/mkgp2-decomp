@@ -7,17 +7,17 @@
 /* Reuse the original RTTI records through the CW cast runtime. */
 extern "C" {
 void *fn_80271340(void *, int, void *, void *, int);
-extern unsigned char lbl_806D01E8[8];
-extern unsigned char lbl_806D01F0[8];
-extern unsigned char lbl_806D01F8[8];
+extern unsigned char FlowTask_RTTI_806D01E8[8];
+extern unsigned char CountdownDot_RTTI_806D01F0[8];
+extern unsigned char CountdownDigit_RTTI_806D01F8[8];
 }
 
 static inline CountdownDot *CastCountdownDot(FlowTask *task) {
-    return (CountdownDot *)fn_80271340(task, 0, lbl_806D01F0, lbl_806D01E8, 0);
+    return (CountdownDot *)fn_80271340(task, 0, CountdownDot_RTTI_806D01F0, FlowTask_RTTI_806D01E8, 0);
 }
 
 static inline CountdownDigit *CastCountdownDigit(FlowTask *task) {
-    return (CountdownDigit *)fn_80271340(task, 0, lbl_806D01F8, lbl_806D01E8, 0);
+    return (CountdownDigit *)fn_80271340(task, 0, CountdownDigit_RTTI_806D01F8, FlowTask_RTTI_806D01E8, 0);
 }
 
 extern "C" void fn_801FEBD8(Countdown *self) {

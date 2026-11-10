@@ -16,12 +16,12 @@ extern void fn_802290D8();
 extern void fn_8022929C();
 extern void fn_80229398();
 extern void fn_802296C4();
-extern char lbl_806D05A0[];
-extern char lbl_806D05A8[];
-extern char lbl_806D05B0[];
-extern char lbl_806D05B8[];
-extern char lbl_806D05C0[];
-extern char lbl_806D05C8[];
+extern char data_804EE008_data_806D05A0[];
+extern char data_804EE008_data_806D05A8[];
+extern char data_804EE008_data_806D05B0[];
+extern char data_804EE008_data_806D05B8[];
+extern char data_804EE008_data_806D05C0[];
+extern char data_804EE008_data_806D05C8[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -38,13 +38,13 @@ Vec3f lbl_804EE038[4] = {
     { 0.0f, 0.0f, 0.0f },
     { 0.0f, 0.0f, 0.0f }
 };
-void *lbl_804EE068[3] = {
-    (void *)&lbl_806D05A0,
+void *sdata_806D0540_data_804EE068[3] = {
+    (void *)&data_804EE008_data_806D05A0,
     0,
     0
 };
-void *lbl_804EE074[7] = {
-    (void *)&lbl_806D05A8,
+void *clDNFlash_vtable_804EE074[7] = {
+    (void *)&data_804EE008_data_806D05A8,
     0,
     (void *)fn_802287EC,
     (void *)fn_802286B4,
@@ -52,13 +52,13 @@ void *lbl_804EE074[7] = {
     (void *)fn_8016A26C,
     0
 };
-void *lbl_804EE090[3] = {
-    (void *)&lbl_806D05B0,
+void *sdata_806D0540_data_804EE090[3] = {
+    (void *)&data_804EE008_data_806D05B0,
     0,
     0
 };
-void *lbl_804EE09C[7] = {
-    (void *)&lbl_806D05B8,
+void *clDNLensflare_vtable_804EE09C[7] = {
+    (void *)&data_804EE008_data_806D05B8,
     0,
     (void *)fn_802290D8,
     (void *)fn_80229080,
@@ -66,13 +66,13 @@ void *lbl_804EE09C[7] = {
     (void *)fn_8016A26C,
     0
 };
-void *lbl_804EE0B8[3] = {
-    (void *)&lbl_806D05C0,
+void *sdata_806D0540_data_804EE0B8[3] = {
+    (void *)&data_804EE008_data_806D05C0,
     0,
     0
 };
-void *lbl_804EE0C4[7] = {
-    (void *)&lbl_806D05C8,
+void *clDNStartCamera_vtable_804EE0C4[7] = {
+    (void *)&data_804EE008_data_806D05C8,
     0,
     (void *)fn_802296C4,
     (void *)fn_80229398,

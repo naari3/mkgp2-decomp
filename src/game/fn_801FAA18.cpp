@@ -5,7 +5,7 @@ public:
 };
 
 extern "C" {
-extern void *lbl_804EBE78[];
+extern void *ReadTask_vtable_804EBE78[];
 void fn_801F4D3C(void *seq);
 void fn_80120A08(int id);
 }
@@ -38,7 +38,7 @@ struct Scene801FAA18 : Base801FAA18 {
 };
 
 Scene801FAA18::~Scene801FAA18() {
-    vt = lbl_804EBE78;
+    vt = ReadTask_vtable_804EBE78;
     fn_801F4D3C(seq.p);
     fn_80120A08(0x72F);
     fn_80120A08(0x734);

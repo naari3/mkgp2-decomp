@@ -19,8 +19,8 @@ index 2f8d9cf..0858042 100644
 -__declspec(section ".extab_user") static const unsigned char extab_NokoNokoChallenge_CalcResultText[8] = {
 -    0x28, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 -};
-+extern int lbl_80355078[][3][2];
-+extern int lbl_803554E0[][3][2];
++extern int MiniGame_GetTimerValue_rodata_80355078[][3][2];
++extern int MiniGame_GetTimerValue_rodata_803554E0[][3][2];
  
 -/* --- CalcResultText extabindex (manual emit) --- */
 -#pragma section R ".extabindex_user"
@@ -174,9 +174,9 @@ index 2f8d9cf..0858042 100644
 +        return 0;
 +    }
 +    if (IsCardValid() == 0) {
-+        return lbl_803554E0[cup][cc][ura];
++        return MiniGame_GetTimerValue_rodata_803554E0[cup][cc][ura];
 +    }
-+    return lbl_80355078[cup][cc][ura];
++    return MiniGame_GetTimerValue_rodata_80355078[cup][cc][ura];
 +}
 +
 +#pragma exceptions on

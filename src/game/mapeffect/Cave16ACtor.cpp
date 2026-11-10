@@ -4,7 +4,7 @@
  * through the section anchor, which puts the pool lis ahead of the vtable
  * stores. */
 extern "C" {
-extern const unsigned char lbl_8036CF68[0x3FC] = {
+extern const unsigned char Cave16ACtor_rodata_8036CF68[0x3FC] = {
     0x3F, 0x80, 0x00, 0x00, 0x3F, 0x33, 0x33, 0x33, 0x3F, 0x66, 0x66, 0x66, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x43, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x00, 0x00,
     0x42, 0x85, 0x55, 0x56, 0x44, 0xFA, 0x00, 0x00, 0x42, 0x85, 0x55, 0x56, 0x45, 0x3B, 0x80, 0x00,
@@ -97,7 +97,7 @@ extern const unsigned char lbl_8036D364[0x168] = {
 };
 extern const char lbl_8036D4CC[] = "clDKRain";
 extern const char lbl_8036D4D8[] = "clMapEffectParts";
-extern const char lbl_8036D4EC[] = " DeleteMapEffect : clDKRain\n";
+extern const char Cave16ACtor_rodata_8036D4EC[] = " DeleteMapEffect : clDKRain\n";
 extern const char lbl_8036D50C[] = " CreateMapEffect : clDKRain\n";
 extern const char lbl_8036D52C[] = "DK_jungle_rain.dat";
 }
@@ -105,7 +105,7 @@ extern const char lbl_8036D52C[] = "DK_jungle_rain.dat";
 /*
  * 0x8016ACD4..0x8016AF3C: draw / update / deleting destructor of a course
  * object that plays SE 0x3A while the camera looks at it (vtable
- * lbl_8049107C, base vtable lbl_80490FE0).
+ * Cave16A_vtable_8049107C, base vtable lbl_80490FE0).
  */
 
 struct CourseObj8016ACD4 {
@@ -119,7 +119,7 @@ struct CourseObj8016ACD4 {
 };
 
 extern "C" {
-extern char lbl_8049107C[];
+extern char Cave16A_vtable_8049107C[];
 extern char lbl_80490FE0[];
 extern void Object_SetColorAlphaOnly(void *, int);
 extern void Object_RenderJObjTree(void *, int);
@@ -186,14 +186,14 @@ void fn_8016AD40(CourseObj8016ACD4 *self) {
 
 CourseObj8016ACD4 *fn_8016AE8C(CourseObj8016ACD4 *self, short flag) {
     if (self) {
-        self->vtable = lbl_8049107C;
+        self->vtable = Cave16A_vtable_8049107C;
         fn_8016C394(0x3A);
         fn_8018D7CC(self->model, 1);
         fn_80123B48(self->anim, 1);
         if (self->archive) {
             Object_DtorWithGXSync(self->archive, 1);
         }
-        DebugPrintf(lbl_8036D4EC);
+        DebugPrintf(Cave16ACtor_rodata_8036D4EC);
         if (self) {
             self->vtable = lbl_80490FE0;
         }

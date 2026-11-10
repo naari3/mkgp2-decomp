@@ -5,7 +5,7 @@ struct EffectJointMatrix : HSD_JObj {
 };
 extern "C" {
 extern char lbl_806D8C18[7], lbl_806D8C20[5];
-extern char lbl_8036E054[];
+extern char EffectFA_Draw_rodata_8036E054[];
 extern const float lbl_806D8C2C;
 void Object_SetJObjPositionVec(clNormal3D *, Vec3f *);
 void Object_SetJObjRotationY(clNormal3D *, float);
@@ -57,7 +57,7 @@ static inline void SetScaleZ(HSD_JObj *j, float f) {
 }
 static inline void SetRotationZ(HSD_JObj *j, float f) {
     if (!j) __assert(lbl_806D8C18, 0x2cc, lbl_806D8C20);
-    if (j->flags & 0x20000) __assert(lbl_806D8C18, 0x2cd, lbl_8036E054);
+    if (j->flags & 0x20000) __assert(lbl_806D8C18, 0x2cd, EffectFA_Draw_rodata_8036E054);
     j->rotZ = f;
     if (!(j->flags & 0x2000000)) Dirty(j);
 }

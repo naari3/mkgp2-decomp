@@ -1,6 +1,6 @@
 /*
  * 0x8016D920..0x8016DA30: constructor of the JObj-chain marker (vtable
- * lbl_80491134, base vtable lbl_80490FE0). Real C++ for its EH actions;
+ * MarkerChain_vtable_80491134, base vtable lbl_80490FE0). Real C++ for its EH actions;
  * mangled names are bridged in tools/extab_user_renames.json.
  */
 

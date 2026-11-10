@@ -60,7 +60,7 @@ extern unsigned int lbl_806D4F88;
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
 extern unsigned int lbl_80328E10[];
-extern unsigned int lbl_80419E70[];
+extern unsigned int ReverseChallenge_vtable_80419E70[];
 extern unsigned int lbl_8048E144[];
 
 /* --- function index (1 fns, .text 0x800AD910..0x800ADDA0) ---
@@ -116,14 +116,14 @@ struct RCQuadPts { float p[4][2]; };
 struct RCQuadEdges {
     float e[4][2];
     RCQuadEdges() {
-        e[0][0] = lbl_80328DD8.p[1][0] - lbl_80328DD8.p[0][0];
-        e[0][1] = lbl_80328DD8.p[1][1] - lbl_80328DD8.p[0][1];
-        e[1][0] = lbl_80328DD8.p[2][0] - lbl_80328DD8.p[1][0];
-        e[1][1] = lbl_80328DD8.p[2][1] - lbl_80328DD8.p[1][1];
-        e[2][0] = lbl_80328DD8.p[3][0] - lbl_80328DD8.p[2][0];
-        e[2][1] = lbl_80328DD8.p[3][1] - lbl_80328DD8.p[2][1];
-        e[3][0] = lbl_80328DD8.p[0][0] - lbl_80328DD8.p[3][0];
-        e[3][1] = lbl_80328DD8.p[0][1] - lbl_80328DD8.p[3][1];
+        e[0][0] = ReverseChallenge_rodata_80328DD8.p[1][0] - ReverseChallenge_rodata_80328DD8.p[0][0];
+        e[0][1] = ReverseChallenge_rodata_80328DD8.p[1][1] - ReverseChallenge_rodata_80328DD8.p[0][1];
+        e[1][0] = ReverseChallenge_rodata_80328DD8.p[2][0] - ReverseChallenge_rodata_80328DD8.p[1][0];
+        e[1][1] = ReverseChallenge_rodata_80328DD8.p[2][1] - ReverseChallenge_rodata_80328DD8.p[1][1];
+        e[2][0] = ReverseChallenge_rodata_80328DD8.p[3][0] - ReverseChallenge_rodata_80328DD8.p[2][0];
+        e[2][1] = ReverseChallenge_rodata_80328DD8.p[3][1] - ReverseChallenge_rodata_80328DD8.p[2][1];
+        e[3][0] = ReverseChallenge_rodata_80328DD8.p[0][0] - ReverseChallenge_rodata_80328DD8.p[3][0];
+        e[3][1] = ReverseChallenge_rodata_80328DD8.p[0][1] - ReverseChallenge_rodata_80328DD8.p[3][1];
     }
 };
 

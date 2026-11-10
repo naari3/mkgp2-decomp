@@ -4,7 +4,7 @@ Source: Codex worker c24_a26_20261109 (gpt-6.1-sol/medium) + coordinator accepta
 
 Reflect best partial (99.832214) remains existing ap4 algorithm with compiler EH enabled and SINGLETON_INSTANCE substitutions. sec/return swapped unchanged by nested-getter or whole-check wrapper; stop after3 approaches. Paste-ready helper+function follows:
 static inline unsigned char KartItem_IsReflectItem(ItemSecondaryLane *sec) {
-    const unsigned int *t = lbl_802ED9E4;
+    const unsigned int *t = KartItem_ApplyImpactReflectAndDampVelocity_rodata_802ED9E4;
     int i;
     for (i = 0; i < 4; i++) {
         if (sec->itemId == (int)t[i]) return 0;
@@ -115,13 +115,13 @@ void ItemEffect_Projectile(ItemStateBlock *self, int idx, void *arg) { /* 0x8005
     d.x = d.x * lbl_806D2730;
     d.y = d.y * lbl_806D2730;
     d.z = d.z * lbl_806D2730;
-    d.x = d.x * lbl_802ED5B4[idx].scaleA;
-    d.y = d.y * lbl_802ED5B4[idx].scaleA;
-    d.z = d.z * lbl_802ED5B4[idx].scaleA;
-    ItemEffectImpact_TryArm(self->guard, &d.x, self->owner->movement->transform, lbl_802ED5B4[idx].mode8);
+    d.x = d.x * ItemEffect_Projectile_rodata_802ED5B4[idx].scaleA;
+    d.y = d.y * ItemEffect_Projectile_rodata_802ED5B4[idx].scaleA;
+    d.z = d.z * ItemEffect_Projectile_rodata_802ED5B4[idx].scaleA;
+    ItemEffectImpact_TryArm(self->guard, &d.x, self->owner->movement->transform, ItemEffect_Projectile_rodata_802ED5B4[idx].mode8);
     {
         typedef struct { int a, b; } ProjPair;
-        *(ProjPair *)&self->activeId = *(const ProjPair *)&lbl_802ED5B4[idx].valC;
+        *(ProjPair *)&self->activeId = *(const ProjPair *)&ItemEffect_Projectile_rodata_802ED5B4[idx].valC;
     }
 }
 #pragma exceptions reset

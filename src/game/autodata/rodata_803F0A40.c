@@ -10,13 +10,13 @@
 
 const char lbl_803F0A40[] = "clRsInfomation : _dt.\n";
 const char lbl_803F0A58[] = "clRsInfomation : _ct.\n";
-const int lbl_803F0A70[4][2] = {
+const int ItemBanner_rodata_803F0A70[4][2] = {
     { 5464, 3448 },
     { 5465, 3449 },
     { 5466, 3450 },
     { 5467, 3451 }
 };
-const float lbl_803F0A90[4][2] = {
+const float ItemBanner_rodata_803F0A90[4][2] = {
     { 81.0f, 9.0f },
     { 84.0f, 1e+01f },
     { 81.0f, 16.0f },

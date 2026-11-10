@@ -4,7 +4,7 @@
  * status flag is set. */
 #include "game/DrawEffectAccess.h"
 
-extern Vec lbl_8041A2B0[11];
+extern Vec DrawEffect_Cb_KartItemStatus_Bind0C_data_8041A2B0[11];
 extern int Rand_RangeInt(int lo, int hi);
 extern void VfxSlot_SetUVScroll(void *slot, float u, float v);
 extern void Mtx44_Scale_PerAxis(float dst[4][4], float src[4][4], float x, float y, float z);
@@ -74,8 +74,8 @@ void DrawEffect_Cb_KartItemStatus_Bind0C(unsigned char *self)
     }
     Mtx_TransposeToMtx44(root, KartDriver_GetKartRootMtx(P(0x11C)));
     Matrix4_Identity(scale);
-    Mtx44_Scale_PerAxis(scale, scale, lbl_8041A2B0[I(0x10)].x, lbl_8041A2B0[I(0x10)].y,
-                        lbl_8041A2B0[I(0x10)].z);
+    Mtx44_Scale_PerAxis(scale, scale, DrawEffect_Cb_KartItemStatus_Bind0C_data_8041A2B0[I(0x10)].x, DrawEffect_Cb_KartItemStatus_Bind0C_data_8041A2B0[I(0x10)].y,
+                        DrawEffect_Cb_KartItemStatus_Bind0C_data_8041A2B0[I(0x10)].z);
     Matrix4_Multiply(root, scale, root);
     DbgScene_CopyMatrix3x4Transpose(self + 0x48, root);
     Mtx44_GetTranslation_RowMajor(V(0x8C), self + 0x48);

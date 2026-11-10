@@ -86,7 +86,7 @@ extern const float lbl_806D6174;
 
 /* --- extern decls: other data --- */
 extern int g_ccClass;
-extern unsigned int lbl_8032FA38[];
+extern unsigned int ShellItem_TickActive_rodata_8032FA38[];
 
 void ShellItem_TickReboundOrCarry(char *self, char *sub)
 {
@@ -316,7 +316,7 @@ void ShellItem_TickActive(char *self, char *sub)
             if (*(void **)(sub + 0x7c) != 0) {
                 Mtx44_GetTranslation_RowMajor((float *)&kartPos,
                                               KartDriver_GetKartRootMtx(*(void **)(sub + 0x7c)));
-                relPos = *(Vec3 *)lbl_8032FA38;
+                relPos = *(Vec3 *)ShellItem_TickActive_rodata_8032FA38;
                 relPos.x = kartPos.x - *(float *)(self + 0xa0);
                 relPos.z = kartPos.z - *(float *)(self + 0xa8);
                 dist = Vec3_HorizontalMagnitude((float *)&relPos);

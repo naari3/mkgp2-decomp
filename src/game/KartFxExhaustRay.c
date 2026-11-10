@@ -47,31 +47,31 @@ const float lbl_80329E20[255] = {
     1000.0f, 83.3333359f, 2000.0f, 83.3333359f, 3000.0f, 83.3333359f, 4000.0f,
     83.3333359f, 5000.0f, 83.3333359f,
 };
-const float lbl_8032A21C[15] = { 1.79999995f, 1.5f, 1.0f, 1.10000002f, 1.0f, 1.10000002f, 1.29999995f, 1.0f, 1.79999995f, 1.0f, 1.0f, 1.79999995f, 1.79999995f, 0.0f, 0.0f };
+const float EffectVfx72_ItemStarAura_Tick_rodata_8032A21C[15] = { 1.79999995f, 1.5f, 1.0f, 1.10000002f, 1.0f, 1.10000002f, 1.29999995f, 1.0f, 1.79999995f, 1.0f, 1.0f, 1.79999995f, 1.79999995f, 0.0f, 0.0f };
 const float lbl_8032A258[15] = { 1.5f, 1.10000002f, 1.0f, 1.0f, 1.04999995f, 1.0f, 1.12f, 0.949999988f, 1.0f, 1.10000002f, 1.0f, 2.79999995f, 1.20000005f, 0.0f, 0.0f };
 const float lbl_8032A294[15] = { 1.39999998f, 1.10000002f, 1.10000002f, 1.10000002f, 1.10000002f, 1.0f, 1.5f, 1.0f, 1.20000005f, 1.39999998f, 0.200000003f, 1.39999998f, 0.800000012f, 0.0f, 0.0f };
 const float lbl_8032A2D0[15] = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.29999995f, 1.0f, 0.0f, 0.0f };
-const float lbl_8032A30C[15] = {
+const float KartFx_BurnoutChargeTick_rodata_8032A30C[15] = {
     1.05999994f, 1.10000002f, 1.0f, 1.01999998f, 1.0f, 1.04999995f, 1.0f, 1.0f, 1.01999998f, 1.0f, 1.0f, 1.08000004f, 1.0f, 0.0f, 0.0f,
 };
-const Vec lbl_8032A348 = { 1.0f, 0.200000003f, 0.200000003f };
+const Vec EffectVfx9_DriftSpark_Tick_rodata_8032A348 = { 1.0f, 0.200000003f, 0.200000003f };
 typedef struct RayColors { Vec entries[2]; } RayColors;
 const RayColors lbl_8032A354 = { {
     { 1.20000005f, 0.400000006f, 0.400000006f },
     { 0.800000012f, 0.600000024f, 0.0f },
 } };
-const struct { float scales[26]; unsigned int flags[2]; float values[6]; } lbl_8032A36C = {
+const struct { float scales[26]; unsigned int flags[2]; float values[6]; } EffectItemChainIndicator_Tick_rodata_8032A36C = {
     { 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, 1.0f, 1.60000002f },
     { 1, 1 },
     { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f }
 };
-const Vec lbl_8032A3F4 = { 0.0f, 0.0f, -10.0f };
+const Vec EffectVfx6D_KartSmokeSpark_Tick_rodata_8032A3F4 = { 0.0f, 0.0f, -10.0f };
 const Vec lbl_8032A400 = { -2.0f, 0.0f, 0.0f };
 const Vec lbl_8032A40C = { 2.0f, 0.0f, 0.0f };
 const Vec lbl_8032A418 = { 0.0f, 0.0f, 0.0f };
 const Vec lbl_8032A424 = { 0.0f, 0.0f, -7.0f };
 
-extern const Vec lbl_8041A274;
+extern const Vec EffectVfx10_KartTrail_Tick_data_8041A274;
 extern unsigned char *PcbSlot_GetByIndex(int pcbIdx);
 extern float Mtx44_GetYawOfPosZ(float m[4][4]);
 extern void VfxSlot_SetUVScroll(void *slot, float u, float v);
@@ -94,8 +94,8 @@ typedef struct RayEffect {
     unsigned char pad15C[0x24]; unsigned int timer0, timer1, timer2, timer3;
     signed char special;
 } RayEffect;
-extern RayColors lbl_8041A280[2];
-extern signed char lbl_806D14B8;
+extern RayColors KartFx_BoostExhaustRayTick_data_8041A280[2];
+extern signed char KartFx_BoostExhaustRayTick_bss_806D14B8;
 extern const float lbl_806D51D4, lbl_806D52B8;
 extern void Mtx44_GetTranslation_ColMajor(Vec *, float m[4][4]);
 extern void Mtx44_TransformVec3(Vec *, float m[4][4], Vec);
@@ -196,12 +196,12 @@ void KartFx_BoostExhaustRayTick(RayEffect *effect) {
     if (effect->index == 0) effect->opacity = opacity;
     else effect->opacity = opacity;
     effect->opacity *= effect->intensity;
-    if (!lbl_806D14B8) {
-        lbl_8041A280[1].entries[0] = lbl_8032A354.entries[0];
-        lbl_8041A280[1].entries[1] = lbl_8032A354.entries[1];
-        lbl_806D14B8 = 1;
+    if (!KartFx_BoostExhaustRayTick_bss_806D14B8) {
+        KartFx_BoostExhaustRayTick_data_8041A280[1].entries[0] = lbl_8032A354.entries[0];
+        KartFx_BoostExhaustRayTick_data_8041A280[1].entries[1] = lbl_8032A354.entries[1];
+        KartFx_BoostExhaustRayTick_bss_806D14B8 = 1;
     }
-    colors = &lbl_8041A280[effect->special];
+    colors = &KartFx_BoostExhaustRayTick_data_8041A280[effect->special];
     Vec3_Lerp(&effect->color, colors->entries[1], colors->entries[0], effect->growth);
     if (FinalLapCoinJump_CheckActiveForObject(effect->kart)) effect->visible = 0;
     else effect->visible = 1;
@@ -277,7 +277,7 @@ void EffectVfx10_KartTrail_Tick(unsigned char *self)
         F(0x150) = 0.0f;
         F(0x154) = 0.0f;
         if (KartTrail_GetCharacter(P(0x11C)) >= 0) {
-            const Vec *color = &lbl_8032A348;
+            const Vec *color = &EffectVfx9_DriftSpark_Tick_rodata_8032A348;
             F(0x30) = color->x;
             F(0x34) = color->y;
             F(0x38) = color->z;
@@ -341,7 +341,7 @@ void EffectVfx10_KartTrail_Tick(unsigned char *self)
         Mtx44_Translate(t, t, off);
         Matrix4_Multiply(m, t, m);
         Matrix4_Identity(t);
-        Mtx44_Scale_PerAxis(t, t, F(0xB0) * lbl_8041A274.x, F(0xB0) * lbl_8041A274.y, F(0xB0) * lbl_8041A274.z);
+        Mtx44_Scale_PerAxis(t, t, F(0xB0) * EffectVfx10_KartTrail_Tick_data_8041A274.x, F(0xB0) * EffectVfx10_KartTrail_Tick_data_8041A274.y, F(0xB0) * EffectVfx10_KartTrail_Tick_data_8041A274.z);
         Matrix4_Multiply(m, t, m);
         DbgScene_CopyMatrix3x4Transpose(self + 0x48, m);
         Mtx44_GetTranslation_RowMajor(V(0x8C), self + 0x48);

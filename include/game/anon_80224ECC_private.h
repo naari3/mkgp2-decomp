@@ -1,5 +1,5 @@
 /*
- * 0x80224ECC..0x802253EC: fade-in/out banner scene (vtable lbl_804EDF14,
+ * 0x80224ECC..0x802253EC: fade-in/out banner scene (vtable clCSSceneGetRace_vtable_804EDF14,
  * base clSceneInterface lbl_803FE0C8). Fades the screen in, shows a sprite
  * for up to two seconds (or until the button is pressed) and fades out.
  */

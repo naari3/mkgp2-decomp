@@ -1,6 +1,6 @@
 /* External tables remain owned by their original data units. */
 extern const char lbl_803123A0[14];
-extern const char* lbl_803FE400[12];
+extern const char* PcbConnStateIdToName_data_803FE400[12];
 extern int lbl_805AC2C0[4][2];
 
 typedef struct MediaBufferRow {
@@ -15,7 +15,7 @@ const char* PcbConnStateIdToName(int state)
     if (state < 0 || state >= 11) {
         return lbl_803123A0;
     }
-    return lbl_803FE400[state];
+    return PcbConnStateIdToName_data_803FE400[state];
 }
 
 int TCPConn_GetChannelDest(int channel, int index)

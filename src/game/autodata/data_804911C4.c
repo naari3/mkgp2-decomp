@@ -28,39 +28,39 @@ extern char lbl_8036DD5C[];
 extern char lbl_8036DD6C[];
 extern char lbl_8036DD7C[];
 extern char lbl_806CFA60[];
-extern char lbl_806CFA68[];
-extern char lbl_806CFA70[];
-extern char lbl_806CFA78[];
-extern char lbl_806CFA80[];
-extern char lbl_806CFA88[];
-extern char lbl_806CFA90[];
-extern char lbl_806CFA98[];
-extern char lbl_806CFAA0[];
-extern char lbl_806CFAA8[];
-extern char lbl_806CFAB0[];
-extern char lbl_806CFAB8[];
-extern char lbl_806CFAC0[];
+extern char data_804911C4_data_806CFA68[];
+extern char data_804911C4_data_806CFA70[];
+extern char data_804911C4_data_806CFA78[];
+extern char data_804911C4_data_806CFA80[];
+extern char data_804911C4_data_806CFA88[];
+extern char data_804911C4_data_806CFA90[];
+extern char data_804911C4_data_806CFA98[];
+extern char data_804911C4_data_806CFAA0[];
+extern char data_804911C4_data_806CFAA8[];
+extern char data_804911C4_data_806CFAB0[];
+extern char data_804911C4_data_806CFAB8[];
+extern char data_804911C4_data_806CFAC0[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804911C4[3] = {
+void *sdata_806CF750_data_804911C4[3] = {
     (void *)&lbl_806CFA60,
     0,
     0
 };
-void *lbl_804911D0[3] = {
-    (void *)&lbl_806CFA68,
+void *CoursePropNodeB_vtable_804911D0[3] = {
+    (void *)&data_804911C4_data_806CFA68,
     0,
     (void *)fn_8016E8B8
 };
-void *lbl_804911DC[3] = {
+void *sdata_806CF750_data_804911DC[3] = {
     (void *)&lbl_806CFA60,
     0,
     0
 };
-void *lbl_804911E8[3] = {
-    (void *)&lbl_806CFA70,
+void *CoursePropNodeA_vtable_804911E8[3] = {
+    (void *)&data_804911C4_data_806CFA70,
     0,
     (void *)fn_8016E8E0
 };
@@ -75,7 +75,7 @@ void *lbl_804911F4[9] = {
     0,
     0
 };
-char *lbl_80491218[3] = {
+char *EffectFA_Ctor_data_80491218[3] = {
     (char *)&lbl_8036DD5C,
     (char *)&lbl_8036DD6C,
     (char *)&lbl_8036DD7C
@@ -86,14 +86,14 @@ void *lbl_80491224[3] = {
     0,
     0
 };
-void *lbl_80491230[3] = {
-    (void *)&lbl_806CFA78,
+void *sdata_806CF750_data_80491230[3] = {
+    (void *)&data_804911C4_data_806CFA78,
     0,
     0
 };
 /* decl: char */
-void *lbl_8049123C[7] = {
-    (void *)&lbl_806CFA80,
+void *CourseModel_vtable_8049123C[7] = {
+    (void *)&data_804911C4_data_806CFA80,
     0,
     (void *)fn_8016FC74,
     (void *)fn_8016FC70,
@@ -101,14 +101,14 @@ void *lbl_8049123C[7] = {
     (void *)fn_8016A26C,
     0
 };
-void *lbl_80491258[3] = {
-    (void *)&lbl_806CFA88,
+void *sdata_806CF750_data_80491258[3] = {
+    (void *)&data_804911C4_data_806CFA88,
     0,
     0
 };
 /* decl: char */
-void *lbl_80491264[7] = {
-    (void *)&lbl_806CFA90,
+void *SparkModels_vtable_80491264[7] = {
+    (void *)&data_804911C4_data_806CFA90,
     0,
     (void *)fn_801704A0,
     (void *)fn_801702E0,
@@ -116,14 +116,14 @@ void *lbl_80491264[7] = {
     (void *)fn_8016A26C,
     0
 };
-void *lbl_80491280[3] = {
-    (void *)&lbl_806CFA98,
+void *sdata_806CF750_data_80491280[3] = {
+    (void *)&data_804911C4_data_806CFA98,
     0,
     0
 };
 /* decl: char */
-void *lbl_8049128C[7] = {
-    (void *)&lbl_806CFAA0,
+void *GrowSet_vtable_8049128C[7] = {
+    (void *)&data_804911C4_data_806CFAA0,
     0,
     (void *)fn_801709FC,
     (void *)fn_801707FC,
@@ -131,14 +131,14 @@ void *lbl_8049128C[7] = {
     (void *)fn_8016A26C,
     0
 };
-void *lbl_804912A8[3] = {
-    (void *)&lbl_806CFAA8,
+void *sdata_806CF750_data_804912A8[3] = {
+    (void *)&data_804911C4_data_806CFAA8,
     0,
     0
 };
 /* decl: char */
-void *lbl_804912B4[7] = {
-    (void *)&lbl_806CFAB0,
+void *clLavaSplash_vtable_804912B4[7] = {
+    (void *)&data_804911C4_data_806CFAB0,
     0,
     (void *)fn_801714E8,
     (void *)fn_80171190,
@@ -146,14 +146,14 @@ void *lbl_804912B4[7] = {
     (void *)fn_8016A26C,
     0
 };
-void *lbl_804912D0[3] = {
-    (void *)&lbl_806CFAB8,
+void *sdata_806CF750_data_804912D0[3] = {
+    (void *)&data_804911C4_data_806CFAB8,
     0,
     0
 };
 /* decl: char */
-void *lbl_804912DC[7] = {
-    (void *)&lbl_806CFAC0,
+void *clLensFlare_vtable_804912DC[7] = {
+    (void *)&data_804911C4_data_806CFAC0,
     0,
     (void *)fn_80171C2C,
     (void *)fn_80171940,

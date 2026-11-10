@@ -3,17 +3,17 @@
 /* Use the original RTTI records through the CW cast runtime. */
 extern "C" {
 void *fn_80271340(void *, int, void *, void *, int);
-extern unsigned char lbl_806D02A0[8];
-extern unsigned char lbl_806D02B8[8];
-extern unsigned char lbl_806D02B0[8];
+extern unsigned char FlowTask_RTTI_806D02A0[8];
+extern unsigned char YesNoCursor_RTTI_806D02B8[8];
+extern unsigned char YesNoButton_RTTI_806D02B0[8];
 }
 
 static inline YesNoCursor *CastYesNoCursor(FlowTask *task) {
-    return (YesNoCursor *)fn_80271340(task, 0, lbl_806D02B8, lbl_806D02A0, 0);
+    return (YesNoCursor *)fn_80271340(task, 0, YesNoCursor_RTTI_806D02B8, FlowTask_RTTI_806D02A0, 0);
 }
 
 static inline YesNoButton *CastYesNoButton(FlowTask *task) {
-    return (YesNoButton *)fn_80271340(task, 0, lbl_806D02B0, lbl_806D02A0, 0);
+    return (YesNoButton *)fn_80271340(task, 0, YesNoButton_RTTI_806D02B0, FlowTask_RTTI_806D02A0, 0);
 }
 
 

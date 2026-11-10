@@ -55,14 +55,14 @@ extern "C" void fn_8024858C(HudRoot *self, unsigned int state) {
 }
 extern "C" HudRoot *fn_80248778(HudRoot *self, short flag) {
     if (self) {
-        self->vptr=lbl_804EEB20; self->hostVptr=lbl_804EEB20+6;
+        self->vptr=HudFlow_data_804EEB20; self->hostVptr=HudFlow_data_804EEB20+6;
         dtor_80249274(self,0);
         if (flag > 0) MemoryManager_TimedFree(self);
     }
     return self;
 }
 HudFlow::HudFlow() {
-    vptr=lbl_804EEB20; hostVptr=lbl_804EEB20+6;
+    vptr=HudFlow_data_804EEB20; hostVptr=HudFlow_data_804EEB20+6;
     int cup=g_cupId;
     fn_801DC870(0);
     if (cup >= 9) {

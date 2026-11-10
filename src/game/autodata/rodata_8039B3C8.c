@@ -8,7 +8,7 @@
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const int lbl_8039B3C8[3] = {
+const int clFlowItemSelect_Init_rodata_8039B3C8[3] = {
     10, 16, 18
 };
 const char clFlowRoulette[] = "clFlowRoulette";

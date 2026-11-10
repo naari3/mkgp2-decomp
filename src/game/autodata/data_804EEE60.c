@@ -34,14 +34,14 @@ extern void fn_8024D108();
 extern void fn_8024D17C();
 extern char lbl_806D08F0[];
 extern char lbl_806D08F8[];
-extern char lbl_806D0930[];
-extern char lbl_806D0938[];
+extern char data_804EEE60_data_806D0930[];
+extern char data_804EEE60_data_806D0938[];
 extern char lbl_806D0940[];
 extern char lbl_806D0948[];
 extern char lbl_806D0950[];
-extern char lbl_806D0958[];
-extern char lbl_806D0960[];
-extern char lbl_806D0968[];
+extern char data_804EEE60_data_806D0958[];
+extern char data_804EEE60_data_806D0960[];
+extern char data_804EEE60_data_806D0968[];
 extern char lbl_806D0978[];
 extern char lbl_806D0980[];
 extern char lbl_806D0990[];
@@ -50,13 +50,13 @@ extern char lbl_806D0998[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804EEE60[3] = {
-    (void *)&lbl_806D0930,
+void *sdata_806D0728_data_804EEE60[3] = {
+    (void *)&data_804EEE60_data_806D0930,
     0,
     0
 };
-void *lbl_804EEE6C[6] = {
-    (void *)&lbl_806D0938,
+void *CardPrintOwner_vtable_804EEE6C[6] = {
+    (void *)&data_804EEE60_data_806D0938,
     0,
     (void *)fn_8024B114,
     (void *)fn_8024B0A0,
@@ -83,15 +83,15 @@ void *lbl_804EEEB0[3] = {
     0,
     0
 };
-void *lbl_804EEEBC[5] = {
+void *sdata_806D0728_data_804EEEBC[5] = {
     (void *)&lbl_806D0948,
     0,
     (void *)&lbl_806D0950,
     0,
     0
 };
-void *lbl_804EEED0[8] = {
-    (void *)&lbl_806D0958,
+void *VariantAOwner_vtable_804EEED0[8] = {
+    (void *)&data_804EEE60_data_806D0958,
     0,
     (void *)fn_8024C284,
     (void *)fn_8024C0BC,
@@ -100,15 +100,15 @@ void *lbl_804EEED0[8] = {
     (void *)fn_8024C018,
     (void *)fn_8024BE9C
 };
-void *lbl_804EEEF0[5] = {
+void *sdata_806D0728_data_804EEEF0[5] = {
     (void *)&lbl_806D0948,
     0,
     (void *)&lbl_806D0950,
     0,
     0
 };
-void *lbl_804EEF04[8] = {
-    (void *)&lbl_806D0960,
+void *RoleB_vtable_804EEF04[8] = {
+    (void *)&data_804EEE60_data_806D0960,
     0,
     (void *)fn_8024C6F0,
     (void *)fn_8024C52C,
@@ -117,15 +117,15 @@ void *lbl_804EEF04[8] = {
     (void *)fn_8024C4B4,
     (void *)fn_8024C3AC
 };
-void *lbl_804EEF24[5] = {
+void *sdata_806D0728_data_804EEF24[5] = {
     (void *)&lbl_806D0948,
     0,
     (void *)&lbl_806D0950,
     0,
     0
 };
-void *lbl_804EEF38[8] = {
-    (void *)&lbl_806D0968,
+void *SceneRoleVariantC_vtable_804EEF38[8] = {
+    (void *)&data_804EEE60_data_806D0968,
     0,
     (void *)fn_8024CBC0,
     (void *)fn_8024C9E0,

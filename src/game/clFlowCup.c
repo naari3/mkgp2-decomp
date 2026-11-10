@@ -121,8 +121,8 @@ struct SpriteInfo {
 #ifdef __cplusplus
 extern "C" {
 #endif
-extern void *lbl_8049AE5C[];
-extern CupName lbl_8049ADE4[];
+extern void *clFlowCup_Dtor_data_8049AE5C[];
+extern CupName clFlowCup_data_8049ADE4[];
 extern const float lbl_806D9CA4;
 extern InputState *g_pInputState;
 extern int g_roundIndex;
@@ -227,15 +227,15 @@ void clFlowCup_Draw(clFlowCup *self) {
     if (self->state != 4 && self->round % 2 == 0) {
         DrawSide(self);
     }
-    fn_801A1174(lbl_8049ADE4[self->round].id0, 4, 0, 0, 0);
+    fn_801A1174(clFlowCup_data_8049ADE4[self->round].id0, 4, 0, 0, 0);
     fn_801A1128(lbl_806D9CB4, lbl_806D9CB8);
     fn_801A0FD4(lbl_806D9C88, lbl_806D9C88, lbl_806D9C88, self->alpha114);
     fn_801A0DF0();
-    fn_801A1174(lbl_8049ADE4[self->round].id1, 4, 0, 0, 0);
+    fn_801A1174(clFlowCup_data_8049ADE4[self->round].id1, 4, 0, 0, 0);
     if (isJapanese() == 0) {
-        fn_801A1128(lbl_8049ADE4[self->round].xEn, lbl_806D9CB8);
+        fn_801A1128(clFlowCup_data_8049ADE4[self->round].xEn, lbl_806D9CB8);
     } else {
-        fn_801A1128(lbl_8049ADE4[self->round].xJp, lbl_806D9CB8);
+        fn_801A1128(clFlowCup_data_8049ADE4[self->round].xJp, lbl_806D9CB8);
     }
     fn_801A0FD4(lbl_806D9C88, lbl_806D9C88, lbl_806D9C88, self->alpha114);
     fn_801A0DF0();
@@ -317,8 +317,8 @@ extern const float lbl_806D9CDC;
 extern const float lbl_806D9CE0;
 
 extern unsigned int g_playerData[];
-extern const CupSide lbl_8039B228[];
-extern short lbl_8049ADD0[];
+extern const CupSide clFlowCup_Update_rodata_8039B228[];
+extern short clFlowCup_Update_data_8049ADD0[];
 
 /* --- function index (1 fns, .text 0x801C772C..0x801C88F4) ---
  * [  0] 0x801C772C size:0x11C8  global clFlowCup_Update
@@ -345,7 +345,7 @@ static inline void PlayCupMusic(clFlowCup *self, int sel) {
     if (self->slots[8].sub != 0 && self->slots[8].anim == 1) {
         self->musicSel = sel;
         Sprite_SetupAnim(self->slots[8].sub, 0x183, 0, 0);
-        Sprite_SetAnimParam(self->slots[8].sub, 0x1744, lbl_8049ADD0[self->musicSel]);
+        Sprite_SetAnimParam(self->slots[8].sub, 0x1744, clFlowCup_Update_data_8049ADD0[self->musicSel]);
         fn_801A0550(self->slots[8].sub);
         fn_8019FF6C(self->slots[8].sub, 1);
     }
@@ -372,8 +372,8 @@ static inline void UpdateSides(clFlowCup *self) {
     self->show110 = 0;
     spr = self->sprite108;
     if (spr != 0) {
-        SetPos(spr, lbl_8039B228[self->round].x0, lbl_8039B228[self->round].y0);
-        self->sprite108->rot = lbl_806D9C68 * lbl_8039B228[self->round].rot0;
+        SetPos(spr, clFlowCup_Update_rodata_8039B228[self->round].x0, clFlowCup_Update_rodata_8039B228[self->round].y0);
+        self->sprite108->rot = lbl_806D9C68 * clFlowCup_Update_rodata_8039B228[self->round].rot0;
         SetScale(self->sprite108, lbl_806D9C70, lbl_806D9C70);
         if (self->round != 0 || self->mode == 1) {
             self->show110 = 1;
@@ -382,8 +382,8 @@ static inline void UpdateSides(clFlowCup *self) {
     self->show111 = 0;
     spr = self->sprite10C;
     if (spr != 0) {
-        { float x = lbl_8039B228[self->round].x1; SetPos(spr, x, lbl_8039B228[self->round].y1); }
-        self->sprite10C->rot = lbl_806D9C68 * lbl_8039B228[self->round].rot1;
+        { float x = clFlowCup_Update_rodata_8039B228[self->round].x1; SetPos(spr, x, clFlowCup_Update_rodata_8039B228[self->round].y1); }
+        self->sprite10C->rot = lbl_806D9C68 * clFlowCup_Update_rodata_8039B228[self->round].rot1;
         SetScale(self->sprite10C, lbl_806D9C70, lbl_806D9C70);
         if (self->round != 7) {
             self->show111 = 1;
@@ -592,7 +592,7 @@ int clFlowCup_Update(clFlowCup *self) {
             if (self->slots[8].sub != 0 && self->slots[8].anim == 1) {
                 self->slots[8].anim = 2;
                 Sprite_SetupAnim(self->slots[8].sub, 0x35, 0, 0);
-                Sprite_SetAnimParam(self->slots[8].sub, 0x1744, lbl_8049ADD0[self->musicSel]);
+                Sprite_SetAnimParam(self->slots[8].sub, 0x1744, clFlowCup_Update_data_8049ADD0[self->musicSel]);
                 fn_801A0550(self->slots[8].sub);
             }
             self->showC0 = 0;
@@ -743,7 +743,7 @@ extern "C" clFlowCup *clFlowCup_Dtor(clFlowCup *self, short flags) {
     int j;
 
     if (self != 0) {
-        self->vtbl = lbl_8049AE5C;
+        self->vtbl = clFlowCup_Dtor_data_8049AE5C;
         fn_80169C44();
         g_roundIndex = GetRound(self);
         if (input_state() != 0) {
@@ -754,8 +754,8 @@ extern "C" clFlowCup *clFlowCup_Dtor(clFlowCup *self, short flags) {
             state->value1C = 0;
         }
         SetScreenBrightness(lbl_806D9CA4);
-        fn_80120A08(lbl_8049ADE4[0].id1);
-        fn_80120A08(lbl_8049ADE4[0].id0);
+        fn_80120A08(clFlowCup_data_8049ADE4[0].id1);
+        fn_80120A08(clFlowCup_data_8049ADE4[0].id0);
         Sprite_Destroy(self->sprite108, 1);
         Sprite_Destroy(self->sprite10C, 1);
         Sprite_Destroy(self->sprite18, 1);
@@ -789,8 +789,8 @@ extern "C" clFlowCup *clFlowCup_Dtor(clFlowCup *self, short flags) {
 
 /* === clFlowCup_Init (C++ ctor) === */
 /* === .data 0x8049AD58..0x8049AE70 (owned by this TU) === */
-extern char lbl_806CFDE0[];
-extern char lbl_806CFDE8[];
+extern char clFlowCup_data_806CFDE0[];
+extern char clFlowCup_data_806CFDE8[];
 
 CupMark lbl_8049AD58[10] = {
     { 0x1777, 0x1780, 90.0f, 185.0f },
@@ -805,11 +805,11 @@ CupMark lbl_8049AD58[10] = {
     { 0, 0, 0.0f, 0.0f },
 };
 
-short lbl_8049ADD0[10] = {
+short clFlowCup_Update_data_8049ADD0[10] = {
     0x1744, 0x1745, 0x1746, 0x1747, 0x1748, 0x1749, 0x174A, 0x174B, 0, 0,
 };
 
-CupName lbl_8049ADE4[9] = {
+CupName clFlowCup_data_8049ADE4[9] = {
     { 0x1758, 0x1729, 127.0f, 142.0f },
     { 0x1758, 0x172A, 117.0f, 137.0f },
     { 0x1759, 0x172B, 137.0f, 157.0f },
@@ -821,10 +821,10 @@ CupName lbl_8049ADE4[9] = {
     { 0, 0, 0.0f, 0.0f },
 };
 
-void *lbl_8049AE50[3] = { lbl_806CFDE0, 0, 0 };
+void *clFlowCup_data_8049AE50[3] = { clFlowCup_data_806CFDE0, 0, 0 };
 
-void *lbl_8049AE5C[5] = {
-    lbl_806CFDE8, 0, (void *)clFlowCup_Dtor, (void *)clFlowCup_Update, (void *)clFlowCup_Draw,
+void *clFlowCup_Dtor_data_8049AE5C[5] = {
+    clFlowCup_data_806CFDE8, 0, (void *)clFlowCup_Dtor, (void *)clFlowCup_Update, (void *)clFlowCup_Draw,
 };
 
 extern void InitBGM(void);
@@ -919,12 +919,12 @@ static inline void SetScale(CupSpr *s, float v) {
 CupFlow::CupFlow() {
     int i;
     int count;
-    vt = lbl_8049AE5C;
+    vt = clFlowCup_Dtor_data_8049AE5C;
     SpriteSystem_EnsureInit();
     PCBComm_PackAndTriggerCardSnapshot();
     SetSyncTarget(0x15);
-    PreloadResource(lbl_8049ADE4[0].id0);
-    PreloadResource(lbl_8049ADE4[0].id1);
+    PreloadResource(clFlowCup_data_8049ADE4[0].id0);
+    PreloadResource(clFlowCup_data_8049ADE4[0].id1);
     PreloadResource(0x1736);
     PreloadResource(0x1AE3);
     PreloadResource(0x1777);
@@ -1037,7 +1037,7 @@ CupFlow::CupFlow() {
         musicB4 = 0;
         musicBC = 0;
         musicSel = new CupSpr(0x36, 0, 0);
-        Sprite_SetAnimParam(musicSel, 0x1744, lbl_8049ADD0[0]);
+        Sprite_SetAnimParam(musicSel, 0x1744, clFlowCup_Update_data_8049ADD0[0]);
         fn_801A0550(musicSel);
         SetXY(musicSel, lbl_806D9C74, lbl_806D9C78);
     }

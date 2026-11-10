@@ -8,8 +8,8 @@ struct DemoWCDriver;
 struct DemoWCTornado;
 extern "C" {
 extern const float lbl_806D4F94, lbl_806D4F98, lbl_806D4FA8;
-extern const char* lbl_806CF2C8;
-extern const char* lbl_806CF2CC;
+extern const char* clCGameDemoWC_Ctor_data_806CF2C8;
+extern const char* clCGameDemoWC_Ctor_data_806CF2CC;
 extern int g_characterId;
 extern unsigned char g_lakituStartAnimDone;
 extern void* g_raceCamera;
@@ -140,14 +140,14 @@ DemoWCOwner::DemoWCOwner()
     SoundChannels_ClearAll();
     ItemObjectManager_Init();
     CourseObjectManager_Init();
-    scene = new DemoWCScene(lbl_806CF2C8);
+    scene = new DemoWCScene(clCGameDemoWC_Ctor_data_806CF2C8);
     scene->start();
-    normal = new DemoWCNormal(lbl_806CF2C8, 0);
+    normal = new DemoWCNormal(clCGameDemoWC_Ctor_data_806CF2C8, 0);
     clNormal3D_SetScale(normal, 0, lbl_806D4F94, lbl_806D4F98, lbl_806D4F94, lbl_806D4F94);
     ProcessSystemTick(0);
     driver = new DemoWCDriver(g_characterId, matrix);
     tornado = new DemoWCTornado(0, driver, g_characterId, 0, lbl_806D4F94, lbl_806D4F94, lbl_806D4F94);
-    joint = ResolveJointByName(normal, lbl_806CF2CC);
+    joint = ResolveJointByName(normal, clCGameDemoWC_Ctor_data_806CF2CC);
     counter = 0;
     auxiliary = new DemoWCAux;
     g_raceCamera = 0;

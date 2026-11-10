@@ -19,13 +19,13 @@ void FlashFadeOverlay_Draw(struct FlashOverlay *self, float x0, float y0, float 
         GXSetViewport(lbl_806D2D70, lbl_806D2D70, lbl_806D2E2C, lbl_806D2E30, lbl_806D2D70, lbl_806D2D44);
         GXSetScissor(0, 0, 640, 480);
         eye = vectors->eye;
-        if (!lbl_806D0F8C) {
-            lbl_806D0F88 = lbl_806D2E34;
-            lbl_806D0F8C = 1;
+        if (!FlashFadeOverlay_Draw_bss_806D0F8C) {
+            FlashFadeOverlay_Draw_bss_806D0F88 = lbl_806D2E34;
+            FlashFadeOverlay_Draw_bss_806D0F8C = 1;
         }
         up = vectors->up;
-        up.x = (float)cos((float)(lbl_806D2E38 * lbl_806D0F88));
-        up.y = -(float)sin((float)(lbl_806D2E38 * lbl_806D0F88));
+        up.x = (float)cos((float)(lbl_806D2E38 * FlashFadeOverlay_Draw_bss_806D0F88));
+        up.y = -(float)sin((float)(lbl_806D2E38 * FlashFadeOverlay_Draw_bss_806D0F88));
         target = vectors->target;
         C_MTXLookAt(view, &eye, &up, &target);
         GXLoadPosMtxImm(view, 0);

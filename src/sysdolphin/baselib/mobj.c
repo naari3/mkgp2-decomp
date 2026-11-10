@@ -510,12 +510,12 @@ HSD_TExp* MObjMakeTExp(HSD_MObj* mobj, HSD_TObj* tobj_top, HSD_TExp** list)
     return ext;
 }
 
-char lbl_804FC270[14] = "mobj->tevdesc";
+char MObjSetupTev_data_804FC270[14] = "mobj->tevdesc";
 
 #undef __FILE__
 #define __FILE__ lbl_806D0CE8
 #undef HSD_ASSERT
-#define HSD_ASSERT(line, cond) ((cond) ? (void) 0 : __assert(__FILE__, line, (line) == 839 ? lbl_804FC270 : (line) == 1148 ? lbl_806D0CF0 : (line) == 1176 ? lbl_806D0D00 : lbl_806D0D04))
+#define HSD_ASSERT(line, cond) ((cond) ? (void) 0 : __assert(__FILE__, line, (line) == 839 ? MObjSetupTev_data_804FC270 : (line) == 1148 ? lbl_806D0CF0 : (line) == 1176 ? lbl_806D0D00 : lbl_806D0D04))
 void HSD_MObjCompileTev(HSD_MObj* mobj)
 {
     HSD_TObj *tobj, **tail;
@@ -696,7 +696,7 @@ void fn_802C3818(HSD_MObj* mobj)
 #undef __FILE__
 #define __FILE__ lbl_806D0CE8
 #undef HSD_ASSERT
-#define HSD_ASSERT(line, cond) ((cond) ? (void) 0 : __assert(__FILE__, line, (line) == 839 ? lbl_804FC270 : (line) == 1148 ? lbl_806D0CF0 : (line) == 1176 ? lbl_806D0D00 : lbl_806D0D04))
+#define HSD_ASSERT(line, cond) ((cond) ? (void) 0 : __assert(__FILE__, line, (line) == 839 ? MObjSetupTev_data_804FC270 : (line) == 1148 ? lbl_806D0CF0 : (line) == 1176 ? lbl_806D0D00 : lbl_806D0D04))
 HSD_Material* HSD_MaterialAlloc(void)
 {
     HSD_Material* mat = hsdAllocMemPiece(sizeof(HSD_Material));
@@ -709,7 +709,7 @@ HSD_Material* HSD_MaterialAlloc(void)
 #undef __FILE__
 #define __FILE__ lbl_806D0CE8
 #undef HSD_ASSERT
-#define HSD_ASSERT(line, cond) ((cond) ? (void) 0 : __assert(__FILE__, line, (line) == 839 ? lbl_804FC270 : (line) == 1148 ? lbl_806D0CF0 : (line) == 1176 ? lbl_806D0D00 : lbl_806D0D04))
+#define HSD_ASSERT(line, cond) ((cond) ? (void) 0 : __assert(__FILE__, line, (line) == 839 ? MObjSetupTev_data_804FC270 : (line) == 1148 ? lbl_806D0CF0 : (line) == 1176 ? lbl_806D0D00 : lbl_806D0D04))
 void HSD_MObjAddShadowTexture(HSD_TObj* tobj)
 {
     HSD_TObj* cur;

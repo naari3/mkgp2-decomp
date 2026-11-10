@@ -2,7 +2,7 @@
 
 extern unsigned char card_rw_state_machine_short(void);
 extern unsigned char lbl_806CF0D4;
-extern unsigned char lbl_806D1250;
+extern unsigned char CardRegister_Session_Tick_bss_806D1250;
 extern signed char g_playerData[];
 
 /* 0x80092460: print the registration receipt after a card session.
@@ -15,9 +15,9 @@ void CardRegister_Session_Tick(void)
         return;
     }
     if (lbl_806CF0DC == 0) {
-        lbl_806D1250 = 1;
+        CardRegister_Session_Tick_bss_806D1250 = 1;
     }
-    if (lbl_806D1250 == 1 && !card_rw_state_machine_short()) {
+    if (CardRegister_Session_Tick_bss_806D1250 == 1 && !card_rw_state_machine_short()) {
         return;
     }
     if (g_playerData[0x1D9] != 2) {
@@ -29,7 +29,7 @@ void CardRegister_Session_Tick(void)
         t0 = lbl_806CF0D4 != 1;
         Receipt_StartFlow(0, t0, 0);
         lbl_806D1214 = saved;
-        lbl_806D1250 = 0;
+        CardRegister_Session_Tick_bss_806D1250 = 0;
     } else if (lbl_806CF0DC > 5) {
         if (Receipt_PollState() == 1) {
             if (lbl_806D1210 == 1) {

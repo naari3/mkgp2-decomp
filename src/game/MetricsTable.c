@@ -1,5 +1,5 @@
 extern char g_metricsTable[0xC4];
-extern char lbl_805985A8[0xC];
+extern char MetricsTable_Init_bss_805985A8[0xC];
 extern const float lbl_806D2478;
 
 extern void *__construct_array(void *table, void *initCb, void *dtorCb,
@@ -16,7 +16,7 @@ void MetricsTable_DefaultSlotInit(float *slot);
 void MetricsTable_Init(void) {
     __construct_array(g_metricsTable, (void *)&MetricsTable_DefaultSlotInit,
                 (void *)&MetricsTable_DefaultDtor, 4, 0x30);
-    __register_global_object(0, (void *)&MetricsTable_Shutdown, lbl_805985A8);
+    __register_global_object(0, (void *)&MetricsTable_Shutdown, MetricsTable_Init_bss_805985A8);
 }
 
 void MetricsTable_Shutdown(void) {

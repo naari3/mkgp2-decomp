@@ -14,10 +14,10 @@ void JObj_Show(clNormal3D *, HSD_JObj *, int);
 void SoundMgr_PlaySE(int);
 void clNormal3D_Exec(clNormal3D *);
 void Object_DriveAnimMatrix(clNormal3D *);
-extern float lbl_806CEDBC, lbl_806CEDB8, lbl_806CEDCC;
+extern float lbl_806CEDBC, LakituStart_UpdateCountdown_data_806CEDB8, LakituStart_UpdateCountdown_data_806CEDCC;
 extern const float lbl_806D2524, lbl_806D2528, lbl_806D252C, lbl_806D2530, lbl_806D2534;
 extern char lbl_806D2514[7], lbl_806D251C[5], lbl_802E9F54[];
-extern const char *lbl_803F5910[6];
+extern const char *LakituStart_UpdateCountdown_data_803F5910[6];
 extern unsigned char g_lakituStartAnimDone;
 }
 static inline unsigned char NeedsEval(HSD_JObj *j) {
@@ -49,7 +49,7 @@ static inline void SetYaw(HSD_JObj *j, float v) {
 }
 static inline void HideCountdown(LakituStart *self) {
     for (unsigned i = 0; i < 6; ++i)
-        JObj_Hide(self->model, ResolveJointByName(self->model, lbl_803F5910[i]), 0x10);
+        JObj_Hide(self->model, ResolveJointByName(self->model, LakituStart_UpdateCountdown_data_803F5910[i]), 0x10);
 }
 struct SyncFlags { unsigned char countdown:5; unsigned char flags:3; };
 extern "C" int LakituStart_UpdateCountdown(LakituStart *self) {
@@ -83,11 +83,11 @@ extern "C" int LakituStart_UpdateCountdown(LakituStart *self) {
         result.z = dir.z * offset.z + (dx * offset.x + eye.z);
         SetZ(Archive_GetRootJObj(self->model), result.z);
         Vec3f rotation;
-        rotation.y = lbl_806CEDCC + (float)atan2(dir.x, dir.z);
+        rotation.y = LakituStart_UpdateCountdown_data_806CEDCC + (float)atan2(dir.x, dir.z);
         SetYaw(Archive_GetRootJObj(self->model), rotation.y);
     }
     self->frame = Object_GetField8(self->model);
-    if (lbl_806D2510 == self->released && self->frame >= lbl_806CEDB8) {
+    if (lbl_806D2510 == self->released && self->frame >= LakituStart_UpdateCountdown_data_806CEDB8) {
         self->released = lbl_806D2524;
         SetRaceStartFlag(1);
         if (SyncSlot_GetHostSend()) {
@@ -105,7 +105,7 @@ extern "C" int LakituStart_UpdateCountdown(LakituStart *self) {
             self->phase = 2;
             HideCountdown(self);
             g_countdownPhase = 3;
-            JObj_Show(self->model, ResolveJointByName(self->model, lbl_803F5910[0]), 0x10);
+            JObj_Show(self->model, ResolveJointByName(self->model, LakituStart_UpdateCountdown_data_803F5910[0]), 0x10);
             SoundMgr_PlaySE(69);
         }
     }
@@ -114,8 +114,8 @@ extern "C" int LakituStart_UpdateCountdown(LakituStart *self) {
             self->phase = 3;
             HideCountdown(self);
             g_countdownPhase = 2;
-            JObj_Show(self->model, ResolveJointByName(self->model, lbl_803F5910[0]), 0x10);
-            JObj_Show(self->model, ResolveJointByName(self->model, lbl_803F5910[1]), 0x10);
+            JObj_Show(self->model, ResolveJointByName(self->model, LakituStart_UpdateCountdown_data_803F5910[0]), 0x10);
+            JObj_Show(self->model, ResolveJointByName(self->model, LakituStart_UpdateCountdown_data_803F5910[1]), 0x10);
             SoundMgr_PlaySE(69);
         }
     }
@@ -124,9 +124,9 @@ extern "C" int LakituStart_UpdateCountdown(LakituStart *self) {
             self->phase = 4;
             HideCountdown(self);
             g_countdownPhase = 1;
-            JObj_Show(self->model, ResolveJointByName(self->model, lbl_803F5910[0]), 0x10);
-            JObj_Show(self->model, ResolveJointByName(self->model, lbl_803F5910[1]), 0x10);
-            JObj_Show(self->model, ResolveJointByName(self->model, lbl_803F5910[2]), 0x10);
+            JObj_Show(self->model, ResolveJointByName(self->model, LakituStart_UpdateCountdown_data_803F5910[0]), 0x10);
+            JObj_Show(self->model, ResolveJointByName(self->model, LakituStart_UpdateCountdown_data_803F5910[1]), 0x10);
+            JObj_Show(self->model, ResolveJointByName(self->model, LakituStart_UpdateCountdown_data_803F5910[2]), 0x10);
             SoundMgr_PlaySE(69);
         }
     }
@@ -135,9 +135,9 @@ extern "C" int LakituStart_UpdateCountdown(LakituStart *self) {
             self->phase = 6;
             HideCountdown(self);
             g_countdownPhase = 0;
-            JObj_Show(self->model, ResolveJointByName(self->model, lbl_803F5910[3]), 0x10);
-            JObj_Show(self->model, ResolveJointByName(self->model, lbl_803F5910[4]), 0x10);
-            JObj_Show(self->model, ResolveJointByName(self->model, lbl_803F5910[5]), 0x10);
+            JObj_Show(self->model, ResolveJointByName(self->model, LakituStart_UpdateCountdown_data_803F5910[3]), 0x10);
+            JObj_Show(self->model, ResolveJointByName(self->model, LakituStart_UpdateCountdown_data_803F5910[4]), 0x10);
+            JObj_Show(self->model, ResolveJointByName(self->model, LakituStart_UpdateCountdown_data_803F5910[5]), 0x10);
             SoundMgr_PlaySE(70);
         }
     }

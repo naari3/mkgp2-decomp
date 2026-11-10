@@ -17,9 +17,9 @@ typedef struct EffectAnchor {
     float scale;
 } EffectAnchor;
 
-extern const char lbl_8032E5EC[];
-extern HandheldPose lbl_80420BC8[];
-extern EffectAnchor lbl_80420D08[];
+extern const char ItemObject_Tick_DispatchcTo15_rodata_8032E5EC[];
+extern HandheldPose ItemObject_Tick_DispatchcTo15_data_80420BC8[];
+extern EffectAnchor ItemObject_Tick_DispatchcTo15_data_80420D08[];
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);
 extern void SpriteSlot_InitLoop(void *slot, int id);
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int en);
@@ -182,19 +182,19 @@ void ItemObject_Tick_DispatchcTo15(unsigned char *self)
     if (1.0f < F(0x2C)) {
         F(0x2C) = 1.0f;
     }
-    F(0xC4) = lbl_80420BC8[I(0x10)].scale * KartFxParam_GetConst1p5(P(0x184)) * KartCharacterParam_GetKinopioBoostBonus(P(0x184));
-    if (lbl_80420BC8[I(0x10)].onKart) {
+    F(0xC4) = ItemObject_Tick_DispatchcTo15_data_80420BC8[I(0x10)].scale * KartFxParam_GetConst1p5(P(0x184)) * KartCharacterParam_GetKinopioBoostBonus(P(0x184));
+    if (ItemObject_Tick_DispatchcTo15_data_80420BC8[I(0x10)].onKart) {
         Mtx44_GetTranslation_RowMajor((Vec *)(self + 0xA0), KartDriver_GetJointByIdx(P(0x184), 12));
-        Vec3_Copy(&ofs, &lbl_80420BC8[I(0x10)].ofs);
-        rot.x = 0.017453289f * lbl_80420BC8[I(0x10)].rot.x;
-        rot.y = 0.017453289f * lbl_80420BC8[I(0x10)].rot.y;
-        rot.z = 0.017453289f * lbl_80420BC8[I(0x10)].rot.z;
+        Vec3_Copy(&ofs, &ItemObject_Tick_DispatchcTo15_data_80420BC8[I(0x10)].ofs);
+        rot.x = 0.017453289f * ItemObject_Tick_DispatchcTo15_data_80420BC8[I(0x10)].rot.x;
+        rot.y = 0.017453289f * ItemObject_Tick_DispatchcTo15_data_80420BC8[I(0x10)].rot.y;
+        rot.z = 0.017453289f * ItemObject_Tick_DispatchcTo15_data_80420BC8[I(0x10)].rot.z;
         KartDriver_BuildJoint12EulerTransform(self + 0x14, P(0x184), ofs, rot, F(0xC4));
     } else {
-        rot2.x = 0.017453289f * lbl_80420BC8[I(0x10)].rot.x;
-        rot2.y = 0.017453289f * lbl_80420BC8[I(0x10)].rot.y;
-        rot2.z = 0.017453289f * lbl_80420BC8[I(0x10)].rot.z;
-        Item_RenderHandheldByCharacter(self, lbl_80420BC8[I(0x10)].ofs, rot2, 0, lbl_80420BC8[I(0x10)].scale);
+        rot2.x = 0.017453289f * ItemObject_Tick_DispatchcTo15_data_80420BC8[I(0x10)].rot.x;
+        rot2.y = 0.017453289f * ItemObject_Tick_DispatchcTo15_data_80420BC8[I(0x10)].rot.y;
+        rot2.z = 0.017453289f * ItemObject_Tick_DispatchcTo15_data_80420BC8[I(0x10)].rot.z;
+        Item_RenderHandheldByCharacter(self, ItemObject_Tick_DispatchcTo15_data_80420BC8[I(0x10)].ofs, rot2, 0, ItemObject_Tick_DispatchcTo15_data_80420BC8[I(0x10)].scale);
     }
     if (FinalLapCoinJump_CheckActiveForObject(P(0x184))) {
         self[0x28] = 0;
@@ -204,21 +204,21 @@ void ItemObject_Tick_DispatchcTo15(unsigned char *self)
     SpriteSlot_TickAnim(self + 0x14);
     switch (I(0x8)) {
     case 0x13:
-        JointByName_GetWorldPosition(&v, self + 0x14, lbl_8032E5EC);
+        JointByName_GetWorldPosition(&v, self + 0x14, ItemObject_Tick_DispatchcTo15_rodata_8032E5EC);
         break;
     case 0x10:
-        JointByName_GetWorldPosition(&v, self + 0x14, lbl_8032E5EC);
+        JointByName_GetWorldPosition(&v, self + 0x14, ItemObject_Tick_DispatchcTo15_rodata_8032E5EC);
         break;
     case 0xC:
-        JointByName_GetWorldPosition(&v, self + 0x14, lbl_8032E5EC);
+        JointByName_GetWorldPosition(&v, self + 0x14, ItemObject_Tick_DispatchcTo15_rodata_8032E5EC);
         break;
     default:
-        GetSpawnPosition(&v, 0.0f, lbl_80420D08[I(0x10)].y, 0.0f);
+        GetSpawnPosition(&v, 0.0f, ItemObject_Tick_DispatchcTo15_data_80420D08[I(0x10)].y, 0.0f);
         Mtx_TransposeToMtx44(m, self + 0x48);
         Mtx44_TransformVec3(&v, m, v);
         break;
     }
-    k = F(0xC4) * lbl_80420D08[I(0x10)].scale;
+    k = F(0xC4) * ItemObject_Tick_DispatchcTo15_data_80420D08[I(0x10)].scale;
     switch (I(0x8)) {
     case 0xE:
     case 0x10:

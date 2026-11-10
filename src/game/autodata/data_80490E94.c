@@ -19,9 +19,9 @@ extern void fn_801661FC();
 extern void fn_80166B28();
 extern char lbl_806CF9A0[];
 extern char lbl_806CF9A8[];
-extern char lbl_806CF9B0[];
-extern char lbl_806CF9B8[];
-extern char lbl_806CF9C0[];
+extern char data_80490E94_data_806CF9B0[];
+extern char data_80490E94_data_806CF9B8[];
+extern char data_80490E94_data_806CF9C0[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -31,7 +31,7 @@ void *lbl_80490E94[3] = {
     0,
     0
 };
-void *lbl_80490EA0[5] = {
+void *sdata_806CF750_data_80490EA0[5] = {
     (void *)&lbl_806CF9A0,
     0,
     (void *)&lbl_806CF9A8,
@@ -39,15 +39,15 @@ void *lbl_80490EA0[5] = {
     0
 };
 /* decl: char */
-void *lbl_80490EB4[6] = {
-    (void *)&lbl_806CF9B0,
+void *DebugModelPage163_vtable_80490EB4[6] = {
+    (void *)&data_80490E94_data_806CF9B0,
     0,
     (void *)fn_80165C98,
     (void *)fn_80165C60,
     (void *)fn_80165D38,
     (void *)fn_80165DA8
 };
-void *lbl_80490ECC[5] = {
+void *sdata_806CF750_data_80490ECC[5] = {
     (void *)&lbl_806CF9A0,
     0,
     (void *)&lbl_806CF9A8,
@@ -55,15 +55,15 @@ void *lbl_80490ECC[5] = {
     0
 };
 /* decl: char */
-void *lbl_80490EE0[6] = {
-    (void *)&lbl_806CF9B8,
+void *DebugOther163_vtable_80490EE0[6] = {
+    (void *)&data_80490E94_data_806CF9B8,
     0,
     (void *)fn_80165E10,
     (void *)fn_80165DD8,
     (void *)fn_80165E90,
     (void *)fn_801660B0
 };
-void *lbl_80490EF8[5] = {
+void *sdata_806CF750_data_80490EF8[5] = {
     (void *)&lbl_806CF9A0,
     0,
     (void *)&lbl_806CF9A8,
@@ -71,8 +71,8 @@ void *lbl_80490EF8[5] = {
     0
 };
 /* decl: char */
-void *lbl_80490F0C[6] = {
-    (void *)&lbl_806CF9C0,
+void *DebugTable163_vtable_80490F0C[6] = {
+    (void *)&data_80490E94_data_806CF9C0,
     0,
     (void *)fn_801660EC,
     (void *)fn_801660B4,

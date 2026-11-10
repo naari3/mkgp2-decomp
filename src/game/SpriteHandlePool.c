@@ -108,7 +108,7 @@ typedef struct SpriteHandle {
 
 extern "C" {
 extern SpriteHandle g_SpriteHandlePool[];
-extern int lbl_80677C38[];
+extern int SpriteHandlePool_bss_80677C38[];
 }
 
 typedef struct SpriteNode {
@@ -172,7 +172,7 @@ extern signed char lbl_806D14F1;
 extern void *lbl_806D14F4;
 extern void *lbl_806D14F8;
 extern signed char lbl_806D14FC;
-extern const SpriteUVTable lbl_803325D0;
+extern const SpriteUVTable SpriteHandlePool_rodata_803325D0;
 extern SavedGXState lbl_806573A0;
 void fn_8011E31C(SpriteHandle *h);
 }
@@ -190,7 +190,7 @@ extern "C" void fn_8011DF98(SpriteHandle *h) {
         h->released = 1;
         if (!h->keep) {
             h->active = 0;
-            lbl_80677C38[h->type]--;
+            SpriteHandlePool_bss_80677C38[h->type]--;
         }
         if (h->next != -1) {
             fn_8011DF98(&g_SpriteHandlePool[h->next]);
@@ -206,7 +206,7 @@ extern "C" void fn_8011E31C(SpriteHandle *h) {
     int useTex2 = 0;
     int modeChanged = 0;
     int tevChanged = 0;
-    SpriteUVTable tbl = lbl_803325D0;
+    SpriteUVTable tbl = SpriteHandlePool_rodata_803325D0;
     int i;
     int coord;
     int map;

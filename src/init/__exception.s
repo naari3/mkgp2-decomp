@@ -151,7 +151,7 @@ gTRKInterruptVectorTable:
 # 0x1E00: Peripheral Breakpoint Exception
     trk_redirect 0x1E00
     .skip 32
-# referenced from .data (lbl_804000A0)
+# referenced from .data (Sci2Card_BuildRetryReceiptLine_data_804000A0)
 .global lbl_80005300
 lbl_80005300:
     .skip 172

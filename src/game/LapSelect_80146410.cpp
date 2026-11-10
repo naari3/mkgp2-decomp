@@ -110,7 +110,7 @@ extern unsigned int lbl_806D7C00;
 extern unsigned int lbl_806D7C04;
 extern unsigned int lbl_806D7C08;
 extern const float lbl_80362620[2][2];
-extern const float lbl_80362630[2][4];
+extern const float LapSelect_80146410_rodata_80362630[2][4];
 extern const float lbl_8048EFB8[2][2];
 void fn_801681E8(int ctx, const char *fmt, ...);
 int vsprintf(char *buf, const char *fmt, va_list ap);
@@ -480,15 +480,15 @@ extern "C" void fn_80146960(LapPanel *self)
         s->scx *= k;
         s->scy *= k;
         if (i == self->cur) {
-            s->m0 *= lbl_80362630[0][0];
-            s->m1 *= lbl_80362630[0][1];
-            s->m2 *= lbl_80362630[0][2];
-            s->m3 *= lbl_80362630[0][3];
+            s->m0 *= LapSelect_80146410_rodata_80362630[0][0];
+            s->m1 *= LapSelect_80146410_rodata_80362630[0][1];
+            s->m2 *= LapSelect_80146410_rodata_80362630[0][2];
+            s->m3 *= LapSelect_80146410_rodata_80362630[0][3];
         } else {
-            s->m0 *= lbl_80362630[1][0];
-            s->m1 *= lbl_80362630[1][1];
-            s->m2 *= lbl_80362630[1][2];
-            s->m3 *= lbl_80362630[1][3];
+            s->m0 *= LapSelect_80146410_rodata_80362630[1][0];
+            s->m1 *= LapSelect_80146410_rodata_80362630[1][1];
+            s->m2 *= LapSelect_80146410_rodata_80362630[1][2];
+            s->m3 *= LapSelect_80146410_rodata_80362630[1][3];
         }
         if (s->t >= 0.0f) {
             s->t += 1.0f;

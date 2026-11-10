@@ -12,10 +12,10 @@ extern char lbl_803761F8[];
 extern char lbl_803767D0[];
 extern char lbl_803767DC[];
 extern char lbl_80377218[];
-extern char lbl_80491704[];
-extern char lbl_80491720[];
-extern char lbl_8049173C[];
-extern char lbl_80491874[];
+extern char data_80491704_data_80491704[];
+extern char data_80491704_data_80491720[];
+extern char data_80491704_data_8049173C[];
+extern char data_80491704_data_80491874[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -23,17 +23,17 @@ extern char lbl_80491874[];
 const char *lbl_806CFB50[2] = {
     (const char *)&lbl_8037617C, 0
 };
-void *lbl_806CFB58[2] = {
+void *data_80491704_data_806CFB58[2] = {
     (void *)&lbl_80376158,
-    (void *)&lbl_80491704
+    (void *)&data_80491704_data_80491704
 };
-void *lbl_806CFB60[2] = {
+void *data_80491704_data_806CFB60[2] = {
     (void *)&lbl_803761D4,
-    (void *)&lbl_80491720
+    (void *)&data_80491704_data_80491720
 };
-void *lbl_806CFB68[2] = {
+void *data_80491704_data_806CFB68[2] = {
     (void *)&lbl_803761F8,
-    (void *)&lbl_8049173C
+    (void *)&data_80491704_data_8049173C
 };
 unsigned int lbl_806CFB70 = 0xFFFFFFFF;
 unsigned int lbl_806CFB74 = 0xFFFFFFFF;
@@ -44,12 +44,12 @@ float lbl_806CFB80 = 1.0f;
 /* decl: bool / unsigned char */
 unsigned char lbl_806CFB84 = 0x1;
 unsigned char lbl_806CFB85 = 0x1;
-const char *lbl_806CFB88[2] = {
+const char *data_80491704_data_806CFB88[2] = {
     (const char *)&lbl_803767DC, 0
 };
-void *lbl_806CFB90[2] = {
+void *data_80491704_data_806CFB90[2] = {
     (void *)&lbl_803767D0,
-    (void *)&lbl_80491874
+    (void *)&data_80491704_data_80491874
 };
 unsigned int lbl_806CFB98 = 0x32;
 unsigned int lbl_806CFB9C = 0x1E;

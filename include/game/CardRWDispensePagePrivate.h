@@ -22,8 +22,8 @@ struct DispensePage {
     int error;
 };
 extern "C" {
-extern MenuItem lbl_803FCAE0[];
-extern DispenseStep lbl_803FDBE8[];
+extern MenuItem CardRW_DispenseTest_Page_data_803FCAE0[];
+extern DispenseStep CardRW_DispenseTest_Page_data_803FDBE8[];
 void CardRW_TestTopMenu_Page(DispensePage *, int, int);
 unsigned char CardRW_ErrorDisplay(DispensePage *, int, int, int);
 int Sci2Card_GetPrintErrorCode();

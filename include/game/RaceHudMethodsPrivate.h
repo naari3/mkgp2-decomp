@@ -9,7 +9,7 @@ struct HudMethodScene : SceneBase {
 };
 extern "C" {
 extern void *lbl_806D1A60;
-extern void *lbl_804EECA4[], *lbl_803FE0C8[];
+extern void *RaceHudScene_vtable_804EECA4[], *lbl_803FE0C8[];
 void fn_8021A17C(void *); void fn_8021A1C4(void *);
 void fn_8020AC34(void *); void ItemDisplay_Update(void *);
 void fn_802321F8(ItemMsgWnd *);

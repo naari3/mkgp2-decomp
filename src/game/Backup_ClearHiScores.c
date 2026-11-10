@@ -22,8 +22,8 @@ extern unsigned char lbl_806D1120; /* backup available */
 extern int lbl_806D1128;           /* backup busy */
 extern BackupHiScores lbl_80598A60;
 extern const float lbl_806D2EB4;   /* 599.999f */
-extern const wchar *lbl_803FDF70[9];
-extern const int lbl_8031128C[9];
+extern const wchar *Backup_ClearHiScores_data_803FDF70[9];
+extern const int Backup_ClearHiScores_rodata_8031128C[9];
 extern unsigned int wcslen(const wchar *s);
 
 int Backup_ClearHiScores(void)
@@ -57,10 +57,10 @@ int Backup_ClearHiScores(void)
                             rec->name[3] = 0;
                             rec->name[4] = 0;
                             rec->name[5] = 0;
-                            for (c = 0; c < wcslen(lbl_803FDF70[course]) && c < 5; c++) {
-                                rec->name[c] = lbl_803FDF70[course][c];
+                            for (c = 0; c < wcslen(Backup_ClearHiScores_data_803FDF70[course]) && c < 5; c++) {
+                                rec->name[c] = Backup_ClearHiScores_data_803FDF70[course][c];
                             }
-                            rec->kart = lbl_8031128C[course];
+                            rec->kart = Backup_ClearHiScores_rodata_8031128C[course];
                             rec->pad[0] = 0;
                             rec->pad[1] = 0;
                             rec->pad[2] = 0;

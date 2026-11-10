@@ -11,7 +11,7 @@
 #pragma force_active on
 
 const char lbl_8032F994[] = "item2_l_center_joint";
-const char lbl_8032F9AC[100] = {
+const char GabyouItem_TickActive_rodata_8032F9AC[100] = {
     105, 116, 101, 109, 95, 109, 95, 99, 101, 110, 116, 101,
     114, 95, 106, 111, 105, 110, 116, 0, 105, 116, 101, 109,
     50, 95, 108, 95, 98, 108, 111, 99, 107, 95, 106, 111,
@@ -22,23 +22,23 @@ const char lbl_8032F9AC[100] = {
     95, 104, 97, 104, 101, 110, 95, 106, 111, 105, 110, 116,
     0, 0, 0, 0
 };
-const FloatTriple lbl_8032FA10[1] = {
+const FloatTriple GabyouTripleParent_Update_rodata_8032FA10[1] = {
     { { 0.087266445f, 0.5235987f, -0.5235987f } }
 };
-const FloatTriple lbl_8032FA1C[1] = {
+const FloatTriple GabyouTripleParent_Update_rodata_8032FA1C[1] = {
     { { 0.0f, -0.087266445f, -0.26179934f } }
 };
 /* decl: Vec3 */
-const float lbl_8032FA28[4] = {
+const float GabyouTripleChild_Update_rodata_8032FA28[4] = {
     0.0f, 4.0f, 0.0f, 0.0f
 };
-const unsigned int lbl_8032FA38[4] = {
+const unsigned int ShellItem_TickActive_rodata_8032FA38[4] = {
     0x0, 0x0, 0x0, 0x0
 };
-const Vec lbl_8032FA48[1] = {
+const Vec BombItem_TickActive_rodata_8032FA48[1] = {
     { 0.0f, -1.0f, -2.5f }
 };
-const Vec lbl_8032FA54[1] = {
+const Vec BombItem_TickActive_rodata_8032FA54[1] = {
     { -0.5235987f, 2.8797927f, 0.0f }
 };
 const char lbl_8032FA60[] = "item_effect_joint";

@@ -103,7 +103,7 @@ struct clDNBress : clMapEffectParts {
 };
 
 extern "C" {
-extern const char lbl_803C6ED0[];
+extern const char DNBress_nm3_rodata_803C6ED0[];
 extern int g_gameMode;
 extern int g_longRoundFlag;
 extern int g_reverseRoundFlag;
@@ -112,19 +112,19 @@ extern const char lbl_806DB3F0[7];
 extern const char lbl_806DB3F8[5];
 extern const int lbl_806DB3E8[2];
 extern float lbl_806D0548[2];
-extern float lbl_806D0580;
-extern float lbl_806D0584;
-extern float lbl_806D0588;
+extern float DNBress_breath_data_806D0580;
+extern float DNBress_breath_data_806D0584;
+extern float DNBress_breath_data_806D0588;
 extern const int lbl_803D0240[4][2];
-extern const float lbl_803D0260[3];
+extern const float DNBress_tick_rodata_803D0260[3];
 extern const float lbl_803D026C[3];
-extern const float lbl_803D0278[4];
+extern const float DNBress_breath_rodata_803D0278[4];
 extern const Vec3f lbl_803D02A0[2];
 extern float lbl_80495A94[48];
 extern const char lbl_803D01BC[];
 extern const char lbl_803D01CC[];
 extern const char *lbl_803D01DC[];
-extern const char lbl_803D0300[];
+extern const char DNBress_breath_rodata_803D0300[];
 extern const char lbl_803D0320[];
 extern const char lbl_803D0340[];
 extern const char lbl_803D0354[];
@@ -250,8 +250,8 @@ struct DNBressDispatch {
     void (*slots[5])();
 };
 extern "C" {
-extern const char lbl_806D058C[];
-extern const char lbl_806D0594[];
+extern const char DNBress_nm3_data_806D058C[];
+extern const char DNBress_nm3_data_806D0594[];
 void fn_80227AA4();
 void fn_80226B20();
 void fn_80226954();
@@ -266,16 +266,16 @@ struct FireRecords { MemberFn spawn; MemberFn upd; } lbl_804EDF98[2] = {
     {{0, -1, fn_80227318}, {0, -1, fn_802271A4}},
     {{0, -1, fn_8022760C}, {0, -1, fn_80227490}}
 };
-DNBressTypeInfo lbl_804EDFC8 = {lbl_806D058C, 0, 0};
-DNBressDispatch lbl_804EDFD4 = {
-    lbl_806D0594, 0,
+DNBressTypeInfo sdata_806D0540_data_804EDFC8 = {DNBress_nm3_data_806D058C, 0, 0};
+DNBressDispatch clDNBress_vtable_804EDFD4 = {
+    DNBress_nm3_data_806D0594, 0,
     {fn_80227AA4, fn_80226B20, fn_80226954, fn_8016A26C, 0}
 };
 #pragma force_active reset
 }
 
 static inline const char *DNBressStrings() {
-    const char *strings = lbl_803C6ED0 + 0x10000;
+    const char *strings = DNBress_nm3_rodata_803C6ED0 + 0x10000;
     return strings;
 }
 

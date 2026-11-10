@@ -83,7 +83,7 @@ CourseLookupBaseDraft::~CourseLookupBaseDraft() {}
 
 #pragma cplusplus on
 extern "C" {
-extern void *lbl_80419DBC[];
+extern void *CourseLookupBase_vtable_80419DBC[];
 void MemoryManager_TimedFree(void *);
 }
 
@@ -92,7 +92,7 @@ void MemoryManager_TimedFree(void *);
 extern "C" CourseLookupBase *dtor_800ABF10(CourseLookupBase *self, short flag)
 {
     if (self) {
-        *(void **)self = lbl_80419DBC;
+        *(void **)self = CourseLookupBase_vtable_80419DBC;
         if (flag > 0) {
             MemoryManager_TimedFree(self);
         }

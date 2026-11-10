@@ -48,7 +48,7 @@ static const char lbl_8036801C[] = "KP_castle_ground_A.dat";
 static const char lbl_80368034[] = "KP_castle_ground_B.dat";
 static const char lbl_8036804C[] = "RB_road_short_a.dat";
 static const char lbl_80368060[] = "RB_road_long_a.dat";
-extern "C" const ModelEntry lbl_80368074[14] = {
+extern "C" const ModelEntry Scene_8015BE44_rodata_80368074[14] = {
     {lbl_80367F68, 10000.0f, 57, 1.0f, -25.0f, -2.0f, 0.032f, 0.034f, 0.0f},
     {lbl_80367F80, 13000.0f, 56, 0.75f, -33.0f, 25.0f, 0.025f, 0.025f, 0.0f},
     {lbl_80367F98, 7000.0f, 59, 0.8f, -15.0f, 3.0f, 0.033f, 0.033f, 0.0f},
@@ -85,7 +85,7 @@ extern "C" void fn_8015B790() {
     if (lbl_806D159C == -1) { if (--selected < 0) selected = 13; }
     if (lbl_806D1594 != selected) {
         lbl_806D1594 = selected;
-        const ModelEntry *models = lbl_80368074;
+        const ModelEntry *models = Scene_8015BE44_rodata_80368074;
         fn_8015BCC4(models[selected].res, models[selected].scale);
         lbl_806D15A4 = lbl_806D85EC;
         lbl_806D15A8 = lbl_806D85EC;
@@ -123,11 +123,11 @@ extern "C" void fn_8015B790() {
     {
         Object_SetJObjPositionX(lbl_806D158C, lbl_806D15A4);
         Object_SetJObjField40(lbl_806D158C, lbl_806D15A8);
-        /* fakematch (hand): natural code is `entry = &lbl_80368074[lbl_806D1594]`.
+        /* fakematch (hand): natural code is `entry = &Scene_8015BE44_rodata_80368074[lbl_806D1594]`.
            The target keeps the scaled index in the entry register and adds the
            table base to it, so the offset has to be a named value first. */
         int off = lbl_806D1594 * 36;
-        off += (int)lbl_80368074;
+        off += (int)Scene_8015BE44_rodata_80368074;
         const ModelEntry *entry = (const ModelEntry *)off;
         float size = lbl_806D8628 * entry->iconScale;
         fn_80169040(0, lbl_806D862C, lbl_806D8630, size,size, lbl_806D8634 * -entry->iconY, lbl_806D8638, entry->icon, 0);

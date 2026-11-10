@@ -13,7 +13,7 @@ extern void fn_801E0924();
 extern void fn_801E092C();
 extern void fn_801E093C();
 extern char lbl_806CFF20[];
-extern char lbl_806CFF28[];
+extern char data_804E21B0_data_806CFF28[];
 
 /* layout as declared in src/game/LateralOffset_GetMagnitude.c */
 typedef struct LateralOffsetEntry {
@@ -393,7 +393,7 @@ ItemUseProbEntry g_itemUseProbTable[34] = {
     { { 0, -1, -1, -1, -1 }, 4, 0.1f },
     { { 0, -1, -1, -1, -1 }, 5, 0.2f }
 };
-DistanceBonusEntry lbl_804E3184[8] = {
+DistanceBonusEntry AI_CalcDistanceSpeedBonus_data_804E3184[8] = {
     { { 2, -1, 0, -1, -1 }, { { 0.0f, 10.0f, 7.0f, 5.0f, 88.8f, 88.8f }, { -3.0f, 0.0f, 20.0f, 30.0f, 88.8f, 88.8f }, { -10.0f, -30.0f, 0.0f, 0.0f, 88.8f, 88.8f }, { -30.0f, -30.0f, -60.0f, 0.0f, 88.8f, 88.8f }, { 88.8f, 88.8f, 88.8f, 88.8f, 88.8f, 88.8f }, { 88.8f, 88.8f, 88.8f, 88.8f, 88.8f, 88.8f } } },
     { { 2, -1, 1, -1, -1 }, { { 0.0f, 10.0f, 7.0f, 5.0f, 88.8f, 88.8f }, { -3.0f, 0.0f, 20.0f, 30.0f, 88.8f, 88.8f }, { -10.0f, -30.0f, 0.0f, 0.0f, 88.8f, 88.8f }, { -30.0f, -30.0f, -60.0f, 0.0f, 88.8f, 88.8f }, { 88.8f, 88.8f, 88.8f, 88.8f, 88.8f, 88.8f }, { 88.8f, 88.8f, 88.8f, 88.8f, 88.8f, 88.8f } } },
     { { 2, -1, 2, -1, -1 }, { { 0.0f, 10.0f, 7.0f, 5.0f, 88.8f, 88.8f }, { -3.0f, 0.0f, 20.0f, 30.0f, 88.8f, 88.8f }, { -10.0f, -30.0f, 0.0f, 0.0f, 88.8f, 88.8f }, { -30.0f, -30.0f, -60.0f, 0.0f, 88.8f, 88.8f }, { 88.8f, 88.8f, 88.8f, 88.8f, 88.8f, 88.8f }, { 88.8f, 88.8f, 88.8f, 88.8f, 88.8f, 88.8f } } },
@@ -499,14 +499,14 @@ Entry_804E3C5C lbl_804E3C5C[12] = {
     { { -1, 5, -1, 7, -1, 0, 0, 0, 0, 0, 0, 4 }, 3, 3 },
     { { -1, 5, -1, 7, -1, 0, 0, 0, 0, 0, 0, 5 }, 3, 2 }
 };
-HitCooldownEntry lbl_804E3D4C[5] = {
+HitCooldownEntry AI_GetHitCooldown_data_804E3D4C[5] = {
     { { 0, -1, -1, 4, -1 }, 200 },
     { { 0, -1, -1, 5, -1 }, 200 },
     { { 0, -1, -1, 6, -1 }, 200 },
     { { 0, -1, -1, 7, -1 }, 200 },
     { { -1, -1, -1, -1, -1 }, 300 }
 };
-ItemList lbl_804E3D88[50] = {
+ItemList AI_GetItemList_data_804E3D88[50] = {
     { { 43, 45, 57, -1 } },
     { { 93, 57, 148, -1 } },
     { { 43, 92, 147, -1 } },
@@ -558,7 +558,7 @@ ItemList lbl_804E3D88[50] = {
     { { 34, 35, 8, -1 } },
     { { 46, 48, 49, -1 } }
 };
-EnemyItemListEntry lbl_804E40A8[48] = {
+EnemyItemListEntry clEnemyParam_FillItemListIds_data_804E40A8[48] = {
     { { 0, 7, -1, 0, -1 }, { 1, -1, -1, -1, -1, -1, -1, -1 } },
     { { 0, 7, -1, 1, -1 }, { 2, -1, -1, -1, -1, -1, -1, -1 } },
     { { 0, 7, -1, 2, -1 }, { 3, -1, -1, -1, -1, -1, -1, -1 } },
@@ -608,13 +608,13 @@ EnemyItemListEntry lbl_804E40A8[48] = {
     { { 2, 7, -1, -1, -1 }, { 36, 40, -1, -1, -1, -1, -1, -1 } },
     { { 2, 8, -1, -1, -1 }, { 37, 39, -1, -1, -1, -1, -1, -1 } }
 };
-void *lbl_804E4828[3] = {
+void *data_804E21B0_data_804E4828[3] = {
     (void *)&lbl_806CFF20,
     0,
     0
 };
-void *lbl_804E4834[7] = {
-    (void *)&lbl_806CFF28,
+void *SteerBounce_vtable_804E4834[7] = {
+    (void *)&data_804E21B0_data_806CFF28,
     0,
     (void *)fn_801E093C,
     (void *)fn_801E092C,

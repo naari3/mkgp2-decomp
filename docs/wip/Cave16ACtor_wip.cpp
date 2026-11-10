@@ -1,7 +1,7 @@
 #include "../src/game/mapeffect/mapfx16a_private.h"
 static inline DObj16A *NextDObj(DObj16A *d) { return d ? d->next : 0; }
 Cave16A::Cave16A() {
-    const char *pool = lbl_8036CF68;
+    const char *pool = Cave16ACtor_rodata_8036CF68;
     DebugPrintf(pool + 0x5a4);
     model = new Obj16A;
     model->flag = 1;

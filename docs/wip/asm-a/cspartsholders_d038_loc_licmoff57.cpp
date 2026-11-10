@@ -72,7 +72,7 @@ extern void fn_8013D800();
 extern const float lbl_806D7E2C;
 extern const float lbl_806D7E30;
 extern const float lbl_806D7EF4;
-extern unsigned int lbl_80362D90[];
+extern unsigned int CSSceneGetTitle_8014ADB4_rodata_80362D90[];
 extern void MemoryManager_TimedFree();
 extern float lbl_806D7EE4;
 PairHolder *fn_8014D038(PairHolder *h, int arg, float x, float y, float s);
@@ -132,7 +132,7 @@ struct PreviewPart {
 };
 struct PartVec { float x, y, z; };
 extern "C" PairHolder *fn_8014D038(PairHolder *h, int arg, float x, float y, float s) {
-    PartVec *pos = (PartVec *)lbl_80362D90;
+    PartVec *pos = (PartVec *)CSSceneGetTitle_8014ADB4_rodata_80362D90;
     PartVec *rot;
     float k, rx, ry, rz;
     int i;
@@ -191,9 +191,9 @@ TripleHolder::~TripleHolder() {
  * time so that the parts pointer gets the target's register; the natural code
  * is `h->parts[i]` with i as the loop index. */
 extern "C" TripleHolder *fn_8014D344(TripleHolder *h, int arg, float x, float y, float s) {
-    float *scale = (float *)((char *)lbl_80362D90 + 0xEB8);
-    PartVec *pos = (PartVec *)((char *)lbl_80362D90 + 0xE70);
-    PartVec *rot = (PartVec *)((char *)lbl_80362D90 + 0xE94);
+    float *scale = (float *)((char *)CSSceneGetTitle_8014ADB4_rodata_80362D90 + 0xEB8);
+    PartVec *pos = (PartVec *)((char *)CSSceneGetTitle_8014ADB4_rodata_80362D90 + 0xE70);
+    PartVec *rot = (PartVec *)((char *)CSSceneGetTitle_8014ADB4_rodata_80362D90 + 0xE94);
     TripleHolder *c = h;
     float k;
     int i;

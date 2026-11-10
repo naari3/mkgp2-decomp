@@ -15,7 +15,7 @@
  * header + 6 preceding virtuals.
  *
  * Object layout (0x14 bytes):
- *   +0x00 vtable (lbl_803F56A4)
+ *   +0x00 vtable (SeqMenuScene_data_803F56A4)
  *   +0x04 MenuEntry *entries   (0xC-stride table, 0 field0 terminates)
  *   +0x08 int count
  *   +0x0C int cursor
@@ -63,7 +63,7 @@ extern void GameMode_BaseInit(void *self);
 extern void *dtor_8002CDF4(void *self, short flag);
 extern void MemoryManager_TimedFree(void *);
 
-extern char lbl_803F56A4[];          /* SeqMenuScene vtable @ .data:0x803F56A4 */
+extern char SeqMenuScene_data_803F56A4[];          /* SeqMenuScene vtable @ .data:0x803F56A4 */
 extern const char lbl_806D22C8[8];   /* header string  @ .sdata2:0x806D22C8 */
 extern const char lbl_806D22D0[3];   /* cursor string  @ .sdata2:0x806D22D0 */
 
@@ -124,7 +124,7 @@ int SeqMenuScene_HandleInput(SeqMenuScene *self) {
 
 void *SeqMenuScene_Dtor(SeqMenuScene *self, short flag) {
     if (self != 0) {
-        self->vtable = lbl_803F56A4;
+        self->vtable = SeqMenuScene_data_803F56A4;
         dtor_8002CDF4(self, 0);
         if (flag > 0) {
             MemoryManager_TimedFree(self);
@@ -135,7 +135,7 @@ void *SeqMenuScene_Dtor(SeqMenuScene *self, short flag) {
 
 void *SeqMenuScene_Init(SeqMenuScene *self, MenuEntry *entries) {
     GameMode_BaseInit(self);
-    self->vtable = lbl_803F56A4;
+    self->vtable = SeqMenuScene_data_803F56A4;
     self->entries = entries;
     self->blink = 0;
     self->count = 0;

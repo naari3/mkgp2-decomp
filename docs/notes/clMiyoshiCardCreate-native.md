@@ -7,7 +7,7 @@ Draw 80061054 is native C++ 100%. The old two-instruction residual lwz r3/global
 ## c24_a10_20261109
 Source: Codex worker c24_a10_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 832 B.
 
-Tick best partial: 97.95028%, 720 B. Everything before +0x298 is opcode/register identical, aside from normalized generated jump-table symbol @54 vs jumptable_803F9F00. At +0x298 target lwz r3,counter; addi r0,r3,1; stw; lwz status; cmpwi; bne; li r3,-4; b join; li r3,-2. Source hoists li r3,-2 above counter increment, loads counter in r4, then conditionally assigns -4, eliminating the b join. This is genuine control-flow/size mismatch, not mere coloring. Direct returns and inline result helper produce the same output; no optimization-disabling pragmas used. To retry this draft, replace existing Tick asm and its manual extab/index, remove hand-written jumptable_803F9F00, and let compiler emit its table. Depends on existing MiyoshiState and lbl_803F9E70:
+Tick best partial: 97.95028%, 720 B. Everything before +0x298 is opcode/register identical, aside from normalized generated jump-table symbol @54 vs jumptable_803F9F00. At +0x298 target lwz r3,counter; addi r0,r3,1; stw; lwz status; cmpwi; bne; li r3,-4; b join; li r3,-2. Source hoists li r3,-2 above counter increment, loads counter in r4, then conditionally assigns -4, eliminating the b join. This is genuine control-flow/size mismatch, not mere coloring. Direct returns and inline result helper produce the same output; no optimization-disabling pragmas used. To retry this draft, replace existing Tick asm and its manual extab/index, remove hand-written jumptable_803F9F00, and let compiler emit its table. Depends on existing MiyoshiState and clMiyoshiCardCreate_Tick_data_803F9E70:
 
 ```cpp
 #pragma cplusplus on
@@ -36,7 +36,7 @@ extern "C" int clMiyoshiCardCreate_Tick(void *) {
     MiyoshiInput *input=InputMgr_GetPlayer(GetInputManager(),0);
     unsigned char confirm=input->isPressed(1);
     unsigned char next=input->isPressed(128);
-    MiyoshiState *state=lbl_806D10D8;
+    MiyoshiState *state=clMiyoshiCardCreate_bss_806D10D8;
     if(state->status==0) {
         if(next==1) state->selection=WrapInRange(state->selection+1,0,10);
         else if(confirm==1) {
@@ -55,7 +55,7 @@ extern "C" int clMiyoshiCardCreate_Tick(void *) {
                 int points;
                 if(state->points<=0) points=0; else points=state->points*100-1;
                 PlayerData_Construct(g_playerData,state->character,state->cc0,state->cc1,state->cc2,
-                    state->flag0,state->flag1,state->flag2,lbl_803F9E70[state->kart],points,state->flag3);
+                    state->flag0,state->flag1,state->flag2,clMiyoshiCardCreate_Tick_data_803F9E70[state->kart],points,state->flag3);
                 card_save_trigger(0); state->status=1; break;
             }
         }

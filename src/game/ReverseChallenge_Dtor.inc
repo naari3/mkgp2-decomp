@@ -33,7 +33,7 @@ extern unsigned int lbl_806D10D0;
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_80419E70[];
+extern unsigned int ReverseChallenge_vtable_80419E70[];
 
 /* --- function index (1 fns, .text 0x800ACD60..0x800ACFC0) ---
  * [  0] 0x800ACD60 size:0x260   global ReverseChallenge_Dtor
@@ -101,7 +101,7 @@ static inline void RCCameraRelease(RCVirtual *camera)
 extern "C" void *ReverseChallenge_Dtor(ReverseChallengeState *self, short freeMemory)
 {
     if (self) {
-        self->vtable = lbl_80419E70;
+        self->vtable = ReverseChallenge_vtable_80419E70;
         if (g_weatherSystem) {
             fn_8016C634((void *)g_weatherSystem, 1);
             g_weatherSystem = 0;

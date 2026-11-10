@@ -1,6 +1,6 @@
 /*
  * 0x8016B0A0..0x8016B32C: holder for a refcounted HSD object kept in
- * lbl_806D15B8 (field setters, release, (re)create).
+ * HsdRes_8016B0A0_bss_806D15B8 (field setters, release, (re)create).
  */
 
 typedef struct HSDObjMethods {
@@ -19,7 +19,7 @@ typedef struct HSDObj {
     float f14;
 } HSDObj;
 
-extern HSDObj *lbl_806D15B8;
+extern HSDObj *HsdRes_8016B0A0_bss_806D15B8;
 extern void HSD_FogSet(HSDObj *);
 extern HSDObj *HSD_FogLoadDesc(void *);
 extern HSDObj *HSD_FogAlloc(void);
@@ -49,11 +49,11 @@ static inline void HSDObj_Release(HSDObj *o) {
 }
 
 static inline void Holder_Release(void) {
-    if (lbl_806D15B8) {
+    if (HsdRes_8016B0A0_bss_806D15B8) {
         HSD_FogSet(0);
-        HSDObj_Release(lbl_806D15B8);
+        HSDObj_Release(HsdRes_8016B0A0_bss_806D15B8);
     }
-    lbl_806D15B8 = 0;
+    HsdRes_8016B0A0_bss_806D15B8 = 0;
 }
 
 static inline void Holder_SetF14(HSDObj *o, float v) {
@@ -81,8 +81,8 @@ void fn_8016B0A0(void) {
 }
 
 void fn_8016B0C4(void) {
-    if (lbl_806D15B8) {
-        HSD_FogSet(lbl_806D15B8);
+    if (HsdRes_8016B0A0_bss_806D15B8) {
+        HSD_FogSet(HsdRes_8016B0A0_bss_806D15B8);
     }
 }
 
@@ -111,7 +111,7 @@ static inline void Holder_SetColor(HSDObj *o, RGBA8 c) {
 }
 
 void fn_8016B0F0(unsigned char r, unsigned char g, unsigned char b) {
-    HSDObj *o = lbl_806D15B8;
+    HSDObj *o = HsdRes_8016B0A0_bss_806D15B8;
     if (o) {
         RGBA8 c = lbl_806DCF40;
         c.r = r;
@@ -122,20 +122,20 @@ void fn_8016B0F0(unsigned char r, unsigned char g, unsigned char b) {
 }
 
 void fn_8016B148(float v) {
-    if (lbl_806D15B8) {
-        Holder_SetF14(lbl_806D15B8, v);
+    if (HsdRes_8016B0A0_bss_806D15B8) {
+        Holder_SetF14(HsdRes_8016B0A0_bss_806D15B8, v);
     }
 }
 
 void fn_8016B160(float v) {
-    if (lbl_806D15B8) {
-        Holder_SetF10(lbl_806D15B8, v);
+    if (HsdRes_8016B0A0_bss_806D15B8) {
+        Holder_SetF10(HsdRes_8016B0A0_bss_806D15B8, v);
     }
 }
 
 void fn_8016B178(int v) {
-    if (lbl_806D15B8) {
-        Holder_SetMode(lbl_806D15B8, v);
+    if (HsdRes_8016B0A0_bss_806D15B8) {
+        Holder_SetMode(HsdRes_8016B0A0_bss_806D15B8, v);
     }
 }
 
@@ -144,13 +144,13 @@ void fn_8016B190(void) {
 }
 
 void fn_8016B248(void *desc) {
-    if (lbl_806D15B8) {
+    if (HsdRes_8016B0A0_bss_806D15B8) {
         Holder_Release();
     }
     if (desc) {
-        lbl_806D15B8 = HSD_FogLoadDesc(desc);
+        HsdRes_8016B0A0_bss_806D15B8 = HSD_FogLoadDesc(desc);
     } else {
-        lbl_806D15B8 = HSD_FogAlloc();
+        HsdRes_8016B0A0_bss_806D15B8 = HSD_FogAlloc();
     }
 }
 

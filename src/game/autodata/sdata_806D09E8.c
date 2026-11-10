@@ -5,7 +5,7 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
-extern char lbl_803F0FF0[];
+extern char sdata_806D09E8_rodata_803F0FF0[];
 extern char lbl_803F1070[];
 extern char lbl_803F107C[];
 extern char lbl_803F1090[];
@@ -23,27 +23,27 @@ extern char lbl_803F11E4[];
 extern char lbl_803F11F0[];
 extern char lbl_803F11FC[];
 extern char lbl_803F1274[];
-extern char lbl_803F1284[];
+extern char sdata_806D09E8_rodata_803F1284[];
 extern char lbl_803F13B8[];
 extern char lbl_804EF140[];
-extern char lbl_804EF14C[];
-extern char lbl_804EF178[];
-extern char lbl_804EF1A8[];
-extern char lbl_804F2020[];
-extern char lbl_804F2060[];
-extern char lbl_804F206C[];
-extern char lbl_804F2078[];
-extern char lbl_804F2084[];
-extern char lbl_804F2090[];
-extern char lbl_804F209C[];
-extern char lbl_804F20A8[];
-extern char lbl_804F2110[];
+extern char sdata_806D09E8_data_804EF14C[];
+extern char sdata_806D09E8_data_804EF178[];
+extern char sdata_806D09E8_data_804EF1A8[];
+extern char sdata_806D09E8_data_804F2020[];
+extern char sdata_806D09E8_data_804F2060[];
+extern char sdata_806D09E8_data_804F206C[];
+extern char sdata_806D09E8_data_804F2078[];
+extern char sdata_806D09E8_data_804F2084[];
+extern char sdata_806D09E8_data_804F2090[];
+extern char sdata_806D09E8_data_804F209C[];
+extern char sdata_806D09E8_data_804F20A8[];
+extern char sdata_806D09E8_data_804F2110[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_806D09E8[2] = {
-    (void *)&lbl_803F0FF0,
+void *data_804EF0C8_data_806D09E8[2] = {
+    (void *)&sdata_806D09E8_rodata_803F0FF0,
     0
 };
 const char *lbl_806D09F0[2] = {
@@ -53,80 +53,80 @@ void *lbl_806D09F8[2] = {
     (void *)&lbl_803F1090,
     (void *)&lbl_804EF140
 };
-void *lbl_806D0A00[2] = {
+void *data_804EF0C8_data_806D0A00[2] = {
     (void *)&lbl_803F1070,
-    (void *)&lbl_804EF14C
+    (void *)&sdata_806D09E8_data_804EF14C
 };
-void *lbl_806D0A08[2] = {
+void *data_804EF0C8_data_806D0A08[2] = {
     (void *)&lbl_803F10A4,
-    (void *)&lbl_804EF178
+    (void *)&sdata_806D09E8_data_804EF178
 };
-const char *lbl_806D0A10[2] = {
+const char *data_804EF0C8_data_806D0A10[2] = {
     (const char *)&lbl_803F115C, 0
 };
-void *lbl_806D0A18[2] = {
+void *data_804EF0C8_data_806D0A18[2] = {
     (void *)&lbl_803F1150,
-    (void *)&lbl_804EF1A8
+    (void *)&sdata_806D09E8_data_804EF1A8
 };
-const char *lbl_806D0A20[2] = {
+const char *data_804EF1F0_data_806D0A20[2] = {
     (const char *)&lbl_803F1180, 0
 };
-void *lbl_806D0A28[2] = {
+void *data_804EF1F0_data_806D0A28[2] = {
     (void *)&lbl_803F1170,
-    (void *)&lbl_804F2020
+    (void *)&sdata_806D09E8_data_804F2020
 };
 /* decl: char / int / unsigned int / void * */
 const char *s_clCDispInterface[2] = {
     (const char *)&lbl_803F11AC, 0
 };
 /* decl: char */
-void *lbl_806D0A38[2] = {
+void *HudManagerLife_data_806D0A38[2] = {
     (void *)&lbl_803F11A0,
-    (void *)&lbl_804F2060
+    (void *)&sdata_806D09E8_data_804F2060
 };
 /* decl: int / void * */
 void *s_clLapDisp[2] = {
     (void *)&lbl_803F11C0,
-    (void *)&lbl_804F206C
+    (void *)&sdata_806D09E8_data_804F206C
 };
 /* decl: char */
-void *lbl_806D0A48[2] = {
+void *HudManagerLap_data_806D0A48[2] = {
     (void *)&lbl_803F11CC,
-    (void *)&lbl_804F2078
+    (void *)&sdata_806D09E8_data_804F2078
 };
 /* decl: char */
-void *lbl_806D0A50[2] = {
+void *HUD_SetRacePosition_data_806D0A50[2] = {
     (void *)&lbl_803F11D8,
-    (void *)&lbl_804F2084
+    (void *)&sdata_806D09E8_data_804F2084
 };
 /* decl: char */
-void *lbl_806D0A58[2] = {
+void *HudManagerDisp_data_806D0A58[2] = {
     (void *)&lbl_803F11E4,
-    (void *)&lbl_804F2090
+    (void *)&sdata_806D09E8_data_804F2090
 };
 /* decl: unsigned int */
-void *lbl_806D0A60[2] = {
+void *HUD_RegisterOverlay_data_806D0A60[2] = {
     (void *)&lbl_803F11F0,
-    (void *)&lbl_804F209C
+    (void *)&sdata_806D09E8_data_804F209C
 };
 /* decl: unsigned int */
-void *lbl_806D0A68[2] = {
+void *HUD_RegisterOverlay_data_806D0A68[2] = {
     (void *)&lbl_803F11FC,
-    (void *)&lbl_804F20A8
+    (void *)&sdata_806D09E8_data_804F20A8
 };
-float lbl_806D0A70 = 0.0f;
-float lbl_806D0A74 = 0.0f;
-float lbl_806D0A78 = 0.0f;
-void *lbl_806D0A7C[2] = {
-    (void *)&lbl_803F1284,
+float ItemViewer_data_806D0A70 = 0.0f;
+float ItemViewer_data_806D0A74 = 0.0f;
+float ItemViewer_data_806D0A78 = 0.0f;
+void *data_804F2110_data_806D0A7C[2] = {
+    (void *)&sdata_806D09E8_rodata_803F1284,
     0
 };
-void *lbl_806D0A84[3] = {
+void *data_804F2110_data_806D0A84[3] = {
     (void *)&lbl_803F1274,
-    (void *)&lbl_804F2110,
+    (void *)&sdata_806D09E8_data_804F2110,
     0
 };
-void *lbl_806D0A90[2] = {
+void *acLib_tail_data_806D0A90[2] = {
     (void *)&lbl_803F13B8,
     0
 };

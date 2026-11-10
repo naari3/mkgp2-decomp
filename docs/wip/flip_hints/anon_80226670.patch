@@ -19,7 +19,7 @@ index b0a9276..f1c621c 100644
      int state;
      float time;
      FlowPanel *panel;
-+    virtual void _key(); /* undefined key stub: vtable lbl_804EDF64 is not owned */
++    virtual void _key(); /* undefined key stub: vtable clCSSceneNextRaceGP_vtable_804EDF64 is not owned */
      clCSSceneJoinMsg();
      ~clCSSceneJoinMsg();
      void Destroy();
@@ -29,7 +29,7 @@ index 1bcf5b9..cde4e0b 100644
 +++ b/tools/extab_user_renames.json
 @@ -4932,7 +4932,8 @@
      "Destroy__16clCSSceneJoinMsgFv": "fn_80226828",
-     "__vt__16clCSSceneJoinMsg": "lbl_804EDF64",
+     "__vt__16clCSSceneJoinMsg": "clCSSceneNextRaceGP_vtable_804EDF64",
      "__vt__9SceneBase": "lbl_803FE0C8",
 -    "__ct__9FlowPanelFv": "fn_801DA06C"
 +    "__ct__9FlowPanelFv": "fn_801DA06C",

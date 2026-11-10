@@ -10,10 +10,10 @@ extern void fn_801F2560();
 extern void fn_801F25BC();
 extern void fn_801F2690();
 extern void fn_801F26C8();
-extern char lbl_806CFFF0[];
-extern char lbl_806CFFF8[];
-extern char lbl_806D0000[];
-extern char lbl_806D0008[];
+extern char data_804E5248_data_806CFFF0[];
+extern char data_804E5248_data_806CFFF8[];
+extern char data_804E5248_data_806D0000[];
+extern char data_804E5248_data_806D0008[];
 extern char lbl_806D0018[];
 extern char lbl_806D0020[];
 extern char lbl_806D0030[];
@@ -21,13 +21,13 @@ extern char lbl_806D0030[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804E5248[3] = {
-    (void *)&lbl_806CFFF0,
+void *data_804E5248_data_804E5248[3] = {
+    (void *)&data_804E5248_data_806CFFF0,
     0,
     0
 };
-void *lbl_804E5254[9] = {
-    (void *)&lbl_806CFFF8,
+void *Menu801F_vtable_804E5254[9] = {
+    (void *)&data_804E5248_data_806CFFF8,
     0,
     (void *)fn_801F25BC,
     (void *)fn_801F2690,
@@ -37,13 +37,13 @@ void *lbl_804E5254[9] = {
     0,
     0
 };
-void *lbl_804E5278[3] = {
-    (void *)&lbl_806D0000,
+void *data_804E5248_data_804E5278[3] = {
+    (void *)&data_804E5248_data_806D0000,
     0,
     0
 };
-void *lbl_804E5284[15] = {
-    (void *)&lbl_806D0008,
+void *FlowFaderI_vtable_804E5284[15] = {
+    (void *)&data_804E5248_data_806D0008,
     0,
     (void *)fn_801F26C8,
     0,
@@ -59,11 +59,11 @@ void *lbl_804E5284[15] = {
     0,
     0
 };
-short lbl_804E52C0[16] = {
+short NamCamFlow_data_804E52C0[16] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0
 };
-short lbl_804E52E0[8] = {
+short NamCamFlow_data_804E52E0[8] = {
     0, 0, 0, 0, 0, 0, 0, 0
 };
 void *lbl_804E52F0[3] = {

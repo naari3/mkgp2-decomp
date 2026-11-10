@@ -28,7 +28,7 @@ struct RankingOwner {
     void *lobjList;
 };
 extern "C" {
-extern char lbl_8049B51C[];
+extern char RankingFlow_vtable_8049B51C[];
 void LObjList_Destroy(void *, int);
 void dtor_801BA14C(void *, int);
 void MemoryManager_TimedFree(void *);
@@ -38,7 +38,7 @@ extern "C" RankingOwner *fn_801D1D9C(RankingOwner *self, short flags) {
     RankingNode *node;
     RankingNode *end;
     if (self) {
-        self->vtable = lbl_8049B51C;
+        self->vtable = RankingFlow_vtable_8049B51C;
         end = (RankingNode *)&self->entries.last;
         for (node = self->entries.first; node != end; node = node->next) {
             delete node->entry;

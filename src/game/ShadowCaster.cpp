@@ -108,8 +108,8 @@ struct Caster {
 };
 
 extern "C" {
-extern const Vec3f lbl_80370858;
-extern const Vec3f lbl_80370864;
+extern const Vec3f ShadowCaster_rodata_80370858;
+extern const Vec3f ShadowCaster_rodata_80370864;
 void fn_80189C10(ShadowSet *);
 unsigned char fn_801847DC(JObj *, Vec3f *, Vec3f *);
 void fn_80189FD8(ShadowSet *, Vec3f *, Vec3f *);
@@ -249,8 +249,8 @@ int fn_80174B54(Caster *self, JObj *root, unsigned char proxy) {
         fn_801748DC(self);
     }
     {
-        Vec3f min = lbl_80370858;
-        Vec3f max = lbl_80370864;
+        Vec3f min = ShadowCaster_rodata_80370858;
+        Vec3f max = ShadowCaster_rodata_80370864;
 
         if (fn_801847DC(self->root, &min, &max)) {
             fn_80189FD8(&self->sub, &min, &max);

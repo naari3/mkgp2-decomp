@@ -18,7 +18,7 @@ struct RefillLayout {
     int resources[3];
 };
 extern "C" {
-extern const RefillLayout lbl_803DC0C0;
+extern const RefillLayout ItemSelectState_rodata_803DC0C0;
 extern unsigned char g_playerData[];
 extern int g_characterId;
 void fn_8023AA0C(RefillChoice *, int);

@@ -63,7 +63,7 @@ extern TweenInterp *lbl_806D148C;
 extern TweenInterp *lbl_806D1490;
 extern int lbl_806D1494;
 extern int lbl_806D1498;
-extern const float lbl_80328BC4[];
+extern const float HitMessageOverlay_FrameUpdate_rodata_80328BC4[];
 
 extern const float lbl_806D4E90; /* 0.0 */
 extern const float lbl_806D4E94; /* 1.0 */
@@ -183,7 +183,7 @@ extern "C" int HitMessageOverlay_FrameUpdate(void)
             off = lbl_806D4ECC;
         }
         c.Show(lbl_806D4EB0, off + (lbl_806D4EA8 + (lbl_806D4EAC - fn_8020A6CC(lbl_806D148C))), lbl_806D4E94);
-        c.SetScale(lbl_80328BC4[lbl_806D1498]);
+        c.SetScale(HitMessageOverlay_FrameUpdate_rodata_80328BC4[lbl_806D1498]);
         c.rot = lbl_806D4EBC * lbl_806D1484;
         fn_8011FAFC(&c, 4);
     }

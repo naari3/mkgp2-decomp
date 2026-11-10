@@ -49,7 +49,7 @@ extern const float lbl_80495A94[];
 }
 
 #ifdef MAPEFFECT_DEFINE_DATA
-extern const unsigned int lbl_80370870[0x102] = {
+extern const unsigned int mapeffect_rodata_80370870[0x102] = {
     0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000,
     0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
     0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
@@ -120,23 +120,23 @@ extern const char lbl_80370D78[0x1C] = "WC_dcity_wc_neon_nb_joint";
 extern const char lbl_80370D94[0x1C] = "WC_dcity_wc_neon_nc_joint";
 extern const char lbl_80370DB0[0x1C] = "WC_dcity_wc_neon_ra_joint";
 extern const char lbl_80370DCC[0x1C] = "WC_dcity_wc_neon_rb_joint";
-extern const char lbl_80370DE8[0x1C] = "WC_dcity_wc_neon_rc_joint";
+extern const char mapeffect_rodata_80370DE8[0x1C] = "WC_dcity_wc_neon_rc_joint";
 extern const MoveTexDesc lbl_80370E04[7] = {
     {lbl_80370D5C, 0.0f, 0.014999999664723873f},
     {lbl_80370D78, 0.0f, 0.014999999664723873f},
     {lbl_80370D94, 0.0f, 0.014999999664723873f},
     {lbl_80370DB0, 0.0f, 0.014999999664723873f},
     {lbl_80370DCC, 0.0f, 0.014999999664723873f},
-    {lbl_80370DE8, 0.0f, 0.014999999664723873f},
+    {mapeffect_rodata_80370DE8, 0.0f, 0.014999999664723873f},
     {0, 0.0f, 0.0f},
 };
-extern const MoveTexDesc lbl_80370E58[7] = {
+extern const MoveTexDesc mapeffect_rodata_80370E58[7] = {
     {lbl_80370D5C, 0.0f, 0.014999999664723873f},
     {lbl_80370D78, 0.0f, 0.014999999664723873f},
     {lbl_80370D94, 0.0f, 0.014999999664723873f},
     {lbl_80370DB0, 0.0f, 0.014999999664723873f},
     {lbl_80370DCC, 0.0f, 0.014999999664723873f},
-    {lbl_80370DE8, 0.0f, 0.014999999664723873f},
+    {mapeffect_rodata_80370DE8, 0.0f, 0.014999999664723873f},
     {0, 0.0f, 0.0f},
 };
 extern const char lbl_80370EAC[0x20] = "KP_castle_KP_yougan_taki_joint";
@@ -220,14 +220,14 @@ extern const unsigned int lbl_8037132C[0x3C] = {
     0x454090F1, 0x00000000, 0xC50A9FD9, 0x452B0427, 0x00000000, 0xC4EDDD98,
     0x450A086C, 0x00000000, 0xC50D7978, 0x00000004, 0x00000000, 0x00000000,
 };
-extern const unsigned int lbl_8037141C[0x1E] = {
+extern const unsigned int mapeffect_rodata_8037141C[0x1E] = {
     0xC517E5E2, 0x42ADF3A0, 0x43691D98, 0xC517D3FA, 0x42ABE153, 0xC3191FD9,
     0xC44F2268, 0x4293FE2F, 0xC3191F2B, 0xC44F225E, 0x429401CF, 0x43691E49,
     0x00000004, 0x00000000, 0x00000000, 0xC5491A14, 0x43960065, 0xC5D32564,
     0xC52A9A24, 0x43960016, 0xC5BAB927, 0xC550297A, 0x4395FA95, 0xC59F2FC7,
     0xC58C8FAD, 0x439605D0, 0xC5A40718, 0x00000004, 0x00000000, 0x00000000,
 };
-extern const unsigned int lbl_80371494[0x1E] = {
+extern const unsigned int mapeffect_rodata_80371494[0x1E] = {
     0xC517D3FA, 0x00000000, 0xC3191FD9, 0xC4272268, 0x00000000, 0xC3191F2B,
     0xC427225E, 0x00000000, 0x43691E49, 0xC517E5E2, 0x00000000, 0x43691D98,
     0x00000004, 0x00000000, 0x00000000, 0xC56EF3C3, 0x00000000, 0xC5D8B861,
@@ -309,7 +309,7 @@ extern const unsigned int lbl_803719F8[0xF] = {
 };
 
 #else
-extern const unsigned int lbl_80370870[0x102];
+extern const unsigned int mapeffect_rodata_80370870[0x102];
 extern const unsigned int lbl_80370C78[0x8];
 extern const unsigned int lbl_80370C98[0x8];
 extern const unsigned int lbl_80370CB8[0x8];
@@ -322,9 +322,9 @@ extern const char lbl_80370D78[0x1C];
 extern const char lbl_80370D94[0x1C];
 extern const char lbl_80370DB0[0x1C];
 extern const char lbl_80370DCC[0x1C];
-extern const char lbl_80370DE8[0x1C];
+extern const char mapeffect_rodata_80370DE8[0x1C];
 extern const MoveTexDesc lbl_80370E04[7];
-extern const MoveTexDesc lbl_80370E58[7];
+extern const MoveTexDesc mapeffect_rodata_80370E58[7];
 extern const char lbl_80370EAC[0x20];
 extern const char lbl_80370ECC[0x20];
 extern const MoveTexDesc lbl_80370EEC[3];
@@ -346,8 +346,8 @@ extern const unsigned int lbl_803710D4[0x1E];
 extern const unsigned int lbl_8037114C[0x3C];
 extern const unsigned int lbl_8037123C[0x3C];
 extern const unsigned int lbl_8037132C[0x3C];
-extern const unsigned int lbl_8037141C[0x1E];
-extern const unsigned int lbl_80371494[0x1E];
+extern const unsigned int mapeffect_rodata_8037141C[0x1E];
+extern const unsigned int mapeffect_rodata_80371494[0x1E];
 extern const unsigned int lbl_8037150C[0x5A];
 extern const unsigned int lbl_80371674[0x3C];
 extern const unsigned int lbl_80371764[0x1E];
@@ -573,7 +573,7 @@ struct P_fn_8016D2D0 : clMapEffectParts {
 #include "game/types/clMapEffectDKC.h"
 
 inline ZoneVolume *NewKPZone() {
-    static const unsigned int lbl_80371A34[0x2D] = {
+    static const unsigned int mapeffect_rodata_80371A34[0x2D] = {
         0xC4B18000, 0x00000000, 0xC52F0000, 0xC4B18000, 0x00000000, 0xC4918000,
         0xC31D0000, 0x00000000, 0xC4918000, 0xC31D0000, 0x00000000, 0xC52F0000,
         0x00000000, 0x00000000, 0x00000000, 0x4417C000, 0x00000000, 0xC544E000,
@@ -583,7 +583,7 @@ inline ZoneVolume *NewKPZone() {
         0x449A6000, 0x00000000, 0x440AC000, 0x449A6000, 0x00000000, 0x43910000,
         0x00000000, 0x00000000, 0x00000000,
     };
-    return new ZoneVolume((const ZoneDesc *)lbl_80371A34, 3);
+    return new ZoneVolume((const ZoneDesc *)mapeffect_rodata_80371A34, 3);
 }
 
 

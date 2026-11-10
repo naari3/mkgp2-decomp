@@ -70,7 +70,7 @@ extern const float lbl_806D62A8;
 extern unsigned int fn_800D748C[];
 extern unsigned int jumptable_804217F8[];
 extern unsigned int lbl_8032FE74[];
-extern unsigned int lbl_8032FE8C[];
+extern unsigned int Tornado_FlightTick_rodata_8032FE8C[];
 
 /* --- function index (1 fns, .text 0x800F9618..0x800F9FD4) ---
  * [  0] 0x800F9618 size:0x9BC   global Tornado_FlightTick
@@ -167,10 +167,10 @@ void Tornado_FlightTick(char *self)
                 }
                 if (i == 0) {
                     SpriteSlot_SetJointVisibilityByName(*slot + 0x14, lbl_8032FE74, 0x10, 0);
-                    SpriteSlot_SetJointVisibilityByName(*slot + 0x14, lbl_8032FE8C, 0x10, 1);
+                    SpriteSlot_SetJointVisibilityByName(*slot + 0x14, Tornado_FlightTick_rodata_8032FE8C, 0x10, 1);
                 } else {
                     SpriteSlot_SetJointVisibilityByName(*slot + 0x14, lbl_8032FE74, 0x10, 1);
-                    SpriteSlot_SetJointVisibilityByName(*slot + 0x14, lbl_8032FE8C, 0x10, 0);
+                    SpriteSlot_SetJointVisibilityByName(*slot + 0x14, Tornado_FlightTick_rodata_8032FE8C, 0x10, 0);
                 }
             }
         }
@@ -379,8 +379,8 @@ asm void Tornado_FlightTick(void) { /* 0x800F9618 size:0x9BC */
     li r6, 0x0
     bl SpriteSlot_SetJointVisibilityByName
     lwz r6, 0x5c(r30)
-    lis r3, lbl_8032FE8C@ha
-    addi r4, r3, lbl_8032FE8C@l
+    lis r3, Tornado_FlightTick_rodata_8032FE8C@ha
+    addi r4, r3, Tornado_FlightTick_rodata_8032FE8C@l
     li r5, 0x10
     addi r3, r6, 0x14
     li r6, 0x1
@@ -395,8 +395,8 @@ asm void Tornado_FlightTick(void) { /* 0x800F9618 size:0x9BC */
     li r6, 0x1
     bl SpriteSlot_SetJointVisibilityByName
     lwz r6, 0x5c(r30)
-    lis r3, lbl_8032FE8C@ha
-    addi r4, r3, lbl_8032FE8C@l
+    lis r3, Tornado_FlightTick_rodata_8032FE8C@ha
+    addi r4, r3, Tornado_FlightTick_rodata_8032FE8C@l
     li r5, 0x10
     addi r3, r6, 0x14
     li r6, 0x0

@@ -16,24 +16,24 @@ extern void fn_80197C84();
 extern void fn_80197F24();
 extern void fn_801980C8();
 extern void fn_801986D8();
-extern char lbl_806CFCC0[];
-extern char lbl_806CFCC8[];
-extern char lbl_806CFCD8[];
-extern char lbl_806CFCE0[];
-extern char lbl_806CFCE8[];
-extern char lbl_806CFCF0[];
+extern char data_80495F98_data_806CFCC0[];
+extern char data_80495F98_data_806CFCC8[];
+extern char data_80495F98_data_806CFCD8[];
+extern char data_80495F98_data_806CFCE0[];
+extern char data_80495F98_data_806CFCE8[];
+extern char data_80495F98_data_806CFCF0[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_80495F98[3] = {
-    (void *)&lbl_806CFCC0,
+void *data_80495F98_data_80495F98[3] = {
+    (void *)&data_80495F98_data_806CFCC0,
     0,
     0
 };
 /* decl: char */
-void *lbl_80495FA4[7] = {
-    (void *)&lbl_806CFCC8,
+void *ParticleView_vtable_80495FA4[7] = {
+    (void *)&data_80495F98_data_806CFCC8,
     0,
     (void *)fn_80196758,
     (void *)fn_8019618C,
@@ -41,7 +41,7 @@ void *lbl_80495FA4[7] = {
     (void *)fn_8016A26C,
     0
 };
-unk32 lbl_80495FC0[80] = {
+unk32 BananaPositionData_Init_data_80495FC0[80] = {
     0xC23A7BF7, 0x00000000, 0xC51762B8, 0x00000001, 0x421C45E9, 0x00000000, 0xC514E642, 0x00000001,
     0xC08754B0, 0x00000000, 0xC51E765A, 0x00000001, 0x41E4CA97, 0x00000000, 0xC5260E19, 0x00000001,
     0xC2874112, 0x00000000, 0xC50EAE93, 0x00000001, 0xC29D4D99, 0x00000000, 0xC50D7B81, 0x00000001,
@@ -53,7 +53,7 @@ unk32 lbl_80495FC0[80] = {
     0xC21A2903, 0x00000000, 0xC525C0E1, 0x00000001, 0xC36A1CCD, 0x00000000, 0xC4DF6D60, 0x00000001,
     0xC317C42C, 0x00000000, 0xC50483C3, 0x00000001, 0x00000000, 0x00000000, 0x00000000, 0x00000002
 };
-unk32 lbl_80496100[156] = {
+unk32 BananaPositionData_Init_data_80496100[156] = {
     0xC001137B, 0x00000000, 0xC50E6102, 0x00000001, 0x4229FF5B, 0x00000000, 0xC50C5256, 0x00000001,
     0xC21A2903, 0x00000000, 0xC50FE154, 0x00000001, 0xC28DCE46, 0x00000000, 0xC5229FC3, 0x00000001,
     0xC30BAE1B, 0x00000000, 0xC506F63D, 0x00000001, 0xC2A42A52, 0x00000000, 0xC5070C93, 0x00000001,
@@ -75,14 +75,14 @@ unk32 lbl_80496100[156] = {
     0xC197FD08, 0x00000000, 0xC513D3C7, 0x00000001, 0x40A36DAF, 0x00000000, 0xC5209B54, 0x00000001,
     0x00000000, 0x00000000, 0x00000000, 0x00000002
 };
-void *lbl_80496370[3] = {
-    (void *)&lbl_806CFCD8,
+void *data_80495F98_data_80496370[3] = {
+    (void *)&data_80495F98_data_806CFCD8,
     0,
     0
 };
 /* decl: char */
-void *lbl_8049637C[7] = {
-    (void *)&lbl_806CFCE0,
+void *P_fn_80197D20_vtable_8049637C[7] = {
+    (void *)&data_80495F98_data_806CFCE0,
     0,
     (void *)fn_80197C84,
     (void *)fn_801972E0,
@@ -90,14 +90,14 @@ void *lbl_8049637C[7] = {
     (void *)fn_8016A26C,
     0
 };
-void *lbl_80496398[3] = {
-    (void *)&lbl_806CFCE8,
+void *data_80495F98_data_80496398[3] = {
+    (void *)&data_80495F98_data_806CFCE8,
     0,
     0
 };
 /* decl: char */
-void *lbl_804963A4[7] = {
-    (void *)&lbl_806CFCF0,
+void *Obj987_vtable_804963A4[7] = {
+    (void *)&data_80495F98_data_806CFCF0,
     0,
     (void *)fn_801986D8,
     (void *)fn_801980C8,

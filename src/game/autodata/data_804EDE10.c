@@ -13,21 +13,21 @@ extern void fn_80221104();
 extern void fn_8022134C();
 extern void fn_802234C8();
 extern void fn_8022353C();
-extern char lbl_806D04C0[];
-extern char lbl_806D04C8[];
-extern char lbl_806D04D0[];
-extern char lbl_806D04D8[];
+extern char data_804EDE10_data_806D04C0[];
+extern char data_804EDE10_data_806D04C8[];
+extern char data_804EDE10_data_806D04D0[];
+extern char data_804EDE10_data_806D04D8[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804EDE10[3] = {
-    (void *)&lbl_806D04C0,
+void *sdata_806D0498_data_804EDE10[3] = {
+    (void *)&data_804EDE10_data_806D04C0,
     0,
     0
 };
-void *lbl_804EDE1C[7] = {
-    (void *)&lbl_806D04C8,
+void *clCSSceneChangeSingle_vtable_804EDE1C[7] = {
+    (void *)&data_804EDE10_data_806D04C8,
     0,
     (void *)fn_8021EEB8,
     (void *)fn_8021EF7C,
@@ -35,13 +35,13 @@ void *lbl_804EDE1C[7] = {
     (void *)fn_8021ED88,
     0
 };
-void *lbl_804EDE38[3] = {
-    (void *)&lbl_806D04D0,
+void *sdata_806D0498_data_804EDE38[3] = {
+    (void *)&data_804EDE10_data_806D04D0,
     0,
     0
 };
-void *lbl_804EDE44[6] = {
-    (void *)&lbl_806D04D8,
+void *clCSSceneCoinMilage_vtable_804EDE44[6] = {
+    (void *)&data_804EDE10_data_806D04D8,
     0,
     (void *)fn_8022353C,
     (void *)fn_802234C8,

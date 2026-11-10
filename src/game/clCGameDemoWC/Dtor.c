@@ -17,7 +17,7 @@ extern void clRom_PurgeAll(void);
 extern void dtor_8002CDF4(void *, int);
 extern void MemoryManager_TimedFree(void *);
 extern DemoWCVirtual *lbl_806D10AC;
-extern unsigned int lbl_80419ED8[], lbl_80419F0C[];
+extern unsigned int DemoWCOwner_vtable_80419ED8[], lbl_80419F0C[];
 }
 /* Base teardown also accepts a null object when called independently. */
 static inline void DemoWCBaseDestroy(DemoWCDtorView *self)
@@ -31,7 +31,7 @@ static inline void DemoWCBaseDestroy(DemoWCDtorView *self)
 extern "C" DemoWCDtorView *clCGameDemoWC_Dtor(DemoWCDtorView *self, short destroy)
 {
     if (self) {
-        self->vptr = lbl_80419ED8;
+        self->vptr = DemoWCOwner_vtable_80419ED8;
         SetActiveCamera(0, 0);
         if (self->owner >= 0) TransparentDraw_RemoveByOwner(self->owner);
         SetPlayerCarObject(0);

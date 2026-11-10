@@ -15,9 +15,9 @@ struct FKTex;
 struct FKVec { float x, y, z; };
 /* .rodata 0x8039E508..0x8039E9F8 */
 extern "C" {
-extern const unsigned int lbl_8039E508[0xFF];
+extern const unsigned int clFlowKart_Init_rodata_8039E508[0xFF];
 /* tables used by other clFlowKart functions */
-const unsigned int lbl_8039E508[0xFF] = {
+const unsigned int clFlowKart_Init_rodata_8039E508[0xFF] = {
     0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000,
     0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
     0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
@@ -270,7 +270,7 @@ extern const float lbl_806DA120;
 extern const float lbl_806DA124;
 extern const float lbl_806DA128;
 extern const float lbl_806DA12C;
-extern signed char lbl_8049BB30[][13][3];
+extern signed char clFlowKart_UpdateDisplay_data_8049BB30[][13][3];
 }
 typedef struct FKParams { int v[5]; } FKParams;
 
@@ -297,7 +297,7 @@ extern "C" void clFlowKart_UpdateDisplay(FKDisplay *self, int kart)
     self->rank[1] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA128, 1);
     self->rank[2] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA12C, 1);
     params = *(const FKParams *)lbl_8039E9B8;
-    for (int a = 0; a < 5 - lbl_8049BB30[level][kart][0]; a++) Sprite_SetAnimParam(self->rank[0], params.v[a], -1);
-    for (int b = 0; b < 5 - lbl_8049BB30[level][kart][1]; b++) Sprite_SetAnimParam(self->rank[1], params.v[b], -1);
-    for (int d = 0; d < 5 - lbl_8049BB30[level][kart][2]; d++) Sprite_SetAnimParam(self->rank[2], params.v[d], -1);
+    for (int a = 0; a < 5 - clFlowKart_UpdateDisplay_data_8049BB30[level][kart][0]; a++) Sprite_SetAnimParam(self->rank[0], params.v[a], -1);
+    for (int b = 0; b < 5 - clFlowKart_UpdateDisplay_data_8049BB30[level][kart][1]; b++) Sprite_SetAnimParam(self->rank[1], params.v[b], -1);
+    for (int d = 0; d < 5 - clFlowKart_UpdateDisplay_data_8049BB30[level][kart][2]; d++) Sprite_SetAnimParam(self->rank[2], params.v[d], -1);
 }

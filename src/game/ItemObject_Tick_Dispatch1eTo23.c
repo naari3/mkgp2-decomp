@@ -6,7 +6,7 @@
 
 #include "game/types/HandheldPose.h"
 
-extern HandheldPose lbl_80420D58[];
+extern HandheldPose ItemObject_Tick_Dispatch1eTo23_data_80420D58[];
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);
 extern void SpriteSlot_InitLoop(void *slot, int id);
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int en);
@@ -116,14 +116,14 @@ void ItemObject_Tick_Dispatch1eTo23(unsigned char *self)
     if (1.0f < F(0x2C)) {
         F(0x2C) = 1.0f;
     }
-    rot.x = 0.017453289f * lbl_80420D58[I(0x10)].rot.x;
-    rot.y = 0.017453289f * lbl_80420D58[I(0x10)].rot.y;
-    rot.z = 0.017453289f * lbl_80420D58[I(0x10)].rot.z;
+    rot.x = 0.017453289f * ItemObject_Tick_Dispatch1eTo23_data_80420D58[I(0x10)].rot.x;
+    rot.y = 0.017453289f * ItemObject_Tick_Dispatch1eTo23_data_80420D58[I(0x10)].rot.y;
+    rot.z = 0.017453289f * ItemObject_Tick_Dispatch1eTo23_data_80420D58[I(0x10)].rot.z;
     if (I(0x8) == 0x21) {
         F(0x100) = BuildOrientationFromYaw(0.08726645f + F(0x100));
         rot.y = BuildOrientationFromYaw(rot.y + F(0x100));
     }
-    Item_RenderHandheldByCharacter(self, lbl_80420D58[I(0x10)].ofs, rot, 0, lbl_80420D58[I(0x10)].scale);
+    Item_RenderHandheldByCharacter(self, ItemObject_Tick_Dispatch1eTo23_data_80420D58[I(0x10)].ofs, rot, 0, ItemObject_Tick_Dispatch1eTo23_data_80420D58[I(0x10)].scale);
     if (FinalLapCoinJump_CheckActiveForObject(P(0x184))) {
         self[0x28] = 0;
     } else {

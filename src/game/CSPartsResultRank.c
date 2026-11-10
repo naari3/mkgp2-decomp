@@ -17,7 +17,7 @@ extern void fn_8013AE20(clCSModel *m, float x, float y, float a);
 extern void fn_8013AB74(clCSModel *m, int obj, int n);
 }
 
-static const unsigned int lbl_80360C70[66] = {
+static const unsigned int CSPartsResultRank_rodata_80360C70[66] = {
     0x00000001, 0x0000003C, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x3FC90FDB, 0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x00000002,
     0x0000000F, 0x43A00000, 0xC2DE0000, 0x3F800000, 0x3F800000, 0x00000000,
@@ -190,7 +190,7 @@ static const unsigned int lbl_80361744[121] = {
     0x00000000,
 };
 
-static const int lbl_80361928[5] = {0x1E94, 0x1E96, 0x1E98, 0x1E9A, 0x1E9C};
+static const int CSPartsResultRank_rodata_80361928[5] = {0x1E94, 0x1E96, 0x1E98, 0x1E9A, 0x1E9C};
 
 struct clCSPartsResultRank : clCSParts {
     int slot;
@@ -236,7 +236,7 @@ extern "C" void fn_80143DB0(void) {
     PreloadResource(0x1E90);
     n = (g_gameMode == 2) ? 3 : 5;
     for (i = 0; i < n; i++) {
-        PreloadResource(lbl_80361928[i]);
+        PreloadResource(CSPartsResultRank_rodata_80361928[i]);
     }
     if (g_gameMode != 2) {
         PreloadResource(0x96A);
@@ -280,8 +280,8 @@ clCSPartsResultRank::clCSPartsResultRank() {
             Add(new clCSModel(0x96A, 0, 1, lbl_80361744, 0));
         }
     } else {
-        PreloadResource(lbl_80361928[slot - 1]);
-        Add(new clCSModel(lbl_80361928[slot - 1], 0, 0, lbl_80360C70, 0));
+        PreloadResource(CSPartsResultRank_rodata_80361928[slot - 1]);
+        Add(new clCSModel(CSPartsResultRank_rodata_80361928[slot - 1], 0, 0, CSPartsResultRank_rodata_80360C70, 0));
     }
 }
 

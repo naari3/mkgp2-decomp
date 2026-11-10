@@ -1,7 +1,7 @@
 /* Ranking panel constructor and its exception-safe owned members. */
 #include "game/RankingSpriteOwner_private.h"
 extern "C" {
-extern void *lbl_8048EF34[], *lbl_8049B53C[];
+extern void *lbl_8048EF34[], *RankingSpriteOwnerCtor_vtable_8049B53C[];
 extern const char lbl_806D9FF8[4];
 extern const float lbl_806D9FA8, lbl_806D9FAC, lbl_806D9FF0, lbl_806D9FF4;
 extern const float lbl_806DA000, lbl_806DA004, lbl_806DA008;

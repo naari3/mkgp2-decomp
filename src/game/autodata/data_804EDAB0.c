@@ -14,41 +14,41 @@ extern void fn_80215A00();
 extern void fn_80215A04();
 extern void fn_80215E30();
 extern char lbl_806D0410[];
-extern char lbl_806D0418[];
-extern char lbl_806D0420[];
+extern char data_804EDAB0_data_806D0418[];
+extern char data_804EDAB0_data_806D0420[];
 extern char lbl_806D0428[];
-extern char lbl_806D0430[];
+extern char data_804EDAB0_data_806D0430[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804EDAB0[3] = {
+void *sdata_806D0410_data_804EDAB0[3] = {
     (void *)&lbl_806D0410,
     0,
     0
 };
-void *lbl_804EDABC[5] = {
+void *sdata_806D0410_data_804EDABC[5] = {
     (void *)&lbl_806D0410,
     0,
-    (void *)&lbl_806D0418,
+    (void *)&data_804EDAB0_data_806D0418,
     0,
     0
 };
-void *lbl_804EDAD0[6] = {
-    (void *)&lbl_806D0420,
+void *ScorePopup_vtable_804EDAD0[6] = {
+    (void *)&data_804EDAB0_data_806D0420,
     0,
     (void *)fn_802158E8,
     (void *)fn_8021574C,
     (void *)fn_8021550C,
     (void *)fn_80215508
 };
-void *lbl_804EDAE8[3] = {
+void *sdata_806D0410_data_804EDAE8[3] = {
     (void *)&lbl_806D0428,
     0,
     0
 };
-void *lbl_804EDAF4[6] = {
-    (void *)&lbl_806D0430,
+void *CountdownHud_vtable_804EDAF4[6] = {
+    (void *)&data_804EDAB0_data_806D0430,
     0,
     (void *)fn_80215E30,
     (void *)fn_80215A04,

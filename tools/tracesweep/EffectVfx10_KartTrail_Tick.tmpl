@@ -28,12 +28,12 @@ void EffectVfx10_KartTrail_Tick(unsigned char *self)
         F(0x150) = 0.0f;
         F(0x154) = 0.0f;
         if (KartTrail_GetCharacter(P(0x11C)) >= 0) {
-            {{col: const Vec *color = &lbl_8032A348;
+            {{col: const Vec *color = &EffectVfx9_DriftSpark_Tick_rodata_8032A348;
             F(0x30) = color->x;
             F(0x34) = color->y;
-            F(0x38) = color->z; | F(0x30) = lbl_8032A348.x;
-            F(0x34) = lbl_8032A348.y;
-            F(0x38) = lbl_8032A348.z; | *(Vec *)(self + 0x30) = lbl_8032A348; }}
+            F(0x38) = color->z; | F(0x30) = EffectVfx9_DriftSpark_Tick_rodata_8032A348.x;
+            F(0x34) = EffectVfx9_DriftSpark_Tick_rodata_8032A348.y;
+            F(0x38) = EffectVfx9_DriftSpark_Tick_rodata_8032A348.z; | *(Vec *)(self + 0x30) = EffectVfx9_DriftSpark_Tick_rodata_8032A348; }}
         }
         STATE++;
         S8(0x190) = 0;
@@ -94,7 +94,7 @@ void EffectVfx10_KartTrail_Tick(unsigned char *self)
         Mtx44_Translate(t, t, off);
         Matrix4_Multiply(m, t, m);
         Matrix4_Identity(t);
-        Mtx44_Scale_PerAxis(t, t, F(0xB0) * lbl_8041A274.x, F(0xB0) * lbl_8041A274.y, F(0xB0) * lbl_8041A274.z);
+        Mtx44_Scale_PerAxis(t, t, F(0xB0) * EffectVfx10_KartTrail_Tick_data_8041A274.x, F(0xB0) * EffectVfx10_KartTrail_Tick_data_8041A274.y, F(0xB0) * EffectVfx10_KartTrail_Tick_data_8041A274.z);
         Matrix4_Multiply(m, t, m);
         DbgScene_CopyMatrix3x4Transpose(self + 0x48, m);
         Mtx44_GetTranslation_RowMajor(V(0x8C), self + 0x48);

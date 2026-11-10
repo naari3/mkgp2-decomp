@@ -23,15 +23,15 @@ typedef struct RaceKartSlot {
 
 #pragma cplusplus on
 extern "C" {
-RaceKartSlot lbl_805AC600[8];
-unsigned char lbl_805AC6C0[0xC];     /* global-object registration node */
-unsigned char lbl_805AC6CC[0x5E00];  /* driver array */
-unsigned char lbl_805B24CC[0xA0];    /* rank rows [2][5], 0x10 each */
-unsigned char lbl_805B256C[0x14];    /* latest result */
-unsigned char lbl_805B2580[0x20000]; /* four 0x8000 banks */
+RaceKartSlot SetCourseParams_bss_805AC600[8];
+unsigned char KartDriverArray_StaticCtor_bss_805AC6C0[0xC];     /* global-object registration node */
+unsigned char SetCourseParams_bss_805AC6CC[0x5E00];  /* driver array */
+unsigned char SetCourseParams_bss_805B24CC[0xA0];    /* rank rows [2][5], 0x10 each */
+unsigned char RaceResult_StoreLatest_bss_805B256C[0x14];    /* latest result */
+unsigned char SetCourseParams_bss_805B2580[0x20000]; /* four 0x8000 banks */
 unsigned char g_playerData[0x1DC];
 unsigned char lbl_805D275C[0x1DC];
-unsigned char lbl_805D2938[0x10];    /* per-slot counters (written 8 wide) */
-unsigned char lbl_805D2948[0x160];   /* 8 rank slots, 0x2C each */
+unsigned char RaceSlot_ResetAll_bss_805D2938[0x10];    /* per-slot counters (written 8 wide) */
+unsigned char SetCourseParams_bss_805D2948[0x160];   /* 8 rank slots, 0x2C each */
 }
 #pragma cplusplus off

@@ -101,14 +101,14 @@ index 5fe80fd..2d2385a 100644
 -    stwu r1, -0x30(r1)
 -    mflr r0
 -    lis r7, lbl_8048FF80@ha
--    lis r6, lbl_8048FFE8@ha
+-    lis r6, TextPanelC_vtable_8048FFE8@ha
 -    stw r0, 0x34(r1)
--    addi r0, r6, lbl_8048FFE8@l
--    lis r8, lbl_80363D30@ha
+-    addi r0, r6, TextPanelC_vtable_8048FFE8@l
+-    lis r8, Scene_8014E0C4_rodata_80363D30@ha
 -    stmw r26, 0x18(r1)
 -    mr r29, r3
 -    addi r3, r7, lbl_8048FF80@l
--    addi r31, r8, lbl_80363D30@l
+-    addi r31, r8, Scene_8014E0C4_rodata_80363D30@l
 -    mr r27, r4
 -    mr r30, r5
 -    stw r3, 0x0(r29)

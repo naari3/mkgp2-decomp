@@ -16,8 +16,8 @@ extern char lbl_803BFD3C[];
 extern char lbl_803BFD5C[];
 extern char lbl_806D0140[];
 extern char lbl_806D0148[];
-extern char lbl_806D0150[];
-extern char lbl_806D0158[];
+extern char data_804EBF58_data_806D0150[];
+extern char data_804EBF58_data_806D0158[];
 extern char lbl_806DA7E0[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
@@ -36,24 +36,24 @@ void *lbl_804EBF70[3] = {
     0,
     0
 };
-void *lbl_804EBF7C[5] = {
+void *data_804EBF58_data_804EBF7C[5] = {
     (void *)&lbl_806D0140,
     0,
     (void *)&lbl_806D0148,
     0,
     0
 };
-void *lbl_804EBF90[7] = {
+void *data_804EBF58_data_804EBF90[7] = {
     (void *)&lbl_806D0140,
     0,
     (void *)&lbl_806D0148,
     0,
-    (void *)&lbl_806D0150,
+    (void *)&data_804EBF58_data_806D0150,
     0,
     0
 };
-void *lbl_804EBFAC[6] = {
-    (void *)&lbl_806D0158,
+void *CoinFlowScene_vtable_804EBFAC[6] = {
+    (void *)&data_804EBF58_data_806D0158,
     0,
     (void *)fn_801FC22C,
     (void *)fn_801FC1A8,

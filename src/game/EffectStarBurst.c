@@ -22,7 +22,7 @@ typedef struct {
     char pad15C[0x34];
     signed char variant;
 } StarEffect;
-extern const StarJoints lbl_8032A7C0;
+extern const StarJoints Effect_StarBurst_Update_rodata_8032A7C0;
 extern const float lbl_806D54F8, lbl_806D54FC, lbl_806D54E8, lbl_806D552C;
 extern const float lbl_806D54C8, lbl_806D54CC, lbl_806D54C4, lbl_806D5530;
 extern const float lbl_806D5534, lbl_806D54B8, lbl_806D5514;
@@ -44,7 +44,7 @@ void Effect_StarBurst_Update(StarEffect* effect) {
         if (!effect->variant) VfxSlot_BindResourceEx(effect->slotHead, 0x7f, 0);
         else VfxSlot_BindResourceEx(effect->slotHead, 3, 0);
         if (effect->slotKind == 3) {
-            StarJoints joints = lbl_8032A7C0;
+            StarJoints joints = Effect_StarBurst_Update_rodata_8032A7C0;
             VfxSlot_ResolveJoint(effect->slotHead, joints.joints[Rand_RangeIntMax(15) % 3]);
         }
         effect->visible = 0;

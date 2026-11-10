@@ -57,11 +57,11 @@ extern unsigned char g_fullThrottleHoldFlag;
 extern void *g_carObjects[];
 extern void *g_itemSelects[];
 extern unsigned char g_playerData[];
-extern Vec lbl_803215D4;
-extern Vec lbl_803215E0;
+extern Vec RaceScene_FrameUpdate_rodata_803215D4;
+extern Vec RaceScene_FrameUpdate_rodata_803215E0;
 extern unsigned char g_rendererActivated;
-extern Vec lbl_805D2B10;
-extern Vec lbl_805D2B1C;
+extern Vec RaceScene_FrameUpdate_bss_805D2B10;
+extern Vec RaceScene_FrameUpdate_bss_805D2B1C;
 extern unsigned char g_rendererGateFlag;
 extern float g_raceTimeRemaining;
 extern unsigned char g_nonFirstFinishFlag;
@@ -282,10 +282,10 @@ extern "C" int RaceScene_FrameUpdate(RaceScene *self)
     if (IsRaceStarted() == 1) {
         float *cp0 = Path_LookupCheckpointOffset(g_pathManager, 0, 0);
         float *cp1 = Path_LookupCheckpointOffset(g_pathManager, 0, 1);
-        Vec a = lbl_803215D4;
+        Vec a = RaceScene_FrameUpdate_rodata_803215D4;
         a.x = cp0[1];
         a.z = cp0[3];
-        Vec b = lbl_803215E0;
+        Vec b = RaceScene_FrameUpdate_rodata_803215E0;
         b.x = cp1[1];
         b.z = cp1[3];
         if (JObj_IsForwardDotBelowThreshold(CarObject_GetRenderObj(g_carObjects[0]), &a, &b) == 1) {
@@ -320,10 +320,10 @@ extern "C" int RaceScene_FrameUpdate(RaceScene *self)
     Jyugemu_ReverseFlag_Tick(self->jyugemuReverse);
     LapBannerScene_UpdateAndDriveAnim(self->lapBanner);
     CourseEnvironment_UpdateAndCullZones_Timed(self->environment);
-    CObj_LoadProjMatrix(self->scene, &lbl_805D2B10);
-    CObj_ApplyScissor(self->scene, &lbl_805D2B1C);
+    CObj_LoadProjMatrix(self->scene, &RaceScene_FrameUpdate_bss_805D2B10);
+    CObj_ApplyScissor(self->scene, &RaceScene_FrameUpdate_bss_805D2B1C);
     ItemObjectManager_Update();
-    VfxSlotMgr_Update(lbl_805D2B10, lbl_805D2B1C);
+    VfxSlotMgr_Update(RaceScene_FrameUpdate_bss_805D2B10, RaceScene_FrameUpdate_bss_805D2B1C);
 
     if (g_currentSceneState != 0x2D && g_rendererGateFlag == 1 && IsRaceStarted() == 1 &&
         g_raceTimeRemaining > 0.0f) {

@@ -3,9 +3,9 @@
 
 extern "C" {
 MediaConfig lbl_80679E28;
-unsigned int lbl_80679E34[8];
-unsigned int lbl_80679E54[32];
-MediaRequestSlot lbl_80679ED4;
+unsigned int acLib_nm1_bss_80679E34[8];
+unsigned int acLib_nm1_bss_80679E54[32];
+MediaRequestSlot acLib_tail_bss_80679ED4;
 int lbl_806D1AD0;
 int lbl_806D1AD4;
 }
@@ -30,15 +30,15 @@ extern "C" int fn_802554DC(void) {
                     fn_80255154((unsigned char)second, 2);
                 }
             }
-            if (lbl_80679ED4.req.state == 0) {
+            if (acLib_tail_bss_80679ED4.req.state == 0) {
                 MediaRequest *req = fn_80288EAC();
                 if (req == 0) {
                     goto done;
                 }
-                CopyMediaRequest(&lbl_80679ED4.req, req);
+                CopyMediaRequest(&acLib_tail_bss_80679ED4.req, req);
             }
             {
-                MediaRequest *cur = &lbl_80679ED4.req;
+                MediaRequest *cur = &acLib_tail_bss_80679ED4.req;
                 switch ((int)cur->state) {
                 case 1: {
                     int port;
@@ -77,11 +77,11 @@ extern "C" int fn_80255640(int a, int b, int c) {
     int ret;
     lbl_806D1AD0 = 0;
     for (i = 0; i < 8; i++) {
-        lbl_80679E34[i] = 0;
-        lbl_80679E54[i] = 0;
+        acLib_nm1_bss_80679E34[i] = 0;
+        acLib_nm1_bss_80679E54[i] = 0;
     }
     lbl_806D1AD4 = 0;
-    if (lbl_806D0A90 == 0) {
+    if (acLib_tail_data_806D0A90 == 0) {
         return 1;
     }
     memset(&lbl_80679E28, 0, 0xC);

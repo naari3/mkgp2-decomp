@@ -14,7 +14,7 @@
 {"t": "2026-11-08T05:09:11.000034Z", "who": "R2", "op": "take", "id": "Q034", "note": "migrated: R2 05:07"}
 {"t": "2026-11-08T05:09:11.000035Z", "who": "migrated", "op": "done", "id": "Q035", "note": "(100% on main)"}
 {"t": "2026-11-08T05:09:11.000036Z", "who": "migrated", "op": "done", "id": "Q036", "note": "already 100% on main e33ad59"}
-{"t": "2026-11-08T05:09:11.000039Z", "who": "migrated", "op": "park", "id": "Q039", "note": "midrange 05:10: only `lwz r30,x.p` scheduled above lis/addi of lbl_803EF74C; 5 offset/pos/fader-local forms no gain"}
+{"t": "2026-11-08T05:09:11.000039Z", "who": "migrated", "op": "park", "id": "Q039", "note": "midrange 05:10: only `lwz r30,x.p` scheduled above lis/addi of HudFlow20Update_rodata_803EF74C; 5 offset/pos/fader-local forms no gain"}
 {"t": "2026-11-08T05:09:11.000040Z", "who": "migrated", "op": "park", "id": "Q040", "note": "midrange 05:20: storing x before y gets 2 lines, but y is still loaded first (lfs 0xc before 0x8); 11 CopyPosition forms + psweep k2 no gain"}
 {"t": "2026-11-08T05:09:11.000041Z", "who": "migrated", "op": "done", "id": "Q041", "note": "already 100% on main e33ad59"}
 {"t": "2026-11-08T05:09:11.000042Z", "who": "migrated", "op": "done", "id": "Q042", "note": "c43e2b7"}

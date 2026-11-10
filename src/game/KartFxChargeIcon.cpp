@@ -22,7 +22,7 @@ struct ChargeEffect {
 };
 struct ChargePlacement { ChargeVec3 offset, scale; };
 extern "C" {
-extern const ChargePlacement lbl_8032A4A8[11];
+extern const ChargePlacement KartFx_BoostChargeIconTick_rodata_8032A4A8[11];
 extern const float lbl_806D51C0, lbl_806D51C4;
 void VfxSlot_BindResourceEx(void *, int, int);
 void VfxSlot_SetMatrixSourceEnabled(void *, int);
@@ -62,8 +62,8 @@ void KartFx_BoostChargeIconTick(ChargeEffect *effect) {
         case 9: effect->identity = 9; break;
         case 10: effect->identity = 10; break;
         }
-        Vec3_Copy(&effect->offset, &lbl_8032A4A8[effect->identity].offset);
-        Vec3_Copy(&effect->size, &lbl_8032A4A8[effect->identity].scale);
+        Vec3_Copy(&effect->offset, &KartFx_BoostChargeIconTick_rodata_8032A4A8[effect->identity].offset);
+        Vec3_Copy(&effect->size, &KartFx_BoostChargeIconTick_rodata_8032A4A8[effect->identity].scale);
         ++effect->state;
         break;
     case 1: break;

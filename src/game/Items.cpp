@@ -3,9 +3,9 @@ struct Items { unsigned char pad[0xB4]; unsigned char slots[60]; unsigned char a
 struct AliasRow { int source; int ownedIndex; int result; };
 struct PlayerView { unsigned char pad[0x1B8]; signed char character; };
 extern "C" {
-extern int lbl_803159B8[60];
-extern AliasRow lbl_80315AA8[104];
-extern int *lbl_803FED28[6];
+extern int Items_rodata_803159B8[60];
+extern AliasRow Items_rodata_80315AA8[104];
+extern int *Items_data_803FED28[6];
 extern PlayerView g_playerData;
 int ItemAlias_DestToSource(int, unsigned char*);
 }
@@ -16,13 +16,13 @@ static inline int OwnedAlias(Items* self, const AliasRow* row, int item) {
 static inline int Resolve(Items* self, int slot) {
     if (slot < 0 || (unsigned int)slot >= 60) return 0;
     const AliasRow* row;
-    int item = lbl_803159B8[slot];
+    int item = Items_rodata_803159B8[slot];
     int i;
     if (item >= 0x115 && item <= 0x11A) {
         item -= 0x115;
-        item = lbl_803FED28[item][g_playerData.character];
+        item = Items_data_803FED28[item][g_playerData.character];
     }
-    row = lbl_80315AA8;
+    row = Items_rodata_80315AA8;
     for (i = 0; i < 104; ++i) {
         int alias = OwnedAlias(self, row, item);
         if (alias >= 0) { item = alias; break; }
@@ -32,14 +32,14 @@ static inline int Resolve(Items* self, int slot) {
 }
 extern "C" int Items_ResolveOwnedAlias(Items* self, int slot) {
     if (slot < 0 || (unsigned int)slot >= 60) return 0;
-    int item = lbl_803159B8[slot];
+    int item = Items_rodata_803159B8[slot];
     int i;
     if (item >= 0x115 && item <= 0x11A) {
         item -= 0x115;
-        item = lbl_803FED28[item][g_playerData.character];
+        item = Items_data_803FED28[item][g_playerData.character];
     }
     for (i = 0; i < 104; ++i) {
-        int alias = OwnedAlias(self, &lbl_80315AA8[i], item);
+        int alias = OwnedAlias(self, &Items_rodata_80315AA8[i], item);
         if (alias >= 0) { item = alias; break; }
     }
     return item;

@@ -11,7 +11,7 @@ typedef struct ItemUseProbEntry {
     float probability;
 } ItemUseProbEntry;
 
-extern int lbl_806CFF04;
+extern int AI_RollItemUseProbability_data_806CFF04;
 extern ItemUseProbEntry g_itemUseProbTable[];
 extern float PseudoRandom_Next(void);
 
@@ -34,7 +34,7 @@ static inline unsigned char KartCond_MatchesRace(KartCond c) {
 int AI_RollItemUseProbability(int kart) {
     int i;
 
-    for (i = 0; i < lbl_806CFF04; i++) {
+    for (i = 0; i < AI_RollItemUseProbability_data_806CFF04; i++) {
         if (KartCond_MatchesRace(g_itemUseProbTable[i].cond)) {
             if (g_itemUseProbTable[i].kart == -1 || kart == g_itemUseProbTable[i].kart) {
                 if (PseudoRandom_Next() <= g_itemUseProbTable[i].probability) {

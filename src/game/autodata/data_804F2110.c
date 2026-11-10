@@ -9,19 +9,19 @@ extern void fn_80254604();
 extern void fn_802549CC();
 extern void fn_80254EA4();
 extern void fn_80254F3C();
-extern char lbl_806D0A7C[];
-extern char lbl_806D0A84[];
+extern char data_804F2110_data_806D0A7C[];
+extern char data_804F2110_data_806D0A84[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804F2110[3] = {
-    (void *)&lbl_806D0A7C,
+void *sdata_806D09E8_data_804F2110[3] = {
+    (void *)&data_804F2110_data_806D0A7C,
     0,
     0
 };
-void *lbl_804F211C[6] = {
-    (void *)&lbl_806D0A84,
+void *clItemViewer_vtable_804F211C[6] = {
+    (void *)&data_804F2110_data_806D0A84,
     0,
     (void *)fn_80254EA4,
     (void *)fn_80254F3C,

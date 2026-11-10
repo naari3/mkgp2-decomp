@@ -49,14 +49,14 @@ typedef struct RCQuadPtsC {
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const int lbl_80328B98[11] = {
+const int HitMessageOverlay_Show_rodata_80328B98[11] = {
     235, 256, 277, 298, 319, 341, 362, 383,
     404, 425, 446
 };
-const float lbl_80328BC4[3] = {
+const float HitMessageOverlay_FrameUpdate_rodata_80328BC4[3] = {
     1.3f, 1.0f, 1.0f
 };
-const LineTable lbl_80328BD0[1] = {
+const LineTable HitMessageOverlay_Show_rodata_80328BD0[1] = {
     { { 11008, 11009, 11010, 11011 } }
 };
 const char lbl_80328BE0[] = "clCounterInterface";
@@ -72,7 +72,7 @@ const char lbl_80328C58[] = "miyazaki>cmain";
 const char lbl_80328C68[] = "Sprite Viewer";
 const char lbl_80328C78[] = "Flash  Viewer";
 const char lbl_80328C88[] = "Live Test";
-void * const lbl_80328C94[63] = {
+void * const main_rodata_80328C94[63] = {
     (void *)GameMode_Title_Ctor,
     (void *)&lbl_806D4EE8,
     (void *)0x10000,
@@ -143,7 +143,7 @@ const char lbl_80328DA8[] = "clStageSelect";
 const char lbl_80328DB8[] = "SeqStageSelect";
 const char lbl_80328DC8[] = "SeqTitle";
 /* 8-aligned in the original: probably the first object of a TU */
-const RCQuadPtsC lbl_80328DD8[1] __attribute__((aligned(8))) = {
+const RCQuadPtsC ReverseChallenge_rodata_80328DD8[1] __attribute__((aligned(8))) = {
     { { { 1045.0f, -340.0f }, { 913.4f, 250.0f }, { 650.0f, 330.9f }, { 650.0f, -150.0f } } }
 };
 const char lbl_80328DF8[] = "clCGameWC";

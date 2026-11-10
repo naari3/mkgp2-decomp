@@ -31,116 +31,116 @@ extern void ActionViscosity_Reset();
 extern void ActionViscosity_Step();
 extern void dtor_8005CCBC();
 extern char lbl_806CEE58[];
-extern char lbl_806CEE60[];
-extern char lbl_806CEE68[];
-extern char lbl_806CEE70[];
-extern char lbl_806CEE78[];
-extern char lbl_806CEE80[];
-extern char lbl_806CEE88[];
-extern char lbl_806CEE90[];
-extern char lbl_806CEE98[];
+extern char data_803F9B48_data_806CEE60[];
+extern char data_803F9B48_data_806CEE68[];
+extern char data_803F9B48_data_806CEE70[];
+extern char data_803F9B48_data_806CEE78[];
+extern char data_803F9B48_data_806CEE80[];
+extern char data_803F9B48_data_806CEE88[];
+extern char data_803F9B48_data_806CEE90[];
+extern char data_803F9B48_data_806CEE98[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_803F9B48[3] = {
+void *data_803F9B48_data_803F9B48[3] = {
     (void *)&lbl_806CEE58,
     0,
     0
 };
-void *lbl_803F9B54[5] = {
-    (void *)&lbl_806CEE60,
+void *ESDly_vtable_803F9B54[5] = {
+    (void *)&data_803F9B48_data_806CEE60,
     0,
     (void *)ActionDelay_Dtor,
     (void *)ActionDelay_Reset,
     (void *)ActionDelay_Step
 };
-void *lbl_803F9B68[3] = {
+void *data_803F9B48_data_803F9B68[3] = {
     (void *)&lbl_806CEE58,
     0,
     0
 };
-void *lbl_803F9B74[5] = {
-    (void *)&lbl_806CEE68,
+void *ESRng_vtable_803F9B74[5] = {
+    (void *)&data_803F9B48_data_806CEE68,
     0,
     (void *)ActionScale_Dtor,
     (void *)ActionScale_Reset,
     (void *)ActionScale_Step
 };
-void *lbl_803F9B88[3] = {
+void *data_803F9B48_data_803F9B88[3] = {
     (void *)&lbl_806CEE58,
     0,
     0
 };
-void *lbl_803F9B94[5] = {
-    (void *)&lbl_806CEE70,
+void *ESLck_vtable_803F9B94[5] = {
+    (void *)&data_803F9B48_data_806CEE70,
     0,
     (void *)ActionInputViscosity_Dtor,
     (void *)ActionInputViscosity_Reset,
     (void *)ActionInputViscosity_Step
 };
-void *lbl_803F9BA8[3] = {
+void *data_803F9B48_data_803F9BA8[3] = {
     (void *)&lbl_806CEE58,
     0,
     0
 };
-void *lbl_803F9BB4[5] = {
-    (void *)&lbl_806CEE78,
+void *ESVib_vtable_803F9BB4[5] = {
+    (void *)&data_803F9B48_data_806CEE78,
     0,
     (void *)ActionShake_Dtor,
     (void *)ActionShake_Reset,
     (void *)ActionShake_Step
 };
-void *lbl_803F9BC8[3] = {
+void *data_803F9B48_data_803F9BC8[3] = {
     (void *)&lbl_806CEE58,
     0,
     0
 };
-void *lbl_803F9BD4[5] = {
-    (void *)&lbl_806CEE80,
+void *ESVis_vtable_803F9BD4[5] = {
+    (void *)&data_803F9B48_data_806CEE80,
     0,
     (void *)ActionSplit_Dtor,
     (void *)ActionSplit_Reset,
     (void *)ActionSplit_Step
 };
-void *lbl_803F9BE8[3] = {
+void *data_803F9B48_data_803F9BE8[3] = {
     (void *)&lbl_806CEE58,
     0,
     0
 };
-void *lbl_803F9BF4[5] = {
-    (void *)&lbl_806CEE88,
+void *ESSpl_vtable_803F9BF4[5] = {
+    (void *)&data_803F9B48_data_806CEE88,
     0,
     (void *)ActionViscosity_Dtor,
     (void *)ActionViscosity_Reset,
     (void *)ActionViscosity_Step
 };
-void *lbl_803F9C08[3] = {
+void *data_803F9B48_data_803F9C08[3] = {
     (void *)&lbl_806CEE58,
     0,
     0
 };
-void *lbl_803F9C14[5] = {
-    (void *)&lbl_806CEE90,
+void *ESSha_vtable_803F9C14[5] = {
+    (void *)&data_803F9B48_data_806CEE90,
     0,
     (void *)ActionVibrate_Dtor,
     (void *)ActionVibrate_Reset,
     (void *)ActionVibrate_Step
 };
-void *lbl_803F9C28[5] = {
+void *ESBase_vtable_803F9C28[5] = {
     (void *)&lbl_806CEE58,
     0,
     (void *)dtor_8005CCBC,
     0,
     0
 };
-void *lbl_803F9C3C[3] = {
+void *data_803F9B48_data_803F9C3C[3] = {
     (void *)&lbl_806CEE58,
     0,
     0
 };
-void *lbl_803F9C48[6] = {
-    (void *)&lbl_806CEE98,
+void *ESScl_vtable_803F9C48[6] = {
+    (void *)&data_803F9B48_data_806CEE98,
     0,
     (void *)ActionLock_Dtor,
     (void *)ActionLock_Reset,

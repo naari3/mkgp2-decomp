@@ -14,7 +14,7 @@ extern "C" const char lbl_802EB020[] = "test_course_coconut_joint";
 #pragma force_active reset
 /* --- owned .data 0x803F5CE8..0x803F60B4 (tools/own_data.py) --- */
 #pragma force_active on
-extern "C" void *lbl_803F5CE8[243] = {
+extern "C" void *CourseScene_Load_data_803F5CE8[243] = {
     (void *)0x1000000,
     (void *)0x0,
     (void *)0x0,
@@ -272,7 +272,7 @@ extern const char lbl_806D2684[7], lbl_806D268C[5];
 extern const float lbl_806D2680, lbl_806D2694, lbl_806D269C, lbl_806D26A8;
 extern int g_cupId, g_gameMode, g_longRoundFlag, g_reverseRoundFlag;
 extern int lbl_806CF128;
-extern void *lbl_803F7494[];
+extern void *clMapEffect_vtable_803F7494[];
 void fn_801746A8(void *);
 void fn_8017A52C(void *);
 void HSD_JObjSetFlags(HSD_JObj *, unsigned int);
@@ -335,7 +335,7 @@ int fn_80174698(void *);
 void WarpDashMgr_GetOrCreate(int, unsigned char, bool, int);
 void *CourseVariantTableLookup();
 void ShadowAreaMgr_GetOrCreate(void *);
-extern void *lbl_80324B10[][2];
+extern void *CourseScene_Load_rodata_80324B10[][2];
 extern int lbl_806D1694, lbl_806D1690;
 extern const char lbl_806D26AC[4];
 }
@@ -508,7 +508,7 @@ static inline void PrintRendererStatistics(const char *format, CourseEnvironment
 int CourseScene_Load(CourseEnvironmentView *self, int course) {
     const char *strings = lbl_802EAF10;
     ZoneObject *o;
-    char *tables = (char *)lbl_803F5CE8;
+    char *tables = (char *)CourseScene_Load_data_803F5CE8;
     CourseEnvironmentView *slotOwner;
     const char **names;
     int j;
@@ -680,7 +680,7 @@ int CourseScene_Load(CourseEnvironmentView *self, int course) {
     self->collision = new CECollision(GetCollisionFilename());
     Collision_SetGlobalData(((CECollision *)self->collision)->collisionData, 0);
     ProcessSystemTick(0);
-    FUN_8007c56c(lbl_80324B10[g_cupId][g_longRoundFlag], 0);
+    FUN_8007c56c(CourseScene_Load_rodata_80324B10[g_cupId][g_longRoundFlag], 0);
     Collision_RegisterSpecialFaces();
     ProcessSystemTick(0);
     self->animationManager = new CEAnimation(self->models[0]);
@@ -813,7 +813,7 @@ int JObj_NeedsEval(HSD_JObj *joint) { return NeedsEval(joint); }
 void fn_800488EC() {}
 void fn_800488F0() {}
 void *dtor_800488F4(void **self, short flag) {
-    if (self) { *self = lbl_803F7494; if (flag > 0) MemoryManager_TimedFree(self); }
+    if (self) { *self = clMapEffect_vtable_803F7494; if (flag > 0) MemoryManager_TimedFree(self); }
     return self;
 }
 }

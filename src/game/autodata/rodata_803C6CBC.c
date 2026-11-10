@@ -9,7 +9,7 @@
 #pragma force_active on
 
 const char lbl_803C6CBC[] = "Total MARIO  COIN";
-const char lbl_803C6CD0[44] = {
+const char CoinResultScene_Init_rodata_803C6CD0[44] = {
     109, 97, 114, 105, 111, 95, 99, 111, 105, 110, 46, 100,
     97, 116, 0, 0, 110, 115, 77, 101, 110, 117, 85, 116,
     105, 108, 58, 58, 99, 108, 70, 105, 108, 116, 101, 114,
@@ -19,7 +19,7 @@ const char lbl_803C6CFC[] = "nsMenuUtil::clMenuNode";
 const char lbl_803C6D14[] = "clGetCoinLine";
 const char lbl_803C6D24[] = "clGetSumLine";
 const char lbl_803C6D34[] = "clCoinPerfect";
-const unk32 lbl_803C6D44[69] = {
+const unk32 sdata_806D0498_rodata_803C6D44[69] = {
     0x636C4765, 0x74436F69, 0x6E53756D, 0x00000000, 0x76656374, 0x6F723A3A, 0x696E7365, 0x7274206C,
     0x656E6774, 0x68206572, 0x726F7200, 0x21737464, 0x3A3A6578, 0x63657074, 0x696F6E21, 0x21737464,
     0x3A3A6C6F, 0x6769635F, 0x6572726F, 0x72212173, 0x74643A3A, 0x6C656E67, 0x74685F65, 0x72726F72,

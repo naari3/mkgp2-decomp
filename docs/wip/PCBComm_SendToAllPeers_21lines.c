@@ -29,14 +29,14 @@ typedef struct SendStorage {
     unsigned char snapshotHeader[0x1C];
     unsigned char snapshot[0x1C];
 } SendStorage;
-extern SendStorage lbl_805A5EC0;
+extern SendStorage PCBCheckRecv_bss_805A5EC0;
 extern unsigned char g_pcbCommEnabled;
 extern unsigned char g_pcbSyncReady;
 extern unsigned char g_isCommHost;
 extern int g_currentSceneState;
 extern int g_localPcbRole;
 extern int g_myPcbId;
-extern unsigned char *lbl_806D11B0;
+extern unsigned char *PCBCheckRecv_bss_806D11B0;
 extern void PCBComm_BuildBroadcastSlot(void);
 extern int PcbConn_TryReceiveAck(void *connection);
 extern int TCPConn_EnqueueMessage(void *connection, unsigned short type,
@@ -47,7 +47,7 @@ extern void *memcpy(void *destination, const void *source, unsigned long length)
 #pragma opt_propagation off
 int PCBComm_SendToAllPeers(void)
 {
-    SendStorage *storage = &lbl_805A5EC0;
+    SendStorage *storage = &PCBCheckRecv_bss_805A5EC0;
     PeerSlot *peer;
     unsigned char *snapshot;
     unsigned char *block;
@@ -89,7 +89,7 @@ int PCBComm_SendToAllPeers(void)
         if (peer->blocksRemaining != 0) {
             int index = peer->blocksRemaining - 1;
             storage->blockIndex = index;
-            memcpy(block, lbl_806D11B0 + index * 0x200, 0x200);
+            memcpy(block, PCBCheckRecv_bss_806D11B0 + index * 0x200, 0x200);
             TCPConn_EnqueueMessage(peer->connection, 3, 0x204, &storage->blockIndex);
             peer->blocksRemaining = peer->blocksRemaining - 1;
         }

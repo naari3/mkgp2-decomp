@@ -11,7 +11,7 @@ struct ViewerScene {
 extern "C" {
 extern Viewer *lbl_806D1588;
 extern void *lbl_806D158C;
-extern char lbl_80490064[];
+extern char ViewerScene_vtable_80490064[];
 extern char lbl_803FE0C8[];
 extern void GXDrawDone(void);
 extern void Object_DtorWithGXSync(void *, int);
@@ -22,7 +22,7 @@ extern void MemoryManager_TimedFree(void *);
 
 ViewerScene *fn_8015BC08(ViewerScene *self, short flag) {
     if (self) {
-        self->vtable = lbl_80490064;
+        self->vtable = ViewerScene_vtable_80490064;
         GXDrawDone();
         if (lbl_806D1588) {
             delete lbl_806D1588;

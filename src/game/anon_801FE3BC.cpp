@@ -1,6 +1,6 @@
 /*
  * Card-flow manager singleton @ 0x801FE3BC..0x801FE4D0
- * (instance lbl_806D19D8, vtable lbl_804EC1AC, base vtable lbl_804EC1B8).
+ * (instance lbl_806D19D8, vtable CardFlowMgr_vtable_804EC1AC, base vtable CardFlowMgrBase_vtable_804EC1B8).
  */
 
 #include "game/FlowScene.h"

@@ -26,7 +26,7 @@ rename** して橋渡しする。ServiceMenu_Page.c の実例:
 __ct__11ServiceMenuFi     -> ServiceMenu_Init        (ctor 定義自体)
 __ct__12GameModeBaseFv    -> GameMode_BaseInit       (暗黙の base ctor call)
 __dt__12GameModeBaseFv    -> dtor_8002CDF4           (DESTROYBASE の dtor 参照)
-__vt__11ServiceMenu       -> lbl_803FDE64            (vtable store)
+__vt__11ServiceMenu       -> CardCreate_Page_data_803FDE64            (vtable store)
 __ct__14DisplayContextFv  -> DisplayContext_Init     (new DisplayContext)
 __ct__6SpriteFiiff        -> fn_801A08B8             (new Sprite(...))
 __nw__FUl                 -> Alloc                   (operator new)
@@ -138,7 +138,7 @@ Rescue of existing NonMatching TUs must check retained function emission order, 
 ## c2_b5_80207324_20261105
 Source: Codex worker c2_b5_80207324_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 33 fn / 8244 B.
 
-Rescue of anon_801FEBD8 / anon_80202148 / anon_80207324: correct VHolder<FlowFaderF/I> mangled length is 21. Map implicit FlowFaderI destructor to fn_801F26C8 (target vtable lbl_804E5284). Append weak destructor EH after owned entries in extab_order. Local synthetic RTTI can retain duplicate .data/.sdata even when text objdiff is 100%; explicit calls to the same CW dynamic-cast runtime with external target RTTI records removed all such sections while preserving every function at 100%. Full-link acceptance remains pending.
+Rescue of anon_801FEBD8 / anon_80202148 / anon_80207324: correct VHolder<FlowFaderF/I> mangled length is 21. Map implicit FlowFaderI destructor to fn_801F26C8 (target vtable FlowFaderI_vtable_804E5284). Append weak destructor EH after owned entries in extab_order. Local synthetic RTTI can retain duplicate .data/.sdata even when text objdiff is 100%; explicit calls to the same CW dynamic-cast runtime with external target RTTI records removed all such sections while preserving every function at 100%. Full-link acceptance remains pending.
 
 ## c2_b5_80207324_20261105
 Source: Codex worker c2_b5_80207324_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 33 fn / 8244 B.
@@ -178,7 +178,7 @@ When splitting a C++ TU, an anonymous-namespace class vtable reference can becom
 ## c2_i1_mapeffect_20261105
 Source: Codex worker c2_i1_mapeffect_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 43 fn / 17296 B.
 
-After a C++ split, compiler RTTI symbols can stay STB_LOCAL even for external-linkage classes. A fallback TU cannot resolve such definitions by global name. Existing postprocess bridge supports global:<target> values; mapeffect uses __RTTI__11clMapEffect -> global:lbl_806CFAD0. Audit the intersection of fallback undefined names and source local defined names; payload bytes stay unchanged.
+After a C++ split, compiler RTTI symbols can stay STB_LOCAL even for external-linkage classes. A fallback TU cannot resolve such definitions by global name. Existing postprocess bridge supports global:<target> values; mapeffect uses __RTTI__11clMapEffect -> global:mapeffect_data_806CFAD0. Audit the intersection of fallback undefined names and source local defined names; payload bytes stay unchanged.
 
 ## c2_b4_8020f44c_20261105
 Source: Codex worker c2_b4_8020f44c_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 15 fn / 7744 B.
@@ -243,7 +243,7 @@ FlashFx: an explicit empty destructor makes deleting singleton fn_8021A2B4 emit 
 ## c2_r4_802161c4_20261105
 Source: Codex worker c2_r4_802161c4_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 36 fn / 5948 B.
 
-Popup rescue: opt-in suppression of unused Open/Close dynamic_cast helpers avoids emitted RTTI even with -RTTI on. Exact Close wrapper uses the same runtime call fn_80271340(t,0,lbl_806D0268,lbl_806D0260,0) with external target RTTI records. First-declared SceneListImpl _key2 suppresses its vtable. Tail MsgPopupCoin dtor needs primary EH order before appended weak FlowFaderI/F and ResCtrl EH. A split with only two leaf getters has no extab, so omit extab_padding while retaining original compiler flags; dtk extab clean otherwise fails.
+Popup rescue: opt-in suppression of unused Open/Close dynamic_cast helpers avoids emitted RTTI even with -RTTI on. Exact Close wrapper uses the same runtime call fn_80271340(t,0,MsgPopup_RTTI_806D0268,FlowTask_RTTI_806D0260,0) with external target RTTI records. First-declared SceneListImpl _key2 suppresses its vtable. Tail MsgPopupCoin dtor needs primary EH order before appended weak FlowFaderI/F and ResCtrl EH. A split with only two leaf getters has no extab, so omit extab_padding while retaining original compiler flags; dtk extab clean otherwise fails.
 
 ## c2_r2_enemyface_20261105
 Source: Codex worker c2_r2_enemyface_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 32 fn / 5952 B.
@@ -258,7 +258,7 @@ No-EH C++ leaf split: extab_padding invokes dtk extab clean, which errors when n
 ## c2_r2_enemyface_20261105
 Source: Codex worker c2_r2_enemyface_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 32 fn / 5952 B.
 
-EnemyFace 8022BEB4 text/EH is exact but emitted clEFace3D vtable under RTTI-off has null at +0 whereas target 804EE134 references lbl_806D0618. Leave destructor NonMatching and isolate exact Trigger 8022BF2C; do not promote based solely on 100% text.
+EnemyFace 8022BEB4 text/EH is exact but emitted clEFace3D vtable under RTTI-off has null at +0 whereas target 804EE134 references data_804EE0EC_data_806D0618. Leave destructor NonMatching and isolate exact Trigger 8022BF2C; do not promote based solely on 100% text.
 
 ## c3_u7_8021bc44_20261105
 Source: Codex worker c3_u7_8021bc44_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
@@ -348,7 +348,7 @@ c5_m5 EnemyFace: Update requires unsigned-byte hidden helper with (bits & 0x8000
 ## c5_s11_anon80203ea0_20261105
 Source: Codex worker c5_s11_anon80203ea0_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 588 B.
 
-c5_s11: fn_80203F5C popup open needs explicit else return 0 when both cur and pending are occupied. TU-local copy plus external target RTTI runtime fn_80271340(t,0,lbl_806D0268,lbl_806D0260,0) gives 340 bytes and all owned sections 100%, no emitted data. Cursor destructor 802051E8 promotes unchanged text with weak FlowFaderI bridge to fn_801F26C8; extra EH discards. YesNoCursor Update declaration px before py fixes FP homes (99.72603 to 99.863014), but list/visible r30/r31 swap remains after scope/helper attempts. Full DOL SHA-1 and ELF positions verified for two promoted functions.
+c5_s11: fn_80203F5C popup open needs explicit else return 0 when both cur and pending are occupied. TU-local copy plus external target RTTI runtime fn_80271340(t,0,MsgPopup_RTTI_806D0268,FlowTask_RTTI_806D0260,0) gives 340 bytes and all owned sections 100%, no emitted data. Cursor destructor 802051E8 promotes unchanged text with weak FlowFaderI bridge to fn_801F26C8; extra EH discards. YesNoCursor Update declaration px before py fixes FP homes (99.72603 to 99.863014), but list/visible r30/r31 swap remains after scope/helper attempts. Full DOL SHA-1 and ELF positions verified for two promoted functions.
 
 ## c5_s12_anon8020aad4_20261105
 Source: Codex worker c5_s12_anon8020aad4_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 668 B.
@@ -358,7 +358,7 @@ c5_s12: BattleMenu ctor 8020BACC cached list r28->r30 resolves by extracting fn_
 ## c5_s13_anon8020c974_20261105
 Source: Codex worker c5_s13_anon8020c974_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 2 fn / 728 B.
 
-c5_s13: CardModeRoot::OnTaskDone text/extab/index were 100%, but dynamic_cast emitted extra local RTTI (.data 76 B/.sdata 24 B). Explicitly calling existing fn_80271340(task,0,lbl_806D0310,lbl_806D0308,0) with canonical extern 8-byte RTTI records preserves all text and removes duplicate data; full-link SHA-1 OK. fn_8020F220 needs flag flip only. Draw Remove named result assignment restores return/argument stack slot order, 96.55224 to 96.61194; iterator SP+10 vs +14, missing assignment copy and r4 caching persist. ScoreDisplay scoped scale and explicit x/y/z/scale locals both leave final-three-block FP coloring unchanged; original retained.
+c5_s13: CardModeRoot::OnTaskDone text/extab/index were 100%, but dynamic_cast emitted extra local RTTI (.data 76 B/.sdata 24 B). Explicitly calling existing fn_80271340(task,0,CardMenuRoot_RTTI_806D0310,SceneBase_RTTI_806D0308,0) with canonical extern 8-byte RTTI records preserves all text and removes duplicate data; full-link SHA-1 OK. fn_8020F220 needs flag flip only. Draw Remove named result assignment restores return/argument stack slot order, 96.55224 to 96.61194; iterator SP+10 vs +14, missing assignment copy and r4 caching persist. ScoreDisplay scoped scale and explicit x/y/z/scale locals both leave final-three-block FP coloring unchanged; original retained.
 
 ## c5_s15_anon8021f088_20261105
 Source: Codex worker c5_s15_anon8021f088_20261105 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 3 fn / 1044 B.
@@ -878,7 +878,7 @@ PcbDebugOverlay: DrawLinkErrorOverlay has exact C text but target DESTROYLOCAL T
 ## c15_u15_20261106
 Source: Codex worker c15_u15_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 2184 B.
 
-c15_u15: CardDataTransfer_UI 8006D308/2184B matches fully by extracting natural inline Begin(TestPage*, int initialStatus) around initialization and six card-status checks, using the parameter for STEP and STATUS then returning error status. Flat local constant duplicates li 1. TU-local DrawItems(TestPage*,int) mirrors TestPage_DrawItems but declares MenuItem* it=lbl_803FCC00 locally instead of passing the table as an inline parameter; target walker r30/index r27/selection r29 restored. Combined native text/EH100 and source-linked full DOL SHA1 exact; no EH bridges or split changes.
+c15_u15: CardDataTransfer_UI 8006D308/2184B matches fully by extracting natural inline Begin(TestPage*, int initialStatus) around initialization and six card-status checks, using the parameter for STEP and STATUS then returning error status. Flat local constant duplicates li 1. TU-local DrawItems(TestPage*,int) mirrors TestPage_DrawItems but declares MenuItem* it=CardDataTransfer_UI_data_803FCC00 locally instead of passing the table as an inline parameter; target walker r30/index r27/selection r29 restored. Combined native text/EH100 and source-linked full DOL SHA1 exact; no EH bridges or split changes.
 
 ## c15_u24_20261106
 Source: Codex worker c15_u24_20261106 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 572 B.
@@ -1183,7 +1183,7 @@ c17_u116: MinimapHud dtor 8021995C improves 98.90351 -> 99.07895 with explicit M
 ## c17_u119_20261107
 Source: Codex worker c17_u119_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
-c17_u119: fn_80203C24 remains98.854965 (520B vs524B). Explicit fn_80271340(t,0,lbl_806D0268,lbl_806D0260,0) removes duplicate68B data+24B sdata with unchanged primary instruction rows and95/91.66667 EH/index. Dispatch helper taking pending by value changes pending/layer rank to r31/r30 but retains early callee-saved load (98.54962); inline queue-take return and OpenMsgPopup const-int-reference snapshot are invariant negatives. Original by-value source retained. Residual is absent target +E0 mr r30,r4 caused by early coalescing; owned EH PCs are -4 and function size is -4. Single function cannot split. No flag/split/bridge edits, fallback full DOL SHA1 OK, native gain0.
+c17_u119: fn_80203C24 remains98.854965 (520B vs524B). Explicit fn_80271340(t,0,MsgPopup_RTTI_806D0268,FlowTask_RTTI_806D0260,0) removes duplicate68B data+24B sdata with unchanged primary instruction rows and95/91.66667 EH/index. Dispatch helper taking pending by value changes pending/layer rank to r31/r30 but retains early callee-saved load (98.54962); inline queue-take return and OpenMsgPopup const-int-reference snapshot are invariant negatives. Original by-value source retained. Residual is absent target +E0 mr r30,r4 caused by early coalescing; owned EH PCs are -4 and function size is -4. Single function cannot split. No flag/split/bridge edits, fallback full DOL SHA1 OK, native gain0.
 
 ## c17_u117_20261107
 Source: Codex worker c17_u117_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 2604 B.
@@ -1393,12 +1393,12 @@ c18_u196: ItemEffectImpact_TryArmInit fresh93.759125 ->93.86131 with scalar ArmL
 ## c18_u202_20261107
 Source: Codex worker c18_u202_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 500 B.
 
-c18_u202: YIState fn_80179F60 fresh default92.90566 / no-inferred-pool94.41779 improves96.81671 /97.690025 using one existing lbl_80370870 base plus offsets408/448/428. Header prefix already owns the table pool, so do not claim it from another Matching TU. Explicit extern lbl_806D8E90 avoids postprocess_sdata2 mapping a newly numbered0.005 literal to1.0 under changed source shape. Typed edge helper regresses88.1752; explicit vertex/position locals97.463615. Native1472 vs target1484: three quad addi r3 instructions folded away, plus FPR/load-order differences. All other function scores/data sections unchanged, extab99.34211->100. Reversed EH starts with tail fn80179F60 at800117E0; mechanism B blocked (prior c2 proven). Keep whole NM; no native gain.
+c18_u202: YIState fn_80179F60 fresh default92.90566 / no-inferred-pool94.41779 improves96.81671 /97.690025 using one existing mapeffect_rodata_80370870 base plus offsets408/448/428. Header prefix already owns the table pool, so do not claim it from another Matching TU. Explicit extern lbl_806D8E90 avoids postprocess_sdata2 mapping a newly numbered0.005 literal to1.0 under changed source shape. Typed edge helper regresses88.1752; explicit vertex/position locals97.463615. Native1472 vs target1484: three quad addi r3 instructions folded away, plus FPR/load-order differences. All other function scores/data sections unchanged, extab99.34211->100. Reversed EH starts with tail fn80179F60 at800117E0; mechanism B blocked (prior c2 proven). Keep whole NM; no native gain.
 
 ## c18_u207_20261107
 Source: Codex worker c18_u207_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
-c18_u207 retry ItemGridState_Init 8023A7AC/608B: static inline int GridFallbackCandidate(int index) returning lbl_803DC174[index], used for both candidate loads in fallback search, fixes cursor/index/value source r3/r5/r6 to exact target r5/r6/r3. Text improves99.07895->99.47369. Grid GPR rotation persists (source rowBase29,row27,col26,cursor28,new24 vs target26,27,28,24,29); eleven text instructions differ. Row helper regresses98.947365; inline new factory and actual GridInitState ctor are invariant99.07895; function-scope named new result/counters and setter helper taking new result are invariant99.47369. Retain only accessor improvement, NonMatching. Primary EH still DELETEPOINTER24 vs29 and anonymous @82/@83 need future bridges; extra weak ResCtrl dtor EH8/index12. Full fallback DOL SHA1 exact; native gain0.
+c18_u207 retry ItemGridState_Init 8023A7AC/608B: static inline int GridFallbackCandidate(int index) returning ItemGridState_Init_rodata_803DC174[index], used for both candidate loads in fallback search, fixes cursor/index/value source r3/r5/r6 to exact target r5/r6/r3. Text improves99.07895->99.47369. Grid GPR rotation persists (source rowBase29,row27,col26,cursor28,new24 vs target26,27,28,24,29); eleven text instructions differ. Row helper regresses98.947365; inline new factory and actual GridInitState ctor are invariant99.07895; function-scope named new result/counters and setter helper taking new result are invariant99.47369. Retain only accessor improvement, NonMatching. Primary EH still DELETEPOINTER24 vs29 and anonymous @82/@83 need future bridges; extra weak ResCtrl dtor EH8/index12. Full fallback DOL SHA1 exact; native gain0.
 
 ## c18_u209_20261107
 Source: Codex worker c18_u209_20261107 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
@@ -2123,7 +2123,7 @@ c23_u107 fn_801F27B4: merged pool already owned correctly. Split coarse symbol l
 ## c23_u129_20261109
 Source: Codex worker c23_u129_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
-c23_u129 ItemGridState_Init improves99.47369->99.70395/608B. Complete saved-GPR grid cycle RESOLVED: expand grid into caller with function-scope int row;int col; and move only one item-resolution iteration into static inline InitializeGridItem(self,player,ids,i), keeping ids snapshot/player/i/loop in caller. Original depth-two GridFallbackCandidate accessor now hurts; use direct lbl_803DC174[j] loads inside per-item helper. Declare unsigned-char found before int candidate, but compute candidate before found=0. All grid homes26/27/28/24/29 and 48-byte owned EH payload exact. Only eight fallback volatile rows remain: walker7/found5 vs target5/7; candidate3/index6 exact. Reference-output membership helper invariant. Final primary anonymous EH/index @84/@85 need future bridges; extra weak dtor remains. Singleton NM, no B cut/native gain; no new full-link request. Correct prior retry IDs c19_u167,c21_u109,c22_u132; archives use per-batch directories.
+c23_u129 ItemGridState_Init improves99.47369->99.70395/608B. Complete saved-GPR grid cycle RESOLVED: expand grid into caller with function-scope int row;int col; and move only one item-resolution iteration into static inline InitializeGridItem(self,player,ids,i), keeping ids snapshot/player/i/loop in caller. Original depth-two GridFallbackCandidate accessor now hurts; use direct ItemGridState_Init_rodata_803DC174[j] loads inside per-item helper. Declare unsigned-char found before int candidate, but compute candidate before found=0. All grid homes26/27/28/24/29 and 48-byte owned EH payload exact. Only eight fallback volatile rows remain: walker7/found5 vs target5/7; candidate3/index6 exact. Reference-output membership helper invariant. Final primary anonymous EH/index @84/@85 need future bridges; extra weak dtor remains. Singleton NM, no B cut/native gain; no new full-link request. Correct prior retry IDs c19_u167,c21_u109,c22_u132; archives use per-batch directories.
 
 ## c23_u128_20261109
 Source: Codex worker c23_u128_20261109 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 1636 B.

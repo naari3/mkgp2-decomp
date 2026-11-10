@@ -8,12 +8,12 @@
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const float lbl_803E5CE8[3][2] = {
+const float LapDispUpdate_rodata_803E5CE8[3][2] = {
     { 5.3e+02f, 145.0f },
     { 5.3e+02f, 145.0f },
     { 5.3e+02f, 145.0f }
 };
-const float lbl_803E5D00[3][2] = {
+const float LapDispUpdate_rodata_803E5D00[3][2] = {
     { 0.0f, 0.0f },
     { 44.0f, -14.0f },
     { 73.0f, -4.0f }

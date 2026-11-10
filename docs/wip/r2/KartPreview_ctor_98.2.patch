@@ -14,16 +14,16 @@ diff --git a/src/game/KartPreview.c b/src/game/KartPreview.c
 index 9d90b15..1b8c2f3 100644
 --- a/src/game/KartPreview.c
 +++ b/src/game/KartPreview.c
-@@ -61,8 +61,8 @@ extern RenderTargetHolder *lbl_806D155C;
- extern char lbl_8048EA78[];
+@@ -61,8 +61,8 @@ extern RenderTargetHolder *RenderTargetSingleton_bss_806D155C;
+ extern char RenderTargetSingleton_data_8048EA78[];
  extern char lbl_806D76D0[7];
  extern char lbl_806D76D8[5];
 -extern float lbl_806D76E0;
 -extern float lbl_806D76E4;
 +extern const float lbl_806D76E0;
 +extern const float lbl_806D76E4;
- extern char lbl_8048EAD8[];
- extern char lbl_8048EAE8[];
+ extern char KartPreview_data_8048EAD8[];
+ extern char clCSModelInterface_vtable_8048EAE8[];
  
 @@ -319,20 +319,138 @@ KartPreview *fn_8013CB10(KartPreview *p, short flag) {
      return p;
@@ -39,8 +39,8 @@ index 9d90b15..1b8c2f3 100644
 -extern void HSD_JObjSetMtxDirtySub();
 -extern unsigned int lbl_806D76E8;
 -extern unsigned int lbl_806D76EC;
--extern unsigned int lbl_803600E0[];
--extern unsigned int lbl_8048EA98[];
+-extern unsigned int KartPreview_rodata_803600E0[];
+-extern unsigned int KartPreview_data_8048EA98[];
 +typedef struct KPVec3 {
 +    float x, y, z;
 +} KPVec3;
@@ -90,7 +90,7 @@ index 9d90b15..1b8c2f3 100644
 +extern const float lbl_806D76E8;
 +extern const float lbl_806D76EC;
 +/* .rodata 0x803600E0..0x80360440 is owned by this TU. */
-+const int lbl_803600E0[4] = { 0, 5, 42, 43 };
++const int KartPreview_rodata_803600E0[4] = { 0, 5, 42, 43 };
 +const char lbl_803600F0[0xC] = "mspacman";
 +const char lbl_803600FC[0x10] = "clCSKartModel";
 +const char lbl_8036010C[0x14] = "clCSModelInterface";
@@ -128,7 +128,7 @@ index 9d90b15..1b8c2f3 100644
 +static const char sKP_hidden17[0x18] = "cart_punk_tire_fr_joint";
 +static const char sKP_hidden18[0x18] = "cart_punk_tire_rl_joint";
 +static const char sKP_hidden19[0x18] = "cart_punk_tire_rr_joint";
-+extern char *lbl_8048EA98[];
++extern char *KartPreview_data_8048EA98[];
  extern void dtor_8013DCBC();
 -asm void fn_8013CC24(void);
 +KartPreview *fn_8013CC24(KartPreview *p, int chara, int flag);
@@ -193,16 +193,16 @@ index 9d90b15..1b8c2f3 100644
 -    stfd f29, 0x50(r1)
 -    psq_st f29, 0x58(r1), 0, 0
 -    stmw r25, 0x34(r1)
--    lis r7, lbl_8048EAE8@ha
--    lis r6, lbl_8048EAD8@ha
+-    lis r7, clCSModelInterface_vtable_8048EAE8@ha
+-    lis r6, KartPreview_data_8048EAD8@ha
 -    mr r28, r3
--    lis r8, lbl_803600E0@ha
--    addi r3, r7, lbl_8048EAE8@l
--    addi r0, r6, lbl_8048EAD8@l
+-    lis r8, KartPreview_rodata_803600E0@ha
+-    addi r3, r7, clCSModelInterface_vtable_8048EAE8@l
+-    addi r0, r6, KartPreview_data_8048EAD8@l
 -    stw r3, 0x0(r28)
 -    mr r26, r4
 -    mr r29, r5
--    addi r30, r8, lbl_803600E0@l
+-    addi r30, r8, KartPreview_rodata_803600E0@l
 -    stw r0, 0x0(r28)
 -    bl fn_8013BD7C
 -    bl fn_8013C428
@@ -301,8 +301,8 @@ index 9d90b15..1b8c2f3 100644
 -    bl clNormal3D_SetScale
 -    fn_8013CC24_L_8013CDDC:
 -    lwz r0, 0x48(r28)
--    lis r3, lbl_8048EA98@ha
--    addi r5, r3, lbl_8048EA98@l
+-    lis r3, KartPreview_data_8048EA98@ha
+-    addi r5, r3, KartPreview_data_8048EA98@l
 -    addi r3, r1, 0x8
 -    slwi r0, r0, 2
 -    addi r4, r30, 0x68
@@ -313,8 +313,8 @@ index 9d90b15..1b8c2f3 100644
 -    addi r4, r1, 0x8
 -    bl ResolveJointByName
 -    stw r3, 0x3c(r28)
--    lis r3, lbl_8048EA98@ha
--    addi r5, r3, lbl_8048EA98@l
+-    lis r3, KartPreview_data_8048EA98@ha
+-    addi r5, r3, KartPreview_data_8048EA98@l
 -    addi r3, r1, 0x8
 -    lwz r0, 0x48(r28)
 -    addi r4, r30, 0x80
@@ -326,8 +326,8 @@ index 9d90b15..1b8c2f3 100644
 -    addi r4, r1, 0x8
 -    bl ResolveJointByName
 -    stw r3, 0x40(r28)
--    lis r3, lbl_8048EA98@ha
--    addi r5, r3, lbl_8048EA98@l
+-    lis r3, KartPreview_data_8048EA98@ha
+-    addi r5, r3, KartPreview_data_8048EA98@l
 -    addi r3, r1, 0x8
 -    lwz r0, 0x48(r28)
 -    addi r4, r30, 0x98
@@ -370,8 +370,8 @@ index 9d90b15..1b8c2f3 100644
 -    lwz r3, 0x8(r28)
 -    bl ResolveJointByName
 -    stw r3, 0x38(r28)
--    lis r3, lbl_8048EA98@ha
--    addi r5, r3, lbl_8048EA98@l
+-    lis r3, KartPreview_data_8048EA98@ha
+-    addi r5, r3, KartPreview_data_8048EA98@l
 -    addi r3, r1, 0x8
 -    lwz r0, 0x48(r28)
 -    addi r4, r30, 0x120
@@ -428,8 +428,8 @@ index 9d90b15..1b8c2f3 100644
 -    bl HSD_JObjSetMtxDirtySub
 -    fn_8013CC24_L_8013CFC0:
 -    lwz r0, 0x48(r28)
--    lis r3, lbl_8048EA98@ha
--    addi r5, r3, lbl_8048EA98@l
+-    lis r3, KartPreview_data_8048EA98@ha
+-    addi r5, r3, KartPreview_data_8048EA98@l
 -    addi r3, r1, 0x8
 -    slwi r0, r0, 2
 -    addi r4, r30, 0x138
@@ -485,8 +485,8 @@ index 9d90b15..1b8c2f3 100644
 -    bl HSD_JObjSetMtxDirtySub
 -    fn_8013CC24_L_8013D090:
 -    lwz r0, 0x48(r28)
--    lis r3, lbl_8048EA98@ha
--    addi r5, r3, lbl_8048EA98@l
+-    lis r3, KartPreview_data_8048EA98@ha
+-    addi r5, r3, KartPreview_data_8048EA98@l
 -    addi r3, r1, 0x8
 -    slwi r0, r0, 2
 -    addi r4, r30, 0x150
@@ -542,8 +542,8 @@ index 9d90b15..1b8c2f3 100644
 -    bl HSD_JObjSetMtxDirtySub
 -    fn_8013CC24_L_8013D160:
 -    lwz r0, 0x48(r28)
--    lis r3, lbl_8048EA98@ha
--    addi r5, r3, lbl_8048EA98@l
+-    lis r3, KartPreview_data_8048EA98@ha
+-    addi r5, r3, KartPreview_data_8048EA98@l
 -    addi r3, r1, 0x8
 -    slwi r0, r0, 2
 -    addi r4, r30, 0x168
@@ -780,8 +780,8 @@ index 9d90b15..1b8c2f3 100644
 +    KPJObj *src;
 +    int i;
 +
-+    p->vtbl = lbl_8048EAE8;
-+    p->vtbl = lbl_8048EAD8;
++    p->vtbl = clCSModelInterface_vtable_8048EAE8;
++    p->vtbl = KartPreview_data_8048EAD8;
 +    fn_8013BD7C();
 +    fn_8013C428();
 +    p->view_x = lbl_806D76E0;
@@ -817,11 +817,11 @@ index 9d90b15..1b8c2f3 100644
 +            clNormal3D_SetScale(p->obj24, 0, lbl_806D76E0, lbl_806D76E4, lbl_806D76E0, lbl_806D76EC);
 +            break;
 +        }
-+        sprintf(buf, sKP_fmtHead, lbl_8048EA98[p->chara]);
++        sprintf(buf, sKP_fmtHead, KartPreview_data_8048EA98[p->chara]);
 +        p->jobj3C = (HSD_JObj *)ResolveJointByName(p->driver, buf);
-+        sprintf(buf, sKP_fmtHandL, lbl_8048EA98[p->chara]);
++        sprintf(buf, sKP_fmtHandL, KartPreview_data_8048EA98[p->chara]);
 +        p->jobj40 = (HSD_JObj *)ResolveJointByName(p->driver, buf);
-+        sprintf(buf, sKP_fmtHandR, lbl_8048EA98[p->chara]);
++        sprintf(buf, sKP_fmtHandR, KartPreview_data_8048EA98[p->chara]);
 +        p->jobj44 = (HSD_JObj *)ResolveJointByName(p->driver, buf);
 +        HSD_JObjSetFlags(p->jobj40, 0x10);
 +        HSD_JObjSetFlags(p->jobj44, 0x10);
@@ -835,7 +835,7 @@ index 9d90b15..1b8c2f3 100644
 +            float x;
 +            float y;
 +            float z;
-+            sprintf(buf, sKP_fmtDriver0, lbl_8048EA98[p->chara]);
++            sprintf(buf, sKP_fmtDriver0, KartPreview_data_8048EA98[p->chara]);
 +            src = ResolveJointByName(p->kart, buf);
 +            if (!src) {
 +                __assert(lbl_806D76D0, 0x3e4, lbl_806D76D8);
@@ -849,7 +849,7 @@ index 9d90b15..1b8c2f3 100644
 +            float x;
 +            float y;
 +            float z;
-+            sprintf(buf, sKP_fmtDriver1, lbl_8048EA98[p->chara]);
++            sprintf(buf, sKP_fmtDriver1, KartPreview_data_8048EA98[p->chara]);
 +            src = ResolveJointByName(p->kart, buf);
 +            if (!src) {
 +                __assert(lbl_806D76D0, 0x3e4, lbl_806D76D8);
@@ -863,7 +863,7 @@ index 9d90b15..1b8c2f3 100644
 +            float x;
 +            float y;
 +            float z;
-+            sprintf(buf, sKP_fmtDriver2, lbl_8048EA98[p->chara]);
++            sprintf(buf, sKP_fmtDriver2, KartPreview_data_8048EA98[p->chara]);
 +            src = ResolveJointByName(p->kart, buf);
 +            if (!src) {
 +                __assert(lbl_806D76D0, 0x3e4, lbl_806D76D8);
@@ -877,7 +877,7 @@ index 9d90b15..1b8c2f3 100644
 +            float x;
 +            float y;
 +            float z;
-+            sprintf(buf, sKP_fmtDriver3, lbl_8048EA98[p->chara]);
++            sprintf(buf, sKP_fmtDriver3, KartPreview_data_8048EA98[p->chara]);
 +            src = ResolveJointByName(p->kart, buf);
 +            if (!src) {
 +                __assert(lbl_806D76D0, 0x3e4, lbl_806D76D8);
@@ -912,7 +912,7 @@ index 9d90b15..1b8c2f3 100644
 +        {
 +            int off = 0;
 +            for (i = 0; i < 4; i++) {
-+                KP_NEW_MODEL(*(void **)((char *)p->anims14 + off), ((KPCharData *)cd)->anims[lbl_803600E0[i]], 0);
++                KP_NEW_MODEL(*(void **)((char *)p->anims14 + off), ((KPCharData *)cd)->anims[KartPreview_rodata_803600E0[i]], 0);
 +                off += 4;
 +            }
 +        }

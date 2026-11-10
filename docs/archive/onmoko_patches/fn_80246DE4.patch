@@ -49,7 +49,7 @@ index 98f37a8..dd37b51 100644
 +#endif
  };
  struct DigitListMid : DigitListBase {
-     DigitListMid() { Init(5,lbl_806D0860); }
+     DigitListMid() { Init(5,RaceDigits_data_806D0860); }
 diff --git a/src/game/RaceDigits.cpp b/src/game/RaceDigits.cpp
 index 4233a31..589dcb4 100644
 --- a/src/game/RaceDigits.cpp

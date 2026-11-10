@@ -11,49 +11,49 @@ extern void fn_801FD504();
 extern void fn_801FD550();
 extern void fn_801FD588();
 extern char lbl_806D0180[];
-extern char lbl_806D0188[];
-extern char lbl_806D0190[];
+extern char data_804EC078_data_806D0188[];
+extern char data_804EC078_data_806D0190[];
 extern char lbl_806D0198[];
-extern char lbl_806D01A0[];
-extern char lbl_806D01A8[];
+extern char data_804EC078_data_806D01A0[];
+extern char data_804EC078_data_806D01A8[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804EC078[3] = {
+void *data_804EC078_data_804EC078[3] = {
     (void *)&lbl_806D0180,
     0,
     0
 };
-void *lbl_804EC084[5] = {
+void *data_804EC078_data_804EC084[5] = {
     (void *)&lbl_806D0180,
     0,
-    (void *)&lbl_806D0188,
+    (void *)&data_804EC078_data_806D0188,
     0,
     0
 };
-void *lbl_804EC098[6] = {
-    (void *)&lbl_806D0190,
+void *FlowScene_vtable_804EC098[6] = {
+    (void *)&data_804EC078_data_806D0190,
     0,
     (void *)dtor_801FD32C,
     0,
     0,
     0
 };
-void *lbl_804EC0B0[3] = {
+void *data_804EC078_data_804EC0B0[3] = {
     (void *)&lbl_806D0198,
     0,
     0
 };
-void *lbl_804EC0BC[5] = {
+void *data_804EC078_data_804EC0BC[5] = {
     (void *)&lbl_806D0198,
     0,
-    (void *)&lbl_806D01A0,
+    (void *)&data_804EC078_data_806D01A0,
     0,
     0
 };
-void *lbl_804EC0D0[6] = {
-    (void *)&lbl_806D01A8,
+void *CardEjectTask_vtable_804EC0D0[6] = {
+    (void *)&data_804EC078_data_806D01A8,
     0,
     (void *)fn_801FD588,
     (void *)fn_801FD550,

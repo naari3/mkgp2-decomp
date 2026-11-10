@@ -1,12 +1,12 @@
 /*
  * 0x8016FC74..0x8016FD0C: deleting destructor of a course model object
- * with a looping SE (vtable lbl_8049123C, base vtable lbl_80490FE0).
+ * with a looping SE (vtable CourseModel_vtable_8049123C, base vtable lbl_80490FE0).
  */
 
 #include "game/types/CourseModel.h"
 
 extern "C" {
-extern char lbl_8049123C[];
+extern char CourseModel_vtable_8049123C[];
 extern char lbl_80490FE0[];
 extern char lbl_8036E0C8[];
 int fn_8016C394(int);
@@ -16,7 +16,7 @@ void DebugPrintf(const char *, ...);
 
 CourseModel *fn_8016FC74(CourseModel *self, short flag) {
     if (self) {
-        self->vtable = lbl_8049123C;
+        self->vtable = CourseModel_vtable_8049123C;
         fn_8016C394(0x34);
         if (self->model) {
             Object_DtorWithGXSync(self->model, 1);

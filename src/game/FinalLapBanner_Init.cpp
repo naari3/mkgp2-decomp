@@ -25,7 +25,7 @@ extern const float lbl_806D3254;
 extern const float lbl_806D3258;
 extern char lbl_806D325C[7];
 extern char lbl_806D3264[5];
-extern unsigned char lbl_803123B0[];
+extern unsigned char FinalLapBanner_Init_rodata_803123B0[];
 int isJapanese(void);
 void clNormal3D_SetScale(void *, int, float, float, float, float);
 HSD_JObj *Archive_GetRootJObj(void *);
@@ -74,7 +74,7 @@ FinalLapBanner::FinalLapBanner(void *drv)
     Vec3 pos;
 
     obj = 0;
-    data = lbl_803123B0;
+    data = FinalLapBanner_Init_rodata_803123B0;
     active = 0;
     if (isJapanese() == 0) {
         obj = new Normal3D(data + 0x430, 0);

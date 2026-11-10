@@ -388,8 +388,8 @@ extern char lbl_806D0CA4[5];
 
 char lbl_804FBA58[33] = "tobj->repeat_s && tobj->repeat_t";
 
-extern GXTexCoordID lbl_806D0C90;
-extern Mtx lbl_806CCF80;
+extern GXTexCoordID HSD_TObjSetupTextureCoordGen_data_806D0C90;
+extern Mtx HSD_TObjSetupTextureCoordGen_bss_806CCF80;
 
 void MakeTextureMtx(HSD_TObj* tobj)
 {
@@ -497,11 +497,11 @@ static void TObjSetupMtx(HSD_TObj* tobj)
 
             GXLoadTexMtxImm(mtx, tobj->mtxid, GX_MTX3x4);
         } else {
-            static Mtx lbl_804FBA7C = {
+            static Mtx TObjSetupMtx_data_804FBA7C = {
                 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F,
                 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F
             };
-            GXLoadTexMtxImm(lbl_804FBA7C, tobj->mtxid, GX_MTX3x4);
+            GXLoadTexMtxImm(TObjSetupMtx_data_804FBA7C, tobj->mtxid, GX_MTX3x4);
         }
     } break;
 
@@ -552,11 +552,11 @@ static void setupTextureCoordGen(HSD_TObj* tobj)
         if (tobj_bump(tobj)) {
             GXSetTexCoordGen(tobj->coord, GX_TG_MTX2x4, tobj->src,
                              tobj->mtxid);
-        } else if (tobj->coord != lbl_806D0C90) {
+        } else if (tobj->coord != HSD_TObjSetupTextureCoordGen_data_806D0C90) {
             GXSetTexCoordGen2(tobj->coord, GX_TG_MTX2x4, tobj->src,
                               GX_IDENTITY, GX_DISABLE, tobj->mtxid);
         } else {
-            GXLoadTexMtxImm(lbl_806CCF80, GX_TEXMTX1, GX_MTX3x4);
+            GXLoadTexMtxImm(HSD_TObjSetupTextureCoordGen_bss_806CCF80, GX_TEXMTX1, GX_MTX3x4);
             GXSetTexCoordGen2(tobj->coord, GX_TG_MTX3x4, GX_TG_POS,
                               GX_TEXMTX1, GX_DISABLE, GX_PTIDENTITY);
         }
@@ -567,7 +567,7 @@ static void setupTextureCoordGenBump(HSD_TObj* bump)
 {
     u32 mask;
     int i;
-    static GXTexGenType lbl_804FBAAC[] = {
+    static GXTexGenType HSD_TObjSetupTextureCoordGen_data_804FBAAC[] = {
         GX_TG_BUMP0, GX_TG_BUMP1, GX_TG_BUMP2, GX_TG_BUMP3,
         GX_TG_BUMP4, GX_TG_BUMP5, GX_TG_BUMP6, GX_TG_BUMP7,
     };
@@ -583,7 +583,7 @@ static void setupTextureCoordGenBump(HSD_TObj* bump)
         i = 0;
     }
 
-    GXSetTexCoordGen((GXTexCoordID) (bump->coord + 1), lbl_804FBAAC[i],
+    GXSetTexCoordGen((GXTexCoordID) (bump->coord + 1), HSD_TObjSetupTextureCoordGen_data_804FBAAC[i],
                      HSD_TexCoordID2TexGenSrc(bump->coord), GX_IDENTITY);
 }
 
@@ -1470,7 +1470,7 @@ void fn_802D47F4(int);
 extern char lbl_806D0C94[7];
 extern char lbl_806D0CAC[2];
 extern char lbl_806D0CB0[5];
-extern char lbl_806D0CB8[4];
+extern char HSD_Index2TexMtx_data_806D0CB8[4];
 extern char lbl_806D0CBC[4];
 extern char lbl_806D0CC0[4];
 extern char lbl_806D0CC4[6];
@@ -1478,7 +1478,7 @@ extern char lbl_806D0CC4[6];
 #define __FILE__ lbl_806D0C94
 #undef HSD_ASSERT
 #define HSD_ASSERT(line, cond) ((cond) ? (void) 0 : __assert(__FILE__, line, (line) == 2212 ? lbl_806D0CBC : (line) == 2241 ? lbl_806D0CB0 : (line) == 2284 ? lbl_806D0CC0 : (line) == 2327 ? lbl_806D0CC4 : lbl_806D0CAC))
-#define HSD_Panic(file, line, msg) HSD_Panic(file, line, (line) == 2049 ? lbl_806D0CB8 : (msg))
+#define HSD_Panic(file, line, msg) HSD_Panic(file, line, (line) == 2049 ? HSD_Index2TexMtx_data_806D0CB8 : (msg))
 u32 HSD_TGTex2Index(GXTexGenSrc tgtex)
 {
     switch (tgtex) {

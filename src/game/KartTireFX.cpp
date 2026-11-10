@@ -52,7 +52,7 @@ void Object_RenderJObjTree(clNormal3D *model, int mask);
 void JObj_Show(clNormal3D *model, HSD_JObj *jobj, int flag);
 void JObj_Hide(clNormal3D *model, HSD_JObj *jobj, int flag);
 
-extern float lbl_803FE018[];
+extern float KartTireFX_Ctor_data_803FE018[];
 }
 
 static inline bool HSD_JObjMtxIsDirty(HSD_JObj *jobj)
@@ -227,9 +227,9 @@ KartTireFX::KartTireFX(int kind, int mode, HSD_JObj *srcFL, HSD_JObj *srcFR, HSD
         this->scale.y = 1000.0f;
         this->scale.z = 1000.0f;
     } else {
-        this->scale.x = lbl_803FE018[kind];
-        this->scale.y = lbl_803FE018[kind];
-        this->scale.z = lbl_803FE018[kind];
+        this->scale.x = KartTireFX_Ctor_data_803FE018[kind];
+        this->scale.y = KartTireFX_Ctor_data_803FE018[kind];
+        this->scale.z = KartTireFX_Ctor_data_803FE018[kind];
     }
 }
 

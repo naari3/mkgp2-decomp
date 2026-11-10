@@ -156,16 +156,16 @@ static inline float QuantizeInput(float v)
 struct TaBookend { Vec eye, target; };
 extern "C" {
 struct TaRecord { int character; const char *name; int score; float time; };
-extern Vec lbl_805D2B28, lbl_805D2B34;
-extern void *lbl_806D13B4, *lbl_806D13A4, *lbl_806D1398;
+extern Vec TaMode_FrameUpdate_bss_805D2B28, TaMode_FrameUpdate_bss_805D2B34;
+extern void *lbl_806D13B4, *TaMode_FrameUpdate_bss_806D13A4, *lbl_806D1398;
 extern void *g_raceCamera;
-extern TaGhostFrame *lbl_806D1388;
-extern unsigned int lbl_806D138C, lbl_806D1394;
-extern int lbl_806D139C, lbl_806CF198, lbl_806D13AC, lbl_806D13B0, lbl_806D13A8;
-extern unsigned char lbl_806D13A0, lbl_806D13A1, lbl_806D13B8;
-extern unsigned int lbl_806D13C0, lbl_806D13C4;
+extern TaGhostFrame *TaMode_FrameUpdate_bss_806D1388;
+extern unsigned int TaMode_FrameUpdate_bss_806D138C, TaMode_FrameUpdate_bss_806D1394;
+extern int TaMode_FrameUpdate_bss_806D139C, TaMode_FrameUpdate_data_806CF198, TaMode_FrameUpdate_bss_806D13AC, TaMode_FrameUpdate_bss_806D13B0, TaMode_FrameUpdate_bss_806D13A8;
+extern unsigned char TaMode_FrameUpdate_bss_806D13A0, lbl_806D13A1, TaMode_FrameUpdate_bss_806D13B8;
+extern unsigned int TaMode_FrameUpdate_bss_806D13C0, TaMode_FrameUpdate_bss_806D13C4;
 extern int g_longRoundFlag, g_reverseRoundFlag;
-extern float lbl_806CF19C;
+extern float TaMode_FrameUpdate_data_806CF19C;
 int __ptmf_test(const void *);
 void fn_8023E324(void *, int);
 int KartMovement_GetCurrentItemId(TaRender *);

@@ -1,8 +1,8 @@
 /* --- owned .data 0x803F7798..0x803F984C (tools/own_data.py) --- */
-extern char lbl_803F7780[];
-extern char lbl_80606060[];
+extern char KartItem_FlushRender_data_803F7780[];
+extern char KartItem_FlushRender_bss_80606060[];
 #pragma force_active on
-void *lbl_803F7798[23] = {
+void *KartItem_FlushRender_data_803F7798[23] = {
     (void *)0x0,
     (void *)0x0,
     (void *)0x0,
@@ -22,21 +22,21 @@ void *lbl_803F7798[23] = {
     (void *)0x30081,
     (void *)0x3F800000,
     (void *)0x1,
-    (void *)&lbl_803F7780,
+    (void *)&KartItem_FlushRender_data_803F7780,
     (void *)0x0,
     (void *)0x0,
     (void *)0x0
 };
-unsigned int lbl_803F77F4[5] = { 0x808080FF, 0xB3B3B3FF, 0xFFFFFFFF, 0x3F800000, 0x42480000 };
-void *lbl_803F7808[6] = {
+unsigned int KartItem_FlushRender_data_803F77F4[5] = { 0x808080FF, 0xB3B3B3FF, 0xFFFFFFFF, 0x3F800000, 0x42480000 };
+void *KartItem_DispatchEffectRenderByState_data_803F7808[6] = {
     (void *)0x0,
     (void *)0x201D,
-    (void *)&lbl_803F7798,
-    (void *)&lbl_803F77F4,
+    (void *)&KartItem_FlushRender_data_803F7798,
+    (void *)&KartItem_FlushRender_data_803F77F4,
     (void *)0x0,
     (void *)0x0
 };
-void *lbl_803F7820[2048] = {
+void *data_803F7690_data_803F7820[2048] = {
     (void *)0x21040000,
     (void *)0x2ABFBFBF,
     (void *)0x21040000,
@@ -852,7 +852,7 @@ void *lbl_803F7820[2048] = {
     (void *)0x94515ACB,
     (void *)0x785E565E,
     (void *)0xB5B69CD3,
-    (void *)&lbl_80606060,
+    (void *)&KartItem_FlushRender_bss_80606060,
     (void *)0xC638BDD7,
     (void *)0xA8EAFE7E,
     (void *)0xD69AC638,
@@ -2086,12 +2086,12 @@ void *lbl_803F7820[2048] = {
     (void *)0x10820841,
     (void *)0xFFFFFFBE
 };
-unsigned int lbl_803F9820[5] = { 0x808080FF, 0xB3B3B3FF, 0xFFFFFFFF, 0x3F000000, 0x42480000 };
-void *lbl_803F9834[6] = {
+unsigned int KartItem_FlushRender_data_803F9820[5] = { 0x808080FF, 0xB3B3B3FF, 0xFFFFFFFF, 0x3F000000, 0x42480000 };
+void *KartItem_DispatchEffectRenderByState_data_803F9834[6] = {
     (void *)0x0,
     (void *)0x4000200D,
     (void *)0x0,
-    (void *)&lbl_803F9820,
+    (void *)&KartItem_FlushRender_data_803F9820,
     (void *)0x0,
     (void *)0x0
 };
@@ -2212,10 +2212,10 @@ void KartItem_DispatchEffectRenderByState(KartItemRender *item)
     }
     switch (item->state128) {
     case 9:
-        fn_802C2274(lbl_803F7808);
+        fn_802C2274(KartItem_DispatchEffectRenderByState_data_803F7808);
         break;
     case 10:
-        fn_802C2274(lbl_803F9834);
+        fn_802C2274(KartItem_DispatchEffectRenderByState_data_803F9834);
         break;
     default:
         item->state128 = 0;

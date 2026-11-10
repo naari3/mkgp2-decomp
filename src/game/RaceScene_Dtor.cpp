@@ -49,7 +49,7 @@ struct RaceScene {
 extern "C" {
 extern char lbl_803211D8[];
 extern char g_RaceModeVtable[];
-extern char lbl_8040E76C[];
+extern char GameModeBase_vtable_8040E76C[];
 extern void *g_weatherSystem;
 extern CarObject *g_carObjects[];
 extern void *g_itemSelects[];
@@ -187,7 +187,7 @@ extern "C" RaceScene *RaceScene_Dtor(RaceScene *self, short flag)
         SetCourseScene3D(0);
         ProcessSystemTick(log + 0x4B8);
         if (self != 0) {
-            self->vtable = lbl_8040E76C;
+            self->vtable = GameModeBase_vtable_8040E76C;
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);

@@ -18,59 +18,59 @@ extern void fn_8020CD68();
 extern void fn_8020CE74();
 extern void fn_8020CEE8();
 extern void fn_8020D1B8();
-extern char lbl_806D0308[];
-extern char lbl_806D0310[];
-extern char lbl_806D0320[];
-extern char lbl_806D0328[];
-extern char lbl_806D0330[];
+extern char SceneBase_RTTI_806D0308[];
+extern char CardMenuRoot_RTTI_806D0310[];
+extern char data_804EC990_data_806D0320[];
+extern char data_804EC990_data_806D0328[];
+extern char data_804EC990_data_806D0330[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804EC990[3] = {
-    (void *)&lbl_806D0308,
+void *data_804EC990_data_804EC990[3] = {
+    (void *)&SceneBase_RTTI_806D0308,
     0,
     0
 };
-void *lbl_804EC99C[6] = {
-    (void *)&lbl_806D0320,
+void *GrandPrixMenu_vtable_804EC99C[6] = {
+    (void *)&data_804EC990_data_806D0320,
     0,
     (void *)fn_8020C290,
     (void *)fn_8020C21C,
     (void *)fn_8020BDC4,
     (void *)fn_8020BD68
 };
-void *lbl_804EC9B4[5] = {
-    (void *)&lbl_806D0308,
+void *data_804EC990_data_804EC9B4[5] = {
+    (void *)&SceneBase_RTTI_806D0308,
     0,
-    (void *)&lbl_806D0310,
+    (void *)&CardMenuRoot_RTTI_806D0310,
     0,
     0
 };
-void *lbl_804EC9C8[6] = {
-    (void *)&lbl_806D0328,
+void *CardMenuRoot_vtable_804EC9C8[6] = {
+    (void *)&data_804EC990_data_806D0328,
     0,
     (void *)fn_8020C830,
     (void *)fn_8020C7BC,
     (void *)fn_8020C69C,
     (void *)fn_8020C650
 };
-void *lbl_804EC9E0[5] = {
-    (void *)&lbl_806D0308,
+void *data_804EC990_data_804EC9E0[5] = {
+    (void *)&SceneBase_RTTI_806D0308,
     0,
-    (void *)&lbl_806D0310,
+    (void *)&CardMenuRoot_RTTI_806D0310,
     0,
     0
 };
 /* pointers mixed with values */
-void *lbl_804EC9F4[9] = {
-    (void *)&lbl_806D0330,
+void *CardModeRoot_vtable_804EC9F4[9] = {
+    (void *)&data_804EC990_data_806D0330,
     0,
     (void *)fn_8020CEE8,
     (void *)fn_8020CE74,
     (void *)fn_8020CD68,
     (void *)fn_8020CD18,
-    (void *)&lbl_806D0330,
+    (void *)&data_804EC990_data_806D0330,
     (void *)0xFFFFFFA4,
     (void *)fn_8020D1B8
 };

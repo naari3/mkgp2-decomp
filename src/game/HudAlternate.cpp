@@ -42,14 +42,14 @@ extern "C" void fn_80248DE8(HudRoot *self, unsigned int state) {
 }
 extern "C" HudRoot *fn_80248F48(HudRoot *self, short flag) {
     if (self) {
-        self->vptr=lbl_804EEC30; self->hostVptr=lbl_804EEC30+6;
+        self->vptr=HudAlternate_data_804EEC30; self->hostVptr=HudAlternate_data_804EEC30+6;
         dtor_80249274(self,0);
         if (flag>0) MemoryManager_TimedFree(self);
     }
     return self;
 }
 HudAlternate::HudAlternate() {
-    vptr=lbl_804EEC30; hostVptr=lbl_804EEC30+6;
+    vptr=HudAlternate_data_804EEC30; hostVptr=HudAlternate_data_804EEC30+6;
     state=0;
     ((HudEnterView *)this)->Enter(state);
 }

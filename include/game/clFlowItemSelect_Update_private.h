@@ -37,7 +37,7 @@ void fn_801B7EF8(void);
 void *ItemDisplay_GetOrCreate(void);
 void ItemDisplay_Update(void *);
 void fn_801CB818(ItemSelectFlow *);
-extern const char lbl_806CFE18[4];
+extern const char clFlowItemSelect_Update_data_806CFE18[4];
 extern const float lbl_806D9DBC, lbl_806D9DD0, lbl_806D9DD4, lbl_806D9DD8, lbl_806D9DDC, lbl_806D9DE0, lbl_806D9DE4, lbl_806D9DE8, lbl_806D9DEC, lbl_806D9DF0, lbl_806D9DF4, lbl_806D9DB0, lbl_806D9DF8;
 }
 #endif

@@ -14,8 +14,8 @@ void wcsncpy(void *, const void *, int);
 extern char *g_pInputState;
 extern char lbl_803BFF98[];
 extern char lbl_803BFFAC[];
-extern void *lbl_804EC1AC[];
-extern void *lbl_804EC1B8[];
+extern void *CardFlowMgr_vtable_804EC1AC[];
+extern void *CardFlowMgrBase_vtable_804EC1B8[];
 }
 
 struct S {
@@ -36,12 +36,12 @@ struct S {
 extern "C" {
 void *fn_801FE4D0(S *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_804EC1AC;
+        self->vt = CardFlowMgr_vtable_804EC1AC;
         fn_80209FA4();
         fn_801F9888();
         DebugPrintf(lbl_803BFF98);
         if (self != 0) {
-            self->vt = lbl_804EC1B8;
+            self->vt = CardFlowMgrBase_vtable_804EC1B8;
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);
@@ -111,7 +111,7 @@ int fn_801FE858(void) {
 #pragma exceptions on
 void *dtor_801FE870(void *self, short flag) {
     if (self != 0) {
-        *(void ***)self = lbl_804EC1B8;
+        *(void ***)self = CardFlowMgrBase_vtable_804EC1B8;
         if (flag > 0) {
             MemoryManager_TimedFree(self);
         }

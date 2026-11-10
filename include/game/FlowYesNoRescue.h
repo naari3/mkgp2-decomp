@@ -8,12 +8,12 @@
  * holding the two option buttons and a blinking cursor.
  *
  *   FlowTask
- *     YesNoTask    (vtable lbl_804EC4C0, size 0x24)
- *     YesNoCursor  (vtable lbl_804EC4D8, size 0x28)
- *     YesNoSpark   (vtable lbl_804EC504, size 0x2C)
- *     YesNoButton  (ctor fn_80207324, vtable lbl_804EC54C, size 0x6C)
- *       YesNoButtonL (vtable lbl_804EC534, size 0x84)
- *       YesNoButtonR (vtable lbl_804EC51C, size 0x74)
+ *     YesNoTask    (vtable YesNoTask_vtable_804EC4C0, size 0x24)
+ *     YesNoCursor  (vtable YesNoCursor_vtable_804EC4D8, size 0x28)
+ *     YesNoSpark   (vtable YesNoSpark_vtable_804EC504, size 0x2C)
+ *     YesNoButton  (ctor fn_80207324, vtable YesNoButton_vtable_804EC54C, size 0x6C)
+ *       YesNoButtonL (vtable YesNoButtonL_vtable_804EC534, size 0x84)
+ *       YesNoButtonR (vtable YesNoButtonR_vtable_804EC51C, size 0x74)
  */
 
 extern "C" {

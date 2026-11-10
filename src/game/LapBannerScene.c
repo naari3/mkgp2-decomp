@@ -49,7 +49,7 @@ extern char lbl_806D325C[7]; /* assert file string */
 extern char lbl_806D3264[5]; /* assert expr string ("jobj") */
 extern const float lbl_806D326C;   /* Y offset */
 extern const float lbl_806D3270;   /* yaw offset */
-extern char lbl_803127B8[0x58]; /* quaternion assert message */
+extern char LapBannerScene_UpdateAndDriveAnim_rodata_803127B8[0x58]; /* quaternion assert message */
 
 extern void __assert(char *, int, char *);
 extern void HSD_JObjSetMtxDirtySub(HSD_JObj *);
@@ -137,7 +137,7 @@ static void set_rotation_y(void *obj, float v) {
         __assert(lbl_806D325C, 0x2B8, lbl_806D3264);
     }
     if (jobj->flags & 0x00020000) {
-        __assert(lbl_806D325C, 0x2B9, lbl_803127B8);
+        __assert(lbl_806D325C, 0x2B9, LapBannerScene_UpdateAndDriveAnim_rodata_803127B8);
     }
     jobj->rotation_y = v;
     set_mtx_dirty(jobj);

@@ -16,7 +16,7 @@ int Path_CountWaypointsAndSnapGround(Waypoint *list)
 
     while (points->flag >= 0) {
         float height = points->y;
-        Vec3 pos = lbl_802EAF00;
+        Vec3 pos = Path_CountWaypointsAndSnapGround_rodata_802EAF00;
 
         pos.x = points->x;
         pos.y = points->y;

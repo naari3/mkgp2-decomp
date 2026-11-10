@@ -107,8 +107,8 @@ void DebugPrintf(const char *fmt, ...);
 int rand(void);
 }
 
-extern const unsigned int lbl_803D0390[0x102];
-extern const float lbl_803D0798[3];
+extern const unsigned int DNFlash_tail_rodata_803D0390[0x102];
+extern const float DNFlash_tail_rodata_803D0798[3];
 extern const float lbl_803D07A4[3];
 extern const float lbl_803D07B0[3];
 extern const TriggerBox lbl_803D07BC[4];

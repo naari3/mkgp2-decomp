@@ -510,18 +510,18 @@ char dspSlave[0x1EC0] = {
 #pragma force_active reset
 
 /* File-local data is not split into this unit yet: refer to it by address. */
-#define dsp_task lbl_806CAF20
-#define dram_image lbl_806CAF80
-#define userCallback lbl_806D20AC
-#define salAIBufferBase lbl_806D20A4
-#define salDspIsDone lbl_806D20A0
-#define salLogicIsWaiting lbl_806D209C
-#define salLogicActive lbl_806D2098
-#define salLastTick lbl_806D2094
-#define salDspInitIsDone lbl_806D2090
-#define salWaitForDSPThreadQueue lbl_806D2088
-#define hwIrqLevel lbl_806D2084
-#define oldState lbl_806D2080
+#define dsp_task hw_dolphin_bss_806CAF20
+#define dram_image salInitDsp_bss_806CAF80
+#define userCallback hw_dolphin_bss_806D20AC
+#define salAIBufferBase hw_dolphin_bss_806D20A4
+#define salDspIsDone hw_dolphin_bss_806D20A0
+#define salLogicIsWaiting hw_dolphin_bss_806D209C
+#define salLogicActive hw_dolphin_bss_806D2098
+#define salLastTick hw_dolphin_bss_806D2094
+#define salDspInitIsDone hw_dolphin_bss_806D2090
+#define salWaitForDSPThreadQueue hw_dolphin_bss_806D2088
+#define hwIrqLevel hw_dolphin_bss_806D2084
+#define oldState hw_dolphin_bss_806D2080
 
 extern DSPTaskInfo dsp_task;
 extern u16 dram_image[4096];

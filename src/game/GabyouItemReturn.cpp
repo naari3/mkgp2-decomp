@@ -40,7 +40,7 @@ float AngleStepTowards_Shortest(float, float, float);
 float Vec3_PitchTo(const GabyouReturnVec *, const GabyouReturnVec *);
 float BuildOrientationFromYaw(float);
 unsigned char FinalLapCoinJump_CheckActiveForObject(void *);
-extern const GabyouReturnTable lbl_8032FF10;
+extern const GabyouReturnTable GabyouItem_ReturnToHandTick_rodata_8032FF10;
 extern const float lbl_806D62C0, lbl_806D62C4, lbl_806D62F0;
 extern const float lbl_806D62F8, lbl_806D62FC, lbl_806D630C;
 
@@ -75,7 +75,7 @@ void GabyouItem_ReturnToHandTick(GabyouReturnItem *item, GabyouReturnContext *co
     }
     case 1: break;
     }
-    radius = lbl_8032FF10;
+    radius = GabyouItem_ReturnToHandTick_rodata_8032FF10;
     Vec3_Scale(&context->localPosition, &context->localPosition,
         (lbl_806D62C4 / Vec3_Magnitude_Wrapper(&context->localPosition)) *
         radius.value[KartCharacterParam_GetIdentityIndex(context->kart)]);

@@ -17,8 +17,8 @@ typedef struct BombWork {
     signed char launch;
 } BombWork;
 
-extern const Vec lbl_8032FA48;
-extern const Vec lbl_8032FA54;
+extern const Vec BombItem_TickActive_rodata_8032FA48;
+extern const Vec BombItem_TickActive_rodata_8032FA54;
 extern void Effect_TwoChild_Res8F_Update(unsigned char *self);
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int en);
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int anim, float frame);
@@ -76,7 +76,7 @@ void BombItem_TickActive(unsigned char *self, BombWork *w)
             F(0x2C) = 0.0f;
             self[0xCA]++;
         case 1:
-            Item_RenderHandheldByCharacter(self, lbl_8032FA48, lbl_8032FA54, 1, 1.0f);
+            Item_RenderHandheldByCharacter(self, BombItem_TickActive_rodata_8032FA48, BombItem_TickActive_rodata_8032FA54, 1, 1.0f);
             if (FinalLapCoinJump_CheckActiveForObject(w->driver)) {
                 self[0x28] = 0;
             } else {

@@ -17,7 +17,7 @@ typedef struct MarkerPath {
 #pragma force_active on
 
 const char lbl_8036C8B0[] = "DKA_bbird.dat";
-const MarkerPath lbl_8036C8C0[3] = {
+const MarkerPath CourseMarker_rodata_8036C8C0[3] = {
     { { 495.8888f, 219.7291f, -338.612f }, { 837.8581f, 86.7647f, -338.786f }, { 1179.826f, 219.7291f, -338.96f } },
     { { 839.8747f, 303.484f, 1954.701f }, { 646.2736f, 79.5133f, 1742.35f }, { 416.6758f, 94.8638f, 1459.574f } },
     { { -386.827f, 219.7291f, -1117.14f }, { -44.8578f, 86.7647f, -1117.32f }, { 297.111f, 219.7291f, -1117.49f } }

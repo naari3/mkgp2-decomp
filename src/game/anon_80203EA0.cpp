@@ -23,8 +23,8 @@ void fn_80204130(int layer);
 }
 
 extern "C" {
-extern const unsigned long lbl_806D0268[2];
-extern const unsigned long lbl_806D0260[2];
+extern const unsigned long MsgPopup_RTTI_806D0268[2];
+extern const unsigned long FlowTask_RTTI_806D0260[2];
 void *fn_80271340(void *, int, const void *, const void *, int);
 }
 
@@ -34,7 +34,7 @@ static inline int CloseMsgPopup() {
     }
     FlowTask *t = fn_801F4DC0(lbl_806D19E8, 0);
     if (t) {
-        MsgPopup *p = (MsgPopup *)fn_80271340(t, 0, lbl_806D0268, lbl_806D0260, 0);
+        MsgPopup *p = (MsgPopup *)fn_80271340(t, 0, MsgPopup_RTTI_806D0268, FlowTask_RTTI_806D0260, 0);
         if (p->state < 4) {
             fn_8020A734(p->scaleX.p, 5, lbl_806DAA9C, lbl_806DAA98);
             fn_8020A734(p->scaleY.p, 5, lbl_806DAAA4, lbl_806DAAA0);

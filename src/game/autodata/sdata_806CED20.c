@@ -14,10 +14,10 @@ extern char lbl_802E98BC[];
 extern char lbl_802E98E0[];
 extern char lbl_802E98F0[];
 extern char lbl_802E9950[];
-extern char lbl_803F5698[];
+extern char sdata_806CED20_data_803F5698[];
 extern char lbl_803F56D0[];
 extern char lbl_803F56DC[];
-extern char lbl_803F5748[];
+extern char sdata_806CED20_data_803F5748[];
 extern char lbl_806D22C0[];
 
 /* layout as declared in src/game/BootDispatcher.cpp */
@@ -48,17 +48,17 @@ unsigned char lbl_806CED30 = 0x1;
 BootColor lbl_806CED34[1] = {
     { 0, 0, 0, 0xFF }
 };
-const char *lbl_806CED38[2] = {
+const char *data_803F5698_data_806CED38[2] = {
     (const char *)&lbl_802E96A8, 0
 };
-void *lbl_806CED40[2] = {
+void *data_803F5698_data_806CED40[2] = {
     (void *)&lbl_806D22C0,
-    (void *)&lbl_803F5698
+    (void *)&sdata_806CED20_data_803F5698
 };
-unsigned int lbl_806CED48[2] = {
+unsigned int DeadCounter_Set_ced48_data_806CED48[2] = {
     0x7, 0x0
 };
-const char *lbl_806CED50[2] = {
+const char *data_803F5698_data_806CED50[2] = {
     (const char *)&lbl_802E96C4, 0
 };
 /* decl: CollData * / TerrainGrid * / void * */
@@ -77,12 +77,12 @@ void *lbl_806CED70[2] = {
     (void *)&lbl_802E9898,
     (void *)&lbl_803F56DC
 };
-const char *lbl_806CED78[2] = {
+const char *data_803F5698_data_806CED78[2] = {
     (const char *)&lbl_802E98F0, 0
 };
-void *lbl_806CED80[2] = {
+void *data_803F5698_data_806CED80[2] = {
     (void *)&lbl_802E98E0,
-    (void *)&lbl_803F5748
+    (void *)&sdata_806CED20_data_803F5748
 };
 const char *lbl_806CED88[2] = {
     (const char *)&lbl_802E9950, 0

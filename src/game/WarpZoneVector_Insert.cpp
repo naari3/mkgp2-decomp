@@ -12,7 +12,7 @@ void *FUN_8003b120(unsigned long);
 void *Alloc(unsigned long);
 void MemoryManager_TimedFree(void *);
 extern const char lbl_803284A4[];
-extern const char lbl_803284F8[];
+extern const char WarpZoneVector_Reserve_rodata_803284F8[];
 }
 inline void *operator new(unsigned long, void *p) { return p; }
 inline void operator delete(void *, void *) {}
@@ -79,7 +79,7 @@ WarpZoneVectorStorage::~WarpZoneVectorStorage() {
 #pragma auto_inline off
 extern "C" void WarpZoneVector_Reserve(WarpZoneVectorStorage *s, unsigned long n) {
     if (n > s->capacity) {
-        if (n > 0x03333333) throw std::length_error(lbl_803284F8);
+        if (n > 0x03333333) throw std::length_error(WarpZoneVector_Reserve_rodata_803284F8);
         WarpZoneVectorStorage temp;
         temp.data = (WarpZoneValue *)Alloc(n * sizeof(WarpZoneValue));
         temp.capacity = n;

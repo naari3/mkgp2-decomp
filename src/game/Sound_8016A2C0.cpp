@@ -1,6 +1,6 @@
 /*
  * 0x8016A2C0..0x8016A3D4: looping sound emitter tick and its deleting
- * destructor (vtable lbl_8049102C, base vtable lbl_80490FE0).
+ * destructor (vtable Kiri16A_vtable_8049102C, base vtable lbl_80490FE0).
  */
 
 struct LoopSE {
@@ -11,7 +11,7 @@ struct LoopSE {
 };
 
 extern "C" {
-extern char lbl_8049102C[];
+extern char Kiri16A_vtable_8049102C[];
 extern char lbl_80490FE0[];
 extern char lbl_8036C9B4[];
 extern unsigned char SoundMgr_PlaySE(int);
@@ -35,7 +35,7 @@ void fn_8016A2C0(LoopSE *self) {
 
 LoopSE *fn_8016A32C(LoopSE *self, short flag) {
     if (self) {
-        self->vtable = lbl_8049102C;
+        self->vtable = Kiri16A_vtable_8049102C;
         if (self->pos) {
             MemoryManager_Free(self->pos);
         }

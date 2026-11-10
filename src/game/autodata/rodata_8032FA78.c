@@ -9,7 +9,7 @@
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const unsigned int lbl_8032FA78[255] = {
+const unsigned int TornadoItem_HoldTick_rodata_8032FA78[255] = {
     0x3F800000, 0x3F333333, 0x3F666666, 0x0, 0x0, 0x43FA0000, 0x42855556, 0x447A0000,
     0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000,
     0x42855556, 0x0, 0x0, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000,
@@ -45,7 +45,7 @@ const unsigned int lbl_8032FA78[255] = {
 };
 /* decl: unsigned int */
 const char lbl_8032FE74[] = "tornado_tornado_joint";
-const unsigned int lbl_8032FE8C[33] = {
+const unsigned int Tornado_FlightTick_rodata_8032FE8C[33] = {
     0x746F726E, 0x61646F5F, 0x746F726E, 0x61646F32, 0x5F6A6F69, 0x6E740000, 0x746F726E, 0x61646F5F,
     0x6974656D, 0x5F747275, 0x6E61646F, 0x5F697465, 0x6D315F6A, 0x6F696E74, 0x0, 0x746F726E,
     0x61646F5F, 0x6974656D, 0x5F747275, 0x6E61646F, 0x5F697465, 0x6D325F6A, 0x6F696E74, 0x0,
@@ -53,20 +53,20 @@ const unsigned int lbl_8032FE8C[33] = {
     0x0
 };
 /* decl: GabyouReturnTable */
-const float lbl_8032FF10[12] = {
+const float GabyouItem_ReturnToHandTick_rodata_8032FF10[12] = {
     3.5f, 4.0f, 2.5f, 3.0f, 3.5f, 3.0f, 3.0f, 3.0f,
     4.0f, 4.0f, 2.0f, 0.0f
 };
 /* decl: Vec */
-const float lbl_8032FF40[4] = {
+const float BombItem_DropAndSpawnExplosionTick_rodata_8032FF40[4] = {
     0.0f, 1e+01f, -1e+01f, 0.0f
 };
 /* decl: Vec */
-const float lbl_8032FF50[4] = {
+const float HandOverItem_HandToHandTick_rodata_8032FF50[4] = {
     0.0f, 7.0f, 1e+01f, 0.0f
 };
 /* decl: StarFlightConstants */
-const float lbl_8032FF60[261] = {
+const float StarItem_FlightAndLockOnTick_rodata_8032FF60[261] = {
     1.0f, 0.7f, 0.9f, 0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f,
     66.66667f, 2e+03f, 66.66667f, 3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f,
     66.66667f, 0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f,
@@ -101,7 +101,7 @@ const float lbl_8032FF60[261] = {
     83.333336f, 3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f, 13.0f,
     0.2f, 0.0f, 0.0f, 1.570796f, 0.0f
 };
-const Vec3 lbl_80330374[1] = {
+const Vec3 StarItem_BoundToVictimTick_rodata_80330374[1] = {
     { 0.0f, 0.0f, 0.0f }
 };
 const char lbl_80330380[] = "item_center_joint";

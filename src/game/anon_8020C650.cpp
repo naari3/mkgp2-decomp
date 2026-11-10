@@ -21,7 +21,7 @@ struct FlowMgrInfo {
     int f188[3];
 };
 
-/* Menu mode base (vtable lbl_804E549C, ctor fn_801F5B54). */
+/* Menu mode base (vtable MenuModeBase_vtable_804E549C, ctor fn_801F5B54). */
 struct MenuModeBase : SceneBase {
     virtual void _key();
     int f08;

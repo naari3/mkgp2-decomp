@@ -12,7 +12,7 @@ extern char lbl_802EAC60[];
 extern char lbl_802EAC84[];
 extern char lbl_802EACA8[];
 extern char lbl_802EACC8[];
-extern char lbl_802EACE8[];
+extern char KartDriver_InitFull_rodata_802EACE8[];
 extern char lbl_802EB4D0[];
 extern char lbl_802EDA00[];
 extern char lbl_802EDA0C[];
@@ -50,9 +50,9 @@ extern char lbl_8030E5BC[];
 extern char lbl_8030E5C8[];
 extern char lbl_8030E5D4[];
 extern char lbl_8030E5FC[];
-extern char lbl_8030E60C[];
+extern char CardCreate_Page_rodata_8030E60C[];
 extern char lbl_803100EC[];
-extern char lbl_803100F8[];
+extern char CardCreate_Page_rodata_803100F8[];
 extern char lbl_80310DB8[];
 extern char lbl_80310DD4[];
 extern char lbl_80311B30[];
@@ -62,27 +62,27 @@ extern char lbl_80311BBC[];
 extern char lbl_80311C50[];
 extern char lbl_80311D78[];
 extern char lbl_80311D88[];
-extern char lbl_803F58F0[];
-extern char lbl_803F75EC[];
+extern char data_803F57E0_data_803F58F0[];
+extern char data_803F75D0_data_803F75EC[];
 extern char lbl_803F769C[];
-extern char lbl_803F76B8[];
-extern char lbl_803F76D8[];
-extern char lbl_803F76F8[];
-extern char lbl_803F7718[];
-extern char lbl_803F774C[];
-extern char lbl_803F9B48[];
-extern char lbl_803F9B68[];
-extern char lbl_803F9B88[];
-extern char lbl_803F9BA8[];
-extern char lbl_803F9BC8[];
-extern char lbl_803F9BE8[];
-extern char lbl_803F9C08[];
-extern char lbl_803F9C3C[];
-extern char lbl_803F9CD8[];
-extern char lbl_803F9EE0[];
-extern char lbl_803FBF28[];
-extern char lbl_803FBF5C[];
-extern char lbl_803FDE58[];
+extern char data_803F7690_data_803F76B8[];
+extern char data_803F7690_data_803F76D8[];
+extern char data_803F7690_data_803F76F8[];
+extern char data_803F7690_data_803F7718[];
+extern char data_803F7690_data_803F774C[];
+extern char data_803F9B48_data_803F9B48[];
+extern char data_803F9B48_data_803F9B68[];
+extern char data_803F9B48_data_803F9B88[];
+extern char data_803F9B48_data_803F9BA8[];
+extern char data_803F9B48_data_803F9BC8[];
+extern char data_803F9B48_data_803F9BE8[];
+extern char data_803F9B48_data_803F9C08[];
+extern char data_803F9B48_data_803F9C3C[];
+extern char data_803F9CD8_data_803F9CD8[];
+extern char clMiyoshiCardCreate_data_803F9EE0[];
+extern char data_803F9F2C_data_803FBF28[];
+extern char data_803F9F2C_data_803FBF5C[];
+extern char CardCreate_Page_data_803FDE58[];
 extern char lbl_803FDF34[];
 extern char lbl_803FE050[];
 extern char lbl_803FE0A0[];
@@ -97,58 +97,58 @@ extern char lbl_806D2C94[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const char *lbl_806CEDA0[2] = {
+const char *data_803F57E0_data_806CEDA0[2] = {
     (const char *)&lbl_802E9D28, 0
 };
-const char *lbl_806CEDA8[2] = {
+const char *data_803F57E0_data_806CEDA8[2] = {
     (const char *)&lbl_802E9D44, 0
 };
-void *lbl_806CEDB0[2] = {
+void *data_803F57E0_data_806CEDB0[2] = {
     (void *)&lbl_802E9D38,
-    (void *)&lbl_803F58F0
+    (void *)&data_803F57E0_data_803F58F0
 };
-float lbl_806CEDB8 = 301.0f;
+float LakituStart_UpdateCountdown_data_806CEDB8 = 301.0f;
 float lbl_806CEDBC = 3.3e+02f;
 float lbl_806CEDC0 = 18.0f;
 float lbl_806CEDC4 = -27.0f;
 float lbl_806CEDC8 = 6e+01f;
-float lbl_806CEDCC = 2.8797932f;
-float lbl_806CEDD0[2] = {
+float LakituStart_UpdateCountdown_data_806CEDCC = 2.8797932f;
+float LakituStart_Init_data_806CEDD0[2] = {
     1.0f, 0.0f
 };
 /* decl: char * / unsigned int */
-const char *lbl_806CEDD8[1] = {
+const char *KartDriver_InitFull_data_806CEDD8[1] = {
     (const char *)&lbl_802EAC60
 };
 /* decl: char * / unsigned int */
-const char *lbl_806CEDDC[1] = {
+const char *KartDriver_InitFull_data_806CEDDC[1] = {
     (const char *)&lbl_802EAC84
 };
 /* decl: char * / unsigned int */
-const char *lbl_806CEDE0[1] = {
+const char *KartDriver_InitFull_data_806CEDE0[1] = {
     (const char *)&lbl_802EACA8
 };
 /* decl: char * / unsigned int */
-const char *lbl_806CEDE4[1] = {
+const char *KartDriver_InitFull_data_806CEDE4[1] = {
     (const char *)&lbl_802EACC8
 };
 /* decl: char * / unsigned int */
-void *lbl_806CEDE8[2] = {
-    (void *)&lbl_802EACE8,
+void *KartDriver_InitFull_data_806CEDE8[2] = {
+    (void *)&KartDriver_InitFull_rodata_802EACE8,
     0
 };
-const char *lbl_806CEDF0[2] = {
+const char *data_803F60B4_data_806CEDF0[2] = {
     (const char *)&lbl_802EB4D0, 0
 };
-int lbl_806CEDF8[2] = {
+int CoinEvent_PlayAlternatingSE_data_806CEDF8[2] = {
     7, 8
 };
-const char *lbl_806CEE00[2] = {
+const char *data_803F75D0_data_806CEE00[2] = {
     (const char *)&lbl_802EDA0C, 0
 };
-void *lbl_806CEE08[2] = {
+void *data_803F75D0_data_806CEE08[2] = {
     (void *)&lbl_802EDA00,
-    (void *)&lbl_803F75EC
+    (void *)&data_803F75D0_data_803F75EC
 };
 const char *lbl_806CEE10[2] = {
     (const char *)&lbl_802EDA54, 0
@@ -160,25 +160,25 @@ void *lbl_806CEE18[2] = {
 const char *lbl_806CEE20[2] = {
     (const char *)&lbl_802EDB90, 0
 };
-void *lbl_806CEE28[2] = {
+void *data_803F7690_data_806CEE28[2] = {
     (void *)&lbl_802EDB68,
-    (void *)&lbl_803F76B8
+    (void *)&data_803F7690_data_803F76B8
 };
-void *lbl_806CEE30[2] = {
+void *data_803F7690_data_806CEE30[2] = {
     (void *)&lbl_802EDBB0,
-    (void *)&lbl_803F76D8
+    (void *)&data_803F7690_data_803F76D8
 };
-void *lbl_806CEE38[2] = {
+void *data_803F7690_data_806CEE38[2] = {
     (void *)&lbl_802EDBD0,
-    (void *)&lbl_803F76F8
+    (void *)&data_803F7690_data_803F76F8
 };
-void *lbl_806CEE40[2] = {
+void *data_803F7690_data_806CEE40[2] = {
     (void *)&lbl_802EDBF0,
-    (void *)&lbl_803F7718
+    (void *)&data_803F7690_data_803F7718
 };
-void *lbl_806CEE48[2] = {
+void *data_803F7690_data_806CEE48[2] = {
     (void *)&lbl_802EDC14,
-    (void *)&lbl_803F774C
+    (void *)&data_803F7690_data_803F774C
 };
 void *lbl_806CEE50[2] = {
     (void *)0x1,
@@ -187,37 +187,37 @@ void *lbl_806CEE50[2] = {
 const char *lbl_806CEE58[2] = {
     (const char *)&lbl_802EDDE4, 0
 };
-void *lbl_806CEE60[2] = {
+void *data_803F9B48_data_806CEE60[2] = {
     (void *)&lbl_802EDDC4,
-    (void *)&lbl_803F9B48
+    (void *)&data_803F9B48_data_803F9B48
 };
-void *lbl_806CEE68[2] = {
+void *data_803F9B48_data_806CEE68[2] = {
     (void *)&lbl_802EDE00,
-    (void *)&lbl_803F9B68
+    (void *)&data_803F9B48_data_803F9B68
 };
-void *lbl_806CEE70[2] = {
+void *data_803F9B48_data_806CEE70[2] = {
     (void *)&lbl_802EDE20,
-    (void *)&lbl_803F9B88
+    (void *)&data_803F9B48_data_803F9B88
 };
-void *lbl_806CEE78[2] = {
+void *data_803F9B48_data_806CEE78[2] = {
     (void *)&lbl_802EDE4C,
-    (void *)&lbl_803F9BA8
+    (void *)&data_803F9B48_data_803F9BA8
 };
-void *lbl_806CEE80[2] = {
+void *data_803F9B48_data_806CEE80[2] = {
     (void *)&lbl_802EDE6C,
-    (void *)&lbl_803F9BC8
+    (void *)&data_803F9B48_data_803F9BC8
 };
-void *lbl_806CEE88[2] = {
+void *data_803F9B48_data_806CEE88[2] = {
     (void *)&lbl_802EDE8C,
-    (void *)&lbl_803F9BE8
+    (void *)&data_803F9B48_data_803F9BE8
 };
-void *lbl_806CEE90[2] = {
+void *data_803F9B48_data_806CEE90[2] = {
     (void *)&lbl_802EDEB0,
-    (void *)&lbl_803F9C08
+    (void *)&data_803F9B48_data_803F9C08
 };
-void *lbl_806CEE98[2] = {
+void *data_803F9B48_data_806CEE98[2] = {
     (void *)&lbl_802EDED4,
-    (void *)&lbl_803F9C3C
+    (void *)&data_803F9B48_data_803F9C3C
 };
 int lbl_806CEEA0[2] = {
     -1, 0
@@ -225,39 +225,39 @@ int lbl_806CEEA0[2] = {
 const char *lbl_806CEEA8[2] = {
     (const char *)&lbl_802EDFEC, 0
 };
-void *lbl_806CEEB0[2] = {
+void *data_803F9CD8_data_806CEEB0[2] = {
     (void *)&lbl_802EDFD8,
-    (void *)&lbl_803F9CD8
+    (void *)&data_803F9CD8_data_803F9CD8
 };
 const char *lbl_806CEEB8[2] = {
     (const char *)&lbl_802EE010, 0
 };
-char *lbl_806CEEC0[2] = {
+char *clMiyoshiCardCreate_Draw_data_806CEEC0[2] = {
     (char *)&lbl_806D2A44,
     (char *)&lbl_806D2A48
 };
-char *lbl_806CEEC8[2] = {
+char *clMiyoshiCardCreate_Draw_data_806CEEC8[2] = {
     (char *)&lbl_802EE04C,
     (char *)&lbl_802EE058
 };
-char *lbl_806CEED0[2] = {
+char *clMiyoshiCardCreate_Draw_data_806CEED0[2] = {
     (char *)&lbl_806D2A4C,
     (char *)&lbl_802EE064
 };
-char *lbl_806CEED8[2] = {
+char *clMiyoshiCardCreate_Draw_data_806CEED8[2] = {
     (char *)&lbl_802EE08C,
     (char *)&lbl_802EE09C
 };
 /* decl: char */
-const char *lbl_806CEEE0[2] = {
+const char *clMiyoshiCardCreate_data_806CEEE0[2] = {
     (const char *)&lbl_802EE23C, 0
 };
 /* decl: char */
-void *lbl_806CEEE8[2] = {
+void *clMiyoshiCardCreate_data_806CEEE8[2] = {
     (void *)&lbl_802EE230,
-    (void *)&lbl_803F9EE0
+    (void *)&clMiyoshiCardCreate_data_803F9EE0
 };
-unsigned int lbl_806CEEF0[2] = {
+unsigned int PlayCamera_Init_data_806CEEF0[2] = {
     0x42, 0x0
 };
 int lbl_806CEEF8 = 6;
@@ -265,42 +265,42 @@ int lbl_806CEEFC = -1;
 const char *lbl_806CEF00[2] = {
     (const char *)&lbl_802EE540, 0
 };
-void *lbl_806CEF08[2] = {
+void *data_803F9F2C_data_806CEF08[2] = {
     (void *)&lbl_802EE520,
-    (void *)&lbl_803FBF28
+    (void *)&data_803F9F2C_data_803FBF28
 };
-void *lbl_806CEF10[2] = {
+void *data_803F9F2C_data_806CEF10[2] = {
     (void *)&lbl_802EE558,
-    (void *)&lbl_803FBF5C
+    (void *)&data_803F9F2C_data_803FBF5C
 };
 unsigned short lbl_806CEF18[4] = {
     0xFFFF, 0x0, 0x0, 0x0
 };
-unsigned int lbl_806CEF20[2] = {
+unsigned int DMAChannelManager_Init_data_806CEF20[2] = {
     0x8, 0x0
 };
-const char *lbl_806CEF28[2] = {
+const char *CardCreate_Page_data_806CEF28[2] = {
     (const char *)&lbl_806D2C8C, (const char *)&lbl_806D2C90
 };
-const char *lbl_806CEF30[2] = {
+const char *CardCreate_Page_data_806CEF30[2] = {
     (const char *)&lbl_8030E5BC, (const char *)&lbl_8030E5C8
 };
-const char *lbl_806CEF38[2] = {
+const char *CardCreate_Page_data_806CEF38[2] = {
     (const char *)&lbl_806D2C94, (const char *)&lbl_8030E5D4
 };
-void *lbl_806CEF40[2] = {
+void *CardCreate_Page_data_806CEF40[2] = {
     (void *)&lbl_8030E5FC,
-    (void *)&lbl_8030E60C
+    (void *)&CardCreate_Page_rodata_8030E60C
 };
 /* decl: char */
-void *lbl_806CEF48[2] = {
-    (void *)&lbl_803100F8,
+void *CardCreate_Page_data_806CEF48[2] = {
+    (void *)&CardCreate_Page_rodata_803100F8,
     0
 };
 /* decl: char */
-void *lbl_806CEF50[2] = {
+void *CardCreate_Page_data_806CEF50[2] = {
     (void *)&lbl_803100EC,
-    (void *)&lbl_803FDE58
+    (void *)&CardCreate_Page_data_803FDE58
 };
 const char *lbl_806CEF58[2] = {
     (const char *)&lbl_80310DB8, 0
@@ -312,8 +312,8 @@ void *lbl_806CEF60[2] = {
 unsigned char lbl_806CEF68 = 0x1;
 unsigned char lbl_806CEF69 = 0x1;
 /* 8-aligned in the original: probably the first object of a TU */
-float lbl_806CEF70 __attribute__((aligned(8))) = 16.0f;
-float lbl_806CEF74 = 16.0f;
+float data_803FDF28_data_806CEF70 __attribute__((aligned(8))) = 16.0f;
+float data_803FDF28_data_806CEF74 = 16.0f;
 const char *lbl_806CEF78[2] = {
     (const char *)&lbl_80311B40, 0
 };
@@ -341,13 +341,13 @@ void *lbl_806CEFB0[2] = {
     (void *)&lbl_80311D78,
     (void *)&lbl_803FE370
 };
-float lbl_806CEFB8 = 1.0f;
-float lbl_806CEFBC = 1.2e+02f;
+float Jyugemu_Flag_Ctor_data_806CEFB8 = 1.0f;
+float Jyugemu_Flag_Ctor_data_806CEFBC = 1.2e+02f;
 /* decl: u8 / unsigned char */
 unsigned char lbl_806CEFC0[8] = {
     0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 };
-unsigned char lbl_806CEFC8[8] = {
+unsigned char PCBCheckRecv_data_806CEFC8[8] = {
     0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0
 };
 

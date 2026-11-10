@@ -36,7 +36,7 @@ extern const float lbl_806D62B8;
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
 extern void Tornado_FlightTick();
 extern unsigned int fn_800D748C[];
-extern unsigned int lbl_8032FA78[];
+extern unsigned int TornadoItem_HoldTick_rodata_8032FA78[];
 
 /* --- function index (1 fns, .text 0x800F9FD4..0x800FA3D8) ---
  * [  0] 0x800F9FD4 size:0x404   global TornadoItem_HoldTick
@@ -73,7 +73,7 @@ void TornadoItem_HoldTick(char *self)
     float handMtx[16];
     float m[16];
     char *sub = self + 0xec;
-    char *names = (char *)lbl_8032FA78;
+    char *names = (char *)TornadoItem_HoldTick_rodata_8032FA78;
     char **slot;
     char *shot;
     int i;
@@ -182,8 +182,8 @@ asm void TornadoItem_HoldTick(void) { /* 0x800F9FD4 size:0x404 */
     stw r0, 0xa4(r1)
     stmw r26, 0x88(r1)
     mr r26, r3
-    lis r3, lbl_8032FA78@ha
-    addi r30, r3, lbl_8032FA78@l
+    lis r3, TornadoItem_HoldTick_rodata_8032FA78@ha
+    addi r30, r3, TornadoItem_HoldTick_rodata_8032FA78@l
     addi r28, r26, 0xec
     lbz r0, 0xc8(r26)
     extsb r0, r0

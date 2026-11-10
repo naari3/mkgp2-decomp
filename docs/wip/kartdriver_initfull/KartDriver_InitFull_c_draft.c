@@ -105,7 +105,7 @@ const char lbl_802EAC60[] = "chara_robo_mario_info_null_joint";
 const char lbl_802EAC84[] = "chara_robo_mario_r_hand_null_joint";
 const char lbl_802EACA8[] = "chara_robo_mario_hand_goo_joint";
 const char lbl_802EACC8[] = "chara_robo_mario_hand_pa_joint";
-const unsigned int lbl_802EACE8[53] = { 0x63686172, 0x615F726F, 0x626F5F6D, 0x6172696F, 0x5F686561, 0x645F6E75, 0x6C6C5F6A, 0x6F696E74, 0x00000000, 0x6974656D, 0x5F62617A, 0x6F6F6B61, 0x2E646174, 0x00000000, 0x6974656D, 0x5F62617A, 0x6F6F6B61, 0x5F697465, 0x6D5F706F, 0x73697469, 0x6F6E5F6A, 0x6F696E74, 0x00000000, 0x6974656D, 0x5F62617A, 0x6F6F6B61, 0x5F62616E, 0x616E615F, 0x6A6F696E, 0x74000000, 0x6974656D, 0x5F62617A, 0x6F6F6B61, 0x5F646F6B, 0x755F6261, 0x6E616E61, 0x5F6A6F69, 0x6E740000, 0x6974656D, 0x5F62617A, 0x6F6F6B61, 0x5F646173, 0x685F6B69, 0x6E6F6B6F, 0x5F6A6F69, 0x6E740000, 0x6974656D, 0x5F62617A, 0x6F6F6B61, 0x5F6B696C, 0x6C65725F, 0x6A6F696E, 0x74000000 };
+const unsigned int KartDriver_InitFull_rodata_802EACE8[53] = { 0x63686172, 0x615F726F, 0x626F5F6D, 0x6172696F, 0x5F686561, 0x645F6E75, 0x6C6C5F6A, 0x6F696E74, 0x00000000, 0x6974656D, 0x5F62617A, 0x6F6F6B61, 0x2E646174, 0x00000000, 0x6974656D, 0x5F62617A, 0x6F6F6B61, 0x5F697465, 0x6D5F706F, 0x73697469, 0x6F6E5F6A, 0x6F696E74, 0x00000000, 0x6974656D, 0x5F62617A, 0x6F6F6B61, 0x5F62616E, 0x616E615F, 0x6A6F696E, 0x74000000, 0x6974656D, 0x5F62617A, 0x6F6F6B61, 0x5F646F6B, 0x755F6261, 0x6E616E61, 0x5F6A6F69, 0x6E740000, 0x6974656D, 0x5F62617A, 0x6F6F6B61, 0x5F646173, 0x685F6B69, 0x6E6F6B6F, 0x5F6A6F69, 0x6E740000, 0x6974656D, 0x5F62617A, 0x6F6F6B61, 0x5F6B696C, 0x6C65725F, 0x6A6F696E, 0x74000000 };
 const unsigned int lbl_802EADBC[81] = { 0x21286A6F, 0x626A2D3E, 0x666C6167, 0x73202620, 0x4A4F424A, 0x5F555345, 0x5F515541, 0x5445524E, 0x494F4E29, 0x00000000, 0x68636861, 0x72615F6D, 0x616D6574, 0x63685F68, 0x6165645F, 0x68617070, 0x795F6A6F, 0x696E7400, 0x63686172, 0x615F6D61, 0x6D657463, 0x685F6861, 0x65645F6E, 0x6F726D61, 0x6C5F6A6F, 0x696E7400, 0x63686172, 0x615F6D61, 0x6D657463, 0x685F6861, 0x65645F73, 0x61645F6A, 0x6F696E74, 0x00000000, 0x77616C75, 0x6967695F, 0x63617274, 0x5F537573, 0x70656E73, 0x696F6E5F, 0x6A6F696E, 0x74000000, 0x6D6F6E73, 0x7465725F, 0x63617274, 0x5F70726F, 0x70656C6C, 0x65725F6A, 0x6F696E74, 0x00000000, 0x6D6F6E73, 0x7465725F, 0x63617274, 0x5F77696E, 0x675F6A6F, 0x696E7400, 0x6D616D65, 0x7463685F, 0x63617274, 0x5F626172, 0x5F6A6F69, 0x6E740000, 0x63686172, 0x615F7065, 0x6163685F, 0x706F6E79, 0x5F6E756C, 0x6C5F6A6F, 0x696E7400, 0x70656163, 0x685F706F, 0x6E792E64, 0x61740000, 0x63686172, 0x615F6B6F, 0x6F70615F, 0x66697265, 0x5F6E756C, 0x6C5F6A6F, 0x696E7400, 0x00000000 };
 #pragma force_active reset
 /* Complete genuine C++ reconstruction, bounded after three structural approaches.
@@ -159,8 +159,8 @@ struct CharacterEntry { unsigned char pad00[4]; const char *file,*anim,*other; u
 struct KDData { unsigned char pad00[0x78]; const char *shadow[13]; const char *shadowSp[13]; const char *override[13][4]; unsigned char pad1B0[0xC4]; CharacterEntry special[2]; };
 struct JointMatrix { unsigned char pad00[28]; float value; };
 extern "C" {
-extern int g_cupId,g_roundIndex; extern unsigned char lbl_803F5928[];
-extern const char *lbl_806CEDD8,*lbl_806CEDDC,*lbl_806CEDE0,*lbl_806CEDE4,*lbl_806CEDE8;
+extern int g_cupId,g_roundIndex; extern unsigned char KartDriver_InitFull_data_803F5928[];
+extern const char *KartDriver_InitFull_data_806CEDD8,*KartDriver_InitFull_data_806CEDDC,*KartDriver_InitFull_data_806CEDE0,*KartDriver_InitFull_data_806CEDE4,*KartDriver_InitFull_data_806CEDE8;
 extern const float lbl_806D264C,lbl_806D2650,lbl_806D2654,lbl_806D2658;
 int fn_801B5BF4(int,int,int,Driver*);
 extern const char *chara_mario_hand_fin_joint[];
@@ -210,7 +210,7 @@ static inline void BlendRoots(Driver *self, void *to) {
     ObjectTree_BlendOrCopy_Timed(self->character,Archive_GetRootJObj(self->animation),to,0,lbl_806D2540);
 }
 extern "C" int KartDriver_InitFull(Driver *self,int id,int characterId,void *matrix,int slot,int a8,int mode) {
-    KDData *data=(KDData*)lbl_803F5928;
+    KDData *data=(KDData*)KartDriver_InitFull_data_803F5928;
     const char *pool=(const char*)lbl_802E9F80;
     fn_801B5BF4(slot,id,characterId,self);
     int special=-1;
@@ -275,12 +275,12 @@ extern "C" int KartDriver_InitFull(Driver *self,int id,int characterId,void *mat
     self->mufflerR=ResolveJointByName(self->kart,mario_cart_muffler_r_joint[characterId]);
     self->teresa=ResolveJointByName(self->kart,mario_cart_teresa_null_joint[characterId]);
     if (special>=0) {
-        self->info=ResolveJointByName(self->character,lbl_806CEDD8);
-        self->head=ResolveJointByName(self->character,lbl_806CEDE8);
-        self->handNull=ResolveJointByName(self->character,lbl_806CEDDC);
+        self->info=ResolveJointByName(self->character,KartDriver_InitFull_data_806CEDD8);
+        self->head=ResolveJointByName(self->character,KartDriver_InitFull_data_806CEDE8);
+        self->handNull=ResolveJointByName(self->character,KartDriver_InitFull_data_806CEDDC);
         self->a138=0;
-        self->handGoo=ResolveJointByName(self->character,lbl_806CEDE0);
-        self->handPa=ResolveJointByName(self->character,lbl_806CEDE4);
+        self->handGoo=ResolveJointByName(self->character,KartDriver_InitFull_data_806CEDE0);
+        self->handPa=ResolveJointByName(self->character,KartDriver_InitFull_data_806CEDE4);
         self->a12C=0; self->joint158=0; self->joint15C=0; self->joint160=0;
     } else {
         self->info=ResolveJointByName(self->character,mario_cart_info_null_joint[characterId]);

@@ -39,7 +39,7 @@ struct StrPcbSerialBuffers {
     u8 log[0x24];
 };
 
-extern "C" StrPcbSerialBuffers lbl_80598100;
+extern "C" StrPcbSerialBuffers StrPcb_Init_bss_80598100;
 
 class StrPcbScratch {
 public:
@@ -186,7 +186,7 @@ void StrPcb_EnsureInstance(void);
 
 StrPcb::StrPcb(int position) : scratch(operator new(4))
 {
-    StrPcbSerialBuffers *bufs = &lbl_80598100;
+    StrPcbSerialBuffers *bufs = &StrPcb_Init_bss_80598100;
     int i;
     int count;
     int mode;

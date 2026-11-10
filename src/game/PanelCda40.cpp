@@ -18,4 +18,4 @@ extern "C" void fn_801CDB00(CdaPanelView *p) {
 }
 CdaHolder::~CdaHolder() throw() { delete p; }
 CdaList::~CdaList() {}
-CdaHolderDerived::~CdaHolderDerived() { vt=lbl_8049B18C; }
+CdaHolderDerived::~CdaHolderDerived() { vt=GpTextPanel_vtable_8049B18C; }

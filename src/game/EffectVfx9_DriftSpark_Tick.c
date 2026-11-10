@@ -8,7 +8,7 @@ extern int g_gameMode;
 extern int g_cupId;
 extern const float lbl_806D5348; /* pi */
 extern const float lbl_806D5354; /* 30 degrees in radians */
-extern const Vec lbl_8032A348;
+extern const Vec EffectVfx9_DriftSpark_Tick_rodata_8032A348;
 extern unsigned char *PcbSlot_GetByIndex(int pcbIdx);
 extern float Mtx44_GetYawOfPosZ(float m[4][4]);
 extern float KartCharacterParam_GetBoostFxSizeFactor(void *driver);
@@ -79,9 +79,9 @@ void EffectVfx9_DriftSpark_Tick(unsigned char *self)
             S8(0x190) = 0;
         }
         if (DriftSpark_GetCharacter(P(0x11C)) >= 0) {
-            F(0x30) = lbl_8032A348.x;
-            F(0x34) = lbl_8032A348.y;
-            F(0x38) = lbl_8032A348.z;
+            F(0x30) = EffectVfx9_DriftSpark_Tick_rodata_8032A348.x;
+            F(0x34) = EffectVfx9_DriftSpark_Tick_rodata_8032A348.y;
+            F(0x38) = EffectVfx9_DriftSpark_Tick_rodata_8032A348.z;
         }
         F(0x150) = 0.0f;
         F(0x154) = 0.5f * F(0xB0) + 0.5f;

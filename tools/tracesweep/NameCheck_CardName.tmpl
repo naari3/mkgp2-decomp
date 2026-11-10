@@ -22,7 +22,7 @@ static inline unsigned short NC_Get(const unsigned short *t, int j) { return t[j
 #pragma opt_strength_reduction off}}
 unsigned char NameCheck_CardName(const unsigned short *name)
 {
-    const char *base = lbl_80318270 + 0x10000;
+    const char *base = NameCheck_CardName_rodata_80318270 + 0x10000;
     unsigned short buf[6];
     const unsigned short *converted;
     unsigned short *cursor;

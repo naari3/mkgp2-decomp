@@ -24,8 +24,8 @@ extern "C" {
 extern void clNormal3D_SetScale(clNormal3D *n, int mode, float a, float b,
                                 float c, float d);
 extern unsigned int lbl_80311DD8[];
-extern float lbl_806CEFB8;           /* .sdata  */
-extern float lbl_806CEFBC;           /* .sdata  */
+extern float Jyugemu_Flag_Ctor_data_806CEFB8;           /* .sdata  */
+extern float Jyugemu_Flag_Ctor_data_806CEFBC;           /* .sdata  */
 extern const float lbl_806D3074;     /* .sdata2 */
 }
 
@@ -50,8 +50,8 @@ JyugemuFlag::JyugemuFlag(int mode_) {
     if (n == 0) {
         return;
     }
-    clNormal3D_SetScale(n, 0, lbl_806D3074, lbl_806CEFB8,
-                        lbl_806D3074, lbl_806CEFBC);
+    clNormal3D_SetScale(n, 0, lbl_806D3074, Jyugemu_Flag_Ctor_data_806CEFB8,
+                        lbl_806D3074, Jyugemu_Flag_Ctor_data_806CEFBC);
     this->mode = mode_;
     this->counter = 0;
 }

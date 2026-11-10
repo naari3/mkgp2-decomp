@@ -26,7 +26,7 @@ typedef struct BoomerangWork {
     signed char launch;
 } BoomerangWork;
 
-extern const PaceKey lbl_80330794;
+extern const PaceKey Boomerang_LaunchAndTickStateMachine_rodata_80330794;
 extern void SpriteSlot_SetAnimFrameAndApplyScale(void *slot, int frame, float f);
 extern void GabyouItem_BuildLocalTransformFromHandJoint(unsigned char *self, int a, float x, float y, float z);
 extern void *KartDriver_GetKartRootMtx(void *kart);
@@ -216,7 +216,7 @@ void Boomerang_LaunchAndTickStateMachine(unsigned char *self, BoomerangWork *w)
         case 1:
             if (w->sub != 0) {
                 x = *(float *)(w->sub + 0x20);
-                k = lbl_80330794;
+                k = Boomerang_LaunchAndTickStateMachine_rodata_80330794;
                 PaceKey_Eval(&k, x, &w->pace);
                 if (*(char *)(w->sub + 0x1E) == 1) {
                     w->timers[0] = 0;

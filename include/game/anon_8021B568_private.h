@@ -1,6 +1,6 @@
 /*
  * 0x8021B568..0x8021BC44: per-player team icon row on the result screen
- * (clCSPartsInerface subclass, vtable lbl_804EDD2C).
+ * (clCSPartsInerface subclass, vtable TeamIconRow_vtable_804EDD2C).
  */
 
 #include "game/CSParts.h"

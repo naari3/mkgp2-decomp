@@ -6,7 +6,7 @@ typedef struct Obj8018E000 {
     void *buf10;
 } Obj8018E000;
 
-extern char lbl_80495E68[];
+extern char GroupCtor_vtable_80495E68[];
 extern char lbl_80490FE0[];
 extern char lbl_80378038[];
 extern unsigned char fn_8016C360(int id);
@@ -19,7 +19,7 @@ extern void DebugPrintf(const char *fmt, ...);
 Obj8018E000 *fn_8018E000(Obj8018E000 *p, short flag) {
     int i;
     if (p != 0) {
-        p->vt = lbl_80495E68;
+        p->vt = GroupCtor_vtable_80495E68;
         if (fn_8016C360(0x38)) fn_8016C394(0x38);
         if (p->buf4 != 0) MemoryManager_Free(p->buf4);
         if (p->objs != 0) {

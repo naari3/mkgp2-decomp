@@ -11,7 +11,7 @@ extern void Object_SetJObjScaleXYZ(void *obj, float x, float y, float z);
 extern const float lbl_806D28D4;
 extern const float lbl_806D28D8;
 extern const float lbl_806D28DC;
-extern unsigned int lbl_802EDC54[];
+extern unsigned int TornadoEffect_InitDetails_rodata_802EDC54[];
 extern unsigned int lbl_802EDC60[];
 
 #pragma cplusplus on
@@ -23,7 +23,7 @@ struct TENormal3D {
 #pragma exceptions on
 extern "C" void TornadoEffect_InitDetails(void *self, int arg, float x, float y, float z)
 {
-    TornadoSpawnPos pos = *(const TornadoSpawnPos *)lbl_802EDC54;
+    TornadoSpawnPos pos = *(const TornadoSpawnPos *)TornadoEffect_InitDetails_rodata_802EDC54;
     pos.x = x;
     pos.y = y;
     pos.z = z;

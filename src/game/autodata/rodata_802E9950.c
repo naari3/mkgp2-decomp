@@ -59,7 +59,7 @@ const char lbl_802E9B48[] = "SCREFF-EXEC";
 const char lbl_802E9B54[] = "SCREFF-DRAW";
 const char lbl_802E9B60[] = "SCREFF-CAPTURE";
 const char lbl_802E9B70[] = "NODE-SHARE";
-char * const lbl_802E9B7C[48] = {
+char * const Profiler_DrawBar_rodata_802E9B7C[48] = {
     (char *)&lbl_802E9968,
     (char *)&lbl_802E9974,
     (char *)&lbl_802E9980,

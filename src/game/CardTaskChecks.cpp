@@ -1,7 +1,7 @@
 #include "game/CardTaskChecks_private.h"
 
 extern "C" int CardTaskWelcome_StepStatus(WelcomeObject *self) {
-    unsigned char *table=lbl_803FE480;
+    unsigned char *table=CardTaskChecks_data_803FE480;
     switch (int status = StrPcb_TimerTick(StrPcb_GetInstance())) {
     case 0: return 1;
     case 1: self->step = CardCallback(table,0x14C); self->result = 0; return 2;
@@ -15,7 +15,7 @@ extern "C" int CardTaskWelcome_StepCommCheck(WelcomeObject *self) {
     void *pcb = StrPcb_GetInstance();
     StrPcb_GetErrorCodeString(pcb);
     if (StrPcb_HasError(pcb) == 1 || StrPcb_GetCommErrorFlag(pcb) == 1) {
-        self->step = lbl_803FE5C0; self->result = 2; return 3;
+        self->step = CardTaskWelcome_StepCommCheck_data_803FE5C0; self->result = 2; return 3;
     }
     return 2;
 }
@@ -40,7 +40,7 @@ extern "C" int fn_8008A6B0(WelcomeObject *self) {
     return 0;
 }
 extern "C" void CardTaskWelcome_StateInit(WelcomeObject *self) {
-    self->state = 1; self->step = lbl_803FE5F0;
+    self->state = 1; self->step = CardTaskWelcome_StateInit_data_803FE5F0;
     self->result = 1; self->counter = 0;
     StrPcb_BeginTimedNeutral(StrPcb_GetInstance());
 }
@@ -87,9 +87,9 @@ extern "C" WaitInputObject *CardTaskWaitInput_New() {
     };
     Storage *self=(Storage *)Alloc(sizeof(Storage));
     if (self) {
-        self->vtable=lbl_803FE8B8;
+        self->vtable=CardTaskObject_vtable_803FE8B8;
         self->state=0;
-        self->vtable=lbl_803FE86C;
+        self->vtable=WaitInputObject_vtable_803FE86C;
     }
     return (WaitInputObject *)self;
 }
@@ -124,21 +124,21 @@ extern "C" int CardTaskPrintJob_StepStart(PrintObject *self) {
     if (!Sci2Card_IsIdleOrExhausted(card)) return 1;
     if (Sci2Card_IsStatusOkNonTerm(card)==1) {
         DebugPrintf(lbl_80312E1C);
-        self->step=lbl_803FE758;
+        self->step=CardTaskPrintJob_StepStart_data_803FE758;
         self->started=OSGetTick();
         CardPrintJob_KickFontTransfer();
         return 1;
     }
     self->error=Sci2Card_ClassifyStatusToCode();
-    self->step=lbl_803FE6BC; self->result=1;
+    self->step=CardTaskChecks_data_803FE6BC; self->result=1;
     ServiceLatchAux96_Set(1); ServiceValue_Set(1); ServiceButtonExtra_Set(1);
     return 3;
 }
 extern "C" int CardTaskPrintJob_StepNoCardPrinter(PrintObject *) {
-    DebugPrintf(lbl_80312E40); return 4;
+    DebugPrintf(CardTaskPrintJob_StepNoCardPrinter_rodata_80312E40); return 4;
 }
 extern "C" int CardTaskPrintJob_StepWaitFontTransfer(PrintObject *self) {
-    unsigned char *table=lbl_803FE480;
+    unsigned char *table=CardTaskChecks_data_803FE480;
     const char *messages=lbl_80312850;
     if (!CardPrintJob_TickFontTransfer(Sci2Card_Singleton_Get())) return 1;
     if (Sci2Card_GetPrintErrorCode()!=1) {
@@ -156,9 +156,9 @@ extern "C" int CardTaskPrintJob_StepWaitFontTransfer(PrintObject *self) {
     return 1;
 }
 extern "C" int CardPrinterChecker_State_WaitStatus(PrintObject *self) {
-    DebugPrintf(lbl_80312E9C);
-    if (!Sci2Card_BeginSpace()) self->step=lbl_803FE71C;
-    else self->step=lbl_803FE728;
+    DebugPrintf(CardPrinterChecker_State_WaitStatus_rodata_80312E9C);
+    if (!Sci2Card_BeginSpace()) self->step=CardPrinterChecker_State_WaitStatus_data_803FE71C;
+    else self->step=CardPrinterChecker_State_WaitStatus_data_803FE728;
     return 1;
 }
 static inline int CardCleaningError(PrintObject *self,unsigned char *table) {
@@ -179,7 +179,7 @@ static inline int CardSelectCleaning(PrintObject *self,unsigned char *table,cons
     return 1;
 }
 extern "C" int CardPrinterChecker_State_SetupCleaning(PrintObject *self) {
-    unsigned char *table=lbl_803FE480;
+    unsigned char *table=CardTaskChecks_data_803FE480;
     const char *messages=lbl_80312850;
     if (!Sci2Card_WaitPingStatus()) return 1;
     if (Sci2Card_GetPrintErrorCode()!=1) return CardCleaningError(self,table);
@@ -189,7 +189,7 @@ extern "C" int CardPrinterChecker_State_SetupCleaning(PrintObject *self) {
     card_eject_init(); return 1;
 }
 extern "C" int CardPrinterChecker_State_RemainCardJobEnd(PrintObject *self) {
-    unsigned char *table=lbl_803FE480;
+    unsigned char *table=CardTaskChecks_data_803FE480;
     const char *messages=lbl_80312850;
     if (!card_eject_state_machine()) return 1;
     if (Sci2Card_GetPrintErrorCode()!=1) {
@@ -208,11 +208,11 @@ extern "C" int CardPrinterChecker_State_CleaningSelectInput(PrintObject *self) {
         if (self->choice!=-1) self->selected=1;
     }
     if (self->choice==0) {
-        DebugPrintf(lbl_806D3328); self->step=lbl_803FE6D4; return 2;
+        DebugPrintf(lbl_806D3328); self->step=CardPrinterChecker_State_CleaningSelectInput_data_803FE6D4; return 2;
     }
     if (self->choice==1) {
         DebugPrintf(lbl_80312EF4);
-        self->step=lbl_803FE6E0; self->result=6;
+        self->step=CardPrinterChecker_State_CleaningSelectInput_data_803FE6E0; self->result=6;
         card_send_cleaning_cmd_init();
         CardPrinterChecker_StartCleaningJob(self->job.p);
     }
@@ -223,14 +223,14 @@ extern "C" int CardPrinterChecker_State_ExecCleaning(PrintObject *self) {
     if (CardTaskPrintJob_IsSuccess(self->job.p)==1) return 2;
     DebugPrintf(lbl_80312F04);
     self->error=Sci2Card_ClassifyStatusToCode();
-    self->step=lbl_803FE6BC; self->result=1;
+    self->step=CardTaskChecks_data_803FE6BC; self->result=1;
     ServiceLatchAux96_Set(1); ServiceValue_Set(1); ServiceButtonExtra_Set(1);
     return 3;
 }
 extern "C" int fn_8008B668(CardTaskObject *self) { return self->state; }
 extern "C" int CardPrinterChecker_State_WaitHandle(PrintObject *self) {
     if (!InputMgr_GetPlayer(GetInputManager(),0)->Held(0x1000)) return 3;
-    self->step=lbl_803FE6C8; self->result=2;
+    self->step=CardPrinterChecker_State_WaitHandle_data_803FE6C8; self->result=2;
     return 3;
 }
 extern "C" int CardPrinterChecker_ReadCleaningChoice(PrintObject *) {
@@ -238,11 +238,11 @@ extern "C" int CardPrinterChecker_ReadCleaningChoice(PrintObject *) {
 }
 PrintObject::~PrintObject() {}
 extern "C" void CardPrinterChecker_State_InitPrinter(PrintObject *self) {
-    if (!ServiceEnable_Get()) { self->step=lbl_803FE764; }
+    if (!ServiceEnable_Get()) { self->step=CardPrinterChecker_State_InitPrinter_data_803FE764; }
     else {
         void *card=Sci2Card_Singleton_Get();
         DebugPrintf(lbl_80312F8C); DebugPrintf(lbl_80312FA0);
-        self->step=lbl_803FE770;
+        self->step=CardPrinterChecker_State_InitPrinter_data_803FE770;
         Sci2Card_SendCmdRetry(card,0);
     }
 }
@@ -251,49 +251,49 @@ extern "C" void CardPrinterChecker_Draw(PrintObject *self) {
     switch (self->result) {
     case 1:
         if (isJapanese()==0) {
-            const char *text=lbl_80312BA8[isJapanese()];
+            const char *text=CardPrinterChecker_Draw_rodata_80312BA8[isJapanese()];
             TexMgr_DrawText_Format_Variant2(1,212.0f,256.0f,lbl_806D32EC,text);
         } else {
-            const char *text=lbl_80312BA8[isJapanese()];
+            const char *text=CardPrinterChecker_Draw_rodata_80312BA8[isJapanese()];
             TexMgr_DrawText_Format_Variant2(1,119.0f,240.0f,lbl_806D32EC,text);
         }
         CardPrinterChecker_DrawStatusErrorLabel(self->error);
         break;
     case 2: {
-        const char *text=lbl_80312BA8[2+isJapanese()];
+        const char *text=CardPrinterChecker_Draw_rodata_80312BA8[2+isJapanese()];
         TexMgr_DrawText_Format_Variant2(1,float(164-(isJapanese()==1 ? 40:0)),256.0f,lbl_806D32EC,text);
-        TexMgr_DrawText_Format_Variant2(0,136.0f,296.0f,lbl_806D32EC,lbl_80312BA8[4+isJapanese()]);
+        TexMgr_DrawText_Format_Variant2(0,136.0f,296.0f,lbl_806D32EC,CardPrinterChecker_Draw_rodata_80312BA8[4+isJapanese()]);
         break;
     }
     case 3: {
-        const char *text=lbl_80312BA8[6+isJapanese()];
+        const char *text=CardPrinterChecker_Draw_rodata_80312BA8[6+isJapanese()];
         TexMgr_DrawText_Format_Variant2(1,float(200-(isJapanese()==1 ? 50:0)),256.0f,lbl_806D32EC,text);
         break;
     }
     case 4: {
-        TexMgr_DrawText_Format_Variant2(1,212.0f,256.0f,lbl_806D32EC,lbl_80312BA8[8+isJapanese()]);
+        TexMgr_DrawText_Format_Variant2(1,212.0f,256.0f,lbl_806D32EC,CardPrinterChecker_Draw_rodata_80312BA8[8+isJapanese()]);
         ResCtrl rc;
         rc.resId=0x735; rc.Show(320.0f,348.0f,1.0f);
         fn_8011FAFC(&rc,0);
         break;
     }
     case 5: {
-        TexMgr_DrawText_Format_Variant2(0,152.0f,184.0f,lbl_806D32EC,lbl_80312BA8[12+isJapanese()]);
+        TexMgr_DrawText_Format_Variant2(0,152.0f,184.0f,lbl_806D32EC,CardPrinterChecker_Draw_rodata_80312BA8[12+isJapanese()]);
         if (isJapanese()==0) {
-            TexMgr_DrawText_Format_Variant2(1,128.0f,142.0f,lbl_806D32EC,lbl_80312BA8[10+isJapanese()]);
-            TexMgr_DrawText_Format_Variant2(0,104.0f,288.0f,lbl_806D32EC,lbl_80312BA8[14+isJapanese()]);
-            TexMgr_DrawText_Format_Variant2(0,104.0f,304.0f,lbl_806D32EC,lbl_80312BA8[16+isJapanese()]);
-            TexMgr_DrawText_Format_Variant2(0,104.0f,320.0f,lbl_806D32EC,lbl_80312BA8[18+isJapanese()]);
-            TexMgr_DrawText_Format_Variant2(0,392.0f,288.0f,lbl_806D32EC,lbl_80312BA8[20+isJapanese()]);
-            TexMgr_DrawText_Format_Variant2(0,392.0f,304.0f,lbl_806D32EC,lbl_80312BA8[22+isJapanese()]);
-            TexMgr_DrawText_Format_Variant2(0,152.0f,256.0f,lbl_806D32EC,lbl_80312BA8[24+isJapanese()]);
+            TexMgr_DrawText_Format_Variant2(1,128.0f,142.0f,lbl_806D32EC,CardPrinterChecker_Draw_rodata_80312BA8[10+isJapanese()]);
+            TexMgr_DrawText_Format_Variant2(0,104.0f,288.0f,lbl_806D32EC,CardPrinterChecker_Draw_rodata_80312BA8[14+isJapanese()]);
+            TexMgr_DrawText_Format_Variant2(0,104.0f,304.0f,lbl_806D32EC,CardPrinterChecker_Draw_rodata_80312BA8[16+isJapanese()]);
+            TexMgr_DrawText_Format_Variant2(0,104.0f,320.0f,lbl_806D32EC,CardPrinterChecker_Draw_rodata_80312BA8[18+isJapanese()]);
+            TexMgr_DrawText_Format_Variant2(0,392.0f,288.0f,lbl_806D32EC,CardPrinterChecker_Draw_rodata_80312BA8[20+isJapanese()]);
+            TexMgr_DrawText_Format_Variant2(0,392.0f,304.0f,lbl_806D32EC,CardPrinterChecker_Draw_rodata_80312BA8[22+isJapanese()]);
+            TexMgr_DrawText_Format_Variant2(0,152.0f,256.0f,lbl_806D32EC,CardPrinterChecker_Draw_rodata_80312BA8[24+isJapanese()]);
         } else {
-            TexMgr_DrawText_Format_Variant2(1,110.0f,158.0f,lbl_806D32EC,lbl_80312BA8[10+isJapanese()]);
-            TexMgr_DrawText_Format_Variant2(0,57.0f,256.0f,lbl_806D32EC,lbl_80312BA8[14+isJapanese()]);
-            TexMgr_DrawText_Format_Variant2(0,72.0f,288.0f,lbl_806D32EC,lbl_80312BA8[16+isJapanese()]);
-            TexMgr_DrawText_Format_Variant2(0,72.0f,304.0f,lbl_806D32EC,lbl_80312BA8[18+isJapanese()]);
-            TexMgr_DrawText_Format_Variant2(0,350.0f,288.0f,lbl_806D32EC,lbl_80312BA8[20+isJapanese()]);
-            TexMgr_DrawText_Format_Variant2(0,360.0f,304.0f,lbl_806D32EC,lbl_80312BA8[22+isJapanese()]);
+            TexMgr_DrawText_Format_Variant2(1,110.0f,158.0f,lbl_806D32EC,CardPrinterChecker_Draw_rodata_80312BA8[10+isJapanese()]);
+            TexMgr_DrawText_Format_Variant2(0,57.0f,256.0f,lbl_806D32EC,CardPrinterChecker_Draw_rodata_80312BA8[14+isJapanese()]);
+            TexMgr_DrawText_Format_Variant2(0,72.0f,288.0f,lbl_806D32EC,CardPrinterChecker_Draw_rodata_80312BA8[16+isJapanese()]);
+            TexMgr_DrawText_Format_Variant2(0,72.0f,304.0f,lbl_806D32EC,CardPrinterChecker_Draw_rodata_80312BA8[18+isJapanese()]);
+            TexMgr_DrawText_Format_Variant2(0,350.0f,288.0f,lbl_806D32EC,CardPrinterChecker_Draw_rodata_80312BA8[20+isJapanese()]);
+            TexMgr_DrawText_Format_Variant2(0,360.0f,304.0f,lbl_806D32EC,CardPrinterChecker_Draw_rodata_80312BA8[22+isJapanese()]);
         }
         CardDrawLeftChoice(self);
         { ResCtrl right;
@@ -313,7 +313,7 @@ extern "C" CameraObject *CameraChecker_Alloc() {
 extern "C" int CameraChecker_State_Entry(CameraObject *self) {
     --self->countdown;
     if (StrPcb_IsInErrorState(StrPcb_GetInstance())==1 || self->countdown<0) {
-        self->step=lbl_803FE7C4;
+        self->step=CameraChecker_State_Entry_data_803FE7C4;
         self->retries=3; self->timeout=300;
         NamCam_Init();
     }
@@ -321,7 +321,7 @@ extern "C" int CameraChecker_State_Entry(CameraObject *self) {
 }
 extern "C" int fn_8008C034() { return 4; }
 extern "C" int CameraChecker_State_DownloadWait(CameraObject *self) {
-    unsigned char *table=lbl_803FE480;
+    unsigned char *table=CardTaskChecks_data_803FE480;
     if (self->timeout-- < 0) {
         self->step=CardCallback(table,0x320); self->result=1;
         ServiceLatchAux97_Set(1); VBlankValue_Set(1);
@@ -343,25 +343,25 @@ extern "C" int CameraChecker_State_DownloadWait(CameraObject *self) {
 }
 extern "C" int CameraChecker_State_WaitButton1000(CameraObject *self) {
     if (InputMgr_GetPlayer(GetInputManager(),0)->Held(0x1000)==1) {
-        self->result=2; self->step=lbl_803FE794; VBlankEnable_Set(0);
+        self->result=2; self->step=CameraChecker_State_WaitButton1000_data_803FE794; VBlankEnable_Set(0);
     }
     return 3;
 }
 extern "C" int CameraChecker_State_WaitButton2400(CameraObject *self) {
     if (!InputMgr_GetPlayer(GetInputManager(),0)->Held(0x2400)) return 3;
     DebugPrintf(lbl_806D3310);
-    self->result=0; self->step=lbl_803FE788; return 3;
+    self->result=0; self->step=CameraChecker_State_WaitButton2400_data_803FE788; return 3;
 }
 extern "C" int CameraChecker_State_ShutdownTick(CameraObject *self) {
     if (NamCam_TickShutdownCountdown()==0) return self->state;
-    self->step=lbl_803FE77C; return 4;
+    self->step=CameraChecker_State_ShutdownTick_data_803FE77C; return 4;
 }
 extern "C" int fn_8008C320(CameraObject *self) { return self->state; }
 CameraObject::~CameraObject() {}
 extern "C" int fn_8008C384(CameraObject *self) { return self->result!=0; }
 extern "C" void CameraChecker_State_WaitVBlank(CameraObject *self) {
-    if (!GetVBlankFlag()) self->step=lbl_803FE7D0;
-    else { DebugPrintf(lbl_80312F5C); self->step=lbl_803FE7DC; }
+    if (!GetVBlankFlag()) self->step=CameraChecker_State_WaitVBlank_data_803FE7D0;
+    else { DebugPrintf(lbl_80312F5C); self->step=CameraChecker_State_WaitVBlank_data_803FE7DC; }
 }
 extern "C" int CardTaskDispatch_WithFrameBudget(CameraObject *self) {
     CardFrameTimer timer;

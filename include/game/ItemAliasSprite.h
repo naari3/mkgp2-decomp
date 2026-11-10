@@ -23,7 +23,7 @@ void fn_8011F610(int,int,int,int);
 int ItemAlias_DestToSource(unsigned int,void *);
 extern unsigned int g_itemIdToIndexTable[0x148];
 extern ItemSpriteResource lbl_803DC530[];
-extern int lbl_803E57E8[];
+extern int ItemAliasSprite_rodata_803E57E8[];
 extern const float lbl_806DBD8C, lbl_806DBD90, lbl_806DBD94, lbl_806DBD98, lbl_806DBD9C, lbl_806DBDA0;
 }
 #endif

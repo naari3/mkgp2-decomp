@@ -4,8 +4,8 @@
  * Fading logo task (0x8020E2D8..0x8020F220).
  *
  *   PopupRoot (vtable lbl_8048ECF8, inline) -> PopupTask (vtable lbl_8048ED10, inline)
- *     FadeLogoScene (vtable lbl_804ECAA8): owns a task list holding one FadeLogo.
- *     FadeTaskBase (vtable lbl_804ECB1C) -> FadeLogo (vtable lbl_804ECB04).
+ *     FadeLogoScene (vtable FadeLogoScene_vtable_804ECAA8): owns a task list holding one FadeLogo.
+ *     FadeTaskBase (vtable FadeTaskBase_vtable_804ECB1C) -> FadeLogo (vtable FadeLogo_vtable_804ECB04).
  *   TaskListBase (vtable lbl_804ECAC0) -> TaskListImpl (vtable lbl_804ECB44).
  */
 

@@ -5,12 +5,12 @@
 extern "C" {
 extern const float lbl_806DBF28, lbl_806DBF2C, lbl_806DBF30, lbl_806DBF34, lbl_806DBF3C;
 extern int g_gameMode, g_countdownPhase;
-extern const int lbl_806D0860[1];
+extern const int RaceDigits_data_806D0860[1];
 extern float lbl_804EE8F0[3][10][2];
 struct DigitPosition { float x,y; };
 extern DigitPosition lbl_804EE9E0[2][10];
 struct DigitMap { int digits[10]; };
-extern const DigitMap lbl_803EF800;
+extern const DigitMap RaceDigits_rodata_803EF800;
 void PreloadResource(int);
 void *SpriteHandle_CreateDefault(ResCtrl *, int);
 void SpriteHandle_Destroy(void *);
@@ -67,7 +67,7 @@ struct DigitListBase {
 #endif
 };
 struct DigitListMid : DigitListBase {
-    DigitListMid() { Init(5,lbl_806D0860); }
+    DigitListMid() { Init(5,RaceDigits_data_806D0860); }
     ~DigitListMid() {}
     void Init(int,const int *);
 };

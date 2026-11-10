@@ -1,7 +1,7 @@
 #include "game/Scene_8016303CPrivate.h"
 
 extern "C" void fn_8016303C(CreditLabels162 *__restrict s) {
-    const char *strings = lbl_80369288;
+    const char *strings = Scene_8016303C_rodata_80369288;
     fn_801473DC(s, 0, 0x737, 0, lbl_806D88CC, lbl_806D88D0, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
     if (s->credits > 0) {
         if (isJapanese() == 1) {

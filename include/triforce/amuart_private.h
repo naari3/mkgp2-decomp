@@ -38,7 +38,7 @@ typedef struct UartState {
     /* 0x48 */ OSSemaphore sem;
 } UartState;
 
-extern u8 lbl_806A1CE0[0x80];
-extern UartState lbl_806A1D60;
+extern u8 amuart_bss_806A1CE0[0x80];
+extern UartState amuart_bss_806A1D60;
 
 #endif

@@ -48,7 +48,7 @@ extern const float lbl_806D6458;
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern Vec3 lbl_80330374;
+extern Vec3 StarItem_BoundToVictimTick_rodata_80330374;
 extern char lbl_80330380[];
 
 /* --- function index (1 fns, .text 0x800FD948..0x800FDF24) ---
@@ -89,7 +89,7 @@ void StarItem_BoundToVictimTick(Item *item, StarWork *work)
         item->step = 0;
     case 1:
         Mtx_TransposeToMtx44(joint, KartDriver_GetJointByIdx(work->target, 15));
-        endpoint = lbl_80330374;
+        endpoint = StarItem_BoundToVictimTick_rodata_80330374;
         switch (item->step) {
         case 0:
             GetSpawnPosition(&item->velocity, lbl_806D63F8, lbl_806D63F8, lbl_806D63F8);
@@ -369,13 +369,13 @@ typedef struct StarFlightConstants {
     unsigned char pad414[0xC];
     char jointName[1];
 } StarFlightConstants;
-extern StarFlightConstants lbl_8032FF60;
+extern StarFlightConstants StarItem_FlightAndLockOnTick_rodata_8032FF60;
 
 #pragma exceptions on
 void StarItem_FlightAndLockOnTick(Item *item, StarWork *work)
 {
     Vec3 joint, wallNormal, wallPoint, correction, renderPos, renderRot, groundPos, hitPos, approachPos, approachVelocity, burstPos;
-    StarFlightConstants *constants = &lbl_8032FF60;
+    StarFlightConstants *constants = &StarItem_FlightAndLockOnTick_rodata_8032FF60;
     switch (item->subphase) {
     case 0:
         item->subphase++;

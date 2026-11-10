@@ -56,8 +56,8 @@ extern const float lbl_806D5E14;
 extern const float lbl_806D5E18;
 extern const float lbl_806D5E1C;
 extern const float lbl_806D5E20;
-extern Vec3 lbl_8032F440;
-extern Vec3 lbl_8032F44C;
+extern Vec3 TaruItem_Tick_HeldAndHoming_25_rodata_8032F440;
+extern Vec3 TaruItem_Tick_HeldAndHoming_25_rodata_8032F44C;
 
 static inline void TaruItem_StopRollSE(char *sub)
 {
@@ -91,7 +91,7 @@ void TaruItem_Tick_HeldAndHoming_25(char *self, char *sub)
             *(unsigned char *)(self + 0xca) = *(unsigned char *)(self + 0xca) + 1;
             /* fallthrough */
         case 1:
-            Item_RenderCharacterScaledFromJoint12(self, lbl_8032F440, lbl_8032F44C, 1, lbl_806D5E18);
+            Item_RenderCharacterScaledFromJoint12(self, TaruItem_Tick_HeldAndHoming_25_rodata_8032F440, TaruItem_Tick_HeldAndHoming_25_rodata_8032F44C, 1, lbl_806D5E18);
             if (FinalLapCoinJump_CheckActiveForObject(*(void **)(sub + 0x98)) != 0) {
                 self[0x28] = 0;
             } else {

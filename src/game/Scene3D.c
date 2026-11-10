@@ -34,7 +34,7 @@ typedef struct Scene3D {
     float far; /* 0x3080 */
 } Scene3D;
 
-extern char lbl_803F56B8[];
+extern char Scene3D_data_803F56B8[];
 extern char lbl_802E96B8[];
 extern const float lbl_806D22E0;
 extern const float lbl_806D22F4;
@@ -85,7 +85,7 @@ static inline void HSD_CObjUnref(HSDObj *cobj)
 
 Scene3D *Object_DtorTree_56b8(Scene3D *self, short flag) {
     if (self) {
-        self->vtable = lbl_803F56B8;
+        self->vtable = Scene3D_data_803F56B8;
         if (self->archive) {
             HSD_CObjUnref(self->cobj);
             clRom_Release(self->archive);
@@ -100,7 +100,7 @@ Scene3D *Object_DtorTree_56b8(Scene3D *self, short flag) {
 Scene3D *Scene3D_Init(Scene3D *self, const char *name) {
     char *str = lbl_802E96B8;
 
-    self->vtable = lbl_803F56B8;
+    self->vtable = Scene3D_data_803F56B8;
     self->archive = 0;
     self->ready = 0;
     self->flag8 = 0;

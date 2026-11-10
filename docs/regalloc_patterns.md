@@ -224,7 +224,7 @@ an initializer) fixed the register order of a struct template copy.
 
 ## 13. "First access folded, the rest through a pointer": a static object behind the section anchor (diagnosed, 11-08)
 
-Target shape (CSPartsHolders fn_8014D038, anchor `lbl_80362D90` in r31):
+Target shape (CSPartsHolders fn_8014D038, anchor `CSSceneGetTitle_8014ADB4_rodata_80362D90` in r31):
 
     addi r3, r31, 0xef4        ; &rot materialised
     lfs  f29, 0xef4(r31)       ; first field folded onto the anchor
@@ -249,7 +249,7 @@ local base gets the base reuse and the hoisting right, but stays at 59 lines.
 Fix: let the TU own the pooled section and define the objects as real
 `static const` locals in source order, so the anchor and its offsets come
 from the compiler (see [[mwcc-rodata-anchor-rule]] in memory and §5 of
-matching_rules). For CSPartsHolders that means the pool `lbl_80362D90`
+matching_rules). For CSPartsHolders that means the pool `CSSceneGetTitle_8014ADB4_rodata_80362D90`
 (.rodata, 0xF00 bytes) shared by RaceHud_80147470 .. CSPartsHolders
 (.text 0x80147470..0x8014D540). It is a multi-TU merge, not attempted yet.
 The same diagnosis covers PCBCheck_RecvLinkData, Item4SubFlame and
@@ -262,7 +262,7 @@ TUs into game/KartFxExhaustRay.c was enough. Other TUs that use the pool as
 an extern base still link because the named objects keep their addresses.
 Lessons: (1) to get `addi rX, anchor, off` + folded first access for a struct
 copy, the copied object must start at that offset, so split the table
-(`lbl_8032A348` became `lbl_8032A348` + `lbl_8032A354[2]`) and copy member by
+(`EffectVfx9_DriftSpark_Tick_rodata_8032A348` became `EffectVfx9_DriftSpark_Tick_rodata_8032A348` + `lbl_8032A354[2]`) and copy member by
 member (`dst.entries[0] = src.entries[0]; ...`), because a whole-struct copy
 folds every load into the anchor; (2) a .cpp merged into a .c owner must lose
 its mid-block declarations, and the hoisted locals' order then decides the
@@ -591,10 +591,10 @@ Rule `restrict-input-ptrs`.
 `optimizer/Alias.c make_alias` returns no alias (so the access becomes
 worst case) when the offset is past `object->type->size`, unless the object
 is an array of unknown size (`extern char x[]`). A pointer built as
-`(char *)lbl_803DC0C0 + 0x1dc` into a defined `const int lbl_803DC0C0[15][3]`
+`(char *)ItemSelectState_rodata_803DC0C0 + 0x1dc` into a defined `const int ItemSelectState_rodata_803DC0C0[15][3]`
 (size 0xB4) therefore "may alias" every store to an address-taken local, and
 the scheduler keeps its load after them. The same source matched as a
-split TU only because there the object was `extern char lbl_803DC0C0[]`.
+split TU only because there the object was `extern char ItemSelectState_rodata_803DC0C0[]`.
 
 Fix: address the object that really holds the data (`choiceY`,
 `lbl_803DC180`, the message strings as `static const char[]` defined in
@@ -1137,7 +1137,7 @@ No codegen pragmas, asm or fakematches were used (onmokoworks's workers are not 
 | `fn_80187084` | game/objview/fn_80187084.c | 99.36 | Resolved: 15 argument-mismatch instructions in three wrapped point lookups. Target wrapped index r3/count r0; original draft index r0/count r3 or r4. No... | H3: pass Path186 pointer, count and index independently, defer path->points load inside CyclicPoint until after wrapping; target index r3/count r0 and load order restored; 100.0%. Retained. | fd33dad6 |
 | `fn_802055F4` | game/anon_802052E0_nm1.cpp | 98.96 | none | Use scale-first ButtonX for second sprite only, retaining offset-first first sprite and both Y products: 100%; exact 424-byte text and owned EH. | 484e8743 |
 | `fn_8023D710` | game/ItemUnlockGridResolve.c | 98.95 | Initial outer row base r31 / inner element cursor r30 were exchanged against target r30 / r31. Final residual: none. | Remove manual inner element cursor and use lbl_803E56B0[row][column], allowing compiler strength reduction to generate both induction pointers: 100% text/extab/extabindex. | 3a3f1b0b |
-| `Items_ResolveOwnedAlias` | game/Items.cpp | 98.89 | Resolved: redundant mr r5,r4 between alias-table base and induction walker, making source 384 B vs target 380 B. | Use &lbl_80315AA8[i] rather than a separately initialized/incremented row pointer; compiler strength reduction forms target walker directly: 100.0%. Removing the now-unused row declaration preserves 100%. | 1b170b0c |
+| `Items_ResolveOwnedAlias` | game/Items.cpp | 98.89 | Resolved: redundant mr r5,r4 between alias-table base and induction walker, making source 384 B vs target 380 B. | Use &Items_rodata_80315AA8[i] rather than a separately initialized/incremented row pointer; compiler strength reduction forms target walker directly: 100.0%. Removing the now-unused row declaration preserves 100%. | 1b170b0c |
 | `upvec2roll` | sysdolphin/baselib/cobj_nm2.c | 98.87 | Resolved: initial validation emitted beq plus an extra unconditional b instead of target bne into valid body; +4 text bytes also shifted constant relocation... | Keep camera/eye-object validation in the outer if/else and place the output-pointer failure return inside the valid-camera branch: 100.0%. | 59485ee9 |
 | `acReadResponse` | triforce/acsocket_m8.c | 98.83 |  | Order case 1 locals addr,len,base,lenOff,n to match the two named register pairs: 100.0. | 8544fc12 |
 | `fn_801FC364` | game/anon_801FC1E0.cpp | 98.77 | none; exact | Capture initialTimer before input edge reset and set subState before timer assignment: 98.76744 -> 100.0. | aaa29b32 |
@@ -1613,7 +1613,7 @@ for (i = 0; i < 4; i++) {
 }
 ...
 int idx = I(0x10);
-height = FlameCurve_Evaluate(lbl_8041A224 + idx, F(0x150));
+height = FlameCurve_Evaluate(EffectVfx29_30_Item4SubFlame_Tick_data_8041A224 + idx, F(0x150));
 ```
 
 Lesson: when a row in gave_up lists "loop tried" and "expression tried"

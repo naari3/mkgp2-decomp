@@ -1,16 +1,16 @@
 /* --- owned .data 0x8048E4E8..0x8048E548 (tools/own_data.py) --- */
 #pragma force_active on
-unsigned int lbl_8048E4E8[5] = { 0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x00000000 };
-unsigned int lbl_8048E4FC[5] = { 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000 };
-void *lbl_8048E510[14] = {
+unsigned int OrthoCam_data_8048E4E8[5] = { 0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x00000000 };
+unsigned int OrthoCam_data_8048E4FC[5] = { 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000 };
+void *OrthoCam_data_8048E510[14] = {
     (void *)0x0,
     (void *)0x1,
     (void *)0x280,
     (void *)0x1E0,
     (void *)0x280,
     (void *)0x1E0,
-    (void *)&lbl_8048E4E8,
-    (void *)&lbl_8048E4FC,
+    (void *)&OrthoCam_data_8048E4E8,
+    (void *)&OrthoCam_data_8048E4FC,
     (void *)0x0,
     (void *)0x0,
     (void *)0x3DCCCCCD,
@@ -58,8 +58,8 @@ extern float lbl_806D74B0;
 extern float lbl_806D74B4;
 extern float lbl_806D74B8;
 extern float lbl_806D74BC;
-extern unsigned int lbl_806D1550;
-extern CamView *lbl_806D1554;
+extern unsigned int OrthoCam_bss_806D1550;
+extern CamView *OrthoCam_bss_806D1554;
 
 extern float HSD_CObjGetNear(void *cobj);
 extern double atan(float x);
@@ -127,7 +127,7 @@ int fn_8013BC38(CamView *v) {
 }
 
 CamView *fn_8013BC98(void) {
-    return lbl_806D1554;
+    return OrthoCam_bss_806D1554;
 }
 
 static inline int HSDObj_RefDec(HSDObj *o) {
@@ -164,10 +164,10 @@ static inline void CamHolder_Free(CamHolder *h) {
 }
 
 void fn_8013BCA0(void) {
-    if (lbl_806D1550 != 0) {
-        if (--lbl_806D1550 == 0) {
-            CamHolder_Free((CamHolder *)lbl_806D1554);
-            lbl_806D1554 = 0;
+    if (OrthoCam_bss_806D1550 != 0) {
+        if (--OrthoCam_bss_806D1550 == 0) {
+            CamHolder_Free((CamHolder *)OrthoCam_bss_806D1554);
+            OrthoCam_bss_806D1554 = 0;
         }
     }
 }
@@ -190,7 +190,7 @@ struct OrthoCamObj {
         float sy;
         float aspect;
         active = 0;
-        cobj = HSD_CObjLoadDesc(lbl_8048E510);
+        cobj = HSD_CObjLoadDesc(OrthoCam_data_8048E510);
         if (cobj) {
             HSD_CObjGetPerspective(cobj, &sx, &sy);
             aspect = HSD_CObjGetNear(cobj);
@@ -205,14 +205,14 @@ struct OrthoCamObj {
 };
 
 extern "C" int fn_8013BD7C(void) {
-    if (lbl_806D1550 == 0) {
+    if (OrthoCam_bss_806D1550 == 0) {
         OrthoCamObj *v = new OrthoCamObj;
-        lbl_806D1554 = (CamView *)v;
+        OrthoCam_bss_806D1554 = (CamView *)v;
         if (v == 0) {
             return 0;
         }
     }
-    lbl_806D1550++;
+    OrthoCam_bss_806D1550++;
     return 1;
 }
 

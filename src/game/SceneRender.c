@@ -4,11 +4,11 @@
  * Same trivial CW C++ ABI deleting dtor pattern as ObjectBase_Dtor
  * (game/ObjectBase.c, commit 9807e6c). Only the vtable address differs:
  *   ObjectBase_Dtor : *this = &lbl_803F5658
- *   SceneRender_BaseDtor : *this = &lbl_803F58E0
+ *   SceneRender_BaseDtor : *this = &clCallback_vtable_803F58E0
  *
  * Body:
  *   1. if (this != NULL) demote *this back to the SceneRender base vtable
- *      (&lbl_803F58E0) so any derived dtor chain that follows sees a
+ *      (&clCallback_vtable_803F58E0) so any derived dtor chain that follows sees a
  *      cleanly typed base subobject.
  *   2. if the second arg (delete-flag, passed as a short) is > 0, call
  *      `MemoryManager_TimedFree(this)` (= MemoryManager_TimedFree) to release the
@@ -26,12 +26,12 @@
  */
 
 extern void MemoryManager_TimedFree(void *);
-extern char lbl_803F58E0[];  /* SceneRender base vtable @ 0x803F58E0 */
+extern char clCallback_vtable_803F58E0[];  /* SceneRender base vtable @ 0x803F58E0 */
 
 #pragma exceptions on
 void *dtor_8003A71C(void *this, short flag) {
     if (this != 0) {
-        *(char **)this = lbl_803F58E0;
+        *(char **)this = clCallback_vtable_803F58E0;
         if (flag > 0) {
             MemoryManager_TimedFree(this);
         }

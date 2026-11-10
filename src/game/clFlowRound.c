@@ -197,7 +197,7 @@ struct RoundPos {
     float y;
 };
 
-RoundPos lbl_8049AE70[4] = { { 6481, 6476, 84.0f, 200.0f }, { 6482, 6477, 208.0f, 260.0f }, { 6483, 6478, 323.0f, 200.0f }, { 6484, 6479, 456.0f, 260.0f } };
+RoundPos clFlowRound_data_8049AE70[4] = { { 6481, 6476, 84.0f, 200.0f }, { 6482, 6477, 208.0f, 260.0f }, { 6483, 6478, 323.0f, 200.0f }, { 6484, 6479, 456.0f, 260.0f } };
 struct RoundResPair {
     short a;
     short b;
@@ -218,19 +218,19 @@ static int s_roundAnim[18] = {
     401, 446, 442, 60, 128, 60, 62, 130, 62, 61, 129, 61, 59, 127, 114, 400, 445, 441
 };
 static short s_roundTitle[10] = { 6511, 6512, 6513, 6514, 6515, 6516, 6517, 6518, 0, 0 };
-short lbl_8049AF8C[10] = {
+short clFlowRound_Draw_data_8049AF8C[10] = {
     -1, 1, 3, 4, 5, 6, 7, 0,
     2, 0
 };
-short lbl_8049AFA0[8] = {
+short clFlowRound_Draw_data_8049AFA0[8] = {
     5869, 5870, 5871, 5872, 5893, 5894, 5895, 5896
 };
 
 /* === .sdata 0x806CFDF0 (RTTI objects follow) === */
-short lbl_806CFDF0[4] = { 0x1977, 0x1978, 0x1979, 0x197A };
+short clFlowRound_data_806CFDF0[4] = { 0x1977, 0x1978, 0x1979, 0x197A };
 
 /* === .rodata 0x8039B308..0x8039B3C8 (class names and the debug string follow) === */
-extern const short lbl_8039B308[8][3];
+extern const short clFlowRound_Init_rodata_8039B308[8][3];
 struct RoundArrow {
     float lx;
     float ly;
@@ -239,13 +239,13 @@ struct RoundArrow {
     float ry;
     float rrot;
 };
-extern const RoundArrow lbl_8039B338[4];
-const short lbl_8039B308[8][3] = {
+extern const RoundArrow clFlowRound_Update_rodata_8039B338[4];
+const short clFlowRound_Init_rodata_8039B308[8][3] = {
     { 0x1A24, 0x1A25, 0x1A26 }, { 0x1A00, 0x1A01, 0x1A02 }, { 0x19EE, 0x19EF, 0x19F0 },
     { 0x1A36, 0x1A37, 0x1A38 }, { 0x1A12, 0x1A13, 0x1A14 }, { 0x1A48, 0x1A49, 0x1A4A },
     { 0x1A6C, 0x1A6D, 0x1A6E }, { 0x1A5A, 0x1A5B, 0x1A5C },
 };
-const RoundArrow lbl_8039B338[4] = {
+const RoundArrow clFlowRound_Update_rodata_8039B338[4] = {
     { 0.0f, 0.0f, 0.0f, 144.0f, 204.0f, -40.0f }, { 124.0f, 195.0f, 150.0f, 260.0f, 195.0f, 40.0f },
     { 254.0f, 204.0f, -150.0f, 388.0f, 204.0f, -40.0f }, { 384.0f, 195.0f, 150.0f, 0.0f, 0.0f, 0.0f },
 };
@@ -295,8 +295,8 @@ int fn_801C9288(::clFlowRound *self_, int index, int state) {
         int anim;
         RoundResPair *param;
         RoundPos *pos;
-        pos = &lbl_8049AE70[index];
-        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        pos = &clFlowRound_data_8049AE70[index];
+        param = &s_roundRes[clFlowRound_Draw_data_8049AF8C[g_cupId]][index];
         anim = s_roundAnim[slot->variant];
         float offset = lbl_806D9D38;
         if (index == 2 || index == 4) offset = -lbl_806D9D38;
@@ -326,8 +326,8 @@ int fn_801C9288(::clFlowRound *self_, int index, int state) {
         int anim;
         RoundResPair *param;
         RoundPos *pos;
-        pos = &lbl_8049AE70[index];
-        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        pos = &clFlowRound_data_8049AE70[index];
+        param = &s_roundRes[clFlowRound_Draw_data_8049AF8C[g_cupId]][index];
         anim = s_roundAnim[15 + slot->variant];
         float offset = lbl_806D9D38;
         if (index == 2 || index == 4) offset = -lbl_806D9D38;
@@ -358,8 +358,8 @@ int fn_801C9288(::clFlowRound *self_, int index, int state) {
         int anim;
         RoundResPair *param;
         RoundPos *pos;
-        pos = &lbl_8049AE70[index];
-        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        pos = &clFlowRound_data_8049AE70[index];
+        param = &s_roundRes[clFlowRound_Draw_data_8049AF8C[g_cupId]][index];
         anim = s_roundAnim[12 + slot->variant];
         float offset = lbl_806D9D38;
         if (index == 2 || index == 4) offset = -lbl_806D9D38;
@@ -389,8 +389,8 @@ int fn_801C9288(::clFlowRound *self_, int index, int state) {
         int anim;
         RoundResPair *param;
         RoundPos *pos;
-        pos = &lbl_8049AE70[index];
-        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        pos = &clFlowRound_data_8049AE70[index];
+        param = &s_roundRes[clFlowRound_Draw_data_8049AF8C[g_cupId]][index];
         anim = s_roundAnim[9 + slot->variant];
         float offset = lbl_806D9D40;
         if (index == 2 || index == 4) offset = -lbl_806D9D40;
@@ -421,8 +421,8 @@ int fn_801C9288(::clFlowRound *self_, int index, int state) {
         int anim;
         RoundResPair *param;
         RoundPos *pos;
-        pos = &lbl_8049AE70[index];
-        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        pos = &clFlowRound_data_8049AE70[index];
+        param = &s_roundRes[clFlowRound_Draw_data_8049AF8C[g_cupId]][index];
         anim = s_roundAnim[6 + slot->variant];
         float offset = lbl_806D9D40;
         if (index == 2 || index == 4) offset = -lbl_806D9D40;
@@ -452,8 +452,8 @@ int fn_801C9288(::clFlowRound *self_, int index, int state) {
         int anim;
         RoundResPair *param;
         RoundPos *pos;
-        pos = &lbl_8049AE70[index];
-        param = &s_roundRes[lbl_8049AF8C[g_cupId]][index];
+        pos = &clFlowRound_data_8049AE70[index];
+        param = &s_roundRes[clFlowRound_Draw_data_8049AF8C[g_cupId]][index];
         anim = s_roundAnim[3 + slot->variant];
         float offset = lbl_806D9D38;
         if (index == 2 || index == 4) offset = -lbl_806D9D38;
@@ -526,13 +526,13 @@ void clFlowRound_Draw(RoundView *self) {
     fn_8011FAFC(self->layer94, 5);
     fn_8011FAFC(self->layerF4, 5);
 
-    cup = lbl_8049AF8C[g_cupId];
-    fn_801A1174(lbl_806CFDF0[self->mirror], 5, 0, 0, 0);
+    cup = clFlowRound_Draw_data_8049AF8C[g_cupId];
+    fn_801A1174(clFlowRound_data_806CFDF0[self->mirror], 5, 0, 0, 0);
     fn_801A1128(lbl_806D9D4C, lbl_806D9D50);
     fn_801A0FD4(lbl_806D9D28, lbl_806D9D28, lbl_806D9D28, self->alpha158);
     fn_801A0DF0();
 
-    fn_801A1174(lbl_8049AFA0[cup], 5, 0, 0, 0);
+    fn_801A1174(clFlowRound_Draw_data_8049AFA0[cup], 5, 0, 0, 0);
     fn_801A1128(lbl_806D9D54, lbl_806D9D58);
     fn_801A0FD4(lbl_806D9D28, lbl_806D9D28, lbl_806D9D28, self->alpha150);
     fn_801A0DF0();
@@ -733,16 +733,16 @@ static inline void SetScale(Sprite *spr, float x, float y) {
 static inline void PlaceArrows(clFlowRound *self) {
     self->show164 = 0;
     if (self->spr15C != 0) {
-        SetPos(self->spr15C, lbl_8039B338[self->round].lx, lbl_8039B338[self->round].ly);
-        self->spr15C->rot = lbl_806D9D08 * lbl_8039B338[self->round].lrot;
+        SetPos(self->spr15C, clFlowRound_Update_rodata_8039B338[self->round].lx, clFlowRound_Update_rodata_8039B338[self->round].ly);
+        self->spr15C->rot = lbl_806D9D08 * clFlowRound_Update_rodata_8039B338[self->round].lrot;
         if (self->round != 0) {
             self->show164 = 1;
         }
     }
     self->show165 = 0;
     if (self->spr160 != 0) {
-        SetPos(self->spr160, lbl_8039B338[self->round].rx, lbl_8039B338[self->round].ry);
-        self->spr160->rot = lbl_806D9D08 * lbl_8039B338[self->round].rrot;
+        SetPos(self->spr160, clFlowRound_Update_rodata_8039B338[self->round].rx, clFlowRound_Update_rodata_8039B338[self->round].ry);
+        self->spr160->rot = lbl_806D9D08 * clFlowRound_Update_rodata_8039B338[self->round].rrot;
         if (self->round != 3 && self->round < self->unlocked - 1) {
             self->show165 = 1;
         }
@@ -753,7 +753,7 @@ static inline void SetTitle(clFlowRound *self, int idx) {
     if (self->spr88 != 0 && self->x80 == 1) {
         self->x84 = idx;
         Sprite_SetupAnim(self->spr88, 0x1BF, 0, 0);
-        Sprite_SetAnimParam(self->spr88, 0x1970, s_roundTitle[lbl_8049AF8C[g_cupId]]);
+        Sprite_SetAnimParam(self->spr88, 0x1970, s_roundTitle[clFlowRound_Draw_data_8049AF8C[g_cupId]]);
         fn_801A0550(self->spr88);
         fn_8019FF6C(self->spr88, 1);
     }
@@ -956,7 +956,7 @@ extern "C" int clFlowRound_Update(clFlowRound *self) {
             if (self->spr88 != 0 && self->x80 == 1) {
                 self->x80 = 2;
                 Sprite_SetupAnim(self->spr88, 0x83, 0, 0);
-                Sprite_SetAnimParam(self->spr88, 0x1970, s_roundTitle[lbl_8049AF8C[g_cupId]]);
+                Sprite_SetAnimParam(self->spr88, 0x1970, s_roundTitle[clFlowRound_Draw_data_8049AF8C[g_cupId]]);
                 fn_801A0550(self->spr88);
             }
             self->x24 = 0;
@@ -1024,7 +1024,7 @@ extern "C" int clFlowRound_Update(clFlowRound *self) {
             case 1:
                 if (self->slots[j].step == 0) {
                     self->slots[j].count++;
-                    self->slots[j].spr->x = (lbl_806D9D1C + lbl_8049AE70[j].x) - (lbl_806D9D1C * (float)self->slots[j].count) / lbl_806D9D20;
+                    self->slots[j].spr->x = (lbl_806D9D1C + clFlowRound_data_8049AE70[j].x) - (lbl_806D9D1C * (float)self->slots[j].count) / lbl_806D9D20;
                     if (self->slots[j].count >= 12) {
                         self->slots[j].step++;
                         fn_8019FF6C(self->slots[j].spr, 1);
@@ -1033,7 +1033,7 @@ extern "C" int clFlowRound_Update(clFlowRound *self) {
                 break;
             case 5: {
                 dy = lbl_806D9D24;
-                res = &s_roundRes[lbl_8049AF8C[g_cupId]][j];
+                res = &s_roundRes[clFlowRound_Draw_data_8049AF8C[g_cupId]][j];
                 anim = s_roundAnim[self->slots[j].state];
                 if (j == 2 || j == 4) {
                     dy = ndy;
@@ -1045,23 +1045,23 @@ extern "C" int clFlowRound_Update(clFlowRound *self) {
                 }
                 switch (self->slots[j].state) {
                 case 0:
-                    Sprite_SetAnimParam(self->slots[j].spr, 0x1951, lbl_8049AE70[j].id0);
+                    Sprite_SetAnimParam(self->slots[j].spr, 0x1951, clFlowRound_data_8049AE70[j].id0);
                     Sprite_SetAnimParam(self->slots[j].spr, 0x19B0, res->b);
                     break;
                 case 1:
-                    Sprite_SetAnimParam(self->slots[j].spr, 0x194C, lbl_8049AE70[j].id1);
+                    Sprite_SetAnimParam(self->slots[j].spr, 0x194C, clFlowRound_data_8049AE70[j].id1);
                     Sprite_SetAnimParam(self->slots[j].spr, 0x19B0, res->b);
                     break;
                 case 2:
-                    Sprite_SetAnimParam(self->slots[j].spr, 0x194C, lbl_8049AE70[j].id1);
+                    Sprite_SetAnimParam(self->slots[j].spr, 0x194C, clFlowRound_data_8049AE70[j].id1);
                     Sprite_SetAnimParam(self->slots[j].spr, 0x19B0, res->b);
                     break;
                 }
                 Sprite_SetAnimParam(self->slots[j].spr, 0x1A1E, res->a);
                 fn_801A0550(self->slots[j].spr);
-                /* fakematch: natural code is `lbl_8049AE70[j].y + dy`; `y - -dy`
+                /* fakematch: natural code is `clFlowRound_data_8049AE70[j].y + dy`; `y - -dy`
                  * keeps the operands in source order (fadds f2,f0,f31). */
-                SetPos(self->slots[j].spr, lbl_8049AE70[j].x, lbl_8049AE70[j].y - -dy);
+                SetPos(self->slots[j].spr, clFlowRound_data_8049AE70[j].x, clFlowRound_data_8049AE70[j].y - -dy);
                 SetScale(self->slots[j].spr, lbl_806D9D28, lbl_806D9D28);
                 fn_8019FF6C(self->slots[j].spr, 1);
                 break;
@@ -1113,10 +1113,10 @@ clFlowRound::clFlowRound() {
     Sprite *spr;
 
     SpriteSystem_EnsureInit();
-    cup = lbl_8049AF8C[g_cupId];
+    cup = clFlowRound_Draw_data_8049AF8C[g_cupId];
     SetSyncTarget(0x1B);
-    PreloadResource(lbl_8049AFA0[cup]);
-    PreloadResource(lbl_8049AFA0[cup] + 12);
+    PreloadResource(clFlowRound_Draw_data_8049AFA0[cup]);
+    PreloadResource(clFlowRound_Draw_data_8049AFA0[cup] + 12);
     PreloadResource(s_roundRes[cup][0].b);
     PreloadResource(s_roundRes[cup][0].b + 6);
     PreloadResource(s_roundRes[cup][0].a);
@@ -1125,8 +1125,8 @@ clFlowRound::clFlowRound() {
     PreloadResource(s_roundRes[cup][1].b + 6);
     PreloadResource(s_roundRes[cup][1].a);
     PreloadResource(s_roundRes[cup][1].a + 9);
-    PreloadResource(lbl_8039B308[cup][0]);
-    PreloadResource(lbl_8039B308[cup][0] + 9);
+    PreloadResource(clFlowRound_Init_rodata_8039B308[cup][0]);
+    PreloadResource(clFlowRound_Init_rodata_8039B308[cup][0] + 9);
     PreloadResource(0x194C);
     PreloadResource(0x195E);
     PreloadResource(0x196F);
@@ -1190,7 +1190,7 @@ clFlowRound::clFlowRound() {
     if (RoundCupIsCompleted(g_playerData, g_ccClass, g_cupId, self->mode == 1 ? 1 : 0)) {
         level = 2;
     }
-    self->layer94.resId = lbl_8039B308[g_cupId - 1][level];
+    self->layer94.resId = clFlowRound_Init_rodata_8039B308[g_cupId - 1][level];
     self->layer94.flag = 1;
     self->layer94.x = lbl_806D9D68;
     self->layer94.y = lbl_806D9D6C;
@@ -1241,7 +1241,7 @@ clFlowRound::clFlowRound() {
         self->x80 = 0;
         self->x84 = 0;
         self->spr88 = new Sprite(0x84, 0, 0);
-        Sprite_SetAnimParam(self->spr88, 0x1970, s_roundTitle[lbl_8049AF8C[g_cupId]]);
+        Sprite_SetAnimParam(self->spr88, 0x1970, s_roundTitle[clFlowRound_Draw_data_8049AF8C[g_cupId]]);
         fn_801A0550(self->spr88);
         spr = self->spr88;
         spr->x = lbl_806D9D10;
@@ -1265,8 +1265,8 @@ clFlowRound::~clFlowRound() {
         state->value1C = 0;
     }
     SetScreenBrightness(lbl_806D9D48);
-    fn_80120A08(lbl_8049AFA0[lbl_8049AF8C[g_cupId]]);
-    fn_80120A08(lbl_806CFDF0[0]);
+    fn_80120A08(clFlowRound_Draw_data_8049AFA0[clFlowRound_Draw_data_8049AF8C[g_cupId]]);
+    fn_80120A08(clFlowRound_data_806CFDF0[0]);
     Sprite_Destroy(spr160, 1);
     Sprite_Destroy(spr15C, 1);
     Sprite_Destroy(sprEC, 1);

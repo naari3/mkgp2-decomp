@@ -11,7 +11,7 @@
 #pragma force_active on
 
 /* decl: HeldRadii */
-const unk32 lbl_8032EEAC[81] = {
+const unk32 GabyouItem_Tick_HeldAndHoming_2Eto31_rodata_8032EEAC[81] = {
     0x00000000, 0x40200000, 0x00000000, 0x00000000, 0x40400000, 0x00000000, 0x00000000, 0x3FC00000,
     0x00000000, 0x00000000, 0x40000000, 0x00000000, 0x00000000, 0x3F000000, 0x00000000, 0x00000000,
     0x40000000, 0x00000000, 0x00000000, 0x3F800000, 0x00000000, 0x00000000, 0x40000000, 0x00000000,
@@ -24,7 +24,7 @@ const unk32 lbl_8032EEAC[81] = {
     0x646C655F, 0x6A6F696E, 0x74000000, 0x6974656D, 0x5F63656E, 0x7465725F, 0x6A6F696E, 0x74000000,
     0x00000000
 };
-const unsigned char lbl_8032EFF0[1068] = {
+const unsigned char BananaTriple_Tick_HeldAndHoming_32to36_rodata_8032EFF0[1068] = {
     0x3F, 0x80, 0x0, 0x0, 0x3F, 0x33, 0x33, 0x33, 0x3F, 0x66, 0x66, 0x66,
     0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x43, 0xFA, 0x0, 0x0,
     0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x0, 0x0, 0x42, 0x85, 0x55, 0x56,
@@ -116,34 +116,34 @@ const unsigned char lbl_8032EFF0[1068] = {
     0xC0, 0x16, 0xCB, 0xE2, 0x0, 0x0, 0x0, 0x0, 0xBF, 0xC9, 0xF, 0xD8
 };
 const char lbl_8032F41C[] = "it_a_01_banana_banana_atari_joint";
-const Vec3 lbl_8032F440[1] = {
+const Vec3 TaruItem_Tick_HeldAndHoming_25_rodata_8032F440[1] = {
     { 1.0f, 1.5f, 0.0f }
 };
-const Vec3 lbl_8032F44C[1] = {
+const Vec3 TaruItem_Tick_HeldAndHoming_25_rodata_8032F44C[1] = {
     { 0.0f, -0.785398f, 0.0f }
 };
 const char lbl_8032F458[] = "item_taru_joint";
 const char lbl_8032F468[] = "item_hahen_taru_joint";
 const char lbl_8032F480[] = "item_goro_egg_joint";
 const char lbl_8032F494[] = "item_goro_egg_hahen_joint";
-const Vec3 lbl_8032F4B0[1] = {
+const Vec3 MukadeItem_TickHeldOrSnake_3839_rodata_8032F4B0[1] = {
     { 0.0f, 0.0f, -0.8f }
 };
-const Vec3 lbl_8032F4BC[1] = {
+const Vec3 MukadeItem_TickHeldOrSnake_3839_rodata_8032F4BC[1] = {
     { 1.9198618f, 0.0f, 0.0f }
 };
-const unsigned int lbl_8032F4C8[12] = {
+const unsigned int MukadeItem_Tick_HeldAndHoming_3839_rodata_8032F4C8[12] = {
     0x40200000, 0x40400000, 0x3FC00000, 0x40000000, 0x3F000000, 0x40000000, 0x3F800000, 0x40000000,
     0x40400000, 0x40400000, 0x3F800000, 0x0
 };
-const Vec3 lbl_8032F4F8[1] = {
+const Vec3 OnchiSpeaker_State2_Active_rodata_8032F4F8[1] = {
     { 0.0f, 20.0f, 15.0f }
 };
 const char lbl_8032F504[] = "item_speaker2_joint";
-const Vec lbl_8032F518[1] = {
+const Vec Enraku_State1_Held_rodata_8032F518[1] = {
     { 0.0f, 1.0f, 0.0f }
 };
-const Vec lbl_8032F524[1] = {
+const Vec Enraku_State1_Held_rodata_8032F524[1] = {
     { 0.0f, 0.0f, -1.570796f }
 };
 const char lbl_8032F530[] = "enmaku_effect_joint";

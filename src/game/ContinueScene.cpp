@@ -1,7 +1,7 @@
 #include "game/ContinueScene_private.h"
 /* --- owned .rodata 0x803F0860..0x803F08B4 (tools/own_data.py) --- */
 #pragma force_active on
-extern "C" const char lbl_803F0860[84] = { 71, 80, 67, 111, 110, 116, 105, 110, 117, 101, 32, 58, 32, 37, 100, 44, 32, 105, 109, 97, 109, 117, 114, 97, 47, 82, 115, 67, 111, 110, 116, 105, 110, 117, 101, 48, 48, 46, 99, 112, 112, 32, 45, 32, 37, 100, 10, 0, 99, 108, 89, 84, 97, 115, 107, 77, 97, 110, 97, 103, 101, 114, 60, 99, 108, 77, 110, 84, 97, 115, 107, 73, 110, 116, 101, 114, 102, 97, 99, 101, 62, 0, 0, 0 };
+extern "C" const char ContinueScene_rodata_803F0860[84] = { 71, 80, 67, 111, 110, 116, 105, 110, 117, 101, 32, 58, 32, 37, 100, 44, 32, 105, 109, 97, 109, 117, 114, 97, 47, 82, 115, 67, 111, 110, 116, 105, 110, 117, 101, 48, 48, 46, 99, 112, 112, 32, 45, 32, 37, 100, 10, 0, 99, 108, 89, 84, 97, 115, 107, 77, 97, 110, 97, 103, 101, 114, 60, 99, 108, 77, 110, 84, 97, 115, 107, 73, 110, 116, 101, 114, 102, 97, 99, 101, 62, 0, 0, 0 };
 #pragma force_active reset
 extern "C" 
 inline CoinCounter::CoinCounter(int s) : slot(s), timer(0), done(1), window(0) {
@@ -144,7 +144,7 @@ confirmed:
             bool clear;
             cup = g_cupId;
             clear = 0;
-            DebugPrintf(lbl_803F0860, ++lbl_806D12C0, 0x244);
+            DebugPrintf(ContinueScene_rodata_803F0860, ++lbl_806D12C0, 0x244);
             if (!res->done && cup >= 1 && cup <= 8) {
                 unsigned char all = fn_801D5C88(g_playerData, g_ccClass);
                 int m = 3;

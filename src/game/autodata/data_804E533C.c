@@ -19,7 +19,7 @@ extern char lbl_806D0028[];
 extern char lbl_806D0030[];
 extern char lbl_806D0038[];
 extern char lbl_806D0040[];
-extern char lbl_806D0048[];
+extern char data_804E533C_data_806D0048[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -31,22 +31,22 @@ void *lbl_804E533C[5] = {
     0,
     0
 };
-void *lbl_804E5350[5] = {
+void *data_804E533C_data_804E5350[5] = {
     (void *)&lbl_806D0030,
     0,
     (void *)&lbl_806D0038,
     0,
     0
 };
-void *lbl_804E5364[6] = {
-    (void *)&lbl_806D0048,
+void *NamCamScene_vtable_804E5364[6] = {
+    (void *)&data_804E533C_data_806D0048,
     0,
     (void *)fn_801F3970,
     (void *)fn_801F38DC,
     (void *)fn_801F2BC8,
     (void *)fn_801F2B70
 };
-void *lbl_804E537C[6] = {
+void *NamCamBase_vtable_804E537C[6] = {
     (void *)&lbl_806D0038,
     0,
     (void *)dtor_801F402C,
@@ -54,7 +54,7 @@ void *lbl_804E537C[6] = {
     0,
     0
 };
-void *lbl_804E5394[7] = {
+void *NamCamCountdown_vtable_804E5394[7] = {
     (void *)&lbl_806D0028,
     0,
     (void *)fn_801F4310,

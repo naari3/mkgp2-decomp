@@ -8,7 +8,7 @@ typedef float Mtx[3][4];
 #include "game/types/Vec3f.h"
 
 extern "C" {
-extern unsigned int lbl_80360520[];
+extern unsigned int ConfettiField_rodata_80360520[];
 extern const float lbl_806D7868, lbl_806D786C, lbl_806D7870, lbl_806D7874, lbl_806D7878;
 extern const float lbl_806D787C, lbl_806D7880, lbl_806D7884, lbl_806D7888;
 extern const float lbl_806D788C, lbl_806D7890, lbl_806D7894, lbl_806D7898;
@@ -141,7 +141,7 @@ void ConfettiField::Draw() {
         if (pieces[i].active) {
             PSMTXConcat(view, pieces[i].mtx, m);
             GXLoadPosMtxImm(m, 0);
-            c.rgba = lbl_80360520[pieces[i].color];
+            c.rgba = ConfettiField_rodata_80360520[pieces[i].color];
             GXBegin(0x80, 0, 4);
             GXPosition3f32(-size, -size, z);
             GXColor4u8(c.c.r, c.c.g, c.c.b, c.c.a);

@@ -30,7 +30,7 @@ typedef struct ShadowBillboard {
 extern const float lbl_806D2B88;
 extern const float lbl_806D2B8C;
 extern const float lbl_806D2B6C;
-extern const float lbl_802EE4CC[];
+extern const float ShadowBillboard_LerpMtx4x4_rodata_802EE4CC[];
 
 float Saturate_Double(float v, float lo, float hi);
 void Mtx34_Orthonormalize(float *mtx);

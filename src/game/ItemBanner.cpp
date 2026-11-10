@@ -1,8 +1,8 @@
 /*
  * Result item banner @ 0x8024F618..0x802506F8.
  *
- * clRubDisp (vtable lbl_804EF0A0) owns a clRubMark (vtable lbl_804EF0B8,
- * four sprites) and a clRubBack (vtable lbl_804EF0AC, one sprite).
+ * clRubDisp (vtable clRubDisp_vtable_804EF0A0) owns a clRubMark (vtable clRubMark_vtable_804EF0B8,
+ * four sprites) and a clRubBack (vtable clRubBack_vtable_804EF0AC, one sprite).
  */
 
 #include "game/FlowCountdown.h"
@@ -17,8 +17,8 @@ extern const float lbl_806DC09C;
 extern const float lbl_806DC0A0;
 extern const float lbl_806DC0A4;
 extern const unsigned char lbl_806DCF70[2];
-extern int lbl_803F0A70[][2];
-extern float lbl_803F0A90[][2];
+extern int ItemBanner_rodata_803F0A70[][2];
+extern float ItemBanner_rodata_803F0A90[][2];
 void *SpriteHandle_CreateDefault(ResCtrl *ctrl, int layer);
 void SpriteHandle_Destroy(void *sprite);
 void SpriteHandle_SetActiveFlag(void *sprite, int active);
@@ -189,8 +189,8 @@ void clRubMark::Show(int id) {
             int jp;
             vis = 1;
             jp = isJapanese() != 0;
-            SpriteLayer_SetResource(sprites[2], lbl_803F0A70[kind][jp]);
-            SpriteLayer_SetResource(sprites[3], lbl_803F0A70[kind][jp]);
+            SpriteLayer_SetResource(sprites[2], ItemBanner_rodata_803F0A70[kind][jp]);
+            SpriteLayer_SetResource(sprites[3], ItemBanner_rodata_803F0A70[kind][jp]);
         }
         SpriteHandle_SetActiveFlag(sprites[2], vis);
         SpriteHandle_SetActiveFlag(sprites[3], vis);
@@ -222,8 +222,8 @@ void clRubMark::Update() {
         }
         if (kind >= 0) {
             float qy, qx;
-            qx = t * lbl_803F0A90[kind][0] + x;
-            qy = t * lbl_803F0A90[kind][1] + y;
+            qx = t * ItemBanner_rodata_803F0A90[kind][0] + x;
+            qy = t * ItemBanner_rodata_803F0A90[kind][1] + y;
             for (i = 2; i <= 3; i++) {
                 fn_8011F804(sprites[i], qx, qy);
                 fn_8011F744(sprites[i], t, t);

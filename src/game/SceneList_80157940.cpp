@@ -149,7 +149,7 @@ extern unsigned int lbl_806D848C;
 extern unsigned int lbl_806D8490;
 extern unsigned int lbl_806D8494;
 extern unsigned int lbl_806D84A0;
-extern unsigned int lbl_803678D8[];
+extern unsigned int SceneList_80157EA8_rodata_803678D8[];
 extern unsigned int lbl_806D84B0;
 extern unsigned int lbl_806D84B4;
 extern unsigned int lbl_806D84B8;

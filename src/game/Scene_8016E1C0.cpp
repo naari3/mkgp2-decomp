@@ -1,5 +1,5 @@
 /*
- * 0x8016E1C0..0x8016E568: course prop list (vtable lbl_804911AC, base
+ * 0x8016E1C0..0x8016E568: course prop list (vtable Scene_8016E1C0_data_804911AC, base
  * vtable lbl_80490FE0): draw, per-node update, destructor, and the
  * self-recursive node destructor (node vtable lbl_804911F4).
  */
@@ -41,7 +41,7 @@ struct PropList {
 
 extern "C" {
 extern const PropKind lbl_8036D75C[3];
-extern char lbl_804911AC[];
+extern char Scene_8016E1C0_data_804911AC[];
 extern char lbl_80490FE0[];
 extern char lbl_8036D89C[];
 unsigned char fn_801379F0(Vec3f *, float);
@@ -93,7 +93,7 @@ PropList *fn_8016E358(PropList *self, short flag) {
     int i;
 
     if (self) {
-        self->vtable = lbl_804911AC;
+        self->vtable = Scene_8016E1C0_data_804911AC;
         for (i = 0; i < 3; i++) {
             if (self->models[i]) {
                 Object_DtorWithGXSync(self->models[i], 1);

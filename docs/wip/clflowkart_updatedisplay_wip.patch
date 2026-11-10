@@ -23,8 +23,8 @@ index be17be7..a7931a2 100644
 + * rank sprites. The display level comes from the player's coin mileage
 + * against two per-kart thresholds (level 1 without a valid card), then
 + * each sprite hides (5 - count) of its five anim params, with the counts
-+ * from the level/kart table lbl_8049BB30. The thresholds and the param
-+ * list live in clFlowKart_Init.c's pooled .rodata (lbl_8039E508).
++ * from the level/kart table clFlowKart_UpdateDisplay_data_8049BB30. The thresholds and the param
++ * list live in clFlowKart_Init.c's pooled .rodata (clFlowKart_Init_rodata_8039E508).
 + * Compiled as C++ (-lang=c++) for the `new` cleanups in the extab. */
  
 -/* --- extern decls: branch callees (bl/b targets) --- */
@@ -50,8 +50,8 @@ index be17be7..a7931a2 100644
 -/* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 -/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
 -extern unsigned int g_playerData[];
--extern unsigned int lbl_8039E508[];
--extern unsigned int lbl_8049BB30[];
+-extern unsigned int clFlowKart_Init_rodata_8039E508[];
+-extern unsigned int clFlowKart_UpdateDisplay_data_8049BB30[];
 +typedef struct FKRodata {
 +    unsigned char pad000[0x3FC];
 +    int need1[13];       /* 0x3FC */
@@ -103,9 +103,9 @@ index be17be7..a7931a2 100644
 -    stw r0, 0x44(r1)
 -    stmw r26, 0x28(r1)
 -    mr r27, r3
--    lis r3, lbl_8039E508@ha
+-    lis r3, clFlowKart_Init_rodata_8039E508@ha
 -    mr r28, r4
--    addi r31, r3, lbl_8039E508@l
+-    addi r31, r3, clFlowKart_Init_rodata_8039E508@l
 -    li r29, 0x0
 -    lwz r0, 0x4(r27)
 -    cmpwi r0, 0x1
@@ -176,11 +176,11 @@ index be17be7..a7931a2 100644
 -    bl fn_801A08B8
 -    clFlowKart_UpdateDisplay_L_801D7A3C:
 -    stw r26, 0x7c(r27)
--    lis r3, lbl_8049BB30@ha
+-    lis r3, clFlowKart_UpdateDisplay_data_8049BB30@ha
 -    mulli r4, r29, 0x27
 -    addi r29, r1, 0x8
 -    lwz r8, 0x4b0(r31)
--    addi r3, r3, lbl_8049BB30@l
+-    addi r3, r3, clFlowKart_UpdateDisplay_data_8049BB30@l
 -    lwz r7, 0x4b4(r31)
 -    mr r30, r29
 -    lwz r6, 0x4b8(r31)
@@ -255,8 +255,8 @@ index be17be7..a7931a2 100644
 +extern const float lbl_806DA128;
 +extern const float lbl_806DA12C;
 +extern unsigned char g_playerData[];
-+extern FKRodata lbl_8039E508;
-+extern signed char lbl_8049BB30[][13][3];
++extern FKRodata clFlowKart_Init_rodata_8039E508;
++extern signed char clFlowKart_UpdateDisplay_data_8049BB30[][13][3];
  }
  
 -#if 0
@@ -270,11 +270,11 @@ index be17be7..a7931a2 100644
 -extern void *Sprite_Destroy(void *, short);
 -extern unsigned char Sprite_SetAnimParam(void *, short, short);
 -extern unsigned char g_playerData[];
--extern unsigned char lbl_8039E508[];
--extern signed char lbl_8049BB30[3][13][3];
+-extern unsigned char clFlowKart_Init_rodata_8039E508[];
+-extern signed char clFlowKart_UpdateDisplay_data_8049BB30[3][13][3];
 -extern const float lbl_806DA120, lbl_806DA124, lbl_806DA128, lbl_806DA12C;
 +/* fakematch (pragma): the natural code is the same body without the pragma;
-+ * the original TU owned lbl_8039E508, so CW kept the base + offset addi. */
++ * the original TU owned clFlowKart_Init_rodata_8039E508, so CW kept the base + offset addi. */
 +#pragma opt_propagation off
  
 -#pragma cplusplus on
@@ -302,12 +302,12 @@ index be17be7..a7931a2 100644
 +
 +extern "C" void clFlowKart_UpdateDisplay(FKDisplay *self, int kart)
  {
--    const DisplayPoolView *pool = (const DisplayPoolView *)lbl_8039E508;
+-    const DisplayPoolView *pool = (const DisplayPoolView *)clFlowKart_Init_rodata_8039E508;
 -    int *cursor0;
 -    int mode = 0;
 -    int index0;
 -    signed char *limits;
-+    FKRodata *rd = &lbl_8039E508;
++    FKRodata *rd = &clFlowKart_Init_rodata_8039E508;
 +    int level = 0;
 +    FKParams params;
 +    signed char *count;
@@ -335,7 +335,7 @@ index be17be7..a7931a2 100644
 +    int i;
  
 -    DisplayWords words = pool->animations;
--    limits = lbl_8049BB30[mode][kart];
+-    limits = clFlowKart_UpdateDisplay_data_8049BB30[mode][kart];
 -    base = words.word;
 -    cursor0 = base;
 -    index0 = 0;
@@ -373,7 +373,7 @@ index be17be7..a7931a2 100644
 +    self->rank[1] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA128, 1);
 +    self->rank[2] = new FKSprite(0x16B, lbl_806DA120, lbl_806DA12C, 1);
 +    params = rd->params;
-+    count = lbl_8049BB30[level][kart];
++    count = clFlowKart_UpdateDisplay_data_8049BB30[level][kart];
 +    base = params.v;
 +    {
 +        signed char *c = count;

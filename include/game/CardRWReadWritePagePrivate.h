@@ -24,8 +24,8 @@ struct ReadWritePage {
     int error;
 };
 extern "C" {
-extern MenuItem lbl_803FCA80[];
-extern ReadWriteStep lbl_803FDB98[];
+extern MenuItem CardRW_ReadWriteTest_Page_data_803FCA80[];
+extern ReadWriteStep CardRW_ReadWriteTest_Page_data_803FDB98[];
 void Backup_PublishShadowCopy_Inline();
 void CardRW_TestTopMenu_Page(ReadWritePage *, int, int);
 unsigned char CardRW_ErrorDisplay(ReadWritePage *, int, int, int);

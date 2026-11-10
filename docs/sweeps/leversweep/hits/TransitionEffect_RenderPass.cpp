@@ -227,9 +227,9 @@ extern const float lbl_806D3010, lbl_806D3014, lbl_806D3018, lbl_806D301C;
 extern const float lbl_806D3028, lbl_806D3038, lbl_806D303C, lbl_806D3040;
 extern const float lbl_806D3044, lbl_806D3048, lbl_806D304C, lbl_806D3050;
 extern const double lbl_806D3020, lbl_806D3030;
-extern const Vec lbl_80311CA0[];
-extern float lbl_806D1170;
-extern signed char lbl_806D1174;
+extern const Vec TransitionEffect_rodata_80311CA0[];
+extern float TransitionEffect_DrawCarRouletteOverlay_bss_806D1170;
+extern signed char TransitionEffect_DrawCarRouletteOverlay_bss_806D1174;
 void *GetCourseScene3D();
 float (*CObj_GetProjMatrix_Cached(void *))[4];
 void Object_SetJObjPositionXYZ(void *, float, float, float);
@@ -241,7 +241,7 @@ GXTexObj *BackupBuffer_InitAsTexture();
 float Saturate_Double(float, float, float);
 }
 struct TransitionTextureVertex { float x, y, u, v; unsigned int color; };
-extern "C" TransitionTextureVertex lbl_803FE230[16];
+extern "C" TransitionTextureVertex TransitionEffect_DrawCarRouletteOverlay_data_803FE230[16];
 
 static inline void ScreenProjection(Mtx44 projection)
 {
@@ -297,9 +297,9 @@ extern "C" {
 void fn_801F6588(int);
 void fn_801F6790(void *);
 void HSD_StateInvalidate(unsigned long);
-extern float lbl_806D1160, lbl_806D1168;
-extern signed char lbl_806D1164, lbl_806D116C;
-extern TransitionTextureVertex lbl_803FE0F0[16];
+extern float TransitionEffect_RenderPass_bss_806D1160, TransitionEffect_RenderPass_bss_806D1168;
+extern signed char TransitionEffect_RenderPass_bss_806D1164, TransitionEffect_RenderPass_bss_806D116C;
+extern TransitionTextureVertex TransitionEffect_RenderPass_data_803FE0F0[16];
 }
 extern "C" void TransitionEffect_DrawCarRouletteOverlay(TransitionRoulette *);
 
@@ -336,7 +336,7 @@ static inline void ScreenFlatQuad(unsigned char r, unsigned char g, unsigned cha
 static inline void ScreenTableQuad()
 {
     GXBegin(GX_QUADS, GX_VTXFMT0, 16);
-    TransitionTextureVertex *v = lbl_803FE0F0;
+    TransitionTextureVertex *v = TransitionEffect_RenderPass_data_803FE0F0;
     for (int i = 0; i < 16; ++i) {
         ScreenPosition((v[0].x - lbl_806D300C) + lbl_806D2FD0,
                        (v[0].y - lbl_806D3000) + lbl_806D2FD0);
@@ -362,7 +362,7 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
     unsigned char b_;
     unsigned char g_;
     unsigned char r_;
-    const Vec *camera = lbl_80311CA0;
+    const Vec *camera = TransitionEffect_rodata_80311CA0;
     void *payload;
     /* Keep each pass's escaped matrices in the target stack order. */
     Mtx view1;
@@ -391,7 +391,7 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
         GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         GXSetCullMode(GX_CULL_BACK);
         ScreenProjection(projection1);
-        ScreenRotatedCamera(view1, camera, 3, &lbl_806D1160, &lbl_806D1164);
+        ScreenRotatedCamera(view1, camera, 3, &TransitionEffect_RenderPass_bss_806D1160, &TransitionEffect_RenderPass_bss_806D1164);
         GXLoadTexObj(BackupBuffer_InitAsTexture(), GX_TEXMAP0);
         GXSetNumTexGens(1);
         GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
@@ -472,7 +472,7 @@ extern "C" void TransitionEffect_RenderPass(TransitionEffectView *self, int pass
         GXSetZCompLoc(GX_FALSE);
         GXSetCullMode(GX_CULL_BACK);
         ScreenProjection(projection4);
-        ScreenRotatedCamera(view4, camera, 6, &lbl_806D1168, &lbl_806D116C);
+        ScreenRotatedCamera(view4, camera, 6, &TransitionEffect_RenderPass_bss_806D1168, &TransitionEffect_RenderPass_bss_806D116C);
         ScreenTexturedMaterial();
         GXSetChanCtrl(GX_COLOR0A0, GX_DISABLE, GX_SRC_VTX, GX_SRC_VTX, GX_LIGHT_NULL, GX_DF_NONE, GX_AF_NONE);
         GXSetNumChans(1);
@@ -519,7 +519,7 @@ static inline void ScreenTablePosition(float x, float y)
 static inline void ScreenRouletteTableQuad()
 {
     GXBegin(GX_QUADS, GX_VTXFMT0, 16);
-    TransitionTextureVertex *v = lbl_803FE230;
+    TransitionTextureVertex *v = TransitionEffect_DrawCarRouletteOverlay_data_803FE230;
     for (int i = 0; i < 16; ++i) {
         ScreenTablePosition(v[0].x, v[0].y);
         *(volatile unsigned int *)0xCC008000 = v[0].color;
@@ -530,7 +530,7 @@ static inline void ScreenRouletteTableQuad()
 
 extern "C" void TransitionEffect_DrawCarRouletteOverlay(TransitionRoulette *self)
 {
-    const Vec *camera = lbl_80311CA0;
+    const Vec *camera = TransitionEffect_rodata_80311CA0;
     if (self->remaining <= lbl_806D2FD0) return;
     TransitionEffect_DrawCarRouletteAndQuad(self, self->fade, self->speed);
     if (self->active != 1) return;
@@ -540,7 +540,7 @@ extern "C" void TransitionEffect_DrawCarRouletteOverlay(TransitionRoulette *self
     Mtx view;
     Mtx44 projection;
     ScreenProjection(projection);
-    ScreenRotatedCamera(view, camera, 15, &lbl_806D1170, &lbl_806D1174);
+    ScreenRotatedCamera(view, camera, 15, &TransitionEffect_DrawCarRouletteOverlay_bss_806D1170, &TransitionEffect_DrawCarRouletteOverlay_bss_806D1174);
     GXLoadTexObj(BackupBuffer_InitAsTexture(), GX_TEXMAP0);
     GXSetNumTexGens(1);
     GXSetTexCoordGen2(GX_TEXCOORD0, GX_TG_MTX3x4, GX_TG_TEX0, GX_IDENTITY, GX_FALSE, GX_PTIDENTITY);
@@ -559,7 +559,7 @@ extern "C" void TransitionEffect_DrawCarRouletteOverlay(TransitionRoulette *self
 #pragma opt_propagation off
 extern "C" void TransitionEffect_DrawCarRouletteAndQuad(TransitionRoulette *self, float fade, float angle)
 {
-    const Vec *camera = lbl_80311CA0;
+    const Vec *camera = TransitionEffect_rodata_80311CA0;
     MtxPtr matrix = CObj_GetProjMatrix_Cached(GetCourseScene3D());
     Vec position;
     position.x = lbl_806D2FD0;

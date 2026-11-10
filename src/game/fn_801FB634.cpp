@@ -1,6 +1,6 @@
 /*
  * 0x801FB634..0x801FB6C0: factory for a small flow scene (vtable
- * lbl_804EBECC) whose timer starts one past the first table entry.
+ * WaitFlowScene_vtable_804EBECC) whose timer starts one past the first table entry.
  */
 
 void *operator new(unsigned long size);

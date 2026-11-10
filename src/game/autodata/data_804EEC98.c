@@ -13,39 +13,39 @@ extern void fn_802494BC();
 extern void fn_802494D4();
 extern void fn_802494E0();
 extern void fn_80249A40();
-extern char lbl_806D08D0[];
-extern char lbl_806D08D8[];
-extern char lbl_806D08E0[];
-extern char lbl_806D08E8[];
+extern char data_804EEC98_data_806D08D0[];
+extern char data_804EEC98_data_806D08D8[];
+extern char data_804EEC98_data_806D08E0[];
+extern char data_804EEC98_data_806D08E8[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804EEC98[3] = {
-    (void *)&lbl_806D08D0,
+void *sdata_806D0728_data_804EEC98[3] = {
+    (void *)&data_804EEC98_data_806D08D0,
     0,
     0
 };
-void *lbl_804EECA4[11] = {
-    (void *)&lbl_806D08D8,
+void *RaceHudScene_vtable_804EECA4[11] = {
+    (void *)&data_804EEC98_data_806D08D8,
     0,
     (void *)dtor_80249274,
     0,
     (void *)fn_80249130,
     (void *)fn_80249054,
-    (void *)&lbl_806D08D8,
+    (void *)&data_804EEC98_data_806D08D8,
     (void *)0xFFFFFFF8,
     (void *)fn_802494B4,
     0,
     0
 };
-void *lbl_804EECD0[3] = {
-    (void *)&lbl_806D08E0,
+void *sdata_806D0728_data_804EECD0[3] = {
+    (void *)&data_804EEC98_data_806D08E0,
     0,
     0
 };
-void *lbl_804EECDC[6] = {
-    (void *)&lbl_806D08E8,
+void *TripletFaderOwner_vtable_804EECDC[6] = {
+    (void *)&data_804EEC98_data_806D08E8,
     0,
     (void *)fn_80249A40,
     (void *)fn_802494E0,

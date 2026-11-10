@@ -39,15 +39,15 @@ typedef struct KartPreview {
     float view_y;
 } KartPreview;
 
-extern unsigned int lbl_806D1558;
-extern RenderTargetHolder *lbl_806D155C;
-extern char lbl_8048EA78[];
+extern unsigned int RenderTargetSingleton_bss_806D1558;
+extern RenderTargetHolder *RenderTargetSingleton_bss_806D155C;
+extern char RenderTargetSingleton_data_8048EA78[];
 extern char lbl_806D76D0[];
 extern char lbl_806D76D8[];
 extern float lbl_806D76E0;
 extern float lbl_806D76E4;
-extern char lbl_8048EAD8[];
-extern char lbl_8048EAE8[];
+extern char KartPreview_data_8048EAD8[];
+extern char clCSModelInterface_vtable_8048EAE8[];
 
 extern void HSD_LObjDeleteCurrentAll(int);
 extern void HSD_LObjAddCurrent(void *rt);
@@ -100,7 +100,7 @@ int fn_8013C34C(RenderTargetHolder *h) {
 }
 
 RenderTargetHolder *fn_8013C3B8(void) {
-    return lbl_806D155C;
+    return RenderTargetSingleton_bss_806D155C;
 }
 
 static inline void RenderTargetHolder_Free(RenderTargetHolder *h) {
@@ -113,10 +113,10 @@ static inline void RenderTargetHolder_Free(RenderTargetHolder *h) {
 }
 
 void fn_8013C3C0(void) {
-    if (lbl_806D1558 != 0) {
-        if (--lbl_806D1558 == 0) {
-            RenderTargetHolder_Free(lbl_806D155C);
-            lbl_806D155C = 0;
+    if (RenderTargetSingleton_bss_806D1558 != 0) {
+        if (--RenderTargetSingleton_bss_806D1558 == 0) {
+            RenderTargetHolder_Free(RenderTargetSingleton_bss_806D155C);
+            RenderTargetSingleton_bss_806D155C = 0;
         }
     }
 }
@@ -129,19 +129,19 @@ struct RenderTargetObj {
     void *rt;
     RenderTargetObj() {
         active = 0;
-        rt = HSD_LObjLoadDesc(lbl_8048EA78);
+        rt = HSD_LObjLoadDesc(RenderTargetSingleton_data_8048EA78);
     }
 };
 
 extern "C" int fn_8013C428(void) {
-    if (lbl_806D1558 == 0) {
+    if (RenderTargetSingleton_bss_806D1558 == 0) {
         RenderTargetObj *h = new RenderTargetObj;
-        lbl_806D155C = (RenderTargetHolder *)h;
+        RenderTargetSingleton_bss_806D155C = (RenderTargetHolder *)h;
         if (h == 0) {
             return 0;
         }
     }
-    lbl_806D1558++;
+    RenderTargetSingleton_bss_806D1558++;
     return 1;
 }
 #pragma cplusplus reset

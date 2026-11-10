@@ -6,7 +6,7 @@ struct MileageBase { void* vt; MileageBase(); ~MileageBase(); };
 struct MileageTableEntry { int miles; short label,title; };
 struct MileageTables { short character[13][2]; MileageTableEntry entries[10]; };
 extern "C" {
-extern MileageTables lbl_8049ACB0;
+extern MileageTables clFlowFigure_Init_data_8049ACB0;
 extern unsigned char g_playerData[];
 extern int g_characterId,g_gameMode;
 extern unsigned char g_confirmFlag;

@@ -12,7 +12,7 @@ index 9941ce2..8c8dd12 100644
 --- a/src/game/PCBCommPhase5.c
 +++ b/src/game/PCBCommPhase5.c
 @@ -37,10 +37,8 @@ int PCBComm_UpdateSyncPhase5(void)
-         lbl_806D11C0[1] = lbl_806D3160;
+         PCBCheckRecv_bss_806D11C0[1] = lbl_806D3160;
          return 1;
      }
 -    slots = lbl_805A6154;

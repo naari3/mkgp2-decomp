@@ -102,7 +102,7 @@ int Race_PerFrameTickAndAudio(void) {
     } else {
         if (g_goalFanfareTriggered) goal = 1;
         else if (g_lastPlayerCurrentCheckpoint != g_goalTriggerCheckpoint) goal = 0;
-        else if (!fn_801A1BD0(&lbl_80496DC4[g_ccClass * 128 + ((g_cupId - 1) * 16 + g_longRoundFlag * 8 + g_reverseRoundFlag * 4)], (RaceVoiceEntry *)&entries[g_lastPlayerIndexCrossingCheckpoint])) goal = 0;
+        else if (!fn_801A1BD0(&Race_PerFrameTickAndAudio_data_80496DC4[g_ccClass * 128 + ((g_cupId - 1) * 16 + g_longRoundFlag * 8 + g_reverseRoundFlag * 4)], (RaceVoiceEntry *)&entries[g_lastPlayerIndexCrossingCheckpoint])) goal = 0;
         else {
             g_goalFanfareTriggered = 1;
             g_currentVoiceSubId = -1;

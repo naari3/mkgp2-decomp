@@ -11,7 +11,7 @@ typedef struct ObjList {
     void *buf;
 } ObjList;
 
-extern char lbl_804963A4[];
+extern char Obj987_vtable_804963A4[];
 extern char lbl_80490FE0[];
 extern const char lbl_8037DC04[];
 extern void Object_DtorWithGXSync(void *obj, int flag);
@@ -23,7 +23,7 @@ extern void DebugPrintf(const char *fmt, ...);
 ObjList *fn_801986D8(ObjList *self, short flag) {
     int i;
     if (self != 0) {
-        self->vt = lbl_804963A4;
+        self->vt = Obj987_vtable_804963A4;
         if (self->count != 0) {
             for (i = 0; i < self->count; i++) {
                 Object_DtorWithGXSync(self->items[i].obj, 1);

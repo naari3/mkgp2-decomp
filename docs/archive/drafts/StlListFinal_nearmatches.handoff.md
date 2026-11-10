@@ -198,29 +198,29 @@ decl-init form and condition-assign form produce identical output.
 
 Drop-in for the asm body (forward decl becomes the typed signature below).
 BoostTicksView/BoostBlendView typedefs and the float/double extern retypes
-(lbl_806D1080/1084 float, lbl_806D2744/2778/27F0/27F4 const float,
-lbl_806D2790 const double, lbl_802EBE14 const float[]) are already in the TU.
+(KartMovement_UpdateBoostVisualBlend_bss_806D1080/1084 float, lbl_806D2744/2778/27F0/27F4 const float,
+lbl_806D2790 const double, KartMovement_UpdateBoostVisualBlend_rodata_802EBE14 const float[]) are already in the TU.
 
 ```c
 #pragma exceptions off
 /* lerp the boost visual color (m+0x2e4..0x2ec) and out scalar between the two
- * lbl_802EBE14 table rows by remaining boost ticks; t<=0 path decays via the
+ * KartMovement_UpdateBoostVisualBlend_rodata_802EBE14 table rows by remaining boost ticks; t<=0 path decays via the
  * 0x78-frame counter, t>0 path re-arms it and publishes sat/s to sda globals */
 void KartMovement_UpdateBoostVisualBlend(BoostTicksView *self, BoostBlendView *m, float *out, void *unused4, int *counter) { /* 0x80052DBC size:0x164 */
     int t = self->boostTicks;
     if (t <= 0) {
         float z = lbl_806D26EC;
         int n;
-        lbl_806D1080 = z;
-        lbl_806D1084 = z;
+        KartMovement_UpdateBoostVisualBlend_bss_806D1080 = z;
+        KartMovement_UpdateBoostVisualBlend_bss_806D1084 = z;
         n = *counter;
         if (n > 0) {
             *counter = n - 1;
-            m->blendR = lbl_802EBE14[1];
-            m->blendG = lbl_802EBE14[2];
-            m->blendB = lbl_802EBE14[3];
+            m->blendR = KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[1];
+            m->blendG = KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[2];
+            m->blendB = KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[3];
             m->weight2c = lbl_806D26FC;
-            *out = lbl_802EBE14[0];
+            *out = KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[0];
         } else {
             m->blendR = z;
             m->blendG = z;
@@ -240,13 +240,13 @@ void KartMovement_UpdateBoostVisualBlend(BoostTicksView *self, BoostBlendView *m
         one = lbl_806D26FC;
         s = sat * lbl_806D2700;
         inv = one - s;
-        m->blendR = inv * lbl_802EBE14[1] + s * lbl_802EBE14[5];
-        m->blendG = inv * lbl_802EBE14[2] + s * lbl_802EBE14[6];
-        m->blendB = inv * lbl_802EBE14[3] + s * lbl_802EBE14[7];
+        m->blendR = inv * KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[1] + s * KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[5];
+        m->blendG = inv * KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[2] + s * KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[6];
+        m->blendB = inv * KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[3] + s * KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[7];
         m->weight2c = one;
-        *out = inv * lbl_802EBE14[0] + s * lbl_802EBE14[4];
-        lbl_806D1080 = sat;
-        lbl_806D1084 = s;
+        *out = inv * KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[0] + s * KartMovement_UpdateBoostVisualBlend_rodata_802EBE14[4];
+        KartMovement_UpdateBoostVisualBlend_bss_806D1080 = sat;
+        KartMovement_UpdateBoostVisualBlend_bss_806D1084 = s;
     }
 }
 #pragma exceptions reset

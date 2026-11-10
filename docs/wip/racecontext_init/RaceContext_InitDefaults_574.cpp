@@ -17,12 +17,12 @@ void *memset(void *, int, unsigned long);
 extern int g_ccClass, g_consecutiveWinsTier, g_courseVariantIdx, g_cupId;
 extern int g_currentSceneState, g_gameMode, g_humanPlayerCount, g_kartVariant;
 extern int g_localPcbRole, g_longRoundFlag, g_reverseRoundFlag, g_timerModeEnabled;
-extern int lbl_806CF10C, lbl_806CF110, lbl_806CF12C, lbl_806D1280, lbl_806D12D8;
+extern int SetCourseParams_data_806CF10C, lbl_806CF110, lbl_806CF12C, SetCourseParams_bss_806D1280, SetCourseParams_bss_806D12D8;
 extern unsigned char g_isCommHost, g_isPcbHost, g_lakituStartAnimDone, g_raceStarted;
-extern unsigned char lbl_806D117C, lbl_806D1258, lbl_806D1259, lbl_806D1290;
+extern unsigned char lbl_806D117C, SetCourseParams_bss_806D1258, RaceContext_InitDefaults_bss_806D1259, lbl_806D1290;
 extern unsigned char lbl_806D12B0, lbl_806D12E1, lbl_806D12E2;
 extern unsigned char lbl_806D1264[3], lbl_806D12E4[3];
-extern unsigned char lbl_805AC600[], lbl_80598A60[], lbl_805B2580[];
+extern unsigned char SetCourseParams_bss_805AC600[], lbl_80598A60[], SetCourseParams_bss_805B2580[];
 extern const float lbl_806D4790, lbl_806D4798;
 }
 
@@ -68,14 +68,14 @@ static inline void InitializeWideRow(RaceWideRow *row) {
     row->enabled = 1;
 }
 
-#define slots ((RaceSlot *)lbl_805AC600)
+#define slots ((RaceSlot *)SetCourseParams_bss_805AC600)
 RaceContext::RaceContext() {
-    unsigned char *storage = lbl_805AC600;
+    unsigned char *storage = SetCourseParams_bss_805AC600;
     unsigned char *farBank = storage + 0x20000;
 
     ItemTable_PopulateAliasedSlots();
-    if (lbl_806D1259 != 1) {
-        unsigned char *destination = lbl_805B2580;
+    if (RaceContext_InitDefaults_bss_806D1259 != 1) {
+        unsigned char *destination = SetCourseParams_bss_805B2580;
         int bank = 0;
         unsigned char *settings = lbl_80598A60;
         do {
@@ -83,7 +83,7 @@ RaceContext::RaceContext() {
             ++bank;
             destination += 0x8000;
         } while (bank <= 3);
-        lbl_806D1259 = 1;
+        RaceContext_InitDefaults_bss_806D1259 = 1;
     }
 
     g_timerModeEnabled = 1;
@@ -108,8 +108,8 @@ RaceContext::RaceContext() {
         g_raceStarted = 0;
     }
 
-    unsigned char initialized = lbl_806D1258;
-    lbl_806CF10C = 0;
+    unsigned char initialized = SetCourseParams_bss_806D1258;
+    SetCourseParams_data_806CF10C = 0;
     if (initialized == 0) {
         RaceAux *aux = (RaceAux *)(storage + 0x5ECC);
         RaceWideRow *rows = (RaceWideRow *)(farBank + 0x6348);
@@ -130,8 +130,8 @@ RaceContext::RaceContext() {
         last->enabled = 0;
         last->current = lbl_806D4790;
         last->limit = lbl_806D4798;
-        lbl_806D1280 = 4;
-        lbl_806D1258 = 1;
+        SetCourseParams_bss_806D1280 = 4;
+        SetCourseParams_bss_806D1258 = 1;
         InitializeWideRow(&rows[0]);
         InitializeWideRow(&rows[1]);
         InitializeWideRow(&rows[2]);
@@ -140,7 +140,7 @@ RaceContext::RaceContext() {
         InitializeWideRow(&rows[5]);
         InitializeWideRow(&rows[6]);
         InitializeWideRow(&rows[7]);
-        lbl_806D12D8 = 0;
+        SetCourseParams_bss_806D12D8 = 0;
     }
 
     g_ccClass = 0;

@@ -59,7 +59,7 @@ extern void fn_801B1660(void *kart, void *target);
 extern void fn_801B1D5C(void *kart, void *target, int alias, bool flag);
 
 extern int g_ccClass;
-extern unsigned char lbl_8032EFF0[];
+extern unsigned char BananaTriple_Tick_HeldAndHoming_32to36_rodata_8032EFF0[];
 extern char lbl_804211B0[][0xC0];
 extern const float lbl_806D5D90;
 extern const float lbl_806D5D94;
@@ -98,7 +98,7 @@ static inline void BananaTriple_SetIdleAnim(char *self)
 #pragma use_lmw_stmw on
 void BananaTriple_Tick_HeldAndHoming_32to36(char *self, char *w)
 {
-    unsigned char *base = lbl_8032EFF0;
+    unsigned char *base = BananaTriple_Tick_HeldAndHoming_32to36_rodata_8032EFF0;
     Vec3 n;
     int landed;
     float groundY;

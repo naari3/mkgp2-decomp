@@ -85,7 +85,7 @@ extern const float lbl_806D5150;
 extern const float lbl_806D5154;
 extern const float lbl_806D5158;
 extern const float lbl_806D515C;
-extern const unsigned char lbl_803292B4[6][3];
+extern const unsigned char ParticleBurst_Draw_rodata_803292B4[6][3];
 
 void ParticleBurst_Draw(char *self);
 
@@ -116,7 +116,7 @@ void ParticleBurst_Draw(char *self) {
             x = lbl_806D509C * (p->x - lbl_806D5020);
             y = lbl_806D50A0 * (p->y - lbl_806D5024);
             z = p->z - lbl_806D5028;
-            c = lbl_803292B4[i % 6];
+            c = ParticleBurst_Draw_rodata_803292B4[i % 6];
             r = c[0];
             g = c[1];
             b = c[2];
@@ -150,13 +150,13 @@ extern PBVec3 Mtx44_TransformVec3(const float *m, PBVec3 v);
 extern void clDrawMan_AddSorted_NoDepthBias(void *mgr, void (*fn)(char *), char *obj,
                                             float x, float y, float z, float bias);
 extern void *lbl_806D10AC;
-extern PBVec3 lbl_803292C8;
+extern PBVec3 ParticleBurst_DrawCb_rodata_803292C8;
 extern float lbl_805DF3D0[];
 
 #pragma exceptions on
 
 void ParticleBurst_DrawCb(char *self) {
-    PBVec3 p = lbl_803292C8;
+    PBVec3 p = ParticleBurst_DrawCb_rodata_803292C8;
     p = Mtx44_TransformVec3(lbl_805DF3D0, p);
     clDrawMan_AddSorted_NoDepthBias(lbl_806D10AC == 0 ? 0 : lbl_806D10AC,
                                     ParticleBurst_Draw, self, p.x, p.y, p.z,

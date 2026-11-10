@@ -1,7 +1,7 @@
 #include "game/singleton.h"
 
 /* sdata symbols referenced from asm */
-extern unsigned char lbl_806CF828[8];
+extern unsigned char Scene_8014E0C4_data_806CF828[8];
 extern unsigned char lbl_806D7F70[8];
 extern unsigned char lbl_806D8134[7];
 extern unsigned char lbl_806D813C[5];
@@ -374,8 +374,8 @@ extern unsigned int lbl_806D8080;
 extern unsigned int dtor_800869D0[];
 extern unsigned int fn_80149214[];
 extern unsigned int fn_8014E04C[];
-/* extern char lbl_80363D30[]; (defined below/above as raw pool) */
-extern unsigned int lbl_8048FED8[];
+/* extern char Scene_8014E0C4_rodata_80363D30[]; (defined below/above as raw pool) */
+extern unsigned int DemoScene1C0_vtable_8048FED8[];
 extern unsigned int lbl_8048FF80[];
 extern void CreditMgr_DrawCoinCreditBanner(int slot, unsigned int color, int count);
 extern void HSD_StateInvalidate(int mask);
@@ -395,7 +395,7 @@ extern unsigned int lbl_806D8088;
 extern unsigned int lbl_806D808C;
 extern unsigned int lbl_806D8090;
 extern unsigned int lbl_806D8094;
-/* extern struct AttractEntry lbl_80367488[]; (defined below/above as raw pool) */
+/* extern struct AttractEntry Scene_8014E0C4_rodata_80367488[]; (defined below/above as raw pool) */
 int CreditMgr_GetCreditCount(int slot);
 void GXDrawDone(void);
 unsigned char GetVBlankFlag(void);
@@ -426,11 +426,11 @@ extern unsigned int g_currentSceneState;
 extern struct TitleDB *lbl_806D10A0;
 extern unsigned int lbl_806D12E1;
 extern unsigned int jumptable_8048FDCC[];
-extern unsigned int lbl_8048FE14[];
-extern unsigned int lbl_8048FE3C[];
-extern unsigned int lbl_8048FE64[];
-extern unsigned int lbl_8048FE8C[];
-extern unsigned int lbl_8048FF64[];
+extern unsigned int EntryScene_vtable_8048FE14[];
+extern unsigned int CourseDemoScene_vtable_8048FE3C[];
+extern unsigned int StatusNoticeScene_vtable_8048FE64[];
+extern unsigned int StatusLogoScene_vtable_8048FE8C[];
+extern unsigned int AttractScene_vtable_8048FF64[];
 extern void dtor_80080330();
 unsigned char Sprite_AdvanceAnim(void *s, float dt);
 extern const float lbl_806D8060;
@@ -441,9 +441,9 @@ void clRom_PurgeAll(void);
 void fn_80120A08(int id);
 void fn_80169C44(void);
 void fn_801933D0(int a);
-extern struct StatusInfo *lbl_806D1580;
+extern struct StatusInfo *Scene_8014E0C4_bss_806D1580;
 extern unsigned int lbl_803FE0C8[];
-extern unsigned int lbl_8048FD98[];
+extern unsigned int Scene_8014E0C4_data_8048FD98[];
 void InitRumbleController(int on);
 unsigned char PreloadResource(int id);
 void SetLocalPcbRole(int role);
@@ -454,9 +454,9 @@ extern unsigned char lbl_806D12E2;
 extern int lbl_80598A60[];
 extern void dtor_8007D0D4();
 void OverlayText(int a, int b, int line, const char *fmt, ...);
-extern const char *lbl_8048FD50[];
+extern const char *Scene_8014E0C4_data_8048FD50[];
 void Sprite_Destroy(void *s, int flag);
-extern unsigned int lbl_8048FFC0[];
+extern unsigned int NamCamPanelC_vtable_8048FFC0[];
 void FlashFadeOverlay_Draw(void *h, float a, float b, float c, float d, float e, float f);
 extern unsigned int lbl_806D80A8;
 extern unsigned int lbl_806D80AC;
@@ -486,7 +486,7 @@ extern unsigned int lbl_806D80F0;
 extern unsigned int lbl_806D80F4;
 extern unsigned int lbl_806D80F8;
 void __destroy_new_array(void *p, void *dtor);
-extern unsigned int lbl_8048FFE8[];
+extern unsigned int TextPanelC_vtable_8048FFE8[];
 void fn_8011FAB8(void);
 void fn_801F8A34(void *a, void *b, int c);
 void *fn_801F8E58(void);
@@ -525,7 +525,7 @@ void fn_8013DB9C(void);
 unsigned char fn_8019083C(int slot);
 void fn_801909A4(int slot);
 extern struct VObj *lbl_806D10AC;
-extern unsigned int lbl_80490010[];
+extern unsigned int RaceSceneC_vtable_80490010[];
 void CObj_DebugVizPathFlush(void *c);
 void CourseEnvironment_RenderObjects_Timed(void *env);
 void DrawEffect_TickAndCull(void);
@@ -559,7 +559,7 @@ extern unsigned int lbl_806D8124;
 extern unsigned int lbl_806D8128;
 extern unsigned int lbl_806D812C;
 extern unsigned int lbl_806D8130;
-/* extern struct CourseModeInfo lbl_80366EF0[]; (defined below/above as raw pool) */
+/* extern struct CourseModeInfo Scene_8014E0C4_rodata_80366EF0[]; (defined below/above as raw pool) */
 extern void BuildOrientationFromYaw();
 extern void CObj_ApplyScissor();
 extern void CObj_LoadProjMatrix();
@@ -631,9 +631,9 @@ extern unsigned int g_courseVariantIdx;
 extern unsigned int g_longRoundFlag;
 extern unsigned int lbl_806D80C0;
 extern unsigned int lbl_806D8184;
-/* extern unsigned int lbl_80367200[]; (defined below/above as raw pool) */
+/* extern unsigned int Scene_8014E0C4_rodata_80367200[]; (defined below/above as raw pool) */
 extern unsigned int lbl_8041BC00[];
-extern char *lbl_8048F178[];
+extern char *Scene_8014E0C4_data_8048F178[];
 extern void C_MTXLookAt(float m[3][4], const struct Vec3f *eye, const struct Vec3f *up, const struct Vec3f *target);
 extern void C_MTXOrtho(float m[4][4], float t, float b, float l, float r, float n, float f);
 extern void GXBegin(int prim, int fmt, unsigned short n);
@@ -703,10 +703,10 @@ extern unsigned int lbl_806D8214;
 extern unsigned int lbl_806D8218;
 extern unsigned int lbl_806D821C;
 extern unsigned int lbl_806D8220;
-/* extern unsigned int lbl_803677B0[]; (defined below/above as raw pool) */
-/* extern unsigned int lbl_803677C8[]; (defined below/above as raw pool) */
+/* extern unsigned int Scene_8014E0C4_rodata_803677B0[]; (defined below/above as raw pool) */
+/* extern unsigned int Scene_8014E0C4_rodata_803677C8[]; (defined below/above as raw pool) */
 
-/* .rodata 0x80363D30..0x803678D8: this TU's pool (raw; anchor lbl_80363D30) */
+/* .rodata 0x80363D30..0x803678D8: this TU's pool (raw; anchor Scene_8014E0C4_rodata_80363D30) */
 /* externs */
 extern "C" char lbl_806D7F00[];
 extern "C" char lbl_806D7F08[];
@@ -740,7 +740,7 @@ extern "C" char lbl_806D8008[];
 extern "C" char lbl_806D8010[];
 extern "C" char lbl_806D8018[];
 #pragma force_active on
-extern "C" unsigned int lbl_80363D30[309] = {
+extern "C" unsigned int Scene_8014E0C4_rodata_80363D30[309] = {
     0x00000000, 0x00000000, 0xC3960000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x3F333333, 0x3F666666,
     0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556,
@@ -851,7 +851,7 @@ extern "C" const unsigned int lbl_80364340[5] = {
 extern "C" const unsigned int lbl_80364354[5] = {
     0x41545F64, 0x656D6F5F, 0x63757431, 0x372E6461, 0x74000000,
 };
-extern "C" const void *const lbl_80364368[29] = {
+extern "C" const void *const Scene_8014E0C4_rodata_80364368[29] = {
     (const void *)&lbl_806D7F00, (const void *)&lbl_806D7F08, (const void *)&lbl_806D7F10, (const void *)&lbl_806D7F18, (const void *)&lbl_806D7F20, (const void *)&lbl_806D7F28,
     (const void *)&lbl_806D7F30, (const void *)&lbl_806D7F38, (const void *)&lbl_806D7F40, (const void *)&lbl_806D7F48, (const void *)&lbl_80364204, (const void *)&lbl_80364210,
     (const void *)&lbl_8036421C, (const void *)&lbl_80364228, (const void *)&lbl_8036423C, (const void *)&lbl_80364250, (const void *)&lbl_80364264, (const void *)&lbl_80364278,
@@ -900,7 +900,7 @@ struct SprEntry {
     float w;
     float h;
 };
-extern "C" const SprEntry lbl_803644D0[81] = {
+extern "C" const SprEntry Scene_8014E0C4_rodata_803644D0[81] = {
     {0x00000000, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, 512.0f, 96.0f},
     {0x00000000, {0x00, 0x00, 0x00, 0x00, 0x42, 0xC0, 0x00, 0x00}, 512.0f, 96.0f},
     {0x00000000, {0x00, 0x00, 0x00, 0x00, 0x43, 0x90, 0x00, 0x00}, 512.0f, 96.0f},
@@ -1006,7 +1006,7 @@ extern "C" const unsigned int lbl_80364BA8[7] = {
     0x444B5F64, 0x656D6F5F, 0x646F6E6B, 0x65795F6E, 0x756C6C5F, 0x6A6F696E,
     0x74000000,
 };
-extern "C" const unsigned int lbl_80364BC4[35] = {
+extern "C" const unsigned int sdata_806CF750_rodata_80364BC4[35] = {
     0x444B5F64, 0x656D6F5F, 0x6D617269, 0x6F5F6E75, 0x6C6C5F6A, 0x6F696E74,
     0x00000000, 0x442DC000, 0x00000002, 0x00000032, 0x01000000, 0x4433C000,
     0x00000002, 0x00000032, 0x00000000, 0x443B8000, 0x00000003, 0x00000039,
@@ -1014,21 +1014,21 @@ extern "C" const unsigned int lbl_80364BC4[35] = {
     0x00000004, 0x00000008, 0x01000000, 0x4451C000, 0x00000004, 0x00000008,
     0x00000000, 0xBF800000, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000000,
 };
-extern "C" const unsigned int lbl_80364C50[30] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80364C50[30] = {
     0x43700000, 0x44900000, 0x43700000, 0x40000000, 0x40000000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x43DB0000, 0xC487C000,
     0x43700000, 0x40000000, 0x40000000, 0x00000000, 0x3F800000, 0x3F800000,
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80364CC8[30] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80364CC8[30] = {
     0x43700000, 0x45080000, 0x43700000, 0x40000000, 0x40000000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x43DB0000, 0xC2780000,
     0x43700000, 0x40000000, 0x40000000, 0x00000000, 0x3F800000, 0x3F800000,
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80364D40[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80364D40[50] = {
     0x43DC0000, 0x42EC0000, 0x43700000, 0x400CCCCD, 0x400CCCCD, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x43DE0000, 0x42FA6666,
     0x43700000, 0x40200000, 0x40200000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1039,7 +1039,7 @@ extern "C" const unsigned int lbl_80364D40[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80364E08[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80364E08[50] = {
     0x43DC0000, 0x44070000, 0x43700000, 0x400CCCCD, 0x400CCCCD, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x43DE0000, 0x44050666,
     0x43700000, 0x40200000, 0x40200000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1050,7 +1050,7 @@ extern "C" const unsigned int lbl_80364E08[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80364ED0[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80364ED0[50] = {
     0x43DC0000, 0x430E0000, 0x43700000, 0x40000000, 0x40000000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x43E60000, 0x430E0000,
     0x43700000, 0x3F666666, 0x3F666666, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1061,7 +1061,7 @@ extern "C" const unsigned int lbl_80364ED0[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80364F98[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80364F98[50] = {
     0x43E10000, 0x43930000, 0x43700000, 0x40000000, 0x40000000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x43EB0000, 0x43930000,
     0x43700000, 0x3F666666, 0x3F666666, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1072,7 +1072,7 @@ extern "C" const unsigned int lbl_80364F98[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80365060[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80365060[50] = {
     0x43E60000, 0x43EE0000, 0x43700000, 0x40000000, 0x40000000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x43F00000, 0x43EE0000,
     0x43700000, 0x3F666666, 0x3F666666, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1083,7 +1083,7 @@ extern "C" const unsigned int lbl_80365060[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80365128[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80365128[50] = {
     0x44070000, 0x43A00000, 0x42FC0000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x440E4000, 0x43A00000,
     0x42FC0000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1094,7 +1094,7 @@ extern "C" const unsigned int lbl_80365128[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_803651F0[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_803651F0[50] = {
     0x44070000, 0x43A00000, 0x42F00000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x440E4000, 0x43A00000,
     0x42F00000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1105,7 +1105,7 @@ extern "C" const unsigned int lbl_803651F0[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_803652B8[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_803652B8[50] = {
     0x44250000, 0xC3120000, 0x43BE0000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44270000, 0x42B60000,
     0x43BE0000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1116,7 +1116,7 @@ extern "C" const unsigned int lbl_803652B8[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80365380[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80365380[50] = {
     0x44250000, 0xC3120000, 0x43BE0000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x44270000, 0x42B60000,
     0x43BE0000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1127,7 +1127,7 @@ extern "C" const unsigned int lbl_80365380[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80365448[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80365448[50] = {
     0x44340000, 0xC3120000, 0x43BE0000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44360000, 0x42B60000,
     0x43BE0000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1138,7 +1138,7 @@ extern "C" const unsigned int lbl_80365448[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80365510[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80365510[50] = {
     0x44340000, 0xC3120000, 0x43BE0000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x44360000, 0x42B60000,
     0x43BE0000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1149,7 +1149,7 @@ extern "C" const unsigned int lbl_80365510[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_803655D8[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_803655D8[50] = {
     0x44430000, 0xC3340000, 0x42A60000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44450000, 0x42D80000,
     0x42A60000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1160,7 +1160,7 @@ extern "C" const unsigned int lbl_803655D8[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_803656A0[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_803656A0[50] = {
     0x44430000, 0xC3340000, 0x42A60000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x44450000, 0x42D80000,
     0x42A60000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1171,7 +1171,7 @@ extern "C" const unsigned int lbl_803656A0[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80365768[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80365768[50] = {
     0x44520000, 0xC3340000, 0x42A60000, 0x3F800000, 0x3F800000, 0xBFC90FDB,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44540000, 0x42D80000,
     0x42A60000, 0x3F800000, 0x3F800000, 0xBFC90FDB, 0x3F800000, 0x3F800000,
@@ -1182,7 +1182,7 @@ extern "C" const unsigned int lbl_80365768[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80365830[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80365830[50] = {
     0x44520000, 0xC3340000, 0x42A60000, 0x3F800000, 0x3F800000, 0xBFC90FDB,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x44540000, 0x42D80000,
     0x42A60000, 0x3F800000, 0x3F800000, 0xBFC90FDB, 0x3F800000, 0x3F800000,
@@ -1193,7 +1193,7 @@ extern "C" const unsigned int lbl_80365830[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_803658F8[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_803658F8[50] = {
     0x44610000, 0x43A00000, 0x42FC0000, 0x3FA66666, 0x3FA66666, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x4464C000, 0x43A00000,
     0x42FC0000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1204,7 +1204,7 @@ extern "C" const unsigned int lbl_803658F8[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_803659C0[60] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_803659C0[60] = {
     0x44734000, 0x43170000, 0xC2080000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x4475C000, 0x43170000,
     0x43200000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1216,7 +1216,7 @@ extern "C" const unsigned int lbl_803659C0[60] = {
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80365AB0[60] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80365AB0[60] = {
     0x44748000, 0x43948000, 0xC2080000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44770000, 0x43948000,
     0x43200000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1228,7 +1228,7 @@ extern "C" const unsigned int lbl_80365AB0[60] = {
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80365BA0[60] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80365BA0[60] = {
     0x4475C000, 0x43CC8000, 0xC2080000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44784000, 0x43CC8000,
     0x43200000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1240,7 +1240,7 @@ extern "C" const unsigned int lbl_80365BA0[60] = {
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80365C90[60] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80365C90[60] = {
     0x44770000, 0x44004000, 0xC2080000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44798000, 0x44004000,
     0x43200000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1252,7 +1252,7 @@ extern "C" const unsigned int lbl_80365C90[60] = {
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80365D80[40] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80365D80[40] = {
     0x44870000, 0x439E8000, 0x43740000, 0x00000000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x448AC000, 0x439E8000,
     0x43740000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1261,7 +1261,7 @@ extern "C" const unsigned int lbl_80365D80[40] = {
     0xBF800000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80365E20[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80365E20[50] = {
     0x448AA000, 0x439E8000, 0x43740000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x448AC000, 0x439E8000,
     0x43740000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1272,21 +1272,21 @@ extern "C" const unsigned int lbl_80365E20[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80365EE8[30] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80365EE8[30] = {
     0x44870000, 0x439E8000, 0x43740000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44AC6000, 0x439E8000,
     0x43740000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80365F60[30] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80365F60[30] = {
     0x44870000, 0x43A00000, 0x42980000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44AC6000, 0x43A00000,
     0x42980000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80365FD8[120] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80365FD8[120] = {
     0x4490C000, 0x44378000, 0x43700000, 0x40200000, 0x40200000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44916000, 0x43FC0000,
     0x438F0000, 0x40200000, 0x40200000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1308,7 +1308,7 @@ extern "C" const unsigned int lbl_80365FD8[120] = {
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_803661B8[120] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_803661B8[120] = {
     0x44936000, 0x44588000, 0x43700000, 0x40200000, 0x40200000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44940000, 0x441D8000,
     0x438F0000, 0x40200000, 0x40200000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1330,7 +1330,7 @@ extern "C" const unsigned int lbl_803661B8[120] = {
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80366398[120] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80366398[120] = {
     0x4495E000, 0x44650000, 0x43700000, 0x40200000, 0x40200000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44968000, 0x44370000,
     0x438F0000, 0x40200000, 0x40200000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1352,7 +1352,7 @@ extern "C" const unsigned int lbl_80366398[120] = {
     0x3F800000, 0x3F800000, 0xBF800000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80366578[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80366578[50] = {
     0x44AC8000, 0xC3920000, 0x43540000, 0x3FE66666, 0x3FE66666, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44ADC000, 0x436E0000,
     0x43A90000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1363,7 +1363,7 @@ extern "C" const unsigned int lbl_80366578[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_80366640[40] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_80366640[40] = {
     0x44AF0000, 0x436E0000, 0x43A90000, 0x3F800000, 0x3F800000, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x44AF8000, 0x436E0000,
     0x43A90000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1372,7 +1372,7 @@ extern "C" const unsigned int lbl_80366640[40] = {
     0xBF800000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-extern "C" const unsigned int lbl_803666E0[50] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_803666E0[50] = {
     0x44ADA000, 0x44718000, 0x438E0000, 0x3FE66666, 0x3FE66666, 0x00000000,
     0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44AEE000, 0x43C70000,
     0x43C60000, 0x3F800000, 0x3F800000, 0x00000000, 0x3F800000, 0x3F800000,
@@ -1383,66 +1383,66 @@ extern "C" const unsigned int lbl_803666E0[50] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000,
 };
-extern "C" const void *const lbl_803667A8[398] = {
+extern "C" const void *const Scene_8014E0C4_rodata_803667A8[398] = {
     (const void *)0x44AF0000, (const void *)0x43C70000, (const void *)0x43C60000, (const void *)0x3F800000, (const void *)0x3F800000, (const void *)0x00000000,
     (const void *)0x3F800000, (const void *)0x3F800000, (const void *)0x3F800000, (const void *)0x00000000, (const void *)0x44AF8000, (const void *)0x43C70000,
     (const void *)0x43C60000, (const void *)0x3F800000, (const void *)0x3F800000, (const void *)0x00000000, (const void *)0x3F800000, (const void *)0x3F800000,
     (const void *)0x3F800000, (const void *)0x3F800000, (const void *)0x44B0E000, (const void *)0x43C70000, (const void *)0x43C60000, (const void *)0x3F800000,
     (const void *)0x3F800000, (const void *)0x00000000, (const void *)0x3F800000, (const void *)0x3F800000, (const void *)0x3F800000, (const void *)0x00000000,
     (const void *)0xBF800000, (const void *)0x00000000, (const void *)0x00000000, (const void *)0x00000000, (const void *)0x00000000, (const void *)0x00000000,
-    (const void *)0x00000000, (const void *)0x00000000, (const void *)0x00000000, (const void *)0x00000000, (const void *)&lbl_80364C50, (const void *)0x00000000,
-    (const void *)0x00000000, (const void *)&lbl_80364C50, (const void *)0x00000002, (const void *)0x00000001, (const void *)&lbl_80364CC8, (const void *)0x00000001,
-    (const void *)0x00000000, (const void *)&lbl_80364CC8, (const void *)0x00000003, (const void *)0x00000001, (const void *)&lbl_80364D40, (const void *)0x00000004,
-    (const void *)0x00000000, (const void *)&lbl_80364D40, (const void *)0x00000006, (const void *)0x00000001, (const void *)&lbl_80364E08, (const void *)0x00000005,
-    (const void *)0x00000000, (const void *)&lbl_80364E08, (const void *)0x00000007, (const void *)0x00000001, (const void *)&lbl_80365128, (const void *)0x0000000C,
-    (const void *)0x00000000, (const void *)&lbl_803652B8, (const void *)0x0000000A, (const void *)0x00000000, (const void *)&lbl_80365380, (const void *)0x0000000A,
-    (const void *)0x00000003, (const void *)&lbl_80365448, (const void *)0x00000009, (const void *)0x00000000, (const void *)&lbl_80365510, (const void *)0x00000009,
-    (const void *)0x00000003, (const void *)&lbl_803655D8, (const void *)0x00000008, (const void *)0x00000000, (const void *)&lbl_803656A0, (const void *)0x00000008,
-    (const void *)0x00000003, (const void *)&lbl_80365768, (const void *)0x0000000B, (const void *)0x00000000, (const void *)&lbl_80365830, (const void *)0x0000000B,
-    (const void *)0x00000003, (const void *)&lbl_803658F8, (const void *)0x0000000D, (const void *)0x00000000, (const void *)&lbl_80365EE8, (const void *)0x00000010,
-    (const void *)0x00000000, (const void *)&lbl_80365F60, (const void *)0x00000013, (const void *)0x00000000, (const void *)&lbl_80365D80, (const void *)0x00000011,
-    (const void *)0x00000000, (const void *)&lbl_80365E20, (const void *)0x00000012, (const void *)0x00000001, (const void *)&lbl_80366578, (const void *)0x0000000E,
-    (const void *)0x00000000, (const void *)&lbl_80366640, (const void *)0x0000000E, (const void *)0x00000003, (const void *)&lbl_803666E0, (const void *)0x0000000F,
-    (const void *)0x00000000, (const void *)&lbl_803667A8, (const void *)0x0000000F, (const void *)0x00000003, (const void *)0x00000000, (const void *)0x00000000,
-    (const void *)0x00000000, (const void *)&lbl_80364C50, (const void *)0x00000000, (const void *)0x00000000, (const void *)&lbl_80364C50, (const void *)0x00000002,
-    (const void *)0x00000001, (const void *)&lbl_80364CC8, (const void *)0x00000001, (const void *)0x00000000, (const void *)&lbl_80364CC8, (const void *)0x00000003,
-    (const void *)0x00000001, (const void *)&lbl_80364D40, (const void *)0x00000004, (const void *)0x00000000, (const void *)&lbl_80364D40, (const void *)0x00000006,
-    (const void *)0x00000001, (const void *)&lbl_80364E08, (const void *)0x00000005, (const void *)0x00000000, (const void *)&lbl_80364E08, (const void *)0x00000007,
-    (const void *)0x00000001, (const void *)&lbl_80365128, (const void *)0x0000000C, (const void *)0x00000000, (const void *)&lbl_803652B8, (const void *)0x0000000A,
-    (const void *)0x00000000, (const void *)&lbl_80365380, (const void *)0x0000000A, (const void *)0x00000003, (const void *)&lbl_80365448, (const void *)0x00000009,
-    (const void *)0x00000000, (const void *)&lbl_80365510, (const void *)0x00000009, (const void *)0x00000003, (const void *)&lbl_803655D8, (const void *)0x00000008,
-    (const void *)0x00000000, (const void *)&lbl_803656A0, (const void *)0x00000008, (const void *)0x00000003, (const void *)&lbl_80365768, (const void *)0x0000000B,
-    (const void *)0x00000000, (const void *)&lbl_80365830, (const void *)0x0000000B, (const void *)0x00000003, (const void *)0x00000000, (const void *)0x00000000,
-    (const void *)0x00000000, (const void *)&lbl_80364C50, (const void *)0x00000026, (const void *)0x00000000, (const void *)&lbl_80364C50, (const void *)0x0000002B,
-    (const void *)0x00000001, (const void *)&lbl_80364CC8, (const void *)0x00000027, (const void *)0x00000000, (const void *)&lbl_80364CC8, (const void *)0x0000002C,
-    (const void *)0x00000001, (const void *)&lbl_80364ED0, (const void *)0x00000028, (const void *)0x00000000, (const void *)&lbl_80364ED0, (const void *)0x0000002D,
-    (const void *)0x00000001, (const void *)&lbl_80364F98, (const void *)0x00000029, (const void *)0x00000000, (const void *)&lbl_80364F98, (const void *)0x0000002E,
-    (const void *)0x00000001, (const void *)&lbl_80365060, (const void *)0x0000002A, (const void *)0x00000000, (const void *)&lbl_80365060, (const void *)0x0000002F,
-    (const void *)0x00000001, (const void *)&lbl_803651F0, (const void *)0x00000030, (const void *)0x00000000, (const void *)&lbl_803652B8, (const void *)0x00000033,
-    (const void *)0x00000000, (const void *)&lbl_80365380, (const void *)0x00000033, (const void *)0x00000003, (const void *)&lbl_80365448, (const void *)0x00000032,
-    (const void *)0x00000000, (const void *)&lbl_80365510, (const void *)0x00000032, (const void *)0x00000003, (const void *)&lbl_803655D8, (const void *)0x00000031,
-    (const void *)0x00000000, (const void *)&lbl_803656A0, (const void *)0x00000031, (const void *)0x00000003, (const void *)&lbl_80365768, (const void *)0x00000034,
-    (const void *)0x00000000, (const void *)&lbl_80365830, (const void *)0x00000034, (const void *)0x00000003, (const void *)&lbl_803659C0, (const void *)0x00000035,
-    (const void *)0x00000000, (const void *)&lbl_80365AB0, (const void *)0x00000036, (const void *)0x00000000, (const void *)&lbl_80365BA0, (const void *)0x00000037,
-    (const void *)0x00000000, (const void *)&lbl_80365C90, (const void *)0x00000038, (const void *)0x00000000, (const void *)&lbl_80365FD8, (const void *)0x00000039,
-    (const void *)0x00000000, (const void *)&lbl_803661B8, (const void *)0x0000003A, (const void *)0x00000000, (const void *)&lbl_80366398, (const void *)0x0000003B,
-    (const void *)0x00000000, (const void *)&lbl_80366578, (const void *)0x0000003C, (const void *)0x00000000, (const void *)&lbl_80366640, (const void *)0x0000003C,
-    (const void *)0x00000003, (const void *)&lbl_803666E0, (const void *)0x0000003D, (const void *)0x00000000, (const void *)&lbl_803667A8, (const void *)0x0000003D,
-    (const void *)0x00000003, (const void *)0x00000000, (const void *)0x00000000, (const void *)0x00000000, (const void *)&lbl_80364C50, (const void *)0x00000026,
-    (const void *)0x00000000, (const void *)&lbl_80364C50, (const void *)0x0000002B, (const void *)0x00000001, (const void *)&lbl_80364CC8, (const void *)0x00000027,
-    (const void *)0x00000000, (const void *)&lbl_80364CC8, (const void *)0x0000002C, (const void *)0x00000001, (const void *)&lbl_80364ED0, (const void *)0x00000028,
-    (const void *)0x00000000, (const void *)&lbl_80364ED0, (const void *)0x0000002D, (const void *)0x00000001, (const void *)&lbl_80364F98, (const void *)0x00000029,
-    (const void *)0x00000000, (const void *)&lbl_80364F98, (const void *)0x0000002E, (const void *)0x00000001, (const void *)&lbl_80365060, (const void *)0x0000002A,
-    (const void *)0x00000000, (const void *)&lbl_80365060, (const void *)0x0000002F, (const void *)0x00000001, (const void *)&lbl_803652B8, (const void *)0x00000033,
-    (const void *)0x00000000, (const void *)&lbl_80365380, (const void *)0x00000033, (const void *)0x00000003, (const void *)&lbl_80365448, (const void *)0x00000032,
-    (const void *)0x00000000, (const void *)&lbl_80365510, (const void *)0x00000032, (const void *)0x00000003, (const void *)&lbl_803655D8, (const void *)0x00000031,
-    (const void *)0x00000000, (const void *)&lbl_803656A0, (const void *)0x00000031, (const void *)0x00000003, (const void *)&lbl_80365768, (const void *)0x00000034,
-    (const void *)0x00000000, (const void *)&lbl_80365830, (const void *)0x00000034, (const void *)0x00000003, (const void *)&lbl_803659C0, (const void *)0x00000035,
-    (const void *)0x00000000, (const void *)&lbl_80365AB0, (const void *)0x00000036, (const void *)0x00000000, (const void *)&lbl_80365BA0, (const void *)0x00000037,
-    (const void *)0x00000000, (const void *)&lbl_80365C90, (const void *)0x00000038, (const void *)0x00000000, (const void *)&lbl_80365FD8, (const void *)0x00000039,
-    (const void *)0x00000000, (const void *)&lbl_803661B8, (const void *)0x0000003A, (const void *)0x00000000, (const void *)&lbl_80366398, (const void *)0x0000003B,
-    (const void *)0x00000000, (const void *)&lbl_80366578, (const void *)0x0000003C, (const void *)0x00000000, (const void *)&lbl_80366640, (const void *)0x0000003C,
-    (const void *)0x00000003, (const void *)&lbl_803666E0, (const void *)0x0000003D, (const void *)0x00000000, (const void *)&lbl_803667A8, (const void *)0x0000003D,
+    (const void *)0x00000000, (const void *)0x00000000, (const void *)0x00000000, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364C50, (const void *)0x00000000,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364C50, (const void *)0x00000002, (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_80364CC8, (const void *)0x00000001,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364CC8, (const void *)0x00000003, (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_80364D40, (const void *)0x00000004,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364D40, (const void *)0x00000006, (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_80364E08, (const void *)0x00000005,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364E08, (const void *)0x00000007, (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_80365128, (const void *)0x0000000C,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_803652B8, (const void *)0x0000000A, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365380, (const void *)0x0000000A,
+    (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_80365448, (const void *)0x00000009, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365510, (const void *)0x00000009,
+    (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_803655D8, (const void *)0x00000008, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_803656A0, (const void *)0x00000008,
+    (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_80365768, (const void *)0x0000000B, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365830, (const void *)0x0000000B,
+    (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_803658F8, (const void *)0x0000000D, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365EE8, (const void *)0x00000010,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365F60, (const void *)0x00000013, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365D80, (const void *)0x00000011,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365E20, (const void *)0x00000012, (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_80366578, (const void *)0x0000000E,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80366640, (const void *)0x0000000E, (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_803666E0, (const void *)0x0000000F,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_803667A8, (const void *)0x0000000F, (const void *)0x00000003, (const void *)0x00000000, (const void *)0x00000000,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364C50, (const void *)0x00000000, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364C50, (const void *)0x00000002,
+    (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_80364CC8, (const void *)0x00000001, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364CC8, (const void *)0x00000003,
+    (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_80364D40, (const void *)0x00000004, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364D40, (const void *)0x00000006,
+    (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_80364E08, (const void *)0x00000005, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364E08, (const void *)0x00000007,
+    (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_80365128, (const void *)0x0000000C, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_803652B8, (const void *)0x0000000A,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365380, (const void *)0x0000000A, (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_80365448, (const void *)0x00000009,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365510, (const void *)0x00000009, (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_803655D8, (const void *)0x00000008,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_803656A0, (const void *)0x00000008, (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_80365768, (const void *)0x0000000B,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365830, (const void *)0x0000000B, (const void *)0x00000003, (const void *)0x00000000, (const void *)0x00000000,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364C50, (const void *)0x00000026, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364C50, (const void *)0x0000002B,
+    (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_80364CC8, (const void *)0x00000027, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364CC8, (const void *)0x0000002C,
+    (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_80364ED0, (const void *)0x00000028, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364ED0, (const void *)0x0000002D,
+    (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_80364F98, (const void *)0x00000029, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364F98, (const void *)0x0000002E,
+    (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_80365060, (const void *)0x0000002A, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365060, (const void *)0x0000002F,
+    (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_803651F0, (const void *)0x00000030, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_803652B8, (const void *)0x00000033,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365380, (const void *)0x00000033, (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_80365448, (const void *)0x00000032,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365510, (const void *)0x00000032, (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_803655D8, (const void *)0x00000031,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_803656A0, (const void *)0x00000031, (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_80365768, (const void *)0x00000034,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365830, (const void *)0x00000034, (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_803659C0, (const void *)0x00000035,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365AB0, (const void *)0x00000036, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365BA0, (const void *)0x00000037,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365C90, (const void *)0x00000038, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365FD8, (const void *)0x00000039,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_803661B8, (const void *)0x0000003A, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80366398, (const void *)0x0000003B,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80366578, (const void *)0x0000003C, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80366640, (const void *)0x0000003C,
+    (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_803666E0, (const void *)0x0000003D, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_803667A8, (const void *)0x0000003D,
+    (const void *)0x00000003, (const void *)0x00000000, (const void *)0x00000000, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364C50, (const void *)0x00000026,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364C50, (const void *)0x0000002B, (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_80364CC8, (const void *)0x00000027,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364CC8, (const void *)0x0000002C, (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_80364ED0, (const void *)0x00000028,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364ED0, (const void *)0x0000002D, (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_80364F98, (const void *)0x00000029,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80364F98, (const void *)0x0000002E, (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_80365060, (const void *)0x0000002A,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365060, (const void *)0x0000002F, (const void *)0x00000001, (const void *)&Scene_8014E0C4_rodata_803652B8, (const void *)0x00000033,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365380, (const void *)0x00000033, (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_80365448, (const void *)0x00000032,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365510, (const void *)0x00000032, (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_803655D8, (const void *)0x00000031,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_803656A0, (const void *)0x00000031, (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_80365768, (const void *)0x00000034,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365830, (const void *)0x00000034, (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_803659C0, (const void *)0x00000035,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365AB0, (const void *)0x00000036, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365BA0, (const void *)0x00000037,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365C90, (const void *)0x00000038, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80365FD8, (const void *)0x00000039,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_803661B8, (const void *)0x0000003A, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80366398, (const void *)0x0000003B,
+    (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80366578, (const void *)0x0000003C, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_80366640, (const void *)0x0000003C,
+    (const void *)0x00000003, (const void *)&Scene_8014E0C4_rodata_803666E0, (const void *)0x0000003D, (const void *)0x00000000, (const void *)&Scene_8014E0C4_rodata_803667A8, (const void *)0x0000003D,
     (const void *)0x00000003, (const void *)0x00000000, (const void *)0x00000000, (const void *)0x00000000, (const void *)0xC2807454, (const void *)0x00000000,
     (const void *)0xBFC2233A, (const void *)0x00000000, (const void *)0xC241E666, (const void *)0x00000000, (const void *)0xC186F41F, (const void *)0x00000000,
     (const void *)0xC200FAE1, (const void *)0x00000000, (const void *)0xBFC2233A, (const void *)0x00000000, (const void *)0xC178999A, (const void *)0x00000000,
@@ -1474,7 +1474,7 @@ struct CourseModeInfo {
     int f10;
     const char *name;
 };
-extern "C" const CourseModeInfo lbl_80366EF0[21] = {
+extern "C" const CourseModeInfo Scene_8014E0C4_rodata_80366EF0[21] = {
     {1, -1, 0, 0, {0, 0}, 0, 0, lbl_806D7F78},
     {120, 13, 1, 0, {0, 0}, 0, 0, lbl_806D7F80},
     {120, 14, 1, 0, {0, 0}, 0, 0, lbl_806D7F88},
@@ -1534,7 +1534,7 @@ extern "C" const unsigned int lbl_803671E4[7] = {
     0x63686172, 0x615F7761, 0x6C756967, 0x695F6E75, 0x6C6C5F6A, 0x6F696E74,
     0x00000000,
 };
-extern "C" const void *const lbl_80367200[142] = {
+extern "C" const void *const Scene_8014E0C4_rodata_80367200[142] = {
     (const void *)0x00000000, (const void *)&lbl_803670E8, (const void *)0x01010000, (const void *)0x00000003, (const void *)&lbl_80367100, (const void *)0x01010000,
     (const void *)0x00000006, (const void *)&lbl_80367118, (const void *)0x01010000, (const void *)0x00000008, (const void *)&lbl_80367130, (const void *)0x01010000,
     (const void *)0x0000000A, (const void *)&lbl_80367148, (const void *)0x01010000, (const void *)0x00000007, (const void *)&lbl_80367164, (const void *)0x01000000,
@@ -1578,7 +1578,7 @@ extern "C" const unsigned int lbl_80367470[3] = {
 extern "C" const unsigned int lbl_8036747C[3] = {
     0x424E475F, 0x4C4F474F, 0x00000000,
 };
-extern "C" const AttractEntry lbl_80367488[12] = {
+extern "C" const AttractEntry Scene_8014E0C4_rodata_80367488[12] = {
     {11, 0, 0},
     {10, 0, 0},
     {13, 0, 0},
@@ -1631,10 +1631,10 @@ extern "C" const unsigned int lbl_80367778[9] = {
 extern "C" const unsigned int lbl_8036779C[5] = {
     0x636C4353, 0x50617274, 0x7352616E, 0x6B696E67, 0x00000000,
 };
-extern "C" const unsigned int lbl_803677B0[6] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_803677B0[6] = {
     0x54494D45, 0x20415454, 0x41434B81, 0x4052414E, 0x4B494E47, 0x00000000,
 };
-extern "C" const unsigned int lbl_803677C8[7] = {
+extern "C" const unsigned int Scene_8014E0C4_rodata_803677C8[7] = {
     0x835E8343, 0x83808341, 0x835E8362, 0x834E8140, 0x83898393, 0x834C8393,
     0x834F0000,
 };
@@ -1644,11 +1644,11 @@ extern "C" const unsigned int lbl_803677E4[4] = {
 extern "C" const unsigned int lbl_803677F4[5] = {
     0x636C4353, 0x50617274, 0x734E696E, 0x74656E64, 0x6F000000,
 };
-extern "C" const unsigned int lbl_80367808[10] = {
+extern "C" const unsigned int sdata_806CF750_rodata_80367808[10] = {
     0x74655369, 0x6E676C65, 0x746F6E3C, 0x636C4D65, 0x6E75496E, 0x7075743E,
     0x00000000, 0x636C4D65, 0x6E75496E, 0x70757400,
 };
-extern "C" const unsigned int lbl_80367830[7] = {
+extern "C" const unsigned int sdata_806CF750_rodata_80367830[7] = {
     0x636C4353, 0x50617274, 0x7353616C, 0x65730000, 0x636C4143, 0x616D6572,
     0x61000000,
 };
@@ -1725,7 +1725,7 @@ extern unsigned int lbl_806D8284;
 extern unsigned int lbl_806D8288;
 extern unsigned int lbl_806D828C;
 extern unsigned int lbl_806D8290;
-extern unsigned int lbl_8048F1A8[];
+extern unsigned int Scene_8014E0C4_data_8048F1A8[];
 float LookupCos(float a);
 float LookupSin(float a);
 void fn_80157C60(void *ret, void *list, void *pos, const void *val);
@@ -1745,11 +1745,11 @@ void HSD_JObjDispAll(void *j, int a, int b, int c);
 void HSD_JObjSetFlagsAll(void *j, int flags);
 void fn_8014017C(void *p);
 void dtor_80060024(void *p, int flag);
-extern unsigned int lbl_8048FF20[];
+extern unsigned int DemoKart_vtable_8048FF20[];
 void fn_8013A6F8(void);
 void fn_80173CC4(void *o, int flag);
 extern VObj *lbl_806D10D0;
-extern unsigned int lbl_8048FF3C[];
+extern unsigned int DemoScene_vtable_8048FF3C[];
 extern void PSMTXTrans();
 extern void clItemBoxManager_Update();
 extern void fn_8013A534();
@@ -2291,15 +2291,15 @@ extern "C" asm void fn_8014E118(void *self, int a) { /* 0x8014E118 size:0x500 */
     stwu r1, -0x30(r1)
     mflr r0
     lis r6, lbl_8048FF80@ha
-    lis r5, lbl_8048FED8@ha
+    lis r5, DemoScene1C0_vtable_8048FED8@ha
     stw r0, 0x34(r1)
-    addi r0, r5, lbl_8048FED8@l
-    lis r7, lbl_80363D30@ha
+    addi r0, r5, DemoScene1C0_vtable_8048FED8@l
+    lis r7, Scene_8014E0C4_rodata_80363D30@ha
     stmw r24, 0x10(r1)
     mr r30, r3
     addi r3, r6, lbl_8048FF80@l
     mr r25, r4
-    addi r31, r7, lbl_80363D30@l
+    addi r31, r7, Scene_8014E0C4_rodata_80363D30@l
     stw r3, 0x0(r30)
     stw r0, 0x0(r30)
     bl fn_80121210
@@ -2644,7 +2644,7 @@ extern "C" void fn_8014E618(AttractPanel *self) {
             }
         }
         fn_8011F994(0);
-        if (lbl_80367488[self->idx].on) {
+        if (Scene_8014E0C4_rodata_80367488[self->idx].on) {
             float s = LUT_Sin12Bit(Saturate_Double(1.5f * self->t, 0.0f, 180.0f));
             int n = PcbSync_CountJoinedPcbsAdvancedKarts();
             CreditMgr_DrawCoinCreditBanner(0, 0xFFFFFF00 | ((unsigned int)(255.0f * s) & 0xFF), n);
@@ -2668,9 +2668,9 @@ extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
     stw r0, 0x24(r1)
     stw r31, 0x1c(r1)
     mr r31, r3
-    lis r3, lbl_80363D30@ha
+    lis r3, Scene_8014E0C4_rodata_80363D30@ha
     stw r30, 0x18(r1)
-    addi r30, r3, lbl_80363D30@l
+    addi r30, r3, Scene_8014E0C4_rodata_80363D30@l
     li r3, 0x0
     stw r29, 0x14(r1)
     lwz r29, 0x30(r31)
@@ -2814,10 +2814,10 @@ extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
     mr. r29, r3
     beq fn_8014E804_L_8014EAC0
     lis r4, lbl_8048FF80@ha
-    lis r3, lbl_8048FE8C@ha
+    lis r3, StatusLogoScene_vtable_8048FE8C@ha
     addi r0, r4, lbl_8048FF80@l
     stw r0, 0x0(r29)
-    addi r0, r3, lbl_8048FE8C@l
+    addi r0, r3, StatusLogoScene_vtable_8048FE8C@l
     addi r3, r29, 0x34
     stw r0, 0x0(r29)
     bl fn_801F6804
@@ -2863,10 +2863,10 @@ extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
     mr. r29, r3
     beq fn_8014E804_L_8014EB4C
     lis r4, lbl_8048FF80@ha
-    lis r3, lbl_8048FE64@ha
+    lis r3, StatusNoticeScene_vtable_8048FE64@ha
     addi r0, r4, lbl_8048FF80@l
     stw r0, 0x0(r29)
-    addi r0, r3, lbl_8048FE64@l
+    addi r0, r3, StatusNoticeScene_vtable_8048FE64@l
     addi r3, r29, 0x34
     stw r0, 0x0(r29)
     bl fn_801F6804
@@ -2939,11 +2939,11 @@ extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
     mr. r29, r3
     beq fn_8014E804_L_8014EC34
     lis r4, lbl_8048FF80@ha
-    lis r3, lbl_8048FE3C@ha
+    lis r3, CourseDemoScene_vtable_8048FE3C@ha
     addi r0, r4, lbl_8048FF80@l
     lfs f0, lbl_806D8064(r2)
     stw r0, 0x0(r29)
-    addi r3, r3, lbl_8048FE3C@l
+    addi r3, r3, CourseDemoScene_vtable_8048FE3C@l
     li r0, 0x0
     stw r3, 0x0(r29)
     stw r0, 0x4(r29)
@@ -2974,10 +2974,10 @@ extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
     mr. r30, r3
     beq fn_8014E804_L_8014ED58
     lis r4, lbl_8048FF80@ha
-    lis r3, lbl_8048FE14@ha
+    lis r3, EntryScene_vtable_8048FE14@ha
     addi r0, r4, lbl_8048FF80@l
     stw r0, 0x0(r30)
-    addi r0, r3, lbl_8048FE14@l
+    addi r0, r3, EntryScene_vtable_8048FE14@l
     stw r0, 0x0(r30)
     bl fn_80169E20
     stw r3, 0x4(r30)
@@ -3051,10 +3051,10 @@ extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
     mr. r30, r3
     beq fn_8014E804_L_8014EE70
     lis r4, lbl_8048FF80@ha
-    lis r3, lbl_8048FE14@ha
+    lis r3, EntryScene_vtable_8048FE14@ha
     addi r0, r4, lbl_8048FF80@l
     stw r0, 0x0(r30)
-    addi r0, r3, lbl_8048FE14@l
+    addi r0, r3, EntryScene_vtable_8048FE14@l
     stw r0, 0x0(r30)
     bl fn_80169E20
     stw r3, 0x4(r30)
@@ -3118,11 +3118,11 @@ extern "C" asm void fn_8014E804(void) { /* 0x8014E804 size:0x960 */
     mr. r30, r3
     beq fn_8014E804_L_8014EF7C
     lis r4, lbl_8048FF80@ha
-    lis r3, lbl_8048FF64@ha
+    lis r3, AttractScene_vtable_8048FF64@ha
     addi r0, r4, lbl_8048FF80@l
     lfs f0, lbl_806D8064(r2)
     stw r0, 0x0(r30)
-    addi r3, r3, lbl_8048FF64@l
+    addi r3, r3, AttractScene_vtable_8048FF64@l
     li r0, 0x0
     stw r3, 0x0(r30)
     stw r0, 0x4(r30)
@@ -3354,7 +3354,7 @@ extern "C" void fn_8014F164(CreditPanel *self) {
 
 extern "C" DemoPanel *fn_8014F2DC(DemoPanel *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_8048FD98;
+        self->vt = Scene_8014E0C4_data_8048FD98;
         fn_80120A08(0x1553);
         fn_80120A08(0x1554);
         if (self->f8 != 0) {
@@ -3364,7 +3364,7 @@ extern "C" DemoPanel *fn_8014F2DC(DemoPanel *self, short flag) {
         }
         fn_801B7CD0(0);
         CreditMgr_SetActiveSlot(0);
-        lbl_806D1580 = 0;
+        Scene_8014E0C4_bss_806D1580 = 0;
         fn_801933D0(0);
         fn_8002CFB8(0, 0, 0, 0xFF);
         fn_801699D8(0, 0);
@@ -3456,7 +3456,7 @@ StatusScene::StatusScene() {
     SetResourceLoadingFlag(0);
     lbl_806D117C = CreditMgr_GetCreditCount(0) <= 0;
     CreditMgr_SetActiveSlot(0);
-    lbl_806D1580 = (StatusInfo *)this;
+    Scene_8014E0C4_bss_806D1580 = (StatusInfo *)this;
     fn_801933D0(1);
     fn_801B7CD0(0);
     PreloadResource(0x1553);
@@ -3468,12 +3468,12 @@ extern "C" void fn_8014F5A8(VObj *p) {
 }
 
 extern "C" void fn_8014F5E0(void) {
-    char *s = (char *)lbl_80363D30;
-    if (lbl_806D1580 != 0) {
-        OverlayText(1, 1, 2, s + 0x38F8, lbl_806D1580->f14);
-        OverlayText(1, 1, 3, s + 0x3908, lbl_806D1580->fC);
-        OverlayText(1, 1, 4, s + 0x3918, lbl_806D1580->f10);
-        OverlayText(1, 1, 5, s + 0x3928, lbl_8048FD50[lbl_806D1580->f10]);
+    char *s = (char *)Scene_8014E0C4_rodata_80363D30;
+    if (Scene_8014E0C4_bss_806D1580 != 0) {
+        OverlayText(1, 1, 2, s + 0x38F8, Scene_8014E0C4_bss_806D1580->f14);
+        OverlayText(1, 1, 3, s + 0x3908, Scene_8014E0C4_bss_806D1580->fC);
+        OverlayText(1, 1, 4, s + 0x3918, Scene_8014E0C4_bss_806D1580->f10);
+        OverlayText(1, 1, 5, s + 0x3928, Scene_8014E0C4_data_8048FD50[Scene_8014E0C4_bss_806D1580->f10]);
     }
 }
 
@@ -3488,7 +3488,7 @@ extern "C" unsigned char fn_8014F6E0(StateObj *o) {
 extern "C" CamPanel *fn_8014F6F4(CamPanel *self, short flag) {
     if (self != 0) {
         NamCamObj *cam;
-        self->vt = lbl_8048FFC0;
+        self->vt = NamCamPanelC_vtable_8048FFC0;
         if (self->cam != 0) {
             cam = self->cam;
             if (GetVBlankFlag() && cam->active) {
@@ -3726,7 +3726,7 @@ extern "C" unsigned char fn_8014FE08(unsigned char *o) {
 
 extern "C" Base *fn_8014FE10(Base *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_8048FFE8;
+        self->vt = TextPanelC_vtable_8048FFE8;
         if (((void **)self)[2] != 0) {
             Sprite_Destroy(((void **)self)[2], 1);
         }
@@ -3809,14 +3809,14 @@ extern "C" asm void fn_801500F4(void) { /* 0x801500F4 size:0x1B8 */
     stwu r1, -0x30(r1)
     mflr r0
     lis r7, lbl_8048FF80@ha
-    lis r6, lbl_8048FFE8@ha
+    lis r6, TextPanelC_vtable_8048FFE8@ha
     stw r0, 0x34(r1)
-    addi r0, r6, lbl_8048FFE8@l
-    lis r8, lbl_80363D30@ha
+    addi r0, r6, TextPanelC_vtable_8048FFE8@l
+    lis r8, Scene_8014E0C4_rodata_80363D30@ha
     stmw r26, 0x18(r1)
     mr r29, r3
     addi r3, r7, lbl_8048FF80@l
-    addi r31, r8, lbl_80363D30@l
+    addi r31, r8, Scene_8014E0C4_rodata_80363D30@l
     mr r27, r4
     mr r30, r5
     stw r3, 0x0(r29)
@@ -3931,11 +3931,11 @@ extern "C" asm void fn_801502AC(void) { /* 0x801502AC size:0x370 */
     nofralloc
     stwu r1, -0x30(r1)
     mflr r0
-    lis r5, lbl_80363D30@ha
+    lis r5, Scene_8014E0C4_rodata_80363D30@ha
     stw r0, 0x34(r1)
     mulli r0, r4, 0x18
     stmw r25, 0x14(r1)
-    addi r31, r5, lbl_80363D30@l
+    addi r31, r5, Scene_8014E0C4_rodata_80363D30@l
     mr r27, r3
     addi r3, r31, 0x31c0
     add r29, r3, r0
@@ -4171,12 +4171,12 @@ extern "C" asm void fn_8015061C(void) { /* 0x8015061C size:0x308 */
     stwu r1, -0x20(r1)
     mflr r0
     cmpwi r4, 0x6
-    lis r6, lbl_80363D30@ha
+    lis r6, Scene_8014E0C4_rodata_80363D30@ha
     stw r0, 0x24(r1)
     stmw r26, 0x8(r1)
     mr r31, r3
     mr r26, r5
-    addi r30, r6, lbl_80363D30@l
+    addi r30, r6, Scene_8014E0C4_rodata_80363D30@l
     beq fn_8015061C_L_801507A0
     bge fn_8015061C_L_80150658
     cmpwi r4, 0x4
@@ -4413,7 +4413,7 @@ static inline void ObjUnref(HsdObj *o) {
 extern "C" RaceScene *fn_8015092C(RaceScene *self, short flag) {
     if (self != 0) {
         int i;
-        self->vt = lbl_80490010;
+        self->vt = RaceSceneC_vtable_80490010;
         if (self->obj574 != 0) {
             delete self->obj574;
         }
@@ -4506,11 +4506,11 @@ extern "C" void fn_80150C1C(RaceScene *self) {
             unsigned char wave;
             clDrawMan_Buckets_Reset(SINGLETON_INSTANCE(lbl_806D10AC));
             LObjList_ApplyForCObj(self->lists[self->mode]);
-            if (lbl_80366EF0[self->mode].transparent) {
+            if (Scene_8014E0C4_rodata_80366EF0[self->mode].transparent) {
                 TransparentDraw_SortAndDispatch();
             }
             CObj_DebugVizPathFlush(self->objs[self->mode]);
-            if (self->env != 0 && lbl_80366EF0[self->mode].env) {
+            if (self->env != 0 && Scene_8014E0C4_rodata_80366EF0[self->mode].env) {
                 CourseEnvironment_RenderObjects_Timed(self->env);
                 Subsystem36c_DispatchPass2_Timed(self->env);
             }
@@ -4629,9 +4629,9 @@ extern "C" asm void fn_80151234(void) { /* 0x80151234 size:0xCD4 */
     psq_st f30, 0xa8(r1), 0, 0
     stmw r24, 0x80(r1)
     mr r31, r3
-    lis r3, lbl_80363D30@ha
+    lis r3, Scene_8014E0C4_rodata_80363D30@ha
     lbz r0, 0x10(r31)
-    addi r30, r3, lbl_80363D30@l
+    addi r30, r3, Scene_8014E0C4_rodata_80363D30@l
     cmplwi r0, 0x0
     bne fn_80151234_L_80151278
     lwz r3, 0xc(r31)
@@ -5520,15 +5520,15 @@ extern "C" asm void fn_80151F08(void) { /* 0x80151F08 size:0x7BC */
     psq_st f31, 0x38(r1), 0, 0
     stmw r25, 0x14(r1)
     lis r7, lbl_8048FF80@ha
-    lis r6, lbl_80490010@ha
+    lis r6, RaceSceneC_vtable_80490010@ha
     mr r26, r3
-    lis r8, lbl_8048F178@ha
+    lis r8, Scene_8014E0C4_data_8048F178@ha
     addi r3, r7, lbl_8048FF80@l
-    addi r0, r6, lbl_80490010@l
+    addi r0, r6, RaceSceneC_vtable_80490010@l
     stw r3, 0x0(r26)
     mr r27, r4
     mr r29, r5
-    addi r28, r8, lbl_8048F178@l
+    addi r28, r8, Scene_8014E0C4_data_8048F178@l
     stw r0, 0x0(r26)
     bl DrawManager_GetOrCreate
     bl fn_80121210
@@ -5818,10 +5818,10 @@ extern "C" asm void fn_80151F08(void) { /* 0x80151F08 size:0x7BC */
     bl SetActiveCamera
     lwz r0, 0x20(r26)
     li r27, 0x0
-    lis r3, lbl_80367200@ha
+    lis r3, Scene_8014E0C4_rodata_80367200@ha
     lfs f31, lbl_806D8064(r2)
     stw r0, g_raceCamera(r13)
-    addi r28, r3, lbl_80367200@l
+    addi r28, r3, Scene_8014E0C4_rodata_80367200@l
     mr r31, r27
     mr r30, r27
     mr r29, r27
@@ -6051,7 +6051,7 @@ static inline void GXTexCoord2f32(float s, float t) {
 
 #pragma use_lmw_stmw on
 extern "C" void DrawColoredQuad(int r, int g, int b, int a, float x, float y, float w, float h) {
-    CamVecs *cam = (CamVecs *)((char *)lbl_80363D30 + 0x30B0);
+    CamVecs *cam = (CamVecs *)((char *)Scene_8014E0C4_rodata_80363D30 + 0x30B0);
     float proj[4][4];
     float view[3][4];
 
@@ -6098,7 +6098,7 @@ extern "C" void fn_80152930(VObj *p) {
 
 extern "C" Base *fn_80152968(Base *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_8048FE14;
+        self->vt = EntryScene_vtable_8048FE14;
         if (((void **)self)[9] != 0) {
             Sprite_Destroy(((void **)self)[9], 1);
         }
@@ -6149,7 +6149,7 @@ extern "C" void fn_80152B2C(VObj *p) {
 
 extern "C" Base *fn_80152B64(Base *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_8048FE3C;
+        self->vt = CourseDemoScene_vtable_8048FE3C;
         delete lbl_806D10AC;
         lbl_806D10AC = 0;
         fn_80121210();
@@ -6259,9 +6259,9 @@ extern "C" void fn_80152C00(TaPanel *self) {
     fn_801698B4(0, 0x865, 0, 320.0f, 45.0f);
     fn_801698B4(0, course + 0x76C, 0, 110.0f + x0, 60.0f);
     if (isJapanese() == 1) {
-        fn_80168A4C(0, (const char *)lbl_803677B0, 318.0f + x1, 43.0f);
+        fn_80168A4C(0, (const char *)Scene_8014E0C4_rodata_803677B0, 318.0f + x1, 43.0f);
     } else {
-        fn_80168A4C(0, (const char *)lbl_803677C8, 318.0f + x1, 43.0f);
+        fn_80168A4C(0, (const char *)Scene_8014E0C4_rodata_803677C8, 318.0f + x1, 43.0f);
     }
     fn_801698B4(0, 0x76A, 0, 320.0f + x0, 137.0f);
     fn_801698B4(0, course * 2 + 0x750, 0, 144.0f + x0, 127.0f);
@@ -6354,7 +6354,7 @@ extern "C" void fn_80153594(VObj *p) {
 
 extern "C" PalObj *fn_801535CC(PalObj *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_8048FE64;
+        self->vt = StatusNoticeScene_vtable_8048FE64;
         if (self->pal != 0) {
             TEXReleasePalette(&self->pal);
         }
@@ -6392,7 +6392,7 @@ extern "C" unsigned char fn_80153758(StateObj *o) {
 }
 
 extern "C" void fn_8015376C(TexFadePanel *self) {
-    CamVecs *cam = (CamVecs *)((char *)lbl_80363D30 + 0x30F8);
+    CamVecs *cam = (CamVecs *)((char *)Scene_8014E0C4_rodata_80363D30 + 0x30F8);
     float proj[4][4];
     float view[3][4];
 
@@ -6452,7 +6452,7 @@ extern "C" void fn_80153A3C(VObj *p) {
 
 extern "C" PalObj *fn_80153A74(PalObj *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_8048FE8C;
+        self->vt = StatusLogoScene_vtable_8048FE8C;
         if (self->pal != 0) {
             TEXReleasePalette(&self->pal);
         }
@@ -6489,7 +6489,7 @@ extern "C" unsigned char fn_80153BEC(StateObj *o) {
 }
 
 extern "C" void fn_80153C00(TexFadePanel *self) {
-    CamVecs *cam = (CamVecs *)((char *)lbl_80363D30 + 0x30D4);
+    CamVecs *cam = (CamVecs *)((char *)Scene_8014E0C4_rodata_80363D30 + 0x30D4);
     float proj[4][4];
     float view[3][4];
 
@@ -6550,7 +6550,7 @@ extern "C" void fn_80153ED0(VObj *p) {
 extern "C" CourseScene *fn_80153F08(CourseScene *self, short flag) {
     if (self != 0) {
         int i;
-        self->vt = lbl_8048FED8;
+        self->vt = DemoScene1C0_vtable_8048FED8;
         SetCourseScene3D(0);
         if (fn_8019083C(0)) {
             fn_801909A4(0);
@@ -6758,9 +6758,9 @@ extern "C" asm void fn_80154304(void) { /* 0x80154304 size:0xCAC */
     psq_st f31, 0x78(r1), 0, 0
     stmw r25, 0x54(r1)
     mr r29, r3
-    lis r3, lbl_80363D30@ha
+    lis r3, Scene_8014E0C4_rodata_80363D30@ha
     lwz r0, 0x8(r29)
-    addi r31, r3, lbl_80363D30@l
+    addi r31, r3, Scene_8014E0C4_rodata_80363D30@l
     cmpwi r0, 0x9
     beq fn_80154304_L_80154F94
     lbz r0, 0x28(r29)
@@ -6876,9 +6876,9 @@ extern "C" asm void fn_80154304(void) { /* 0x80154304 size:0xCAC */
     fn_80154304_L_801544C8:
     lwz r3, 0x18(r29)
     bl SetCourseScene3D
-    lis r3, lbl_8048F1A8@ha
+    lis r3, Scene_8014E0C4_data_8048F1A8@ha
     mr r27, r29
-    addi r28, r3, lbl_8048F1A8@l
+    addi r28, r3, Scene_8014E0C4_data_8048F1A8@l
     mr r26, r29
     li r30, 0x0
     fn_80154304_L_801544E4:
@@ -7634,7 +7634,7 @@ extern "C" asm void fn_80154304(void) { /* 0x80154304 size:0xCAC */
 }
 
 
-/* extern "C" SprEntry lbl_803644D0[]; (defined below/above as raw pool) */
+/* extern "C" SprEntry Scene_8014E0C4_rodata_803644D0[]; (defined below/above as raw pool) */
 
 struct SprNodeBase {
     SprNodeBase *prev;
@@ -7715,7 +7715,7 @@ static inline void *SprCache_Get(SprList *cache, unsigned int key) {
         SprCacheVal v;
         v.key = key;
         v.ref = 1;
-        v.res = new SprRes(lbl_8048F178[key]);
+        v.res = new SprRes(Scene_8014E0C4_data_8048F178[key]);
         SprCache_Insert(cache, &v);
         return v.res;
     }
@@ -7744,8 +7744,8 @@ void SprScene::Draw(unsigned int layer, unsigned int id, unsigned int flags, flo
     if (id >= 80) {
         return;
     }
-    hw = sx * (0.5f * lbl_803644D0[id].w);
-    hh = sy * (0.5f * lbl_803644D0[id].h);
+    hw = sx * (0.5f * Scene_8014E0C4_rodata_803644D0[id].w);
+    hh = sy * (0.5f * Scene_8014E0C4_rodata_803644D0[id].h);
     if (rot != 0.0f) {
         float s = LookupSin(rot);
         float c = LookupCos(rot);
@@ -7763,7 +7763,7 @@ void SprScene::Draw(unsigned int layer, unsigned int id, unsigned int flags, flo
     if (x - hw > 640.0f || x + hw < 0.0f || y - hh > 480.0f || x + hw < 0.0f) {
         return;
     }
-    e = &lbl_803644D0[id];
+    e = &Scene_8014E0C4_rodata_803644D0[id];
     res = SprCache_Get(&cache, e->key);
     if (res == 0) {
         return;
@@ -7835,7 +7835,7 @@ extern "C" void fn_801553AC(CourseScene *self) {
 
 extern "C" Base *fn_801556A0(Base *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_8048FF20;
+        self->vt = DemoKart_vtable_8048FF20;
         VisualEffectHolder_Dtor(((void **)self)[4], 1);
         KartDriver_Dtor(((void **)self)[3], 1);
         dtor_80060024(self, 0);
@@ -7860,7 +7860,7 @@ extern "C" void fn_8015573C(VObj *p) {
 extern "C" CoursePanel *fn_80155774(CoursePanel *self, short flag) {
     if (self != 0) {
         int i;
-        self->vt = lbl_8048FF3C;
+        self->vt = DemoScene_vtable_8048FF3C;
         SetCourseScene3D(0);
         fn_80173CC4(self->obj48, 1);
         for (i = 0; i < 2; i++) {
@@ -8003,7 +8003,7 @@ extern "C" asm void fn_801558CC(void) { /* 0x801558CC size:0x16F4 */
     bl SetCourseScene3D
     mr r31, r28
     li r29, 0x0
-    la r30, lbl_806CF828(r13)  /* lbl_806CF828 */
+    la r30, Scene_8014E0C4_data_806CF828(r13)  /* Scene_8014E0C4_data_806CF828 */
     fn_801558CC_L_80155A64:
     lwz r3, 0x34(r31)
     lwz r3, 0xc(r3)
@@ -9472,7 +9472,7 @@ extern "C" void fn_80157240(VObj *p) {
 extern "C" CamPanel *fn_80157278(CamPanel *self, short flag) {
     if (self != 0) {
         NamCamObj *cam;
-        self->vt = lbl_8048FF64;
+        self->vt = AttractScene_vtable_8048FF64;
         if (self->cam != 0) {
             cam = self->cam;
             if (GetVBlankFlag() && cam->active) {

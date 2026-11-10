@@ -464,636 +464,636 @@ const ItemDescriptor lbl_803DC530[327] = {
     { { 0x1422, 0x1B8C }, 3, 0 },
     { { 0x1422, 0x1B8C }, 3, 0 }
 };
-const unk32 lbl_803DD9A0[3] = {
+const unk32 ItemLocalizedName_rodata_803DD9A0[3] = {
     0x836E8393, 0x837D815B, 0x00000000
 };
-const unk32 lbl_803DD9AC[4] = {
+const unk32 ItemLocalizedName_rodata_803DD9AC[4] = {
     0x834C836D, 0x8352836E, 0x8393837D, 0x815B0000
 };
-const unk32 lbl_803DD9BC[5] = {
+const unk32 ItemLocalizedName_rodata_803DD9BC[5] = {
     0x83738352, 0x83738352, 0x836E8393, 0x837D815B, 0x00000000
 };
-const unk32 lbl_803DD9D0[5] = {
+const unk32 ItemLocalizedName_rodata_803DD9D0[5] = {
     0x8250824F, 0x83678393, 0x836E8393, 0x837D815B, 0x00000000
 };
-const unk32 lbl_803DD9E4[5] = {
+const unk32 ItemLocalizedName_rodata_803DD9E4[5] = {
     0x83828393, 0x8358835E, 0x815B836E, 0x8393837D, 0x815B0000
 };
-const unk32 lbl_803DD9F8[5] = {
+const unk32 ItemLocalizedName_rodata_803DD9F8[5] = {
     0x8372838A, 0x8372838A, 0x83588365, 0x83428362, 0x834E0000
 };
-const unk32 lbl_803DDA0C[3] = {
+const unk32 ItemLocalizedName_rodata_803DDA0C[3] = {
     0x836E838A, 0x835A8393, 0x00000000
 };
-const unk32 lbl_803DDA18[3] = {
+const unk32 ItemLocalizedName_rodata_803DDA18[3] = {
     0x83748389, 0x83438370, 0x83930000
 };
-const unk32 lbl_803DDA24[5] = {
+const unk32 ItemLocalizedName_rodata_803DDA24[5] = {
     0x83728388, 0x8388815B, 0x83938370, 0x83938360, 0x00000000
 };
-const unk32 lbl_803DDA38[3] = {
+const unk32 ItemLocalizedName_rodata_803DDA38[3] = {
     0x836A8393, 0x836A834E, 0x00000000
 };
-const unk32 lbl_803DDA44[3] = {
+const unk32 ItemLocalizedName_rodata_803DDA44[3] = {
     0x8370838F, 0x815B8347, 0x83540000
 };
-const unk32 lbl_803DDA50[4] = {
+const unk32 ItemLocalizedName_rodata_803DDA50[4] = {
     0x83828393, 0x8358835E, 0x815B8347, 0x83540000
 };
-const unk32 lbl_803DDA60[5] = {
+const unk32 ItemLocalizedName_rodata_803DDA60[5] = {
     0x8358835E, 0x815B88F3, 0x82CC836F, 0x83698369, 0x00000000
 };
-const unk32 lbl_803DDA74[4] = {
+const unk32 ItemLocalizedName_rodata_803DDA74[4] = {
     0x82A882A2, 0x82B582A2, 0x836F8369, 0x83690000
 };
-const unk32 lbl_803DDA84[4] = {
+const unk32 ItemLocalizedName_rodata_803DDA84[4] = {
     0x837E8389, 0x834E838B, 0x834C836D, 0x83520000
 };
-const unk32 lbl_803DDA94[4] = {
+const unk32 ItemLocalizedName_rodata_803DDA94[4] = {
     0x835F8362, 0x83568385, 0x834C836D, 0x83520000
 };
-const unk32 lbl_803DDAA4[4] = {
+const unk32 ItemLocalizedName_rodata_803DDAA4[4] = {
     0x82B082F1, 0x82AB834C, 0x836D8352, 0x00000000
 };
-const unk32 lbl_803DDAB4[4] = {
+const unk32 ItemLocalizedName_rodata_803DDAB4[4] = {
     0x8B9091E5, 0x89BB834C, 0x836D8352, 0x00000000
 };
-const unk32 lbl_803DDAC4[6] = {
+const unk32 ItemLocalizedName_rodata_803DDAC4[6] = {
     0x8353815B, 0x838B8368, 0x835F8356, 0x8385834C, 0x836D8352, 0x00000000
 };
-const unk32 lbl_803DDADC[3] = {
+const unk32 ItemLocalizedName_rodata_803DDADC[3] = {
     0x8B7A8EFB, 0x834C836D, 0x83520000
 };
-const unk32 lbl_803DDAE8[4] = {
+const unk32 ItemLocalizedName_rodata_803DDAE8[4] = {
     0x836B838B, 0x836B838B, 0x834C836D, 0x83520000
 };
 const unk32 lbl_803DDAF8[6] = {
     0x8358815B, 0x8370815B, 0x835F8362, 0x83568385, 0x834C836D, 0x83520000
 };
-const unk32 lbl_803DDB10[4] = {
+const unk32 ItemLocalizedName_rodata_803DDB10[4] = {
     0x82C682A4, 0x82DF82A2, 0x834C836D, 0x83520000
 };
-const unk32 lbl_803DDB20[4] = {
+const unk32 ItemLocalizedName_rodata_803DDB20[4] = {
     0x83778372, 0x815B834C, 0x836D8352, 0x00000000
 };
-const unk32 lbl_803DDB30[3] = {
+const unk32 ItemLocalizedName_rodata_803DDB30[3] = {
     0x838F838A, 0x8349834A, 0x815B0000
 };
-const unk32 lbl_803DDB3C[4] = {
+const unk32 ItemLocalizedName_rodata_803DDB3C[4] = {
     0x83568346, 0x838B837B, 0x83668342, 0x815B0000
 };
-const unk32 lbl_803DDB4C[4] = {
+const unk32 ItemLocalizedName_rodata_803DDB4C[4] = {
     0x82BD82DC, 0x82B2837B, 0x83668342, 0x815B0000
 };
-const unk32 lbl_803DDB5C[3] = {
+const unk32 ItemLocalizedName_rodata_803DDB5C[3] = {
     0x82A882CE, 0x82AF89BB, 0x00000000
 };
-const unk32 lbl_803DDB68[3] = {
+const unk32 ItemLocalizedName_rodata_803DDB68[3] = {
     0x8356815B, 0x838B8368, 0x00000000
 };
-const unk32 lbl_803DDB74[4] = {
+const unk32 ItemLocalizedName_rodata_803DDB74[4] = {
     0x94BD8ECB, 0x8356815B, 0x838B8368, 0x00000000
 };
-const unk32 lbl_803DDB84[5] = {
+const unk32 ItemLocalizedName_rodata_803DDB84[5] = {
     0x83588379, 0x83568383, 0x838B8352, 0x83438393, 0x00000000
 };
-const unk32 lbl_803DDB98[3] = {
+const unk32 ItemLocalizedName_rodata_803DDB98[3] = {
     0x83748346, 0x8341838A, 0x815B0000
 };
-const unk32 lbl_803DDBA4[5] = {
+const unk32 ItemLocalizedName_rodata_803DDBA4[5] = {
     0x83828393, 0x8358835E, 0x815B8356, 0x815B838B, 0x83680000
 };
-const unk32 lbl_803DDBB8[4] = {
+const unk32 ItemLocalizedName_rodata_803DDBB8[4] = {
     0x834E8389, 0x834E8356, 0x83878393, 0x00000000
 };
-const unk32 lbl_803DDBC8[4] = {
+const unk32 ItemLocalizedName_rodata_803DDBC8[4] = {
     0x836E838A, 0x835A8393, 0x837B8393, 0x00000000
 };
-const unk32 lbl_803DDBD8[6] = {
+const unk32 ItemLocalizedName_rodata_803DDBD8[6] = {
     0x82B682B0, 0x82F1836F, 0x834E835F, 0x83938169, 0x8FAC816A, 0x00000000
 };
-const unk32 lbl_803DDBF0[6] = {
+const unk32 ItemLocalizedName_rodata_803DDBF0[6] = {
     0x82B682B0, 0x82F1836F, 0x834E835F, 0x83938169, 0x91E5816A, 0x00000000
 };
-const unk32 lbl_803DDC08[4] = {
+const unk32 ItemLocalizedName_rodata_803DDC08[4] = {
     0x8353815B, 0x838B8368, 0x836F8369, 0x83690000
 };
-const unk32 lbl_803DDC18[4] = {
+const unk32 ItemLocalizedName_rodata_803DDC18[4] = {
     0x83578383, 0x8393837B, 0x836F8369, 0x83690000
 };
-const unk32 lbl_803DDC28[4] = {
+const unk32 ItemLocalizedName_rodata_803DDC28[4] = {
     0x836F8369, 0x8369836F, 0x8359815B, 0x834A0000
 };
-const unk32 lbl_803DDC38[5] = {
+const unk32 ItemLocalizedName_rodata_803DDC38[5] = {
     0x93C5836F, 0x83698369, 0x836F8359, 0x815B834A, 0x00000000
 };
-const unk32 lbl_803DDC4C[4] = {
+const unk32 ItemLocalizedName_rodata_803DDC4C[4] = {
     0x82B282EB, 0x82B282EB, 0x82BD82DC, 0x82B20000
 };
-const unk32 lbl_803DDC5C[3] = {
+const unk32 ItemLocalizedName_rodata_803DDC5C[3] = {
     0x83688362, 0x83588393, 0x00000000
 };
-const unk32 lbl_803DDC68[5] = {
+const unk32 ItemLocalizedName_rodata_803DDC68[5] = {
     0x82A882F1, 0x82BF8358, 0x8373815B, 0x834A815B, 0x00000000
 };
-const unk32 lbl_803DDC7C[4] = {
+const unk32 ItemLocalizedName_rodata_803DDC7C[4] = {
     0x837E8368, 0x838A82B1, 0x82A482E7, 0x00000000
 };
-const unk32 lbl_803DDC8C[4] = {
+const unk32 ItemLocalizedName_rodata_803DDC8C[4] = {
     0x83758389, 0x8362834E, 0x82B182A4, 0x82E70000
 };
-const unk32 lbl_803DDC9C[4] = {
+const unk32 ItemLocalizedName_rodata_803DDC9C[4] = {
     0x8353815B, 0x838B8368, 0x82B182A4, 0x82E70000
 };
-const unk32 lbl_803DDCAC[3] = {
+const unk32 ItemLocalizedName_rodata_803DDCAC[3] = {
     0x82A682F1, 0x82DC82AD, 0x00000000
 };
-const unk32 lbl_803DDCB8[4] = {
+const unk32 ItemLocalizedName_rodata_803DDCB8[4] = {
     0x834E8362, 0x837082CC, 0x82B182A4, 0x82E70000
 };
-const unk32 lbl_803DDCC8[3] = {
+const unk32 ItemLocalizedName_rodata_803DDCC8[3] = {
     0x8375838D, 0x8362834E, 0x00000000
 };
-const unk32 lbl_803DDCD4[3] = {
+const unk32 ItemLocalizedName_rodata_803DDCD4[3] = {
     0x82AA82D1, 0x82E582A4, 0x00000000
 };
-const unk32 lbl_803DDCE0[3] = {
+const unk32 ItemLocalizedName_rodata_803DDCE0[3] = {
     0x93C5834C, 0x836D8352, 0x00000000
 };
-const unk32 lbl_803DDCEC[4] = {
+const unk32 ItemLocalizedName_rodata_803DDCEC[4] = {
     0x82D182E5, 0x82A482AB, 0x834C836D, 0x83520000
 };
-const unk32 lbl_803DDCFC[5] = {
+const unk32 ItemLocalizedName_rodata_803DDCFC[5] = {
     0x835F8362, 0x83568385, 0x836F8359, 0x815B834A, 0x00000000
 };
-const unk32 lbl_803DDD10[4] = {
+const unk32 ItemLocalizedName_rodata_803DDD10[4] = {
     0x82CB82CE, 0x82CB82CE, 0x83498343, 0x838B0000
 };
-const unk32 lbl_803DDD20[3] = {
+const unk32 ItemLocalizedName_rodata_803DDD20[3] = {
     0x837B8380, 0x82D682A2, 0x00000000
 };
-const unk32 lbl_803DDD2C[3] = {
+const unk32 ItemLocalizedName_rodata_803DDD2C[3] = {
     0x838F8393, 0x838F8393, 0x00000000
 };
-const unk32 lbl_803DDD38[3] = {
+const unk32 ItemLocalizedName_rodata_803DDD38[3] = {
     0x82BD82C2, 0x82DC82AB, 0x00000000
 };
-const unk32 lbl_803DDD44[3] = {
+const unk32 ItemLocalizedName_rodata_803DDD44[3] = {
     0x82A082AB, 0x82A982F1, 0x00000000
 };
-const unk32 lbl_803DDD50[3] = {
+const unk32 ItemLocalizedName_rodata_803DDD50[3] = {
     0x836E8343, 0x8372815B, 0x83800000
 };
-const unk32 lbl_803DDD5C[3] = {
+const unk32 ItemLocalizedName_rodata_803DDD5C[3] = {
     0x82D082B0, 0x83798393, 0x00000000
 };
-const unk32 lbl_803DDD68[5] = {
+const unk32 ItemLocalizedName_rodata_803DDD68[5] = {
     0x83708362, 0x834E8393, 0x83748389, 0x838F815B, 0x00000000
 };
-const unk32 lbl_803DDD7C[3] = {
+const unk32 ItemLocalizedName_rodata_803DDD7C[3] = {
     0x834C836D, 0x835282CC, 0x95B20000
 };
-const unk32 lbl_803DDD88[5] = {
+const unk32 ItemLocalizedName_rodata_803DDD88[5] = {
     0x83578383, 0x83938376, 0x82D382A4, 0x82A282F1, 0x00000000
 };
-const unk32 lbl_803DDD9C[5] = {
+const unk32 ItemLocalizedName_rodata_803DDD9C[5] = {
     0x83498393, 0x837B838D, 0x836E8393, 0x8368838B, 0x00000000
 };
-const unk32 lbl_803DDDB0[4] = {
+const unk32 ItemLocalizedName_rodata_803DDDB0[4] = {
     0x8366834A, 0x83608372, 0x835E8343, 0x83840000
 };
-const unk32 lbl_803DDDC0[4] = {
+const unk32 ItemLocalizedName_rodata_803DDDC0[4] = {
     0x834A834E, 0x834A834E, 0x835E8343, 0x83840000
 };
-const unk32 lbl_803DDDD0[4] = {
+const unk32 ItemLocalizedName_rodata_803DDDD0[4] = {
     0x83748340, 0x83438341, 0x837B815B, 0x838B0000
 };
-const unk32 lbl_803DDDE0[3] = {
+const unk32 ItemLocalizedName_rodata_803DDDE0[3] = {
     0x8389838A, 0x815B8277, 0x00000000
 };
 const char lbl_803DDDEC[] = "BOM_SMALL";
 const char lbl_803DDDF8[] = "SMOKE_PINK";
 const char lbl_803DDE04[] = "SMOKE_PURPLE";
 const char lbl_803DDE14[] = "SMOKE_YELLOW";
-const unk32 lbl_803DDE24[4] = {
+const unk32 ItemLocalizedName_rodata_803DDE24[4] = {
     0x834A8393, 0x83568383, 0x834E835F, 0x837D0000
 };
-const unk32 lbl_803DDE34[4] = {
+const unk32 ItemLocalizedName_rodata_803DDE34[4] = {
     0x83768360, 0x83828393, 0x8358835E, 0x815B0000
 };
-const unk32 lbl_803DDE44[4] = {
+const unk32 ItemLocalizedName_rodata_803DDE44[4] = {
     0x837B8358, 0x834D8383, 0x8389834B, 0x00000000
 };
-const unk32 lbl_803DDE54[5] = {
+const unk32 ItemLocalizedName_rodata_803DDE54[5] = {
     0x83418343, 0x83658380, 0x82D382A4, 0x82A282F1, 0x00000000
 };
-const unk32 lbl_803DDE68[5] = {
+const unk32 ItemLocalizedName_rodata_803DDE68[5] = {
     0x82CD82C8, 0x82AD82BB, 0x836F834E, 0x835F8393, 0x00000000
 };
-const unk32 lbl_803DDE7C[3] = {
+const unk32 ItemLocalizedName_rodata_803DDE7C[3] = {
     0x8376815B, 0x834A8340, 0x00000000
 };
-const unk32 lbl_803DDE88[4] = {
+const unk32 ItemLocalizedName_rodata_803DDE88[4] = {
     0x82C882BC, 0x82CC82BD, 0x82DC82B2, 0x00000000
 };
-const unk32 lbl_803DDE98[4] = {
+const unk32 ItemLocalizedName_rodata_803DDE98[4] = {
     0x8373815B, 0x8360836F, 0x815B8368, 0x00000000
 };
-const unk32 lbl_803DDEA8[4] = {
+const unk32 ItemLocalizedName_rodata_803DDEA8[4] = {
     0x82D182C1, 0x82AD82E8, 0x837B815B, 0x838B0000
 };
-const unk32 lbl_803DDEB8[5] = {
+const unk32 ItemLocalizedName_rodata_803DDEB8[5] = {
     0x8376838A, 0x8393835A, 0x83588368, 0x838A8393, 0x834E0000
 };
-const unk32 lbl_803DDECC[4] = {
+const unk32 ItemLocalizedName_rodata_803DDECC[4] = {
     0x8345835C, 0x83418389, 0x815B8380, 0x00000000
 };
-const unk32 lbl_803DDEDC[5] = {
+const unk32 ItemLocalizedName_rodata_803DDEDC[5] = {
     0x836E8393, 0x8368838B, 0x83458343, 0x838B8358, 0x00000000
 };
-const unk32 lbl_803DDEF0[4] = {
+const unk32 ItemLocalizedName_rodata_803DDEF0[4] = {
     0x82DF82DC, 0x82A28345, 0x8343838B, 0x83580000
 };
-const unk32 lbl_803DDF00[4] = {
+const unk32 ItemLocalizedName_rodata_803DDF00[4] = {
     0x8353815B, 0x838B8368, 0x835E8389, 0x83430000
 };
-const unk32 lbl_803DDF10[4] = {
+const unk32 ItemLocalizedName_rodata_803DDF10[4] = {
     0x837D8357, 0x8362834E, 0x836E8393, 0x83680000
 };
 const char lbl_803DDF20[] = "IROIRO_KINOKO";
 const char lbl_803DDF30[] = "IROIRO_THROW";
 const char lbl_803DDF40[] = "IROIRO_HOMING";
 const char lbl_803DDF50[] = "IROIRO_PUT";
-const unk32 lbl_803DDF5C[4] = {
+const unk32 ItemLocalizedName_rodata_803DDF5C[4] = {
     0x8367838A, 0x8376838B, 0x82B182A4, 0x82E70000
 };
-const unk32 lbl_803DDF6C[4] = {
+const unk32 ItemLocalizedName_rodata_803DDF6C[4] = {
     0x8367838A, 0x8376838B, 0x836F8369, 0x83690000
 };
-const unk32 lbl_803DDF7C[4] = {
+const unk32 ItemLocalizedName_rodata_803DDF7C[4] = {
     0x8367838A, 0x8376838B, 0x834C836D, 0x83520000
 };
-const unk32 lbl_803DDF8C[4] = {
+const unk32 ItemLocalizedName_rodata_803DDF8C[4] = {
     0x8367838A, 0x8376838B, 0x83708343, 0x00000000
 };
-const unk32 lbl_803DDF9C[4] = {
+const unk32 ItemLocalizedName_rodata_803DDF9C[4] = {
     0x8367838A, 0x8376838B, 0x835E8389, 0x83430000
 };
-const unk32 lbl_803DDFAC[5] = {
+const unk32 ItemLocalizedName_rodata_803DDFAC[5] = {
     0x8367838A, 0x8376838B, 0x82A682F1, 0x82DC82AD, 0x00000000
 };
-const unk32 lbl_803DDFC0[4] = {
+const unk32 ItemLocalizedName_rodata_803DDFC0[4] = {
     0x8367838A, 0x8376838B, 0x8365838C, 0x83540000
 };
-const unk32 lbl_803DDFD0[5] = {
+const unk32 ItemLocalizedName_rodata_803DDFD0[5] = {
     0x8367838A, 0x8376838B, 0x82AA82D1, 0x82E582A4, 0x00000000
 };
-const unk32 lbl_803DDFE4[5] = {
+const unk32 ItemLocalizedName_rodata_803DDFE4[5] = {
     0x8367838A, 0x8376838B, 0x834A834E, 0x834A834E, 0x00000000
 };
-const unk32 lbl_803DDFF8[5] = {
+const unk32 ItemLocalizedName_rodata_803DDFF8[5] = {
     0x8367838A, 0x8376838B, 0x836E838A, 0x835A8393, 0x00000000
 };
-const unk32 lbl_803DE00C[5] = {
+const unk32 ItemLocalizedName_rodata_803DE00C[5] = {
     0x8367838A, 0x8376838B, 0x82D082B0, 0x83798393, 0x00000000
 };
-const unk32 lbl_803DE020[5] = {
+const unk32 ItemLocalizedName_rodata_803DE020[5] = {
     0x8367838A, 0x8376838B, 0x82BD82C2, 0x82DC82AB, 0x00000000
 };
-const unk32 lbl_803DE034[5] = {
+const unk32 ItemLocalizedName_rodata_803DE034[5] = {
     0x8367838A, 0x8376838B, 0x83758389, 0x8362834E, 0x00000000
 };
-const unk32 lbl_803DE048[4] = {
+const unk32 ItemLocalizedName_rodata_803DE048[4] = {
     0x82D082B0, 0x837E8354, 0x8343838B, 0x00000000
 };
-const unk32 lbl_803DE058[5] = {
+const unk32 ItemLocalizedName_rodata_803DE058[5] = {
     0x836A835A, 0x837D838A, 0x83498352, 0x83438393, 0x00000000
 };
-const unk32 lbl_803DE06C[4] = {
+const unk32 ItemLocalizedName_rodata_803DE06C[4] = {
     0x8968977B, 0x8368838A, 0x8393834E, 0x00000000
 };
-const unk32 lbl_803DE07C[3] = {
+const unk32 ItemLocalizedName_rodata_803DE07C[3] = {
     0x8345836A, 0x837B815B, 0x00000000
 };
-const unk32 lbl_803DE088[4] = {
+const unk32 ItemLocalizedName_rodata_803DE088[4] = {
     0x82DC82DF, 0x8375838D, 0x8362834E, 0x00000000
 };
-const unk32 lbl_803DE098[4] = {
+const unk32 ItemLocalizedName_rodata_803DE098[4] = {
     0x836882C5, 0x82A982A6, 0x82F182D2, 0x82C20000
 };
-const unk32 lbl_803DE0A8[4] = {
+const unk32 ItemLocalizedName_rodata_803DE0A8[4] = {
     0x82CE82AE, 0x82CE82AE, 0x82C182BF, 0x00000000
 };
-const unk32 lbl_803DE0B8[4] = {
+const unk32 ItemLocalizedName_rodata_803DE0B8[4] = {
     0x82DC82DF, 0x8368838A, 0x8393834E, 0x00000000
 };
-const unk32 lbl_803DE0C8[3] = {
+const unk32 ItemLocalizedName_rodata_803DE0C8[3] = {
     0x82BF82D1, 0x82C182B1, 0x96F20000
 };
-const unk32 lbl_803DE0D4[5] = {
+const unk32 ItemLocalizedName_rodata_803DE0D4[5] = {
     0x83498357, 0x8383837D, 0x8374838C, 0x815B8380, 0x00000000
 };
-const unk32 lbl_803DE0E8[3] = {
+const unk32 ItemLocalizedName_rodata_803DE0E8[3] = {
     0x82A482B3, 0x82DD82DD, 0x00000000
 };
-const unk32 lbl_803DE0F4[3] = {
+const unk32 ItemLocalizedName_rodata_803DE0F4[3] = {
     0x836C8359, 0x837E949A, 0x92650000
 };
-const unk32 lbl_803DE100[3] = {
+const unk32 ItemLocalizedName_rodata_803DE100[3] = {
     0x82D182C1, 0x82AD82E8, 0x94A00000
 };
-const unk32 lbl_803DE10C[3] = {
+const unk32 ItemLocalizedName_rodata_803DE10C[3] = {
     0x82AE82C9, 0x82E1834F, 0x837E0000
 };
-const unk32 lbl_803DE118[4] = {
+const unk32 ItemLocalizedName_rodata_803DE118[4] = {
     0x8358815B, 0x8370815B, 0x837D8343, 0x834E0000
 };
-const unk32 lbl_803DE128[3] = {
+const unk32 ItemLocalizedName_rodata_803DE128[3] = {
     0x837D834F, 0x836C8362, 0x83670000
 };
-const unk32 lbl_803DE134[4] = {
+const unk32 ItemLocalizedName_rodata_803DE134[4] = {
     0x836F8369, 0x83698367, 0x838C8343, 0x83930000
 };
-const unk32 lbl_803DE144[4] = {
+const unk32 ItemLocalizedName_rodata_803DE144[4] = {
     0x837E8368, 0x838A82B1, 0x82A482E7, 0x817B0000
 };
-const unk32 lbl_803DE154[3] = {
+const unk32 ItemLocalizedName_rodata_803DE154[3] = {
     0x836F8369, 0x8369817B, 0x00000000
 };
-const unk32 lbl_803DE160[3] = {
+const unk32 ItemLocalizedName_rodata_803DE160[3] = {
     0x82BD82C2, 0x82DC82AB, 0x817B0000
 };
-const unk32 lbl_803DE16C[5] = {
+const unk32 ItemLocalizedName_rodata_803DE16C[5] = {
     0x83758389, 0x8362834E, 0x82B182A4, 0x82E7817B, 0x00000000
 };
-const unk32 lbl_803DE180[5] = {
+const unk32 ItemLocalizedName_rodata_803DE180[5] = {
     0x93C5836F, 0x83698369, 0x836F8359, 0x815B834A, 0x817B0000
 };
-const unk32 lbl_803DE194[5] = {
+const unk32 ItemLocalizedName_rodata_803DE194[5] = {
     0x8353815B, 0x838B8368, 0x836F8369, 0x8369817B, 0x00000000
 };
-const unk32 lbl_803DE1A8[5] = {
+const unk32 ItemLocalizedName_rodata_803DE1A8[5] = {
     0x836F8369, 0x8369836F, 0x8359815B, 0x834A817B, 0x00000000
 };
-const unk32 lbl_803DE1BC[4] = {
+const unk32 ItemLocalizedName_rodata_803DE1BC[4] = {
     0x836E8343, 0x8372815B, 0x8380817B, 0x00000000
 };
-const unk32 lbl_803DE1CC[3] = {
+const unk32 ItemLocalizedName_rodata_803DE1CC[3] = {
     0x835E8389, 0x8343817B, 0x00000000
 };
-const unk32 lbl_803DE1D8[3] = {
+const unk32 ItemLocalizedName_rodata_803DE1D8[3] = {
     0x82A682F1, 0x82DC82AD, 0x817B0000
 };
-const unk32 lbl_803DE1E4[5] = {
+const unk32 ItemLocalizedName_rodata_803DE1E4[5] = {
     0x8353815B, 0x838B8368, 0x835E8389, 0x8343817B, 0x00000000
 };
-const unk32 lbl_803DE1F8[3] = {
+const unk32 ItemLocalizedName_rodata_803DE1F8[3] = {
     0x8365838C, 0x8354817B, 0x00000000
 };
-const unk32 lbl_803DE204[5] = {
+const unk32 ItemLocalizedName_rodata_803DE204[5] = {
     0x834A834E, 0x834A834E, 0x835E8343, 0x8384817B, 0x00000000
 };
-const unk32 lbl_803DE218[5] = {
+const unk32 ItemLocalizedName_rodata_803DE218[5] = {
     0x8366834A, 0x83608372, 0x835E8343, 0x8384817B, 0x00000000
 };
-const unk32 lbl_803DE22C[5] = {
+const unk32 ItemLocalizedName_rodata_803DE22C[5] = {
     0x83498393, 0x837B838D, 0x836E8393, 0x8368838B, 0x817B0000
 };
-const unk32 lbl_803DE240[4] = {
+const unk32 ItemLocalizedName_rodata_803DE240[4] = {
     0x836E838A, 0x835A8393, 0x837B8393, 0x817B0000
 };
-const unk32 lbl_803DE250[4] = {
+const unk32 ItemLocalizedName_rodata_803DE250[4] = {
     0x834E8389, 0x834E8356, 0x83878393, 0x817B0000
 };
-const unk32 lbl_803DE260[3] = {
+const unk32 ItemLocalizedName_rodata_803DE260[3] = {
     0x82AA82D1, 0x82E582A4, 0x817B0000
 };
-const unk32 lbl_803DE26C[5] = {
+const unk32 ItemLocalizedName_rodata_803DE26C[5] = {
     0x82CB82CE, 0x82CB82CE, 0x83498343, 0x838B817B, 0x00000000
 };
-const unk32 lbl_803DE280[5] = {
+const unk32 ItemLocalizedName_rodata_803DE280[5] = {
     0x8372838A, 0x83588365, 0x83428362, 0x834E817B, 0x00000000
 };
-const unk32 lbl_803DE294[5] = {
+const unk32 ItemLocalizedName_rodata_803DE294[5] = {
     0x834A8393, 0x83568383, 0x834E835F, 0x837D817B, 0x00000000
 };
-const unk32 lbl_803DE2A8[3] = {
+const unk32 ItemLocalizedName_rodata_803DE2A8[3] = {
     0x82A082AB, 0x82A982F1, 0x817B0000
 };
-const unk32 lbl_803DE2B4[5] = {
+const unk32 ItemLocalizedName_rodata_803DE2B4[5] = {
     0x82B682B0, 0x82F182CE, 0x82AD82BE, 0x82F18FAC, 0x817B0000
 };
-const unk32 lbl_803DE2C8[5] = {
+const unk32 ItemLocalizedName_rodata_803DE2C8[5] = {
     0x82B682B0, 0x82F182CE, 0x82AD82BE, 0x82F191E5, 0x817B0000
 };
-const unk32 lbl_803DE2DC[5] = {
+const unk32 ItemLocalizedName_rodata_803DE2DC[5] = {
     0x836E8393, 0x8368838B, 0x83458342, 0x838B8358, 0x817B0000
 };
-const unk32 lbl_803DE2F0[5] = {
+const unk32 ItemLocalizedName_rodata_803DE2F0[5] = {
     0x82DF82DC, 0x82A28345, 0x8342838B, 0x8358817B, 0x00000000
 };
-const unk32 lbl_803DE304[5] = {
+const unk32 ItemLocalizedName_rodata_803DE304[5] = {
     0x83418343, 0x83658380, 0x82D382A4, 0x82A282F1, 0x817B0000
 };
-const unk32 lbl_803DE318[5] = {
+const unk32 ItemLocalizedName_rodata_803DE318[5] = {
     0x837D8357, 0x8362834E, 0x836E8393, 0x8368817B, 0x00000000
 };
-const unk32 lbl_803DE32C[5] = {
+const unk32 ItemLocalizedName_rodata_803DE32C[5] = {
     0x835F8362, 0x83568385, 0x836F8359, 0x815B834A, 0x817B0000
 };
-const unk32 lbl_803DE340[4] = {
+const unk32 ItemLocalizedName_rodata_803DE340[4] = {
     0x8345835C, 0x83418389, 0x815B8380, 0x817B0000
 };
-const unk32 lbl_803DE350[5] = {
+const unk32 ItemLocalizedName_rodata_803DE350[5] = {
     0x83578383, 0x83938376, 0x82D382A4, 0x82A282F1, 0x817B0000
 };
-const unk32 lbl_803DE364[5] = {
+const unk32 ItemLocalizedName_rodata_803DE364[5] = {
     0x835F8362, 0x83568385, 0x834C836D, 0x8352817B, 0x00000000
 };
-const unk32 lbl_803DE378[4] = {
+const unk32 ItemLocalizedName_rodata_803DE378[4] = {
     0x8B7A8EFB, 0x834C836D, 0x8352817B, 0x00000000
 };
-const unk32 lbl_803DE388[5] = {
+const unk32 ItemLocalizedName_rodata_803DE388[5] = {
     0x82C682A4, 0x82DF82A2, 0x834C836D, 0x8352817B, 0x00000000
 };
-const unk32 lbl_803DE39C[5] = {
+const unk32 ItemLocalizedName_rodata_803DE39C[5] = {
     0x836B838B, 0x836B838B, 0x834C836D, 0x8352817B, 0x00000000
 };
-const unk32 lbl_803DE3B0[4] = {
+const unk32 ItemLocalizedName_rodata_803DE3B0[4] = {
     0x8B9091E5, 0x89BB834C, 0x836D8352, 0x817B0000
 };
-const unk32 lbl_803DE3C0[4] = {
+const unk32 ItemLocalizedName_rodata_803DE3C0[4] = {
     0x83778372, 0x815B834C, 0x836D8352, 0x817B0000
 };
-const unk32 lbl_803DE3D0[3] = {
+const unk32 ItemLocalizedName_rodata_803DE3D0[3] = {
     0x8356815B, 0x838B8368, 0x817B0000
 };
-const unk32 lbl_803DE3DC[4] = {
+const unk32 ItemLocalizedName_rodata_803DE3DC[4] = {
     0x94BD8ECB, 0x8356815B, 0x838B8368, 0x817B0000
 };
-const unk32 lbl_803DE3EC[3] = {
+const unk32 ItemLocalizedName_rodata_803DE3EC[3] = {
     0x82D082B0, 0x83798393, 0x817B0000
 };
-const unk32 lbl_803DE3F8[3] = {
+const unk32 ItemLocalizedName_rodata_803DE3F8[3] = {
     0x8FCE82A2, 0x91DC817B, 0x00000000
 };
-const unk32 lbl_803DE404[5] = {
+const unk32 ItemLocalizedName_rodata_803DE404[5] = {
     0x82A882F1, 0x82BF8358, 0x8373815B, 0x834A815B, 0x817B0000
 };
-const unk32 lbl_803DE418[3] = {
+const unk32 ItemLocalizedName_rodata_803DE418[3] = {
     0x8358835E, 0x815B817B, 0x00000000
 };
-const unk32 lbl_803DE424[5] = {
+const unk32 ItemLocalizedName_rodata_803DE424[5] = {
     0x83748340, 0x83438341, 0x837B815B, 0x838B817B, 0x00000000
 };
-const unk32 lbl_803DE438[3] = {
+const unk32 ItemLocalizedName_rodata_803DE438[3] = {
     0x836E8393, 0x837D815B, 0x817B0000
 };
-const unk32 lbl_803DE444[3] = {
+const unk32 ItemLocalizedName_rodata_803DE444[3] = {
     0x8375838D, 0x8362834E, 0x817B0000
 };
-const unk32 lbl_803DE450[5] = {
+const unk32 ItemLocalizedName_rodata_803DE450[5] = {
     0x83588379, 0x83568383, 0x838B8352, 0x83438393, 0x817B0000
 };
-const unk32 lbl_803DE464[3] = {
+const unk32 ItemLocalizedName_rodata_803DE464[3] = {
     0x83528343, 0x8393817B, 0x00000000
 };
-const unk32 lbl_803DE470[3] = {
+const unk32 ItemLocalizedName_rodata_803DE470[3] = {
     0x838F8393, 0x838F8393, 0x817B0000
 };
-const unk32 lbl_803DE47C[6] = {
+const unk32 ItemLocalizedName_rodata_803DE47C[6] = {
     0x8376838A, 0x8393835A, 0x83588368, 0x838A8393, 0x834E817B, 0x00000000
 };
-const unk32 lbl_803DE494[4] = {
+const unk32 ItemLocalizedName_rodata_803DE494[4] = {
     0x8373815B, 0x8360836F, 0x815B8368, 0x817B0000
 };
-const unk32 lbl_803DE4A4[4] = {
+const unk32 ItemLocalizedName_rodata_803DE4A4[4] = {
     0x83748389, 0x83438370, 0x8393817B, 0x00000000
 };
-const unk32 lbl_803DE4B4[5] = {
+const unk32 ItemLocalizedName_rodata_803DE4B4[5] = {
     0x83708362, 0x834E8393, 0x83748389, 0x838F815B, 0x817B0000
 };
-const unk32 lbl_803DE4C8[3] = {
+const unk32 ItemLocalizedName_rodata_803DE4C8[3] = {
     0x8350815B, 0x834C817B, 0x00000000
 };
-const unk32 lbl_803DE4D4[3] = {
+const unk32 ItemLocalizedName_rodata_803DE4D4[3] = {
     0x836E815B, 0x8367817B, 0x00000000
 };
-const unk32 lbl_803DE4E0[5] = {
+const unk32 ItemLocalizedName_rodata_803DE4E0[5] = {
     0x83568346, 0x838B837B, 0x83668342, 0x815B817B, 0x00000000
 };
-const unk32 lbl_803DE4F4[5] = {
+const unk32 ItemLocalizedName_rodata_803DE4F4[5] = {
     0x834E8362, 0x837082CC, 0x82B182A4, 0x82E7817B, 0x00000000
 };
-const unk32 lbl_803DE508[3] = {
+const unk32 ItemLocalizedName_rodata_803DE508[3] = {
     0x898A82CC, 0x9166817B, 0x00000000
 };
-const unk32 lbl_803DE514[3] = {
+const unk32 ItemLocalizedName_rodata_803DE514[3] = {
     0x834C8389, 0x815B817B, 0x00000000
 };
-const unk32 lbl_803DE520[3] = {
+const unk32 ItemLocalizedName_rodata_803DE520[3] = {
     0x83688362, 0x83588393, 0x817B0000
 };
-const unk32 lbl_803DE52C[4] = {
+const unk32 ItemLocalizedName_rodata_803DE52C[4] = {
     0x838F838A, 0x8349834A, 0x815B817B, 0x00000000
 };
-const unk32 lbl_803DE53C[5] = {
+const unk32 ItemLocalizedName_rodata_803DE53C[5] = {
     0x82CD82C8, 0x82AD82BB, 0x836F834E, 0x835F8393, 0x817B0000
 };
-const unk32 lbl_803DE550[5] = {
+const unk32 ItemLocalizedName_rodata_803DE550[5] = {
     0x83728388, 0x8388815B, 0x83938370, 0x83938360, 0x817B0000
 };
-const unk32 lbl_803DE564[3] = {
+const unk32 ItemLocalizedName_rodata_803DE564[3] = {
     0x82A882C8, 0x82E7817B, 0x00000000
 };
-const unk32 lbl_803DE570[3] = {
+const unk32 ItemLocalizedName_rodata_803DE570[3] = {
     0x836A8393, 0x836A834E, 0x817B0000
 };
-const unk32 lbl_803DE57C[3] = {
+const unk32 ItemLocalizedName_rodata_803DE57C[3] = {
     0x837B8380, 0x82D682A2, 0x817B0000
 };
-const unk32 lbl_803DE588[5] = {
+const unk32 ItemLocalizedName_rodata_803DE588[5] = {
     0x82BD82DC, 0x82B2837B, 0x83668342, 0x815B817B, 0x00000000
 };
-const unk32 lbl_803DE59C[5] = {
+const unk32 ItemLocalizedName_rodata_803DE59C[5] = {
     0x82B282EB, 0x82B282EB, 0x82BD82DC, 0x82B2817B, 0x00000000
 };
-const unk32 lbl_803DE5B0[3] = {
+const unk32 ItemLocalizedName_rodata_803DE5B0[3] = {
     0x836E838A, 0x835A8393, 0x817B0000
 };
-const unk32 lbl_803DE5BC[4] = {
+const unk32 ItemLocalizedName_rodata_803DE5BC[4] = {
     0x82C882BC, 0x82CC82BD, 0x82DC82B2, 0x817B0000
 };
-const unk32 lbl_803DE5CC[3] = {
+const unk32 ItemLocalizedName_rodata_803DE5CC[3] = {
     0x8381838D, 0x8393817B, 0x00000000
 };
-const unk32 lbl_803DE5D8[5] = {
+const unk32 ItemLocalizedName_rodata_803DE5D8[5] = {
     0x837E8389, 0x834E838B, 0x834C836D, 0x8352817B, 0x00000000
 };
-const unk32 lbl_803DE5EC[3] = {
+const unk32 ItemLocalizedName_rodata_803DE5EC[3] = {
     0x93C5834C, 0x836D8352, 0x817B0000
 };
-const unk32 lbl_803DE5F8[5] = {
+const unk32 ItemLocalizedName_rodata_803DE5F8[5] = {
     0x834C836D, 0x8352836E, 0x8393837D, 0x815B817B, 0x00000000
 };
-const unk32 lbl_803DE60C[4] = {
+const unk32 ItemLocalizedName_rodata_803DE60C[4] = {
     0x834C836D, 0x835282CC, 0x95B2817B, 0x00000000
 };
-const unk32 lbl_803DE61C[4] = {
+const unk32 ItemLocalizedName_rodata_803DE61C[4] = {
     0x82B082F1, 0x82AB834C, 0x836D8352, 0x817B0000
 };
-const unk32 lbl_803DE62C[5] = {
+const unk32 ItemLocalizedName_rodata_803DE62C[5] = {
     0x82D182E5, 0x82A482AB, 0x834C836D, 0x8352817B, 0x00000000
 };
-const unk32 lbl_803DE640[5] = {
+const unk32 ItemLocalizedName_rodata_803DE640[5] = {
     0x8358835E, 0x815B88F3, 0x82CC836F, 0x83698369, 0x817B0000
 };
-const unk32 lbl_803DE654[5] = {
+const unk32 ItemLocalizedName_rodata_803DE654[5] = {
     0x8250824F, 0x83678393, 0x836E8393, 0x837D815B, 0x817B0000
 };
-const unk32 lbl_803DE668[5] = {
+const unk32 ItemLocalizedName_rodata_803DE668[5] = {
     0x83578383, 0x8393837B, 0x836F8369, 0x8369817B, 0x00000000
 };
-const unk32 lbl_803DE67C[5] = {
+const unk32 ItemLocalizedName_rodata_803DE67C[5] = {
     0x82A882A2, 0x82B582A2, 0x836F8369, 0x8369817B, 0x00000000
 };
-const unk32 lbl_803DE690[3] = {
+const unk32 ItemLocalizedName_rodata_803DE690[3] = {
     0x83528393, 0x834B817B, 0x00000000
 };
-const unk32 lbl_803DE69C[4] = {
+const unk32 ItemLocalizedName_rodata_803DE69C[4] = {
     0x8370838F, 0x815B8347, 0x8354817B, 0x00000000
 };
-const unk32 lbl_803DE6AC[3] = {
+const unk32 ItemLocalizedName_rodata_803DE6AC[3] = {
     0x8376815B, 0x834A8340, 0x817B0000
 };
-const unk32 lbl_803DE6B8[5] = {
+const unk32 ItemLocalizedName_rodata_803DE6B8[5] = {
     0x83738352, 0x83738352, 0x836E8393, 0x837D815B, 0x817B0000
 };
-const unk32 lbl_803DE6CC[3] = {
+const unk32 ItemLocalizedName_rodata_803DE6CC[3] = {
     0x8389838A, 0x815B5881, 0x7B000000
 };
-const unk32 lbl_803DE6D8[4] = {
+const unk32 ItemLocalizedName_rodata_803DE6D8[4] = {
     0x83748346, 0x8341838A, 0x815B817B, 0x00000000
 };
-const unk32 lbl_803DE6E8[4] = {
+const unk32 ItemLocalizedName_rodata_803DE6E8[4] = {
     0x837B8358, 0x834D8383, 0x8389834B, 0x817B0000
 };
-const unk32 lbl_803DE6F8[6] = {
+const unk32 ItemLocalizedName_rodata_803DE6F8[6] = {
     0x83828393, 0x8358835E, 0x815B8356, 0x815B838B, 0x8368817B, 0x00000000
 };
-const unk32 lbl_803DE710[5] = {
+const unk32 ItemLocalizedName_rodata_803DE710[5] = {
     0x83768360, 0x83828393, 0x8358835E, 0x815B817B, 0x00000000
 };
-const unk32 lbl_803DE724[6] = {
+const unk32 ItemLocalizedName_rodata_803DE724[6] = {
     0x83828393, 0x8358835E, 0x815B836E, 0x8393837D, 0x815B817B, 0x00000000
 };
-const unk32 lbl_803DE73C[5] = {
+const unk32 ItemLocalizedName_rodata_803DE73C[5] = {
     0x82D182C1, 0x82AD82E8, 0x837B815B, 0x838B817B, 0x00000000
 };
-const unk32 lbl_803DE750[5] = {
+const unk32 ItemLocalizedName_rodata_803DE750[5] = {
     0x83828393, 0x8358835E, 0x815B8347, 0x8354817B, 0x00000000
 };
-const unk32 lbl_803DE764[3] = {
+const unk32 ItemLocalizedName_rodata_803DE764[3] = {
     0x82A882CE, 0x82AF89BB, 0x817B0000
 };
 const char lbl_803DE770[] = "FIRE BALL K";
@@ -1135,278 +1135,278 @@ const char lbl_803DE974[] = "DOT_ATTACK";
 const char lbl_803DE980[] = "GAL BOSS";
 const char lbl_803DE98C[] = "EMBLEM_YOSHI";
 const char lbl_803DE99C[] = "EMBLEM_KUPPA";
-char * const lbl_803DE9AC[329] = {
+char * const ItemLocalizedName_rodata_803DE9AC[329] = {
     (char *)&lbl_806DB9F0,
-    (char *)&lbl_803DD9A0,
-    (char *)&lbl_803DD9A0,
-    (char *)&lbl_803DD9AC,
-    (char *)&lbl_803DD9BC,
-    (char *)&lbl_803DD9BC,
-    (char *)&lbl_803DD9D0,
-    (char *)&lbl_803DD9E4,
-    (char *)&lbl_803DD9F8,
-    (char *)&lbl_803DDA0C,
-    (char *)&lbl_803DDA18,
-    (char *)&lbl_803DDA24,
+    (char *)&ItemLocalizedName_rodata_803DD9A0,
+    (char *)&ItemLocalizedName_rodata_803DD9A0,
+    (char *)&ItemLocalizedName_rodata_803DD9AC,
+    (char *)&ItemLocalizedName_rodata_803DD9BC,
+    (char *)&ItemLocalizedName_rodata_803DD9BC,
+    (char *)&ItemLocalizedName_rodata_803DD9D0,
+    (char *)&ItemLocalizedName_rodata_803DD9E4,
+    (char *)&ItemLocalizedName_rodata_803DD9F8,
+    (char *)&ItemLocalizedName_rodata_803DDA0C,
+    (char *)&ItemLocalizedName_rodata_803DDA18,
+    (char *)&ItemLocalizedName_rodata_803DDA24,
     (char *)&lbl_806DB9F8,
-    (char *)&lbl_803DDA38,
-    (char *)&lbl_803DDA44,
-    (char *)&lbl_803DDA50,
-    (char *)&lbl_803DDA60,
+    (char *)&ItemLocalizedName_rodata_803DDA38,
+    (char *)&ItemLocalizedName_rodata_803DDA44,
+    (char *)&ItemLocalizedName_rodata_803DDA50,
+    (char *)&ItemLocalizedName_rodata_803DDA60,
     (char *)&lbl_806DBA00,
     (char *)&lbl_806DBA08,
-    (char *)&lbl_803DDA74,
-    (char *)&lbl_803DDA84,
-    (char *)&lbl_803DDA94,
-    (char *)&lbl_803DDAA4,
-    (char *)&lbl_803DDAB4,
-    (char *)&lbl_803DDAC4,
-    (char *)&lbl_803DDADC,
-    (char *)&lbl_803DDAE8,
+    (char *)&ItemLocalizedName_rodata_803DDA74,
+    (char *)&ItemLocalizedName_rodata_803DDA84,
+    (char *)&ItemLocalizedName_rodata_803DDA94,
+    (char *)&ItemLocalizedName_rodata_803DDAA4,
+    (char *)&ItemLocalizedName_rodata_803DDAB4,
+    (char *)&ItemLocalizedName_rodata_803DDAC4,
+    (char *)&ItemLocalizedName_rodata_803DDADC,
+    (char *)&ItemLocalizedName_rodata_803DDAE8,
     (char *)&lbl_803DDAF8,
-    (char *)&lbl_803DDB10,
-    (char *)&lbl_803DDB20,
-    (char *)&lbl_803DDB30,
-    (char *)&lbl_803DDB3C,
-    (char *)&lbl_803DDB4C,
-    (char *)&lbl_803DDB5C,
-    (char *)&lbl_803DDB68,
-    (char *)&lbl_803DDB74,
+    (char *)&ItemLocalizedName_rodata_803DDB10,
+    (char *)&ItemLocalizedName_rodata_803DDB20,
+    (char *)&ItemLocalizedName_rodata_803DDB30,
+    (char *)&ItemLocalizedName_rodata_803DDB3C,
+    (char *)&ItemLocalizedName_rodata_803DDB4C,
+    (char *)&ItemLocalizedName_rodata_803DDB5C,
+    (char *)&ItemLocalizedName_rodata_803DDB68,
+    (char *)&ItemLocalizedName_rodata_803DDB74,
     (char *)&lbl_806DBA10,
-    (char *)&lbl_803DDB84,
-    (char *)&lbl_803DDB84,
-    (char *)&lbl_803DDB98,
-    (char *)&lbl_803DDBA4,
+    (char *)&ItemLocalizedName_rodata_803DDB84,
+    (char *)&ItemLocalizedName_rodata_803DDB84,
+    (char *)&ItemLocalizedName_rodata_803DDB98,
+    (char *)&ItemLocalizedName_rodata_803DDBA4,
     (char *)&lbl_806DBA18,
     (char *)&lbl_806DBA20,
-    (char *)&lbl_803DDBB8,
-    (char *)&lbl_803DDBC8,
-    (char *)&lbl_803DDBD8,
-    (char *)&lbl_803DDBF0,
+    (char *)&ItemLocalizedName_rodata_803DDBB8,
+    (char *)&ItemLocalizedName_rodata_803DDBC8,
+    (char *)&ItemLocalizedName_rodata_803DDBD8,
+    (char *)&ItemLocalizedName_rodata_803DDBF0,
     (char *)&lbl_806DBA28,
-    (char *)&lbl_803DDC08,
-    (char *)&lbl_803DDC18,
-    (char *)&lbl_803DDC28,
-    (char *)&lbl_803DDC38,
+    (char *)&ItemLocalizedName_rodata_803DDC08,
+    (char *)&ItemLocalizedName_rodata_803DDC18,
+    (char *)&ItemLocalizedName_rodata_803DDC28,
+    (char *)&ItemLocalizedName_rodata_803DDC38,
     (char *)&lbl_806DBA30,
-    (char *)&lbl_803DDC4C,
+    (char *)&ItemLocalizedName_rodata_803DDC4C,
     (char *)&lbl_806DBA38,
-    (char *)&lbl_803DDC5C,
-    (char *)&lbl_803DDC68,
-    (char *)&lbl_803DDC7C,
-    (char *)&lbl_803DDC8C,
-    (char *)&lbl_803DDC9C,
-    (char *)&lbl_803DDCAC,
-    (char *)&lbl_803DDCB8,
+    (char *)&ItemLocalizedName_rodata_803DDC5C,
+    (char *)&ItemLocalizedName_rodata_803DDC68,
+    (char *)&ItemLocalizedName_rodata_803DDC7C,
+    (char *)&ItemLocalizedName_rodata_803DDC8C,
+    (char *)&ItemLocalizedName_rodata_803DDC9C,
+    (char *)&ItemLocalizedName_rodata_803DDCAC,
+    (char *)&ItemLocalizedName_rodata_803DDCB8,
     (char *)&lbl_806DBA40,
-    (char *)&lbl_803DDCC8,
-    (char *)&lbl_803DDCC8,
+    (char *)&ItemLocalizedName_rodata_803DDCC8,
+    (char *)&ItemLocalizedName_rodata_803DDCC8,
     (char *)&lbl_806DBA08,
-    (char *)&lbl_803DDCD4,
-    (char *)&lbl_803DDCE0,
-    (char *)&lbl_803DDCEC,
-    (char *)&lbl_803DDCFC,
-    (char *)&lbl_803DDD10,
-    (char *)&lbl_803DDD10,
-    (char *)&lbl_803DDD20,
-    (char *)&lbl_803DDD2C,
-    (char *)&lbl_803DDD38,
-    (char *)&lbl_803DDD38,
+    (char *)&ItemLocalizedName_rodata_803DDCD4,
+    (char *)&ItemLocalizedName_rodata_803DDCE0,
+    (char *)&ItemLocalizedName_rodata_803DDCEC,
+    (char *)&ItemLocalizedName_rodata_803DDCFC,
+    (char *)&ItemLocalizedName_rodata_803DDD10,
+    (char *)&ItemLocalizedName_rodata_803DDD10,
+    (char *)&ItemLocalizedName_rodata_803DDD20,
+    (char *)&ItemLocalizedName_rodata_803DDD2C,
+    (char *)&ItemLocalizedName_rodata_803DDD38,
+    (char *)&ItemLocalizedName_rodata_803DDD38,
     (char *)&lbl_806DBA48,
-    (char *)&lbl_803DDD44,
-    (char *)&lbl_803DDD50,
-    (char *)&lbl_803DDD50,
-    (char *)&lbl_803DDD5C,
-    (char *)&lbl_803DDD68,
-    (char *)&lbl_803DDD68,
-    (char *)&lbl_803DDD7C,
-    (char *)&lbl_803DDD88,
-    (char *)&lbl_803DDD9C,
-    (char *)&lbl_803DDDB0,
-    (char *)&lbl_803DDDC0,
+    (char *)&ItemLocalizedName_rodata_803DDD44,
+    (char *)&ItemLocalizedName_rodata_803DDD50,
+    (char *)&ItemLocalizedName_rodata_803DDD50,
+    (char *)&ItemLocalizedName_rodata_803DDD5C,
+    (char *)&ItemLocalizedName_rodata_803DDD68,
+    (char *)&ItemLocalizedName_rodata_803DDD68,
+    (char *)&ItemLocalizedName_rodata_803DDD7C,
+    (char *)&ItemLocalizedName_rodata_803DDD88,
+    (char *)&ItemLocalizedName_rodata_803DDD9C,
+    (char *)&ItemLocalizedName_rodata_803DDDB0,
+    (char *)&ItemLocalizedName_rodata_803DDDC0,
     (char *)&lbl_806DBA50,
-    (char *)&lbl_803DDDD0,
-    (char *)&lbl_803DDDD0,
-    (char *)&lbl_803DDDE0,
-    (char *)&lbl_803DDDE0,
+    (char *)&ItemLocalizedName_rodata_803DDDD0,
+    (char *)&ItemLocalizedName_rodata_803DDDD0,
+    (char *)&ItemLocalizedName_rodata_803DDDE0,
+    (char *)&ItemLocalizedName_rodata_803DDDE0,
     (char *)&lbl_806DBA58,
     (char *)&lbl_803DDDEC,
     (char *)&lbl_803DDDF8,
     (char *)&lbl_803DDE04,
     (char *)&lbl_803DDE14,
     (char *)&lbl_806DBA60,
-    (char *)&lbl_803DDE24,
-    (char *)&lbl_803DDE34,
-    (char *)&lbl_803DDE44,
-    (char *)&lbl_803DDC28,
-    (char *)&lbl_803DDC38,
-    (char *)&lbl_803DDCFC,
+    (char *)&ItemLocalizedName_rodata_803DDE24,
+    (char *)&ItemLocalizedName_rodata_803DDE34,
+    (char *)&ItemLocalizedName_rodata_803DDE44,
+    (char *)&ItemLocalizedName_rodata_803DDC28,
+    (char *)&ItemLocalizedName_rodata_803DDC38,
+    (char *)&ItemLocalizedName_rodata_803DDCFC,
     (char *)&lbl_806DBA68,
     (char *)&lbl_806DBA68,
     (char *)&lbl_806DBA70,
     (char *)&lbl_806DBA78,
     (char *)&lbl_806DBA80,
-    (char *)&lbl_803DDE54,
-    (char *)&lbl_803DDE68,
-    (char *)&lbl_803DDE7C,
-    (char *)&lbl_803DDE88,
-    (char *)&lbl_803DDE98,
-    (char *)&lbl_803DDEA8,
+    (char *)&ItemLocalizedName_rodata_803DDE54,
+    (char *)&ItemLocalizedName_rodata_803DDE68,
+    (char *)&ItemLocalizedName_rodata_803DDE7C,
+    (char *)&ItemLocalizedName_rodata_803DDE88,
+    (char *)&ItemLocalizedName_rodata_803DDE98,
+    (char *)&ItemLocalizedName_rodata_803DDEA8,
     (char *)&lbl_806DBA88,
-    (char *)&lbl_803DDEB8,
-    (char *)&lbl_803DDECC,
-    (char *)&lbl_803DDEDC,
-    (char *)&lbl_803DDEF0,
-    (char *)&lbl_803DDF00,
+    (char *)&ItemLocalizedName_rodata_803DDEB8,
+    (char *)&ItemLocalizedName_rodata_803DDECC,
+    (char *)&ItemLocalizedName_rodata_803DDEDC,
+    (char *)&ItemLocalizedName_rodata_803DDEF0,
+    (char *)&ItemLocalizedName_rodata_803DDF00,
     (char *)&lbl_806DBA90,
-    (char *)&lbl_803DDF10,
+    (char *)&ItemLocalizedName_rodata_803DDF10,
     (char *)&lbl_803DDF20,
     (char *)&lbl_803DDF30,
     (char *)&lbl_803DDF40,
     (char *)&lbl_803DDF50,
-    (char *)&lbl_803DDF5C,
-    (char *)&lbl_803DDF6C,
-    (char *)&lbl_803DDF7C,
-    (char *)&lbl_803DDF8C,
-    (char *)&lbl_803DDF9C,
-    (char *)&lbl_803DDFAC,
-    (char *)&lbl_803DDFC0,
-    (char *)&lbl_803DDFD0,
-    (char *)&lbl_803DDFE4,
-    (char *)&lbl_803DDFF8,
-    (char *)&lbl_803DE00C,
-    (char *)&lbl_803DE020,
-    (char *)&lbl_803DE034,
+    (char *)&ItemLocalizedName_rodata_803DDF5C,
+    (char *)&ItemLocalizedName_rodata_803DDF6C,
+    (char *)&ItemLocalizedName_rodata_803DDF7C,
+    (char *)&ItemLocalizedName_rodata_803DDF8C,
+    (char *)&ItemLocalizedName_rodata_803DDF9C,
+    (char *)&ItemLocalizedName_rodata_803DDFAC,
+    (char *)&ItemLocalizedName_rodata_803DDFC0,
+    (char *)&ItemLocalizedName_rodata_803DDFD0,
+    (char *)&ItemLocalizedName_rodata_803DDFE4,
+    (char *)&ItemLocalizedName_rodata_803DDFF8,
+    (char *)&ItemLocalizedName_rodata_803DE00C,
+    (char *)&ItemLocalizedName_rodata_803DE020,
+    (char *)&ItemLocalizedName_rodata_803DE034,
     (char *)&lbl_806DBA98,
-    (char *)&lbl_803DE048,
+    (char *)&ItemLocalizedName_rodata_803DE048,
     (char *)&lbl_806DBAA0,
-    (char *)&lbl_803DE058,
-    (char *)&lbl_803DE06C,
-    (char *)&lbl_803DE07C,
-    (char *)&lbl_803DE07C,
-    (char *)&lbl_803DE088,
-    (char *)&lbl_803DE098,
-    (char *)&lbl_803DE0A8,
-    (char *)&lbl_803DE0B8,
-    (char *)&lbl_803DE0C8,
+    (char *)&ItemLocalizedName_rodata_803DE058,
+    (char *)&ItemLocalizedName_rodata_803DE06C,
+    (char *)&ItemLocalizedName_rodata_803DE07C,
+    (char *)&ItemLocalizedName_rodata_803DE07C,
+    (char *)&ItemLocalizedName_rodata_803DE088,
+    (char *)&ItemLocalizedName_rodata_803DE098,
+    (char *)&ItemLocalizedName_rodata_803DE0A8,
+    (char *)&ItemLocalizedName_rodata_803DE0B8,
+    (char *)&ItemLocalizedName_rodata_803DE0C8,
     (char *)&lbl_806DBAA8,
-    (char *)&lbl_803DE0D4,
-    (char *)&lbl_803DE0E8,
-    (char *)&lbl_803DE0F4,
-    (char *)&lbl_803DE100,
-    (char *)&lbl_803DE10C,
-    (char *)&lbl_803DE118,
-    (char *)&lbl_803DE128,
-    (char *)&lbl_803DE134,
-    (char *)&lbl_803DE134,
+    (char *)&ItemLocalizedName_rodata_803DE0D4,
+    (char *)&ItemLocalizedName_rodata_803DE0E8,
+    (char *)&ItemLocalizedName_rodata_803DE0F4,
+    (char *)&ItemLocalizedName_rodata_803DE100,
+    (char *)&ItemLocalizedName_rodata_803DE10C,
+    (char *)&ItemLocalizedName_rodata_803DE118,
+    (char *)&ItemLocalizedName_rodata_803DE128,
+    (char *)&ItemLocalizedName_rodata_803DE134,
+    (char *)&ItemLocalizedName_rodata_803DE134,
     (char *)&lbl_806DBAB0,
     (char *)&lbl_806DBAB0,
-    (char *)&lbl_803DE144,
-    (char *)&lbl_803DE154,
-    (char *)&lbl_803DE160,
-    (char *)&lbl_803DE16C,
-    (char *)&lbl_803DE180,
-    (char *)&lbl_803DDC9C,
-    (char *)&lbl_803DE194,
-    (char *)&lbl_803DE1A8,
-    (char *)&lbl_803DE1BC,
+    (char *)&ItemLocalizedName_rodata_803DE144,
+    (char *)&ItemLocalizedName_rodata_803DE154,
+    (char *)&ItemLocalizedName_rodata_803DE160,
+    (char *)&ItemLocalizedName_rodata_803DE16C,
+    (char *)&ItemLocalizedName_rodata_803DE180,
+    (char *)&ItemLocalizedName_rodata_803DDC9C,
+    (char *)&ItemLocalizedName_rodata_803DE194,
+    (char *)&ItemLocalizedName_rodata_803DE1A8,
+    (char *)&ItemLocalizedName_rodata_803DE1BC,
     (char *)&lbl_806DBAB8,
-    (char *)&lbl_803DE1CC,
-    (char *)&lbl_803DE1D8,
-    (char *)&lbl_803DE1E4,
-    (char *)&lbl_803DE1F8,
-    (char *)&lbl_803DE204,
-    (char *)&lbl_803DE218,
-    (char *)&lbl_803DE22C,
-    (char *)&lbl_803DE240,
-    (char *)&lbl_803DE250,
-    (char *)&lbl_803DE260,
-    (char *)&lbl_803DE26C,
-    (char *)&lbl_803DE280,
+    (char *)&ItemLocalizedName_rodata_803DE1CC,
+    (char *)&ItemLocalizedName_rodata_803DE1D8,
+    (char *)&ItemLocalizedName_rodata_803DE1E4,
+    (char *)&ItemLocalizedName_rodata_803DE1F8,
+    (char *)&ItemLocalizedName_rodata_803DE204,
+    (char *)&ItemLocalizedName_rodata_803DE218,
+    (char *)&ItemLocalizedName_rodata_803DE22C,
+    (char *)&ItemLocalizedName_rodata_803DE240,
+    (char *)&ItemLocalizedName_rodata_803DE250,
+    (char *)&ItemLocalizedName_rodata_803DE260,
+    (char *)&ItemLocalizedName_rodata_803DE26C,
+    (char *)&ItemLocalizedName_rodata_803DE280,
     (char *)&lbl_806DBAC0,
     (char *)&lbl_806DBAC8,
-    (char *)&lbl_803DE294,
-    (char *)&lbl_803DE2A8,
-    (char *)&lbl_803DE2B4,
-    (char *)&lbl_803DE2C8,
-    (char *)&lbl_803DE2DC,
-    (char *)&lbl_803DE2F0,
-    (char *)&lbl_803DE304,
-    (char *)&lbl_803DE318,
-    (char *)&lbl_803DE32C,
+    (char *)&ItemLocalizedName_rodata_803DE294,
+    (char *)&ItemLocalizedName_rodata_803DE2A8,
+    (char *)&ItemLocalizedName_rodata_803DE2B4,
+    (char *)&ItemLocalizedName_rodata_803DE2C8,
+    (char *)&ItemLocalizedName_rodata_803DE2DC,
+    (char *)&ItemLocalizedName_rodata_803DE2F0,
+    (char *)&ItemLocalizedName_rodata_803DE304,
+    (char *)&ItemLocalizedName_rodata_803DE318,
+    (char *)&ItemLocalizedName_rodata_803DE32C,
     (char *)&lbl_806DBAD0,
-    (char *)&lbl_803DE340,
-    (char *)&lbl_803DE350,
-    (char *)&lbl_803DE364,
-    (char *)&lbl_803DE378,
-    (char *)&lbl_803DE388,
-    (char *)&lbl_803DE39C,
-    (char *)&lbl_803DE3B0,
-    (char *)&lbl_803DE3C0,
-    (char *)&lbl_803DE3D0,
-    (char *)&lbl_803DE3DC,
-    (char *)&lbl_803DE3EC,
-    (char *)&lbl_803DE3F8,
-    (char *)&lbl_803DE404,
-    (char *)&lbl_803DE418,
-    (char *)&lbl_803DE424,
-    (char *)&lbl_803DE424,
-    (char *)&lbl_803DE438,
-    (char *)&lbl_803DE438,
-    (char *)&lbl_803DE444,
-    (char *)&lbl_803DE444,
-    (char *)&lbl_803DE450,
-    (char *)&lbl_803DE464,
-    (char *)&lbl_803DE470,
-    (char *)&lbl_803DE47C,
-    (char *)&lbl_803DE494,
-    (char *)&lbl_803DE4A4,
-    (char *)&lbl_803DE4B4,
-    (char *)&lbl_803DE4C8,
-    (char *)&lbl_803DE4D4,
-    (char *)&lbl_803DE4E0,
-    (char *)&lbl_803DE4F4,
-    (char *)&lbl_803DE508,
-    (char *)&lbl_803DE514,
+    (char *)&ItemLocalizedName_rodata_803DE340,
+    (char *)&ItemLocalizedName_rodata_803DE350,
+    (char *)&ItemLocalizedName_rodata_803DE364,
+    (char *)&ItemLocalizedName_rodata_803DE378,
+    (char *)&ItemLocalizedName_rodata_803DE388,
+    (char *)&ItemLocalizedName_rodata_803DE39C,
+    (char *)&ItemLocalizedName_rodata_803DE3B0,
+    (char *)&ItemLocalizedName_rodata_803DE3C0,
+    (char *)&ItemLocalizedName_rodata_803DE3D0,
+    (char *)&ItemLocalizedName_rodata_803DE3DC,
+    (char *)&ItemLocalizedName_rodata_803DE3EC,
+    (char *)&ItemLocalizedName_rodata_803DE3F8,
+    (char *)&ItemLocalizedName_rodata_803DE404,
+    (char *)&ItemLocalizedName_rodata_803DE418,
+    (char *)&ItemLocalizedName_rodata_803DE424,
+    (char *)&ItemLocalizedName_rodata_803DE424,
+    (char *)&ItemLocalizedName_rodata_803DE438,
+    (char *)&ItemLocalizedName_rodata_803DE438,
+    (char *)&ItemLocalizedName_rodata_803DE444,
+    (char *)&ItemLocalizedName_rodata_803DE444,
+    (char *)&ItemLocalizedName_rodata_803DE450,
+    (char *)&ItemLocalizedName_rodata_803DE464,
+    (char *)&ItemLocalizedName_rodata_803DE470,
+    (char *)&ItemLocalizedName_rodata_803DE47C,
+    (char *)&ItemLocalizedName_rodata_803DE494,
+    (char *)&ItemLocalizedName_rodata_803DE4A4,
+    (char *)&ItemLocalizedName_rodata_803DE4B4,
+    (char *)&ItemLocalizedName_rodata_803DE4C8,
+    (char *)&ItemLocalizedName_rodata_803DE4D4,
+    (char *)&ItemLocalizedName_rodata_803DE4E0,
+    (char *)&ItemLocalizedName_rodata_803DE4F4,
+    (char *)&ItemLocalizedName_rodata_803DE508,
+    (char *)&ItemLocalizedName_rodata_803DE514,
     (char *)&lbl_806DBAD8,
-    (char *)&lbl_803DE520,
-    (char *)&lbl_803DE52C,
-    (char *)&lbl_803DE53C,
-    (char *)&lbl_803DE550,
-    (char *)&lbl_803DE564,
-    (char *)&lbl_803DE570,
-    (char *)&lbl_803DE57C,
-    (char *)&lbl_803DE588,
-    (char *)&lbl_803DE59C,
-    (char *)&lbl_803DE5B0,
-    (char *)&lbl_803DE5BC,
-    (char *)&lbl_803DE5CC,
+    (char *)&ItemLocalizedName_rodata_803DE520,
+    (char *)&ItemLocalizedName_rodata_803DE52C,
+    (char *)&ItemLocalizedName_rodata_803DE53C,
+    (char *)&ItemLocalizedName_rodata_803DE550,
+    (char *)&ItemLocalizedName_rodata_803DE564,
+    (char *)&ItemLocalizedName_rodata_803DE570,
+    (char *)&ItemLocalizedName_rodata_803DE57C,
+    (char *)&ItemLocalizedName_rodata_803DE588,
+    (char *)&ItemLocalizedName_rodata_803DE59C,
+    (char *)&ItemLocalizedName_rodata_803DE5B0,
+    (char *)&ItemLocalizedName_rodata_803DE5BC,
+    (char *)&ItemLocalizedName_rodata_803DE5CC,
     (char *)&lbl_806DBAE0,
-    (char *)&lbl_803DE5D8,
-    (char *)&lbl_803DE5EC,
-    (char *)&lbl_803DE5F8,
-    (char *)&lbl_803DE60C,
-    (char *)&lbl_803DE61C,
-    (char *)&lbl_803DE62C,
-    (char *)&lbl_803DE640,
+    (char *)&ItemLocalizedName_rodata_803DE5D8,
+    (char *)&ItemLocalizedName_rodata_803DE5EC,
+    (char *)&ItemLocalizedName_rodata_803DE5F8,
+    (char *)&ItemLocalizedName_rodata_803DE60C,
+    (char *)&ItemLocalizedName_rodata_803DE61C,
+    (char *)&ItemLocalizedName_rodata_803DE62C,
+    (char *)&ItemLocalizedName_rodata_803DE640,
     (char *)&lbl_806DBAE8,
-    (char *)&lbl_803DE654,
-    (char *)&lbl_803DE668,
-    (char *)&lbl_803DE67C,
-    (char *)&lbl_803DE690,
-    (char *)&lbl_803DE69C,
-    (char *)&lbl_803DE6AC,
-    (char *)&lbl_803DE6B8,
-    (char *)&lbl_803DE6B8,
-    (char *)&lbl_803DE6CC,
-    (char *)&lbl_803DE6D8,
-    (char *)&lbl_803DE6E8,
-    (char *)&lbl_803DE6F8,
-    (char *)&lbl_803DE710,
-    (char *)&lbl_803DE724,
-    (char *)&lbl_803DE73C,
-    (char *)&lbl_803DE750,
-    (char *)&lbl_803DE764,
+    (char *)&ItemLocalizedName_rodata_803DE654,
+    (char *)&ItemLocalizedName_rodata_803DE668,
+    (char *)&ItemLocalizedName_rodata_803DE67C,
+    (char *)&ItemLocalizedName_rodata_803DE690,
+    (char *)&ItemLocalizedName_rodata_803DE69C,
+    (char *)&ItemLocalizedName_rodata_803DE6AC,
+    (char *)&ItemLocalizedName_rodata_803DE6B8,
+    (char *)&ItemLocalizedName_rodata_803DE6B8,
+    (char *)&ItemLocalizedName_rodata_803DE6CC,
+    (char *)&ItemLocalizedName_rodata_803DE6D8,
+    (char *)&ItemLocalizedName_rodata_803DE6E8,
+    (char *)&ItemLocalizedName_rodata_803DE6F8,
+    (char *)&ItemLocalizedName_rodata_803DE710,
+    (char *)&ItemLocalizedName_rodata_803DE724,
+    (char *)&ItemLocalizedName_rodata_803DE73C,
+    (char *)&ItemLocalizedName_rodata_803DE750,
+    (char *)&ItemLocalizedName_rodata_803DE764,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
@@ -1478,22 +1478,22 @@ const unk32 lbl_803DEF04[7] = {
 const unk32 lbl_803DEF20[4] = {
     0x82F08EF3, 0x82AF82DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DEF30[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DEF30[6] = {
     0x88EA92E8, 0x8E9E8AD4, 0x918A8EE8, 0x82F082BD, 0x82BD82AB, 0x82DC0000
 };
-const unk32 lbl_803DEF48[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DEF48[7] = {
     0x82B78142, 0x82BD82BD, 0x82A982EA, 0x82E982C6, 0x8AB49364, 0x82B582C4, 0x00000000
 };
-const unk32 lbl_803DEF64[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DEF64[6] = {
     0x836E8393, 0x8368838B, 0x82AA82B5, 0x82D182EA, 0x82DC82B7, 0x81420000
 };
 const unk32 lbl_803DEF7C[6] = {
     0x8EA995AA, 0x82C98E67, 0x82A48341, 0x83438365, 0x83808142, 0x00000000
 };
-const unk32 lbl_803DEF94[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DEF94[7] = {
     0x82A082E7, 0x82E482E9, 0x83588365, 0x815B835E, 0x835888D9, 0x8FED82A9, 0x00000000
 };
-const unk32 lbl_803DEFB0[4] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DEFB0[4] = {
     0x82E789F1, 0x959C82B5, 0x82DC82B7, 0x81420000
 };
 const unk32 lbl_803DEFC0[6] = {
@@ -1505,82 +1505,82 @@ const unk32 lbl_803DEFD8[7] = {
 const unk32 lbl_803DEFF4[3] = {
     0x919682E8, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803DF000[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF000[6] = {
     0x8E6782A4, 0x82C688EA, 0x8E9E9349, 0x82C9835F, 0x83628356, 0x83850000
 };
-const unk32 lbl_803DF018[3] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF018[3] = {
     0x82C582AB, 0x82DC82B7, 0x00000000
 };
-const unk32 lbl_803DF024[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF024[7] = {
     0x88F982DE, 0x82C6834A, 0x815B8367, 0x82AA8B90, 0x91E589BB, 0x82B582DC, 0x00000000
 };
-const unk32 lbl_803DF040[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF040[7] = {
     0x8D558C82, 0x82B382EA, 0x82BD8341, 0x83438365, 0x838082F0, 0x8B7A8EFB, 0x00000000
 };
-const unk32 lbl_803DF05C[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF05C[7] = {
     0x82B58141, 0x8EA995AA, 0x82CC82E0, 0x82CC82C9, 0x82B582DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF078[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF078[7] = {
     0x91BC82CC, 0x834A815B, 0x836782C9, 0x82D482C2, 0x82A982C1, 0x82C482E0, 0x00000000
 };
-const unk32 lbl_803DF094[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF094[6] = {
     0x836B838B, 0x836282C6, 0x82A982ED, 0x82B982DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF0AC[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF0AC[7] = {
     0x88F982DE, 0x82C693A7, 0x96BE82C9, 0x82C882E8, 0x8141918A, 0x8EE882A9, 0x00000000
 };
-const unk32 lbl_803DF0C8[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF0C8[6] = {
     0x82E78CA9, 0x82A682C8, 0x82AD82C8, 0x82E882DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF0E0[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF0E0[7] = {
     0x88F982DE, 0x82C6834A, 0x815B8367, 0x82AA8F64, 0x82AD82C8, 0x82E88141, 0x00000000
 };
-const unk32 lbl_803DF0FC[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF0FC[7] = {
     0x91CC9396, 0x82BD82E8, 0x82AA8BAD, 0x82AD82C8, 0x82E882DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF118[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF118[7] = {
     0x91BC82CC, 0x834A815B, 0x836782F0, 0x82B782E8, 0x82CA82AF, 0x82E782EA, 0x00000000
 };
-const unk32 lbl_803DF134[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF134[5] = {
     0x82E982E6, 0x82A482C9, 0x82C882E8, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803DF148[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF148[7] = {
     0x88EA92E8, 0x8E9E8AD4, 0x8356815B, 0x838B8368, 0x82F082CD, 0x82E88141, 0x00000000
 };
 const unk32 lbl_803DF164[7] = {
     0x83418343, 0x83658380, 0x8D558C82, 0x82F09668, 0x82AC82DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF180[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF180[7] = {
     0x83418343, 0x83658380, 0x8D558C82, 0x82F0836E, 0x836C95D4, 0x82B582DC, 0x00000000
 };
 const unk32 lbl_803DF19C[6] = {
     0x83528393, 0x834B82F0, 0x82BD82BD, 0x82AB82DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF1B4[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF1B4[7] = {
     0x82DC82ED, 0x82E882CC, 0x834A815B, 0x836782AA, 0x8141838A, 0x83598380, 0x00000000
 };
-const unk32 lbl_803DF1D0[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF1D0[6] = {
     0x82C982A0, 0x82ED82B9, 0x82C482A8, 0x82C782E8, 0x82DC82B7, 0x81420000
 };
 const unk32 lbl_803DF1E8[7] = {
     0x934782F0, 0x838D8362, 0x834E8349, 0x839382B5, 0x82C494AD, 0x8ECB8149, 0x00000000
 };
-const unk32 lbl_803DF204[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF204[7] = {
     0x8365838C, 0x835482F0, 0x834A815B, 0x836782C9, 0x82D482E7, 0x82B382B0, 0x00000000
 };
-const unk32 lbl_803DF220[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF220[6] = {
     0x836E8393, 0x8368838B, 0x8F6497CA, 0x83418362, 0x83768149, 0x00000000
 };
-const unk32 lbl_803DF238[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF238[7] = {
     0x91E589B9, 0x97CA82C5, 0x834E8389, 0x834E8356, 0x83878393, 0x82F096C2, 0x00000000
 };
-const unk32 lbl_803DF254[3] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF254[3] = {
     0x82E782B5, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803DF260[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF260[6] = {
     0x82DD82F1, 0x82C88372, 0x8362834E, 0x838A82B5, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803DF278[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF278[7] = {
     0x835E8343, 0x838482F0, 0x83708393, 0x834E82B3, 0x82B982DC, 0x82B78142, 0x00000000
 };
 const unk32 lbl_803DF294[7] = {
@@ -1595,22 +1595,22 @@ const unk32 lbl_803DF2CC[7] = {
 const unk32 lbl_803DF2E8[6] = {
     0x8CE382EB, 0x82C9978E, 0x82C682B7, 0x83418343, 0x83658380, 0x81420000
 };
-const unk32 lbl_803DF300[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF300[7] = {
     0x93A582DE, 0x82C6834A, 0x815B8367, 0x82AA8358, 0x83738393, 0x82B582DC, 0x00000000
 };
-const unk32 lbl_803DF31C[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF31C[7] = {
     0x93A582DE, 0x82C68358, 0x83738393, 0x82B58141, 0x836E8393, 0x8368838B, 0x00000000
 };
-const unk32 lbl_803DF338[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF338[5] = {
     0x82AA836C, 0x836F836C, 0x836F82B5, 0x82DC82B7, 0x81420000
 };
 const unk32 lbl_803DF34C[5] = {
     0x836F8369, 0x836982CC, 0x8B9091E5, 0x94C58142, 0x00000000
 };
-const unk32 lbl_803DF360[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF360[6] = {
     0x93A582DE, 0x82C68358, 0x83738393, 0x82B582DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF378[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF378[5] = {
     0x82AA834B, 0x834E834B, 0x834E82B5, 0x82DC82B7, 0x81420000
 };
 const unk32 lbl_803DF38C[7] = {
@@ -1622,172 +1622,172 @@ const unk32 lbl_803DF3A8[7] = {
 const unk32 lbl_803DF3C4[7] = {
     0x82E98141, 0x82B782B2, 0x82A28D55, 0x8C828341, 0x83438365, 0x83808142, 0x00000000
 };
-const unk32 lbl_803DF3E0[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF3E0[7] = {
     0x93AA82C9, 0x835E8389, 0x834382F0, 0x978E82C6, 0x82B582DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF3FC[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF3FC[7] = {
     0x89BA82F0, 0x92CA82E9, 0x82C6899F, 0x82B582C2, 0x82D482B3, 0x82EA82DC, 0x00000000
 };
-const unk32 lbl_803DF418[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF418[6] = {
     0x96BD9286, 0x82B782E9, 0x82C68141, 0x82D682F1, 0x82C88BC8, 0x82AA0000
 };
-const unk32 lbl_803DF430[4] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF430[4] = {
     0x96C282E8, 0x8BBF82AB, 0x82DC82B7, 0x81420000
 };
 const unk32 lbl_803DF440[6] = {
     0x914F95FB, 0x82D682DC, 0x82C182B7, 0x82AE94AD, 0x8ECB8149, 0x00000000
 };
-const unk32 lbl_803DF458[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF458[7] = {
     0x95C782C9, 0x82A082BD, 0x82E982C6, 0x836E836C, 0x95D482E8, 0x8141834A, 0x00000000
 };
-const unk32 lbl_803DF474[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF474[7] = {
     0x815B8367, 0x82C982A0, 0x82BD82E9, 0x82C68FAC, 0x835F8381, 0x815B8357, 0x00000000
 };
-const unk32 lbl_803DF490[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF490[5] = {
     0x914F82C9, 0x8CFC82AF, 0x82C494AD, 0x8ECB8149, 0x00000000
 };
-const unk32 lbl_803DF4A4[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF4A4[7] = {
     0x95C782A9, 0x934782C9, 0x82D482C2, 0x82A982E9, 0x82C691E5, 0x949A94AD, 0x00000000
 };
-const unk32 lbl_803DF4C0[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF4C0[7] = {
     0x815B8367, 0x82C982A0, 0x82BD82E9, 0x82C69286, 0x835F8381, 0x815B8357, 0x00000000
 };
-const unk32 lbl_803DF4DC[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF4DC[6] = {
     0x82A682F1, 0x82DC82AD, 0x82CC9286, 0x82C993FC, 0x82E982C6, 0x81410000
 };
-const unk32 lbl_803DF4F4[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF4F4[7] = {
     0x914F82AA, 0x8CA982A6, 0x82C982AD, 0x82AD82C8, 0x82E882DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF510[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF510[5] = {
     0x91BC82CC, 0x906C82CC, 0x83418343, 0x83658380, 0x82F00000
 };
-const unk32 lbl_803DF524[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF524[5] = {
     0x8FC182B5, 0x82BF82E1, 0x82A282DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF538[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF538[7] = {
     0x837D838A, 0x834982C6, 0x838B8343, 0x815B8357, 0x88C88A4F, 0x82CD8141, 0x00000000
 };
-const unk32 lbl_803DF554[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF554[7] = {
     0x82D482C2, 0x82A982E9, 0x82C682D3, 0x82C182C6, 0x82D182DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF570[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF570[7] = {
     0x93A582DE, 0x82C6835E, 0x83438384, 0x82AA8370, 0x8393834E, 0x82B582DC, 0x00000000
 };
 const unk32 lbl_803DF58C[5] = {
     0x8CE382EB, 0x82C98CFC, 0x82AF82C4, 0x94AD8ECB, 0x81490000
 };
-const unk32 lbl_803DF5A0[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF5A0[7] = {
     0x96BD9286, 0x82B782E9, 0x82C6836E, 0x83938368, 0x838B834B, 0x834E834B, 0x00000000
 };
-const unk32 lbl_803DF5BC[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF5BC[5] = {
     0x834E8195, 0x96DA82AA, 0x834E8389, 0x834E8389, 0x81420000
 };
-const unk32 lbl_803DF5D0[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF5D0[7] = {
     0x96BD9286, 0x82B582BD, 0x834A815B, 0x836782F0, 0x835F8362, 0x83568385, 0x00000000
 };
-const unk32 lbl_803DF5EC[3] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF5EC[3] = {
     0x82B382B9, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803DF5F8[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF5F8[7] = {
     0x93A582DE, 0x82C6836E, 0x83938368, 0x838B82AA, 0x836C836F, 0x836C836F, 0x00000000
 };
-const unk32 lbl_803DF614[3] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF614[3] = {
     0x82B582DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF620[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF620[7] = {
     0x8CE382EB, 0x82C9837B, 0x838082D6, 0x82A282F0, 0x978E82C6, 0x82B582DC, 0x00000000
 };
-const unk32 lbl_803DF63C[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF63C[6] = {
     0x82B78142, 0x82D482C2, 0x82A982E9, 0x82C691E5, 0x949A94AD, 0x81490000
 };
-const unk32 lbl_803DF654[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF654[7] = {
     0x8D8291AC, 0x88DA93AE, 0x82B582C4, 0x814182D4, 0x82C282A9, 0x82C182BD, 0x00000000
 };
-const unk32 lbl_803DF670[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF670[7] = {
     0x834A815B, 0x836782F0, 0x82CD82CB, 0x82C682CE, 0x82B582DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF68C[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF68C[7] = {
     0x8AAA82AB, 0x8D9E82F1, 0x82BE834A, 0x815B8367, 0x82F08141, 0x8BF39286, 0x00000000
 };
-const unk32 lbl_803DF6A8[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF6A8[5] = {
     0x82D69081, 0x82AB94F2, 0x82CE82B5, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803DF6BC[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF6BC[7] = {
     0x96BD9286, 0x82B782E9, 0x82C68370, 0x834382AA, 0x94F282D1, 0x8E5582E8, 0x00000000
 };
-const unk32 lbl_803DF6D8[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF6D8[6] = {
     0x914F82AA, 0x8CA982A6, 0x82C882AD, 0x82C882E8, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803DF6F0[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF6F0[7] = {
     0x834A815B, 0x836782CC, 0x8CE382EB, 0x82C982A0, 0x82AB82A9, 0x82F182F0, 0x00000000
 };
-const unk32 lbl_803DF70C[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF70C[7] = {
     0x82D082AB, 0x82B882C1, 0x82C48358, 0x8373815B, 0x8368835F, 0x83458393, 0x00000000
 };
 const unk32 lbl_803DF728[7] = {
     0x82DC82D4, 0x82B582A2, 0x8CF582F0, 0x94AD8CF5, 0x82B582DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF744[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF744[7] = {
     0x8ECA905E, 0x82C98343, 0x835E8359, 0x83898F91, 0x82AB82B5, 0x82BF82E1, 0x00000000
 };
-const unk32 lbl_803DF760[3] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF760[3] = {
     0x82A282DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF76C[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF76C[7] = {
     0x8BDF82AD, 0x82F092CA, 0x89DF82B5, 0x82BD834A, 0x815B8367, 0x82CC8341, 0x00000000
 };
-const unk32 lbl_803DF788[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF788[5] = {
     0x83438365, 0x838082F0, 0x904882D7, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803DF79C[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF79C[7] = {
     0x95B282C9, 0x904782EA, 0x82E982C6, 0x814182A2, 0x82B882EA, 0x82A982CC, 0x00000000
 };
-const unk32 lbl_803DF7B8[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF7B8[7] = {
     0x834C836D, 0x83528CF8, 0x89CA82AA, 0x8B4E82B1, 0x82E882DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF7D4[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF7D4[7] = {
     0x83578383, 0x83938376, 0x8B40945C, 0x82F08E67, 0x97709573, 0x945C82C9, 0x00000000
 };
-const unk32 lbl_803DF7F0[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF7F0[7] = {
     0x836E8393, 0x8368838B, 0x82F08349, 0x8393837B, 0x838D89BB, 0x82B382B9, 0x00000000
 };
-const unk32 lbl_803DF80C[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF80C[7] = {
     0x835E8343, 0x838482CC, 0x91E582AB, 0x82B382F0, 0x95CF89BB, 0x82B382B9, 0x00000000
 };
-const unk32 lbl_803DF828[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF828[7] = {
     0x835E8343, 0x838482F0, 0x834A834E, 0x834A834E, 0x82C995CF, 0x8C6082B3, 0x00000000
 };
-const unk32 lbl_803DF844[3] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF844[3] = {
     0x82B982DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF850[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF850[7] = {
     0x895E935D, 0x82F0837E, 0x835882B5, 0x82BD8E9E, 0x82C98FCE, 0x82ED82EA, 0x00000000
 };
-const unk32 lbl_803DF86C[4] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF86C[4] = {
     0x82BF82E1, 0x82A282DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF87C[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF87C[7] = {
     0x8389838A, 0x815B8277, 0x82CC82AF, 0x82DE82E8, 0x82F08F6F, 0x82B582DC, 0x00000000
 };
-const unk32 lbl_803DF898[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF898[7] = {
     0x82B78142, 0x82AF82DE, 0x82E882C9, 0x82D382EA, 0x82E982C6, 0x81418358, 0x00000000
 };
-const unk32 lbl_803DF8B4[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF8B4[6] = {
     0x83738393, 0x82B582C4, 0x82B582DC, 0x82A282DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF8CC[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF8CC[7] = {
     0x93A582DE, 0x82C6946A, 0x97F482B5, 0x82C48141, 0x835F8381, 0x815B8357, 0x00000000
 };
-const unk32 lbl_803DF8E8[4] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF8E8[4] = {
     0x82F082A4, 0x82AF82DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF8F8[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF8F8[7] = {
     0x837B8358, 0x834D8383, 0x8389834B, 0x82AA8367, 0x8389834E, 0x835E815B, 0x00000000
 };
-const unk32 lbl_803DF914[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF914[7] = {
     0x8372815B, 0x838082F0, 0x8F6F82B5, 0x8141834A, 0x815B8367, 0x82F082C2, 0x00000000
 };
-const unk32 lbl_803DF930[4] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF930[4] = {
     0x82A982DC, 0x82A682DC, 0x82B78142, 0x00000000
 };
 const unk32 lbl_803DF940[5] = {
@@ -1796,40 +1796,40 @@ const unk32 lbl_803DF940[5] = {
 const unk32 lbl_803DF954[4] = {
     0x834C8389, 0x815B82F0, 0x94AD8ECB, 0x81490000
 };
-const unk32 lbl_803DF964[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF964[7] = {
     0x834A815B, 0x836782C9, 0x834A837E, 0x8369838A, 0x82AA978E, 0x82BF8141, 0x00000000
 };
-const unk32 lbl_803DF980[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF980[7] = {
     0x834A815B, 0x836782C9, 0x90E182AA, 0x82D382E8, 0x8141835E, 0x83438384, 0x00000000
 };
-const unk32 lbl_803DF99C[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF99C[6] = {
     0x82AA82B7, 0x82D782E8, 0x82DC82AD, 0x82E882DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF9B4[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF9B4[7] = {
     0x834A815B, 0x836782C9, 0x894A82AA, 0x82D382E8, 0x8141835E, 0x83438384, 0x00000000
 };
-const unk32 lbl_803DF9D0[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF9D0[7] = {
     0x82AA82B7, 0x82D782E8, 0x82E282B7, 0x82AD82C8, 0x82E882DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DF9EC[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DF9EC[7] = {
     0x83418343, 0x83658380, 0x82F08E67, 0x97709573, 0x945C82C9, 0x82B582DC, 0x00000000
 };
-const unk32 lbl_803DFA08[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFA08[7] = {
     0x82D482C2, 0x82A982E9, 0x82C69286, 0x82A982E7, 0x97C782A2, 0x82E082CC, 0x00000000
 };
-const unk32 lbl_803DFA24[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFA24[7] = {
     0x82E288AB, 0x82A282E0, 0x82CC82AA, 0x8F6F8CBB, 0x82B582DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DFA40[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFA40[7] = {
     0x8373834A, 0x836282C6, 0x8CF582C1, 0x82C496DA, 0x82CC914F, 0x82AA8CA9, 0x00000000
 };
-const unk32 lbl_803DFA5C[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFA5C[5] = {
     0x82A682C8, 0x82AD82C8, 0x82E882DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DFA70[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFA70[7] = {
     0x82B782D7, 0x82C482CC, 0x834A815B, 0x836782C9, 0x836A835A, 0x8382836D, 0x00000000
 };
-const unk32 lbl_803DFA8C[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFA8C[7] = {
     0x82CC838D, 0x8362834E, 0x83498393, 0x83418389, 0x815B8380, 0x82F096C2, 0x00000000
 };
 const unk32 lbl_803DFAA8[6] = {
@@ -1841,163 +1841,163 @@ const unk32 lbl_803DFAC0[7] = {
 const unk32 lbl_803DFADC[7] = {
     0x83458343, 0x838B8358, 0x82F088DA, 0x93AE82B3, 0x82B982E6, 0x82A48149, 0x00000000
 };
-const unk32 lbl_803DFAF8[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFAF8[7] = {
     0x93AA82C9, 0x835E8389, 0x834382F0, 0x978E82C6, 0x82B582DC, 0x82AD82E8, 0x00000000
 };
 const unk32 lbl_803DFB14[7] = {
     0x8CE382EB, 0x82C982A8, 0x82C882E7, 0x834B8358, 0x82F094AD, 0x8ECB8149, 0x00000000
 };
-const unk32 lbl_803DFB30[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFB30[7] = {
     0x834B8358, 0x82CC9286, 0x82C993FC, 0x82E982C6, 0x836E8393, 0x8368838B, 0x00000000
 };
-const unk32 lbl_803DFB4C[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFB4C[7] = {
     0x834B834E, 0x834B834E, 0x819596DA, 0x82AA834E, 0x8389834E, 0x83898142, 0x00000000
 };
-const unk32 lbl_803DFB68[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFB68[5] = {
     0x83728388, 0x815B8393, 0x82C682CC, 0x82D182C4, 0x81410000
 };
-const unk32 lbl_803DFB7C[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFB7C[7] = {
     0x91BC82CC, 0x834A815B, 0x836782A9, 0x82E78341, 0x83438365, 0x838082F0, 0x00000000
 };
-const unk32 lbl_803DFB98[4] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFB98[4] = {
     0x82A482CE, 0x82A282DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DFBA8[4] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFBA8[4] = {
     0x837E8368, 0x838A82B1, 0x82A482E7, 0x82F00000
 };
-const unk32 lbl_803DFBB8[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFBB8[5] = {
     0x825289F1, 0x94AD8ECB, 0x82C582AB, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803DFBCC[3] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFBCC[3] = {
     0x836F8369, 0x836982F0, 0x00000000
 };
 const unk32 lbl_803DFBD8[6] = {
     0x8E6782A4, 0x82C6835F, 0x83628356, 0x838582B5, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803DFBF0[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFBF0[5] = {
     0x825289F1, 0x82DC82C5, 0x8E6782A6, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803DFC04[3] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFC04[3] = {
     0x835E8389, 0x834382F0, 0x00000000
 };
-const unk32 lbl_803DFC10[3] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFC10[3] = {
     0x82A682F1, 0x82DC82AD, 0x82F00000
 };
-const unk32 lbl_803DFC1C[3] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFC1C[3] = {
     0x8365838C, 0x835482F0, 0x00000000
 };
-const unk32 lbl_803DFC28[3] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFC28[3] = {
     0x82AA82D1, 0x82E582A4, 0x82F00000
 };
-const unk32 lbl_803DFC34[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFC34[5] = {
     0x834A834E, 0x834A834E, 0x835E8343, 0x838482F0, 0x00000000
 };
-const unk32 lbl_803DFC48[4] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFC48[4] = {
     0x836E838A, 0x835A8393, 0x837B8393, 0x82F00000
 };
-const unk32 lbl_803DFC58[3] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFC58[3] = {
     0x82D082B0, 0x83798393, 0x82F00000
 };
-const unk32 lbl_803DFC64[3] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFC64[3] = {
     0x82BD82C2, 0x82DC82AB, 0x82F00000
 };
-const unk32 lbl_803DFC70[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFC70[5] = {
     0x83758389, 0x8362834E, 0x82B182A4, 0x82E782F0, 0x00000000
 };
 const unk32 lbl_803DFC84[7] = {
     0x8378838D, 0x82F082CC, 0x82CE82B5, 0x82C48141, 0x918A8EE8, 0x82CC8341, 0x00000000
 };
-const unk32 lbl_803DFCA0[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFCA0[7] = {
     0x83528343, 0x839382BB, 0x82C182AD, 0x82E882CC, 0x836A835A, 0x8382836D, 0x81420000
 };
-const unk32 lbl_803DFCBC[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFCBC[7] = {
     0x8AD488E1, 0x82C182C4, 0x82C682E9, 0x82C6949A, 0x94AD82B5, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803DFCD8[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFCD8[7] = {
     0x8345836A, 0x837B815B, 0x82F0834A, 0x815B8367, 0x82C9835A, 0x83628367, 0x81420000
 };
-const unk32 lbl_803DFCF4[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFCF4[7] = {
     0x91CC9396, 0x82BD82E8, 0x82B782E9, 0x82C68370, 0x8393834E, 0x82B382B9, 0x00000000
 };
-const unk32 lbl_803DFD10[3] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFD10[3] = {
     0x82E782EA, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803DFD1C[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFD1C[7] = {
     0x8BDF82C3, 0x82AD834C, 0x83838389, 0x82CC8341, 0x83438365, 0x838082F0, 0x00000000
 };
-const unk32 lbl_803DFD38[4] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFD38[4] = {
     0x904882D7, 0x82BF82E1, 0x82A282DC, 0x82B70000
 };
-const unk32 lbl_803DFD48[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFD48[7] = {
     0x96BD9286, 0x82B782E9, 0x82C68FAC, 0x82B382AD, 0x82C882E8, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803DFD64[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFD64[6] = {
     0x8ECA905E, 0x82C982A8, 0x96CA82AA, 0x82C282AB, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803DFD7C[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFD7C[7] = {
     0x8EA995AA, 0x82CC8ECA, 0x905E82F0, 0x918A8EE8, 0x82CC89E6, 0x96CA82C5, 0x00000000
 };
-const unk32 lbl_803DFD98[4] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFD98[4] = {
     0x91E5965C, 0x82EA82B3, 0x82B982DC, 0x82B70000
 };
-const unk32 lbl_803DFDA8[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFDA8[7] = {
     0x96BD9286, 0x82B782E9, 0x82C6834A, 0x815B8367, 0x82AA8F9F, 0x8EE882C9, 0x00000000
 };
-const unk32 lbl_803DFDC4[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFDC4[5] = {
     0x83578383, 0x83938376, 0x82B582DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DFDD8[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFDD8[7] = {
     0x8CE382EB, 0x82C990DD, 0x927582B7, 0x82E98341, 0x83438365, 0x83808142, 0x00000000
 };
-const unk32 lbl_803DFDF4[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFDF4[7] = {
     0x965C82EA, 0x82DC82ED, 0x82E9836C, 0x8359837E, 0x82C990DA, 0x904782B7, 0x00000000
 };
-const unk32 lbl_803DFE10[4] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFE10[4] = {
     0x82E982C6, 0x91E5949A, 0x94AD8149, 0x00000000
 };
-const unk32 lbl_803DFE20[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFE20[7] = {
     0x83418343, 0x83658380, 0x837B8362, 0x834E8358, 0x82BB82C1, 0x82AD82E8, 0x00000000
 };
-const unk32 lbl_803DFE3C[4] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFE3C[4] = {
     0x82CC949A, 0x926582C5, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DFE4C[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFE4C[7] = {
     0x96BD9286, 0x82B782E9, 0x82C6834A, 0x815B8367, 0x82AA834F, 0x836A8383, 0x00000000
 };
-const unk32 lbl_803DFE68[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFE68[5] = {
     0x834F836A, 0x838382C9, 0x82C882E8, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803DFE7C[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFE7C[7] = {
     0x88EA92E8, 0x8E9E8AD4, 0x81418EC0, 0x8BB582AA, 0x8EA995AA, 0x92869053, 0x00000000
 };
-const unk32 lbl_803DFE98[4] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFE98[4] = {
     0x82C982C8, 0x82E882DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803DFEA8[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFEA8[7] = {
     0x88EA92E8, 0x8E9E8AD4, 0x814182DC, 0x82ED82E8, 0x82CC8352, 0x83438393, 0x00000000
 };
-const unk32 lbl_803DFEC4[4] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFEC4[4] = {
     0x82F089F1, 0x8EFB82B5, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803DFED4[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFED4[7] = {
     0x8EA995AA, 0x82C98E67, 0x82A48341, 0x83438365, 0x83808142, 0x8CE382EB, 0x00000000
 };
-const unk32 lbl_803DFEF0[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFEF0[7] = {
     0x82C9836F, 0x83698369, 0x82F08252, 0x82C282AD, 0x82C182C2, 0x82AF82DC, 0x00000000
 };
-const unk32 lbl_803DFF0C[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFF0C[6] = {
     0x82B78142, 0x90DA9047, 0x82B782E9, 0x82C68358, 0x83738393, 0x81490000
 };
-const unk32 lbl_803DFF24[7] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFF24[7] = {
     0x93AA82CC, 0x8FE382C9, 0x837C8393, 0x837682F0, 0x82C282AF, 0x81418379, 0x00000000
 };
-const unk32 lbl_803DFF40[6] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803DFF40[6] = {
     0x8393834C, 0x949A9265, 0x82F094AD, 0x8ECB82B5, 0x82DC82B7, 0x81420000
 };
 const unk32 lbl_803DFF58[7] = {
     0x82528CC2, 0x82CC834C, 0x8389815B, 0x82F093AF, 0x8E9E94AD, 0x8ECB8149, 0x00000000
 };
-char * const lbl_803DFF74[316][3] = {
+char * const ItemAliasLocalizedVariant_rodata_803DFF74[316][3] = {
     (char *)&lbl_803DEED0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBB28,
@@ -2022,9 +2022,9 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DEEE8,
     (char *)&lbl_803DEF04,
     (char *)&lbl_803DEF20,
-    (char *)&lbl_803DEF30,
-    (char *)&lbl_803DEF48,
-    (char *)&lbl_803DEF64,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF30,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF48,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF64,
     (char *)&lbl_803DEEE8,
     (char *)&lbl_803DEF04,
     (char *)&lbl_803DEF20,
@@ -2035,103 +2035,103 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DEF04,
     (char *)&lbl_803DEF20,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_803DEFD8,
     (char *)&lbl_803DEFF4,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DF000,
-    (char *)&lbl_803DF018,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF000,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF018,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DF024,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF024,
     (char *)&lbl_806DBB2C,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DF040,
-    (char *)&lbl_803DF05C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF040,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF05C,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DF078,
-    (char *)&lbl_803DF094,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF078,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF094,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DF0AC,
-    (char *)&lbl_803DF0C8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF0AC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF0C8,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DF0E0,
-    (char *)&lbl_803DF0FC,
-    (char *)&lbl_806DBAF0,
-    (char *)&lbl_803DEFC0,
-    (char *)&lbl_806DBB28,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF0E0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF0FC,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBB28,
+    (char *)&lbl_806DBAF0,
+    (char *)&lbl_803DEFC0,
+    (char *)&lbl_806DBB28,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DF118,
-    (char *)&lbl_803DF134,
-    (char *)&lbl_803DF148,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF118,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF134,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF148,
     (char *)&lbl_803DF164,
     (char *)&lbl_806DBB28,
-    (char *)&lbl_803DF148,
-    (char *)&lbl_803DF180,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF148,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF180,
     (char *)&lbl_806DBB2C,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DF19C,
-    (char *)&lbl_803DF1B4,
-    (char *)&lbl_803DF1D0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF1B4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF1D0,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF204,
-    (char *)&lbl_803DF220,
-    (char *)&lbl_803DF238,
-    (char *)&lbl_803DF254,
-    (char *)&lbl_803DF260,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF204,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF220,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF238,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF254,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF260,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF278,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF278,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DF294,
     (char *)&lbl_803DF2B0,
@@ -2140,20 +2140,20 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DF2B0,
     (char *)&lbl_803DF2CC,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF300,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF300,
     (char *)&lbl_806DBB2C,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF31C,
-    (char *)&lbl_803DF338,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF31C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF338,
     (char *)&lbl_803DF34C,
-    (char *)&lbl_803DF360,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF360,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF300,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF300,
     (char *)&lbl_806DBB2C,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF31C,
-    (char *)&lbl_803DF378,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF31C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF378,
     (char *)&lbl_803DF38C,
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
@@ -2161,77 +2161,77 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF3E0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF3E0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF3FC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF3FC,
     (char *)&lbl_806DBB2C,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF418,
-    (char *)&lbl_803DF430,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF418,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF430,
     (char *)&lbl_803DF440,
-    (char *)&lbl_803DF458,
-    (char *)&lbl_803DF474,
-    (char *)&lbl_803DF490,
-    (char *)&lbl_803DF4A4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF458,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF474,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF490,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF4A4,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DF440,
-    (char *)&lbl_803DF458,
-    (char *)&lbl_803DF4C0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF458,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF4C0,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF4DC,
-    (char *)&lbl_803DF4F4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF4DC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF4F4,
     (char *)&lbl_803DF38C,
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DF510,
-    (char *)&lbl_803DF524,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF510,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF524,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF538,
-    (char *)&lbl_803DF554,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF538,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF554,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF538,
-    (char *)&lbl_803DF554,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF538,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF554,
     (char *)&lbl_803DEEE8,
     (char *)&lbl_803DEF04,
     (char *)&lbl_803DEF20,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF570,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF570,
     (char *)&lbl_806DBB2C,
     (char *)&lbl_803DF38C,
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
     (char *)&lbl_803DF58C,
-    (char *)&lbl_803DF5A0,
-    (char *)&lbl_803DF5BC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF5A0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF5BC,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF5D0,
-    (char *)&lbl_803DF5EC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF5D0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF5EC,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF5F8,
-    (char *)&lbl_803DF614,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF5F8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF614,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBB28,
-    (char *)&lbl_803DF620,
-    (char *)&lbl_803DF63C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF620,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF63C,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF654,
-    (char *)&lbl_803DF670,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF654,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF670,
     (char *)&lbl_803DF440,
-    (char *)&lbl_803DF68C,
-    (char *)&lbl_803DF6A8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF68C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF6A8,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DF58C,
-    (char *)&lbl_803DF6BC,
-    (char *)&lbl_803DF6D8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF6BC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF6D8,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF6F0,
-    (char *)&lbl_803DF70C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF6F0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF70C,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF728,
     (char *)&lbl_806DBAF0,
@@ -2239,41 +2239,41 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF744,
-    (char *)&lbl_803DF760,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF744,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF760,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF76C,
-    (char *)&lbl_803DF788,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF76C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF788,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF79C,
-    (char *)&lbl_803DF7B8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF79C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF7B8,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF7D4,
-    (char *)&lbl_803DF614,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF7D4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF614,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF7F0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF7F0,
     (char *)&lbl_806DBB34,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF80C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF80C,
     (char *)&lbl_806DBB34,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF828,
-    (char *)&lbl_803DF844,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF828,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF844,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF850,
-    (char *)&lbl_803DF86C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF850,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF86C,
     (char *)&lbl_803DF38C,
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
     (char *)&lbl_803DF38C,
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
-    (char *)&lbl_803DF87C,
-    (char *)&lbl_803DF898,
-    (char *)&lbl_803DF8B4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF87C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF898,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF8B4,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
@@ -2296,23 +2296,23 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF8CC,
-    (char *)&lbl_803DF8E8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF8CC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF8E8,
     (char *)&lbl_803DF38C,
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
-    (char *)&lbl_803DF8F8,
-    (char *)&lbl_803DF914,
-    (char *)&lbl_803DF930,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF8F8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF914,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF930,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF300,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF300,
     (char *)&lbl_806DBB2C,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF31C,
-    (char *)&lbl_803DF378,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF31C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF378,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF5D0,
-    (char *)&lbl_803DF5EC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF5D0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF5EC,
     (char *)&lbl_803DF940,
     (char *)&lbl_803DF954,
     (char *)&lbl_806DBB28,
@@ -2320,16 +2320,16 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DF954,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF964,
-    (char *)&lbl_803DEF64,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF964,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF64,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF980,
-    (char *)&lbl_803DF99C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF980,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF99C,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF9B4,
-    (char *)&lbl_803DF9D0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF9B4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF9D0,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF9EC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF9EC,
     (char *)&lbl_806DBB2C,
     (char *)&lbl_803DF38C,
     (char *)&lbl_803DF3A8,
@@ -2338,23 +2338,23 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DFA08,
-    (char *)&lbl_803DFA24,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFA08,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFA24,
     (char *)&lbl_803DF38C,
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
     (char *)&lbl_803DF58C,
-    (char *)&lbl_803DFA40,
-    (char *)&lbl_803DFA5C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFA40,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFA5C,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBB28,
-    (char *)&lbl_803DFA70,
-    (char *)&lbl_803DFA8C,
-    (char *)&lbl_803DF254,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFA70,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFA8C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF254,
     (char *)&lbl_803DFAA8,
     (char *)&lbl_803DFAC0,
     (char *)&lbl_803DFADC,
@@ -2362,14 +2362,14 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DFAC0,
     (char *)&lbl_803DFADC,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DFAF8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFAF8,
     (char *)&lbl_806DBB34,
     (char *)&lbl_803DFB14,
-    (char *)&lbl_803DFB30,
-    (char *)&lbl_803DFB4C,
-    (char *)&lbl_803DFB68,
-    (char *)&lbl_803DFB7C,
-    (char *)&lbl_803DFB98,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFB30,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFB4C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFB68,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFB7C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFB98,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
@@ -2382,47 +2382,47 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803DFBA8,
-    (char *)&lbl_803DFBB8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFBA8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFBB8,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803DFBCC,
-    (char *)&lbl_803DFBB8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFBCC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFBB8,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEF7C,
     (char *)&lbl_803DFBD8,
-    (char *)&lbl_803DFBF0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFBF0,
     (char *)&lbl_806DBB3C,
-    (char *)&lbl_803DFBB8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFBB8,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803DFC04,
-    (char *)&lbl_803DFBB8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFC04,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFBB8,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803DFC10,
-    (char *)&lbl_803DFBB8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFC10,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFBB8,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803DFC1C,
-    (char *)&lbl_803DFBB8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFC1C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFBB8,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803DFC28,
-    (char *)&lbl_803DFBB8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFC28,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFBB8,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803DFC34,
-    (char *)&lbl_803DFBB8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFC34,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFBB8,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803DFC48,
-    (char *)&lbl_803DFBB8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFC48,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFBB8,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803DFC58,
-    (char *)&lbl_803DFBB8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFC58,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFBB8,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803DFC64,
-    (char *)&lbl_803DFBB8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFC64,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFBB8,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803DFC70,
-    (char *)&lbl_803DFBB8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFC70,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFBB8,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DFC84,
-    (char *)&lbl_803DF788,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF788,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DF38C,
     (char *)&lbl_803DF3A8,
@@ -2430,18 +2430,18 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DEEE8,
     (char *)&lbl_803DEF04,
     (char *)&lbl_803DEF20,
-    (char *)&lbl_803DFCA0,
-    (char *)&lbl_803DFCBC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFCA0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFCBC,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
-    (char *)&lbl_803DFCD8,
-    (char *)&lbl_803DFCF4,
-    (char *)&lbl_803DFD10,
-    (char *)&lbl_803DFCD8,
-    (char *)&lbl_803DFCF4,
-    (char *)&lbl_803DFD10,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFCD8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFCF4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFD10,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFCD8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFCF4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFD10,
     (char *)&lbl_803DF38C,
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
@@ -2449,128 +2449,128 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DEF04,
     (char *)&lbl_803DEF20,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DFD1C,
-    (char *)&lbl_803DFD38,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFD1C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFD38,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DFD48,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFD48,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DFD64,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFD64,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DFD7C,
-    (char *)&lbl_803DFD98,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFD7C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFD98,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DFDA8,
-    (char *)&lbl_803DFDC4,
-    (char *)&lbl_803DFDD8,
-    (char *)&lbl_803DFDF4,
-    (char *)&lbl_803DFE10,
-    (char *)&lbl_803DFDD8,
-    (char *)&lbl_803DFE20,
-    (char *)&lbl_803DFE3C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFDA8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFDC4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFDD8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFDF4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFE10,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFDD8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFE20,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFE3C,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DFE4C,
-    (char *)&lbl_803DFE68,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFE4C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFE68,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DFE7C,
-    (char *)&lbl_803DFE98,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFE7C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFE98,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DFEA8,
-    (char *)&lbl_803DFEC4,
-    (char *)&lbl_803DFED4,
-    (char *)&lbl_803DFEF0,
-    (char *)&lbl_803DFF0C,
-    (char *)&lbl_803DFED4,
-    (char *)&lbl_803DFEF0,
-    (char *)&lbl_803DFF0C,
-    (char *)&lbl_803DFF24,
-    (char *)&lbl_803DFF40,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFEA8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFEC4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFED4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFEF0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFF0C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFED4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFEF0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFF0C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFF24,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFF40,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803DFF24,
-    (char *)&lbl_803DFF40,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFF24,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFF40,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF440,
-    (char *)&lbl_803DF458,
-    (char *)&lbl_803DF474,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF458,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF474,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF300,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF300,
     (char *)&lbl_806DBB2C,
     (char *)&lbl_803DF440,
-    (char *)&lbl_803DF68C,
-    (char *)&lbl_803DF6A8,
-    (char *)&lbl_803DF490,
-    (char *)&lbl_803DF4A4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF68C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF6A8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF490,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF4A4,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF31C,
-    (char *)&lbl_803DF378,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF31C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF378,
     (char *)&lbl_803DF440,
-    (char *)&lbl_803DF458,
-    (char *)&lbl_803DF4C0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF458,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF4C0,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF31C,
-    (char *)&lbl_803DF338,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF31C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF338,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF300,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF300,
     (char *)&lbl_806DBB2C,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF728,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF58C,
-    (char *)&lbl_803DF6BC,
-    (char *)&lbl_803DF6D8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF6BC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF6D8,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF3E0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF3E0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF4DC,
-    (char *)&lbl_803DF4F4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF4DC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF4F4,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DFAF8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFAF8,
     (char *)&lbl_806DBB34,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF204,
-    (char *)&lbl_803DF220,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF204,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF220,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF828,
-    (char *)&lbl_803DF844,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF828,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF844,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF80C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF80C,
     (char *)&lbl_806DBB34,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF7F0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF7F0,
     (char *)&lbl_806DBB34,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF278,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF278,
     (char *)&lbl_806DBB28,
-    (char *)&lbl_803DF238,
-    (char *)&lbl_803DF254,
-    (char *)&lbl_803DF260,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF238,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF254,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF260,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF570,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF570,
     (char *)&lbl_806DBB2C,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF5F8,
-    (char *)&lbl_803DF614,
-    (char *)&lbl_803DEF30,
-    (char *)&lbl_803DEF48,
-    (char *)&lbl_803DEF64,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF5F8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF614,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF30,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF48,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF64,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF964,
-    (char *)&lbl_803DEF64,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF964,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF64,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF980,
-    (char *)&lbl_803DF99C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF980,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF99C,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF8CC,
-    (char *)&lbl_803DF8E8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF8CC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF8E8,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF6F0,
-    (char *)&lbl_803DF70C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF6F0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF70C,
     (char *)&lbl_803DF294,
     (char *)&lbl_803DF2B0,
     (char *)&lbl_803DF2CC,
@@ -2584,56 +2584,56 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DFAC0,
     (char *)&lbl_803DFADC,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF9EC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF9EC,
     (char *)&lbl_806DBB2C,
-    (char *)&lbl_803DFB68,
-    (char *)&lbl_803DFB7C,
-    (char *)&lbl_803DFB98,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFB68,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFB7C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFB98,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF5D0,
-    (char *)&lbl_803DF5EC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF5D0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF5EC,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF9B4,
-    (char *)&lbl_803DF9D0,
-    (char *)&lbl_803DFA70,
-    (char *)&lbl_803DFA8C,
-    (char *)&lbl_803DF254,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF9B4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF9D0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFA70,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFA8C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF254,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF7D4,
-    (char *)&lbl_803DF614,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF7D4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF614,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DF040,
-    (char *)&lbl_803DF05C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF040,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF05C,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DF0AC,
-    (char *)&lbl_803DF0C8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF0AC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF0C8,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DF078,
-    (char *)&lbl_803DF094,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF078,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF094,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DF024,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF024,
     (char *)&lbl_806DBB2C,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DF0E0,
-    (char *)&lbl_803DF0FC,
-    (char *)&lbl_803DF148,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF0E0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF0FC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF148,
     (char *)&lbl_803DF164,
     (char *)&lbl_806DBB28,
-    (char *)&lbl_803DF148,
-    (char *)&lbl_803DF180,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF148,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF180,
     (char *)&lbl_806DBB2C,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF744,
-    (char *)&lbl_803DF760,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF744,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF760,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF850,
-    (char *)&lbl_803DF86C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF850,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF86C,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF418,
-    (char *)&lbl_803DF430,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF418,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF430,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBAF0,
@@ -2650,20 +2650,20 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DEF04,
     (char *)&lbl_803DEF20,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF538,
-    (char *)&lbl_803DF554,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF538,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF554,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF538,
-    (char *)&lbl_803DF554,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF538,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF554,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_803DF1E8,
-    (char *)&lbl_803DF654,
-    (char *)&lbl_803DF670,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF654,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF670,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBAF0,
@@ -2674,14 +2674,14 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DEF04,
     (char *)&lbl_803DEF20,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF76C,
-    (char *)&lbl_803DF788,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF76C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF788,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DF510,
-    (char *)&lbl_803DF524,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF510,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF524,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBAF0,
@@ -2695,10 +2695,10 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DFF58,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF3FC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF3FC,
     (char *)&lbl_806DBB2C,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
@@ -2710,13 +2710,13 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DEF04,
     (char *)&lbl_803DEF20,
     (char *)&lbl_803DFB14,
-    (char *)&lbl_803DFB30,
-    (char *)&lbl_803DFB4C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFB30,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFB4C,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
-    (char *)&lbl_803DF620,
-    (char *)&lbl_803DF63C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF620,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF63C,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
@@ -2728,13 +2728,13 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DEF04,
     (char *)&lbl_803DEF20,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DFA08,
-    (char *)&lbl_803DFA24,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFA08,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFA24,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_803DFC84,
-    (char *)&lbl_803DF788,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF788,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
@@ -2746,14 +2746,14 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DEF04,
     (char *)&lbl_803DEF20,
     (char *)&lbl_803DF2E8,
-    (char *)&lbl_803DF79C,
-    (char *)&lbl_803DF7B8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF79C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF7B8,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_803DF58C,
-    (char *)&lbl_803DF5A0,
-    (char *)&lbl_803DF5BC,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF5A0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF5BC,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBAF0,
@@ -2764,14 +2764,14 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DEF04,
     (char *)&lbl_803DEF20,
     (char *)&lbl_803DF34C,
-    (char *)&lbl_803DF360,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF360,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_803DF19C,
-    (char *)&lbl_803DF1B4,
-    (char *)&lbl_803DF1D0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF1B4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF1D0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBAF0,
@@ -2784,15 +2784,15 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DEEE8,
     (char *)&lbl_803DEF04,
     (char *)&lbl_803DEF20,
-    (char *)&lbl_803DF87C,
-    (char *)&lbl_803DF898,
-    (char *)&lbl_803DF8B4,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF87C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF898,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF8B4,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
-    (char *)&lbl_803DF8F8,
-    (char *)&lbl_803DF914,
-    (char *)&lbl_803DF930,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF8F8,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF914,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF930,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBAF0,
@@ -2803,17 +2803,17 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_803DEF04,
     (char *)&lbl_803DEF20,
     (char *)&lbl_803DF58C,
-    (char *)&lbl_803DFA40,
-    (char *)&lbl_803DFA5C,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFA40,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DFA5C,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DEF94,
-    (char *)&lbl_803DEFB0,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEF94,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DEFB0,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DF118,
-    (char *)&lbl_803DF134,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF118,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF134,
     (char *)&lbl_803DEF7C,
-    (char *)&lbl_803DF118,
-    (char *)&lbl_803DF134,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF118,
+    (char *)&ItemAliasLocalizedVariant_rodata_803DF134,
     (char *)&lbl_803DEED0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBB28,
@@ -2947,43 +2947,43 @@ char * const lbl_803DFF74[316][3] = {
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBB28
 };
-const unk32 lbl_803E0E44[5] = {
+const unk32 g_itemAssetTable_EN_rodata_803E0E44[5] = {
     0x918A8EE8, 0x82F082BD, 0x82BD82AB, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803E0E58[7] = {
+const unk32 g_itemAssetTable_EN_rodata_803E0E58[7] = {
     0x8EA995AA, 0x82C98E67, 0x82A489F1, 0x959C8341, 0x83438365, 0x83808142, 0x00000000
 };
-const unk32 lbl_803E0E74[6] = {
+const unk32 g_itemAssetTable_EN_rodata_803E0E74[6] = {
     0x83418343, 0x83658380, 0x8D558C82, 0x82F094BD, 0x8ECB8149, 0x00000000
 };
-const unk32 lbl_803E0E8C[6] = {
+const unk32 g_itemAssetTable_EN_rodata_803E0E8C[6] = {
     0x91E589B9, 0x97CA82C5, 0x834E8389, 0x834E8356, 0x83878393, 0x81490000
 };
-const unk32 lbl_803E0EA4[7] = {
+const unk32 g_itemAssetTable_EN_rodata_803E0EA4[7] = {
     0x8CE382EB, 0x82C9978E, 0x82C682B7, 0x83418343, 0x83658380, 0x81428140, 0x00000000
 };
-const unk32 lbl_803E0EC0[6] = {
+const unk32 g_itemAssetTable_EN_rodata_803E0EC0[6] = {
     0x8CE382EB, 0x82C9837B, 0x838082D6, 0x82A282F0, 0x978E89BA, 0x81490000
 };
-const unk32 lbl_803E0ED8[5] = {
+const unk32 g_itemAssetTable_EN_rodata_803E0ED8[5] = {
     0x82AF82DE, 0x82E882F0, 0x8F6F82B5, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803E0EEC[6] = {
+const unk32 g_itemAssetTable_EN_rodata_803E0EEC[6] = {
     0x915388F5, 0x82C98345, 0x835C82CC, 0x83418389, 0x815B8380, 0x82F00000
 };
-const unk32 lbl_803E0F04[4] = {
+const unk32 g_itemAssetTable_EN_rodata_803E0F04[4] = {
     0x96C282E7, 0x82B582DC, 0x82B78142, 0x00000000
 };
-const unk32 lbl_803E0F14[6] = {
+const unk32 g_itemAssetTable_EN_rodata_803E0F14[6] = {
     0x83418343, 0x83658380, 0x82F082A4, 0x82CE82A2, 0x82DC82B7, 0x81420000
 };
-const unk32 lbl_803E0F2C[5] = {
+const unk32 g_itemAssetTable_EN_rodata_803E0F2C[5] = {
     0x8EA995AA, 0x82C98E67, 0x82A48341, 0x83438365, 0x83800000
 };
-const unk32 lbl_803E0F40[6] = {
+const unk32 g_itemAssetTable_EN_rodata_803E0F40[6] = {
     0x8EA995AA, 0x82C98E67, 0x82A489F1, 0x959C8341, 0x83438365, 0x83800000
 };
-const unk32 lbl_803E0F58[6] = {
+const unk32 g_itemAssetTable_EN_rodata_803E0F58[6] = {
     0x83438365, 0x838082F0, 0x82A482CE, 0x82A282DC, 0x82B78142, 0x00000000
 };
 char * const g_itemAssetTable_EN[316][3] = {
@@ -2991,61 +2991,61 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFD8,
     (char *)&lbl_803DEFF4,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
@@ -3054,7 +3054,7 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DFBD8,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEF7C,
@@ -3093,19 +3093,19 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DF164,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E74,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E74,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
@@ -3117,7 +3117,7 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DF1E8,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E8C,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E8C,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF1E8,
@@ -3198,13 +3198,13 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DF1E8,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0EA4,
+    (char *)&g_itemAssetTable_EN_rodata_803E0EA4,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0EC0,
+    (char *)&g_itemAssetTable_EN_rodata_803E0EC0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF1E8,
@@ -3261,7 +3261,7 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0ED8,
+    (char *)&g_itemAssetTable_EN_rodata_803E0ED8,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
@@ -3336,13 +3336,13 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DF58C,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0EEC,
-    (char *)&lbl_803E0F04,
+    (char *)&g_itemAssetTable_EN_rodata_803E0EEC,
+    (char *)&g_itemAssetTable_EN_rodata_803E0F04,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DFAA8,
     (char *)&lbl_803DFAC0,
@@ -3357,7 +3357,7 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DFB14,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0F14,
+    (char *)&g_itemAssetTable_EN_rodata_803E0F14,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DEED0,
     (char *)&lbl_806DBB28,
@@ -3411,19 +3411,19 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DF440,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0F2C,
+    (char *)&g_itemAssetTable_EN_rodata_803E0F2C,
     (char *)&lbl_806DBB28,
     (char *)&lbl_803DF38C,
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF2E8,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0F40,
+    (char *)&g_itemAssetTable_EN_rodata_803E0F40,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEF7C,
@@ -3435,13 +3435,13 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF2E8,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0F40,
+    (char *)&g_itemAssetTable_EN_rodata_803E0F40,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF1E8,
@@ -3633,10 +3633,10 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF2E8,
@@ -3645,10 +3645,10 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DF2E8,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF1E8,
@@ -3660,13 +3660,13 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF2E8,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF1E8,
@@ -3684,7 +3684,7 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DFF58,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF2E8,
@@ -3696,16 +3696,16 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DFB14,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0EC0,
+    (char *)&g_itemAssetTable_EN_rodata_803E0EC0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
@@ -3714,16 +3714,16 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF2E8,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DFC84,
-    (char *)&lbl_803E0F58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0F58,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEFC0,
@@ -3732,13 +3732,13 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF2E8,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF58C,
@@ -3750,13 +3750,13 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF34C,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF19C,
@@ -3768,16 +3768,16 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0ED8,
+    (char *)&g_itemAssetTable_EN_rodata_803E0ED8,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF440,
@@ -3789,13 +3789,13 @@ char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DF3A8,
     (char *)&lbl_803DF3C4,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E44,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E44,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DF58C,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBAF0,
-    (char *)&lbl_803E0E58,
+    (char *)&g_itemAssetTable_EN_rodata_803E0E58,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_806DBAF0,
     (char *)&lbl_803DEF7C,
@@ -4059,7 +4059,7 @@ const char lbl_803E2508[] = "Broken Wheel+";
 const char lbl_803E2518[] = "Needle Bomb+";
 const char lbl_803E2528[] = "Sticky Oil+";
 const char lbl_803E2534[] = "Thunder Stick+";
-const unk32 lbl_803E2544[4] = {
+const unk32 ItemLocalizedName_rodata_803E2544[4] = {
     0x82736875, 0x6E646572, 0x636C6F75, 0x642B0000
 };
 const char lbl_803E2554[] = "Snow Cloud+";
@@ -4124,7 +4124,7 @@ const char lbl_803E28D4[] = "Monster's Hammer+";
 const char lbl_803E28E8[] = "Flare Ball+";
 const char lbl_803E28F4[] = "Monster Pill+";
 const char lbl_803E2904[] = "Ghost Morph+";
-char * const lbl_803E2914[317] = {
+char * const ItemLocalizedName_rodata_803E2914[317] = {
     (char *)&lbl_806DB9F0,
     (char *)&lbl_806DBB4C,
     (char *)&lbl_806DBB4C,
@@ -4312,7 +4312,7 @@ char * const lbl_803E2914[317] = {
     (char *)&lbl_806DBC64,
     (char *)&lbl_803E2528,
     (char *)&lbl_803E2534,
-    (char *)&lbl_803E2544,
+    (char *)&ItemLocalizedName_rodata_803E2544,
     (char *)&lbl_803E2554,
     (char *)&lbl_803E2560,
     (char *)&lbl_803E2570,
@@ -4544,7 +4544,7 @@ const char lbl_803E342C[] = "Tire slips.";
 const char lbl_803E3438[] = "Tires become ";
 const char lbl_803E3448[] = "slippery.";
 const char lbl_803E3454[] = "Cannot use items";
-const unk32 lbl_803E3468[5] = {
+const unk32 ItemAliasLocalizedVariant_rodata_803E3468[5] = {
     0x44726F70, 0x73206261, 0x636B7761, 0x72648142, 0x00000000
 };
 const char lbl_803E347C[] = "Something comes";
@@ -4611,7 +4611,7 @@ const char lbl_803E3830[] = "shock.  ";
 const char lbl_803E383C[] = "3 Bullet Bill";
 const char lbl_803E384C[] = "Steal rival's";
 const char lbl_803E385C[] = "item with a";
-char * const lbl_803E3868[316][3] = {
+char * const ItemAliasLocalizedVariant_rodata_803E3868[316][3] = {
     (char *)&lbl_803DEED0,
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBB28,
@@ -4951,7 +4951,7 @@ char * const lbl_803E3868[316][3] = {
     (char *)&lbl_803E30A8,
     (char *)&lbl_803E30BC,
     (char *)&lbl_803E30CC,
-    (char *)&lbl_803E3468,
+    (char *)&ItemAliasLocalizedVariant_rodata_803E3468,
     (char *)&lbl_803E347C,
     (char *)&lbl_803E348C,
     (char *)&lbl_803E30A8,
@@ -6538,7 +6538,7 @@ const int lbl_803E56B0[13][6] = {
     { 60, 111, 112, 113, 114, 115 },
     { 60, 116, 117, 118, 119, 120 }
 };
-const int lbl_803E57E8[36] = {
+const int ItemAliasSprite_rodata_803E57E8[36] = {
     5154, 5087, 5088, 5095, 5096, 5098, 5099, 5101,
     5102, 5104, 5105, 5107, 5108, 5110, 5111, 5113,
     5114, 5116, 5117, 5119, 5120, 5122, 5123, 5125,

@@ -429,7 +429,7 @@ const char lbl_8032CAE0[] = "ef_pomp_ink_hit.dat";
 const char lbl_8032CAF4[] = "ef_pomp_ink_tare.dat";
 const char lbl_8032CB0C[] = "at_ef_toonsmoke.dat";
 const char lbl_8032CB20[] = "at_ef_toonsmoke_s.dat";
-const char lbl_8032CB38[300] = {
+const char DbgMenu_rodata_8032CB38[300] = {
     116, 101, 115, 116, 95, 99, 111, 117, 114, 115, 101, 95,
     112, 104, 95, 112, 111, 115, 95, 97, 95, 106, 111, 105,
     110, 116, 0, 0, 116, 101, 115, 116, 95, 99, 111, 117,
@@ -456,7 +456,7 @@ const char lbl_8032CB38[300] = {
     95, 99, 111, 117, 114, 115, 101, 95, 99, 111, 99, 111,
     110, 117, 116, 95, 106, 111, 105, 110, 116, 0, 0, 0
 };
-const JointTable lbl_8032CC64[1] = {
+const JointTable TestMenuJointBrowser_Update_rodata_8032CC64[1] = {
     { { { "movie old", 0, 0 }, { "movie all", 1, -1 }, { "movie cut0", 1, 0 }, { "movie cut1", 1, 1 }, { "movie cut2", 1, 2 }, { "movie cut3", 1, 3 }, { "movie cut4", 1, 4 }, { "movie cut5", 1, 5 }, { "movie cut6", 1, 6 }, { "movie cut7", 1, 7 }, { "movie cut8", 1, 8 }, { "movie cut9", 1, 9 }, { "movie cut10", 1, 10 }, { "movie cut11", 1, 11 }, { "movie cut12", 1, 12 }, { "movie cut13", 1, 13 }, { "movie cut14", 1, 14 }, { "movie cut15", 1, 15 }, { "movie cut16", 1, 16 }, { "movie cut17", 1, 17 }, { "movie cut18", 1, 18 }, { "movie cut19", 1, 19 }, { "movie cut20", 1, 20 }, { "logo nintendo", 2, 0 }, { "logo bng1", 2, 1 }, { "logo namco", 2, 2 }, { "logo bng2", 2, 3 }, { "namcam old", 3, 0 }, { "namcam new", 4, 0 }, { "play 07 short", 5, 0 }, { "play 08 short", 5, 1 }, { "play 07 long", 5, 2 }, { "play 08 long", 5, 3 }, { "how to play", 6, 0 } } }
 };
 const char lbl_8032CF94[] = "00:Spr Viewer";
@@ -476,7 +476,7 @@ const char lbl_8032D04C[] = "clHidaka";
 const char lbl_8032D058[] = "clJobRunner";
 const char lbl_8032D064[] = "tpl2_JP_at_sp_c10_akabei_a.tpl";
 const char lbl_8032D084[] = "tpl2_sp_joutyuu.tpl";
-const char lbl_8032D098[472] = {
+const char DbgScene08_AtrTest_Ctor_rodata_8032D098[472] = {
     105, 116, 95, 119, 95, 48, 52, 95, 101, 102, 102, 101,
     99, 116, 46, 100, 97, 116, 0, 0, 91, 118, 105, 101,
     119, 101, 114, 93, 0, 0, 0, 0, 109, 111, 118, 101,
@@ -643,7 +643,7 @@ const char lbl_8032D994[] = "gunya gummi";
 const char lbl_8032D9A0[] = "super star";
 const char lbl_8032D9AC[] = "banana train";
 const char lbl_8032D9BC[] = "no equip";
-const unsigned char lbl_8032D9C8[1020] = {
+const unsigned char GabyouItem_BuildOrUpdateAttachTransform_rodata_8032D9C8[1020] = {
     0x3F, 0x80, 0x0, 0x0, 0x3F, 0x33, 0x33, 0x33, 0x3F, 0x66, 0x66, 0x66,
     0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x43, 0xFA, 0x0, 0x0,
     0x42, 0x85, 0x55, 0x56, 0x44, 0x7A, 0x0, 0x0, 0x42, 0x85, 0x55, 0x56,
@@ -730,19 +730,19 @@ const unsigned char lbl_8032D9C8[1020] = {
     0x45, 0x3B, 0x80, 0x0, 0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x7A, 0x0, 0x0,
     0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x9C, 0x40, 0x0, 0x42, 0xA6, 0xAA, 0xAB
 };
-const Float3 lbl_8032DDC4[1] = {
+const Float3 Item_HomingScanAndSteer_rodata_8032DDC4[1] = {
     { { 15.0f, 15.0f, 50.0f } }
 };
-const Float3 lbl_8032DDD0[3] = {
+const Float3 Item_HomingScanAndSteer_rodata_8032DDD0[3] = {
     { { 0.0f, 1.0f, -1.0f } },
     { { 0.0f, 0.0f, 0.0f } },
     { { 0.0f, 0.0f, 0.0f } }
 };
-const HitVec3 lbl_8032DDF4[1] = {
+const HitVec3 Item_PropagateHitToDriversInRadius_rodata_8032DDF4[1] = {
     { 0.0f, 5.0f, 0.0f }
 };
 /* decl: ItemKindDef */
-const unk32 lbl_8032DE00[152] = {
+const unk32 ItemHitRegistry_AddEntry_rodata_8032DE00[152] = {
     0x0000002D, 0x00000001, 0x00000001, 0x00000002, 0x00000003, 0x00000001, 0x00000032, 0x00000001,
     0x00000001, 0x00000002, 0x00000003, 0xFFFFFFFF, 0x00000033, 0x00000001, 0x00000001, 0x00000002,
     0x00000003, 0xFFFFFFFF, 0x00000034, 0x00000001, 0x00000001, 0x00000002, 0x00000003, 0xFFFFFFFF,
@@ -868,21 +868,21 @@ const char lbl_8032E060[1236] = {
     63, -16, -89, 30, 63, -48, -37, -116, 63, -39, -83, 67,
     63, -39, -83, 67, 63, 99, 90, -122, 63, -128, 0, 0
 };
-const Vec lbl_8032E534[1] = {
+const Vec ItemObject_Tick_Kind29_LightAttachment_rodata_8032E534[1] = {
     { 0.0f, 15.0f, 10.0f }
 };
-const FloatTriple lbl_8032E540[1] = {
+const FloatTriple ItemObject_TickHornBlastShockwave_rodata_8032E540[1] = {
     { { 0.0f, 0.4f, 0.0f } }
 };
 /* decl: FloatTriple */
-const unk32 lbl_8032E54C[40] = {
+const unk32 ItemObject_TickHornBlastShockwave_rodata_8032E54C[40] = {
     0x00000000, 0x40278D34, 0x00000000, 0x6974726D, 0x5F70696E, 0x6B5F6A6F, 0x696E7400, 0x6974726D,
     0x5F6F7261, 0x6E67655F, 0x6A6F696E, 0x74000000, 0x6974726D, 0x5F6D697A, 0x7569726F, 0x5F6A6F69,
     0x6E740000, 0x6974656D, 0x5F6C6967, 0x68745F6A, 0x6F696E74, 0x00000000, 0x6974656D, 0x5F615F6E,
     0x7572755F, 0x6B5F6A6F, 0x696E7400, 0x6974656D, 0x5F625F6E, 0x7572755F, 0x65666665, 0x63745F6A,
     0x6F696E74, 0x00000000, 0x69745F71, 0x5F30305F, 0x63656E74, 0x65725F6A, 0x6F696E74, 0x00000000
 };
-const char lbl_8032E5EC[44] = {
+const char ItemObject_Tick_DispatchcTo15_rodata_8032E5EC[44] = {
     105, 116, 101, 109, 95, 99, 101, 110, 116, 101, 114, 95,
     106, 111, 105, 110, 116, 0, 0, 0, 105, 116, 95, 102,
     95, 48, 49, 95, 99, 101, 110, 116, 101, 114, 95, 106,

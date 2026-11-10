@@ -16,7 +16,7 @@ typedef struct PickupState {
 } PickupState;
 extern int g_gameMode, lbl_806CF110;
 extern unsigned char g_isCommHost, lbl_80598A60[0x4a];
-extern int lbl_803F9D10[39];
+extern int ItemBox_ProcessPickup_data_803F9D10[39];
 extern void *CarObject_GetRenderObj(void *);
 extern int KartMovement_GetCurrentItemId(void *);
 extern unsigned char KartMovement_EquipItem(void *, int);

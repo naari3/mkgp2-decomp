@@ -17,7 +17,7 @@ extern int g_characterId;
 extern unsigned char g_playerData[];
 extern unsigned int lbl_803DC180[6][10];
 extern float lbl_803DC29C[];
-extern char lbl_803DC0C0[];
+extern char ItemSelectState_rodata_803DC0C0[];
 extern const float lbl_806DB88C,lbl_806DB890,lbl_806DB8CC,lbl_806DB900,lbl_806DB924;
 extern const float lbl_806DB928,lbl_806DB92C,lbl_806DB930,lbl_806DB8F0,lbl_806DB910;
 extern const float lbl_806DB8DC,lbl_806DB934,lbl_806DB938,lbl_806DB93C;
@@ -47,7 +47,7 @@ static inline unsigned int MakeCell(unsigned int resource,const float *y) {
  return SpriteHandle_CreateDefault(&cell,6);
 }
 ItemSelectState::ItemSelectState() {
- char *data=lbl_803DC0C0;
+ char *data=ItemSelectState_rodata_803DC0C0;
  iconArray=0;auxBuffer=0;field148=0;field14c=0;resultCode=0;phase=0;doneFlag=0;shownFlag=0;
  for(int i=0;i<9;i++)groups[i]=0;
  for(int i=0;i<66;i++)itemSprites[i]=-1;

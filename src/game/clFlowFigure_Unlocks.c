@@ -7,7 +7,7 @@ typedef struct {
     char pad108[0x118-0x108]; unsigned char second;
 } FigureUnlocks;
 extern unsigned char g_playerData[];
-extern short lbl_8039B218[];
+extern short clFlowFigure_Unlocks_rodata_8039B218[];
 extern void SetCourseParams(int,int,int,int);
 extern unsigned char RoundIsUnlocked(void*,int);
 /* Cup labels and their page/completion variants form blocks of eight IDs. */
@@ -16,7 +16,7 @@ typedef enum {
     FIGURE_LABEL_VARIANT_LAST = 0x1EB9
 } FigureLabelId;
 static inline FigureLabelId FigureLabel(FigureUnlocks* self) {
-    int label = lbl_8039B218[self->cup];
+    int label = clFlowFigure_Unlocks_rodata_8039B218[self->cup];
     int page = self->second == 1 ? 8 : 0;
     return (FigureLabelId)(label + page);
 }
@@ -48,7 +48,7 @@ void fn_801C64DC(FigureUnlocks* self) {
             *self->value=FigureLabel(self)+8;
         } else {
             *self->label=0x175b;
-            *self->value=lbl_8039B218[self->cup];
+            *self->value=clFlowFigure_Unlocks_rodata_8039B218[self->cup];
         }
     }
 }

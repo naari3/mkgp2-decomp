@@ -17,8 +17,8 @@ typedef struct ShellPose {
 } ShellPose;
 
 extern const char lbl_8032E618[];
-extern ShellPose lbl_80420808[];
-extern Vec lbl_80420BB0[2];
+extern ShellPose ItemObject_Tick_DispatchShellGroup_data_80420808[];
+extern Vec ItemObject_Tick_DispatchShellGroup_data_80420BB0[2];
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);
 extern void SpriteSlot_SetMatrixSourceEnabled_WithReseed(void *slot, int en);
 extern void SpriteSlot_SetJointScaleByName(void *slot, const char *name, float x, float y, float z);
@@ -138,7 +138,7 @@ void ItemObject_Tick_DispatchShellGroup(unsigned char *self)
             I(0x10) = 12;
             break;
         }
-        SpriteSlot_InitNonLoop(self + 0x14, lbl_80420808[I(0x10)].anim & 0xFF);
+        SpriteSlot_InitNonLoop(self + 0x14, ItemObject_Tick_DispatchShellGroup_data_80420808[I(0x10)].anim & 0xFF);
         SpriteSlot_SetMatrixSourceEnabled_WithReseed(self + 0x14, 1);
         F(0x2C) = 0.0f;
         ItemTracker_AcquireLock(self);
@@ -162,7 +162,7 @@ void ItemObject_Tick_DispatchShellGroup(unsigned char *self)
         if (P(0x184) != ItemTracker_GetTargetKart(self)) {
             ItemHit_Dispatch(self, 0, 0, 0);
             se = *(Vec *)(self + 0xA0);
-            SoundMgr_PlaySE_Positional(lbl_80420808[I(0x10)].se, &se, 0);
+            SoundMgr_PlaySE_Positional(ItemObject_Tick_DispatchShellGroup_data_80420808[I(0x10)].se, &se, 0);
         }
     }
     if (F(0x100) < 1.0f) {
@@ -233,17 +233,17 @@ void ItemObject_Tick_DispatchShellGroup(unsigned char *self)
     } else {
         self[0x28] = 1;
     }
-    F(0xC4) = lbl_80420808[I(0x10)].scale * KartFxParam_GetConst1p5(P(0x184)) * KartCharacterParam_GetKinopioBoostBonus(P(0x184));
+    F(0xC4) = ItemObject_Tick_DispatchShellGroup_data_80420808[I(0x10)].scale * KartFxParam_GetConst1p5(P(0x184)) * KartCharacterParam_GetKinopioBoostBonus(P(0x184));
     if (F(0x100) < 1.0f) {
         F(0xC4) = F(0xC4) * (1.0f + sinf(3.141592f * F(0x100)));
     }
-    Vec3_Lerp(&lp, lbl_80420808[I(0x10)].far, lbl_80420808[I(0x10)].near, sinf(3.141592f * F(0x100)));
+    Vec3_Lerp(&lp, ItemObject_Tick_DispatchShellGroup_data_80420808[I(0x10)].far, ItemObject_Tick_DispatchShellGroup_data_80420808[I(0x10)].near, sinf(3.141592f * F(0x100)));
     if (*(int *)(P(0x184) + 0x1F8) == 0xC && I(0x8) == 8) {
-        Vec3_Lerp(&lp, lbl_80420BB0[1], lbl_80420BB0[0], sinf(3.141592f * F(0x100)));
+        Vec3_Lerp(&lp, ItemObject_Tick_DispatchShellGroup_data_80420BB0[1], ItemObject_Tick_DispatchShellGroup_data_80420BB0[0], sinf(3.141592f * F(0x100)));
     }
-    rot.x = 0.017453289f * lbl_80420808[I(0x10)].rot.x;
-    rot.y = 0.017453289f * lbl_80420808[I(0x10)].rot.y;
-    rot.z = 0.017453289f * lbl_80420808[I(0x10)].rot.z;
+    rot.x = 0.017453289f * ItemObject_Tick_DispatchShellGroup_data_80420808[I(0x10)].rot.x;
+    rot.y = 0.017453289f * ItemObject_Tick_DispatchShellGroup_data_80420808[I(0x10)].rot.y;
+    rot.z = 0.017453289f * ItemObject_Tick_DispatchShellGroup_data_80420808[I(0x10)].rot.z;
     KartDriver_BuildJoint12EulerTransform(self + 0x14, P(0x184), lp, rot, F(0xC4));
     Mtx44_GetTranslation_RowMajor((Vec *)(self + 0xA0), self + 0x48);
     if (I(0x8) == 0xB) {

@@ -34,25 +34,25 @@ extern void fn_80205DC8();
 extern void fn_80205DCC();
 extern void fn_8020688C();
 extern void fn_802068C4();
-extern char lbl_806D0268[];
+extern char MsgPopup_RTTI_806D0268[];
 extern char lbl_806D0278[];
 extern char lbl_806D0280[];
-extern char lbl_806D0288[];
-extern char lbl_806D0290[];
+extern char data_804EC3E0_data_806D0288[];
+extern char data_804EC3E0_data_806D0290[];
 extern char lbl_806D0298[];
-extern char lbl_806D02A0[];
-extern char lbl_806D02A8[];
-extern char lbl_806D02B0[];
-extern char lbl_806D02B8[];
-extern char lbl_806D02C0[];
-extern char lbl_806D02C8[];
-extern char lbl_806D02D0[];
+extern char FlowTask_RTTI_806D02A0[];
+extern char YesNoTask_RTTI_806D02A8[];
+extern char YesNoButton_RTTI_806D02B0[];
+extern char YesNoCursor_RTTI_806D02B8[];
+extern char YesNoButtonL_RTTI_806D02C0[];
+extern char YesNoButtonR_RTTI_806D02C8[];
+extern char YesNoSpark_RTTI_806D02D0[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804EC3E0[6] = {
-    (void *)&lbl_806D0268,
+void *MsgPopup_vtable_804EC3E0[6] = {
+    (void *)&MsgPopup_RTTI_806D0268,
     0,
     (void *)fn_80203784,
     (void *)fn_8020374C,
@@ -71,13 +71,13 @@ void *lbl_804EC404[5] = {
     (void *)fn_80204324,
     (void *)fn_80204218
 };
-void *lbl_804EC418[3] = {
-    (void *)&lbl_806D0288,
+void *data_804EC3E0_data_804EC418[3] = {
+    (void *)&data_804EC3E0_data_806D0288,
     0,
     0
 };
-void *lbl_804EC424[7] = {
-    (void *)&lbl_806D0290,
+void *FlowTask_vtable_804EC424[7] = {
+    (void *)&data_804EC3E0_data_806D0290,
     0,
     (void *)dtor_802043EC,
     0,
@@ -85,99 +85,99 @@ void *lbl_804EC424[7] = {
     0,
     0
 };
-void *lbl_804EC440[3] = {
+void *FlowTask_data_804EC440[3] = {
     (void *)&lbl_806D0298,
     0,
     0
 };
-void *lbl_804EC44C[5] = {
+void *YesNoTask_data_804EC44C[5] = {
     (void *)&lbl_806D0298,
     0,
-    (void *)&lbl_806D02A0,
+    (void *)&FlowTask_RTTI_806D02A0,
     0,
     0
 };
-void *lbl_804EC460[5] = {
+void *YesNoButton_data_804EC460[5] = {
     (void *)&lbl_806D0298,
     0,
-    (void *)&lbl_806D02A0,
+    (void *)&FlowTask_RTTI_806D02A0,
     0,
     0
 };
-void *lbl_804EC474[5] = {
+void *YesNoCursor_data_804EC474[5] = {
     (void *)&lbl_806D0298,
     0,
-    (void *)&lbl_806D02A0,
+    (void *)&FlowTask_RTTI_806D02A0,
     0,
     0
 };
-void *lbl_804EC488[7] = {
+void *YesNoButtonL_data_804EC488[7] = {
     (void *)&lbl_806D0298,
     0,
-    (void *)&lbl_806D02A0,
+    (void *)&FlowTask_RTTI_806D02A0,
     0,
-    (void *)&lbl_806D02B0,
+    (void *)&YesNoButton_RTTI_806D02B0,
     0,
     0
 };
-void *lbl_804EC4A4[7] = {
+void *YesNoButtonR_data_804EC4A4[7] = {
     (void *)&lbl_806D0298,
     0,
-    (void *)&lbl_806D02A0,
+    (void *)&FlowTask_RTTI_806D02A0,
     0,
-    (void *)&lbl_806D02B0,
+    (void *)&YesNoButton_RTTI_806D02B0,
     0,
     0
 };
-void *lbl_804EC4C0[6] = {
-    (void *)&lbl_806D02A8,
+void *YesNoTask_vtable_804EC4C0[6] = {
+    (void *)&YesNoTask_RTTI_806D02A8,
     0,
     (void *)fn_802047D4,
     (void *)fn_80204740,
     (void *)fn_802044A4,
     (void *)fn_80204474
 };
-void *lbl_804EC4D8[6] = {
-    (void *)&lbl_806D02B8,
+void *YesNoCursor_vtable_804EC4D8[6] = {
+    (void *)&YesNoCursor_RTTI_806D02B8,
     0,
     (void *)fn_802051E8,
     (void *)fn_802051B0,
     (void *)fn_80204F68,
     (void *)fn_80204F38
 };
-void *lbl_804EC4F0[5] = {
+void *YesNoSpark_data_804EC4F0[5] = {
     (void *)&lbl_806D0298,
     0,
-    (void *)&lbl_806D02A0,
+    (void *)&FlowTask_RTTI_806D02A0,
     0,
     0
 };
-void *lbl_804EC504[6] = {
-    (void *)&lbl_806D02D0,
+void *YesNoSpark_vtable_804EC504[6] = {
+    (void *)&YesNoSpark_RTTI_806D02D0,
     0,
     (void *)fn_802054D0,
     (void *)fn_80205498,
     (void *)fn_802052E4,
     (void *)fn_802052E0
 };
-void *lbl_804EC51C[6] = {
-    (void *)&lbl_806D02C8,
+void *YesNoButtonR_vtable_804EC51C[6] = {
+    (void *)&YesNoButtonR_RTTI_806D02C8,
     0,
     (void *)fn_80205B6C,
     (void *)fn_80205B34,
     (void *)fn_802055F4,
     (void *)fn_802055F0
 };
-void *lbl_804EC534[6] = {
-    (void *)&lbl_806D02C0,
+void *YesNoButtonL_vtable_804EC534[6] = {
+    (void *)&YesNoButtonL_RTTI_806D02C0,
     0,
     (void *)fn_802068C4,
     (void *)fn_8020688C,
     (void *)fn_80205DCC,
     (void *)fn_80205DC8
 };
-void *lbl_804EC54C[7] = {
-    (void *)&lbl_806D02B0,
+void *YesNoButton_vtable_804EC54C[7] = {
+    (void *)&YesNoButton_RTTI_806D02B0,
     0,
     (void *)dtor_802070EC,
     0,

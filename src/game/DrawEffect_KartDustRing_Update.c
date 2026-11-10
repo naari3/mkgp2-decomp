@@ -23,9 +23,9 @@ extern const float lbl_806D5720; /* 0.8 */
 extern const float lbl_806D5724; /* 1.2 */
 extern const float lbl_806D5728; /* 0.1 */
 /* The three tiers share the TU's data-section base register. */
-Vec lbl_8041A4D0 = { 1.0f, 1.0f, 1.0f };
-Vec lbl_8041A4DC = { 1.0f, 1.0f, 0.9f };
-Vec lbl_8041A4E8 = { 0.65f, 0.55f, 0.25f };
+Vec DrawEffect_KartDustRing_Update_data_8041A4D0 = { 1.0f, 1.0f, 1.0f };
+Vec DrawEffect_ItemHitOriented_Spawn_data_8041A4DC = { 1.0f, 1.0f, 0.9f };
+Vec DrawEffect_ItemHitOriented_Spawn_data_8041A4E8 = { 0.65f, 0.55f, 0.25f };
 extern int Rand_RangeInt(int lo, int hi);
 extern int Item_AdvanceTrackedHomingState(void *item, Vec *offset, float k);
 
@@ -40,13 +40,13 @@ void DrawEffect_KartDustRing_Update(unsigned char *self)
         VfxSlot_BindResourceEx(SLOT(self), 0x6D, 0);
         switch (S8(0x190)) {
         case 1:
-            Vec3_Copy(V(0x30), &lbl_8041A4D0);
+            Vec3_Copy(V(0x30), &DrawEffect_KartDustRing_Update_data_8041A4D0);
             break;
         case 2:
-            Vec3_Copy(V(0x30), &lbl_8041A4DC);
+            Vec3_Copy(V(0x30), &DrawEffect_ItemHitOriented_Spawn_data_8041A4DC);
             break;
         case 3:
-            Vec3_Copy(V(0x30), &lbl_8041A4E8);
+            Vec3_Copy(V(0x30), &DrawEffect_ItemHitOriented_Spawn_data_8041A4E8);
             break;
         }
         S8(0x28) = 1;
@@ -420,10 +420,10 @@ void DrawEffect_ItemHitOriented_Spawn(Vec *pos, Vec *vel, signed char kind)
             }
             switch (type) {
             case 2:
-                Vec3_Copy((Vec *)(e + 0x120), &lbl_8041A4DC);
+                Vec3_Copy((Vec *)(e + 0x120), &DrawEffect_ItemHitOriented_Spawn_data_8041A4DC);
                 break;
             case 3:
-                Vec3_Copy((Vec *)(e + 0x120), &lbl_8041A4E8);
+                Vec3_Copy((Vec *)(e + 0x120), &DrawEffect_ItemHitOriented_Spawn_data_8041A4E8);
                 break;
             }
         }
@@ -565,13 +565,13 @@ void DrawEffect_ItemHitBurst_Spawn(Vec *pos, Vec *vel, signed char strength)
                 S8(0x193) = 2;
                 switch (ground) {
                 case 1:
-                    Vec3_Copy(V(0x120), &lbl_8041A4D0);
+                    Vec3_Copy(V(0x120), &DrawEffect_KartDustRing_Update_data_8041A4D0);
                     break;
                 case 2:
-                    Vec3_Copy(V(0x120), &lbl_8041A4DC);
+                    Vec3_Copy(V(0x120), &DrawEffect_ItemHitOriented_Spawn_data_8041A4DC);
                     break;
                 case 3:
-                    Vec3_Copy(V(0x120), &lbl_8041A4E8);
+                    Vec3_Copy(V(0x120), &DrawEffect_ItemHitOriented_Spawn_data_8041A4E8);
                     break;
                 }
             }

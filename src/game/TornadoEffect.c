@@ -10,14 +10,14 @@ extern const float lbl_806D28C8; /* 0.0f */
 extern const float lbl_806D28CC; /* 1.0f */
 extern const float lbl_806D28D0;
 extern const float lbl_806D28F8;
-extern unsigned int lbl_802EDC30[];
+extern unsigned int TornadoEffect_rodata_802EDC30[];
 #define TE_F(p, o) (*(float *)((char *)(p) + (o)))
 #define TE_U8(p, o) (*(unsigned char *)((char *)(p) + (o)))
 #define TE_S32(p, o) (*(int *)((char *)(p) + (o)))
 #define TE_PTR(p, o) (*(void **)((char *)(p) + (o)))
 typedef struct { float x, y, z; } TornadoSpawnPos;
 typedef struct { float a0, a1, a2, a3, b0, b1, b2, b3, c0, c1, c2, c3, d0, d1, d2, d3; } TornadoMtx16;
-#define TE_SPAWN_POS (*(const TornadoSpawnPos *)lbl_802EDC30)
+#define TE_SPAWN_POS (*(const TornadoSpawnPos *)TornadoEffect_rodata_802EDC30)
 void DrawEffect_SetBytePairD4D5(void *, signed char, signed char);
 void DrawEffect_SetByte10C(void *, int);
 unsigned int Terrain_ApplyCup2FlagPatch(unsigned int);

@@ -84,10 +84,10 @@ typedef struct CoinState {
 
 
 #define Coin lbl_80690E40
-#define StrBuf lbl_80690E20
-#define Event lbl_80690E30
+#define StrBuf amcoin_bss_80690E20
+#define Event amcoin_bss_80690E30
 #define CoinTable lbl_803F2688
-#define DefaultConfig lbl_803F2668
+#define DefaultConfig amcoin_tail_rodata_803F2668
 
 extern char StrBuf[0x10];
 extern CoinEvent Event;

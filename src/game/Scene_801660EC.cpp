@@ -1,6 +1,6 @@
 /*
  * 0x801660EC..0x801661FC: deleting destructor of the parameter-dump scene
- * (vtable lbl_80490F0C, base chain lbl_8048ED10 -> lbl_8048ECF8). Dumps
+ * (vtable DebugTable163_vtable_80490F0C, base chain lbl_8048ED10 -> lbl_8048ECF8). Dumps
  * the 0x115-entry parameter table before freeing it.
  */
 
@@ -19,7 +19,7 @@ struct ParamDumpScene {
 };
 
 extern "C" {
-extern char lbl_80490F0C[];
+extern char DebugTable163_vtable_80490F0C[];
 extern char lbl_8048ED10[];
 extern char lbl_8048ECF8[];
 extern char lbl_8036A210[];
@@ -36,7 +36,7 @@ ParamDumpScene *fn_801660EC(ParamDumpScene *self, short flag) {
     int i;
 
     if (self) {
-        self->vtable = lbl_80490F0C;
+        self->vtable = DebugTable163_vtable_80490F0C;
         fn_8013DB9C();
         if (self->obj1C) {
             delete self->obj1C;

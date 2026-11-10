@@ -2,8 +2,8 @@
  * Two sprite popup flow tasks @ 0x80250F38..0x80251CD0.
  *
  *   PopupRoot (vtable lbl_8048ECF8, inline) -> PopupTask (vtable lbl_8048ED10, inline)
- *     KindPopup  (vtable lbl_804EF160): resource 0x13A2 + kind, slides two halves together.
- *     FlashPopup (vtable lbl_804EF18C): resource 0x13A6, zoom and fade.
+ *     KindPopup  (vtable KindPopup_vtable_804EF160): resource 0x13A2 + kind, slides two halves together.
+ *     FlashPopup (vtable FlashPopup_vtable_804EF18C): resource 0x13A6, zoom and fade.
  *
  * KindPopup::Draw is the separate fn_80250F34 unit.
  */

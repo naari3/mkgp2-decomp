@@ -6,7 +6,7 @@
 #include "game/autodata.h"
 
 extern char lbl_803DC2C0[];
-extern char lbl_803DC2CC[];
+extern char sdata_806D0728_rodata_803DC2CC[];
 extern char lbl_803DC328[];
 extern char lbl_803DC334[];
 extern char lbl_803DC348[];
@@ -20,7 +20,7 @@ extern char lbl_803EEE58[];
 extern char lbl_803EF408[];
 extern char lbl_803EF418[];
 extern char lbl_803EF42C[];
-extern char lbl_803EF440[];
+extern char sdata_806D0728_rodata_803EF440[];
 extern char lbl_803EF5E0[];
 extern char lbl_803EF5EC[];
 extern char lbl_803EF620[];
@@ -72,132 +72,132 @@ extern char lbl_803F07D8[];
 extern char lbl_803F07EC[];
 extern char lbl_803F0800[];
 extern char lbl_803F0810[];
-extern char lbl_803F08B4[];
+extern char sdata_806D0728_rodata_803F08B4[];
 extern char lbl_803F09C8[];
 extern char lbl_803F09DC[];
 extern char lbl_803F09F0[];
 extern char lbl_803F0A04[];
-extern char lbl_804EE520[];
-extern char lbl_804EE560[];
-extern char lbl_804EE5B0[];
-extern char lbl_804EE638[];
+extern char sdata_806D0728_data_804EE520[];
+extern char sdata_806D0728_data_804EE560[];
+extern char sdata_806D0728_data_804EE5B0[];
+extern char sdata_806D0728_data_804EE638[];
 extern char lbl_804EE680[];
 extern char lbl_804EE6A0[];
 extern char lbl_804EE6D8[];
-extern char lbl_804EE6E4[];
-extern char lbl_804EE6F8[];
-extern char lbl_804EE760[];
-extern char lbl_804EE830[];
+extern char sdata_806D0728_data_804EE6E4[];
+extern char sdata_806D0728_data_804EE6F8[];
+extern char sdata_806D0728_data_804EE760[];
+extern char sdata_806D0728_data_804EE830[];
 extern char lbl_804EE8C8[];
 extern char lbl_804EEA80[];
 extern char lbl_804EEAE0[];
-extern char lbl_804EEB00[];
-extern char lbl_804EEB0C[];
-extern char lbl_804EEB88[];
-extern char lbl_804EEB94[];
-extern char lbl_804EEC10[];
-extern char lbl_804EEC1C[];
-extern char lbl_804EEC98[];
-extern char lbl_804EECD0[];
+extern char sdata_806D0728_data_804EEB00[];
+extern char sdata_806D0728_data_804EEB0C[];
+extern char sdata_806D0728_data_804EEB88[];
+extern char sdata_806D0728_data_804EEB94[];
+extern char sdata_806D0728_data_804EEC10[];
+extern char sdata_806D0728_data_804EEC1C[];
+extern char sdata_806D0728_data_804EEC98[];
+extern char sdata_806D0728_data_804EECD0[];
 extern char lbl_804EED50[];
 extern char lbl_804EED5C[];
 extern char lbl_804EED70[];
 extern char lbl_804EED84[];
 extern char lbl_804EED98[];
-extern char lbl_804EEDAC[];
-extern char lbl_804EEDC8[];
-extern char lbl_804EEE60[];
+extern char sdata_806D0728_data_804EEDAC[];
+extern char sdata_806D0728_data_804EEDC8[];
+extern char sdata_806D0728_data_804EEE60[];
 extern char lbl_804EEE84[];
 extern char lbl_804EEEB0[];
-extern char lbl_804EEEBC[];
-extern char lbl_804EEEF0[];
-extern char lbl_804EEF24[];
+extern char sdata_806D0728_data_804EEEBC[];
+extern char sdata_806D0728_data_804EEEF0[];
+extern char sdata_806D0728_data_804EEF24[];
 extern char lbl_804EEF78[];
 extern char lbl_804EEF84[];
 extern char lbl_804EEF98[];
-extern char lbl_804EEFE4[];
+extern char sdata_806D0728_data_804EEFE4[];
 extern char lbl_804EF018[];
-extern char lbl_804EF024[];
-extern char lbl_804EF038[];
+extern char sdata_806D0728_data_804EF024[];
+extern char sdata_806D0728_data_804EF038[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-int lbl_806D0728 = 81;
-int lbl_806D072C = 88;
-int lbl_806D0730 = 87;
-int lbl_806D0734 = 419;
-float lbl_806D0738 = 1.8e+02f;
-char lbl_806D073C[4] = {
+int ItemSelectState_data_806D0728 = 81;
+int ItemSelectState_data_806D072C = 88;
+int ItemSelectState_data_806D0730 = 87;
+int ItemSelectState_data_806D0734 = 419;
+float ItemSelectState_data_806D0738 = 1.8e+02f;
+char ItemSelectState_data_806D073C[4] = {
     0, 0, 0, 73
 };
-char lbl_806D0740[4] = {
+char ItemSelectState_data_806D0740[4] = {
     0, 0, 1, -88
 };
-char lbl_806D0744[4] = {
+char ItemSelectState_data_806D0744[4] = {
     0, 0, 1, -89
 };
-char lbl_806D0748[4] = {
+char ItemSelectState_data_806D0748[4] = {
     0, 0, 1, -97
 };
-char lbl_806D074C[4] = {
+char ItemSelectState_data_806D074C[4] = {
     0, 0, 1, -97
 };
-char lbl_806D0750[4] = {
+char ItemSelectState_data_806D0750[4] = {
     0, 0, 1, -97
 };
-char lbl_806D0754[4] = {
+char ItemSelectState_data_806D0754[4] = {
     0, 0, 0, -100
 };
-char lbl_806D0758[4] = {
+char clFlowItem_Update_data_806D0758[4] = {
     0, 0, 0, 77
 };
-int lbl_806D075C = 63;
-int lbl_806D0760 = 63;
-int lbl_806D0764 = 421;
-int lbl_806D0768 = 417;
-int lbl_806D076C = 425;
-int lbl_806D0770 = 414;
-int lbl_806D0774 = 414;
-int lbl_806D0778 = 414;
-char lbl_806D077C[4] = {
+int ItemSelectState_data_806D075C = 63;
+int ItemSelectState_data_806D0760 = 63;
+int ItemSelectState_data_806D0764 = 421;
+int ItemSelectState_data_806D0768 = 417;
+int ItemSelectState_data_806D076C = 425;
+int ItemSelectState_data_806D0770 = 414;
+int ItemSelectState_data_806D0774 = 414;
+int ItemSelectState_data_806D0778 = 414;
+char clFlowItem_Init_data_806D077C[4] = {
     0, 0, 0, 74
 };
-char lbl_806D0780[4] = {
+char clFlowItem_Init_data_806D0780[4] = {
     0, 0, 0, 116
 };
-void *lbl_806D0784[2] = {
-    (void *)&lbl_803DC2CC,
+void *data_804EE520_data_806D0784[2] = {
+    (void *)&sdata_806D0728_rodata_803DC2CC,
     0
 };
-void *lbl_806D078C[3] = {
+void *data_804EE520_data_806D078C[3] = {
     (void *)&lbl_803DC2C0,
-    (void *)&lbl_804EE520,
+    (void *)&sdata_806D0728_data_804EE520,
     0
 };
-const char *lbl_806D0798[2] = {
+const char *data_804EE560_data_806D0798[2] = {
     (const char *)&lbl_803DC334, 0
 };
-void *lbl_806D07A0[2] = {
+void *data_804EE560_data_806D07A0[2] = {
     (void *)&lbl_803DC328,
-    (void *)&lbl_804EE560
+    (void *)&sdata_806D0728_data_804EE560
 };
-const char *lbl_806D07A8[2] = {
+const char *data_804EE5A0_data_806D07A8[2] = {
     (const char *)&lbl_803DC348, 0
 };
-const char *lbl_806D07B0[2] = {
+const char *data_804EE5A0_data_806D07B0[2] = {
     (const char *)&lbl_803DC364, 0
 };
-void *lbl_806D07B8[2] = {
+void *data_804EE5A0_data_806D07B8[2] = {
     (void *)&lbl_803DC358,
-    (void *)&lbl_804EE5B0
+    (void *)&sdata_806D0728_data_804EE5B0
 };
-const char *lbl_806D07C0[2] = {
+const char *data_804EE638_data_806D07C0[2] = {
     (const char *)&lbl_803E5D24, 0
 };
-void *lbl_806D07C8[2] = {
+void *data_804EE638_data_806D07C8[2] = {
     (void *)&lbl_803E5D18,
-    (void *)&lbl_804EE638
+    (void *)&sdata_806D0728_data_804EE638
 };
 /* decl: char */
 void *lbl_806D07D0[2] = {
@@ -220,28 +220,28 @@ void *lbl_806D07F0[2] = {
     (void *)&lbl_803EF42C,
     (void *)&lbl_804EE6D8
 };
-void *lbl_806D07F8[2] = {
-    (void *)&lbl_803EF440,
-    (void *)&lbl_804EE6E4
+void *data_804EE680_data_806D07F8[2] = {
+    (void *)&sdata_806D0728_rodata_803EF440,
+    (void *)&sdata_806D0728_data_804EE6E4
 };
-void *lbl_806D0800[2] = {
+void *data_804EE680_data_806D0800[2] = {
     (void *)&lbl_803EF408,
-    (void *)&lbl_804EE6F8
+    (void *)&sdata_806D0728_data_804EE6F8
 };
-const char *lbl_806D0808[2] = {
+const char *data_804EE760_data_806D0808[2] = {
     (const char *)&lbl_803EF5EC, 0
 };
-void *lbl_806D0810[2] = {
+void *data_804EE760_data_806D0810[2] = {
     (void *)&lbl_803EF5E0,
-    (void *)&lbl_804EE760
+    (void *)&sdata_806D0728_data_804EE760
 };
-const char *lbl_806D0818[2] = {
+const char *data_804EE760_data_806D0818[2] = {
     (const char *)&lbl_803EF620, 0
 };
-const char *lbl_806D0820[2] = {
+const char *data_804EE760_data_806D0820[2] = {
     (const char *)&lbl_803EF62C, 0
 };
-const char *lbl_806D0828[2] = {
+const char *data_804EE760_data_806D0828[2] = {
     (const char *)&lbl_803EF63C, 0
 };
 const char *lbl_806D0830[2] = {
@@ -255,9 +255,9 @@ const char *lbl_806D0840[2] = {
     (const char *)&lbl_803EF788, 0
 };
 /* decl: char */
-void *lbl_806D0848[2] = {
+void *HudSelectionUpdate_data_806D0848[2] = {
     (void *)&lbl_803EF77C,
-    (void *)&lbl_804EE830
+    (void *)&sdata_806D0728_data_804EE830
 };
 const char *lbl_806D0850[2] = {
     (const char *)&lbl_803EF79C, 0
@@ -266,7 +266,7 @@ void *lbl_806D0858[2] = {
     (void *)&lbl_803EF7B0,
     (void *)&lbl_804EE8C8
 };
-int lbl_806D0860[1] = {
+int RaceDigits_data_806D0860[1] = {
     0
 };
 const char *lbl_806D0864[2] = {
@@ -287,49 +287,49 @@ void *lbl_806D0880[2] = {
 const char *lbl_806D0888[2] = {
     (const char *)&lbl_803EF870, 0
 };
-void *lbl_806D0890[2] = {
+void *data_804EEAE0_data_806D0890[2] = {
     (void *)&lbl_803EF884,
-    (void *)&lbl_804EEB00
+    (void *)&sdata_806D0728_data_804EEB00
 };
-void *lbl_806D0898[2] = {
+void *data_804EEAE0_data_806D0898[2] = {
     (void *)&lbl_803EF860,
-    (void *)&lbl_804EEB0C
+    (void *)&sdata_806D0728_data_804EEB0C
 };
 const char *lbl_806D08A0[2] = {
     (const char *)&lbl_803EF8A8, 0
 };
-void *lbl_806D08A8[2] = {
+void *data_804EEB88_data_806D08A8[2] = {
     (void *)&lbl_803EF8BC,
-    (void *)&lbl_804EEB88
+    (void *)&sdata_806D0728_data_804EEB88
 };
-void *lbl_806D08B0[2] = {
+void *data_804EEB88_data_806D08B0[2] = {
     (void *)&lbl_803EF898,
-    (void *)&lbl_804EEB94
+    (void *)&sdata_806D0728_data_804EEB94
 };
 const char *lbl_806D08B8[2] = {
     (const char *)&lbl_803EF8E0, 0
 };
-void *lbl_806D08C0[2] = {
+void *data_804EEC10_data_806D08C0[2] = {
     (void *)&lbl_803EF8F4,
-    (void *)&lbl_804EEC10
+    (void *)&sdata_806D0728_data_804EEC10
 };
-void *lbl_806D08C8[2] = {
+void *data_804EEC10_data_806D08C8[2] = {
     (void *)&lbl_803EF8D0,
-    (void *)&lbl_804EEC1C
+    (void *)&sdata_806D0728_data_804EEC1C
 };
-const char *lbl_806D08D0[2] = {
+const char *data_804EEC98_data_806D08D0[2] = {
     (const char *)&lbl_803EF91C, 0
 };
-void *lbl_806D08D8[2] = {
+void *data_804EEC98_data_806D08D8[2] = {
     (void *)&lbl_803EF908,
-    (void *)&lbl_804EEC98
+    (void *)&sdata_806D0728_data_804EEC98
 };
-const char *lbl_806D08E0[2] = {
+const char *data_804EEC98_data_806D08E0[2] = {
     (const char *)&lbl_803EF93C, 0
 };
-void *lbl_806D08E8[2] = {
+void *data_804EEC98_data_806D08E8[2] = {
     (void *)&lbl_803EF930,
-    (void *)&lbl_804EECD0
+    (void *)&sdata_806D0728_data_804EECD0
 };
 const char *lbl_806D08F0[2] = {
     (const char *)&lbl_803EFD20, 0
@@ -359,20 +359,20 @@ void *lbl_806D0918[2] = {
     (void *)&lbl_804EED98
 };
 /* decl: char */
-void *lbl_806D0920[2] = {
+void *CardSetupFlowSelect_data_806D0920[2] = {
     (void *)&lbl_803EFDA4,
-    (void *)&lbl_804EEDAC
+    (void *)&sdata_806D0728_data_804EEDAC
 };
-void *lbl_806D0928[2] = {
+void *CardSetupFlowResult_data_806D0928[2] = {
     (void *)&lbl_803EFDC4,
-    (void *)&lbl_804EEDC8
+    (void *)&sdata_806D0728_data_804EEDC8
 };
-const char *lbl_806D0930[2] = {
+const char *data_804EEE60_data_806D0930[2] = {
     (const char *)&lbl_803EFDD4, 0
 };
-void *lbl_806D0938[2] = {
+void *data_804EEE60_data_806D0938[2] = {
     (void *)&lbl_803EFE30,
-    (void *)&lbl_804EEE60
+    (void *)&sdata_806D0728_data_804EEE60
 };
 void *lbl_806D0940[2] = {
     (void *)&lbl_803EFE3C,
@@ -385,17 +385,17 @@ void *lbl_806D0950[2] = {
     (void *)&lbl_803EFE6C,
     (void *)&lbl_804EEEB0
 };
-void *lbl_806D0958[2] = {
+void *data_804EEE60_data_806D0958[2] = {
     (void *)&lbl_803EFE48,
-    (void *)&lbl_804EEEBC
+    (void *)&sdata_806D0728_data_804EEEBC
 };
-void *lbl_806D0960[2] = {
+void *data_804EEE60_data_806D0960[2] = {
     (void *)&lbl_803EFE7C,
-    (void *)&lbl_804EEEF0
+    (void *)&sdata_806D0728_data_804EEEF0
 };
-void *lbl_806D0968[2] = {
+void *data_804EEE60_data_806D0968[2] = {
     (void *)&lbl_803EFE8C,
-    (void *)&lbl_804EEF24
+    (void *)&sdata_806D0728_data_804EEF24
 };
 char *lbl_806D0970[2] = {
     (char *)&lbl_803F07A4,
@@ -422,9 +422,9 @@ void *lbl_806D0998[2] = {
     (void *)&lbl_803F0800,
     (void *)&lbl_804EEF98
 };
-void *lbl_806D09A0[2] = {
-    (void *)&lbl_803F08B4,
-    (void *)&lbl_804EEFE4
+void *data_804EEFE4_data_806D09A0[2] = {
+    (void *)&sdata_806D0728_rodata_803F08B4,
+    (void *)&sdata_806D0728_data_804EEFE4
 };
 const char *lbl_806D09A8[2] = {
     (const char *)&lbl_803F09DC, 0
@@ -433,13 +433,13 @@ void *lbl_806D09B0[2] = {
     (void *)&lbl_803F09F0,
     (void *)&lbl_804EF018
 };
-void *lbl_806D09B8[2] = {
+void *data_804EEFE4_data_806D09B8[2] = {
     (void *)&lbl_803F0A04,
-    (void *)&lbl_804EF024
+    (void *)&sdata_806D0728_data_804EF024
 };
-void *lbl_806D09C0[2] = {
+void *data_804EEFE4_data_806D09C0[2] = {
     (void *)&lbl_803F09C8,
-    (void *)&lbl_804EF038
+    (void *)&sdata_806D0728_data_804EF038
 };
 int lbl_806D09C8[2] = {
     -1, 0

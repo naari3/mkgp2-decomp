@@ -15,29 +15,29 @@ extern const CoursePropResource lbl_8036D75C[3];
 extern const float lbl_806D8BAC;
 extern int g_longRoundFlag, g_reverseRoundFlag;
 void fn_8016E7E4(void *, void *);
-extern CoursePropData lbl_8036D78C, lbl_8036D7A0, lbl_8036D7B4, lbl_8036D7C8;
-extern CoursePropData lbl_8036D7DC, lbl_8036D7F0, lbl_8036D804, lbl_8036D818;
-extern CoursePropData lbl_8036D82C, lbl_8036D840, lbl_8036D854, lbl_8036D868;
-extern char lbl_806CFA50[], lbl_806CFA58[];
+extern CoursePropData CoursePropCtor_rodata_8036D78C, CoursePropCtor_rodata_8036D7A0, CoursePropCtor_rodata_8036D7B4, CoursePropCtor_rodata_8036D7C8;
+extern CoursePropData CoursePropCtor_rodata_8036D7DC, CoursePropCtor_rodata_8036D7F0, CoursePropCtor_rodata_8036D804, CoursePropCtor_rodata_8036D818;
+extern CoursePropData CoursePropCtor_rodata_8036D82C, CoursePropCtor_rodata_8036D840, CoursePropCtor_rodata_8036D854, CoursePropCtor_rodata_8036D868;
+extern char CoursePropCtor_data_806CFA50[], CoursePropCtor_data_806CFA58[];
 void fn_8016E358();
 void fn_8016E308();
 void fn_8016E1C0();
 void fn_8016A26C();
 }
 static CoursePropData *normalProps[7] = {
-    &lbl_8036D78C, &lbl_8036D7DC, &lbl_8036D82C, &lbl_8036D840,
-    &lbl_8036D854, &lbl_8036D868, 0
+    &CoursePropCtor_rodata_8036D78C, &CoursePropCtor_rodata_8036D7DC, &CoursePropCtor_rodata_8036D82C, &CoursePropCtor_rodata_8036D840,
+    &CoursePropCtor_rodata_8036D854, &CoursePropCtor_rodata_8036D868, 0
 };
 static CoursePropData *reverseProps[7] = {
-    &lbl_8036D7A0, &lbl_8036D7F0, &lbl_8036D82C, &lbl_8036D840,
-    &lbl_8036D854, &lbl_8036D868, 0
+    &CoursePropCtor_rodata_8036D7A0, &CoursePropCtor_rodata_8036D7F0, &CoursePropCtor_rodata_8036D82C, &CoursePropCtor_rodata_8036D840,
+    &CoursePropCtor_rodata_8036D854, &CoursePropCtor_rodata_8036D868, 0
 };
-static CoursePropData *longProps[3] = { &lbl_8036D7B4, &lbl_8036D804, 0 };
-static CoursePropData *longReverseProps[3] = { &lbl_8036D7C8, &lbl_8036D818, 0 };
+static CoursePropData *longProps[3] = { &CoursePropCtor_rodata_8036D7B4, &CoursePropCtor_rodata_8036D804, 0 };
+static CoursePropData *longReverseProps[3] = { &CoursePropCtor_rodata_8036D7C8, &CoursePropCtor_rodata_8036D818, 0 };
 // RTTI hierarchy record followed by the list virtual table.
-static void *propTypeInfo[3] = { lbl_806CFA50, 0, 0 };
+static void *propTypeInfo[3] = { CoursePropCtor_data_806CFA50, 0, 0 };
 static void *propVtable[6] = {
-    lbl_806CFA58, 0, (void *)fn_8016E358, (void *)fn_8016E308,
+    CoursePropCtor_data_806CFA58, 0, (void *)fn_8016E358, (void *)fn_8016E308,
     (void *)fn_8016E1C0, (void *)fn_8016A26C
 };
 

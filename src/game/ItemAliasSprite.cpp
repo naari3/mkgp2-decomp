@@ -15,7 +15,7 @@ extern "C" void fn_8023D458(ItemAliasSprite *self,int item) {
     self->item=item;
     if (!((item>0 && item<0x115) || (item>0x115 && item<0x137))) self->item=0;
     if (item>0x115 && item<0x137) {
-        self->resource=lbl_803E57E8[item-0x115];
+        self->resource=ItemAliasSprite_rodata_803E57E8[item-0x115];
         self->alias=0;
     } else self->resource=ResolveItem(self->item,&self->alias);
 }

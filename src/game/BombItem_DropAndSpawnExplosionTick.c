@@ -29,7 +29,7 @@ typedef struct BombItem {
 } BombItem;
 
 extern unsigned int Effect_KartWaveGlow_Update[];
-extern const Vec lbl_8032FF40;
+extern const Vec BombItem_DropAndSpawnExplosionTick_rodata_8032FF40;
 
 extern DrawEffect *DrawEffect_SpawnDirect(void *update);
 extern void *KartDriver_GetKartRootMtx(void *driver);
@@ -69,7 +69,7 @@ void BombItem_DropAndSpawnExplosionTick(BombItem *self)
                 blast->team = self->team;
                 blast->tag = self->tag;
                 Mtx_TransposeToMtx44(m, KartDriver_GetKartRootMtx(self->driver));
-                Mtx44_TransformVec3(&blast->pos, m, lbl_8032FF40);
+                Mtx44_TransformVec3(&blast->pos, m, BombItem_DropAndSpawnExplosionTick_rodata_8032FF40);
                 blast->owner = self->owner;
                 blast->driver = self->driver;
             }

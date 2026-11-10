@@ -47,7 +47,7 @@ extern int g_gameMode;
 extern unsigned char g_namCamFlag;
 extern unsigned char g_playerData[];
 extern Int4 lbl_803292E0;
-extern Vec lbl_803293D0;
+extern Vec KartPair3ArmUpdate_rodata_803293D0;
 extern Camera lbl_805DF3D0;
 
 extern void CarrotItemEffect_AddDraw(void *self);
@@ -116,7 +116,7 @@ void KartPair3ArmUpdate(unsigned char *self)
         c->skipDelay = 3;
         c->holdDelay = 3;
         for (i = 0; i < 3; i++) {
-            Vec yaw = lbl_803293D0;
+            Vec yaw = KartPair3ArmUpdate_rodata_803293D0;
             c->pos[i].x = 320.0f;
             c->pos[i].y = 240.0f;
             c->yaw[i] = (&yaw.x)[i];

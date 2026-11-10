@@ -1,9 +1,9 @@
 /* BananaField_TestHitBox (0x80196F60): oriented-box test of a point against the kart
- * matrix, using the per-character half extents in lbl_8037D9E0. */
+ * matrix, using the per-character half extents in BananaField_TestHitBox_rodata_8037D9E0. */
 
 #include "game/types/Vec.h"
 
-extern Vec lbl_8037D9E0[];
+extern Vec BananaField_TestHitBox_rodata_8037D9E0[];
 extern const float lbl_806D95B8;
 extern const float lbl_806D95BC;
 extern float Vec3_Dot(const Vec *a, const Vec *b);
@@ -12,7 +12,7 @@ extern void PSVECScale(const Vec *src, Vec *dst, float s);
 
 #pragma exceptions on
 int BananaField_TestHitBox(int chara, float (*mtx)[4], Vec *pos, float radius) {
-    Vec *ext = &lbl_8037D9E0[chara];
+    Vec *ext = &BananaField_TestHitBox_rodata_8037D9E0[chara];
     Vec rel;
     Vec axis;
     float mag;

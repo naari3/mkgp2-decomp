@@ -3,7 +3,7 @@
 /*
  * Continue (insert coin) flow scene @ 0x8024D764..0x8024E338.
  *
- * ContinueScene derives from FlowScene (vtable lbl_804EF000). CoinCounter
+ * ContinueScene derives from FlowScene (vtable ContinueScene_vtable_804EF000). CoinCounter
  * (0x10 bytes) is defined first so CW auto-inlines its methods into the
  * scene; its out-of-line copies are the functions at the end of the range.
  */
@@ -69,7 +69,7 @@ extern int g_roundIndex;
 extern char g_playerData[];
 extern const char lbl_806DC020[4];
 extern const char lbl_803F0848[];
-extern const char lbl_803F0860[];
+extern const char ContinueScene_rodata_803F0860[];
 extern const char lbl_803EFEA0[];
 extern const char *lbl_806D0970[2];
 extern unsigned char lbl_80598A60[];

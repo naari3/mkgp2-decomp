@@ -23,15 +23,15 @@ extern void ItemEffectSpin_Tick();
 extern void ItemState_InitKeyframeBufferAndArm();
 extern void dtor_80052744();
 extern void dtor_80054B2C();
-extern char lbl_803F7820[];
+extern char data_803F7690_data_803F7820[];
 extern char lbl_806CEE10[];
 extern char lbl_806CEE18[];
 extern char lbl_806CEE20[];
-extern char lbl_806CEE28[];
-extern char lbl_806CEE30[];
-extern char lbl_806CEE38[];
-extern char lbl_806CEE40[];
-extern char lbl_806CEE48[];
+extern char data_803F7690_data_806CEE28[];
+extern char data_803F7690_data_806CEE30[];
+extern char data_803F7690_data_806CEE38[];
+extern char data_803F7690_data_806CEE40[];
+extern char data_803F7690_data_806CEE48[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -54,49 +54,49 @@ void *lbl_803F76A8[4] = {
     (void *)CarObjectManager_Dtor,
     0
 };
-void *lbl_803F76B8[3] = {
+void *data_803F7690_data_803F76B8[3] = {
     (void *)&lbl_806CEE20,
     0,
     0
 };
-void *lbl_803F76C4[5] = {
-    (void *)&lbl_806CEE28,
+void *C7Spin_vtable_803F76C4[5] = {
+    (void *)&data_803F7690_data_806CEE28,
     0,
     (void *)ItemState_InitKeyframeBufferAndArm,
     (void *)ItemEffectSpin_Tick,
     (void *)ItemEffectSpin_Dtor
 };
-void *lbl_803F76D8[3] = {
+void *data_803F7690_data_803F76D8[3] = {
     (void *)&lbl_806CEE20,
     0,
     0
 };
-void *lbl_803F76E4[5] = {
-    (void *)&lbl_806CEE30,
+void *C7Damp_vtable_803F76E4[5] = {
+    (void *)&data_803F7690_data_806CEE30,
     0,
     (void *)ItemEffectDamp_Init,
     (void *)ItemEffectDamp_Tick,
     (void *)ItemEffectDamp_Dtor
 };
-void *lbl_803F76F8[3] = {
+void *data_803F7690_data_803F76F8[3] = {
     (void *)&lbl_806CEE20,
     0,
     0
 };
-void *lbl_803F7704[5] = {
-    (void *)&lbl_806CEE38,
+void *C7Jump_vtable_803F7704[5] = {
+    (void *)&data_803F7690_data_806CEE38,
     0,
     (void *)ItemEffectJump_Init,
     (void *)ExplosionTumble_Update,
     (void *)ItemEffectJump_Dtor
 };
-void *lbl_803F7718[3] = {
+void *data_803F7690_data_803F7718[3] = {
     (void *)&lbl_806CEE20,
     0,
     0
 };
-void *lbl_803F7724[5] = {
-    (void *)&lbl_806CEE40,
+void *C7Quake_vtable_803F7724[5] = {
+    (void *)&data_803F7690_data_806CEE40,
     0,
     (void *)ItemEffectQuake_Init,
     (void *)ItemEffectQuake_Tick,
@@ -109,13 +109,13 @@ void *lbl_803F7738[5] = {
     0,
     (void *)dtor_80054B2C
 };
-void *lbl_803F774C[3] = {
+void *data_803F7690_data_803F774C[3] = {
     (void *)&lbl_806CEE20,
     0,
     0
 };
-void *lbl_803F7758[10] = {
-    (void *)&lbl_806CEE48,
+void *C7Impact_vtable_803F7758[10] = {
+    (void *)&data_803F7690_data_806CEE48,
     0,
     (void *)ItemEffectImpact_Init,
     (void *)ItemEffectImpact_Tick,
@@ -127,8 +127,8 @@ void *lbl_803F7758[10] = {
     0
 };
 /* decl: char */
-void *lbl_803F7780[6] = {
-    (void *)&lbl_803F7820,
+void *KartItem_FlushRender_data_803F7780[6] = {
+    (void *)&data_803F7690_data_803F7820,
     (void *)0x800080,
     (void *)0xE,
     0,

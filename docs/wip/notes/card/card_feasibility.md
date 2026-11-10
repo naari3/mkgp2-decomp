@@ -54,7 +54,7 @@ S=ジョブ状態（`'0'` なし、`'2'` 不正コマンド、`'3'` 実行中、
 ビット列は MSB 先頭（バイト 0 の bit7 がビット 0）。VERSION で 3 形式に分岐する:
 
 - **VERSION 2 = MKGP2**（`lbl_8049B6A0`、73 項目、484 bit = 61 バイト使用、残り 8 バイトは 0）
-- **VERSION 0 / 1 = MKGP1 の旧カード**（`lbl_803FED70` / `lbl_803FF0E0`）。MKGP2 は旧カードを読んで変換する (`card_unpack_legacy_dispatch`)。
+- **VERSION 0 / 1 = MKGP1 の旧カード**（`card_unpack_legacy_dispatch_data_803FED70` / `card_unpack_legacy_dispatch_data_803FF0E0`）。MKGP2 は旧カードを読んで変換する (`card_unpack_legacy_dispatch`)。
 
 V2 の主な配置（バイト.ビット）:
 

@@ -28,7 +28,7 @@ extern float Vec3_HorizontalYawTo(Vec *a, Vec *b);
 extern void ItemObject_DispatchVtable1C_IfBoundedItem(void *kart, int state, int arg);
 
 extern unsigned char lbl_80638300[];
-extern Vec lbl_8032FF50;
+extern Vec HandOverItem_HandToHandTick_rodata_8032FF50;
 
 static inline float LerpF(float a, float b, float t)
 {
@@ -144,7 +144,7 @@ void HandOverItem_HandToHandTick(unsigned char *self, unsigned char *sub)
             SF(0x18) = 1.0f;
         }
         SF(0x14) = BuildOrientationFromYaw(0.034906577f + SF(0x14));
-        dir = lbl_8032FF50;
+        dir = HandOverItem_HandToHandTick_rodata_8032FF50;
         Vec2_RotateY(&dir, &dir, 0.785398f * (float)sin(SF(0x14)));
         Vec3_Lerp(sub + 0x34, dir, *(Vec *)(sub + 0x34), SF(0x18));
         Mtx44_TransformVec3(self + 0xA0, m, *(Vec *)(sub + 0x34));

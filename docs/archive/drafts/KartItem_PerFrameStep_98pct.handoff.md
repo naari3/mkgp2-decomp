@@ -195,7 +195,7 @@ void KartItem_PerFrameStep(PfsKartView *self, void *arg) { /* 0x8004C320 size:0x
     float fwdSpeed;
     float t0, t1, t2, t3, t4, t5, t6, t7;
 
-    G.scaled = *(Vec3 *)lbl_802ED9F4;
+    G.scaled = *(Vec3 *)KartItem_PerFrameStep_rodata_802ED9F4;
     G.scaled.x = lbl_806D2730 * self->movement->velX;
     G.scaled.y = lbl_806D2730 * self->movement->velY;
     G.scaled.z = lbl_806D2730 * self->movement->velZ;

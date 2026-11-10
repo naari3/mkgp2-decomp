@@ -1,6 +1,6 @@
 /*
  * 0x8016700C..0x801670FC: child release forwarder, virtual-delete thunk and
- * the deleting destructor of a scene (vtable lbl_80490F9C, base chain
+ * the deleting destructor of a scene (vtable DebugTitle163_vtable_80490F9C, base chain
  * lbl_8048ED10 -> lbl_8048ECF8).
  */
 
@@ -17,7 +17,7 @@ struct Scene8016707C {
 };
 
 extern "C" {
-extern char lbl_80490F9C[];
+extern char DebugTitle163_vtable_80490F9C[];
 extern char lbl_8048ED10[];
 extern char lbl_8048ECF8[];
 extern void fn_80121210(void);
@@ -37,7 +37,7 @@ void fn_80167044(VObj *p) {
 
 Scene8016707C *fn_8016707C(Scene8016707C *self, short flag) {
     if (self) {
-        self->vtable = lbl_80490F9C;
+        self->vtable = DebugTitle163_vtable_80490F9C;
         fn_80121210();
         if (self) {
             self->vtable = lbl_8048ED10;

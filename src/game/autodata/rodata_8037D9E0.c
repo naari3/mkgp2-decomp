@@ -9,7 +9,7 @@
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const Vec lbl_8037D9E0[13] = {
+const Vec BananaField_TestHitBox_rodata_8037D9E0[13] = {
     { 10.0f, 10.0f, 6.0f },
     { 10.0f, 10.0f, 6.0f },
     { 11.0f, 10.0f, 7.0f },

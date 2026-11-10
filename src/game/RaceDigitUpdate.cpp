@@ -20,8 +20,8 @@ static inline void ShowHudSprites(DigitHud &hud, int variant) {
     for(int renderIndex=0;renderIndex<4;renderIndex++) {
         float x;
         float y;
-        y=lbl_803EF7C0[variant][renderIndex].y;
-        x=lbl_803EF7C0[variant][renderIndex].x-hud.offset;
+        y=RaceDigitUpdate_rodata_803EF7C0[variant][renderIndex].y;
+        x=RaceDigitUpdate_rodata_803EF7C0[variant][renderIndex].x-hud.offset;
         fn_8011F744(hud.sprites[renderIndex],hud.scale,hud.scale);
         SpriteHandle_SetActiveFlag(hud.sprites[renderIndex],1);
         fn_8011F804(hud.sprites[renderIndex],x,y);

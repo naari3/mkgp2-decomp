@@ -7,8 +7,8 @@
  * Card / continue flow scenes @ 0x801FC1E0..0x801FD320.
  *
  * FlowScene (ctor fn_801FD41C, dtor dtor_801FD32C) is the shared base;
- * CardFlowScene (vtable lbl_804EC02C) and CoinFlowScene (vtable
- * lbl_804EBFAC) derive from it. Vtables live in the auto .data blob; the
+ * CardFlowScene (vtable CardFlowScene_vtable_804EC02C) and CoinFlowScene (vtable
+ * CoinFlowScene_vtable_804EBFAC) derive from it. Vtables live in the auto .data blob; the
  * undeclared key virtual keeps CW from emitting them here.
  */
 

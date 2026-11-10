@@ -13,7 +13,7 @@ extern int g_longRoundFlag;
 extern int g_roundIndex;
 }
 
-static const unsigned int lbl_80361970[33] = {
+static const unsigned int CSPartsResultStage_rodata_80361970[33] = {
     0x00000001, 0x00000025, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x3F800000, 0x3F800000, 0x3F800000, 0x00000000, 0x00000002,
     0x0000000F, 0x442A8000, 0x41F00000, 0x3F19999A, 0x3F19999A, 0x00000000,
@@ -103,7 +103,7 @@ clCSPartsResultStage::clCSPartsResultStage() {
     Add(new clCSModel(lbl_80361B84[cup][longRound], 0, 0, lbl_80361A78, 0));
     if (g_roundIndex >= 4 && g_gameMode == 0) {
         PreloadResource(0x15F4);
-        Add(new clCSModel(0x15F4, 0, 0, lbl_80361970, 0));
+        Add(new clCSModel(0x15F4, 0, 0, CSPartsResultStage_rodata_80361970, 0));
     }
 }
 

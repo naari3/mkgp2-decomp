@@ -114,7 +114,7 @@ Cases: tools/patterns/hits.jsonl and the Codex table of docs/regalloc_patterns.m
 | hit | codex:loop | `fn_801CDF10` | e9bb50f9 | 183/183 | 4 | order:store (1) |  |
 | hit | codex:loop | `fn_801DABFC` | fea84a21 | 150/150 | 0 | select:signedness (2) | select:signedness: target `cmplwi` / ours `cmpwi` |
 | hit | codex:loop | `fn_801FDDA4` | bc0de938 | 95/94 | 0 | loop:shape (3), imm (1) | loop:shape: target bgex1 / ours bx1 beqx1 bltx1 cmpwix1 |
-| hit | codex:types | `DrawEffect_Cb_RalySmokeVariant_Tick` | c6d5adb8 | 207/207 | 0 | order:load (1) | order:load: registers are identical too: only the schedule differs; global `lbl_8032A7E0` involved |
+| hit | codex:types | `DrawEffect_Cb_RalySmokeVariant_Tick` | c6d5adb8 | 207/207 | 0 | order:load (1) | order:load: registers are identical too: only the schedule differs; global `DrawEffect_Cb_RalySmokeVariant_Tick_rodata_8032A7E0` involved |
 | hit | codex:types | `VfxSlotMgr_Update` | 563dd718 | 124/124 | 0 | order:store (1), stack:offset (2) |  |
 | hit | codex:types | `fn_8016A854` | da7cd059 | 154/154 | 20 | order:regswap (1) | order:regswap: r30 <-> r31 (or the instructions are swapped) |
 | hit | codex:types | `fn_8017EFFC` | 055c08da | 123/123 | 0 | order:epilogue (1) |  |

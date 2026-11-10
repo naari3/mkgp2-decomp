@@ -4,8 +4,8 @@
 /* ==== pool (tools/data2c.py) ==== */
 extern char lbl_806D3578[];
 extern char lbl_806D3580[];
-static const unsigned int lbl_80317948[255] = { 0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB };
-static const unsigned int lbl_80317D44[3] = { 0x20201125, 0x2D313173, 0x14000000 };
+static const unsigned int Sci2Card_BuildRetryReceiptLine_rodata_80317948[255] = { 0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB };
+static const unsigned int Sci2Card_BuildRetryReceiptLine_rodata_80317D44[3] = { 0x20201125, 0x2D313173, 0x14000000 };
 static const char lbl_80317D50[] = "             %s %s";
 static const char lbl_80317D64[] = "                    %s";
 static const char lbl_80317D7C[] = "              %5d";
@@ -17,8 +17,8 @@ const char *format_p1;
 unsigned char line_p1;
 unsigned char reserved_p1[3];
 } ScoreReceiptFormat_p1;
-static const ScoreReceiptFormat_p1 lbl_80317DB0[10] = {
-    { (const char *)&lbl_80317D44, 0 },
+static const ScoreReceiptFormat_p1 Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[10] = {
+    { (const char *)&Sci2Card_BuildRetryReceiptLine_rodata_80317D44, 0 },
     { (const char *)&lbl_80317D50, 0 },
     { (const char *)&lbl_80317D64, 0 },
     { (const char *)&lbl_80317D7C, 0 },
@@ -29,29 +29,29 @@ static const ScoreReceiptFormat_p1 lbl_80317DB0[10] = {
     { (const char *)&lbl_80317D9C, 7 },
     { (const char *)&lbl_806D3580, 9 }
 };
-static const unsigned int lbl_80317E00[67] = { 0x0000003C, 0x0000003C, 0x0000003D, 0x0000003E, 0x00000046, 0x0000004B, 0x00000050, 0x00000055, 0x0000005A, 0x0000005F, 0x00000064, 0x00000065, 0x0000006A, 0x0000003F, 0x00000040, 0x00000047, 0x0000004C, 0x00000051, 0x00000056, 0x0000005B, 0x00000060, 0x00000066, 0x00000066, 0x0000006B, 0x00000041, 0x00000042, 0x00000048, 0x0000004D, 0x00000052, 0x00000057, 0x0000005C, 0x00000061, 0x00000067, 0x00000067, 0x0000006C, 0x00000043, 0x00000044, 0x00000049, 0x0000004E, 0x00000053, 0x00000058, 0x0000005D, 0x00000062, 0x00000068, 0x00000068, 0x0000006D, 0x00000045, 0x00000045, 0x0000004A, 0x0000004F, 0x00000054, 0x00000059, 0x0000005E, 0x00000063, 0x00000069, 0x00000069, 0x0000006E, 0x0000006F, 0x00000070, 0x00000071, 0x00000072, 0x00000073, 0x00000074, 0x00000075, 0x00000076, 0x00000077, 0x00000078 };
-static const unsigned int lbl_80317F0C[12] = { 0x0000002E, 0x00000030, 0x00000033, 0x0000002F, 0x00000031, 0x00000032, 0x00000034, 0x00000035, 0x00000036, 0x00000039, 0x00000037, 0x00000038 };
-static const unsigned int lbl_80317F3C[7] = { 0x25732573, 0x25738CC2, 0x20202020, 0x20202020, 0x20202020, 0x20202020, 0x20000000 };
-static const unsigned int lbl_80317F58[7] = { 0x25732573, 0x25738CC2, 0x208AEE96, 0x7BB1B2C3, 0xD1B9DEAF, 0xC4814920, 0x20000000 };
-static const unsigned int lbl_80317F74[7] = { 0x25732573, 0x25738CC2, 0x20BADEB0, 0xD9C4DEB1, 0xB2C3D1B9, 0xDEAFC481, 0x49000000 };
-static const unsigned int lbl_80317F90[7] = { 0x25732573, 0x25738CC2, 0x20CCDFD7, 0xBDB1B2C3, 0xD1B9DEAF, 0xC4814920, 0x20000000 };
-static const unsigned int lbl_80317FAC[7] = { 0x25732573, 0x25738CC2, 0x20BDCDDF, 0xBCACD9B1, 0xB2C3D1B9, 0xDEAFC481, 0x49000000 };
-static const unsigned int lbl_80317FC8[7] = { 0x25732573, 0x25738CC2, 0x2081998E, 0x6382E825, 0x738CC281, 0x99202020, 0x20000000 };
-static const unsigned int lbl_80317FE4[7] = { 0x82508250, 0x82558CC2, 0x20819AB1, 0xB2C3D1BA, 0xDDCCDFD8, 0xB0C48149, 0x20000000 };
-static const unsigned int lbl_80318000[7] = { 0x25732573, 0x25738CC2, 0x20C4D8CC, 0xDFD9B1B2, 0xC3D1B9DE, 0xAFC48149, 0x20000000 };
+static const unsigned int Sci2Card_BuildItemGetReceiptLine_rodata_80317E00[67] = { 0x0000003C, 0x0000003C, 0x0000003D, 0x0000003E, 0x00000046, 0x0000004B, 0x00000050, 0x00000055, 0x0000005A, 0x0000005F, 0x00000064, 0x00000065, 0x0000006A, 0x0000003F, 0x00000040, 0x00000047, 0x0000004C, 0x00000051, 0x00000056, 0x0000005B, 0x00000060, 0x00000066, 0x00000066, 0x0000006B, 0x00000041, 0x00000042, 0x00000048, 0x0000004D, 0x00000052, 0x00000057, 0x0000005C, 0x00000061, 0x00000067, 0x00000067, 0x0000006C, 0x00000043, 0x00000044, 0x00000049, 0x0000004E, 0x00000053, 0x00000058, 0x0000005D, 0x00000062, 0x00000068, 0x00000068, 0x0000006D, 0x00000045, 0x00000045, 0x0000004A, 0x0000004F, 0x00000054, 0x00000059, 0x0000005E, 0x00000063, 0x00000069, 0x00000069, 0x0000006E, 0x0000006F, 0x00000070, 0x00000071, 0x00000072, 0x00000073, 0x00000074, 0x00000075, 0x00000076, 0x00000077, 0x00000078 };
+static const unsigned int Sci2Card_BuildItemGetReceiptLine_rodata_80317F0C[12] = { 0x0000002E, 0x00000030, 0x00000033, 0x0000002F, 0x00000031, 0x00000032, 0x00000034, 0x00000035, 0x00000036, 0x00000039, 0x00000037, 0x00000038 };
+static const unsigned int Sci2Card_BuildRetryReceiptLine_rodata_80317F3C[7] = { 0x25732573, 0x25738CC2, 0x20202020, 0x20202020, 0x20202020, 0x20202020, 0x20000000 };
+static const unsigned int Sci2Card_BuildRetryReceiptLine_rodata_80317F58[7] = { 0x25732573, 0x25738CC2, 0x208AEE96, 0x7BB1B2C3, 0xD1B9DEAF, 0xC4814920, 0x20000000 };
+static const unsigned int Sci2Card_BuildRetryReceiptLine_rodata_80317F74[7] = { 0x25732573, 0x25738CC2, 0x20BADEB0, 0xD9C4DEB1, 0xB2C3D1B9, 0xDEAFC481, 0x49000000 };
+static const unsigned int Sci2Card_BuildRetryReceiptLine_rodata_80317F90[7] = { 0x25732573, 0x25738CC2, 0x20CCDFD7, 0xBDB1B2C3, 0xD1B9DEAF, 0xC4814920, 0x20000000 };
+static const unsigned int Sci2Card_BuildRetryReceiptLine_rodata_80317FAC[7] = { 0x25732573, 0x25738CC2, 0x20BDCDDF, 0xBCACD9B1, 0xB2C3D1B9, 0xDEAFC481, 0x49000000 };
+static const unsigned int Sci2Card_BuildRetryReceiptLine_rodata_80317FC8[7] = { 0x25732573, 0x25738CC2, 0x2081998E, 0x6382E825, 0x738CC281, 0x99202020, 0x20000000 };
+static const unsigned int Sci2Card_BuildRetryReceiptLine_rodata_80317FE4[7] = { 0x82508250, 0x82558CC2, 0x20819AB1, 0xB2C3D1BA, 0xDDCCDFD8, 0xB0C48149, 0x20000000 };
+static const unsigned int Sci2Card_BuildRetryReceiptLine_rodata_80318000[7] = { 0x25732573, 0x25738CC2, 0x20C4D8CC, 0xDFD9B1B2, 0xC3D1B9DE, 0xAFC48149, 0x20000000 };
 static const char lbl_8031801C[] = "%s%s%s                   ";
 static const char lbl_80318038[] = "%s%s%s Basic Item Get!   ";
 static const char lbl_80318054[] = "%s%s%s Gold Item Get!    ";
 static const char lbl_80318070[] = "%s%s%s Plus Item Get!    ";
 static const char lbl_8031808C[] = "%s%s%s SP Item Get!      ";
 static const char lbl_803180A8[] = "%s%s%s %s more left      ";
-static const unsigned int lbl_803180C4[7] = { 0x82508250, 0x82552069, 0x74656D20, 0x636F6D70, 0x6C657465, 0x20202020, 0x20000000 };
+static const unsigned int Sci2Card_BuildRetryReceiptLine_rodata_803180C4[7] = { 0x82508250, 0x82552069, 0x74656D20, 0x636F6D70, 0x6C657465, 0x20202020, 0x20000000 };
 static const unsigned int lbl_803180E0[7] = { 0x25732573, 0x25732074, 0x7269706C, 0x65206974, 0x656D2067, 0x65742020, 0x20000000 };
 static const unsigned int lbl_803180FC[3] = { 0x826D8260, 0x826C8262, 0x826E0000 };
-static const unsigned int lbl_80318108[3] = { 0x91CE90ED, 0x838C815B, 0x83580000 };
+static const unsigned int Sci2Card_BuildScoreReceiptLine_rodata_80318108[3] = { 0x91CE90ED, 0x838C815B, 0x83580000 };
 static const unsigned int lbl_80318114[3] = { 0x54455354, 0x20505249, 0x4E540000 };
 static const unsigned int lbl_80318120[6] = { 0x82738264, 0x82728273, 0x8140826F, 0x82718268, 0x826D8273, 0x00000000 };
-static const unsigned int lbl_80318138[78] = { 0x1B67011B, 0x67020000, 0x00000000, 0x001B6707, 0x1B670800, 0x00000000, 0x00001B67, 0x091B670A, 0x00000000, 0x0000001B, 0x670B1B67, 0x0C000000, 0x00000000, 0x1B670D1B, 0x670E0000, 0x00000000, 0x001B670F, 0x1B671000, 0x00000000, 0x00001B67, 0x031B6704, 0x00000000, 0x0000001B, 0x67051B67, 0x06000000, 0x00000000, 0x1B67111B, 0x67120000, 0x00000000, 0x001B6717, 0x1B671800, 0x00000000, 0x00001B67, 0x191B671A, 0x00000000, 0x0000001B, 0x671B1B67, 0x1C000000, 0x00000000, 0x1B671D1B, 0x671E0000, 0x00000000, 0x001B671F, 0x1B672000, 0x00000000, 0x00001B67, 0x131B6714, 0x00000000, 0x0000001B, 0x67151B67, 0x16000000, 0x00000000, 0x1B67211B, 0x67221B67, 0x231B6724, 0x001B6725, 0x1B67261B, 0x67271B67, 0x28001B67, 0x291B672A, 0x1B672B1B, 0x672C001B, 0x672D1B67, 0x2E1B672F, 0x1B673000, 0x1B67311B, 0x67321B67, 0x331B6734, 0x001B6735, 0x1B67361B, 0x67371B67, 0x38001B67, 0x391B673A, 0x1B673B00, 0x0000001B, 0x673C1B67, 0x3D1B673E, 0x00000000 };
+static const unsigned int Sci2Card_GetReceiptStringEntry_rodata_80318138[78] = { 0x1B67011B, 0x67020000, 0x00000000, 0x001B6707, 0x1B670800, 0x00000000, 0x00001B67, 0x091B670A, 0x00000000, 0x0000001B, 0x670B1B67, 0x0C000000, 0x00000000, 0x1B670D1B, 0x670E0000, 0x00000000, 0x001B670F, 0x1B671000, 0x00000000, 0x00001B67, 0x031B6704, 0x00000000, 0x0000001B, 0x67051B67, 0x06000000, 0x00000000, 0x1B67111B, 0x67120000, 0x00000000, 0x001B6717, 0x1B671800, 0x00000000, 0x00001B67, 0x191B671A, 0x00000000, 0x0000001B, 0x671B1B67, 0x1C000000, 0x00000000, 0x1B671D1B, 0x671E0000, 0x00000000, 0x001B671F, 0x1B672000, 0x00000000, 0x00001B67, 0x131B6714, 0x00000000, 0x0000001B, 0x67151B67, 0x16000000, 0x00000000, 0x1B67211B, 0x67221B67, 0x231B6724, 0x001B6725, 0x1B67261B, 0x67271B67, 0x28001B67, 0x291B672A, 0x1B672B1B, 0x672C001B, 0x672D1B67, 0x2E1B672F, 0x1B673000, 0x1B67311B, 0x67321B67, 0x331B6734, 0x001B6735, 0x1B67361B, 0x67371B67, 0x38001B67, 0x391B673A, 0x1B673B00, 0x0000001B, 0x673C1B67, 0x3D1B673E, 0x00000000 };
 
 /* ItemGet receipt tables (.data 0x803FFDF0): defined before the first function so they precede the switch tables. */
 extern const char lbl_806D35D4_p19[3];
@@ -70,10 +70,10 @@ const char *lbl_803FFDF0_p19[10] = {
 lbl_806D3594_p19, lbl_806D3598_p19, lbl_806D359C_p19, lbl_806D35A0_p19, lbl_806D35A4_p19, lbl_806D35A8_p19, lbl_806D35AC_p19, lbl_806D35B0_p19, lbl_806D35B4_p19, lbl_806D35B8_p19
 };
 static const char *receiptEnglish_p19[8] = {
-(*(const char (*)[])&lbl_80317F3C), (*(const char (*)[])&lbl_80317F58), (*(const char (*)[])&lbl_80317F74), (*(const char (*)[])&lbl_80317F90), (*(const char (*)[])&lbl_80317FAC), (*(const char (*)[])&lbl_80317FC8), (*(const char (*)[])&lbl_80317FE4), (*(const char (*)[])&lbl_80318000)
+(*(const char (*)[])&Sci2Card_BuildRetryReceiptLine_rodata_80317F3C), (*(const char (*)[])&Sci2Card_BuildRetryReceiptLine_rodata_80317F58), (*(const char (*)[])&Sci2Card_BuildRetryReceiptLine_rodata_80317F74), (*(const char (*)[])&Sci2Card_BuildRetryReceiptLine_rodata_80317F90), (*(const char (*)[])&Sci2Card_BuildRetryReceiptLine_rodata_80317FAC), (*(const char (*)[])&Sci2Card_BuildRetryReceiptLine_rodata_80317FC8), (*(const char (*)[])&Sci2Card_BuildRetryReceiptLine_rodata_80317FE4), (*(const char (*)[])&Sci2Card_BuildRetryReceiptLine_rodata_80318000)
 };
 static const char *receiptJapanese_p19[8] = {
-(*(const char (*)[])&lbl_8031801C), (*(const char (*)[])&lbl_80318038), (*(const char (*)[])&lbl_80318054), (*(const char (*)[])&lbl_80318070), (*(const char (*)[])&lbl_8031808C), (*(const char (*)[])&lbl_803180A8), (*(const char (*)[])&lbl_803180C4), (*(const char (*)[])&lbl_803180E0)
+(*(const char (*)[])&lbl_8031801C), (*(const char (*)[])&lbl_80318038), (*(const char (*)[])&lbl_80318054), (*(const char (*)[])&lbl_80318070), (*(const char (*)[])&lbl_8031808C), (*(const char (*)[])&lbl_803180A8), (*(const char (*)[])&Sci2Card_BuildRetryReceiptLine_rodata_803180C4), (*(const char (*)[])&lbl_803180E0)
 };
 
 /* ==== game/Sci2Card_BuildRetryReceiptLine.c (0x80094d80) ==== */
@@ -265,7 +265,7 @@ const char *format_p0;
 unsigned char rows_p0;
 unsigned char reserved_p0[3];
 } RetryReceiptFormat_p0;
-static inline const char *Retry_WinLabel_p0(void) { if (isJapanese_p0() == 0) return (const char *)lbl_80318108; return lbl_806D35C8_p0; }
+static inline const char *Retry_WinLabel_p0(void) { if (isJapanese_p0() == 0) return (const char *)Sci2Card_BuildScoreReceiptLine_rodata_80318108; return lbl_806D35C8_p0; }
 static inline char *Retry_WinDigits_p0(void)
 {
 char number_p0[4];
@@ -296,7 +296,7 @@ memset_p0(output_p0, 0, 0x1400);
 switch (line_p0) {
 case 0:
 memset_p0(scratch_p0, 0, 0x200) ;
-sprintf_p0(output_p0, lbl_80317DB0[line_p0].format_p1 , (const char *)lbl_803180FC);
+sprintf_p0(output_p0, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p0].format_p1 , (const char *)lbl_803180FC);
 if (lbl_806D123C_p0 == line_p0) update_p0 = 1 ;
 strcat_p0(output_p0, lbl_806D35BC_p0) ;
 ++line_p0;
@@ -306,7 +306,7 @@ const char *text_p0;
 memset_p0(scratch_p0, 0, 0x200) ;
 if (isJapanese_p0() == 0) text_p0 = Sci2Card_GetReceiptStringEntry_p0(22);
 else text_p0 = Sci2Card_GetReceiptStringEntry_p0(23);
-sprintf_p0(scratch_p0, lbl_80317DB0[line_p0].format_p1 , text_p0, lbl_806D35C0_p0);
+sprintf_p0(scratch_p0, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p0].format_p1 , text_p0, lbl_806D35C0_p0);
 if (lbl_806D123C_p0 == line_p0) update_p0 = 1 ;
 strcat_p0(output_p0, scratch_p0) ;
 strcat_p0(output_p0, lbl_806D35C4_p0);
@@ -317,14 +317,14 @@ case 2:
 memset_p0(scratch_p0, 0, 0x200) ;
 if (lbl_806D123C_p0 == line_p0) update_p0 = 1 ;
 { const char *text_p0 = lbl_806CF0F0_p0[isJapanese_p0()];
-sprintf_p0(scratch_p0, lbl_80317DB0[line_p0].format_p1 , text_p0); }
+sprintf_p0(scratch_p0, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p0].format_p1 , text_p0); }
 strcat_p0(output_p0, scratch_p0) ;
 strcat_p0(output_p0, lbl_806D35BC_p0) ;
 ++line_p0;
 case 3:
 memset_p0(scratch_p0, 0, 0x200) ;
 if (lbl_806D123C_p0 == line_p0) update_p0 = 1 ;
-sprintf_p0(scratch_p0, lbl_80317DB0[line_p0].format_p1 , 99999);
+sprintf_p0(scratch_p0, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p0].format_p1 , 99999);
 strcat_p0(output_p0, scratch_p0) ;
 strcat_p0(output_p0, lbl_806D35BC_p0) ;
 ++line_p0;
@@ -336,7 +336,7 @@ memset_p0(scratch_p0, 0, 0x200) ;
 label_p0 = Retry_WinLabel_p0();
 digits_p0 = Retry_WinDigits_p0();
 suffix_p0 = isJapanese_p0() == 0 ? lbl_806D35D8_p0 : lbl_806D35DC_p0;
-sprintf_p0(scratch_p0, lbl_80317DB0[line_p0].format_p1 , label_p0, digits_p0, suffix_p0);
+sprintf_p0(scratch_p0, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p0].format_p1 , label_p0, digits_p0, suffix_p0);
 if (lbl_806D123C_p0 == line_p0) update_p0 = 1 ;
 strcat_p0(output_p0, scratch_p0) ;
 strcat_p0(output_p0, lbl_806D35BC_p0) ;
@@ -346,14 +346,14 @@ break;
 case 5:
 memset_p0(scratch_p0, 0, 0x200) ;
 if (lbl_806D123C_p0 == line_p0) update_p0 = 1 ;
-sprintf_p0(scratch_p0, lbl_80317DB0[line_p0].format_p1 , (const char *)lbl_80318114);
+sprintf_p0(scratch_p0, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p0].format_p1 , (const char *)lbl_80318114);
 strcat_p0(output_p0, scratch_p0) ;
 strcat_p0(output_p0, lbl_806D35BC_p0) ;
 ++line_p0;
 case 6:
 memset_p0(scratch_p0, 0, 0x200) ;
 if (lbl_806D123C_p0 == line_p0) update_p0 = 1 ;
-sprintf_p0(scratch_p0, lbl_80317DB0[line_p0].format_p1 , (const char *)lbl_80318120);
+sprintf_p0(scratch_p0, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p0].format_p1 , (const char *)lbl_80318120);
 strcat_p0(output_p0, scratch_p0) ;
 strcat_p0(output_p0, lbl_806D35C4_p0);
 ++line_p0;
@@ -365,7 +365,7 @@ a_p0 = Retry_Text_p0(6);
 b_p0 = Retry_Text_p0(0);
 c_p0 = Retry_Text_p0(7);
 d_p0 = Retry_Text_p0(1);
-sprintf_p0(scratch_p0, lbl_80317DB0[line_p0].format_p1 , Sci2Card_GetReceiptStringEntry_p0(18), a_p0, b_p0, c_p0, d_p0);
+sprintf_p0(scratch_p0, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p0].format_p1 , Sci2Card_GetReceiptStringEntry_p0(18), a_p0, b_p0, c_p0, d_p0);
 if (lbl_806D123C_p0 == line_p0) update_p0 = 1 ;
 strcat_p0(output_p0, scratch_p0) ;
 strcat_p0(output_p0, lbl_806D35BC_p0) ;
@@ -379,7 +379,7 @@ a_p0 = Retry_Text_p0(2);
 b_p0 = Retry_Text_p0(3);
 c_p0 = Retry_Text_p0(4);
 d_p0 = Retry_Text_p0(5);
-sprintf_p0(scratch_p0, lbl_80317DB0[line_p0].format_p1 , Sci2Card_GetReceiptStringEntry_p0(19), a_p0, b_p0, c_p0, d_p0);
+sprintf_p0(scratch_p0, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p0].format_p1 , Sci2Card_GetReceiptStringEntry_p0(19), a_p0, b_p0, c_p0, d_p0);
 if (lbl_806D123C_p0 == line_p0) update_p0 = 1 ;
 strcat_p0(output_p0, scratch_p0) ;
 strcat_p0(output_p0, lbl_806D35BC_p0) ;
@@ -398,7 +398,7 @@ break;
 default: return line_p0;
 }
 Sci2Card_SendCmdRegister_p0(card_p0, output_p0,
-(unsigned char)(lbl_80317DB0[line_p0 - 1].line_p1 + 1),
+(unsigned char)(Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p0 - 1].line_p1 + 1),
 finish_p0, update_p0);
 return line_p0;
 }
@@ -500,7 +500,7 @@ memset_p1(output_p1, 0, sizeof(output_p1));
 switch (line_p1) {
 case 0:
 memset_p1(row_p1, 0, sizeof(row_p1));
-sprintf_p1(output_p1, lbl_80317DB0[line_p1].format_p1, &g_playerData_p1);
+sprintf_p1(output_p1, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p1].format_p1, &g_playerData_p1);
 if (lbl_806D123C_p1 == line_p1) highlight_p1 = 1;
 strcat_p1(output_p1, lbl_806D35BC_p1);
 line_p1++;
@@ -512,7 +512,7 @@ sprintf_p1(scratch_p1, lbl_806D35C0_p1);
 const char *text_p1;
 if (isJapanese_p1() == 0) text_p1 = Sci2Card_GetReceiptStringEntry_p1(22);
 else text_p1 = Sci2Card_GetReceiptStringEntry_p1(23);
-sprintf_p1(row_p1, lbl_80317DB0[line_p1].format_p1, text_p1, scratch_p1);
+sprintf_p1(row_p1, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p1].format_p1, text_p1, scratch_p1);
 }
 if (lbl_806D123C_p1 == line_p1) highlight_p1 = 1;
 strcat_p1(output_p1, row_p1);
@@ -526,7 +526,7 @@ if (lbl_806D123C_p1 == line_p1) highlight_p1 = 1;
 const char *title_p1;
 if (g_playerData_p1.hasTitle_p1 == 0) title_p1 = lbl_806D35E4_p1;
 else title_p1 = lbl_806CF0F0_p1[isJapanese_p1()];
-sprintf_p1(row_p1, lbl_80317DB0[line_p1].format_p1, title_p1);
+sprintf_p1(row_p1, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p1].format_p1, title_p1);
 }
 strcat_p1(output_p1, row_p1);
 strcat_p1(output_p1, lbl_806D35BC_p1);
@@ -534,7 +534,7 @@ line_p1++;
 case 3:
 memset_p1(row_p1, 0, sizeof(row_p1));
 if (lbl_806D123C_p1 == line_p1) highlight_p1 = 1;
-sprintf_p1(row_p1, lbl_80317DB0[line_p1].format_p1, GetCoinMilage_p1(&g_playerData_p1));
+sprintf_p1(row_p1, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p1].format_p1, GetCoinMilage_p1(&g_playerData_p1));
 strcat_p1(output_p1, row_p1);
 strcat_p1(output_p1, lbl_806D35BC_p1);
 line_p1++;
@@ -544,10 +544,10 @@ const char *label_p1;
 const char *digits_p1;
 const char *suffix_p1;
 memset_p1(row_p1, 0, sizeof(row_p1));
-label_p1 = isJapanese_p1() == 0 ? (*(const char (*)[])&lbl_80318108) : lbl_806D35C8_p1;
+label_p1 = isJapanese_p1() == 0 ? (*(const char (*)[])&Sci2Card_BuildScoreReceiptLine_rodata_80318108) : lbl_806D35C8_p1;
 digits_p1 = Receipt_WinDigits_p1();
 suffix_p1 = isJapanese_p1() == 0 ? lbl_806D35D8_p1 : lbl_806D35DC_p1;
-sprintf_p1(row_p1, lbl_80317DB0[line_p1].format_p1, label_p1, digits_p1, suffix_p1);
+sprintf_p1(row_p1, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p1].format_p1, label_p1, digits_p1, suffix_p1);
 if (lbl_806D123C_p1 == line_p1) highlight_p1 = 1;
 strcat_p1(output_p1, row_p1);
 strcat_p1(output_p1, lbl_806D35BC_p1);
@@ -562,7 +562,7 @@ void *title_p1 = Receipt_TitleTracker_p1();
 const char *text_p1;
 if (title_p1 == 0) text_p1 = lbl_806D35E4_p1;
 else text_p1 = get_title_name_global_p1(title_p1);
-sprintf_p1(row_p1, lbl_80317DB0[line_p1].format_p1, text_p1);
+sprintf_p1(row_p1, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p1].format_p1, text_p1);
 }
 strcat_p1(output_p1, row_p1);
 strcat_p1(output_p1, lbl_806D35BC_p1);
@@ -570,7 +570,7 @@ line_p1++;
 case 6:
 memset_p1(row_p1, 0, sizeof(row_p1));
 if (lbl_806D123C_p1 == line_p1) highlight_p1 = 1;
-sprintf_p1(row_p1, lbl_80317DB0[line_p1].format_p1, Sci2Card_BuildItemGetReceiptLine_p1());
+sprintf_p1(row_p1, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p1].format_p1, Sci2Card_BuildItemGetReceiptLine_p1());
 strcat_p1(output_p1, row_p1);
 strcat_p1(output_p1, lbl_806D35C4_p1);
 line_p1++;
@@ -593,7 +593,7 @@ a_p1 = Receipt_RankText_p1(ranks_p1[6], mode_p1, 6);
 b_p1 = Receipt_RankText_p1(ranks_p1[0], mode_p1, 0);
 c_p1 = Receipt_RankText_p1(ranks_p1[7], mode_p1, 7);
 d_p1 = Receipt_RankText_p1(ranks_p1[1], mode_p1, 1);
-sprintf_p1(row_p1, lbl_80317DB0[line_p1].format_p1, Sci2Card_GetReceiptStringEntry_p1(key7_p1 * 2 + 16), a_p1, b_p1, c_p1, d_p1);
+sprintf_p1(row_p1, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p1].format_p1, Sci2Card_GetReceiptStringEntry_p1(key7_p1 * 2 + 16), a_p1, b_p1, c_p1, d_p1);
 }
 if (lbl_806D123C_p1 == line_p1) highlight_p1 = 1;
 strcat_p1(output_p1, row_p1);
@@ -618,7 +618,7 @@ a_p1 = Receipt_RankText_p1(ranks_p1[2], mode_p1, 2);
 b_p1 = Receipt_RankText_p1(ranks_p1[3], mode_p1, 3);
 c_p1 = Receipt_RankText_p1(ranks_p1[4], mode_p1, 4);
 d_p1 = Receipt_RankText_p1(ranks_p1[5], mode_p1, 5);
-sprintf_p1(row_p1, lbl_80317DB0[line_p1].format_p1, Sci2Card_GetReceiptStringEntry_p1(key8_p1 * 2 + 17), a_p1, b_p1, c_p1, d_p1);
+sprintf_p1(row_p1, Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p1].format_p1, Sci2Card_GetReceiptStringEntry_p1(key8_p1 * 2 + 17), a_p1, b_p1, c_p1, d_p1);
 }
 if (lbl_806D123C_p1 == line_p1) highlight_p1 = 1;
 strcat_p1(output_p1, row_p1);
@@ -651,7 +651,7 @@ break;
 default:
 return line_p1;
 }
-Sci2Card_SendCmdRegister_p1(card_p1, output_p1, (unsigned char)(lbl_80317DB0[line_p1 - 1].line_p1 + 1), final_p1, highlight_p1);
+Sci2Card_SendCmdRegister_p1(card_p1, output_p1, (unsigned char)(Sci2Card_BuildScoreReceiptLine_rodata_80317DB0[line_p1 - 1].line_p1 + 1), final_p1, highlight_p1);
 return line_p1;
 }
 #pragma use_lmw_stmw reset
@@ -4176,7 +4176,7 @@ signed char alias_p19;
 int source_p19 = ItemAlias_DestToSource_p19(item_p19, (unsigned char *)&alias_p19);
 int i_p19;
 for (i_p19 = 0; i_p19 < 67; i_p19++) {
-if (source_p19 == (*(const int (*)[67])&lbl_80317E00)[i_p19]) return (signed char)alias_p19;
+if (source_p19 == (*(const int (*)[67])&Sci2Card_BuildItemGetReceiptLine_rodata_80317E00)[i_p19]) return (signed char)alias_p19;
 }
 if (alias_p19 == 1) return 2;
 return -1;
@@ -4185,7 +4185,7 @@ static inline unsigned char Receipt_IsSpecialItem_p19(int item_p19)
 {
 int i_p19;
 for (i_p19 = 0; i_p19 < 12; i_p19++) {
-if (item_p19 == (*(const int (*)[12])&lbl_80317F0C)[i_p19]) return 1;
+if (item_p19 == (*(const int (*)[12])&Sci2Card_BuildItemGetReceiptLine_rodata_80317F0C)[i_p19]) return 1;
 }
 return 0;
 }
@@ -4402,7 +4402,7 @@ void * lbl_80401018_p22[64] = { 0, (void *)&lbl_803FFEA8_p22, (void *)&lbl_803FF
 
 char *Sci2Card_GetReceiptStringEntry(int index_p22)
 {
-return (*(char (*)[24][0xD])&lbl_80318138)[index_p22];
+return (*(char (*)[24][0xD])&Sci2Card_GetReceiptStringEntry_rodata_80318138)[index_p22];
 }
 void *CardPrintJob_GetFontPagePayload(int page_p22)
 {

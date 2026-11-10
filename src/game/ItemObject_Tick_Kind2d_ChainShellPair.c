@@ -14,7 +14,7 @@ typedef struct ChainScaleKey {
 } ChainScaleKey;
 
 extern const char lbl_8032EA98[];
-extern ChainScaleKey lbl_80421120[2];
+extern ChainScaleKey ItemObject_Tick_Kind2d_ChainShellPair_data_80421120[2];
 extern void fn_800D748C(unsigned char *self);
 extern unsigned char *ItemObject_AllocFromPool(void (*fn)(unsigned char *));
 extern void SpriteSlot_InitNonLoop(void *slot, int animId);
@@ -210,7 +210,7 @@ void ItemObject_Tick_Kind2d_ChainShellPair(unsigned char *self)
         if (sub->children[i] != 0) {
             sub->children[i][0x28] = self[0x28];
             if (*(signed char *)(sub->children[i] + 0x28)) {
-                k = &lbl_80421120[i];
+                k = &ItemObject_Tick_Kind2d_ChainShellPair_data_80421120[i];
                 s = 1.0f;
                 switch (S8(0x1D)) {
                 case 0:

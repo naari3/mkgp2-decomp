@@ -26,7 +26,7 @@ cross-call reassociation, both documented classes).
       "status": "skipped",
       "src_path": null,
       "objdiff_percent": null,
-      "notes": "precan park, 0 probes. Two documented hard-block classes at once: (1) class-2 frsp store-forward interleave (16-float transform copy stores raw lfs values while the dot product consumes frsp-rounded copies of the same loads - cw132-frsp-store-forward-negative-probes ledger says unreachable from plain C); (2) cross-call product-only-callee-saved (mulli r30,idx,0x18 kept across ItemEffectDamp_TryArm, lbl_802ED7BC base rematerialized per region = TryStartByCategory addressing-reassociation family)."
+      "notes": "precan park, 0 probes. Two documented hard-block classes at once: (1) class-2 frsp store-forward interleave (16-float transform copy stores raw lfs values while the dot product consumes frsp-rounded copies of the same loads - cw132-frsp-store-forward-negative-probes ledger says unreachable from plain C); (2) cross-call product-only-callee-saved (mulli r30,idx,0x18 kept across ItemEffectDamp_TryArm, ItemEffect_Trap_rodata_802ED7BC base rematerialized per region = TryStartByCategory addressing-reassociation family)."
     },
     {
       "addr": "0x80051A70",
@@ -34,7 +34,7 @@ cross-call reassociation, both documented classes).
       "status": "skipped",
       "src_path": null,
       "objdiff_percent": null,
-      "notes": "precan park, 0 probes. Same two classes as Trap: class-2 frsp interleave in the velocity-magnitude block (raw stfs of velX/Y/Z to two stack regions interleaved with frsp-rounded squares) + mulli r31,idx,0x14 kept callee-saved across ItemEffectImpact_TryArm with lbl_802ED5B4 base remat. First normalize block (from arg, no frsp) is solvable with the Explosion sqrtf recipe if the classes ever unlock."
+      "notes": "precan park, 0 probes. Same two classes as Trap: class-2 frsp interleave in the velocity-magnitude block (raw stfs of velX/Y/Z to two stack regions interleaved with frsp-rounded squares) + mulli r31,idx,0x14 kept callee-saved across ItemEffectImpact_TryArm with ItemEffect_Projectile_rodata_802ED5B4 base remat. First normalize block (from arg, no frsp) is solvable with the Explosion sqrtf recipe if the classes ever unlock."
     },
     {
       "addr": "0x80051CB8",
@@ -127,7 +127,7 @@ cross-call reassociation, both documented classes).
 - Trap and Projectile: class-2 frsp interleave spotted in precan (raw stfs +
   frsp-rounded math on the same lfs values) -> 0-probe park per the batch
   precan rules; both ALSO carry the cross-call product-only-callee-saved shape.
-- Explosion's table tail uses the direct symbol lbl_802ED8C4 (the sub-table has
+- Explosion's table tail uses the direct symbol ItemEffect_Explosion_rodata_802ED8C4 (the sub-table has
   its own label), NOT the symbol+const addi form -> not the
   addressing-reassociation class; it indeed matched (IdFlagPair copy).
 - All three effect fns have manual extab with dtor_80036E40 refs (approach B
@@ -145,7 +145,7 @@ decomp value: 6 more fns now have real C.
   `lbl_806D2728;` (retyped from unsigned int for fp use).
 - typedefs: ItemCatEntry20, ItemCatEntry24, IdFlagPair, CarObjAux304View;
   ItemObjectPosView gained velX/velY/velZ at 0xb8..0xc0.
-- `extern ItemCatEntry12 lbl_802ED8C4[];` (moved below the typedef; explosion
+- `extern ItemCatEntry12 ItemEffect_Explosion_rodata_802ED8C4[];` (moved below the typedef; explosion
   table = lbl_802EBA18+0x1eac with its own label).
 - Find-loop signatures retyped in the forward decls to typed entry pointers
   (callers are asm bl only).
@@ -230,7 +230,7 @@ void ItemEffect_Explosion(ItemStateBlock *self, int idx, void *arg) { /* 0x80051
         p.z = fz;
     }
     ShadowBillboard_SetVec3At0x70(bb, &p);
-    *(IdFlagPair *)&self->activeId = *(const IdFlagPair *)&lbl_802ED8C4[idx].valA;
+    *(IdFlagPair *)&self->activeId = *(const IdFlagPair *)&ItemEffect_Explosion_rodata_802ED8C4[idx].valA;
 }
 #pragma exceptions reset
 ```

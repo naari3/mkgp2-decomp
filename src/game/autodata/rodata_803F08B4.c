@@ -8,7 +8,7 @@
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const unk32 lbl_803F08B4[69] = {
+const unk32 sdata_806D0728_rodata_803F08B4[69] = {
     0x636C5273, 0x436F6E74, 0x696E7565, 0x5461736B, 0x00000000, 0x76656374, 0x6F72206C, 0x656E6774,
     0x68206572, 0x726F7200, 0x21737464, 0x3A3A6578, 0x63657074, 0x696F6E21, 0x21737464, 0x3A3A6C6F,
     0x6769635F, 0x6572726F, 0x72212173, 0x74643A3A, 0x6C656E67, 0x74685F65, 0x72726F72, 0x21210000,

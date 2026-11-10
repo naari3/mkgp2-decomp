@@ -1,7 +1,7 @@
 /*
  * 0x8021A7C8..0x8021B568: clCSOrgKartModel, the kart + driver model shown
- * on the result / course select screens (vtable lbl_804EDCFC, base
- * lbl_8048EAE8). One TU, built with -inline deferred and -RTTI on, so the
+ * on the result / course select screens (vtable clCSOrgKartModel_vtable_804EDCFC, base
+ * clCSModelInterface_vtable_8048EAE8). One TU, built with -inline deferred and -RTTI on, so the
  * functions are written in reverse address order (ctor, dtor, Update, Draw).
  * The class action (RTTI + vtable) runs before the deferred ctor is
  * generated, so the ctor reaches the vtable through the .data section anchor

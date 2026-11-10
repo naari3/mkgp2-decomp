@@ -53,253 +53,253 @@ extern char lbl_80357F38[];
 extern char lbl_80357F48[];
 extern char lbl_80357F54[];
 extern char lbl_806CF4A0[];
-extern char lbl_806CF4A8[];
-extern char lbl_806CF4B0[];
+extern char data_8048E200_data_806CF4A8[];
+extern char data_8048E200_data_806CF4B0[];
 extern char lbl_806CF4C4[];
-extern char lbl_806CF4CC[];
-extern char lbl_806CF4D4[];
+extern char data_8048E200_data_806CF4CC[];
+extern char data_8048E200_data_806CF4D4[];
 extern char lbl_806CF4E8[];
-extern char lbl_806CF4F0[];
-extern char lbl_806CF4F8[];
+extern char data_8048E200_data_806CF4F0[];
+extern char data_8048E200_data_806CF4F8[];
 extern char lbl_806CF508[];
-extern char lbl_806CF510[];
-extern char lbl_806CF518[];
+extern char data_8048E200_data_806CF510[];
+extern char data_8048E200_data_806CF518[];
 extern char lbl_806CF530[];
-extern char lbl_806CF538[];
-extern char lbl_806CF540[];
+extern char data_8048E200_data_806CF538[];
+extern char data_8048E200_data_806CF540[];
 extern char lbl_806CF548[];
-extern char lbl_806CF550[];
-extern char lbl_806CF558[];
+extern char data_8048E200_data_806CF550[];
+extern char data_8048E200_data_806CF558[];
 extern char lbl_806CF560[];
-extern char lbl_806CF568[];
+extern char data_8048E200_data_806CF568[];
 extern char lbl_806CF59C[];
-extern char lbl_806CF5A4[];
-extern char lbl_806CF5AC[];
-extern char lbl_806CF5B4[];
-extern char lbl_806CF5BC[];
+extern char data_8048E200_data_806CF5A4[];
+extern char data_8048E200_data_806CF5AC[];
+extern char data_8048E200_data_806CF5B4[];
+extern char data_8048E200_data_806CF5BC[];
 extern char lbl_806CF5C8[];
-extern char lbl_806CF5D0[];
-extern char lbl_806CF5D8[];
-extern char lbl_806CF5E0[];
-extern char lbl_806CF5E8[];
+extern char data_8048E200_data_806CF5D0[];
+extern char data_8048E200_data_806CF5D8[];
+extern char data_8048E200_data_806CF5E0[];
+extern char data_8048E200_data_806CF5E8[];
 extern char lbl_806CF5F4[];
-extern char lbl_806CF5FC[];
-extern char lbl_806CF604[];
+extern char data_8048E200_data_806CF5FC[];
+extern char data_8048E200_data_806CF604[];
 extern char lbl_806CF624[];
-extern char lbl_806CF62C[];
-extern char lbl_806CF634[];
+extern char data_8048E200_data_806CF62C[];
+extern char data_8048E200_data_806CF634[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_8048E200[3] = {
+void *sdata_806CF1C0_data_8048E200[3] = {
     (void *)&lbl_806CF4A0,
     0,
     0
 };
-void *lbl_8048E20C[5] = {
+void *sdata_806CF1C0_data_8048E20C[5] = {
     (void *)&lbl_806CF4A0,
     0,
-    (void *)&lbl_806CF4A8,
+    (void *)&data_8048E200_data_806CF4A8,
     0,
     0
 };
-void *lbl_8048E220[6] = {
-    (void *)&lbl_806CF4B0,
+void *ShellDemoScene_vtable_8048E220[6] = {
+    (void *)&data_8048E200_data_806CF4B0,
     0,
     (void *)fn_801250E8,
     (void *)fn_80124F2C,
     (void *)fn_80125558,
     0
 };
-void *lbl_8048E238[3] = {
+void *sdata_806CF1C0_data_8048E238[3] = {
     (void *)&lbl_806CF4C4,
     0,
     0
 };
-void *lbl_8048E244[5] = {
+void *sdata_806CF1C0_data_8048E244[5] = {
     (void *)&lbl_806CF4C4,
     0,
-    (void *)&lbl_806CF4CC,
+    (void *)&data_8048E200_data_806CF4CC,
     0,
     0
 };
 /* decl: unsigned int */
-void *lbl_8048E258[6] = {
-    (void *)&lbl_806CF4D4,
+void *ChallengeDemoBlock_vtable_8048E258[6] = {
+    (void *)&data_8048E200_data_806CF4D4,
     0,
     (void *)fn_80125B04,
     (void *)fn_80125948,
     (void *)fn_80126728,
     0
 };
-void *lbl_8048E270[3] = {
+void *sdata_806CF1C0_data_8048E270[3] = {
     (void *)&lbl_806CF4E8,
     0,
     0
 };
-void *lbl_8048E27C[5] = {
+void *sdata_806CF1C0_data_8048E27C[5] = {
     (void *)&lbl_806CF4E8,
     0,
-    (void *)&lbl_806CF4F0,
+    (void *)&data_8048E200_data_806CF4F0,
     0,
     0
 };
-void *lbl_8048E290[6] = {
-    (void *)&lbl_806CF4F8,
+void *MapDemoScene_vtable_8048E290[6] = {
+    (void *)&data_8048E200_data_806CF4F8,
     0,
     (void *)fn_80126E6C,
     (void *)fn_80126CC4,
     (void *)fn_801271A0,
     0
 };
-void *lbl_8048E2A8[3] = {
+void *sdata_806CF1C0_data_8048E2A8[3] = {
     (void *)&lbl_806CF508,
     0,
     0
 };
-void *lbl_8048E2B4[5] = {
+void *sdata_806CF1C0_data_8048E2B4[5] = {
     (void *)&lbl_806CF508,
     0,
-    (void *)&lbl_806CF510,
+    (void *)&data_8048E200_data_806CF510,
     0,
     0
 };
-void *lbl_8048E2C8[6] = {
-    (void *)&lbl_806CF518,
+void *RoboDemoScene_vtable_8048E2C8[6] = {
+    (void *)&data_8048E200_data_806CF518,
     0,
     (void *)fn_8012772C,
     (void *)fn_80127584,
     (void *)fn_80127AB8,
     0
 };
-void *lbl_8048E2E0[3] = {
+void *sdata_806CF1C0_data_8048E2E0[3] = {
     (void *)&lbl_806CF530,
     0,
     0
 };
-void *lbl_8048E2EC[5] = {
+void *sdata_806CF1C0_data_8048E2EC[5] = {
     (void *)&lbl_806CF530,
     0,
-    (void *)&lbl_806CF538,
+    (void *)&data_8048E200_data_806CF538,
     0,
     0
 };
-void *lbl_8048E300[6] = {
-    (void *)&lbl_806CF540,
+void *UraDemoScene_vtable_8048E300[6] = {
+    (void *)&data_8048E200_data_806CF540,
     0,
     (void *)fn_80128074,
     (void *)fn_80127ECC,
     (void *)fn_801283C0,
     0
 };
-void *lbl_8048E318[3] = {
+void *sdata_806CF1C0_data_8048E318[3] = {
     (void *)&lbl_806CF548,
     0,
     0
 };
-void *lbl_8048E324[5] = {
+void *sdata_806CF1C0_data_8048E324[5] = {
     (void *)&lbl_806CF548,
     0,
-    (void *)&lbl_806CF550,
+    (void *)&data_8048E200_data_806CF550,
     0,
     0
 };
-void *lbl_8048E338[5] = {
-    (void *)&lbl_806CF558,
+void *NokoNokoChallenge_vtable_8048E338[5] = {
+    (void *)&data_8048E200_data_806CF558,
     0,
     (void *)NokoNokoChallenge_Update,
     (void *)TimeTrial_Render,
     (void *)TimeTrial_Destroy
 };
 /* decl: char / unsigned int / void * */
-void *lbl_8048E34C[5] = {
+void *CoinShotBase_vtable_8048E34C[5] = {
     (void *)&lbl_806CF560,
     0,
     (void *)dtor_8012A5AC,
     0,
     0
 };
-void *lbl_8048E360[3] = {
+void *sdata_806CF1C0_data_8048E360[3] = {
     (void *)&lbl_806CF560,
     0,
     0
 };
-void *lbl_8048E36C[5] = {
-    (void *)&lbl_806CF568,
+void *CoinShots_vtable_8048E36C[5] = {
+    (void *)&data_8048E200_data_806CF568,
     0,
     (void *)fn_8012A52C,
     (void *)fn_8012A22C,
     (void *)fn_8012A070
 };
-void *lbl_8048E380[3] = {
+void *sdata_806CF1C0_data_8048E380[3] = {
     (void *)&lbl_806CF59C,
     0,
     0
 };
-void *lbl_8048E38C[5] = {
+void *sdata_806CF1C0_data_8048E38C[5] = {
     (void *)&lbl_806CF59C,
     0,
-    (void *)&lbl_806CF5A4,
+    (void *)&data_8048E200_data_806CF5A4,
     0,
     0
 };
 /* decl: unsigned int */
 void *vtable[5] = {
-    (void *)&lbl_806CF5AC,
+    (void *)&data_8048E200_data_806CF5AC,
     0,
     (void *)CGameCoin_Update,
     (void *)CGameCoin_Draw,
     (void *)CGameCoin_Destroy
 };
-void *lbl_8048E3B4[3] = {
-    (void *)&lbl_806CF5B4,
+void *sdata_806CF1C0_data_8048E3B4[3] = {
+    (void *)&data_8048E200_data_806CF5B4,
     0,
     0
 };
 /* decl: unsigned int */
-void *lbl_8048E3C0[6] = {
-    (void *)&lbl_806CF5BC,
+void *KPCoinShots_vtable_8048E3C0[6] = {
+    (void *)&data_8048E200_data_806CF5BC,
     0,
     (void *)CoinParticleManager_Destroy,
     (void *)CoinParticle_Update,
     (void *)CoinParticle_Draw,
     0
 };
-void *lbl_8048E3D8[3] = {
+void *sdata_806CF1C0_data_8048E3D8[3] = {
     (void *)&lbl_806CF5C8,
     0,
     0
 };
-void *lbl_8048E3E4[5] = {
+void *sdata_806CF1C0_data_8048E3E4[5] = {
     (void *)&lbl_806CF5C8,
     0,
-    (void *)&lbl_806CF5D0,
+    (void *)&data_8048E200_data_806CF5D0,
     0,
     0
 };
 /* decl: char */
-void *lbl_8048E3F8[5] = {
-    (void *)&lbl_806CF5D8,
+void *SuikaBallMode_vtable_8048E3F8[5] = {
+    (void *)&data_8048E200_data_806CF5D8,
     0,
     (void *)SuikaBall_Update,
     (void *)SuikaBall_Render,
     (void *)fn_80133008
 };
-void *lbl_8048E40C[3] = {
-    (void *)&lbl_806CF5E0,
+void *sdata_806CF1C0_data_8048E40C[3] = {
+    (void *)&data_8048E200_data_806CF5E0,
     0,
     0
 };
-void *lbl_8048E418[6] = {
-    (void *)&lbl_806CF5E8,
+void *SuikaCoinShots_vtable_8048E418[6] = {
+    (void *)&data_8048E200_data_806CF5E8,
     0,
     (void *)fn_80134164,
     (void *)fn_80133E64,
     (void *)fn_80133CA8,
     0
 };
-char *lbl_8048E430[7] = {
+char *BiribiriLand_Init_data_8048E430[7] = {
     (char *)&lbl_80357EFC,
     (char *)&lbl_80357F08,
     (char *)&lbl_80357F18,
@@ -308,41 +308,41 @@ char *lbl_8048E430[7] = {
     (char *)&lbl_80357F48,
     (char *)&lbl_80357F54
 };
-void *lbl_8048E44C[3] = {
+void *sdata_806CF1C0_data_8048E44C[3] = {
     (void *)&lbl_806CF5F4,
     0,
     0
 };
-void *lbl_8048E458[5] = {
+void *sdata_806CF1C0_data_8048E458[5] = {
     (void *)&lbl_806CF5F4,
     0,
-    (void *)&lbl_806CF5FC,
+    (void *)&data_8048E200_data_806CF5FC,
     0,
     0
 };
 /* decl: unsigned int */
-void *lbl_8048E46C[5] = {
-    (void *)&lbl_806CF604,
+void *BiribiriLand_vtable_8048E46C[5] = {
+    (void *)&data_8048E200_data_806CF604,
     0,
     (void *)BiribiriLand_Update,
     (void *)BiribiriLand_Render,
     (void *)BiribiriLand_Destroy
 };
-void *lbl_8048E480[3] = {
+void *sdata_806CF1C0_data_8048E480[3] = {
     (void *)&lbl_806CF624,
     0,
     0
 };
-void *lbl_8048E48C[5] = {
+void *sdata_806CF1C0_data_8048E48C[5] = {
     (void *)&lbl_806CF624,
     0,
-    (void *)&lbl_806CF62C,
+    (void *)&data_8048E200_data_806CF62C,
     0,
     0
 };
 /* decl: unsigned int */
-void *lbl_8048E4A0[6] = {
-    (void *)&lbl_806CF634,
+void *RivalRun_vtable_8048E4A0[6] = {
+    (void *)&data_8048E200_data_806CF634,
     0,
     (void *)RivalRun_Update,
     (void *)RivalRun_Draw,

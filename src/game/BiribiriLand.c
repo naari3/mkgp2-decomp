@@ -32,7 +32,7 @@ void fn_80253448(void *hud, unsigned int mask);
 void fn_802535D4(void *hud);
 void HSD_StateInvalidate(int mask);
 
-extern float lbl_806CF5F0;
+extern float BiribiriLand_Render_data_806CF5F0;
 extern void *lbl_806D109C;
 extern void *lbl_806D10AC;
 extern const float lbl_806D7320;
@@ -48,7 +48,7 @@ typedef struct BiribiriObstacleDesc {
 
 /* --- .rodata of this scene (0x80357B00..0x803580F8) --- */
 /* Table at the start of this scene's .rodata (0x80357B00); no code reference. */
-const float lbl_80357B00[255] = {
+const float BiribiriLand_UpdateObstacles_rodata_80357B00[255] = {
     1.0f, 0.7f, 0.9f,
     0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
     0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f,
@@ -80,7 +80,7 @@ const char lbl_80357F48[] = "obj_UFO.dat";
 const char lbl_80357F54[] = "packland_biribiri.dat";
 
 /* Obstacle gates: two posts, gate yaw, post model, electric pole flag. */
-const BiribiriObstacleDesc lbl_80357F6C[9] = {
+const BiribiriObstacleDesc BiribiriLand_rodata_80357F6C[9] = {
     {{113.0f, 0.0f, -1700.0f}, {-113.0f, 0.0f, -1700.0f}, 0.0f, 0, 0},
     {{113.0f, 0.0f, -3900.0f}, {-113.0f, 0.0f, -3900.0f}, 0.0f, 1, 0},
     {{113.0f, 0.0f, -5800.0f}, {-113.0f, 0.0f, -5800.0f}, 0.0f, 2, 0},
@@ -105,17 +105,17 @@ static inline void BiribiriDrawObstacles(BiribiriObstacles *obs)
     unsigned int i;
 
     for (i = 0; i < 9; i++) {
-        int model = lbl_80357F6C[i].model;
-        float yaw = lbl_80357F6C[i].yaw;
+        int model = BiribiriLand_rodata_80357F6C[i].model;
+        float yaw = BiribiriLand_rodata_80357F6C[i].yaw;
         if (model != 0) {
             yaw += lbl_806D7320;
         }
         Object_SetJObjPositionVec(obs->model[model], &obs->obstacles[i].a);
         Object_SetJObjRotationY(obs->model[model], yaw);
         Object_RenderJObjTree(obs->model[model], 7);
-        if (lbl_80357F6C[i].glow) {
+        if (BiribiriLand_rodata_80357F6C[i].glow) {
             Object_SetJObjPositionX(obs->model[5], obs->obstacles[i].a.x);
-            Object_SetJObjPositionY(obs->model[5], obs->obstacles[i].a.y + lbl_806CF5F0);
+            Object_SetJObjPositionY(obs->model[5], obs->obstacles[i].a.y + BiribiriLand_Render_data_806CF5F0);
             Object_SetJObjField40(obs->model[5], obs->obstacles[i].a.z);
             Object_SetJObjRotationY(obs->model[5], yaw);
             Object_RenderJObjTree(obs->model[5], 7);
@@ -123,9 +123,9 @@ static inline void BiribiriDrawObstacles(BiribiriObstacles *obs)
         Object_SetJObjPositionVec(obs->model[model], &obs->obstacles[i].b);
         Object_SetJObjRotationY(obs->model[model], yaw);
         Object_RenderJObjTree(obs->model[model], 7);
-        if (lbl_80357F6C[i].glow) {
+        if (BiribiriLand_rodata_80357F6C[i].glow) {
             Object_SetJObjPositionX(obs->model[5], obs->obstacles[i].b.x);
-            Object_SetJObjPositionY(obs->model[5], obs->obstacles[i].b.y + lbl_806CF5F0);
+            Object_SetJObjPositionY(obs->model[5], obs->obstacles[i].b.y + BiribiriLand_Render_data_806CF5F0);
             Object_SetJObjField40(obs->model[5], obs->obstacles[i].b.z);
             Object_SetJObjRotationY(obs->model[5], yaw);
             Object_RenderJObjTree(obs->model[5], 7);
@@ -268,8 +268,8 @@ extern const float lbl_806D7338;
 extern const float lbl_806D733C;
 extern const float lbl_806D7340;
 extern const float lbl_806D7344;
-extern Vec lbl_80677C88;
-extern Vec lbl_80677C94;
+extern Vec BiribiriLand_Update_bss_80677C88;
+extern Vec BiribiriLand_Update_bss_80677C94;
 }
 
 static inline unsigned char BiribiriCheckObstacleHit(BiribiriObstacles *obs, Vec *pos)
@@ -359,10 +359,10 @@ extern "C" int BiribiriLand_Update(BiribiriState *self)
             KartMovement_ResetOnGoal(CarObject_GetRenderObj(self->car));
         }
     }
-    CObj_LoadProjMatrix(self->scene, &lbl_80677C88);
-    CObj_ApplyScissor(self->scene, &lbl_80677C94);
+    CObj_LoadProjMatrix(self->scene, &BiribiriLand_Update_bss_80677C88);
+    CObj_ApplyScissor(self->scene, &BiribiriLand_Update_bss_80677C94);
     ItemObjectManager_Update();
-    VfxSlotMgr_Update(lbl_80677C88, lbl_80677C94);
+    VfxSlotMgr_Update(BiribiriLand_Update_bss_80677C88, BiribiriLand_Update_bss_80677C94);
     if (IsRaceStarted() && self->finished == 0 && g_raceTimeRemaining >= 0.0f) {
         g_raceTimeRemaining -= 0.016666668f;
         if (g_raceTimeRemaining < 0.0f) {
@@ -452,15 +452,15 @@ void BiribiriLand_UpdateObstacles(BiribiriObstacles *obs)
             obs->obstacles[i].phase = lbl_806D7330;
         }
         lift = lbl_806D7330;
-        if (lbl_80357F6C[i].glow) {
+        if (BiribiriLand_rodata_80357F6C[i].glow) {
             lift = 5.0f * LUT_Sin12Bit(lbl_806D735C * obs->obstacles[i].phase) + 5.0f;
         }
-        obs->obstacles[i].a.x = lbl_80357F6C[i].a.x;
-        obs->obstacles[i].a.y = lbl_80357F6C[i].a.y;
-        obs->obstacles[i].a.z = lbl_80357F6C[i].a.z;
-        obs->obstacles[i].b.x = lbl_80357F6C[i].b.x;
-        obs->obstacles[i].b.y = lbl_80357F6C[i].b.y;
-        obs->obstacles[i].b.z = lbl_80357F6C[i].b.z;
+        obs->obstacles[i].a.x = BiribiriLand_rodata_80357F6C[i].a.x;
+        obs->obstacles[i].a.y = BiribiriLand_rodata_80357F6C[i].a.y;
+        obs->obstacles[i].a.z = BiribiriLand_rodata_80357F6C[i].a.z;
+        obs->obstacles[i].b.x = BiribiriLand_rodata_80357F6C[i].b.x;
+        obs->obstacles[i].b.y = BiribiriLand_rodata_80357F6C[i].b.y;
+        obs->obstacles[i].b.z = BiribiriLand_rodata_80357F6C[i].b.z;
         obs->obstacles[i].a.y += lift;
         obs->obstacles[i].b.y += lift;
         obs->obstacles[i].center.x = lbl_806D7334 * (obs->obstacles[i].a.x + obs->obstacles[i].b.x);
@@ -538,7 +538,7 @@ extern unsigned int lbl_806D10D0;
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_8048E46C[];
+extern unsigned int BiribiriLand_vtable_8048E46C[];
 
 /* --- function index (1 fns, .text 0x80134D68..0x80134FF0) ---
  * [  0] 0x80134D68 size:0x288   global BiribiriLand_Destroy
@@ -598,7 +598,7 @@ static inline void BiribiriDestroyObstacles(BiribiriObstacles *obstacles)
 extern "C" void *BiribiriLand_Destroy(BiribiriState *self, short freeMemory)
 {
     if (self) {
-        self->vtable = lbl_8048E46C;
+        self->vtable = BiribiriLand_vtable_8048E46C;
         if (g_weatherSystem) {
             fn_8016C634((void *)g_weatherSystem, 1);
             g_weatherSystem = 0;
@@ -675,7 +675,7 @@ void Object_SetJObjScaleXYZ(void *obj, float x, float y, float z);
 void clNormal3D_SetScale(void *obj, int arg, float a, float b, float c, float d);
 extern int g_characterId;
 extern int lbl_806D12BC;
-extern const char *lbl_8048E430[7];
+extern const char *BiribiriLand_Init_data_8048E430[7];
 extern char lbl_8048E144[];
 }
 
@@ -705,7 +705,7 @@ struct BLObstacles {
         int i;
         unsigned int j;
         for (i = 0; i < 7; i++) {
-            model[i] = new BLNormal3D(lbl_8048E430[i], 0);
+            model[i] = new BLNormal3D(BiribiriLand_Init_data_8048E430[i], 0);
             if (i <= 5) {
                 Object_SetJObjScaleXYZ(model[i], 12.5f, 12.5f, 12.5f);
             }
@@ -713,12 +713,12 @@ struct BLObstacles {
         clNormal3D_SetScale(model[6], 0, 0.0f, 1.0f, 0.0f, 0.0f);
         for (j = 0; j < 9; j++) {
             Vec d;
-            obstacles[j].a.x = lbl_80357F6C[j].a.x;
-            obstacles[j].a.y = lbl_80357F6C[j].a.y;
-            obstacles[j].a.z = lbl_80357F6C[j].a.z;
-            obstacles[j].b.x = lbl_80357F6C[j].b.x;
-            obstacles[j].b.y = lbl_80357F6C[j].b.y;
-            obstacles[j].b.z = lbl_80357F6C[j].b.z;
+            obstacles[j].a.x = BiribiriLand_rodata_80357F6C[j].a.x;
+            obstacles[j].a.y = BiribiriLand_rodata_80357F6C[j].a.y;
+            obstacles[j].a.z = BiribiriLand_rodata_80357F6C[j].a.z;
+            obstacles[j].b.x = BiribiriLand_rodata_80357F6C[j].b.x;
+            obstacles[j].b.y = BiribiriLand_rodata_80357F6C[j].b.y;
+            obstacles[j].b.z = BiribiriLand_rodata_80357F6C[j].b.z;
             obstacles[j].center.x = 0.5f * (obstacles[j].a.x + obstacles[j].b.x);
             obstacles[j].center.y = 0.5f * (obstacles[j].a.y + obstacles[j].b.y) + 5.8f;
             obstacles[j].center.z = 0.5f * (obstacles[j].a.z + obstacles[j].b.z);

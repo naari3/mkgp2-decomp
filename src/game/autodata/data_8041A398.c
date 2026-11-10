@@ -13,7 +13,7 @@ typedef struct DustCurve {
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-DustCurve lbl_8041A398[4] = {
+DustCurve Effect_DustBurst4_Update_data_8041A398[4] = {
     { { 0.0f, 2.0f, 5.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f } },
     { { 2.0f, 7.0f, 11.0f, 0.0f, 1.0f, 2.0f, 0.0f, 1.0f, 0.0f } },
     { { 5.0f, 7.0f, 11.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f } },

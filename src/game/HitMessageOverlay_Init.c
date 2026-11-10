@@ -4,7 +4,7 @@
 
 #include "game/types/TweenInterp.h"
 
-extern char lbl_80419DC8[];      /* TweenBase vtable */
+extern char FlowFader_vtable_80419DC8[];      /* TweenBase vtable */
 extern char lbl_80419DE0[];      /* TweenInterp vtable */
 
 extern unsigned char lbl_806D1478;
@@ -29,7 +29,7 @@ static inline TweenInterp *TweenInterp_New(void)
 {
     TweenInterp *t = (TweenInterp *)Alloc(sizeof(TweenInterp));
     if (t != 0) {
-        t->vtable = lbl_80419DC8;
+        t->vtable = FlowFader_vtable_80419DC8;
         t->from = 0;
         t->to = 0;
         t->vtable = lbl_80419DE0;
@@ -88,7 +88,7 @@ TweenInterp *TweenInterp_Dtor(TweenInterp *self, short flag)
     if (self != 0) {
         self->vtable = lbl_80419DE0;
         if (self != 0) {
-            self->vtable = lbl_80419DC8;
+            self->vtable = FlowFader_vtable_80419DC8;
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);

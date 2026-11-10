@@ -145,13 +145,13 @@ extern const float lbl_806D7AF0;
 extern unsigned int lbl_806D7AF4;
 extern const float lbl_806D7AF8;
 extern unsigned int lbl_806D7B00;
-extern const float lbl_80361DCC[2][3];
+extern const float RankPanel_80144430_rodata_80361DCC[2][3];
 extern const float lbl_806D7B08;
 void MemoryManager_TimedFree(void *p);
 void Sprite_Destroy(void *s, int flag);
 extern void __unexpected();
 extern unsigned int lbl_8048EB44[];
-extern unsigned int lbl_8048EEF4[];
+extern unsigned int clCSPartsResultRecord_vtable_8048EEF4[];
 extern void Alloc();
 extern void Sprite_InitWithAnim();
 extern void __construct_array();
@@ -170,7 +170,7 @@ extern const float lbl_806D7B30;
 extern const float lbl_806D7B34;
 extern const float lbl_806D7B38;
 extern const float lbl_806D7B3C;
-extern const short lbl_80361D60[][2];
+extern const short RankPanel_80144430_rodata_80361D60[][2];
 extern void *lbl_8048EF20[];
 extern void *lbl_8048EF34[];
 extern void ResCtrl_Init();
@@ -231,24 +231,24 @@ struct Sprite {
 extern "C" {
 extern const float lbl_806D7B40;
 extern const float lbl_806D7B44;
-extern const short lbl_80361D80[];
+extern const short RankPanel_80144430_rodata_80361D80[];
 void fn_8019FF8C(Sprite *s, int id, struct SpriteNodeInfo *out);
 int isJapanese(void);
 }
 
 /* .rodata 0x80361D60..0x80361ED0 is owned by this TU. */
 extern "C" {
-extern const short lbl_80361D60[8][2] = {
+extern const short RankPanel_80144430_rodata_80361D60[8][2] = {
     {0x1AB6, 0x1AB7}, {0x1ABA, 0x1ABB}, {0x1AC4, 0x1AC5}, {0x1AC6, 0x1AC7},
     {0x1AC8, 0x1AC9}, {0x1ACA, 0x1ACB}, {0x1AB4, 0x1AB5}, {0x1AB8, 0x1AB9},
 };
-extern const short lbl_80361D80[0x26] = {
+extern const short RankPanel_80144430_rodata_80361D80[0x26] = {
     0x1CDE, 0x1D23, 0x2467, 0x2469, 0x246B, 0x246D, 0x246F,
     0x1F4D, 0x1F4F, 0x1F51, 0x1F53, 0x1F55, 0x1F57, 0x1F59, 0x1F5B, 0x1F5D, 0x1F5F, 0x1F61,
     0x1F4D, 0x1F4F, 0x1F51, 0x1F53, 0x1F55, 0x1F57, 0x1F59, 0x1F5B, 0x1F5D, 0x1F5F, 0x1F61,
     0x1CE8, 0x1CE9, 0x1CEA, 0x1CF3, 0x1CEB, 0x1CEC, 0x1CF2, 0x1CED, 0x1CEE,
 };
-extern const float lbl_80361DCC[2][3] = {
+extern const float RankPanel_80144430_rodata_80361DCC[2][3] = {
     {960.0f, 320.0f, -320.0f},
     {1180.0f, 410.0f, -360.0f},
 };
@@ -315,7 +315,7 @@ struct clCSPartsResultRecord : clCSPartsInerface {
     void LoadColumns(Sprite *s) {
         for (int i = 0; i < 0x26; i++) {
             SpriteNodeInfo info;
-            fn_8019FF8C(s, lbl_80361D80[i], &info);
+            fn_8019FF8C(s, RankPanel_80144430_rodata_80361D80[i], &info);
             xs[i] = info.x;
         }
     }
@@ -391,7 +391,7 @@ extern "C" void fn_80144500(RankPanel *self)
                 if ((int)self->f1c == i * 2) {
                     int off = i * 0x26;
                     for (int k = 0; k < 0x26; k++) {
-                        ((PanelItem *)*fn_80146000(&self->vec, off + k))->tw[3].Start(self->xs[k] + lbl_80361DCC[row][0], self->xs[k] + lbl_80361DCC[row][1], lbl_806D7AE0);
+                        ((PanelItem *)*fn_80146000(&self->vec, off + k))->tw[3].Start(self->xs[k] + RankPanel_80144430_rodata_80361DCC[row][0], self->xs[k] + RankPanel_80144430_rodata_80361DCC[row][1], lbl_806D7AE0);
                     }
                     break;
                 }
@@ -415,7 +415,7 @@ extern "C" void fn_80144500(RankPanel *self)
                 if ((int)self->f1c == i * 2) {
                     int off = i * 0x26;
                     for (int k = 0; k < 0x26; k++) {
-                        ((PanelItem *)*fn_80146000(&self->vec, off + k))->tw[3].Start(self->xs[k] + lbl_80361DCC[row][1], self->xs[k] + lbl_80361DCC[row][2], lbl_806D7AE0);
+                        ((PanelItem *)*fn_80146000(&self->vec, off + k))->tw[3].Start(self->xs[k] + RankPanel_80144430_rodata_80361DCC[row][1], self->xs[k] + RankPanel_80144430_rodata_80361DCC[row][2], lbl_806D7AE0);
                     }
                     break;
                 }
@@ -478,7 +478,7 @@ extern "C" void fn_80144ADC(RankPanel *self)
 extern "C" RankPanel *fn_80144AF0(RankPanel *self, short flag)
 {
     if (self) {
-        self->vt14 = (void **)lbl_8048EEF4;
+        self->vt14 = (void **)clCSPartsResultRecord_vtable_8048EEF4;
         for (PanelItem **it = self->vec.begin(); it != self->vec.end(); it++) {
             delete *it;
         }
@@ -580,7 +580,7 @@ extern "C" void fn_80144C1C(RankPanel *self)
         y += lbl_806D7B18;
     }
 
-    item = new PanelIcon(lbl_806D7B1C, lbl_806D7B20, lbl_80361D60[g_cupId - 1][g_longRoundFlag], 5);
+    item = new PanelIcon(lbl_806D7B1C, lbl_806D7B20, RankPanel_80144430_rodata_80361D60[g_cupId - 1][g_longRoundFlag], 5);
     item->tw[0].Start(0.0f, 1.0f, lbl_806D7AE0);
     self->vec.push_back(item);
 

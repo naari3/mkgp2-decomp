@@ -5,7 +5,7 @@
 
 typedef struct ShardAngles { float a[6]; } ShardAngles;
 
-extern const ShardAngles lbl_80329474;
+extern const ShardAngles KartBurstShard_SpawnSet_rodata_80329474;
 extern void Mtx44_GetTranslation_ColMajor(Vec *out, float m[4][4]);
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec in);
 extern void KartFadeInEffect_Update(unsigned char *self);
@@ -21,7 +21,7 @@ void KartBurstShard_SpawnSet(unsigned char *self)
     float *angle;
     int i;
 
-    angles = lbl_80329474;
+    angles = KartBurstShard_SpawnSet_rodata_80329474;
     Mtx_TransposeToMtx44(m, self + 0x48);
     Mtx44_GetTranslation_ColMajor(&pos, m);
     Matrix4_PreMultiplyTranslation(m, m, -pos.x, -pos.y, -pos.z);

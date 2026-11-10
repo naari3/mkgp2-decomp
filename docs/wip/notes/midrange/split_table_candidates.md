@@ -11,21 +11,21 @@ target uses (see TIPS.md, "`addi rX, rBase, 0x0` from one big const table").
 | 99.93 | fn_801F7604 | lbl_803BEDC0 (rodata, 0x20) | game/fn_801F7604 |
 | 97.44 | fn_801F894C | lbl_803BEDC0 (rodata, 0x20) | game/fn_801F894C |
 | 98.47 | fn_801913B0 | lbl_80495F20 (data, 0x18) | game/clsound/fn_801913B0 |
-| 98.22 | clFlowCourse_Init | lbl_8049B1E0 (data, 0x168) | game/clFlowCourse |
+| 98.22 | clFlowCourse_Init | clFlowCourse_data_8049B1E0 (data, 0x168) | game/clFlowCourse |
 | 98.13 | fn_801A4F38 | lbl_80496C38 (data, 0x1c) | game/sprite/fn_801A4F38 |
-| 96.91 | DrawEffect_ItemHitBurst_Spawn | lbl_8041A4D0 (data, 0xc) | game/DrawEffect_ItemHitBurst_Spawn |
+| 96.91 | DrawEffect_ItemHitBurst_Spawn | DrawEffect_KartDustRing_Update_data_8041A4D0 (data, 0xc) | game/DrawEffect_ItemHitBurst_Spawn |
 | 96.33 | fn_8021ABFC | lbl_804EDC88 (data), lbl_803C4E60 (rodata) | game/anon_8021A7C8_nm1 |
 | 96.03 | Race_PerFrameTickAndAudio | g_voiceQueue (bss, 0x180) | game/RacePerFrame |
 | 94.45 | TaMode_Init | BATTLE (data, 0x64c) | game/TaMode_Init |
 | 93.74 | fn_801B9928 | lbl_80679280 (bss, 0xc) | game/fn_801B9928 |
-| 93.44 | CardCreate_Page | lbl_803FBF80 (data, 0x98) | game/CardCreate_Page |
-| 92.45 | IsItemSelectAllowed | lbl_803DC378 (rodata, 0x1b8) | game/ItemSelectAllowed |
-| 92.40 | PCBComm_SendToAllPeers | lbl_805A5EC0 (bss, 0x204) | game/PCBCommSendPeers |
+| 93.44 | CardCreate_Page | CardCreate_Page_data_803FBF80 (data, 0x98) | game/CardCreate_Page |
+| 92.45 | IsItemSelectAllowed | IsItemSelectAllowed_rodata_803DC378 (rodata, 0x1b8) | game/ItemSelectAllowed |
+| 92.40 | PCBComm_SendToAllPeers | PCBCheckRecv_bss_805A5EC0 (bss, 0x204) | game/PCBCommSendPeers |
 | 91.87 | fn_801B7EF8 | lbl_80679280 (bss, 0xc) | game/fn_801B7EF8 |
-| 91.65 | ranking_display | lbl_8049B4A8 (data, 0x68) | game/ranking_display |
-| 91.27 | fn_801C9288 | lbl_8049AE70 (data, 0x11c) | game/fn_801C9288 |
-| 91.11 | Sci2Card_BuildItemGetReceiptLine | lbl_803FFDF0 (data, 0x68) | game/Sci2Card_BuildItemGetReceiptLine |
-| 90.00 | RaceFlow_ResetState_FullColdInit | lbl_805AC600 (bss, 0xc0) | game/RaceFlow_ResetState_FullColdInit |
+| 91.65 | ranking_display | ranking_display_data_8049B4A8 (data, 0x68) | game/ranking_display |
+| 91.27 | fn_801C9288 | clFlowRound_data_8049AE70 (data, 0x11c) | game/fn_801C9288 |
+| 91.11 | Sci2Card_BuildItemGetReceiptLine | Sci2Card_BuildRetryReceiptLine_data_803FFDF0 (data, 0x68) | game/Sci2Card_BuildItemGetReceiptLine |
+| 90.00 | RaceFlow_ResetState_FullColdInit | SetCourseParams_bss_805AC600 (bss, 0xc0) | game/RaceFlow_ResetState_FullColdInit |
 | 89.32 | VoiceSystem_Init | g_voiceQueue (bss, 0x180) | game/VoiceSystem_Init |
 
 Some of these (fn_801F894C, fn_801913B0, fn_801A4F38, the g_voiceQueue users)
@@ -40,10 +40,10 @@ is in this file's header.
   anchor, but the body still differs (missing speed clamp, r27/r28 swap). The data
   0x8041A4D0.. is owned by DrawEffect_KartDustRing_Update.c, so a fix would mean a
   7-TU merge (6 of them Matching). Skipped.
-- CardCreate_Page: lbl_803FBF80 sits before UI_PageDispatcher's .data (0x803FDE78),
+- CardCreate_Page: CardCreate_Page_data_803FBF80 sits before UI_PageDispatcher's .data (0x803FDE78),
   whose .text is before the service-menu pages. So the original TU spans
   UI_PageDispatcher..CardCreate_Page (~15 TUs). Skipped.
-- Sci2Card_BuildItemGetReceiptLine: lbl_803FFDF0 sits right before the
+- Sci2Card_BuildItemGetReceiptLine: Sci2Card_BuildRetryReceiptLine_data_803FFDF0 sits right before the
   BuildRetryReceiptLine/BuildScoreReceiptLine jump tables, so the original TU spans
   0x80094D80..0x800997E4 (17 TUs, 2 of them NonMatching). Skipped.
 - RaceFlow_ResetState_FullColdInit: uses SetCourseParams' .bss pool (base+0x20000).

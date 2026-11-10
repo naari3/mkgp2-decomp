@@ -192,7 +192,7 @@ Remaining in range (not done, why), as of PR #247:
 - CW register numbering follows declaration order. Declaring loop locals at function top in the target's order (earlier = higher reg) fixed nested-loop allocation.
 - Volatile sqrt stack slots: deeper inline nesting gets lower slots. Match the slot order by flattening or nesting the inline sqrt helper.
 - Next unsplit work in G6 starts at 0x80209A84 (card reward state, then FlowFader fn_8020A6CC.. and ItemDisplay). Parked residuals are listed in PRs #198/#203/#210/#220.
-- (G3 wrap-up) Group 3 stopped at 0x8014388C. Next unit 0x8014388C..0x80144430 = ModelFx family (base vtable EE48: dtor_80143F0C + 4 thin wrappers, derived dtors 8014388C/80143F8C/80144258, ctors 8014393C/8014403C/80144308). The derived ctors index rodata struct lbl_80361970 (0x29C) with `addi base,off; lwzx` = 2D member arrays [cup][mode]. Unmatched list for G3 range: 0x801077C8–0x801223E8 and 0x8014388C–0x8015A6E4.
+- (G3 wrap-up) Group 3 stopped at 0x8014388C. Next unit 0x8014388C..0x80144430 = ModelFx family (base vtable EE48: dtor_80143F0C + 4 thin wrappers, derived dtors 8014388C/80143F8C/80144258, ctors 8014393C/8014403C/80144308). The derived ctors index rodata struct CSPartsResultStage_rodata_80361970 (0x29C) with `addi base,off; lwzx` = 2D member arrays [cup][mode]. Unmatched list for G3 range: 0x801077C8–0x801223E8 and 0x8014388C–0x8015A6E4.
 - (G3) "Pooled" rodata access (`lis/addi r31` once, then `addi r3,r31,0x2b4; lwz r4,8(r3)` or `addi r4,r31,0x164; lfsx`) did not reproduce with an extern struct (CW folds the offsets). PoseChar ctor (fn_80143450) stays asm for that reason; likely needs the TU to own the .rodata.
 - (G3) HSD JObj inlines with exact asserts (0x25D dirty, 0x47C GetMtxPtr, 0x495/0x496 CopyMtx, 0x383/0x38F/0x39B GetScaleXYZ, 0x3E4 GetTranslation, 0x2FA GetRotationY) are in src/game/PodiumPose.c — take MtxPtr (float(*)[4]) params, not float*, so the stack-mtx null assert folds away; use extern lbl_806D7AA0/AA8/AC0 not string literals (literals land in .sdata).
 
@@ -203,7 +203,7 @@ Remaining in range (not done, why), as of PR #247:
 - Leftovers in range 1:
   - Terrain_GetGroundHeight / FindTriangleAtPosition / WallEdgeTest are NonMatching at ~98%. The edge-test zero gets hoisted out of the loop, and the parameter register order differs.
   - Sci2Card_Tick and AllocAndOpenSci2 use the pool base lbl_803114D0. They need one TU covering 0x8007660C..0x8007723C plus .rodata 0x803114D0..0x803115F0 (Init/BuildPacket/Lifetime are currently separate TUs and would have to merge).
-  - FinalLapBanner_Init uses pool lbl_803123B0, same approach.
+  - FinalLapBanner_Init uses pool FinalLapBanner_Init_rodata_803123B0, same approach.
   - StrPcb_Init/Shutdown are parked (notes/StrPcb_Lifetime.md).
   - PcbIdToIpAndModify uses pool lbl_80310DE0.
   - Untouched: big UI pages (SystemInfo_UI, CardData*, TestPages), ShadowBillboard, clDrawMan, TransitionEffect, CreditMgr, CardTask*, Sci2Card print/receipt state machines, NameCheck.
@@ -268,7 +268,7 @@ Remaining in range (not done, why), as of PR #247:
 - THP decoder 0x80298988..0x8029C33C = `src/thp/THPDec.c` (lib `thp`, GC/1.2.5, cflags_base + `-fp_contract off`), NonMatching. It is an OLDER THP than dolsdk2004/melee: custom THPFileInfo layout (see the struct comments), IDCT is C loops around asm blocks. melee's THPDec.c helps for the parsers only.
 - CW inline asm: a hardcoded `r0` inside an asm block stops the compiler from using r0 anywhere in the function. Use a `register u32 tmp` instead (this fixed THPDecDecode).
 - Register vars: allocation follows declaration order (first-declared callee-saved one gets the highest reg). Volatile loop vars are also assigned in declaration order. For float consts: `register f32 bias, cc2c6a, cc2c6s, cc2, cc4;` then assign in load order.
-- Perf-counter idiom (fn_8029B54C/BA2C/BCF0): THPPerfRec[10] at lbl_806A4A40, macro with `{ u32 d = end-start; u32 m = max; if (d > m) m = d; max = m; }` (a ternary gives the wrong branch shape). The array must be `extern`: if it is defined in the TU, mwcc hoists its address to the function entry.
+- Perf-counter idiom (fn_8029B54C/BA2C/BCF0): THPPerfRec[10] at THPDec_bss_806A4A40, macro with `{ u32 d = end-start; u32 m = max; if (d > m) m = d; max = m; }` (a ternary gives the wrong branch shape). The array must be `extern`: if it is defined in the TU, mwcc hoists its address to the function entry.
 - Left (all regalloc/order): __THPHuffDecode/Tab (`add r0,valPtr,Vij` operand order, 2 lines each), fn_8029B54C (vs computed in j's reg, 2 lines), __THPDecodeBlock, fn_80299D58 (68 lines, ws<->itmp0 and cc4<->bias swaps; WIP docs/wip/notes/thp/fn_80299D58.wip.c with //DB..//DE decl block), __THPGetBit (loop shape).
 - Brute-force tools: docs/wip/notes/thp/{hill.py,permsel.py} swap/permute decl lines between `//DB` and `//DE` and score with cmp.py (`--only` that function). asm2c.py turns dtk asm into a CW asm body with a register->var map.
 
@@ -385,7 +385,7 @@ Source: their commits + docs/notes/*-20261026.md. They took UNSPLIT auto_* range
 - Fast iteration: compile one-line/whole-file source variants with the TU's own `ninja -t commands` line in parallel and diff the fn (normalize `bl`/@ha/@l/@sda21). ~50 variants in under a minute found both.
 - (thread B, clFlowItemSelect_Init 12dc847) The reverse case also happens: `li rA,0; mr rB,rA; mr rC,rA` (one zero copied into several loop counters/IVs) needs counters SHARED at function scope (`int i, j;` reused by those loops); scoped `for (int i` gives separate `li`. Hill-climb which loops share: flip one loop's `int` at a time.
 - `lwz r0,g; cmpwi r0; mr rX,r0` vs target `lwz rX,g` for a clamped global copy: write `if ((c = g) < 0 || c >= 13) c = 0;`.
-- Two array args to an inline ctor loaded in the wrong order: declare the read-only table `const` (`extern const int lbl_8039B3C8[3]`).
+- Two array args to an inline ctor loaded in the wrong order: declare the read-only table `const` (`extern const int clFlowItemSelect_Init_rodata_8039B3C8[3]`).
 - A free-standing draft can be diffed without touching the TU: compile it with the TU's ninja command line into a scratch dir and diff the mangled name against the target fn (bl targets normalized).
 
 ## Pooled-data `lis` scheduled early in a ctor = the TU owns its .rodata (R2, 2026-11-07)
@@ -461,7 +461,7 @@ them off one section base. (CW pools when a function touches 3+ objects of
 the section; the first object sits at offset 0, so you get `addi …, 0x0`.)
 Split the array into one object per offset the target uses, define them in
 order in the owning TU, reference each by name, and update symbols.txt.
-Example: amnet fn_8028D8CC, lbl_803F2798[36] -> 5 tables (99.83 -> 99.97).
+Example: amnet fn_8028D8CC, amnet_setup_nm_rodata_803F2798[36] -> 5 tables (99.83 -> 99.97).
 This does NOT explain the acsocket `lwz r5, bufOff; addi r29, r5, 0x0`
 copy: there the source register is a loaded value, not a section base.
 That one is still open (opt_lifetimes off gets acModifyMyIPaddr to 97.88
@@ -506,7 +506,7 @@ When a switch jump table sits after other .data objects that belong to the TU (t
 DIAGNOSED (mid, 11-08): this is a compiler-local static object reached via the section anchor. See docs/regalloc_patterns.md §13. The fix is to own the pooled section and define real `static const` locals; pointer arithmetic on an extern pool can never produce it.
 Seen in at least 4 near-misses: CSPartsHolders fn_8014D038 (rot=base+0xEF4: x via 0xef4(base), y/z via r3),
 PCBCheck_RecvLinkData (addi r27,base,0x204; addi r27,r27,0x2c), EffectVfx29_30_Item4SubFlame_Tick
-(&keys[i] in r4, keys[i] off r3), KartFx_BoostExhaustRayTick (struct copy `lbl_8041A280[1] = resources->colors`:
+(&keys[i] in r4, keys[i] off r3), KartFx_BoostExhaustRayTick (struct copy `KartFx_BoostExhaustRayTick_data_8041A280[1] = resources->colors`:
 first 3 words off r31, last 3 off r3=r31+0x534). Our MWCC always folds every access into displacements.
 Not fixed by: pragmas (opt_* / peephole / scheduling / optimization_level), GC/1.0..2.7, auto_inline,
 copy/assign ctors on the element type, separate pointer variables. If you crack it, it likely fixes all four.

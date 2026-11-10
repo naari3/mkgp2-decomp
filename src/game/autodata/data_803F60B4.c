@@ -66,7 +66,7 @@ extern char lbl_802EB408[];
 extern char lbl_802EB41C[];
 extern char lbl_802EB42C[];
 extern char lbl_802EB440[];
-extern char lbl_806CEDF0[];
+extern char data_803F60B4_data_806CEDF0[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -1445,8 +1445,8 @@ void *lbl_803F6FE8[299] = {
     0,
     0
 };
-void *lbl_803F7494[5] = {
-    (void *)&lbl_806CEDF0,
+void *clMapEffect_vtable_803F7494[5] = {
+    (void *)&data_803F60B4_data_806CEDF0,
     0,
     (void *)dtor_800488F4,
     (void *)fn_800488F0,

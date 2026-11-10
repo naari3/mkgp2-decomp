@@ -45,14 +45,14 @@ extern float lbl_806CF01C;
 extern float lbl_806CF020;
 extern float lbl_806CF024;
 extern float lbl_806CF028;
-extern float lbl_806CF02C;
-extern float lbl_806CF030;
-extern float lbl_806CF034;
-extern float lbl_806CF038;
-extern float lbl_806CF03C;
-extern float lbl_806CF040;
-extern float lbl_806CF044;
-extern float lbl_806CF048;
+extern float KartReaction_Side_data_806CF02C;
+extern float KartReaction_Side_data_806CF030;
+extern float KartReaction_Side_data_806CF034;
+extern float KartReaction_Side_data_806CF038;
+extern float KartReaction_Front_data_806CF03C;
+extern float KartReaction_Front_data_806CF040;
+extern float KartReaction_Front_data_806CF044;
+extern float KartReaction_Front_data_806CF048;
 
 #pragma exceptions on
 int KartReaction_Front(KartItem *self) {
@@ -65,7 +65,7 @@ int KartReaction_Front(KartItem *self) {
     if (self->currentItemId == 0x51) {
         return 0;
     }
-    SetAnimState(self, 0x16, 0, 1, lbl_806CF03C, lbl_806CF040, lbl_806CF044, lbl_806CF048);
+    SetAnimState(self, 0x16, 0, 1, KartReaction_Front_data_806CF03C, KartReaction_Front_data_806CF040, KartReaction_Front_data_806CF044, KartReaction_Front_data_806CF048);
     return 1;
 }
 
@@ -79,7 +79,7 @@ int KartReaction_Side(KartItem *self) {
     if (self->currentItemId == 0x51) {
         return 0;
     }
-    SetAnimState(self, 0x15, 0, 1, lbl_806CF02C, lbl_806CF030, lbl_806CF034, lbl_806CF038);
+    SetAnimState(self, 0x15, 0, 1, KartReaction_Side_data_806CF02C, KartReaction_Side_data_806CF030, KartReaction_Side_data_806CF034, KartReaction_Side_data_806CF038);
     return 1;
 }
 

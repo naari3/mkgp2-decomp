@@ -144,18 +144,18 @@ extern float lbl_806D18C8;
 extern float lbl_803BD0F0[];
 extern const float lbl_806DA30C;
 
-extern void *lbl_804E4834[];
-extern void *lbl_804E4884[];
-extern void *lbl_804E48AC[];
-extern void *lbl_804E48D4[];
-extern void *lbl_804E48FC[];
-extern void *lbl_804E4924[];
-extern void *lbl_804E494C[];
-extern void *lbl_804E4974[];
-extern void *lbl_804E499C[];
-extern void *lbl_804E49C4[];
-extern void *lbl_804E49EC[];
-extern void *lbl_804E4A08[];
+extern void *SteerBounce_vtable_804E4834[];
+extern void *SteerJump_vtable_804E4884[];
+extern void *SteerTurn_vtable_804E48AC[];
+extern void *SteerHold_vtable_804E48D4[];
+extern void *SteerSquash_vtable_804E48FC[];
+extern void *SteerSpinOut_vtable_804E4924[];
+extern void *SteerHop_vtable_804E494C[];
+extern void *SteerFlip_vtable_804E4974[];
+extern void *SteerRollA_vtable_804E499C[];
+extern void *SteerRollB_vtable_804E49C4[];
+extern void *SteerNone_vtable_804E49EC[];
+extern void *SteerBase_vtable_804E4A08[];
 
 #include "game/types/Vec3f.h"
 
@@ -369,9 +369,9 @@ int fn_801E092C(SteerAction *self) {
 
 SteerAction *fn_801E093C(SteerAction *self, short flag) {
     if (self) {
-        SET_VT(self, lbl_804E4834);
+        SET_VT(self, SteerBounce_vtable_804E4834);
         if (self) {
-            SET_VT(self, lbl_804E4A08);
+            SET_VT(self, SteerBase_vtable_804E4A08);
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);
@@ -445,9 +445,9 @@ int fn_801E0B9C(SteerAction *self) {
 
 SteerAction *fn_801E0BB4(SteerAction *self, short flag) {
     if (self) {
-        SET_VT(self, lbl_804E4884);
+        SET_VT(self, SteerJump_vtable_804E4884);
         if (self) {
-            SET_VT(self, lbl_804E4A08);
+            SET_VT(self, SteerBase_vtable_804E4A08);
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);
@@ -473,9 +473,9 @@ void fn_801E0C10(SteerAction *self) {
 
 SteerAction *fn_801E0FDC(SteerAction *self, short flag) {
     if (self) {
-        SET_VT(self, lbl_804E48AC);
+        SET_VT(self, SteerTurn_vtable_804E48AC);
         if (self) {
-            SET_VT(self, lbl_804E4A08);
+            SET_VT(self, SteerBase_vtable_804E4A08);
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);
@@ -495,9 +495,9 @@ int fn_801E104C(SteerAction *self) {
 
 SteerAction *fn_801E1060(SteerAction *self, short flag) {
     if (self) {
-        SET_VT(self, lbl_804E48D4);
+        SET_VT(self, SteerHold_vtable_804E48D4);
         if (self) {
-            SET_VT(self, lbl_804E4A08);
+            SET_VT(self, SteerBase_vtable_804E4A08);
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);
@@ -536,9 +536,9 @@ int fn_801E124C(SteerAction *self) {
 
 SteerAction *fn_801E125C(SteerAction *self, short flag) {
     if (self) {
-        SET_VT(self, lbl_804E48FC);
+        SET_VT(self, SteerSquash_vtable_804E48FC);
         if (self) {
-            SET_VT(self, lbl_804E4A08);
+            SET_VT(self, SteerBase_vtable_804E4A08);
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);
@@ -597,9 +597,9 @@ int fn_801E17C8(SteerAction *self, int item) {
 
 SteerAction *fn_801E1814(SteerAction *self, short flag) {
     if (self) {
-        SET_VT(self, lbl_804E4924);
+        SET_VT(self, SteerSpinOut_vtable_804E4924);
         if (self) {
-            SET_VT(self, lbl_804E4A08);
+            SET_VT(self, SteerBase_vtable_804E4A08);
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);
@@ -635,9 +635,9 @@ int fn_801E1C64(SteerAction *self) {
 
 SteerAction *fn_801E1C74(SteerAction *self, short flag) {
     if (self) {
-        SET_VT(self, lbl_804E494C);
+        SET_VT(self, SteerHop_vtable_804E494C);
         if (self) {
-            SET_VT(self, lbl_804E4A08);
+            SET_VT(self, SteerBase_vtable_804E4A08);
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);
@@ -685,9 +685,9 @@ int fn_801E211C(SteerAction *self) {
 
 SteerAction *fn_801E212C(SteerAction *self, short flag) {
     if (self) {
-        SET_VT(self, lbl_804E4974);
+        SET_VT(self, SteerFlip_vtable_804E4974);
         if (self) {
-            SET_VT(self, lbl_804E4A08);
+            SET_VT(self, SteerBase_vtable_804E4A08);
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);
@@ -735,9 +735,9 @@ int fn_801E25D4(SteerAction *self) {
 
 SteerAction *fn_801E25E4(SteerAction *self, short flag) {
     if (self) {
-        SET_VT(self, lbl_804E499C);
+        SET_VT(self, SteerRollA_vtable_804E499C);
         if (self) {
-            SET_VT(self, lbl_804E4A08);
+            SET_VT(self, SteerBase_vtable_804E4A08);
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);
@@ -793,9 +793,9 @@ int fn_801E2AA4(SteerAction *self) {
 
 SteerAction *fn_801E2AB4(SteerAction *self, short flag) {
     if (self) {
-        SET_VT(self, lbl_804E49C4);
+        SET_VT(self, SteerRollB_vtable_804E49C4);
         if (self) {
-            SET_VT(self, lbl_804E4A08);
+            SET_VT(self, SteerBase_vtable_804E4A08);
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);
@@ -811,9 +811,9 @@ int fn_801E2B24(SteerAction *self) { return 0; }
 
 SteerAction *fn_801E2B2C(SteerAction *self, short flag) {
     if (self) {
-        SET_VT(self, lbl_804E49EC);
+        SET_VT(self, SteerNone_vtable_804E49EC);
         if (self) {
-            SET_VT(self, lbl_804E4A08);
+            SET_VT(self, SteerBase_vtable_804E4A08);
         }
         if (flag > 0) {
             MemoryManager_TimedFree(self);
@@ -824,7 +824,7 @@ SteerAction *fn_801E2B2C(SteerAction *self, short flag) {
 
 SteerAction *fn_801E2B88(SteerAction *self, short flag) {
     if (self) {
-        SET_VT(self, lbl_804E4A08);
+        SET_VT(self, SteerBase_vtable_804E4A08);
         if (flag > 0) {
             MemoryManager_TimedFree(self);
         }

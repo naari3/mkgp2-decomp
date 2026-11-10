@@ -24,7 +24,7 @@ typedef struct SurfaceSE {
 } SurfaceSE;
 
 extern const float lbl_806D2940;
-extern SurfaceSE lbl_802EDCBC[13];
+extern SurfaceSE KartAudioChannel_PlayColorMatchSE_rodata_802EDCBC[13];
 extern const Vec lbl_802EDD24;
 extern unsigned int Terrain_ApplyCup2FlagPatch(int flags);
 extern void SoundMgr_PlaySE(unsigned int id);
@@ -55,26 +55,26 @@ void KartAudioChannel_PlayColorMatchSE(KartAudioChannel *self, int ground0, int 
     idx0 = 12;
     idx1 = 12;
     for (i = 0; i < 13; i++) {
-        if (type0 == lbl_802EDCBC[i].ground) {
+        if (type0 == KartAudioChannel_PlayColorMatchSE_rodata_802EDCBC[i].ground) {
             idx0 = i;
             break;
         }
     }
     for (i = 0; i < 13; i++) {
-        if (type1 == lbl_802EDCBC[i].ground) {
+        if (type1 == KartAudioChannel_PlayColorMatchSE_rodata_802EDCBC[i].ground) {
             idx1 = i;
             break;
         }
     }
     idx = (idx0 < idx1) ? idx0 : idx1;
 
-    if (self->surfaceSE == lbl_802EDCBC[idx].se) {
+    if (self->surfaceSE == KartAudioChannel_PlayColorMatchSE_rodata_802EDCBC[idx].se) {
         return;
     }
     if (self->surfaceSE >= 0) {
         fn_8016C394(self->surfaceSE | ((self->channel & 0xf) << 27));
     }
-    self->surfaceSE = lbl_802EDCBC[idx].se;
+    self->surfaceSE = KartAudioChannel_PlayColorMatchSE_rodata_802EDCBC[idx].se;
     se = self->surfaceSE;
     if (se >= 0) {
         SoundMgr_PlaySE(se | ((self->channel & 0xf) << 27));

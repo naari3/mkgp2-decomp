@@ -1,6 +1,6 @@
 #include "game/singleton.h"
 /*
- * 0x80211B10..0x80211E6C: JumpDistanceMode draw (vtable lbl_804ECC08:
+ * 0x80211B10..0x80211E6C: JumpDistanceMode draw (vtable JumpDistanceMode_vtable_804ECC08:
  * JumpDistanceMode_Update, this, dtor fn_80212EA4). Draws the course
  * scene and, when a card is inserted, the landing result grid.
  */

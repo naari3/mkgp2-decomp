@@ -169,7 +169,7 @@ extern "C" void fn_800AB130(void)
 extern "C" void *dtor_800AB134(void *self, short flag)
 {
     if (self != 0) {
-        *(char **)self = lbl_80411E10;
+        *(char **)self = ShadowAreaBase_vtable_80411E10;
         if (flag > 0) {
             MemoryManager_TimedFree(self);
         }

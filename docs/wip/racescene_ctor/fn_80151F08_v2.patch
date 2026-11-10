@@ -46,7 +46,7 @@ index aaf185c..02555c1 100644
 +extern const float lbl_806D80C0;
 +extern const float lbl_806D8184;
  extern unsigned int lbl_8041BC00[];
- extern char *lbl_8048F178[];
+ extern char *Scene_8014E0C4_data_8048F178[];
  extern void C_MTXLookAt(float m[3][4], const struct Vec3f *eye, const struct Vec3f *up, const struct Vec3f *target);
 @@ -1102,7 +1102,7 @@ RaceScene *fn_8015092C(RaceScene *self, short flag);
  void fn_80150BE4(VObj *p);
@@ -88,15 +88,15 @@ index aaf185c..02555c1 100644
 -    psq_st f31, 0x38(r1), 0, 0
 -    stmw r25, 0x14(r1)
 -    lis r7, lbl_8048FF80@ha
--    lis r6, lbl_80490010@ha
+-    lis r6, RaceSceneC_vtable_80490010@ha
 -    mr r26, r3
--    lis r8, lbl_8048F178@ha
+-    lis r8, Scene_8014E0C4_data_8048F178@ha
 -    addi r3, r7, lbl_8048FF80@l
--    addi r0, r6, lbl_80490010@l
+-    addi r0, r6, RaceSceneC_vtable_80490010@l
 -    stw r3, 0x0(r26)
 -    mr r27, r4
 -    mr r29, r5
--    addi r28, r8, lbl_8048F178@l
+-    addi r28, r8, Scene_8014E0C4_data_8048F178@l
 -    stw r0, 0x0(r26)
 -    bl DrawManager_GetOrCreate
 -    bl fn_80121210
@@ -386,10 +386,10 @@ index aaf185c..02555c1 100644
 -    bl SetActiveCamera
 -    lwz r0, 0x20(r26)
 -    li r27, 0x0
--    lis r3, lbl_80367200@ha
+-    lis r3, Scene_8014E0C4_rodata_80367200@ha
 -    lfs f31, lbl_806D8064(r2)
 -    stw r0, g_raceCamera(r13)
--    addi r28, r3, lbl_80367200@l
+-    addi r28, r3, Scene_8014E0C4_rodata_80367200@l
 -    mr r31, r27
 -    mr r30, r27
 -    mr r29, r27
@@ -678,7 +678,7 @@ index aaf185c..02555c1 100644
 +    SoundChannels_ClearAll();
 +    ItemObjectManager_Init();
 +    CourseObjectManager_Init();
-+    scripts = (char *)lbl_8048F178;
++    scripts = (char *)Scene_8014E0C4_data_8048F178;
 +    switch (fn_80169E20()) {
 +    case 1:
 +        if (IsCardValid() == 1) {
@@ -749,7 +749,7 @@ index aaf185c..02555c1 100644
 +    SetActiveCamera(0, (int)camera);
 +    g_raceCamera = camera;
 +    {
-+        scripts = (char *)&lbl_80367200;
++        scripts = (char *)&Scene_8014E0C4_rodata_80367200;
 +        for (i = 0; i < 11; i++, scripts += sizeof(RaceKartDesc)) {
 +            drivers[i] = 0;
 +            effects[i] = 0;

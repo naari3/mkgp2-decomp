@@ -7,7 +7,7 @@
 /* refine if the real prototype matters for header consumers. */
 
 /* --- extern decls: sda21-referenced data --- */
-extern unsigned int lbl_806D10A8;
+extern unsigned int TornadoEffect_bss_806D10A8;
 extern const float lbl_806D2914;
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
@@ -76,12 +76,12 @@ void TornadoEffect_ApplyItemVisual_Compact(void *e, int item, int flag)
         break;
     case 0x1D:
         r2 = 9;
-        lbl_806D10A8++;
+        TornadoEffect_bss_806D10A8++;
         break;
     case 0x1C:
     case 0x21:
         r2 = 10;
-        lbl_806D10A8++;
+        TornadoEffect_bss_806D10A8++;
         break;
     }
     if (r != 0) {

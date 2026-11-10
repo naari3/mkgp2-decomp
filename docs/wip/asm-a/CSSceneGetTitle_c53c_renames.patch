@@ -23,7 +23,7 @@ index 5af618b..4eae202 100644
 +    "__ct__9GetSpriteFiii": "Sprite_InitWithAnim",
 +    "__ct__4VObjFPCvUc": "fn_8013D800",
 +    "__vt__9SceneBase": "lbl_803FE0C8",
-+    "__vt__17clCSSceneGetTitle": "lbl_8048F118",
++    "__vt__17clCSSceneGetTitle": "CSSceneGetTitle_vtable_8048F118",
 +    "__dt__9SceneBaseFv": "dtor_8007D0D4",
 +    "__ct__17clCSSceneGetTitleFv": "fn_8014C53C"
    },

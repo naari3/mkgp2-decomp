@@ -43,7 +43,7 @@ struct RefillSingleton { char opaque[0x5c]; RefillSingleton(); };
 
 extern "C" {
 // Shared item-selection palette and default item IDs.
-const int lbl_803DC0C0[15][3] = {
+const int ItemSelectState_rodata_803DC0C0[15][3] = {
     {0, 0, 0},
     {96, 255, 0},
     {200, 64, 0},
@@ -60,7 +60,7 @@ const int lbl_803DC0C0[15][3] = {
     {0, 96, 255},
     {0, 96, 255},
 };
-const int lbl_803DC174[3] = {6, 1, 0};
+const int ItemGridState_Init_rodata_803DC174[3] = {6, 1, 0};
 const int lbl_803DC180[6][10] = {
     {6, 2, 1, 0, 11, 8, 10, 9, 13, 12},
     {7, 3, 4, 5, 22, 23, 44, 27, 43, 59},
@@ -74,7 +74,7 @@ static const float choiceX[11] = {102.0f, 144.0f, 185.0f, 227.0f, 269.0f, 310.0f
 static const float choiceY[6] = {230.0f, 261.0f, 292.0f, 323.0f, 354.0f, 385.0f};
 static const int choiceResources[3] = {0x1424, 0x1423, 0x1425};
 extern "C" const char lbl_803DC2C0[] = "clFlowItem";
-extern "C" const char lbl_803DC2CC[] = "clFlowProcess";
+extern "C" const char sdata_806D0728_rodata_803DC2CC[] = "clFlowProcess";
 /* "Choose three items" */
 static const char selectMessage[] = "\x83\x41\x83\x43\x83\x65\x83\x80\x82\xf0\x82\x52\x82\xc2\x91\x49\x82\xf1\x82\xc5\x89\xba\x82\xb3\x82\xa2";
 static const char selectMessageEn[] = "3 items will be selected";
@@ -124,12 +124,12 @@ void fn_801FE36C();
 void fn_801FE390();
 void fn_80232284(RefillSingleton *, float);
 void fn_8023F1C8(void *);
-extern const int lbl_806D0728, lbl_806D072C, lbl_806D0730, lbl_806D0734;
-extern const char lbl_806D073C[4], lbl_806D0740[4], lbl_806D0744[4];
-extern const char lbl_806D0748[4], lbl_806D074C[4], lbl_806D0750[4], lbl_806D0754[4];
-extern const int lbl_806D075C, lbl_806D0760, lbl_806D0764, lbl_806D0768;
-extern const int lbl_806D076C, lbl_806D0770, lbl_806D0774, lbl_806D0778;
-extern float lbl_806D0738;
+extern const int ItemSelectState_data_806D0728, ItemSelectState_data_806D072C, ItemSelectState_data_806D0730, ItemSelectState_data_806D0734;
+extern const char ItemSelectState_data_806D073C[4], ItemSelectState_data_806D0740[4], ItemSelectState_data_806D0744[4];
+extern const char ItemSelectState_data_806D0748[4], ItemSelectState_data_806D074C[4], ItemSelectState_data_806D0750[4], ItemSelectState_data_806D0754[4];
+extern const int ItemSelectState_data_806D075C, ItemSelectState_data_806D0760, ItemSelectState_data_806D0764, ItemSelectState_data_806D0768;
+extern const int ItemSelectState_data_806D076C, ItemSelectState_data_806D0770, ItemSelectState_data_806D0774, ItemSelectState_data_806D0778;
+extern float ItemSelectState_data_806D0738;
 extern const float lbl_806DB888, lbl_806DB88C, lbl_806DB890, lbl_806DB894, lbl_806DB89C;
 extern const float lbl_806DB8A0, lbl_806DB8A4, lbl_806DB8A8, lbl_806DB8CC, lbl_806DB8D4;
 extern const float lbl_806DB8D8, lbl_806DB8DC, lbl_806DB8E0, lbl_806DB8E4, lbl_806DB8E8;
@@ -220,17 +220,17 @@ static inline int CharacterOrder(int id) {
     return 0;
 }
 extern "C" void fn_80238980(ItemSelectState *self) {
-    SpriteGroup_CreateOrInit(&self->groups[8], &lbl_806D075C, 1, lbl_806DB8E4, lbl_806DB8E8);
-    SpriteGroup_CreateOrInit(&self->groups[7], &lbl_806D0760, 1, lbl_806DB8EC, lbl_806DB8E8);
+    SpriteGroup_CreateOrInit(&self->groups[8], &ItemSelectState_data_806D075C, 1, lbl_806DB8E4, lbl_806DB8E8);
+    SpriteGroup_CreateOrInit(&self->groups[7], &ItemSelectState_data_806D0760, 1, lbl_806DB8EC, lbl_806DB8E8);
     GroupSprite(self->groups[8])->layer = 6;
     GroupSprite(self->groups[7])->layer = 6;
     SpriteHandle_SetCornerAlpha(self->sprites[3], 255);
     SpriteHandle_SetActiveFlag(self->sprites[3], 1);
     RefillChoice *choice = (RefillChoice *)self->iconArray;
-    SpriteGroup_CreateOrInit(&choice->groups[1], &lbl_806D0728, 1, lbl_806DB888, lbl_806DB888);
-    SpriteGroup_CreateOrInit(&choice->groups[2], &lbl_806D072C, 1, lbl_806DB888, lbl_806DB888);
-    SpriteGroup_CreateOrInit(&choice->groups[3], &lbl_806D0730, 1, lbl_806DB888, lbl_806DB888);
-    SpriteGroup_CreateOrInit(&choice->groups[0], &lbl_806D0734, 0, lbl_806DB8F0, lbl_806DB8F4);
+    SpriteGroup_CreateOrInit(&choice->groups[1], &ItemSelectState_data_806D0728, 1, lbl_806DB888, lbl_806DB888);
+    SpriteGroup_CreateOrInit(&choice->groups[2], &ItemSelectState_data_806D072C, 1, lbl_806DB888, lbl_806DB888);
+    SpriteGroup_CreateOrInit(&choice->groups[3], &ItemSelectState_data_806D0730, 1, lbl_806DB888, lbl_806DB888);
+    SpriteGroup_CreateOrInit(&choice->groups[0], &ItemSelectState_data_806D0734, 0, lbl_806DB8F0, lbl_806DB8F4);
     choice->groups[1]->sprite->layer = 6;
     choice->groups[2]->sprite->layer = 6;
     choice->groups[3]->sprite->layer = 6;
@@ -252,12 +252,12 @@ extern "C" void fn_80238980(ItemSelectState *self) {
     choice->active = 1;
     self->resultCode = 0;
     self->phase = 4;
-    SpriteGroup_CreateOrInit(&self->groups[1], &lbl_806D0764, 0, lbl_806DB888, lbl_806DB8FC);
-    SpriteGroup_CreateOrInit(&self->groups[2], &lbl_806D0768, 0, lbl_806DB900, lbl_806DB904);
-    SpriteGroup_CreateOrInit(&self->groups[6], &lbl_806D076C, 0, lbl_806DB908, lbl_806DB90C);
-    SpriteGroup_CreateOrInit(&self->groups[3], &lbl_806D0770, 0, lbl_806DB8F0, lbl_806DB8F4);
-    SpriteGroup_CreateOrInit(&self->groups[4], &lbl_806D0774, 0, lbl_806DB8F0, lbl_806DB8F4);
-    SpriteGroup_CreateOrInit(&self->groups[5], &lbl_806D0778, 0, lbl_806DB8F0, lbl_806DB8F4);
+    SpriteGroup_CreateOrInit(&self->groups[1], &ItemSelectState_data_806D0764, 0, lbl_806DB888, lbl_806DB8FC);
+    SpriteGroup_CreateOrInit(&self->groups[2], &ItemSelectState_data_806D0768, 0, lbl_806DB900, lbl_806DB904);
+    SpriteGroup_CreateOrInit(&self->groups[6], &ItemSelectState_data_806D076C, 0, lbl_806DB908, lbl_806DB90C);
+    SpriteGroup_CreateOrInit(&self->groups[3], &ItemSelectState_data_806D0770, 0, lbl_806DB8F0, lbl_806DB8F4);
+    SpriteGroup_CreateOrInit(&self->groups[4], &ItemSelectState_data_806D0774, 0, lbl_806DB8F0, lbl_806DB8F4);
+    SpriteGroup_CreateOrInit(&self->groups[5], &ItemSelectState_data_806D0778, 0, lbl_806DB8F0, lbl_806DB8F4);
     int character = CharacterOrder(g_characterId) * 3;
     SpriteAnimParamBlock_SetAnimParamCached(self->groups[2], 0x17bc, character + 0x17bc);
     SpriteAnimParamBlock_SetAnimParamCached(self->groups[2], 0x17bd, character + 0x17bd);
@@ -548,13 +548,13 @@ static inline void PresentationParams(ItemSelectPresentation *self) {
     }
 }
 extern "C" void fn_80239D6C(ItemSelectPresentation *self) {
-    SpriteGroup_CreateOrInit(&self->groups[0], lbl_806D073C, 0, lbl_806DB8DC, lbl_806DB940);
-    SpriteGroup_CreateOrInit(&self->groups[1], lbl_806D0740, 0, lbl_806DB944, lbl_806DB948);
-    SpriteGroup_CreateOrInit(&self->groups[2], lbl_806D0744, 0, lbl_806DB94C, lbl_806DB948);
-    SpriteGroup_CreateOrInit(&self->groups[3], lbl_806D0748, 0, lbl_806DB950, lbl_806DB954);
-    SpriteGroup_CreateOrInit(&self->groups[4], lbl_806D074C, 0, lbl_806DB8DC, lbl_806DB954);
-    SpriteGroup_CreateOrInit(&self->groups[5], lbl_806D0750, 0, lbl_806DB958, lbl_806DB954);
-    SpriteGroup_CreateOrInit(&self->groups[6], lbl_806D0754, 1, lbl_806DB95C, lbl_806DB960);
+    SpriteGroup_CreateOrInit(&self->groups[0], ItemSelectState_data_806D073C, 0, lbl_806DB8DC, lbl_806DB940);
+    SpriteGroup_CreateOrInit(&self->groups[1], ItemSelectState_data_806D0740, 0, lbl_806DB944, lbl_806DB948);
+    SpriteGroup_CreateOrInit(&self->groups[2], ItemSelectState_data_806D0744, 0, lbl_806DB94C, lbl_806DB948);
+    SpriteGroup_CreateOrInit(&self->groups[3], ItemSelectState_data_806D0748, 0, lbl_806DB950, lbl_806DB954);
+    SpriteGroup_CreateOrInit(&self->groups[4], ItemSelectState_data_806D074C, 0, lbl_806DB8DC, lbl_806DB954);
+    SpriteGroup_CreateOrInit(&self->groups[5], ItemSelectState_data_806D0750, 0, lbl_806DB958, lbl_806DB954);
+    SpriteGroup_CreateOrInit(&self->groups[6], ItemSelectState_data_806D0754, 1, lbl_806DB95C, lbl_806DB960);
     self->groups[0]->sprite->layer = 6;
     self->groups[1]->sprite->layer = 6;
     self->groups[2]->sprite->layer = 6;
@@ -655,7 +655,7 @@ extern "C" void fn_8023A148(ItemSelectPresentation *self) {
             PresentationScale(self->groups[other + 1]->sprite, lbl_806DB964);
             PresentationParams(self);
             if (self->selected == 0) self->groups[6]->sprite->field1c = 0.0f;
-            else self->groups[6]->sprite->field1c = lbl_806DB968 * lbl_806D0738;
+            else self->groups[6]->sprite->field1c = lbl_806DB968 * ItemSelectState_data_806D0738;
         }
         if (self->selected == 0) {
             alpha -= 0.1f;
@@ -728,7 +728,7 @@ static inline void InitializeGridItem(GridInitState *self, unsigned char *player
         id=fn_8023D844(character,fn_8023D7A8(*(int *)(player+0x18c+i*4)));
         if(player[id+0xa8]==0) {
             int j;
-            const int *p=lbl_803DC174;
+            const int *p=ItemGridState_Init_rodata_803DC174;
             for(j=0;j<3;++p,++j) {
                 int candidate;
                 candidate=*p;
@@ -736,7 +736,7 @@ static inline void InitializeGridItem(GridInitState *self, unsigned char *player
                 for (int k=0;k<3;++k) {
                     if (candidate==ids[k]) { found=1; break; }
                 }
-                if (!found) {id=lbl_803DC174[j];break;}
+                if (!found) {id=ItemGridState_Init_rodata_803DC174[j];break;}
             }
         }
     } else id=*(int *)(player+0x18c+i*4);

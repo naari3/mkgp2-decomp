@@ -40,13 +40,13 @@ extern void Effect_KartAuraCompound_Update(char *self);
 extern void Effect_KartGlow_Update(char *self);
 
 extern const char lbl_8032F580[];
-extern Vec3 lbl_804216F8;
-extern Vec3 lbl_80421704;
-extern int lbl_806CF3C8;
-extern float lbl_806CF3CC;
-extern float lbl_806CF3D0;
-extern float lbl_806CF3D4;
-extern float lbl_806CF3D8;
+extern Vec3 HeartCompoundItem_TickCarryPhase_data_804216F8;
+extern Vec3 HeartCompoundItem_TickCarryPhase_data_80421704;
+extern int HeartCompoundItem_Update_data_806CF3C8;
+extern float HeartCompoundItem_TickCarryPhase_data_806CF3CC;
+extern float HeartCompoundItem_TickCarryPhase_data_806CF3D0;
+extern float HeartCompoundItem_TickCarryPhase_data_806CF3D4;
+extern float HeartCompoundItem_TickCarryPhase_data_806CF3D8;
 extern const float lbl_806D6060;
 extern const float lbl_806D6064;
 extern const float lbl_806D6068;
@@ -159,15 +159,15 @@ void HeartCompoundItem_TickCarryPhase(char *self, char *st) {
         *(float *)(st + 0x14) = lbl_806D6060;
         (*(signed char *)(self + 0xCA))++;
     case 1:
-        *(float *)(st + 0x14) = BuildOrientationFromYaw(*(float *)(st + 0x14) + lbl_806CF3D0);
-        rot.x = lbl_80421704.x;
-        rot.y = lbl_80421704.y;
-        rot.z = lbl_806CF3D4 * (float)sin(*(float *)(st + 0x14)) + lbl_80421704.z;
-        ofs.x = lbl_804216F8.x;
+        *(float *)(st + 0x14) = BuildOrientationFromYaw(*(float *)(st + 0x14) + HeartCompoundItem_TickCarryPhase_data_806CF3D0);
+        rot.x = HeartCompoundItem_TickCarryPhase_data_80421704.x;
+        rot.y = HeartCompoundItem_TickCarryPhase_data_80421704.y;
+        rot.z = HeartCompoundItem_TickCarryPhase_data_806CF3D4 * (float)sin(*(float *)(st + 0x14)) + HeartCompoundItem_TickCarryPhase_data_80421704.z;
+        ofs.x = HeartCompoundItem_TickCarryPhase_data_804216F8.x;
         s = sin(lbl_806D6080 * *(float *)(st + 0x14));
-        ofs.y = lbl_804216F8.y + (lbl_806CF3D8 * (float)s + lbl_806CF3D8);
-        ofs.z = lbl_804216F8.z;
-        Item_RenderHandheldByCharacter(self, ofs, rot, 1, lbl_806CF3CC);
+        ofs.y = HeartCompoundItem_TickCarryPhase_data_804216F8.y + (HeartCompoundItem_TickCarryPhase_data_806CF3D8 * (float)s + HeartCompoundItem_TickCarryPhase_data_806CF3D8);
+        ofs.z = HeartCompoundItem_TickCarryPhase_data_804216F8.z;
+        Item_RenderHandheldByCharacter(self, ofs, rot, 1, HeartCompoundItem_TickCarryPhase_data_806CF3CC);
         *(float *)(self + 0xB0) = Mtx44_GetYawOfPosZ_Padded(self + 0x48);
         if (FinalLapCoinJump_CheckActiveForObject(*(void **)(st + 0x98))) {
             *(signed char *)(self + 0x28) = 0;
@@ -205,7 +205,7 @@ void HeartCompoundItem_Update(char *self) {
 
     switch (*(signed char *)(self + 0xC8)) {
     case 0:
-        SpriteSlot_InitNonLoop(self + 0x14, lbl_806CF3C8);
+        SpriteSlot_InitNonLoop(self + 0x14, HeartCompoundItem_Update_data_806CF3C8);
         *(signed char *)(self + 0x14) = 4;
         *(char **)(st + 0x4C) = DrawEffect_SpawnDirect(Effect_KartAuraCompound_Update);
         *(signed char *)(self + 0xC8) = 1;

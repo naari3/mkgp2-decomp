@@ -5,13 +5,13 @@
  * course scene's cached projection matrix. */
 #include "game/DrawEffectAccess.h"
 
-extern unsigned int lbl_806CF2F8; /* boost frames */
-extern float lbl_806CF2FC;        /* -25.0 start velocity */
-extern float lbl_806CF300;        /* 2.0 boost accel */
-extern float lbl_806CF304;        /* 0.4 accel */
-extern float lbl_806CF308;        /* 1.5 boost growth */
-extern float lbl_806CF30C;        /* 15.0 max scale */
-extern float lbl_806D14B0;        /* growth */
+extern unsigned int RisingTextSprite_Update_data_806CF2F8; /* boost frames */
+extern float RisingTextSprite_Update_data_806CF2FC;        /* -25.0 start velocity */
+extern float RisingTextSprite_Update_data_806CF300;        /* 2.0 boost accel */
+extern float RisingTextSprite_Update_data_806CF304;        /* 0.4 accel */
+extern float RisingTextSprite_Update_data_806CF308;        /* 1.5 boost growth */
+extern float RisingTextSprite_Update_data_806CF30C;        /* 15.0 max scale */
+extern float RisingTextSprite_Update_bss_806D14B0;        /* growth */
 extern const float lbl_806D5020; /* 320.0 */
 extern const float lbl_806D5024; /* 240.0 */
 extern const float lbl_806D5028; /* 1.0 */
@@ -46,24 +46,24 @@ void RisingTextSprite_Update(unsigned char *self)
         U8(0x14) = 1;
         SpriteSlot_SetAnimFrameAndApplyScale(SLOT(self), 3, lbl_806D5034);
         GetSpawnPosition(V(0xA0), lbl_806D5020, lbl_806D5024, lbl_806D5034);
-        F(0xBC) = lbl_806CF2FC;
+        F(0xBC) = RisingTextSprite_Update_data_806CF2FC;
         F(0xC4) = lbl_806D5034;
-        U32(0xF0) = lbl_806CF2F8;
+        U32(0xF0) = RisingTextSprite_Update_data_806CF2F8;
         S8(0xC8) = 1;
     case 1:
         if (U32(0xF0) != 0) {
-            F(0xBC) += lbl_806CF300;
+            F(0xBC) += RisingTextSprite_Update_data_806CF300;
         } else {
-            F(0xBC) += lbl_806CF304;
+            F(0xBC) += RisingTextSprite_Update_data_806CF304;
         }
         F(0xA4) += F(0xBC);
         if (U32(0xF0) != 0) {
-            F(0xC4) += lbl_806CF308;
+            F(0xC4) += RisingTextSprite_Update_data_806CF308;
         } else {
-            F(0xC4) += lbl_806D14B0;
+            F(0xC4) += RisingTextSprite_Update_bss_806D14B0;
         }
-        if (lbl_806CF30C < F(0xC4)) {
-            F(0xC4) = lbl_806CF30C;
+        if (RisingTextSprite_Update_data_806CF30C < F(0xC4)) {
+            F(0xC4) = RisingTextSprite_Update_data_806CF30C;
         }
         if (lbl_806D5160 < F(0xA4)) {
             SpriteSlot_Container_Free(self);

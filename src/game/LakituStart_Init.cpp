@@ -5,7 +5,7 @@ LakituStart::LakituStart(const void *desc, int start, float px, float py, float 
     g_lakituDropStarted = 0;
     model = new clNormal3D(desc, 0);
     if (model) {
-        clNormal3D_SetScale(model, 0, lbl_806D2510, lbl_806CEDD0, lbl_806D2510, lbl_806D2510);
+        clNormal3D_SetScale(model, 0, lbl_806D2510, LakituStart_Init_data_806CEDD0, lbl_806D2510, lbl_806D2510);
         float sz, sx;
         GetStartPosition(start, &sx, 0, &sz);
         matrix[0][3] = sx + lbl_806CEDC0;

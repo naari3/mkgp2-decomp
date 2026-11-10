@@ -29,7 +29,7 @@ typedef struct KartAudioChannel {
 } KartAudioChannel;
 
 extern const Vec3 lbl_802EDD24;
-extern const Vec3 lbl_802EDD30;
+extern const Vec3 SoundVolumePan_Update_rodata_802EDD30;
 extern int SoundMgr_PlaySE(int soundId);
 extern void fn_8016C288();
 extern void fn_8016C394();
@@ -156,7 +156,7 @@ void SoundVolumePan_Update(KartAudioChannel *self)
             }
             if (self->mtx != 0) {
                 float *mtx = self->mtx;
-                Vec3 pos = lbl_802EDD30;
+                Vec3 pos = SoundVolumePan_Update_rodata_802EDD30;
                 pos.x = mtx[3];
                 pos.y = mtx[7];
                 pos.z = mtx[11];

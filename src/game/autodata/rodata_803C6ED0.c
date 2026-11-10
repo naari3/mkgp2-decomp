@@ -11,7 +11,7 @@ extern char lbl_806DB3E0[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const char lbl_803C6ED0[1032] = {
+const char DNBress_nm3_rodata_803C6ED0[1032] = {
     63, -128, 0, 0, 63, 51, 51, 51, 63, 102, 102, 102,
     0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0,
     66, -123, 85, 86, 68, 122, 0, 0, 66, -123, 85, 86,
@@ -4976,13 +4976,13 @@ const int lbl_803D0240[4][2] = {
     { 60, 50 },
     { 120, 120 }
 };
-const float lbl_803D0260[3] = {
+const float DNBress_tick_rodata_803D0260[3] = {
     1.0f, 0.3f, 0.3f
 };
 const float lbl_803D026C[3] = {
     1.0f, 1.0f, 1.0f
 };
-const float lbl_803D0278[10] = {
+const float DNBress_breath_rodata_803D0278[10] = {
     2e+03f, -4.2e+03f, 5e+03f, -2e+03f, 0.6f, 0.75f, 0.6f, 7e+01f,
     7e+01f, 7e+01f
 };
@@ -4990,11 +4990,11 @@ const Vec3f lbl_803D02A0[2] = {
     { 3670.0f, 150.0f, -3250.0f },
     { 3880.0f, 150.0f, -2846.0f }
 };
-const float lbl_803D02B8[10] = {
+const float DNBressInit_rodata_803D02B8[10] = {
     3.75e+03f, 2.3e+02f, -2971.0f, 4049.0f, 2.3e+02f, -2.8e+03f, 3122.0f, 4412.0f,
     -3.7e+03f, -2.39e+03f
 };
-const unk32 lbl_803D02E0[3] = {
+const unk32 sdata_806D0540_rodata_803D02E0[3] = {
     0x636C444E, 0x42726573, 0x73000000
 };
 const char lbl_803D02EC[] = "clMapEffectParts";

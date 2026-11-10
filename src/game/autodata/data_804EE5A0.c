@@ -10,26 +10,26 @@ extern void fn_8023C394();
 extern void fn_8023C3C8();
 extern void fn_8023C5A4();
 extern void fn_8023C878();
-extern char lbl_806D07A8[];
-extern char lbl_806D07B0[];
-extern char lbl_806D07B8[];
+extern char data_804EE5A0_data_806D07A8[];
+extern char data_804EE5A0_data_806D07B0[];
+extern char data_804EE5A0_data_806D07B8[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804EE5A0[4] = {
-    (void *)&lbl_806D07A8,
+void *ChoiceChild_vtable_804EE5A0[4] = {
+    (void *)&data_804EE5A0_data_806D07A8,
     0,
     (void *)fn_8023C0D8,
     0
 };
-void *lbl_804EE5B0[3] = {
-    (void *)&lbl_806D07B0,
+void *sdata_806D0728_data_804EE5B0[3] = {
+    (void *)&data_804EE5A0_data_806D07B0,
     0,
     0
 };
-void *lbl_804EE5BC[7] = {
-    (void *)&lbl_806D07B8,
+void *ChoiceFinish_vtable_804EE5BC[7] = {
+    (void *)&data_804EE5A0_data_806D07B8,
     0,
     (void *)fn_8023C5A4,
     (void *)fn_8023C878,

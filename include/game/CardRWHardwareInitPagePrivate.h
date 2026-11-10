@@ -17,7 +17,7 @@ struct HardwareInitPage {
     int field27C;
 };
 extern "C" {
-extern MenuItem lbl_803FCD2C[];
+extern MenuItem CardRW_HardwareInit_Page_data_803FCD2C[];
 extern char lbl_806D2DB4[5];
 void CardRW_TestTopMenu_Page(HardwareInitPage *, int, int);
 unsigned char CardRW_ErrorDisplay(HardwareInitPage *, int, int, int);

@@ -5,7 +5,7 @@ typedef struct ObjView {
     void *buf1;
 } ObjView;
 
-extern char lbl_80495FA4[];
+extern char ParticleView_vtable_80495FA4[];
 extern char lbl_80490FE0[];
 extern const char lbl_8037D950[];
 extern void Object_DtorWithGXSync(void *obj, int flag);
@@ -15,7 +15,7 @@ extern void DebugPrintf(const char *fmt, ...);
 
 ObjView *fn_80196758(ObjView *self, short flag) {
     if (self != 0) {
-        self->vt = lbl_80495FA4;
+        self->vt = ParticleView_vtable_80495FA4;
         Object_DtorWithGXSync(self->child, 1);
         MemoryManager_Free(self->buf0);
         MemoryManager_Free(self->buf1);

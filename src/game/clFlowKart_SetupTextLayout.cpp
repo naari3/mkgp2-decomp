@@ -1,150 +1,150 @@
 /* --- owned .rodata 0x8039F1C8..0x8039FC60 (tools/own_data.py) --- */
-extern "C" char lbl_8039ECC8[];
-extern "C" char lbl_8039ECE0[];
-extern "C" char lbl_8039ECFC[];
-extern "C" char lbl_8039ED18[];
-extern "C" char lbl_8039ED2C[];
-extern "C" char lbl_8039ED40[];
-extern "C" char lbl_8039ED60[];
-extern "C" char lbl_8039ED80[];
-extern "C" char lbl_8039ED98[];
-extern "C" char lbl_8039EDB0[];
-extern "C" char lbl_8039EDC4[];
-extern "C" char lbl_8039EDDC[];
-extern "C" char lbl_8039EDF4[];
-extern "C" char lbl_8039EE0C[];
-extern "C" char lbl_8039EE28[];
-extern "C" char lbl_8039EE44[];
-extern "C" char lbl_8039EE5C[];
-extern "C" char lbl_8039EE6C[];
-extern "C" char lbl_8039EE7C[];
-extern "C" char lbl_8039EE94[];
-extern "C" char lbl_8039EEB8[];
-extern "C" char lbl_8039EEDC[];
-extern "C" char lbl_8039EEF8[];
-extern "C" char lbl_8039EF0C[];
-extern "C" char lbl_8039EF1C[];
-extern "C" char lbl_8039EF30[];
-extern "C" char lbl_8039EF44[];
-extern "C" char lbl_8039EF5C[];
-extern "C" char lbl_8039EF78[];
-extern "C" char lbl_8039EF98[];
-extern "C" char lbl_8039EFB8[];
-extern "C" char lbl_8039EFC8[];
-extern "C" char lbl_8039EFE4[];
-extern "C" char lbl_8039EFFC[];
-extern "C" char lbl_8039F014[];
-extern "C" char lbl_8039F030[];
-extern "C" char lbl_8039F04C[];
-extern "C" char lbl_8039F064[];
-extern "C" char lbl_8039F07C[];
-extern "C" char lbl_8039F094[];
-extern "C" char lbl_8039F0AC[];
-extern "C" char lbl_8039F0C0[];
-extern "C" char lbl_8039F0D8[];
-extern "C" char lbl_8039F0F0[];
-extern "C" char lbl_8039F108[];
-extern "C" char lbl_8039F120[];
-extern "C" char lbl_8039F134[];
-extern "C" char lbl_8039F148[];
-extern "C" char lbl_8039F160[];
-extern "C" char lbl_8039F174[];
-extern "C" char lbl_8039F18C[];
-extern "C" char lbl_8039F19C[];
-extern "C" char lbl_8039F1B4[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039ECC8[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039ECE0[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039ECFC[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039ED18[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039ED2C[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039ED40[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039ED60[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039ED80[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039ED98[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EDB0[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EDC4[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EDDC[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EDF4[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EE0C[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EE28[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EE44[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EE5C[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EE6C[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EE7C[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EE94[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EEB8[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EEDC[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EEF8[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EF0C[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EF1C[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EF30[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EF44[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EF5C[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EF78[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EF98[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EFB8[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EFC8[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EFE4[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039EFFC[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F014[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F030[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F04C[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F064[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F07C[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F094[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F0AC[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F0C0[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F0D8[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F0F0[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F108[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F120[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F134[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F148[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F160[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F174[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F18C[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F19C[];
+extern "C" char clFlowKart_SetupTextLayout_rodata_8039F1B4[];
 extern "C" char lbl_806DA1A8[];
 extern "C" char lbl_806DA1AC[];
 #pragma force_active on
-extern "C" const void *const lbl_8039F1C8[224] = {
+extern "C" const void *const clFlowKart_SetupTextLayout_rodata_8039F1C8[224] = {
     (void *)0x1AEB,
     (void *)0x1D04,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039ECC8,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039ECC8,
     (void *)&lbl_806DA1A8,
     (void *)0x0,
     (void *)0x0,
     (void *)0x1AEB,
     (void *)0x1D04,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039ECE0,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039ECE0,
     (void *)&lbl_806DA1A8,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1CFC,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039ECFC,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039ECFC,
     (void *)&lbl_806DA1AC,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1CFC,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039ED18,
-    (void *)&lbl_8039ED2C,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039ED18,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039ED2C,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1CFD,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039ED40,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039ED40,
     (void *)&lbl_806DA1A8,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0xFFFFFFFF,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039ED60,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039ED60,
     (void *)&lbl_806DA1A8,
     (void *)0x0,
     (void *)0x3,
     (void *)0xFFFFFFFF,
     (void *)0x1D09,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039ED80,
-    (void *)&lbl_8039ED98,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039ED80,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039ED98,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D09,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039EDB0,
-    (void *)&lbl_8039EDC4,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EDB0,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EDC4,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D03,
-    (void *)&lbl_8039EDDC,
-    (void *)&lbl_8039EDF4,
-    (void *)&lbl_8039EE0C,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EDDC,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EDF4,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EE0C,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D03,
-    (void *)&lbl_8039EE28,
-    (void *)&lbl_8039EE44,
-    (void *)&lbl_8039EE5C,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EE28,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EE44,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EE5C,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D04,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039EE6C,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EE6C,
     (void *)&lbl_806DA1A8,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D00,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039EE7C,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EE7C,
     (void *)&lbl_806DA1A8,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D00,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039EE94,
-    (void *)&lbl_8039EEB8,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EE94,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EEB8,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
@@ -163,121 +163,121 @@ extern "C" const void *const lbl_8039F1C8[224] = {
     (void *)0x2,
     (void *)0xFFFFFFFF,
     (void *)0x1D00,
-    (void *)&lbl_8039EEDC,
-    (void *)&lbl_8039EEF8,
-    (void *)&lbl_8039EF0C,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EEDC,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EEF8,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EF0C,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D06,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039EF1C,
-    (void *)&lbl_8039EF30,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EF1C,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EF30,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D06,
-    (void *)&lbl_8039EF44,
-    (void *)&lbl_8039EF1C,
-    (void *)&lbl_8039EF30,
-    (void *)0x0,
-    (void *)0x0,
-    (void *)0xFFFFFFFF,
-    (void *)0x1D06,
-    (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039EF5C,
-    (void *)&lbl_806DA1A8,
-    (void *)0x0,
-    (void *)0x0,
-    (void *)0xFFFFFFFF,
-    (void *)0x1D06,
-    (void *)&lbl_8039EF78,
-    (void *)&lbl_8039EF98,
-    (void *)&lbl_8039EFB8,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EF44,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EF1C,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EF30,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D06,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039EFC8,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EF5C,
+    (void *)&lbl_806DA1A8,
+    (void *)0x0,
+    (void *)0x0,
+    (void *)0xFFFFFFFF,
+    (void *)0x1D06,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EF78,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EF98,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EFB8,
+    (void *)0x0,
+    (void *)0x0,
+    (void *)0xFFFFFFFF,
+    (void *)0x1D06,
+    (void *)&lbl_806DA1A8,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EFC8,
     (void *)&lbl_806DA1A8,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D06,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039EFE4,
-    (void *)&lbl_8039EFFC,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EFE4,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039EFFC,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D06,
-    (void *)&lbl_8039F014,
-    (void *)&lbl_8039F030,
-    (void *)&lbl_8039F04C,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F014,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F030,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F04C,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D06,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039F064,
-    (void *)&lbl_8039F07C,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F064,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F07C,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D04,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039F094,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F094,
     (void *)&lbl_806DA1A8,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D06,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039F0AC,
-    (void *)&lbl_8039F0C0,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F0AC,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F0C0,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D08,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039F0D8,
-    (void *)&lbl_8039F0F0,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F0D8,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F0F0,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D00,
-    (void *)&lbl_8039F108,
-    (void *)&lbl_8039F120,
-    (void *)&lbl_8039F134,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F108,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F120,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F134,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D00,
-    (void *)&lbl_8039F108,
-    (void *)&lbl_8039F148,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F108,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F148,
     (void *)&lbl_806DA1A8,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D00,
-    (void *)&lbl_8039F108,
-    (void *)&lbl_8039F160,
-    (void *)&lbl_8039F134,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F108,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F160,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F134,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D00,
-    (void *)&lbl_8039F108,
-    (void *)&lbl_8039F174,
-    (void *)&lbl_8039F18C,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F108,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F174,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F18C,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
     (void *)0x1D00,
-    (void *)&lbl_8039F108,
-    (void *)&lbl_8039F19C,
-    (void *)&lbl_8039F1B4,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F108,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F19C,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F1B4,
     (void *)0x0,
     (void *)0x0
 };
@@ -327,7 +327,7 @@ extern "C" const char lbl_8039F888[] = "Card printing has failed.";
 extern "C" const char lbl_8039F8A4[] = "Card writer error.";
 extern "C" const char lbl_8039F8B8[] = "Please confirm card";
 extern "C" const char lbl_8039F8CC[] = "R/W connections.";
-extern "C" const void *const lbl_8039F8E0[224] = {
+extern "C" const void *const clFlowKart_SetupTextLayout_rodata_8039F8E0[224] = {
     (void *)0x1AEB,
     (void *)0x1D04,
     (void *)&lbl_806DA1A8,
@@ -513,8 +513,8 @@ extern "C" const void *const lbl_8039F8E0[224] = {
     (void *)0xFFFFFFFF,
     (void *)0x1D08,
     (void *)&lbl_806DA1A8,
-    (void *)&lbl_8039F0D8,
-    (void *)&lbl_8039F0F0,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F0D8,
+    (void *)&clFlowKart_SetupTextLayout_rodata_8039F0F0,
     (void *)0x0,
     (void *)0x0,
     (void *)0xFFFFFFFF,
@@ -577,7 +577,7 @@ struct FlowKartView {
     TextManager *texts[3];
 };
 extern "C" {
-extern KartEntry *lbl_806CFED0[2];
+extern KartEntry *clFlowKart_SetupTextLayout_data_806CFED0[2];
 extern Vec2 lbl_8039FC60[];
 extern const float lbl_806DA1C8;
 int isJapanese(void);
@@ -588,7 +588,7 @@ void fn_801F93D0(TextManager *tm, float x, float y);
 
 extern "C" void clFlowKart_SetupTextLayout(FlowKartView *self, int kind)
 {
-    if (fn_801D92D0(self, &lbl_806CFED0[isJapanese()][kind]) == 1) {
+    if (fn_801D92D0(self, &clFlowKart_SetupTextLayout_data_806CFED0[isJapanese()][kind]) == 1) {
         self->kind = kind;
     } else {
         self->otherKind = kind;

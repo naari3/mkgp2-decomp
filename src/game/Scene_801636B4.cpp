@@ -1,6 +1,6 @@
 /*
  * 0x801636B4..0x80163804: draw / update forwarders and deleting destructor
- * of a course loader scene (vtable lbl_80490DF8), plus a virtual-delete thunk.
+ * of a course loader scene (vtable CourseLoadScene_vtable_80490DF8), plus a virtual-delete thunk.
  */
 
 #include "game/types/VObj.h"
@@ -13,7 +13,7 @@ struct Scene801636B4 {
 };
 
 extern "C" {
-extern char lbl_80490DF8[];
+extern char CourseLoadScene_vtable_80490DF8[];
 extern char lbl_803FE0C8[];
 extern void fn_80163C68(void *);
 extern unsigned char fn_80163EF4(void *);
@@ -39,7 +39,7 @@ void fn_801636EC(Scene801636B4 *self) {
 
 Scene801636B4 *fn_80163744(Scene801636B4 *self, short flag) {
     if (self) {
-        self->vtable = lbl_80490DF8;
+        self->vtable = CourseLoadScene_vtable_80490DF8;
         SetCourseScene3D(0);
         if (self->child) {
             fn_801638B4(self->child, 1);

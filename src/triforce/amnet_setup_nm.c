@@ -2,22 +2,22 @@
 
 /* Five board-config tables; separate objects so fn_8028D8CC addresses them off
  * one pooled .rodata base (addi rX, base, 0x0/0x28/0x40/0x50/0x78). */
-const u32 lbl_803F2798[10] = {0x00800000, 0x00001000, 0x00000020, 0x00000000, 0x00000200, 0x00000200, 0x00A00000, 0x00100000, 0x00B00000, 0x00100000};
+const u32 amnet_setup_nm_rodata_803F2798[10] = {0x00800000, 0x00001000, 0x00000020, 0x00000000, 0x00000200, 0x00000200, 0x00A00000, 0x00100000, 0x00B00000, 0x00100000};
 const u32 lbl_803F27C0[6] = {0x00D00000, 0x00100000, 0x000FF000, 0x00000000, 0x00D00000, 0x00100000};
 const u32 lbl_803F27D8[4] = {0x00C00000, 0x00001000, 0x00000020, 0x00000000};
 const u32 lbl_803F27E8[10] = {0x00040000, 0x00001000, 0x00000020, 0x00000000, 0x00000200, 0x00000200, 0x00100000, 0x00080000, 0x00180000, 0x00080000};
 const u32 lbl_803F2810[6] = {0x00080000, 0x00080000, 0x0007F000, 0x00000000, 0x00080000, 0x00080000};
 
-const NetHandler lbl_803F2828[12] = {
+const NetHandler amnet_setup_nm_rodata_803F2828[12] = {
     fn_80291738, fn_80291738, fn_802916E4, fn_80291690, fn_802915F4, fn_80291524,
     fn_8029145C, fn_802913CC, fn_80291314, fn_80291738, fn_8029121C, fn_80291134,
 };
 
-const NetHandler lbl_803F2858[4] = {fn_80291738, fn_80291738, fn_80291098, fn_80291738};
+const NetHandler amnet_setup_nm_rodata_803F2858[4] = {fn_80291738, fn_80291738, fn_80291098, fn_80291738};
 
-const NetDispatch lbl_803F2868[3] = {
-    {0x0000, 12, lbl_803F2828},
-    {0x0300, 4, lbl_803F2858},
+const NetDispatch amnet_nm3_rodata_803F2868[3] = {
+    {0x0000, 12, amnet_setup_nm_rodata_803F2828},
+    {0x0300, 4, amnet_setup_nm_rodata_803F2858},
     {0, 0, NULL},
 };
 
@@ -198,7 +198,7 @@ s32 fn_8028D8CC(u8 id, NetBlob* blob) {
             dev->statAddr = off + 0x900020;
             InitializeDevCommand(dev);
             InitializeDevClear(dev->statAddr, dev);
-            memcpy(lbl_80699140.cfgA, lbl_803F2798, sizeof(lbl_80699140.cfgA));
+            memcpy(lbl_80699140.cfgA, amnet_setup_nm_rodata_803F2798, sizeof(lbl_80699140.cfgA));
             lbl_80699140.cfgA[0] += off;
             lbl_80699140.cfgA[6] += off;
             lbl_80699140.cfgA[8] += off;

@@ -3,7 +3,7 @@
 extern "C" void *Alloc(unsigned long);
 extern "C" void TexMgr_Init(void *);
 static inline int GridFallbackCandidate(int index) {
-    return lbl_803DC174[index];
+    return ItemGridState_Init_rodata_803DC174[index];
 }
 static inline void CreateGridTexts(GridInitState *self) {
     int col, row;

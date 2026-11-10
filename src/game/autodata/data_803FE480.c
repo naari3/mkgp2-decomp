@@ -62,18 +62,18 @@ extern void fn_8008C034();
 extern void fn_8008C320();
 extern void fn_8008C384();
 extern void fn_8008F074();
-extern char lbl_80312874[];
+extern char data_803FE480_rodata_80312874[];
 extern char lbl_80312884[];
-extern char lbl_80312894[];
+extern char data_803FE480_rodata_80312894[];
 extern char lbl_803128B8[];
 extern char lbl_803128CC[];
 extern char lbl_803128E4[];
-extern char lbl_80312900[];
+extern char data_803FE480_rodata_80312900[];
 extern char lbl_8031291C[];
 extern char lbl_80312928[];
-extern char lbl_80312938[];
+extern char data_803FE480_rodata_80312938[];
 extern char lbl_80312958[];
-extern char lbl_8031296C[];
+extern char data_803FE480_rodata_8031296C[];
 extern char lbl_80312994[];
 extern char lbl_80313648[];
 extern char lbl_80313664[];
@@ -333,19 +333,19 @@ extern char lbl_803152F8[];
 extern char lbl_80315318[];
 extern char lbl_80315338[];
 extern char lbl_80315358[];
-extern char lbl_80315F88[];
-extern char lbl_80315FBC[];
-extern char lbl_80315FF0[];
-extern char lbl_80316024[];
-extern char lbl_80316058[];
-extern char lbl_8031608C[];
+extern char data_803FE480_rodata_80315F88[];
+extern char data_803FE480_rodata_80315FBC[];
+extern char data_803FE480_rodata_80315FF0[];
+extern char data_803FE480_rodata_80316024[];
+extern char data_803FE480_rodata_80316058[];
+extern char data_803FE480_rodata_8031608C[];
 extern char lbl_803170FC[];
 extern char lbl_80317108[];
 extern char lbl_806CEFE0[];
-extern char lbl_806CEFE8[];
-extern char lbl_806CEFF0[];
-extern char lbl_806CEFF8[];
-extern char lbl_806CF000[];
+extern char data_803FE480_data_806CEFE8[];
+extern char data_803FE480_data_806CEFF0[];
+extern char data_803FE480_data_806CEFF8[];
+extern char data_803FE480_data_806CF000[];
 extern char lbl_806D32AC[];
 extern char lbl_806D32B4[];
 extern char lbl_806D32BC[];
@@ -374,10 +374,10 @@ typedef struct CardTaskFactory {
 #pragma force_active on
 
 /* decl: unsigned char */
-void *lbl_803FE480[80] = {
+void *CardTaskChecks_data_803FE480[80] = {
     (void *)0x43680000,
     (void *)0x43960000,
-    (void *)&lbl_80312874,
+    (void *)&data_803FE480_rodata_80312874,
     (void *)0x1,
     (void *)0xFF,
     (void *)0xFF,
@@ -393,7 +393,7 @@ void *lbl_803FE480[80] = {
     (void *)0xFF,
     (void *)0x43100000,
     (void *)0x43AE0000,
-    (void *)&lbl_80312894,
+    (void *)&data_803FE480_rodata_80312894,
     (void *)0x1,
     (void *)0xFF,
     0,
@@ -425,7 +425,7 @@ void *lbl_803FE480[80] = {
     (void *)0xFF,
     (void *)0x433C0000,
     (void *)0x43A28000,
-    (void *)&lbl_80312900,
+    (void *)&data_803FE480_rodata_80312900,
     (void *)0x1,
     (void *)0xFF,
     (void *)0xFF,
@@ -457,7 +457,7 @@ void *lbl_803FE480[80] = {
     (void *)0xFF
 };
 /* decl: CardStep */
-void *lbl_803FE5C0[12] = {
+void *CardTaskWelcome_StepCommCheck_data_803FE5C0[12] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)CardTaskWelcome_StepInputCheck,
@@ -472,39 +472,39 @@ void *lbl_803FE5C0[12] = {
     (void *)CardTaskWelcome_StepInputCheck
 };
 /* decl: CardStep */
-void *lbl_803FE5F0[3] = {
+void *CardTaskWelcome_StateInit_data_803FE5F0[3] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)CardTaskWelcome_StepStatus
 };
-CardTextLine lbl_803FE5FC[6] = {
+CardTextLine CardTaskWaitInput_DrawByButtons_data_803FE5FC[6] = {
     { 212.0f, 256.0f, (void *)&lbl_803128CC, 1, 255, 255, 255, 255 },
     { 119.0f, 240.0f, (void *)&lbl_803128E4, 1, 255, 255, 255, 255 },
-    { 160.0f, 300.0f, (void *)&lbl_80312938, 1, 255, 255, 255, 255 },
+    { 160.0f, 300.0f, (void *)&data_803FE480_rodata_80312938, 1, 255, 255, 255, 255 },
     { 204.0f, 300.0f, (void *)&lbl_80312958, 1, 255, 255, 255, 255 },
-    { 130.0f, 300.0f, (void *)&lbl_8031296C, 1, 255, 255, 255, 255 },
+    { 130.0f, 300.0f, (void *)&data_803FE480_rodata_8031296C, 1, 255, 255, 255, 255 },
     { 140.0f, 300.0f, (void *)&lbl_80312994, 1, 255, 255, 255, 255 }
 };
 /* decl: CardStep */
-void *lbl_803FE6BC[3] = {
+void *CardTaskChecks_data_803FE6BC[3] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)CardPrinterChecker_State_WaitHandle
 };
 /* decl: CardStep */
-void *lbl_803FE6C8[3] = {
+void *CardPrinterChecker_State_WaitHandle_data_803FE6C8[3] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)CardPrinterChecker_ReadCleaningChoice
 };
 /* decl: CardStep */
-void *lbl_803FE6D4[3] = {
+void *CardPrinterChecker_State_CleaningSelectInput_data_803FE6D4[3] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)fn_8008B668
 };
 /* decl: CardStep */
-void *lbl_803FE6E0[15] = {
+void *CardPrinterChecker_State_CleaningSelectInput_data_803FE6E0[15] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)CardPrinterChecker_State_ExecCleaning,
@@ -522,13 +522,13 @@ void *lbl_803FE6E0[15] = {
     (void *)CardPrinterChecker_State_RemainCardJobEnd
 };
 /* decl: CardStep */
-void *lbl_803FE71C[3] = {
+void *CardPrinterChecker_State_WaitStatus_data_803FE71C[3] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)CardPrinterChecker_State_WaitStatus
 };
 /* decl: CardStep */
-void *lbl_803FE728[12] = {
+void *CardPrinterChecker_State_WaitStatus_data_803FE728[12] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)CardPrinterChecker_State_SetupCleaning,
@@ -543,37 +543,37 @@ void *lbl_803FE728[12] = {
     (void *)CardPrinterChecker_State_SetupCleaning
 };
 /* decl: CardStep */
-void *lbl_803FE758[3] = {
+void *CardTaskPrintJob_StepStart_data_803FE758[3] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)CardTaskPrintJob_StepWaitFontTransfer
 };
 /* decl: CardStep */
-void *lbl_803FE764[3] = {
+void *CardPrinterChecker_State_InitPrinter_data_803FE764[3] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)CardTaskPrintJob_StepNoCardPrinter
 };
 /* decl: CardStep */
-void *lbl_803FE770[3] = {
+void *CardPrinterChecker_State_InitPrinter_data_803FE770[3] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)CardTaskPrintJob_StepStart
 };
 /* decl: CardStep */
-void *lbl_803FE77C[3] = {
+void *CameraChecker_State_ShutdownTick_data_803FE77C[3] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)fn_8008C320
 };
 /* decl: CardStep */
-void *lbl_803FE788[3] = {
+void *CameraChecker_State_WaitButton2400_data_803FE788[3] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)CameraChecker_State_ShutdownTick
 };
 /* decl: CardStep */
-void *lbl_803FE794[12] = {
+void *CameraChecker_State_WaitButton1000_data_803FE794[12] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)CameraChecker_State_WaitButton2400,
@@ -588,19 +588,19 @@ void *lbl_803FE794[12] = {
     (void *)fn_8008C320
 };
 /* decl: CardStep */
-void *lbl_803FE7C4[3] = {
+void *CameraChecker_State_Entry_data_803FE7C4[3] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)CameraChecker_State_DownloadWait
 };
 /* decl: CardStep */
-void *lbl_803FE7D0[3] = {
+void *CameraChecker_State_WaitVBlank_data_803FE7D0[3] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)fn_8008C034
 };
 /* decl: CardStep */
-void *lbl_803FE7DC[3] = {
+void *CameraChecker_State_WaitVBlank_data_803FE7DC[3] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)CameraChecker_State_Entry
@@ -611,13 +611,13 @@ CardTaskFactory lbl_803FE7E8[4] = {
     { (void *)CardTaskPrintJob_New, (void *)&lbl_806D32BC },
     { (void *)CameraChecker_Alloc, (void *)&lbl_806D32C4 }
 };
-void *lbl_803FE808[3] = {
+void *sdata_806CEFE0_data_803FE808[3] = {
     (void *)&lbl_806CEFE0,
     0,
     0
 };
-void *lbl_803FE814[8] = {
-    (void *)&lbl_806CEFE8,
+void *CameraObject_vtable_803FE814[8] = {
+    (void *)&data_803FE480_data_806CEFE8,
     0,
     (void *)fn_8008C384,
     (void *)CameraChecker_Dtor,
@@ -626,13 +626,13 @@ void *lbl_803FE814[8] = {
     (void *)CardTaskDispatch_WithFrameBudget,
     (void *)CardTask_NamCamEndTrampoline
 };
-void *lbl_803FE834[3] = {
+void *sdata_806CEFE0_data_803FE834[3] = {
     (void *)&lbl_806CEFE0,
     0,
     0
 };
-void *lbl_803FE840[8] = {
-    (void *)&lbl_806CEFF0,
+void *PrintObject_vtable_803FE840[8] = {
+    (void *)&data_803FE480_data_806CEFF0,
     0,
     (void *)fn_8008BF1C,
     (void *)CardPrinterChecker_dtor,
@@ -641,13 +641,13 @@ void *lbl_803FE840[8] = {
     (void *)CardPrinterChecker_PostFrame,
     (void *)fn_80089FA0
 };
-void *lbl_803FE860[3] = {
+void *sdata_806CEFE0_data_803FE860[3] = {
     (void *)&lbl_806CEFE0,
     0,
     0
 };
-void *lbl_803FE86C[8] = {
-    (void *)&lbl_806CEFF8,
+void *WaitInputObject_vtable_803FE86C[8] = {
+    (void *)&data_803FE480_data_806CEFF8,
     0,
     (void *)fn_80089E70,
     (void *)CardTaskWaitInput_Dtor,
@@ -656,13 +656,13 @@ void *lbl_803FE86C[8] = {
     (void *)CardTaskWaitInput_StepPoll,
     (void *)fn_8008ABFC
 };
-void *lbl_803FE88C[3] = {
+void *sdata_806CEFE0_data_803FE88C[3] = {
     (void *)&lbl_806CEFE0,
     0,
     0
 };
-void *lbl_803FE898[8] = {
-    (void *)&lbl_806CF000,
+void *WelcomeObject_vtable_803FE898[8] = {
+    (void *)&data_803FE480_data_806CF000,
     0,
     (void *)fn_8008A6B0,
     (void *)CardTaskBase_Dtor,
@@ -672,7 +672,7 @@ void *lbl_803FE898[8] = {
     (void *)fn_8008A760
 };
 /* decl: char / void * */
-void *lbl_803FE8B8[8] = {
+void *CardTaskObject_vtable_803FE8B8[8] = {
     (void *)&lbl_806CEFE0,
     0,
     (void *)fn_80089E70,
@@ -682,20 +682,20 @@ void *lbl_803FE8B8[8] = {
     0,
     (void *)fn_80089FA0
 };
-CardPrinterStatePtr lbl_803FE8D8[1] = {
+CardPrinterStatePtr CardPrinterChecker_StartCleaningJob_data_803FE8D8[1] = {
     { 0, -1, (void *)CardPrinterChecker_State_CardResetWait }
 };
-CardPrinterStatePtr lbl_803FE8E4[1] = {
+CardPrinterStatePtr CardPrinterChecker_State_CardResetWait_data_803FE8E4[1] = {
     { 0, -1, (void *)CardPrinterChecker_State_CleaningWait }
 };
-CardPrinterStatePtr lbl_803FE8F0[1] = {
+CardPrinterStatePtr CardPrinterChecker_State_CleaningWait_data_803FE8F0[1] = {
     { 0, -1, (void *)CardPrinterChecker_State_CardEjectWait }
 };
-CardPrinterStatePtr lbl_803FE8FC[1] = {
+CardPrinterStatePtr CardPrinterChecker_State_CardEjectWait_data_803FE8FC[1] = {
     { 0, -1, (void *)fn_8008F074 }
 };
 /* decl: CardPrinterStatePtr */
-void *lbl_803FE908[4] = {
+void *CardPrinterChecker_States_data_803FE908[4] = {
     0,
     (void *)0xFFFFFFFF,
     (void *)fn_8008F074,
@@ -1021,16 +1021,16 @@ char *chara_mario_head_null_joint[13] = {
     (char *)&lbl_80315338,
     (char *)&lbl_80315358
 };
-int *lbl_803FED28[6] = {
-    (int *)&lbl_80315F88,
-    (int *)&lbl_80315FBC,
-    (int *)&lbl_80315FF0,
-    (int *)&lbl_80316024,
-    (int *)&lbl_80316058,
-    (int *)&lbl_8031608C
+int *Items_data_803FED28[6] = {
+    (int *)&data_803FE480_rodata_80315F88,
+    (int *)&data_803FE480_rodata_80315FBC,
+    (int *)&data_803FE480_rodata_80315FF0,
+    (int *)&data_803FE480_rodata_80316024,
+    (int *)&data_803FE480_rodata_80316058,
+    (int *)&data_803FE480_rodata_8031608C
 };
 /* decl: u8 */
-void *lbl_803FED40[12] = {
+void *Card_VerifyChecksum_data_803FED40[12] = {
     (void *)&lbl_803170FC,
     (void *)0x8,
     (void *)0x3,

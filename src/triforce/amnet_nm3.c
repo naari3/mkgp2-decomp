@@ -1,23 +1,23 @@
 #include <triforce/amnet_priv.h>
 
 NetTrace lbl_806937C0[8];
-u32 lbl_80693940[0x1000];
+u32 amnet_nm3_bss_80693940[0x1000];
 NetChan lbl_80697940[64];
 NetState lbl_80699140;
 
 /* Debug helper stripped from the final link; fixes the order of the statics. */
 void NetResetTrace(void) {
     lbl_806937C0[0].flags = 0;
-    lbl_80693940[0] = 0;
+    amnet_nm3_bss_80693940[0] = 0;
     lbl_80697940[0].dev = 0;
     lbl_80699140.numDev = 0;
 }
 
 u32 lbl_806D1E44;
-u32 lbl_806D1E40;
+u32 amnet_nm3_bss_806D1E40;
 
 void (*lbl_804F5800[5])(void) = {NULL, fn_8028F430, fn_8028F3D8, fn_8028F31C, fn_8028F25C};
-void (*lbl_804F5814[5])(void) = {NULL, fn_8028F404, fn_8028F348, fn_8028F298, NULL};
+void (*amnet_nm3_data_804F5814[5])(void) = {NULL, fn_8028F404, fn_8028F348, fn_8028F298, NULL};
 
 static inline void TracePacket(u8 op, u8 dir, void* buf, u32 addr, u32 size) {
     NetTrace* t;
@@ -99,8 +99,8 @@ s32 fn_8028C1B8(u8 channel) {
     SendPacket(pkt, dev);
     {
         u32 kind = dev->kind;
-        if (kind <= 3 && lbl_804F5814[kind] != NULL) {
-            lbl_804F5814[kind]();
+        if (kind <= 3 && amnet_nm3_data_804F5814[kind] != NULL) {
+            amnet_nm3_data_804F5814[kind]();
         }
     }
     lbl_80699140.txCount++;
@@ -149,7 +149,7 @@ static inline NetHandler HandlerFor(NetPacket* pkt) {
     const NetDispatch* d;
     const NetHandler* fns;
     cmd = BSWAP16(pkt->flags);
-    d = lbl_803F2868;
+    d = amnet_nm3_rodata_803F2868;
     while ((fns = d->fns) != NULL) {
         if ((cmd & 0x7F00) == d->key) {
             idx = cmd & 0xFF;

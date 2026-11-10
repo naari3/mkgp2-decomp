@@ -3,59 +3,59 @@
 #include "game/singleton.h"
 extern "C" {
 extern const char lbl_8039C5BC[];
-extern const float lbl_8039C55C[];
+extern const float ranking_display_rodata_8039C55C[];
 extern const float lbl_806D9FC4, lbl_806D9FC8, lbl_806D9FCC, lbl_806D9FD0, lbl_806D9FD4;
 extern const float lbl_806D9FD8, lbl_806D9FDC, lbl_806D9FE0, lbl_806D9FE4, lbl_806D9FE8;
 extern const char lbl_806D9FEC[4];
 extern int g_cupId, g_longRoundFlag, g_reverseRoundFlag, g_localPcbRole;
 extern const char lbl_806D9F70[];
-extern const char lbl_8039C384[];
+extern const char ranking_display_rodata_8039C384[];
 extern const char lbl_806D9F78[];
 extern const char lbl_806D9F80[];
 extern const char lbl_806D9F88[];
-extern const char lbl_8039C390[];
-extern const char lbl_8039C39C[];
-extern const char lbl_8039C3A8[];
-extern const char lbl_8039C3B4[];
-extern const char lbl_8039C3C0[];
-extern const char lbl_8039C3CC[];
-extern const char lbl_8039C3D8[];
-extern const char lbl_8039C3E4[];
-extern const char lbl_8039C3F0[];
-extern const char lbl_8039C3FC[];
-extern const char lbl_8039C408[];
-extern const char lbl_8039C414[];
-extern const char lbl_8039C420[];
-extern const char lbl_8039C42C[];
+extern const char ranking_display_rodata_8039C390[];
+extern const char ranking_display_rodata_8039C39C[];
+extern const char ranking_display_rodata_8039C3A8[];
+extern const char ranking_display_rodata_8039C3B4[];
+extern const char ranking_display_rodata_8039C3C0[];
+extern const char ranking_display_rodata_8039C3CC[];
+extern const char ranking_display_rodata_8039C3D8[];
+extern const char ranking_display_rodata_8039C3E4[];
+extern const char ranking_display_rodata_8039C3F0[];
+extern const char ranking_display_rodata_8039C3FC[];
+extern const char ranking_display_rodata_8039C408[];
+extern const char ranking_display_rodata_8039C414[];
+extern const char ranking_display_rodata_8039C420[];
+extern const char ranking_display_rodata_8039C42C[];
 extern const char lbl_806D9F90[];
-extern const char lbl_8039C438[];
+extern const char ranking_display_rodata_8039C438[];
 extern const char lbl_806D9F98[];
-extern const char lbl_8039C444[];
+extern const char ranking_display_rodata_8039C444[];
 extern const char lbl_806D9FA0[];
-extern const char lbl_8039C450[];
-extern const char lbl_8039C45C[];
+extern const char ranking_display_rodata_8039C450[];
+extern const char ranking_display_rodata_8039C45C[];
 static const char *rankingEnglish[13] = {
-    lbl_806D9F70, lbl_8039C384, lbl_806D9F78, lbl_806D9F80,
-    lbl_806D9F88, lbl_8039C390, lbl_8039C39C, lbl_8039C3A8,
-    lbl_8039C3B4, lbl_8039C3C0, lbl_8039C3CC, lbl_8039C3D8,
-    lbl_8039C3E4
+    lbl_806D9F70, ranking_display_rodata_8039C384, lbl_806D9F78, lbl_806D9F80,
+    lbl_806D9F88, ranking_display_rodata_8039C390, ranking_display_rodata_8039C39C, ranking_display_rodata_8039C3A8,
+    ranking_display_rodata_8039C3B4, ranking_display_rodata_8039C3C0, ranking_display_rodata_8039C3CC, ranking_display_rodata_8039C3D8,
+    ranking_display_rodata_8039C3E4
 };
 static const char *rankingJapanese[13] = {
-    lbl_8039C3F0, lbl_8039C3FC, lbl_8039C408, lbl_8039C414,
-    lbl_8039C420, lbl_8039C42C, lbl_806D9F90, lbl_8039C438,
-    lbl_806D9F98, lbl_8039C444, lbl_806D9FA0, lbl_8039C450,
-    lbl_8039C45C
+    ranking_display_rodata_8039C3F0, ranking_display_rodata_8039C3FC, ranking_display_rodata_8039C408, ranking_display_rodata_8039C414,
+    ranking_display_rodata_8039C420, ranking_display_rodata_8039C42C, lbl_806D9F90, ranking_display_rodata_8039C438,
+    lbl_806D9F98, ranking_display_rodata_8039C444, lbl_806D9FA0, ranking_display_rodata_8039C450,
+    ranking_display_rodata_8039C45C
 };
 
 #include "game/RankingDisplayDispatch_private.h"
-extern const char lbl_806CFE78[], lbl_806CFE80[];
+extern const char ranking_display_data_806CFE78[], ranking_display_data_806CFE80[];
 void *fn_801D1D9C(void *, short);
 int fn_801D1890(void *);
 void fn_801D1800(void *);
 #pragma force_active on
-static RankingBaseRecord rankingBase = {lbl_806CFE78, 0, 0};
+static RankingBaseRecord rankingBase = {ranking_display_data_806CFE78, 0, 0};
 static RankingDispatch rankingDispatch = {
-    lbl_806CFE80, 0, fn_801D1D9C, fn_801D1890, fn_801D1800
+    ranking_display_data_806CFE80, 0, fn_801D1D9C, fn_801D1890, fn_801D1800
 };
 #pragma force_active reset
 
@@ -211,7 +211,7 @@ RankingFlow::RankingFlow() : RankingDisplayBase(), list() {
     RankingAdd(&list, new RankingAnim((RankingSprite *)sprite, 0));
     RankingAnim *entry;
     if (g_reverseRoundFlag == 1) {
-        CourseSprite *mirror = new CourseSprite(0x9E, 1, lbl_8039C55C[(g_cupId-1)*2+g_longRoundFlag],
+        CourseSprite *mirror = new CourseSprite(0x9E, 1, ranking_display_rodata_8039C55C[(g_cupId-1)*2+g_longRoundFlag],
             lbl_806D9FD0, lbl_806D9FAC, lbl_806D9FAC, lbl_806D9FA8, lbl_806D9FAC);
         mirror->layer = 6;
         entry = new RankingAnim((RankingSprite *)mirror, 20);

@@ -14,7 +14,7 @@ typedef struct TerrainTypeEntry {
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-TerrainTypeEntry lbl_8040F100[9] = {
+TerrainTypeEntry Terrain_FlagsToTypeId_data_8040F100[9] = {
     { 3, 1 },
     { 0x24, 3 },
     { 0x40, 4 },

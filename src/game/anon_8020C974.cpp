@@ -1,15 +1,15 @@
 #include "game/CardModeRoot_private.h"
 
 extern "C" {
-extern const unsigned int lbl_806D0310[2];
-extern const unsigned int lbl_806D0308[2];
+extern const unsigned int CardMenuRoot_RTTI_806D0310[2];
+extern const unsigned int SceneBase_RTTI_806D0308[2];
 void *fn_80271340(void *object, int offset, const void *toType, const void *fromType, int isReference);
 }
 
 void CardModeRoot::OnTaskDone(int st) {
     if (task != 0) {
         if (st == 3) {
-            CardMenuRoot *menu = static_cast<CardMenuRoot *>(fn_80271340(task, 0, lbl_806D0310, lbl_806D0308, 0));
+            CardMenuRoot *menu = static_cast<CardMenuRoot *>(fn_80271340(task, 0, CardMenuRoot_RTTI_806D0310, SceneBase_RTTI_806D0308, 0));
             mode = fn_801FE404()->mode;
             chara = fn_801FE404()->chara;
             f08 = menu->f08;

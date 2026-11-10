@@ -26,15 +26,15 @@ extern void fn_801634FC();
 extern void fn_80163554();
 extern void fn_801635D4();
 extern void fn_801635DC();
-extern char lbl_806CF938[];
-extern char lbl_806CF940[];
-extern char lbl_806CF948[];
-extern char lbl_806CF950[];
-extern char lbl_806CF958[];
-extern char lbl_806CF960[];
-extern char lbl_806CF968[];
-extern char lbl_806CF970[];
-extern char lbl_806CF978[];
+extern char data_80490ACC_data_806CF938[];
+extern char data_80490ACC_data_806CF940[];
+extern char data_80490ACC_data_806CF948[];
+extern char data_80490ACC_data_806CF950[];
+extern char data_80490ACC_data_806CF958[];
+extern char data_80490ACC_data_806CF960[];
+extern char data_80490ACC_data_806CF968[];
+extern char data_80490ACC_data_806CF970[];
+extern char data_80490ACC_data_806CF978[];
 
 /* layout as declared in src/game/Scene_80164614.cpp */
 typedef struct RaceLimits163 {
@@ -47,48 +47,48 @@ typedef struct RaceLimits163 {
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_80490ACC[3] = {
-    (void *)&lbl_806CF938,
+void *sdata_806CF750_data_80490ACC[3] = {
+    (void *)&data_80490ACC_data_806CF938,
     0,
     0
 };
-void *lbl_80490AD8[6] = {
-    (void *)&lbl_806CF940,
+void *ResultSceneA_vtable_80490AD8[6] = {
+    (void *)&data_80490ACC_data_806CF940,
     0,
     (void *)fn_80160178,
     (void *)fn_80160200,
     (void *)fn_80160110,
     (void *)fn_801600CC
 };
-void *lbl_80490AF0[3] = {
-    (void *)&lbl_806CF948,
+void *sdata_806CF750_data_80490AF0[3] = {
+    (void *)&data_80490ACC_data_806CF948,
     0,
     0
 };
 /* decl: char */
-void *lbl_80490AFC[6] = {
-    (void *)&lbl_806CF950,
+void *Scene80162C3C_vtable_80490AFC[6] = {
+    (void *)&data_80490ACC_data_806CF950,
     0,
     (void *)fn_80162B00,
     (void *)fn_80162C04,
     (void *)fn_8016234C,
     (void *)fn_801622C8
 };
-void *lbl_80490B14[3] = {
-    (void *)&lbl_806CF958,
+void *sdata_806CF750_data_80490B14[3] = {
+    (void *)&data_80490ACC_data_806CF958,
     0,
     0
 };
-void *lbl_80490B20[5] = {
-    (void *)&lbl_806CF958,
+void *sdata_806CF750_data_80490B20[5] = {
+    (void *)&data_80490ACC_data_806CF958,
     0,
-    (void *)&lbl_806CF960,
+    (void *)&data_80490ACC_data_806CF960,
     0,
     0
 };
 /* decl: char */
-void *lbl_80490B34[11] = {
-    (void *)&lbl_806CF968,
+void *CreditChild162_vtable_80490B34[11] = {
+    (void *)&data_80490ACC_data_806CF968,
     0,
     (void *)fn_80162B98,
     (void *)fn_8013EB44,
@@ -150,14 +150,14 @@ RaceLimits163 DEMO[48] = {
     { 5, { 0, 0, 0 }, 100.0f, 30.0f },
     { 5, { 0, 0, 0 }, 100.0f, 30.0f }
 };
-void *lbl_80490DA0[3] = {
-    (void *)&lbl_806CF970,
+void *sdata_806CF750_data_80490DA0[3] = {
+    (void *)&data_80490ACC_data_806CF970,
     0,
     0
 };
 /* decl: char */
-void *lbl_80490DAC[7] = {
-    (void *)&lbl_806CF978,
+void *LoaderHolder_vtable_80490DAC[7] = {
+    (void *)&data_80490ACC_data_806CF978,
     0,
     (void *)fn_80163554,
     (void *)fn_801635DC,

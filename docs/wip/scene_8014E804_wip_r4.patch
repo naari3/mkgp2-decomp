@@ -51,11 +51,11 @@ index 7ad70094..cdd46e11 100644
 -extern unsigned int lbl_806D12E1;
 +extern unsigned char lbl_806D12E1;
  extern unsigned int jumptable_8048FDCC[];
- extern unsigned int lbl_8048FE14[];
- extern unsigned int lbl_8048FE3C[];
- extern unsigned int lbl_8048FE64[];
- extern unsigned int lbl_8048FE8C[];
- extern unsigned int lbl_8048FF64[];
+ extern unsigned int EntryScene_vtable_8048FE14[];
+ extern unsigned int CourseDemoScene_vtable_8048FE3C[];
+ extern unsigned int StatusNoticeScene_vtable_8048FE64[];
+ extern unsigned int StatusLogoScene_vtable_8048FE8C[];
+ extern unsigned int AttractScene_vtable_8048FF64[];
 -extern void dtor_80080330();
  unsigned char Sprite_AdvanceAnim(void *s, float dt);
  extern const float lbl_806D8060;
@@ -129,9 +129,9 @@ index 7ad70094..cdd46e11 100644
 -    stw r0, 0x24(r1)
 -    stw r31, 0x1c(r1)
 -    mr r31, r3
--    lis r3, lbl_80363D30@ha
+-    lis r3, Scene_8014E0C4_rodata_80363D30@ha
 -    stw r30, 0x18(r1)
--    addi r30, r3, lbl_80363D30@l
+-    addi r30, r3, Scene_8014E0C4_rodata_80363D30@l
 -    li r3, 0x0
 -    stw r29, 0x14(r1)
 -    lwz r29, 0x30(r31)
@@ -275,10 +275,10 @@ index 7ad70094..cdd46e11 100644
 -    mr. r29, r3
 -    beq fn_8014E804_L_8014EAC0
 -    lis r4, lbl_8048FF80@ha
--    lis r3, lbl_8048FE8C@ha
+-    lis r3, StatusLogoScene_vtable_8048FE8C@ha
 -    addi r0, r4, lbl_8048FF80@l
 -    stw r0, 0x0(r29)
--    addi r0, r3, lbl_8048FE8C@l
+-    addi r0, r3, StatusLogoScene_vtable_8048FE8C@l
 -    addi r3, r29, 0x34
 -    stw r0, 0x0(r29)
 -    bl fn_801F6804
@@ -324,10 +324,10 @@ index 7ad70094..cdd46e11 100644
 -    mr. r29, r3
 -    beq fn_8014E804_L_8014EB4C
 -    lis r4, lbl_8048FF80@ha
--    lis r3, lbl_8048FE64@ha
+-    lis r3, StatusNoticeScene_vtable_8048FE64@ha
 -    addi r0, r4, lbl_8048FF80@l
 -    stw r0, 0x0(r29)
--    addi r0, r3, lbl_8048FE64@l
+-    addi r0, r3, StatusNoticeScene_vtable_8048FE64@l
 -    addi r3, r29, 0x34
 -    stw r0, 0x0(r29)
 -    bl fn_801F6804
@@ -400,11 +400,11 @@ index 7ad70094..cdd46e11 100644
 -    mr. r29, r3
 -    beq fn_8014E804_L_8014EC34
 -    lis r4, lbl_8048FF80@ha
--    lis r3, lbl_8048FE3C@ha
+-    lis r3, CourseDemoScene_vtable_8048FE3C@ha
 -    addi r0, r4, lbl_8048FF80@l
 -    lfs f0, lbl_806D8064(r2)
 -    stw r0, 0x0(r29)
--    addi r3, r3, lbl_8048FE3C@l
+-    addi r3, r3, CourseDemoScene_vtable_8048FE3C@l
 -    li r0, 0x0
 -    stw r3, 0x0(r29)
 -    stw r0, 0x4(r29)
@@ -435,10 +435,10 @@ index 7ad70094..cdd46e11 100644
 -    mr. r30, r3
 -    beq fn_8014E804_L_8014ED58
 -    lis r4, lbl_8048FF80@ha
--    lis r3, lbl_8048FE14@ha
+-    lis r3, EntryScene_vtable_8048FE14@ha
 -    addi r0, r4, lbl_8048FF80@l
 -    stw r0, 0x0(r30)
--    addi r0, r3, lbl_8048FE14@l
+-    addi r0, r3, EntryScene_vtable_8048FE14@l
 -    stw r0, 0x0(r30)
 -    bl fn_80169E20
 -    stw r3, 0x4(r30)
@@ -512,10 +512,10 @@ index 7ad70094..cdd46e11 100644
 -    mr. r30, r3
 -    beq fn_8014E804_L_8014EE70
 -    lis r4, lbl_8048FF80@ha
--    lis r3, lbl_8048FE14@ha
+-    lis r3, EntryScene_vtable_8048FE14@ha
 -    addi r0, r4, lbl_8048FF80@l
 -    stw r0, 0x0(r30)
--    addi r0, r3, lbl_8048FE14@l
+-    addi r0, r3, EntryScene_vtable_8048FE14@l
 -    stw r0, 0x0(r30)
 -    bl fn_80169E20
 -    stw r3, 0x4(r30)
@@ -579,11 +579,11 @@ index 7ad70094..cdd46e11 100644
 -    mr. r30, r3
 -    beq fn_8014E804_L_8014EF7C
 -    lis r4, lbl_8048FF80@ha
--    lis r3, lbl_8048FF64@ha
+-    lis r3, AttractScene_vtable_8048FF64@ha
 -    addi r0, r4, lbl_8048FF80@l
 -    lfs f0, lbl_806D8064(r2)
 -    stw r0, 0x0(r30)
--    addi r3, r3, lbl_8048FF64@l
+-    addi r3, r3, AttractScene_vtable_8048FF64@l
 -    li r0, 0x0
 -    stw r3, 0x0(r30)
 -    stw r0, 0x4(r30)
@@ -938,7 +938,7 @@ index 7ad70094..cdd46e11 100644
 +
 +
 +extern "C" void fn_8014E804(StatusView *self) {
-+    char *base = (char *)lbl_80363D30;
++    char *base = (char *)Scene_8014E0C4_rodata_80363D30;
 +    int prev = self->credits;
 +    self->credits = CreditMgr_GetCreditCount(0);
 +    if (self->credits != prev) {
@@ -1134,15 +1134,15 @@ index 7560a9df..c4325f7c 100644
 --- a/tools/extab_user_renames.json
 +++ b/tools/extab_user_renames.json
 @@ -5738,7 +5738,12 @@
-     "__vt__10TextPanelC": "lbl_8048FFE8",
+     "__vt__10TextPanelC": "TextPanelC_vtable_8048FFE8",
      "__ct__11TextManagerFv": "fn_80149214",
      "__dt__11TextManagerFv": "dtor_800869D0",
 -    "@47": "lbl_80367368"
 +    "@47": "lbl_80367368",
-+    "__vt__15StatusLogoScene": "lbl_8048FE8C",
-+    "__vt__17StatusNoticeScene": "lbl_8048FE64",
-+    "__vt__15CourseDemoScene": "lbl_8048FE3C",
-+    "__vt__10EntryScene": "lbl_8048FE14",
++    "__vt__15StatusLogoScene": "StatusLogoScene_vtable_8048FE8C",
++    "__vt__17StatusNoticeScene": "StatusNoticeScene_vtable_8048FE64",
++    "__vt__15CourseDemoScene": "CourseDemoScene_vtable_8048FE3C",
++    "__vt__10EntryScene": "EntryScene_vtable_8048FE14",
 +    "__dt__13NamCamTextureFv": "dtor_80080330"
    },
    "src/game/RaceHud_80147470.cpp": {

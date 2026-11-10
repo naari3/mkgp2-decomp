@@ -16,7 +16,7 @@ void *lbl_804EDB90[3] = {
     0,
     0
 };
-void *lbl_804EDB9C[5] = {
+void *sdata_806D0410_data_804EDB9C[5] = {
     (void *)&lbl_806D0450,
     0,
     (void *)&lbl_806D0458,

@@ -5,7 +5,7 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
-extern char lbl_803D02E0[];
+extern char sdata_806D0540_rodata_803D02E0[];
 extern char lbl_803D02EC[];
 extern char lbl_803D081C[];
 extern char lbl_803D0828[];
@@ -18,79 +18,79 @@ extern char lbl_803DA15C[];
 extern char lbl_803DA6E0[];
 extern char lbl_803DA6EC[];
 extern char lbl_803DA700[];
-extern char lbl_804EDFC8[];
-extern char lbl_804EE068[];
-extern char lbl_804EE090[];
-extern char lbl_804EE0B8[];
-extern char lbl_804EE0EC[];
-extern char lbl_804EE110[];
+extern char sdata_806D0540_data_804EDFC8[];
+extern char sdata_806D0540_data_804EE068[];
+extern char sdata_806D0540_data_804EE090[];
+extern char sdata_806D0540_data_804EE0B8[];
+extern char sdata_806D0540_data_804EE0EC[];
+extern char sdata_806D0540_data_804EE110[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-float lbl_806D0540 = 1e+03f;
-float lbl_806D0544 = 1e+03f;
+float DNBressInit_data_806D0540 = 1e+03f;
+float DNBressInit_data_806D0544 = 1e+03f;
 float lbl_806D0548[2] = {
     0.0f, 0.0f
 };
-float lbl_806D0550 = 8e+02f;
-float lbl_806D0554 = 1.3e+03f;
-float lbl_806D0558[2] = {
+float DNBressInit_data_806D0550 = 8e+02f;
+float DNBressInit_data_806D0554 = 1.3e+03f;
+float DNBressInit_data_806D0558[2] = {
     0.0f, 0.0f
 };
-float lbl_806D0560 = 45.0f;
-float lbl_806D0564 = 6e+01f;
-float lbl_806D0568[2] = {
+float DNBressInit_data_806D0560 = 45.0f;
+float DNBressInit_data_806D0564 = 6e+01f;
+float DNBressInit_data_806D0568[2] = {
     0.0f, 0.0f
 };
-float lbl_806D0570 = 15.0f;
-float lbl_806D0574 = 135.0f;
-float lbl_806D0578[2] = {
+float DNBressInit_data_806D0570 = 15.0f;
+float DNBressInit_data_806D0574 = 135.0f;
+float DNBressInit_data_806D0578[2] = {
     0.0f, 0.0f
 };
-float lbl_806D0580 = 0.0f;
-float lbl_806D0584 = 0.0f;
-float lbl_806D0588 = -1.0f;
+float DNBress_breath_data_806D0580 = 0.0f;
+float DNBress_breath_data_806D0584 = 0.0f;
+float DNBress_breath_data_806D0588 = -1.0f;
 /* decl: char */
-const char *lbl_806D058C[2] = {
+const char *DNBress_nm3_data_806D058C[2] = {
     (const char *)&lbl_803D02EC, 0
 };
 /* decl: char */
-void *lbl_806D0594[3] = {
-    (void *)&lbl_803D02E0,
-    (void *)&lbl_804EDFC8,
+void *DNBress_nm3_data_806D0594[3] = {
+    (void *)&sdata_806D0540_rodata_803D02E0,
+    (void *)&sdata_806D0540_data_804EDFC8,
     0
 };
-const char *lbl_806D05A0[2] = {
+const char *data_804EE008_data_806D05A0[2] = {
     (const char *)&lbl_803D0828, 0
 };
-void *lbl_806D05A8[2] = {
+void *data_804EE008_data_806D05A8[2] = {
     (void *)&lbl_803D081C,
-    (void *)&lbl_804EE068
+    (void *)&sdata_806D0540_data_804EE068
 };
-const char *lbl_806D05B0[2] = {
+const char *data_804EE008_data_806D05B0[2] = {
     (const char *)&lbl_803D08C8, 0
 };
-void *lbl_806D05B8[2] = {
+void *data_804EE008_data_806D05B8[2] = {
     (void *)&lbl_803D08B8,
-    (void *)&lbl_804EE090
+    (void *)&sdata_806D0540_data_804EE090
 };
-const char *lbl_806D05C0[2] = {
+const char *data_804EE008_data_806D05C0[2] = {
     (const char *)&lbl_803D0D18, 0
 };
-void *lbl_806D05C8[2] = {
+void *data_804EE008_data_806D05C8[2] = {
     (void *)&lbl_803D0D08,
-    (void *)&lbl_804EE0B8
+    (void *)&sdata_806D0540_data_804EE0B8
 };
-float lbl_806D05D0 = -1.0f;
-float lbl_806D05D4 = 0.0f;
-float lbl_806D05D8 = 0.0f;
-const char *lbl_806D05DC[2] = {
+float DNStartDino_tail_data_806D05D0 = -1.0f;
+float DNStartDino_tail_data_806D05D4 = 0.0f;
+float DNStartDino_tail_data_806D05D8 = 0.0f;
+const char *data_804EE0EC_data_806D05DC[2] = {
     (const char *)&lbl_803DA15C, 0
 };
-void *lbl_806D05E4[3] = {
+void *data_804EE0EC_data_806D05E4[3] = {
     (void *)&lbl_803DA14C,
-    (void *)&lbl_804EE0EC,
+    (void *)&sdata_806D0540_data_804EE0EC,
     0
 };
 void *lbl_806D05F0[2] = {
@@ -106,14 +106,14 @@ void *lbl_806D0600[2] = {
     0,
     0
 };
-const char *lbl_806D0608[2] = {
+const char *data_804EE0EC_data_806D0608[2] = {
     (const char *)&lbl_803DA6EC, 0
 };
-void *lbl_806D0610[2] = {
+void *data_804EE0EC_data_806D0610[2] = {
     (void *)&lbl_803DA6E0,
-    (void *)&lbl_804EE110
+    (void *)&sdata_806D0540_data_804EE110
 };
-const char *lbl_806D0618[2] = {
+const char *data_804EE0EC_data_806D0618[2] = {
     (const char *)&lbl_803DA700, 0
 };
 

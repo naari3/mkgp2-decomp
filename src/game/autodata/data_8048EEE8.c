@@ -53,47 +53,47 @@ extern void fn_8014B118();
 extern void fn_8014C308();
 extern void fn_8014CE74();
 extern char lbl_80363CB8[];
-extern char lbl_80363CC8[];
-extern char lbl_80363CD4[];
-extern char lbl_806CF750[];
-extern char lbl_806CF758[];
+extern char data_8048EEE8_rodata_80363CC8[];
+extern char data_8048EEE8_rodata_80363CD4[];
+extern char data_8048EEE8_data_806CF750[];
+extern char data_8048EEE8_data_806CF758[];
 extern char lbl_806CF760[];
 extern char lbl_806CF768[];
 extern char lbl_806CF770[];
 extern char lbl_806CF778[];
 extern char lbl_806CF780[];
 extern char lbl_806CF788[];
-extern char lbl_806CF790[];
-extern char lbl_806CF798[];
-extern char lbl_806CF7A0[];
-extern char lbl_806CF7A8[];
+extern char data_8048EEE8_data_806CF790[];
+extern char data_8048EEE8_data_806CF798[];
+extern char data_8048EEE8_data_806CF7A0[];
+extern char data_8048EEE8_data_806CF7A8[];
 extern char lbl_806CF7B0[];
-extern char lbl_806CF7B8[];
-extern char lbl_806CF7C0[];
+extern char data_8048EEE8_data_806CF7B8[];
+extern char data_8048EEE8_data_806CF7C0[];
 extern char lbl_806CF7C8[];
-extern char lbl_806CF7D0[];
-extern char lbl_806CF7D8[];
+extern char data_8048EEE8_data_806CF7D0[];
+extern char data_8048EEE8_data_806CF7D8[];
 extern char lbl_806CF7E0[];
-extern char lbl_806CF7E8[];
-extern char lbl_806CF7F0[];
+extern char data_8048EEE8_data_806CF7E8[];
+extern char data_8048EEE8_data_806CF7F0[];
 extern char lbl_806CF7F8[];
-extern char lbl_806CF800[];
-extern char lbl_806CF808[];
+extern char data_8048EEE8_data_806CF800[];
+extern char data_8048EEE8_data_806CF808[];
 extern char lbl_806CF810[];
-extern char lbl_806CF820[];
+extern char data_8048EEE8_data_806CF820[];
 extern char lbl_806D7E20[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_8048EEE8[3] = {
-    (void *)&lbl_806CF750,
+void *sdata_806CF750_data_8048EEE8[3] = {
+    (void *)&data_8048EEE8_data_806CF750,
     0,
     0
 };
 /* decl: unsigned int */
-void *lbl_8048EEF4[8] = {
-    (void *)&lbl_806CF758,
+void *clCSPartsResultRecord_vtable_8048EEF4[8] = {
+    (void *)&data_8048EEE8_data_806CF758,
     0,
     (void *)fn_80144AF0,
     (void *)fn_80144ADC,
@@ -140,20 +140,20 @@ void *lbl_8048EF68[4] = {
     (void *)fn_801460D0,
     (void *)fn_80038E28
 };
-void *lbl_8048EF78[3] = {
+void *sdata_806CF750_data_8048EF78[3] = {
     (void *)&lbl_806CF788,
     0,
     0
 };
-void *lbl_8048EF84[5] = {
+void *sdata_806CF750_data_8048EF84[5] = {
     (void *)&lbl_806CF788,
     0,
-    (void *)&lbl_806CF790,
+    (void *)&data_8048EEE8_data_806CF790,
     0,
     0
 };
-void *lbl_8048EF98[8] = {
-    (void *)&lbl_806CF798,
+void *clCSPartsResultPanel_vtable_8048EF98[8] = {
+    (void *)&data_8048EEE8_data_806CF798,
     0,
     (void *)fn_801461B0,
     (void *)fn_80143E58,
@@ -165,14 +165,14 @@ void *lbl_8048EF98[8] = {
 float lbl_8048EFB8[4] = {
     0.0f, 0.0f, 0.0f, 0.0f
 };
-void *lbl_8048EFC8[3] = {
-    (void *)&lbl_806CF7A0,
+void *sdata_806CF750_data_8048EFC8[3] = {
+    (void *)&data_8048EEE8_data_806CF7A0,
     0,
     0
 };
 /* decl: unsigned int */
-void *lbl_8048EFD4[11] = {
-    (void *)&lbl_806CF7A8,
+void *LapHud_vtable_8048EFD4[11] = {
+    (void *)&data_8048EEE8_data_806CF7A8,
     0,
     (void *)dtor_80147584,
     (void *)fn_8013EB44,
@@ -184,84 +184,84 @@ void *lbl_8048EFD4[11] = {
     (void *)fn_8014640C,
     0
 };
-void *lbl_8048F000[3] = {
+void *sdata_806CF750_data_8048F000[3] = {
     (void *)&lbl_806CF7B0,
     0,
     0
 };
-void *lbl_8048F00C[5] = {
+void *sdata_806CF750_data_8048F00C[5] = {
     (void *)&lbl_806CF7B0,
     0,
-    (void *)&lbl_806CF7B8,
+    (void *)&data_8048EEE8_data_806CF7B8,
     0,
     0
 };
 /* decl: unsigned int */
-void *lbl_8048F020[6] = {
-    (void *)&lbl_806CF7C0,
+void *RecordHud_vtable_8048F020[6] = {
+    (void *)&data_8048EEE8_data_806CF7C0,
     0,
     (void *)fn_80148648,
     (void *)fn_801491DC,
     (void *)fn_8014816C,
     (void *)fn_80147EE8
 };
-void *lbl_8048F038[3] = {
+void *sdata_806CF750_data_8048F038[3] = {
     (void *)&lbl_806CF7C8,
     0,
     0
 };
-void *lbl_8048F044[5] = {
+void *sdata_806CF750_data_8048F044[5] = {
     (void *)&lbl_806CF7C8,
     0,
-    (void *)&lbl_806CF7D0,
+    (void *)&data_8048EEE8_data_806CF7D0,
     0,
     0
 };
 /* decl: unsigned int */
-void *lbl_8048F058[6] = {
-    (void *)&lbl_806CF7D8,
+void *CountHud_vtable_8048F058[6] = {
+    (void *)&data_8048EEE8_data_806CF7D8,
     0,
     (void *)fn_80149A88,
     (void *)fn_80149D58,
     (void *)fn_801494A4,
     (void *)fn_80149420
 };
-void *lbl_8048F070[3] = {
+void *sdata_806CF750_data_8048F070[3] = {
     (void *)&lbl_806CF7E0,
     0,
     0
 };
-void *lbl_8048F07C[5] = {
+void *sdata_806CF750_data_8048F07C[5] = {
     (void *)&lbl_806CF7E0,
     0,
-    (void *)&lbl_806CF7E8,
+    (void *)&data_8048EEE8_data_806CF7E8,
     0,
     0
 };
 /* decl: unsigned int */
-void *lbl_8048F090[6] = {
-    (void *)&lbl_806CF7F0,
+void *StrHud_vtable_8048F090[6] = {
+    (void *)&data_8048EEE8_data_806CF7F0,
     0,
     (void *)fn_8014A8FC,
     (void *)fn_8014AD7C,
     (void *)fn_80149E44,
     (void *)fn_80149D90
 };
-void *lbl_8048F0A8[3] = {
+void *sdata_806CF750_data_8048F0A8[3] = {
     (void *)&lbl_806CF7F8,
     0,
     0
 };
-void *lbl_8048F0B4[5] = {
+void *sdata_806CF750_data_8048F0B4[5] = {
     (void *)&lbl_806CF7F8,
     0,
-    (void *)&lbl_806CF800,
+    (void *)&data_8048EEE8_data_806CF800,
     0,
     0
 };
 /* decl: unsigned int */
-void *lbl_8048F0C8[10] = {
-    (void *)&lbl_806CF808,
+void *RaceHud_80147470_data_8048F0C8[10] = {
+    (void *)&data_8048EEE8_data_806CF808,
     0,
     (void *)fn_8014A890,
     (void *)fn_8013EB44,
@@ -272,26 +272,26 @@ void *lbl_8048F0C8[10] = {
     (void *)fn_8014AC48,
     0
 };
-void *lbl_8048F0F0[3] = {
+void *sdata_806CF750_data_8048F0F0[3] = {
     (void *)&lbl_806CF810,
     0,
     0
 };
 /* decl: unsigned int */
-void *lbl_8048F0FC[4] = {
+void *CSSceneGetTitle_8014ADB4_data_8048F0FC[4] = {
     (void *)&lbl_806D7E20,
     (void *)&lbl_80363CB8,
-    (void *)&lbl_80363CC8,
-    (void *)&lbl_80363CD4
+    (void *)&data_8048EEE8_rodata_80363CC8,
+    (void *)&data_8048EEE8_rodata_80363CD4
 };
-void *lbl_8048F10C[3] = {
+void *sdata_806CF750_data_8048F10C[3] = {
     (void *)&lbl_806CF810,
     0,
     0
 };
 /* decl: unsigned int */
-void *lbl_8048F118[6] = {
-    (void *)&lbl_806CF820,
+void *CSSceneGetTitle_vtable_8048F118[6] = {
+    (void *)&data_8048EEE8_data_806CF820,
     0,
     (void *)fn_8014C308,
     (void *)fn_8014CE74,

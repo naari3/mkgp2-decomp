@@ -3,7 +3,7 @@
 #include "game/HudFlowPrivate.h"
 struct HudResultFlow : HudRoot { HudResultFlow(); };
 extern "C" {
-extern void *lbl_804EEBA8[];
+extern void *HudResultFlow_data_804EEBA8[];
 HudChild *fn_8021E0C0();
 HudChild *fn_8024C564();
 void CalcEarnedCoins();

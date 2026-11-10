@@ -112,7 +112,7 @@ the original target in a comment.
 
 - An object that starts on an odd address right after another one is a wrong
   split: `lbl_80383FFD` was the middle of a float (kart parameter block
-  `lbl_80383F28`, now 0xF0 bytes of float plus `lbl_80384018`), `"M"` + `"KA"`
+  `rodata_803175A0_rodata_80383F28`, now 0xF0 bytes of float plus `lbl_80384018`), `"M"` + `"KA"`
   was the card magic `"MKA"` (`lbl_806D34A4`, `lbl_806DA110`).
 - A one-byte variable in .sdata followed by zero bytes had the padding counted
   in its size (`lbl_806CEF69`, `lbl_806CFBA1`, `lbl_806CFCA2`, `lbl_806CFCAB`:

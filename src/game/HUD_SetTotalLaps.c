@@ -11,7 +11,7 @@
  * Mirror of HUD_SetRacePosition with three differences:
  *   - HUD field offset 0x20 -> 0x1c
  *   - sda21 ptr s_clRnkDisp / s_clCDispInterface -> s_clLapDisp / s_clCDispInterface
- *     (lbl_806D0A20 / lbl_806D0A10 -> lbl_806D0A40 / lbl_806D0A30)
+ *     (data_804EF1F0_data_806D0A20 / data_804EF0C8_data_806D0A10 -> lbl_806D0A40 / lbl_806D0A30)
  *   - callee RnkDisp_SetPosition -> LapDisp_SetTotalLaps
  *
  * extab/extabindex entries are present in the target (Large Frame: Yes,

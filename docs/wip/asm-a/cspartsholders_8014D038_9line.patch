@@ -3,7 +3,7 @@ index 1f66f8dd..0fa1d040 100644
 --- a/src/game/CSPartsHolders.c
 +++ b/src/game/CSPartsHolders.c
 @@ -75,7 +75,7 @@ extern const float lbl_806D7EF4;
- extern unsigned int lbl_80362D90[];
+ extern unsigned int CSSceneGetTitle_8014ADB4_rodata_80362D90[];
  extern void MemoryManager_TimedFree();
  extern float lbl_806D7EE4;
 -asm void fn_8014D038(void);
@@ -40,11 +40,11 @@ index 1f66f8dd..0fa1d040 100644
 -    stw r28, 0x10(r1)
 -    mr r28, r3
 -    fmr f25, f1
--    lis r3, lbl_80362D90@ha
+-    lis r3, CSSceneGetTitle_8014ADB4_rodata_80362D90@ha
 -    fmr f26, f2
 -    fmr f27, f3
 -    stw r4, 0x0(r28)
--    addi r31, r3, lbl_80362D90@l
+-    addi r31, r3, CSSceneGetTitle_8014ADB4_rodata_80362D90@l
 -    li r3, 0x20
 -    bl Alloc
 -    mr. r29, r3
@@ -137,7 +137,7 @@ index 1f66f8dd..0fa1d040 100644
 +#pragma push
 +#pragma opt_loop_invariants off
 +extern "C" PairHolder *fn_8014D038(PairHolder *h, int arg, float x, float y, float s) {
-+    char *base = (char *)lbl_80362D90;
++    char *base = (char *)CSSceneGetTitle_8014ADB4_rodata_80362D90;
 +    PartVec *pos;
 +    int i;
 +    PartVec *rot;
@@ -148,7 +148,7 @@ index 1f66f8dd..0fa1d040 100644
 +    h->parts[0] = (Part3D *)new PreviewPart(base + 0xF74, 1);
 +    h->parts[1] = (Part3D *)new PreviewPart(base + 0xF88, 1);
 +    k = lbl_806D7EF4;
-+    rot = (PartVec *)((char *)lbl_80362D90 + 0xEF4);
++    rot = (PartVec *)((char *)CSSceneGetTitle_8014ADB4_rodata_80362D90 + 0xEF4);
 +    rx = rot->x;
 +    pos = (PartVec *)(base + 0xED0);
 +    ry = rot->y;
@@ -169,7 +169,7 @@ index 1f66f8dd..0fa1d040 100644
   * this area's pooled layout tables (positions, rotations in degrees, scales).
   * fakematch (permuter): the slot cursor `c` walks the holder 4 bytes at a
 @@ -283,6 +202,7 @@ extern "C" TripleHolder *fn_8014D344(TripleHolder *h, int arg, float x, float y,
-     PartVec *rot = (PartVec *)((char *)lbl_80362D90 + 0xE94);
+     PartVec *rot = (PartVec *)((char *)CSSceneGetTitle_8014ADB4_rodata_80362D90 + 0xE94);
      TripleHolder *c = h;
      float k;
 +    float rx, ry, rz;

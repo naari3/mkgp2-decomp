@@ -1,12 +1,12 @@
 #pragma inline_max_size(1000)
 #include "CardSetupFlowView.h"
 #include "CardSetupFlowResultPlayerView.h"
-extern "C" { extern ResultPlayerSnapshot g_playerData, lbl_805D275C; extern char lbl_806D0928[8]; }
+extern "C" { extern ResultPlayerSnapshot g_playerData, lbl_805D275C; extern char CardSetupFlowResult_data_806D0928[8]; }
 extern "C" void fn_8024A2F0(CardSetupFlow *self) {
     FlowTask *task = fn_801F4DC0(self->list, 2);
     if (task) {
-        self->selection = ((SetupChoiceView *)fn_80271340(task, 0, lbl_806D0928, lbl_806D08F8, 0))->selection;
-        int result = ((SetupChoiceView *)fn_80271340(task, 0, lbl_806D0928, lbl_806D08F8, 0))->result;
+        self->selection = ((SetupChoiceView *)fn_80271340(task, 0, CardSetupFlowResult_data_806D0928, lbl_806D08F8, 0))->selection;
+        int result = ((SetupChoiceView *)fn_80271340(task, 0, CardSetupFlowResult_data_806D0928, lbl_806D08F8, 0))->result;
         task = fn_801F4DC0(self->list, 4);
         if (task) fn_801FEF18(fn_80271340(task, 0, lbl_806D0900, lbl_806D08F8, 0), result);
     } else {

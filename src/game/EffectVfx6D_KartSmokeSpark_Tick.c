@@ -3,7 +3,7 @@
  * kart with growing slack, then grows and fades out. */
 #include "game/DrawEffectAccess.h"
 
-extern const Vec lbl_8032A3F4; /* {0, 0, -10} */
+extern const Vec EffectVfx6D_KartSmokeSpark_Tick_rodata_8032A3F4; /* {0, 0, -10} */
 extern const float lbl_806D51C0; /* 0.0 */
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec *in);
 
@@ -17,7 +17,7 @@ void EffectVfx6D_KartSmokeSpark_Tick(unsigned char *self)
 
     if (P(0x11C) != 0) {
         Mtx_TransposeToMtx44(root, KartDriver_GetKartRootMtx(P(0x11C)));
-        off = lbl_8032A3F4;
+        off = EffectVfx6D_KartSmokeSpark_Tick_rodata_8032A3F4;
         Mtx44_TransformVec3(&kartPos, root, &off);
     }
 

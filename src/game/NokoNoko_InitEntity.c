@@ -34,7 +34,7 @@ extern const float lbl_806D9324;
 extern const float lbl_806D9350;
 extern float lbl_80495994[];
 extern NokoKind *lbl_80495D28[];
-extern Vec lbl_80377450[];
+extern Vec NokoNoko_InitEntity_rodata_80377450[];
 extern void Vec3_Subtract(Vec *a, Vec *b, Vec *out);
 extern float PSVECSquareMag(Vec *v);
 extern void Vec3_Normalize(Vec *src, Vec *dst);
@@ -77,21 +77,21 @@ NokoNoko *NokoNoko_InitEntity(NokoNoko *self, Vec *pos) {
     self->radius = lbl_80495D28[self->kindTable][self->kindIndex].radius;
     self->frame = lbl_806D9324;
     for (i = 0; i < 21; i++) {
-        Vec3_Subtract(lbl_80377450, &self->pos, &d);
+        Vec3_Subtract(NokoNoko_InitEntity_rodata_80377450, &self->pos, &d);
         dist = PSVECSquareMag(&d);
         if ((int)i == 0 || dist < bestDist) {
             best = i;
             bestDist = dist;
         }
     }
-    nearest.x = lbl_80377450[best].x;
-    nearest.y = lbl_80377450[best].y;
-    nearest.z = lbl_80377450[best].z;
+    nearest.x = NokoNoko_InitEntity_rodata_80377450[best].x;
+    nearest.y = NokoNoko_InitEntity_rodata_80377450[best].y;
+    nearest.z = NokoNoko_InitEntity_rodata_80377450[best].z;
     next = best + 1;
     if (next == 21) {
         next = 0;
     }
-    Vec3_Subtract(&lbl_80377450[next], &lbl_80377450[best], &d);
+    Vec3_Subtract(&NokoNoko_InitEntity_rodata_80377450[next], &NokoNoko_InitEntity_rodata_80377450[best], &d);
     Vec3_Normalize(&d, &d);
     Vec3_Subtract(&self->pos, &nearest, &rel);
     t = Vec3_Dot(&rel, &d);

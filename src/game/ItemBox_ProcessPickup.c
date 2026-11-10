@@ -95,19 +95,19 @@ void ItemBox_ProcessPickup(PickupState *self, void *car, int unused, void *input
                 item = self->slots[self->slot].itemId;
                 count = self->state;
                 switch (item) {
-                case 0x7b: item = lbl_803F9D10[count + -1]; break;
-                case 0x7c: item = lbl_803F9D10[count + 2]; break;
-                case 0x7d: item = lbl_803F9D10[count + 5]; break;
-                case 0x7e: item = lbl_803F9D10[count + 8]; break;
-                case 0x7f: item = lbl_803F9D10[count + 11]; break;
-                case 0x80: item = lbl_803F9D10[count + 14]; break;
-                case 0x81: item = lbl_803F9D10[count + 17]; break;
-                case 0x82: item = lbl_803F9D10[count + 20]; break;
-                case 0x83: item = lbl_803F9D10[count + 23]; break;
-                case 0x84: item = lbl_803F9D10[count + 26]; break;
-                case 0x85: item = lbl_803F9D10[count + 29]; break;
-                case 0x86: item = lbl_803F9D10[count + 32]; break;
-                case 0x87: item = lbl_803F9D10[count + 35]; break;
+                case 0x7b: item = ItemBox_ProcessPickup_data_803F9D10[count + -1]; break;
+                case 0x7c: item = ItemBox_ProcessPickup_data_803F9D10[count + 2]; break;
+                case 0x7d: item = ItemBox_ProcessPickup_data_803F9D10[count + 5]; break;
+                case 0x7e: item = ItemBox_ProcessPickup_data_803F9D10[count + 8]; break;
+                case 0x7f: item = ItemBox_ProcessPickup_data_803F9D10[count + 11]; break;
+                case 0x80: item = ItemBox_ProcessPickup_data_803F9D10[count + 14]; break;
+                case 0x81: item = ItemBox_ProcessPickup_data_803F9D10[count + 17]; break;
+                case 0x82: item = ItemBox_ProcessPickup_data_803F9D10[count + 20]; break;
+                case 0x83: item = ItemBox_ProcessPickup_data_803F9D10[count + 23]; break;
+                case 0x84: item = ItemBox_ProcessPickup_data_803F9D10[count + 26]; break;
+                case 0x85: item = ItemBox_ProcessPickup_data_803F9D10[count + 29]; break;
+                case 0x86: item = ItemBox_ProcessPickup_data_803F9D10[count + 32]; break;
+                case 0x87: item = ItemBox_ProcessPickup_data_803F9D10[count + 35]; break;
                 }
                 fn_8023E1E4(self->hud, item, 0);
             }
@@ -122,19 +122,19 @@ void ItemBox_ProcessPickup(PickupState *self, void *car, int unused, void *input
             if (self->hud) {
                 int item = self->slots[slot].itemId;
                 switch (item) {
-                case 0x7b: item = lbl_803F9D10[2]; break;
-                case 0x7c: item = lbl_803F9D10[5]; break;
-                case 0x7d: item = lbl_803F9D10[8]; break;
-                case 0x7e: item = lbl_803F9D10[11]; break;
-                case 0x7f: item = lbl_803F9D10[14]; break;
-                case 0x80: item = lbl_803F9D10[17]; break;
-                case 0x81: item = lbl_803F9D10[20]; break;
-                case 0x82: item = lbl_803F9D10[23]; break;
-                case 0x83: item = lbl_803F9D10[26]; break;
-                case 0x84: item = lbl_803F9D10[29]; break;
-                case 0x85: item = lbl_803F9D10[32]; break;
-                case 0x86: item = lbl_803F9D10[35]; break;
-                case 0x87: item = lbl_803F9D10[38]; break;
+                case 0x7b: item = ItemBox_ProcessPickup_data_803F9D10[2]; break;
+                case 0x7c: item = ItemBox_ProcessPickup_data_803F9D10[5]; break;
+                case 0x7d: item = ItemBox_ProcessPickup_data_803F9D10[8]; break;
+                case 0x7e: item = ItemBox_ProcessPickup_data_803F9D10[11]; break;
+                case 0x7f: item = ItemBox_ProcessPickup_data_803F9D10[14]; break;
+                case 0x80: item = ItemBox_ProcessPickup_data_803F9D10[17]; break;
+                case 0x81: item = ItemBox_ProcessPickup_data_803F9D10[20]; break;
+                case 0x82: item = ItemBox_ProcessPickup_data_803F9D10[23]; break;
+                case 0x83: item = ItemBox_ProcessPickup_data_803F9D10[26]; break;
+                case 0x84: item = ItemBox_ProcessPickup_data_803F9D10[29]; break;
+                case 0x85: item = ItemBox_ProcessPickup_data_803F9D10[32]; break;
+                case 0x86: item = ItemBox_ProcessPickup_data_803F9D10[35]; break;
+                case 0x87: item = ItemBox_ProcessPickup_data_803F9D10[38]; break;
                 }
                 fn_8023E1E4(self->hud, item, 0);
             }

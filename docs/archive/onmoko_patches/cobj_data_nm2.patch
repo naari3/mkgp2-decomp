@@ -19,7 +19,7 @@ index de43b9c..47fa281 100644
 -#include "cobj_private.h"
 -/* Shared camera diagnostic strings and unit vectors remain target-backed. */
 +/* Shared camera diagnostic strings and unit vectors (.data 0x804FC560..0x804FC620).
-+ * Sizes include the padding to the next object. The tail of lbl_804FC5F0's
++ * Sizes include the padding to the next object. The tail of CObjLoad_data_804FC5F0's
 + * block holds CObjInfoInit's class-name strings, which the target pools here.
 + * Not including cobj_private.h: it declares the strings with their string
 + * lengths. */
@@ -29,9 +29,9 @@ index de43b9c..47fa281 100644
 +char lbl_804FC560[0x20] = "unkown type of render pass.\n";
 +char lbl_804FC580[0x10] = "cobj->eyepos";
 +char lbl_804FC590[0x10] = "cobj->interest";
-+CObjDataVec lbl_804FC5A0 = { 0.0F, 0.0F, 0.0F };
-+CObjDataVec lbl_804FC5AC = { 0.0F, 1.0F, 0.0F };
-+char lbl_804FC5B8[0x38] = "illegal up vector.\0\0hsdIsDescendantOf(info, &hsdCObj)";
-+CObjDataVec lbl_804FC5F0 = { 0.0F, 1.0F, 0.0F };
++CObjDataVec upvec2roll_data_804FC5A0 = { 0.0F, 0.0F, 0.0F };
++CObjDataVec upvec2roll_data_804FC5AC = { 0.0F, 1.0F, 0.0F };
++char HSD_CObjSetRoll_data_804FC5B8[0x38] = "illegal up vector.\0\0hsdIsDescendantOf(info, &hsdCObj)";
++CObjDataVec CObjLoad_data_804FC5F0 = { 0.0F, 1.0F, 0.0F };
 +char lbl_804FC5FC[0x24] = "sysdolphin_base_library\0hsd_cobj";
 +#pragma force_active reset

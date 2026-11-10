@@ -3,7 +3,7 @@
  * build its attach matrix. With no item it only builds the matrix into dst. */
 #include "game/types/Vec.h"
 
-extern unsigned char lbl_8032D9C8[];
+extern unsigned char GabyouItem_BuildOrUpdateAttachTransform_rodata_8032D9C8[];
 
 extern void *KartDriver_GetJointByIdx(void *kart, int idx);
 extern void *KartDriver_GetKartRootMtx(void *kart);
@@ -96,7 +96,7 @@ static inline float Gabyou_ClassScale(unsigned char *kart)
 
 void GabyouItem_BuildOrUpdateAttachTransform(float dst[4][4], unsigned char *item, unsigned char *kart)
 {
-    unsigned char *base = lbl_8032D9C8;
+    unsigned char *base = GabyouItem_BuildOrUpdateAttachTransform_rodata_8032D9C8;
     float m[4][4];
     float root[4][4];
     float mtx[4][4];

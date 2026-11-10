@@ -65,7 +65,7 @@ extern "C" {
 extern CharaInput* g_pInputState;
 extern CharaFrame FrameParam_ARRAY_8049aad0[];
 extern float g_tierCursorPosTable[][2];
-extern const unsigned char lbl_8039AA40[];
+extern const unsigned char clFlowChara_rodata_8039AA40[];
 extern signed char lbl_806D184C, lbl_806D184D;
 extern const float FLOAT_ARROW_RIGHT_OFFSET, FLOAT_ARROW_SCALE;
 extern const float FLOAT_BRIGHTNESS_DARK, FLOAT_FULL_ALPHA, FLOAT_SPRITE_INIT_TIME;
@@ -133,7 +133,7 @@ static inline CharaMatrix* CharaJointMatrix(CharaJoint* joint)
 extern "C" int clFlowChara_Update(CharaView* self)
 {
     struct SoundIds { short ids[13]; };
-    SoundIds soundCopy = *(const SoundIds*)(lbl_8039AA40 + 0x74C);
+    SoundIds soundCopy = *(const SoundIds*)(clFlowChara_rodata_8039AA40 + 0x74C);
     short (&soundIds)[13] = soundCopy.ids;
     CharaMatrix scale, rotation, translation;
     RumbleUpdate();
@@ -142,16 +142,16 @@ extern "C" int clFlowChara_Update(CharaView* self)
     switch (self->state) {
     case 0: {
         if (self->frame >= 2 && self->frame <= 14)
-            FileLoader_Open(((const char* const*)(lbl_8039AA40 + 0x70C))[self->frame - 2]);
+            FileLoader_Open(((const char* const*)(clFlowChara_rodata_8039AA40 + 0x70C))[self->frame - 2]);
         if (self->frame >= 15 && self->frame <= 27) {
             int visual = self->frame - 15;
             if (self->variants[GetFrameIdxFromVisualIdx(self, visual)] >= 1)
                 FileLoader_Open(*GetKartModelNameEntry(GetFrameIdxFromVisualIdx(self, visual), 2));
-            else FileLoader_Open(((const char* const*)(lbl_8039AA40 + 0x5D4))[visual]);
+            else FileLoader_Open(((const char* const*)(clFlowChara_rodata_8039AA40 + 0x5D4))[visual]);
         }
         if (self->frame == 28) {
             for (int i = 0; i < 13; ++i) {
-                self->normals[i] = new CharaNormal(((const char* const*)(lbl_8039AA40 + 0x70C))[i], 0);
+                self->normals[i] = new CharaNormal(((const char* const*)(clFlowChara_rodata_8039AA40 + 0x70C))[i], 0);
                 Object_SetAnimBinding(self->normals[i], &self->matrix, 0);
             }
         }
@@ -162,7 +162,7 @@ extern "C" int clFlowChara_Update(CharaView* self)
                     fn_8021A660(self->models[i], lbl_806D9BB0, lbl_806D9BB0, lbl_806D9BB0);
                     fn_8021A71C(self->models[i], lbl_806D9B7C, FLOAT_BRIGHTNESS_DARK, lbl_806D9BB4);
                 } else {
-                    self->alternateNormals[i] = new CharaNormal(((const char* const*)(lbl_8039AA40 + 0x5D4))[i], 0);
+                    self->alternateNormals[i] = new CharaNormal(((const char* const*)(clFlowChara_rodata_8039AA40 + 0x5D4))[i], 0);
                 }
             }
         }
@@ -212,7 +212,7 @@ extern "C" int clFlowChara_Update(CharaView* self)
             fn_801B8918(0x1AE1);
             PSMTXScale(&scale, lbl_806D9B80, lbl_806D9B80, lbl_806D9B80);
             PSMTXRotRad(&rotation, 'y', FLOAT_SPRITE_INIT_TIME);
-            const float* pos = (const float*)(lbl_8039AA40 + 0x740);
+            const float* pos = (const float*)(clFlowChara_rodata_8039AA40 + 0x740);
             PSMTXTrans(&translation, pos[0], pos[1], pos[2]);
             PSMTXIdentity(&self->matrix);
             PSMTXConcat(&scale, &self->matrix, &self->matrix);
@@ -257,7 +257,7 @@ extern "C" int clFlowChara_Update(CharaView* self)
         }
         if (clFlowChara_HandleConfirm(self) != -1) {
             fn_801C37E8(self, self->selection, 0x1F, -1, FLOAT_FULL_ALPHA);
-            const float* range = (const float*)(lbl_8039AA40 + 0x4A4);
+            const float* range = (const float*)(clFlowChara_rodata_8039AA40 + 0x4A4);
             clNormal3D_SetScale(self->normals[self->selection], 0, range[2], FLOAT_FULL_ALPHA, range[2], range[3]);
             lbl_806D184C = -1;
             Sprite_Destroy(self->leftArrow, 1); Sprite_Destroy(self->rightArrow, 1);
@@ -334,9 +334,9 @@ extern "C" int clFlowChara_Update(CharaView* self)
     }
     if (self->normals[self->selection]) {
         clNormal3D_Exec(self->normals[self->selection]);
-        if (self->state >= 3 && Object_GetField8(self->normals[self->selection]) >= ((const float*)(lbl_8039AA40 + 0x4A4))[3]) {
+        if (self->state >= 3 && Object_GetField8(self->normals[self->selection]) >= ((const float*)(clFlowChara_rodata_8039AA40 + 0x4A4))[3]) {
             self->complete = 1;
-            float end = ((const float*)(lbl_8039AA40 + 0x4A4))[3] - FLOAT_FULL_ALPHA;
+            float end = ((const float*)(clFlowChara_rodata_8039AA40 + 0x4A4))[3] - FLOAT_FULL_ALPHA;
             clNormal3D_SetScale(self->normals[self->selection], 0, end, FLOAT_FULL_ALPHA, end, end);
         }
         Object_DriveAnimMatrix(self->normals[self->selection]);

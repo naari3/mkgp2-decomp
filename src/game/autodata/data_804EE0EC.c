@@ -14,43 +14,43 @@ extern void fn_8022B414();
 extern void fn_8022B53C();
 extern void fn_8022BA58();
 extern void fn_8022BEB4();
-extern char lbl_806D05DC[];
-extern char lbl_806D05E4[];
-extern char lbl_806D0608[];
-extern char lbl_806D0610[];
-extern char lbl_806D0618[];
+extern char data_804EE0EC_data_806D05DC[];
+extern char data_804EE0EC_data_806D05E4[];
+extern char data_804EE0EC_data_806D0608[];
+extern char data_804EE0EC_data_806D0610[];
+extern char data_804EE0EC_data_806D0618[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804EE0EC[3] = {
-    (void *)&lbl_806D05DC,
+void *sdata_806D0540_data_804EE0EC[3] = {
+    (void *)&data_804EE0EC_data_806D05DC,
     0,
     0
 };
-void *lbl_804EE0F8[6] = {
-    (void *)&lbl_806D05E4,
+void *clDNStartDino_vtable_804EE0F8[6] = {
+    (void *)&data_804EE0EC_data_806D05E4,
     0,
     (void *)fn_8022A758,
     (void *)fn_8022A160,
     (void *)fn_80229E0C,
     (void *)fn_8016A26C
 };
-void *lbl_804EE110[3] = {
-    (void *)&lbl_806D0608,
+void *sdata_806D0540_data_804EE110[3] = {
+    (void *)&data_804EE0EC_data_806D0608,
     0,
     0
 };
-void *lbl_804EE11C[6] = {
-    (void *)&lbl_806D0610,
+void *clEnemyFace_vtable_804EE11C[6] = {
+    (void *)&data_804EE0EC_data_806D0610,
     0,
     (void *)fn_8022BA58,
     (void *)fn_8022B53C,
     (void *)fn_8022B414,
     (void *)fn_8022B3FC
 };
-void *lbl_804EE134[3] = {
-    (void *)&lbl_806D0618,
+void *clEFace3D_vtable_804EE134[3] = {
+    (void *)&data_804EE0EC_data_806D0618,
     0,
     (void *)fn_8022BEB4
 };

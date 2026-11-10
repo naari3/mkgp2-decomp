@@ -43,7 +43,7 @@ extern const char lbl_803C4A28[17];
 extern const char lbl_803C4A3C[16];
 
 /* Display colour and coin milestone scale pairs preceding the reward tables. */
-extern const float lbl_803C3F50[258] = {
+extern const float CalcEarnedCoins_rodata_803C3F50[258] = {
     0.0f, 0.0f, 0.0f, 1.0f, 0.699999988079071f, 0.8999999761581421f, 0.0f, 0.0f,
     500.0f, 66.66667175292969f, 1000.0f, 66.66667175292969f, 2000.0f, 66.66667175292969f, 3000.0f, 66.66667175292969f,
     4000.0f, 66.66667175292969f, 5000.0f, 66.66667175292969f, 0.0f, 0.0f, 500.0f, 66.66667175292969f,

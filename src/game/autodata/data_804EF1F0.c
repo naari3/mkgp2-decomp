@@ -10,13 +10,13 @@ extern void fn_802529C8();
 extern void fn_802529E0();
 extern void fn_802529E4();
 extern void fn_80252DDC();
-extern char lbl_806D0A20[];
-extern char lbl_806D0A28[];
+extern char data_804EF1F0_data_806D0A20[];
+extern char data_804EF1F0_data_806D0A28[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-GlyphInfo lbl_804EF1F0[739] = {
+GlyphInfo TitleNameHud_nm1_data_804EF1F0[739] = {
     { { 32, 7885 }, 9189, 10497 },
     { { 98895, 7887 }, 9191, 10499 },
     { { 164432, 7889 }, 9193, 10501 },
@@ -757,13 +757,13 @@ GlyphInfo lbl_804EF1F0[739] = {
     { { 48300070, 8349 }, 9653, 10575 },
     { { 48365632, 8351 }, 9655, 10577 }
 };
-void *lbl_804F2020[3] = {
-    (void *)&lbl_806D0A20,
+void *sdata_806D09E8_data_804F2020[3] = {
+    (void *)&data_804EF1F0_data_806D0A20,
     0,
     0
 };
-void *lbl_804F202C[6] = {
-    (void *)&lbl_806D0A28,
+void *TitleNameHud_vtable_804F202C[6] = {
+    (void *)&data_804EF1F0_data_806D0A28,
     0,
     (void *)fn_80252DDC,
     (void *)fn_802529E4,

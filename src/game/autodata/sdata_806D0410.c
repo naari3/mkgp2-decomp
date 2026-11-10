@@ -17,14 +17,14 @@ extern char lbl_803C4BE0[];
 extern char lbl_803C4BEC[];
 extern char lbl_803C4E2C[];
 extern char lbl_803C4E38[];
-extern char lbl_804EDAB0[];
-extern char lbl_804EDABC[];
-extern char lbl_804EDAE8[];
+extern char sdata_806D0410_data_804EDAB0[];
+extern char sdata_806D0410_data_804EDABC[];
+extern char sdata_806D0410_data_804EDAE8[];
 extern char lbl_804EDB90[];
-extern char lbl_804EDB9C[];
-extern char lbl_804EDBC8[];
-extern char lbl_804EDBF4[];
-extern char lbl_804EDC20[];
+extern char sdata_806D0410_data_804EDB9C[];
+extern char sdata_806D0410_data_804EDBC8[];
+extern char sdata_806D0410_data_804EDBF4[];
+extern char sdata_806D0410_data_804EDC20[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -32,20 +32,20 @@ extern char lbl_804EDC20[];
 const char *lbl_806D0410[2] = {
     (const char *)&lbl_803C3E78, 0
 };
-void *lbl_806D0418[2] = {
+void *data_804EDAB0_data_806D0418[2] = {
     (void *)&lbl_803C3E8C,
-    (void *)&lbl_804EDAB0
+    (void *)&sdata_806D0410_data_804EDAB0
 };
-void *lbl_806D0420[2] = {
+void *data_804EDAB0_data_806D0420[2] = {
     (void *)&lbl_803C3E68,
-    (void *)&lbl_804EDABC
+    (void *)&sdata_806D0410_data_804EDABC
 };
 const char *lbl_806D0428[2] = {
     (const char *)&lbl_803C3F3C, 0
 };
-void *lbl_806D0430[2] = {
+void *data_804EDAB0_data_806D0430[2] = {
     (void *)&lbl_803C3F30,
-    (void *)&lbl_804EDAE8
+    (void *)&sdata_806D0410_data_804EDAE8
 };
 int winBonus = -1;
 int positionBonus = -1;
@@ -64,26 +64,26 @@ void *lbl_806D0458[2] = {
     (void *)&lbl_804EDB90
 };
 /* decl: char */
-void *lbl_806D0460[2] = {
+void *CardPrompt_data_806D0460[2] = {
     (void *)&lbl_803C4BA8,
-    (void *)&lbl_804EDB9C
+    (void *)&sdata_806D0410_data_804EDB9C
 };
 /* decl: char */
-void *lbl_806D0468[2] = {
+void *CardLogoScene_data_806D0468[2] = {
     (void *)&lbl_803C4BE0,
-    (void *)&lbl_804EDBC8
+    (void *)&sdata_806D0410_data_804EDBC8
 };
 /* decl: char */
-void *lbl_806D0470[2] = {
+void *CardLogo_data_806D0470[2] = {
     (void *)&lbl_803C4BEC,
-    (void *)&lbl_804EDBF4
+    (void *)&sdata_806D0410_data_804EDBF4
 };
-const char *lbl_806D0478[2] = {
+const char *data_804EDC20_data_806D0478[2] = {
     (const char *)&lbl_803C4E38, 0
 };
-void *lbl_806D0480[2] = {
+void *data_804EDC20_data_806D0480[2] = {
     (void *)&lbl_803C4E2C,
-    (void *)&lbl_804EDC20
+    (void *)&sdata_806D0410_data_804EDC20
 };
 
 #pragma force_active reset

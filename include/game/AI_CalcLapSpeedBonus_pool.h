@@ -8,7 +8,7 @@ typedef struct AICourseTuning {
     int count; float bonusAlt; int value;
     float bonus2; int count2; float bonus2Alt; int value2;
 } AICourseTuning;
-const float lbl_8039FD90[270] = {
+const float AI_CalcLapSpeedBonus_rodata_8039FD90[270] = {
     1.0f, 0.699999988079071f, 0.8999999761581421f, 0.0f, 0.0f, 500.0f,
     66.66667175292969f, 1000.0f, 66.66667175292969f, 2000.0f, 66.66667175292969f, 3000.0f,
     66.66667175292969f, 4000.0f, 66.66667175292969f, 5000.0f, 66.66667175292969f, 0.0f,
@@ -253,30 +253,30 @@ const AIBaseSpeed kAIBaseSpeedTable_Race[192] = {
     { 285.0f, 295.0f },
     { 285.0f, 295.0f },
 };
-extern unsigned char lbl_804E2030[16];
-extern unsigned char lbl_804E2040[16];
-extern unsigned char lbl_804E2050[16];
-extern unsigned char lbl_804E2060[16];
-extern unsigned char lbl_804E2070[16];
-extern unsigned char lbl_804E2080[16];
-extern unsigned char lbl_804E2090[16];
-extern unsigned char lbl_804E20A0[16];
-extern unsigned char lbl_804E20B0[16];
-extern unsigned char lbl_804E20C0[16];
-extern unsigned char lbl_804E20D0[16];
-extern unsigned char lbl_804E20E0[16];
-extern unsigned char lbl_804E20F0[16];
-extern unsigned char lbl_804E2100[16];
-extern unsigned char lbl_804E2110[16];
-extern unsigned char lbl_804E2120[16];
-extern unsigned char lbl_804E2130[16];
-extern unsigned char lbl_804E2140[16];
-extern unsigned char lbl_804E2150[16];
-extern unsigned char lbl_804E2160[16];
-extern unsigned char lbl_804E2170[16];
-extern unsigned char lbl_804E2180[16];
-extern unsigned char lbl_804E2190[16];
-extern unsigned char lbl_804E21A0[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E2030[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E2040[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E2050[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E2060[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E2070[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E2080[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E2090[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E20A0[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E20B0[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E20C0[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E20D0[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E20E0[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E20F0[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E2100[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E2110[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E2120[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E2130[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E2140[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E2150[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E2160[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E2170[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E2180[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E2190[16];
+extern unsigned char AI_CalcLapSpeedBonus_data_804E21A0[16];
 typedef struct AINonRaceParameters {
     AIBaseSpeed speeds[24];
     const void *itemLists[24];
@@ -309,12 +309,12 @@ const AINonRaceParameters kAIBaseSpeedTable_BattleTimeAttack = {
     { 235.0f, 245.0f },
   },
   {
-    lbl_804E2030, lbl_804E2040, lbl_804E2050, lbl_804E2060,
-    lbl_804E2070, lbl_804E2080, lbl_804E2090, lbl_804E20A0,
-    lbl_804E20B0, lbl_804E20C0, lbl_804E20D0, lbl_804E20E0,
-    lbl_804E20F0, lbl_804E2100, lbl_804E2110, lbl_804E2120,
-    lbl_804E2130, lbl_804E2140, lbl_804E2150, lbl_804E2160,
-    lbl_804E2170, lbl_804E2180, lbl_804E2190, lbl_804E21A0,
+    AI_CalcLapSpeedBonus_data_804E2030, AI_CalcLapSpeedBonus_data_804E2040, AI_CalcLapSpeedBonus_data_804E2050, AI_CalcLapSpeedBonus_data_804E2060,
+    AI_CalcLapSpeedBonus_data_804E2070, AI_CalcLapSpeedBonus_data_804E2080, AI_CalcLapSpeedBonus_data_804E2090, AI_CalcLapSpeedBonus_data_804E20A0,
+    AI_CalcLapSpeedBonus_data_804E20B0, AI_CalcLapSpeedBonus_data_804E20C0, AI_CalcLapSpeedBonus_data_804E20D0, AI_CalcLapSpeedBonus_data_804E20E0,
+    AI_CalcLapSpeedBonus_data_804E20F0, AI_CalcLapSpeedBonus_data_804E2100, AI_CalcLapSpeedBonus_data_804E2110, AI_CalcLapSpeedBonus_data_804E2120,
+    AI_CalcLapSpeedBonus_data_804E2130, AI_CalcLapSpeedBonus_data_804E2140, AI_CalcLapSpeedBonus_data_804E2150, AI_CalcLapSpeedBonus_data_804E2160,
+    AI_CalcLapSpeedBonus_data_804E2170, AI_CalcLapSpeedBonus_data_804E2180, AI_CalcLapSpeedBonus_data_804E2190, AI_CalcLapSpeedBonus_data_804E21A0,
   }
 };
 const AICourseTuning lbl_803A0908[192] = {
@@ -511,11 +511,11 @@ const AICourseTuning lbl_803A0908[192] = {
     { 0.75f, 30.0f, 15.0f, 155.0f, 150.0f, -20.0f, 300, -15.0f, 300, -20.0f, 300, -15.0f, 300 },
     { 0.75f, 30.0f, 15.0f, 155.0f, 150.0f, -20.0f, 300, -15.0f, 300, -20.0f, 300, -15.0f, 300 },
 };
-static const AILapRule lbl_803A3008[2] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A3008[2] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A3030[34] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A3030[34] = {
     { 2, 0, -1, 2, 0, 128, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 3, 0, 128, -1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 4, 0, 128, -1, {0, 0, 0}, 10.0f },
@@ -551,7 +551,7 @@ static const AILapRule lbl_803A3030[34] = {
     { 1, 0, -1, 6, 51, 128, -1, {0, 0, 0}, -75.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A32D8[26] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A32D8[26] = {
     { 2, 1, -1, 1, 0, 180, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 0, 180, -1, {0, 0, 0}, 10.0f },
     { 2, 1, -1, 3, 0, 180, -1, {0, 0, 0}, 10.0f },
@@ -579,7 +579,7 @@ static const AILapRule lbl_803A32D8[26] = {
     { 1, 1, -1, 4, 0, 180, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A34E0[36] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A34E0[36] = {
     { 2, 2, -1, 1, 0, 128, -1, {0, 0, 0}, 20.0f },
     { 2, 2, -1, 2, 0, 128, -1, {0, 0, 0}, 10.0f },
     { 2, 2, -1, 3, 0, 128, -1, {0, 0, 0}, 10.0f },
@@ -617,7 +617,7 @@ static const AILapRule lbl_803A34E0[36] = {
     { 1, 2, -1, 6, 51, 128, -1, {0, 0, 0}, -70.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A37B0[28] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A37B0[28] = {
     { 2, 3, -1, 1, 0, 180, -1, {0, 0, 0}, 20.0f },
     { 2, 3, -1, 2, 0, 180, -1, {0, 0, 0}, 10.0f },
     { 2, 3, -1, 3, 0, 180, -1, {0, 0, 0}, 10.0f },
@@ -647,7 +647,7 @@ static const AILapRule lbl_803A37B0[28] = {
     { 1, 3, -1, 4, 0, 180, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A39E0[36] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A39E0[36] = {
     { 2, 4, -1, 1, 0, 128, -1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 2, 0, 128, -1, {0, 0, 0}, 10.0f },
     { 2, 4, -1, 3, 0, 128, -1, {0, 0, 0}, 10.0f },
@@ -685,7 +685,7 @@ static const AILapRule lbl_803A39E0[36] = {
     { 1, 4, -1, 6, 51, 128, -1, {0, 0, 0}, -60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A3CB0[25] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A3CB0[25] = {
     { 2, 5, -1, 1, 0, 180, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 180, -1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 3, 0, 180, -1, {0, 0, 0}, 10.0f },
@@ -712,7 +712,7 @@ static const AILapRule lbl_803A3CB0[25] = {
     { 1, 5, -1, 4, 0, 180, -1, {0, 0, 0}, -35.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A3EA4[36] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A3EA4[36] = {
     { 2, 6, -1, 1, 0, 128, -1, {0, 0, 0}, 20.0f },
     { 2, 6, -1, 2, 0, 128, -1, {0, 0, 0}, 10.0f },
     { 2, 6, -1, 3, 0, 128, -1, {0, 0, 0}, 10.0f },
@@ -750,7 +750,7 @@ static const AILapRule lbl_803A3EA4[36] = {
     { 1, 6, -1, 6, 51, 128, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A4174[25] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A4174[25] = {
     { 2, 7, -1, 1, 0, 180, -1, {0, 0, 0}, 20.0f },
     { 2, 7, -1, 2, 0, 180, -1, {0, 0, 0}, 10.0f },
     { 2, 7, -1, 3, 0, 180, -1, {0, 0, 0}, 10.0f },
@@ -777,7 +777,7 @@ static const AILapRule lbl_803A4174[25] = {
     { 1, 7, -1, 4, 0, 180, -1, {0, 0, 0}, -25.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A4368[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A4368[10] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { 2, 0, -1, 9, 50, 128, -1, {0, 0, 0}, -30.0f },
     { 2, 1, -1, 6, 50, 180, -1, {0, 0, 0}, -30.0f },
@@ -789,7 +789,7 @@ static const AILapRule lbl_803A4368[10] = {
     { 2, 7, -1, 6, 50, 180, -1, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A4430[28] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A4430[28] = {
     { -1, 0, 1, 1, 0, 128, -1, {0, 0, 0}, 30.0f },
     { -1, 0, 2, 1, 0, 128, -1, {0, 0, 0}, 30.0f },
     { -1, 0, 3, 1, 0, 128, -1, {0, 0, 0}, 25.0f },
@@ -819,7 +819,7 @@ static const AILapRule lbl_803A4430[28] = {
     { 1, 0, -1, 6, 51, 128, -1, {0, 0, 0}, -75.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A4660[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A4660[20] = {
     { -1, 1, 1, 1, 0, 180, -1, {0, 0, 0}, 30.0f },
     { -1, 1, 2, 1, 0, 180, -1, {0, 0, 0}, 25.0f },
     { -1, 1, 3, 1, 0, 180, -1, {0, 0, 0}, 10.0f },
@@ -841,7 +841,7 @@ static const AILapRule lbl_803A4660[20] = {
     { 1, 1, -1, 4, 0, 180, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A47F0[28] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A47F0[28] = {
     { -1, 2, 1, 1, 0, 128, -1, {0, 0, 0}, 30.0f },
     { -1, 2, 2, 1, 0, 128, -1, {0, 0, 0}, 20.0f },
     { -1, 2, 3, 1, 0, 128, -1, {0, 0, 0}, 15.0f },
@@ -871,7 +871,7 @@ static const AILapRule lbl_803A47F0[28] = {
     { 1, 2, -1, 6, 51, 128, -1, {0, 0, 0}, -70.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A4A20[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A4A20[20] = {
     { -1, 3, 1, 1, 0, 180, -1, {0, 0, 0}, 30.0f },
     { -1, 3, 2, 1, 0, 180, -1, {0, 0, 0}, 25.0f },
     { -1, 3, 3, 1, 0, 180, -1, {0, 0, 0}, 10.0f },
@@ -893,7 +893,7 @@ static const AILapRule lbl_803A4A20[20] = {
     { 1, 3, -1, 4, 0, 180, -1, {0, 0, 0}, -55.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A4BB0[28] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A4BB0[28] = {
     { -1, 4, 1, 1, 0, 128, -1, {0, 0, 0}, 30.0f },
     { -1, 4, 2, 1, 0, 128, -1, {0, 0, 0}, 20.0f },
     { -1, 4, 3, 1, 0, 128, -1, {0, 0, 0}, 15.0f },
@@ -923,7 +923,7 @@ static const AILapRule lbl_803A4BB0[28] = {
     { 1, 4, -1, 6, 51, 128, -1, {0, 0, 0}, -65.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A4DE0[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A4DE0[20] = {
     { -1, 5, 1, 1, 0, 180, -1, {0, 0, 0}, 30.0f },
     { -1, 5, 2, 1, 0, 180, -1, {0, 0, 0}, 25.0f },
     { -1, 5, 3, 1, 0, 180, -1, {0, 0, 0}, 10.0f },
@@ -945,7 +945,7 @@ static const AILapRule lbl_803A4DE0[20] = {
     { 1, 5, -1, 4, 0, 180, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A4F70[28] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A4F70[28] = {
     { -1, 6, 1, 1, 0, 128, -1, {0, 0, 0}, 30.0f },
     { -1, 6, 2, 1, 0, 128, -1, {0, 0, 0}, 20.0f },
     { -1, 6, 3, 1, 0, 128, -1, {0, 0, 0}, 15.0f },
@@ -975,7 +975,7 @@ static const AILapRule lbl_803A4F70[28] = {
     { 1, 6, -1, 6, 51, 128, -1, {0, 0, 0}, -55.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A51A0[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A51A0[20] = {
     { -1, 7, 1, 1, 0, 180, -1, {0, 0, 0}, 30.0f },
     { -1, 7, 2, 1, 0, 180, -1, {0, 0, 0}, 25.0f },
     { -1, 7, 3, 1, 0, 180, -1, {0, 0, 0}, 10.0f },
@@ -997,11 +997,11 @@ static const AILapRule lbl_803A51A0[20] = {
     { 1, 7, -1, 4, 0, 180, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A5330[2] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A5330[2] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A5358[31] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A5358[31] = {
     { 2, 0, -1, 2, 0, 128, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 3, 0, 128, -1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 6, 50, 128, -1, {0, 0, 0}, -5.0f },
@@ -1034,7 +1034,7 @@ static const AILapRule lbl_803A5358[31] = {
     { 1, 0, -1, 6, 51, 128, -1, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A55C4[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A55C4[23] = {
     { 2, 1, -1, 1, 0, 180, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 0, 180, -1, {0, 0, 0}, 10.0f },
     { 2, 1, -1, 4, 50, 180, -1, {0, 0, 0}, -5.0f },
@@ -1059,7 +1059,7 @@ static const AILapRule lbl_803A55C4[23] = {
     { 1, 1, -1, 4, 0, 180, -1, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A5790[31] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A5790[31] = {
     { 2, 2, -1, 1, 0, 128, -1, {0, 0, 0}, 20.0f },
     { 2, 2, -1, 2, 0, 128, -1, {0, 0, 0}, 10.0f },
     { 2, 2, -1, 6, 50, 128, -1, {0, 0, 0}, -5.0f },
@@ -1092,7 +1092,7 @@ static const AILapRule lbl_803A5790[31] = {
     { 1, 2, -1, 6, 51, 128, -1, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A59FC[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A59FC[23] = {
     { 2, 3, -1, 1, 0, 180, -1, {0, 0, 0}, 20.0f },
     { 2, 3, -1, 2, 0, 180, -1, {0, 0, 0}, 10.0f },
     { 2, 3, -1, 4, 50, 180, -1, {0, 0, 0}, 0.0f },
@@ -1117,7 +1117,7 @@ static const AILapRule lbl_803A59FC[23] = {
     { 1, 3, -1, 4, 0, 180, -1, {0, 0, 0}, -5.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A5BC8[28] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A5BC8[28] = {
     { -1, 4, 1, 1, 0, 128, -1, {0, 0, 0}, 30.0f },
     { -1, 4, 2, 1, 0, 128, -1, {0, 0, 0}, 20.0f },
     { -1, 4, 3, 1, 0, 128, -1, {0, 0, 0}, 15.0f },
@@ -1147,7 +1147,7 @@ static const AILapRule lbl_803A5BC8[28] = {
     { 1, 4, -1, 6, 51, 128, -1, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A5DF8[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A5DF8[23] = {
     { 2, 5, -1, 1, 0, 180, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 180, -1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 4, 50, 180, -1, {0, 0, 0}, 0.0f },
@@ -1172,7 +1172,7 @@ static const AILapRule lbl_803A5DF8[23] = {
     { 1, 5, -1, 4, 0, 180, -1, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A5FC4[31] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A5FC4[31] = {
     { 2, 6, -1, 1, 0, 128, -1, {0, 0, 0}, 20.0f },
     { 2, 6, -1, 2, 0, 128, -1, {0, 0, 0}, 10.0f },
     { 2, 6, -1, 6, 50, 128, -1, {0, 0, 0}, 10.0f },
@@ -1205,7 +1205,7 @@ static const AILapRule lbl_803A5FC4[31] = {
     { 1, 6, -1, 6, 51, 128, -1, {0, 0, 0}, 0.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A6230[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A6230[23] = {
     { 2, 7, -1, 1, 0, 180, -1, {0, 0, 0}, 20.0f },
     { 2, 7, -1, 2, 0, 180, -1, {0, 0, 0}, 10.0f },
     { 2, 7, -1, 4, 50, 180, -1, {0, 0, 0}, 10.0f },
@@ -1230,11 +1230,11 @@ static const AILapRule lbl_803A6230[23] = {
     { 1, 7, -1, 4, 0, 180, -1, {0, 0, 0}, 0.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A63FC[2] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A63FC[2] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A6424[36] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A6424[36] = {
     { 2, 0, -1, 2, 0, 97, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 3, 0, 97, -1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 9, 0, 49, -1, {0, 0, 0}, -5.0f },
@@ -1272,7 +1272,7 @@ static const AILapRule lbl_803A6424[36] = {
     { 1, 0, -1, 8, 51, 97, -1, {0, 0, 0}, -65.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A66F4[26] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A66F4[26] = {
     { 2, 1, -1, 2, 0, 100, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 3, 0, 100, -1, {0, 0, 0}, 10.0f },
     { 2, 1, -1, 4, 0, 100, -1, {0, 0, 0}, 10.0f },
@@ -1300,7 +1300,7 @@ static const AILapRule lbl_803A66F4[26] = {
     { 1, 1, -1, 4, 0, 127, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A68FC[37] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A68FC[37] = {
     { 2, 2, -1, 2, 0, 97, -1, {0, 0, 0}, 20.0f },
     { 2, 2, -1, 3, 0, 97, -1, {0, 0, 0}, 10.0f },
     { 2, 2, -1, 4, 0, 97, -1, {0, 0, 0}, 10.0f },
@@ -1339,7 +1339,7 @@ static const AILapRule lbl_803A68FC[37] = {
     { 1, 2, -1, 8, 51, 97, -1, {0, 0, 0}, -60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A6BE0[27] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A6BE0[27] = {
     { 2, 3, -1, 2, 0, 100, -1, {0, 0, 0}, 20.0f },
     { 2, 3, -1, 3, 0, 100, -1, {0, 0, 0}, 10.0f },
     { 2, 3, -1, 4, 0, 100, -1, {0, 0, 0}, 10.0f },
@@ -1368,7 +1368,7 @@ static const AILapRule lbl_803A6BE0[27] = {
     { 1, 3, -1, 4, 0, 127, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A6DFC[36] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A6DFC[36] = {
     { 2, 4, -1, 2, 0, 97, -1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 3, 0, 97, -1, {0, 0, 0}, 10.0f },
     { 2, 4, -1, 4, 0, 97, -1, {0, 0, 0}, 10.0f },
@@ -1406,7 +1406,7 @@ static const AILapRule lbl_803A6DFC[36] = {
     { 1, 4, -1, 8, 51, 97, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A70CC[25] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A70CC[25] = {
     { 2, 5, -1, 2, 0, 100, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 3, 0, 100, -1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 4, 0, 100, -1, {0, 0, 0}, 10.0f },
@@ -1433,7 +1433,7 @@ static const AILapRule lbl_803A70CC[25] = {
     { 1, 5, -1, 4, 0, 127, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A72C0[38] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A72C0[38] = {
     { 2, 6, -1, 2, 0, 97, -1, {0, 0, 0}, 20.0f },
     { 2, 6, -1, 3, 0, 97, -1, {0, 0, 0}, 10.0f },
     { 2, 6, -1, 4, 0, 97, -1, {0, 0, 0}, 10.0f },
@@ -1473,7 +1473,7 @@ static const AILapRule lbl_803A72C0[38] = {
     { 1, 6, -1, 8, 51, 97, -1, {0, 0, 0}, -35.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A75B8[25] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A75B8[25] = {
     { 2, 7, -1, 2, 0, 100, -1, {0, 0, 0}, 20.0f },
     { 2, 7, -1, 3, 0, 100, -1, {0, 0, 0}, 10.0f },
     { 2, 7, -1, 4, 0, 100, -1, {0, 0, 0}, 10.0f },
@@ -1500,7 +1500,7 @@ static const AILapRule lbl_803A75B8[25] = {
     { 1, 7, -1, 4, 0, 127, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A77AC[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A77AC[10] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { 2, 0, -1, 9, 50, 97, -1, {0, 0, 0}, -30.0f },
     { 2, 1, -1, 6, 50, 100, -1, {0, 0, 0}, -30.0f },
@@ -1512,7 +1512,7 @@ static const AILapRule lbl_803A77AC[10] = {
     { 2, 7, -1, 6, 50, 100, -1, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A7874[29] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A7874[29] = {
     { -1, 0, 1, 1, 0, 97, -1, {0, 0, 0}, 40.0f },
     { -1, 0, 2, 1, 0, 97, -1, {0, 0, 0}, 30.0f },
     { -1, 0, 3, 1, 0, 97, -1, {0, 0, 0}, 25.0f },
@@ -1543,7 +1543,7 @@ static const AILapRule lbl_803A7874[29] = {
     { 1, 0, -1, 8, 51, 97, -1, {0, 0, 0}, -65.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A7AB8[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A7AB8[20] = {
     { -1, 1, 1, 1, 0, 172, -1, {0, 0, 0}, 20.0f },
     { -1, 1, 2, 1, 0, 172, -1, {0, 0, 0}, 15.0f },
     { -1, 1, 3, 1, 0, 172, -1, {0, 0, 0}, 0.0f },
@@ -1565,7 +1565,7 @@ static const AILapRule lbl_803A7AB8[20] = {
     { 1, 1, -1, 4, 0, 127, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A7C48[29] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A7C48[29] = {
     { -1, 2, 1, 1, 0, 97, -1, {0, 0, 0}, 40.0f },
     { -1, 2, 2, 1, 0, 97, -1, {0, 0, 0}, 30.0f },
     { -1, 2, 3, 1, 0, 97, -1, {0, 0, 0}, 25.0f },
@@ -1596,7 +1596,7 @@ static const AILapRule lbl_803A7C48[29] = {
     { 1, 2, -1, 8, 51, 97, -1, {0, 0, 0}, -60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A7E8C[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A7E8C[20] = {
     { -1, 3, 1, 1, 0, 172, -1, {0, 0, 0}, 30.0f },
     { -1, 3, 2, 1, 0, 172, -1, {0, 0, 0}, 25.0f },
     { -1, 3, 3, 1, 0, 172, -1, {0, 0, 0}, 10.0f },
@@ -1618,7 +1618,7 @@ static const AILapRule lbl_803A7E8C[20] = {
     { 1, 3, -1, 4, 0, 127, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A801C[29] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A801C[29] = {
     { -1, 4, 1, 1, 0, 97, -1, {0, 0, 0}, 40.0f },
     { -1, 4, 2, 1, 0, 97, -1, {0, 0, 0}, 30.0f },
     { -1, 4, 3, 1, 0, 97, -1, {0, 0, 0}, 25.0f },
@@ -1649,7 +1649,7 @@ static const AILapRule lbl_803A801C[29] = {
     { 1, 4, -1, 8, 51, 97, -1, {0, 0, 0}, -55.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A8260[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A8260[20] = {
     { -1, 5, 1, 1, 0, 172, -1, {0, 0, 0}, 30.0f },
     { -1, 5, 2, 1, 0, 172, -1, {0, 0, 0}, 25.0f },
     { -1, 5, 3, 1, 0, 172, -1, {0, 0, 0}, 10.0f },
@@ -1671,7 +1671,7 @@ static const AILapRule lbl_803A8260[20] = {
     { 1, 5, -1, 4, 0, 127, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A83F0[29] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A83F0[29] = {
     { -1, 6, 1, 1, 0, 97, -1, {0, 0, 0}, 40.0f },
     { -1, 6, 2, 1, 0, 97, -1, {0, 0, 0}, 30.0f },
     { -1, 6, 3, 1, 0, 97, -1, {0, 0, 0}, 25.0f },
@@ -1702,7 +1702,7 @@ static const AILapRule lbl_803A83F0[29] = {
     { 1, 6, -1, 8, 51, 97, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A8634[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A8634[20] = {
     { -1, 7, 1, 1, 0, 172, -1, {0, 0, 0}, 30.0f },
     { -1, 7, 2, 1, 0, 172, -1, {0, 0, 0}, 25.0f },
     { -1, 7, 3, 1, 0, 172, -1, {0, 0, 0}, 10.0f },
@@ -1724,11 +1724,11 @@ static const AILapRule lbl_803A8634[20] = {
     { 1, 7, -1, 4, 0, 127, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A87C4[2] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A87C4[2] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A87EC[33] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A87EC[33] = {
     { 2, 0, -1, 2, 0, 97, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 3, 0, 97, -1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 7, 0, 49, -1, {0, 0, 0}, -5.0f },
@@ -1763,7 +1763,7 @@ static const AILapRule lbl_803A87EC[33] = {
     { 1, 0, -1, 7, 51, 97, -1, {0, 0, 0}, -35.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A8A80[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A8A80[23] = {
     { 2, 1, -1, 2, 0, 100, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 3, 0, 100, -1, {0, 0, 0}, 10.0f },
     { 2, 1, -1, 4, 50, 100, -1, {0, 0, 0}, -10.0f },
@@ -1788,7 +1788,7 @@ static const AILapRule lbl_803A8A80[23] = {
     { 1, 1, -1, 4, 0, 127, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A8C4C[33] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A8C4C[33] = {
     { 2, 2, -1, 2, 0, 97, -1, {0, 0, 0}, 20.0f },
     { 2, 2, -1, 3, 0, 97, -1, {0, 0, 0}, 10.0f },
     { 2, 2, -1, 7, 0, 49, -1, {0, 0, 0}, -5.0f },
@@ -1823,7 +1823,7 @@ static const AILapRule lbl_803A8C4C[33] = {
     { 1, 2, -1, 7, 51, 97, -1, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A8EE0[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A8EE0[23] = {
     { 2, 3, -1, 2, 0, 100, -1, {0, 0, 0}, 20.0f },
     { 2, 3, -1, 3, 0, 100, -1, {0, 0, 0}, 10.0f },
     { 2, 3, -1, 4, 50, 100, -1, {0, 0, 0}, 0.0f },
@@ -1848,7 +1848,7 @@ static const AILapRule lbl_803A8EE0[23] = {
     { 1, 3, -1, 4, 0, 127, -1, {0, 0, 0}, -5.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A90AC[33] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A90AC[33] = {
     { 2, 4, -1, 2, 0, 97, -1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 3, 0, 97, -1, {0, 0, 0}, 10.0f },
     { 2, 4, -1, 7, 0, 49, -1, {0, 0, 0}, -5.0f },
@@ -1883,7 +1883,7 @@ static const AILapRule lbl_803A90AC[33] = {
     { 1, 4, -1, 7, 51, 97, -1, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A9340[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A9340[23] = {
     { 2, 5, -1, 2, 0, 100, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 3, 0, 100, -1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 4, 50, 100, -1, {0, 0, 0}, 0.0f },
@@ -1908,7 +1908,7 @@ static const AILapRule lbl_803A9340[23] = {
     { 1, 5, -1, 4, 0, 127, -1, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A950C[33] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A950C[33] = {
     { 2, 6, -1, 2, 0, 97, -1, {0, 0, 0}, 20.0f },
     { 2, 6, -1, 3, 0, 97, -1, {0, 0, 0}, 10.0f },
     { 2, 6, -1, 7, 0, 49, -1, {0, 0, 0}, 0.0f },
@@ -1943,7 +1943,7 @@ static const AILapRule lbl_803A950C[33] = {
     { 1, 6, -1, 7, 51, 97, -1, {0, 0, 0}, -5.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A97A0[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A97A0[23] = {
     { 2, 7, -1, 2, 0, 100, -1, {0, 0, 0}, 20.0f },
     { 2, 7, -1, 3, 0, 100, -1, {0, 0, 0}, 10.0f },
     { 2, 7, -1, 4, 50, 100, -1, {0, 0, 0}, 10.0f },
@@ -1968,11 +1968,11 @@ static const AILapRule lbl_803A97A0[23] = {
     { 1, 7, -1, 4, 0, 127, -1, {0, 0, 0}, 0.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A996C[2] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A996C[2] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A9994[27] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A9994[27] = {
     { 2, 0, -1, 1, 51, 83, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 2, 0, 83, -1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 3, 0, 83, -1, {0, 0, 0}, 10.0f },
@@ -2001,7 +2001,7 @@ static const AILapRule lbl_803A9994[27] = {
     { 1, 0, -1, 4, 0, 83, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A9BB0[26] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A9BB0[26] = {
     { 2, 1, -1, 1, 51, 115, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 0, 115, -1, {0, 0, 0}, 10.0f },
     { 2, 1, -1, 3, 0, 115, -1, {0, 0, 0}, 10.0f },
@@ -2029,7 +2029,7 @@ static const AILapRule lbl_803A9BB0[26] = {
     { 1, 1, -1, 4, 0, 96, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A9DB8[27] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A9DB8[27] = {
     { 2, 2, -1, 1, 51, 83, -1, {0, 0, 0}, 20.0f },
     { 2, 2, -1, 2, 0, 83, -1, {0, 0, 0}, 10.0f },
     { 2, 2, -1, 3, 0, 83, -1, {0, 0, 0}, 10.0f },
@@ -2058,7 +2058,7 @@ static const AILapRule lbl_803A9DB8[27] = {
     { 1, 2, -1, 4, 0, 83, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803A9FD4[26] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803A9FD4[26] = {
     { 2, 3, -1, 1, 51, 115, -1, {0, 0, 0}, 20.0f },
     { 2, 3, -1, 2, 0, 115, -1, {0, 0, 0}, 10.0f },
     { 2, 3, -1, 3, 0, 115, -1, {0, 0, 0}, 10.0f },
@@ -2086,7 +2086,7 @@ static const AILapRule lbl_803A9FD4[26] = {
     { 1, 3, -1, 4, 0, 96, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AA1DC[25] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AA1DC[25] = {
     { 2, 4, -1, 1, 51, 83, -1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 2, 0, 83, -1, {0, 0, 0}, 10.0f },
     { 2, 4, -1, 3, 0, 83, -1, {0, 0, 0}, 10.0f },
@@ -2113,7 +2113,7 @@ static const AILapRule lbl_803AA1DC[25] = {
     { 1, 4, -1, 4, 0, 83, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AA3D0[24] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AA3D0[24] = {
     { 2, 5, -1, 1, 51, 115, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 115, -1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 3, 0, 115, -1, {0, 0, 0}, 10.0f },
@@ -2139,7 +2139,7 @@ static const AILapRule lbl_803AA3D0[24] = {
     { 1, 5, -1, 4, 0, 96, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AA5B0[25] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AA5B0[25] = {
     { 2, 6, -1, 1, 51, 83, -1, {0, 0, 0}, 20.0f },
     { 2, 6, -1, 2, 0, 83, -1, {0, 0, 0}, 10.0f },
     { 2, 6, -1, 3, 0, 83, -1, {0, 0, 0}, 10.0f },
@@ -2166,7 +2166,7 @@ static const AILapRule lbl_803AA5B0[25] = {
     { 1, 6, -1, 4, 0, 83, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AA7A4[24] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AA7A4[24] = {
     { 2, 7, -1, 1, 51, 115, -1, {0, 0, 0}, 20.0f },
     { 2, 7, -1, 2, 0, 115, -1, {0, 0, 0}, 10.0f },
     { 2, 7, -1, 3, 0, 115, -1, {0, 0, 0}, 10.0f },
@@ -2192,7 +2192,7 @@ static const AILapRule lbl_803AA7A4[24] = {
     { 1, 7, -1, 4, 0, 96, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AA984[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AA984[10] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { 2, 0, -1, 6, 50, 83, -1, {0, 0, 0}, -30.0f },
     { 2, 1, -1, 5, 50, 115, -1, {0, 0, 0}, -30.0f },
@@ -2204,7 +2204,7 @@ static const AILapRule lbl_803AA984[10] = {
     { 2, 7, -1, 5, 50, 115, -1, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AAA4C[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AAA4C[20] = {
     { -1, 0, 1, 1, 0, 83, -1, {0, 0, 0}, 20.0f },
     { -1, 0, 2, 1, 0, 83, -1, {0, 0, 0}, 15.0f },
     { -1, 0, 3, 1, 0, 83, -1, {0, 0, 0}, 0.0f },
@@ -2226,7 +2226,7 @@ static const AILapRule lbl_803AAA4C[20] = {
     { 1, 0, -1, 4, 0, 83, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AABDC[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AABDC[20] = {
     { -1, 1, 1, 1, 0, 96, -1, {0, 0, 0}, 20.0f },
     { -1, 1, 2, 1, 0, 96, -1, {0, 0, 0}, 15.0f },
     { -1, 1, 3, 1, 0, 96, -1, {0, 0, 0}, 0.0f },
@@ -2248,7 +2248,7 @@ static const AILapRule lbl_803AABDC[20] = {
     { 1, 1, -1, 4, 0, 96, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AAD6C[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AAD6C[20] = {
     { -1, 2, 1, 1, 0, 83, -1, {0, 0, 0}, 30.0f },
     { -1, 2, 2, 1, 0, 83, -1, {0, 0, 0}, 25.0f },
     { -1, 2, 3, 1, 0, 83, -1, {0, 0, 0}, 10.0f },
@@ -2270,7 +2270,7 @@ static const AILapRule lbl_803AAD6C[20] = {
     { 1, 2, -1, 4, 0, 83, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AAEFC[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AAEFC[20] = {
     { -1, 3, 1, 1, 0, 96, -1, {0, 0, 0}, 30.0f },
     { -1, 3, 2, 1, 0, 96, -1, {0, 0, 0}, 25.0f },
     { -1, 3, 3, 1, 0, 96, -1, {0, 0, 0}, 10.0f },
@@ -2292,7 +2292,7 @@ static const AILapRule lbl_803AAEFC[20] = {
     { 1, 3, -1, 4, 0, 96, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AB08C[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AB08C[20] = {
     { -1, 4, 1, 1, 0, 83, -1, {0, 0, 0}, 30.0f },
     { -1, 4, 2, 1, 0, 83, -1, {0, 0, 0}, 25.0f },
     { -1, 4, 3, 1, 0, 83, -1, {0, 0, 0}, 10.0f },
@@ -2314,7 +2314,7 @@ static const AILapRule lbl_803AB08C[20] = {
     { 1, 4, -1, 4, 0, 83, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AB21C[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AB21C[20] = {
     { -1, 5, 1, 1, 0, 96, -1, {0, 0, 0}, 30.0f },
     { -1, 5, 2, 1, 0, 96, -1, {0, 0, 0}, 25.0f },
     { -1, 5, 3, 1, 0, 96, -1, {0, 0, 0}, 10.0f },
@@ -2336,7 +2336,7 @@ static const AILapRule lbl_803AB21C[20] = {
     { 1, 5, -1, 4, 0, 96, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AB3AC[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AB3AC[20] = {
     { -1, 6, 1, 1, 0, 83, -1, {0, 0, 0}, 30.0f },
     { -1, 6, 2, 1, 0, 83, -1, {0, 0, 0}, 25.0f },
     { -1, 6, 3, 1, 0, 83, -1, {0, 0, 0}, 10.0f },
@@ -2358,7 +2358,7 @@ static const AILapRule lbl_803AB3AC[20] = {
     { 1, 6, -1, 4, 0, 83, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AB53C[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AB53C[20] = {
     { -1, 7, 1, 1, 0, 96, -1, {0, 0, 0}, 30.0f },
     { -1, 7, 2, 1, 0, 96, -1, {0, 0, 0}, 25.0f },
     { -1, 7, 3, 1, 0, 96, -1, {0, 0, 0}, 10.0f },
@@ -2380,11 +2380,11 @@ static const AILapRule lbl_803AB53C[20] = {
     { 1, 7, -1, 4, 0, 96, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AB6CC[2] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AB6CC[2] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AB6F4[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AB6F4[23] = {
     { 2, 0, -1, 1, 51, 83, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 2, 0, 83, -1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 4, 50, 83, -1, {0, 0, 0}, -10.0f },
@@ -2409,7 +2409,7 @@ static const AILapRule lbl_803AB6F4[23] = {
     { 1, 0, -1, 4, 0, 83, -1, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AB8C0[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AB8C0[23] = {
     { 2, 1, -1, 1, 51, 115, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 0, 115, -1, {0, 0, 0}, 10.0f },
     { 2, 1, -1, 4, 50, 115, -1, {0, 0, 0}, -10.0f },
@@ -2434,7 +2434,7 @@ static const AILapRule lbl_803AB8C0[23] = {
     { 1, 1, -1, 4, 0, 96, -1, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803ABA8C[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803ABA8C[23] = {
     { 2, 2, -1, 1, 51, 83, -1, {0, 0, 0}, 20.0f },
     { 2, 2, -1, 2, 0, 83, -1, {0, 0, 0}, 10.0f },
     { 2, 2, -1, 4, 50, 83, -1, {0, 0, 0}, -5.0f },
@@ -2459,7 +2459,7 @@ static const AILapRule lbl_803ABA8C[23] = {
     { 1, 2, -1, 4, 0, 83, -1, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803ABC58[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803ABC58[23] = {
     { 2, 3, -1, 1, 51, 115, -1, {0, 0, 0}, 20.0f },
     { 2, 3, -1, 2, 0, 115, -1, {0, 0, 0}, 10.0f },
     { 2, 3, -1, 4, 50, 115, -1, {0, 0, 0}, 0.0f },
@@ -2484,7 +2484,7 @@ static const AILapRule lbl_803ABC58[23] = {
     { 1, 3, -1, 4, 0, 96, -1, {0, 0, 0}, -5.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803ABE24[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803ABE24[23] = {
     { 2, 4, -1, 1, 51, 83, -1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 2, 0, 83, -1, {0, 0, 0}, 10.0f },
     { 2, 4, -1, 4, 50, 83, -1, {0, 0, 0}, 0.0f },
@@ -2509,7 +2509,7 @@ static const AILapRule lbl_803ABE24[23] = {
     { 1, 4, -1, 4, 0, 83, -1, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803ABFF0[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803ABFF0[23] = {
     { 2, 5, -1, 1, 51, 115, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 115, -1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 4, 50, 115, -1, {0, 0, 0}, 0.0f },
@@ -2534,7 +2534,7 @@ static const AILapRule lbl_803ABFF0[23] = {
     { 1, 5, -1, 4, 0, 96, -1, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AC1BC[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AC1BC[23] = {
     { 2, 6, -1, 1, 51, 83, -1, {0, 0, 0}, 20.0f },
     { 2, 6, -1, 2, 0, 83, -1, {0, 0, 0}, 10.0f },
     { 2, 6, -1, 4, 50, 83, -1, {0, 0, 0}, 5.0f },
@@ -2559,7 +2559,7 @@ static const AILapRule lbl_803AC1BC[23] = {
     { 1, 6, -1, 4, 0, 83, -1, {0, 0, 0}, -5.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AC388[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AC388[23] = {
     { 2, 7, -1, 1, 51, 115, -1, {0, 0, 0}, 20.0f },
     { 2, 7, -1, 2, 0, 115, -1, {0, 0, 0}, 10.0f },
     { 2, 7, -1, 4, 50, 115, -1, {0, 0, 0}, 10.0f },
@@ -2584,11 +2584,11 @@ static const AILapRule lbl_803AC388[23] = {
     { 1, 7, -1, 4, 0, 96, -1, {0, 0, 0}, 0.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AC554[2] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AC554[2] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AC57C[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AC57C[15] = {
     { 2, 0, -1, 1, 51, 104, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 2, 0, 104, -1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 3, 0, 104, -1, {0, 0, 0}, 10.0f },
@@ -2605,7 +2605,7 @@ static const AILapRule lbl_803AC57C[15] = {
     { 1, 0, -1, 3, 0, 104, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AC6A8[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AC6A8[15] = {
     { 2, 1, -1, 1, 51, 114, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 0, 114, -1, {0, 0, 0}, 10.0f },
     { 2, 1, -1, 3, 0, 114, -1, {0, 0, 0}, 10.0f },
@@ -2622,7 +2622,7 @@ static const AILapRule lbl_803AC6A8[15] = {
     { 1, 1, -1, 3, 0, 114, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AC7D4[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AC7D4[15] = {
     { 2, 2, -1, 1, 51, 104, -1, {0, 0, 0}, 20.0f },
     { 2, 2, -1, 2, 0, 104, -1, {0, 0, 0}, 10.0f },
     { 2, 2, -1, 3, 0, 104, -1, {0, 0, 0}, 10.0f },
@@ -2639,7 +2639,7 @@ static const AILapRule lbl_803AC7D4[15] = {
     { 1, 2, -1, 3, 0, 104, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AC900[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AC900[15] = {
     { 2, 3, -1, 1, 51, 114, -1, {0, 0, 0}, 20.0f },
     { 2, 3, -1, 2, 0, 114, -1, {0, 0, 0}, 10.0f },
     { 2, 3, -1, 3, 0, 114, -1, {0, 0, 0}, 10.0f },
@@ -2656,7 +2656,7 @@ static const AILapRule lbl_803AC900[15] = {
     { 1, 3, -1, 3, 0, 114, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803ACA2C[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803ACA2C[15] = {
     { 2, 4, -1, 1, 51, 104, -1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 2, 0, 104, -1, {0, 0, 0}, 10.0f },
     { 2, 4, -1, 3, 0, 104, -1, {0, 0, 0}, 10.0f },
@@ -2673,7 +2673,7 @@ static const AILapRule lbl_803ACA2C[15] = {
     { 1, 4, -1, 3, 0, 104, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803ACB58[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803ACB58[15] = {
     { 2, 5, -1, 1, 51, 114, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 114, -1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 3, 0, 114, -1, {0, 0, 0}, 10.0f },
@@ -2690,7 +2690,7 @@ static const AILapRule lbl_803ACB58[15] = {
     { 1, 5, -1, 3, 0, 114, -1, {0, 0, 0}, -35.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803ACC84[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803ACC84[15] = {
     { 2, 6, -1, 1, 51, 104, -1, {0, 0, 0}, 20.0f },
     { 2, 6, -1, 2, 0, 104, -1, {0, 0, 0}, 10.0f },
     { 2, 6, -1, 3, 0, 104, -1, {0, 0, 0}, 10.0f },
@@ -2707,7 +2707,7 @@ static const AILapRule lbl_803ACC84[15] = {
     { 1, 6, -1, 3, 0, 104, -1, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803ACDB0[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803ACDB0[15] = {
     { 2, 7, -1, 1, 51, 114, -1, {0, 0, 0}, 20.0f },
     { 2, 7, -1, 2, 0, 114, -1, {0, 0, 0}, 10.0f },
     { 2, 7, -1, 3, 0, 114, -1, {0, 0, 0}, 10.0f },
@@ -2724,7 +2724,7 @@ static const AILapRule lbl_803ACDB0[15] = {
     { 1, 7, -1, 3, 0, 114, -1, {0, 0, 0}, -25.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803ACEDC[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803ACEDC[10] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { 2, 0, -1, 4, 50, 104, -1, {0, 0, 0}, -30.0f },
     { 2, 1, -1, 4, 50, 114, -1, {0, 0, 0}, -30.0f },
@@ -2736,7 +2736,7 @@ static const AILapRule lbl_803ACEDC[10] = {
     { 2, 7, -1, 4, 50, 114, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803ACFA4[11] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803ACFA4[11] = {
     { -1, 0, 1, 1, 0, 104, -1, {0, 0, 0}, 20.0f },
     { -1, 0, 2, 1, 0, 104, -1, {0, 0, 0}, 15.0f },
     { -1, 0, 3, 1, 0, 104, -1, {0, 0, 0}, 0.0f },
@@ -2749,7 +2749,7 @@ static const AILapRule lbl_803ACFA4[11] = {
     { 1, 0, -1, 3, 0, 104, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AD080[11] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AD080[11] = {
     { -1, 1, 1, 1, 0, 114, -1, {0, 0, 0}, 20.0f },
     { -1, 1, 2, 1, 0, 114, -1, {0, 0, 0}, 15.0f },
     { -1, 1, 3, 1, 0, 114, -1, {0, 0, 0}, 0.0f },
@@ -2762,7 +2762,7 @@ static const AILapRule lbl_803AD080[11] = {
     { 1, 1, -1, 3, 0, 114, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AD15C[11] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AD15C[11] = {
     { -1, 2, 1, 1, 0, 104, -1, {0, 0, 0}, 30.0f },
     { -1, 2, 2, 1, 0, 104, -1, {0, 0, 0}, 25.0f },
     { -1, 2, 3, 1, 0, 104, -1, {0, 0, 0}, 10.0f },
@@ -2775,7 +2775,7 @@ static const AILapRule lbl_803AD15C[11] = {
     { 1, 2, -1, 3, 0, 104, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AD238[11] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AD238[11] = {
     { -1, 3, 1, 1, 0, 114, -1, {0, 0, 0}, 30.0f },
     { -1, 3, 2, 1, 0, 114, -1, {0, 0, 0}, 25.0f },
     { -1, 3, 3, 1, 0, 114, -1, {0, 0, 0}, 10.0f },
@@ -2788,7 +2788,7 @@ static const AILapRule lbl_803AD238[11] = {
     { 1, 3, -1, 3, 0, 114, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AD314[11] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AD314[11] = {
     { -1, 4, 1, 1, 0, 104, -1, {0, 0, 0}, 30.0f },
     { -1, 4, 2, 1, 0, 104, -1, {0, 0, 0}, 25.0f },
     { -1, 4, 3, 1, 0, 104, -1, {0, 0, 0}, 10.0f },
@@ -2801,7 +2801,7 @@ static const AILapRule lbl_803AD314[11] = {
     { 1, 4, -1, 3, 0, 104, -1, {0, 0, 0}, -35.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AD3F0[11] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AD3F0[11] = {
     { -1, 5, 1, 1, 0, 114, -1, {0, 0, 0}, 30.0f },
     { -1, 5, 2, 1, 0, 114, -1, {0, 0, 0}, 25.0f },
     { -1, 5, 3, 1, 0, 114, -1, {0, 0, 0}, 10.0f },
@@ -2814,7 +2814,7 @@ static const AILapRule lbl_803AD3F0[11] = {
     { 1, 5, -1, 3, 0, 114, -1, {0, 0, 0}, -35.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AD4CC[11] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AD4CC[11] = {
     { -1, 6, 1, 1, 0, 104, -1, {0, 0, 0}, 30.0f },
     { -1, 6, 2, 1, 0, 104, -1, {0, 0, 0}, 25.0f },
     { -1, 6, 3, 1, 0, 104, -1, {0, 0, 0}, 10.0f },
@@ -2827,7 +2827,7 @@ static const AILapRule lbl_803AD4CC[11] = {
     { 1, 6, -1, 3, 0, 104, -1, {0, 0, 0}, -25.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AD5A8[11] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AD5A8[11] = {
     { -1, 7, 1, 1, 0, 114, -1, {0, 0, 0}, 30.0f },
     { -1, 7, 2, 1, 0, 114, -1, {0, 0, 0}, 25.0f },
     { -1, 7, 3, 1, 0, 114, -1, {0, 0, 0}, 10.0f },
@@ -2840,11 +2840,11 @@ static const AILapRule lbl_803AD5A8[11] = {
     { 1, 7, -1, 3, 0, 114, -1, {0, 0, 0}, -25.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AD684[2] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AD684[2] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AD6AC[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AD6AC[14] = {
     { 2, 0, -1, 1, 51, 104, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 2, 0, 104, -1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 3, 50, 104, -1, {0, 0, 0}, -10.0f },
@@ -2860,7 +2860,7 @@ static const AILapRule lbl_803AD6AC[14] = {
     { 1, 0, -1, 3, 0, 104, -1, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AD7C4[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AD7C4[14] = {
     { 2, 1, -1, 1, 51, 114, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 0, 114, -1, {0, 0, 0}, 10.0f },
     { 2, 1, -1, 3, 50, 114, -1, {0, 0, 0}, -10.0f },
@@ -2876,7 +2876,7 @@ static const AILapRule lbl_803AD7C4[14] = {
     { 1, 1, -1, 3, 0, 114, -1, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AD8DC[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AD8DC[14] = {
     { 2, 2, -1, 1, 51, 104, -1, {0, 0, 0}, 20.0f },
     { 2, 2, -1, 2, 0, 104, -1, {0, 0, 0}, 10.0f },
     { 2, 2, -1, 3, 50, 104, -1, {0, 0, 0}, -5.0f },
@@ -2892,7 +2892,7 @@ static const AILapRule lbl_803AD8DC[14] = {
     { 1, 2, -1, 3, 0, 104, -1, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AD9F4[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AD9F4[14] = {
     { 2, 3, -1, 1, 51, 114, -1, {0, 0, 0}, 20.0f },
     { 2, 3, -1, 2, 0, 114, -1, {0, 0, 0}, 10.0f },
     { 2, 3, -1, 3, 50, 114, -1, {0, 0, 0}, 0.0f },
@@ -2908,7 +2908,7 @@ static const AILapRule lbl_803AD9F4[14] = {
     { 1, 3, -1, 3, 0, 114, -1, {0, 0, 0}, -5.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803ADB0C[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803ADB0C[14] = {
     { 2, 4, -1, 1, 51, 104, -1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 2, 0, 104, -1, {0, 0, 0}, 10.0f },
     { 2, 4, -1, 3, 50, 104, -1, {0, 0, 0}, 0.0f },
@@ -2924,7 +2924,7 @@ static const AILapRule lbl_803ADB0C[14] = {
     { 1, 4, -1, 3, 0, 104, -1, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803ADC24[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803ADC24[14] = {
     { 2, 5, -1, 1, 51, 114, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 114, -1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 3, 50, 114, -1, {0, 0, 0}, 0.0f },
@@ -2940,7 +2940,7 @@ static const AILapRule lbl_803ADC24[14] = {
     { 1, 5, -1, 3, 0, 114, -1, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803ADD3C[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803ADD3C[14] = {
     { 2, 6, -1, 1, 51, 104, -1, {0, 0, 0}, 20.0f },
     { 2, 6, -1, 2, 0, 104, -1, {0, 0, 0}, 10.0f },
     { 2, 6, -1, 3, 50, 104, -1, {0, 0, 0}, 5.0f },
@@ -2956,7 +2956,7 @@ static const AILapRule lbl_803ADD3C[14] = {
     { 1, 6, -1, 3, 0, 104, -1, {0, 0, 0}, -5.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803ADE54[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803ADE54[14] = {
     { 2, 7, -1, 1, 51, 114, -1, {0, 0, 0}, 20.0f },
     { 2, 7, -1, 2, 0, 114, -1, {0, 0, 0}, 10.0f },
     { 2, 7, -1, 3, 50, 114, -1, {0, 0, 0}, 10.0f },
@@ -2972,11 +2972,11 @@ static const AILapRule lbl_803ADE54[14] = {
     { 1, 7, -1, 3, 0, 114, -1, {0, 0, 0}, 0.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803ADF6C[2] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803ADF6C[2] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803ADF94[24] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803ADF94[24] = {
     { 2, 0, -1, 1, 50, 177, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 2, 0, 177, -1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 3, 0, 177, -1, {0, 0, 0}, 10.0f },
@@ -3002,7 +3002,7 @@ static const AILapRule lbl_803ADF94[24] = {
     { 1, 0, -1, 4, 0, 177, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AE174[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AE174[15] = {
     { 2, 1, -1, 1, 50, 110, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 0, 110, -1, {0, 0, 0}, 10.0f },
     { 2, 1, -1, 3, 0, 110, -1, {0, 0, 0}, 10.0f },
@@ -3019,7 +3019,7 @@ static const AILapRule lbl_803AE174[15] = {
     { 1, 1, -1, 4, 0, 249, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AE2A0[24] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AE2A0[24] = {
     { 2, 2, -1, 1, 50, 177, -1, {0, 0, 0}, 20.0f },
     { 2, 2, -1, 2, 0, 177, -1, {0, 0, 0}, 10.0f },
     { 2, 2, -1, 3, 0, 177, -1, {0, 0, 0}, 10.0f },
@@ -3045,7 +3045,7 @@ static const AILapRule lbl_803AE2A0[24] = {
     { 1, 2, -1, 4, 0, 177, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AE480[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AE480[15] = {
     { 2, 3, -1, 1, 50, 110, -1, {0, 0, 0}, 20.0f },
     { 2, 3, -1, 2, 0, 110, -1, {0, 0, 0}, 10.0f },
     { 2, 3, -1, 3, 0, 110, -1, {0, 0, 0}, 10.0f },
@@ -3062,7 +3062,7 @@ static const AILapRule lbl_803AE480[15] = {
     { 1, 3, -1, 4, 0, 249, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AE5AC[24] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AE5AC[24] = {
     { 2, 4, -1, 1, 50, 177, -1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 2, 0, 177, -1, {0, 0, 0}, 10.0f },
     { 2, 4, -1, 3, 0, 177, -1, {0, 0, 0}, 10.0f },
@@ -3088,7 +3088,7 @@ static const AILapRule lbl_803AE5AC[24] = {
     { 1, 4, -1, 4, 0, 177, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AE78C[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AE78C[15] = {
     { 2, 5, -1, 1, 50, 110, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 110, -1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 3, 0, 110, -1, {0, 0, 0}, 10.0f },
@@ -3105,7 +3105,7 @@ static const AILapRule lbl_803AE78C[15] = {
     { 1, 5, -1, 4, 0, 249, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AE8B8[24] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AE8B8[24] = {
     { 2, 6, -1, 1, 50, 177, -1, {0, 0, 0}, 20.0f },
     { 2, 6, -1, 2, 0, 177, -1, {0, 0, 0}, 10.0f },
     { 2, 6, -1, 3, 0, 177, -1, {0, 0, 0}, 10.0f },
@@ -3131,7 +3131,7 @@ static const AILapRule lbl_803AE8B8[24] = {
     { 1, 6, -1, 4, 0, 177, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AEA98[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AEA98[15] = {
     { 2, 7, -1, 1, 50, 110, -1, {0, 0, 0}, 20.0f },
     { 2, 7, -1, 2, 0, 110, -1, {0, 0, 0}, 10.0f },
     { 2, 7, -1, 3, 0, 110, -1, {0, 0, 0}, 10.0f },
@@ -3148,7 +3148,7 @@ static const AILapRule lbl_803AEA98[15] = {
     { 1, 7, -1, 4, 0, 249, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AEBC4[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AEBC4[10] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { 2, 0, -1, 5, 50, 177, -1, {0, 0, 0}, -30.0f },
     { 2, 1, -1, 5, 50, 110, -1, {0, 0, 0}, -30.0f },
@@ -3160,7 +3160,7 @@ static const AILapRule lbl_803AEBC4[10] = {
     { 2, 7, -1, 5, 50, 110, -1, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AEC8C[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AEC8C[20] = {
     { -1, 0, 1, 1, 0, 177, -1, {0, 0, 0}, 20.0f },
     { -1, 0, 2, 1, 0, 177, -1, {0, 0, 0}, 15.0f },
     { -1, 0, 3, 1, 0, 177, -1, {0, 0, 0}, 0.0f },
@@ -3182,7 +3182,7 @@ static const AILapRule lbl_803AEC8C[20] = {
     { 1, 0, -1, 4, 0, 177, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AEE1C[11] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AEE1C[11] = {
     { -1, 1, 1, 1, 0, 249, -1, {0, 0, 0}, 20.0f },
     { -1, 1, 2, 1, 0, 249, -1, {0, 0, 0}, 15.0f },
     { -1, 1, 3, 1, 0, 249, -1, {0, 0, 0}, 0.0f },
@@ -3195,7 +3195,7 @@ static const AILapRule lbl_803AEE1C[11] = {
     { 1, 1, -1, 4, 0, 249, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AEEF8[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AEEF8[20] = {
     { -1, 2, 1, 1, 0, 177, -1, {0, 0, 0}, 30.0f },
     { -1, 2, 2, 1, 0, 177, -1, {0, 0, 0}, 25.0f },
     { -1, 2, 3, 1, 0, 177, -1, {0, 0, 0}, 10.0f },
@@ -3217,7 +3217,7 @@ static const AILapRule lbl_803AEEF8[20] = {
     { 1, 2, -1, 4, 0, 177, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AF088[11] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AF088[11] = {
     { -1, 3, 1, 1, 0, 249, -1, {0, 0, 0}, 30.0f },
     { -1, 3, 2, 1, 0, 249, -1, {0, 0, 0}, 25.0f },
     { -1, 3, 3, 1, 0, 249, -1, {0, 0, 0}, 10.0f },
@@ -3230,7 +3230,7 @@ static const AILapRule lbl_803AF088[11] = {
     { 1, 3, -1, 4, 0, 249, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AF164[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AF164[20] = {
     { -1, 4, 1, 1, 0, 177, -1, {0, 0, 0}, 30.0f },
     { -1, 4, 2, 1, 0, 177, -1, {0, 0, 0}, 25.0f },
     { -1, 4, 3, 1, 0, 177, -1, {0, 0, 0}, 10.0f },
@@ -3252,7 +3252,7 @@ static const AILapRule lbl_803AF164[20] = {
     { 1, 4, -1, 4, 0, 177, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AF2F4[11] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AF2F4[11] = {
     { -1, 5, 1, 1, 0, 249, -1, {0, 0, 0}, 30.0f },
     { -1, 5, 2, 1, 0, 249, -1, {0, 0, 0}, 25.0f },
     { -1, 5, 3, 1, 0, 249, -1, {0, 0, 0}, 10.0f },
@@ -3265,7 +3265,7 @@ static const AILapRule lbl_803AF2F4[11] = {
     { 1, 5, -1, 4, 0, 249, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AF3D0[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AF3D0[20] = {
     { -1, 6, 1, 1, 0, 177, -1, {0, 0, 0}, 30.0f },
     { -1, 6, 2, 1, 0, 177, -1, {0, 0, 0}, 25.0f },
     { -1, 6, 3, 1, 0, 177, -1, {0, 0, 0}, 10.0f },
@@ -3287,7 +3287,7 @@ static const AILapRule lbl_803AF3D0[20] = {
     { 1, 6, -1, 4, 0, 177, -1, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AF560[11] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AF560[11] = {
     { -1, 7, 1, 1, 0, 249, -1, {0, 0, 0}, 30.0f },
     { -1, 7, 2, 1, 0, 249, -1, {0, 0, 0}, 25.0f },
     { -1, 7, 3, 1, 0, 249, -1, {0, 0, 0}, 10.0f },
@@ -3300,11 +3300,11 @@ static const AILapRule lbl_803AF560[11] = {
     { 1, 7, -1, 4, 0, 249, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AF63C[2] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AF63C[2] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AF664[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AF664[23] = {
     { 2, 0, -1, 1, 50, 177, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 2, 0, 177, -1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 4, 50, 177, -1, {0, 0, 0}, -10.0f },
@@ -3329,7 +3329,7 @@ static const AILapRule lbl_803AF664[23] = {
     { 1, 0, -1, 4, 0, 177, -1, {0, 0, 0}, -25.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AF830[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AF830[14] = {
     { 2, 1, -1, 1, 50, 110, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 0, 110, -1, {0, 0, 0}, 10.0f },
     { 2, 1, -1, 4, 50, 110, -1, {0, 0, 0}, -10.0f },
@@ -3345,7 +3345,7 @@ static const AILapRule lbl_803AF830[14] = {
     { 1, 1, -1, 4, 0, 249, -1, {0, 0, 0}, -25.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AF948[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AF948[23] = {
     { 2, 2, -1, 1, 50, 177, -1, {0, 0, 0}, 20.0f },
     { 2, 2, -1, 2, 0, 177, -1, {0, 0, 0}, 10.0f },
     { 2, 2, -1, 4, 50, 177, -1, {0, 0, 0}, 5.0f },
@@ -3370,7 +3370,7 @@ static const AILapRule lbl_803AF948[23] = {
     { 1, 2, -1, 4, 0, 177, -1, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AFB14[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AFB14[14] = {
     { 2, 3, -1, 1, 50, 110, -1, {0, 0, 0}, 20.0f },
     { 2, 3, -1, 2, 0, 110, -1, {0, 0, 0}, 10.0f },
     { 2, 3, -1, 4, 50, 110, -1, {0, 0, 0}, 5.0f },
@@ -3386,7 +3386,7 @@ static const AILapRule lbl_803AFB14[14] = {
     { 1, 3, -1, 4, 0, 249, -1, {0, 0, 0}, -5.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AFC2C[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AFC2C[23] = {
     { 2, 4, -1, 1, 50, 177, -1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 2, 0, 177, -1, {0, 0, 0}, 10.0f },
     { 2, 4, -1, 4, 50, 177, -1, {0, 0, 0}, 0.0f },
@@ -3411,7 +3411,7 @@ static const AILapRule lbl_803AFC2C[23] = {
     { 1, 4, -1, 4, 0, 177, -1, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AFDF8[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AFDF8[14] = {
     { 2, 5, -1, 1, 50, 110, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 110, -1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 4, 50, 110, -1, {0, 0, 0}, 0.0f },
@@ -3427,7 +3427,7 @@ static const AILapRule lbl_803AFDF8[14] = {
     { 1, 5, -1, 4, 0, 249, -1, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803AFF10[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803AFF10[23] = {
     { 2, 6, -1, 1, 50, 177, -1, {0, 0, 0}, 20.0f },
     { 2, 6, -1, 2, 0, 177, -1, {0, 0, 0}, 10.0f },
     { 2, 6, -1, 4, 50, 177, -1, {0, 0, 0}, 5.0f },
@@ -3452,7 +3452,7 @@ static const AILapRule lbl_803AFF10[23] = {
     { 1, 6, -1, 4, 0, 177, -1, {0, 0, 0}, 0.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B00DC[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B00DC[14] = {
     { 2, 7, -1, 1, 50, 110, -1, {0, 0, 0}, 20.0f },
     { 2, 7, -1, 2, 0, 110, -1, {0, 0, 0}, 10.0f },
     { 2, 7, -1, 4, 50, 110, -1, {0, 0, 0}, 10.0f },
@@ -3468,11 +3468,11 @@ static const AILapRule lbl_803B00DC[14] = {
     { 1, 7, -1, 4, 0, 249, -1, {0, 0, 0}, 0.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B01F4[2] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B01F4[2] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B021C[16] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B021C[16] = {
     { 2, 0, -1, 1, 51, 216, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 2, 0, 50, -1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 3, 100, 216, -1, {0, 0, 0}, -10.0f },
@@ -3490,7 +3490,7 @@ static const AILapRule lbl_803B021C[16] = {
     { 1, 0, -1, 2, 111, 216, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B035C[16] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B035C[16] = {
     { 2, 1, -1, 1, 51, 193, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 0, 50, -1, {0, 0, 0}, 10.0f },
     { 2, 1, -1, 3, 100, 193, -1, {0, 0, 0}, -10.0f },
@@ -3508,7 +3508,7 @@ static const AILapRule lbl_803B035C[16] = {
     { 1, 1, -1, 2, 111, 193, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B049C[16] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B049C[16] = {
     { 2, 2, -1, 1, 51, 216, -1, {0, 0, 0}, 20.0f },
     { 2, 2, -1, 2, 0, 50, -1, {0, 0, 0}, 10.0f },
     { 2, 2, -1, 3, 100, 216, -1, {0, 0, 0}, -5.0f },
@@ -3526,7 +3526,7 @@ static const AILapRule lbl_803B049C[16] = {
     { 1, 2, -1, 2, 111, 216, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B05DC[16] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B05DC[16] = {
     { 2, 3, -1, 1, 51, 193, -1, {0, 0, 0}, 20.0f },
     { 2, 3, -1, 2, 0, 50, -1, {0, 0, 0}, 10.0f },
     { 2, 3, -1, 3, 100, 193, -1, {0, 0, 0}, 0.0f },
@@ -3544,7 +3544,7 @@ static const AILapRule lbl_803B05DC[16] = {
     { 1, 3, -1, 2, 111, 193, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B071C[16] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B071C[16] = {
     { 2, 4, -1, 1, 51, 216, -1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 2, 0, 50, -1, {0, 0, 0}, 10.0f },
     { 2, 4, -1, 3, 100, 216, -1, {0, 0, 0}, 0.0f },
@@ -3562,7 +3562,7 @@ static const AILapRule lbl_803B071C[16] = {
     { 1, 4, -1, 2, 111, 216, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B085C[16] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B085C[16] = {
     { 2, 5, -1, 1, 51, 193, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 50, -1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 3, 100, 193, -1, {0, 0, 0}, 0.0f },
@@ -3580,7 +3580,7 @@ static const AILapRule lbl_803B085C[16] = {
     { 1, 5, -1, 2, 111, 193, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B099C[16] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B099C[16] = {
     { 2, 6, -1, 1, 51, 216, -1, {0, 0, 0}, 20.0f },
     { 2, 6, -1, 2, 0, 50, -1, {0, 0, 0}, 10.0f },
     { 2, 6, -1, 3, 100, 216, -1, {0, 0, 0}, 0.0f },
@@ -3598,7 +3598,7 @@ static const AILapRule lbl_803B099C[16] = {
     { 1, 6, -1, 2, 111, 216, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B0ADC[16] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B0ADC[16] = {
     { 2, 7, -1, 1, 51, 193, -1, {0, 0, 0}, 20.0f },
     { 2, 7, -1, 2, 0, 50, -1, {0, 0, 0}, 10.0f },
     { 2, 7, -1, 3, 100, 193, -1, {0, 0, 0}, 5.0f },
@@ -3616,7 +3616,7 @@ static const AILapRule lbl_803B0ADC[16] = {
     { 1, 7, -1, 2, 111, 193, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B0C1C[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B0C1C[10] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { 2, 0, -1, 3, 100, 216, -1, {0, 0, 0}, -30.0f },
     { 2, 1, -1, 3, 100, 193, -1, {0, 0, 0}, -30.0f },
@@ -3628,7 +3628,7 @@ static const AILapRule lbl_803B0C1C[10] = {
     { 2, 7, -1, 3, 100, 193, -1, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B0CE4[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B0CE4[13] = {
     { -1, 0, 1, 1, 0, 100, -1, {0, 0, 0}, 20.0f },
     { -1, 0, 2, 1, 0, 100, -1, {0, 0, 0}, 15.0f },
     { -1, 0, 3, 1, 0, 100, -1, {0, 0, 0}, 0.0f },
@@ -3643,7 +3643,7 @@ static const AILapRule lbl_803B0CE4[13] = {
     { 1, 0, -1, 2, 111, 216, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B0DE8[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B0DE8[13] = {
     { -1, 1, 1, 1, 0, 100, -1, {0, 0, 0}, 20.0f },
     { -1, 1, 2, 1, 0, 100, -1, {0, 0, 0}, 15.0f },
     { -1, 1, 3, 1, 0, 100, -1, {0, 0, 0}, 0.0f },
@@ -3658,7 +3658,7 @@ static const AILapRule lbl_803B0DE8[13] = {
     { 1, 1, -1, 2, 111, 193, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B0EEC[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B0EEC[13] = {
     { -1, 2, 1, 1, 0, 100, -1, {0, 0, 0}, 30.0f },
     { -1, 2, 2, 1, 0, 100, -1, {0, 0, 0}, 25.0f },
     { -1, 2, 3, 1, 0, 100, -1, {0, 0, 0}, 15.0f },
@@ -3673,7 +3673,7 @@ static const AILapRule lbl_803B0EEC[13] = {
     { 1, 2, -1, 2, 111, 216, -1, {0, 0, 0}, -55.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B0FF0[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B0FF0[13] = {
     { -1, 3, 1, 1, 0, 100, -1, {0, 0, 0}, 30.0f },
     { -1, 3, 2, 1, 0, 100, -1, {0, 0, 0}, 25.0f },
     { -1, 3, 3, 1, 0, 100, -1, {0, 0, 0}, 10.0f },
@@ -3688,7 +3688,7 @@ static const AILapRule lbl_803B0FF0[13] = {
     { 1, 3, -1, 2, 111, 193, -1, {0, 0, 0}, -55.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B10F4[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B10F4[13] = {
     { -1, 4, 1, 1, 0, 100, -1, {0, 0, 0}, 30.0f },
     { -1, 4, 2, 1, 0, 100, -1, {0, 0, 0}, 25.0f },
     { -1, 4, 3, 1, 0, 100, -1, {0, 0, 0}, 15.0f },
@@ -3703,7 +3703,7 @@ static const AILapRule lbl_803B10F4[13] = {
     { 1, 4, -1, 2, 111, 216, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B11F8[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B11F8[13] = {
     { -1, 5, 1, 1, 0, 100, -1, {0, 0, 0}, 30.0f },
     { -1, 5, 2, 1, 0, 100, -1, {0, 0, 0}, 25.0f },
     { -1, 5, 3, 1, 0, 100, -1, {0, 0, 0}, 10.0f },
@@ -3718,7 +3718,7 @@ static const AILapRule lbl_803B11F8[13] = {
     { 1, 5, -1, 2, 111, 193, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B12FC[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B12FC[13] = {
     { -1, 6, 1, 1, 0, 100, -1, {0, 0, 0}, 30.0f },
     { -1, 6, 2, 1, 0, 100, -1, {0, 0, 0}, 25.0f },
     { -1, 6, 3, 1, 0, 100, -1, {0, 0, 0}, 15.0f },
@@ -3733,7 +3733,7 @@ static const AILapRule lbl_803B12FC[13] = {
     { 1, 6, -1, 2, 111, 216, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B1400[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B1400[13] = {
     { -1, 7, 1, 1, 0, 100, -1, {0, 0, 0}, 30.0f },
     { -1, 7, 2, 1, 0, 100, -1, {0, 0, 0}, 25.0f },
     { -1, 7, 3, 1, 0, 100, -1, {0, 0, 0}, 10.0f },
@@ -3748,11 +3748,11 @@ static const AILapRule lbl_803B1400[13] = {
     { 1, 7, -1, 2, 111, 193, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B1504[2] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B1504[2] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B152C[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B152C[15] = {
     { 2, 0, -1, 1, 51, 216, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 2, 100, 216, -1, {0, 0, 0}, -10.0f },
     { -1, 0, 1, 1, 0, 100, -1, {0, 0, 0}, 20.0f },
@@ -3769,7 +3769,7 @@ static const AILapRule lbl_803B152C[15] = {
     { 1, 0, -1, 2, 111, 216, -1, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B1658[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B1658[15] = {
     { 2, 1, -1, 1, 51, 193, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 100, 193, -1, {0, 0, 0}, -10.0f },
     { -1, 1, 1, 1, 0, 100, -1, {0, 0, 0}, 20.0f },
@@ -3786,7 +3786,7 @@ static const AILapRule lbl_803B1658[15] = {
     { 1, 1, -1, 2, 111, 193, -1, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B1784[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B1784[15] = {
     { 2, 2, -1, 1, 51, 216, -1, {0, 0, 0}, 20.0f },
     { 2, 2, -1, 2, 100, 216, -1, {0, 0, 0}, -5.0f },
     { -1, 2, 1, 1, 0, 100, -1, {0, 0, 0}, 30.0f },
@@ -3803,7 +3803,7 @@ static const AILapRule lbl_803B1784[15] = {
     { 1, 2, -1, 2, 111, 216, -1, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B18B0[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B18B0[15] = {
     { 2, 3, -1, 1, 51, 193, -1, {0, 0, 0}, 20.0f },
     { 2, 3, -1, 2, 100, 193, -1, {0, 0, 0}, 0.0f },
     { -1, 3, 1, 1, 0, 100, -1, {0, 0, 0}, 30.0f },
@@ -3820,7 +3820,7 @@ static const AILapRule lbl_803B18B0[15] = {
     { 1, 3, -1, 2, 111, 193, -1, {0, 0, 0}, -5.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B19DC[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B19DC[15] = {
     { 2, 4, -1, 1, 51, 216, -1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 2, 100, 216, -1, {0, 0, 0}, 0.0f },
     { -1, 4, 1, 1, 0, 100, -1, {0, 0, 0}, 30.0f },
@@ -3837,7 +3837,7 @@ static const AILapRule lbl_803B19DC[15] = {
     { 1, 4, -1, 2, 111, 216, -1, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B1B08[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B1B08[15] = {
     { 2, 5, -1, 1, 51, 193, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 100, 193, -1, {0, 0, 0}, 0.0f },
     { -1, 5, 1, 1, 0, 100, -1, {0, 0, 0}, 30.0f },
@@ -3854,7 +3854,7 @@ static const AILapRule lbl_803B1B08[15] = {
     { 1, 5, -1, 2, 111, 193, -1, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B1C34[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B1C34[15] = {
     { 2, 6, -1, 1, 51, 216, -1, {0, 0, 0}, 20.0f },
     { 2, 6, -1, 2, 100, 216, -1, {0, 0, 0}, 0.0f },
     { -1, 6, 1, 1, 0, 100, -1, {0, 0, 0}, 30.0f },
@@ -3871,7 +3871,7 @@ static const AILapRule lbl_803B1C34[15] = {
     { 1, 6, -1, 2, 111, 216, -1, {0, 0, 0}, -5.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B1D60[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B1D60[15] = {
     { 2, 7, -1, 1, 51, 193, -1, {0, 0, 0}, 20.0f },
     { 2, 7, -1, 2, 100, 193, -1, {0, 0, 0}, 5.0f },
     { -1, 7, 1, 1, 0, 100, -1, {0, 0, 0}, 30.0f },
@@ -3888,11 +3888,11 @@ static const AILapRule lbl_803B1D60[15] = {
     { 1, 7, -1, 2, 111, 193, -1, {0, 0, 0}, 0.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B1E8C[2] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B1E8C[2] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B1EB4[19] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B1EB4[19] = {
     { 2, 0, -1, 1, 50, 113, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 2, 0, 113, -1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 3, 0, 113, -1, {0, 0, 0}, 10.0f },
@@ -3913,7 +3913,7 @@ static const AILapRule lbl_803B1EB4[19] = {
     { 1, 0, -1, 3, 50, 113, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B2030[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B2030[14] = {
     { 2, 1, -1, 1, 148, 165, -1, {0, 0, 0}, 50.0f },
     { 2, 1, -1, 1, 50, 173, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 148, 165, -1, {0, 0, 0}, 50.0f },
@@ -3929,7 +3929,7 @@ static const AILapRule lbl_803B2030[14] = {
     { 1, 1, -1, 2, 50, 173, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B2148[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B2148[23] = {
     { 2, 2, -1, 1, 80, 105, -1, {0, 0, 0}, 50.0f },
     { 2, 2, -1, 1, 50, 113, -1, {0, 0, 0}, 20.0f },
     { 2, 2, -1, 2, 80, 105, -1, {0, 0, 0}, 50.0f },
@@ -3954,7 +3954,7 @@ static const AILapRule lbl_803B2148[23] = {
     { 1, 2, -1, 3, 50, 113, -1, {0, 0, 0}, -54.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B2314[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B2314[14] = {
     { 2, 3, -1, 1, 148, 165, -1, {0, 0, 0}, 50.0f },
     { 2, 3, -1, 1, 50, 173, -1, {0, 0, 0}, 20.0f },
     { 2, 3, -1, 2, 148, 165, -1, {0, 0, 0}, 50.0f },
@@ -3970,7 +3970,7 @@ static const AILapRule lbl_803B2314[14] = {
     { 1, 3, -1, 2, 50, 173, -1, {0, 0, 0}, -35.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B242C[19] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B242C[19] = {
     { 2, 4, -1, 1, 50, 113, -1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 2, 0, 113, -1, {0, 0, 0}, 10.0f },
     { 2, 4, -1, 3, 0, 113, -1, {0, 0, 0}, 10.0f },
@@ -3991,7 +3991,7 @@ static const AILapRule lbl_803B242C[19] = {
     { 1, 4, -1, 3, 50, 113, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B25A8[11] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B25A8[11] = {
     { 2, 5, -1, 1, 50, 173, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 99, -1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 3, 50, 173, -1, {0, 0, 0}, 10.0f },
@@ -4004,7 +4004,7 @@ static const AILapRule lbl_803B25A8[11] = {
     { 1, 5, -1, 2, 50, 173, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B2684[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B2684[23] = {
     { 2, 6, -1, 1, 80, 105, -1, {0, 0, 0}, 50.0f },
     { 2, 6, -1, 1, 50, 113, -1, {0, 0, 0}, 20.0f },
     { 2, 6, -1, 2, 80, 105, -1, {0, 0, 0}, 50.0f },
@@ -4029,7 +4029,7 @@ static const AILapRule lbl_803B2684[23] = {
     { 1, 6, -1, 3, 50, 113, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B2850[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B2850[14] = {
     { 2, 7, -1, 1, 148, 165, -1, {0, 0, 0}, 50.0f },
     { 2, 7, -1, 1, 50, 173, -1, {0, 0, 0}, 20.0f },
     { 2, 7, -1, 2, 148, 165, -1, {0, 0, 0}, 50.0f },
@@ -4045,7 +4045,7 @@ static const AILapRule lbl_803B2850[14] = {
     { 1, 7, -1, 2, 50, 173, -1, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B2968[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B2968[10] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { 2, 0, -1, 4, 100, 113, -1, {0, 0, 0}, -30.0f },
     { 2, 1, -1, 3, 100, 173, -1, {0, 0, 0}, -30.0f },
@@ -4057,7 +4057,7 @@ static const AILapRule lbl_803B2968[10] = {
     { 2, 7, -1, 3, 100, 173, -1, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B2A30[19] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B2A30[19] = {
     { 2, 0, -1, 1, 80, 105, -1, {0, 0, 0}, 50.0f },
     { 2, 0, -1, 2, 80, 105, -1, {0, 0, 0}, 50.0f },
     { 2, 0, -1, 3, 80, 105, -1, {0, 0, 0}, 50.0f },
@@ -4078,7 +4078,7 @@ static const AILapRule lbl_803B2A30[19] = {
     { 1, 0, -1, 3, 50, 113, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B2BAC[11] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B2BAC[11] = {
     { 2, 1, -1, 1, 148, 165, -1, {0, 0, 0}, 50.0f },
     { 2, 1, -1, 2, 148, 165, -1, {0, 0, 0}, 50.0f },
     { 2, 1, -1, 3, 148, 165, -1, {0, 0, 0}, 50.0f },
@@ -4091,7 +4091,7 @@ static const AILapRule lbl_803B2BAC[11] = {
     { 1, 1, -1, 2, 50, 173, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B2C88[19] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B2C88[19] = {
     { 2, 2, -1, 1, 80, 105, -1, {0, 0, 0}, 50.0f },
     { 2, 2, -1, 2, 80, 105, -1, {0, 0, 0}, 50.0f },
     { 2, 2, -1, 3, 80, 105, -1, {0, 0, 0}, 50.0f },
@@ -4112,7 +4112,7 @@ static const AILapRule lbl_803B2C88[19] = {
     { 1, 2, -1, 3, 50, 113, -1, {0, 0, 0}, -54.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B2E04[11] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B2E04[11] = {
     { 2, 3, -1, 1, 148, 165, -1, {0, 0, 0}, 50.0f },
     { 2, 3, -1, 2, 148, 165, -1, {0, 0, 0}, 50.0f },
     { 2, 3, -1, 3, 148, 165, -1, {0, 0, 0}, 50.0f },
@@ -4125,7 +4125,7 @@ static const AILapRule lbl_803B2E04[11] = {
     { 1, 3, -1, 2, 50, 173, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B2EE0[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B2EE0[15] = {
     { -1, 4, 1, 1, 0, 113, -1, {0, 0, 0}, 40.0f },
     { -1, 4, 2, 1, 0, 113, -1, {0, 0, 0}, 20.0f },
     { -1, 4, 3, 1, 0, 113, -1, {0, 0, 0}, 10.0f },
@@ -4142,7 +4142,7 @@ static const AILapRule lbl_803B2EE0[15] = {
     { 1, 4, -1, 3, 50, 113, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B300C[8] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B300C[8] = {
     { -1, 5, 1, 1, 0, 173, -1, {0, 0, 0}, 40.0f },
     { -1, 5, 2, 1, 0, 173, -1, {0, 0, 0}, 30.0f },
     { -1, 5, 3, 1, 0, 173, -1, {0, 0, 0}, 20.0f },
@@ -4152,7 +4152,7 @@ static const AILapRule lbl_803B300C[8] = {
     { 1, 5, -1, 2, 50, 173, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B30AC[19] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B30AC[19] = {
     { 2, 6, -1, 1, 80, 105, -1, {0, 0, 0}, 50.0f },
     { 2, 6, -1, 2, 80, 105, -1, {0, 0, 0}, 50.0f },
     { 2, 6, -1, 3, 80, 105, -1, {0, 0, 0}, 50.0f },
@@ -4173,7 +4173,7 @@ static const AILapRule lbl_803B30AC[19] = {
     { 1, 6, -1, 3, 50, 113, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B3228[11] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B3228[11] = {
     { 2, 7, -1, 1, 148, 165, -1, {0, 0, 0}, 50.0f },
     { 2, 7, -1, 2, 148, 165, -1, {0, 0, 0}, 50.0f },
     { 2, 7, -1, 3, 148, 165, -1, {0, 0, 0}, 50.0f },
@@ -4186,11 +4186,11 @@ static const AILapRule lbl_803B3228[11] = {
     { 1, 7, -1, 2, 50, 173, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B3304[2] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B3304[2] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B332C[18] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B332C[18] = {
     { 2, 0, -1, 1, 50, 113, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 2, 0, 113, -1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 3, 50, 113, -1, {0, 0, 0}, -10.0f },
@@ -4210,7 +4210,7 @@ static const AILapRule lbl_803B332C[18] = {
     { 1, 0, -1, 3, 50, 113, -1, {0, 0, 0}, -25.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B3494[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B3494[14] = {
     { 2, 1, -1, 1, 148, 165, -1, {0, 0, 0}, 50.0f },
     { 2, 1, -1, 1, 50, 173, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 148, 165, -1, {0, 0, 0}, 50.0f },
@@ -4226,7 +4226,7 @@ static const AILapRule lbl_803B3494[14] = {
     { 1, 1, -1, 2, 50, 173, -1, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B35AC[21] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B35AC[21] = {
     { 2, 2, -1, 1, 80, 105, -1, {0, 0, 0}, 50.0f },
     { 2, 2, -1, 1, 50, 113, -1, {0, 0, 0}, 20.0f },
     { 2, 2, -1, 2, 80, 105, -1, {0, 0, 0}, 50.0f },
@@ -4249,7 +4249,7 @@ static const AILapRule lbl_803B35AC[21] = {
     { 1, 2, -1, 3, 50, 113, -1, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B3750[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B3750[14] = {
     { 2, 3, -1, 1, 148, 165, -1, {0, 0, 0}, 50.0f },
     { 2, 3, -1, 1, 50, 173, -1, {0, 0, 0}, 20.0f },
     { 2, 3, -1, 2, 148, 165, -1, {0, 0, 0}, 50.0f },
@@ -4265,7 +4265,7 @@ static const AILapRule lbl_803B3750[14] = {
     { 1, 3, -1, 2, 50, 173, -1, {0, 0, 0}, -5.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B3868[18] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B3868[18] = {
     { 2, 4, -1, 1, 50, 113, -1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 2, 0, 113, -1, {0, 0, 0}, 10.0f },
     { 2, 4, -1, 3, 50, 113, -1, {0, 0, 0}, 10.0f },
@@ -4285,7 +4285,7 @@ static const AILapRule lbl_803B3868[18] = {
     { 1, 4, -1, 3, 50, 113, -1, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B39D0[11] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B39D0[11] = {
     { 2, 5, -1, 1, 50, 173, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 99, -1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 2, 100, 173, -1, {0, 0, 0}, 10.0f },
@@ -4298,7 +4298,7 @@ static const AILapRule lbl_803B39D0[11] = {
     { 1, 5, -1, 2, 50, 173, -1, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B3AAC[21] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B3AAC[21] = {
     { 2, 6, -1, 1, 80, 105, -1, {0, 0, 0}, 50.0f },
     { 2, 6, -1, 1, 50, 113, -1, {0, 0, 0}, 20.0f },
     { 2, 6, -1, 2, 80, 105, -1, {0, 0, 0}, 50.0f },
@@ -4321,7 +4321,7 @@ static const AILapRule lbl_803B3AAC[21] = {
     { 1, 6, -1, 3, 50, 113, -1, {0, 0, 0}, -5.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B3C50[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B3C50[14] = {
     { 2, 7, -1, 1, 148, 165, -1, {0, 0, 0}, 50.0f },
     { 2, 7, -1, 1, 50, 173, -1, {0, 0, 0}, 20.0f },
     { 2, 7, -1, 2, 148, 165, -1, {0, 0, 0}, 50.0f },
@@ -4337,11 +4337,11 @@ static const AILapRule lbl_803B3C50[14] = {
     { 1, 7, -1, 2, 50, 173, -1, {0, 0, 0}, 0.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B3D68[2] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B3D68[2] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B3D90[26] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B3D90[26] = {
     { 2, 0, -1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 2, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -4369,7 +4369,7 @@ static const AILapRule lbl_803B3D90[26] = {
     { 1, 0, -1, 4, 0, 111, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B3F98[26] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B3F98[26] = {
     { 2, 1, -1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 1, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -4397,7 +4397,7 @@ static const AILapRule lbl_803B3F98[26] = {
     { 1, 1, -1, 4, 0, 111, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B41A0[26] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B41A0[26] = {
     { 2, 2, -1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 2, -1, 2, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 2, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -4425,7 +4425,7 @@ static const AILapRule lbl_803B41A0[26] = {
     { 1, 2, -1, 4, 0, 111, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B43A8[26] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B43A8[26] = {
     { 2, 3, -1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 3, -1, 2, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 3, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -4453,7 +4453,7 @@ static const AILapRule lbl_803B43A8[26] = {
     { 1, 3, -1, 4, 0, 111, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B45B0[24] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B45B0[24] = {
     { 2, 4, -1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 2, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 4, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -4479,7 +4479,7 @@ static const AILapRule lbl_803B45B0[24] = {
     { 1, 4, -1, 4, 0, 111, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B4790[24] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B4790[24] = {
     { 2, 5, -1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -4505,7 +4505,7 @@ static const AILapRule lbl_803B4790[24] = {
     { 1, 5, -1, 4, 0, 111, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B4970[24] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B4970[24] = {
     { 2, 6, -1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 6, -1, 2, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 6, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -4531,7 +4531,7 @@ static const AILapRule lbl_803B4970[24] = {
     { 1, 6, -1, 4, 0, 111, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B4B50[24] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B4B50[24] = {
     { 2, 7, -1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 7, -1, 2, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 7, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -4557,7 +4557,7 @@ static const AILapRule lbl_803B4B50[24] = {
     { 1, 7, -1, 4, 0, 111, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B4D30[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B4D30[10] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { 2, 0, -1, 5, 50, 111, -1, {0, 0, 0}, -30.0f },
     { 2, 1, -1, 5, 50, 111, -1, {0, 0, 0}, -30.0f },
@@ -4569,7 +4569,7 @@ static const AILapRule lbl_803B4D30[10] = {
     { 2, 7, -1, 5, 50, 111, -1, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B4DF8[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B4DF8[20] = {
     { -1, 0, 1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { -1, 0, 2, 1, 0, 111, -1, {0, 0, 0}, 15.0f },
     { -1, 0, 3, 1, 0, 111, -1, {0, 0, 0}, 0.0f },
@@ -4591,7 +4591,7 @@ static const AILapRule lbl_803B4DF8[20] = {
     { 1, 0, -1, 4, 0, 111, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B4F88[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B4F88[20] = {
     { -1, 1, 1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { -1, 1, 2, 1, 0, 111, -1, {0, 0, 0}, 15.0f },
     { -1, 1, 3, 1, 0, 111, -1, {0, 0, 0}, 0.0f },
@@ -4613,7 +4613,7 @@ static const AILapRule lbl_803B4F88[20] = {
     { 1, 1, -1, 4, 0, 111, -1, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B5118[19] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B5118[19] = {
     { -1, 2, 1, 1, 0, 111, -1, {0, 0, 0}, 30.0f },
     { -1, 2, 2, 1, 0, 111, -1, {0, 0, 0}, 25.0f },
     { -1, 2, 3, 1, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -4634,7 +4634,7 @@ static const AILapRule lbl_803B5118[19] = {
     { 0, 2, -1, 4, 0, 111, -1, {0, 0, 0}, -45.0f },
     { 1, 2, -1, 4, 0, 111, -1, {0, 0, 0}, -45.0f },
 };
-static const AILapRule lbl_803B5294[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B5294[20] = {
     { -1, 3, 1, 1, 0, 111, -1, {0, 0, 0}, 30.0f },
     { -1, 3, 2, 1, 0, 111, -1, {0, 0, 0}, 25.0f },
     { -1, 3, 3, 1, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -4656,7 +4656,7 @@ static const AILapRule lbl_803B5294[20] = {
     { 1, 3, -1, 4, 0, 111, -1, {0, 0, 0}, -45.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B5424[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B5424[20] = {
     { -1, 4, 1, 1, 0, 111, -1, {0, 0, 0}, 30.0f },
     { -1, 4, 2, 1, 0, 111, -1, {0, 0, 0}, 25.0f },
     { -1, 4, 3, 1, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -4678,7 +4678,7 @@ static const AILapRule lbl_803B5424[20] = {
     { 1, 4, -1, 4, 0, 111, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B55B4[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B55B4[20] = {
     { -1, 5, 1, 1, 0, 111, -1, {0, 0, 0}, 30.0f },
     { -1, 5, 2, 1, 0, 111, -1, {0, 0, 0}, 25.0f },
     { -1, 5, 3, 1, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -4700,7 +4700,7 @@ static const AILapRule lbl_803B55B4[20] = {
     { 1, 5, -1, 4, 0, 111, -1, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B5744[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B5744[20] = {
     { -1, 6, 1, 1, 0, 111, -1, {0, 0, 0}, 30.0f },
     { -1, 6, 2, 1, 0, 111, -1, {0, 0, 0}, 25.0f },
     { -1, 6, 3, 1, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -4722,7 +4722,7 @@ static const AILapRule lbl_803B5744[20] = {
     { 1, 6, -1, 4, 0, 111, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B58D4[20] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B58D4[20] = {
     { -1, 7, 1, 1, 0, 111, -1, {0, 0, 0}, 30.0f },
     { -1, 7, 2, 1, 0, 111, -1, {0, 0, 0}, 25.0f },
     { -1, 7, 3, 1, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -4744,11 +4744,11 @@ static const AILapRule lbl_803B58D4[20] = {
     { 1, 7, -1, 4, 0, 111, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B5A64[2] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B5A64[2] = {
     { 2, -1, -1, 1, 0, 50, -1, {0, 0, 0}, 60.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B5A8C[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B5A8C[23] = {
     { 2, 0, -1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 2, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 4, 50, 111, -1, {0, 0, 0}, -10.0f },
@@ -4773,7 +4773,7 @@ static const AILapRule lbl_803B5A8C[23] = {
     { 1, 0, -1, 4, 0, 111, -1, {0, 0, 0}, -25.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B5C58[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B5C58[23] = {
     { 2, 1, -1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 1, -1, 4, 50, 111, -1, {0, 0, 0}, -10.0f },
@@ -4798,7 +4798,7 @@ static const AILapRule lbl_803B5C58[23] = {
     { 1, 1, -1, 4, 0, 111, -1, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B5E24[22] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B5E24[22] = {
     { 2, 2, -1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 2, -1, 2, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 2, -1, 4, 50, 111, -1, {0, 0, 0}, 5.0f },
@@ -4822,7 +4822,7 @@ static const AILapRule lbl_803B5E24[22] = {
     { 0, 2, -1, 4, 0, 111, -1, {0, 0, 0}, -15.0f },
     { 1, 2, -1, 4, 0, 111, -1, {0, 0, 0}, -15.0f },
 };
-static const AILapRule lbl_803B5FDC[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B5FDC[23] = {
     { 2, 3, -1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 3, -1, 2, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 3, -1, 4, 0, 111, -1, {0, 0, 0}, 5.0f },
@@ -4847,7 +4847,7 @@ static const AILapRule lbl_803B5FDC[23] = {
     { 1, 3, -1, 4, 0, 111, -1, {0, 0, 0}, -5.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B61A8[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B61A8[23] = {
     { 2, 4, -1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 2, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 4, -1, 4, 50, 111, -1, {0, 0, 0}, 0.0f },
@@ -4872,7 +4872,7 @@ static const AILapRule lbl_803B61A8[23] = {
     { 1, 4, -1, 4, 0, 111, -1, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B6374[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B6374[23] = {
     { 2, 5, -1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 4, 50, 111, -1, {0, 0, 0}, 0.0f },
@@ -4897,7 +4897,7 @@ static const AILapRule lbl_803B6374[23] = {
     { 1, 5, -1, 4, 0, 111, -1, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B6540[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B6540[23] = {
     { 2, 6, -1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 6, -1, 2, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 6, -1, 4, 50, 111, -1, {0, 0, 0}, 5.0f },
@@ -4922,7 +4922,7 @@ static const AILapRule lbl_803B6540[23] = {
     { 1, 6, -1, 4, 0, 111, -1, {0, 0, 0}, -5.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B670C[23] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B670C[23] = {
     { 2, 7, -1, 1, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 7, -1, 2, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 7, -1, 4, 50, 111, -1, {0, 0, 0}, 10.0f },
@@ -4947,7 +4947,7 @@ static const AILapRule lbl_803B670C[23] = {
     { 1, 7, -1, 4, 0, 111, -1, {0, 0, 0}, 0.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B68D8[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B68D8[13] = {
     { 0, 0, -1, 1, 31, 128, 1, {0, 0, 0}, -50.0f },
     { 0, 0, -1, 2, 0, 128, -1, {0, 0, 0}, 20.0f },
     { 0, 0, -1, 3, 0, 128, -1, {0, 0, 0}, 20.0f },
@@ -4962,7 +4962,7 @@ static const AILapRule lbl_803B68D8[13] = {
     { 0, 0, -1, 6, 0, 128, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B69DC[18] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B69DC[18] = {
     { 0, 1, -1, 1, 31, 180, 1, {0, 0, 0}, -50.0f },
     { 0, 1, -1, 2, 0, 180, 0, {0, 0, 0}, 20.0f },
     { 0, 1, -1, 2, 0, 180, 1, {0, 0, 0}, 10.0f },
@@ -4982,7 +4982,7 @@ static const AILapRule lbl_803B69DC[18] = {
     { 0, 1, -1, 4, 0, 180, 3, {0, 0, 0}, -25.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B6B44[21] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B6B44[21] = {
     { 0, 0, -1, 1, 31, 97, 1, {0, 0, 0}, -50.0f },
     { 0, 0, -1, 2, 0, 97, -1, {0, 0, 0}, 20.0f },
     { 0, 0, -1, 3, 0, 97, -1, {0, 0, 0}, 20.0f },
@@ -5005,7 +5005,7 @@ static const AILapRule lbl_803B6B44[21] = {
     { 0, 0, -1, 8, 0, 97, 3, {0, 0, 0}, -55.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B6CE8[18] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B6CE8[18] = {
     { 0, 1, -1, 1, 31, 172, 1, {0, 0, 0}, -50.0f },
     { 0, 1, -1, 2, 0, 172, 0, {0, 0, 0}, 30.0f },
     { 0, 1, -1, 2, 0, 172, 1, {0, 0, 0}, 20.0f },
@@ -5025,7 +5025,7 @@ static const AILapRule lbl_803B6CE8[18] = {
     { 0, 1, -1, 4, 0, 172, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B6E50[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B6E50[14] = {
     { 0, 0, -1, 1, 31, 83, 1, {0, 0, 0}, -50.0f },
     { 0, 0, -1, 2, 0, 83, 0, {0, 0, 0}, 30.0f },
     { 0, 0, -1, 2, 0, 83, 1, {0, 0, 0}, 20.0f },
@@ -5041,7 +5041,7 @@ static const AILapRule lbl_803B6E50[14] = {
     { 0, 0, -1, 4, 0, 83, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B6F68[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B6F68[14] = {
     { 0, 1, -1, 1, 31, 96, 1, {0, 0, 0}, -50.0f },
     { 0, 1, -1, 2, 0, 96, 0, {0, 0, 0}, 30.0f },
     { 0, 1, -1, 2, 0, 96, 1, {0, 0, 0}, 20.0f },
@@ -5057,7 +5057,7 @@ static const AILapRule lbl_803B6F68[14] = {
     { 0, 1, -1, 4, 0, 96, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B7080[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B7080[10] = {
     { 0, 0, -1, 1, 31, 104, 1, {0, 0, 0}, -50.0f },
     { 0, 0, -1, 2, 0, 104, 0, {0, 0, 0}, 25.0f },
     { 0, 0, -1, 2, 0, 104, 1, {0, 0, 0}, 15.0f },
@@ -5069,7 +5069,7 @@ static const AILapRule lbl_803B7080[10] = {
     { 0, 0, -1, 3, 0, 104, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B7148[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B7148[10] = {
     { 0, 1, -1, 1, 31, 114, 1, {0, 0, 0}, -50.0f },
     { 0, 1, -1, 2, 0, 114, 0, {0, 0, 0}, 25.0f },
     { 0, 1, -1, 2, 0, 114, 1, {0, 0, 0}, 15.0f },
@@ -5081,7 +5081,7 @@ static const AILapRule lbl_803B7148[10] = {
     { 0, 1, -1, 3, 0, 114, 3, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B7210[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B7210[14] = {
     { 0, 0, -1, 1, 0, 177, 1, {0, 0, 0}, -50.0f },
     { 0, 0, -1, 2, 0, 177, 0, {0, 0, 0}, 25.0f },
     { 0, 0, -1, 2, 0, 177, 1, {0, 0, 0}, 15.0f },
@@ -5097,7 +5097,7 @@ static const AILapRule lbl_803B7210[14] = {
     { 0, 0, -1, 4, 0, 177, 3, {0, 0, 0}, -35.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B7328[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B7328[15] = {
     { 0, 1, -1, 1, 31, 120, 1, {0, 0, 0}, -50.0f },
     { 0, 1, -1, 2, 0, 120, 0, {0, 0, 0}, 25.0f },
     { 0, 1, -1, 2, 0, 120, 1, {0, 0, 0}, 15.0f },
@@ -5114,7 +5114,7 @@ static const AILapRule lbl_803B7328[15] = {
     { 0, 1, -1, 4, 0, 249, 3, {0, 0, 0}, -35.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B7454[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B7454[13] = {
     { 0, 0, -1, 1, 50, 216, 0, {0, 0, 0}, 20.0f },
     { 0, 0, -1, 1, 31, 216, 1, {0, 0, 0}, -50.0f },
     { 0, 0, -1, 1, 50, 216, 2, {0, 0, 0}, 10.0f },
@@ -5129,7 +5129,7 @@ static const AILapRule lbl_803B7454[13] = {
     { 0, 0, -1, 2, 100, 216, 3, {0, 0, 0}, -35.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B7558[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B7558[13] = {
     { 0, 1, -1, 1, 100, 193, 0, {0, 0, 0}, 20.0f },
     { 0, 1, -1, 1, 31, 193, 1, {0, 0, 0}, -50.0f },
     { 0, 1, -1, 1, 100, 193, 2, {0, 0, 0}, 10.0f },
@@ -5144,7 +5144,7 @@ static const AILapRule lbl_803B7558[13] = {
     { 0, 1, -1, 2, 100, 193, 3, {0, 0, 0}, -35.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B765C[12] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B765C[12] = {
     { 0, 0, -1, 1, 31, 112, 1, {0, 0, 0}, -50.0f },
     { 0, 0, -1, 1, 51, 112, -1, {0, 0, 0}, 20.0f },
     { 0, 0, -1, 2, 0, 69, -1, {0, 0, 0}, 10.0f },
@@ -5158,7 +5158,7 @@ static const AILapRule lbl_803B765C[12] = {
     { 0, 0, -1, 3, 0, 112, 3, {0, 0, 0}, -25.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B774C[7] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B774C[7] = {
     { 0, 1, -1, 1, 31, 173, 1, {0, 0, 0}, -50.0f },
     { 0, 1, -1, 1, 51, 173, -1, {0, 0, 0}, 20.0f },
     { 0, 1, -1, 2, 0, 80, -1, {0, 0, 0}, -10.0f },
@@ -5167,7 +5167,7 @@ static const AILapRule lbl_803B774C[7] = {
     { 0, 1, -1, 2, 80, 173, -1, {0, 0, 0}, -35.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B77D8[8] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B77D8[8] = {
     { 0, 0, -1, 1, 31, 111, 1, {0, 0, 0}, -50.0f },
     { 0, 0, -1, 2, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 0, 0, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -5177,7 +5177,7 @@ static const AILapRule lbl_803B77D8[8] = {
     { 0, 0, -1, 4, 0, 111, 3, {0, 0, 0}, -25.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B7878[8] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B7878[8] = {
     { 0, 1, -1, 2, 31, 111, 1, {0, 0, 0}, -50.0f },
     { 0, 1, -1, 2, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 0, 1, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -5187,7 +5187,7 @@ static const AILapRule lbl_803B7878[8] = {
     { 0, 1, -1, 4, 0, 111, 3, {0, 0, 0}, -25.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B7918[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B7918[13] = {
     { 0, 4, -1, 1, 31, 128, 1, {0, 0, 0}, -50.0f },
     { 0, 4, -1, 2, 0, 128, -1, {0, 0, 0}, 20.0f },
     { 0, 4, -1, 3, 0, 128, -1, {0, 0, 0}, 20.0f },
@@ -5202,7 +5202,7 @@ static const AILapRule lbl_803B7918[13] = {
     { 0, 4, -1, 6, 0, 128, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B7A1C[18] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B7A1C[18] = {
     { 0, 5, -1, 1, 31, 180, 1, {0, 0, 0}, -50.0f },
     { 0, 5, -1, 2, 0, 180, 0, {0, 0, 0}, 20.0f },
     { 0, 5, -1, 2, 0, 180, 1, {0, 0, 0}, 10.0f },
@@ -5222,7 +5222,7 @@ static const AILapRule lbl_803B7A1C[18] = {
     { 0, 5, -1, 4, 0, 180, 3, {0, 0, 0}, -25.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B7B84[21] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B7B84[21] = {
     { 0, 4, -1, 1, 31, 97, 1, {0, 0, 0}, -50.0f },
     { 0, 4, -1, 2, 0, 97, -1, {0, 0, 0}, 20.0f },
     { 0, 4, -1, 3, 0, 97, -1, {0, 0, 0}, 20.0f },
@@ -5245,7 +5245,7 @@ static const AILapRule lbl_803B7B84[21] = {
     { 0, 4, -1, 8, 0, 97, 3, {0, 0, 0}, -55.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B7D28[18] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B7D28[18] = {
     { 0, 5, -1, 1, 31, 172, 1, {0, 0, 0}, -50.0f },
     { 0, 5, -1, 2, 0, 172, 0, {0, 0, 0}, 30.0f },
     { 0, 5, -1, 2, 0, 172, 1, {0, 0, 0}, 20.0f },
@@ -5265,7 +5265,7 @@ static const AILapRule lbl_803B7D28[18] = {
     { 0, 5, -1, 4, 0, 172, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B7E90[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B7E90[14] = {
     { 0, 4, -1, 1, 31, 83, 1, {0, 0, 0}, -50.0f },
     { 0, 4, -1, 2, 0, 83, 0, {0, 0, 0}, 30.0f },
     { 0, 4, -1, 2, 0, 83, 1, {0, 0, 0}, 20.0f },
@@ -5281,7 +5281,7 @@ static const AILapRule lbl_803B7E90[14] = {
     { 0, 4, -1, 4, 0, 83, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B7FA8[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B7FA8[14] = {
     { 0, 5, -1, 1, 31, 96, 1, {0, 0, 0}, -50.0f },
     { 0, 5, -1, 2, 0, 96, 0, {0, 0, 0}, 30.0f },
     { 0, 5, -1, 2, 0, 96, 1, {0, 0, 0}, 20.0f },
@@ -5297,7 +5297,7 @@ static const AILapRule lbl_803B7FA8[14] = {
     { 0, 5, -1, 4, 0, 96, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B80C0[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B80C0[10] = {
     { 0, 4, -1, 1, 31, 104, 1, {0, 0, 0}, -50.0f },
     { 0, 4, -1, 2, 0, 104, 0, {0, 0, 0}, 25.0f },
     { 0, 4, -1, 2, 0, 104, 1, {0, 0, 0}, 15.0f },
@@ -5309,7 +5309,7 @@ static const AILapRule lbl_803B80C0[10] = {
     { 0, 4, -1, 3, 0, 104, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B8188[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B8188[10] = {
     { 0, 5, -1, 1, 31, 114, 1, {0, 0, 0}, -50.0f },
     { 0, 5, -1, 2, 0, 114, 0, {0, 0, 0}, 25.0f },
     { 0, 5, -1, 2, 0, 114, 1, {0, 0, 0}, 15.0f },
@@ -5321,7 +5321,7 @@ static const AILapRule lbl_803B8188[10] = {
     { 0, 5, -1, 3, 0, 114, 3, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B8250[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B8250[14] = {
     { 0, 4, -1, 1, 0, 177, 1, {0, 0, 0}, -50.0f },
     { 0, 4, -1, 2, 0, 177, 0, {0, 0, 0}, 25.0f },
     { 0, 4, -1, 2, 0, 177, 1, {0, 0, 0}, 15.0f },
@@ -5337,7 +5337,7 @@ static const AILapRule lbl_803B8250[14] = {
     { 0, 4, -1, 4, 0, 177, 3, {0, 0, 0}, -35.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B8368[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B8368[15] = {
     { 0, 5, -1, 1, 31, 120, 1, {0, 0, 0}, -50.0f },
     { 0, 5, -1, 2, 0, 120, 0, {0, 0, 0}, 25.0f },
     { 0, 5, -1, 2, 0, 120, 1, {0, 0, 0}, 15.0f },
@@ -5354,7 +5354,7 @@ static const AILapRule lbl_803B8368[15] = {
     { 0, 5, -1, 4, 0, 249, 3, {0, 0, 0}, -35.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B8494[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B8494[13] = {
     { 0, 4, -1, 1, 50, 216, 0, {0, 0, 0}, 20.0f },
     { 0, 4, -1, 1, 31, 216, 1, {0, 0, 0}, -50.0f },
     { 0, 4, -1, 1, 50, 216, 2, {0, 0, 0}, 10.0f },
@@ -5369,7 +5369,7 @@ static const AILapRule lbl_803B8494[13] = {
     { 0, 4, -1, 2, 100, 216, 3, {0, 0, 0}, -35.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B8598[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B8598[13] = {
     { 0, 5, -1, 1, 100, 193, 0, {0, 0, 0}, 20.0f },
     { 0, 5, -1, 1, 31, 193, 1, {0, 0, 0}, -50.0f },
     { 0, 5, -1, 1, 100, 193, 2, {0, 0, 0}, 10.0f },
@@ -5384,7 +5384,7 @@ static const AILapRule lbl_803B8598[13] = {
     { 0, 5, -1, 2, 100, 193, 3, {0, 0, 0}, -35.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B869C[12] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B869C[12] = {
     { 0, 4, -1, 1, 31, 112, 1, {0, 0, 0}, -50.0f },
     { 0, 4, -1, 1, 51, 112, -1, {0, 0, 0}, 20.0f },
     { 0, 4, -1, 2, 0, 69, -1, {0, 0, 0}, 10.0f },
@@ -5398,7 +5398,7 @@ static const AILapRule lbl_803B869C[12] = {
     { 0, 4, -1, 3, 0, 112, 3, {0, 0, 0}, -25.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B878C[7] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B878C[7] = {
     { 0, 5, -1, 1, 31, 173, 1, {0, 0, 0}, -50.0f },
     { 0, 5, -1, 1, 51, 173, -1, {0, 0, 0}, 20.0f },
     { 0, 5, -1, 2, 0, 80, -1, {0, 0, 0}, -10.0f },
@@ -5407,7 +5407,7 @@ static const AILapRule lbl_803B878C[7] = {
     { 0, 5, -1, 2, 80, 173, -1, {0, 0, 0}, -35.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B8818[8] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B8818[8] = {
     { 0, 4, -1, 1, 31, 111, 1, {0, 0, 0}, -50.0f },
     { 0, 4, -1, 2, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 0, 4, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -5417,7 +5417,7 @@ static const AILapRule lbl_803B8818[8] = {
     { 0, 4, -1, 4, 0, 111, 3, {0, 0, 0}, -25.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B88B8[8] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B88B8[8] = {
     { 0, 5, -1, 2, 31, 111, 1, {0, 0, 0}, -50.0f },
     { 0, 5, -1, 2, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 0, 5, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -5427,7 +5427,7 @@ static const AILapRule lbl_803B88B8[8] = {
     { 0, 5, -1, 4, 0, 111, 3, {0, 0, 0}, -25.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B8958[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B8958[13] = {
     { 1, 0, -1, 1, 31, 128, 1, {0, 0, 0}, -50.0f },
     { 1, 0, -1, 2, 0, 128, -1, {0, 0, 0}, 20.0f },
     { 1, 0, -1, 3, 0, 128, -1, {0, 0, 0}, 20.0f },
@@ -5442,7 +5442,7 @@ static const AILapRule lbl_803B8958[13] = {
     { 1, 0, -1, 6, 0, 128, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B8A5C[18] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B8A5C[18] = {
     { 1, 1, -1, 1, 31, 180, 1, {0, 0, 0}, -50.0f },
     { 1, 1, -1, 2, 0, 180, 0, {0, 0, 0}, 30.0f },
     { 1, 1, -1, 2, 0, 180, 1, {0, 0, 0}, 20.0f },
@@ -5462,7 +5462,7 @@ static const AILapRule lbl_803B8A5C[18] = {
     { 1, 1, -1, 4, 0, 180, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B8BC4[21] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B8BC4[21] = {
     { 1, 0, -1, 1, 31, 97, 1, {0, 0, 0}, -50.0f },
     { 1, 0, -1, 2, 0, 97, -1, {0, 0, 0}, 20.0f },
     { 1, 0, -1, 3, 0, 97, -1, {0, 0, 0}, 20.0f },
@@ -5485,7 +5485,7 @@ static const AILapRule lbl_803B8BC4[21] = {
     { 1, 0, -1, 8, 0, 97, 3, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B8D68[18] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B8D68[18] = {
     { 1, 1, -1, 1, 31, 172, 1, {0, 0, 0}, -50.0f },
     { 1, 1, -1, 2, 0, 172, 0, {0, 0, 0}, 30.0f },
     { 1, 1, -1, 2, 0, 172, 1, {0, 0, 0}, 20.0f },
@@ -5505,7 +5505,7 @@ static const AILapRule lbl_803B8D68[18] = {
     { 1, 1, -1, 4, 0, 172, 3, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B8ED0[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B8ED0[14] = {
     { 1, 0, -1, 1, 31, 83, 1, {0, 0, 0}, -50.0f },
     { 1, 0, -1, 2, 0, 83, 0, {0, 0, 0}, 30.0f },
     { 1, 0, -1, 2, 0, 83, 1, {0, 0, 0}, 20.0f },
@@ -5521,7 +5521,7 @@ static const AILapRule lbl_803B8ED0[14] = {
     { 1, 0, -1, 4, 0, 83, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B8FE8[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B8FE8[14] = {
     { 1, 1, -1, 1, 31, 96, 1, {0, 0, 0}, -50.0f },
     { 1, 1, -1, 2, 0, 96, 0, {0, 0, 0}, 30.0f },
     { 1, 1, -1, 2, 0, 96, 1, {0, 0, 0}, 20.0f },
@@ -5537,7 +5537,7 @@ static const AILapRule lbl_803B8FE8[14] = {
     { 1, 1, -1, 4, 0, 96, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B9100[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B9100[10] = {
     { 1, 0, -1, 1, 31, 104, 1, {0, 0, 0}, -50.0f },
     { 1, 0, -1, 2, 0, 104, 0, {0, 0, 0}, 30.0f },
     { 1, 0, -1, 2, 0, 104, 1, {0, 0, 0}, 20.0f },
@@ -5549,7 +5549,7 @@ static const AILapRule lbl_803B9100[10] = {
     { 1, 0, -1, 3, 0, 104, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B91C8[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B91C8[10] = {
     { 1, 1, -1, 1, 31, 114, 1, {0, 0, 0}, -50.0f },
     { 1, 1, -1, 2, 0, 114, 0, {0, 0, 0}, 30.0f },
     { 1, 1, -1, 2, 0, 114, 1, {0, 0, 0}, 20.0f },
@@ -5561,7 +5561,7 @@ static const AILapRule lbl_803B91C8[10] = {
     { 1, 1, -1, 3, 0, 114, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B9290[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B9290[14] = {
     { 1, 0, -1, 1, 31, 177, 1, {0, 0, 0}, -50.0f },
     { 1, 0, -1, 2, 0, 177, 0, {0, 0, 0}, 30.0f },
     { 1, 0, -1, 2, 0, 177, 1, {0, 0, 0}, 20.0f },
@@ -5577,7 +5577,7 @@ static const AILapRule lbl_803B9290[14] = {
     { 1, 0, -1, 4, 0, 177, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B93A8[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B93A8[15] = {
     { 1, 1, -1, 1, 31, 120, 1, {0, 0, 0}, -50.0f },
     { 1, 1, -1, 2, 0, 120, 0, {0, 0, 0}, 30.0f },
     { 1, 1, -1, 2, 0, 120, 1, {0, 0, 0}, 20.0f },
@@ -5594,7 +5594,7 @@ static const AILapRule lbl_803B93A8[15] = {
     { 1, 1, -1, 4, 0, 249, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B94D4[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B94D4[13] = {
     { 1, 0, -1, 1, 50, 216, 0, {0, 0, 0}, 20.0f },
     { 1, 0, -1, 1, 31, 216, 1, {0, 0, 0}, -50.0f },
     { 1, 0, -1, 1, 50, 216, 2, {0, 0, 0}, 10.0f },
@@ -5609,7 +5609,7 @@ static const AILapRule lbl_803B94D4[13] = {
     { 1, 0, -1, 2, 100, 216, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B95D8[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B95D8[13] = {
     { 1, 1, -1, 1, 100, 193, 0, {0, 0, 0}, 20.0f },
     { 1, 1, -1, 1, 31, 193, 1, {0, 0, 0}, -50.0f },
     { 1, 1, -1, 1, 100, 193, 2, {0, 0, 0}, 10.0f },
@@ -5624,7 +5624,7 @@ static const AILapRule lbl_803B95D8[13] = {
     { 1, 1, -1, 2, 100, 193, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B96DC[12] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B96DC[12] = {
     { 1, 0, -1, 1, 31, 112, 1, {0, 0, 0}, -50.0f },
     { 1, 0, -1, 1, 51, 112, -1, {0, 0, 0}, 20.0f },
     { 1, 0, -1, 2, 0, 69, -1, {0, 0, 0}, 10.0f },
@@ -5638,7 +5638,7 @@ static const AILapRule lbl_803B96DC[12] = {
     { 1, 0, -1, 3, 0, 112, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B97CC[7] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B97CC[7] = {
     { 1, 1, -1, 1, 31, 173, 1, {0, 0, 0}, -50.0f },
     { 1, 1, -1, 1, 51, 173, -1, {0, 0, 0}, 20.0f },
     { 1, 1, -1, 2, 0, 80, -1, {0, 0, 0}, -10.0f },
@@ -5647,7 +5647,7 @@ static const AILapRule lbl_803B97CC[7] = {
     { 1, 1, -1, 2, 80, 173, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B9858[8] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B9858[8] = {
     { 1, 0, -1, 1, 31, 111, 1, {0, 0, 0}, -50.0f },
     { 1, 0, -1, 2, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 1, 0, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -5657,7 +5657,7 @@ static const AILapRule lbl_803B9858[8] = {
     { 1, 0, -1, 4, 0, 111, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B98F8[8] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B98F8[8] = {
     { 1, 1, -1, 1, 31, 111, 1, {0, 0, 0}, -50.0f },
     { 1, 1, -1, 2, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 1, 1, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -5667,7 +5667,7 @@ static const AILapRule lbl_803B98F8[8] = {
     { 1, 1, -1, 4, 0, 111, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B9998[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B9998[13] = {
     { 1, 4, -1, 1, 31, 128, 1, {0, 0, 0}, -50.0f },
     { 1, 4, -1, 2, 0, 128, -1, {0, 0, 0}, 20.0f },
     { 1, 4, -1, 3, 0, 128, -1, {0, 0, 0}, 20.0f },
@@ -5682,7 +5682,7 @@ static const AILapRule lbl_803B9998[13] = {
     { 1, 4, -1, 6, 0, 128, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B9A9C[18] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B9A9C[18] = {
     { 1, 5, -1, 1, 31, 180, 1, {0, 0, 0}, -50.0f },
     { 1, 5, -1, 2, 0, 180, 0, {0, 0, 0}, 30.0f },
     { 1, 5, -1, 2, 0, 180, 1, {0, 0, 0}, 20.0f },
@@ -5702,7 +5702,7 @@ static const AILapRule lbl_803B9A9C[18] = {
     { 1, 5, -1, 4, 0, 180, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B9C04[21] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B9C04[21] = {
     { 1, 4, -1, 1, 31, 97, 1, {0, 0, 0}, -50.0f },
     { 1, 4, -1, 2, 0, 97, -1, {0, 0, 0}, 20.0f },
     { 1, 4, -1, 3, 0, 97, -1, {0, 0, 0}, 20.0f },
@@ -5725,7 +5725,7 @@ static const AILapRule lbl_803B9C04[21] = {
     { 1, 4, -1, 8, 0, 97, 3, {0, 0, 0}, -50.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B9DA8[18] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B9DA8[18] = {
     { 1, 5, -1, 1, 31, 172, 1, {0, 0, 0}, -50.0f },
     { 1, 5, -1, 2, 0, 172, 0, {0, 0, 0}, 30.0f },
     { 1, 5, -1, 2, 0, 172, 1, {0, 0, 0}, 20.0f },
@@ -5745,7 +5745,7 @@ static const AILapRule lbl_803B9DA8[18] = {
     { 1, 5, -1, 4, 0, 172, 3, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803B9F10[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803B9F10[14] = {
     { 1, 4, -1, 1, 31, 83, 1, {0, 0, 0}, -50.0f },
     { 1, 4, -1, 2, 0, 83, 0, {0, 0, 0}, 30.0f },
     { 1, 4, -1, 2, 0, 83, 1, {0, 0, 0}, 20.0f },
@@ -5761,7 +5761,7 @@ static const AILapRule lbl_803B9F10[14] = {
     { 1, 4, -1, 4, 0, 83, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BA028[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BA028[14] = {
     { 1, 5, -1, 1, 31, 96, 1, {0, 0, 0}, -50.0f },
     { 1, 5, -1, 2, 0, 96, 0, {0, 0, 0}, 30.0f },
     { 1, 5, -1, 2, 0, 96, 1, {0, 0, 0}, 20.0f },
@@ -5777,7 +5777,7 @@ static const AILapRule lbl_803BA028[14] = {
     { 1, 5, -1, 4, 0, 96, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BA140[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BA140[10] = {
     { 1, 4, -1, 1, 31, 104, 1, {0, 0, 0}, -50.0f },
     { 1, 4, -1, 2, 0, 104, 0, {0, 0, 0}, 30.0f },
     { 1, 4, -1, 2, 0, 104, 1, {0, 0, 0}, 20.0f },
@@ -5789,7 +5789,7 @@ static const AILapRule lbl_803BA140[10] = {
     { 1, 4, -1, 3, 0, 104, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BA208[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BA208[10] = {
     { 1, 5, -1, 1, 31, 114, 1, {0, 0, 0}, -50.0f },
     { 1, 5, -1, 2, 0, 114, 0, {0, 0, 0}, 30.0f },
     { 1, 5, -1, 2, 0, 114, 1, {0, 0, 0}, 20.0f },
@@ -5801,7 +5801,7 @@ static const AILapRule lbl_803BA208[10] = {
     { 1, 5, -1, 3, 0, 114, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BA2D0[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BA2D0[14] = {
     { 1, 4, -1, 1, 31, 177, 1, {0, 0, 0}, -50.0f },
     { 1, 4, -1, 2, 0, 177, 0, {0, 0, 0}, 30.0f },
     { 1, 4, -1, 2, 0, 177, 1, {0, 0, 0}, 20.0f },
@@ -5817,7 +5817,7 @@ static const AILapRule lbl_803BA2D0[14] = {
     { 1, 4, -1, 4, 0, 177, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BA3E8[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BA3E8[15] = {
     { 1, 5, -1, 1, 31, 120, 1, {0, 0, 0}, -50.0f },
     { 1, 5, -1, 2, 0, 120, 0, {0, 0, 0}, 30.0f },
     { 1, 5, -1, 2, 0, 120, 1, {0, 0, 0}, 20.0f },
@@ -5834,7 +5834,7 @@ static const AILapRule lbl_803BA3E8[15] = {
     { 1, 5, -1, 4, 0, 249, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BA514[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BA514[13] = {
     { 1, 4, -1, 1, 50, 216, 0, {0, 0, 0}, 20.0f },
     { 1, 4, -1, 1, 31, 216, 1, {0, 0, 0}, -50.0f },
     { 1, 4, -1, 1, 50, 216, 2, {0, 0, 0}, 10.0f },
@@ -5849,7 +5849,7 @@ static const AILapRule lbl_803BA514[13] = {
     { 1, 4, -1, 2, 100, 216, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BA618[13] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BA618[13] = {
     { 1, 5, -1, 1, 100, 193, 0, {0, 0, 0}, 20.0f },
     { 1, 5, -1, 1, 31, 193, 1, {0, 0, 0}, -50.0f },
     { 1, 5, -1, 1, 100, 193, 2, {0, 0, 0}, 10.0f },
@@ -5864,7 +5864,7 @@ static const AILapRule lbl_803BA618[13] = {
     { 1, 5, -1, 2, 100, 193, 3, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BA71C[12] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BA71C[12] = {
     { 1, 4, -1, 1, 31, 112, 1, {0, 0, 0}, -50.0f },
     { 1, 4, -1, 1, 51, 112, -1, {0, 0, 0}, 20.0f },
     { 1, 4, -1, 2, 0, 69, -1, {0, 0, 0}, 10.0f },
@@ -5878,7 +5878,7 @@ static const AILapRule lbl_803BA71C[12] = {
     { 1, 4, -1, 3, 0, 112, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BA80C[7] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BA80C[7] = {
     { 1, 5, -1, 1, 31, 173, 1, {0, 0, 0}, -50.0f },
     { 1, 5, -1, 1, 51, 173, -1, {0, 0, 0}, 20.0f },
     { 1, 5, -1, 2, 0, 80, -1, {0, 0, 0}, -10.0f },
@@ -5887,7 +5887,7 @@ static const AILapRule lbl_803BA80C[7] = {
     { 1, 5, -1, 2, 80, 173, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BA898[8] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BA898[8] = {
     { 1, 4, -1, 1, 31, 111, 1, {0, 0, 0}, -50.0f },
     { 1, 4, -1, 2, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 1, 4, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -5897,7 +5897,7 @@ static const AILapRule lbl_803BA898[8] = {
     { 1, 4, -1, 4, 0, 111, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BA938[8] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BA938[8] = {
     { 1, 5, -1, 1, 31, 111, 1, {0, 0, 0}, -50.0f },
     { 1, 5, -1, 2, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 1, 5, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -5907,7 +5907,7 @@ static const AILapRule lbl_803BA938[8] = {
     { 1, 5, -1, 4, 0, 111, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BA9D8[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BA9D8[14] = {
     { 2, 0, -1, 2, 0, 128, -1, {0, 0, 0}, 30.0f },
     { 2, 0, -1, 3, 0, 128, -1, {0, 0, 0}, 30.0f },
     { 2, 0, -1, 4, 0, 128, -1, {0, 0, 0}, 15.0f },
@@ -5923,7 +5923,7 @@ static const AILapRule lbl_803BA9D8[14] = {
     { 2, 0, -1, 9, 0, 128, 3, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BAAF0[19] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BAAF0[19] = {
     { 2, 1, -1, 2, 0, 180, 0, {0, 0, 0}, 30.0f },
     { 2, 1, -1, 2, 0, 180, 1, {0, 0, 0}, 30.0f },
     { 2, 1, -1, 2, 0, 180, 2, {0, 0, 0}, 30.0f },
@@ -5944,7 +5944,7 @@ static const AILapRule lbl_803BAAF0[19] = {
     { 2, 1, -1, 6, 0, 180, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BAC6C[21] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BAC6C[21] = {
     { 2, 0, -1, 2, 0, 97, -1, {0, 0, 0}, 30.0f },
     { 2, 0, -1, 3, 0, 97, -1, {0, 0, 0}, 30.0f },
     { 2, 0, -1, 4, 0, 97, 0, {0, 0, 0}, 30.0f },
@@ -5967,7 +5967,7 @@ static const AILapRule lbl_803BAC6C[21] = {
     { 2, 0, -1, 9, 0, 97, 3, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BAE10[19] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BAE10[19] = {
     { 2, 1, -1, 2, 0, 172, 0, {0, 0, 0}, 30.0f },
     { 2, 1, -1, 2, 0, 172, 1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 0, 172, 2, {0, 0, 0}, 20.0f },
@@ -5988,7 +5988,7 @@ static const AILapRule lbl_803BAE10[19] = {
     { 2, 1, -1, 6, 0, 172, 3, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BAF8C[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BAF8C[15] = {
     { 2, 0, -1, 2, 0, 83, 0, {0, 0, 0}, 30.0f },
     { 2, 0, -1, 2, 0, 83, 1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 2, 0, 83, 2, {0, 0, 0}, 20.0f },
@@ -6005,7 +6005,7 @@ static const AILapRule lbl_803BAF8C[15] = {
     { 2, 0, -1, 6, 0, 83, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BB0B8[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BB0B8[14] = {
     { 2, 1, -1, 2, 0, 96, 0, {0, 0, 0}, 30.0f },
     { 2, 1, -1, 2, 0, 96, 1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 0, 96, 2, {0, 0, 0}, 20.0f },
@@ -6021,7 +6021,7 @@ static const AILapRule lbl_803BB0B8[14] = {
     { 2, 1, -1, 5, 0, 96, 3, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BB1D0[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BB1D0[10] = {
     { 2, 0, -1, 2, 0, 104, 0, {0, 0, 0}, 30.0f },
     { 2, 0, -1, 2, 0, 104, 1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 2, 0, 104, 2, {0, 0, 0}, 20.0f },
@@ -6033,7 +6033,7 @@ static const AILapRule lbl_803BB1D0[10] = {
     { 2, 0, -1, 4, 0, 104, 3, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BB298[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BB298[10] = {
     { 2, 1, -1, 2, 0, 114, 0, {0, 0, 0}, 30.0f },
     { 2, 1, -1, 2, 0, 114, 1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 0, 114, 2, {0, 0, 0}, 20.0f },
@@ -6045,7 +6045,7 @@ static const AILapRule lbl_803BB298[10] = {
     { 2, 1, -1, 4, 0, 114, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BB360[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BB360[14] = {
     { 2, 0, -1, 2, 0, 177, 0, {0, 0, 0}, 30.0f },
     { 2, 0, -1, 2, 0, 177, 1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 2, 0, 177, 2, {0, 0, 0}, 20.0f },
@@ -6061,7 +6061,7 @@ static const AILapRule lbl_803BB360[14] = {
     { 2, 0, -1, 5, 0, 177, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BB478[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BB478[15] = {
     { 2, 1, -1, 2, 0, 120, 0, {0, 0, 0}, 30.0f },
     { 2, 1, -1, 2, 0, 120, 1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 0, 120, 2, {0, 0, 0}, 20.0f },
@@ -6078,7 +6078,7 @@ static const AILapRule lbl_803BB478[15] = {
     { 2, 1, -1, 5, 0, 249, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BB5A4[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BB5A4[14] = {
     { 2, 0, -1, 1, 50, 216, 0, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 1, 50, 216, 1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 1, 50, 216, 2, {0, 0, 0}, 10.0f },
@@ -6094,7 +6094,7 @@ static const AILapRule lbl_803BB5A4[14] = {
     { 2, 0, -1, 3, 100, 216, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BB6BC[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BB6BC[14] = {
     { 2, 1, -1, 1, 100, 193, 0, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 1, 100, 193, 1, {0, 0, 0}, 10.0f },
     { 2, 1, -1, 1, 100, 193, 2, {0, 0, 0}, 10.0f },
@@ -6110,7 +6110,7 @@ static const AILapRule lbl_803BB6BC[14] = {
     { 2, 1, -1, 3, 100, 193, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BB7D4[12] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BB7D4[12] = {
     { 2, 0, -1, 1, 51, 112, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 2, 0, 112, -1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 3, 0, 69, -1, {0, 0, 0}, 10.0f },
@@ -6124,7 +6124,7 @@ static const AILapRule lbl_803BB7D4[12] = {
     { 2, 0, -1, 4, 0, 112, 3, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BB8C4[7] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BB8C4[7] = {
     { 2, 1, -1, 1, 51, 173, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 2, 0, 173, -1, {0, 0, 0}, 10.0f },
     { 2, 1, -1, 3, 0, 80, -1, {0, 0, 0}, -10.0f },
@@ -6133,7 +6133,7 @@ static const AILapRule lbl_803BB8C4[7] = {
     { 2, 1, -1, 3, 80, 173, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BB950[8] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BB950[8] = {
     { 2, 0, -1, 2, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 0, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 0, -1, 4, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -6143,7 +6143,7 @@ static const AILapRule lbl_803BB950[8] = {
     { 2, 0, -1, 5, 0, 111, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BB9F0[8] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BB9F0[8] = {
     { 2, 1, -1, 2, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 1, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 1, -1, 4, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -6153,7 +6153,7 @@ static const AILapRule lbl_803BB9F0[8] = {
     { 2, 1, -1, 5, 0, 111, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BBA90[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BBA90[14] = {
     { 2, 0, -1, 2, 0, 128, -1, {0, 0, 0}, 30.0f },
     { 2, 0, -1, 3, 0, 128, -1, {0, 0, 0}, 30.0f },
     { 2, 0, -1, 4, 0, 128, -1, {0, 0, 0}, 15.0f },
@@ -6169,7 +6169,7 @@ static const AILapRule lbl_803BBA90[14] = {
     { 2, 0, -1, 9, 0, 128, 3, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BBBA8[19] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BBBA8[19] = {
     { 2, 5, -1, 2, 0, 180, 0, {0, 0, 0}, 30.0f },
     { 2, 5, -1, 2, 0, 180, 1, {0, 0, 0}, 30.0f },
     { 2, 5, -1, 2, 0, 180, 2, {0, 0, 0}, 30.0f },
@@ -6190,7 +6190,7 @@ static const AILapRule lbl_803BBBA8[19] = {
     { 2, 5, -1, 6, 0, 180, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BBD24[21] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BBD24[21] = {
     { 2, 4, -1, 2, 0, 97, -1, {0, 0, 0}, 30.0f },
     { 2, 4, -1, 3, 0, 97, -1, {0, 0, 0}, 30.0f },
     { 2, 4, -1, 4, 0, 97, 0, {0, 0, 0}, 30.0f },
@@ -6213,7 +6213,7 @@ static const AILapRule lbl_803BBD24[21] = {
     { 2, 4, -1, 9, 0, 97, 3, {0, 0, 0}, -40.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BBEC8[19] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BBEC8[19] = {
     { 2, 5, -1, 2, 0, 172, 0, {0, 0, 0}, 30.0f },
     { 2, 5, -1, 2, 0, 172, 1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 172, 2, {0, 0, 0}, 20.0f },
@@ -6234,7 +6234,7 @@ static const AILapRule lbl_803BBEC8[19] = {
     { 2, 5, -1, 6, 0, 172, 3, {0, 0, 0}, -10.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BC044[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BC044[15] = {
     { 2, 4, -1, 2, 0, 83, 0, {0, 0, 0}, 30.0f },
     { 2, 4, -1, 2, 0, 83, 1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 2, 0, 83, 2, {0, 0, 0}, 20.0f },
@@ -6251,7 +6251,7 @@ static const AILapRule lbl_803BC044[15] = {
     { 2, 4, -1, 6, 0, 83, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BC170[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BC170[14] = {
     { 2, 5, -1, 2, 0, 96, 0, {0, 0, 0}, 30.0f },
     { 2, 5, -1, 2, 0, 96, 1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 96, 2, {0, 0, 0}, 20.0f },
@@ -6267,7 +6267,7 @@ static const AILapRule lbl_803BC170[14] = {
     { 2, 5, -1, 5, 0, 96, 3, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BC288[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BC288[10] = {
     { 2, 4, -1, 2, 0, 104, 0, {0, 0, 0}, 30.0f },
     { 2, 4, -1, 2, 0, 104, 1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 2, 0, 104, 2, {0, 0, 0}, 20.0f },
@@ -6279,7 +6279,7 @@ static const AILapRule lbl_803BC288[10] = {
     { 2, 4, -1, 4, 0, 104, 3, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BC350[10] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BC350[10] = {
     { 2, 5, -1, 2, 0, 114, 0, {0, 0, 0}, 30.0f },
     { 2, 5, -1, 2, 0, 114, 1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 114, 2, {0, 0, 0}, 20.0f },
@@ -6291,7 +6291,7 @@ static const AILapRule lbl_803BC350[10] = {
     { 2, 5, -1, 4, 0, 114, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BC418[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BC418[14] = {
     { 2, 4, -1, 2, 0, 177, 0, {0, 0, 0}, 30.0f },
     { 2, 4, -1, 2, 0, 177, 1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 2, 0, 177, 2, {0, 0, 0}, 20.0f },
@@ -6307,7 +6307,7 @@ static const AILapRule lbl_803BC418[14] = {
     { 2, 4, -1, 5, 0, 177, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BC530[15] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BC530[15] = {
     { 2, 5, -1, 2, 0, 120, 0, {0, 0, 0}, 30.0f },
     { 2, 5, -1, 2, 0, 120, 1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 120, 2, {0, 0, 0}, 20.0f },
@@ -6324,7 +6324,7 @@ static const AILapRule lbl_803BC530[15] = {
     { 2, 5, -1, 5, 0, 249, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BC65C[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BC65C[14] = {
     { 2, 4, -1, 1, 50, 216, 0, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 1, 50, 216, 1, {0, 0, 0}, 10.0f },
     { 2, 4, -1, 1, 50, 216, 2, {0, 0, 0}, 10.0f },
@@ -6340,7 +6340,7 @@ static const AILapRule lbl_803BC65C[14] = {
     { 2, 4, -1, 3, 100, 216, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BC774[14] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BC774[14] = {
     { 2, 5, -1, 1, 100, 193, 0, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 1, 100, 193, 1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 1, 100, 193, 2, {0, 0, 0}, 10.0f },
@@ -6356,7 +6356,7 @@ static const AILapRule lbl_803BC774[14] = {
     { 2, 5, -1, 3, 100, 193, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BC88C[12] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BC88C[12] = {
     { 2, 4, -1, 1, 51, 112, -1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 2, 0, 112, -1, {0, 0, 0}, 10.0f },
     { 2, 4, -1, 3, 0, 69, -1, {0, 0, 0}, 10.0f },
@@ -6370,7 +6370,7 @@ static const AILapRule lbl_803BC88C[12] = {
     { 2, 4, -1, 4, 0, 112, 3, {0, 0, 0}, -15.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BC97C[7] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BC97C[7] = {
     { 2, 5, -1, 1, 51, 173, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 2, 0, 173, -1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 3, 0, 80, -1, {0, 0, 0}, -10.0f },
@@ -6379,7 +6379,7 @@ static const AILapRule lbl_803BC97C[7] = {
     { 2, 5, -1, 3, 80, 173, -1, {0, 0, 0}, -30.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BCA08[8] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BCA08[8] = {
     { 2, 4, -1, 2, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 4, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 4, -1, 4, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -6389,7 +6389,7 @@ static const AILapRule lbl_803BCA08[8] = {
     { 2, 4, -1, 5, 0, 111, 3, {0, 0, 0}, -20.0f },
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
-static const AILapRule lbl_803BCAA8[8] = {
+static const AILapRule AI_CalcLapSpeedBonus_rodata_803BCAA8[8] = {
     { 2, 5, -1, 2, 0, 111, -1, {0, 0, 0}, 20.0f },
     { 2, 5, -1, 3, 0, 111, -1, {0, 0, 0}, 10.0f },
     { 2, 5, -1, 4, 0, 111, -1, {0, 0, 0}, 10.0f },
@@ -6407,88 +6407,88 @@ static const AILapRule kAILapBonusRules_NonRaceCommon[5] = {
     { -100, -100, -100, -100, -100, -100, -100, {0, 0, 0}, 0.0f },
 };
 static const AILapRule *const kAILapBonusRuleTable_RaceCourse[24] = {
-    lbl_803A3008, lbl_803A63FC, lbl_803A996C, lbl_803AC554,
-    lbl_803ADF6C, lbl_803B01F4, lbl_803B1E8C, lbl_803B3D68,
-    lbl_803A4368, lbl_803A77AC, lbl_803AA984, lbl_803ACEDC,
-    lbl_803AEBC4, lbl_803B0C1C, lbl_803B2968, lbl_803B4D30,
-    lbl_803A5330, lbl_803A87C4, lbl_803AB6CC, lbl_803AD684,
-    lbl_803AF63C, lbl_803B1504, lbl_803B3304, lbl_803B5A64,
+    AI_CalcLapSpeedBonus_rodata_803A3008, AI_CalcLapSpeedBonus_rodata_803A63FC, AI_CalcLapSpeedBonus_rodata_803A996C, AI_CalcLapSpeedBonus_rodata_803AC554,
+    AI_CalcLapSpeedBonus_rodata_803ADF6C, AI_CalcLapSpeedBonus_rodata_803B01F4, AI_CalcLapSpeedBonus_rodata_803B1E8C, AI_CalcLapSpeedBonus_rodata_803B3D68,
+    AI_CalcLapSpeedBonus_rodata_803A4368, AI_CalcLapSpeedBonus_rodata_803A77AC, AI_CalcLapSpeedBonus_rodata_803AA984, AI_CalcLapSpeedBonus_rodata_803ACEDC,
+    AI_CalcLapSpeedBonus_rodata_803AEBC4, AI_CalcLapSpeedBonus_rodata_803B0C1C, AI_CalcLapSpeedBonus_rodata_803B2968, AI_CalcLapSpeedBonus_rodata_803B4D30,
+    AI_CalcLapSpeedBonus_rodata_803A5330, AI_CalcLapSpeedBonus_rodata_803A87C4, AI_CalcLapSpeedBonus_rodata_803AB6CC, AI_CalcLapSpeedBonus_rodata_803AD684,
+    AI_CalcLapSpeedBonus_rodata_803AF63C, AI_CalcLapSpeedBonus_rodata_803B1504, AI_CalcLapSpeedBonus_rodata_803B3304, AI_CalcLapSpeedBonus_rodata_803B5A64,
 };
 static const AILapRule *const kAILapBonusRuleTable_RaceFallback[192] = {
-    lbl_803A3030, lbl_803A32D8, lbl_803A34E0, lbl_803A37B0,
-    lbl_803A39E0, lbl_803A3CB0, lbl_803A3EA4, lbl_803A4174,
-    lbl_803A6424, lbl_803A66F4, lbl_803A68FC, lbl_803A6BE0,
-    lbl_803A6DFC, lbl_803A70CC, lbl_803A72C0, lbl_803A75B8,
-    lbl_803A9994, lbl_803A9BB0, lbl_803A9DB8, lbl_803A9FD4,
-    lbl_803AA1DC, lbl_803AA3D0, lbl_803AA5B0, lbl_803AA7A4,
-    lbl_803AC57C, lbl_803AC6A8, lbl_803AC7D4, lbl_803AC900,
-    lbl_803ACA2C, lbl_803ACB58, lbl_803ACC84, lbl_803ACDB0,
-    lbl_803ADF94, lbl_803AE174, lbl_803AE2A0, lbl_803AE480,
-    lbl_803AE5AC, lbl_803AE78C, lbl_803AE8B8, lbl_803AEA98,
-    lbl_803B021C, lbl_803B035C, lbl_803B049C, lbl_803B05DC,
-    lbl_803B071C, lbl_803B085C, lbl_803B099C, lbl_803B0ADC,
-    lbl_803B1EB4, lbl_803B2030, lbl_803B2148, lbl_803B2314,
-    lbl_803B242C, lbl_803B25A8, lbl_803B2684, lbl_803B2850,
-    lbl_803B3D90, lbl_803B3F98, lbl_803B41A0, lbl_803B43A8,
-    lbl_803B45B0, lbl_803B4790, lbl_803B4970, lbl_803B4B50,
-    lbl_803A4430, lbl_803A4660, lbl_803A47F0, lbl_803A4A20,
-    lbl_803A4BB0, lbl_803A4DE0, lbl_803A4F70, lbl_803A51A0,
-    lbl_803A7874, lbl_803A7AB8, lbl_803A7C48, lbl_803A7E8C,
-    lbl_803A801C, lbl_803A8260, lbl_803A83F0, lbl_803A8634,
-    lbl_803AAA4C, lbl_803AABDC, lbl_803AAD6C, lbl_803AAEFC,
-    lbl_803AB08C, lbl_803AB21C, lbl_803AB3AC, lbl_803AB53C,
-    lbl_803ACFA4, lbl_803AD080, lbl_803AD15C, lbl_803AD238,
-    lbl_803AD314, lbl_803AD3F0, lbl_803AD4CC, lbl_803AD5A8,
-    lbl_803AEC8C, lbl_803AEE1C, lbl_803AEEF8, lbl_803AF088,
-    lbl_803AF164, lbl_803AF2F4, lbl_803AF3D0, lbl_803AF560,
-    lbl_803B0CE4, lbl_803B0DE8, lbl_803B0EEC, lbl_803B0FF0,
-    lbl_803B10F4, lbl_803B11F8, lbl_803B12FC, lbl_803B1400,
-    lbl_803B2A30, lbl_803B2BAC, lbl_803B2C88, lbl_803B2E04,
-    lbl_803B2EE0, lbl_803B300C, lbl_803B30AC, lbl_803B3228,
-    lbl_803B4DF8, lbl_803B4F88, lbl_803B5118, lbl_803B5294,
-    lbl_803B5424, lbl_803B55B4, lbl_803B5744, lbl_803B58D4,
-    lbl_803A5358, lbl_803A55C4, lbl_803A5790, lbl_803A59FC,
-    lbl_803A5BC8, lbl_803A5DF8, lbl_803A5FC4, lbl_803A6230,
-    lbl_803A87EC, lbl_803A8A80, lbl_803A8C4C, lbl_803A8EE0,
-    lbl_803A90AC, lbl_803A9340, lbl_803A950C, lbl_803A97A0,
-    lbl_803AB6F4, lbl_803AB8C0, lbl_803ABA8C, lbl_803ABC58,
-    lbl_803ABE24, lbl_803ABFF0, lbl_803AC1BC, lbl_803AC388,
-    lbl_803AD6AC, lbl_803AD7C4, lbl_803AD8DC, lbl_803AD9F4,
-    lbl_803ADB0C, lbl_803ADC24, lbl_803ADD3C, lbl_803ADE54,
-    lbl_803AF664, lbl_803AF830, lbl_803AF948, lbl_803AFB14,
-    lbl_803AFC2C, lbl_803AFDF8, lbl_803AFF10, lbl_803B00DC,
-    lbl_803B152C, lbl_803B1658, lbl_803B1784, lbl_803B18B0,
-    lbl_803B19DC, lbl_803B1B08, lbl_803B1C34, lbl_803B1D60,
-    lbl_803B332C, lbl_803B3494, lbl_803B35AC, lbl_803B3750,
-    lbl_803B3868, lbl_803B39D0, lbl_803B3AAC, lbl_803B3C50,
-    lbl_803B5A8C, lbl_803B5C58, lbl_803B5E24, lbl_803B5FDC,
-    lbl_803B61A8, lbl_803B6374, lbl_803B6540, lbl_803B670C,
+    AI_CalcLapSpeedBonus_rodata_803A3030, AI_CalcLapSpeedBonus_rodata_803A32D8, AI_CalcLapSpeedBonus_rodata_803A34E0, AI_CalcLapSpeedBonus_rodata_803A37B0,
+    AI_CalcLapSpeedBonus_rodata_803A39E0, AI_CalcLapSpeedBonus_rodata_803A3CB0, AI_CalcLapSpeedBonus_rodata_803A3EA4, AI_CalcLapSpeedBonus_rodata_803A4174,
+    AI_CalcLapSpeedBonus_rodata_803A6424, AI_CalcLapSpeedBonus_rodata_803A66F4, AI_CalcLapSpeedBonus_rodata_803A68FC, AI_CalcLapSpeedBonus_rodata_803A6BE0,
+    AI_CalcLapSpeedBonus_rodata_803A6DFC, AI_CalcLapSpeedBonus_rodata_803A70CC, AI_CalcLapSpeedBonus_rodata_803A72C0, AI_CalcLapSpeedBonus_rodata_803A75B8,
+    AI_CalcLapSpeedBonus_rodata_803A9994, AI_CalcLapSpeedBonus_rodata_803A9BB0, AI_CalcLapSpeedBonus_rodata_803A9DB8, AI_CalcLapSpeedBonus_rodata_803A9FD4,
+    AI_CalcLapSpeedBonus_rodata_803AA1DC, AI_CalcLapSpeedBonus_rodata_803AA3D0, AI_CalcLapSpeedBonus_rodata_803AA5B0, AI_CalcLapSpeedBonus_rodata_803AA7A4,
+    AI_CalcLapSpeedBonus_rodata_803AC57C, AI_CalcLapSpeedBonus_rodata_803AC6A8, AI_CalcLapSpeedBonus_rodata_803AC7D4, AI_CalcLapSpeedBonus_rodata_803AC900,
+    AI_CalcLapSpeedBonus_rodata_803ACA2C, AI_CalcLapSpeedBonus_rodata_803ACB58, AI_CalcLapSpeedBonus_rodata_803ACC84, AI_CalcLapSpeedBonus_rodata_803ACDB0,
+    AI_CalcLapSpeedBonus_rodata_803ADF94, AI_CalcLapSpeedBonus_rodata_803AE174, AI_CalcLapSpeedBonus_rodata_803AE2A0, AI_CalcLapSpeedBonus_rodata_803AE480,
+    AI_CalcLapSpeedBonus_rodata_803AE5AC, AI_CalcLapSpeedBonus_rodata_803AE78C, AI_CalcLapSpeedBonus_rodata_803AE8B8, AI_CalcLapSpeedBonus_rodata_803AEA98,
+    AI_CalcLapSpeedBonus_rodata_803B021C, AI_CalcLapSpeedBonus_rodata_803B035C, AI_CalcLapSpeedBonus_rodata_803B049C, AI_CalcLapSpeedBonus_rodata_803B05DC,
+    AI_CalcLapSpeedBonus_rodata_803B071C, AI_CalcLapSpeedBonus_rodata_803B085C, AI_CalcLapSpeedBonus_rodata_803B099C, AI_CalcLapSpeedBonus_rodata_803B0ADC,
+    AI_CalcLapSpeedBonus_rodata_803B1EB4, AI_CalcLapSpeedBonus_rodata_803B2030, AI_CalcLapSpeedBonus_rodata_803B2148, AI_CalcLapSpeedBonus_rodata_803B2314,
+    AI_CalcLapSpeedBonus_rodata_803B242C, AI_CalcLapSpeedBonus_rodata_803B25A8, AI_CalcLapSpeedBonus_rodata_803B2684, AI_CalcLapSpeedBonus_rodata_803B2850,
+    AI_CalcLapSpeedBonus_rodata_803B3D90, AI_CalcLapSpeedBonus_rodata_803B3F98, AI_CalcLapSpeedBonus_rodata_803B41A0, AI_CalcLapSpeedBonus_rodata_803B43A8,
+    AI_CalcLapSpeedBonus_rodata_803B45B0, AI_CalcLapSpeedBonus_rodata_803B4790, AI_CalcLapSpeedBonus_rodata_803B4970, AI_CalcLapSpeedBonus_rodata_803B4B50,
+    AI_CalcLapSpeedBonus_rodata_803A4430, AI_CalcLapSpeedBonus_rodata_803A4660, AI_CalcLapSpeedBonus_rodata_803A47F0, AI_CalcLapSpeedBonus_rodata_803A4A20,
+    AI_CalcLapSpeedBonus_rodata_803A4BB0, AI_CalcLapSpeedBonus_rodata_803A4DE0, AI_CalcLapSpeedBonus_rodata_803A4F70, AI_CalcLapSpeedBonus_rodata_803A51A0,
+    AI_CalcLapSpeedBonus_rodata_803A7874, AI_CalcLapSpeedBonus_rodata_803A7AB8, AI_CalcLapSpeedBonus_rodata_803A7C48, AI_CalcLapSpeedBonus_rodata_803A7E8C,
+    AI_CalcLapSpeedBonus_rodata_803A801C, AI_CalcLapSpeedBonus_rodata_803A8260, AI_CalcLapSpeedBonus_rodata_803A83F0, AI_CalcLapSpeedBonus_rodata_803A8634,
+    AI_CalcLapSpeedBonus_rodata_803AAA4C, AI_CalcLapSpeedBonus_rodata_803AABDC, AI_CalcLapSpeedBonus_rodata_803AAD6C, AI_CalcLapSpeedBonus_rodata_803AAEFC,
+    AI_CalcLapSpeedBonus_rodata_803AB08C, AI_CalcLapSpeedBonus_rodata_803AB21C, AI_CalcLapSpeedBonus_rodata_803AB3AC, AI_CalcLapSpeedBonus_rodata_803AB53C,
+    AI_CalcLapSpeedBonus_rodata_803ACFA4, AI_CalcLapSpeedBonus_rodata_803AD080, AI_CalcLapSpeedBonus_rodata_803AD15C, AI_CalcLapSpeedBonus_rodata_803AD238,
+    AI_CalcLapSpeedBonus_rodata_803AD314, AI_CalcLapSpeedBonus_rodata_803AD3F0, AI_CalcLapSpeedBonus_rodata_803AD4CC, AI_CalcLapSpeedBonus_rodata_803AD5A8,
+    AI_CalcLapSpeedBonus_rodata_803AEC8C, AI_CalcLapSpeedBonus_rodata_803AEE1C, AI_CalcLapSpeedBonus_rodata_803AEEF8, AI_CalcLapSpeedBonus_rodata_803AF088,
+    AI_CalcLapSpeedBonus_rodata_803AF164, AI_CalcLapSpeedBonus_rodata_803AF2F4, AI_CalcLapSpeedBonus_rodata_803AF3D0, AI_CalcLapSpeedBonus_rodata_803AF560,
+    AI_CalcLapSpeedBonus_rodata_803B0CE4, AI_CalcLapSpeedBonus_rodata_803B0DE8, AI_CalcLapSpeedBonus_rodata_803B0EEC, AI_CalcLapSpeedBonus_rodata_803B0FF0,
+    AI_CalcLapSpeedBonus_rodata_803B10F4, AI_CalcLapSpeedBonus_rodata_803B11F8, AI_CalcLapSpeedBonus_rodata_803B12FC, AI_CalcLapSpeedBonus_rodata_803B1400,
+    AI_CalcLapSpeedBonus_rodata_803B2A30, AI_CalcLapSpeedBonus_rodata_803B2BAC, AI_CalcLapSpeedBonus_rodata_803B2C88, AI_CalcLapSpeedBonus_rodata_803B2E04,
+    AI_CalcLapSpeedBonus_rodata_803B2EE0, AI_CalcLapSpeedBonus_rodata_803B300C, AI_CalcLapSpeedBonus_rodata_803B30AC, AI_CalcLapSpeedBonus_rodata_803B3228,
+    AI_CalcLapSpeedBonus_rodata_803B4DF8, AI_CalcLapSpeedBonus_rodata_803B4F88, AI_CalcLapSpeedBonus_rodata_803B5118, AI_CalcLapSpeedBonus_rodata_803B5294,
+    AI_CalcLapSpeedBonus_rodata_803B5424, AI_CalcLapSpeedBonus_rodata_803B55B4, AI_CalcLapSpeedBonus_rodata_803B5744, AI_CalcLapSpeedBonus_rodata_803B58D4,
+    AI_CalcLapSpeedBonus_rodata_803A5358, AI_CalcLapSpeedBonus_rodata_803A55C4, AI_CalcLapSpeedBonus_rodata_803A5790, AI_CalcLapSpeedBonus_rodata_803A59FC,
+    AI_CalcLapSpeedBonus_rodata_803A5BC8, AI_CalcLapSpeedBonus_rodata_803A5DF8, AI_CalcLapSpeedBonus_rodata_803A5FC4, AI_CalcLapSpeedBonus_rodata_803A6230,
+    AI_CalcLapSpeedBonus_rodata_803A87EC, AI_CalcLapSpeedBonus_rodata_803A8A80, AI_CalcLapSpeedBonus_rodata_803A8C4C, AI_CalcLapSpeedBonus_rodata_803A8EE0,
+    AI_CalcLapSpeedBonus_rodata_803A90AC, AI_CalcLapSpeedBonus_rodata_803A9340, AI_CalcLapSpeedBonus_rodata_803A950C, AI_CalcLapSpeedBonus_rodata_803A97A0,
+    AI_CalcLapSpeedBonus_rodata_803AB6F4, AI_CalcLapSpeedBonus_rodata_803AB8C0, AI_CalcLapSpeedBonus_rodata_803ABA8C, AI_CalcLapSpeedBonus_rodata_803ABC58,
+    AI_CalcLapSpeedBonus_rodata_803ABE24, AI_CalcLapSpeedBonus_rodata_803ABFF0, AI_CalcLapSpeedBonus_rodata_803AC1BC, AI_CalcLapSpeedBonus_rodata_803AC388,
+    AI_CalcLapSpeedBonus_rodata_803AD6AC, AI_CalcLapSpeedBonus_rodata_803AD7C4, AI_CalcLapSpeedBonus_rodata_803AD8DC, AI_CalcLapSpeedBonus_rodata_803AD9F4,
+    AI_CalcLapSpeedBonus_rodata_803ADB0C, AI_CalcLapSpeedBonus_rodata_803ADC24, AI_CalcLapSpeedBonus_rodata_803ADD3C, AI_CalcLapSpeedBonus_rodata_803ADE54,
+    AI_CalcLapSpeedBonus_rodata_803AF664, AI_CalcLapSpeedBonus_rodata_803AF830, AI_CalcLapSpeedBonus_rodata_803AF948, AI_CalcLapSpeedBonus_rodata_803AFB14,
+    AI_CalcLapSpeedBonus_rodata_803AFC2C, AI_CalcLapSpeedBonus_rodata_803AFDF8, AI_CalcLapSpeedBonus_rodata_803AFF10, AI_CalcLapSpeedBonus_rodata_803B00DC,
+    AI_CalcLapSpeedBonus_rodata_803B152C, AI_CalcLapSpeedBonus_rodata_803B1658, AI_CalcLapSpeedBonus_rodata_803B1784, AI_CalcLapSpeedBonus_rodata_803B18B0,
+    AI_CalcLapSpeedBonus_rodata_803B19DC, AI_CalcLapSpeedBonus_rodata_803B1B08, AI_CalcLapSpeedBonus_rodata_803B1C34, AI_CalcLapSpeedBonus_rodata_803B1D60,
+    AI_CalcLapSpeedBonus_rodata_803B332C, AI_CalcLapSpeedBonus_rodata_803B3494, AI_CalcLapSpeedBonus_rodata_803B35AC, AI_CalcLapSpeedBonus_rodata_803B3750,
+    AI_CalcLapSpeedBonus_rodata_803B3868, AI_CalcLapSpeedBonus_rodata_803B39D0, AI_CalcLapSpeedBonus_rodata_803B3AAC, AI_CalcLapSpeedBonus_rodata_803B3C50,
+    AI_CalcLapSpeedBonus_rodata_803B5A8C, AI_CalcLapSpeedBonus_rodata_803B5C58, AI_CalcLapSpeedBonus_rodata_803B5E24, AI_CalcLapSpeedBonus_rodata_803B5FDC,
+    AI_CalcLapSpeedBonus_rodata_803B61A8, AI_CalcLapSpeedBonus_rodata_803B6374, AI_CalcLapSpeedBonus_rodata_803B6540, AI_CalcLapSpeedBonus_rodata_803B670C,
 };
 static const AILapRule *const kAILapBonusRuleTable_NonRace[96] = {
-    lbl_803B68D8, lbl_803B69DC, lbl_803B7918, lbl_803B7A1C,
-    lbl_803B6B44, lbl_803B6CE8, lbl_803B7B84, lbl_803B7D28,
-    lbl_803B6E50, lbl_803B6F68, lbl_803B7E90, lbl_803B7FA8,
-    lbl_803B7080, lbl_803B7148, lbl_803B80C0, lbl_803B8188,
-    lbl_803B7210, lbl_803B7328, lbl_803B8250, lbl_803B8368,
-    lbl_803B7454, lbl_803B7558, lbl_803B8494, lbl_803B8598,
-    lbl_803B765C, lbl_803B774C, lbl_803B869C, lbl_803B878C,
-    lbl_803B77D8, lbl_803B7878, lbl_803B8818, lbl_803B88B8,
-    lbl_803B8958, lbl_803B8A5C, lbl_803B9998, lbl_803B9A9C,
-    lbl_803B8BC4, lbl_803B8D68, lbl_803B9C04, lbl_803B9DA8,
-    lbl_803B8ED0, lbl_803B8FE8, lbl_803B9F10, lbl_803BA028,
-    lbl_803B9100, lbl_803B91C8, lbl_803BA140, lbl_803BA208,
-    lbl_803B9290, lbl_803B93A8, lbl_803BA2D0, lbl_803BA3E8,
-    lbl_803B94D4, lbl_803B95D8, lbl_803BA514, lbl_803BA618,
-    lbl_803B96DC, lbl_803B97CC, lbl_803BA71C, lbl_803BA80C,
-    lbl_803B9858, lbl_803B98F8, lbl_803BA898, lbl_803BA938,
-    lbl_803BA9D8, lbl_803BAAF0, lbl_803BBA90, lbl_803BBBA8,
-    lbl_803BAC6C, lbl_803BAE10, lbl_803BBD24, lbl_803BBEC8,
-    lbl_803BAF8C, lbl_803BB0B8, lbl_803BC044, lbl_803BC170,
-    lbl_803BB1D0, lbl_803BB298, lbl_803BC288, lbl_803BC350,
-    lbl_803BB360, lbl_803BB478, lbl_803BC418, lbl_803BC530,
-    lbl_803BB5A4, lbl_803BB6BC, lbl_803BC65C, lbl_803BC774,
-    lbl_803BB7D4, lbl_803BB8C4, lbl_803BC88C, lbl_803BC97C,
-    lbl_803BB950, lbl_803BB9F0, lbl_803BCA08, lbl_803BCAA8,
+    AI_CalcLapSpeedBonus_rodata_803B68D8, AI_CalcLapSpeedBonus_rodata_803B69DC, AI_CalcLapSpeedBonus_rodata_803B7918, AI_CalcLapSpeedBonus_rodata_803B7A1C,
+    AI_CalcLapSpeedBonus_rodata_803B6B44, AI_CalcLapSpeedBonus_rodata_803B6CE8, AI_CalcLapSpeedBonus_rodata_803B7B84, AI_CalcLapSpeedBonus_rodata_803B7D28,
+    AI_CalcLapSpeedBonus_rodata_803B6E50, AI_CalcLapSpeedBonus_rodata_803B6F68, AI_CalcLapSpeedBonus_rodata_803B7E90, AI_CalcLapSpeedBonus_rodata_803B7FA8,
+    AI_CalcLapSpeedBonus_rodata_803B7080, AI_CalcLapSpeedBonus_rodata_803B7148, AI_CalcLapSpeedBonus_rodata_803B80C0, AI_CalcLapSpeedBonus_rodata_803B8188,
+    AI_CalcLapSpeedBonus_rodata_803B7210, AI_CalcLapSpeedBonus_rodata_803B7328, AI_CalcLapSpeedBonus_rodata_803B8250, AI_CalcLapSpeedBonus_rodata_803B8368,
+    AI_CalcLapSpeedBonus_rodata_803B7454, AI_CalcLapSpeedBonus_rodata_803B7558, AI_CalcLapSpeedBonus_rodata_803B8494, AI_CalcLapSpeedBonus_rodata_803B8598,
+    AI_CalcLapSpeedBonus_rodata_803B765C, AI_CalcLapSpeedBonus_rodata_803B774C, AI_CalcLapSpeedBonus_rodata_803B869C, AI_CalcLapSpeedBonus_rodata_803B878C,
+    AI_CalcLapSpeedBonus_rodata_803B77D8, AI_CalcLapSpeedBonus_rodata_803B7878, AI_CalcLapSpeedBonus_rodata_803B8818, AI_CalcLapSpeedBonus_rodata_803B88B8,
+    AI_CalcLapSpeedBonus_rodata_803B8958, AI_CalcLapSpeedBonus_rodata_803B8A5C, AI_CalcLapSpeedBonus_rodata_803B9998, AI_CalcLapSpeedBonus_rodata_803B9A9C,
+    AI_CalcLapSpeedBonus_rodata_803B8BC4, AI_CalcLapSpeedBonus_rodata_803B8D68, AI_CalcLapSpeedBonus_rodata_803B9C04, AI_CalcLapSpeedBonus_rodata_803B9DA8,
+    AI_CalcLapSpeedBonus_rodata_803B8ED0, AI_CalcLapSpeedBonus_rodata_803B8FE8, AI_CalcLapSpeedBonus_rodata_803B9F10, AI_CalcLapSpeedBonus_rodata_803BA028,
+    AI_CalcLapSpeedBonus_rodata_803B9100, AI_CalcLapSpeedBonus_rodata_803B91C8, AI_CalcLapSpeedBonus_rodata_803BA140, AI_CalcLapSpeedBonus_rodata_803BA208,
+    AI_CalcLapSpeedBonus_rodata_803B9290, AI_CalcLapSpeedBonus_rodata_803B93A8, AI_CalcLapSpeedBonus_rodata_803BA2D0, AI_CalcLapSpeedBonus_rodata_803BA3E8,
+    AI_CalcLapSpeedBonus_rodata_803B94D4, AI_CalcLapSpeedBonus_rodata_803B95D8, AI_CalcLapSpeedBonus_rodata_803BA514, AI_CalcLapSpeedBonus_rodata_803BA618,
+    AI_CalcLapSpeedBonus_rodata_803B96DC, AI_CalcLapSpeedBonus_rodata_803B97CC, AI_CalcLapSpeedBonus_rodata_803BA71C, AI_CalcLapSpeedBonus_rodata_803BA80C,
+    AI_CalcLapSpeedBonus_rodata_803B9858, AI_CalcLapSpeedBonus_rodata_803B98F8, AI_CalcLapSpeedBonus_rodata_803BA898, AI_CalcLapSpeedBonus_rodata_803BA938,
+    AI_CalcLapSpeedBonus_rodata_803BA9D8, AI_CalcLapSpeedBonus_rodata_803BAAF0, AI_CalcLapSpeedBonus_rodata_803BBA90, AI_CalcLapSpeedBonus_rodata_803BBBA8,
+    AI_CalcLapSpeedBonus_rodata_803BAC6C, AI_CalcLapSpeedBonus_rodata_803BAE10, AI_CalcLapSpeedBonus_rodata_803BBD24, AI_CalcLapSpeedBonus_rodata_803BBEC8,
+    AI_CalcLapSpeedBonus_rodata_803BAF8C, AI_CalcLapSpeedBonus_rodata_803BB0B8, AI_CalcLapSpeedBonus_rodata_803BC044, AI_CalcLapSpeedBonus_rodata_803BC170,
+    AI_CalcLapSpeedBonus_rodata_803BB1D0, AI_CalcLapSpeedBonus_rodata_803BB298, AI_CalcLapSpeedBonus_rodata_803BC288, AI_CalcLapSpeedBonus_rodata_803BC350,
+    AI_CalcLapSpeedBonus_rodata_803BB360, AI_CalcLapSpeedBonus_rodata_803BB478, AI_CalcLapSpeedBonus_rodata_803BC418, AI_CalcLapSpeedBonus_rodata_803BC530,
+    AI_CalcLapSpeedBonus_rodata_803BB5A4, AI_CalcLapSpeedBonus_rodata_803BB6BC, AI_CalcLapSpeedBonus_rodata_803BC65C, AI_CalcLapSpeedBonus_rodata_803BC774,
+    AI_CalcLapSpeedBonus_rodata_803BB7D4, AI_CalcLapSpeedBonus_rodata_803BB8C4, AI_CalcLapSpeedBonus_rodata_803BC88C, AI_CalcLapSpeedBonus_rodata_803BC97C,
+    AI_CalcLapSpeedBonus_rodata_803BB950, AI_CalcLapSpeedBonus_rodata_803BB9F0, AI_CalcLapSpeedBonus_rodata_803BCA08, AI_CalcLapSpeedBonus_rodata_803BCAA8,
 };
 
 #endif

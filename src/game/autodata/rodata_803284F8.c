@@ -8,7 +8,7 @@
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const char lbl_803284F8[104] = {
+const char WarpZoneVector_Reserve_rodata_803284F8[104] = {
     118, 101, 99, 116, 111, 114, 58, 58, 114, 101, 115, 101,
     114, 118, 101, 32, 108, 101, 110, 103, 116, 104, 32, 101,
     114, 114, 111, 114, 0, 0, 0, 0, 115, 116, 100, 58,

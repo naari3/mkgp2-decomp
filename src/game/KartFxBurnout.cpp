@@ -21,7 +21,7 @@ struct BurnEffect {
 };
 extern "C" {
 extern BurnCamera lbl_805DF3D0;
-extern float lbl_8032A30C[15];
+extern float KartFx_BurnoutChargeTick_rodata_8032A30C[15];
 extern int g_gameMode,g_kartVariant,g_cupId;
 void fn_800AF4F8(BurnEffect *);
 BurnEffect *DrawEffect_SpawnDirect(void (*)(BurnEffect *));
@@ -239,7 +239,7 @@ void KartFx_BurnoutChargeTick(BurnEffect *e) {
     Vec3_Scale(&offset,&offset,distance);
     Vec3_Add_DestFirst(&e->position,&world,&offset);
     int character=BurnCharacter(e->kart);
-    float factor=character<0 ? 1.0f : lbl_8032A30C[character];
+    float factor=character<0 ? 1.0f : KartFx_BurnoutChargeTick_rodata_8032A30C[character];
     float scale=1.3f*KartCharacterParam_GetFxSizeFactor(e->kart);
     scale=e->size*scale;
     scale=scale*factor;

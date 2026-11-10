@@ -99,10 +99,10 @@ void CObjUpdateFunc(void* obj, int type, HSD_ObjData* val)
 char lbl_804FC560[29] = "unkown type of render pass.\n";
 char lbl_804FC580[13] = "cobj->eyepos";
 char lbl_804FC590[15] = "cobj->interest";
-Vec3 lbl_804FC5A0 = { 0.0F, 0.0F, 0.0F };
-Vec3 lbl_804FC5AC = { 0.0F, 1.0F, 0.0F };
-char lbl_804FC5B8[56] = "illegal up vector.\0\0hsdIsDescendantOf(info, &hsdCObj)";
-Vec3 lbl_804FC5F0 = { 0.0F, 1.0F, 0.0F };
+Vec3 upvec2roll_data_804FC5A0 = { 0.0F, 0.0F, 0.0F };
+Vec3 upvec2roll_data_804FC5AC = { 0.0F, 1.0F, 0.0F };
+char HSD_CObjSetRoll_data_804FC5B8[56] = "illegal up vector.\0\0hsdIsDescendantOf(info, &hsdCObj)";
+Vec3 CObjLoad_data_804FC5F0 = { 0.0F, 1.0F, 0.0F };
 
 void HSD_CObjAnim(HSD_CObj* cobj)
 {
@@ -667,7 +667,7 @@ void HSD_CObjSetUpVector(HSD_CObj* cobj, Vec3* up)
     }
     if ((cobj->flags & 1) != 0) {
         if (vec_normalize_check(up, &v)) {
-            OSReport(lbl_804FC5B8);
+            OSReport(HSD_CObjSetRoll_data_804FC5B8);
             __assert(lbl_806D0D50, 976, lbl_806D0D60);
         }
         if (cobj->u.up.x != cobj_get_up_x(&v) || cobj->u.up.y != v.y ||
@@ -1007,7 +1007,7 @@ int CObjLoad(HSD_CObj* cobj, HSD_CObjDesc* desc)
         if (desc->common.up_vector != NULL) {
             HSD_CObjSetUpVector(cobj, desc->common.up_vector);
         } else {
-            HSD_CObjSetUpVector(cobj, &lbl_804FC5F0);
+            HSD_CObjSetUpVector(cobj, &CObjLoad_data_804FC5F0);
         }
     } else {
         HSD_CObjSetRoll(cobj, desc->common.roll);

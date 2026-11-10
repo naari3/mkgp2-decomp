@@ -10,7 +10,7 @@ typedef struct RRVec3 {
 /* PathFollower context (0x2C bytes, see RivalRun_PathFollowerInit.c) */
 typedef struct RRPathFollower {
     unsigned char needsSearch; /* 0x00 */
-    int lane;                  /* 0x04 (row of lbl_8035C1E4) */
+    int lane;                  /* 0x04 (row of RivalRun_rodata_8035C1E4) */
     int route;                 /* 0x08 (0/1, toggled by warp zones) */
     int seg;                   /* 0x0C */
     RRVec3 target;             /* 0x10 */
@@ -18,7 +18,7 @@ typedef struct RRPathFollower {
     float endDist;             /* 0x28 */
 } RRPathFollower;
 
-/* rival path table entry (lbl_8035C1E4[lane][route]) */
+/* rival path table entry (RivalRun_rodata_8035C1E4[lane][route]) */
 typedef struct RRPath {
     RRVec3 *pts;
     int count;
@@ -241,8 +241,8 @@ extern unsigned int lbl_806D7394;
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_80677CA0[];
-extern unsigned int lbl_80677CAC[];
+extern unsigned int RivalRun_Update_bss_80677CA0[];
+extern unsigned int RivalRun_Update_bss_80677CAC[];
 
 /* --- function index (1 fns, .text 0x80135734..0x80135B7C) ---
  * [  0] 0x80135734 size:0x448   global RivalRun_Update
@@ -305,10 +305,10 @@ extern "C" int RivalRun_Update(RivalRunState *self)
     PathManager_UpdateAll(self->participants);
     LakituStart_UpdateCountdown(self->lakitu);
     CourseEnvironment_UpdateAndCullZones_Timed(self->environment);
-    CObj_LoadProjMatrix(self->scene, lbl_80677CA0);
-    CObj_ApplyScissor(self->scene, lbl_80677CAC);
+    CObj_LoadProjMatrix(self->scene, RivalRun_Update_bss_80677CA0);
+    CObj_ApplyScissor(self->scene, RivalRun_Update_bss_80677CAC);
     ItemObjectManager_Update();
-    VfxSlotMgr_Update(*(RRVec3 *)lbl_80677CA0, *(RRVec3 *)lbl_80677CAC);
+    VfxSlotMgr_Update(*(RRVec3 *)RivalRun_Update_bss_80677CA0, *(RRVec3 *)RivalRun_Update_bss_80677CAC);
     if (IsRaceStarted() && self->finished == 0 && *(float *)&g_raceTimeRemaining >= 0.0f) {
         mine = *(int *)((char *)CarObject_GetRenderObj(self->car) + 0x240);
         rival = *(int *)((char *)CarObject_GetRenderObj(self->rival->car) + 0x240);
@@ -386,11 +386,11 @@ extern void *WarpDashMgr_GetInstance(int create);
 extern int WarpZone_FindContaining(void *mgr, float x, float y, float z);
 
 /* --- extern decls: sda21-referenced data --- */
-extern float lbl_806CF610;
-extern float lbl_806CF614;
-extern float lbl_806CF618;
-extern float lbl_806CF61C;
-extern float lbl_806CF620;
+extern float RivalRun_RivalAIUpdate_data_806CF610;
+extern float RivalRun_RivalAIUpdate_data_806CF614;
+extern float RivalRun_RivalAIUpdate_data_806CF618;
+extern float RivalRun_RivalAIUpdate_data_806CF61C;
+extern float RivalRun_RivalAIUpdate_data_806CF620;
 extern const float lbl_806D7384;
 extern const float lbl_806D738C;
 extern const float lbl_806D7398;
@@ -442,19 +442,19 @@ void RivalRun_RivalAIUpdate(RRRivalAI *self) {
                 side = lbl_806D7398;
             }
         }
-        steer = Saturate_Double(-side * lbl_806CF610, lbl_806D7398, lbl_806D7384);
-        t = (speed - lbl_806CF618) / lbl_806CF61C;
-        if (steer > lbl_806CF614) {
-            accel = Saturate_Double(lbl_806D7384 - t * (steer - lbl_806CF614), lbl_806D738C, lbl_806D7384);
-        } else if (steer < -lbl_806CF614) {
-            accel = Saturate_Double(t * (steer + lbl_806CF614) + lbl_806D7384, lbl_806D738C, lbl_806D7384);
+        steer = Saturate_Double(-side * RivalRun_RivalAIUpdate_data_806CF610, lbl_806D7398, lbl_806D7384);
+        t = (speed - RivalRun_RivalAIUpdate_data_806CF618) / RivalRun_RivalAIUpdate_data_806CF61C;
+        if (steer > RivalRun_RivalAIUpdate_data_806CF614) {
+            accel = Saturate_Double(lbl_806D7384 - t * (steer - RivalRun_RivalAIUpdate_data_806CF614), lbl_806D738C, lbl_806D7384);
+        } else if (steer < -RivalRun_RivalAIUpdate_data_806CF614) {
+            accel = Saturate_Double(t * (steer + RivalRun_RivalAIUpdate_data_806CF614) + lbl_806D7384, lbl_806D738C, lbl_806D7384);
         } else {
             accel = lbl_806D7384;
         }
         accel *= self->accelScale;
         if (self->driftDir == 0) {
             if (speed > lbl_806D739C && !CarObject_IsAirborne(self->car)) {
-                if (steer >= lbl_806CF620 || steer <= -lbl_806CF620) {
+                if (steer >= RivalRun_RivalAIUpdate_data_806CF620 || steer <= -RivalRun_RivalAIUpdate_data_806CF620) {
                     KartItem_TryArmBoostOnLanding(self->car, 1);
                     if (steer > lbl_806D738C) {
                         self->driftDir = 1;
@@ -517,7 +517,7 @@ extern unsigned int lbl_806D73A0;
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern RRPath lbl_8035C1E4[][2];
+extern RRPath RivalRun_rodata_8035C1E4[][2];
 
 /* --- function index (1 fns, .text 0x80135EFC..0x80136148) ---
  * [  0] 0x80135EFC size:0x24C   global RivalRun_UpdatePathFollower
@@ -554,9 +554,9 @@ asm void RivalRun_UpdatePathFollower(void) { /* 0x80135EFC size:0x24C */
     psq_st f28, 0x48(r1), 0, 0
     stmw r25, 0x24(r1)
     mr r30, r3
-    lis r3, lbl_8035C1E4@ha
+    lis r3, RivalRun_rodata_8035C1E4@ha
     lwz r0, 0x4(r30)
-    addi r5, r3, lbl_8035C1E4@l
+    addi r5, r3, RivalRun_rodata_8035C1E4@l
     lwz r3, 0x8(r30)
     mr r25, r4
     slwi r4, r0, 4
@@ -1244,7 +1244,7 @@ extern const float lbl_806D738C;
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern RRPath lbl_8035C1E4[][2];
+extern RRPath RivalRun_rodata_8035C1E4[][2];
 
 /* --- function index (1 fns, .text 0x801367F4..0x80136BA8) ---
  * [  0] 0x801367F4 size:0x3B4   global RivalRun_CalcPathDistance
@@ -1318,8 +1318,8 @@ float RivalRun_CalcPathDistance(RRPathFollower *pf, const RRVec3 *a, const RRVec
     int ib;
     int i;
 
-    pts = lbl_8035C1E4[pf->lane][pf->route].pts;
-    count = lbl_8035C1E4[pf->lane][pf->route].count;
+    pts = RivalRun_rodata_8035C1E4[pf->lane][pf->route].pts;
+    count = RivalRun_rodata_8035C1E4[pf->lane][pf->route].count;
     dist = lbl_806D738C;
     ia = RRFindNearest(pts, count, a);
     ib = RRFindNearest(pts, count, b);
@@ -1382,7 +1382,7 @@ extern void *lbl_806D10D0;
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
-extern unsigned int lbl_8048E4A0[];
+extern unsigned int RivalRun_vtable_8048E4A0[];
 
 /* --- function index (1 fns, .text 0x80136BA8..0x80136EA0) ---
  * [  0] 0x80136BA8 size:0x2F8   global RivalRun_Destroy
@@ -1443,7 +1443,7 @@ static inline void RRDestroyRival(RRRival *rival)
 extern "C" void *RivalRun_Destroy(RivalRunState *self, short freeMemory)
 {
     if (self) {
-        self->vtable = lbl_8048E4A0;
+        self->vtable = RivalRun_vtable_8048E4A0;
         if (g_weatherSystem) {
             fn_8016C634((void *)g_weatherSystem, 1);
             g_weatherSystem = 0;
@@ -1554,7 +1554,7 @@ extern unsigned int lbl_806D73D8;
 /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
 extern unsigned int lbl_8035C22C[];
 extern unsigned int lbl_8048E144[];
-extern unsigned int lbl_8048E4A0[];
+extern unsigned int RivalRun_vtable_8048E4A0[];
 
 /* --- native C++ ctor (same shape as ReverseChallenge_Init / JumpDistanceMode_Init) --- */
 #pragma cplusplus on

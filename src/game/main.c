@@ -6,7 +6,7 @@
  * Flow:
  *   1. BootDispatcher(bootScratch)          -- boot 4 段階; bootScratch[0] = test_mode flag
  *   2. DeadCounters_PostBootReset()                        -- post-boot 中間処理
- *   3. FlowDispatcher_Create(&lbl_80328C94, mode)     -- main scene allocation
+ *   3. FlowDispatcher_Create(&main_rodata_80328C94, mode)     -- main scene allocation
  *                                              mode default 3; if test mode -> 12
  *   4. MainGameLoop()                       -- per-frame game loop
  *   5. FlowDispatcher_Dtor(scene, 1)                -- scene shutdown
@@ -32,7 +32,7 @@ extern void MainGameLoop(void);
 extern void FlowDispatcher_Dtor(void *scene, int flag);
 extern void Game_Shutdown(void);
 
-extern void *lbl_80328C94[];
+extern void *main_rodata_80328C94[];
 
 #pragma exceptions on
 void main(void) {
@@ -46,7 +46,7 @@ void main(void) {
     if (bootScratch[0] == 1) {
         mode = 12;
     }
-    scene = FlowDispatcher_Create(lbl_80328C94, mode);
+    scene = FlowDispatcher_Create(main_rodata_80328C94, mode);
     MainGameLoop();
     FlowDispatcher_Dtor(scene, 1);
     Game_Shutdown();

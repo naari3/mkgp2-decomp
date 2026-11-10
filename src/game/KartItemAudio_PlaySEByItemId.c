@@ -12,7 +12,7 @@
  * zero Vec3 through one hoisted base (lbl_802EDC70, then +0x34 / +0xB4) and
  * keeps an `addi rX, base, 0` for the voice table. CW emits that shape for
  * objects defined in the same TU, so this TU owns .rodata 0x802EDC70..
- * 0x802EDD30 and defines the four objects there (lbl_802EDCBC and
+ * 0x802EDD30 and defines the four objects there (KartAudioChannel_PlayColorMatchSE_rodata_802EDCBC and
  * lbl_802EDD24 stay global: other TUs reference them). An extern struct
  * overlay only reaches ~96-97% (offsets get folded into displacements).
  * The function is
@@ -32,8 +32,8 @@ extern void fn_8016C288(); /* positional SE update (id, Vec3 *pos) */
 const int lbl_802EDC70[13] = {
     0xD7, 0xEC, 0x101, 0x116, 0x12B, 0x141, 0x156, 0x16B, 0x180, 0x195, 0x1AA, 0x1C0, 0x1D5,
 };
-const int lbl_802EDCA4[6] = { 0x52, 0x53, 0xA7, 0x10A, 0x2A, 0xFB };
-const unsigned int lbl_802EDCBC[26] = {
+const int IsAudioMutedItem_rodata_802EDCA4[6] = { 0x52, 0x53, 0xA7, 0x10A, 0x2A, 0xFB };
+const unsigned int KartAudioChannel_PlayColorMatchSE_rodata_802EDCBC[26] = {
     0x004, 0x7E, 0x800, 0x77, 0x008, 0x76, 0x040, 0x76, 0x080, 0x76, 0x010, 0x7C, 0x001,
     0x73,  0x002, 0x73, 0x020, 0x74, 0x200, 0x7A, 0x100, 0x79, 0x400, 0x7F, 0x000, 0xFFFFFFFF,
 };
@@ -52,7 +52,7 @@ typedef struct KartItemAudio {
 } KartItemAudio;
 
 static inline unsigned char KartItemAudio_IsVoicedItem(int itemId) {
-    const int *p = lbl_802EDCA4;
+    const int *p = IsAudioMutedItem_rodata_802EDCA4;
     int i;
     for (i = 0; i < 6; i++, p++) {
         if (itemId == *p) {

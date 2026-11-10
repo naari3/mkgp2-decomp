@@ -11,10 +11,10 @@
 #pragma cplusplus on
 
 extern "C" {
-extern char lbl_8048EB24[];
+extern char SpriteEffects_data_8048EB24[];
 extern char lbl_8048EB44[];
-extern char lbl_8048EB70[];
-extern char lbl_8048EB9C[];
+extern char SpriteEffects_data_8048EB70[];
+extern char SpriteEffects_data_8048EB9C[];
 extern const float lbl_806D76F0, lbl_806D76F4, lbl_806D76F8, lbl_806D76FC;
 extern const float lbl_806D7700, lbl_806D7704, lbl_806D7708, lbl_806D770C;
 extern const float lbl_806D7710, lbl_806D7714, lbl_806D7718, lbl_806D771C;
@@ -73,7 +73,7 @@ struct Effect3 : Effect {
 };
 
 Effect1::~Effect1() {
-    vptr = lbl_8048EB24;
+    vptr = SpriteEffects_data_8048EB24;
 }
 
 static inline void Effect_DrawSprite(Effect *e, int id, float alpha) {
@@ -167,7 +167,7 @@ extern "C" void fn_8013E108(Effect *e) {
 }
 
 Effect1::Effect1() {
-    vptr = lbl_8048EB24;
+    vptr = SpriteEffects_data_8048EB24;
     flags = 2;
     t = lbl_806D770C;
 }
@@ -284,7 +284,7 @@ extern "C" void fn_8013E6B4(Effect *e) {
 }
 
 Effect2::Effect2(int mode) {
-    vptr = lbl_8048EB70;
+    vptr = SpriteEffects_data_8048EB70;
     flags = ((mode << 2) & 4) | 2;
     t = lbl_806D770C;
 }
@@ -364,7 +364,7 @@ extern "C" void fn_8013EAB4(Effect *e) {
 }
 
 Effect3::Effect3() {
-    vptr = lbl_8048EB9C;
+    vptr = SpriteEffects_data_8048EB9C;
     flags = 2;
     t = lbl_806D770C;
 }
@@ -395,11 +395,11 @@ extern "C" void fn_8013EB9C(void) {
 }
 
 Effect2::~Effect2() {
-    vptr = lbl_8048EB70;
+    vptr = SpriteEffects_data_8048EB70;
 }
 
 Effect3::~Effect3() {
-    vptr = lbl_8048EB9C;
+    vptr = SpriteEffects_data_8048EB9C;
 }
 
 struct EffectHolder {

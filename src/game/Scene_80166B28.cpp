@@ -1,6 +1,6 @@
 /*
  * 0x80166B28..0x80166BE8: empty virtual stub, virtual-delete thunk and the
- * deleting destructor of a scene (vtable lbl_80490F70, base chain
+ * deleting destructor of a scene (vtable DebugName163_vtable_80490F70, base chain
  * lbl_8048ED10 -> lbl_8048ECF8).
  */
 
@@ -11,7 +11,7 @@ struct Scene80166B64 {
 };
 
 extern "C" {
-extern char lbl_80490F70[];
+extern char DebugName163_vtable_80490F70[];
 extern char lbl_8048ED10[];
 extern char lbl_8048ECF8[];
 extern void fn_80252D48(void);
@@ -29,7 +29,7 @@ void fn_80166B2C(VObj *p) {
 
 Scene80166B64 *fn_80166B64(Scene80166B64 *self, short flag) {
     if (self) {
-        self->vtable = lbl_80490F70;
+        self->vtable = DebugName163_vtable_80490F70;
         fn_80252D48();
         fn_80121210();
         if (self) {

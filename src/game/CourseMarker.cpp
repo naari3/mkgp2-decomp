@@ -1,6 +1,6 @@
 /*
  * 0x80169E34..0x8016A2B8: course marker effect (three animated markers that
- * fly along a curve when a kart comes close). Vtable lbl_80491004, base
+ * fly along a curve when a kart comes close). Vtable CourseMarker_vtable_80491004, base
  * vtable lbl_80490FE0 (deleting dtor dtor_8016A270). The constructor is real
  * C++ for its EH actions; mangled names are bridged in
  * tools/extab_user_renames.json.
@@ -33,12 +33,12 @@ struct clNormal3D {
 };
 
 extern "C" {
-extern const MarkerPath lbl_8036C8C0[3];
+extern const MarkerPath CourseMarker_rodata_8036C8C0[3];
 extern char lbl_8036C940[];
 extern char lbl_8036C960[];
-extern char lbl_80491004[];
+extern char CourseMarker_vtable_80491004[];
 extern char lbl_80490FE0[];
-extern void *lbl_806CF9D8;
+extern void *CourseMarker_data_806CF9D8;
 extern unsigned char fn_801379F0(Vec3f *, float);
 extern void Object_SetField8_AndDirty(clNormal3D *, float);
 extern void clNormal3D_Exec(clNormal3D *);
@@ -100,13 +100,13 @@ void fn_80169EFC(CourseMarker *self) {
             kp.y = KartDriver_GetKartRootMtx(kart)[7];
             kp.z = KartDriver_GetKartRootMtx(kart)[11];
             for (i = 0; i < 3; i++) {
-                Vec3_Subtract(&lbl_8036C8C0[i].trigger, &kp, &d);
+                Vec3_Subtract(&CourseMarker_rodata_8036C8C0[i].trigger, &kp, &d);
                 if (PSVECSquareMag(&d) < 1000000.0f) {
                     if (self->markers[i].state == 0) {
                         self->markers[i].state = 1;
                         self->markers[i].t = 0.0f;
                         self->markers[i].frame = 0.0f;
-                        kp = lbl_8036C8C0[i].start;
+                        kp = CourseMarker_rodata_8036C8C0[i].start;
                     }
                 } else if (self->markers[i].state == 2) {
                     self->markers[i].state = 0;
@@ -118,7 +118,7 @@ void fn_80169EFC(CourseMarker *self) {
                         d.x = self->markers[i].pos.x;
                         d.y = self->markers[i].pos.y;
                         d.z = self->markers[i].pos.z;
-                        fn_80181F18(&lbl_8036C8C0[i].start, &lbl_8036C8C0[i].trigger, &lbl_8036C8C0[i].end, &self->markers[i].pos,
+                        fn_80181F18(&CourseMarker_rodata_8036C8C0[i].start, &CourseMarker_rodata_8036C8C0[i].trigger, &CourseMarker_rodata_8036C8C0[i].end, &self->markers[i].pos,
                                     self->markers[i].t);
                         self->markers[i].rotY = atan2(self->markers[i].pos.x - d.x,
                                                       self->markers[i].pos.z - d.z);
@@ -134,7 +134,7 @@ void fn_80169EFC(CourseMarker *self) {
 
 CourseMarker *fn_8016A11C(CourseMarker *self, short flag) {
     if (self) {
-        *(char **)self = lbl_80491004;
+        *(char **)self = CourseMarker_vtable_80491004;
         Object_DtorWithGXSync(self->model, 1);
         MemoryManager_Free(self->markers);
         DebugPrintf(lbl_8036C940);
@@ -154,7 +154,7 @@ CourseMarker *fn_8016A11C(CourseMarker *self, short flag) {
  * DELETEPOINTER guard, the ctor body the DESTROYBASE region. */
 CourseMarker::CourseMarker() {
     DebugPrintf(lbl_8036C960);
-    model = new clNormal3D(lbl_806CF9D8, 0);
+    model = new clNormal3D(CourseMarker_data_806CF9D8, 0);
     clNormal3D_SetScale(model, 0, 0.0f, 1.0f, 0.0f, 0.0f);
     markers = (Marker *)FUN_8003b120(sizeof(Marker) * 3);
     markers[0].state = 0;

@@ -116,9 +116,9 @@ extern char lbl_802EAC00[];
 extern char lbl_802EAC18[];
 extern char lbl_802EAC30[];
 extern char lbl_802EAC48[];
-extern char lbl_806CEDA0[];
-extern char lbl_806CEDA8[];
-extern char lbl_806CEDB0[];
+extern char data_803F57E0_data_806CEDA0[];
+extern char data_803F57E0_data_806CEDA8[];
+extern char data_803F57E0_data_806CEDB0[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
@@ -197,26 +197,26 @@ void *lbl_803F5888[22] = {
     0
 };
 /* decl: char */
-void *lbl_803F58E0[4] = {
-    (void *)&lbl_806CEDA0,
+void *clCallback_vtable_803F58E0[4] = {
+    (void *)&data_803F57E0_data_806CEDA0,
     0,
     (void *)dtor_8003A71C,
     0
 };
-void *lbl_803F58F0[3] = {
-    (void *)&lbl_806CEDA8,
+void *data_803F57E0_data_803F58F0[3] = {
+    (void *)&data_803F57E0_data_806CEDA8,
     0,
     0
 };
 /* decl: char */
-void *lbl_803F58FC[5] = {
-    (void *)&lbl_806CEDB0,
+void *clShadow_vtable_803F58FC[5] = {
+    (void *)&data_803F57E0_data_806CEDB0,
     0,
     (void *)SceneRender_Dtor,
     (void *)SceneRender_DrawObjectWithLights,
     0
 };
-char *lbl_803F5910[6] = {
+char *LakituStart_UpdateCountdown_data_803F5910[6] = {
     (char *)&lbl_802E9EB8,
     (char *)&lbl_802E9ED0,
     (char *)&lbl_802E9EE8,
@@ -224,7 +224,7 @@ char *lbl_803F5910[6] = {
     (char *)&lbl_802E9F1C,
     (char *)&lbl_802E9F38
 };
-unsigned int lbl_803F5928[30] = {
+unsigned int KartDriver_InitFull_data_803F5928[30] = {
     0x3D324E3E, 0x6D3F336C, 0x52503940, 0x3A2B5D5C, 0x5B2D2C46, 0x4A087172, 0x695A2E2F, 0x30317454,
     0x6E732959, 0x171A1C1B, 0x191D2223, 0x555E3C24, 0x5F600201, 0x44432625, 0x4D15780A, 0x560C421F,
     0x41126F14, 0x3B1E750B, 0x510D4C20, 0x38097711, 0x7A164703, 0x58184810, 0x37063413, 0x2A0E7604,

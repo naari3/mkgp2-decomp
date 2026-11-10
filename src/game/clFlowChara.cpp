@@ -161,8 +161,8 @@ struct FrameParam {
 };
 
 extern "C" {
-extern char lbl_806CFDC0[8]; /* .sdata - clFlowBase RTTI */
-extern char lbl_806CFDC8[8]; /* .sdata - clFlowChara RTTI {name, bases} */
+extern char clFlowChara_data_806CFDC0[8]; /* .sdata - clFlowBase RTTI */
+extern char clFlowChara_data_806CFDC8[8]; /* .sdata - clFlowChara RTTI {name, bases} */
 struct DtorView;
 DtorView *clFlowChara_Destructor(DtorView *self, short del);
 struct CharaView;
@@ -200,11 +200,11 @@ float g_tierCursorPosTable[13][2] = {
 };
 
 /* clFlowChara RTTI base list / vtable { rtti, offset, dtor, Update, Draw } */
-void *lbl_8049AC70[3] = { lbl_806CFDC0, 0, 0 };
+void *clFlowChara_data_8049AC70[3] = { clFlowChara_data_806CFDC0, 0, 0 };
 /* Only reached through FrameSelection_Init's pool base (g_charaStatTable+0x224). */
 #pragma force_active on
-void *lbl_8049AC7C[5] = {
-    lbl_806CFDC8, 0, (void *)clFlowChara_Destructor, (void *)clFlowChara_Update, (void *)fn_801C3AA4
+void *clFlowChara_Destructor_data_8049AC7C[5] = {
+    clFlowChara_data_806CFDC8, 0, (void *)clFlowChara_Destructor, (void *)clFlowChara_Update, (void *)fn_801C3AA4
 };
 #pragma force_active reset
 }
@@ -813,7 +813,7 @@ DtorView *clFlowChara_Destructor(DtorView *self, short del) {
     int i;
 
     if (self != 0) {
-        self->vt = lbl_8049AC7C;
+        self->vt = clFlowChara_Destructor_data_8049AC7C;
         if ((g_pInputState == 0 ? 0 : g_pInputState) != 0) {
             char *in;
             if ((in = g_pInputState) == 0) {
@@ -983,7 +983,7 @@ struct FrameSelection : clFlowBase {
     FrameSelection();
 }; /* size 0x1B0 */
 
-FrameSelection::FrameSelection() : vptr(lbl_8049AC7C) {
+FrameSelection::FrameSelection() : vptr(clFlowChara_Destructor_data_8049AC7C) {
     int i;
     int j;
     int mileage;

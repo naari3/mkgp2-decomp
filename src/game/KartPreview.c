@@ -50,15 +50,15 @@ typedef struct KartPreview {
     float view_y;
 } KartPreview;
 
-extern unsigned int lbl_806D1558;
-extern RenderTargetHolder *lbl_806D155C;
-extern char lbl_8048EA78[];
+extern unsigned int RenderTargetSingleton_bss_806D1558;
+extern RenderTargetHolder *RenderTargetSingleton_bss_806D155C;
+extern char RenderTargetSingleton_data_8048EA78[];
 extern char lbl_806D76D0[7];
 extern char lbl_806D76D8[5];
 extern const float lbl_806D76E0;
 extern const float lbl_806D76E4;
-extern char lbl_8048EAD8[];
-extern char lbl_8048EAE8[];
+extern char KartPreview_data_8048EAD8[];
+extern char clCSModelInterface_vtable_8048EAE8[];
 
 extern void HSD_LObjDeleteCurrentAll(int);
 extern void HSD_LObjAddCurrent(void *rt);
@@ -284,7 +284,7 @@ void fn_8013CA70(KartPreview *p) {
 KartPreview *fn_8013CB10(KartPreview *p, short flag) {
     int i;
     if (p) {
-        p->vtbl = lbl_8048EAD8;
+        p->vtbl = KartPreview_data_8048EAD8;
         if (p->kart) {
             Object_DtorWithGXSync(p->kart, 1);
         }
@@ -308,7 +308,7 @@ KartPreview *fn_8013CB10(KartPreview *p, short flag) {
         fn_8013BCA0();
         fn_8013C3C0();
         if (p) {
-            p->vtbl = lbl_8048EAE8;
+            p->vtbl = clCSModelInterface_vtable_8048EAE8;
         }
         if (flag > 0) {
             MemoryManager_TimedFree(p);
@@ -366,11 +366,11 @@ extern const float lbl_806D76EC;
 
 /* .rodata 0x803600E0..0x80360440 (TU-owned). The ctor addresses everything
  * from the section start, so the tables it reads are statics. */
-extern const int lbl_803600E0[4];
+extern const int KartPreview_rodata_803600E0[4];
 extern const char lbl_803600F0[9];
 extern const char lbl_803600FC[0xE];
 extern const char lbl_8036010C[0x13];
-const int lbl_803600E0[4] = {0, 5, 42, 43};
+const int KartPreview_rodata_803600E0[4] = {0, 5, 42, 43};
 const char lbl_803600F0[9] = "mspacman";
 const char lbl_803600FC[0xE] = "clCSKartModel";
 const char lbl_8036010C[0x13] = "clCSModelInterface";
@@ -408,7 +408,7 @@ static const char sKPHidden16[] = "cart_punk_tire_fl_joint";
 static const char sKPHidden17[] = "cart_punk_tire_fr_joint";
 static const char sKPHidden18[] = "cart_punk_tire_rl_joint";
 static const char sKPHidden19[] = "cart_punk_tire_rr_joint";
-extern char *lbl_8048EA98[];
+extern char *KartPreview_data_8048EA98[];
 extern void dtor_8013DCBC();
 
 #define KP_JOBJ(j) ((KPJObj *)(j))
@@ -466,7 +466,7 @@ struct KPNormal3D {
 
 struct KPBase {
     void *vptr;
-    KPBase() { vptr = lbl_8048EAE8; }
+    KPBase() { vptr = clCSModelInterface_vtable_8048EAE8; }
     ~KPBase();
 };
 
@@ -504,7 +504,7 @@ KPCtor::KPCtor(int ch, unsigned char flag) {
     KPJObj *src;
     int i;
 
-    vptr = lbl_8048EAD8;
+    vptr = KartPreview_data_8048EAD8;
     fn_8013BD7C();
     fn_8013C428();
     view_x = lbl_806D76E0;
@@ -540,11 +540,11 @@ KPCtor::KPCtor(int ch, unsigned char flag) {
             clNormal3D_SetScale(obj24, lbl_806D76E0, 0, lbl_806D76E4, lbl_806D76E0, lbl_806D76EC);
             break;
         }
-        sprintf(buf, sKPFmtHead, lbl_8048EA98[chara]);
+        sprintf(buf, sKPFmtHead, KartPreview_data_8048EA98[chara]);
         jobj3C = ResolveJointByName(driver, buf);
-        sprintf(buf, sKPFmtHandL, lbl_8048EA98[chara]);
+        sprintf(buf, sKPFmtHandL, KartPreview_data_8048EA98[chara]);
         jobj40 = ResolveJointByName(driver, buf);
-        sprintf(buf, sKPFmtHandR, lbl_8048EA98[chara]);
+        sprintf(buf, sKPFmtHandR, KartPreview_data_8048EA98[chara]);
         jobj44 = ResolveJointByName(driver, buf);
         HSD_JObjSetFlags((HSD_JObj *)jobj40, 0x10);
         HSD_JObjSetFlags((HSD_JObj *)jobj44, 0x10);
@@ -558,7 +558,7 @@ KPCtor::KPCtor(int ch, unsigned char flag) {
             float x;
             float y;
             float z;
-            sprintf(buf, sKPFmtDriver0, lbl_8048EA98[chara]);
+            sprintf(buf, sKPFmtDriver0, KartPreview_data_8048EA98[chara]);
             src = ResolveJointByName(kart, buf);
             if (!src) {
                 __assert(lbl_806D76D0, 0x3e4, lbl_806D76D8);
@@ -572,7 +572,7 @@ KPCtor::KPCtor(int ch, unsigned char flag) {
             float x;
             float y;
             float z;
-            sprintf(buf, sKPFmtDriver1, lbl_8048EA98[chara]);
+            sprintf(buf, sKPFmtDriver1, KartPreview_data_8048EA98[chara]);
             src = ResolveJointByName(kart, buf);
             if (!src) {
                 __assert(lbl_806D76D0, 0x3e4, lbl_806D76D8);
@@ -586,7 +586,7 @@ KPCtor::KPCtor(int ch, unsigned char flag) {
             float x;
             float y;
             float z;
-            sprintf(buf, sKPFmtDriver2, lbl_8048EA98[chara]);
+            sprintf(buf, sKPFmtDriver2, KartPreview_data_8048EA98[chara]);
             src = ResolveJointByName(kart, buf);
             if (!src) {
                 __assert(lbl_806D76D0, 0x3e4, lbl_806D76D8);
@@ -600,7 +600,7 @@ KPCtor::KPCtor(int ch, unsigned char flag) {
             float x;
             float y;
             float z;
-            sprintf(buf, sKPFmtDriver3, lbl_8048EA98[chara]);
+            sprintf(buf, sKPFmtDriver3, KartPreview_data_8048EA98[chara]);
             src = ResolveJointByName(kart, buf);
             if (!src) {
                 __assert(lbl_806D76D0, 0x3e4, lbl_806D76D8);
@@ -633,7 +633,7 @@ KPCtor::KPCtor(int ch, unsigned char flag) {
         HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden19), 0x10);
 
         for (i = 0; i < 4; i++) {
-            anims14[i] = new KPNormal3D(((KPCharData *)cd)->anims[lbl_803600E0[i]], 0);
+            anims14[i] = new KPNormal3D(((KPCharData *)cd)->anims[KartPreview_rodata_803600E0[i]], 0);
         }
         clNormal3D_SetScale(obj10, lbl_806D76EC, anims14[0], lbl_806D76E0, lbl_806D76E0, lbl_806D76E0);
         ObjectTree_BlendOrCopy_Timed(driver, Archive_GetRootJObj(obj10), Archive_GetRootJObj(driver), 0, lbl_806D76E0);

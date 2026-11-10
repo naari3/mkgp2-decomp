@@ -20,7 +20,7 @@ typedef char SetupOwnerSize[sizeof(CardSetupFlow) == 0x24 ? 1 : -1];
 struct SetupDialog : FlowTask { char pad[0x48]; SetupDialog(int, int); };
 struct SetupChoiceView { char pad[0x20]; int result; int selection; };
 extern "C" {
-extern char lbl_806D0920[8], lbl_806D0900[8], lbl_806D08F8[8], lbl_806D0910[8], lbl_806D0908[8];
+extern char CardSetupFlowSelect_data_806D0920[8], lbl_806D0900[8], lbl_806D08F8[8], lbl_806D0910[8], lbl_806D0908[8];
 void *fn_80271340(void *, int, const void *, const void *, int);
 void fn_801FEF18(void *, int);
 void fn_80201148(void *);

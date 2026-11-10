@@ -1,7 +1,7 @@
 #include "game/ClassUpdatePrivate.h"
 #include "game/singleton.h"
 extern "C" {
-extern unsigned char lbl_8039A5A0[];
+extern unsigned char clFlowClass_Update_rodata_8039A5A0[];
 extern int g_gameMode, g_currentSceneState, g_ccClass;
 extern ClassInputState *g_pInputState;
 extern signed char lbl_806D184C,lbl_806D184D;
@@ -38,7 +38,7 @@ static inline float interpolate(float start, float end, int frame, float duratio
 }
 static inline int selection(const ClassUpdate *self) { return self->selection; }
 extern "C" int clFlowClass_Update(ClassUpdate *self) {
-    unsigned char *data = lbl_8039A5A0;
+    unsigned char *data = clFlowClass_Update_rodata_8039A5A0;
     RumbleUpdate();
     if (self->advance) { ++self->state; self->advance=0; }
     self->elapsed += lbl_806D9B08;

@@ -8,10 +8,10 @@ typedef struct ReceiptPlayer {
     signed char cardVersion;
 } ReceiptPlayer;
 extern ReceiptPlayer g_playerData;
-extern const char *lbl_803FFDF0[10];
-extern const int lbl_80317E00[67];
-extern const int lbl_80317F0C[12];
-extern char lbl_805AC5A4[64];
+extern const char *Sci2Card_BuildRetryReceiptLine_data_803FFDF0[10];
+extern const int Sci2Card_BuildItemGetReceiptLine_rodata_80317E00[67];
+extern const int Sci2Card_BuildItemGetReceiptLine_rodata_80317F0C[12];
+extern char Sci2Card_BuildItemGetReceiptLine_bss_805AC5A4[64];
 extern const char lbl_806D35D4[3];
 extern const char lbl_806D35E4[4];
 extern int fn_801D5E80(ReceiptPlayer *);

@@ -31,7 +31,7 @@ struct ItemPanel {
     PanelMark *mark;
 };
 extern "C" {
-extern float lbl_803EF5B0[12];
+extern float ItemPanelDraw_rodata_803EF5B0[12];
 extern const float lbl_806DBE90,lbl_806D6DE4,lbl_806D6DE8,lbl_806DBEB0,lbl_806DBEB4,lbl_806DBEB8;
 void fn_80121E10(ResCtrl *);
 void fn_8011FAFC(ResCtrl *, int);

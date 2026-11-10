@@ -4,7 +4,7 @@ extern "C" {
 extern ViewerScene3D *lbl_806D1588;
 extern ViewerNormal3D *lbl_806D158C;
 extern ViewerVec lbl_80677CD8;
-extern float lbl_806D1590;
+extern float Scene_8015BCC4_bss_806D1590;
 extern const float lbl_806D85EC, lbl_806D8648;
 void GXDrawDone();
 void Object_DtorWithGXSync(void *, int);
@@ -41,7 +41,7 @@ extern "C" void fn_8015BCC4(unsigned int resId, float scale) {
             HSD_CObjSetEyePosition(camera, &lbl_80677CD8);
             HSD_CObjSetInterest(camera, &interest);
             HSD_CObjSetRoll(camera, lbl_806D8648);
-            lbl_806D1590 = HSD_CObjGetFov(camera);
+            Scene_8015BCC4_bss_806D1590 = HSD_CObjGetFov(camera);
         }
     }
 }

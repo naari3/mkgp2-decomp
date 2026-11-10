@@ -2,29 +2,29 @@
 #include "game/CoinMilestone.h"
 /* --- owned .rodata 0x8039D8C0..0x8039D9A4 (tools/own_data.py) --- */
 #pragma force_active on
-const unsigned int lbl_8039D8C0[3] = { 0x828D8281, 0x82928289, 0x828F0000 };
-const unsigned int lbl_8039D8CC[3] = { 0x828C8295, 0x82898287, 0x82890000 };
-const unsigned int lbl_8039D8D8[3] = { 0x82978281, 0x82928289, 0x828F0000 };
-const unsigned int lbl_8039D8E4[3] = { 0x82908285, 0x82818283, 0x82880000 };
-const unsigned int lbl_8039D8F0[3] = { 0x828B8289, 0x828E8287, 0x00000000 };
-const unsigned int lbl_8039D8FC[3] = { 0x82AB82CC, 0x82D282A8, 0x00000000 };
-const unsigned int lbl_8039D908[3] = { 0x8294828F, 0x82818284, 0x00000000 };
-const unsigned int lbl_8039D914[3] = { 0x82C782F1, 0x82AB815B, 0x00000000 };
-const unsigned int lbl_8039D920[3] = { 0x82E682C1, 0x82B5815B, 0x00000000 };
-const unsigned int lbl_8039D92C[3] = { 0x8299828F, 0x82938288, 0x82890000 };
-const unsigned int lbl_8039D938[3] = { 0x82CF82C1, 0x82AD82DC, 0x82F10000 };
-const unsigned int lbl_8039D944[3] = { 0x82DD82B8, 0x82DC82C1, 0x82AD0000 };
-const unsigned int lbl_8039D950[3] = { 0x826C8293, 0x81448290, 0x00000000 };
-const unsigned int lbl_8039D95C[3] = { 0x82A082A9, 0x82D782A2, 0x00000000 };
-const unsigned int lbl_8039D968[3] = { 0x82ED82E9, 0x82A2815B, 0x82B60000 };
-const unsigned int lbl_8039D974[3] = { 0x82978281, 0x828C8295, 0x00000000 };
-const unsigned int lbl_8039D980[3] = { 0x82DC82DF, 0x82C182BF, 0x00000000 };
-const unsigned int lbl_8039D98C[6] = { 0x828D8281, 0x828D8285, 0x00000000, 0x00000000, 0x00000000, 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D8C0[3] = { 0x828D8281, 0x82928289, 0x828F0000 };
+const unsigned int data_8049B530_rodata_8039D8CC[3] = { 0x828C8295, 0x82898287, 0x82890000 };
+const unsigned int data_8049B530_rodata_8039D8D8[3] = { 0x82978281, 0x82928289, 0x828F0000 };
+const unsigned int data_8049B530_rodata_8039D8E4[3] = { 0x82908285, 0x82818283, 0x82880000 };
+const unsigned int data_8049B530_rodata_8039D8F0[3] = { 0x828B8289, 0x828E8287, 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D8FC[3] = { 0x82AB82CC, 0x82D282A8, 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D908[3] = { 0x8294828F, 0x82818284, 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D914[3] = { 0x82C782F1, 0x82AB815B, 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D920[3] = { 0x82E682C1, 0x82B5815B, 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D92C[3] = { 0x8299828F, 0x82938288, 0x82890000 };
+const unsigned int data_8049B530_rodata_8039D938[3] = { 0x82CF82C1, 0x82AD82DC, 0x82F10000 };
+const unsigned int data_8049B530_rodata_8039D944[3] = { 0x82DD82B8, 0x82DC82C1, 0x82AD0000 };
+const unsigned int data_8049B530_rodata_8039D950[3] = { 0x826C8293, 0x81448290, 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D95C[3] = { 0x82A082A9, 0x82D782A2, 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D968[3] = { 0x82ED82E9, 0x82A2815B, 0x82B60000 };
+const unsigned int data_8049B530_rodata_8039D974[3] = { 0x82978281, 0x828C8295, 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D980[3] = { 0x82DC82DF, 0x82C182BF, 0x00000000 };
+const unsigned int data_8049B530_rodata_8039D98C[6] = { 0x828D8281, 0x828D8285, 0x00000000, 0x00000000, 0x00000000, 0x00000000 };
 #pragma force_active reset
 extern int isJapanese(void);
 extern char *strcpy(char *, const char *);
 extern int rand(void);
-extern const char *lbl_8049B608[][2];
+extern const char *PlayerData_Construct_data_8049B608[][2];
 extern PlayerDataRecord g_playerData;
 extern int g_roundIndex;
 extern void fn_80209C88(void);
@@ -54,7 +54,7 @@ void PlayerData_Construct(PlayerDataReset *self, int character, int count, int b
     unsigned char freePlay, unsigned char allRare, unsigned char special,
     int value, int coins, unsigned char allItems) {
     const ConstructPool *pool = &lbl_8039C718;
-    strcpy((char *)self->name, lbl_8049B608[character][isJapanese()]);
+    strcpy((char *)self->name, PlayerData_Construct_data_8049B608[character][isJapanese()]);
     *(unsigned short *)((unsigned char *)self + 0xE) = value;
     self->coinMilage = coins;
     self->field1B0 = special;

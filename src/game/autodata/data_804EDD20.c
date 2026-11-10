@@ -15,21 +15,21 @@ extern void fn_8021BC44();
 extern void fn_8021C560();
 extern void fn_8021C778();
 extern void fn_8021E088();
-extern char lbl_806D0498[];
-extern char lbl_806D04A0[];
+extern char data_804EDD20_data_806D0498[];
+extern char data_804EDD20_data_806D04A0[];
 extern char lbl_806D04A8[];
-extern char lbl_806D04B8[];
+extern char data_804EDD20_data_806D04B8[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804EDD20[3] = {
-    (void *)&lbl_806D0498,
+void *sdata_806D0498_data_804EDD20[3] = {
+    (void *)&data_804EDD20_data_806D0498,
     0,
     0
 };
-void *lbl_804EDD2C[9] = {
-    (void *)&lbl_806D04A0,
+void *TeamIconRow_vtable_804EDD2C[9] = {
+    (void *)&data_804EDD20_data_806D04A0,
     0,
     (void *)fn_8021B92C,
     (void *)fn_8013EB44,
@@ -48,13 +48,13 @@ void *lbl_804EDD80[3] = {
     0,
     0
 };
-void *lbl_804EDD8C[3] = {
+void *sdata_806D0498_data_804EDD8C[3] = {
     (void *)&lbl_806D04A8,
     0,
     0
 };
-void *lbl_804EDD98[6] = {
-    (void *)&lbl_806D04B8,
+void *TimeAttackResult_vtable_804EDD98[6] = {
+    (void *)&data_804EDD20_data_806D04B8,
     0,
     (void *)fn_8021BC44,
     (void *)fn_8021E088,

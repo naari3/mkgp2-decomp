@@ -1,10 +1,10 @@
 /* fn_8018CFC4: S22Single ctor (ObjView S22 variant with one model + joint).
  * Written in C with explicit vtable stores (base lbl_80490FE0, then derived
- * lbl_80495DDC): the C++ ctor form computes the string-pool base after both
+ * S22Single_vtable_80495DDC): the C++ ctor form computes the string-pool base after both
  * vtable stores instead of between them. The extab (DELETEPOINTER for the
  * new'd clNormal3D, DESTROYBASE dtor_8016A270) is emitted by hand. */
 extern void *lbl_80490FE0[];
-extern void *lbl_80495DDC[];
+extern void *S22Single_vtable_80495DDC[];
 extern const char lbl_80377E60[];
 extern void DebugPrintf(const char *, ...);
 extern void *Alloc(unsigned long);
@@ -40,7 +40,7 @@ S22Single *fn_8018CFC4(S22Single *self) {
 
     data = lbl_80377E60;
     self->vt = lbl_80490FE0;
-    self->vt = lbl_80495DDC;
+    self->vt = S22Single_vtable_80495DDC;
     DebugPrintf(data + 0x40);
     self->model = 0;
     self->joint = 0;

@@ -68,7 +68,7 @@ the capture pump as a `static inline` helper taking `NamCamObj *`, or as an inli
 - The third loop written with a block-scoped `for (int k = 0; ...)` instead of reusing the
   function-scope `i` gives the target `li r27, 0 / li r28, 0` (the prior attempt's `mr r28,
   r27` residue). 99.906%.
-- Remaining: prologue `lis r5, g_charaStatTable@ha / lis r4, lbl_8039AA40@ha` vs ours with
+- Remaining: prologue `lis r5, g_charaStatTable@ha / lis r4, clFlowChara_rodata_8039AA40@ha` vs ours with
   .data and .rodata swapped (r4/r5 only; the addi destinations r30/r29 match).
   - Reordering the data definitions (.data before/after .rodata) does not change it.
   - Defining the .rodata objects after the functions: worse (92.5%, rodata not pooled).
@@ -76,7 +76,7 @@ the capture pump as a `static inline` helper taking `NamCamObj *`, or as an inli
   - A probe function defined before the ctor with five .rodata-pool uses across calls makes
     the ctor 100.0% (probe only; it adds code and is not a solution).
 - Target: `clFlowChara_Update` (0x801C3D48, separate TU `game/clFlowChara_Update.c`) loads
-  `lbl_8039AA40` in its prologue (0x801C3D50) before any .data-pool reference.
+  `clFlowChara_rodata_8039AA40` in its prologue (0x801C3D50) before any .data-pool reference.
 
 Hypothesis: CW emits the pool-base loads in the order the pool symbols were created, i.e.
 the first pooled reference anywhere earlier in the TU. In the original TU clFlowChara_Update

@@ -11,7 +11,7 @@
 const char lbl_80312DEC[] = "time out error\n";
 const char lbl_80312DFC[] = "data recive error. retry %d\n";
 const char lbl_80312E1C[] = "trans extend font to card printer\n";
-const char lbl_80312E40[92] = {
+const char CardTaskPrintJob_StepNoCardPrinter_rodata_80312E40[92] = {
     110, 111, 32, 117, 115, 101, 100, 32, 99, 97, 114, 100,
     32, 112, 114, 105, 110, 116, 101, 114, 10, 0, 0, 0,
     99, 97, 114, 100, 32, 112, 114, 105, 110, 116, 101, 114,
@@ -21,7 +21,7 @@ const char lbl_80312E40[92] = {
     99, 97, 114, 100, 32, 114, 101, 109, 97, 105, 110, 32,
     99, 104, 101, 99, 107, 10, 0, 0
 };
-const char lbl_80312E9C[88] = {
+const char CardPrinterChecker_State_WaitStatus_rodata_80312E9C[88] = {
     119, 97, 105, 116, 32, 115, 116, 97, 116, 117, 115, 10,
     0, 0, 0, 0, 115, 101, 116, 117, 112, 32, 99, 108,
     101, 97, 110, 105, 110, 103, 10, 0, 99, 108, 101, 97,

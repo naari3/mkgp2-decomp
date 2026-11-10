@@ -39,13 +39,13 @@ extern "C" const unsigned int lbl_80328EB8[255] = {
     0x42A6AAAB, 0x00000000, 0x00000000, 0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000,
     0x42A6AAAB, 0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB
 };
-extern "C" const unsigned int lbl_803292B4[5] = {
+extern "C" const unsigned int ParticleBurst_Draw_rodata_803292B4[5] = {
     0xFFFFFFFF, 0x000000FF, 0x000000FF, 0xFFFF00FF, 0x00FF0000
 };
-extern "C" const unsigned int lbl_803292C8[3] = {
+extern "C" const unsigned int ParticleBurst_DrawCb_rodata_803292C8[3] = {
     0x00000000, 0x00000000, 0x3F800000
 };
-extern "C" const unsigned int lbl_803292D4[3] = {
+extern "C" const unsigned int TripleBladeRing_SetWorldYaw_rodata_803292D4[3] = {
     0x00000000, 0x41700000, 0x41F00000
 };
 extern "C" const unsigned int lbl_803292E0[60] = {
@@ -58,23 +58,23 @@ extern "C" const unsigned int lbl_803292E0[60] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000001, 0x00000001, 0x00000001,
     0x00000001, 0x00000000, 0x00000000, 0x00000000
 };
-extern "C" const unsigned int lbl_803293D0[3] = {
+extern "C" const unsigned int KartPair3ArmUpdate_rodata_803293D0[3] = {
     0x00000000, 0x40060A90, 0x40860A90
 };
-extern "C" const unsigned int lbl_803293DC[38] = {
+extern "C" const unsigned int CarrotItemEffect_AddDraw_rodata_803293DC[38] = {
     0x00000000, 0x00000000, 0x3F800000, 0x00000000, 0x3C23D70A, 0x3CA3D70A, 0xBFCEA897, 0x3FC5C2E3,
     0x3E3FDB4C, 0x3FCA46F1, 0x3FC5C2E3, 0x3E3FDB4C, 0x3FCA46F1, 0x40A128F6, 0x3E3FDB4C, 0xBFCEA897,
     0x40A128F6, 0x3E3FDB4C, 0xBFCEA897, 0x3FC5C2E3, 0x3DB2E9CC, 0x3FCA46F1, 0x3FC5C2E3, 0x3DB2E9CC,
     0x3FCA46F1, 0x40A128F6, 0x3DB2E9CC, 0xBFCEA897, 0x40A128F6, 0x3DB2E9CC, 0x00000000, 0x00000001,
     0x00000001, 0x00000001, 0x00000001, 0x00000000, 0x00000000, 0x00000000
 };
-extern "C" const unsigned int lbl_80329474[6] = {
+extern "C" const unsigned int KartBurstShard_SpawnSet_rodata_80329474[6] = {
     0xC2B40000, 0xC2580000, 0xC1900000, 0x41900000, 0x42580000, 0x42B40000
 };
-extern "C" const unsigned int lbl_8032948C[3] = {
+extern "C" const unsigned int TwinSpriteOverlay_AddDraw_rodata_8032948C[3] = {
     0x00000000, 0x00000000, 0x3F800000
 };
-extern "C" const unsigned int lbl_80329498[21] = {
+extern "C" const unsigned int TwinSpriteOverlay_Render_rodata_80329498[21] = {
     0x43960000, 0xC2200000, 0x00000000, 0x43AA0000, 0xC2C80000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x42B40000, 0xC1B00000, 0x00000000, 0x43960000, 0xC2A00000, 0x00000000, 0x44208000,
     0xC2200000, 0x00000000, 0x3FDF66F0, 0x00000000, 0x405F66F0
@@ -92,7 +92,7 @@ extern "C" const char lbl_803295A0[0x13] = "chara_pop_10_joint";
 extern "C" const char lbl_803295B4[0x13] = "chara_pop_11_joint";
 extern "C" const char lbl_803295C8[0x13] = "chara_pop_12_joint";
 extern "C" const char lbl_803295DC[0x12] = "chara_null1_joint";
-extern "C" const unsigned int lbl_803295F0[5] = {0x63686172, 0x615F706F, 0x705F3030, 0x5F6A6F69, 0x6E740000};
+extern "C" const unsigned int data_80419FB8_rodata_803295F0[5] = {0x63686172, 0x615F706F, 0x705F3030, 0x5F6A6F69, 0x6E740000};
 static const int celebDelay[17] = {1, 2, 3, 5, 7, 9, 13, 16, 18, 10, 10, 10, 10, 18, 27, 36, 47};
 static const int celebAnim[17] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1};
 static const int celebDuration[17] = {15, 15, 15, 15, 15, 15, 22, 24, 24, 15, 30, 30, 30, 30, 30, 30, 30};
@@ -100,7 +100,7 @@ static const int celebX0[17] = {160, 187, 116, 134, 188, 169, 215, 102, 157, 147
 static const int celebX1[17] = {160, 187, 116, 134, 188, 169, 241, 91, 157, 147, 352, -50, 19, -4, 338, 380, 19};
 static const int celebY0[17] = {120, 150, 123, 149, 114, 154, 129, 142, 103, 128, 120, 150, 120, 129, 149, 158, 120};
 static const int celebY1[17] = {120, 150, 123, 149, 114, 154, 116, 150, 103, 128, -2, 243, 206, 38, 33, 168, 206};
-extern "C" const unsigned int lbl_803297E0[68] = {
+extern "C" const unsigned int VfxBannerSequence_Tick_rodata_803297E0[68] = {
     0x00000AD6, 0x00000AD7, 0x00000AD8, 0x00000AD9, 0x00000ADA, 0x00000ADB, 0x00000ADC, 0x00000ADD,
     0x00000ADE, 0x00000ADF, 0x00000AE0, 0x00000AE1, 0x00000AE2, 0x00000AE3, 0x00000AE4, 0x00000AE5,
     0x00000AE6, 0x00000AE7, 0x00000AE8, 0x00000AE9, 0x00000AEA, 0x00000AEB, 0x00000AEC, 0x00000AED,

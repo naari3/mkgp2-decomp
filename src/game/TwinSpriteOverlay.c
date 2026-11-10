@@ -61,11 +61,11 @@ extern const float lbl_806D5044;
 extern const float lbl_806D5098;
 extern const float lbl_806D509C;
 extern const float lbl_806D50A0;
-extern Vec3 lbl_8032948C;
-extern TwinOffsets lbl_80329498;
+extern Vec3 TwinSpriteOverlay_AddDraw_rodata_8032948C;
+extern TwinOffsets TwinSpriteOverlay_Render_rodata_80329498;
 extern float lbl_805DF3D0[];
-extern unsigned char lbl_8041A0E0[];
-extern unsigned char lbl_8041A14C[];
+extern unsigned char TwinSpriteOverlay_Update_data_8041A0E0[];
+extern unsigned char TwinSpriteOverlay_Update_data_8041A14C[];
 
 #pragma exceptions on
 
@@ -91,7 +91,7 @@ void TwinSpriteOverlay_Render(char *self) {
     int i;
 
     if (*(char **)(self + 0xE0) != 0 && *(void **)(self + 0xD0) != 0) {
-        offsets = lbl_80329498;
+        offsets = TwinSpriteOverlay_Render_rodata_80329498;
         yaws = lbl_806D5018;
         wrap = *(void **)(*(char **)(self + 0xE0) + 0x18);
         sx = AnimState_GetTotalScaleX(*(void **)(self + 0xD0));
@@ -127,7 +127,7 @@ void TwinSpriteOverlay_Render(char *self) {
 }
 
 void TwinSpriteOverlay_AddDraw(char *self) {
-    Vec3 p = lbl_8032948C;
+    Vec3 p = TwinSpriteOverlay_AddDraw_rodata_8032948C;
     p = Mtx44_TransformVec3(lbl_805DF3D0, p);
     clDrawMan_AddSorted_NoDepthBias(lbl_806D10AC == 0 ? 0 : lbl_806D10AC,
                                     TwinSpriteOverlay_Render, self, p.x, p.y, p.z,
@@ -147,8 +147,8 @@ void TwinSpriteOverlay_Update(char *self) {
         VfxSlot_BindResource(*(char **)(self + 0xE0) + 0x14, 0x94);
         *(signed char *)(*(char **)(self + 0xDC) + 0x28) = 0;
         *(signed char *)(*(char **)(self + 0xE0) + 0x28) = 0;
-        *(void **)(self + 0xCC) = AnimStatePool_Alloc(lbl_8041A0E0);
-        *(void **)(self + 0xD0) = AnimStatePool_Alloc(lbl_8041A14C);
+        *(void **)(self + 0xCC) = AnimStatePool_Alloc(TwinSpriteOverlay_Update_data_8041A0E0);
+        *(void **)(self + 0xD0) = AnimStatePool_Alloc(TwinSpriteOverlay_Update_data_8041A14C);
         *(void (**)(char *))(self + 0x78) = TwinSpriteOverlay_AddDraw;
         *(char **)(self + 0x7C) = self;
         *(signed char *)(self + 0x190) = 0;

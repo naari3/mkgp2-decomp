@@ -9,19 +9,19 @@ extern void Draw__10MinimapHudFv();
 extern void Start__10MinimapHudFi();
 extern void fn_80218F5C();
 extern void fn_8021995C();
-extern char lbl_806D0478[];
-extern char lbl_806D0480[];
+extern char data_804EDC20_data_806D0478[];
+extern char data_804EDC20_data_806D0480[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804EDC20[3] = {
-    (void *)&lbl_806D0478,
+void *sdata_806D0410_data_804EDC20[3] = {
+    (void *)&data_804EDC20_data_806D0478,
     0,
     0
 };
-void *lbl_804EDC2C[6] = {
-    (void *)&lbl_806D0480,
+void *MinimapHud_vtable_804EDC2C[6] = {
+    (void *)&data_804EDC20_data_806D0480,
     0,
     (void *)fn_8021995C,
     (void *)fn_80218F5C,

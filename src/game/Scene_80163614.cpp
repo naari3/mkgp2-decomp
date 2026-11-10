@@ -1,6 +1,6 @@
 /*
  * 0x80163614..0x801636B4: factory for the loader holder (vtable
- * lbl_80490DAC, base vtable lbl_8048FF80 / base dtor dtor_801577D4).
+ * LoaderHolder_vtable_80490DAC, base vtable lbl_8048FF80 / base dtor dtor_801577D4).
  * Real C++ new-expressions so CW emits the DELETEPOINTER / DESTROYBASE
  * extab actions; mangled names are bridged in tools/extab_user_renames.json.
  */

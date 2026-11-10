@@ -12,7 +12,7 @@ extern char lbl_806D0918[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-char *lbl_804EED20[12] = {
+char *CardPrintConfig_data_804EED20[12] = {
     0,
     0,
     0,
@@ -59,7 +59,7 @@ void *lbl_804EED98[5] = {
     0,
     0
 };
-void *lbl_804EEDAC[7] = {
+void *sdata_806D0728_data_804EEDAC[7] = {
     (void *)&lbl_806D08F0,
     0,
     (void *)&lbl_806D08F8,
@@ -68,7 +68,7 @@ void *lbl_804EEDAC[7] = {
     0,
     0
 };
-void *lbl_804EEDC8[7] = {
+void *sdata_806D0728_data_804EEDC8[7] = {
     (void *)&lbl_806D08F0,
     0,
     (void *)&lbl_806D08F8,

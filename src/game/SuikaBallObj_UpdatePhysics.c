@@ -70,12 +70,12 @@ collision_done:
   }
  }
  PSVECAdd(&ball->position,&ball->velocity,&ball->position);
- old_points=lbl_80355918;
+ old_points=SuikaBallObj_UpdatePhysics_rodata_80355918;
  old_points.v[0].x=old_x+ball->radius; old_points.v[0].y=old_y; old_points.v[0].z=old_z;
  old_points.v[1].x=old_x-ball->radius; old_points.v[1].y=old_y; old_points.v[1].z=old_z;
  old_points.v[2].x=old_x; old_points.v[2].y=old_y; old_points.v[2].z=old_z+ball->radius;
  old_points.v[3].x=old_x; old_points.v[3].y=old_y; old_points.v[3].z=old_z-ball->radius;
- new_points=lbl_80355948;
+ new_points=SuikaBallObj_UpdatePhysics_rodata_80355948;
  new_points.v[0].x=ball->position.x+ball->radius; new_points.v[0].y=ball->position.y; new_points.v[0].z=ball->position.z;
  new_points.v[1].x=ball->position.x-ball->radius; new_points.v[1].y=ball->position.y; new_points.v[1].z=ball->position.z;
  new_points.v[2].x=ball->position.x; new_points.v[2].y=ball->position.y; new_points.v[2].z=ball->position.z+ball->radius;

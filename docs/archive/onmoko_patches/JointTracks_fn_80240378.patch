@@ -10,7 +10,7 @@ index 59232eb..d9c2764 100644
 +#pragma opt_propagation off
  int fn_80240378(TaskBucket *self, const char *name, int group, void *model,
                  const TrackGroup *groups) {
-     const char *strings = lbl_803E5D38 + 0x10000;
+     const char *strings = JointTracks_rodata_803E5D38 + 0x10000;
 @@ -77,6 +79,8 @@ int fn_80240378(TaskBucket *self, const char *name, int group, void *model,
      }
      return 0;

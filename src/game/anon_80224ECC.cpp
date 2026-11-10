@@ -1,6 +1,6 @@
 /* clCSSceneGetRace (0x80224ECC..0x802253EC): fade-in/out banner scene.
- * One TU with RTTI, so it owns the vtable lbl_804EDF14, the base list
- * lbl_804EDF08, the type_info objects and the class-name strings. */
+ * One TU with RTTI, so it owns the vtable clCSSceneGetRace_vtable_804EDF14, the base list
+ * clCSSceneGetRace_data_804EDF08, the type_info objects and the class-name strings. */
 #include "game/anon_80224ECC_private.h"
 
 static SpriteResourceId sBannerSprite = { 0x68 };

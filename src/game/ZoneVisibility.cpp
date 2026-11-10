@@ -31,7 +31,7 @@ extern const char lbl_8036EA94[0x1C] = "WC_dcity_wc_neon_nb_joint";
 extern const char lbl_8036EAB0[0x1C] = "WC_dcity_wc_neon_nc_joint";
 extern const char lbl_8036EACC[0x1C] = "WC_dcity_wc_neon_ra_joint";
 extern const char lbl_8036EAE8[0x1C] = "WC_dcity_wc_neon_rb_joint";
-extern const char lbl_8036EB04[0x1C] = "WC_dcity_wc_neon_rc_joint";
+extern const char ZoneVisibility_rodata_8036EB04[0x1C] = "WC_dcity_wc_neon_rc_joint";
 extern const ZoneDesc lbl_8036EB20[11] = {
     {{{-140.0f, 0.0f, -1190.0f}, {140.0f, 0.0f, -1190.0f}, {140.0f, 0.0f, 10.0f}, {-140.0f, 0.0f, 10.0f}}, {0.0f, 0.0f, 0.0f}, 0x2A7},
     {{{-300.0f, 0.0f, -3300.0f}, {160.0f, 0.0f, -3300.0f}, {160.0f, 0.0f, -1180.0f}, {-300.0f, 0.0f, -1180.0f}}, {0.0f, 0.0f, 0.0f}, 0xA7},
@@ -92,7 +92,7 @@ extern const char lbl_8036F688[0x20] = "PC_land_ab_long_pacland_joint";
 extern const char lbl_8036F6A8[0x1C] = "PC_land_long_pacman_joint";
 extern const char lbl_8036F6C4[0x18] = "PC_land_long_road_joint";
 extern const char lbl_8036F6DC[0x1C] = "PC_land_long_normal_joint";
-extern const char lbl_8036F6F8[0x1C] = "PC_land_long_reverse_joint";
+extern const char ZoneVisibility_rodata_8036F6F8[0x1C] = "PC_land_long_reverse_joint";
 extern const ZoneDesc lbl_8036F714[3] = {
     {{{5860.0f, 0.0f, -14175.0f}, {12040.0f, 0.0f, -14175.0f}, {12040.0f, 0.0f, 4254.0f}, {5860.0f, 0.0f, 4254.0f}}, {0.0f, 0.0f, 0.0f}, 0x60},
     {{{-5177.0f, 0.0f, -7943.0f}, {1004.0f, 0.0f, -7943.0f}, {1004.0f, 0.0f, 888.0f}, {-5177.0f, 0.0f, 888.0f}}, {0.0f, 0.0f, 0.0f}, 0x9F},
@@ -113,7 +113,7 @@ extern const char lbl_8036F93C[0x1C] = "KP_castle_kp_obj07_joint";
 extern const char lbl_8036F958[0x1C] = "KP_castle_kp_obj08_joint";
 extern const char lbl_8036F974[0x1C] = "KP_castle_kp_obj09_joint";
 extern const char lbl_8036F990[0x1C] = "KP_castle_kp_obj10_joint";
-extern const char lbl_8036F9AC[0x1C] = "KP_castle_kp_obj11_joint";
+extern const char ZoneVisibility_rodata_8036F9AC[0x1C] = "KP_castle_kp_obj11_joint";
 extern const ZoneDesc lbl_8036F9C8[11] = {
     {{{-1440.0f, 0.0f, 65.0f}, {-801.0f, 0.0f, 65.0f}, {-801.0f, 0.0f, 2300.0f}, {-1440.0f, 0.0f, 2300.0f}}, {0.0f, 0.0f, 0.0f}, 0x607},
     {{{-1350.0f, 0.0f, -1200.0f}, {-950.0f, 0.0f, -1200.0f}, {-950.0f, 0.0f, 75.0f}, {-1350.0f, 0.0f, 75.0f}}, {0.0f, 0.0f, 0.0f}, 0x407},
@@ -154,7 +154,7 @@ extern const char lbl_8036FFD8[0x1C] = "RB_road_sr_reverse_joint";
 extern const char lbl_8036FFF4[0x14] = "RB_road_long_joint";
 extern const char lbl_80370008[0x18] = "RB_road_long_road_joint";
 extern const char lbl_80370020[0x1C] = "RB_road_long_normal_joint";
-extern const char lbl_8037003C[0x1C] = "RB_road_long_reverse_joint";
+extern const char ZoneVisibility_rodata_8037003C[0x1C] = "RB_road_long_reverse_joint";
 extern const ZoneDesc lbl_80370058[5] = {
     {{{3008.0f, 0.0f, -3537.0f}, {5323.0f, 0.0f, -3537.0f}, {5323.0f, 0.0f, 2694.0f}, {3008.0f, 0.0f, 2694.0f}}, {0.0f, 0.0f, 0.0f}, 0x50F},
     {{{-7603.0f, 0.0f, -2549.0f}, {-2567.0f, 0.0f, -2549.0f}, {-2567.0f, 0.0f, -226.0f}, {-7603.0f, 0.0f, -226.0f}}, {0.0f, 0.0f, 0.0f}, 0x2F0},
@@ -211,7 +211,7 @@ static const char *sCityNames[16] = {
     lbl_8036EAB0,
     lbl_8036EACC,
     lbl_8036EAE8,
-    lbl_8036EB04,
+    ZoneVisibility_rodata_8036EB04,
     0,
 };
 
@@ -224,7 +224,7 @@ static const char *sPacNormalNames[10] = {
     lbl_8036F6A8,
     lbl_8036F6C4,
     lbl_8036F6DC,
-    lbl_8036F6F8,
+    ZoneVisibility_rodata_8036F6F8,
     0,
 };
 
@@ -237,7 +237,7 @@ static const char *sPacReverseNames[10] = {
     lbl_8036F6A8,
     lbl_8036F6C4,
     lbl_8036F6DC,
-    lbl_8036F6F8,
+    ZoneVisibility_rodata_8036F6F8,
     0,
 };
 
@@ -252,7 +252,7 @@ static const char *sCastleNames[12] = {
     lbl_8036F958,
     lbl_8036F974,
     lbl_8036F990,
-    lbl_8036F9AC,
+    ZoneVisibility_rodata_8036F9AC,
     0,
 };
 
@@ -311,7 +311,7 @@ static const char *sRoadLongReverseNames[11] = {
     lbl_80370008,
     lbl_8036FF1C,
     lbl_8036FF38,
-    lbl_8037003C,
+    ZoneVisibility_rodata_8037003C,
     lbl_8036FFA0,
     0,
 };

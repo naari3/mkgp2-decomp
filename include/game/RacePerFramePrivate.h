@@ -52,7 +52,7 @@ extern OSTime g_voiceTickTimeHi, g_bgmStateTimeHi, g_goalFanfareStartTimeHi;
 extern OSTime g_voiceStreamTime, g_voiceStreamStartTime, g_voiceStreamLastPollTime;
 extern const float lbl_806D9804, lbl_806D9808;
 extern float lbl_806D1788;
-extern float lbl_80496DC4[];
+extern float Race_PerFrameTickAndAudio_data_80496DC4[];
 extern VoiceClip g_voicePlayCountTable[];
 extern unsigned char IsRaceStarted(void), RaceAnnouncer_TickAndEnqueue(void), VoiceEvent_PushRace(void), fn_801AECF4(void);
 extern int Race_CompareKartProgress(void *, int, int);

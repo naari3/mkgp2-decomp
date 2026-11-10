@@ -64,8 +64,8 @@ static inline void RRAdvance(RRPathFollower *pf, RRVec3 *pts, int last, float x,
 }
 
 void RivalRun_UpdatePathFollower(RRPathFollower *pf, const RRVec3 *pos) {
-    RRVec3 *pts = lbl_8035C1E4[pf->lane][pf->route].pts;
-    int count = lbl_8035C1E4[pf->lane][pf->route].count;
+    RRVec3 *pts = RivalRun_rodata_8035C1E4[pf->lane][pf->route].pts;
+    int count = RivalRun_rodata_8035C1E4[pf->lane][pf->route].count;
     RRVec3 rel;
 
     if (pf->needsSearch) {

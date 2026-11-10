@@ -13,36 +13,36 @@ extern void fn_8016504C();
 extern void fn_801652F0();
 extern void fn_80165454();
 extern void fn_80165BCC();
-extern char lbl_806CF980[];
-extern char lbl_806CF988[];
-extern char lbl_806CF990[];
-extern char lbl_806CF998[];
+extern char data_80490DEC_data_806CF980[];
+extern char data_80490DEC_data_806CF988[];
+extern char data_80490DEC_data_806CF990[];
+extern char data_80490DEC_data_806CF998[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_80490DEC[3] = {
-    (void *)&lbl_806CF980,
+void *sdata_806CF750_data_80490DEC[3] = {
+    (void *)&data_80490DEC_data_806CF980,
     0,
     0
 };
 /* decl: char */
-void *lbl_80490DF8[6] = {
-    (void *)&lbl_806CF988,
+void *CourseLoadScene_vtable_80490DF8[6] = {
+    (void *)&data_80490DEC_data_806CF988,
     0,
     (void *)fn_80163744,
     (void *)fn_801637CC,
     (void *)fn_801636EC,
     (void *)fn_801636B4
 };
-void *lbl_80490E10[3] = {
-    (void *)&lbl_806CF990,
+void *sdata_806CF750_data_80490E10[3] = {
+    (void *)&data_80490DEC_data_806CF990,
     0,
     0
 };
 /* decl: char */
-void *lbl_80490E1C[6] = {
-    (void *)&lbl_806CF998,
+void *Obj801654E0_vtable_80490E1C[6] = {
+    (void *)&data_80490DEC_data_806CF998,
     0,
     (void *)fn_80165454,
     (void *)fn_80165BCC,

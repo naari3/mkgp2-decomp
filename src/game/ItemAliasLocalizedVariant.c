@@ -4,8 +4,8 @@
 extern int ItemAlias_DestToSource(int destId, unsigned char *foundOut);
 extern int isJapanese(void);
 extern int g_itemIdToIndexTable[];
-extern const char *lbl_803DFF74[][3];
-extern const char *lbl_803E3868[][3];
+extern const char *ItemAliasLocalizedVariant_rodata_803DFF74[][3];
+extern const char *ItemAliasLocalizedVariant_rodata_803E3868[][3];
 
 const char *fn_8023D938(int id, int variant) {
     int index;
@@ -20,8 +20,8 @@ const char *fn_8023D938(int id, int variant) {
         variant = 0;
     }
     if (isJapanese() == 0) {
-        return lbl_803DFF74[index][variant];
+        return ItemAliasLocalizedVariant_rodata_803DFF74[index][variant];
     } else {
-        return lbl_803E3868[index][variant];
+        return ItemAliasLocalizedVariant_rodata_803E3868[index][variant];
     }
 }

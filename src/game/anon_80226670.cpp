@@ -1,7 +1,7 @@
 #include "game/singleton.h"
 /*
  * 0x80226670..0x80226954: single-play join message scene (vtable
- * lbl_804EDF64, base clSceneInterface lbl_803FE0C8). Shows one FlowPanel
+ * clCSSceneNextRaceGP_vtable_804EDF64, base clSceneInterface lbl_803FE0C8). Shows one FlowPanel
  * message and counts the join. RTTI names: clCSSceneNextRaceGP : clSceneInterface.
  * The TU owns the vtable and RTTI (0x804EDF58..0x804EDF80, .sdata 0x806D0530).
  */

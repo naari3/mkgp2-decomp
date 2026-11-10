@@ -1,6 +1,6 @@
 #include "game/DNStartCameraPrivate.h"
 
-extern const unsigned int lbl_803D08F0[0x102] = {
+extern const unsigned int DNStartCamera_m2_rodata_803D08F0[0x102] = {
     0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x3F333333, 0x3F666666,
     0x00000000, 0x00000000, 0x43FA0000, 0x42855556, 0x447A0000, 0x42855556,
     0x44FA0000, 0x42855556, 0x453B8000, 0x42855556, 0x457A0000, 0x42855556,
@@ -45,7 +45,7 @@ extern const unsigned int lbl_803D08F0[0x102] = {
     0x43FA0000, 0x42A6AAAB, 0x447A0000, 0x42A6AAAB, 0x44FA0000, 0x42A6AAAB,
     0x453B8000, 0x42A6AAAB, 0x457A0000, 0x42A6AAAB, 0x459C4000, 0x42A6AAAB,
 };
-extern const float lbl_803D0CF8[4] = {300.0f, -7900.0f, 1500.0f, -300.0f};
+extern const float DNStartCamera_nm1_rodata_803D0CF8[4] = {300.0f, -7900.0f, 1500.0f, -300.0f};
 extern const char lbl_803D0D08[0x10] = "clDNStartCamera";
 extern const char lbl_803D0D18[0x11] = "clMapEffectParts";
 extern const char lbl_803D0D2C[0x25] = "!(jobj->flags & JOBJ_USE_QUATERNION)";

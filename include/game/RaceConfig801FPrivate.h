@@ -16,10 +16,10 @@ struct RaceItem801F {
 extern "C" {
 void *fn_801F98CC();
 void OverlayText(int, int, int, const char *, ...);
-extern const char lbl_803BE6C0[];
+extern const char DebugOverlay_RaceConfig_rodata_803BE6C0[];
 
 extern const char lbl_806DA68C[3];
-extern const char *lbl_806D0064[2], *lbl_806D006C[2];
+extern const char *DebugOverlay_RaceConfig_data_806D0064[2], *DebugOverlay_RaceConfig_data_806D006C[2];
 const char *DebugOverlay_GetCupLabel(int);
 const char *DebugOverlay_GetLongRoundLabel(int);
 const char *DebugOverlay_GetDaytimeLabel(int);

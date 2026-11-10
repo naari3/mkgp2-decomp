@@ -14,10 +14,10 @@ diff --git a/src/game/clMiyoshiCardCreate.c b/src/game/clMiyoshiCardCreate.c
 index 0ae53a19..d45b9402 100644
 --- a/src/game/clMiyoshiCardCreate.c
 +++ b/src/game/clMiyoshiCardCreate.c
-@@ -6,6 +6,58 @@ extern unsigned char lbl_806CEED8[8];
- extern unsigned char lbl_806CEED0[8];
- extern unsigned char lbl_806CEEC8[8];
- extern unsigned char lbl_806CEEC0[8];
+@@ -6,6 +6,58 @@ extern unsigned char clMiyoshiCardCreate_Draw_data_806CEED8[8];
+ extern unsigned char clMiyoshiCardCreate_Draw_data_806CEED0[8];
+ extern unsigned char clMiyoshiCardCreate_Draw_data_806CEEC8[8];
+ extern unsigned char clMiyoshiCardCreate_Draw_data_806CEEC0[8];
 +extern void card_eject_init(void);
 +extern void card_eject_state_machine(void);
 +extern void card_send_cleaning_cmd_init(void);
@@ -50,16 +50,16 @@ index 0ae53a19..d45b9402 100644
 +extern char lbl_806D2A9C[];
 +extern char lbl_806D2AA4[];
 +extern char lbl_806D2B38[], lbl_806D2B40[], lbl_806D2B48[], lbl_806D2B50[];
-+extern char lbl_806CEEE0[], lbl_806CEEE8[];
++extern char clMiyoshiCardCreate_data_806CEEE0[], clMiyoshiCardCreate_data_806CEEE8[];
 +int clMiyoshiCardCreate_Tick(void *);
 +void clMiyoshiCardCreate_Draw(void);
 +void __dt__11MiyoshiModeFv(void); /* ~MiyoshiMode, renamed clMiyoshiCardCreate_Dtor */
 +/* labels: cc classes (3x3), characters (13), karts (17) as {name pointers} */
-+const char *lbl_803F9E18[22] = {
++const char *clMiyoshiCardCreate_Draw_data_803F9E18[22] = {
 +    lbl_806D2A28, lbl_806D2A2C, lbl_802EE028, lbl_806D2A28, lbl_806D2A34, lbl_802EE034, lbl_806D2A28, lbl_806D2A3C, lbl_802EE040, lbl_806D2A54, lbl_806D2A5C, lbl_806D2A64, lbl_806D2A6C, lbl_806D2A74, lbl_806D2A7C, lbl_802EE074, lbl_806D2A84, lbl_806D2A8C, lbl_802EE080, lbl_806D2A94, lbl_806D2A9C, lbl_806D2AA4
 +};
 +/* kart id table (16) followed by the card flow table {init, poll, name} x4 */
-+void *lbl_803F9E70[28] = {
++void *clMiyoshiCardCreate_Tick_data_803F9E70[28] = {
 +    (void *)0x00, (void *)0x04, (void *)0x09, (void *)0x0E, (void *)0x13, (void *)0x18, (void *)0x1D, (void *)0x22,
 +    (void *)0x27, (void *)0x2C, (void *)0x31, (void *)0x3B, (void *)0x45, (void *)0x4F, (void *)0x59, (void *)0x63,
 +    (void *)card_eject_init, (void *)card_eject_state_machine, lbl_806D2B38,
@@ -67,9 +67,9 @@ index 0ae53a19..d45b9402 100644
 +    (void *)card_send_read_cmd_init_dup_unused, (void *)card_read_state_machine, lbl_806D2B48,
 +    (void *)Sci2Card_WriteTrackData_StartFlow, (void *)Sci2Card_WriteTrackData_PollState, lbl_806D2B50
 +};
-+void *lbl_803F9EE0[3] = { lbl_806CEEE0, 0, 0 };
-+/* MiyoshiMode vtable (lbl_803F9EEC; referenced as __vt__ by the ctor/dtor) */
-+void *__vt__11MiyoshiMode[5] = { lbl_806CEEE8, 0, (void *)clMiyoshiCardCreate_Tick, (void *)clMiyoshiCardCreate_Draw, (void *)__dt__11MiyoshiModeFv };
++void *clMiyoshiCardCreate_data_803F9EE0[3] = { clMiyoshiCardCreate_data_806CEEE0, 0, 0 };
++/* MiyoshiMode vtable (MiyoshiMode_vtable_803F9EEC; referenced as __vt__ by the ctor/dtor) */
++void *__vt__11MiyoshiMode[5] = { clMiyoshiCardCreate_data_806CEEE8, 0, (void *)clMiyoshiCardCreate_Tick, (void *)clMiyoshiCardCreate_Draw, (void *)__dt__11MiyoshiModeFv };
  /* Only observed lifetime/layout: 4B mode, 44B state, 216B display context. */
  #pragma cplusplus on
  void *operator new(unsigned long);
@@ -78,7 +78,7 @@ index 0ae53a19..d45b9402 100644
  /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
  /* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
 -extern unsigned int lbl_802EE028[];
--extern unsigned int lbl_803F9E18[];
+-extern unsigned int clMiyoshiCardCreate_Draw_data_803F9E18[];
 +extern char lbl_802EE028[];
  
  /* --- function index (1 fns, .text 0x80061054..0x80061394) ---
@@ -98,7 +98,7 @@ index 0ae53a19..d45b9402 100644
  unsigned char CardSave_Tick();
  void card_rw_kick_state_machine();
  extern unsigned int g_playerData[];
--extern int lbl_803F9E70[];
+-extern int clMiyoshiCardCreate_Tick_data_803F9E70[];
  }
  extern "C" int clMiyoshiCardCreate_Tick(void *) {
      MiyoshiInput *input=InputMgr_GetPlayer(GetInputManager(),0);
@@ -106,8 +106,8 @@ index 0ae53a19..d45b9402 100644
                  int points;
                  if(state->points<=0) points=0; else points=state->points*100-1;
                  PlayerData_Construct(g_playerData,state->character,state->cc0,state->cc1,state->cc2,
--                    state->flag0,state->flag1,state->flag2,lbl_803F9E70[state->kart],points,state->flag3);
-+                    state->flag0,state->flag1,state->flag2,(int)lbl_803F9E70[state->kart],points,state->flag3);
+-                    state->flag0,state->flag1,state->flag2,clMiyoshiCardCreate_Tick_data_803F9E70[state->kart],points,state->flag3);
++                    state->flag0,state->flag1,state->flag2,(int)clMiyoshiCardCreate_Tick_data_803F9E70[state->kart],points,state->flag3);
                  card_save_trigger(0); state->status=1; break;
              }
          }
@@ -140,7 +140,7 @@ index 0ae53a19..d45b9402 100644
 -/* promote rewrites the asm_fn to C and references the symbol as `arr[i]`. */
 -extern unsigned int g_playerData[];
 -extern unsigned int jumptable_803F9F00[];
--extern unsigned int lbl_803F9E70[];
+-extern unsigned int clMiyoshiCardCreate_Tick_data_803F9E70[];
 -
 -/* --- function index (1 fns, .text 0x80061394..0x80061668) ---
 - * [  0] 0x80061394 size:0x2D4   global clMiyoshiCardCreate_Tick
@@ -185,7 +185,7 @@ index 0ae53a19..d45b9402 100644
 -    lwz r12, 0x20(r12)
 -    mtctr r12
 -    bctrl
--    lwz r31, lbl_806D10D8(r13)
+-    lwz r31, clMiyoshiCardCreate_bss_806D10D8(r13)
 -    lwz r0, 0x0(r31)
 -    cmpwi r0, 0x0
 -    bne clMiyoshiCardCreate_Tick_L_800615E4
@@ -292,10 +292,10 @@ index 0ae53a19..d45b9402 100644
 -    subi r5, r3, 0x1
 -    clMiyoshiCardCreate_Tick_L_80061584:
 -    lwz r0, 0x20(r31)
--    lis r4, lbl_803F9E70@ha
+-    lis r4, clMiyoshiCardCreate_Tick_data_803F9E70@ha
 -    lis r3, g_playerData@ha
 -    slwi r0, r0, 2
--    addi r4, r4, lbl_803F9E70@l
+-    addi r4, r4, clMiyoshiCardCreate_Tick_data_803F9E70@l
 -    lwzx r0, r4, r0
 -    addi r3, r3, g_playerData@l
 -    stw r0, 0x8(r1)

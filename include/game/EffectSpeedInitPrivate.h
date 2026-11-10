@@ -11,7 +11,7 @@ struct SpeedInitOwner;
 struct SpeedInitAction {
     SpeedInitAction() {}
     /* Process is declared first (and never defined) so this TU set does not
-     * emit the base vtable; it lives at lbl_803FBF48. */
+     * emit the base vtable; it lives at SpeedInitAction_vtable_803FBF48. */
     virtual bool Process();
     virtual void Reset();
     virtual ~SpeedInitAction();

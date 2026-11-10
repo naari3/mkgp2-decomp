@@ -52,7 +52,7 @@ extern const float lbl_806D2388;
 extern const double lbl_806D23A0;
 extern const double lbl_806D23A8;
 
-extern const TerrainSegment lbl_802E9828;
+extern const TerrainSegment Terrain_WallEdgeTest_rodata_802E9828;
 
 extern unsigned char Math_SegmentIntersection2D(void *self, float ax, float az, float bx, float bz, float cx,
                                                 float cz, float dx, float dz, float *out);

@@ -58,7 +58,7 @@ const unk32 lbl_803EEE58[42] = {
     0x65707469, 0x6F6E0000, 0x7374643A, 0x3A6C6F67, 0x69635F65, 0x72726F72, 0x00000000, 0x65786365,
     0x7074696F, 0x6E000000
 };
-const char lbl_803EEF00[280] = {
+const char CardCreditFlow_rodata_803EEF00[280] = {
     0, 0, 0, 96, 0, 0, 0, -1, 0, 0, 0, 0,
     0, 0, 0, -56, 0, 0, 0, 64, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 96, 0, 0, 0, -1,
@@ -335,7 +335,7 @@ void *const lbl_803EF270[102] = {
 const char lbl_803EF408[] = "clMnCardRenew";
 const char lbl_803EF418[] = "clYTaskInterface";
 const char lbl_803EF42C[] = "clMnTaskInterface";
-const unk32 lbl_803EF440[92] = {
+const unk32 sdata_806D0728_rodata_803EF440[92] = {
     0x636C4D6E, 0x43617264, 0x5430496E, 0x74657266, 0x61636500, 0x25732053, 0x434E5F53, 0x54415254,
     0x0A000000, 0x4D6E4361, 0x72645265, 0x6E65772E, 0x63707000, 0x25732053, 0x434E5F4D, 0x41494E0A,
     0x00000000, 0x25732053, 0x434E5F45, 0x4A454354, 0x0A000000, 0x25732053, 0x434E5F43, 0x52454154,
@@ -349,7 +349,7 @@ const unk32 lbl_803EF440[92] = {
     0x3A6C6F67, 0x69635F65, 0x72726F72, 0x00000000, 0x7374643A, 0x3A6C656E, 0x6774685F, 0x6572726F,
     0x72000000, 0x65786365, 0x7074696F, 0x6E000000
 };
-const float lbl_803EF5B0[12] = {
+const float ItemPanelDraw_rodata_803EF5B0[12] = {
     0.0f, 0.0f, 0.0f, -49.0f, 0.0f, -49.0f, 0.0f, -49.0f,
     27.0f, -24.0f, 0.0f, -49.0f
 };
@@ -362,68 +362,68 @@ const char lbl_803EF63C[] = "clMrrItem";
 const char lbl_803EF648[] = "clMrrItemEffect";
 const char lbl_803EF658[] = "clMslDisp";
 /* 8-aligned in the original: probably the first object of a TU */
-const char lbl_803EF668[12] __attribute__((aligned(8))) = {
+const char HudSelectionUpdate_rodata_803EF668[12] __attribute__((aligned(8))) = {
     -125, -117, -125, 67, -127, 91, -125, 87, 0, 0, 0, 0
 };
-const char lbl_803EF674[12] = {
+const char HudSelectionUpdate_rodata_803EF674[12] = {
     -125, 76, -125, 109, -125, 115, -125, 73, 0, 0, 0, 0
 };
-const char lbl_803EF680[12] = {
+const char HudSelectionUpdate_rodata_803EF680[12] = {
     -125, 104, -125, -109, -125, 76, -127, 91, 0, 0, 0, 0
 };
-const char lbl_803EF68C[12] = {
+const char HudSelectionUpdate_rodata_803EF68C[12] = {
     -125, -120, -125, 98, -125, 86, -127, 91, 0, 0, 0, 0
 };
-const char lbl_803EF698[12] = {
+const char HudSelectionUpdate_rodata_803EF698[12] = {
     -125, 112, -125, 98, -125, 78, -125, 125, -125, -109, 0, 0
 };
-const char lbl_803EF6A4[12] = {
+const char HudSelectionUpdate_rodata_803EF6A4[12] = {
     -125, 126, -125, 89, -125, 112, -125, 98, -125, 78, 0, 0
 };
-const char lbl_803EF6B0[12] = {
+const char HudSelectionUpdate_rodata_803EF6B0[12] = {
     -125, 65, -125, 74, -125, 120, -125, 67, 0, 0, 0, 0
 };
-const char lbl_803EF6BC[12] = {
+const char HudSelectionUpdate_rodata_803EF6BC[12] = {
     -125, -113, -125, -117, -125, 67, -127, 91, -125, 87, 0, 0
 };
-const char lbl_803EF6C8[12] = {
+const char HudSelectionUpdate_rodata_803EF6C8[12] = {
     -126, -36, -126, -33, -126, -63, -126, -65, 0, 0, 0, 0
 };
-const char lbl_803EF6D4[12] = {
+const char HudSelectionUpdate_rodata_803EF6D4[12] = {
     -126, 108, -126, 96, -126, 113, -126, 104, -126, 110, 0, 0
 };
-const char lbl_803EF6E0[12] = {
+const char HudSelectionUpdate_rodata_803EF6E0[12] = {
     -126, 107, -126, 116, -126, 104, -126, 102, -126, 104, 0, 0
 };
-const char lbl_803EF6EC[12] = {
+const char HudSelectionUpdate_rodata_803EF6EC[12] = {
     -126, 118, -126, 96, -126, 113, -126, 104, -126, 110, 0, 0
 };
-const char lbl_803EF6F8[12] = {
+const char HudSelectionUpdate_rodata_803EF6F8[12] = {
     -126, 111, -126, 100, -126, 96, -126, 98, -126, 103, 0, 0
 };
-const char lbl_803EF704[12] = {
+const char HudSelectionUpdate_rodata_803EF704[12] = {
     -126, 106, -126, 104, -126, 109, -126, 102, 0, 0, 0, 0
 };
-const char lbl_803EF710[12] = {
+const char HudSelectionUpdate_rodata_803EF710[12] = {
     -126, 115, -126, 110, -126, 96, -126, 99, 0, 0, 0, 0
 };
-const char lbl_803EF71C[12] = {
+const char HudSelectionUpdate_rodata_803EF71C[12] = {
     -126, 120, -126, 110, -126, 114, -126, 103, -126, 104, 0, 0
 };
-const char lbl_803EF728[12] = {
+const char HudSelectionUpdate_rodata_803EF728[12] = {
     -126, 108, -126, -109, -127, 68, -126, 111, 0, 0, 0, 0
 };
-const char lbl_803EF734[12] = {
+const char HudSelectionUpdate_rodata_803EF734[12] = {
     -126, 118, -126, 96, -126, 107, -126, 116, 0, 0, 0, 0
 };
-const char lbl_803EF740[12] = {
+const char HudSelectionUpdate_rodata_803EF740[12] = {
     -126, 108, -126, 96, -126, 108, -126, 100, 0, 0, 0, 0
 };
-const HudPosition lbl_803EF74C[2] = {
+const HudPosition HudFlow20Update_rodata_803EF74C[2] = {
     { 20.0f, 303.6f },
     { 20.0f, 339.0f }
 };
-const HudSelectionPosition lbl_803EF75C[4] = {
+const HudSelectionPosition HudSelectionUpdate_rodata_803EF75C[4] = {
     { 64.399994f, 303.6f },
     { 64.399994f, 339.0f },
     { 48.0f, 303.6f },
@@ -434,7 +434,7 @@ const char lbl_803EF788[] = "clCDispInterface";
 const char lbl_803EF79C[] = "clCounterInterface";
 const char lbl_803EF7B0[] = "clNoDisp";
 /* 8-aligned in the original: probably the first object of a TU */
-const DigitPosition lbl_803EF7C0[8] __attribute__((aligned(8))) = {
+const DigitPosition RaceDigitUpdate_rodata_803EF7C0[8] __attribute__((aligned(8))) = {
     { 62.0f, 146.0f },
     { 62.0f, 99.0f },
     { 80.0f, 155.0f },
@@ -444,7 +444,7 @@ const DigitPosition lbl_803EF7C0[8] __attribute__((aligned(8))) = {
     { 80.0f, 115.0f },
     { 105.0f, 50.0f }
 };
-const DigitMap lbl_803EF800[1] = {
+const DigitMap RaceDigits_rodata_803EF800[1] = {
     { { 0, 1, -1, 2, 3, -1, -1, 4, 5, 6 } }
 };
 const char lbl_803EF828[] = "clRecDisp";
@@ -517,7 +517,7 @@ const char lbl_803EFD20[] = "clYTaskInterface";
 const char lbl_803EFD34[] = "clMnTaskInterface";
 const char lbl_803EFD48[] = "clMnPedalSprTask";
 const char lbl_803EFD5C[] = "clMnHandleTask";
-const PrintErrorCaption lbl_803EFD6C[7] = {
+const PrintErrorCaption CardPrintFlowRender_rodata_803EFD6C[7] = {
     { 55, 156 },
     { 51, 155 },
     { 52, 157 },

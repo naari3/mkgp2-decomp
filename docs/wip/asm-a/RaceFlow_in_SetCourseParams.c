@@ -47,37 +47,37 @@ typedef struct RankSlot {
     unsigned char pad29[3];
 } RankSlot;
 
-extern KartSlot lbl_805AC600[8];
-extern unsigned char lbl_805AC6C0[0xC];
-extern unsigned char lbl_805AC6CC[0x5E00];
-extern LapEntry lbl_805B24CC[10];
-extern struct LapExtra lbl_805B256C;
-extern unsigned char lbl_805B2580[0x20000];
+extern KartSlot SetCourseParams_bss_805AC600[8];
+extern unsigned char KartDriverArray_StaticCtor_bss_805AC6C0[0xC];
+extern unsigned char SetCourseParams_bss_805AC6CC[0x5E00];
+extern LapEntry SetCourseParams_bss_805B24CC[10];
+extern struct LapExtra RaceResult_StoreLatest_bss_805B256C;
+extern unsigned char SetCourseParams_bss_805B2580[0x20000];
 extern unsigned char g_playerData[0x1DC];
 extern unsigned char lbl_805D275C[0x1DC];
-extern int lbl_805D2938[4];
-extern RankSlot lbl_805D2948[8];
+extern int RaceSlot_ResetAll_bss_805D2938[4];
+extern RankSlot SetCourseParams_bss_805D2948[8];
 
-KartSlot lbl_805AC600[8];
-unsigned char lbl_805AC6C0[0xC];
-unsigned char lbl_805AC6CC[0x5E00];
-LapEntry lbl_805B24CC[10];
-struct LapExtra lbl_805B256C;
-unsigned char lbl_805B2580[0x20000];
+KartSlot SetCourseParams_bss_805AC600[8];
+unsigned char KartDriverArray_StaticCtor_bss_805AC6C0[0xC];
+unsigned char SetCourseParams_bss_805AC6CC[0x5E00];
+LapEntry SetCourseParams_bss_805B24CC[10];
+struct LapExtra RaceResult_StoreLatest_bss_805B256C;
+unsigned char SetCourseParams_bss_805B2580[0x20000];
 unsigned char g_playerData[0x1DC];
 unsigned char lbl_805D275C[0x1DC];
-int lbl_805D2938[4];
-RankSlot lbl_805D2948[8];
+int RaceSlot_ResetAll_bss_805D2938[4];
+RankSlot SetCourseParams_bss_805D2948[8];
 
 extern int g_cupId;
 extern int g_longRoundFlag;
 extern int g_courseVariantIdx;
 extern int g_reverseRoundFlag;
 extern unsigned char g_raceStarted;
-extern unsigned char lbl_806D1258;
-extern int lbl_806CF10C;
-extern int lbl_806D1280;
-extern int lbl_806D12D8;
+extern unsigned char SetCourseParams_bss_806D1258;
+extern int SetCourseParams_data_806CF10C;
+extern int SetCourseParams_bss_806D1280;
+extern int SetCourseParams_bss_806D12D8;
 extern const float lbl_806D4790;
 extern const float lbl_806D4798;
 
@@ -110,25 +110,25 @@ int SetCourseParams(int cup, int longRound, int variant, int reverse)
     g_courseVariantIdx = variant;
     g_reverseRoundFlag = reverse;
     for (i = 0; i < 8; ++i) {
-        lbl_805AC600[i].driverId = -1;
-        lbl_805AC600[i].charId = -1;
-        lbl_805AC600[i].field8 = 1;
-        lbl_805AC600[i].items[0] = 0x24;
-        lbl_805AC600[i].items[1] = 0x25;
-        { lbl_805AC600[i].items[2] = 0x26;
-        lbl_805AC600[i].kartVariant = 0; }
-        lbl_805D2938[i] = 0;
+        SetCourseParams_bss_805AC600[i].driverId = -1;
+        SetCourseParams_bss_805AC600[i].charId = -1;
+        SetCourseParams_bss_805AC600[i].field8 = 1;
+        SetCourseParams_bss_805AC600[i].items[0] = 0x24;
+        SetCourseParams_bss_805AC600[i].items[1] = 0x25;
+        { SetCourseParams_bss_805AC600[i].items[2] = 0x26;
+        SetCourseParams_bss_805AC600[i].kartVariant = 0; }
+        RaceSlot_ResetAll_bss_805D2938[i] = 0;
     }
     /* fakematch: the target reloads both globals after the slot loop;
      * natural code: if (g_cupId >= 0 && g_longRoundFlag >= 0) */
     if (*(volatile int *)&g_cupId >= 0 && *(volatile int *)&g_longRoundFlag >= 0) {
         g_raceStarted = 0;
     }
-    lbl_806CF10C = 0;
-    if (0 == lbl_806D1258) {
-        struct LapExtra *extra = &lbl_805B256C;
-        RankSlot *rank = lbl_805D2948;
-        LapEntry *lap = lbl_805B24CC;
+    SetCourseParams_data_806CF10C = 0;
+    if (0 == SetCourseParams_bss_806D1258) {
+        struct LapExtra *extra = &RaceResult_StoreLatest_bss_805B256C;
+        RankSlot *rank = SetCourseParams_bss_805D2948;
+        LapEntry *lap = SetCourseParams_bss_805B24CC;
         for (i = 0; 5 > i; ++i) {
             lap[i].a = 0;
             lap[i].b = 0;
@@ -141,12 +141,12 @@ int SetCourseParams(int cup, int longRound, int variant, int reverse)
             lap[i].c = lbl_806D4790;
             lap[i].d = lbl_806D4798;
         }
-        lbl_805B256C.e.a = 0;
+        RaceResult_StoreLatest_bss_805B256C.e.a = 0;
         extra->e.b = 0;
         extra->e.c = lbl_806D4790;
         extra->e.d = lbl_806D4798;
-        lbl_806D1280 = 4;
-        lbl_806D1258 = 1;
+        SetCourseParams_bss_806D1280 = 4;
+        SetCourseParams_bss_806D1258 = 1;
         /* The original resets each rank explicitly rather than retaining a loop. */
         ResetRankSlot(&rank[0]);
         ResetRankSlot(&rank[1]);
@@ -156,7 +156,7 @@ int SetCourseParams(int cup, int longRound, int variant, int reverse)
         ResetRankSlot(&rank[5]);
         ResetRankSlot(&rank[6]);
         ResetRankSlot(&rank[7]);
-        lbl_806D12D8 = 0;
+        SetCourseParams_bss_806D12D8 = 0;
     }
     return 1;
 }
@@ -188,7 +188,7 @@ void RaceFlow_ResetState_FullColdInit(void)
     memset(g_playerData, 0, 0x1DC);
     fn_801D7610(g_playerData, 1);
     {
-        RankSlot *rank = lbl_805D2948;
+        RankSlot *rank = SetCourseParams_bss_805D2948;
         ResetRankSlot(&rank[0]);
         ResetRankSlot(&rank[1]);
         ResetRankSlot(&rank[2]);
@@ -197,7 +197,7 @@ void RaceFlow_ResetState_FullColdInit(void)
         ResetRankSlot(&rank[5]);
         ResetRankSlot(&rank[6]);
         ResetRankSlot(&rank[7]);
-        lbl_806D12D8 = 0;
+        SetCourseParams_bss_806D12D8 = 0;
     }
     fn_8018CC64();
 
@@ -217,23 +217,23 @@ void RaceFlow_ResetState_FullColdInit(void)
     g_courseVariantIdx = 0;
     g_reverseRoundFlag = 0;
     for (i = 0; i < 8; ++i) {
-        lbl_805AC600[i].driverId = -1;
-        lbl_805AC600[i].charId = -1;
-        lbl_805AC600[i].field8 = 1;
-        lbl_805AC600[i].items[0] = 0x24;
-        lbl_805AC600[i].items[1] = 0x25;
-        lbl_805AC600[i].items[2] = 0x26;
-        lbl_805AC600[i].kartVariant = 0;
-        lbl_805D2938[i] = 0;
+        SetCourseParams_bss_805AC600[i].driverId = -1;
+        SetCourseParams_bss_805AC600[i].charId = -1;
+        SetCourseParams_bss_805AC600[i].field8 = 1;
+        SetCourseParams_bss_805AC600[i].items[0] = 0x24;
+        SetCourseParams_bss_805AC600[i].items[1] = 0x25;
+        SetCourseParams_bss_805AC600[i].items[2] = 0x26;
+        SetCourseParams_bss_805AC600[i].kartVariant = 0;
+        RaceSlot_ResetAll_bss_805D2938[i] = 0;
     }
     if (*(volatile int *)&g_cupId >= 0 && *(volatile int *)&g_longRoundFlag >= 0) {
         g_raceStarted = 0;
     }
-    lbl_806CF10C = 0;
-    if (0 == lbl_806D1258) {
-        struct LapExtra *extra = &lbl_805B256C;
-        RankSlot *rank = lbl_805D2948;
-        LapEntry *lap = lbl_805B24CC;
+    SetCourseParams_data_806CF10C = 0;
+    if (0 == SetCourseParams_bss_806D1258) {
+        struct LapExtra *extra = &RaceResult_StoreLatest_bss_805B256C;
+        RankSlot *rank = SetCourseParams_bss_805D2948;
+        LapEntry *lap = SetCourseParams_bss_805B24CC;
         for (i = 0; 5 > i; ++i) {
             lap[i].a = 0;
             lap[i].b = 0;
@@ -246,12 +246,12 @@ void RaceFlow_ResetState_FullColdInit(void)
             lap[i].c = lbl_806D4790;
             lap[i].d = lbl_806D4798;
         }
-        lbl_805B256C.e.a = 0;
+        RaceResult_StoreLatest_bss_805B256C.e.a = 0;
         extra->e.b = 0;
         extra->e.c = lbl_806D4790;
         extra->e.d = lbl_806D4798;
-        lbl_806D1280 = 4;
-        lbl_806D1258 = 1;
+        SetCourseParams_bss_806D1280 = 4;
+        SetCourseParams_bss_806D1258 = 1;
         ResetRankSlot(&rank[0]);
         ResetRankSlot(&rank[1]);
         ResetRankSlot(&rank[2]);
@@ -260,7 +260,7 @@ void RaceFlow_ResetState_FullColdInit(void)
         ResetRankSlot(&rank[5]);
         ResetRankSlot(&rank[6]);
         ResetRankSlot(&rank[7]);
-        lbl_806D12D8 = 0;
+        SetCourseParams_bss_806D12D8 = 0;
     }
     g_ccClass = 0;
     g_nonFirstFinishFlag = 0;

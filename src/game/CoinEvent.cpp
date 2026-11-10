@@ -7,9 +7,9 @@ struct CoinEventView {
 extern "C" {
 extern void SoundObj_PlaySE(void*, int);
 extern int WrapInRange(int, int, int);
-extern signed char lbl_806D1094;
-extern int lbl_806D1090;
-extern int lbl_806CEDF8[2];
+extern signed char CoinEvent_PlayAlternatingSE_bss_806D1094;
+extern int CoinEvent_PlayAlternatingSE_bss_806D1090;
+extern int CoinEvent_PlayAlternatingSE_data_806CEDF8[2];
 void CoinEvent_PlayResultSE(CoinEventView* self, int result) {
     int se;
     if (self->context->mode == 12) {
@@ -22,11 +22,11 @@ void CoinEvent_PlayResultSE(CoinEventView* self, int result) {
     self->pending = 0;
 }
 void CoinEvent_PlayAlternatingSE(CoinEventView* self) {
-    if (lbl_806D1094 == 0) {
-        lbl_806D1090 = 0;
-        lbl_806D1094 = 1;
+    if (CoinEvent_PlayAlternatingSE_bss_806D1094 == 0) {
+        CoinEvent_PlayAlternatingSE_bss_806D1090 = 0;
+        CoinEvent_PlayAlternatingSE_bss_806D1094 = 1;
     }
-    lbl_806D1090 = WrapInRange(lbl_806D1090 + 1, 0, 1);
-    SoundObj_PlaySE(self->sound, lbl_806CEDF8[lbl_806D1090]);
+    CoinEvent_PlayAlternatingSE_bss_806D1090 = WrapInRange(CoinEvent_PlayAlternatingSE_bss_806D1090 + 1, 0, 1);
+    SoundObj_PlaySE(self->sound, CoinEvent_PlayAlternatingSE_data_806CEDF8[CoinEvent_PlayAlternatingSE_bss_806D1090]);
 }
 }

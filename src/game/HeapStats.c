@@ -1,6 +1,6 @@
 /* --- owned .rodata 0x802E9650..0x802E96A8 (tools/own_data.py) --- */
 #pragma force_active on
-const char lbl_802E9650[88] = { 108, 118, 32, 37, 100, 32, 105, 100, 32, 37, 100, 32, 109, 115, 103, 58, 37, 115, 10, 0, 97, 108, 108, 32, 97, 108, 108, 111, 99, 32, 109, 101, 109, 111, 114, 121, 32, 37, 100, 91, 107, 98, 93, 0, 109, 97, 120, 32, 97, 108, 108, 111, 99, 32, 109, 101, 109, 111, 114, 121, 32, 37, 100, 91, 107, 98, 93, 0, 109, 101, 109, 111, 114, 121, 32, 98, 108, 111, 99, 107, 32, 32, 32, 32, 32, 37, 100, 0 };
+const char DebugLog_LvIdMsg_rodata_802E9650[88] = { 108, 118, 32, 37, 100, 32, 105, 100, 32, 37, 100, 32, 109, 115, 103, 58, 37, 115, 10, 0, 97, 108, 108, 32, 97, 108, 108, 111, 99, 32, 109, 101, 109, 111, 114, 121, 32, 37, 100, 91, 107, 98, 93, 0, 109, 97, 120, 32, 97, 108, 108, 111, 99, 32, 109, 101, 109, 111, 114, 121, 32, 37, 100, 91, 107, 98, 93, 0, 109, 101, 109, 111, 114, 121, 32, 98, 108, 111, 99, 107, 32, 32, 32, 32, 32, 37, 100, 0 };
 #pragma force_active reset
 /* Boot-state refresh, heap stat dump and a couple of small destructors.
  * The format strings live in a shared .rodata pool that starts at
@@ -73,8 +73,8 @@ BootState *fn_80293BBC(void);
 extern const float SAFE;
 extern void *lbl_806CF010;
 extern BootTimer *lbl_806D0F9C;
-extern int lbl_806D0FA4;
-extern signed char lbl_806D0FA8;
+extern int BootStateStruct_RefreshIfDue_bss_806D0FA4;
+extern signed char BootStateStruct_RefreshIfDue_bss_806D0FA8;
 extern void *lbl_806D1880;
 extern const float lbl_806D2294;
 extern const float lbl_806D22B4;
@@ -95,9 +95,9 @@ static inline unsigned char BootState_IsDue(void)
 
 extern "C" void BootStateStruct_RefreshIfDue(void)
 {
-    if (!lbl_806D0FA8) {
-        lbl_806D0FA4 = 0;
-        lbl_806D0FA8 = 1;
+    if (!BootStateStruct_RefreshIfDue_bss_806D0FA8) {
+        BootStateStruct_RefreshIfDue_bss_806D0FA4 = 0;
+        BootStateStruct_RefreshIfDue_bss_806D0FA8 = 1;
     }
     if (BootState_IsDue() == 1) {
         BootTimer *timer;
@@ -132,7 +132,7 @@ extern "C" int isJapanese(void)
 
 extern "C" void DebugLog_LvIdMsg(int lv, int id, const char *msg)
 {
-    DebugPrintf(lbl_802E9650, lv, id, msg);
+    DebugPrintf(DebugLog_LvIdMsg_rodata_802E9650, lv, id, msg);
 }
 
 extern "C" void *dtor_8002F910(void *self, short flag)

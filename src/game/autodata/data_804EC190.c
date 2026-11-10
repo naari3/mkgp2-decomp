@@ -46,51 +46,51 @@ extern void fn_80202F54();
 extern void fn_802030DC();
 extern void fn_8020314C();
 extern void fn_8020374C();
-extern char lbl_806D01B0[];
+extern char data_804EC190_data_806D01B0[];
 extern char lbl_806D01B8[];
-extern char lbl_806D01C0[];
+extern char data_804EC190_data_806D01C0[];
 extern char lbl_806D01C8[];
 extern char lbl_806D01D0[];
 extern char lbl_806D01D8[];
 extern char lbl_806D01E0[];
-extern char lbl_806D01E8[];
-extern char lbl_806D01F0[];
-extern char lbl_806D01F8[];
-extern char lbl_806D0200[];
-extern char lbl_806D0208[];
+extern char FlowTask_RTTI_806D01E8[];
+extern char CountdownDot_RTTI_806D01F0[];
+extern char CountdownDigit_RTTI_806D01F8[];
+extern char data_804EC190_data_806D0200[];
+extern char data_804EC190_data_806D0208[];
 extern char lbl_806D0210[];
 extern char lbl_806D0218[];
-extern char lbl_806D0220[];
+extern char data_804EC190_data_806D0220[];
 extern char lbl_806D0228[];
-extern char lbl_806D0230[];
+extern char data_804EC190_data_806D0230[];
 extern char lbl_806D0238[];
-extern char lbl_806D0240[];
-extern char lbl_806D0248[];
+extern char FlowTask_RTTI_806D0240[];
+extern char ClassSelTask_RTTI_806D0248[];
 extern char lbl_806D0258[];
-extern char lbl_806D0260[];
-extern char lbl_806D0268[];
-extern char lbl_806D0270[];
+extern char FlowTask_RTTI_806D0260[];
+extern char MsgPopup_RTTI_806D0268[];
+extern char data_804EC190_data_806D0270[];
 
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-void *lbl_804EC190[4] = {
-    (void *)&lbl_806D01B0,
+void *FlowSceneHost_vtable_804EC190[4] = {
+    (void *)&data_804EC190_data_806D01B0,
     0,
     (void *)dtor_801FD958,
     0
 };
-void *lbl_804EC1A0[3] = {
+void *data_804EC190_data_804EC1A0[3] = {
     (void *)&lbl_806D01B8,
     0,
     0
 };
-void *lbl_804EC1AC[3] = {
-    (void *)&lbl_806D01C0,
+void *CardFlowMgr_vtable_804EC1AC[3] = {
+    (void *)&data_804EC190_data_806D01C0,
     0,
     (void *)fn_801FE4D0
 };
-void *lbl_804EC1B8[4] = {
+void *CardFlowMgrBase_vtable_804EC1B8[4] = {
     (void *)&lbl_806D01B8,
     0,
     (void *)dtor_801FE870,
@@ -118,65 +118,65 @@ void *lbl_804EC1F4[3] = {
     0,
     (void *)fn_801FE8B8
 };
-void *lbl_804EC200[3] = {
+void *FlowTask_data_804EC200[3] = {
     (void *)&lbl_806D01E0,
     0,
     0
 };
-void *lbl_804EC20C[5] = {
+void *CountdownDot_data_804EC20C[5] = {
     (void *)&lbl_806D01E0,
     0,
-    (void *)&lbl_806D01E8,
+    (void *)&FlowTask_RTTI_806D01E8,
     0,
     0
 };
-void *lbl_804EC220[5] = {
+void *CountdownDigit_data_804EC220[5] = {
     (void *)&lbl_806D01E0,
     0,
-    (void *)&lbl_806D01E8,
+    (void *)&FlowTask_RTTI_806D01E8,
     0,
     0
 };
-void *lbl_804EC234[5] = {
+void *data_804EC190_data_804EC234[5] = {
     (void *)&lbl_806D01E0,
     0,
-    (void *)&lbl_806D01E8,
+    (void *)&FlowTask_RTTI_806D01E8,
     0,
     0
 };
-void *lbl_804EC248[6] = {
-    (void *)&lbl_806D0200,
+void *Countdown_vtable_804EC248[6] = {
+    (void *)&data_804EC190_data_806D0200,
     0,
     (void *)fn_801FF068,
     (void *)fn_801FEFD4,
     (void *)fn_801FEC08,
     (void *)fn_801FEBD8
 };
-void *lbl_804EC260[6] = {
-    (void *)&lbl_806D01F0,
+void *CountdownDot_vtable_804EC260[6] = {
+    (void *)&CountdownDot_RTTI_806D01F0,
     0,
     (void *)fn_801FF6A8,
     (void *)fn_801FF670,
     (void *)fn_801FF3E8,
     (void *)fn_801FF3E4
 };
-void *lbl_804EC278[6] = {
-    (void *)&lbl_806D01F8,
+void *CountdownDigit_vtable_804EC278[6] = {
+    (void *)&CountdownDigit_RTTI_806D01F8,
     0,
     (void *)fn_801FF9D4,
     (void *)fn_801FF99C,
     (void *)fn_801FF794,
     (void *)fn_801FF790
 };
-void *lbl_804EC290[5] = {
+void *data_804EC190_data_804EC290[5] = {
     (void *)&lbl_806D01E0,
     0,
-    (void *)&lbl_806D01E8,
+    (void *)&FlowTask_RTTI_806D01E8,
     0,
     0
 };
-void *lbl_804EC2A4[6] = {
-    (void *)&lbl_806D0208,
+void *CountdownBanner_vtable_804EC2A4[6] = {
+    (void *)&data_804EC190_data_806D0208,
     0,
     (void *)fn_802000E8,
     (void *)fn_80200044,
@@ -193,15 +193,15 @@ void *lbl_804EC2C8[3] = {
     0,
     (void *)fn_80200EAC
 };
-void *lbl_804EC2D4[5] = {
+void *data_804EC190_data_804EC2D4[5] = {
     (void *)&lbl_806D01E0,
     0,
-    (void *)&lbl_806D01E8,
+    (void *)&FlowTask_RTTI_806D01E8,
     0,
     0
 };
-void *lbl_804EC2E8[6] = {
-    (void *)&lbl_806D0220,
+void *CountdownGauge_vtable_804EC2E8[6] = {
+    (void *)&data_804EC190_data_806D0220,
     0,
     (void *)fn_8020122C,
     (void *)fn_80201198,
@@ -213,64 +213,64 @@ void *lbl_804EC300[3] = {
     0,
     (void *)fn_802017C8
 };
-void *lbl_804EC30C[5] = {
+void *data_804EC190_data_804EC30C[5] = {
     (void *)&lbl_806D01E0,
     0,
-    (void *)&lbl_806D01E8,
+    (void *)&FlowTask_RTTI_806D01E8,
     0,
     0
 };
-void *lbl_804EC320[6] = {
-    (void *)&lbl_806D0230,
+void *CcClassModel_vtable_804EC320[6] = {
+    (void *)&data_804EC190_data_806D0230,
     0,
     (void *)fn_80201A94,
     (void *)fn_80201A10,
     (void *)fn_8020192C,
     (void *)fn_802018A4
 };
-void *lbl_804EC338[3] = {
+void *FlowTask_data_804EC338[3] = {
     (void *)&lbl_806D0238,
     0,
     0
 };
-void *lbl_804EC344[5] = {
+void *ClassSelTask_data_804EC344[5] = {
     (void *)&lbl_806D0238,
     0,
-    (void *)&lbl_806D0240,
+    (void *)&FlowTask_RTTI_806D0240,
     0,
     0
 };
-void *lbl_804EC358[6] = {
-    (void *)&lbl_806D0248,
+void *ClassSelTask_vtable_804EC358[6] = {
+    (void *)&ClassSelTask_RTTI_806D0248,
     0,
     (void *)fn_802025C4,
     (void *)fn_8020258C,
     (void *)fn_802021B0,
     (void *)fn_80202180
 };
-void *lbl_804EC370[3] = {
+void *FlowTask_data_804EC370[3] = {
     (void *)&lbl_806D0258,
     0,
     0
 };
-void *lbl_804EC37C[5] = {
+void *MsgPopup_data_804EC37C[5] = {
     (void *)&lbl_806D0258,
     0,
-    (void *)&lbl_806D0260,
+    (void *)&FlowTask_RTTI_806D0260,
     0,
     0
 };
-void *lbl_804EC390[7] = {
+void *data_804EC190_data_804EC390[7] = {
     (void *)&lbl_806D0258,
     0,
-    (void *)&lbl_806D0260,
+    (void *)&FlowTask_RTTI_806D0260,
     0,
-    (void *)&lbl_806D0268,
+    (void *)&MsgPopup_RTTI_806D0268,
     0,
     0
 };
-void *lbl_804EC3AC[6] = {
-    (void *)&lbl_806D0270,
+void *MsgPopupCoin_vtable_804EC3AC[6] = {
+    (void *)&data_804EC190_data_806D0270,
     0,
     (void *)fn_80202F54,
     (void *)fn_8020374C,

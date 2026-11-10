@@ -14,12 +14,12 @@ typedef struct Entry10 {
     int v[4];
 } Entry10;
 
-extern Entry1C lbl_8035C6C4;
-extern Entry1C lbl_8035E260[];
-extern Entry10 lbl_8035E220[4];
-extern int lbl_8035E120[8][2][4];
-extern int lbl_8035E0E0[8][2];
-extern int lbl_803600AC[13];
+extern Entry1C CourseTables_rodata_8035C6C4;
+extern Entry1C CourseTables_rodata_8035E260[];
+extern Entry10 CourseTables_rodata_8035E220[4];
+extern int CourseTables_rodata_8035E120[8][2][4];
+extern int CourseTables_rodata_8035E0E0[8][2];
+extern int CourseTables_rodata_803600AC[13];
 extern void *lbl_806CF640;
 extern void *lbl_8048E548[0xA0][2];
 
@@ -27,16 +27,16 @@ extern int isJapanese(void);
 
 Entry1C *fn_8013BE98(int id) {
     if (id > 0 && id < 0x115) {
-        return &lbl_8035E260[id];
+        return &CourseTables_rodata_8035E260[id];
     }
-    return &lbl_8035C6C4;
+    return &CourseTables_rodata_8035C6C4;
 }
 
 Entry10 *fn_8013BEC8(int id) {
     if (id < 0 || id >= 4) {
         return 0;
     }
-    return &lbl_8035E220[id];
+    return &CourseTables_rodata_8035E220[id];
 }
 
 int fn_8013BEF4(int course, int a, int b) {
@@ -55,7 +55,7 @@ int fn_8013BEF4(int course, int a, int b) {
     } else {
         idx = course - 1;
     }
-    return lbl_8035E120[idx][a][b];
+    return CourseTables_rodata_8035E120[idx][a][b];
 }
 
 int fn_8013BF70(int course, int a) {
@@ -71,14 +71,14 @@ int fn_8013BF70(int course, int a) {
     } else {
         idx = course - 1;
     }
-    return lbl_8035E0E0[idx][a];
+    return CourseTables_rodata_8035E0E0[idx][a];
 }
 
 int fn_8013BFCC(int id) {
     if (id < 0 || id >= 0xD) {
         return -1;
     }
-    return lbl_803600AC[id];
+    return CourseTables_rodata_803600AC[id];
 }
 
 typedef struct CourseTexRow {
@@ -95,7 +95,7 @@ typedef struct CourseTexTables {
     CourseTexRow noCard[8];  /* 0x1968 */
 } CourseTexTables;
 
-extern CourseTexTables lbl_8035C6B8;
+extern CourseTexTables CourseTables_rodata_8035C6B8;
 extern signed char lbl_80598A60[];
 extern unsigned char IsCardValid(void);
 
@@ -106,7 +106,7 @@ extern unsigned char IsCardValid(void);
 #pragma opt_propagation off
 void *fn_8013BFF8(int course, int kind, int lang)
 {
-    CourseTexTables *t = &lbl_8035C6B8;
+    CourseTexTables *t = &CourseTables_rodata_8035C6B8;
     int idx;
     CourseTexRow *row;
 

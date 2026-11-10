@@ -1,8 +1,8 @@
 #include "game/CardRewardPickersPrivate.h"
 
 static inline bool HasAllItems(PlayerData *pd) {
-    for (unsigned int k = 0; k < sizeof(lbl_804EC7D4) / sizeof(lbl_804EC7D4[0]); k++) {
-        const ItemList &l = lbl_804EC7D4[k];
+    for (unsigned int k = 0; k < sizeof(CardSnapshot_ResolveCommonItems_data_804EC7D4) / sizeof(CardSnapshot_ResolveCommonItems_data_804EC7D4[0]); k++) {
+        const ItemList &l = CardSnapshot_ResolveCommonItems_data_804EC7D4[k];
         int j = l.count;
         while (j-- > 0) {
             if (!fn_801D6F30(pd, l.items[j], 1)) {
@@ -56,9 +56,9 @@ int CardSnapshot_ResolveCommonItems(void **cards) {
         return -1;
     }
     int category = g_roundIndex >= 4 ? 1 : 0;
-    int n = lbl_804EC7D4[category].count;
+    int n = CardSnapshot_ResolveCommonItems_data_804EC7D4[category].count;
     int *ids = new int[n];
-    Shuffle(ids, lbl_804EC7D4[category].items, n);
+    Shuffle(ids, CardSnapshot_ResolveCommonItems_data_804EC7D4[category].items, n);
     int found[4];
     for (int i = 0; i < 4; i++) found[i] = 0;
     for (int i = 0; i < n; i++) {

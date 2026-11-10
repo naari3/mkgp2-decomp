@@ -9,7 +9,7 @@ typedef struct CObjLineBufferView {
     unsigned char lineBuffer[1];
 } CObjLineBufferView;
 
-extern int lbl_806D0FC0[2];
+extern int IsDisplayModeEnabled_bss_806D0FC0[2];
 
 unsigned char IsDisplayModeEnabled(int mode)
 {
@@ -22,7 +22,7 @@ unsigned char IsDisplayModeEnabled(int mode)
     if (mode == 4) {
         return 1;
     }
-    return mode == lbl_806D0FC0[0];
+    return mode == IsDisplayModeEnabled_bss_806D0FC0[0];
 }
 
 int Object_SetByte10_Return1(ObjectByte10View *self, unsigned char value)

@@ -21,7 +21,7 @@ extern char lbl_806D3220[];
 #pragma force_active on
 
 /* decl: char* */
-char *lbl_803FE400[12] = {
+char *PcbConnStateIdToName_data_803FE400[12] = {
     (char *)&lbl_806D31D0,
     (char *)&lbl_806D31D8,
     (char *)&lbl_806D31E0,

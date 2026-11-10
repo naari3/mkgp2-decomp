@@ -27,7 +27,7 @@ typedef struct CoinTimeTable {
 } CoinTimeTable;
 
 /*
- * Coin reward tables inside the rodata pool at lbl_803C3F50. The original
+ * Coin reward tables inside the rodata pool at CalcEarnedCoins_rodata_803C3F50. The original
  * TU owned them as static const arrays (addressed off the pool base), so
  * CalcEarnedCoins does not match until that rodata is split into this TU.
  */
@@ -46,7 +46,7 @@ typedef struct CoinRodata {
     CoinTimeTable timesRev;
 } CoinRodata;
 
-extern const CoinRodata lbl_803C3F50;
+extern const CoinRodata CalcEarnedCoins_rodata_803C3F50;
 #define kWinBonus (rd->winBonus)
 #define kPositionGP (rd->positionGP)
 #define kPositionVS (rd->positionVS)

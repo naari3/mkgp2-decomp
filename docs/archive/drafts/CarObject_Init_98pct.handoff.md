@@ -164,8 +164,8 @@ index b65cbb3..8a5b548 100644
 -extern unsigned int lbl_806D0051;
 +extern unsigned char lbl_806D0051;
  extern void *lbl_806D1060;
- extern float lbl_806D1080;
- extern float lbl_806D1084;
+ extern float KartMovement_UpdateBoostVisualBlend_bss_806D1080;
+ extern float KartMovement_UpdateBoostVisualBlend_bss_806D1084;
 @@ -313,6 +313,7 @@ extern unsigned int lbl_806D27C4;
  extern const float lbl_806D27C8; /* 1000.0f (us -> ms divisor) */
  extern unsigned int lbl_806D27D0;
@@ -330,9 +330,9 @@ index b65cbb3..8a5b548 100644
 -    bl clItemBoxResponder_Ctor
 -    addi r3, r31, 0xc
 -    bl WarpZone_VtableTrim
--    lis r4, lbl_803F75F8@ha
+-    lis r4, CarObject_vtable_803F75F8@ha
 -    li r3, 0x38
--    addi r5, r4, lbl_803F75F8@l
+-    addi r5, r4, CarObject_vtable_803F75F8@l
 -    addi r4, r2, -0x7A84  /* lbl_806D27DC */
 -    stw r5, 0x0(r31)
 -    addi r0, r5, 0x10
@@ -859,8 +859,8 @@ index b65cbb3..8a5b548 100644
 +
 +    clItemBoxResponder_Ctor(self, self->responder90);
 +    WarpZone_VtableTrim((char *)self + 0xc);
-+    self->vt0 = lbl_803F75F8;
-+    self->vtC = (void *)(lbl_803F75F8 + 4);
++    self->vt0 = CarObject_vtable_803F75F8;
++    self->vtC = (void *)(CarObject_vtable_803F75F8 + 4);
 +    self->kartSlot = kartSlot;
 +    self->param14 = a5;
 +    self->param18 = a6;

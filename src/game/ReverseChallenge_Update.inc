@@ -117,9 +117,9 @@ extern unsigned int lbl_806D4F60;
 extern unsigned int lbl_806D4F64;
 extern unsigned int lbl_806D4F68;
 
-extern const RCQuadPtsC lbl_80328DD8;
-extern RCVec3 lbl_805DF338;
-extern RCVec3 lbl_805DF344;
+extern const RCQuadPtsC ReverseChallenge_rodata_80328DD8;
+extern RCVec3 ReverseChallenge_Update_bss_805DF338;
+extern RCVec3 ReverseChallenge_Update_bss_805DF344;
 
 #define RCF(x) (*(const float *)&(x))
 #define RC_ENDED (*(unsigned char *)&g_raceEnded)
@@ -127,8 +127,8 @@ extern RCVec3 lbl_805DF344;
 
 static inline unsigned char RC_InsideStartQuad(RCVec3 *p, float *n)
 {
-    float dx = p->x - lbl_80328DD8.p[1][0];
-    float dz = -(p->z - lbl_80328DD8.p[1][1]);
+    float dx = p->x - ReverseChallenge_rodata_80328DD8.p[1][0];
+    float dz = -(p->z - ReverseChallenge_rodata_80328DD8.p[1][1]);
     float zero = RCF(lbl_806D4F54);
     if (dz * n[0] + dx * n[1] > zero) {
         return 0;
@@ -136,8 +136,8 @@ static inline unsigned char RC_InsideStartQuad(RCVec3 *p, float *n)
     if (dz * n[2] + dx * n[3] > zero) {
         return 0;
     }
-    dx = p->x - lbl_80328DD8.p[3][0];
-    dz = -(p->z - lbl_80328DD8.p[3][1]);
+    dx = p->x - ReverseChallenge_rodata_80328DD8.p[3][0];
+    dz = -(p->z - ReverseChallenge_rodata_80328DD8.p[3][1]);
     if (dz * n[4] + dx * n[5] > zero) {
         return 0;
     }
@@ -281,10 +281,10 @@ extern "C" int ReverseChallenge_Update(ReverseChallengeUpdateView *self)
             KartMovement_ResetOnGoal(CarObject_GetRenderObj(self->car));
         }
     }
-    CObj_LoadProjMatrix(self->camera, &lbl_805DF338);
-    CObj_ApplyScissor(self->camera, &lbl_805DF344);
+    CObj_LoadProjMatrix(self->camera, &ReverseChallenge_Update_bss_805DF338);
+    CObj_ApplyScissor(self->camera, &ReverseChallenge_Update_bss_805DF344);
     ItemObjectManager_Update();
-    VfxSlotMgr_Update(lbl_805DF338, lbl_805DF344);
+    VfxSlotMgr_Update(ReverseChallenge_Update_bss_805DF338, ReverseChallenge_Update_bss_805DF344);
     if (IsRaceStarted() && self->finished == 0) {
         float t;
         float zero;

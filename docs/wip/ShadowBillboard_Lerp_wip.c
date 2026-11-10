@@ -12,7 +12,7 @@ typedef struct ShadowBillboard {
 extern const float lbl_806D2B88;
 extern const float lbl_806D2B8C;
 extern const float lbl_806D2B6C;
-extern const float lbl_802EE4CC[];
+extern const float ShadowBillboard_LerpMtx4x4_rodata_802EE4CC[];
 
 float Saturate_Double(float v, float lo, float hi);
 void Mtx34_Orthonormalize(float *mtx);
@@ -40,7 +40,7 @@ void ShadowBillboard_LerpMtx4x4(ShadowBillboard *sb, const float *target, float 
 
     t = Saturate_Double(lbl_806D2B88 * t, lbl_806D2B8C, lbl_806D2B6C);
     for (i = 0; i < 3; i++) {
-        LerpRow(sb, target, t, lbl_802EE4CC[i], i * 4);
+        LerpRow(sb, target, t, ShadowBillboard_LerpMtx4x4_rodata_802EE4CC[i], i * 4);
     }
     Mtx34_Orthonormalize(sb->mtx);
     CopyPosition((Vec3f *)(sb->mtx + 12), (const Vec3f *)(target + 12));

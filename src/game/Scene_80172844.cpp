@@ -19,10 +19,10 @@ extern const SlotDesc lbl_8036E8D4[4] = {
     {{194.0f, 1.0f, 52.0f, 52.0f}, 0},
     {{0.0f, 0.0f, 128.0f, 128.0f}, 1},
 };
-extern const float lbl_8036E924[4] = {0.0f, 1.0f, 1.0f, 1.0f};
-extern const float lbl_8036E934[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-extern const float lbl_8036E944[4] = {1.0f, 0.0f, 0.0f, 1.0f};
-extern const Vec2f lbl_8036E954[3] = {
+extern const float HomingMarkerUpdate_rodata_8036E924[4] = {0.0f, 1.0f, 1.0f, 1.0f};
+extern const float HomingMarkerUpdate_rodata_8036E934[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+extern const float HomingMarkerUpdate_rodata_8036E944[4] = {1.0f, 0.0f, 0.0f, 1.0f};
+extern const Vec2f Scene_801734B0_rodata_8036E954[3] = {
     {5.0f, 3.0f},
     {3.0f, 5.0f},
     {4.0f, 4.0f},

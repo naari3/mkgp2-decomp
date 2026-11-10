@@ -55,13 +55,13 @@ struct Cave16A : MapPart16A {
     virtual ~Cave16A();
 };
 extern "C" {
-extern const char lbl_8036CA00[];
-extern const Desc16ARaw lbl_8036CE88[];
+extern const char Jungle16ACtor_rodata_8036CA00[];
+extern const Desc16ARaw Jungle16AUpdate_rodata_8036CE88[];
 extern const float lbl_806D8A40, lbl_806D8A54, lbl_806D8A58, lbl_806D8A5C;
 extern const float lbl_806D8A60, lbl_806D8A64, lbl_806D8A68, lbl_806D8A70;
 extern char lbl_806D8A44[7], lbl_806D8A4C[5];
 extern const char lbl_8036CEF0[], lbl_8036CEFC[];
-extern void *lbl_806CFA00;
+extern void *Jungle16ACtor_data_806CFA00;
 extern int g_longRoundFlag;
 void *FUN_8003b120(unsigned long);
 DObj16A *HSD_JObjGetDObj(HSD_JObj *);

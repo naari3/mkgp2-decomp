@@ -12,7 +12,7 @@ typedef struct ObjectJObjView {
     HSD_JObj *jobj;
 } ObjectJObjView;
 
-extern const Quat lbl_802E9780;
+extern const Quat JObj_SetRotationQuat_rodata_802E9780;
 extern char lbl_806D2348[7];
 extern char lbl_806D2350[5];
 extern void __assert(char *, int, char *);
@@ -36,7 +36,7 @@ void JObj_SetRotationQuat(ObjectJObjView *object, float x, float y, float z) {
     HSD_JObj *jobj = object->jobj;
 
     if (jobj != 0) {
-        Quat quat = lbl_802E9780;
+        Quat quat = JObj_SetRotationQuat_rodata_802E9780;
 
         quat.x = x;
         quat.y = y;

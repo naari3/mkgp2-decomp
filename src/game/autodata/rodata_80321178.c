@@ -101,14 +101,14 @@ const char lbl_803211D8[1020] = {
     69, 59, -128, 0, 66, -90, -86, -85, 69, 122, 0, 0,
     66, -90, -86, -85, 69, -100, 64, 0, 66, -90, -86, -85
 };
-const Vec lbl_803215D4[1] = {
+const Vec RaceScene_FrameUpdate_rodata_803215D4[1] = {
     { 0.0f, 0.0f, 0.0f }
 };
-const Vec lbl_803215E0[1] = {
+const Vec RaceScene_FrameUpdate_rodata_803215E0[1] = {
     { 0.0f, 0.0f, 0.0f }
 };
 const char lbl_803215EC[] = "clGameSingle";
-const unk32 lbl_803215FC[225] = {
+const unk32 sdata_806CEFE0_rodata_803215FC[225] = {
     0x636C4761, 0x6D65576F, 0x726C6400, 0x4F4B2050, 0x72697A65, 0x20667265, 0x65210000, 0x636F6C6C,
     0x20667265, 0x65210000, 0x63697465, 0x6D73656C, 0x20746163, 0x686F6D65, 0x74657220, 0x68697466,
     0x61636520, 0x66726565, 0x21000000, 0x63617220, 0x73686164, 0x6F772066, 0x72656521, 0x00000000,

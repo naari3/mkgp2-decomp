@@ -8,7 +8,7 @@
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const char lbl_80369288[1020] = {
+const char Scene_8016303C_rodata_80369288[1020] = {
     63, -128, 0, 0, 63, 51, 51, 51, 63, 102, 102, 102,
     0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0,
     66, -123, 85, 86, 68, 122, 0, 0, 66, -123, 85, 86,
@@ -99,7 +99,7 @@ const char lbl_80369684[] = "clCSSceneNextRace";
 const char lbl_80369698[] = "clSceneInterface";
 const char lbl_803696AC[] = "clCSPartsYNWindowNR";
 const char lbl_803696C0[] = "clCSPartsInerface";
-const unk32 lbl_803696D4[49] = {
+const unk32 sdata_806CF750_rodata_803696D4[49] = {
     0x636C4353, 0x50617274, 0x73594E57, 0x696E646F, 0x77000000, 0x506C6561, 0x73652069, 0x6E736572,
     0x74000000, 0x81408140, 0x6D6F7265, 0x20256420, 0x636F696E, 0x28732900, 0x81408140, 0x81408140,
     0x81408140, 0x20256420, 0x636F696E, 0x28732900, 0x82A082C6, 0x25643030, 0x897E0000, 0x81408140,

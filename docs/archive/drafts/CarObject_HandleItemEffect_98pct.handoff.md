@@ -34,7 +34,7 @@ sites. Worktree restored with git checkout; `ninja build/GNLJ82/ok` green at bas
   "docs_notes": [
     {
       "path": "docs/notes/cw132-dead-counter-ctr-loop-hardblock.md",
-      "content": "# CW 1.3.2 dead-counter-in-ctr-loop hard-block (2026-06-10, batch_promote_8004f858_handleitemfx)\n\nTarget idiom: ctr-converted scan loop that ALSO materializes a never-read up-counter (`li r4,0x0` init + `addi r4,r4,0x1` per iteration, no reads before the register is clobbered). Seen in CarObject_HandleItemEffect 0x8004F858 loop 1 (pair-table scan over lbl_802ED94C, 0x13 iterations, two compares per iteration via lwz/lwzu). Same family as the dead `i` counter in CarObject_MainUpdate's mtx loop (sec 14.2 flavor 5) and the const-prop-escaped `mr r6,r4` init in KartItem_GetMaxSpeedWithBonus.\n\nProbed source forms - ALL get the counter web deleted (or the loop fails to ctr-convert):\n1. do-while with `++i` + `while (i < 0x13)`: keeps i but NO ctr conversion (cmpwi/blt, init split addi r0+mr).\n2. `for (i = 0; i < 0x13; i++)` + manual `*p` / `*++p` / `++p` walk: ctr-converts, lwzu reproduced, counter eliminated with the loop control.\n3. separate body counter (`for (n...)` control + `++i` in body): ctr-converts, i web DCEd.\n4. shared u8 variable (loop-1 counter reused later as loop-2 found flag, hoping variable-granularity liveness): increments still DCEd.\n5. dead copy `n = i;` after the loop (single-pass-DCE test): both copy and web removed - CW DCE is iterative.\n6. `#pragma opt_dead_assignments off` around the fn: no effect (inert or not honored at -O4,p global optimizer).\n7. pointer-bound for (`p < base + 0x26`) with i++ header increment: does NOT ctr-convert (cmplw kept per iteration; CW does not derive trip count from pointer bounds here).\n8. inline `asm { addi i, i, 0x1 }` in the loop body (requires `register int i`, else \"not assigned to a register\" error): the asm statement itself is integrated into IR and DCEd; `#pragma volatile_asm on` does NOT protect it.\n\nConclusion: with -O4,p -inline auto, CW 1.3.2 always removes a never-read counter web in a ctr loop. No pure-C or pragma path found to retain it. Functions whose target carries this idiom cannot currently be promoted byte-identical.\n\nPrecan rule: in a ctr loop (`mtctr` + `bdnz`), an `addi rX,rX,1` whose register has no read before the next write to rX marks this class. Budget 0-2 probes, then park as asm_fn.\n\nSecondary observation from the same batch: the missing web also seems to perturb downstream callee-saved tie-breaks (lane-clear inline sites 2/3 land permuted registers while site 1 matches exactly with identical inlined source) - allocator history is global, so solving the counter may cascade-fix the site permutations.\n"
+      "content": "# CW 1.3.2 dead-counter-in-ctr-loop hard-block (2026-06-10, batch_promote_8004f858_handleitemfx)\n\nTarget idiom: ctr-converted scan loop that ALSO materializes a never-read up-counter (`li r4,0x0` init + `addi r4,r4,0x1` per iteration, no reads before the register is clobbered). Seen in CarObject_HandleItemEffect 0x8004F858 loop 1 (pair-table scan over CarObject_HandleItemEffect_rodata_802ED94C, 0x13 iterations, two compares per iteration via lwz/lwzu). Same family as the dead `i` counter in CarObject_MainUpdate's mtx loop (sec 14.2 flavor 5) and the const-prop-escaped `mr r6,r4` init in KartItem_GetMaxSpeedWithBonus.\n\nProbed source forms - ALL get the counter web deleted (or the loop fails to ctr-convert):\n1. do-while with `++i` + `while (i < 0x13)`: keeps i but NO ctr conversion (cmpwi/blt, init split addi r0+mr).\n2. `for (i = 0; i < 0x13; i++)` + manual `*p` / `*++p` / `++p` walk: ctr-converts, lwzu reproduced, counter eliminated with the loop control.\n3. separate body counter (`for (n...)` control + `++i` in body): ctr-converts, i web DCEd.\n4. shared u8 variable (loop-1 counter reused later as loop-2 found flag, hoping variable-granularity liveness): increments still DCEd.\n5. dead copy `n = i;` after the loop (single-pass-DCE test): both copy and web removed - CW DCE is iterative.\n6. `#pragma opt_dead_assignments off` around the fn: no effect (inert or not honored at -O4,p global optimizer).\n7. pointer-bound for (`p < base + 0x26`) with i++ header increment: does NOT ctr-convert (cmplw kept per iteration; CW does not derive trip count from pointer bounds here).\n8. inline `asm { addi i, i, 0x1 }` in the loop body (requires `register int i`, else \"not assigned to a register\" error): the asm statement itself is integrated into IR and DCEd; `#pragma volatile_asm on` does NOT protect it.\n\nConclusion: with -O4,p -inline auto, CW 1.3.2 always removes a never-read counter web in a ctr loop. No pure-C or pragma path found to retain it. Functions whose target carries this idiom cannot currently be promoted byte-identical.\n\nPrecan rule: in a ctr loop (`mtctr` + `bdnz`), an `addi rX,rX,1` whose register has no read before the next write to rX marks this class. Budget 0-2 probes, then park as asm_fn.\n\nSecondary observation from the same batch: the missing web also seems to perturb downstream callee-saved tie-breaks (lane-clear inline sites 2/3 land permuted registers while site 1 matches exactly with identical inlined source) - allocator history is global, so solving the counter may cascade-fix the site permutations.\n"
     }
   ],
   "build_verified": {
@@ -63,10 +63,10 @@ sites. Worktree restored with git checkout; `ninja build/GNLJ82/ok` green at bas
 secondary-lane view (owner 0x0 / itemId 0x8 / blend 0xc). Returns 0 (not in pair table /
 default case), 1 (guard active / event filter / handler returned 0), 2 (committed).
 
-1. Scan lbl_802ED94C = 19 pairs of int (0x98 bytes, ends exactly at lbl_802ED9E4) with
+1. Scan CarObject_HandleItemEffect_rodata_802ED94C = 19 pairs of int (0x98 bytes, ends exactly at KartItem_ApplyImpactReflectAndDampVelocity_rodata_802ED9E4) with
    `*p` / `*++p` / `++p` (the `*++p` spelling reproduces target lwzu). Not found -> 0.
 2. ItemStateGuard_IsActive(self->owner->stateBlock->guard) == 1 -> return 1.
-3. Scan lbl_803F75D0 = 13 s16 entries (lha) -> found2.
+3. Scan CarObject_HandleItemEffect_data_803F75D0 = 13 s16 entries (lha) -> found2.
 4. ev = self->owner->effectTable->run18; m = (ev==0x98 || ev==0x92) written as an
    if/else-if/else constant chain; if (m == 1 && found2 == 0) return 1;
 5. handled = 1; then the double-blt guard: nested identical `if (self->itemId >= 0)`
@@ -129,7 +129,7 @@ default case), 1 (guard active / event filter / handler returned 0), 2 (committe
 - forward decl: `asm void CarObject_HandleItemEffect(void);` ->
   `int CarObject_HandleItemEffect(ItemSecondaryLane *self, int itemId);`
 - Tables typed via casts at use (shared open-array extern decls untouched):
-  lbl_802ED94C = 19 int pairs, lbl_803F75D0 = 13 s16.
+  CarObject_HandleItemEffect_rodata_802ED94C = 19 int pairs, CarObject_HandleItemEffect_data_803F75D0 = 13 s16.
 - No configure.py / splits.txt / symbols.txt changes (TU-internal promote; the
   `-use_lmw_stmw on` already on the Object line is sufficient).
 
@@ -201,7 +201,7 @@ int CarObject_HandleItemEffect(ItemSecondaryLane *self, int itemId) { /* 0x8004F
 
     found = 0;
     i = 0;
-    p = (const int *)lbl_802ED94C;
+    p = (const int *)CarObject_HandleItemEffect_rodata_802ED94C;
     for (n = 0; n < 0x13; n++) {
         if (itemId == *p) {
             found = 1;
@@ -220,7 +220,7 @@ int CarObject_HandleItemEffect(ItemSecondaryLane *self, int itemId) { /* 0x8004F
     if (ItemStateGuard_IsActive(self->owner->stateBlock->guard) == 1) {
         return 1;
     }
-    p2 = (const short *)lbl_803F75D0;
+    p2 = (const short *)CarObject_HandleItemEffect_data_803F75D0;
     found2 = 0;
     for (n = 0; n < 0xd; n++) {
         if (itemId == *p2) {

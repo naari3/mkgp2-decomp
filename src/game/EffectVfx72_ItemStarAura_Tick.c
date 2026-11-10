@@ -8,7 +8,7 @@ extern int g_gameMode;
 extern int g_cupId;
 extern const float lbl_806D5348; /* pi */
 extern const float lbl_806D53D4; /* -35.0 */
-extern const float lbl_8032A21C[];
+extern const float EffectVfx72_ItemStarAura_Tick_rodata_8032A21C[];
 extern unsigned char *PcbSlot_GetByIndex(int pcbIdx);
 extern void EffectVfx_KartChildAttached_RenderHook(unsigned char *self);
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec *in);
@@ -99,7 +99,7 @@ void EffectVfx72_ItemStarAura_Tick(unsigned char *self)
         GetSpawnPosition(V(0x120), 0.0f, 0.0f, 0.0f);
         F(0x150) = Rand_RangeFloat(0.8f, 1.2f);
         character = ItemStarAura_GetCharacter(P(0x11C));
-        F(0x154) = character < 0 ? 1.0f : lbl_8032A21C[character];
+        F(0x154) = character < 0 ? 1.0f : EffectVfx72_ItemStarAura_Tick_rodata_8032A21C[character];
         F(0xB0) = F(0x150) * F(0x154);
         if (S8(0x190)) {
             F(0x150) *= 1.5f;

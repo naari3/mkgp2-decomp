@@ -1,17 +1,17 @@
 /*
  * 0x80124F2C..0x80125948: challenge demo with the nokonoko shells. The kart
  * gets a shell item, fires it at frame 100 and hit effects spawn on the
- * frames listed in lbl_803559CC.
+ * frames listed in ChallengeDemoShell_rodata_803559CC.
  */
 #pragma cplusplus on
 #include "game/DemoKartScene.h"
 
 extern "C" {
-extern const float lbl_803559CC[10];
+extern const float ChallengeDemoShell_rodata_803559CC[10];
 extern const char lbl_80355A1C[];
 extern const char lbl_80355A38[];
-extern const char *lbl_806CF498;
-extern const char *lbl_806CF49C;
+extern const char *ChallengeDemoShell_data_806CF498;
+extern const char *ChallengeDemoShell_data_806CF49C;
 extern char lbl_806D6EDC[7];
 extern char lbl_806D6EE4[5];
 int sprintf(char *s, const char *format, ...);
@@ -142,7 +142,7 @@ int ShellDemoScene::Update() {
     Vec eye;
     Vec target;
     for (unsigned int i = 0; i < 10; i++) {
-        if (time == lbl_803559CC[i]) {
+        if (time == ChallengeDemoShell_rodata_803559CC[i]) {
             char name[0x100];
             sprintf(name, lbl_80355A1C, i + 1);
             HSD_JObj *hj = ResolveJointByName(shells, name);
@@ -209,14 +209,14 @@ ShellDemoScene::ShellDemoScene() {
     SoundChannels_ClearAll();
     ItemObjectManager_Init();
     CourseObjectManager_Init();
-    scene = new DemoScene(lbl_806CF498, -1.0f, 0.0f);
+    scene = new DemoScene(ChallengeDemoShell_data_806CF498, -1.0f, 0.0f);
     scene->Start(0.0f, 1.0f);
-    normal = new DemoNormal(lbl_806CF498, 0);
+    normal = new DemoNormal(ChallengeDemoShell_data_806CF498, 0);
     clNormal3D_SetScale(normal, 0, 0.0f, 1.0f, 0.0f, 0.0f);
     ProcessSystemTick(0);
     driver = new DemoDriver(g_characterId, matrix);
     tornado = new DemoTornado(0, driver, g_characterId, 0, 0.0f, 0.0f, 0.0f);
-    joint = ResolveJointByName(normal, lbl_806CF49C);
+    joint = ResolveJointByName(normal, ChallengeDemoShell_data_806CF49C);
     KartMovement_EquipItem(driver, 6);
     ProcessSystemTick(0);
     shells = new DemoNormal(lbl_80355A38, 0);

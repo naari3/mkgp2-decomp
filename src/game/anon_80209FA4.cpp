@@ -269,12 +269,12 @@ extern "C" void fn_80209FA4(void) {
 
 /* Target vtable includes its existing RTTI descriptor with RTTI disabled. */
 extern "C" {
-extern const char lbl_806D02F0[];
+extern const char JobRunnerMode_data_806D02F0[];
 int fn_8020A194(void *);
 void fn_8020A004(void *);
 void *fn_8020A39C(void *, short);
-const void *lbl_804EC7F4[5] = {
-    lbl_806D02F0, 0, (const void *)fn_8020A194,
+const void *JobRunnerMode_vtable_804EC7F4[5] = {
+    JobRunnerMode_data_806D02F0, 0, (const void *)fn_8020A194,
     (const void *)fn_8020A004, (const void *)fn_8020A39C
 };
 }

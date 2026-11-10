@@ -11,7 +11,7 @@
 const float lbl_80362620[4] = {
     178.0f, 306.0f, 478.0f, 306.0f
 };
-const float lbl_80362630[2][4] = {
+const float LapSelect_80146410_rodata_80362630[2][4] = {
     { 1.0f, 1.0f, 1.0f, 1.0f },
     { 0.5f, 0.5f, 1.0f, 1.0f }
 };

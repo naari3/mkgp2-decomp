@@ -9,7 +9,7 @@ struct FlowController {
     FlowSceneList *owner;
 };
 
-/* Holds the scene list at +4 (vtable lbl_804EC190). */
+/* Holds the scene list at +4 (vtable FlowSceneHost_vtable_804EC190). */
 #include "game/types/FlowSceneHost.h"
 
 extern "C" {

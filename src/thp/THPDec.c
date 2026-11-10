@@ -137,7 +137,7 @@ typedef struct THPPerfRec {
     /* 0x34 */ u32 count;
 } THPPerfRec; // size = 0x38
 
-extern THPPerfRec lbl_806A4A40[10];
+extern THPPerfRec THPDec_bss_806A4A40[10];
 
 #define THP_PERF_START(r)                                                      \
     PPCMtmmcr1(0);                                                             \
@@ -1715,7 +1715,7 @@ void fn_8029B54C(THPDecHandle* handle, u8* dst, u32 width, u32 height)
     }
     info->x7AC = 0;
 
-    THP_PERF_START(lbl_806A4A40[5]);
+    THP_PERF_START(THPDec_bss_806A4A40[5]);
     __THPGQRSetup(info);
 
     while (info->x7AC < h) {
@@ -1755,10 +1755,10 @@ void fn_8029B54C(THPDecHandle* handle, u8* dst, u32 width, u32 height)
         }
     }
 
-    THP_PERF_END(lbl_806A4A40[5]);
-    THP_PERF_START(lbl_806A4A40[9]);
+    THP_PERF_END(THPDec_bss_806A4A40[5]);
+    THP_PERF_START(THPDec_bss_806A4A40[9]);
     DCStoreRange(dst, width * height * 2);
-    THP_PERF_END(lbl_806A4A40[9]);
+    THP_PERF_END(THPDec_bss_806A4A40[9]);
     __THPGQRRestore(info);
 }
 
@@ -1800,13 +1800,13 @@ void fn_8029BA2C(THPDecHandle* handle, u8* tileY, u8* tileU, u8* tileV)
         }
     }
 
-    THP_PERF_START(lbl_806A4A40[2]);
+    THP_PERF_START(THPDec_bss_806A4A40[2]);
     ysize = info->components[0].x08 * info->components[0].x0C;
     uvsize = info->components[1].x08 * info->components[1].x0C;
     DCStoreRange(tileY, ysize);
     DCStoreRange(tileU, uvsize);
     DCStoreRange(tileV, uvsize);
-    THP_PERF_END(lbl_806A4A40[2]);
+    THP_PERF_END(THPDec_bss_806A4A40[2]);
     __THPGQRRestore(info);
 }
 
@@ -1849,7 +1849,7 @@ void fn_8029BCF0(THPDecHandle* handle, u8* dst, u8 alpha)
     }
     info->x7AC = 0;
 
-    THP_PERF_START(lbl_806A4A40[5]);
+    THP_PERF_START(THPDec_bss_806A4A40[5]);
     __THPGQRSetup(info);
 
     while (info->x7AC < info->yPixelSize) {
@@ -1931,10 +1931,10 @@ void fn_8029BCF0(THPDecHandle* handle, u8* dst, u8 alpha)
         }
     }
 
-    THP_PERF_END(lbl_806A4A40[5]);
-    THP_PERF_START(lbl_806A4A40[2]);
+    THP_PERF_END(THPDec_bss_806A4A40[5]);
+    THP_PERF_START(THPDec_bss_806A4A40[2]);
     DCStoreRange(dst, GXGetTexBufferSize(info->xPixelSize, info->yPixelSize, 6, 0, 0));
-    THP_PERF_END(lbl_806A4A40[2]);
+    THP_PERF_END(THPDec_bss_806A4A40[2]);
     __THPGQRRestore(info);
 }
 

@@ -49,7 +49,7 @@ struct ObjList : ListBase {
 
 extern "C" {
 extern InputView *g_pInputState;
-extern void *lbl_8049B16C[];
+extern void *clFlowGpPlease_vtable_8049B16C[];
 }
 
 static inline InputView *input_state() {
@@ -66,7 +66,7 @@ struct Scene801CCF2C : FlowBase {
 };
 
 Scene801CCF2C::~Scene801CCF2C() {
-    vt = lbl_8049B16C;
+    vt = clFlowGpPlease_vtable_8049B16C;
     for (ListIter it(objs.head.next); it != objs.end(); ++it) {
         delete *it;
     }

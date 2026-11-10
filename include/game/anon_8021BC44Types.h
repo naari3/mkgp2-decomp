@@ -4,7 +4,7 @@
 #include "game/anon_8021BC44Private.h"
 
 /*
- * 0x8021BC44..0x8021ED1C: time attack result scene (vtable lbl_804EDD98,
+ * 0x8021BC44..0x8021ED1C: time attack result scene (vtable TimeAttackResult_vtable_804EDD98,
  * base lbl_803FE0C8). Shows the lap time and rank, lets a new record enter
  * its name, then offers the coin continue panel.
  *

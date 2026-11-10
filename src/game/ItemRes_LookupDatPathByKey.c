@@ -256,7 +256,7 @@ static const char lbl_80323B4C[] = "it_k_03_triple_banana.dat";
 static const char lbl_80323B68[] = "it_k_03_triple_banana_model.dat";
 static const char lbl_80323B88[] = "it_w_09_pump.dat";
 static const char lbl_80323B9C[] = "it_w_09_pump_ball.dat";
-const ItemResPath lbl_80323BB4[0xF6] = {
+const ItemResPath ItemRes_LookupDatPathByKey_rodata_80323BB4[0xF6] = {
 {lbl_80322200,lbl_80322200},
 {lbl_80322210,lbl_80322210},
 {lbl_80322228,lbl_80322228},
@@ -505,7 +505,7 @@ const ItemResPath lbl_80323BB4[0xF6] = {
 {lbl_80322DF4,lbl_80322DF4}
 };
 /* 0xF5 ItemResKey entries + one trailing word */
-const int lbl_80324364[0x1EB] = {
+const int ItemRes_LookupDatPathByKey_rodata_80324364[0x1EB] = {
 0,0,61,0,50,0,78,0,
 62,0,109,0,63,0,51,0,
 108,0,82,0,80,0,57,0,
@@ -576,7 +576,7 @@ static inline int ItemRes_FindKey(int key)
     int i;
 
     for (i = 0; i < 0xF5; i++) {
-        if (key == ((const ItemResKey *)lbl_80324364)[i].key) {
+        if (key == ((const ItemResKey *)ItemRes_LookupDatPathByKey_rodata_80324364)[i].key) {
             return i;
         }
     }
@@ -585,7 +585,7 @@ static inline int ItemRes_FindKey(int key)
 
 const char *ItemRes_LookupDatPathByKey(int key)
 {
-    return lbl_80323BB4[ItemRes_FindKey(key)].path;
+    return ItemRes_LookupDatPathByKey_rodata_80323BB4[ItemRes_FindKey(key)].path;
 }
 
 void calc_title_params(void *unused, unsigned short *code, unsigned char *sub,

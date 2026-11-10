@@ -16,33 +16,33 @@ typedef struct MapEffectDef {
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const unk32 lbl_8036DD8C[15] = {
+const unk32 rodata_8036DD8C_rodata_8036DD8C[15] = {
     0x00000001, 0x42380000, 0x3F800000, 0x3F000000, 0x00000000, 0x00000001, 0x41600000, 0x3F800000,
     0x3F000000, 0x00000000, 0x00000002, 0x00000000, 0x3F800000, 0x3FC00000, 0x00000000
 };
-const unk32 lbl_8036DDC8[25] = {
+const unk32 rodata_8036DD8C_rodata_8036DDC8[25] = {
     0x00000000, 0x42480000, 0x00000000, 0x00000000, 0x00000000, 0x00000001, 0x40800000, 0x3F800000,
     0x3E99999A, 0x00000000, 0x00000001, 0x41200000, 0x3F800000, 0x3FC00000, 0x3E3CBAEA, 0x00000001,
     0x40400000, 0x3F800000, 0x40333333, 0x3F250CAC, 0x00000002, 0x00000000, 0x00000000, 0x40400000,
     0x3F490FDB
 };
-const unk32 lbl_8036DE2C[25] = {
+const unk32 rodata_8036DD8C_rodata_8036DE2C[25] = {
     0x00000000, 0x42380000, 0x00000000, 0x00000000, 0x00000000, 0x00000001, 0x40800000, 0x3F800000,
     0x3E99999A, 0x00000000, 0x00000001, 0x41500000, 0x3F800000, 0x3FC00000, 0x00000000, 0x00000001,
     0x40400000, 0x3F800000, 0x3E99999A, 0x00000000, 0x00000002, 0x00000000, 0x00000000, 0x40400000,
     0x00000000
 };
-const unk32 lbl_8036DE90[20] = {
+const unk32 rodata_8036DD8C_rodata_8036DE90[20] = {
     0x00000000, 0x42440000, 0x00000000, 0x00000000, 0x00000000, 0x00000001, 0x41300000, 0x3F800000,
     0x3E4CCCCD, 0x00000000, 0x00000001, 0x40400000, 0x3F800000, 0x40333333, 0x00000000, 0x00000002,
     0x00000000, 0x00000000, 0x40400000, 0x00000000
 };
-const unk32 lbl_8036DEE0[20] = {
+const unk32 rodata_8036DD8C_rodata_8036DEE0[20] = {
     0x00000000, 0x423C0000, 0x00000000, 0x00000000, 0x00000000, 0x00000001, 0x41300000, 0x3F800000,
     0x3E4CCCCD, 0x00000000, 0x00000001, 0x40400000, 0x3F800000, 0x40333333, 0x00000000, 0x00000002,
     0x00000000, 0x3F800000, 0x3FC00000, 0x00000000
 };
-const unk32 lbl_8036DF30[20] = {
+const unk32 rodata_8036DD8C_rodata_8036DF30[20] = {
     0x00000000, 0x42480000, 0x00000000, 0x00000000, 0x00000000, 0x00000001, 0x41300000, 0x3F800000,
     0x3E4CCCCD, 0x00000000, 0x00000001, 0x40400000, 0x3F800000, 0x40333333, 0x00000000, 0x00000002,
     0x00000000, 0x3F800000, 0x3FC00000, 0x00000000
@@ -52,18 +52,18 @@ const char lbl_8036DF9C[] = "ef_magic_pink_inazuma_joint";
 const char lbl_8036DFB8[] = "ef_magic_pink_obi_joint";
 const char lbl_8036DFD0[] = "ef_magic_green_joint";
 const char lbl_8036DFE8[] = "ef_magic_white_joint";
-const MapEffectDef lbl_8036E000[6] = {
-    { 0, (void *)&lbl_8036DF80, (void *)&lbl_8036DD8C },
-    { 1, (void *)&lbl_8036DF9C, (void *)&lbl_8036DDC8 },
-    { 1, (void *)&lbl_8036DFB8, (void *)&lbl_8036DE2C },
-    { 2, (void *)&lbl_8036DFD0, (void *)&lbl_8036DE90 },
-    { 2, (void *)&lbl_8036DFE8, (void *)&lbl_8036DEE0 },
-    { 2, (void *)&lbl_8036DFE8, (void *)&lbl_8036DF30 }
+const MapEffectDef EffectFA_Update_rodata_8036E000[6] = {
+    { 0, (void *)&lbl_8036DF80, (void *)&rodata_8036DD8C_rodata_8036DD8C },
+    { 1, (void *)&lbl_8036DF9C, (void *)&rodata_8036DD8C_rodata_8036DDC8 },
+    { 1, (void *)&lbl_8036DFB8, (void *)&rodata_8036DD8C_rodata_8036DE2C },
+    { 2, (void *)&lbl_8036DFD0, (void *)&rodata_8036DD8C_rodata_8036DE90 },
+    { 2, (void *)&lbl_8036DFE8, (void *)&rodata_8036DD8C_rodata_8036DEE0 },
+    { 2, (void *)&lbl_8036DFE8, (void *)&rodata_8036DD8C_rodata_8036DF30 }
 };
-const Vec3f lbl_8036E048[1] = {
+const Vec3f EffectFA_Update_rodata_8036E048[1] = {
     { 0.0f, 0.0f, 0.0f }
 };
-const char lbl_8036E054[84] = {
+const char EffectFA_Draw_rodata_8036E054[84] = {
     33, 40, 106, 111, 98, 106, 45, 62, 102, 108, 97, 103,
     115, 32, 38, 32, 74, 79, 66, 74, 95, 85, 83, 69,
     95, 81, 85, 65, 84, 69, 82, 78, 73, 79, 78, 41,

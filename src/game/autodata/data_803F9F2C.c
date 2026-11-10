@@ -14,8 +14,8 @@ extern void EffectSpeedAction_SpeedScale_Dtor();
 extern void EffectSpeedAction_SpeedScale_Reset();
 extern void dtor_8006528C();
 extern char lbl_806CEF00[];
-extern char lbl_806CEF08[];
-extern char lbl_806CEF10[];
+extern char data_803F9F2C_data_806CEF08[];
+extern char data_803F9F2C_data_806CEF10[];
 
 /* layout as declared in src/game/ShadowBillboard.c */
 typedef struct PCPathSeg {
@@ -39,7 +39,7 @@ typedef struct PCCourseCamEntry {
 static unk32 lbl_803F9F2C[1] = {
     0x00000000
 };
-PCCourseCamEntry lbl_803F9F30[66] = {
+PCCourseCamEntry ShadowBillboard_data_803F9F30[66] = {
     { 2, 7, -1, 1, { { { -566.798f, 1484.82f, -2448.51f }, { -528.91f, 1481.91f, -2458.75f }, { -490.68f, 1462.52f, -2208.69f } }, { { 159.4f, 1490.36f, -8958.8f }, { 122.48f, 1452.02f, -8984.71f }, { 137.563f, 1063.95f, -10186.7f } }, { { -6520.81f, 1588.26f, -12635.7f }, { -6571.2f, 1604.42f, -12609.2f }, { -6407.16f, 1540.56f, -11818.2f } } } },
     { -1, 1, -1, 0, { { { 17.491f, 10.5353f, 1150.77f }, { -6.038f, 10.5353f, 1166.6f }, { 3.9315f, 10.5353f, 1469.68f } }, { { 1588.11f, 185.98f, -1775.45f }, { 1554.35f, 185.978f, -1758.19f }, { 1497.1f, 61.2688f, -138.283f } }, { { 997.312f, 144.686f, 2199.95f }, { 966.273f, 152.854f, 2247.81f }, { 123.74f, 127.184f, 2104.31f } } } },
     { -1, 1, -1, 2, { { { 17.491f, 10.5353f, 1150.77f }, { -6.038f, 10.5353f, 1166.6f }, { 3.9315f, 10.5353f, 1469.68f } }, { { 1588.11f, 185.983f, -1775.45f }, { 1554.35f, 185.9783f, -1758.19f }, { 1497.1f, 61.2688f, -138.283f } }, { { 997.312f, 144.686f, 2199.95f }, { 966.273f, 152.854f, 2247.81f }, { 123.74f, 127.184f, 2104.31f } } } },
@@ -107,32 +107,32 @@ PCCourseCamEntry lbl_803F9F30[66] = {
     { -1, 8, -1, 5, { { { 569.75f, 41.5309f, -4988.93f }, { 603.76f, 41.5309f, -4988.93f }, { 607.4f, 27.0382f, -5257.27f } }, { { 2164.85f, 463.54f, -253.975f }, { 2287.64f, 549.51f, -302.058f }, { 3810.54f, 319.153f, -1337.46f } }, { { 3106.31f, 393.879f, -4324.92f }, { 3049.12f, 276.54f, -4258.4f }, { 2312.85f, -102.72f, -5721.82f } } } },
     { -1, -1, -1, -1, { { { 0.0f, 1000.0f, 0.0f }, { 1000.0f, 1000.0f, 0.0f }, { 500.0f, 0.0f, 500.0f } }, { { 0.0f, 1000.0f, 0.0f }, { 1000.0f, 1000.0f, 0.0f }, { 500.0f, 0.0f, 500.0f } }, { { 0.0f, 1000.0f, 0.0f }, { 1000.0f, 1000.0f, 0.0f }, { 500.0f, 0.0f, 500.0f } } } }
 };
-void *lbl_803FBF28[3] = {
+void *data_803F9F2C_data_803FBF28[3] = {
     (void *)&lbl_806CEF00,
     0,
     0
 };
-void *lbl_803FBF34[5] = {
-    (void *)&lbl_806CEF08,
+void *SpeedInitMue_vtable_803FBF34[5] = {
+    (void *)&data_803F9F2C_data_806CEF08,
     0,
     (void *)ActionMueScale_Process,
     (void *)EffectSpeedAction_MueScale_Reset,
     (void *)EffectSpeedAction_MueScale_Dtor
 };
-void *lbl_803FBF48[5] = {
+void *SpeedInitAction_vtable_803FBF48[5] = {
     (void *)&lbl_806CEF00,
     0,
     0,
     0,
     (void *)dtor_8006528C
 };
-void *lbl_803FBF5C[3] = {
+void *data_803F9F2C_data_803FBF5C[3] = {
     (void *)&lbl_806CEF00,
     0,
     0
 };
-void *lbl_803FBF68[6] = {
-    (void *)&lbl_806CEF10,
+void *SpeedInitScale_vtable_803FBF68[6] = {
+    (void *)&data_803F9F2C_data_806CEF10,
     0,
     (void *)ActionSpeedScale_Process,
     (void *)EffectSpeedAction_SpeedScale_Reset,

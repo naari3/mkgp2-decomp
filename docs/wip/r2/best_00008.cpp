@@ -20,7 +20,7 @@ namespace course_data {
 using course_rows::RowLayout;
 using course_rows::RowAnimation;
 extern "C" {
-RowLayout lbl_8049B1E0[18] = {
+RowLayout clFlowCourse_data_8049B1E0[18] = {
     {0x19DC, 0x19E0, 0x19DE, 0, 92.0f, 260.0f, 245.0f},
     {0x19DD, 0x19E1, 0x19DF, 0, 158.0f, 168.0f, 188.0f},
     {0x19AC, 0x19B0, 0x19AF, 0, 214.0f, 260.0f, 245.0f},
@@ -40,11 +40,11 @@ RowLayout lbl_8049B1E0[18] = {
     {0, 0, 0, 0, 0.0f, 0.0f, 0.0f},
     {0, 0, 0, 0, 0.0f, 0.0f, 0.0f}
 };
-RowAnimation lbl_8049B348[8] = {
+RowAnimation clFlowCourse_data_8049B348[8] = {
     {0, 1.0f}, {34, 1.0f}, {151, 1.0f}, {152, 1.0f},
     {150, 1.0f}, {364, 0.6f}, {440, 0.6f}, {113, 0.6f}
 };
-short lbl_8049B388[8][2] = {
+short clFlowCourse_data_8049B388[8][2] = {
     {0x1777, 0x1780}, {0x1778, 0x1781}, {0x1779, 0x1782}, {0x177A, 0x1783},
     {0x177B, 0x1784}, {0x177C, 0x1785}, {0x177D, 0x1786}, {0x177E, 0x1787}
 };
@@ -71,7 +71,7 @@ typedef struct CourseSel {
     float fadeF0;
 } CourseSel;
 
-extern CupNames lbl_8049B388[8];
+extern CupNames clFlowCourse_data_8049B388[8];
 void fn_80121E10(void *ctrl);
 short GetCourseShortIdByCupAndMirror(int cup, int mirror);
 
@@ -220,8 +220,8 @@ static const ArrowLayout courseArrows[16] = {
     };
 
 extern "C" {
-extern CourseLayout lbl_8049B1E0[];
-extern short lbl_8049B388[][2];
+extern CourseLayout clFlowCourse_data_8049B1E0[];
+extern short clFlowCourse_data_8049B388[][2];
 extern int g_gameMode, g_roundIndex, g_localPcbRole, lbl_806CF12C;
 extern signed char lbl_806D184C, lbl_806D184D;
 extern unsigned char g_playerData[];
@@ -274,8 +274,8 @@ static inline int CourseCup(int i) {
 }
 static inline void UpdatePreview(CourseFlow *self, int selection) {
     int cup = selection / 2;
-    *self->mapIdA = lbl_8049B388[cup][0];
-    *self->mapIdB = lbl_8049B388[cup][1];
+    *self->mapIdA = clFlowCourse_data_8049B388[cup][0];
+    *self->mapIdB = clFlowCourse_data_8049B388[cup][1];
     fn_80121E10(&self->preview);
     self->preview.resId = GetCourseShortIdByCupAndMirror(CourseCup(cup), selection % 2);
     self->preview.Show((265.0f), (388.0f), (1.0f));
@@ -478,8 +478,8 @@ CourseFlow::CourseFlow() {
     if (!PCBComm_PackAndTriggerCardSnapshot())
         DebugPrintf("Send card error!!  - %s %d\n", "flow_course.cpp", 0xA1);
     for (i = 0; i < 9; i++) {
-        PreloadResource(course_data::lbl_8049B1E0[i].a);
-        PreloadResource(course_data::lbl_8049B1E0[i].a + 6);
+        PreloadResource(course_data::clFlowCourse_data_8049B1E0[i].a);
+        PreloadResource(course_data::clFlowCourse_data_8049B1E0[i].a + 6);
     }
     PreloadResource(0x196F); PreloadResource(0x197C);
     PreloadResource(0x1777); PreloadResource(0x178B);
@@ -505,7 +505,7 @@ CourseFlow::CourseFlow() {
     mapIdB = fn_801A0310(map, 0x1780);
     sel = selection;
     cup = sel / 2;
-    mapIds = course_data::lbl_8049B388;
+    mapIds = course_data::clFlowCourse_data_8049B388;
     *mapIdA = mapIds[cup][0];
     *mapIdB = mapIds[cup][1];
     fn_80121E10(&preview);
@@ -734,7 +734,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
         if (self->timer <= 30) {
             CourseLayout *p;
             float t = (float)(self->timer - 20) / (1e+01f);
-            p = &lbl_8049B1E0[self->selected];
+            p = &clFlowCourse_data_8049B1E0[self->selected];
             float y = p->y + t * ((218.0f) - p->y);
             float x;
             if (self->selection > 8) {
@@ -775,7 +775,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
     case 98:
         self->field14 = -((32.0f) * (float)self->timer);
         for (int i = 0; i < 18; i++)
-            if (self->slots[i].sprite) self->slots[i].sprite->x = self->field14 + lbl_8049B1E0[i].x;
+            if (self->slots[i].sprite) self->slots[i].sprite->x = self->field14 + clFlowCourse_data_8049B1E0[i].x;
         if (self->field12C) self->field12C->x = (3.1e+02f) + self->field14;
         if (self->field130) self->field130->x = (9.6e+02f) + self->field14;
         if (self->timer >= 20) { self->state = 1; UpdateArrows(self, courseArrows); }
@@ -783,7 +783,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
     case 99:
         self->field14 = (32.0f) * (float)self->timer + (-6.4e+02f);
         for (int i = 0; i < 18; i++)
-            if (self->slots[i].sprite) self->slots[i].sprite->x = self->field14 + lbl_8049B1E0[i].x;
+            if (self->slots[i].sprite) self->slots[i].sprite->x = self->field14 + clFlowCourse_data_8049B1E0[i].x;
         if (self->field12C) self->field12C->x = (3.1e+02f) + self->field14;
         if (self->field130) self->field130->x = (9.6e+02f) + self->field14;
         if (self->timer >= 20) { self->state = 1; UpdateArrows(self, courseArrows); }
@@ -839,7 +839,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
                     float a;
                     CourseLayout *layout;
                     int selected = (PcbSlot_GetByIndex(remoteIndex)[5] >> 1) & 0x7F;
-                    layout = &lbl_8049B1E0[selected];
+                    layout = &clFlowCourse_data_8049B1E0[selected];
                     float x = layout->x;
                     if (self->selection >= 8) x -= (6.4e+02f);
                     CourseIcon *icon = self->icons[remoteIndex];
@@ -933,8 +933,8 @@ extern "C" int fn_801CEB78(CourseRows *self, int index, int state) {
     row->state = state;
     switch(state) {
     case 1: {
-        RowAnimation *animations = lbl_8049B348;
-        RowLayout *layout = &lbl_8049B1E0[index];
+        RowAnimation *animations = clFlowCourse_data_8049B348;
+        RowLayout *layout = &clFlowCourse_data_8049B1E0[index];
         if (!row->sprite) row->sprite = new AnimSprite(animations[1].resource,0,0);
         else Sprite_SetupAnim(row->sprite, animations[1].resource,0,0);
         Sprite_SetAnimParam(row->sprite,0x19AC,layout->a);
@@ -946,8 +946,8 @@ extern "C" int fn_801CEB78(CourseRows *self, int index, int state) {
         break;
     }
     case 2: {
-        RowAnimation *animations = lbl_8049B348;
-        RowLayout *layout = &lbl_8049B1E0[index];
+        RowAnimation *animations = clFlowCourse_data_8049B348;
+        RowLayout *layout = &clFlowCourse_data_8049B1E0[index];
         if (!row->sprite) row->sprite = new AnimSprite(animations[2].resource,0,0);
         else Sprite_SetupAnim(row->sprite, animations[2].resource,0,0);
         Sprite_SetAnimParam(row->sprite,0x19AC,layout->a);
@@ -960,8 +960,8 @@ extern "C" int fn_801CEB78(CourseRows *self, int index, int state) {
         break;
     }
     case 3: {
-        RowAnimation *animations = lbl_8049B348;
-        RowLayout *layout = &lbl_8049B1E0[index];
+        RowAnimation *animations = clFlowCourse_data_8049B348;
+        RowLayout *layout = &clFlowCourse_data_8049B1E0[index];
         if (!row->sprite) row->sprite = new AnimSprite(animations[3].resource,0,0);
         else Sprite_SetupAnim(row->sprite, animations[3].resource,0,0);
         Sprite_SetAnimParam(row->sprite,0x19AC,layout->a);
@@ -973,8 +973,8 @@ extern "C" int fn_801CEB78(CourseRows *self, int index, int state) {
         break;
     }
     case 4: {
-        RowAnimation *animations = lbl_8049B348;
-        RowLayout *layout = &lbl_8049B1E0[index];
+        RowAnimation *animations = clFlowCourse_data_8049B348;
+        RowLayout *layout = &clFlowCourse_data_8049B1E0[index];
         if (!row->sprite) row->sprite = new AnimSprite(animations[4].resource,0,0);
         else Sprite_SetupAnim(row->sprite, animations[4].resource,0,0);
         Sprite_SetAnimParam(row->sprite,0x19AC,layout->a);
@@ -986,8 +986,8 @@ extern "C" int fn_801CEB78(CourseRows *self, int index, int state) {
         break;
     }
     case 5: {
-        RowAnimation *animations = lbl_8049B348;
-        RowLayout *layout = &lbl_8049B1E0[index];
+        RowAnimation *animations = clFlowCourse_data_8049B348;
+        RowLayout *layout = &clFlowCourse_data_8049B1E0[index];
         if (!row->sprite) row->sprite = new AnimSprite(animations[5].resource,0,0);
         else Sprite_SetupAnim(row->sprite, animations[5].resource,0,0);
         Sprite_SetAnimParam(row->sprite,0x19AC,layout->a);
@@ -1000,8 +1000,8 @@ extern "C" int fn_801CEB78(CourseRows *self, int index, int state) {
         break;
     }
     case 6: {
-        RowAnimation *animations = lbl_8049B348;
-        RowLayout *layout = &lbl_8049B1E0[index];
+        RowAnimation *animations = clFlowCourse_data_8049B348;
+        RowLayout *layout = &clFlowCourse_data_8049B1E0[index];
         if (!row->sprite) row->sprite = new AnimSprite(animations[6].resource,0,0);
         else Sprite_SetupAnim(row->sprite, animations[6].resource,0,0);
         Sprite_SetAnimParam(row->sprite,0x19AC,layout->a);
@@ -1014,8 +1014,8 @@ extern "C" int fn_801CEB78(CourseRows *self, int index, int state) {
         break;
     }
     case 7: {
-        RowAnimation *animations = lbl_8049B348;
-        RowLayout *layout = &lbl_8049B1E0[index];
+        RowAnimation *animations = clFlowCourse_data_8049B348;
+        RowLayout *layout = &clFlowCourse_data_8049B1E0[index];
         if (!row->sprite) row->sprite = new AnimSprite(animations[7].resource,0,0);
         else Sprite_SetupAnim(row->sprite, animations[7].resource,0,0);
         Sprite_SetAnimParam(row->sprite,0x19AC,layout->a);
@@ -1036,8 +1036,8 @@ extern "C" int fn_801CE918(CourseRows *self, int index) {
     if (Sprite_AdvanceAnim(row->sprite,(0.0165f)) == 1) return 1;
     switch(row->state) {
     case 1: {
-        RowAnimation *animations = lbl_8049B348;
-        RowLayout *layout = &lbl_8049B1E0[index];
+        RowAnimation *animations = clFlowCourse_data_8049B348;
+        RowLayout *layout = &clFlowCourse_data_8049B1E0[index];
         if (!row->sprite) row->sprite = new AnimSprite(animations[5].resource,0,0);
         else Sprite_SetupAnim(row->sprite, animations[5].resource,0,0);
         Sprite_SetAnimParam(row->sprite,0x19AC,layout->a);
@@ -1051,8 +1051,8 @@ extern "C" int fn_801CE918(CourseRows *self, int index) {
     }
     case 2: break;
     case 3: {
-        RowAnimation *animations = lbl_8049B348;
-        RowLayout *layout = &lbl_8049B1E0[index];
+        RowAnimation *animations = clFlowCourse_data_8049B348;
+        RowLayout *layout = &clFlowCourse_data_8049B1E0[index];
         if (!row->sprite) row->sprite = new AnimSprite(animations[2].resource,0,0);
         else Sprite_SetupAnim(row->sprite, animations[2].resource,0,0);
         Sprite_SetAnimParam(row->sprite,0x19AC,layout->a);
@@ -1081,8 +1081,8 @@ void fn_801CE800(CourseSel *sel, int index) {
     int cup = index / 2;
     int cupId;
 
-    *sel->nameA = lbl_8049B388[cup].first;
-    *sel->nameB = lbl_8049B388[cup].second;
+    *sel->nameA = clFlowCourse_data_8049B388[cup].first;
+    *sel->nameB = clFlowCourse_data_8049B388[cup].second;
     fn_80121E10(&sel->course);
     switch (cup) {
     case 0:

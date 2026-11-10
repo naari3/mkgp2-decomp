@@ -1,11 +1,11 @@
 /* --- owned .rodata 0x80360498..0x803604F8 (tools/own_data.py) --- */
 #pragma force_active on
-const int lbl_80360498[8][2] = { 2720, 2721, 2692, 2693, 2678, 2679, 2734, 2735, 2706, 2707, 2752, 2753, 2772, 2773, 2762, 2763 };
-const int lbl_803604D8[8] = { 5286, 5284, 5283, 5287, 5285, 5288, 5290, 5289 };
+const int ResultFx_rodata_80360498[8][2] = { 2720, 2721, 2692, 2693, 2678, 2679, 2734, 2735, 2706, 2707, 2752, 2753, 2772, 2773, 2762, 2763 };
+const int ResultFx_rodata_803604D8[8] = { 5286, 5284, 5283, 5287, 5285, 5288, 5290, 5289 };
 #pragma force_active reset
 /*
  * Result-screen cup trophy effect on the shared sprite-effect base
- * (vtable lbl_8048EBCC; ctor, dtor). The base declares a virtual that is
+ * (vtable TrophyFx_vtable_8048EBCC; ctor, dtor). The base declares a virtual that is
  * not defined here first, so no vtable is emitted.
  */
 #pragma cplusplus on
@@ -16,13 +16,13 @@ typedef float Mtx[3][4];
 
 extern "C" {
 extern char lbl_8048EB44[];
-extern char lbl_8048EBCC[];
-extern char lbl_8048EC9C[];
-extern unsigned int lbl_80360520[];
-extern int lbl_803606C4[];
-extern int lbl_803606E4[][3];
-extern char lbl_806CF688[4];
-extern char lbl_806CF68C[4];
+extern char TrophyFx_vtable_8048EBCC[];
+extern char ResultFx_vtable_8048EC9C[];
+extern unsigned int ConfettiField_rodata_80360520[];
+extern int ResultFxScene_rodata_803606C4[];
+extern int ResultFxScene_rodata_803606E4[][3];
+extern char ResultFx_data_806CF688[4];
+extern char ResultFx_data_806CF68C[4];
 extern int g_cupId;
 extern const float lbl_806D77AC, lbl_806D77B0, lbl_806D77B8, lbl_806D7840, lbl_806D7860;
 extern const float lbl_806D7868;
@@ -121,7 +121,7 @@ extern void *GetInputManager(void);
 extern InputPlayer *InputMgr_GetPlayer(void *, int);
 extern void SetRumbleMode(unsigned int ch, unsigned int mode, int duration);
 extern struct { char pad[0x20]; signed char f20; } lbl_80598A60;
-extern char lbl_806CF690[4];
+extern char ResultFx_data_806CF690[4];
 extern const char lbl_806D77C4[4];
 extern const char lbl_806D780C[7];
 extern const char lbl_806D7824[5];
@@ -223,7 +223,7 @@ void TrophyFx::DrawCaption(float a) {
 
     alpha = (int)(255.0f * a);
     ResCtrl rc;
-    rc.resId = lbl_803604D8[cup - 1];
+    rc.resId = ResultFx_rodata_803604D8[cup - 1];
     rc.flag = 1;
     rc.x = 320.0f;
     rc.y = 238.0f;
@@ -475,11 +475,11 @@ void TrophyFx::Update() {
             done = 0;
             state++;
             t = 0.0f;
-            SpriteGroup_CreateOrInit(&anims[1], lbl_806CF690, 0, 320.0f, 240.0f);
+            SpriteGroup_CreateOrInit(&anims[1], ResultFx_data_806CF690, 0, 320.0f, 240.0f);
             SoundMgr_Play(0x1A);
             int idx = cup - 1;
-            SpriteAnimParamBlock_SetAnimParamCached(anims[1], 0xA9C, lbl_80360498[idx][0]);
-            SpriteAnimParamBlock_SetAnimParamCached(anims[1], 0xA9D, lbl_80360498[idx][1]);
+            SpriteAnimParamBlock_SetAnimParamCached(anims[1], 0xA9C, ResultFx_rodata_80360498[idx][0]);
+            SpriteAnimParamBlock_SetAnimParamCached(anims[1], 0xA9D, ResultFx_rodata_80360498[idx][1]);
         }
         break;
     case 4:
@@ -542,9 +542,9 @@ TrophyFx::~TrophyFx() {
     }
     SpriteHandle_Destroy(sprite);
     int idx = cup - 1;
-    fn_80120A08(lbl_803604D8[idx]);
-    fn_80120A08(lbl_80360498[idx][0]);
-    fn_80120A08(lbl_80360498[idx][1]);
+    fn_80120A08(ResultFx_rodata_803604D8[idx]);
+    fn_80120A08(ResultFx_rodata_80360498[idx][0]);
+    fn_80120A08(ResultFx_rodata_80360498[idx][1]);
     fn_80120A08(0x14E5);
     fn_80120A08(0x14F5);
     fn_80120A08(0x1CDA);
@@ -567,15 +567,15 @@ TrophyFx::TrophyFx() {
     anims[1] = 0;
     anims[2] = 0;
     idx = cup - 1;
-    PreloadResource(lbl_803604D8[idx]);
-    PreloadResource(lbl_80360498[idx][0]);
-    PreloadResource(lbl_80360498[idx][1]);
+    PreloadResource(ResultFx_rodata_803604D8[idx]);
+    PreloadResource(ResultFx_rodata_80360498[idx][0]);
+    PreloadResource(ResultFx_rodata_80360498[idx][1]);
     PreloadResource(0x14E5);
     PreloadResource(0x14F5);
     PreloadResource(0x1CDA);
     PreloadResource(0x1CDD);
-    SpriteGroup_CreateOrInit(&anims[0], lbl_806CF688, 0, lbl_806D77B8, lbl_806D7840);
-    SpriteGroup_CreateOrInit(&anims[2], lbl_806CF68C, 1, lbl_806D7860, lbl_806D7840);
+    SpriteGroup_CreateOrInit(&anims[0], ResultFx_data_806CF688, 0, lbl_806D77B8, lbl_806D7840);
+    SpriteGroup_CreateOrInit(&anims[2], ResultFx_data_806CF68C, 1, lbl_806D7860, lbl_806D7840);
     ((SpriteRef *)anims[2])->spr->t = lbl_806D77B0;
     sprite = 0;
     PreloadResource(0x14E5);

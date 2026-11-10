@@ -1,6 +1,6 @@
 /*
- * 0x8021550C..0x8021617C: coin challenge result popup (vtable lbl_804EDAD0)
- * and the start countdown HUD (vtable lbl_804EDAF4, base lbl_804EDB28).
+ * 0x8021550C..0x8021617C: coin challenge result popup (vtable ScorePopup_vtable_804EDAD0)
+ * and the start countdown HUD (vtable CountdownHud_vtable_804EDAF4, base lbl_804EDB28).
  * The popup's empty Draw lives in fn_80215508.c and the countdown base
  * dtor in dtor_8021617C.c.
  */

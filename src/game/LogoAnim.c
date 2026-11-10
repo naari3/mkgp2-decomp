@@ -2,7 +2,7 @@
  * A small sprite animation object (resource 0x139F): two layers of the
  * same sprite are scaled and faded in, held, and scaled back out from a
  * frame timer. Three classes deep (vtables lbl_8048ECF8, lbl_8048ED10,
- * lbl_8048ECE0, all in data), so the vptr stores are spelled out by hand.
+ * LogoAnim_data_8048ECE0, all in data), so the vptr stores are spelled out by hand.
  *
  * The update keeps its seven scale/alpha temps at function scope, declared
  * in the order below: MWCC numbers locals in reverse declaration order and
@@ -12,7 +12,7 @@
 #pragma cplusplus on
 
 extern "C" {
-extern char lbl_8048ECE0[];
+extern char LogoAnim_data_8048ECE0[];
 extern char lbl_8048ECF8[];
 extern char lbl_8048ED10[];
 extern void fn_8016918C(void *obj, int id, int flag, float x, float y, float sx, float sy, float r, float g, float b, float a);
@@ -118,11 +118,11 @@ extern "C" void fn_80141454(LogoAnim *self) {
 
 
 LogoAnim::~LogoAnim() {
-    vptr = lbl_8048ECE0;
+    vptr = LogoAnim_data_8048ECE0;
 }
 
 LogoAnim::LogoAnim(void *o, int a) : AnimMid(a) {
-    vptr = lbl_8048ECE0;
+    vptr = LogoAnim_data_8048ECE0;
     obj = o;
     done = 0;
     t = 0.0f;

@@ -9,8 +9,8 @@ extern int g_gameMode;
 extern int g_cupId;
 extern int g_ccClass;
 extern int g_roundIndex;
-extern int lbl_806CFF18;
-extern HitCooldownEntry lbl_804E3D4C[];
+extern int AI_GetHitCooldown_data_806CFF18;
+extern HitCooldownEntry AI_GetHitCooldown_data_804E3D4C[];
 
 static inline unsigned char KartCond_Matches(KartCond c, int kart) {
     if (c.mode != -1 && c.mode != g_gameMode) {
@@ -34,9 +34,9 @@ static inline unsigned char KartCond_Matches(KartCond c, int kart) {
 int AI_GetHitCooldown(int kart) {
     int i;
 
-    for (i = 0; i < lbl_806CFF18; i++) {
-        if (KartCond_Matches(lbl_804E3D4C[i].cond, kart)) {
-            return lbl_804E3D4C[i].cooldown;
+    for (i = 0; i < AI_GetHitCooldown_data_806CFF18; i++) {
+        if (KartCond_Matches(AI_GetHitCooldown_data_804E3D4C[i].cond, kart)) {
+            return AI_GetHitCooldown_data_804E3D4C[i].cooldown;
         }
     }
     return 0;

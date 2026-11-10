@@ -23,6 +23,6 @@ int PlayerData_ResolveUnlockedIdByIndex(void *, int);
 int Item_GetDescriptorField0(int,int);
 extern const float lbl_806DB8DC, lbl_806DB940, lbl_806DB8CC, lbl_806DB8A0;
 extern const char lbl_806DB8F8[4];
-extern int lbl_803DC174[3];
+extern int ItemGridState_Init_rodata_803DC174[3];
 }
 #endif

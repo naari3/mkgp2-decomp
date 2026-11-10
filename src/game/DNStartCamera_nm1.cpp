@@ -35,7 +35,7 @@ void clDNStartCamera::Update() {
     float a;
     float x = m[3];
     float z = m[11];
-    if (x >= lbl_803D0CF8[0] && x <= lbl_803D0CF8[2] && z >= lbl_803D0CF8[1] && z <= lbl_803D0CF8[3]) {
+    if (x >= DNStartCamera_nm1_rodata_803D0CF8[0] && x <= DNStartCamera_nm1_rodata_803D0CF8[2] && z >= DNStartCamera_nm1_rodata_803D0CF8[1] && z <= DNStartCamera_nm1_rodata_803D0CF8[3]) {
         hidden = 0;
         for (int i = 0; i < 10; i++) {
             a = JObjGetTranslationX(men[i]) - x;

@@ -81,7 +81,7 @@ void *const lbl_80383E80[42] = {
     (void *)0x3DCCCCCD,
     (void *)0x3E4CCCCD
 };
-const unk32 lbl_80383F28[60] = {
+const unk32 rodata_803175A0_rodata_80383F28[60] = {
     0x3F800000, 0x3F4CCCCD, 0x00000000, 0x3F800000, 0x3F800000, 0x3F800000, 0x3F800000, 0x44BB8000,
     0x43960000, 0x43520000, 0x3E570A3E, 0x3C83126F, 0x3F800000, 0x3F800000, 0x3F800000, 0x41700000,
     0x3F800000, 0x3F333333, 0x42340000, 0x3EE66666, 0x3F800000, 0x3F800000, 0x40000000, 0x00000001,
@@ -96,73 +96,73 @@ void *const lbl_80384018[2] = {
     (void *)&lbl_80383E80,
     (void *)0x7
 };
-const float lbl_80384020[14] = {
+const float rodata_803175A0_rodata_80384020[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80384058[14] = {
+const float rodata_803175A0_rodata_80384058[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80384090[14] = {
+const float rodata_803175A0_rodata_80384090[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_803840C8[14] = {
+const float rodata_803175A0_rodata_803840C8[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80384100[14] = {
+const float rodata_803175A0_rodata_80384100[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80384138[14] = {
+const float rodata_803175A0_rodata_80384138[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80384170[14] = {
+const float rodata_803175A0_rodata_80384170[14] = {
     0.0f, 0.0f, 5e+02f, 8.8148155f, 1e+03f, 17.629631f, 2e+03f, 26.444447f,
     3e+03f, 35.259262f, 4e+03f, 44.074078f, 5e+03f, 52.888893f
 };
 /* pointers mixed with values */
-void *const lbl_803841A8[42] = {
-    (void *)&lbl_80384170,
+void *const rodata_803175A0_rodata_803841A8[42] = {
+    (void *)&rodata_803175A0_rodata_80384170,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E4CCCCD,
-    (void *)&lbl_80384020,
+    (void *)&rodata_803175A0_rodata_80384020,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E4CCCCD,
-    (void *)&lbl_80384058,
+    (void *)&rodata_803175A0_rodata_80384058,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E4CCCCD,
-    (void *)&lbl_80384090,
+    (void *)&rodata_803175A0_rodata_80384090,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E4CCCCD,
-    (void *)&lbl_803840C8,
+    (void *)&rodata_803175A0_rodata_803840C8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E4CCCCD,
-    (void *)&lbl_80384100,
+    (void *)&rodata_803175A0_rodata_80384100,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E4CCCCD,
-    (void *)&lbl_80384138,
+    (void *)&rodata_803175A0_rodata_80384138,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -170,7 +170,7 @@ void *const lbl_803841A8[42] = {
     (void *)0x3E4CCCCD
 };
 /* pointers mixed with values */
-void *const lbl_80384250[62] = {
+void *const rodata_803175A0_rodata_80384250[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -231,76 +231,76 @@ void *const lbl_80384250[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803841A8,
+    (void *)&rodata_803175A0_rodata_803841A8,
     (void *)0x7
 };
-const float lbl_80384348[14] = {
+const float rodata_803175A0_rodata_80384348[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80384380[14] = {
+const float rodata_803175A0_rodata_80384380[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803843B8[14] = {
+const float rodata_803175A0_rodata_803843B8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803843F0[14] = {
+const float rodata_803175A0_rodata_803843F0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80384428[14] = {
+const float rodata_803175A0_rodata_80384428[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80384460[14] = {
+const float rodata_803175A0_rodata_80384460[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80384498[14] = {
+const float rodata_803175A0_rodata_80384498[14] = {
     0.0f, 0.0f, 5e+02f, 5.555556f, 1e+03f, 11.111112f, 2e+03f, 16.666668f,
     3e+03f, 22.222223f, 4e+03f, 27.777779f, 5e+03f, 33.333336f
 };
 /* pointers mixed with values */
-void *const lbl_803844D0[42] = {
-    (void *)&lbl_80384498,
+void *const rodata_803175A0_rodata_803844D0[42] = {
+    (void *)&rodata_803175A0_rodata_80384498,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E4CCCCD,
-    (void *)&lbl_80384348,
+    (void *)&rodata_803175A0_rodata_80384348,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E4CCCCD,
-    (void *)&lbl_80384380,
+    (void *)&rodata_803175A0_rodata_80384380,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E4CCCCD,
-    (void *)&lbl_803843B8,
+    (void *)&rodata_803175A0_rodata_803843B8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E4CCCCD,
-    (void *)&lbl_803843F0,
+    (void *)&rodata_803175A0_rodata_803843F0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E4CCCCD,
-    (void *)&lbl_80384428,
+    (void *)&rodata_803175A0_rodata_80384428,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E4CCCCD,
-    (void *)&lbl_80384460,
+    (void *)&rodata_803175A0_rodata_80384460,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -308,7 +308,7 @@ void *const lbl_803844D0[42] = {
     (void *)0x3E4CCCCD
 };
 /* pointers mixed with values */
-void *const lbl_80384578[62] = {
+void *const rodata_803175A0_rodata_80384578[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -369,76 +369,76 @@ void *const lbl_80384578[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803844D0,
+    (void *)&rodata_803175A0_rodata_803844D0,
     (void *)0x7
 };
-const float lbl_80384670[14] = {
+const float rodata_803175A0_rodata_80384670[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803846A8[14] = {
+const float rodata_803175A0_rodata_803846A8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803846E0[14] = {
+const float rodata_803175A0_rodata_803846E0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80384718[14] = {
+const float rodata_803175A0_rodata_80384718[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80384750[14] = {
+const float rodata_803175A0_rodata_80384750[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80384788[14] = {
+const float rodata_803175A0_rodata_80384788[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803847C0[14] = {
+const float rodata_803175A0_rodata_803847C0[14] = {
     0.0f, 0.0f, 5e+02f, 8.888889f, 1e+03f, 17.777779f, 2e+03f, 26.666668f,
     3e+03f, 35.555557f, 4e+03f, 44.444447f, 5e+03f, 53.333336f
 };
 /* pointers mixed with values */
-void *const lbl_803847F8[42] = {
-    (void *)&lbl_803847C0,
+void *const rodata_803175A0_rodata_803847F8[42] = {
+    (void *)&rodata_803175A0_rodata_803847C0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80384670,
+    (void *)&rodata_803175A0_rodata_80384670,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803846A8,
+    (void *)&rodata_803175A0_rodata_803846A8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803846E0,
+    (void *)&rodata_803175A0_rodata_803846E0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80384718,
+    (void *)&rodata_803175A0_rodata_80384718,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80384750,
+    (void *)&rodata_803175A0_rodata_80384750,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80384788,
+    (void *)&rodata_803175A0_rodata_80384788,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -446,7 +446,7 @@ void *const lbl_803847F8[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_803848A0[62] = {
+void *const rodata_803175A0_rodata_803848A0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -507,76 +507,76 @@ void *const lbl_803848A0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803847F8,
+    (void *)&rodata_803175A0_rodata_803847F8,
     (void *)0x7
 };
-const float lbl_80384998[14] = {
+const float rodata_803175A0_rodata_80384998[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_803849D0[14] = {
+const float rodata_803175A0_rodata_803849D0[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80384A08[14] = {
+const float rodata_803175A0_rodata_80384A08[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80384A40[14] = {
+const float rodata_803175A0_rodata_80384A40[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80384A78[14] = {
+const float rodata_803175A0_rodata_80384A78[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80384AB0[14] = {
+const float rodata_803175A0_rodata_80384AB0[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80384AE8[14] = {
+const float rodata_803175A0_rodata_80384AE8[14] = {
     0.0f, 0.0f, 5e+02f, 10.37037f, 1e+03f, 20.74074f, 2e+03f, 31.111113f,
     3e+03f, 41.48148f, 4e+03f, 51.85185f, 5e+03f, 62.222225f
 };
 /* pointers mixed with values */
-void *const lbl_80384B20[42] = {
-    (void *)&lbl_80384AE8,
+void *const rodata_803175A0_rodata_80384B20[42] = {
+    (void *)&rodata_803175A0_rodata_80384AE8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80384998,
+    (void *)&rodata_803175A0_rodata_80384998,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803849D0,
+    (void *)&rodata_803175A0_rodata_803849D0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80384A08,
+    (void *)&rodata_803175A0_rodata_80384A08,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80384A40,
+    (void *)&rodata_803175A0_rodata_80384A40,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80384A78,
+    (void *)&rodata_803175A0_rodata_80384A78,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80384AB0,
+    (void *)&rodata_803175A0_rodata_80384AB0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -584,7 +584,7 @@ void *const lbl_80384B20[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_80384BC8[62] = {
+void *const rodata_803175A0_rodata_80384BC8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -645,76 +645,76 @@ void *const lbl_80384BC8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80384B20,
+    (void *)&rodata_803175A0_rodata_80384B20,
     (void *)0x7
 };
-const float lbl_80384CC0[14] = {
+const float rodata_803175A0_rodata_80384CC0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80384CF8[14] = {
+const float rodata_803175A0_rodata_80384CF8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80384D30[14] = {
+const float rodata_803175A0_rodata_80384D30[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80384D68[14] = {
+const float rodata_803175A0_rodata_80384D68[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80384DA0[14] = {
+const float rodata_803175A0_rodata_80384DA0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80384DD8[14] = {
+const float rodata_803175A0_rodata_80384DD8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80384E10[14] = {
+const float rodata_803175A0_rodata_80384E10[14] = {
     0.0f, 0.0f, 5e+02f, 8.888889f, 1e+03f, 17.777779f, 2e+03f, 26.666668f,
     3e+03f, 35.555557f, 4e+03f, 44.444447f, 5e+03f, 53.333336f
 };
 /* pointers mixed with values */
-void *const lbl_80384E48[42] = {
-    (void *)&lbl_80384E10,
+void *const rodata_803175A0_rodata_80384E48[42] = {
+    (void *)&rodata_803175A0_rodata_80384E10,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80384CC0,
+    (void *)&rodata_803175A0_rodata_80384CC0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80384CF8,
+    (void *)&rodata_803175A0_rodata_80384CF8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80384D30,
+    (void *)&rodata_803175A0_rodata_80384D30,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80384D68,
+    (void *)&rodata_803175A0_rodata_80384D68,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80384DA0,
+    (void *)&rodata_803175A0_rodata_80384DA0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80384DD8,
+    (void *)&rodata_803175A0_rodata_80384DD8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -722,7 +722,7 @@ void *const lbl_80384E48[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_80384EF0[62] = {
+void *const rodata_803175A0_rodata_80384EF0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -783,76 +783,76 @@ void *const lbl_80384EF0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80384E48,
+    (void *)&rodata_803175A0_rodata_80384E48,
     (void *)0x7
 };
-const float lbl_80384FE8[14] = {
+const float rodata_803175A0_rodata_80384FE8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80385020[14] = {
+const float rodata_803175A0_rodata_80385020[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80385058[14] = {
+const float rodata_803175A0_rodata_80385058[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80385090[14] = {
+const float rodata_803175A0_rodata_80385090[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803850C8[14] = {
+const float rodata_803175A0_rodata_803850C8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80385100[14] = {
+const float rodata_803175A0_rodata_80385100[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80385138[14] = {
+const float rodata_803175A0_rodata_80385138[14] = {
     0.0f, 0.0f, 5e+02f, 8.333334f, 1e+03f, 11.111112f, 2e+03f, 13.888889f,
     3e+03f, 19.444445f, 4e+03f, 22.222223f, 5e+03f, 25.0f
 };
 /* pointers mixed with values */
-void *const lbl_80385170[42] = {
-    (void *)&lbl_80385138,
+void *const rodata_803175A0_rodata_80385170[42] = {
+    (void *)&rodata_803175A0_rodata_80385138,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80384FE8,
+    (void *)&rodata_803175A0_rodata_80384FE8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385020,
+    (void *)&rodata_803175A0_rodata_80385020,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385058,
+    (void *)&rodata_803175A0_rodata_80385058,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385090,
+    (void *)&rodata_803175A0_rodata_80385090,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803850C8,
+    (void *)&rodata_803175A0_rodata_803850C8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385100,
+    (void *)&rodata_803175A0_rodata_80385100,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -860,7 +860,7 @@ void *const lbl_80385170[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_80385218[62] = {
+void *const rodata_803175A0_rodata_80385218[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -921,76 +921,76 @@ void *const lbl_80385218[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80385170,
+    (void *)&rodata_803175A0_rodata_80385170,
     (void *)0x7
 };
-const float lbl_80385310[14] = {
+const float rodata_803175A0_rodata_80385310[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80385348[14] = {
+const float rodata_803175A0_rodata_80385348[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80385380[14] = {
+const float rodata_803175A0_rodata_80385380[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_803853B8[14] = {
+const float rodata_803175A0_rodata_803853B8[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_803853F0[14] = {
+const float rodata_803175A0_rodata_803853F0[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80385428[14] = {
+const float rodata_803175A0_rodata_80385428[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80385460[14] = {
+const float rodata_803175A0_rodata_80385460[14] = {
     0.0f, 0.0f, 5e+02f, 8.333334f, 1e+03f, 11.111112f, 2e+03f, 13.888889f,
     3e+03f, 19.444445f, 4e+03f, 22.222223f, 5e+03f, 25.0f
 };
 /* pointers mixed with values */
-void *const lbl_80385498[42] = {
-    (void *)&lbl_80385460,
+void *const rodata_803175A0_rodata_80385498[42] = {
+    (void *)&rodata_803175A0_rodata_80385460,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385310,
+    (void *)&rodata_803175A0_rodata_80385310,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385348,
+    (void *)&rodata_803175A0_rodata_80385348,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385380,
+    (void *)&rodata_803175A0_rodata_80385380,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803853B8,
+    (void *)&rodata_803175A0_rodata_803853B8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803853F0,
+    (void *)&rodata_803175A0_rodata_803853F0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385428,
+    (void *)&rodata_803175A0_rodata_80385428,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -998,7 +998,7 @@ void *const lbl_80385498[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_80385540[62] = {
+void *const rodata_803175A0_rodata_80385540[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -1059,76 +1059,76 @@ void *const lbl_80385540[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80385498,
+    (void *)&rodata_803175A0_rodata_80385498,
     (void *)0x7
 };
-const float lbl_80385638[14] = {
+const float rodata_803175A0_rodata_80385638[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80385670[14] = {
+const float rodata_803175A0_rodata_80385670[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803856A8[14] = {
+const float rodata_803175A0_rodata_803856A8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803856E0[14] = {
+const float rodata_803175A0_rodata_803856E0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80385718[14] = {
+const float rodata_803175A0_rodata_80385718[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80385750[14] = {
+const float rodata_803175A0_rodata_80385750[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80385788[14] = {
+const float rodata_803175A0_rodata_80385788[14] = {
     0.0f, 0.0f, 5e+02f, 8.333334f, 1e+03f, 11.111112f, 2e+03f, 13.888889f,
     3e+03f, 19.444445f, 4e+03f, 22.222223f, 5e+03f, 25.0f
 };
 /* pointers mixed with values */
-void *const lbl_803857C0[42] = {
-    (void *)&lbl_80385788,
+void *const rodata_803175A0_rodata_803857C0[42] = {
+    (void *)&rodata_803175A0_rodata_80385788,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385638,
+    (void *)&rodata_803175A0_rodata_80385638,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385670,
+    (void *)&rodata_803175A0_rodata_80385670,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803856A8,
+    (void *)&rodata_803175A0_rodata_803856A8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803856E0,
+    (void *)&rodata_803175A0_rodata_803856E0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385718,
+    (void *)&rodata_803175A0_rodata_80385718,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385750,
+    (void *)&rodata_803175A0_rodata_80385750,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -1136,7 +1136,7 @@ void *const lbl_803857C0[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_80385868[62] = {
+void *const rodata_803175A0_rodata_80385868[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -1197,76 +1197,76 @@ void *const lbl_80385868[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803857C0,
+    (void *)&rodata_803175A0_rodata_803857C0,
     (void *)0x7
 };
-const float lbl_80385960[14] = {
+const float rodata_803175A0_rodata_80385960[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80385998[14] = {
+const float rodata_803175A0_rodata_80385998[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803859D0[14] = {
+const float rodata_803175A0_rodata_803859D0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80385A08[14] = {
+const float rodata_803175A0_rodata_80385A08[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80385A40[14] = {
+const float rodata_803175A0_rodata_80385A40[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80385A78[14] = {
+const float rodata_803175A0_rodata_80385A78[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80385AB0[14] = {
+const float rodata_803175A0_rodata_80385AB0[14] = {
     0.0f, 0.0f, 5e+02f, 8.333334f, 1e+03f, 11.111112f, 2e+03f, 13.888889f,
     3e+03f, 19.444445f, 4e+03f, 22.222223f, 5e+03f, 25.0f
 };
 /* pointers mixed with values */
-void *const lbl_80385AE8[42] = {
-    (void *)&lbl_80385AB0,
+void *const rodata_803175A0_rodata_80385AE8[42] = {
+    (void *)&rodata_803175A0_rodata_80385AB0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385960,
+    (void *)&rodata_803175A0_rodata_80385960,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385998,
+    (void *)&rodata_803175A0_rodata_80385998,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803859D0,
+    (void *)&rodata_803175A0_rodata_803859D0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385A08,
+    (void *)&rodata_803175A0_rodata_80385A08,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385A40,
+    (void *)&rodata_803175A0_rodata_80385A40,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385A78,
+    (void *)&rodata_803175A0_rodata_80385A78,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -1274,7 +1274,7 @@ void *const lbl_80385AE8[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_80385B90[62] = {
+void *const rodata_803175A0_rodata_80385B90[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -1335,76 +1335,76 @@ void *const lbl_80385B90[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80385AE8,
+    (void *)&rodata_803175A0_rodata_80385AE8,
     (void *)0x7
 };
-const float lbl_80385C88[14] = {
+const float rodata_803175A0_rodata_80385C88[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80385CC0[14] = {
+const float rodata_803175A0_rodata_80385CC0[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80385CF8[14] = {
+const float rodata_803175A0_rodata_80385CF8[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80385D30[14] = {
+const float rodata_803175A0_rodata_80385D30[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80385D68[14] = {
+const float rodata_803175A0_rodata_80385D68[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80385DA0[14] = {
+const float rodata_803175A0_rodata_80385DA0[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80385DD8[14] = {
+const float rodata_803175A0_rodata_80385DD8[14] = {
     0.0f, 0.0f, 5e+02f, 8.333334f, 1e+03f, 11.111112f, 2e+03f, 13.888889f,
     3e+03f, 19.444445f, 4e+03f, 22.222223f, 5e+03f, 25.0f
 };
 /* pointers mixed with values */
-void *const lbl_80385E10[42] = {
-    (void *)&lbl_80385DD8,
+void *const rodata_803175A0_rodata_80385E10[42] = {
+    (void *)&rodata_803175A0_rodata_80385DD8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385C88,
+    (void *)&rodata_803175A0_rodata_80385C88,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385CC0,
+    (void *)&rodata_803175A0_rodata_80385CC0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385CF8,
+    (void *)&rodata_803175A0_rodata_80385CF8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385D30,
+    (void *)&rodata_803175A0_rodata_80385D30,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385D68,
+    (void *)&rodata_803175A0_rodata_80385D68,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385DA0,
+    (void *)&rodata_803175A0_rodata_80385DA0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -1412,7 +1412,7 @@ void *const lbl_80385E10[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_80385EB8[62] = {
+void *const rodata_803175A0_rodata_80385EB8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -1473,76 +1473,76 @@ void *const lbl_80385EB8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80385E10,
+    (void *)&rodata_803175A0_rodata_80385E10,
     (void *)0x7
 };
-const float lbl_80385FB0[14] = {
+const float rodata_803175A0_rodata_80385FB0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80385FE8[14] = {
+const float rodata_803175A0_rodata_80385FE8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386020[14] = {
+const float rodata_803175A0_rodata_80386020[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386058[14] = {
+const float rodata_803175A0_rodata_80386058[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386090[14] = {
+const float rodata_803175A0_rodata_80386090[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803860C8[14] = {
+const float rodata_803175A0_rodata_803860C8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386100[14] = {
+const float rodata_803175A0_rodata_80386100[14] = {
     0.0f, 0.0f, 5e+02f, 8.333334f, 1e+03f, 11.111112f, 2e+03f, 13.888889f,
     3e+03f, 19.444445f, 4e+03f, 22.222223f, 5e+03f, 25.0f
 };
 /* pointers mixed with values */
-void *const lbl_80386138[42] = {
-    (void *)&lbl_80386100,
+void *const rodata_803175A0_rodata_80386138[42] = {
+    (void *)&rodata_803175A0_rodata_80386100,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385FB0,
+    (void *)&rodata_803175A0_rodata_80385FB0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80385FE8,
+    (void *)&rodata_803175A0_rodata_80385FE8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386020,
+    (void *)&rodata_803175A0_rodata_80386020,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386058,
+    (void *)&rodata_803175A0_rodata_80386058,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386090,
+    (void *)&rodata_803175A0_rodata_80386090,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803860C8,
+    (void *)&rodata_803175A0_rodata_803860C8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -1550,7 +1550,7 @@ void *const lbl_80386138[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_803861E0[62] = {
+void *const rodata_803175A0_rodata_803861E0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -1611,76 +1611,76 @@ void *const lbl_803861E0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80386138,
+    (void *)&rodata_803175A0_rodata_80386138,
     (void *)0x7
 };
-const float lbl_803862D8[14] = {
+const float rodata_803175A0_rodata_803862D8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386310[14] = {
+const float rodata_803175A0_rodata_80386310[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386348[14] = {
+const float rodata_803175A0_rodata_80386348[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386380[14] = {
+const float rodata_803175A0_rodata_80386380[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803863B8[14] = {
+const float rodata_803175A0_rodata_803863B8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803863F0[14] = {
+const float rodata_803175A0_rodata_803863F0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386428[14] = {
+const float rodata_803175A0_rodata_80386428[14] = {
     0.0f, 0.0f, 5e+02f, 8.8148155f, 1e+03f, 17.629631f, 2e+03f, 26.444447f,
     3e+03f, 35.259262f, 4e+03f, 44.074078f, 5e+03f, 52.888893f
 };
 /* pointers mixed with values */
-void *const lbl_80386460[42] = {
-    (void *)&lbl_80386428,
+void *const rodata_803175A0_rodata_80386460[42] = {
+    (void *)&rodata_803175A0_rodata_80386428,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803862D8,
+    (void *)&rodata_803175A0_rodata_803862D8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386310,
+    (void *)&rodata_803175A0_rodata_80386310,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386348,
+    (void *)&rodata_803175A0_rodata_80386348,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386380,
+    (void *)&rodata_803175A0_rodata_80386380,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803863B8,
+    (void *)&rodata_803175A0_rodata_803863B8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803863F0,
+    (void *)&rodata_803175A0_rodata_803863F0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -1688,7 +1688,7 @@ void *const lbl_80386460[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_80386508[62] = {
+void *const rodata_803175A0_rodata_80386508[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -1749,76 +1749,76 @@ void *const lbl_80386508[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80386460,
+    (void *)&rodata_803175A0_rodata_80386460,
     (void *)0x7
 };
-const float lbl_80386600[14] = {
+const float rodata_803175A0_rodata_80386600[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80386638[14] = {
+const float rodata_803175A0_rodata_80386638[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80386670[14] = {
+const float rodata_803175A0_rodata_80386670[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_803866A8[14] = {
+const float rodata_803175A0_rodata_803866A8[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_803866E0[14] = {
+const float rodata_803175A0_rodata_803866E0[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80386718[14] = {
+const float rodata_803175A0_rodata_80386718[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80386750[14] = {
+const float rodata_803175A0_rodata_80386750[14] = {
     0.0f, 0.0f, 5e+02f, 8.8148155f, 1e+03f, 17.629631f, 2e+03f, 26.444447f,
     3e+03f, 35.259262f, 4e+03f, 44.074078f, 5e+03f, 52.888893f
 };
 /* pointers mixed with values */
-void *const lbl_80386788[42] = {
-    (void *)&lbl_80386750,
+void *const rodata_803175A0_rodata_80386788[42] = {
+    (void *)&rodata_803175A0_rodata_80386750,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386600,
+    (void *)&rodata_803175A0_rodata_80386600,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386638,
+    (void *)&rodata_803175A0_rodata_80386638,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386670,
+    (void *)&rodata_803175A0_rodata_80386670,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803866A8,
+    (void *)&rodata_803175A0_rodata_803866A8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803866E0,
+    (void *)&rodata_803175A0_rodata_803866E0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386718,
+    (void *)&rodata_803175A0_rodata_80386718,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -1826,7 +1826,7 @@ void *const lbl_80386788[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_80386830[62] = {
+void *const rodata_803175A0_rodata_80386830[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -1887,76 +1887,76 @@ void *const lbl_80386830[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80386788,
+    (void *)&rodata_803175A0_rodata_80386788,
     (void *)0x7
 };
-const float lbl_80386928[14] = {
+const float rodata_803175A0_rodata_80386928[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386960[14] = {
+const float rodata_803175A0_rodata_80386960[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386998[14] = {
+const float rodata_803175A0_rodata_80386998[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803869D0[14] = {
+const float rodata_803175A0_rodata_803869D0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386A08[14] = {
+const float rodata_803175A0_rodata_80386A08[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386A40[14] = {
+const float rodata_803175A0_rodata_80386A40[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386A78[14] = {
+const float rodata_803175A0_rodata_80386A78[14] = {
     0.0f, 0.0f, 5e+02f, 8.8148155f, 1e+03f, 17.629631f, 2e+03f, 26.444447f,
     3e+03f, 35.259262f, 4e+03f, 44.074078f, 5e+03f, 52.888893f
 };
 /* pointers mixed with values */
-void *const lbl_80386AB0[42] = {
-    (void *)&lbl_80386A78,
+void *const rodata_803175A0_rodata_80386AB0[42] = {
+    (void *)&rodata_803175A0_rodata_80386A78,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386928,
+    (void *)&rodata_803175A0_rodata_80386928,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386960,
+    (void *)&rodata_803175A0_rodata_80386960,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386998,
+    (void *)&rodata_803175A0_rodata_80386998,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803869D0,
+    (void *)&rodata_803175A0_rodata_803869D0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386A08,
+    (void *)&rodata_803175A0_rodata_80386A08,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386A40,
+    (void *)&rodata_803175A0_rodata_80386A40,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -1964,7 +1964,7 @@ void *const lbl_80386AB0[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_80386B58[62] = {
+void *const rodata_803175A0_rodata_80386B58[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -2025,76 +2025,76 @@ void *const lbl_80386B58[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80386AB0,
+    (void *)&rodata_803175A0_rodata_80386AB0,
     (void *)0x7
 };
-const float lbl_80386C50[14] = {
+const float rodata_803175A0_rodata_80386C50[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386C88[14] = {
+const float rodata_803175A0_rodata_80386C88[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386CC0[14] = {
+const float rodata_803175A0_rodata_80386CC0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386CF8[14] = {
+const float rodata_803175A0_rodata_80386CF8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386D30[14] = {
+const float rodata_803175A0_rodata_80386D30[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386D68[14] = {
+const float rodata_803175A0_rodata_80386D68[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80386DA0[14] = {
+const float rodata_803175A0_rodata_80386DA0[14] = {
     0.0f, 0.0f, 5e+02f, 10.37037f, 1e+03f, 20.74074f, 2e+03f, 31.111113f,
     3e+03f, 41.48148f, 4e+03f, 51.85185f, 5e+03f, 62.222225f
 };
 /* pointers mixed with values */
-void *const lbl_80386DD8[42] = {
-    (void *)&lbl_80386DA0,
+void *const rodata_803175A0_rodata_80386DD8[42] = {
+    (void *)&rodata_803175A0_rodata_80386DA0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386C50,
+    (void *)&rodata_803175A0_rodata_80386C50,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386C88,
+    (void *)&rodata_803175A0_rodata_80386C88,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386CC0,
+    (void *)&rodata_803175A0_rodata_80386CC0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386CF8,
+    (void *)&rodata_803175A0_rodata_80386CF8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386D30,
+    (void *)&rodata_803175A0_rodata_80386D30,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80386D68,
+    (void *)&rodata_803175A0_rodata_80386D68,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -2102,7 +2102,7 @@ void *const lbl_80386DD8[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_80386E80[62] = {
+void *const rodata_803175A0_rodata_80386E80[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -2163,76 +2163,76 @@ void *const lbl_80386E80[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80386DD8,
+    (void *)&rodata_803175A0_rodata_80386DD8,
     (void *)0x7
 };
-const float lbl_80386F78[14] = {
+const float rodata_803175A0_rodata_80386F78[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80386FB0[14] = {
+const float rodata_803175A0_rodata_80386FB0[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80386FE8[14] = {
+const float rodata_803175A0_rodata_80386FE8[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80387020[14] = {
+const float rodata_803175A0_rodata_80387020[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80387058[14] = {
+const float rodata_803175A0_rodata_80387058[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80387090[14] = {
+const float rodata_803175A0_rodata_80387090[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_803870C8[14] = {
+const float rodata_803175A0_rodata_803870C8[14] = {
     0.0f, 0.0f, 5e+02f, 18.055555f, 1e+03f, 30.092592f, 2e+03f, 42.129627f,
     3e+03f, 48.148148f, 4e+03f, 60.185184f, 5e+03f, 72.22222f
 };
 /* pointers mixed with values */
-void *const lbl_80387100[42] = {
-    (void *)&lbl_803870C8,
+void *const rodata_803175A0_rodata_80387100[42] = {
+    (void *)&rodata_803175A0_rodata_803870C8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E99999A,
-    (void *)&lbl_80386F78,
+    (void *)&rodata_803175A0_rodata_80386F78,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E99999A,
-    (void *)&lbl_80386FB0,
+    (void *)&rodata_803175A0_rodata_80386FB0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E99999A,
-    (void *)&lbl_80386FE8,
+    (void *)&rodata_803175A0_rodata_80386FE8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E99999A,
-    (void *)&lbl_80387020,
+    (void *)&rodata_803175A0_rodata_80387020,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E99999A,
-    (void *)&lbl_80387058,
+    (void *)&rodata_803175A0_rodata_80387058,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3E99999A,
-    (void *)&lbl_80387090,
+    (void *)&rodata_803175A0_rodata_80387090,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -2240,7 +2240,7 @@ void *const lbl_80387100[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803871A8[62] = {
+void *const rodata_803175A0_rodata_803871A8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -2301,76 +2301,76 @@ void *const lbl_803871A8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80387100,
+    (void *)&rodata_803175A0_rodata_80387100,
     (void *)0x7
 };
-const float lbl_803872A0[14] = {
+const float rodata_803175A0_rodata_803872A0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803872D8[14] = {
+const float rodata_803175A0_rodata_803872D8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80387310[14] = {
+const float rodata_803175A0_rodata_80387310[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80387348[14] = {
+const float rodata_803175A0_rodata_80387348[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80387380[14] = {
+const float rodata_803175A0_rodata_80387380[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803873B8[14] = {
+const float rodata_803175A0_rodata_803873B8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803873F0[14] = {
+const float rodata_803175A0_rodata_803873F0[14] = {
     0.0f, 0.0f, 5e+02f, 10.37037f, 1e+03f, 20.74074f, 2e+03f, 31.111113f,
     3e+03f, 41.48148f, 4e+03f, 51.85185f, 5e+03f, 62.222225f
 };
 /* pointers mixed with values */
-void *const lbl_80387428[42] = {
-    (void *)&lbl_803873F0,
+void *const rodata_803175A0_rodata_80387428[42] = {
+    (void *)&rodata_803175A0_rodata_803873F0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803872A0,
+    (void *)&rodata_803175A0_rodata_803872A0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803872D8,
+    (void *)&rodata_803175A0_rodata_803872D8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387310,
+    (void *)&rodata_803175A0_rodata_80387310,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387348,
+    (void *)&rodata_803175A0_rodata_80387348,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387380,
+    (void *)&rodata_803175A0_rodata_80387380,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803873B8,
+    (void *)&rodata_803175A0_rodata_803873B8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -2378,7 +2378,7 @@ void *const lbl_80387428[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_803874D0[62] = {
+void *const rodata_803175A0_rodata_803874D0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -2439,76 +2439,76 @@ void *const lbl_803874D0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80387428,
+    (void *)&rodata_803175A0_rodata_80387428,
     (void *)0x7
 };
-const float lbl_803875C8[14] = {
+const float rodata_803175A0_rodata_803875C8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80387600[14] = {
+const float rodata_803175A0_rodata_80387600[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80387638[14] = {
+const float rodata_803175A0_rodata_80387638[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80387670[14] = {
+const float rodata_803175A0_rodata_80387670[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803876A8[14] = {
+const float rodata_803175A0_rodata_803876A8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803876E0[14] = {
+const float rodata_803175A0_rodata_803876E0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80387718[14] = {
+const float rodata_803175A0_rodata_80387718[14] = {
     0.0f, 0.0f, 5e+02f, 8.333334f, 1e+03f, 11.111112f, 2e+03f, 13.888889f,
     3e+03f, 19.444445f, 4e+03f, 22.222223f, 5e+03f, 25.0f
 };
 /* pointers mixed with values */
-void *const lbl_80387750[42] = {
-    (void *)&lbl_80387718,
+void *const rodata_803175A0_rodata_80387750[42] = {
+    (void *)&rodata_803175A0_rodata_80387718,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803875C8,
+    (void *)&rodata_803175A0_rodata_803875C8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387600,
+    (void *)&rodata_803175A0_rodata_80387600,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387638,
+    (void *)&rodata_803175A0_rodata_80387638,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387670,
+    (void *)&rodata_803175A0_rodata_80387670,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803876A8,
+    (void *)&rodata_803175A0_rodata_803876A8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803876E0,
+    (void *)&rodata_803175A0_rodata_803876E0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -2516,7 +2516,7 @@ void *const lbl_80387750[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_803877F8[62] = {
+void *const rodata_803175A0_rodata_803877F8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -2577,76 +2577,76 @@ void *const lbl_803877F8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80387750,
+    (void *)&rodata_803175A0_rodata_80387750,
     (void *)0x7
 };
-const float lbl_803878F0[14] = {
+const float rodata_803175A0_rodata_803878F0[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80387928[14] = {
+const float rodata_803175A0_rodata_80387928[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80387960[14] = {
+const float rodata_803175A0_rodata_80387960[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80387998[14] = {
+const float rodata_803175A0_rodata_80387998[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_803879D0[14] = {
+const float rodata_803175A0_rodata_803879D0[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80387A08[14] = {
+const float rodata_803175A0_rodata_80387A08[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80387A40[14] = {
+const float rodata_803175A0_rodata_80387A40[14] = {
     0.0f, 0.0f, 5e+02f, 8.333334f, 1e+03f, 11.111112f, 2e+03f, 13.888889f,
     3e+03f, 19.444445f, 4e+03f, 22.222223f, 5e+03f, 25.0f
 };
 /* pointers mixed with values */
-void *const lbl_80387A78[42] = {
-    (void *)&lbl_80387A40,
+void *const rodata_803175A0_rodata_80387A78[42] = {
+    (void *)&rodata_803175A0_rodata_80387A40,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803878F0,
+    (void *)&rodata_803175A0_rodata_803878F0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387928,
+    (void *)&rodata_803175A0_rodata_80387928,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387960,
+    (void *)&rodata_803175A0_rodata_80387960,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387998,
+    (void *)&rodata_803175A0_rodata_80387998,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803879D0,
+    (void *)&rodata_803175A0_rodata_803879D0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387A08,
+    (void *)&rodata_803175A0_rodata_80387A08,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -2654,7 +2654,7 @@ void *const lbl_80387A78[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_80387B20[62] = {
+void *const rodata_803175A0_rodata_80387B20[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -2715,76 +2715,76 @@ void *const lbl_80387B20[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80387A78,
+    (void *)&rodata_803175A0_rodata_80387A78,
     (void *)0x7
 };
-const float lbl_80387C18[14] = {
+const float rodata_803175A0_rodata_80387C18[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80387C50[14] = {
+const float rodata_803175A0_rodata_80387C50[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80387C88[14] = {
+const float rodata_803175A0_rodata_80387C88[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80387CC0[14] = {
+const float rodata_803175A0_rodata_80387CC0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80387CF8[14] = {
+const float rodata_803175A0_rodata_80387CF8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80387D30[14] = {
+const float rodata_803175A0_rodata_80387D30[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80387D68[14] = {
+const float rodata_803175A0_rodata_80387D68[14] = {
     0.0f, 0.0f, 5e+02f, 8.333334f, 1e+03f, 11.111112f, 2e+03f, 13.888889f,
     3e+03f, 19.444445f, 4e+03f, 22.222223f, 5e+03f, 25.0f
 };
 /* pointers mixed with values */
-void *const lbl_80387DA0[42] = {
-    (void *)&lbl_80387D68,
+void *const rodata_803175A0_rodata_80387DA0[42] = {
+    (void *)&rodata_803175A0_rodata_80387D68,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387C18,
+    (void *)&rodata_803175A0_rodata_80387C18,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387C50,
+    (void *)&rodata_803175A0_rodata_80387C50,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387C88,
+    (void *)&rodata_803175A0_rodata_80387C88,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387CC0,
+    (void *)&rodata_803175A0_rodata_80387CC0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387CF8,
+    (void *)&rodata_803175A0_rodata_80387CF8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387D30,
+    (void *)&rodata_803175A0_rodata_80387D30,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -2792,7 +2792,7 @@ void *const lbl_80387DA0[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_80387E48[62] = {
+void *const rodata_803175A0_rodata_80387E48[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -2853,76 +2853,76 @@ void *const lbl_80387E48[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80387DA0,
+    (void *)&rodata_803175A0_rodata_80387DA0,
     (void *)0x7
 };
-const float lbl_80387F40[14] = {
+const float rodata_803175A0_rodata_80387F40[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80387F78[14] = {
+const float rodata_803175A0_rodata_80387F78[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80387FB0[14] = {
+const float rodata_803175A0_rodata_80387FB0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80387FE8[14] = {
+const float rodata_803175A0_rodata_80387FE8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80388020[14] = {
+const float rodata_803175A0_rodata_80388020[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80388058[14] = {
+const float rodata_803175A0_rodata_80388058[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80388090[14] = {
+const float rodata_803175A0_rodata_80388090[14] = {
     0.0f, 0.0f, 5e+02f, 8.8148155f, 1e+03f, 17.629631f, 2e+03f, 26.444447f,
     3e+03f, 35.259262f, 4e+03f, 44.074078f, 5e+03f, 52.888893f
 };
 /* pointers mixed with values */
-void *const lbl_803880C8[42] = {
-    (void *)&lbl_80388090,
+void *const rodata_803175A0_rodata_803880C8[42] = {
+    (void *)&rodata_803175A0_rodata_80388090,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387F40,
+    (void *)&rodata_803175A0_rodata_80387F40,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387F78,
+    (void *)&rodata_803175A0_rodata_80387F78,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387FB0,
+    (void *)&rodata_803175A0_rodata_80387FB0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80387FE8,
+    (void *)&rodata_803175A0_rodata_80387FE8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80388020,
+    (void *)&rodata_803175A0_rodata_80388020,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80388058,
+    (void *)&rodata_803175A0_rodata_80388058,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -2930,7 +2930,7 @@ void *const lbl_803880C8[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_80388170[62] = {
+void *const rodata_803175A0_rodata_80388170[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -2991,76 +2991,76 @@ void *const lbl_80388170[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803880C8,
+    (void *)&rodata_803175A0_rodata_803880C8,
     (void *)0x7
 };
-const float lbl_80388268[14] = {
+const float rodata_803175A0_rodata_80388268[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_803882A0[14] = {
+const float rodata_803175A0_rodata_803882A0[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_803882D8[14] = {
+const float rodata_803175A0_rodata_803882D8[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80388310[14] = {
+const float rodata_803175A0_rodata_80388310[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80388348[14] = {
+const float rodata_803175A0_rodata_80388348[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80388380[14] = {
+const float rodata_803175A0_rodata_80388380[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_803883B8[14] = {
+const float rodata_803175A0_rodata_803883B8[14] = {
     0.0f, 0.0f, 5e+02f, 10.37037f, 1e+03f, 20.74074f, 2e+03f, 31.111113f,
     3e+03f, 41.48148f, 4e+03f, 51.85185f, 5e+03f, 62.222225f
 };
 /* pointers mixed with values */
-void *const lbl_803883F0[42] = {
-    (void *)&lbl_803883B8,
+void *const rodata_803175A0_rodata_803883F0[42] = {
+    (void *)&rodata_803175A0_rodata_803883B8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80388268,
+    (void *)&rodata_803175A0_rodata_80388268,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803882A0,
+    (void *)&rodata_803175A0_rodata_803882A0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803882D8,
+    (void *)&rodata_803175A0_rodata_803882D8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80388310,
+    (void *)&rodata_803175A0_rodata_80388310,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80388348,
+    (void *)&rodata_803175A0_rodata_80388348,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80388380,
+    (void *)&rodata_803175A0_rodata_80388380,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -3068,7 +3068,7 @@ void *const lbl_803883F0[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_80388498[62] = {
+void *const rodata_803175A0_rodata_80388498[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -3129,76 +3129,76 @@ void *const lbl_80388498[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803883F0,
+    (void *)&rodata_803175A0_rodata_803883F0,
     (void *)0x7
 };
-const float lbl_80388590[14] = {
+const float rodata_803175A0_rodata_80388590[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803885C8[14] = {
+const float rodata_803175A0_rodata_803885C8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80388600[14] = {
+const float rodata_803175A0_rodata_80388600[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80388638[14] = {
+const float rodata_803175A0_rodata_80388638[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80388670[14] = {
+const float rodata_803175A0_rodata_80388670[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803886A8[14] = {
+const float rodata_803175A0_rodata_803886A8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803886E0[14] = {
+const float rodata_803175A0_rodata_803886E0[14] = {
     0.0f, 0.0f, 5e+02f, 8.8148155f, 1e+03f, 17.629631f, 2e+03f, 26.444447f,
     3e+03f, 35.259262f, 4e+03f, 44.074078f, 5e+03f, 52.888893f
 };
 /* pointers mixed with values */
-void *const lbl_80388718[42] = {
-    (void *)&lbl_803886E0,
+void *const rodata_803175A0_rodata_80388718[42] = {
+    (void *)&rodata_803175A0_rodata_803886E0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80388590,
+    (void *)&rodata_803175A0_rodata_80388590,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803885C8,
+    (void *)&rodata_803175A0_rodata_803885C8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80388600,
+    (void *)&rodata_803175A0_rodata_80388600,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80388638,
+    (void *)&rodata_803175A0_rodata_80388638,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_80388670,
+    (void *)&rodata_803175A0_rodata_80388670,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
     (void *)0x3DCCCCCD,
     (void *)0x3F7AE148,
-    (void *)&lbl_803886A8,
+    (void *)&rodata_803175A0_rodata_803886A8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -3206,7 +3206,7 @@ void *const lbl_80388718[42] = {
     (void *)0x3F7AE148
 };
 /* pointers mixed with values */
-void *const lbl_803887C0[62] = {
+void *const rodata_803175A0_rodata_803887C0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -3267,7 +3267,7 @@ void *const lbl_803887C0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80388718,
+    (void *)&rodata_803175A0_rodata_80388718,
     (void *)0x7
 };
 const float lbl_803888B8[14] = {
@@ -3294,13 +3294,13 @@ const float lbl_803889D0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80388A08[14] = {
+const float rodata_803175A0_rodata_80388A08[14] = {
     0.0f, 0.0f, 5e+02f, 8.189845f, 1e+03f, 16.918495f, 2e+03f, 23.22252f,
     3e+03f, 31.412365f, 4e+03f, 38.255196f, 5e+03f, 53.880558f
 };
 /* pointers mixed with values */
-void *const lbl_80388A40[42] = {
-    (void *)&lbl_80388A08,
+void *const rodata_803175A0_rodata_80388A40[42] = {
+    (void *)&rodata_803175A0_rodata_80388A08,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -3344,7 +3344,7 @@ void *const lbl_80388A40[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80388AE8[62] = {
+void *const rodata_803175A0_rodata_80388AE8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -3405,16 +3405,16 @@ void *const lbl_80388AE8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80388A40,
+    (void *)&rodata_803175A0_rodata_80388A40,
     (void *)0x7
 };
-const float lbl_80388BE0[14] = {
+const float rodata_803175A0_rodata_80388BE0[14] = {
     0.0f, 0.0f, 5e+02f, 6.190178f, 1e+03f, 14.038439f, 2e+03f, 21.05766f,
     3e+03f, 27.800531f, 4e+03f, 39.24131f, 5e+03f, 55.269447f
 };
 /* pointers mixed with values */
-void *const lbl_80388C18[42] = {
-    (void *)&lbl_80388BE0,
+void *const rodata_803175A0_rodata_80388C18[42] = {
+    (void *)&rodata_803175A0_rodata_80388BE0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -3458,7 +3458,7 @@ void *const lbl_80388C18[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80388CC0[62] = {
+void *const rodata_803175A0_rodata_80388CC0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -3519,16 +3519,16 @@ void *const lbl_80388CC0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80388C18,
+    (void *)&rodata_803175A0_rodata_80388C18,
     (void *)0x7
 };
-const float lbl_80388DB8[14] = {
+const float rodata_803175A0_rodata_80388DB8[14] = {
     0.0f, 0.0f, 5e+02f, 8.527622f, 1e+03f, 17.616272f, 2e+03f, 24.180298f,
     3e+03f, 32.70792f, 4e+03f, 39.832973f, 5e+03f, 56.10278f
 };
 /* pointers mixed with values */
-void *const lbl_80388DF0[42] = {
-    (void *)&lbl_80388DB8,
+void *const rodata_803175A0_rodata_80388DF0[42] = {
+    (void *)&rodata_803175A0_rodata_80388DB8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -3572,7 +3572,7 @@ void *const lbl_80388DF0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80388E98[62] = {
+void *const rodata_803175A0_rodata_80388E98[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -3633,7 +3633,7 @@ void *const lbl_80388E98[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80388DF0,
+    (void *)&rodata_803175A0_rodata_80388DF0,
     (void *)0x7
 };
 const float lbl_80388F90[14] = {
@@ -3660,13 +3660,13 @@ const float lbl_803890A8[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_803890E0[14] = {
+const float rodata_803175A0_rodata_803890E0[14] = {
     0.0f, 0.0f, 5e+02f, 16.365557f, 1e+03f, 32.810555f, 2e+03f, 47.905f,
     3e+03f, 57.517776f, 4e+03f, 67.05112f, 5e+03f, 79.44444f
 };
 /* pointers mixed with values */
-void *const lbl_80389118[42] = {
-    (void *)&lbl_803890E0,
+void *const rodata_803175A0_rodata_80389118[42] = {
+    (void *)&rodata_803175A0_rodata_803890E0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -3710,7 +3710,7 @@ void *const lbl_80389118[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803891C0[62] = {
+void *const rodata_803175A0_rodata_803891C0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -3771,16 +3771,16 @@ void *const lbl_803891C0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80389118,
+    (void *)&rodata_803175A0_rodata_80389118,
     (void *)0x7
 };
-const float lbl_803892B8[14] = {
+const float rodata_803175A0_rodata_803892B8[14] = {
     0.0f, 0.0f, 5e+02f, 13.418334f, 1e+03f, 26.917501f, 2e+03f, 40.65917f,
     3e+03f, 55.290005f, 4e+03f, 68.223335f, 5e+03f, 80.833336f
 };
 /* pointers mixed with values */
-void *const lbl_803892F0[42] = {
-    (void *)&lbl_803892B8,
+void *const rodata_803175A0_rodata_803892F0[42] = {
+    (void *)&rodata_803175A0_rodata_803892B8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -3824,7 +3824,7 @@ void *const lbl_803892F0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80389398[62] = {
+void *const rodata_803175A0_rodata_80389398[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -3885,16 +3885,16 @@ void *const lbl_80389398[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803892F0,
+    (void *)&rodata_803175A0_rodata_803892F0,
     (void *)0x7
 };
-const float lbl_80389490[14] = {
+const float rodata_803175A0_rodata_80389490[14] = {
     0.0f, 0.0f, 5e+02f, 16.823334f, 1e+03f, 33.728333f, 2e+03f, 49.245f,
     3e+03f, 59.12667f, 4e+03f, 68.92667f, 5e+03f, 81.66667f
 };
 /* pointers mixed with values */
-void *const lbl_803894C8[42] = {
-    (void *)&lbl_80389490,
+void *const rodata_803175A0_rodata_803894C8[42] = {
+    (void *)&rodata_803175A0_rodata_80389490,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -3938,7 +3938,7 @@ void *const lbl_803894C8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80389570[62] = {
+void *const rodata_803175A0_rodata_80389570[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -3999,7 +3999,7 @@ void *const lbl_80389570[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803894C8,
+    (void *)&rodata_803175A0_rodata_803894C8,
     (void *)0x7
 };
 const float lbl_80389668[14] = {
@@ -4026,13 +4026,13 @@ const float lbl_80389780[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803897B8[14] = {
+const float rodata_803175A0_rodata_803897B8[14] = {
     0.0f, 0.0f, 5e+02f, 6.8392735f, 1e+03f, 14.128499f, 2e+03f, 19.39294f,
     3e+03f, 26.232214f, 4e+03f, 31.946608f, 5e+03f, 44.99522f
 };
 /* pointers mixed with values */
-void *const lbl_803897F0[42] = {
-    (void *)&lbl_803897B8,
+void *const rodata_803175A0_rodata_803897F0[42] = {
+    (void *)&rodata_803175A0_rodata_803897B8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -4076,7 +4076,7 @@ void *const lbl_803897F0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80389898[62] = {
+void *const rodata_803175A0_rodata_80389898[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -4137,16 +4137,16 @@ void *const lbl_80389898[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803897F0,
+    (void *)&rodata_803175A0_rodata_803897F0,
     (void *)0x7
 };
-const float lbl_80389990[14] = {
+const float rodata_803175A0_rodata_80389990[14] = {
     0.0f, 0.0f, 5e+02f, 5.19502f, 1e+03f, 11.781564f, 2e+03f, 17.672346f,
     3e+03f, 23.331205f, 4e+03f, 32.932716f, 5e+03f, 46.38411f
 };
 /* pointers mixed with values */
-void *const lbl_803899C8[42] = {
-    (void *)&lbl_80389990,
+void *const rodata_803175A0_rodata_803899C8[42] = {
+    (void *)&rodata_803175A0_rodata_80389990,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -4190,7 +4190,7 @@ void *const lbl_803899C8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80389A70[62] = {
+void *const rodata_803175A0_rodata_80389A70[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -4251,16 +4251,16 @@ void *const lbl_80389A70[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803899C8,
+    (void *)&rodata_803175A0_rodata_803899C8,
     (void *)0x7
 };
-const float lbl_80389B68[14] = {
+const float rodata_803175A0_rodata_80389B68[14] = {
     0.0f, 0.0f, 5e+02f, 7.177051f, 1e+03f, 14.826277f, 2e+03f, 20.350718f,
     3e+03f, 27.52777f, 4e+03f, 33.524384f, 5e+03f, 47.21744f
 };
 /* pointers mixed with values */
-void *const lbl_80389BA0[42] = {
-    (void *)&lbl_80389B68,
+void *const rodata_803175A0_rodata_80389BA0[42] = {
+    (void *)&rodata_803175A0_rodata_80389B68,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -4304,7 +4304,7 @@ void *const lbl_80389BA0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80389C48[62] = {
+void *const rodata_803175A0_rodata_80389C48[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -4365,7 +4365,7 @@ void *const lbl_80389C48[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80389BA0,
+    (void *)&rodata_803175A0_rodata_80389BA0,
     (void *)0x7
 };
 const float lbl_80389D40[14] = {
@@ -4392,13 +4392,13 @@ const float lbl_80389E58[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80389E90[14] = {
+const float rodata_803175A0_rodata_80389E90[14] = {
     0.0f, 0.0f, 5e+02f, 11.1066675f, 1e+03f, 20.838223f, 2e+03f, 30.56978f,
     3e+03f, 38.873333f, 4e+03f, 45.85467f, 5e+03f, 52.888893f
 };
 /* pointers mixed with values */
-void *const lbl_80389EC8[42] = {
-    (void *)&lbl_80389E90,
+void *const rodata_803175A0_rodata_80389EC8[42] = {
+    (void *)&rodata_803175A0_rodata_80389E90,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -4442,7 +4442,7 @@ void *const lbl_80389EC8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80389F70[62] = {
+void *const rodata_803175A0_rodata_80389F70[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -4503,16 +4503,16 @@ void *const lbl_80389F70[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80389EC8,
+    (void *)&rodata_803175A0_rodata_80389EC8,
     (void *)0x7
 };
-const float lbl_8038A068[14] = {
+const float rodata_803175A0_rodata_8038A068[14] = {
     0.0f, 0.0f, 5e+02f, 9.77f, 1e+03f, 16.500446f, 2e+03f, 24.859224f,
     3e+03f, 38.265835f, 4e+03f, 44.344944f, 5e+03f, 54.277782f
 };
 /* pointers mixed with values */
-void *const lbl_8038A0A0[42] = {
-    (void *)&lbl_8038A068,
+void *const rodata_803175A0_rodata_8038A0A0[42] = {
+    (void *)&rodata_803175A0_rodata_8038A068,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -4556,7 +4556,7 @@ void *const lbl_8038A0A0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038A148[62] = {
+void *const rodata_803175A0_rodata_8038A148[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -4617,16 +4617,16 @@ void *const lbl_8038A148[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038A0A0,
+    (void *)&rodata_803175A0_rodata_8038A0A0,
     (void *)0x7
 };
-const float lbl_8038A240[14] = {
+const float rodata_803175A0_rodata_8038A240[14] = {
     0.0f, 0.0f, 5e+02f, 11.573334f, 1e+03f, 21.71378f, 2e+03f, 31.854225f,
     3e+03f, 40.506668f, 4e+03f, 47.781334f, 5e+03f, 55.111115f
 };
 /* pointers mixed with values */
-void *const lbl_8038A278[42] = {
-    (void *)&lbl_8038A240,
+void *const rodata_803175A0_rodata_8038A278[42] = {
+    (void *)&rodata_803175A0_rodata_8038A240,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -4670,7 +4670,7 @@ void *const lbl_8038A278[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038A320[62] = {
+void *const rodata_803175A0_rodata_8038A320[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -4731,7 +4731,7 @@ void *const lbl_8038A320[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038A278,
+    (void *)&rodata_803175A0_rodata_8038A278,
     (void *)0x7
 };
 const float lbl_8038A418[14] = {
@@ -4758,13 +4758,13 @@ const float lbl_8038A530[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_8038A568[14] = {
+const float rodata_803175A0_rodata_8038A568[14] = {
     0.0f, 0.0f, 5e+02f, 22.477777f, 1e+03f, 33.36667f, 2e+03f, 50.011112f,
     3e+03f, 63.85556f, 4e+03f, 72.333336f, 5e+03f, 77.77778f
 };
 /* pointers mixed with values */
-void *const lbl_8038A5A0[42] = {
-    (void *)&lbl_8038A568,
+void *const rodata_803175A0_rodata_8038A5A0[42] = {
+    (void *)&rodata_803175A0_rodata_8038A568,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -4808,7 +4808,7 @@ void *const lbl_8038A5A0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038A648[62] = {
+void *const rodata_803175A0_rodata_8038A648[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -4869,16 +4869,16 @@ void *const lbl_8038A648[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038A5A0,
+    (void *)&rodata_803175A0_rodata_8038A5A0,
     (void *)0x7
 };
-const float lbl_8038A740[14] = {
+const float rodata_803175A0_rodata_8038A740[14] = {
     0.0f, 0.0f, 5e+02f, 18.129168f, 1e+03f, 33.170834f, 2e+03f, 50.1125f,
     3e+03f, 59.45417f, 4e+03f, 70.458336f, 5e+03f, 79.16667f
 };
 /* pointers mixed with values */
-void *const lbl_8038A778[42] = {
-    (void *)&lbl_8038A740,
+void *const rodata_803175A0_rodata_8038A778[42] = {
+    (void *)&rodata_803175A0_rodata_8038A740,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -4922,7 +4922,7 @@ void *const lbl_8038A778[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038A820[62] = {
+void *const rodata_803175A0_rodata_8038A820[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -4983,16 +4983,16 @@ void *const lbl_8038A820[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038A778,
+    (void *)&rodata_803175A0_rodata_8038A778,
     (void *)0x7
 };
-const float lbl_8038A918[14] = {
+const float rodata_803175A0_rodata_8038A918[14] = {
     0.0f, 0.0f, 5e+02f, 23.12f, 1e+03f, 34.32f, 2e+03f, 51.440002f,
     3e+03f, 65.68f, 4e+03f, 74.4f, 5e+03f, 8e+01f
 };
 /* pointers mixed with values */
-void *const lbl_8038A950[42] = {
-    (void *)&lbl_8038A918,
+void *const rodata_803175A0_rodata_8038A950[42] = {
+    (void *)&rodata_803175A0_rodata_8038A918,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -5036,7 +5036,7 @@ void *const lbl_8038A950[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038A9F8[62] = {
+void *const rodata_803175A0_rodata_8038A9F8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -5097,7 +5097,7 @@ void *const lbl_8038A9F8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038A950,
+    (void *)&rodata_803175A0_rodata_8038A950,
     (void *)0x7
 };
 const float lbl_8038AAF0[14] = {
@@ -5124,13 +5124,13 @@ const float lbl_8038AC08[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_8038AC40[14] = {
+const float rodata_803175A0_rodata_8038AC40[14] = {
     0.0f, 0.0f, 5e+02f, 9.107467f, 1e+03f, 17.087343f, 2e+03f, 25.06722f,
     3e+03f, 31.876135f, 4e+03f, 37.600826f, 5e+03f, 43.368893f
 };
 /* pointers mixed with values */
-void *const lbl_8038AC78[42] = {
-    (void *)&lbl_8038AC40,
+void *const rodata_803175A0_rodata_8038AC78[42] = {
+    (void *)&rodata_803175A0_rodata_8038AC40,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -5174,7 +5174,7 @@ void *const lbl_8038AC78[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038AD20[62] = {
+void *const rodata_803175A0_rodata_8038AD20[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -5235,16 +5235,16 @@ void *const lbl_8038AD20[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038AC78,
+    (void *)&rodata_803175A0_rodata_8038AC78,
     (void *)0x7
 };
-const float lbl_8038AE18[14] = {
+const float rodata_803175A0_rodata_8038AE18[14] = {
     0.0f, 0.0f, 5e+02f, 7.45963f, 1e+03f, 13.427334f, 2e+03f, 20.141003f,
     3e+03f, 27.600632f, 4e+03f, 35.06026f, 5e+03f, 44.757782f
 };
 /* pointers mixed with values */
-void *const lbl_8038AE50[42] = {
-    (void *)&lbl_8038AE18,
+void *const rodata_803175A0_rodata_8038AE50[42] = {
+    (void *)&rodata_803175A0_rodata_8038AE18,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -5288,7 +5288,7 @@ void *const lbl_8038AE50[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038AEF8[62] = {
+void *const rodata_803175A0_rodata_8038AEF8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -5349,16 +5349,16 @@ void *const lbl_8038AEF8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038AE50,
+    (void *)&rodata_803175A0_rodata_8038AE50,
     (void *)0x7
 };
-const float lbl_8038AFF0[14] = {
+const float rodata_803175A0_rodata_8038AFF0[14] = {
     0.0f, 0.0f, 5e+02f, 7.598519f, 1e+03f, 15.197038f, 2e+03f, 22.795557f,
     3e+03f, 30.394075f, 4e+03f, 37.992596f, 5e+03f, 45.591114f
 };
 /* pointers mixed with values */
-void *const lbl_8038B028[42] = {
-    (void *)&lbl_8038AFF0,
+void *const rodata_803175A0_rodata_8038B028[42] = {
+    (void *)&rodata_803175A0_rodata_8038AFF0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -5402,7 +5402,7 @@ void *const lbl_8038B028[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038B0D0[62] = {
+void *const rodata_803175A0_rodata_8038B0D0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -5463,7 +5463,7 @@ void *const lbl_8038B0D0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038B028,
+    (void *)&rodata_803175A0_rodata_8038B028,
     (void *)0x7
 };
 const float lbl_8038B1C8[14] = {
@@ -5490,13 +5490,13 @@ const float lbl_8038B2E0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_8038B318[14] = {
+const float rodata_803175A0_rodata_8038B318[14] = {
     0.0f, 0.0f, 5e+02f, 8.189845f, 1e+03f, 16.918495f, 2e+03f, 23.22252f,
     3e+03f, 31.412365f, 4e+03f, 38.255196f, 5e+03f, 53.880558f
 };
 /* pointers mixed with values */
-void *const lbl_8038B350[42] = {
-    (void *)&lbl_8038B318,
+void *const rodata_803175A0_rodata_8038B350[42] = {
+    (void *)&rodata_803175A0_rodata_8038B318,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -5540,7 +5540,7 @@ void *const lbl_8038B350[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038B3F8[62] = {
+void *const rodata_803175A0_rodata_8038B3F8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -5601,16 +5601,16 @@ void *const lbl_8038B3F8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038B350,
+    (void *)&rodata_803175A0_rodata_8038B350,
     (void *)0x7
 };
-const float lbl_8038B4F0[14] = {
+const float rodata_803175A0_rodata_8038B4F0[14] = {
     0.0f, 0.0f, 5e+02f, 6.190178f, 1e+03f, 14.038439f, 2e+03f, 21.05766f,
     3e+03f, 27.800531f, 4e+03f, 39.24131f, 5e+03f, 55.269447f
 };
 /* pointers mixed with values */
-void *const lbl_8038B528[42] = {
-    (void *)&lbl_8038B4F0,
+void *const rodata_803175A0_rodata_8038B528[42] = {
+    (void *)&rodata_803175A0_rodata_8038B4F0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -5654,7 +5654,7 @@ void *const lbl_8038B528[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038B5D0[62] = {
+void *const rodata_803175A0_rodata_8038B5D0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -5715,16 +5715,16 @@ void *const lbl_8038B5D0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038B528,
+    (void *)&rodata_803175A0_rodata_8038B528,
     (void *)0x7
 };
-const float lbl_8038B6C8[14] = {
+const float rodata_803175A0_rodata_8038B6C8[14] = {
     0.0f, 0.0f, 5e+02f, 8.527622f, 1e+03f, 17.616272f, 2e+03f, 24.180298f,
     3e+03f, 32.70792f, 4e+03f, 39.832973f, 5e+03f, 56.10278f
 };
 /* pointers mixed with values */
-void *const lbl_8038B700[42] = {
-    (void *)&lbl_8038B6C8,
+void *const rodata_803175A0_rodata_8038B700[42] = {
+    (void *)&rodata_803175A0_rodata_8038B6C8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -5768,7 +5768,7 @@ void *const lbl_8038B700[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038B7A8[62] = {
+void *const rodata_803175A0_rodata_8038B7A8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -5829,7 +5829,7 @@ void *const lbl_8038B7A8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038B700,
+    (void *)&rodata_803175A0_rodata_8038B700,
     (void *)0x7
 };
 const float lbl_8038B8A0[14] = {
@@ -5856,13 +5856,13 @@ const float lbl_8038B9B8[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_8038B9F0[14] = {
+const float rodata_803175A0_rodata_8038B9F0[14] = {
     0.0f, 0.0f, 5e+02f, 16.365557f, 1e+03f, 32.810555f, 2e+03f, 47.905f,
     3e+03f, 57.517776f, 4e+03f, 67.05112f, 5e+03f, 79.44444f
 };
 /* pointers mixed with values */
-void *const lbl_8038BA28[42] = {
-    (void *)&lbl_8038B9F0,
+void *const rodata_803175A0_rodata_8038BA28[42] = {
+    (void *)&rodata_803175A0_rodata_8038B9F0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -5906,7 +5906,7 @@ void *const lbl_8038BA28[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038BAD0[62] = {
+void *const rodata_803175A0_rodata_8038BAD0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -5967,16 +5967,16 @@ void *const lbl_8038BAD0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038BA28,
+    (void *)&rodata_803175A0_rodata_8038BA28,
     (void *)0x7
 };
-const float lbl_8038BBC8[14] = {
+const float rodata_803175A0_rodata_8038BBC8[14] = {
     0.0f, 0.0f, 5e+02f, 13.418334f, 1e+03f, 26.917501f, 2e+03f, 40.65917f,
     3e+03f, 55.290005f, 4e+03f, 68.223335f, 5e+03f, 80.833336f
 };
 /* pointers mixed with values */
-void *const lbl_8038BC00[42] = {
-    (void *)&lbl_8038BBC8,
+void *const rodata_803175A0_rodata_8038BC00[42] = {
+    (void *)&rodata_803175A0_rodata_8038BBC8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -6020,7 +6020,7 @@ void *const lbl_8038BC00[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038BCA8[62] = {
+void *const rodata_803175A0_rodata_8038BCA8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -6081,16 +6081,16 @@ void *const lbl_8038BCA8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038BC00,
+    (void *)&rodata_803175A0_rodata_8038BC00,
     (void *)0x7
 };
-const float lbl_8038BDA0[14] = {
+const float rodata_803175A0_rodata_8038BDA0[14] = {
     0.0f, 0.0f, 5e+02f, 16.823334f, 1e+03f, 33.728333f, 2e+03f, 49.245f,
     3e+03f, 59.12667f, 4e+03f, 68.92667f, 5e+03f, 81.66667f
 };
 /* pointers mixed with values */
-void *const lbl_8038BDD8[42] = {
-    (void *)&lbl_8038BDA0,
+void *const rodata_803175A0_rodata_8038BDD8[42] = {
+    (void *)&rodata_803175A0_rodata_8038BDA0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -6134,7 +6134,7 @@ void *const lbl_8038BDD8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038BE80[62] = {
+void *const rodata_803175A0_rodata_8038BE80[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -6195,7 +6195,7 @@ void *const lbl_8038BE80[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038BDD8,
+    (void *)&rodata_803175A0_rodata_8038BDD8,
     (void *)0x7
 };
 const float lbl_8038BF78[14] = {
@@ -6222,13 +6222,13 @@ const float lbl_8038C090[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_8038C0C8[14] = {
+const float rodata_803175A0_rodata_8038C0C8[14] = {
     0.0f, 0.0f, 5e+02f, 6.8392735f, 1e+03f, 14.128499f, 2e+03f, 19.39294f,
     3e+03f, 26.232214f, 4e+03f, 31.946608f, 5e+03f, 44.99522f
 };
 /* pointers mixed with values */
-void *const lbl_8038C100[42] = {
-    (void *)&lbl_8038C0C8,
+void *const rodata_803175A0_rodata_8038C100[42] = {
+    (void *)&rodata_803175A0_rodata_8038C0C8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -6272,7 +6272,7 @@ void *const lbl_8038C100[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038C1A8[62] = {
+void *const rodata_803175A0_rodata_8038C1A8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -6333,16 +6333,16 @@ void *const lbl_8038C1A8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038C100,
+    (void *)&rodata_803175A0_rodata_8038C100,
     (void *)0x7
 };
-const float lbl_8038C2A0[14] = {
+const float rodata_803175A0_rodata_8038C2A0[14] = {
     0.0f, 0.0f, 5e+02f, 5.19502f, 1e+03f, 11.781564f, 2e+03f, 17.672346f,
     3e+03f, 23.331205f, 4e+03f, 32.932716f, 5e+03f, 46.38411f
 };
 /* pointers mixed with values */
-void *const lbl_8038C2D8[42] = {
-    (void *)&lbl_8038C2A0,
+void *const rodata_803175A0_rodata_8038C2D8[42] = {
+    (void *)&rodata_803175A0_rodata_8038C2A0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -6386,7 +6386,7 @@ void *const lbl_8038C2D8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038C380[62] = {
+void *const rodata_803175A0_rodata_8038C380[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -6447,16 +6447,16 @@ void *const lbl_8038C380[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038C2D8,
+    (void *)&rodata_803175A0_rodata_8038C2D8,
     (void *)0x7
 };
-const float lbl_8038C478[14] = {
+const float rodata_803175A0_rodata_8038C478[14] = {
     0.0f, 0.0f, 5e+02f, 7.177051f, 1e+03f, 14.826277f, 2e+03f, 20.350718f,
     3e+03f, 27.52777f, 4e+03f, 33.524384f, 5e+03f, 47.21744f
 };
 /* pointers mixed with values */
-void *const lbl_8038C4B0[42] = {
-    (void *)&lbl_8038C478,
+void *const rodata_803175A0_rodata_8038C4B0[42] = {
+    (void *)&rodata_803175A0_rodata_8038C478,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x4149999A,
@@ -6500,7 +6500,7 @@ void *const lbl_8038C4B0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038C558[62] = {
+void *const rodata_803175A0_rodata_8038C558[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -6561,7 +6561,7 @@ void *const lbl_8038C558[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038C4B0,
+    (void *)&rodata_803175A0_rodata_8038C4B0,
     (void *)0x7
 };
 const float lbl_8038C650[14] = {
@@ -6588,13 +6588,13 @@ const float lbl_8038C768[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_8038C7A0[14] = {
+const float rodata_803175A0_rodata_8038C7A0[14] = {
     0.0f, 0.0f, 5e+02f, 8.62089f, 1e+03f, 17.18889f, 2e+03f, 25.80978f,
     3e+03f, 34.43067f, 4e+03f, 43.05156f, 5e+03f, 52.888893f
 };
 /* pointers mixed with values */
-void *const lbl_8038C7D8[42] = {
-    (void *)&lbl_8038C7A0,
+void *const rodata_803175A0_rodata_8038C7D8[42] = {
+    (void *)&rodata_803175A0_rodata_8038C7A0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -6638,7 +6638,7 @@ void *const lbl_8038C7D8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038C880[62] = {
+void *const rodata_803175A0_rodata_8038C880[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -6699,16 +6699,16 @@ void *const lbl_8038C880[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038C7D8,
+    (void *)&rodata_803175A0_rodata_8038C7D8,
     (void *)0x7
 };
-const float lbl_8038C978[14] = {
+const float rodata_803175A0_rodata_8038C978[14] = {
     0.0f, 0.0f, 5e+02f, 8.250223f, 1e+03f, 17.043222f, 2e+03f, 23.393724f,
     3e+03f, 31.643948f, 4e+03f, 38.537224f, 5e+03f, 54.277782f
 };
 /* pointers mixed with values */
-void *const lbl_8038C9B0[42] = {
-    (void *)&lbl_8038C978,
+void *const rodata_803175A0_rodata_8038C9B0[42] = {
+    (void *)&rodata_803175A0_rodata_8038C978,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -6752,7 +6752,7 @@ void *const lbl_8038C9B0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038CA58[62] = {
+void *const rodata_803175A0_rodata_8038CA58[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -6813,16 +6813,16 @@ void *const lbl_8038CA58[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038C9B0,
+    (void *)&rodata_803175A0_rodata_8038C9B0,
     (void *)0x7
 };
-const float lbl_8038CB50[14] = {
+const float rodata_803175A0_rodata_8038CB50[14] = {
     0.0f, 0.0f, 5e+02f, 8.983112f, 1e+03f, 17.911112f, 2e+03f, 26.894224f,
     3e+03f, 35.877335f, 4e+03f, 44.860447f, 5e+03f, 55.111115f
 };
 /* pointers mixed with values */
-void *const lbl_8038CB88[42] = {
-    (void *)&lbl_8038CB50,
+void *const rodata_803175A0_rodata_8038CB88[42] = {
+    (void *)&rodata_803175A0_rodata_8038CB50,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -6866,7 +6866,7 @@ void *const lbl_8038CB88[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038CC30[62] = {
+void *const rodata_803175A0_rodata_8038CC30[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -6927,7 +6927,7 @@ void *const lbl_8038CC30[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038CB88,
+    (void *)&rodata_803175A0_rodata_8038CB88,
     (void *)0x7
 };
 const float lbl_8038CD28[14] = {
@@ -6954,13 +6954,13 @@ const float lbl_8038CE40[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_8038CE78[14] = {
+const float rodata_803175A0_rodata_8038CE78[14] = {
     0.0f, 0.0f, 5e+02f, 19.677776f, 1e+03f, 36.633335f, 2e+03f, 50.78889f,
     3e+03f, 62.222225f, 4e+03f, 70.77778f, 5e+03f, 77.77778f
 };
 /* pointers mixed with values */
-void *const lbl_8038CEB0[42] = {
-    (void *)&lbl_8038CE78,
+void *const rodata_803175A0_rodata_8038CEB0[42] = {
+    (void *)&rodata_803175A0_rodata_8038CE78,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -7004,7 +7004,7 @@ void *const lbl_8038CEB0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038CF58[62] = {
+void *const rodata_803175A0_rodata_8038CF58[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -7065,16 +7065,16 @@ void *const lbl_8038CF58[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038CEB0,
+    (void *)&rodata_803175A0_rodata_8038CEB0,
     (void *)0x7
 };
-const float lbl_8038D050[14] = {
+const float rodata_803175A0_rodata_8038D050[14] = {
     0.0f, 0.0f, 5e+02f, 16.308334f, 1e+03f, 32.695835f, 2e+03f, 47.7375f,
     3e+03f, 57.316666f, 4e+03f, 66.816666f, 5e+03f, 79.16667f
 };
 /* pointers mixed with values */
-void *const lbl_8038D088[42] = {
-    (void *)&lbl_8038D050,
+void *const rodata_803175A0_rodata_8038D088[42] = {
+    (void *)&rodata_803175A0_rodata_8038D050,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -7118,7 +7118,7 @@ void *const lbl_8038D088[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038D130[62] = {
+void *const rodata_803175A0_rodata_8038D130[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -7179,16 +7179,16 @@ void *const lbl_8038D130[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038D088,
+    (void *)&rodata_803175A0_rodata_8038D088,
     (void *)0x7
 };
-const float lbl_8038D228[14] = {
+const float rodata_803175A0_rodata_8038D228[14] = {
     0.0f, 0.0f, 5e+02f, 20.24f, 1e+03f, 37.68f, 2e+03f, 52.24f,
     3e+03f, 64.0f, 4e+03f, 72.799995f, 5e+03f, 8e+01f
 };
 /* pointers mixed with values */
-void *const lbl_8038D260[42] = {
-    (void *)&lbl_8038D228,
+void *const rodata_803175A0_rodata_8038D260[42] = {
+    (void *)&rodata_803175A0_rodata_8038D228,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -7232,7 +7232,7 @@ void *const lbl_8038D260[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038D308[62] = {
+void *const rodata_803175A0_rodata_8038D308[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -7293,7 +7293,7 @@ void *const lbl_8038D308[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038D260,
+    (void *)&rodata_803175A0_rodata_8038D260,
     (void *)0x7
 };
 const float lbl_8038D400[14] = {
@@ -7320,13 +7320,13 @@ const float lbl_8038D518[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_8038D550[14] = {
+const float rodata_803175A0_rodata_8038D550[14] = {
     0.0f, 0.0f, 5e+02f, 7.2281485f, 1e+03f, 14.456297f, 2e+03f, 21.684446f,
     3e+03f, 28.912594f, 4e+03f, 36.140743f, 5e+03f, 43.368893f
 };
 /* pointers mixed with values */
-void *const lbl_8038D588[42] = {
-    (void *)&lbl_8038D550,
+void *const rodata_803175A0_rodata_8038D588[42] = {
+    (void *)&rodata_803175A0_rodata_8038D550,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -7370,7 +7370,7 @@ void *const lbl_8038D588[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038D630[62] = {
+void *const rodata_803175A0_rodata_8038D630[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -7431,16 +7431,16 @@ void *const lbl_8038D630[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038D588,
+    (void *)&rodata_803175A0_rodata_8038D588,
     (void *)0x7
 };
-const float lbl_8038D728[14] = {
+const float rodata_803175A0_rodata_8038D728[14] = {
     0.0f, 0.0f, 5e+02f, 6.8031826f, 1e+03f, 14.053943f, 2e+03f, 19.290602f,
     3e+03f, 26.093786f, 4e+03f, 31.778025f, 5e+03f, 44.757782f
 };
 /* pointers mixed with values */
-void *const lbl_8038D760[42] = {
-    (void *)&lbl_8038D728,
+void *const rodata_803175A0_rodata_8038D760[42] = {
+    (void *)&rodata_803175A0_rodata_8038D728,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -7484,7 +7484,7 @@ void *const lbl_8038D760[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038D808[62] = {
+void *const rodata_803175A0_rodata_8038D808[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -7545,16 +7545,16 @@ void *const lbl_8038D808[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038D760,
+    (void *)&rodata_803175A0_rodata_8038D760,
     (void *)0x7
 };
-const float lbl_8038D900[14] = {
+const float rodata_803175A0_rodata_8038D900[14] = {
     0.0f, 0.0f, 5e+02f, 7.598519f, 1e+03f, 15.197038f, 2e+03f, 22.795557f,
     3e+03f, 30.394075f, 4e+03f, 37.992596f, 5e+03f, 45.591114f
 };
 /* pointers mixed with values */
-void *const lbl_8038D938[42] = {
-    (void *)&lbl_8038D900,
+void *const rodata_803175A0_rodata_8038D938[42] = {
+    (void *)&rodata_803175A0_rodata_8038D900,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -7598,7 +7598,7 @@ void *const lbl_8038D938[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038D9E0[62] = {
+void *const rodata_803175A0_rodata_8038D9E0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -7659,7 +7659,7 @@ void *const lbl_8038D9E0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038D938,
+    (void *)&rodata_803175A0_rodata_8038D938,
     (void *)0x7
 };
 const float lbl_8038DAD8[14] = {
@@ -7686,13 +7686,13 @@ const float lbl_8038DBF0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_8038DC28[14] = {
+const float rodata_803175A0_rodata_8038DC28[14] = {
     0.0f, 0.0f, 5e+02f, 11.1066675f, 1e+03f, 20.838223f, 2e+03f, 30.56978f,
     3e+03f, 38.873333f, 4e+03f, 45.85467f, 5e+03f, 52.888893f
 };
 /* pointers mixed with values */
-void *const lbl_8038DC60[42] = {
-    (void *)&lbl_8038DC28,
+void *const rodata_803175A0_rodata_8038DC60[42] = {
+    (void *)&rodata_803175A0_rodata_8038DC28,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -7736,7 +7736,7 @@ void *const lbl_8038DC60[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038DD08[62] = {
+void *const rodata_803175A0_rodata_8038DD08[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -7797,16 +7797,16 @@ void *const lbl_8038DD08[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038DC60,
+    (void *)&rodata_803175A0_rodata_8038DC60,
     (void *)0x7
 };
-const float lbl_8038DE00[14] = {
+const float rodata_803175A0_rodata_8038DE00[14] = {
     0.0f, 0.0f, 5e+02f, 9.77f, 1e+03f, 16.500446f, 2e+03f, 24.859224f,
     3e+03f, 38.265835f, 4e+03f, 44.344944f, 5e+03f, 54.277782f
 };
 /* pointers mixed with values */
-void *const lbl_8038DE38[42] = {
-    (void *)&lbl_8038DE00,
+void *const rodata_803175A0_rodata_8038DE38[42] = {
+    (void *)&rodata_803175A0_rodata_8038DE00,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -7850,7 +7850,7 @@ void *const lbl_8038DE38[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038DEE0[62] = {
+void *const rodata_803175A0_rodata_8038DEE0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -7911,16 +7911,16 @@ void *const lbl_8038DEE0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038DE38,
+    (void *)&rodata_803175A0_rodata_8038DE38,
     (void *)0x7
 };
-const float lbl_8038DFD8[14] = {
+const float rodata_803175A0_rodata_8038DFD8[14] = {
     0.0f, 0.0f, 5e+02f, 11.573334f, 1e+03f, 21.71378f, 2e+03f, 31.854225f,
     3e+03f, 40.506668f, 4e+03f, 47.781334f, 5e+03f, 55.111115f
 };
 /* pointers mixed with values */
-void *const lbl_8038E010[42] = {
-    (void *)&lbl_8038DFD8,
+void *const rodata_803175A0_rodata_8038E010[42] = {
+    (void *)&rodata_803175A0_rodata_8038DFD8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -7964,7 +7964,7 @@ void *const lbl_8038E010[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038E0B8[62] = {
+void *const rodata_803175A0_rodata_8038E0B8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -8025,7 +8025,7 @@ void *const lbl_8038E0B8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038E010,
+    (void *)&rodata_803175A0_rodata_8038E010,
     (void *)0x7
 };
 const float lbl_8038E1B0[14] = {
@@ -8052,13 +8052,13 @@ const float lbl_8038E2C8[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_8038E300[14] = {
+const float rodata_803175A0_rodata_8038E300[14] = {
     0.0f, 0.0f, 5e+02f, 22.477777f, 1e+03f, 33.36667f, 2e+03f, 50.011112f,
     3e+03f, 63.85556f, 4e+03f, 72.333336f, 5e+03f, 77.77778f
 };
 /* pointers mixed with values */
-void *const lbl_8038E338[42] = {
-    (void *)&lbl_8038E300,
+void *const rodata_803175A0_rodata_8038E338[42] = {
+    (void *)&rodata_803175A0_rodata_8038E300,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -8102,7 +8102,7 @@ void *const lbl_8038E338[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038E3E0[62] = {
+void *const rodata_803175A0_rodata_8038E3E0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -8163,16 +8163,16 @@ void *const lbl_8038E3E0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038E338,
+    (void *)&rodata_803175A0_rodata_8038E338,
     (void *)0x7
 };
-const float lbl_8038E4D8[14] = {
+const float rodata_803175A0_rodata_8038E4D8[14] = {
     0.0f, 0.0f, 5e+02f, 18.129168f, 1e+03f, 33.170834f, 2e+03f, 50.1125f,
     3e+03f, 59.45417f, 4e+03f, 70.458336f, 5e+03f, 79.16667f
 };
 /* pointers mixed with values */
-void *const lbl_8038E510[42] = {
-    (void *)&lbl_8038E4D8,
+void *const rodata_803175A0_rodata_8038E510[42] = {
+    (void *)&rodata_803175A0_rodata_8038E4D8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -8216,7 +8216,7 @@ void *const lbl_8038E510[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038E5B8[62] = {
+void *const rodata_803175A0_rodata_8038E5B8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -8277,16 +8277,16 @@ void *const lbl_8038E5B8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038E510,
+    (void *)&rodata_803175A0_rodata_8038E510,
     (void *)0x7
 };
-const float lbl_8038E6B0[14] = {
+const float rodata_803175A0_rodata_8038E6B0[14] = {
     0.0f, 0.0f, 5e+02f, 23.12f, 1e+03f, 34.32f, 2e+03f, 51.440002f,
     3e+03f, 65.68f, 4e+03f, 74.4f, 5e+03f, 8e+01f
 };
 /* pointers mixed with values */
-void *const lbl_8038E6E8[42] = {
-    (void *)&lbl_8038E6B0,
+void *const rodata_803175A0_rodata_8038E6E8[42] = {
+    (void *)&rodata_803175A0_rodata_8038E6B0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -8330,7 +8330,7 @@ void *const lbl_8038E6E8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038E790[62] = {
+void *const rodata_803175A0_rodata_8038E790[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -8391,7 +8391,7 @@ void *const lbl_8038E790[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038E6E8,
+    (void *)&rodata_803175A0_rodata_8038E6E8,
     (void *)0x7
 };
 const float lbl_8038E888[14] = {
@@ -8418,13 +8418,13 @@ const float lbl_8038E9A0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_8038E9D8[14] = {
+const float rodata_803175A0_rodata_8038E9D8[14] = {
     0.0f, 0.0f, 5e+02f, 7.2281485f, 1e+03f, 14.456297f, 2e+03f, 21.684446f,
     3e+03f, 28.912594f, 4e+03f, 36.140743f, 5e+03f, 43.368893f
 };
 /* pointers mixed with values */
-void *const lbl_8038EA10[42] = {
-    (void *)&lbl_8038E9D8,
+void *const rodata_803175A0_rodata_8038EA10[42] = {
+    (void *)&rodata_803175A0_rodata_8038E9D8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -8468,7 +8468,7 @@ void *const lbl_8038EA10[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038EAB8[62] = {
+void *const rodata_803175A0_rodata_8038EAB8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -8529,16 +8529,16 @@ void *const lbl_8038EAB8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038EA10,
+    (void *)&rodata_803175A0_rodata_8038EA10,
     (void *)0x7
 };
-const float lbl_8038EBB0[14] = {
+const float rodata_803175A0_rodata_8038EBB0[14] = {
     0.0f, 0.0f, 5e+02f, 7.45963f, 1e+03f, 13.427334f, 2e+03f, 20.141003f,
     3e+03f, 27.600632f, 4e+03f, 35.06026f, 5e+03f, 44.757782f
 };
 /* pointers mixed with values */
-void *const lbl_8038EBE8[42] = {
-    (void *)&lbl_8038EBB0,
+void *const rodata_803175A0_rodata_8038EBE8[42] = {
+    (void *)&rodata_803175A0_rodata_8038EBB0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -8582,7 +8582,7 @@ void *const lbl_8038EBE8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038EC90[62] = {
+void *const rodata_803175A0_rodata_8038EC90[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -8643,16 +8643,16 @@ void *const lbl_8038EC90[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038EBE8,
+    (void *)&rodata_803175A0_rodata_8038EBE8,
     (void *)0x7
 };
-const float lbl_8038ED88[14] = {
+const float rodata_803175A0_rodata_8038ED88[14] = {
     0.0f, 0.0f, 5e+02f, 7.598519f, 1e+03f, 15.197038f, 2e+03f, 22.795557f,
     3e+03f, 30.394075f, 4e+03f, 37.992596f, 5e+03f, 45.591114f
 };
 /* pointers mixed with values */
-void *const lbl_8038EDC0[42] = {
-    (void *)&lbl_8038ED88,
+void *const rodata_803175A0_rodata_8038EDC0[42] = {
+    (void *)&rodata_803175A0_rodata_8038ED88,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -8696,7 +8696,7 @@ void *const lbl_8038EDC0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038EE68[62] = {
+void *const rodata_803175A0_rodata_8038EE68[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -8757,7 +8757,7 @@ void *const lbl_8038EE68[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038EDC0,
+    (void *)&rodata_803175A0_rodata_8038EDC0,
     (void *)0x7
 };
 const float lbl_8038EF60[14] = {
@@ -8784,13 +8784,13 @@ const float lbl_8038F078[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_8038F0B0[14] = {
+const float rodata_803175A0_rodata_8038F0B0[14] = {
     0.0f, 0.0f, 5e+02f, 8.62089f, 1e+03f, 17.18889f, 2e+03f, 25.80978f,
     3e+03f, 34.43067f, 4e+03f, 43.05156f, 5e+03f, 52.888893f
 };
 /* pointers mixed with values */
-void *const lbl_8038F0E8[42] = {
-    (void *)&lbl_8038F0B0,
+void *const rodata_803175A0_rodata_8038F0E8[42] = {
+    (void *)&rodata_803175A0_rodata_8038F0B0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -8834,7 +8834,7 @@ void *const lbl_8038F0E8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038F190[62] = {
+void *const rodata_803175A0_rodata_8038F190[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -8895,16 +8895,16 @@ void *const lbl_8038F190[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038F0E8,
+    (void *)&rodata_803175A0_rodata_8038F0E8,
     (void *)0x7
 };
-const float lbl_8038F288[14] = {
+const float rodata_803175A0_rodata_8038F288[14] = {
     0.0f, 0.0f, 5e+02f, 8.250223f, 1e+03f, 17.043222f, 2e+03f, 23.393724f,
     3e+03f, 31.643948f, 4e+03f, 38.537224f, 5e+03f, 54.277782f
 };
 /* pointers mixed with values */
-void *const lbl_8038F2C0[42] = {
-    (void *)&lbl_8038F288,
+void *const rodata_803175A0_rodata_8038F2C0[42] = {
+    (void *)&rodata_803175A0_rodata_8038F288,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -8948,7 +8948,7 @@ void *const lbl_8038F2C0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038F368[62] = {
+void *const rodata_803175A0_rodata_8038F368[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -9009,16 +9009,16 @@ void *const lbl_8038F368[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038F2C0,
+    (void *)&rodata_803175A0_rodata_8038F2C0,
     (void *)0x7
 };
-const float lbl_8038F460[14] = {
+const float rodata_803175A0_rodata_8038F460[14] = {
     0.0f, 0.0f, 5e+02f, 8.983112f, 1e+03f, 17.911112f, 2e+03f, 26.894224f,
     3e+03f, 35.877335f, 4e+03f, 44.860447f, 5e+03f, 55.111115f
 };
 /* pointers mixed with values */
-void *const lbl_8038F498[42] = {
-    (void *)&lbl_8038F460,
+void *const rodata_803175A0_rodata_8038F498[42] = {
+    (void *)&rodata_803175A0_rodata_8038F460,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -9062,7 +9062,7 @@ void *const lbl_8038F498[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038F540[62] = {
+void *const rodata_803175A0_rodata_8038F540[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -9123,7 +9123,7 @@ void *const lbl_8038F540[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038F498,
+    (void *)&rodata_803175A0_rodata_8038F498,
     (void *)0x7
 };
 const float lbl_8038F638[14] = {
@@ -9150,13 +9150,13 @@ const float lbl_8038F750[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_8038F788[14] = {
+const float rodata_803175A0_rodata_8038F788[14] = {
     0.0f, 0.0f, 5e+02f, 19.677776f, 1e+03f, 36.633335f, 2e+03f, 50.78889f,
     3e+03f, 62.222225f, 4e+03f, 70.77778f, 5e+03f, 77.77778f
 };
 /* pointers mixed with values */
-void *const lbl_8038F7C0[42] = {
-    (void *)&lbl_8038F788,
+void *const rodata_803175A0_rodata_8038F7C0[42] = {
+    (void *)&rodata_803175A0_rodata_8038F788,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -9200,7 +9200,7 @@ void *const lbl_8038F7C0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038F868[62] = {
+void *const rodata_803175A0_rodata_8038F868[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -9261,16 +9261,16 @@ void *const lbl_8038F868[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038F7C0,
+    (void *)&rodata_803175A0_rodata_8038F7C0,
     (void *)0x7
 };
-const float lbl_8038F960[14] = {
+const float rodata_803175A0_rodata_8038F960[14] = {
     0.0f, 0.0f, 5e+02f, 16.308334f, 1e+03f, 32.695835f, 2e+03f, 47.7375f,
     3e+03f, 57.316666f, 4e+03f, 66.816666f, 5e+03f, 79.16667f
 };
 /* pointers mixed with values */
-void *const lbl_8038F998[42] = {
-    (void *)&lbl_8038F960,
+void *const rodata_803175A0_rodata_8038F998[42] = {
+    (void *)&rodata_803175A0_rodata_8038F960,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -9314,7 +9314,7 @@ void *const lbl_8038F998[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038FA40[62] = {
+void *const rodata_803175A0_rodata_8038FA40[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -9375,16 +9375,16 @@ void *const lbl_8038FA40[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038F998,
+    (void *)&rodata_803175A0_rodata_8038F998,
     (void *)0x7
 };
-const float lbl_8038FB38[14] = {
+const float rodata_803175A0_rodata_8038FB38[14] = {
     0.0f, 0.0f, 5e+02f, 20.24f, 1e+03f, 37.68f, 2e+03f, 52.24f,
     3e+03f, 64.0f, 4e+03f, 72.799995f, 5e+03f, 8e+01f
 };
 /* pointers mixed with values */
-void *const lbl_8038FB70[42] = {
-    (void *)&lbl_8038FB38,
+void *const rodata_803175A0_rodata_8038FB70[42] = {
+    (void *)&rodata_803175A0_rodata_8038FB38,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -9428,7 +9428,7 @@ void *const lbl_8038FB70[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038FC18[62] = {
+void *const rodata_803175A0_rodata_8038FC18[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -9489,7 +9489,7 @@ void *const lbl_8038FC18[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038FB70,
+    (void *)&rodata_803175A0_rodata_8038FB70,
     (void *)0x7
 };
 const float lbl_8038FD10[14] = {
@@ -9516,13 +9516,13 @@ const float lbl_8038FE28[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_8038FE60[14] = {
+const float rodata_803175A0_rodata_8038FE60[14] = {
     0.0f, 0.0f, 5e+02f, 7.2281485f, 1e+03f, 14.456297f, 2e+03f, 21.684446f,
     3e+03f, 28.912594f, 4e+03f, 36.140743f, 5e+03f, 43.368893f
 };
 /* pointers mixed with values */
-void *const lbl_8038FE98[42] = {
-    (void *)&lbl_8038FE60,
+void *const rodata_803175A0_rodata_8038FE98[42] = {
+    (void *)&rodata_803175A0_rodata_8038FE60,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -9566,7 +9566,7 @@ void *const lbl_8038FE98[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_8038FF40[62] = {
+void *const rodata_803175A0_rodata_8038FF40[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -9627,16 +9627,16 @@ void *const lbl_8038FF40[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_8038FE98,
+    (void *)&rodata_803175A0_rodata_8038FE98,
     (void *)0x7
 };
-const float lbl_80390038[14] = {
+const float rodata_803175A0_rodata_80390038[14] = {
     0.0f, 0.0f, 5e+02f, 6.8031826f, 1e+03f, 14.053943f, 2e+03f, 19.290602f,
     3e+03f, 26.093786f, 4e+03f, 31.778025f, 5e+03f, 44.757782f
 };
 /* pointers mixed with values */
-void *const lbl_80390070[42] = {
-    (void *)&lbl_80390038,
+void *const rodata_803175A0_rodata_80390070[42] = {
+    (void *)&rodata_803175A0_rodata_80390038,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -9680,7 +9680,7 @@ void *const lbl_80390070[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80390118[62] = {
+void *const rodata_803175A0_rodata_80390118[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -9741,16 +9741,16 @@ void *const lbl_80390118[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80390070,
+    (void *)&rodata_803175A0_rodata_80390070,
     (void *)0x7
 };
-const float lbl_80390210[14] = {
+const float rodata_803175A0_rodata_80390210[14] = {
     0.0f, 0.0f, 5e+02f, 7.598519f, 1e+03f, 15.197038f, 2e+03f, 22.795557f,
     3e+03f, 30.394075f, 4e+03f, 37.992596f, 5e+03f, 45.591114f
 };
 /* pointers mixed with values */
-void *const lbl_80390248[42] = {
-    (void *)&lbl_80390210,
+void *const rodata_803175A0_rodata_80390248[42] = {
+    (void *)&rodata_803175A0_rodata_80390210,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -9794,7 +9794,7 @@ void *const lbl_80390248[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803902F0[62] = {
+void *const rodata_803175A0_rodata_803902F0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -9855,7 +9855,7 @@ void *const lbl_803902F0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80390248,
+    (void *)&rodata_803175A0_rodata_80390248,
     (void *)0x7
 };
 const float lbl_803903E8[14] = {
@@ -9882,13 +9882,13 @@ const float lbl_80390500[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80390538[14] = {
+const float rodata_803175A0_rodata_80390538[14] = {
     0.0f, 0.0f, 5e+02f, 13.891111f, 1e+03f, 27.834446f, 2e+03f, 39.010002f,
     3e+03f, 46.79111f, 4e+03f, 49.55889f, 5e+03f, 52.222225f
 };
 /* pointers mixed with values */
-void *const lbl_80390570[42] = {
-    (void *)&lbl_80390538,
+void *const rodata_803175A0_rodata_80390570[42] = {
+    (void *)&rodata_803175A0_rodata_80390538,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -9932,7 +9932,7 @@ void *const lbl_80390570[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80390618[62] = {
+void *const rodata_803175A0_rodata_80390618[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -9993,16 +9993,16 @@ void *const lbl_80390618[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80390570,
+    (void *)&rodata_803175A0_rodata_80390570,
     (void *)0x7
 };
-const float lbl_80390710[14] = {
+const float rodata_803175A0_rodata_80390710[14] = {
     0.0f, 0.0f, 5e+02f, 12.652223f, 1e+03f, 26.430279f, 2e+03f, 37.366943f,
     3e+03f, 43.210556f, 4e+03f, 49.80472f, 5e+03f, 53.61111f
 };
 /* pointers mixed with values */
-void *const lbl_80390748[42] = {
-    (void *)&lbl_80390710,
+void *const rodata_803175A0_rodata_80390748[42] = {
+    (void *)&rodata_803175A0_rodata_80390710,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -10046,7 +10046,7 @@ void *const lbl_80390748[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803907F0[62] = {
+void *const rodata_803175A0_rodata_803907F0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -10107,16 +10107,16 @@ void *const lbl_803907F0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80390748,
+    (void *)&rodata_803175A0_rodata_80390748,
     (void *)0x7
 };
-const float lbl_803908E8[14] = {
+const float rodata_803175A0_rodata_803908E8[14] = {
     0.0f, 0.0f, 5e+02f, 14.4822235f, 1e+03f, 29.01889f, 2e+03f, 40.670002f,
     3e+03f, 48.782223f, 4e+03f, 51.667778f, 5e+03f, 54.444447f
 };
 /* pointers mixed with values */
-void *const lbl_80390920[42] = {
-    (void *)&lbl_803908E8,
+void *const rodata_803175A0_rodata_80390920[42] = {
+    (void *)&rodata_803175A0_rodata_803908E8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -10160,7 +10160,7 @@ void *const lbl_80390920[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803909C8[62] = {
+void *const rodata_803175A0_rodata_803909C8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -10221,7 +10221,7 @@ void *const lbl_803909C8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80390920,
+    (void *)&rodata_803175A0_rodata_80390920,
     (void *)0x7
 };
 const float lbl_80390AC0[14] = {
@@ -10248,13 +10248,13 @@ const float lbl_80390BD8[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80390C10[14] = {
+const float rodata_803175A0_rodata_80390C10[14] = {
     0.0f, 0.0f, 5e+02f, 22.233334f, 1e+03f, 41.70667f, 2e+03f, 55.660004f,
     3e+03f, 66.240005f, 4e+03f, 73.753334f, 5e+03f, 76.66667f
 };
 /* pointers mixed with values */
-void *const lbl_80390C48[42] = {
-    (void *)&lbl_80390C10,
+void *const rodata_803175A0_rodata_80390C48[42] = {
+    (void *)&rodata_803175A0_rodata_80390C10,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -10298,7 +10298,7 @@ void *const lbl_80390C48[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80390CF0[62] = {
+void *const rodata_803175A0_rodata_80390CF0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -10359,16 +10359,16 @@ void *const lbl_80390CF0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80390C48,
+    (void *)&rodata_803175A0_rodata_80390C48,
     (void *)0x7
 };
-const float lbl_80390DE8[14] = {
+const float rodata_803175A0_rodata_80390DE8[14] = {
     0.0f, 0.0f, 5e+02f, 19.51389f, 1e+03f, 39.34f, 2e+03f, 51.204445f,
     3e+03f, 58.85389f, 4e+03f, 68.845f, 5e+03f, 78.05556f
 };
 /* pointers mixed with values */
-void *const lbl_80390E20[42] = {
-    (void *)&lbl_80390DE8,
+void *const rodata_803175A0_rodata_80390E20[42] = {
+    (void *)&rodata_803175A0_rodata_80390DE8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -10412,7 +10412,7 @@ void *const lbl_80390E20[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80390EC8[62] = {
+void *const rodata_803175A0_rodata_80390EC8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -10473,16 +10473,16 @@ void *const lbl_80390EC8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80390E20,
+    (void *)&rodata_803175A0_rodata_80390E20,
     (void *)0x7
 };
-const float lbl_80390FC0[14] = {
+const float rodata_803175A0_rodata_80390FC0[14] = {
     0.0f, 0.0f, 5e+02f, 22.877779f, 1e+03f, 42.915558f, 2e+03f, 57.27334f,
     3e+03f, 68.16f, 4e+03f, 75.89111f, 5e+03f, 78.88889f
 };
 /* pointers mixed with values */
-void *const lbl_80390FF8[42] = {
-    (void *)&lbl_80390FC0,
+void *const rodata_803175A0_rodata_80390FF8[42] = {
+    (void *)&rodata_803175A0_rodata_80390FC0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -10526,7 +10526,7 @@ void *const lbl_80390FF8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803910A0[62] = {
+void *const rodata_803175A0_rodata_803910A0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -10587,7 +10587,7 @@ void *const lbl_803910A0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80390FF8,
+    (void *)&rodata_803175A0_rodata_80390FF8,
     (void *)0x7
 };
 const float lbl_80391198[14] = {
@@ -10614,13 +10614,13 @@ const float lbl_803912B0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803912E8[14] = {
+const float rodata_803175A0_rodata_803912E8[14] = {
     0.0f, 0.0f, 5e+02f, 11.390712f, 1e+03f, 22.824245f, 2e+03f, 31.988201f,
     3e+03f, 38.368713f, 4e+03f, 40.63829f, 5e+03f, 42.822224f
 };
 /* pointers mixed with values */
-void *const lbl_80391320[42] = {
-    (void *)&lbl_803912E8,
+void *const rodata_803175A0_rodata_80391320[42] = {
+    (void *)&rodata_803175A0_rodata_803912E8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -10664,7 +10664,7 @@ void *const lbl_80391320[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803913C8[62] = {
+void *const rodata_803175A0_rodata_803913C8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -10725,16 +10725,16 @@ void *const lbl_803913C8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80391320,
+    (void *)&rodata_803175A0_rodata_80391320,
     (void *)0x7
 };
-const float lbl_803914C0[14] = {
+const float rodata_803175A0_rodata_803914C0[14] = {
     0.0f, 0.0f, 5e+02f, 10.433823f, 1e+03f, 21.79608f, 2e+03f, 30.815147f,
     3e+03f, 35.634155f, 4e+03f, 41.072124f, 5e+03f, 44.211113f
 };
 /* pointers mixed with values */
-void *const lbl_803914F8[42] = {
-    (void *)&lbl_803914C0,
+void *const rodata_803175A0_rodata_803914F8[42] = {
+    (void *)&rodata_803175A0_rodata_803914C0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -10778,7 +10778,7 @@ void *const lbl_803914F8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803915A0[62] = {
+void *const rodata_803175A0_rodata_803915A0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -10839,16 +10839,16 @@ void *const lbl_803915A0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803914F8,
+    (void *)&rodata_803175A0_rodata_803914F8,
     (void *)0x7
 };
-const float lbl_80391698[14] = {
+const float rodata_803175A0_rodata_80391698[14] = {
     0.0f, 0.0f, 5e+02f, 11.981822f, 1e+03f, 24.00869f, 2e+03f, 33.6482f,
     3e+03f, 40.359825f, 4e+03f, 42.74718f, 5e+03f, 45.044445f
 };
 /* pointers mixed with values */
-void *const lbl_803916D0[42] = {
-    (void *)&lbl_80391698,
+void *const rodata_803175A0_rodata_803916D0[42] = {
+    (void *)&rodata_803175A0_rodata_80391698,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -10892,7 +10892,7 @@ void *const lbl_803916D0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80391778[62] = {
+void *const rodata_803175A0_rodata_80391778[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -10953,7 +10953,7 @@ void *const lbl_80391778[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803916D0,
+    (void *)&rodata_803175A0_rodata_803916D0,
     (void *)0x7
 };
 const float lbl_80391870[14] = {
@@ -10980,13 +10980,13 @@ const float lbl_80391988[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803919C0[14] = {
+const float rodata_803175A0_rodata_803919C0[14] = {
     0.0f, 0.0f, 5e+02f, 11.1066675f, 1e+03f, 20.838223f, 2e+03f, 30.56978f,
     3e+03f, 38.873333f, 4e+03f, 45.85467f, 5e+03f, 52.888893f
 };
 /* pointers mixed with values */
-void *const lbl_803919F8[42] = {
-    (void *)&lbl_803919C0,
+void *const rodata_803175A0_rodata_803919F8[42] = {
+    (void *)&rodata_803175A0_rodata_803919C0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -11030,7 +11030,7 @@ void *const lbl_803919F8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80391AA0[62] = {
+void *const rodata_803175A0_rodata_80391AA0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -11091,16 +11091,16 @@ void *const lbl_80391AA0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803919F8,
+    (void *)&rodata_803175A0_rodata_803919F8,
     (void *)0x7
 };
-const float lbl_80391B98[14] = {
+const float rodata_803175A0_rodata_80391B98[14] = {
     0.0f, 0.0f, 5e+02f, 9.77f, 1e+03f, 16.500446f, 2e+03f, 24.859224f,
     3e+03f, 38.265835f, 4e+03f, 44.344944f, 5e+03f, 54.277782f
 };
 /* pointers mixed with values */
-void *const lbl_80391BD0[42] = {
-    (void *)&lbl_80391B98,
+void *const rodata_803175A0_rodata_80391BD0[42] = {
+    (void *)&rodata_803175A0_rodata_80391B98,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -11144,7 +11144,7 @@ void *const lbl_80391BD0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80391C78[62] = {
+void *const rodata_803175A0_rodata_80391C78[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -11205,16 +11205,16 @@ void *const lbl_80391C78[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80391BD0,
+    (void *)&rodata_803175A0_rodata_80391BD0,
     (void *)0x7
 };
-const float lbl_80391D70[14] = {
+const float rodata_803175A0_rodata_80391D70[14] = {
     0.0f, 0.0f, 5e+02f, 11.573334f, 1e+03f, 21.71378f, 2e+03f, 31.854225f,
     3e+03f, 40.506668f, 4e+03f, 47.781334f, 5e+03f, 55.111115f
 };
 /* pointers mixed with values */
-void *const lbl_80391DA8[42] = {
-    (void *)&lbl_80391D70,
+void *const rodata_803175A0_rodata_80391DA8[42] = {
+    (void *)&rodata_803175A0_rodata_80391D70,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -11258,7 +11258,7 @@ void *const lbl_80391DA8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80391E50[62] = {
+void *const rodata_803175A0_rodata_80391E50[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -11319,7 +11319,7 @@ void *const lbl_80391E50[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80391DA8,
+    (void *)&rodata_803175A0_rodata_80391DA8,
     (void *)0x7
 };
 const float lbl_80391F48[14] = {
@@ -11346,13 +11346,13 @@ const float lbl_80392060[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80392098[14] = {
+const float rodata_803175A0_rodata_80392098[14] = {
     0.0f, 0.0f, 5e+02f, 22.477777f, 1e+03f, 33.36667f, 2e+03f, 50.011112f,
     3e+03f, 63.85556f, 4e+03f, 72.333336f, 5e+03f, 77.77778f
 };
 /* pointers mixed with values */
-void *const lbl_803920D0[42] = {
-    (void *)&lbl_80392098,
+void *const rodata_803175A0_rodata_803920D0[42] = {
+    (void *)&rodata_803175A0_rodata_80392098,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -11396,7 +11396,7 @@ void *const lbl_803920D0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80392178[62] = {
+void *const rodata_803175A0_rodata_80392178[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -11457,16 +11457,16 @@ void *const lbl_80392178[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803920D0,
+    (void *)&rodata_803175A0_rodata_803920D0,
     (void *)0x7
 };
-const float lbl_80392270[14] = {
+const float rodata_803175A0_rodata_80392270[14] = {
     0.0f, 0.0f, 5e+02f, 18.129168f, 1e+03f, 33.170834f, 2e+03f, 50.1125f,
     3e+03f, 59.45417f, 4e+03f, 70.458336f, 5e+03f, 79.16667f
 };
 /* pointers mixed with values */
-void *const lbl_803922A8[42] = {
-    (void *)&lbl_80392270,
+void *const rodata_803175A0_rodata_803922A8[42] = {
+    (void *)&rodata_803175A0_rodata_80392270,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -11510,7 +11510,7 @@ void *const lbl_803922A8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80392350[62] = {
+void *const rodata_803175A0_rodata_80392350[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -11571,16 +11571,16 @@ void *const lbl_80392350[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803922A8,
+    (void *)&rodata_803175A0_rodata_803922A8,
     (void *)0x7
 };
-const float lbl_80392448[14] = {
+const float rodata_803175A0_rodata_80392448[14] = {
     0.0f, 0.0f, 5e+02f, 23.12f, 1e+03f, 34.32f, 2e+03f, 51.440002f,
     3e+03f, 65.68f, 4e+03f, 74.4f, 5e+03f, 8e+01f
 };
 /* pointers mixed with values */
-void *const lbl_80392480[42] = {
-    (void *)&lbl_80392448,
+void *const rodata_803175A0_rodata_80392480[42] = {
+    (void *)&rodata_803175A0_rodata_80392448,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -11624,7 +11624,7 @@ void *const lbl_80392480[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80392528[62] = {
+void *const rodata_803175A0_rodata_80392528[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -11685,7 +11685,7 @@ void *const lbl_80392528[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80392480,
+    (void *)&rodata_803175A0_rodata_80392480,
     (void *)0x7
 };
 const float lbl_80392620[14] = {
@@ -11712,13 +11712,13 @@ const float lbl_80392738[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80392770[14] = {
+const float rodata_803175A0_rodata_80392770[14] = {
     0.0f, 0.0f, 5e+02f, 7.2281485f, 1e+03f, 14.456297f, 2e+03f, 21.684446f,
     3e+03f, 28.912594f, 4e+03f, 36.140743f, 5e+03f, 43.368893f
 };
 /* pointers mixed with values */
-void *const lbl_803927A8[42] = {
-    (void *)&lbl_80392770,
+void *const rodata_803175A0_rodata_803927A8[42] = {
+    (void *)&rodata_803175A0_rodata_80392770,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -11762,7 +11762,7 @@ void *const lbl_803927A8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80392850[62] = {
+void *const rodata_803175A0_rodata_80392850[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -11823,16 +11823,16 @@ void *const lbl_80392850[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803927A8,
+    (void *)&rodata_803175A0_rodata_803927A8,
     (void *)0x7
 };
-const float lbl_80392948[14] = {
+const float rodata_803175A0_rodata_80392948[14] = {
     0.0f, 0.0f, 5e+02f, 7.45963f, 1e+03f, 13.427334f, 2e+03f, 20.141003f,
     3e+03f, 27.600632f, 4e+03f, 35.06026f, 5e+03f, 44.757782f
 };
 /* pointers mixed with values */
-void *const lbl_80392980[42] = {
-    (void *)&lbl_80392948,
+void *const rodata_803175A0_rodata_80392980[42] = {
+    (void *)&rodata_803175A0_rodata_80392948,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -11876,7 +11876,7 @@ void *const lbl_80392980[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80392A28[62] = {
+void *const rodata_803175A0_rodata_80392A28[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -11937,16 +11937,16 @@ void *const lbl_80392A28[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80392980,
+    (void *)&rodata_803175A0_rodata_80392980,
     (void *)0x7
 };
-const float lbl_80392B20[14] = {
+const float rodata_803175A0_rodata_80392B20[14] = {
     0.0f, 0.0f, 5e+02f, 7.598519f, 1e+03f, 15.197038f, 2e+03f, 22.795557f,
     3e+03f, 30.394075f, 4e+03f, 37.992596f, 5e+03f, 45.591114f
 };
 /* pointers mixed with values */
-void *const lbl_80392B58[42] = {
-    (void *)&lbl_80392B20,
+void *const rodata_803175A0_rodata_80392B58[42] = {
+    (void *)&rodata_803175A0_rodata_80392B20,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -11990,7 +11990,7 @@ void *const lbl_80392B58[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80392C00[62] = {
+void *const rodata_803175A0_rodata_80392C00[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -12051,7 +12051,7 @@ void *const lbl_80392C00[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80392B58,
+    (void *)&rodata_803175A0_rodata_80392B58,
     (void *)0x7
 };
 const float lbl_80392CF8[14] = {
@@ -12078,13 +12078,13 @@ const float lbl_80392E10[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80392E48[14] = {
+const float rodata_803175A0_rodata_80392E48[14] = {
     0.0f, 0.0f, 5e+02f, 8.62089f, 1e+03f, 17.18889f, 2e+03f, 25.80978f,
     3e+03f, 34.43067f, 4e+03f, 43.05156f, 5e+03f, 52.888893f
 };
 /* pointers mixed with values */
-void *const lbl_80392E80[42] = {
-    (void *)&lbl_80392E48,
+void *const rodata_803175A0_rodata_80392E80[42] = {
+    (void *)&rodata_803175A0_rodata_80392E48,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -12128,7 +12128,7 @@ void *const lbl_80392E80[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80392F28[62] = {
+void *const rodata_803175A0_rodata_80392F28[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -12189,16 +12189,16 @@ void *const lbl_80392F28[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80392E80,
+    (void *)&rodata_803175A0_rodata_80392E80,
     (void *)0x7
 };
-const float lbl_80393020[14] = {
+const float rodata_803175A0_rodata_80393020[14] = {
     0.0f, 0.0f, 5e+02f, 8.250223f, 1e+03f, 17.043222f, 2e+03f, 23.393724f,
     3e+03f, 31.643948f, 4e+03f, 38.537224f, 5e+03f, 54.277782f
 };
 /* pointers mixed with values */
-void *const lbl_80393058[42] = {
-    (void *)&lbl_80393020,
+void *const rodata_803175A0_rodata_80393058[42] = {
+    (void *)&rodata_803175A0_rodata_80393020,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -12242,7 +12242,7 @@ void *const lbl_80393058[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80393100[62] = {
+void *const rodata_803175A0_rodata_80393100[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -12303,16 +12303,16 @@ void *const lbl_80393100[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80393058,
+    (void *)&rodata_803175A0_rodata_80393058,
     (void *)0x7
 };
-const float lbl_803931F8[14] = {
+const float rodata_803175A0_rodata_803931F8[14] = {
     0.0f, 0.0f, 5e+02f, 8.983112f, 1e+03f, 17.911112f, 2e+03f, 26.894224f,
     3e+03f, 35.877335f, 4e+03f, 44.860447f, 5e+03f, 55.111115f
 };
 /* pointers mixed with values */
-void *const lbl_80393230[42] = {
-    (void *)&lbl_803931F8,
+void *const rodata_803175A0_rodata_80393230[42] = {
+    (void *)&rodata_803175A0_rodata_803931F8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -12356,7 +12356,7 @@ void *const lbl_80393230[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803932D8[62] = {
+void *const rodata_803175A0_rodata_803932D8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -12417,7 +12417,7 @@ void *const lbl_803932D8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80393230,
+    (void *)&rodata_803175A0_rodata_80393230,
     (void *)0x7
 };
 const float lbl_803933D0[14] = {
@@ -12444,13 +12444,13 @@ const float lbl_803934E8[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80393520[14] = {
+const float rodata_803175A0_rodata_80393520[14] = {
     0.0f, 0.0f, 5e+02f, 19.677776f, 1e+03f, 36.633335f, 2e+03f, 50.78889f,
     3e+03f, 62.222225f, 4e+03f, 70.77778f, 5e+03f, 77.77778f
 };
 /* pointers mixed with values */
-void *const lbl_80393558[42] = {
-    (void *)&lbl_80393520,
+void *const rodata_803175A0_rodata_80393558[42] = {
+    (void *)&rodata_803175A0_rodata_80393520,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -12494,7 +12494,7 @@ void *const lbl_80393558[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80393600[62] = {
+void *const rodata_803175A0_rodata_80393600[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -12555,16 +12555,16 @@ void *const lbl_80393600[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80393558,
+    (void *)&rodata_803175A0_rodata_80393558,
     (void *)0x7
 };
-const float lbl_803936F8[14] = {
+const float rodata_803175A0_rodata_803936F8[14] = {
     0.0f, 0.0f, 5e+02f, 16.308334f, 1e+03f, 32.695835f, 2e+03f, 47.7375f,
     3e+03f, 57.316666f, 4e+03f, 66.816666f, 5e+03f, 79.16667f
 };
 /* pointers mixed with values */
-void *const lbl_80393730[42] = {
-    (void *)&lbl_803936F8,
+void *const rodata_803175A0_rodata_80393730[42] = {
+    (void *)&rodata_803175A0_rodata_803936F8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -12608,7 +12608,7 @@ void *const lbl_80393730[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803937D8[62] = {
+void *const rodata_803175A0_rodata_803937D8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -12669,16 +12669,16 @@ void *const lbl_803937D8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80393730,
+    (void *)&rodata_803175A0_rodata_80393730,
     (void *)0x7
 };
-const float lbl_803938D0[14] = {
+const float rodata_803175A0_rodata_803938D0[14] = {
     0.0f, 0.0f, 5e+02f, 20.24f, 1e+03f, 37.68f, 2e+03f, 52.24f,
     3e+03f, 64.0f, 4e+03f, 72.799995f, 5e+03f, 8e+01f
 };
 /* pointers mixed with values */
-void *const lbl_80393908[42] = {
-    (void *)&lbl_803938D0,
+void *const rodata_803175A0_rodata_80393908[42] = {
+    (void *)&rodata_803175A0_rodata_803938D0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -12722,7 +12722,7 @@ void *const lbl_80393908[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803939B0[62] = {
+void *const rodata_803175A0_rodata_803939B0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -12783,7 +12783,7 @@ void *const lbl_803939B0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80393908,
+    (void *)&rodata_803175A0_rodata_80393908,
     (void *)0x7
 };
 const float lbl_80393AA8[14] = {
@@ -12810,13 +12810,13 @@ const float lbl_80393BC0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80393BF8[14] = {
+const float rodata_803175A0_rodata_80393BF8[14] = {
     0.0f, 0.0f, 5e+02f, 7.2281485f, 1e+03f, 14.456297f, 2e+03f, 21.684446f,
     3e+03f, 28.912594f, 4e+03f, 36.140743f, 5e+03f, 43.368893f
 };
 /* pointers mixed with values */
-void *const lbl_80393C30[42] = {
-    (void *)&lbl_80393BF8,
+void *const rodata_803175A0_rodata_80393C30[42] = {
+    (void *)&rodata_803175A0_rodata_80393BF8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -12860,7 +12860,7 @@ void *const lbl_80393C30[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80393CD8[62] = {
+void *const rodata_803175A0_rodata_80393CD8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -12921,16 +12921,16 @@ void *const lbl_80393CD8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80393C30,
+    (void *)&rodata_803175A0_rodata_80393C30,
     (void *)0x7
 };
-const float lbl_80393DD0[14] = {
+const float rodata_803175A0_rodata_80393DD0[14] = {
     0.0f, 0.0f, 5e+02f, 6.8031826f, 1e+03f, 14.053943f, 2e+03f, 19.290602f,
     3e+03f, 26.093786f, 4e+03f, 31.778025f, 5e+03f, 44.757782f
 };
 /* pointers mixed with values */
-void *const lbl_80393E08[42] = {
-    (void *)&lbl_80393DD0,
+void *const rodata_803175A0_rodata_80393E08[42] = {
+    (void *)&rodata_803175A0_rodata_80393DD0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -12974,7 +12974,7 @@ void *const lbl_80393E08[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80393EB0[62] = {
+void *const rodata_803175A0_rodata_80393EB0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -13035,16 +13035,16 @@ void *const lbl_80393EB0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80393E08,
+    (void *)&rodata_803175A0_rodata_80393E08,
     (void *)0x7
 };
-const float lbl_80393FA8[14] = {
+const float rodata_803175A0_rodata_80393FA8[14] = {
     0.0f, 0.0f, 5e+02f, 7.598519f, 1e+03f, 15.197038f, 2e+03f, 22.795557f,
     3e+03f, 30.394075f, 4e+03f, 37.992596f, 5e+03f, 45.591114f
 };
 /* pointers mixed with values */
-void *const lbl_80393FE0[42] = {
-    (void *)&lbl_80393FA8,
+void *const rodata_803175A0_rodata_80393FE0[42] = {
+    (void *)&rodata_803175A0_rodata_80393FA8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -13088,7 +13088,7 @@ void *const lbl_80393FE0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80394088[62] = {
+void *const rodata_803175A0_rodata_80394088[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -13149,7 +13149,7 @@ void *const lbl_80394088[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80393FE0,
+    (void *)&rodata_803175A0_rodata_80393FE0,
     (void *)0x7
 };
 const float lbl_80394180[14] = {
@@ -13176,13 +13176,13 @@ const float lbl_80394298[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_803942D0[14] = {
+const float rodata_803175A0_rodata_803942D0[14] = {
     0.0f, 0.0f, 5e+02f, 13.891111f, 1e+03f, 27.834446f, 2e+03f, 39.010002f,
     3e+03f, 46.79111f, 4e+03f, 49.55889f, 5e+03f, 52.222225f
 };
 /* pointers mixed with values */
-void *const lbl_80394308[42] = {
-    (void *)&lbl_803942D0,
+void *const rodata_803175A0_rodata_80394308[42] = {
+    (void *)&rodata_803175A0_rodata_803942D0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -13226,7 +13226,7 @@ void *const lbl_80394308[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803943B0[62] = {
+void *const rodata_803175A0_rodata_803943B0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -13287,16 +13287,16 @@ void *const lbl_803943B0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80394308,
+    (void *)&rodata_803175A0_rodata_80394308,
     (void *)0x7
 };
-const float lbl_803944A8[14] = {
+const float rodata_803175A0_rodata_803944A8[14] = {
     0.0f, 0.0f, 5e+02f, 12.652223f, 1e+03f, 26.430279f, 2e+03f, 37.366943f,
     3e+03f, 43.210556f, 4e+03f, 49.80472f, 5e+03f, 53.61111f
 };
 /* pointers mixed with values */
-void *const lbl_803944E0[42] = {
-    (void *)&lbl_803944A8,
+void *const rodata_803175A0_rodata_803944E0[42] = {
+    (void *)&rodata_803175A0_rodata_803944A8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -13340,7 +13340,7 @@ void *const lbl_803944E0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80394588[62] = {
+void *const rodata_803175A0_rodata_80394588[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -13401,16 +13401,16 @@ void *const lbl_80394588[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803944E0,
+    (void *)&rodata_803175A0_rodata_803944E0,
     (void *)0x7
 };
-const float lbl_80394680[14] = {
+const float rodata_803175A0_rodata_80394680[14] = {
     0.0f, 0.0f, 5e+02f, 14.4822235f, 1e+03f, 29.01889f, 2e+03f, 40.670002f,
     3e+03f, 48.782223f, 4e+03f, 51.667778f, 5e+03f, 54.444447f
 };
 /* pointers mixed with values */
-void *const lbl_803946B8[42] = {
-    (void *)&lbl_80394680,
+void *const rodata_803175A0_rodata_803946B8[42] = {
+    (void *)&rodata_803175A0_rodata_80394680,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -13454,7 +13454,7 @@ void *const lbl_803946B8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80394760[62] = {
+void *const rodata_803175A0_rodata_80394760[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -13515,7 +13515,7 @@ void *const lbl_80394760[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803946B8,
+    (void *)&rodata_803175A0_rodata_803946B8,
     (void *)0x7
 };
 const float lbl_80394858[14] = {
@@ -13542,13 +13542,13 @@ const float lbl_80394970[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_803949A8[14] = {
+const float rodata_803175A0_rodata_803949A8[14] = {
     0.0f, 0.0f, 5e+02f, 22.233334f, 1e+03f, 41.70667f, 2e+03f, 55.660004f,
     3e+03f, 66.240005f, 4e+03f, 73.753334f, 5e+03f, 76.66667f
 };
 /* pointers mixed with values */
-void *const lbl_803949E0[42] = {
-    (void *)&lbl_803949A8,
+void *const rodata_803175A0_rodata_803949E0[42] = {
+    (void *)&rodata_803175A0_rodata_803949A8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -13592,7 +13592,7 @@ void *const lbl_803949E0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80394A88[62] = {
+void *const rodata_803175A0_rodata_80394A88[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -13653,16 +13653,16 @@ void *const lbl_80394A88[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803949E0,
+    (void *)&rodata_803175A0_rodata_803949E0,
     (void *)0x7
 };
-const float lbl_80394B80[14] = {
+const float rodata_803175A0_rodata_80394B80[14] = {
     0.0f, 0.0f, 5e+02f, 19.51389f, 1e+03f, 39.34f, 2e+03f, 51.204445f,
     3e+03f, 58.85389f, 4e+03f, 68.845f, 5e+03f, 78.05556f
 };
 /* pointers mixed with values */
-void *const lbl_80394BB8[42] = {
-    (void *)&lbl_80394B80,
+void *const rodata_803175A0_rodata_80394BB8[42] = {
+    (void *)&rodata_803175A0_rodata_80394B80,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -13706,7 +13706,7 @@ void *const lbl_80394BB8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80394C60[62] = {
+void *const rodata_803175A0_rodata_80394C60[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -13767,16 +13767,16 @@ void *const lbl_80394C60[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80394BB8,
+    (void *)&rodata_803175A0_rodata_80394BB8,
     (void *)0x7
 };
-const float lbl_80394D58[14] = {
+const float rodata_803175A0_rodata_80394D58[14] = {
     0.0f, 0.0f, 5e+02f, 22.877779f, 1e+03f, 42.915558f, 2e+03f, 57.27334f,
     3e+03f, 68.16f, 4e+03f, 75.89111f, 5e+03f, 78.88889f
 };
 /* pointers mixed with values */
-void *const lbl_80394D90[42] = {
-    (void *)&lbl_80394D58,
+void *const rodata_803175A0_rodata_80394D90[42] = {
+    (void *)&rodata_803175A0_rodata_80394D58,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -13820,7 +13820,7 @@ void *const lbl_80394D90[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80394E38[62] = {
+void *const rodata_803175A0_rodata_80394E38[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -13881,7 +13881,7 @@ void *const lbl_80394E38[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80394D90,
+    (void *)&rodata_803175A0_rodata_80394D90,
     (void *)0x7
 };
 const float lbl_80394F30[14] = {
@@ -13908,13 +13908,13 @@ const float lbl_80395048[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80395080[14] = {
+const float rodata_803175A0_rodata_80395080[14] = {
     0.0f, 0.0f, 5e+02f, 11.390712f, 1e+03f, 22.824245f, 2e+03f, 31.988201f,
     3e+03f, 38.368713f, 4e+03f, 40.63829f, 5e+03f, 42.822224f
 };
 /* pointers mixed with values */
-void *const lbl_803950B8[42] = {
-    (void *)&lbl_80395080,
+void *const rodata_803175A0_rodata_803950B8[42] = {
+    (void *)&rodata_803175A0_rodata_80395080,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -13958,7 +13958,7 @@ void *const lbl_803950B8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80395160[62] = {
+void *const rodata_803175A0_rodata_80395160[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -14019,16 +14019,16 @@ void *const lbl_80395160[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803950B8,
+    (void *)&rodata_803175A0_rodata_803950B8,
     (void *)0x7
 };
-const float lbl_80395258[14] = {
+const float rodata_803175A0_rodata_80395258[14] = {
     0.0f, 0.0f, 5e+02f, 10.433823f, 1e+03f, 21.79608f, 2e+03f, 30.815147f,
     3e+03f, 35.634155f, 4e+03f, 41.072124f, 5e+03f, 44.211113f
 };
 /* pointers mixed with values */
-void *const lbl_80395290[42] = {
-    (void *)&lbl_80395258,
+void *const rodata_803175A0_rodata_80395290[42] = {
+    (void *)&rodata_803175A0_rodata_80395258,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -14072,7 +14072,7 @@ void *const lbl_80395290[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80395338[62] = {
+void *const rodata_803175A0_rodata_80395338[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -14133,16 +14133,16 @@ void *const lbl_80395338[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80395290,
+    (void *)&rodata_803175A0_rodata_80395290,
     (void *)0x7
 };
-const float lbl_80395430[14] = {
+const float rodata_803175A0_rodata_80395430[14] = {
     0.0f, 0.0f, 5e+02f, 11.981822f, 1e+03f, 24.00869f, 2e+03f, 33.6482f,
     3e+03f, 40.359825f, 4e+03f, 42.74718f, 5e+03f, 45.044445f
 };
 /* pointers mixed with values */
-void *const lbl_80395468[42] = {
-    (void *)&lbl_80395430,
+void *const rodata_803175A0_rodata_80395468[42] = {
+    (void *)&rodata_803175A0_rodata_80395430,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -14186,7 +14186,7 @@ void *const lbl_80395468[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80395510[62] = {
+void *const rodata_803175A0_rodata_80395510[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -14247,7 +14247,7 @@ void *const lbl_80395510[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80395468,
+    (void *)&rodata_803175A0_rodata_80395468,
     (void *)0x7
 };
 const float lbl_80395608[14] = {
@@ -14274,13 +14274,13 @@ const float lbl_80395720[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80395758[14] = {
+const float rodata_803175A0_rodata_80395758[14] = {
     0.0f, 0.0f, 5e+02f, 8.62089f, 1e+03f, 17.18889f, 2e+03f, 25.80978f,
     3e+03f, 34.43067f, 4e+03f, 43.05156f, 5e+03f, 52.888893f
 };
 /* pointers mixed with values */
-void *const lbl_80395790[42] = {
-    (void *)&lbl_80395758,
+void *const rodata_803175A0_rodata_80395790[42] = {
+    (void *)&rodata_803175A0_rodata_80395758,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -14324,7 +14324,7 @@ void *const lbl_80395790[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80395838[62] = {
+void *const rodata_803175A0_rodata_80395838[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -14385,16 +14385,16 @@ void *const lbl_80395838[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80395790,
+    (void *)&rodata_803175A0_rodata_80395790,
     (void *)0x7
 };
-const float lbl_80395930[14] = {
+const float rodata_803175A0_rodata_80395930[14] = {
     0.0f, 0.0f, 5e+02f, 8.250223f, 1e+03f, 17.043222f, 2e+03f, 23.393724f,
     3e+03f, 31.643948f, 4e+03f, 38.537224f, 5e+03f, 54.277782f
 };
 /* pointers mixed with values */
-void *const lbl_80395968[42] = {
-    (void *)&lbl_80395930,
+void *const rodata_803175A0_rodata_80395968[42] = {
+    (void *)&rodata_803175A0_rodata_80395930,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -14438,7 +14438,7 @@ void *const lbl_80395968[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80395A10[62] = {
+void *const rodata_803175A0_rodata_80395A10[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -14499,16 +14499,16 @@ void *const lbl_80395A10[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80395968,
+    (void *)&rodata_803175A0_rodata_80395968,
     (void *)0x7
 };
-const float lbl_80395B08[14] = {
+const float rodata_803175A0_rodata_80395B08[14] = {
     0.0f, 0.0f, 5e+02f, 8.983112f, 1e+03f, 17.911112f, 2e+03f, 26.894224f,
     3e+03f, 35.877335f, 4e+03f, 44.860447f, 5e+03f, 55.111115f
 };
 /* pointers mixed with values */
-void *const lbl_80395B40[42] = {
-    (void *)&lbl_80395B08,
+void *const rodata_803175A0_rodata_80395B40[42] = {
+    (void *)&rodata_803175A0_rodata_80395B08,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -14552,7 +14552,7 @@ void *const lbl_80395B40[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80395BE8[62] = {
+void *const rodata_803175A0_rodata_80395BE8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -14613,7 +14613,7 @@ void *const lbl_80395BE8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80395B40,
+    (void *)&rodata_803175A0_rodata_80395B40,
     (void *)0x7
 };
 const float lbl_80395CE0[14] = {
@@ -14640,13 +14640,13 @@ const float lbl_80395DF8[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80395E30[14] = {
+const float rodata_803175A0_rodata_80395E30[14] = {
     0.0f, 0.0f, 5e+02f, 19.677776f, 1e+03f, 36.633335f, 2e+03f, 50.78889f,
     3e+03f, 62.222225f, 4e+03f, 70.77778f, 5e+03f, 77.77778f
 };
 /* pointers mixed with values */
-void *const lbl_80395E68[42] = {
-    (void *)&lbl_80395E30,
+void *const rodata_803175A0_rodata_80395E68[42] = {
+    (void *)&rodata_803175A0_rodata_80395E30,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -14690,7 +14690,7 @@ void *const lbl_80395E68[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80395F10[62] = {
+void *const rodata_803175A0_rodata_80395F10[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -14751,16 +14751,16 @@ void *const lbl_80395F10[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80395E68,
+    (void *)&rodata_803175A0_rodata_80395E68,
     (void *)0x7
 };
-const float lbl_80396008[14] = {
+const float rodata_803175A0_rodata_80396008[14] = {
     0.0f, 0.0f, 5e+02f, 16.308334f, 1e+03f, 32.695835f, 2e+03f, 47.7375f,
     3e+03f, 57.316666f, 4e+03f, 66.816666f, 5e+03f, 79.16667f
 };
 /* pointers mixed with values */
-void *const lbl_80396040[42] = {
-    (void *)&lbl_80396008,
+void *const rodata_803175A0_rodata_80396040[42] = {
+    (void *)&rodata_803175A0_rodata_80396008,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -14804,7 +14804,7 @@ void *const lbl_80396040[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803960E8[62] = {
+void *const rodata_803175A0_rodata_803960E8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -14865,16 +14865,16 @@ void *const lbl_803960E8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80396040,
+    (void *)&rodata_803175A0_rodata_80396040,
     (void *)0x7
 };
-const float lbl_803961E0[14] = {
+const float rodata_803175A0_rodata_803961E0[14] = {
     0.0f, 0.0f, 5e+02f, 20.24f, 1e+03f, 37.68f, 2e+03f, 52.24f,
     3e+03f, 64.0f, 4e+03f, 72.799995f, 5e+03f, 8e+01f
 };
 /* pointers mixed with values */
-void *const lbl_80396218[42] = {
-    (void *)&lbl_803961E0,
+void *const rodata_803175A0_rodata_80396218[42] = {
+    (void *)&rodata_803175A0_rodata_803961E0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -14918,7 +14918,7 @@ void *const lbl_80396218[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803962C0[62] = {
+void *const rodata_803175A0_rodata_803962C0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -14979,7 +14979,7 @@ void *const lbl_803962C0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80396218,
+    (void *)&rodata_803175A0_rodata_80396218,
     (void *)0x7
 };
 const float lbl_803963B8[14] = {
@@ -15006,13 +15006,13 @@ const float lbl_803964D0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80396508[14] = {
+const float rodata_803175A0_rodata_80396508[14] = {
     0.0f, 0.0f, 5e+02f, 7.2281485f, 1e+03f, 14.456297f, 2e+03f, 21.684446f,
     3e+03f, 28.912594f, 4e+03f, 36.140743f, 5e+03f, 43.368893f
 };
 /* pointers mixed with values */
-void *const lbl_80396540[42] = {
-    (void *)&lbl_80396508,
+void *const rodata_803175A0_rodata_80396540[42] = {
+    (void *)&rodata_803175A0_rodata_80396508,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -15056,7 +15056,7 @@ void *const lbl_80396540[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803965E8[62] = {
+void *const rodata_803175A0_rodata_803965E8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -15117,16 +15117,16 @@ void *const lbl_803965E8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80396540,
+    (void *)&rodata_803175A0_rodata_80396540,
     (void *)0x7
 };
-const float lbl_803966E0[14] = {
+const float rodata_803175A0_rodata_803966E0[14] = {
     0.0f, 0.0f, 5e+02f, 6.8031826f, 1e+03f, 14.053943f, 2e+03f, 19.290602f,
     3e+03f, 26.093786f, 4e+03f, 31.778025f, 5e+03f, 44.757782f
 };
 /* pointers mixed with values */
-void *const lbl_80396718[42] = {
-    (void *)&lbl_803966E0,
+void *const rodata_803175A0_rodata_80396718[42] = {
+    (void *)&rodata_803175A0_rodata_803966E0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -15170,7 +15170,7 @@ void *const lbl_80396718[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803967C0[62] = {
+void *const rodata_803175A0_rodata_803967C0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -15231,16 +15231,16 @@ void *const lbl_803967C0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80396718,
+    (void *)&rodata_803175A0_rodata_80396718,
     (void *)0x7
 };
-const float lbl_803968B8[14] = {
+const float rodata_803175A0_rodata_803968B8[14] = {
     0.0f, 0.0f, 5e+02f, 7.598519f, 1e+03f, 15.197038f, 2e+03f, 22.795557f,
     3e+03f, 30.394075f, 4e+03f, 37.992596f, 5e+03f, 45.591114f
 };
 /* pointers mixed with values */
-void *const lbl_803968F0[42] = {
-    (void *)&lbl_803968B8,
+void *const rodata_803175A0_rodata_803968F0[42] = {
+    (void *)&rodata_803175A0_rodata_803968B8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41A80000,
@@ -15284,7 +15284,7 @@ void *const lbl_803968F0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80396998[62] = {
+void *const rodata_803175A0_rodata_80396998[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -15345,7 +15345,7 @@ void *const lbl_80396998[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803968F0,
+    (void *)&rodata_803175A0_rodata_803968F0,
     (void *)0x7
 };
 const float lbl_80396A90[14] = {
@@ -15372,13 +15372,13 @@ const float lbl_80396BA8[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80396BE0[14] = {
+const float rodata_803175A0_rodata_80396BE0[14] = {
     0.0f, 0.0f, 5e+02f, 8.189845f, 1e+03f, 16.918495f, 2e+03f, 23.22252f,
     3e+03f, 31.412365f, 4e+03f, 38.255196f, 5e+03f, 53.880558f
 };
 /* pointers mixed with values */
-void *const lbl_80396C18[42] = {
-    (void *)&lbl_80396BE0,
+void *const rodata_803175A0_rodata_80396C18[42] = {
+    (void *)&rodata_803175A0_rodata_80396BE0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -15422,7 +15422,7 @@ void *const lbl_80396C18[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80396CC0[62] = {
+void *const rodata_803175A0_rodata_80396CC0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -15483,16 +15483,16 @@ void *const lbl_80396CC0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80396C18,
+    (void *)&rodata_803175A0_rodata_80396C18,
     (void *)0x7
 };
-const float lbl_80396DB8[14] = {
+const float rodata_803175A0_rodata_80396DB8[14] = {
     0.0f, 0.0f, 5e+02f, 6.190178f, 1e+03f, 14.038439f, 2e+03f, 21.05766f,
     3e+03f, 27.800531f, 4e+03f, 39.24131f, 5e+03f, 55.269447f
 };
 /* pointers mixed with values */
-void *const lbl_80396DF0[42] = {
-    (void *)&lbl_80396DB8,
+void *const rodata_803175A0_rodata_80396DF0[42] = {
+    (void *)&rodata_803175A0_rodata_80396DB8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -15536,7 +15536,7 @@ void *const lbl_80396DF0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80396E98[62] = {
+void *const rodata_803175A0_rodata_80396E98[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -15597,16 +15597,16 @@ void *const lbl_80396E98[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80396DF0,
+    (void *)&rodata_803175A0_rodata_80396DF0,
     (void *)0x7
 };
-const float lbl_80396F90[14] = {
+const float rodata_803175A0_rodata_80396F90[14] = {
     0.0f, 0.0f, 5e+02f, 8.527622f, 1e+03f, 17.616272f, 2e+03f, 24.180298f,
     3e+03f, 32.70792f, 4e+03f, 39.832973f, 5e+03f, 56.10278f
 };
 /* pointers mixed with values */
-void *const lbl_80396FC8[42] = {
-    (void *)&lbl_80396F90,
+void *const rodata_803175A0_rodata_80396FC8[42] = {
+    (void *)&rodata_803175A0_rodata_80396F90,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -15650,7 +15650,7 @@ void *const lbl_80396FC8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80397070[62] = {
+void *const rodata_803175A0_rodata_80397070[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -15711,7 +15711,7 @@ void *const lbl_80397070[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80396FC8,
+    (void *)&rodata_803175A0_rodata_80396FC8,
     (void *)0x7
 };
 const float lbl_80397168[14] = {
@@ -15738,13 +15738,13 @@ const float lbl_80397280[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_803972B8[14] = {
+const float rodata_803175A0_rodata_803972B8[14] = {
     0.0f, 0.0f, 5e+02f, 16.365557f, 1e+03f, 32.810555f, 2e+03f, 47.905f,
     3e+03f, 57.517776f, 4e+03f, 67.05112f, 5e+03f, 79.44444f
 };
 /* pointers mixed with values */
-void *const lbl_803972F0[42] = {
-    (void *)&lbl_803972B8,
+void *const rodata_803175A0_rodata_803972F0[42] = {
+    (void *)&rodata_803175A0_rodata_803972B8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -15788,7 +15788,7 @@ void *const lbl_803972F0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80397398[62] = {
+void *const rodata_803175A0_rodata_80397398[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -15849,16 +15849,16 @@ void *const lbl_80397398[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803972F0,
+    (void *)&rodata_803175A0_rodata_803972F0,
     (void *)0x7
 };
-const float lbl_80397490[14] = {
+const float rodata_803175A0_rodata_80397490[14] = {
     0.0f, 0.0f, 5e+02f, 13.418334f, 1e+03f, 26.917501f, 2e+03f, 40.65917f,
     3e+03f, 55.290005f, 4e+03f, 68.223335f, 5e+03f, 80.833336f
 };
 /* pointers mixed with values */
-void *const lbl_803974C8[42] = {
-    (void *)&lbl_80397490,
+void *const rodata_803175A0_rodata_803974C8[42] = {
+    (void *)&rodata_803175A0_rodata_80397490,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -15902,7 +15902,7 @@ void *const lbl_803974C8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80397570[62] = {
+void *const rodata_803175A0_rodata_80397570[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -15963,16 +15963,16 @@ void *const lbl_80397570[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803974C8,
+    (void *)&rodata_803175A0_rodata_803974C8,
     (void *)0x7
 };
-const float lbl_80397668[14] = {
+const float rodata_803175A0_rodata_80397668[14] = {
     0.0f, 0.0f, 5e+02f, 16.823334f, 1e+03f, 33.728333f, 2e+03f, 49.245f,
     3e+03f, 59.12667f, 4e+03f, 68.92667f, 5e+03f, 81.66667f
 };
 /* pointers mixed with values */
-void *const lbl_803976A0[42] = {
-    (void *)&lbl_80397668,
+void *const rodata_803175A0_rodata_803976A0[42] = {
+    (void *)&rodata_803175A0_rodata_80397668,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -16016,7 +16016,7 @@ void *const lbl_803976A0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80397748[62] = {
+void *const rodata_803175A0_rodata_80397748[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -16077,7 +16077,7 @@ void *const lbl_80397748[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803976A0,
+    (void *)&rodata_803175A0_rodata_803976A0,
     (void *)0x7
 };
 const float lbl_80397840[14] = {
@@ -16104,13 +16104,13 @@ const float lbl_80397958[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80397990[14] = {
+const float rodata_803175A0_rodata_80397990[14] = {
     0.0f, 0.0f, 5e+02f, 6.8392735f, 1e+03f, 14.128499f, 2e+03f, 19.39294f,
     3e+03f, 26.232214f, 4e+03f, 31.946608f, 5e+03f, 44.99522f
 };
 /* pointers mixed with values */
-void *const lbl_803979C8[42] = {
-    (void *)&lbl_80397990,
+void *const rodata_803175A0_rodata_803979C8[42] = {
+    (void *)&rodata_803175A0_rodata_80397990,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -16154,7 +16154,7 @@ void *const lbl_803979C8[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80397A70[62] = {
+void *const rodata_803175A0_rodata_80397A70[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -16215,16 +16215,16 @@ void *const lbl_80397A70[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803979C8,
+    (void *)&rodata_803175A0_rodata_803979C8,
     (void *)0x7
 };
-const float lbl_80397B68[14] = {
+const float rodata_803175A0_rodata_80397B68[14] = {
     0.0f, 0.0f, 5e+02f, 5.19502f, 1e+03f, 11.781564f, 2e+03f, 17.672346f,
     3e+03f, 23.331205f, 4e+03f, 32.932716f, 5e+03f, 46.38411f
 };
 /* pointers mixed with values */
-void *const lbl_80397BA0[42] = {
-    (void *)&lbl_80397B68,
+void *const rodata_803175A0_rodata_80397BA0[42] = {
+    (void *)&rodata_803175A0_rodata_80397B68,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -16268,7 +16268,7 @@ void *const lbl_80397BA0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80397C48[62] = {
+void *const rodata_803175A0_rodata_80397C48[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -16329,16 +16329,16 @@ void *const lbl_80397C48[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80397BA0,
+    (void *)&rodata_803175A0_rodata_80397BA0,
     (void *)0x7
 };
-const float lbl_80397D40[14] = {
+const float rodata_803175A0_rodata_80397D40[14] = {
     0.0f, 0.0f, 5e+02f, 7.177051f, 1e+03f, 14.826277f, 2e+03f, 20.350718f,
     3e+03f, 27.52777f, 4e+03f, 33.524384f, 5e+03f, 47.21744f
 };
 /* pointers mixed with values */
-void *const lbl_80397D78[42] = {
-    (void *)&lbl_80397D40,
+void *const rodata_803175A0_rodata_80397D78[42] = {
+    (void *)&rodata_803175A0_rodata_80397D40,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -16382,7 +16382,7 @@ void *const lbl_80397D78[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80397E20[62] = {
+void *const rodata_803175A0_rodata_80397E20[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -16443,7 +16443,7 @@ void *const lbl_80397E20[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80397D78,
+    (void *)&rodata_803175A0_rodata_80397D78,
     (void *)0x7
 };
 const float lbl_80397F18[14] = {
@@ -16470,13 +16470,13 @@ const float lbl_80398030[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80398068[14] = {
+const float rodata_803175A0_rodata_80398068[14] = {
     0.0f, 0.0f, 5e+02f, 13.891111f, 1e+03f, 27.834446f, 2e+03f, 39.010002f,
     3e+03f, 46.79111f, 4e+03f, 49.55889f, 5e+03f, 52.222225f
 };
 /* pointers mixed with values */
-void *const lbl_803980A0[42] = {
-    (void *)&lbl_80398068,
+void *const rodata_803175A0_rodata_803980A0[42] = {
+    (void *)&rodata_803175A0_rodata_80398068,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -16520,7 +16520,7 @@ void *const lbl_803980A0[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80398148[62] = {
+void *const rodata_803175A0_rodata_80398148[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -16581,16 +16581,16 @@ void *const lbl_80398148[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_803980A0,
+    (void *)&rodata_803175A0_rodata_803980A0,
     (void *)0x7
 };
-const float lbl_80398240[14] = {
+const float rodata_803175A0_rodata_80398240[14] = {
     0.0f, 0.0f, 5e+02f, 12.652223f, 1e+03f, 26.430279f, 2e+03f, 37.366943f,
     3e+03f, 43.210556f, 4e+03f, 49.80472f, 5e+03f, 53.61111f
 };
 /* pointers mixed with values */
-void *const lbl_80398278[42] = {
-    (void *)&lbl_80398240,
+void *const rodata_803175A0_rodata_80398278[42] = {
+    (void *)&rodata_803175A0_rodata_80398240,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -16634,7 +16634,7 @@ void *const lbl_80398278[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80398320[62] = {
+void *const rodata_803175A0_rodata_80398320[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -16695,16 +16695,16 @@ void *const lbl_80398320[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80398278,
+    (void *)&rodata_803175A0_rodata_80398278,
     (void *)0x7
 };
-const float lbl_80398418[14] = {
+const float rodata_803175A0_rodata_80398418[14] = {
     0.0f, 0.0f, 5e+02f, 14.4822235f, 1e+03f, 29.01889f, 2e+03f, 40.670002f,
     3e+03f, 48.782223f, 4e+03f, 51.667778f, 5e+03f, 54.444447f
 };
 /* pointers mixed with values */
-void *const lbl_80398450[42] = {
-    (void *)&lbl_80398418,
+void *const rodata_803175A0_rodata_80398450[42] = {
+    (void *)&rodata_803175A0_rodata_80398418,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -16748,7 +16748,7 @@ void *const lbl_80398450[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803984F8[62] = {
+void *const rodata_803175A0_rodata_803984F8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -16809,7 +16809,7 @@ void *const lbl_803984F8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80398450,
+    (void *)&rodata_803175A0_rodata_80398450,
     (void *)0x7
 };
 const float lbl_803985F0[14] = {
@@ -16836,13 +16836,13 @@ const float lbl_80398708[14] = {
     0.0f, 0.0f, 5e+02f, 83.333336f, 1e+03f, 83.333336f, 2e+03f, 83.333336f,
     3e+03f, 83.333336f, 4e+03f, 83.333336f, 5e+03f, 83.333336f
 };
-const float lbl_80398740[14] = {
+const float NORMAL_rodata_80398740[14] = {
     0.0f, 0.0f, 5e+02f, 22.233334f, 1e+03f, 41.70667f, 2e+03f, 55.660004f,
     3e+03f, 66.240005f, 4e+03f, 73.753334f, 5e+03f, 76.66667f
 };
 /* pointers mixed with values */
-void *const lbl_80398778[42] = {
-    (void *)&lbl_80398740,
+void *const NORMAL_rodata_80398778[42] = {
+    (void *)&NORMAL_rodata_80398740,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -16947,16 +16947,16 @@ void *const NORMAL[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80398778,
+    (void *)&NORMAL_rodata_80398778,
     (void *)0x7
 };
-const float lbl_80398918[14] = {
+const float ORIGINAL_rodata_80398918[14] = {
     0.0f, 0.0f, 5e+02f, 19.51389f, 1e+03f, 39.34f, 2e+03f, 51.204445f,
     3e+03f, 58.85389f, 4e+03f, 68.845f, 5e+03f, 78.05556f
 };
 /* pointers mixed with values */
-void *const lbl_80398950[42] = {
-    (void *)&lbl_80398918,
+void *const ORIGINAL_rodata_80398950[42] = {
+    (void *)&ORIGINAL_rodata_80398918,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -17061,16 +17061,16 @@ void *const ORIGINAL[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80398950,
+    (void *)&ORIGINAL_rodata_80398950,
     (void *)0x7
 };
-const float lbl_80398AF0[14] = {
+const float ENHANCED_rodata_80398AF0[14] = {
     0.0f, 0.0f, 5e+02f, 22.877779f, 1e+03f, 42.915558f, 2e+03f, 57.27334f,
     3e+03f, 68.16f, 4e+03f, 75.89111f, 5e+03f, 78.88889f
 };
 /* pointers mixed with values */
-void *const lbl_80398B28[42] = {
-    (void *)&lbl_80398AF0,
+void *const ENHANCED_rodata_80398B28[42] = {
+    (void *)&ENHANCED_rodata_80398AF0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -17175,7 +17175,7 @@ void *const ENHANCED[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80398B28,
+    (void *)&ENHANCED_rodata_80398B28,
     (void *)0x7
 };
 const float lbl_80398CC8[14] = {
@@ -17202,13 +17202,13 @@ const float lbl_80398DE0[14] = {
     0.0f, 0.0f, 5e+02f, 66.66667f, 1e+03f, 66.66667f, 2e+03f, 66.66667f,
     3e+03f, 66.66667f, 4e+03f, 66.66667f, 5e+03f, 66.66667f
 };
-const float lbl_80398E18[14] = {
+const float rodata_803175A0_rodata_80398E18[14] = {
     0.0f, 0.0f, 5e+02f, 11.390712f, 1e+03f, 22.824245f, 2e+03f, 31.988201f,
     3e+03f, 38.368713f, 4e+03f, 40.63829f, 5e+03f, 42.822224f
 };
 /* pointers mixed with values */
-void *const lbl_80398E50[42] = {
-    (void *)&lbl_80398E18,
+void *const rodata_803175A0_rodata_80398E50[42] = {
+    (void *)&rodata_803175A0_rodata_80398E18,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -17252,7 +17252,7 @@ void *const lbl_80398E50[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_80398EF8[62] = {
+void *const rodata_803175A0_rodata_80398EF8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -17313,16 +17313,16 @@ void *const lbl_80398EF8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80398E50,
+    (void *)&rodata_803175A0_rodata_80398E50,
     (void *)0x7
 };
-const float lbl_80398FF0[14] = {
+const float rodata_803175A0_rodata_80398FF0[14] = {
     0.0f, 0.0f, 5e+02f, 10.433823f, 1e+03f, 21.79608f, 2e+03f, 30.815147f,
     3e+03f, 35.634155f, 4e+03f, 41.072124f, 5e+03f, 44.211113f
 };
 /* pointers mixed with values */
-void *const lbl_80399028[42] = {
-    (void *)&lbl_80398FF0,
+void *const rodata_803175A0_rodata_80399028[42] = {
+    (void *)&rodata_803175A0_rodata_80398FF0,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -17366,7 +17366,7 @@ void *const lbl_80399028[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803990D0[62] = {
+void *const rodata_803175A0_rodata_803990D0[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -17427,16 +17427,16 @@ void *const lbl_803990D0[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80399028,
+    (void *)&rodata_803175A0_rodata_80399028,
     (void *)0x7
 };
-const float lbl_803991C8[14] = {
+const float rodata_803175A0_rodata_803991C8[14] = {
     0.0f, 0.0f, 5e+02f, 11.981822f, 1e+03f, 24.00869f, 2e+03f, 33.6482f,
     3e+03f, 40.359825f, 4e+03f, 42.74718f, 5e+03f, 45.044445f
 };
 /* pointers mixed with values */
-void *const lbl_80399200[42] = {
-    (void *)&lbl_803991C8,
+void *const rodata_803175A0_rodata_80399200[42] = {
+    (void *)&rodata_803175A0_rodata_803991C8,
     (void *)0x7,
     (void *)0x459C4000,
     (void *)0x41FC0000,
@@ -17480,7 +17480,7 @@ void *const lbl_80399200[42] = {
     (void *)0x3E99999A
 };
 /* pointers mixed with values */
-void *const lbl_803992A8[62] = {
+void *const rodata_803175A0_rodata_803992A8[62] = {
     (void *)0x3F800000,
     (void *)0x3F4CCCCD,
     0,
@@ -17541,7 +17541,7 @@ void *const lbl_803992A8[62] = {
     (void *)0xC0C00000,
     0,
     (void *)0xC1000000,
-    (void *)&lbl_80399200,
+    (void *)&rodata_803175A0_rodata_80399200,
     (void *)0x7
 };
 

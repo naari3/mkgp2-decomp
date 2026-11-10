@@ -16,7 +16,7 @@ typedef struct ViewerEntry {
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const char lbl_803F0AD8[1032] = {
+const char KartAlertPanel_rodata_803F0AD8[1032] = {
     63, -128, 0, 0, 63, 51, 51, 51, 63, 102, 102, 102,
     0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0,
     66, -123, 85, 86, 68, 122, 0, 0, 66, -123, 85, 86,
@@ -104,74 +104,74 @@ const char lbl_803F0AD8[1032] = {
     66, -90, -86, -85, 69, -100, 64, 0, 66, -90, -86, -85,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
-const unk32 lbl_803F0EE0[3] = {
+const unk32 data_804EF0C8_rodata_803F0EE0[3] = {
     0x838B8343, 0x815B8357, 0x00000000
 };
-const unk32 lbl_803F0EEC[3] = {
+const unk32 data_804EF0C8_rodata_803F0EEC[3] = {
     0x834C836D, 0x83738349, 0x00000000
 };
-const unk32 lbl_803F0EF8[3] = {
+const unk32 data_804EF0C8_rodata_803F0EF8[3] = {
     0x83688393, 0x834C815B, 0x00000000
 };
-const unk32 lbl_803F0F04[3] = {
+const unk32 data_804EF0C8_rodata_803F0F04[3] = {
     0x83888362, 0x8356815B, 0x00000000
 };
-const unk32 lbl_803F0F10[3] = {
+const unk32 data_804EF0C8_rodata_803F0F10[3] = {
     0x83708362, 0x834E837D, 0x83930000
 };
-const unk32 lbl_803F0F1C[3] = {
+const unk32 data_804EF0C8_rodata_803F0F1C[3] = {
     0x837E8359, 0x83708362, 0x834E0000
 };
-const unk32 lbl_803F0F28[3] = {
+const unk32 data_804EF0C8_rodata_803F0F28[3] = {
     0x8341834A, 0x83788343, 0x00000000
 };
-const unk32 lbl_803F0F34[3] = {
+const unk32 data_804EF0C8_rodata_803F0F34[3] = {
     0x838F838B, 0x8343815B, 0x83570000
 };
-const unk32 lbl_803F0F40[3] = {
+const unk32 data_804EF0C8_rodata_803F0F40[3] = {
     0x82DC82DF, 0x82C182BF, 0x00000000
 };
-const unk32 lbl_803F0F4C[3] = {
+const unk32 data_804EF0C8_rodata_803F0F4C[3] = {
     0x826C8260, 0x82718268, 0x826E0000
 };
-const unk32 lbl_803F0F58[3] = {
+const unk32 data_804EF0C8_rodata_803F0F58[3] = {
     0x826B8274, 0x82688266, 0x82680000
 };
-const unk32 lbl_803F0F64[3] = {
+const unk32 data_804EF0C8_rodata_803F0F64[3] = {
     0x82768260, 0x82718268, 0x826E0000
 };
-const unk32 lbl_803F0F70[3] = {
+const unk32 data_804EF0C8_rodata_803F0F70[3] = {
     0x826F8264, 0x82608262, 0x82670000
 };
-const unk32 lbl_803F0F7C[3] = {
+const unk32 data_804EF0C8_rodata_803F0F7C[3] = {
     0x826A8268, 0x826D8266, 0x00000000
 };
-const unk32 lbl_803F0F88[3] = {
+const unk32 data_804EF0C8_rodata_803F0F88[3] = {
     0x8273826E, 0x82608263, 0x00000000
 };
-const unk32 lbl_803F0F94[3] = {
+const unk32 data_804EF0C8_rodata_803F0F94[3] = {
     0x8278826E, 0x82728267, 0x82680000
 };
-const unk32 lbl_803F0FA0[3] = {
+const unk32 data_804EF0C8_rodata_803F0FA0[3] = {
     0x826C8293, 0x8144826F, 0x00000000
 };
-const unk32 lbl_803F0FAC[3] = {
+const unk32 data_804EF0C8_rodata_803F0FAC[3] = {
     0x82768260, 0x826B8274, 0x00000000
 };
-const unk32 lbl_803F0FB8[3] = {
+const unk32 data_804EF0C8_rodata_803F0FB8[3] = {
     0x826C8260, 0x826C8264, 0x00000000
 };
 /* decl: Vec2 */
-const unk32 lbl_803F0FC4[11] = {
+const unk32 KartAlertPanel_rodata_803F0FC4[11] = {
     0x00000000, 0x00000000, 0xC2940000, 0xC1600000, 0xC2580000, 0xC1200000, 0x42300000, 0xC1200000,
     0xFFFF0000, 0x00000000, 0x00000000
 };
-const unk32 lbl_803F0FF0[12] = {
+const unk32 sdata_806D09E8_rodata_803F0FF0[12] = {
     0x636C5275, 0x62537461, 0x72000000, 0x53757065, 0x72205374, 0x61722045, 0x6E640A00, 0x53757065,
     0x72205374, 0x61722053, 0x74617274, 0x21210A00
 };
 const char lbl_803F1020[] = "Super Star Restart\n";
-const char lbl_803F1034[60] = {
+const char KartAlertPanel_rodata_803F1034[60] = {
     83, 117, 112, 101, 114, 32, 83, 116, 97, 114, 32, 83,
     116, 111, 112, 10, 0, 0, 0, 0, 99, 108, 67, 111,
     117, 110, 116, 101, 114, 73, 110, 116, 101, 114, 102, 97,
@@ -182,11 +182,11 @@ const char lbl_803F1070[] = "clStartNum";
 const char lbl_803F107C[] = "clYTaskInterface";
 const char lbl_803F1090[] = "clCTaskInterface";
 const char lbl_803F10A4[] = "clStartGo";
-const Vec2 lbl_803F10B0[2] = {
+const Vec2 SpeedHud_rodata_803F10B0[2] = {
     { 64.0f, 27.0f },
     { 573.0f, 29.0f }
 };
-const Vec2 lbl_803F10C0[18] = {
+const Vec2 SpeedHud_rodata_803F10C0[18] = {
     { 94.0f, 59.0f },
     { 62.0f, 59.0f },
     { 30.0f, 59.0f },
@@ -219,17 +219,17 @@ const char lbl_803F11D8[] = "clRnkDisp";
 const char lbl_803F11E4[] = "clCoinDisp";
 const char lbl_803F11F0[] = "clMrrDisp2";
 const char lbl_803F11FC[] = "clCrsDisp";
-const char lbl_803F1208[12] = {
+const char ItemViewer_rodata_803F1208[12] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 const char lbl_803F1214[] = "item_coin.dat";
 const char lbl_803F1224[] = "mario_coin.dat";
-const ViewerEntry lbl_803F1234[2] = {
+const ViewerEntry ItemViewer_rodata_803F1234[2] = {
     { (void *)&lbl_803F1214, { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, 1.0f } },
     { (void *)&lbl_803F1224, { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, 1.0f } }
 };
 const char lbl_803F1274[] = "clItemViewer";
-const unk32 lbl_803F1284[77] = {
+const unk32 sdata_806D09E8_rodata_803F1284[77] = {
     0x636C5363, 0x656E6549, 0x6E746572, 0x66616365, 0x00000000, 0x5B497465, 0x6D547261, 0x6E735D0A,
     0x00000000, 0x4974656D, 0x4E616D65, 0x203D2025, 0x730A0000, 0x506F732E, 0x78203D20, 0x25660A00,
     0x506F732E, 0x79203D20, 0x25660A00, 0x506F732E, 0x7A203D20, 0x25660A00, 0x526F742E, 0x78203D20,

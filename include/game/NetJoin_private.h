@@ -2,7 +2,7 @@
 #define NET_JOIN_PRIVATE_H
 /*
  * 0x802253EC..0x80226640: network single-play join scene (vtable
- * lbl_804EDF3C, base clSceneInterface lbl_803FE0C8). Scrolls a "waiting
+ * clCSSceneNextRaceBT_vtable_804EDF3C, base clSceneInterface lbl_803FE0C8). Scrolls a "waiting
  * for host" text, waits for the host PCB through a SyncWaiter and lets the
  * player open a coin popup (NetJoinPopup) while waiting.
  */

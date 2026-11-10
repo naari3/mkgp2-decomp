@@ -1,4 +1,4 @@
-/* 0x80165454..0x801654E0: deleting destructor of a scene (vtable lbl_80490E1C). */
+/* 0x80165454..0x801654E0: deleting destructor of a scene (vtable Obj801654E0_vtable_80490E1C). */
 
 struct VObj {
     virtual ~VObj();
@@ -12,7 +12,7 @@ struct Scene80165454 {
 };
 
 extern "C" {
-extern char lbl_80490E1C[];
+extern char Obj801654E0_vtable_80490E1C[];
 extern char lbl_803FE0C8[];
 extern void fn_80121210(void);
 extern void MemoryManager_TimedFree(void *);
@@ -21,7 +21,7 @@ extern void MemoryManager_TimedFree(void *);
 
 Scene80165454 *fn_80165454(Scene80165454 *self, short flag) {
     if (self) {
-        self->vtable = lbl_80490E1C;
+        self->vtable = Obj801654E0_vtable_80490E1C;
         fn_80121210();
         if (self->obj10) {
             self->obj10->Release();

@@ -20,7 +20,7 @@ typedef struct Obj8018FDA4 {
     Child8018FDA4 *child;
 } Obj8018FDA4;
 
-extern char lbl_80495F04[];
+extern char Obj8018FEAC_vtable_80495F04[];
 extern char lbl_80490FE0[];
 extern char lbl_803785C0[];
 extern void fn_801831F8(HsdHandle *h, int id, void *buf, int x);
@@ -44,7 +44,7 @@ static inline void ChildDtor(Child8018FDA4 *c) {
 
 Obj8018FDA4 *fn_8018FDA4(Obj8018FDA4 *p, short flag) {
     if (p != 0) {
-        p->vt = lbl_80495F04;
+        p->vt = Obj8018FEAC_vtable_80495F04;
         if (p->child != 0) ChildDtor(p->child);
         if (p->obj != 0) Object_DtorWithGXSync(p->obj, 1);
         DebugPrintf(lbl_803785C0);

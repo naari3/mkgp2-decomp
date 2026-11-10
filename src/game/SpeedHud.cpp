@@ -1,5 +1,5 @@
 /*
- * Three-digit gauge HUD part @ 0x80251CD0..0x802529C8 (vtable lbl_804EF1B4).
+ * Three-digit gauge HUD part @ 0x80251CD0..0x802529C8 (vtable SpeedHud_vtable_804EF1B4).
  *
  * HudPart (vtable lbl_804EDB28, dtor dtor_8021617C) is the base. The gauge
  * slides in once the countdown reaches phase 2, shows the value with up to
@@ -22,8 +22,8 @@ extern const float lbl_806DC130;
 extern const float lbl_806DC134;
 extern const float lbl_806DC138;
 extern const float lbl_806DC13C;
-extern const Vec2 lbl_803F10B0[2];
-extern const Vec2 lbl_803F10C0[2][9];
+extern const Vec2 SpeedHud_rodata_803F10B0[2];
+extern const Vec2 SpeedHud_rodata_803F10C0[2][9];
 extern int g_countdownPhase;
 extern int g_gameMode;
 int SpriteHandle_CreateDefault(ResCtrl *ctrl, int layer);
@@ -92,9 +92,9 @@ struct GaugeMark {
                 fn_8011F610(sprite, c, c, c);
             }
             side = g_gameMode == 1 ? 1 : 0;
-            px = x + lbl_803F10C0[side][6].x;
+            px = x + SpeedHud_rodata_803F10C0[side][6].x;
             s = fn_8020A6CC(scale.p);
-            fn_8011F804(sprite, px, lbl_803F10C0[side][6].y);
+            fn_8011F804(sprite, px, SpeedHud_rodata_803F10C0[side][6].y);
             fn_8011F744(sprite, s, s);
             SpriteHandle_SetActiveFlag(sprite, 1);
             SpriteHandle_RecomputeCull(sprite);
@@ -228,9 +228,9 @@ void SpeedHud::Update() {
             if (low) {
                 res = 0xB34;
             }
-            x = lbl_803F10B0[side].x - off;
+            x = SpeedHud_rodata_803F10B0[side].x - off;
             SpriteLayer_SetResource(sprites[0], res);
-            fn_8011F804(sprites[0], x, lbl_803F10B0[side].y);
+            fn_8011F804(sprites[0], x, SpeedHud_rodata_803F10B0[side].y);
             fn_8011F744(sprites[0], is, is);
             SpriteHandle_SetActiveFlag(sprites[0], 1);
             SpriteHandle_SetActiveFlag(sprites[3], 1);
@@ -238,9 +238,9 @@ void SpeedHud::Update() {
         if (showDigits) {
             for (int i = 0; i < 3; i++) {
                 int d = fn_8020A900((int)v, i);
-                x = lbl_803F10C0[side][i].x - off;
+                x = SpeedHud_rodata_803F10C0[side][i].x - off;
                 SpriteLayer_SetResource(sprites[3 - i], d + 0xB2A);
-                fn_8011F804(sprites[3 - i], x, lbl_803F10C0[side][i].y);
+                fn_8011F804(sprites[3 - i], x, SpeedHud_rodata_803F10C0[side][i].y);
                 fn_8011F744(sprites[3 - i], ds, ds);
             }
             SpriteHandle_SetActiveFlag(sprites[1], 1);
@@ -258,9 +258,9 @@ void SpeedHud::Update() {
         } else {
             for (i = 0; i < 2; i++) {
                 int d = fn_8020A900((int)v, i);
-                x = lbl_803F10C0[side][i + 3].x - off;
+                x = SpeedHud_rodata_803F10C0[side][i + 3].x - off;
                 SpriteLayer_SetResource(sprites[3 - i], d + 0xB2A);
-                fn_8011F804(sprites[3 - i], x, lbl_803F10C0[side][i + 3].y);
+                fn_8011F804(sprites[3 - i], x, SpeedHud_rodata_803F10C0[side][i + 3].y);
                 fn_8011F744(sprites[3 - i], ds, ds);
             }
             SpriteHandle_SetActiveFlag(sprites[1], 0);

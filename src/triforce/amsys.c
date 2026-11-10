@@ -133,15 +133,15 @@ extern s32 fn_80290DB0(u8 id, u32* out);
 extern u8 fn_80290E44(s32 mask, u32 a0);
 extern u8* fn_802857A8(void);
 
-extern AmThread lbl_806A1DB8;
-extern AmThread lbl_806A3130;
-extern AmBackup lbl_806A44A8;
-extern AmSys lbl_806A469C;
+extern AmThread amsys_bss_806A1DB8;
+extern AmThread amsys_bss_806A3130;
+extern AmBackup amsys_bss_806A44A8;
+extern AmSys amsys_bss_806A469C;
 
-extern u32 lbl_806D1E48;
-extern u32 lbl_806D1E4C;
-extern u8 lbl_806D1E50;
-extern s32 lbl_806D1E54;
+extern u32 amsys_bss_806D1E48;
+extern u32 amsys_bss_806D1E4C;
+extern u8 amsys_bss_806D1E50;
+extern s32 amsys_bss_806D1E54;
 
 static const AmBackupDesc BackupDesc = {"ACBU0001", 0x1F4, 0x83};
 static const AmNetCfg DefaultNetCfg = {0x20, 0x0E, 0x1A, 0xFF, 0xFF, 0xFF};
@@ -161,15 +161,15 @@ static inline void InsertDash(char* s) {
 }
 
 AmInfo* fn_80293BBC(void) {
-    return &lbl_806A469C.info;
+    return &amsys_bss_806A469C.info;
 }
 
 BOOL fn_80293BCC(void) {
-    return lbl_806A469C.state >= 4;
+    return amsys_bss_806A469C.state >= 4;
 }
 
 u32 fn_80293BF4(void) {
-    return lbl_806A469C.ready;
+    return amsys_bss_806A469C.ready;
 }
 
 BOOL fn_80293C04(AmNetCfg* cfg) {
@@ -223,7 +223,7 @@ BOOL fn_80293C04(AmNetCfg* cfg) {
 s32 fn_802946A4(u8 id);
 
 s32 fn_80293DD4(void) {
-    AmSys* s = &lbl_806A469C;
+    AmSys* s = &amsys_bss_806A469C;
     AmFirm* firm;
     AmInfo* info;
     s32 i;
@@ -236,53 +236,53 @@ s32 fn_80293DD4(void) {
     case 4:
         break;
     case 1:
-        lbl_806A469C.mbId = fn_8028F008();
-        if (lbl_806A469C.mbId == 0) {
+        amsys_bss_806A469C.mbId = fn_8028F008();
+        if (amsys_bss_806A469C.mbId == 0) {
             s->state = 0;
             break;
         }
         s->state = 2;
-        fn_802946A4(lbl_806A469C.mbId);
+        fn_802946A4(amsys_bss_806A469C.mbId);
     case 2:
-        firm = &lbl_806A469C.firm;
-        if (fn_8028D8CC(lbl_806A469C.mbId, &firm->size) != 0) {
+        firm = &amsys_bss_806A469C.firm;
+        if (fn_8028D8CC(amsys_bss_806A469C.mbId, &firm->size) != 0) {
             break;
         }
-        lbl_806A469C.numCoin = fn_8028D870();
-        if (lbl_806A469C.ownFirm != 0 && firm->size != 0 && firm->buf != NULL) {
+        amsys_bss_806A469C.numCoin = fn_8028D870();
+        if (amsys_bss_806A469C.ownFirm != 0 && firm->size != 0 && firm->buf != NULL) {
             firm->size = 0;
             OSFreeToHeap(lbl_806CF010, firm->buf);
             firm->buf = NULL;
         }
         s->state = 3;
-        lbl_806D1E4C = 0;
-        lbl_806D1E48 = 0;
-        lbl_806D1E50 = 0;
+        amsys_bss_806D1E4C = 0;
+        amsys_bss_806D1E48 = 0;
+        amsys_bss_806D1E50 = 0;
     case 3:
-        if (lbl_806D1E4C == 0) {
-            lbl_806D1E50 = fn_80290E44(0, 1);
-            if (lbl_806D1E50 == 0) {
+        if (amsys_bss_806D1E4C == 0) {
+            amsys_bss_806D1E50 = fn_80290E44(0, 1);
+            if (amsys_bss_806D1E50 == 0) {
                 s->state = 0;
                 break;
             }
         }
         ip = 0;
-        if (fn_80290DB0(lbl_806D1E50, &ip) != 0) {
-            if (++lbl_806D1E4C < 60) {
+        if (fn_80290DB0(amsys_bss_806D1E50, &ip) != 0) {
+            if (++amsys_bss_806D1E4C < 60) {
                 break;
             }
-            if (++lbl_806D1E48 >= 10) {
+            if (++amsys_bss_806D1E48 >= 10) {
                 s->state = 0;
             }
-            lbl_806D1E4C = 0;
-            fn_8028D000(lbl_806D1E50);
-            lbl_806D1E50 = 0;
-            fn_8028EAA8(lbl_806A469C.mbId);
+            amsys_bss_806D1E4C = 0;
+            fn_8028D000(amsys_bss_806D1E50);
+            amsys_bss_806D1E50 = 0;
+            fn_8028EAA8(amsys_bss_806A469C.mbId);
             break;
         }
-        lbl_806D1E50 = 0;
+        amsys_bss_806D1E50 = 0;
         fn_8028D71C(0, ip);
-        info = &lbl_806A469C.info;
+        info = &amsys_bss_806A469C.info;
         ver = 0;
         fn_80290C6C(&ver, NULL);
         info->mbVer[1] = ver;
@@ -294,46 +294,46 @@ s32 fn_80293DD4(void) {
             }
             info->mbSerial[i] = '-';
         }
-        lbl_806A469C.ip = ip;
-        lbl_806A469C.netId = fn_8028EF74(lbl_806A469C.mbId);
-        if (lbl_806A469C.netId == 0) {
+        amsys_bss_806A469C.ip = ip;
+        amsys_bss_806A469C.netId = fn_8028EF74(amsys_bss_806A469C.mbId);
+        if (amsys_bss_806A469C.netId == 0) {
             s->state = 4;
             break;
         }
         s->state = 5;
     case 5:
-        if (fn_8028D8CC(lbl_806A469C.netId, NULL) != 0) {
+        if (fn_8028D8CC(amsys_bss_806A469C.netId, NULL) != 0) {
             break;
         }
         s->state = 6;
-        lbl_806D1E4C = 0;
-        lbl_806D1E48 = 0;
-        lbl_806D1E50 = 0;
+        amsys_bss_806D1E4C = 0;
+        amsys_bss_806D1E48 = 0;
+        amsys_bss_806D1E50 = 0;
     case 6:
-        if (lbl_806D1E4C == 0) {
-            lbl_806D1E50 = fn_80290E44(0x80000000, 1);
-            if (lbl_806D1E50 == 0) {
+        if (amsys_bss_806D1E4C == 0) {
+            amsys_bss_806D1E50 = fn_80290E44(0x80000000, 1);
+            if (amsys_bss_806D1E50 == 0) {
                 s->state = 0;
                 break;
             }
         }
         ip = 0;
-        if (fn_80290DB0(lbl_806D1E50, &ip) != 0) {
-            if (++lbl_806D1E4C < 60) {
+        if (fn_80290DB0(amsys_bss_806D1E50, &ip) != 0) {
+            if (++amsys_bss_806D1E4C < 60) {
                 break;
             }
-            if (++lbl_806D1E48 >= 10) {
+            if (++amsys_bss_806D1E48 >= 10) {
                 s->state = 4;
-                lbl_806A469C.netId = 0;
+                amsys_bss_806A469C.netId = 0;
             }
-            lbl_806D1E4C = 0;
-            fn_8028D000(lbl_806D1E50);
-            lbl_806D1E50 = 0;
-            fn_8028EAA8(lbl_806A469C.netId);
+            amsys_bss_806D1E4C = 0;
+            fn_8028D000(amsys_bss_806D1E50);
+            amsys_bss_806D1E50 = 0;
+            fn_8028EAA8(amsys_bss_806A469C.netId);
             break;
         }
-        lbl_806D1E50 = 0;
-        info = &lbl_806A469C.info;
+        amsys_bss_806D1E50 = 0;
+        info = &amsys_bss_806A469C.info;
         unused = 0;
         fn_80290B28(&unused, NULL);
         info->netVer[1] = unused;
@@ -353,18 +353,18 @@ s32 fn_80293DD4(void) {
 
 s32 fn_8029425C(void) {
     s32 ret = 0;
-    AmBackup* bk = &lbl_806A44A8;
+    AmBackup* bk = &amsys_bss_806A44A8;
     s32 r;
 
     if (fn_80289BEC(1)) {
         fn_80289B04(bk->slot);
-        lbl_806A469C.dirty = 1;
+        amsys_bss_806A469C.dirty = 1;
     }
     if (fn_80289BEC(2)) {
         fn_80289A90(bk->jvsCfg);
-        lbl_806A469C.dirty = 1;
+        amsys_bss_806A469C.dirty = 1;
     }
-    if (lbl_806A469C.dirty != 0) {
+    if (amsys_bss_806A469C.dirty != 0) {
         r = fn_802882BC(0, bk);
         if (r == 5) {
             ret = 6;
@@ -372,7 +372,7 @@ s32 fn_8029425C(void) {
             ret = 1;
         }
         if (r != 5) {
-            lbl_806A469C.dirty = 0;
+            amsys_bss_806A469C.dirty = 0;
         }
     }
     return ret;
@@ -397,12 +397,12 @@ s32 fn_80294394(void) {
 }
 
 s32 fn_802943D0(u8 ch) {
-    OSSendMessage(&lbl_806A1DB8.queue, (void*)(u32)ch, 1);
+    OSSendMessage(&amsys_bss_806A1DB8.queue, (void*)(u32)ch, 1);
     return 0;
 }
 
 s32 fn_8029440C(u8 ch) {
-    OSSendMessage(&lbl_806A3130.queue, (void*)(u32)ch, 1);
+    OSSendMessage(&amsys_bss_806A3130.queue, (void*)(u32)ch, 1);
     return 0;
 }
 
@@ -421,18 +421,18 @@ void fn_80294448(void) {
     OSMessageQueue* txq;
     OSMessageQueue* rxq;
 
-    memset(&lbl_806A3130, 0, sizeof(AmThread));
-    FillStack(&lbl_806A3130);
-    memset(&lbl_806A1DB8, 0, sizeof(AmThread));
-    FillStack(&lbl_806A1DB8);
-    txq = &lbl_806A3130.queue;
-    OSInitMessageQueue(txq, lbl_806A3130.msgs, 0x10);
-    rxq = &lbl_806A1DB8.queue;
-    OSInitMessageQueue(rxq, lbl_806A1DB8.msgs, 0x10);
-    OSCreateThread(&lbl_806A3130.thread, (void* (*)(void*))fn_80294394, txq, txq, 0x1000, 8, 1);
-    OSResumeThread(&lbl_806A3130.thread);
-    OSCreateThread(&lbl_806A1DB8.thread, (void* (*)(void*))fn_80294340, rxq, rxq, 0x1000, 8, 1);
-    OSResumeThread(&lbl_806A1DB8.thread);
+    memset(&amsys_bss_806A3130, 0, sizeof(AmThread));
+    FillStack(&amsys_bss_806A3130);
+    memset(&amsys_bss_806A1DB8, 0, sizeof(AmThread));
+    FillStack(&amsys_bss_806A1DB8);
+    txq = &amsys_bss_806A3130.queue;
+    OSInitMessageQueue(txq, amsys_bss_806A3130.msgs, 0x10);
+    rxq = &amsys_bss_806A1DB8.queue;
+    OSInitMessageQueue(rxq, amsys_bss_806A1DB8.msgs, 0x10);
+    OSCreateThread(&amsys_bss_806A3130.thread, (void* (*)(void*))fn_80294394, txq, txq, 0x1000, 8, 1);
+    OSResumeThread(&amsys_bss_806A3130.thread);
+    OSCreateThread(&amsys_bss_806A1DB8.thread, (void* (*)(void*))fn_80294340, rxq, rxq, 0x1000, 8, 1);
+    OSResumeThread(&amsys_bss_806A1DB8.thread);
     fn_8028D704(fn_8029440C);
     fn_8028D6EC(fn_802943D0);
 }
@@ -442,7 +442,7 @@ s32 fn_802946A4(u8 id) {
     AmFirm firm;
     s32 entry;
 
-    if (lbl_806A469C.firm.size != 0 && lbl_806A469C.firm.buf != NULL) {
+    if (amsys_bss_806A469C.firm.size != 0 && amsys_bss_806A469C.firm.buf != NULL) {
         return 0;
     }
     switch (id) {
@@ -465,8 +465,8 @@ s32 fn_802946A4(u8 id) {
             return 1;
         }
         DVDClose(&fi);
-        lbl_806A469C.firm = firm;
-        lbl_806A469C.ownFirm = 1;
+        amsys_bss_806A469C.firm = firm;
+        amsys_bss_806A469C.ownFirm = 1;
         break;
     }
     return 0;
@@ -477,7 +477,7 @@ s32 fn_802947CC(void) {
     fn_8028F0E8();
     fn_80289E20();
     fn_80288B80();
-    memset(&lbl_806A469C, 0, sizeof(AmSys));
+    memset(&amsys_bss_806A469C, 0, sizeof(AmSys));
     return 0;
 }
 
@@ -498,29 +498,29 @@ static inline void GetDate(u8* out) {
 }
 
 s32 fn_80294810(s32 mode, s32 netArg, AmOptions* optIn) {
-    AmBackup* bk = &lbl_806A44A8;
+    AmBackup* bk = &amsys_bss_806A44A8;
     AmOptions opt;
     AmInfo* info;
     s32 i;
     u32 r;
 
-    lbl_806D1E54 = 0;
-    memset(&lbl_806A469C, 0, sizeof(AmSys));
-    lbl_806A469C.ready = 0;
-    lbl_806A469C.mode = mode;
-    lbl_806A469C.dirty = 0;
-    lbl_806A469C.state = 1;
-    lbl_806A469C.mbId = 0;
-    lbl_806A469C.netId = 0;
-    lbl_806A469C.numCoin = 8;
+    amsys_bss_806D1E54 = 0;
+    memset(&amsys_bss_806A469C, 0, sizeof(AmSys));
+    amsys_bss_806A469C.ready = 0;
+    amsys_bss_806A469C.mode = mode;
+    amsys_bss_806A469C.dirty = 0;
+    amsys_bss_806A469C.state = 1;
+    amsys_bss_806A469C.mbId = 0;
+    amsys_bss_806A469C.netId = 0;
+    amsys_bss_806A469C.numCoin = 8;
     if (optIn != NULL) {
         memcpy(&opt, optIn, sizeof(AmOptions));
     } else {
         memset(&opt, 0, sizeof(AmOptions));
     }
     if (opt.firm.size != 0 && opt.firm.buf != NULL) {
-        lbl_806A469C.firm = opt.firm;
-        lbl_806A469C.ownFirm = 0;
+        amsys_bss_806A469C.firm = opt.firm;
+        amsys_bss_806A469C.ownFirm = 0;
     }
     if (fn_80288BCC(&BackupDesc) != 0) {
         return 2;
@@ -530,13 +530,13 @@ s32 fn_80294810(s32 mode, s32 netArg, AmOptions* optIn) {
         memset(bk, 0, sizeof(AmBackup));
         bk->version = 1;
         bk->netCfg = DefaultNetCfg;
-        lbl_806A469C.dirty = 1;
+        amsys_bss_806A469C.dirty = 1;
     } else if (r != 0) {
-        lbl_806A469C.dirty = 1;
+        amsys_bss_806A469C.dirty = 1;
     }
     if (bk->version < 1) {
         bk->version = 1;
-        lbl_806A469C.dirty = 1;
+        amsys_bss_806A469C.dirty = 1;
     }
     if (opt.coinA != 0) {
         bk->coinCfg[0] = opt.coinA;
@@ -552,59 +552,59 @@ s32 fn_80294810(s32 mode, s32 netArg, AmOptions* optIn) {
     }
     if (opt.clearCoin != 0) {
         memset(bk->slot, 0, sizeof(bk->slot));
-        lbl_806A469C.dirty = 1;
+        amsys_bss_806A469C.dirty = 1;
     } else {
         for (i = 0; i < bk->coinCfg[2]; i++) {
             if (opt.keep & 1) {
                 bk->slot[i].credits = 0;
-                lbl_806A469C.dirty = 1;
+                amsys_bss_806A469C.dirty = 1;
             }
             if (~opt.keep & 2) {
                 bk->slot[i].bonus = 0;
-                lbl_806A469C.dirty = 1;
+                amsys_bss_806A469C.dirty = 1;
             }
             if (~opt.keep & 4) {
                 bk->slot[i].total = 0;
-                lbl_806A469C.dirty = 1;
+                amsys_bss_806A469C.dirty = 1;
             }
             if (~opt.keep & 8) {
                 bk->slot[i].service = 0;
-                lbl_806A469C.dirty = 1;
+                amsys_bss_806A469C.dirty = 1;
             }
         }
     }
     fn_8028A16C(bk->coinCfg, bk->slot, bk->jvsCfg);
     if (fn_80289BEC(0)) {
         fn_80289B7C(bk->coinCfg);
-        lbl_806A469C.dirty = 1;
+        amsys_bss_806A469C.dirty = 1;
     }
     if (fn_80289BEC(1)) {
         fn_80289B04(bk->slot);
-        lbl_806A469C.dirty = 1;
+        amsys_bss_806A469C.dirty = 1;
     }
     if (fn_80289BEC(2)) {
         fn_80289A90(bk->jvsCfg);
-        lbl_806A469C.dirty = 1;
+        amsys_bss_806A469C.dirty = 1;
     }
     if (!fn_80293C04(&bk->netCfg)) {
-        lbl_806A469C.dirty = 1;
+        amsys_bss_806A469C.dirty = 1;
     }
-    if (lbl_806A469C.dirty != 0) {
+    if (amsys_bss_806A469C.dirty != 0) {
         fn_802882BC(0, bk);
-        lbl_806A469C.dirty = 0;
+        amsys_bss_806A469C.dirty = 0;
     }
     if (fn_8028F160(netArg) != 0) {
         return 3;
     }
     fn_8028D6C0(0, bk->jvsCfg);
-    info = &lbl_806A469C.info;
+    info = &amsys_bss_806A469C.info;
     fn_8028D6C0(1, info);
     fn_80294448();
     if (fn_8028BFD4() != 0) {
         return 4;
     }
     fn_8028AFF4(&bk->netCfg);
-    lbl_806A469C.ready = 1;
+    amsys_bss_806A469C.ready = 1;
     memcpy(info->region, bk->region, 2);
     memcpy(info->jvsVer, fn_802857A8() + 0x20, 2);
     memcpy(info->jvsCmdVer, fn_802857A8() + 0x22, 2);
@@ -623,25 +623,25 @@ s32 fn_80294810(s32 mode, s32 netArg, AmOptions* optIn) {
 }
 
 s32 fn_80294DF8(s32 a0) {
-    if (--lbl_806D1E54 == 0) {
+    if (--amsys_bss_806D1E54 == 0) {
         return fn_80286B80(a0);
     }
     return 1;
 }
 
 s32 fn_80294E30(s32 a0, s32 a1) {
-    if (lbl_806D1E54++ == 0) {
+    if (amsys_bss_806D1E54++ == 0) {
         return fn_80286BD4(a0, a1);
     }
     return 1;
 }
 
 /* CW allocates these deferred zero-initialized definitions in reverse order. */
-s32 lbl_806D1E54;
-u8 lbl_806D1E50;
-u32 lbl_806D1E4C;
-u32 lbl_806D1E48;
-AmSys lbl_806A469C;
-AmBackup lbl_806A44A8;
-AmThread lbl_806A3130;
-AmThread lbl_806A1DB8;
+s32 amsys_bss_806D1E54;
+u8 amsys_bss_806D1E50;
+u32 amsys_bss_806D1E4C;
+u32 amsys_bss_806D1E48;
+AmSys amsys_bss_806A469C;
+AmBackup amsys_bss_806A44A8;
+AmThread amsys_bss_806A3130;
+AmThread amsys_bss_806A1DB8;

@@ -48,5 +48,5 @@ struct RoundTileTable {
     char gap114[8];
     short cups[2];
 };
-extern "C" RoundTileTable lbl_8049AE70;
+extern "C" RoundTileTable clFlowRound_data_8049AE70;
 #endif

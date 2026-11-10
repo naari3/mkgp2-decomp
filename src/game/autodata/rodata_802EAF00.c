@@ -9,7 +9,7 @@
 #pragma force_active on
 
 /* decl: Vec3 */
-const unk32 lbl_802EAF00[4] = {
+const unk32 Path_CountWaypointsAndSnapGround_rodata_802EAF00[4] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000
 };
 
