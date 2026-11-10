@@ -1158,6 +1158,9 @@
     "__vt__11Obj8018FEAC": "lbl_80495F04"
   },
   "src/game/resultscene/resultscene.cpp": {
+    "Destroy__12ResultSceneXFv": "fn_8015CB24",
+    "Update__12ResultSceneXFv": "fn_8015BF18",
+    "Draw__12ResultSceneXFv": "fn_8015BED4",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__vt__9SceneBase": "lbl_803FE0C8",
@@ -3260,20 +3263,9 @@
     "__dt__7ResCtrlFv": "dtor_80082960"
   },
   "src/game/KartPreview.c": {
-    "extab_fn_8013C4A4": "@etb_8000D400",
-    "extabindex_fn_8013C4A4": "@eti_80024DC4",
-    "extab_fn_8013C534": "@etb_8000D408",
-    "extabindex_fn_8013C534": "@eti_80024DD0",
-    "extab_fn_8013C5FC": "@etb_8000D410",
-    "extabindex_fn_8013C5FC": "@eti_80024DDC",
-    "extab_fn_8013C674": "@etb_8000D418",
-    "extabindex_fn_8013C674": "@eti_80024DE8",
-    "extab_fn_8013C6EC": "@etb_8000D420",
-    "extabindex_fn_8013C6EC": "@eti_80024DF4",
-    "extab_fn_8013C7BC": "@etb_8000D428",
-    "extabindex_fn_8013C7BC": "@eti_80024E00",
-    "extab_fn_8013CC24": "@etb_8000D450",
-    "extabindex_fn_8013CC24": "@eti_80024E3C"
+    "__ct__6KPCtorFiUc": "fn_8013CC24",
+    "__ct__10KPNormal3DFPCvUc": "clNormal3D_Construct",
+    "__dt__6KPBaseFv": "dtor_8013DCBC"
   },
   "src/game/PreviewModel.c": {
     "__dt__12PreviewModelFv": "fn_8013D778",
@@ -16972,10 +16964,5 @@
     "__dt__3HUDFv": "fn_80254134",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
-  },
-  "src/game/KartPreview.c": {
-    "__ct__6KPCtorFiUc": "fn_8013CC24",
-    "__ct__10KPNormal3DFPCvUc": "clNormal3D_Construct",
-    "__dt__6KPBaseFv": "dtor_8013DCBC"
   }
 }
