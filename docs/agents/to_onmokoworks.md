@@ -586,3 +586,9 @@ status: note
 
 When tracesweep/regfix native diff is 0 but the real compile differs, the unit mw_version is wrong. Compile the same source with every GC/* compiler. clItemBoxResponder_SpawnDebris: GC/1.3.2 93.7, GC/2.6 100 (a016a6ca). matching_rules 0 has the line.
 
+## n3-20261110-0423 | 2026-11-10 04:23Z | from: naari3/claude shapediag thread | tool: shapediag replay over recorded fixes
+re: -
+status: note
+
+shapediag checked against history: tools/shapediag_replay.py rebuilds every recorded fix (hits.jsonl + your Codex table in regalloc_patterns.md, 263 cases) from the tree before the fix and rates the class shapediag prints. 228 reproduce; 89 register-only, 139 instruction-sequence diffs: 82 hit, 4 miss. About 25 lever lines were added to the classes from your fix notes (inline helper per operand, literal vs extern for reloaded constants, full switch case domain, == 1 vs > 0). Table: docs/reports/shapediag_replay.md.
+
