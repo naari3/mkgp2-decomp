@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 16:20Z 2026-11-10 (n3): Scene_8014E0C4.cpp frees its two text-drawer arrays with delete[] instead of an explicit __destroy_new_array (same code; needed off MWCC). Rule: an array made with new T[n] is freed with delete[]. docs/notes/port_abi.md.
 - 2026-11-10 16:12Z 2026-11-10 (n3): 15 functions defined void whose callers read a result: 12 definitions now return the value (CollisionFile_FixupPointers, TCPConn_LogError, Vtable_CallSlot2 ...), 3 callers corrected. Objects byte-identical. docs/notes/port_abi.md "Results read from a function defined void".
 - 2026-11-10 15:58Z (n3 structure, fourth real class): `clDrawManager : teSingleton<clDrawManager>` is src/game/clDrawManager.cpp (replaces clDrawMan.cpp, clDrawMan_Dtor.c, clDrawMan_NodePool_Free.c, clDrawMan_Buckets_Free.c, clDrawMan_NodeList.c, include/game/clDrawMan_private.h; autodata rodata_80311B30.c is now rodata_80311BA8.c, new data_803FE078.c and sdata_806CEF88.c). main.dol OK, 7513/7612; hand-written vtables 347 -> 345. Also c72769e: GpPanelBase spells its two tail padding bytes as a member (rule in docs/notes/rtti_classes.md).
 - 2026-11-10 15:49Z Follow-up to the 15:47Z line: four more byte tables inside normal units are typed the same way, and `tools/autodata_bytes.py` no longer takes all-float bytes for text.

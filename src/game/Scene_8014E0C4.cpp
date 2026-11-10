@@ -3934,6 +3934,14 @@ NamCamPanelC::NamCamPanelC() {
     }
 }
 
+struct TextManager {
+    char pad0[0x18];
+    int visible;
+    char pad1C[0x230 - 0x1C];
+    TextManager();
+    ~TextManager();
+};
+
 extern "C" unsigned char fn_8014FE08(unsigned char *o) {
     return o[4];
 }
@@ -3944,7 +3952,7 @@ extern "C" Base *fn_8014FE10(Base *self, short flag) {
         if (((void **)self)[2] != 0) {
             Sprite_Destroy(((void **)self)[2], 1);
         }
-        __destroy_new_array(((void **)self)[3], (void *)dtor_800869D0);
+        delete[] (TextManager *)((void **)self)[3];
         ((void **)self)[3] = 0;
         fn_80121210();
         clRom_PurgeAll();
@@ -4018,13 +4026,6 @@ extern "C" void fn_80150004(TextPanel *self) {
     }
 }
 
-struct TextManager {
-    char pad0[0x18];
-    int visible;
-    char pad1C[0x230 - 0x1C];
-    TextManager();
-    ~TextManager();
-};
 
 
 
@@ -5543,7 +5544,7 @@ extern "C" CourseScene *fn_80153F08(CourseScene *self, short flag) {
             delete self->pair;
         }
         fn_801540E0((ObjListSetFull *)self->list, 1);
-        __destroy_new_array(self->arr, dtor_800869D0);
+        delete[] (BdText *)self->arr;
         self->arr = 0;
         delete lbl_806D10AC;
         lbl_806D10AC = 0;

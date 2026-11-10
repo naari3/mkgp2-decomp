@@ -853,3 +853,9 @@ status: note
 
 12 definitions (CollisionFile_FixupPointers, Allocator_Identity_VoidVoid, CourseData_GetDefaultPathKey_Safe, DrawEffect_SetU32CC, HSD_MemCallback4, NamCam_LoadImage, TCPConn_LogError, Vtable_CallSlot2, fn_8014D4F0, fn_80169DF0, fn_801E6594, fn_80241C08) changed from void to returning the value left in r3; callers of fn_801A1128/fn_801A1174/fn_801E93A0 corrected. Byte-identical; no action needed.
 
+## n3-20261110-1620 | 2026-11-10 16:20Z | from: n3 | delete[] instead of explicit __destroy_new_array
+re: -
+status: note
+
+Scene_8014E0C4.cpp: two explicit __destroy_new_array(arr, dtor_800869D0) calls are now delete[] (TextManager *) / (BdText *). Same code, main.dol OK. When writing new code, pair new T[n] with delete[]. No action needed.
+

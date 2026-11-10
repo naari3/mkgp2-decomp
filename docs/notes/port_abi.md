@@ -155,6 +155,20 @@ When a new case turns up: read the tail of the callee's asm for what r3 holds
 at `blr`, write that as the return value, and check the object hash. If r3 is
 only a leftover that the callee never set, correct the caller.
 
+## `new T[n]` must be freed with `delete[]` (request 20, 2026-11-10)
+
+MWCC's `new T[n]` writes a 16-byte header (element size, count) in front of
+the array and `delete[]` calls `__destroy_new_array(p, dtor)`. A host compiler
+keeps its own cookie, so an explicit `__destroy_new_array(arr, dtor)` on an
+array made with `new T[n]` frees a wrong pointer there. Write `delete[]
+(T *)arr;` with the element class: it compiles to the same call. The two
+sites in `Scene_8014E0C4.cpp` (`fn_8014FE10` and the demo scene destructor)
+were changed this way; the code and relocations are identical, only the order
+of two undefined symbols in the object's symbol table moved, and main.dol is
+unchanged. No other source calls `__destroy_new_array` or
+`__construct_new_array` explicitly. `__construct_array` / `__destroy_arr` on
+member arrays carry no header and are fine as they are.
+
 ## Pointers to member functions (item 14)
 
 MWCC's pointer to member function is 12 bytes, `{ long thisDelta; long
