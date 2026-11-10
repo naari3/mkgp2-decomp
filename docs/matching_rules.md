@@ -24,6 +24,11 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 01:25Z (n3 technique): regalloc_patterns §83: vector block
+  (copy, length, scale) with only f-registers permuted. Literal instead of
+  `extern const float`, multiplier through a pointer inline, load statement
+  order, and reuse of named locals with the sum in the last-coloured one;
+  the four only match together (ItemEffect_Projectile 98.9 -> 100).
 - 2026-11-10 01:05Z (n3 technique): regalloc_patterns §80: a big inline
   expanded several times in one function. A one-line wrapper inline puts
   every `self` temp one level up (all get the same register), the first
@@ -47,6 +52,10 @@ below say the same thing.
 - 2026-11-09 22:55Z (n3 structure): TU merge, 4 -> 1: CoinChallengeRender /
   CoinChallengeUpdate / anon_80214B3C / CoinChallengeInit are now
   `game/CoinChallenge.cpp` (clCGameYI, GC/2.6 `-inline deferred -RTTI on -rostr`).
+- 2026-11-10 00:45Z (n3 regfix): `tools/regfix.py diag` flags an off `@temp`
+  that may be an inline's RETURN temp (regalloc_patterns §81: return through a
+  reference out-parameter); checked on the pre-match fn_8018E6FC. fn_8017DF00
+  matched from the §70 diag section (7889058)
 - 2026-11-10 00:10Z (n3 regfix): `tools/regfix.py diag` hint for two saved
   GPRs swapped between a pointer local and a shared loop counter
   (regalloc_patterns §73) or between two split-off temps (§57/§72); checked on

@@ -6,8 +6,13 @@
  * The model setters and the render function start with
  * `if (kart == 0 || driver == 0) return;`, which is what produces the
  * `beq end; ...; bne body; b end` branch-over-branch on the second test.
- * The large ctor (fn_8013CC24) stays asm for now.
+ * The ctor (fn_8013CC24) is a real C++ constructor (KPCtor) so that the
+ * compiler emits its exception table.
  */
+
+#pragma cplusplus on
+
+extern "C" {
 
 typedef struct HSD_JObj {
     unsigned char pad[0x14];
@@ -61,8 +66,8 @@ extern RenderTargetHolder *lbl_806D155C;
 extern char lbl_8048EA78[];
 extern char lbl_806D76D0[7];
 extern char lbl_806D76D8[5];
-extern float lbl_806D76E0;
-extern float lbl_806D76E4;
+extern const float lbl_806D76E0;
+extern const float lbl_806D76E4;
 extern char lbl_8048EAD8[];
 extern char lbl_8048EAE8[];
 
@@ -88,7 +93,11 @@ extern void __assert(char *file, int line, char *expr);
 extern void HSD_JObjSetupMatrixSub(HSD_JObj *jobj);
 extern void Object_SetAnimBinding(void *obj, void *anim, int);
 extern void Object_DriveAnimMatrix(void *obj);
-extern void clNormal3D_SetScale(void *obj, void *anim, float frame, float a, float b, float c);
+/* fakematch (regalloc_patterns §74): the real prototype is
+ * (obj, anim, frame, a, b, c) (Normal3DScale.c). Declaring the first float
+ * before the anim pointer keeps the same argument registers but makes the
+ * ctor evaluate `1.0f` before `anims14[0]`, as the target does. */
+extern void clNormal3D_SetScale(void *obj, float frame, void *anim, float a, float b, float c);
 extern void *Archive_GetRootJObj(void *obj);
 extern void ObjectTree_BlendOrCopy_Timed(void *obj, void *a, void *b, int, float t);
 extern void clNormal3D_Exec(void *obj);
@@ -245,7 +254,7 @@ void fn_8013C91C(KartPreview *p) {
         } else {
             anim = p->anims14[1];
         }
-        clNormal3D_SetScale(p->obj10, anim, p->frame, lbl_806D76E0, lbl_806D76E0, lbl_806D76E0);
+        clNormal3D_SetScale(p->obj10, p->frame, anim, lbl_806D76E0, lbl_806D76E0, lbl_806D76E0);
         ObjectTree_BlendOrCopy_Timed(p->driver, Archive_GetRootJObj(p->obj10), Archive_GetRootJObj(p->driver), 0, lbl_806D76E0);
         Object_DriveAnimMatrix(p->driver);
         if (p->obj24) {
@@ -319,622 +328,60 @@ KartPreview *fn_8013CB10(KartPreview *p, short flag) {
     return p;
 }
 
-extern void GetKartModelNameEntry();
-extern void ResolveJointByName();
-extern void clNormal3D_Construct();
-extern void clNormal3D_SetFlags();
-extern void fn_8013BD7C();
-extern void sprintf();
-extern void HSD_JObjSetFlagsAll();
-extern void HSD_JObjSetMtxDirtySub();
-extern unsigned int lbl_806D76E8;
-extern unsigned int lbl_806D76EC;
-extern const int lbl_803600E0[];
-extern unsigned int lbl_8048EA98[];
-extern void dtor_8013DCBC();
-asm void fn_8013CC24(void);
+typedef struct KPVec3 {
+    float x, y, z;
+} KPVec3;
 
-/* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
-#pragma section R ".extab_user"
-__declspec(section ".extab_user") static const struct { unsigned int f0; unsigned int f1; unsigned int f2; unsigned int f3; unsigned int f4; unsigned int f5; unsigned int f6; unsigned int f7; unsigned int f8; unsigned int f9; unsigned int f10; unsigned int f11; unsigned int f12; unsigned int f13; unsigned int f14; unsigned int f15; unsigned int f16; unsigned int f17; unsigned int f18; unsigned int f19; unsigned int f20; unsigned int f21; unsigned int f22; unsigned int f23; unsigned int f24; unsigned int f25; unsigned int f26; unsigned int f27; unsigned int f28; void *f29; unsigned int f30; unsigned int f31; void *f32; unsigned int f33; void *f34; unsigned int f35; unsigned int f36; void *f37; unsigned int f38; void *f39; unsigned int f40; unsigned int f41; void *f42; unsigned int f43; void *f44; unsigned int f45; unsigned int f46; void *f47; unsigned int f48; void *f49; unsigned int f50; unsigned int f51; void *f52; unsigned int f53; void *f54; unsigned int f55; unsigned int f56; void *f57; } extab_fn_8013CC24 = { 0x38CA0000, 0x00000058, 0x00240078, 0x000000FC, 0x00000070, 0x00000108, 0x00000078, 0x0000011C, 0x00000084, 0x00000128, 0x00000078, 0x0000013C, 0x00000098, 0x0000015C, 0x000A0078, 0x00000198, 0x000000AC, 0x000001B8, 0x002F0078, 0x00000288, 0x000000C0, 0x00000298, 0x01460078, 0x000007D0, 0x000000D4, 0x00000808, 0x00150078, 0x00000000, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001C, 0x00000000, (void *)&dtor_8013DCBC, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001C, 0x00000000, (void *)&dtor_8013DCBC, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001C, 0x00000000, (void *)&dtor_8013DCBC, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001C, 0x00000000, (void *)&dtor_8013DCBC, 0x0A80001A, (void *)&MemoryManager_TimedFree, 0x8680001C, 0x00000000, (void *)&dtor_8013DCBC, 0x0A800019, (void *)&MemoryManager_TimedFree, 0x8680001C, 0x00000000, (void *)&dtor_8013DCBC };
+typedef struct KPJObj {
+    unsigned char pad[0x14];
+    unsigned int flags;
+    unsigned char pad18[0x38 - 0x18];
+    KPVec3 translate;
+} KPJObj;
 
-/* --- extabindex (manual emit, .extabindex_user -> extabindex via objcopy) --- */
-#pragma section R ".extabindex_user"
-__declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_fn_8013CC24 = {
-    (void *)&fn_8013CC24, 0x0000088C, (void *)&extab_fn_8013CC24
-};
+typedef struct KPModelName {
+    char *name;
+} KPModelName;
 
-/* --- asm function bodies (.text order = fn address order) --- */
-asm void fn_8013CC24(void) { /* 0x8013CC24 size:0x88C */
-    nofralloc
-    stwu r1, -0x80(r1)
-    mflr r0
-    stw r0, 0x84(r1)
-    stfd f31, 0x70(r1)
-    psq_st f31, 0x78(r1), 0, 0
-    stfd f30, 0x60(r1)
-    psq_st f30, 0x68(r1), 0, 0
-    stfd f29, 0x50(r1)
-    psq_st f29, 0x58(r1), 0, 0
-    stmw r25, 0x34(r1)
-    lis r7, lbl_8048EAE8@ha
-    lis r6, lbl_8048EAD8@ha
-    mr r28, r3
-    lis r8, lbl_803600E0@ha
-    addi r3, r7, lbl_8048EAE8@l
-    addi r0, r6, lbl_8048EAD8@l
-    stw r3, 0x0(r28)
-    mr r26, r4
-    mr r29, r5
-    addi r30, r8, lbl_803600E0@l
-    stw r0, 0x0(r28)
-    bl fn_8013BD7C
-    bl fn_8013C428
-    lfs f1, lbl_806D76E0(r2)
-    li r0, 0x0
-    lfs f0, lbl_806D76E8(r2)
-    mr r3, r28
-    stfs f1, 0x88(r28)
-    stfs f1, 0x8c(r28)
-    stw r26, 0x48(r28)
-    stw r0, 0x4c(r28)
-    stfs f1, 0x50(r28)
-    stfs f0, 0x54(r28)
-    stw r0, 0x4(r28)
-    stw r0, 0x8(r28)
-    stw r0, 0xc(r28)
-    stw r0, 0x10(r28)
-    stw r0, 0x14(r28)
-    stw r0, 0x18(r28)
-    stw r0, 0x1c(r28)
-    stw r0, 0x20(r28)
-    stw r0, 0x24(r28)
-    stw r0, 0x28(r28)
-    lwz r0, 0x48(r28)
-    cmpwi r0, 0x0
-    blt fn_8013CC24_L_8013D484
-    cmpwi r0, 0xd
-    blt fn_8013CC24_L_8013CCE8
-    b fn_8013CC24_L_8013D484
-    fn_8013CC24_L_8013CCE8:
-    mr r3, r0
-    li r4, -0x1
-    bl GetKartModelNameEntry
-    mr r27, r3
-    lwz r3, 0x48(r28)
-    bl GetCharacterDataEntry
-    mr r31, r3
-    li r3, 0x5c
-    bl Alloc
-    mr. r26, r3
-    beq fn_8013CC24_L_8013CD20
-    lwz r4, 0x0(r27)
-    mr r5, r29
-    bl clNormal3D_Construct
-    fn_8013CC24_L_8013CD20:
-    stw r26, 0x4(r28)
-    li r3, 0x5c
-    bl Alloc
-    mr. r26, r3
-    beq fn_8013CC24_L_8013CD40
-    lwz r4, 0x4(r31)
-    mr r5, r29
-    bl clNormal3D_Construct
-    fn_8013CC24_L_8013CD40:
-    stw r26, 0xc(r28)
-    li r3, 0x5c
-    bl Alloc
-    mr. r26, r3
-    beq fn_8013CC24_L_8013CD60
-    lwz r4, 0x8(r31)
-    li r5, 0x0
-    bl clNormal3D_Construct
-    fn_8013CC24_L_8013CD60:
-    lfs f1, lbl_806D76E0(r2)
-    li r4, 0x0
-    stw r26, 0x10(r28)
-    fmr f3, f1
-    lfs f2, lbl_806D76E4(r2)
-    fmr f4, f1
-    lwz r3, 0xc(r28)
-    bl clNormal3D_SetScale
-    lwz r0, 0x48(r28)
-    cmpwi r0, 0x3
-    beq fn_8013CC24_L_8013CD90
-    b fn_8013CC24_L_8013CDDC
-    fn_8013CC24_L_8013CD90:
-    lwz r3, 0xc(r28)
-    addi r4, r30, 0x40
-    bl ResolveJointByName
-    stw r3, 0x28(r28)
-    li r3, 0x5c
-    bl Alloc
-    mr. r26, r3
-    beq fn_8013CC24_L_8013CDBC
-    mr r5, r29
-    addi r4, r30, 0x5c
-    bl clNormal3D_Construct
-    fn_8013CC24_L_8013CDBC:
-    lfs f1, lbl_806D76E0(r2)
-    li r4, 0x0
-    stw r26, 0x24(r28)
-    fmr f3, f1
-    lfs f2, lbl_806D76E4(r2)
-    lwz r3, 0x24(r28)
-    lfs f4, lbl_806D76EC(r2)
-    bl clNormal3D_SetScale
-    fn_8013CC24_L_8013CDDC:
-    lwz r0, 0x48(r28)
-    lis r3, lbl_8048EA98@ha
-    addi r5, r3, lbl_8048EA98@l
-    addi r3, r1, 0x8
-    slwi r0, r0, 2
-    addi r4, r30, 0x68
-    lwzx r5, r5, r0
-    crxor 6, 6, 6
-    bl sprintf
-    lwz r3, 0xc(r28)
-    addi r4, r1, 0x8
-    bl ResolveJointByName
-    stw r3, 0x3c(r28)
-    lis r3, lbl_8048EA98@ha
-    addi r5, r3, lbl_8048EA98@l
-    addi r3, r1, 0x8
-    lwz r0, 0x48(r28)
-    addi r4, r30, 0x80
-    slwi r0, r0, 2
-    lwzx r5, r5, r0
-    crxor 6, 6, 6
-    bl sprintf
-    lwz r3, 0xc(r28)
-    addi r4, r1, 0x8
-    bl ResolveJointByName
-    stw r3, 0x40(r28)
-    lis r3, lbl_8048EA98@ha
-    addi r5, r3, lbl_8048EA98@l
-    addi r3, r1, 0x8
-    lwz r0, 0x48(r28)
-    addi r4, r30, 0x98
-    slwi r0, r0, 2
-    lwzx r5, r5, r0
-    crxor 6, 6, 6
-    bl sprintf
-    lwz r3, 0xc(r28)
-    addi r4, r1, 0x8
-    bl ResolveJointByName
-    stw r3, 0x44(r28)
-    li r4, 0x10
-    lwz r3, 0x40(r28)
-    bl HSD_JObjSetFlags
-    lwz r3, 0x44(r28)
-    li r4, 0x10
-    bl HSD_JObjSetFlags
-    li r3, 0x5c
-    bl Alloc
-    mr. r26, r3
-    beq fn_8013CC24_L_8013CEAC
-    mr r5, r29
-    addi r4, r30, 0xb0
-    bl clNormal3D_Construct
-    fn_8013CC24_L_8013CEAC:
-    stw r26, 0x8(r28)
-    addi r4, r30, 0xc0
-    lwz r3, 0x8(r28)
-    bl ResolveJointByName
-    stw r3, 0x2c(r28)
-    addi r4, r30, 0xd8
-    lwz r3, 0x8(r28)
-    bl ResolveJointByName
-    stw r3, 0x30(r28)
-    addi r4, r30, 0xf0
-    lwz r3, 0x8(r28)
-    bl ResolveJointByName
-    stw r3, 0x34(r28)
-    addi r4, r30, 0x108
-    lwz r3, 0x8(r28)
-    bl ResolveJointByName
-    stw r3, 0x38(r28)
-    lis r3, lbl_8048EA98@ha
-    addi r5, r3, lbl_8048EA98@l
-    addi r3, r1, 0x8
-    lwz r0, 0x48(r28)
-    addi r4, r30, 0x120
-    slwi r0, r0, 2
-    lwzx r5, r5, r0
-    crxor 6, 6, 6
-    bl sprintf
-    lwz r3, 0x4(r28)
-    addi r4, r1, 0x8
-    bl ResolveJointByName
-    mr. r27, r3
-    bne fn_8013CC24_L_8013CF38
-    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
-    li r4, 0x3e4
-    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
-    bl __assert
-    fn_8013CC24_L_8013CF38:
-    lwz r26, 0x2c(r28)
-    lfs f31, 0x38(r27)
-    cmplwi r26, 0x0
-    lfs f30, 0x3c(r27)
-    lfs f29, 0x40(r27)
-    bne fn_8013CC24_L_8013CF60
-    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
-    li r4, 0x3a9
-    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
-    bl __assert
-    fn_8013CC24_L_8013CF60:
-    stfs f31, 0x38(r26)
-    stfs f30, 0x3c(r26)
-    stfs f29, 0x40(r26)
-    lwz r0, 0x14(r26)
-    rlwinm. r0, r0, 0, 6, 6
-    bne fn_8013CC24_L_8013CFC0
-    cmplwi r26, 0x0
-    beq fn_8013CC24_L_8013CFC0
-    bne fn_8013CC24_L_8013CF94
-    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
-    li r4, 0x25d
-    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
-    bl __assert
-    fn_8013CC24_L_8013CF94:
-    lwz r4, 0x14(r26)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne fn_8013CC24_L_8013CFB0
-    rlwinm. r0, r4, 0, 25, 25
-    beq fn_8013CC24_L_8013CFB0
-    li r3, 0x1
-    fn_8013CC24_L_8013CFB0:
-    clrlwi. r0, r3, 24
-    bne fn_8013CC24_L_8013CFC0
-    mr r3, r26
-    bl HSD_JObjSetMtxDirtySub
-    fn_8013CC24_L_8013CFC0:
-    lwz r0, 0x48(r28)
-    lis r3, lbl_8048EA98@ha
-    addi r5, r3, lbl_8048EA98@l
-    addi r3, r1, 0x8
-    slwi r0, r0, 2
-    addi r4, r30, 0x138
-    lwzx r5, r5, r0
-    crxor 6, 6, 6
-    bl sprintf
-    lwz r3, 0x4(r28)
-    addi r4, r1, 0x8
-    bl ResolveJointByName
-    mr. r27, r3
-    bne fn_8013CC24_L_8013D008
-    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
-    li r4, 0x3e4
-    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
-    bl __assert
-    fn_8013CC24_L_8013D008:
-    lwz r26, 0x30(r28)
-    lfs f29, 0x38(r27)
-    cmplwi r26, 0x0
-    lfs f30, 0x3c(r27)
-    lfs f31, 0x40(r27)
-    bne fn_8013CC24_L_8013D030
-    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
-    li r4, 0x3a9
-    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
-    bl __assert
-    fn_8013CC24_L_8013D030:
-    stfs f29, 0x38(r26)
-    stfs f30, 0x3c(r26)
-    stfs f31, 0x40(r26)
-    lwz r0, 0x14(r26)
-    rlwinm. r0, r0, 0, 6, 6
-    bne fn_8013CC24_L_8013D090
-    cmplwi r26, 0x0
-    beq fn_8013CC24_L_8013D090
-    bne fn_8013CC24_L_8013D064
-    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
-    li r4, 0x25d
-    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
-    bl __assert
-    fn_8013CC24_L_8013D064:
-    lwz r4, 0x14(r26)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne fn_8013CC24_L_8013D080
-    rlwinm. r0, r4, 0, 25, 25
-    beq fn_8013CC24_L_8013D080
-    li r3, 0x1
-    fn_8013CC24_L_8013D080:
-    clrlwi. r0, r3, 24
-    bne fn_8013CC24_L_8013D090
-    mr r3, r26
-    bl HSD_JObjSetMtxDirtySub
-    fn_8013CC24_L_8013D090:
-    lwz r0, 0x48(r28)
-    lis r3, lbl_8048EA98@ha
-    addi r5, r3, lbl_8048EA98@l
-    addi r3, r1, 0x8
-    slwi r0, r0, 2
-    addi r4, r30, 0x150
-    lwzx r5, r5, r0
-    crxor 6, 6, 6
-    bl sprintf
-    lwz r3, 0x4(r28)
-    addi r4, r1, 0x8
-    bl ResolveJointByName
-    mr. r27, r3
-    bne fn_8013CC24_L_8013D0D8
-    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
-    li r4, 0x3e4
-    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
-    bl __assert
-    fn_8013CC24_L_8013D0D8:
-    lwz r26, 0x34(r28)
-    lfs f29, 0x38(r27)
-    cmplwi r26, 0x0
-    lfs f30, 0x3c(r27)
-    lfs f31, 0x40(r27)
-    bne fn_8013CC24_L_8013D100
-    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
-    li r4, 0x3a9
-    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
-    bl __assert
-    fn_8013CC24_L_8013D100:
-    stfs f29, 0x38(r26)
-    stfs f30, 0x3c(r26)
-    stfs f31, 0x40(r26)
-    lwz r0, 0x14(r26)
-    rlwinm. r0, r0, 0, 6, 6
-    bne fn_8013CC24_L_8013D160
-    cmplwi r26, 0x0
-    beq fn_8013CC24_L_8013D160
-    bne fn_8013CC24_L_8013D134
-    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
-    li r4, 0x25d
-    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
-    bl __assert
-    fn_8013CC24_L_8013D134:
-    lwz r4, 0x14(r26)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne fn_8013CC24_L_8013D150
-    rlwinm. r0, r4, 0, 25, 25
-    beq fn_8013CC24_L_8013D150
-    li r3, 0x1
-    fn_8013CC24_L_8013D150:
-    clrlwi. r0, r3, 24
-    bne fn_8013CC24_L_8013D160
-    mr r3, r26
-    bl HSD_JObjSetMtxDirtySub
-    fn_8013CC24_L_8013D160:
-    lwz r0, 0x48(r28)
-    lis r3, lbl_8048EA98@ha
-    addi r5, r3, lbl_8048EA98@l
-    addi r3, r1, 0x8
-    slwi r0, r0, 2
-    addi r4, r30, 0x168
-    lwzx r5, r5, r0
-    crxor 6, 6, 6
-    bl sprintf
-    lwz r3, 0x4(r28)
-    addi r4, r1, 0x8
-    bl ResolveJointByName
-    mr. r27, r3
-    bne fn_8013CC24_L_8013D1A8
-    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
-    li r4, 0x3e4
-    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
-    bl __assert
-    fn_8013CC24_L_8013D1A8:
-    lwz r26, 0x38(r28)
-    lfs f29, 0x38(r27)
-    cmplwi r26, 0x0
-    lfs f30, 0x3c(r27)
-    lfs f31, 0x40(r27)
-    bne fn_8013CC24_L_8013D1D0
-    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
-    li r4, 0x3a9
-    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
-    bl __assert
-    fn_8013CC24_L_8013D1D0:
-    stfs f29, 0x38(r26)
-    stfs f30, 0x3c(r26)
-    stfs f31, 0x40(r26)
-    lwz r0, 0x14(r26)
-    rlwinm. r0, r0, 0, 6, 6
-    bne fn_8013CC24_L_8013D230
-    cmplwi r26, 0x0
-    beq fn_8013CC24_L_8013D230
-    bne fn_8013CC24_L_8013D204
-    la r3, lbl_806D76D0(r2)  /* lbl_806D76D0 */
-    li r4, 0x25d
-    la r5, lbl_806D76D8(r2)  /* lbl_806D76D8 */
-    bl __assert
-    fn_8013CC24_L_8013D204:
-    lwz r4, 0x14(r26)
-    li r3, 0x0
-    rlwinm. r0, r4, 0, 8, 8
-    bne fn_8013CC24_L_8013D220
-    rlwinm. r0, r4, 0, 25, 25
-    beq fn_8013CC24_L_8013D220
-    li r3, 0x1
-    fn_8013CC24_L_8013D220:
-    clrlwi. r0, r3, 24
-    bne fn_8013CC24_L_8013D230
-    mr r3, r26
-    bl HSD_JObjSetMtxDirtySub
-    fn_8013CC24_L_8013D230:
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x180
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x198
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x1b0
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x1c8
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x1e0
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x1f8
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x210
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x228
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x240
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x258
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x270
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x288
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x2a0
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x2b8
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x2d0
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x2e8
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x300
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x318
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x330
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    lwz r3, 0x8(r28)
-    addi r4, r30, 0x348
-    bl ResolveJointByName
-    li r4, 0x10
-    bl HSD_JObjSetFlagsAll
-    addi r26, r30, 0x0
-    li r30, 0x0
-    li r27, 0x0
-    fn_8013CC24_L_8013D3CC:
-    li r3, 0x5c
-    bl Alloc
-    mr. r25, r3
-    beq fn_8013CC24_L_8013D3F4
-    lwz r0, 0x0(r26)
-    li r5, 0x0
-    lwz r4, 0x18(r31)
-    slwi r0, r0, 2
-    lwzx r4, r4, r0
-    bl clNormal3D_Construct
-    fn_8013CC24_L_8013D3F4:
-    addi r30, r30, 0x1
-    addi r0, r27, 0x14
-    cmpwi r30, 0x4
-    stwx r25, r28, r0
-    addi r26, r26, 0x4
-    addi r27, r27, 0x4
-    blt fn_8013CC24_L_8013D3CC
-    lfs f2, lbl_806D76E0(r2)
-    lwz r3, 0x10(r28)
-    fmr f3, f2
-    lfs f1, lbl_806D76EC(r2)
-    fmr f4, f2
-    lwz r4, 0x14(r28)
-    bl clNormal3D_SetScale
-    lwz r3, 0xc(r28)
-    bl Archive_GetRootJObj
-    mr r30, r3
-    lwz r3, 0x10(r28)
-    bl Archive_GetRootJObj
-    mr r4, r3
-    lwz r3, 0xc(r28)
-    lfs f1, lbl_806D76E0(r2)
-    mr r5, r30
-    li r6, 0x0
-    bl ObjectTree_BlendOrCopy_Timed
-    clrlwi. r0, r29, 24
-    beq fn_8013CC24_L_8013D480
-    lwz r3, 0x4(r28)
-    lis r4, 0x4000
-    li r5, 0x0
-    bl clNormal3D_SetFlags
-    lwz r3, 0xc(r28)
-    lis r4, 0x4000
-    li r5, 0x0
-    bl clNormal3D_SetFlags
-    fn_8013CC24_L_8013D480:
-    mr r3, r28
-    fn_8013CC24_L_8013D484:
-    psq_l f31, 0x78(r1), 0, 0
-    lfd f31, 0x70(r1)
-    psq_l f30, 0x68(r1), 0, 0
-    lfd f30, 0x60(r1)
-    psq_l f29, 0x58(r1), 0, 0
-    lfd f29, 0x50(r1)
-    lmw r25, 0x34(r1)
-    lwz r0, 0x84(r1)
-    mtlr r0
-    addi r1, r1, 0x80
-    blr
-}
+typedef struct KPCharData {
+    int pad0;
+    char *driverModel;  /* 0x04 */
+    char *kartModel;    /* 0x08 */
+    unsigned char pad0C[0x18 - 0x0C];
+    char **anims;       /* 0x18 */
+} KPCharData;
+
+/* .rodata 0x803600E0: anim indices and the model/joint name strings */
+typedef struct KPStrings {
+    char wingJoint[0x1C];      /* 0x40 */
+    char wingModel[0x0C];      /* 0x5C */
+    char fmtHead[0x18];        /* 0x68 */
+    char fmtHandL[0x18];       /* 0x80 */
+    char fmtHandR[0x18];       /* 0x98 */
+    char kartModel[0x10];      /* 0xB0 */
+    char kartJoint[4][0x18];   /* 0xC0 */
+    char fmtDriver[4][0x18];   /* 0x120 */
+    char hidden[20][0x18];     /* 0x180 */
+} KPStrings;
+
+extern KPModelName *GetKartModelNameEntry(int chara, int kind);
+extern KPJObj *ResolveJointByName(void *model, const char *name);
+extern void clNormal3D_Construct(void *self, const char *name, int flags);
+extern void clNormal3D_SetFlags(void *model, unsigned int flags, int b);
+extern void fn_8013BD7C(void);
+extern int sprintf(char *buf, const char *fmt, ...);
+extern void HSD_JObjSetFlagsAll(void *jobj, int flags);
+extern void HSD_JObjSetMtxDirtySub(KPJObj *jobj);
+extern const float lbl_806D76E8;
+extern const float lbl_806D76EC;
 
 /* .rodata 0x803600E0..0x80360440 (TU-owned). The ctor addresses everything
- * from the section start, so the tables it reads are statics. The ctor is
- * still asm; a C draft is listed in docs/gave_up.md. The explicit section is
- * needed because the .extabindex_user section pragma above is still active
- * (it would put the int table in .data). */
-#pragma force_active on
-__declspec(section ".rodata") const int lbl_803600E0[4] = {0, 5, 42, 43};
+ * from the section start, so the tables it reads are statics. */
+extern const int lbl_803600E0[4];
+extern const char lbl_803600F0[9];
+extern const char lbl_803600FC[0xE];
+extern const char lbl_8036010C[0x13];
+const int lbl_803600E0[4] = {0, 5, 42, 43};
 const char lbl_803600F0[9] = "mspacman";
 const char lbl_803600FC[0xE] = "clCSKartModel";
 const char lbl_8036010C[0x13] = "clCSModelInterface";
@@ -972,4 +419,241 @@ static const char sKPHidden16[] = "cart_punk_tire_fl_joint";
 static const char sKPHidden17[] = "cart_punk_tire_fr_joint";
 static const char sKPHidden18[] = "cart_punk_tire_rl_joint";
 static const char sKPHidden19[] = "cart_punk_tire_rr_joint";
-#pragma force_active reset
+extern char *lbl_8048EA98[];
+extern void dtor_8013DCBC();
+
+#define KP_JOBJ(j) ((KPJObj *)(j))
+
+static inline void KP_GetTranslate(KPJObj *j, KPVec3 *v) {
+    if (!j) {
+        __assert(lbl_806D76D0, 0x3e4, lbl_806D76D8);
+    }
+    *v = j->translate;
+}
+
+static inline unsigned char KP_MtxIsDirty(KPJObj *j) {
+    unsigned char ret;
+
+    if (!j) {
+        __assert(lbl_806D76D0, 0x25d, lbl_806D76D8);
+    }
+    ret = 0;
+    if (!(j->flags & 0x800000) && (j->flags & 0x40)) {
+        ret = 1;
+    }
+    return ret;
+}
+
+static inline void KP_SetMtxDirty(KPJObj *j) {
+    if (j && !KP_MtxIsDirty(j)) {
+        HSD_JObjSetMtxDirtySub(j);
+    }
+}
+
+static inline void KP_SetTranslate(KPJObj *j, float x, float y, float z) {
+    if (!j) {
+        __assert(lbl_806D76D0, 0x3a9, lbl_806D76D8);
+    }
+    j->translate.x = x;
+    j->translate.y = y;
+    j->translate.z = z;
+    if (!(j->flags & 0x2000000)) {
+        KP_SetMtxDirty(j);
+    }
+}
+
+
+
+}
+
+/* --- asm function bodies (.text order = fn address order) --- */
+void *operator new(unsigned long size);
+void operator delete(void *p);
+
+struct KPNormal3D {
+    unsigned char opaque[0x5C];
+    KPNormal3D(const void *name, unsigned char flags);
+};
+
+struct KPBase {
+    void *vptr;
+    KPBase() { vptr = lbl_8048EAE8; }
+    ~KPBase();
+};
+
+struct KPCtor : KPBase {
+    KPNormal3D *kart;
+    KPNormal3D *obj8;
+    KPNormal3D *driver;
+    KPNormal3D *obj10;
+    KPNormal3D *anims14[4];
+    KPNormal3D *obj24;
+    KPJObj *jobj28;
+    KPJObj *jobj2C;
+    KPJObj *jobj30;
+    KPJObj *jobj34;
+    KPJObj *jobj38;
+    KPJObj *jobj3C;
+    KPJObj *jobj40;
+    KPJObj *jobj44;
+    int chara;
+    int anim_state;
+    float frame;
+    float end_frame;
+    unsigned char pad58[0x88 - 0x58];
+    float view_x;
+    float view_y;
+    KPCtor(int chara, unsigned char flag);
+};
+
+#pragma push
+#pragma use_lmw_stmw on
+KPCtor::KPCtor(int ch, unsigned char flag) {
+    char buf[0x28];
+    CharacterData *cd;
+    KPModelName *km;
+    KPJObj *src;
+    int i;
+
+    vptr = lbl_8048EAD8;
+    fn_8013BD7C();
+    fn_8013C428();
+    view_x = lbl_806D76E0;
+    view_y = lbl_806D76E0;
+    chara = ch;
+    anim_state = 0;
+    frame = lbl_806D76E0;
+    end_frame = lbl_806D76E8;
+    kart = 0;
+    obj8 = 0;
+    driver = 0;
+    obj10 = 0;
+    anims14[0] = 0;
+    anims14[1] = 0;
+    anims14[2] = 0;
+    anims14[3] = 0;
+    obj24 = 0;
+    jobj28 = 0;
+    if (chara < 0 || chara >= 13) {
+        return;
+    }
+    {
+        km = GetKartModelNameEntry(chara, -1);
+        cd = GetCharacterDataEntry(chara);
+        kart = new KPNormal3D(km->name, flag);
+        driver = new KPNormal3D(cd->driver_model, flag);
+        obj10 = new KPNormal3D(cd->kart_model, 0);
+        clNormal3D_SetScale(driver, lbl_806D76E0, 0, lbl_806D76E4, lbl_806D76E0, lbl_806D76E0);
+        switch (chara) {
+        case 3:
+            jobj28 = ResolveJointByName(driver, sKPWingJoint);
+            obj24 = new KPNormal3D(sKPWingModel, flag);
+            clNormal3D_SetScale(obj24, lbl_806D76E0, 0, lbl_806D76E4, lbl_806D76E0, lbl_806D76EC);
+            break;
+        }
+        sprintf(buf, sKPFmtHead, lbl_8048EA98[chara]);
+        jobj3C = ResolveJointByName(driver, buf);
+        sprintf(buf, sKPFmtHandL, lbl_8048EA98[chara]);
+        jobj40 = ResolveJointByName(driver, buf);
+        sprintf(buf, sKPFmtHandR, lbl_8048EA98[chara]);
+        jobj44 = ResolveJointByName(driver, buf);
+        HSD_JObjSetFlags((HSD_JObj *)jobj40, 0x10);
+        HSD_JObjSetFlags((HSD_JObj *)jobj44, 0x10);
+        obj8 = new KPNormal3D(sKPKartModel, flag);
+        jobj2C = ResolveJointByName(obj8, sKPKartJoint0);
+        jobj30 = ResolveJointByName(obj8, sKPKartJoint1);
+        jobj34 = ResolveJointByName(obj8, sKPKartJoint2);
+        jobj38 = ResolveJointByName(obj8, sKPKartJoint3);
+
+        {
+            float x;
+            float y;
+            float z;
+            sprintf(buf, sKPFmtDriver0, lbl_8048EA98[chara]);
+            src = ResolveJointByName(kart, buf);
+            if (!src) {
+                __assert(lbl_806D76D0, 0x3e4, lbl_806D76D8);
+            }
+            x = src->translate.x;
+            y = src->translate.y;
+            z = src->translate.z;
+            KP_SetTranslate((jobj2C), x, y, z);
+        }
+        {
+            float x;
+            float y;
+            float z;
+            sprintf(buf, sKPFmtDriver1, lbl_8048EA98[chara]);
+            src = ResolveJointByName(kart, buf);
+            if (!src) {
+                __assert(lbl_806D76D0, 0x3e4, lbl_806D76D8);
+            }
+            x = src->translate.x;
+            y = src->translate.y;
+            z = src->translate.z;
+            KP_SetTranslate((jobj30), x, y, z);
+        }
+        {
+            float x;
+            float y;
+            float z;
+            sprintf(buf, sKPFmtDriver2, lbl_8048EA98[chara]);
+            src = ResolveJointByName(kart, buf);
+            if (!src) {
+                __assert(lbl_806D76D0, 0x3e4, lbl_806D76D8);
+            }
+            x = src->translate.x;
+            y = src->translate.y;
+            z = src->translate.z;
+            KP_SetTranslate((jobj34), x, y, z);
+        }
+        {
+            float x;
+            float y;
+            float z;
+            sprintf(buf, sKPFmtDriver3, lbl_8048EA98[chara]);
+            src = ResolveJointByName(kart, buf);
+            if (!src) {
+                __assert(lbl_806D76D0, 0x3e4, lbl_806D76D8);
+            }
+            x = src->translate.x;
+            y = src->translate.y;
+            z = src->translate.z;
+            KP_SetTranslate((jobj38), x, y, z);
+        }
+
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden0), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden1), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden2), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden3), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden4), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden5), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden6), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden7), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden8), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden9), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden10), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden11), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden12), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden13), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden14), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden15), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden16), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden17), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden18), 0x10);
+        HSD_JObjSetFlagsAll(ResolveJointByName(obj8, sKPHidden19), 0x10);
+
+        for (i = 0; i < 4; i++) {
+            anims14[i] = new KPNormal3D(((KPCharData *)cd)->anims[lbl_803600E0[i]], 0);
+        }
+        clNormal3D_SetScale(obj10, lbl_806D76EC, anims14[0], lbl_806D76E0, lbl_806D76E0, lbl_806D76E0);
+        ObjectTree_BlendOrCopy_Timed(driver, Archive_GetRootJObj(obj10), Archive_GetRootJObj(driver), 0, lbl_806D76E0);
+        if (flag) {
+            clNormal3D_SetFlags(kart, 0x40000000, 0);
+            clNormal3D_SetFlags(driver, 0x40000000, 0);
+        }
+    }
+    return;
+}
+#pragma pop
+

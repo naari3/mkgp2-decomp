@@ -2381,6 +2381,18 @@ def shape_hints(a, rep, src_text):
                    "expression: for a float constant, write literals and pass the shared value into the inline as "
                    "separate parameters (TransitionEffect_DrawCarRouletteOverlay: `Quad(0.0f, 0.0f)`, "
                    "regalloc_patterns 61).")
+    if cse:
+        inl = [m.group(1) for m in re.finditer(
+            r"\bstatic\s+inline\s+(?!void\s+\w+\s*\()[\w\s\*&:<>]+?\b(\w+)\s*\([^;{]*\)\s*\{", src_text)]
+        scopes = body + "".join(src_text[m.start():m.start() + 4000] for n in inl
+                                for m in re.finditer(r"\b" + re.escape(n) + r"\s*\([^;{]*\)\s*\{", src_text))
+        used = sorted({n for n in inl if re.search(r"[^=!<>]=\s*(?:\([^()]*\)\s*)?" + re.escape(n) + r"\s*\(", scopes)})
+        if used:
+            out.append(f"an off @temp may be the RETURN temp of an inline (assigned from: {', '.join(used[:5])}): it is "
+                       "created when the nested inline is expanded, after every local of the outer inline, so it is "
+                       "coloured after them and no declaration order moves it. Return the value through a reference "
+                       "out-parameter (`static inline void find(T *o, U *&out)`) and order the outer locals instead; "
+                       "regalloc_patterns 81.")
     return out
 
 
