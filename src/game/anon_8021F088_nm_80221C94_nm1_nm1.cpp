@@ -5,8 +5,7 @@ static inline void FormatItemNames(char *buf, int first, int second) {
     sprintf(buf, lbl_806DB2A0, fn_8013C26C(first, -1), fn_8013C26C(second, -1));
 }
 
-static inline void SetItemLabels(ItemWnd *w, unsigned char alpha) {
-    unsigned int color = PackColor(0xFF, 0xFF, 0xFF, alpha);
+static inline void SetItemLabels(ItemWnd *w, unsigned int color) {
     w->label.SetColor(color);
     w->SetTextAlpha(color);
 }
@@ -95,16 +94,19 @@ void ItemWnd::ShowItem() {
         break;
     }
     case 1: {
+        unsigned int c, d;
+        d = c = 0xFFFFFF00;
         float alpha = timer / lbl_806DB294;
         SetItemSprites(this, alpha);
         f = alpha;
         int a = (int)(lbl_806DB24C * f);
         *(unsigned int *)((char *)&texts[3] + 0x20) = PackColor(0xE0, 0x20, 0x20, a);
-        unsigned int c = PackColor(0xFF, 0xFF, 0xFF, a);
+        d |= a & 0xFF;
+        c |= a & 0xFF;
         *(unsigned int *)((char *)&texts[4] + 0x20) = c;
         *(unsigned int *)((char *)&texts[5] + 0x20) = c;
         *(unsigned int *)((char *)&texts[6] + 0x20) = c;
-        SetItemLabels(this, a);
+        SetItemLabels(this, d);
         if (timer >= 15) {
             spr[2]->alpha = lbl_806DB194;
             spr[1]->alpha = lbl_806DB194;
@@ -121,16 +123,19 @@ void ItemWnd::ShowItem() {
         }
         break;
     case 3: {
+        unsigned int c, d;
+        d = c = 0xFFFFFF00;
         float alpha = lbl_806DB194 - timer / lbl_806DB250;
         SetItemSprites(this, alpha);
         f = alpha;
         int a = (int)(lbl_806DB24C * f);
         *(unsigned int *)((char *)&texts[3] + 0x20) = PackColor(0xE0, 0x20, 0x20, a);
-        unsigned int c = PackColor(0xFF, 0xFF, 0xFF, a);
+        d |= a & 0xFF;
+        c |= a & 0xFF;
         *(unsigned int *)((char *)&texts[4] + 0x20) = c;
         *(unsigned int *)((char *)&texts[5] + 0x20) = c;
         *(unsigned int *)((char *)&texts[6] + 0x20) = c;
-        SetItemLabels(this, a);
+        SetItemLabels(this, d);
         if (timer >= 10) {
             label.resId = -1;
             sub = 0;
