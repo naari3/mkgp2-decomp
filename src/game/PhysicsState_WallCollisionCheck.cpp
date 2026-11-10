@@ -33,7 +33,10 @@ extern "C" void PhysicsState_WallCollisionCheck(char *self)
     PhysicsCollisionVec *ep = &endpoint;
     unsigned char applied = 0;
     for (int corner = 0; corner < 4; ++corner) {
-        PhysicsCollisionVec scaled(lbl_803BDD28[corner]);
+        PhysicsCollisionVec scaled;
+        scaled.z = lbl_803BDD28[corner].z;
+        scaled.y = lbl_803BDD28[corner].y;
+        scaled.x = lbl_803BDD28[corner].x;
         PhysicsCollisionVec correction;
         PhysicsCollisionVec normal;
         scaled.x *= PH_F(self, 0x13C);
@@ -61,7 +64,10 @@ extern "C" void PhysicsState_WallCollisionCheck(char *self)
                 if (lbl_806DA49C < length) force = lbl_806DA49C;
                 if (corner < 2) force *= lbl_806DA4A0;
                 else force *= lbl_806DA4A4;
-                PhysicsCollisionVec push(normal);
+                PhysicsCollisionVec push;
+                push.x = normal.x;
+                push.z = normal.z;
+                push.y = normal.y;
                 push.x *= force;
                 push.y *= force;
                 push.z *= force;
