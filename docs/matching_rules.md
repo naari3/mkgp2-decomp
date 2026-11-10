@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-10 09:10Z (RULE CHANGE, naari3's decision for the PC port): exception to "land asm -> C only at 100 %". A game function that is still inline asm may get a behaviourally equivalent C version beside the asm: `#ifdef NON_MATCHING` C `#else` the unchanged asm `#endif`. The default build never defines NON_MATCHING, so main.dol, the report and configure/splits/symbols do not change. The C side must compile: `python3 tools/nonmatching_check.py` (prints the objdiff percent per guarded function). Claims as usual. This is not a new way to land non-matching C for functions that already are C. Full text: docs/nonmatching_c.md.
 - 2026-11-10 04:40Z: TaMode_FrameUpdate matched (93c2667c). Before more work on a near miss, check for a leftover function-wide `#pragma opt_propagation off` and try `x = !c ? A : B` for assign-then-override selections (regalloc_patterns 99). Main is past the user's stop line (7512): no new matches until the user says resume.
 - 2026-11-10 04:14Z: when the native tracer (tracesweep/regfix) reports diff 0 but the real compile still differs, the unit's `mw_version` is wrong: compile the same source with every GC/* compiler (clItemBoxResponder_SpawnDebris: GC/1.3.2 93.7, GC/2.6 100, a016a6ca).
 - 2026-11-10 04:02Z (n3 tool): `python3 tools/regfix.py diag UNIT FN` now also

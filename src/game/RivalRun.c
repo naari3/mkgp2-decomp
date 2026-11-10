@@ -1329,11 +1329,44 @@ struct RIPathManager {
     RIPathManager(int key, void *car, void *render, float *x, float *y, float *z);
 };
 struct RICollChecker { char data[0x18]; RICollChecker(); };
+#ifdef NON_MATCHING
+struct RIRivalInfo {
+    int holdFrames;    /* 0x00 */
+    float speed;       /* 0x04 */
+    char pad8[0xC];
+    int itemCooldown;  /* 0x14 */
+};
+struct RIRival {
+    RIRivalInfo *info;      /* 0x00 */
+    RICarObject *car;       /* 0x04 */
+    RIVec pos;              /* 0x08 */
+    RIPathManager *path;    /* 0x14 */
+    int pathSlot;           /* 0x18 */
+    int raceSlot;           /* 0x1C */
+    void *follower;         /* 0x20 */
+    int laneCooldown;       /* 0x24 */
+    RIVec aim;              /* 0x28 */
+    int driftDir;           /* 0x34 */
+    unsigned char fast;     /* 0x38 */
+    int holdFrames;         /* 0x3C */
+    int itemCooldown;       /* 0x40 */
+    int item;               /* 0x44 */
+    int aimFrames;          /* 0x48 */
+    float accelScale;       /* 0x4C */
+    void *render;           /* 0x50 */
+    RIRival(RIPathManager *path, int arg, void *course);
+};
+struct RIRivalCar : RICarObject {
+    RIRivalCar(RIVec *pos, int cc, int lod)
+        : RICarObject(6, 0, cc, 0, 0, lod, 0, 0, pos->x, pos->z, GetCourseStartYaw()) {}
+};
+#else
 struct RIRival {
     char pad0[0x50];
     void *render;
     RIRival(RIPathManager *path, int arg, void *course);
 };
+#endif
 struct RILakituStart { char data[0x58]; RILakituStart(const void *data, int arg, float x, float y, float z); };
 struct RIScene3D { char data[0x3084]; RIScene3D(int name); };
 struct RIGoalCamera { char data[8]; RIGoalCamera(); };
@@ -1507,6 +1540,67 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&RivalRun_RivalInit, 0x0000025C, (void *)&extab_RivalRun_RivalInit
 };
 
+#ifdef NON_MATCHING
+/* NON_MATCHING: equivalent C++ (the RIRival ctor; the default build renames
+ * __ct__7RIRivalFP13RIPathManageriPv to RivalRun_RivalInit). Differs from the
+ * target only in the order of two loads in the info tail (docs/gave_up.md). */
+#pragma cplusplus on
+#pragma exceptions on
+RIRival::RIRival(RIPathManager *p, int startSlot, void *course) {
+    int i;
+    void *f;
+
+    info = (RIRivalInfo *)course;
+    car = 0;
+    path = p;
+    GetStartPosition(startSlot, &pos.x, &pos.y, &pos.z);
+    if ((int)g_ccClass == 2) {
+        car = new RIRivalCar(&pos, RIGetCC(), 5);
+    } else {
+        car = new RIRivalCar(&pos, RIGetCC(), -1);
+    }
+    CarObject_SetPosition(car, &pos);
+    ItemEffectBus_OrMask(*(void **)((char *)CarObject_GetRenderObj(car) + 0x304), 0x0080000000000000ULL);
+    pathSlot = -1;
+    pathSlot = ((int (*)(void *, float *, float *, float *, void *, void *, int))PathManager_RegisterCarObject)(
+        path, &pos.x, &pos.y, &pos.z, car, CarObject_GetRenderObj(car), -1);
+    raceSlot = 0;
+    f = operator new(0x2C);
+    if (f != 0) {
+        ((void (*)(void *, RIVec *))RivalRun_PathFollowerInit)(f, &pos);
+    }
+    follower = f;
+    laneCooldown = 0;
+    aim.x = 0.0f;
+    aim.y = 0.0f;
+    aim.z = 0.0f;
+    driftDir = 0;
+    fast = 0;
+    holdFrames = 0;
+    itemCooldown = 180;
+    item = 0;
+    accelScale = 0.0f;
+    render = 0;
+    for (i = 0; i < 0x80; i++) {
+        char *slot = RaceContextSlot_GetIfAlive(GetRaceContextPtr(), i);
+        if (slot != 0 && *(void **)(slot + 0xB4) == CarObject_GetRenderObj(car)) {
+            raceSlot = i;
+            break;
+        }
+    }
+    if (info != 0) {
+        holdFrames = info->holdFrames;
+        itemCooldown = info->itemCooldown;
+        if (((RIRivalInfo *)course)->speed > 0.0f) {
+            fast = 1;
+        } else {
+            fast = 0;
+        }
+    }
+}
+#pragma exceptions reset
+#pragma cplusplus reset
+#else
 /* --- asm function bodies (.text order = fn address order) --- */
 asm void RivalRun_RivalInit(void) { /* 0x8013732C size:0x25C */
     nofralloc
@@ -1672,3 +1766,4 @@ asm void RivalRun_RivalInit(void) { /* 0x8013732C size:0x25C */
     addi r1, r1, 0x20
     blr
 }
+#endif

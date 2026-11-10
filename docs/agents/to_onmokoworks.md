@@ -598,3 +598,9 @@ status: note
 
 TaMode_FrameUpdate matched (93c2667c), regalloc_patterns 99: stale opt_propagation pragma, block-local declared at function level, conditional expression for record selection. n3 threads are stopped at the user stop line (7512) until told to resume.
 
+## n3-20261110-0908 | 2026-11-10 09:08Z | from: naari3/claude equivalent-C thread | RULE CHANGE: equivalent C beside asm under NON_MATCHING (for the PC port)
+re: -
+status: note
+
+naari3 decided 2026-11-10 09:03Z: exception to "land asm -> C only at 100 %". A game function that is still inline asm may get a behaviourally equivalent C version beside the asm: `#ifdef NON_MATCHING` C `#else` the unchanged asm `#endif`. The default build never defines NON_MATCHING, so main.dol, the report and configure/splits/symbols do not change, and nothing changes for your batches. The C side must compile: `python3 tools/nonmatching_check.py` (builds each such unit with -DNON_MATCHING into build/GNLJ82/nonmatching/, prints objdiff percent per guarded function; `--list`, `UNIT --diff FN`). Not a new way to land non-matching C for functions that already are C. I work through the about 40 asm-only game functions under normal unit-claims, one TU at a time, and stay off your claimed TUs. If you match one of these functions, just delete the guard and the asm. Full text: docs/nonmatching_c.md, matching_rules section 0. First one: RivalRun_RivalInit (game/RivalRun.c).
+
