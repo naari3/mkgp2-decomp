@@ -5,15 +5,28 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803997A8_Pool {
+    char s_000[12];
+    char s_00C[28];
+    char s_028[28];
+    char s_044[16];
+    char s_054[16];
+    int i_064;
+} lbl_803997A8_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
 const char lbl_8039979C[] = "clLiveTest";
-const unk32 lbl_803997A8[26] = {
-    0x636C4A6F, 0x6252756E, 0x6E657200, 0x20202020, 0x20202B2B, 0x2B2B2B2B, 0x2B2B2B2B, 0x2B2B2B2B,
-    0x2B2B2B2B, 0x2B2B2B00, 0x20202020, 0x20202B20, 0x2B202B20, 0x2B202B20, 0x2B202B20, 0x2B202B20,
-    0x2B202B00, 0x25313673, 0x205B2566, 0x20736563, 0x5D000000, 0x504C4159, 0x2054494D, 0x45202566,
-    0x00000000, 0x00000000
+const lbl_803997A8_Pool lbl_803997A8 = {
+    "clJobRunner",
+    "      +++++++++++++++++++++",
+    "      + + + + + + + + + + +",
+    "%16s [%f sec]",
+    "PLAY TIME %f",
+    0
 };
 const char clFlowTitle[] = "clFlowTitle";
 const char lbl_8039981C[] = "clFlowProcess";

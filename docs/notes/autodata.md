@@ -124,6 +124,12 @@ Second pass (same day, 18 KB more): two more column kinds and text.
   string literals joined by `"\0"`. Text needs no byte swap, so one object is fine.
 A column that fits none of these stays `unk32`.
 
+Third pass (26 KB): anchor pools that mix strings and numbers (`mixed_pool`).
+The object is cut at each NUL-terminated string (zero padded to 4), the words
+between are floats or small integers, and it becomes one
+`struct <name>_Pool { char s_000[28]; float f_01C[3]; ... }`. A port swaps the
+numeric members and leaves the `char` members alone.
+
 An embedded file image is typed as bytes on purpose: the 31.8 KB object at
 0x80412158 is a `*_line.bin` course file (dtk had cut it in two), read by
 `CourseLookup::LoadMemory`. A port swaps it with the loader, like the files.

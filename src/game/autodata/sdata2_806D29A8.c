@@ -5,6 +5,12 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806D2EA8_Pool {
+    char s_000[8];
+} lbl_806D2EA8_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -258,8 +264,8 @@ const float lbl_806D2E9C = 137.0f;
 const unk32 lbl_806D2EA0[2] = {
     0x8263826A, 0x00000000
 };
-const unk32 lbl_806D2EA8[2] = {
-    0x826F8281, 0x82830000
+const lbl_806D2EA8_Pool lbl_806D2EA8 = {
+    "\202o\202\201\202\203"
 };
 const float lbl_806D2EB0 = 0.0f;
 const float lbl_806D2EB4 = 599.999f;

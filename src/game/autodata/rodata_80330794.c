@@ -6,14 +6,52 @@
 #include "game/autodata.h"
 #include "game/types/Vec3.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct Boomerang_LaunchAndTickStateMachine_rodata_80330794_Pool {
+    int i_000;
+    float f_004[7];
+    char s_020[16];
+    char s_030[20];
+    char s_044[16];
+} Boomerang_LaunchAndTickStateMachine_rodata_80330794_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80330C14_Pool {
+    int i_000;
+    float f_004[2];
+    int i_00C;
+    float f_010[2];
+    char s_018[24];
+    int i_030[10];
+    char s_058[28];
+    int i_074[9];
+    char s_098[24];
+    int i_0B0[10];
+    char s_0D8[20];
+} lbl_80330C14_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803315D8_Pool {
+    int i_000;
+    float f_004[2];
+    char s_00C[16];
+    char s_01C[24];
+    int i_034;
+} lbl_803315D8_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
 /* decl: PaceKey */
-const unk32 Boomerang_LaunchAndTickStateMachine_rodata_80330794[21] = {
-    0x00000000, 0x41C80000, 0x42200000, 0x42700000, 0x3F800000, 0x3F4CCCCD, 0x3F99999A, 0x3F800000,
-    0x6974656D, 0x5F686174, 0x695F6A6F, 0x696E7400, 0x6974656D, 0x5F666C6F, 0x7765725F, 0x6A6F696E,
-    0x74000000, 0x6974656D, 0x5F746F70, 0x5F6A6F69, 0x6E740000
+const Boomerang_LaunchAndTickStateMachine_rodata_80330794_Pool Boomerang_LaunchAndTickStateMachine_rodata_80330794 = {
+    0,
+    { 25.0f, 40.0f, 60.0f, 1.0f, 0.8f, 1.2f, 1.0f },
+    "item_hati_joint",
+    "item_flower_joint",
+    "item_top_joint"
 };
 const unsigned char lbl_803307E8[1068] = {
     0x3F, 0x80, 0x0, 0x0, 0x3F, 0x33, 0x33, 0x33, 0x3F, 0x66, 0x66, 0x66,
@@ -107,15 +145,18 @@ const unsigned char lbl_803307E8[1068] = {
     0x40, 0x49, 0xF, 0xD8, 0x40, 0x6, 0xA, 0x90, 0xBF, 0x6, 0xA, 0x90
 };
 /* decl: Vec */
-const unk32 lbl_80330C14[59] = {
-    0x00000000, 0x3F800000, 0xC0C00000, 0x00000000, 0x40400000, 0xC1100000, 0x6974656D, 0x5F63656E,
-    0x7465725F, 0x616B615F, 0x6A6F696E, 0x74000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x6974656D, 0x5F63656E,
-    0x7465725F, 0x6D69646F, 0x72695F6A, 0x6F696E74, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x6974656D, 0x5F63656E,
-    0x7465725F, 0x616F5F6A, 0x6F696E74, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x6974656D, 0x5F6E756C,
-    0x6C325F6A, 0x6F696E74, 0x00000000
+const lbl_80330C14_Pool lbl_80330C14 = {
+    0,
+    { 1.0f, -6.0f },
+    0,
+    { 3.0f, -9.0f },
+    "item_center_aka_joint",
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    "item_center_midori_joint",
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    "item_center_ao_joint",
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    "item_null2_joint"
 };
 const char lbl_80330D00[] = "item_kase_joint";
 const unsigned char lbl_80330D10[1216] = {
@@ -311,9 +352,12 @@ const unsigned char lbl_803311D0[1032] = {
     0x3F, 0x80, 0x0, 0x0, 0x3F, 0x80, 0x0, 0x0, 0x3F, 0x80, 0x0, 0x0
 };
 /* decl: Vec */
-const unk32 lbl_803315D8[14] = {
-    0x00000000, 0x41400000, 0x41700000, 0x6974656D, 0x5F63686E, 0x365F6A6F, 0x696E7400, 0x6974656D,
-    0x5F776172, 0x61695F65, 0x66666563, 0x745F6A6F, 0x696E7400, 0x00000000
+const lbl_803315D8_Pool lbl_803315D8 = {
+    0,
+    { 12.0f, 15.0f },
+    "item_chn6_joint",
+    "item_warai_effect_joint",
+    0
 };
 const Vec3 lbl_80331610[1] = {
     { 0.0f, 1.0f, 0.0f }

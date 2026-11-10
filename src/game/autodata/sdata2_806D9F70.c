@@ -5,6 +5,48 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806DA080_Pool {
+    char s_000[8];
+} lbl_806DA080_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806DA088_Pool {
+    char s_000[8];
+} lbl_806DA088_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806DA090_Pool {
+    char s_000[8];
+} lbl_806DA090_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806DA098_Pool {
+    char s_000[8];
+} lbl_806DA098_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806DA0A0_Pool {
+    char s_000[8];
+} lbl_806DA0A0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806DA0B0_Pool {
+    char s_000[8];
+} lbl_806DA0B0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806DA0B8_Pool {
+    char s_000[8];
+} lbl_806DA0B8_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -82,29 +124,29 @@ const float lbl_806DA070 = 2.4e+02f;
 const float lbl_806DA074 = 3.2e+02f;
 const float lbl_806DA078 = 0.0165f;
 const float lbl_806DA07C = 1e+02f;
-const unk32 lbl_806DA080[2] = {
-    0x82DC82E8, 0x82A80000
+const lbl_806DA080_Pool lbl_806DA080 = {
+    "\202\334\202\350\202\250"
 };
-const unk32 lbl_806DA088[2] = {
-    0x82E982A2, 0x82B60000
+const lbl_806DA088_Pool lbl_806DA088 = {
+    "\202\351\202\242\202\266"
 };
-const unk32 lbl_806DA090[2] = {
-    0x82ED82E8, 0x82A80000
+const lbl_806DA090_Pool lbl_806DA090 = {
+    "\202\355\202\350\202\250"
 };
-const unk32 lbl_806DA098[2] = {
-    0x82D2815B, 0x82BF0000
+const lbl_806DA098_Pool lbl_806DA098 = {
+    "\202\322\201[\202\277"
 };
-const unk32 lbl_806DA0A0[2] = {
-    0x82AD82C1, 0x82CF0000
+const lbl_806DA0A0_Pool lbl_806DA0A0 = {
+    "\202\255\202\301\202\317"
 };
 const unk32 lbl_806DA0A8[2] = {
     0x8284828B, 0x00000000
 };
-const unk32 lbl_806DA0B0[2] = {
-    0x82908281, 0x82830000
+const lbl_806DA0B0_Pool lbl_806DA0B0 = {
+    "\202\220\202\201\202\203"
 };
-const unk32 lbl_806DA0B8[2] = {
-    0x82928285, 0x82840000
+const lbl_806DA0B8_Pool lbl_806DA0B8 = {
+    "\202\222\202\205\202\204"
 };
 const char lbl_806DA0C0[] = "VERSION";
 const char lbl_806DA0C8[] = "COUNTRY";

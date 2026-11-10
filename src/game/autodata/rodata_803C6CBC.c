@@ -5,6 +5,21 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct sdata_806D0498_rodata_803C6D44_Pool {
+    char s_000[16];
+    char s_010[28];
+    char s_02C[56];
+    char s_064[32];
+    char s_084[56];
+    char s_0BC[20];
+    char s_0D0[16];
+    char s_0E0[20];
+    char s_0F4[20];
+    char s_108[12];
+} sdata_806D0498_rodata_803C6D44_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -19,16 +34,17 @@ const char lbl_803C6CFC[] = "nsMenuUtil::clMenuNode";
 const char lbl_803C6D14[] = "clGetCoinLine";
 const char lbl_803C6D24[] = "clGetSumLine";
 const char lbl_803C6D34[] = "clCoinPerfect";
-const unk32 sdata_806D0498_rodata_803C6D44[69] = {
-    0x636C4765, 0x74436F69, 0x6E53756D, 0x00000000, 0x76656374, 0x6F723A3A, 0x696E7365, 0x7274206C,
-    0x656E6774, 0x68206572, 0x726F7200, 0x21737464, 0x3A3A6578, 0x63657074, 0x696F6E21, 0x21737464,
-    0x3A3A6C6F, 0x6769635F, 0x6572726F, 0x72212173, 0x74643A3A, 0x6C656E67, 0x74685F65, 0x72726F72,
-    0x21210000, 0x76656374, 0x6F723A3A, 0x61742069, 0x6E646578, 0x206F7574, 0x206F6620, 0x72616E67,
-    0x65000000, 0x21737464, 0x3A3A6578, 0x63657074, 0x696F6E21, 0x21737464, 0x3A3A6C6F, 0x6769635F,
-    0x6572726F, 0x72212173, 0x74643A3A, 0x6F75745F, 0x6F665F72, 0x616E6765, 0x21210000, 0x7374643A,
-    0x3A6F7574, 0x5F6F665F, 0x72616E67, 0x65000000, 0x7374643A, 0x3A657863, 0x65707469, 0x6F6E0000,
-    0x7374643A, 0x3A6C6F67, 0x69635F65, 0x72726F72, 0x00000000, 0x7374643A, 0x3A6C656E, 0x6774685F,
-    0x6572726F, 0x72000000, 0x65786365, 0x7074696F, 0x6E000000
+const sdata_806D0498_rodata_803C6D44_Pool sdata_806D0498_rodata_803C6D44 = {
+    "clGetCoinSum",
+    "vector::insert length error",
+    "!std::exception!!std::logic_error!!std::length_error!!",
+    "vector::at index out of range",
+    "!std::exception!!std::logic_error!!std::out_of_range!!",
+    "std::out_of_range",
+    "std::exception",
+    "std::logic_error",
+    "std::length_error",
+    "exception"
 };
 
 #pragma force_active reset

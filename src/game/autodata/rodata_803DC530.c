@@ -132,6 +132,2400 @@ typedef struct ItemDescriptor {
     unsigned int field_C;
 } ItemDescriptor;
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DD9A0_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DD9A0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DD9AC_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DD9AC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DD9BC_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DD9BC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DD9D0_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DD9D0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DD9E4_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DD9E4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DD9F8_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DD9F8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDA0C_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDA0C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDA18_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDA18_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDA24_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDA24_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDA38_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDA38_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDA44_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDA44_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDA50_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDA50_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDA60_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDA60_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDA74_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDA74_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDA84_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDA84_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDA94_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDA94_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDAA4_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDAA4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDAB4_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDAB4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDAC4_Pool {
+    char s_000[24];
+} ItemLocalizedName_rodata_803DDAC4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDADC_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDADC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDAE8_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDAE8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DDAF8_Pool {
+    char s_000[24];
+} lbl_803DDAF8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDB10_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDB10_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDB20_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDB20_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDB30_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDB30_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDB3C_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDB3C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDB4C_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDB4C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDB5C_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDB5C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDB68_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDB68_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDB74_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDB74_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDB84_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDB84_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDB98_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDB98_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDBA4_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDBA4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDBB8_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDBB8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDBC8_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDBC8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDBD8_Pool {
+    char s_000[24];
+} ItemLocalizedName_rodata_803DDBD8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDBF0_Pool {
+    char s_000[24];
+} ItemLocalizedName_rodata_803DDBF0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDC08_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDC08_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDC18_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDC18_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDC28_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDC28_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDC38_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDC38_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDC4C_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDC4C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDC5C_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDC5C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDC68_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDC68_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDC7C_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDC7C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDC8C_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDC8C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDC9C_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDC9C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDCAC_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDCAC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDCB8_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDCB8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDCC8_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDCC8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDCD4_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDCD4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDCE0_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDCE0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDCEC_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDCEC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDCFC_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDCFC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDD10_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDD10_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDD20_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDD20_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDD2C_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDD2C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDD38_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDD38_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDD44_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDD44_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDD50_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDD50_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDD5C_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDD5C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDD68_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDD68_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDD7C_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDD7C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDD88_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDD88_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDD9C_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDD9C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDDB0_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDDB0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDDC0_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDDC0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDDD0_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDDD0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDDE0_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDDE0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDE24_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDE24_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDE34_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDE34_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDE44_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDE44_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDE54_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDE54_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDE68_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDE68_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDE7C_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DDE7C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDE88_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDE88_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDE98_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDE98_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDEA8_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDEA8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDEB8_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDEB8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDECC_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDECC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDEDC_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDEDC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDEF0_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDEF0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDF00_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDF00_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDF10_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDF10_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDF5C_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDF5C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDF6C_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDF6C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDF7C_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDF7C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDF8C_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDF8C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDF9C_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDF9C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDFAC_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDFAC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDFC0_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DDFC0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDFD0_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDFD0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDFE4_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDFE4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DDFF8_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DDFF8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE00C_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE00C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE020_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE020_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE034_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE034_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE048_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE048_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE058_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE058_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE06C_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE06C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE07C_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE07C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE088_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE088_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE098_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE098_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE0A8_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE0A8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE0B8_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE0B8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE0C8_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE0C8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE0D4_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE0D4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE0E8_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE0E8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE0F4_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE0F4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE100_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE100_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE10C_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE10C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE118_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE118_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE128_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE128_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE134_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE134_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE144_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE144_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE154_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE154_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE160_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE160_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE16C_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE16C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE180_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE180_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE194_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE194_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE1A8_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE1A8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE1BC_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE1BC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE1CC_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE1CC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE1D8_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE1D8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE1E4_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE1E4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE1F8_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE1F8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE204_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE204_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE218_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE218_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE22C_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE22C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE240_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE240_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE250_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE250_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE260_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE260_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE26C_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE26C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE280_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE280_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE294_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE294_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE2A8_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE2A8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE2B4_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE2B4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE2C8_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE2C8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE2DC_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE2DC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE2F0_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE2F0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE304_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE304_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE318_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE318_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE32C_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE32C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE340_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE340_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE350_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE350_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE364_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE364_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE378_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE378_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE388_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE388_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE39C_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE39C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE3B0_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE3B0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE3C0_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE3C0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE3D0_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE3D0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE3DC_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE3DC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE3EC_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE3EC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE3F8_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE3F8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE404_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE404_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE418_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE418_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE424_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE424_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE438_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE438_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE444_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE444_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE450_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE450_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE464_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE464_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE470_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE470_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE47C_Pool {
+    char s_000[24];
+} ItemLocalizedName_rodata_803DE47C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE494_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE494_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE4A4_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE4A4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE4B4_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE4B4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE4C8_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE4C8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE4D4_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE4D4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE4E0_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE4E0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE4F4_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE4F4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE508_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE508_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE514_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE514_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE520_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE520_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE52C_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE52C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE53C_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE53C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE550_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE550_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE564_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE564_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE570_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE570_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE57C_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE57C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE588_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE588_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE59C_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE59C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE5B0_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE5B0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE5BC_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE5BC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE5CC_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE5CC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE5D8_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE5D8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE5EC_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE5EC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE5F8_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE5F8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE60C_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE60C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE61C_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE61C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE62C_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE62C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE640_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE640_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE654_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE654_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE668_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE668_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE67C_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE67C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE690_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE690_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE69C_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE69C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE6AC_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE6AC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE6B8_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE6B8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE6CC_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE6CC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE6D8_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE6D8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE6E8_Pool {
+    char s_000[16];
+} ItemLocalizedName_rodata_803DE6E8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE6F8_Pool {
+    char s_000[24];
+} ItemLocalizedName_rodata_803DE6F8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE710_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE710_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE724_Pool {
+    char s_000[24];
+} ItemLocalizedName_rodata_803DE724_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE73C_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE73C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE750_Pool {
+    char s_000[20];
+} ItemLocalizedName_rodata_803DE750_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemLocalizedName_rodata_803DE764_Pool {
+    char s_000[12];
+} ItemLocalizedName_rodata_803DE764_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DE938_Pool {
+    char s_000[12];
+} lbl_803DE938_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DEED0_Pool {
+    char s_000[24];
+} lbl_803DEED0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DEEE8_Pool {
+    char s_000[28];
+} lbl_803DEEE8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DEF04_Pool {
+    char s_000[28];
+} lbl_803DEF04_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DEF20_Pool {
+    char s_000[16];
+} lbl_803DEF20_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DEF30_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DEF30_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DEF48_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DEF48_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DEF64_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DEF64_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DEF7C_Pool {
+    char s_000[24];
+} lbl_803DEF7C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DEF94_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DEF94_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DEFB0_Pool {
+    char s_000[16];
+} ItemAliasLocalizedVariant_rodata_803DEFB0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DEFC0_Pool {
+    char s_000[24];
+} lbl_803DEFC0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DEFD8_Pool {
+    char s_000[28];
+} lbl_803DEFD8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DEFF4_Pool {
+    char s_000[12];
+} lbl_803DEFF4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF000_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DF000_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF018_Pool {
+    char s_000[12];
+} ItemAliasLocalizedVariant_rodata_803DF018_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF024_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF024_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF040_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF040_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF05C_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF05C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF078_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF078_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF094_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DF094_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF0AC_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF0AC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF0C8_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DF0C8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF0E0_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF0E0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF0FC_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF0FC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF118_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF118_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF134_Pool {
+    char s_000[20];
+} ItemAliasLocalizedVariant_rodata_803DF134_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF148_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF148_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DF164_Pool {
+    char s_000[28];
+} lbl_803DF164_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF180_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF180_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DF19C_Pool {
+    char s_000[24];
+} lbl_803DF19C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF1B4_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF1B4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF1D0_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DF1D0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DF1E8_Pool {
+    char s_000[28];
+} lbl_803DF1E8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF204_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF204_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF220_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DF220_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF238_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF238_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF254_Pool {
+    char s_000[12];
+} ItemAliasLocalizedVariant_rodata_803DF254_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF260_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DF260_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF278_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF278_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DF294_Pool {
+    char s_000[28];
+} lbl_803DF294_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DF2B0_Pool {
+    char s_000[28];
+} lbl_803DF2B0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DF2CC_Pool {
+    char s_000[28];
+} lbl_803DF2CC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DF2E8_Pool {
+    char s_000[24];
+} lbl_803DF2E8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF300_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF300_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF31C_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF31C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF338_Pool {
+    char s_000[20];
+} ItemAliasLocalizedVariant_rodata_803DF338_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DF34C_Pool {
+    char s_000[20];
+} lbl_803DF34C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF360_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DF360_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF378_Pool {
+    char s_000[20];
+} ItemAliasLocalizedVariant_rodata_803DF378_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DF38C_Pool {
+    char s_000[28];
+} lbl_803DF38C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DF3A8_Pool {
+    char s_000[28];
+} lbl_803DF3A8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DF3C4_Pool {
+    char s_000[28];
+} lbl_803DF3C4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF3E0_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF3E0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF3FC_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF3FC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF418_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DF418_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF430_Pool {
+    char s_000[16];
+} ItemAliasLocalizedVariant_rodata_803DF430_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DF440_Pool {
+    char s_000[24];
+} lbl_803DF440_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF458_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF458_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF474_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF474_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF490_Pool {
+    char s_000[20];
+} ItemAliasLocalizedVariant_rodata_803DF490_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF4A4_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF4A4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF4C0_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF4C0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF4DC_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DF4DC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF4F4_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF4F4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF510_Pool {
+    char s_000[20];
+} ItemAliasLocalizedVariant_rodata_803DF510_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF524_Pool {
+    char s_000[20];
+} ItemAliasLocalizedVariant_rodata_803DF524_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF538_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF538_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF554_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF554_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF570_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF570_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DF58C_Pool {
+    char s_000[20];
+} lbl_803DF58C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF5A0_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF5A0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF5BC_Pool {
+    char s_000[20];
+} ItemAliasLocalizedVariant_rodata_803DF5BC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF5D0_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF5D0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF5EC_Pool {
+    char s_000[12];
+} ItemAliasLocalizedVariant_rodata_803DF5EC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF5F8_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF5F8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF614_Pool {
+    char s_000[12];
+} ItemAliasLocalizedVariant_rodata_803DF614_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF620_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF620_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF63C_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DF63C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF654_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF654_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF670_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF670_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF68C_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF68C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF6A8_Pool {
+    char s_000[20];
+} ItemAliasLocalizedVariant_rodata_803DF6A8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF6BC_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF6BC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF6D8_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DF6D8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF6F0_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF6F0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF70C_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF70C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DF728_Pool {
+    char s_000[28];
+} lbl_803DF728_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF744_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF744_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF760_Pool {
+    char s_000[12];
+} ItemAliasLocalizedVariant_rodata_803DF760_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF76C_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF76C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF788_Pool {
+    char s_000[20];
+} ItemAliasLocalizedVariant_rodata_803DF788_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF79C_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF79C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF7B8_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF7B8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF7D4_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF7D4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF7F0_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF7F0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF80C_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF80C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF828_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF828_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF844_Pool {
+    char s_000[12];
+} ItemAliasLocalizedVariant_rodata_803DF844_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF850_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF850_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF86C_Pool {
+    char s_000[16];
+} ItemAliasLocalizedVariant_rodata_803DF86C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF87C_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF87C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF898_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF898_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF8B4_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DF8B4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF8CC_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF8CC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF8E8_Pool {
+    char s_000[16];
+} ItemAliasLocalizedVariant_rodata_803DF8E8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF8F8_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF8F8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF914_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF914_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF930_Pool {
+    char s_000[16];
+} ItemAliasLocalizedVariant_rodata_803DF930_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DF940_Pool {
+    char s_000[20];
+} lbl_803DF940_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DF954_Pool {
+    char s_000[16];
+} lbl_803DF954_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF964_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF964_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF980_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF980_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF99C_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DF99C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF9B4_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF9B4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF9D0_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF9D0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DF9EC_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DF9EC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFA08_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFA08_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFA24_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFA24_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFA40_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFA40_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFA5C_Pool {
+    char s_000[20];
+} ItemAliasLocalizedVariant_rodata_803DFA5C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFA70_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFA70_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFA8C_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFA8C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DFAA8_Pool {
+    char s_000[24];
+} lbl_803DFAA8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DFAC0_Pool {
+    char s_000[28];
+} lbl_803DFAC0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DFADC_Pool {
+    char s_000[28];
+} lbl_803DFADC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFAF8_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFAF8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DFB14_Pool {
+    char s_000[28];
+} lbl_803DFB14_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFB30_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFB30_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFB4C_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFB4C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFB68_Pool {
+    char s_000[20];
+} ItemAliasLocalizedVariant_rodata_803DFB68_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFB7C_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFB7C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFB98_Pool {
+    char s_000[16];
+} ItemAliasLocalizedVariant_rodata_803DFB98_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFBA8_Pool {
+    char s_000[16];
+} ItemAliasLocalizedVariant_rodata_803DFBA8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFBB8_Pool {
+    char s_000[20];
+} ItemAliasLocalizedVariant_rodata_803DFBB8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFBCC_Pool {
+    char s_000[12];
+} ItemAliasLocalizedVariant_rodata_803DFBCC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DFBD8_Pool {
+    char s_000[24];
+} lbl_803DFBD8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFBF0_Pool {
+    char s_000[20];
+} ItemAliasLocalizedVariant_rodata_803DFBF0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFC04_Pool {
+    char s_000[12];
+} ItemAliasLocalizedVariant_rodata_803DFC04_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFC10_Pool {
+    char s_000[12];
+} ItemAliasLocalizedVariant_rodata_803DFC10_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFC1C_Pool {
+    char s_000[12];
+} ItemAliasLocalizedVariant_rodata_803DFC1C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFC28_Pool {
+    char s_000[12];
+} ItemAliasLocalizedVariant_rodata_803DFC28_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFC34_Pool {
+    char s_000[20];
+} ItemAliasLocalizedVariant_rodata_803DFC34_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFC48_Pool {
+    char s_000[16];
+} ItemAliasLocalizedVariant_rodata_803DFC48_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFC58_Pool {
+    char s_000[12];
+} ItemAliasLocalizedVariant_rodata_803DFC58_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFC64_Pool {
+    char s_000[12];
+} ItemAliasLocalizedVariant_rodata_803DFC64_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFC70_Pool {
+    char s_000[20];
+} ItemAliasLocalizedVariant_rodata_803DFC70_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DFC84_Pool {
+    char s_000[28];
+} lbl_803DFC84_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFCA0_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFCA0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFCBC_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFCBC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFCD8_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFCD8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFCF4_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFCF4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFD10_Pool {
+    char s_000[12];
+} ItemAliasLocalizedVariant_rodata_803DFD10_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFD1C_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFD1C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFD38_Pool {
+    char s_000[16];
+} ItemAliasLocalizedVariant_rodata_803DFD38_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFD48_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFD48_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFD64_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DFD64_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFD7C_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFD7C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFD98_Pool {
+    char s_000[16];
+} ItemAliasLocalizedVariant_rodata_803DFD98_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFDA8_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFDA8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFDC4_Pool {
+    char s_000[20];
+} ItemAliasLocalizedVariant_rodata_803DFDC4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFDD8_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFDD8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFDF4_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFDF4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFE10_Pool {
+    char s_000[16];
+} ItemAliasLocalizedVariant_rodata_803DFE10_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFE20_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFE20_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFE3C_Pool {
+    char s_000[16];
+} ItemAliasLocalizedVariant_rodata_803DFE3C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFE4C_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFE4C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFE68_Pool {
+    char s_000[20];
+} ItemAliasLocalizedVariant_rodata_803DFE68_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFE7C_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFE7C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFE98_Pool {
+    char s_000[16];
+} ItemAliasLocalizedVariant_rodata_803DFE98_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFEA8_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFEA8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFEC4_Pool {
+    char s_000[16];
+} ItemAliasLocalizedVariant_rodata_803DFEC4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFED4_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFED4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFEF0_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFEF0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFF0C_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DFF0C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFF24_Pool {
+    char s_000[28];
+} ItemAliasLocalizedVariant_rodata_803DFF24_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemAliasLocalizedVariant_rodata_803DFF40_Pool {
+    char s_000[24];
+} ItemAliasLocalizedVariant_rodata_803DFF40_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803DFF58_Pool {
+    char s_000[28];
+} lbl_803DFF58_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct g_itemAssetTable_EN_rodata_803E0E44_Pool {
+    char s_000[20];
+} g_itemAssetTable_EN_rodata_803E0E44_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct g_itemAssetTable_EN_rodata_803E0E58_Pool {
+    char s_000[28];
+} g_itemAssetTable_EN_rodata_803E0E58_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct g_itemAssetTable_EN_rodata_803E0E74_Pool {
+    char s_000[24];
+} g_itemAssetTable_EN_rodata_803E0E74_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct g_itemAssetTable_EN_rodata_803E0E8C_Pool {
+    char s_000[24];
+} g_itemAssetTable_EN_rodata_803E0E8C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct g_itemAssetTable_EN_rodata_803E0EA4_Pool {
+    char s_000[28];
+} g_itemAssetTable_EN_rodata_803E0EA4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct g_itemAssetTable_EN_rodata_803E0EC0_Pool {
+    char s_000[24];
+} g_itemAssetTable_EN_rodata_803E0EC0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct g_itemAssetTable_EN_rodata_803E0ED8_Pool {
+    char s_000[20];
+} g_itemAssetTable_EN_rodata_803E0ED8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct g_itemAssetTable_EN_rodata_803E0EEC_Pool {
+    char s_000[24];
+} g_itemAssetTable_EN_rodata_803E0EEC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct g_itemAssetTable_EN_rodata_803E0F04_Pool {
+    char s_000[16];
+} g_itemAssetTable_EN_rodata_803E0F04_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct g_itemAssetTable_EN_rodata_803E0F14_Pool {
+    char s_000[24];
+} g_itemAssetTable_EN_rodata_803E0F14_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct g_itemAssetTable_EN_rodata_803E0F2C_Pool {
+    char s_000[20];
+} g_itemAssetTable_EN_rodata_803E0F2C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct g_itemAssetTable_EN_rodata_803E0F40_Pool {
+    char s_000[24];
+} g_itemAssetTable_EN_rodata_803E0F40_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct g_itemAssetTable_EN_rodata_803E0F58_Pool {
+    char s_000[24];
+} g_itemAssetTable_EN_rodata_803E0F58_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -464,637 +2858,637 @@ const ItemDescriptor lbl_803DC530[327] = {
     { { 0x1422, 0x1B8C }, 3, 0 },
     { { 0x1422, 0x1B8C }, 3, 0 }
 };
-const unk32 ItemLocalizedName_rodata_803DD9A0[3] = {
-    0x836E8393, 0x837D815B, 0x00000000
+const ItemLocalizedName_rodata_803DD9A0_Pool ItemLocalizedName_rodata_803DD9A0 = {
+    "\203n\203\223\203}\201["
 };
-const unk32 ItemLocalizedName_rodata_803DD9AC[4] = {
-    0x834C836D, 0x8352836E, 0x8393837D, 0x815B0000
+const ItemLocalizedName_rodata_803DD9AC_Pool ItemLocalizedName_rodata_803DD9AC = {
+    "\203L\203m\203R\203n\203\223\203}\201["
 };
-const unk32 ItemLocalizedName_rodata_803DD9BC[5] = {
-    0x83738352, 0x83738352, 0x836E8393, 0x837D815B, 0x00000000
+const ItemLocalizedName_rodata_803DD9BC_Pool ItemLocalizedName_rodata_803DD9BC = {
+    "\203s\203R\203s\203R\203n\203\223\203}\201["
 };
-const unk32 ItemLocalizedName_rodata_803DD9D0[5] = {
-    0x8250824F, 0x83678393, 0x836E8393, 0x837D815B, 0x00000000
+const ItemLocalizedName_rodata_803DD9D0_Pool ItemLocalizedName_rodata_803DD9D0 = {
+    "\202P\202O\203g\203\223\203n\203\223\203}\201["
 };
-const unk32 ItemLocalizedName_rodata_803DD9E4[5] = {
-    0x83828393, 0x8358835E, 0x815B836E, 0x8393837D, 0x815B0000
+const ItemLocalizedName_rodata_803DD9E4_Pool ItemLocalizedName_rodata_803DD9E4 = {
+    "\203\202\203\223\203X\203^\201[\203n\203\223\203}\201["
 };
-const unk32 ItemLocalizedName_rodata_803DD9F8[5] = {
-    0x8372838A, 0x8372838A, 0x83588365, 0x83428362, 0x834E0000
+const ItemLocalizedName_rodata_803DD9F8_Pool ItemLocalizedName_rodata_803DD9F8 = {
+    "\203r\203\212\203r\203\212\203X\203e\203B\203b\203N"
 };
-const unk32 ItemLocalizedName_rodata_803DDA0C[3] = {
-    0x836E838A, 0x835A8393, 0x00000000
+const ItemLocalizedName_rodata_803DDA0C_Pool ItemLocalizedName_rodata_803DDA0C = {
+    "\203n\203\212\203Z\203\223"
 };
-const unk32 ItemLocalizedName_rodata_803DDA18[3] = {
-    0x83748389, 0x83438370, 0x83930000
+const ItemLocalizedName_rodata_803DDA18_Pool ItemLocalizedName_rodata_803DDA18 = {
+    "\203t\203\211\203C\203p\203\223"
 };
-const unk32 ItemLocalizedName_rodata_803DDA24[5] = {
-    0x83728388, 0x8388815B, 0x83938370, 0x83938360, 0x00000000
+const ItemLocalizedName_rodata_803DDA24_Pool ItemLocalizedName_rodata_803DDA24 = {
+    "\203r\203\210\203\210\201[\203\223\203p\203\223\203`"
 };
-const unk32 ItemLocalizedName_rodata_803DDA38[3] = {
-    0x836A8393, 0x836A834E, 0x00000000
+const ItemLocalizedName_rodata_803DDA38_Pool ItemLocalizedName_rodata_803DDA38 = {
+    "\203j\203\223\203j\203N"
 };
-const unk32 ItemLocalizedName_rodata_803DDA44[3] = {
-    0x8370838F, 0x815B8347, 0x83540000
+const ItemLocalizedName_rodata_803DDA44_Pool ItemLocalizedName_rodata_803DDA44 = {
+    "\203p\203\217\201[\203G\203T"
 };
-const unk32 ItemLocalizedName_rodata_803DDA50[4] = {
-    0x83828393, 0x8358835E, 0x815B8347, 0x83540000
+const ItemLocalizedName_rodata_803DDA50_Pool ItemLocalizedName_rodata_803DDA50 = {
+    "\203\202\203\223\203X\203^\201[\203G\203T"
 };
-const unk32 ItemLocalizedName_rodata_803DDA60[5] = {
-    0x8358835E, 0x815B88F3, 0x82CC836F, 0x83698369, 0x00000000
+const ItemLocalizedName_rodata_803DDA60_Pool ItemLocalizedName_rodata_803DDA60 = {
+    "\203X\203^\201[\210\363\202\314\203o\203i\203i"
 };
-const unk32 ItemLocalizedName_rodata_803DDA74[4] = {
-    0x82A882A2, 0x82B582A2, 0x836F8369, 0x83690000
+const ItemLocalizedName_rodata_803DDA74_Pool ItemLocalizedName_rodata_803DDA74 = {
+    "\202\250\202\242\202\265\202\242\203o\203i\203i"
 };
-const unk32 ItemLocalizedName_rodata_803DDA84[4] = {
-    0x837E8389, 0x834E838B, 0x834C836D, 0x83520000
+const ItemLocalizedName_rodata_803DDA84_Pool ItemLocalizedName_rodata_803DDA84 = {
+    "\203~\203\211\203N\203\213\203L\203m\203R"
 };
-const unk32 ItemLocalizedName_rodata_803DDA94[4] = {
-    0x835F8362, 0x83568385, 0x834C836D, 0x83520000
+const ItemLocalizedName_rodata_803DDA94_Pool ItemLocalizedName_rodata_803DDA94 = {
+    "\203_\203b\203V\203\205\203L\203m\203R"
 };
-const unk32 ItemLocalizedName_rodata_803DDAA4[4] = {
-    0x82B082F1, 0x82AB834C, 0x836D8352, 0x00000000
+const ItemLocalizedName_rodata_803DDAA4_Pool ItemLocalizedName_rodata_803DDAA4 = {
+    "\202\260\202\361\202\253\203L\203m\203R"
 };
-const unk32 ItemLocalizedName_rodata_803DDAB4[4] = {
-    0x8B9091E5, 0x89BB834C, 0x836D8352, 0x00000000
+const ItemLocalizedName_rodata_803DDAB4_Pool ItemLocalizedName_rodata_803DDAB4 = {
+    "\213\220\221\345\211\273\203L\203m\203R"
 };
-const unk32 ItemLocalizedName_rodata_803DDAC4[6] = {
-    0x8353815B, 0x838B8368, 0x835F8356, 0x8385834C, 0x836D8352, 0x00000000
+const ItemLocalizedName_rodata_803DDAC4_Pool ItemLocalizedName_rodata_803DDAC4 = {
+    "\203S\201[\203\213\203h\203_\203V\203\205\203L\203m\203R"
 };
-const unk32 ItemLocalizedName_rodata_803DDADC[3] = {
-    0x8B7A8EFB, 0x834C836D, 0x83520000
+const ItemLocalizedName_rodata_803DDADC_Pool ItemLocalizedName_rodata_803DDADC = {
+    "\213z\216\373\203L\203m\203R"
 };
-const unk32 ItemLocalizedName_rodata_803DDAE8[4] = {
-    0x836B838B, 0x836B838B, 0x834C836D, 0x83520000
+const ItemLocalizedName_rodata_803DDAE8_Pool ItemLocalizedName_rodata_803DDAE8 = {
+    "\203k\203\213\203k\203\213\203L\203m\203R"
 };
-const unk32 lbl_803DDAF8[6] = {
-    0x8358815B, 0x8370815B, 0x835F8362, 0x83568385, 0x834C836D, 0x83520000
+const lbl_803DDAF8_Pool lbl_803DDAF8 = {
+    "\203X\201[\203p\201[\203_\203b\203V\203\205\203L\203m\203R"
 };
-const unk32 ItemLocalizedName_rodata_803DDB10[4] = {
-    0x82C682A4, 0x82DF82A2, 0x834C836D, 0x83520000
+const ItemLocalizedName_rodata_803DDB10_Pool ItemLocalizedName_rodata_803DDB10 = {
+    "\202\306\202\244\202\337\202\242\203L\203m\203R"
 };
-const unk32 ItemLocalizedName_rodata_803DDB20[4] = {
-    0x83778372, 0x815B834C, 0x836D8352, 0x00000000
+const ItemLocalizedName_rodata_803DDB20_Pool ItemLocalizedName_rodata_803DDB20 = {
+    "\203w\203r\201[\203L\203m\203R"
 };
-const unk32 ItemLocalizedName_rodata_803DDB30[3] = {
-    0x838F838A, 0x8349834A, 0x815B0000
+const ItemLocalizedName_rodata_803DDB30_Pool ItemLocalizedName_rodata_803DDB30 = {
+    "\203\217\203\212\203I\203J\201["
 };
-const unk32 ItemLocalizedName_rodata_803DDB3C[4] = {
-    0x83568346, 0x838B837B, 0x83668342, 0x815B0000
+const ItemLocalizedName_rodata_803DDB3C_Pool ItemLocalizedName_rodata_803DDB3C = {
+    "\203V\203F\203\213\203{\203f\203B\201["
 };
-const unk32 ItemLocalizedName_rodata_803DDB4C[4] = {
-    0x82BD82DC, 0x82B2837B, 0x83668342, 0x815B0000
+const ItemLocalizedName_rodata_803DDB4C_Pool ItemLocalizedName_rodata_803DDB4C = {
+    "\202\275\202\334\202\262\203{\203f\203B\201["
 };
-const unk32 ItemLocalizedName_rodata_803DDB5C[3] = {
-    0x82A882CE, 0x82AF89BB, 0x00000000
+const ItemLocalizedName_rodata_803DDB5C_Pool ItemLocalizedName_rodata_803DDB5C = {
+    "\202\250\202\316\202\257\211\273"
 };
-const unk32 ItemLocalizedName_rodata_803DDB68[3] = {
-    0x8356815B, 0x838B8368, 0x00000000
+const ItemLocalizedName_rodata_803DDB68_Pool ItemLocalizedName_rodata_803DDB68 = {
+    "\203V\201[\203\213\203h"
 };
-const unk32 ItemLocalizedName_rodata_803DDB74[4] = {
-    0x94BD8ECB, 0x8356815B, 0x838B8368, 0x00000000
+const ItemLocalizedName_rodata_803DDB74_Pool ItemLocalizedName_rodata_803DDB74 = {
+    "\224\275\216\313\203V\201[\203\213\203h"
 };
-const unk32 ItemLocalizedName_rodata_803DDB84[5] = {
-    0x83588379, 0x83568383, 0x838B8352, 0x83438393, 0x00000000
+const ItemLocalizedName_rodata_803DDB84_Pool ItemLocalizedName_rodata_803DDB84 = {
+    "\203X\203y\203V\203\203\203\213\203R\203C\203\223"
 };
-const unk32 ItemLocalizedName_rodata_803DDB98[3] = {
-    0x83748346, 0x8341838A, 0x815B0000
+const ItemLocalizedName_rodata_803DDB98_Pool ItemLocalizedName_rodata_803DDB98 = {
+    "\203t\203F\203A\203\212\201["
 };
-const unk32 ItemLocalizedName_rodata_803DDBA4[5] = {
-    0x83828393, 0x8358835E, 0x815B8356, 0x815B838B, 0x83680000
+const ItemLocalizedName_rodata_803DDBA4_Pool ItemLocalizedName_rodata_803DDBA4 = {
+    "\203\202\203\223\203X\203^\201[\203V\201[\203\213\203h"
 };
-const unk32 ItemLocalizedName_rodata_803DDBB8[4] = {
-    0x834E8389, 0x834E8356, 0x83878393, 0x00000000
+const ItemLocalizedName_rodata_803DDBB8_Pool ItemLocalizedName_rodata_803DDBB8 = {
+    "\203N\203\211\203N\203V\203\207\203\223"
 };
-const unk32 ItemLocalizedName_rodata_803DDBC8[4] = {
-    0x836E838A, 0x835A8393, 0x837B8393, 0x00000000
+const ItemLocalizedName_rodata_803DDBC8_Pool ItemLocalizedName_rodata_803DDBC8 = {
+    "\203n\203\212\203Z\203\223\203{\203\223"
 };
-const unk32 ItemLocalizedName_rodata_803DDBD8[6] = {
-    0x82B682B0, 0x82F1836F, 0x834E835F, 0x83938169, 0x8FAC816A, 0x00000000
+const ItemLocalizedName_rodata_803DDBD8_Pool ItemLocalizedName_rodata_803DDBD8 = {
+    "\202\266\202\260\202\361\203o\203N\203_\203\223\201i\217\254\201j"
 };
-const unk32 ItemLocalizedName_rodata_803DDBF0[6] = {
-    0x82B682B0, 0x82F1836F, 0x834E835F, 0x83938169, 0x91E5816A, 0x00000000
+const ItemLocalizedName_rodata_803DDBF0_Pool ItemLocalizedName_rodata_803DDBF0 = {
+    "\202\266\202\260\202\361\203o\203N\203_\203\223\201i\221\345\201j"
 };
-const unk32 ItemLocalizedName_rodata_803DDC08[4] = {
-    0x8353815B, 0x838B8368, 0x836F8369, 0x83690000
+const ItemLocalizedName_rodata_803DDC08_Pool ItemLocalizedName_rodata_803DDC08 = {
+    "\203S\201[\203\213\203h\203o\203i\203i"
 };
-const unk32 ItemLocalizedName_rodata_803DDC18[4] = {
-    0x83578383, 0x8393837B, 0x836F8369, 0x83690000
+const ItemLocalizedName_rodata_803DDC18_Pool ItemLocalizedName_rodata_803DDC18 = {
+    "\203W\203\203\203\223\203{\203o\203i\203i"
 };
-const unk32 ItemLocalizedName_rodata_803DDC28[4] = {
-    0x836F8369, 0x8369836F, 0x8359815B, 0x834A0000
+const ItemLocalizedName_rodata_803DDC28_Pool ItemLocalizedName_rodata_803DDC28 = {
+    "\203o\203i\203i\203o\203Y\201[\203J"
 };
-const unk32 ItemLocalizedName_rodata_803DDC38[5] = {
-    0x93C5836F, 0x83698369, 0x836F8359, 0x815B834A, 0x00000000
+const ItemLocalizedName_rodata_803DDC38_Pool ItemLocalizedName_rodata_803DDC38 = {
+    "\223\305\203o\203i\203i\203o\203Y\201[\203J"
 };
-const unk32 ItemLocalizedName_rodata_803DDC4C[4] = {
-    0x82B282EB, 0x82B282EB, 0x82BD82DC, 0x82B20000
+const ItemLocalizedName_rodata_803DDC4C_Pool ItemLocalizedName_rodata_803DDC4C = {
+    "\202\262\202\353\202\262\202\353\202\275\202\334\202\262"
 };
-const unk32 ItemLocalizedName_rodata_803DDC5C[3] = {
-    0x83688362, 0x83588393, 0x00000000
+const ItemLocalizedName_rodata_803DDC5C_Pool ItemLocalizedName_rodata_803DDC5C = {
+    "\203h\203b\203X\203\223"
 };
-const unk32 ItemLocalizedName_rodata_803DDC68[5] = {
-    0x82A882F1, 0x82BF8358, 0x8373815B, 0x834A815B, 0x00000000
+const ItemLocalizedName_rodata_803DDC68_Pool ItemLocalizedName_rodata_803DDC68 = {
+    "\202\250\202\361\202\277\203X\203s\201[\203J\201["
 };
-const unk32 ItemLocalizedName_rodata_803DDC7C[4] = {
-    0x837E8368, 0x838A82B1, 0x82A482E7, 0x00000000
+const ItemLocalizedName_rodata_803DDC7C_Pool ItemLocalizedName_rodata_803DDC7C = {
+    "\203~\203h\203\212\202\261\202\244\202\347"
 };
-const unk32 ItemLocalizedName_rodata_803DDC8C[4] = {
-    0x83758389, 0x8362834E, 0x82B182A4, 0x82E70000
+const ItemLocalizedName_rodata_803DDC8C_Pool ItemLocalizedName_rodata_803DDC8C = {
+    "\203u\203\211\203b\203N\202\261\202\244\202\347"
 };
-const unk32 ItemLocalizedName_rodata_803DDC9C[4] = {
-    0x8353815B, 0x838B8368, 0x82B182A4, 0x82E70000
+const ItemLocalizedName_rodata_803DDC9C_Pool ItemLocalizedName_rodata_803DDC9C = {
+    "\203S\201[\203\213\203h\202\261\202\244\202\347"
 };
-const unk32 ItemLocalizedName_rodata_803DDCAC[3] = {
-    0x82A682F1, 0x82DC82AD, 0x00000000
+const ItemLocalizedName_rodata_803DDCAC_Pool ItemLocalizedName_rodata_803DDCAC = {
+    "\202\246\202\361\202\334\202\255"
 };
-const unk32 ItemLocalizedName_rodata_803DDCB8[4] = {
-    0x834E8362, 0x837082CC, 0x82B182A4, 0x82E70000
+const ItemLocalizedName_rodata_803DDCB8_Pool ItemLocalizedName_rodata_803DDCB8 = {
+    "\203N\203b\203p\202\314\202\261\202\244\202\347"
 };
-const unk32 ItemLocalizedName_rodata_803DDCC8[3] = {
-    0x8375838D, 0x8362834E, 0x00000000
+const ItemLocalizedName_rodata_803DDCC8_Pool ItemLocalizedName_rodata_803DDCC8 = {
+    "\203u\203\215\203b\203N"
 };
-const unk32 ItemLocalizedName_rodata_803DDCD4[3] = {
-    0x82AA82D1, 0x82E582A4, 0x00000000
+const ItemLocalizedName_rodata_803DDCD4_Pool ItemLocalizedName_rodata_803DDCD4 = {
+    "\202\252\202\321\202\345\202\244"
 };
-const unk32 ItemLocalizedName_rodata_803DDCE0[3] = {
-    0x93C5834C, 0x836D8352, 0x00000000
+const ItemLocalizedName_rodata_803DDCE0_Pool ItemLocalizedName_rodata_803DDCE0 = {
+    "\223\305\203L\203m\203R"
 };
-const unk32 ItemLocalizedName_rodata_803DDCEC[4] = {
-    0x82D182E5, 0x82A482AB, 0x834C836D, 0x83520000
+const ItemLocalizedName_rodata_803DDCEC_Pool ItemLocalizedName_rodata_803DDCEC = {
+    "\202\321\202\345\202\244\202\253\203L\203m\203R"
 };
-const unk32 ItemLocalizedName_rodata_803DDCFC[5] = {
-    0x835F8362, 0x83568385, 0x836F8359, 0x815B834A, 0x00000000
+const ItemLocalizedName_rodata_803DDCFC_Pool ItemLocalizedName_rodata_803DDCFC = {
+    "\203_\203b\203V\203\205\203o\203Y\201[\203J"
 };
-const unk32 ItemLocalizedName_rodata_803DDD10[4] = {
-    0x82CB82CE, 0x82CB82CE, 0x83498343, 0x838B0000
+const ItemLocalizedName_rodata_803DDD10_Pool ItemLocalizedName_rodata_803DDD10 = {
+    "\202\313\202\316\202\313\202\316\203I\203C\203\213"
 };
-const unk32 ItemLocalizedName_rodata_803DDD20[3] = {
-    0x837B8380, 0x82D682A2, 0x00000000
+const ItemLocalizedName_rodata_803DDD20_Pool ItemLocalizedName_rodata_803DDD20 = {
+    "\203{\203\200\202\326\202\242"
 };
-const unk32 ItemLocalizedName_rodata_803DDD2C[3] = {
-    0x838F8393, 0x838F8393, 0x00000000
+const ItemLocalizedName_rodata_803DDD2C_Pool ItemLocalizedName_rodata_803DDD2C = {
+    "\203\217\203\223\203\217\203\223"
 };
-const unk32 ItemLocalizedName_rodata_803DDD38[3] = {
-    0x82BD82C2, 0x82DC82AB, 0x00000000
+const ItemLocalizedName_rodata_803DDD38_Pool ItemLocalizedName_rodata_803DDD38 = {
+    "\202\275\202\302\202\334\202\253"
 };
-const unk32 ItemLocalizedName_rodata_803DDD44[3] = {
-    0x82A082AB, 0x82A982F1, 0x00000000
+const ItemLocalizedName_rodata_803DDD44_Pool ItemLocalizedName_rodata_803DDD44 = {
+    "\202\240\202\253\202\251\202\361"
 };
-const unk32 ItemLocalizedName_rodata_803DDD50[3] = {
-    0x836E8343, 0x8372815B, 0x83800000
+const ItemLocalizedName_rodata_803DDD50_Pool ItemLocalizedName_rodata_803DDD50 = {
+    "\203n\203C\203r\201[\203\200"
 };
-const unk32 ItemLocalizedName_rodata_803DDD5C[3] = {
-    0x82D082B0, 0x83798393, 0x00000000
+const ItemLocalizedName_rodata_803DDD5C_Pool ItemLocalizedName_rodata_803DDD5C = {
+    "\202\320\202\260\203y\203\223"
 };
-const unk32 ItemLocalizedName_rodata_803DDD68[5] = {
-    0x83708362, 0x834E8393, 0x83748389, 0x838F815B, 0x00000000
+const ItemLocalizedName_rodata_803DDD68_Pool ItemLocalizedName_rodata_803DDD68 = {
+    "\203p\203b\203N\203\223\203t\203\211\203\217\201["
 };
-const unk32 ItemLocalizedName_rodata_803DDD7C[3] = {
-    0x834C836D, 0x835282CC, 0x95B20000
+const ItemLocalizedName_rodata_803DDD7C_Pool ItemLocalizedName_rodata_803DDD7C = {
+    "\203L\203m\203R\202\314\225\262"
 };
-const unk32 ItemLocalizedName_rodata_803DDD88[5] = {
-    0x83578383, 0x83938376, 0x82D382A4, 0x82A282F1, 0x00000000
+const ItemLocalizedName_rodata_803DDD88_Pool ItemLocalizedName_rodata_803DDD88 = {
+    "\203W\203\203\203\223\203v\202\323\202\244\202\242\202\361"
 };
-const unk32 ItemLocalizedName_rodata_803DDD9C[5] = {
-    0x83498393, 0x837B838D, 0x836E8393, 0x8368838B, 0x00000000
+const ItemLocalizedName_rodata_803DDD9C_Pool ItemLocalizedName_rodata_803DDD9C = {
+    "\203I\203\223\203{\203\215\203n\203\223\203h\203\213"
 };
-const unk32 ItemLocalizedName_rodata_803DDDB0[4] = {
-    0x8366834A, 0x83608372, 0x835E8343, 0x83840000
+const ItemLocalizedName_rodata_803DDDB0_Pool ItemLocalizedName_rodata_803DDDB0 = {
+    "\203f\203J\203`\203r\203^\203C\203\204"
 };
-const unk32 ItemLocalizedName_rodata_803DDDC0[4] = {
-    0x834A834E, 0x834A834E, 0x835E8343, 0x83840000
+const ItemLocalizedName_rodata_803DDDC0_Pool ItemLocalizedName_rodata_803DDDC0 = {
+    "\203J\203N\203J\203N\203^\203C\203\204"
 };
-const unk32 ItemLocalizedName_rodata_803DDDD0[4] = {
-    0x83748340, 0x83438341, 0x837B815B, 0x838B0000
+const ItemLocalizedName_rodata_803DDDD0_Pool ItemLocalizedName_rodata_803DDDD0 = {
+    "\203t\203@\203C\203A\203{\201[\203\213"
 };
-const unk32 ItemLocalizedName_rodata_803DDDE0[3] = {
-    0x8389838A, 0x815B8277, 0x00000000
+const ItemLocalizedName_rodata_803DDDE0_Pool ItemLocalizedName_rodata_803DDDE0 = {
+    "\203\211\203\212\201[\202w"
 };
 const char lbl_803DDDEC[] = "BOM_SMALL";
 const char lbl_803DDDF8[] = "SMOKE_PINK";
 const char lbl_803DDE04[] = "SMOKE_PURPLE";
 const char lbl_803DDE14[] = "SMOKE_YELLOW";
-const unk32 ItemLocalizedName_rodata_803DDE24[4] = {
-    0x834A8393, 0x83568383, 0x834E835F, 0x837D0000
+const ItemLocalizedName_rodata_803DDE24_Pool ItemLocalizedName_rodata_803DDE24 = {
+    "\203J\203\223\203V\203\203\203N\203_\203}"
 };
-const unk32 ItemLocalizedName_rodata_803DDE34[4] = {
-    0x83768360, 0x83828393, 0x8358835E, 0x815B0000
+const ItemLocalizedName_rodata_803DDE34_Pool ItemLocalizedName_rodata_803DDE34 = {
+    "\203v\203`\203\202\203\223\203X\203^\201["
 };
-const unk32 ItemLocalizedName_rodata_803DDE44[4] = {
-    0x837B8358, 0x834D8383, 0x8389834B, 0x00000000
+const ItemLocalizedName_rodata_803DDE44_Pool ItemLocalizedName_rodata_803DDE44 = {
+    "\203{\203X\203M\203\203\203\211\203K"
 };
-const unk32 ItemLocalizedName_rodata_803DDE54[5] = {
-    0x83418343, 0x83658380, 0x82D382A4, 0x82A282F1, 0x00000000
+const ItemLocalizedName_rodata_803DDE54_Pool ItemLocalizedName_rodata_803DDE54 = {
+    "\203A\203C\203e\203\200\202\323\202\244\202\242\202\361"
 };
-const unk32 ItemLocalizedName_rodata_803DDE68[5] = {
-    0x82CD82C8, 0x82AD82BB, 0x836F834E, 0x835F8393, 0x00000000
+const ItemLocalizedName_rodata_803DDE68_Pool ItemLocalizedName_rodata_803DDE68 = {
+    "\202\315\202\310\202\255\202\273\203o\203N\203_\203\223"
 };
-const unk32 ItemLocalizedName_rodata_803DDE7C[3] = {
-    0x8376815B, 0x834A8340, 0x00000000
+const ItemLocalizedName_rodata_803DDE7C_Pool ItemLocalizedName_rodata_803DDE7C = {
+    "\203v\201[\203J\203@"
 };
-const unk32 ItemLocalizedName_rodata_803DDE88[4] = {
-    0x82C882BC, 0x82CC82BD, 0x82DC82B2, 0x00000000
+const ItemLocalizedName_rodata_803DDE88_Pool ItemLocalizedName_rodata_803DDE88 = {
+    "\202\310\202\274\202\314\202\275\202\334\202\262"
 };
-const unk32 ItemLocalizedName_rodata_803DDE98[4] = {
-    0x8373815B, 0x8360836F, 0x815B8368, 0x00000000
+const ItemLocalizedName_rodata_803DDE98_Pool ItemLocalizedName_rodata_803DDE98 = {
+    "\203s\201[\203`\203o\201[\203h"
 };
-const unk32 ItemLocalizedName_rodata_803DDEA8[4] = {
-    0x82D182C1, 0x82AD82E8, 0x837B815B, 0x838B0000
+const ItemLocalizedName_rodata_803DDEA8_Pool ItemLocalizedName_rodata_803DDEA8 = {
+    "\202\321\202\301\202\255\202\350\203{\201[\203\213"
 };
-const unk32 ItemLocalizedName_rodata_803DDEB8[5] = {
-    0x8376838A, 0x8393835A, 0x83588368, 0x838A8393, 0x834E0000
+const ItemLocalizedName_rodata_803DDEB8_Pool ItemLocalizedName_rodata_803DDEB8 = {
+    "\203v\203\212\203\223\203Z\203X\203h\203\212\203\223\203N"
 };
-const unk32 ItemLocalizedName_rodata_803DDECC[4] = {
-    0x8345835C, 0x83418389, 0x815B8380, 0x00000000
+const ItemLocalizedName_rodata_803DDECC_Pool ItemLocalizedName_rodata_803DDECC = {
+    "\203E\203\\\203A\203\211\201[\203\200"
 };
-const unk32 ItemLocalizedName_rodata_803DDEDC[5] = {
-    0x836E8393, 0x8368838B, 0x83458343, 0x838B8358, 0x00000000
+const ItemLocalizedName_rodata_803DDEDC_Pool ItemLocalizedName_rodata_803DDEDC = {
+    "\203n\203\223\203h\203\213\203E\203C\203\213\203X"
 };
-const unk32 ItemLocalizedName_rodata_803DDEF0[4] = {
-    0x82DF82DC, 0x82A28345, 0x8343838B, 0x83580000
+const ItemLocalizedName_rodata_803DDEF0_Pool ItemLocalizedName_rodata_803DDEF0 = {
+    "\202\337\202\334\202\242\203E\203C\203\213\203X"
 };
-const unk32 ItemLocalizedName_rodata_803DDF00[4] = {
-    0x8353815B, 0x838B8368, 0x835E8389, 0x83430000
+const ItemLocalizedName_rodata_803DDF00_Pool ItemLocalizedName_rodata_803DDF00 = {
+    "\203S\201[\203\213\203h\203^\203\211\203C"
 };
-const unk32 ItemLocalizedName_rodata_803DDF10[4] = {
-    0x837D8357, 0x8362834E, 0x836E8393, 0x83680000
+const ItemLocalizedName_rodata_803DDF10_Pool ItemLocalizedName_rodata_803DDF10 = {
+    "\203}\203W\203b\203N\203n\203\223\203h"
 };
 const char lbl_803DDF20[] = "IROIRO_KINOKO";
 const char lbl_803DDF30[] = "IROIRO_THROW";
 const char lbl_803DDF40[] = "IROIRO_HOMING";
 const char lbl_803DDF50[] = "IROIRO_PUT";
-const unk32 ItemLocalizedName_rodata_803DDF5C[4] = {
-    0x8367838A, 0x8376838B, 0x82B182A4, 0x82E70000
+const ItemLocalizedName_rodata_803DDF5C_Pool ItemLocalizedName_rodata_803DDF5C = {
+    "\203g\203\212\203v\203\213\202\261\202\244\202\347"
 };
-const unk32 ItemLocalizedName_rodata_803DDF6C[4] = {
-    0x8367838A, 0x8376838B, 0x836F8369, 0x83690000
+const ItemLocalizedName_rodata_803DDF6C_Pool ItemLocalizedName_rodata_803DDF6C = {
+    "\203g\203\212\203v\203\213\203o\203i\203i"
 };
-const unk32 ItemLocalizedName_rodata_803DDF7C[4] = {
-    0x8367838A, 0x8376838B, 0x834C836D, 0x83520000
+const ItemLocalizedName_rodata_803DDF7C_Pool ItemLocalizedName_rodata_803DDF7C = {
+    "\203g\203\212\203v\203\213\203L\203m\203R"
 };
-const unk32 ItemLocalizedName_rodata_803DDF8C[4] = {
-    0x8367838A, 0x8376838B, 0x83708343, 0x00000000
+const ItemLocalizedName_rodata_803DDF8C_Pool ItemLocalizedName_rodata_803DDF8C = {
+    "\203g\203\212\203v\203\213\203p\203C"
 };
-const unk32 ItemLocalizedName_rodata_803DDF9C[4] = {
-    0x8367838A, 0x8376838B, 0x835E8389, 0x83430000
+const ItemLocalizedName_rodata_803DDF9C_Pool ItemLocalizedName_rodata_803DDF9C = {
+    "\203g\203\212\203v\203\213\203^\203\211\203C"
 };
-const unk32 ItemLocalizedName_rodata_803DDFAC[5] = {
-    0x8367838A, 0x8376838B, 0x82A682F1, 0x82DC82AD, 0x00000000
+const ItemLocalizedName_rodata_803DDFAC_Pool ItemLocalizedName_rodata_803DDFAC = {
+    "\203g\203\212\203v\203\213\202\246\202\361\202\334\202\255"
 };
-const unk32 ItemLocalizedName_rodata_803DDFC0[4] = {
-    0x8367838A, 0x8376838B, 0x8365838C, 0x83540000
+const ItemLocalizedName_rodata_803DDFC0_Pool ItemLocalizedName_rodata_803DDFC0 = {
+    "\203g\203\212\203v\203\213\203e\203\214\203T"
 };
-const unk32 ItemLocalizedName_rodata_803DDFD0[5] = {
-    0x8367838A, 0x8376838B, 0x82AA82D1, 0x82E582A4, 0x00000000
+const ItemLocalizedName_rodata_803DDFD0_Pool ItemLocalizedName_rodata_803DDFD0 = {
+    "\203g\203\212\203v\203\213\202\252\202\321\202\345\202\244"
 };
-const unk32 ItemLocalizedName_rodata_803DDFE4[5] = {
-    0x8367838A, 0x8376838B, 0x834A834E, 0x834A834E, 0x00000000
+const ItemLocalizedName_rodata_803DDFE4_Pool ItemLocalizedName_rodata_803DDFE4 = {
+    "\203g\203\212\203v\203\213\203J\203N\203J\203N"
 };
-const unk32 ItemLocalizedName_rodata_803DDFF8[5] = {
-    0x8367838A, 0x8376838B, 0x836E838A, 0x835A8393, 0x00000000
+const ItemLocalizedName_rodata_803DDFF8_Pool ItemLocalizedName_rodata_803DDFF8 = {
+    "\203g\203\212\203v\203\213\203n\203\212\203Z\203\223"
 };
-const unk32 ItemLocalizedName_rodata_803DE00C[5] = {
-    0x8367838A, 0x8376838B, 0x82D082B0, 0x83798393, 0x00000000
+const ItemLocalizedName_rodata_803DE00C_Pool ItemLocalizedName_rodata_803DE00C = {
+    "\203g\203\212\203v\203\213\202\320\202\260\203y\203\223"
 };
-const unk32 ItemLocalizedName_rodata_803DE020[5] = {
-    0x8367838A, 0x8376838B, 0x82BD82C2, 0x82DC82AB, 0x00000000
+const ItemLocalizedName_rodata_803DE020_Pool ItemLocalizedName_rodata_803DE020 = {
+    "\203g\203\212\203v\203\213\202\275\202\302\202\334\202\253"
 };
-const unk32 ItemLocalizedName_rodata_803DE034[5] = {
-    0x8367838A, 0x8376838B, 0x83758389, 0x8362834E, 0x00000000
+const ItemLocalizedName_rodata_803DE034_Pool ItemLocalizedName_rodata_803DE034 = {
+    "\203g\203\212\203v\203\213\203u\203\211\203b\203N"
 };
-const unk32 ItemLocalizedName_rodata_803DE048[4] = {
-    0x82D082B0, 0x837E8354, 0x8343838B, 0x00000000
+const ItemLocalizedName_rodata_803DE048_Pool ItemLocalizedName_rodata_803DE048 = {
+    "\202\320\202\260\203~\203T\203C\203\213"
 };
-const unk32 ItemLocalizedName_rodata_803DE058[5] = {
-    0x836A835A, 0x837D838A, 0x83498352, 0x83438393, 0x00000000
+const ItemLocalizedName_rodata_803DE058_Pool ItemLocalizedName_rodata_803DE058 = {
+    "\203j\203Z\203}\203\212\203I\203R\203C\203\223"
 };
-const unk32 ItemLocalizedName_rodata_803DE06C[4] = {
-    0x8968977B, 0x8368838A, 0x8393834E, 0x00000000
+const ItemLocalizedName_rodata_803DE06C_Pool ItemLocalizedName_rodata_803DE06C = {
+    "\211h\227{\203h\203\212\203\223\203N"
 };
-const unk32 ItemLocalizedName_rodata_803DE07C[3] = {
-    0x8345836A, 0x837B815B, 0x00000000
+const ItemLocalizedName_rodata_803DE07C_Pool ItemLocalizedName_rodata_803DE07C = {
+    "\203E\203j\203{\201["
 };
-const unk32 ItemLocalizedName_rodata_803DE088[4] = {
-    0x82DC82DF, 0x8375838D, 0x8362834E, 0x00000000
+const ItemLocalizedName_rodata_803DE088_Pool ItemLocalizedName_rodata_803DE088 = {
+    "\202\334\202\337\203u\203\215\203b\203N"
 };
-const unk32 ItemLocalizedName_rodata_803DE098[4] = {
-    0x836882C5, 0x82A982A6, 0x82F182D2, 0x82C20000
+const ItemLocalizedName_rodata_803DE098_Pool ItemLocalizedName_rodata_803DE098 = {
+    "\203h\202\305\202\251\202\246\202\361\202\322\202\302"
 };
-const unk32 ItemLocalizedName_rodata_803DE0A8[4] = {
-    0x82CE82AE, 0x82CE82AE, 0x82C182BF, 0x00000000
+const ItemLocalizedName_rodata_803DE0A8_Pool ItemLocalizedName_rodata_803DE0A8 = {
+    "\202\316\202\256\202\316\202\256\202\301\202\277"
 };
-const unk32 ItemLocalizedName_rodata_803DE0B8[4] = {
-    0x82DC82DF, 0x8368838A, 0x8393834E, 0x00000000
+const ItemLocalizedName_rodata_803DE0B8_Pool ItemLocalizedName_rodata_803DE0B8 = {
+    "\202\334\202\337\203h\203\212\203\223\203N"
 };
-const unk32 ItemLocalizedName_rodata_803DE0C8[3] = {
-    0x82BF82D1, 0x82C182B1, 0x96F20000
+const ItemLocalizedName_rodata_803DE0C8_Pool ItemLocalizedName_rodata_803DE0C8 = {
+    "\202\277\202\321\202\301\202\261\226\362"
 };
-const unk32 ItemLocalizedName_rodata_803DE0D4[5] = {
-    0x83498357, 0x8383837D, 0x8374838C, 0x815B8380, 0x00000000
+const ItemLocalizedName_rodata_803DE0D4_Pool ItemLocalizedName_rodata_803DE0D4 = {
+    "\203I\203W\203\203\203}\203t\203\214\201[\203\200"
 };
-const unk32 ItemLocalizedName_rodata_803DE0E8[3] = {
-    0x82A482B3, 0x82DD82DD, 0x00000000
+const ItemLocalizedName_rodata_803DE0E8_Pool ItemLocalizedName_rodata_803DE0E8 = {
+    "\202\244\202\263\202\335\202\335"
 };
-const unk32 ItemLocalizedName_rodata_803DE0F4[3] = {
-    0x836C8359, 0x837E949A, 0x92650000
+const ItemLocalizedName_rodata_803DE0F4_Pool ItemLocalizedName_rodata_803DE0F4 = {
+    "\203l\203Y\203~\224\232\222e"
 };
-const unk32 ItemLocalizedName_rodata_803DE100[3] = {
-    0x82D182C1, 0x82AD82E8, 0x94A00000
+const ItemLocalizedName_rodata_803DE100_Pool ItemLocalizedName_rodata_803DE100 = {
+    "\202\321\202\301\202\255\202\350\224\240"
 };
-const unk32 ItemLocalizedName_rodata_803DE10C[3] = {
-    0x82AE82C9, 0x82E1834F, 0x837E0000
+const ItemLocalizedName_rodata_803DE10C_Pool ItemLocalizedName_rodata_803DE10C = {
+    "\202\256\202\311\202\341\203O\203~"
 };
-const unk32 ItemLocalizedName_rodata_803DE118[4] = {
-    0x8358815B, 0x8370815B, 0x837D8343, 0x834E0000
+const ItemLocalizedName_rodata_803DE118_Pool ItemLocalizedName_rodata_803DE118 = {
+    "\203X\201[\203p\201[\203}\203C\203N"
 };
-const unk32 ItemLocalizedName_rodata_803DE128[3] = {
-    0x837D834F, 0x836C8362, 0x83670000
+const ItemLocalizedName_rodata_803DE128_Pool ItemLocalizedName_rodata_803DE128 = {
+    "\203}\203O\203l\203b\203g"
 };
-const unk32 ItemLocalizedName_rodata_803DE134[4] = {
-    0x836F8369, 0x83698367, 0x838C8343, 0x83930000
+const ItemLocalizedName_rodata_803DE134_Pool ItemLocalizedName_rodata_803DE134 = {
+    "\203o\203i\203i\203g\203\214\203C\203\223"
 };
-const unk32 ItemLocalizedName_rodata_803DE144[4] = {
-    0x837E8368, 0x838A82B1, 0x82A482E7, 0x817B0000
+const ItemLocalizedName_rodata_803DE144_Pool ItemLocalizedName_rodata_803DE144 = {
+    "\203~\203h\203\212\202\261\202\244\202\347\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE154[3] = {
-    0x836F8369, 0x8369817B, 0x00000000
+const ItemLocalizedName_rodata_803DE154_Pool ItemLocalizedName_rodata_803DE154 = {
+    "\203o\203i\203i\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE160[3] = {
-    0x82BD82C2, 0x82DC82AB, 0x817B0000
+const ItemLocalizedName_rodata_803DE160_Pool ItemLocalizedName_rodata_803DE160 = {
+    "\202\275\202\302\202\334\202\253\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE16C[5] = {
-    0x83758389, 0x8362834E, 0x82B182A4, 0x82E7817B, 0x00000000
+const ItemLocalizedName_rodata_803DE16C_Pool ItemLocalizedName_rodata_803DE16C = {
+    "\203u\203\211\203b\203N\202\261\202\244\202\347\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE180[5] = {
-    0x93C5836F, 0x83698369, 0x836F8359, 0x815B834A, 0x817B0000
+const ItemLocalizedName_rodata_803DE180_Pool ItemLocalizedName_rodata_803DE180 = {
+    "\223\305\203o\203i\203i\203o\203Y\201[\203J\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE194[5] = {
-    0x8353815B, 0x838B8368, 0x836F8369, 0x8369817B, 0x00000000
+const ItemLocalizedName_rodata_803DE194_Pool ItemLocalizedName_rodata_803DE194 = {
+    "\203S\201[\203\213\203h\203o\203i\203i\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE1A8[5] = {
-    0x836F8369, 0x8369836F, 0x8359815B, 0x834A817B, 0x00000000
+const ItemLocalizedName_rodata_803DE1A8_Pool ItemLocalizedName_rodata_803DE1A8 = {
+    "\203o\203i\203i\203o\203Y\201[\203J\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE1BC[4] = {
-    0x836E8343, 0x8372815B, 0x8380817B, 0x00000000
+const ItemLocalizedName_rodata_803DE1BC_Pool ItemLocalizedName_rodata_803DE1BC = {
+    "\203n\203C\203r\201[\203\200\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE1CC[3] = {
-    0x835E8389, 0x8343817B, 0x00000000
+const ItemLocalizedName_rodata_803DE1CC_Pool ItemLocalizedName_rodata_803DE1CC = {
+    "\203^\203\211\203C\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE1D8[3] = {
-    0x82A682F1, 0x82DC82AD, 0x817B0000
+const ItemLocalizedName_rodata_803DE1D8_Pool ItemLocalizedName_rodata_803DE1D8 = {
+    "\202\246\202\361\202\334\202\255\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE1E4[5] = {
-    0x8353815B, 0x838B8368, 0x835E8389, 0x8343817B, 0x00000000
+const ItemLocalizedName_rodata_803DE1E4_Pool ItemLocalizedName_rodata_803DE1E4 = {
+    "\203S\201[\203\213\203h\203^\203\211\203C\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE1F8[3] = {
-    0x8365838C, 0x8354817B, 0x00000000
+const ItemLocalizedName_rodata_803DE1F8_Pool ItemLocalizedName_rodata_803DE1F8 = {
+    "\203e\203\214\203T\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE204[5] = {
-    0x834A834E, 0x834A834E, 0x835E8343, 0x8384817B, 0x00000000
+const ItemLocalizedName_rodata_803DE204_Pool ItemLocalizedName_rodata_803DE204 = {
+    "\203J\203N\203J\203N\203^\203C\203\204\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE218[5] = {
-    0x8366834A, 0x83608372, 0x835E8343, 0x8384817B, 0x00000000
+const ItemLocalizedName_rodata_803DE218_Pool ItemLocalizedName_rodata_803DE218 = {
+    "\203f\203J\203`\203r\203^\203C\203\204\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE22C[5] = {
-    0x83498393, 0x837B838D, 0x836E8393, 0x8368838B, 0x817B0000
+const ItemLocalizedName_rodata_803DE22C_Pool ItemLocalizedName_rodata_803DE22C = {
+    "\203I\203\223\203{\203\215\203n\203\223\203h\203\213\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE240[4] = {
-    0x836E838A, 0x835A8393, 0x837B8393, 0x817B0000
+const ItemLocalizedName_rodata_803DE240_Pool ItemLocalizedName_rodata_803DE240 = {
+    "\203n\203\212\203Z\203\223\203{\203\223\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE250[4] = {
-    0x834E8389, 0x834E8356, 0x83878393, 0x817B0000
+const ItemLocalizedName_rodata_803DE250_Pool ItemLocalizedName_rodata_803DE250 = {
+    "\203N\203\211\203N\203V\203\207\203\223\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE260[3] = {
-    0x82AA82D1, 0x82E582A4, 0x817B0000
+const ItemLocalizedName_rodata_803DE260_Pool ItemLocalizedName_rodata_803DE260 = {
+    "\202\252\202\321\202\345\202\244\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE26C[5] = {
-    0x82CB82CE, 0x82CB82CE, 0x83498343, 0x838B817B, 0x00000000
+const ItemLocalizedName_rodata_803DE26C_Pool ItemLocalizedName_rodata_803DE26C = {
+    "\202\313\202\316\202\313\202\316\203I\203C\203\213\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE280[5] = {
-    0x8372838A, 0x83588365, 0x83428362, 0x834E817B, 0x00000000
+const ItemLocalizedName_rodata_803DE280_Pool ItemLocalizedName_rodata_803DE280 = {
+    "\203r\203\212\203X\203e\203B\203b\203N\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE294[5] = {
-    0x834A8393, 0x83568383, 0x834E835F, 0x837D817B, 0x00000000
+const ItemLocalizedName_rodata_803DE294_Pool ItemLocalizedName_rodata_803DE294 = {
+    "\203J\203\223\203V\203\203\203N\203_\203}\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE2A8[3] = {
-    0x82A082AB, 0x82A982F1, 0x817B0000
+const ItemLocalizedName_rodata_803DE2A8_Pool ItemLocalizedName_rodata_803DE2A8 = {
+    "\202\240\202\253\202\251\202\361\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE2B4[5] = {
-    0x82B682B0, 0x82F182CE, 0x82AD82BE, 0x82F18FAC, 0x817B0000
+const ItemLocalizedName_rodata_803DE2B4_Pool ItemLocalizedName_rodata_803DE2B4 = {
+    "\202\266\202\260\202\361\202\316\202\255\202\276\202\361\217\254\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE2C8[5] = {
-    0x82B682B0, 0x82F182CE, 0x82AD82BE, 0x82F191E5, 0x817B0000
+const ItemLocalizedName_rodata_803DE2C8_Pool ItemLocalizedName_rodata_803DE2C8 = {
+    "\202\266\202\260\202\361\202\316\202\255\202\276\202\361\221\345\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE2DC[5] = {
-    0x836E8393, 0x8368838B, 0x83458342, 0x838B8358, 0x817B0000
+const ItemLocalizedName_rodata_803DE2DC_Pool ItemLocalizedName_rodata_803DE2DC = {
+    "\203n\203\223\203h\203\213\203E\203B\203\213\203X\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE2F0[5] = {
-    0x82DF82DC, 0x82A28345, 0x8342838B, 0x8358817B, 0x00000000
+const ItemLocalizedName_rodata_803DE2F0_Pool ItemLocalizedName_rodata_803DE2F0 = {
+    "\202\337\202\334\202\242\203E\203B\203\213\203X\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE304[5] = {
-    0x83418343, 0x83658380, 0x82D382A4, 0x82A282F1, 0x817B0000
+const ItemLocalizedName_rodata_803DE304_Pool ItemLocalizedName_rodata_803DE304 = {
+    "\203A\203C\203e\203\200\202\323\202\244\202\242\202\361\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE318[5] = {
-    0x837D8357, 0x8362834E, 0x836E8393, 0x8368817B, 0x00000000
+const ItemLocalizedName_rodata_803DE318_Pool ItemLocalizedName_rodata_803DE318 = {
+    "\203}\203W\203b\203N\203n\203\223\203h\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE32C[5] = {
-    0x835F8362, 0x83568385, 0x836F8359, 0x815B834A, 0x817B0000
+const ItemLocalizedName_rodata_803DE32C_Pool ItemLocalizedName_rodata_803DE32C = {
+    "\203_\203b\203V\203\205\203o\203Y\201[\203J\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE340[4] = {
-    0x8345835C, 0x83418389, 0x815B8380, 0x817B0000
+const ItemLocalizedName_rodata_803DE340_Pool ItemLocalizedName_rodata_803DE340 = {
+    "\203E\203\\\203A\203\211\201[\203\200\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE350[5] = {
-    0x83578383, 0x83938376, 0x82D382A4, 0x82A282F1, 0x817B0000
+const ItemLocalizedName_rodata_803DE350_Pool ItemLocalizedName_rodata_803DE350 = {
+    "\203W\203\203\203\223\203v\202\323\202\244\202\242\202\361\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE364[5] = {
-    0x835F8362, 0x83568385, 0x834C836D, 0x8352817B, 0x00000000
+const ItemLocalizedName_rodata_803DE364_Pool ItemLocalizedName_rodata_803DE364 = {
+    "\203_\203b\203V\203\205\203L\203m\203R\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE378[4] = {
-    0x8B7A8EFB, 0x834C836D, 0x8352817B, 0x00000000
+const ItemLocalizedName_rodata_803DE378_Pool ItemLocalizedName_rodata_803DE378 = {
+    "\213z\216\373\203L\203m\203R\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE388[5] = {
-    0x82C682A4, 0x82DF82A2, 0x834C836D, 0x8352817B, 0x00000000
+const ItemLocalizedName_rodata_803DE388_Pool ItemLocalizedName_rodata_803DE388 = {
+    "\202\306\202\244\202\337\202\242\203L\203m\203R\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE39C[5] = {
-    0x836B838B, 0x836B838B, 0x834C836D, 0x8352817B, 0x00000000
+const ItemLocalizedName_rodata_803DE39C_Pool ItemLocalizedName_rodata_803DE39C = {
+    "\203k\203\213\203k\203\213\203L\203m\203R\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE3B0[4] = {
-    0x8B9091E5, 0x89BB834C, 0x836D8352, 0x817B0000
+const ItemLocalizedName_rodata_803DE3B0_Pool ItemLocalizedName_rodata_803DE3B0 = {
+    "\213\220\221\345\211\273\203L\203m\203R\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE3C0[4] = {
-    0x83778372, 0x815B834C, 0x836D8352, 0x817B0000
+const ItemLocalizedName_rodata_803DE3C0_Pool ItemLocalizedName_rodata_803DE3C0 = {
+    "\203w\203r\201[\203L\203m\203R\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE3D0[3] = {
-    0x8356815B, 0x838B8368, 0x817B0000
+const ItemLocalizedName_rodata_803DE3D0_Pool ItemLocalizedName_rodata_803DE3D0 = {
+    "\203V\201[\203\213\203h\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE3DC[4] = {
-    0x94BD8ECB, 0x8356815B, 0x838B8368, 0x817B0000
+const ItemLocalizedName_rodata_803DE3DC_Pool ItemLocalizedName_rodata_803DE3DC = {
+    "\224\275\216\313\203V\201[\203\213\203h\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE3EC[3] = {
-    0x82D082B0, 0x83798393, 0x817B0000
+const ItemLocalizedName_rodata_803DE3EC_Pool ItemLocalizedName_rodata_803DE3EC = {
+    "\202\320\202\260\203y\203\223\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE3F8[3] = {
-    0x8FCE82A2, 0x91DC817B, 0x00000000
+const ItemLocalizedName_rodata_803DE3F8_Pool ItemLocalizedName_rodata_803DE3F8 = {
+    "\217\316\202\242\221\334\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE404[5] = {
-    0x82A882F1, 0x82BF8358, 0x8373815B, 0x834A815B, 0x817B0000
+const ItemLocalizedName_rodata_803DE404_Pool ItemLocalizedName_rodata_803DE404 = {
+    "\202\250\202\361\202\277\203X\203s\201[\203J\201[\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE418[3] = {
-    0x8358835E, 0x815B817B, 0x00000000
+const ItemLocalizedName_rodata_803DE418_Pool ItemLocalizedName_rodata_803DE418 = {
+    "\203X\203^\201[\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE424[5] = {
-    0x83748340, 0x83438341, 0x837B815B, 0x838B817B, 0x00000000
+const ItemLocalizedName_rodata_803DE424_Pool ItemLocalizedName_rodata_803DE424 = {
+    "\203t\203@\203C\203A\203{\201[\203\213\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE438[3] = {
-    0x836E8393, 0x837D815B, 0x817B0000
+const ItemLocalizedName_rodata_803DE438_Pool ItemLocalizedName_rodata_803DE438 = {
+    "\203n\203\223\203}\201[\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE444[3] = {
-    0x8375838D, 0x8362834E, 0x817B0000
+const ItemLocalizedName_rodata_803DE444_Pool ItemLocalizedName_rodata_803DE444 = {
+    "\203u\203\215\203b\203N\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE450[5] = {
-    0x83588379, 0x83568383, 0x838B8352, 0x83438393, 0x817B0000
+const ItemLocalizedName_rodata_803DE450_Pool ItemLocalizedName_rodata_803DE450 = {
+    "\203X\203y\203V\203\203\203\213\203R\203C\203\223\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE464[3] = {
-    0x83528343, 0x8393817B, 0x00000000
+const ItemLocalizedName_rodata_803DE464_Pool ItemLocalizedName_rodata_803DE464 = {
+    "\203R\203C\203\223\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE470[3] = {
-    0x838F8393, 0x838F8393, 0x817B0000
+const ItemLocalizedName_rodata_803DE470_Pool ItemLocalizedName_rodata_803DE470 = {
+    "\203\217\203\223\203\217\203\223\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE47C[6] = {
-    0x8376838A, 0x8393835A, 0x83588368, 0x838A8393, 0x834E817B, 0x00000000
+const ItemLocalizedName_rodata_803DE47C_Pool ItemLocalizedName_rodata_803DE47C = {
+    "\203v\203\212\203\223\203Z\203X\203h\203\212\203\223\203N\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE494[4] = {
-    0x8373815B, 0x8360836F, 0x815B8368, 0x817B0000
+const ItemLocalizedName_rodata_803DE494_Pool ItemLocalizedName_rodata_803DE494 = {
+    "\203s\201[\203`\203o\201[\203h\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE4A4[4] = {
-    0x83748389, 0x83438370, 0x8393817B, 0x00000000
+const ItemLocalizedName_rodata_803DE4A4_Pool ItemLocalizedName_rodata_803DE4A4 = {
+    "\203t\203\211\203C\203p\203\223\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE4B4[5] = {
-    0x83708362, 0x834E8393, 0x83748389, 0x838F815B, 0x817B0000
+const ItemLocalizedName_rodata_803DE4B4_Pool ItemLocalizedName_rodata_803DE4B4 = {
+    "\203p\203b\203N\203\223\203t\203\211\203\217\201[\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE4C8[3] = {
-    0x8350815B, 0x834C817B, 0x00000000
+const ItemLocalizedName_rodata_803DE4C8_Pool ItemLocalizedName_rodata_803DE4C8 = {
+    "\203P\201[\203L\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE4D4[3] = {
-    0x836E815B, 0x8367817B, 0x00000000
+const ItemLocalizedName_rodata_803DE4D4_Pool ItemLocalizedName_rodata_803DE4D4 = {
+    "\203n\201[\203g\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE4E0[5] = {
-    0x83568346, 0x838B837B, 0x83668342, 0x815B817B, 0x00000000
+const ItemLocalizedName_rodata_803DE4E0_Pool ItemLocalizedName_rodata_803DE4E0 = {
+    "\203V\203F\203\213\203{\203f\203B\201[\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE4F4[5] = {
-    0x834E8362, 0x837082CC, 0x82B182A4, 0x82E7817B, 0x00000000
+const ItemLocalizedName_rodata_803DE4F4_Pool ItemLocalizedName_rodata_803DE4F4 = {
+    "\203N\203b\203p\202\314\202\261\202\244\202\347\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE508[3] = {
-    0x898A82CC, 0x9166817B, 0x00000000
+const ItemLocalizedName_rodata_803DE508_Pool ItemLocalizedName_rodata_803DE508 = {
+    "\211\212\202\314\221f\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE514[3] = {
-    0x834C8389, 0x815B817B, 0x00000000
+const ItemLocalizedName_rodata_803DE514_Pool ItemLocalizedName_rodata_803DE514 = {
+    "\203L\203\211\201[\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE520[3] = {
-    0x83688362, 0x83588393, 0x817B0000
+const ItemLocalizedName_rodata_803DE520_Pool ItemLocalizedName_rodata_803DE520 = {
+    "\203h\203b\203X\203\223\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE52C[4] = {
-    0x838F838A, 0x8349834A, 0x815B817B, 0x00000000
+const ItemLocalizedName_rodata_803DE52C_Pool ItemLocalizedName_rodata_803DE52C = {
+    "\203\217\203\212\203I\203J\201[\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE53C[5] = {
-    0x82CD82C8, 0x82AD82BB, 0x836F834E, 0x835F8393, 0x817B0000
+const ItemLocalizedName_rodata_803DE53C_Pool ItemLocalizedName_rodata_803DE53C = {
+    "\202\315\202\310\202\255\202\273\203o\203N\203_\203\223\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE550[5] = {
-    0x83728388, 0x8388815B, 0x83938370, 0x83938360, 0x817B0000
+const ItemLocalizedName_rodata_803DE550_Pool ItemLocalizedName_rodata_803DE550 = {
+    "\203r\203\210\203\210\201[\203\223\203p\203\223\203`\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE564[3] = {
-    0x82A882C8, 0x82E7817B, 0x00000000
+const ItemLocalizedName_rodata_803DE564_Pool ItemLocalizedName_rodata_803DE564 = {
+    "\202\250\202\310\202\347\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE570[3] = {
-    0x836A8393, 0x836A834E, 0x817B0000
+const ItemLocalizedName_rodata_803DE570_Pool ItemLocalizedName_rodata_803DE570 = {
+    "\203j\203\223\203j\203N\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE57C[3] = {
-    0x837B8380, 0x82D682A2, 0x817B0000
+const ItemLocalizedName_rodata_803DE57C_Pool ItemLocalizedName_rodata_803DE57C = {
+    "\203{\203\200\202\326\202\242\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE588[5] = {
-    0x82BD82DC, 0x82B2837B, 0x83668342, 0x815B817B, 0x00000000
+const ItemLocalizedName_rodata_803DE588_Pool ItemLocalizedName_rodata_803DE588 = {
+    "\202\275\202\334\202\262\203{\203f\203B\201[\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE59C[5] = {
-    0x82B282EB, 0x82B282EB, 0x82BD82DC, 0x82B2817B, 0x00000000
+const ItemLocalizedName_rodata_803DE59C_Pool ItemLocalizedName_rodata_803DE59C = {
+    "\202\262\202\353\202\262\202\353\202\275\202\334\202\262\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE5B0[3] = {
-    0x836E838A, 0x835A8393, 0x817B0000
+const ItemLocalizedName_rodata_803DE5B0_Pool ItemLocalizedName_rodata_803DE5B0 = {
+    "\203n\203\212\203Z\203\223\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE5BC[4] = {
-    0x82C882BC, 0x82CC82BD, 0x82DC82B2, 0x817B0000
+const ItemLocalizedName_rodata_803DE5BC_Pool ItemLocalizedName_rodata_803DE5BC = {
+    "\202\310\202\274\202\314\202\275\202\334\202\262\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE5CC[3] = {
-    0x8381838D, 0x8393817B, 0x00000000
+const ItemLocalizedName_rodata_803DE5CC_Pool ItemLocalizedName_rodata_803DE5CC = {
+    "\203\201\203\215\203\223\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE5D8[5] = {
-    0x837E8389, 0x834E838B, 0x834C836D, 0x8352817B, 0x00000000
+const ItemLocalizedName_rodata_803DE5D8_Pool ItemLocalizedName_rodata_803DE5D8 = {
+    "\203~\203\211\203N\203\213\203L\203m\203R\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE5EC[3] = {
-    0x93C5834C, 0x836D8352, 0x817B0000
+const ItemLocalizedName_rodata_803DE5EC_Pool ItemLocalizedName_rodata_803DE5EC = {
+    "\223\305\203L\203m\203R\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE5F8[5] = {
-    0x834C836D, 0x8352836E, 0x8393837D, 0x815B817B, 0x00000000
+const ItemLocalizedName_rodata_803DE5F8_Pool ItemLocalizedName_rodata_803DE5F8 = {
+    "\203L\203m\203R\203n\203\223\203}\201[\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE60C[4] = {
-    0x834C836D, 0x835282CC, 0x95B2817B, 0x00000000
+const ItemLocalizedName_rodata_803DE60C_Pool ItemLocalizedName_rodata_803DE60C = {
+    "\203L\203m\203R\202\314\225\262\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE61C[4] = {
-    0x82B082F1, 0x82AB834C, 0x836D8352, 0x817B0000
+const ItemLocalizedName_rodata_803DE61C_Pool ItemLocalizedName_rodata_803DE61C = {
+    "\202\260\202\361\202\253\203L\203m\203R\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE62C[5] = {
-    0x82D182E5, 0x82A482AB, 0x834C836D, 0x8352817B, 0x00000000
+const ItemLocalizedName_rodata_803DE62C_Pool ItemLocalizedName_rodata_803DE62C = {
+    "\202\321\202\345\202\244\202\253\203L\203m\203R\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE640[5] = {
-    0x8358835E, 0x815B88F3, 0x82CC836F, 0x83698369, 0x817B0000
+const ItemLocalizedName_rodata_803DE640_Pool ItemLocalizedName_rodata_803DE640 = {
+    "\203X\203^\201[\210\363\202\314\203o\203i\203i\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE654[5] = {
-    0x8250824F, 0x83678393, 0x836E8393, 0x837D815B, 0x817B0000
+const ItemLocalizedName_rodata_803DE654_Pool ItemLocalizedName_rodata_803DE654 = {
+    "\202P\202O\203g\203\223\203n\203\223\203}\201[\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE668[5] = {
-    0x83578383, 0x8393837B, 0x836F8369, 0x8369817B, 0x00000000
+const ItemLocalizedName_rodata_803DE668_Pool ItemLocalizedName_rodata_803DE668 = {
+    "\203W\203\203\203\223\203{\203o\203i\203i\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE67C[5] = {
-    0x82A882A2, 0x82B582A2, 0x836F8369, 0x8369817B, 0x00000000
+const ItemLocalizedName_rodata_803DE67C_Pool ItemLocalizedName_rodata_803DE67C = {
+    "\202\250\202\242\202\265\202\242\203o\203i\203i\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE690[3] = {
-    0x83528393, 0x834B817B, 0x00000000
+const ItemLocalizedName_rodata_803DE690_Pool ItemLocalizedName_rodata_803DE690 = {
+    "\203R\203\223\203K\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE69C[4] = {
-    0x8370838F, 0x815B8347, 0x8354817B, 0x00000000
+const ItemLocalizedName_rodata_803DE69C_Pool ItemLocalizedName_rodata_803DE69C = {
+    "\203p\203\217\201[\203G\203T\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE6AC[3] = {
-    0x8376815B, 0x834A8340, 0x817B0000
+const ItemLocalizedName_rodata_803DE6AC_Pool ItemLocalizedName_rodata_803DE6AC = {
+    "\203v\201[\203J\203@\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE6B8[5] = {
-    0x83738352, 0x83738352, 0x836E8393, 0x837D815B, 0x817B0000
+const ItemLocalizedName_rodata_803DE6B8_Pool ItemLocalizedName_rodata_803DE6B8 = {
+    "\203s\203R\203s\203R\203n\203\223\203}\201[\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE6CC[3] = {
-    0x8389838A, 0x815B5881, 0x7B000000
+const ItemLocalizedName_rodata_803DE6CC_Pool ItemLocalizedName_rodata_803DE6CC = {
+    "\203\211\203\212\201[X\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE6D8[4] = {
-    0x83748346, 0x8341838A, 0x815B817B, 0x00000000
+const ItemLocalizedName_rodata_803DE6D8_Pool ItemLocalizedName_rodata_803DE6D8 = {
+    "\203t\203F\203A\203\212\201[\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE6E8[4] = {
-    0x837B8358, 0x834D8383, 0x8389834B, 0x817B0000
+const ItemLocalizedName_rodata_803DE6E8_Pool ItemLocalizedName_rodata_803DE6E8 = {
+    "\203{\203X\203M\203\203\203\211\203K\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE6F8[6] = {
-    0x83828393, 0x8358835E, 0x815B8356, 0x815B838B, 0x8368817B, 0x00000000
+const ItemLocalizedName_rodata_803DE6F8_Pool ItemLocalizedName_rodata_803DE6F8 = {
+    "\203\202\203\223\203X\203^\201[\203V\201[\203\213\203h\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE710[5] = {
-    0x83768360, 0x83828393, 0x8358835E, 0x815B817B, 0x00000000
+const ItemLocalizedName_rodata_803DE710_Pool ItemLocalizedName_rodata_803DE710 = {
+    "\203v\203`\203\202\203\223\203X\203^\201[\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE724[6] = {
-    0x83828393, 0x8358835E, 0x815B836E, 0x8393837D, 0x815B817B, 0x00000000
+const ItemLocalizedName_rodata_803DE724_Pool ItemLocalizedName_rodata_803DE724 = {
+    "\203\202\203\223\203X\203^\201[\203n\203\223\203}\201[\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE73C[5] = {
-    0x82D182C1, 0x82AD82E8, 0x837B815B, 0x838B817B, 0x00000000
+const ItemLocalizedName_rodata_803DE73C_Pool ItemLocalizedName_rodata_803DE73C = {
+    "\202\321\202\301\202\255\202\350\203{\201[\203\213\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE750[5] = {
-    0x83828393, 0x8358835E, 0x815B8347, 0x8354817B, 0x00000000
+const ItemLocalizedName_rodata_803DE750_Pool ItemLocalizedName_rodata_803DE750 = {
+    "\203\202\203\223\203X\203^\201[\203G\203T\201{"
 };
-const unk32 ItemLocalizedName_rodata_803DE764[3] = {
-    0x82A882CE, 0x82AF89BB, 0x817B0000
+const ItemLocalizedName_rodata_803DE764_Pool ItemLocalizedName_rodata_803DE764 = {
+    "\202\250\202\316\202\257\211\273\201{"
 };
 const char lbl_803DE770[] = "FIRE BALL K";
 const char lbl_803DE77C[] = "BIG TIRE";
@@ -1125,8 +3519,8 @@ const char lbl_803DE8EC[] = "BULLET_BANA_NORMAL";
 const char lbl_803DE900[] = "CANNON_BANA_DOKU";
 const char lbl_803DE914[] = "BULLET_BANA_DOKU";
 const char lbl_803DE928[] = "CHIBI KINOKO";
-const unk32 lbl_803DE938[3] = {
-    0x835E8363, 0x837D834C, 0x00000000
+const lbl_803DE938_Pool lbl_803DE938 = {
+    "\203^\203c\203}\203L"
 };
 const char lbl_803DE944[] = "CAP_HANDLE_BORO";
 const char lbl_803DE954[] = "CAP_TIYA_KAKU";
@@ -1466,536 +3860,536 @@ char * const ItemLocalizedName_rodata_803DE9AC[329] = {
     (char *)&lbl_806DBB1C,
     (char *)&lbl_806DBB24
 };
-const unk32 lbl_803DEED0[6] = {
-    0x83418343, 0x83658380, 0x90E096BE, 0x82AA93FC, 0x82E9975C, 0x92E80000
+const lbl_803DEED0_Pool lbl_803DEED0 = {
+    "\203A\203C\203e\203\200\220\340\226\276\202\252\223\374\202\351\227\\\222\350"
 };
-const unk32 lbl_803DEEE8[7] = {
-    0x88EA92E8, 0x8E9E8AD4, 0x8141918A, 0x8EE882F0, 0x82BD82BD, 0x82AB82DC, 0x00000000
+const lbl_803DEEE8_Pool lbl_803DEEE8 = {
+    "\210\352\222\350\216\236\212\324\201A\221\212\216\350\202\360\202\275\202\275\202\253\202\334"
 };
-const unk32 lbl_803DEF04[7] = {
-    0x82B78142, 0x82BD82BD, 0x82A982EA, 0x82E982C6, 0x835F8381, 0x815B8357, 0x00000000
+const lbl_803DEF04_Pool lbl_803DEF04 = {
+    "\202\267\201B\202\275\202\275\202\251\202\352\202\351\202\306\203_\203\201\201[\203W"
 };
-const unk32 lbl_803DEF20[4] = {
-    0x82F08EF3, 0x82AF82DC, 0x82B78142, 0x00000000
+const lbl_803DEF20_Pool lbl_803DEF20 = {
+    "\202\360\216\363\202\257\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DEF30[6] = {
-    0x88EA92E8, 0x8E9E8AD4, 0x918A8EE8, 0x82F082BD, 0x82BD82AB, 0x82DC0000
+const ItemAliasLocalizedVariant_rodata_803DEF30_Pool ItemAliasLocalizedVariant_rodata_803DEF30 = {
+    "\210\352\222\350\216\236\212\324\221\212\216\350\202\360\202\275\202\275\202\253\202\334"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DEF48[7] = {
-    0x82B78142, 0x82BD82BD, 0x82A982EA, 0x82E982C6, 0x8AB49364, 0x82B582C4, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DEF48_Pool ItemAliasLocalizedVariant_rodata_803DEF48 = {
+    "\202\267\201B\202\275\202\275\202\251\202\352\202\351\202\306\212\264\223d\202\265\202\304"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DEF64[6] = {
-    0x836E8393, 0x8368838B, 0x82AA82B5, 0x82D182EA, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DEF64_Pool ItemAliasLocalizedVariant_rodata_803DEF64 = {
+    "\203n\203\223\203h\203\213\202\252\202\265\202\321\202\352\202\334\202\267\201B"
 };
-const unk32 lbl_803DEF7C[6] = {
-    0x8EA995AA, 0x82C98E67, 0x82A48341, 0x83438365, 0x83808142, 0x00000000
+const lbl_803DEF7C_Pool lbl_803DEF7C = {
+    "\216\251\225\252\202\311\216g\202\244\203A\203C\203e\203\200\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DEF94[7] = {
-    0x82A082E7, 0x82E482E9, 0x83588365, 0x815B835E, 0x835888D9, 0x8FED82A9, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DEF94_Pool ItemAliasLocalizedVariant_rodata_803DEF94 = {
+    "\202\240\202\347\202\344\202\351\203X\203e\201[\203^\203X\210\331\217\355\202\251"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DEFB0[4] = {
-    0x82E789F1, 0x959C82B5, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DEFB0_Pool ItemAliasLocalizedVariant_rodata_803DEFB0 = {
+    "\202\347\211\361\225\234\202\265\202\334\202\267\201B"
 };
-const unk32 lbl_803DEFC0[6] = {
-    0x96B39347, 0x8FF391D4, 0x82C982C8, 0x82E882DC, 0x82B78142, 0x00000000
+const lbl_803DEFC0_Pool lbl_803DEFC0 = {
+    "\226\263\223G\217\363\221\324\202\311\202\310\202\350\202\334\202\267\201B"
 };
-const unk32 lbl_803DEFD8[7] = {
-    0x88EA92E8, 0x8E9E8AD4, 0x8141898A, 0x82F082CD, 0x82AB82C8, 0x82AA82E7, 0x00000000
+const lbl_803DEFD8_Pool lbl_803DEFD8 = {
+    "\210\352\222\350\216\236\212\324\201A\211\212\202\360\202\315\202\253\202\310\202\252\202\347"
 };
-const unk32 lbl_803DEFF4[3] = {
-    0x919682E8, 0x82DC82B7, 0x81420000
+const lbl_803DEFF4_Pool lbl_803DEFF4 = {
+    "\221\226\202\350\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF000[6] = {
-    0x8E6782A4, 0x82C688EA, 0x8E9E9349, 0x82C9835F, 0x83628356, 0x83850000
+const ItemAliasLocalizedVariant_rodata_803DF000_Pool ItemAliasLocalizedVariant_rodata_803DF000 = {
+    "\216g\202\244\202\306\210\352\216\236\223I\202\311\203_\203b\203V\203\205"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF018[3] = {
-    0x82C582AB, 0x82DC82B7, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF018_Pool ItemAliasLocalizedVariant_rodata_803DF018 = {
+    "\202\305\202\253\202\334\202\267"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF024[7] = {
-    0x88F982DE, 0x82C6834A, 0x815B8367, 0x82AA8B90, 0x91E589BB, 0x82B582DC, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF024_Pool ItemAliasLocalizedVariant_rodata_803DF024 = {
+    "\210\371\202\336\202\306\203J\201[\203g\202\252\213\220\221\345\211\273\202\265\202\334"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF040[7] = {
-    0x8D558C82, 0x82B382EA, 0x82BD8341, 0x83438365, 0x838082F0, 0x8B7A8EFB, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF040_Pool ItemAliasLocalizedVariant_rodata_803DF040 = {
+    "\215U\214\202\202\263\202\352\202\275\203A\203C\203e\203\200\202\360\213z\216\373"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF05C[7] = {
-    0x82B58141, 0x8EA995AA, 0x82CC82E0, 0x82CC82C9, 0x82B582DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF05C_Pool ItemAliasLocalizedVariant_rodata_803DF05C = {
+    "\202\265\201A\216\251\225\252\202\314\202\340\202\314\202\311\202\265\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF078[7] = {
-    0x91BC82CC, 0x834A815B, 0x836782C9, 0x82D482C2, 0x82A982C1, 0x82C482E0, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF078_Pool ItemAliasLocalizedVariant_rodata_803DF078 = {
+    "\221\274\202\314\203J\201[\203g\202\311\202\324\202\302\202\251\202\301\202\304\202\340"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF094[6] = {
-    0x836B838B, 0x836282C6, 0x82A982ED, 0x82B982DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF094_Pool ItemAliasLocalizedVariant_rodata_803DF094 = {
+    "\203k\203\213\203b\202\306\202\251\202\355\202\271\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF0AC[7] = {
-    0x88F982DE, 0x82C693A7, 0x96BE82C9, 0x82C882E8, 0x8141918A, 0x8EE882A9, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF0AC_Pool ItemAliasLocalizedVariant_rodata_803DF0AC = {
+    "\210\371\202\336\202\306\223\247\226\276\202\311\202\310\202\350\201A\221\212\216\350\202\251"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF0C8[6] = {
-    0x82E78CA9, 0x82A682C8, 0x82AD82C8, 0x82E882DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF0C8_Pool ItemAliasLocalizedVariant_rodata_803DF0C8 = {
+    "\202\347\214\251\202\246\202\310\202\255\202\310\202\350\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF0E0[7] = {
-    0x88F982DE, 0x82C6834A, 0x815B8367, 0x82AA8F64, 0x82AD82C8, 0x82E88141, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF0E0_Pool ItemAliasLocalizedVariant_rodata_803DF0E0 = {
+    "\210\371\202\336\202\306\203J\201[\203g\202\252\217d\202\255\202\310\202\350\201A"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF0FC[7] = {
-    0x91CC9396, 0x82BD82E8, 0x82AA8BAD, 0x82AD82C8, 0x82E882DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF0FC_Pool ItemAliasLocalizedVariant_rodata_803DF0FC = {
+    "\221\314\223\226\202\275\202\350\202\252\213\255\202\255\202\310\202\350\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF118[7] = {
-    0x91BC82CC, 0x834A815B, 0x836782F0, 0x82B782E8, 0x82CA82AF, 0x82E782EA, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF118_Pool ItemAliasLocalizedVariant_rodata_803DF118 = {
+    "\221\274\202\314\203J\201[\203g\202\360\202\267\202\350\202\312\202\257\202\347\202\352"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF134[5] = {
-    0x82E982E6, 0x82A482C9, 0x82C882E8, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DF134_Pool ItemAliasLocalizedVariant_rodata_803DF134 = {
+    "\202\351\202\346\202\244\202\311\202\310\202\350\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF148[7] = {
-    0x88EA92E8, 0x8E9E8AD4, 0x8356815B, 0x838B8368, 0x82F082CD, 0x82E88141, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF148_Pool ItemAliasLocalizedVariant_rodata_803DF148 = {
+    "\210\352\222\350\216\236\212\324\203V\201[\203\213\203h\202\360\202\315\202\350\201A"
 };
-const unk32 lbl_803DF164[7] = {
-    0x83418343, 0x83658380, 0x8D558C82, 0x82F09668, 0x82AC82DC, 0x82B78142, 0x00000000
+const lbl_803DF164_Pool lbl_803DF164 = {
+    "\203A\203C\203e\203\200\215U\214\202\202\360\226h\202\254\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF180[7] = {
-    0x83418343, 0x83658380, 0x8D558C82, 0x82F0836E, 0x836C95D4, 0x82B582DC, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF180_Pool ItemAliasLocalizedVariant_rodata_803DF180 = {
+    "\203A\203C\203e\203\200\215U\214\202\202\360\203n\203l\225\324\202\265\202\334"
 };
-const unk32 lbl_803DF19C[6] = {
-    0x83528393, 0x834B82F0, 0x82BD82BD, 0x82AB82DC, 0x82B78142, 0x00000000
+const lbl_803DF19C_Pool lbl_803DF19C = {
+    "\203R\203\223\203K\202\360\202\275\202\275\202\253\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF1B4[7] = {
-    0x82DC82ED, 0x82E882CC, 0x834A815B, 0x836782AA, 0x8141838A, 0x83598380, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF1B4_Pool ItemAliasLocalizedVariant_rodata_803DF1B4 = {
+    "\202\334\202\355\202\350\202\314\203J\201[\203g\202\252\201A\203\212\203Y\203\200"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF1D0[6] = {
-    0x82C982A0, 0x82ED82B9, 0x82C482A8, 0x82C782E8, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DF1D0_Pool ItemAliasLocalizedVariant_rodata_803DF1D0 = {
+    "\202\311\202\240\202\355\202\271\202\304\202\250\202\307\202\350\202\334\202\267\201B"
 };
-const unk32 lbl_803DF1E8[7] = {
-    0x934782F0, 0x838D8362, 0x834E8349, 0x839382B5, 0x82C494AD, 0x8ECB8149, 0x00000000
+const lbl_803DF1E8_Pool lbl_803DF1E8 = {
+    "\223G\202\360\203\215\203b\203N\203I\203\223\202\265\202\304\224\255\216\313\201I"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF204[7] = {
-    0x8365838C, 0x835482F0, 0x834A815B, 0x836782C9, 0x82D482E7, 0x82B382B0, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF204_Pool ItemAliasLocalizedVariant_rodata_803DF204 = {
+    "\203e\203\214\203T\202\360\203J\201[\203g\202\311\202\324\202\347\202\263\202\260"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF220[6] = {
-    0x836E8393, 0x8368838B, 0x8F6497CA, 0x83418362, 0x83768149, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF220_Pool ItemAliasLocalizedVariant_rodata_803DF220 = {
+    "\203n\203\223\203h\203\213\217d\227\312\203A\203b\203v\201I"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF238[7] = {
-    0x91E589B9, 0x97CA82C5, 0x834E8389, 0x834E8356, 0x83878393, 0x82F096C2, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF238_Pool ItemAliasLocalizedVariant_rodata_803DF238 = {
+    "\221\345\211\271\227\312\202\305\203N\203\211\203N\203V\203\207\203\223\202\360\226\302"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF254[3] = {
-    0x82E782B5, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DF254_Pool ItemAliasLocalizedVariant_rodata_803DF254 = {
+    "\202\347\202\265\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF260[6] = {
-    0x82DD82F1, 0x82C88372, 0x8362834E, 0x838A82B5, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DF260_Pool ItemAliasLocalizedVariant_rodata_803DF260 = {
+    "\202\335\202\361\202\310\203r\203b\203N\203\212\202\265\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF278[7] = {
-    0x835E8343, 0x838482F0, 0x83708393, 0x834E82B3, 0x82B982DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF278_Pool ItemAliasLocalizedVariant_rodata_803DF278 = {
+    "\203^\203C\203\204\202\360\203p\203\223\203N\202\263\202\271\202\334\202\267\201B"
 };
-const unk32 lbl_803DF294[7] = {
-    0x836F834F, 0x835F8393, 0x82C58B53, 0x82B282C1, 0x82B18142, 0x949A94AD, 0x00000000
+const lbl_803DF294_Pool lbl_803DF294 = {
+    "\203o\203O\203_\203\223\202\305\213S\202\262\202\301\202\261\201B\224\232\224\255"
 };
-const unk32 lbl_803DF2B0[7] = {
-    0x82DC82C5, 0x82C991BC, 0x82CC834A, 0x815B8367, 0x82D691CC, 0x939682E8, 0x00000000
+const lbl_803DF2B0_Pool lbl_803DF2B0 = {
+    "\202\334\202\305\202\311\221\274\202\314\203J\201[\203g\202\326\221\314\223\226\202\350"
 };
-const unk32 lbl_803DF2CC[7] = {
-    0x82B582C4, 0x949A9265, 0x82F088DA, 0x93AE82B3, 0x82B982E6, 0x82A48149, 0x00000000
+const lbl_803DF2CC_Pool lbl_803DF2CC = {
+    "\202\265\202\304\224\232\222e\202\360\210\332\223\256\202\263\202\271\202\346\202\244\201I"
 };
-const unk32 lbl_803DF2E8[6] = {
-    0x8CE382EB, 0x82C9978E, 0x82C682B7, 0x83418343, 0x83658380, 0x81420000
+const lbl_803DF2E8_Pool lbl_803DF2E8 = {
+    "\214\343\202\353\202\311\227\216\202\306\202\267\203A\203C\203e\203\200\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF300[7] = {
-    0x93A582DE, 0x82C6834A, 0x815B8367, 0x82AA8358, 0x83738393, 0x82B582DC, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF300_Pool ItemAliasLocalizedVariant_rodata_803DF300 = {
+    "\223\245\202\336\202\306\203J\201[\203g\202\252\203X\203s\203\223\202\265\202\334"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF31C[7] = {
-    0x93A582DE, 0x82C68358, 0x83738393, 0x82B58141, 0x836E8393, 0x8368838B, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF31C_Pool ItemAliasLocalizedVariant_rodata_803DF31C = {
+    "\223\245\202\336\202\306\203X\203s\203\223\202\265\201A\203n\203\223\203h\203\213"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF338[5] = {
-    0x82AA836C, 0x836F836C, 0x836F82B5, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DF338_Pool ItemAliasLocalizedVariant_rodata_803DF338 = {
+    "\202\252\203l\203o\203l\203o\202\265\202\334\202\267\201B"
 };
-const unk32 lbl_803DF34C[5] = {
-    0x836F8369, 0x836982CC, 0x8B9091E5, 0x94C58142, 0x00000000
+const lbl_803DF34C_Pool lbl_803DF34C = {
+    "\203o\203i\203i\202\314\213\220\221\345\224\305\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF360[6] = {
-    0x93A582DE, 0x82C68358, 0x83738393, 0x82B582DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF360_Pool ItemAliasLocalizedVariant_rodata_803DF360 = {
+    "\223\245\202\336\202\306\203X\203s\203\223\202\265\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF378[5] = {
-    0x82AA834B, 0x834E834B, 0x834E82B5, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DF378_Pool ItemAliasLocalizedVariant_rodata_803DF378 = {
+    "\202\252\203K\203N\203K\203N\202\265\202\334\202\267\201B"
 };
-const unk32 lbl_803DF38C[7] = {
-    0x94E996A7, 0x82CC9180, 0x8DEC95FB, 0x964082F0, 0x8E6782A6, 0x82CE8141, 0x00000000
+const lbl_803DF38C_Pool lbl_803DF38C = {
+    "\224\351\226\247\202\314\221\200\215\354\225\373\226@\202\360\216g\202\246\202\316\201A"
 };
-const unk32 lbl_803DF3A8[7] = {
-    0x914F8CE3, 0x82CC8C82, 0x82BF95AA, 0x82AF82AA, 0x89C2945C, 0x82C982C8, 0x00000000
+const lbl_803DF3A8_Pool lbl_803DF3A8 = {
+    "\221O\214\343\202\314\214\202\202\277\225\252\202\257\202\252\211\302\224\\\202\311\202\310"
 };
-const unk32 lbl_803DF3C4[7] = {
-    0x82E98141, 0x82B782B2, 0x82A28D55, 0x8C828341, 0x83438365, 0x83808142, 0x00000000
+const lbl_803DF3C4_Pool lbl_803DF3C4 = {
+    "\202\351\201A\202\267\202\262\202\242\215U\214\202\203A\203C\203e\203\200\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF3E0[7] = {
-    0x93AA82C9, 0x835E8389, 0x834382F0, 0x978E82C6, 0x82B582DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF3E0_Pool ItemAliasLocalizedVariant_rodata_803DF3E0 = {
+    "\223\252\202\311\203^\203\211\203C\202\360\227\216\202\306\202\265\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF3FC[7] = {
-    0x89BA82F0, 0x92CA82E9, 0x82C6899F, 0x82B582C2, 0x82D482B3, 0x82EA82DC, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF3FC_Pool ItemAliasLocalizedVariant_rodata_803DF3FC = {
+    "\211\272\202\360\222\312\202\351\202\306\211\237\202\265\202\302\202\324\202\263\202\352\202\334"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF418[6] = {
-    0x96BD9286, 0x82B782E9, 0x82C68141, 0x82D682F1, 0x82C88BC8, 0x82AA0000
+const ItemAliasLocalizedVariant_rodata_803DF418_Pool ItemAliasLocalizedVariant_rodata_803DF418 = {
+    "\226\275\222\206\202\267\202\351\202\306\201A\202\326\202\361\202\310\213\310\202\252"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF430[4] = {
-    0x96C282E8, 0x8BBF82AB, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DF430_Pool ItemAliasLocalizedVariant_rodata_803DF430 = {
+    "\226\302\202\350\213\277\202\253\202\334\202\267\201B"
 };
-const unk32 lbl_803DF440[6] = {
-    0x914F95FB, 0x82D682DC, 0x82C182B7, 0x82AE94AD, 0x8ECB8149, 0x00000000
+const lbl_803DF440_Pool lbl_803DF440 = {
+    "\221O\225\373\202\326\202\334\202\301\202\267\202\256\224\255\216\313\201I"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF458[7] = {
-    0x95C782C9, 0x82A082BD, 0x82E982C6, 0x836E836C, 0x95D482E8, 0x8141834A, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF458_Pool ItemAliasLocalizedVariant_rodata_803DF458 = {
+    "\225\307\202\311\202\240\202\275\202\351\202\306\203n\203l\225\324\202\350\201A\203J"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF474[7] = {
-    0x815B8367, 0x82C982A0, 0x82BD82E9, 0x82C68FAC, 0x835F8381, 0x815B8357, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF474_Pool ItemAliasLocalizedVariant_rodata_803DF474 = {
+    "\201[\203g\202\311\202\240\202\275\202\351\202\306\217\254\203_\203\201\201[\203W"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF490[5] = {
-    0x914F82C9, 0x8CFC82AF, 0x82C494AD, 0x8ECB8149, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF490_Pool ItemAliasLocalizedVariant_rodata_803DF490 = {
+    "\221O\202\311\214\374\202\257\202\304\224\255\216\313\201I"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF4A4[7] = {
-    0x95C782A9, 0x934782C9, 0x82D482C2, 0x82A982E9, 0x82C691E5, 0x949A94AD, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF4A4_Pool ItemAliasLocalizedVariant_rodata_803DF4A4 = {
+    "\225\307\202\251\223G\202\311\202\324\202\302\202\251\202\351\202\306\221\345\224\232\224\255"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF4C0[7] = {
-    0x815B8367, 0x82C982A0, 0x82BD82E9, 0x82C69286, 0x835F8381, 0x815B8357, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF4C0_Pool ItemAliasLocalizedVariant_rodata_803DF4C0 = {
+    "\201[\203g\202\311\202\240\202\275\202\351\202\306\222\206\203_\203\201\201[\203W"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF4DC[6] = {
-    0x82A682F1, 0x82DC82AD, 0x82CC9286, 0x82C993FC, 0x82E982C6, 0x81410000
+const ItemAliasLocalizedVariant_rodata_803DF4DC_Pool ItemAliasLocalizedVariant_rodata_803DF4DC = {
+    "\202\246\202\361\202\334\202\255\202\314\222\206\202\311\223\374\202\351\202\306\201A"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF4F4[7] = {
-    0x914F82AA, 0x8CA982A6, 0x82C982AD, 0x82AD82C8, 0x82E882DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF4F4_Pool ItemAliasLocalizedVariant_rodata_803DF4F4 = {
+    "\221O\202\252\214\251\202\246\202\311\202\255\202\255\202\310\202\350\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF510[5] = {
-    0x91BC82CC, 0x906C82CC, 0x83418343, 0x83658380, 0x82F00000
+const ItemAliasLocalizedVariant_rodata_803DF510_Pool ItemAliasLocalizedVariant_rodata_803DF510 = {
+    "\221\274\202\314\220l\202\314\203A\203C\203e\203\200\202\360"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF524[5] = {
-    0x8FC182B5, 0x82BF82E1, 0x82A282DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF524_Pool ItemAliasLocalizedVariant_rodata_803DF524 = {
+    "\217\301\202\265\202\277\202\341\202\242\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF538[7] = {
-    0x837D838A, 0x834982C6, 0x838B8343, 0x815B8357, 0x88C88A4F, 0x82CD8141, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF538_Pool ItemAliasLocalizedVariant_rodata_803DF538 = {
+    "\203}\203\212\203I\202\306\203\213\203C\201[\203W\210\310\212O\202\315\201A"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF554[7] = {
-    0x82D482C2, 0x82A982E9, 0x82C682D3, 0x82C182C6, 0x82D182DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF554_Pool ItemAliasLocalizedVariant_rodata_803DF554 = {
+    "\202\324\202\302\202\251\202\351\202\306\202\323\202\301\202\306\202\321\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF570[7] = {
-    0x93A582DE, 0x82C6835E, 0x83438384, 0x82AA8370, 0x8393834E, 0x82B582DC, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF570_Pool ItemAliasLocalizedVariant_rodata_803DF570 = {
+    "\223\245\202\336\202\306\203^\203C\203\204\202\252\203p\203\223\203N\202\265\202\334"
 };
-const unk32 lbl_803DF58C[5] = {
-    0x8CE382EB, 0x82C98CFC, 0x82AF82C4, 0x94AD8ECB, 0x81490000
+const lbl_803DF58C_Pool lbl_803DF58C = {
+    "\214\343\202\353\202\311\214\374\202\257\202\304\224\255\216\313\201I"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF5A0[7] = {
-    0x96BD9286, 0x82B782E9, 0x82C6836E, 0x83938368, 0x838B834B, 0x834E834B, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF5A0_Pool ItemAliasLocalizedVariant_rodata_803DF5A0 = {
+    "\226\275\222\206\202\267\202\351\202\306\203n\203\223\203h\203\213\203K\203N\203K"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF5BC[5] = {
-    0x834E8195, 0x96DA82AA, 0x834E8389, 0x834E8389, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DF5BC_Pool ItemAliasLocalizedVariant_rodata_803DF5BC = {
+    "\203N\201\225\226\332\202\252\203N\203\211\203N\203\211\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF5D0[7] = {
-    0x96BD9286, 0x82B582BD, 0x834A815B, 0x836782F0, 0x835F8362, 0x83568385, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF5D0_Pool ItemAliasLocalizedVariant_rodata_803DF5D0 = {
+    "\226\275\222\206\202\265\202\275\203J\201[\203g\202\360\203_\203b\203V\203\205"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF5EC[3] = {
-    0x82B382B9, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DF5EC_Pool ItemAliasLocalizedVariant_rodata_803DF5EC = {
+    "\202\263\202\271\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF5F8[7] = {
-    0x93A582DE, 0x82C6836E, 0x83938368, 0x838B82AA, 0x836C836F, 0x836C836F, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF5F8_Pool ItemAliasLocalizedVariant_rodata_803DF5F8 = {
+    "\223\245\202\336\202\306\203n\203\223\203h\203\213\202\252\203l\203o\203l\203o"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF614[3] = {
-    0x82B582DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF614_Pool ItemAliasLocalizedVariant_rodata_803DF614 = {
+    "\202\265\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF620[7] = {
-    0x8CE382EB, 0x82C9837B, 0x838082D6, 0x82A282F0, 0x978E82C6, 0x82B582DC, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF620_Pool ItemAliasLocalizedVariant_rodata_803DF620 = {
+    "\214\343\202\353\202\311\203{\203\200\202\326\202\242\202\360\227\216\202\306\202\265\202\334"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF63C[6] = {
-    0x82B78142, 0x82D482C2, 0x82A982E9, 0x82C691E5, 0x949A94AD, 0x81490000
+const ItemAliasLocalizedVariant_rodata_803DF63C_Pool ItemAliasLocalizedVariant_rodata_803DF63C = {
+    "\202\267\201B\202\324\202\302\202\251\202\351\202\306\221\345\224\232\224\255\201I"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF654[7] = {
-    0x8D8291AC, 0x88DA93AE, 0x82B582C4, 0x814182D4, 0x82C282A9, 0x82C182BD, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF654_Pool ItemAliasLocalizedVariant_rodata_803DF654 = {
+    "\215\202\221\254\210\332\223\256\202\265\202\304\201A\202\324\202\302\202\251\202\301\202\275"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF670[7] = {
-    0x834A815B, 0x836782F0, 0x82CD82CB, 0x82C682CE, 0x82B582DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF670_Pool ItemAliasLocalizedVariant_rodata_803DF670 = {
+    "\203J\201[\203g\202\360\202\315\202\313\202\306\202\316\202\265\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF68C[7] = {
-    0x8AAA82AB, 0x8D9E82F1, 0x82BE834A, 0x815B8367, 0x82F08141, 0x8BF39286, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF68C_Pool ItemAliasLocalizedVariant_rodata_803DF68C = {
+    "\212\252\202\253\215\236\202\361\202\276\203J\201[\203g\202\360\201A\213\363\222\206"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF6A8[5] = {
-    0x82D69081, 0x82AB94F2, 0x82CE82B5, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DF6A8_Pool ItemAliasLocalizedVariant_rodata_803DF6A8 = {
+    "\202\326\220\201\202\253\224\362\202\316\202\265\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF6BC[7] = {
-    0x96BD9286, 0x82B782E9, 0x82C68370, 0x834382AA, 0x94F282D1, 0x8E5582E8, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF6BC_Pool ItemAliasLocalizedVariant_rodata_803DF6BC = {
+    "\226\275\222\206\202\267\202\351\202\306\203p\203C\202\252\224\362\202\321\216U\202\350"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF6D8[6] = {
-    0x914F82AA, 0x8CA982A6, 0x82C882AD, 0x82C882E8, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DF6D8_Pool ItemAliasLocalizedVariant_rodata_803DF6D8 = {
+    "\221O\202\252\214\251\202\246\202\310\202\255\202\310\202\350\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF6F0[7] = {
-    0x834A815B, 0x836782CC, 0x8CE382EB, 0x82C982A0, 0x82AB82A9, 0x82F182F0, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF6F0_Pool ItemAliasLocalizedVariant_rodata_803DF6F0 = {
+    "\203J\201[\203g\202\314\214\343\202\353\202\311\202\240\202\253\202\251\202\361\202\360"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF70C[7] = {
-    0x82D082AB, 0x82B882C1, 0x82C48358, 0x8373815B, 0x8368835F, 0x83458393, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF70C_Pool ItemAliasLocalizedVariant_rodata_803DF70C = {
+    "\202\320\202\253\202\270\202\301\202\304\203X\203s\201[\203h\203_\203E\203\223"
 };
-const unk32 lbl_803DF728[7] = {
-    0x82DC82D4, 0x82B582A2, 0x8CF582F0, 0x94AD8CF5, 0x82B582DC, 0x82B78142, 0x00000000
+const lbl_803DF728_Pool lbl_803DF728 = {
+    "\202\334\202\324\202\265\202\242\214\365\202\360\224\255\214\365\202\265\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF744[7] = {
-    0x8ECA905E, 0x82C98343, 0x835E8359, 0x83898F91, 0x82AB82B5, 0x82BF82E1, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF744_Pool ItemAliasLocalizedVariant_rodata_803DF744 = {
+    "\216\312\220^\202\311\203C\203^\203Y\203\211\217\221\202\253\202\265\202\277\202\341"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF760[3] = {
-    0x82A282DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF760_Pool ItemAliasLocalizedVariant_rodata_803DF760 = {
+    "\202\242\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF76C[7] = {
-    0x8BDF82AD, 0x82F092CA, 0x89DF82B5, 0x82BD834A, 0x815B8367, 0x82CC8341, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF76C_Pool ItemAliasLocalizedVariant_rodata_803DF76C = {
+    "\213\337\202\255\202\360\222\312\211\337\202\265\202\275\203J\201[\203g\202\314\203A"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF788[5] = {
-    0x83438365, 0x838082F0, 0x904882D7, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DF788_Pool ItemAliasLocalizedVariant_rodata_803DF788 = {
+    "\203C\203e\203\200\202\360\220H\202\327\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF79C[7] = {
-    0x95B282C9, 0x904782EA, 0x82E982C6, 0x814182A2, 0x82B882EA, 0x82A982CC, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF79C_Pool ItemAliasLocalizedVariant_rodata_803DF79C = {
+    "\225\262\202\311\220G\202\352\202\351\202\306\201A\202\242\202\270\202\352\202\251\202\314"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF7B8[7] = {
-    0x834C836D, 0x83528CF8, 0x89CA82AA, 0x8B4E82B1, 0x82E882DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF7B8_Pool ItemAliasLocalizedVariant_rodata_803DF7B8 = {
+    "\203L\203m\203R\214\370\211\312\202\252\213N\202\261\202\350\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF7D4[7] = {
-    0x83578383, 0x83938376, 0x8B40945C, 0x82F08E67, 0x97709573, 0x945C82C9, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF7D4_Pool ItemAliasLocalizedVariant_rodata_803DF7D4 = {
+    "\203W\203\203\203\223\203v\213@\224\\\202\360\216g\227p\225s\224\\\202\311"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF7F0[7] = {
-    0x836E8393, 0x8368838B, 0x82F08349, 0x8393837B, 0x838D89BB, 0x82B382B9, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF7F0_Pool ItemAliasLocalizedVariant_rodata_803DF7F0 = {
+    "\203n\203\223\203h\203\213\202\360\203I\203\223\203{\203\215\211\273\202\263\202\271"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF80C[7] = {
-    0x835E8343, 0x838482CC, 0x91E582AB, 0x82B382F0, 0x95CF89BB, 0x82B382B9, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF80C_Pool ItemAliasLocalizedVariant_rodata_803DF80C = {
+    "\203^\203C\203\204\202\314\221\345\202\253\202\263\202\360\225\317\211\273\202\263\202\271"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF828[7] = {
-    0x835E8343, 0x838482F0, 0x834A834E, 0x834A834E, 0x82C995CF, 0x8C6082B3, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF828_Pool ItemAliasLocalizedVariant_rodata_803DF828 = {
+    "\203^\203C\203\204\202\360\203J\203N\203J\203N\202\311\225\317\214`\202\263"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF844[3] = {
-    0x82B982DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF844_Pool ItemAliasLocalizedVariant_rodata_803DF844 = {
+    "\202\271\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF850[7] = {
-    0x895E935D, 0x82F0837E, 0x835882B5, 0x82BD8E9E, 0x82C98FCE, 0x82ED82EA, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF850_Pool ItemAliasLocalizedVariant_rodata_803DF850 = {
+    "\211^\223]\202\360\203~\203X\202\265\202\275\216\236\202\311\217\316\202\355\202\352"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF86C[4] = {
-    0x82BF82E1, 0x82A282DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF86C_Pool ItemAliasLocalizedVariant_rodata_803DF86C = {
+    "\202\277\202\341\202\242\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF87C[7] = {
-    0x8389838A, 0x815B8277, 0x82CC82AF, 0x82DE82E8, 0x82F08F6F, 0x82B582DC, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF87C_Pool ItemAliasLocalizedVariant_rodata_803DF87C = {
+    "\203\211\203\212\201[\202w\202\314\202\257\202\336\202\350\202\360\217o\202\265\202\334"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF898[7] = {
-    0x82B78142, 0x82AF82DE, 0x82E882C9, 0x82D382EA, 0x82E982C6, 0x81418358, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF898_Pool ItemAliasLocalizedVariant_rodata_803DF898 = {
+    "\202\267\201B\202\257\202\336\202\350\202\311\202\323\202\352\202\351\202\306\201A\203X"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF8B4[6] = {
-    0x83738393, 0x82B582C4, 0x82B582DC, 0x82A282DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF8B4_Pool ItemAliasLocalizedVariant_rodata_803DF8B4 = {
+    "\203s\203\223\202\265\202\304\202\265\202\334\202\242\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF8CC[7] = {
-    0x93A582DE, 0x82C6946A, 0x97F482B5, 0x82C48141, 0x835F8381, 0x815B8357, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF8CC_Pool ItemAliasLocalizedVariant_rodata_803DF8CC = {
+    "\223\245\202\336\202\306\224j\227\364\202\265\202\304\201A\203_\203\201\201[\203W"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF8E8[4] = {
-    0x82F082A4, 0x82AF82DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF8E8_Pool ItemAliasLocalizedVariant_rodata_803DF8E8 = {
+    "\202\360\202\244\202\257\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF8F8[7] = {
-    0x837B8358, 0x834D8383, 0x8389834B, 0x82AA8367, 0x8389834E, 0x835E815B, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF8F8_Pool ItemAliasLocalizedVariant_rodata_803DF8F8 = {
+    "\203{\203X\203M\203\203\203\211\203K\202\252\203g\203\211\203N\203^\201["
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF914[7] = {
-    0x8372815B, 0x838082F0, 0x8F6F82B5, 0x8141834A, 0x815B8367, 0x82F082C2, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF914_Pool ItemAliasLocalizedVariant_rodata_803DF914 = {
+    "\203r\201[\203\200\202\360\217o\202\265\201A\203J\201[\203g\202\360\202\302"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF930[4] = {
-    0x82A982DC, 0x82A682DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF930_Pool ItemAliasLocalizedVariant_rodata_803DF930 = {
+    "\202\251\202\334\202\246\202\334\202\267\201B"
 };
-const unk32 lbl_803DF940[5] = {
-    0x8CE382EB, 0x82C98CFC, 0x82A982C1, 0x82C48141, 0x00000000
+const lbl_803DF940_Pool lbl_803DF940 = {
+    "\214\343\202\353\202\311\214\374\202\251\202\301\202\304\201A"
 };
-const unk32 lbl_803DF954[4] = {
-    0x834C8389, 0x815B82F0, 0x94AD8ECB, 0x81490000
+const lbl_803DF954_Pool lbl_803DF954 = {
+    "\203L\203\211\201[\202\360\224\255\216\313\201I"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF964[7] = {
-    0x834A815B, 0x836782C9, 0x834A837E, 0x8369838A, 0x82AA978E, 0x82BF8141, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF964_Pool ItemAliasLocalizedVariant_rodata_803DF964 = {
+    "\203J\201[\203g\202\311\203J\203~\203i\203\212\202\252\227\216\202\277\201A"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF980[7] = {
-    0x834A815B, 0x836782C9, 0x90E182AA, 0x82D382E8, 0x8141835E, 0x83438384, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF980_Pool ItemAliasLocalizedVariant_rodata_803DF980 = {
+    "\203J\201[\203g\202\311\220\341\202\252\202\323\202\350\201A\203^\203C\203\204"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF99C[6] = {
-    0x82AA82B7, 0x82D782E8, 0x82DC82AD, 0x82E882DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF99C_Pool ItemAliasLocalizedVariant_rodata_803DF99C = {
+    "\202\252\202\267\202\327\202\350\202\334\202\255\202\350\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF9B4[7] = {
-    0x834A815B, 0x836782C9, 0x894A82AA, 0x82D382E8, 0x8141835E, 0x83438384, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF9B4_Pool ItemAliasLocalizedVariant_rodata_803DF9B4 = {
+    "\203J\201[\203g\202\311\211J\202\252\202\323\202\350\201A\203^\203C\203\204"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF9D0[7] = {
-    0x82AA82B7, 0x82D782E8, 0x82E282B7, 0x82AD82C8, 0x82E882DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF9D0_Pool ItemAliasLocalizedVariant_rodata_803DF9D0 = {
+    "\202\252\202\267\202\327\202\350\202\342\202\267\202\255\202\310\202\350\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DF9EC[7] = {
-    0x83418343, 0x83658380, 0x82F08E67, 0x97709573, 0x945C82C9, 0x82B582DC, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DF9EC_Pool ItemAliasLocalizedVariant_rodata_803DF9EC = {
+    "\203A\203C\203e\203\200\202\360\216g\227p\225s\224\\\202\311\202\265\202\334"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFA08[7] = {
-    0x82D482C2, 0x82A982E9, 0x82C69286, 0x82A982E7, 0x97C782A2, 0x82E082CC, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFA08_Pool ItemAliasLocalizedVariant_rodata_803DFA08 = {
+    "\202\324\202\302\202\251\202\351\202\306\222\206\202\251\202\347\227\307\202\242\202\340\202\314"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFA24[7] = {
-    0x82E288AB, 0x82A282E0, 0x82CC82AA, 0x8F6F8CBB, 0x82B582DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFA24_Pool ItemAliasLocalizedVariant_rodata_803DFA24 = {
+    "\202\342\210\253\202\242\202\340\202\314\202\252\217o\214\273\202\265\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFA40[7] = {
-    0x8373834A, 0x836282C6, 0x8CF582C1, 0x82C496DA, 0x82CC914F, 0x82AA8CA9, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFA40_Pool ItemAliasLocalizedVariant_rodata_803DFA40 = {
+    "\203s\203J\203b\202\306\214\365\202\301\202\304\226\332\202\314\221O\202\252\214\251"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFA5C[5] = {
-    0x82A682C8, 0x82AD82C8, 0x82E882DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFA5C_Pool ItemAliasLocalizedVariant_rodata_803DFA5C = {
+    "\202\246\202\310\202\255\202\310\202\350\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFA70[7] = {
-    0x82B782D7, 0x82C482CC, 0x834A815B, 0x836782C9, 0x836A835A, 0x8382836D, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFA70_Pool ItemAliasLocalizedVariant_rodata_803DFA70 = {
+    "\202\267\202\327\202\304\202\314\203J\201[\203g\202\311\203j\203Z\203\202\203m"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFA8C[7] = {
-    0x82CC838D, 0x8362834E, 0x83498393, 0x83418389, 0x815B8380, 0x82F096C2, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFA8C_Pool ItemAliasLocalizedVariant_rodata_803DFA8C = {
+    "\202\314\203\215\203b\203N\203I\203\223\203A\203\211\201[\203\200\202\360\226\302"
 };
-const unk32 lbl_803DFAA8[6] = {
-    0x83458343, 0x838B8358, 0x82C58B53, 0x82B282C1, 0x82B18142, 0x00000000
+const lbl_803DFAA8_Pool lbl_803DFAA8 = {
+    "\203E\203C\203\213\203X\202\305\213S\202\262\202\301\202\261\201B"
 };
-const unk32 lbl_803DFAC0[7] = {
-    0x91BC82CC, 0x834A815B, 0x836782D6, 0x91CC9396, 0x82E882B5, 0x82C48141, 0x00000000
+const lbl_803DFAC0_Pool lbl_803DFAC0 = {
+    "\221\274\202\314\203J\201[\203g\202\326\221\314\223\226\202\350\202\265\202\304\201A"
 };
-const unk32 lbl_803DFADC[7] = {
-    0x83458343, 0x838B8358, 0x82F088DA, 0x93AE82B3, 0x82B982E6, 0x82A48149, 0x00000000
+const lbl_803DFADC_Pool lbl_803DFADC = {
+    "\203E\203C\203\213\203X\202\360\210\332\223\256\202\263\202\271\202\346\202\244\201I"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFAF8[7] = {
-    0x93AA82C9, 0x835E8389, 0x834382F0, 0x978E82C6, 0x82B582DC, 0x82AD82E8, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFAF8_Pool ItemAliasLocalizedVariant_rodata_803DFAF8 = {
+    "\223\252\202\311\203^\203\211\203C\202\360\227\216\202\306\202\265\202\334\202\255\202\350"
 };
-const unk32 lbl_803DFB14[7] = {
-    0x8CE382EB, 0x82C982A8, 0x82C882E7, 0x834B8358, 0x82F094AD, 0x8ECB8149, 0x00000000
+const lbl_803DFB14_Pool lbl_803DFB14 = {
+    "\214\343\202\353\202\311\202\250\202\310\202\347\203K\203X\202\360\224\255\216\313\201I"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFB30[7] = {
-    0x834B8358, 0x82CC9286, 0x82C993FC, 0x82E982C6, 0x836E8393, 0x8368838B, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFB30_Pool ItemAliasLocalizedVariant_rodata_803DFB30 = {
+    "\203K\203X\202\314\222\206\202\311\223\374\202\351\202\306\203n\203\223\203h\203\213"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFB4C[7] = {
-    0x834B834E, 0x834B834E, 0x819596DA, 0x82AA834E, 0x8389834E, 0x83898142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFB4C_Pool ItemAliasLocalizedVariant_rodata_803DFB4C = {
+    "\203K\203N\203K\203N\201\225\226\332\202\252\203N\203\211\203N\203\211\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFB68[5] = {
-    0x83728388, 0x815B8393, 0x82C682CC, 0x82D182C4, 0x81410000
+const ItemAliasLocalizedVariant_rodata_803DFB68_Pool ItemAliasLocalizedVariant_rodata_803DFB68 = {
+    "\203r\203\210\201[\203\223\202\306\202\314\202\321\202\304\201A"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFB7C[7] = {
-    0x91BC82CC, 0x834A815B, 0x836782A9, 0x82E78341, 0x83438365, 0x838082F0, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFB7C_Pool ItemAliasLocalizedVariant_rodata_803DFB7C = {
+    "\221\274\202\314\203J\201[\203g\202\251\202\347\203A\203C\203e\203\200\202\360"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFB98[4] = {
-    0x82A482CE, 0x82A282DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFB98_Pool ItemAliasLocalizedVariant_rodata_803DFB98 = {
+    "\202\244\202\316\202\242\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFBA8[4] = {
-    0x837E8368, 0x838A82B1, 0x82A482E7, 0x82F00000
+const ItemAliasLocalizedVariant_rodata_803DFBA8_Pool ItemAliasLocalizedVariant_rodata_803DFBA8 = {
+    "\203~\203h\203\212\202\261\202\244\202\347\202\360"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFBB8[5] = {
-    0x825289F1, 0x94AD8ECB, 0x82C582AB, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DFBB8_Pool ItemAliasLocalizedVariant_rodata_803DFBB8 = {
+    "\202R\211\361\224\255\216\313\202\305\202\253\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFBCC[3] = {
-    0x836F8369, 0x836982F0, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFBCC_Pool ItemAliasLocalizedVariant_rodata_803DFBCC = {
+    "\203o\203i\203i\202\360"
 };
-const unk32 lbl_803DFBD8[6] = {
-    0x8E6782A4, 0x82C6835F, 0x83628356, 0x838582B5, 0x82DC82B7, 0x81420000
+const lbl_803DFBD8_Pool lbl_803DFBD8 = {
+    "\216g\202\244\202\306\203_\203b\203V\203\205\202\265\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFBF0[5] = {
-    0x825289F1, 0x82DC82C5, 0x8E6782A6, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DFBF0_Pool ItemAliasLocalizedVariant_rodata_803DFBF0 = {
+    "\202R\211\361\202\334\202\305\216g\202\246\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFC04[3] = {
-    0x835E8389, 0x834382F0, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFC04_Pool ItemAliasLocalizedVariant_rodata_803DFC04 = {
+    "\203^\203\211\203C\202\360"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFC10[3] = {
-    0x82A682F1, 0x82DC82AD, 0x82F00000
+const ItemAliasLocalizedVariant_rodata_803DFC10_Pool ItemAliasLocalizedVariant_rodata_803DFC10 = {
+    "\202\246\202\361\202\334\202\255\202\360"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFC1C[3] = {
-    0x8365838C, 0x835482F0, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFC1C_Pool ItemAliasLocalizedVariant_rodata_803DFC1C = {
+    "\203e\203\214\203T\202\360"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFC28[3] = {
-    0x82AA82D1, 0x82E582A4, 0x82F00000
+const ItemAliasLocalizedVariant_rodata_803DFC28_Pool ItemAliasLocalizedVariant_rodata_803DFC28 = {
+    "\202\252\202\321\202\345\202\244\202\360"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFC34[5] = {
-    0x834A834E, 0x834A834E, 0x835E8343, 0x838482F0, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFC34_Pool ItemAliasLocalizedVariant_rodata_803DFC34 = {
+    "\203J\203N\203J\203N\203^\203C\203\204\202\360"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFC48[4] = {
-    0x836E838A, 0x835A8393, 0x837B8393, 0x82F00000
+const ItemAliasLocalizedVariant_rodata_803DFC48_Pool ItemAliasLocalizedVariant_rodata_803DFC48 = {
+    "\203n\203\212\203Z\203\223\203{\203\223\202\360"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFC58[3] = {
-    0x82D082B0, 0x83798393, 0x82F00000
+const ItemAliasLocalizedVariant_rodata_803DFC58_Pool ItemAliasLocalizedVariant_rodata_803DFC58 = {
+    "\202\320\202\260\203y\203\223\202\360"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFC64[3] = {
-    0x82BD82C2, 0x82DC82AB, 0x82F00000
+const ItemAliasLocalizedVariant_rodata_803DFC64_Pool ItemAliasLocalizedVariant_rodata_803DFC64 = {
+    "\202\275\202\302\202\334\202\253\202\360"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFC70[5] = {
-    0x83758389, 0x8362834E, 0x82B182A4, 0x82E782F0, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFC70_Pool ItemAliasLocalizedVariant_rodata_803DFC70 = {
+    "\203u\203\211\203b\203N\202\261\202\244\202\347\202\360"
 };
-const unk32 lbl_803DFC84[7] = {
-    0x8378838D, 0x82F082CC, 0x82CE82B5, 0x82C48141, 0x918A8EE8, 0x82CC8341, 0x00000000
+const lbl_803DFC84_Pool lbl_803DFC84 = {
+    "\203x\203\215\202\360\202\314\202\316\202\265\202\304\201A\221\212\216\350\202\314\203A"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFCA0[7] = {
-    0x83528343, 0x839382BB, 0x82C182AD, 0x82E882CC, 0x836A835A, 0x8382836D, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DFCA0_Pool ItemAliasLocalizedVariant_rodata_803DFCA0 = {
+    "\203R\203C\203\223\202\273\202\301\202\255\202\350\202\314\203j\203Z\203\202\203m\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFCBC[7] = {
-    0x8AD488E1, 0x82C182C4, 0x82C682E9, 0x82C6949A, 0x94AD82B5, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DFCBC_Pool ItemAliasLocalizedVariant_rodata_803DFCBC = {
+    "\212\324\210\341\202\301\202\304\202\306\202\351\202\306\224\232\224\255\202\265\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFCD8[7] = {
-    0x8345836A, 0x837B815B, 0x82F0834A, 0x815B8367, 0x82C9835A, 0x83628367, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DFCD8_Pool ItemAliasLocalizedVariant_rodata_803DFCD8 = {
+    "\203E\203j\203{\201[\202\360\203J\201[\203g\202\311\203Z\203b\203g\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFCF4[7] = {
-    0x91CC9396, 0x82BD82E8, 0x82B782E9, 0x82C68370, 0x8393834E, 0x82B382B9, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFCF4_Pool ItemAliasLocalizedVariant_rodata_803DFCF4 = {
+    "\221\314\223\226\202\275\202\350\202\267\202\351\202\306\203p\203\223\203N\202\263\202\271"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFD10[3] = {
-    0x82E782EA, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DFD10_Pool ItemAliasLocalizedVariant_rodata_803DFD10 = {
+    "\202\347\202\352\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFD1C[7] = {
-    0x8BDF82C3, 0x82AD834C, 0x83838389, 0x82CC8341, 0x83438365, 0x838082F0, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFD1C_Pool ItemAliasLocalizedVariant_rodata_803DFD1C = {
+    "\213\337\202\303\202\255\203L\203\203\203\211\202\314\203A\203C\203e\203\200\202\360"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFD38[4] = {
-    0x904882D7, 0x82BF82E1, 0x82A282DC, 0x82B70000
+const ItemAliasLocalizedVariant_rodata_803DFD38_Pool ItemAliasLocalizedVariant_rodata_803DFD38 = {
+    "\220H\202\327\202\277\202\341\202\242\202\334\202\267"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFD48[7] = {
-    0x96BD9286, 0x82B782E9, 0x82C68FAC, 0x82B382AD, 0x82C882E8, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DFD48_Pool ItemAliasLocalizedVariant_rodata_803DFD48 = {
+    "\226\275\222\206\202\267\202\351\202\306\217\254\202\263\202\255\202\310\202\350\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFD64[6] = {
-    0x8ECA905E, 0x82C982A8, 0x96CA82AA, 0x82C282AB, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DFD64_Pool ItemAliasLocalizedVariant_rodata_803DFD64 = {
+    "\216\312\220^\202\311\202\250\226\312\202\252\202\302\202\253\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFD7C[7] = {
-    0x8EA995AA, 0x82CC8ECA, 0x905E82F0, 0x918A8EE8, 0x82CC89E6, 0x96CA82C5, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFD7C_Pool ItemAliasLocalizedVariant_rodata_803DFD7C = {
+    "\216\251\225\252\202\314\216\312\220^\202\360\221\212\216\350\202\314\211\346\226\312\202\305"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFD98[4] = {
-    0x91E5965C, 0x82EA82B3, 0x82B982DC, 0x82B70000
+const ItemAliasLocalizedVariant_rodata_803DFD98_Pool ItemAliasLocalizedVariant_rodata_803DFD98 = {
+    "\221\345\226\\\202\352\202\263\202\271\202\334\202\267"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFDA8[7] = {
-    0x96BD9286, 0x82B782E9, 0x82C6834A, 0x815B8367, 0x82AA8F9F, 0x8EE882C9, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFDA8_Pool ItemAliasLocalizedVariant_rodata_803DFDA8 = {
+    "\226\275\222\206\202\267\202\351\202\306\203J\201[\203g\202\252\217\237\216\350\202\311"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFDC4[5] = {
-    0x83578383, 0x83938376, 0x82B582DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFDC4_Pool ItemAliasLocalizedVariant_rodata_803DFDC4 = {
+    "\203W\203\203\203\223\203v\202\265\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFDD8[7] = {
-    0x8CE382EB, 0x82C990DD, 0x927582B7, 0x82E98341, 0x83438365, 0x83808142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFDD8_Pool ItemAliasLocalizedVariant_rodata_803DFDD8 = {
+    "\214\343\202\353\202\311\220\335\222u\202\267\202\351\203A\203C\203e\203\200\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFDF4[7] = {
-    0x965C82EA, 0x82DC82ED, 0x82E9836C, 0x8359837E, 0x82C990DA, 0x904782B7, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFDF4_Pool ItemAliasLocalizedVariant_rodata_803DFDF4 = {
+    "\226\\\202\352\202\334\202\355\202\351\203l\203Y\203~\202\311\220\332\220G\202\267"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFE10[4] = {
-    0x82E982C6, 0x91E5949A, 0x94AD8149, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFE10_Pool ItemAliasLocalizedVariant_rodata_803DFE10 = {
+    "\202\351\202\306\221\345\224\232\224\255\201I"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFE20[7] = {
-    0x83418343, 0x83658380, 0x837B8362, 0x834E8358, 0x82BB82C1, 0x82AD82E8, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFE20_Pool ItemAliasLocalizedVariant_rodata_803DFE20 = {
+    "\203A\203C\203e\203\200\203{\203b\203N\203X\202\273\202\301\202\255\202\350"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFE3C[4] = {
-    0x82CC949A, 0x926582C5, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFE3C_Pool ItemAliasLocalizedVariant_rodata_803DFE3C = {
+    "\202\314\224\232\222e\202\305\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFE4C[7] = {
-    0x96BD9286, 0x82B782E9, 0x82C6834A, 0x815B8367, 0x82AA834F, 0x836A8383, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFE4C_Pool ItemAliasLocalizedVariant_rodata_803DFE4C = {
+    "\226\275\222\206\202\267\202\351\202\306\203J\201[\203g\202\252\203O\203j\203\203"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFE68[5] = {
-    0x834F836A, 0x838382C9, 0x82C882E8, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DFE68_Pool ItemAliasLocalizedVariant_rodata_803DFE68 = {
+    "\203O\203j\203\203\202\311\202\310\202\350\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFE7C[7] = {
-    0x88EA92E8, 0x8E9E8AD4, 0x81418EC0, 0x8BB582AA, 0x8EA995AA, 0x92869053, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFE7C_Pool ItemAliasLocalizedVariant_rodata_803DFE7C = {
+    "\210\352\222\350\216\236\212\324\201A\216\300\213\265\202\252\216\251\225\252\222\206\220S"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFE98[4] = {
-    0x82C982C8, 0x82E882DC, 0x82B78142, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFE98_Pool ItemAliasLocalizedVariant_rodata_803DFE98 = {
+    "\202\311\202\310\202\350\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFEA8[7] = {
-    0x88EA92E8, 0x8E9E8AD4, 0x814182DC, 0x82ED82E8, 0x82CC8352, 0x83438393, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFEA8_Pool ItemAliasLocalizedVariant_rodata_803DFEA8 = {
+    "\210\352\222\350\216\236\212\324\201A\202\334\202\355\202\350\202\314\203R\203C\203\223"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFEC4[4] = {
-    0x82F089F1, 0x8EFB82B5, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DFEC4_Pool ItemAliasLocalizedVariant_rodata_803DFEC4 = {
+    "\202\360\211\361\216\373\202\265\202\334\202\267\201B"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFED4[7] = {
-    0x8EA995AA, 0x82C98E67, 0x82A48341, 0x83438365, 0x83808142, 0x8CE382EB, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFED4_Pool ItemAliasLocalizedVariant_rodata_803DFED4 = {
+    "\216\251\225\252\202\311\216g\202\244\203A\203C\203e\203\200\201B\214\343\202\353"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFEF0[7] = {
-    0x82C9836F, 0x83698369, 0x82F08252, 0x82C282AD, 0x82C182C2, 0x82AF82DC, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFEF0_Pool ItemAliasLocalizedVariant_rodata_803DFEF0 = {
+    "\202\311\203o\203i\203i\202\360\202R\202\302\202\255\202\301\202\302\202\257\202\334"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFF0C[6] = {
-    0x82B78142, 0x90DA9047, 0x82B782E9, 0x82C68358, 0x83738393, 0x81490000
+const ItemAliasLocalizedVariant_rodata_803DFF0C_Pool ItemAliasLocalizedVariant_rodata_803DFF0C = {
+    "\202\267\201B\220\332\220G\202\267\202\351\202\306\203X\203s\203\223\201I"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFF24[7] = {
-    0x93AA82CC, 0x8FE382C9, 0x837C8393, 0x837682F0, 0x82C282AF, 0x81418379, 0x00000000
+const ItemAliasLocalizedVariant_rodata_803DFF24_Pool ItemAliasLocalizedVariant_rodata_803DFF24 = {
+    "\223\252\202\314\217\343\202\311\203|\203\223\203v\202\360\202\302\202\257\201A\203y"
 };
-const unk32 ItemAliasLocalizedVariant_rodata_803DFF40[6] = {
-    0x8393834C, 0x949A9265, 0x82F094AD, 0x8ECB82B5, 0x82DC82B7, 0x81420000
+const ItemAliasLocalizedVariant_rodata_803DFF40_Pool ItemAliasLocalizedVariant_rodata_803DFF40 = {
+    "\203\223\203L\224\232\222e\202\360\224\255\216\313\202\265\202\334\202\267\201B"
 };
-const unk32 lbl_803DFF58[7] = {
-    0x82528CC2, 0x82CC834C, 0x8389815B, 0x82F093AF, 0x8E9E94AD, 0x8ECB8149, 0x00000000
+const lbl_803DFF58_Pool lbl_803DFF58 = {
+    "\202R\214\302\202\314\203L\203\211\201[\202\360\223\257\216\236\224\255\216\313\201I"
 };
 char * const ItemAliasLocalizedVariant_rodata_803DFF74[316][3] = {
     (char *)&lbl_803DEED0,
@@ -2947,44 +5341,44 @@ char * const ItemAliasLocalizedVariant_rodata_803DFF74[316][3] = {
     (char *)&lbl_806DBB28,
     (char *)&lbl_806DBB28
 };
-const unk32 g_itemAssetTable_EN_rodata_803E0E44[5] = {
-    0x918A8EE8, 0x82F082BD, 0x82BD82AB, 0x82DC82B7, 0x81420000
+const g_itemAssetTable_EN_rodata_803E0E44_Pool g_itemAssetTable_EN_rodata_803E0E44 = {
+    "\221\212\216\350\202\360\202\275\202\275\202\253\202\334\202\267\201B"
 };
-const unk32 g_itemAssetTable_EN_rodata_803E0E58[7] = {
-    0x8EA995AA, 0x82C98E67, 0x82A489F1, 0x959C8341, 0x83438365, 0x83808142, 0x00000000
+const g_itemAssetTable_EN_rodata_803E0E58_Pool g_itemAssetTable_EN_rodata_803E0E58 = {
+    "\216\251\225\252\202\311\216g\202\244\211\361\225\234\203A\203C\203e\203\200\201B"
 };
-const unk32 g_itemAssetTable_EN_rodata_803E0E74[6] = {
-    0x83418343, 0x83658380, 0x8D558C82, 0x82F094BD, 0x8ECB8149, 0x00000000
+const g_itemAssetTable_EN_rodata_803E0E74_Pool g_itemAssetTable_EN_rodata_803E0E74 = {
+    "\203A\203C\203e\203\200\215U\214\202\202\360\224\275\216\313\201I"
 };
-const unk32 g_itemAssetTable_EN_rodata_803E0E8C[6] = {
-    0x91E589B9, 0x97CA82C5, 0x834E8389, 0x834E8356, 0x83878393, 0x81490000
+const g_itemAssetTable_EN_rodata_803E0E8C_Pool g_itemAssetTable_EN_rodata_803E0E8C = {
+    "\221\345\211\271\227\312\202\305\203N\203\211\203N\203V\203\207\203\223\201I"
 };
-const unk32 g_itemAssetTable_EN_rodata_803E0EA4[7] = {
-    0x8CE382EB, 0x82C9978E, 0x82C682B7, 0x83418343, 0x83658380, 0x81428140, 0x00000000
+const g_itemAssetTable_EN_rodata_803E0EA4_Pool g_itemAssetTable_EN_rodata_803E0EA4 = {
+    "\214\343\202\353\202\311\227\216\202\306\202\267\203A\203C\203e\203\200\201B\201@"
 };
-const unk32 g_itemAssetTable_EN_rodata_803E0EC0[6] = {
-    0x8CE382EB, 0x82C9837B, 0x838082D6, 0x82A282F0, 0x978E89BA, 0x81490000
+const g_itemAssetTable_EN_rodata_803E0EC0_Pool g_itemAssetTable_EN_rodata_803E0EC0 = {
+    "\214\343\202\353\202\311\203{\203\200\202\326\202\242\202\360\227\216\211\272\201I"
 };
-const unk32 g_itemAssetTable_EN_rodata_803E0ED8[5] = {
-    0x82AF82DE, 0x82E882F0, 0x8F6F82B5, 0x82DC82B7, 0x81420000
+const g_itemAssetTable_EN_rodata_803E0ED8_Pool g_itemAssetTable_EN_rodata_803E0ED8 = {
+    "\202\257\202\336\202\350\202\360\217o\202\265\202\334\202\267\201B"
 };
-const unk32 g_itemAssetTable_EN_rodata_803E0EEC[6] = {
-    0x915388F5, 0x82C98345, 0x835C82CC, 0x83418389, 0x815B8380, 0x82F00000
+const g_itemAssetTable_EN_rodata_803E0EEC_Pool g_itemAssetTable_EN_rodata_803E0EEC = {
+    "\221S\210\365\202\311\203E\203\\\202\314\203A\203\211\201[\203\200\202\360"
 };
-const unk32 g_itemAssetTable_EN_rodata_803E0F04[4] = {
-    0x96C282E7, 0x82B582DC, 0x82B78142, 0x00000000
+const g_itemAssetTable_EN_rodata_803E0F04_Pool g_itemAssetTable_EN_rodata_803E0F04 = {
+    "\226\302\202\347\202\265\202\334\202\267\201B"
 };
-const unk32 g_itemAssetTable_EN_rodata_803E0F14[6] = {
-    0x83418343, 0x83658380, 0x82F082A4, 0x82CE82A2, 0x82DC82B7, 0x81420000
+const g_itemAssetTable_EN_rodata_803E0F14_Pool g_itemAssetTable_EN_rodata_803E0F14 = {
+    "\203A\203C\203e\203\200\202\360\202\244\202\316\202\242\202\334\202\267\201B"
 };
-const unk32 g_itemAssetTable_EN_rodata_803E0F2C[5] = {
-    0x8EA995AA, 0x82C98E67, 0x82A48341, 0x83438365, 0x83800000
+const g_itemAssetTable_EN_rodata_803E0F2C_Pool g_itemAssetTable_EN_rodata_803E0F2C = {
+    "\216\251\225\252\202\311\216g\202\244\203A\203C\203e\203\200"
 };
-const unk32 g_itemAssetTable_EN_rodata_803E0F40[6] = {
-    0x8EA995AA, 0x82C98E67, 0x82A489F1, 0x959C8341, 0x83438365, 0x83800000
+const g_itemAssetTable_EN_rodata_803E0F40_Pool g_itemAssetTable_EN_rodata_803E0F40 = {
+    "\216\251\225\252\202\311\216g\202\244\211\361\225\234\203A\203C\203e\203\200"
 };
-const unk32 g_itemAssetTable_EN_rodata_803E0F58[6] = {
-    0x83438365, 0x838082F0, 0x82A482CE, 0x82A282DC, 0x82B78142, 0x00000000
+const g_itemAssetTable_EN_rodata_803E0F58_Pool g_itemAssetTable_EN_rodata_803E0F58 = {
+    "\203C\203e\203\200\202\360\202\244\202\316\202\242\202\334\202\267\201B"
 };
 char * const g_itemAssetTable_EN[316][3] = {
     (char *)&lbl_803DEED0,

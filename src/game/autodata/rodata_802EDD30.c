@@ -5,13 +5,24 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct SoundVolumePan_Update_rodata_802EDD30_Pool {
+    int i_000[3];
+    char s_00C[12];
+    char s_018[12];
+    int i_024;
+} SoundVolumePan_Update_rodata_802EDD30_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
 /* decl: Vec3 */
-const unk32 SoundVolumePan_Update_rodata_802EDD30[10] = {
-    0x00000000, 0x00000000, 0x00000000, 0x65206E20, 0x25662074, 0x20256600, 0x73206E20, 0x25662074,
-    0x20256600, 0x00000000
+const SoundVolumePan_Update_rodata_802EDD30_Pool SoundVolumePan_Update_rodata_802EDD30 = {
+    { 0, 0, 0 },
+    "e n %f t %f",
+    "s n %f t %f",
+    0
 };
 const char lbl_802EDD58[] = "%s %d error switch case error\n";
 const char lbl_802EDD78[] = "%s %d error type not found\n";

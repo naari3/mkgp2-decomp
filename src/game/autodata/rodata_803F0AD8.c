@@ -13,6 +13,146 @@ typedef struct ViewerEntry {
     ShowXform xf;
 } ViewerEntry;
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0EE0_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0EE0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0EEC_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0EEC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0EF8_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0EF8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0F04_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0F04_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0F10_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0F10_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0F1C_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0F1C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0F28_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0F28_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0F34_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0F34_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0F40_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0F40_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0F4C_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0F4C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0F58_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0F58_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0F64_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0F64_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0F70_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0F70_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0F7C_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0F7C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0F88_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0F88_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0F94_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0F94_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0FA0_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0FA0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0FAC_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0FAC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EF0C8_rodata_803F0FB8_Pool {
+    char s_000[12];
+} data_804EF0C8_rodata_803F0FB8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct sdata_806D09E8_rodata_803F1284_Pool {
+    char s_000[20];
+    char s_014[16];
+    char s_024[16];
+    char s_034[12];
+    char s_040[12];
+    char s_04C[12];
+    char s_058[12];
+    char s_064[12];
+    char s_070[12];
+    char s_07C[12];
+    char s_088[16];
+    char s_098[16];
+    char s_0A8[16];
+    char s_0B8[16];
+    char s_0C8[16];
+    char s_0D8[16];
+    char s_0E8[16];
+    char s_0F8[16];
+    char s_108[16];
+    char s_118[16];
+    char s_128[12];
+} sdata_806D09E8_rodata_803F1284_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -104,62 +244,62 @@ const char KartAlertPanel_rodata_803F0AD8[1032] = {
     66, -90, -86, -85, 69, -100, 64, 0, 66, -90, -86, -85,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
-const unk32 data_804EF0C8_rodata_803F0EE0[3] = {
-    0x838B8343, 0x815B8357, 0x00000000
+const data_804EF0C8_rodata_803F0EE0_Pool data_804EF0C8_rodata_803F0EE0 = {
+    "\203\213\203C\201[\203W"
 };
-const unk32 data_804EF0C8_rodata_803F0EEC[3] = {
-    0x834C836D, 0x83738349, 0x00000000
+const data_804EF0C8_rodata_803F0EEC_Pool data_804EF0C8_rodata_803F0EEC = {
+    "\203L\203m\203s\203I"
 };
-const unk32 data_804EF0C8_rodata_803F0EF8[3] = {
-    0x83688393, 0x834C815B, 0x00000000
+const data_804EF0C8_rodata_803F0EF8_Pool data_804EF0C8_rodata_803F0EF8 = {
+    "\203h\203\223\203L\201["
 };
-const unk32 data_804EF0C8_rodata_803F0F04[3] = {
-    0x83888362, 0x8356815B, 0x00000000
+const data_804EF0C8_rodata_803F0F04_Pool data_804EF0C8_rodata_803F0F04 = {
+    "\203\210\203b\203V\201["
 };
-const unk32 data_804EF0C8_rodata_803F0F10[3] = {
-    0x83708362, 0x834E837D, 0x83930000
+const data_804EF0C8_rodata_803F0F10_Pool data_804EF0C8_rodata_803F0F10 = {
+    "\203p\203b\203N\203}\203\223"
 };
-const unk32 data_804EF0C8_rodata_803F0F1C[3] = {
-    0x837E8359, 0x83708362, 0x834E0000
+const data_804EF0C8_rodata_803F0F1C_Pool data_804EF0C8_rodata_803F0F1C = {
+    "\203~\203Y\203p\203b\203N"
 };
-const unk32 data_804EF0C8_rodata_803F0F28[3] = {
-    0x8341834A, 0x83788343, 0x00000000
+const data_804EF0C8_rodata_803F0F28_Pool data_804EF0C8_rodata_803F0F28 = {
+    "\203A\203J\203x\203C"
 };
-const unk32 data_804EF0C8_rodata_803F0F34[3] = {
-    0x838F838B, 0x8343815B, 0x83570000
+const data_804EF0C8_rodata_803F0F34_Pool data_804EF0C8_rodata_803F0F34 = {
+    "\203\217\203\213\203C\201[\203W"
 };
-const unk32 data_804EF0C8_rodata_803F0F40[3] = {
-    0x82DC82DF, 0x82C182BF, 0x00000000
+const data_804EF0C8_rodata_803F0F40_Pool data_804EF0C8_rodata_803F0F40 = {
+    "\202\334\202\337\202\301\202\277"
 };
-const unk32 data_804EF0C8_rodata_803F0F4C[3] = {
-    0x826C8260, 0x82718268, 0x826E0000
+const data_804EF0C8_rodata_803F0F4C_Pool data_804EF0C8_rodata_803F0F4C = {
+    "\202l\202`\202q\202h\202n"
 };
-const unk32 data_804EF0C8_rodata_803F0F58[3] = {
-    0x826B8274, 0x82688266, 0x82680000
+const data_804EF0C8_rodata_803F0F58_Pool data_804EF0C8_rodata_803F0F58 = {
+    "\202k\202t\202h\202f\202h"
 };
-const unk32 data_804EF0C8_rodata_803F0F64[3] = {
-    0x82768260, 0x82718268, 0x826E0000
+const data_804EF0C8_rodata_803F0F64_Pool data_804EF0C8_rodata_803F0F64 = {
+    "\202v\202`\202q\202h\202n"
 };
-const unk32 data_804EF0C8_rodata_803F0F70[3] = {
-    0x826F8264, 0x82608262, 0x82670000
+const data_804EF0C8_rodata_803F0F70_Pool data_804EF0C8_rodata_803F0F70 = {
+    "\202o\202d\202`\202b\202g"
 };
-const unk32 data_804EF0C8_rodata_803F0F7C[3] = {
-    0x826A8268, 0x826D8266, 0x00000000
+const data_804EF0C8_rodata_803F0F7C_Pool data_804EF0C8_rodata_803F0F7C = {
+    "\202j\202h\202m\202f"
 };
-const unk32 data_804EF0C8_rodata_803F0F88[3] = {
-    0x8273826E, 0x82608263, 0x00000000
+const data_804EF0C8_rodata_803F0F88_Pool data_804EF0C8_rodata_803F0F88 = {
+    "\202s\202n\202`\202c"
 };
-const unk32 data_804EF0C8_rodata_803F0F94[3] = {
-    0x8278826E, 0x82728267, 0x82680000
+const data_804EF0C8_rodata_803F0F94_Pool data_804EF0C8_rodata_803F0F94 = {
+    "\202x\202n\202r\202g\202h"
 };
-const unk32 data_804EF0C8_rodata_803F0FA0[3] = {
-    0x826C8293, 0x8144826F, 0x00000000
+const data_804EF0C8_rodata_803F0FA0_Pool data_804EF0C8_rodata_803F0FA0 = {
+    "\202l\202\223\201D\202o"
 };
-const unk32 data_804EF0C8_rodata_803F0FAC[3] = {
-    0x82768260, 0x826B8274, 0x00000000
+const data_804EF0C8_rodata_803F0FAC_Pool data_804EF0C8_rodata_803F0FAC = {
+    "\202v\202`\202k\202t"
 };
-const unk32 data_804EF0C8_rodata_803F0FB8[3] = {
-    0x826C8260, 0x826C8264, 0x00000000
+const data_804EF0C8_rodata_803F0FB8_Pool data_804EF0C8_rodata_803F0FB8 = {
+    "\202l\202`\202l\202d"
 };
 /* decl: Vec2 */
 const unk32 KartAlertPanel_rodata_803F0FC4[11] = {
@@ -232,17 +372,28 @@ const ViewerEntry ItemViewer_rodata_803F1234[2] = {
     { (void *)&lbl_803F1224, { { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 0.0f }, 1.0f } }
 };
 const char lbl_803F1274[] = "clItemViewer";
-const unk32 sdata_806D09E8_rodata_803F1284[77] = {
-    0x636C5363, 0x656E6549, 0x6E746572, 0x66616365, 0x00000000, 0x5B497465, 0x6D547261, 0x6E735D0A,
-    0x00000000, 0x4974656D, 0x4E616D65, 0x203D2025, 0x730A0000, 0x506F732E, 0x78203D20, 0x25660A00,
-    0x506F732E, 0x79203D20, 0x25660A00, 0x506F732E, 0x7A203D20, 0x25660A00, 0x526F742E, 0x78203D20,
-    0x25660A00, 0x526F742E, 0x79203D20, 0x25660A00, 0x526F742E, 0x7A203D20, 0x25660A00, 0x5363616C,
-    0x203D2025, 0x660A0000, 0x506F7320, 0x2020783D, 0x25332E31, 0x66000000, 0x506F7320, 0x2020793D,
-    0x25332E31, 0x66000000, 0x506F7320, 0x20207A3D, 0x25332E31, 0x66000000, 0x526F7420, 0x2020783D,
-    0x25332E31, 0x66000000, 0x526F7420, 0x2020793D, 0x25332E31, 0x66000000, 0x526F7420, 0x20207A3D,
-    0x25332E31, 0x66000000, 0x5363616C, 0x6520203D, 0x25322E32, 0x66000000, 0x436F6C6F, 0x7220723D,
-    0x25312E32, 0x66000000, 0x436F6C6F, 0x7220673D, 0x25312E32, 0x66000000, 0x436F6C6F, 0x7220623D,
-    0x25312E32, 0x66000000, 0x4E657874, 0x20497465, 0x6D000000
+const sdata_806D09E8_rodata_803F1284_Pool sdata_806D09E8_rodata_803F1284 = {
+    "clSceneInterface",
+    "[ItemTrans]\n",
+    "ItemName = %s\n",
+    "Pos.x = %f\n",
+    "Pos.y = %f\n",
+    "Pos.z = %f\n",
+    "Rot.x = %f\n",
+    "Rot.y = %f\n",
+    "Rot.z = %f\n",
+    "Scal = %f\n",
+    "Pos   x=%3.1f",
+    "Pos   y=%3.1f",
+    "Pos   z=%3.1f",
+    "Rot   x=%3.1f",
+    "Rot   y=%3.1f",
+    "Rot   z=%3.1f",
+    "Scale  =%2.2f",
+    "Color r=%1.2f",
+    "Color g=%1.2f",
+    "Color b=%1.2f",
+    "Next Item"
 };
 const char lbl_803F13B8[] = "\nacLib Ver.0.76 Build:Feb  6 2007 22:36:18\n";
 const char lbl_803F13E4[] = "acLibUpdateMedia - Reset request has come.[Error %d]\n";

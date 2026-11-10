@@ -47,16 +47,274 @@ typedef struct PrintErrorCaption {
     int texture;
 } PrintErrorCaption;
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EEE58_Pool {
+    char s_000[16];
+    char s_010[28];
+    char s_02C[56];
+    char s_064[20];
+    char s_078[16];
+    char s_088[20];
+    char s_09C[12];
+} lbl_803EEE58_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EF018_Pool {
+    char s_000[12];
+} lbl_803EF018_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EF024_Pool {
+    char s_000[16];
+} lbl_803EF024_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EF034_Pool {
+    char s_000[16];
+} lbl_803EF034_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EF044_Pool {
+    char s_000[16];
+} lbl_803EF044_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EF054_Pool {
+    char s_000[12];
+} lbl_803EF054_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EF060_Pool {
+    char s_000[12];
+} lbl_803EF060_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EF06C_Pool {
+    char s_000[12];
+} lbl_803EF06C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EF078_Pool {
+    char s_000[12];
+} lbl_803EF078_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EF084_Pool {
+    char s_000[16];
+} lbl_803EF084_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EF094_Pool {
+    char s_000[16];
+} lbl_803EF094_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EF0A4_Pool {
+    char s_000[12];
+} lbl_803EF0A4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EF0B0_Pool {
+    char s_000[12];
+} lbl_803EF0B0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EF0BC_Pool {
+    char s_000[12];
+} lbl_803EF0BC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct sdata_806D0728_rodata_803EF440_Pool {
+    char s_000[20];
+    char s_014[16];
+    char s_024[16];
+    char s_034[16];
+    char s_044[16];
+    char s_054[16];
+    char s_064[16];
+    char s_074[20];
+    char s_088[56];
+    char s_0C0[32];
+    char s_0E0[56];
+    char s_118[20];
+    char s_12C[16];
+    char s_13C[20];
+    char s_150[20];
+    char s_164[12];
+} sdata_806D0728_rodata_803EF440_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EF950_Pool {
+    char s_000[120];
+} lbl_803EF950_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EF9C8_Pool {
+    char s_000[120];
+} lbl_803EF9C8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EFA40_Pool {
+    char s_000[120];
+} lbl_803EFA40_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EFAB8_Pool {
+    char s_000[120];
+} lbl_803EFAB8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EFB30_Pool {
+    char s_000[120];
+} lbl_803EFB30_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EFBA8_Pool {
+    char s_000[120];
+} lbl_803EFBA8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EFC20_Pool {
+    char s_000[120];
+} lbl_803EFC20_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803EFC98_Pool {
+    char s_000[120];
+} lbl_803EFC98_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803F03C0_Pool {
+    char s_000[12];
+} lbl_803F03C0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803F03CC_Pool {
+    char s_000[16];
+} lbl_803F03CC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803F03DC_Pool {
+    char s_000[16];
+} lbl_803F03DC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803F03EC_Pool {
+    char s_000[16];
+} lbl_803F03EC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803F03FC_Pool {
+    char s_000[12];
+} lbl_803F03FC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803F0408_Pool {
+    char s_000[12];
+} lbl_803F0408_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803F0414_Pool {
+    char s_000[12];
+} lbl_803F0414_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803F0420_Pool {
+    char s_000[12];
+} lbl_803F0420_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803F042C_Pool {
+    char s_000[16];
+} lbl_803F042C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803F043C_Pool {
+    char s_000[16];
+} lbl_803F043C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803F044C_Pool {
+    char s_000[12];
+} lbl_803F044C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803F0458_Pool {
+    char s_000[12];
+} lbl_803F0458_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803F0464_Pool {
+    char s_000[12];
+} lbl_803F0464_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803F07A4_Pool {
+    char s_000[20];
+} lbl_803F07A4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803F07B8_Pool {
+    char s_000[12];
+} lbl_803F07B8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803F0810_Pool {
+    char s_000[20];
+    char s_014[20];
+    char s_028[16];
+} lbl_803F0810_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const unk32 lbl_803EEE58[42] = {
-    0x636C4D61, 0x70416E69, 0x6D485344, 0x00000000, 0x76656374, 0x6F723A3A, 0x696E7365, 0x7274206C,
-    0x656E6774, 0x68206572, 0x726F7200, 0x21737464, 0x3A3A6578, 0x63657074, 0x696F6E21, 0x21737464,
-    0x3A3A6C6F, 0x6769635F, 0x6572726F, 0x72212173, 0x74643A3A, 0x6C656E67, 0x74685F65, 0x72726F72,
-    0x21210000, 0x7374643A, 0x3A6C656E, 0x6774685F, 0x6572726F, 0x72000000, 0x7374643A, 0x3A657863,
-    0x65707469, 0x6F6E0000, 0x7374643A, 0x3A6C6F67, 0x69635F65, 0x72726F72, 0x00000000, 0x65786365,
-    0x7074696F, 0x6E000000
+const lbl_803EEE58_Pool lbl_803EEE58 = {
+    "clMapAnimHSD",
+    "vector::insert length error",
+    "!std::exception!!std::logic_error!!std::length_error!!",
+    "std::length_error",
+    "std::exception",
+    "std::logic_error",
+    "exception"
 };
 const char CardCreditFlow_rodata_803EEF00[280] = {
     0, 0, 0, 96, 0, 0, 0, -1, 0, 0, 0, 0,
@@ -84,44 +342,44 @@ const char CardCreditFlow_rodata_803EEF00[280] = {
     0, 0, 0, -108, 0, 0, 0, 112, 0, 0, 1, -73,
     0, 0, 0, 111
 };
-const unk32 lbl_803EF018[3] = {
-    0x834A815B, 0x836882F0, 0x00000000
+const lbl_803EF018_Pool lbl_803EF018 = {
+    "\203J\201[\203h\202\360"
 };
-const unk32 lbl_803EF024[4] = {
-    0x93FC82EA, 0x82C482AD, 0x82BE82B3, 0x82A20000
+const lbl_803EF024_Pool lbl_803EF024 = {
+    "\223\374\202\352\202\304\202\255\202\276\202\263\202\242"
 };
-const unk32 lbl_803EF034[4] = {
-    0x8E9D82C1, 0x82C482A2, 0x82C882A2, 0x00000000
+const lbl_803EF034_Pool lbl_803EF034 = {
+    "\216\235\202\301\202\304\202\242\202\310\202\242"
 };
-const unk32 lbl_803EF044[4] = {
-    0x83528343, 0x839382F0, 0x25649687, 0x00000000
+const lbl_803EF044_Pool lbl_803EF044 = {
+    "\203R\203C\203\223\202\360%d\226\207"
 };
-const unk32 lbl_803EF054[3] = {
-    0x8DEC82E7, 0x82C882A2, 0x00000000
+const lbl_803EF054_Pool lbl_803EF054 = {
+    "\215\354\202\347\202\310\202\242"
 };
-const unk32 lbl_803EF060[3] = {
-    0x8D589056, 0x82B782E9, 0x00000000
+const lbl_803EF060_Pool lbl_803EF060 = {
+    "\215X\220V\202\267\202\351"
 };
-const unk32 lbl_803EF06C[3] = {
-    0x8D589056, 0x82B582C8, 0x82A20000
+const lbl_803EF06C_Pool lbl_803EF06C = {
+    "\215X\220V\202\265\202\310\202\242"
 };
-const unk32 lbl_803EF078[3] = {
-    0x8F9182AB, 0x82A982A6, 0x82E90000
+const lbl_803EF078_Pool lbl_803EF078 = {
+    "\217\221\202\253\202\251\202\246\202\351"
 };
-const unk32 lbl_803EF084[4] = {
-    0x8F9182AB, 0x82A982A6, 0x82C882A2, 0x00000000
+const lbl_803EF084_Pool lbl_803EF084 = {
+    "\217\221\202\253\202\251\202\246\202\310\202\242"
 };
-const unk32 lbl_803EF094[4] = {
-    0x83528393, 0x83658342, 0x836A8385, 0x815B0000
+const lbl_803EF094_Pool lbl_803EF094 = {
+    "\203R\203\223\203e\203B\203j\203\205\201["
 };
-const unk32 lbl_803EF0A4[3] = {
-    0x91CE90ED, 0x82B782E9, 0x00000000
+const lbl_803EF0A4_Pool lbl_803EF0A4 = {
+    "\221\316\220\355\202\267\202\351"
 };
-const unk32 lbl_803EF0B0[3] = {
-    0x91CE90ED, 0x82B582C8, 0x82A20000
+const lbl_803EF0B0_Pool lbl_803EF0B0 = {
+    "\221\316\220\355\202\265\202\310\202\242"
 };
-const unk32 lbl_803EF0BC[3] = {
-    0x8B4C985E, 0x82B782E9, 0x00000000
+const lbl_803EF0BC_Pool lbl_803EF0BC = {
+    "\213L\230^\202\267\202\351"
 };
 /* pointers mixed with values */
 void *const lbl_803EF0C8[99] = {
@@ -335,19 +593,23 @@ void *const lbl_803EF270[102] = {
 const char lbl_803EF408[] = "clMnCardRenew";
 const char lbl_803EF418[] = "clYTaskInterface";
 const char lbl_803EF42C[] = "clMnTaskInterface";
-const unk32 sdata_806D0728_rodata_803EF440[92] = {
-    0x636C4D6E, 0x43617264, 0x5430496E, 0x74657266, 0x61636500, 0x25732053, 0x434E5F53, 0x54415254,
-    0x0A000000, 0x4D6E4361, 0x72645265, 0x6E65772E, 0x63707000, 0x25732053, 0x434E5F4D, 0x41494E0A,
-    0x00000000, 0x25732053, 0x434E5F45, 0x4A454354, 0x0A000000, 0x25732053, 0x434E5F43, 0x52454154,
-    0x450A0000, 0x25732053, 0x434E5F46, 0x494E4953, 0x480A0000, 0x76656374, 0x6F72206C, 0x656E6774,
-    0x68206572, 0x726F7200, 0x21737464, 0x3A3A6578, 0x63657074, 0x696F6E21, 0x21737464, 0x3A3A6C6F,
-    0x6769635F, 0x6572726F, 0x72212173, 0x74643A3A, 0x6C656E67, 0x74685F65, 0x72726F72, 0x21210000,
-    0x76656374, 0x6F723A3A, 0x61742069, 0x6E646578, 0x206F7574, 0x206F6620, 0x72616E67, 0x65000000,
-    0x21737464, 0x3A3A6578, 0x63657074, 0x696F6E21, 0x21737464, 0x3A3A6C6F, 0x6769635F, 0x6572726F,
-    0x72212173, 0x74643A3A, 0x6F75745F, 0x6F665F72, 0x616E6765, 0x21210000, 0x7374643A, 0x3A6F7574,
-    0x5F6F665F, 0x72616E67, 0x65000000, 0x7374643A, 0x3A657863, 0x65707469, 0x6F6E0000, 0x7374643A,
-    0x3A6C6F67, 0x69635F65, 0x72726F72, 0x00000000, 0x7374643A, 0x3A6C656E, 0x6774685F, 0x6572726F,
-    0x72000000, 0x65786365, 0x7074696F, 0x6E000000
+const sdata_806D0728_rodata_803EF440_Pool sdata_806D0728_rodata_803EF440 = {
+    "clMnCardT0Interface",
+    "%s SCN_START\n",
+    "MnCardRenew.cpp",
+    "%s SCN_MAIN\n",
+    "%s SCN_EJECT\n",
+    "%s SCN_CREATE\n",
+    "%s SCN_FINISH\n",
+    "vector length error",
+    "!std::exception!!std::logic_error!!std::length_error!!",
+    "vector::at index out of range",
+    "!std::exception!!std::logic_error!!std::out_of_range!!",
+    "std::out_of_range",
+    "std::exception",
+    "std::logic_error",
+    "std::length_error",
+    "exception"
 };
 const float ItemPanelDraw_rodata_803EF5B0[12] = {
     0.0f, 0.0f, 0.0f, -49.0f, 0.0f, -49.0f, 0.0f, -49.0f,
@@ -464,53 +726,29 @@ const char lbl_803EF908[] = "clResultInterface";
 const char lbl_803EF91C[] = "clSceneInterface";
 const char lbl_803EF930[] = "clRnkDisp";
 const char lbl_803EF93C[] = "clCDispInterface";
-const unk32 lbl_803EF950[30] = {
-    0x82A082A2, 0x82A482A6, 0x82A882A9, 0x82AB82AD, 0x82AF82B1, 0x82B382B5, 0x82B782B9, 0x82BB82BD,
-    0x82BF82C2, 0x82C482C6, 0x82C882C9, 0x82CA82CB, 0x82CC82CD, 0x82D082D3, 0x82D682D9, 0x82DC82DD,
-    0x82DE82DF, 0x82E082E2, 0x82E482E6, 0x814A818B, 0x82E782E8, 0x82E982EA, 0x82EB82ED, 0x82F082F1,
-    0x82C18140, 0x829F82A1, 0x82A382A5, 0x82A782E1, 0x82E382E5, 0x815B0000
+const lbl_803EF950_Pool lbl_803EF950 = {
+    "\202\240\202\242\202\244\202\246\202\250\202\251\202\253\202\255\202\257\202\261\202\263\202\265\202\267\202\271\202\273\202\275\202\277\202\302\202\304\202\306\202\310\202\311\202\312\202\313\202\314\202\315\202\320\202\323\202\326\202\331\202\334\202\335\202\336\202\337\202\340\202\342\202\344\202\346\201J\201\213\202\347\202\350\202\351\202\352\202\353\202\355\202\360\202\361\202\301\201@\202\237\202\241\202\243\202\245\202\247\202\341\202\343\202\345\201["
 };
-const unk32 lbl_803EF9C8[30] = {
-    0x81408140, 0x81408140, 0x814082AA, 0x82AC82AE, 0x82B082B2, 0x82B482B6, 0x82B882BA, 0x82BC82BE,
-    0x82C082C3, 0x82C582C7, 0x81408140, 0x81408140, 0x814082CE, 0x82D182D4, 0x82D782DA, 0x81408140,
-    0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140,
-    0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81400000
+const lbl_803EF9C8_Pool lbl_803EF9C8 = {
+    "\201@\201@\201@\201@\201@\202\252\202\254\202\256\202\260\202\262\202\264\202\266\202\270\202\272\202\274\202\276\202\300\202\303\202\305\202\307\201@\201@\201@\201@\201@\202\316\202\321\202\324\202\327\202\332\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@"
 };
-const unk32 lbl_803EFA40[30] = {
-    0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140,
-    0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x814082CF, 0x82D282D5, 0x82D882DB, 0x81408140,
-    0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140,
-    0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81400000
+const lbl_803EFA40_Pool lbl_803EFA40 = {
+    "\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\202\317\202\322\202\325\202\330\202\333\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@"
 };
-const unk32 lbl_803EFAB8[30] = {
-    0x83418343, 0x83458347, 0x8349834A, 0x834C834E, 0x83508352, 0x83548356, 0x8358835A, 0x835C835E,
-    0x83608363, 0x83658367, 0x8369836A, 0x836B836C, 0x836D836E, 0x83718374, 0x8377837A, 0x837D837E,
-    0x83808381, 0x83828384, 0x83868388, 0x814A818B, 0x8389838A, 0x838B838C, 0x838D838F, 0x83928393,
-    0x83628140, 0x83408342, 0x83448346, 0x83488383, 0x83858387, 0x815B0000
+const lbl_803EFAB8_Pool lbl_803EFAB8 = {
+    "\203A\203C\203E\203G\203I\203J\203L\203N\203P\203R\203T\203V\203X\203Z\203\\\203^\203`\203c\203e\203g\203i\203j\203k\203l\203m\203n\203q\203t\203w\203z\203}\203~\203\200\203\201\203\202\203\204\203\206\203\210\201J\201\213\203\211\203\212\203\213\203\214\203\215\203\217\203\222\203\223\203b\201@\203@\203B\203D\203F\203H\203\203\203\205\203\207\201["
 };
-const unk32 lbl_803EFB30[30] = {
-    0x81408140, 0x81408140, 0x8140834B, 0x834D834F, 0x83518353, 0x83558357, 0x8359835B, 0x835D835F,
-    0x83618364, 0x83668368, 0x81408140, 0x81408140, 0x8140836F, 0x83728375, 0x8378837B, 0x81408140,
-    0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140,
-    0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81400000
+const lbl_803EFB30_Pool lbl_803EFB30 = {
+    "\201@\201@\201@\201@\201@\203K\203M\203O\203Q\203S\203U\203W\203Y\203[\203]\203_\203a\203d\203f\203h\201@\201@\201@\201@\201@\203o\203r\203u\203x\203{\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@"
 };
-const unk32 lbl_803EFBA8[30] = {
-    0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140,
-    0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408370, 0x83738376, 0x8379837C, 0x81408140,
-    0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140,
-    0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81408140, 0x81400000
+const lbl_803EFBA8_Pool lbl_803EFBA8 = {
+    "\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\203p\203s\203v\203y\203|\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@\201@"
 };
-const unk32 lbl_803EFC20[30] = {
-    0x82608261, 0x82628263, 0x82648265, 0x82668267, 0x82688269, 0x826A826B, 0x826C826D, 0x826E826F,
-    0x82708271, 0x82728273, 0x82748275, 0x82768277, 0x82788279, 0x81498148, 0x81958197, 0x82508251,
-    0x82528253, 0x82548255, 0x82568257, 0x8258824F, 0x8169816A, 0x81838184, 0x814F817B, 0x815B817E,
-    0x81808181, 0x815E815F, 0x81518144, 0x81458147, 0x81468196, 0x819E0000
+const lbl_803EFC20_Pool lbl_803EFC20 = {
+    "\202`\202a\202b\202c\202d\202e\202f\202g\202h\202i\202j\202k\202l\202m\202n\202o\202p\202q\202r\202s\202t\202u\202v\202w\202x\202y\201I\201H\201\225\201\227\202P\202Q\202R\202S\202T\202U\202V\202W\202X\202O\201i\201j\201\203\201\204\201O\201{\201[\201~\201\200\201\201\201^\201_\201Q\201D\201E\201G\201F\201\226\201\236"
 };
-const unk32 lbl_803EFC98[30] = {
-    0x82818282, 0x82838284, 0x82858286, 0x82878288, 0x8289828A, 0x828B828C, 0x828D828E, 0x828F8290,
-    0x82918292, 0x82938294, 0x82958296, 0x82978298, 0x8299829A, 0x81498148, 0x81958197, 0x82508251,
-    0x82528253, 0x82548255, 0x82568257, 0x8258824F, 0x8169816A, 0x81838184, 0x814F817B, 0x815B817E,
-    0x81808181, 0x815E815F, 0x81518144, 0x81458147, 0x81468196, 0x819E0000
+const lbl_803EFC98_Pool lbl_803EFC98 = {
+    "\202\201\202\202\202\203\202\204\202\205\202\206\202\207\202\210\202\211\202\212\202\213\202\214\202\215\202\216\202\217\202\220\202\221\202\222\202\223\202\224\202\225\202\226\202\227\202\230\202\231\202\232\201I\201H\201\225\201\227\202P\202Q\202R\202S\202T\202U\202V\202W\202X\202O\201i\201j\201\203\201\204\201O\201{\201[\201~\201\200\201\201\201^\201_\201Q\201D\201E\201G\201F\201\226\201\236"
 };
 const char lbl_803EFD10[] = "clMnTimeSprTask";
 const char lbl_803EFD20[] = "clYTaskInterface";
@@ -652,44 +890,44 @@ const char lbl_803EFEA0[1312] __attribute__((aligned(8))) = {
     0, 0, 0, -108, 0, 0, 0, 112, 0, 0, 1, -73,
     0, 0, 0, 111
 };
-const unk32 lbl_803F03C0[3] = {
-    0x834A815B, 0x836882F0, 0x00000000
+const lbl_803F03C0_Pool lbl_803F03C0 = {
+    "\203J\201[\203h\202\360"
 };
-const unk32 lbl_803F03CC[4] = {
-    0x93FC82EA, 0x82C482AD, 0x82BE82B3, 0x82A20000
+const lbl_803F03CC_Pool lbl_803F03CC = {
+    "\223\374\202\352\202\304\202\255\202\276\202\263\202\242"
 };
-const unk32 lbl_803F03DC[4] = {
-    0x8E9D82C1, 0x82C482A2, 0x82C882A2, 0x00000000
+const lbl_803F03DC_Pool lbl_803F03DC = {
+    "\216\235\202\301\202\304\202\242\202\310\202\242"
 };
-const unk32 lbl_803F03EC[4] = {
-    0x83528343, 0x839382F0, 0x25649687, 0x00000000
+const lbl_803F03EC_Pool lbl_803F03EC = {
+    "\203R\203C\203\223\202\360%d\226\207"
 };
-const unk32 lbl_803F03FC[3] = {
-    0x8DEC82E7, 0x82C882A2, 0x00000000
+const lbl_803F03FC_Pool lbl_803F03FC = {
+    "\215\354\202\347\202\310\202\242"
 };
-const unk32 lbl_803F0408[3] = {
-    0x8D589056, 0x82B782E9, 0x00000000
+const lbl_803F0408_Pool lbl_803F0408 = {
+    "\215X\220V\202\267\202\351"
 };
-const unk32 lbl_803F0414[3] = {
-    0x8D589056, 0x82B582C8, 0x82A20000
+const lbl_803F0414_Pool lbl_803F0414 = {
+    "\215X\220V\202\265\202\310\202\242"
 };
-const unk32 lbl_803F0420[3] = {
-    0x8F9182AB, 0x82A982A6, 0x82E90000
+const lbl_803F0420_Pool lbl_803F0420 = {
+    "\217\221\202\253\202\251\202\246\202\351"
 };
-const unk32 lbl_803F042C[4] = {
-    0x8F9182AB, 0x82A982A6, 0x82C882A2, 0x00000000
+const lbl_803F042C_Pool lbl_803F042C = {
+    "\217\221\202\253\202\251\202\246\202\310\202\242"
 };
-const unk32 lbl_803F043C[4] = {
-    0x83528393, 0x83658342, 0x836A8385, 0x815B0000
+const lbl_803F043C_Pool lbl_803F043C = {
+    "\203R\203\223\203e\203B\203j\203\205\201["
 };
-const unk32 lbl_803F044C[3] = {
-    0x91CE90ED, 0x82B782E9, 0x00000000
+const lbl_803F044C_Pool lbl_803F044C = {
+    "\221\316\220\355\202\267\202\351"
 };
-const unk32 lbl_803F0458[3] = {
-    0x91CE90ED, 0x82B582C8, 0x82A20000
+const lbl_803F0458_Pool lbl_803F0458 = {
+    "\221\316\220\355\202\265\202\310\202\242"
 };
-const unk32 lbl_803F0464[3] = {
-    0x8B4C985E, 0x82B782E9, 0x00000000
+const lbl_803F0464_Pool lbl_803F0464 = {
+    "\213L\230^\202\267\202\351"
 };
 /* pointers mixed with values */
 void *const lbl_803F0470[99] = {
@@ -897,19 +1135,20 @@ void *const lbl_803F0618[99] = {
     (void *)&lbl_806DBFE0,
     (void *)&lbl_806DBFE0
 };
-const unk32 lbl_803F07A4[5] = {
-    0x83528343, 0x839382F0, 0x82A082C6, 0x25649687, 0x00000000
+const lbl_803F07A4_Pool lbl_803F07A4 = {
+    "\203R\203C\203\223\202\360\202\240\202\306%d\226\207"
 };
-const unk32 lbl_803F07B8[3] = {
-    0x82A082C6, 0x25643030, 0x897E0000
+const lbl_803F07B8_Pool lbl_803F07B8 = {
+    "\202\240\202\306%d00\211~"
 };
 const char lbl_803F07C4[] = "clMnCardT0Interface";
 const char lbl_803F07D8[] = "clYTaskInterface";
 const char lbl_803F07EC[] = "clMnTaskInterface";
 const char lbl_803F0800[] = "clRsContinue00";
-const unk32 lbl_803F0810[14] = {
-    0x636C5363, 0x656E6549, 0x6E746572, 0x66616365, 0x00000000, 0x93FC82EA, 0x82C482AD, 0x82BE82B3,
-    0x82A28142, 0x00000000, 0x6D6F7265, 0x20256463, 0x6F696E28, 0x73290000
+const lbl_803F0810_Pool lbl_803F0810 = {
+    "clSceneInterface",
+    "\223\374\202\352\202\304\202\255\202\276\202\263\202\242\201B",
+    "more %dcoin(s)"
 };
 const char lbl_803F0848[24] = {
     -125, 82, -125, 67, -125, -109, -126, -16, -109, -4, -126, -22,

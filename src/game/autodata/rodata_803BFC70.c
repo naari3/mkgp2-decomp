@@ -5,6 +5,18 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803BFCD8_Pool {
+    char s_000[36];
+} lbl_803BFCD8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803BFCFC_Pool {
+    char s_000[36];
+} lbl_803BFCFC_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -14,13 +26,11 @@ const char lbl_803BFC90[] = "clMnTaskInterface";
 const char lbl_803BFCA4[] = "clMnCardT0Interface";
 const char lbl_803BFCB8[] = "card read ok *************\n";
 /* 8-aligned in the original: probably the first object of a TU */
-const unk32 lbl_803BFCD8[9] __attribute__((aligned(8))) = {
-    0x8DEC82E7, 0x82C882A2, 0x8FEA8D87, 0x81418DA1, 0x89F1838C, 0x815B8358, 0x82C58A6C, 0x93BE82B5,
-    0x82BD0000
+const lbl_803BFCD8_Pool lbl_803BFCD8 __attribute__((aligned(8))) = {
+    "\215\354\202\347\202\310\202\242\217\352\215\207\201A\215\241\211\361\203\214\201[\203X\202\305\212l\223\276\202\265\202\275"
 };
-const unk32 lbl_803BFCFC[9] = {
-    0x837D838A, 0x83498352, 0x83438393, 0x82CD82B7, 0x82D782C4, 0x82C882AD, 0x82C882E8, 0x82DC82B7,
-    0x81420000
+const lbl_803BFCFC_Pool lbl_803BFCFC = {
+    "\203}\203\212\203I\203R\203C\203\223\202\315\202\267\202\327\202\304\202\310\202\255\202\310\202\350\202\334\202\267\201B"
 };
 const char lbl_803BFD20[] = "If you do not have a card,";
 const char lbl_803BFD3C[] = "you will lose all MARIO COIN";

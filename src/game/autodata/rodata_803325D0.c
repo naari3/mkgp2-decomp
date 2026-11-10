@@ -5,17 +5,22 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct SpriteHandlePool_rodata_803325D0_Pool {
+    int i_000[32];
+    char s_080[24];
+    char s_098[16];
+} SpriteHandlePool_rodata_803325D0_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
 /* decl: SpriteUVTable */
-const unk32 SpriteHandlePool_rodata_803325D0[42] = {
-    0x00000000, 0x00000001, 0x00000000, 0x00000000, 0x00000001, 0x00000000, 0x00000001, 0x00000001,
-    0x00000001, 0x00000000, 0x00000001, 0x00000001, 0x00000000, 0x00000001, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000001, 0x00000001, 0x00000001, 0x00000001, 0x00000000,
-    0x00000001, 0x00000001, 0x00000001, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000001,
-    0x69643A25, 0x642C2070, 0x6F733A25, 0x662C2566, 0x20726F74, 0x3A256600, 0x46696C65, 0x203D2025,
-    0x3464203A, 0x20257300
+const SpriteHandlePool_rodata_803325D0_Pool SpriteHandlePool_rodata_803325D0 = {
+    { 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1 },
+    "id:%d, pos:%f,%f rot:%f",
+    "File = %4d : %s"
 };
 
 #pragma force_active reset

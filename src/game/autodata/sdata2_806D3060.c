@@ -8,6 +8,12 @@
 extern char lbl_80317150[];
 extern char lbl_8031715C[];
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806D3584_Pool {
+    char s_000[8];
+} lbl_806D3584_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -351,8 +357,8 @@ const short lbl_806D3570[4] = {
 };
 const char lbl_806D3578[] = "  %s";
 const char lbl_806D3580[] = " %s";
-const unk32 lbl_806D3584[2] = {
-    0x8E679770, 0x8DCF0000
+const lbl_806D3584_Pool lbl_806D3584 = {
+    "\216g\227p\215\317"
 };
 const char lbl_806D358C[] = "[used]";
 const unsigned int lbl_806D3594 = 0x824F0000;

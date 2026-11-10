@@ -5,6 +5,42 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806D74E4_Pool {
+    char s_000[8];
+} lbl_806D74E4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806D74FC_Pool {
+    char s_000[8];
+} lbl_806D74FC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806D750C_Pool {
+    char s_000[8];
+} lbl_806D750C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806D751C_Pool {
+    char s_000[8];
+} lbl_806D751C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806D75E0_Pool {
+    char s_000[8];
+} lbl_806D75E0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806D762C_Pool {
+    char s_000[8];
+} lbl_806D762C_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -1929,21 +1965,21 @@ const char lbl_806D74C4[] = "player1";
 const char lbl_806D74CC[] = "player2";
 const char lbl_806D74D4[] = "player3";
 const char lbl_806D74DC[] = "player4";
-const unk32 lbl_806D74E4[2] = {
-    0x837D838A, 0x83490000
+const lbl_806D74E4_Pool lbl_806D74E4 = {
+    "\203}\203\212\203I"
 };
 const char lbl_806D74EC[] = "MARIO";
 const char lbl_806D74F4[] = "LUIGI";
-const unk32 lbl_806D74FC[2] = {
-    0x838F838A, 0x83490000
+const lbl_806D74FC_Pool lbl_806D74FC = {
+    "\203\217\203\212\203I"
 };
 const char lbl_806D7504[] = "WARIO";
-const unk32 lbl_806D750C[2] = {
-    0x8373815B, 0x83600000
+const lbl_806D750C_Pool lbl_806D750C = {
+    "\203s\201[\203`"
 };
 const char lbl_806D7514[] = "PEACH";
-const unk32 lbl_806D751C[2] = {
-    0x834E8362, 0x83700000
+const lbl_806D751C_Pool lbl_806D751C = {
+    "\203N\203b\203p"
 };
 const char lbl_806D7524[] = "BOWSER";
 const char lbl_806D752C[] = "TOAD";
@@ -1981,8 +2017,8 @@ const unk32 lbl_806D75D4[2] = {
     0x82CD82A2, 0x00000000
 };
 const char lbl_806D75DC[] = "YES";
-const unk32 lbl_806D75E0[2] = {
-    0x82A282A2, 0x82A60000
+const lbl_806D75E0_Pool lbl_806D75E0 = {
+    "\202\242\202\242\202\246"
 };
 const char lbl_806D75E8[] = "NO";
 const char lbl_806D75EC[] = ".";
@@ -2002,8 +2038,8 @@ const unk32 lbl_806D761C[2] = {
     0x25649687, 0x00000000
 };
 const char lbl_806D7624[] = "%dcoins";
-const unk32 lbl_806D762C[2] = {
-    0x8379815B, 0x83570000
+const lbl_806D762C_Pool lbl_806D762C = {
+    "\203y\201[\203W"
 };
 const char lbl_806D7634[] = "%d/%d";
 const char lbl_806D763C[] = "%d";

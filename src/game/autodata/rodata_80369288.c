@@ -5,6 +5,22 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct sdata_806CF750_rodata_803696D4_Pool {
+    char s_000[20];
+    char s_014[16];
+    char s_024[20];
+    char s_038[24];
+    char s_050[12];
+    char s_05C[20];
+    char s_070[20];
+    char s_084[16];
+    char s_094[20];
+    char s_0A8[24];
+    int i_0C0;
+} sdata_806CF750_rodata_803696D4_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -99,14 +115,18 @@ const char lbl_80369684[] = "clCSSceneNextRace";
 const char lbl_80369698[] = "clSceneInterface";
 const char lbl_803696AC[] = "clCSPartsYNWindowNR";
 const char lbl_803696C0[] = "clCSPartsInerface";
-const unk32 sdata_806CF750_rodata_803696D4[49] = {
-    0x636C4353, 0x50617274, 0x73594E57, 0x696E646F, 0x77000000, 0x506C6561, 0x73652069, 0x6E736572,
-    0x74000000, 0x81408140, 0x6D6F7265, 0x20256420, 0x636F696E, 0x28732900, 0x81408140, 0x81408140,
-    0x81408140, 0x20256420, 0x636F696E, 0x28732900, 0x82A082C6, 0x25643030, 0x897E0000, 0x81408140,
-    0x93FC82EA, 0x82C482AD, 0x82BE82B3, 0x82A20000, 0x83528343, 0x839382F0, 0x82A082C6, 0x25649687,
-    0x00000000, 0x83528343, 0x839382F0, 0x25649687, 0x00000000, 0x53746570, 0x206F6E20, 0x67617320,
-    0x70656461, 0x6C000000, 0x81408140, 0x81408140, 0x81408140, 0x746F2073, 0x74617274, 0x00000000,
-    0x00000000
+const sdata_806CF750_rodata_803696D4_Pool sdata_806CF750_rodata_803696D4 = {
+    "clCSPartsYNWindow",
+    "Please insert",
+    "\201@\201@more %d coin(s)",
+    "\201@\201@\201@\201@\201@\201@ %d coin(s)",
+    "\202\240\202\306%d00\211~",
+    "\201@\201@\223\374\202\352\202\304\202\255\202\276\202\263\202\242",
+    "\203R\203C\203\223\202\360\202\240\202\306%d\226\207",
+    "\203R\203C\203\223\202\360%d\226\207",
+    "Step on gas pedal",
+    "\201@\201@\201@\201@\201@\201@to start",
+    0
 };
 
 #pragma force_active reset

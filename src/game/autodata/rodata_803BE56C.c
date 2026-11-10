@@ -5,6 +5,16 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803BE5E8_Pool {
+    char s_000[24];
+    char s_018[24];
+    char s_030[20];
+    char s_044[20];
+    char s_058[24];
+} lbl_803BE5E8_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -32,11 +42,12 @@ const char lbl_803BE590[68] =
     "" "\0"
     "clEzNamCamDebug";
 const char lbl_803BE5D4[] = "clSceneInterface";
-const unk32 lbl_803BE5E8[28] = {
-    0x636C4E61, 0x6D63616D, 0x4D656E75, 0x496E7465, 0x72666163, 0x65000000, 0x50484F54, 0x4F205343,
-    0x414C4520, 0x3D202537, 0x2E336681, 0x93000000, 0x50484F54, 0x4F20504F, 0x53205820, 0x3D202564,
-    0x00000000, 0x50484F54, 0x4F20504F, 0x53205920, 0x3D202564, 0x00000000, 0x4652414D, 0x45205343,
-    0x414C4520, 0x3D202537, 0x2E336681, 0x93000000
+const lbl_803BE5E8_Pool lbl_803BE5E8 = {
+    "clNamcamMenuInterface",
+    "PHOTO SCALE = %7.3f\201\223",
+    "PHOTO POS X = %d",
+    "PHOTO POS Y = %d",
+    "FRAME SCALE = %7.3f\201\223"
 };
 /* text only: a string pool (strings back to back, the code points into it) */
 const char lbl_803BE658[88] =

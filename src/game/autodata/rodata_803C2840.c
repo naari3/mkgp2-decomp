@@ -6,6 +6,16 @@
 #include "game/autodata.h"
 #include "game/types/JobEntry.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_804EC754_rodata_803C2D9C_Pool {
+    char s_000[12];
+    char s_00C[20];
+    char s_020[20];
+    char s_034[20];
+    int i_048;
+} data_804EC754_rodata_803C2D9C_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -75,10 +85,12 @@ const JobEntry lbl_803C2D20[14] = {
     { 13, (void *)&lbl_803C2D0C }
 };
 const char lbl_803C2D90[] = "clYokome";
-const unk32 data_804EC754_rodata_803C2D9C[19] = {
-    0x636C4A6F, 0x6252756E, 0x6E657200, 0x53656C65, 0x63742049, 0x44204E75, 0x6D626572, 0x20256400,
-    0x72756E20, 0x70726F63, 0x20203A20, 0x25642875, 0x73290000, 0x64726177, 0x2070726F, 0x63203A20,
-    0x25642875, 0x73290000, 0x00000000
+const data_804EC754_rodata_803C2D9C_Pool data_804EC754_rodata_803C2D9C = {
+    "clJobRunner",
+    "Select ID Number %d",
+    "run proc  : %d(us)",
+    "draw proc : %d(us)",
+    0
 };
 const unsigned int lbl_803C2DE8[7] = {
     0x36EE80, 0x927C0, 0xEA60, 0x2710, 0x3E8, 0x64, 0xA

@@ -147,17 +147,33 @@ extern char rodata_803175A0_rodata_80398EF8[];
 extern char rodata_803175A0_rodata_803990D0[];
 extern char rodata_803175A0_rodata_803992A8[];
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803175A0_Pool {
+    char s_000[36];
+    char s_024[16];
+    char s_034[16];
+    char s_044[48];
+    char s_074[32];
+    char s_094[32];
+    char s_0B4[24];
+    char s_0CC[16];
+    int i_0DC;
+} lbl_803175A0_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const unk32 lbl_803175A0[56] = {
-    0x2A2A2A2A, 0x2A2A2A2A, 0x20636172, 0x6420756E, 0x7061636B, 0x202A2A2A, 0x2A2A2A2A, 0x2A2A2A0A,
-    0x00000000, 0x6D656D6F, 0x7279206E, 0x756C6C0A, 0x00000000, 0x6E6F2063, 0x61726420, 0x64617461,
-    0x0A000000, 0x63617264, 0x206D656D, 0x6F727920, 0x25642862, 0x79746529, 0x20256428, 0x62697429,
-    0x2072656D, 0x61696E20, 0x25642862, 0x6974290A, 0x00000000, 0x2A2A2A2A, 0x2A2A2A2A, 0x20636172,
-    0x64207061, 0x636B202A, 0x2A2A2A2A, 0x2A2A2A2A, 0x2A0A0000, 0x63617264, 0x206D656D, 0x6F727920,
-    0x25642862, 0x79746529, 0x20256428, 0x62697429, 0x0A000000, 0x6F766572, 0x20636172, 0x64206D65,
-    0x6D6F7279, 0x2025640A, 0x00000000, 0x63686172, 0x61206964, 0x20657272, 0x6F720A00, 0x00000000
+const lbl_803175A0_Pool lbl_803175A0 = {
+    "******** card unpack **********\n",
+    "memory null\n",
+    "no card data\n",
+    "card memory %d(byte) %d(bit) remain %d(bit)\n",
+    "******** card pack **********\n",
+    "card memory %d(byte) %d(bit)\n",
+    "over card memory %d\n",
+    "chara id error\n",
+    0
 };
 void *const rodata_803175A0_rodata_80317680[9] = {
     (void *)&rodata_803175A0_rodata_8038FF40,

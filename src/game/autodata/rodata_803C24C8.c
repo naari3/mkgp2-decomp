@@ -6,6 +6,19 @@
 #include "game/autodata.h"
 #include "game/types/Vec.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct YesNoButtonR_rodata_803C26E4_Pool {
+    char s_000[12];
+    char s_00C[16];
+    char s_01C[20];
+    char s_030[12];
+    char s_03C[16];
+    char s_04C[20];
+    char s_060[16];
+    char s_070[16];
+} YesNoButtonR_rodata_803C26E4_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -55,11 +68,15 @@ const float lbl_803C26AC[3] = {
 const char lbl_803C26B8[] = "clMnYesNoInterface";
 const char lbl_803C26CC[] = "clMnCdAllow";
 const char lbl_803C26D8[] = "clMnSelYes";
-const unk32 YesNoButtonR_rodata_803C26E4[32] = {
-    0x636C4D6E, 0x53656C4E, 0x6F000000, 0x81408352, 0x83438393, 0x82F02564, 0x96870000, 0x81408352,
-    0x83438393, 0x82F082A0, 0x82C62564, 0x96870000, 0x81402564, 0x3030897E, 0x00000000, 0x814082A0,
-    0x82C62564, 0x3030897E, 0x00000000, 0x81402093, 0xFC82EA82, 0xC482AD82, 0xBE82B382, 0xA2000000,
-    0x8140506C, 0x65617365, 0x20696E73, 0x65727400, 0x81402025, 0x6420636F, 0x696E2873, 0x29000000
+const YesNoButtonR_rodata_803C26E4_Pool YesNoButtonR_rodata_803C26E4 = {
+    "clMnSelNo",
+    "\201@\203R\203C\203\223\202\360%d\226\207",
+    "\201@\203R\203C\203\223\202\360\202\240\202\306%d\226\207",
+    "\201@%d00\211~",
+    "\201@\202\240\202\306%d00\211~",
+    "\201@ \223\374\202\352\202\304\202\255\202\276\202\263\202\242",
+    "\201@Please insert",
+    "\201@ %d coin(s)"
 };
 const char lbl_803C2764[] = "clMnYesNoManager::free()\n";
 const char lbl_803C2780[116] = {

@@ -22,6 +22,14 @@ typedef struct ClSoundDef {
     unsigned int attributes;
 } ClSoundDef;
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_8037CEC4_Pool {
+    int i_000[3];
+    char s_00C[44];
+    char s_038[40];
+} lbl_8037CEC4_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -679,10 +687,10 @@ const char *const kBgmDspFilenameTable[42] = {
     (const char *)&lbl_8037CDF4, (const char *)&lbl_8037CE08
 };
 /* decl: Vec3 */
-const unk32 lbl_8037CEC4[24] = {
-    0x00000000, 0x00000000, 0x00000000, 0x636C5374, 0x7265616D, 0x3A3A7365, 0x74537065, 0x65642820,
-    0x25642C20, 0x25642029, 0x20697320, 0x6661696C, 0x65642E0A, 0x00000000, 0x636C5374, 0x7265616D,
-    0x3A3A7365, 0x7450616E, 0x28202564, 0x2C202564, 0x20292069, 0x73206661, 0x696C6564, 0x2E0A0000
+const lbl_8037CEC4_Pool lbl_8037CEC4 = {
+    { 0, 0, 0 },
+    "clStream::setSpeed( %d, %d ) is failed.\n",
+    "clStream::setPan( %d, %d ) is failed.\n"
 };
 const char lbl_8037CF24[] = "clStream::setVolume( %d, %d ) is failed.\n";
 const char lbl_8037CF50[] = "clStream::stop( %d ) is failed.\n";

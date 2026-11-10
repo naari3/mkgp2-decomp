@@ -842,6 +842,53 @@ def text_pool(words):
     return parts
 
 
+def _text_word(w):
+    """0 no text, else number of characters: the non-zero bytes are a prefix and look like text
+    (ASCII, or Shift-JIS double-byte pairs are checked by the caller on the whole run)."""
+    bs = w.to_bytes(4, 'big').rstrip(b'\0')
+    if not bs or b'\0' in bs: return 0
+    if any(not (32 <= x < 127 or x in (9, 10, 13) or 0x81 <= x <= 0x9F or 0xE0 <= x <= 0xEA or 0x40 <= x <= 0xFC) for x in bs): return 0
+    return len(bs)
+
+
+def _sjis_ok(bs):
+    i = 0
+    while i < len(bs):
+        x = bs[i]
+        if x < 0x80: i += 1; continue
+        if not (0x81 <= x <= 0x9F or 0xE0 <= x <= 0xEA) or i + 1 >= len(bs) or not (0x40 <= bs[i + 1] <= 0xFC): return False
+        i += 2
+    return True
+
+
+def mixed_pool(words):
+    """Split an anchor pool into strings and numbers: -> [(kind, first word, n words)] with kind
+    's' (one NUL-terminated string, zero padded), 'f' or 'i'; None when a word fits nothing."""
+    n = len(words)
+    segs = []
+    i = 0
+    while i < n:
+        j = i
+        while j < n and _text_word(words[j]) == 4: j += 1
+        if j < n and (_text_word(words[j]) or (j > i and words[j] == 0)):
+            bs = b''.join(w.to_bytes(4, 'big') for w in words[i:j + 1]).rstrip(b'\0')
+            ascii_ = sum(1 for x in bs if 32 <= x < 127)
+            ok = _sjis_ok(bs) and (len(bs) >= 3 or (len(bs) == 2 and bs.isalpha() and segs and segs[-1][0] == 's'))
+            if ok and len(bs) <= 4 and not (bs.isalnum() or ascii_ == len(bs) and not floatlike(words[i])): ok = False
+            if ok and len(bs) == 4 and words[j] != 0 and j == i: ok = False   # four characters and no terminator
+            if ok:
+                segs.append(('s', i, j + 1 - i)); i = j + 1; continue
+        w = words[i]
+        if w < 0x10000 or w >= 0xFFFF0000: k = 'i'
+        elif floatlike(w) and fmt_float(w): k = 'f'
+        else: return None
+        if segs and segs[-1][0] == k: segs[-1] = (k, segs[-1][1], segs[-1][2] + 1)
+        else: segs.append((k, i, 1))
+        i += 1
+    if not any(k == 's' for k, _, _ in segs): return None
+    return segs
+
+
 def cmd_infer(a):
     """Give unk32 word tables a type read off the values: text pools, and rows whose every column is
     all floats, all small integers, single bytes or 16-bit pairs."""
@@ -866,7 +913,27 @@ def cmd_infer(a):
                 return '%s/* text only: a string pool (strings back to back, the code points into it) */\n%schar %s[%d]%s =\n    %s;' % (
                     note, quals, name, 4 * len(words), attr, lit)
             r = infer_rows(words)
-            if r is None: return m.group(0)
+            if r is None:
+                segs = mixed_pool(words)
+                if segs is None: return m.group(0)
+                total += 4 * len(words)
+                tn = name + '_Pool'
+                mem, vals = [], []
+                for k, i0, cnt_ in segs:
+                    o = 4 * i0
+                    if k == 's':
+                        bs = b''.join(w.to_bytes(4, 'big') for w in words[i0:i0 + cnt_]).rstrip(b'\0')
+                        mem.append('    char s_%03X[%d];' % (o, 4 * cnt_)); vals.append('    ' + D.c_string(bs))
+                    else:
+                        vs = [fmt_float(w) if k == 'f' else str(w if w < 0x80000000 else w - (1 << 32)) for w in words[i0:i0 + cnt_]]
+                        if cnt_ == 1:
+                            mem.append('    %s %s_%03X;' % (CT[k], k, o)); vals.append('    ' + vs[0])
+                        else:
+                            mem.append('    %s %s_%03X[%d];' % (CT[k], k, o, cnt_)); vals.append('    { ' + ', '.join(vs) + ' }')
+                types.append('/* anchor pool cut into its strings and numbers by value (text, floats, small integers),\n'
+                             ' * not from code */\n'
+                             'typedef struct %s {\n%s\n} %s;' % (tn, '\n'.join(mem), tn))
+                return '%s%s%s %s%s = {\n%s\n};' % (note, quals, tn, name, attr, ',\n'.join(vals))
             p, kinds = r
 
             def val(w, k):

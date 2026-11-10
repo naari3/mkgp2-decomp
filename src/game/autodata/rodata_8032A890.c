@@ -31,6 +31,28 @@ typedef struct HitVec3 {
     float z;
 } HitVec3;
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemHitRegistry_AddEntry_rodata_8032DE00_Pool {
+    int i_000[144];
+    char s_240[32];
+} ItemHitRegistry_AddEntry_rodata_8032DE00_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct ItemObject_TickHornBlastShockwave_rodata_8032E54C_Pool {
+    int i_000;
+    float f_004;
+    int i_008;
+    char s_00C[16];
+    char s_01C[20];
+    char s_030[20];
+    char s_044[20];
+    char s_058[20];
+    char s_06C[28];
+    char s_088[24];
+} ItemObject_TickHornBlastShockwave_rodata_8032E54C_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -745,26 +767,9 @@ const HitVec3 Item_PropagateHitToDriversInRadius_rodata_8032DDF4[1] = {
     { 0.0f, 5.0f, 0.0f }
 };
 /* decl: ItemKindDef */
-const unk32 ItemHitRegistry_AddEntry_rodata_8032DE00[152] = {
-    0x0000002D, 0x00000001, 0x00000001, 0x00000002, 0x00000003, 0x00000001, 0x00000032, 0x00000001,
-    0x00000001, 0x00000002, 0x00000003, 0xFFFFFFFF, 0x00000033, 0x00000001, 0x00000001, 0x00000002,
-    0x00000003, 0xFFFFFFFF, 0x00000034, 0x00000001, 0x00000001, 0x00000002, 0x00000003, 0xFFFFFFFF,
-    0x00000035, 0x00000001, 0x00000001, 0x00000002, 0x00000003, 0xFFFFFFFF, 0x00000036, 0x00000001,
-    0x00000001, 0x00000002, 0x00000003, 0xFFFFFFFF, 0x0000003B, 0x00000001, 0x00000001, 0x00000003,
-    0xFFFFFFFF, 0xFFFFFFFF, 0x00000065, 0x00000001, 0x00000001, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
-    0x00000066, 0x00000001, 0x00000001, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000067, 0x00000001,
-    0x00000001, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000043, 0x00000001, 0x00000001, 0x00000002,
-    0x00000002, 0xFFFFFFFF, 0x00000044, 0x00000001, 0x00000001, 0x00000002, 0x00000002, 0xFFFFFFFF,
-    0x00000046, 0x00000003, 0x00000001, 0x00000001, 0x00000003, 0xFFFFFFFF, 0x0000004A, 0x00000001,
-    0x00000001, 0x00000002, 0x00000004, 0xFFFFFFFF, 0x0000004C, 0x00000001, 0x00000001, 0x00000002,
-    0x00000002, 0xFFFFFFFF, 0x00000056, 0x00000001, 0x00000001, 0x00000003, 0x00000002, 0xFFFFFFFF,
-    0x00000062, 0x00000003, 0x00000001, 0x00000001, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000069, 0x00000005,
-    0x00000001, 0x00000001, 0x00000002, 0xFFFFFFFF, 0x00000077, 0x00000001, 0x00000001, 0x00000002,
-    0x00000002, 0xFFFFFFFF, 0x0000008A, 0x00000001, 0x00000001, 0x00000001, 0x00000002, 0xFFFFFFFF,
-    0x00000090, 0x00000001, 0x00000001, 0x00000001, 0x00000002, 0xFFFFFFFF, 0x00000096, 0x00000001,
-    0x00000001, 0x00000001, 0x00000002, 0xFFFFFFFF, 0x00000097, 0x00000001, 0x00000001, 0x00000001,
-    0x00000002, 0xFFFFFFFF, 0x0000002B, 0x00000001, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
-    0x67616279, 0x6F755F6D, 0x6F74696F, 0x6E5F4558, 0x5F63656E, 0x7465725F, 0x6A6F696E, 0x74000000
+const ItemHitRegistry_AddEntry_rodata_8032DE00_Pool ItemHitRegistry_AddEntry_rodata_8032DE00 = {
+    { 45, 1, 1, 2, 3, 1, 50, 1, 1, 2, 3, -1, 51, 1, 1, 2, 3, -1, 52, 1, 1, 2, 3, -1, 53, 1, 1, 2, 3, -1, 54, 1, 1, 2, 3, -1, 59, 1, 1, 3, -1, -1, 101, 1, 1, -1, -1, -1, 102, 1, 1, -1, -1, -1, 103, 1, 1, -1, -1, -1, 67, 1, 1, 2, 2, -1, 68, 1, 1, 2, 2, -1, 70, 3, 1, 1, 3, -1, 74, 1, 1, 2, 4, -1, 76, 1, 1, 2, 2, -1, 86, 1, 1, 3, 2, -1, 98, 3, 1, 1, -1, -1, 105, 5, 1, 1, 2, -1, 119, 1, 1, 2, 2, -1, 138, 1, 1, 1, 2, -1, 144, 1, 1, 1, 2, -1, 150, 1, 1, 1, 2, -1, 151, 1, 1, 1, 2, -1, 43, 1, -1, -1, -1, -1 },
+    "gabyou_motion_EX_center_joint"
 };
 const char lbl_8032E060[1236] = {
     63, -128, 0, 0, 63, 51, 51, 51, 63, 102, 102, 102,
@@ -878,12 +883,17 @@ const FloatTriple ItemObject_TickHornBlastShockwave_rodata_8032E540[1] = {
     { { 0.0f, 0.4f, 0.0f } }
 };
 /* decl: FloatTriple */
-const unk32 ItemObject_TickHornBlastShockwave_rodata_8032E54C[40] = {
-    0x00000000, 0x40278D34, 0x00000000, 0x6974726D, 0x5F70696E, 0x6B5F6A6F, 0x696E7400, 0x6974726D,
-    0x5F6F7261, 0x6E67655F, 0x6A6F696E, 0x74000000, 0x6974726D, 0x5F6D697A, 0x7569726F, 0x5F6A6F69,
-    0x6E740000, 0x6974656D, 0x5F6C6967, 0x68745F6A, 0x6F696E74, 0x00000000, 0x6974656D, 0x5F615F6E,
-    0x7572755F, 0x6B5F6A6F, 0x696E7400, 0x6974656D, 0x5F625F6E, 0x7572755F, 0x65666665, 0x63745F6A,
-    0x6F696E74, 0x00000000, 0x69745F71, 0x5F30305F, 0x63656E74, 0x65725F6A, 0x6F696E74, 0x00000000
+const ItemObject_TickHornBlastShockwave_rodata_8032E54C_Pool ItemObject_TickHornBlastShockwave_rodata_8032E54C = {
+    0,
+    2.6179934f,
+    0,
+    "itrm_pink_joint",
+    "itrm_orange_joint",
+    "itrm_mizuiro_joint",
+    "item_light_joint",
+    "item_a_nuru_k_joint",
+    "item_b_nuru_effect_joint",
+    "it_q_00_center_joint"
 };
 const char ItemObject_Tick_DispatchcTo15_rodata_8032E5EC[44] = {
     105, 116, 101, 109, 95, 99, 101, 110, 116, 101, 114, 95,

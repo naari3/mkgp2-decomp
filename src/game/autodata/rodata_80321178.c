@@ -6,6 +6,51 @@
 #include "game/autodata.h"
 #include "game/types/Vec.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct sdata_806CEFE0_rodata_803215FC_Pool {
+    char s_000[12];
+    char s_00C[16];
+    char s_01C[12];
+    char s_028[36];
+    char s_04C[20];
+    char s_060[24];
+    char s_078[28];
+    char s_094[16];
+    char s_0A4[24];
+    char s_0BC[16];
+    char s_0CC[24];
+    char s_0E4[40];
+    char s_10C[36];
+    char s_130[20];
+    char s_144[20];
+    char s_158[12];
+    char s_164[20];
+    char s_178[12];
+    char s_184[12];
+    char s_190[16];
+    char s_1A0[20];
+    char s_1B4[16];
+    char s_1C4[20];
+    char s_1D8[20];
+    char s_1EC[20];
+    char s_200[28];
+    char s_21C[12];
+    char s_228[16];
+    char s_238[20];
+    char s_24C[32];
+    char s_26C[32];
+    char s_28C[32];
+    char s_2AC[28];
+    char s_2C8[28];
+    char s_2E4[52];
+    char s_318[20];
+    char s_32C[52];
+    char s_360[16];
+    char s_370[16];
+    int i_380;
+} sdata_806CEFE0_rodata_803215FC_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -108,36 +153,47 @@ const Vec RaceScene_FrameUpdate_rodata_803215E0[1] = {
     { 0.0f, 0.0f, 0.0f }
 };
 const char lbl_803215EC[] = "clGameSingle";
-const unk32 sdata_806CEFE0_rodata_803215FC[225] = {
-    0x636C4761, 0x6D65576F, 0x726C6400, 0x4F4B2050, 0x72697A65, 0x20667265, 0x65210000, 0x636F6C6C,
-    0x20667265, 0x65210000, 0x63697465, 0x6D73656C, 0x20746163, 0x686F6D65, 0x74657220, 0x68697466,
-    0x61636520, 0x66726565, 0x21000000, 0x63617220, 0x73686164, 0x6F772066, 0x72656521, 0x00000000,
-    0x63617220, 0x73686164, 0x6F77206D, 0x61702066, 0x72656521, 0x00000000, 0x65666665, 0x63742061,
-    0x75746F72, 0x756E206C, 0x69676874, 0x20667265, 0x65210000, 0x616C6C20, 0x726F6D20, 0x66726565,
-    0x21000000, 0x4F4B2063, 0x6C47616D, 0x653A3A73, 0x65747469, 0x6E672829, 0x00000000, 0x4F4B2063,
-    0x6C4C6976, 0x65496E69, 0x74282900, 0x636C4C69, 0x6768744D, 0x616E6167, 0x65723A3A, 0x696E6974,
-    0x28290000, 0x636C5363, 0x7265656E, 0x45666665, 0x63742829, 0x20262063, 0x6C456666, 0x6563744D,
-    0x616E6167, 0x65722829, 0x00000000, 0x4F4B204F, 0x626A6563, 0x74576F72, 0x6B496E69, 0x74202620,
-    0x45666665, 0x6374576F, 0x726B496E, 0x69740000, 0x4F626A65, 0x6374576F, 0x726B496E, 0x69742829,
-    0x00000000, 0x45666665, 0x6374576F, 0x726B496E, 0x69742829, 0x00000000, 0x6D617020, 0x6D616E61,
-    0x67657200, 0x636C4761, 0x6D653A3A, 0x73686164, 0x6F772829, 0x00000000, 0x4F4B2073, 0x6861646F,
-    0x77210000, 0x706C6179, 0x65722063, 0x61720000, 0x4F4B2050, 0x6C617965, 0x72206361, 0x72000000,
-    0x6A797567, 0x656D755F, 0x73746172, 0x742E6461, 0x74000000, 0x6A756765, 0x6D752063, 0x616D6572,
-    0x61000000, 0x4F4B206A, 0x7567656D, 0x75202620, 0x65746321, 0x21000000, 0x636C4F62, 0x6A436F6C,
-    0x6C436865, 0x636B6572, 0x00000000, 0x636C456E, 0x656D7954, 0x68696E6B, 0x4D616E61, 0x67657200,
-    0x4F4B2063, 0x6C456E65, 0x6D795468, 0x696E6B4D, 0x616E6167, 0x65722829, 0x21000000, 0x6974656D,
-    0x53656C65, 0x63740000, 0x4F4B2073, 0x70726974, 0x65206974, 0x656D2100, 0x4F4B2054, 0x494D4520,
-    0x73657474, 0x696E6721, 0x00000000, 0x4F4B2065, 0x74632063, 0x6F757273, 0x65206566, 0x66656374,
-    0x2066696C, 0x65206C6F, 0x61642100, 0x4F4B2065, 0x66666563, 0x745F4C6F, 0x61644461, 0x74612845,
-    0x465F4B41, 0x5254293B, 0x00000000, 0x4F4B2065, 0x66666563, 0x745F4C6F, 0x61644461, 0x74612845,
-    0x465F4954, 0x454D293B, 0x00000000, 0x4F4B2050, 0x6C617965, 0x72204974, 0x656D204D, 0x6F64656C,
-    0x206C6F61, 0x64210000, 0x4F4B2045, 0x4E454D59, 0x20497465, 0x6D204D6F, 0x64656C20, 0x6C6F6164,
-    0x21000000, 0x2D2D2D4C, 0x4F414420, 0x53505249, 0x5445202D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D,
-    0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x0A000000, 0x4F4B2073, 0x70726974,
-    0x65206364, 0x69737028, 0x29000000, 0x2D2D2D52, 0x41434520, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D,
-    0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x2D2D2D2D, 0x0A000000,
-    0x73707220, 0x73697A65, 0x20697320, 0x25640A00, 0x4F4B206C, 0x69766520, 0x73657474, 0x696E6700,
-    0x00000000
+const sdata_806CEFE0_rodata_803215FC_Pool sdata_806CEFE0_rodata_803215FC = {
+    "clGameWorld",
+    "OK Prize free!",
+    "coll free!",
+    "citemsel tachometer hitface free!",
+    "car shadow free!",
+    "car shadow map free!",
+    "effect autorun light free!",
+    "all rom free!",
+    "OK clGame::setting()",
+    "OK clLiveInit()",
+    "clLightManager::init()",
+    "clScreenEffect() & clEffectManager()",
+    "OK ObjectWorkInit & EffectWorkInit",
+    "ObjectWorkInit()",
+    "EffectWorkInit()",
+    "map manager",
+    "clGame::shadow()",
+    "OK shadow!",
+    "player car",
+    "OK Player car",
+    "jyugemu_start.dat",
+    "jugemu camera",
+    "OK jugemu & etc!!",
+    "clObjCollChecker",
+    "clEnemyThinkManager",
+    "OK clEnemyThinkManager()!",
+    "itemSelect",
+    "OK sprite item!",
+    "OK TIME setting!",
+    "OK etc course effect file load!",
+    "OK effect_LoadData(EF_KART);",
+    "OK effect_LoadData(EF_ITEM);",
+    "OK Player Item Model load!",
+    "OK ENEMY Item Model load!",
+    "---LOAD SPRITE ---------------------------------\n",
+    "OK sprite cdisp()",
+    "---RACE ----------------------------------------\n",
+    "spr size is %d\n",
+    "OK live setting",
+    0
 };
 
 #pragma force_active reset

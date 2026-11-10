@@ -5,6 +5,27 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_8039C5E8_Pool {
+    char s_000[24];
+    char s_018[28];
+    char s_034[28];
+    char s_050[28];
+    int i_06C;
+} lbl_8039C5E8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_8039C6D0_Pool {
+    char s_000[12];
+    char s_00C[20];
+    char s_020[12];
+    char s_02C[12];
+    char s_038[12];
+    int i_044;
+} lbl_8039C6D0_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -16,11 +37,12 @@ const char clFlowBtPlease[] = "clFlowBtPlease";
 const char lbl_8039C5AC[] = "clFlowProcess";
 const char lbl_8039C5BC[] = "cone.dat";
 const char clFlowCourseBattle[] = "nsFlowBtPlease::clPlayerPlate";
-const unk32 lbl_8039C5E8[28] = {
-    0x6E734D65, 0x6E755574, 0x696C3A3A, 0x636C4D65, 0x6E754E6F, 0x64650000, 0x6E734D65, 0x6E755574,
-    0x696C3A3A, 0x636C5374, 0x72696E67, 0x4E6F6465, 0x00000000, 0x6E734D65, 0x6E755574, 0x696C3A3A,
-    0x636C5370, 0x72697465, 0x4E6F6465, 0x00000000, 0x6E734D65, 0x6E755574, 0x696C3A3A, 0x636C4669,
-    0x6C746572, 0x4E6F6465, 0x00000000, 0x00000000
+const lbl_8039C5E8_Pool lbl_8039C5E8 = {
+    "nsMenuUtil::clMenuNode",
+    "nsMenuUtil::clStringNode",
+    "nsMenuUtil::clSpriteNode",
+    "nsMenuUtil::clFilterNode",
+    0
 };
 const char clFlowCupBattle[] = "clFlashViewer";
 /* text only: a string pool (strings back to back, the code points into it) */
@@ -33,10 +55,13 @@ const char lbl_8039C668[88] =
     " FRAME    : %f (MAX %f)" "\0"
     " LOOP     : %s";
 const char clFlowCCInterface[] = "clSpriteViewer";
-const unk32 lbl_8039C6D0[18] = {
-    0x636C4A6F, 0x6252756E, 0x6E657200, 0x5B535052, 0x49544520, 0x54455354, 0x204D4F44, 0x455D0000,
-    0x49442020, 0x203A2025, 0x30356400, 0x46494C45, 0x203A2025, 0x73000000, 0x4E414D45, 0x203A2025,
-    0x73000000, 0x00000000
+const lbl_8039C6D0_Pool lbl_8039C6D0 = {
+    "clJobRunner",
+    "[SPRITE TEST MODE]",
+    "ID   : %05d",
+    "FILE : %s",
+    "NAME : %s",
+    0
 };
 
 #pragma force_active reset

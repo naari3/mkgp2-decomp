@@ -16,6 +16,48 @@ extern char lbl_8039A180[];
 extern char lbl_8039A1F8[];
 extern char lbl_8039A270[];
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806D99A4_Pool {
+    char s_000[8];
+} lbl_806D99A4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806D99B4_Pool {
+    char s_000[8];
+} lbl_806D99B4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806D99BC_Pool {
+    char s_000[8];
+} lbl_806D99BC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806D99C4_Pool {
+    char s_000[8];
+} lbl_806D99C4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806D99CC_Pool {
+    char s_000[8];
+} lbl_806D99CC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806D99DC_Pool {
+    char s_000[8];
+} lbl_806D99DC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_806D99E4_Pool {
+    char s_000[8];
+} lbl_806D99E4_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -2077,30 +2119,30 @@ const unk32 lbl_806D9994[2] = {
 const unk32 lbl_806D999C[2] = {
     0x82B782E9, 0x00000000
 };
-const unk32 lbl_806D99A4[2] = {
-    0x82B582C8, 0x82A20000
+const lbl_806D99A4_Pool lbl_806D99A4 = {
+    "\202\265\202\310\202\242"
 };
 const char lbl_806D99AC[] = "Please";
-const unk32 lbl_806D99B4[2] = {
-    0x837D838A, 0x83490000
+const lbl_806D99B4_Pool lbl_806D99B4 = {
+    "\203}\203\212\203I"
 };
-const unk32 lbl_806D99BC[2] = {
-    0x838F838A, 0x83490000
+const lbl_806D99BC_Pool lbl_806D99BC = {
+    "\203\217\203\212\203I"
 };
-const unk32 lbl_806D99C4[2] = {
-    0x8373815B, 0x83600000
+const lbl_806D99C4_Pool lbl_806D99C4 = {
+    "\203s\201[\203`"
 };
-const unk32 lbl_806D99CC[2] = {
-    0x834E8362, 0x83700000
+const lbl_806D99CC_Pool lbl_806D99CC = {
+    "\203N\203b\203p"
 };
 const unk32 lbl_806D99D4[2] = {
     0x8263826A, 0x00000000
 };
-const unk32 lbl_806D99DC[2] = {
-    0x826F8260, 0x82620000
+const lbl_806D99DC_Pool lbl_806D99DC = {
+    "\202o\202`\202b"
 };
-const unk32 lbl_806D99E4[2] = {
-    0x82718264, 0x82630000
+const lbl_806D99E4_Pool lbl_806D99E4 = {
+    "\202q\202d\202c"
 };
 unsigned short * const lbl_806D99EC = (unsigned short *)&lbl_80399F28;
 unsigned short * const lbl_806D99F0 = (unsigned short *)&lbl_80399FA0;

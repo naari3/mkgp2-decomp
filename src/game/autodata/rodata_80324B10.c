@@ -127,6 +127,1032 @@ extern char lbl_806D4DB0[];
 extern char lbl_806D4DB8[];
 extern char lbl_806D4DC0[];
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_80324F94_Pool {
+    char s_000[12];
+} data_80411B18_rodata_80324F94_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_80324FA0_Pool {
+    char s_000[12];
+} data_80411B18_rodata_80324FA0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_80324FB8_Pool {
+    char s_000[12];
+} data_80411B18_rodata_80324FB8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_80324FC4_Pool {
+    char s_000[12];
+} data_80411B18_rodata_80324FC4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_80324FD0_Pool {
+    char s_000[12];
+} data_80411B18_rodata_80324FD0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_80324FDC_Pool {
+    char s_000[12];
+} data_80411B18_rodata_80324FDC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_80324FE8_Pool {
+    char s_000[12];
+} data_80411B18_rodata_80324FE8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_80324FF4_Pool {
+    char s_000[12];
+} data_80411B18_rodata_80324FF4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_80325000_Pool {
+    char s_000[12];
+} data_80411B18_rodata_80325000_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_8032500C_Pool {
+    char s_000[12];
+} data_80411B18_rodata_8032500C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_80325018_Pool {
+    char s_000[12];
+} data_80411B18_rodata_80325018_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_80325024_Pool {
+    char s_000[12];
+} data_80411B18_rodata_80325024_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_80325030_Pool {
+    char s_000[12];
+} data_80411B18_rodata_80325030_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_8032503C_Pool {
+    char s_000[12];
+} data_80411B18_rodata_8032503C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_80325054_Pool {
+    char s_000[12];
+} data_80411B18_rodata_80325054_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_80325060_Pool {
+    char s_000[12];
+} data_80411B18_rodata_80325060_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_80325078_Pool {
+    char s_000[12];
+} data_80411B18_rodata_80325078_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_8032509C_Pool {
+    char s_000[12];
+} data_80411B18_rodata_8032509C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_803250D8_Pool {
+    char s_000[12];
+} data_80411B18_rodata_803250D8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_803250E4_Pool {
+    char s_000[12];
+} data_80411B18_rodata_803250E4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_803250FC_Pool {
+    char s_000[12];
+} data_80411B18_rodata_803250FC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_80325114_Pool {
+    char s_000[12];
+} data_80411B18_rodata_80325114_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_8032512C_Pool {
+    char s_000[12];
+} data_80411B18_rodata_8032512C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct data_80411B18_rodata_80325138_Pool {
+    char s_000[12];
+} data_80411B18_rodata_80325138_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325150_Pool {
+    char s_000[20];
+} lbl_80325150_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325174_Pool {
+    char s_000[24];
+} lbl_80325174_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_8032519C_Pool {
+    char s_000[20];
+} lbl_8032519C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803251C0_Pool {
+    char s_000[20];
+} lbl_803251C0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803251E4_Pool {
+    char s_000[24];
+} lbl_803251E4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_8032520C_Pool {
+    char s_000[20];
+} lbl_8032520C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325230_Pool {
+    char s_000[20];
+} lbl_80325230_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325250_Pool {
+    char s_000[24];
+} lbl_80325250_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325278_Pool {
+    char s_000[20];
+} lbl_80325278_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_8032529C_Pool {
+    char s_000[20];
+} lbl_8032529C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803252C0_Pool {
+    char s_000[24];
+} lbl_803252C0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803252E8_Pool {
+    char s_000[20];
+} lbl_803252E8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_8032530C_Pool {
+    char s_000[20];
+} lbl_8032530C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325330_Pool {
+    char s_000[20];
+} lbl_80325330_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325354_Pool {
+    char s_000[24];
+} lbl_80325354_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325380_Pool {
+    char s_000[16];
+} lbl_80325380_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803253A0_Pool {
+    char s_000[20];
+} lbl_803253A0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803253C4_Pool {
+    char s_000[24];
+} lbl_803253C4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803253F0_Pool {
+    char s_000[20];
+} lbl_803253F0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325418_Pool {
+    char s_000[24];
+} lbl_80325418_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325444_Pool {
+    char s_000[24];
+} lbl_80325444_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325470_Pool {
+    char s_000[20];
+} lbl_80325470_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325498_Pool {
+    char s_000[24];
+} lbl_80325498_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803254C8_Pool {
+    char s_000[20];
+} lbl_803254C8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803254EC_Pool {
+    char s_000[20];
+} lbl_803254EC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325514_Pool {
+    char s_000[24];
+} lbl_80325514_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325540_Pool {
+    char s_000[20];
+} lbl_80325540_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325568_Pool {
+    char s_000[24];
+} lbl_80325568_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325594_Pool {
+    char s_000[20];
+} lbl_80325594_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803255B8_Pool {
+    char s_000[20];
+} lbl_803255B8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803255DC_Pool {
+    char s_000[24];
+} lbl_803255DC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325608_Pool {
+    char s_000[16];
+} lbl_80325608_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325628_Pool {
+    char s_000[20];
+} lbl_80325628_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_8032564C_Pool {
+    char s_000[24];
+} lbl_8032564C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325678_Pool {
+    char s_000[20];
+} lbl_80325678_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803256A0_Pool {
+    char s_000[24];
+} lbl_803256A0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803256CC_Pool {
+    char s_000[24];
+} lbl_803256CC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803256F8_Pool {
+    char s_000[20];
+} lbl_803256F8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325720_Pool {
+    char s_000[24];
+} lbl_80325720_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_8032574C_Pool {
+    char s_000[20];
+} lbl_8032574C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325770_Pool {
+    char s_000[20];
+} lbl_80325770_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325798_Pool {
+    char s_000[24];
+} lbl_80325798_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803257C4_Pool {
+    char s_000[20];
+} lbl_803257C4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803257EC_Pool {
+    char s_000[24];
+} lbl_803257EC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325818_Pool {
+    char s_000[20];
+} lbl_80325818_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325858_Pool {
+    char s_000[16];
+} lbl_80325858_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325874_Pool {
+    char s_000[16];
+} lbl_80325874_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325890_Pool {
+    char s_000[12];
+} lbl_80325890_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_8032589C_Pool {
+    char s_000[16];
+} lbl_8032589C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803258B8_Pool {
+    char s_000[12];
+} lbl_803258B8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803258C4_Pool {
+    char s_000[16];
+} lbl_803258C4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803258D4_Pool {
+    char s_000[12];
+} lbl_803258D4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803258E0_Pool {
+    char s_000[12];
+} lbl_803258E0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803258EC_Pool {
+    char s_000[12];
+} lbl_803258EC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803258F8_Pool {
+    char s_000[12];
+} lbl_803258F8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325904_Pool {
+    char s_000[16];
+} lbl_80325904_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325914_Pool {
+    char s_000[16];
+} lbl_80325914_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325924_Pool {
+    char s_000[12];
+} lbl_80325924_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325930_Pool {
+    char s_000[12];
+} lbl_80325930_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_8032593C_Pool {
+    char s_000[12];
+} lbl_8032593C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325948_Pool {
+    char s_000[16];
+} lbl_80325948_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325958_Pool {
+    char s_000[12];
+} lbl_80325958_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325970_Pool {
+    char s_000[16];
+} lbl_80325970_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_8032598C_Pool {
+    char s_000[12];
+} lbl_8032598C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803259A4_Pool {
+    char s_000[16];
+} lbl_803259A4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803259C0_Pool {
+    char s_000[16];
+} lbl_803259C0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_803259DC_Pool {
+    char s_000[12];
+} lbl_803259DC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325A00_Pool {
+    char s_000[12];
+} lbl_80325A00_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325A18_Pool {
+    char s_000[12];
+} lbl_80325A18_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325A60_Pool {
+    char s_000[16];
+} lbl_80325A60_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325A7C_Pool {
+    char s_000[16];
+} lbl_80325A7C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325A98_Pool {
+    char s_000[16];
+} lbl_80325A98_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325AB4_Pool {
+    char s_000[16];
+} lbl_80325AB4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325AD0_Pool {
+    char s_000[16];
+} lbl_80325AD0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325AEC_Pool {
+    char s_000[16];
+} lbl_80325AEC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325B08_Pool {
+    char s_000[16];
+} lbl_80325B08_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325B24_Pool {
+    char s_000[16];
+} lbl_80325B24_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325B40_Pool {
+    char s_000[16];
+} lbl_80325B40_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325B5C_Pool {
+    char s_000[16];
+} lbl_80325B5C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325B78_Pool {
+    char s_000[16];
+} lbl_80325B78_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325B94_Pool {
+    char s_000[16];
+} lbl_80325B94_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325BB0_Pool {
+    char s_000[16];
+} lbl_80325BB0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325BCC_Pool {
+    char s_000[16];
+} lbl_80325BCC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325BDC_Pool {
+    char s_000[16];
+} lbl_80325BDC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325BF8_Pool {
+    char s_000[16];
+} lbl_80325BF8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325C14_Pool {
+    char s_000[16];
+} lbl_80325C14_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325C30_Pool {
+    char s_000[16];
+} lbl_80325C30_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325C4C_Pool {
+    char s_000[12];
+} lbl_80325C4C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325C64_Pool {
+    char s_000[12];
+} lbl_80325C64_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325C7C_Pool {
+    char s_000[12];
+} lbl_80325C7C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325C88_Pool {
+    char s_000[12];
+} lbl_80325C88_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325CA0_Pool {
+    char s_000[12];
+} lbl_80325CA0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325CAC_Pool {
+    char s_000[12];
+} lbl_80325CAC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325CB8_Pool {
+    char s_000[12];
+} lbl_80325CB8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325CC4_Pool {
+    char s_000[12];
+} lbl_80325CC4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325CD0_Pool {
+    char s_000[12];
+} lbl_80325CD0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325CDC_Pool {
+    char s_000[12];
+} lbl_80325CDC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325CF4_Pool {
+    char s_000[12];
+} lbl_80325CF4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325D0C_Pool {
+    char s_000[12];
+} lbl_80325D0C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325D18_Pool {
+    char s_000[12];
+} lbl_80325D18_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325D48_Pool {
+    char s_000[16];
+} lbl_80325D48_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325D58_Pool {
+    char s_000[16];
+} lbl_80325D58_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325D74_Pool {
+    char s_000[12];
+} lbl_80325D74_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325D80_Pool {
+    char s_000[12];
+} lbl_80325D80_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325D8C_Pool {
+    char s_000[12];
+} lbl_80325D8C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325DA4_Pool {
+    char s_000[12];
+} lbl_80325DA4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325DC8_Pool {
+    char s_000[12];
+} lbl_80325DC8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325DE0_Pool {
+    char s_000[16];
+} lbl_80325DE0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325DF0_Pool {
+    char s_000[12];
+} lbl_80325DF0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325DFC_Pool {
+    char s_000[16];
+} lbl_80325DFC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325E0C_Pool {
+    char s_000[12];
+} lbl_80325E0C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325E18_Pool {
+    char s_000[12];
+} lbl_80325E18_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325E24_Pool {
+    char s_000[12];
+} lbl_80325E24_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325E3C_Pool {
+    char s_000[12];
+} lbl_80325E3C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325E54_Pool {
+    char s_000[12];
+} lbl_80325E54_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325E6C_Pool {
+    char s_000[12];
+} lbl_80325E6C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325E78_Pool {
+    char s_000[12];
+} lbl_80325E78_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325E84_Pool {
+    char s_000[12];
+} lbl_80325E84_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325E90_Pool {
+    char s_000[16];
+} lbl_80325E90_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325EA0_Pool {
+    char s_000[12];
+} lbl_80325EA0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325EAC_Pool {
+    char s_000[12];
+} lbl_80325EAC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325EC4_Pool {
+    char s_000[12];
+} lbl_80325EC4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325ED0_Pool {
+    char s_000[16];
+} lbl_80325ED0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325EEC_Pool {
+    char s_000[12];
+} lbl_80325EEC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325EF8_Pool {
+    char s_000[12];
+} lbl_80325EF8_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325F04_Pool {
+    char s_000[12];
+} lbl_80325F04_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325F10_Pool {
+    char s_000[16];
+} lbl_80325F10_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325F2C_Pool {
+    char s_000[16];
+} lbl_80325F2C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325F48_Pool {
+    char s_000[12];
+} lbl_80325F48_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325F54_Pool {
+    char s_000[12];
+} lbl_80325F54_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325F60_Pool {
+    char s_000[12];
+} lbl_80325F60_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325F78_Pool {
+    char s_000[16];
+} lbl_80325F78_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325F94_Pool {
+    char s_000[16];
+} lbl_80325F94_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325FB0_Pool {
+    char s_000[16];
+} lbl_80325FB0_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325FCC_Pool {
+    char s_000[12];
+} lbl_80325FCC_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80325FE4_Pool {
+    char s_000[16];
+} lbl_80325FE4_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80326000_Pool {
+    char s_000[12];
+} lbl_80326000_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80326018_Pool {
+    char s_000[16];
+} lbl_80326018_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80326028_Pool {
+    char s_000[12];
+} lbl_80326028_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80326034_Pool {
+    char s_000[12];
+} lbl_80326034_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80326040_Pool {
+    char s_000[16];
+} lbl_80326040_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80326050_Pool {
+    char s_000[16];
+} lbl_80326050_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80326060_Pool {
+    char s_000[12];
+} lbl_80326060_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_8032606C_Pool {
+    char s_000[16];
+} lbl_8032606C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_8032607C_Pool {
+    char s_000[16];
+} lbl_8032607C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_8032608C_Pool {
+    char s_000[16];
+} lbl_8032608C_Pool;
+
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_8032609C_Pool {
+    char s_000[16];
+} lbl_8032609C_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -253,638 +1279,638 @@ const unsigned char RankLog_rodata_80324B98[1020] = {
     0x45, 0x3B, 0x80, 0x0, 0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x7A, 0x0, 0x0,
     0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x9C, 0x40, 0x0, 0x42, 0xA6, 0xAA, 0xAB
 };
-const unk32 data_80411B18_rodata_80324F94[3] = {
-    0x838B815B, 0x834C815B, 0x00000000
+const data_80411B18_rodata_80324F94_Pool data_80411B18_rodata_80324F94 = {
+    "\203\213\201[\203L\201["
 };
-const unk32 data_80411B18_rodata_80324FA0[3] = {
-    0x8341835E, 0x8362834A, 0x815B0000
+const data_80411B18_rodata_80324FA0_Pool data_80411B18_rodata_80324FA0 = {
+    "\203A\203^\203b\203J\201["
 };
 const char lbl_80324FAC[] = "Attacker";
-const unk32 data_80411B18_rodata_80324FB8[3] = {
-    0x83688389, 0x8343836F, 0x815B0000
+const data_80411B18_rodata_80324FB8_Pool data_80411B18_rodata_80324FB8 = {
+    "\203h\203\211\203C\203o\201["
 };
-const unk32 data_80411B18_rodata_80324FC4[3] = {
-    0x838C815B, 0x8354815B, 0x00000000
+const data_80411B18_rodata_80324FC4_Pool data_80411B18_rodata_80324FC4 = {
+    "\203\214\201[\203T\201["
 };
-const unk32 data_80411B18_rodata_80324FD0[3] = {
-    0x838A815B, 0x835F815B, 0x00000000
+const data_80411B18_rodata_80324FD0_Pool data_80411B18_rodata_80324FD0 = {
+    "\203\212\201[\203_\201["
 };
-const unk32 data_80411B18_rodata_80324FDC[3] = {
-    0x83748340, 0x8343835E, 0x815B0000
+const data_80411B18_rodata_80324FDC_Pool data_80411B18_rodata_80324FDC = {
+    "\203t\203@\203C\203^\201["
 };
-const unk32 data_80411B18_rodata_80324FE8[3] = {
-    0x837D8358, 0x835E815B, 0x00000000
+const data_80411B18_rodata_80324FE8_Pool data_80411B18_rodata_80324FE8 = {
+    "\203}\203X\203^\201["
 };
-const unk32 data_80411B18_rodata_80324FF4[3] = {
-    0x83608383, 0x83938376, 0x00000000
+const data_80411B18_rodata_80324FF4_Pool data_80411B18_rodata_80324FF4 = {
+    "\203`\203\203\203\223\203v"
 };
-const unk32 data_80411B18_rodata_80325000[3] = {
-    0x83438369, 0x8359837D, 0x00000000
+const data_80411B18_rodata_80325000_Pool data_80411B18_rodata_80325000 = {
+    "\203C\203i\203Y\203}"
 };
-const unk32 data_80411B18_rodata_8032500C[3] = {
-    0x83548380, 0x83898343, 0x00000000
+const data_80411B18_rodata_8032500C_Pool data_80411B18_rodata_8032500C = {
+    "\203T\203\200\203\211\203C"
 };
-const unk32 data_80411B18_rodata_80325018[3] = {
-    0x8371815B, 0x838D815B, 0x00000000
+const data_80411B18_rodata_80325018_Pool data_80411B18_rodata_80325018 = {
+    "\203q\201[\203\215\201["
 };
-const unk32 data_80411B18_rodata_80325024[3] = {
-    0x8371838D, 0x83438393, 0x00000000
+const data_80411B18_rodata_80325024_Pool data_80411B18_rodata_80325024 = {
+    "\203q\203\215\203C\203\223"
 };
-const unk32 data_80411B18_rodata_80325030[3] = {
-    0x8376838A, 0x83938358, 0x00000000
+const data_80411B18_rodata_80325030_Pool data_80411B18_rodata_80325030 = {
+    "\203v\203\212\203\223\203X"
 };
-const unk32 data_80411B18_rodata_8032503C[3] = {
-    0x8376838A, 0x8393835A, 0x83580000
+const data_80411B18_rodata_8032503C_Pool data_80411B18_rodata_8032503C = {
+    "\203v\203\212\203\223\203Z\203X"
 };
 const char lbl_80325048[] = "Princess";
-const unk32 data_80411B18_rodata_80325054[3] = {
-    0x834E8343, 0x815B8393, 0x00000000
+const data_80411B18_rodata_80325054_Pool data_80411B18_rodata_80325054 = {
+    "\203N\203C\201[\203\223"
 };
-const unk32 data_80411B18_rodata_80325060[3] = {
-    0x834A8343, 0x8355815B, 0x00000000
+const data_80411B18_rodata_80325060_Pool data_80411B18_rodata_80325060 = {
+    "\203J\203C\203U\201["
 };
 const char lbl_8032506C[] = "Conqueror";
-const unk32 data_80411B18_rodata_80325078[3] = {
-    0x837D838A, 0x834A96BC, 0x906C0000
+const data_80411B18_rodata_80325078_Pool data_80411B18_rodata_80325078 = {
+    "\203}\203\212\203J\226\274\220l"
 };
 const char lbl_80325084[] = "Lone Wolf";
 const char lbl_80325090[] = "WarMachine";
-const unk32 data_80411B18_rodata_8032509C[3] = {
-    0x965C9196, 0x97F18ED4, 0x00000000
+const data_80411B18_rodata_8032509C_Pool data_80411B18_rodata_8032509C = {
+    "\226\\\221\226\227\361\216\324"
 };
 const char lbl_803250A8[] = "TrainFleet";
 const char lbl_803250B4[] = "Lion King";
 const char lbl_803250C0[] = "Blast King";
 const char lbl_803250CC[] = "Speed King";
-const unk32 data_80411B18_rodata_803250D8[3] = {
-    0x837D838A, 0x834A91E5, 0x89A40000
+const data_80411B18_rodata_803250D8_Pool data_80411B18_rodata_803250D8 = {
+    "\203}\203\212\203J\221\345\211\244"
 };
-const unk32 data_80411B18_rodata_803250E4[3] = {
-    0x837D838A, 0x834A9465, 0x89A40000
+const data_80411B18_rodata_803250E4_Pool data_80411B18_rodata_803250E4 = {
+    "\203}\203\212\203J\224e\211\244"
 };
 const char lbl_803250F0[] = "MK Kaiser";
-const unk32 data_80411B18_rodata_803250FC[3] = {
-    0x837D838A, 0x834A92E9, 0x89A40000
+const data_80411B18_rodata_803250FC_Pool data_80411B18_rodata_803250FC = {
+    "\203}\203\212\203J\222\351\211\244"
 };
 const char lbl_80325108[] = "MK Emperor";
-const unk32 data_80411B18_rodata_80325114[3] = {
-    0x837D838A, 0x834A9682, 0x89A40000
+const data_80411B18_rodata_80325114_Pool data_80411B18_rodata_80325114 = {
+    "\203}\203\212\203J\226\202\211\244"
 };
 const char lbl_80325120[] = "MK Demon";
-const unk32 data_80411B18_rodata_8032512C[3] = {
-    0x837D838A, 0x834A8B53, 0x905F0000
+const data_80411B18_rodata_8032512C_Pool data_80411B18_rodata_8032512C = {
+    "\203}\203\212\203J\213S\220_"
 };
-const unk32 data_80411B18_rodata_80325138[3] = {
-    0x8DC58BAD, 0x936090E0, 0x00000000
+const data_80411B18_rodata_80325138_Pool data_80411B18_rodata_80325138 = {
+    "\215\305\213\255\223`\220\340"
 };
 const char lbl_80325144[] = "Legendary";
-const unk32 lbl_80325150[5] = {
-    0x955C8254, 0x824F8266, 0x826F96B3, 0x947390A7, 0x94650000
+const lbl_80325150_Pool lbl_80325150 = {
+    "\225\\\202T\202O\202f\202o\226\263\224s\220\247\224e"
 };
 const char lbl_80325164[] = "M50GP Flawless";
-const unk32 lbl_80325174[6] = {
-    0x955C8250, 0x824F824F, 0x8266826F, 0x96B39473, 0x90A79465, 0x00000000
+const lbl_80325174_Pool lbl_80325174 = {
+    "\225\\\202P\202O\202O\202f\202o\226\263\224s\220\247\224e"
 };
 const char lbl_8032518C[] = "M100GP Flawless";
-const unk32 lbl_8032519C[5] = {
-    0x8254824F, 0x8266826F, 0x96B39473, 0x90A79465, 0x00000000
+const lbl_8032519C_Pool lbl_8032519C = {
+    "\202T\202O\202f\202o\226\263\224s\220\247\224e"
 };
 const char lbl_803251B0[] = "50GP Flawless";
-const unk32 lbl_803251C0[5] = {
-    0x8250824F, 0x824F8266, 0x826F96B3, 0x947390A7, 0x94650000
+const lbl_803251C0_Pool lbl_803251C0 = {
+    "\202P\202O\202O\202f\202o\226\263\224s\220\247\224e"
 };
 const char lbl_803251D4[] = "100GP Flawless";
-const unk32 lbl_803251E4[6] = {
-    0x955C8250, 0x8254824F, 0x8266826F, 0x96B39473, 0x90A79465, 0x00000000
+const lbl_803251E4_Pool lbl_803251E4 = {
+    "\225\\\202P\202T\202O\202f\202o\226\263\224s\220\247\224e"
 };
 const char lbl_803251FC[] = "M150GP Flawless";
-const unk32 lbl_8032520C[5] = {
-    0x82508254, 0x824F8266, 0x826F96B3, 0x947390A7, 0x94650000
+const lbl_8032520C_Pool lbl_8032520C = {
+    "\202P\202T\202O\202f\202o\226\263\224s\220\247\224e"
 };
 const char lbl_80325220[] = "150GP Flawless";
-const unk32 lbl_80325230[5] = {
-    0x83498382, 0x83658254, 0x824F8266, 0x826F90A7, 0x94650000
+const lbl_80325230_Pool lbl_80325230 = {
+    "\203I\203\202\203e\202T\202O\202f\202o\220\247\224e"
 };
 const char lbl_80325244[] = "M50GP CLEAR";
-const unk32 lbl_80325250[6] = {
-    0x83498382, 0x83658250, 0x824F824F, 0x8266826F, 0x90A79465, 0x00000000
+const lbl_80325250_Pool lbl_80325250 = {
+    "\203I\203\202\203e\202P\202O\202O\202f\202o\220\247\224e"
 };
 const char lbl_80325268[] = "M100GP CLEAR";
-const unk32 lbl_80325278[5] = {
-    0x83458389, 0x8254824F, 0x8266826F, 0x90A79465, 0x00000000
+const lbl_80325278_Pool lbl_80325278 = {
+    "\203E\203\211\202T\202O\202f\202o\220\247\224e"
 };
 const char lbl_8032528C[] = "SP50GP CLEAR";
-const unk32 lbl_8032529C[5] = {
-    0x83458389, 0x8250824F, 0x824F8266, 0x826F90A7, 0x94650000
+const lbl_8032529C_Pool lbl_8032529C = {
+    "\203E\203\211\202P\202O\202O\202f\202o\220\247\224e"
 };
 const char lbl_803252B0[] = "SP100GP CLEAR";
-const unk32 lbl_803252C0[6] = {
-    0x83498382, 0x83658250, 0x8254824F, 0x8266826F, 0x90A79465, 0x00000000
+const lbl_803252C0_Pool lbl_803252C0 = {
+    "\203I\203\202\203e\202P\202T\202O\202f\202o\220\247\224e"
 };
 const char lbl_803252D8[] = "M150GP CLEAR";
-const unk32 lbl_803252E8[5] = {
-    0x83458389, 0x82508254, 0x824F8266, 0x826F90A7, 0x94650000
+const lbl_803252E8_Pool lbl_803252E8 = {
+    "\203E\203\211\202P\202T\202O\202f\202o\220\247\224e"
 };
 const char lbl_803252FC[] = "SP150GP CLEAR";
-const unk32 lbl_8032530C[5] = {
-    0x83888362, 0x8356815B, 0x834A8362, 0x837690A7, 0x94650000
+const lbl_8032530C_Pool lbl_8032530C = {
+    "\203\210\203b\203V\201[\203J\203b\203v\220\247\224e"
 };
 const char lbl_80325320[] = "Yoshi Cup CLEAR";
-const unk32 lbl_80325330[5] = {
-    0x837D838A, 0x8349834A, 0x83628376, 0x90A79465, 0x00000000
+const lbl_80325330_Pool lbl_80325330 = {
+    "\203}\203\212\203I\203J\203b\203v\220\247\224e"
 };
 const char lbl_80325344[] = "Mario Cup CLEAR";
-const unk32 lbl_80325354[6] = {
-    0x838F838B, 0x8343815B, 0x8357834A, 0x83628376, 0x90A79465, 0x00000000
+const lbl_80325354_Pool lbl_80325354 = {
+    "\203\217\203\213\203C\201[\203W\203J\203b\203v\220\247\224e"
 };
 const char lbl_8032536C[] = "Waluigi Cup CLEAR";
-const unk32 lbl_80325380[4] = {
-    0x8263826A, 0x834A8362, 0x837690A7, 0x94650000
+const lbl_80325380_Pool lbl_80325380 = {
+    "\202c\202j\203J\203b\203v\220\247\224e"
 };
 const char lbl_80325390[] = "DK Cup CLEAR";
-const unk32 lbl_803253A0[5] = {
-    0x838F838A, 0x8349834A, 0x83628376, 0x90A79465, 0x00000000
+const lbl_803253A0_Pool lbl_803253A0 = {
+    "\203\217\203\212\203I\203J\203b\203v\220\247\224e"
 };
 const char lbl_803253B4[] = "Wario Cup CLEAR";
-const unk32 lbl_803253C4[6] = {
-    0x83708362, 0x834E837D, 0x8393834A, 0x83628376, 0x90A79465, 0x00000000
+const lbl_803253C4_Pool lbl_803253C4 = {
+    "\203p\203b\203N\203}\203\223\203J\203b\203v\220\247\224e"
 };
 const char lbl_803253DC[] = "Pac-Man Cup CLEAR";
-const unk32 lbl_803253F0[5] = {
-    0x834E8362, 0x8370834A, 0x83628376, 0x90A79465, 0x00000000
+const lbl_803253F0_Pool lbl_803253F0 = {
+    "\203N\203b\203p\203J\203b\203v\220\247\224e"
 };
 const char lbl_80325404[] = "Bowser Cup CLEAR";
-const unk32 lbl_80325418[6] = {
-    0x838C8343, 0x8393837B, 0x815B834A, 0x83628376, 0x90A79465, 0x00000000
+const lbl_80325418_Pool lbl_80325418 = {
+    "\203\214\203C\203\223\203{\201[\203J\203b\203v\220\247\224e"
 };
 const char lbl_80325430[] = "Rainbow Cup CLEAR";
-const unk32 lbl_80325444[6] = {
-    0x97A08388, 0x83628356, 0x815B834A, 0x83628376, 0x90A79465, 0x00000000
+const lbl_80325444_Pool lbl_80325444 = {
+    "\227\240\203\210\203b\203V\201[\203J\203b\203v\220\247\224e"
 };
 const char lbl_8032545C[] = "SP Yoshi Cup CLEAR";
-const unk32 lbl_80325470[5] = {
-    0x97A0837D, 0x838A8349, 0x834A8362, 0x837690A7, 0x94650000
+const lbl_80325470_Pool lbl_80325470 = {
+    "\227\240\203}\203\212\203I\203J\203b\203v\220\247\224e"
 };
 const char lbl_80325484[] = "SP Mario Cup CLEAR";
-const unk32 lbl_80325498[6] = {
-    0x97A0838F, 0x838B8343, 0x815B8357, 0x834A8362, 0x837690A7, 0x94650000
+const lbl_80325498_Pool lbl_80325498 = {
+    "\227\240\203\217\203\213\203C\201[\203W\203J\203b\203v\220\247\224e"
 };
 const char lbl_803254B0[] = "SP Waluigi Cup CLEAR";
-const unk32 lbl_803254C8[5] = {
-    0x97A08263, 0x826A834A, 0x83628376, 0x90A79465, 0x00000000
+const lbl_803254C8_Pool lbl_803254C8 = {
+    "\227\240\202c\202j\203J\203b\203v\220\247\224e"
 };
 const char lbl_803254DC[] = "SP DK Cup CLEAR";
-const unk32 lbl_803254EC[5] = {
-    0x97A0838F, 0x838A8349, 0x834A8362, 0x837690A7, 0x94650000
+const lbl_803254EC_Pool lbl_803254EC = {
+    "\227\240\203\217\203\212\203I\203J\203b\203v\220\247\224e"
 };
 const char lbl_80325500[] = "SP Wario C CLEAR";
-const unk32 lbl_80325514[6] = {
-    0x97A08370, 0x8362834E, 0x837D8393, 0x834A8362, 0x837690A7, 0x94650000
+const lbl_80325514_Pool lbl_80325514 = {
+    "\227\240\203p\203b\203N\203}\203\223\203J\203b\203v\220\247\224e"
 };
 const char lbl_8032552C[] = "SP Pac Cup CLEAR";
-const unk32 lbl_80325540[5] = {
-    0x97A0834E, 0x83628370, 0x834A8362, 0x837690A7, 0x94650000
+const lbl_80325540_Pool lbl_80325540 = {
+    "\227\240\203N\203b\203p\203J\203b\203v\220\247\224e"
 };
 const char lbl_80325554[] = "SP BowserC CLEAR";
-const unk32 lbl_80325568[6] = {
-    0x97A0838C, 0x83438393, 0x837B815B, 0x834A8362, 0x837690A7, 0x94650000
+const lbl_80325568_Pool lbl_80325568 = {
+    "\227\240\203\214\203C\203\223\203{\201[\203J\203b\203v\220\247\224e"
 };
 const char lbl_80325580[] = "SP Rainbow CLEAR";
-const unk32 lbl_80325594[5] = {
-    0x82508254, 0x824F8388, 0x83628356, 0x815B90A7, 0x94650000
+const lbl_80325594_Pool lbl_80325594 = {
+    "\202P\202T\202O\203\210\203b\203V\201[\220\247\224e"
 };
 const char lbl_803255A8[] = "150 Yoshi CLEAR";
-const unk32 lbl_803255B8[5] = {
-    0x82508254, 0x824F837D, 0x838A8349, 0x90A79465, 0x00000000
+const lbl_803255B8_Pool lbl_803255B8 = {
+    "\202P\202T\202O\203}\203\212\203I\220\247\224e"
 };
 const char lbl_803255CC[] = "150 Mario CLEAR";
-const unk32 lbl_803255DC[6] = {
-    0x82508254, 0x824F838F, 0x838B8343, 0x815B8357, 0x90A79465, 0x00000000
+const lbl_803255DC_Pool lbl_803255DC = {
+    "\202P\202T\202O\203\217\203\213\203C\201[\203W\220\247\224e"
 };
 const char lbl_803255F4[] = "150 Waluigi CLEAR";
-const unk32 lbl_80325608[4] = {
-    0x82508254, 0x824F8263, 0x826A90A7, 0x94650000
+const lbl_80325608_Pool lbl_80325608 = {
+    "\202P\202T\202O\202c\202j\220\247\224e"
 };
 const char lbl_80325618[] = "150 DK CLEAR";
-const unk32 lbl_80325628[5] = {
-    0x82508254, 0x824F838F, 0x838A8349, 0x90A79465, 0x00000000
+const lbl_80325628_Pool lbl_80325628 = {
+    "\202P\202T\202O\203\217\203\212\203I\220\247\224e"
 };
 const char lbl_8032563C[] = "150 Wario CLEAR";
-const unk32 lbl_8032564C[6] = {
-    0x82508254, 0x824F8370, 0x8362834E, 0x837D8393, 0x90A79465, 0x00000000
+const lbl_8032564C_Pool lbl_8032564C = {
+    "\202P\202T\202O\203p\203b\203N\203}\203\223\220\247\224e"
 };
 const char lbl_80325664[] = "150 Pac-man CLEAR";
-const unk32 lbl_80325678[5] = {
-    0x82508254, 0x824F834E, 0x83628370, 0x90A79465, 0x00000000
+const lbl_80325678_Pool lbl_80325678 = {
+    "\202P\202T\202O\203N\203b\203p\220\247\224e"
 };
 const char lbl_8032568C[] = "150 Bowser CLEAR";
-const unk32 lbl_803256A0[6] = {
-    0x82508254, 0x824F838C, 0x83438393, 0x837B815B, 0x90A79465, 0x00000000
+const lbl_803256A0_Pool lbl_803256A0 = {
+    "\202P\202T\202O\203\214\203C\203\223\203{\201[\220\247\224e"
 };
 const char lbl_803256B8[] = "150 Rainbow CLEAR";
-const unk32 lbl_803256CC[6] = {
-    0x97A08250, 0x8254824F, 0x83888362, 0x8356815B, 0x90A79465, 0x00000000
+const lbl_803256CC_Pool lbl_803256CC = {
+    "\227\240\202P\202T\202O\203\210\203b\203V\201[\220\247\224e"
 };
 const char lbl_803256E4[] = "SP150 Yoshi CLEAR";
-const unk32 lbl_803256F8[5] = {
-    0x97A08250, 0x8254824F, 0x837D838A, 0x834990A7, 0x94650000
+const lbl_803256F8_Pool lbl_803256F8 = {
+    "\227\240\202P\202T\202O\203}\203\212\203I\220\247\224e"
 };
 const char lbl_8032570C[] = "SP150 Mario CLEAR";
-const unk32 lbl_80325720[6] = {
-    0x97A08250, 0x8254824F, 0x838F838B, 0x8343815B, 0x835790A7, 0x94650000
+const lbl_80325720_Pool lbl_80325720 = {
+    "\227\240\202P\202T\202O\203\217\203\213\203C\201[\203W\220\247\224e"
 };
 const char lbl_80325738[] = "SP150 Waluigi CLEAR";
-const unk32 lbl_8032574C[5] = {
-    0x97A08250, 0x8254824F, 0x8263826A, 0x90A79465, 0x00000000
+const lbl_8032574C_Pool lbl_8032574C = {
+    "\227\240\202P\202T\202O\202c\202j\220\247\224e"
 };
 const char lbl_80325760[] = "SP150 DK CLEAR";
-const unk32 lbl_80325770[5] = {
-    0x97A08250, 0x8254824F, 0x838F838A, 0x834990A7, 0x94650000
+const lbl_80325770_Pool lbl_80325770 = {
+    "\227\240\202P\202T\202O\203\217\203\212\203I\220\247\224e"
 };
 const char lbl_80325784[] = "SP150 Wario CLEAR";
-const unk32 lbl_80325798[6] = {
-    0x97A08250, 0x8254824F, 0x83708362, 0x834E837D, 0x839390A7, 0x94650000
+const lbl_80325798_Pool lbl_80325798 = {
+    "\227\240\202P\202T\202O\203p\203b\203N\203}\203\223\220\247\224e"
 };
 const char lbl_803257B0[] = "SP150 Pac-man CLEAR";
-const unk32 lbl_803257C4[5] = {
-    0x97A08250, 0x8254824F, 0x834E8362, 0x837090A7, 0x94650000
+const lbl_803257C4_Pool lbl_803257C4 = {
+    "\227\240\202P\202T\202O\203N\203b\203p\220\247\224e"
 };
 const char lbl_803257D8[] = "SP150 Bowser CLEAR";
-const unk32 lbl_803257EC[6] = {
-    0x97A08250, 0x8254824F, 0x838C8343, 0x8393837B, 0x815B90A7, 0x94650000
+const lbl_803257EC_Pool lbl_803257EC = {
+    "\227\240\202P\202T\202O\203\214\203C\203\223\203{\201[\220\247\224e"
 };
 const char lbl_80325804[] = "SP150 Rainbow CLEAR";
-const unk32 lbl_80325818[5] = {
-    0x82738260, 0x83898393, 0x834C8393, 0x834F90A7, 0x94650000
+const lbl_80325818_Pool lbl_80325818 = {
+    "\202s\202`\203\211\203\223\203L\203\223\203O\220\247\224e"
 };
 const char lbl_8032582C[] = "TA Ranking CLEAR";
 const char lbl_80325840[] = "Undefeated";
 const char lbl_8032584C[] = "First Loss";
-const unk32 lbl_80325858[4] = {
-    0x8AFA91D2, 0x82CC836F, 0x8367838B, 0x00000000
+const lbl_80325858_Pool lbl_80325858 = {
+    "\212\372\221\322\202\314\203o\203g\203\213"
 };
 const char lbl_80325868[] = "Expected";
-const unk32 lbl_80325874[4] = {
-    0x928D96DA, 0x82CC836F, 0x8367838B, 0x00000000
+const lbl_80325874_Pool lbl_80325874 = {
+    "\222\215\226\332\202\314\203o\203g\203\213"
 };
 const char lbl_80325884[] = "Attractive";
-const unk32 lbl_80325890[3] = {
-    0x8BAD82AB, 0x836F8367, 0x838B0000
+const lbl_80325890_Pool lbl_80325890 = {
+    "\213\255\202\253\203o\203g\203\213"
 };
-const unk32 lbl_8032589C[4] = {
-    0x8C8382B5, 0x82AB836F, 0x8367838B, 0x00000000
+const lbl_8032589C_Pool lbl_8032589C = {
+    "\214\203\202\265\202\253\203o\203g\203\213"
 };
 const char lbl_803258AC[] = "Slashing";
-const unk32 lbl_803258B8[3] = {
-    0x8250824F, 0x906C8E61, 0x82E80000
+const lbl_803258B8_Pool lbl_803258B8 = {
+    "\202P\202O\220l\216a\202\350"
 };
-const unk32 lbl_803258C4[4] = {
-    0x98729798, 0x82AB836F, 0x8367838B, 0x00000000
+const lbl_803258C4_Pool lbl_803258C4 = {
+    "\230r\227\230\202\253\203o\203g\203\213"
 };
-const unk32 lbl_803258D4[3] = {
-    0x90A69872, 0x836F8367, 0x838B0000
+const lbl_803258D4_Pool lbl_803258D4 = {
+    "\220\246\230r\203o\203g\203\213"
 };
-const unk32 lbl_803258E0[3] = {
-    0x8D8B9872, 0x836F8367, 0x838B0000
+const lbl_803258E0_Pool lbl_803258E0 = {
+    "\215\213\230r\203o\203g\203\213"
 };
-const unk32 lbl_803258EC[3] = {
-    0x8252824F, 0x906C8E61, 0x82E80000
+const lbl_803258EC_Pool lbl_803258EC = {
+    "\202R\202O\220l\216a\202\350"
 };
-const unk32 lbl_803258F8[3] = {
-    0x8C838BAD, 0x836F8367, 0x838B0000
+const lbl_803258F8_Pool lbl_803258F8 = {
+    "\214\203\213\255\203o\203g\203\213"
 };
-const unk32 lbl_80325904[4] = {
-    0x88CC91E5, 0x82C8836F, 0x8367838B, 0x00000000
+const lbl_80325904_Pool lbl_80325904 = {
+    "\210\314\221\345\202\310\203o\203g\203\213"
 };
-const unk32 lbl_80325914[4] = {
-    0x93AC905F, 0x82C682C8, 0x82E882B5, 0x00000000
+const lbl_80325914_Pool lbl_80325914 = {
+    "\223\254\220_\202\306\202\310\202\350\202\265"
 };
-const unk32 lbl_80325924[3] = {
-    0x8254824F, 0x906C8E61, 0x82E80000
+const lbl_80325924_Pool lbl_80325924 = {
+    "\202T\202O\220l\216a\202\350"
 };
-const unk32 lbl_80325930[3] = {
-    0x93568DCB, 0x836F8367, 0x838B0000
+const lbl_80325930_Pool lbl_80325930 = {
+    "\223V\215\313\203o\203g\203\213"
 };
-const unk32 lbl_8032593C[3] = {
-    0x895C82CC, 0x836F8367, 0x838B0000
+const lbl_8032593C_Pool lbl_8032593C = {
+    "\211\\\202\314\203o\203g\203\213"
 };
-const unk32 lbl_80325948[4] = {
-    0x8BB0957C, 0x82CC836F, 0x8367838B, 0x00000000
+const lbl_80325948_Pool lbl_80325948 = {
+    "\213\260\225|\202\314\203o\203g\203\213"
 };
-const unk32 lbl_80325958[3] = {
-    0x834A838A, 0x8358837D, 0x00000000
+const lbl_80325958_Pool lbl_80325958 = {
+    "\203J\203\212\203X\203}"
 };
 const char lbl_80325964[] = "Charisma";
-const unk32 lbl_80325970[4] = {
-    0x8250824F, 0x824F906C, 0x8E6182E8, 0x00000000
+const lbl_80325970_Pool lbl_80325970 = {
+    "\202P\202O\202O\220l\216a\202\350"
 };
 const char lbl_80325980[] = "100 Wins";
-const unk32 lbl_8032598C[3] = {
-    0x98418F9F, 0x836F8367, 0x838B0000
+const lbl_8032598C_Pool lbl_8032598C = {
+    "\230A\217\237\203o\203g\203\213"
 };
 const char lbl_80325998[] = "Consecutive";
-const unk32 lbl_803259A4[4] = {
-    0x96B39347, 0x82CC836F, 0x8367838B, 0x00000000
+const lbl_803259A4_Pool lbl_803259A4 = {
+    "\226\263\223G\202\314\203o\203g\203\213"
 };
 const char lbl_803259B4[] = "Invincible";
-const unk32 lbl_803259C0[4] = {
-    0x92788DE7, 0x82AB836F, 0x8367838B, 0x00000000
+const lbl_803259C0_Pool lbl_803259C0 = {
+    "\222x\215\347\202\253\203o\203g\203\213"
 };
 const char lbl_803259D0[] = "Come Back";
-const unk32 lbl_803259DC[3] = {
-    0x955390ED, 0x98429681, 0x00000000
+const lbl_803259DC_Pool lbl_803259DC = {
+    "\225S\220\355\230B\226\201"
 };
 const char lbl_803259E8[] = "Victorious";
 const char lbl_803259F4[] = "Military";
-const unk32 lbl_80325A00[3] = {
-    0x91CE90ED, 0x8ABD8C7D, 0x00000000
+const lbl_80325A00_Pool lbl_80325A00 = {
+    "\221\316\220\355\212\275\214}"
 };
 const char lbl_80325A0C[] = "Champion";
-const unk32 lbl_80325A18[3] = {
-    0x944D82AB, 0x836F8367, 0x838B0000
+const lbl_80325A18_Pool lbl_80325A18 = {
+    "\224M\202\253\203o\203g\203\213"
 };
 const char lbl_80325A24[] = "Full Out";
 const char lbl_80325A30[] = "Velocity";
 const char lbl_80325A3C[] = "Streaking";
 const char lbl_80325A48[] = "Cannonball";
 const char lbl_80325A54[] = "Ultimate";
-const unk32 lbl_80325A60[4] = {
-    0x82508254, 0x824F6363, 0x91AC82AB, 0x00000000
+const lbl_80325A60_Pool lbl_80325A60 = {
+    "\202P\202T\202Occ\221\254\202\253"
 };
 const char lbl_80325A70[] = "150 Speedy";
-const unk32 lbl_80325A7C[4] = {
-    0x82508254, 0x824F6363, 0x92658ADB, 0x00000000
+const lbl_80325A7C_Pool lbl_80325A7C = {
+    "\202P\202T\202Occ\222e\212\333"
 };
 const char lbl_80325A8C[] = "150 Bullet";
-const unk32 lbl_80325A98[4] = {
-    0x82508254, 0x824F6363, 0x96D297F3, 0x00000000
+const lbl_80325A98_Pool lbl_80325A98 = {
+    "\202P\202T\202Occ\226\322\227\363"
 };
 const char lbl_80325AA8[] = "150 Fierce";
-const unk32 lbl_80325AB4[4] = {
-    0x82508254, 0x824F6363, 0x91538A4A, 0x00000000
+const lbl_80325AB4_Pool lbl_80325AB4 = {
+    "\202P\202T\202Occ\221S\212J"
 };
 const char lbl_80325AC4[] = "150 FullOut";
-const unk32 lbl_80325AD0[4] = {
-    0x82508254, 0x824F6363, 0x949A9196, 0x00000000
+const lbl_80325AD0_Pool lbl_80325AD0 = {
+    "\202P\202T\202Occ\224\232\221\226"
 };
 const char lbl_80325AE0[] = "150Velocity";
-const unk32 lbl_80325AEC[4] = {
-    0x82508254, 0x824F6363, 0x8D8291AC, 0x00000000
+const lbl_80325AEC_Pool lbl_80325AEC = {
+    "\202P\202T\202Occ\215\202\221\254"
 };
 const char lbl_80325AFC[] = "150 Speed";
-const unk32 lbl_80325B08[4] = {
-    0x82508254, 0x824F6363, 0x89F591AC, 0x00000000
+const lbl_80325B08_Pool lbl_80325B08 = {
+    "\202P\202T\202Occ\211\365\221\254"
 };
 const char lbl_80325B18[] = "150 Swift";
-const unk32 lbl_80325B24[4] = {
-    0x82508254, 0x824F6363, 0x8F7891AC, 0x00000000
+const lbl_80325B24_Pool lbl_80325B24 = {
+    "\202P\202T\202Occ\217x\221\254"
 };
 const char lbl_80325B34[] = "150 Fleet";
-const unk32 lbl_80325B40[4] = {
-    0x82508254, 0x824F6363, 0x89B991AC, 0x00000000
+const lbl_80325B40_Pool lbl_80325B40 = {
+    "\202P\202T\202Occ\211\271\221\254"
 };
 const char lbl_80325B50[] = "150 Sonic";
-const unk32 lbl_80325B5C[4] = {
-    0x82508254, 0x824F6363, 0x8CF591AC, 0x00000000
+const lbl_80325B5C_Pool lbl_80325B5C = {
+    "\202P\202T\202Occ\214\365\221\254"
 };
 const char lbl_80325B6C[] = "150 Streak";
-const unk32 lbl_80325B78[4] = {
-    0x82508254, 0x824F6363, 0x8C8391AC, 0x00000000
+const lbl_80325B78_Pool lbl_80325B78 = {
+    "\202P\202T\202Occ\214\203\221\254"
 };
 const char lbl_80325B88[] = "150 Rapid";
-const unk32 lbl_80325B94[4] = {
-    0x82508254, 0x824F6363, 0x92B491AC, 0x00000000
+const lbl_80325B94_Pool lbl_80325B94 = {
+    "\202P\202T\202Occ\222\264\221\254"
 };
 const char lbl_80325BA4[] = "150 Cannon";
-const unk32 lbl_80325BB0[4] = {
-    0x82508254, 0x824F6363, 0x8BC191AC, 0x00000000
+const lbl_80325BB0_Pool lbl_80325BB0 = {
+    "\202P\202T\202Occ\213\301\221\254"
 };
 const char lbl_80325BC0[] = "150 Arrow";
-const unk32 lbl_80325BCC[4] = {
-    0x82508254, 0x824F6363, 0x89F691AC, 0x00000000
+const lbl_80325BCC_Pool lbl_80325BCC = {
+    "\202P\202T\202Occ\211\366\221\254"
 };
-const unk32 lbl_80325BDC[4] = {
-    0x82508254, 0x824F6363, 0x8B5391AC, 0x00000000
+const lbl_80325BDC_Pool lbl_80325BDC = {
+    "\202P\202T\202Occ\213S\221\254"
 };
 const char lbl_80325BEC[] = "150 Zippy";
-const unk32 lbl_80325BF8[4] = {
-    0x82508254, 0x824F6363, 0x8B868BC9, 0x00000000
+const lbl_80325BF8_Pool lbl_80325BF8 = {
+    "\202P\202T\202Occ\213\206\213\311"
 };
 const char lbl_80325C08[] = "150Ultimate";
-const unk32 lbl_80325C14[4] = {
-    0x834A815B, 0x83678352, 0x83938376, 0x00000000
+const lbl_80325C14_Pool lbl_80325C14 = {
+    "\203J\201[\203g\203R\203\223\203v"
 };
 const char lbl_80325C24[] = "Kart Comp";
-const unk32 lbl_80325C30[4] = {
-    0x83528343, 0x83938352, 0x83938376, 0x00000000
+const lbl_80325C30_Pool lbl_80325C30 = {
+    "\203R\203C\203\223\203R\203\223\203v"
 };
 const char lbl_80325C40[] = "Coin Comp";
-const unk32 lbl_80325C4C[3] = {
-    0x969C9687, 0x8A6C93BE, 0x00000000
+const lbl_80325C4C_Pool lbl_80325C4C = {
+    "\226\234\226\207\212l\223\276"
 };
 const char lbl_80325C58[] = "10000 coin";
-const unk32 lbl_80325C64[3] = {
-    0x8373834A, 0x8373834A, 0x00000000
+const lbl_80325C64_Pool lbl_80325C64 = {
+    "\203s\203J\203s\203J"
 };
 const char lbl_80325C70[] = "Brand New";
-const unk32 lbl_80325C7C[3] = {
-    0x94E497DE, 0x82C882AB, 0x00000000
+const lbl_80325C7C_Pool lbl_80325C7C = {
+    "\224\344\227\336\202\310\202\253"
 };
-const unk32 lbl_80325C88[3] = {
-    0x8FEE944D, 0x934982C8, 0x00000000
+const lbl_80325C88_Pool lbl_80325C88 = {
+    "\217\356\224M\223I\202\310"
 };
 const char lbl_80325C94[] = "Passionate";
-const unk32 lbl_80325CA0[3] = {
-    0x82B782C4, 0x82AB82C8, 0x00000000
+const lbl_80325CA0_Pool lbl_80325CA0 = {
+    "\202\267\202\304\202\253\202\310"
 };
-const unk32 lbl_80325CAC[3] = {
-    0x83788365, 0x83898393, 0x00000000
+const lbl_80325CAC_Pool lbl_80325CAC = {
+    "\203x\203e\203\211\203\223"
 };
-const unk32 lbl_80325CB8[3] = {
-    0x8353815B, 0x838B8366, 0x83930000
+const lbl_80325CB8_Pool lbl_80325CB8 = {
+    "\203S\201[\203\213\203f\203\223"
 };
-const unk32 lbl_80325CC4[3] = {
-    0x83698393, 0x837082C8, 0x00000000
+const lbl_80325CC4_Pool lbl_80325CC4 = {
+    "\203i\203\223\203p\202\310"
 };
-const unk32 lbl_80325CD0[3] = {
-    0x837E8389, 0x834E838B, 0x00000000
+const lbl_80325CD0_Pool lbl_80325CD0 = {
+    "\203~\203\211\203N\203\213"
 };
-const unk32 lbl_80325CDC[3] = {
-    0x8EE782E8, 0x82CC8C98, 0x82A20000
+const lbl_80325CDC_Pool lbl_80325CDC = {
+    "\216\347\202\350\202\314\214\230\202\242"
 };
 const char lbl_80325CE8[] = "Defensive";
-const unk32 lbl_80325CF4[3] = {
-    0x8FD58C82, 0x934982C8, 0x00000000
+const lbl_80325CF4_Pool lbl_80325CF4 = {
+    "\217\325\214\202\223I\202\310"
 };
 const char lbl_80325D00[] = "Shocking";
-const unk32 lbl_80325D0C[3] = {
-    0x8368838A, 0x83748367, 0x00000000
+const lbl_80325D0C_Pool lbl_80325D0C = {
+    "\203h\203\212\203t\203g"
 };
-const unk32 lbl_80325D18[3] = {
-    0x96D293C1, 0x8C509286, 0x82CC0000
+const lbl_80325D18_Pool lbl_80325D18 = {
+    "\226\322\223\301\214P\222\206\202\314"
 };
 const char lbl_80325D24[] = "Training";
 const char lbl_80325D30[] = "Assaultive";
 const char lbl_80325D3C[] = "Virtuosity";
-const unk32 lbl_80325D48[4] = {
-    0x8349834C, 0x8365946A, 0x82E882CC, 0x00000000
+const lbl_80325D48_Pool lbl_80325D48 = {
+    "\203I\203L\203e\224j\202\350\202\314"
 };
-const unk32 lbl_80325D58[4] = {
-    0x93AC8E75, 0x82C9969E, 0x82BF82BD, 0x00000000
+const lbl_80325D58_Pool lbl_80325D58 = {
+    "\223\254\216u\202\311\226\236\202\277\202\275"
 };
 const char lbl_80325D68[] = "Spiritual";
-const unk32 lbl_80325D74[3] = {
-    0x955394AD, 0x95539286, 0x00000000
+const lbl_80325D74_Pool lbl_80325D74 = {
+    "\225S\224\255\225S\222\206"
 };
-const unk32 lbl_80325D80[3] = {
-    0x82E282B3, 0x82B582A2, 0x00000000
+const lbl_80325D80_Pool lbl_80325D80 = {
+    "\202\342\202\263\202\265\202\242"
 };
-const unk32 lbl_80325D8C[3] = {
-    0x906989BB, 0x82B782E9, 0x00000000
+const lbl_80325D8C_Pool lbl_80325D8C = {
+    "\220i\211\273\202\267\202\351"
 };
 const char lbl_80325D98[] = "Evolution";
-const unk32 lbl_80325DA4[3] = {
-    0x8BAD89BB, 0x82B382EA, 0x82BD0000
+const lbl_80325DA4_Pool lbl_80325DA4 = {
+    "\213\255\211\273\202\263\202\352\202\275"
 };
 const char lbl_80325DB0[] = "Encahnted";
 const char lbl_80325DBC[] = "Delivery";
-const unk32 lbl_80325DC8[3] = {
-    0x8F9D82BE, 0x82E782AF, 0x82CC0000
+const lbl_80325DC8_Pool lbl_80325DC8 = {
+    "\217\235\202\276\202\347\202\257\202\314"
 };
 const char lbl_80325DD4[] = "Bruising";
-const unk32 lbl_80325DE0[4] = {
-    0x92CA82E8, 0x82B782AA, 0x82E882CC, 0x00000000
+const lbl_80325DE0_Pool lbl_80325DE0 = {
+    "\222\312\202\350\202\267\202\252\202\350\202\314"
 };
-const unk32 lbl_80325DF0[3] = {
-    0x92B488EA, 0x97AC82CC, 0x00000000
+const lbl_80325DF0_Pool lbl_80325DF0 = {
+    "\222\264\210\352\227\254\202\314"
 };
-const unk32 lbl_80325DFC[4] = {
-    0x8370815B, 0x83748346, 0x834E8367, 0x00000000
+const lbl_80325DFC_Pool lbl_80325DFC = {
+    "\203p\201[\203t\203F\203N\203g"
 };
-const unk32 lbl_80325E0C[3] = {
-    0x8E8688EA, 0x8F6482CC, 0x00000000
+const lbl_80325E0C_Pool lbl_80325E0C = {
+    "\216\206\210\352\217d\202\314"
 };
-const unk32 lbl_80325E18[3] = {
-    0x835F8393, 0x83568393, 0x834F0000
+const lbl_80325E18_Pool lbl_80325E18 = {
+    "\203_\203\223\203V\203\223\203O"
 };
-const unk32 lbl_80325E24[3] = {
-    0x83608383, 0x8393836F, 0x83890000
+const lbl_80325E24_Pool lbl_80325E24 = {
+    "\203`\203\203\203\223\203o\203\211"
 };
 const char lbl_80325E30[] = "Clanging";
-const unk32 lbl_80325E3C[3] = {
-    0x899082E2, 0x82A982C8, 0x00000000
+const lbl_80325E3C_Pool lbl_80325E3C = {
+    "\211\220\202\342\202\251\202\310"
 };
 const char lbl_80325E48[] = "Sparkling";
-const unk32 lbl_80325E54[3] = {
-    0x91E58A43, 0x8CB482CC, 0x00000000
+const lbl_80325E54_Pool lbl_80325E54 = {
+    "\221\345\212C\214\264\202\314"
 };
 const char lbl_80325E60[] = "Blue Water";
-const unk32 lbl_80325E6C[3] = {
-    0x82A982ED, 0x82A282A2, 0x00000000
+const lbl_80325E6C_Pool lbl_80325E6C = {
+    "\202\251\202\355\202\242\202\242"
 };
-const unk32 lbl_80325E78[3] = {
-    0x837D8357, 0x834A838B, 0x00000000
+const lbl_80325E78_Pool lbl_80325E78 = {
+    "\203}\203W\203J\203\213"
 };
-const unk32 lbl_80325E84[3] = {
-    0x8AEB8B40, 0x88EA94AF, 0x00000000
+const lbl_80325E84_Pool lbl_80325E84 = {
+    "\212\353\213@\210\352\224\257"
 };
-const unk32 lbl_80325E90[4] = {
-    0x90E68D73, 0x93A682B0, 0x90D882E8, 0x00000000
+const lbl_80325E90_Pool lbl_80325E90 = {
+    "\220\346\215s\223\246\202\260\220\330\202\350"
 };
-const unk32 lbl_80325EA0[3] = {
-    0x8AAE9153, 0x95909195, 0x00000000
+const lbl_80325EA0_Pool lbl_80325EA0 = {
+    "\212\256\221S\225\220\221\225"
 };
-const unk32 lbl_80325EAC[3] = {
-    0x82B382DC, 0x82E682A6, 0x82E90000
+const lbl_80325EAC_Pool lbl_80325EAC = {
+    "\202\263\202\334\202\346\202\246\202\351"
 };
 const char lbl_80325EB8[] = "Wandering";
-const unk32 lbl_80325EC4[3] = {
-    0x83548393, 0x8366815B, 0x00000000
+const lbl_80325EC4_Pool lbl_80325EC4 = {
+    "\203T\203\223\203f\201["
 };
-const unk32 lbl_80325ED0[4] = {
-    0x82508254, 0x824F836F, 0x8367838B, 0x00000000
+const lbl_80325ED0_Pool lbl_80325ED0 = {
+    "\202P\202T\202O\203o\203g\203\213"
 };
 const char lbl_80325EE0[] = "150 Battle";
-const unk32 lbl_80325EEC[3] = {
-    0x91818B4E, 0x82AB82CC, 0x00000000
+const lbl_80325EEC_Pool lbl_80325EEC = {
+    "\221\201\213N\202\253\202\314"
 };
-const unk32 lbl_80325EF8[3] = {
-    0x96DA8A6F, 0x82DF82BD, 0x00000000
+const lbl_80325EF8_Pool lbl_80325EF8 = {
+    "\226\332\212o\202\337\202\275"
 };
-const unk32 lbl_80325F04[3] = {
-    0x836E8393, 0x834F838A, 0x815B0000
+const lbl_80325F04_Pool lbl_80325F04 = {
+    "\203n\203\223\203O\203\212\201["
 };
-const unk32 lbl_80325F10[4] = {
-    0x83898393, 0x8360835E, 0x83438380, 0x00000000
+const lbl_80325F10_Pool lbl_80325F10 = {
+    "\203\211\203\223\203`\203^\203C\203\200"
 };
 const char lbl_80325F20[] = "Lunchtime";
-const unk32 lbl_80325F2C[4] = {
-    0x82A882E2, 0x82C291E5, 0x8D4482AB, 0x00000000
+const lbl_80325F2C_Pool lbl_80325F2C = {
+    "\202\250\202\342\202\302\221\345\215D\202\253"
 };
 const char lbl_80325F3C[] = "Tea Break";
-const unk32 lbl_80325F48[3] = {
-    0x975B95E9, 0x82EA8E9E, 0x82CC0000
+const lbl_80325F48_Pool lbl_80325F48 = {
+    "\227[\225\351\202\352\216\236\202\314"
 };
-const unk32 lbl_80325F54[3] = {
-    0x83548393, 0x835A8362, 0x83670000
+const lbl_80325F54_Pool lbl_80325F54 = {
+    "\203T\203\223\203Z\203b\203g"
 };
-const unk32 lbl_80325F60[3] = {
-    0x834C8389, 0x834C8389, 0x00000000
+const lbl_80325F60_Pool lbl_80325F60 = {
+    "\203L\203\211\203L\203\211"
 };
 const char lbl_80325F6C[] = "Brilliant";
-const unk32 lbl_80325F78[4] = {
-    0x8380815B, 0x83938389, 0x83438367, 0x00000000
+const lbl_80325F78_Pool lbl_80325F78 = {
+    "\203\200\201[\203\223\203\211\203C\203g"
 };
 const char lbl_80325F88[] = "Moonlight";
-const unk32 lbl_80325F94[4] = {
-    0x96E99756, 0x82D18D44, 0x82AB82CC, 0x00000000
+const lbl_80325F94_Pool lbl_80325F94 = {
+    "\226\351\227V\202\321\215D\202\253\202\314"
 };
 const char lbl_80325FA4[] = "Nightlife";
-const unk32 lbl_80325FB0[4] = {
-    0x837E8362, 0x83688369, 0x83438367, 0x00000000
+const lbl_80325FB0_Pool lbl_80325FB0 = {
+    "\203~\203b\203h\203i\203C\203g"
 };
 const char lbl_80325FC0[] = "Midnight";
-const unk32 lbl_80325FCC[3] = {
-    0x88C596E9, 0x82C990F6, 0x82DE0000
+const lbl_80325FCC_Pool lbl_80325FCC = {
+    "\210\305\226\351\202\311\220\366\202\336"
 };
 const char lbl_80325FD8[] = "Darkness";
-const unk32 lbl_80325FE4[4] = {
-    0x8D8291AC, 0x8352815B, 0x835882CC, 0x00000000
+const lbl_80325FE4_Pool lbl_80325FE4 = {
+    "\215\202\221\254\203R\201[\203X\202\314"
 };
 const char lbl_80325FF4[] = "High speed";
-const unk32 lbl_80326000[3] = {
-    0x97568980, 0x926E82CC, 0x00000000
+const lbl_80326000_Pool lbl_80326000 = {
+    "\227V\211\200\222n\202\314"
 };
 const char lbl_8032600C[] = "Fun Park";
-const unk32 lbl_80326018[4] = {
-    0x836E8343, 0x83458346, 0x834382CC, 0x00000000
+const lbl_80326018_Pool lbl_80326018 = {
+    "\203n\203C\203E\203F\203C\202\314"
 };
-const unk32 lbl_80326028[3] = {
-    0x8A438ADD, 0x90FC82CC, 0x00000000
+const lbl_80326028_Pool lbl_80326028 = {
+    "\212C\212\335\220\374\202\314"
 };
-const unk32 lbl_80326034[3] = {
-    0x8341838A, 0x815B8369, 0x82CC0000
+const lbl_80326034_Pool lbl_80326034 = {
+    "\203A\203\212\201[\203i\202\314"
 };
-const unk32 lbl_80326040[4] = {
-    0x8358835E, 0x83578341, 0x838082CC, 0x00000000
+const lbl_80326040_Pool lbl_80326040 = {
+    "\203X\203^\203W\203A\203\200\202\314"
 };
-const unk32 lbl_80326050[4] = {
-    0x83578383, 0x8393834F, 0x838B82CC, 0x00000000
+const lbl_80326050_Pool lbl_80326050 = {
+    "\203W\203\203\203\223\203O\203\213\202\314"
 };
-const unk32 lbl_80326060[3] = {
-    0x835F815B, 0x836782CC, 0x00000000
+const lbl_80326060_Pool lbl_80326060 = {
+    "\203_\201[\203g\202\314"
 };
-const unk32 lbl_8032606C[4] = {
-    0x83588367, 0x838A815B, 0x836782CC, 0x00000000
+const lbl_8032606C_Pool lbl_8032606C = {
+    "\203X\203g\203\212\201[\203g\202\314"
 };
-const unk32 lbl_8032607C[4] = {
-    0x834C8383, 0x83628358, 0x838B82CC, 0x00000000
+const lbl_8032607C_Pool lbl_8032607C = {
+    "\203L\203\203\203b\203X\203\213\202\314"
 };
-const unk32 lbl_8032608C[4] = {
-    0x8352815B, 0x8358835E, 0x815B82CC, 0x00000000
+const lbl_8032608C_Pool lbl_8032608C = {
+    "\203R\201[\203X\203^\201[\202\314"
 };
-const unk32 lbl_8032609C[4] = {
-    0x835F8345, 0x83938371, 0x838B82CC, 0x00000000
+const lbl_8032609C_Pool lbl_8032609C = {
+    "\203_\203E\203\223\203q\203\213\202\314"
 };
 /* pointers mixed with values */
 void *const lbl_803260AC[576] = {

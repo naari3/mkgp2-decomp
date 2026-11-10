@@ -5,6 +5,15 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct lbl_80376E38_Pool {
+    int i_000[64];
+    char s_100[12];
+    char s_10C[16];
+    char s_11C[12];
+} lbl_80376E38_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
@@ -12,17 +21,11 @@ const char lbl_80376E10[] = "miyazakiconsole.cpp";
 const char lbl_80376E24[] = "buffer over!!\n";
 /* 8-aligned in the original: probably the first object of a TU */
 /* decl: TextBuffer */
-const unk32 lbl_80376E38[74] __attribute__((aligned(8))) = {
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x5B303030, 0x302F3030, 0x30305D00, 0x4E6F6E65, 0x20497465, 0x6D2E2E2E, 0x00000000, 0x5B253034,
-    0x642F2530, 0x34645D00
+const lbl_80376E38_Pool lbl_80376E38 __attribute__((aligned(8))) = {
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    "[0000/0000]",
+    "None Item...",
+    "[%04d/%04d]"
 };
 const char lbl_80376F60[60] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

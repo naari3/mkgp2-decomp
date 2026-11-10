@@ -5,19 +5,37 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct sdata_806D0728_rodata_803F08B4_Pool {
+    char s_000[20];
+    char s_014[20];
+    char s_028[56];
+    char s_060[32];
+    char s_080[56];
+    char s_0B8[20];
+    char s_0CC[16];
+    char s_0DC[20];
+    char s_0F0[20];
+    char s_104[12];
+    int i_110;
+} sdata_806D0728_rodata_803F08B4_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-const unk32 sdata_806D0728_rodata_803F08B4[69] = {
-    0x636C5273, 0x436F6E74, 0x696E7565, 0x5461736B, 0x00000000, 0x76656374, 0x6F72206C, 0x656E6774,
-    0x68206572, 0x726F7200, 0x21737464, 0x3A3A6578, 0x63657074, 0x696F6E21, 0x21737464, 0x3A3A6C6F,
-    0x6769635F, 0x6572726F, 0x72212173, 0x74643A3A, 0x6C656E67, 0x74685F65, 0x72726F72, 0x21210000,
-    0x76656374, 0x6F723A3A, 0x61742069, 0x6E646578, 0x206F7574, 0x206F6620, 0x72616E67, 0x65000000,
-    0x21737464, 0x3A3A6578, 0x63657074, 0x696F6E21, 0x21737464, 0x3A3A6C6F, 0x6769635F, 0x6572726F,
-    0x72212173, 0x74643A3A, 0x6F75745F, 0x6F665F72, 0x616E6765, 0x21210000, 0x7374643A, 0x3A6F7574,
-    0x5F6F665F, 0x72616E67, 0x65000000, 0x7374643A, 0x3A657863, 0x65707469, 0x6F6E0000, 0x7374643A,
-    0x3A6C6F67, 0x69635F65, 0x72726F72, 0x00000000, 0x7374643A, 0x3A6C656E, 0x6774685F, 0x6572726F,
-    0x72000000, 0x65786365, 0x7074696F, 0x6E000000, 0x00000000
+const sdata_806D0728_rodata_803F08B4_Pool sdata_806D0728_rodata_803F08B4 = {
+    "clRsContinueTask",
+    "vector length error",
+    "!std::exception!!std::logic_error!!std::length_error!!",
+    "vector::at index out of range",
+    "!std::exception!!std::logic_error!!std::out_of_range!!",
+    "std::out_of_range",
+    "std::exception",
+    "std::logic_error",
+    "std::length_error",
+    "exception",
+    0
 };
 const char lbl_803F09C8[] = "clRsContinueTaskBT";
 const char lbl_803F09DC[] = "clYTaskInterface";

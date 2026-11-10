@@ -7,22 +7,80 @@
 #include "game/types/Vec3.h"
 #include "game/types/Vec.h"
 
+/* anchor pool cut into its strings and numbers by value (text, floats, small integers),
+ * not from code */
+typedef struct GabyouItem_Tick_HeldAndHoming_2Eto31_rodata_8032EEAC_Pool {
+    int i_000;
+    float f_004;
+    int i_008[2];
+    float f_010;
+    int i_014[2];
+    float f_01C;
+    int i_020[2];
+    float f_028;
+    int i_02C[2];
+    float f_034;
+    int i_038[2];
+    float f_040;
+    int i_044[2];
+    float f_04C;
+    int i_050[2];
+    float f_058;
+    int i_05C[2];
+    float f_064;
+    int i_068[2];
+    float f_070;
+    int i_074[2];
+    float f_07C;
+    int i_080;
+    char s_084[28];
+    char s_0A0[28];
+    char s_0BC[24];
+    char s_0D4[24];
+    char s_0EC[24];
+    char s_104[20];
+    char s_118[20];
+    char s_12C[20];
+    int i_140;
+} GabyouItem_Tick_HeldAndHoming_2Eto31_rodata_8032EEAC_Pool;
+
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
 /* decl: HeldRadii */
-const unk32 GabyouItem_Tick_HeldAndHoming_2Eto31_rodata_8032EEAC[81] = {
-    0x00000000, 0x40200000, 0x00000000, 0x00000000, 0x40400000, 0x00000000, 0x00000000, 0x3FC00000,
-    0x00000000, 0x00000000, 0x40000000, 0x00000000, 0x00000000, 0x3F000000, 0x00000000, 0x00000000,
-    0x40000000, 0x00000000, 0x00000000, 0x3F800000, 0x00000000, 0x00000000, 0x40000000, 0x00000000,
-    0x00000000, 0x40400000, 0x00000000, 0x00000000, 0x40400000, 0x00000000, 0x00000000, 0x3F800000,
-    0x00000000, 0x626F6D5F, 0x736D616C, 0x6C325F72, 0x69676874, 0x5F74696D, 0x655F6A6F, 0x696E7400,
-    0x626F6D5F, 0x736D616C, 0x6C325F6C, 0x6566745F, 0x74696D65, 0x5F6A6F69, 0x6E740000, 0x6974656D,
-    0x5F726967, 0x68745F74, 0x696D655F, 0x6A6F696E, 0x74000000, 0x6974656D, 0x5F6C6566, 0x745F7469,
-    0x6D655F6A, 0x6F696E74, 0x00000000, 0x626F6D5F, 0x736D616C, 0x6C325F65, 0x66666563, 0x745F6A6F,
-    0x696E7400, 0x6974656D, 0x5F6E756C, 0x6C325F6A, 0x6F696E74, 0x00000000, 0x6974656D, 0x5F68616E,
-    0x646C655F, 0x6A6F696E, 0x74000000, 0x6974656D, 0x5F63656E, 0x7465725F, 0x6A6F696E, 0x74000000,
-    0x00000000
+const GabyouItem_Tick_HeldAndHoming_2Eto31_rodata_8032EEAC_Pool GabyouItem_Tick_HeldAndHoming_2Eto31_rodata_8032EEAC = {
+    0,
+    2.5f,
+    { 0, 0 },
+    3.0f,
+    { 0, 0 },
+    1.5f,
+    { 0, 0 },
+    2.0f,
+    { 0, 0 },
+    0.5f,
+    { 0, 0 },
+    2.0f,
+    { 0, 0 },
+    1.0f,
+    { 0, 0 },
+    2.0f,
+    { 0, 0 },
+    3.0f,
+    { 0, 0 },
+    3.0f,
+    { 0, 0 },
+    1.0f,
+    0,
+    "bom_small2_right_time_joint",
+    "bom_small2_left_time_joint",
+    "item_right_time_joint",
+    "item_left_time_joint",
+    "bom_small2_effect_joint",
+    "item_null2_joint",
+    "item_handle_joint",
+    "item_center_joint",
+    0
 };
 const unsigned char BananaTriple_Tick_HeldAndHoming_32to36_rodata_8032EFF0[1068] = {
     0x3F, 0x80, 0x0, 0x0, 0x3F, 0x33, 0x33, 0x33, 0x3F, 0x66, 0x66, 0x66,
