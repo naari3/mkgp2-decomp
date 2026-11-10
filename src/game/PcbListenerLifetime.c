@@ -1,4 +1,7 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Only the listener fields observed in the authoritative lifetime routines. */
+C_REGION_END
 #pragma cplusplus on
 extern "C" {
 struct PcbBackupView {

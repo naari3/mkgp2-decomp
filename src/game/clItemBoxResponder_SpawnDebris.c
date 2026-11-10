@@ -1,9 +1,12 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* C++ with exceptions on, GC/2.6 (GC/1.3.2 schedules the float loads
  * differently and allocates position/direction the other way round).
  * Locals are declared in descending target register order (regalloc_patterns 89).
  */
 /* Observed debris ownership and particle layout; TU-local views only. */
 #include "game/types/size_t.h"
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 void *operator new(size_t);
@@ -73,4 +76,6 @@ extern "C" SpawnResponder *clItemBoxResponder_SpawnDebris(
     return self;
 }
 #pragma cplusplus off
+C_REGION_BEGIN
 #pragma exceptions reset
+C_REGION_END

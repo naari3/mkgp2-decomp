@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 #include "game/types/size_t.h"
 #include "game/singleton.h"
 /* --- owned .rodata 0x8035C240..0x8035C678 (tools/own_data.py) --- */
@@ -14,6 +16,7 @@ const char CoinSystem_Init_rodata_8035C240[1080] = { 63, -128, 0, 0, 63, 51, 51,
  * (i, offset, cursor) and increment order fix the register assignment.
  */
 /* TU-local observed ownership and coin-row layouts. */
+C_REGION_END
 #pragma cplusplus on
 void *operator new(size_t);
 void operator delete(void *);

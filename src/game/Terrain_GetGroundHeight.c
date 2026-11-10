@@ -1,8 +1,11 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * Penetrating ground-height query, 0x80035268..0x80035700.
  * NonMatching: only initial sentinel/X and grid/Z load scheduling differs.
  * Indexed cell and triangle traversal preserves the original array bases.
  */
+C_REGION_END
 #pragma cplusplus on
 extern "C" {
 unsigned int OSGetTick(void);

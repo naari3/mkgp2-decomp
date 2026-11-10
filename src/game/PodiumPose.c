@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * 0x8014219C..0x8014388C: podium pose effect. A camera fly-in over a stage
  * model with up to six posed character models (PoseChar). Vtable
@@ -6,6 +8,7 @@
  * have their matrices copied from character joints each frame.
  */
 #include "game/types/size_t.h"
+C_REGION_END
 #pragma cplusplus on
 
 typedef float Mtx[3][4];

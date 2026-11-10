@@ -1,9 +1,12 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * A "push button" prompt effect on the shared sprite-effect base
  * (vtable PushPrompt_vtable_8048ED34): it zooms in, waits for a button press (or a
  * timeout), then zooms out and finishes. The base declares a virtual
  * that is not defined here first, so neither vtable is emitted.
  */
+C_REGION_END
 #pragma cplusplus on
 
 typedef struct { char c[256]; } TextBuf;

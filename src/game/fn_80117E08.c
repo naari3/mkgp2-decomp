@@ -1,8 +1,11 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* fn_80117E08: state tick of a floating item that bobs up and down on a
  * sine wave, spins slowly, and leaves the tracking state on a kart hit, a
  * kart-held drop or when its hit-registry lifetime expires.
  * Compiled as C++: the hit call's last parameter is a bool, and the int
  * ternary argument is normalised (neg/or/srwi) at the call. */
+C_REGION_END
 #pragma cplusplus on
 
 extern "C" {

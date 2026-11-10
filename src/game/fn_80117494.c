@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* fn_80117494: state tick of an item that circles a fixed anchor point on
  * the ground: it orbits with a wobbling yaw, is pulled back onto a 100-unit
  * radius around the anchor, and leaves the tracking state on a kart hit, a
@@ -5,6 +7,7 @@
  * effect follows it and is released together with it.
  * Compiled as C++: the hit call's last parameter is a bool, and the int
  * ternary argument is normalised (neg/or/srwi) at the call. */
+C_REGION_END
 #pragma cplusplus on
 
 extern "C" {

@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * Three small sprite effects that share one base (vtable lbl_8048EB44, at
  * +0x14 after the base fields): each has a render that picks a sprite frame
@@ -9,6 +11,7 @@
  * Effect_DrawSprite helper mirrors the repeated draw call).
  */
 #include "game/types/size_t.h"
+C_REGION_END
 #pragma cplusplus on
 
 extern "C" {

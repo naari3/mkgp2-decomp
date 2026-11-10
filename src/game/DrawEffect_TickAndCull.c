@@ -1,6 +1,9 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Per-frame DrawEffect pool tick: frustum-cull each live entry, advance its
  * VfxSlot animation and run its draw hook, timed into profiler slot 26.
  * Automatic cleanup uses the canonical cross-TU ScopedTimer destructor. */
+C_REGION_END
 #pragma cplusplus on
 extern "C" {
 unsigned int OSGetTick(void);

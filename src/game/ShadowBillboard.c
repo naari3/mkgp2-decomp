@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * ShadowBillboard update/flash and the play camera, 0x80061954..0x80064CD4.
  * Tick uses native matrix and camera updates. PlayCamera_Init is the C++
@@ -818,6 +820,7 @@ PlayCamera *PlayCamera_Dtor(PlayCamera *cam, short flags) {
 
 
 #pragma exceptions on
+C_REGION_END
 #pragma cplusplus on
 
 static inline void Mtx44_Identity(float *m) {
@@ -1031,5 +1034,7 @@ extern "C" void Mtx34_Orthonormalize(float (*m)[4]) {
 }
 
 #pragma cplusplus reset
+C_REGION_BEGIN
 #pragma exceptions reset
+C_REGION_END
 

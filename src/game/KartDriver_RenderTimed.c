@@ -1,5 +1,8 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Automatic cleanup uses the canonical cross-TU ScopedTimer destructor.
  * TU-scoped metadata names the automatic cleanup records at their target addresses. */
+C_REGION_END
 #pragma cplusplus on
 extern "C" {
 unsigned int OSGetTick(void);

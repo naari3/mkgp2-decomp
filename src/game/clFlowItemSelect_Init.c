@@ -1,7 +1,10 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* clFlowItemSelect_Init @ 0x801CC2EC: FlowItemSelect constructor (item
  * select scene). Real C++ ctor; extab comes from the base/member/new
  * cleanups. Mangled names are bridged in tools/extab_user_renames.json. */
 #include "game/types/size_t.h"
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 void* operator new(size_t);

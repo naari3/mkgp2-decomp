@@ -1,7 +1,10 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * 0x80144258..0x80144430: clCSPartsResultTimeNum, a two-model digit part on
  * the result screen built from one resource id.
  */
+C_REGION_END
 #pragma cplusplus on
 
 #define CSPARTS_INLINE_DTOR

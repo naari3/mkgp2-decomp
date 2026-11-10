@@ -1,9 +1,12 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * 0x8011DF98..0x8011EB1C: sprite handle pool. Releasing a handle runs its
  * draw-release callback, frees the pool slot and walks the chain of linked
  * handles (the self-recursion is inlined four levels deep). fn_8011E9C0
  * releases every live handle of one type under the frame profiler.
  */
+C_REGION_END
 #pragma cplusplus on
 extern "C" {
 void GXBegin(int type, int vtxfmt, unsigned short nverts);

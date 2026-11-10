@@ -1,9 +1,12 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * 0x8014388C..0x80143F8C: clCSParts (the model-chain result part, its
  * forwarding virtuals and dtor) and clCSPartsResultRank, the rank badge on
  * the result screen. fn_80143DB0 preloads the resources the badge can use.
  * Built with deferred inlining, so functions are emitted in reverse order.
  */
+C_REGION_END
 #pragma cplusplus on
 
 #include "game/CSParts.h"

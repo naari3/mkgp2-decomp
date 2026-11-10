@@ -95,6 +95,8 @@ static inline JObj *JObjNext(JObj *j)
 
 /* 4x4 matrix helpers, compiled as C. */
 #pragma cplusplus off
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 
 #include "game/types/Matrix44.h"
 
@@ -148,6 +150,7 @@ static inline void Mtx44SetTranslation(struct Matrix44 *m, float x, float y, flo
     m->v[12] = x; m->v[13] = y; m->v[14] = z;
 }
 
+C_REGION_END
 #pragma cplusplus reset
 
 extern "C" void CourseObjects_Activate(void)

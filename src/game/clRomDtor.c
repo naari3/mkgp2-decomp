@@ -1,4 +1,7 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Observed list-owner layout only; no virtual base or exception specification. */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 

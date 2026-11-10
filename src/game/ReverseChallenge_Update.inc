@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* ReverseChallenge_Update (0x800AD134..0x800AD910): per-frame update of the
  * reverse-run challenge (drive the course backwards inside the start quad,
  * reach the goal plane before the timer runs out). Same frame as
@@ -6,6 +8,7 @@
 typedef struct RCVec3 { float x, y, z; } RCVec3;
 #include "game/types/RCQuadPtsC.h"
 
+C_REGION_END
 #pragma cplusplus on
 struct RCInput {
     virtual void slot08();

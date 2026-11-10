@@ -1,9 +1,12 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* 18 TUs merged by tools/merge_tus.py, .text 0x801b7ef8..0x801ba034.
  * Each section is the preprocessed original TU with its names suffixed _pN
  * (tools/extab_user_renames.json maps the symbols back). */
 /* ==== .bss pool: countdown sprites, used through the section anchor by fn_801B7EF8 and fn_801B9928 ==== */
 /* defined in C++ mode: a C++ TU lays .bss out in definition order, a C TU in first-use order */
 #include "game/types/size_t.h"
+C_REGION_END
 #pragma cplusplus on
 extern "C" {
 void *lbl_80679280[3];
@@ -11,6 +14,7 @@ void *lbl_8067928C[4];
 unsigned short *lbl_8067929C[5];
 }
 #pragma cplusplus reset
+C_REGION_BEGIN
 
 /* ==== game/fn_801B7EF8.c (0x801b7ef8) ==== */
 #pragma exceptions on
@@ -282,6 +286,7 @@ return 1;
 /* ==== game/fn_801B85DC.cpp (0x801b85dc) ==== */
 #pragma exceptions on
 #pragma use_lmw_stmw off
+C_REGION_END
 #pragma cplusplus on
 class Sprite_p7 {
 public:
@@ -345,6 +350,7 @@ lbl_806D1818_p7 = 0;
 return 1;
 }
 #pragma cplusplus reset
+C_REGION_BEGIN
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
 
@@ -459,6 +465,7 @@ return 1;
 /* ==== game/fn_801B8918.cpp (0x801b8918) ==== */
 #pragma exceptions on
 #pragma use_lmw_stmw off
+C_REGION_END
 #pragma cplusplus on
 struct SpriteObj_p11 {
 char pad0_p11[0xC];
@@ -496,6 +503,7 @@ lbl_806D1808_p11 = 0;
 return 1;
 }
 #pragma cplusplus reset
+C_REGION_BEGIN
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
 
@@ -537,6 +545,7 @@ return 1;
 /* ==== game/SetupBgSprites.cpp (0x801b8a80) ==== */
 #pragma exceptions on
 #pragma use_lmw_stmw off
+C_REGION_END
 #pragma cplusplus on
 struct SpriteObj_p13 {
 char pad0_p13[0x30];
@@ -581,12 +590,14 @@ lbl_806D17FC_p13 = 0;
 return 1;
 }
 #pragma cplusplus reset
+C_REGION_BEGIN
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
 
 /* ==== game/fn_801B8BD8.cpp (0x801b8bd8) ==== */
 #pragma exceptions on
 #pragma use_lmw_stmw off
+C_REGION_END
 #pragma cplusplus on
 void *operator new(size_t size_p14);
 void operator delete(void *p_p14) throw();
@@ -886,12 +897,14 @@ fn_801A0DF0_p14();
 fn_8011FA98_p14();
 }
 #pragma cplusplus reset
+C_REGION_BEGIN
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
 
 /* ==== game/MenuScene_Dispatch.cpp (0x801b8ec0) ==== */
 #pragma exceptions on
 #pragma use_lmw_stmw off
+C_REGION_END
 #pragma cplusplus on
 void *operator new(size_t size_p15);
 void operator delete(void *p_p15) throw();
@@ -1395,12 +1408,14 @@ if (lbl_806D1858_p15 == 0) lbl_806D1850_p15 = 0;
 return -2;
 }
 #pragma cplusplus reset
+C_REGION_BEGIN
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
 
 /* ==== game/fn_801B9740.cpp (0x801b9740) ==== */
 #pragma exceptions on
 #pragma use_lmw_stmw on
+C_REGION_END
 #pragma cplusplus on
 struct SpriteObj_p16 {
 ~SpriteObj_p16();
@@ -1490,12 +1505,14 @@ fn_80121210_p16();
 clRom_PurgeAll_p16();
 }
 #pragma cplusplus reset
+C_REGION_BEGIN
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
 
 /* ==== game/fn_801B9928.cpp (0x801b9928) ==== */
 #pragma exceptions on
 #pragma use_lmw_stmw on
+C_REGION_END
 #pragma cplusplus on
 #pragma optimize_for_size on
 void *operator new(size_t);
@@ -1908,6 +1925,8 @@ CourseSetFlag(fn_801DAEC0_p17()+0x12);
 }
 #pragma optimize_for_size reset
 #pragma cplusplus reset
+C_REGION_BEGIN
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
+C_REGION_END
 

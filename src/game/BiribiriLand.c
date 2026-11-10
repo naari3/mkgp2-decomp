@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 #include "game/types/size_t.h"
 #include "game/BiribiriLand_private.h"
 
@@ -93,6 +95,7 @@ const BiribiriObstacleDesc BiribiriLand_rodata_80357F6C[9] = {
     {{6000.0f, 0.0f, -8724.0f}, {6000.0f, 0.0f, -8950.0f}, -1.5707964f, 0, 1},
 };
 
+C_REGION_END
 #pragma cplusplus on
 struct BiribiriScene {
     virtual ~BiribiriScene();
@@ -100,6 +103,7 @@ struct BiribiriScene {
     virtual void Draw();
 };
 #pragma cplusplus reset
+C_REGION_BEGIN
 
 static inline void BiribiriDrawObstacles(BiribiriObstacles *obs)
 {
@@ -176,6 +180,7 @@ void BiribiriLand_Render(BiribiriState *self)
 
 /* === BiribiriLand_Update === */
 extern void BiribiriLand_UpdateObstacles();
+C_REGION_END
 #pragma cplusplus on
 struct BiribiriInput {
     virtual void slot08();
@@ -417,6 +422,7 @@ extern "C" int BiribiriLand_Update(BiribiriState *self)
 }
 #pragma exceptions reset
 #pragma cplusplus reset
+C_REGION_BEGIN
 
 
 /* === BiribiriLand_UpdateObstacles === */
@@ -548,6 +554,7 @@ extern unsigned int BiribiriLand_vtable_8048E46C[];
 /* --- forward decls --- */
 void *BiribiriLand_Destroy(BiribiriState *, short);
 
+C_REGION_END
 #pragma cplusplus on
 struct BiribiriVirtual {
     virtual ~BiribiriVirtual();
@@ -642,9 +649,11 @@ extern "C" void *BiribiriLand_Destroy(BiribiriState *self, short freeMemory)
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
 #pragma cplusplus reset
+C_REGION_BEGIN
 
 
 /* === BiribiriLand_Init: C++ ctor (same template as ReverseChallenge_Init / RivalRun_Init) === */
+C_REGION_END
 #pragma cplusplus on
 void *operator new(size_t size);
 void operator delete(void *p);

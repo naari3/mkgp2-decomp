@@ -342,9 +342,12 @@ static inline void Shutdown() {
 }
 
 #pragma cplusplus off
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 static inline int BootOptionDisabled(unsigned char option) {
     return option == 0;
 }
+C_REGION_END
 #pragma cplusplus reset
 
 static inline int IsServiceBoot(unsigned int mode) {

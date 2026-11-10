@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* 23 TUs merged by tools/merge_tus.py, .text 0x80094d80..0x80099994.
  * Each section is the preprocessed original TU with its names suffixed _pN
  * (tools/extab_user_renames.json maps the symbols back). */
@@ -4020,6 +4022,7 @@ return lbl_806CF0D0_p13;
 #pragma inline_max_size(1000)
 
 
+C_REGION_END
 #pragma cplusplus on
 
 extern "C"{
@@ -4076,6 +4079,7 @@ card_backup_p14();
 }
 
 #pragma cplusplus reset
+C_REGION_BEGIN
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
 
@@ -4460,7 +4464,9 @@ return lbl_80401018_p22[page_p22];
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
 
+C_REGION_END
 #ifdef NON_MATCHING
+C_REGION_BEGIN
 /*
  * Equivalent C for the PC port (docs/nonmatching_c.md) of the three card
  * state machines that are inline asm above. They are built from the same
@@ -4469,6 +4475,7 @@ return lbl_80401018_p22[page_p22];
  * the target inlines them and then takes the backup snapshot of g_playerData.
  */
 #pragma inline_max_size(10000)
+C_REGION_END
 #pragma cplusplus on
 extern "C" {
 extern unsigned char lbl_806D1224;

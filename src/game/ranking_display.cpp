@@ -75,10 +75,13 @@ const char *get_title_name(void *, int, int, int, int);
 unsigned char *PcbSlot_GetByIndex(int);
 }
 #pragma cplusplus off
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 static inline const char *RankingCharacterName(int character) {
     if (isJapanese() == 0) return rankingEnglish[character];
     return rankingJapanese[character];
 }
+C_REGION_END
 #pragma cplusplus reset
 struct RankingWorld {
     char data[0x3084];

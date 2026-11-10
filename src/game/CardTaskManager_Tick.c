@@ -1,6 +1,9 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Run the current card task. When it finishes (2), fails (4) or aborts (5)
  * the manager moves on to the next one; after the last task it lingers a
  * few frames. Returns 2 while busy, 3 on abort, 0 when done. */
+C_REGION_END
 #pragma cplusplus on
 
 class CardTask {

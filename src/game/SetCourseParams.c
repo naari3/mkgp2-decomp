@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Race context unit, .text 0x8009BAC4..0x8009DD64: race/rank/kart-slot
  * accessors, course table getters, SetCourseParams, the player-data
  * wrappers, the cold reset, the RaceContext class (ctor / dtor / singleton)
@@ -21,6 +23,7 @@ typedef struct RaceKartSlot {
     unsigned char pad17;
 } RaceKartSlot;
 
+C_REGION_END
 #pragma cplusplus on
 extern "C" {
 RaceKartSlot SetCourseParams_bss_805AC600[8];
@@ -35,6 +38,7 @@ unsigned char RaceSlot_ResetAll_bss_805D2938[0x10];    /* per-slot counters (wri
 unsigned char SetCourseParams_bss_805D2948[0x160];   /* 8 rank slots, 0x2C each */
 }
 #pragma cplusplus off
+C_REGION_BEGIN
 
 /* ==== RaceSys_8009BAC4.c ==== */
 #define RankSlot RankSlot_p1
@@ -1110,6 +1114,7 @@ void SetReverseRoundFlag(int v)
 #pragma cplusplus off
 
 /* ==== SetCourseParams.c ==== */
+C_REGION_END
 #pragma cplusplus on
 #define KartSlot KartSlot_p5
 #define LapEntry LapEntry_p5
@@ -1308,6 +1313,7 @@ int SetCourseParams(int cup, int longRound, int variant, int reverse)
 #undef RaceSlot_ResetAll_bss_805D2938
 #undef SetCourseParams_bss_805D2948
 #pragma cplusplus off
+C_REGION_BEGIN
 
 /* ==== PlayerData_ApplyItemUnlockById.c ==== */
 #define fn_801D5F74 fn_801D5F74_p6
@@ -1694,6 +1700,7 @@ void ProcessSystemTick(void) {
 extern void MemoryManager_TimedFree(void *);
 
 /* --- extern decls: sda21-referenced data --- */
+C_REGION_END
 #pragma cplusplus on
 struct PolymorphicOwner {
     virtual ~PolymorphicOwner();
@@ -1703,6 +1710,7 @@ struct RaceContextView {
 };
 extern PolymorphicOwner *lbl_806D10A0;
 #pragma cplusplus off
+C_REGION_BEGIN
 
 /* --- extern decls: large-data refs (@ha/@l pairs) --- */
 /* Open array (`[]`) avoids sda21 strict-mode link errors when a future */
@@ -1715,9 +1723,11 @@ extern unsigned int SetCourseParams_data_8040E4DC[];
  */
 
 /* --- forward decls --- */
+C_REGION_END
 #pragma cplusplus on
 extern "C" void *RaceContext_Dtor(RaceContextView *, short);
 #pragma cplusplus off
+C_REGION_BEGIN
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -1732,6 +1742,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions off
 extern "C" void *RaceContext_Dtor(RaceContextView *self, short freeFlag) { /* 0x8009D638 size:0x94 */
@@ -1750,6 +1761,7 @@ extern "C" void *RaceContext_Dtor(RaceContextView *self, short freeFlag) { /* 0x
 }
 #pragma exceptions off
 #pragma cplusplus off
+C_REGION_BEGIN
 #undef MemoryManager_TimedFree
 #undef PolymorphicOwner
 #undef RaceContextView
@@ -1813,10 +1825,13 @@ extern "C" void *RaceContext_Dtor(RaceContextView *self, short freeFlag) { /* 0x
  * 1428B versus 1460B target. Natural DESTROYBASE r29 begins PC40;
  * saved range r24..31 and end PC554 differ from target r22..31/PC570.
  * Original exact ASM follows unchanged. This draft is NOT a promotion. */
+C_REGION_END
 #if 0
+C_REGION_BEGIN
 /* Genuine C++ reconstruction of the observed RaceContext constructor.
  * Only the vptr/base lifetime and global storage accesses are established.
  * Authoritative target/callee assembly was used (Ghidra unavailable). */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 
@@ -2000,6 +2015,7 @@ RaceContext::RaceContext() {
 #pragma exceptions off
 #pragma cplusplus off
 #endif
+C_REGION_BEGIN
 
 /* === extracted from auto_RaceContext_InitDefa_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -2078,10 +2094,12 @@ void RaceContext_InitDefaults(void);
 #endif
 
 /* --- extern decls: extab symbolic refs (dtors / typeids) --- */
+C_REGION_END
 #pragma cplusplus on
 struct RaceContext_p13;
 extern "C" RaceContext_p13 *dtor_8009DCE0(RaceContext_p13 *, short);
 #pragma cplusplus off
+C_REGION_BEGIN
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -2681,6 +2699,7 @@ asm void RaceContext_InitDefaults(void) { /* 0x8009D6CC size:0x5B4 */
 #pragma use_lmw_stmw off
 #include "game/singleton.h"
 /* Lazily created race context singleton and its deleting destructor. */
+C_REGION_END
 #pragma cplusplus on
 
 struct RaceContext {
@@ -2717,6 +2736,7 @@ extern "C" RaceContext *dtor_8009DCE0(RaceContext *self, short flag)
 #undef SetCourseParams_data_8040E4DC
 #undef lbl_806D12DC
 #pragma cplusplus off
+C_REGION_BEGIN
 
 /* ==== KartDriverArray_StaticCtor.c ==== */
 #define RaceContextArray_Dtor RaceContextArray_Dtor_p14
@@ -2742,3 +2762,4 @@ __declspec(section ".ctors") static void (*const s_KartDriverArray_StaticCtor_ct
 #undef KartDriverArray_StaticCtor_bss_805AC6C0
 #undef SetCourseParams_bss_805AC6CC
 #pragma cplusplus off
+C_REGION_END

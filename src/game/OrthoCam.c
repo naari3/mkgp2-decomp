@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* --- owned .data 0x8048E4E8..0x8048E548 (tools/own_data.py) --- */
 #include "game/types/size_t.h"
 #pragma force_active on
@@ -173,6 +175,7 @@ void fn_8013BCA0(void) {
     }
 }
 
+C_REGION_END
 #pragma cplusplus on
 
 void *operator new(size_t size);

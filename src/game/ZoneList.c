@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * Mini-game helpers: the per-cup timer lookup and the trigger-zone lists
  * (box and quad zones chained through `next`, vtable at +4) plus a small
@@ -11,6 +13,7 @@
  * not own).
  */
 #include "game/types/size_t.h"
+C_REGION_END
 #pragma cplusplus on
 
 #include "game/types/Vec3.h"

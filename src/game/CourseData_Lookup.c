@@ -1,6 +1,9 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Indivisible lookup group. Only observed vptr and pointer fields are modeled.
  * The external constructor publishes this through g_courseData itself. */
 #include "game/types/size_t.h"
+C_REGION_END
 #pragma cplusplus on
 void *operator new(size_t);
 void operator delete(void *);
@@ -28,6 +31,7 @@ CourseLookup::~CourseLookup() {
     MemoryManager_Free(keys);
 }
 #pragma cplusplus off
+C_REGION_BEGIN
 
 int CourseData_ResolveByKey(void *p, unsigned int key) {
     unsigned int *keys = ((unsigned int **)p)[1];
@@ -55,6 +59,7 @@ good:
     return ((void **)*(void **)((char *)p + 4))[idx];
 }
 
+C_REGION_END
 #pragma cplusplus on
 static inline void *CourseData_Current() {
     if (g_courseData == 0) return 0;
@@ -71,8 +76,10 @@ extern "C" void *CourseData_GetOrCreate(int first, int second, int third) {
 #pragma cplusplus off
 
 #if 0
+C_REGION_BEGIN
 /* Complete strong base draft (probe 1: exact 72B standalone instructions).
  * Its non-inline spelling prevented the derived base cleanup from inlining. */
+C_REGION_END
 #pragma cplusplus on
 struct CourseLookupBaseDraft {
     virtual void key();

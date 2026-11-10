@@ -1,9 +1,12 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * Wall raycast between two positions, 0x80035AE4..0x80035ED4: special-face
  * mesh first, then the terrain grid stepper.
  * The input ranges are independent. The first triangle query belongs to
  * the stepper constructor so exception cleanup starts after it completes.
  */
+C_REGION_END
 #pragma cplusplus on
 extern "C" {
 unsigned int OSGetTick(void);

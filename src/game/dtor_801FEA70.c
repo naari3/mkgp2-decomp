@@ -1,7 +1,10 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Observed lifetime views only: vptr at zero for the first class;
  * one owned polymorphic pointer at zero for each nonvirtual holder.
  * Real deleting destructors and throw() emit all exception metadata.
  * The existing TU declaration controls exception-entry placement. */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 void operator delete(void *);

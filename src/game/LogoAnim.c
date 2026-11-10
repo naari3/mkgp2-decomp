@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * A small sprite animation object (resource 0x139F): two layers of the
  * same sprite are scaled and faded in, held, and scaled back out from a
@@ -9,6 +11,7 @@
  * hands out f28..f31 from that (regalloc_patterns 51). The release helper
  * is C++ `delete` through the virtual destructor.
  */
+C_REGION_END
 #pragma cplusplus on
 
 extern "C" {

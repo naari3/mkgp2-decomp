@@ -1,5 +1,8 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Native C++ ownership for the input manager and its virtual input object. */
 #include "game/types/size_t.h"
+C_REGION_END
 #pragma cplusplus on
 void *operator new(size_t);
 void operator delete(void *);

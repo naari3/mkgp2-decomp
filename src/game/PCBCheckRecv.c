@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 #pragma exceptions on
 #pragma use_lmw_stmw on
 /* PCB link communication unit, .text 0x80083348..0x80086A0C: receive / send /
@@ -86,6 +88,7 @@ const char lbl_8031236C[25] = "\x92" "\xCA" "\x90" "M" "\x83" "G" "\x83" "\x89" 
 const char lbl_80312388[24] = "   Link error occurred.";
 const char lbl_803123A0[14] = "PROCESS_ERROR";
 /* Preserve the declaration order of the shared communication buffers. */
+C_REGION_END
 #pragma cplusplus on
 unsigned char PCBCheckRecv_bss_805A5EC0[0x204];
 unsigned char PCBComm_BuildBroadcastSlot_bss_805A60C4[0x54];
@@ -97,6 +100,7 @@ unsigned char PCBComm_PackAndTriggerCardSnapshot_bss_805A8A44[4][0x45];
 unsigned char g_ringBufferBase[64][0xDC];
 unsigned char PCBCheckRecv_bss_805AC258[2][0x1C];
 #pragma cplusplus reset
+C_REGION_BEGIN
 extern unsigned char g_pcbCommEnabled, g_isCommHost;
 extern int g_ringReadIdx, g_ringWriteIdx;
 extern void* memcpy(void*, const void*, unsigned long);
@@ -905,6 +909,7 @@ unsigned char CommBroadcast_ScanForMySyncMatch(void)
 #undef g_ringBufferBase
 
 /* ==== BootPCBCheck.cpp ==== */
+C_REGION_END
 #pragma cplusplus on
 #define BootInput BootInput_p4
 #define DisplayContext_Flush DisplayContext_Flush_p4
@@ -1028,6 +1033,7 @@ extern "C" int BootPCBCheck_Poll(void)
 #undef lbl_806D3178
 #undef PCBCheckRecv_bss_805A6154
 #pragma cplusplus off
+C_REGION_BEGIN
 
 /* ==== BootNotice_CheckEnterCondition.c ==== */
 #define SetSyncTarget SetSyncTarget_p5
@@ -2135,6 +2141,7 @@ void DebugOverlay_DumpPcbState(void)
 /* C++ parts. Every declaration of both parts comes before the first C++
  * function: MWCC emits pending weak inline copies (FKTex::~FKTex) at the
  * next declaration, and the target has it after PCBComm_Init. */
+C_REGION_END
 #pragma cplusplus on
 /* ==== PcbDebugOverlay_link.cpp  declarations ==== */
 #define TexMgr_SetTexture TexMgr_SetTexture_p22

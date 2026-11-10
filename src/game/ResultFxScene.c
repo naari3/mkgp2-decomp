@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* sdata symbols referenced from asm */
 extern unsigned char ResultFxScene_data_806CF6A8[4];
 extern unsigned char ResultFxScene_data_806CF6AC[4];
@@ -14,6 +16,7 @@ extern char ResultFxScene_data_806CF6B8[4];
  * them through one pooled .rodata base (+0x2C/0x18C/0x1AC). The two zero
  * tables are not referenced by any code that survives in this unit.
  */
+C_REGION_END
 #pragma cplusplus on
 
 typedef float Mtx[3][4];

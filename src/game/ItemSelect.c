@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * game/ItemSelect.c
  *
@@ -149,6 +151,7 @@ void *ItemSelect_Dtor(unsigned char *self, short freeSelf) {
 
 /* The child constructor's observed ABI is (self, mode), and its layout
  * reaches +0x40. A real new expression supplies allocation-failure cleanup. */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 class ItemSelectChild {

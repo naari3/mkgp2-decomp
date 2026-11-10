@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* AnimState pool management, 0x800AF240..0x800AF4F8. */
 #include "game/types/size_t.h"
 extern void AnimState_Init(void*, void*);
@@ -6,6 +8,7 @@ extern unsigned int AnimStatePool_bss_805DF350[];
 extern const float lbl_806D4FC8;
 extern const float lbl_806D4FCC;
 
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 void* operator new(size_t);
@@ -41,6 +44,7 @@ struct PoolAnimState {
 };
 
 #pragma cplusplus off
+C_REGION_BEGIN
 void AnimStatePool_Free(void* state) {
     int i;
     for (i = 0; i < 32; ++i) {
@@ -52,6 +56,7 @@ void AnimStatePool_Free(void* state) {
     }
 }
 
+C_REGION_END
 #pragma cplusplus on
 extern "C" void* AnimStatePool_Alloc(void* data) {
     for (int i = 0; i < 32; ++i) {
@@ -72,6 +77,7 @@ extern "C" void AnimStatePool_FreeAll(void) {
     }
 }
 #pragma cplusplus off
+C_REGION_BEGIN
 #pragma exceptions off
 
 void AnimStatePool_ZeroInit(void) {
@@ -108,3 +114,4 @@ void AnimStatePool_ZeroInit(void) {
     AnimStatePool_bss_805DF350[30] = 0;
     AnimStatePool_bss_805DF350[31] = 0;
 }
+C_REGION_END

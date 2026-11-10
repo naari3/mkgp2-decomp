@@ -1,6 +1,9 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Native C++ draft: 99.90991% text, exact 1332-byte primary size.
  * Kept NonMatching: final animation count/cursor register allocation
  * remains different from the target. */
+C_REGION_END
 #pragma cplusplus on
 struct JObj;
 typedef void (*AnimCallback)(void);

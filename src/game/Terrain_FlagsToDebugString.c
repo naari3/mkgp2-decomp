@@ -1,8 +1,11 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Terrain_FlagsToDebugString (0x800A5384): debug name for a terrain flag
  * word ("ROAD_ISIDATAMI_..."). In cup 2 a bit-0x80 surface reads as 0x40
  * and the slip bits are remapped. */
 
 
+C_REGION_END
 #pragma cplusplus on
 extern "C" {
 extern int g_cupId;

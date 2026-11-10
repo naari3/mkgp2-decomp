@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* BananaTriple_Tick_HeldAndHoming_32to36 (0x800E8CAC): banana variants
  * 0x32..0x36 while held on the kart (state 1) and while thrown/homing or
  * lying on the ground (state 2). Raw offsets as in fn_801025C0.c.
@@ -6,6 +8,7 @@
  * +0x18 ground height, +0x4c chained item, +0x98 driver, +0x9c target.
  * Compiled as C++: the hit call's last parameter is a bool, and the int
  * ternary argument is normalised (neg/or/srwi) at the call. */
+C_REGION_END
 #pragma cplusplus on
 
 extern "C" {

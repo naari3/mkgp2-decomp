@@ -1,4 +1,7 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* KartDriver_Init (0x80044578): driver model/joint setup, written as C++ for the new-expression EH. */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 #pragma use_lmw_stmw on

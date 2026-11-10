@@ -1,6 +1,9 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Constructor-only observed lifetime views; no complete HUD class claimed.
  * Nontrivial owner and new expression generate the original cleanup actions. */
 #include "game/types/size_t.h"
+C_REGION_END
 #pragma cplusplus on
 void *operator new(size_t);
 void operator delete(void *);

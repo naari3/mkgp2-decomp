@@ -1,4 +1,7 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Build the enabled card-task queue and start its first task. */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 

@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 #include "game/types/size_t.h"
 #include "game/DebugTextPrivate.h"
 
@@ -85,6 +87,7 @@ const void *__vt__11MiyoshiMode[5] = { clMiyoshiCardCreate_data_806CEEE8, 0, (vo
     (void *)clMiyoshiCardCreate_Draw, (void *)__dt__11MiyoshiModeFv };
 #pragma force_active reset
 /* Only observed lifetime/layout: 4B mode, 44B state, 216B display context. */
+C_REGION_END
 #pragma cplusplus on
 void *operator new(size_t);
 void operator delete(void *);

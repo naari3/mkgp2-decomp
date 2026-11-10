@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* === extracted from EffectSteering === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -49,6 +51,7 @@ typedef struct EffectActionResetState {
 } EffectActionResetState;
 
 void ActionDelay_Reset(EffectActionResetState *self);
+C_REGION_END
 #pragma cplusplus on
 struct EffectInputDelay {
     /* As with Scale/Shake, reset is the second virtual slot (+0x0C). */
@@ -109,6 +112,7 @@ extern "C" int EffectSteering_InitForDelay(EffectSteeringScale *self, int sample
 extern "C" int EffectSteering_InitForScale(EffectSteeringScale *self, float duration, float value);
 extern "C" int EffectSteering_InitForShake(EffectSteeringScale *self, float duration, float value, float cycle, float final_value);
 #pragma cplusplus off
+C_REGION_BEGIN
 
 /* --- extab (manual emit, .extab_user -> extab via objcopy) --- */
 #pragma section R ".extab_user"
@@ -157,6 +161,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* Function bodies follow target .text order. Manual EH records are retained. */
+C_REGION_END
 #pragma cplusplus on
 extern "C" int EffectSteering_InitForDelay(EffectSteeringScale *self, int sample_count, float duration) {
     unsigned char ok;
@@ -196,6 +201,7 @@ selected_delay:
     return 1;
 }
 #pragma cplusplus off
+C_REGION_BEGIN
 void ActionDelay_Reset(EffectActionResetState *self) { /* 0x8005B43C size:0x54 */
     EffectSteeringResetState *owner = self->owner;
     KartItem_ResetStrPcbToIdle(owner->owner);
@@ -207,6 +213,7 @@ void ActionDelay_Reset(EffectActionResetState *self) { /* 0x8005B43C size:0x54 *
 
 
 
+C_REGION_END
 #pragma cplusplus on
 extern "C" int EffectSteering_InitForScale(EffectSteeringScale *self, float duration, float value) {
     unsigned char ok;
@@ -304,12 +311,16 @@ done:
     return 1;
 }
 #pragma cplusplus off
+C_REGION_BEGIN
 
 /* Exact asm_fn bridges for the contiguous partial-matching range. */
 #include "src/game/TmpActionShake.c"
+C_REGION_END
 #include "src/game/TmpSplit.c"
+C_REGION_BEGIN
 #include "src/game/TmpActionSplit.c"
 
+C_REGION_END
 #pragma cplusplus on
 
 extern "C" void EffectSteering_InputViscosity_SetFieldC(EffectSteeringScale *self, float value) {
@@ -484,9 +495,11 @@ done_vibrate_sub:
     return 1;
 }
 #pragma cplusplus off
+C_REGION_BEGIN
 
 #include "src/game/TmpActionVibrate.c"
 
+C_REGION_END
 #pragma cplusplus on
 extern "C" int EffectSteering_InitForVibrate(EffectSteeringScale *self, float duration,
                                               float value, float input_duration);
@@ -599,6 +612,7 @@ selected_lock:
     return 1;
 }
 #pragma cplusplus off
+C_REGION_BEGIN
 
 void ActionLock_Reset(EffectActionResetState *self);
 #pragma section R ".extab_user"
@@ -614,3 +628,4 @@ void ActionLock_Reset(EffectActionResetState *self) {
     KartItem_ResetStrPcbToIdle(owner->owner);
     owner->output = *(float *)&lbl_806D297C;
 }
+C_REGION_END

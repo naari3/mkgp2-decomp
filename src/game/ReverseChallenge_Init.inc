@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* === extracted from auto_ReverseChallenge_Ini_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -69,6 +71,7 @@ extern unsigned int lbl_8048E144[];
  */
 
 /* --- native C++ ctor (same shape as JumpDistanceMode_Init.c) --- */
+C_REGION_END
 #pragma cplusplus on
 void *operator new(size_t size);
 void operator delete(void *p);

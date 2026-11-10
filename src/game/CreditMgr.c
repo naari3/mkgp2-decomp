@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * Credit manager: coin/credit banner, queries and acceptor polling,
  * 0x80081184..0x8008299C.
@@ -63,6 +65,7 @@ void CreditMgr_PollInsertAndPlay(unsigned char silent);
 int CreditMgr_GetCoinCount(unsigned char noClamp);
 
 #pragma exceptions on
+C_REGION_END
 #pragma cplusplus on
 
 /* Sprite draw request (ResCtrl_Init / dtor_80082960). */
@@ -288,6 +291,7 @@ extern "C" void CreditMgr_DrawCoinCreditBanner(int slot, unsigned int color, int
 }
 
 #pragma cplusplus reset
+C_REGION_BEGIN
 
 /* The rest of the unit is code-generated deferred: CW emits deferred
  * functions back to front, so they are written in reverse address order,
@@ -560,3 +564,4 @@ int CreditMgr_TryConfirmPlay(int mode) {
     }
     return 1;
 }
+C_REGION_END

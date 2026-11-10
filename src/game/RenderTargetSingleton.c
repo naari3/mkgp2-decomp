@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * Ref-counted render-target singleton used by the kart preview
  * (0x8013C334..0x8013C4A4), same shape as OrthoCam.
@@ -94,6 +96,7 @@ void fn_8013C3C0(void) {
     }
 }
 
+C_REGION_END
 #pragma cplusplus on
 void *operator new(size_t size);
 void operator delete(void *p);

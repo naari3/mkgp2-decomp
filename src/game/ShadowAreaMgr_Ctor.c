@@ -1,6 +1,9 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* ShadowAreaMgr constructor: real C++ ctor (base ctor registers the
  * singleton, member array of 0x40 ShadowAreaEntry). Mangled names are
  * bridged to the existing symbols via tools/extab_user_renames.json. */
+C_REGION_END
 #pragma cplusplus on
 
 extern "C" {

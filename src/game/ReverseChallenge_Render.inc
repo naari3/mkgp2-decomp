@@ -1,8 +1,11 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* === extracted from auto_ReverseChallenge_Ren_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
 
 /* --- extern decls --- */
+C_REGION_END
 #pragma cplusplus on
 struct RevScene {
     virtual void Slot8();

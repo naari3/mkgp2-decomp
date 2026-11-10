@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 typedef unsigned char u8;
 
 #include "game/types/Vec3.h"
@@ -109,6 +111,7 @@ void Item_PrepareHitRebound(ItemView *item, Vec3 *rebound, Vec3 *oldPosition,
     }
 }
 
+C_REGION_END
 #pragma cplusplus on
 class ItemDispatcher {
 public:

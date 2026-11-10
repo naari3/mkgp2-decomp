@@ -11,11 +11,14 @@ int acLib_tail_bss_806D1AD4;
 }
 
 #pragma cplusplus off
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 static inline void CopyMediaRequest(struct MediaRequest *dst, const struct MediaRequest *src) {
     dst->state = src->state;
     dst->params = src->params;
     dst->len = src->len;
 }
+C_REGION_END
 #pragma cplusplus reset
 
 extern "C" int fn_802554DC(void) {

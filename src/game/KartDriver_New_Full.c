@@ -1,4 +1,7 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Observed forwarding constructor; no allocation and no cleanup action. */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 

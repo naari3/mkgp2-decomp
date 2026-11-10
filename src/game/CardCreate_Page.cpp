@@ -3,6 +3,8 @@
  * (tools/extab_user_renames.json maps the symbols back). */
 /* ==== pool (tools/data2c.py) ==== */
 #pragma cplusplus off
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 void CardSavedata_LoadShadow_TriggerUnused();
 void CardSession_PollFsmStatus();
 void PostRace_StartScoreEntryFlow();
@@ -2221,12 +2223,14 @@ void *CardCreate_Page_data_803FDE64[5] = {
     (void *)&ServiceMenu_Draw,
     (void *)&ServiceMenu_Dtor
 };
+C_REGION_END
 #pragma cplusplus reset
 
 /* ==== game/UI_PageDispatcher.c (0x800668fc) ==== */
 #pragma exceptions on
 #pragma use_lmw_stmw off
 #pragma cplusplus off
+C_REGION_BEGIN
 typedef struct TestPage_p0 {
 unsigned char pad_0_p0[0x10];
 unsigned int page_p0;
@@ -2382,6 +2386,7 @@ return 0;
 }
 
 #pragma exceptions reset
+C_REGION_END
 #pragma cplusplus reset
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
@@ -7461,6 +7466,7 @@ return 1;
 #pragma exceptions off
 #pragma use_lmw_stmw off
 #pragma cplusplus off
+C_REGION_BEGIN
 typedef signed char s8_p27;
 typedef unsigned char u8_p27;
 typedef signed short int s16_p27;
@@ -9702,6 +9708,7 @@ HSD_StateInvalidate_p27(0x7F);
 }
 
 #pragma exceptions reset
+C_REGION_END
 #pragma cplusplus reset
 #pragma use_lmw_stmw reset
 #pragma exceptions reset
@@ -10422,6 +10429,7 @@ typedef struct TestPage_p32 TestPage_p32;
 typedef struct GameSettings_p32 GameSettings_p32;
 
 #pragma cplusplus off
+C_REGION_BEGIN
 
 static inline unsigned int GameSetting_Flag_p32(unsigned int value_p32)
 {
@@ -10893,6 +10901,7 @@ return 1;
 
 
 #pragma exceptions reset
+C_REGION_END
 #pragma cplusplus reset
 #pragma use_lmw_stmw reset
 #pragma exceptions reset

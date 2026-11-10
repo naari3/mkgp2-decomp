@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Timed blend/copy and the inlined HSD JObj matrix-dirty guard.
  * Automatic EH references the canonical cross-TU ScopedTimer destructor;
  * the compiler's weak destructor copy is discarded by the linker. */
@@ -6,6 +8,7 @@ typedef struct JObjFlagsView {
     unsigned int flags;
 } JObjFlagsView;
 
+C_REGION_END
 #pragma cplusplus on
 extern "C" {
 unsigned int OSGetTick(void);

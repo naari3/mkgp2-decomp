@@ -1,7 +1,10 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Apply a hit item's effect to its target kart: mode 2/3 raise the
  * target's effect-bus spin flag (2 also plays the positional hit SE),
  * mode 1 knocks the target down, notifies the owner's item handler and
  * logs the defeat for rank tracking. */
+C_REGION_END
 #pragma cplusplus on
 
 #include "game/types/Vec3.h"

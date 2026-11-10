@@ -1,9 +1,12 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * KartDriver destructor (0x80045950, 0x200). Releases the kart's scene
  * objects, effect slots and polymorphic helpers, unbinds the race slot and
  * frees the driver when called as a deleting destructor (flags > 0).
  * Compiled as C++ (the helpers are deleted through their virtual dtor).
  */
+C_REGION_END
 #pragma cplusplus on
 
 class KartHelper {

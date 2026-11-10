@@ -1,8 +1,11 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Whole-TU C++ lifetime retrofit; only observed manager layout is modeled.
  * Slot+0x14 is the external SpriteSlot subobject. The loop invokes each
  * element destructor without deallocating the static 256-element pool.
  * The canonical strong ScopedTimer destructor owns exception cleanup;
  * the generated weak copy is discarded at link time. */
+C_REGION_END
 #pragma cplusplus on
 class ManagedObject {
 public:

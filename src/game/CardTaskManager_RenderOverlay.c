@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 
 /* sdata symbols referenced from asm */
 /* === extracted from auto_CardTaskManager_Rend_text === */
@@ -157,6 +159,7 @@ static const char lbl_80312DC4[] = "Device Check";
 static const char lbl_80312DD4[] = "MK2100-1-NA-MPR0-A36";
 #pragma force_active reset
 
+C_REGION_END
 #pragma cplusplus on
 class CardTask {
 public:

@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 
 /* sdata symbols referenced from asm */
 #include "game/types/size_t.h"
@@ -1204,10 +1206,12 @@ void CarObject_MainUpdate(void *self, void *arg);
 void CarObject_FrameUpdate(CarObjFrameView *self, void *arg);
 void CarObject_ApplyInput_AI(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3, float in4);
 void CarObject_ApplyInput(CarObjInputAIView *self, unsigned char active, float in1, float in2, float in3);
+C_REGION_END
 #pragma cplusplus on
 struct KartItemObj;
 extern "C" void *KartItem_Dtor(KartItemObj *self, short flag);
 #pragma cplusplus off
+C_REGION_BEGIN
 void KartItem_UpdateShadowBillboardAndViewport(KartItemOpsView *self, int arg2, int arg3);
 float KartItem_AdvanceAnim3c(const KartItemOpsView *self);
 float CarObject_CalcSpeedRatio(KartItemOpsView *self);
@@ -1500,6 +1504,7 @@ void KartItem_ApplyEffectToVictim_AdjThunk(void);
 #endif
 void *dtor_800524CC(void *self, short flag);
 void StlList_RemoveByValueField(StlList *l, StlListValRef *key);
+C_REGION_END
 #pragma cplusplus on
 struct StlEraseIter {
     StlListNode *node;
@@ -1529,6 +1534,7 @@ struct StlInsIter {
 
 extern "C" StlInsIter StlList_InsertBefore(StlList *l, StlInsIter &pos, const StlInsValue &value);
 #pragma cplusplus off
+C_REGION_BEGIN
 void StlList_InitEmpty(StlList *l);
 void *dtor_80052744(void *self, short flag);
 void dtor_8005278C(void);
@@ -1536,9 +1542,11 @@ void *dtor_80052808(void *self, short flag);
 void *dtor_8005285C(void *self, short flag);
 void dtor_800528B0(void);
 void dtor_8005292C(void);
+C_REGION_END
 #pragma cplusplus on
 extern "C" void *dtor_800529A8(void *self, short flag) throw();
 #pragma cplusplus off
+C_REGION_BEGIN
 void dtor_80052A58(void);
 void dtor_80052AD4(void);
 void dtor_80052B50(void);
@@ -5360,6 +5368,7 @@ void CarObject_UpdateCoinSpeedBonus(KartItemOpsView *self) { /* 0x8004CF64 size:
 }
 #pragma exceptions reset
 
+C_REGION_END
 #pragma cplusplus on
 struct Vec3c {
     float x, y, z;
@@ -5436,6 +5445,7 @@ extern "C" void CarObject_ProcessWarpAndDash(CarObjWarpView *self) { /* 0x8004D1
     }
 }
 #pragma cplusplus off
+C_REGION_BEGIN
 
 #ifdef NON_MATCHING
 /* NON_MATCHING: equivalent C, 82 % when written (docs/archive/drafts/CarObject_MainUpdate_82pct.handoff.md);
@@ -6696,6 +6706,7 @@ void CarObject_ApplyInput(CarObjInputAIView *self, unsigned char active, float i
  * The owned-pointer member holders are plain (non-template) structs on
  * purpose: a template instantiation makes MWCC defer KartItem_Dtor past the
  * following asm CarObject_Init, which breaks the link order. */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 struct Owned8005278C {
@@ -6904,11 +6915,13 @@ extern "C" void *KartItem_Dtor(KartItemObj *self, short flag) { /* 0x8004E2B0 si
 #undef gCarList
 #pragma exceptions reset
 #pragma cplusplus off
+C_REGION_BEGIN
 
 /* CarObject_Init: native C++ constructor (exceptions on). Members are
  * owned-pointer holders built from tagged new-expressions; the compiler
  * extab destroys the built members/bases when a later ctor throws.
  * Mangled names are bridged in tools/extab_user_renames.json. */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 void *operator new(size_t);
@@ -7229,6 +7242,7 @@ CarObject::CarObject(int slot, int character, int a18, int a1c, unsigned char is
 #undef gCarList
 #pragma exceptions reset
 #pragma cplusplus off
+C_REGION_BEGIN
 
 static inline float KartItem_CalcKeySpeedFromTable(KartMovementSpeedView *mv) {
     SpeedTableEntry *e;
@@ -7968,6 +7982,7 @@ int ItemEffect_SelectAndDispatch_Wrap(ItemEffectTable *self, int itemId, void *i
  * returning the pick (keeps the sel<0 branch pair), the ignore-list scan is
  * `while (p--, n-- > 0)` over a 1-entry table, and the owner message send
  * is a real virtual call (slot 0x34) so the vtable temp is r12/r12. */
+C_REGION_END
 #pragma cplusplus on
 struct ItemMsgTarget {
     virtual void v08(); virtual void v0C(); virtual void v10(); virtual void v14();
@@ -8026,6 +8041,7 @@ extern "C" int ItemEffect_SelectAndDispatch(ItemEffectTable *self, int itemId, v
     return ItemEffect_GenericHandler(self, sel, itemObj, arg4);
 }
 #pragma cplusplus off
+C_REGION_BEGIN
 
 #pragma exceptions off
 int ItemEffect_GenericHandler(ItemEffectTable *self, int itemId, void *itemObj, int arg4) { /* 0x800501B0 size:0x140 */
@@ -9016,6 +9032,7 @@ void CarObject_GetField304Vec3(Vec3 *out, CarObjAux304View *car) { /* 0x80051DD0
  * changes the 12-byte copies), the collide callback is a real virtual call, the index
  * of the outer loop reaches the bitset calls as int so no shared (unsigned long)i temp
  * is coalesced with it, and &bs is written at each use instead of a pointer local. */
+C_REGION_END
 #pragma cplusplus on
 struct SweepKartBase {
     virtual void v08(); virtual void v0C(); virtual void v10(); virtual void v14();
@@ -9182,6 +9199,7 @@ extern "C" CarObjectManager *CarObjectManager_Dtor(CarObjectManager *self, short
 }
 #pragma exceptions reset
 #pragma cplusplus off
+C_REGION_BEGIN
 
 #pragma exceptions off
 /* Bitset deleting dtor: free word buffer, then free self when flag > 0 */
@@ -9219,6 +9237,7 @@ void Bitset_SetBit(Bitset *self, unsigned long idx, unsigned char val) { /* 0x80
 /* The exception hierarchy and string member generate Bitset_Init's cleanup
  * actions. Read-only exception names replace the corresponding raw pool data. */
 #pragma readonly_strings on
+C_REGION_END
 #pragma cplusplus on
 namespace std {
 struct exception {
@@ -9263,6 +9282,7 @@ extern "C" void Bitset_Init(Bitset *self, unsigned long n, const unsigned char *
     }
 }
 #pragma cplusplus off
+C_REGION_BEGIN
 #pragma readonly_strings reset
 static const char lbl_802EDADC[18] = "std::length_error";
 static const char lbl_802EDAF0[15] = "std::exception";
@@ -9362,6 +9382,7 @@ asm void KartItem_ApplyEffectToVictim_AdjThunk(void) { /* 0x800524C4 size:0x8 */
  * CW emit this function one slot late, so this source position yields the
  * target .text order (dtor_800524CC, remove, StlList_EraseRange); here it also
  * gets no auto extab, so the manual entry above stays. */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions off
 static inline StlEraseIter StlList_EraseInl(StlList *l, StlEraseIter first, StlEraseIter last) {
@@ -9403,6 +9424,7 @@ extern "C" void StlList_RemoveByValueField(StlList *l, StlListValRef *key) { /* 
 }
 #pragma exceptions reset
 #pragma cplusplus off
+C_REGION_BEGIN
 #pragma exceptions off
 void *dtor_800524CC(void *self, short flag) { /* 0x800524CC size:0x3C */
     if (self) {
@@ -9415,6 +9437,7 @@ void *dtor_800524CC(void *self, short flag) { /* 0x800524CC size:0x3C */
 #pragma exceptions reset
 
 
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions off
 /* std::list::erase(first, last): unlink the whole range, then free node by node.
@@ -9437,6 +9460,7 @@ extern "C" StlEraseIter StlList_EraseRange(StlList *l, StlEraseIter first, StlEr
 }
 #pragma exceptions reset
 #pragma cplusplus off
+C_REGION_BEGIN
 
 /* skipped (0 probes): -Cpp_exceptions on EH scaffolding class - FP prologue
  * `mr r31,r1`, back-chain epilogue, EH state store `stw r1,0x24(r31)` and dead
@@ -9444,6 +9468,7 @@ extern "C" StlEraseIter StlList_EraseRange(StlList *l, StlEraseIter first, StlEr
  * node if the obj copy throws). Approach B cannot emit any of this; approach A
  * excluded by the 14.1 mix rule (manual-extab asm fns precede). Same class as
  * dtor_8005278C/800528B0 (exceptions-on-eh-scaffolding-unpromotable). */
+C_REGION_END
 #pragma cplusplus on
 inline void *operator new(size_t, void *p) { return p; }
 inline void operator delete(void *, void *) {}
@@ -9475,6 +9500,7 @@ extern "C" StlInsIter StlList_InsertBefore(StlList *l, StlInsIter &pos, const St
     return StlList_LinkNode(l, pos.node, guard.Release());
 }
 #pragma cplusplus off
+C_REGION_BEGIN
 
 #pragma exceptions off
 void StlList_InitEmpty(StlList *l) { /* 0x8005272C size:0x18 */
@@ -9506,6 +9532,7 @@ void *dtor_80052744(void *self, short flag) { /* 0x80052744 size:0x48 */
  *   __dt__15Holder8005278CFv -> dtor_8005278C
  *   __dt__14Owned8005278CFv  -> Free_IfOwnedShort
  */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 Holder8005278C::~Holder8005278C() throw() {
@@ -9513,6 +9540,7 @@ Holder8005278C::~Holder8005278C() throw() {
 }
 #pragma exceptions reset
 #pragma cplusplus off
+C_REGION_BEGIN
 
 #pragma exceptions off
 /* owned-pointer holder deleting dtor: free the payload at +0x0 unconditionally */
@@ -9540,6 +9568,7 @@ void *dtor_8005285C(void *self, short flag) { /* 0x8005285C size:0x54 */
 }
 #pragma exceptions reset
 
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 Holder800528B0::~Holder800528B0() throw() {
@@ -9547,8 +9576,10 @@ Holder800528B0::~Holder800528B0() throw() {
 }
 #pragma exceptions reset
 #pragma cplusplus off
+C_REGION_BEGIN
 
 /* dtor_8005292C: EffectSteering owned-pointer holder deleting dtor. */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 Holder8005292C::~Holder8005292C() throw() {
@@ -9586,8 +9617,10 @@ Holder80052A58::~Holder80052A58() throw() {
 }
 #pragma exceptions reset
 #pragma cplusplus off
+C_REGION_BEGIN
 
 /* dtor_80052AD4: PlayCamera owned-pointer holder deleting dtor. */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 Holder80052AD4::~Holder80052AD4() throw() {
@@ -9611,8 +9644,10 @@ Holder80052BCC::~Holder80052BCC() throw() {
 }
 #pragma exceptions reset
 #pragma cplusplus off
+C_REGION_BEGIN
 
 /* dtor_80052C48: KartDriver owned-pointer holder deleting dtor. */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 Holder80052C48::~Holder80052C48() throw() {
@@ -9636,6 +9671,7 @@ Holder80052D40::~Holder80052D40() throw() {
 }
 #pragma exceptions reset
 #pragma cplusplus off
+C_REGION_BEGIN
 
 void KartMovement_UpdateBoostVisualBlend(KartDriverBusView *drv, KartMovementSpeedView *mv, float *outA, float *outB, int *counter) { /* 0x80052DBC size:0x164 */
     int ticks = drv->boostTicks1b4;
@@ -9675,4 +9711,5 @@ void KartMovement_UpdateBoostVisualBlend(KartDriverBusView *drv, KartMovementSpe
         KartMovement_UpdateBoostVisualBlend_bss_806D1084 = s;
     }
 }
+C_REGION_END
 

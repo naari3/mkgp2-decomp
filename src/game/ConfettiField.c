@@ -1,7 +1,10 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * Confetti particle field drawn into the result render targets: 72 quads
  * spawned from the 48/64-entry random tables, spun and dropped each frame.
  */
+C_REGION_END
 #pragma cplusplus on
 
 typedef float Mtx[3][4];

@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* HUD_FrameUpdate @ 0x80253658: per-frame update of the race HUD manager.
  *
  * Updates every HUD part, adds the next start-countdown popup (digit, or the
@@ -5,6 +7,7 @@
  * own phase, runs the final-seconds time warning (digit popup + SE 3) while
  * the timer part exists, then updates the manager's scene list.
  */
+C_REGION_END
 #pragma cplusplus on
 
 #include "game/HudManager.h"

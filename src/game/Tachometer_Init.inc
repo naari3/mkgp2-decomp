@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Tachometer_Init @ 0x800AB77C (size 0x1DC): C++ island. The three ResCtrl
  * locals have an empty inline dtor (dtor_80082960), which gives the extab
  * its destroy-local actions. */
@@ -14,6 +16,7 @@ typedef struct TachResTable { int body[4]; int needle[4]; char pad20[0xE0 - 0x20
 #define TACH_RES (*(TachResTable *)Tachometer_data_80411E20)
 #define TACH_ZERO (*(const float *)&lbl_806D4E68)
 
+C_REGION_END
 #pragma cplusplus on
 extern "C" int SpriteHandle_CreateDefault(void *ctrl, int layer);
 

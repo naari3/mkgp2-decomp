@@ -1,8 +1,11 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * 0x80143F8C..0x80144258: clCSPartsResultStage, the cup/stage banner on the
  * result screen. Model resources are picked per cup from two [cup][2]
  * tables (by mode and by the long-round flag).
  */
+C_REGION_END
 #pragma cplusplus on
 
 #define CSPARTS_INLINE_DTOR

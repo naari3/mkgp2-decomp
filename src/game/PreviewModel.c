@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * 3D preview models drawn through the orthographic camera into the shared
  * render target, plus eight per-layer lists of them.
@@ -21,6 +23,7 @@
  * (a named CIter swaps the two iterator stack slots).
  */
 #include "game/types/size_t.h"
+C_REGION_END
 #pragma cplusplus on
 
 struct Normal3D {

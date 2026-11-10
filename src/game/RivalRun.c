@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Exact asm_fn implementation for the remaining RivalRun unit members. */
 /* Generated from the nine dtk auto_RivalRun_* target assembly fragments. */
 /* Keep function/extab/extabindex order aligned with the target ranges. */
@@ -40,6 +42,7 @@ typedef struct RRRivalAI {
     void *rivalRender;         /* 0x50 */
 } RRRivalAI;
 
+C_REGION_END
 #pragma cplusplus on
 /* scene camera object (self->scene) */
 struct RRScene {
@@ -49,6 +52,7 @@ struct RRScene {
 };
 
 #pragma cplusplus reset
+C_REGION_BEGIN
 
 typedef struct RRLight {
     struct RRLightInfo *info; /* 0x00 */
@@ -693,6 +697,7 @@ extern unsigned int lbl_806DC1B8;
  * [  0] 0x8013558C size:0x1A8   global RivalRun_Draw
  */
 
+C_REGION_END
 #pragma cplusplus on
 
 #pragma exceptions on
@@ -731,6 +736,7 @@ extern "C" void RivalRun_Draw(RivalRunState *self) {
 
 #pragma exceptions reset
 #pragma cplusplus reset
+C_REGION_BEGIN
 
 /* === extracted from auto_RivalRun_Update_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -804,6 +810,7 @@ extern unsigned int RivalRun_Update_bss_80677CAC[];
  */
 
 /* --- forward decls --- */
+C_REGION_END
 #pragma cplusplus on
 struct RRInput {
     virtual void slot08();
@@ -914,6 +921,7 @@ extern "C" int RivalRun_Update(RivalRunState *self)
 }
 #pragma exceptions reset
 #pragma cplusplus reset
+C_REGION_BEGIN
 
 /* === extracted from auto_RivalRun_RivalAIUpda_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -1678,6 +1686,7 @@ extern unsigned int RivalRun_vtable_8048E4A0[];
 
 void *RivalRun_Destroy(RivalRunState *, short);
 
+C_REGION_END
 #pragma cplusplus on
 struct RRVirtual {
     virtual ~RRVirtual();
@@ -1774,6 +1783,7 @@ extern "C" void *RivalRun_Destroy(RivalRunState *self, short freeMemory)
 }
 #pragma exceptions reset
 #pragma cplusplus reset
+C_REGION_BEGIN
 
 /* === extracted from auto_RivalRun_Init_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -1841,6 +1851,7 @@ extern unsigned int lbl_8048E144[];
 extern unsigned int RivalRun_vtable_8048E4A0[];
 
 /* --- native C++ ctor (same shape as ReverseChallenge_Init / JumpDistanceMode_Init) --- */
+C_REGION_END
 #pragma cplusplus on
 void *operator new(size_t size);
 void operator delete(void *p);
@@ -2022,6 +2033,7 @@ RivalRun::RivalRun() {
 }
 #pragma exceptions reset
 #pragma cplusplus reset
+C_REGION_BEGIN
 
 /* === extracted from auto_RivalRun_RivalInit_text === */
 /* Copy into the TU between forward decls and function bodies; */
@@ -2064,10 +2076,13 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
     (void *)&RivalRun_RivalInit, 0x0000025C, (void *)&extab_RivalRun_RivalInit
 };
 
+C_REGION_END
 #ifdef NON_MATCHING
+C_REGION_BEGIN
 /* NON_MATCHING: equivalent C++ (the RIRival ctor; the default build renames
  * __ct__7RIRivalFP13RIPathManageriPv to RivalRun_RivalInit). Differs from the
  * target only in the order of two loads in the info tail (docs/gave_up.md). */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 RIRival::RIRival(RIPathManager *p, int startSlot, void *course) {
@@ -2125,6 +2140,7 @@ RIRival::RIRival(RIPathManager *p, int startSlot, void *course) {
 #pragma exceptions reset
 #pragma cplusplus reset
 #else
+C_REGION_BEGIN
 /* --- asm function bodies (.text order = fn address order) --- */
 asm void RivalRun_RivalInit(void) { /* 0x8013732C size:0x25C */
     nofralloc
@@ -2290,4 +2306,5 @@ asm void RivalRun_RivalInit(void) { /* 0x8013732C size:0x25C */
     addi r1, r1, 0x20
     blr
 }
+C_REGION_END
 #endif

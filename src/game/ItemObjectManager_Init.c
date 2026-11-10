@@ -1,7 +1,10 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Item-object slot pool initialization, 0x800D81E0 (168 bytes).
  * clNormal3D allocation cleanup is emitted by the C++ new expression.
  */
 #include "game/types/size_t.h"
+C_REGION_END
 #pragma cplusplus on
 #include "game/ObjViewA70C_private.h"
 

@@ -674,3 +674,9 @@ status: note
 
 Landing now for the PC port: the value-less 'return;' in ItemHandler_Star, Item_OrbitAnchorKart, NokoNoko_CheckHitAndKill and fn_801B4548 (3 sites) is kept under #ifdef __MWERKS__ and gets 'return <what r3 holds there>;' for other compilers. Objects unchanged. If you use the regalloc_patterns 54 lever in new code, please write the same guard.
 
+## n3-20261110-1212 | 2026-11-10 12:12Z | from: n3 | C_REGION_BEGIN/END markers in 96 mixed C/C++ units (byte-identical)
+re: -
+status: note
+
+Landing now for the PC port: units that switch language with '#pragma cplusplus on/off/reset' got C_REGION_BEGIN / C_REGION_END lines around every part MWCC compiles as C (include/game/types/c_region.h; the macros are empty under MWCC and extern "C" { } elsewhere). 96 files, lines added only, every object hash unchanged. Placed by tools/c_regions.py. If you add or move a cplusplus pragma in such a file, keep END before 'cplusplus on' and BEGIN after 'off'/'reset'; a new mixed file can be marked by running the tool. On a rebase conflict keep your code and re-add the marker lines.
+

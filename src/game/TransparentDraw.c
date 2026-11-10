@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * TransparentDraw @ 0x80065990..0x8006609C (.text)
  *
@@ -202,6 +204,7 @@ int TransparentDraw_InitEntry(TDrawEntry *self, TDrawDesc *desc) {
  * mangled names are bridged in tools/extab_user_renames.json:
  * __dt__15TDrawEntryOwnerFv -> TransparentDraw_DestroyEntry.
  */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 
@@ -241,6 +244,7 @@ TDrawEntryOwner::~TDrawEntryOwner() {
 
 #pragma exceptions reset
 #pragma cplusplus reset
+C_REGION_BEGIN
 
 void TransparentDraw_ResetEntry(TDrawEntry *self) {
     self->handle = 0;
@@ -401,3 +405,4 @@ __declspec(section ".extab_user") static const unsigned char extab_TransparentDr
 __declspec(section ".extabindex_user") static const struct { void *fn; unsigned int fn_size; void *extab; } extabindex_TransparentDraw_SortAndDispatch = {
     (void *)&TransparentDraw_SortAndDispatch, 0x0000033C, (void *)extab_TransparentDraw_SortAndDispatch
 };
+C_REGION_END

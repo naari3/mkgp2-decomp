@@ -1,9 +1,12 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* TornadoEffect_Ctor @ 0x80056EC0 (size 0x5C): C++ ctor. The three Vec3
  * members have an empty dtor (dtor_80036E40), which gives the extab its
  * destroy-member actions. */
 
 extern const float lbl_806D28E0;
 
+C_REGION_END
 #pragma cplusplus on
 struct TEVec3 {
     float x, y, z;

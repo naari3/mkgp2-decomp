@@ -205,6 +205,8 @@ static inline void DemoJObjSetTranslate(HSD_JObj *jobj, const Vec *t) {
 }
 
 #pragma cplusplus reset
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 
 /* callees used by the plain C views below */
 extern void fn_8016EACC();
@@ -216,6 +218,7 @@ extern unsigned int ChallengeDemoBlock_vtable_8048E258[];
 extern void fn_801825C8();
 extern void fn_801825FC();
 
+C_REGION_END
 #pragma cplusplus on
 extern "C" void fn_80125948(DemoMode *self)
 {

@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * clCSAnim (csAnim.cpp): keyframed sprite animation node list.
  * .text 0x8013AB74..0x8013BA90
@@ -28,6 +30,7 @@ typedef struct CSAnimKey {
     float a;
 } CSAnimKey;
 
+C_REGION_END
 #pragma cplusplus on
 struct ResCtrl {
     int res;
@@ -63,6 +66,7 @@ struct CSAnim {
     ~CSAnim();
 };
 #pragma cplusplus off
+C_REGION_BEGIN
 typedef struct CSAnim CSAnim;
 
 extern const int lbl_806D7480;
@@ -598,6 +602,7 @@ void fn_8013B7A8(CSAnim *n, CSAnim *add) {
     n->next = add;
 }
 
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 void operator delete(void *p);
@@ -609,6 +614,7 @@ CSAnim::~CSAnim() {
 }
 #pragma exceptions reset
 #pragma cplusplus off
+C_REGION_BEGIN
 
 CSAnim *fn_8013B9A0(CSAnim *n, int res, int res20, int mode, CSAnimKey *keys, int id) {
     n->id = id;
@@ -639,3 +645,4 @@ CSAnim *fn_8013B9A0(CSAnim *n, int res, int res20, int mode, CSAnimKey *keys, in
     }
     return n;
 }
+C_REGION_END

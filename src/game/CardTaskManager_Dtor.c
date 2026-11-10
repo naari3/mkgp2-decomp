@@ -1,5 +1,8 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* CardTaskManager destructor: delete every queued task, free the queue,
  * then the manager itself when called as a deleting destructor. */
+C_REGION_END
 #pragma cplusplus on
 
 class CardTask {

@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * dtk reversed-extab group `auto_fn_800A8F4C_text` bundle (1 TU, indivisible).
  * Held as asm_fn with manually emitted extab/extabindex via __declspec(section ".extab_user"/".extabindex_user"). tools/postprocess_extab_user.py renames sections + symbols to the
@@ -146,6 +148,7 @@ __declspec(section ".extabindex_user") static const struct { void *fn; unsigned 
 };
 
 /* --- asm function bodies (.text order = fn address order) --- */
+C_REGION_END
 #pragma cplusplus on
 struct WarpVec {
     float x, y, z;
@@ -277,11 +280,13 @@ extern "C" void WarpDashMgr_Cleanup(void) {
     }
 }
 #pragma cplusplus off
+C_REGION_BEGIN
 
 WarpDashMgr *WarpDashMgr_GetInstance(unsigned char id) {
     return g_warpDashMgrs[id != 0];
 }
 
+C_REGION_END
 #pragma cplusplus on
 #pragma use_lmw_stmw on
 extern "C" WarpDashMgr *WarpDashMgr_GetOrCreate(int cup, unsigned char course, unsigned char reverse, unsigned char id) {
@@ -292,6 +297,7 @@ extern "C" WarpDashMgr *WarpDashMgr_GetOrCreate(int cup, unsigned char course, u
 }
 #pragma use_lmw_stmw reset
 #pragma cplusplus off
+C_REGION_BEGIN
 
 void *Free_IfOwnedShort(void *p, short flag) {
     if (p != 0 && flag > 0) {
@@ -411,6 +417,7 @@ void WarpAutoRun_OnEnter(void *self, float f1, float f2, float f3, float f4, flo
     *(int *)self = 1;
 }
 
+C_REGION_END
 #pragma cplusplus on
 /* The manager must be a local of an inline function that is loaded straight
  * from the table (not through WarpDashMgr_GetInstance or an inline parameter)
@@ -448,11 +455,13 @@ extern "C" unsigned char WarpZone_CheckEntry(WarpAutoRun *self, float x, float y
     return WarpAutoRun_FindZone(self, x, y, z);
 }
 #pragma cplusplus off
+C_REGION_BEGIN
 
 int Field4NotMinusOne(WarpAutoRun *self) {
     return self->zone != -1;
 }
 
+C_REGION_END
 #pragma cplusplus on
 struct WarpEdgeVec {
     float x, y, z;
@@ -505,6 +514,7 @@ WarpZoneObj::WarpZoneObj(WarpNode *n) : node(n) {
     WarpZone_Normalize(&dir);
 }
 #pragma cplusplus off
+C_REGION_BEGIN
 
 void *dtor_800A9CC8(void *self, short flag) {
     if (self != 0) {
@@ -529,4 +539,5 @@ void *dtor_800A9D2C(void *self, short flag) {
     return self;
 }
 #pragma exceptions reset
+C_REGION_END
 

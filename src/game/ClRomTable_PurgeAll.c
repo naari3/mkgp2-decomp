@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * ClRomTable_PurgeAll, 0x8003AC84..0x8003AD4C: force-destroys every rom in
  * the 40-entry ClRomTable (.bss 0x80598678) and returns how many slots were
@@ -11,6 +13,7 @@ extern ClRomEntry g_clRomTable[40];
 extern int strcmp(const char *a, const char *b);
 extern void clRom_DtorForce(void *rom, int flag);
 
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 

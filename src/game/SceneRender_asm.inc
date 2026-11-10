@@ -1,8 +1,11 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Generated asm_fn extab bundle for the pending SceneRender methods. */
 /* === extracted from auto_SceneRender_DrawObje_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
 
+C_REGION_END
 #pragma cplusplus on
 extern "C" {
 unsigned int OSGetTick(void);
@@ -108,6 +111,7 @@ extern "C" void SceneRender_DrawObjectWithLights(SRScene *self)
 }
 #pragma exceptions reset
 #pragma cplusplus reset
+C_REGION_BEGIN
 
 
 
@@ -200,5 +204,6 @@ void *SceneRender_Dtor(void *self, short flag) {
 }
 #pragma dont_inline reset
 #pragma exceptions reset
+C_REGION_END
 
 

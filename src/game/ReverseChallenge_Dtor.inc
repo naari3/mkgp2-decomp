@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* === extracted from auto_ReverseChallenge_Dto_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -40,6 +42,7 @@ extern unsigned int ReverseChallenge_vtable_80419E70[];
  */
 
 /* --- native C++ island (deleting-destructor shape, see RivalRun.c) --- */
+C_REGION_END
 #pragma cplusplus on
 struct RCVirtual {
     virtual ~RCVirtual();

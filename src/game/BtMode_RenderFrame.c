@@ -1,7 +1,10 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* BtMode_RenderFrame (0x800A28D4): battle-mode counterpart of
  * RaceScene_RenderFrame. Draws the scene while battle mode is active: the
  * player kart (and the rival kart once the race starts), course objects,
  * effects and the HUD layers, then flushes the HUD and GX state. */
+C_REGION_END
 #pragma cplusplus on
 
 #include "game/types/SceneCamera.h"

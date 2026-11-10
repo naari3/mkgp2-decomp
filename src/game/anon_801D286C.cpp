@@ -141,6 +141,8 @@ struct RankingSpriteOwnerCtor : RankingCtorBase {
 };
 
 #pragma cplusplus off
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 static inline int RankingDriverMode(unsigned char variant) {
     return variant == 1 ? 2 : 0;
 }
@@ -148,6 +150,7 @@ static inline int RankingNameOffset(void) {
     if (isJapanese() == 0) return 12;
     return -6;
 }
+C_REGION_END
 #pragma cplusplus reset
 
 static inline float RankingPlacementY(const RankingPlacement *p) { return p->y; }

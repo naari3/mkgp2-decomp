@@ -1,9 +1,12 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* JumpDistanceMode_InitTimerDisplay @ 0x80213A64: jump-distance timer
  * display constructor. Builds seven digit/label sprites from one local
  * ResCtrl descriptor, resetting it between sprites. */
 /* Observed timer display constructor and local ResCtrl lifetime.
  * The empty inline destructor has no normal-path work; its weak EH copy
  * resolves to the existing strong dtor_80082960 at final link. */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 typedef unsigned char u8;

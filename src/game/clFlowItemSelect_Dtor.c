@@ -1,4 +1,7 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Observed destructor-only layouts; runtime class identities remain unverified. */
+C_REGION_END
 #pragma cplusplus on
 void operator delete(void*) throw();
 struct FlowInputView {

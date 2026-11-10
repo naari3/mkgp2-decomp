@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* --- owned .rodata 0x80360498..0x803604F8 (tools/own_data.py) --- */
 #pragma force_active on
 const int ResultFx_rodata_80360498[8][2] = { 2720, 2721, 2692, 2693, 2678, 2679, 2734, 2735, 2706, 2707, 2752, 2753, 2772, 2773, 2762, 2763 };
@@ -8,6 +10,7 @@ const int ResultFx_rodata_803604D8[8] = { 5286, 5284, 5283, 5287, 5285, 5288, 52
  * (vtable TrophyFx_vtable_8048EBCC; ctor, dtor). The base declares a virtual that is
  * not defined here first, so no vtable is emitted.
  */
+C_REGION_END
 #pragma cplusplus on
 
 typedef float Mtx[3][4];

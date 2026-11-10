@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* === extracted from auto_TornadoEffect_InitDe_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -14,6 +16,7 @@ extern const float lbl_806D28DC;
 extern unsigned int TornadoEffect_InitDetails_rodata_802EDC54[];
 extern unsigned int lbl_802EDC60[];
 
+C_REGION_END
 #pragma cplusplus on
 struct TENormal3D {
     char data[0x5C];

@@ -1,7 +1,10 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * Ground-height query, 0x80035700..0x80035AE4.
  * Indexed cell and triangle traversal preserves the original array bases.
  */
+C_REGION_END
 #pragma cplusplus on
 extern "C" {
 unsigned int OSGetTick(void);

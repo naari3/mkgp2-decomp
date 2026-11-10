@@ -1,8 +1,11 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /* Observed 92-byte storage only. Real constructor preserves implicit return-this.
  * Prior six plain-C schedule/local/register probes are not repeated.
  * Ghidra unavailable: authoritative target and full Load ASM establish the ABI.
  * filename and the full incoming useSkin word are forwarded; Load masks its byte.
  */
+C_REGION_END
 #pragma cplusplus on
 #pragma exceptions on
 

@@ -1,3 +1,5 @@
+#include "game/types/c_region.h"
+C_REGION_BEGIN
 /*
  * Kart/driver preview model shown on the select screens
  * (0x8013C4A4..0x8013D4B0): model wrapper setters, render, anim, dtor
@@ -11,6 +13,7 @@
  */
 
 #include "game/types/size_t.h"
+C_REGION_END
 #pragma cplusplus on
 
 extern "C" {

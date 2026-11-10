@@ -1,7 +1,10 @@
+#include "game/types/c_region.h"
 #ifdef NON_MATCHING
+C_REGION_BEGIN
 /* NON_MATCHING: equivalent C++ (docs/wip/r1-drafts/CardSave_Tick_CaptureAndStart_83.c, 83 % when
  * written; the g_playerData snapshot copy is scheduled differently, docs/gave_up.md). */
 #pragma inline_max_size(1000)
+C_REGION_END
 #pragma cplusplus on
 extern "C" {
 #include "game/CardLoadShadowPrivate.h"
@@ -73,6 +76,7 @@ unsigned char CardSave_Tick_CaptureAndStart(void)
 }
 #pragma cplusplus reset
 #else
+C_REGION_BEGIN
 /* === extracted from auto_CardSave_Tick_Captur_text === */
 /* Copy into the TU between forward decls and function bodies; */
 /* keep emit order = target section layout (do not sort). */
@@ -417,4 +421,5 @@ asm void CardSave_Tick_CaptureAndStart(void) { /* 0x800937D4 size:0x454 */
     addi r1, r1, 0x80
     blr
 }
+C_REGION_END
 #endif
