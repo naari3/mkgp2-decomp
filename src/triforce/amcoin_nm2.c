@@ -37,7 +37,10 @@ s32 fn_8028A3EC(CoinConfig* dst, u8* src) {
     tmp.bonusDiv = src[6];
     tmp.coinsPerCredit = src[7];
     if (tmp.coinSetting != 0) {
-        t = &CoinTable[tmp.coinSetting];
+        /* fakematch (hand): natural code is `&CoinTable[tmp.coinSetting]`. Read
+           through a cast, the second load is not a frontend CSE temp but a
+           backend one numbered after the src[4..7] loads (regfix diag). */
+        t = &CoinTable[*(u8 *)&tmp.coinSetting];
         tmp.coinMul[0] = t->mul0;
         if (tmp.separate == 0 && t->perCredit != 1) {
             tmp.coinMul[1] = t->mul1;
