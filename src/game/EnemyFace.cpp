@@ -37,10 +37,10 @@ static inline void LoadTireSpriteResources() {
                 TEXBindPaletteEntry_RGB(*palettes, *textures, k);
             }
         }
+        ++textures;
         ++palettes;
         ++resources;
         ++tluts;
-        ++textures;
     }
     DebugPrintf(lbl_803DA6C0);
 }
