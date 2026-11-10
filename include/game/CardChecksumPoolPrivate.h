@@ -1,5 +1,9 @@
 /* Native shared card parameter tables and field-name pool. */
-static const float cardPool_80315378[255] = {
+#include "game/types/shared_data.h"
+#ifndef __MWERKS__ /* the names other units use (tools/alias_census.py) */
+#define cardPool_80315378 CardSaveData_Parser_rodata_80315378
+#endif
+SHARED_STATIC const float cardPool_80315378[255] = {
     1.0f, 0.699999988079071f, 0.8999999761581421f, 0.0f, 0.0f, 500.0f, 66.66667175292969f, 1000.0f,
     66.66667175292969f, 2000.0f, 66.66667175292969f, 3000.0f, 66.66667175292969f, 4000.0f, 66.66667175292969f, 5000.0f,
     66.66667175292969f, 0.0f, 0.0f, 500.0f, 66.66667175292969f, 1000.0f, 66.66667175292969f, 2000.0f,
@@ -72,7 +76,7 @@ static const struct CardPoolItemLists { int special[3]; struct { const void *ite
         {&lbl_80315974, 3},
     }
 };
-static const int Items_rodata_803159B8[60] = {
+SHARED_STATIC const int Items_rodata_803159B8[60] = {
     57, 43, 45, 93, 92, 91, 61, 78, 50, 70,
     74, 80, 115, 113, 114, 60, 62, 108, 109, 110,
     105, 64, 8, 46, 90, 89, 116, 85, 94, 27,
@@ -80,7 +84,7 @@ static const int Items_rodata_803159B8[60] = {
     281, 282, 26, 25, 28, 82, 49, 48, 123, 127,
     129, 131, 132, 133, 134, 135, 124, 128, 126, 130
 };
-static const int Items_rodata_80315AA8[312] = {
+SHARED_STATIC const int Items_rodata_80315AA8[312] = {
     61, 0, 63, 50, 1, 51, 57, 2, 58, 61,
     3, 159, 62, 5, 162, 78, 4, 161, 108, 7,
     166, 50, 8, 160, 82, 9, 167, 80, 10, 168,
@@ -114,27 +118,27 @@ static const int Items_rodata_80315AA8[312] = {
     7, 82, 261, 121, 83, 262, 15, 84, 263, 33,
     86, 264
 };
-static const int data_803FE480_rodata_80315F88[13] = {
+SHARED_STATIC const int data_803FE480_rodata_80315F88[13] = {
     36, 36, 30, 21, 31, 22, 16, 32, 14, 14,
     40, 36, 36
 };
-static const int data_803FE480_rodata_80315FBC[13] = {
+SHARED_STATIC const int data_803FE480_rodata_80315FBC[13] = {
     2, 1, 11, 10, 18, 3, 6, 9, 4, 5,
     7, 2, 2
 };
-static const int data_803FE480_rodata_80315FF0[13] = {
+SHARED_STATIC const int data_803FE480_rodata_80315FF0[13] = {
     68, 67, 81, 86, 111, 88, 52, 119, 97, 97,
     121, 68, 68
 };
-static const int data_803FE480_rodata_80316024[13] = {
+SHARED_STATIC const int data_803FE480_rodata_80316024[13] = {
     38, 37, 13, 12, 20, 24, 19, 17, 39, 39,
     15, 38, 38
 };
-static const int data_803FE480_rodata_80316058[13] = {
+SHARED_STATIC const int data_803FE480_rodata_80316058[13] = {
     95, 96, 117, 120, 65, 71, 55, 56, 118, 118,
     106, 95, 95
 };
-static const int data_803FE480_rodata_8031608C[13] = {
+SHARED_STATIC const int data_803FE480_rodata_8031608C[13] = {
     77, 77, 76, 66, 59, 72, 42, 122, 107, 107,
     33, 77, 77,
 };
@@ -244,60 +248,60 @@ static const int lbl_803160C0[1039] = {
     0, -2098822463, -2102034085, 0, -2100329791, -2102557988, -2098135040, -2099412296, -2099477823, -2102591488,
     -2103410007, -2099805534, 0, -2098363671, -2103279269, -2102001664, -2099477793, -2101247297, 0,
 };
-static const char lbl_803170FC[9] = "APP-CODE";
-static const char lbl_80317108[9] = "CHECKSUM";
-static const char lbl_80317114[14] = "LOCATION-TEST";
-static const char lbl_80317124[12] = "TITLE-PARAM";
-static const char lbl_80317130[14] = "GET-ITEM-LIST";
-static const char lbl_80317140[14] = "LAST-GET-ITEM";
-static const char lbl_80317150[11] = "ITEMPACK-1";
-static const char lbl_8031715C[11] = "ITEMPACK-2";
-static const char lbl_80317168[11] = "ITEMPACK-3";
-static const char lbl_80317174[13] = "RESULT-GP-MR";
-static const char lbl_80317184[13] = "RESULT-GP-DK";
-static const char lbl_80317194[13] = "RESULT-GP-WC";
-static const char lbl_803171A4[13] = "RESULT-GP-PC";
-static const char lbl_803171B4[13] = "RESULT-GP-KP";
-static const char lbl_803171C4[13] = "RESULT-GP-RB";
-static const char lbl_803171D4[9] = "GHOST-MR";
-static const char lbl_803171E0[9] = "GHOST-DK";
-static const char lbl_803171EC[9] = "GHOST-WC";
-static const char lbl_803171F8[9] = "GHOST-PC";
-static const char lbl_80317204[9] = "GHOST-KP";
-static const char lbl_80317210[9] = "GHOST-RB";
-static const char lbl_8031721C[13] = "WIN-GHOST-MR";
-static const char lbl_8031722C[13] = "WIN-GHOST-DK";
-static const char lbl_8031723C[13] = "WIN-GHOST-WC";
-static const char lbl_8031724C[13] = "WIN-GHOST-PC";
-static const char lbl_8031725C[13] = "WIN-GHOST-KP";
-static const char lbl_8031726C[13] = "WIN-GHOST-RB";
-static const char lbl_8031727C[10] = "RECORD-TA";
-static const char lbl_80317288[11] = "RECORD-STG";
-static const char lbl_80317294[11] = "RECORD-CRS";
-static const char lbl_803172A0[11] = "RECORD-DIR";
-static const char lbl_803172AC[18] = "BATTLE-WIN-MR-TAG";
-static const char lbl_803172C0[18] = "BATTLE-WIN-DK-TAG";
-static const char lbl_803172D4[18] = "BATTLE-WIN-WC-TAG";
-static const char lbl_803172E8[18] = "BATTLE-WIN-PC-TAG";
-static const char lbl_803172FC[18] = "BATTLE-WIN-KP-TAG";
-static const char lbl_80317310[18] = "BATTLE-WIN-RB-TAG";
-static const char lbl_80317324[19] = "BATTLE-LOSE-MR-TAG";
-static const char lbl_80317338[19] = "BATTLE-LOSE-DK-TAG";
-static const char lbl_8031734C[19] = "BATTLE-LOSE-WC-TAG";
-static const char lbl_80317360[19] = "BATTLE-LOSE-PC-TAG";
-static const char lbl_80317374[19] = "BATTLE-LOSE-KP-TAG";
-static const char lbl_80317388[19] = "BATTLE-LOSE-RB-TAG";
-static const char lbl_8031739C[11] = "CAMERA-TAG";
-static const char lbl_803173A8[13] = "RECORD-CLASS";
-static const char lbl_803173B8[14] = "PLAYCOUNT-TAG";
-static const char lbl_803173C8[21] = "PLAY-SUNDAYCOUNT-TAG";
-static const char lbl_803173E0[18] = "ITEMPACK-LAST-TAG";
-static const char lbl_803173F4[13] = "TA-RECORD-TA";
-static const char lbl_80317404[14] = "TA-RECORD-STG";
-static const char lbl_80317414[14] = "TA-RECORD-CRS";
-static const char lbl_80317424[14] = "TA-RECORD-DIR";
-static const char lbl_80317434[13] = "TITLE-PARAM2";
-static const char lbl_80317444[16] = "TA-RECORD-CLASS";
+SHARED_STATIC const char lbl_803170FC[9] = "APP-CODE";
+SHARED_STATIC const char lbl_80317108[9] = "CHECKSUM";
+SHARED_STATIC const char lbl_80317114[14] = "LOCATION-TEST";
+SHARED_STATIC const char lbl_80317124[12] = "TITLE-PARAM";
+SHARED_STATIC const char lbl_80317130[14] = "GET-ITEM-LIST";
+SHARED_STATIC const char lbl_80317140[14] = "LAST-GET-ITEM";
+SHARED_STATIC const char lbl_80317150[11] = "ITEMPACK-1";
+SHARED_STATIC const char lbl_8031715C[11] = "ITEMPACK-2";
+SHARED_STATIC const char lbl_80317168[11] = "ITEMPACK-3";
+SHARED_STATIC const char lbl_80317174[13] = "RESULT-GP-MR";
+SHARED_STATIC const char lbl_80317184[13] = "RESULT-GP-DK";
+SHARED_STATIC const char lbl_80317194[13] = "RESULT-GP-WC";
+SHARED_STATIC const char lbl_803171A4[13] = "RESULT-GP-PC";
+SHARED_STATIC const char lbl_803171B4[13] = "RESULT-GP-KP";
+SHARED_STATIC const char lbl_803171C4[13] = "RESULT-GP-RB";
+SHARED_STATIC const char lbl_803171D4[9] = "GHOST-MR";
+SHARED_STATIC const char lbl_803171E0[9] = "GHOST-DK";
+SHARED_STATIC const char lbl_803171EC[9] = "GHOST-WC";
+SHARED_STATIC const char lbl_803171F8[9] = "GHOST-PC";
+SHARED_STATIC const char lbl_80317204[9] = "GHOST-KP";
+SHARED_STATIC const char lbl_80317210[9] = "GHOST-RB";
+SHARED_STATIC const char lbl_8031721C[13] = "WIN-GHOST-MR";
+SHARED_STATIC const char lbl_8031722C[13] = "WIN-GHOST-DK";
+SHARED_STATIC const char lbl_8031723C[13] = "WIN-GHOST-WC";
+SHARED_STATIC const char lbl_8031724C[13] = "WIN-GHOST-PC";
+SHARED_STATIC const char lbl_8031725C[13] = "WIN-GHOST-KP";
+SHARED_STATIC const char lbl_8031726C[13] = "WIN-GHOST-RB";
+SHARED_STATIC const char lbl_8031727C[10] = "RECORD-TA";
+SHARED_STATIC const char lbl_80317288[11] = "RECORD-STG";
+SHARED_STATIC const char lbl_80317294[11] = "RECORD-CRS";
+SHARED_STATIC const char lbl_803172A0[11] = "RECORD-DIR";
+SHARED_STATIC const char lbl_803172AC[18] = "BATTLE-WIN-MR-TAG";
+SHARED_STATIC const char lbl_803172C0[18] = "BATTLE-WIN-DK-TAG";
+SHARED_STATIC const char lbl_803172D4[18] = "BATTLE-WIN-WC-TAG";
+SHARED_STATIC const char lbl_803172E8[18] = "BATTLE-WIN-PC-TAG";
+SHARED_STATIC const char lbl_803172FC[18] = "BATTLE-WIN-KP-TAG";
+SHARED_STATIC const char lbl_80317310[18] = "BATTLE-WIN-RB-TAG";
+SHARED_STATIC const char lbl_80317324[19] = "BATTLE-LOSE-MR-TAG";
+SHARED_STATIC const char lbl_80317338[19] = "BATTLE-LOSE-DK-TAG";
+SHARED_STATIC const char lbl_8031734C[19] = "BATTLE-LOSE-WC-TAG";
+SHARED_STATIC const char lbl_80317360[19] = "BATTLE-LOSE-PC-TAG";
+SHARED_STATIC const char lbl_80317374[19] = "BATTLE-LOSE-KP-TAG";
+SHARED_STATIC const char lbl_80317388[19] = "BATTLE-LOSE-RB-TAG";
+SHARED_STATIC const char lbl_8031739C[11] = "CAMERA-TAG";
+SHARED_STATIC const char lbl_803173A8[13] = "RECORD-CLASS";
+SHARED_STATIC const char lbl_803173B8[14] = "PLAYCOUNT-TAG";
+SHARED_STATIC const char lbl_803173C8[21] = "PLAY-SUNDAYCOUNT-TAG";
+SHARED_STATIC const char lbl_803173E0[18] = "ITEMPACK-LAST-TAG";
+SHARED_STATIC const char lbl_803173F4[13] = "TA-RECORD-TA";
+SHARED_STATIC const char lbl_80317404[14] = "TA-RECORD-STG";
+SHARED_STATIC const char lbl_80317414[14] = "TA-RECORD-CRS";
+SHARED_STATIC const char lbl_80317424[14] = "TA-RECORD-DIR";
+SHARED_STATIC const char lbl_80317434[13] = "TITLE-PARAM2";
+SHARED_STATIC const char lbl_80317444[16] = "TA-RECORD-CLASS";
 static const char *const lbl_80317454[6] = {
     lbl_80317174, lbl_80317184, lbl_80317194, lbl_803171A4, lbl_803171B4, lbl_803171C4
 };

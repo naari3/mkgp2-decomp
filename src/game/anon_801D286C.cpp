@@ -49,25 +49,47 @@ static const float rankingCurve[255] = {
     83.333336f, 0.0f, 0.0f, 500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f,
     83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f, 5000.0f, 83.333336f,
 };
-static const char rankingName8039C384[12] = "\x83\x8B\x83\x43\x81\x5B\x83\x57";
-static const char rankingName8039C390[12] = "\x83\x4C\x83\x6D\x83\x73\x83\x49";
-static const char rankingName8039C39C[12] = "\x83\x68\x83\x93\x83\x4C\x81\x5B";
-static const char rankingName8039C3A8[12] = "\x83\x88\x83\x62\x83\x56\x81\x5B";
-static const char rankingName8039C3B4[12] = "\x83\x70\x83\x62\x83\x4E\x83\x7D\x83\x93";
-static const char rankingName8039C3C0[12] = "\x83\x7E\x83\x59\x83\x70\x83\x62\x83\x4E";
-static const char rankingName8039C3CC[12] = "\x83\x41\x83\x4A\x83\x78\x83\x43";
-static const char rankingName8039C3D8[12] = "\x83\x8F\x83\x8B\x83\x43\x81\x5B\x83\x57";
-static const char rankingName8039C3E4[12] = "\x82\xDC\x82\xDF\x82\xC1\x82\xBF";
-static const char rankingName8039C3F0[12] = "\x82\x6C\x82\x60\x82\x71\x82\x68\x82\x6E";
-static const char rankingName8039C3FC[12] = "\x82\x6B\x82\x74\x82\x68\x82\x66\x82\x68";
-static const char rankingName8039C408[12] = "\x82\x76\x82\x60\x82\x71\x82\x68\x82\x6E";
-static const char rankingName8039C414[12] = "\x82\x6F\x82\x64\x82\x60\x82\x62\x82\x67";
-static const char rankingName8039C420[12] = "\x82\x6A\x82\x68\x82\x6D\x82\x66";
-static const char rankingName8039C42C[12] = "\x82\x73\x82\x6E\x82\x60\x82\x63";
-static const char rankingName8039C438[12] = "\x82\x78\x82\x6E\x82\x72\x82\x67\x82\x68";
-static const char rankingName8039C444[12] = "\x82\x6C\x82\x93\x81\x44\x82\x6F";
-static const char rankingName8039C450[12] = "\x82\x76\x82\x60\x82\x6B\x82\x74";
-static const char rankingNameMame[12] = "\x82\x6C\x82\x60\x82\x6C\x82\x64";
+#include "game/types/shared_data.h"
+#ifndef __MWERKS__ /* the names other units use (tools/alias_census.py) */
+#define rankingName8039C384 ranking_display_rodata_8039C384
+#define rankingName8039C390 ranking_display_rodata_8039C390
+#define rankingName8039C39C ranking_display_rodata_8039C39C
+#define rankingName8039C3A8 ranking_display_rodata_8039C3A8
+#define rankingName8039C3B4 ranking_display_rodata_8039C3B4
+#define rankingName8039C3C0 ranking_display_rodata_8039C3C0
+#define rankingName8039C3CC ranking_display_rodata_8039C3CC
+#define rankingName8039C3D8 ranking_display_rodata_8039C3D8
+#define rankingName8039C3E4 ranking_display_rodata_8039C3E4
+#define rankingName8039C3F0 ranking_display_rodata_8039C3F0
+#define rankingName8039C3FC ranking_display_rodata_8039C3FC
+#define rankingName8039C408 ranking_display_rodata_8039C408
+#define rankingName8039C414 ranking_display_rodata_8039C414
+#define rankingName8039C420 ranking_display_rodata_8039C420
+#define rankingName8039C42C ranking_display_rodata_8039C42C
+#define rankingName8039C438 ranking_display_rodata_8039C438
+#define rankingName8039C444 ranking_display_rodata_8039C444
+#define rankingName8039C450 ranking_display_rodata_8039C450
+#define rankingNameMame ranking_display_rodata_8039C45C
+#endif
+SHARED_STATIC const char rankingName8039C384[12] = "\x83\x8B\x83\x43\x81\x5B\x83\x57";
+SHARED_STATIC const char rankingName8039C390[12] = "\x83\x4C\x83\x6D\x83\x73\x83\x49";
+SHARED_STATIC const char rankingName8039C39C[12] = "\x83\x68\x83\x93\x83\x4C\x81\x5B";
+SHARED_STATIC const char rankingName8039C3A8[12] = "\x83\x88\x83\x62\x83\x56\x81\x5B";
+SHARED_STATIC const char rankingName8039C3B4[12] = "\x83\x70\x83\x62\x83\x4E\x83\x7D\x83\x93";
+SHARED_STATIC const char rankingName8039C3C0[12] = "\x83\x7E\x83\x59\x83\x70\x83\x62\x83\x4E";
+SHARED_STATIC const char rankingName8039C3CC[12] = "\x83\x41\x83\x4A\x83\x78\x83\x43";
+SHARED_STATIC const char rankingName8039C3D8[12] = "\x83\x8F\x83\x8B\x83\x43\x81\x5B\x83\x57";
+SHARED_STATIC const char rankingName8039C3E4[12] = "\x82\xDC\x82\xDF\x82\xC1\x82\xBF";
+SHARED_STATIC const char rankingName8039C3F0[12] = "\x82\x6C\x82\x60\x82\x71\x82\x68\x82\x6E";
+SHARED_STATIC const char rankingName8039C3FC[12] = "\x82\x6B\x82\x74\x82\x68\x82\x66\x82\x68";
+SHARED_STATIC const char rankingName8039C408[12] = "\x82\x76\x82\x60\x82\x71\x82\x68\x82\x6E";
+SHARED_STATIC const char rankingName8039C414[12] = "\x82\x6F\x82\x64\x82\x60\x82\x62\x82\x67";
+SHARED_STATIC const char rankingName8039C420[12] = "\x82\x6A\x82\x68\x82\x6D\x82\x66";
+SHARED_STATIC const char rankingName8039C42C[12] = "\x82\x73\x82\x6E\x82\x60\x82\x63";
+SHARED_STATIC const char rankingName8039C438[12] = "\x82\x78\x82\x6E\x82\x72\x82\x67\x82\x68";
+SHARED_STATIC const char rankingName8039C444[12] = "\x82\x6C\x82\x93\x81\x44\x82\x6F";
+SHARED_STATIC const char rankingName8039C450[12] = "\x82\x76\x82\x60\x82\x6B\x82\x74";
+SHARED_STATIC const char rankingNameMame[12] = "\x82\x6C\x82\x60\x82\x6C\x82\x64";
 /* The target has an unresolved 12-byte zero run before this table. */
 static const RankingPlacement rankingPlacements[4] = {
     { -8.2f, 1.5f, 3.0f, -34.2f, 1.5f, 3.0f, 20.0f, -20.0f },

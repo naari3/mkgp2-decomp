@@ -26,9 +26,15 @@ void fn_801D7610(unsigned char *data, int mode);
 
 
 /* Original card-error type names and localized messages share one pool. */
-static const char cardEjectName[0xc] = "clMnCardErr";
-static const char cardEjectTaskName[0x11] = "clYTaskInterface";
-static const char cardEjectBaseName[0x12] = "clMnTaskInterface";
+#include "game/types/shared_data.h"
+#ifndef __MWERKS__ /* the names other units use (tools/alias_census.py) */
+#define cardEjectBaseName lbl_803BFE68
+#define cardEjectName lbl_803BFE48
+#define cardEjectTaskName lbl_803BFE54
+#endif
+SHARED_STATIC const char cardEjectName[0xc] = "clMnCardErr";
+SHARED_STATIC const char cardEjectTaskName[0x11] = "clYTaskInterface";
+SHARED_STATIC const char cardEjectBaseName[0x12] = "clMnTaskInterface";
 static const char callAttendantJ[0x15] = "\214W\210\365\202\360\214\304\202\361\202\305\202\255\202\276\202\263\202\242";
 static const char callAttendantE[0x19] = "Please call an attendant";
 static const char cardEmptyJ[0x13] = "\203J\201[\203h\202\252\202\240\202\350\202\334\202\271\202\361";

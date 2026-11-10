@@ -230,7 +230,12 @@ static RankKey sRankKeys[26] = {
     {0, 46}, {3, 0}, {0, 66}, {3, 0}, {0, 92}, {3, 0},
 };
 
+#ifdef __MWERKS__ /* two float literals of this unit (lbl_806DB6E0), named after compiling */
 extern const float kGlowOffset[2];
+#else
+#define kGlowOffset lbl_806DB6E0
+extern const float kGlowOffset[2] = {0.0f, 10.0f};
+#endif
 
 class clFaceEffect {
 public:

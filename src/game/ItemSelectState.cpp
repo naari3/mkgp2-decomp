@@ -55,7 +55,8 @@ const int ItemSelectState_rodata_803DC0C0[15][3] = {
     {0, 96, 255},
 };
 const int ItemGridState_Init_rodata_803DC174[3] = {6, 1, 0};
-const int ItemSelectState_rodata_803DC180[6][10] = {
+#include "game/types/shared_data.h"
+SHARED_EXTERN const int ItemSelectState_rodata_803DC180[6][10] = {
     {6, 2, 1, 0, 11, 8, 10, 9, 13, 12},
     {7, 3, 4, 5, 22, 23, 44, 27, 43, 59},
     {42, 15, 30, 14, 41, 45, 19, 25, 29, 20},

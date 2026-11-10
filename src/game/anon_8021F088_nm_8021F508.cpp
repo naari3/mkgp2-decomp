@@ -1,3 +1,5 @@
+/* this unit defines the pool objects that anon_8021F088_private.h declares under other types */
+#define ANON_8021F088_POOL_OWNER
 #include "game/anon_8021F088_nm_8021F508_private.h"
 
 /* Coin mileage animation, display poses, and diagnostic resource pool. */
@@ -36,10 +38,24 @@ static const float kCoinAnimation[258] = {
     1000.0f, 83.333336f, 2000.0f, 83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f,
     5000.0f, 83.333336f,
 };
-static const float kOrigin[3] = {
+#include "game/types/shared_data.h"
+#ifndef __MWERKS__ /* the names other units use (tools/alias_census.py) */
+#define kBaseName lbl_803C6C18
+#define kCounters lbl_803C6B70
+#define kDigitPositions lbl_803C6BD4
+#define kDigits lbl_803C6BC4
+#define kLastItem lbl_803C6C70
+#define kLineY lbl_803C6A24
+#define kNextCoin lbl_803C6C2C
+#define kNoItem lbl_803C6C58
+#define kOrigin CoinResultScene_Init_rodata_803C6A18
+#define kSceneName lbl_803C6C04
+#define kWork lbl_803C6B84
+#endif
+SHARED_STATIC const float kOrigin[3] = {
     0.0f, 0.0f, 0.0f,
 };
-static const float kLineY[5] = {
+SHARED_STATIC const float kLineY[5] = {
     102.5f, 161.5f, 221.5f, 299.5f, 265.5f,
 };
 static const ItemPose kItemPoses[13] = {
@@ -58,25 +74,25 @@ static const ItemPose kItemPoses[13] = {
     {347.0f, 273.0f, {25.0f, -34.0f, -12.0f}, 0.015f},
 };
 // Zero-valued aggregate defaults from the original resource pool.
-static const int kCounters[5] = {
+SHARED_STATIC const int kCounters[5] = {
     0, 0, 0, 0, 0,
 };
-static const int kWork[16] = {
+SHARED_STATIC const int kWork[16] = {
     0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0,
 };
-static const int kDigits[4] = {
+SHARED_STATIC const int kDigits[4] = {
     0, 0, 0, 0,
 };
-static const float kDigitPositions[12] = {
+SHARED_STATIC const float kDigitPositions[12] = {
     268.5f, 213.5f, 158.5f, 103.5f, 360.5f, 305.5f, 250.5f, -100.0f,
     375.0f, 328.0f, 286.0f, 244.0f,
 };
-static const char kSceneName[] = "clCSSceneCoinMilage";
-static const char kBaseName[] = "clSceneInterface";
-static const char kNextCoin[] = "Next coin is %d, num : %d, afterCoin : %d\n";
-static const char kNoItem[] = "Can't get item struct.";
-static const char kLastItem[] = "Have last item.";
+SHARED_STATIC const char kSceneName[] = "clCSSceneCoinMilage";
+SHARED_STATIC const char kBaseName[] = "clSceneInterface";
+SHARED_STATIC const char kNextCoin[] = "Next coin is %d, num : %d, afterCoin : %d\n";
+SHARED_STATIC const char kNoItem[] = "Can't get item struct.";
+SHARED_STATIC const char kLastItem[] = "Have last item.";
 static const char kItemError[] = "Get Item Scene Error!!, %s - %d\n";
 static const char kSourceName[] = "csSceneCoinMilage.cpp";
 

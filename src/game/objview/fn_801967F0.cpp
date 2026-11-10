@@ -1,6 +1,14 @@
 #include "game/ObjViewParticles_private.h"
 
+#include "game/types/shared_data.h"
+#ifndef __MWERKS__ /* the names other units use (tools/alias_census.py) */
+#define kEmitters lbl_8037D888
+#endif
+#ifdef __MWERKS__
 static const ParticleEmitter kEmitters[7] = {
+#else /* ObjViewParticles_private.h declares it without const */
+ParticleEmitter kEmitters[7] = {
+#endif
     {{222.0f, 130.0f, -1600.0f}, {100.0f, 70.0f, -1700.0f}},
     {{222.0f, 130.0f, -1300.0f}, {100.0f, 70.0f, -1300.0f}},
     {{222.0f, 130.0f, -998.0f}, {100.0f, 70.0f, -900.0f}},
@@ -9,9 +17,9 @@ static const ParticleEmitter kEmitters[7] = {
     {{1136.0f, 290.0f, -1432.0f}, {1300.0f, 250.0f, -1380.0f}},
     {{1018.0f, 290.0f, -1074.0f}, {1200.0f, 200.0f, -1000.0f}}
 };
-static const char lbl_8037D930[12] = "clWCBlossom";
-static const char lbl_8037D93C[17] = "clMapEffectParts";
-static const char lbl_8037D950[32] = " DeleteMapEffect : clWCBlossom\n";
+SHARED_STATIC const char lbl_8037D930[12] = "clWCBlossom";
+SHARED_STATIC const char lbl_8037D93C[17] = "clMapEffectParts";
+SHARED_STATIC const char lbl_8037D950[32] = " DeleteMapEffect : clWCBlossom\n";
 static const char lbl_8037D970[32] = " CreateMapEffect : clWCBlossom\n";
 static const char lbl_8037D990[21] = "ef_cherryblossom.dat";
 static const char lbl_8037D9A8[27] = "ef_cherryblossom_night.dat";

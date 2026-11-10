@@ -8,43 +8,43 @@ C_REGION_BEGIN
  * Objects used by name from .data/.sdata keep their lbl_ names. */
 extern const char lbl_806D2A54[], lbl_806D2AAC[], lbl_806D2AB4[], lbl_806D2ABC[], lbl_806D2AC4[], lbl_806D2ACC[], lbl_806D2AD4[], lbl_806D2ADC[], lbl_806D2AE4[], lbl_806D2AEC[], lbl_806D2AF4[], lbl_806D2AFC[], lbl_806D2B04[], lbl_806D2B08[], lbl_806D2B10[], lbl_806D2B18[], lbl_806D2B20[], lbl_806D2B28[], lbl_806D2B30[];
 #pragma force_active on
-const char lbl_802EE028[] = "50cc URA";
-const char lbl_802EE034[] = "100cc URA";
-const char lbl_802EE040[] = "150cc URA";
-const char lbl_802EE04C[] = "take RANDOM";
-const char lbl_802EE058[] = "take GOLD";
-const char lbl_802EE064[] = "LOCATION TEST";
-const char lbl_802EE074[] = "DONKEY KONG";
-const char lbl_802EE080[] = "Ms.PAC-MAN";
-const char lbl_802EE08C[] = "Take Standard";
-const char lbl_802EE09C[] = "Take All";
-const char lbl_802EE0A8[] = "CMD RESET";
-const char lbl_802EE0B4[] = "GET CARD";
-const char lbl_802EE0C0[] = "READ CARD ONLY";
-const char lbl_802EE0D0[] = "READ CARD AND DATA";
-const char lbl_802EE0E4[] = "WRITE DATA";
-const char lbl_802EE0F0[] = "CLEANING";
-const char lbl_802EE0FC[] = "cp::Eject";
-const char lbl_802EE108[] = "cp::Insert";
-const char lbl_802EE114[] = "cp::Read";
-const char lbl_802EE120[] = "cp::Write";
-const char lbl_802EE12C[] = "cp::Print";
-const char *const lbl_802EE138[18] = {
+extern const char lbl_802EE028[] = "50cc URA";
+extern const char lbl_802EE034[] = "100cc URA";
+extern const char lbl_802EE040[] = "150cc URA";
+extern const char lbl_802EE04C[] = "take RANDOM";
+extern const char lbl_802EE058[] = "take GOLD";
+extern const char lbl_802EE064[] = "LOCATION TEST";
+extern const char lbl_802EE074[] = "DONKEY KONG";
+extern const char lbl_802EE080[] = "Ms.PAC-MAN";
+extern const char lbl_802EE08C[] = "Take Standard";
+extern const char lbl_802EE09C[] = "Take All";
+extern const char lbl_802EE0A8[] = "CMD RESET";
+extern const char lbl_802EE0B4[] = "GET CARD";
+extern const char lbl_802EE0C0[] = "READ CARD ONLY";
+extern const char lbl_802EE0D0[] = "READ CARD AND DATA";
+extern const char lbl_802EE0E4[] = "WRITE DATA";
+extern const char lbl_802EE0F0[] = "CLEANING";
+extern const char lbl_802EE0FC[] = "cp::Eject";
+extern const char lbl_802EE108[] = "cp::Insert";
+extern const char lbl_802EE114[] = "cp::Read";
+extern const char lbl_802EE120[] = "cp::Write";
+extern const char lbl_802EE12C[] = "cp::Print";
+extern const char *const lbl_802EE138[18] = {
     lbl_802EE0A8, lbl_806D2AAC, lbl_806D2AB4, lbl_806D2ABC, lbl_802EE0B4, lbl_806D2AC4, lbl_802EE0C0, lbl_802EE0D0, lbl_802EE0E4, lbl_806D2ACC, lbl_806D2AD4, lbl_806D2ADC, lbl_802EE0F0, lbl_802EE0FC, lbl_802EE108, lbl_802EE114, lbl_802EE120, lbl_802EE12C
 };
-const char lbl_802EE180[] = "MARIO KART";
-const char lbl_802EE18C[] = "YAMASITA";
-const char lbl_802EE198[] = "YAMAZAKI";
-const char lbl_802EE1A4[] = "1234567890";
-const char lbl_802EE1B0[] = "ABCDEFGHIJ";
-const char lbl_802EE1BC[] = "BLUE BACK";
-const char lbl_802EE1C8[] = "ALPHA BLEND";
-const char lbl_802EE1D4[] = "flying disc";
-const char *const lbl_802EE1E0[20] = {
+extern const char lbl_802EE180[] = "MARIO KART";
+extern const char lbl_802EE18C[] = "YAMASITA";
+extern const char lbl_802EE198[] = "YAMAZAKI";
+extern const char lbl_802EE1A4[] = "1234567890";
+extern const char lbl_802EE1B0[] = "ABCDEFGHIJ";
+extern const char lbl_802EE1BC[] = "BLUE BACK";
+extern const char lbl_802EE1C8[] = "ALPHA BLEND";
+extern const char lbl_802EE1D4[] = "flying disc";
+extern const char *const lbl_802EE1E0[20] = {
     lbl_802EE180, lbl_806D2AE4, lbl_802EE18C, lbl_806D2AEC, lbl_806D2AF4, lbl_802EE198, lbl_806D2A54, lbl_806D2AFC, lbl_806D2B04, lbl_806D2B08, lbl_806D2B10, lbl_802EE1A4, lbl_802EE1B0, lbl_802EE1BC, lbl_802EE1C8, lbl_806D2B18, lbl_802EE1D4, lbl_806D2B20, lbl_806D2B28, lbl_806D2B30
 };
-const char lbl_802EE230[] = "clMiyoshi";
-const char lbl_802EE23C[] = "clJobRunner";
+extern const char lbl_802EE230[] = "clMiyoshi";
+extern const char lbl_802EE23C[] = "clJobRunner";
 static const char sMiyTitle[] = "CARD CREATE";
 static const char sMiyChr[] = "CHR           %s";
 static const char sMiy50[] = "50CC CLEAR    %s";
@@ -68,7 +68,7 @@ extern void card_eject_init(), card_eject_state_machine(), card_send_cleaning_cm
 extern void __dt__11MiyoshiModeFv();
 extern void clMiyoshiCardCreate_Draw(void *);
 #pragma force_active on
-const char *clMiyoshiCardCreate_Draw_data_803F9E18[3] = { lbl_806D2A28, lbl_806D2A2C, lbl_802EE028 };
+extern const char *clMiyoshiCardCreate_Draw_data_803F9E18[3] = { lbl_806D2A28, lbl_806D2A2C, lbl_802EE028 };
 static const char *sMiyCC1[3] = { lbl_806D2A28, lbl_806D2A34, lbl_802EE034 };
 static const char *sMiyCC2[3] = { lbl_806D2A28, lbl_806D2A3C, lbl_802EE040 };
 static const char *sMiyChara[13] = {
@@ -82,8 +82,8 @@ struct MiyoshiCardCmd lbl_803F9EB0[4] = {
     { card_send_read_cmd_init_dup_unused, card_read_state_machine, lbl_806D2B48 },
     { Sci2Card_WriteTrackData_StartFlow, Sci2Card_WriteTrackData_PollState, lbl_806D2B50 },
 };
-const void *clMiyoshiCardCreate_data_803F9EE0[3] = { clMiyoshiCardCreate_data_806CEEE0, 0, 0 };
-const void *__vt__11MiyoshiMode[5] = { clMiyoshiCardCreate_data_806CEEE8, 0, (void *)clMiyoshiCardCreate_Tick,
+extern const void *clMiyoshiCardCreate_data_803F9EE0[3] = { clMiyoshiCardCreate_data_806CEEE0, 0, 0 };
+extern const void *__vt__11MiyoshiMode[5] = { clMiyoshiCardCreate_data_806CEEE8, 0, (void *)clMiyoshiCardCreate_Tick,
     (void *)clMiyoshiCardCreate_Draw, (void *)__dt__11MiyoshiModeFv };
 #pragma force_active reset
 /* Only observed lifetime/layout: 4B mode, 44B state, 216B display context. */

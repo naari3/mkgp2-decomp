@@ -55,8 +55,13 @@ static const CoursePathSource pathSources[9][2][2] = {
  {{{0,0x00000000},{0,0x00000000}},{{0,0x00000000},{0,0x00000000}}},
  {{{0,0x00000000},{0,0x00000000}},{{0,0x00000000},{0,0x00000000}}},
 };
-static const char lineClass[] = "clLineManager";
-static const char lineSingleton[] = "teSingleton<clLineManager>";
+#include "game/types/shared_data.h"
+#ifndef __MWERKS__ /* the names other units use (tools/alias_census.py) */
+#define lineClass lbl_80328ABC
+#define lineSingleton lbl_80328ACC
+#endif
+SHARED_STATIC const char lineClass[] = "clLineManager";
+SHARED_STATIC const char lineSingleton[] = "teSingleton<clLineManager>";
 static const char lineFormat[] = "line %08x\n";
 static const char countFormat[] = "------------------------------------------- line data member %d\n";
 static const char memoryFormat[] = "line data raw is %s size %d\n";

@@ -10,7 +10,8 @@ void fn_801825C8();
 void fn_8018F7D4(void *,void *);
 }
 // Ripple resource names and paired joints share one compiler constant pool.
-static const char lbl_80378210[11] = "ripple.dat";
+#include "game/types/shared_data.h"
+SHARED_STATIC const char lbl_80378210[11] = "ripple.dat";
 static const char lbl_8037821C[29] = "ef_MR_ripple_ripple_a1_joint";
 static const char lbl_8037823C[29] = "ef_MR_ripple_ripple_a2_joint";
 static const char lbl_8037825C[29] = "ef_MR_ripple_ripple_b1_joint";
@@ -18,7 +19,7 @@ static const char lbl_8037827C[29] = "ef_MR_ripple_ripple_b2_joint";
 static const char lbl_8037829C[29] = "ef_MR_ripple_ripple_c1_joint";
 static const char lbl_803782BC[29] = "ef_MR_ripple_ripple_c2_joint";
 static const Pair lbl_803782DC[3] = { {lbl_8037821C, lbl_8037823C}, {lbl_8037825C, lbl_8037827C}, {lbl_8037829C, lbl_803782BC} };
-static const char lbl_803782F4[14] = "ripple_tw.dat";
+SHARED_STATIC const char lbl_803782F4[14] = "ripple_tw.dat";
 static const char lbl_80378304[32] = "ef_MR_ripple_tw_ripple_a1_joint";
 static const char lbl_80378324[32] = "ef_MR_ripple_tw_ripple_a2_joint";
 static const char lbl_80378344[32] = "ef_MR_ripple_tw_ripple_b1_joint";
@@ -26,7 +27,7 @@ static const char lbl_80378364[32] = "ef_MR_ripple_tw_ripple_b2_joint";
 static const char lbl_80378384[32] = "ef_MR_ripple_tw_ripple_c1_joint";
 static const char lbl_803783A4[32] = "ef_MR_ripple_tw_ripple_c2_joint";
 static const Pair lbl_803783C4[3] = { {lbl_80378304, lbl_80378324}, {lbl_80378344, lbl_80378364}, {lbl_80378384, lbl_803783A4} };
-static const char lbl_803783DC[14] = "ripple_ni.dat";
+SHARED_STATIC const char lbl_803783DC[14] = "ripple_ni.dat";
 static const char lbl_803783EC[32] = "ef_MR_ripple_ni_ripple_a1_joint";
 static const char lbl_8037840C[32] = "ef_MR_ripple_ni_ripple_a2_joint";
 static const char lbl_8037842C[32] = "ef_MR_ripple_ni_ripple_b1_joint";
@@ -34,9 +35,9 @@ static const char lbl_8037844C[32] = "ef_MR_ripple_ni_ripple_b2_joint";
 static const char lbl_8037846C[32] = "ef_MR_ripple_ni_ripple_c1_joint";
 static const char lbl_8037848C[32] = "ef_MR_ripple_ni_ripple_c2_joint";
 static const Pair lbl_803784AC[3] = { {lbl_803783EC, lbl_8037840C}, {lbl_8037842C, lbl_8037844C}, {lbl_8037846C, lbl_8037848C} };
-static const char lbl_803784C4[9] = "clRipple";
-static const char lbl_803784D0[17] = "clMapEffectParts";
-static const char lbl_803784E4[29] = " DeleteMapEffect : clRipple\n";
+SHARED_STATIC const char lbl_803784C4[9] = "clRipple";
+SHARED_STATIC const char lbl_803784D0[17] = "clMapEffectParts";
+SHARED_STATIC const char lbl_803784E4[29] = " DeleteMapEffect : clRipple\n";
 static const char lbl_80378504[29] = " CreateMapEffect : clRipple\n";
 
 #include "game/types/clNormal3D.h"

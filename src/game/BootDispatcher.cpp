@@ -130,7 +130,8 @@ extern const char lbl_806D2290[4];
 }
 
 #pragma force_active on
-static const char lbl_802E8F48[0x14] = "             NOTICE";
+#include "game/types/shared_data.h"
+SHARED_STATIC const char lbl_802E8F48[0x14] = "             NOTICE";
 static const char lbl_802E8F5C[0x22] = " THIS GAME IS FOR USE EXCLUSIVELY";
 static const char lbl_802E8F80[0xA] = "IN JAPAN.";
 static const char lbl_802E8F8C[0x22] = " THE SALE,EXPORT,USE OR OPERATION";
@@ -171,10 +172,10 @@ static const char lbl_802E94D4[0xB] = "Ms.PAC-MAN";
 static const char lbl_802E94E0[0xE] = "Take Standard";
 static const char lbl_802E94F0[0x9] = "Take All";
 static const unsigned char lbl_802E94FC[0x10] = {1,42,0,10,1,1,1,1,2,1,1,1,1,1,1,1};
-static const char lbl_802E950C[0x2C] = "clLibrary::backupBuffer error align no 32b\n";
-static const char lbl_802E9538[0x30] = "clLibrary::backupBuffer error buffer size over\n";
-static const char lbl_802E9568[0xF] = "MAIN  BD ID %s";
-static const char lbl_802E9578[0xF] = "MEDIA BD ID %s";
+SHARED_STATIC const char lbl_802E950C[0x2C] = "clLibrary::backupBuffer error align no 32b\n";
+SHARED_STATIC const char lbl_802E9538[0x30] = "clLibrary::backupBuffer error buffer size over\n";
+SHARED_STATIC const char lbl_802E9568[0xF] = "MAIN  BD ID %s";
+SHARED_STATIC const char lbl_802E9578[0xF] = "MEDIA BD ID %s";
 static const char lbl_802E9588[0x10] = "wake test mode\n";
 static const char lbl_802E9598[0x11] = "enter test mode\n";
 static const char lbl_802E95AC[0x11] = "no device check\n";

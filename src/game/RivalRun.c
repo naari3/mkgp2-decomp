@@ -101,7 +101,7 @@ typedef struct RivalRunState {
 /* --- owned .rodata 0x803580F8..0x8035C23E (tools/own_data.py) --- */
 #pragma force_active on
 /* element type read off the values (all floats), not from code */
-const float RivalRun_rodata_803580F8[621] = {
+extern const float RivalRun_rodata_803580F8[621] = {
     4090.0376f, 301.0f, -1079.1754f, 4086.0151f, 301.0f, -1035.2985f, 4083.388f, 301.0f,
     -966.2849f, 4084.1116f, 301.0f, -890.7938f, 4084.7517f, 301.0f, -824.0132f, 4085.4475f,
     301.0f, -751.4257f, 4085.9478f, 301.0f, -684.6443f, 4085.3755f, 301.0f, -617.8671f,
@@ -182,7 +182,7 @@ const float RivalRun_rodata_803580F8[621] = {
     -148.9997f, 853.4203f, 3358.9294f, -148.9997f, 914.3837f
 };
 /* element type read off the values (all floats), not from code */
-const float RivalRun_rodata_80358AAC[957] = {
+extern const float RivalRun_rodata_80358AAC[957] = {
     -6137.5913f, 1.0002f, -2095.6655f, -6034.858f, 1.0002f, -2094.2788f, -5965.2974f, 1.0002f,
     -2092.9448f, -5901.4185f, 1.0002f, -2092.8518f, -5837.5386f, 1.0002f, -2092.7302f, -5767.859f,
     1.0f, -2091.7925f, -5695.276f, 1.0009f, -2091.298f, -5640.1113f, 1.0009f, -2091.239f,
@@ -305,7 +305,7 @@ const float RivalRun_rodata_80358AAC[957] = {
     -199.0002f, 5424.002f, -4503.865f, -199.0f, 5423.985f
 };
 /* element type read off the values (all floats), not from code */
-const float RivalRun_rodata_803599A0[573] = {
+extern const float RivalRun_rodata_803599A0[573] = {
     3994.3445f, 301.0f, -1176.5701f, 3993.5544f, 301.0f, -989.1171f, 3984.5298f, 301.0f,
     -821.6161f, 3987.0872f, 301.0f, -746.1922f, 3989.902f, 301.0f, -670.7535f, 3989.3984f,
     301.0f, -589.4537f, 3989.822f, 301.0f, -513.9609f, 3989.6086f, 301.0f, -435.5664f,
@@ -380,7 +380,7 @@ const float RivalRun_rodata_803599A0[573] = {
     -148.9997f, 815.7841f, 3268.2598f, -148.9997f, 899.9892f
 };
 /* element type read off the values (all floats), not from code */
-const float RivalRun_rodata_8035A294[765] = {
+extern const float RivalRun_rodata_8035A294[765] = {
     -6092.337f, 1.0002f, -1999.1931f, -6072.8877f, 1.0002f, -1999.1991f, -6036.3965f, 1.0002f,
     -1999.2102f, -5966.467f, 1.0002f, -1999.2313f, -5893.8716f, 1.0002f, -1999.2527f, -5818.3726f,
     1.0001f, -1999.2749f, -5745.7773f, 1.0f, -1999.2963f, -5673.182f, 1.0009f, -1999.3176f,
@@ -479,7 +479,7 @@ const float RivalRun_rodata_8035A294[765] = {
     -199.0002f, 5334.4336f, -4492.5635f, -199.0f, 5334.864f
 };
 /* element type read off the values (all floats), not from code */
-const float RivalRun_rodata_8035AE88[555] = {
+extern const float RivalRun_rodata_8035AE88[555] = {
     3896.1494f, 301.0f, -1042.64f, 3900.6335f, 301.0f, -902.8096f, 3896.7048f, 301.0f,
     -811.0937f, 3895.902f, 301.0f, -721.0853f, 3895.0974f, 301.0f, -628.1732f, 3894.3682f,
     301.0f, -543.9716f, 3893.8184f, 301.0f, -462.6731f, 3894.4692f, 301.0f, -372.6626f,
@@ -552,7 +552,7 @@ const float RivalRun_rodata_8035AE88[555] = {
     3176.4075f, -148.9997f, 966.5273f
 };
 /* element type read off the values (all floats), not from code */
-const float RivalRun_rodata_8035B734[684] = {
+extern const float RivalRun_rodata_8035B734[684] = {
     -5404.3506f, 1.0f, -1907.4644f, -5309.882f, 0.9962f, -1907.4529f, -5229.1157f, 0.9672f,
     -1907.4426f, -5144.9053f, 0.6009f, -1907.432f, -5054.9087f, -0.8763f, -1907.4207f, -4973.657f,
     -3.5363f, -1907.4104f, -4892.4565f, -7.4711f, -1907.4001f, -4808.427f, -12.8498f, -1907.56f,
@@ -640,7 +640,7 @@ const float RivalRun_rodata_8035B734[684] = {
     -4175.017f, -199.0002f, 5246.8804f, -4247.6f, -199.0002f, 5245.916f, -4328.893f, -199.0002f,
     5244.836f, -4410.186f, -199.0002f, 5243.756f
 };
-const void *const RivalRun_rodata_8035C1E4[12] = {
+extern const void *const RivalRun_rodata_8035C1E4[12] = {
     (void *)&RivalRun_rodata_803580F8,
     (void *)0xCF,
     (void *)&RivalRun_rodata_80358AAC,
@@ -654,9 +654,9 @@ const void *const RivalRun_rodata_8035C1E4[12] = {
     (void *)&RivalRun_rodata_8035B734,
     (void *)0xE4
 };
-const char lbl_8035C214[] = "clCGameRB";
-const char lbl_8035C220[] = "clJobRunner";
-const char lbl_8035C22C[] = "jyugemu_start.dat";
+extern const char lbl_8035C214[] = "clCGameRB";
+extern const char lbl_8035C220[] = "clJobRunner";
+extern const char lbl_8035C22C[] = "jyugemu_start.dat";
 #pragma force_active reset
 
 /* === extracted from auto_RivalRun_Draw_text === */

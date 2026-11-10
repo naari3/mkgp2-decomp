@@ -9,6 +9,16 @@
 
 #include "game/singleton.h"
 
+#ifndef __MWERKS__
+/* Float literals of this unit that RaceScene_Init.cpp reads by name. MWCC's
+ * anonymous copies get these names after compiling (tools/postprocess_sdata2.py);
+ * other compilers need them as objects. */
+extern const float lbl_806D47DC = 0.1f;
+extern const float lbl_806D47E0 = 1000.0f;
+extern const float lbl_806D47EC = 0.0f;
+extern const float lbl_806D47F4 = 100.0f;
+#endif
+
 #include "game/types/Vec.h"
 
 struct InputPlayer {

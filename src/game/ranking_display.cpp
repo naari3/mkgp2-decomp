@@ -53,8 +53,13 @@ void *fn_801D1D9C(void *, short);
 int fn_801D1890(void *);
 void fn_801D1800(void *);
 #pragma force_active on
-static RankingBaseRecord rankingBase = {ranking_display_data_806CFE78, 0, 0};
-static RankingDispatch rankingDispatch = {
+#include "game/types/shared_data.h"
+#ifndef __MWERKS__ /* the names other units use (tools/alias_census.py) */
+#define rankingBase ranking_display_data_8049B510
+#define rankingDispatch RankingFlow_vtable_8049B51C
+#endif
+SHARED_STATIC RankingBaseRecord rankingBase = {ranking_display_data_806CFE78, 0, 0};
+SHARED_STATIC RankingDispatch rankingDispatch = {
     ranking_display_data_806CFE80, 0, fn_801D1D9C, fn_801D1890, fn_801D1800
 };
 #pragma force_active reset

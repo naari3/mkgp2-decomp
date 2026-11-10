@@ -564,7 +564,11 @@ u8 card_unpack_v1(u8 *, void *, u8);
 u8 CardSaveData_Parser(u8 *, void *, u8);
 void MemoryManager_TimedFree(void *);
 void SetCardVolumeFlagByte(u8);
+#ifdef __MWERKS__
 extern const char CardSaveData_Parser_rodata_80315378[0x3FC];
+#else
+extern const char lbl_803175A0[0xE0];
+#endif
 extern u8 g_playerData[0x1DC];
 extern u8 lbl_806D12AF;
 }
@@ -581,7 +585,13 @@ public:
 
 extern "C" u8 card_unpack_legacy_dispatch(u8 *dest, const void *raw, u8 publish)
 {
+#ifdef __MWERKS__
+    /* The code addresses the messages from the start of CardSaveData_Parser's
+     * .rodata: they are lbl_803175A0, the first object of the next unit. */
     const char *messages = CardSaveData_Parser_rodata_80315378;
+#else
+    const char *messages = lbl_803175A0 - 0x2228;
+#endif
     u8 result;
     int version;
     CardBitpack *pack;

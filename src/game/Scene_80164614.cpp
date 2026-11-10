@@ -33,6 +33,11 @@ static const DemoEntry163 demoEntries[4] = {
     {12, 7, 1, 0, 0, lbl_80369BBC},
     {11, 8, 1, 0, 0, lbl_80369BD0},
 };
+#include "game/types/shared_data.h"
+#ifndef __MWERKS__ /* the names other units use (tools/alias_census.py) */
+#define demoZero1 Scene_80163EF4_rodata_80369C44
+#define demoZero2 Scene_80163EF4_rodata_80369C50
+#endif
 extern "C" const Vec demoZero1 = {0.0f, 0.0f, 0.0f};
 extern "C" const Vec demoZero2 = {0.0f, 0.0f, 0.0f};
 extern "C" const char lbl_80369C5C[0x12] = "clCSPartsPlayDemo";

@@ -110,6 +110,13 @@ static MenuMethod801F liveB[14] = {
     &MenuReceiver801F::fn_801F0E3C,
     &MenuReceiver801F::fn_801F0CBC
 };
+#ifndef __MWERKS__
+/* Menu801F0CC0_private.h declares these two tables for this unit as
+ * lbl_804E5050 / lbl_804E51A0 with Menu801F as the class; the build gives
+ * the statics those names after compiling (tools/extab_user_renames.json). */
+#define lbl_804E5050 ((Menu801FMethod *)liveA)
+#define lbl_804E51A0 ((Menu801FMethod *)liveB)
+#endif
 
 static inline unsigned int MenuRGBA(unsigned int r, unsigned int g, unsigned int b, unsigned int a) {
     return (r << 24) | ((g & 255) << 16) | ((b & 255) << 8) | (a & 255);

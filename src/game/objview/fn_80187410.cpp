@@ -45,11 +45,12 @@ static const Path186Def lbl_803771DC[2] = {
     {{lbl_8037712C, lbl_8037713C, lbl_80377154, lbl_8037716C}, (Vec3f *)lbl_80377030, 12},
     {{lbl_80377184, lbl_80377194, lbl_803771AC, lbl_803771C4}, (Vec3f *)lbl_803770C0, 9}
 };
-static const char lbl_8037720C[12] = "clMRAirShip";
-static const char lbl_80377218[17] = "clMapEffectParts";
-static const char lbl_8037722C[37] = "!(jobj->flags & JOBJ_USE_QUATERNION)";
-static const char lbl_80377254[10] = "translate";
-static const char lbl_80377260[32] = " DeleteMapEffect : clMRAirShip\n";
+#include "game/types/shared_data.h"
+SHARED_STATIC const char lbl_8037720C[12] = "clMRAirShip";
+SHARED_STATIC const char lbl_80377218[17] = "clMapEffectParts";
+SHARED_STATIC const char lbl_8037722C[37] = "!(jobj->flags & JOBJ_USE_QUATERNION)";
+SHARED_STATIC const char lbl_80377254[10] = "translate";
+SHARED_STATIC const char lbl_80377260[32] = " DeleteMapEffect : clMRAirShip\n";
 static const char lbl_80377280[32] = " CreateMapEffect : clMRAirShip\n";
 static const char lbl_803772A0[18] = "MRA_airship_A.dat";
 static const char lbl_803772B4[18] = "MRA_airship_B.dat";

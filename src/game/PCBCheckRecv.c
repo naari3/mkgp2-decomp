@@ -37,7 +37,7 @@ typedef struct PcbRecvSlot {
 } PcbRecvSlot;
 /* .rodata pool 0x80311E38..0x803123B0 (also read by other units). */
 /* element type read off the values (all floats), not from code */
-const float PCBCheckRecv_rodata_80311E38[255] = {
+extern const float PCBCheckRecv_rodata_80311E38[255] = {
     1.0f, 0.7f, 0.9f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f,
     66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f,
     66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f,
@@ -71,22 +71,22 @@ const float PCBCheckRecv_rodata_80311E38[255] = {
     83.333336f, 0.0f, 0.0f, 500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f,
     83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f, 5000.0f, 83.333336f
 };
-const unsigned int PCBComm_ComputeSyncState_rodata_80312234[4] = {
+extern const unsigned int PCBComm_ComputeSyncState_rodata_80312234[4] = {
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
 };
-const char lbl_80312244[15] = "PCB ID : %d OK";
-const char lbl_80312254[24] = "PCB ID : %d CHECKING...";
-const char lbl_8031226C[23] = "S PCB %d : %s (port%d)";
-const char lbl_80312284[35] = "C PCB %d : MY      %d : %02d (%2d)";
-const char lbl_803122A8[49] = "C PCB %d : %s (P%d:O%d) %s %d:%02d (%02d) E%+04d";
-const char lbl_803122DC[44] = "C PCB %d : %s (P%d:O%02d) NO recv socket %d";
-const char lbl_80312308[23] = "ROM READ TIME : %f sec";
-const char lbl_80312320[23] = "ROM READ MAX  : %f sec";
-const char lbl_80312338[21] = "\x8C" "W" "\x88" "\xF5" "\x82" "\xF0" "\x8C" "\xC4" "\x82" "\xF1" "\x82" "\xC5" "\x82" "\xAD" "\x82" "\xBE" "\x82" "\xB3" "\x82" "\xA2";
-const char lbl_80312350[26] = "Please call an attendant.";
-const char lbl_8031236C[25] = "\x92" "\xCA" "\x90" "M" "\x83" "G" "\x83" "\x89" "\x81" "[" "\x82" "\xAA" "\x94" "\xAD" "\x90" "\xB6" "\x82" "\xB5" "\x82" "\xDC" "\x82" "\xB5" "\x82" "\xBD";
-const char lbl_80312388[24] = "   Link error occurred.";
-const char lbl_803123A0[14] = "PROCESS_ERROR";
+extern const char lbl_80312244[15] = "PCB ID : %d OK";
+extern const char lbl_80312254[24] = "PCB ID : %d CHECKING...";
+extern const char lbl_8031226C[23] = "S PCB %d : %s (port%d)";
+extern const char lbl_80312284[35] = "C PCB %d : MY      %d : %02d (%2d)";
+extern const char lbl_803122A8[49] = "C PCB %d : %s (P%d:O%d) %s %d:%02d (%02d) E%+04d";
+extern const char lbl_803122DC[44] = "C PCB %d : %s (P%d:O%02d) NO recv socket %d";
+extern const char lbl_80312308[23] = "ROM READ TIME : %f sec";
+extern const char lbl_80312320[23] = "ROM READ MAX  : %f sec";
+extern const char lbl_80312338[21] = "\x8C" "W" "\x88" "\xF5" "\x82" "\xF0" "\x8C" "\xC4" "\x82" "\xF1" "\x82" "\xC5" "\x82" "\xAD" "\x82" "\xBE" "\x82" "\xB3" "\x82" "\xA2";
+extern const char lbl_80312350[26] = "Please call an attendant.";
+extern const char lbl_8031236C[25] = "\x92" "\xCA" "\x90" "M" "\x83" "G" "\x83" "\x89" "\x81" "[" "\x82" "\xAA" "\x94" "\xAD" "\x90" "\xB6" "\x82" "\xB5" "\x82" "\xDC" "\x82" "\xB5" "\x82" "\xBD";
+extern const char lbl_80312388[24] = "   Link error occurred.";
+extern const char lbl_803123A0[14] = "PROCESS_ERROR";
 /* Preserve the declaration order of the shared communication buffers. */
 C_REGION_END
 #pragma cplusplus on

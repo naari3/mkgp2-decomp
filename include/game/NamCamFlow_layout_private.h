@@ -275,13 +275,18 @@ static const NamCamPoolPrefix kNamCamPrefix = {
     {0x0, 0x60, 0xff}
 }
 };
-static const float kNamCamBorderA[4][2] = {
+#include "game/types/shared_data.h"
+#ifndef __MWERKS__ /* the names other units use (tools/alias_census.py) */
+#define kNamCamBorderA NamCamFlow_rodata_803BE3C4
+#define kNamCamBorderB NamCamFlow_rodata_803BE3E4
+#endif
+SHARED_STATIC const float kNamCamBorderA[4][2] = {
     {96.0f, 144.0f},
     {288.0f, 144.0f},
     {480.0f, 144.0f},
     {608.0f, 144.0f}
 };
-static const float kNamCamBorderB[4][2] = {
+SHARED_STATIC const float kNamCamBorderB[4][2] = {
     {96.0f, 384.0f},
     {288.0f, 384.0f},
     {480.0f, 384.0f},
