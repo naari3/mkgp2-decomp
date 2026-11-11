@@ -1980,10 +1980,6 @@
     "@5": "@etb_80007DA8",
     "@6": "@eti_80020D38"
   },
-  "src/game/clItemBoxResponder_Ctor.c": {
-    "@19": "@etb_80007DB8",
-    "@20": "@eti_80020D50"
-  },
   "src/game/clItemBoxResponder_SpawnDebris.c": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
@@ -18095,5 +18091,17 @@
     "__dl__FPv": "MemoryManager_TimedFree",
     "@7": "@etb_80005F18",
     "@8": "@eti_8001FBC8"
+  },
+  "src/game/dtor_80060024.cpp": {
+    "__dt__18clItemBoxResponderFv": "dtor_80060024",
+    "__ct__18clItemBoxResponderFPv": "clItemBoxResponder_Ctor",
+    "__vt__18clItemBoxResponder": "clItemBoxResponder_vtable_803F9D00",
+    "__RTTI__18clItemBoxResponder": "clItemBoxResponder_data_806CEEB8",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@33": "lbl_802EE010",
+    "@16": "@etb_80007DB0",
+    "@17": "@eti_80020D44",
+    "@31": "@etb_80007DB8",
+    "@32": "@eti_80020D50"
   }
 }
