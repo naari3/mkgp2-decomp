@@ -11910,49 +11910,21 @@ game/HudResultFlow.cpp:
 	.data       start:0x804EEB88 end:0x804EEC0C
 	.sdata      start:0x806D08A0 end:0x806D08B8
 
-game/autodata/sdata_806D08B8.c:
-	.sdata      start:0x806D08B8 end:0x806D08E0
-
-game/autodata/data_804EEC10.c:
-	.data       start:0x804EEC10 end:0x804EEC5C
-
-game/autodata/rodata_803EF8D0.c:
-	.rodata     start:0x803EF8D0 end:0x803EF930
-
 game/HudAlternate.cpp:
 	extab       start:0x8001DB94 end:0x8001DBE0
 	extabindex  start:0x8002B3C4 end:0x8002B400
-	.text       start:0x80248CEC end:0x8024904C
-	.data       start:0x804EEC5C end:0x804EEC94
-
-game/autodata/data_804EEC98.c:
-	.data       start:0x804EEC98 end:0x804EECD0
-
-game/RaceHudAdjust.cpp:
-	.text       start:0x8024904C end:0x80249054
+	.text       start:0x80248CEC end:0x80249054
+	.rodata     start:0x803EF8D0 end:0x803EF908
+	.data       start:0x804EEC10 end:0x804EEC94
+	.sdata      start:0x806D08B8 end:0x806D08D0
 
 game/RaceHudDraw.cpp:
-	extab       start:0x8001DBE0 end:0x8001DBFC
-	extabindex  start:0x8002B400 end:0x8002B40C
-	.text       start:0x80249054 end:0x80249130
-
-game/RaceHudUpdate.cpp:
-	extab       start:0x8001DBFC end:0x8001DC04
-	extabindex  start:0x8002B40C end:0x8002B418
-	.text       start:0x80249130 end:0x80249274
-
-game/RaceHudDestroy.cpp:
-	extab       start:0x8001DC04 end:0x8001DC0C
-	extabindex  start:0x8002B418 end:0x8002B424
-	.text       start:0x80249274 end:0x8024932C
-
-game/RaceHudSceneCtor.cpp:
-	extab       start:0x8001DC0C end:0x8001DC50
-	extabindex  start:0x8002B424 end:0x8002B430
-	.text       start:0x8024932C end:0x802494B4
-
-game/RankDispControls.cpp:
-	.text       start:0x802494B4 end:0x802494BC
+	extab       start:0x8001DBE0 end:0x8001DC50
+	extabindex  start:0x8002B400 end:0x8002B430
+	.text       start:0x80249054 end:0x802494BC
+	.rodata     start:0x803EF908 end:0x803EF930
+	.data       start:0x804EEC98 end:0x804EECD0
+	.sdata      start:0x806D08D0 end:0x806D08E0
 
 game/RankDispControls_tail.cpp:
 	extab       start:0x8001DC50 end:0x8001DD64

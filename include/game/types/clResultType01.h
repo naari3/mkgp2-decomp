@@ -6,6 +6,7 @@ struct HudChild;
 struct ResultListOwner {
     virtual ~ResultListOwner();
     void *list;
+    ResultListOwner();
 };
 struct clResultInterface : clSceneInterface, private ResultListOwner {
     clResultInterface();
