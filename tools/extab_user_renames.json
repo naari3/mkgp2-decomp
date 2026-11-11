@@ -4852,12 +4852,20 @@
     "Update__14KartAlertPanelFv": "fn_80250984",
     "Refresh__14KartAlertPanelFv": "fn_802506F8",
     "__vt__14KartAlertPanel": "KartAlertPanel_vtable_804EF130",
+    "__ct__9clRubStarFv": "fn_80250D1C",
+    "__dt__9clRubStarFv": "fn_80250C18",
+    "OnItem__9clRubStarFiP4Kart": "fn_80250AE8",
+    "Update__9clRubStarFv": "fn_80250984",
+    "Refresh__9clRubStarFv": "fn_802506F8",
+    "__vt__9clRubStar": "KartAlertPanel_vtable_804EF130",
     "__vt__9FlowFader": "FlowFader_vtable_80419DC8",
     "__vt__10FlowFaderF": "lbl_80419DE0",
     "__ct__7TextBoxFv": "TexMgr_Init",
     "__ct__7ResCtrlFv": "ResCtrl_Init",
     "__dt__7ResCtrlFv": "dtor_80082960",
-    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80"
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
+    "__RTTI__9clRubStar": "data_804EF0C8_data_806D09E8",
+    "@328": "extern:sdata_806D09E8_rodata_803F0FF0"
   },
   "src/game/RacePopups.cpp": {
     "Finish__9clStartGoFv": "fn_80251C98",

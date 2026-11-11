@@ -120,10 +120,8 @@ static inline unsigned char TestFlag(Kart *k, unsigned long long mask) {
     return r;
 }
 
-struct KartAlertPanel {
-    // Keep the target vtable external: no panel virtual dispatch occurs in this TU.
-    virtual void _key();
-    virtual ~KartAlertPanel();
+struct clRubStar {
+    virtual ~clRubStar();
     unsigned char active;
     unsigned char hold;
     unsigned char hidden;
@@ -133,13 +131,13 @@ struct KartAlertPanel {
     Kart *kart;
     int timer;
     int item;
-    KartAlertPanel();
+    clRubStar();
     void OnItem(int id, Kart *k);
     void Update();
     void Refresh();
 };
 
-void KartAlertPanel::Refresh() {
+void clRubStar::Refresh() {
     const char *base = KartAlertPanel_rodata_803F0AD8;
     unsigned char found = 0;
     Kart *k;
@@ -205,7 +203,7 @@ void KartAlertPanel::Refresh() {
     }
 }
 
-void KartAlertPanel::Update() {
+void clRubStar::Update() {
     unsigned char vis = 1;
     Refresh();
     fader.p->Step();
@@ -234,7 +232,7 @@ void KartAlertPanel::Update() {
     }
 }
 
-void KartAlertPanel::OnItem(int id, Kart *k) {
+void clRubStar::OnItem(int id, Kart *k) {
     if (k) {
         Kart *pl = g_playerRenderObj;
         if (pl == k) {
@@ -269,7 +267,7 @@ void KartAlertPanel::OnItem(int id, Kart *k) {
     }
 }
 
-KartAlertPanel::~KartAlertPanel() {
+clRubStar::~clRubStar() {
     for (int i = 0; i < 2; i++) {
         if (sprites[i]) {
             delete sprites[i];
@@ -282,7 +280,7 @@ KartAlertPanel::~KartAlertPanel() {
     }
 }
 
-KartAlertPanel::KartAlertPanel()
+clRubStar::clRubStar()
     : active(0), hold(0), hidden(1), fader(new FlowFaderF(lbl_806DC0E8)), text(0), kart(0),
       timer(0), item(-1) {
     ResCtrl rc;

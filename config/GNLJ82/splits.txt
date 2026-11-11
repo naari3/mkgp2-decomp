@@ -12115,11 +12115,8 @@ game/ItemBanner.cpp:
 	.data       start:0x804EF0A0 end:0x804EF0C8
 	.sdata      start:0x806D09D0 end:0x806D09E8
 
-game/autodata/sdata_806D09E8.c:
-	.sdata      start:0x806D09E8 end:0x806D09F0
-
 game/autodata/data_804EF0C8.c:
-	.data       start:0x804EF0C8 end:0x804EF140
+	.data       start:0x804EF0C8 end:0x804EF130
 
 game/autodata/rodata_803F0AD8.c:
 	.rodata     start:0x803F0AD8 end:0x803F1070
@@ -12128,6 +12125,8 @@ game/KartAlertPanel.cpp:
 	extab       start:0x8001EBD4 end:0x8001EC90
 	extabindex  start:0x8002B838 end:0x8002B874
 	.text       start:0x802506F8 end:0x80250F34
+	.data       start:0x804EF130 end:0x804EF140
+	.sdata      start:0x806D09E8 end:0x806D09F0
 
 game/RacePopups.cpp:
 	extab       start:0x8001EC90 end:0x8001EE38
