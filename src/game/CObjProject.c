@@ -23,8 +23,8 @@ extern void GXGetProjectionv(float *);
 extern void GXGetViewportv(float *);
 extern Matrix3x4 *HSD_CObjGetViewingMtxPtr(void *);
 extern void HSD_CObjSetupViewingMtx(void *);
-extern void GXProject(const Matrix3x4, const float *, const float *,
-                       float *, float *, float *, float, float, float);
+extern void GXProject(float x, float y, float z, const Matrix3x4 mtx, const float *pm, const float *vp,
+                      float *sx, float *sy, float *sz);
 extern void PSMTXMultVec(const Matrix3x4, const Vec3 *, Vec3 *);
 extern const Vec3 lbl_802E96B8;
 
@@ -67,7 +67,7 @@ void CObj_ProjectPoint(CObjProjectView *self, float *outX, float *outY,
     GXGetProjectionv(projection);
     GXGetViewportv(viewport);
     matrix = CObjProject_GetView(self);
-    GXProject(*matrix, projection, viewport, outX, outY, outDepth, x, y, z);
+    GXProject(x, y, z, *matrix, projection, viewport, outX, outY, outDepth);
     point = lbl_802E96B8;
     point.x = x;
     point.y = y;
