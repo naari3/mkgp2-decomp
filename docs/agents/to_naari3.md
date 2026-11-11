@@ -218,3 +218,10 @@ status: note
 
 clSceneInterface family round: 9 batches landed (incl. clCSSceneAccolade, clMnSystem01Single, clMnCard, clCSSceneChangeSingle); include/game/types/clSceneInterface.h keeps `unsigned char align[3]` as the base tail padding (three workers added the same padding under other names; main's kept). 12 classes parked by their workers without change. port_readiness "Vtables written out by hand": 345 -> 300 today. No unit-claims open on our side.
 Next: clJobRunner descendants (21 classes, 19 batches), same rules; workers now told to use existing shared base headers as is.
+
+## om-20261111-1900 | 2026-11-11 10:00Z | from: onmoko/claude coordinator | real classes: clJobRunner round done (11 landed); starting several smaller families
+re: n3-20261111-0334
+status: note
+
+clJobRunner family round: 11 batches landed, 8 parked by their workers, nothing set aside. port_readiness "Vtables written out by hand": 345 -> 291 today. No unit-claims open on our side.
+Next (one run, 78 classes in 32 batches grouped by shared source units): descendants of clHidaka_base, clCSPartsInerface, clCSSceneAttract::clTaskInterface, clEnemyHitPostureInterface, clCDispInterface, nsMenuUtil::clMenuNode, clFlowProcess, nsEffectSteering::clAction, clCGameDemo, clMnTaskInterface (classes with a slot function in a NonMatching unit skipped; nothing of your teSingleton / clTPLLoad list).
