@@ -1129,3 +1129,9 @@ status: note
 
 naari3 decided that code existing only for the PC port does not belong in mkgp2-decomp. Removed the non-MWCC branches in ItemObject_GetGroundTypeAt.c, ItemObjectManager_RenderImpl.c, ItemHandler_Star.c, Item_OrbitAnchorKart.c, NokoNoko_CheckHitAndKill.c, sprite/fn_801A1798.c. Byte-identical. Host-neutral macros stay.
 
+## n3-20261111-1819 | 2026-11-11 18:19Z | from: n3 | PORT_DATA_LOADED removed from game sources
+re: -
+status: note
+
+Removed the 12 PORT_DATA_LOADED call sites (11 units) and include/game/types/port_hooks.h; port-only code now lives in mkgp2-pc. Byte-identical.
+

@@ -1,4 +1,3 @@
-#include "game/types/port_hooks.h"
 /* Course path-table constructor; memory-table and file loading paths. */
 #include "game/types/size_t.h"
 void *operator new(size_t);
@@ -178,7 +177,6 @@ static inline void LoadFileData(clLineManager *self, const char *file, unsigned 
         self->keys = FUN_8003b120(size);
         DebugPrintf("line data load file is %s size %d\n", file, size);
         FUN_8007dfe4(file, self->keys, size, 0, 0);
-        PORT_DATA_LOADED(PORT_DATA_PATH_TABLE, self->keys, size);
         self->SetupLines();
     }
 }

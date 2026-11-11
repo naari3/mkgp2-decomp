@@ -1,4 +1,3 @@
-#include "game/types/port_hooks.h"
 /*
  * CourseBgm_Load @ 0x80064ED0 (size 0x88).
  *
@@ -47,7 +46,6 @@ void CourseBgm_Load(void) {
     path = GetCourseBgmFilePath();
     if (path != 0) {
         g_courseBgm = DVDFile_LoadSync(path);
-        PORT_DATA_LOADED(PORT_DATA_COURSE_BGM, g_courseBgm, 0);
         g_courseBgmSize = g_courseBgm;
         CourseBgm_Load_bss_806D10E0 = 0;
         for (p = g_courseBgm; *p == 0; p += 4) {

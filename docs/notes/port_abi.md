@@ -878,6 +878,26 @@ carried by mkgp2-pc as patches applied to its copy of these sources:
   (`ItemHandler_Star.c`, `Item_OrbitAnchorKart.c`, `NokoNoko_CheckHitAndKill.c`,
   `sprite/fn_801A1798.c`).
 
+- `PORT_DATA_LOADED` (12 call sites after file reads) and
+  `include/game/types/port_hooks.h`: a hook that only the port defines.
+  `docs/notes/byte_order.md` still describes which files need converting.
+
 The analysis above and the detectors in `tools/port_abi/` stay, since they
 describe the original code. Do not add `#ifndef __MWERKS__` branches that
 change behaviour; report the finding and let the port patch it.
+
+### Tables indexed by KartCharacterParam_GetIdentityIndex (request 44, analysis only)
+
+The getter returns 0..12 (`KartCharacterParam.c`). Tables it indexes:
+
+| reader | table | entries | index 11, 12 read |
+|---|---|---|---|
+| `MukadeItem.c:135` | stack copy `float values[11]` | 11 | stale stack |
+| `GabyouItemHeld.cpp:284, 313, 397` | stack copy `Vec3 entry[11]` (`.y` used) | 11 | stale stack |
+| `GabyouItemReturn.cpp:88` | stack copy `float value[11]` | 11 | stale stack |
+| `KartFxBoost.cpp:152` | stack copy `Vec3 entries[11]` (whole vector copied) | 11 | stale stack |
+| `objview/fn_80198ABC.c:78` | `const float lbl_8037DD48[12]` | 12 (last is 0.0) | 11: 0.0; 12: first word of the next object, `DebugOverlay_KartPhysics_rodata_8037DD78[0]` = 1.0 |
+| `CarrotItemEffect_Update.c:102` | `Vec CarrotItemEffect_Update_data_8041A000[13]` | 13 | in range |
+| `fn_80114990.c:195` | `lbl_80421F20` (40 floats = 13 vectors + 1) | 13 | in range |
+
+The sources keep the original reads. The port patches its own copy.

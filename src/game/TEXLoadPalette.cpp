@@ -1,4 +1,3 @@
-#include "game/types/port_hooks.h"
 #include "game/types/le.h"
 // DVD palette loader and relocation of serialized TPL offsets.
 typedef unsigned int u32;
@@ -77,7 +76,6 @@ void TEXLoadPalette(TPLPalette** out, const char* path) {
         OSFreeToHeap(lbl_806CF010, compressed);
     }
     if (lbl_806D2FB0 == 0) DVDClose(&file);
-    PORT_DATA_LOADED(PORT_DATA_TPL, *out, size);
     RelocatePalette(*out);
 }
 
