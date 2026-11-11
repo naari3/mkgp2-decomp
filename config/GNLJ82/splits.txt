@@ -8707,7 +8707,7 @@ game/autodata/sdata2_806D9F70.c:
 	.sdata2     start:0x806D9F70 end:0x806DA700
 
 game/autodata/sdata_806CFE78.c:
-	.sdata      start:0x806CFE78 end:0x806D0110
+	.sdata      start:0x806CFE78 end:0x806CFE98
 
 game/fn_801D1800.cpp:
 	extab       start:0x80014EB4 end:0x80014EBC
@@ -8731,7 +8731,7 @@ game/ranking_display.cpp:
 	.data       start:0x8049B4A8 end:0x8049B530
 
 game/autodata/data_8049B530.c:
-	.data       start:0x8049B530 end:0x8049D030
+	.data       start:0x8049B530 end:0x8049B5C8
 
 game/anon_801D286C.cpp:
 	extab       start:0x80015074 end:0x80015174
@@ -8740,7 +8740,7 @@ game/anon_801D286C.cpp:
 	.rodata     start:0x8039BF88 end:0x8039C55C
 
 game/autodata/rodata_8039C55C.c:
-	.rodata     start:0x8039C55C end:0x8039C718
+	.rodata     start:0x8039C55C end:0x8039C658
 
 game/anon_801D2F0C.cpp:
 	extab       start:0x80015174 end:0x80015204
@@ -8748,24 +8748,21 @@ game/anon_801D2F0C.cpp:
 	.text       start:0x801D2F0C end:0x801D3480
 
 game/fn_801D3480.cpp:
-	extab       start:0x80015204 end:0x8001520C
-	extabindex  start:0x80028034 end:0x80028040
-	.text       start:0x801D3480 end:0x801D35D4
+	extab       start:0x80015204 end:0x80015260
+	extabindex  start:0x80028034 end:0x80028064
+	.text       start:0x801D3480 end:0x801D3A70
+	.rodata     start:0x8039C658 end:0x8039C6C0
+	.data       start:0x8049B5C8 end:0x8049B5E8
+	.sdata      start:0x806CFE98 end:0x806CFEA8
 
-game/fn_801D35D4.cpp:
-	extab       start:0x8001520C end:0x80015214
-	extabindex  start:0x80028040 end:0x8002804C
-	.text       start:0x801D35D4 end:0x801D394C
+game/autodata/sdata_806CFEA8.c:
+	.sdata      start:0x806CFEA8 end:0x806D0110
 
-game/fn_801D394C.c:
-	extab       start:0x80015214 end:0x8001521C
-	extabindex  start:0x8002804C end:0x80028058
-	.text       start:0x801D394C end:0x801D39BC
+game/autodata/data_8049B5E8.c:
+	.data       start:0x8049B5E8 end:0x8049D030
 
-game/fn_801D39BC.cpp:
-	extab       start:0x8001521C end:0x80015260
-	extabindex  start:0x80028058 end:0x80028064
-	.text       start:0x801D39BC end:0x801D3A70
+game/autodata/rodata_8039C6C0.c:
+	.rodata     start:0x8039C6C0 end:0x8039C718
 
 game/fn_801D3A70.cpp:
 	extab       start:0x80015260 end:0x80015268

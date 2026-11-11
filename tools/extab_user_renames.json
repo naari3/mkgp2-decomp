@@ -2895,11 +2895,6 @@
     "__ct__8FlowBaseFv": "InitializeFrameSelection",
     "__dt__8FlowBaseFv": "dtor_801BA14C"
   },
-  "src/game/fn_801D39BC.cpp": {
-    "__ct__12GameModeBaseFv": "GameMode_BaseInit",
-    "__dt__12GameModeBaseFv": "dtor_8002CDF4",
-    "__ct__9SpriteObjFiii": "Sprite_InitWithAnim"
-  },
   "src/game/fn_801D4060.cpp": {
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",
     "__dt__12GameModeBaseFv": "dtor_8002CDF4",
@@ -18322,5 +18317,31 @@
     "@122": "@eti_8002783C",
     "@130": "@etb_80012BC0",
     "@131": "@eti_80027848"
+  },
+  "src/game/fn_801D3480.cpp": {
+    "@86": "@etb_80015204",
+    "@139": "@etb_8001520C",
+    "@143": "@etb_80015214",
+    "@153": "@etb_8001521C",
+    "@87": "@eti_80028034",
+    "@140": "@eti_80028040",
+    "@144": "@eti_8002804C",
+    "@154": "@eti_80028058",
+    "@82": "global:FlashViewer_mode",
+    "@83": "global:FlashViewer_name",
+    "@84": "global:FlashViewer_frame",
+    "@85": "global:FlashViewer_loop",
+    "@72": "global:clFlowCupBattle",
+    "@74": "global:lbl_8039C668",
+    "@73": "global:lbl_8049B5C8",
+    "__ct__11clJobRunnerFv": "GameMode_BaseInit",
+    "__dt__11clJobRunnerFv": "dtor_8002CDF4",
+    "__ct__9SpriteObjFiii": "Sprite_InitWithAnim",
+    "__dt__13clFlashViewerFv": "fn_801D394C",
+    "Update__13clFlashViewerFv": "fn_801D35D4",
+    "Draw__13clFlashViewerFv": "fn_801D3480",
+    "__vt__13clFlashViewer": "lbl_8049B5D4",
+    "__RTTI__13clFlashViewer": "lbl_806CFEA0",
+    "__RTTI__11clJobRunner": "lbl_806CFE98"
   }
 }
