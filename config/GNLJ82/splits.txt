@@ -11212,7 +11212,7 @@ game/DNLensflare.cpp:
 	.sdata      start:0x806D05B0 end:0x806D05C0
 
 game/autodata/sdata_806D05C0.c:
-	.sdata      start:0x806D05C0 end:0x806D0620
+	.sdata      start:0x806D05C0 end:0x806D0608
 
 game/autodata/data_804EE0B8.c:
 	.data       start:0x804EE0B8 end:0x804EE0E0
@@ -11257,7 +11257,7 @@ game/DNStartDino_tail.cpp:
 	.data       start:0x804EE0E0 end:0x804EE0EC
 
 game/autodata/data_804EE0EC.c:
-	.data       start:0x804EE0EC end:0x804EE140
+	.data       start:0x804EE0EC end:0x804EE110
 
 game/EnemyFace.cpp:
 	extab       start:0x8001BE64 end:0x8001BE6C
@@ -11281,29 +11281,18 @@ game/EnemyFace_nm1.cpp:
 	.text       start:0x8022B278 end:0x8022B39C
 
 game/EnemyFace_exact2.cpp:
-	extab       start:0x8001BE84 end:0x8001BE8C
-	extabindex  start:0x8002A854 end:0x8002A860
-	.text       start:0x8022B39C end:0x8022B53C
-
-game/EnemyFace_nm2.cpp:
-	extab       start:0x8001BE8C end:0x8001BEAC
-	extabindex  start:0x8002A860 end:0x8002A878
-	.text       start:0x8022B53C end:0x8022B9B0
-
-game/EnemyFace_exact3.cpp:
-	extab       start:0x8001BEAC end:0x8001BEF4
-	extabindex  start:0x8002A878 end:0x8002A89C
-	.text       start:0x8022B9B0 end:0x8022BBC8
-
-game/EnemyFace_nm3.cpp:
-	extab       start:0x8001BEF4 end:0x8001BFB8
-	extabindex  start:0x8002A89C end:0x8002A8A8
-	.text       start:0x8022BBC8 end:0x8022BEB4
+	extab       start:0x8001BE84 end:0x8001BFB8
+	extabindex  start:0x8002A854 end:0x8002A8A8
+	.text       start:0x8022B39C end:0x8022BEB4
+	.data       start:0x804EE110 end:0x804EE134
+	.sdata      start:0x806D0608 end:0x806D0618
 
 game/EnemyFace_nm4.cpp:
 	extab       start:0x8001BFB8 end:0x8001BFC0
 	extabindex  start:0x8002A8A8 end:0x8002A8B4
 	.text       start:0x8022BEB4 end:0x8022BF2C
+	.data       start:0x804EE134 end:0x804EE140
+	.sdata      start:0x806D0618 end:0x806D0620
 
 game/EnemyFace_exact5.cpp:
 	extab       start:0x8001BFC0 end:0x8001BFC8

@@ -342,3 +342,8 @@ Added the requested working-note paragraph tracing the raw/processed symbol-inde
 Source: Codex worker r7_c22_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 Added object/link observation on shared TA/Ghost RTTI-name pooling via approved uncalled diagnostic member; not a compiler-source trace.
+
+## r7_c44_20261111
+Source: Codex worker r7_c44_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+clEnemyFace/clEFace3D converted in EnemyFace_exact2.cpp + EnemyFace_nm4.cpp: four assigned EnemyFace units merged into exact2, deferred/noauto reverse definitions, canonical clCDispInterface unchanged. Existing extern: RTTI-name bridges retain names in the unassigned renderer pool; no need to absorb EnemyFace.cpp/exact5. Both vtables and owned RTTI/base-list compiler emitted; all ten functions/2960 B and five owned sections per TU 100%, clang OK, DOL SHA-1 exact. DATA_ALIGN4_TUS on nm4 preserves 804EE134. Existing-mechanism observation, no new compiler-source rule.

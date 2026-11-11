@@ -1993,12 +1993,15 @@
     "fn_8022B1C8"
   ],
   "src/game/EnemyFace_exact2.cpp": [
-    "fn_8022B414"
-  ],
-  "src/game/EnemyFace_exact3.cpp": [
+    "fn_8022B414",
+    "fn_8022B53C",
+    "fn_8022B728",
     "fn_8022B9B0",
     "fn_8022B9FC",
     "fn_8022BA58",
+    "fn_8022BBC8",
+    "dtor_80036E40",
+    "dtor_8020EB04",
     "dtor_8021617C"
   ],
   "src/game/anon_80218F40_exact2.cpp": [
@@ -2047,11 +2050,6 @@
     "dtor_802070EC",
     "fn_801F26C8",
     "TweenInterp_Dtor"
-  ],
-  "src/game/EnemyFace_nm2.cpp": [
-    "fn_8022B53C",
-    "fn_8022B728",
-    "dtor_80036E40"
   ],
   "src/game/HeartCompoundItem.c": [
     "HeartCompoundItem_TickReleasePhase",
