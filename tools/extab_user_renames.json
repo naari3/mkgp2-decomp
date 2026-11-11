@@ -383,10 +383,6 @@
     "extab_SeqMenuScene_Init": "@etb_80005898",
     "extabindex_SeqMenuScene_Init": "@eti_8001F4F0"
   },
-  "src/game/SceneRender.c": {
-    "extab_SceneRender_Dtor": "@etb_80005F48",
-    "extabindex_SceneRender_Dtor": "@eti_8001FBF8"
-  },
   "src/game/Jyugemu_Flag_Render.c": {
     "@10": "@etb_800089FC",
     "@11": "@eti_800216F8"
@@ -3415,12 +3411,37 @@
     "__ct__14FinalLapBannerFPv": "FinalLapBanner_Init"
   },
   "src/game/Camera_Create.cpp": {
+    "lbl_802E9D38": "global:lbl_802E9D38",
+    "callback_name": "global:lbl_802E9D44",
+    "@58": "global:lbl_802E9D38",
+    "@59": "global:data_803F57E0_data_803F58F0",
+    "@60": "global:lbl_802E9D44",
+    "@132": "shadow_header",
+    "@133": "infinite_message",
+    "@134": "point_spot_message",
+    "@135": "shadow_source",
     "__ct__8clShadowFiiP8HSD_LObjff": "Camera_Create",
     "__dt__10clCallbackFv": "dtor_8003A71C",
     "__vt__10clCallback": "clCallback_vtable_803F58E0",
     "__vt__8clShadow": "clShadow_vtable_803F58FC",
-    "lbl_802E9D38": "global:lbl_802E9D38",
-    "callback_name": "global:lbl_802E9D44"
+    "__RTTI__10clCallback": "data_803F57E0_data_806CEDA8",
+    "__RTTI__8clShadow": "data_803F57E0_data_806CEDB0",
+    "__dt__8clShadowFv": "SceneRender_Dtor",
+    "Exec__8clShadowFv": "SceneRender_DrawObjectWithLights",
+    "SetViewport__8clShadowFffffff": "SceneRender_SetViewportRect",
+    "DeleteObject__8clShadowFPv": "SceneRender_CmdA_8a9e8",
+    "AddObject__8clShadowFPv": "SceneRender_CmdB_8aa20",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@89": "@etb_80005F20",
+    "@90": "@eti_8001FBD4",
+    "@101": "@etb_80005F38",
+    "@102": "@eti_8001FBE0",
+    "@108": "@etb_80005F40",
+    "@109": "@eti_8001FBEC",
+    "@113": "@etb_80005F48",
+    "@114": "@eti_8001FBF8",
+    "@136": "@etb_80005F50",
+    "@137": "@eti_8001FC04"
   },
   "src/game/Terrain_RaycastWall.c": {
     "@68": "@etb_80005C28",
@@ -18063,5 +18084,16 @@
     "@39": "lbl_802E9950",
     "@52": "@etb_80005E78",
     "@53": "@eti_8001FAF0"
+  },
+  "src/game/SceneRender.cpp": {
+    "extab_SceneRender_Dtor": "@etb_80005F48",
+    "extabindex_SceneRender_Dtor": "@eti_8001FBF8",
+    "@9": "global:lbl_802E9D28",
+    "__dt__10clCallbackFv": "dtor_8003A71C",
+    "__vt__10clCallback": "clCallback_vtable_803F58E0",
+    "__RTTI__10clCallback": "data_803F57E0_data_806CEDA0",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@7": "@etb_80005F18",
+    "@8": "@eti_8001FBC8"
   }
 }

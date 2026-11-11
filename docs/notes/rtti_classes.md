@@ -302,3 +302,8 @@ clTitleDisp2 converted in game/TitleNameHudUpdate.cpp: five code units merged, c
 Source: Codex worker r6_c29_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 r6_c29 yes/no family observation: shared interleaved RTTI lists require family-level data ownership, but keeping the public service tail as a separate TU avoids deferred/auto factory inlining without new function pragmas. Compiler RTTI may need global: bridges when a retained external-view tail references legacy aliases. The original force_active autodata pool included eleven otherwise unreferenced real format/helper-name strings; an approved uncalled pool-order member emits them, and existing active: data renames preserve their retention. All six owned sections, 40 linked functions and DOL SHA-1 verified exact. These are object/full-link observations, not a compiler-source trace.
+
+## r7_c4_20261111
+Source: Codex worker r7_c4_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+clCallback/clShadow: preserve the standalone base destructor TU separately from the derived shadow TU, because the binary has two distinct clCallback RTTI/name copies. clShadow data starts with a base list, so its methods use deferred generation/reverse definitions while clCallback remains nondeferred. Vtable size 0x14 included four alignment bytes; actual clShadow table is 0x10. Both real-class TUs and all 7 functions match, clang OK, full DOL SHA1 unchanged. Observations follow existing rules, not a new compiler-source trace.

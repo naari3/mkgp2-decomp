@@ -616,14 +616,11 @@ game/VolumeCalibration.cpp:
 game/autodata/sdata2_806D2490.c:
 	.sdata2     start:0x806D2490 end:0x806D299C
 
-game/autodata/sdata_806CEDA0.c:
-	.sdata      start:0x806CEDA0 end:0x806CEF58
-
 game/autodata/data_803F57E0.c:
-	.data       start:0x803F57E0 end:0x803F5BF4
+	.data       start:0x803F57E0 end:0x803F58E0
 
 game/autodata/rodata_802E9CC8.c:
-	.rodata     start:0x802E9CC8 end:0x802E9D34
+	.rodata     start:0x802E9CC8 end:0x802E9D28
 
 game/MJObj_ColorFloat.c:
 	extab       start:0x80005ED0 end:0x80005ED8
@@ -660,16 +657,27 @@ game/MJObj_SetColor.c:
 	extabindex  start:0x8001FBBC end:0x8001FBC8
 	.text       start:0x8003A608 end:0x8003A71C
 
-game/SceneRender.c:
-	extab       start:0x80005F18 end:0x80005F50
-	extabindex  start:0x8001FBC8 end:0x8001FC04
-	.text       start:0x8003A71C end:0x8003AACC
+game/SceneRender.cpp:
+	extab       start:0x80005F18 end:0x80005F20
+	extabindex  start:0x8001FBC8 end:0x8001FBD4
+	.text       start:0x8003A71C end:0x8003A764
+	.rodata     start:0x802E9D28 end:0x802E9D33
+	.data       start:0x803F58E0 end:0x803F58F0
+	.sdata      start:0x806CEDA0 end:0x806CEDA8
 
 game/Camera_Create.cpp:
-	extab       start:0x80005F50 end:0x80005F6C
-	extabindex  start:0x8001FC04 end:0x8001FC10
-	.text       start:0x8003AACC end:0x8003AC84
+	extab       start:0x80005F20 end:0x80005F6C
+	extabindex  start:0x8001FBD4 end:0x8001FC10
+	.text       start:0x8003A764 end:0x8003AC84
 	.rodata     start:0x802E9D38 end:0x802E9D8B
+	.data       start:0x803F58F0 end:0x803F590C
+	.sdata      start:0x806CEDA8 end:0x806CEDB8
+
+game/autodata/sdata_806CEDB8.c:
+	.sdata      start:0x806CEDB8 end:0x806CEF58
+
+game/autodata/data_803F5910.c:
+	.data       start:0x803F5910 end:0x803F5BF4
 
 game/ClRomTable_PurgeAll.c:
 	extab       start:0x80005F6C end:0x80005F74

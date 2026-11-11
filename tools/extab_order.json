@@ -2930,13 +2930,6 @@
       "WarpZone_OperatorAssign_LinkerStub"
     ]
   },
-  "src/game/SceneRender.c": [
-    "dtor_8003A71C",
-    "SceneRender_DrawObjectWithLights",
-    "SceneRender_CmdA_8a9e8",
-    "SceneRender_CmdB_8aa20",
-    "SceneRender_Dtor"
-  ],
   "src/game/Tachometer.c": [
     "Tachometer_UpdateDisplaySpeed",
     "Tachometer_RenderDigits",
@@ -3720,5 +3713,16 @@
       "dtor_801F4B10",
       "dtor_80082960"
     ]
-  }
+  },
+  "src/game/SceneRender.cpp": [
+    "dtor_8003A71C"
+  ],
+  "src/game/Camera_Create.cpp": [
+    "SceneRender_DrawObjectWithLights",
+    "SceneRender_CmdA_8a9e8",
+    "SceneRender_CmdB_8aa20",
+    "SceneRender_Dtor",
+    "Camera_Create",
+    "__dt__11ScopedTimerFv"
+  ]
 }
