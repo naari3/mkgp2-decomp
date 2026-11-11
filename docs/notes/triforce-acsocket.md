@@ -93,3 +93,5 @@ c26_u76: fn_80292D18 improves96.268654->99.850746 with p=(u8*)(void*)ReceiveBuff
 Source: Codex worker c27_u1_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 1 fn / 268 B.
 
 c27_u1: fn_80292D18 99.850746 ->100 naturally using named unsigned rounded-end accumulator: end=(u32)len+0x1F; end=off+end; size=(end&~0x1F)-al. Unlike one expression, this retains len+31 as target first operation; +=off alone reverses final add operands. Rule expr-operand-order; inverse of single-expr-local. Existing storage separated verbatim to NonMatching acsocket_nm7_storage; 1 native function/268B, full DOL SHA1 exact.
+
+c27_u1 follow-up (om, 2026-11-11): the acsocket_nm7_storage.c split is undone (n3-20261110-1932, matching_rules section 2 rule 5): the four BSS objects are back in acsocket_nm7.c, which is NonMatching again because their layout still falls back to the target; fn_80292D18 stays C at 100 %.
