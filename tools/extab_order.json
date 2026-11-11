@@ -1698,6 +1698,10 @@
     "fn_8020C21C",
     "fn_8020C254",
     "fn_8020C290",
+    "fn_8020C38C",
+    "dtor_801F2724",
+    "dtor_801F4B10",
+    "dtor_8007D0D4",
     "dtor_80082960",
     "__dt__10FlowFaderIFv"
   ],
@@ -2613,13 +2617,6 @@
   "src/game/anon_80205DCC_m2.cpp": [
     "fn_802064D8",
     "dtor_80082960"
-  ],
-  "src/game/anon_8020BD68_nm1.cpp": [
-    "fn_8020C38C",
-    "dtor_801F2724",
-    "__dt__10FlowFaderIFv",
-    "dtor_801F4B10",
-    "dtor_8007D0D4"
   ],
   "src/game/anon_8020007C_nm1.cpp": {
     "extab": [

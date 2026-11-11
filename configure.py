@@ -1861,8 +1861,7 @@ config.libs = [
             Object(Matching, "game/RoundResult.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             Object(Matching, "game/RoundResult_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             Object(Matching, "game/ItemBanner.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-rostr", "-inline deferred"], mw_version="GC/2.6"),
-            Object(Matching, "game/anon_8020BD68.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
-            Object(Matching, "game/anon_8020BD68_nm1.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+            Object(Matching, "game/anon_8020BD68.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-rostr"], mw_version="GC/2.6"),
             Object(Matching, "game/anon_8020C650.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-inline deferred,noauto", "-rostr"], mw_version="GC/2.6"),
             Object(Matching, "game/anon_8020C974.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on"], mw_version="GC/2.6"),
             Object(Matching, "game/anon_8020D1C0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-rostr"], mw_version="GC/2.6"),
@@ -3649,6 +3648,7 @@ DATA_ALIGN4_TUS = [
     "game/fn_801FB778",
     "game/Scene_801654E0",
     "game/fn_801F52A8",
+    "game/autodata/data_804EC9B4",
 ]
 
 
@@ -3696,7 +3696,6 @@ DATA_ALIGN4_WEAK_TUS = [
     "game/anon_8020B4F8",
     "game/anon_8020B4F8_nm1",
     "game/anon_8020BD68",
-    "game/anon_8020BD68_nm1",
     "game/ENo3D",
     "game/anon_8020314C_nm1",
     "game/anon_8020C650",
