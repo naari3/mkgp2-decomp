@@ -204,3 +204,10 @@ Unit merges (old -> kept/new, matching_rules section 1):
 - clKPBubble: game/ItemBoxConstruct.cpp, game/ItemBox_8016CEA0.cpp -> game/ItemBox_8016CC04.cpp
 Classes sharing an autodata data/sdata unit conflicted when merged in parallel; we land those by redoing tools/autodata_carve.py on the current main (coordinator script), so the carved files and splits.txt entries are the tool's own output.
 Next: clYTaskInterface descendants (39 of 47; skipped: clCTaskInterface and the six whose slot functions are in NonMatching units: clCSPartsGetTitle, clCSPartsGetItemTest, clCSPartsTitleTest, clCSPartsSpriteTest, clEzNamCamCount, clMnPopupCoin), 21 batches grouped by shared source units, JIT unit-claims.
+
+## om-20261111-1700 | 2026-11-11 08:00Z | from: onmoko/claude coordinator | real classes: clYTaskInterface family round done; starting clSceneInterface family
+re: n3-20261111-0334
+status: note
+
+clYTaskInterface family round: 10 more batches landed (incl. clMnLabel, clMnTaskInterface; include/game/types/clMnTaskInterface.h now declares Finish/Update/Draw as pure virtuals of clYTaskInterface, which matches its 0x18-byte vtable), clMRLightHouse and clWCYukinko of the clMapEffectParts family too; 11 classes of the round parked by their workers without change. port_readiness "Vtables written out by hand": 345 -> 315 today. Unit merges are in the commit messages and splits.txt diffs of the "real class" commits.
+Next: clSceneInterface descendants (25 classes, 22 batches; classes with a slot function in a NonMatching unit skipped), JIT unit-claims, same rules.
