@@ -8591,10 +8591,10 @@ game/clFlowRound.c:
 	.sdata      start:0x806CFDF0 end:0x806CFE08
 
 game/autodata/sdata_806CFE08.c:
-	.sdata      start:0x806CFE08 end:0x806CFE68
+	.sdata      start:0x806CFE08 end:0x806CFE58
 
 game/autodata/data_8049AFD0.c:
-	.data       start:0x8049AFD0 end:0x8049B1E0
+	.data       start:0x8049AFD0 end:0x8049B1C0
 
 game/autodata/rodata_8039B3C8.c:
 	.rodata     start:0x8039B3C8 end:0x8039B46C
@@ -8665,28 +8665,12 @@ game/PanelCda40.cpp:
 	.text       start:0x801CDA40 end:0x801CDDC4
 
 game/fn_801CDDC4.cpp:
-	extab       start:0x80014B08 end:0x80014B20
-	extabindex  start:0x80027F44 end:0x80027F50
-	.text       start:0x801CDDC4 end:0x801CDF10
-
-game/fn_801CDF10.cpp:
-	extab       start:0x80014B20 end:0x80014B28
-	extabindex  start:0x80027F50 end:0x80027F5C
-	.text       start:0x801CDF10 end:0x801CE1EC
-
-game/fn_801CE1EC.cpp:
-	extab       start:0x80014B28 end:0x80014B70
-	extabindex  start:0x80027F5C end:0x80027F68
-	.text       start:0x801CE1EC end:0x801CE324
-
-game/clFlowTaPlease_Init.cpp:
-	extab       start:0x80014B70 end:0x80014C44
-	extabindex  start:0x80027F68 end:0x80027F74
-	.text       start:0x801CE324 end:0x801CE800
-	.rodata     start:0x8039B470 end:0x8039B96C
-
-game/autodata/rodata_8039B96C.c:
-	.rodata     start:0x8039B96C end:0x8039B98C
+	extab       start:0x80014B08 end:0x80014C44
+	extabindex  start:0x80027F44 end:0x80027F74
+	.text       start:0x801CDDC4 end:0x801CE800
+	.rodata     start:0x8039B470 end:0x8039B98A
+	.data       start:0x8049B1C0 end:0x8049B1E0
+	.sdata      start:0x806CFE58 end:0x806CFE68
 
 game/clFlowCourse.cpp:
 	extab       start:0x80014C44 end:0x80014EB4

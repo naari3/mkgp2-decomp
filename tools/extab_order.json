@@ -3622,5 +3622,14 @@
     "dtor_801F2724",
     "dtor_801F4A80",
     "dtor_8021617C"
+  ],
+  "src/game/fn_801CDDC4.cpp": [
+    "fn_801CDDC4",
+    "fn_801CDF10",
+    "fn_801CE1EC",
+    "clFlowTaPlease_Init",
+    "dtor_80082960",
+    "dtor_80145F04",
+    "dtor_801CCA30"
   ]
 }
