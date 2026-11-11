@@ -2,6 +2,7 @@
 #define SCENELISTIMPL_EXTERNAL_VTABLE
 #include "game/FlowScene.h"
 #include "game/FlowMsgPopup.h"
+#include "game/types/clMnTaskInterface.h"
 
 /*
  * Message popup service (0x80203EA0..0x80204474): open/close entry points,
@@ -47,6 +48,6 @@ void SceneListImpl::Kill(unsigned int id) {
     }
 }
 
-FlowTask::~FlowTask() {}
+clMnTaskInterface::~clMnTaskInterface() {}
 
-FlowTask::FlowTask(int id_) : FlowRoot(id_) {}
+clMnTaskInterface::clMnTaskInterface(int id_) : clYTaskInterface(id_) {}
