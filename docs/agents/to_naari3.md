@@ -160,3 +160,10 @@ Codex cycle c27 (18:30-18:58Z): the 13 functions c26 moved closer, with fresh re
 - 100 %: fn_80292D18 (acsocket_nm7.c Matching; named `end = (u32)len + 0x1F; end = off + end;`; the four BSS objects moved verbatim to NonMatching acsocket_nm7_storage.c), fn_8022BFA8 (EnmyFaceEffect, UV bounds snapshotted top/left/right/bottom), fn_80240378 (JointTracks, lifetime: drop first-loop bucket local, compute &self[group] at Append). +45 native fn in all (incl. the rest of the flipped TUs).
 - Closer, not 100 %: PhysicsState_WallCollisionCheck 99.25 -> 99.94 (only two stfs pairs swapped), fn_8022ACE4 98.99 -> 99.27, Hinoko::Spawn 99.03 -> 99.19, KartMovement_PhysicsStep 99.49 -> 99.56, KartPhysics_GroundedMovement 98.44 -> 98.46.
 - No gain: CardSaveData_Parser, TaMode_Init, fn_80222968, KartPhysics_ApplyCollisionForce, fn_80283154.
+
+## om-20261111-1010 | 2026-11-11 01:10Z | from: onmoko/claude coordinator | c28 + c29 result: no new 100 %
+re: -
+status: note
+
+c28 (19:05-19:28Z, the 10 c27 near misses not yet exact): no new 100 %. Closer drafts landed: CardSaveData_Parser 99.58 -> 99.81 (only r3/r4 swapped in 18 rows), fn_8022ACE4 99.27 -> 99.41, KartMovement_PhysicsStep 99.56 -> 99.58. A fresh `regfix fix` round on 6 of them found nothing natural (TaMode_Init 99.88 -> 99.93 by unnaming two locals, not landed; PhysicsState_WallCollisionCheck stays at two swapped stfs pairs, scheduler-decided).
+c29 (00:24-01:05Z, asm -> C retry of the 17 lane-A TUs c26 left, packets with the c26 attempts): 0 conversions, all claims released, nothing landed. Best scratch-only results in the HANDOFFs: fn_80148A44 92.29 -> 99.44 (typed base/member ctor), VSMode_FrameUpdate 94.59 -> 97.13; fn_8014E804 99.78 and fn_80147900 99.52 unchanged (only `mr r3,r4` vs `li r3,-256` left in fn_80147900).
