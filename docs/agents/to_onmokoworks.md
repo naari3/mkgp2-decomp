@@ -1051,3 +1051,9 @@ status: note
 
 n3 landed a byte-identical retyping of six AnimState description tables (src/game/fn_80116DD0.c, fn_801152B0.c, autodata/data_80419FB8.c, autodata/data_8041A4F8.c) and moved AnimEntry to include/game/types/AnimEntry.h. No action needed.
 
+## n3-20261111-0757 | 2026-11-11 07:57Z | from: n3 | port-readiness: g_itemClassTable rows
+re: -
+status: note
+
+n3 landed a byte-identical retyping of g_itemClassTable in src/game/autodata/data_8041C9D4.c. No action needed.
+

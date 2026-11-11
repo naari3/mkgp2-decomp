@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-11 07:57Z Port readiness (n3): g_itemClassTable (autodata/data_8041C9D4.c) is ItemClassRow[278] with byte members instead of void *[1390]. Byte-identical.
 - 2026-11-11 07:56Z Port readiness (n3): AnimState description tables are AnimEntry arrays (include/game/types/AnimEntry.h) instead of void * arrays with the type in the top byte: fn_80116DD0.c, fn_801152B0.c, autodata/data_80419FB8.c, autodata/data_8041A4F8.c; tool tools/port_abi/anim_tables.py. Byte-identical.
 - 2026-11-11 07:53Z Port readiness (n3): cabinet-link slot fields that cross a byte boundary (scene, wins, track, id) are accessed through include/game/types/pcb_link.h in PCBCommBroadcast.c, PCBCheckRecv.c, PCBCheckProcess.c, fn_801D1890.cpp, FaceEffect.cpp; notes in docs/notes/port_abi.md. Byte-identical.
 - 2026-11-11 06:41Z Port readiness (n3): src/game/dlistutil and its three private headers read display lists and vertex buffers through GXDATA_U16 / GXDATA_SET_U16 / GXDATA_F32 (include/game/types/gx_data.h); notes in docs/notes/port_abi.md. Byte-identical.

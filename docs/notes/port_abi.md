@@ -638,3 +638,9 @@ found and rewritten by `tools/port_abi/anim_tables.py`: `lbl_80422064`
 (fn_80116DD0.c), `lbl_80421E34`, `lbl_80421EE8` (fn_801152B0.c),
 `TwinSpriteOverlay_Update_data_8041A0E0` / `_8041A14C`
 (autodata/data_80419FB8.c), `DbgMenu_data_8041C8A0` (autodata/data_8041A4F8.c).
+
+`g_itemClassTable` (autodata/data_8041C9D4.c) was `void *[1390]` with words
+like `(void *)0x1050000`; it is `ItemClassRow[278]` now (function pointer,
+four flag bytes, a signed byte, a name pointer, the effect byte), matching the
+members its readers use through `ItemClassEntry` (`def`, `flag0`, `flag1`) and
+`ItemKindEntry` (`effect`).
