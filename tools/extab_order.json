@@ -1675,7 +1675,11 @@
     "fn_8020B994",
     "fn_8020B9D0",
     "dtor_80082960",
-    "__dt__10FlowFaderIFv"
+    "__dt__10FlowFaderIFv",
+    "fn_8020BACC",
+    "dtor_801F2724",
+    "dtor_801F4B10",
+    "dtor_8007D0D4"
   ],
   "src/game/anon_8020BD68.cpp": [
     "fn_8020BD68",
@@ -1970,13 +1974,6 @@
     "fn_8022B53C",
     "fn_8022B728",
     "dtor_80036E40"
-  ],
-  "src/game/anon_8020B4F8_nm1.cpp": [
-    "fn_8020BACC",
-    "dtor_801F2724",
-    "__dt__10FlowFaderIFv",
-    "dtor_801F4B10",
-    "dtor_8007D0D4"
   ],
   "src/game/HeartCompoundItem.c": [
     "HeartCompoundItem_TickReleasePhase",
