@@ -2206,7 +2206,7 @@ config.libs = [
             Object(Matching, "game/fn_8012A71C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_8012B48C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/CGameCoin_8012BF5C.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(Matching, "game/SuikaBall_801313D0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/SuikaBall_801313D0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-inline deferred,noauto", "-rostr"]),
             Object(Matching, "game/fn_8013A534.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_8013A6F8.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_8010C110.c", extab_padding=b"\x00\x00"),
@@ -3638,6 +3638,7 @@ DATA_ALIGN4_TUS = [
     "game/fn_801FB778",
     "game/Scene_801654E0",
     "game/fn_801F52A8",
+    "game/autodata/data_8048E40C",
     "game/autodata/data_804EC9B4",
 ]
 

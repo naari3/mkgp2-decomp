@@ -75,7 +75,43 @@ struct SuikaSlot {
     int count;
 };
 
-#include "game/types/SuikaBall.h"
+#include "game/types/clJobRunner.h"
+extern "C" const float lbl_806D72B8;
+struct clCGame : clJobRunner {
+    float phase;
+    clCGame() { phase = lbl_806D72B8; }
+    virtual ~clCGame();
+};
+struct clCGameMR : clCGame {
+    virtual int Update();
+    virtual void Draw();
+    virtual ~clCGameMR();
+    float *courseData;
+    Destroyable *car;
+    void *lakitu;
+    void *environment;
+    Deletable *m18;
+    void *m1C;
+    Deletable *m20;
+    HsdRefObj *m24;
+    int x28;
+    void *hud;
+    unsigned char active, bgmOn, finished, goalReached;
+    int state, x38;
+    SuikaBallObj *m3C;
+    Gate *m40;
+    Deletable *m44, *m48;
+    float speedScale;
+    Vec3 prevPos;
+    SuikaSlot *slots;
+    Deletable *m60;
+    GateList *bufs;
+    int coins;
+    clCGameMR();
+    void AddBallToCamera(void *cam);
+    void PrintTypeNames();
+};
+typedef clCGameMR SuikaBall;
 
 /* TOP-END */
 
@@ -213,8 +249,6 @@ extern unsigned int lbl_806D72DC;
 extern unsigned int lbl_806D72E0;
 extern unsigned int lbl_806D72E4;
 extern unsigned int lbl_806D72E8;
-extern const char lbl_80357A6C[];
-extern const char SuikaBall_Update_rodata_80357A88[];
 extern Vec3 SuikaBall_Update_bss_80677C70;
 extern Vec3 SuikaBall_Update_bss_80677C7C;
 extern void ClRomTable_PurgeAll();
@@ -298,9 +332,9 @@ extern const float lbl_806D72F0;
 extern const float lbl_806D72F4;
 extern float lbl_80495994[];
 extern float lbl_80495A94[];
-void SuikaBall_Render(SuikaBall *self);
-int SuikaBall_Update(SuikaBall *self);
-struct SuikaBall *fn_80133008(struct SuikaBall *self, short flag);
+
+
+
 void fn_80133CA8(ShotOwner *self);
 void fn_80133E64(ShotOwner *self);
 ModelPair *fn_80134164(ModelPair *self, short flag);
@@ -332,7 +366,7 @@ struct JointSetDesc {
     const char *const *joints;
     int count;
 };
-extern "C" const unsigned int SuikaBall_Init_rodata_80357008[0x102] = {
+extern "C" const unsigned int suikaCourseParameters[0x102] = {
     0x3F800000, 0x3F333333, 0x3F666666, 0x00000000, 0x00000000, 0x43FA0000,
     0x42855556, 0x447A0000, 0x42855556, 0x44FA0000, 0x42855556, 0x453B8000,
     0x42855556, 0x457A0000, 0x42855556, 0x459C4000, 0x42855556, 0x00000000,
@@ -437,16 +471,16 @@ extern "C" const Vec3 SuikaBall_Render_rodata_803579F4[4][2] = {
     { { 648.89f, 0.0f, 991.32f }, { 684.98f, 0.0f, 1083.0f } },
     { { 313.91f, 0.0f, 960.16f }, { 260.2f, 0.0f, 1042.56f } },
 };
-extern "C" const char lbl_80357A54[] = "clCGameMR";
-extern "C" const char lbl_80357A60[] = "clJobRunner";
-extern "C" const char lbl_80357A6C[] = "Start to MRCoin.  %s - %d\n";
-extern "C" const char SuikaBall_Update_rodata_80357A88[] = "CGameCoin.hpp";
-static const char s_lakituFile[20] = "jyugemu_start.dat";
-static const char s_ballFile[20] = "MRO_suikaball.dat";
-static const char s_coinFile[16] = "mario_coin.dat";
-static const char s_kiraFile[16] = "k_kira13.dat";
-extern "C" const char lbl_80357AE0[] = "clCGameCoinBase";
-extern "C" const char lbl_80357AF0[] = "clCGameMRCoin";
+
+
+
+
+
+
+
+
+
+
 
 #include "game/singleton.h"
 
@@ -605,59 +639,7 @@ static inline void DrawCardWalls(void)
     HSD_StateInvalidate(0x7e);
 }
 
-extern "C" void SuikaBall_Render(SuikaBall *self)
-{
-    if (self->active == 0) {
-        return;
-    }
-    if (self->m18->Begin() == 1) {
-        clDrawMan_Buckets_Reset(SINGLETON_INSTANCE(lbl_806D10AC));
-        TransparentDraw_SortAndDispatch();
-        CObj_DebugVizPathFlush(self->m18);
-        fn_8016B0C4();
-        KartItem_RenderPipelinedWithEffects(self->car, 0);
-        Object_RenderJObjIfWithinRange(self->lakitu);
-        CourseEnvironment_RenderObjects_Timed(self->environment);
-        Subsystem36c_DispatchPass2_Timed(self->environment);
-        ItemObjectManager_Render();
-        SuikaBallObj_Render(self->m3C);
-        self->m44->End();
-        self->m48->End();
-        for (unsigned int i = 0; i < 3; i++) {
-            SuikaSlot *slot = &self->slots[i];
-            for (int j = 0; j < slot->count; j++) {
-                if (slot->bufB[j] != 0 && slot->bufA[j] != 0) {
-                    Vec3 v;
-                    Quat q;
-                    HSD_JObjGetTranslation(slot->bufB[j], &v);
-                    HSD_JObjSetTranslate(slot->bufA[j], &v);
-                    HSD_JObjGetRotation(slot->bufB[j], &q);
-                    HSD_JObjSetRotation(slot->bufA[j], &q);
-                    HSD_JObjGetScale(slot->bufB[j], &v);
-                    HSD_JObjSetScale(slot->bufA[j], &v);
-                    Object_RenderJObjEx(slot->objA, slot->bufA[j], 7);
-                }
-            }
-        }
-        fn_80253448(self->hud, lbl_806DC190);
-        DrawEffect_TickAndCull();
-        if (IsCardValid()) {
-            DrawCardWalls();
-        }
-        self->m60->End();
-        clDrawMan_EndFrame_NoOp(SINGLETON_INSTANCE(lbl_806D10AC));
-        clDrawMan_Buckets_Dispatch(SINGLETON_INSTANCE(lbl_806D10AC));
-        Subsystem36c_DispatchPass4_Timed(self->environment);
-        TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 2);
-        TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 4);
-        fn_80253448(self->hud, lbl_806DC1B0 | lbl_806DC190);
-        self->m18->End();
-    }
-    fn_80253448(self->hud, lbl_806DC1B8);
-    fn_802535D4(self->hud);
-    TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 1);
-    HSD_StateInvalidate(0x7f);
-}
+
 
 static inline void Fireworks_Launch(ShotSet *fw, Vec3 *pos, float kx, float kz, float spread)
 {
@@ -665,7 +647,7 @@ static inline void Fireworks_Launch(ShotSet *fw, Vec3 *pos, float kx, float kz, 
         int i;
         float heading;
         float angle;
-        DebugPrintf(lbl_80357A6C, SuikaBall_Update_rodata_80357A88, 0x2d8);
+        DebugPrintf("Start to MRCoin.  %s - %d\n", "CGameCoin.hpp", 0x2d8);
         if (fn_8016C360(0xab) == 1) {
             fn_8016C394(0xab);
         }
@@ -719,8 +701,437 @@ static inline bool GateList_Update(GateList *list, Vec3 *pos)
     return false;
 }
 
-extern "C" int SuikaBall_Update(SuikaBall *self)
+
+
+static inline int HsdRef_Dec(HsdRefObj *o)
 {
+    int done = o->ref == (unsigned short)-1;
+    if (done) {
+        return done;
+    }
+    return o->ref-- == 0;
+}
+
+static inline void HsdObj_Destroy(HsdRefObj *o)
+{
+    if (o != 0) {
+        o->klass->release(o);
+        o->klass->destroy(o);
+    }
+}
+
+static inline void HsdRef_Unref(HsdRefObj *o)
+{
+    if (o != 0 && HsdRef_Dec(o)) {
+        HsdObj_Destroy(o);
+    }
+}
+
+static inline void FreeBufs(SuikaBall *self)
+{
+    GateList *bufs = self->bufs;
+    if (bufs != 0) {
+        for (int i = 0; i < 4; i++) {
+            if (bufs->gates[i] != 0) {
+                MemoryManager_TimedFree(bufs->gates[i]);
+            }
+        }
+        MemoryManager_TimedFree(bufs);
+    }
+}
+
+
+
+#include "game/types/KartDriver.h"
+
+#include "game/types/InputManager.h"
+#include "game/types/Camera.h"
+#include "game/types/CarObject.h"
+static inline int GetChara() { return g_characterId; }
+struct PlayerCar : CarObject {
+    PlayerCar(const float *x, const float *z, int chara)
+        : CarObject(GetDisplayBufferIndex(), chara, 0, 0, 1, 0, 0, 0, *x, *z, GetCourseStartYaw()) {}
+};
+#include "game/types/LakituStart.h"
+#include "game/types/Scene3D.h"
+#include "game/types/ChallengeGoalCamera.h"
+#include "game/types/HUD.h"
+#include "game/types/WeatherSystem.h"
+#include "game/types/clNormal3D.h"
+
+struct ShotVec {
+    float x, y, z;
+    void Zero() { x = y = z = lbl_806D72B8; }
+};
+struct CoinShotTrail { int age; ShotVec pos; };
+struct CoinShot {
+    int active;
+    int x4;
+    int timer;
+    ShotVec pos;
+    ShotVec vel;
+    float rot;
+    float alpha;
+    CoinShotTrail trail[20];
+};
+
+#include "game/types/CoinShotBase.h"
+
+inline CoinShotBase::CoinShotBase(const char *modelFile, const char *trailFile) {
+    xC = 0;
+    x10 = 0;
+    trailCount = 5;
+    model = new clNormal3D(modelFile, 1);
+    clNormal3D_SetFlags(model, 0x40000000, 0);
+    trailModel = new clNormal3D(trailFile, 1);
+    HSD_JObjSetFlags(Archive_GetRootJObj(trailModel), 0x200);
+    for (int i = 0; i < 6; i++) {
+        shots[i].active = 0;
+        shots[i].timer = 0;
+        shots[i].rot = lbl_806D72B8;
+        shots[i].alpha = lbl_806D72B8;
+        shots[i].x4 = 0;
+        shots[i].pos.Zero();
+        shots[i].vel.Zero();
+        for (int j = 0; j < 20; j++) {
+            shots[i].trail[j].age = -1;
+        }
+    }
+    if (trailCount >= 20) {
+        trailCount = 19;
+    }
+}
+
+struct SuikaCoinShots : CoinShotBase {
+    SuikaCoinShots(const char *modelFile, const char *trailFile) : CoinShotBase(modelFile, trailFile) {}
+    virtual ~SuikaCoinShots();
+};
+
+struct GVec { float x, y, z; };
+static inline GVec MkVec(float x, float y, float z) { GVec v; v.x = x; v.y = y; v.z = z; return v; }
+struct GoalLine {
+    Vec3 p0, p1, dir, normal;
+    GoalLine(GVec a, GVec b) { Set(a, b); }
+    void Set(GVec a, GVec b) {
+        p0.x = a.x; p0.y = a.y; p0.z = a.z;
+        p1.x = b.x; p1.y = b.y; p1.z = b.z;
+        Vec3_Subtract(&p1, &p0, &dir);
+        Vec3_Normalize(&dir, &dir);
+        normal.x = -dir.z; normal.y = dir.y; normal.z = dir.x;
+    }
+};
+struct GoalLineSet {
+    GoalLine *lines[4];
+    int next;
+    GoalLineSet(const Vec3 (*tbl)[2]) {
+        next = 0;
+        for (int i = 0; i < 4; i++) {
+            lines[i] = new GoalLine(*(const GVec *)&tbl[i][0], *(const GVec *)&tbl[i][1]);
+        }
+    }
+};
+struct JointSet {
+    clNormal3D *a;
+    clNormal3D *b;
+    void **ja;
+    void **jb;
+    int count;
+};
+struct SuikaUnk44 { char data[0xC]; SuikaUnk44(); };
+struct SuikaUnk48 { char data[0x10]; SuikaUnk48(); };
+
+/*
+ * SuikaBall_Init: the mode's constructor. The goal-line constructor takes
+ * its two end points by value and forwards them to Set() by value; that
+ * extra copy (and MkVec's local) is what gives the target's stack layout.
+ * Float literals in the joint-set loop keep 0.0f from being hoisted into f31.
+ */
+inline void clCGameMR::AddBallToCamera(void *cam) {
+    if (cam != 0 && m3C->archive != 0) {
+        SceneRender_CmdB_8aa20(cam, Archive_GetRootJObj(m3C->archive));
+    }
+}
+
+
+
+
+
+static inline bool Trail_Spawn(Trail *t, float c, float s)
+{
+    if (t->age >= 0) {
+        return false;
+    }
+    t->age = 0;
+    t->pos.x = 5.0f * LUT_Sin12Bit(360.0f * c);
+    t->pos.y = 10.0f * s;
+    t->pos.z = 5.0f * fn_80186960(360.0f * c);
+    return true;
+}
+
+
+
+
+
+
+
+/* Uncalled diagnostic preserves the trailing pooled type names, as in
+ * clLineManager::PrintLines (body inferred; pool-order fakematch). */
+void clCGameMR::PrintTypeNames() {
+    DebugPrintf("clCGameCoinBase");
+    DebugPrintf("clCGameMRCoin");
+}
+
+/* Deferred code generation emits these in target address order. */
+extern "C" ModelPair *fn_80134164(ModelPair *self, short flag)
+{
+    if (self) {
+        self->vt = SuikaCoinShots_vtable_8048E418;
+        if (self) {
+            self->vt = CoinShotBase_vtable_8048E34C;
+            Object_DtorWithGXSync(self->a, 1);
+            Object_DtorWithGXSync(self->b, 1);
+        }
+        if (flag > 0) MemoryManager_TimedFree(self);
+    }
+    return self;
+}
+
+extern "C" void fn_80133E64(ShotOwner *self)
+{
+    Trail *tr;
+    int i;
+    for (i = 0; i < 6; i++) {
+        Shot *s = &((ShotSet *)self)->shots[i];
+        if (s->active) {
+            tr = s->trail;
+            s->pos.x += s->vel.x;
+            s->pos.y += s->vel.y;
+            s->pos.z += s->vel.z;
+            s->vel.y -= 0.1f;
+            float h = 0.0f;
+            if (Terrain_GetGroundHeightWithPenetration(&s->pos, &h, 0, 0, 10.0f) == 1 && s->pos.y < h) {
+                s->vel.y = 0.8f * -s->vel.y;
+            }
+            s->rot += 5.0f;
+            if (s->rot > 360.0f) {
+                s->rot -= 360.0f;
+            }
+            s->alpha = 1.0f - s->timer / 70.0f;
+            int j;
+            for (j = 0; j < self->trailCount; j++) {
+                Trail *t = &tr[j];
+                if (t->age >= 0) {
+                    t->pos.y -= 2.0f;
+                    if (++t->age > 10) {
+                        t->age = -1;
+                    }
+                }
+            }
+            if ((s->timer & 3) == 0) {
+                for (j = 0; j < self->trailCount; j++) {
+                    if (Trail_Spawn(&tr[j], lbl_80495994[self->sinIdx], lbl_80495A94[self->cosIdx]) == true) {
+                        tr[j].pos.x += s->pos.x;
+                        tr[j].pos.y += s->pos.y;
+                        tr[j].pos.z += s->pos.z;
+                        break;
+                    }
+                }
+                if (++self->sinIdx >= 0x40) {
+                    self->sinIdx = 0;
+                }
+                if (++self->cosIdx >= 0x30) {
+                    self->cosIdx = 0;
+                }
+            }
+            if (++s->timer >= 0x46) {
+                s->active = 0;
+            }
+        }
+    }
+}
+
+extern "C" void fn_80133CA8(ShotOwner *self)
+{
+    for (int i = 0; i < 6; i++) {
+        if (((ShotSet *)self)->shots[i].active) {
+            Object_SetJObjPositionVec(self->model, &((ShotSet *)self)->shots[i].pos);
+            Object_SetJObjRotationY(self->model, lbl_806D7298 * ((ShotSet *)self)->shots[i].rot);
+            Object_SetColorAlphaOnly(self->model, 0, ((ShotSet *)self)->shots[i].alpha);
+            Object_RenderJObjEx(self->model, LinkedNode_GetField10_OrFallback(self->model, 0), 7);
+            LNode *n = LinkedNode_GetField10_OrFallback(self->model, 0);
+            Object_RenderJObjEx(self->model, n == 0 ? 0 : n->f8, 7);
+            for (int j = 0; j < self->trailCount; j++) {
+                float f = ((ShotSet *)self)->shots[i].trail[j].age / lbl_806D729C;
+                float sc = lbl_806D72A0 - f;
+                Object_SetJObjPositionVec(self->trailModel, &((ShotSet *)self)->shots[i].trail[j].pos);
+                Object_SetJObjScaleXYZ(self->trailModel, sc, sc, sc);
+                Object_SetColorAlphaOnly(self->trailModel, 0, (lbl_806D72A4 - f) * ((ShotSet *)self)->shots[i].alpha);
+                Object_RenderJObjTree(self->trailModel, 7);
+            }
+        }
+    }
+}
+
+clCGameMR::clCGameMR() {
+    Vec3 pos;
+    float camA, camB;
+
+    courseData = MiniGame_GetCourseData();
+    DrawManager_GetOrCreate();
+    SetResourceLoadingFlag(0);
+    DMAChannelManager_Init();
+    TransitionEffect_GetOrCreate();
+    SoundChannels_ClearAll();
+    ItemObjectManager_Init();
+    CourseObjectManager_Init();
+    environment = new InputManager;
+    m24 = (HsdRefObj *)HSD_LObjLoadDesc(GetCourseDataPtr());
+    m20 = (Deletable *)new Camera ARGS_ORDER((lbl_806D72F8, lbl_806D72B4, 0x100, 0x100, (int)m24), (0x100, 0x100, (int)m24, lbl_806D72F8, lbl_806D72B4));
+    SetActiveCamera(0, m20);
+    g_raceCamera = m20;
+    ProcessSystemTick(0);
+    RankingTable_Init(GetRaceContextPtr());
+    lbl_806D12BC = 0;
+    SoundDriver_GetOrCreate(0);
+    GetStartPosition(0, &pos.x, &pos.y, &pos.z);
+    car = (Destroyable *)new PlayerCar(&pos.x, &pos.z, GetChara());
+    CarObject_SetPosition(car, &pos);
+    {
+        KartDriver *r = (KartDriver *)CarObject_GetRenderObj(car);
+        r->visible_238 = 1;
+    }
+    SetPlayerCarObject(car);
+    lakitu = new LakituStart("jyugemu_start.dat", 0, lbl_806D72B8, lbl_806D72B8, lbl_806D72B8);
+    m18 = (Deletable *)new Scene3D(*GetKartModelNameEntry(g_characterId, -1));
+    m1C = new ChallengeGoalCamera;
+    ProcessSystemTick(0);
+    Scene3D_GetCameraPos(m18, &camA, &camB);
+    camA += lbl_806D729C;
+    Scene3D_SetupProjection(m18, camA, camB);
+    hud = new HUD(0);
+    HUD_RegisterOverlay(hud, 6, 0);
+    HUD_RegisterOverlay(hud, 0x11, 0);
+    HUD_RegisterOverlay(hud, 0x12, 0);
+    HUD_RegisterOverlay(hud, 0xE, 0);
+    g_lakituStartAnimDone = 0;
+    SetCourseScene3D(m18);
+    g_raceEnded = 0;
+    g_raceTimeRemaining = MiniGame_GetTimerValue();
+    PreloadEffectResources(1);
+    PreloadEffectResources(9);
+    PreloadEffectResources(0xA);
+    active = 0;
+    finished = 0;
+    goalReached = 0;
+    state = 0;
+    bgmOn = 0;
+    speedScale = lbl_806D72A4;
+    prevPos.x = lbl_806D72B8;
+    prevPos.y = lbl_806D72B8;
+    prevPos.z = lbl_806D72B8;
+    if ((m3C = new SuikaBallObj("MRO_suikaball.dat")) != 0) {
+        m3C->SetPos(lbl_806D72FC, lbl_806D7300, lbl_806D7304);
+        AddBallToCamera(g_raceCamera);
+        if (courseData != 0) {
+            m3C->SetParams(courseData[0], courseData[1], courseData[2], courseData[3], courseData[4], courseData[5]);
+        }
+    }
+    m44 = (Deletable *)new SuikaUnk44;
+    m48 = (Deletable *)new SuikaUnk48;
+    m40 = (Gate *)new GoalLine(MkVec(lbl_806D7308, lbl_806D7300, lbl_806D730C), MkVec(lbl_806D7310, lbl_806D7300, lbl_806D7314));
+    slots = (SuikaSlot *)FUN_8003b120(sizeof(JointSet) * 3);
+    for (unsigned int i = 0; i < 3; i++) {
+        JointSet *s = (JointSet *)&slots[i];
+        s->a = new clNormal3D(s_jointSets[i].model, 0);
+        clNormal3D_SetScale(s->a, 0, 0.0f, 1.0f, 0.0f, 0.0f);
+        s->b = new clNormal3D(s_jointSets[i].setModel, 0);
+        clNormal3D_SetScale(s->b, 0, 0.0f, 1.0f, 0.0f, 0.0f);
+        s->count = s_jointSets[i].count;
+        s->ja = (void **)FUN_8003b120(s->count * 4);
+        s->jb = (void **)FUN_8003b120(s->count * 4);
+        for (int j = 0; j < s->count; j++) {
+            s->ja[j] = ResolveJointByName(s->a, s_jointSets[i].joints[j * 2]);
+            s->jb[j] = ResolveJointByName(s->b, s_jointSets[i].joints[j * 2 + 1]);
+        }
+    }
+    m60 = (Deletable *)new SuikaCoinShots("mario_coin.dat", "k_kira13.dat");
+    bufs = (GateList *)new GoalLineSet(SuikaBall_Render_rodata_803579F4);
+    coins = 0;
+    if (g_weatherSystem == 0) {
+        g_weatherSystem = new WeatherSystem(1);
+    }
+    SetResourceLoadingFlag(1);
+}
+
+clCGameMR::~clCGameMR()
+{
+    clCGameMR *self = this;
+        delete self->m60;
+        FreeBufs(self);
+        fn_8016C394(0x24);
+        if (g_weatherSystem != 0) {
+            fn_8016C634(g_weatherSystem, 1);
+            g_weatherSystem = 0;
+        }
+        SetActiveCamera(0, 0);
+        delete self->m18;
+        LakituStart_Dtor(self->lakitu, 1);
+        fn_80124C84(self->m1C, 1);
+        SetPlayerCarObject(0);
+        if (self->car != 0) {
+            self->car->Destroy(1);
+        }
+        g_raceCamera = 0;
+        if (self->m20 != 0) {
+            delete self->m20;
+        }
+        if (self->m24 != 0) {
+            HsdRef_Unref(self->m24);
+        }
+        CourseEnvironment_Dtor(self->environment, 1);
+        fn_80254134(self->hud, 1);
+        fn_8012491C(self->m3C, 1);
+        if (self->m40 != 0) {
+            MemoryManager_TimedFree(self->m40);
+        }
+        delete self->m44;
+        delete self->m48;
+        if (self->slots != 0) {
+            for (unsigned int i = 0; i < 3; i++) {
+                if (self->slots[i].bufA != 0) {
+                    MemoryManager_Free(self->slots[i].bufA);
+                }
+                if (self->slots[i].bufB != 0) {
+                    MemoryManager_Free(self->slots[i].bufB);
+                }
+                if (self->slots[i].objA != 0) {
+                    Object_DtorWithGXSync(self->slots[i].objA, 1);
+                }
+                if (self->slots[i].objB != 0) {
+                    Object_DtorWithGXSync(self->slots[i].objB, 1);
+                }
+            }
+            MemoryManager_Free(self->slots);
+        }
+        ItemObjectManager_Reset();
+        VfxSlotMgr_Shutdown();
+        ClRomTable_PurgeAll();
+        RankingTable_Init(GetRaceContextPtr());
+        delete lbl_806D10D0;
+        lbl_806D10D0 = 0;
+        SceneDrawList_Reset();
+        delete lbl_806D109C;
+        lbl_806D109C = 0;
+        SetResourceLoadingFlag(0);
+        clRom_PurgeAll();
+        delete lbl_806D10AC;
+        lbl_806D10AC = 0;
+
+}
+
+int clCGameMR::Update()
+{
+    clCGameMR *self = this;
     InputPlayer *pad;
     float (*mtx)[4];
     Vec3 delta;
@@ -887,454 +1298,57 @@ extern "C" int SuikaBall_Update(SuikaBall *self)
     return -2;
 }
 
-static inline int HsdRef_Dec(HsdRefObj *o)
+void clCGameMR::Draw()
 {
-    int done = o->ref == (unsigned short)-1;
-    if (done) {
-        return done;
+    clCGameMR *self = this;
+    if (self->active == 0) {
+        return;
     }
-    return o->ref-- == 0;
-}
-
-static inline void HsdObj_Destroy(HsdRefObj *o)
-{
-    if (o != 0) {
-        o->klass->release(o);
-        o->klass->destroy(o);
-    }
-}
-
-static inline void HsdRef_Unref(HsdRefObj *o)
-{
-    if (o != 0 && HsdRef_Dec(o)) {
-        HsdObj_Destroy(o);
-    }
-}
-
-static inline void FreeBufs(SuikaBall *self)
-{
-    GateList *bufs = self->bufs;
-    if (bufs != 0) {
-        for (int i = 0; i < 4; i++) {
-            if (bufs->gates[i] != 0) {
-                MemoryManager_TimedFree(bufs->gates[i]);
-            }
-        }
-        MemoryManager_TimedFree(bufs);
-    }
-}
-
-extern "C" SuikaBall *fn_80133008(SuikaBall *self, short flag)
-{
-    if (self != 0) {
-        self->vtable = SuikaBallMode_vtable_8048E3F8;
-        delete self->m60;
-        FreeBufs(self);
-        fn_8016C394(0x24);
-        if (g_weatherSystem != 0) {
-            fn_8016C634(g_weatherSystem, 1);
-            g_weatherSystem = 0;
-        }
-        SetActiveCamera(0, 0);
-        delete self->m18;
-        LakituStart_Dtor(self->lakitu, 1);
-        fn_80124C84(self->m1C, 1);
-        SetPlayerCarObject(0);
-        if (self->car != 0) {
-            self->car->Destroy(1);
-        }
-        g_raceCamera = 0;
-        if (self->m20 != 0) {
-            delete self->m20;
-        }
-        if (self->m24 != 0) {
-            HsdRef_Unref(self->m24);
-        }
-        CourseEnvironment_Dtor(self->environment, 1);
-        fn_80254134(self->hud, 1);
-        fn_8012491C(self->m3C, 1);
-        if (self->m40 != 0) {
-            MemoryManager_TimedFree(self->m40);
-        }
-        delete self->m44;
-        delete self->m48;
-        if (self->slots != 0) {
-            for (unsigned int i = 0; i < 3; i++) {
-                if (self->slots[i].bufA != 0) {
-                    MemoryManager_Free(self->slots[i].bufA);
-                }
-                if (self->slots[i].bufB != 0) {
-                    MemoryManager_Free(self->slots[i].bufB);
-                }
-                if (self->slots[i].objA != 0) {
-                    Object_DtorWithGXSync(self->slots[i].objA, 1);
-                }
-                if (self->slots[i].objB != 0) {
-                    Object_DtorWithGXSync(self->slots[i].objB, 1);
+    if (self->m18->Begin() == 1) {
+        clDrawMan_Buckets_Reset(SINGLETON_INSTANCE(lbl_806D10AC));
+        TransparentDraw_SortAndDispatch();
+        CObj_DebugVizPathFlush(self->m18);
+        fn_8016B0C4();
+        KartItem_RenderPipelinedWithEffects(self->car, 0);
+        Object_RenderJObjIfWithinRange(self->lakitu);
+        CourseEnvironment_RenderObjects_Timed(self->environment);
+        Subsystem36c_DispatchPass2_Timed(self->environment);
+        ItemObjectManager_Render();
+        SuikaBallObj_Render(self->m3C);
+        self->m44->End();
+        self->m48->End();
+        for (unsigned int i = 0; i < 3; i++) {
+            SuikaSlot *slot = &self->slots[i];
+            for (int j = 0; j < slot->count; j++) {
+                if (slot->bufB[j] != 0 && slot->bufA[j] != 0) {
+                    Vec3 v;
+                    Quat q;
+                    HSD_JObjGetTranslation(slot->bufB[j], &v);
+                    HSD_JObjSetTranslate(slot->bufA[j], &v);
+                    HSD_JObjGetRotation(slot->bufB[j], &q);
+                    HSD_JObjSetRotation(slot->bufA[j], &q);
+                    HSD_JObjGetScale(slot->bufB[j], &v);
+                    HSD_JObjSetScale(slot->bufA[j], &v);
+                    Object_RenderJObjEx(slot->objA, slot->bufA[j], 7);
                 }
             }
-            MemoryManager_Free(self->slots);
         }
-        ItemObjectManager_Reset();
-        VfxSlotMgr_Shutdown();
-        ClRomTable_PurgeAll();
-        RankingTable_Init(GetRaceContextPtr());
-        delete lbl_806D10D0;
-        lbl_806D10D0 = 0;
-        SceneDrawList_Reset();
-        delete lbl_806D109C;
-        lbl_806D109C = 0;
-        SetResourceLoadingFlag(0);
-        clRom_PurgeAll();
-        delete lbl_806D10AC;
-        lbl_806D10AC = 0;
-        dtor_80122FD8(self, 0);
-        if (flag > 0) {
-            MemoryManager_TimedFree(self);
+        fn_80253448(self->hud, lbl_806DC190);
+        DrawEffect_TickAndCull();
+        if (IsCardValid()) {
+            DrawCardWalls();
         }
+        self->m60->End();
+        clDrawMan_EndFrame_NoOp(SINGLETON_INSTANCE(lbl_806D10AC));
+        clDrawMan_Buckets_Dispatch(SINGLETON_INSTANCE(lbl_806D10AC));
+        Subsystem36c_DispatchPass4_Timed(self->environment);
+        TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 2);
+        TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 4);
+        fn_80253448(self->hud, lbl_806DC1B0 | lbl_806DC190);
+        self->m18->End();
     }
-    return self;
+    fn_80253448(self->hud, lbl_806DC1B8);
+    fn_802535D4(self->hud);
+    TransitionEffect_RenderPass(SINGLETON_INSTANCE(lbl_806D109C), 1);
+    HSD_StateInvalidate(0x7f);
 }
-
-#include "game/types/KartDriver.h"
-
-#include "game/types/InputManager.h"
-#include "game/types/Camera.h"
-#include "game/types/CarObject.h"
-static inline int GetChara() { return g_characterId; }
-struct PlayerCar : CarObject {
-    PlayerCar(const float *x, const float *z, int chara)
-        : CarObject(GetDisplayBufferIndex(), chara, 0, 0, 1, 0, 0, 0, *x, *z, GetCourseStartYaw()) {}
-};
-#include "game/types/LakituStart.h"
-#include "game/types/Scene3D.h"
-#include "game/types/ChallengeGoalCamera.h"
-#include "game/types/HUD.h"
-#include "game/types/WeatherSystem.h"
-#include "game/types/clNormal3D.h"
-
-struct ShotVec {
-    float x, y, z;
-    void Zero() { x = y = z = lbl_806D72B8; }
-};
-struct CoinShotTrail { int age; ShotVec pos; };
-struct CoinShot {
-    int active;
-    int x4;
-    int timer;
-    ShotVec pos;
-    ShotVec vel;
-    float rot;
-    float alpha;
-    CoinShotTrail trail[20];
-};
-
-#include "game/types/CoinShotBase.h"
-
-inline CoinShotBase::CoinShotBase(const char *modelFile, const char *trailFile) {
-    xC = 0;
-    x10 = 0;
-    trailCount = 5;
-    model = new clNormal3D(modelFile, 1);
-    clNormal3D_SetFlags(model, 0x40000000, 0);
-    trailModel = new clNormal3D(trailFile, 1);
-    HSD_JObjSetFlags(Archive_GetRootJObj(trailModel), 0x200);
-    for (int i = 0; i < 6; i++) {
-        shots[i].active = 0;
-        shots[i].timer = 0;
-        shots[i].rot = lbl_806D72B8;
-        shots[i].alpha = lbl_806D72B8;
-        shots[i].x4 = 0;
-        shots[i].pos.Zero();
-        shots[i].vel.Zero();
-        for (int j = 0; j < 20; j++) {
-            shots[i].trail[j].age = -1;
-        }
-    }
-    if (trailCount >= 20) {
-        trailCount = 19;
-    }
-}
-
-struct SuikaCoinShots : CoinShotBase {
-    SuikaCoinShots(const char *modelFile, const char *trailFile) : CoinShotBase(modelFile, trailFile) {}
-    virtual ~SuikaCoinShots();
-};
-
-#include "game/types/GameModeBase.h"
-
-struct ModeBase : GameModeBase {
-    float x4;
-    ModeBase() {
-        x4 = lbl_806D72B8;
-    }
-    virtual void _key2();
-    virtual ~ModeBase();
-};
-
-
-struct GVec { float x, y, z; };
-static inline GVec MkVec(float x, float y, float z) { GVec v; v.x = x; v.y = y; v.z = z; return v; }
-struct GoalLine {
-    Vec3 p0, p1, dir, normal;
-    GoalLine(GVec a, GVec b) { Set(a, b); }
-    void Set(GVec a, GVec b) {
-        p0.x = a.x; p0.y = a.y; p0.z = a.z;
-        p1.x = b.x; p1.y = b.y; p1.z = b.z;
-        Vec3_Subtract(&p1, &p0, &dir);
-        Vec3_Normalize(&dir, &dir);
-        normal.x = -dir.z; normal.y = dir.y; normal.z = dir.x;
-    }
-};
-struct GoalLineSet {
-    GoalLine *lines[4];
-    int next;
-    GoalLineSet(const Vec3 (*tbl)[2]) {
-        next = 0;
-        for (int i = 0; i < 4; i++) {
-            lines[i] = new GoalLine(*(const GVec *)&tbl[i][0], *(const GVec *)&tbl[i][1]);
-        }
-    }
-};
-struct JointSet {
-    clNormal3D *a;
-    clNormal3D *b;
-    void **ja;
-    void **jb;
-    int count;
-};
-struct SuikaUnk44 { char data[0xC]; SuikaUnk44(); };
-struct SuikaUnk48 { char data[0x10]; SuikaUnk48(); };
-
-/*
- * SuikaBall_Init: the mode's constructor. The goal-line constructor takes
- * its two end points by value and forwards them to Set() by value; that
- * extra copy (and MkVec's local) is what gives the target's stack layout.
- * Float literals in the joint-set loop keep 0.0f from being hoisted into f31.
- */
-struct SuikaBallMode : ModeBase {
-    virtual void _key3();
-    float *courseData;
-    CarObject *car;
-    LakituStart *lakitu;
-    InputManager *input;
-    Scene3D *scene;
-    ChallengeGoalCamera *goalCam;
-    Camera *camera;
-    int renderTarget;
-    int x28;
-    HUD *hud;
-    unsigned char x30, x31, x32, x33;
-    int x34;
-    int x38;
-    SuikaBallObj *ball;
-    GoalLine *goal;
-    SuikaUnk44 *x44;
-    SuikaUnk48 *x48;
-    float x4C;
-    Vec3 x50;
-    JointSet *sets;
-    SuikaCoinShots *shots;
-    GoalLineSet *lines;
-    int coins;
-    SuikaBallMode();
-    void AddBallToCamera(void *cam) {
-        if (cam != 0 && ball->archive != 0) {
-            SceneRender_CmdB_8aa20(cam, Archive_GetRootJObj(ball->archive));
-        }
-    }
-};
-
-SuikaBallMode::SuikaBallMode() {
-    Vec3 pos;
-    float camA, camB;
-
-    courseData = MiniGame_GetCourseData();
-    DrawManager_GetOrCreate();
-    SetResourceLoadingFlag(0);
-    DMAChannelManager_Init();
-    TransitionEffect_GetOrCreate();
-    SoundChannels_ClearAll();
-    ItemObjectManager_Init();
-    CourseObjectManager_Init();
-    input = new InputManager;
-    renderTarget = HSD_LObjLoadDesc(GetCourseDataPtr());
-    camera = new Camera ARGS_ORDER((lbl_806D72F8, lbl_806D72B4, 0x100, 0x100, renderTarget), (0x100, 0x100, renderTarget, lbl_806D72F8, lbl_806D72B4));
-    SetActiveCamera(0, camera);
-    g_raceCamera = camera;
-    ProcessSystemTick(0);
-    RankingTable_Init(GetRaceContextPtr());
-    lbl_806D12BC = 0;
-    SoundDriver_GetOrCreate(0);
-    GetStartPosition(0, &pos.x, &pos.y, &pos.z);
-    car = new PlayerCar(&pos.x, &pos.z, GetChara());
-    CarObject_SetPosition(car, &pos);
-    {
-        KartDriver *r = (KartDriver *)CarObject_GetRenderObj(car);
-        r->visible_238 = 1;
-    }
-    SetPlayerCarObject(car);
-    lakitu = new LakituStart(s_lakituFile, 0, lbl_806D72B8, lbl_806D72B8, lbl_806D72B8);
-    scene = new Scene3D(*GetKartModelNameEntry(g_characterId, -1));
-    goalCam = new ChallengeGoalCamera;
-    ProcessSystemTick(0);
-    Scene3D_GetCameraPos(scene, &camA, &camB);
-    camA += lbl_806D729C;
-    Scene3D_SetupProjection(scene, camA, camB);
-    hud = new HUD(0);
-    HUD_RegisterOverlay(hud, 6, 0);
-    HUD_RegisterOverlay(hud, 0x11, 0);
-    HUD_RegisterOverlay(hud, 0x12, 0);
-    HUD_RegisterOverlay(hud, 0xE, 0);
-    g_lakituStartAnimDone = 0;
-    SetCourseScene3D(scene);
-    g_raceEnded = 0;
-    g_raceTimeRemaining = MiniGame_GetTimerValue();
-    PreloadEffectResources(1);
-    PreloadEffectResources(9);
-    PreloadEffectResources(0xA);
-    x30 = 0;
-    x32 = 0;
-    x33 = 0;
-    x34 = 0;
-    x31 = 0;
-    x4C = lbl_806D72A4;
-    x50.x = lbl_806D72B8;
-    x50.y = lbl_806D72B8;
-    x50.z = lbl_806D72B8;
-    if ((ball = new SuikaBallObj(s_ballFile)) != 0) {
-        ball->SetPos(lbl_806D72FC, lbl_806D7300, lbl_806D7304);
-        AddBallToCamera(g_raceCamera);
-        if (courseData != 0) {
-            ball->SetParams(courseData[0], courseData[1], courseData[2], courseData[3], courseData[4], courseData[5]);
-        }
-    }
-    x44 = new SuikaUnk44;
-    x48 = new SuikaUnk48;
-    goal = new GoalLine(MkVec(lbl_806D7308, lbl_806D7300, lbl_806D730C), MkVec(lbl_806D7310, lbl_806D7300, lbl_806D7314));
-    sets = (JointSet *)FUN_8003b120(sizeof(JointSet) * 3);
-    for (unsigned int i = 0; i < 3; i++) {
-        JointSet *s = &sets[i];
-        s->a = new clNormal3D(s_jointSets[i].model, 0);
-        clNormal3D_SetScale(s->a, 0, 0.0f, 1.0f, 0.0f, 0.0f);
-        s->b = new clNormal3D(s_jointSets[i].setModel, 0);
-        clNormal3D_SetScale(s->b, 0, 0.0f, 1.0f, 0.0f, 0.0f);
-        s->count = s_jointSets[i].count;
-        s->ja = (void **)FUN_8003b120(s->count * 4);
-        s->jb = (void **)FUN_8003b120(s->count * 4);
-        for (int j = 0; j < s->count; j++) {
-            s->ja[j] = ResolveJointByName(s->a, s_jointSets[i].joints[j * 2]);
-            s->jb[j] = ResolveJointByName(s->b, s_jointSets[i].joints[j * 2 + 1]);
-        }
-    }
-    shots = new SuikaCoinShots(s_coinFile, s_kiraFile);
-    lines = new GoalLineSet(SuikaBall_Render_rodata_803579F4);
-    coins = 0;
-    if (g_weatherSystem == 0) {
-        g_weatherSystem = new WeatherSystem(1);
-    }
-    SetResourceLoadingFlag(1);
-}
-
-extern "C" void fn_80133CA8(ShotOwner *self)
-{
-    for (int i = 0; i < 6; i++) {
-        if (((ShotSet *)self)->shots[i].active) {
-            Object_SetJObjPositionVec(self->model, &((ShotSet *)self)->shots[i].pos);
-            Object_SetJObjRotationY(self->model, lbl_806D7298 * ((ShotSet *)self)->shots[i].rot);
-            Object_SetColorAlphaOnly(self->model, 0, ((ShotSet *)self)->shots[i].alpha);
-            Object_RenderJObjEx(self->model, LinkedNode_GetField10_OrFallback(self->model, 0), 7);
-            LNode *n = LinkedNode_GetField10_OrFallback(self->model, 0);
-            Object_RenderJObjEx(self->model, n == 0 ? 0 : n->f8, 7);
-            for (int j = 0; j < self->trailCount; j++) {
-                float f = ((ShotSet *)self)->shots[i].trail[j].age / lbl_806D729C;
-                float sc = lbl_806D72A0 - f;
-                Object_SetJObjPositionVec(self->trailModel, &((ShotSet *)self)->shots[i].trail[j].pos);
-                Object_SetJObjScaleXYZ(self->trailModel, sc, sc, sc);
-                Object_SetColorAlphaOnly(self->trailModel, 0, (lbl_806D72A4 - f) * ((ShotSet *)self)->shots[i].alpha);
-                Object_RenderJObjTree(self->trailModel, 7);
-            }
-        }
-    }
-}
-
-static inline bool Trail_Spawn(Trail *t, float c, float s)
-{
-    if (t->age >= 0) {
-        return false;
-    }
-    t->age = 0;
-    t->pos.x = 5.0f * LUT_Sin12Bit(360.0f * c);
-    t->pos.y = 10.0f * s;
-    t->pos.z = 5.0f * fn_80186960(360.0f * c);
-    return true;
-}
-
-extern "C" void fn_80133E64(ShotOwner *self)
-{
-    Trail *tr;
-    int i;
-    for (i = 0; i < 6; i++) {
-        Shot *s = &((ShotSet *)self)->shots[i];
-        if (s->active) {
-            tr = s->trail;
-            s->pos.x += s->vel.x;
-            s->pos.y += s->vel.y;
-            s->pos.z += s->vel.z;
-            s->vel.y -= 0.1f;
-            float h = 0.0f;
-            if (Terrain_GetGroundHeightWithPenetration(&s->pos, &h, 0, 0, 10.0f) == 1 && s->pos.y < h) {
-                s->vel.y = 0.8f * -s->vel.y;
-            }
-            s->rot += 5.0f;
-            if (s->rot > 360.0f) {
-                s->rot -= 360.0f;
-            }
-            s->alpha = 1.0f - s->timer / 70.0f;
-            int j;
-            for (j = 0; j < self->trailCount; j++) {
-                Trail *t = &tr[j];
-                if (t->age >= 0) {
-                    t->pos.y -= 2.0f;
-                    if (++t->age > 10) {
-                        t->age = -1;
-                    }
-                }
-            }
-            if ((s->timer & 3) == 0) {
-                for (j = 0; j < self->trailCount; j++) {
-                    if (Trail_Spawn(&tr[j], lbl_80495994[self->sinIdx], lbl_80495A94[self->cosIdx]) == true) {
-                        tr[j].pos.x += s->pos.x;
-                        tr[j].pos.y += s->pos.y;
-                        tr[j].pos.z += s->pos.z;
-                        break;
-                    }
-                }
-                if (++self->sinIdx >= 0x40) {
-                    self->sinIdx = 0;
-                }
-                if (++self->cosIdx >= 0x30) {
-                    self->cosIdx = 0;
-                }
-            }
-            if (++s->timer >= 0x46) {
-                s->active = 0;
-            }
-        }
-    }
-}
-
-extern "C" ModelPair *fn_80134164(ModelPair *self, short flag)
-{
-    if (self) {
-        self->vt = SuikaCoinShots_vtable_8048E418;
-        if (self) {
-            self->vt = CoinShotBase_vtable_8048E34C;
-            Object_DtorWithGXSync(self->a, 1);
-            Object_DtorWithGXSync(self->b, 1);
-        }
-        if (flag > 0) MemoryManager_TimedFree(self);
-    }
-    return self;
-}
-
