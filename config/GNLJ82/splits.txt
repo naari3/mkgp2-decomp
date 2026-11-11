@@ -7664,7 +7664,7 @@ game/autodata/sdata_806CFC58.c:
 	.sdata      start:0x806CFC58 end:0x806CFCAC
 
 game/autodata/sdata_806CFCB0.c:
-	.sdata      start:0x806CFCB0 end:0x806CFDF0
+	.sdata      start:0x806CFCB0 end:0x806CFCD8
 
 game/autodata/data_80495ED0.c:
 	.data       start:0x80495ED0 end:0x80495F20
@@ -7967,7 +7967,7 @@ game/objview/MapWaterEffect_Init.c:
 	.data       start:0x80495F6C end:0x80495F98
 
 game/autodata/data_80495F98.c:
-	.data       start:0x80495F98 end:0x804963D8
+	.data       start:0x80495F98 end:0x80496370
 
 game/autodata/rodata_8037D61C.c:
 	.rodata     start:0x8037D61C end:0x8037D884
@@ -8032,25 +8032,18 @@ game/BananaField_TestHitBox.c:
 	.text       start:0x80196F60 end:0x80197130
 
 game/objview/fn_80197130.cpp:
-	extab       start:0x800124E0 end:0x800124F8
-	extabindex  start:0x80027344 end:0x80027350
-	.text       start:0x80197130 end:0x801972E0
-
-game/objview/fn_801972E0.c:
-	extab       start:0x800124F8 end:0x80012500
-	extabindex  start:0x80027350 end:0x8002735C
-	.text       start:0x801972E0 end:0x80197C84
-
-game/objview/fn_80197C84.c:
-	extab       start:0x80012500 end:0x80012508
-	extabindex  start:0x8002735C end:0x80027368
-	.text       start:0x80197C84 end:0x80197D20
-
-game/objview/fn_80197D20.cpp:
-	extab       start:0x80012508 end:0x80012560
-	extabindex  start:0x80027368 end:0x80027374
-	.text       start:0x80197D20 end:0x80197F24
+	extab       start:0x800124E0 end:0x80012560
+	extabindex  start:0x80027344 end:0x80027374
+	.text       start:0x80197130 end:0x80197F24
 	.rodata     start:0x8037DA90 end:0x8037DB74
+	.data       start:0x80496370 end:0x80496398
+	.sdata      start:0x806CFCD8 end:0x806CFCE8
+
+game/autodata/sdata_806CFCE8.c:
+	.sdata      start:0x806CFCE8 end:0x806CFDF0
+
+game/autodata/data_80496398.c:
+	.data       start:0x80496398 end:0x804963D8
 
 game/objview/fn_80197F24.cpp:
 	extab       start:0x80012560 end:0x80012578
