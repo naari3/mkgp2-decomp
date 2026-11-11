@@ -1,3 +1,4 @@
+#include "game/types/gx_data.h"
 #include "game/types/VtxDesc.h"
 
 #include "game/types/VtxAttrEntry.h"
@@ -35,7 +36,7 @@ static inline unsigned char SetIndex(int attr, unsigned char *vtx, int idx) {
         }
         if (attr == lbl_80677E18[i].desc->attr) {
             if (lbl_80677E18[i].desc->type == 3) {
-                *(unsigned short *)(vtx + lbl_80677E18[i].offset) = idx;
+                GXDATA_SET_U16(vtx + lbl_80677E18[i].offset, idx);
                 return 1;
             } else {
                 *(unsigned char *)(vtx + lbl_80677E18[i].offset) = idx;
@@ -55,7 +56,7 @@ static inline unsigned int CmdSize(unsigned char *p) {
     case 0x08:
         return 6;
     case 0x10:
-        return ((unsigned int)(*(unsigned short *)(p + 1) + 1) * 32 + 40) / 8;
+        return ((unsigned int)(GXDATA_U16(p + 1) + 1) * 32 + 40) / 8;
     case 0x20:
         return 5;
     case 0x28:
@@ -106,7 +107,7 @@ int fn_80182ED0(PObjView *pobj, int attr) {
             p += size;
             continue;
         }
-        n = *(unsigned short *)(p + 1);
+        n = GXDATA_U16(p + 1);
         p += 3;
         for (j = 0; j < n; j++) {
             if (SetIndex(attr, p, idx)) {

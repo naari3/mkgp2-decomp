@@ -1,3 +1,4 @@
+#include "game/types/gx_data.h"
 #include <game/dlistutil_extract_private.h>
 
 static inline unsigned char ReadQuadPosition(unsigned char *p, Vec *out) {
@@ -8,14 +9,14 @@ static inline unsigned char ReadQuadPosition(unsigned char *p, Vec *out) {
             unsigned int index;
             float *src;
             if (lbl_80677E18[i].desc->type == 3)
-                index = *(unsigned short *)(p + lbl_80677E18[i].offset);
+                index = GXDATA_U16(p + lbl_80677E18[i].offset);
             else
                 index = *(unsigned char *)(p + lbl_80677E18[i].offset);
             src = lbl_80677E18[i].desc->array;
             src += index * (lbl_80677E18[i].desc->stride / 4);
-            out->x = src[0];
-            out->y = src[1];
-            out->z = src[2];
+            out->x = GXDATA_F32(src);
+            out->y = GXDATA_F32(src + 1);
+            out->z = GXDATA_F32(src + 2);
             return 1;
         }
     }
@@ -26,7 +27,7 @@ static inline int ReadPrimitive(unsigned char **cursor, int *primitive) {
     unsigned char *header = *cursor;
     int vertex_count;
     *primitive = header[0] & 0xf8;
-    vertex_count = *(unsigned short *)(header + 1);
+    vertex_count = GXDATA_U16(header + 1);
     *cursor = header + 3;
     return vertex_count;
 }

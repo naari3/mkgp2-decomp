@@ -1,5 +1,6 @@
 #ifndef GAME_DLIST_BOUNDS_PRIVATE_H
 #define GAME_DLIST_BOUNDS_PRIVATE_H
+#include "game/types/gx_data.h"
 #include "sysdolphin/baselib/jobj.h"
 #include "sysdolphin/baselib/dobj.h"
 typedef struct BoundsVec { float x, y, z; } BoundsVec;
@@ -39,7 +40,7 @@ static inline unsigned int CmdSize(unsigned char *p, const char *messages) {
     case 0x08:
         return 6;
     case 0x10:
-        return ((unsigned int)(*(unsigned short *)(p + 1) + 1) * 32 + 40) / 8;
+        return ((unsigned int)(GXDATA_U16(p + 1) + 1) * 32 + 40) / 8;
     case 0x20:
         return 5;
     case 0x28:
@@ -73,10 +74,10 @@ static inline unsigned char ReadPosition(unsigned char *p, BoundsVec *out) {
             VtxDesc *d=entry->desc;
             unsigned int index;
             float *v;
-            if (d->type==3) index=*(unsigned short *)(p+entry->offset);
+            if (d->type==3) index=GXDATA_U16(p+entry->offset);
             else index=p[entry->offset];
             v=d->array+index*(d->stride/4);
-            out->x=v[0];out->y=v[1];out->z=v[2];
+            out->x=GXDATA_F32(v);out->y=GXDATA_F32(v + 1);out->z=GXDATA_F32(v + 2);
             return 1;
         }
     }

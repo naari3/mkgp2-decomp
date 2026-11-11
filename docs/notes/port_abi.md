@@ -583,3 +583,22 @@ from game code with a float involved; most are MetroTRK and Melee headers);
 `--all` adds functions defined in src/game, which the port's
 arg_order_census.py covers (those are handled by ARGS_ORDER, `_Reordered`
 wrappers or tween_set_order.h, which this text tool reads as written).
+
+## GX stream data read on the CPU
+
+Display lists and vertex buffers stay big-endian in a port (the GX layer
+consumes them that way). The game's own readers, src/game/dlistutil (11 of
+the 13 units) with DListBoundsPrivate.h, DListGeometryPrivate.h and
+dlistutil_extract_private.h, go through include/game/types/gx_data.h:
+
+- `GXDATA_U16(p)`: the vertex count of a primitive (`p + 1`, also in
+  `CmdSize` for command 0x10) and a 16-bit vertex index in a display list;
+- `GXDATA_SET_U16(p, v)`: `SetIndex` (fn_80182ED0.c, fn_801831F8.c);
+- `GXDATA_F32(p)`: the three position floats of a vertex.
+
+Plain loads and stores by default (objects unchanged); a port predefines them.
+8-bit indices need nothing. Outside dlistutil the game only hands these
+buffers to GX (`GXSetArray`, `GXCallDisplayList` in GXChannel_*.c). The HSD
+library has one more CPU reader, the shape-animation path of
+src/sysdolphin/baselib/pobj.c (`get_shape_vertex_xyz`, `get_shape_normal_xyz`,
+`get_shape_nbt_xyz`, `interpretShapeAnimDisplayList`); it is not converted.
