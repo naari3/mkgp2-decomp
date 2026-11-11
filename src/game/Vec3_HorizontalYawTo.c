@@ -1,7 +1,7 @@
 #include "game/MathInline.h"
 
 extern void Vec3_Subtract(const Vec3f *a, const Vec3f *b, Vec3f *out);
-extern double atan2(float y, float x);
+extern double atan2(double, double);
 
 float Vec3_HorizontalYawTo(const Vec3f *from, const Vec3f *to)
 {

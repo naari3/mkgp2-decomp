@@ -2,7 +2,7 @@
 
 extern void PSMTX44Identity(float dst[4][4]);
 extern void Vec3_Subtract(const Vec3f *a, const Vec3f *b, Vec3f *out);
-extern double atan2(float y, float x);
+extern double atan2(double, double);
 
 static inline void Mtx_TransposeToMtx44_Inline(float dst[4][4], float src[3][4])
 {

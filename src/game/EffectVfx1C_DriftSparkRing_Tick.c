@@ -15,7 +15,7 @@ extern float LUT_Cosine(float angle);
 extern void VfxSlot_SetScaleVec3(void *slot, float x, float y, float z);
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec *in);
 extern void Mtx44_GetTranslation_ColMajor(Vec *out, float m[4][4]);
-extern double atan2(float y, float x);
+extern double atan2(double, double);
 
 void EffectVfx1C_DriftSparkRing_Tick(unsigned char *self)
 {

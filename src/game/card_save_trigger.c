@@ -121,7 +121,7 @@ extern void __copy();
 extern void card_backup();
 extern void card_rw_state_machine();
 extern void fn_801D647C();
-extern void rand();
+extern int rand(void);
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806CF0D0;

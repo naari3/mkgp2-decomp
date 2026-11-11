@@ -758,3 +758,21 @@ like; nothing changes for MWCC): `PanelItem` (RankPanel_80144430.cpp),
 clang's record layouts; it reports none after this change. A new class with
 virtual functions that ends in a `char`, `bool` or `short` and is derived from
 needs the same member.
+
+## Library prototypes (request 41, 2026-11-11)
+
+Sixteen units declared `atan2`, `atan` and `tan` with `float` parameters. On
+PowerPC a float and a double argument use the same register, so the objects
+are the same either way; a 32-bit x86 caller pushes 4 bytes where libm reads
+8, and every yaw and pitch computed that way was garbage. All declarations of
+C library functions in src/game and include/game now have the standard
+parameter and return types (`double atan2(double, double)`,
+`unsigned long strlen(const char *)`, `void *memset(void *, int, unsigned long)`,
+`int snprintf(char *, unsigned long, const char *, ...)` and so on); no
+object changed.
+
+`tools/port_abi/libc_decls.py [--fix]` lists and rewrites them. It does not
+compare pointer types with each other and leaves the `wcs*` functions alone.
+Left: src/game/Rand.c declares `unsigned short rand(void)`; with `int` the
+object changes (the truncation is how the original was written), and the low
+16 bits of the result are the same on the host.

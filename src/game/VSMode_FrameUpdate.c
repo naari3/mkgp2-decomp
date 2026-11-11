@@ -1091,7 +1091,7 @@ extern void fn_80253F2C();
 extern void fn_80253FD8();
 extern void VIWaitForRetrace();
 extern void __div2i();
-extern void memset();
+extern void *memset(void *, int, unsigned long);
 extern void race_result_handler();
 
 /* --- extern decls: sda21-referenced data --- */

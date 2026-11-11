@@ -8,12 +8,12 @@
 #ifdef NON_MATCHING
 extern double cos(double x);
 #else
-extern void cos();
+extern double cos(double);
 #endif
 #ifdef NON_MATCHING
 extern double sin(double x);
 #else
-extern void sin();
+extern double sin(double);
 #endif
 
 /* --- extern decls: sda21-referenced data --- */

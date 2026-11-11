@@ -40,7 +40,7 @@ extern void Vec3_Scale();
 #ifdef NON_MATCHING
 extern double sin(double);
 #else
-extern void sin();
+extern double sin(double);
 #endif
 
 /* --- extern decls: sda21-referenced data --- */

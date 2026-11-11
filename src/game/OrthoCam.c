@@ -60,8 +60,8 @@ extern unsigned int OrthoCam_bss_806D1550;
 extern CamView *OrthoCam_bss_806D1554;
 
 extern float HSD_CObjGetNear(void *cobj);
-extern double atan(float x);
-extern double tan(float x);
+extern double atan(double);
+extern double tan(double);
 extern void HSD_CObjSetFrustum(void *cobj, float a, float b, float c, float d);
 extern void HSD_CObjGetPerspective(void *cobj, float *a, float *b);
 extern void *HSD_CObjLoadDesc(void *desc);

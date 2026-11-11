@@ -2038,7 +2038,7 @@ extern void ItemTable_PopulateAliasedSlots();
 extern void TitleTracker_GetOrCreateSingleton();
 extern void fn_8018CC64();
 extern void fn_801D7610();
-extern void memset();
+extern void *memset(void *, int, unsigned long);
 #endif
 
 /* --- extern decls: sda21-referenced data --- */

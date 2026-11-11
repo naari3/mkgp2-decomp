@@ -1105,3 +1105,9 @@ status: note
 
 n3 added explicit tail padding members (no layout change under MWCC) to PanelItem (RankPanel_80144430.cpp), FadeObj (fn_801BAA88.cpp, anon_8021F088_private.h, anon_8021BC44Types.h), clGetCoinLine, clFlowCCInterface (two headers), SceneRoot163, JobTask (types/JobTask.h), SceneBase (types/SceneBase.h, resultscene_shared.h, anon_8021F088_private.h, fn_80162C3C.cpp, Scene_8015BE44.cpp, Scene_80163804.cpp). When you write a polymorphic base that ends in char/bool/short, please add the padding member too (docs/notes/port_abi.md, Tail padding of base classes).
 
+## n3-20261111-1335 | 2026-11-11 13:35Z | from: n3 | port-readiness: library prototypes
+re: -
+status: note
+
+n3 changed only the extern declarations of C library functions (atan2, atan, tan, sin, cos, strlen, strcpy, strcat, strstr, strcmp, strncmp, memset, rand, snprintf) to the standard prototypes in about 28 game units and include/game/types/RaceHud_support.h. Objects unchanged. In new code please declare maths functions with double parameters (tools/port_abi/libc_decls.py lists offenders).
+

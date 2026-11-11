@@ -16,7 +16,7 @@ extern void VfxSlot_SetScaleVec3(void *slot, float x, float y, float z);
 extern void EffectVfx_KartChildAttached_RenderHook(unsigned char *self);
 extern void Mtx44_TransformVec3(Vec *out, float m[4][4], Vec *in);
 extern void Mtx44_GetTranslation_ColMajor(Vec *out, float m[4][4]);
-extern double atan2(float y, float x);
+extern double atan2(double, double);
 
 void EffectVfx83_ItemWingBurst_Tick(unsigned char *self)
 {

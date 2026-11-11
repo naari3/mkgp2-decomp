@@ -1324,7 +1324,7 @@ void *PcbSyncTable_Ptr(void)
 extern unsigned char g_isCommHost;
 extern int g_localPcbRole;
 
-extern void memset(void *dst, int value, unsigned long size);
+extern void *memset(void *, int, unsigned long);
 
 void *SyncSlot_GetHostSend(void) {
     unsigned char *p;
