@@ -11603,7 +11603,7 @@ game/FlowCardCheck_nm2.cpp:
 	.sdata      start:0x806D0650 end:0x806D0728
 
 game/autodata/sdata_806D0728.c:
-	.sdata      start:0x806D0728 end:0x806D08A0
+	.sdata      start:0x806D0728 end:0x806D0888
 
 game/autodata/data_804EE520.c:
 	.data       start:0x804EE520 end:0x804EE540
@@ -11911,7 +11911,7 @@ game/autodata/sdata2_806DBE00.c:
 	.sdata2     start:0x806DBE00 end:0x806DC260
 
 game/autodata/rodata_803EEE58.c:
-	.rodata     start:0x803EEE58 end:0x803EF898
+	.rodata     start:0x803EEE58 end:0x803EF860
 
 game/fn_80241B84.c:
 	extab       start:0x8001CF80 end:0x8001CF88
@@ -12122,7 +12122,7 @@ game/RaceDigits.cpp:
 	.data       start:0x804EEAC4 end:0x804EEAE0
 
 game/autodata/data_804EEAE0.c:
-	.data       start:0x804EEAE0 end:0x804EEB4C
+	.data       start:0x804EEAE0 end:0x804EEB00
 
 game/RaceDigitListErase.cpp:
 	extab       start:0x8001DA34 end:0x8001DA3C
@@ -12166,11 +12166,10 @@ game/HudModeCreate.cpp:
 game/HudFlow.cpp:
 	extab       start:0x8001DAFC end:0x8001DB48
 	extabindex  start:0x8002B34C end:0x8002B388
-	.text       start:0x802483B4 end:0x802488FC
-	.data       start:0x804EEB4C end:0x804EEB84
-
-game/HudThunk802488FC.cpp:
-	.text       start:0x802488FC end:0x80248904
+	.text       start:0x802483B4 end:0x80248904
+	.rodata     start:0x803EF860 end:0x803EF898
+	.data       start:0x804EEB00 end:0x804EEB84
+	.sdata      start:0x806D0888 end:0x806D08A0
 
 game/HudResultFlow.cpp:
 	extab       start:0x8001DB48 end:0x8001DB94
