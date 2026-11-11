@@ -8,6 +8,9 @@
     "__vt__13SceneRoleBase": "lbl_803FE0C8"
   },
   "src/game/ItemHolder_Init.cpp": {
+    "__vt__10ItemHolder": "lbl_804E4B44",
+    "__vt__20clEnemyItemInterface": "lbl_804E4AF0",
+    "__dt__20clEnemyItemInterfaceFv": "fn_801E89A0",
     "__ct__10ItemHolderFUiiii": "ItemHolder_Init"
   },
   "_comment": "Per-TU mapping of user-emitted extab/extabindex C symbol names to the anonymous local @etb_/@eti_ names dtk dol split writes into symbols.txt. Used by tools/postprocess_extab_user.py via llvm-objcopy --redefine-sym. Each TU's mapping must cover every manually emitted extab/extabindex symbol in source order; unlisted symbols pass through unchanged (and will trip dtk dol diff).",
@@ -10953,6 +10956,10 @@
     "@381": "@eti_80021488"
   },
   "src/game/AI_KartInit.cpp": {
+    "__dt__20clEnemyItemInterfaceFv": "fn_801E89A0",
+    "__vt__20clEnemyItemInterface": "lbl_804E4AF0",
+    "__RTTI__20clEnemyItemInterface": "lbl_806CFFA0",
+    "__dl__FPv": "MemoryManager_TimedFree",
     "__ct__6AIKartFPviii": "AI_KartInit",
     "__ct__11AIResponderFP10AIPosition": "clItemBoxResponder_Ctor",
     "__dt__11AIResponderFv": "dtor_80060024",
@@ -10982,10 +10989,11 @@
     "__dt__15AIOwn<7AIAudio>Fv": "dtor_80052D40",
     "__dt__17AIOwn<9AITornado>Fv": "dtor_80052B50",
     "__dt__16AIOwn<8AIDriver>Fv": "dtor_80052C48",
-    "@288": "@etb_80016698",
-    "@289": "@eti_80028904",
-    "@372": "@etb_80016690",
-    "@373": "@eti_80028910"
+    "@296": "@etb_80016698",
+    "@297": "@eti_80028904",
+    "@378": "@etb_80016690",
+    "@379": "@eti_80028910",
+    "@380": "global:lbl_803BD7E8"
   },
   "src/game/KartItemSubObject_Dtor.cpp": {
     "__dt__12C7ItemOwnersFv": "KartItemSubObject_Dtor",
