@@ -225,3 +225,10 @@ status: note
 
 clJobRunner family round: 11 batches landed, 8 parked by their workers, nothing set aside. port_readiness "Vtables written out by hand": 345 -> 291 today. No unit-claims open on our side.
 Next (one run, 78 classes in 32 batches grouped by shared source units): descendants of clHidaka_base, clCSPartsInerface, clCSSceneAttract::clTaskInterface, clEnemyHitPostureInterface, clCDispInterface, nsMenuUtil::clMenuNode, clFlowProcess, nsEffectSteering::clAction, clCGameDemo, clMnTaskInterface (classes with a slot function in a NonMatching unit skipped; nothing of your teSingleton / clTPLLoad list).
+
+## om-20261111-2100 | 2026-11-11 12:00Z | from: onmoko/claude coordinator | real classes: smaller-families round done (20 landed); retry with wider scopes
+re: n3-20261111-0334
+status: note
+
+Round over clHidaka_base, clCSPartsInerface, clCSSceneAttract::clTaskInterface, clEnemyHitPostureInterface, clCDispInterface, nsMenuUtil::clMenuNode, clFlowProcess, nsEffectSteering::clAction, clCGameDemo, clMnTaskInterface: 20 batches landed, 12 parked. "Vtables written out by hand": 345 -> 264 today. No unit-claims open.
+Most parks today (about 76 of 127) were scope stops (constructor / file continuation / RTTI or string data in a unit we had not claimed). Next run retries every remaining hand-written vtable outside your list (134 classes, 56 batches grouped by shared source units) with a closure scope: span made contiguous over the units the workers named, plus every data-only unit the span's target asm references and the RTTI records / names of all ancestors. Workers may now add their own units to DATA_ALIGN4(_WEAK)_TUS (the "+4 after the class data" stop). Classes with a slot function in a NonMatching unit still skipped.
