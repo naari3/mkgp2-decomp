@@ -6789,10 +6789,10 @@ game/Scene_8016FC14.cpp:
 	.sdata      start:0x806CFA78 end:0x806CFA88
 
 game/autodata/sdata_806CFA88.c:
-	.sdata      start:0x806CFA88 end:0x806CFAD0
+	.sdata      start:0x806CFA88 end:0x806CFA98
 
 game/autodata/data_80491258.c:
-	.data       start:0x80491258 end:0x804912F8
+	.data       start:0x80491258 end:0x80491280
 
 game/Scene_8016FE44.cpp:
 	extab       start:0x800106EC end:0x800106F4
@@ -6816,25 +6816,18 @@ game/Scene_80170544.cpp:
 	.rodata     start:0x8036E118 end:0x8036E21C
 
 game/Scene_801706C8.cpp:
-	extab       start:0x8001075C end:0x80010764
-	extabindex  start:0x800263F0 end:0x800263FC
-	.text       start:0x801706C8 end:0x801707FC
-
-game/Scene_801707FC.cpp:
-	extab       start:0x80010764 end:0x8001076C
-	extabindex  start:0x800263FC end:0x80026408
-	.text       start:0x801707FC end:0x801709FC
-
-game/Scene_801709FC.cpp:
-	extab       start:0x8001076C end:0x80010774
-	extabindex  start:0x80026408 end:0x80026414
-	.text       start:0x801709FC end:0x80170B5C
-
-game/Scene_80170B5C.cpp:
-	extab       start:0x80010774 end:0x800107E8
-	extabindex  start:0x80026414 end:0x80026420
-	.text       start:0x80170B5C end:0x80170EE0
+	extab       start:0x8001075C end:0x800107E8
+	extabindex  start:0x800263F0 end:0x80026420
+	.text       start:0x801706C8 end:0x80170EE0
 	.rodata     start:0x8036E220 end:0x8036E728
+	.data       start:0x80491280 end:0x804912A8
+	.sdata      start:0x806CFA98 end:0x806CFAA8
+
+game/autodata/sdata_806CFAA8.c:
+	.sdata      start:0x806CFAA8 end:0x806CFAD0
+
+game/autodata/data_804912A8.c:
+	.data       start:0x804912A8 end:0x804912F8
 
 game/LavaSplash.cpp:
 	extab       start:0x800107E8 end:0x800108A4
