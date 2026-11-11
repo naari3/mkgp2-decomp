@@ -12117,13 +12117,13 @@ game/HudResultFlow.cpp:
 	.sdata      start:0x806D08A0 end:0x806D08B8
 
 game/autodata/sdata_806D08B8.c:
-	.sdata      start:0x806D08B8 end:0x806D0948
+	.sdata      start:0x806D08B8 end:0x806D08E0
 
 game/autodata/data_804EEC10.c:
 	.data       start:0x804EEC10 end:0x804EEC5C
 
 game/autodata/rodata_803EF8D0.c:
-	.rodata     start:0x803EF8D0 end:0x803EFE48
+	.rodata     start:0x803EF8D0 end:0x803EF930
 
 game/HudAlternate.cpp:
 	extab       start:0x8001DB94 end:0x8001DBE0
@@ -12132,7 +12132,7 @@ game/HudAlternate.cpp:
 	.data       start:0x804EEC5C end:0x804EEC94
 
 game/autodata/data_804EEC98.c:
-	.data       start:0x804EEC98 end:0x804EECF4
+	.data       start:0x804EEC98 end:0x804EECD0
 
 game/RaceHudAdjust.cpp:
 	.text       start:0x8024904C end:0x80249054
@@ -12160,27 +12160,22 @@ game/RaceHudSceneCtor.cpp:
 game/RankDispControls.cpp:
 	.text       start:0x802494B4 end:0x802494BC
 
-game/RankDispControls_tail.c:
-	.text       start:0x802494BC end:0x802494E0
+game/RankDispControls_tail.cpp:
+	extab       start:0x8001DC50 end:0x8001DD64
+	extabindex  start:0x8002B430 end:0x8002B46C
+	.text       start:0x802494BC end:0x80249E0C
+	.rodata     start:0x803EF930 end:0x803EF950
+	.data       start:0x804EECD0 end:0x804EED1C
+	.sdata      start:0x806D08E0 end:0x806D08F0
 
-game/RankDispUpdate.cpp:
-	extab       start:0x8001DC50 end:0x8001DC58
-	extabindex  start:0x8002B430 end:0x8002B43C
-	.text       start:0x802494E0 end:0x80249984
-	.data       start:0x804EECF4 end:0x804EED1C
+game/autodata/sdata_806D08F0.c:
+	.sdata      start:0x806D08F0 end:0x806D0948
 
 game/autodata/data_804EED20.c:
 	.data       start:0x804EED20 end:0x804EEDE4
 
-game/RnkDisp_SetPosition.c:
-	extab       start:0x8001DC58 end:0x8001DC60
-	extabindex  start:0x8002B43C end:0x8002B448
-	.text       start:0x80249984 end:0x802499F4
-
-game/TripletFaderOwner.cpp:
-	extab       start:0x8001DC60 end:0x8001DD64
-	extabindex  start:0x8002B448 end:0x8002B46C
-	.text       start:0x802499F4 end:0x80249E0C
+game/autodata/rodata_803EF950.c:
+	.rodata     start:0x803EF950 end:0x803EFE48
 
 game/CardSetupFlowDraw.cpp:
 	extab       start:0x8001DD64 end:0x8001DD6C

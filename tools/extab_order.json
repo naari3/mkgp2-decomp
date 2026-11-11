@@ -1351,17 +1351,6 @@
     "fn_80126878",
     "clCGameDemo_Dtor"
   ],
-  "src/game/TripletFaderOwner.cpp": [
-    "fn_802499F4",
-    "fn_80249A40",
-    "fn_80249BB4",
-    "TweenInterp_Dtor",
-    "fn_801F26C8",
-    "dtor_80082960",
-    "dtor_801F2724",
-    "dtor_801F4A80",
-    "dtor_8021617C"
-  ],
   "src/game/KartChoiceDtor.cpp": [
     "fn_8023BBB8",
     "dtor_801F4A80"
@@ -3618,6 +3607,19 @@
     "fn_8023BBB8",
     "fn_8023BD00",
     "TweenInterp_Dtor",
+    "dtor_801F4A80",
+    "dtor_8021617C"
+  ],
+  "src/game/RankDispControls_tail.cpp": [
+    "fn_802494E0",
+    "RnkDisp_SetPosition",
+    "fn_802499F4",
+    "fn_80249A40",
+    "fn_80249BB4",
+    "TweenInterp_Dtor",
+    "fn_801F26C8",
+    "dtor_80082960",
+    "dtor_801F2724",
     "dtor_801F4A80",
     "dtor_8021617C"
   ]
