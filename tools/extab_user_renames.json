@@ -11632,15 +11632,6 @@
     "@145": "@eti_80028EA4",
     "@155": "@eti_80028EB0"
   },
-  "src/game/objview/fn_8018CFC4.cpp": {
-    "__ct__9S22SingleFv": "fn_8018CFC4",
-    "__vt__9S22Single": "S22Single_vtable_80495DDC",
-    "__vt__7S22Base": "lbl_80490FE0",
-    "__dt__7S22BaseFv": "dtor_8016A270",
-    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
-    "@8": "@etb_80011EA8",
-    "@9": "@eti_80026EF4"
-  },
   "src/game/objview/fn_8018D3E0.cpp": {
     "__ct__7S22ListFv": "fn_8018D3E0",
     "__vt__7S22List": "S22List_vtable_80495E18",
@@ -17295,6 +17286,37 @@
     "Enable__16clMapEffectPartsFi": "fn_8016A26C",
     "__ct__10clNormal3DFPvi": "clNormal3D_Construct",
     "__dt__10clNormal3DFv": "Object_DtorWithGXSync",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/objview/fn_8018CD68.cpp": {
+    "@93": "@etb_80011E90",
+    "@94": "@eti_80026ED0",
+    "@116": "@etb_80011E98",
+    "@117": "@eti_80026EDC",
+    "@125": "@etb_80011EA0",
+    "@126": "@eti_80026EE8",
+    "@133": "@etb_80011EA8",
+    "@134": "@eti_80026EF4",
+    "@72": "global:lbl_80377E60",
+    "@74": "global:lbl_80377E6C",
+    "@73": "data_80491988_data_80495DD0",
+    "@124": "global:lbl_80377E80",
+    "@130": "clPCFruit_createMsg",
+    "@131": "clPCFruit_modelFile",
+    "@132": "clPCFruit_jointName",
+    "__dt__10clNormal3DFv": "Object_DtorWithGXSync",
+    "__ct__9clPCFruitFv": "fn_8018CFC4",
+    "__dt__9clPCFruitFv": "fn_8018CF34",
+    "Update__9clPCFruitFv": "fn_8018CE38",
+    "Draw__9clPCFruitFv": "fn_8018CD68",
+    "__vt__9clPCFruit": "S22Single_vtable_80495DDC",
+    "__RTTI__9clPCFruit": "data_80491988_data_806CFC00",
+    "__RTTI__16clMapEffectParts": "data_80491988_data_806CFBF8",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "__dt__16clMapEffectPartsFv": "dtor_8016A270",
+    "Enable__16clMapEffectPartsFi": "fn_8016A26C",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
   }

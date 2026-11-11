@@ -3492,5 +3492,12 @@
     "Tornado_LockOnHomingTick",
     "Tornado_FlightTick",
     "TornadoItem_HoldTick"
+  ],
+  "src/game/objview/fn_8018CD68.cpp": [
+    "fn_8018CD68",
+    "fn_8018CE38",
+    "fn_8018CF34",
+    "fn_8018CFC4",
+    "dtor_8016A270"
   ]
 }
