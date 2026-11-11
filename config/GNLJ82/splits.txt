@@ -7996,32 +7996,19 @@ game/objview/fn_80197130.cpp:
 	.data       start:0x80496370 end:0x80496398
 	.sdata      start:0x806CFCD8 end:0x806CFCE8
 
-game/autodata/sdata_806CFCE8.c:
-	.sdata      start:0x806CFCE8 end:0x806CFDF0
-
-game/autodata/data_80496398.c:
-	.data       start:0x80496398 end:0x804963D8
-
 game/objview/fn_80197F24.cpp:
-	extab       start:0x80012560 end:0x80012578
-	extabindex  start:0x80027374 end:0x80027380
-	.text       start:0x80197F24 end:0x801980C8
-
-game/objview/fn_801980C8.c:
-	extab       start:0x80012578 end:0x80012580
-	extabindex  start:0x80027380 end:0x8002738C
-	.text       start:0x801980C8 end:0x801986D8
-
-game/objview/fn_801986D8.c:
-	extab       start:0x80012580 end:0x80012588
-	extabindex  start:0x8002738C end:0x80027398
-	.text       start:0x801986D8 end:0x801987C4
-
-game/objview/fn_801987C4.cpp:
-	extab       start:0x80012588 end:0x800125E0
-	extabindex  start:0x80027398 end:0x800273A4
-	.text       start:0x801987C4 end:0x80198ABC
+	extab       start:0x80012560 end:0x800125E0
+	extabindex  start:0x80027374 end:0x800273A4
+	.text       start:0x80197F24 end:0x80198ABC
 	.rodata     start:0x8037DB78 end:0x8037DD48
+	.data       start:0x80496398 end:0x804963C0
+	.sdata      start:0x806CFCE8 end:0x806CFCF8
+
+game/autodata/sdata_806CFCF8.c:
+	.sdata      start:0x806CFCF8 end:0x806CFDF0
+
+game/autodata/data_804963C0.c:
+	.data       start:0x804963C0 end:0x804963D8
 
 game/autodata/rodata_8037DD48.c:
 	.rodata     start:0x8037DD48 end:0x8037DD78
