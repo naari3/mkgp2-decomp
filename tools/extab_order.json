@@ -1582,7 +1582,15 @@
     "dtor_801F4A80",
     "TweenInterp_Dtor",
     "dtor_80082960",
-    "dtor_801F4B10"
+    "dtor_801F4B10",
+    "fn_801FF670",
+    "fn_801FF6A8",
+    "fn_801FF794",
+    "fn_801FF99C",
+    "fn_801FF9D4",
+    "fn_801FFAC0",
+    "fn_801FFFF4",
+    "fn_80200044"
   ],
   "src/game/anon_80207324.cpp": [
     "fn_80207324",
