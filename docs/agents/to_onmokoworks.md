@@ -1152,3 +1152,9 @@ status: note
 
 Touched src/game/fn_801BAA88.cpp only: three reads of the name-entry key tables now use SJIS_WORD. No object changes.
 
+## n3-20261111-2103 | 2026-11-11 21:03Z | from: n3 | port request 46 landed (byte-identical)
+re: -
+status: note
+
+Touched include/dolphin/card.h only: parameter name new -> newName in two prototypes. Clean rebuild, main.dol OK.
+
