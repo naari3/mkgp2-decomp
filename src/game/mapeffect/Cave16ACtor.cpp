@@ -1,5 +1,8 @@
 #include "game/types/reg_args.h"
 #include "../src/game/mapeffect/mapfx16a_private.h"
+#include "game/types/clDKRain.h"
+
+#pragma readonly_strings on
 
 /* This TU owns its rodata pool (0x8036CF68..0x8036D540): the ctor reaches it
  * through the section anchor, which puts the pool lis ahead of the vtable
@@ -96,32 +99,9 @@ extern const unsigned char lbl_8036D364[0x168] = {
     0x43, 0x73, 0x99, 0x9A, 0x00, 0x00, 0x00, 0x00, 0x43, 0xBD, 0xE6, 0x66, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
-extern const char lbl_8036D4CC[] = "clDKRain";
-extern const char lbl_8036D4D8[] = "clMapEffectParts";
-extern const char Cave16ACtor_rodata_8036D4EC[] = " DeleteMapEffect : clDKRain\n";
-extern const char lbl_8036D50C[] = " CreateMapEffect : clDKRain\n";
-extern const char lbl_8036D52C[] = "DK_jungle_rain.dat";
 }
 
-/*
- * 0x8016ACD4..0x8016AF3C: draw / update / deleting destructor of a course
- * object that plays SE 0x3A while the camera looks at it (vtable
- * Cave16A_vtable_8049107C, base vtable lbl_80490FE0).
- */
-
-struct CourseObj8016ACD4 {
-    void *vtable;
-    void *model;
-    void *anim;
-    unsigned char hit;
-    char pad0D[3];
-    void *archive;
-    float alpha;
-};
-
 extern "C" {
-extern char Cave16A_vtable_8049107C[];
-extern char lbl_80490FE0[];
 extern void Object_SetColorAlphaOnly(void *, int MORE_REG_ARGS1(float a));
 extern void Object_RenderJObjTree(void *, int);
 extern void fn_8018D64C(void *);
@@ -137,19 +117,39 @@ extern void fn_80123B48(void *, int);
 extern void Object_DtorWithGXSync(void *, int);
 extern void MemoryManager_TimedFree(void *);
 
-#pragma exceptions on
 
-void fn_8016ACD4(CourseObj8016ACD4 *self) {
-    if (self->archive && self->alpha > 0.0f) {
-        Object_SetColorAlphaOnly(self->archive, 0 MORE_REG_ARGS1(self->alpha)); /* f1 still holds the alpha just compared */
-        Object_RenderJObjTree(self->archive, 7);
-    }
-    if (!self->hit) {
-        fn_8018D64C(self->model);
+}
+
+static inline DObj16A *NextDObj(DObj16A *d) { return d ? d->next : 0; }
+clDKRain::clDKRain() {
+    DebugPrintf(" CreateMapEffect : clDKRain\n");
+    model = new Obj16A;
+    model->flag = 1;
+    zone = new Zone16A(lbl_8036D364, 6);
+    hit = 1;
+    archive = 0;
+    alpha = lbl_806D8A70;
+    if (g_longRoundFlag == 1) {
+        archive = new clNormal3D("DK_jungle_rain.dat", 1);
+        for (DObj16A *d = HSD_JObjGetDObj(Archive_GetRootJObj(archive)); d; d = NextDObj(d)) {
+            void *m = d ? d->material : 0;
+            if (m) {
+                TObj16A *t = HSD_MObjGetTObj(m);
+                if (t) { t->s = 2; t->t = 1; }
+            }
+        }
     }
 }
 
-void fn_8016AD40(CourseObj8016ACD4 *self) {
+clDKRain::~clDKRain() {
+    fn_8016C394(0x3A);
+    fn_8018D7CC(model, 1);
+    fn_80123B48(zone, 1);
+    if (archive) Object_DtorWithGXSync(archive, 1);
+    DebugPrintf(" DeleteMapEffect : clDKRain\n");
+}
+
+void clDKRain::Update() {
     void *cam;
     float *view;
     Vec3f p;
@@ -161,8 +161,8 @@ void fn_8016AD40(CourseObj8016ACD4 *self) {
         p.x = 30.0f * view[2] + p.x;
         p.y = 30.0f * view[6] + p.y;
         p.z = 30.0f * view[10] + p.z;
-        self->hit = fn_80123480((Zone16A *)self->anim, &p);
-        if (self->hit) {
+        hit = fn_80123480((Zone16A *)zone, &p);
+        if (hit) {
             if (!fn_8016C360(0x3A)) {
                 SoundMgr_PlaySE(0x3A);
             }
@@ -172,59 +172,25 @@ void fn_8016AD40(CourseObj8016ACD4 *self) {
                 SoundMgr_PlaySE(0x3A);
             }
             fn_8016C1B0(0x3A, 0x64);
-            fn_8018D6F0(self->model, CObj_GetLineBufferPtr(cam), view);
+            fn_8018D6F0(model, CObj_GetLineBufferPtr(cam), view);
         }
     }
-    if (self->archive) {
-        if (self->hit) {
-            self->alpha = 1.0f;
+    if (archive) {
+        if (hit) {
+            alpha = 1.0f;
         } else {
-            self->alpha = 0.0f;
+            alpha = 0.0f;
         }
-        fn_80182B50(Archive_GetRootJObj((clNormal3D *)self->archive), 0.0f, -0.1f);
+        fn_80182B50(Archive_GetRootJObj((clNormal3D *)archive), 0.0f, -0.1f);
     }
 }
 
-CourseObj8016ACD4 *fn_8016AE8C(CourseObj8016ACD4 *self, short flag) {
-    if (self) {
-        self->vtable = Cave16A_vtable_8049107C;
-        fn_8016C394(0x3A);
-        fn_8018D7CC(self->model, 1);
-        fn_80123B48(self->anim, 1);
-        if (self->archive) {
-            Object_DtorWithGXSync(self->archive, 1);
-        }
-        DebugPrintf(Cave16ACtor_rodata_8036D4EC);
-        if (self) {
-            self->vtable = lbl_80490FE0;
-        }
-        if (flag > 0) {
-            MemoryManager_TimedFree(self);
-        }
+void clDKRain::Draw() {
+    if (archive && alpha > 0.0f) {
+        Object_SetColorAlphaOnly(archive, 0 MORE_REG_ARGS1(alpha)); /* f1 still holds the alpha just compared */
+        Object_RenderJObjTree(archive, 7);
     }
-    return self;
-}
-
-#pragma exceptions reset
-}
-
-static inline DObj16A *NextDObj(DObj16A *d) { return d ? d->next : 0; }
-Cave16A::Cave16A() {
-    DebugPrintf(lbl_8036D50C);
-    model = new Obj16A;
-    model->flag = 1;
-    zone = new Zone16A(lbl_8036D364, 6);
-    hit = 1;
-    archive = 0;
-    alpha = lbl_806D8A70;
-    if (g_longRoundFlag == 1) {
-        archive = new clNormal3D(lbl_8036D52C, 1);
-        for (DObj16A *d = HSD_JObjGetDObj(Archive_GetRootJObj(archive)); d; d = NextDObj(d)) {
-            void *m = d ? d->material : 0;
-            if (m) {
-                TObj16A *t = HSD_MObjGetTObj(m);
-                if (t) { t->s = 2; t->t = 1; }
-            }
-        }
+    if (!hit) {
+        fn_8018D64C(model);
     }
 }
