@@ -6181,34 +6181,30 @@ game/RankPanelBase_801461B0.cpp:
 	.data       start:0x8048EF78 end:0x8048EFB8
 	.sdata      start:0x806CF788 end:0x806CF7A0
 
-game/autodata/sdata_806CF7A0.c:
-	.sdata      start:0x806CF7A0 end:0x806CF7C8
-
 game/autodata/data_8048EFB8.c:
-	.data       start:0x8048EFB8 end:0x8048F038
+	.data       start:0x8048EFB8 end:0x8048EFC8
 
 game/autodata/rodata_80362620.c:
 	.rodata     start:0x80362620 end:0x80362650
 
 game/fn_8014640C.c:
-	.text       start:0x8014640C end:0x80146410
+	extab       start:0x8000DF14 end:0x8000DFAC
+	extabindex  start:0x800252B0 end:0x80025328
+	.text       start:0x8014640C end:0x80147778
+	.rodata     start:0x80362650 end:0x80362778
+	.data       start:0x8048EFC8 end:0x8048F000
+	.sdata      start:0x806CF7A0 end:0x806CF7B0
 
-game/LapSelect_80146410.cpp:
-	extab       start:0x8000DF14 end:0x8000DF44
-	extabindex  start:0x800252B0 end:0x800252F8
-	.text       start:0x80146410 end:0x80147468
-	.rodata     start:0x80362650 end:0x80362750
+game/autodata/sdata_806CF7B0.c:
+	.sdata      start:0x806CF7B0 end:0x806CF7C8
 
-game/autodata/rodata_80362750.c:
-	.rodata     start:0x80362750 end:0x80362778
+game/autodata/data_8048F000.c:
+	.data       start:0x8048F000 end:0x8048F038
 
-game/fn_80147468.c:
-	.text       start:0x80147468 end:0x80147470
-
-game/RaceHud_80147470.cpp:
-	extab       start:0x8000DF44 end:0x8000E208
-	extabindex  start:0x800252F8 end:0x800253DC
-	.text       start:0x80147470 end:0x801493B0
+game/RaceHud_80147470_tail.cpp:
+	extab       start:0x8000DFAC end:0x8000E208
+	extabindex  start:0x80025328 end:0x800253DC
+	.text       start:0x80147778 end:0x801493B0
 	.ctors      start:0x802E890C end:0x802E8910
 	.rodata     start:0x80362778 end:0x80362858
 
@@ -6220,19 +6216,19 @@ game/clCSResultGP.cpp:
 	.data       start:0x8048F038 end:0x8048F070
 	.sdata      start:0x806CF7C8 end:0x806CF7E0
 
-game/autodata/sdata_806CF7E0.c:
-	.sdata      start:0x806CF7E0 end:0x806CF820
-
-game/autodata/data_8048F070.c:
-	.data       start:0x8048F070 end:0x8048F10C
-
-game/autodata/rodata_803628A8.c:
-	.rodata     start:0x803628A8 end:0x80362D90
-
 game/RaceHudResultTA.cpp:
 	extab       start:0x8000E2A0 end:0x8000E380
 	extabindex  start:0x80025430 end:0x80025484
 	.text       start:0x80149D90 end:0x8014ADB4
+	.rodata     start:0x803628A8 end:0x80362D90
+	.data       start:0x8048F070 end:0x8048F0F0
+	.sdata      start:0x806CF7E0 end:0x806CF810
+
+game/autodata/sdata_806CF810.c:
+	.sdata      start:0x806CF810 end:0x806CF820
+
+game/autodata/data_8048F0F0.c:
+	.data       start:0x8048F0F0 end:0x8048F10C
 
 game/CSSceneGetTitle_8014ADB4.cpp:
 	extab       start:0x8000E380 end:0x8000E640

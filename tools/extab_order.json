@@ -3542,7 +3542,10 @@
     "fn_8014A890",
     "fn_8014A8FC",
     "fn_8014AA38",
-    "fn_8014AC48"
+    "fn_8014AC48",
+    "dtor_801419C8",
+    "fn_80141A24",
+    "PrintClassNames__20clCSPartsAppearGhostFv"
   ],
   "src/game/SceneRoleTransitions.cpp": [
     "fn_8024BE64",
@@ -3761,5 +3764,37 @@
     "ReverseChallenge_Render",
     "ReverseChallenge_Update",
     "ReverseChallenge_Init"
+  ],
+  "src/game/fn_8014640C.c": [
+    "fn_80146410",
+    "fn_80146574",
+    "fn_8014660C",
+    "fn_80146960",
+    "fn_80147200",
+    "fn_801473DC",
+    "fn_80147470",
+    "fn_80147530",
+    "dtor_80147584",
+    "fn_80147638",
+    "dtor_8013EB50"
+  ],
+  "src/game/RaceHud_80147470_tail.cpp": [
+    "fn_801491DC",
+    "fn_801477BC",
+    "fn_801478B0",
+    "fn_80147900",
+    "fn_80147AF4",
+    "fn_80147CE8",
+    "fn_80147EE8",
+    "fn_8014816C",
+    "fn_80148648",
+    "fn_80148810",
+    "dtor_80149244",
+    "fn_80148A44",
+    "dtor_8014917C",
+    "fn_80149214",
+    "dtor_80149320",
+    "dtor_800869D0",
+    "dtor_80082960"
   ]
 }

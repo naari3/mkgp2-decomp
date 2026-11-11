@@ -337,3 +337,8 @@ clCSKartModel converted in game/KartPreview.c without merging PreviewModel.c: in
 Source: Codex worker r7_c24_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 Added the requested working-note paragraph tracing the raw/processed symbol-index and .comment misassociation caused by unnecessary global: bridges. Does not claim every previous parked gap has the same cause. This docs edit follows the explicit real-class-lane new-rule instruction.
+
+## r7_c22_20261111
+Source: Codex worker r7_c22_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+Added object/link observation on shared TA/Ghost RTTI-name pooling via approved uncalled diagnostic member; not a compiler-source trace.
