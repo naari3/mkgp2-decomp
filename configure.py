@@ -2338,11 +2338,6 @@ config.libs = [
             Object(Matching, "game/CollisionFile_Load.cpp", mw_version="GC/1.3", extab_padding=b""),
             Object(Matching, "game/fn_8021ED1C.cpp"),
             Object(Matching, "game/fn_801F9F04.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-rostr", "-inline deferred,auto"]),
-            Object(Matching, "game/fn_801FA6A4.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/fn_801FA310.cpp", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/fn_801FA2E0.cpp"),
-            Object(Matching, "game/fn_801FA864.cpp", extab_padding=b""),
-            Object(Matching, "game/fn_801FAB20.cpp"),
             Object(Matching, "game/fn_801FAB58.cpp", extab_padding=b"", extra_cflags=["-RTTI on", "-inline deferred", "-rostr"]),
             Object(Matching, "game/clFlowChara.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(NonMatching, "game/clFlowCourse.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-rostr", "-inline deferred", "-RTTI on"], mw_version="GC/2.6"),
@@ -2362,7 +2357,6 @@ config.libs = [
             Object(Matching, "game/fn_801D1D9C.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801D1890.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-i include/libc"]),
             Object(NonMatching, "game/ranking_display.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-i include/libc"], mw_version="GC/1.3"),
-            Object(Matching, "game/fn_801FAA18.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801BA9A0.cpp"),
             Object(Matching, "game/fn_801E9594.cpp"),
             Object(Matching, "game/fn_801E81D8.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
@@ -3631,7 +3625,6 @@ def _inject_data_align4_tus() -> None:
 # (e.g. shared dtors). Dropping .comment would lose MWLD's weak flags, so
 # only the .data alignment inside .comment and the section header is pinned.
 DATA_ALIGN4_WEAK_TUS = [
-    "game/fn_801F9F04",
     "game/CSSceneGetTitle_8014ADB4",
     "game/RaceDigits",
     "game/TransitionEffect",

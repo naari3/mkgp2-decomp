@@ -2883,10 +2883,6 @@
   "src/game/fn_801BA110.cpp": {
     "__ct__11Obj801BA110Fv": "fn_801B9928"
   },
-  "src/game/fn_801FA864.cpp": {
-    "__ct__11Obj801FA864Fii": "fn_801FD240",
-    "Add__7StepSeqFPvi": "fn_801F4DF0"
-  },
   "src/game/clFlowAttract_Init.cpp": {
     "__ct__11AttractFlowFv": "clFlowAttract_Init",
     "__ct__8FlowBaseFv": "InitializeFrameSelection",
@@ -2898,10 +2894,6 @@
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",
     "__dt__12GameModeBaseFv": "dtor_8002CDF4",
     "__ct__9SpriteObjFiiPs": "Sprite_InitWithAnim"
-  },
-  "src/game/fn_801FAA18.cpp": {
-    "__dt__13Scene801FAA18Fv": "fn_801FAA18",
-    "__dt__12Base801FAA18Fv": "dtor_802043EC"
   },
   "src/game/fn_801BAA88.cpp": {
     "__dt__9CardEntryFv": "fn_801BB940",
@@ -7869,12 +7861,6 @@
     "@135": "@etb_80017740",
     "@136": "@eti_80029120",
     "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
-  },
-  "src/game/fn_801FA6A4.cpp": {
-    "__ct__11Obj801FA6A4Fii": "fn_801FD240",
-    "Add__7StepSeqFPvi": "fn_801F4DF0",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
   },
@@ -17977,16 +17963,6 @@
     "@61": "@eti_80026D38"
   },
   "src/game/fn_801F9F04.cpp": {
-    "@76": "@etb_80017790",
-    "@77": "@eti_8002912C",
-    "@82": "@etb_80017798",
-    "@83": "@eti_80029138",
-    "@88": "@etb_800177A0",
-    "@89": "@eti_80029144",
-    "@124": "@etb_800177A8",
-    "@125": "@eti_80029150",
-    "@135": "@etb_8001785C",
-    "@136": "@eti_8002915C",
     "__dt__24VHolder<13FlowSceneList>Fv": "dtor_801F4B10",
     "__ct__16DoublyLinkedListFv": "DoublyLinkedList_Init",
     "__nw__FUl": "Alloc",
@@ -18001,9 +17977,6 @@
     "Set__10FlowFaderIFiis": "fn_8020A7CC",
     "__dt__21VHolder<10FlowFaderI>Fv": "dtor_801F2724",
     "__dt__10FlowFaderIFv": "fn_801F26C8",
-    "@71": "lbl_803BFC30",
-    "@73": "lbl_803BFC3C",
-    "@72": "data_804EB6B0_data_804EBE2C",
     "__vt__8clMnCard": "CardOwner_vtable_804EBE38",
     "__dt__8clMnCardFv": "fn_801FA214",
     "Destroy__8clMnCardFv": "fn_801F9FEC",
@@ -18012,7 +17985,55 @@
     "__vt__16clSceneInterface": "lbl_803FE0C8",
     "__dt__16clSceneInterfaceFv": "dtor_8007D0D4",
     "__RTTI__16clSceneInterface": "data_804EB6B0_data_806D0110",
-    "__RTTI__8clMnCard": "data_804EB6B0_data_806D0118"
+    "__RTTI__8clMnCard": "data_804EB6B0_data_806D0118",
+    "__vt__10clMnCardT0": "ReadTask_vtable_804EBE78",
+    "__RTTI__10clMnCardT0": "lbl_806D0108",
+    "__ct__17clMnTaskInterfaceFi": "fn_80204448",
+    "__dt__17clMnTaskInterfaceFv": "dtor_802043EC",
+    "__RTTI__17clMnTaskInterface": "extern:lbl_806D00C8",
+    "__RTTI__16clYTaskInterface": "extern:lbl_806D00C0",
+    "__dt__10clMnCardT0Fv": "fn_801FAA18",
+    "Finish__10clMnCardT0Fv": "fn_801FAB20",
+    "Update__10clMnCardT0Fv": "fn_801FA310",
+    "Draw__10clMnCardT0Fv": "fn_801FA2E0",
+    "Start__10clMnCardT0Fv": "fn_801FA864",
+    "Advance__10clMnCardT0Fv": "fn_801FA6A4",
+    "__ct__11Obj801FA864Fii": "fn_801FD240",
+    "__ct__11Obj801FA6A4Fii": "fn_801FD240",
+    "Add__7StepSeqFPvi": "fn_801F4DF0",
+    "@42": "lbl_803BFC24",
+    "@43": "lbl_804EBE18",
+    "@44": "extern:lbl_803BFBA0",
+    "@45": "extern:lbl_803BFBB4",
+    "@46": "extern:lbl_804EBD68",
+    "@180": "lbl_803BFC30",
+    "@182": "lbl_803BFC3C",
+    "@181": "data_804EB6B0_data_804EBE2C",
+    "@339": "jumptable_804EBE50",
+    "@185": "@etb_80017790",
+    "@186": "@eti_8002912C",
+    "@191": "@etb_80017798",
+    "@192": "@eti_80029138",
+    "@197": "@etb_800177A0",
+    "@198": "@eti_80029144",
+    "@233": "@etb_800177A8",
+    "@234": "@eti_80029150",
+    "@279": "@etb_8001785C",
+    "@280": "@eti_8002915C",
+    "@282": "@etb_80017884",
+    "@283": "@eti_80029168",
+    "@340": "@etb_8001788C",
+    "@341": "@eti_80029174",
+    "@370": "@etb_80017894",
+    "@371": "@eti_80029180",
+    "@385": "@etb_800178AC",
+    "@386": "@eti_8002918C",
+    "@409": "@etb_800178C4",
+    "@410": "@eti_80029198",
+    "@415": "@etb_8001790C",
+    "@416": "@eti_800291A4",
+    "__dynamic_cast": "fn_80271340",
+    "#align4": ".rodata"
   },
   "src/game/fn_801B70EC.cpp": {
     "__ct__11clJobRunnerFv": "GameMode_BaseInit",
