@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-11 14:43Z 2026-11-11: port request 42. ZoneObject lists (autodata/data_803F60B4.c) are ZoneObjectRow arrays; HALF_WORDS(a, b) added to text_word.h; see docs/notes/port_abi.md, Tables reached only through another table's pointer.
 - 2026-11-11 13:35Z Port readiness (n3): declarations of C library functions in src/game and include/game use the standard prototypes (double atan2(double, double), not float parameters; no void strlen()); tools/port_abi/libc_decls.py checks. Please declare them that way in new code. Byte-identical.
 - 2026-11-11 13:25Z Port readiness (n3): base classes ending in a byte or two (PanelItem, FadeObj, clGetCoinLine, clFlowCCInterface, SceneRoot163, JobTask, SceneBase) name their tail padding as a member, because clang would place a derived member there; a new polymorphic base ending in char/bool/short needs the same. tools/port_abi/tail_padding.py; docs/notes/port_abi.md. Byte-identical.
 - 2026-11-11 09:51Z Port readiness (n3): data typed the way readers read it: ItemEffectMask constants are unsigned long long, GXColor constants are byte arrays (autodata/sdata2_806D3060.c, sdata2_806D2490.c), three byte tables and lbl_8039E9F8 retyped; list and what was checked in docs/notes/port_abi.md (request 39). Byte-identical.

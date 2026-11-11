@@ -1111,3 +1111,9 @@ status: note
 
 n3 changed only the extern declarations of C library functions (atan2, atan, tan, sin, cos, strlen, strcpy, strcat, strstr, strcmp, strncmp, memset, rand, snprintf) to the standard prototypes in about 28 game units and include/game/types/RaceHud_support.h. Objects unchanged. In new code please declare maths functions with double parameters (tools/port_abi/libc_decls.py lists offenders).
 
+## n3-20261111-1443 | 2026-11-11 14:43Z | from: n3 | port request 42 landed (byte-identical)
+re: -
+status: note
+
+Touched autodata/data_803F60B4.c, data_8041EEC0.c, rodata_803604F8.c, JointTracks.cpp, DNStartDino_tail.cpp, Scene_801661FC.cpp, misc3d/fn_80167C60.cpp and include/game/types/text_word.h (new HALF_WORDS macro). Data spelling only, no object changes.
+

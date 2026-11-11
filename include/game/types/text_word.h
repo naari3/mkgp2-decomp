@@ -25,4 +25,15 @@
      ((unsigned int)(unsigned char)(b) << 8) | (unsigned int)(unsigned char)(a))
 #endif
 
+/*
+ * HALF_WORDS(a, b): the word whose two 16-bit halves in memory are a, then
+ * b, for a { short; short; } pair kept in a word or pointer array (the frame
+ * of an animation key that sits behind a table of pointers in one object).
+ */
+#if defined(__MWERKS__) || (defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__)
+#define HALF_WORDS(a, b) (((unsigned int)(unsigned short)(a) << 16) | (unsigned int)(unsigned short)(b))
+#else
+#define HALF_WORDS(a, b) (((unsigned int)(unsigned short)(b) << 16) | (unsigned int)(unsigned short)(a))
+#endif
+
 #endif

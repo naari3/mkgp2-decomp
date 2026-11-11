@@ -443,7 +443,7 @@ void *ShellPile_data_8041EEC0[431] = {
     0,
     0,
     0,
-    (void *)0x697465,
+    (void *)TEXT_WORD(0, 'i', 't', 'e'),
     (void *)TEXT_WORD('m', '_', 't', 'a'),
     (void *)TEXT_WORD('r', 'u', '_', 'j'),
     (void *)TEXT_WORD('o', 'i', 'n', 't'),
@@ -459,7 +459,7 @@ void *ShellPile_data_8041EEC0[431] = {
     0,
     0,
     0,
-    (void *)0x120100,
+    (void *)TEXT_WORD(0, 18, 1, 0),
     (void *)&ShellPile_data_8041EEC0,
     (void *)0x3F800000
 };
@@ -657,7 +657,7 @@ void *lbl_8041F57C[211] = {
     0,
     0,
     0,
-    (void *)0x697465,
+    (void *)TEXT_WORD(0, 'i', 't', 'e'),
     (void *)TEXT_WORD('m', '_', 'g', 'o'),
     (void *)TEXT_WORD('r', 'o', '_', 'e'),
     (void *)TEXT_WORD('g', 'g', '_', 'j'),
@@ -673,7 +673,7 @@ void *lbl_8041F57C[211] = {
     0,
     0,
     0,
-    (void *)0x80100,
+    (void *)TEXT_WORD(0, 8, 1, 0),
     (void *)&lbl_8041F57C,
     (void *)0x3F800000
 };
@@ -871,7 +871,7 @@ void *lbl_8041F8C8[211] = {
     0,
     0,
     0,
-    (void *)0x697465,
+    (void *)TEXT_WORD(0, 'i', 't', 'e'),
     (void *)TEXT_WORD('m', '_', 'm', 'y'),
     (void *)TEXT_WORD('s', 't', 'e', 'r'),
     (void *)TEXT_WORD('y', '_', 'e', 'g'),
@@ -887,7 +887,7 @@ void *lbl_8041F8C8[211] = {
     0,
     0,
     0,
-    (void *)0x80100,
+    (void *)TEXT_WORD(0, 8, 1, 0),
     (void *)&lbl_8041F8C8,
     (void *)0x3F800000
 };
@@ -1085,7 +1085,7 @@ void *lbl_8041FC14[211] = {
     0,
     0,
     0,
-    (void *)0x69745F,
+    (void *)TEXT_WORD(0, 'i', 't', '_'),
     (void *)TEXT_WORD('n', '_', '0', '1'),
     (void *)TEXT_WORD('_', 'm', 'o', 'd'),
     (void *)TEXT_WORD('e', 'l', '_', 'j'),
@@ -1101,7 +1101,7 @@ void *lbl_8041FC14[211] = {
     0,
     0,
     0,
-    (void *)0x80100,
+    (void *)TEXT_WORD(0, 8, 1, 0),
     (void *)&lbl_8041FC14,
     (void *)0x3F800000
 };
@@ -1365,7 +1365,7 @@ void *lbl_8041FF60[277] = {
     0,
     0,
     0,
-    (void *)0x697465,
+    (void *)TEXT_WORD(0, 'i', 't', 'e'),
     (void *)TEXT_WORD('m', '2', '_', 'l'),
     (void *)TEXT_WORD('_', 'b', 'l', 'o'),
     (void *)TEXT_WORD('c', 'k', '_', 'j'),
@@ -1381,7 +1381,7 @@ void *lbl_8041FF60[277] = {
     0,
     0,
     0,
-    (void *)0xB0000,
+    (void *)TEXT_WORD(0, 11, 0, 0),
     (void *)&lbl_8041FF60,
     (void *)0x3F800000
 };
@@ -1645,7 +1645,7 @@ void *lbl_804203B4[277] = {
     0,
     0,
     0,
-    (void *)0x697465,
+    (void *)TEXT_WORD(0, 'i', 't', 'e'),
     (void *)TEXT_WORD('m', '_', 'm', '_'),
     (void *)TEXT_WORD('b', 'l', 'o', 'c'),
     (void *)TEXT_WORD('k', '_', 'j', 'o'),
@@ -1661,7 +1661,7 @@ void *lbl_804203B4[277] = {
     0,
     0,
     0,
-    (void *)0xB0000,
+    (void *)TEXT_WORD(0, 11, 0, 0),
     (void *)&lbl_804203B4,
     (void *)0x3F800000
 };
