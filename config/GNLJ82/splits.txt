@@ -5947,7 +5947,7 @@ game/SuikaBall_801313D0.cpp:
 	.sdata      start:0x806CF5C8 end:0x806CF5E0
 
 game/autodata/sdata_806CF5E0.c:
-	.sdata      start:0x806CF5E0 end:0x806CF6E8
+	.sdata      start:0x806CF5E0 end:0x806CF650
 
 game/autodata/data_8048E40C.c:
 	.data       start:0x8048E40C end:0x8048E4B8
@@ -6023,7 +6023,7 @@ game/OrthoCam.c:
 	.data       start:0x8048E4E8 end:0x8048E548
 
 game/autodata/data_8048E548.c:
-	.data       start:0x8048E548 end:0x8048EBEC
+	.data       start:0x8048E548 end:0x8048EACC
 
 game/CourseTables.c:
 	extab       start:0x8000D3A8 end:0x8000D3D0
@@ -6045,6 +6045,14 @@ game/KartPreview.c:
 	extabindex  start:0x80024DC4 end:0x80024E48
 	.text       start:0x8013C4A4 end:0x8013D4B0
 	.rodata     start:0x803600E0 end:0x80360440
+	.data       start:0x8048EACC end:0x8048EAE8
+	.sdata      start:0x806CF650 end:0x806CF660
+
+game/autodata/sdata_806CF660.c:
+	.sdata      start:0x806CF660 end:0x806CF6E8
+
+game/autodata/data_8048EAE8.c:
+	.data       start:0x8048EAE8 end:0x8048EBEC
 
 game/autodata/rodata_80360440.c:
 	.rodata     start:0x80360440 end:0x80360498

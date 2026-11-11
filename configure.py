@@ -2034,7 +2034,7 @@ config.libs = [
         "objects": [
             Object(Matching, "game/csAnim.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/csAnim_Reset.c"),
-            Object(Matching, "game/KartPreview.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/KartPreview.c", extab_padding=b"\x00\x00", extra_cflags=["-RTTI on", "-rostr", "-inline deferred,auto"]),
             Object(Matching, "game/PreviewModel.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/SpriteEffects.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/RenderTargetSingleton.c", extab_padding=b"\x00\x00"),
@@ -3598,6 +3598,7 @@ def _inject_data_align4_tus() -> None:
 # (e.g. shared dtors). Dropping .comment would lose MWLD's weak flags, so
 # only the .data alignment inside .comment and the section header is pinned.
 DATA_ALIGN4_WEAK_TUS = [
+    "game/KartPreview",
     "game/CSSceneGetTitle_8014ADB4",
     "game/RaceDigits",
     "game/TransitionEffect",
