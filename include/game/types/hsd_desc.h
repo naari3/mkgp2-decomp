@@ -43,4 +43,58 @@ typedef struct BuiltinCObjDesc {
     /* 0x34 */ float aspect;
 } BuiltinCObjDesc;
 
+/*
+ * Static material description handed to HSD (the same layouts as
+ * HSD_ImageDesc, HSD_TObjDesc, HSD_Material and HSD_MObjDesc). The image
+ * itself is texture data, so it is an array of bytes.
+ */
+typedef struct BuiltinImageDesc {
+    /* 0x00 */ void *img_ptr;
+    /* 0x04 */ unsigned short width;
+    /* 0x06 */ unsigned short height;
+    /* 0x08 */ unsigned int format;
+    /* 0x0C */ unsigned int mipmap;
+    /* 0x10 */ float minLOD;
+    /* 0x14 */ float maxLOD;
+} BuiltinImageDesc;
+
+typedef struct BuiltinTObjDesc {
+    /* 0x00 */ char *class_name;
+    /* 0x04 */ struct BuiltinTObjDesc *next;
+    /* 0x08 */ int id;
+    /* 0x0C */ int src;
+    /* 0x10 */ float rotate[3];
+    /* 0x1C */ float scale[3];
+    /* 0x28 */ float translate[3];
+    /* 0x34 */ int wrap_s;
+    /* 0x38 */ int wrap_t;
+    /* 0x3C */ unsigned char repeat_s;
+    /* 0x3D */ unsigned char repeat_t;
+    /* 0x3E */ unsigned char pad_3E[2];
+    /* 0x40 */ unsigned int blend_flags;
+    /* 0x44 */ float blending;
+    /* 0x48 */ int magFilt;
+    /* 0x4C */ BuiltinImageDesc *imagedesc;
+    /* 0x50 */ void *tlutdesc;
+    /* 0x54 */ void *lod;
+    /* 0x58 */ void *tev;
+} BuiltinTObjDesc;
+
+typedef struct BuiltinMaterial {
+    /* 0x00 */ unsigned char ambient[4];
+    /* 0x04 */ unsigned char diffuse[4];
+    /* 0x08 */ unsigned char specular[4];
+    /* 0x0C */ float alpha;
+    /* 0x10 */ float shininess;
+} BuiltinMaterial;
+
+typedef struct BuiltinMObjDesc {
+    /* 0x00 */ char *class_name;
+    /* 0x04 */ unsigned int rendermode;
+    /* 0x08 */ BuiltinTObjDesc *texdesc;
+    /* 0x0C */ BuiltinMaterial *mat;
+    /* 0x10 */ void *renderdesc;
+    /* 0x14 */ void *pedesc;
+} BuiltinMObjDesc;
+
 #endif

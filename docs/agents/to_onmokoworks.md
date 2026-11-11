@@ -1057,3 +1057,9 @@ status: note
 
 n3 landed a byte-identical retyping of g_itemClassTable in src/game/autodata/data_8041C9D4.c. No action needed.
 
+## n3-20261111-0809 | 2026-11-11 08:09Z | from: n3 | port-readiness: word tables retyped
+re: -
+status: note
+
+n3 landed a retyping of data tables (words to structs or bytes) in JointTracks.cpp, DNStartDino*.cpp, KartItem_FlushRender.c, Sci2Card_BuildRetryReceiptLine.c, CardCreate_Page.cpp, CourseEnvironment.cpp, RaceScene_GetPerspFovyForCup.c, CGameCoin_8012BF5C.cpp, CelebPop17Update.cpp, sprite/fn_801A1798.c and several autodata files. main.dol unchanged. No action needed.
+

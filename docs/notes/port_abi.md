@@ -644,3 +644,50 @@ like `(void *)0x1050000`; it is `ItemClassRow[278]` now (function pointer,
 four flag bytes, a signed byte, a name pointer, the effect byte), matching the
 members its readers use through `ItemClassEntry` (`def`, `flag0`, `flag1`) and
 `ItemKindEntry` (`effect`).
+
+### The sweep (request 38, part 3)
+
+Tools, all listing only unless told to rewrite:
+
+- `tools/port_abi/byte_words.py [-v]`: word arrays holding values such as
+  `0x01000000` or `0x003C0000` (a byte or a 16-bit value at the top of a word).
+- `tools/port_abi/word_readers.py`: word arrays that another unit declares
+  with, or casts to, a type that is not made of words.
+- `tools/port_abi/track_keys.py [--fix]`, `word_rows.py`, `word_bytes.py`: the
+  rewrites (key tracks, rows of a hand-written struct, plain bytes).
+
+Changed, object files unchanged unless noted:
+
+| Data | Was | Is |
+| --- | --- | --- |
+| 504 joint animation tracks in JointTracks.cpp and DNStartDino_tail.cpp | `unsigned int[2n]`, frame in the top half of a word | `TrackKey[n]` (include/game/types/TrackKey.h) |
+| `g_itemDescriptorTable` (autodata/data_8041A4F8.c) | `void *[1015]` | `ItemModelRow[203]`, `hasJoint` is a byte |
+| `g_characterDataTable` (RaceScene_GetPerspFovyForCup.c) | `void *[165]` | `CharacterDataRow[15]`, byte at 0x20 |
+| flash material of KartItem_FlushRender.c: image, image desc, TObj desc, two materials, two MObj descs | words | `Builtin*Desc` of hsd_desc.h; the 128x128 CMPR image is `unsigned char[0x2000]` |
+| `lbl_80499F84`, `lbl_8049A010`, `lbl_8049A038` (sprite/fn_801A1798.c) | `unsigned int[]` | `lbl_80499F98_Row[]` like their neighbour |
+| `lbl_80498158` (same file), `ParticleBurst_Draw_rodata_803292B4` | `unsigned int[5]` | `unsigned char[20]` |
+| `s_defaultCourse` (CGameCoin_8012BF5C.cpp) | `unsigned int[5]` | a struct, `loseShellOnHit` is a byte |
+| `CardRW_TestTopMenu_Page_data_803FDB18` (CardCreate_Page.cpp) | `void *[16]` | `CardRWTopStep[8]` |
+| `CarObject_HandleItemEffect_data_803F75D0` | `unsigned int[7]` | `short[14]` |
+| `lbl_80399E9C` (autodata/rodata_80399830.c) | `unk32[35]` | rows with the layout of `KeyGroup` |
+| receipt text and 24x24 printer bitmaps in Sci2Card_BuildRetryReceiptLine.c (72 arrays) | `unsigned int[]` | `unsigned char[]` |
+| 3 arrays and 14 single words of Shift-JIS text in autodata/sdata2_806D3060.c, sdata2_806D5658.c, sdata2_806DB6E0.c | `unk32` / `unsigned int` | `unsigned char[]` |
+| `CourseScene_Load_data_803F5CE8` (CourseEnvironment.cpp) | kind/variant bytes as `(void *)0x1010000` | `(void *)TEXT_WORD(1, 1, 0, 0)` |
+| "name    : " in autodata/rodata_8039D9A4.c | raw words | `TEXT_WORD` |
+
+The image in KartItem_FlushRender.c held one word, 0x80606060, written as
+`&KartItem_FlushRender_bss_80606060`: pixels that happen to look like an
+address. As bytes the object no longer has that relocation (the only
+difference in the object file; main.dol is the same).
+
+Left as they are, with the reason:
+
+- Floats and whole numbers stored in `void *` tables (most of the hits in
+  autodata/rodata_80383CF8.c): a word is a word on both machines.
+- `main_rodata_80328C94` (scene table, third word 0x10000 / 0x1000000),
+  `RaceScene_GetPerspFovyForCup_data_8040B7AC` (0x01000000 in 7-word rows),
+  `lbl_8041FF60` / `lbl_804203B4` (0xB0000): no C reader of those words, so the
+  source does not say whether they are bytes, halves or a mask. Retype them
+  when a reader is decompiled.
+- Tables already written with `TEXT_WORD`, and tables another unit declares as
+  `char[]` only to take their address.

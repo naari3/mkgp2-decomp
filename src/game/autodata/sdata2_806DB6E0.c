@@ -462,7 +462,7 @@ const lbl_806DBB1C_Pool lbl_806DBB1C = {
     "\202\276\202\335\201["
 };
 const char lbl_806DBB24[] = "END";
-const unsigned int lbl_806DBB28 = 0x81400000;
+const unsigned char lbl_806DBB28[4] = { 0x81, 0x40, 0x00, 0x00 };
 /* Shift-JIS text */
 const char lbl_806DBB2C[8] = "\202\267\201B";
 const lbl_806DBB34_Pool lbl_806DBB34 = {

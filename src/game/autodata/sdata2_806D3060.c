@@ -361,16 +361,16 @@ const lbl_806D3584_Pool lbl_806D3584 = {
     "\216g\227p\215\317"
 };
 const char lbl_806D358C[] = "[used]";
-const unsigned int lbl_806D3594 = 0x824F0000;
-const unsigned int lbl_806D3598 = 0x82500000;
-const unsigned int lbl_806D359C = 0x82510000;
-const unsigned int lbl_806D35A0 = 0x82520000;
-const unsigned int lbl_806D35A4 = 0x82530000;
-const unsigned int lbl_806D35A8 = 0x82540000;
-const unsigned int lbl_806D35AC = 0x82550000;
-const unsigned int lbl_806D35B0 = 0x82560000;
-const unsigned int lbl_806D35B4 = 0x82570000;
-const unsigned int lbl_806D35B8 = 0x82580000;
+const unsigned char lbl_806D3594[4] = { 0x82, 0x4F, 0x00, 0x00 };
+const unsigned char lbl_806D3598[4] = { 0x82, 0x50, 0x00, 0x00 };
+const unsigned char lbl_806D359C[4] = { 0x82, 0x51, 0x00, 0x00 };
+const unsigned char lbl_806D35A0[4] = { 0x82, 0x52, 0x00, 0x00 };
+const unsigned char lbl_806D35A4[4] = { 0x82, 0x53, 0x00, 0x00 };
+const unsigned char lbl_806D35A8[4] = { 0x82, 0x54, 0x00, 0x00 };
+const unsigned char lbl_806D35AC[4] = { 0x82, 0x55, 0x00, 0x00 };
+const unsigned char lbl_806D35B0[4] = { 0x82, 0x56, 0x00, 0x00 };
+const unsigned char lbl_806D35B4[4] = { 0x82, 0x57, 0x00, 0x00 };
+const unsigned char lbl_806D35B8[4] = { 0x82, 0x58, 0x00, 0x00 };
 const char lbl_806D35BC[] = "\015";
 const char lbl_806D35C0[] = "   ";
 const char lbl_806D35C4[] = "\015\015";

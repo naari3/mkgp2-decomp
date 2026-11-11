@@ -390,7 +390,7 @@ extern unsigned int jumptable_803F7668[];
 extern unsigned int lbl_803F56F0[];
 extern unsigned int lbl_803F5700[];
 extern unsigned int lbl_803F5710[];
-extern unsigned int CarObject_HandleItemEffect_data_803F75D0[];
+extern short CarObject_HandleItemEffect_data_803F75D0[];
 extern unsigned int CarObject_vtable_803F75F8[];
 extern unsigned int CarObjectManager_vtable_803F7690[];
 extern unsigned int CarObject_data_803F76A8[];

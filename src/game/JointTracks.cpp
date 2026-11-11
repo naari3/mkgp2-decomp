@@ -5,8 +5,8 @@ extern "C" char lbl_806DBDD8[];
 #pragma force_active on
 extern "C" const unsigned int JointTracks_rodata_803E5D38[3] = { 0x00000000, 0x00000000, 0x00000000 };
 extern "C" const unsigned int JointTracks_rodata_803E5D44[9] = { 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E5D68[12] = { 0x00000000, 0x00000000, 0x003C0000, 0xC351D99A, 0x00780000, 0x00000000, 0x00B40000, 0x4363028F, 0x00F00000, 0x3FEF5C29, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E5D98[12] = { 0x00000000, 0x00000000, 0x003C0000, 0x427AE148, 0x00780000, 0x00000000, 0x00B40000, 0x427AE148, 0x00F00000, 0x3F051EB8, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E5D68[6] = { { 0, 0, 0.0f }, { 60, 0, -209.85f }, { 120, 0, 0.0f }, { 180, 0, 227.01f }, { 240, 0, 1.87f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E5D98[6] = { { 0, 0, 0.0f }, { 60, 0, 62.72f }, { 120, 0, 0.0f }, { 180, 0, 62.72f }, { 240, 0, 0.52f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E5DC8[9] = {
     (void *)&JointTracks_rodata_803E5D68,
     (void *)&JointTracks_rodata_803E5D98,
@@ -18,8 +18,8 @@ extern "C" const void *const JointTracks_rodata_803E5DC8[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E5DEC[16] = { 0x00000000, 0x3F800000, 0x000A0000, 0x3F8147AE, 0x00630000, 0x3F947AE1, 0x00780000, 0x3F970A3D, 0x008C0000, 0x3F947AE1, 0x00DE0000, 0x3F828F5C, 0x00F00000, 0x3F800000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E5E2C[24] = { 0x00000000, 0x3F3D70A4, 0x00110000, 0x3F2E147B, 0x00200000, 0x3F07AE14, 0x005C0000, 0xBF0A3D71, 0x006A0000, 0xBF2E147B, 0x00780000, 0xBF3851EC, 0x00860000, 0xBF28F5C3, 0x00920000, 0xBF0A3D71, 0x00D50000, 0x3F0CCCCD, 0x00E20000, 0x3F2E147B, 0x00F00000, 0x3F3D70A4, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E5DEC[8] = { { 0, 0, 1.0f }, { 10, 0, 1.01f }, { 99, 0, 1.16f }, { 120, 0, 1.18f }, { 140, 0, 1.16f }, { 222, 0, 1.02f }, { 240, 0, 1.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E5E2C[12] = { { 0, 0, 0.74f }, { 17, 0, 0.68f }, { 32, 0, 0.53f }, { 92, 0, -0.54f }, { 106, 0, -0.68f }, { 120, 0, -0.72f }, { 134, 0, -0.66f }, { 146, 0, -0.54f }, { 213, 0, 0.55f }, { 226, 0, 0.68f }, { 240, 0, 0.74f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E5E8C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -31,8 +31,8 @@ extern "C" const void *const JointTracks_rodata_803E5E8C[9] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5E2C
 };
-extern "C" const unsigned int JointTracks_rodata_803E5EB0[16] = { 0x00000000, 0x3F800000, 0x000A0000, 0x3F7D70A4, 0x00630000, 0x3F51EB85, 0x00780000, 0x3F4CCCCD, 0x008C0000, 0x3F51EB85, 0x00DE0000, 0x3F7AE148, 0x00F00000, 0x3F800000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E5EF0[24] = { 0x00000000, 0xBF400000, 0x00110000, 0xBF30A3D7, 0x00200000, 0xBF07AE14, 0x005C0000, 0x3F0A3D71, 0x006A0000, 0x3F2E147B, 0x00780000, 0x3F3AE148, 0x00860000, 0x3F2B851F, 0x00920000, 0x3F0A3D71, 0x00D50000, 0xBF0F5C29, 0x00E20000, 0xBF30A3D7, 0x00F00000, 0xBF400000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E5EB0[8] = { { 0, 0, 1.0f }, { 10, 0, 0.99f }, { 99, 0, 0.82f }, { 120, 0, 0.8f }, { 140, 0, 0.82f }, { 222, 0, 0.98f }, { 240, 0, 1.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E5EF0[12] = { { 0, 0, -0.75f }, { 17, 0, -0.69f }, { 32, 0, -0.53f }, { 92, 0, 0.54f }, { 106, 0, 0.68f }, { 120, 0, 0.73f }, { 134, 0, 0.67f }, { 146, 0, 0.54f }, { 213, 0, -0.56f }, { 226, 0, -0.69f }, { 240, 0, -0.75f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E5F50[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -44,7 +44,7 @@ extern "C" const void *const JointTracks_rodata_803E5F50[9] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5EF0
 };
-extern "C" const unsigned int JointTracks_rodata_803E5F74[24] = { 0x00000000, 0xC1C80000, 0x000C0000, 0xC1B80000, 0x00140000, 0xC1880000, 0x00280000, 0x41880000, 0x00300000, 0x41B80000, 0x003C0000, 0x41C80000, 0x00480000, 0x41B80000, 0x00500000, 0x41880000, 0x00640000, 0xC1880000, 0x006C0000, 0xC1B80000, 0x00780000, 0xC1C80000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E5F74[12] = { { 0, 0, -25.0f }, { 12, 0, -23.0f }, { 20, 0, -17.0f }, { 40, 0, 17.0f }, { 48, 0, 23.0f }, { 60, 0, 25.0f }, { 72, 0, 23.0f }, { 80, 0, 17.0f }, { 100, 0, -17.0f }, { 108, 0, -23.0f }, { 120, 0, -25.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E5FD4[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -93,7 +93,7 @@ extern "C" const void *const JointTracks_rodata_803E613C[4] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E614C[6] = { 0x00000000, 0x00000000, 0x00F00000, 0x43B40000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E614C[3] = { { 0, 0, 0.0f }, { 240, 0, 360.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E6164[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -105,7 +105,7 @@ extern "C" const void *const JointTracks_rodata_803E6164[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E6188[6] = { 0x00000000, 0x00000000, 0x00F00000, 0xC3B40000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E6188[3] = { { 0, 0, 0.0f }, { 240, 0, -360.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E61A0[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -176,7 +176,7 @@ extern "C" const void *const JointTracks_rodata_803E6404[4] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E6414[16] = { 0x00000000, 0x3F800000, 0x000A0000, 0x3F8147AE, 0x00630000, 0x3F947AE1, 0x00780000, 0x3F970A3D, 0x008C0000, 0x3F947AE1, 0x00DE0000, 0x3F828F5C, 0x00F00000, 0x3F800000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E6414[8] = { { 0, 0, 1.0f }, { 10, 0, 1.01f }, { 99, 0, 1.16f }, { 120, 0, 1.18f }, { 140, 0, 1.16f }, { 222, 0, 1.02f }, { 240, 0, 1.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E6454[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -258,7 +258,7 @@ extern "C" const void *const JointTracks_rodata_803E6758[4] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E6768[6] = { 0x00000000, 0x42480000, 0x01680000, 0xC4278000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E6768[3] = { { 0, 0, 50.0f }, { 360, 0, -670.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E6780[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -270,7 +270,7 @@ extern "C" const void *const JointTracks_rodata_803E6780[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E67A4[6] = { 0x00000000, 0x42700000, 0x01680000, 0x44430000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E67A4[3] = { { 0, 0, 60.0f }, { 360, 0, 780.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E67BC[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -282,7 +282,7 @@ extern "C" const void *const JointTracks_rodata_803E67BC[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E67E0[6] = { 0x00000000, 0x00000000, 0x00F00000, 0xC3B40000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E67E0[3] = { { 0, 0, 0.0f }, { 240, 0, -360.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E67F8[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -294,7 +294,7 @@ extern "C" const void *const JointTracks_rodata_803E67F8[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E681C[6] = { 0x00000000, 0x00000000, 0x00F00000, 0x43B40000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E681C[3] = { { 0, 0, 0.0f }, { 240, 0, 360.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E6834[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -306,8 +306,8 @@ extern "C" const void *const JointTracks_rodata_803E6834[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E6858[8] = { 0x00000000, 0xC1700000, 0x00780000, 0x41700000, 0x00F00000, 0xC1700000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E6878[12] = { 0x00000000, 0x43356666, 0x003C0000, 0x43200000, 0x00780000, 0x43356666, 0x00B40000, 0x43200000, 0x00F00000, 0x43356666, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E6858[4] = { { 0, 0, -15.0f }, { 120, 0, 15.0f }, { 240, 0, -15.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E6878[6] = { { 0, 0, 181.4f }, { 60, 0, 160.0f }, { 120, 0, 181.4f }, { 180, 0, 160.0f }, { 240, 0, 181.4f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E68A8[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -319,8 +319,8 @@ extern "C" const void *const JointTracks_rodata_803E68A8[9] = {
     (void *)&JointTracks_rodata_803E6878,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E68CC[8] = { 0x00000000, 0x41700000, 0x00780000, 0xC1700000, 0x00F00000, 0x41700000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E68EC[12] = { 0x00000000, 0x42E19EB8, 0x003C0000, 0x42D20000, 0x00780000, 0x42E19EB8, 0x00B40000, 0x42D20000, 0x00F00000, 0x42E19EB8, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E68CC[4] = { { 0, 0, 15.0f }, { 120, 0, -15.0f }, { 240, 0, 15.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E68EC[6] = { { 0, 0, 112.81f }, { 60, 0, 105.0f }, { 120, 0, 112.81f }, { 180, 0, 105.0f }, { 240, 0, 112.81f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E691C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -363,7 +363,7 @@ extern "C" const void *const JointTracks_rodata_803E69F4[20] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803E6A44[24] = { 0x00000000, 0x41200000, 0x00280000, 0xC1200000, 0x002D0000, 0xC1000000, 0x00320000, 0xC1200000, 0x00370000, 0xC1100000, 0x003C0000, 0xC1200000, 0x00640000, 0x41200000, 0x00690000, 0x41000000, 0x006E0000, 0x41200000, 0x00730000, 0x41100000, 0x00780000, 0x41200000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E6A44[12] = { { 0, 0, 10.0f }, { 40, 0, -10.0f }, { 45, 0, -8.0f }, { 50, 0, -10.0f }, { 55, 0, -9.0f }, { 60, 0, -10.0f }, { 100, 0, 10.0f }, { 105, 0, 8.0f }, { 110, 0, 10.0f }, { 115, 0, 9.0f }, { 120, 0, 10.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E6AA4[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -389,8 +389,8 @@ extern "C" const void *const JointTracks_rodata_803E6B00[4] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803E6B10[14] = { 0x00000000, 0x3F800000, 0x00120000, 0x3F800000, 0x00210000, 0x3F970A3D, 0x00260000, 0x3F800000, 0x002B0000, 0x3F8CCCCD, 0x00300000, 0x3F800000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E6B48[14] = { 0x00000000, 0x3F800000, 0x00120000, 0x3F800000, 0x00210000, 0x3F3851EC, 0x00260000, 0x3F800000, 0x002B0000, 0x3F547AE1, 0x00300000, 0x3F800000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E6B10[7] = { { 0, 0, 1.0f }, { 18, 0, 1.0f }, { 33, 0, 1.18f }, { 38, 0, 1.0f }, { 43, 0, 1.1f }, { 48, 0, 1.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E6B48[7] = { { 0, 0, 1.0f }, { 18, 0, 1.0f }, { 33, 0, 0.72f }, { 38, 0, 1.0f }, { 43, 0, 0.83f }, { 48, 0, 1.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E6B80[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -402,8 +402,8 @@ extern "C" const void *const JointTracks_rodata_803E6B80[9] = {
     (void *)&JointTracks_rodata_803E6B48,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E6BA4[12] = { 0x00000000, 0x3F800000, 0x000F0000, 0x3F970A3D, 0x00140000, 0x3F800000, 0x00190000, 0x3F8CCCCD, 0x001E0000, 0x3F800000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E6BD4[12] = { 0x00000000, 0x3F800000, 0x000F0000, 0x3F3851EC, 0x00140000, 0x3F800000, 0x00190000, 0x3F547AE1, 0x001E0000, 0x3F800000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E6BA4[6] = { { 0, 0, 1.0f }, { 15, 0, 1.18f }, { 20, 0, 1.0f }, { 25, 0, 1.1f }, { 30, 0, 1.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E6BD4[6] = { { 0, 0, 1.0f }, { 15, 0, 0.72f }, { 20, 0, 1.0f }, { 25, 0, 0.83f }, { 30, 0, 1.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E6C04[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -415,8 +415,8 @@ extern "C" const void *const JointTracks_rodata_803E6C04[9] = {
     (void *)&JointTracks_rodata_803E6BD4,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E6C28[14] = { 0x00000000, 0x3F800000, 0x00290000, 0x3F800000, 0x00380000, 0x3F970A3D, 0x003D0000, 0x3F800000, 0x00420000, 0x3F8CCCCD, 0x00470000, 0x3F800000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E6C60[14] = { 0x00000000, 0x3F800000, 0x00290000, 0x3F800000, 0x00380000, 0x3F3851EC, 0x003D0000, 0x3F800000, 0x00420000, 0x3F547AE1, 0x00470000, 0x3F800000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E6C28[7] = { { 0, 0, 1.0f }, { 41, 0, 1.0f }, { 56, 0, 1.18f }, { 61, 0, 1.0f }, { 66, 0, 1.1f }, { 71, 0, 1.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E6C60[7] = { { 0, 0, 1.0f }, { 41, 0, 1.0f }, { 56, 0, 0.72f }, { 61, 0, 1.0f }, { 66, 0, 0.83f }, { 71, 0, 1.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E6C98[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -428,8 +428,8 @@ extern "C" const void *const JointTracks_rodata_803E6C98[9] = {
     (void *)&JointTracks_rodata_803E6C60,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E6CBC[14] = { 0x00000000, 0x3F800000, 0x00560000, 0x3F800000, 0x00650000, 0x3F970A3D, 0x006A0000, 0x3F800000, 0x006F0000, 0x3F8CCCCD, 0x00740000, 0x3F800000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E6CF4[14] = { 0x00000000, 0x3F800000, 0x00560000, 0x3F800000, 0x00650000, 0x3F3851EC, 0x006A0000, 0x3F800000, 0x006F0000, 0x3F547AE1, 0x00740000, 0x3F800000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E6CBC[7] = { { 0, 0, 1.0f }, { 86, 0, 1.0f }, { 101, 0, 1.18f }, { 106, 0, 1.0f }, { 111, 0, 1.1f }, { 116, 0, 1.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E6CF4[7] = { { 0, 0, 1.0f }, { 86, 0, 1.0f }, { 101, 0, 0.72f }, { 106, 0, 1.0f }, { 111, 0, 0.83f }, { 116, 0, 1.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E6D2C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -441,8 +441,8 @@ extern "C" const void *const JointTracks_rodata_803E6D2C[9] = {
     (void *)&JointTracks_rodata_803E6CF4,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E6D50[14] = { 0x00000000, 0x3F800000, 0x00090000, 0x3F800000, 0x00180000, 0x3F970A3D, 0x001D0000, 0x3F800000, 0x00220000, 0x3F8CCCCD, 0x00270000, 0x3F800000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E6D88[14] = { 0x00000000, 0x3F800000, 0x00090000, 0x3F800000, 0x00180000, 0x3F3851EC, 0x001D0000, 0x3F800000, 0x00220000, 0x3F547AE1, 0x00270000, 0x3F800000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E6D50[7] = { { 0, 0, 1.0f }, { 9, 0, 1.0f }, { 24, 0, 1.18f }, { 29, 0, 1.0f }, { 34, 0, 1.1f }, { 39, 0, 1.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E6D88[7] = { { 0, 0, 1.0f }, { 9, 0, 1.0f }, { 24, 0, 0.72f }, { 29, 0, 1.0f }, { 34, 0, 0.83f }, { 39, 0, 1.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E6DC0[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -454,8 +454,8 @@ extern "C" const void *const JointTracks_rodata_803E6DC0[9] = {
     (void *)&JointTracks_rodata_803E6D88,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E6DE4[14] = { 0x00000000, 0x3F800000, 0x00250000, 0x3F800000, 0x00340000, 0x3F970A3D, 0x00390000, 0x3F800000, 0x003E0000, 0x3F8CCCCD, 0x00430000, 0x3F800000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E6E1C[14] = { 0x00000000, 0x3F800000, 0x00250000, 0x3F800000, 0x00340000, 0x3F3851EC, 0x00390000, 0x3F800000, 0x003E0000, 0x3F547AE1, 0x00430000, 0x3F800000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E6DE4[7] = { { 0, 0, 1.0f }, { 37, 0, 1.0f }, { 52, 0, 1.18f }, { 57, 0, 1.0f }, { 62, 0, 1.1f }, { 67, 0, 1.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E6E1C[7] = { { 0, 0, 1.0f }, { 37, 0, 1.0f }, { 52, 0, 0.72f }, { 57, 0, 1.0f }, { 62, 0, 0.83f }, { 67, 0, 1.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E6E54[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -467,7 +467,7 @@ extern "C" const void *const JointTracks_rodata_803E6E54[9] = {
     (void *)&JointTracks_rodata_803E6E1C,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E6E78[16] = { 0x00000000, 0x00000000, 0x00120000, 0x00000000, 0x001B0000, 0x3F51EB85, 0x00200000, 0x3F75C28F, 0x00280000, 0x3F800000, 0x00290000, 0x00000000, 0x00780000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E6E78[8] = { { 0, 0, 0.0f }, { 18, 0, 0.0f }, { 27, 0, 0.82f }, { 32, 0, 0.96f }, { 40, 0, 1.0f }, { 41, 0, 0.0f }, { 120, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E6EB8[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -479,7 +479,7 @@ extern "C" const void *const JointTracks_rodata_803E6EB8[9] = {
     (void *)&JointTracks_rodata_803E6E78,
     (void *)&JointTracks_rodata_803E6E78
 };
-extern "C" const unsigned int JointTracks_rodata_803E6EDC[30] = { 0x00000000, 0x00000000, 0x00120000, 0x00000000, 0x00220000, 0x3F8A3D71, 0x00270000, 0x3F68F5C3, 0x002D0000, 0x3F87AE14, 0x00340000, 0x3F733333, 0x003C0000, 0x3F866666, 0x00440000, 0x3F7851EC, 0x004E0000, 0x3F828F5C, 0x00580000, 0x3F7D70A4, 0x00610000, 0x3F8147AE, 0x00680000, 0x3F7D70A4, 0x006E0000, 0x3F800000, 0x00780000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E6EDC[15] = { { 0, 0, 0.0f }, { 18, 0, 0.0f }, { 34, 0, 1.08f }, { 39, 0, 0.91f }, { 45, 0, 1.06f }, { 52, 0, 0.95f }, { 60, 0, 1.05f }, { 68, 0, 0.97f }, { 78, 0, 1.02f }, { 88, 0, 0.99f }, { 97, 0, 1.01f }, { 104, 0, 0.99f }, { 110, 0, 1.0f }, { 120, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E6F54[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -491,8 +491,8 @@ extern "C" const void *const JointTracks_rodata_803E6F54[9] = {
     (void *)&JointTracks_rodata_803E6EDC,
     (void *)&JointTracks_rodata_803E6EDC
 };
-extern "C" const unsigned int JointTracks_rodata_803E6F78[14] = { 0x00000000, 0x3F800000, 0x000A0000, 0x3FBD70A4, 0x00100000, 0x3FD9999A, 0x00140000, 0x3F2147AE, 0x00170000, 0x3F800000, 0x00780000, 0x3F800000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E6FB0[14] = { 0x00000000, 0x3F800000, 0x000A0000, 0x3F51EB85, 0x00100000, 0x3F451EB8, 0x00140000, 0x3FA147AE, 0x00170000, 0x3F800000, 0x00780000, 0x3F800000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E6F78[7] = { { 0, 0, 1.0f }, { 10, 0, 1.48f }, { 16, 0, 1.7f }, { 20, 0, 0.63f }, { 23, 0, 1.0f }, { 120, 0, 1.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E6FB0[7] = { { 0, 0, 1.0f }, { 10, 0, 0.82f }, { 16, 0, 0.77f }, { 20, 0, 1.26f }, { 23, 0, 1.0f }, { 120, 0, 1.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E6FE8[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -504,8 +504,8 @@ extern "C" const void *const JointTracks_rodata_803E6FE8[9] = {
     (void *)&JointTracks_rodata_803E6FB0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E700C[16] = { 0x00000000, 0x42700000, 0x00140000, 0x42700000, 0x00170000, 0x42E57AE1, 0x00190000, 0x430423D7, 0x001D0000, 0x430A4CCD, 0x006E0000, 0x430A4CCD, 0x00780000, 0x42700000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E704C[16] = { 0x00000000, 0x00000000, 0x00140000, 0x00000000, 0x00170000, 0x00000000, 0x00190000, 0xC16BAE14, 0x001D0000, 0xC195C28F, 0x006E0000, 0xC195C28F, 0x00780000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E700C[8] = { { 0, 0, 60.0f }, { 20, 0, 60.0f }, { 23, 0, 114.74f }, { 25, 0, 132.14f }, { 29, 0, 138.3f }, { 110, 0, 138.3f }, { 120, 0, 60.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E704C[8] = { { 0, 0, 0.0f }, { 20, 0, 0.0f }, { 23, 0, 0.0f }, { 25, 0, -14.73f }, { 29, 0, -18.72f }, { 110, 0, -18.72f }, { 120, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E708C[9] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E700C,
@@ -590,7 +590,7 @@ extern "C" const void *const JointTracks_rodata_803E72DC[48] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803E739C[26] = { 0x00000000, 0x00000000, 0x00120000, 0x00000000, 0x00220000, 0x3F8CCCCD, 0x00270000, 0x3F68F5C3, 0x002D0000, 0x3F87AE14, 0x00340000, 0x3F733333, 0x003C0000, 0x3F866666, 0x00440000, 0x3F7851EC, 0x004E0000, 0x3F828F5C, 0x00580000, 0x3F800000, 0x006E0000, 0x3F800000, 0x00780000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E739C[13] = { { 0, 0, 0.0f }, { 18, 0, 0.0f }, { 34, 0, 1.1f }, { 39, 0, 0.91f }, { 45, 0, 1.06f }, { 52, 0, 0.95f }, { 60, 0, 1.05f }, { 68, 0, 0.97f }, { 78, 0, 1.02f }, { 88, 0, 1.0f }, { 110, 0, 1.0f }, { 120, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E7404[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -699,7 +699,7 @@ extern "C" const void *const JointTracks_rodata_803E7744[64] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803E7844[28] = { 0x00000000, 0x41000000, 0x00060000, 0x41000000, 0x00100000, 0x40E00000, 0x001A0000, 0x40A00000, 0x00340000, 0xC0E00000, 0x00380000, 0xC0C00000, 0x003C0000, 0xC0E00000, 0x00420000, 0xC0E00000, 0x004C0000, 0xC0C00000, 0x00560000, 0xC0800000, 0x00700000, 0x41000000, 0x00740000, 0x40E00000, 0x00780000, 0x41000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E7844[14] = { { 0, 0, 8.0f }, { 6, 0, 8.0f }, { 16, 0, 7.0f }, { 26, 0, 5.0f }, { 52, 0, -7.0f }, { 56, 0, -6.0f }, { 60, 0, -7.0f }, { 66, 0, -7.0f }, { 76, 0, -6.0f }, { 86, 0, -4.0f }, { 112, 0, 8.0f }, { 116, 0, 7.0f }, { 120, 0, 8.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E78B4[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -711,7 +711,7 @@ extern "C" const void *const JointTracks_rodata_803E78B4[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E78D8[28] = { 0x00000000, 0xC0800000, 0x00060000, 0xC0800000, 0x00100000, 0xC0600000, 0x001A0000, 0xC0000000, 0x00340000, 0x40800000, 0x00380000, 0x40400000, 0x003C0000, 0x40800000, 0x00420000, 0x40800000, 0x004C0000, 0x40600000, 0x00560000, 0x40000000, 0x00700000, 0xC0800000, 0x00740000, 0xC0400000, 0x00780000, 0xC0800000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E78D8[14] = { { 0, 0, -4.0f }, { 6, 0, -4.0f }, { 16, 0, -3.5f }, { 26, 0, -2.0f }, { 52, 0, 4.0f }, { 56, 0, 3.0f }, { 60, 0, 4.0f }, { 66, 0, 4.0f }, { 76, 0, 3.5f }, { 86, 0, 2.0f }, { 112, 0, -4.0f }, { 116, 0, -3.0f }, { 120, 0, -4.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E7948[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -746,7 +746,7 @@ extern "C" const void *const JointTracks_rodata_803E79EC[4] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E79FC[8] = { 0x00000000, 0x00000000, 0x01040000, 0x00000000, 0x01680000, 0x43B40000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E79FC[4] = { { 0, 0, 0.0f }, { 260, 0, 0.0f }, { 360, 0, 360.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E7A1C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -758,7 +758,7 @@ extern "C" const void *const JointTracks_rodata_803E7A1C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E7A40[10] = { 0x00000000, 0x00000000, 0x00E60000, 0x00000000, 0x014A0000, 0x43B40000, 0x01680000, 0x43B40000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E7A40[5] = { { 0, 0, 0.0f }, { 230, 0, 0.0f }, { 330, 0, 360.0f }, { 360, 0, 360.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E7A68[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -770,7 +770,7 @@ extern "C" const void *const JointTracks_rodata_803E7A68[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E7A8C[10] = { 0x00000000, 0x00000000, 0x00D20000, 0x00000000, 0x01360000, 0x43B40000, 0x01680000, 0x43B40000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E7A8C[5] = { { 0, 0, 0.0f }, { 210, 0, 0.0f }, { 310, 0, 360.0f }, { 360, 0, 360.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E7AB4[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -782,7 +782,7 @@ extern "C" const void *const JointTracks_rodata_803E7AB4[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E7AD8[10] = { 0x00000000, 0x00000000, 0x00BE0000, 0x00000000, 0x01220000, 0x43B40000, 0x01680000, 0x43B40000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E7AD8[5] = { { 0, 0, 0.0f }, { 190, 0, 0.0f }, { 290, 0, 360.0f }, { 360, 0, 360.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E7B00[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -794,7 +794,7 @@ extern "C" const void *const JointTracks_rodata_803E7B00[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E7B24[10] = { 0x00000000, 0x00000000, 0x00AA0000, 0x00000000, 0x010E0000, 0x43B40000, 0x01680000, 0x43B40000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E7B24[5] = { { 0, 0, 0.0f }, { 170, 0, 0.0f }, { 270, 0, 360.0f }, { 360, 0, 360.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E7B4C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -806,7 +806,7 @@ extern "C" const void *const JointTracks_rodata_803E7B4C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E7B70[10] = { 0x00000000, 0x00000000, 0x00960000, 0x00000000, 0x00FA0000, 0x43B40000, 0x01680000, 0x43B40000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E7B70[5] = { { 0, 0, 0.0f }, { 150, 0, 0.0f }, { 250, 0, 360.0f }, { 360, 0, 360.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E7B98[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -840,8 +840,8 @@ extern "C" const void *const JointTracks_rodata_803E7C34[14] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803E7C6C[6] = { 0x00000000, 0x00000000, 0x02D00000, 0x43B40000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E7C84[6] = { 0x00000000, 0x00000000, 0x02D00000, 0xC3B40000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E7C6C[3] = { { 0, 0, 0.0f }, { 720, 0, 360.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E7C84[3] = { { 0, 0, 0.0f }, { 720, 0, -360.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E7C9C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -864,7 +864,7 @@ extern "C" const void *const JointTracks_rodata_803E7CC0[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E7CE4[8] = { 0x00000000, 0x42C80000, 0x002D0000, 0x430C0000, 0x005A0000, 0x42C80000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E7CE4[4] = { { 0, 0, 100.0f }, { 45, 0, 140.0f }, { 90, 0, 100.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E7D04[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -956,7 +956,7 @@ extern "C" const void *const JointTracks_rodata_803E7F70[26] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803E7FD8[20] = { 0x00000000, 0x41F00000, 0x00820000, 0xC1F00000, 0x00870000, 0xC1E00000, 0x008C0000, 0xC1F00000, 0x00960000, 0xC1F00000, 0x01180000, 0x41F00000, 0x011D0000, 0x41E00000, 0x01220000, 0x41F00000, 0x012C0000, 0x41F00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E7FD8[10] = { { 0, 0, 30.0f }, { 130, 0, -30.0f }, { 135, 0, -28.0f }, { 140, 0, -30.0f }, { 150, 0, -30.0f }, { 280, 0, 30.0f }, { 285, 0, 28.0f }, { 290, 0, 30.0f }, { 300, 0, 30.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8028[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -968,7 +968,7 @@ extern "C" const void *const JointTracks_rodata_803E8028[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E804C[24] = { 0x00000000, 0xC1A00000, 0x00140000, 0xC1980000, 0x00270000, 0xC1800000, 0x006E0000, 0x41700000, 0x00820000, 0x41980000, 0x00960000, 0x41A00000, 0x00AA0000, 0x41980000, 0x00BD0000, 0x41700000, 0x01040000, 0xC1700000, 0x01180000, 0xC1980000, 0x012C0000, 0xC1A00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E804C[12] = { { 0, 0, -20.0f }, { 20, 0, -19.0f }, { 39, 0, -16.0f }, { 110, 0, 15.0f }, { 130, 0, 19.0f }, { 150, 0, 20.0f }, { 170, 0, 19.0f }, { 189, 0, 15.0f }, { 260, 0, -15.0f }, { 280, 0, -19.0f }, { 300, 0, -20.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E80AC[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -980,7 +980,7 @@ extern "C" const void *const JointTracks_rodata_803E80AC[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E80D0[24] = { 0x00000000, 0x41A00000, 0x00140000, 0x41980000, 0x00270000, 0x41700000, 0x006E0000, 0xC1700000, 0x00820000, 0xC1980000, 0x00960000, 0xC1A00000, 0x00AA0000, 0xC1980000, 0x00BD0000, 0xC1800000, 0x01040000, 0x41700000, 0x01180000, 0x41980000, 0x012C0000, 0x41A00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E80D0[12] = { { 0, 0, 20.0f }, { 20, 0, 19.0f }, { 39, 0, 15.0f }, { 110, 0, -15.0f }, { 130, 0, -19.0f }, { 150, 0, -20.0f }, { 170, 0, -19.0f }, { 189, 0, -16.0f }, { 260, 0, 15.0f }, { 280, 0, 19.0f }, { 300, 0, 20.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8130[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1018,7 +1018,7 @@ extern "C" const void *const JointTracks_rodata_803E822C[8] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803E824C[6] = { 0x00000000, 0x00000000, 0x02580000, 0x43340000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E824C[3] = { { 0, 0, 0.0f }, { 600, 0, 180.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8264[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1030,7 +1030,7 @@ extern "C" const void *const JointTracks_rodata_803E8264[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8288[6] = { 0x00000000, 0x00000000, 0x02580000, 0xC3340000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8288[3] = { { 0, 0, 0.0f }, { 600, 0, -180.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E82A0[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1098,7 +1098,7 @@ extern "C" const void *const JointTracks_rodata_803E8470[4] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8480[8] = { 0x00000000, 0x41C80000, 0x000F0000, 0xC1C80000, 0x001E0000, 0x41C80000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8480[4] = { { 0, 0, 25.0f }, { 15, 0, -25.0f }, { 30, 0, 25.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E84A0[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1110,7 +1110,7 @@ extern "C" const void *const JointTracks_rodata_803E84A0[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E84C4[6] = { 0x00000000, 0x00000000, 0x012C0000, 0x44340000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E84C4[3] = { { 0, 0, 0.0f }, { 300, 0, 720.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E84DC[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1122,9 +1122,9 @@ extern "C" const void *const JointTracks_rodata_803E84DC[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8500[16] = { 0x00000000, 0x41F00000, 0x00460000, 0x41F00000, 0x00560000, 0xC2EA999A, 0x00660000, 0xC3F3E666, 0x00780000, 0xC4A84B85, 0x00950000, 0xC53BC000, 0x00960000, 0x41F00000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E8540[10] = { 0x00000000, 0xC48FC000, 0x004B0000, 0x433A0000, 0x00950000, 0x433A0000, 0x00960000, 0xC48FC000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E8568[10] = { 0x00000000, 0x00000000, 0x00460000, 0x00000000, 0x008C0000, 0x42200000, 0x00960000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8500[8] = { { 0, 0, 30.0f }, { 70, 0, 30.0f }, { 86, 0, -117.3f }, { 102, 0, -487.8f }, { 120, 0, -1346.36f }, { 149, 0, -3004.0f }, { 150, 0, 30.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E8540[5] = { { 0, 0, -1150.0f }, { 75, 0, 186.0f }, { 149, 0, 186.0f }, { 150, 0, -1150.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E8568[5] = { { 0, 0, 0.0f }, { 70, 0, 0.0f }, { 140, 0, 40.0f }, { 150, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8590[9] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E8500,
@@ -1153,7 +1153,7 @@ extern "C" const void *const JointTracks_rodata_803E8614[10] = {
     (void *)&JointTracks_rodata_803E5D44
 };
 extern "C" const char lbl_803E863C[] = "YIA_c_waterfall_UV_joint";
-extern "C" const unsigned int JointTracks_rodata_803E8658[12] = { 0x00000000, 0xC1A00000, 0x004B0000, 0x41A00000, 0x00960000, 0xC1A00000, 0x00E10000, 0x41A00000, 0x012C0000, 0xC1A00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8658[6] = { { 0, 0, -20.0f }, { 75, 0, 20.0f }, { 150, 0, -20.0f }, { 225, 0, 20.0f }, { 300, 0, -20.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8688[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1165,7 +1165,7 @@ extern "C" const void *const JointTracks_rodata_803E8688[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E86AC[12] = { 0x00000000, 0x41A00000, 0x004B0000, 0xC1A00000, 0x00960000, 0x41A00000, 0x00E10000, 0xC1A00000, 0x012C0000, 0x41A00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E86AC[6] = { { 0, 0, 20.0f }, { 75, 0, -20.0f }, { 150, 0, 20.0f }, { 225, 0, -20.0f }, { 300, 0, 20.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E86DC[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1177,7 +1177,7 @@ extern "C" const void *const JointTracks_rodata_803E86DC[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8700[8] = { 0x00000000, 0x41B80000, 0x00960000, 0x41800000, 0x012C0000, 0x41B80000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8700[4] = { { 0, 0, 23.0f }, { 150, 0, 16.0f }, { 300, 0, 23.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8720[9] = {
     (void *)&JointTracks_rodata_803E8700,
     (void *)0x0,
@@ -1189,7 +1189,7 @@ extern "C" const void *const JointTracks_rodata_803E8720[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8744[8] = { 0x00000000, 0xC1000000, 0x009E0000, 0xBF4CCCCD, 0x012C0000, 0xC1000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8744[4] = { { 0, 0, -8.0f }, { 158, 0, -0.8f }, { 300, 0, -8.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8764[9] = {
     (void *)&JointTracks_rodata_803E8744,
     (void *)0x0,
@@ -1201,7 +1201,7 @@ extern "C" const void *const JointTracks_rodata_803E8764[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8788[32] = { 0x00000000, 0xC2700000, 0x00110000, 0xC266AE14, 0x00220000, 0xC247851F, 0x00300000, 0xC21651EC, 0x00650000, 0x4217B852, 0x00720000, 0x4249F5C3, 0x00830000, 0x4266C28F, 0x00960000, 0x42700000, 0x00A90000, 0x426547AE, 0x00B90000, 0x42458F5C, 0x00C90000, 0x42083D71, 0x00FA0000, 0xC218CCCD, 0x01070000, 0xC249147B, 0x01180000, 0xC266A3D7, 0x012C0000, 0xC2700000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8788[16] = { { 0, 0, -60.0f }, { 17, 0, -57.67f }, { 34, 0, -49.88f }, { 48, 0, -37.58f }, { 101, 0, 37.93f }, { 114, 0, 50.49f }, { 131, 0, 57.69f }, { 150, 0, 60.0f }, { 169, 0, 57.32f }, { 185, 0, 49.39f }, { 201, 0, 34.06f }, { 250, 0, -38.2f }, { 263, 0, -50.27f }, { 280, 0, -57.66f }, { 300, 0, -60.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8808[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1235,8 +1235,8 @@ extern "C" const void *const JointTracks_rodata_803E88C4[14] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803E88FC[28] = { 0x00000000, 0x413BD70A, 0x001E0000, 0xC13BD70A, 0x003C0000, 0x413BD70A, 0x005A0000, 0xC13BD70A, 0x00780000, 0x413BD70A, 0x00960000, 0xC13BD70A, 0x00B40000, 0x413BD70A, 0x00D20000, 0xC13BD70A, 0x00F00000, 0x413BD70A, 0x010E0000, 0xC13BD70A, 0x012C0000, 0x413BD70A, 0x014A0000, 0xC13BD70A, 0x01680000, 0x413BD70A, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E896C[8] = { 0x00000000, 0x3F800000, 0x000A0000, 0x3FA66666, 0x001E0000, 0x3F800000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E88FC[14] = { { 0, 0, 11.74f }, { 30, 0, -11.74f }, { 60, 0, 11.74f }, { 90, 0, -11.74f }, { 120, 0, 11.74f }, { 150, 0, -11.74f }, { 180, 0, 11.74f }, { 210, 0, -11.74f }, { 240, 0, 11.74f }, { 270, 0, -11.74f }, { 300, 0, 11.74f }, { 330, 0, -11.74f }, { 360, 0, 11.74f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E896C[4] = { { 0, 0, 1.0f }, { 10, 0, 1.3f }, { 30, 0, 1.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E898C[27] = {
     (void *)0x0,
     (void *)0x0,
@@ -1277,9 +1277,9 @@ extern "C" const void *const JointTracks_rodata_803E89F8[9] = {
     (void *)&JointTracks_rodata_803E896C,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8A1C[12] = { 0x00000000, 0x00000000, 0x00A00000, 0x00000000, 0x00B40000, 0x43340000, 0x01540000, 0x43340000, 0x01680000, 0x00000000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E8A4C[8] = { 0x00000000, 0x3F800000, 0x001E0000, 0x3FA66666, 0x003C0000, 0x3F800000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E8A6C[8] = { 0x00000000, 0xC38A0000, 0x00B40000, 0x43B3999A, 0x01680000, 0xC38A0000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8A1C[6] = { { 0, 0, 0.0f }, { 160, 0, 0.0f }, { 180, 0, 180.0f }, { 340, 0, 180.0f }, { 360, 0, 0.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E8A4C[4] = { { 0, 0, 1.0f }, { 30, 0, 1.3f }, { 60, 0, 1.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E8A6C[4] = { { 0, 0, -276.0f }, { 180, 0, 359.2f }, { 360, 0, -276.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8A8C[9] = {
     (void *)&JointTracks_rodata_803E8A6C,
     (void *)0x0,
@@ -1302,7 +1302,7 @@ extern "C" const void *const JointTracks_rodata_803E8AB0[9] = {
     (void *)&JointTracks_rodata_803E896C,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8AD4[8] = { 0x00000000, 0x43890000, 0x00B40000, 0xC38D3EB8, 0x01680000, 0x43890000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8AD4[4] = { { 0, 0, 274.0f }, { 180, 0, -282.49f }, { 360, 0, 274.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8AF4[9] = {
     (void *)&JointTracks_rodata_803E8AD4,
     (void *)0x0,
@@ -1314,7 +1314,7 @@ extern "C" const void *const JointTracks_rodata_803E8AF4[9] = {
     (void *)&JointTracks_rodata_803E8A4C,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8B18[16] = { 0x00000000, 0x4018F5C3, 0x003C0000, 0xC16BAE14, 0x00780000, 0x401147AE, 0x00B40000, 0xC1673333, 0x00F00000, 0x400EB852, 0x012D0000, 0xC160A3D7, 0x01680000, 0x4018F5C3, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8B18[8] = { { 0, 0, 2.39f }, { 60, 0, -14.73f }, { 120, 0, 2.27f }, { 180, 0, -14.45f }, { 240, 0, 2.23f }, { 301, 0, -14.04f }, { 360, 0, 2.39f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8B58[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1326,8 +1326,8 @@ extern "C" const void *const JointTracks_rodata_803E8B58[9] = {
     (void *)&JointTracks_rodata_803E8A4C,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8B7C[8] = { 0x00000000, 0x43890000, 0x00B40000, 0xC3AA051F, 0x01680000, 0x43890000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E8B9C[16] = { 0x00000000, 0xC3087333, 0x00130000, 0xC1700000, 0x00A00000, 0xC1700000, 0x00B40000, 0xC3087333, 0x00C70000, 0xC1880000, 0x01530000, 0xC1600000, 0x01680000, 0xC3087333, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8B7C[4] = { { 0, 0, 274.0f }, { 180, 0, -340.04f }, { 360, 0, 274.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E8B9C[8] = { { 0, 0, -136.45f }, { 19, 0, -15.0f }, { 160, 0, -15.0f }, { 180, 0, -136.45f }, { 199, 0, -17.0f }, { 339, 0, -14.0f }, { 360, 0, -136.45f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8BDC[9] = {
     (void *)&JointTracks_rodata_803E8B7C,
     (void *)&JointTracks_rodata_803E8B9C,
@@ -1339,8 +1339,8 @@ extern "C" const void *const JointTracks_rodata_803E8BDC[9] = {
     (void *)&JointTracks_rodata_803E8A4C,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8C00[16] = { 0x00000000, 0x43890000, 0x00050000, 0x43880000, 0x00AF0000, 0xC3AD0000, 0x00B40000, 0xC3ADBEB8, 0x00B90000, 0xC3AD0000, 0x01630000, 0x43898000, 0x01680000, 0x43890000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E8C40[24] = { 0x00000000, 0xC3AC028F, 0x001F0000, 0xC2EE0000, 0x00400000, 0xC31B0000, 0x007E0000, 0xC31B0000, 0x00970000, 0xC2FE0000, 0x00B40000, 0xC3B98000, 0x00D30000, 0xC2EE0000, 0x00F40000, 0xC31B0000, 0x01320000, 0xC31B0000, 0x014B0000, 0xC2FE0000, 0x01680000, 0xC3AC028F, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8C00[8] = { { 0, 0, 274.0f }, { 5, 0, 272.0f }, { 175, 0, -346.0f }, { 180, 0, -347.49f }, { 185, 0, -346.0f }, { 355, 0, 275.0f }, { 360, 0, 274.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E8C40[12] = { { 0, 0, -344.02f }, { 31, 0, -119.0f }, { 64, 0, -155.0f }, { 126, 0, -155.0f }, { 151, 0, -127.0f }, { 180, 0, -371.0f }, { 211, 0, -119.0f }, { 244, 0, -155.0f }, { 306, 0, -155.0f }, { 331, 0, -127.0f }, { 360, 0, -344.02f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8CA0[9] = {
     (void *)&JointTracks_rodata_803E8C00,
     (void *)&JointTracks_rodata_803E8C40,
@@ -1352,8 +1352,8 @@ extern "C" const void *const JointTracks_rodata_803E8CA0[9] = {
     (void *)&JointTracks_rodata_803E8A4C,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8CC4[8] = { 0x00000000, 0xC38A0000, 0x00B40000, 0x43B3999A, 0x01680000, 0xC38A0000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E8CE4[8] = { 0x00000000, 0xC2EB75C3, 0x00B40000, 0xC390E8F6, 0x01680000, 0xC2EB75C3, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8CC4[4] = { { 0, 0, -276.0f }, { 180, 0, 359.2f }, { 360, 0, -276.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E8CE4[4] = { { 0, 0, -117.73f }, { 180, 0, -289.82f }, { 360, 0, -117.73f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8D04[9] = {
     (void *)&JointTracks_rodata_803E8CC4,
     (void *)&JointTracks_rodata_803E8CE4,
@@ -1365,7 +1365,7 @@ extern "C" const void *const JointTracks_rodata_803E8D04[9] = {
     (void *)&JointTracks_rodata_803E8A4C,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8D28[16] = { 0x00000000, 0xC40B08F6, 0x000C0000, 0xC4098000, 0x00220000, 0xC3220000, 0x00A80000, 0xC2E5E666, 0x01370000, 0xC3380000, 0x01490000, 0xC40F0000, 0x01680000, 0xC40B08F6, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8D28[8] = { { 0, 0, -556.14f }, { 12, 0, -550.0f }, { 34, 0, -162.0f }, { 168, 0, -114.95f }, { 311, 0, -184.0f }, { 329, 0, -572.0f }, { 360, 0, -556.14f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8D68[9] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E8D28,
@@ -1377,8 +1377,8 @@ extern "C" const void *const JointTracks_rodata_803E8D68[9] = {
     (void *)&JointTracks_rodata_803E8A4C,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8D8C[8] = { 0x00000000, 0x43890000, 0x00B40000, 0xC3ADBEB8, 0x01680000, 0x43890000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E8DAC[8] = { 0x00000000, 0xC30947AE, 0x00B40000, 0x424ED70A, 0x01680000, 0xC30947AE, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8D8C[4] = { { 0, 0, 274.0f }, { 180, 0, -347.49f }, { 360, 0, 274.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E8DAC[4] = { { 0, 0, -137.28f }, { 180, 0, 51.71f }, { 360, 0, -137.28f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8DCC[9] = {
     (void *)&JointTracks_rodata_803E8D8C,
     (void *)&JointTracks_rodata_803E8DAC,
@@ -1390,10 +1390,10 @@ extern "C" const void *const JointTracks_rodata_803E8DCC[9] = {
     (void *)&JointTracks_rodata_803E8A4C,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8DF0[12] = { 0x00000000, 0x430707AE, 0x005A0000, 0xC32B4000, 0x00B40000, 0x430707AE, 0x010E0000, 0xC32B4000, 0x01680000, 0x430707AE, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E8E20[12] = { 0x00000000, 0xC3185C29, 0x005A0000, 0xC29B8F5C, 0x00B40000, 0xC3185C29, 0x010E0000, 0xC2996B85, 0x01680000, 0xC3185C29, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E8E50[20] = { 0x00000000, 0x00000000, 0x00510000, 0x00000000, 0x005B0000, 0x43340000, 0x00AA0000, 0x43340000, 0x00B40000, 0x00000000, 0x01050000, 0x00000000, 0x010F0000, 0x43340000, 0x015E0000, 0x43340000, 0x01680000, 0x00000000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E8EA0[8] = { 0x00000000, 0x3F800000, 0x000F0000, 0x3FA66666, 0x001E0000, 0x3F800000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8DF0[6] = { { 0, 0, 135.03f }, { 90, 0, -171.25f }, { 180, 0, 135.03f }, { 270, 0, -171.25f }, { 360, 0, 135.03f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E8E20[6] = { { 0, 0, -152.36f }, { 90, 0, -77.78f }, { 180, 0, -152.36f }, { 270, 0, -76.71f }, { 360, 0, -152.36f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E8E50[10] = { { 0, 0, 0.0f }, { 81, 0, 0.0f }, { 91, 0, 180.0f }, { 170, 0, 180.0f }, { 180, 0, 0.0f }, { 261, 0, 0.0f }, { 271, 0, 180.0f }, { 350, 0, 180.0f }, { 360, 0, 0.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E8EA0[4] = { { 0, 0, 1.0f }, { 15, 0, 1.3f }, { 30, 0, 1.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8EC0[9] = {
     (void *)&JointTracks_rodata_803E8DF0,
     (void *)&JointTracks_rodata_803E8E20,
@@ -1405,7 +1405,7 @@ extern "C" const void *const JointTracks_rodata_803E8EC0[9] = {
     (void *)&JointTracks_rodata_803E8EA0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8EE4[8] = { 0x00000000, 0x431C2E14, 0x00B40000, 0xC34611EC, 0x01680000, 0x431C2E14, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8EE4[4] = { { 0, 0, 156.18f }, { 180, 0, -198.07f }, { 360, 0, 156.18f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8F04[9] = {
     (void *)&JointTracks_rodata_803E8EE4,
     (void *)0x0,
@@ -1417,7 +1417,7 @@ extern "C" const void *const JointTracks_rodata_803E8F04[9] = {
     (void *)&JointTracks_rodata_803E8A4C,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8F28[8] = { 0x00000000, 0x3F800000, 0x000D0000, 0x3FAF5C29, 0x00140000, 0x3F800000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8F28[4] = { { 0, 0, 1.0f }, { 13, 0, 1.37f }, { 20, 0, 1.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8F48[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1429,9 +1429,9 @@ extern "C" const void *const JointTracks_rodata_803E8F48[9] = {
     (void *)&JointTracks_rodata_803E8F28,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E8F6C[12] = { 0x00000000, 0x3F800000, 0x000D0000, 0x3F170A3D, 0x00140000, 0x3FAF5C29, 0x00210000, 0x3F400000, 0x00280000, 0x3F800000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E8F9C[12] = { 0x00000000, 0x3F800000, 0x000D0000, 0x401F5C29, 0x00140000, 0x3F07AE14, 0x00210000, 0x3FE51EB8, 0x00280000, 0x3F800000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E8FCC[6] = { 0x00000000, 0x00000000, 0x00B40000, 0x44340000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E8F6C[6] = { { 0, 0, 1.0f }, { 13, 0, 0.59f }, { 20, 0, 1.37f }, { 33, 0, 0.75f }, { 40, 0, 1.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E8F9C[6] = { { 0, 0, 1.0f }, { 13, 0, 2.49f }, { 20, 0, 0.53f }, { 33, 0, 1.79f }, { 40, 0, 1.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E8FCC[3] = { { 0, 0, 0.0f }, { 180, 0, 720.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E8FE4[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1563,7 +1563,7 @@ extern "C" const void *const JointTracks_rodata_803E9534[11] = {
     (void *)&lbl_803E9520,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E9560[8] = { 0x00000000, 0x41C80000, 0x000F0000, 0xC1C80000, 0x001E0000, 0x41C80000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E9560[4] = { { 0, 0, 25.0f }, { 15, 0, -25.0f }, { 30, 0, 25.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E9580[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1575,7 +1575,7 @@ extern "C" const void *const JointTracks_rodata_803E9580[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E95A4[6] = { 0x00000000, 0x00000000, 0x01680000, 0x44B40000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E95A4[3] = { { 0, 0, 0.0f }, { 360, 0, 1440.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E95BC[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1587,7 +1587,7 @@ extern "C" const void *const JointTracks_rodata_803E95BC[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E95E0[6] = { 0x00000000, 0x00000000, 0x01680000, 0x43B40000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E95E0[3] = { { 0, 0, 0.0f }, { 360, 0, 360.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E95F8[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1599,7 +1599,7 @@ extern "C" const void *const JointTracks_rodata_803E95F8[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E961C[6] = { 0x00000000, 0x00000000, 0x02D00000, 0x43B40000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E961C[3] = { { 0, 0, 0.0f }, { 720, 0, 360.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E9634[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1693,7 +1693,7 @@ extern "C" const void *const JointTracks_rodata_803E98F8[54] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803E99D0[8] = { 0x00000000, 0x40A00000, 0x00150000, 0xC0A00000, 0x002A0000, 0x40A00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E99D0[4] = { { 0, 0, 5.0f }, { 21, 0, -5.0f }, { 42, 0, 5.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E99F0[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1705,7 +1705,7 @@ extern "C" const void *const JointTracks_rodata_803E99F0[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E9A14[8] = { 0x00000000, 0xC0A00000, 0x00150000, 0x40A00000, 0x002A0000, 0xC0A00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E9A14[4] = { { 0, 0, -5.0f }, { 21, 0, 5.0f }, { 42, 0, -5.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E9A34[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1717,7 +1717,7 @@ extern "C" const void *const JointTracks_rodata_803E9A34[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E9A58[14] = { 0x00000000, 0x40E6147B, 0x001B0000, 0x42200000, 0x001C0000, 0xBF3D70A4, 0x00220000, 0x3F4A3D71, 0x00270000, 0x408051EC, 0x002A0000, 0x40E6147B, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E9A58[7] = { { 0, 0, 7.19f }, { 27, 0, 40.0f }, { 28, 0, -0.74f }, { 34, 0, 0.79f }, { 39, 0, 4.01f }, { 42, 0, 7.19f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E9A90[9] = {
     (void *)&JointTracks_rodata_803E9A58,
     (void *)0x0,
@@ -1729,7 +1729,7 @@ extern "C" const void *const JointTracks_rodata_803E9A90[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E9AB4[14] = { 0x00000000, 0x401A3D71, 0x00070000, 0x4038F5C3, 0x001B0000, 0x400F5C29, 0x001C0000, 0x3F19999A, 0x00240000, 0x4001EB85, 0x002A0000, 0x401A3D71, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E9AB4[7] = { { 0, 0, 2.41f }, { 7, 0, 2.89f }, { 27, 0, 2.24f }, { 28, 0, 0.6f }, { 36, 0, 2.03f }, { 42, 0, 2.41f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E9AEC[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1741,7 +1741,7 @@ extern "C" const void *const JointTracks_rodata_803E9AEC[9] = {
     (void *)&JointTracks_rodata_803E9AB4,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E9B10[14] = { 0x00000000, 0x41BB0A3D, 0x000D0000, 0x42200000, 0x000E0000, 0xC00A3D71, 0x00140000, 0xBF2147AE, 0x00190000, 0x4025C28F, 0x002A0000, 0x41BB0A3D, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E9B10[7] = { { 0, 0, 23.38f }, { 13, 0, 40.0f }, { 14, 0, -2.16f }, { 20, 0, -0.63f }, { 25, 0, 2.59f }, { 42, 0, 23.38f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E9B48[9] = {
     (void *)&JointTracks_rodata_803E9B10,
     (void *)0x0,
@@ -1753,7 +1753,7 @@ extern "C" const void *const JointTracks_rodata_803E9B48[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E9B6C[14] = { 0x00000000, 0x40247AE1, 0x000D0000, 0x400F5C29, 0x000E0000, 0x3F19999A, 0x00150000, 0x40170A3D, 0x001D0000, 0x4038F5C3, 0x002A0000, 0x40247AE1, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E9B6C[7] = { { 0, 0, 2.57f }, { 13, 0, 2.24f }, { 14, 0, 0.6f }, { 21, 0, 2.36f }, { 29, 0, 2.89f }, { 42, 0, 2.57f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E9BA4[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1765,7 +1765,7 @@ extern "C" const void *const JointTracks_rodata_803E9BA4[9] = {
     (void *)&JointTracks_rodata_803E9B6C,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E9BC8[12] = { 0x00000000, 0xBFCF5C29, 0x00070000, 0xBDA3D70A, 0x000C0000, 0x404851EC, 0x00290000, 0x42200000, 0x002A0000, 0xBFCF5C29, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E9BC8[6] = { { 0, 0, -1.62f }, { 7, 0, -0.08f }, { 12, 0, 3.13f }, { 41, 0, 40.0f }, { 42, 0, -1.62f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E9BF8[9] = {
     (void *)&JointTracks_rodata_803E9BC8,
     (void *)0x0,
@@ -1777,7 +1777,7 @@ extern "C" const void *const JointTracks_rodata_803E9BF8[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E9C1C[12] = { 0x00000000, 0x3F19999A, 0x00070000, 0x40170A3D, 0x000E0000, 0x4038F5C3, 0x00290000, 0x401CCCCD, 0x002A0000, 0x3F19999A, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E9C1C[6] = { { 0, 0, 0.6f }, { 7, 0, 2.36f }, { 14, 0, 2.89f }, { 41, 0, 2.45f }, { 42, 0, 0.6f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E9C4C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1789,7 +1789,7 @@ extern "C" const void *const JointTracks_rodata_803E9C4C[9] = {
     (void *)&JointTracks_rodata_803E9C1C,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E9C70[8] = { 0x00000000, 0x00000000, 0x000B0000, 0xC1C80000, 0x00150000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E9C70[4] = { { 0, 0, 0.0f }, { 11, 0, -25.0f }, { 21, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E9C90[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1801,7 +1801,7 @@ extern "C" const void *const JointTracks_rodata_803E9C90[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E9CB4[10] = { 0x00000000, 0x3F400000, 0x00010000, 0x3F8CCCCD, 0x000D0000, 0x3F147AE1, 0x000E0000, 0x3F400000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E9CB4[5] = { { 0, 0, 0.75f }, { 1, 0, 1.1f }, { 13, 0, 0.58f }, { 14, 0, 0.75f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E9CDC[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1813,7 +1813,7 @@ extern "C" const void *const JointTracks_rodata_803E9CDC[9] = {
     (void *)&JointTracks_rodata_803E9CB4,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E9D00[8] = { 0x00000000, 0x40A00000, 0x00150000, 0xC0A00000, 0x002A0000, 0x40A00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E9D00[4] = { { 0, 0, 5.0f }, { 21, 0, -5.0f }, { 42, 0, 5.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E9D20[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1825,8 +1825,8 @@ extern "C" const void *const JointTracks_rodata_803E9D20[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803E9D44[6] = { 0x00000000, 0x45BD587B, 0x01A40000, 0x46153D48, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E9D5C[6] = { 0x00000000, 0x45601333, 0x01A40000, 0xC69649FB, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E9D44[3] = { { 0, 0, 6059.06f }, { 420, 0, 9551.32f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E9D5C[3] = { { 0, 0, 3585.2f }, { 420, 0, -19236.99f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E9D74[9] = {
     (void *)&JointTracks_rodata_803E9D44,
     (void *)0x0,
@@ -1878,9 +1878,9 @@ extern "C" const void *const JointTracks_rodata_803E9EDC[26] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803E9F44[10] = { 0x00000000, 0x45942B5C, 0x00C00000, 0xC5907985, 0x01680000, 0xC6484148, 0x01A40000, 0xC64C3E29, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E9F6C[10] = { 0x00000000, 0xC6BA527B, 0x00B60000, 0xC6AF347B, 0x01370000, 0xC66B17E1, 0x01A40000, 0xC5A9E266, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803E9F94[10] = { 0x00000000, 0x410051EC, 0x00A10000, 0x41600000, 0x00D60000, 0x42578F5C, 0x01A40000, 0x42B03D71, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803E9F44[5] = { { 0, 0, 4741.42f }, { 192, 0, -4623.19f }, { 360, 0, -12816.32f }, { 420, 0, -13071.54f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E9F6C[5] = { { 0, 0, -23849.24f }, { 182, 0, -22426.24f }, { 311, 0, -15045.97f }, { 420, 0, -5436.3f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803E9F94[5] = { { 0, 0, 8.02f }, { 161, 0, 14.0f }, { 214, 0, 53.89f }, { 420, 0, 88.12f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803E9FBC[9] = {
     (void *)&JointTracks_rodata_803E9F44,
     (void *)0x0,
@@ -1932,7 +1932,7 @@ extern "C" const void *const JointTracks_rodata_803EA124[26] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803EA18C[44] = { 0x00000000, 0x44BA0052, 0x000B0000, 0x44BA14CD, 0x00140000, 0x44BA44CD, 0x002A0000, 0x44BB7D71, 0x00310000, 0x44BBAD1F, 0x003C0000, 0x44BBBF0A, 0x00470000, 0x44BBB19A, 0x004E0000, 0x44BB8333, 0x00650000, 0x44BA4614, 0x006E0000, 0x44BA128F, 0x00780000, 0x44BA0052, 0x00820000, 0x44BA10F6, 0x008B0000, 0x44BA3BD7, 0x00A20000, 0x44BB0852, 0x00AA0000, 0x44BB2F5C, 0x00B40000, 0x44BB3D1F, 0x00BE0000, 0x44BB2F5C, 0x00C60000, 0x44BB09EC, 0x00DA0000, 0x44BA47AE, 0x00E40000, 0x44BA11EC, 0x00F00000, 0x44BA0052, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EA18C[22] = { { 0, 0, 1488.01f }, { 11, 0, 1488.65f }, { 20, 0, 1490.15f }, { 42, 0, 1499.92f }, { 49, 0, 1501.41f }, { 60, 0, 1501.97f }, { 71, 0, 1501.55f }, { 78, 0, 1500.1f }, { 101, 0, 1490.19f }, { 110, 0, 1488.58f }, { 120, 0, 1488.01f }, { 130, 0, 1488.53f }, { 139, 0, 1489.87f }, { 162, 0, 1496.26f }, { 170, 0, 1497.48f }, { 180, 0, 1497.91f }, { 190, 0, 1497.48f }, { 198, 0, 1496.31f }, { 218, 0, 1490.24f }, { 228, 0, 1488.56f }, { 240, 0, 1488.01f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EA23C[9] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803EA18C,
@@ -1944,7 +1944,7 @@ extern "C" const void *const JointTracks_rodata_803EA23C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EA260[24] = { 0x00000000, 0x3F800000, 0x000F0000, 0x3F800000, 0x001E0000, 0x3F7D70A4, 0x005A0000, 0x3F68F5C3, 0x00690000, 0x3F666666, 0x00780000, 0x3F666666, 0x00870000, 0x3F666666, 0x00960000, 0x3F68F5C3, 0x00D20000, 0x3F7D70A4, 0x00E10000, 0x3F800000, 0x00F00000, 0x3F800000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EA260[12] = { { 0, 0, 1.0f }, { 15, 0, 1.0f }, { 30, 0, 0.99f }, { 90, 0, 0.91f }, { 105, 0, 0.9f }, { 120, 0, 0.9f }, { 135, 0, 0.9f }, { 150, 0, 0.91f }, { 210, 0, 0.99f }, { 225, 0, 1.0f }, { 240, 0, 1.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EA2C0[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1956,7 +1956,7 @@ extern "C" const void *const JointTracks_rodata_803EA2C0[9] = {
     (void *)&JointTracks_rodata_803EA260,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EA2E4[24] = { 0x00000000, 0x3F666666, 0x000F0000, 0x3F666666, 0x001E0000, 0x3F68F5C3, 0x005A0000, 0x3F7D70A4, 0x00690000, 0x3F800000, 0x00780000, 0x3F800000, 0x00870000, 0x3F800000, 0x00960000, 0x3F7D70A4, 0x00D20000, 0x3F68F5C3, 0x00E10000, 0x3F666666, 0x00F00000, 0x3F666666, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EA2E4[12] = { { 0, 0, 0.9f }, { 15, 0, 0.9f }, { 30, 0, 0.91f }, { 90, 0, 0.99f }, { 105, 0, 1.0f }, { 120, 0, 1.0f }, { 135, 0, 1.0f }, { 150, 0, 0.99f }, { 210, 0, 0.91f }, { 225, 0, 0.9f }, { 240, 0, 0.9f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EA344[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -1968,7 +1968,7 @@ extern "C" const void *const JointTracks_rodata_803EA344[9] = {
     (void *)&JointTracks_rodata_803EA2E4,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EA368[24] = { 0x00000000, 0x3F800000, 0x000F0000, 0x3F800000, 0x001E0000, 0x3F7D70A4, 0x005A0000, 0x3F68F5C3, 0x00690000, 0x3F666666, 0x00780000, 0x3F666666, 0x00870000, 0x3F666666, 0x00960000, 0x3F68F5C3, 0x00D20000, 0x3F7D70A4, 0x00E10000, 0x3F800000, 0x00F00000, 0x3F800000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EA368[12] = { { 0, 0, 1.0f }, { 15, 0, 1.0f }, { 30, 0, 0.99f }, { 90, 0, 0.91f }, { 105, 0, 0.9f }, { 120, 0, 0.9f }, { 135, 0, 0.9f }, { 150, 0, 0.91f }, { 210, 0, 0.99f }, { 225, 0, 1.0f }, { 240, 0, 1.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EA3C8[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2112,10 +2112,10 @@ extern "C" const void *const JointTracks_rodata_803EA5D4[92] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EA744[20] = { 0x00000000, 0x451C6F33, 0x02320000, 0x44400333, 0x04650000, 0x441A1EB8, 0x064C0000, 0x4469951F, 0x08CA0000, 0x451C6F33, 0x0AB10000, 0x458B0052, 0x0C990000, 0x458F8D0A, 0x0ECB0000, 0x45661214, 0x11940000, 0x451C6F33, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EA794[20] = { 0x00000000, 0x43A28000, 0x02320000, 0x43C80000, 0x04650000, 0x43A28000, 0x064C0000, 0x43C80000, 0x08CA0000, 0x43A28000, 0x0AB10000, 0x43C80000, 0x0C990000, 0x43A28000, 0x0ECB0000, 0x43C80000, 0x11940000, 0x43A28000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EA7E4[20] = { 0x00000000, 0xC5EDBB5C, 0x02320000, 0xC5E6D11F, 0x04650000, 0xC57CDA8F, 0x064C0000, 0xC44B8D71, 0x08CA0000, 0xC48BC7AE, 0x0AB10000, 0xC4F8EE14, 0x0C990000, 0xC57D028F, 0x0ECB0000, 0xC5CD4D48, 0x11940000, 0xC5EDBB5C, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EA834[30] = { 0x00000000, 0xC2B40000, 0x012C0000, 0xC2B40000, 0x02320000, 0xC21F147B, 0x02D50000, 0x00000000, 0x04650000, 0x00000000, 0x05910000, 0x00000000, 0x064C0000, 0x42748F5C, 0x079E0000, 0x42DD0000, 0x08CA0000, 0x42DD0000, 0x09F60000, 0x42DD0000, 0x0AB10000, 0x43119C29, 0x0B6D0000, 0x43340000, 0x0C990000, 0x43340000, 0x11940000, 0x43870000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EA744[10] = { { 0, 0, 2502.95f }, { 562, 0, 768.05f }, { 1125, 0, 616.48f }, { 1612, 0, 934.33f }, { 2250, 0, 2502.95f }, { 2737, 0, 4448.04f }, { 3225, 0, 4593.63f }, { 3787, 0, 3681.13f }, { 4500, 0, 2502.95f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EA794[10] = { { 0, 0, 325.0f }, { 562, 0, 400.0f }, { 1125, 0, 325.0f }, { 1612, 0, 400.0f }, { 2250, 0, 325.0f }, { 2737, 0, 400.0f }, { 3225, 0, 325.0f }, { 3787, 0, 400.0f }, { 4500, 0, 325.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EA7E4[10] = { { 0, 0, -7607.42f }, { 562, 0, -7386.14f }, { 1125, 0, -4045.66f }, { 1612, 0, -814.21f }, { 2250, 0, -1118.24f }, { 2737, 0, -1991.44f }, { 3225, 0, -4048.16f }, { 3787, 0, -6569.66f }, { 4500, 0, -7607.42f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EA834[15] = { { 0, 0, -90.0f }, { 300, 0, -90.0f }, { 562, 0, -39.77f }, { 725, 0, 0.0f }, { 1125, 0, 0.0f }, { 1425, 0, 0.0f }, { 1612, 0, 61.14f }, { 1950, 0, 110.5f }, { 2250, 0, 110.5f }, { 2550, 0, 110.5f }, { 2737, 0, 145.61f }, { 2925, 0, 180.0f }, { 3225, 0, 180.0f }, { 4500, 0, 270.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EA8AC[9] = {
     (void *)&JointTracks_rodata_803EA744,
     (void *)&JointTracks_rodata_803EA794,
@@ -2127,7 +2127,7 @@ extern "C" const void *const JointTracks_rodata_803EA8AC[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EA8D0[8] = { 0x00000000, 0x41A00000, 0x007D0000, 0xC1A00000, 0x00FA0000, 0x41A00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EA8D0[4] = { { 0, 0, 20.0f }, { 125, 0, -20.0f }, { 250, 0, 20.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EA8F0[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2139,7 +2139,7 @@ extern "C" const void *const JointTracks_rodata_803EA8F0[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EA914[6] = { 0x00000000, 0x00000000, 0x11940000, 0x46D2F000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EA914[3] = { { 0, 0, 0.0f }, { 4500, 0, 27000.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EA92C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2167,7 +2167,7 @@ extern "C" const void *const JointTracks_rodata_803EA988[10] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803EA9B0[12] = { 0x00000000, 0x40400000, 0x003C0000, 0x00000000, 0x00B40000, 0xBF800000, 0x012C0000, 0x00000000, 0x01680000, 0x40400000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EA9B0[6] = { { 0, 0, 3.0f }, { 60, 0, 0.0f }, { 180, 0, -1.0f }, { 300, 0, 0.0f }, { 360, 0, 3.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EA9E0[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2179,7 +2179,7 @@ extern "C" const void *const JointTracks_rodata_803EA9E0[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EAA04[12] = { 0x00000000, 0x41100000, 0x003C0000, 0x00000000, 0x00B40000, 0xC0200000, 0x012C0000, 0x00000000, 0x01680000, 0x41100000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EAA04[6] = { { 0, 0, 9.0f }, { 60, 0, 0.0f }, { 180, 0, -2.5f }, { 300, 0, 0.0f }, { 360, 0, 9.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EAA34[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2191,7 +2191,7 @@ extern "C" const void *const JointTracks_rodata_803EAA34[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EAA58[12] = { 0x00000000, 0xC0400000, 0x003C0000, 0xC0C00000, 0x00B40000, 0xC0E00000, 0x012C0000, 0xC0C00000, 0x01680000, 0xC0400000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EAA58[6] = { { 0, 0, -3.0f }, { 60, 0, -6.0f }, { 180, 0, -7.0f }, { 300, 0, -6.0f }, { 360, 0, -3.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EAA88[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2203,7 +2203,7 @@ extern "C" const void *const JointTracks_rodata_803EAA88[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EAAAC[24] = { 0x00000000, 0x41C80000, 0x001E0000, 0x40400000, 0x00640000, 0x00000000, 0x00780000, 0x41100000, 0x008C0000, 0x00000000, 0x00A00000, 0x41100000, 0x00B40000, 0x00000000, 0x00C80000, 0x41100000, 0x00DC0000, 0x00000000, 0x012C0000, 0x00000000, 0x01680000, 0x41C80000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EAAAC[12] = { { 0, 0, 25.0f }, { 30, 0, 3.0f }, { 100, 0, 0.0f }, { 120, 0, 9.0f }, { 140, 0, 0.0f }, { 160, 0, 9.0f }, { 180, 0, 0.0f }, { 200, 0, 9.0f }, { 220, 0, 0.0f }, { 300, 0, 0.0f }, { 360, 0, 25.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EAB0C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2215,7 +2215,7 @@ extern "C" const void *const JointTracks_rodata_803EAB0C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EAB30[20] = { 0x00000000, 0x00000000, 0x001E0000, 0x40C00000, 0x003C0000, 0xC1A00000, 0x008C0000, 0xC1C80000, 0x00DC0000, 0xC1A00000, 0x00F00000, 0x00000000, 0x01040000, 0x40C00000, 0x011D0000, 0x00000000, 0x01680000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EAB30[10] = { { 0, 0, 0.0f }, { 30, 0, 6.0f }, { 60, 0, -20.0f }, { 140, 0, -25.0f }, { 220, 0, -20.0f }, { 240, 0, 0.0f }, { 260, 0, 6.0f }, { 285, 0, 0.0f }, { 360, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EAB80[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2227,7 +2227,7 @@ extern "C" const void *const JointTracks_rodata_803EAB80[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EABA4[22] = { 0x00000000, 0x00000000, 0x001E0000, 0xC1000000, 0x003C0000, 0x41400000, 0x00DC0000, 0x41400000, 0x00F00000, 0x00000000, 0x01040000, 0x40800000, 0x01180000, 0x40800000, 0x012C0000, 0xC0400000, 0x01540000, 0x00000000, 0x01680000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EABA4[11] = { { 0, 0, 0.0f }, { 30, 0, -8.0f }, { 60, 0, 12.0f }, { 220, 0, 12.0f }, { 240, 0, 0.0f }, { 260, 0, 4.0f }, { 280, 0, 4.0f }, { 300, 0, -3.0f }, { 340, 0, 0.0f }, { 360, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EABFC[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2239,7 +2239,7 @@ extern "C" const void *const JointTracks_rodata_803EABFC[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EAC20[22] = { 0x00000000, 0x00000000, 0x001E0000, 0xC0C00000, 0x003C0000, 0x41400000, 0x00DC0000, 0x41400000, 0x00F00000, 0xC0400000, 0x01040000, 0x40400000, 0x01180000, 0x40400000, 0x012C0000, 0xC0400000, 0x01540000, 0x00000000, 0x01680000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EAC20[11] = { { 0, 0, 0.0f }, { 30, 0, -6.0f }, { 60, 0, 12.0f }, { 220, 0, 12.0f }, { 240, 0, -3.0f }, { 260, 0, 3.0f }, { 280, 0, 3.0f }, { 300, 0, -3.0f }, { 340, 0, 0.0f }, { 360, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EAC78[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2251,7 +2251,7 @@ extern "C" const void *const JointTracks_rodata_803EAC78[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EAC9C[24] = { 0x00000000, 0x40400000, 0x001E0000, 0x00000000, 0x00640000, 0x41E00000, 0x00780000, 0x42000000, 0x008C0000, 0x41800000, 0x00B40000, 0x42000000, 0x00DC0000, 0x42000000, 0x010E0000, 0x00000000, 0x012C0000, 0x00000000, 0x014A0000, 0x40C00000, 0x01680000, 0x40400000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EAC9C[12] = { { 0, 0, 3.0f }, { 30, 0, 0.0f }, { 100, 0, 28.0f }, { 120, 0, 32.0f }, { 140, 0, 16.0f }, { 180, 0, 32.0f }, { 220, 0, 32.0f }, { 270, 0, 0.0f }, { 300, 0, 0.0f }, { 330, 0, 6.0f }, { 360, 0, 3.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EACFC[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2263,8 +2263,8 @@ extern "C" const void *const JointTracks_rodata_803EACFC[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EAD20[22] = { 0x00000000, 0x00000000, 0x001E0000, 0x00000000, 0x005A0000, 0x40C00000, 0x00780000, 0x420C0000, 0x00960000, 0x420C0000, 0x00AA0000, 0x00000000, 0x00BE0000, 0x42000000, 0x00C80000, 0x42000000, 0x00E60000, 0x00000000, 0x01680000, 0x00000000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EAD78[16] = { 0x00000000, 0xC0400000, 0x001E0000, 0x3F4CCCCD, 0x003C0000, 0xC0400000, 0x00F00000, 0xC0400000, 0x01040000, 0x3F4CCCCD, 0x011D0000, 0xC0400000, 0x01680000, 0xC0400000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EAD20[11] = { { 0, 0, 0.0f }, { 30, 0, 0.0f }, { 90, 0, 6.0f }, { 120, 0, 35.0f }, { 150, 0, 35.0f }, { 170, 0, 0.0f }, { 190, 0, 32.0f }, { 200, 0, 32.0f }, { 230, 0, 0.0f }, { 360, 0, 0.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EAD78[8] = { { 0, 0, -3.0f }, { 30, 0, 0.8f }, { 60, 0, -3.0f }, { 240, 0, -3.0f }, { 260, 0, 0.8f }, { 285, 0, -3.0f }, { 360, 0, -3.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EADB8[9] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803EAD78,
@@ -2276,7 +2276,7 @@ extern "C" const void *const JointTracks_rodata_803EADB8[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EADDC[24] = { 0x00000000, 0x00000000, 0x001E0000, 0x00000000, 0x005A0000, 0xC2200000, 0x00780000, 0xC1200000, 0x00960000, 0xC1200000, 0x00AA0000, 0xC2100000, 0x00BE0000, 0xC1400000, 0x00D20000, 0xC2100000, 0x00DC0000, 0xC2100000, 0x00F00000, 0x00000000, 0x01680000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EADDC[12] = { { 0, 0, 0.0f }, { 30, 0, 0.0f }, { 90, 0, -40.0f }, { 120, 0, -10.0f }, { 150, 0, -10.0f }, { 170, 0, -36.0f }, { 190, 0, -12.0f }, { 210, 0, -36.0f }, { 220, 0, -36.0f }, { 240, 0, 0.0f }, { 360, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EAE3C[9] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803EAD78,
@@ -2288,7 +2288,7 @@ extern "C" const void *const JointTracks_rodata_803EAE3C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EAE60[12] = { 0x00000000, 0xBF800000, 0x00780000, 0x00000000, 0x00B40000, 0x40400000, 0x00F00000, 0x00000000, 0x01680000, 0xBF800000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EAE60[6] = { { 0, 0, -1.0f }, { 120, 0, 0.0f }, { 180, 0, 3.0f }, { 240, 0, 0.0f }, { 360, 0, -1.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EAE90[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2300,7 +2300,7 @@ extern "C" const void *const JointTracks_rodata_803EAE90[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EAEB4[12] = { 0x00000000, 0xC0200000, 0x00780000, 0x00000000, 0x00B40000, 0x41100000, 0x00F00000, 0x00000000, 0x01680000, 0xC0200000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EAEB4[6] = { { 0, 0, -2.5f }, { 120, 0, 0.0f }, { 180, 0, 9.0f }, { 240, 0, 0.0f }, { 360, 0, -2.5f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EAEE4[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2312,8 +2312,8 @@ extern "C" const void *const JointTracks_rodata_803EAEE4[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EAF08[12] = { 0x00000000, 0xC0E00000, 0x00780000, 0xC0C00000, 0x00B40000, 0xC0400000, 0x00F00000, 0xC0C00000, 0x01680000, 0xC0E00000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EAF38[12] = { 0x00000000, 0x41100000, 0x00780000, 0x41800000, 0x00B40000, 0x41800000, 0x00F00000, 0x41100000, 0x01680000, 0x41100000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EAF08[6] = { { 0, 0, -7.0f }, { 120, 0, -6.0f }, { 180, 0, -3.0f }, { 240, 0, -6.0f }, { 360, 0, -7.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EAF38[6] = { { 0, 0, 9.0f }, { 120, 0, 16.0f }, { 180, 0, 16.0f }, { 240, 0, 9.0f }, { 360, 0, 9.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EAF68[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2325,7 +2325,7 @@ extern "C" const void *const JointTracks_rodata_803EAF68[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EAF8C[20] = { 0x00000000, 0x00000000, 0x00780000, 0x00000000, 0x00B40000, 0x41C80000, 0x00D20000, 0x40400000, 0x01180000, 0x00000000, 0x012C0000, 0x41100000, 0x01400000, 0x00000000, 0x01540000, 0x41100000, 0x01680000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EAF8C[10] = { { 0, 0, 0.0f }, { 120, 0, 0.0f }, { 180, 0, 25.0f }, { 210, 0, 3.0f }, { 280, 0, 0.0f }, { 300, 0, 9.0f }, { 320, 0, 0.0f }, { 340, 0, 9.0f }, { 360, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EAFDC[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2337,7 +2337,7 @@ extern "C" const void *const JointTracks_rodata_803EAFDC[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EB000[8] = { 0x00000000, 0x400CCCCD, 0x003C0000, 0x3FC00000, 0x005A0000, 0x400CCCCD, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EB000[4] = { { 0, 0, 2.2f }, { 60, 0, 1.5f }, { 90, 0, 2.2f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EB020[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2463,7 +2463,7 @@ extern "C" const void *const JointTracks_rodata_803EB314[38] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803EB3AC[12] = { 0x00000000, 0x40400000, 0x003C0000, 0x00000000, 0x00B40000, 0xBF800000, 0x012C0000, 0x00000000, 0x01680000, 0x40400000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EB3AC[6] = { { 0, 0, 3.0f }, { 60, 0, 0.0f }, { 180, 0, -1.0f }, { 300, 0, 0.0f }, { 360, 0, 3.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EB3DC[21] = {
     (void *)0x0,
     (void *)0x0,
@@ -2498,8 +2498,8 @@ extern "C" const void *const JointTracks_rodata_803EB430[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EB454[12] = { 0x00000000, 0xC0400000, 0x003C0000, 0xC0C00000, 0x00B40000, 0xC0E00000, 0x012C0000, 0xC0C00000, 0x01680000, 0xC0400000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EB484[12] = { 0x00000000, 0x00000000, 0x003C0000, 0x00000000, 0x00B40000, 0x41400000, 0x012C0000, 0x41400000, 0x01680000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EB454[6] = { { 0, 0, -3.0f }, { 60, 0, -6.0f }, { 180, 0, -7.0f }, { 300, 0, -6.0f }, { 360, 0, -3.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EB484[6] = { { 0, 0, 0.0f }, { 60, 0, 0.0f }, { 180, 0, 12.0f }, { 300, 0, 12.0f }, { 360, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EB4B4[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2511,7 +2511,7 @@ extern "C" const void *const JointTracks_rodata_803EB4B4[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EB4D8[24] = { 0x00000000, 0x41C80000, 0x001E0000, 0x40400000, 0x00640000, 0x00000000, 0x00780000, 0x41100000, 0x008C0000, 0x00000000, 0x00A00000, 0x41100000, 0x00B40000, 0x00000000, 0x00C80000, 0x41100000, 0x00DC0000, 0x00000000, 0x012C0000, 0x00000000, 0x01680000, 0x41C80000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EB4D8[12] = { { 0, 0, 25.0f }, { 30, 0, 3.0f }, { 100, 0, 0.0f }, { 120, 0, 9.0f }, { 140, 0, 0.0f }, { 160, 0, 9.0f }, { 180, 0, 0.0f }, { 200, 0, 9.0f }, { 220, 0, 0.0f }, { 300, 0, 0.0f }, { 360, 0, 25.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EB538[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2523,7 +2523,7 @@ extern "C" const void *const JointTracks_rodata_803EB538[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EB55C[12] = { 0x00000000, 0x40400000, 0x003C0000, 0x00000000, 0x00B40000, 0xBF800000, 0x012C0000, 0x00000000, 0x01680000, 0x40400000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EB55C[6] = { { 0, 0, 3.0f }, { 60, 0, 0.0f }, { 180, 0, -1.0f }, { 300, 0, 0.0f }, { 360, 0, 3.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EB58C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2535,7 +2535,7 @@ extern "C" const void *const JointTracks_rodata_803EB58C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EB5B0[12] = { 0x00000000, 0x41100000, 0x003C0000, 0x00000000, 0x00B40000, 0xC0200000, 0x012C0000, 0x00000000, 0x01680000, 0x41100000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EB5B0[6] = { { 0, 0, 9.0f }, { 60, 0, 0.0f }, { 180, 0, -2.5f }, { 300, 0, 0.0f }, { 360, 0, 9.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EB5E0[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2547,8 +2547,8 @@ extern "C" const void *const JointTracks_rodata_803EB5E0[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EB604[12] = { 0x00000000, 0xC0400000, 0x003C0000, 0xC0C00000, 0x00B40000, 0xC0E00000, 0x012C0000, 0xC0C00000, 0x01680000, 0xC0400000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EB634[12] = { 0x00000000, 0x00000000, 0x003C0000, 0x00000000, 0x00B40000, 0x41400000, 0x012C0000, 0x41400000, 0x01680000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EB604[6] = { { 0, 0, -3.0f }, { 60, 0, -6.0f }, { 180, 0, -7.0f }, { 300, 0, -6.0f }, { 360, 0, -3.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EB634[6] = { { 0, 0, 0.0f }, { 60, 0, 0.0f }, { 180, 0, 12.0f }, { 300, 0, 12.0f }, { 360, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EB664[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2560,7 +2560,7 @@ extern "C" const void *const JointTracks_rodata_803EB664[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EB688[24] = { 0x00000000, 0x41C80000, 0x001E0000, 0x40400000, 0x00640000, 0x00000000, 0x00780000, 0x41100000, 0x008C0000, 0x00000000, 0x00A00000, 0x41100000, 0x00B40000, 0x00000000, 0x00C80000, 0x41100000, 0x00DC0000, 0x00000000, 0x012C0000, 0x00000000, 0x01680000, 0x41C80000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EB688[12] = { { 0, 0, 25.0f }, { 30, 0, 3.0f }, { 100, 0, 0.0f }, { 120, 0, 9.0f }, { 140, 0, 0.0f }, { 160, 0, 9.0f }, { 180, 0, 0.0f }, { 200, 0, 9.0f }, { 220, 0, 0.0f }, { 300, 0, 0.0f }, { 360, 0, 25.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EB6E8[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2572,7 +2572,7 @@ extern "C" const void *const JointTracks_rodata_803EB6E8[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EB70C[8] = { 0x00000000, 0x408CCCCD, 0x003C0000, 0x4019999A, 0x005A0000, 0x408CCCCD, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EB70C[4] = { { 0, 0, 4.4f }, { 60, 0, 2.4f }, { 90, 0, 4.4f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EB72C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2652,7 +2652,7 @@ extern "C" const void *const JointTracks_rodata_803EB840[54] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803EB918[12] = { 0x00000000, 0x00000000, 0x003C0000, 0x00000000, 0x00B40000, 0xC1400000, 0x012C0000, 0xC1400000, 0x01680000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EB918[6] = { { 0, 0, 0.0f }, { 60, 0, 0.0f }, { 180, 0, -12.0f }, { 300, 0, -12.0f }, { 360, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EB948[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2724,9 +2724,9 @@ extern "C" const void *const JointTracks_rodata_803EB9CC[54] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803EBAA4[74] = { 0x00000000, 0x459888F6, 0x003C0000, 0x4590A9AE, 0x00780000, 0x45878252, 0x00B40000, 0x457F06B8, 0x00F00000, 0x4578651F, 0x012C0000, 0x45770971, 0x01680000, 0x456A107B, 0x01A40000, 0x455326E1, 0x01E00000, 0x45378AE1, 0x021C0000, 0x451E68A4, 0x02580000, 0x4505A4CD, 0x02940000, 0x44D2EF5C, 0x02D00000, 0x449A7666, 0x030C0000, 0x4447E28F, 0x03480000, 0x440988F6, 0x03840000, 0x4416399A, 0x03C00000, 0x447A6D71, 0x03FC0000, 0x44AB1F5C, 0x04380000, 0x44C69B85, 0x04740000, 0x44E35A8F, 0x04B00000, 0x45086B5C, 0x04EC0000, 0x4521D852, 0x05280000, 0x453CD052, 0x05640000, 0x455864F6, 0x05A00000, 0x45711CA4, 0x05DC0000, 0x458245EC, 0x06180000, 0x4587C71F, 0x06540000, 0x4587B8F6, 0x06900000, 0x4583C266, 0x06CC0000, 0x457C3B85, 0x07080000, 0x45750AE1, 0x07440000, 0x457D3971, 0x07800000, 0x458A9E66, 0x07BC0000, 0x459736B8, 0x07F80000, 0x459A8B5C, 0x08160000, 0x459888F6, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EBBCC[74] = { 0x00000000, 0x4401C47B, 0x003C0000, 0x44160C29, 0x00780000, 0x43F1A3D7, 0x00B40000, 0x433B35C3, 0x00F00000, 0x430C170A, 0x012C0000, 0x4347547B, 0x01680000, 0x439C1D71, 0x01A40000, 0x43CDD333, 0x01E00000, 0x43F848F6, 0x021C0000, 0x4407B1EC, 0x02580000, 0x440810A4, 0x02940000, 0x43F72F5C, 0x02D00000, 0x43D963D7, 0x030C0000, 0x43DD03D7, 0x03480000, 0x440B4F5C, 0x03840000, 0x44358333, 0x03C00000, 0x4442E47B, 0x03FC0000, 0x442A4F5C, 0x04380000, 0x43F5A3D7, 0x04740000, 0x436523D7, 0x04B00000, 0x43188A3D, 0x04EC0000, 0x43713D71, 0x05280000, 0x43B67EB8, 0x05640000, 0x43E96148, 0x05A00000, 0x4402851F, 0x05DC0000, 0x44092CCD, 0x06180000, 0x440D05C3, 0x06540000, 0x4410270A, 0x06900000, 0x44124E14, 0x06CC0000, 0x441357AE, 0x07080000, 0x44138000, 0x07440000, 0x44138000, 0x07800000, 0x44138000, 0x07BC0000, 0x44136C29, 0x07F80000, 0x440BC1EC, 0x08160000, 0x4401C47B, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EBCF4[74] = { 0x00000000, 0xC532A59A, 0x003C0000, 0xC51BA1EC, 0x00780000, 0xC506A9C3, 0x00B40000, 0xC4DF8DC3, 0x00F00000, 0xC4A8628F, 0x012C0000, 0xC45F1EB8, 0x01680000, 0xC3FC6666, 0x01A40000, 0xC379970A, 0x01E00000, 0xC34E0000, 0x021C0000, 0xC3D268F6, 0x02580000, 0xC4234148, 0x02940000, 0xC42DFB85, 0x02D00000, 0xC41DAA3D, 0x030C0000, 0xC4382148, 0x03480000, 0xC488DE66, 0x03840000, 0xC4BC71EC, 0x03C00000, 0xC4CF46B8, 0x03FC0000, 0xC4B18F5C, 0x04380000, 0xC4852571, 0x04740000, 0xC43FC852, 0x04B00000, 0xC3FE628F, 0x04EC0000, 0xC39D51EC, 0x05280000, 0xC35A8A3D, 0x05640000, 0xC38C0148, 0x05A00000, 0xC3FC799A, 0x05DC0000, 0xC452470A, 0x06180000, 0xC49DD852, 0x06540000, 0xC4D715C3, 0x06900000, 0xC5072785, 0x06CC0000, 0xC521A029, 0x07080000, 0xC53D4CCD, 0x07440000, 0xC5586971, 0x07800000, 0xC5668266, 0x07BC0000, 0xC55B5852, 0x07F80000, 0xC5402D71, 0x08160000, 0xC532A59A, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EBAA4[37] = { { 0, 0, 4881.12f }, { 60, 0, 4629.21f }, { 120, 0, 4336.29f }, { 180, 0, 4080.42f }, { 240, 0, 3974.32f }, { 300, 0, 3952.59f }, { 360, 0, 3745.03f }, { 420, 0, 3378.43f }, { 480, 0, 2936.68f }, { 540, 0, 2534.54f }, { 600, 0, 2138.3f }, { 660, 0, 1687.48f }, { 720, 0, 1235.7f }, { 780, 0, 799.54f }, { 840, 0, 550.14f }, { 900, 0, 600.9f }, { 960, 0, 1001.71f }, { 1020, 0, 1368.98f }, { 1080, 0, 1588.86f }, { 1140, 0, 1818.83f }, { 1200, 0, 2182.71f }, { 1260, 0, 2589.52f }, { 1320, 0, 3021.02f }, { 1380, 0, 3462.31f }, { 1440, 0, 3857.79f }, { 1500, 0, 4168.74f }, { 1560, 0, 4344.89f }, { 1620, 0, 4343.12f }, { 1680, 0, 4216.3f }, { 1740, 0, 4035.72f }, { 1800, 0, 3920.68f }, { 1860, 0, 4051.59f }, { 1920, 0, 4435.8f }, { 1980, 0, 4838.84f }, { 2040, 0, 4945.42f }, { 2070, 0, 4881.12f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EBBCC[37] = { { 0, 0, 519.07f }, { 60, 0, 600.19f }, { 120, 0, 483.28f }, { 180, 0, 187.21f }, { 240, 0, 140.09f }, { 300, 0, 199.33f }, { 360, 0, 312.23f }, { 420, 0, 411.65f }, { 480, 0, 496.57f }, { 540, 0, 542.78f }, { 600, 0, 544.26f }, { 660, 0, 494.37f }, { 720, 0, 434.78f }, { 780, 0, 442.03f }, { 840, 0, 557.24f }, { 900, 0, 726.05f }, { 960, 0, 779.57f }, { 1020, 0, 681.24f }, { 1080, 0, 491.28f }, { 1140, 0, 229.14f }, { 1200, 0, 152.54f }, { 1260, 0, 241.24f }, { 1320, 0, 364.99f }, { 1380, 0, 466.76f }, { 1440, 0, 522.08f }, { 1500, 0, 548.7f }, { 1560, 0, 564.09f }, { 1620, 0, 576.61f }, { 1680, 0, 585.22f }, { 1740, 0, 589.37f }, { 1800, 0, 590.0f }, { 1860, 0, 590.0f }, { 1920, 0, 590.0f }, { 1980, 0, 589.69f }, { 2040, 0, 559.03f }, { 2070, 0, 519.07f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EBCF4[37] = { { 0, 0, -2858.35f }, { 60, 0, -2490.12f }, { 120, 0, -2154.61f }, { 180, 0, -1788.43f }, { 240, 0, -1347.08f }, { 300, 0, -892.48f }, { 360, 0, -504.8f }, { 420, 0, -249.59f }, { 480, 0, -206.0f }, { 540, 0, -420.82f }, { 600, 0, -653.02f }, { 660, 0, -695.93f }, { 720, 0, -630.66f }, { 780, 0, -736.52f }, { 840, 0, -1094.95f }, { 900, 0, -1507.56f }, { 960, 0, -1658.21f }, { 1020, 0, -1420.48f }, { 1080, 0, -1065.17f }, { 1140, 0, -767.13f }, { 1200, 0, -508.77f }, { 1260, 0, -314.64f }, { 1320, 0, -218.54f }, { 1380, 0, -280.01f }, { 1440, 0, -504.95f }, { 1500, 0, -841.11f }, { 1560, 0, -1262.76f }, { 1620, 0, -1720.68f }, { 1680, 0, -2162.47f }, { 1740, 0, -2586.01f }, { 1800, 0, -3028.8f }, { 1860, 0, -3462.59f }, { 1920, 0, -3688.15f }, { 1980, 0, -3509.52f }, { 2040, 0, -3074.84f }, { 2070, 0, -2858.35f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EBE1C[9] = {
     (void *)&JointTracks_rodata_803EBAA4,
     (void *)&JointTracks_rodata_803EBBCC,
@@ -2738,7 +2738,7 @@ extern "C" const void *const JointTracks_rodata_803EBE1C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EBE40[38] = { 0x00000000, 0xC1C80000, 0x00780000, 0xC2180000, 0x00F00000, 0xC1700000, 0x01680000, 0xC2240000, 0x01E00000, 0xC2DC0000, 0x02580000, 0xC2C80000, 0x02D00000, 0xC2B40000, 0x03480000, 0xC3250000, 0x03C00000, 0xC38C0000, 0x04380000, 0xC3A68000, 0x04B00000, 0xC3940000, 0x05280000, 0xC3898000, 0x05A00000, 0xC36B0000, 0x06180000, 0xC33E0000, 0x06900000, 0xC3200000, 0x07080000, 0xC32C0000, 0x07800000, 0xC3898000, 0x08160000, 0xC3C08000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EBE40[19] = { { 0, 0, -25.0f }, { 120, 0, -38.0f }, { 240, 0, -15.0f }, { 360, 0, -41.0f }, { 480, 0, -110.0f }, { 600, 0, -100.0f }, { 720, 0, -90.0f }, { 840, 0, -165.0f }, { 960, 0, -280.0f }, { 1080, 0, -333.0f }, { 1200, 0, -296.0f }, { 1320, 0, -275.0f }, { 1440, 0, -235.0f }, { 1560, 0, -190.0f }, { 1680, 0, -160.0f }, { 1800, 0, -172.0f }, { 1920, 0, -275.0f }, { 2070, 0, -385.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EBED8[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2750,7 +2750,7 @@ extern "C" const void *const JointTracks_rodata_803EBED8[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EBEFC[28] = { 0x00000000, 0x41F00000, 0x00780000, 0x40A00000, 0x00F00000, 0xC1F00000, 0x01680000, 0x42200000, 0x01E00000, 0x42200000, 0x02580000, 0xC1700000, 0x02D00000, 0x41F00000, 0x03C00000, 0x42340000, 0x04380000, 0x00000000, 0x05280000, 0xC1F00000, 0x06900000, 0xC1C80000, 0x07080000, 0x42340000, 0x08160000, 0x41F00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EBEFC[14] = { { 0, 0, 30.0f }, { 120, 0, 5.0f }, { 240, 0, -30.0f }, { 360, 0, 40.0f }, { 480, 0, 40.0f }, { 600, 0, -15.0f }, { 720, 0, 30.0f }, { 960, 0, 45.0f }, { 1080, 0, 0.0f }, { 1320, 0, -30.0f }, { 1680, 0, -25.0f }, { 1800, 0, 45.0f }, { 2070, 0, 30.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EBF6C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2762,7 +2762,7 @@ extern "C" const void *const JointTracks_rodata_803EBF6C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EBF90[28] = { 0x00000000, 0x41A00000, 0x00F00000, 0x40400000, 0x01680000, 0xC0C00000, 0x01E00000, 0x00000000, 0x02580000, 0x40C00000, 0x02D00000, 0x41100000, 0x03480000, 0xC1700000, 0x03C00000, 0x40C00000, 0x04380000, 0x42200000, 0x04EC0000, 0xC0400000, 0x05640000, 0xC0400000, 0x06180000, 0x00000000, 0x07300000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EBF90[14] = { { 0, 0, 20.0f }, { 240, 0, 3.0f }, { 360, 0, -6.0f }, { 480, 0, 0.0f }, { 600, 0, 6.0f }, { 720, 0, 9.0f }, { 840, 0, -15.0f }, { 960, 0, 6.0f }, { 1080, 0, 40.0f }, { 1260, 0, -3.0f }, { 1380, 0, -3.0f }, { 1560, 0, 0.0f }, { 1840, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC000[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2774,9 +2774,9 @@ extern "C" const void *const JointTracks_rodata_803EC000[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC024[12] = { 0x00000000, 0xC09AE148, 0x000A0000, 0xC0BAE148, 0x001E0000, 0x00000000, 0x004B0000, 0x409C28F6, 0x005A0000, 0xC09AE148, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EC054[12] = { 0x00000000, 0x40E0F5C3, 0x000A0000, 0x40C75C29, 0x001E0000, 0x41087AE1, 0x004B0000, 0x40DA8F5C, 0x005A0000, 0x40E0F5C3, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EC084[12] = { 0x00000000, 0xC20AB852, 0x000A0000, 0xC22D28F6, 0x001E0000, 0x00000000, 0x004B0000, 0x420F0A3D, 0x005A0000, 0xC20AB852, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC024[6] = { { 0, 0, -4.84f }, { 10, 0, -5.84f }, { 30, 0, 0.0f }, { 75, 0, 4.88f }, { 90, 0, -4.84f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EC054[6] = { { 0, 0, 7.03f }, { 10, 0, 6.23f }, { 30, 0, 8.53f }, { 75, 0, 6.83f }, { 90, 0, 7.03f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EC084[6] = { { 0, 0, -34.68f }, { 10, 0, -43.29f }, { 30, 0, 0.0f }, { 75, 0, 35.76f }, { 90, 0, -34.68f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC0B4[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2788,8 +2788,8 @@ extern "C" const void *const JointTracks_rodata_803EC0B4[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC0D8[12] = { 0x00000000, 0xC0E0F5C3, 0x000A0000, 0xC0C75C29, 0x001E0000, 0xC1087AE1, 0x004B0000, 0xC0DA8F5C, 0x005A0000, 0xC0E0F5C3, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EC108[12] = { 0x00000000, 0x420AB852, 0x000A0000, 0x422D28F6, 0x001E0000, 0x00000000, 0x004B0000, 0xC20F0A3D, 0x005A0000, 0x420AB852, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC0D8[6] = { { 0, 0, -7.03f }, { 10, 0, -6.23f }, { 30, 0, -8.53f }, { 75, 0, -6.83f }, { 90, 0, -7.03f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EC108[6] = { { 0, 0, 34.68f }, { 10, 0, 43.29f }, { 30, 0, 0.0f }, { 75, 0, -35.76f }, { 90, 0, 34.68f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC138[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2801,7 +2801,7 @@ extern "C" const void *const JointTracks_rodata_803EC138[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC15C[10] = { 0x00000000, 0x40800000, 0x00140000, 0x40A00000, 0x004B0000, 0xC0A00000, 0x005A0000, 0x40800000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC15C[5] = { { 0, 0, 4.0f }, { 20, 0, 5.0f }, { 75, 0, -5.0f }, { 90, 0, 4.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC184[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2813,7 +2813,7 @@ extern "C" const void *const JointTracks_rodata_803EC184[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC1A8[10] = { 0x00000000, 0xC1100000, 0x000A0000, 0xC1080000, 0x00410000, 0x00000000, 0x004B0000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC1A8[5] = { { 0, 0, -9.0f }, { 10, 0, -8.5f }, { 65, 0, 0.0f }, { 75, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC1D0[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2853,8 +2853,8 @@ extern "C" const void *const JointTracks_rodata_803EC294[18] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803EC2DC[12] = { 0x00000000, 0x4558AC29, 0x00780000, 0x45552052, 0x00F00000, 0x455400A4, 0x01680000, 0x45579A14, 0x01E00000, 0x4558AC29, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EC30C[12] = { 0x00000000, 0xC595D4F6, 0x00780000, 0xC598970A, 0x00F00000, 0xC595B533, 0x01680000, 0xC593AB1F, 0x01E00000, 0xC595D4F6, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC2DC[6] = { { 0, 0, 3466.76f }, { 120, 0, 3410.02f }, { 240, 0, 3392.04f }, { 360, 0, 3449.63f }, { 480, 0, 3466.76f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EC30C[6] = { { 0, 0, -4794.62f }, { 120, 0, -4882.88f }, { 240, 0, -4790.65f }, { 360, 0, -4725.39f }, { 480, 0, -4794.62f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC33C[9] = {
     (void *)&JointTracks_rodata_803EC2DC,
     (void *)0x0,
@@ -2866,7 +2866,7 @@ extern "C" const void *const JointTracks_rodata_803EC33C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC360[12] = { 0x00000000, 0xC0A00000, 0x00780000, 0xC17E3D71, 0x00F00000, 0xC0A00000, 0x01680000, 0xC17E3D71, 0x01E00000, 0xC0A00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC360[6] = { { 0, 0, -5.0f }, { 120, 0, -15.89f }, { 240, 0, -5.0f }, { 360, 0, -15.89f }, { 480, 0, -5.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC390[9] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803EC360,
@@ -2878,8 +2878,8 @@ extern "C" const void *const JointTracks_rodata_803EC390[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC3B4[12] = { 0x00000000, 0x42040000, 0x00780000, 0x420C0000, 0x00F00000, 0x42040000, 0x01680000, 0x420C0000, 0x01E00000, 0x42040000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EC3E4[12] = { 0x00000000, 0x40A00000, 0x00780000, 0xC0A00000, 0x00F00000, 0x40A00000, 0x01680000, 0x41200000, 0x01E00000, 0x40A00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC3B4[6] = { { 0, 0, 33.0f }, { 120, 0, 35.0f }, { 240, 0, 33.0f }, { 360, 0, 35.0f }, { 480, 0, 33.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EC3E4[6] = { { 0, 0, 5.0f }, { 120, 0, -5.0f }, { 240, 0, 5.0f }, { 360, 0, 10.0f }, { 480, 0, 5.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC414[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2891,7 +2891,7 @@ extern "C" const void *const JointTracks_rodata_803EC414[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC438[12] = { 0x00000000, 0x41900000, 0x00780000, 0x41A00000, 0x00F00000, 0x41900000, 0x01680000, 0x41A00000, 0x01E00000, 0x41900000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC438[6] = { { 0, 0, 18.0f }, { 120, 0, 20.0f }, { 240, 0, 18.0f }, { 360, 0, 20.0f }, { 480, 0, 18.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC468[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2903,7 +2903,7 @@ extern "C" const void *const JointTracks_rodata_803EC468[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC48C[12] = { 0x00000000, 0xC0A00000, 0x00780000, 0x40A00000, 0x00F00000, 0x00000000, 0x01680000, 0xC0A00000, 0x01E00000, 0xC0A00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC48C[6] = { { 0, 0, -5.0f }, { 120, 0, 5.0f }, { 240, 0, 0.0f }, { 360, 0, -5.0f }, { 480, 0, -5.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC4BC[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2915,7 +2915,7 @@ extern "C" const void *const JointTracks_rodata_803EC4BC[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC4E0[16] = { 0x00000000, 0x00000000, 0x003C0000, 0x00000000, 0x00780000, 0x41700000, 0x00B40000, 0x40400000, 0x00F00000, 0x40400000, 0x014A0000, 0x41700000, 0x01E00000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC4E0[8] = { { 0, 0, 0.0f }, { 60, 0, 0.0f }, { 120, 0, 15.0f }, { 180, 0, 3.0f }, { 240, 0, 3.0f }, { 330, 0, 15.0f }, { 480, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC520[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2927,7 +2927,7 @@ extern "C" const void *const JointTracks_rodata_803EC520[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC544[12] = { 0x00000000, 0x42200000, 0x00780000, 0x425C0000, 0x01040000, 0x42200000, 0x01680000, 0x425C0000, 0x01E00000, 0x42200000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC544[6] = { { 0, 0, 40.0f }, { 120, 0, 55.0f }, { 260, 0, 40.0f }, { 360, 0, 55.0f }, { 480, 0, 40.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC574[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2939,7 +2939,7 @@ extern "C" const void *const JointTracks_rodata_803EC574[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC598[12] = { 0x00000000, 0xC1200000, 0x00780000, 0x00000000, 0x00F00000, 0xC1200000, 0x01680000, 0x00000000, 0x01E00000, 0xC1200000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC598[6] = { { 0, 0, -10.0f }, { 120, 0, 0.0f }, { 240, 0, -10.0f }, { 360, 0, 0.0f }, { 480, 0, -10.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC5C8[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2951,7 +2951,7 @@ extern "C" const void *const JointTracks_rodata_803EC5C8[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC5EC[12] = { 0x00000000, 0x41200000, 0x00780000, 0xC1200000, 0x00F00000, 0x41200000, 0x01680000, 0xC1200000, 0x01E00000, 0x41200000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC5EC[6] = { { 0, 0, 10.0f }, { 120, 0, -10.0f }, { 240, 0, 10.0f }, { 360, 0, -10.0f }, { 480, 0, 10.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC61C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2963,7 +2963,7 @@ extern "C" const void *const JointTracks_rodata_803EC61C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC640[12] = { 0x00000000, 0xC1200000, 0x00780000, 0x41200000, 0x00F00000, 0xC1200000, 0x01680000, 0x41200000, 0x01E00000, 0xC1200000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC640[6] = { { 0, 0, -10.0f }, { 120, 0, 10.0f }, { 240, 0, -10.0f }, { 360, 0, 10.0f }, { 480, 0, -10.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC670[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2975,7 +2975,7 @@ extern "C" const void *const JointTracks_rodata_803EC670[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC694[12] = { 0x00000000, 0xC1A00000, 0x00780000, 0x41700000, 0x00F00000, 0xC1A00000, 0x01680000, 0x40A00000, 0x01E00000, 0xC1A00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC694[6] = { { 0, 0, -20.0f }, { 120, 0, 15.0f }, { 240, 0, -20.0f }, { 360, 0, 5.0f }, { 480, 0, -20.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC6C4[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2987,7 +2987,7 @@ extern "C" const void *const JointTracks_rodata_803EC6C4[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC6E8[12] = { 0x00000000, 0x41700000, 0x00780000, 0xC1A00000, 0x00F00000, 0x41A00000, 0x01680000, 0xC1F00000, 0x01E00000, 0x41700000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC6E8[6] = { { 0, 0, 15.0f }, { 120, 0, -20.0f }, { 240, 0, 20.0f }, { 360, 0, -30.0f }, { 480, 0, 15.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC718[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -2999,9 +2999,9 @@ extern "C" const void *const JointTracks_rodata_803EC718[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC73C[12] = { 0x00000000, 0x44F9CA3D, 0x00780000, 0x44F170A4, 0x00F00000, 0x44EDDC7B, 0x01680000, 0x44F78A3D, 0x01E00000, 0x44F9CA3D, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EC76C[12] = { 0x00000000, 0xC5AA71C3, 0x00780000, 0xC5ABC948, 0x00F00000, 0xC5A83533, 0x01680000, 0xC5A73D0A, 0x01E00000, 0xC5AA71C3, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EC79C[10] = { 0x00000000, 0x43070000, 0x00780000, 0x43110000, 0x01680000, 0x42FA0000, 0x01E00000, 0x43070000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC73C[6] = { { 0, 0, 1998.32f }, { 120, 0, 1931.52f }, { 240, 0, 1902.89f }, { 360, 0, 1980.32f }, { 480, 0, 1998.32f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EC76C[6] = { { 0, 0, -5454.22f }, { 120, 0, -5497.16f }, { 240, 0, -5382.65f }, { 360, 0, -5351.63f }, { 480, 0, -5454.22f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EC79C[5] = { { 0, 0, 135.0f }, { 120, 0, 145.0f }, { 360, 0, 125.0f }, { 480, 0, 135.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC7C4[9] = {
     (void *)&JointTracks_rodata_803EC73C,
     (void *)0x0,
@@ -3013,7 +3013,7 @@ extern "C" const void *const JointTracks_rodata_803EC7C4[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC7E8[12] = { 0x00000000, 0x00000000, 0x00780000, 0x41700000, 0x00F00000, 0x40A00000, 0x01680000, 0x41200000, 0x01E00000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC7E8[6] = { { 0, 0, 0.0f }, { 120, 0, 15.0f }, { 240, 0, 5.0f }, { 360, 0, 10.0f }, { 480, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC818[9] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803EC7E8,
@@ -3025,8 +3025,8 @@ extern "C" const void *const JointTracks_rodata_803EC818[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC83C[10] = { 0x00000000, 0x42200000, 0x012C0000, 0x420C0000, 0x01680000, 0x420C0000, 0x01E00000, 0x42200000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EC864[10] = { 0x00000000, 0xC0A00000, 0x012C0000, 0x40A00000, 0x01680000, 0x00000000, 0x01E00000, 0xC0A00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC83C[5] = { { 0, 0, 40.0f }, { 300, 0, 35.0f }, { 360, 0, 35.0f }, { 480, 0, 40.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EC864[5] = { { 0, 0, -5.0f }, { 300, 0, 5.0f }, { 360, 0, 0.0f }, { 480, 0, -5.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC88C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3038,8 +3038,8 @@ extern "C" const void *const JointTracks_rodata_803EC88C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC8B0[14] = { 0x00000000, 0x41A00000, 0x00780000, 0x41C80000, 0x00B40000, 0x41C80000, 0x012C0000, 0x41900000, 0x01680000, 0x41900000, 0x01E00000, 0x41A00000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EC8E8[10] = { 0x00000000, 0xC0A00000, 0x00F00000, 0x40A00000, 0x01680000, 0x00000000, 0x01E00000, 0xC0A00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC8B0[7] = { { 0, 0, 20.0f }, { 120, 0, 25.0f }, { 180, 0, 25.0f }, { 300, 0, 18.0f }, { 360, 0, 18.0f }, { 480, 0, 20.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EC8E8[5] = { { 0, 0, -5.0f }, { 240, 0, 5.0f }, { 360, 0, 0.0f }, { 480, 0, -5.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC910[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3051,7 +3051,7 @@ extern "C" const void *const JointTracks_rodata_803EC910[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC934[14] = { 0x00000000, 0x41A00000, 0x00780000, 0x41B80000, 0x00B40000, 0x41B80000, 0x012C0000, 0x41900000, 0x01680000, 0x41900000, 0x01E00000, 0x41A00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC934[7] = { { 0, 0, 20.0f }, { 120, 0, 23.0f }, { 180, 0, 23.0f }, { 300, 0, 18.0f }, { 360, 0, 18.0f }, { 480, 0, 20.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EC96C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3063,9 +3063,9 @@ extern "C" const void *const JointTracks_rodata_803EC96C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EC990[12] = { 0x00000000, 0xC2960000, 0x00780000, 0xC2960000, 0x00F00000, 0xC25C0000, 0x01680000, 0xC25C0000, 0x01E00000, 0xC2960000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EC9C0[12] = { 0x00000000, 0xC1700000, 0x00780000, 0x41200000, 0x00F00000, 0x00000000, 0x01680000, 0x00000000, 0x01E00000, 0xC1700000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EC9F0[10] = { 0x00000000, 0x00000000, 0x00F00000, 0x41A00000, 0x01680000, 0xC1200000, 0x01E00000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EC990[6] = { { 0, 0, -75.0f }, { 120, 0, -75.0f }, { 240, 0, -55.0f }, { 360, 0, -55.0f }, { 480, 0, -75.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EC9C0[6] = { { 0, 0, -15.0f }, { 120, 0, 10.0f }, { 240, 0, 0.0f }, { 360, 0, 0.0f }, { 480, 0, -15.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EC9F0[5] = { { 0, 0, 0.0f }, { 240, 0, 20.0f }, { 360, 0, -10.0f }, { 480, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ECA18[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3077,7 +3077,7 @@ extern "C" const void *const JointTracks_rodata_803ECA18[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ECA3C[16] = { 0x00000000, 0x41B00000, 0x003E0000, 0x40A00000, 0x00780000, 0x41B00000, 0x00B40000, 0x00000000, 0x00F00000, 0x40400000, 0x01A40000, 0x00000000, 0x01E00000, 0x41B00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ECA3C[8] = { { 0, 0, 22.0f }, { 62, 0, 5.0f }, { 120, 0, 22.0f }, { 180, 0, 0.0f }, { 240, 0, 3.0f }, { 420, 0, 0.0f }, { 480, 0, 22.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ECA7C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3089,7 +3089,7 @@ extern "C" const void *const JointTracks_rodata_803ECA7C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ECAA0[12] = { 0x00000000, 0x425C0000, 0x00780000, 0x42340000, 0x00F00000, 0x425C0000, 0x01680000, 0x42200000, 0x01E00000, 0x425C0000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ECAA0[6] = { { 0, 0, 55.0f }, { 120, 0, 45.0f }, { 240, 0, 55.0f }, { 360, 0, 40.0f }, { 480, 0, 55.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ECAD0[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3101,7 +3101,7 @@ extern "C" const void *const JointTracks_rodata_803ECAD0[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ECAF4[12] = { 0x00000000, 0x00000000, 0x00780000, 0xC1700000, 0x00F00000, 0x00000000, 0x01680000, 0xC1700000, 0x01E00000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ECAF4[6] = { { 0, 0, 0.0f }, { 120, 0, -15.0f }, { 240, 0, 0.0f }, { 360, 0, -15.0f }, { 480, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ECB24[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3113,7 +3113,7 @@ extern "C" const void *const JointTracks_rodata_803ECB24[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ECB48[12] = { 0x00000000, 0x41200000, 0x00780000, 0xC1200000, 0x00F00000, 0x41200000, 0x01680000, 0xC1200000, 0x01E00000, 0x41200000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ECB48[6] = { { 0, 0, 10.0f }, { 120, 0, -10.0f }, { 240, 0, 10.0f }, { 360, 0, -10.0f }, { 480, 0, 10.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ECB78[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3125,7 +3125,7 @@ extern "C" const void *const JointTracks_rodata_803ECB78[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ECB9C[12] = { 0x00000000, 0xC1200000, 0x00780000, 0x41200000, 0x00F00000, 0xC1200000, 0x01680000, 0x41200000, 0x01E00000, 0xC1200000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ECB9C[6] = { { 0, 0, -10.0f }, { 120, 0, 10.0f }, { 240, 0, -10.0f }, { 360, 0, 10.0f }, { 480, 0, -10.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ECBCC[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3137,7 +3137,7 @@ extern "C" const void *const JointTracks_rodata_803ECBCC[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ECBF0[14] = { 0x00000000, 0x41C80000, 0x001E0000, 0x41F00000, 0x00780000, 0xC1200000, 0x00F00000, 0x40A00000, 0x01860000, 0xC1A00000, 0x01E00000, 0x41C80000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ECBF0[7] = { { 0, 0, 25.0f }, { 30, 0, 30.0f }, { 120, 0, -10.0f }, { 240, 0, 5.0f }, { 390, 0, -20.0f }, { 480, 0, 25.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ECC28[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3149,7 +3149,7 @@ extern "C" const void *const JointTracks_rodata_803ECC28[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ECC4C[12] = { 0x00000000, 0x41C80000, 0x00780000, 0xC1700000, 0x00F00000, 0x41200000, 0x01680000, 0xC1A00000, 0x01E00000, 0x41C80000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ECC4C[6] = { { 0, 0, 25.0f }, { 120, 0, -15.0f }, { 240, 0, 10.0f }, { 360, 0, -20.0f }, { 480, 0, 25.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ECC7C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3243,9 +3243,9 @@ extern "C" const void *const JointTracks_rodata_803ECEA8[54] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803ECF80[12] = { 0x00000000, 0xC28C0000, 0x003C0000, 0xC2820000, 0x00780000, 0xC25C0000, 0x01680000, 0xC2900000, 0x01A40000, 0xC28C0000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803ECFB0[12] = { 0x00000000, 0x41400000, 0x003C0000, 0x41400000, 0x00780000, 0x41A00000, 0x01680000, 0x41600000, 0x01A40000, 0x41400000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803ECFE0[12] = { 0x00000000, 0x41400000, 0x003C0000, 0x41A00000, 0x00780000, 0x41700000, 0x01680000, 0x41700000, 0x01A40000, 0x41400000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ECF80[6] = { { 0, 0, -70.0f }, { 60, 0, -65.0f }, { 120, 0, -55.0f }, { 360, 0, -72.0f }, { 420, 0, -70.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803ECFB0[6] = { { 0, 0, 12.0f }, { 60, 0, 12.0f }, { 120, 0, 20.0f }, { 360, 0, 14.0f }, { 420, 0, 12.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803ECFE0[6] = { { 0, 0, 12.0f }, { 60, 0, 20.0f }, { 120, 0, 15.0f }, { 360, 0, 15.0f }, { 420, 0, 12.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ED010[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3257,7 +3257,7 @@ extern "C" const void *const JointTracks_rodata_803ED010[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ED034[10] = { 0x00000000, 0x41A00000, 0x003C0000, 0x41F00000, 0x01680000, 0x41C80000, 0x01A40000, 0x41A00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ED034[5] = { { 0, 0, 20.0f }, { 60, 0, 30.0f }, { 360, 0, 25.0f }, { 420, 0, 20.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ED05C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3269,8 +3269,8 @@ extern "C" const void *const JointTracks_rodata_803ED05C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ED080[20] = { 0x00000000, 0x41C80000, 0x003C0000, 0xC1200000, 0x00780000, 0xC1A00000, 0x00B40000, 0xC2200000, 0x00D20000, 0xC2340000, 0x00F00000, 0xC2200000, 0x012C0000, 0xC1900000, 0x01680000, 0x41A00000, 0x01A40000, 0x41C80000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803ED0D0[18] = { 0x00000000, 0x42200000, 0x003C0000, 0x42480000, 0x00780000, 0x42480000, 0x00B40000, 0x42700000, 0x00F00000, 0x42700000, 0x012C0000, 0x42180000, 0x01680000, 0x42340000, 0x01A40000, 0x42200000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ED080[10] = { { 0, 0, 25.0f }, { 60, 0, -10.0f }, { 120, 0, -20.0f }, { 180, 0, -40.0f }, { 210, 0, -45.0f }, { 240, 0, -40.0f }, { 300, 0, -18.0f }, { 360, 0, 20.0f }, { 420, 0, 25.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803ED0D0[9] = { { 0, 0, 40.0f }, { 60, 0, 50.0f }, { 120, 0, 50.0f }, { 180, 0, 60.0f }, { 240, 0, 60.0f }, { 300, 0, 38.0f }, { 360, 0, 45.0f }, { 420, 0, 40.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ED118[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3282,7 +3282,7 @@ extern "C" const void *const JointTracks_rodata_803ED118[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ED13C[12] = { 0x00000000, 0x41700000, 0x00B40000, 0x41F00000, 0x00D20000, 0x41F00000, 0x01680000, 0x41A00000, 0x01A40000, 0x41700000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ED13C[6] = { { 0, 0, 15.0f }, { 180, 0, 30.0f }, { 210, 0, 30.0f }, { 360, 0, 20.0f }, { 420, 0, 15.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ED16C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3294,8 +3294,8 @@ extern "C" const void *const JointTracks_rodata_803ED16C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ED190[18] = { 0x00000000, 0x41700000, 0x003C0000, 0xC1C80000, 0x00780000, 0xC1200000, 0x00B40000, 0xC1A00000, 0x00D20000, 0xC1A00000, 0x012C0000, 0xC10451EC, 0x01680000, 0xC1200000, 0x01A40000, 0x41700000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803ED1D8[18] = { 0x00000000, 0x41F00000, 0x003C0000, 0x41F00000, 0x00780000, 0x41C80000, 0x00B40000, 0x42340000, 0x00D20000, 0x42340000, 0x012C0000, 0x41F00000, 0x01680000, 0x42040000, 0x01A40000, 0x41F00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ED190[9] = { { 0, 0, 15.0f }, { 60, 0, -25.0f }, { 120, 0, -10.0f }, { 180, 0, -20.0f }, { 210, 0, -20.0f }, { 300, 0, -8.27f }, { 360, 0, -10.0f }, { 420, 0, 15.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803ED1D8[9] = { { 0, 0, 30.0f }, { 60, 0, 30.0f }, { 120, 0, 25.0f }, { 180, 0, 45.0f }, { 210, 0, 45.0f }, { 300, 0, 30.0f }, { 360, 0, 33.0f }, { 420, 0, 30.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ED220[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3307,7 +3307,7 @@ extern "C" const void *const JointTracks_rodata_803ED220[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ED244[14] = { 0x00000000, 0x41C80000, 0x00780000, 0x41A00000, 0x00B40000, 0xC1700000, 0x00D20000, 0xC1A00000, 0x012C0000, 0x41A00000, 0x01A40000, 0x41C80000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ED244[7] = { { 0, 0, 25.0f }, { 120, 0, 20.0f }, { 180, 0, -15.0f }, { 210, 0, -20.0f }, { 300, 0, 20.0f }, { 420, 0, 25.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ED27C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3319,9 +3319,9 @@ extern "C" const void *const JointTracks_rodata_803ED27C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ED2A0[24] = { 0x00000000, 0xC2200000, 0x003C0000, 0xC195999A, 0x005A0000, 0xC1F00000, 0x00780000, 0xC1A00000, 0x00B40000, 0xC1200000, 0x00E10000, 0xC1B00000, 0x00FF0000, 0xC1700000, 0x011D0000, 0xC1C13333, 0x012C0000, 0xC1700000, 0x01680000, 0xC1F00000, 0x01A40000, 0xC2200000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803ED300[24] = { 0x00000000, 0x42700000, 0x003C0000, 0xC0F51EB8, 0x00780000, 0xC0551EB8, 0x00B40000, 0xC1A00000, 0x00D20000, 0xC1F00000, 0x00E10000, 0xC1E651EC, 0x00F00000, 0xC1470A3D, 0x011D0000, 0x409851EC, 0x012C0000, 0x41200000, 0x01680000, 0x41F00000, 0x01A40000, 0x42700000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803ED360[24] = { 0x00000000, 0x00000000, 0x003C0000, 0x428A3D71, 0x00780000, 0x425128F6, 0x00B40000, 0x42820000, 0x00D20000, 0x42960000, 0x00E10000, 0x4298851F, 0x00F00000, 0x42A00000, 0x011D0000, 0x4269EB85, 0x012C0000, 0x42480000, 0x01680000, 0x41700000, 0x01A40000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ED2A0[12] = { { 0, 0, -40.0f }, { 60, 0, -18.7f }, { 90, 0, -30.0f }, { 120, 0, -20.0f }, { 180, 0, -10.0f }, { 225, 0, -22.0f }, { 255, 0, -15.0f }, { 285, 0, -24.15f }, { 300, 0, -15.0f }, { 360, 0, -30.0f }, { 420, 0, -40.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803ED300[12] = { { 0, 0, 60.0f }, { 60, 0, -7.66f }, { 120, 0, -3.33f }, { 180, 0, -20.0f }, { 210, 0, -30.0f }, { 225, 0, -28.79f }, { 240, 0, -12.44f }, { 285, 0, 4.76f }, { 300, 0, 10.0f }, { 360, 0, 30.0f }, { 420, 0, 60.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803ED360[12] = { { 0, 0, 0.0f }, { 60, 0, 69.12f }, { 120, 0, 52.29f }, { 180, 0, 65.0f }, { 210, 0, 75.0f }, { 225, 0, 76.26f }, { 240, 0, 80.0f }, { 285, 0, 58.48f }, { 300, 0, 50.0f }, { 360, 0, 15.0f }, { 420, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ED3C0[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3333,7 +3333,7 @@ extern "C" const void *const JointTracks_rodata_803ED3C0[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ED3E4[34] = { 0x00000000, 0x00000000, 0x000F0000, 0x40400000, 0x001E0000, 0x00000000, 0x002D0000, 0x41700000, 0x003C0000, 0x4050A3D7, 0x004B0000, 0x41900000, 0x005A0000, 0x41AACCCD, 0x00780000, 0x00000000, 0x00D20000, 0x40400000, 0x00E10000, 0x00000000, 0x00F00000, 0x41700000, 0x00FF0000, 0x41500000, 0x010E0000, 0x41900000, 0x01680000, 0x00000000, 0x01770000, 0x40400000, 0x01A40000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ED3E4[17] = { { 0, 0, 0.0f }, { 15, 0, 3.0f }, { 30, 0, 0.0f }, { 45, 0, 15.0f }, { 60, 0, 3.26f }, { 75, 0, 18.0f }, { 90, 0, 21.35f }, { 120, 0, 0.0f }, { 210, 0, 3.0f }, { 225, 0, 0.0f }, { 240, 0, 15.0f }, { 255, 0, 13.0f }, { 270, 0, 18.0f }, { 360, 0, 0.0f }, { 375, 0, 3.0f }, { 420, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ED46C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3373,8 +3373,8 @@ extern "C" const void *const JointTracks_rodata_803ED530[18] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803ED578[12] = { 0x00000000, 0x00000000, 0x003C0000, 0x00000000, 0x00780000, 0xC1000000, 0x01680000, 0xC0000000, 0x01A40000, 0x00000000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803ED5A8[12] = { 0x00000000, 0xC1100000, 0x003C0000, 0xC1700000, 0x00780000, 0xC1400000, 0x01680000, 0xC1400000, 0x01A40000, 0xC1100000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ED578[6] = { { 0, 0, 0.0f }, { 60, 0, 0.0f }, { 120, 0, -8.0f }, { 360, 0, -2.0f }, { 420, 0, 0.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803ED5A8[6] = { { 0, 0, -9.0f }, { 60, 0, -15.0f }, { 120, 0, -12.0f }, { 360, 0, -12.0f }, { 420, 0, -9.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ED5D8[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3386,7 +3386,7 @@ extern "C" const void *const JointTracks_rodata_803ED5D8[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ED5FC[10] = { 0x00000000, 0xC1A00000, 0x003C0000, 0xC1F00000, 0x01680000, 0xC1C80000, 0x01A40000, 0xC1A00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ED5FC[5] = { { 0, 0, -20.0f }, { 60, 0, -30.0f }, { 360, 0, -25.0f }, { 420, 0, -20.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ED624[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3398,7 +3398,7 @@ extern "C" const void *const JointTracks_rodata_803ED624[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ED648[18] = { 0x00000000, 0xC2200000, 0x003C0000, 0xC2480000, 0x00780000, 0xC2480000, 0x00B40000, 0xC2700000, 0x00F00000, 0xC2700000, 0x012C0000, 0xC2180000, 0x01680000, 0xC2340000, 0x01A40000, 0xC2200000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ED648[9] = { { 0, 0, -40.0f }, { 60, 0, -50.0f }, { 120, 0, -50.0f }, { 180, 0, -60.0f }, { 240, 0, -60.0f }, { 300, 0, -38.0f }, { 360, 0, -45.0f }, { 420, 0, -40.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ED690[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3410,7 +3410,7 @@ extern "C" const void *const JointTracks_rodata_803ED690[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ED6B4[12] = { 0x00000000, 0xC1700000, 0x00B40000, 0xC1F00000, 0x00D20000, 0xC1F00000, 0x01680000, 0xC1A00000, 0x01A40000, 0xC1700000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ED6B4[6] = { { 0, 0, -15.0f }, { 180, 0, -30.0f }, { 210, 0, -30.0f }, { 360, 0, -20.0f }, { 420, 0, -15.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ED6E4[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3422,7 +3422,7 @@ extern "C" const void *const JointTracks_rodata_803ED6E4[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ED708[18] = { 0x00000000, 0xC1F00000, 0x003C0000, 0xC1F00000, 0x00780000, 0xC1C80000, 0x00B40000, 0xC2340000, 0x00D20000, 0xC2340000, 0x012C0000, 0xC1F00000, 0x01680000, 0xC2040000, 0x01A40000, 0xC1F00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ED708[9] = { { 0, 0, -30.0f }, { 60, 0, -30.0f }, { 120, 0, -25.0f }, { 180, 0, -45.0f }, { 210, 0, -45.0f }, { 300, 0, -30.0f }, { 360, 0, -33.0f }, { 420, 0, -30.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ED750[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3434,7 +3434,7 @@ extern "C" const void *const JointTracks_rodata_803ED750[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ED774[14] = { 0x00000000, 0xC1C80000, 0x00780000, 0xC1A00000, 0x00B40000, 0x41700000, 0x00D20000, 0x41A00000, 0x012C0000, 0xC1A00000, 0x01A40000, 0xC1C80000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ED774[7] = { { 0, 0, -25.0f }, { 120, 0, -20.0f }, { 180, 0, 15.0f }, { 210, 0, 20.0f }, { 300, 0, -20.0f }, { 420, 0, -25.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ED7AC[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3446,9 +3446,9 @@ extern "C" const void *const JointTracks_rodata_803ED7AC[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ED7D0[22] = { 0x00000000, 0xC2200000, 0x003C0000, 0xC1B5AE14, 0x005A0000, 0xC1F00000, 0x00780000, 0xC1A00000, 0x00B40000, 0xC1200000, 0x00E10000, 0xC1B00000, 0x00FF0000, 0xC1700000, 0x012C0000, 0xC1700000, 0x01680000, 0xC1F00000, 0x01A40000, 0xC2200000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803ED828[20] = { 0x00000000, 0xC2700000, 0x003C0000, 0x40D051EC, 0x00780000, 0xC1700000, 0x00B40000, 0x41A00000, 0x00D20000, 0x41F00000, 0x00F00000, 0x41470A3D, 0x012C0000, 0xC1200000, 0x01680000, 0xC1F00000, 0x01A40000, 0xC2700000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803ED878[20] = { 0x00000000, 0x00000000, 0x003C0000, 0xC2746666, 0x00780000, 0xC2480000, 0x00B40000, 0xC2820000, 0x00D20000, 0xC2960000, 0x00F00000, 0xC2A00000, 0x012C0000, 0xC282F0A4, 0x01680000, 0xC1700000, 0x01A40000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ED7D0[11] = { { 0, 0, -40.0f }, { 60, 0, -22.71f }, { 90, 0, -30.0f }, { 120, 0, -20.0f }, { 180, 0, -10.0f }, { 225, 0, -22.0f }, { 255, 0, -15.0f }, { 300, 0, -15.0f }, { 360, 0, -30.0f }, { 420, 0, -40.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803ED828[10] = { { 0, 0, -60.0f }, { 60, 0, 6.51f }, { 120, 0, -15.0f }, { 180, 0, 20.0f }, { 210, 0, 30.0f }, { 240, 0, 12.44f }, { 300, 0, -10.0f }, { 360, 0, -30.0f }, { 420, 0, -60.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803ED878[10] = { { 0, 0, 0.0f }, { 60, 0, -61.1f }, { 120, 0, -50.0f }, { 180, 0, -65.0f }, { 210, 0, -75.0f }, { 240, 0, -80.0f }, { 300, 0, -65.47f }, { 360, 0, -15.0f }, { 420, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ED8C8[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3460,7 +3460,7 @@ extern "C" const void *const JointTracks_rodata_803ED8C8[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803ED8EC[32] = { 0x00000000, 0x00000000, 0x000F0000, 0x40400000, 0x001E0000, 0x00000000, 0x002D0000, 0x41700000, 0x003C0000, 0x41500000, 0x004B0000, 0x41900000, 0x00780000, 0x00000000, 0x00D20000, 0x40400000, 0x00E10000, 0x00000000, 0x00F00000, 0x41700000, 0x00FF0000, 0x41500000, 0x010E0000, 0x41900000, 0x01680000, 0x00000000, 0x01770000, 0x40400000, 0x01A40000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803ED8EC[16] = { { 0, 0, 0.0f }, { 15, 0, 3.0f }, { 30, 0, 0.0f }, { 45, 0, 15.0f }, { 60, 0, 13.0f }, { 75, 0, 18.0f }, { 120, 0, 0.0f }, { 210, 0, 3.0f }, { 225, 0, 0.0f }, { 240, 0, 15.0f }, { 255, 0, 13.0f }, { 270, 0, 18.0f }, { 360, 0, 0.0f }, { 375, 0, 3.0f }, { 420, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803ED96C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3500,7 +3500,7 @@ extern "C" const void *const JointTracks_rodata_803EDA30[18] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803EDA78[6] = { 0x00000000, 0x00000000, 0x003C0000, 0x44870000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EDA78[3] = { { 0, 0, 0.0f }, { 60, 0, 1080.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EDA90[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3528,7 +3528,7 @@ extern "C" const void *const JointTracks_rodata_803EDAF0[10] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803EDB18[8] = { 0x00000000, 0x41700000, 0x00B40000, 0x42D20000, 0x01680000, 0x41700000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EDB18[4] = { { 0, 0, 15.0f }, { 180, 0, 105.0f }, { 360, 0, 15.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EDB38[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3540,7 +3540,7 @@ extern "C" const void *const JointTracks_rodata_803EDB38[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EDB5C[8] = { 0x00000000, 0x42960000, 0x00B40000, 0xC1700000, 0x01680000, 0x42960000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EDB5C[4] = { { 0, 0, 75.0f }, { 180, 0, -15.0f }, { 360, 0, 75.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EDB7C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3552,7 +3552,7 @@ extern "C" const void *const JointTracks_rodata_803EDB7C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EDBA0[8] = { 0x00000000, 0xC3250000, 0x00B40000, 0xC2960000, 0x01680000, 0xC3250000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EDBA0[4] = { { 0, 0, -165.0f }, { 180, 0, -75.0f }, { 360, 0, -165.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EDBC0[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3564,7 +3564,7 @@ extern "C" const void *const JointTracks_rodata_803EDBC0[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EDBE4[8] = { 0x00000000, 0xC2D20000, 0x00B40000, 0xC3480000, 0x01680000, 0xC2D20000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EDBE4[4] = { { 0, 0, -105.0f }, { 180, 0, -200.0f }, { 360, 0, -105.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EDC04[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3576,7 +3576,7 @@ extern "C" const void *const JointTracks_rodata_803EDC04[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EDC28[8] = { 0x00000000, 0x41700000, 0x00B40000, 0xC2960000, 0x01680000, 0x41700000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EDC28[4] = { { 0, 0, 15.0f }, { 180, 0, -75.0f }, { 360, 0, 15.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EDC48[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3588,7 +3588,7 @@ extern "C" const void *const JointTracks_rodata_803EDC48[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EDC6C[8] = { 0x00000000, 0xC2D20000, 0x00B40000, 0xC1700000, 0x01680000, 0xC2D20000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EDC6C[4] = { { 0, 0, -105.0f }, { 180, 0, -15.0f }, { 360, 0, -105.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EDC8C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3600,7 +3600,7 @@ extern "C" const void *const JointTracks_rodata_803EDC8C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EDCB0[8] = { 0x00000000, 0xC31B0000, 0x00B40000, 0xC3820000, 0x01680000, 0xC31B0000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EDCB0[4] = { { 0, 0, -155.0f }, { 180, 0, -260.0f }, { 360, 0, -155.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EDCD0[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3612,7 +3612,7 @@ extern "C" const void *const JointTracks_rodata_803EDCD0[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EDCF4[8] = { 0x00000000, 0x428C0000, 0x00B40000, 0x43250000, 0x01680000, 0x428C0000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EDCF4[4] = { { 0, 0, 70.0f }, { 180, 0, 165.0f }, { 360, 0, 70.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EDD14[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3652,8 +3652,8 @@ extern "C" const void *const JointTracks_rodata_803EDDF8[18] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803EDE40[16] = { 0x00000000, 0x45691DC3, 0x003C0000, 0x456D45C3, 0x00460000, 0x456CF5C3, 0x004E0000, 0x456D15C3, 0x01180000, 0x456D15C3, 0x01360000, 0x456D45C3, 0x01540000, 0x45691DC3, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EDE80[16] = { 0x00000000, 0xC528B948, 0x003C0000, 0xC52D9A14, 0x00460000, 0xC52D4A14, 0x004E0000, 0xC52D69EC, 0x01180000, 0xC52D6A14, 0x01360000, 0xC52D9A14, 0x01540000, 0xC528B948, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EDE40[8] = { { 0, 0, 3729.86f }, { 60, 0, 3796.36f }, { 70, 0, 3791.36f }, { 78, 0, 3793.36f }, { 280, 0, 3793.36f }, { 310, 0, 3796.36f }, { 340, 0, 3729.86f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EDE80[8] = { { 0, 0, -2699.58f }, { 60, 0, -2777.63f }, { 70, 0, -2772.63f }, { 78, 0, -2774.62f }, { 280, 0, -2774.63f }, { 310, 0, -2777.63f }, { 340, 0, -2699.58f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EDEC0[9] = {
     (void *)&JointTracks_rodata_803EDE40,
     (void *)0x0,
@@ -3665,7 +3665,7 @@ extern "C" const void *const JointTracks_rodata_803EDEC0[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EDEE4[30] = { 0x00000000, 0x41400000, 0x001E0000, 0x41400000, 0x003C0000, 0x41600000, 0x005A0000, 0x00000000, 0x006E0000, 0x00000000, 0x00820000, 0x41400000, 0x00AF0000, 0x41500000, 0x00DC0000, 0x41400000, 0x00F00000, 0x41100000, 0x00FA0000, 0x41100000, 0x010E0000, 0x41380000, 0x01180000, 0x41400000, 0x01360000, 0x41580000, 0x01540000, 0x41400000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EDEE4[15] = { { 0, 0, 12.0f }, { 30, 0, 12.0f }, { 60, 0, 14.0f }, { 90, 0, 0.0f }, { 110, 0, 0.0f }, { 130, 0, 12.0f }, { 175, 0, 13.0f }, { 220, 0, 12.0f }, { 240, 0, 9.0f }, { 250, 0, 9.0f }, { 270, 0, 11.5f }, { 280, 0, 12.0f }, { 310, 0, 13.5f }, { 340, 0, 12.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EDF5C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3677,8 +3677,8 @@ extern "C" const void *const JointTracks_rodata_803EDF5C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EDF80[26] = { 0x00000000, 0x41100000, 0x001E0000, 0x41100000, 0x003C0000, 0x41400000, 0x005A0000, 0x40400000, 0x006E0000, 0x40400000, 0x00820000, 0x40C00000, 0x00A00000, 0x41100000, 0x00DC0000, 0x40C00000, 0x00FA0000, 0x41400000, 0x01180000, 0x40C00000, 0x01360000, 0x41400000, 0x01540000, 0x41100000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EDFE8[14] = { 0x00000000, 0x40C00000, 0x00820000, 0x40C00000, 0x00A00000, 0x40C00000, 0x00D20000, 0x00000000, 0x00F00000, 0x00000000, 0x01180000, 0x40C00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EDF80[13] = { { 0, 0, 9.0f }, { 30, 0, 9.0f }, { 60, 0, 12.0f }, { 90, 0, 3.0f }, { 110, 0, 3.0f }, { 130, 0, 6.0f }, { 160, 0, 9.0f }, { 220, 0, 6.0f }, { 250, 0, 12.0f }, { 280, 0, 6.0f }, { 310, 0, 12.0f }, { 340, 0, 9.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EDFE8[7] = { { 0, 0, 6.0f }, { 130, 0, 6.0f }, { 160, 0, 6.0f }, { 210, 0, 0.0f }, { 240, 0, 0.0f }, { 280, 0, 6.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE020[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3690,8 +3690,8 @@ extern "C" const void *const JointTracks_rodata_803EE020[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EE044[28] = { 0x00000000, 0xC1B80000, 0x001E0000, 0xC1B80000, 0x003C0000, 0xC1980000, 0x005A0000, 0xC1D00000, 0x006E0000, 0xC1D00000, 0x00820000, 0xC1B80000, 0x00A00000, 0xC1F00000, 0x00BE0000, 0xC1E00000, 0x00DC0000, 0xC1C00000, 0x00FA0000, 0xC1A00000, 0x01180000, 0xC1B80000, 0x01360000, 0xC1400000, 0x01540000, 0xC1B80000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EE0B4[20] = { 0x00000000, 0x40C00000, 0x003C0000, 0x40C00000, 0x006E0000, 0x41900000, 0x00820000, 0x41C80000, 0x00A00000, 0x41C80000, 0x00D20000, 0xC0C00000, 0x00F00000, 0xC0C00000, 0x01180000, 0x41C80000, 0x01360000, 0x40C00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE044[14] = { { 0, 0, -23.0f }, { 30, 0, -23.0f }, { 60, 0, -19.0f }, { 90, 0, -26.0f }, { 110, 0, -26.0f }, { 130, 0, -23.0f }, { 160, 0, -30.0f }, { 190, 0, -28.0f }, { 220, 0, -24.0f }, { 250, 0, -20.0f }, { 280, 0, -23.0f }, { 310, 0, -12.0f }, { 340, 0, -23.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EE0B4[10] = { { 0, 0, 6.0f }, { 60, 0, 6.0f }, { 110, 0, 18.0f }, { 130, 0, 25.0f }, { 160, 0, 25.0f }, { 210, 0, -6.0f }, { 240, 0, -6.0f }, { 280, 0, 25.0f }, { 310, 0, 6.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE104[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3703,7 +3703,7 @@ extern "C" const void *const JointTracks_rodata_803EE104[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EE128[26] = { 0x00000000, 0xC1F00000, 0x001E0000, 0xC1F00000, 0x003C0000, 0xC1E40000, 0x005A0000, 0xC2220000, 0x006E0000, 0xC2220000, 0x00820000, 0xC2320000, 0x00960000, 0xC2320000, 0x00BE0000, 0xC2220000, 0x00DC0000, 0xC22C0000, 0x00FA0000, 0xC21A0000, 0x01180000, 0xC2320000, 0x01360000, 0xC1F00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE128[13] = { { 0, 0, -30.0f }, { 30, 0, -30.0f }, { 60, 0, -28.5f }, { 90, 0, -40.5f }, { 110, 0, -40.5f }, { 130, 0, -44.5f }, { 150, 0, -44.5f }, { 190, 0, -40.5f }, { 220, 0, -43.0f }, { 250, 0, -38.5f }, { 280, 0, -44.5f }, { 310, 0, -30.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE190[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3715,7 +3715,7 @@ extern "C" const void *const JointTracks_rodata_803EE190[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EE1B4[26] = { 0x00000000, 0x40400000, 0x001E0000, 0x40400000, 0x003C0000, 0x00000000, 0x005A0000, 0x41C00000, 0x006E0000, 0x41C00000, 0x00820000, 0x42000000, 0x00960000, 0x42000000, 0x00BE0000, 0x41C00000, 0x00DC0000, 0x41E80000, 0x00FA0000, 0x41A00000, 0x01180000, 0x42000000, 0x01360000, 0x40400000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE1B4[13] = { { 0, 0, 3.0f }, { 30, 0, 3.0f }, { 60, 0, 0.0f }, { 90, 0, 24.0f }, { 110, 0, 24.0f }, { 130, 0, 32.0f }, { 150, 0, 32.0f }, { 190, 0, 24.0f }, { 220, 0, 29.0f }, { 250, 0, 20.0f }, { 280, 0, 32.0f }, { 310, 0, 3.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE21C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3727,7 +3727,7 @@ extern "C" const void *const JointTracks_rodata_803EE21C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EE240[20] = { 0x00000000, 0xC1980000, 0x00280000, 0xC1980000, 0x00460000, 0xC0400000, 0x00640000, 0xC1C00000, 0x00820000, 0xC1980000, 0x00AF0000, 0xC1800000, 0x00DC0000, 0xC1980000, 0x00FA0000, 0xC1000000, 0x01180000, 0xC1980000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE240[10] = { { 0, 0, -19.0f }, { 40, 0, -19.0f }, { 70, 0, -3.0f }, { 100, 0, -24.0f }, { 130, 0, -19.0f }, { 175, 0, -16.0f }, { 220, 0, -19.0f }, { 250, 0, -8.0f }, { 280, 0, -19.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE290[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3739,7 +3739,7 @@ extern "C" const void *const JointTracks_rodata_803EE290[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EE2B4[20] = { 0x00000000, 0xC2480000, 0x00280000, 0xC2480000, 0x00460000, 0xC2200000, 0x00640000, 0xC2480000, 0x00820000, 0xC2480000, 0x00AF0000, 0xC2340000, 0x00DC0000, 0xC2480000, 0x00FA0000, 0xC2540000, 0x01180000, 0xC2480000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE2B4[10] = { { 0, 0, -50.0f }, { 40, 0, -50.0f }, { 70, 0, -40.0f }, { 100, 0, -50.0f }, { 130, 0, -50.0f }, { 175, 0, -45.0f }, { 220, 0, -50.0f }, { 250, 0, -53.0f }, { 280, 0, -50.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE304[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3751,7 +3751,7 @@ extern "C" const void *const JointTracks_rodata_803EE304[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EE328[16] = { 0x00000000, 0x00000000, 0x00140000, 0x41A00000, 0x00280000, 0x41A00000, 0x003C0000, 0x00000000, 0x01360000, 0x00000000, 0x01450000, 0xC1200000, 0x01540000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE328[8] = { { 0, 0, 0.0f }, { 20, 0, 20.0f }, { 40, 0, 20.0f }, { 60, 0, 0.0f }, { 310, 0, 0.0f }, { 325, 0, -10.0f }, { 340, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE368[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3794,7 +3794,7 @@ extern "C" const void *const JointTracks_rodata_803EE440[20] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803EE490[16] = { 0x00000000, 0x43B50000, 0x001E0000, 0x43670000, 0x002D0000, 0x43710000, 0x003C0000, 0x43670000, 0x00DC0000, 0x43670000, 0x00F00000, 0x43620000, 0x010E0000, 0x43B50000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE490[8] = { { 0, 0, 362.0f }, { 30, 0, 231.0f }, { 45, 0, 241.0f }, { 60, 0, 231.0f }, { 220, 0, 231.0f }, { 240, 0, 226.0f }, { 270, 0, 362.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE4D0[9] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803EE490,
@@ -3806,7 +3806,7 @@ extern "C" const void *const JointTracks_rodata_803EE4D0[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EE4F4[14] = { 0x00000000, 0x42340000, 0x003C0000, 0x42340000, 0x00640000, 0x42400000, 0x008C0000, 0x42340000, 0x00B40000, 0x42280000, 0x00DC0000, 0x42340000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE4F4[7] = { { 0, 0, 45.0f }, { 60, 0, 45.0f }, { 100, 0, 48.0f }, { 140, 0, 45.0f }, { 180, 0, 42.0f }, { 220, 0, 45.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE52C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3818,8 +3818,8 @@ extern "C" const void *const JointTracks_rodata_803EE52C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EE550[22] = { 0x00000000, 0x41F00000, 0x002D0000, 0x42340000, 0x003C0000, 0x42200000, 0x00640000, 0x42180000, 0x008C0000, 0x42200000, 0x00B40000, 0x42180000, 0x00DC0000, 0x42200000, 0x00F00000, 0x42200000, 0x00FF0000, 0x42480000, 0x010E0000, 0x41F00000, 0xFFFF0000, 0x00000000 };
-extern "C" const unsigned int JointTracks_rodata_803EE5A8[14] = { 0x00000000, 0x00000000, 0x003C0000, 0x00000000, 0x00640000, 0x40C00000, 0x008C0000, 0x00000000, 0x00B40000, 0xC0C00000, 0x00DC0000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE550[11] = { { 0, 0, 30.0f }, { 45, 0, 45.0f }, { 60, 0, 40.0f }, { 100, 0, 38.0f }, { 140, 0, 40.0f }, { 180, 0, 38.0f }, { 220, 0, 40.0f }, { 240, 0, 40.0f }, { 255, 0, 50.0f }, { 270, 0, 30.0f }, { -1, 0, 0.0f } };
+extern "C" const TrackKey JointTracks_rodata_803EE5A8[7] = { { 0, 0, 0.0f }, { 60, 0, 0.0f }, { 100, 0, 6.0f }, { 140, 0, 0.0f }, { 180, 0, -6.0f }, { 220, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE5E0[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3831,7 +3831,7 @@ extern "C" const void *const JointTracks_rodata_803EE5E0[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EE604[18] = { 0x00000000, 0xC2820000, 0x002D0000, 0xC2700000, 0x003C0000, 0xC2820000, 0x00DC0000, 0xC2820000, 0x00E60000, 0xC28C0000, 0x00F00000, 0xC2820000, 0x00FF0000, 0xC25C0000, 0x010E0000, 0xC2820000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE604[9] = { { 0, 0, -65.0f }, { 45, 0, -60.0f }, { 60, 0, -65.0f }, { 220, 0, -65.0f }, { 230, 0, -70.0f }, { 240, 0, -65.0f }, { 255, 0, -55.0f }, { 270, 0, -65.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE64C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3843,7 +3843,7 @@ extern "C" const void *const JointTracks_rodata_803EE64C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EE670[20] = { 0x00000000, 0xC1F00000, 0x001E0000, 0xC2200000, 0x002D0000, 0xC2160000, 0x003C0000, 0xC2200000, 0x00640000, 0xC2160000, 0x008C0000, 0xC2200000, 0x00B40000, 0xC2160000, 0x00DC0000, 0xC2200000, 0x00F00000, 0xC1F00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE670[10] = { { 0, 0, -30.0f }, { 30, 0, -40.0f }, { 45, 0, -37.5f }, { 60, 0, -40.0f }, { 100, 0, -37.5f }, { 140, 0, -40.0f }, { 180, 0, -37.5f }, { 220, 0, -40.0f }, { 240, 0, -30.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE6C0[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3855,7 +3855,7 @@ extern "C" const void *const JointTracks_rodata_803EE6C0[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EE6E4[20] = { 0x00000000, 0x00000000, 0x001E0000, 0x41F00000, 0x002D0000, 0x41700000, 0x003C0000, 0x41A00000, 0x00640000, 0x41700000, 0x008C0000, 0x41A00000, 0x00B40000, 0x41700000, 0x00DC0000, 0x41A00000, 0x00F00000, 0x00000000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE6E4[10] = { { 0, 0, 0.0f }, { 30, 0, 30.0f }, { 45, 0, 15.0f }, { 60, 0, 20.0f }, { 100, 0, 15.0f }, { 140, 0, 20.0f }, { 180, 0, 15.0f }, { 220, 0, 20.0f }, { 240, 0, 0.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE734[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3889,7 +3889,7 @@ extern "C" const void *const JointTracks_rodata_803EE7D0[14] = {
     (void *)0x0,
     (void *)&JointTracks_rodata_803E5D44
 };
-extern "C" const unsigned int JointTracks_rodata_803EE808[8] = { 0x00000000, 0x41200000, 0x003C0000, 0x41C80000, 0x00780000, 0x41200000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE808[4] = { { 0, 0, 10.0f }, { 60, 0, 25.0f }, { 120, 0, 10.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE828[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3901,7 +3901,7 @@ extern "C" const void *const JointTracks_rodata_803EE828[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EE84C[8] = { 0x00000000, 0xC1F00000, 0x003C0000, 0xC20C0000, 0x00780000, 0xC1F00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE84C[4] = { { 0, 0, -30.0f }, { 60, 0, -35.0f }, { 120, 0, -30.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE86C[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3913,7 +3913,7 @@ extern "C" const void *const JointTracks_rodata_803EE86C[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EE890[8] = { 0x00000000, 0x3FC00000, 0x00190000, 0x3F800000, 0x00280000, 0x3FC00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE890[4] = { { 0, 0, 1.5f }, { 25, 0, 1.0f }, { 40, 0, 1.5f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE8B0[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3925,7 +3925,7 @@ extern "C" const void *const JointTracks_rodata_803EE8B0[9] = {
     (void *)&JointTracks_rodata_803EE890,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EE8D4[8] = { 0x00000000, 0xC1C80000, 0x003C0000, 0xC1A00000, 0x00780000, 0xC1C80000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE8D4[4] = { { 0, 0, -25.0f }, { 60, 0, -20.0f }, { 120, 0, -25.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE8F4[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3937,7 +3937,7 @@ extern "C" const void *const JointTracks_rodata_803EE8F4[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EE918[8] = { 0x00000000, 0xC1200000, 0x003C0000, 0xC1C80000, 0x00780000, 0xC1200000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE918[4] = { { 0, 0, -10.0f }, { 60, 0, -25.0f }, { 120, 0, -10.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE938[9] = {
     (void *)0x0,
     (void *)0x0,
@@ -3949,7 +3949,7 @@ extern "C" const void *const JointTracks_rodata_803EE938[9] = {
     (void *)0x0,
     (void *)0x0
 };
-extern "C" const unsigned int JointTracks_rodata_803EE95C[8] = { 0x00000000, 0xC1F00000, 0x003C0000, 0xC20C0000, 0x00780000, 0xC1F00000, 0xFFFF0000, 0x00000000 };
+extern "C" const TrackKey JointTracks_rodata_803EE95C[4] = { { 0, 0, -30.0f }, { 60, 0, -35.0f }, { 120, 0, -30.0f }, { -1, 0, 0.0f } };
 extern "C" const void *const JointTracks_rodata_803EE97C[9] = {
     (void *)0x0,
     (void *)0x0,

@@ -1403,49 +1403,34 @@ void *RaceScene_GetPerspFovyForCup_data_80401C1C[49] = {
     lbl_8031B7A8, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
     (void *)0x00000000,
 };
-void *g_characterDataTable[165] = {
-    lbl_8031B7C0, lbl_8031B7CC, lbl_8031B7E0, lbl_8031B7F4,
-    lbl_8031B808, lbl_8031B818, RaceScene_GetPerspFovyForCup_data_804012EC, (void *)0x41F00000,
-    (void *)0x00000000, (void *)0x42480000, (void *)0x00000000, lbl_8031B82C,
-    lbl_8031B838, lbl_8031B84C, lbl_8031B860, lbl_8031B874,
-    lbl_8031B884, RaceScene_GetPerspFovyForCup_data_804013B0, (void *)0x41F00000, (void *)0x00000000,
-    (void *)0x42480000, (void *)0x00000000, lbl_8031B898, lbl_8031B8A4,
-    lbl_8031B8B8, lbl_8031B8CC, lbl_8031B8E0, lbl_8031B8F0,
-    RaceScene_GetPerspFovyForCup_data_80401474, (void *)0x42200000, (void *)0x00000000, (void *)0x42480000,
-    (void *)0x00000000, lbl_8031B904, lbl_8031B910, lbl_8031B924,
-    lbl_8031B938, lbl_8031B94C, lbl_8031B95C, RaceScene_GetPerspFovyForCup_data_80401538,
-    (void *)0x42700000, (void *)0x01000000, (void *)0x42480000, (void *)0x00000000,
-    lbl_8031B970, lbl_8031B97C, lbl_8031B990, lbl_8031B9A4,
-    lbl_8031B9B8, lbl_8031B9C8, RaceScene_GetPerspFovyForCup_data_804015FC, (void *)0x41F00000,
-    (void *)0x00000000, (void *)0x42700000, (void *)0x00000000, lbl_8031B9DC,
-    lbl_8031B9E8, lbl_8031B9FC, lbl_8031BA10, lbl_8031BA24,
-    lbl_8031BA34, RaceScene_GetPerspFovyForCup_data_804016C0, (void *)0x42700000, (void *)0x00000000,
-    (void *)0x41F00000, (void *)0x00000000, lbl_8031BA48, lbl_8031BA54,
-    lbl_8031BA68, lbl_8031BA7C, lbl_8031BA90, lbl_8031BAA0,
-    RaceScene_GetPerspFovyForCup_data_80401784, (void *)0x42200000, (void *)0x00000000, (void *)0x42200000,
-    (void *)0x00000000, lbl_8031BAB4, lbl_8031BAC0, lbl_8031BAD4,
-    lbl_8031BAE8, lbl_8031BAFC, lbl_8031BB0C, RaceScene_GetPerspFovyForCup_data_80401848,
-    (void *)0x42700000, (void *)0x00000000, (void *)0x42480000, (void *)0x00000000,
-    lbl_8031BB20, lbl_8031BB2C, lbl_8031BB40, lbl_8031BB54,
-    lbl_8031BB68, lbl_8031BB78, RaceScene_GetPerspFovyForCup_data_8040190C, (void *)0x42700000,
-    (void *)0x00000000, (void *)0x42480000, (void *)0x00000000, lbl_8031BB8C,
-    lbl_8031BB98, lbl_8031BBAC, lbl_8031BBC0, lbl_8031BBD4,
-    lbl_8031BBE8, RaceScene_GetPerspFovyForCup_data_804019D0, (void *)0x42200000, (void *)0x00000000,
-    (void *)0x42200000, (void *)0x00000000, lbl_8031BBFC, lbl_8031BC08,
-    lbl_8031BC1C, lbl_8031BC30, lbl_8031BC44, lbl_8031BC54,
-    RaceScene_GetPerspFovyForCup_data_80401A94, (void *)0x42700000, (void *)0x00000000, (void *)0x42200000,
-    (void *)0x00000000, lbl_8031BC68, lbl_8031BC74, lbl_8031BC88,
-    lbl_8031BC9C, lbl_8031BCB0, lbl_8031BCC0, RaceScene_GetPerspFovyForCup_data_80401B58,
-    (void *)0x42700000, (void *)0x00000000, (void *)0x42700000, (void *)0x00000000,
-    lbl_8031BCD4, lbl_8031BCE0, lbl_8031BCF4, lbl_8031BD08,
-    lbl_8031BD1C, lbl_8031BD2C, RaceScene_GetPerspFovyForCup_data_80401C1C, (void *)0x42700000,
-    (void *)0x00000000, (void *)0x42700000, (void *)0x00000000, lbl_8031BD40,
-    (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
-    (void *)0x00000000, (void *)0x00000000, (void *)0x41F00000, (void *)0x00000000,
-    (void *)0x41F00000, (void *)0x00000000, lbl_8031BD40, (void *)0x00000000,
-    (void *)0x00000000, (void *)0x00000000, (void *)0x00000000, (void *)0x00000000,
-    (void *)0x00000000, (void *)0x41F00000, (void *)0x00000000, (void *)0x41F00000,
-    (void *)0x00000000,
+/* The layout readers know as CharacterData (include/game/types/CharacterData.h). */
+typedef struct CharacterDataRow {
+    void *name;
+    void *driver_model;
+    void *kart_model;
+    void *p0C[4];
+    float anim1C;
+    unsigned char flag20;
+    unsigned char pad21[3];
+    float anim24;
+    unsigned int x28;
+} CharacterDataRow;
+CharacterDataRow g_characterDataTable[15] = {
+    { lbl_8031B7C0, lbl_8031B7CC, lbl_8031B7E0, lbl_8031B7F4, lbl_8031B808, lbl_8031B818, RaceScene_GetPerspFovyForCup_data_804012EC, 30.0f, 0, { 0, 0, 0 }, 50.0f, 0 },
+    { lbl_8031B82C, lbl_8031B838, lbl_8031B84C, lbl_8031B860, lbl_8031B874, lbl_8031B884, RaceScene_GetPerspFovyForCup_data_804013B0, 30.0f, 0, { 0, 0, 0 }, 50.0f, 0 },
+    { lbl_8031B898, lbl_8031B8A4, lbl_8031B8B8, lbl_8031B8CC, lbl_8031B8E0, lbl_8031B8F0, RaceScene_GetPerspFovyForCup_data_80401474, 40.0f, 0, { 0, 0, 0 }, 50.0f, 0 },
+    { lbl_8031B904, lbl_8031B910, lbl_8031B924, lbl_8031B938, lbl_8031B94C, lbl_8031B95C, RaceScene_GetPerspFovyForCup_data_80401538, 60.0f, 1, { 0, 0, 0 }, 50.0f, 0 },
+    { lbl_8031B970, lbl_8031B97C, lbl_8031B990, lbl_8031B9A4, lbl_8031B9B8, lbl_8031B9C8, RaceScene_GetPerspFovyForCup_data_804015FC, 30.0f, 0, { 0, 0, 0 }, 60.0f, 0 },
+    { lbl_8031B9DC, lbl_8031B9E8, lbl_8031B9FC, lbl_8031BA10, lbl_8031BA24, lbl_8031BA34, RaceScene_GetPerspFovyForCup_data_804016C0, 60.0f, 0, { 0, 0, 0 }, 30.0f, 0 },
+    { lbl_8031BA48, lbl_8031BA54, lbl_8031BA68, lbl_8031BA7C, lbl_8031BA90, lbl_8031BAA0, RaceScene_GetPerspFovyForCup_data_80401784, 40.0f, 0, { 0, 0, 0 }, 40.0f, 0 },
+    { lbl_8031BAB4, lbl_8031BAC0, lbl_8031BAD4, lbl_8031BAE8, lbl_8031BAFC, lbl_8031BB0C, RaceScene_GetPerspFovyForCup_data_80401848, 60.0f, 0, { 0, 0, 0 }, 50.0f, 0 },
+    { lbl_8031BB20, lbl_8031BB2C, lbl_8031BB40, lbl_8031BB54, lbl_8031BB68, lbl_8031BB78, RaceScene_GetPerspFovyForCup_data_8040190C, 60.0f, 0, { 0, 0, 0 }, 50.0f, 0 },
+    { lbl_8031BB8C, lbl_8031BB98, lbl_8031BBAC, lbl_8031BBC0, lbl_8031BBD4, lbl_8031BBE8, RaceScene_GetPerspFovyForCup_data_804019D0, 40.0f, 0, { 0, 0, 0 }, 40.0f, 0 },
+    { lbl_8031BBFC, lbl_8031BC08, lbl_8031BC1C, lbl_8031BC30, lbl_8031BC44, lbl_8031BC54, RaceScene_GetPerspFovyForCup_data_80401A94, 60.0f, 0, { 0, 0, 0 }, 40.0f, 0 },
+    { lbl_8031BC68, lbl_8031BC74, lbl_8031BC88, lbl_8031BC9C, lbl_8031BCB0, lbl_8031BCC0, RaceScene_GetPerspFovyForCup_data_80401B58, 60.0f, 0, { 0, 0, 0 }, 60.0f, 0 },
+    { lbl_8031BCD4, lbl_8031BCE0, lbl_8031BCF4, lbl_8031BD08, lbl_8031BD1C, lbl_8031BD2C, RaceScene_GetPerspFovyForCup_data_80401C1C, 60.0f, 0, { 0, 0, 0 }, 60.0f, 0 },
+    { lbl_8031BD40, 0, 0, 0, 0, 0, 0, 30.0f, 0, { 0, 0, 0 }, 30.0f, 0 },
+    { lbl_8031BD40, 0, 0, 0, 0, 0, 0, 30.0f, 0, { 0, 0, 0 }, 30.0f, 0 }
 };
 void *RaceScene_GetPerspFovyForCup_data_80401F74[80] = {
     (void *)0xC253982B, (void *)0x00000000, (void *)0xC2E54C64, (void *)0x00000001,

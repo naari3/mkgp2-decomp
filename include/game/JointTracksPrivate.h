@@ -62,7 +62,7 @@ static inline void SetMatrix(HSD_JObj *j, float (*m)[4]) {
     DirtyMatrix(j);
 }
 
-struct TrackKey { short frame; short reserved; float value; };
+#include "game/types/TrackKey.h"
 struct TrackSet { const TrackKey *channels[9]; };
 struct TrackState { int key, frame; };
 struct JointTask {
