@@ -1,10 +1,4 @@
-/*
- * 0x8021550C..0x8021617C: coin challenge result popup (vtable ScorePopup_vtable_804EDAD0)
- * and the start countdown HUD (vtable CountdownHud_vtable_804EDAF4, base lbl_804EDB28).
- * The popup's empty Draw lives in fn_80215508.c and the countdown base
- * dtor in dtor_8021617C.c.
- */
-
+/* Countdown HUD, retained after the result-popup class split. */
 #include "game/FadeLogo.h"
 
 extern "C" {
@@ -37,85 +31,6 @@ void fn_8011F744(int sprite, float sx, float sy);
 int fn_8020A900(int value, int digit);
 void Tachometer_SetDisplaySpeedRef(float v);
 void Tachometer_SetMaxSpeedRef(float v);
-}
-
-/* ---- result popup ---- */
-
-struct ScorePopup : PopupTask {
-    /* Keep the original vtable external. */
-    virtual void _key();
-    int layer;
-    int kind;
-    VHolder<FlowFaderI> alpha;
-    VHolder<FlowFaderF> scale;
-    ScorePopup(int kind_, int layer_, int id_)
-        : PopupTask(id_), layer(layer_), kind(kind_), alpha(new FlowFaderI),
-          scale(new FlowFaderF(lbl_806DAE7C)) {
-        if (kind_ < 1 || kind_ > 5) {
-            kind = 1;
-        }
-        alpha.p->Set(0, 0xFF, 15);
-        scale.p->Set(lbl_806DAE80, lbl_806DAE6C, 15);
-    }
-    ~ScorePopup();
-    void Finish();
-    void Update();
-    void Draw();
-};
-
-void ScorePopup::Update() {
-    ResCtrl rc;
-    unsigned int c = alpha.p->Value() | 0xFFFFFF00;
-    float s = scale.p->Value();
-    rc.resId = lbl_803C3E50[kind];
-    rc.Show(lbl_806DAE60, lbl_806DAE64, lbl_806DAE68);
-    rc.SetColor(c);
-    rc.SetScale(s);
-    fn_8011FAFC(&rc, layer);
-    alpha.p->Step();
-    scale.p->Step();
-    if (scale.p->Done()) {
-        float v = scale.p->Value();
-        if (lbl_806DAE6C == v) {
-            scale.p->Set(lbl_806DAE6C, lbl_806DAE68, 5);
-        } else if (lbl_806DAE68 == v) {
-            scale.p->Set(lbl_806DAE68, lbl_806DAE70, 20);
-        } else if (lbl_806DAE70 == v) {
-            scale.p->Set(lbl_806DAE70, lbl_806DAE74, 5);
-        } else if (lbl_806DAE74 == v) {
-            alpha.p->Set(0xFF, 0, 15);
-            scale.p->Set(lbl_806DAE74, lbl_806DAE78, 15);
-        } else {
-            field0C = 1;
-        }
-    }
-}
-
-extern "C" void fn_802156C4(void) {
-    fn_80120A08(0xB1E);
-    fn_80120A08(0xB1F);
-    fn_80120A08(0xB20);
-    fn_80120A08(0xB21);
-    fn_80120A08(0xB22);
-}
-
-extern "C" void fn_80215708(void) {
-    PreloadResource(0xB1E);
-    PreloadResource(0xB1F);
-    PreloadResource(0xB20);
-    PreloadResource(0xB21);
-    PreloadResource(0xB22);
-}
-
-void ScorePopup::Finish() {
-    delete this;
-}
-
-extern "C" ScorePopup *fn_80215784(int kind, int layer, int id) {
-    return new ScorePopup(kind, layer, id);
-}
-
-ScorePopup::~ScorePopup() {
 }
 
 /* ---- start countdown ---- */

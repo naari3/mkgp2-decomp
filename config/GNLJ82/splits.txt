@@ -10875,27 +10875,32 @@ game/CoinChallenge.cpp:
 game/autodata/sdata2_806DAE20.c:
 	.sdata2     start:0x806DAE20 end:0x806DB6D4
 
-game/autodata/sdata_806D0410.c:
-	.sdata      start:0x806D0410 end:0x806D0450
-
-game/autodata/data_804EDAB0.c:
-	.data       start:0x804EDAB0 end:0x804EDB0C
-
-game/autodata/rodata_803C3E50.c:
-	.rodata     start:0x803C3E50 end:0x803C3F50
-
 game/anon_802151C8.cpp:
 	extab       start:0x8001A300 end:0x8001A318
 	extabindex  start:0x80029FD8 end:0x80029FE4
 	.text       start:0x802151C8 end:0x80215508
 
-game/fn_80215508.c:
-	.text       start:0x80215508 end:0x8021550C
+game/fn_80215508.cpp:
+	extab       start:0x8001A318 end:0x8001A3DC
+	extabindex  start:0x80029FE4 end:0x8002A02C
+	.text       start:0x80215508 end:0x802159E8
+	.rodata     start:0x803C3E50 end:0x803C3EA0
+	.data       start:0x804EDAB0 end:0x804EDAE8
+	.sdata      start:0x806D0410 end:0x806D0428
+
+game/autodata/sdata_806D0428.c:
+	.sdata      start:0x806D0428 end:0x806D0450
+
+game/autodata/data_804EDAE8.c:
+	.data       start:0x804EDAE8 end:0x804EDB0C
+
+game/autodata/rodata_803C3EA0.c:
+	.rodata     start:0x803C3EA0 end:0x803C3F50
 
 game/anon_8021550C.cpp:
-	extab       start:0x8001A318 end:0x8001A50C
-	extabindex  start:0x80029FE4 end:0x8002A068
-	.text       start:0x8021550C end:0x8021617C
+	extab       start:0x8001A3DC end:0x8001A50C
+	extabindex  start:0x8002A02C end:0x8002A068
+	.text       start:0x802159E8 end:0x8021617C
 	.data       start:0x804EDB0C end:0x804EDB28
 
 game/autodata/data_804EDB28.c:
