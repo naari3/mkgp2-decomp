@@ -649,7 +649,38 @@
   "src/game/ItemBox_8016CC04.cpp": {
     "__ct__9GXChannelFPvPvii": "GXChannel_Init",
     "PushTransform__9GXChannelFPA4_f": "GXChannel_PushTransform",
-    "__dt__9GXChannelFv": "dtor_8007D9C4"
+    "__dt__9GXChannelFv": "dtor_8007D9C4",
+    "__ct__10clKPBubbleFP8BoxJoint": "fn_8016D2D0",
+    "__dt__10clKPBubbleFv": "fn_8016D208",
+    "Update__10clKPBubbleFv": "fn_8016CEA0",
+    "Draw__10clKPBubbleFv": "fn_8016CC04",
+    "__vt__10clKPBubble": "BoxConstruct_vtable_8049110C",
+    "__RTTI__10clKPBubble": "data_80491100_data_806CFA38",
+    "__RTTI__16clMapEffectParts": "data_80491100_data_806CFA30",
+    "__dt__16clMapEffectPartsFv": "dtor_8016A270",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "Enable__16clMapEffectPartsFi": "fn_8016A26C",
+    "Update__16clMapEffectPartsFv": "fn_8016A2B8",
+    "Draw__16clMapEffectPartsFv": "fn_8016A2BC",
+    "__ct__8BoxModelFPCci": "clNormal3D_Construct",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@163": "global:lbl_8036D588",
+    "@165": "global:lbl_8036D594",
+    "@164": "global:sdata_806CF750_data_80491100",
+    "@302": "global:lbl_8036D5A8",
+    "@380": "lbl_8036D5C8",
+    "@381": "lbl_8036D5E8",
+    "@382": "lbl_8036D5F8",
+    "@383": "lbl_8036D608",
+    "@227": "@etb_8001048C",
+    "@228": "@eti_8002624C",
+    "@288": "@etb_800104A4",
+    "@289": "@eti_80026258",
+    "@303": "@etb_800104AC",
+    "@304": "@eti_80026264",
+    "@384": "@etb_800104B4",
+    "@385": "@eti_80026270"
   },
   "src/game/Scene_8016D920.cpp": {
     "__ct__11MarkerChainFP12MarkerSource": "fn_8016D920",
@@ -11324,18 +11355,7 @@
     "@91": "@etb_80009E04",
     "@92": "@eti_800225A4"
   },
-  "src/game/ItemBoxConstruct.cpp": {
-    "__ct__12BoxConstructFP8BoxJoint": "fn_8016D2D0",
-    "__dt__7BoxBaseFv": "dtor_8016A270",
-    "__vt__7BoxBase": "lbl_80490FE0",
-    "__vt__12BoxConstruct": "BoxConstruct_vtable_8049110C",
-    "__ct__8BoxModelFPCci": "clNormal3D_Construct",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree",
-    "lbl_8036D588": "global:lbl_8036D588",
-    "lbl_8036D594": "global:lbl_8036D594",
-    "lbl_8036D5A8": "global:lbl_8036D5A8"
-  },
+
   "src/game/mapeffect/PointListConstruct.cpp": {
     "__ct__9PointListFP10SpawnPoint": "fn_8016C94C"
   },

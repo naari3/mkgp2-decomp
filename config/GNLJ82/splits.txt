@@ -6627,7 +6627,7 @@ game/mapeffect/Cave16ACtor.cpp:
 	.sdata      start:0x806CFA18 end:0x806CFA28
 
 game/autodata/sdata_806CFA28.c:
-	.sdata      start:0x806CFA28 end:0x806CFAD0
+	.sdata      start:0x806CFA28 end:0x806CFA30
 
 game/HsdRes_8016B0A0.c:
 	extab       start:0x80010364 end:0x8001038C
@@ -6666,9 +6666,6 @@ game/mapeffect/WeatherSystem_Init.c:
 	.text       start:0x8016C730 end:0x8016C850
 	.data       start:0x804910BC end:0x80491100
 
-game/autodata/data_80491100.c:
-	.data       start:0x80491100 end:0x80491150
-
 game/mapeffect/fn_8016C850.c:
 	extab       start:0x8001045C end:0x80010464
 	extabindex  start:0x8002621C end:0x80026228
@@ -6691,20 +6688,18 @@ sound/SoundMgr_PointSetNew.cpp:
 	.text       start:0x8016CBAC end:0x8016CC04
 
 game/ItemBox_8016CC04.cpp:
-	extab       start:0x8001048C end:0x800104A4
-	extabindex  start:0x8002624C end:0x80026258
-	.text       start:0x8016CC04 end:0x8016CEA0
-
-game/ItemBox_8016CEA0.cpp:
-	extab       start:0x800104A4 end:0x800104B4
-	extabindex  start:0x80026258 end:0x80026270
-	.text       start:0x8016CEA0 end:0x8016D2D0
-
-game/ItemBoxConstruct.cpp:
-	extab       start:0x800104B4 end:0x80010530
-	extabindex  start:0x80026270 end:0x8002627C
-	.text       start:0x8016D2D0 end:0x8016D79C
+	extab       start:0x8001048C end:0x80010530
+	extabindex  start:0x8002624C end:0x8002627C
+	.text       start:0x8016CC04 end:0x8016D79C
 	.rodata     start:0x8036D588 end:0x8036D620
+	.data       start:0x80491100 end:0x80491128
+	.sdata      start:0x806CFA30 end:0x806CFA40
+
+game/autodata/sdata_806CFA40.c:
+	.sdata      start:0x806CFA40 end:0x806CFAD0
+
+game/autodata/data_80491128.c:
+	.data       start:0x80491128 end:0x80491150
 
 game/autodata/rodata_8036D620.c:
 	.rodata     start:0x8036D620 end:0x8036D690
