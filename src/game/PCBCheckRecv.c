@@ -1,3 +1,4 @@
+#include "game/types/pcb_link.h"
 #include "game/types/reg_args.h"
 #include "game/types/bitfields.h"
 #include "game/types/c_region.h"
@@ -361,7 +362,7 @@ static inline u8 PeersReady(int role)
         SyncPeerSlot* peer = (SyncPeerSlot *)PCBCheckRecv_bss_805A6154;
         for (i = 0; i < 4; ++i, ++peer)
             if (peer->first.bytes.header.role == role &&
-                ((peer->first.word >> 15) & 255) != scene) ready = 0;
+                PCB_HDR_SCENE(peer->first.word) != scene) ready = 0;
     }
     return ready;
 }
@@ -374,7 +375,7 @@ static inline void PeersReady2(int role, u8 *ready)
         SyncPeerSlot* peer = (SyncPeerSlot *)PCBCheckRecv_bss_805A6154;
         for (i = 0; i < 4; ++i, ++peer)
             if (peer->first.bytes.header.role == role &&
-                ((peer->first.word >> 15) & 255) != scene) *ready = 0;
+                PCB_HDR_SCENE(peer->first.word) != scene) *ready = 0;
     }
 }
 
@@ -483,7 +484,7 @@ int PCBComm_ComputeSyncState(void)
         CountTrackVotes(((SyncPeerSlot *)PCBCheckRecv_bss_805A6154), trackVotes, g_localPcbRole);
         for (i = 0; i < 16; ++i)
             if (trackVotes[i] > trackVotes[winner]) winner = i;
-        out->choice.half.track = winner;
+        PCB_CHOICE_SET_TRACK(out->choice, winner);
     }
     if ((int)out->scene == 26) {
         int winner = 0;
@@ -592,7 +593,7 @@ int PCBComm_UpdateSyncPhase5(void)
     phase = phases = g_pcbSyncPhasePerPcb;
     for (i = 0; i < 4;) {
         unsigned int role;
-        if (((slot->header.word >> 15) & 0xFF) == 50) ++sceneCount;
+        if (PCB_HDR_SCENE(slot->header.word) == 50) ++sceneCount;
         role = slot->header.bytes.role.role;
         if (role == 5) {
             if (first == -1) first = i;
@@ -611,7 +612,7 @@ int PCBComm_UpdateSyncPhase5(void)
                 slot->header.bytes.flags.flag1 = 0;
                 reset = 1;
             }
-            if (((slot->header.word >> 15) & 0xFF) == 48) *phase = 5;
+            if (PCB_HDR_SCENE(slot->header.word) == 48) *phase = 5;
         }
         ++slot;
         ++phase;
@@ -716,7 +717,7 @@ int PCBComm_UpdateSyncPhase1(void)
     phase = phases = g_pcbSyncPhasePerPcb;
     for (i = 0; i < 4;) {
         unsigned int role;
-        if (((slot->header.word >> 15) & 0xFF) == 8) ++sceneCount;
+        if (PCB_HDR_SCENE(slot->header.word) == 8) ++sceneCount;
         role = slot->header.bytes.role.role;
         if (role == 1) {
             if (first == -1) first = i;
@@ -735,7 +736,7 @@ int PCBComm_UpdateSyncPhase1(void)
                 slot->header.bytes.flags.flag1 = 0;
                 reset = 1;
             }
-            if (((slot->header.word >> 15) & 0xFF) == 6) *phase = 1;
+            if (PCB_HDR_SCENE(slot->header.word) == 6) *phase = 1;
         }
         ++slot;
         ++phase;
@@ -1493,7 +1494,7 @@ void *PcbSlot_GetByIndex(int index)
 unsigned int PcbSlot_GetCharIdByte(int index)
 {
     if (index < 0 || index >= 4) return 0;
-    return (*(unsigned int *)(PCBCheckRecv_bss_805A6154 + index * 0xA3C) >> 15) & 0xFF;
+    return PCB_HDR_SCENE(*(unsigned int *)(PCBCheckRecv_bss_805A6154 + index * 0xA3C));
 }
 
 typedef struct {
@@ -1680,7 +1681,7 @@ extern int g_myPcbId;
 extern int g_localPcbRole;
 extern int g_currentSceneState;
 
-#define PCB_CHAR_ID(s) (((s)->hdr.word >> 15) & 0xFF)
+#define PCB_CHAR_ID(s) PCB_HDR_SCENE((s)->hdr.word)
 
 #define PCB_IS_JOINED(s, i, self) ((i) == (self) || ((s)->flags.ready && (s)->flags.flag4))
 
@@ -1995,7 +1996,7 @@ extern void fn_801F8A34(void *list, FKTex *tex, int flags);
 extern int isJapanese(void);
 extern void fn_8011F994(int arg);
 
-#define PCB_CHAR_ID(s) (((s)->hdr.word >> 15) & 0xFF)
+#define PCB_CHAR_ID(s) PCB_HDR_SCENE((s)->hdr.word)
 
 static inline int PcbConn_GetPortCycle(const PcbConnView *conn)
 {
@@ -2034,7 +2035,7 @@ void DebugOverlay_DumpPcbState(void)
         for (pending = 0; w != r % 64; r++, pending++) {
         }
         if (PCBCheckRecv_bss_805A6154[i].flags.byte.disabled == 1) {
-            OverlayText(1, 0, i + 2, lbl_80312284, PCBCheckRecv_bss_805A6154[i].flags.half.id,
+            OverlayText(1, 0, i + 2, lbl_80312284, PCB_FLAGS_ID(PCBCheckRecv_bss_805A6154[i].flags, half),
                         PCBCheckRecv_bss_805A6154[i].hdr.bits.team, PCB_CHAR_ID(&PCBCheckRecv_bss_805A6154[i]), pending);
         } else {
             primary = PCBCheckRecv_bss_805A6154[i].primary;
@@ -2042,12 +2043,12 @@ void DebugOverlay_DumpPcbState(void)
                 closeCount = PcbConn_GetCloseCount(primary);
                 portCycle = PcbConn_GetPortCycle(primary);
                 secondaryName = PcbConn_GetStateName(secondary);
-                OverlayText(1, 0, i + 2, lbl_803122A8, PCBCheckRecv_bss_805A6154[i].flags.half.id,
+                OverlayText(1, 0, i + 2, lbl_803122A8, PCB_FLAGS_ID(PCBCheckRecv_bss_805A6154[i].flags, half),
                             PcbConn_GetStateName(PCBCheckRecv_bss_805A6154[i].primary), portCycle, closeCount,
                             secondaryName, PCBCheckRecv_bss_805A6154[i].hdr.bits.team,
                             PCB_CHAR_ID(&PCBCheckRecv_bss_805A6154[i]), pending, secondary->field20);
             } else {
-                OverlayText(1, 0, i + 2, lbl_803122DC, PCBCheckRecv_bss_805A6154[i].flags.half.id,
+                OverlayText(1, 0, i + 2, lbl_803122DC, PCB_FLAGS_ID(PCBCheckRecv_bss_805A6154[i].flags, half),
                             PcbConn_GetStateName(primary), primary->portCycle,
                             primary->closeCount, PCBCheckRecv_bss_805A6154[i].secondary);
             }
@@ -2306,9 +2307,9 @@ public:
     }
 };
 
-static inline int SlotId(Slot *slot) { return (slot->flags.half >> 7) & 7; }
+static inline int SlotId(Slot *slot) { return PCB_FLAGS16_ID(slot->flags.half); }
 static inline void SetSlotId(Slot *slot, int id) {
-    slot->flags.ids.id = id;
+    PCB_FLAGS_SET_ID(slot->flags, ids, id);
 }
 static inline void ClearPackets(Slot *slot) {
     u8 *cursor;
@@ -2524,7 +2525,7 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
                     if (*(LifecycleConn **)sel != 0) TCPConn_Close(*(LifecycleConn **)sel);
                     *(LifecycleConn **)sel = g_in[i];
                     int socket = PcbListener_TakeAcceptedSocket(g_pcbListener);
-                    TCPConn_Init(*(LifecycleConn **)sel, ((SlotFlags *)((u8 *)g_slots + 0xa34 + off))->ids.id, socket, 1);
+                    TCPConn_Init(*(LifecycleConn **)sel, PCB_FLAGS_ID(*(SlotFlags *)((u8 *)g_slots + 0xa34 + off), ids), socket, 1);
                     accepted = 1;
                     break;
                 }
@@ -2542,7 +2543,7 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
             sync = &g_pcbSyncTable;
             phases = g_pcbSyncPhasePerPcb;
             for (i = 0; i < 4; ++i) {
-                sync->scenes[i] = (slots[i].header.word >> 15) & 255;
+                sync->scenes[i] = PCB_HDR_SCENE(slots[i].header.word);
                 sync->roles[i] = slots[i].header.bytes.role.role;
                 phases[i] = 0;
             }
@@ -2560,7 +2561,7 @@ extern "C" int PCBComm_Process(u8 receive, u8 send)
             g_pcbSyncTable.ready = 1;
             Slot *cursor = slots;
             for (i = 0; i < 4; ++i, ++cursor) {
-                if (((cursor->header.word >> 15) & 255) != 0 && ((cursor->header.word >> 15) & 255) < 7 && cursor->header.bytes.role.role == 0 && ((cursor->header.word >> 15) & 255) == 3) {
+                if (PCB_HDR_SCENE(cursor->header.word) != 0 && PCB_HDR_SCENE(cursor->header.word) < 7 && cursor->header.bytes.role.role == 0 && PCB_HDR_SCENE(cursor->header.word) == 3) {
                     g_pcbSyncTable.ready = 0;
                     break;
                 }

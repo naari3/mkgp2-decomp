@@ -1,3 +1,4 @@
+#include "game/types/pcb_link.h"
 #include "game/types/bitfields.h"
 /* Complete NonMatching reconstruction: 89.06464% in the bounded
  * signed-bitfield retry. Typed wire overlays preserve all writes and the
@@ -119,7 +120,7 @@ void PCBComm_BuildBroadcastSlot(void)
     slot->header.bytes.first.SetFlag2(PCBComm_BuildBroadcastSlot_bss_806D12A0);
     slot->header.bytes.state.SetActive(1);
     slot->header.bytes.state.SetFlag5(lbl_806D129C);
-    slot->header.word.scene = g_currentSceneState;
+    PCB_HDR_SET_SCENE(slot->header, g_currentSceneState);
     slot->header.bytes.status.SetFlag7(lbl_806D12AD);
     slot->header.bytes.status.SetCard(card);
     slot->header.bytes.status.SetConfirmed(confirmed);
@@ -139,7 +140,7 @@ void PCBComm_BuildBroadcastSlot(void)
     slot->classes.bytes.first.cc = g_ccClass;
     slot->classes.bytes.first.allCleared = fn_801D5C88(&g_playerData, g_ccClass);
     slot->classes.bytes.first.kart = g_kartVariant;
-    slot->classes.half.wins = g_consecutiveWinsTier;
+    PCB_CLASS_SET_WINS(slot->classes, g_consecutiveWinsTier);
     slot->value = PCBComm_BuildBroadcastSlot_bss_806D12A8;
     slot->counters[0] = lbl_806D1264[0];
     slot->counters[1] = lbl_806D1264[1];

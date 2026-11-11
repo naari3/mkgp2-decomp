@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-11 07:53Z Port readiness (n3): cabinet-link slot fields that cross a byte boundary (scene, wins, track, id) are accessed through include/game/types/pcb_link.h in PCBCommBroadcast.c, PCBCheckRecv.c, PCBCheckProcess.c, fn_801D1890.cpp, FaceEffect.cpp; notes in docs/notes/port_abi.md. Byte-identical.
 - 2026-11-11 06:41Z Port readiness (n3): src/game/dlistutil and its three private headers read display lists and vertex buffers through GXDATA_U16 / GXDATA_SET_U16 / GXDATA_F32 (include/game/types/gx_data.h); notes in docs/notes/port_abi.md. Byte-identical.
 - 2026-11-11 06:05Z Port readiness (n3): CObjProject.c declares and calls GXProject in the SDK's parameter order; sweep tool tools/port_abi/arg_class_order.py (prototype against library definition/header by float/other parameter order), notes in docs/notes/port_abi.md. Byte-identical.
 - 2026-11-11 03:34Z (naari3): onmokoworks may convert hand-written vtables to

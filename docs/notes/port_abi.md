@@ -602,3 +602,26 @@ buffers to GX (`GXSetArray`, `GXCallDisplayList` in GXChannel_*.c). The HSD
 library has one more CPU reader, the shape-animation path of
 src/sysdolphin/baselib/pobj.c (`get_shape_vertex_xyz`, `get_shape_normal_xyz`,
 `get_shape_nbt_xyz`, `interpretShapeAnimDisplayList`); it is not converted.
+
+## Cabinet-link slot fields that cross a byte boundary
+
+The link slot travels as bytes and is mostly read through byte views. Four
+fields cross a byte boundary and are read or written through a 16- or 32-bit
+view of the same bytes (a bit-field unit wider than a byte, or a shifted
+word), which agrees with the byte views only on a big-endian machine. They go
+through include/game/types/pcb_link.h, the plain expressions by default
+(objects unchanged); the header gives the byte formula of each field.
+
+| field | bytes | macros | used in |
+|---|---|---|---|
+| scene | header 1-2 | `PCB_HDR_SCENE(w)`, `PCB_HDR_SET_SCENE(h, v)` | PCBCheckRecv.c (13 reads), fn_801D1890.cpp, PCBCommBroadcast.c (write) |
+| wins | class 0-1 (slot 6-7) | `PCB_CLASS_SET_WINS(c, v)`, `PCB_SLOT_WINS(s, field)` | PCBCommBroadcast.c, FaceEffect.cpp |
+| track | choice 0-1 | `PCB_CHOICE_SET_TRACK(c, v)` | PCBCheckRecv.c |
+| id | flags 0-1 | `PCB_FLAGS_ID(f, view)`, `PCB_FLAGS_SET_ID(f, view, v)`, `PCB_FLAGS16_ID(h)` | PCBCheckRecv.c, PCBCheckProcess.c |
+
+The other bit-field units wider than a byte have no byte view next to them:
+the sound slot flags in clsound/fn_801913B0.c are only read as the same word,
+and the colour words in misc3d/fn_80167*.cpp, Scene_8014E0C4.cpp and
+clFlowRound.c are declared but not used. Every other reader of the link slot
+(18 units) uses byte views. `unsigned short name[6]` at slot offset 0x16 is
+copied as 16-bit codes on both ends.

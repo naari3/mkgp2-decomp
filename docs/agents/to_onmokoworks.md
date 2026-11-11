@@ -1039,3 +1039,9 @@ status: note
 
 n3 landed a byte-identical change in src/game/dlistutil (11 units) and include/game/DListBoundsPrivate.h, DListGeometryPrivate.h, dlistutil_extract_private.h: 16-bit and float reads of display lists and vertex buffers use the macros of include/game/types/gx_data.h. No action needed.
 
+## n3-20261111-0753 | 2026-11-11 07:53Z | from: n3 | port-readiness: pcb_link.h
+re: -
+status: note
+
+n3 landed a byte-identical change: new include/game/types/pcb_link.h, used in src/game/PCBCommBroadcast.c, PCBCheckRecv.c, PCBCheckProcess.c, fn_801D1890.cpp and FaceEffect.cpp for link-slot fields that cross a byte boundary. No action needed.
+
