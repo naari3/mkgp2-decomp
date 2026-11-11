@@ -8734,10 +8734,10 @@ game/fn_801D3480.cpp:
 	.sdata      start:0x806CFE98 end:0x806CFEA8
 
 game/autodata/sdata_806CFEA8.c:
-	.sdata      start:0x806CFEA8 end:0x806CFED8
+	.sdata      start:0x806CFEA8 end:0x806CFEC0
 
 game/autodata/data_8049B5E8.c:
-	.data       start:0x8049B5E8 end:0x8049BBE8
+	.data       start:0x8049B5E8 end:0x8049BB30
 
 game/autodata/rodata_8039C6C0.c:
 	.rodata     start:0x8039C6C0 end:0x8039C718
@@ -8858,6 +8858,11 @@ game/clFlowKart_Init.c:
 	extabindex  start:0x80028130 end:0x80028178
 	.text       start:0x801D7920 end:0x801D878C
 	.rodata     start:0x8039E508 end:0x8039E9F8
+	.data       start:0x8049BB30 end:0x8049BBE8
+	.sdata      start:0x806CFEC0 end:0x806CFED0
+
+game/autodata/sdata_806CFED0.c:
+	.sdata      start:0x806CFED0 end:0x806CFED8
 
 game/autodata/rodata_8039E9F8.c:
 	.rodata     start:0x8039E9F8 end:0x8039EA10

@@ -659,7 +659,7 @@ config.libs = [
             Object(Matching, "game/SoundMgr_PlaySE_Positional.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/VSMode_FrameUpdate.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/clFlowKart_SetupTextLayout.cpp", extab_padding=b""),
-            Object(Matching, "game/clFlowKart_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
+            Object(Matching, "game/clFlowKart_Init.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-lang=c++", "-RTTI on", "-inline deferred,noauto"]),
             Object(Matching, "game/CardRW_ErrorDisplay.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/HUD_RegisterOverlay.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/HUD_Init.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
