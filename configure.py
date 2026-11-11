@@ -2646,7 +2646,7 @@ config.libs = [
             Object(Matching, "game/Scene_8016FC14.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-inline deferred", "-rostr"]),
             Object(Matching, "game/Scene_8016FE44.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-inline deferred", "-rostr"]),
             Object(Matching, "game/Scene_801706C8.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-inline deferred,auto"]),
-            Object(Matching, "game/LensFlare.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/LensFlare.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-inline deferred", "-rostr"]),
             Object(Matching, "game/LavaSplash.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-inline deferred", "-rostr"]),
             Object(Matching, "game/Scene_801734B0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(NonMatching, "game/HomingMarkerUpdate.cpp", extra_cflags=["-Cpp_exceptions on"]),

@@ -2,7 +2,9 @@
  * 0x80171754..0x8017218C: clLensFlare, a screen-space flare that follows a
  * world position: draw, update (projects the anchor to the screen and fades
  * in or out), destructor and two constructors. Real C++ ctors for their EH
- * actions; mangled names are bridged in tools/extab_user_renames.json.
+ * actions. Deferred generation emits the definitions in reverse source order;
+ * the compiler owns the vtable and RTTI. Mangled names are bridged in
+ * tools/extab_user_renames.json.
  */
 
 #include "game/types/Vec3f.h"
@@ -46,11 +48,7 @@ struct FlareState {
     ~FlareState();
 };
 
-struct clMapEffectParts {
-    virtual void vKeyFunction();
-    virtual ~clMapEffectParts();
-    clMapEffectParts() {}
-};
+#include "game/types/clMapEffectParts.h"
 
 struct clLensFlare : clMapEffectParts {
     float screenW;
@@ -68,15 +66,12 @@ struct clLensFlare : clMapEffectParts {
 
     clLensFlare(const char *res, HSD_JObj *at, float scale, float spread);
     clLensFlare(const char *res, float x, float y, float z, float scale, float spread);
-    virtual void vKeyFunction2();
+    virtual ~clLensFlare();
+    virtual void Update();
+    virtual void Draw();
 };
 
 extern "C" {
-extern char clLensFlare_vtable_804912DC[];
-extern char lbl_80490FE0[];
-extern char lbl_8036E860[];
-extern char lbl_8036E880[];
-extern char lbl_8036E8A0[];
 extern char lbl_806D8D80[7];
 extern char lbl_806D8D88[5];
 extern GXRenderModeObj HSD_VIData;
@@ -111,7 +106,7 @@ static inline void HSD_JObjGetTranslation(HSD_JObj *jobj, Vec3f *translate) {
         __assert(lbl_806D8D80, 0x3E4, lbl_806D8D88);
     }
     if (translate == 0) {
-        __assert(lbl_806D8D80, 0x3E5, lbl_8036E8A0);
+        __assert(lbl_806D8D80, 0x3E5, "translate");
     }
     *translate = jobj->translate;
 }
@@ -127,187 +122,10 @@ static inline HSD_DObj *HSD_DObjGetNext(HSD_DObj *dobj) {
     return 0;
 }
 
-extern "C" {
-
-void fn_80171754(clLensFlare *self) {
-    int j;
-    int frame;
-    int i;
-    float t;
-
-    if (self->model != 0 && self->alpha != 0) {
-        frame = (int)((float)self->alpha * self->spread);
-        for (i = 0; i < self->dobjCount; i++) {
-            if (self->dobjs[i]) {
-                for (j = 0; j < self->dobjCount; j++) {
-                    if (j == i) {
-                        HSD_DObjClearFlags(self->dobjs[j], 1);
-                    } else {
-                        HSD_DObjSetFlags(self->dobjs[j], 1);
-                    }
-                }
-                fn_80182578(HSD_DObjGetMObj(self->dobjs[i]), frame);
-                if (i < 2) {
-                    t = 0.0f;
-                } else {
-                    t = (float)(i - 1) / (float)(self->dobjCount - 2);
-                }
-                Object_SetJObjPositionXYZ(self->model, self->edgeNeg.x * t + self->edge.x,
-                                          self->edgeNeg.y * t + self->edge.y,
-                                          self->edgeNeg.z * t + self->edge.z);
-                t = self->scale * (0.01f * (1.5f * ((float)i / (float)self->dobjCount) + 1.0f));
-                Object_SetJObjScaleXYZ(self->model, t, t, t);
-                Object_RenderJObjTree(self->model, 7);
-            }
-        }
-    }
-}
-
-void fn_80171940(clLensFlare *self) {
-    void *scene;
-    void *view;
-    void *proj;
-    ProjParams *pp;
-    Vec3f v;
-    float halfW;
-    float halfH;
-    int a;
-
-    if (self->model == 0) {
-        self->state.visible = 0;
-        return;
-    }
-    scene = GetCourseScene3D();
-    if (scene == 0) {
-        self->state.visible = 0;
-        return;
-    }
-    view = CObj_GetViewMatrix_Cached(scene);
-    proj = CObj_GetProjMatrix_Cached(scene);
-    pp = CObj_GetLineBufferPtr(scene);
-    PSMTXMultVec(view, &self->pos, &v);
-    if (v.z > 0.0f) {
-        self->state.visible = 0;
-        self->alpha -= 0x20;
-        a = self->alpha;
-        self->alpha = a < 0 ? 0 : (a > 0xFF ? 0xFF : a);
-        return;
-    }
-    halfW = -v.z * pp->x8 / pp->x0;
-    halfH = -v.z * pp->x28 / pp->x24;
-    self->edge.x = pp->x8 / pp->x0 * (v.x / halfW);
-    self->edge.y = pp->x28 / pp->x24 * (v.y / halfH);
-    self->edge.z = -1.0f;
-    self->edgeNeg.x = -self->edge.x;
-    self->edgeNeg.y = -self->edge.y;
-    self->edgeNeg.z = -1.0f;
-    PSMTXMultVec(proj, &self->edge, &self->edge);
-    PSMTXMultVec(proj, &self->edgeNeg, &self->edgeNeg);
-    Vec3_Subtract(&self->edgeNeg, &self->edge, &self->edgeNeg);
-    Object_SetJObjRotationZ(self->model, 4.712389f + (float)atan2(v.y, v.x));
-    if (self->state.frame < 0xFFFD34) {
-        self->alpha -= 0x20;
-    } else {
-        self->alpha += 0x20;
-    }
-    a = self->alpha;
-    self->alpha = a < 0 ? 0 : (a > 0xFF ? 0xFF : a);
-    if (v.x < halfW || v.x > -halfW || v.y > halfH || v.y < -halfH) {
-        self->state.visible = 0;
-    } else {
-        float d;
-        d = (v.x - halfW) / (2.0f * halfW);
-        if (d < 0.0f) {
-            d = -d;
-        }
-        self->state.x = 640.0f * d;
-        d = (v.y - halfH) / (2.0f * halfH);
-        if (d < 0.0f) {
-            d = -d;
-        }
-        self->state.y = 480.0f * d;
-        self->state.visible = 1;
-    }
-}
-
-clLensFlare *fn_80171C2C(clLensFlare *self, short flag) {
-    if (self) {
-        *(void **)self = clLensFlare_vtable_804912DC;
-        if (self->model) {
-            Object_DtorWithGXSync(self->model, 1);
-            self->model = 0;
-        }
-        DebugPrintf(lbl_8036E860);
-        dtor_8018F088(&self->state, -1);
-        if (self) {
-            *(void **)self = lbl_80490FE0;
-        }
-        if (flag > 0) {
-            MemoryManager_TimedFree(self);
-        }
-    }
-    return self;
-}
-
-}
-
-#pragma exceptions on
-
-clLensFlare::clLensFlare(const char *res, HSD_JObj *at, float scale, float spread) {
-    HSD_DObj *dobj;
-
-    DebugPrintf(lbl_8036E880);
-    model = 0;
-    dobjs[0] = 0;
-    dobjs[1] = 0;
-    dobjs[2] = 0;
-    dobjs[3] = 0;
-    dobjs[4] = 0;
-    dobjs[5] = 0;
-    dobjs[6] = 0;
-    dobjs[7] = 0;
-    dobjs[8] = 0;
-    dobjs[9] = 0;
-    dobjCount = 0;
-    alpha = 0xFF;
-    pos.x = 0.0f;
-    pos.y = 0.0f;
-    pos.z = 0.0f;
-    edge.x = 0.0f;
-    edge.y = 0.0f;
-    edge.z = 0.0f;
-    edgeNeg.x = 0.0f;
-    edgeNeg.y = 0.0f;
-    edgeNeg.z = 0.0f;
-    state.visible = 0;
-    this->scale = scale;
-    this->spread = spread;
-    if (at) {
-        HSD_JObjGetTranslation(at, &pos);
-        screenW = HSD_VIData.fbWidth;
-        screenH = HSD_VIData.xfbHeight;
-        fn_801825FC();
-        model = new clNormal3D(res, 0);
-        fn_801825C8();
-        if (model) {
-            Object_SetJObjScaleXYZ(model, 0.01f, 0.01f, 0.01f);
-            for (dobj = HSD_JObjGetDObj(Archive_GetRootJObj(model)); dobj; dobj = HSD_DObjGetNext(dobj)) {
-                if (dobjCount < 10) {
-                    fn_80182644(HSD_DObjGetMObj(dobj), 0x28000000);
-                    dobjs[dobjCount] = dobj;
-                    dobjCount++;
-                } else {
-                    HSD_DObjSetFlags(dobj, 1);
-                }
-            }
-        }
-    }
-}
-
 clLensFlare::clLensFlare(const char *res, float x, float y, float z, float scale, float spread) {
     HSD_DObj *dobj;
 
-    DebugPrintf(lbl_8036E880);
+    DebugPrintf(" CreateMapEffect : clLensFlare\n");
     model = 0;
     dobjs[0] = 0;
     dobjs[1] = 0;
@@ -355,4 +173,163 @@ clLensFlare::clLensFlare(const char *res, float x, float y, float z, float scale
     }
 }
 
-#pragma exceptions reset
+
+clLensFlare::clLensFlare(const char *res, HSD_JObj *at, float scale, float spread) {
+    HSD_DObj *dobj;
+
+    DebugPrintf(" CreateMapEffect : clLensFlare\n");
+    model = 0;
+    dobjs[0] = 0;
+    dobjs[1] = 0;
+    dobjs[2] = 0;
+    dobjs[3] = 0;
+    dobjs[4] = 0;
+    dobjs[5] = 0;
+    dobjs[6] = 0;
+    dobjs[7] = 0;
+    dobjs[8] = 0;
+    dobjs[9] = 0;
+    dobjCount = 0;
+    alpha = 0xFF;
+    pos.x = 0.0f;
+    pos.y = 0.0f;
+    pos.z = 0.0f;
+    edge.x = 0.0f;
+    edge.y = 0.0f;
+    edge.z = 0.0f;
+    edgeNeg.x = 0.0f;
+    edgeNeg.y = 0.0f;
+    edgeNeg.z = 0.0f;
+    state.visible = 0;
+    this->scale = scale;
+    this->spread = spread;
+    if (at) {
+        HSD_JObjGetTranslation(at, &pos);
+        screenW = HSD_VIData.fbWidth;
+        screenH = HSD_VIData.xfbHeight;
+        fn_801825FC();
+        model = new clNormal3D(res, 0);
+        fn_801825C8();
+        if (model) {
+            Object_SetJObjScaleXYZ(model, 0.01f, 0.01f, 0.01f);
+            for (dobj = HSD_JObjGetDObj(Archive_GetRootJObj(model)); dobj; dobj = HSD_DObjGetNext(dobj)) {
+                if (dobjCount < 10) {
+                    fn_80182644(HSD_DObjGetMObj(dobj), 0x28000000);
+                    dobjs[dobjCount] = dobj;
+                    dobjCount++;
+                } else {
+                    HSD_DObjSetFlags(dobj, 1);
+                }
+            }
+        }
+    }
+}
+
+clLensFlare::~clLensFlare() {
+    if (model) {
+        Object_DtorWithGXSync(model, 1);
+        model = 0;
+    }
+    DebugPrintf(" DeleteMapEffect : clLensFlare\n");
+}
+
+void clLensFlare::Update() {
+    void *scene;
+    void *view;
+    void *proj;
+    ProjParams *pp;
+    Vec3f v;
+    float halfW;
+    float halfH;
+    int a;
+
+    if (model == 0) {
+        state.visible = 0;
+        return;
+    }
+    scene = GetCourseScene3D();
+    if (scene == 0) {
+        state.visible = 0;
+        return;
+    }
+    view = CObj_GetViewMatrix_Cached(scene);
+    proj = CObj_GetProjMatrix_Cached(scene);
+    pp = CObj_GetLineBufferPtr(scene);
+    PSMTXMultVec(view, &pos, &v);
+    if (v.z > 0.0f) {
+        state.visible = 0;
+        alpha -= 0x20;
+        a = alpha;
+        alpha = a < 0 ? 0 : (a > 0xFF ? 0xFF : a);
+        return;
+    }
+    halfW = -v.z * pp->x8 / pp->x0;
+    halfH = -v.z * pp->x28 / pp->x24;
+    edge.x = pp->x8 / pp->x0 * (v.x / halfW);
+    edge.y = pp->x28 / pp->x24 * (v.y / halfH);
+    edge.z = -1.0f;
+    edgeNeg.x = -edge.x;
+    edgeNeg.y = -edge.y;
+    edgeNeg.z = -1.0f;
+    PSMTXMultVec(proj, &edge, &edge);
+    PSMTXMultVec(proj, &edgeNeg, &edgeNeg);
+    Vec3_Subtract(&edgeNeg, &edge, &edgeNeg);
+    Object_SetJObjRotationZ(model, 4.712389f + (float)atan2(v.y, v.x));
+    if (state.frame < 0xFFFD34) {
+        alpha -= 0x20;
+    } else {
+        alpha += 0x20;
+    }
+    a = alpha;
+    alpha = a < 0 ? 0 : (a > 0xFF ? 0xFF : a);
+    if (v.x < halfW || v.x > -halfW || v.y > halfH || v.y < -halfH) {
+        state.visible = 0;
+    } else {
+        float d;
+        d = (v.x - halfW) / (2.0f * halfW);
+        if (d < 0.0f) {
+            d = -d;
+        }
+        state.x = 640.0f * d;
+        d = (v.y - halfH) / (2.0f * halfH);
+        if (d < 0.0f) {
+            d = -d;
+        }
+        state.y = 480.0f * d;
+        state.visible = 1;
+    }
+}
+
+void clLensFlare::Draw() {
+    int j;
+    int frame;
+    int i;
+    float t;
+
+    if (model != 0 && alpha != 0) {
+        frame = (int)((float)alpha * spread);
+        for (i = 0; i < dobjCount; i++) {
+            if (dobjs[i]) {
+                for (j = 0; j < dobjCount; j++) {
+                    if (j == i) {
+                        HSD_DObjClearFlags(dobjs[j], 1);
+                    } else {
+                        HSD_DObjSetFlags(dobjs[j], 1);
+                    }
+                }
+                fn_80182578(HSD_DObjGetMObj(dobjs[i]), frame);
+                if (i < 2) {
+                    t = 0.0f;
+                } else {
+                    t = (float)(i - 1) / (float)(dobjCount - 2);
+                }
+                Object_SetJObjPositionXYZ(model, edgeNeg.x * t + edge.x,
+                                          edgeNeg.y * t + edge.y,
+                                          edgeNeg.z * t + edge.z);
+                t = scale * (0.01f * (1.5f * ((float)i / (float)dobjCount) + 1.0f));
+                Object_SetJObjScaleXYZ(model, t, t, t);
+                Object_RenderJObjTree(model, 7);
+            }
+        }
+    }
+}
