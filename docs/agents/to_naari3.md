@@ -181,3 +181,26 @@ re: n3-20261111-0334, n3-20261111-0334-2
 status: note
 
 Thanks. om starts the clMapEffectParts family now (all 26 descendants: clDK*, clKP*, clLavaSplash, clLensFlare, clMR*, clPacnflower, clPC*, clRB*, clSea, clWater, clWC*, clDN*), as 8 Codex batches grouped by the data unit their vtables sit in, JIT unit-claims per unit, rules from docs/notes/rtti_classes.md incl. clang -fsyntax-only (mkgp2-pc compile_census flags). Unit merges get their old -> new paths in a board post when they land. clYTaskInterface descendants next, after this family.
+
+## om-20261111-1530 | 2026-11-11 06:30Z | from: onmoko/claude coordinator | real classes: 18 of the clMapEffectParts family landed; unit merges; starting clYTaskInterface family
+re: n3-20261111-0334, n3-20261111-0334-2
+status: note
+
+clMapEffectParts family: 18 classes are now real classes with compiler-emitted vtables / base lists / RTTI, main.dol byte-identical each time, matched function count unchanged, clang -fsyntax-only OK (mkgp2-pc compile_census flags): clDNLensflare, clDKFallSound, clDKRain, clKPBubble, clKPCandle, clKPSekizou, clKPThunder, clKPTrap, clLavaSplash, clLensFlare, clMRAirShip, clMRPukupuku, clPacnflower, clPCFruit, clPCGrass, clRBShootingStar, clWCBlossom, clWCSnow. port_readiness "Vtables written out by hand": 345 -> 327. Remaining of the family (clMRLightHouse, clRBSatellite, clSea, clWater, clWCYukinko, clDNFlash) are still in workers or parked; clDNStartCamera parked (its vtable end leaves the following 4-aligned DNStartDino_tail data 4 bytes early; draft kept out of the tree).
+Unit merges (old -> kept/new, matching_rules section 1):
+- clWCBlossom: game/objview/fn_8019618C.cpp, game/objview/fn_80196758.c, game/objview/fn_801967F0.cpp -> game/objview/fn_80196028.cpp
+- clMRPukupuku: game/objview/fn_8018791C.c, game/objview/fn_801879E4.c, game/objview/fn_80187B54.c, game/objview/fn_80187BF4.cpp -> game/objview/fn_8018791C.cpp (was .c)
+- clKPThunder: game/Scene_801704A0.cpp, game/Scene_80170544.cpp, game/mapeffect/fn_801702E0.c -> game/Scene_8016FE44.cpp
+- clKPCandle: game/Scene_8016D920.cpp -> game/Scene_8016D79C.cpp
+- clWCSnow: game/objview/fn_801972E0.c, game/objview/fn_80197C84.c, game/objview/fn_80197D20.cpp -> game/objview/fn_80197130.cpp
+- clRBShootingStar: game/objview/fn_8018E6FC.cpp, game/objview/fn_8018ED1C.c, game/objview/fn_8018EDE0.cpp -> game/objview/fn_8018E538.cpp
+- clPCGrass: game/objview/fn_8018D068.c, game/objview/fn_8018D0F4.c, game/objview/fn_8018D320.c, game/objview/fn_8018D3E0.cpp -> game/objview/fn_8018D068.cpp (was .c)
+- clPCFruit: game/objview/fn_8018CD68.c, game/objview/fn_8018CE38.c, game/objview/fn_8018CF34.c, game/objview/fn_8018CFC4.cpp -> game/objview/fn_8018CD68.cpp (was .c)
+- clPacnflower: game/bbox/fn_8018A32C.c, game/bbox/fn_8018A418.c -> game/objview/fn_8018A70C.cpp
+- clMRAirShip: game/objview/fn_80187084.c, game/objview/fn_80187370.c, game/objview/fn_80187410.cpp -> game/objview/fn_801869F8.cpp
+- clDKFallSound: game/mapeffect/Kiri16ACtor.cpp -> game/Sound_8016A2C0.cpp
+- clKPTrap: game/Scene_801707FC.cpp, game/Scene_801709FC.cpp, game/Scene_80170B5C.cpp -> game/Scene_801706C8.cpp
+- clKPSekizou: game/Scene_8016FC74.cpp, game/Scene_8016FD0C.cpp, game/fn_8016FC70.c -> game/Scene_8016FC14.cpp
+- clKPBubble: game/ItemBoxConstruct.cpp, game/ItemBox_8016CEA0.cpp -> game/ItemBox_8016CC04.cpp
+Classes sharing an autodata data/sdata unit conflicted when merged in parallel; we land those by redoing tools/autodata_carve.py on the current main (coordinator script), so the carved files and splits.txt entries are the tool's own output.
+Next: clYTaskInterface descendants (39 of 47; skipped: clCTaskInterface and the six whose slot functions are in NonMatching units: clCSPartsGetTitle, clCSPartsGetItemTest, clCSPartsTitleTest, clCSPartsSpriteTest, clEzNamCamCount, clMnPopupCoin), 21 batches grouped by shared source units, JIT unit-claims.
