@@ -10198,13 +10198,13 @@ game/fn_801FAB58.cpp:
 	.sdata      start:0x806D0120 end:0x806D0140
 
 game/autodata/sdata_806D0140.c:
-	.sdata      start:0x806D0140 end:0x806D0338
+	.sdata      start:0x806D0140 end:0x806D0180
 
 game/autodata/data_804EBF58.c:
 	.data       start:0x804EBF58 end:0x804EBFC4
 
 game/autodata/rodata_803BFCD8.c:
-	.rodata     start:0x803BFCD8 end:0x803BFE44
+	.rodata     start:0x803BFCD8 end:0x803BFE08
 
 game/fn_801FB720.c:
 	extab       start:0x8001795C end:0x80017964
@@ -10251,20 +10251,25 @@ game/anon_801FC1E0_nm1.cpp:
 	.text       start:0x801FC614 end:0x801FD320
 	.data       start:0x804EC044 end:0x804EC074
 
-game/autodata/data_804EC078.c:
-	.data       start:0x804EC078 end:0x804EC0E8
-
 game/anon_801FD320.cpp:
-	extab       start:0x80017B40 end:0x80017C00
-	extabindex  start:0x800292D0 end:0x8002930C
-	.text       start:0x801FD320 end:0x801FD5FC
+	extab       start:0x80017B40 end:0x80017BE8
+	extabindex  start:0x800292D0 end:0x800292E8
+	.text       start:0x801FD320 end:0x801FD500
 	.ctors      start:0x802E8938 end:0x802E893C
+	.rodata     start:0x803BFE08 end:0x803BFE44
+	.data       start:0x804EC078 end:0x804EC0B0
+	.sdata      start:0x806D0180 end:0x806D0198
 
 game/anon_801FD320_nm1.cpp:
-	extab       start:0x80017C00 end:0x80017C2C
-	extabindex  start:0x8002930C end:0x80029318
-	.text       start:0x801FD5FC end:0x801FD800
+	extab       start:0x80017BE8 end:0x80017C2C
+	extabindex  start:0x800292E8 end:0x80029318
+	.text       start:0x801FD500 end:0x801FD800
 	.rodata     start:0x803BFE48 end:0x803BFEF8
+	.data       start:0x804EC0B0 end:0x804EC0E8
+	.sdata      start:0x806D0198 end:0x806D01B0
+
+game/autodata/sdata_806D01B0.c:
+	.sdata      start:0x806D01B0 end:0x806D0338
 
 game/autodata/rodata_803BFEF8.c:
 	.rodata     start:0x803BFEF8 end:0x803C0300

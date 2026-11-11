@@ -2,7 +2,7 @@
  * FlowScene base and the card-eject result task @ 0x801FD320..0x801FD924.
  */
 
-#include "game/FlowScene.h"
+#include "game/types/clMnCardClasses.h"
 
 #include "game/types/FlowController.h"
 
@@ -30,31 +30,14 @@ extern "C" void fn_801FD320(void) {
     lbl_806D19C8 = lbl_806DA848;
 }
 
-FlowScene::~FlowScene() {
+clMnCardT0Interface::~clMnCardT0Interface() {
     fn_801F4D3C(list.p);
 }
 
-FlowScene::FlowScene(int id)
-    : FlowTask(id), list(new SceneListImpl), fader(new FlowFaderI), state(0), subState(0),
+clMnCardT0Interface::clMnCardT0Interface(int id)
+    : clMnTaskInterface(id), list(new SceneListImpl), fader(new FlowFaderI), state(0), subState(0),
       timer(0), cursor(0) {
     fn_8020A7CC(fader.p, 0, 0, 1);
 }
-
-extern "C" void fn_801FD500(void) {
-}
-
-extern "C" void fn_801FD504(CardEjectTask *self) {
-    fn_801F8A34(fn_801F8E58(), &self->texts[0], 7);
-    fn_801F8A34(fn_801F8E58(), &self->texts[1], 7);
-}
-
-extern "C" void fn_801FD550(VObject *obj) {
-    delete obj;
-}
-
-CardEjectTask::~CardEjectTask() {
-    delete[] texts;
-}
-
 
 __declspec(section ".ctors") static void (*const cardEjectInitRef)(void) = fn_801FD320;
