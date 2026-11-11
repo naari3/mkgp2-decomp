@@ -12585,9 +12585,6 @@ TRK_MINNOW_DOLPHIN/dolphin_trk_glue.c:
 	.data       start:0x804F4780 end:0x804F47A8
 	.bss        start:0x8067D118 end:0x8067D120
 
-game/autodata/data_804F47A8.c:
-	.data       start:0x804F47A8 end:0x804F47C8
-
 TRK_MINNOW_DOLPHIN/targcont.c:
 	.text       start:0x802700F8 end:0x8027012C
 
@@ -12638,9 +12635,6 @@ Runtime.PPCEABI.H/NMWException.cpp:
 	.text       start:0x80270C78 end:0x802712E8
 	.sdata      start:0x806D0B60 end:0x806D0B68
 
-game/autodata/sdata_806D0B68.c:
-	.sdata      start:0x806D0B68 end:0x806D0B78
-
 Runtime.PPCEABI.H/ptmf.c:
 	.text       start:0x802712E8 end:0x80271340
 
@@ -12657,6 +12651,8 @@ Runtime.PPCEABI.H/MWRTTI_bad_cast.cpp:
 	extab       start:0x8001F2B0 end:0x8001F2B8
 	extabindex  start:0x8002BB68 end:0x8002BB74
 	.text       start:0x802715A4 end:0x8027160C
+	.data       start:0x804F47A8 end:0x804F47C8
+	.sdata      start:0x806D0B68 end:0x806D0B78
 
 Runtime.PPCEABI.H/runtime.c:
 	.text       start:0x8027160C end:0x80271D74

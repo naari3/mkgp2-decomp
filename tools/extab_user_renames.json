@@ -12841,8 +12841,13 @@
     "__dt__11WarpEdgeVecFv": "dtor_80036E40"
   },
   "src/Runtime.PPCEABI.H/MWRTTI_bad_cast.cpp": {
-    "@15": "@etb_8001F2B0",
-    "@16": "@eti_8002BB68",
+    "@11": "extern:lbl_803F1CAC",
+    "@13": "extern:lbl_803F1C9C",
+    "@12": "lbl_804F47A8",
+    "__RTTI__Q23std9exception": "lbl_806D0B68",
+    "__RTTI__Q23std8bad_cast": "lbl_806D0B70",
+    "@18": "@etb_8001F2B0",
+    "@19": "@eti_8002BB68",
     "__dt__Q23std8bad_castFv": "fn_802715A4",
     "what__Q23std8bad_castCFv": "fn_80271600",
     "__vt__Q23std8bad_cast": "lbl_804F47B4",
