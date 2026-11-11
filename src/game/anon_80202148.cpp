@@ -4,28 +4,13 @@
 
 #define GAME_FLOWFADERF_DEFAULT_CTOR_OUT_OF_LINE
 #include "game/FlowCountdown.h"
+#include "game/types/clMnTaskInterface.h"
 /* --- owned .rodata 0x803C0300..0x803C038A (tools/own_data.py) --- */
 #pragma force_active on
 extern "C" const unsigned int lbl_803C0300[22] = { 0x000008A9, 0x000008A9, 0x000008AA, 0x000008AB, 0x000008AC, 0x000008AD, 0x000008AE, 0x000008AF, 0x000008B0, 0x000008B1, 0x000008B2, 0x000008B3, 0x000008B4, 0x000008B5, 0x000008B6, 0x000008B7, 0x000008B8, 0x000008B9, 0x000008BA, 0x000008BB, 0x000008BC, 0x00001ADB };
-extern "C" const char lbl_803C0358[] = "clMnLabel";
-extern "C" const char lbl_803C0364[] = "clYTaskInterface";
-extern "C" const char lbl_803C0378[] = "clMnTaskInterface";
 #pragma force_active reset
 extern "C" 
 FlowFaderF::FlowFaderF() : x(lbl_806DA880), y(lbl_806DA880), z(lbl_806DA880) {}
-
-/* Reuse the original RTTI records through the CW cast runtime. */
-extern "C" {
-void *fn_80271340(void *, int, void *, void *, int);
-extern unsigned char FlowTask_RTTI_806D0240[8];
-extern unsigned char ClassSelTask_RTTI_806D0248[8];
-}
-
-struct ClassSelTask;
-
-static inline ClassSelTask *CastClassSelTask(FlowTask *task) {
-    return (ClassSelTask *)fn_80271340(task, 0, ClassSelTask_RTTI_806D0248, FlowTask_RTTI_806D0240, 0);
-}
 
 extern "C" {
 extern const float lbl_806DA8C8;
@@ -53,7 +38,7 @@ void fn_80120A08(int id);
 }
 
 /* Character-class selector (vtable ClassSelTask_vtable_804EC358). */
-struct ClassSelTask : FlowTask {
+struct clMnLabel : clMnTaskInterface {
     VHolder<FlowSceneList> list;
     int cur;
     int prev;
@@ -63,21 +48,29 @@ struct ClassSelTask : FlowTask {
     VHolder<FlowFaderF> slideIn;
     VHolder<FlowFaderF> scale;
     FlowFaderF *bg;
-    ClassSelTask(int cur_, int layer_, int id);
-    ~ClassSelTask();
-    virtual void _key3();
+    clMnLabel(int cur_, int layer_, int id);
+    ~clMnLabel();
+    virtual void Finish();
+    virtual void Update();
+    virtual void Draw();
 };
+
+static inline clMnLabel *CastMnLabel(FlowTask *task) {
+    return dynamic_cast<clMnLabel *>((clMnTaskInterface *)task);
+}
 
 static inline void SetScaleXY(ResCtrl &c, float sx, float sy) {
     c.scaleX = sx;
     c.scaleY = sy;
 }
 
-extern "C" void fn_80202180(ClassSelTask *self) {
+void clMnLabel::Draw() {
+    clMnLabel *self = this;
     self->list.p->Draw();
 }
 
-extern "C" void fn_802021B0(ClassSelTask *self) {
+void clMnLabel::Update() {
+    clMnLabel *self = this;
     ResCtrl ctrl;
     int col = -1;
     if (self->cur == 0) {
@@ -144,11 +137,11 @@ extern "C" void fn_802021B0(ClassSelTask *self) {
     self->list.p->Update();
 }
 
-extern "C" void fn_8020258C(VObject *obj) {
-    delete obj;
+void clMnLabel::Finish() {
+    delete this;
 }
 
-ClassSelTask::~ClassSelTask() {
+clMnLabel::~clMnLabel() {
     if (g_ccClass != 0) {
         fn_80120A08(0x8C5);
     }
@@ -156,8 +149,8 @@ ClassSelTask::~ClassSelTask() {
     delete[] bg;
 }
 
-ClassSelTask::ClassSelTask(int cur_, int layer_, int id)
-    : FlowTask(id), list(new SceneListImpl), cur(cur_), prev(cur_), layer(layer_),
+clMnLabel::clMnLabel(int cur_, int layer_, int id)
+    : clMnTaskInterface(id), list(new SceneListImpl), cur(cur_), prev(cur_), layer(layer_),
       fade(new FlowFaderF(lbl_806DA8CC)), slideOut(new FlowFaderF(lbl_806DA8CC)),
       slideIn(new FlowFaderF(lbl_806DA8CC)), scale(new FlowFaderF(lbl_806DA8CC)) {
     if (g_ccClass != 0) {
@@ -190,7 +183,7 @@ extern "C" int fn_80202A5C(int sel) {
     }
     FlowTask *t = fn_801F4DC0(lbl_806D19E0, 0);
     if (t) {
-        ClassSelTask *c = CastClassSelTask(t);
+        clMnLabel *c = CastMnLabel(t);
         int next = 0;
         int old = c->cur;
         if (old > -1 && old < 22) {
@@ -213,6 +206,6 @@ extern "C" int fn_80202B48(int cur) {
         return 0;
     }
     int layer = lbl_806D19E4;
-    fn_801F4DF0(lbl_806D19E0, new ClassSelTask(cur, layer, 0), 2);
+    fn_801F4DF0(lbl_806D19E0, (FlowTask *)new clMnLabel(cur, layer, 0), 2);
     return 1;
 }
