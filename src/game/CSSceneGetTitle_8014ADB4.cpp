@@ -490,13 +490,7 @@ void fn_8014BBE4(struct ResultPanel *self, float alpha);
 void fn_8014BF80(struct ResultPanel *self, float alpha);
 struct ResultPanel *fn_8014C308(struct ResultPanel *self, short flag);
 
-
-
-
-
-
 }
-
 
 #include "game/types/ResTrio.h"
 
@@ -746,12 +740,26 @@ static const GtVec sPumpPairPos[2] = {
 extern "C" const float lbl_80363C78[3] = {0.0f, 0.0f, 0.0f};
 static const GtVec sPumpPairRot = {0.0f, 39.5f, 1.0f};
 #pragma force_active reset
-extern "C" const unsigned int lbl_80363C90[5] = {
-    TEXT_WORD('c', 'l', 'C', 'S'), TEXT_WORD('S', 'c', 'e', 'n'), TEXT_WORD('e', 'G', 'e', 't'), TEXT_WORD('T', 'i', 't', 'l'), TEXT_WORD('e', 0, 0, 0),
+/* Private mirror of clSceneInterface; explicit tail padding preserves MWCC layout
+ * under the port ABI too. Its virtual methods follow the canonical interface. */
+struct clSceneInterface {
+    virtual ~clSceneInterface() {}
+    virtual void Destroy();
+    virtual void Update();
+    virtual void Draw();
+    unsigned char done;
+    unsigned char align[3];
+    clSceneInterface() : done(false) {}
 };
-extern "C" const unsigned int lbl_80363CA4[5] = {
-    TEXT_WORD('c', 'l', 'S', 'c'), TEXT_WORD('e', 'n', 'e', 'I'), TEXT_WORD('n', 't', 'e', 'r'), TEXT_WORD('f', 'a', 'c', 'e'), 0x00000000,
+
+/* The title scene is another controller obtained through the scene interface.
+ * This cast also places its RTTI names before the prize text pool. */
+struct clCSSceneGetTitle : public clSceneInterface {
+    virtual ~clCSSceneGetTitle();
 };
+static inline clCSSceneGetTitle *GetTitleScene() {
+    return dynamic_cast<clCSSceneGetTitle *>((clSceneInterface *)fn_80160238());
+}
 extern "C" const unsigned int lbl_80363CB8[4] = {
     TEXT_WORD(' ', 'g', 'o', 't'), TEXT_WORD(' ', 'a', ' ', 'p'), TEXT_WORD('r', 'i', 'z', 'e'), TEXT_WORD(' ', '!', 0, 0),
 };
@@ -761,9 +769,6 @@ extern "C" const unsigned int data_8048EEE8_rodata_80363CC8[3] = {
 extern "C" const unsigned int data_8048EEE8_rodata_80363CD4[7] = {
     TEXT_WORD(0x82, 0xC9, 0x82, 0xCD), TEXT_WORD(0x8F, 0xDC, 0x95, 'i'), TEXT_WORD(0x82, 0xAA, 0x91, 0xA1), TEXT_WORD(0x82, 0xE7, 0x82, 0xEA), TEXT_WORD(0x82, 0xDC, 0x82, 0xB5), TEXT_WORD(0x82, 0xBD, 0x81, 'I'), 0x00000000,
 };
-extern "C" const char sdata_806CF750_rodata_80363CF0[0x14] = "clCSSceneAccolade";
-static const char sPumpFile[0x14] = "it_w_09_pump.dat";
-static const char sPumpStandFile[0x18] = "it_w_09_pump_dodai.dat";
 
 /* Rank board shown after the race: per-slot character portrait, voice
  * label and place number, laid out from this area's pooled tables. */
@@ -799,98 +804,723 @@ namespace RankDraw { extern "C" void fn_80169334(float x, float y, float sx, flo
 namespace RankDraw { static inline void fn_80169334(float x, float y, float sx, float sy, float a, void *obj, int id, int flag) { ::fn_80169334(obj, id, flag, x, y, sx, sy, a); } }
 #endif
 #define SPR(obj, id, flag, x, y, sx, sy, a) RankDraw::fn_80169334(x, y, sx, sy, a, obj, id, flag)
-extern "C" void fn_8014ADB4(RankBoard *self)
-{
+
+#pragma use_lmw_stmw reset
+
+#define FK(x) (*(const float *)&(x))
+
+/* 0x230-byte text drawer (ctor TexMgr_Init, inline dtor dtor_800869D0). */
+struct TextManager {
+    TextManager();
+    ~TextManager() {}
+    char pad0[0x18];
+    int visible;            /* 0x18 */
+    char pad1C[4];
+    unsigned int color;     /* 0x20 */
+    char pad24[0x22C - 0x24];
+    float scale;            /* 0x22C */
+};
+
+#pragma use_lmw_stmw on
+
+#pragma use_lmw_stmw reset
+
+#pragma use_lmw_stmw on
+
+#pragma use_lmw_stmw reset
+
+struct GtRankList {
+    char data[0x48];
+    GtRankList(int flag);
+};
+struct GtPanelC {
+    char data[0x28];
+    GtPanelC();
+};
+struct GtPanel10 {
+    char data[0x1C];
+    GtPanel10();
+};
+struct GtPanel14 {
+    char data[0x24];
+    GtPanel14();
+};
+struct GtCoinPanel {
+    char data[0x44];
+    GtCoinPanel();
+};
+struct GtTitlePanel {
+    int f0;
+    char pad4[0x280];
+    GtTitlePanel();
+};
+struct GtFlowInfo {
+    unsigned char f0;
+    char pad1;
+    unsigned char f2;
+    char pad3;
+    int cup;
+    int round;
+    unsigned char fC;
+    void SetNext(int c, int r) {
+        f2 = 1;
+        cup = c;
+        round = r;
+    }
+};
+struct GtItemPose {
+    float pos[3];
+    float rot[3];
+    float scale;
+};
+struct GtSync {
+    int f0;
+    int item;
+};
+
+class GtModel : public VObj {
+public:
+    char pad4[0x1C];
+    GtModel(const char *name, int flag);
+};
+
+/* pump trophy (item 0x9B): three stacked models */
+inline unsigned char IsCleared(int count, int round) {
+    unsigned char r = 0;
+    if (count >= (round >= 4 ? 9 : 4)) {
+        r = 1;
+    }
+    return r;
+}
+
+inline void GtSetPos(VObj *o, const GtVec &p, float k) {
+    fn_8013D634(o, p.x * k, p.y * k, p.z * k);
+}
+
+inline void GtSetScale(VObj *o, float s, float k) {
+    float v = s * k;
+    fn_8013D608(o, v, v, v);
+}
+
+inline ObjTrio::ObjTrio() {
+    const GtVec *rot;
+    const GtVec *pos;
+    const float *scale;
+    int i;
+    f0 = 1;
+    scale = sPumpTrioScale;
+    pos = sPumpTrioPos;
+    rot = sPumpTrioRot;
+    for (i = 0; i < 3; i++) {
+        objs[i] = new GtModel(ItemRes_LookupByKey_Thunk(0x32), 1);
+        fn_8013D738(objs[i], 0.0f, 1.0f);
+        fn_8013D660(objs[i], 114.0f, 358.0f);
+        GtSetPos(objs[i], *pos, 0.02f);
+        GtSetScale(objs[i], *scale, 0.02f);
+        fn_8013D59C(objs[i], 0.017453292f * (*rot).x, 0.017453292f * (*rot).y, 0.017453292f * (*rot).z);
+        fn_8013D50C(objs[i], 2.0f, 2.0f, 2.0f, 0.0f);
+        scale++;
+        pos++;
+        rot++;
+    }
+}
+
+/* pump + stand (item 0x9D) */
+inline ObjPair::ObjPair() {
+    int i;
+    f0 = 1;
+    objs[0] = new GtModel("it_w_09_pump.dat", 1);
+    objs[1] = new GtModel("it_w_09_pump_dodai.dat", 1);
+    for (i = 0; i < 2; i++) {
+        const GtVec &p = sPumpPairPos[i];
+        fn_8013D738(objs[i], 0.0f, 1.0f);
+        fn_8013D660(objs[i], 114.0f, 358.0f);
+        GtSetPos(objs[i], p, 0.02f);
+        fn_8013D608(objs[i], 0.02f, 0.02f, 0.02f);
+        fn_8013D59C(objs[i], 0.017453292f * sPumpPairRot.x, 0.017453292f * sPumpPairRot.y, 0.017453292f * sPumpPairRot.z);
+    }
+}
+
+#pragma use_lmw_stmw on
+/* opt_dead_assignments off: found by tools/pragmasweep.py */
+#pragma opt_dead_assignments off
+
+#pragma use_lmw_stmw reset
+#pragma opt_dead_assignments reset
+
+/* ---- 0x8014CE74..0x8014D540: result-screen 3D part holders (was
+ * game/CSPartsHolders.c, merged so fn_8014D038 reaches sPumpPair* /
+ * "it_w_09_pump.dat" through the section anchor, docs/regalloc_patterns.md §13). */
+#pragma use_lmw_stmw on
+
+void *operator new(size_t);
+void operator delete(void *);
+
+struct CSPVObj {
+    virtual ~CSPVObj();
+};
+
+struct Part3D;
+
+extern "C" {
+extern void Frame_PostDrawOverlay(void);
+extern void Frame_UpdatePerFrameState(void);
+}
+
+struct PairHolder {
+    int arg;
+    Part3D *parts[2];
+    ~PairHolder();
+};
+
+struct TripleHolder {
+    int arg;
+    Part3D *parts[3];
+    ~TripleHolder();
+};
+
+struct Runner {
+    virtual void m08();
+    virtual void m0C();
+    virtual void m10();
+    virtual void m14();
+    virtual unsigned char m18();
+};
+
+struct RunnerOwner {
+    int m0;
+    int m4;
+    Runner *runner;
+};
+
+struct ResultScene {
+    char pad[0x50];
+    ResultScene();
+};
+
+extern "C" {
+TripleHolder *fn_8014D344(TripleHolder *h, int arg, float x, float y, float s);
+
+}
+
+struct PreviewPart {
+    char pad[0x20];
+    PreviewPart(void *resource, unsigned char flag);
+};
+struct PartVec { float x, y, z; };
+
+/* Three-model holder ctor body: one preview model per slot, placed from
+ * this area's pooled layout tables (positions, rotations in degrees, scales).
+ * fakematch (permuter): the slot cursor `c` walks the holder 4 bytes at a
+ * time so that the parts pointer gets the target's register; the natural code
+ * is `h->parts[i]` with i as the loop index. */
+
+#pragma use_lmw_stmw reset
+
+class clCSSceneAccolade : public clSceneInterface {
+public:
+    clCSSceneAccolade();
+    virtual ~clCSSceneAccolade();
+    virtual void Destroy();
+    virtual void Update();
+    virtual void Draw();
+    void DrawPrize(float alpha);
+    void DrawItem(float alpha);
+
+    /* 0x008 */ struct VObj14 *f8;
+    /* 0x00C */ struct VObj14 *fC;
+    /* 0x010 */ struct VObj14 *f10;
+    /* 0x014 */ void *f14;
+    /* 0x018 */ void *f18;
+    /* 0x01C */ unsigned char pad_01C[0x4];
+    /* 0x020 */ unsigned char f20;
+    /* 0x021 */ unsigned char f21;
+    /* 0x022 */ unsigned char pad_022[0x2];
+    /* 0x024 */ int state;
+    /* 0x028 */ float t;
+    unsigned char pad2C;
+    unsigned char f2D;
+    unsigned char pad2E[2];
+    int kart;
+    /* 0x034 */ unsigned char f34;
+    /* 0x035 */ unsigned char pad_035[0x3];
+    /* 0x038 */ int item;
+    /* 0x03C */ struct VObj *f3C;
+    /* 0x040 */ unsigned char f40;
+    /* 0x041 */ unsigned char pad_041[0x3];
+    /* 0x044 */ struct VObj14F *f44;
+    int f48;
+    /* 0x04C */ unsigned char f4C;
+    /* 0x04D */ unsigned char pad_04D[0x3];
+    /* 0x050 */ struct VObj14 *f50;
+    /* 0x054 */ struct VObjCF *f54;
+    /* 0x058 */ unsigned char f58;
+    /* 0x059 */ unsigned char pad_059[0x3];
+    /* 0x05C */ float f5C;
+    float f60;
+    /* 0x064 */ struct ResultFader *f64;
+    /* 0x068 */ struct ObjTrio *f68;
+    /* 0x06C */ struct ObjPair *f6C;
+    /* 0x070 */ unsigned char f70;
+    /* 0x071 */ unsigned char pad_071[0x3];
+};
+
+#pragma use_lmw_stmw on
+extern "C" unsigned char fn_8014D4F0(RunnerOwner *o) {
+    o->runner->m10();
+    return o->runner->m18();
+}
+#pragma use_lmw_stmw reset
+#pragma use_lmw_stmw on
+extern "C" void fn_8014D4B8(RunnerOwner *o) {
+    o->runner->m14();
+    HSD_StateInvalidate(-1);
+}
+#pragma use_lmw_stmw reset
+#pragma use_lmw_stmw on
+extern "C" TripleHolder *fn_8014D344(TripleHolder *h, int arg, float x, float y, float s) {
+    float *scale = (float *)((char *)CSSceneGetTitle_8014ADB4_rodata_80362D90 + 0xEB8);
+    PartVec *pos = (PartVec *)((char *)CSSceneGetTitle_8014ADB4_rodata_80362D90 + 0xE70);
+    PartVec *rot = (PartVec *)((char *)CSSceneGetTitle_8014ADB4_rodata_80362D90 + 0xE94);
+    TripleHolder *c = h;
+    float k;
     int i;
 
-    if (self->hidden) {
-        return;
+    h->arg = arg;
+    k = lbl_806D7EF4;
+    for (i = 0; i < 3; i++) {
+        c->parts[0] = (Part3D *)new PreviewPart((void *)ItemRes_LookupByKey_Thunk(0x32), 1);
+        fn_8013D738(c->parts[0], lbl_806D7E30, lbl_806D7E2C);
+        fn_8013D660(c->parts[0], x, y);
+        fn_8013D634(c->parts[0], pos->x * s, pos->y * s, pos->z * s);
+        fn_8013D608(c->parts[0], *scale * s, *scale * s, *scale * s);
+        fn_8013D59C(c->parts[0], k * rot->x, k * rot->y, k * rot->z);
+        fn_8013D50C(c->parts[0], lbl_806D7EE4, lbl_806D7EE4, lbl_806D7EE4, lbl_806D7E30);
+        scale++;
+        pos++;
+        rot++;
+        c = (TripleHolder *)&c->parts[0];
     }
-    if (self->state > 3) {
-        self->t += 0.05f;
-        if (self->t > 1.0f) {
-            self->t = 1.0f;
-        }
-        for (i = 0; i < 6; i++) {
-            HudRankSlot *slot;
-            int kart;
-            int portrait;
-            int voice;
-            int extra;
-            unsigned char ok;
+    return h;
+}
+#pragma use_lmw_stmw reset
+#pragma use_lmw_stmw on
+TripleHolder::~TripleHolder() {
+    int i;
 
-            slot = RankSlot_GetByIndex(i);
-            if (slot == 0) {
-                continue;
-            }
-            kart = slot->kart;
-            if (kart < 0 || kart >= 13) {
-                continue;
-            }
-            if (slot->chr < 0 || slot->chr > 3) {
-                continue;
-            }
-            portrait = 0x2B00;
-            voice = 0x1ECD;
-            if (g_gameMode == 0) {
-                ok = fn_802317E0(&portrait, &voice, &extra, slot->chr, slot->kart, 0);
-            } else {
-                ok = fn_80231644(&portrait, &voice, &extra, slot->chr, slot->kart);
-            }
-            if (ok == 1) {
-                const RankVec2 *q;
-                float dy;
-                float yy;
-
-                SPR(0, portrait, 0, sRankPortraitPos[kart][i].x, sRankPortraitPos[kart][i].y, lbl_806D6DE4, lbl_806D6DE8, self->t);
-                dy = lbl_806D7E30;
-                if (!fn_80231B74(voice)) {
-                    dy = *(float *)&lbl_806D7E34;
-                }
-                yy = sRankPortraitPos[kart][i].y;
-                yy = dy + yy;
-                SPR(0, voice, 0, sRankPortraitPos[kart][i].x, yy, *(float *)&lbl_806D7E38, *(float *)&lbl_806D7E38, self->t);
-                if (i < 3) {
-                    SPR(0, i + 0x14DB, 0, sRankPortraitPos[kart][i].x, sRankPortraitPos[kart][i].y, lbl_806D7E2C, lbl_806D7E2C, self->t);
-                } else {
-                    SPR(0, 0x14DE, 0, sRankPortraitPos[kart][i].x, sRankPortraitPos[kart][i].y, lbl_806D7E2C, lbl_806D7E2C, self->t);
-                    SPR(0, i + 0x14DC, 0, sRankPortraitPos[kart][i].x, sRankPortraitPos[kart][i].y - *(float *)&lbl_806D7E3C, lbl_806D7E2C, lbl_806D7E2C, self->t);
-                }
-                q = &sRankNamePos[kart][i];
-                fn_80167F24(0, slot->name, q->x, q->y, self->t);
-            } else {
-                const RankVec2 *q = &sRankNameOnlyPos[kart][i];
-                fn_80167F24(0, slot->name, q->x, q->y, self->t);
-            }
-        }
-    }
-    fn_801678FC(0, lbl_806D7E30, lbl_806D7E30, lbl_806D7E30, self->alpha);
-    if (self->f20 == 1) {
-        self->f08->v1C();
-        fn_8014017C(self->f14);
-        if (self->state >= 11 && self->state <= 13 && self->f50 != 0) {
-            fn_8014095C(self->f50);
-        }
-        if (self->state >= 5 && self->state <= 7) {
-            fn_8011FAB8();
-        }
-        if (self->state >= 14 && self->state <= 16) {
-            self->f44->v18();
-            self->f44->v1C();
-        }
-        if (self->f64 != 0) {
-            fn_801A0004(self->f64);
-        }
-        for (i = 0; i < 8; i++) {
-            fn_8013D940(i);
-        }
-        HSD_StateInvalidate(-1);
+    for (i = 0; i < 3; i++) {
+        delete (CSPVObj *)parts[i];
     }
 }
 #pragma use_lmw_stmw reset
+#pragma use_lmw_stmw on
+extern "C" void fn_8014D2AC(void) {
+}
+#pragma use_lmw_stmw reset
+#pragma use_lmw_stmw on
+extern "C" void fn_8014D250(TripleHolder *h) {
+    int i;
 
+    for (i = 0; i < 3; i++) {
+        fn_8013DAC8(h->parts[i], h->arg);
+    }
+}
+#pragma use_lmw_stmw reset
+#pragma use_lmw_stmw on
+extern "C" void fn_8014D1E0(TripleHolder *h, float a) {
+    int i;
 
-extern "C" void fn_8014B118(ResultPanel *self) {
+    for (i = 0; i < 3; i++) {
+        fn_8013D50C(h->parts[i], 2.0f, 2.0f, 2.0f, a);
+    }
+}
+#pragma use_lmw_stmw reset
+#pragma use_lmw_stmw on
+extern "C" ObjPair *fn_8014D038(ObjPair *h, int arg, float x, float y, float s) {
+    int i;
+    h->f0 = arg;
+    h->objs[0] = new GtModel("it_w_09_pump.dat", 1);
+    h->objs[1] = new GtModel("it_w_09_pump_dodai.dat", 1);
+    for (i = 0; i < 2; i++) {
+        const GtVec &p = sPumpPairPos[i];
+        fn_8013D738(h->objs[i], 0.0f, 1.0f);
+        fn_8013D660(h->objs[i], x, y);
+        GtSetPos(h->objs[i], p, s);
+        fn_8013D608(h->objs[i], s, s, s);
+        fn_8013D59C(h->objs[i], 0.017453292f * sPumpPairRot.x, 0.017453292f * sPumpPairRot.y, 0.017453292f * sPumpPairRot.z);
+    }
+    return h;
+}
+#pragma use_lmw_stmw reset
+#pragma use_lmw_stmw on
+PairHolder::~PairHolder() {
+    int i;
+
+    for (i = 0; i < 2; i++) {
+        delete (CSPVObj *)parts[i];
+    }
+}
+#pragma use_lmw_stmw reset
+#pragma use_lmw_stmw on
+extern "C" void fn_8014CFA0(void) {
+}
+#pragma use_lmw_stmw reset
+#pragma use_lmw_stmw on
+extern "C" void fn_8014CF44(PairHolder *h) {
+    int i;
+
+    for (i = 0; i < 2; i++) {
+        fn_8013DAC8(h->parts[i], h->arg);
+    }
+}
+#pragma use_lmw_stmw reset
+#pragma use_lmw_stmw on
+extern "C" void fn_8014CEE8(PairHolder *h, float t) {
+    int i;
+
+    for (i = 0; i < 2; i++) {
+        fn_8013D4B0(h->parts[i], t);
+    }
+}
+#pragma use_lmw_stmw reset
+#pragma use_lmw_stmw on
+extern "C" clCSSceneAccolade *fn_8014CEAC(void) {
+    return new clCSSceneAccolade();
+}
+#pragma use_lmw_stmw reset
+#pragma use_lmw_stmw on
+void clCSSceneAccolade::Destroy() {
+    delete this;
+}
+#pragma use_lmw_stmw reset
+#pragma use_lmw_stmw on
+#pragma opt_dead_assignments off
+clCSSceneAccolade::clCSSceneAccolade() { /* 0x8014C53C size:0x938 */
+    /* local declaration order is load-bearing (register coloring) */
+    int cup;
+    unsigned char done;
+    GtItemPose *pose;
+    HudRankSlot *slot;
+    int cc;
+    int n;
+    int round;
+    unsigned char sync;
+    int i;
+
+    fn_8013DBF8();
+    InitRumbleController(1);
+    f8 = (VObj14 *)new GtRankList(1);
+    f2D = 1;
+    if (!ServiceEnable_Get() || ServiceValue_Get() == 1) {
+        f2D = 0;
+    }
+    for (i = 0; i < 6; i++) {
+        HudRankSlot *s = RankSlot_GetByIndex(i);
+        if (s != 0) {
+            fn_801426A0(f8, i, s->kart);
+        }
+    }
+    ProcessSystemTick(0);
+    fC = (VObj14 *)new GtPanelC;
+    f10 = (VObj14 *)new GtPanel10;
+    f14 = new GtPanel14;
+    f18 = 0;
+    f20 = 0;
+    f21 = 0;
+    state = 0;
+    t = 0.0f;
+    item = 0;
+    f3C = 0;
+    f68 = 0;
+    f6C = 0;
+    f40 = 0;
+    f44 = 0;
+    f48 = -1;
+    f4C = 0;
+    f50 = 0;
+    f54 = (VObjCF *)GetTitleScene();
+    f58 = 0;
+    f5C = 0.0f;
+    f60 = 0.0f;
+    f64 = 0;
+    f70 = has_title_changed();
+    ProcessSystemTick(0);
+    slot = RankSlot_GetByIndex(0);
+    kart = slot->chr;
+    f34 = slot->active;
+    /* fakematch (permuter): natural code is `cc = g_ccClass;`; the no-op cast
+     * makes CW load straight into the callee-saved register. */
+    cc = (int)g_ccClass;
+    cup = g_cupId;
+    round = g_roundIndex;
+    fn_801D5C88(g_playerData, cc);
+    sync = 0;
+    if (slot->f28) {
+        switch (g_gameMode) {
+        case 0:
+            if (f34) {
+                if (cup >= 1 && cup <= 8 && round >= 0 && round <= 7) {
+                    item = fn_80209A84();
+                    if (item <= 0 || item >= 0x115) {
+                        item = 0;
+                    } else if (fn_801D6F30(g_playerData, item, 1)) {
+                        item = 0;
+                    }
+                    if (item != 0) {
+                        PlayerData_ApplyItemUnlockById(item);
+                    }
+                    lbl_806D17F2 = 1;
+                }
+                done = 0;
+                n = fn_801D59A0(g_playerData, cc, cup);
+                if (n >= (round >= 4 ? 9 : 4)) {
+                    done = 1;
+                }
+                if (done) {
+                    f40 = 1;
+                    f48 = cup + 8;
+                }
+                if (done == 1 && *fn_8024F588() == 1) {
+                    f4C = 1;
+                }
+            } else {
+                fn_801DC870(1);
+            }
+            break;
+        case 2:
+            if (kart >= 0 && kart <= 3) {
+                item = SyncSlot_GetRecv()->item;
+                if (item <= 0 || item >= 0x115) {
+                    item = 0;
+                }
+                if (item != 0 && f34 == 1) {
+                    PlayerData_ApplyItemUnlockById(item);
+                }
+                if (f34 == 1 && fn_8023F714() == 1) {
+                    sync = 1;
+                }
+            }
+            break;
+        }
+    }
+    if (f40 == 1) {
+        CalcEarnedCoins();
+    }
+    if (sync == 1) {
+        ((GtFlowInfo *)fn_8024F588())->SetNext(g_cupId, g_roundIndex + 1);
+        lbl_806D17F0 = 1;
+        lbl_806D17F2 = 1;
+        fn_801DC870(2);
+    }
+    if (f40) {
+        f44 = (VObj14F *)new GtCoinPanel;
+        GtFlowInfo *info = (GtFlowInfo *)fn_8024F588();
+        info->fC = 1;
+    }
+    if (item != 0 && f34 == 1) {
+        pose = fn_8013BE98(item);
+        if (item == 0x9B) {
+            f68 = new ObjTrio;
+            f68->SetColor(0.0f);
+        } else if (item == 0x9D) {
+            f6C = new ObjPair;
+            f6C->SetAlpha(0.0f);
+        } else {
+            f3C = new GtModel(ItemRes_LookupByKey_Thunk(item), 1);
+            fn_8013D738(f3C, 0.0f, 1.0f);
+            fn_8013D660(f3C, 114.0f, 358.0f);
+            fn_8013D634(f3C, 0.02f * pose->pos[0], 0.02f * pose->pos[1], 0.02f * pose->pos[2]);
+            fn_8013D59C(f3C, 0.017453292f * pose->rot[0], 0.017453292f * pose->rot[1], 0.017453292f * pose->rot[2]);
+            {
+                float s = 0.02f * pose->scale;
+                fn_8013D608(f3C, s, s, s);
+            }
+            if (item == 0x81) {
+                fn_8013D50C(f3C, 1.3f, 1.3f, 1.3f, 0.0f);
+            }
+        }
+    }
+    f64 = 0;
+    if (item != 0) {
+        if (f34 == 1) {
+            f64 = new ResultFader(0x40, 1, 0);
+            f64->SetPos(113.0f, 374.0f);
+        } else {
+            f64 = new ResultFader(0x41, 1, 0);
+            f64->SetPos(320.0f, 373.0f);
+        }
+        f64->alpha = 0.0f;
+        fn_8019FF6C(f64, 1);
+    }
+    if (fn_8019083C(1)) {
+        fn_801909A4(1);
+    }
+    if (f4C == 1) {
+        f50 = (VObj14 *)new GtTitlePanel;
+        ((GtTitlePanel *)f50)->f0 = 0;
+    }
+    PreloadResource(0x14E5);
+    if (item != 0) {
+        if (f34) {
+            PreloadResource(0x14E7);
+            PreloadResource(0x14E8);
+            PreloadResource(0x14E2);
+            PreloadResource(0x14EA);
+            PreloadResource(0x14E6);
+        } else {
+            PreloadResource(0x14E3);
+            PreloadResource(0x14E4);
+            PreloadResource(0x14E9);
+        }
+    }
+}
+#pragma use_lmw_stmw reset
+#pragma opt_dead_assignments reset
+#pragma use_lmw_stmw on
+clCSSceneAccolade::~clCSSceneAccolade() {
+    clCSSceneAccolade *self = this;
+        fn_8013DB9C();
+        if (self->f64 != 0) {
+            Sprite_Destroy(self->f64, 1);
+            self->f64 = 0;
+        }
+        delete self->f8;
+        delete self->fC;
+        delete self->f10;
+        fn_80140810(self->f14, 1);
+        fn_8023CFE0(self->f18, 1);
+        if (self->f68 != 0) {
+            delete self->f68;
+        }
+        if (self->f6C != 0) {
+            delete self->f6C;
+        }
+        if (self->f3C != 0) {
+            delete self->f3C;
+        }
+        if (self->f44 != 0) {
+            delete self->f44;
+        }
+        if (self->f50 != 0) {
+            delete self->f50;
+        }
+        if (self->f54 != 0) {
+            self->f54->vC();
+        }
+        fn_80169C44();
+        fn_80121210();
+        fn_8012094C();
+        clRom_PurgeAll();
+
+}
+#pragma use_lmw_stmw reset
+#pragma use_lmw_stmw on
+void clCSSceneAccolade::DrawItem(float alpha) {
+    clCSSceneAccolade *self = this;
+    int item = self->item;
+    int a = Item_GetDescriptorField8(item);
+    int b = Item_GetDescriptorFieldC(item);
+    int idA;
+    int idB;
+    if (a >= 0) {
+        idA = a + 0x503;
+    } else {
+        idA = -1;
+    }
+    idB = b >= 0 ? b + 0x1E1D : -1;
+    float *col = fn_8013BEC8(a);
+    fn_80169334(0, 0x14E5, 0, lbl_806D7E58, 373.0f, 1.25f, lbl_806D7E2C, alpha);
+    fn_801695E0(0, 0x14E7, 0, 204.0f, 394.0f, alpha);
+    fn_80169334(0, 0x14E8, 0, 420.0f, 394.0f, 10.6f, lbl_806D7E2C, alpha);
+    fn_801695E0(0, 0x14E2, 0, 113.0f, 374.0f, alpha);
+    fn_80169334(0, 0x14EA, 0, 305.0f, 399.0f, lbl_806D7E2C, lbl_806D7E2C, alpha);
+    fn_801695E0(0, idA, 0, 305.0f, 398.0f, alpha);
+    fn_801695E0(0, idB, 0, 305.0f, 398.0f, alpha);
+    fn_801695E0(0, Item_GetDescriptorField0(item, 0), 0, 365.0f, 402.0f, alpha);
+    fn_801695E0(0, 0x14E6, 0, 418.0f, 316.0f, alpha);
+    fn_80168798(0, GetTextureByIdAndLang(0x4D, -1), 228.0f, 316.0f, alpha);
+    if (col != 0) {
+        fn_80168B90(0, fn_8023DAA8(item), 224.0f, 362.0f, col[0], col[1], col[2], col[3] * alpha);
+    } else {
+        fn_80168D84(0, fn_8023DAA8(item), 224.0f, 362.0f, alpha);
+    }
+    fn_80168D84(0, fn_8023D938(item, 0), 424.0f, 378.0f, alpha);
+    fn_80168D84(0, fn_8023D938(item, 1), 424.0f, 398.0f, alpha);
+    fn_80168D84(0, fn_8023D938(item, 2), 424.0f, 418.0f, alpha);
+    if (self->f68 != 0) {
+        self->f68->SetColor(alpha);
+        self->f68->Apply();
+    } else if (self->f6C != 0) {
+        self->f6C->SetAlpha(alpha);
+        self->f6C->Apply();
+    } else {
+        fn_8013D4B0(self->f3C, alpha);
+        fn_8013DAC8(self->f3C, 1);
+    }
+    self->f64->alpha = alpha;
+}
+#pragma use_lmw_stmw reset
+void clCSSceneAccolade::DrawPrize(float alpha) {
+    clCSSceneAccolade *self = this;
+    int item = self->item;
+    float *col = fn_8013BEC8(Item_GetDescriptorField8(item));
+    TextManager tm;
+    void *ctx;
+    HudRankSlot *slot;
+    unsigned short *name;
+
+    ctx = fn_801F8E58();
+    fn_80169334(0, 0x14E5, 0, lbl_806D7E58, FK(lbl_806D7E5C), FK(lbl_806D7E60), lbl_806D7E2C, alpha);
+    fn_801695E0(0, 0x14E3, 0, FK(lbl_806D7E64), FK(lbl_806D7E68), alpha);
+    fn_801695E0(0, 0x14E4, 0, FK(lbl_806D7E6C), FK(lbl_806D7E68), alpha);
+    fn_801695E0(0, Item_GetDescriptorField0(item, 0), 0, FK(lbl_806D7E70), FK(lbl_806D7E74), alpha);
+    if (!isJapanese()) {
+        if (col != 0) {
+            fn_801685A4(0, fn_8023DAA8(item), FK(lbl_806D7E64), FK(lbl_806D7E78), col[0], col[1], col[2], col[3] * alpha);
+        } else {
+            fn_80168798(0, fn_8023DAA8(item), FK(lbl_806D7E64), FK(lbl_806D7E78), alpha);
+        }
+    } else {
+        TexMgr_SetTexture(&tm, fn_8023DAA8(item));
+        if (col != 0) {
+            float k = FK(lbl_806D7E7C);
+            unsigned char r = (int)(k * col[0]);
+            unsigned char g = (int)(k * col[1]);
+            unsigned char b = (int)(k * col[2]);
+            float ka = k * col[3];
+            unsigned char a = (int)(ka * alpha);
+            tm.color = ((r & 0xFF) << 24) | ((g & 0xFF) << 16) | ((b & 0xFF) << 8) | (a & 0xFF);
+        } else {
+            float ka = FK(lbl_806D7E7C) * col[3];
+            tm.color = __rlwimi(-0x100, (unsigned char)(int)(ka * alpha), 0, 24, 31);
+        }
+        tm.visible = 1;
+        fn_801F93EC(&tm, FK(lbl_806D7E64), FK(lbl_806D7E78));
+        fn_801F93D0(&tm, FK(lbl_806D7E80), FK(lbl_806D7E80));
+        tm.scale = FK(lbl_806D7E84);
+        fn_801F8A34(ctx, &tm, 0);
+    }
+    fn_80169334(0, 0x14E9, 0, lbl_806D7E58, FK(lbl_806D7E88), FK(lbl_806D7E60), lbl_806D7E2C, alpha);
+    slot = RankSlot_GetByIndex(0);
+    name = slot->name;
+    if (name[0] != 0) {
+        TexMgr_Init(&tm);
+        if (!isJapanese()) {
+            TexMgr_SetTexture(&tm, (const char *)lbl_806D7E8C, ((const char **)CSSceneGetTitle_8014ADB4_data_8048F0FC)[2], name, ((const char **)CSSceneGetTitle_8014ADB4_data_8048F0FC)[3]);
+        } else {
+            TexMgr_SetTexture(&tm, (const char *)lbl_806D7E8C, ((const char **)CSSceneGetTitle_8014ADB4_data_8048F0FC)[0], name, ((const char **)CSSceneGetTitle_8014ADB4_data_8048F0FC)[1]);
+        }
+        tm.visible = 1;
+        fn_801F93EC(&tm, FK(lbl_806D7E94), FK(lbl_806D7E98));
+        tm.color = __rlwimi(-0x100, (unsigned char)(int)(FK(lbl_806D7E7C) * alpha), 0, 24, 31);
+        fn_801F8A34(ctx, &tm, 0);
+    } else {
+        fn_80168798(0, GetTextureByIdAndLang(0x4E, -1), FK(lbl_806D7E94), FK(lbl_806D7E98), alpha, fn_8013C26C(slot->kart, -1));
+    }
+    self->f64->alpha = alpha;
+}
+void clCSSceneAccolade::Update() {
+    clCSSceneAccolade *self = this;
     unsigned char hit;
     if (self->done != 0) {
         return;
@@ -962,9 +1592,9 @@ extern "C" void fn_8014B118(ResultPanel *self) {
         self->fC->v14();
         self->fC->v18();
         if (self->f34 != 0) {
-            fn_8014BF80(self, self->t / lbl_806D7E40);
+            self->DrawItem(self->t / lbl_806D7E40);
         } else {
-            fn_8014BBE4(self, self->t / lbl_806D7E40);
+            self->DrawPrize(self->t / lbl_806D7E40);
         }
         if (self->t >= lbl_806D7E40) {
             self->t = lbl_806D7E30;
@@ -975,9 +1605,9 @@ extern "C" void fn_8014B118(ResultPanel *self) {
         self->fC->v14();
         self->fC->v18();
         if (self->f34 != 0) {
-            fn_8014BF80(self, lbl_806D7E2C);
+            self->DrawItem(lbl_806D7E2C);
         } else {
-            fn_8014BBE4(self, lbl_806D7E2C);
+            self->DrawPrize(lbl_806D7E2C);
         }
         if (self->t >= lbl_806D7E48 || hit) {
             self->state = 7;
@@ -988,9 +1618,9 @@ extern "C" void fn_8014B118(ResultPanel *self) {
         self->fC->v14();
         self->fC->v18();
         if (self->f34 != 0) {
-            fn_8014BF80(self, lbl_806D7E2C - self->t / lbl_806D7E40);
+            self->DrawItem(lbl_806D7E2C - self->t / lbl_806D7E40);
         } else {
-            fn_8014BBE4(self, lbl_806D7E2C - self->t / lbl_806D7E40);
+            self->DrawPrize(lbl_806D7E2C - self->t / lbl_806D7E40);
         }
         if (self->t >= lbl_806D7E40) {
             self->t = lbl_806D7E30;
@@ -1137,701 +1767,94 @@ extern "C" void fn_8014B118(ResultPanel *self) {
         self->f20 = 1;
     }
 }
-
-
-#define FK(x) (*(const float *)&(x))
-
-/* 0x230-byte text drawer (ctor TexMgr_Init, inline dtor dtor_800869D0). */
-struct TextManager {
-    TextManager();
-    ~TextManager() {}
-    char pad0[0x18];
-    int visible;            /* 0x18 */
-    char pad1C[4];
-    unsigned int color;     /* 0x20 */
-    char pad24[0x22C - 0x24];
-    float scale;            /* 0x22C */
-};
-
-extern "C" void fn_8014BBE4(ResultPanel *self, float alpha) {
-    int item = self->item;
-    float *col = fn_8013BEC8(Item_GetDescriptorField8(item));
-    TextManager tm;
-    void *ctx;
-    HudRankSlot *slot;
-    unsigned short *name;
-
-    ctx = fn_801F8E58();
-    fn_80169334(0, 0x14E5, 0, lbl_806D7E58, FK(lbl_806D7E5C), FK(lbl_806D7E60), lbl_806D7E2C, alpha);
-    fn_801695E0(0, 0x14E3, 0, FK(lbl_806D7E64), FK(lbl_806D7E68), alpha);
-    fn_801695E0(0, 0x14E4, 0, FK(lbl_806D7E6C), FK(lbl_806D7E68), alpha);
-    fn_801695E0(0, Item_GetDescriptorField0(item, 0), 0, FK(lbl_806D7E70), FK(lbl_806D7E74), alpha);
-    if (!isJapanese()) {
-        if (col != 0) {
-            fn_801685A4(0, fn_8023DAA8(item), FK(lbl_806D7E64), FK(lbl_806D7E78), col[0], col[1], col[2], col[3] * alpha);
-        } else {
-            fn_80168798(0, fn_8023DAA8(item), FK(lbl_806D7E64), FK(lbl_806D7E78), alpha);
-        }
-    } else {
-        TexMgr_SetTexture(&tm, fn_8023DAA8(item));
-        if (col != 0) {
-            float k = FK(lbl_806D7E7C);
-            unsigned char r = (int)(k * col[0]);
-            unsigned char g = (int)(k * col[1]);
-            unsigned char b = (int)(k * col[2]);
-            float ka = k * col[3];
-            unsigned char a = (int)(ka * alpha);
-            tm.color = ((r & 0xFF) << 24) | ((g & 0xFF) << 16) | ((b & 0xFF) << 8) | (a & 0xFF);
-        } else {
-            float ka = FK(lbl_806D7E7C) * col[3];
-            tm.color = __rlwimi(-0x100, (unsigned char)(int)(ka * alpha), 0, 24, 31);
-        }
-        tm.visible = 1;
-        fn_801F93EC(&tm, FK(lbl_806D7E64), FK(lbl_806D7E78));
-        fn_801F93D0(&tm, FK(lbl_806D7E80), FK(lbl_806D7E80));
-        tm.scale = FK(lbl_806D7E84);
-        fn_801F8A34(ctx, &tm, 0);
-    }
-    fn_80169334(0, 0x14E9, 0, lbl_806D7E58, FK(lbl_806D7E88), FK(lbl_806D7E60), lbl_806D7E2C, alpha);
-    slot = RankSlot_GetByIndex(0);
-    name = slot->name;
-    if (name[0] != 0) {
-        TexMgr_Init(&tm);
-        if (!isJapanese()) {
-            TexMgr_SetTexture(&tm, (const char *)lbl_806D7E8C, ((const char **)CSSceneGetTitle_8014ADB4_data_8048F0FC)[2], name, ((const char **)CSSceneGetTitle_8014ADB4_data_8048F0FC)[3]);
-        } else {
-            TexMgr_SetTexture(&tm, (const char *)lbl_806D7E8C, ((const char **)CSSceneGetTitle_8014ADB4_data_8048F0FC)[0], name, ((const char **)CSSceneGetTitle_8014ADB4_data_8048F0FC)[1]);
-        }
-        tm.visible = 1;
-        fn_801F93EC(&tm, FK(lbl_806D7E94), FK(lbl_806D7E98));
-        tm.color = __rlwimi(-0x100, (unsigned char)(int)(FK(lbl_806D7E7C) * alpha), 0, 24, 31);
-        fn_801F8A34(ctx, &tm, 0);
-    } else {
-        fn_80168798(0, GetTextureByIdAndLang(0x4E, -1), FK(lbl_806D7E94), FK(lbl_806D7E98), alpha, fn_8013C26C(slot->kart, -1));
-    }
-    self->f64->alpha = alpha;
-}
-
 #pragma use_lmw_stmw on
-extern "C" void fn_8014BF80(ResultPanel *self, float alpha) {
-    int item = self->item;
-    int a = Item_GetDescriptorField8(item);
-    int b = Item_GetDescriptorFieldC(item);
-    int idA;
-    int idB;
-    if (a >= 0) {
-        idA = a + 0x503;
-    } else {
-        idA = -1;
-    }
-    idB = b >= 0 ? b + 0x1E1D : -1;
-    float *col = fn_8013BEC8(a);
-    fn_80169334(0, 0x14E5, 0, lbl_806D7E58, 373.0f, 1.25f, lbl_806D7E2C, alpha);
-    fn_801695E0(0, 0x14E7, 0, 204.0f, 394.0f, alpha);
-    fn_80169334(0, 0x14E8, 0, 420.0f, 394.0f, 10.6f, lbl_806D7E2C, alpha);
-    fn_801695E0(0, 0x14E2, 0, 113.0f, 374.0f, alpha);
-    fn_80169334(0, 0x14EA, 0, 305.0f, 399.0f, lbl_806D7E2C, lbl_806D7E2C, alpha);
-    fn_801695E0(0, idA, 0, 305.0f, 398.0f, alpha);
-    fn_801695E0(0, idB, 0, 305.0f, 398.0f, alpha);
-    fn_801695E0(0, Item_GetDescriptorField0(item, 0), 0, 365.0f, 402.0f, alpha);
-    fn_801695E0(0, 0x14E6, 0, 418.0f, 316.0f, alpha);
-    fn_80168798(0, GetTextureByIdAndLang(0x4D, -1), 228.0f, 316.0f, alpha);
-    if (col != 0) {
-        fn_80168B90(0, fn_8023DAA8(item), 224.0f, 362.0f, col[0], col[1], col[2], col[3] * alpha);
-    } else {
-        fn_80168D84(0, fn_8023DAA8(item), 224.0f, 362.0f, alpha);
-    }
-    fn_80168D84(0, fn_8023D938(item, 0), 424.0f, 378.0f, alpha);
-    fn_80168D84(0, fn_8023D938(item, 1), 424.0f, 398.0f, alpha);
-    fn_80168D84(0, fn_8023D938(item, 2), 424.0f, 418.0f, alpha);
-    if (self->f68 != 0) {
-        self->f68->SetColor(alpha);
-        self->f68->Apply();
-    } else if (self->f6C != 0) {
-        self->f6C->SetAlpha(alpha);
-        self->f6C->Apply();
-    } else {
-        fn_8013D4B0(self->f3C, alpha);
-        fn_8013DAC8(self->f3C, 1);
-    }
-    self->f64->alpha = alpha;
-}
-#pragma use_lmw_stmw reset
-
-#pragma use_lmw_stmw on
-extern "C" ResultPanel *fn_8014C308(ResultPanel *self, short flag) {
-    if (self != 0) {
-        self->vt = CSSceneGetTitle_vtable_8048F118;
-        fn_8013DB9C();
-        if (self->f64 != 0) {
-            Sprite_Destroy(self->f64, 1);
-            self->f64 = 0;
-        }
-        delete self->f8;
-        delete self->fC;
-        delete self->f10;
-        fn_80140810(self->f14, 1);
-        fn_8023CFE0(self->f18, 1);
-        if (self->f68 != 0) {
-            delete self->f68;
-        }
-        if (self->f6C != 0) {
-            delete self->f6C;
-        }
-        if (self->f3C != 0) {
-            delete self->f3C;
-        }
-        if (self->f44 != 0) {
-            delete self->f44;
-        }
-        if (self->f50 != 0) {
-            delete self->f50;
-        }
-        if (self->f54 != 0) {
-            self->f54->vC();
-        }
-        fn_80169C44();
-        fn_80121210();
-        fn_8012094C();
-        clRom_PurgeAll();
-        if (self != 0) {
-            self->vt = lbl_803FE0C8;
-        }
-        if (flag > 0) {
-            MemoryManager_TimedFree(self);
-        }
-    }
-    return self;
-}
-#pragma use_lmw_stmw reset
-
-/* clCSSceneGetTitle: base clSceneInterface (vtable lbl_803FE0C8). */
-struct GtSceneBase {
-    virtual ~GtSceneBase();
-    unsigned char done;
-    GtSceneBase() : done(0) {}
-};
-
-struct GtRankList {
-    char data[0x48];
-    GtRankList(int flag);
-};
-struct GtPanelC {
-    char data[0x28];
-    GtPanelC();
-};
-struct GtPanel10 {
-    char data[0x1C];
-    GtPanel10();
-};
-struct GtPanel14 {
-    char data[0x24];
-    GtPanel14();
-};
-struct GtCoinPanel {
-    char data[0x44];
-    GtCoinPanel();
-};
-struct GtTitlePanel {
-    int f0;
-    char pad4[0x280];
-    GtTitlePanel();
-};
-struct GtFlowInfo {
-    unsigned char f0;
-    char pad1;
-    unsigned char f2;
-    char pad3;
-    int cup;
-    int round;
-    unsigned char fC;
-    void SetNext(int c, int r) {
-        f2 = 1;
-        cup = c;
-        round = r;
-    }
-};
-struct GtItemPose {
-    float pos[3];
-    float rot[3];
-    float scale;
-};
-struct GtSync {
-    int f0;
-    int item;
-};
-
-class GtModel : public VObj {
-public:
-    char pad4[0x1C];
-    GtModel(const char *name, int flag);
-};
-
-/* pump trophy (item 0x9B): three stacked models */
-inline unsigned char IsCleared(int count, int round) {
-    unsigned char r = 0;
-    if (count >= (round >= 4 ? 9 : 4)) {
-        r = 1;
-    }
-    return r;
-}
-
-inline void GtSetPos(VObj *o, const GtVec &p, float k) {
-    fn_8013D634(o, p.x * k, p.y * k, p.z * k);
-}
-
-inline void GtSetScale(VObj *o, float s, float k) {
-    float v = s * k;
-    fn_8013D608(o, v, v, v);
-}
-
-inline ObjTrio::ObjTrio() {
-    const GtVec *rot;
-    const GtVec *pos;
-    const float *scale;
-    int i;
-    f0 = 1;
-    scale = sPumpTrioScale;
-    pos = sPumpTrioPos;
-    rot = sPumpTrioRot;
-    for (i = 0; i < 3; i++) {
-        objs[i] = new GtModel(ItemRes_LookupByKey_Thunk(0x32), 1);
-        fn_8013D738(objs[i], 0.0f, 1.0f);
-        fn_8013D660(objs[i], 114.0f, 358.0f);
-        GtSetPos(objs[i], *pos, 0.02f);
-        GtSetScale(objs[i], *scale, 0.02f);
-        fn_8013D59C(objs[i], 0.017453292f * (*rot).x, 0.017453292f * (*rot).y, 0.017453292f * (*rot).z);
-        fn_8013D50C(objs[i], 2.0f, 2.0f, 2.0f, 0.0f);
-        scale++;
-        pos++;
-        rot++;
-    }
-}
-
-/* pump + stand (item 0x9D) */
-inline ObjPair::ObjPair() {
-    int i;
-    f0 = 1;
-    objs[0] = new GtModel(sPumpFile, 1);
-    objs[1] = new GtModel(sPumpStandFile, 1);
-    for (i = 0; i < 2; i++) {
-        const GtVec &p = sPumpPairPos[i];
-        fn_8013D738(objs[i], 0.0f, 1.0f);
-        fn_8013D660(objs[i], 114.0f, 358.0f);
-        GtSetPos(objs[i], p, 0.02f);
-        fn_8013D608(objs[i], 0.02f, 0.02f, 0.02f);
-        fn_8013D59C(objs[i], 0.017453292f * sPumpPairRot.x, 0.017453292f * sPumpPairRot.y, 0.017453292f * sPumpPairRot.z);
-    }
-}
-
-class CSSceneGetTitle : public GtSceneBase {
-public:
-    CSSceneGetTitle();
-    virtual ~CSSceneGetTitle();
-
-    GtRankList *f8;
-    GtPanelC *fC;
-    GtPanel10 *f10;
-    GtPanel14 *f14;
-    void *f18;
-    char pad1C[4];
-    unsigned char f20;
-    unsigned char f21;
-    char pad22[2];
-    int state;
-    float t;
-    char pad2C;
-    unsigned char f2D;
-    char pad2E[2];
-    int kart;
-    unsigned char f34;
-    char pad35[3];
-    int item;
-    VObj *f3C;
-    unsigned char f40;
-    char pad41[3];
-    GtCoinPanel *f44;
-    int f48;
-    unsigned char f4C;
-    char pad4D[3];
-    GtTitlePanel *f50;
-    void *f54;
-    unsigned char f58;
-    char pad59[3];
-    float f5C;
-    float f60;
-    ResultFader *f64;
-    ObjTrio *f68;
-    ObjPair *f6C;
-    unsigned char f70;
-};
-
-#pragma use_lmw_stmw on
-/* opt_dead_assignments off: found by tools/pragmasweep.py */
-#pragma opt_dead_assignments off
-CSSceneGetTitle::CSSceneGetTitle() { /* 0x8014C53C size:0x938 */
-    /* local declaration order is load-bearing (register coloring) */
-    int cup;
-    unsigned char done;
-    GtItemPose *pose;
-    HudRankSlot *slot;
-    int cc;
-    int n;
-    int round;
-    unsigned char sync;
+void clCSSceneAccolade::Draw()
+{
+    clCSSceneAccolade *self = this;
     int i;
 
-    fn_8013DBF8();
-    InitRumbleController(1);
-    f8 = new GtRankList(1);
-    f2D = 1;
-    if (!ServiceEnable_Get() || ServiceValue_Get() == 1) {
-        f2D = 0;
+    if (self->done) {
+        return;
     }
-    for (i = 0; i < 6; i++) {
-        HudRankSlot *s = RankSlot_GetByIndex(i);
-        if (s != 0) {
-            fn_801426A0(f8, i, s->kart);
+    if (self->state > 3) {
+        self->f60 += 0.05f;
+        if (self->f60 > 1.0f) {
+            self->f60 = 1.0f;
         }
-    }
-    ProcessSystemTick(0);
-    fC = new GtPanelC;
-    f10 = new GtPanel10;
-    f14 = new GtPanel14;
-    f18 = 0;
-    f20 = 0;
-    f21 = 0;
-    state = 0;
-    t = 0.0f;
-    item = 0;
-    f3C = 0;
-    f68 = 0;
-    f6C = 0;
-    f40 = 0;
-    f44 = 0;
-    f48 = -1;
-    f4C = 0;
-    f50 = 0;
-    f54 = fn_80271340(fn_80160238(), 0, CSSceneGetTitle_8014ADB4_data_806CF818, lbl_806CF810, 0);
-    f58 = 0;
-    f5C = 0.0f;
-    f60 = 0.0f;
-    f64 = 0;
-    f70 = has_title_changed();
-    ProcessSystemTick(0);
-    slot = RankSlot_GetByIndex(0);
-    kart = slot->chr;
-    f34 = slot->active;
-    /* fakematch (permuter): natural code is `cc = g_ccClass;`; the no-op cast
-     * makes CW load straight into the callee-saved register. */
-    cc = (int)g_ccClass;
-    cup = g_cupId;
-    round = g_roundIndex;
-    fn_801D5C88(g_playerData, cc);
-    sync = 0;
-    if (slot->f28) {
-        switch (g_gameMode) {
-        case 0:
-            if (f34) {
-                if (cup >= 1 && cup <= 8 && round >= 0 && round <= 7) {
-                    item = fn_80209A84();
-                    if (item <= 0 || item >= 0x115) {
-                        item = 0;
-                    } else if (fn_801D6F30(g_playerData, item, 1)) {
-                        item = 0;
-                    }
-                    if (item != 0) {
-                        PlayerData_ApplyItemUnlockById(item);
-                    }
-                    lbl_806D17F2 = 1;
-                }
-                done = 0;
-                n = fn_801D59A0(g_playerData, cc, cup);
-                if (n >= (round >= 4 ? 9 : 4)) {
-                    done = 1;
-                }
-                if (done) {
-                    f40 = 1;
-                    f48 = cup + 8;
-                }
-                if (done == 1 && *fn_8024F588() == 1) {
-                    f4C = 1;
-                }
+        for (i = 0; i < 6; i++) {
+            HudRankSlot *slot;
+            int kart;
+            int portrait;
+            int voice;
+            int extra;
+            unsigned char ok;
+
+            slot = RankSlot_GetByIndex(i);
+            if (slot == 0) {
+                continue;
+            }
+            kart = slot->kart;
+            if (kart < 0 || kart >= 13) {
+                continue;
+            }
+            if (slot->chr < 0 || slot->chr > 3) {
+                continue;
+            }
+            portrait = 0x2B00;
+            voice = 0x1ECD;
+            if (g_gameMode == 0) {
+                ok = fn_802317E0(&portrait, &voice, &extra, slot->chr, slot->kart, 0);
             } else {
-                fn_801DC870(1);
+                ok = fn_80231644(&portrait, &voice, &extra, slot->chr, slot->kart);
             }
-            break;
-        case 2:
-            if (kart >= 0 && kart <= 3) {
-                item = SyncSlot_GetRecv()->item;
-                if (item <= 0 || item >= 0x115) {
-                    item = 0;
+            if (ok == 1) {
+                const RankVec2 *q;
+                float dy;
+                float yy;
+
+                SPR(0, portrait, 0, sRankPortraitPos[kart][i].x, sRankPortraitPos[kart][i].y, lbl_806D6DE4, lbl_806D6DE8, self->f60);
+                dy = lbl_806D7E30;
+                if (!fn_80231B74(voice)) {
+                    dy = *(float *)&lbl_806D7E34;
                 }
-                if (item != 0 && f34 == 1) {
-                    PlayerData_ApplyItemUnlockById(item);
+                yy = sRankPortraitPos[kart][i].y;
+                yy = dy + yy;
+                SPR(0, voice, 0, sRankPortraitPos[kart][i].x, yy, *(float *)&lbl_806D7E38, *(float *)&lbl_806D7E38, self->f60);
+                if (i < 3) {
+                    SPR(0, i + 0x14DB, 0, sRankPortraitPos[kart][i].x, sRankPortraitPos[kart][i].y, lbl_806D7E2C, lbl_806D7E2C, self->f60);
+                } else {
+                    SPR(0, 0x14DE, 0, sRankPortraitPos[kart][i].x, sRankPortraitPos[kart][i].y, lbl_806D7E2C, lbl_806D7E2C, self->f60);
+                    SPR(0, i + 0x14DC, 0, sRankPortraitPos[kart][i].x, sRankPortraitPos[kart][i].y - *(float *)&lbl_806D7E3C, lbl_806D7E2C, lbl_806D7E2C, self->f60);
                 }
-                if (f34 == 1 && fn_8023F714() == 1) {
-                    sync = 1;
-                }
-            }
-            break;
-        }
-    }
-    if (f40 == 1) {
-        CalcEarnedCoins();
-    }
-    if (sync == 1) {
-        ((GtFlowInfo *)fn_8024F588())->SetNext(g_cupId, g_roundIndex + 1);
-        lbl_806D17F0 = 1;
-        lbl_806D17F2 = 1;
-        fn_801DC870(2);
-    }
-    if (f40) {
-        f44 = new GtCoinPanel;
-        GtFlowInfo *info = (GtFlowInfo *)fn_8024F588();
-        info->fC = 1;
-    }
-    if (item != 0 && f34 == 1) {
-        pose = fn_8013BE98(item);
-        if (item == 0x9B) {
-            f68 = new ObjTrio;
-            f68->SetColor(0.0f);
-        } else if (item == 0x9D) {
-            f6C = new ObjPair;
-            f6C->SetAlpha(0.0f);
-        } else {
-            f3C = new GtModel(ItemRes_LookupByKey_Thunk(item), 1);
-            fn_8013D738(f3C, 0.0f, 1.0f);
-            fn_8013D660(f3C, 114.0f, 358.0f);
-            fn_8013D634(f3C, 0.02f * pose->pos[0], 0.02f * pose->pos[1], 0.02f * pose->pos[2]);
-            fn_8013D59C(f3C, 0.017453292f * pose->rot[0], 0.017453292f * pose->rot[1], 0.017453292f * pose->rot[2]);
-            {
-                float s = 0.02f * pose->scale;
-                fn_8013D608(f3C, s, s, s);
-            }
-            if (item == 0x81) {
-                fn_8013D50C(f3C, 1.3f, 1.3f, 1.3f, 0.0f);
+                q = &sRankNamePos[kart][i];
+                fn_80167F24(0, slot->name, q->x, q->y, self->f60);
+            } else {
+                const RankVec2 *q = &sRankNameOnlyPos[kart][i];
+                fn_80167F24(0, slot->name, q->x, q->y, self->f60);
             }
         }
     }
-    f64 = 0;
-    if (item != 0) {
-        if (f34 == 1) {
-            f64 = new ResultFader(0x40, 1, 0);
-            f64->SetPos(113.0f, 374.0f);
-        } else {
-            f64 = new ResultFader(0x41, 1, 0);
-            f64->SetPos(320.0f, 373.0f);
+    fn_801678FC(0, lbl_806D7E30, lbl_806D7E30, lbl_806D7E30, self->f5C);
+    if (self->f20 == 1) {
+        self->f8->v1C();
+        fn_8014017C(self->f14);
+        if (self->state >= 11 && self->state <= 13 && self->f50 != 0) {
+            fn_8014095C(self->f50);
         }
-        f64->alpha = 0.0f;
-        fn_8019FF6C(f64, 1);
-    }
-    if (fn_8019083C(1)) {
-        fn_801909A4(1);
-    }
-    if (f4C == 1) {
-        f50 = new GtTitlePanel;
-        f50->f0 = 0;
-    }
-    PreloadResource(0x14E5);
-    if (item != 0) {
-        if (f34) {
-            PreloadResource(0x14E7);
-            PreloadResource(0x14E8);
-            PreloadResource(0x14E2);
-            PreloadResource(0x14EA);
-            PreloadResource(0x14E6);
-        } else {
-            PreloadResource(0x14E3);
-            PreloadResource(0x14E4);
-            PreloadResource(0x14E9);
+        if (self->state >= 5 && self->state <= 7) {
+            fn_8011FAB8();
         }
+        if (self->state >= 14 && self->state <= 16) {
+            self->f44->v18();
+            self->f44->v1C();
+        }
+        if (self->f64 != 0) {
+            fn_801A0004(self->f64);
+        }
+        for (i = 0; i < 8; i++) {
+            fn_8013D940(i);
+        }
+        HSD_StateInvalidate(-1);
     }
-}
-#pragma use_lmw_stmw reset
-#pragma opt_dead_assignments reset
-
-/* ---- 0x8014CE74..0x8014D540: result-screen 3D part holders (was
- * game/CSPartsHolders.c, merged so fn_8014D038 reaches sPumpPair* /
- * sPumpFile through the section anchor, docs/regalloc_patterns.md §13). */
-#pragma use_lmw_stmw on
-
-void *operator new(size_t);
-void operator delete(void *);
-
-struct CSPVObj {
-    virtual ~CSPVObj();
-};
-
-struct Part3D;
-
-extern "C" {
-extern void Frame_PostDrawOverlay(void);
-extern void Frame_UpdatePerFrameState(void);
-}
-
-
-struct PairHolder {
-    int arg;
-    Part3D *parts[2];
-    ~PairHolder();
-};
-
-struct TripleHolder {
-    int arg;
-    Part3D *parts[3];
-    ~TripleHolder();
-};
-
-struct Runner {
-    virtual void m08();
-    virtual void m0C();
-    virtual void m10();
-    virtual void m14();
-    virtual unsigned char m18();
-};
-
-struct RunnerOwner {
-    int m0;
-    int m4;
-    Runner *runner;
-};
-
-struct ResultScene {
-    char pad[0x50];
-    ResultScene();
-};
-
-extern "C" {
-TripleHolder *fn_8014D344(TripleHolder *h, int arg, float x, float y, float s);
-
-
-
-}
-
-
-extern "C" void fn_8014CE74(CSPVObj *p) {
-    delete p;
-}
-
-extern "C" CSSceneGetTitle *fn_8014CEAC(void) {
-    return new CSSceneGetTitle();
-}
-
-extern "C" void fn_8014CEE8(PairHolder *h, float t) {
-    int i;
-
-    for (i = 0; i < 2; i++) {
-        fn_8013D4B0(h->parts[i], t);
-    }
-}
-
-extern "C" void fn_8014CF44(PairHolder *h) {
-    int i;
-
-    for (i = 0; i < 2; i++) {
-        fn_8013DAC8(h->parts[i], h->arg);
-    }
-}
-
-extern "C" void fn_8014CFA0(void) {
-}
-
-PairHolder::~PairHolder() {
-    int i;
-
-    for (i = 0; i < 2; i++) {
-        delete (CSPVObj *)parts[i];
-    }
-}
-
-extern "C" ObjPair *fn_8014D038(ObjPair *h, int arg, float x, float y, float s) {
-    int i;
-    h->f0 = arg;
-    h->objs[0] = new GtModel(sPumpFile, 1);
-    h->objs[1] = new GtModel(sPumpStandFile, 1);
-    for (i = 0; i < 2; i++) {
-        const GtVec &p = sPumpPairPos[i];
-        fn_8013D738(h->objs[i], 0.0f, 1.0f);
-        fn_8013D660(h->objs[i], x, y);
-        GtSetPos(h->objs[i], p, s);
-        fn_8013D608(h->objs[i], s, s, s);
-        fn_8013D59C(h->objs[i], 0.017453292f * sPumpPairRot.x, 0.017453292f * sPumpPairRot.y, 0.017453292f * sPumpPairRot.z);
-    }
-    return h;
-}
-
-extern "C" void fn_8014D1E0(TripleHolder *h, float a) {
-    int i;
-
-    for (i = 0; i < 3; i++) {
-        fn_8013D50C(h->parts[i], 2.0f, 2.0f, 2.0f, a);
-    }
-}
-
-extern "C" void fn_8014D250(TripleHolder *h) {
-    int i;
-
-    for (i = 0; i < 3; i++) {
-        fn_8013DAC8(h->parts[i], h->arg);
-    }
-}
-
-extern "C" void fn_8014D2AC(void) {
-}
-
-TripleHolder::~TripleHolder() {
-    int i;
-
-    for (i = 0; i < 3; i++) {
-        delete (CSPVObj *)parts[i];
-    }
-}
-
-struct PreviewPart {
-    char pad[0x20];
-    PreviewPart(void *resource, unsigned char flag);
-};
-struct PartVec { float x, y, z; };
-
-/* Three-model holder ctor body: one preview model per slot, placed from
- * this area's pooled layout tables (positions, rotations in degrees, scales).
- * fakematch (permuter): the slot cursor `c` walks the holder 4 bytes at a
- * time so that the parts pointer gets the target's register; the natural code
- * is `h->parts[i]` with i as the loop index. */
-extern "C" TripleHolder *fn_8014D344(TripleHolder *h, int arg, float x, float y, float s) {
-    float *scale = (float *)((char *)CSSceneGetTitle_8014ADB4_rodata_80362D90 + 0xEB8);
-    PartVec *pos = (PartVec *)((char *)CSSceneGetTitle_8014ADB4_rodata_80362D90 + 0xE70);
-    PartVec *rot = (PartVec *)((char *)CSSceneGetTitle_8014ADB4_rodata_80362D90 + 0xE94);
-    TripleHolder *c = h;
-    float k;
-    int i;
-
-    h->arg = arg;
-    k = lbl_806D7EF4;
-    for (i = 0; i < 3; i++) {
-        c->parts[0] = (Part3D *)new PreviewPart((void *)ItemRes_LookupByKey_Thunk(0x32), 1);
-        fn_8013D738(c->parts[0], lbl_806D7E30, lbl_806D7E2C);
-        fn_8013D660(c->parts[0], x, y);
-        fn_8013D634(c->parts[0], pos->x * s, pos->y * s, pos->z * s);
-        fn_8013D608(c->parts[0], *scale * s, *scale * s, *scale * s);
-        fn_8013D59C(c->parts[0], k * rot->x, k * rot->y, k * rot->z);
-        fn_8013D50C(c->parts[0], lbl_806D7EE4, lbl_806D7EE4, lbl_806D7EE4, lbl_806D7E30);
-        scale++;
-        pos++;
-        rot++;
-        c = (TripleHolder *)&c->parts[0];
-    }
-    return h;
-}
-
-extern "C" void fn_8014D4B8(RunnerOwner *o) {
-    o->runner->m14();
-    HSD_StateInvalidate(-1);
-}
-
-extern "C" unsigned char fn_8014D4F0(RunnerOwner *o) {
-    o->runner->m10();
-    return o->runner->m18();
 }
 #pragma use_lmw_stmw reset

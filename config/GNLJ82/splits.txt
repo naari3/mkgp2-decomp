@@ -6151,10 +6151,10 @@ game/clCSResultGP.cpp:
 	.sdata      start:0x806CF7C8 end:0x806CF7E0
 
 game/autodata/sdata_806CF7E0.c:
-	.sdata      start:0x806CF7E0 end:0x806CF8B8
+	.sdata      start:0x806CF7E0 end:0x806CF820
 
 game/autodata/data_8048F070.c:
-	.data       start:0x8048F070 end:0x8048F130
+	.data       start:0x8048F070 end:0x8048F10C
 
 game/autodata/rodata_803628A8.c:
 	.rodata     start:0x803628A8 end:0x80362D90
@@ -6169,7 +6169,11 @@ game/CSSceneGetTitle_8014ADB4.cpp:
 	extabindex  start:0x80025484 end:0x8002555C
 	.text       start:0x8014ADB4 end:0x8014D540
 	.rodata     start:0x80362D90 end:0x80363D30
-	.data       start:0x8048F130 end:0x8048F178
+	.data       start:0x8048F10C end:0x8048F178
+	.sdata      start:0x806CF820 end:0x806CF828
+
+game/autodata/sdata_806CF828.c:
+	.sdata      start:0x806CF828 end:0x806CF8B8
 
 game/Scene_8014E0C4.cpp:
 	extab       start:0x8000E640 end:0x8000F0DC
