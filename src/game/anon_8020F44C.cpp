@@ -3,7 +3,7 @@
  * three background models.
  */
 
-#include "game/DemoKartScene.h"
+#include "game/types/clCGameDemoMR.h"
 
 extern "C" void PtrVec_InsertFill(void *v, void *pos, int n, const void *val);
 
@@ -54,17 +54,34 @@ struct DemoObjC : DemoObj {
 };
 
 extern "C" {
+extern const char lbl_803C36A8[] = "challenge_demo_dn.dat";
+extern const char lbl_803C36C0[] = "DN_stadium_waluigi_null_joint";
+extern const char lbl_803C36E0[] = "DNA_waluigi_tv.dat";
+extern const char lbl_803C36F4[] = "DNA_audience_all.dat";
+extern const char lbl_803C370C[] = "DNA_dino_f.dat";
+extern const char lbl_803C371C[] = "DNA_dino_as.dat";
+extern const char lbl_803C372C[] = "DNA_dino_a_walk.dat";
+extern const char lbl_803C3740[] = "DNA_spotlight_a.dat";
+extern const char lbl_803C3754[] = "DNA_dino_b.dat";
+extern const char lbl_803C3764[] = "DNA_airship_as.dat";
+extern const char lbl_803C3778[] = "DNA_startgate_challenge.dat";
+const char *lbl_804ECB58[9] = {lbl_803C36E0, lbl_803C36F4, lbl_803C370C, lbl_803C371C, lbl_803C372C, lbl_803C3740, lbl_803C3754, lbl_803C3764, lbl_803C3778};
 extern const char *lbl_806D0398;
 extern const char *lbl_806D039C;
-extern const char lbl_803C37BC[];
-extern const char *lbl_804ECB58[9];
+
+
 extern char lbl_806DAD1C[7];
 extern char lbl_806DAD24[5];
 }
 
-struct ObjDemoScene : DemoBase {
-    // Keep the target vtable external: CW selects the first non-inline virtual.
-    virtual void _keyB();
+template <> PtrVec<DemoObj *>::~PtrVec();
+template <> PtrVec<DemoNormal *>::~PtrVec();
+
+// fakematch: explicit specializations preserve deferred destructor code order.
+template <> PtrVec<DemoObj *>::~PtrVec() {}
+template <> PtrVec<DemoNormal *>::~PtrVec() {}
+
+struct clCGameDemoDN : clCGameDemo {
     unsigned char first;
     float time;
     DemoScene *scene;
@@ -76,10 +93,10 @@ struct ObjDemoScene : DemoBase {
     HSD_JObj *joint;
     PtrVec<DemoObj *> objs;
     PtrVec<DemoNormal *> models;
-    ObjDemoScene();
+    clCGameDemoDN();
     virtual int Update();
     virtual void Draw();
-    virtual ~ObjDemoScene();
+    virtual ~clCGameDemoDN();
 };
 
 static inline void SetupJointMatrix(HSD_JObj *jobj) {
@@ -101,41 +118,76 @@ static inline void SetupJointMatrix(HSD_JObj *jobj) {
     }
 }
 
-void ObjDemoScene::Draw() {
-    if (scene->Ready() == 1) {
-        clDrawMan_Buckets_Reset(GetDrawMan());
-        TransparentDraw_SortAndDispatch();
-        CObj_DebugVizPathFlush(scene);
-        fn_8016B0C4();
-        Object_RenderJObjTree(normal, 7);
-        for (DemoNormal **m = models.begin(); m != models.end(); m++) {
-            Object_RenderJObjTree(*m, 7);
-        }
-        for (DemoObj **o = objs.begin(); o != objs.end(); o++) {
-            (*o)->Draw();
-        }
-        KartDriver_RenderTimed(driver, 0, 1);
-        ItemObjectManager_Render();
-        DrawEffect_TickAndCull();
-        clDrawMan_EndFrame_NoOp(GetDrawMan());
-        clDrawMan_Buckets_Dispatch(GetDrawMan());
-        float t = time;
-        unsigned char alpha = 0;
-        if (t < 30.0f) {
-            alpha = 255.0f - 255.0f * DemoClamp(t / 30.0f, 0.0f, 1.0f);
-        }
-        if (t > 240.0f) {
-            alpha = 255.0f - 255.0f * DemoClamp((270.0f - t) / 30.0f, 0.0f, 1.0f);
-        }
-        if (alpha) {
-            fn_80181790(scene, 0, 1.0f, 0, 0, alpha, 0);
-        }
-        scene->Render();
-        HSD_StateInvalidate(0x7F);
+clCGameDemoDN::clCGameDemoDN() {
+    first = 1;
+    time = 0.0f;
+    scene = 0;
+    drawHandle = -1;
+    normal = 0;
+    driver = 0;
+    tornado = 0;
+    joint = 0;
+    PSMTXIdentity(matrix);
+    SetResourceLoadingFlag(0);
+    DrawManager_GetOrCreate();
+    DMAChannelManager_Init();
+    SoundChannels_ClearAll();
+    ItemObjectManager_Init();
+    CourseObjectManager_Init();
+    scene = new DemoScene(lbl_806D0398, -1.0f, 0.0f);
+    scene->Start(0.0f, 1.0f);
+    normal = new DemoNormal(lbl_806D0398, 0);
+    clNormal3D_SetScale(normal, 0, 0.0f, 1.0f, 0.0f, 0.0f);
+    ProcessSystemTick(0);
+    driver = new DemoDriver(g_characterId, matrix);
+    tornado = new DemoTornado(0, driver, g_characterId, 0, 0.0f, 0.0f, 0.0f);
+    joint = ResolveJointByName(normal, lbl_806D039C);
+    g_playerRenderObj = driver;
+    objs.push_back(new DemoObjA(ResolveJointByName(normal, "DN_stadium_DNA_all_joint")));
+    objs.push_back(new DemoObjB);
+    objs.push_back(new DemoObjC(ResolveJointByName(normal, "DN_stadium_DNA_all_joint")));
+    ProcessSystemTick(0);
+    DemoNormal *m = 0;
+    for (int i = 0; i < 3; i++) {
+        m = new DemoNormal(lbl_804ECB58[i], 0);
+        clNormal3D_SetScale(m, 0, 0.0f, 1.0f, 0.0f, 0.0f);
+        models.push_back(m);
     }
+    g_raceCamera = 0;
+    g_lakituStartAnimDone = 0;
+    SetCourseScene3D(scene);
+    drawHandle = SceneDrawList_RegisterArchive(normal->archive, 4);
+    SetResourceLoadingFlag(1);
+}
+clCGameDemoDN::~clCGameDemoDN() {
+    SetActiveCamera(0, 0);
+    g_playerRenderObj = 0;
+    if (drawHandle >= 0) {
+        TransparentDraw_RemoveByOwner(drawHandle);
+    }
+    SetPlayerCarObject(0);
+    SetCourseScene3D(0);
+    for (DemoObj **o = objs.begin(); o != objs.end(); o++) {
+        delete *o;
+    }
+    for (DemoNormal **m = models.begin(); m != models.end(); m++) {
+        Object_DtorWithGXSync(*m, 1);
+    }
+    delete scene;
+    Object_DtorWithGXSync(normal, 1);
+    VisualEffectHolder_Dtor(tornado, 1);
+    KartDriver_Dtor(driver, 1);
+    ItemObjectManager_Reset();
+    VfxSlotMgr_Shutdown();
+    ClRomTable_PurgeAll();
+    SceneDrawList_Reset();
+    delete lbl_806D10AC;
+    lbl_806D10AC = 0;
+    SetResourceLoadingFlag(0);
+    clRom_PurgeAll();
 }
 
-int ObjDemoScene::Update() {
+int clCGameDemoDN::Update() {
     if (first) {
         first = 0;
     } else {
@@ -199,72 +251,37 @@ int ObjDemoScene::Update() {
     return InputMgr_GetPlayer(GetInputManager(), 0)->Pressed(0x400) ? 0xF : -2;
 }
 
-ObjDemoScene::~ObjDemoScene() {
-    SetActiveCamera(0, 0);
-    g_playerRenderObj = 0;
-    if (drawHandle >= 0) {
-        TransparentDraw_RemoveByOwner(drawHandle);
+void clCGameDemoDN::Draw() {
+    if (scene->Ready() == 1) {
+        clDrawMan_Buckets_Reset(GetDrawMan());
+        TransparentDraw_SortAndDispatch();
+        CObj_DebugVizPathFlush(scene);
+        fn_8016B0C4();
+        Object_RenderJObjTree(normal, 7);
+        for (DemoNormal **m = models.begin(); m != models.end(); m++) {
+            Object_RenderJObjTree(*m, 7);
+        }
+        for (DemoObj **o = objs.begin(); o != objs.end(); o++) {
+            (*o)->Draw();
+        }
+        KartDriver_RenderTimed(driver, 0, 1);
+        ItemObjectManager_Render();
+        DrawEffect_TickAndCull();
+        clDrawMan_EndFrame_NoOp(GetDrawMan());
+        clDrawMan_Buckets_Dispatch(GetDrawMan());
+        float t = time;
+        unsigned char alpha = 0;
+        if (t < 30.0f) {
+            alpha = 255.0f - 255.0f * DemoClamp(t / 30.0f, 0.0f, 1.0f);
+        }
+        if (t > 240.0f) {
+            alpha = 255.0f - 255.0f * DemoClamp((270.0f - t) / 30.0f, 0.0f, 1.0f);
+        }
+        if (alpha) {
+            fn_80181790(scene, 0, 1.0f, 0, 0, alpha, 0);
+        }
+        scene->Render();
+        HSD_StateInvalidate(0x7F);
     }
-    SetPlayerCarObject(0);
-    SetCourseScene3D(0);
-    for (DemoObj **o = objs.begin(); o != objs.end(); o++) {
-        delete *o;
-    }
-    for (DemoNormal **m = models.begin(); m != models.end(); m++) {
-        Object_DtorWithGXSync(*m, 1);
-    }
-    delete scene;
-    Object_DtorWithGXSync(normal, 1);
-    VisualEffectHolder_Dtor(tornado, 1);
-    KartDriver_Dtor(driver, 1);
-    ItemObjectManager_Reset();
-    VfxSlotMgr_Shutdown();
-    ClRomTable_PurgeAll();
-    SceneDrawList_Reset();
-    delete lbl_806D10AC;
-    lbl_806D10AC = 0;
-    SetResourceLoadingFlag(0);
-    clRom_PurgeAll();
 }
 
-ObjDemoScene::ObjDemoScene() {
-    first = 1;
-    time = 0.0f;
-    scene = 0;
-    drawHandle = -1;
-    normal = 0;
-    driver = 0;
-    tornado = 0;
-    joint = 0;
-    PSMTXIdentity(matrix);
-    SetResourceLoadingFlag(0);
-    DrawManager_GetOrCreate();
-    DMAChannelManager_Init();
-    SoundChannels_ClearAll();
-    ItemObjectManager_Init();
-    CourseObjectManager_Init();
-    scene = new DemoScene(lbl_806D0398, -1.0f, 0.0f);
-    scene->Start(0.0f, 1.0f);
-    normal = new DemoNormal(lbl_806D0398, 0);
-    clNormal3D_SetScale(normal, 0, 0.0f, 1.0f, 0.0f, 0.0f);
-    ProcessSystemTick(0);
-    driver = new DemoDriver(g_characterId, matrix);
-    tornado = new DemoTornado(0, driver, g_characterId, 0, 0.0f, 0.0f, 0.0f);
-    joint = ResolveJointByName(normal, lbl_806D039C);
-    g_playerRenderObj = driver;
-    objs.push_back(new DemoObjA(ResolveJointByName(normal, lbl_803C37BC)));
-    objs.push_back(new DemoObjB);
-    objs.push_back(new DemoObjC(ResolveJointByName(normal, lbl_803C37BC)));
-    ProcessSystemTick(0);
-    DemoNormal *m = 0;
-    for (int i = 0; i < 3; i++) {
-        m = new DemoNormal(lbl_804ECB58[i], 0);
-        clNormal3D_SetScale(m, 0, 0.0f, 1.0f, 0.0f, 0.0f);
-        models.push_back(m);
-    }
-    g_raceCamera = 0;
-    g_lakituStartAnimDone = 0;
-    SetCourseScene3D(scene);
-    drawHandle = SceneDrawList_RegisterArchive(normal->archive, 4);
-    SetResourceLoadingFlag(1);
-}
