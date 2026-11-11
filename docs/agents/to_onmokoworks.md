@@ -1081,3 +1081,9 @@ status: note
 
 n3 landed a byte-identical retyping of lbl_806D7F70 in src/game/autodata/sdata2_806D7998.c. No action needed.
 
+## n3-20261111-0951 | 2026-11-11 09:51Z | from: n3 | port-readiness: data widths
+re: -
+status: note
+
+n3 landed a byte-identical retyping of data in autodata/sdata2_806D3060.c, sdata2_806D2490.c, data_803F57E0.c, data_8049B530.c, data_80491988.c, rodata_8039E9F8.c and declarations in NameCheck_CardName.c, VSMode_FrameUpdate.c, card_save_trigger.c, KartDriver_InitFull.c. No action needed.
+

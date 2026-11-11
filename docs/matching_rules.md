@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-11 09:51Z Port readiness (n3): data typed the way readers read it: ItemEffectMask constants are unsigned long long, GXColor constants are byte arrays (autodata/sdata2_806D3060.c, sdata2_806D2490.c), three byte tables and lbl_8039E9F8 retyped; list and what was checked in docs/notes/port_abi.md (request 39). Byte-identical.
 - 2026-11-11 09:45Z Port readiness (n3): lbl_806D7F70 (autodata/sdata2_806D7998.c) is unsigned char[8], the type its reader uses. Byte-identical.
 - 2026-11-11 08:09Z Port readiness (n3): word tables read as bytes or halves are defined with their readers types: 504 TrackKey tracks (JointTracks.cpp, DNStartDino_tail.cpp; include/game/types/TrackKey.h), g_itemDescriptorTable, g_characterDataTable, the KartItem_FlushRender.c material (hsd_desc.h), receipt text and bitmaps in Sci2Card_BuildRetryReceiptLine.c, and smaller ones; tools/port_abi/byte_words.py, word_readers.py, track_keys.py, word_rows.py, word_bytes.py; list in docs/notes/port_abi.md. main.dol unchanged.
 - 2026-11-11 07:57Z Port readiness (n3): g_itemClassTable (autodata/data_8041C9D4.c) is ItemClassRow[278] with byte members instead of void *[1390]. Byte-identical.

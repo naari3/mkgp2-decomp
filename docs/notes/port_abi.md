@@ -691,3 +691,50 @@ Left as they are, with the reason:
   when a reader is decompiled.
 - Tables already written with `TEXT_WORD`, and tables another unit declares as
   `char[]` only to take their address.
+
+## Data defined with one width and read with another (request 39, 2026-11-11)
+
+`lbl_806D7F70` was `const int[2] = { 255, -65536 }` (autodata reads the type
+off the values when no reader names one) and is read as two RGB triples; on a
+little-endian machine black came out red. Checked after that:
+
+- the port's list of 707 symbols whose definition and some `extern` disagree
+  on element width (mkgp2-pc docs/port/data_width_census.txt);
+- every autodata definition marked "element type read off the values" (128);
+- every autodata definition whose `/* decl: */` comment names a reader type
+  of another width (204);
+- every definition whose readers declare a 64-bit type.
+
+Changed (objects unchanged):
+
+| Data | Was | Is |
+| --- | --- | --- |
+| `lbl_806D7F70` | `int[2]` | `unsigned char[8]` |
+| 22 `ItemEffectMask` constants `lbl_806D34B8`..`lbl_806D3570` (sdata2_806D3060.c) | `int[2]`, `short[4]`, `unk32[2]` | `unsigned long long`, the type ItemEffectBus.c reads |
+| 7 `GXColor` constants `lbl_806D28A8`..`lbl_806D28C4` (sdata2_806D2490.c) | `unsigned int` | `unsigned char[4]` |
+| `KartDriver_InitFull_data_803F5928` | `unsigned int[30]` | `unsigned char[120]` |
+| `clFlowKart_UpdateDisplay_data_8049BB30` | `short[60]` | `unsigned char[120]` (reader: `signed char[][13][3]`) |
+| `lbl_80495988` (12 bytes copied into an HSD pixel-engine block) | `short[6]` | `unsigned char[12]` |
+| `lbl_8039E9F8` | `short[12]` | a struct with the layout of `KartInfoEntry` (`int res` first) |
+
+Declarations only: the banned words of NameCheck_CardName.c are declared
+`const unsigned short[]` like their definitions (they are NameCode strings
+compared through `NAMECODE_STRCMP`, see "Card-name check"; they stay 16-bit),
+and four byte flags declared `unsigned int` for asm blocks are `unsigned char`.
+
+Not a width problem, left alone: `extern char x[]` used only to take an
+address (most of the list); int tables handed to `SpriteGroup_CreateOrInit`
+(`int *resource`); the NokoNoko coin tables; pools of ints or floats that a
+reader holds as `char *` and casts back.
+
+Float pools: none of the float-typed pools has text or bytes inside the
+object itself. But ten readers go past the end of the pool object with a
+constant offset and land in the objects that follow it (strings, tables):
+`DNBress_nm3_rodata_803C6ED0`, `FinalLapBanner_Init_rodata_803123B0`,
+`GabyouItem_BuildOrUpdateAttachTransform_rodata_8032D9C8`,
+`ItemObject_Tick_rodata_8032E060`, `KartAlertPanel_rodata_803F0AD8`,
+`KartFxExhaustRay_rodata_80329E20`, `RaceScene_rodata_803211D8`,
+`RankLog_rodata_80324B98`, `lbl_803311D0`, `lbl_8039C718`. That is the
+"object addressed from another object's name plus an offset" case of
+shared_data.md: right only while the objects keep the original order and
+spacing.

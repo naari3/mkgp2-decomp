@@ -9,9 +9,14 @@
 #pragma force_active on
 
 /* decl: FKDrawEntry / KartInfoEntry */
-/* element type read off the values (16-bit pairs), not from code */
-const short lbl_8039E9F8[12] = {
-    0, 415, 6052, 7709, 5049, 7885, 7887, 7889, 7891, 0, 0, 0
-};
+/* KartInfoEntry of fn_801D8AB4.cpp (20 bytes) and four more zero bytes */
+const struct lbl_8039E9F8_Row {
+    int res;
+    short v[3];
+    short name;
+    short text[3];
+    short pad12;
+    int tail;
+} lbl_8039E9F8 = { 415, { 6052, 7709, 5049 }, 7885, { 7887, 7889, 7891 }, 0, 0 };
 
 #pragma force_active reset

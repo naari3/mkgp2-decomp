@@ -125,7 +125,7 @@ extern void rand();
 
 /* --- extern decls: sda21-referenced data --- */
 extern unsigned int lbl_806CF0D0;
-extern unsigned int lbl_806CF0D4;
+extern unsigned char lbl_806CF0D4;
 extern unsigned int g_cardRwSubState;
 extern unsigned int lbl_806CF0E4;
 extern unsigned int lbl_806CF0E8;

@@ -255,21 +255,21 @@ const float lbl_806D289C = -3.0f;
 const float lbl_806D28A0 = 0.6f;
 const float lbl_806D28A4 = 0.25f;
 /* decl: GXColor */
-const unsigned int lbl_806D28A8 = 0x00808000;
+const unsigned char lbl_806D28A8[4] = { 0, 128, 128, 0 }; /* GXColor */
 /* decl: GXColor */
-const unsigned int lbl_806D28AC = 0x80800000;
+const unsigned char lbl_806D28AC[4] = { 128, 128, 0, 0 }; /* GXColor */
 /* decl: GXColor */
-const unsigned int lbl_806D28B0 = 0x20008000;
+const unsigned char lbl_806D28B0[4] = { 32, 0, 128, 0 }; /* GXColor */
 /* decl: GXColor */
-const unsigned int lbl_806D28B4 = 0x80808000;
+const unsigned char lbl_806D28B4[4] = { 128, 128, 128, 0 }; /* GXColor */
 /* decl: GXColor */
-const unsigned int lbl_806D28B8 = 0x00800000;
+const unsigned char lbl_806D28B8[4] = { 0, 128, 0, 0 }; /* GXColor */
 /* decl: GXColor */
-const unsigned int lbl_806D28BC = 0x80000000;
+const unsigned char lbl_806D28BC[4] = { 128, 0, 0, 0 }; /* GXColor */
 /* decl: GXColor */
 const int lbl_806D28C0 = 0;
 /* decl: GXColor */
-const unsigned int lbl_806D28C4 = 0x64646400;
+const unsigned char lbl_806D28C4[4] = { 100, 100, 100, 0 }; /* GXColor */
 const float lbl_806D28C8 = 0.0f;
 const float lbl_806D28CC = 1.0f;
 const float lbl_806D28D0 = 0.1f;

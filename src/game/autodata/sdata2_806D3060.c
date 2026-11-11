@@ -245,116 +245,53 @@ const unsigned int lbl_806D34B0[2] = {
     0x0, 0x0
 };
 /* decl: ItemEffectMask */
-/* element type read off the values (16-bit pairs), not from code */
-const short lbl_806D34B8[4] = {
-    0, 0, 6, 58
-};
+const unsigned long long lbl_806D34B8 = 0x000000000006003AULL;
 /* decl: ItemEffectMask */
-/* element type read off the values (all small integers), not from code */
-const int lbl_806D34C0[2] = {
-    0, 0
-};
+const unsigned long long lbl_806D34C0 = 0x0000000000000000ULL;
 /* decl: ItemEffectMask */
-/* element type read off the values (all small integers), not from code */
-const int lbl_806D34C8[2] = {
-    0, 0
-};
+const unsigned long long lbl_806D34C8 = 0x0000000000000000ULL;
 /* decl: ItemEffectMask */
-/* element type read off the values (all small integers), not from code */
-const int lbl_806D34D0[2] = {
-    0, 0
-};
+const unsigned long long lbl_806D34D0 = 0x0000000000000000ULL;
 /* decl: ItemEffectMask */
-/* element type read off the values (16-bit pairs), not from code */
-const short lbl_806D34D8[4] = {
-    256, 4, 10, 0
-};
+const unsigned long long lbl_806D34D8 = 0x01000004000A0000ULL;
 /* decl: ItemEffectMask */
-/* element type read off the values (16-bit pairs), not from code */
-const short lbl_806D34E0[4] = {
-    0, 384, 12288, 1216
-};
+const unsigned long long lbl_806D34E0 = 0x00000180300004C0ULL;
 /* decl: ItemEffectMask */
-/* element type read off the values (all small integers), not from code */
-const int lbl_806D34E8[2] = {
-    0, 0
-};
+const unsigned long long lbl_806D34E8 = 0x0000000000000000ULL;
 /* decl: ItemEffectMask */
-/* element type read off the values (16-bit pairs), not from code */
-const short lbl_806D34F0[4] = {
-    0, 0, 624, 0
-};
+const unsigned long long lbl_806D34F0 = 0x0000000002700000ULL;
 const unsigned int lbl_806D34F8 = 0x1;
 const unsigned int lbl_806D34FC = 0x80;
 const unsigned int lbl_806D3500 = 0x20;
 const unsigned int lbl_806D3504 = 0x10;
 /* decl: ItemEffectMask */
-/* element type read off the values (all small integers), not from code */
-const int lbl_806D3508[2] = {
-    0, 0
-};
+const unsigned long long lbl_806D3508 = 0x0000000000000000ULL;
 /* decl: ItemEffectMask */
-/* element type read off the values (all small integers), not from code */
-const int lbl_806D3510[2] = {
-    0, 64
-};
+const unsigned long long lbl_806D3510 = 0x0000000000000040ULL;
 /* decl: ItemEffectMask */
-/* element type read off the values (all small integers), not from code */
-const int lbl_806D3518[2] = {
-    0, 0
-};
+const unsigned long long lbl_806D3518 = 0x0000000000000000ULL;
 /* decl: ItemEffectMask */
-/* element type read off the values (all small integers), not from code */
-const int lbl_806D3520[2] = {
-    0, 4096
-};
+const unsigned long long lbl_806D3520 = 0x0000000000001000ULL;
 /* decl: ItemEffectMask */
-const unk32 lbl_806D3528[2] = {
-    0x00000000, 0x01000000
-};
+const unsigned long long lbl_806D3528 = 0x0000000001000000ULL;
 /* decl: ItemEffectMask */
-/* element type read off the values (all small integers), not from code */
-const int lbl_806D3530[2] = {
-    0, 1024
-};
+const unsigned long long lbl_806D3530 = 0x0000000000000400ULL;
 /* decl: ItemEffectMask */
-const unk32 lbl_806D3538[2] = {
-    0x00000000, 0x04000000
-};
+const unsigned long long lbl_806D3538 = 0x0000000004000000ULL;
 /* decl: ItemEffectMask */
-const unk32 lbl_806D3540[2] = {
-    0x00000000, 0x10000000
-};
+const unsigned long long lbl_806D3540 = 0x0000000010000000ULL;
 /* decl: ItemEffectMask */
-/* element type read off the values (all small integers), not from code */
-const int lbl_806D3548[2] = {
-    8192, 0
-};
+const unsigned long long lbl_806D3548 = 0x0000200000000000ULL;
 /* decl: ItemEffectMask */
-/* element type read off the values (all small integers), not from code */
-const int lbl_806D3550[2] = {
-    32768, 0
-};
+const unsigned long long lbl_806D3550 = 0x0000800000000000ULL;
 /* decl: ItemEffectMask */
-/* element type read off the values (all small integers), not from code */
-const int lbl_806D3558[2] = {
-    16384, 0
-};
+const unsigned long long lbl_806D3558 = 0x0000400000000000ULL;
 /* decl: ItemEffectMask */
-/* element type read off the values (16-bit pairs), not from code */
-const short lbl_806D3560[4] = {
-    1, 0, 0, 0
-};
+const unsigned long long lbl_806D3560 = 0x0001000000000000ULL;
 /* decl: ItemEffectMask */
-/* element type read off the values (all small integers), not from code */
-const int lbl_806D3568[2] = {
-    1024, 0
-};
+const unsigned long long lbl_806D3568 = 0x0000040000000000ULL;
 /* decl: ItemEffectMask */
-/* element type read off the values (16-bit pairs), not from code */
-const short lbl_806D3570[4] = {
-    0, 0, 1, 0
-};
+const unsigned long long lbl_806D3570 = 0x0000000000010000ULL;
 const char lbl_806D3578[] = "  %s";
 const char lbl_806D3580[] = " %s";
 const lbl_806D3584_Pool lbl_806D3584 = {
