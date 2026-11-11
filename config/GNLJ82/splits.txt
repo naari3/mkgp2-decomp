@@ -2862,7 +2862,7 @@ game/autodata/sdata2_806D4910.c:
 	.sdata2     start:0x806D4910 end:0x806D5010
 
 game/autodata/sdata_806CF1C0.c:
-	.sdata      start:0x806CF1C0 end:0x806CF260
+	.sdata      start:0x806CF1C0 end:0x806CF240
 
 game/autodata/data_8040F168.c:
 	.data       start:0x8040F168 end:0x80411458
@@ -2894,7 +2894,7 @@ game/RankLog.c:
 	.data       start:0x80411458 end:0x80411B18
 
 game/autodata/data_80411B18.c:
-	.data       start:0x80411B18 end:0x80411E20
+	.data       start:0x80411B18 end:0x80411DD0
 
 game/WarpDashMgr_Init.cpp:
 	extab       start:0x80009E04 end:0x80009E60
@@ -2914,15 +2914,24 @@ game/WarpZoneVector_Insert.cpp:
 	.rodata     start:0x803284C0 end:0x803284F8
 
 game/autodata/rodata_803284F8.c:
-	.rodata     start:0x803284F8 end:0x803285BC
+	.rodata     start:0x803284F8 end:0x80328560
 
-game/WarpZone_Dtor.c:
+game/WarpZone_Dtor.cpp:
 	extab       start:0x80009F80 end:0x80009F88
 	extabindex  start:0x800226A0 end:0x800226AC
-	.text       start:0x800AA888 end:0x800AA8D0
+	.text       start:0x800AA888 end:0x800AA8FC
+	.rodata     start:0x80328560 end:0x80328570
+	.data       start:0x80411DD0 end:0x80411DF8
+	.sdata      start:0x806CF240 end:0x806CF248
 
-game/WarpZone_VtableTrim.c:
-	.text       start:0x800AA8D0 end:0x800AA8FC
+game/autodata/sdata_806CF248.c:
+	.sdata      start:0x806CF248 end:0x806CF260
+
+game/autodata/data_80411DF8.c:
+	.data       start:0x80411DF8 end:0x80411E20
+
+game/autodata/rodata_80328570.c:
+	.rodata     start:0x80328570 end:0x803285BC
 
 game/ShadowAreaMgr_Dtor.c:
 	extab       start:0x80009F88 end:0x80009F90

@@ -18133,5 +18133,19 @@
     "__dt__Q213nsEffectSpeed18clActionSpeedScaleFv": "EffectSpeedAction_SpeedScale_Dtor",
     "Reset__Q213nsEffectSpeed18clActionSpeedScaleFv": "EffectSpeedAction_SpeedScale_Reset",
     "Process__Q213nsEffectSpeed18clActionSpeedScaleFv": "ActionSpeedScale_Process"
+  },
+  "src/game/WarpZone_Dtor.cpp": {
+    "__dt__13clHitReactionFv": "dtor_800AA888",
+    "__ct__13clHitReactionFv": "WarpZone_VtableTrim",
+    "Method0__13clHitReactionFv": "fn_800AA8F4",
+    "Method1__13clHitReactionFv": "fn_800AA8F0",
+    "Method2__13clHitReactionFv": "fn_800AA8E8",
+    "Method3__13clHitReactionFv": "fn_800AA8E0",
+    "__vt__13clHitReaction": "WarpZone_vtable_80411DD0",
+    "__RTTI__13clHitReaction": "WarpZone_data_806CF240",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@21": "lbl_80328560",
+    "@25": "@etb_80009F80",
+    "@26": "@eti_800226A0"
   }
 }

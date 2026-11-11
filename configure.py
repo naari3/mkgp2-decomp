@@ -1100,7 +1100,6 @@ config.libs = [
             Object(Matching, "game/Unknown_DeleteIfFlag_800a5188.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/VSModeIntro.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-rostr", "-inline deferred"]),  #g2
             Object(Matching, "game/TitleTracker_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(Matching, "game/WarpZone_VtableTrim.c"),  #g2
             Object(Matching, "game/ShadowAreaMgr_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/dtor_800AA980.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/ShadowAreaEdge_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
@@ -1637,7 +1636,7 @@ config.libs = [
             Object(Matching, "game/AI_AdjustThunks.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/PanelCda40.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/WarpDashMgr_Init.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(Matching, "game/WarpZone_Dtor.c", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/WarpZone_Dtor.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-rostr", "-inline deferred,noauto"]),
             Object(Matching, "ui/CursorSound.c"),
             Object(NonMatching, "game/fn_801B7EF8.c", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/dtor_801BA14C.c", extra_cflags=["-Cpp_exceptions on"]),
