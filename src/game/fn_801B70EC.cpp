@@ -1,35 +1,108 @@
 #include "game/VoiceBrowser_private.h"
+#include "game/types/clJobRunner.h"
+
+struct DisplayContext {
+    char storage[0xD8];
+    DisplayContext();
+    ~DisplayContext();
+};
+extern "C" {
+extern DisplayContext *lbl_806D1880;
+void fn_8002CFB8(int, int, int, int);
+void VoiceSystem_Init();
+int fn_801B6B94();
+}
+struct clLiveTest : clJobRunner {
+    clLiveTest() {
+        fn_8002CFB8(0,0,0,0);
+        VoiceSystem_Init();
+        if (lbl_806D1880 == 0) lbl_806D1880 = new DisplayContext;
+        context = lbl_806D1880;
+        selection = 0;
+        fraction = lbl_806D986C;
+    }
+    virtual int Update();
+    virtual void Draw();
+    virtual ~clLiveTest();
+    DisplayContext *context;
+    int selection;
+    float fraction;
+};
+
 /* --- owned .rodata 0x803993A0..0x8039979C (tools/own_data.py) --- */
 #pragma force_active on
 extern "C" const char lbl_803993A0[1020] = { 63, -128, 0, 0, 63, 51, 51, 51, 63, 102, 102, 102, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -123, 85, 86, 68, 122, 0, 0, 66, -123, 85, 86, 68, -6, 0, 0, 66, -123, 85, 86, 69, 59, -128, 0, 66, -123, 85, 86, 69, 122, 0, 0, 66, -123, 85, 86, 69, -100, 64, 0, 66, -123, 85, 86, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -123, 85, 86, 68, 122, 0, 0, 66, -123, 85, 86, 68, -6, 0, 0, 66, -123, 85, 86, 69, 59, -128, 0, 66, -123, 85, 86, 69, 122, 0, 0, 66, -123, 85, 86, 69, -100, 64, 0, 66, -123, 85, 86, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -123, 85, 86, 68, 122, 0, 0, 66, -123, 85, 86, 68, -6, 0, 0, 66, -123, 85, 86, 69, 59, -128, 0, 66, -123, 85, 86, 69, 122, 0, 0, 66, -123, 85, 86, 69, -100, 64, 0, 66, -123, 85, 86, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -123, 85, 86, 68, 122, 0, 0, 66, -123, 85, 86, 68, -6, 0, 0, 66, -123, 85, 86, 69, 59, -128, 0, 66, -123, 85, 86, 69, 122, 0, 0, 66, -123, 85, 86, 69, -100, 64, 0, 66, -123, 85, 86, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -123, 85, 86, 68, 122, 0, 0, 66, -123, 85, 86, 68, -6, 0, 0, 66, -123, 85, 86, 69, 59, -128, 0, 66, -123, 85, 86, 69, 122, 0, 0, 66, -123, 85, 86, 69, -100, 64, 0, 66, -123, 85, 86, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -123, 85, 86, 68, 122, 0, 0, 66, -123, 85, 86, 68, -6, 0, 0, 66, -123, 85, 86, 69, 59, -128, 0, 66, -123, 85, 86, 69, 122, 0, 0, 66, -123, 85, 86, 69, -100, 64, 0, 66, -123, 85, 86, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -123, 85, 86, 68, 122, 0, 0, 66, -123, 85, 86, 68, -6, 0, 0, 66, -123, 85, 86, 69, 59, -128, 0, 66, -123, 85, 86, 69, 122, 0, 0, 66, -123, 85, 86, 69, -100, 64, 0, 66, -123, 85, 86, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -123, 85, 86, 68, 122, 0, 0, 66, -123, 85, 86, 68, -6, 0, 0, 66, -123, 85, 86, 69, 59, -128, 0, 66, -123, 85, 86, 69, 122, 0, 0, 66, -123, 85, 86, 69, -100, 64, 0, 66, -123, 85, 86, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -123, 85, 86, 68, 122, 0, 0, 66, -123, 85, 86, 68, -6, 0, 0, 66, -123, 85, 86, 69, 59, -128, 0, 66, -123, 85, 86, 69, 122, 0, 0, 66, -123, 85, 86, 69, -100, 64, 0, 66, -123, 85, 86, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -123, 85, 86, 68, 122, 0, 0, 66, -123, 85, 86, 68, -6, 0, 0, 66, -123, 85, 86, 69, 59, -128, 0, 66, -123, 85, 86, 69, 122, 0, 0, 66, -123, 85, 86, 69, -100, 64, 0, 66, -123, 85, 86, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -123, 85, 86, 68, 122, 0, 0, 66, -123, 85, 86, 68, -6, 0, 0, 66, -123, 85, 86, 69, 59, -128, 0, 66, -123, 85, 86, 69, 122, 0, 0, 66, -123, 85, 86, 69, -100, 64, 0, 66, -123, 85, 86, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -123, 85, 86, 68, 122, 0, 0, 66, -123, 85, 86, 68, -6, 0, 0, 66, -123, 85, 86, 69, 59, -128, 0, 66, -123, 85, 86, 69, 122, 0, 0, 66, -123, 85, 86, 69, -100, 64, 0, 66, -123, 85, 86, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -90, -86, -85, 68, 122, 0, 0, 66, -90, -86, -85, 68, -6, 0, 0, 66, -90, -86, -85, 69, 59, -128, 0, 66, -90, -86, -85, 69, 122, 0, 0, 66, -90, -86, -85, 69, -100, 64, 0, 66, -90, -86, -85, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -90, -86, -85, 68, 122, 0, 0, 66, -90, -86, -85, 68, -6, 0, 0, 66, -90, -86, -85, 69, 59, -128, 0, 66, -90, -86, -85, 69, 122, 0, 0, 66, -90, -86, -85, 69, -100, 64, 0, 66, -90, -86, -85, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -90, -86, -85, 68, 122, 0, 0, 66, -90, -86, -85, 68, -6, 0, 0, 66, -90, -86, -85, 69, 59, -128, 0, 66, -90, -86, -85, 69, 122, 0, 0, 66, -90, -86, -85, 69, -100, 64, 0, 66, -90, -86, -85, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -90, -86, -85, 68, 122, 0, 0, 66, -90, -86, -85, 68, -6, 0, 0, 66, -90, -86, -85, 69, 59, -128, 0, 66, -90, -86, -85, 69, 122, 0, 0, 66, -90, -86, -85, 69, -100, 64, 0, 66, -90, -86, -85, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -90, -86, -85, 68, 122, 0, 0, 66, -90, -86, -85, 68, -6, 0, 0, 66, -90, -86, -85, 69, 59, -128, 0, 66, -90, -86, -85, 69, 122, 0, 0, 66, -90, -86, -85, 69, -100, 64, 0, 66, -90, -86, -85, 0, 0, 0, 0, 0, 0, 0, 0, 67, -6, 0, 0, 66, -90, -86, -85, 68, 122, 0, 0, 66, -90, -86, -85, 68, -6, 0, 0, 66, -90, -86, -85, 69, 59, -128, 0, 66, -90, -86, -85, 69, 122, 0, 0, 66, -90, -86, -85, 69, -100, 64, 0, 66, -90, -86, -85 };
 #pragma force_active reset
 
-extern "C" void fn_801B70EC(VoiceBrowser *self) {
-    const char *strings = lbl_803993A0;
-    if (self->context) {
-        float axis = InputMgr_GetPlayer(GetInputManager(), 0)->v2();
-        if (axis < lbl_806D9848)
-            DrawText(self->context, 60, 90, 4, lbl_806D984C, strings + 0x414);
-        else if (axis < lbl_806D9850)
-            DrawText(self->context, 60, 90, 4, lbl_806D984C, strings + 0x430);
-        VoiceClip *clip;
-        clip = fn_801B3A50(self->selection - 2);
-        DrawText(self->context, 60, 110, 1, lbl_806D984C, strings + 0x44C, clip->path, clip->length);
-        clip = fn_801B3A50(self->selection - 1);
-        DrawText(self->context, 60, 130, 1, lbl_806D984C, strings + 0x44C, clip->path, clip->length);
-        clip = fn_801B3A50(self->selection);
-        DrawText(self->context, 60, 150, 7, lbl_806D984C, strings + 0x44C, clip->path, clip->length);
-        clip = fn_801B3A50(self->selection + 1);
-        DrawText(self->context, 60, 170, 1, lbl_806D984C, strings + 0x44C, clip->path, clip->length);
-        clip = fn_801B3A50(self->selection + 2);
-        DrawText(self->context, 60, 190, 1, lbl_806D984C, strings + 0x44C, clip->path, clip->length);
-        if (axis > lbl_806D9854)
-            DrawText(self->context, 60, 210, 4, lbl_806D984C, strings + 0x414);
-        else if (axis > lbl_806D9858)
-            DrawText(self->context, 60, 210, 4, lbl_806D984C, strings + 0x430);
-        DrawText(self->context, 10, 320, 7, lbl_806D984C, strings + 0x45C,
-            (float)OSTicksToMilliseconds(g_voiceStreamLastPollTime - g_voiceStreamStartTime) / lbl_806D985C);
-        DisplayContext_Flush(self->context);
+extern "C" clLiveTest *fn_801B7624() { return new clLiveTest; }
+
+clLiveTest::~clLiveTest() {
+    if (lbl_806D1880 == 0) {
+        delete lbl_806D1880;
+        lbl_806D1880 = 0;
     }
+    fn_801B6B94();
 }
 
+int clLiveTest::Update() {
+    InputPlayer *input = InputMgr_GetPlayer(GetInputManager(), 0);
+    VoiceClip *clip = fn_801B3A50(selection);
+    float step = lbl_806D9860 * input->v2();
+    if (lbl_806D9864 < step && step < lbl_806D9868)
+        step = lbl_806D986C;
+    fraction += step;
+    if (fraction >= lbl_806D9854) {
+        selection++;
+        fraction -= lbl_806D984C;
+    } else if (fraction <= lbl_806D9848) {
+        selection--;
+        fraction += lbl_806D984C;
+    }
+    float value = input->StickRight();
+    if (value > lbl_806D9860)
+        clip->length += lbl_806D9870 * (value - lbl_806D9860);
+    value = input->StickLeft();
+    if (value > lbl_806D9860) {
+        clip->length = clip->length - lbl_806D9870 * (value - lbl_806D9860);
+        if (clip->length < 0.0f)
+            clip->length = 0.0f;
+    }
+    if (input->Pressed(0x800)) {
+        selection++;
+        fraction = lbl_806D986C;
+    }
+    fn_801B11B8();
+    if (input->Pressed(0x2000))
+        fn_801B3980(fn_801B3A88(selection));
+    if (input->Pressed(0x400))
+        fn_801B3A4C();
+    return -2;
+}
+
+void clLiveTest::Draw() {
+    if (context) {
+        float axis = InputMgr_GetPlayer(GetInputManager(), 0)->v2();
+        if (axis < lbl_806D9848)
+            DrawText(context, 60, 90, 4, lbl_806D984C, "      +++++++++++++++++++++");
+        else if (axis < lbl_806D9850)
+            DrawText(context, 60, 90, 4, lbl_806D984C, "      + + + + + + + + + + +");
+        VoiceClip *clip;
+        clip = fn_801B3A50(selection - 2);
+        DrawText(context, 60, 110, 1, lbl_806D984C, "%16s [%f sec]", clip->path, clip->length);
+        clip = fn_801B3A50(selection - 1);
+        DrawText(context, 60, 130, 1, lbl_806D984C, "%16s [%f sec]", clip->path, clip->length);
+        clip = fn_801B3A50(selection);
+        DrawText(context, 60, 150, 7, lbl_806D984C, "%16s [%f sec]", clip->path, clip->length);
+        clip = fn_801B3A50(selection + 1);
+        DrawText(context, 60, 170, 1, lbl_806D984C, "%16s [%f sec]", clip->path, clip->length);
+        clip = fn_801B3A50(selection + 2);
+        DrawText(context, 60, 190, 1, lbl_806D984C, "%16s [%f sec]", clip->path, clip->length);
+        if (axis > lbl_806D9854)
+            DrawText(context, 60, 210, 4, lbl_806D984C, "      +++++++++++++++++++++");
+        else if (axis > lbl_806D9858)
+            DrawText(context, 60, 210, 4, lbl_806D984C, "      + + + + + + + + + + +");
+        DrawText(context, 10, 320, 7, lbl_806D984C, "PLAY TIME %f",
+            (float)OSTicksToMilliseconds(g_voiceStreamLastPollTime - g_voiceStreamStartTime) / lbl_806D985C);
+        DisplayContext_Flush(context);
+    }
+}

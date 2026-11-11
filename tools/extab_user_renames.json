@@ -2905,11 +2905,6 @@
     "__dt__12GameModeBaseFv": "dtor_8002CDF4",
     "__ct__9SpriteObjFiiPs": "Sprite_InitWithAnim"
   },
-  "src/game/fn_801B7624.cpp": {
-    "__ct__12GameModeBaseFv": "GameMode_BaseInit",
-    "__dt__12GameModeBaseFv": "dtor_8002CDF4",
-    "__ct__14DisplayContextFv": "DisplayContext_Init"
-  },
   "src/game/fn_801FAA18.cpp": {
     "__dt__13Scene801FAA18Fv": "fn_801FAA18",
     "__dt__12Base801FAA18Fv": "dtor_802043EC"
@@ -18300,5 +18295,32 @@
     "__dt__16clSceneInterfaceFv": "dtor_8007D0D4",
     "__RTTI__16clSceneInterface": "data_804EB6B0_data_806D0110",
     "__RTTI__8clMnCard": "data_804EB6B0_data_806D0118"
+  },
+  "src/game/fn_801B70EC.cpp": {
+    "__ct__11clJobRunnerFv": "GameMode_BaseInit",
+    "__dt__11clJobRunnerFv": "dtor_8002CDF4",
+    "__ct__14DisplayContextFv": "DisplayContext_Init",
+    "__dt__14DisplayContextFv": "fn_801DB68C",
+    "Update__10clLiveTestFv": "fn_801B739C",
+    "Draw__10clLiveTestFv": "fn_801B70EC",
+    "__dt__10clLiveTestFv": "fn_801B75A0",
+    "__vt__10clLiveTest": "lbl_8049A214",
+    "__RTTI__10clLiveTest": "lbl_806CFD48",
+    "__RTTI__11clJobRunner": "lbl_806CFD40",
+    "@68": "global:lbl_8039979C",
+    "@70": "global:lbl_803997A8",
+    "@69": "global:lbl_8049A208",
+    "@83": "global:lbl_803997B4",
+    "@84": "global:lbl_803997D0",
+    "@85": "global:lbl_803997EC",
+    "@86": "global:lbl_803997FC",
+    "@87": "@etb_80012BA8",
+    "@88": "@eti_80027824",
+    "@115": "@etb_80012BB0",
+    "@116": "@eti_80027830",
+    "@121": "@etb_80012BB8",
+    "@122": "@eti_8002783C",
+    "@130": "@etb_80012BC0",
+    "@131": "@eti_80027848"
   }
 }

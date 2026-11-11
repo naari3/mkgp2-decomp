@@ -8044,7 +8044,7 @@ game/objview/fn_80197F24.cpp:
 	.sdata      start:0x806CFCE8 end:0x806CFCF8
 
 game/autodata/sdata_806CFCF8.c:
-	.sdata      start:0x806CFCF8 end:0x806CFDF0
+	.sdata      start:0x806CFCF8 end:0x806CFD40
 
 game/autodata/data_804963C0.c:
 	.data       start:0x804963C0 end:0x804963D8
@@ -8363,38 +8363,28 @@ game/sprite/fn_801A1798.c:
 	.data       start:0x80496C38 end:0x8049A204
 	.bss        start:0x80678D90 end:0x80679260
 
-game/autodata/data_8049A208.c:
-	.data       start:0x8049A208 end:0x8049A748
-
 game/autodata/rodata_80383CF8.c:
 	.rodata     start:0x80383CF8 end:0x803993A0
 
 game/fn_801B70EC.cpp:
-	extab       start:0x80012BA8 end:0x80012BB0
-	extabindex  start:0x80027824 end:0x80027830
-	.text       start:0x801B70EC end:0x801B739C
-	.rodata     start:0x803993A0 end:0x8039979C
+	extab       start:0x80012BA8 end:0x80012BFC
+	extabindex  start:0x80027824 end:0x80027854
+	.text       start:0x801B70EC end:0x801B76C8
+	.rodata     start:0x803993A0 end:0x80399810
+	.data       start:0x8049A208 end:0x8049A228
+	.sdata      start:0x806CFD40 end:0x806CFD50
 
-game/autodata/rodata_8039979C.c:
-	.rodata     start:0x8039979C end:0x8039982C
+game/autodata/sdata_806CFD50.c:
+	.sdata      start:0x806CFD50 end:0x806CFDF0
+
+game/autodata/data_8049A228.c:
+	.data       start:0x8049A228 end:0x8049A748
+
+game/autodata/rodata_80399810.c:
+	.rodata     start:0x80399810 end:0x8039982C
 
 game/autodata/rodata_80399830.c:
 	.rodata     start:0x80399830 end:0x8039AA3C
-
-game/fn_801B739C.cpp:
-	extab       start:0x80012BB0 end:0x80012BB8
-	extabindex  start:0x80027830 end:0x8002783C
-	.text       start:0x801B739C end:0x801B75A0
-
-game/fn_801B75A0.c:
-	extab       start:0x80012BB8 end:0x80012BC0
-	extabindex  start:0x8002783C end:0x80027848
-	.text       start:0x801B75A0 end:0x801B7624
-
-game/fn_801B7624.cpp:
-	extab       start:0x80012BC0 end:0x80012BFC
-	extabindex  start:0x80027848 end:0x80027854
-	.text       start:0x801B7624 end:0x801B76C8
 
 game/fn_801B76C8.cpp:
 	extab       start:0x80012BFC end:0x80012C04
