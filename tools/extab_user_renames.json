@@ -2870,13 +2870,6 @@
     "__ct__11Obj801FA864Fii": "fn_801FD240",
     "Add__7StepSeqFPvi": "fn_801F4DF0"
   },
-  "src/game/clFlowTitle_Init.cpp": {
-    "__ct__9TitleFlowFv": "clFlowTitle_Init",
-    "__ct__8FlowBaseFv": "InitializeFrameSelection",
-    "__dt__8FlowBaseFv": "dtor_801BA14C",
-    "__ct__9SpriteObjFiiff": "fn_801A08B8",
-    "__ct__9SpriteObjFiiffffff": "Sprite_CreateWithParams"
-  },
   "src/game/clFlowAttract_Init.cpp": {
     "__ct__11AttractFlowFv": "clFlowAttract_Init",
     "__ct__8FlowBaseFv": "InitializeFrameSelection",
@@ -12169,11 +12162,6 @@
     "__ct__11ClassSpriteFiii": "Sprite_InitWithAnim",
     "__ct__11ClassSpriteFiUcff": "fn_801A08B8"
   },
-  "src/game/clFlowEntry_Update.cpp": {
-    "__ct__9EntryCardFiii": "fn_80161914",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
-  },
   "src/game/fn_801CCAAC.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
@@ -18195,5 +18183,32 @@
     "@367": "@eti_8002B460",
     "__RTTI__9clRnkDisp": "data_804EEC98_data_806D08E8",
     "__RTTI__16clCDispInterface": "data_804EEC98_data_806D08E0"
+  },
+  "src/game/fn_801BA318.cpp": {
+    "__ct__11clFlowEntryFv": "clFlowTitle_Init",
+    "__dt__11clFlowEntryFv": "fn_801BA6A4",
+    "Update__11clFlowEntryFv": "clFlowEntry_Update",
+    "Draw__11clFlowEntryFv": "fn_801BA318",
+    "__vt__11clFlowEntry": "lbl_8049A878",
+    "__RTTI__11clFlowEntry": "global:lbl_806CFD88",
+    "__RTTI__13clFlowProcess": "global:lbl_806CFD80",
+    "@112": "global:clFlowEntry",
+    "@113": "global:lbl_8049A86C",
+    "@114": "global:lbl_8039985C",
+    "@123": "@etb_80013124",
+    "@124": "@eti_800279D4",
+    "@196": "@etb_8001312C",
+    "@197": "@eti_800279E0",
+    "@211": "@etb_80013144",
+    "@212": "@eti_800279EC",
+    "@240": "@etb_8001314C",
+    "@241": "@eti_800279F8",
+    "__ct__13clFlowProcessFv": "InitializeFrameSelection",
+    "__dt__13clFlowProcessFv": "dtor_801BA14C",
+    "__ct__9SpriteObjFiiff": "fn_801A08B8",
+    "__ct__9SpriteObjFiiffffff": "Sprite_CreateWithParams",
+    "__ct__9EntryCardFiii": "fn_80161914",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }
