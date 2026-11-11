@@ -8497,16 +8497,16 @@ game/fn_801BA318.cpp:
 	.sdata      start:0x806CFD80 end:0x806CFD90
 
 game/autodata/sdata_806CFD90.c:
-	.sdata      start:0x806CFD90 end:0x806CFDF0
+	.sdata      start:0x806CFD90 end:0x806CFDB0
 
 game/autodata/data_8049A890.c:
 	.data       start:0x8049A890 end:0x8049A948
 
 game/autodata/data_8049A9DC.c:
-	.data       start:0x8049A9DC end:0x8049AA20
+	.data       start:0x8049A9DC end:0x8049AA00
 
 game/autodata/rodata_80399870.c:
-	.rodata     start:0x80399870 end:0x8039AA3C
+	.rodata     start:0x80399870 end:0x8039A5A0
 
 game/fn_801BA9A0.cpp:
 	extab       start:0x800131A4 end:0x800131AC
@@ -8524,26 +8524,16 @@ game/fn_801C1F88.cpp:
 	extabindex  start:0x80027D10 end:0x80027D1C
 	.text       start:0x801C1F88 end:0x801C2238
 
-game/fn_801C2238.c:
-	extab       start:0x80013DA4 end:0x80013DAC
-	extabindex  start:0x80027D1C end:0x80027D28
-	.text       start:0x801C2238 end:0x801C23A8
+game/fn_801C2238.cpp:
+	extab       start:0x80013DA4 end:0x80013E64
+	extabindex  start:0x80027D1C end:0x80027D4C
+	.text       start:0x801C2238 end:0x801C3470
+	.rodata     start:0x8039A5A0 end:0x8039AA3A
+	.data       start:0x8049AA00 end:0x8049AA54
+	.sdata      start:0x806CFDB0 end:0x806CFDC0
 
-game/clFlowClass_Update.cpp:
-	extab       start:0x80013DAC end:0x80013E04
-	extabindex  start:0x80027D28 end:0x80027D34
-	.text       start:0x801C23A8 end:0x801C3108
-	.data       start:0x8049AA20 end:0x8049AA54
-
-game/fn_801C3108.c:
-	extab       start:0x80013E04 end:0x80013E0C
-	extabindex  start:0x80027D34 end:0x80027D40
-	.text       start:0x801C3108 end:0x801C3244
-
-game/clFlowClass_Init.cpp:
-	extab       start:0x80013E0C end:0x80013E64
-	extabindex  start:0x80027D40 end:0x80027D4C
-	.text       start:0x801C3244 end:0x801C3470
+game/autodata/sdata_806CFDC0.c:
+	.sdata      start:0x806CFDC0 end:0x806CFDF0
 
 game/clFlowChara.cpp:
 	extab       start:0x80013E64 end:0x80013FE0

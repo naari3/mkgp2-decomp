@@ -2877,12 +2877,6 @@
     "__ct__9SpriteObjFiii": "Sprite_InitWithAnim",
     "__ct__9SpriteObjFiiffffff": "Sprite_CreateWithParams"
   },
-  "src/game/clFlowClass_Init.cpp": {
-    "__ct__9ClassFlowFv": "clFlowClass_Init",
-    "__ct__8FlowBaseFv": "InitializeFrameSelection",
-    "__dt__8FlowBaseFv": "dtor_801BA14C",
-    "__ct__9SpriteObjFiii": "Sprite_InitWithAnim"
-  },
   "src/game/fn_801D4060.cpp": {
     "__ct__12GameModeBaseFv": "GameMode_BaseInit",
     "__dt__12GameModeBaseFv": "dtor_8002CDF4",
@@ -12158,10 +12152,6 @@
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
   },
-  "src/game/clFlowClass_Update.cpp": {
-    "__ct__11ClassSpriteFiii": "Sprite_InitWithAnim",
-    "__ct__11ClassSpriteFiUcff": "fn_801A08B8"
-  },
   "src/game/fn_801CCAAC.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
@@ -18208,6 +18198,25 @@
     "__ct__9SpriteObjFiiff": "fn_801A08B8",
     "__ct__9SpriteObjFiiffffff": "Sprite_CreateWithParams",
     "__ct__9EntryCardFiii": "fn_80161914",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/fn_801C2238.cpp": {
+    "@275": "clFlowClass",
+    "@277": "lbl_8039AA2C",
+    "@276": "lbl_8049AA00",
+    "@619": "jumptable_8049AA20",
+    "__ct__11clFlowClassFv": "clFlowClass_Init",
+    "__dt__11clFlowClassFv": "fn_801C3108",
+    "Update__11clFlowClassFv": "clFlowClass_Update",
+    "Draw__11clFlowClassFv": "fn_801C2238",
+    "__ct__13clFlowProcessFv": "InitializeFrameSelection",
+    "__dt__13clFlowProcessFv": "dtor_801BA14C",
+    "__vt__11clFlowClass": "lbl_8049AA0C",
+    "__RTTI__11clFlowClass": "lbl_806CFDB8",
+    "__RTTI__13clFlowProcess": "lbl_806CFDB0",
+    "__ct__11ClassSpriteFiii": "Sprite_InitWithAnim",
+    "__ct__11ClassSpriteFiUcff": "fn_801A08B8",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
   }

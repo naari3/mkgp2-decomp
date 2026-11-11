@@ -1,9 +1,53 @@
+/* clFlowClass: deferred original unit, definitions follow reverse text order. */
 #include "game/ClassUpdatePrivate.h"
+#include "game/types/clFlowProcess.h"
 #include "game/singleton.h"
+
+class clFlowClass : public clFlowProcess {
+public:
+    clFlowClass();
+    virtual ~clFlowClass();
+    virtual int Update();
+    virtual void Draw();
+
+    unsigned char advance, mode, fading, pad7;
+    int count, selection, unknown10, state, selectedSpecial, indicatorStarted;
+    float brightness, elapsed;
+    int result;
+    ClassSprite *indicator, *sprites[3], *extra;
+    int unknown40;
+    ClassSprite *left, *right;
+    int ticks; float startX,startY;
+};
+
+struct FlowInput { unsigned char pad0[4]; unsigned char enabled; unsigned char pad5[15]; int delta, held, edge; };
+struct clFlowClass_Update_rodata_8039A5A0_Pool { float f_000[255]; int i_3FC[27]; };
+/* The update reads the shared animation pool through a mutable byte view.
+ * Keep that view separate from its native constant definition. */
+namespace flow_data {
 extern "C" {
-extern unsigned char clFlowClass_Update_rodata_8039A5A0[];
+extern const clFlowClass_Update_rodata_8039A5A0_Pool clFlowClass_Update_rodata_8039A5A0 = {
+    { 1.0f, 0.7f, 0.9f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 66.66667f, 1000.0f, 66.66667f, 2000.0f, 66.66667f, 3000.0f, 66.66667f, 4000.0f, 66.66667f, 5000.0f, 66.66667f, 0.0f, 0.0f, 500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f, 83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f, 5000.0f, 83.333336f, 0.0f, 0.0f, 500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f, 83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f, 5000.0f, 83.333336f, 0.0f, 0.0f, 500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f, 83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f, 5000.0f, 83.333336f, 0.0f, 0.0f, 500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f, 83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f, 5000.0f, 83.333336f, 0.0f, 0.0f, 500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f, 83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f, 5000.0f, 83.333336f, 0.0f, 0.0f, 500.0f, 83.333336f, 1000.0f, 83.333336f, 2000.0f, 83.333336f, 3000.0f, 83.333336f, 4000.0f, 83.333336f, 5000.0f, 83.333336f },
+    { 333, 2, 332, 333, 331, 332, 12, 2, 7, 11, 1, 6, 12, 2, 7, 13, 3, 8, 10, 0, 5, 12, 2, 7, 11, 1, 6 }
+};
+}
+}
+#if defined(__MWERKS__) && !defined(__clang__)
+#define classAnimationPool clFlowClass_Update_rodata_8039A5A0
+extern "C" unsigned char clFlowClass_Update_rodata_8039A5A0[];
+#else
+static unsigned char *const classAnimationPool = (unsigned char *)&flow_data::clFlowClass_Update_rodata_8039A5A0;
+#endif
+extern "C" const ClassAnims lbl_8039AA08[1] = {
+    { { 13, 3, 8 } }
+};
+extern "C" const ClassAnims lbl_8039AA14[1] = {
+    { { 10, 0, 5 } }
+};
+
+extern "C" {
 extern int g_gameMode, g_currentSceneState, g_ccClass;
-extern ClassInputState *g_pInputState;
+extern FlowInput *g_pInputState;
 extern signed char lbl_806D184C,lbl_806D184D;
 extern const float lbl_806D9AF4,lbl_806D9AF8,lbl_806D9AFC;
 extern const float lbl_806D9B08,lbl_806D9B0C,lbl_806D9B10,lbl_806D9B14,lbl_806D9B18,lbl_806D9B1C,lbl_806D9B20;
@@ -22,7 +66,7 @@ void SetRumbleMode(int,int,int);
 void fn_801B8874(int);
 void fn_801B89C8(int);
 void fn_801B7CAC();
-int fn_801C1F88(ClassUpdate*);
+int fn_801C1F88(clFlowClass*);
 void fn_801B87D8();
 unsigned char fn_801B87B0();
 void SetSyncTarget(int);
@@ -31,14 +75,146 @@ unsigned char IsSyncReached();
 unsigned char *SyncSlot_GetRecv();
 void fn_801B7B04(int);
 }
-static inline ClassInputState *input() { return SINGLETON_INSTANCE(g_pInputState); }
+static inline FlowInput *input() { return SINGLETON_INSTANCE(g_pInputState); }
 static inline float interpolate(float start, float end, int frame, float duration) {
     float step = (end-start)/duration;
     return step * frame + start;
 }
-static inline int selection(const ClassUpdate *self) { return self->selection; }
-extern "C" int clFlowClass_Update(ClassUpdate *self) {
-    unsigned char *data = clFlowClass_Update_rodata_8039A5A0;
+static inline int selection(const clFlowClass *self) { return self->selection; }
+static inline void SetPos(ClassSprite *s, float x, float y) { s->x=x; s->y=y; }
+extern "C" {
+extern FlowInput *g_pInputState;
+extern int g_gameMode;
+extern const float lbl_806D9AF4;
+extern const float lbl_806D9AF8;
+extern const float lbl_806D9AFC;
+extern const float lbl_806D9B04;
+extern const float lbl_806D9B10;
+extern const float lbl_806D9B14;
+extern const float lbl_806D9B48;
+extern const float lbl_806D9B4C;
+void InitBGM(void);
+void InitRumbleController(int arg);
+void PreloadResource(int id);
+void SetScreenBrightness(float level);
+void SetSyncTarget(int target);
+int SetupBgSprites(unsigned char enable);
+void SpriteSystem_EnsureInit(void);
+int fn_801B8918(int value);
+void fn_801B7B04(int arg);
+}
+
+clFlowClass::clFlowClass() {
+    SetSyncTarget(0xB);
+    SpriteSystem_EnsureInit();
+    PreloadResource(0x1B13);
+    PreloadResource(0x1B12);
+    PreloadResource(0x1666);
+    PreloadResource(0x1ADE);
+    PreloadResource(0x1ADF);
+    PreloadResource(0x1AE0);
+    PreloadResource(0x166F);
+    sprites[0] = new ClassSprite(0xE, 1, 0);
+    if (g_gameMode == 2) {
+        SetPos(sprites[0], lbl_806D9B48, lbl_806D9B10);
+    } else {
+        SetPos(sprites[0], lbl_806D9B48, lbl_806D9B14);
+    }
+    sprites[1] = 0;
+    sprites[2] = 0;
+    selectedSpecial = 0;
+    indicatorStarted = 0;
+    indicator = 0;
+    elapsed = lbl_806D9AF4;
+    state = 0;
+    unknown40 = 0;
+    advance = 0;
+    selection = 1;
+    result = -1;
+    mode = 0;
+    brightness = lbl_806D9B4C;
+    left = 0;
+    right = 0;
+    ticks = 0;
+    startX = lbl_806D9AF4;
+    startY = lbl_806D9AF4;
+    fading = 0;
+    if (g_gameMode != 2) {
+        extra = new ClassSprite(0x47, 1, 0);
+        count = 4;
+    } else {
+        extra = 0;
+        count = 3;
+    }
+    if (extra != 0) {
+        SetPos(extra, lbl_806D9AFC, lbl_806D9B04);
+    }
+    if (input()) {
+        FlowInput *in = input();
+        in->enabled = 1;
+        in->held = 0;
+        in->edge = 0;
+    }
+    InitBGM();
+    SetupBgSprites(1);
+    SetScreenBrightness(lbl_806D9AF8);
+    InitRumbleController(1);
+    if (g_gameMode == 2) {
+        fn_801B8918(0x1ADE);
+    } else {
+        fn_801B8918(0x1ADF);
+    }
+    fn_801B7B04(0);
+}
+
+extern "C" {
+
+extern int g_ccClass;
+extern int g_gameMode;
+
+extern const float lbl_806D9AF8;
+extern void MemoryManager_TimedFree(void *p);
+extern void SetScreenBrightness(float level);
+
+extern unsigned char *SyncSlot_GetRecv(void);
+
+extern void fn_80120A08(int id);
+extern void fn_80169C44(void);
+extern void fn_801A1678(void);
+extern void fn_801B7B04(int arg);
+
+}
+clFlowClass::~clFlowClass() {
+    clFlowClass *self = this;
+        fn_801B7B04(1);
+        if (input()) {
+            FlowInput *in = input();
+            in->enabled = 0;
+            in->held = 0;
+            in->edge = 0;
+        }
+        SetScreenBrightness(lbl_806D9AF8);
+        fn_80169C44();
+        fn_80120A08(0x166F);
+        fn_80120A08(0x1AE0);
+        fn_80120A08(0x1ADF);
+        fn_80120A08(0x1ADE);
+        fn_80120A08(0x1666);
+        fn_80120A08(0x1B12);
+        fn_80120A08(0x1B13);
+        Sprite_Destroy(self->sprites[2], 1);
+        Sprite_Destroy(self->sprites[1], 1);
+        Sprite_Destroy(self->sprites[0], 1);
+        Sprite_Destroy(self->indicator, 1);
+        fn_801A1678();
+        if (g_gameMode == 2) {
+            g_ccClass = (SyncSlot_GetRecv()[1] >> 1) & 3;
+        }
+}
+
+int clFlowClass::Update() {
+    clFlowClass *self = this;
+    unsigned char *data = classAnimationPool;
     RumbleUpdate();
     if (self->advance) { ++self->state; self->advance=0; }
     self->elapsed += lbl_806D9B08;
@@ -103,7 +279,7 @@ extern "C" int clFlowClass_Update(ClassUpdate *self) {
         }
         if (input()) {
             int old = self->selection;
-            ClassInputState *in = input();
+            FlowInput *in = input();
             self->selection += in->delta;
             if (self->mode) {
                 if (self->selection>2) self->selection=2;
@@ -228,3 +404,55 @@ extern "C" int clFlowClass_Update(ClassUpdate *self) {
     return -1;
 }
 
+
+extern "C" {
+extern void fn_801A0004(ClassSprite *label);
+extern void fn_801A1174(int id, int a, int b, int c, int d);
+extern void fn_801A1128(float x, float y);
+extern void fn_801A0DF0(void);
+
+}
+void clFlowClass::Draw() {
+    clFlowClass *self = this;
+    if (self->extra != 0) {
+        fn_801A0004(self->extra);
+    }
+    if (self->indicatorStarted != 0) {
+        fn_801A1174(0x166F, 5, 0, 0, 0);
+        fn_801A1128(320.0f, 378.0f);
+        fn_801A0DF0();
+        if (self->indicator != 0) {
+            fn_801A0004(self->indicator);
+        }
+    }
+    if (self->mode) {
+        if (self->selection != 1 && self->sprites[1] != 0) {
+            fn_801A0004(self->sprites[1]);
+        }
+        if (self->selection != 2 && self->sprites[2] != 0) {
+            fn_801A0004(self->sprites[2]);
+        }
+    } else {
+        if (self->selection != 0 && self->sprites[0] != 0) {
+            fn_801A0004(self->sprites[0]);
+        }
+        if (self->selection != 1 && self->sprites[1] != 0) {
+            fn_801A0004(self->sprites[1]);
+        }
+        if (self->selection != 2 && self->sprites[2] != 0) {
+            fn_801A0004(self->sprites[2]);
+        }
+    }
+    if (self->sprites[self->selection] != 0) {
+        fn_801A0004(self->sprites[self->selection]);
+    }
+    if (self->left != 0) {
+        fn_801A0004(self->left);
+    }
+    if (self->right != 0) {
+        fn_801A0004(self->right);
+    }
+    if (self->extra != 0) {
+        SetPos(self->extra, 320.0f, 374.0f);
+    }
+}
