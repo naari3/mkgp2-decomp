@@ -705,13 +705,6 @@
     "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
     "__ct__12SoundEmitterFv": "fn_801715A0"
   },
-  "src/game/Scene_8016FD0C.cpp": {
-    "__ct__11CourseModelFP8HSD_JObj": "fn_8016FD0C",
-    "__vt__16CourseMarkerBase": "lbl_80490FE0",
-    "__vt__11CourseModel": "CourseModel_vtable_8049123C",
-    "__dt__16CourseMarkerBaseFv": "dtor_8016A270",
-    "__ct__10clNormal3DFPvi": "clNormal3D_Construct"
-  },
   "src/game/LavaSplash.cpp": {
     "__ct__12clLavaSplashFv": "fn_801715A0",
     "__vt__16clMapEffectParts": "lbl_80490FE0",
@@ -11355,7 +11348,6 @@
     "@91": "@etb_80009E04",
     "@92": "@eti_800225A4"
   },
-
   "src/game/mapeffect/PointListConstruct.cpp": {
     "__ct__9PointListFP10SpawnPoint": "fn_8016C94C"
   },
@@ -17216,5 +17208,33 @@
     "@157": "@eti_80026030",
     "@207": "@etb_80010244",
     "@208": "@eti_8002603C"
+  },
+  "src/game/Scene_8016FC14.cpp": {
+    "__ct__11clKPSekizouFP8HSD_JObj": "fn_8016FD0C",
+    "__dt__11clKPSekizouFv": "fn_8016FC74",
+    "Update__11clKPSekizouFv": "fn_8016FC70",
+    "Draw__11clKPSekizouFv": "fn_8016FC14",
+    "__vt__11clKPSekizou": "CourseModel_vtable_8049123C",
+    "__RTTI__11clKPSekizou": "data_804911C4_data_806CFA80",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "__RTTI__16clMapEffectParts": "data_804911C4_data_806CFA78",
+    "__dt__16clMapEffectPartsFv": "dtor_8016A270",
+    "Update__16clMapEffectPartsFv": "fn_8016A2B8",
+    "Draw__16clMapEffectPartsFv": "fn_8016A2BC",
+    "Enable__16clMapEffectPartsFi": "fn_8016A26C",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__dt__10clNormal3DFv": "Object_DtorWithGXSync",
+    "@47": "global:lbl_8036E0A8",
+    "@49": "global:lbl_8036E0B4",
+    "@48": "global:sdata_806CF750_data_80491230",
+    "@64": "global:lbl_8036E0C8",
+    "@83": "global:lbl_8036E0E8",
+    "@84": "global:lbl_8036E108",
+    "@55": "@etb_800106A8",
+    "@56": "@eti_8002639C",
+    "@65": "@etb_800106B0",
+    "@66": "@eti_800263A8",
+    "@87": "@etb_800106B8",
+    "@88": "@eti_800263B4"
   }
 }
