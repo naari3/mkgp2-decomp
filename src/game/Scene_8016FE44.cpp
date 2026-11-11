@@ -1,5 +1,92 @@
-/* Native reconstruction of fn_8016FE44. */
-#include "game/Scene_8016FE44_private.h"
+/* clKPThunder: deferred emission puts Draw, Update, destructor, constructor
+ * in target order. RTTI, base list and vtable are compiler-emitted. */
+#include "game/types/clKPThunder.h"
+extern "C" {
+extern const float lbl_806D8CD4;
+void DebugPrintf(const char *, ...);
+void fn_801825FC();
+void fn_801825C8();
+void Object_SetJObjScaleXYZ(clNormal3D *, float, float, float);
+RenderJoint *ResolveJointByName(clNormal3D *, const char *);
+}
+
+static inline RenderJoint *GetChild(RenderJoint *j) {
+    if (j == 0) return 0;
+    return j->child;
+}
+
+clKPThunder::clKPThunder(RenderJoint *at) {
+    DebugPrintf(" CreateMapEffect : clKPThunder\n");
+    modelA = 0;
+    modelB = 0;
+    sparks[0].active = 0;
+    sparks[1].active = 0;
+    sparks[2].active = 0;
+    sparks[3].active = 0;
+    sparks[4].active = 0;
+    joints[0] = 0;
+    joints[1] = 0;
+    joints[2] = 0;
+    joints[3] = 0;
+    cooldown = 0;
+    randomIndex = 0;
+    root = at;
+    count = 0;
+    for (RenderJoint *j = GetChild(root); j; j = j->next) {
+        count++;
+    }
+    fn_801825FC();
+    modelB = new clNormal3D((void *)"skythunder.dat", 0);
+    fn_801825C8();
+    modelA = new clNormal3D((void *)"KP_sky_kasan.dat", 1);
+    if (modelB) {
+        Object_SetJObjScaleXYZ(modelB, lbl_806D8CD4, lbl_806D8CD4, lbl_806D8CD4);
+        joints[0] = ResolveJointByName(modelB, "ef_sky_thunder_thunder1_joint");
+        joints[1] = ResolveJointByName(modelB, "ef_sky_thunder_thunder2_joint");
+        joints[2] = ResolveJointByName(modelB, "ef_sky_thunder_thunder3_joint");
+        joints[3] = ResolveJointByName(modelB, "ef_sky_thunder_thunder4_joint");
+    }
+}
+
+clKPThunder::~clKPThunder() {
+    if (modelA) delete modelA;
+    if (modelB) delete modelB;
+    DebugPrintf(" DeleteMapEffect : clKPThunder\n");
+}
+
+extern const float lbl_80495994[64];
+extern const float lbl_806D8CD0;
+
+void clKPThunder::Update() {
+    int i;
+    int j;
+    int v;
+    unsigned char found;
+    CourseSpark *s;
+    if (this->modelB == 0) return;
+    for (i = 0; i < 5; i++) {
+        s = &this->sparks[i];
+        if (s->active) {
+            if (++s->timer > 0x50) s->active = 0;
+        } else if (this->cooldown == 0) {
+            v = (int)((float)this->count * lbl_80495994[this->randomIndex]);
+            found = 0;
+            for (j = 0; j < 5; j++) {
+                if (this->sparks[j].active && this->sparks[j].index == v) found = 1;
+            }
+            if (!found) {
+                s->active = 1;
+                s->timer = 0;
+                s->index = v;
+                this->cooldown = 5;
+                this->cooldown = (int)(lbl_806D8CD0 * lbl_80495994[this->randomIndex]);
+            }
+        }
+    }
+    this->randomIndex++;
+    if (this->randomIndex >= 0x40) this->randomIndex = 0;
+    if (this->cooldown > 0) this->cooldown--;
+}
 
 extern "C" {
 extern char lbl_806D8C98[7], lbl_806D8CA0[5];
@@ -40,7 +127,7 @@ static inline void Check(RenderJoint *j, int line) {
     if (!j) __assert(lbl_806D8C98, line, lbl_806D8CA0);
 }
 #define Clamp01(value) ((value) < 0.0f ? 0.0f : ((value) > 1.0f ? 1.0f : (value)))
-static inline void ApplyTransform(SparkRender *s, RenderJoint *j) {
+static inline void ApplyTransform(clKPThunder *s, RenderJoint *j) {
     Check(j, 0x3F1);
     Object_SetJObjPositionX(s->modelB, j->x);
     Check(j, 0x3FD);
@@ -69,7 +156,7 @@ static inline void ApplyTransform(SparkRender *s, RenderJoint *j) {
 static inline void SetAlpha(clNormal3D *m, unsigned char alpha) {
     Object_SetColorAlphaOnly(m, (float)alpha / 255.0f, 0);
 }
-void SparkRender::Draw() {
+void clKPThunder::Draw() {
     if (this->modelB == 0 || this->modelA == 0) return;
     for (int i=0; i<5; i++) {
         CourseSpark *spark = &this->sparks[i];

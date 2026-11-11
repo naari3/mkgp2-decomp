@@ -6780,32 +6780,13 @@ game/Scene_8016FC14.cpp:
 	.data       start:0x80491230 end:0x80491258
 	.sdata      start:0x806CFA78 end:0x806CFA88
 
-game/autodata/sdata_806CFA88.c:
-	.sdata      start:0x806CFA88 end:0x806CFA98
-
-game/autodata/data_80491258.c:
-	.data       start:0x80491258 end:0x80491280
-
 game/Scene_8016FE44.cpp:
-	extab       start:0x800106EC end:0x800106F4
-	extabindex  start:0x800263C0 end:0x800263CC
-	.text       start:0x8016FE44 end:0x801702E0
-
-game/mapeffect/fn_801702E0.c:
-	extab       start:0x800106F4 end:0x800106FC
-	extabindex  start:0x800263CC end:0x800263D8
-	.text       start:0x801702E0 end:0x801704A0
-
-game/Scene_801704A0.cpp:
-	extab       start:0x800106FC end:0x80010704
-	extabindex  start:0x800263D8 end:0x800263E4
-	.text       start:0x801704A0 end:0x80170544
-
-game/Scene_80170544.cpp:
-	extab       start:0x80010704 end:0x8001075C
-	extabindex  start:0x800263E4 end:0x800263F0
-	.text       start:0x80170544 end:0x801706C8
+	extab       start:0x800106EC end:0x8001075C
+	extabindex  start:0x800263C0 end:0x800263F0
+	.text       start:0x8016FE44 end:0x801706C8
 	.rodata     start:0x8036E118 end:0x8036E21C
+	.data       start:0x80491258 end:0x80491280
+	.sdata      start:0x806CFA88 end:0x806CFA98
 
 game/Scene_801706C8.cpp:
 	extab       start:0x8001075C end:0x800107E8
