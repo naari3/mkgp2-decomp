@@ -1,11 +1,9 @@
 #include "game/types/c_region.h"
 C_REGION_BEGIN
-/*
- * A "push button" prompt effect on the shared sprite-effect base
- * (vtable PushPrompt_vtable_8048ED34): it zooms in, waits for a button press (or a
- * timeout), then zooms out and finishes. The base declares a virtual
- * that is not defined here first, so neither vtable is emitted.
- */
+/* clCSPartsMsgWindow: real six-slot sprite-parts descendant with the
+ * additional message callback. Compiler-emitted RTTI/vtable and original
+ * text-buffer initializer belong to this unit. Deferred definitions are
+ * in reverse address order. */
 C_REGION_END
 #pragma cplusplus on
 
@@ -29,7 +27,7 @@ extern "C" void *__va_arg(va_list v_list, int type);
 extern "C" {
 extern char lbl_8048EB44[];
 extern char PushPrompt_vtable_8048ED34[];
-extern const TextBuf PushPrompt_rodata_803607A8;
+extern const TextBuf PushPrompt_rodata_803607A8 = { {0} };
 extern const float lbl_806D7998, lbl_806D799C, lbl_806D79A0, lbl_806D79A4;
 extern const float lbl_806D79A8, lbl_806D79AC, lbl_806D79B0, lbl_806D79B4;
 extern const float lbl_806D79B8, lbl_806D79BC, lbl_806D79C0, lbl_806D79C4;
@@ -43,7 +41,7 @@ extern void fn_8016918C(void *obj, int id, int flag, float x, float y, float sx,
 #else
 /* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
 extern void fn_8016918C(void *, int, float, float, float, float, float, float, float, float, int);
-static inline void fn_8016918C_Reordered(void *obj, int id, int flag, float x, float y, float sx, float sy, float r, float g, float b, float a) { fn_8016918C(obj, id, x, y, sx, sy, r, g, b, a, flag); }
+static inline void fn_8016918C_Reordered(void *obj, int id, int flag, float x, float y, float sx, float sy, float r, float g, float b, float a) { fn_8016918C((void *)obj, id, x, y, sx, sy, r, g, b, a, flag); }
 #define fn_8016918C fn_8016918C_Reordered
 #endif
 #ifdef __MWERKS__
@@ -51,7 +49,7 @@ extern void fn_80169334(void *obj, int id, int flag, float x, float y, float sx,
 #else
 /* The definition orders its int and float parameters differently; see docs/notes/port_abi.md. */
 extern void fn_80169334(void *, int, float, float, float, float, float, int);
-static inline void fn_80169334_Reordered(void *obj, int id, int flag, float x, float y, float sx, float sy, float a) { fn_80169334(obj, id, x, y, sx, sy, a, flag); }
+static inline void fn_80169334_Reordered(void *obj, int id, int flag, float x, float y, float sx, float sy, float a) { fn_80169334((void *)obj, id, x, y, sx, sy, a, flag); }
 #define fn_80169334 fn_80169334_Reordered
 #endif
 extern void fn_801681E8(void *obj, const char *text, float x, float y, float sx, float sy, float r, float g, float b, float a, ...);
@@ -72,8 +70,8 @@ extern void *GetInputManager(void);
 extern InputPlayer *InputMgr_GetPlayer(void *, int);
 }
 
-struct PushPrompt;
-extern "C" void fn_80141B08(PushPrompt *self);
+struct clCSPartsMsgWindow;
+
 
 
 struct SpriteAnim {
@@ -83,30 +81,9 @@ struct SpriteAnim {
     SpriteAnim(int a);
 };
 
-struct FxData {
-    void *obj;
-    unsigned char active;
-    float x, y;
-    float alpha;
-};
+#include "game/CSParts.h"
 
-struct FxBase : FxData {
-    FxBase() {
-        obj = 0;
-        active = 0;
-        x = lbl_806D79A8;
-        y = lbl_806D79A8;
-        alpha = lbl_806D7998;
-    }
-    virtual ~FxBase() {}
-    virtual void m0C();
-    virtual void m10();
-    virtual void Update();
-    virtual void Draw();
-    virtual void m1C();
-};
-
-struct PushPrompt : FxBase {
+struct clCSPartsMsgWindow : clCSPartsInerface {
     int state;
     float t;
     float px, py;
@@ -116,9 +93,9 @@ struct PushPrompt : FxBase {
     float fade;
     SpriteAnim *anim;
 
-    virtual void m0C();
-    PushPrompt();
-    virtual ~PushPrompt();
+    clCSPartsMsgWindow();
+    virtual ~clCSPartsMsgWindow();
+    virtual void Update();
     virtual void Draw();
     virtual void m1C();
     virtual void m20();
@@ -126,25 +103,44 @@ struct PushPrompt : FxBase {
     void Put(int id, int flag, float x, float y, float w, float h, float r, float g, float b, float a);
 };
 
-void PushPrompt::m20() {
-}
-
-void PushPrompt::m1C() {
-    fn_801674AC(anim);
-}
-
-void PushPrompt::Draw() {
-    if (state != 3) {
-        fn_80169334(obj, 0x57F, 0, px, py, sx, sy, fade);
-        m20();
-        fn_801675A4(anim);
-    }
-}
 
 #define LERP(a, b, t) ((a) + ((b) - (a)) * (t))
 
-extern "C" void fn_80141B08(PushPrompt *self)
+clCSPartsMsgWindow::clCSPartsMsgWindow() {
+    state = 0;
+    t = 0.0f;
+    anim = new SpriteAnim(0);
+    px = lbl_806D7A0C;
+    py = lbl_806D7A10;
+    sx = 0.0f;
+    sy = 0.0f;
+    px2 = lbl_806D7A0C;
+    py2 = lbl_806D7A10;
+    sx2 = 0.0f;
+    sy2 = 0.0f;
+    fade = 0.0f;
+}
+
+clCSPartsMsgWindow::~clCSPartsMsgWindow() {
+    fn_80120A08(0x57F);
+    fn_801676AC(anim, 1);
+}
+
+void clCSPartsMsgWindow::Put(int id, int flag, float x, float y, float w, float h, float r, float g, float b, float a) {
+    fn_8016918C((void *)obj, id, flag, x * sx + px, y * sy + py, w * sy, h * sy, r, g, b, a * fade);
+}
+
+void clCSPartsMsgWindow::Print(float x, float y, float w, float h, float r, float g, float b, float a, const char *fmt, ...) {
+    va_list args;
+    TextBuf buf = PushPrompt_rodata_803607A8;
+    va_start(args, fmt);
+    vsprintf(buf.c, fmt, args);
+    fn_801681E8((void *)obj, buf.c, x * sx + px, y * sy + py, w * sy, h * sy, r, g, b, a * fade);
+}
+
+void clCSPartsMsgWindow::Update()
 {
+    clCSPartsMsgWindow *self = this;
     float k;
 
     if (self->state == 3) {
@@ -235,34 +231,17 @@ extern "C" void fn_80141B08(PushPrompt *self)
     self->py2 += 262.0f;
 }
 
-void PushPrompt::Print(float x, float y, float w, float h, float r, float g, float b, float a, const char *fmt, ...) {
-    va_list args;
-    TextBuf buf = PushPrompt_rodata_803607A8;
-    va_start(args, fmt);
-    vsprintf(buf.c, fmt, args);
-    fn_801681E8(obj, buf.c, x * sx + px, y * sy + py, w * sy, h * sy, r, g, b, a * fade);
+void clCSPartsMsgWindow::Draw() {
+    if (state != 3) {
+        fn_80169334((void *)obj, 0x57F, 0, px, py, sx, sy, fade);
+        m20();
+        fn_801675A4(anim);
+    }
 }
 
-void PushPrompt::Put(int id, int flag, float x, float y, float w, float h, float r, float g, float b, float a) {
-    fn_8016918C(obj, id, flag, x * sx + px, y * sy + py, w * sy, h * sy, r, g, b, a * fade);
+void clCSPartsMsgWindow::m1C() {
+    fn_801674AC(anim);
 }
 
-PushPrompt::~PushPrompt() {
-    fn_80120A08(0x57F);
-    fn_801676AC(anim, 1);
-}
-
-PushPrompt::PushPrompt() {
-    state = 0;
-    t = lbl_806D79A8;
-    anim = new SpriteAnim(0);
-    px = lbl_806D7A0C;
-    py = lbl_806D7A10;
-    sx = lbl_806D79A8;
-    sy = lbl_806D79A8;
-    px2 = lbl_806D7A0C;
-    py2 = lbl_806D7A10;
-    sx2 = lbl_806D79A8;
-    sy2 = lbl_806D79A8;
-    fade = lbl_806D79A8;
+void clCSPartsMsgWindow::m20() {
 }

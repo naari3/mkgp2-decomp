@@ -1,13 +1,7 @@
-/*
- * 0x801461B0..0x8014640C: ranking panel base dtor and ctor.
- *
- * fn_80146260 is the constructor of a clCSParts-derived result panel
- * (vtable clCSPartsResultPanel_vtable_8048EF98): the inlined clCSPartsInerface / clCSParts ctors,
- * then four clCSModel children built from this TU's .rodata parameter
- * blocks (0x80361ED0..0x803625E4). Mangled names are bridged to the
- * binary's symbols via tools/extab_user_renames.json; the inline
- * clCSPartsInerface dtor is emitted as a weak copy (dtor_8013EB50).
- */
+/* clCSPartsWindowArrow: .text 0x801461B0..0x8014640C.
+ * Canonical clCSParts base, compiler-emitted vtable and RTTI, with the
+ * model descriptor pool preserved. Deferred definitions are in reverse
+ * address order. Weak base destructors are discarded by the linker. */
 #pragma cplusplus on
 
 #include "game/types/InputPlayer.h"
@@ -28,29 +22,8 @@ extern void *clCSPartsResultPanel_vtable_8048EF98[];
 TripleObj *fn_801461B0(TripleObj *self, short flag);
 }
 
+#define CSPARTS_INLINE_DTOR
 #include "game/CSParts.h"
-
-extern "C" TripleObj *fn_801461B0(TripleObj *self, short flag)
-{
-    if (self) {
-        self->vt14 = clCSPartsResultPanel_vtable_8048EF98;
-        if (self->p18) {
-            fn_8013B87C(self->p18, 1);
-        }
-        self->p18 = 0;
-        if (self) {
-            self->vt14 = clCSParts_vtable_8048EE48;
-            if (self->p18) {
-                fn_8013B87C(self->p18, 1);
-            }
-            if (self) {
-                self->vt14 = lbl_8048EB44;
-            }
-        }
-        if (flag > 0) MemoryManager_TimedFree(self);
-    }
-    return self;
-}
 
 /* element type read off the values (all floats), not from code */
 static const float RankPanelBase_801461B0_rodata_80361ED0[255] = {
@@ -177,15 +150,20 @@ static const lbl_80362508_Row lbl_80362508[5] = {
     { 1, 20, 294.0f, 300.0f, 1.0f, 1.0f, 3.1415927f, 1.0f, 1.0f, 1.0f, 0.3f },
     { 5, 0, 0.0f, 0.0f, 1.0f, 1.0f, 3.1415927f, 1.0f, 1.0f, 1.0f, 0.0f }
 };
-struct clCSPartsResultPanel : clCSParts {
-    clCSPartsResultPanel();
-    virtual ~clCSPartsResultPanel();
+struct clCSPartsWindowArrow : clCSParts {
+    clCSPartsWindowArrow();
+    virtual ~clCSPartsWindowArrow();
 };
 
-clCSPartsResultPanel::clCSPartsResultPanel() {
+clCSPartsWindowArrow::clCSPartsWindowArrow() {
     PreloadResource(0x8CD);
     Add(new clCSModel(0x8CD, 0, 0, lbl_803622CC, 1));
     Add(new clCSModel(0x8CD, 0, 0, lbl_8036237C, 1));
     Add(new clCSModel(0x8CD, 0, 0, lbl_80362458, 0));
     Add(new clCSModel(0x8CD, 0, 0, lbl_80362508, 0));
+}
+
+clCSPartsWindowArrow::~clCSPartsWindowArrow() {
+    if (model) { delete model; }
+    model = 0;
 }

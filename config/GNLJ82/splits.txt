@@ -5941,7 +5941,7 @@ game/SuikaBall_801313D0.cpp:
 	.sdata      start:0x806CF5C8 end:0x806CF5E0
 
 game/autodata/sdata_806CF5E0.c:
-	.sdata      start:0x806CF5E0 end:0x806CF708
+	.sdata      start:0x806CF5E0 end:0x806CF6E8
 
 game/autodata/data_8048E40C.c:
 	.data       start:0x8048E40C end:0x8048E4B8
@@ -6076,13 +6076,13 @@ game/ResultFxScene.c:
 	.data       start:0x8048EC50 end:0x8048EC90
 
 game/autodata/data_8048EC90.c:
-	.data       start:0x8048EC90 end:0x8048EE08
+	.data       start:0x8048EC90 end:0x8048ED28
 
 game/autodata/rodata_80360744.c:
 	.rodata     start:0x80360744 end:0x8036076C
 
 game/autodata/rodata_80360770.c:
-	.rodata     start:0x80360770 end:0x803608D0
+	.rodata     start:0x80360770 end:0x803607A8
 
 game/LogoAnim.c:
 	extab       start:0x8000D7AC end:0x8000D7DC
@@ -6097,6 +6097,15 @@ game/PushPrompt.c:
 	extab       start:0x8000D7DC end:0x8000D838
 	extabindex  start:0x80025094 end:0x800250E8
 	.text       start:0x80141A6C end:0x8014219C
+	.rodata     start:0x803607A8 end:0x803608D0
+	.data       start:0x8048ED28 end:0x8048ED58
+	.sdata      start:0x806CF6E8 end:0x806CF6F8
+
+game/autodata/sdata_806CF6F8.c:
+	.sdata      start:0x806CF6F8 end:0x806CF708
+
+game/autodata/data_8048ED58.c:
+	.data       start:0x8048ED58 end:0x8048EE08
 
 game/PodiumPose.c:
 	extab       start:0x8000D838 end:0x8000D92C
@@ -6129,10 +6138,10 @@ game/CSPartsResultTimeNum.c:
 	.sdata      start:0x806CF738 end:0x806CF750
 
 game/autodata/sdata_806CF750.c:
-	.sdata      start:0x806CF750 end:0x806CF7C8
+	.sdata      start:0x806CF750 end:0x806CF788
 
 game/autodata/data_8048EEE8.c:
-	.data       start:0x8048EEE8 end:0x8048F038
+	.data       start:0x8048EEE8 end:0x8048EF78
 
 game/RankPanel_80144430.cpp:
 	extab       start:0x8000DBE4 end:0x8000DE5C
@@ -6154,10 +6163,15 @@ game/RankPanelBase_801461B0.cpp:
 	extab       start:0x8000DE6C end:0x8000DF14
 	extabindex  start:0x80025298 end:0x800252B0
 	.text       start:0x801461B0 end:0x8014640C
-	.rodata     start:0x80361ED0 end:0x803625E4
+	.rodata     start:0x80361ED0 end:0x8036261C
+	.data       start:0x8048EF78 end:0x8048EFB8
+	.sdata      start:0x806CF788 end:0x806CF7A0
 
-game/autodata/rodata_803625E4.c:
-	.rodata     start:0x803625E4 end:0x8036261C
+game/autodata/sdata_806CF7A0.c:
+	.sdata      start:0x806CF7A0 end:0x806CF7C8
+
+game/autodata/data_8048EFB8.c:
+	.data       start:0x8048EFB8 end:0x8048F038
 
 game/autodata/rodata_80362620.c:
 	.rodata     start:0x80362620 end:0x80362650
