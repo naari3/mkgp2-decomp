@@ -2833,10 +2833,6 @@
     "__nwa__FUl": "FUN_8003b120",
     "__dla__FPv": "MemoryManager_Free"
   },
-  "src/game/JvsInputLifetime.cpp": {
-    "__dt__16JvsInputLifetimeFv": "JvsInput_DtorAndFree",
-    "__vt__16JvsInputLifetime": "JvsInput_data_803F5788"
-  },
   "src/game/PcbListenerLifetime.c": {
     "__dt__11PcbListenerFv": "PcbListener_Dtor",
     "__ct__11PcbListenerFv": "PcbListener_Init"
@@ -18048,5 +18044,24 @@
     "@487": "@eti_80029258",
     "@504": "@etb_80017A4C",
     "@505": "@eti_80029264"
+  },
+  "src/game/JvsInputStubs.c": {
+    "__ct__16clInputInterfaceFv": "JvsInput_SetVtable",
+    "__dt__16clInputInterfaceFv": "JvsInput_DtorAndFree",
+    "__vt__16clInputInterface": "JvsInput_data_803F5788",
+    "__RTTI__16clInputInterface": "JvsInput_data_806CED88",
+    "Update__16clInputInterfaceFv": "InputObj_Update_Stub",
+    "GetValue0__16clInputInterfaceFv": "fn_80039AB4",
+    "GetDefaultFloat__16clInputInterfaceFv": "InputObj_GetDefaultFloat",
+    "GetValue1__16clInputInterfaceFv": "fn_80039AA4",
+    "GetValue2__16clInputInterfaceFv": "fn_80039A9C",
+    "GetState0__16clInputInterfaceFv": "fn_80039A94",
+    "GetState1__16clInputInterfaceFv": "fn_80039A8C",
+    "GetState2__16clInputInterfaceFv": "fn_80039A84",
+    "GetState3__16clInputInterfaceFv": "fn_80039A7C",
+    "Clear__16clInputInterfaceFv": "fn_80039A78",
+    "@39": "lbl_802E9950",
+    "@52": "@etb_80005E78",
+    "@53": "@eti_8001FAF0"
   }
 }

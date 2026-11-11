@@ -129,10 +129,10 @@ game/autodata/sdata2_806D22C8.c:
 	.sdata2     start:0x806D22C8 end:0x806D2480
 
 game/autodata/sdata_806CED48.c:
-	.sdata      start:0x806CED48 end:0x806CED90
+	.sdata      start:0x806CED48 end:0x806CED88
 
 game/autodata/data_803F56B8.c:
-	.data       start:0x803F56B8 end:0x803F57C0
+	.data       start:0x803F56B8 end:0x803F5788
 
 game/autodata/rodata_802E96B8.c:
 	.rodata     start:0x802E96B8 end:0x802E98DC
@@ -566,9 +566,6 @@ game/JvsInputReset.c:
 	.text       start:0x800396E4 end:0x80039780
 	.rodata     start:0x802E98E0 end:0x802E994C
 
-game/autodata/rodata_802E9950.c:
-	.rodata     start:0x802E9950 end:0x802E9C4C
-
 game/JvsInputPoll.c:
 	extab       start:0x80005E68 end:0x80005E70
 	extabindex  start:0x8001FAD8 end:0x8001FAE4
@@ -580,15 +577,18 @@ game/JvsInputClear.c:
 	.text       start:0x80039A34 end:0x80039A78
 
 game/JvsInputStubs.c:
-	.text       start:0x80039A78 end:0x80039AC4
-
-game/JvsInputLifetime.cpp:
 	extab       start:0x80005E78 end:0x80005E80
 	extabindex  start:0x8001FAF0 end:0x8001FAFC
-	.text       start:0x80039AC4 end:0x80039B0C
+	.text       start:0x80039A78 end:0x80039B1C
+	.rodata     start:0x802E9950 end:0x802E9968
+	.data       start:0x803F5788 end:0x803F57C0
+	.sdata      start:0x806CED88 end:0x806CED90
+
+game/autodata/rodata_802E9968.c:
+	.rodata     start:0x802E9968 end:0x802E9C4C
 
 game/JvsInputMetrics.cpp:
-	.text       start:0x80039B0C end:0x80039C40
+	.text       start:0x80039B1C end:0x80039C40
 
 game/Profiler_DrawBar.c:
 	extab       start:0x80005E80 end:0x80005E88

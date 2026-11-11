@@ -1,11 +1,3 @@
-/* Only the observed offset-zero vptr is modeled here. */
-struct JvsInput {
-    JvsInput();
-    virtual ~JvsInput();
-};
-
-JvsInput::JvsInput() {}
-
 extern "C" {
 extern float g_metricsTable[49];
 extern const float lbl_806D2478;

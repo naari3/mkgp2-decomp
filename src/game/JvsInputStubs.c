@@ -1,14 +1,16 @@
-/* JVS input object virtual-method stubs, 0x80039A78..0x80039AC4. */
-
-extern const float lbl_806D2440;
-
-void fn_80039A78(void) {}
-int fn_80039A7C(void) { return 0; }
-int fn_80039A84(void) { return 0; }
-int fn_80039A8C(void) { return 0; }
-int fn_80039A94(void) { return 0; }
-float fn_80039A9C(void) { return lbl_806D2440; }
-float fn_80039AA4(void) { return lbl_806D2440; }
-float InputObj_GetDefaultFloat(void) { return lbl_806D2440; }
-float fn_80039AB4(void) { return lbl_806D2440; }
-int InputObj_Update_Stub(void) { return 0; }
+/* clInputInterface definitions, in reverse order for deferred emission. */
+#include "game/types/clInputInterface.h"
+void operator delete(void *);
+extern "C" const float lbl_806D2440;
+clInputInterface::clInputInterface() {}
+clInputInterface::~clInputInterface() {}
+int clInputInterface::Update() { return 0; }
+float clInputInterface::GetValue0() { return lbl_806D2440; }
+float clInputInterface::GetDefaultFloat() { return lbl_806D2440; }
+float clInputInterface::GetValue1() { return lbl_806D2440; }
+float clInputInterface::GetValue2() { return lbl_806D2440; }
+int clInputInterface::GetState0() { return 0; }
+int clInputInterface::GetState1() { return 0; }
+int clInputInterface::GetState2() { return 0; }
+int clInputInterface::GetState3() { return 0; }
+void clInputInterface::Clear() {}
