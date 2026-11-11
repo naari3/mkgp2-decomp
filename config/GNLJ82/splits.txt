@@ -10443,7 +10443,7 @@ game/anon_80203EA0_m2.cpp:
 	.sdata      start:0x806D0288 end:0x806D0298
 
 game/autodata/sdata_806D0298.c:
-	.sdata      start:0x806D0298 end:0x806D0338
+	.sdata      start:0x806D0298 end:0x806D0328
 
 game/autodata/data_804EC440.c:
 	.data       start:0x804EC440 end:0x804EC568
@@ -10662,7 +10662,7 @@ game/anon_8020AF08_nm1.cpp:
 	.rodata     start:0x803C2E50 end:0x803C3504
 
 game/autodata/rodata_803C3508.c:
-	.rodata     start:0x803C3508 end:0x803C35AC
+	.rodata     start:0x803C3508 end:0x803C3590
 
 game/anon_8020B4F8.cpp:
 	extab       start:0x80019538 end:0x800195C8
@@ -10689,12 +10689,24 @@ game/anon_8020BD68_nm1.cpp:
 	.data       start:0x804EC95C end:0x804EC990
 
 game/autodata/data_804EC990.c:
-	.data       start:0x804EC990 end:0x804ECA2C
+	.data       start:0x804EC990 end:0x804EC9B4
 
 game/anon_8020C650.cpp:
 	extab       start:0x80019718 end:0x8001976C
 	extabindex  start:0x80029C78 end:0x80029CC0
 	.text       start:0x8020C650 end:0x8020C974
+	.rodata     start:0x803C3590 end:0x803C35A0
+	.data       start:0x804EC9B4 end:0x804EC9E0
+	.sdata      start:0x806D0328 end:0x806D0330
+
+game/autodata/sdata_806D0330.c:
+	.sdata      start:0x806D0330 end:0x806D0338
+
+game/autodata/data_804EC9E0.c:
+	.data       start:0x804EC9E0 end:0x804ECA2C
+
+game/autodata/rodata_803C35A0.c:
+	.rodata     start:0x803C35A0 end:0x803C35AC
 
 game/anon_8020C974.cpp:
 	extab       start:0x8001976C end:0x80019774

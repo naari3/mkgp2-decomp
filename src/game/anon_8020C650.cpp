@@ -5,7 +5,7 @@
 
 #include "game/FlowScene.h"
 
-#include "game/types/SceneBase.h"
+#include "game/types/clMnSystem01.h"
 
 struct FlowMgrInfo {
     char pad000[0x164];
@@ -21,24 +21,6 @@ struct FlowMgrInfo {
     int f188[3];
 };
 
-/* Menu mode base (vtable MenuModeBase_vtable_804E549C, ctor fn_801F5B54). */
-struct MenuModeBase : SceneBase {
-    virtual void _key();
-    int f08;
-    int f0C;
-    int f10;
-    int f14;
-    char pad18[0x30 - 0x18];
-    int f30[3];
-    int chara;
-    int pad40;
-    int mode;
-    int f48;
-    char pad4C[0x5C - 0x4C];
-    MenuModeBase();
-    ~MenuModeBase() {}
-};
-
 extern "C" {
 extern int g_localPcbRole;
 FlowMgrInfo *fn_801FE404(void);
@@ -49,29 +31,41 @@ void fn_801F9B64(void);
 void fn_801F9CA8(void);
 void fn_801F9DA4(void);
 unsigned char PcbSyncTable_MyFlagIsSet(void);
-SceneBase *fn_8020B994(void);
-SceneBase *fn_8020C254(void);
+clSceneInterface *fn_8020B994(void);
+clSceneInterface *fn_8020C254(void);
 }
 
-struct CardMenuRoot : MenuModeBase {
-    virtual void _key();
-    SceneBase *task;
-    CardMenuRoot();
-    ~CardMenuRoot();
-    virtual void Destroy();
-    virtual void Update();
-    virtual void Draw();
-};
-
-void CardMenuRoot::Draw() {
-    fn_802029EC();
-    if (task != 0) {
-        task->Draw();
+clMnSystem01::clMnSystem01() : task(0) {
+    fn_801F9B64();
+    fn_801F9DA4();
+    if (g_localPcbRole > 1 || PcbSyncTable_MyFlagIsSet() > 1) {
+        mode = 2;
+        fn_801FE404()->mode = mode;
+    } else {
+        mode = 0;
+        fn_801FE404()->mode = mode;
     }
-    fn_8011FAB8();
+    if (fn_801FE404()->mode == 2) {
+        task = fn_8020B994();
+    } else {
+        task = fn_8020C254();
+    }
 }
 
-void CardMenuRoot::Update() {
+clMnSystem01::~clMnSystem01() {
+    fn_801F9CA8();
+    fn_801F9AAC();
+}
+
+extern "C" clMnSystem01 *fn_8020C7F4(void) {
+    return new clMnSystem01;
+}
+
+void clMnSystem01::Destroy() {
+    delete this;
+}
+
+void clMnSystem01::Update() {
     if (task != 0) {
         if (!task->done) {
             task->Update();
@@ -94,32 +88,10 @@ void CardMenuRoot::Update() {
     }
 }
 
-void CardMenuRoot::Destroy() {
-    delete this;
-}
-
-extern "C" CardMenuRoot *fn_8020C7F4(void) {
-    return new CardMenuRoot;
-}
-
-CardMenuRoot::~CardMenuRoot() {
-    fn_801F9CA8();
-    fn_801F9AAC();
-}
-
-CardMenuRoot::CardMenuRoot() : task(0) {
-    fn_801F9B64();
-    fn_801F9DA4();
-    if (g_localPcbRole > 1 || PcbSyncTable_MyFlagIsSet() > 1) {
-        mode = 2;
-        fn_801FE404()->mode = mode;
-    } else {
-        mode = 0;
-        fn_801FE404()->mode = mode;
+void clMnSystem01::Draw() {
+    fn_802029EC();
+    if (task != 0) {
+        task->Draw();
     }
-    if (fn_801FE404()->mode == 2) {
-        task = fn_8020B994();
-    } else {
-        task = fn_8020C254();
-    }
+    fn_8011FAB8();
 }
