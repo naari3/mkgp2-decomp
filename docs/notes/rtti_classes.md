@@ -277,3 +277,8 @@ When expanding a converted TU backwards from an existing 4-aligned jump-table se
 Source: Codex worker r3_c20_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 clRsContinueTaskBT converted in game/BattleContinueScene.cpp using canonical clMnCardClasses.h bases, deferred reverse definitions and explicit VHolder<Panel> dtor specialization; compiler vtable 804EF054, base lists, RTTI and name pool exact, clang OK, main.dol SHA1 unchanged. No new compiler rule found.
+
+## r3_c21_20261111
+Source: Codex worker r3_c21_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+clStartNum/clStartGo: deferred reverse function definitions plus -inline deferred,noauto preserve the out-of-line clStartGo constructor (auto would inline it into the factory). Existing reorder_extab declarations match the complete function-name set exactly; preserve the legacy weak-base-destructor bridge when renaming the real base class, otherwise the reorder silently does not apply. Six owned sections and all 15 functions match; full DOL SHA-1 unchanged.
