@@ -18509,5 +18509,13 @@
     "@829": "lbl_803BDED8",
     "@831": "lbl_803BDEE4",
     "@830": "data_804E5248_data_804E5248"
+  },
+  "src/game/fn_80245780.cpp": {
+    "@15": "lbl_803EF658",
+    "__dt__9clMslDispFv": "fn_80245780",
+    "__ct__9clMslDispFv": "fn_802457E0",
+    "__vt__9clMslDisp": "lbl_804EE7B8",
+    "__RTTI__9clMslDisp": "lbl_806D0838",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

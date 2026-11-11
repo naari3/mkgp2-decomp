@@ -11664,13 +11664,13 @@ game/CardCreditFlow.cpp:
 	.sdata      start:0x806D07E8 end:0x806D0808
 
 game/autodata/sdata_806D0808.c:
-	.sdata      start:0x806D0808 end:0x806D0878
+	.sdata      start:0x806D0808 end:0x806D0838
 
 game/autodata/data_804EE760.c:
-	.data       start:0x804EE760 end:0x804EE7C8
+	.data       start:0x804EE760 end:0x804EE7B8
 
 game/autodata/rodata_803EF418.c:
-	.rodata     start:0x803EF418 end:0x803EF848
+	.rodata     start:0x803EF418 end:0x803EF658
 
 game/fn_80242DE0.c:
 	.text       start:0x80242DE0 end:0x80242DEC
@@ -11782,15 +11782,19 @@ game/fn_80245704.cpp:
 	extabindex  start:0x8002B1F0 end:0x8002B1FC
 	.text       start:0x80245704 end:0x80245780
 
-game/fn_80245780.c:
-	extab       start:0x8001D448 end:0x8001D450
-	extabindex  start:0x8002B1FC end:0x8002B208
-	.text       start:0x80245780 end:0x802457E0
+game/fn_80245780.cpp:
+	extab       start:0x8001D448 end:0x8001D458
+	extabindex  start:0x8002B1FC end:0x8002B214
+	.text       start:0x80245780 end:0x80245834
+	.rodata     start:0x803EF658 end:0x803EF668
+	.data       start:0x804EE7B8 end:0x804EE7C8
+	.sdata      start:0x806D0838 end:0x806D0840
 
-game/HudSelectionInit.c:
-	extab       start:0x8001D450 end:0x8001D458
-	extabindex  start:0x8002B208 end:0x8002B214
-	.text       start:0x802457E0 end:0x80245834
+game/autodata/sdata_806D0840.c:
+	.sdata      start:0x806D0840 end:0x806D0878
+
+game/autodata/rodata_803EF668.c:
+	.rodata     start:0x803EF668 end:0x803EF848
 
 game/HudSelectionStep.c:
 	.text       start:0x80245834 end:0x80245850
