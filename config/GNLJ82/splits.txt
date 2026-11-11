@@ -11664,10 +11664,10 @@ game/CardCreditFlow.cpp:
 	.sdata      start:0x806D07E8 end:0x806D0808
 
 game/autodata/sdata_806D0808.c:
-	.sdata      start:0x806D0808 end:0x806D0838
+	.sdata      start:0x806D0808 end:0x806D0818
 
 game/autodata/data_804EE760.c:
-	.data       start:0x804EE760 end:0x804EE7B8
+	.data       start:0x804EE760 end:0x804EE784
 
 game/autodata/rodata_803EF418.c:
 	.rodata     start:0x803EF418 end:0x803EF658
@@ -11700,44 +11700,17 @@ game/fn_80243464.cpp:
 	.text       start:0x80243464 end:0x802437AC
 
 game/fn_802437AC.cpp:
-	extab       start:0x8001D0BC end:0x8001D0EC
-	extabindex  start:0x8002B13C end:0x8002B148
-	.text       start:0x802437AC end:0x80243958
+	extab       start:0x8001D0BC end:0x8001D230
+	extabindex  start:0x8002B13C end:0x8002B19C
+	.text       start:0x802437AC end:0x80244524
+	.data       start:0x804EE784 end:0x804EE79C
+	.sdata      start:0x806D0818 end:0x806D0828
 
-game/fn_80243958.c:
-	extab       start:0x8001D0EC end:0x8001D0F4
-	extabindex  start:0x8002B148 end:0x8002B154
-	.text       start:0x80243958 end:0x80243A24
+game/autodata/sdata_806D0828.c:
+	.sdata      start:0x806D0828 end:0x806D0838
 
-game/ItemListHudCreate.cpp:
-	extab       start:0x8001D0F4 end:0x8001D12C
-	extabindex  start:0x8002B154 end:0x8002B160
-	.text       start:0x80243A24 end:0x80243B78
-
-game/ItemListHudDestroy.cpp:
-	extab       start:0x8001D12C end:0x8001D154
-	extabindex  start:0x8002B160 end:0x8002B16C
-	.text       start:0x80243B78 end:0x80243C70
-
-game/ItemPanelDraw.cpp:
-	extab       start:0x8001D154 end:0x8001D1C4
-	extabindex  start:0x8002B16C end:0x8002B178
-	.text       start:0x80243C70 end:0x80244128
-
-game/fn_80244128.cpp:
-	extab       start:0x8001D1C4 end:0x8001D200
-	extabindex  start:0x8002B178 end:0x8002B184
-	.text       start:0x80244128 end:0x80244378
-
-game/fn_80244378.cpp:
-	extab       start:0x8001D200 end:0x8001D208
-	extabindex  start:0x8002B184 end:0x8002B190
-	.text       start:0x80244378 end:0x80244480
-
-game/fn_80244480.cpp:
-	extab       start:0x8001D208 end:0x8001D230
-	extabindex  start:0x8002B190 end:0x8002B19C
-	.text       start:0x80244480 end:0x80244524
+game/autodata/data_804EE79C.c:
+	.data       start:0x804EE79C end:0x804EE7B8
 
 game/fn_80244524.cpp:
 	extab       start:0x8001D230 end:0x8001D248

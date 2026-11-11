@@ -819,15 +819,8 @@ config.libs = [
             Object(NonMatching, "game/fn_80243074.cpp", mw_version="GC/1.3.2", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_80243464.cpp", mw_version="GC/1.3.2", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
             Object(Matching, "game/fn_80242E80.cpp", mw_version="GC/1.3.2", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/fn_802437AC.cpp", mw_version="GC/1.3.2", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(Matching, "game/ItemPanelDraw.cpp", mw_version="GC/1.3.2", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
-            Object(Matching, "game/fn_80243958.c", extra_cflags=["-Cpp_exceptions on", "-lang=c++"]),
-            Object(Matching, "game/ItemListHudCreate.cpp", mw_version="GC/1.3.2", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw off"]),
-            Object(Matching, "game/ItemListHudDestroy.cpp", mw_version="GC/1.3.2", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
+            Object(Matching, "game/fn_802437AC.cpp", mw_version="GC/1.3.2", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-rostr", "-use_lmw_stmw on", "-inline deferred,noauto"]),
             Object(Matching, "game/fn_80244524.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
-            Object(Matching, "game/fn_80244128.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/fn_80244378.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/fn_80244480.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
 
             Object(Matching, "game/fn_80226640.c"),
             Object(Matching, "game/fn_8020F268.c"),
@@ -3495,6 +3488,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # .comment section is dropped and .data alignment pinned to 4. Text/data bytes
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
+    "game/autodata/data_804EE79C",
     "game/SetCourseParams",
     "game/MenuScene_Dispatch",
     "game/RaceDigitUpdate",
@@ -3574,6 +3568,7 @@ def _inject_data_align4_tus() -> None:
 # (e.g. shared dtors). Dropping .comment would lose MWLD's weak flags, so
 # only the .data alignment inside .comment and the section header is pinned.
 DATA_ALIGN4_WEAK_TUS = [
+    "game/fn_802437AC",
     "game/KartPreview",
     "game/CSSceneGetTitle_8014ADB4",
     "game/RaceDigits",
