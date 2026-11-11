@@ -322,3 +322,8 @@ clGameSingle converted in game/RaceScene_RenderPass.cpp, merging FrameUpdate/Dto
 Source: Codex worker r7_c13_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 clSeqEnding/clStageSelect/clTitle share one nondeferred TU: ordinary address-order definitions preserve all 12 functions, and the compiler emits class data SeqEnding/StageSelect/Title in reverse at the end. Base-list-first alone cannot distinguish deferred mode when the external canonical base emits no weak vtable in the TU. Deferred reverse definitions matched text but reversed all class data; all-inline deferred recovered data but moved methods after factories. Keep debug-label strings external here so compiler RTTI names alone occupy 80328D90..80328DB8. Existing #align4 .sdata2 directive handles short clTitle name at 806D4F34. Object/full-link observations, not a traced general compiler rule. Full DOL exact.
+
+## r7_c18_20261111
+Source: Codex worker r7_c18_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+clCGameDemoRB converted in game/ChallengeDemoUra.cpp with canonical clCGameDemo/clJobRunner, deferred,noauto reverse definitions and -rostr. Existing bridges remained valid. Four functions/2348 B and all six owned sections exact, clang OK, full DOL SHA-1 unchanged. No new compiler rule.

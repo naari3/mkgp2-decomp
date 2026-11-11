@@ -2135,7 +2135,7 @@ config.libs = [
             Object(Matching, "game/ChallengeDemoShell.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-inline deferred,auto", "-rostr"]),
             Object(Matching, "game/ChallengeDemoObj.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-inline deferred,auto", "-rostr"]),
             Object(Matching, "game/ChallengeDemoTornado.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-inline deferred", "-rostr"]),
-            Object(Matching, "game/ChallengeDemoUra.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/ChallengeDemoUra.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-inline deferred,noauto", "-rostr"]),
             Object(Matching, "game/ChallengeDemo_Create.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/dtor_8012A5AC.c"),
             Object(Matching, "game/fn_8012A61C.c"),
