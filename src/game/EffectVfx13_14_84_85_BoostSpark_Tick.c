@@ -76,19 +76,19 @@ void EffectVfx13_14_84_85_BoostSpark_Tick(unsigned char *self)
         if ((int)U8(0x190) == 4) {
             if (!S8(0x191)) {
                 GetSpawnPosition(&dir, 0.0f, 0.0f, Rand_RangeFloat(1.0f, 1.5f));
-                Vec2_RotateX(&dir, &dir, 0.017453292f * Rand_RangeFloat(-60.0f, -45.0f));
-                Vec2_RotateY(&dir, &dir, 0.017453292f * (180.0f + Rand_RangeFloat(-20.0f, 20.0f)));
+                Vec2_RotateX(&dir, &dir, 0.017453289f * Rand_RangeFloat(-60.0f, -45.0f));
+                Vec2_RotateY(&dir, &dir, 0.017453289f * (180.0f + Rand_RangeFloat(-20.0f, 20.0f)));
             } else {
                 GetSpawnPosition(&dir, 0.0f, 0.0f, Rand_RangeFloat(1.5f, 2.0f));
-                Vec2_RotateX(&dir, &dir, 0.017453292f * Rand_RangeFloat(-45.0f, -20.0f));
-                Vec2_RotateY(&dir, &dir, 0.017453292f * (180.0f + Rand_RangeFloat(-20.0f, 20.0f)));
+                Vec2_RotateX(&dir, &dir, 0.017453289f * Rand_RangeFloat(-45.0f, -20.0f));
+                Vec2_RotateY(&dir, &dir, 0.017453289f * (180.0f + Rand_RangeFloat(-20.0f, 20.0f)));
             }
         } else {
             float rel = BuildOrientationFromYaw(Vec3_ToYaw(V(0xA4)) - yaw);
             GetSpawnPosition(&dir, 0.0f, 0.0f, Rand_RangeFloat(0.7f, 1.3f));
-            Vec2_RotateX(&dir, &dir, 0.017453292f * Rand_RangeFloat(-50.0f, -45.0f));
+            Vec2_RotateX(&dir, &dir, 0.017453289f * Rand_RangeFloat(-50.0f, -45.0f));
             Vec2_RotateY(&dir, &dir, rel);
-            Vec2_RotateY(&dir, &dir, 0.017453292f * (180.0f + Rand_RangeFloat(-15.0f, 15.0f)));
+            Vec2_RotateY(&dir, &dir, 0.017453289f * (180.0f + Rand_RangeFloat(-15.0f, 15.0f)));
         }
         local = dir;
         Mtx44_TransformVec3(&dir, root, &local);
@@ -98,8 +98,8 @@ void EffectVfx13_14_84_85_BoostSpark_Tick(unsigned char *self)
         F(0x128) = Rand_RangeFloat(-2.0f, 2.0f);
         U32(0x180) = 0;
         Vec3_Scale(V(0xA4), V(0xA4), 0.2f);
-        F(0xA0) = 0.017453292f * Rand_RangeFloat(-180.0f, 180.0f);
-        F(0x158) = 0.017453292f * Rand_RangeFloat(-10.0f, 10.0f);
+        F(0xA0) = 0.017453289f * Rand_RangeFloat(-180.0f, 180.0f);
+        F(0x158) = 0.017453289f * Rand_RangeFloat(-10.0f, 10.0f);
         STATE++;
     }
     case 1:

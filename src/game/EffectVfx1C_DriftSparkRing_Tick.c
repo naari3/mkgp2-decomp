@@ -52,7 +52,7 @@ void EffectVfx1C_DriftSparkRing_Tick(unsigned char *self)
             GetSpawnPosition(V(0x30), 0.7f, 0.6f, 0.3f);
             break;
         }
-        yaw = BuildOrientationFromYaw(0.017453292f * Rand_RangeFloat(-5.0f, 5.0f) + F(0x150));
+        yaw = BuildOrientationFromYaw(0.017453289f * Rand_RangeFloat(-5.0f, 5.0f) + F(0x150));
         GetSpawnPosition(&dir, 0.0f, 0.0f, 1.0f);
         Vec2_RotateY(&dir, &dir, yaw);
         c1 = dir;

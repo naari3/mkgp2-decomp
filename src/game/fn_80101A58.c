@@ -121,8 +121,8 @@ void fn_80101A58(unsigned char *self, unsigned char *w)
             break;
         }
         Vec3_Lerp(self + 0xA0, target, *(Vec *)(self + 0xA0), WF(0x14));
-        F(0xB0) = AngleStepTowards_Shortest(F(0xB0), Vec3_HorizontalYawTo(self + 0xA0, &target), 0.05235986f);
-        F(0xAC) = AngleStepTowards_Shortest(F(0xAC), Vec3_PitchTo(self + 0xA0, &target), 0.05235986f);
+        F(0xB0) = AngleStepTowards_Shortest(F(0xB0), Vec3_HorizontalYawTo(self + 0xA0, &target), 0.052359864f);
+        F(0xAC) = AngleStepTowards_Shortest(F(0xAC), Vec3_PitchTo(self + 0xA0, &target), 0.052359864f);
         WF(0x14) += 0.3f;
         if (1.0f <= WF(0x14)) {
             self[0xC9]++;
@@ -195,11 +195,11 @@ void fn_80101A58(unsigned char *self, unsigned char *w)
             } else {
                 WF(0x14) += 0.008726644f;
             }
-            if (WF(0x14) < -0.08726645f) {
-                WF(0x14) = -0.08726645f;
+            if (WF(0x14) < -0.087266445f) {
+                WF(0x14) = -0.087266445f;
             }
-            if (0.08726645f < WF(0x14)) {
-                WF(0x14) = 0.08726645f;
+            if (0.087266445f < WF(0x14)) {
+                WF(0x14) = 0.087266445f;
             }
             F(0xAC) = BuildOrientationFromYaw(F(0xAC) + WF(0x14));
             if (1.0471973f < F(0xAC)) {
@@ -258,7 +258,7 @@ void fn_80101A58(unsigned char *self, unsigned char *w)
             WF(0x44) += -0.2f;
             Vec3_Add_DestFirst(w + 0x34, w + 0x34, w + 0x40);
             Vec3_Add_DestFirst(self + 0xA0, &rootPos, w + 0x34);
-            F(0xAC) = BuildOrientationFromYaw(-0.08726645f + F(0xAC));
+            F(0xAC) = BuildOrientationFromYaw(-0.087266445f + F(0xAC));
             if (WU(0x4) == 0) {
                 F(0x2C) -= 0.05f;
                 if (F(0x2C) < 0.0f) {

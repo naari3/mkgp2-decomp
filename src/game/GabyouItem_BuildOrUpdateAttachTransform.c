@@ -167,8 +167,8 @@ void GabyouItem_BuildOrUpdateAttachTransform(float dst[4][4], unsigned char *ite
         if (39.0f < x) {
             t -= 39.0f;
         }
-        if (FAbs_FloatAsDouble(10.0f - t) < 1.3f) {
-            if (FAbs_FloatAsDouble(b - (1.3f + t)) < 1.3f) {
+        if (FAbs_FloatAsDouble(10.0f - t) < 1.3000001f) {
+            if (FAbs_FloatAsDouble(b - (1.3000001f + t)) < 1.3000001f) {
                 SpriteSlot_SetAnimFrameAndApplyScale(item + 0x14, item[0x1D], a);
                 SpriteSlot_SetScale(item + 0x14, 0.0f);
             } else {
@@ -176,7 +176,7 @@ void GabyouItem_BuildOrUpdateAttachTransform(float dst[4][4], unsigned char *ite
                 SpriteSlot_SetScale(item + 0x14, 0.0f);
             }
         } else {
-            SpriteSlot_SetScale(item + 0x14, 1.3f);
+            SpriteSlot_SetScale(item + 0x14, 1.3000001f);
         }
         F(0x100) = frame;
     }

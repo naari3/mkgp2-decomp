@@ -84,7 +84,7 @@ void DrawEffect_Cb_KartWheel_DualSpawn(unsigned char *self)
         }
     }
     if (d->timers[0] == 0) {
-        d->speed = 0.017453292f * Rand_RangeFloat(1.0f, 6.0f);
+        d->speed = 0.017453289f * Rand_RangeFloat(1.0f, 6.0f);
         d->timers[0] = Rand_RangeInt(30, 60);
     }
     d->angle = BuildOrientationFromYaw(d->angle + d->speed);

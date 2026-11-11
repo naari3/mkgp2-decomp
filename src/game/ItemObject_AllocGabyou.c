@@ -29,7 +29,7 @@ GabyouSprite *ItemObject_AllocGabyou(void)
         } else {
             SpriteSlot_SetAnimFrameAndApplyScale(&e->slotMode, 0, 0.0f);
         }
-        SpriteSlot_SetScale(&e->slotMode, 1.3f);
+        SpriteSlot_SetScale(&e->slotMode, 1.3000001f);
         e->visible = 0;
         e->field100 = 0.0f;
         e->state = 1;

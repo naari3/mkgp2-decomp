@@ -10,7 +10,7 @@ struct FKPositioned { char pad[0xC]; float x, y;
     void SetPosition(FKPosition p) { x=p.x; y=p.y; }
 };
 struct FKPositionIcon { char pad[0x10]; unsigned char active; char pad11[3]; float x,y,z;
-    void SetPosition(FKPosition p) { active=1; x=p.x; y=p.y; z=0.0f; }
+    void SetPosition(FKPosition p) { active=1; x=p.x; y=p.y; z=1.0f; }
 };
 struct FKPositionPanel {
     char pad00[0x18]; int mode; int state;

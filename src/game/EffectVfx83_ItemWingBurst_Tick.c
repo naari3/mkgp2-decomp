@@ -48,8 +48,8 @@ void EffectVfx83_ItemWingBurst_Tick(unsigned char *self)
         F(0xB0) = 0.7f * Rand_RangeFloat(0.5f, 1.5f);
         if (!S8(0x190)) {
             GetSpawnPosition(V(0xA4), 0.0f, Rand_RangeFloat(0.6f, 1.0f), 1.3f);
-            Vec2_RotateX(V(0xA4), V(0xA4), 0.017453292f * Rand_RangeFloat(-25.0f, 15.0f));
-            Vec2_RotateY(V(0xA4), V(0xA4), 0.017453292f * (180.0f + Rand_RangeFloat(-15.0f, 15.0f)));
+            Vec2_RotateX(V(0xA4), V(0xA4), 0.017453289f * Rand_RangeFloat(-25.0f, 15.0f));
+            Vec2_RotateY(V(0xA4), V(0xA4), 0.017453289f * (180.0f + Rand_RangeFloat(-15.0f, 15.0f)));
             Vec3_Scale(V(0xA4), V(0xA4), Rand_RangeFloat(1.8f, 3.0f));
             local = *V(0xA4);
             Mtx44_TransformVec3(V(0xA4), root, &local);
@@ -58,8 +58,8 @@ void EffectVfx83_ItemWingBurst_Tick(unsigned char *self)
             Vec *eye = &lbl_805DF3D0.eye;
             float yaw = Vec3_HorizontalYawTo(V(0x8C), eye);
             float pitch = Vec3_PitchTo(V(0x8C), eye);
-            yaw = BuildOrientationFromYaw(0.017453292f * Rand_RangeFloat(-15.0f, 15.0f) + yaw);
-            pitch = BuildOrientationFromYaw(0.017453292f * Rand_RangeFloat(-15.0f, 15.0f) + pitch);
+            yaw = BuildOrientationFromYaw(0.017453289f * Rand_RangeFloat(-15.0f, 15.0f) + yaw);
+            pitch = BuildOrientationFromYaw(0.017453289f * Rand_RangeFloat(-15.0f, 15.0f) + pitch);
             GetSpawnPosition(V(0xA4), 0.0f, 0.0f, Rand_RangeFloat(1.5f, 3.0f));
             Vec2_RotateX(V(0xA4), V(0xA4), pitch);
             Vec2_RotateY(V(0xA4), V(0xA4), yaw);

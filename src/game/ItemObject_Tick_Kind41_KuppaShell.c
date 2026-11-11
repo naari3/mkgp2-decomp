@@ -81,7 +81,7 @@ static inline void KuppaShell_RollFade(unsigned char *self, KuppaShellWork *w)
     }
     F(0xBC) += -0.2f;
     Item_AccelClampVelocity(self, g_ccClass == 0 ? 12.0f : 17.0f, g_ccClass == 0 ? 1.0f : 2.0f);
-    F(0xB0) = BuildOrientationFromYaw(0.2617993f + F(0xB0));
+    F(0xB0) = BuildOrientationFromYaw(0.26179934f + F(0xB0));
     Item_DecayVelocityScalar(self, 8.0f);
     if (Item_CheckWallCollision(self, &n, 0)) {
         Item_BounceOffWall(self, n, 0, 0, 0.5f, 0.0f);
@@ -89,11 +89,11 @@ static inline void KuppaShell_RollFade(unsigned char *self, KuppaShellWork *w)
     if (Item_AdvanceFallingDrop(self, &landed, &gy, 2.5f) && landed != 0) {
         F(0xBC) *= 0.1f;
         F(0xB4) = Item_ProbeLateralGroundPitch(*(Vec *)(self + 0xA0), F(0xB0), 5.0f, F(0xA4) - gy);
-        if (0.2617993f < FAbs_FloatAsDouble(F(0xB4))) {
+        if (0.26179934f < FAbs_FloatAsDouble(F(0xB4))) {
             if (0.0f < F(0xB4)) {
-                Vec2_RotateY(self + 0xB8, self + 0xB8, 0.1f * -(F(0xB4) - 0.2617993f));
+                Vec2_RotateY(self + 0xB8, self + 0xB8, 0.1f * -(F(0xB4) - 0.26179934f));
             } else {
-                Vec2_RotateY(self + 0xB8, self + 0xB8, 0.1f * -(0.2617993f + F(0xB4)));
+                Vec2_RotateY(self + 0xB8, self + 0xB8, 0.1f * -(0.26179934f + F(0xB4)));
             }
         }
     }

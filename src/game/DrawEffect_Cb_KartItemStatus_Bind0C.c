@@ -56,7 +56,7 @@ void DrawEffect_Cb_KartItemStatus_Bind0C(unsigned char *self)
             VfxSlot_SetUVScroll(SLOT(self), -0.06666667f, -0.06666667f);
         }
         {
-            float s = sin(0.017453292f * (180.0f * F(0x150)));
+            float s = sin(0.017453289f * (180.0f * F(0x150)));
             float k = 0.6f * s + 1.0f;
             GetSpawnPosition(V(0x30), k, k, k);
         }

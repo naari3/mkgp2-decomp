@@ -94,12 +94,12 @@ void DrawEffect_KartWheel_TripleChildUpdate(unsigned char *self, Vec *pos, float
                     if (1.0f < t) {
                         t = 0.0f;
                         *(float *)(CH + 0xA0) =
-                            0.017453292f * Rand_RangeFloat(-180.0f, 180.0f);
+                            0.017453289f * Rand_RangeFloat(-180.0f, 180.0f);
                     }
                     C(0x150) = t;
                     C(0x90) += s3 * t + -1.0f;
                     C(0xA0) = BuildOrientationFromYaw(0.006544983f + C(0xA0));
-                    sn = sin(0.017453292f * (360.0f * t + 270.0f));
+                    sn = sin(0.017453289f * (360.0f * t + 270.0f));
                     C(0x2C) = C(0x2C) * ((1.0f + sn) / 2.0f);
                 }
                 if (i != 0) {

@@ -32,15 +32,15 @@ void EffectVfx13or14_MushroomDust_Tick(unsigned char *self)
         F(0x124) = 0.0f;
         F(0x128) = 0.0f;
         U32(0x180) = 5;
-        F(0xA0) = 0.017453292f * Rand_RangeFloat(-180.0f, 180.0f);
-        F(0x158) = 0.017453292f * Rand_RangeFloat(-10.0f, 10.0f);
+        F(0xA0) = 0.017453289f * Rand_RangeFloat(-180.0f, 180.0f);
+        F(0x158) = 0.017453289f * Rand_RangeFloat(-10.0f, 10.0f);
         STATE++;
     case 1:
         break;
     }
 
     if (U32(0x180) == 0) {
-        F(0x2C) -= 0.06f;
+        F(0x2C) -= 0.060000002f;
         if (F(0x2C) < 0.0f) {
             DrawEffect_Free(self);
             return;
@@ -52,7 +52,7 @@ void EffectVfx13or14_MushroomDust_Tick(unsigned char *self)
         }
     }
 
-    F(0x154) = BuildOrientationFromYaw(0.13962634f + F(0x154));
+    F(0x154) = BuildOrientationFromYaw(0.13962631f + F(0x154));
     GetSpawnPosition(V(0x8C), 0.0f, -2.5f, 0.0f);
     Vec3_Add_DestFirst(V(0x8C), V(0x8C), V(0x120));
     Vec3_Scale(V(0x8C), V(0x8C), KartCharacterParam_GetBoostFxSizeFactor(P(0x11C)));

@@ -192,7 +192,7 @@ void clKPBubble::Draw() {
     for (it = slots; it <= &slots[count - 1]; it++) {
         it->visible = 0;
         if (it->delay == 0) {
-            it->visible = fn_801379F0(&it->pos, 3.0f);
+            it->visible = fn_801379F0(&it->pos, 20.0f);
         }
     }
 
@@ -220,7 +220,7 @@ void clKPBubble::Draw() {
 
     for (it = slots; it <= &slots[count - 1]; it++) {
         for (i = 0; i < 10; i++) {
-            if (it->shadows[i].scale > 0.0f && fn_801379F0(&it->shadows[i].pos, 1.0f)) {
+            if (it->shadows[i].scale > 0.0f && fn_801379F0(&it->shadows[i].pos, 10.0f)) {
                 Mtx m;
                 PSMTXScale(m, it->shadows[i].scale, it->shadows[i].scale, it->shadows[i].scale);
                 m[0][3] = it->shadows[i].pos.x;

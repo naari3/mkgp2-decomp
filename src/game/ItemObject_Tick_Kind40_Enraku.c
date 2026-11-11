@@ -154,7 +154,7 @@ void ItemObject_Tick_Kind40_Enraku(unsigned char *self)
                 break;
             }
             Item_DecayVelocityScalar(self, 2.0f);
-            if (Item_OrbitAnchorKart(self, &w->anchor, w->timers[0], 0.2617993f, 0.2617993f)) {
+            if (Item_OrbitAnchorKart(self, &w->anchor, w->timers[0], 0.26179934f, 0.26179934f)) {
                 self[0x28] = 0;
                 self[0xC8] = 3;
                 self[0xC9] = 0;
