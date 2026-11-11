@@ -1358,21 +1358,6 @@
     "dtor_801F4A80",
     "dtor_8021617C"
   ],
-  "src/game/SceneRoleVariantCFactory.cpp": [
-    "fn_8024CA18",
-    "dtor_801F2724",
-    "fn_801F26C8",
-    "dtor_801F4B10",
-    "dtor_8007D0D4"
-  ],
-  "src/game/SceneRoleVariantCDtor.cpp": [
-    "fn_8024CBC0",
-    "fn_801F26C8"
-  ],
-  "src/game/SceneRoleVariantCUpdate.cpp": [
-    "fn_8024CD54",
-    "dtor_80082960"
-  ],
   "src/game/TripletFaderOwner.cpp": [
     "fn_802499F4",
     "fn_80249A40",
@@ -3570,5 +3555,31 @@
     "fn_8014A8FC",
     "fn_8014AA38",
     "fn_8014AC48"
+  ],
+  "src/game/SceneRoleTransitions.cpp": [
+    "fn_8024BE64",
+    "fn_8024BE9C",
+    "fn_8024C018",
+    "fn_8024C0BC",
+    "fn_8024C0F4",
+    "fn_8024C284",
+    "fn_8024C3AC",
+    "fn_8024C4B4",
+    "fn_8024C52C",
+    "fn_8024C564",
+    "fn_8024C6F0",
+    "fn_8024C818",
+    "fn_8024C944",
+    "fn_8024C9E0",
+    "fn_8024CA18",
+    "fn_8024CBC0",
+    "fn_8024CCE8",
+    "fn_8024CD54",
+    "dtor_8024CED0",
+    "dtor_801F2724",
+    "fn_801F26C8",
+    "dtor_801F4B10",
+    "dtor_8007D0D4",
+    "dtor_80082960"
   ]
 }

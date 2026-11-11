@@ -12186,13 +12186,13 @@ game/HudResultFlow.cpp:
 	.sdata      start:0x806D08A0 end:0x806D08B8
 
 game/autodata/sdata_806D08B8.c:
-	.sdata      start:0x806D08B8 end:0x806D09A8
+	.sdata      start:0x806D08B8 end:0x806D0948
 
 game/autodata/data_804EEC10.c:
 	.data       start:0x804EEC10 end:0x804EEC5C
 
 game/autodata/rodata_803EF8D0.c:
-	.rodata     start:0x803EF8D0 end:0x803F0860
+	.rodata     start:0x803EF8D0 end:0x803EFE48
 
 game/HudAlternate.cpp:
 	extab       start:0x8001DB94 end:0x8001DBE0
@@ -12304,7 +12304,7 @@ game/CardPrintFlowUpdate.cpp:
 	.data       start:0x804EEE20 end:0x804EEE60
 
 game/autodata/data_804EEE60.c:
-	.data       start:0x804EEE60 end:0x804EEFBC
+	.data       start:0x804EEE60 end:0x804EEEB0
 
 game/CardPrintFlowRender.cpp:
 	extab       start:0x8001E1D4 end:0x8001E1FC
@@ -12326,54 +12326,21 @@ game/CardPrintConfig.cpp:
 	.ctors      start:0x802E8964 end:0x802E8968
 
 game/SceneRoleTransitions.cpp:
-	extab       start:0x8001E26C end:0x8001E28C
-	extabindex  start:0x8002B52C end:0x8002B55C
-	.text       start:0x8024BE64 end:0x8024C0F4
+	extab       start:0x8001E26C end:0x8001E570
+	extabindex  start:0x8002B52C end:0x8002B610
+	.text       start:0x8024BE64 end:0x8024CFE8
+	.rodata     start:0x803EFE48 end:0x803EFEA0
+	.data       start:0x804EEEB0 end:0x804EEF78
+	.sdata      start:0x806D0948 end:0x806D0970
 
-game/SceneRoleVariantAFactory.cpp:
-	extab       start:0x8001E28C end:0x8001E308
-	extabindex  start:0x8002B55C end:0x8002B568
-	.text       start:0x8024C0F4 end:0x8024C284
+game/autodata/sdata_806D0970.c:
+	.sdata      start:0x806D0970 end:0x806D09A8
 
-game/SceneRoleVariantADtor.cpp:
-	extab       start:0x8001E308 end:0x8001E350
-	extabindex  start:0x8002B568 end:0x8002B574
-	.text       start:0x8024C284 end:0x8024C3AC
+game/autodata/data_804EEF78.c:
+	.data       start:0x804EEF78 end:0x804EEFBC
 
-game/SceneRoleVariantATransitions.cpp:
-	extab       start:0x8001E350 end:0x8001E368
-	extabindex  start:0x8002B574 end:0x8002B598
-	.text       start:0x8024C3AC end:0x8024C564
-
-game/SceneRoleVariantB.cpp:
-	extab       start:0x8001E368 end:0x8001E444
-	extabindex  start:0x8002B598 end:0x8002B5D4
-	.text       start:0x8024C564 end:0x8024CA18
-
-game/SceneRoleVariantCFactory.cpp:
-	extab       start:0x8001E444 end:0x8001E4C0
-	extabindex  start:0x8002B5D4 end:0x8002B5E0
-	.text       start:0x8024CA18 end:0x8024CBC0
-
-game/SceneRoleVariantCDtor.cpp:
-	extab       start:0x8001E4C0 end:0x8001E508
-	extabindex  start:0x8002B5E0 end:0x8002B5EC
-	.text       start:0x8024CBC0 end:0x8024CCE8
-
-game/SceneRoleVariantCDraw.cpp:
-	extab       start:0x8001E508 end:0x8001E510
-	extabindex  start:0x8002B5EC end:0x8002B5F8
-	.text       start:0x8024CCE8 end:0x8024CD54
-
-game/SceneRoleVariantCUpdate.cpp:
-	extab       start:0x8001E510 end:0x8001E528
-	extabindex  start:0x8002B5F8 end:0x8002B604
-	.text       start:0x8024CD54 end:0x8024CED0
-
-game/SceneRoleVariantCBaseDtor.cpp:
-	extab       start:0x8001E528 end:0x8001E570
-	extabindex  start:0x8002B604 end:0x8002B610
-	.text       start:0x8024CED0 end:0x8024CFE8
+game/autodata/rodata_803EFEA0.c:
+	.rodata     start:0x803EFEA0 end:0x803F0860
 
 game/SceneRoleRender.cpp:
 	extab       start:0x8001E570 end:0x8001E578
