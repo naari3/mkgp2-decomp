@@ -2961,7 +2961,7 @@ game/clLineManager.cpp:
 	.sdata      start:0x806CF260 end:0x806CF270
 
 game/autodata/sdata_806CF270.c:
-	.sdata      start:0x806CF270 end:0x806CF708
+	.sdata      start:0x806CF270 end:0x806CF4E8
 
 game/autodata/data_80419DC8.c:
 	.data       start:0x80419DC8 end:0x80419F20
@@ -5826,7 +5826,7 @@ game/ChallengeDemo_Create.cpp:
 	.data       start:0x8048E1E0 end:0x8048E200
 
 game/autodata/data_8048E200.c:
-	.data       start:0x8048E200 end:0x8048E4B8
+	.data       start:0x8048E200 end:0x8048E270
 
 game/ChallengeDemoShell.cpp:
 	extab       start:0x8000BF68 end:0x8000C044
@@ -5839,13 +5839,22 @@ game/fn_80125948.c:
 	.text       start:0x80125948 end:0x80126CC4
 	.rodata     start:0x80355A58 end:0x80356070
 
-game/autodata/rodata_80356070.c:
-	.rodata     start:0x80356070 end:0x803561E8
-
 game/ChallengeDemoObj.cpp:
 	extab       start:0x8000C18C end:0x8000C268
 	extabindex  start:0x8002492C end:0x8002495C
 	.text       start:0x80126CC4 end:0x80127584
+	.rodata     start:0x80356070 end:0x803560F0
+	.data       start:0x8048E270 end:0x8048E2A8
+	.sdata      start:0x806CF4E8 end:0x806CF500
+
+game/autodata/sdata_806CF500.c:
+	.sdata      start:0x806CF500 end:0x806CF708
+
+game/autodata/data_8048E2A8.c:
+	.data       start:0x8048E2A8 end:0x8048E4B8
+
+game/autodata/rodata_803560F0.c:
+	.rodata     start:0x803560F0 end:0x803561E8
 
 game/ChallengeDemoTornado.cpp:
 	extab       start:0x8000C268 end:0x8000C344
