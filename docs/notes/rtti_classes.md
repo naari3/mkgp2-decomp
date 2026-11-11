@@ -297,3 +297,8 @@ clResultType01 (HudResultFlow.cpp) is a deferred multiple-inheritance case. A pu
 Source: Codex worker r6_c12_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 clTitleDisp2 converted in game/TitleNameHudUpdate.cpp: five code units merged, canonical clCDispInterface base unchanged, deferred/noauto reverse definitions and compiler RTTI/vtable 804F202C. Eight functions/2252 bytes and all six owned sections 100%; clang OK and full DOL SHA-1 unchanged. Removed obsolete DATA_ALIGN4_TUS entry when extending the jump-table range backward to 8-aligned class data. This follows existing clMnCardT02/clResultType01 rules; no new compiler rule.
+
+## r6_c29_20261111
+Source: Codex worker r6_c29_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+r6_c29 yes/no family observation: shared interleaved RTTI lists require family-level data ownership, but keeping the public service tail as a separate TU avoids deferred/auto factory inlining without new function pragmas. Compiler RTTI may need global: bridges when a retained external-view tail references legacy aliases. The original force_active autodata pool included eleven otherwise unreferenced real format/helper-name strings; an approved uncalled pool-order member emits them, and existing active: data renames preserve their retention. All six owned sections, 40 linked functions and DOL SHA-1 verified exact. These are object/full-link observations, not a compiler-source trace.
