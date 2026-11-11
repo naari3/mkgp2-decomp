@@ -3724,5 +3724,39 @@
     "SceneRender_Dtor",
     "Camera_Create",
     "__dt__11ScopedTimerFv"
-  ]
+  ],
+  "src/game/EffectSpeedAction_SpeedScale_Dtor.cpp": {
+    "extab": [
+      "EffectSpeedAction_SpeedScale_Dtor",
+      "EffectSpeedAction_MueScale_Dtor",
+      "EffectSpeed_Init",
+      "dtor_800656B8",
+      "EffectSpeedAction_MueScale_Reset",
+      "dtor_80065748",
+      "EffectSpeedAction_SpeedScale_Reset",
+      "dtor_8006528C",
+      "MediaBoard_SendAndCheck",
+      "EffectSpeed_TickTimer",
+      "InterpolationStep",
+      "EffectSpeed_ApplySpeedScale",
+      "ActionMueScale_Process",
+      "ActionSpeedScale_Process"
+    ],
+    "extabindex": [
+      "EffectSpeedAction_SpeedScale_Dtor",
+      "EffectSpeedAction_MueScale_Dtor",
+      "EffectSpeed_Init",
+      "EffectSpeedAction_MueScale_Reset",
+      "EffectSpeedAction_SpeedScale_Reset",
+      "dtor_8006528C",
+      "MediaBoard_SendAndCheck",
+      "EffectSpeed_TickTimer",
+      "InterpolationStep",
+      "EffectSpeed_ApplySpeedScale",
+      "ActionMueScale_Process",
+      "ActionSpeedScale_Process",
+      "dtor_800656B8",
+      "dtor_80065748"
+    ]
+  }
 }

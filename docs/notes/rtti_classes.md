@@ -307,3 +307,8 @@ r6_c29 yes/no family observation: shared interleaved RTTI lists require family-l
 Source: Codex worker r7_c4_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 clCallback/clShadow: preserve the standalone base destructor TU separately from the derived shadow TU, because the binary has two distinct clCallback RTTI/name copies. clShadow data starts with a base list, so its methods use deferred generation/reverse definitions while clCallback remains nondeferred. Vtable size 0x14 included four alignment bytes; actual clShadow table is 0x10. Both real-class TUs and all 7 functions match, clang OK, full DOL SHA1 unchanged. Observations follow existing rules, not a new compiler-source trace.
+
+## r7_c9_20261111
+Source: Codex worker r7_c9_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+nsEffectSpeed::clActionMueScale/clAction/clActionSpeedScale converted together in game/EffectSpeedAction_SpeedScale_Dtor.cpp (four code TUs merged). Deferred reverse definitions retain all 14 functions / 1968 B. Declaring MueScale::Reset first and SpeedScale::Process first chooses vtable keys whose generation reproduces MueScale/base/SpeedScale data order; RTTI names and sdata then match too. Last vtable symbol size corrected 0x18 -> 0x14, excluding 4-byte inter-unit alignment. All six owned sections, clang, 25 linked symbol addresses and full DOL SHA-1 verified. This is an object/full-link observation, not a compiler-source trace.
