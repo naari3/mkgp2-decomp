@@ -10991,18 +10991,6 @@ game/anon_80216568_misc.cpp:
 	.data       start:0x804EDB90 end:0x804EDC20
 	.sdata      start:0x806D0450 end:0x806D0478
 
-game/autodata/sdata_806D0478.c:
-	.sdata      start:0x806D0478 end:0x806D0488
-
-game/autodata/data_804EDC20.c:
-	.data       start:0x804EDC20 end:0x804EDC44
-
-game/autodata/rodata_803C4BF8.c:
-	.rodata     start:0x803C4BF8 end:0x803C4E4C
-
-game/autodata/rodata_803C4E50.c:
-	.rodata     start:0x803C4E50 end:0x803C4E60
-
 game/anon_80216568_fader.cpp:
 	.text       start:0x80218B28 end:0x80218B5C
 
@@ -11030,39 +11018,15 @@ game/fn_80218F1C.c:
 	.text       start:0x80218F1C end:0x80218F40
 
 game/anon_80218F40.cpp:
-	.text       start:0x80218F40 end:0x80218F5C
+	extab       start:0x8001A940 end:0x8001AA90
+	extabindex  start:0x8002A1DC end:0x8002A224
+	.text       start:0x80218F40 end:0x80219FF4
+	.rodata     start:0x803C4BF8 end:0x803C4E4C
+	.data       start:0x804EDC20 end:0x804EDC84
+	.sdata      start:0x806D0478 end:0x806D0488
 
-game/anon_80218F40_nm1.cpp:
-	extab       start:0x8001A940 end:0x8001A948
-	extabindex  start:0x8002A1DC end:0x8002A1E8
-	.text       start:0x80218F5C end:0x80219538
-	.data       start:0x804EDC44 end:0x804EDC60
-
-game/anon_80218F40_nm1_tail.cpp:
-	extab       start:0x8001A948 end:0x8001A950
-	extabindex  start:0x8002A1E8 end:0x8002A1F4
-	.text       start:0x80219538 end:0x8021984C
-
-game/anon_80218F40_setpath.cpp:
-	extab       start:0x8001A950 end:0x8001A958
-	extabindex  start:0x8002A1F4 end:0x8002A200
-	.text       start:0x8021984C end:0x80219900
-
-game/anon_80218F40_exact2.cpp:
-	extab       start:0x8001A958 end:0x8001A970
-	extabindex  start:0x8002A200 end:0x8002A20C
-	.text       start:0x80219900 end:0x8021995C
-
-game/anon_80218F40_nm2.cpp:
-	extab       start:0x8001A970 end:0x8001A9CC
-	extabindex  start:0x8002A20C end:0x8002A218
-	.text       start:0x8021995C end:0x80219B24
-
-game/anon_80218F40_exact3.cpp:
-	extab       start:0x8001A9CC end:0x8001AA90
-	extabindex  start:0x8002A218 end:0x8002A224
-	.text       start:0x80219B24 end:0x80219FF4
-	.data       start:0x804EDC60 end:0x804EDC84
+game/autodata/rodata_803C4E50.c:
+	.rodata     start:0x803C4E50 end:0x803C4E60
 
 game/anon_80219FF4.cpp:
 	extab       start:0x8001AA90 end:0x8001AAA8
