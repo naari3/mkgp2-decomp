@@ -7,6 +7,7 @@ struct clSceneInterface {
     virtual void Update();
     virtual void Draw();
     unsigned char done;
+    unsigned char align[3];
     clSceneInterface() : done(false) {}
 };
 

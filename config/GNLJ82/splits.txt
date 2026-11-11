@@ -6151,7 +6151,7 @@ game/clCSResultGP.cpp:
 	.sdata      start:0x806CF7C8 end:0x806CF7E0
 
 game/autodata/sdata_806CF7E0.c:
-	.sdata      start:0x806CF7E0 end:0x806CF9F0
+	.sdata      start:0x806CF7E0 end:0x806CF8B8
 
 game/autodata/data_8048F070.c:
 	.data       start:0x8048F070 end:0x8048F130
@@ -6179,10 +6179,7 @@ game/Scene_8014E0C4.cpp:
 	.data       start:0x8048F178 end:0x8048FDCC
 
 game/autodata/data_8048FE08.c:
-	.data       start:0x8048FE08 end:0x80490AA8
-
-game/autodata/data_80490ACC.c:
-	.data       start:0x80490ACC end:0x80490DC8
+	.data       start:0x8048FE08 end:0x80490030
 
 game/SceneList_80157940.cpp:
 	extab       start:0x8000F0DC end:0x8000F114
@@ -6195,15 +6192,21 @@ game/fn_80157DE0.cpp:
 	.text       start:0x80157DE0 end:0x80157EA8
 
 game/SceneList_80157EA8.cpp:
-	extab       start:0x8000F150 end:0x8000F264
-	extabindex  start:0x80025910 end:0x80025994
-	.text       start:0x80157EA8 end:0x8015B698
+	extab       start:0x8000F150 end:0x8000F26C
+	extabindex  start:0x80025910 end:0x800259A0
+	.text       start:0x80157EA8 end:0x8015B6D0
 	.rodata     start:0x803678D8 end:0x80367F68
+	.data       start:0x80490030 end:0x80490054
+	.sdata      start:0x806CF8B8 end:0x806CF8C8
 
-game/Scene_8015B698.cpp:
-	extab       start:0x8000F264 end:0x8000F26C
-	extabindex  start:0x80025994 end:0x800259A0
-	.text       start:0x8015B698 end:0x8015B6D0
+game/autodata/sdata_806CF8C8.c:
+	.sdata      start:0x806CF8C8 end:0x806CF9F0
+
+game/autodata/data_80490058.c:
+	.data       start:0x80490058 end:0x80490AA8
+
+game/autodata/data_80490ACC.c:
+	.data       start:0x80490ACC end:0x80490DC8
 
 game/Scene_8015B6D0.cpp:
 	extab       start:0x8000F26C end:0x8000F284
