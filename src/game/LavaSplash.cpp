@@ -34,11 +34,7 @@ typedef float Mtx[3][4];
 
 #include "game/types/GXChannel.h"
 
-struct clMapEffectParts {
-    virtual void vKeyFunction();
-    virtual ~clMapEffectParts();
-    clMapEffectParts() {}
-};
+#include "game/types/clMapEffectParts.h"
 
 struct clLavaSplash : clMapEffectParts {
     clNormal3D *modelA;
@@ -49,26 +45,15 @@ struct clLavaSplash : clMapEffectParts {
     int randIdx;
 
     clLavaSplash();
-    virtual void vKeyFunction2();
+    virtual ~clLavaSplash();
+    virtual void Update();
+    virtual void Draw();
+    int Spawn(float x, float y, float z, float size);
+    void UnusedResources();
 };
 
 extern const char LavaSplash_rodata_8036E728[0x18] = {0};
-extern const char lbl_8036E740[0x10] = "clLavaSplash";
-extern const char lbl_8036E750[0x14] = "clMapEffectParts";
-static const char sDeleteMsg[0x24] = " DeleteMapEffect : clLavaSplash\n";
-static const char sCreateMsg[0x24] = " CreateMapEffect : clLavaSplash\n";
-static const char sFluidInModel[0x14] = "magma_fluid_in.dat";
-static const char sFluidOutModel[0x14] = "magma_fluid_out.dat";
-static const char sDropModel[0x10] = "magma_drop.dat";
-static const char sFluidJoint[0x18] = "magma_fluid3_mf%d_joint";
-extern const char lbl_8036E7FC[0x14] = "KP_yougan_yuka.dat";
-extern const char lbl_8036E810[0x14] = "KP_yougan_taki.dat";
-extern const char lbl_8036E824[0xC] = "clLavaLake";
-extern const char lbl_8036E830[0x10] = "clLavaFalls";
-
 extern "C" {
-extern char clLavaSplash_vtable_804912B4[];
-extern char lbl_80490FE0[];
 extern float lbl_80495994[64];
 void PSVECAdd(Vec3f *, Vec3f *, Vec3f *);
 double sin(double);
@@ -89,25 +74,131 @@ void Object_SetJObjScaleXYZ(void *, float, float, float);
 void Object_RenderJObjTree(void *, int);
 }
 
-extern "C" {
-void fn_80170EE0(clLavaSplash *self) {
+/* Uncalled pool owner, as clLineManager::PrintLines (fakematch). */
+void clLavaSplash::UnusedResources() {
+    DebugPrintf("KP_yougan_yuka.dat");
+    DebugPrintf("KP_yougan_taki.dat");
+    DebugPrintf("clLavaLake");
+    DebugPrintf("clLavaFalls");
+}
+
+#pragma exceptions on
+
+clLavaSplash::clLavaSplash() {
+    int i;
+    char name[0x20];
+
+    DebugPrintf(" CreateMapEffect : clLavaSplash\n");
+    modelA = new clNormal3D("magma_fluid_in.dat", 0);
+    modelB = new clNormal3D("magma_fluid_out.dat", 0);
+    modelC = new clNormal3D("magma_drop.dat", 0);
+    for (i = 0; i < 30; i++) {
+        bursts[i].active = 0;
+    }
+    if (modelB) {
+        for (i = 0; i < 8; i++) {
+            sprintf(name, "magma_fluid3_mf%d_joint", i + 1);
+            joints[i] = ResolveJointByName(modelB, name);
+        }
+    }
+    if (modelC) {
+        HSD_JObjSetFlags(Archive_GetRootJObj(modelC), 0x200);
+    }
+    randIdx = 0;
+}
+
+#pragma exceptions reset
+clLavaSplash::~clLavaSplash() {
+    if (modelA) Object_DtorWithGXSync(modelA, 1);
+    if (modelB) Object_DtorWithGXSync(modelB, 1);
+    if (modelC) Object_DtorWithGXSync(modelC, 1);
+    DebugPrintf(" DeleteMapEffect : clLavaSplash\n");
+}
+
+int clLavaSplash::Spawn(float x, float y, float z, float size) {
+    int i;
+    int j;
+
+    if (modelA == 0 || modelB == 0 || modelC == 0) {
+        return 0;
+    }
+    for (i = 0; i < 30; i++) {
+        if (!bursts[i].active) {
+            bursts[i].t = 0.0f;
+            bursts[i].size = size;
+            bursts[i].pos.x = x;
+            bursts[i].pos.y = y;
+            bursts[i].pos.z = z;
+            for (j = 0; j < 10; j++) {
+                float angle = 6.2831855f * lbl_80495994[randIdx];
+                randIdx++;
+                if (randIdx >= 64) {
+                    randIdx = 0;
+                }
+                bursts[i].sparks[j].vel.x = size * (float)sin(angle);
+                bursts[i].sparks[j].vel.z = size * (float)cos(angle);
+                bursts[i].sparks[j].vel.y = size * (1.5f + lbl_80495994[randIdx]);
+                bursts[i].sparks[j].pos.x = x;
+                bursts[i].sparks[j].pos.y = y;
+                bursts[i].sparks[j].pos.z = z;
+                bursts[i].sparks[j].drag = 0.1f * size;
+                bursts[i].sparks[j].gravity = 0.2f * size;
+            }
+            bursts[i].active = 1;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void clLavaSplash::Update() {
+    int i;
+    int j;
+
+    if (modelA == 0 || modelB == 0 || modelC == 0) {
+        return;
+    }
+    for (i = 0; i < 30; i++) {
+        if (bursts[i].active) {
+            bursts[i].t += 1.0f;
+            if (bursts[i].t > 37.0f) {
+                bursts[i].active = 0;
+            } else {
+                if (bursts[i].t <= 7.0f) {
+                    bursts[i].scale = 1.5707964f * bursts[i].t / 7.0f;
+                } else if (bursts[i].t <= 15.0f) {
+                    bursts[i].scale = 1.5707964f * (15.0f - bursts[i].t) / 8.0f;
+                } else {
+                    bursts[i].scale = 0.0f;
+                }
+                bursts[i].scale *= 11.0f;
+            }
+            for (j = 0; j < 10; j++) {
+                PSVECAdd(&bursts[i].sparks[j].vel, &bursts[i].sparks[j].pos, &bursts[i].sparks[j].pos);
+                bursts[i].sparks[j].vel.y = bursts[i].sparks[j].vel.y - bursts[i].sparks[j].gravity;
+            }
+        }
+    }
+}
+
+void clLavaSplash::Draw() {
     SparkBurst *b;
     int i;
     Mtx m;
 
-    if (self->modelA == 0 || self->modelB == 0 || self->modelC == 0) {
+    if (modelA == 0 || modelB == 0 || modelC == 0) {
         return;
     }
-    for (b = self->bursts; b <= &self->bursts[29]; b++) {
+    for (b = bursts; b <= &bursts[29]; b++) {
         b->visible = 0;
         if (b->active) {
             b->visible = fn_801379F0(&b->pos, 15.0f * b->size);
         }
     }
     {
-        GXChannel ch(Archive_GetRootJObj(self->modelA), HSD_JObjGetDObj(Archive_GetRootJObj(self->modelA)), 0x40000000, 1);
+        GXChannel ch(Archive_GetRootJObj(modelA), HSD_JObjGetDObj(Archive_GetRootJObj(modelA)), 0x40000000, 1);
 
-        for (b = self->bursts; b <= &self->bursts[29]; b++) {
+        for (b = bursts; b <= &bursts[29]; b++) {
             if (b->visible && b->scale > 0.0f) {
                 PSMTXScale(m, b->size, b->size * b->scale, b->size);
                 m[0][3] = b->pos.x;
@@ -117,21 +208,21 @@ void fn_80170EE0(clLavaSplash *self) {
             }
         }
     }
-    for (b = self->bursts; b <= &self->bursts[29]; b++) {
+    for (b = bursts; b <= &bursts[29]; b++) {
         if (b->visible && b->t <= 15.0f) {
             for (i = 0; i < 8; i++) {
-                HSD_JObjSetFlags(self->joints[i], 0x10);
+                HSD_JObjSetFlags(joints[i], 0x10);
             }
-            HSD_JObjClearFlags(self->joints[(int)(b->t / 2.0f)], 0x10);
-            Object_SetJObjPositionVec(self->modelB, &b->pos);
-            Object_SetJObjScaleXYZ(self->modelB, b->size, b->size, b->size);
-            Object_RenderJObjTree(self->modelB, 7);
+            HSD_JObjClearFlags(joints[(int)(b->t / 2.0f)], 0x10);
+            Object_SetJObjPositionVec(modelB, &b->pos);
+            Object_SetJObjScaleXYZ(modelB, b->size, b->size, b->size);
+            Object_RenderJObjTree(modelB, 7);
         }
     }
     {
-        GXChannel ch(Archive_GetRootJObj(self->modelC), HSD_JObjGetDObj(Archive_GetRootJObj(self->modelC)), 0x40000000, 1);
+        GXChannel ch(Archive_GetRootJObj(modelC), HSD_JObjGetDObj(Archive_GetRootJObj(modelC)), 0x40000000, 1);
 
-        for (b = self->bursts; b <= &self->bursts[29]; b++) {
+        for (b = bursts; b <= &bursts[29]; b++) {
             if (b->visible) {
                 int j;
 
@@ -146,121 +237,3 @@ void fn_80170EE0(clLavaSplash *self) {
         }
     }
 }
-
-void fn_80171190(clLavaSplash *self) {
-    int i;
-    int j;
-
-    if (self->modelA == 0 || self->modelB == 0 || self->modelC == 0) {
-        return;
-    }
-    for (i = 0; i < 30; i++) {
-        if (self->bursts[i].active) {
-            self->bursts[i].t += 1.0f;
-            if (self->bursts[i].t > 37.0f) {
-                self->bursts[i].active = 0;
-            } else {
-                if (self->bursts[i].t <= 7.0f) {
-                    self->bursts[i].scale = 1.5707964f * self->bursts[i].t / 7.0f;
-                } else if (self->bursts[i].t <= 15.0f) {
-                    self->bursts[i].scale = 1.5707964f * (15.0f - self->bursts[i].t) / 8.0f;
-                } else {
-                    self->bursts[i].scale = 0.0f;
-                }
-                self->bursts[i].scale *= 11.0f;
-            }
-            for (j = 0; j < 10; j++) {
-                PSVECAdd(&self->bursts[i].sparks[j].vel, &self->bursts[i].sparks[j].pos, &self->bursts[i].sparks[j].pos);
-                self->bursts[i].sparks[j].vel.y = self->bursts[i].sparks[j].vel.y - self->bursts[i].sparks[j].gravity;
-            }
-        }
-    }
-}
-
-int fn_801712E4(clLavaSplash *self, float x, float y, float z, float size) {
-    int i;
-    int j;
-
-    if (self->modelA == 0 || self->modelB == 0 || self->modelC == 0) {
-        return 0;
-    }
-    for (i = 0; i < 30; i++) {
-        if (!self->bursts[i].active) {
-            self->bursts[i].t = 0.0f;
-            self->bursts[i].size = size;
-            self->bursts[i].pos.x = x;
-            self->bursts[i].pos.y = y;
-            self->bursts[i].pos.z = z;
-            for (j = 0; j < 10; j++) {
-                float angle = 6.2831855f * lbl_80495994[self->randIdx];
-                self->randIdx++;
-                if (self->randIdx >= 64) {
-                    self->randIdx = 0;
-                }
-                self->bursts[i].sparks[j].vel.x = size * (float)sin(angle);
-                self->bursts[i].sparks[j].vel.z = size * (float)cos(angle);
-                self->bursts[i].sparks[j].vel.y = size * (1.5f + lbl_80495994[self->randIdx]);
-                self->bursts[i].sparks[j].pos.x = x;
-                self->bursts[i].sparks[j].pos.y = y;
-                self->bursts[i].sparks[j].pos.z = z;
-                self->bursts[i].sparks[j].drag = 0.1f * size;
-                self->bursts[i].sparks[j].gravity = 0.2f * size;
-            }
-            self->bursts[i].active = 1;
-            return 1;
-        }
-    }
-    return 0;
-}
-
-clLavaSplash *fn_801714E8(clLavaSplash *self, short flag) {
-    if (self) {
-        *(void **)self = clLavaSplash_vtable_804912B4;
-        if (self->modelA) {
-            Object_DtorWithGXSync(self->modelA, 1);
-        }
-        if (self->modelB) {
-            Object_DtorWithGXSync(self->modelB, 1);
-        }
-        if (self->modelC) {
-            Object_DtorWithGXSync(self->modelC, 1);
-        }
-        DebugPrintf(sDeleteMsg);
-        if (self) {
-            *(void **)self = lbl_80490FE0;
-        }
-        if (flag > 0) {
-            MemoryManager_TimedFree(self);
-        }
-    }
-    return self;
-}
-
-}
-
-#pragma exceptions on
-
-clLavaSplash::clLavaSplash() {
-    int i;
-    char name[0x20];
-
-    DebugPrintf(sCreateMsg);
-    modelA = new clNormal3D(sFluidInModel, 0);
-    modelB = new clNormal3D(sFluidOutModel, 0);
-    modelC = new clNormal3D(sDropModel, 0);
-    for (i = 0; i < 30; i++) {
-        bursts[i].active = 0;
-    }
-    if (modelB) {
-        for (i = 0; i < 8; i++) {
-            sprintf(name, sFluidJoint, i + 1);
-            joints[i] = ResolveJointByName(modelB, name);
-        }
-    }
-    if (modelC) {
-        HSD_JObjSetFlags(Archive_GetRootJObj(modelC), 0x200);
-    }
-    randIdx = 0;
-}
-
-#pragma exceptions reset
