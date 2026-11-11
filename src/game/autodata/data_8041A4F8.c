@@ -3,6 +3,7 @@
  * these objects declare them `extern`. Edit freely: give `unk` objects their real
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
+#include "game/types/AnimEntry.h"
 #include "game/autodata.h"
 
 extern void DbgMenu_Dtor();
@@ -2729,15 +2730,11 @@ int data_8041A4F8_data_8041C894[3] = {
     0, 29, -2
 };
 /* decl: unsigned char */
-void *DbgMenu_data_8041C8A0[8] = {
-    0,
-    (void *)&data_8041A4F8_data_8041C894,
-    (void *)0x8000000,
-    (void *)&data_8041A4F8_data_806CF324,
-    (void *)0x9000000,
-    (void *)&data_8041A4F8_data_806CF324,
-    (void *)0xD000000,
-    0
+AnimEntry DbgMenu_data_8041C8A0[4] = {
+    { 0, { 0, 0, 0 }, &data_8041A4F8_data_8041C894 },
+    { 8, { 0, 0, 0 }, &data_8041A4F8_data_806CF324 },
+    { 9, { 0, 0, 0 }, &data_8041A4F8_data_806CF324 },
+    { 13, { 0, 0, 0 }, 0 }
 };
 ScrollEntry TestMenuScrollList_Update_data_8041C8C0[6] = {
     { 2621, 63.899994f, 239.5f, 0.0f },

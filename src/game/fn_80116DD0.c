@@ -1,3 +1,4 @@
+#include "game/types/AnimEntry.h"
 /* --- owned .data 0x80421FE0..0x8042209C (tools/own_data.py) --- */
 #pragma force_active on
 unsigned int lbl_80421FE0[6] = { 0x00000000, 0x00000001, 0x0000000C, 0x0000002A, 0x0000003C, 0xFFFFFFFE };
@@ -6,21 +7,14 @@ unsigned int lbl_8042200C[6] = { 0x00000000, 0x00000001, 0x0000000F, 0x00000028,
 unsigned int lbl_80422024[5] = { 0x3F4CCCCD, 0x3F5C28F6, 0x3F947AE1, 0x3ECCCCCD, 0x3F4CCCCD };
 unsigned int lbl_80422038[6] = { 0x00000000, 0x00000001, 0x00000015, 0x0000002F, 0x0000003C, 0xFFFFFFFE };
 unsigned int lbl_80422050[5] = { 0x3F0F5C29, 0x3F0F5C29, 0x3F6147AE, 0x3EB851EC, 0x3F0F5C29 };
-void *lbl_80422064[14] = {
-    (void *)0x0,
-    (void *)&lbl_80421FE0,
-    (void *)0x8000000,
-    (void *)&lbl_80421FF8,
-    (void *)0x0,
-    (void *)&lbl_8042200C,
-    (void *)0x9000000,
-    (void *)&lbl_80422024,
-    (void *)0x0,
-    (void *)&lbl_80422038,
-    (void *)0xA000000,
-    (void *)&lbl_80422050,
-    (void *)0xD000000,
-    (void *)0x0
+AnimEntry lbl_80422064[7] = {
+    { 0, { 0, 0, 0 }, &lbl_80421FE0 },
+    { 8, { 0, 0, 0 }, &lbl_80421FF8 },
+    { 0, { 0, 0, 0 }, &lbl_8042200C },
+    { 9, { 0, 0, 0 }, &lbl_80422024 },
+    { 0, { 0, 0, 0 }, &lbl_80422038 },
+    { 10, { 0, 0, 0 }, &lbl_80422050 },
+    { 13, { 0, 0, 0 }, 0 }
 };
 #pragma force_active reset
 /* fn_80116DD0 (0x80116DD0): item held in the driver's hand: spawn its

@@ -1045,3 +1045,9 @@ status: note
 
 n3 landed a byte-identical change: new include/game/types/pcb_link.h, used in src/game/PCBCommBroadcast.c, PCBCheckRecv.c, PCBCheckProcess.c, fn_801D1890.cpp and FaceEffect.cpp for link-slot fields that cross a byte boundary. No action needed.
 
+## n3-20261111-0756 | 2026-11-11 07:56Z | from: n3 | port-readiness: AnimEntry tables
+re: -
+status: note
+
+n3 landed a byte-identical retyping of six AnimState description tables (src/game/fn_80116DD0.c, fn_801152B0.c, autodata/data_80419FB8.c, autodata/data_8041A4F8.c) and moved AnimEntry to include/game/types/AnimEntry.h. No action needed.
+

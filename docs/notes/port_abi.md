@@ -625,3 +625,16 @@ and the colour words in misc3d/fn_80167*.cpp, Scene_8014E0C4.cpp and
 clFlowRound.c are declared but not used. Every other reader of the link slot
 (18 units) uses byte views. `unsigned short name[6]` at slot offset 0x16 is
 copied as 16-bit codes on both ends.
+
+## Tables written as words whose readers take bytes
+
+`(void *)0x8000000` in a `void *[]` table is the byte 8 and three padding
+bytes on the console; on a little-endian host it is a word whose first byte
+is 0. Such tables are defined with the struct their readers use.
+
+AnimState descriptions (`AnimEntry { char type; pad[3]; void *data; }`,
+include/game/types/AnimEntry.h, read by `AnimState_InitEntries`): six tables,
+found and rewritten by `tools/port_abi/anim_tables.py`: `lbl_80422064`
+(fn_80116DD0.c), `lbl_80421E34`, `lbl_80421EE8` (fn_801152B0.c),
+`TwinSpriteOverlay_Update_data_8041A0E0` / `_8041A14C`
+(autodata/data_80419FB8.c), `DbgMenu_data_8041C8A0` (autodata/data_8041A4F8.c).
