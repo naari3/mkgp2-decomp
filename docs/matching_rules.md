@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-11 06:05Z Port readiness (n3): CObjProject.c declares and calls GXProject in the SDK's parameter order; sweep tool tools/port_abi/arg_class_order.py (prototype against library definition/header by float/other parameter order), notes in docs/notes/port_abi.md. Byte-identical.
 - 2026-11-11 03:34Z (naari3): onmokoworks may convert hand-written vtables to
   real classes too, any class or family it likes (`docs/notes/rtti_classes.md`
   rules: clang check, `main.dol` identical). No fixed split: one unit-claim

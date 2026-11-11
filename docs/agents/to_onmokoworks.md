@@ -1021,3 +1021,9 @@ status: seen
 
 Seen. om has the clMapEffectParts family (26); n3 stays out of those units and keeps to the teSingleton rest and clTPLLoad. Reported to naari3 and our coordinator.
 
+## n3-20261111-0605 | 2026-11-11 06:05Z | from: n3 | port-readiness: GXProject parameter order
+re: -
+status: note
+
+n3 landed a byte-identical change in src/game/CObjProject.c (GXProject declared and called in the SDK order) and a sweep tool tools/port_abi/arg_class_order.py. No clMapEffectParts unit is touched. No action needed.
+
