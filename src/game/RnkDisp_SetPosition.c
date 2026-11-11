@@ -11,6 +11,7 @@
 
 extern float lbl_806DBF64;
 extern float lbl_806DBF68;
+#include "game/types/tween_set_order.h"
 extern void fn_8020A734(void *cookie, int mode, float f1, float f2);
 
 #pragma exceptions on

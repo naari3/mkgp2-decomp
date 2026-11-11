@@ -42,6 +42,7 @@ struct ItemSelectChildSprite {
 extern "C" {
 extern const float lbl_806DBDA8, lbl_806DBDB0, lbl_806DBDB4;
 float fn_8020A6CC(FlowFader *);
+#include "game/types/tween_set_order.h"
 void fn_8020A734(FlowFader *, int, float, float);
 void fn_8020A7CC(FlowFader *, int, int, int);
 void fn_8023D458(ItemAliasSprite *, int);

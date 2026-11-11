@@ -65,6 +65,7 @@ extern int lbl_803C0200[10];
 extern int lbl_803C01C4[15];
 void fn_8011FAFC(ResCtrl *ctrl, int layer);
 void PreloadResource(int id);
+#include "game/types/tween_set_order.h"
 void fn_8020A734(FlowFader *fader, int frames, float from, float to);
 void fn_8020A7CC(FlowFader *fader, int a, int b, int c);
 float fn_8020A6CC(FlowFader *fader);

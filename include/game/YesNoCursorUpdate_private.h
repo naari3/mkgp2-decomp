@@ -8,6 +8,7 @@ extern const float lbl_806DAB10;
 extern const float lbl_806DAB18;
 extern const float lbl_806DAB20;
 extern const float lbl_806DAB54;
+#include "game/types/tween_set_order.h"
 void fn_8020A734(FlowFader *fader, int frames, float from, float to);
 int fn_8020A788(FlowFader *fader);
 }

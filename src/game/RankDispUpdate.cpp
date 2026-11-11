@@ -14,6 +14,7 @@ extern "C" {
 extern int g_countdownPhase;
 extern const float lbl_806DBF58[2];
 extern const float lbl_806DBF60,lbl_806DBF64,lbl_806DBF68,lbl_806DBF6C,lbl_806DBF70,lbl_806DBF74,lbl_806DBF78;
+#include "game/types/tween_set_order.h"
 void fn_8020A734(FlowFaderF *,int,float,float);
 float fn_8020A6CC(FlowFaderF *);
 int fn_8020A788(FlowFaderI *);

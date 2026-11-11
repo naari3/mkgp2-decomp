@@ -58,6 +58,7 @@ void SpriteHandle_RecomputeCull(int sprite);
 void SpriteHandle_SetCornerAlpha(int sprite, int alpha);
 void SpriteLayer_SetResource(int sprite, int id);
 void fn_80121E10(ResCtrl *ctrl);
+#include "game/types/tween_set_order.h"
 void fn_8020A734(FlowFader *fader, int frames, float from, float to);
 float fn_8020A6CC(FlowFader *fader);
 void *fn_801F8E58(void);

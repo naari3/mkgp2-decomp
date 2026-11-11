@@ -11,6 +11,7 @@ extern "C" {
 extern int g_countdownPhase;
 extern const float lbl_806DBDC8,lbl_806DBDCC,lbl_806DBDD0,lbl_806DBDD4;
 extern const float LapDispUpdate_rodata_803E5CE8[][2],LapDispUpdate_rodata_803E5D00[][2];
+#include "game/types/tween_set_order.h"
 void fn_8020A734(FlowFaderF *,int,float,float);
 float fn_8020A6CC(FlowFaderF *);
 void SpriteHandle_SetActiveFlag(int,int);

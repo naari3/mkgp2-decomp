@@ -57,6 +57,7 @@ extern const float lbl_806DBE8C, lbl_806DBE90, lbl_806DBE98;
 extern const float lbl_806DBE9C, lbl_806DBEA0, lbl_806DBEA4;
 extern int g_countdownPhase, g_gameMode, g_roundIndex, g_cupId;
 extern const float lbl_806DBE60, lbl_806DBE64;
+#include "game/types/tween_set_order.h"
 void fn_8020A734(FlowFader *, int, float, float);
 float fn_8020A6CC(FlowFader *);
 void fn_80120A08(int);

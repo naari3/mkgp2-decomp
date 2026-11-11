@@ -553,3 +553,16 @@ unsigned short codes), the name entry in fn_801BAA88.cpp and the card pack /
 unpack code (16-bit codes), and the display-list readers in
 src/game/dlistutil (`*(unsigned short *)(p + 1)`: big-endian asset data, not
 text).
+
+## fn_8020A734: argument order by macro
+
+`fn_8020A734` is `Tween::Set(float from, float to, short frames)`, reached
+under its address name through the rename table. 23 prototypes (and about 280
+calls in 46 files) are written `fn_8020A734(tween, frames, from, to)`. The
+written order fixes MWCC's argument loads, so it stays; each prototype is
+preceded by `#include "game/types/tween_set_order.h"`, whose macro (host
+compilers only) reorders every prototype and call after it to
+`(tween, from, to, frames)`. A function-like macro was chosen over the
+`Foo_Reordered` wrapper because the first parameter's type differs from unit to
+unit. A new unit that declares the function must include the header ahead of
+its prototype.

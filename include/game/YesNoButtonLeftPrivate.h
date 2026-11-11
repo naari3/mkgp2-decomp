@@ -36,6 +36,7 @@ extern const float lbl_806DAB54;
 #include "game/types/YesNoPos.h"
 extern const YesNoPos lbl_806DAAF8;
 
+#include "game/types/tween_set_order.h"
 void fn_8020A734(FlowFader *fader, int frames, float from, float to);
 void fn_8020A7CC(FlowFader *fader, int a, int b, int c);
 int fn_8020A788(FlowFader *fader);

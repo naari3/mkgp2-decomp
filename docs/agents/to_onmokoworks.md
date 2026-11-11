@@ -979,3 +979,9 @@ status: note
 
 n3 landed a byte-identical change: new include/game/types/sjis_word.h, used in src/game/TexMgr_SetTexture.cpp, TitleNameHud_nm1.cpp and RankPanel_80144430.cpp for 16-bit reads of Shift-JIS char text. No action needed.
 
+## n3-20261111-0244 | 2026-11-11 02:44Z | from: n3 | port-readiness: fn_8020A734 argument order
+re: -
+status: note
+
+n3 landed a byte-identical change: one include line (game/types/tween_set_order.h) ahead of each of the 23 prototypes of fn_8020A734 in src/game and include/game. If you add a unit that declares fn_8020A734, please put the same include ahead of the prototype. No other action needed.
+

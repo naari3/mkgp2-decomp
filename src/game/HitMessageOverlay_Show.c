@@ -36,6 +36,7 @@ extern int fn_80231BD4(int set, int character, int alt);
 extern int fn_80231B94(int set);
 extern unsigned char fn_80231B74(int line);
 extern unsigned char fn_80231644(int *outVoice, int *outLine, int *outExtra, int set, int character);
+#include "game/types/tween_set_order.h"
 extern void fn_8020A734(void *layer, int mode, float from, float to);
 
 int HitMessageOverlay_Show(HitKart *src, HitKart *dst, unsigned char playSe)

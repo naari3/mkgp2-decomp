@@ -28,6 +28,7 @@ void fn_80121E10(ResCtrl *);
 void fn_80120A08(int);
 float fn_8020A6CC(HudTween *);
 int fn_8020A788(HudByteTween *);
+#include "game/types/tween_set_order.h"
 void fn_8020A734(HudTween *, int, float, float);
 void fn_8020A7CC(HudByteTween *, int, int, int);
 void MemoryManager_TimedFree(void *);

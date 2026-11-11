@@ -45,6 +45,7 @@ void SpriteHandle_RecomputeCull(int sprite);
 void fn_8011F804(int sprite, float x, float y);
 void fn_8011F744(int sprite, float sx, float sy);
 void fn_80121E10(ResCtrl *ctrl);
+#include "game/types/tween_set_order.h"
 void fn_8020A734(FlowFader *fader, int frames, float from, float to);
 float fn_8020A6CC(FlowFader *fader);
 void PreloadResource(int id);

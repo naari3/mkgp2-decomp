@@ -86,6 +86,7 @@ extern const float lbl_806D4ED4;
 extern const float lbl_806D4ED8;
 extern const float lbl_806D4EDC;
 
+#include "game/types/tween_set_order.h"
 void fn_8020A734(TweenInterp *t, int frames, float from, float to);
 float fn_8020A6CC(TweenInterp *t);
 void fn_80121E10(ResCtrl *c);

@@ -29,6 +29,7 @@ extern const float lbl_806DAAF0;
 const char *fn_80202E78(int msg, int line);
 int fn_80202F28(int msg);
 void fn_8011FAFC(ResCtrl *ctrl, int layer);
+#include "game/types/tween_set_order.h"
 void fn_8020A734(FlowFader *fader, int frames, float from, float to);
 void fn_8020A7CC(FlowFader *fader, int a, int b, int c);
 float fn_8020A6CC(FlowFader *fader);
