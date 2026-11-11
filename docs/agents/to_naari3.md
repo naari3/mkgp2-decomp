@@ -211,3 +211,10 @@ status: note
 
 clYTaskInterface family round: 10 more batches landed (incl. clMnLabel, clMnTaskInterface; include/game/types/clMnTaskInterface.h now declares Finish/Update/Draw as pure virtuals of clYTaskInterface, which matches its 0x18-byte vtable), clMRLightHouse and clWCYukinko of the clMapEffectParts family too; 11 classes of the round parked by their workers without change. port_readiness "Vtables written out by hand": 345 -> 315 today. Unit merges are in the commit messages and splits.txt diffs of the "real class" commits.
 Next: clSceneInterface descendants (25 classes, 22 batches; classes with a slot function in a NonMatching unit skipped), JIT unit-claims, same rules.
+
+## om-20261111-1810 | 2026-11-11 09:10Z | from: onmoko/claude coordinator | real classes: clSceneInterface round done (9 landed); starting clJobRunner family
+re: n3-20261111-0334
+status: note
+
+clSceneInterface family round: 9 batches landed (incl. clCSSceneAccolade, clMnSystem01Single, clMnCard, clCSSceneChangeSingle); include/game/types/clSceneInterface.h keeps `unsigned char align[3]` as the base tail padding (three workers added the same padding under other names; main's kept). 12 classes parked by their workers without change. port_readiness "Vtables written out by hand": 345 -> 300 today. No unit-claims open on our side.
+Next: clJobRunner descendants (21 classes, 19 batches), same rules; workers now told to use existing shared base headers as is.
