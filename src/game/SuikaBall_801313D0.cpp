@@ -775,9 +775,19 @@ struct CoinShot {
     CoinShotTrail trail[20];
 };
 
-#include "game/types/CoinShotBase.h"
+struct clCGameCoinBase {
+    virtual ~clCGameCoinBase();
+    virtual void Update() = 0;
+    virtual void Draw() = 0;
+    clNormal3D *model;
+    clNormal3D *trailModel;
+    int xC, x10;
+    CoinShot shots[6];
+    int trailCount;
+    clCGameCoinBase(const char *modelFile, const char *trailFile);
+};
 
-inline CoinShotBase::CoinShotBase(const char *modelFile, const char *trailFile) {
+inline clCGameCoinBase::clCGameCoinBase(const char *modelFile, const char *trailFile) {
     xC = 0;
     x10 = 0;
     trailCount = 5;
@@ -802,9 +812,16 @@ inline CoinShotBase::CoinShotBase(const char *modelFile, const char *trailFile) 
     }
 }
 
-struct SuikaCoinShots : CoinShotBase {
-    SuikaCoinShots(const char *modelFile, const char *trailFile) : CoinShotBase(modelFile, trailFile) {}
-    virtual ~SuikaCoinShots();
+inline clCGameCoinBase::~clCGameCoinBase() {
+    Object_DtorWithGXSync(model, 1);
+    Object_DtorWithGXSync(trailModel, 1);
+}
+
+struct clCGameMRCoin : clCGameCoinBase {
+    clCGameMRCoin(const char *modelFile, const char *trailFile) : clCGameCoinBase(modelFile, trailFile) {}
+    virtual ~clCGameMRCoin();
+    virtual void Update();
+    virtual void Draw();
 };
 
 struct GVec { float x, y, z; };
@@ -874,34 +891,22 @@ static inline bool Trail_Spawn(Trail *t, float c, float s)
 
 
 
-/* Uncalled diagnostic preserves the trailing pooled type names, as in
- * clLineManager::PrintLines (body inferred; pool-order fakematch). */
+/* Retained diagnostic from the clCGameMR conversion. */
+extern "C" const char lbl_80357AE0[], lbl_80357AF0[];
 void clCGameMR::PrintTypeNames() {
-    DebugPrintf("clCGameCoinBase");
-    DebugPrintf("clCGameMRCoin");
+    DebugPrintf(lbl_80357AE0);
+    DebugPrintf(lbl_80357AF0);
 }
 
 /* Deferred code generation emits these in target address order. */
-extern "C" ModelPair *fn_80134164(ModelPair *self, short flag)
-{
-    if (self) {
-        self->vt = SuikaCoinShots_vtable_8048E418;
-        if (self) {
-            self->vt = CoinShotBase_vtable_8048E34C;
-            Object_DtorWithGXSync(self->a, 1);
-            Object_DtorWithGXSync(self->b, 1);
-        }
-        if (flag > 0) MemoryManager_TimedFree(self);
-    }
-    return self;
-}
+clCGameMRCoin::~clCGameMRCoin() {}
 
-extern "C" void fn_80133E64(ShotOwner *self)
+void clCGameMRCoin::Update()
 {
     Trail *tr;
     int i;
     for (i = 0; i < 6; i++) {
-        Shot *s = &((ShotSet *)self)->shots[i];
+        Shot *s = &((ShotSet *)((ShotOwner *)this))->shots[i];
         if (s->active) {
             tr = s->trail;
             s->pos.x += s->vel.x;
@@ -918,7 +923,7 @@ extern "C" void fn_80133E64(ShotOwner *self)
             }
             s->alpha = 1.0f - s->timer / 70.0f;
             int j;
-            for (j = 0; j < self->trailCount; j++) {
+            for (j = 0; j < ((ShotOwner *)this)->trailCount; j++) {
                 Trail *t = &tr[j];
                 if (t->age >= 0) {
                     t->pos.y -= 2.0f;
@@ -928,19 +933,19 @@ extern "C" void fn_80133E64(ShotOwner *self)
                 }
             }
             if ((s->timer & 3) == 0) {
-                for (j = 0; j < self->trailCount; j++) {
-                    if (Trail_Spawn(&tr[j], lbl_80495994[self->sinIdx], lbl_80495A94[self->cosIdx]) == true) {
+                for (j = 0; j < ((ShotOwner *)this)->trailCount; j++) {
+                    if (Trail_Spawn(&tr[j], lbl_80495994[((ShotOwner *)this)->sinIdx], lbl_80495A94[((ShotOwner *)this)->cosIdx]) == true) {
                         tr[j].pos.x += s->pos.x;
                         tr[j].pos.y += s->pos.y;
                         tr[j].pos.z += s->pos.z;
                         break;
                     }
                 }
-                if (++self->sinIdx >= 0x40) {
-                    self->sinIdx = 0;
+                if (++((ShotOwner *)this)->sinIdx >= 0x40) {
+                    ((ShotOwner *)this)->sinIdx = 0;
                 }
-                if (++self->cosIdx >= 0x30) {
-                    self->cosIdx = 0;
+                if (++((ShotOwner *)this)->cosIdx >= 0x30) {
+                    ((ShotOwner *)this)->cosIdx = 0;
                 }
             }
             if (++s->timer >= 0x46) {
@@ -950,23 +955,23 @@ extern "C" void fn_80133E64(ShotOwner *self)
     }
 }
 
-extern "C" void fn_80133CA8(ShotOwner *self)
+void clCGameMRCoin::Draw()
 {
     for (int i = 0; i < 6; i++) {
-        if (((ShotSet *)self)->shots[i].active) {
-            Object_SetJObjPositionVec(self->model, &((ShotSet *)self)->shots[i].pos);
-            Object_SetJObjRotationY(self->model, lbl_806D7298 * ((ShotSet *)self)->shots[i].rot);
-            Object_SetColorAlphaOnly(self->model, 0, ((ShotSet *)self)->shots[i].alpha);
-            Object_RenderJObjEx(self->model, LinkedNode_GetField10_OrFallback(self->model, 0), 7);
-            LNode *n = LinkedNode_GetField10_OrFallback(self->model, 0);
-            Object_RenderJObjEx(self->model, n == 0 ? 0 : n->f8, 7);
-            for (int j = 0; j < self->trailCount; j++) {
-                float f = ((ShotSet *)self)->shots[i].trail[j].age / lbl_806D729C;
+        if (((ShotSet *)((ShotOwner *)this))->shots[i].active) {
+            Object_SetJObjPositionVec(((ShotOwner *)this)->model, &((ShotSet *)((ShotOwner *)this))->shots[i].pos);
+            Object_SetJObjRotationY(((ShotOwner *)this)->model, lbl_806D7298 * ((ShotSet *)((ShotOwner *)this))->shots[i].rot);
+            Object_SetColorAlphaOnly(((ShotOwner *)this)->model, 0, ((ShotSet *)((ShotOwner *)this))->shots[i].alpha);
+            Object_RenderJObjEx(((ShotOwner *)this)->model, LinkedNode_GetField10_OrFallback(((ShotOwner *)this)->model, 0), 7);
+            LNode *n = LinkedNode_GetField10_OrFallback(((ShotOwner *)this)->model, 0);
+            Object_RenderJObjEx(((ShotOwner *)this)->model, n == 0 ? 0 : n->f8, 7);
+            for (int j = 0; j < ((ShotOwner *)this)->trailCount; j++) {
+                float f = ((ShotSet *)((ShotOwner *)this))->shots[i].trail[j].age / lbl_806D729C;
                 float sc = lbl_806D72A0 - f;
-                Object_SetJObjPositionVec(self->trailModel, &((ShotSet *)self)->shots[i].trail[j].pos);
-                Object_SetJObjScaleXYZ(self->trailModel, sc, sc, sc);
-                Object_SetColorAlphaOnly(self->trailModel, 0, (lbl_806D72A4 - f) * ((ShotSet *)self)->shots[i].alpha);
-                Object_RenderJObjTree(self->trailModel, 7);
+                Object_SetJObjPositionVec(((ShotOwner *)this)->trailModel, &((ShotSet *)((ShotOwner *)this))->shots[i].trail[j].pos);
+                Object_SetJObjScaleXYZ(((ShotOwner *)this)->trailModel, sc, sc, sc);
+                Object_SetColorAlphaOnly(((ShotOwner *)this)->trailModel, 0, (lbl_806D72A4 - f) * ((ShotSet *)((ShotOwner *)this))->shots[i].alpha);
+                Object_RenderJObjTree(((ShotOwner *)this)->trailModel, 7);
             }
         }
     }
@@ -1054,7 +1059,7 @@ clCGameMR::clCGameMR() {
             s->jb[j] = ResolveJointByName(s->b, s_jointSets[i].joints[j * 2 + 1]);
         }
     }
-    m60 = (Deletable *)new SuikaCoinShots("mario_coin.dat", "k_kira13.dat");
+    m60 = (Deletable *)new clCGameMRCoin("mario_coin.dat", "k_kira13.dat");
     bufs = (GateList *)new GoalLineSet(SuikaBall_Render_rodata_803579F4);
     coins = 0;
     if (g_weatherSystem == 0) {

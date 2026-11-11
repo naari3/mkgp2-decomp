@@ -5943,14 +5943,14 @@ game/SuikaBall_801313D0.cpp:
 	extabindex  start:0x80024B18 end:0x80024B6C
 	.text       start:0x801313D0 end:0x801341E4
 	.rodata     start:0x80357008 end:0x80357B00
-	.data       start:0x8048E3D8 end:0x8048E40C
-	.sdata      start:0x806CF5C8 end:0x806CF5E0
+	.data       start:0x8048E3D8 end:0x8048E42C
+	.sdata      start:0x806CF5C8 end:0x806CF5F0
 
-game/autodata/sdata_806CF5E0.c:
-	.sdata      start:0x806CF5E0 end:0x806CF650
+game/autodata/sdata_806CF5F0.c:
+	.sdata      start:0x806CF5F0 end:0x806CF650
 
-game/autodata/data_8048E40C.c:
-	.data       start:0x8048E40C end:0x8048E4B8
+game/autodata/data_8048E42C.c:
+	.data       start:0x8048E42C end:0x8048E4B8
 
 game/BiribiriLand.c:
 	extab       start:0x8000CE64 end:0x8000D014

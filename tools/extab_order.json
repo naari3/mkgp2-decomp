@@ -1306,7 +1306,8 @@
     "fn_80133008",
     "fn_80134164",
     "SuikaBall_Init",
-    "PrintTypeNames__9clCGameMRFv"
+    "PrintTypeNames__9clCGameMRFv",
+    "dtor_8012A5AC"
   ],
   "src/game/fn_8013A534.cpp": [
     "fn_8013A534",
