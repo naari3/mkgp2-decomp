@@ -332,3 +332,8 @@ clCGameDemoRB converted in game/ChallengeDemoUra.cpp with canonical clCGameDemo/
 Source: Codex worker r7_c20_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 clCSKartModel converted in game/KartPreview.c without merging PreviewModel.c: inline base dtor plus external base Draw preserves the existing base table, while global: on the compiler-emitted base RTTI lets the untouched table reference it. Deferred reverse definitions and pooled ctor literals retain text/string order. All 12 methods and six sections 100%; DATA_ALIGN4_WEAK_TUS for 8048EACC start, clang OK, full DOL SHA-1 unchanged. Uses existing rules; no new compiler-source rule.
+
+## r7_c24_20261111
+Source: Codex worker r7_c24_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+Added the requested working-note paragraph tracing the raw/processed symbol-index and .comment misassociation caused by unnecessary global: bridges. Does not claim every previous parked gap has the same cause. This docs edit follows the explicit real-class-lane new-rule instruction.

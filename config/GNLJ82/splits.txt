@@ -6273,50 +6273,27 @@ game/SceneList_80157EA8.cpp:
 	.data       start:0x80490030 end:0x80490054
 	.sdata      start:0x806CF8B8 end:0x806CF8C8
 
-game/autodata/sdata_806CF8C8.c:
-	.sdata      start:0x806CF8C8 end:0x806CF9F0
-
-game/autodata/data_80490058.c:
-	.data       start:0x80490058 end:0x80490AA8
-
-game/autodata/data_80490ACC.c:
-	.data       start:0x80490ACC end:0x80490DC8
-
 game/Scene_8015B6D0.cpp:
 	extab       start:0x8000F26C end:0x8000F284
 	extabindex  start:0x800259A0 end:0x800259AC
 	.text       start:0x8015B6D0 end:0x8015B70C
 
 game/Scene_8015B70C.cpp:
-	extab       start:0x8000F284 end:0x8000F28C
-	extabindex  start:0x800259AC end:0x800259B8
-	.text       start:0x8015B70C end:0x8015B790
-
-game/Scene_8015B790.cpp:
-	extab       start:0x8000F28C end:0x8000F294
-	extabindex  start:0x800259B8 end:0x800259C4
-	.text       start:0x8015B790 end:0x8015BC08
+	extab       start:0x8000F284 end:0x8000F2F0
+	extabindex  start:0x800259AC end:0x800259F4
+	.text       start:0x8015B70C end:0x8015BED4
 	.rodata     start:0x80367F68 end:0x803682AC
+	.data       start:0x80490058 end:0x80490080
+	.sdata      start:0x806CF8C8 end:0x806CF8D8
 
-game/Scene_8015BC08.cpp:
-	extab       start:0x8000F294 end:0x8000F29C
-	extabindex  start:0x800259C4 end:0x800259D0
-	.text       start:0x8015BC08 end:0x8015BCC4
+game/autodata/sdata_806CF8D8.c:
+	.sdata      start:0x806CF8D8 end:0x806CF9F0
 
-game/Scene_8015BCC4.cpp:
-	extab       start:0x8000F29C end:0x8000F2C4
-	extabindex  start:0x800259D0 end:0x800259DC
-	.text       start:0x8015BCC4 end:0x8015BE0C
+game/autodata/data_80490080.c:
+	.data       start:0x80490080 end:0x80490AA8
 
-game/Scene_8015BE0C.cpp:
-	extab       start:0x8000F2C4 end:0x8000F2CC
-	extabindex  start:0x800259DC end:0x800259E8
-	.text       start:0x8015BE0C end:0x8015BE44
-
-game/Scene_8015BE44.cpp:
-	extab       start:0x8000F2CC end:0x8000F2F0
-	extabindex  start:0x800259E8 end:0x800259F4
-	.text       start:0x8015BE44 end:0x8015BED4
+game/autodata/data_80490ACC.c:
+	.data       start:0x80490ACC end:0x80490DC8
 
 game/Scene_8015BED4.cpp:
 	extab       start:0x8000F2F0 end:0x8000F2F8
