@@ -7,6 +7,7 @@ struct SceneBase {
     virtual void Update();
     virtual void Draw();
     bool done;
+    unsigned char pad5[3]; /* tail padding, named so a derived class cannot use it */
     SceneBase() : done(false) {}
 };
 

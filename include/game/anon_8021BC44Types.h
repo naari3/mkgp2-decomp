@@ -633,6 +633,7 @@ struct FadeObj {
     FadeTrack tracks[5];
     unsigned char shown;
     unsigned char flush;
+    unsigned char pad86[2]; /* tail padding, named so a derived class cannot use it */
     FadeObj() : sprite(0), delay(20) {
         shown = 0;
         flush = 0;

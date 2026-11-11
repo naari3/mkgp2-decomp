@@ -289,11 +289,11 @@ static inline void fn_802090F0_Reordered(void * a0, void * a1, void * a2, float 
 #endif
 extern void fn_802091BC(void *, int, int);
 extern void __throw();
-extern void strcpy(void *, const void *);
+extern char *strcpy(char *, const char *);
 #ifdef NON_MATCHING
 extern double cos(double x);
 #else
-extern void cos();
+extern double cos(double);
 #endif
 extern double sin(double x);
 extern void fn_802BD6AC(float x, float y);
@@ -302,7 +302,7 @@ extern void HSD_FObjForceLinearInterp(int);
 extern void HSD_MtxGetRotation(void *, void *);
 extern float HSD_Randf(void);
 extern int HSD_Randi(int range);
-extern void memset(void *, int, int);
+extern void *memset(void *, int, unsigned long);
 extern unsigned long strlen(const char *);
 
 /* --- extern decls: sda21-referenced data --- */

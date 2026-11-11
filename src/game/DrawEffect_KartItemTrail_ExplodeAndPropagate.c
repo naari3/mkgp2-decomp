@@ -21,7 +21,7 @@ static inline void Mtx44_TransformVec3_ByValue(Vec *out, float m[4][4], Vec v) {
 #endif
 extern void Matrix4_Identity(float m[4][4]);
 extern void Matrix4_PreMultiplyTranslation(float dst[4][4], float src[4][4], float x, float y, float z);
-extern double atan2(float y, float x);
+extern double atan2(double, double);
 extern float BuildOrientationFromYaw(float yaw);
 extern void Matrix4_PreMultiplyRotY(float dst[4][4], float src[4][4], float angle);
 extern void Matrix4_Multiply(float a[4][4], float b[4][4], float out[4][4]);

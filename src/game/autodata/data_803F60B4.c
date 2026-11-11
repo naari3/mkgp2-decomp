@@ -71,261 +71,118 @@ extern char data_803F60B4_data_806CEDF0[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-/* pointers mixed with values */
-void *lbl_803F60B4[6] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB03C,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+#include "game/types/text_word.h"
+/* ZoneObject of include/game/CourseEnvironmentPrivate.h: one course part of a
+ * zone; a list ends with kind -1. CourseScene_Load writes the slot. */
+typedef struct ZoneObjectRow {
+    signed char kind, variant;
+    short slot;
+    void *filename, *jointName;
+} ZoneObjectRow;
+ZoneObjectRow lbl_803F60B4[2] = {
+    { 0, -1, -1, &lbl_802EB03C, &lbl_802EB050 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F60CC[6] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB068,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F60CC[2] = {
+    { 0, -1, -1, &lbl_802EB068, &lbl_802EB050 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F60E4[6] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB07C,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F60E4[2] = {
+    { 0, -1, -1, &lbl_802EB07C, &lbl_802EB050 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F60FC[15] = {
-    (void *)0x1FFFFFF,
-    0,
-    (void *)&lbl_802EB08C,
-    (void *)0x1FFFF,
-    (void *)&lbl_802EB0A4,
-    (void *)&lbl_802EB050,
-    (void *)0x2FFFF,
-    (void *)&lbl_802EB0B4,
-    (void *)&lbl_802EB050,
-    (void *)0x3FFFF,
-    (void *)&lbl_802EB0C4,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F60FC[5] = {
+    { 1, -1, -1, 0, &lbl_802EB08C },
+    { 0, 1, -1, &lbl_802EB0A4, &lbl_802EB050 },
+    { 0, 2, -1, &lbl_802EB0B4, &lbl_802EB050 },
+    { 0, 3, -1, &lbl_802EB0C4, &lbl_802EB050 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6138[9] = {
-    (void *)0x1FFFFFF,
-    0,
-    (void *)&lbl_802EB0D4,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB0EC,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6138[3] = {
+    { 1, -1, -1, 0, &lbl_802EB0D4 },
+    { 0, -1, -1, &lbl_802EB0EC, &lbl_802EB050 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F615C[6] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB0FC,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F615C[2] = {
+    { 0, -1, -1, &lbl_802EB0FC, &lbl_802EB050 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6174[9] = {
-    (void *)0x1FFFFFF,
-    0,
-    (void *)&lbl_802EB10C,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB124,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6174[3] = {
+    { 1, -1, -1, 0, &lbl_802EB10C },
+    { 0, -1, -1, &lbl_802EB124, &lbl_802EB050 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6198[36] = {
-    (void *)0x1FFFFFF,
-    0,
-    (void *)&lbl_802EB134,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB14C,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFFFF,
-    0,
-    0,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB158,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB168,
-    (void *)&lbl_802EB050,
-    (void *)0x1FFFFFF,
-    0,
-    (void *)&lbl_802EB178,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB190,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB1A0,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB1B0,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB1C0,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB1D0,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6198[12] = {
+    { 1, -1, -1, 0, &lbl_802EB134 },
+    { 0, -1, -1, &lbl_802EB14C, &lbl_802EB050 },
+    { -1, -1, -1, 0, 0 },
+    { 0, -1, -1, &lbl_802EB158, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB168, &lbl_802EB050 },
+    { 1, -1, -1, 0, &lbl_802EB178 },
+    { 0, -1, -1, &lbl_802EB190, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB1A0, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB1B0, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB1C0, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB1D0, &lbl_802EB050 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6228[6] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB1E0,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6228[2] = {
+    { 0, -1, -1, &lbl_802EB1E0, &lbl_802EB050 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6240[6] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB1F0,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6240[2] = {
+    { 0, -1, -1, &lbl_802EB1F0, &lbl_802EB050 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6258[36] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB200,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB210,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB224,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB234,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB248,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB25C,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB26C,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB27C,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB190,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB1B0,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB28C,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6258[12] = {
+    { 0, -1, -1, &lbl_802EB200, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB210, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB224, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB234, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB248, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB25C, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB26C, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB27C, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB190, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB1B0, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB28C, &lbl_802EB050 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F62E8[33] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB200,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB210,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB1B0,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB1C0,
-    (void *)&lbl_802EB050,
-    (void *)0x1FFFFFF,
-    0,
-    (void *)&lbl_802EB178,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB29C,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB2AC,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB2C0,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB2D0,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB2E0,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F62E8[11] = {
+    { 0, -1, -1, &lbl_802EB200, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB210, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB1B0, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB1C0, &lbl_802EB050 },
+    { 1, -1, -1, 0, &lbl_802EB178 },
+    { 0, -1, -1, &lbl_802EB29C, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB2AC, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB2C0, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB2D0, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB2E0, &lbl_802EB050 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F636C[33] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB200,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB210,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB1B0,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB1C0,
-    (void *)&lbl_802EB050,
-    (void *)0x1FFFFFF,
-    0,
-    (void *)&lbl_802EB178,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB29C,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB2AC,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB2C0,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB2D0,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB2E0,
-    (void *)&lbl_802EB050,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F636C[11] = {
+    { 0, -1, -1, &lbl_802EB200, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB210, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB1B0, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB1C0, &lbl_802EB050 },
+    { 1, -1, -1, 0, &lbl_802EB178 },
+    { 0, -1, -1, &lbl_802EB29C, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB2AC, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB2C0, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB2D0, &lbl_802EB050 },
+    { 0, -1, -1, &lbl_802EB2E0, &lbl_802EB050 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
+/* ZoneObject lists (first word: kind, variant and the 16-bit slot) and CourseZone tables */
 void *lbl_803F63F0[550] = {
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB200,
     (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB248,
     (void *)&lbl_802EB050,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB2F0,
     (void *)&lbl_802EB050,
     (void *)0xFFFFFFFF,
@@ -791,367 +648,204 @@ void *lbl_803F63F0[550] = {
     0,
     0,
     0,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB300,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB330,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB348,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB358,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB368,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB378,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB38C,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB3A0,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB3B0,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB3C0,
     (void *)&lbl_802EB314,
     (void *)0xFFFFFFFF,
     0,
     0,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB300,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB330,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB348,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB358,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB3D4,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB3E4,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB3F4,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB38C,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB3A0,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB3B0,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB408,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB41C,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB42C,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB440,
     (void *)&lbl_802EB314,
     (void *)0xFFFFFFFF,
     0,
     0
 };
-/* pointers mixed with values */
-void *lbl_803F6C88[6] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB348,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6C88[2] = {
+    { 0, -1, -1, &lbl_802EB348, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6CA0[6] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB358,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6CA0[2] = {
+    { 0, -1, -1, &lbl_802EB358, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6CB8[9] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB348,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB3A0,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6CB8[3] = {
+    { 0, -1, -1, &lbl_802EB348, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB3A0, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6CDC[9] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB358,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB3B0,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6CDC[3] = {
+    { 0, -1, -1, &lbl_802EB358, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB3B0, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6D00[18] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB300,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB330,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB368,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB38C,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB3C0,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6D00[6] = {
+    { 0, -1, -1, &lbl_802EB300, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB330, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB368, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB38C, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB3C0, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6D48[18] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB300,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB330,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB378,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB38C,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB3C0,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6D48[6] = {
+    { 0, -1, -1, &lbl_802EB300, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB330, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB378, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB38C, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB3C0, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6D90[9] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB3D4,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB348,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6D90[3] = {
+    { 0, -1, -1, &lbl_802EB3D4, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB348, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6DB4[9] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB3D4,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB358,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6DB4[3] = {
+    { 0, -1, -1, &lbl_802EB3D4, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB358, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6DD8[15] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB408,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB41C,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB42C,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB440,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6DD8[5] = {
+    { 0, -1, -1, &lbl_802EB408, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB41C, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB42C, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB440, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6E14[12] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB3D4,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB348,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB3A0,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6E14[4] = {
+    { 0, -1, -1, &lbl_802EB3D4, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB348, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB3A0, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6E44[12] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB3D4,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB358,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB3B0,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6E44[4] = {
+    { 0, -1, -1, &lbl_802EB3D4, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB358, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB3B0, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6E74[15] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB300,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB330,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB3E4,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB38C,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6E74[5] = {
+    { 0, -1, -1, &lbl_802EB300, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB330, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB3E4, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB38C, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6EB0[15] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB300,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB330,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB3F4,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB38C,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6EB0[5] = {
+    { 0, -1, -1, &lbl_802EB300, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB330, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB3F4, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB38C, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6EEC[9] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB3D4,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB348,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6EEC[3] = {
+    { 0, -1, -1, &lbl_802EB3D4, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB348, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6F10[9] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB3D4,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB358,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6F10[3] = {
+    { 0, -1, -1, &lbl_802EB3D4, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB358, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6F34[15] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB408,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB41C,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB42C,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB440,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6F34[5] = {
+    { 0, -1, -1, &lbl_802EB408, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB41C, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB42C, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB440, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6F70[9] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB3D4,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB348,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6F70[3] = {
+    { 0, -1, -1, &lbl_802EB3D4, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB348, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6F94[9] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB3D4,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB358,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6F94[3] = {
+    { 0, -1, -1, &lbl_802EB3D4, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB358, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
-void *lbl_803F6FB8[12] = {
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB300,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB330,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
-    (void *)&lbl_802EB38C,
-    (void *)&lbl_802EB314,
-    (void *)0xFFFFFFFF,
-    0,
-    0
+ZoneObjectRow lbl_803F6FB8[4] = {
+    { 0, -1, -1, &lbl_802EB300, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB330, &lbl_802EB314 },
+    { 0, -1, -1, &lbl_802EB38C, &lbl_802EB314 },
+    { -1, -1, -1, 0, 0 }
 };
-/* pointers mixed with values */
+/* ZoneObject lists (first word: kind, variant and the 16-bit slot) and CourseZone tables */
 void *lbl_803F6FE8[299] = {
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB300,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB330,
     (void *)&lbl_802EB314,
-    (void *)0xFFFFFF,
+    (void *)TEXT_WORD(0, 255, 0xFF, 0xFF),
     (void *)&lbl_802EB38C,
     (void *)&lbl_802EB314,
     (void *)0xFFFFFFFF,

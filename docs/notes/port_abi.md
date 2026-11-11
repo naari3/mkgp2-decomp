@@ -738,3 +738,92 @@ constant offset and land in the objects that follow it (strings, tables):
 "object addressed from another object's name plus an offset" case of
 shared_data.md: right only while the objects keep the original order and
 spacing.
+
+## Tail padding of base classes (request 40, 2026-11-11)
+
+MWCC starts the members of a derived class at `sizeof(base)`. clang (Itanium
+C++ ABI) starts them at the end of the base's data when the base is not a
+plain struct (virtual functions, a constructor), so a base ending in one or
+two bytes loses its padding to the first small member of the derived class:
+`PanelIcon::resId` sat at 0x86 on the host and at 0x88 in the game, and code
+that fills the object through a flat view wrote the wrong place.
+
+The padding is now a member of the base (`unsigned char pad86[2];` and the
+like; nothing changes for MWCC): `PanelItem` (RankPanel_80144430.cpp),
+`FadeObj` (fn_801BAA88.cpp, anon_8021F088_private.h, anon_8021BC44Types.h),
+`clGetCoinLine`, `clFlowCCInterface` (both headers), `SceneRoot163`, `JobTask`
+(types/JobTask.h) and the `SceneBase` copies that end in `done`.
+
+`tools/port_abi/tail_padding.py` lists the cases over every game .cpp from
+clang's record layouts; it reports none after this change. A new class with
+virtual functions that ends in a `char`, `bool` or `short` and is derived from
+needs the same member.
+
+## Library prototypes (request 41, 2026-11-11)
+
+Sixteen units declared `atan2`, `atan` and `tan` with `float` parameters. On
+PowerPC a float and a double argument use the same register, so the objects
+are the same either way; a 32-bit x86 caller pushes 4 bytes where libm reads
+8, and every yaw and pitch computed that way was garbage. All declarations of
+C library functions in src/game and include/game now have the standard
+parameter and return types (`double atan2(double, double)`,
+`unsigned long strlen(const char *)`, `void *memset(void *, int, unsigned long)`,
+`int snprintf(char *, unsigned long, const char *, ...)` and so on); no
+object changed.
+
+`tools/port_abi/libc_decls.py [--fix]` lists and rewrites them. It does not
+compare pointer types with each other and leaves the `wcs*` functions alone.
+Left: src/game/Rand.c declares `unsigned short rand(void)`; with `int` the
+object changes (the truncation is how the original was written), and the low
+16 bits of the result are the same on the host.
+
+## Tables reached only through another table's pointer (request 42, 2026-11-11)
+
+The earlier sweeps looked for a function that reads a table as bytes. A table
+whose only reader gets it through a pointer stored in a second table was
+missed, because no function names it. The ZoneObject lists were the case that
+showed on the PC build (decoration loop ended on the first entry).
+
+Changed, all byte-identical under MWCC:
+
+- `src/game/autodata/data_803F60B4.c`: 32 lists are now
+  `ZoneObjectRow x[] = { { kind, variant, slot, filename, jointName }, ... }`
+  (`signed char kind, variant; short slot;`). The two objects that hold both
+  ZoneObject lists and the CourseZone tables that point at them
+  (`lbl_803F63F0`, `lbl_803F6FE8`) stay `void *` arrays with the header word
+  written as `(void *)TEXT_WORD(kind, variant, 0xFF, 0xFF)`; the terminator
+  word stays `0xFFFFFFFF` and the CourseZone `int` kinds stay plain numbers.
+  All of them are still writable data.
+- `src/game/autodata/data_8041EEC0.c`: shell pile configuration blocks
+  (readers `ShellPile_Spawn.c`, `ShellPilePiece_Tick.c` take a name string at
+  +1 and bytes at +0x80..0x82): 12 words to `TEXT_WORD`.
+- `JointTracks_rodata_803EB3DC`, `DNStartDino_tail_rodata_803D6850`: nine
+  track pointers followed by six inline keys. The key frames are 16-bit, so
+  they use the new `HALF_WORDS(a, b)` in `include/game/types/text_word.h`
+  (the word whose two 16-bit halves in memory are a, then b).
+- `ConfettiField_rodata_80360520`: six colours read through a
+  `{ r, g, b, a }` byte union, now `TEXT_WORD(r, g, b, a)`.
+- `lbl_8036BF90` (fn_80167C60.cpp) and three words of
+  `sdata_806CF750_rodata_8036A308` (Scene_801661FC.cpp): format string text
+  that was still raw words.
+
+How the search was done: every word table in `src/game` (arrays of
+`void *`, `int`, `unsigned int`) was scanned for words that are not an
+address, a small integer, a float in a plausible range, zero or all ones;
+what is left is a word with several meaningful bytes. Fifteen tables came
+out; the ones above were real.
+
+Looked at and left alone:
+
+- `RaceScene_GetPerspFovyForCup_data_8040B7AC` (one word `0x01000000`): no C
+  reader names it, so its width is unknown.
+- `lbl_803C2DE8`, `lbl_803C2E04`, `lbl_806D4E00`: read as whole words.
+- Unions of a word and four bytes also exist in `PCBCheckRecv.c` and
+  `clFlowRound.c`; their words come from the media board or from code, not
+  from a table in the source.
+
+Limit of the search: a table whose packed bytes are all small (for example
+`{ 0, 0, 0, 1 }` as one word `1`) looks the same as an integer and cannot be
+found from the values alone. Those can only be found from the reader, and a
+reader that takes the table through an untyped pointer in another table gives
+no type to follow.

@@ -2476,15 +2476,15 @@ extern "C" const void *const JointTracks_rodata_803EB3DC[21] = {
     (void *)0x0,
     (void *)0x0,
     (void *)0x41100000,
-    (void *)0x3C0000,
+    (void *)HALF_WORDS(60, 0),
     (void *)0x0,
-    (void *)0xB40000,
+    (void *)HALF_WORDS(180, 0),
     (void *)0xC0200000,
-    (void *)0x12C0000,
+    (void *)HALF_WORDS(300, 0),
     (void *)0x0,
-    (void *)0x1680000,
+    (void *)HALF_WORDS(360, 0),
     (void *)0x41100000,
-    (void *)0xFFFF0000,
+    (void *)HALF_WORDS(-1, 0),
     (void *)0x0
 };
 extern "C" const void *const JointTracks_rodata_803EB430[9] = {

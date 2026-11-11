@@ -43,7 +43,7 @@ extern float *KartDriver_GetKartRootMtx(KartDriver *);
 extern void Vec3_Subtract(const Vec3f *, Vec3f *, Vec3f *);
 extern float PSVECSquareMag(Vec3f *);
 extern void fn_80181F18(const Vec3f *, const Vec3f *, const Vec3f *, Vec3f *, float);
-extern double atan2(float, float);
+extern double atan2(double, double);
 extern void Object_DtorWithGXSync(clNormal3D *, int);
 extern void MemoryManager_Free(void *);
 extern void MemoryManager_TimedFree(void *);

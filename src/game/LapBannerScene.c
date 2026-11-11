@@ -49,7 +49,7 @@ extern void CObj_LoadProjMatrix(void *, Vec3 *);
 extern void CObj_ApplyScissor(void *, Vec3 *);
 extern void Vec3_Subtract(Vec3 *, Vec3 *, Vec3 *);
 extern void Vec3_Normalize(Vec3 *, Vec3 *);
-extern double atan2(float, float);
+extern double atan2(double, double);
 extern void clNormal3D_Exec(void *);
 extern void Object_DriveAnimMatrix(void *);
 extern void Object_DtorWithGXSync(void *, int);

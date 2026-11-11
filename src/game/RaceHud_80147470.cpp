@@ -151,7 +151,7 @@ extern void __construct_array();
 extern void fn_801F8E90();
 extern void fn_801F93EC();
 int isJapanese(void);
-extern void strlen();
+extern unsigned long strlen(const char *);
 extern unsigned int lbl_806D7C9C;
 extern unsigned int lbl_806D7CA0;
 extern unsigned int lbl_806D7CA4;

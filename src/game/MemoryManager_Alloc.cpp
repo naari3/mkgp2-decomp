@@ -28,7 +28,7 @@ extern "C" unsigned int OSGetTick(void);
 extern "C" void DebugPrintf(const char *fmt, ...);
 extern "C" void *OSAllocFromHeap(void *heap, unsigned int size);
 extern "C" void OSFreeToHeap(void *heap, void *ptr);
-extern "C" void snprintf(char *dst, int size, const char *fmt, ...);
+extern "C" int snprintf(char *, unsigned long, const char *, ...);
 
 extern "C" unsigned char lbl_806D0FA1;
 extern "C" void *lbl_806CF010;
