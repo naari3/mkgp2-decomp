@@ -626,6 +626,15 @@ clFlowRound.c are declared but not used. Every other reader of the link slot
 (18 units) uses byte views. `unsigned short name[6]` at slot offset 0x16 is
 copied as 16-bit codes on both ends.
 
+### VS mode string pool (request 48, 2026-11-11)
+
+`sdata_806CEFE0_rodata_80320D9C[247]` in `VSMode_FrameUpdate.c` was text
+written as words and had been missed: `tools/port_abi/text_words.py` did not
+look at definitions that start with `__declspec(section "...")`. The tool now
+does, and the pool is `TEXT_WORD`s. A second scan that ignores how a
+definition starts (any run of three or more hexadecimal text words anywhere
+under `src`) finds nothing else.
+
 ### Track choice read (request 47, 2026-11-11)
 
 `clFlowCourse.cpp` read the chosen track as `(*(unsigned short *)recv >> 4) &
