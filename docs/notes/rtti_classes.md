@@ -312,3 +312,8 @@ clCallback/clShadow: preserve the standalone base destructor TU separately from 
 Source: Codex worker r7_c9_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 nsEffectSpeed::clActionMueScale/clAction/clActionSpeedScale converted together in game/EffectSpeedAction_SpeedScale_Dtor.cpp (four code TUs merged). Deferred reverse definitions retain all 14 functions / 1968 B. Declaring MueScale::Reset first and SpeedScale::Process first chooses vtable keys whose generation reproduces MueScale/base/SpeedScale data order; RTTI names and sdata then match too. Last vtable symbol size corrected 0x18 -> 0x14, excluding 4-byte inter-unit alignment. All six owned sections, clang, 25 linked symbol addresses and full DOL SHA-1 verified. This is an object/full-link observation, not a compiler-source trace.
+
+## r7_c11_20261111
+Source: Codex worker r7_c11_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+clGameSingle converted in game/RaceScene_RenderPass.cpp, merging FrameUpdate/Dtor/Init. Deferred reverse definitions plus compiler RTTI/vtable and pooled literal strings preserve all four native methods and seven owned sections at 100%; clang OK and full DOL SHA-1 unchanged. Split the old compound string-pool symbol into actual literal boundaries to eliminate R_PPC_NONE pseudo-relocation mismatches (existing matching_rules section 5 rule). No new compiler rule discovered.
