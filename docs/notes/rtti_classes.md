@@ -228,6 +228,12 @@ Order of work that avoided rework in the five tries:
 
 Things that are easy to get wrong:
 
+- `main.dol: OK` only checks units marked `Matching` in configure.py. For
+  a `NonMatching` unit the original object is linked, whatever the source
+  says. clScreenEffect landed that way; linked from source its exception
+  table order was wrong. Flip the unit to `Matching` for the check, or
+  leave the class alone until the unit matches.
+
 - A weak table of a header-only base (`clMapEffectParts`, the interface
   classes) is emitted by every unit that needs it and the linker keeps one
   copy per unit in this binary, so the same class has several vtable rows

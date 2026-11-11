@@ -1716,7 +1716,7 @@ config.libs = [
             Object(Matching, "game/DVDLoad_ReadChunkHandle.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/DVDLoad_WaitIfSamePage.c", extra_cflags=["-Cpp_exceptions on"], extab_padding=b""),
             Object(Matching, "game/FUN_8007e344.c", extra_cflags=["-Cpp_exceptions on"]),
-            Object(NonMatching, "game/TransitionEffect.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-i include/libc", "-RTTI on", "-rostr", "-inline deferred,auto"]),
+            Object(Matching, "game/TransitionEffect.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-i include/libc", "-RTTI on", "-rostr", "-inline deferred,auto"]),
             Object(Matching, "game/DVDLoad_RecordOpStart.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/PcbConn_GetStateName.c", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/PcbListener_GetStateName.c", extra_cflags=["-Cpp_exceptions on"]),
