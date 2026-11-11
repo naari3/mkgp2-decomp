@@ -1346,10 +1346,6 @@
     "dtor_801F4A80",
     "dtor_8021617C"
   ],
-  "src/game/KartChoiceChildCtor.cpp": [
-    "fn_8023C160",
-    "dtor_80082960"
-  ],
   "src/game/KartChoiceFinish.cpp": {
     "extab": [
       "fn_8023C878",
@@ -3809,5 +3805,10 @@
       "fn_801FE5C8",
       "dtor_801FE870"
     ]
-  }
+  },
+  "src/game/KartChoiceChildDtor.cpp": [
+    "fn_8023C0D8",
+    "fn_8023C160",
+    "dtor_80082960"
+  ]
 }

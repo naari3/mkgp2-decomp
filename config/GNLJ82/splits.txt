@@ -11429,29 +11429,18 @@ game/KartChoiceRequest.cpp:
 	.data       start:0x804EE560 end:0x804EE5A0
 	.sdata      start:0x806D0798 end:0x806D07A8
 
-game/autodata/sdata_806D07A8.c:
-	.sdata      start:0x806D07A8 end:0x806D07B0
-
-game/autodata/data_804EE5A0.c:
-	.data       start:0x804EE5A0 end:0x804EE5B0
-
-game/autodata/rodata_803DC348.c:
-	.rodata     start:0x803DC348 end:0x803DC358
-
 game/KartChoiceChildDraw.cpp:
 	extab       start:0x8001CA14 end:0x8001CA1C
 	extabindex  start:0x8002AD10 end:0x8002AD1C
 	.text       start:0x8023BEF0 end:0x8023C0D8
 
 game/KartChoiceChildDtor.cpp:
-	extab       start:0x8001CA1C end:0x8001CA24
-	extabindex  start:0x8002AD1C end:0x8002AD28
-	.text       start:0x8023C0D8 end:0x8023C160
-
-game/KartChoiceChildCtor.cpp:
-	extab       start:0x8001CA24 end:0x8001CA3C
-	extabindex  start:0x8002AD28 end:0x8002AD34
-	.text       start:0x8023C160 end:0x8023C394
+	extab       start:0x8001CA1C end:0x8001CA3C
+	extabindex  start:0x8002AD1C end:0x8002AD34
+	.text       start:0x8023C0D8 end:0x8023C394
+	.rodata     start:0x803DC348 end:0x803DC358
+	.data       start:0x804EE5A0 end:0x804EE5B0
+	.sdata      start:0x806D07A8 end:0x806D07B0
 
 game/KartChoiceFinish.cpp:
 	extab       start:0x8001CA3C end:0x8001CAAC
