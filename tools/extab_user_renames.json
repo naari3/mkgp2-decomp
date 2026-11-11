@@ -11632,15 +11632,6 @@
     "@145": "@eti_80028EA4",
     "@155": "@eti_80028EB0"
   },
-  "src/game/objview/fn_8018A70C.cpp": {
-    "__ct__9SoundPropFv": "fn_8018A70C",
-    "__vt__9SoundProp": "SoundProp_vtable_80495DB4",
-    "__vt__16CourseMarkerBase": "lbl_80490FE0",
-    "__dt__16CourseMarkerBaseFv": "dtor_8016A270",
-    "__ct__10clNormal3DFPvi": "clNormal3D_Construct",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
-  },
   "src/game/objview/fn_8018CFC4.cpp": {
     "__ct__9S22SingleFv": "fn_8018CFC4",
     "__vt__9S22Single": "S22Single_vtable_80495DDC",
@@ -17277,5 +17268,34 @@
     "@359": "@eti_80026CFC",
     "@395": "@etb_80011C50",
     "@396": "@eti_80026D08"
+  },
+  "src/game/bbox/fn_8018A32C.cpp": {
+    "@105": "@etb_80011E04",
+    "@106": "@eti_80026E40",
+    "@172": "@etb_80011E0C",
+    "@173": "@eti_80026E4C",
+    "@183": "@etb_80011E14",
+    "@184": "@eti_80026E58",
+    "@206": "@etb_80011E1C",
+    "@207": "@eti_80026E64",
+    "@92": "lbl_80377B50",
+    "@94": "lbl_80377B60",
+    "@93": "data_80491988_data_80495DA8",
+    "@182": "lbl_80377B74",
+    "@205": "sCreateMsg",
+    "__ct__12clPacnflowerFv": "fn_8018A70C",
+    "__dt__12clPacnflowerFv": "fn_8018A66C",
+    "Update__12clPacnflowerFv": "fn_8018A418",
+    "Draw__12clPacnflowerFv": "fn_8018A32C",
+    "__vt__12clPacnflower": "SoundProp_vtable_80495DB4",
+    "__RTTI__12clPacnflower": "data_80491988_data_806CFBF0",
+    "__RTTI__16clMapEffectParts": "data_80491988_data_806CFBE8",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "__dt__16clMapEffectPartsFv": "dtor_8016A270",
+    "Enable__16clMapEffectPartsFi": "fn_8016A26C",
+    "__ct__10clNormal3DFPvi": "clNormal3D_Construct",
+    "__dt__10clNormal3DFv": "Object_DtorWithGXSync",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }

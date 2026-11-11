@@ -1,4 +1,4 @@
-#include "game/ObjViewA70C_private.h"
+#include "game/types/clPacnflower.h"
 extern "C" {
 extern float lbl_806D9368[2];
 extern int g_cupId;
@@ -78,9 +78,9 @@ extern const unsigned char lbl_803776C8[0x3FC] = {
     0x42, 0xA6, 0xAA, 0xAB, 0x45, 0x9C, 0x40, 0x00, 0x42, 0xA6, 0xAA, 0xAB,
 };
 }
-extern "C" const char lbl_80377AC4[0x14] = "MRA_pacnflower.dat";
+extern "C" const char lbl_80377AC4[0x13] = "MRA_pacnflower.dat";
 extern "C" const Vec sPacnflowerPos[2] = {{1864.099f, -209.300003f, -4210.87012f}, {1405.80701f, -209.300003f, -3928.46997f}};
-extern "C" const char lbl_80377AF0[0x10] = "DKA_pacn.dat";
+extern "C" const char lbl_80377AF0[0xD] = "DKA_pacn.dat";
 extern "C" const Vec sPacnPos[5] = {
     {41.6474991f, 125.972099f, -2110.48999f},
     {342.098785f, 127.375999f, -2234.55005f},
@@ -89,17 +89,7 @@ extern "C" const Vec sPacnPos[5] = {
     {205.288696f, 1.63339996f, -1755.08997f},
 };
 extern "C" const float sPacnRot[5] = {0.620000303f, 0.0699999258f, -0.609999597f, 2.82318544f, -2.21998906f};
-extern "C" const char lbl_80377B50[] = "clPacnflower";
-extern "C" const char lbl_80377B60[] = "clMapEffectParts";
-extern "C" const char lbl_80377B74[] = " DeleteMapEffect : clPacnflower\n";
-extern "C" const char sCreateMsg[] = " CreateMapEffect : clPacnflower\n";
 
-typedef struct ObjView {
-    void *vt;
-    void *child;
-    unsigned char pad[0x10];
-    void *buf;
-} ObjView;
 
 extern "C" {
 extern char SoundProp_vtable_80495DB4[];
@@ -109,29 +99,9 @@ void MemoryManager_Free(void *p);
 void MemoryManager_TimedFree(void *p);
 }
 
-extern "C" ObjView *fn_8018A66C(ObjView *self, short flag) {
-    if (self != 0) {
-        self->vt = SoundProp_vtable_80495DB4;
-        if (self->child != 0) {
-            Object_DtorWithGXSync(self->child, 1);
-        }
-        if (self->buf != 0) {
-            MemoryManager_Free(self->buf);
-        }
-        DebugPrintf(lbl_80377B74);
-        if (self != 0) {
-            self->vt = lbl_80490FE0;
-        }
-        if (flag > 0) {
-            MemoryManager_TimedFree(self);
-        }
-    }
-    return self;
-}
-
-SoundProp::SoundProp() {
+clPacnflower::clPacnflower() {
     void *resource;
-    DebugPrintf(sCreateMsg);
+    DebugPrintf(" CreateMapEffect : clPacnflower\n");
     model = 0;
     radius = 0.0f;
     yoff = 0.0f;
@@ -169,3 +139,119 @@ SoundProp::SoundProp() {
         frames[i].time = 0.0f;
     }
 }
+
+clPacnflower::~clPacnflower() {
+    if (model != 0) {
+        delete model;
+    }
+    if (frames != 0) {
+        MemoryManager_Free(frames);
+    }
+    DebugPrintf(" DeleteMapEffect : clPacnflower\n");
+}
+
+extern "C" {
+
+extern unsigned char fn_8016C360(int);
+extern unsigned char SoundMgr_PlaySE(int);
+extern void fn_8016C240(int, Vec *, int);
+extern void *GetKartSlotKartVariant(int);
+extern float *KartDriver_GetKartRootMtx(void *);
+extern void Vec3_Subtract(Vec *, Vec *, Vec *);
+extern float PSVECSquareMag(Vec *);
+extern unsigned char fn_8016C318(int);
+extern unsigned char fn_8016C0A4(int, Vec *, unsigned char *, unsigned char *, unsigned char *);
+extern void fn_8016C1B0(int, unsigned char);
+extern void fn_8016C168(int, unsigned char);
+extern void fn_8016C120(int, unsigned char);
+}
+static inline float AdvanceFrameTime(ObjViewFrame *frame, float step) {
+    step = frame->time + step;
+    frame->time = step;
+    return step;
+}
+void clPacnflower::Update() {
+    unsigned int triggered;
+    int i;
+    if (count == 0) return;
+    if (!fn_8016C360(40)) SoundMgr_PlaySE(40);
+    fn_8016C240(40, pos, count);
+    triggered = 0;
+    for (i=0; i<count; i++) {
+        ObjViewFrame *f = &frames[i];
+        void *kart;
+        int j;
+        if (f->active == 0) {
+            float time = AdvanceFrameTime(f, 1.0f);
+            if (time > 44.0f) f->time = 0.0f;
+        } else {
+            float time = AdvanceFrameTime(f, 1.0f);
+            if (time > 90.0f) { f->time = 0.0f; f->active = 0; }
+        }
+        for (j=0; j<8; j++) {
+            kart = GetKartSlotKartVariant(j);
+            if (kart) {
+                Vec p;
+                p.x = KartDriver_GetKartRootMtx(kart)[3];
+                p.y = KartDriver_GetKartRootMtx(kart)[7];
+                p.z = KartDriver_GetKartRootMtx(kart)[11];
+                Vec3_Subtract(&p, &pos[i], &p);
+                if (PSVECSquareMag(&p) < 90000.0f) {
+                    if (f->active == 0) {
+                        f->active = 1;
+                        triggered |= 1 << i;
+                        f->time = 45.0f;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    if (triggered && fn_8016C318(41)) {
+        unsigned char best=0, pan, pitch;
+        int k;
+        for (k=0; k<count; k++) {
+            if (triggered & (1 << k)) {
+                unsigned char volume, p, q;
+                if (fn_8016C0A4(41, &pos[k], &volume, &p, &q) && volume > best) {
+                    pan=p; best=volume; pitch=q;
+                }
+            }
+        }
+        if (best && SoundMgr_PlaySE(41)) {
+            fn_8016C1B0(41,best); fn_8016C168(41,pan); fn_8016C120(41,pitch);
+        }
+    }
+}
+
+extern "C" {
+extern unsigned char fn_801379F0(Vec *p, float radius);
+extern void Object_SetField8_AndDirty(void *model, float v);
+extern void clNormal3D_Exec(void *model);
+extern void Object_SetJObjPositionVec(void *model, Vec *p);
+extern void Object_SetJObjRotationY(void *model, float r);
+extern void Object_RenderJObjTree(void *model, int mask);
+
+}
+void clPacnflower::Draw() {
+    int i;
+    Vec p;
+    if (count == 0) {
+        return;
+    }
+    for (i = 0; i < count; i++) {
+        Vec *src = &pos[i];
+        p.x = src->x;
+        p.y = src->y;
+        p.z = src->z;
+        p.y = p.y + yoff;
+        if (fn_801379F0(&p, radius)) {
+            Object_SetField8_AndDirty(model, frames[i].time);
+            clNormal3D_Exec(model);
+            Object_SetJObjPositionVec(model, &pos[i]);
+            Object_SetJObjRotationY(model, rot[i]);
+            Object_RenderJObjTree(model, 7);
+        }
+    }
+}
+
