@@ -569,7 +569,7 @@ config.libs = [
             Object(Matching, "game/KartChoiceChildDraw.cpp", extab_padding=b""),
             Object(Matching, "game/KartChoiceChildDtor.cpp", extab_padding=b""),
             Object(Matching, "game/KartChoiceChildCtor.cpp", extab_padding=b""),
-            Object(Matching, "game/KartChoiceFinish.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
+            Object(Matching, "game/KartChoiceFinish.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-inline deferred", "-rostr"]),
             Object(Matching, "game/TripletFaderOwner.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/CountdownOwner.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/TaskBucketsCast.cpp", extab_padding=b""),

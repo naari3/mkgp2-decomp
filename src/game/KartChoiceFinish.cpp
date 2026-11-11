@@ -1,5 +1,6 @@
 #include "game/singleton.h"
-#include "game/KartChoiceFinishPrivate.h"
+#include "game/SpritePairOwner.h"
+#include "game/types/clGameOver.h"
 struct FinishInput {
     virtual void v0();
     virtual void v1();
@@ -39,63 +40,9 @@ signed char GetDisplayBufferIndex();
 void *GetDisplayContext(int);
 void *memset(void *, int, unsigned long);
 }
-extern "C" void fn_8023C394(ChoiceFinish *self) {
-    if (self->done != 1) { fn_801A0004(self->sprite); fn_8011FAB8(); }
-}
-extern "C" void fn_8023C3C8(ChoiceFinish *self) {
-    if (self->done == 1) return;
-    unsigned char pressed;
-    FinishInput *input = InputMgr_GetPlayer(GetInputManager(), 0);
-    pressed = 1;
-    if (!input->Pressed(0x2000) && !(input->Axis() >= lbl_806DB9A8)) pressed = 0;
-    switch (self->state) {
-    case 0:
-        if (!fn_8019FE78(self->sprite)) { self->state = 1; self->timer = 0; }
-        if (pressed) {
-            self->state = 2;
-            self->timer = 0;
-            SpriteHandle_SetActiveFlag(self->handle, 1);
-        }
-        break;
-    case 1:
-        if (self->timer >= 40 || pressed) {
-            self->timer = 0;
-            self->state = 2;
-            SpriteHandle_SetActiveFlag(self->handle, 1);
-            fn_801DAEC0()->SetActive(0);
-        }
-        break;
-    case 2:
-        SpriteHandle_SetCornerAlpha(self->handle, lbl_806DB9AC * (self->timer / lbl_806DB9B0));
-        if (self->timer >= 30) self->state = 3;
-        break;
-    case 3:
-        self->done = 1;
-        self->state = -1;
-        break;
-    }
-    ++self->timer;
-    Sprite_AdvanceAnim(self->sprite, lbl_806DB9B4);
-    SpriteHandle_RecomputeCull(self->handle);
-}
-ChoiceFinish::~ChoiceFinish() {
-    if (sprite) delete sprite;
-    SetKartVariant(0);
-    g_gameMode = 0;
-    fn_8020F220();
-    if (SINGLETON_INSTANCE(lbl_806D10A0))
-        RankLog_Reset(SINGLETON_INSTANCE(lbl_806D10A0));
-    lbl_806D09C8 = -1;
-    lbl_806D1ACC = 0;
-    SpriteHandle_Destroy(handle);
-    fn_80121210();
-    fn_8012094C();
-    clRom_PurgeAll();
-    fn_801A0B70(0);
-    StrPcb_WaitForState1(StrPcb_GetInstance());
-    fn_801DAEC0()->SetActive(0);
-}
-ChoiceFinish::ChoiceFinish() : state(0), sprite(0), handle(-1), timer(0) {
+void clGameOver::Destroy() { delete this; }
+
+clGameOver::clGameOver() : state(0), sprite(0), handle(-1), timer(0) {
     SetSyncTarget(0x34);
     lbl_806D12E2 = 1;
     ProcessSystemTick(0);
@@ -136,4 +83,62 @@ ChoiceFinish::ChoiceFinish() : state(0), sprite(0), handle(-1), timer(0) {
     }
     ProcessSystemTick(0);
 }
-extern "C" void fn_8023C878(VObject *self) { delete self; }
+
+clGameOver::~clGameOver() {
+    if (sprite) delete sprite;
+    SetKartVariant(0);
+    g_gameMode = 0;
+    fn_8020F220();
+    if (SINGLETON_INSTANCE(lbl_806D10A0))
+        RankLog_Reset(SINGLETON_INSTANCE(lbl_806D10A0));
+    lbl_806D09C8 = -1;
+    lbl_806D1ACC = 0;
+    SpriteHandle_Destroy(handle);
+    fn_80121210();
+    fn_8012094C();
+    clRom_PurgeAll();
+    fn_801A0B70(0);
+    StrPcb_WaitForState1(StrPcb_GetInstance());
+    fn_801DAEC0()->SetActive(0);
+}
+
+void clGameOver::Update() {
+    if (done == 1) return;
+    unsigned char pressed;
+    FinishInput *input = InputMgr_GetPlayer(GetInputManager(), 0);
+    pressed = 1;
+    if (!input->Pressed(0x2000) && !(input->Axis() >= lbl_806DB9A8)) pressed = 0;
+    switch (state) {
+    case 0:
+        if (!fn_8019FE78(sprite)) { state = 1; timer = 0; }
+        if (pressed) {
+            state = 2;
+            timer = 0;
+            SpriteHandle_SetActiveFlag(handle, 1);
+        }
+        break;
+    case 1:
+        if (timer >= 40 || pressed) {
+            timer = 0;
+            state = 2;
+            SpriteHandle_SetActiveFlag(handle, 1);
+            fn_801DAEC0()->SetActive(0);
+        }
+        break;
+    case 2:
+        SpriteHandle_SetCornerAlpha(handle, lbl_806DB9AC * (timer / lbl_806DB9B0));
+        if (timer >= 30) state = 3;
+        break;
+    case 3:
+        done = 1;
+        state = -1;
+        break;
+    }
+    ++timer;
+    Sprite_AdvanceAnim(sprite, lbl_806DB9B4);
+    SpriteHandle_RecomputeCull(handle);
+}
+
+void clGameOver::Draw() {
+    if (done != 1) { fn_801A0004(sprite); fn_8011FAB8(); }
+}

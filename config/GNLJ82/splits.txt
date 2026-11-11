@@ -11603,7 +11603,7 @@ game/FlowCardCheck_nm2.cpp:
 	.sdata      start:0x806D0650 end:0x806D0728
 
 game/autodata/sdata_806D0728.c:
-	.sdata      start:0x806D0728 end:0x806D0888
+	.sdata      start:0x806D0728 end:0x806D07B0
 
 game/autodata/data_804EE520.c:
 	.data       start:0x804EE520 end:0x804EE540
@@ -11627,7 +11627,7 @@ game/autodata/data_804EE560.c:
 	.data       start:0x804EE560 end:0x804EE584
 
 game/autodata/rodata_803DC318.c:
-	.rodata     start:0x803DC318 end:0x803DC378
+	.rodata     start:0x803DC318 end:0x803DC358
 
 game/ItemSelectChoiceInit.cpp:
 	extab       start:0x8001C920 end:0x8001C938
@@ -11654,7 +11654,7 @@ game/KartChoiceUpdate.cpp:
 	.data       start:0x804EE584 end:0x804EE5A0
 
 game/autodata/data_804EE5A0.c:
-	.data       start:0x804EE5A0 end:0x804EE5D8
+	.data       start:0x804EE5A0 end:0x804EE5B0
 
 game/KartChoiceFactory.cpp:
 	extab       start:0x8001C950 end:0x8001C968
@@ -11690,6 +11690,12 @@ game/KartChoiceFinish.cpp:
 	extab       start:0x8001CA3C end:0x8001CAAC
 	extabindex  start:0x8002AD34 end:0x8002AD70
 	.text       start:0x8023C394 end:0x8023C8B0
+	.rodata     start:0x803DC358 end:0x803DC378
+	.data       start:0x804EE5B0 end:0x804EE5D8
+	.sdata      start:0x806D07B0 end:0x806D07C0
+
+game/autodata/sdata_806D07C0.c:
+	.sdata      start:0x806D07C0 end:0x806D0888
 
 game/ItemSelectAllowed.c:
 	extab       start:0x8001CAAC end:0x8001CAB4
