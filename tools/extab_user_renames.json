@@ -3513,7 +3513,19 @@
     "extab_MiniGame_GetTimerValue": "@etb_8000BD8C",
     "extabindex_MiniGame_GetTimerValue": "@eti_80024794",
     "extab_fn_801232E0": "@etb_8000BD94",
-    "extabindex_fn_801232E0": "@eti_800247A0"
+    "extabindex_fn_801232E0": "@eti_800247A0",
+    "__ct__11clJobRunnerFv": "GameMode_BaseInit",
+    "__dt__11clJobRunnerFv": "dtor_8002CDF4",
+    "__dt__9clAttractFv": "fn_80123FDC",
+    "__ct__9clAttractFv": "fn_8012409C",
+    "Update__9clAttractFv": "fn_80123F6C",
+    "Draw__9clAttractFv": "fn_80123F34",
+    "__vt__9clAttract": "TaskMode_vtable_8048E1CC",
+    "__RTTI__9clAttract": "data_8048E178_data_806CF490",
+    "__RTTI__11clJobRunner": "data_8048E178_data_806CF488",
+    "@438": "global:lbl_803558E8",
+    "@440": "global:lbl_803558F4",
+    "@439": "global:sdata_806CF1C0_data_8048E1C0"
   },
   "src/game/anon_801FC1E0.cpp": {
     "__ct__13CoinFlowSceneFi": "fn_801FC364",

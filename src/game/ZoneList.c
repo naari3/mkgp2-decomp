@@ -3,8 +3,8 @@ C_REGION_BEGIN
 /*
  * Mini-game helpers: the per-cup timer lookup and the trigger-zone lists
  * (box and quad zones chained through `next`, vtable at +4) plus a small
- * game-mode wrapper. Each class declares a virtual that is not defined
- * here first, so the vtables (in data) are not emitted by this unit.
+ * game-mode wrapper clAttract. The zone classes keep undefined key
+ * virtuals; clAttract owns its compiler-emitted vtable and RTTI.
  *
  * Built with GC/2.7: the zone ctors schedule src loads across the stores
  * to `this`, which GC/1.3.2 never does.
@@ -27,7 +27,6 @@ extern int MiniGame_GetTimerValue_rodata_803554E0[][3][2];
 extern char QuadZone_vtable_8048E184[];
 extern char BoxZone_vtable_8048E1A0[];
 extern char Zone_vtable_8048E1B0[];
-extern char TaskMode_vtable_8048E1CC[];
 extern const float lbl_806D6E50;
 extern unsigned char IsCardValid(void);
 extern float Vec3_Magnitude(const Vec3 *v);
@@ -506,42 +505,43 @@ struct ModeTask : ModeTaskBase {
     unsigned char done;
 };
 
-#include "game/types/GameModeBase.h"
+#include "game/types/clJobRunner.h"
 
-struct TaskMode : GameModeBase {
+struct clAttract : clJobRunner {
     ModeTask *task;
-    virtual void key();
-    TaskMode() { task = (ModeTask *)fn_8014F6A4(); }
-    ~TaskMode();
+    clAttract() { task = (ModeTask *)fn_8014F6A4(); }
+    virtual int Update();
+    virtual void Draw();
+    virtual ~clAttract();
 };
 
-extern "C" void fn_80123F34(TaskMode *m) {
-    if (m->task) {
-        m->task->Draw();
+void clAttract::Draw() {
+    if (task) {
+        task->Draw();
     }
 }
 
-extern "C" int fn_80123F6C(TaskMode *m) {
-    if (m->task) {
-        if (m->task->done) {
-            m->task->Finish();
-            m->task = 0;
+int clAttract::Update() {
+    if (task) {
+        if (task->done) {
+            task->Finish();
+            task = 0;
         } else {
-            m->task->Update();
+            task->Update();
         }
     }
     return -2;
 }
 
-TaskMode::~TaskMode() {
+clAttract::~clAttract() {
     if (task) {
         task->Finish();
         task = 0;
     }
 }
 
-extern "C" TaskMode *fn_80124064(void) {
-    return new TaskMode;
+extern "C" clAttract *fn_80124064(void) {
+    return new clAttract;
 }
 
 __declspec(section ".ctors") static void *const fn_801232E0_ctor_ref = (void *)fn_801232E0;
