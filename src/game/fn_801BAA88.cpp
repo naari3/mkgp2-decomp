@@ -1,3 +1,4 @@
+#include "game/types/sjis_word.h"
 #include "game/types/size_t.h"
 #include "game/singleton.h"
 #include <new>
@@ -2419,7 +2420,7 @@ void NameEntry::BuildKeys() {
         for (int g = 0; g < 3; g++) {
             short x = 0x3C + g * 0xBB;
             for (int k = 0; k < 5; k++) {
-                unsigned int code = lbl_8049A8F8[mode].chars[n];
+                unsigned int code = SJIS_WORD(&lbl_8049A8F8[mode].chars[n]);
                 if (n != 59) {
                     if (code != 0x8140) {
                         keys[r][g * 5 + k] = new NameKey(x, sy, code);
@@ -2531,8 +2532,8 @@ static inline int ConvertKana(unsigned short prev, unsigned short ch, void *out)
     }
     for (int t = 0; t < 4; t++) {
         for (int i = 0; i < 60; i++) {
-            if (prev == lbl_8049A8F8[t].chars[i] && lbl_8049A8F8[t].marks[type][i] != 0x8140) {
-                *(unsigned short *)out = lbl_8049A8F8[t].marks[type][i];
+            if (prev == SJIS_WORD(&lbl_8049A8F8[t].chars[i]) && SJIS_WORD(&lbl_8049A8F8[t].marks[type][i]) != 0x8140) {
+                *(unsigned short *)out = SJIS_WORD(&lbl_8049A8F8[t].marks[type][i]);
                 return 0;
             }
         }

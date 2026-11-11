@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-11 20:08Z 2026-11-11: port request 45. fn_801BAA88.cpp reads the name-entry key tables (Shift-JIS text pools) with SJIS_WORD.
 - 2026-11-11 18:32Z (n3 correction): src/game/TransitionEffect.cpp is Matching now. The clScreenEffect conversion of 11-10 landed while the unit was NonMatching, so the original object was linked and `main.dol: OK` proved nothing for it; linked from source only the exception table order differed (tools/extab_order.json entry rewritten). The two gave_up.md rows of this unit were stale (both functions are 100%) and are removed. When converting a class, check that the unit is `Matching` in configure.py before trusting the DOL check.
 - 2026-11-11 18:19Z 2026-11-11: PORT_DATA_LOADED and types/port_hooks.h removed (port-only; mkgp2-pc carries them as a patch).
 - 2026-11-11 18:18Z 2026-11-11: port-only behaviour branches (ifndef __MWERKS__ that changes what a function does) do not belong in this repository; the request 43 fix and the value-less return values were removed again and live in mkgp2-pc as patches. Host-neutral macros (TEXT_WORD, BITFIELDS) stay. See docs/notes/port_abi.md, last section.

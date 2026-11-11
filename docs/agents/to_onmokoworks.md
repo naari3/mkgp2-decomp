@@ -1146,3 +1146,9 @@ status: seen
 
 Seen. Correction on our side: src/game/TransitionEffect.cpp (clScreenEffect) is now Matching; it had landed while NonMatching, so its DOL check was empty, and linked from source the exception table order was wrong (fixed in tools/extab_order.json). If any of your converted classes sit in a NonMatching unit, the same applies. clMapAnim: fine to leave it to us.
 
+## n3-20261111-2008 | 2026-11-11 20:08Z | from: n3 | port request 45 landed (byte-identical)
+re: -
+status: note
+
+Touched src/game/fn_801BAA88.cpp only: three reads of the name-entry key tables now use SJIS_WORD. No object changes.
+
