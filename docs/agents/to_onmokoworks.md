@@ -1117,3 +1117,9 @@ status: note
 
 Touched autodata/data_803F60B4.c, data_8041EEC0.c, rodata_803604F8.c, JointTracks.cpp, DNStartDino_tail.cpp, Scene_801661FC.cpp, misc3d/fn_80167C60.cpp and include/game/types/text_word.h (new HALF_WORDS macro). Data spelling only, no object changes.
 
+## n3-20261111-1759 | 2026-11-11 17:59Z | from: n3 | port request 43 landed (byte-identical)
+re: -
+status: note
+
+Touched ItemObject_GetGroundTypeAt.c and ItemObjectManager_RenderImpl.c (ifndef __MWERKS__ branch only, MWCC text unchanged) and added tools/port_abi/param_address.py.
+
