@@ -3808,5 +3808,25 @@
     "fn_8023C0D8",
     "fn_8023C160",
     "dtor_80082960"
+  ],
+  "src/game/CardSetupFlowDraw.cpp": [
+    "fn_80249E0C",
+    "fn_80249E78",
+    "fn_8024A06C",
+    "fn_8024A2F0",
+    "fn_8024AA6C",
+    "fn_8024AC38",
+    "fn_8024AD8C",
+    "fn_8024B0A0",
+    "fn_8024B0D8",
+    "fn_8024B114",
+    "fn_8024B3B8",
+    "fn_8024B544",
+    "fn_8024B568",
+    "dtor_801C1DBC",
+    "dtor_801F2724",
+    "fn_801F26C8",
+    "dtor_801F4B10",
+    "dtor_8007D0D4"
   ]
 }
