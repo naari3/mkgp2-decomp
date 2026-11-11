@@ -3499,5 +3499,21 @@
     "fn_8018CF34",
     "fn_8018CFC4",
     "dtor_8016A270"
-  ]
+  ],
+  "src/game/objview/fn_8018E538.cpp": {
+    "extab": [
+      "fn_8018E538",
+      "fn_8018E6FC",
+      "fn_8018ED1C",
+      "fn_8018EDE0",
+      "dtor_8016A270"
+    ],
+    "extabindex": [
+      "fn_8018E538",
+      "fn_8018E6FC",
+      "fn_8018ED1C",
+      "fn_8018EDE0",
+      "dtor_8016A270"
+    ]
+  }
 }

@@ -7579,13 +7579,10 @@ game/objview/fn_8018D068.cpp:
 	.sdata      start:0x806CFC08 end:0x806CFC18
 
 game/autodata/sdata_806CFC18.c:
-	.sdata      start:0x806CFC18 end:0x806CFCAC
-
-game/autodata/sdata_806CFCB0.c:
-	.sdata      start:0x806CFCB0 end:0x806CFDF0
+	.sdata      start:0x806CFC18 end:0x806CFC40
 
 game/autodata/data_80495E30.c:
-	.data       start:0x80495E30 end:0x80495F20
+	.data       start:0x80495E30 end:0x80495EA8
 
 game/autodata/rodata_80377F60.c:
 	.rodata     start:0x80377F60 end:0x80377F6C
@@ -7625,7 +7622,7 @@ game/objview/fn_8018DAD0.c:
 	.rodata     start:0x80377F70 end:0x80378018
 
 game/autodata/rodata_80378018.c:
-	.rodata     start:0x80378018 end:0x8037820C
+	.rodata     start:0x80378018 end:0x803780C8
 
 game/misc3d/fn_8018DFC4.c:
 	extab       start:0x80011F70 end:0x80011F78
@@ -7656,24 +7653,21 @@ game/objview/fn_8018E510.cpp:
 	.text       start:0x8018E510 end:0x8018E538
 
 game/objview/fn_8018E538.cpp:
-	extab       start:0x80011FC4 end:0x80011FDC
-	extabindex  start:0x80026FB4 end:0x80026FC0
-	.text       start:0x8018E538 end:0x8018E6FC
+	extab       start:0x80011FC4 end:0x80012044
+	extabindex  start:0x80026FB4 end:0x80026FE4
+	.text       start:0x8018E538 end:0x8018F088
+	.rodata     start:0x803780C8 end:0x8037820C
+	.data       start:0x80495EA8 end:0x80495ED0
+	.sdata      start:0x806CFC40 end:0x806CFC58
 
-game/objview/fn_8018E6FC.cpp:
-	extab       start:0x80011FDC end:0x80011FE4
-	extabindex  start:0x80026FC0 end:0x80026FCC
-	.text       start:0x8018E6FC end:0x8018ED1C
+game/autodata/sdata_806CFC58.c:
+	.sdata      start:0x806CFC58 end:0x806CFCAC
 
-game/objview/fn_8018ED1C.c:
-	extab       start:0x80011FE4 end:0x80011FEC
-	extabindex  start:0x80026FCC end:0x80026FD8
-	.text       start:0x8018ED1C end:0x8018EDE0
+game/autodata/sdata_806CFCB0.c:
+	.sdata      start:0x806CFCB0 end:0x806CFDF0
 
-game/objview/fn_8018EDE0.cpp:
-	extab       start:0x80011FEC end:0x80012044
-	extabindex  start:0x80026FD8 end:0x80026FE4
-	.text       start:0x8018EDE0 end:0x8018F088
+game/autodata/data_80495ED0.c:
+	.data       start:0x80495ED0 end:0x80495F20
 
 game/zprobe/dtor_8018F088.c:
 	extab       start:0x80012044 end:0x8001204C
