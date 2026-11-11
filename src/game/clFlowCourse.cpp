@@ -7,6 +7,7 @@
 #define CourseFlow clFlowCourse
 #define CourseBase clFlowProcess
 #define CLFLOWCOURSE_REAL_VTABLE
+#include "game/types/pcb_link.h"
 #include "game/clFlowCourse.h"
 #include "game/singleton.h"
 #include "game/CreditHud.h"
@@ -776,7 +777,7 @@ extern "C" int clFlowCourse_Update(CourseFlow *self) {
             }
         }
         if (self->field20 != -1) {
-            self->selected = (*(unsigned short *)SyncSlot_GetRecv() >> 4) & 0x7F;
+            self->selected = PCB_CHOICE_TRACK(*(unsigned short *)SyncSlot_GetRecv());
             self->reverse = (SyncSlot_GetRecv()[1] >> 3) & 1;
             CoursePulse *pulse = self->pulse;
             if (pulse) {

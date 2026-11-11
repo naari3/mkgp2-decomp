@@ -1158,3 +1158,9 @@ status: note
 
 Touched include/dolphin/card.h only: parameter name new -> newName in two prototypes. Clean rebuild, main.dol OK.
 
+## n3-20261111-2112 | 2026-11-11 21:12Z | from: n3 | port request 47 landed (byte-identical)
+re: -
+status: note
+
+Touched include/game/types/pcb_link.h (new PCB_CHOICE_TRACK) and src/game/clFlowCourse.cpp (one read). No object changes.
+

@@ -626,6 +626,19 @@ clFlowRound.c are declared but not used. Every other reader of the link slot
 (18 units) uses byte views. `unsigned short name[6]` at slot offset 0x16 is
 copied as 16-bit codes on both ends.
 
+### Track choice read (request 47, 2026-11-11)
+
+`clFlowCourse.cpp` read the chosen track as `(*(unsigned short *)recv >> 4) &
+0x7F`; it now uses `PCB_CHOICE_TRACK(h)` (same expression by default). Other
+reads of the received slot were checked: the rest are byte reads, byte-sized
+bit-fields (`BITFIELDSn`) or the macros above. Three reads take a whole 16- or
+32-bit value from the slot and were left as they are, because they are whole
+numbers and not fields crossing a byte boundary: `short voiceId` at 0x18
+(`sprite/fn_801A1798.c`), `*(int *)(recv + 4)` (`VSMode_FrameUpdate.c`, human
+player count) and `GtSync { int f0; int item; }`
+(`CSSceneGetTitle_8014ADB4.cpp`). Two hosts of the same byte order agree on
+them; a host linked to a real cabinet would have to swap them.
+
 ## Tables written as words whose readers take bytes
 
 `(void *)0x8000000` in a `void *[]` table is the byte 8 and three padding
