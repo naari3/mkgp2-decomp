@@ -2753,3 +2753,39 @@ colours before it. Rule `named-locals-to-level1-inline-temps`.
 
 Rule `stale-propagation-pragma-and-cond-expr`.
 
+## 100. A constant in r4 and the loads beside it in r3 (target the other way): keep the loaded word in its own local, with opt_propagation off (CardSaveData_Parser, 99.81 -> 100, 11-11)
+
+Diff: `li r4,2 ... lwz r3,0x34(r1); neg r0,r3; or r0,r0,r3 ... li r4,0; stw r4`
+where the target has r3 and r4 exchanged, in two places (18 lines). Source:
+`u32 progress = 2; flags[4] = *cleared != 0; flags[8] = *visited != 0;
+if (*award == 0) progress = 0;`.
+
+Cause (regfix diag): the loads of `cleared` / `visited` are backend temps, so
+they are numbered above `progress` (a named or inline local) and coloured
+first, taking r3. The target needs `progress` coloured first. Writing
+`u32 flag = *cleared; flags[4] = flag != 0;` changes nothing: copy
+propagation removes `flag` and the load is a backend temp again. `?:` for the
+constant gives branch-free code (264 lines).
+
+Fix, three parts that only work together:
+1. `#pragma opt_propagation off` around the function, and the loaded word in
+   a local declared BEFORE `progress` (`u32 flag; u32 progress = 2;`). `flag`
+   now has the lower number and `progress` gets r3.
+2. This only took effect inside an inline. The same statements written in the
+   function body kept r3/r4 swapped in both declaration orders, so the second
+   place (one record, another layout) became a second inline,
+   `StoreCardTotalResult`.
+3. The pragma changed two other places, which were then written by hand:
+   - `cardName[nameIndex]` was no longer strength-reduced (`slwi; add`). A
+     walking pointer as a named local is coloured r23 (target r29, counter
+     r24). The pointer has to be an inline local while the counter stays the
+     caller's named local: the loop moved into an inline that takes the
+     counter by address (`int *index`). Marked fakematch.
+   - `dest[(rule->group*4 + slot) + 0x23]` computed the sum the other way
+     round (`add r3,r0,r3`); `int idx = rule->group*4; dest[idx+rule->slot+0x23]`
+     gives the target. The inline getter for `slot` is no longer needed.
+
+So a function-wide pragma that section 99 calls a suspect can still be the
+fix; expect to repair its side effects one by one.
+
+Rule `propagation-off-load-local-before-constant`.

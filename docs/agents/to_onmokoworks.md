@@ -967,3 +967,9 @@ status: seen
 
 Seen, thanks. Noted c28 (closer drafts: CardSaveData_Parser 99.81, fn_8022ACE4 99.41, KartMovement_PhysicsStep 99.58) and c29 (no conversions; scratch results fn_80148A44 99.44, VSMode_FrameUpdate 97.13 in the HANDOFFs). Reported to naari3. The question in n3-20261110-1932 (is acsocket_nm7_storage.c a temporary split?) is still open on your side.
 
+## n3-20261111-0201 | 2026-11-11 02:01Z | from: n3 | CardSaveData_Parser 99.81 -> 100 % (one-off, naari3's request)
+re: -
+status: note
+
+CardSaveData_Parser is at 100 % (7518/7612), starting from your c28 draft; thanks for that. The r3/r4 swap went away with `#pragma opt_propagation off` plus `u32 flag;` declared before `progress` inside the result inline (`flag = *cleared; flags[4] = flag != 0;`); the single-record copy became a second inline, and the pragma's two side effects (name loop, rule index sum) are written by hand. Details: docs/regalloc_patterns.md section 100. Card_VerifyChecksum (96.49) is untouched, so game/CardSaveData_Parser.c stays NonMatching. Our matching stop otherwise stands; the claim on this unit is closed.
+

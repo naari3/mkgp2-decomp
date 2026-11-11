@@ -15,24 +15,55 @@ extern const char lbl_806D3478[7], lbl_806D3480[4], lbl_806D3484[5], lbl_806D348
 extern const char lbl_806D3494[8];
 extern const char *const lbl_806D349C[2];
 
+/* `flag` is declared before `progress` so that, with copy propagation off,
+ * the loaded word keeps its own low-numbered register and `progress` is
+ * coloured first (r3, the loads r4). See docs/regalloc_patterns.md 100. */
 static inline void StoreCardRaceResult(u8 *row, u8 *flags,
     const u32 *rank, const u32 *wins, const u32 *cleared,
     const u32 *visited, const u32 *award)
 {
+    u32 flag;
     u32 progress = 2;
     *(u32 *)row = *rank;
     flags[0] = *wins;
-    flags[4] = *cleared != 0;
-    flags[8] = *visited != 0;
+    flag = *cleared; flags[4] = flag != 0;
+    flag = *visited; flags[8] = flag != 0;
     if (*award == 0) progress = 0;
     *(u32 *)(row + 0x1C) = progress;
 }
 
-static inline int CardUnlockRuleSlot(const CardUnlockRule *rule)
+static inline void StoreCardTotalResult(u8 *row,
+    const u32 *rank, const u32 *wins, const u32 *cleared,
+    const u32 *visited, const u32 *award)
 {
-    return rule->slot;
+    u32 flag;
+    u32 progress = 2;
+    *(u32 *)row = *rank;
+    row[4] = *wins;
+    flag = *cleared; row[5] = flag != 0;
+    flag = *visited; row[6] = flag != 0;
+    if (*award == 0) progress = 0;
+    *(u32 *)(row + 8) = progress;
 }
 
+/* fakematch (counter by address): the counter is the caller's named local
+ * (r24) while the walking pointer is a local of this inline (r29). Natural
+ * form, in the caller:
+ *     u16 *cardName = (u16 *)dest;
+ *     for (nameIndex = 0; nameIndex < 5; nameIndex++, cardName++) { ... }
+ * which colours the pointer r23. */
+static inline void ReadCardName(u8 *dest, void *pack, u32 *name, int *index)
+{
+    u16 *cardName;
+    for (*index = 0, cardName = (u16 *)dest; *index < 5; (*index)++, cardName++) {
+        bitpack_read_field_by_name(pack, lbl_806D3460, name, *index);
+        *cardName = fn_801F8D58((u8)*name);
+    }
+}
+
+/* opt_propagation off keeps `flag` in the two result inlines a variable of
+ * its own; the rule loop's `idx` is written out for the same reason. */
+#pragma opt_propagation off
 u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
 {
     u32 locale = 0, name, value;
@@ -52,13 +83,7 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
     bitpack_read_field_by_name(pack, lbl_806D3448, &locale, 0);
     if (locale != isJapanese()) return 0;
     memset(dest, 0, 12);
-    {
-        u16 *cardName = (u16 *)dest;
-        for (nameIndex = 0; nameIndex < 5; nameIndex++) {
-            bitpack_read_field_by_name(pack, lbl_806D3460, &name, nameIndex);
-            cardName[nameIndex] = fn_801F8D58((u8)name);
-        }
-    }
+    ReadCardName(dest, pack, &name, &nameIndex);
     if (NameCheck_CardName((u16 *)dest) == 1) {
         DebugPrintf((const char *)lbl_80317544);
         return 0;
@@ -104,15 +129,7 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
     bitpack_read_field_by_name(pack, (const char *)lbl_80317414, &cleared, 0);
     bitpack_read_field_by_name(pack, (const char *)lbl_80317424, &visited, 0);
     bitpack_read_field_by_name(pack, (const char *)lbl_80317444, &award, 0);
-    *(u32 *)(dest+0x78) = rank;
-    dest[0x7C] = wins;
-    dest[0x7D] = cleared != 0;
-    dest[0x7E] = visited != 0;
-    {
-        u32 progress = 2;
-        if (award == 0) progress = 0;
-        *(u32 *)(dest+0x80) = progress;
-    }
+    StoreCardTotalResult(dest + 0x78, &rank, &wins, &cleared, &visited, &award);
     {
         unsigned int group;
         int i, j;
@@ -156,7 +173,10 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
         if (rule->savedFlag >= 0 && dest[0xF0+rule->savedFlag] == 1 && rule->category >= 0)
             dest[0xB4+rule->category] = 1;
         if (rule->group >= 0 && rule->savedFlag >= 0 && dest[0xF0+rule->savedFlag] == 1)
-            dest[(rule->group*4+CardUnlockRuleSlot(rule))+0x23] = 1;
+        {
+            int idx = rule->group*4;
+            dest[idx+rule->slot+0x23] = 1;
+        }
     }
     {
         unsigned int group;
@@ -197,6 +217,7 @@ u8 CardSaveData_Parser(u8 *dest, void *pack, u8 publish)
     if (publish == 1) g_characterId = (signed char)dest[0xC];
     return 1;
 }
+#pragma opt_propagation reset
 
 /* Assembly-grounded v1 unpack view; unknown player fields stay opaque. */
 
