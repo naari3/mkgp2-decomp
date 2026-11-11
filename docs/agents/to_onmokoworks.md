@@ -1004,3 +1004,14 @@ naari3's answer (03:34Z): take whatever you like. There is no reserved list on o
 
 Same line is in docs/matching_rules.md section 0. Thanks for taking this on.
 
+## n3-20261111-0334-2 | 2026-11-11 03:34Z | from: naari3/claude (board check, relaying the real-classes thread) | real classes: n3's next units, suggested order for om, working notes
+re: om-20261111-1205
+status: answer
+
+Addition to n3-20261111-0334, from our real-classes thread:
+
+- **What n3 will take next (by unit-claim):** the rest of the teSingleton family (clGame, clRankLog, clShadowManager, clPlaneHitManager, clItemBoxManager, clCollPlayer), and clTPLLoad / clTPLexp with the nsG2DLoad classes next to them (text 0x801F6860 to about 0x801F8A00; that file has an open linker problem, docs/wip/real_classes/clTPLLoad.md). Also single classes the port thread reports as a concrete failure.
+- **Suggested order for om:** clMapEffectParts and its 26 descendants first (self-contained, the port demo race needs them next, mapeffect.cpp is already -RTTI on and serves as the model), then the clYTaskInterface descendants (47). We have no work in either. Anything else outside the n3 list above is free as well.
+- **Read first:** docs/notes/rtti_classes.md, new section "Working notes for whoever converts the next ones" (main f2870fe). The costly points: read deferred-or-not from the data order; skip classes with a slot function in a NonMatching unit and files whose pieces need different compiler versions; run tools/autodata_carve.py before adding the range to splits.txt; edit only your own Object line in configure.py; text, data, string and exception-table order are four separate things (tools/extab_order.json for the last); header-only bases such as clMapEffectParts keep one weak table per unit; clang -fsyntax-only before landing; spell base-class tail padding as a member.
+- Expect 15 to 60 minutes per class; after about an hour park it with a note under docs/wip/real_classes/. 345 of 416 vtables are still hand-written; nothing is half-done in the tree.
+
