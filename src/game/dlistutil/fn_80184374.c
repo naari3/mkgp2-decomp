@@ -1,3 +1,4 @@
+#include "game/types/gx_data.h"
 #include "game/DListBoundsPrivate.h"
 static inline unsigned char ReadBoundsPosition(unsigned char *p, BoundsVec *out) {
     int i;
@@ -8,11 +9,11 @@ static inline unsigned char ReadBoundsPosition(unsigned char *p, BoundsVec *out)
             VtxDesc *d=entry->desc;
             unsigned int index;
             float *v;
-            if (d->type==3) index=*(unsigned short *)(p+entry->offset);
+            if (d->type==3) index=GXDATA_U16(p+entry->offset);
             else index=p[entry->offset];
             v=d->array;
             v+=index*(d->stride/4);
-            out->x=v[0];out->y=v[1];out->z=v[2];
+            out->x=GXDATA_F32(v);out->y=GXDATA_F32(v + 1);out->z=GXDATA_F32(v + 2);
             return 1;
         }
     }
@@ -37,7 +38,7 @@ int fn_80184374(HSD_JObj *j, HSD_DObj *d, BoundsVec *lo, BoundsVec *hi) {
         while (p<end) {
             size=CmdSize(p,messages);
             if (size) { p+=size; continue; }
-            n=*(unsigned short *)(p+1);
+            n=GXDATA_U16(p+1);
             p+=3;
             for (i=0;i<n;++i) {
                 if (ReadBoundsPosition(p,&v)) {

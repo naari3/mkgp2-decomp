@@ -1,5 +1,6 @@
 #ifndef GAME_DLIST_GEOMETRY_PRIVATE_H
 #define GAME_DLIST_GEOMETRY_PRIVATE_H
+#include "game/types/gx_data.h"
 #include "sysdolphin/baselib/jobj.h"
 
 typedef struct DListJObjMatrix { char pad[0x44]; float mtx[3][4]; } DListJObjMatrix;
@@ -38,11 +39,11 @@ static inline void ReadPosition(unsigned char *p, DListVec *out) {
             DListVtxDesc *desc;
             unsigned int index;
             float *v;
-            if (lbl_80677E18[i].desc->type == 3) index = *(unsigned short *)(p + lbl_80677E18[i].offset);
+            if (lbl_80677E18[i].desc->type == 3) index = GXDATA_U16(p + lbl_80677E18[i].offset);
             else index = *(unsigned char *)(p + lbl_80677E18[i].offset);
             desc = lbl_80677E18[i].desc;
             v = desc->array + index * (desc->stride / 4);
-            out->x = v[0]; out->y = v[1]; out->z = v[2];
+            out->x = GXDATA_F32(v); out->y = GXDATA_F32(v + 1); out->z = GXDATA_F32(v + 2);
             break;
         }
     }
@@ -78,7 +79,7 @@ static inline unsigned int CmdSize(unsigned char *p) {
     case 0x08:
         return 6;
     case 0x10:
-        return ((unsigned int)(*(unsigned short *)(p + 1) + 1) * 32 + 40) / 8;
+        return ((unsigned int)(GXDATA_U16(p + 1) + 1) * 32 + 40) / 8;
     case 0x20:
         return 5;
     case 0x28:

@@ -1,3 +1,4 @@
+#include "game/types/gx_data.h"
 #include "game/DListGeometryPrivate.h"
 
 static inline float (*FaceMatrix(HSD_JObj *jobj))[4] {
@@ -33,7 +34,7 @@ int fn_80185630(HSD_JObj *jobj, DListPObj *pobj, DListFace *faces, int capacity)
         size = CmdSize(p);
         if (size) { p += size; continue; }
         primitive = *p & 0xf8;
-        n = *(unsigned short *)(p + 1);
+        n = GXDATA_U16(p + 1);
         p += 3;
         switch (primitive) {
         case 0x90: needed = 3; break;

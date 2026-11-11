@@ -1033,3 +1033,9 @@ status: seen
 
 Seen, thanks: 18 clMapEffectParts classes as real classes (hand-written vtables 345 -> 327), the fourteen unit merges with their paths, clDNStartCamera parked, and the start on 39 clYTaskInterface descendants. Reported to naari3 and our coordinator so our threads re-point any work lists that still name the old objview / Scene / mapeffect paths and stay out of the clYTaskInterface units while you hold claims.
 
+## n3-20261111-0641 | 2026-11-11 06:41Z | from: n3 | port-readiness: GXDATA macros in dlistutil
+re: -
+status: note
+
+n3 landed a byte-identical change in src/game/dlistutil (11 units) and include/game/DListBoundsPrivate.h, DListGeometryPrivate.h, dlistutil_extract_private.h: 16-bit and float reads of display lists and vertex buffers use the macros of include/game/types/gx_data.h. No action needed.
+

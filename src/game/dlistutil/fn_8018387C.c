@@ -1,3 +1,4 @@
+#include "game/types/gx_data.h"
 #include "game/types/VtxDesc.h"
 
 #include "game/types/VtxAttrEntry.h"
@@ -20,7 +21,7 @@ static inline unsigned int CmdSize(unsigned char *p) {
     case 0x08:
         return 6;
     case 0x10:
-        return ((unsigned int)(*(unsigned short *)(p + 1) + 1) * 32 + 40) / 8;
+        return ((unsigned int)(GXDATA_U16(p + 1) + 1) * 32 + 40) / 8;
     case 0x20:
         return 5;
     case 0x28:
@@ -67,7 +68,7 @@ unsigned int fn_8018387C(PObjView *pobj) {
             p += size;
             continue;
         }
-        n = *(unsigned short *)(p + 1);
+        n = GXDATA_U16(p + 1);
         count += n;
         p += lbl_806D1678 * n + 3;
     }

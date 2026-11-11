@@ -1,5 +1,6 @@
 #ifndef GAME_DLISTUTIL_EXTRACT_PRIVATE_H
 #define GAME_DLISTUTIL_EXTRACT_PRIVATE_H
+#include "game/types/gx_data.h"
 
 #include <sysdolphin/baselib/jobj.h>
 
@@ -61,7 +62,7 @@ static inline unsigned int DListCmdSize(unsigned char *p) {
     case 0: return 1;
     case 0x61: return 5;
     case 8: return 6;
-    case 0x10: return ((unsigned int)(*(unsigned short *)(p + 1) + 1) * 32 + 40) / 8;
+    case 0x10: return ((unsigned int)(GXDATA_U16(p + 1) + 1) * 32 + 40) / 8;
     case 0x20: return 5;
     case 0x28: return 5;
     case 0x30: return 5;
@@ -83,13 +84,13 @@ static inline unsigned char DListGetPosition(unsigned char *p, Vec *out) {
             unsigned int index;
             float *src;
             if (lbl_80677E18[i].desc->type == 3)
-                index = *(unsigned short *)(p + lbl_80677E18[i].offset);
+                index = GXDATA_U16(p + lbl_80677E18[i].offset);
             else
                 index = *(unsigned char *)(p + lbl_80677E18[i].offset);
             src = lbl_80677E18[i].desc->array + index * (lbl_80677E18[i].desc->stride / 4);
-            out->x = src[0];
-            out->y = src[1];
-            out->z = src[2];
+            out->x = GXDATA_F32(src);
+            out->y = GXDATA_F32(src + 1);
+            out->z = GXDATA_F32(src + 2);
             return 1;
         }
     }

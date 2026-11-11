@@ -1,3 +1,4 @@
+#include "game/types/gx_data.h"
 #include <game/dlistutil_extract_private.h>
 
 static inline MtxPtr DListQuadMatrix(HSD_JObj *jobj) {
@@ -32,7 +33,7 @@ int fn_80184F24(HSD_JObj *jobj, DListPObj *pobj, DListQuadInfo *out, int capacit
         while (p < end) {
             size = DListCmdSize(p);
             if (size) { p += size; continue; }
-            n = *(unsigned short *)(p + 1);
+            n = GXDATA_U16(p + 1);
             primitive = *p & 0xf8;
             p += 3;
             if (n < 4 || (primitive != 0x80 && primitive != 0x98)) {

@@ -1,3 +1,4 @@
+#include "game/types/gx_data.h"
 #include "game/DListGeometryPrivate.h"
 
 static inline float (*QuadMatrix(HSD_JObj *jobj))[4] {
@@ -14,12 +15,12 @@ static inline void QuadReadPosition(unsigned char *p, DListVec *out) {
             DListVtxDesc *desc;
             unsigned int index;
             float *v;
-            if (lbl_80677E18[i].desc->type == 3) index = *(unsigned short *)(p + lbl_80677E18[i].offset);
+            if (lbl_80677E18[i].desc->type == 3) index = GXDATA_U16(p + lbl_80677E18[i].offset);
             else index = *(unsigned char *)(p + lbl_80677E18[i].offset);
             desc = lbl_80677E18[i].desc;
             v = desc->array;
             v += index * (desc->stride / 4);
-            out->x = v[0]; out->y = v[1]; out->z = v[2];
+            out->x = GXDATA_F32(v); out->y = GXDATA_F32(v + 1); out->z = GXDATA_F32(v + 2);
             break;
         }
     }
@@ -43,7 +44,7 @@ int fn_80185FE8(HSD_JObj *jobj, DListPObj *pobj,
     while (p < end) {
         size = CmdSize(p);
         if (size) { p += size; continue; }
-        n = *(unsigned short *)(p + 1);
+        n = GXDATA_U16(p + 1);
         primitive = *p & 0xf8;
         p += 3;
         if (n < 4) { p += lbl_806D1678 * n; continue; }
