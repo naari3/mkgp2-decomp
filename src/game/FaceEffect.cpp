@@ -1,3 +1,4 @@
+#include "game/types/pcb_link.h"
 #include "game/types/bitfields.h"
 /*
  * 0x80230644..0x80231D50: clFaceEffect, the reaction icon (tears, sweat,
@@ -81,6 +82,7 @@ struct PcbSlot {
     unsigned char b0, b1, b2;
     BITFIELDS3(unsigned char b3_0:2, unsigned char active:1, unsigned char b3_3:5)
     unsigned char b4, b5;
+    /* the class bytes of the link slot (ClassHeader in PCBCommBroadcast.c); tier is its wins field */
     BITFIELDS3(unsigned short h6_0:7, unsigned short tier:4, unsigned short h6_11:5)
 };
 
@@ -364,7 +366,7 @@ static inline int NameResOf(int chara, int slot, unsigned char useSlot) {
         int res = kNameRes[chara];
         int tier;
         if (useSlot == 1) {
-            tier = ((PcbSlot *)PcbSlot_GetByIndex(slot))->tier;
+            tier = PCB_SLOT_WINS((PcbSlot *)PcbSlot_GetByIndex(slot), tier);
         } else {
             tier = g_consecutiveWinsTier;
         }
@@ -424,7 +426,7 @@ int FaceEffect_GetNameRes(int slot, int chara, unsigned char useSlot) {
         res = kNameRes[chara];
         int tier;
         if (useSlot == 1) {
-            tier = ((PcbSlot *)PcbSlot_GetByIndex(slot))->tier;
+            tier = PCB_SLOT_WINS((PcbSlot *)PcbSlot_GetByIndex(slot), tier);
         } else {
             tier = g_consecutiveWinsTier;
         }

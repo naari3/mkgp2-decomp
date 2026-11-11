@@ -8,11 +8,7 @@
 
 #include "game/types/Vec.h"
 
-typedef struct AnimEntry {
-    char type;
-    unsigned char pad[3];
-    void *data;
-} AnimEntry;
+#include "game/types/AnimEntry.h"
 
 #include "game/types/AnimState.h"
 

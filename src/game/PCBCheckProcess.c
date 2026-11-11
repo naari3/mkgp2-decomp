@@ -1,3 +1,4 @@
+#include "game/types/pcb_link.h"
 #include "game/types/bitfields.h"
 /* Observed link-slot storage only; no foreign data is owned by this TU. */
 typedef struct PcbConnection { unsigned char pad0[0xC]; int state; } PcbConnection;
@@ -100,14 +101,14 @@ static inline void PCBCheck_ResetLinks(int requested)
 static inline void PCBCheck_InitSlot(PcbLinkSlot* slot, int i)
 {
     int id = i + 1;
-    slot->flags.half.id = id;
+    PCB_FLAGS_SET_ID(slot->flags, half, id);
     slot->flags.byte.polled = 0;
     slot->flags.byte.receiving = 0;
     slot->timeout = 0;
     slot->flags.byte.low = 0;
     slot->flags.byte.reserved3 = 0;
     slot->flags.byte.dirty = 1;
-    if (slot->flags.half.id == g_myPcbId) {
+    if (PCB_FLAGS_ID(slot->flags, half) == g_myPcbId) {
         slot->flags.byte.local = 1;
         slot->primary = 0;
         slot->secondary = 0;

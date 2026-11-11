@@ -1075,9 +1075,16 @@ static const unsigned int s_shellPathData[0x26] = {
     0x42890000, 0xC25C0000, 0x42900000, 0x41400000, 0x40C00000, 0x00000000,
     0xC1000000, 0xC1800000,
 };
-static const unsigned int s_defaultCourse[5] = {
-    0x00000078, 0x40A00000, 0x00000014, 0x00000078, 0x01000000,
-};
+/* The course parameters used when the mini game has none (KPCourseData /
+ * CoinCourseParams below). */
+static const struct KPDefaultCourse {
+    int shellWait;
+    float speed;
+    int x8;
+    int xC;
+    unsigned char loseShellOnHit;
+    unsigned char pad11[3];
+} s_defaultCourse = { 120, 5.0f, 20, 120, 1, { 0, 0, 0 } };
 extern "C" const char lbl_80356BF4[12] = "clCGameKP";
 extern "C" const unsigned int CGameCoin_8012BF5C_rodata_80356C00[0x16] = {
     TEXT_WORD('c', 'l', 'J', 'o'), TEXT_WORD('b', 'R', 'u', 'n'), TEXT_WORD('n', 'e', 'r', 0), TEXT_WORD('H', 'i', 't', ' '), TEXT_WORD('N', 'o', ' ', '='), TEXT_WORD(' ', '%', 'd', '\n'),
@@ -4320,7 +4327,7 @@ KPCoinMode::KPCoinMode() {
     PreloadEffectResources(0xA);
     course = (KPCourseData *)MiniGame_GetCourseData();
     if (course == 0) {
-        course = (KPCourseData *)s_defaultCourse;
+        course = (KPCourseData *)&s_defaultCourse;
     }
     shell = new KPShell(rival->x164, course->speed);
     koopa = new BossKoopa(course->x8, course->xC);

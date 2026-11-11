@@ -5,6 +5,7 @@
  * range in splits.txt). */
 #include "game/autodata.h"
 
+#include "game/types/hsd_desc.h"
 extern void CarObjectManager_Dtor();
 extern void ExplosionTumble_Update();
 extern void ItemEffectDamp_Dtor();
@@ -23,7 +24,7 @@ extern void ItemEffectSpin_Tick();
 extern void ItemState_InitKeyframeBufferAndArm();
 extern void dtor_80052744();
 extern void dtor_80054B2C();
-extern char data_803F7690_data_803F7820[];
+extern unsigned char data_803F7690_data_803F7820[];
 extern char lbl_806CEE10[];
 extern char CarObject_data_806CEE18[];
 extern char lbl_806CEE20[];
@@ -126,14 +127,8 @@ void *C7Impact_vtable_803F7758[10] = {
     0,
     0
 };
-/* decl: char */
-void *KartItem_FlushRender_data_803F7780[6] = {
-    (void *)&data_803F7690_data_803F7820,
-    (void *)0x800080,
-    (void *)0xE,
-    0,
-    0,
-    0
+BuiltinImageDesc KartItem_FlushRender_data_803F7780 = {
+    data_803F7690_data_803F7820, 128, 128, 0xE, 0, 0.0f, 0.0f
 };
 
 #pragma force_active reset

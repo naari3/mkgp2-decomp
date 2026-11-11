@@ -1,3 +1,4 @@
+#include "game/types/pcb_link.h"
 #include "game/RankingFlow_private.h"
 union RankingPcbSlot { unsigned int flags; unsigned char bytes[4]; };
 extern "C" {
@@ -60,7 +61,7 @@ int RankingFlowView::Update() {
     for (i = 0; i < 4; ++i) {
         RankingPcbSlot *slot = PcbSlot_GetByIndex(i);
         if ((int)((slot->bytes[0] >> 4) & 7) == g_localPcbRole &&
-            (((slot->flags >> 15) & 255) == 0x27 || ((slot->flags >> 15) & 255) == 0x28)) {
+            (PCB_HDR_SCENE(slot->flags) == 0x27 || PCB_HDR_SCENE(slot->flags) == 0x28)) {
             if (self->players[i]) self->players[i]->hideMark = 1;
         }
     }

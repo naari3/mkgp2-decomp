@@ -24,6 +24,10 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-11 08:09Z Port readiness (n3): word tables read as bytes or halves are defined with their readers types: 504 TrackKey tracks (JointTracks.cpp, DNStartDino_tail.cpp; include/game/types/TrackKey.h), g_itemDescriptorTable, g_characterDataTable, the KartItem_FlushRender.c material (hsd_desc.h), receipt text and bitmaps in Sci2Card_BuildRetryReceiptLine.c, and smaller ones; tools/port_abi/byte_words.py, word_readers.py, track_keys.py, word_rows.py, word_bytes.py; list in docs/notes/port_abi.md. main.dol unchanged.
+- 2026-11-11 07:57Z Port readiness (n3): g_itemClassTable (autodata/data_8041C9D4.c) is ItemClassRow[278] with byte members instead of void *[1390]. Byte-identical.
+- 2026-11-11 07:56Z Port readiness (n3): AnimState description tables are AnimEntry arrays (include/game/types/AnimEntry.h) instead of void * arrays with the type in the top byte: fn_80116DD0.c, fn_801152B0.c, autodata/data_80419FB8.c, autodata/data_8041A4F8.c; tool tools/port_abi/anim_tables.py. Byte-identical.
+- 2026-11-11 07:53Z Port readiness (n3): cabinet-link slot fields that cross a byte boundary (scene, wins, track, id) are accessed through include/game/types/pcb_link.h in PCBCommBroadcast.c, PCBCheckRecv.c, PCBCheckProcess.c, fn_801D1890.cpp, FaceEffect.cpp; notes in docs/notes/port_abi.md. Byte-identical.
 - 2026-11-11 06:41Z Port readiness (n3): src/game/dlistutil and its three private headers read display lists and vertex buffers through GXDATA_U16 / GXDATA_SET_U16 / GXDATA_F32 (include/game/types/gx_data.h); notes in docs/notes/port_abi.md. Byte-identical.
 - 2026-11-11 06:05Z Port readiness (n3): CObjProject.c declares and calls GXProject in the SDK's parameter order; sweep tool tools/port_abi/arg_class_order.py (prototype against library definition/header by float/other parameter order), notes in docs/notes/port_abi.md. Byte-identical.
 - 2026-11-11 03:34Z (naari3): onmokoworks may convert hand-written vtables to

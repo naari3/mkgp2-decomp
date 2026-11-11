@@ -25,8 +25,8 @@ extern char data_803F75D0_data_806CEE08[];
 #pragma explicit_zero_data on   /* zero-initialised objects stay in the data section */
 #pragma force_active on
 
-unsigned int CarObject_HandleItemEffect_data_803F75D0[7] = {
-    0x240026, 0x25000C, 0x14000D, 0x110018, 0x130027, 0xF008B, 0x910000
+short CarObject_HandleItemEffect_data_803F75D0[14] = {
+    0x24, 0x26, 0x25, 0x0C, 0x14, 0x0D, 0x11, 0x18, 0x13, 0x27, 0x0F, 0x8B, 0x91, 0
 };
 void *data_803F75D0_data_803F75EC[3] = {
     (void *)&data_803F75D0_data_806CEE00,

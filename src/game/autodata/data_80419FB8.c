@@ -3,6 +3,7 @@
  * these objects declare them `extern`. Edit freely: give `unk` objects their real
  * type, or move a definition into the TU it belongs to (and shrink this file's
  * range in splits.txt). */
+#include "game/types/AnimEntry.h"
 #include "game/autodata.h"
 #include "game/types/Vec.h"
 
@@ -99,17 +100,12 @@ float data_80419FB8_data_8041A0D0[4] = {
     1.0f, 1.0f, 1.0f, 0.0f
 };
 /* decl: unsigned char */
-void *TwinSpriteOverlay_Update_data_8041A0E0[10] = {
-    0,
-    (void *)&data_80419FB8_data_8041A09C,
-    (void *)0x8000000,
-    (void *)&data_80419FB8_data_8041A0B0,
-    (void *)0x9000000,
-    (void *)&data_80419FB8_data_8041A0C0,
-    (void *)0xB000000,
-    (void *)&data_80419FB8_data_8041A0D0,
-    (void *)0xD000000,
-    0
+AnimEntry TwinSpriteOverlay_Update_data_8041A0E0[5] = {
+    { 0, { 0, 0, 0 }, &data_80419FB8_data_8041A09C },
+    { 8, { 0, 0, 0 }, &data_80419FB8_data_8041A0B0 },
+    { 9, { 0, 0, 0 }, &data_80419FB8_data_8041A0C0 },
+    { 11, { 0, 0, 0 }, &data_80419FB8_data_8041A0D0 },
+    { 13, { 0, 0, 0 }, 0 }
 };
 /* element type read off the values (all small integers), not from code */
 int data_80419FB8_data_8041A108[4] = {
@@ -129,19 +125,13 @@ float data_80419FB8_data_8041A140[3] = {
     1.0f, 1.0f, 0.0f
 };
 /* decl: unsigned char */
-void *TwinSpriteOverlay_Update_data_8041A14C[12] = {
-    0,
-    (void *)&data_80419FB8_data_8041A108,
-    (void *)0x8000000,
-    (void *)&data_80419FB8_data_8041A118,
-    (void *)0x9000000,
-    (void *)&data_80419FB8_data_8041A124,
-    0,
-    (void *)&data_80419FB8_data_8041A130,
-    (void *)0xB000000,
-    (void *)&data_80419FB8_data_8041A140,
-    (void *)0xD000000,
-    0
+AnimEntry TwinSpriteOverlay_Update_data_8041A14C[6] = {
+    { 0, { 0, 0, 0 }, &data_80419FB8_data_8041A108 },
+    { 8, { 0, 0, 0 }, &data_80419FB8_data_8041A118 },
+    { 9, { 0, 0, 0 }, &data_80419FB8_data_8041A124 },
+    { 0, { 0, 0, 0 }, &data_80419FB8_data_8041A130 },
+    { 11, { 0, 0, 0 }, &data_80419FB8_data_8041A140 },
+    { 13, { 0, 0, 0 }, 0 }
 };
 char *CharaPop12_Update_data_8041A17C[15] = {
     (char *)&lbl_803294EC,

@@ -2017,9 +2017,7 @@ const lbl_806D75E0_Pool lbl_806D75E0 = {
 };
 const char lbl_806D75E8[] = "NO";
 const char lbl_806D75EC[] = ".";
-const unk32 lbl_806D75F0[2] = {
-    0x257382CC, 0x00000000
-};
+const unsigned char lbl_806D75F0[8] = { 0x25, 0x73, 0x82, 0xCC, 0x00, 0x00, 0x00, 0x00 };
 const char lbl_806D75F8[] = " ";
 /* Shift-JIS text */
 const char lbl_806D75FC[8] = "\202\240\202\306";
@@ -2027,22 +2025,18 @@ const char lbl_806D75FC[8] = "\202\240\202\306";
 const char lbl_806D7604[8] = "\215\207\214v";
 const char lbl_806D760C[] = "Total";
 const char lbl_806D7614[] = "%dgames";
-const unk32 lbl_806D761C[2] = {
-    0x25649687, 0x00000000
-};
+const unsigned char lbl_806D761C[8] = { 0x25, 0x64, 0x96, 0x87, 0x00, 0x00, 0x00, 0x00 };
 const char lbl_806D7624[] = "%dcoins";
 const lbl_806D762C_Pool lbl_806D762C = {
     "\203y\201[\203W"
 };
 const char lbl_806D7634[] = "%d/%d";
 const char lbl_806D763C[] = "%d";
-const unk32 lbl_806D7640[2] = {
-    0x256489F1, 0x00000000
-};
-const unsigned int lbl_806D7648 = 0x96870000;
+const unsigned char lbl_806D7640[8] = { 0x25, 0x64, 0x89, 0xF1, 0x00, 0x00, 0x00, 0x00 };
+const unsigned char lbl_806D7648[4] = { 0x96, 0x87, 0x00, 0x00 };
 const char lbl_806D764C[] = "meter";
-const unsigned int lbl_806D7654 = 0x95430000;
-const unsigned int lbl_806D7658 = 0x95620000;
+const unsigned char lbl_806D7654[4] = { 0x95, 0x43, 0x00, 0x00 };
+const unsigned char lbl_806D7658[4] = { 0x95, 0x62, 0x00, 0x00 };
 const char lbl_806D765C[] = "sec";
 /* text only: a string pool (strings back to back, the code points into it) */
 const char lbl_806D7660[8] =

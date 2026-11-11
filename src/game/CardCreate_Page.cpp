@@ -2080,23 +2080,21 @@ CleaningTick_p22 tick_p22;
 unsigned char checkError_p22;
 unsigned char pad_p22[3];
 };
-void *CardRW_TestTopMenu_Page_data_803FDB18[16] = {
-    (void *)0x0,
-    (void *)0x0,
-    (void *)&CardSavedata_LoadShadow_TriggerUnused,
-    (void *)0x0,
-    (void *)&CardSession_PollFsmStatus,
-    (void *)0x1000000,
-    (void *)&PostRace_StartScoreEntryFlow,
-    (void *)0x0,
-    (void *)&Sci2Card_PrintReceipt_PollState,
-    (void *)0x0,
-    (void *)&card_eject_init,
-    (void *)0x0,
-    (void *)&card_eject_state_machine,
-    (void *)0x0,
-    (void *)0x0,
-    (void *)0x0
+/* run function and "check the reader error" byte of each state */
+typedef struct CardRWTopStep {
+    void *run;
+    unsigned char checkError;
+    unsigned char pad[3];
+} CardRWTopStep;
+CardRWTopStep CardRW_TestTopMenu_Page_data_803FDB18[8] = {
+    { 0, 0, { 0, 0, 0 } },
+    { (void *)&CardSavedata_LoadShadow_TriggerUnused, 0, { 0, 0, 0 } },
+    { (void *)&CardSession_PollFsmStatus, 1, { 0, 0, 0 } },
+    { (void *)&PostRace_StartScoreEntryFlow, 0, { 0, 0, 0 } },
+    { (void *)&Sci2Card_PrintReceipt_PollState, 0, { 0, 0, 0 } },
+    { (void *)&card_eject_init, 0, { 0, 0, 0 } },
+    { (void *)&card_eject_state_machine, 0, { 0, 0, 0 } },
+    { 0, 0, { 0, 0, 0 } }
 };
 struct CleaningStep_p22 CardRW_CleaningTest_Page_data_803FDB58[8] = {
     { 0, 0 },
