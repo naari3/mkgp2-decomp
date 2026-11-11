@@ -2363,9 +2363,7 @@ config.libs = [
             Object(Matching, "game/fn_801F98E8.c"),
             Object(Matching, "game/CollisionFile_Load.cpp", mw_version="GC/1.3", extab_padding=b""),
             Object(Matching, "game/fn_8021ED1C.cpp"),
-            Object(Matching, "game/fn_801F9F04.cpp"),
-            Object(Matching, "game/fn_801F9F54.cpp"),
-            Object(Matching, "game/fn_801F9FEC.cpp"),
+            Object(Matching, "game/fn_801F9F04.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-rostr", "-inline deferred,auto"]),
             Object(Matching, "game/fn_801FA6A4.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801FA310.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801FA2E0.cpp"),
@@ -2394,8 +2392,6 @@ config.libs = [
             Object(Matching, "game/fn_801F6C2C.cpp", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801F8A34.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801F89F0.c"),
-            Object(Matching, "game/fn_801FA024.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),
-            Object(Matching, "game/fn_801FA214.cpp", extab_padding=b""),
             Object(Matching, "game/fn_801CCAAC.cpp", extab_padding=b"", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801CB818.cpp", mw_version="GC/2.6", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/fn_801CCD14.cpp"),
@@ -3684,6 +3680,7 @@ def _inject_data_align4_tus() -> None:
 # (e.g. shared dtors). Dropping .comment would lose MWLD's weak flags, so
 # only the .data alignment inside .comment and the section header is pinned.
 DATA_ALIGN4_WEAK_TUS = [
+    "game/fn_801F9F04",
     "game/CSSceneGetTitle_8014ADB4",
     "game/RaceDigits",
     "game/TransitionEffect",

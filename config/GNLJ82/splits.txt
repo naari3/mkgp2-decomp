@@ -8683,7 +8683,7 @@ game/autodata/sdata2_806D9F70.c:
 	.sdata2     start:0x806D9F70 end:0x806DA700
 
 game/autodata/sdata_806CFE78.c:
-	.sdata      start:0x806CFE78 end:0x806D0120
+	.sdata      start:0x806CFE78 end:0x806D0110
 
 game/fn_801D1800.cpp:
 	extab       start:0x80014EB4 end:0x80014EBC
@@ -10022,7 +10022,7 @@ game/fn_801F8D58.c:
 	.data       start:0x804E83C0 end:0x804EB6B0
 
 game/autodata/data_804EB6B0.c:
-	.data       start:0x804EB6B0 end:0x804EBE50
+	.data       start:0x804EB6B0 end:0x804EBE2C
 
 game/CardCharLookup.c:
 	.text       start:0x801F8E08 end:0x801F8E54
@@ -10115,7 +10115,7 @@ game/fn_801F9CA8.cpp:
 	.rodata     start:0x803BFB30 end:0x803BFB90
 
 game/autodata/rodata_803BFB90.c:
-	.rodata     start:0x803BFB90 end:0x803BFC50
+	.rodata     start:0x803BFB90 end:0x803BFC30
 
 game/fn_801F9DA4.cpp:
 	extab       start:0x80017740 end:0x80017790
@@ -10123,29 +10123,12 @@ game/fn_801F9DA4.cpp:
 	.text       start:0x801F9DA4 end:0x801F9F04
 
 game/fn_801F9F04.cpp:
-	extab       start:0x80017790 end:0x80017798
-	extabindex  start:0x8002912C end:0x80029138
-	.text       start:0x801F9F04 end:0x801F9F54
-
-game/fn_801F9F54.cpp:
-	extab       start:0x80017798 end:0x800177A0
-	extabindex  start:0x80029138 end:0x80029144
-	.text       start:0x801F9F54 end:0x801F9FEC
-
-game/fn_801F9FEC.cpp:
-	extab       start:0x800177A0 end:0x800177A8
-	extabindex  start:0x80029144 end:0x80029150
-	.text       start:0x801F9FEC end:0x801FA024
-
-game/fn_801FA024.cpp:
-	extab       start:0x800177A8 end:0x8001785C
-	extabindex  start:0x80029150 end:0x8002915C
-	.text       start:0x801FA024 end:0x801FA214
-
-game/fn_801FA214.cpp:
-	extab       start:0x8001785C end:0x80017884
-	extabindex  start:0x8002915C end:0x80029168
-	.text       start:0x801FA214 end:0x801FA2E0
+	extab       start:0x80017790 end:0x80017884
+	extabindex  start:0x8002912C end:0x80029168
+	.text       start:0x801F9F04 end:0x801FA2E0
+	.rodata     start:0x803BFC30 end:0x803BFC50
+	.data       start:0x804EBE2C end:0x804EBE50
+	.sdata      start:0x806D0110 end:0x806D0120
 
 game/fn_801FA2E0.cpp:
 	extab       start:0x80017884 end:0x8001788C
