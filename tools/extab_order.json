@@ -3610,5 +3610,15 @@
     "dtor_80082960",
     "dtor_801F4A80",
     "dtor_8021617C"
+  ],
+  "src/game/KartChoiceRequest.cpp": [
+    "fn_8023B7FC",
+    "fn_8023B838",
+    "fn_8023BB6C",
+    "fn_8023BBB8",
+    "fn_8023BD00",
+    "TweenInterp_Dtor",
+    "dtor_801F4A80",
+    "dtor_8021617C"
   ]
 }

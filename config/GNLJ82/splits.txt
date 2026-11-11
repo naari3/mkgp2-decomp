@@ -11587,7 +11587,7 @@ game/FlowCardCheck_nm2.cpp:
 	.sdata      start:0x806D0650 end:0x806D0728
 
 game/autodata/sdata_806D0728.c:
-	.sdata      start:0x806D0728 end:0x806D07B0
+	.sdata      start:0x806D0728 end:0x806D0798
 
 game/autodata/data_804EE520.c:
 	.data       start:0x804EE520 end:0x804EE540
@@ -11607,12 +11607,6 @@ game/ItemSelectState.cpp:
 	.rodata     start:0x803DC0C0 end:0x803DC318
 	.data       start:0x804EE540 end:0x804EE55C
 
-game/autodata/data_804EE560.c:
-	.data       start:0x804EE560 end:0x804EE584
-
-game/autodata/rodata_803DC318.c:
-	.rodata     start:0x803DC318 end:0x803DC358
-
 game/ItemSelectChoiceInit.cpp:
 	extab       start:0x8001C920 end:0x8001C938
 	extabindex  start:0x8002ACBC end:0x8002ACC8
@@ -11624,36 +11618,21 @@ game/KartChoiceSelect.cpp:
 	.text       start:0x8023B318 end:0x8023B7E4
 
 game/KartChoiceRequest.cpp:
-	.text       start:0x8023B7E4 end:0x8023B7FC
+	extab       start:0x8001C940 end:0x8001CA14
+	extabindex  start:0x8002ACD4 end:0x8002AD10
+	.text       start:0x8023B7E4 end:0x8023BEF0
+	.rodata     start:0x803DC318 end:0x803DC348
+	.data       start:0x804EE560 end:0x804EE5A0
+	.sdata      start:0x806D0798 end:0x806D07A8
 
-game/KartChoiceOtherUpdate.cpp:
-	extab       start:0x8001C940 end:0x8001C948
-	extabindex  start:0x8002ACD4 end:0x8002ACE0
-	.text       start:0x8023B7FC end:0x8023B838
-
-game/KartChoiceUpdate.cpp:
-	extab       start:0x8001C948 end:0x8001C950
-	extabindex  start:0x8002ACE0 end:0x8002ACEC
-	.text       start:0x8023B838 end:0x8023BB6C
-	.data       start:0x804EE584 end:0x804EE5A0
+game/autodata/sdata_806D07A8.c:
+	.sdata      start:0x806D07A8 end:0x806D07B0
 
 game/autodata/data_804EE5A0.c:
 	.data       start:0x804EE5A0 end:0x804EE5B0
 
-game/KartChoiceFactory.cpp:
-	extab       start:0x8001C950 end:0x8001C968
-	extabindex  start:0x8002ACEC end:0x8002ACF8
-	.text       start:0x8023BB6C end:0x8023BBB8
-
-game/KartChoiceDtor.cpp:
-	extab       start:0x8001C968 end:0x8001C9A4
-	extabindex  start:0x8002ACF8 end:0x8002AD04
-	.text       start:0x8023BBB8 end:0x8023BD00
-
-game/KartChoiceCtor.cpp:
-	extab       start:0x8001C9A4 end:0x8001CA14
-	extabindex  start:0x8002AD04 end:0x8002AD10
-	.text       start:0x8023BD00 end:0x8023BEF0
+game/autodata/rodata_803DC348.c:
+	.rodata     start:0x803DC348 end:0x803DC358
 
 game/KartChoiceChildDraw.cpp:
 	extab       start:0x8001CA14 end:0x8001CA1C
