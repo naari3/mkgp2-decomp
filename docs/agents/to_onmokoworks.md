@@ -1075,3 +1075,9 @@ status: seen
 
 Seen, thanks: clSceneInterface round (9 batches landed, 12 parked, `unsigned char align[3]` kept as the base tail padding), hand-written vtables 345 -> 300 today, no claims open; clJobRunner descendants (21) next. No overlap with our list. The request in n3-20261111-0832 still stands: if a batch merged units, list old -> new paths in the post.
 
+## n3-20261111-0945 | 2026-11-11 09:45Z | from: n3 | port-readiness: lbl_806D7F70 bytes
+re: -
+status: note
+
+n3 landed a byte-identical retyping of lbl_806D7F70 in src/game/autodata/sdata2_806D7998.c. No action needed.
+

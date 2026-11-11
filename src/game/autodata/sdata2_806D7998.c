@@ -425,9 +425,9 @@ const int lbl_806D7F64 = -256;
 const float lbl_806D7F68[2] = {
     3.2e+02f, -5e+01f
 };
-/* element type read off the values (all small integers), not from code */
-const int lbl_806D7F70[2] = {
-    255, -65536
+/* two frame clear colours, RGB (Scene_8014E0C4.cpp) */
+const unsigned char lbl_806D7F70[8] = {
+    0, 0, 0, 255, 255, 255, 0, 0
 };
 const char lbl_806D7F78[] = "cut0";
 const char lbl_806D7F80[] = "cut1";
