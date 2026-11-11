@@ -566,3 +566,20 @@ compilers only) reorders every prototype and call after it to
 `Foo_Reordered` wrapper because the first parameter's type differs from unit to
 unit. A new unit that declares the function must include the header ahead of
 its prototype.
+
+## Library functions declared in another parameter order
+
+`CObj_ProjectPoint` (CObjProject.c) declared `GXProject` with the pointers
+first and the three floats last; the SDK takes `(x, y, z, mtx, pm, vp, sx, sy,
+sz)`. The prototype and the call are now written in the SDK order (object
+unchanged).
+
+`python3 tools/port_abi/arg_class_order.py` compares every prototype with the
+function's definition, or with its library header when there is no C
+definition, by the sequence of parameter classes (float by value / other).
+For functions of the SDK, MSL, HSD and MusyX it reports 0 after this change;
+`-v` adds prototypes with another parameter count (20, none of them called
+from game code with a float involved; most are MetroTRK and Melee headers);
+`--all` adds functions defined in src/game, which the port's
+arg_order_census.py covers (those are handled by ARGS_ORDER, `_Reordered`
+wrappers or tween_set_order.h, which this text tool reads as written).
