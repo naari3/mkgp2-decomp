@@ -77,7 +77,7 @@ void ItemObject_Tick_Kind28_BananaTrioChild(unsigned char *self)
         S8(0xC8) = 1;
     case 1:
         F(0xC4) = 2.0f * KartFxParam_GetConst1p5(P(0x184));
-        Vec2_RotateY(V(0x120), V(0x120), 0.08726645f);
+        Vec2_RotateY(V(0x120), V(0x120), 0.087266445f);
         if (P(0x184) != 0) {
             Mtx_TransposeToMtx44(root, KartDriver_GetKartRootMtx(P(0x184)));
             Vec3_Scale(&scaled, V(0x120), KartFxParam_GetConst1p5(P(0x184)));

@@ -376,7 +376,7 @@ struct RCCarObject {
 struct RCPlayerCar : RCCarObject {
     RCPlayerCar(RCVec *pos, int chara)
         : RCCarObject(GetDisplayBufferIndex(), chara, 0, 0, 1, 0, 0, 0, pos->x, pos->z,
-                      BuildOrientationFromYaw(GetCourseStartYaw() + 3.1415925f)) {}
+                      BuildOrientationFromYaw(GetCourseStartYaw() + 3.141592f)) {}
 };
 struct RCRenderObj { char pad0[0x238]; int x238; };
 struct RCLakituStart { char data[0x58]; RCLakituStart(const void *data, int arg, float x, float y, float z); };

@@ -148,7 +148,7 @@ void ItemObject_Tick_Dispatch1eTo23(unsigned char *self)
     rot.y = 0.017453289f * ItemObject_Tick_Dispatch1eTo23_data_80420D58[I(0x10)].rot.y;
     rot.z = 0.017453289f * ItemObject_Tick_Dispatch1eTo23_data_80420D58[I(0x10)].rot.z;
     if (I(0x8) == 0x21) {
-        F(0x100) = BuildOrientationFromYaw(0.08726645f + F(0x100));
+        F(0x100) = BuildOrientationFromYaw(0.087266445f + F(0x100));
         rot.y = BuildOrientationFromYaw(rot.y + F(0x100));
     }
     Item_RenderHandheldByCharacter(self, ItemObject_Tick_Dispatch1eTo23_data_80420D58[I(0x10)].ofs, rot, 0, ItemObject_Tick_Dispatch1eTo23_data_80420D58[I(0x10)].scale);

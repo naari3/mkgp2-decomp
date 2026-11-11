@@ -83,12 +83,12 @@ void EffectVfx72_ItemStarAura_Tick(unsigned char *self)
 
         VfxSlot_BindResourceEx(SLOT(self), 0x72, 0);
         *(void (**)(unsigned char *))(self + 0x78) = EffectVfx_KartChildAttached_RenderHook;
-        F(0xA0) = 0.017453292f * Rand_RangeFloat(-180.0f, 180.0f);
+        F(0xA0) = 0.017453289f * Rand_RangeFloat(-180.0f, 180.0f);
         GetSpawnPosition(V(0xA4), 0.0f, 0.0f, 1.0f);
         Vec2_RotateY(V(0xA4), V(0xA4), lbl_806D5348);
         pitch = ItemStarAura_GetPitch(P(0x11C));
         if (0.0f != pitch) {
-            Vec2_RotateX(V(0xA4), V(0xA4), 0.017453292f * pitch);
+            Vec2_RotateX(V(0xA4), V(0xA4), 0.017453289f * pitch);
         }
         if (S8(0x190)) {
             Vec3_Scale(V(0xA4), V(0xA4), 1.5f);

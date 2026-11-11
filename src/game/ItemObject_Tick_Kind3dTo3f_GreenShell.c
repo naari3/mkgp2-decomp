@@ -272,7 +272,7 @@ void ItemObject_Tick_Kind3dTo3f_GreenShell(unsigned char *self)
                 break;
             }
             Item_DecayVelocityScalar(self, 1.75f);
-            if (Item_OrbitAnchorKart(self, &w->launchPos, w->timers[0], 0.2617993f, 0.2617993f)) {
+            if (Item_OrbitAnchorKart(self, &w->launchPos, w->timers[0], 0.26179934f, 0.26179934f)) {
                 self[0x28] = 0;
                 self[0xC8] = 3;
                 self[0xC9] = 0;

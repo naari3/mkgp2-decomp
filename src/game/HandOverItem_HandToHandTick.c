@@ -87,7 +87,7 @@ void HandOverItem_HandToHandTick(unsigned char *self, unsigned char *sub)
             F(0x2C) = 0.0f;
             self[0xCA]++;
         case 1:
-            GabyouItem_BuildLocalTransformFromHandJoint(self, 1, 1.0f, -0.2617993f, 1.5f);
+            GabyouItem_BuildLocalTransformFromHandJoint(self, 1, 1.0f, -0.26179934f, 1.5f);
             if (FinalLapCoinJump_CheckActiveForObject(SP(0x98))) {
                 self[0x28] = 0;
             } else {

@@ -77,7 +77,7 @@ void ItemObject_Teresa_GrabAndArc_Sub(unsigned char *self, unsigned char *sub)
             F(0x2C) = 0.0f;
             S8(0xCA)++;
         case 1:
-            GabyouItem_BuildLocalTransformFromHandJoint(self, 1, -0.5f, -0.2617993f, 0.7f);
+            GabyouItem_BuildLocalTransformFromHandJoint(self, 1, -0.5f, -0.26179934f, 0.7f);
             if (FinalLapCoinJump_CheckActiveForObject(SP(0x98))) {
                 self[0x14] |= 2;
             } else {

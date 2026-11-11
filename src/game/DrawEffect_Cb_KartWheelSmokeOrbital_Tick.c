@@ -49,8 +49,8 @@ void DrawEffect_Cb_KartWheelSmokeOrbital_Tick(unsigned char *self)
         local2 = joint;
         Mtx44_TransformVec3(&joint, inv2, &local2);
         Vec3_Subtract_DestFirst(V(0xA4), &joint, V(0x120));
-        pitch = BuildOrientationFromYaw(Vec3_ToPitch(V(0xA4)) + 0.017453292f * Rand_RangeFloat(-15.0f, 15.0f));
-        yaw = BuildOrientationFromYaw(Vec3_ToYaw(V(0xA4)) + 0.017453292f * Rand_RangeFloat(-15.0f, 15.0f));
+        pitch = BuildOrientationFromYaw(Vec3_ToPitch(V(0xA4)) + 0.017453289f * Rand_RangeFloat(-15.0f, 15.0f));
+        yaw = BuildOrientationFromYaw(Vec3_ToYaw(V(0xA4)) + 0.017453289f * Rand_RangeFloat(-15.0f, 15.0f));
         GetSpawnPosition(V(0xA4), 0.0f, 0.0f, 1.5f * Rand_RangeFloat(0.7f, 1.3f));
         Vec2_RotateX(V(0xA4), V(0xA4), pitch);
         Vec2_RotateY(V(0xA4), V(0xA4), yaw);

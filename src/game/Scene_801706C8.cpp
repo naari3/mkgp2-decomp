@@ -6,6 +6,7 @@
 extern "C" {
 extern int g_longRoundFlag, g_reverseRoundFlag;
 extern char lbl_806D8CD8[7], lbl_806D8CE0[5];
+extern const float lbl_806D8D0C; /* 2.0f */
 void DebugPrintf(const char *, ...);
 int HSD_GetNbBits(unsigned int);
 void *FUN_8003b120(unsigned long);
@@ -208,7 +209,7 @@ clKPTrap::clKPTrap() {
             ppos->x=pp->x; ppos->y=pp->y; ppos->z=pp->z;
             e->sub=new GrowSub;
             e->sub->pos=*ppos;
-            e->sub->scale=1.0f;
+            e->sub->scale=lbl_806D8D0C;
             if (++used>=count) break;
         }
     }

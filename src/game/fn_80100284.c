@@ -50,7 +50,7 @@ void fn_80100284(unsigned char *self, unsigned char *sub)
             *(float *)(self + 0x2C) = 0.0f;
             self[0xCA]++;
         case 1:
-            Item_RenderFlyingFromKart(self, *(void **)(sub + 0x5C), 1, -0.8f, 2.3561945f, 1.2f);
+            Item_RenderFlyingFromKart(self, *(void **)(sub + 0x5C), 1, -0.8f, 2.356194f, 1.2f);
             g = *(void **)(sub + 0x5C);
             if (g != 0) {
                 SpriteSlot_SetAnimFrameAndApplyScale(self + 0x14, self[0x1D], *(float *)((unsigned char *)g + 0x20));
@@ -99,7 +99,7 @@ void fn_80100284(unsigned char *self, unsigned char *sub)
         }
         *(float *)(self + 0xBC) += -0.1f;
         Item_HomingScanAndSteer(self, self + 0xB0, 1);
-        *(float *)(self + 0xAC) = BuildOrientationFromYaw(0.08726645f + *(float *)(self + 0xAC));
+        *(float *)(self + 0xAC) = BuildOrientationFromYaw(0.087266445f + *(float *)(self + 0xAC));
         Item_DecayVelocityScalar(self, 2.0f);
         hit = ItemCollision_Check(self);
         switch (hit) {

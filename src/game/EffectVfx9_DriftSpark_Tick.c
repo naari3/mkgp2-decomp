@@ -111,7 +111,7 @@ void EffectVfx9_DriftSpark_Tick(unsigned char *self)
         }
         VfxSlot_SetScaleVec3(SLOT(self), sx, sy, F(0xB0));
     }
-    yaw = 0.017453292f * (45.0f * F(0x150) + 135.0f);
+    yaw = 0.017453289f * (45.0f * F(0x150) + 135.0f);
     if (S8(0x190)) {
         yaw *= -1.0f;
     }

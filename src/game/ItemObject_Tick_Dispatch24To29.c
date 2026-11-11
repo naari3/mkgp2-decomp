@@ -225,7 +225,7 @@ void ItemObject_Tick_Dispatch24To29(unsigned char *self)
         rot.y = 0.017453289f * ItemObject_Tick_Dispatch24To29_data_80420E18[I(0x10)].rot.y;
         rot.z = 0.017453289f * ItemObject_Tick_Dispatch24To29_data_80420E18[I(0x10)].rot.z;
         if (I(0x8) == 0x24 || I(0x8) == 0x25 || I(0x8) == 0x26) {
-            SF(0x14) = BuildOrientationFromYaw(0.08726645f + SF(0x14));
+            SF(0x14) = BuildOrientationFromYaw(0.087266445f + SF(0x14));
             rot.y = BuildOrientationFromYaw(rot.y + SF(0x14));
             ofs.y = (1.0f + sinf(SF(0x14))) / 2.0f + ofs.y;
         }

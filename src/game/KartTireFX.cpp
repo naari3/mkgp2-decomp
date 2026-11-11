@@ -205,21 +205,21 @@ KartTireFX::KartTireFX(int kind, int mode, HSD_JObj *srcFL, HSD_JObj *srcFR, HSD
     this->loaded = KartTireFX_ResolveJoints(this, kind, mode);
     this->leftStage = 0;
     this->rightStage = 0;
-    this->frontSpin = 1.0f;
-    this->rearSpin = 1.0f;
+    this->frontSpin = 0.0f;
+    this->rearSpin = 0.0f;
     this->src[0] = srcFL;
     this->src[1] = srcFR;
     this->src[2] = srcRL;
     this->src[3] = srcRR;
     /* Never true; the target keeps both compares. */
     if (kind < 0 && kind >= 13) {
-        this->scale.x = 1000.0f;
-        this->scale.y = 1000.0f;
-        this->scale.z = 1000.0f;
+        this->scale.x = 1.0f;
+        this->scale.y = 1.0f;
+        this->scale.z = 1.0f;
     } else if (mode == 2 || mode == 3) {
-        this->scale.x = 1000.0f;
-        this->scale.y = 1000.0f;
-        this->scale.z = 1000.0f;
+        this->scale.x = 1.0f;
+        this->scale.y = 1.0f;
+        this->scale.z = 1.0f;
     } else {
         this->scale.x = KartTireFX_Ctor_data_803FE018[kind];
         this->scale.y = KartTireFX_Ctor_data_803FE018[kind];
