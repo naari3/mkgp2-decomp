@@ -6,14 +6,6 @@
 
 #include "game/types/AnimState.h"
 
-void fn_800AE71C(void)
-{
-}
-
-void fn_800AE720(void)
-{
-}
-
 float AnimState_GetTotalWeight(AnimState *self)
 {
     return self->d[3] * (self->d[2] * (self->d[0] * self->d[1]));

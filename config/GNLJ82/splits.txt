@@ -3034,49 +3034,27 @@ game/autodata/sdata2_806D4F48.c:
 	.sdata2     start:0x806D4F48 end:0x806D5010
 
 game/autodata/sdata_806CF2C8.c:
-	.sdata      start:0x806CF2C8 end:0x806CF488
-
-game/autodata/data_80419E88.c:
-	.data       start:0x80419E88 end:0x80419F20
+	.sdata      start:0x806CF2C8 end:0x806CF2D0
 
 game/autodata/rodata_80328E28.c:
-	.rodata     start:0x80328E28 end:0x80328EA0
+	.rodata     start:0x80328E28 end:0x80328E60
 
 game/clCGameDemoWC_Stubs.c:
 	.text       start:0x800ADDA0 end:0x800ADDAC
 
-game/clCGameDemoWC/Dtor.c:
-	extab       start:0x8000A37C end:0x8000A384
-	extabindex  start:0x80022898 end:0x800228A4
-	.text       start:0x800ADDAC end:0x800ADEF8
+game/clCGameDemoWC/Dtor.cpp:
+	extab       start:0x8000A37C end:0x8000A468
+	extabindex  start:0x80022898 end:0x800228E0
+	.text       start:0x800ADDAC end:0x800AE724
+	.rodata     start:0x80328E60 end:0x80328EA0
+	.data       start:0x80419E88 end:0x80419F20
+	.sdata      start:0x806CF2D0 end:0x806CF2F8
 
-game/clACamera_Dtor_WC.c:
-	extab       start:0x8000A384 end:0x8000A38C
-	extabindex  start:0x800228A4 end:0x800228B0
-	.text       start:0x800ADEF8 end:0x800ADF58
-
-game/clCGameDemoWC/Render.c:
-	extab       start:0x8000A38C end:0x8000A394
-	extabindex  start:0x800228B0 end:0x800228BC
-	.text       start:0x800ADF58 end:0x800AE108
-
-game/clCGameDemoWC/Tick.c:
-	extab       start:0x8000A394 end:0x8000A39C
-	extabindex  start:0x800228BC end:0x800228C8
-	.text       start:0x800AE108 end:0x800AE438
-
-game/clCGameDemoWC/Ctor.c:
-	extab       start:0x8000A39C end:0x8000A460
-	extabindex  start:0x800228C8 end:0x800228D4
-	.text       start:0x800AE438 end:0x800AE6BC
-
-game/clCGameDemo_Dtor.c:
-	extab       start:0x8000A460 end:0x8000A468
-	extabindex  start:0x800228D4 end:0x800228E0
-	.text       start:0x800AE6BC end:0x800AE71C
+game/autodata/sdata_806CF2F8.c:
+	.sdata      start:0x806CF2F8 end:0x806CF488
 
 game/fn_800AE71C.c:
-	.text       start:0x800AE71C end:0x800AE854
+	.text       start:0x800AE724 end:0x800AE854
 
 game/AnimState_Step.c:
 	extab       start:0x8000A468 end:0x8000A478

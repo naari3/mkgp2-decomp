@@ -60,31 +60,6 @@
     "@70": "@etb_80011D54",
     "@71": "@eti_80026DC8"
   },
-  "src/game/clCGameDemoWC/Dtor.c": {
-    "extab_clCGameDemoWC_Dtor": "@etb_8000A37C",
-    "extabindex_clCGameDemoWC_Dtor": "@eti_80022898"
-  },
-  "src/game/clCGameDemoWC/Render.c": {
-    "extab_clCGameDemoWC_Render": "@etb_8000A38C",
-    "extabindex_clCGameDemoWC_Render": "@eti_800228B0"
-  },
-  "src/game/clCGameDemoWC/Tick.c": {
-    "extab_clCGameDemoWC_Tick": "@etb_8000A394",
-    "extabindex_clCGameDemoWC_Tick": "@eti_800228BC"
-  },
-  "src/game/clCGameDemoWC/Ctor.c": {
-    "__ct__11DemoWCOwnerFv": "clCGameDemoWC_Ctor",
-    "__ct__10DemoWCRootFv": "GameMode_BaseInit",
-    "__dt__10DemoWCBaseFv": "clCGameDemo_Dtor",
-    "__ct__12DemoWCNormalFPCci": "clNormal3D_Construct",
-    "__ct__15DemoWCSceneBaseFPCc": "Scene3D_Init",
-    "__ct__16DemoWCDriverBaseFiiPfiii": "KartDriver_New_Full",
-    "__ct__13DemoWCTornadoFUcP12DemoWCDriveriUcfff": "TornadoEffect_Ctor",
-    "__ct__9DemoWCAuxFv": "fn_801967F0",
-    "__vt__11DemoWCOwner": "DemoWCOwner_vtable_80419ED8",
-    "__vt__10DemoWCBase": "lbl_80419F0C",
-    "__vt__11DemoWCScene": "lbl_80419EF8"
-  },
   "src/game/ObjectTree_BlendOrCopy.c": {
     "extab_ObjectTree_BlendOrCopy": "@etb_80005A18",
     "extabindex_ObjectTree_BlendOrCopy": "@eti_8001F730"
@@ -18247,5 +18222,61 @@
     "__ct__15RCWeatherSystemFi": "WeatherSystem_Init",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/clCGameDemoWC/Dtor.cpp": {
+    "__ct__11clJobRunnerFv": "GameMode_BaseInit",
+    "__dt__11clJobRunnerFv": "dtor_8002CDF4",
+    "__dt__11clCGameDemoFv": "clCGameDemo_Dtor",
+    "Update__11clCGameDemoFv": "fn_800AE71C",
+    "Draw__11clCGameDemoFv": "fn_800AE720",
+    "__vt__11clCGameDemo": "lbl_80419F0C",
+    "__dt__9clACameraFv": "clACamera_Dtor_WC",
+    "__dt__8clCameraFv": "Object_DtorTree_56b8",
+    "__ct__8clCameraFPCc": "Scene3D_Init",
+    "Ready__8clCameraFv": "CObj_RenderPass_Execute",
+    "Render__8clCameraFv": "CObj_GlobalProjPushFrame",
+    "__vt__9clACamera": "lbl_80419EF8",
+    "__ct__10DemoNormalFPCci": "clNormal3D_Construct",
+    "__ct__14DemoDriverBaseFiiPA4_fiii": "KartDriver_New_Full",
+    "__ct__11DemoTornadoFUcP10DemoDriveriUcfff": "TornadoEffect_Ctor",
+    "__ct__9DemoWCAuxFv": "fn_801967F0",
+    "__RTTI__11clJobRunner": "lbl_806CF2D0",
+    "__RTTI__11clCGameDemo": "lbl_806CF2D8",
+    "__RTTI__8clCamera": "lbl_806CF2E8",
+    "__RTTI__9clACamera": "lbl_806CF2F0",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__nw__FUl": "Alloc",
+    "__ct__13clCGameDemoWCFv": "clCGameDemoWC_Ctor",
+    "__dt__13clCGameDemoWCFv": "clCGameDemoWC_Dtor",
+    "Update__13clCGameDemoWCFv": "clCGameDemoWC_Tick",
+    "Draw__13clCGameDemoWCFv": "clCGameDemoWC_Render",
+    "__vt__13clCGameDemoWC": "DemoWCOwner_vtable_80419ED8",
+    "__RTTI__13clCGameDemoWC": "data_80412158_data_806CF2E0",
+    "@128": "lbl_80328E60",
+    "@130": "lbl_80328E70",
+    "@131": "lbl_80328E7C",
+    "@132": "lbl_80419EB8",
+    "@129": "sdata_806CF1C0_data_80419EC4",
+    "@270": "lbl_80328E88",
+    "@272": "lbl_80328E94",
+    "@271": "lbl_80419EEC",
+    "@149": "@etb_8000A37C",
+    "@150": "@eti_80022898",
+    "@153": "@etb_8000A384",
+    "@154": "@eti_800228A4",
+    "@189": "@etb_8000A38C",
+    "@190": "@eti_800228B0",
+    "@229": "@etb_8000A394",
+    "@230": "@eti_800228BC",
+    "@262": "@etb_8000A39C",
+    "@263": "@eti_800228C8",
+    "@266": "@etb_8000A460",
+    "@267": "@eti_800228D4",
+    "@182": "extern:lbl_806D4F90",
+    "@183": "extern:lbl_806D4F94",
+    "@184": "extern:lbl_806D4F98",
+    "@185": "extern:lbl_806D4F9C",
+    "@186": "extern:lbl_806D4FA0",
+    "@187": "extern:lbl_806D4FA4"
   }
 }
