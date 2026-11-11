@@ -1164,8 +1164,38 @@
     "__ct__5GroupFP11GroupParams": "fn_80195DA8"
   },
   "src/game/objview/fn_80196028.cpp": {
+    "kEmitters": "global:lbl_8037D888",
     "__ct__9GXChannelFP8HSD_JObjP8HSD_DObjUii": "GXChannel_Init",
-    "__dt__9GXChannelFv": "dtor_8007D9C4"
+    "__dt__9GXChannelFv": "dtor_8007D9C4",
+    "__ct__11clWCBlossomFv": "fn_801967F0",
+    "__dt__11clWCBlossomFv": "fn_80196758",
+    "Update__11clWCBlossomFv": "fn_8019618C",
+    "Draw__11clWCBlossomFv": "fn_80196028",
+    "__dt__16clMapEffectPartsFv": "dtor_8016A270",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "Enable__16clMapEffectPartsFi": "fn_8016A26C",
+    "__vt__11clWCBlossom": "ParticleView_vtable_80495FA4",
+    "__RTTI__11clWCBlossom": "global:data_80495F98_data_806CFCC8",
+    "__RTTI__16clMapEffectParts": "global:data_80495F98_data_806CFCC0",
+    "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@191": "global:lbl_8037D930",
+    "@193": "global:lbl_8037D93C",
+    "@192": "global:data_80495F98_data_80495F98",
+    "@281": "global:lbl_8037D950",
+    "@317": "global:lbl_8037D970",
+    "@318": "global:lbl_8037D990",
+    "@319": "global:lbl_8037D9A8",
+    "@320": "global:lbl_8037D9C4",
+    "@202": "@etb_800123E8",
+    "@203": "@eti_800272E4",
+    "@275": "@etb_80012400",
+    "@276": "@eti_800272F0",
+    "@282": "@etb_80012408",
+    "@283": "@eti_800272FC",
+    "@321": "@etb_80012410",
+    "@322": "@eti_80027308"
   },
   "src/game/kartmove/fn_8019A4E0.cpp": {
     "__dt__3VecFv": "dtor_80036E40"
@@ -11838,23 +11868,6 @@
   },
   "src/game/kartmove/KartMovement_CollisionUpdate.cpp": {
     "__dt__12CollisionVecFv": "dtor_80036E40"
-  },
-  "src/game/objview/fn_801967F0.cpp": {
-    "kEmitters": "global:lbl_8037D888",
-    "lbl_8037D930": "global:lbl_8037D930",
-    "lbl_8037D93C": "global:lbl_8037D93C",
-    "lbl_8037D950": "global:lbl_8037D950",
-    "lbl_8037D970": "global:lbl_8037D970",
-    "lbl_8037D990": "global:lbl_8037D990",
-    "lbl_8037D9A8": "global:lbl_8037D9A8",
-    "lbl_8037D9C4": "global:lbl_8037D9C4",
-    "__ct__12ParticleViewFv": "fn_801967F0",
-    "__dt__16ParticleViewBaseFv": "dtor_8016A270",
-    "__vt__16ParticleViewBase": "lbl_80490FE0",
-    "__vt__12ParticleView": "ParticleView_vtable_80495FA4",
-    "__ct__10clNormal3DFPCvi": "clNormal3D_Construct",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
   },
   "src/game/objview/fn_801987C4.cpp": {
     "__ct__6Obj987Fv": "fn_801987C4",

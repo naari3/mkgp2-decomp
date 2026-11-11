@@ -7631,7 +7631,7 @@ game/autodata/sdata_806CFC58.c:
 	.sdata      start:0x806CFC58 end:0x806CFCAC
 
 game/autodata/sdata_806CFCB0.c:
-	.sdata      start:0x806CFCB0 end:0x806CFCD8
+	.sdata      start:0x806CFCB0 end:0x806CFCC0
 
 game/autodata/data_80495ED0.c:
 	.data       start:0x80495ED0 end:0x80495F20
@@ -7933,9 +7933,6 @@ game/objview/MapWaterEffect_Init.c:
 	.rodata     start:0x8037D220 end:0x8037D61C
 	.data       start:0x80495F6C end:0x80495F98
 
-game/autodata/data_80495F98.c:
-	.data       start:0x80495F98 end:0x80496370
-
 game/autodata/rodata_8037D61C.c:
 	.rodata     start:0x8037D61C end:0x8037D884
 
@@ -7955,25 +7952,18 @@ game/objview/fn_80195F54.c:
 	.text       start:0x80195F54 end:0x80196028
 
 game/objview/fn_80196028.cpp:
-	extab       start:0x800123E8 end:0x80012400
-	extabindex  start:0x800272E4 end:0x800272F0
-	.text       start:0x80196028 end:0x8019618C
-
-game/objview/fn_8019618C.cpp:
-	extab       start:0x80012400 end:0x80012408
-	extabindex  start:0x800272F0 end:0x800272FC
-	.text       start:0x8019618C end:0x80196758
-
-game/objview/fn_80196758.c:
-	extab       start:0x80012408 end:0x80012410
-	extabindex  start:0x800272FC end:0x80027308
-	.text       start:0x80196758 end:0x801967F0
-
-game/objview/fn_801967F0.cpp:
-	extab       start:0x80012410 end:0x800124B0
-	extabindex  start:0x80027308 end:0x80027314
-	.text       start:0x801967F0 end:0x80196AA0
+	extab       start:0x800123E8 end:0x800124B0
+	extabindex  start:0x800272E4 end:0x80027314
+	.text       start:0x80196028 end:0x80196AA0
 	.rodata     start:0x8037D888 end:0x8037D9E0
+	.data       start:0x80495F98 end:0x80495FC0
+	.sdata      start:0x806CFCC0 end:0x806CFCD0
+
+game/autodata/sdata_806CFCD0.c:
+	.sdata      start:0x806CFCD0 end:0x806CFCD8
+
+game/autodata/data_80495FC0.c:
+	.data       start:0x80495FC0 end:0x80496370
 
 game/autodata/rodata_8037D9E0.c:
 	.rodata     start:0x8037D9E0 end:0x8037DA90
