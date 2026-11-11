@@ -5788,10 +5788,10 @@ game/ZoneList.c:
 	.sdata      start:0x806CF488 end:0x806CF498
 
 game/autodata/sdata_806CF498.c:
-	.sdata      start:0x806CF498 end:0x806CF4E8
+	.sdata      start:0x806CF498 end:0x806CF4A0
 
 game/autodata/rodata_80355900.c:
-	.rodata     start:0x80355900 end:0x80355A54
+	.rodata     start:0x80355900 end:0x803559CC
 
 game/SuikaBallObj_Render.c:
 	extab       start:0x8000BE88 end:0x8000BE90
@@ -5834,13 +5834,19 @@ game/ChallengeDemo_Create.cpp:
 	.text       start:0x80124DF8 end:0x80124F2C
 	.data       start:0x8048E1E0 end:0x8048E200
 
-game/autodata/data_8048E200.c:
-	.data       start:0x8048E200 end:0x8048E270
-
 game/ChallengeDemoShell.cpp:
 	extab       start:0x8000BF68 end:0x8000C044
 	extabindex  start:0x800248CC end:0x800248FC
 	.text       start:0x80124F2C end:0x80125948
+	.rodata     start:0x803559CC end:0x80355A54
+	.data       start:0x8048E200 end:0x8048E234
+	.sdata      start:0x806CF4A0 end:0x806CF4B8
+
+game/autodata/sdata_806CF4B8.c:
+	.sdata      start:0x806CF4B8 end:0x806CF4E8
+
+game/autodata/data_8048E234.c:
+	.data       start:0x8048E234 end:0x8048E270
 
 game/fn_80125948.c:
 	extab       start:0x8000C044 end:0x8000C18C
