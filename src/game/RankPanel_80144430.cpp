@@ -1,3 +1,4 @@
+#include "game/types/sjis_word.h"
 #include "game/types/size_t.h"
 #include "game/singleton.h"
 
@@ -554,7 +555,7 @@ extern "C" void fn_80144C1C(RankPanel *self)
             int wide;
             if (*c == 0)
                 break;
-            memcpy(&ch, c, 2);
+            SJIS_WORD_LOAD(ch, c);
             wide = ch & 0x8000;
             if (wide)
                 pos++;

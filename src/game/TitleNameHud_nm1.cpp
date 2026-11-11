@@ -1,3 +1,4 @@
+#include "game/types/sjis_word.h"
 #include "game/TitleNameHud_nm1.h"
 
 TitleNameHud::TitleNameHud(int layer_)
@@ -21,7 +22,7 @@ TitleNameHud::TitleNameHud(int layer_)
         char *p = name;
         int n = 0;
         while (*p != 0) {
-            if (*(unsigned short *)p & 0x8000) {
+            if (SJIS_WORD(p) & 0x8000) {
                 p++;
             }
             p++;

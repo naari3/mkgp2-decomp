@@ -1,4 +1,5 @@
 #include "game/TextDraw801F.h"
+#include "game/types/sjis_word.h"
 #include "libc/stdarg.h"
 
 extern "C" int OSDisableInterrupts(void);
@@ -9,7 +10,7 @@ static inline unsigned short LookupWide(const char *cursor) {
     int glyph = 0;
     int i;
     for (i = 0; i < 654; ++i) {
-        if (*(const unsigned short *)cursor == lbl_804E5590[i].code) {
+        if (SJIS_WORD(cursor) == lbl_804E5590[i].code) {
             glyph = lbl_804E5590[i].card;
             break;
         }
@@ -33,7 +34,7 @@ static inline void DecodeText(TextDraw801F *self, char *cursor) {
     unsigned short *out = self->glyphs;
     int count = 0;
     for (; *cursor && count < 255; ++count, ++out, ++cursor) {
-        if (*(unsigned short *)cursor & 0x8000) {
+        if (SJIS_WORD(cursor) & 0x8000) {
             *out = LookupWide(cursor);
             ++cursor;
         } else if (*cursor == '\n') {

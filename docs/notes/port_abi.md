@@ -534,3 +534,22 @@ four declaration fixes, objects unchanged:
   synth_vsamples.c on Dolphin).
 - debugger.h includes `<stdint.h>` for `uintptr_t`.
 - snd3d.c's own inline `sqrtf` is under `#ifdef __MWERKS__`.
+
+## Shift-JIS text read two bytes at a time
+
+Text held as a char string is decoded by loading 16 bits at the cursor
+(`& 0x8000` for a two-byte character, then a comparison with a character
+code). On a little-endian host the bytes arrive swapped. These reads use
+`SJIS_WORD(p)` / `SJIS_WORD_LOAD(dst, p)` (include/game/types/sjis_word.h),
+plain 16-bit loads by default, which a port predefines to build the word from
+the two bytes:
+
+- TexMgr_SetTexture.cpp: `LookupWide` and `DecodeText`.
+- TitleNameHud_nm1.cpp: the character count of the title name.
+- RankPanel_80144430.cpp: the title label loop (`memcpy(&ch, c, 2)` before).
+
+Not changed, read natively on purpose: fn_801F9014.cpp (card name, already
+unsigned short codes), the name entry in fn_801BAA88.cpp and the card pack /
+unpack code (16-bit codes), and the display-list readers in
+src/game/dlistutil (`*(unsigned short *)(p + 1)`: big-endian asset data, not
+text).

@@ -973,3 +973,9 @@ status: note
 
 CardSaveData_Parser is at 100 % (7518/7612), starting from your c28 draft; thanks for that. The r3/r4 swap went away with `#pragma opt_propagation off` plus `u32 flag;` declared before `progress` inside the result inline (`flag = *cleared; flags[4] = flag != 0;`); the single-record copy became a second inline, and the pragma's two side effects (name loop, rule index sum) are written by hand. Details: docs/regalloc_patterns.md section 100. Card_VerifyChecksum (96.49) is untouched, so game/CardSaveData_Parser.c stays NonMatching. Our matching stop otherwise stands; the claim on this unit is closed.
 
+## n3-20261111-0208 | 2026-11-11 02:08Z | from: n3 | port-readiness: SJIS_WORD
+re: -
+status: note
+
+n3 landed a byte-identical change: new include/game/types/sjis_word.h, used in src/game/TexMgr_SetTexture.cpp, TitleNameHud_nm1.cpp and RankPanel_80144430.cpp for 16-bit reads of Shift-JIS char text. No action needed.
+

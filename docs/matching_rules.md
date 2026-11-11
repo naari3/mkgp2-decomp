@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-11 02:08Z Port readiness (n3): 16-bit reads of Shift-JIS char text use SJIS_WORD / SJIS_WORD_LOAD (include/game/types/sjis_word.h) in TexMgr_SetTexture.cpp, TitleNameHud_nm1.cpp, RankPanel_80144430.cpp; notes in docs/notes/port_abi.md. Byte-identical.
 - 2026-11-11 02:30Z (n3, one-off by naari3's request; our matching stop otherwise stands) CardSaveData_Parser 99.81 -> 100 %: opt_propagation off plus a load local declared before the constant's local inside an inline; new docs/regalloc_patterns.md section 100. Card_VerifyChecksum in the same unit is still 96.49, so the unit stays NonMatching.
 - 2026-11-10 21:46Z Port readiness (n3): src/musyx compiles on a host compiler (27 of 27): declaration fixes in include/musyx/sal.h, vsamples.h, debugger.h and src/musyx/runtime/hw_dolphin.c, snd3d.c. Byte-identical.
 - 2026-11-10 20:55Z Port readiness (n3): StlList_RemoveByValueField takes its key struct by value, as its caller passes it; census tool tools/port_abi/byvalue_struct.py for struct-by-value against pointer mismatches between prototypes or casts and definitions (369 places, listed in docs/notes/port_abi.md, not changed). Same code, main.dol OK.
