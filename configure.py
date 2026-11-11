@@ -1702,7 +1702,7 @@ config.libs = [
             Object(Matching, "game/TaruItem_OnGroundDriftTick_25.c", extab_padding=b""),
             Object(Matching, "game/TaruItem_Tick_HeldAndHoming_25.c", extab_padding=b""),
             Object(Matching, "game/TaruItem_Dispatch_25.c", extab_padding=b""),
-            Object(Matching, "game/ReverseChallenge.c", extab_padding=b"\x00\x00", extra_cflags=["-i src/game"]),
+            Object(Matching, "game/ReverseChallenge.cpp", extab_padding=b"\x00\x00", extra_cflags=["-i src/game", "-Cpp_exceptions on", "-RTTI on", "-inline deferred,noauto", "-rostr"]),
             Object(Matching, "game/OnchiSpeaker_State2_Active.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/OnchiSpeaker_State2_Flight.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/OnchiSpeaker_State1_Held.c", extab_padding=b"\x00\x00"),

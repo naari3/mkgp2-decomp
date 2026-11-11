@@ -3018,22 +3018,29 @@ game/GameMode_TitleSelect.cpp:
 	.sdata      start:0x806CF290 end:0x806CF2B0
 	.sdata2     start:0x806D4F34 end:0x806D4F3C
 
-game/autodata/sdata2_806D4F3C.c:
-	.sdata2     start:0x806D4F3C end:0x806D5010
-
-game/autodata/sdata_806CF2B0.c:
-	.sdata      start:0x806CF2B0 end:0x806CF488
-
-game/autodata/data_80419E50.c:
-	.data       start:0x80419E50 end:0x80419F20
-
 game/autodata/rodata_80328DB8.c:
-	.rodata     start:0x80328DB8 end:0x80328EA0
+	.rodata     start:0x80328DB8 end:0x80328DD8
 
-game/ReverseChallenge.c:
+game/ReverseChallenge.cpp:
 	extab       start:0x8000A1EC end:0x8000A37C
 	extabindex  start:0x80022868 end:0x80022898
 	.text       start:0x800ACD60 end:0x800ADDA0
+	.rodata     start:0x80328DD8 end:0x80328E28
+	.data       start:0x80419E50 end:0x80419E88
+	.sdata      start:0x806CF2B0 end:0x806CF2C8
+	.sdata2     start:0x806D4F40 end:0x806D4F48
+
+game/autodata/sdata2_806D4F48.c:
+	.sdata2     start:0x806D4F48 end:0x806D5010
+
+game/autodata/sdata_806CF2C8.c:
+	.sdata      start:0x806CF2C8 end:0x806CF488
+
+game/autodata/data_80419E88.c:
+	.data       start:0x80419E88 end:0x80419F20
+
+game/autodata/rodata_80328E28.c:
+	.rodata     start:0x80328E28 end:0x80328EA0
 
 game/clCGameDemoWC_Stubs.c:
 	.text       start:0x800ADDA0 end:0x800ADDAC
