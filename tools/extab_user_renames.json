@@ -18219,5 +18219,21 @@
     "__ct__11ClassSpriteFiUcff": "fn_801A08B8",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/fn_801DA46C.cpp": {
+    "@60": "clFlowFigure",
+    "@62": "lbl_8039FCC0",
+    "@61": "lbl_8049BBFC",
+    "__ct__12clFlowFigureFv": "clFlowAttract_Init",
+    "__dt__12clFlowFigureFv": "fn_801DA700",
+    "Update__12clFlowFigureFv": "fn_801DA574",
+    "Draw__12clFlowFigureFv": "fn_801DA46C",
+    "__ct__13clFlowProcessFv": "InitializeFrameSelection",
+    "__dt__13clFlowProcessFv": "dtor_801BA14C",
+    "__vt__12clFlowFigure": "lbl_8049BC08",
+    "__RTTI__12clFlowFigure": "lbl_806CFEE0",
+    "__RTTI__13clFlowProcess": "lbl_806CFED8",
+    "__ct__9SpriteObjFiii": "Sprite_InitWithAnim",
+    "__ct__9SpriteObjFiiffffff": "Sprite_CreateWithParams"
   }
 }

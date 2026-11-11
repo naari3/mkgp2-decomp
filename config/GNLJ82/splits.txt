@@ -8750,10 +8750,10 @@ game/fn_801D3480.cpp:
 	.sdata      start:0x806CFE98 end:0x806CFEA8
 
 game/autodata/sdata_806CFEA8.c:
-	.sdata      start:0x806CFEA8 end:0x806D0110
+	.sdata      start:0x806CFEA8 end:0x806CFED8
 
 game/autodata/data_8049B5E8.c:
-	.data       start:0x8049B5E8 end:0x8049D030
+	.data       start:0x8049B5E8 end:0x8049BBE8
 
 game/autodata/rodata_8039C6C0.c:
 	.rodata     start:0x8039C6C0 end:0x8039C718
@@ -8936,7 +8936,7 @@ game/clFlowKart_SetupTextLayout.cpp:
 	.rodata     start:0x8039F1C8 end:0x8039FC60
 
 game/autodata/rodata_8039FC60.c:
-	.rodata     start:0x8039FC60 end:0x8039FD18
+	.rodata     start:0x8039FC60 end:0x8039FCB0
 
 game/fn_801D9A2C.cpp:
 	extab       start:0x80015528 end:0x80015540
@@ -8963,25 +8963,22 @@ game/AttractJoinInput.cpp:
 	extabindex  start:0x80028208 end:0x80028214
 	.text       start:0x801DA1C4 end:0x801DA46C
 
-game/fn_801DA46C.c:
-	extab       start:0x80015590 end:0x80015598
-	extabindex  start:0x80028214 end:0x80028220
-	.text       start:0x801DA46C end:0x801DA574
+game/fn_801DA46C.cpp:
+	extab       start:0x80015590 end:0x8001566C
+	extabindex  start:0x80028214 end:0x80028244
+	.text       start:0x801DA46C end:0x801DAA84
+	.rodata     start:0x8039FCB0 end:0x8039FCD0
+	.data       start:0x8049BBE8 end:0x8049BC1C
+	.sdata      start:0x806CFED8 end:0x806CFEE8
 
-game/fn_801DA574.c:
-	extab       start:0x80015598 end:0x800155A0
-	extabindex  start:0x80028220 end:0x8002822C
-	.text       start:0x801DA574 end:0x801DA700
+game/autodata/sdata_806CFEE8.c:
+	.sdata      start:0x806CFEE8 end:0x806D0110
 
-game/fn_801DA700.c:
-	extab       start:0x800155A0 end:0x800155A8
-	extabindex  start:0x8002822C end:0x80028238
-	.text       start:0x801DA700 end:0x801DA838
+game/autodata/data_8049BC1C.c:
+	.data       start:0x8049BC1C end:0x8049D030
 
-game/clFlowAttract_Init.cpp:
-	extab       start:0x800155A8 end:0x8001566C
-	extabindex  start:0x80028238 end:0x80028244
-	.text       start:0x801DA838 end:0x801DAA84
+game/autodata/rodata_8039FCD0.c:
+	.rodata     start:0x8039FCD0 end:0x8039FD18
 
 game/fn_801DAA84.c:
 	extab       start:0x8001566C end:0x80015674
