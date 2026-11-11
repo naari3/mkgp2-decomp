@@ -317,3 +317,8 @@ nsEffectSpeed::clActionMueScale/clAction/clActionSpeedScale converted together i
 Source: Codex worker r7_c11_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 clGameSingle converted in game/RaceScene_RenderPass.cpp, merging FrameUpdate/Dtor/Init. Deferred reverse definitions plus compiler RTTI/vtable and pooled literal strings preserve all four native methods and seven owned sections at 100%; clang OK and full DOL SHA-1 unchanged. Split the old compound string-pool symbol into actual literal boundaries to eliminate R_PPC_NONE pseudo-relocation mismatches (existing matching_rules section 5 rule). No new compiler rule discovered.
+
+## r7_c13_20261111
+Source: Codex worker r7_c13_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+clSeqEnding/clStageSelect/clTitle share one nondeferred TU: ordinary address-order definitions preserve all 12 functions, and the compiler emits class data SeqEnding/StageSelect/Title in reverse at the end. Base-list-first alone cannot distinguish deferred mode when the external canonical base emits no weak vtable in the TU. Deferred reverse definitions matched text but reversed all class data; all-inline deferred recovered data but moved methods after factories. Keep debug-label strings external here so compiler RTTI names alone occupy 80328D90..80328DB8. Existing #align4 .sdata2 directive handles short clTitle name at 806D4F34. Object/full-link observations, not a traced general compiler rule. Full DOL exact.

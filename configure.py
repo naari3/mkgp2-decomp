@@ -1106,7 +1106,6 @@ config.libs = [
             Object(Matching, "game/ShadowAreaMgr_Ctor.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/HitMessageOverlay_Destroy.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/TweenInterp_VtableTrim.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
-            Object(Matching, "game/GameMode_Title_Ctor.c", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/AnimState_Reset.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/AnimState_New.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/DrawEffect_SetFlagsByte.c"),  #g2
@@ -1246,7 +1245,7 @@ config.libs = [
             Object(Matching, "game/EffectVfx84_85_BoostChargeRing_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/RaceSys_8009B98C.c"),  #g2
             Object(Matching, "game/RaceScene_GetPerspFovyForCup.c"),  #g2
-            Object(Matching, "game/GameMode_TitleSelect.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on"]),  #g2
+            Object(Matching, "game/GameMode_TitleSelect.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-rostr"]),  #g2
             Object(NonMatching, "game/RankLog.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
             Object(Matching, "game/DbgMenu.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], extab_padding=b""),  #g2
             Object(NonMatching, "game/ShadowAreaMgr.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),  #g2

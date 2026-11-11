@@ -2849,7 +2849,7 @@ game/VSModeIntro.cpp:
 	.sdata2     start:0x806D4908 end:0x806D4910
 
 game/autodata/sdata2_806D4910.c:
-	.sdata2     start:0x806D4910 end:0x806D5010
+	.sdata2     start:0x806D4910 end:0x806D4F34
 
 game/autodata/sdata_806CF1C0.c:
 	.sdata      start:0x806CF1C0 end:0x806CF240
@@ -2968,13 +2968,13 @@ game/clLineManager.cpp:
 	.sdata      start:0x806CF260 end:0x806CF270
 
 game/autodata/sdata_806CF270.c:
-	.sdata      start:0x806CF270 end:0x806CF488
+	.sdata      start:0x806CF270 end:0x806CF290
 
 game/autodata/data_80419DC8.c:
-	.data       start:0x80419DC8 end:0x80419F20
+	.data       start:0x80419DC8 end:0x80419DF0
 
 game/autodata/rodata_80328B98.c:
-	.rodata     start:0x80328B98 end:0x80328EA0
+	.rodata     start:0x80328B98 end:0x80328D90
 
 game/HitMessageOverlay_Show.c:
 	extab       start:0x8000A110 end:0x8000A118
@@ -3009,15 +3009,26 @@ game/main.c:
 	extabindex  start:0x800227E4 end:0x800227F0
 	.text       start:0x800AC894 end:0x800AC8FC
 
-game/GameMode_Title_Ctor.c:
-	extab       start:0x8000A158 end:0x8000A170
-	extabindex  start:0x800227F0 end:0x800227FC
-	.text       start:0x800AC8FC end:0x800AC94C
-
 game/GameMode_TitleSelect.cpp:
-	extab       start:0x8000A170 end:0x8000A1EC
-	extabindex  start:0x800227FC end:0x80022868
-	.text       start:0x800AC94C end:0x800ACD60
+	extab       start:0x8000A158 end:0x8000A1EC
+	extabindex  start:0x800227F0 end:0x80022868
+	.text       start:0x800AC8FC end:0x800ACD60
+	.rodata     start:0x80328D90 end:0x80328DB8
+	.data       start:0x80419DF0 end:0x80419E50
+	.sdata      start:0x806CF290 end:0x806CF2B0
+	.sdata2     start:0x806D4F34 end:0x806D4F3C
+
+game/autodata/sdata2_806D4F3C.c:
+	.sdata2     start:0x806D4F3C end:0x806D5010
+
+game/autodata/sdata_806CF2B0.c:
+	.sdata      start:0x806CF2B0 end:0x806CF488
+
+game/autodata/data_80419E50.c:
+	.data       start:0x80419E50 end:0x80419F20
+
+game/autodata/rodata_80328DB8.c:
+	.rodata     start:0x80328DB8 end:0x80328EA0
 
 game/ReverseChallenge.c:
 	extab       start:0x8000A1EC end:0x8000A37C

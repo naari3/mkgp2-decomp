@@ -1951,6 +1951,7 @@
   ],
   "src/game/GameMode_TitleSelect.cpp": {
     "extab": [
+      "GameMode_Title_Ctor",
       "GameMode_StageSelect_Ctor",
       "GameMode_CharacterSelect_Ctor",
       "GameMode_CharacterSelect_Dtor",
@@ -1962,6 +1963,7 @@
       "GameMode_Title_DrawDebugLabel"
     ],
     "extabindex": [
+      "GameMode_Title_Ctor",
       "GameMode_Title_Dtor",
       "GameMode_Title_DrawDebugLabel",
       "GameMode_StageSelect_Ctor",
