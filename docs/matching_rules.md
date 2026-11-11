@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-11 18:18Z 2026-11-11: port-only behaviour branches (ifndef __MWERKS__ that changes what a function does) do not belong in this repository; the request 43 fix and the value-less return values were removed again and live in mkgp2-pc as patches. Host-neutral macros (TEXT_WORD, BITFIELDS) stay. See docs/notes/port_abi.md, last section.
 - 2026-11-11 17:59Z 2026-11-11: port request 43. ItemObject_GetGroundTypeAt passes a float[3] for the ground normal outside MWCC; tools/port_abi/param_address.py; see docs/notes/port_abi.md, Out-pointer arguments smaller than what the callee writes.
 - 2026-11-11 14:43Z 2026-11-11: port request 42. ZoneObject lists (autodata/data_803F60B4.c) are ZoneObjectRow arrays; HALF_WORDS(a, b) added to text_word.h; see docs/notes/port_abi.md, Tables reached only through another table's pointer.
 - 2026-11-11 13:35Z Port readiness (n3): declarations of C library functions in src/game and include/game use the standard prototypes (double atan2(double, double), not float parameters; no void strlen()); tools/port_abi/libc_decls.py checks. Please declare them that way in new code. Byte-identical.

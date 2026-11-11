@@ -862,3 +862,22 @@ local names that the tool confuses across functions of one file
 iterators) or one-pointer struct returns (`RaceDigitLap.cpp`). Nothing else
 writes past its target. Not covered: addresses of struct members and of
 array elements.
+
+## Port-only fixes do not live in this repository (2026-11-11)
+
+naari3, 2026-11-11: host-neutral spellings (`TEXT_WORD`, `BITFIELDSn` and the
+like, one code path, same behaviour as the original) are fine here; code that
+exists only for mkgp2-pc is not. So branches that make another compiler's
+build behave differently from the original were taken out again and are
+carried by mkgp2-pc as patches applied to its copy of these sources:
+
+- the request 43 fix (`float normal[3]` in `ItemObject_GetGroundTypeAt.c` and
+  `ItemObjectManager_RenderImpl.c`); the sources are the original text again
+  and still write three floats through the address of an `int`;
+- the value for value-less `return;` in non-void functions
+  (`ItemHandler_Star.c`, `Item_OrbitAnchorKart.c`, `NokoNoko_CheckHitAndKill.c`,
+  `sprite/fn_801A1798.c`).
+
+The analysis above and the detectors in `tools/port_abi/` stay, since they
+describe the original code. Do not add `#ifndef __MWERKS__` branches that
+change behaviour; report the finding and let the port patch it.

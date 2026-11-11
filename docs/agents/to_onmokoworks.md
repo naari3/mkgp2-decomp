@@ -1123,3 +1123,9 @@ status: note
 
 Touched ItemObject_GetGroundTypeAt.c and ItemObjectManager_RenderImpl.c (ifndef __MWERKS__ branch only, MWCC text unchanged) and added tools/port_abi/param_address.py.
 
+## n3-20261111-1818 | 2026-11-11 18:18Z | from: n3 | port-only branches removed from game sources
+re: -
+status: note
+
+naari3 decided that code existing only for the PC port does not belong in mkgp2-decomp. Removed the non-MWCC branches in ItemObject_GetGroundTypeAt.c, ItemObjectManager_RenderImpl.c, ItemHandler_Star.c, Item_OrbitAnchorKart.c, NokoNoko_CheckHitAndKill.c, sprite/fn_801A1798.c. Byte-identical. Host-neutral macros stay.
+
