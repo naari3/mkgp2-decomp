@@ -5779,6 +5779,16 @@
     "@182": "extern:lbl_806D6FC4"
   },
   "src/game/ChallengeDemoTornado.cpp": {
+    "@152": "@etb_8000C268",
+    "@153": "@eti_8002495C",
+    "@194": "@etb_8000C270",
+    "@195": "@eti_80024968",
+    "@209": "@etb_8000C278",
+    "@210": "@eti_80024974",
+    "@241": "@etb_8000C280",
+    "@242": "@eti_80024980",
+    "mapPath": "lbl_803560F0",
+    "jointName": "lbl_80356108",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
     "__ct__8DemoRootFv": "GameMode_BaseInit",
