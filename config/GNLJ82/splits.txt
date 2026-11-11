@@ -6695,24 +6695,16 @@ game/ItemBox_8016CC04.cpp:
 	.data       start:0x80491100 end:0x80491128
 	.sdata      start:0x806CFA30 end:0x806CFA40
 
-game/autodata/sdata_806CFA40.c:
-	.sdata      start:0x806CFA40 end:0x806CFA78
-
-game/autodata/data_80491128.c:
-	.data       start:0x80491128 end:0x80491150
-
-game/autodata/rodata_8036D620.c:
-	.rodata     start:0x8036D620 end:0x8036D690
-
 game/Scene_8016D79C.cpp:
-	extab       start:0x80010530 end:0x80010548
-	extabindex  start:0x8002627C end:0x800262A0
-	.text       start:0x8016D79C end:0x8016D920
+	extab       start:0x80010530 end:0x8001057C
+	extabindex  start:0x8002627C end:0x800262AC
+	.text       start:0x8016D79C end:0x8016DA30
+	.rodata     start:0x8036D620 end:0x8036D690
+	.data       start:0x80491128 end:0x80491150
+	.sdata      start:0x806CFA40 end:0x806CFA50
 
-game/Scene_8016D920.cpp:
-	extab       start:0x80010548 end:0x8001057C
-	extabindex  start:0x800262A0 end:0x800262AC
-	.text       start:0x8016D920 end:0x8016DA30
+game/autodata/sdata_806CFA50.c:
+	.sdata      start:0x806CFA50 end:0x806CFA78
 
 game/DebrisBurst.cpp:
 	extab       start:0x8001057C end:0x800105C4

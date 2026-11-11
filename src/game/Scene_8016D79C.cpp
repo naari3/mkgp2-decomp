@@ -1,28 +1,40 @@
-/*
- * 0x8016D79C..0x8016D920: marker model draw over a JObj chain, exec, and
- * the deleting destructor (vtable MarkerChain_vtable_80491134, base vtable lbl_80490FE0).
+/* clKPCandle: course candle markers, 0x8016D79C..0x8016DA30.
+ * Deferred generation puts the definitions in reverse address order.
+ * RTTI, the base list and the virtual table are compiler generated.
  */
-
 #include "game/types/Vec3f.h"
-
 #include "game/types/HSD_JObj.h"
+#include "game/types/clNormal3D.h"
+#include "game/types/clMapEffectParts.h"
 
-#include "game/types/MarkerChain.h"
+struct MarkerSource {
+    char pad00[0x10];
+    HSD_JObj *chain;
+};
+
+struct clKPCandle : clMapEffectParts {
+    virtual ~clKPCandle();
+    virtual void Update();
+    virtual void Draw();
+    clNormal3D *model;
+    HSD_JObj *chain;
+    clKPCandle(MarkerSource *src);
+};
 
 extern "C" {
 extern char lbl_806D8B48[7];
 extern char lbl_806D8B50[5];
-extern char MarkerChain_vtable_80491134[];
-extern char lbl_80490FE0[];
-extern char lbl_8036D640[];
 void __assert(char *, int, char *);
 unsigned char fn_801379F0(Vec3f *, float);
 void Object_SetJObjPositionVec(void *, Vec3f *);
 void Object_RenderJObjTree(void *, int);
 void clNormal3D_Exec(void *);
-void Object_DtorWithGXSync(void *, int);
-void MemoryManager_TimedFree(void *);
 void DebugPrintf(const char *, ...);
+HSD_JObj *Archive_GetRootJObj(clNormal3D *);
+void HSD_JObjClearFlagsAll(HSD_JObj *, int);
+void HSD_JObjSetFlagsAll(HSD_JObj *, int);
+void clNormal3D_SetScale(clNormal3D *, int, float, float, float, float);
+void Object_SetJObjScaleXYZ(clNormal3D *, float, float, float);
 }
 
 static inline void HSD_JObjGetTranslation(HSD_JObj *jobj, Vec3f *out) {
@@ -34,46 +46,48 @@ static inline void HSD_JObjGetTranslation(HSD_JObj *jobj, Vec3f *out) {
     out->z = jobj->translate.z;
 }
 
-extern "C" {
+clKPCandle::clKPCandle(MarkerSource *src) {
+    DebugPrintf(" CreateMapEffect : clKPCandle\n");
+    model = 0;
+    chain = 0;
+    model = new clNormal3D("candlefire.dat", 0);
+    if (model == 0) {
+        return;
+    }
+    HSD_JObjClearFlagsAll(Archive_GetRootJObj(model), 0xE00);
+    HSD_JObjSetFlagsAll(Archive_GetRootJObj(model), 0x400);
+    clNormal3D_SetScale(model, 0, 0.0f, 1.0f, 0.0f, 0.0f);
+    Object_SetJObjScaleXYZ(model, 1.5f, 1.5f, 1.5f);
+    chain = src == 0 ? 0 : src->chain;
+}
 
-void fn_8016D79C(MarkerChain *self) {
+
+clKPCandle::~clKPCandle() {
+    if (model) {
+        delete model;
+    }
+    DebugPrintf(" DeleteMapEffect : clKPCandle\n");
+}
+
+void clKPCandle::Update() {
+    if (model) {
+        clNormal3D_Exec(model);
+    }
+}
+
+void clKPCandle::Draw() {
     HSD_JObj *jobj;
     Vec3f pos;
 
-    if (self->model == 0) {
+    if (model == 0) {
         return;
     }
-    for (jobj = self->chain; jobj != 0; jobj = jobj->next) {
+    for (jobj = chain; jobj != 0; jobj = jobj->next) {
         HSD_JObjGetTranslation(jobj, &pos);
         pos.y += 8.0f;
         if (fn_801379F0(&pos, 10.0f)) {
-            Object_SetJObjPositionVec(self->model, &pos);
-            Object_RenderJObjTree(self->model, 7);
+            Object_SetJObjPositionVec(model, &pos);
+            Object_RenderJObjTree(model, 7);
         }
     }
-}
-
-void fn_8016D864(MarkerChain *self) {
-    if (self->model) {
-        clNormal3D_Exec(self->model);
-    }
-}
-
-MarkerChain *fn_8016D890(MarkerChain *self, short flag) {
-    if (self) {
-        self->vtable = MarkerChain_vtable_80491134;
-        if (self->model) {
-            Object_DtorWithGXSync(self->model, 1);
-        }
-        DebugPrintf(lbl_8036D640);
-        if (self) {
-            self->vtable = lbl_80490FE0;
-        }
-        if (flag > 0) {
-            MemoryManager_TimedFree(self);
-        }
-    }
-    return self;
-}
-
 }

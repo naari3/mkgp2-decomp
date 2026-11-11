@@ -682,13 +682,6 @@
     "@384": "@etb_800104B4",
     "@385": "@eti_80026270"
   },
-  "src/game/Scene_8016D920.cpp": {
-    "__ct__11MarkerChainFP12MarkerSource": "fn_8016D920",
-    "__vt__16CourseMarkerBase": "lbl_80490FE0",
-    "__vt__11MarkerChain": "MarkerChain_vtable_80491134",
-    "__dt__16CourseMarkerBaseFv": "dtor_8016A270",
-    "__ct__10clNormal3DFPvi": "clNormal3D_Construct"
-  },
   "src/game/Scene_8016E1C0.cpp": {
     "__dt__8PropNodeFv": "fn_8016E424",
     "__vt__8PropNode": "lbl_804911F4"
@@ -17430,5 +17423,35 @@
     "@189": "@eti_80026F18",
     "@244": "@etb_80011EF4",
     "@245": "@eti_80026F24"
+  },
+  "src/game/Scene_8016D79C.cpp": {
+    "@53": "@etb_80010530",
+    "@54": "@eti_8002627C",
+    "@58": "@etb_80010538",
+    "@59": "@eti_80026288",
+    "@67": "@etb_80010540",
+    "@68": "@eti_80026294",
+    "@83": "@etb_80010548",
+    "@84": "@eti_800262A0",
+    "@39": "global:lbl_8036D620",
+    "@40": "global:sdata_806CF750_data_80491128",
+    "@41": "global:lbl_8036D62C",
+    "@66": "global:lbl_8036D640",
+    "@78": "global:lbl_8036D660",
+    "@79": "global:lbl_8036D680",
+    "__ct__10clKPCandleFP12MarkerSource": "fn_8016D920",
+    "__dt__10clKPCandleFv": "fn_8016D890",
+    "Update__10clKPCandleFv": "fn_8016D864",
+    "Draw__10clKPCandleFv": "fn_8016D79C",
+    "__vt__10clKPCandle": "MarkerChain_vtable_80491134",
+    "__RTTI__10clKPCandle": "data_80491100_data_806CFA48",
+    "__RTTI__16clMapEffectParts": "data_80491100_data_806CFA40",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "__dt__16clMapEffectPartsFv": "dtor_8016A270",
+    "Enable__16clMapEffectPartsFi": "fn_8016A26C",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__dt__10clNormal3DFv": "Object_DtorWithGXSync",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree"
   }
 }
