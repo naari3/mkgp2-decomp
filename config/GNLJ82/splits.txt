@@ -11679,9 +11679,6 @@ game/KartChoiceFinish.cpp:
 	.data       start:0x804EE5B0 end:0x804EE5D8
 	.sdata      start:0x806D07B0 end:0x806D07C0
 
-game/autodata/sdata_806D07C0.c:
-	.sdata      start:0x806D07C0 end:0x806D0878
-
 game/ItemSelectAllowed.c:
 	extab       start:0x8001CAAC end:0x8001CAB4
 	extabindex  start:0x8002AD70 end:0x8002AD7C
@@ -11787,9 +11784,6 @@ game/ItemSelectChildSpriteDraw.cpp:
 	.text       start:0x8023DCEC end:0x8023E154
 	.rodata     start:0x803E5878 end:0x803E5CE8
 
-game/autodata/rodata_803E5CE8.c:
-	.rodata     start:0x803E5CE8 end:0x803E5D38
-
 game/ItemSelectChildSpriteMethods.cpp:
 	extab       start:0x8001CBDC end:0x8001CBFC
 	extabindex  start:0x8002AEC0 end:0x8002AEF0
@@ -11800,9 +11794,6 @@ game/ItemSelectChildSpriteUpdate.cpp:
 	extabindex  start:0x8002AEF0 end:0x8002AEFC
 	.text       start:0x8023E324 end:0x8023E808
 	.data       start:0x804EE618 end:0x804EE638
-
-game/autodata/data_804EE638.c:
-	.data       start:0x804EE638 end:0x804EE65C
 
 game/ItemSelectChildSpriteDtor.cpp:
 	extab       start:0x8001CC04 end:0x8001CC9C
@@ -11854,32 +11845,19 @@ game/CardSlotFlag.cpp:
 	extabindex  start:0x8002AF80 end:0x8002AF8C
 	.text       start:0x8023F714 end:0x8023F76C
 
-game/LapDispControls.c:
-	.text       start:0x8023F76C end:0x8023F790
+game/LapDispControls.cpp:
+	extab       start:0x8001CE24 end:0x8001CEE4
+	extabindex  start:0x8002AF8C end:0x8002AFD4
+	.text       start:0x8023F76C end:0x8023FE74
+	.rodata     start:0x803E5CE8 end:0x803E5D35
+	.data       start:0x804EE638 end:0x804EE67C
+	.sdata      start:0x806D07C0 end:0x806D07D0
 
-game/LapDispUpdate.cpp:
-	extab       start:0x8001CE24 end:0x8001CE2C
-	extabindex  start:0x8002AF8C end:0x8002AF98
-	.text       start:0x8023F790 end:0x8023FAA0
-	.data       start:0x804EE65C end:0x804EE67C
+game/autodata/sdata_806D07D0.c:
+	.sdata      start:0x806D07D0 end:0x806D0878
 
 game/autodata/data_804EE680.c:
 	.data       start:0x804EE680 end:0x804EE72C
-
-game/LapDisp_SetTotalLaps.c:
-	extab       start:0x8001CE2C end:0x8001CE34
-	extabindex  start:0x8002AF98 end:0x8002AFA4
-	.text       start:0x8023FAA0 end:0x8023FAEC
-
-game/LapDisp_SetCurrentLap.c:
-	extab       start:0x8001CE34 end:0x8001CE3C
-	extabindex  start:0x8002AFA4 end:0x8002AFB0
-	.text       start:0x8023FAEC end:0x8023FB4C
-
-game/CountdownOwner.cpp:
-	extab       start:0x8001CE3C end:0x8001CEE4
-	extabindex  start:0x8002AFB0 end:0x8002AFD4
-	.text       start:0x8023FB4C end:0x8023FE74
 
 game/TaskBucketsCast.cpp:
 	extab       start:0x8001CEE4 end:0x8001CEEC

@@ -7011,20 +7011,6 @@
   "src/game/FlowCardCheck.cpp": {
     "Draw__15clFlowCardCheckFv": "fn_80232884"
   },
-  "src/game/CountdownOwner.cpp": {
-    "__ct__14CountdownOwnerFii": "fn_8023FCAC",
-    "__dt__14CountdownOwnerFv": "fn_8023FBA8",
-    "__vt__14CountdownOwner": "CountdownOwner_vtable_804EE644",
-    "__vt__13CountdownRoot": "lbl_804EDB28",
-    "__dt__13CountdownRootFv": "dtor_8021617C",
-    "__vt__9FlowFader": "FlowFader_vtable_80419DC8",
-    "__vt__10FlowFaderF": "lbl_80419DE0",
-    "__ct__7ResCtrlFv": "ResCtrl_Init",
-    "__dt__7ResCtrlFv": "dtor_80082960",
-    "Set__10FlowFaderFFffs": "fn_8020A734",
-    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
-    "__dt__10FlowFaderFFv": "TweenInterp_Dtor"
-  },
   "src/game/SpritePairOwnerLife.cpp": {
     "__ct__15SpritePairOwnerFiiiii": "fn_8023D080",
     "__dt__15SpritePairOwnerFv": "fn_8023CFE0",
@@ -18208,5 +18194,42 @@
     "@57": "lbl_803EF848",
     "@59": "lbl_803EF854",
     "@58": "lbl_804EEAE0"
+  },
+  "src/game/LapDispControls.cpp": {
+    "@208": "@etb_8001CE24",
+    "@209": "@eti_8002AF8C",
+    "@215": "@etb_8001CE2C",
+    "@216": "@eti_8002AF98",
+    "@226": "@etb_8001CE34",
+    "@227": "@eti_8002AFA4",
+    "@230": "@etb_8001CE3C",
+    "@231": "@eti_8002AFB0",
+    "@263": "@etb_8001CE54",
+    "@264": "@eti_8002AFBC",
+    "@292": "@etb_8001CE90",
+    "@293": "@eti_8002AFC8",
+    "__vt__16clCDispInterface": "lbl_804EDB28",
+    "@127": "lbl_803E5D18",
+    "@129": "lbl_803E5D24",
+    "@128": "sdata_806D0728_data_804EE638",
+    "@207": "jumptable_804EE65C",
+    "__ct__9clLapDispFii": "fn_8023FCAC",
+    "__dt__9clLapDispFv": "fn_8023FBA8",
+    "__vt__9clLapDisp": "CountdownOwner_vtable_804EE644",
+    "__dt__16clCDispInterfaceFv": "dtor_8021617C",
+    "__vt__9FlowFader": "FlowFader_vtable_80419DC8",
+    "__vt__10FlowFaderF": "lbl_80419DE0",
+    "__ct__7ResCtrlFv": "ResCtrl_Init",
+    "__dt__7ResCtrlFv": "dtor_80082960",
+    "Set__10FlowFaderFFffs": "fn_8020A734",
+    "__dt__21VHolder<10FlowFaderF>Fv": "dtor_801F4A80",
+    "__dt__10FlowFaderFFv": "TweenInterp_Dtor",
+    "__RTTI__9clLapDisp": "data_804EE638_data_806D07C8",
+    "__RTTI__16clCDispInterface": "data_804EE638_data_806D07C0",
+    "Update__9clLapDispFv": "fn_8023F790",
+    "IsDone__9clLapDispFv": "fn_8023F784",
+    "SetTimeout__9clLapDispFi": "fn_8023F76C",
+    "SetTotalLaps__9clLapDispFi": "LapDisp_SetTotalLaps",
+    "SetCurrentLap__9clLapDispFi": "LapDisp_SetCurrentLap"
   }
 }

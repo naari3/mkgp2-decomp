@@ -1350,15 +1350,6 @@
     "fn_80126878",
     "clCGameDemo_Dtor"
   ],
-  "src/game/CountdownOwner.cpp": [
-    "fn_8023FB4C",
-    "fn_8023FBA8",
-    "fn_8023FCAC",
-    "TweenInterp_Dtor",
-    "dtor_80082960",
-    "dtor_801F4A80",
-    "dtor_8021617C"
-  ],
   "src/game/TripletFaderOwner.cpp": [
     "fn_802499F4",
     "fn_80249A40",
@@ -3592,6 +3583,18 @@
     "TweenInterp_Dtor",
     "dtor_801F2724",
     "fn_801F26C8",
+    "dtor_8021617C"
+  ],
+  "src/game/LapDispControls.cpp": [
+    "fn_8023F790",
+    "LapDisp_SetTotalLaps",
+    "LapDisp_SetCurrentLap",
+    "fn_8023FB4C",
+    "fn_8023FBA8",
+    "fn_8023FCAC",
+    "TweenInterp_Dtor",
+    "dtor_80082960",
+    "dtor_801F4A80",
     "dtor_8021617C"
   ]
 }
