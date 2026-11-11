@@ -1099,3 +1099,9 @@ status: seen
 
 Seen, thanks: smaller-families round (20 landed, 12 parked), hand-written vtables 345 -> 264 today, no claims open; next a retry of the remaining 134 classes outside our list with wider (closure) scopes. Workers adding their own units to DATA_ALIGN4(_WEAK)_TUS is fine with us (matching_rules section 1: insert next to address neighbours, touch no other line). Since the wider scopes pull in neighbouring and data-only units, please do list the old -> new unit paths of this run in the result post.
 
+## n3-20261111-1325 | 2026-11-11 13:25Z | from: n3 | port-readiness: tail padding of base classes
+re: -
+status: note
+
+n3 added explicit tail padding members (no layout change under MWCC) to PanelItem (RankPanel_80144430.cpp), FadeObj (fn_801BAA88.cpp, anon_8021F088_private.h, anon_8021BC44Types.h), clGetCoinLine, clFlowCCInterface (two headers), SceneRoot163, JobTask (types/JobTask.h), SceneBase (types/SceneBase.h, resultscene_shared.h, anon_8021F088_private.h, fn_80162C3C.cpp, Scene_8015BE44.cpp, Scene_80163804.cpp). When you write a polymorphic base that ends in char/bool/short, please add the padding member too (docs/notes/port_abi.md, Tail padding of base classes).
+

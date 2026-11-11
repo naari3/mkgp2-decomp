@@ -7,6 +7,7 @@ struct JobTask {
     virtual void Update();
     virtual void Draw();
     unsigned char done;
+    unsigned char pad5[3]; /* tail padding, named so a derived class cannot use it */
 };
 
 #endif /* GAME_TYPES_JOBTASK_H */

@@ -16,6 +16,7 @@ struct SceneBase {
     SceneBase() { done = 0; }
     virtual ~SceneBase();
     unsigned char done;
+    unsigned char pad5[3]; /* tail padding, named so a derived class cannot use it */
 };
 
 struct Scene80162C3C : SceneBase {

@@ -15,6 +15,7 @@ struct SceneBase {
     SceneBase() { done = 0; }
 
     unsigned char done;
+    unsigned char pad5[3]; /* tail padding, named so a derived class cannot use it */
 };
 
 struct CourseLoadScene : SceneBase {

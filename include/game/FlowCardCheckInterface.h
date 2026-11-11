@@ -22,6 +22,7 @@ public:
     int inTimer;
     int outTimer;
     unsigned char active;
+    unsigned char pad19[3]; /* tail padding, named so a derived class cannot use it */
 
     void Open(int t) {
         inTimer = t;

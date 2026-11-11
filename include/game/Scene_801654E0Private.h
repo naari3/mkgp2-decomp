@@ -31,6 +31,7 @@ extern "C" DebugEntry163 *fn_8013BE98(int);
 struct SceneRoot163 {
     virtual ~SceneRoot163();
     unsigned char done;
+    unsigned char pad5[3]; /* tail padding, named so a derived class cannot use it */
     SceneRoot163() { done = 0; }
 };
 struct PanelRoot163 {

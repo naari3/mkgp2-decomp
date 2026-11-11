@@ -738,3 +738,23 @@ constant offset and land in the objects that follow it (strings, tables):
 "object addressed from another object's name plus an offset" case of
 shared_data.md: right only while the objects keep the original order and
 spacing.
+
+## Tail padding of base classes (request 40, 2026-11-11)
+
+MWCC starts the members of a derived class at `sizeof(base)`. clang (Itanium
+C++ ABI) starts them at the end of the base's data when the base is not a
+plain struct (virtual functions, a constructor), so a base ending in one or
+two bytes loses its padding to the first small member of the derived class:
+`PanelIcon::resId` sat at 0x86 on the host and at 0x88 in the game, and code
+that fills the object through a flat view wrote the wrong place.
+
+The padding is now a member of the base (`unsigned char pad86[2];` and the
+like; nothing changes for MWCC): `PanelItem` (RankPanel_80144430.cpp),
+`FadeObj` (fn_801BAA88.cpp, anon_8021F088_private.h, anon_8021BC44Types.h),
+`clGetCoinLine`, `clFlowCCInterface` (both headers), `SceneRoot163`, `JobTask`
+(types/JobTask.h) and the `SceneBase` copies that end in `done`.
+
+`tools/port_abi/tail_padding.py` lists the cases over every game .cpp from
+clang's record layouts; it reports none after this change. A new class with
+virtual functions that ends in a `char`, `bool` or `short` and is derived from
+needs the same member.

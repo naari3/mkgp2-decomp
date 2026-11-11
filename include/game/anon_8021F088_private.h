@@ -440,6 +440,7 @@ struct FadeObj {
     FadeTrack tracks[5];
     unsigned char shown;
     unsigned char flush;
+    unsigned char pad86[2]; /* tail padding, named so a derived class cannot use it */
     FadeObj() : sprite(0), delay(0) {
         shown = 0;
         flush = 0;
@@ -522,6 +523,7 @@ struct clGetCoinLine : FadeObj {
     int timer;
     int flashTimer;
     unsigned char flash;
+    unsigned char pad4E5[3]; /* tail padding, named so a derived class cannot use it */
     clGetCoinLine(const char *label, int n, float y, Model *m);
 #ifdef COIN_LINE_EXTERNAL_VTABLE
     virtual void _key();
@@ -827,6 +829,7 @@ struct SceneBase {
     virtual void Update();
     virtual void Draw();
     unsigned char done;
+    unsigned char pad5[3]; /* tail padding, named so a derived class cannot use it */
     SceneBase() : done(false) {}
 };
 

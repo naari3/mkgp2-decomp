@@ -58,6 +58,7 @@ public:
     Tween tw[5];
     unsigned char active;
     unsigned char flag85;
+    unsigned char pad86[2]; /* tail padding, named so a derived class cannot use it */
 };
 
 /* resource label (vtable lbl_8048EF20) */
