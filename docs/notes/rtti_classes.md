@@ -292,3 +292,8 @@ clCSSceneCardBrowse converted in game/SceneList_80157EA8.cpp, merging game/Scene
 Source: Codex worker r4_c17_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 clResultType01 (HudResultFlow.cpp) is a deferred multiple-inheritance case. A public clSceneInterface ancestor and a private 8-byte polymorphic list-owner base reproduce its primary/secondary table layout without adding a list-owner RTTI record. Inherited clResultInterface ctor/dtor/Update/Draw can stay external under per-TU bridges. Reverse definitions emit all six functions, including the secondary destructor thunk, exactly; existing EH ordering remains valid. Remove the old DATA_ALIGN4_TUS opt-in when expanding the jump-table-only range backwards to 8-aligned class data. These are object/full-link observations, not a compiler-source trace.
+
+## r6_c12_20261111
+Source: Codex worker r6_c12_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+clTitleDisp2 converted in game/TitleNameHudUpdate.cpp: five code units merged, canonical clCDispInterface base unchanged, deferred/noauto reverse definitions and compiler RTTI/vtable 804F202C. Eight functions/2252 bytes and all six owned sections 100%; clang OK and full DOL SHA-1 unchanged. Removed obsolete DATA_ALIGN4_TUS entry when extending the jump-table range backward to 8-aligned class data. This follows existing clMnCardT02/clResultType01 rules; no new compiler rule.

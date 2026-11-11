@@ -3597,5 +3597,18 @@
     "dtor_80082960",
     "dtor_801F4A80",
     "dtor_8021617C"
+  ],
+  "src/game/TitleNameHudUpdate.cpp": [
+    "fn_802529E4",
+    "fn_80252D48",
+    "fn_80252D6C",
+    "fn_80252D90",
+    "fn_80252DDC",
+    "fn_80252EE4",
+    "TweenInterp_Dtor",
+    "dtor_800869D0",
+    "dtor_80082960",
+    "dtor_801F4A80",
+    "dtor_8021617C"
   ]
 }

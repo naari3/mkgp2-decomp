@@ -12440,13 +12440,13 @@ game/RacePopups.cpp:
 	.sdata      start:0x806D09F0 end:0x806D0A10
 
 game/autodata/sdata_806D0A10.c:
-	.sdata      start:0x806D0A10 end:0x806D0A98
+	.sdata      start:0x806D0A10 end:0x806D0A20
 
 game/autodata/data_804EF1A8.c:
 	.data       start:0x804EF1A8 end:0x804EF1CC
 
 game/autodata/rodata_803F10B0.c:
-	.rodata     start:0x803F10B0 end:0x803F141C
+	.rodata     start:0x803F10B0 end:0x803F1170
 
 game/SpeedHud.cpp:
 	extab       start:0x8001EE38 end:0x8001EF8C
@@ -12455,36 +12455,24 @@ game/SpeedHud.cpp:
 	.data       start:0x804EF1CC end:0x804EF1EC
 
 game/autodata/data_804EF1F0.c:
-	.data       start:0x804EF1F0 end:0x804F2044
+	.data       start:0x804EF1F0 end:0x804F2020
 
 game/TitleNameHudUpdate.cpp:
-	extab       start:0x8001EF8C end:0x8001EF94
-	extabindex  start:0x8002B940 end:0x8002B94C
-	.text       start:0x802529C8 end:0x80252D48
-	.data       start:0x804F2044 end:0x804F2060
+	extab       start:0x8001EF8C end:0x8001F078
+	extabindex  start:0x8002B940 end:0x8002B988
+	.text       start:0x802529C8 end:0x80253294
+	.rodata     start:0x803F1170 end:0x803F11A0
+	.data       start:0x804F2020 end:0x804F2060
+	.sdata      start:0x806D0A20 end:0x806D0A30
+
+game/autodata/sdata_806D0A30.c:
+	.sdata      start:0x806D0A30 end:0x806D0A98
 
 game/autodata/data_804F2060.c:
 	.data       start:0x804F2060 end:0x804F20B4
 
-game/fn_80252D48.c:
-	extab       start:0x8001EF94 end:0x8001EF9C
-	extabindex  start:0x8002B94C end:0x8002B958
-	.text       start:0x80252D48 end:0x80252D6C
-
-game/fn_80252D6C.c:
-	extab       start:0x8001EF9C end:0x8001EFA4
-	extabindex  start:0x8002B958 end:0x8002B964
-	.text       start:0x80252D6C end:0x80252D90
-
-game/TitleNameHud.cpp:
-	extab       start:0x8001EFA4 end:0x8001EFF8
-	extabindex  start:0x8002B964 end:0x8002B97C
-	.text       start:0x80252D90 end:0x80252EE4
-
-game/TitleNameHud_nm1.cpp:
-	extab       start:0x8001EFF8 end:0x8001F078
-	extabindex  start:0x8002B97C end:0x8002B988
-	.text       start:0x80252EE4 end:0x80253294
+game/autodata/rodata_803F11A0.c:
+	.rodata     start:0x803F11A0 end:0x803F141C
 
 game/HudManager.cpp:
 	extab       start:0x8001F078 end:0x8001F090
