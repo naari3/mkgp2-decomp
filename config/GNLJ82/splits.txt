@@ -7570,37 +7570,25 @@ game/objview/fn_8018CD68.cpp:
 	.data       start:0x80495DD0 end:0x80495DF8
 	.sdata      start:0x806CFBF8 end:0x806CFC08
 
-game/autodata/sdata_806CFC08.c:
-	.sdata      start:0x806CFC08 end:0x806CFCAC
+game/objview/fn_8018D068.cpp:
+	extab       start:0x80011EDC end:0x80011F20
+	extabindex  start:0x80026F00 end:0x80026F30
+	.text       start:0x8018D068 end:0x8018D638
+	.rodata     start:0x80377EF0 end:0x80377F60
+	.data       start:0x80495DF8 end:0x80495E30
+	.sdata      start:0x806CFC08 end:0x806CFC18
+
+game/autodata/sdata_806CFC18.c:
+	.sdata      start:0x806CFC18 end:0x806CFCAC
 
 game/autodata/sdata_806CFCB0.c:
 	.sdata      start:0x806CFCB0 end:0x806CFDF0
 
-game/autodata/data_80495DF8.c:
-	.data       start:0x80495DF8 end:0x80495F20
+game/autodata/data_80495E30.c:
+	.data       start:0x80495E30 end:0x80495F20
 
-game/autodata/rodata_80377EF0.c:
-	.rodata     start:0x80377EF0 end:0x80377F6C
-
-game/objview/fn_8018D068.c:
-	extab       start:0x80011EDC end:0x80011EE4
-	extabindex  start:0x80026F00 end:0x80026F0C
-	.text       start:0x8018D068 end:0x8018D0F4
-
-game/objview/fn_8018D0F4.c:
-	extab       start:0x80011EE4 end:0x80011EEC
-	extabindex  start:0x80026F0C end:0x80026F18
-	.text       start:0x8018D0F4 end:0x8018D320
-
-game/objview/fn_8018D320.c:
-	extab       start:0x80011EEC end:0x80011EF4
-	extabindex  start:0x80026F18 end:0x80026F24
-	.text       start:0x8018D320 end:0x8018D3E0
-
-game/objview/fn_8018D3E0.cpp:
-	extab       start:0x80011EF4 end:0x80011F20
-	extabindex  start:0x80026F24 end:0x80026F30
-	.text       start:0x8018D3E0 end:0x8018D638
+game/autodata/rodata_80377F60.c:
+	.rodata     start:0x80377F60 end:0x80377F6C
 
 game/misc3d/fn_8018D638.c:
 	.text       start:0x8018D638 end:0x8018D64C

@@ -11664,15 +11664,6 @@
     "@145": "@eti_80028EA4",
     "@155": "@eti_80028EB0"
   },
-  "src/game/objview/fn_8018D3E0.cpp": {
-    "__ct__7S22ListFv": "fn_8018D3E0",
-    "__vt__7S22List": "S22List_vtable_80495E18",
-    "__vt__7S22Base": "lbl_80490FE0",
-    "__dt__7S22BaseFv": "dtor_8016A270",
-    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
-    "@59": "@etb_80011EF4",
-    "@60": "@eti_80026F24"
-  },
   "src/game/CardCreditFlow.cpp": {
     "__ct__14CardCreditFlowFii": "fn_80242C44",
     "__vt__14CardCreditFlow": "CardCreditFlow_vtable_804EE714",
@@ -17351,5 +17342,37 @@
     "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/objview/fn_8018D068.cpp": {
+    "__ct__9clPCGrassFv": "fn_8018D3E0",
+    "__dt__9clPCGrassFv": "fn_8018D320",
+    "Update__9clPCGrassFv": "fn_8018D0F4",
+    "Draw__9clPCGrassFv": "fn_8018D068",
+    "__vt__9clPCGrass": "S22List_vtable_80495E18",
+    "__RTTI__9clPCGrass": "data_80491988_data_806CFC10",
+    "__RTTI__16clMapEffectParts": "data_80491988_data_806CFC08",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "__dt__16clMapEffectPartsFv": "dtor_8016A270",
+    "Update__16clMapEffectPartsFv": "fn_8016A2B8",
+    "Draw__16clMapEffectPartsFv": "fn_8016A2BC",
+    "Enable__16clMapEffectPartsFi": "fn_8016A26C",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "grassFiles": "lbl_80495DF8",
+    "grassA": "lbl_80377EF0",
+    "grassB": "lbl_80377F00",
+    "grassC": "lbl_80377F10",
+    "grassD": "lbl_80377F20",
+    "grassE": "lbl_80377F30",
+    "@126": "lbl_80377F40",
+    "@128": "lbl_80377F4C",
+    "@127": "data_80491988_data_80495E0C",
+    "@137": "@etb_80011EDC",
+    "@138": "@eti_80026F00",
+    "@178": "@etb_80011EE4",
+    "@179": "@eti_80026F0C",
+    "@188": "@etb_80011EEC",
+    "@189": "@eti_80026F18",
+    "@244": "@etb_80011EF4",
+    "@245": "@eti_80026F24"
   }
 }
