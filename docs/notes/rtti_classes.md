@@ -252,3 +252,8 @@ class's first non-inline virtual function to own the class data, which often
 means merging units first, and the constructors and destructors written as
 real ones. That is matching-grade work per class, helped by the table but
 not mechanical.
+
+## r1_c8_20261111
+Source: Codex worker r1_c8_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+Added working-note paragraph on vtable symbol sizes including inter-unit alignment, lens successful size correction and camera following-unit alignment blocker.

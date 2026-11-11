@@ -11425,7 +11425,7 @@ game/anon_80226670.cpp:
 	.sdata      start:0x806D0530 end:0x806D0540
 
 game/autodata/sdata_806D0540.c:
-	.sdata      start:0x806D0540 end:0x806D0620
+	.sdata      start:0x806D0540 end:0x806D05B0
 
 game/autodata/rodata_803C6ED0.c:
 	.rodata     start:0x803C6ED0 end:0x803D0300
@@ -11472,7 +11472,7 @@ game/DNBress_nm3.cpp:
 	.data       start:0x804EDF80 end:0x804EDFF0
 
 game/autodata/data_804EE008.c:
-	.data       start:0x804EE008 end:0x804EE0E0
+	.data       start:0x804EE008 end:0x804EE090
 
 game/DNBressInit.c:
 	extab       start:0x8001BB70 end:0x8001BB78
@@ -11510,6 +11510,14 @@ game/DNLensflare.cpp:
 	extabindex  start:0x8002A77C end:0x8002A7AC
 	.text       start:0x80228FB0 end:0x8022929C
 	.rodata     start:0x803D08A8 end:0x803D08F0
+	.data       start:0x804EE090 end:0x804EE0B8
+	.sdata      start:0x806D05B0 end:0x806D05C0
+
+game/autodata/sdata_806D05C0.c:
+	.sdata      start:0x806D05C0 end:0x806D0620
+
+game/autodata/data_804EE0B8.c:
+	.data       start:0x804EE0B8 end:0x804EE0E0
 
 game/DNStartCamera.cpp:
 	extab       start:0x8001BCC8 end:0x8001BCE0
