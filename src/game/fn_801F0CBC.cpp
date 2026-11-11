@@ -1,6 +1,5 @@
 #include "game/types/pmf.h"
-#include "game/Menu801F0CC0_private.h"
-#include "game/fn_801F27B4_private.h"
+#include "game/types/clEzMenu.h"
 
 /* Menu layout coordinates (separate objects: the menu methods reach them through the
  * section anchor, base + object offset, then + element offset), followed by two
@@ -80,43 +79,41 @@ static MenuRect801F menuLevelIcon[6] = {
 };
 /* MWCC emits the default ptmf records and the .ctors initializer. */
 static MenuMethod801F liveA[14] = {
-    PMF_OF(&MenuReceiver801F::fn_801F2400),
-    PMF_OF(&MenuReceiver801F::fn_801F2370),
-    PMF_OF(&MenuReceiver801F::fn_801F21C8),
-    PMF_OF(&MenuReceiver801F::fn_801F20A0),
-    PMF_OF(&MenuReceiver801F::fn_801F1EE0),
-    PMF_OF(&MenuReceiver801F::fn_801F1C58),
-    PMF_OF(&MenuReceiver801F::fn_801F1AC8),
-    PMF_OF(&MenuReceiver801F::fn_801F19C8),
-    PMF_OF(&MenuReceiver801F::fn_801F1664),
-    PMF_OF(&MenuReceiver801F::fn_801F140C),
-    PMF_OF(&MenuReceiver801F::fn_801F1244),
-    PMF_OF(&MenuReceiver801F::fn_801F0ECC),
-    PMF_OF(&MenuReceiver801F::fn_801F0D04),
-    PMF_OF(&MenuReceiver801F::fn_801F0CC0)
+    PMF_OF(&clEzMenu::fn_801F2400),
+    PMF_OF(&clEzMenu::fn_801F2370),
+    PMF_OF(&clEzMenu::fn_801F21C8),
+    PMF_OF(&clEzMenu::fn_801F20A0),
+    PMF_OF(&clEzMenu::fn_801F1EE0),
+    PMF_OF(&clEzMenu::fn_801F1C58),
+    PMF_OF(&clEzMenu::fn_801F1AC8),
+    PMF_OF(&clEzMenu::fn_801F19C8),
+    PMF_OF(&clEzMenu::fn_801F1664),
+    PMF_OF(&clEzMenu::fn_801F140C),
+    PMF_OF(&clEzMenu::fn_801F1244),
+    PMF_OF(&clEzMenu::fn_801F0ECC),
+    PMF_OF(&clEzMenu::fn_801F0D04),
+    PMF_OF(&clEzMenu::fn_801F0CC0)
 };
 static MenuMethod801F liveB[14] = {
-    PMF_OF(&MenuReceiver801F::fn_801F230C),
-    PMF_OF(&MenuReceiver801F::fn_801F230C),
-    PMF_OF(&MenuReceiver801F::fn_801F1FE4),
-    PMF_OF(&MenuReceiver801F::fn_801F1FE4),
-    PMF_OF(&MenuReceiver801F::fn_801F1BC8),
-    PMF_OF(&MenuReceiver801F::fn_801F1BC8),
-    PMF_OF(&MenuReceiver801F::fn_801F190C),
-    PMF_OF(&MenuReceiver801F::fn_801F190C),
-    PMF_OF(&MenuReceiver801F::fn_801F15D4),
-    PMF_OF(&MenuReceiver801F::fn_801F115C),
-    PMF_OF(&MenuReceiver801F::fn_801F115C),
-    PMF_OF(&MenuReceiver801F::fn_801F0E3C),
-    PMF_OF(&MenuReceiver801F::fn_801F0E3C),
-    PMF_OF(&MenuReceiver801F::fn_801F0CBC)
+    PMF_OF(&clEzMenu::fn_801F230C),
+    PMF_OF(&clEzMenu::fn_801F230C),
+    PMF_OF(&clEzMenu::fn_801F1FE4),
+    PMF_OF(&clEzMenu::fn_801F1FE4),
+    PMF_OF(&clEzMenu::fn_801F1BC8),
+    PMF_OF(&clEzMenu::fn_801F1BC8),
+    PMF_OF(&clEzMenu::fn_801F190C),
+    PMF_OF(&clEzMenu::fn_801F190C),
+    PMF_OF(&clEzMenu::fn_801F15D4),
+    PMF_OF(&clEzMenu::fn_801F115C),
+    PMF_OF(&clEzMenu::fn_801F115C),
+    PMF_OF(&clEzMenu::fn_801F0E3C),
+    PMF_OF(&clEzMenu::fn_801F0E3C),
+    PMF_OF(&clEzMenu::fn_801F0CBC)
 };
 #ifndef __MWERKS__
-/* Menu801F0CC0_private.h declares these two tables for this unit as
- * lbl_804E5050 / lbl_804E51A0 with Menu801F as the class; the build gives
- * the statics those names after compiling (tools/extab_user_renames.json). */
-#define lbl_804E5050 ((Menu801FMethod *)liveA)
-#define lbl_804E51A0 ((Menu801FMethod *)liveB)
+/* The build gives the two static PMF tables their shared legacy names. */
+#define lbl_804E5050 ((clEzMenuMethod *)liveA)
+#define lbl_804E51A0 ((clEzMenuMethod *)liveB)
 #endif
 
 static inline unsigned int MenuRGBA(unsigned int r, unsigned int g, unsigned int b, unsigned int a) {
@@ -131,16 +128,16 @@ static inline unsigned int WithAlpha(unsigned int color, unsigned char alpha) {
 
 /* Loops in a static inline: only an inlined loop gets the target's
  * `mr rOff, rI` strength-reduction init (see fn_801F230C). */
-static inline void SetColorRange(Menu801F *self, int from, int to, unsigned int c) {
+static inline void SetColorRange(clEzMenu *self, int from, int to, unsigned int c) {
     for (int i = from; i < to; i++) fn_801F6E98(&self->sprites[i], c);
 }
-static inline void SetAlphaRange(Menu801F *self, int from, int to, unsigned char alpha) {
+static inline void SetAlphaRange(clEzMenu *self, int from, int to, unsigned char alpha) {
     int i;
     unsigned int c = 0xFFFFFF00 | alpha;
     for (i = from; i < to; ++i) fn_801F6E98(&self->sprites[i], c);
 }
 
-static inline void SetAlpha2(Menu801F *self, int from, int to, int nextFrom, int nextTo, unsigned char alpha) {
+static inline void SetAlpha2(clEzMenu *self, int from, int to, int nextFrom, int nextTo, unsigned char alpha) {
     unsigned int c;
     int offset;
     int i;
@@ -153,17 +150,17 @@ static inline void SetAlpha2(Menu801F *self, int from, int to, int nextFrom, int
     for (; i < nextTo; ++i, offset += sizeof(MenuSprite801F)) fn_801F6E98((MenuSprite801F *)((char *)self->sprites + offset), c);
 }
 
-static inline void DrawRange(Menu801F *self, int from, int to, float z) {
+static inline void DrawRange(clEzMenu *self, int from, int to, float z) {
     for (int i = from; i < to; i++) fn_801F7B74(self->context, &self->sprites[i], z);
 }
-static inline void SetColor2(Menu801F *self, int a, int b, int x, int y, unsigned int c) {
+static inline void SetColor2(clEzMenu *self, int a, int b, int x, int y, unsigned int c) {
     SetColorRange(self, a, b, c);
     SetColorRange(self, x, y, c);
 }
 
 
 // Shared option artwork; inlined by both input handlers.
-static inline void SetOption(Menu801F *self) {
+static inline void SetOption(clEzMenu *self) {
     if (self->option == 0) {
         fn_801F6ED0(&self->sprites[20], lbl_806DA568, lbl_806DA568);
         fn_801F6ED0(&self->sprites[21], lbl_806DA56C, lbl_806DA56C);
@@ -179,14 +176,18 @@ static inline void SetOption(Menu801F *self) {
     }
 }
 
-extern "C" void fn_801F0CC0(Menu801F *self) {
-    if (!self->active) { clCGameDemoWC_StubBlr_800adda0(self); clCGameDemoWC_StubBlr_800adda4(); }
-    self->active = 1;
+void clEzMenu::fn_801F0CBC() {}
+
+void clEzMenu::fn_801F0CC0() {
+    clEzMenu *self = this;
+    if (!self->done) { clCGameDemoWC_StubBlr_800adda0(self); clCGameDemoWC_StubBlr_800adda4(); }
+    self->done = 1;
 }
 
 /* The target indexes sprites[i] without strength reduction in this function. */
 #pragma opt_strength_reduction off
-extern "C" void fn_801F0D04(Menu801F *self) {
+void clEzMenu::fn_801F0D04() {
+    clEzMenu *self = this;
     unsigned int v = fn_8020A788(self->fade.p);
     unsigned int c = MenuRGBA(v, v, v, 255);
     for (int i = 26; i < 32; ++i) fn_801F6E98(&self->sprites[i], c);
@@ -200,14 +201,16 @@ extern "C" void fn_801F0D04(Menu801F *self) {
 }
 #pragma opt_strength_reduction reset
 
-extern "C" void fn_801F0E3C(Menu801F *self) {
+void clEzMenu::fn_801F0E3C() {
+    clEzMenu *self = this;
     int offset;
     int i;
     DrawRange(self, 26, 32, lbl_806DA550);
     DrawRange(self, 32, 35, lbl_806DA550);
 }
 
-extern "C" void fn_801F0ECC(Menu801F *self) {
+void clEzMenu::fn_801F0ECC() {
+    clEzMenu *self = this;
     int offset;
     int i;
     InputPlayer *input = InputMgr_GetPlayer(GetInputManager(), 0);
@@ -233,7 +236,8 @@ extern "C" void fn_801F0ECC(Menu801F *self) {
     }
 }
 
-extern "C" void fn_801F115C(Menu801F *self) {
+void clEzMenu::fn_801F115C() {
+    clEzMenu *self = this;
     int offset;
     int i;
     DrawRange(self, 6, 12, lbl_806DA550);
@@ -242,7 +246,8 @@ extern "C" void fn_801F115C(Menu801F *self) {
     DrawRange(self, 32, 35, lbl_806DA550);
 }
 
-extern "C" void fn_801F1244(Menu801F *self) {
+void clEzMenu::fn_801F1244() {
+    clEzMenu *self = this;
     unsigned int c;
     unsigned int c2;
     int offset;
@@ -281,7 +286,8 @@ extern "C" void fn_801F1244(Menu801F *self) {
     }
 }
 
-extern "C" void fn_801F140C(Menu801F *self) {
+void clEzMenu::fn_801F140C() {
+    clEzMenu *self = this;
     unsigned int c;
     unsigned int c2;
     int offset;
@@ -320,14 +326,16 @@ extern "C" void fn_801F140C(Menu801F *self) {
     }
 }
 
-extern "C" void fn_801F15D4(Menu801F *self) {
+void clEzMenu::fn_801F15D4() {
+    clEzMenu *self = this;
     int offset;
     int i;
     DrawRange(self, 6, 12, lbl_806DA550);
     DrawRange(self, 19, 26, lbl_806DA550);
 }
 
-extern "C" void fn_801F1664(Menu801F *self) {
+void clEzMenu::fn_801F1664() {
+    clEzMenu *self = this;
     int i;
     int offset;
     InputPlayer *input = InputMgr_GetPlayer(GetInputManager(), 0);
@@ -347,7 +355,8 @@ extern "C" void fn_801F1664(Menu801F *self) {
     }
 }
 
-extern "C" void fn_801F190C(Menu801F *self) {
+void clEzMenu::fn_801F190C() {
+    clEzMenu *self = this;
     int offset;
     int i;
     DrawRange(self, 6, 12, lbl_806DA550);
@@ -355,7 +364,8 @@ extern "C" void fn_801F190C(Menu801F *self) {
     DrawRange(self, 12, 19, lbl_806DA550);
 }
 
-extern "C" void fn_801F19C8(Menu801F *self) {
+void clEzMenu::fn_801F19C8() {
+    clEzMenu *self = this;
     unsigned char v = fn_8020A788(self->fade.p);
     unsigned int c = WithAlpha(0xFFFFFF00, v);
     SetColorRange(self, 12, 19, c);
@@ -367,7 +377,8 @@ extern "C" void fn_801F19C8(Menu801F *self) {
     }
 }
 
-extern "C" void fn_801F1AC8(Menu801F *self) {
+void clEzMenu::fn_801F1AC8() {
+    clEzMenu *self = this;
     unsigned char v = fn_8020A788(self->fade.p);
     unsigned int c = WithAlpha(0xFFFFFF00, (unsigned char)(255 - v));
     SetColorRange(self, 12, 19, c);
@@ -379,14 +390,16 @@ extern "C" void fn_801F1AC8(Menu801F *self) {
     }
 }
 
-extern "C" void fn_801F1BC8(Menu801F *self) {
+void clEzMenu::fn_801F1BC8() {
+    clEzMenu *self = this;
     int offset;
     int i;
     DrawRange(self, 6, 12, lbl_806DA550);
     DrawRange(self, 12, 19, lbl_806DA550);
 }
 
-extern "C" void fn_801F1C58(Menu801F *self) {
+void clEzMenu::fn_801F1C58() {
+    clEzMenu *self = this;
     int offset;
     int i;
     InputPlayer *input = InputMgr_GetPlayer(GetInputManager(), 0);
@@ -406,7 +419,8 @@ extern "C" void fn_801F1C58(Menu801F *self) {
     }
 }
 
-extern "C" void fn_801F1EE0(Menu801F *self) {
+void clEzMenu::fn_801F1EE0() {
+    clEzMenu *self = this;
     unsigned int c;
     int offset;
     int i;
@@ -427,7 +441,8 @@ extern "C" void fn_801F1EE0(Menu801F *self) {
     }
 }
 
-extern "C" void fn_801F1FE4(Menu801F *self) {
+void clEzMenu::fn_801F1FE4() {
+    clEzMenu *self = this;
     int offset;
     int i;
     DrawRange(self, 6, 12, lbl_806DA550);
@@ -435,7 +450,8 @@ extern "C" void fn_801F1FE4(Menu801F *self) {
     DrawRange(self, 0, 6, lbl_806DA550);
 }
 
-extern "C" void fn_801F20A0(Menu801F *self) {
+void clEzMenu::fn_801F20A0() {
+    clEzMenu *self = this;
     unsigned char v = fn_8020A788(self->fade.p);
     unsigned int c = WithAlpha(0xFFFFFF00, (unsigned char)(255 - v));
     SetColorRange(self, 0, 6, c);
@@ -448,7 +464,8 @@ extern "C" void fn_801F20A0(Menu801F *self) {
     }
 }
 
-extern "C" void fn_801F21C8(Menu801F *self) {
+void clEzMenu::fn_801F21C8() {
+    clEzMenu *self = this;
     unsigned char v = fn_8020A788(self->fade.p);
     unsigned int c = WithAlpha(0xFFFFFF00, v);
     SetColorRange(self, 0, 6, c);
@@ -464,20 +481,22 @@ extern "C" void fn_801F21C8(Menu801F *self) {
     }
 }
 
-static inline void DrawSprites6(Menu801F *self) {
+static inline void DrawSprites6(clEzMenu *self) {
     for (int i = 0; i < 6; i++) fn_801F7B74(self->context, &self->sprites[i], lbl_806DA550);
 }
 /* The loop sits in an inline helper: only an inlined loop gets the target's
  * `mr rOff, rI` strength-reduction init (see docs/archive/per_fn_matching_strategy.md). */
-static inline void DrawFirstSprites(Menu801F *self) {
+static inline void DrawFirstSprites(clEzMenu *self) {
     for (int i = 0; i < 6; i++) fn_801F7B74(self->context, &self->sprites[i], lbl_806DA550);
 }
 
-extern "C" void fn_801F230C(Menu801F *self) {
+void clEzMenu::fn_801F230C() {
+    clEzMenu *self = this;
     DrawFirstSprites(self);
 }
 
-extern "C" void fn_801F2370(Menu801F *self) {
+void clEzMenu::fn_801F2370() {
+    clEzMenu *self = this;
     if (InputMgr_GetPlayer(GetInputManager(), 0)->Pressed(0x400)) {
         fn_8020A7CC(self->fade.p, 255, 0, 22);
         fn_801F6F7C(&self->sprites[18], &menuSelectRects[self->selection], lbl_806DA568);
@@ -485,7 +504,8 @@ extern "C" void fn_801F2370(Menu801F *self) {
     }
 }
 
-extern "C" void fn_801F2400(Menu801F *self) {
+void clEzMenu::fn_801F2400() {
+    clEzMenu *self = this;
     unsigned int c;
     int offset;
     int i;
@@ -501,22 +521,24 @@ extern "C" void fn_801F2400(Menu801F *self) {
     }
 }
 
-extern "C" void fn_801F24E8(Menu801F *self) {
+void clEzMenu::Draw() {
+    clEzMenu *self = this;
     GX_EndDraw(0);
     PMF_CALL(self, lbl_804E51A0[self->state % 14])();
     GX_BeginDraw();
 }
 
-extern "C" void fn_801F2560(Menu801F *self) {
+void clEzMenu::Update() {
+    clEzMenu *self = this;
     PMF_CALL(self, lbl_804E5050[self->state % 14])();
 }
 
-Menu801F::~Menu801F() {
+clEzMenu::~clEzMenu() {
     delete[] sprites;
     fn_801F7CD8(context, 1);
 }
 
-extern "C" void fn_801F2690(FlowFaderI *self) { delete self; }
+void clEzMenu::Destroy() { delete this; }
 
 extern "C" {
 extern void *FlowFaderI_vtable_804E5284[];

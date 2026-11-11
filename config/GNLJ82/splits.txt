@@ -8969,7 +8969,7 @@ game/fn_801DAB20.cpp:
 	.sdata      start:0x806CFEE8 end:0x806CFEF0
 
 game/autodata/sdata_806CFEF0.c:
-	.sdata      start:0x806CFEF0 end:0x806D0108
+	.sdata      start:0x806CFEF0 end:0x806CFFF0
 
 game/autodata/data_8049BC30.c:
 	.data       start:0x8049BC30 end:0x8049D030
@@ -9744,9 +9744,6 @@ game/fn_801ECA14.c:
 	.text       start:0x801ECA14 end:0x801ECAFC
 	.rodata     start:0x803BD920 end:0x803BDED4
 
-game/autodata/rodata_803BDED8.c:
-	.rodata     start:0x803BDED8 end:0x803BDF1C
-
 game/fn_801ECAFC.c:
 	.text       start:0x801ECAFC end:0x801ECB04
 
@@ -9824,21 +9821,26 @@ game/fn_801F0C80.c:
 	.text       start:0x801F0C80 end:0x801F0CBC
 	.ctors      start:0x802E892C end:0x802E8930
 
-game/fn_801F0CBC.c:
-	.text       start:0x801F0CBC end:0x801F0CC0
-
-game/fn_801F27B4.cpp:
+game/fn_801F0CBC.cpp:
 	extab       start:0x80016E94 end:0x80016FB4
 	extabindex  start:0x80028BD4 end:0x80028D24
-	.text       start:0x801F0CC0 end:0x801F2B70
+	.text       start:0x801F0CBC end:0x801F2B70
 	.ctors      start:0x802E8930 end:0x802E8934
-	.data       start:0x804E4C28 end:0x804E5248
+	.rodata     start:0x803BDED8 end:0x803BDEF8
+	.data       start:0x804E4C28 end:0x804E5278
+	.sdata      start:0x806CFFF0 end:0x806D0000
 
-game/autodata/data_804E5248.c:
-	.data       start:0x804E5248 end:0x804E531C
+game/autodata/sdata_806D0000.c:
+	.sdata      start:0x806D0000 end:0x806D0108
+
+game/autodata/data_804E5278.c:
+	.data       start:0x804E5278 end:0x804E531C
 
 game/autodata/data_804E533C.c:
 	.data       start:0x804E533C end:0x804E53B0
+
+game/autodata/rodata_803BDEF8.c:
+	.rodata     start:0x803BDEF8 end:0x803BDF1C
 
 game/NamCamFlow.cpp:
 	extab       start:0x80016FB4 end:0x800173C0
