@@ -18616,5 +18616,14 @@
     "sRecordModelPos": "sRecordModelPos",
     "0x23EF23F1": "0x23EF23F1",
     "sRecordDigitTex": "sRecordDigitTex"
+  },
+  "src/game/fn_801DAB20.cpp": {
+    "__dt__12clAdjustmentFv": "fn_801DAB20",
+    "__ct__12clAdjustmentFi": "fn_801DAB7C",
+    "__vt__12clAdjustment": "lbl_8049BC20",
+    "__RTTI__12clAdjustment": "lbl_806CFEE8",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "resourceIds": "lbl_8039FCD0",
+    "@21": "lbl_8039FCE0"
   }
 }
