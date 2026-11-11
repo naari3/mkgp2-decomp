@@ -251,22 +251,6 @@
     "clFlowCup_Dtor",
     "clFlowCup_Init"
   ],
-  "src/game/dtor_801FE870.cpp": {
-    "extab": [
-      "dtor_801FE870",
-      "fn_801FE4D0",
-      "fn_801FE554",
-      "fn_801FE588",
-      "fn_801FE5C8"
-    ],
-    "extabindex": [
-      "fn_801FE4D0",
-      "fn_801FE554",
-      "fn_801FE588",
-      "fn_801FE5C8",
-      "dtor_801FE870"
-    ]
-  },
   "src/game/CourseMarker.cpp": {
     "extab": [
       "dtor_8016A270",
@@ -3795,6 +3779,26 @@
       "dtor_801F2724",
       "fn_801F27B4",
       "__dt__10FlowFaderIFv"
+    ]
+  },
+  "src/game/anon_801FE3BC.cpp": {
+    "extab": [
+      "fn_801FE3BC",
+      "fn_801FE404",
+      "dtor_801FE870",
+      "fn_801FE4D0",
+      "fn_801FE554",
+      "fn_801FE588",
+      "fn_801FE5C8"
+    ],
+    "extabindex": [
+      "fn_801FE3BC",
+      "fn_801FE404",
+      "fn_801FE4D0",
+      "fn_801FE554",
+      "fn_801FE588",
+      "fn_801FE5C8",
+      "dtor_801FE870"
     ]
   }
 }

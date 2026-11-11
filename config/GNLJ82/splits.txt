@@ -10160,10 +10160,10 @@ game/anon_801FD320_nm1.cpp:
 	.sdata      start:0x806D0198 end:0x806D01B0
 
 game/autodata/sdata_806D01B0.c:
-	.sdata      start:0x806D01B0 end:0x806D01E0
+	.sdata      start:0x806D01B0 end:0x806D01B8
 
 game/autodata/rodata_803BFEF8.c:
-	.rodata     start:0x803BFEF8 end:0x803C0300
+	.rodata     start:0x803BFEF8 end:0x803BFF68
 
 game/anon_801FD320_m2.cpp:
 	extab       start:0x80017C2C end:0x80017C5C
@@ -10189,7 +10189,7 @@ game/anon_801FD924_tail.cpp:
 	.data       start:0x804EC158 end:0x804EC190
 
 game/autodata/data_804EC190.c:
-	.data       start:0x804EC190 end:0x804EC200
+	.data       start:0x804EC190 end:0x804EC1A0
 
 ui/UI_PlaySeToggle.c:
 	extab       start:0x80017CD4 end:0x80017CDC
@@ -10212,14 +10212,21 @@ game/UISeHelpers.c:
 	.text       start:0x801FE1D0 end:0x801FE3BC
 
 game/anon_801FE3BC.cpp:
-	extab       start:0x80017D3C end:0x80017D70
-	extabindex  start:0x80029438 end:0x80029450
-	.text       start:0x801FE3BC end:0x801FE4D0
+	extab       start:0x80017D3C end:0x80017D98
+	extabindex  start:0x80029438 end:0x8002948C
+	.text       start:0x801FE3BC end:0x801FE8B8
+	.rodata     start:0x803BFF68 end:0x803BFFD8
+	.data       start:0x804EC1A0 end:0x804EC1C8
+	.sdata      start:0x806D01B8 end:0x806D01C8
 
-game/dtor_801FE870.cpp:
-	extab       start:0x80017D70 end:0x80017D98
-	extabindex  start:0x80029450 end:0x8002948C
-	.text       start:0x801FE4D0 end:0x801FE8B8
+game/autodata/sdata_806D01C8.c:
+	.sdata      start:0x806D01C8 end:0x806D01E0
+
+game/autodata/data_804EC1C8.c:
+	.data       start:0x804EC1C8 end:0x804EC200
+
+game/autodata/rodata_803BFFD8.c:
+	.rodata     start:0x803BFFD8 end:0x803C0300
 
 game/anon_801FE8B8.cpp:
 	extab       start:0x80017D98 end:0x80017DF0
