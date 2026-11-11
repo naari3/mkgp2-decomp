@@ -12398,20 +12398,16 @@ game/RacePopups.cpp:
 	.data       start:0x804EF140 end:0x804EF1A8
 	.sdata      start:0x806D09F0 end:0x806D0A10
 
-game/autodata/sdata_806D0A10.c:
-	.sdata      start:0x806D0A10 end:0x806D0A20
-
-game/autodata/data_804EF1A8.c:
-	.data       start:0x804EF1A8 end:0x804EF1CC
-
 game/autodata/rodata_803F10B0.c:
-	.rodata     start:0x803F10B0 end:0x803F1170
+	.rodata     start:0x803F10B0 end:0x803F1150
 
 game/SpeedHud.cpp:
 	extab       start:0x8001EE38 end:0x8001EF8C
 	extabindex  start:0x8002B910 end:0x8002B940
 	.text       start:0x80251CD0 end:0x802529C8
-	.data       start:0x804EF1CC end:0x804EF1EC
+	.rodata     start:0x803F1150 end:0x803F1170
+	.data       start:0x804EF1A8 end:0x804EF1EC
+	.sdata      start:0x806D0A10 end:0x806D0A20
 
 game/autodata/data_804EF1F0.c:
 	.data       start:0x804EF1F0 end:0x804F2020
