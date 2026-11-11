@@ -41,17 +41,9 @@ static inline void SetInput(unsigned char en) {
     in->edge = 0;
 }
 
-struct SceneBase {
-    virtual ~SceneBase() {}
-    virtual void Destroy();
-    virtual void Update();
-    virtual void Draw();
-    unsigned char done;
-    SceneBase() : done(false) {}
-};
+#include "game/types/clSceneInterface.h"
 
-struct clCSSceneChangeSingle : SceneBase {
-    virtual void _key();
+struct clCSSceneChangeSingle : clSceneInterface {
     int state;
     float xc;
     int x10;
@@ -64,9 +56,32 @@ struct clCSSceneChangeSingle : SceneBase {
     void Draw();
 };
 
-void clCSSceneChangeSingle::Draw() {
+extern "C" clCSSceneChangeSingle *fn_8021EFB4(void) {
+    return new clCSSceneChangeSingle;
+}
+inline clCSSceneChangeSingle::clCSSceneChangeSingle() {
+    state = 0;
+    xc = lbl_806DB188;
+    x10 = 0;
+    x14 = 1;
+    panel = 0;
+    panel = new FlowPanel;
+    if (GetInput()) {
+        SetInput(1);
+    }
+}
+
+void clCSSceneChangeSingle::Destroy() {
+    delete this;
+}
+
+clCSSceneChangeSingle::~clCSSceneChangeSingle() {
     if (panel) {
-        fn_801D9A2C(panel);
+        fn_801D9F88(panel, 1);
+        panel = 0;
+    }
+    if (GetInput()) {
+        SetInput(0);
     }
 }
 
@@ -101,32 +116,8 @@ void clCSSceneChangeSingle::Update() {
     }
 }
 
-clCSSceneChangeSingle::~clCSSceneChangeSingle() {
+void clCSSceneChangeSingle::Draw() {
     if (panel) {
-        fn_801D9F88(panel, 1);
-        panel = 0;
+        fn_801D9A2C(panel);
     }
-    if (GetInput()) {
-        SetInput(0);
-    }
-}
-
-void clCSSceneChangeSingle::Destroy() {
-    delete this;
-}
-
-inline clCSSceneChangeSingle::clCSSceneChangeSingle() {
-    state = 0;
-    xc = lbl_806DB188;
-    x10 = 0;
-    x14 = 1;
-    panel = 0;
-    panel = new FlowPanel;
-    if (GetInput()) {
-        SetInput(1);
-    }
-}
-
-extern "C" clCSSceneChangeSingle *fn_8021EFB4(void) {
-    return new clCSSceneChangeSingle;
 }
