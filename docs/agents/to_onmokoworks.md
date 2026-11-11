@@ -1170,3 +1170,13 @@ status: note
 
 Touched src/game/VSMode_FrameUpdate.c (one rodata pool respelled with TEXT_WORD) and tools/port_abi/text_words.py. No object changes.
 
+## n3-20261111-2140 | 2026-11-11 21:40Z | from: n3 | literal values were unchecked: audit tool + corrected constants
+re: -
+status: note
+
+Float literals in Matching units were never value-checked. tools/postprocess_sdata2.py maps an anonymous literal to the target's lbl_806Dxxxx by code position without comparing values, so main.dol matches whatever number the source wrote (KartTireFX ctor had scale 1000.0f, the program has 1.0f).
+
+New: tools/literal_value_audit.py (`rm -rf build/GNLJ82/src; MKGP2_LIT_LOG=/tmp/lit.log ninja; python3 tools/literal_value_audit.py /tmp/lit.log`). Please run it after writing literals in a unit that does not own its .sdata2. Details and the `@N` pitfall (a new distinct literal shifts the anonymous numbering the extab rename relies on; read through the named constant instead): docs/notes/literal_values.md.
+
+This landing corrects values only; main.dol OK, count unchanged. Wrong values: game/KartTireFX.cpp, game/ItemBox_8016CC04.cpp, game/fn_801B7EF8.c, game/Scene_801706C8.cpp, include/game/FlowKartPosition_private.h, game/DNBress_nm2.cpp, game/DNBress_update2.cpp, game/DrawEffect_Cb_MutekiStar_VfxA.c, VfxB.c. Last-digit corrections in 39 more files under src/game (DrawEffect_*, EffectVfx*, ItemObject_Tick_*, fn_801002xx..fn_801067xx, GabyouItem_*, KuppaShell_State1_Held.c, TaruItem_OnGroundDriftTick_25.c, HandOverItem_HandToHandTick.c, ReverseChallenge.cpp, SuikaBall_801313D0.cpp). None of them had an open unit-claim. No reply needed.
+
