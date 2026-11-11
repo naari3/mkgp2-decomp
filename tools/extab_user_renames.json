@@ -1342,15 +1342,6 @@
     "__ct__4BBoxFP4Vec3P4Vec3P4BBoxi": "fn_8018A278",
     "__nw__FUl": "Alloc"
   },
-  "src/game/objview/fn_80187878.cpp": {
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree",
-    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
-    "__ct__7ObjViewFv": "fn_80187878",
-    "__dt__7ObjBaseFv": "dtor_8016A270",
-    "__vt__7ObjBase": "lbl_80490FE0",
-    "__vt__7ObjView": "ObjView_vtable_80495BE4"
-  },
   "src/game/miyazakiconsole/fn_801816AC.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
@@ -18076,5 +18067,41 @@
     "@403": "@eti_8002546C",
     "@412": "@etb_8000E2A0",
     "@413": "@eti_80025478"
+  },
+  "src/game/objview/fn_80187754.cpp": {
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__dt__10clNormal3DFv": "Object_DtorWithGXSync",
+    "__ct__14clMRLightHouseFv": "fn_80187878",
+    "__dt__14clMRLightHouseFv": "fn_801877E8",
+    "Update__14clMRLightHouseFv": "fn_80187784",
+    "Draw__14clMRLightHouseFv": "fn_80187754",
+    "__dt__16clMapEffectPartsFv": "dtor_8016A270",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "Enable__16clMapEffectPartsFi": "fn_8016A26C",
+    "__vt__14clMRLightHouse": "ObjView_vtable_80495BE4",
+    "__RTTI__14clMRLightHouse": "data_80491988_data_806CFBC0",
+    "__RTTI__16clMapEffectParts": "data_80491988_data_806CFBB8",
+    "@27": "global:lbl_803772E0",
+    "@29": "global:lbl_803772F0",
+    "@28": "global:data_80491988_data_80495BD8",
+    "@48": "global:lbl_80377304",
+    "@54": "global:lbl_80377328",
+    "@56": "global:lbl_8037734C",
+    "@38": "extern:lbl_806D92D8",
+    "@39": "extern:lbl_806D92DC",
+    "@55": "extern:lbl_806D92E0",
+    "@57": "extern:lbl_806D92E4",
+    "@58": "extern:lbl_806D92E8",
+    "@59": "extern:lbl_806D92EC",
+    "@33": "@etb_80011C84",
+    "@34": "@eti_80026D14",
+    "@40": "@etb_80011C8C",
+    "@41": "@eti_80026D20",
+    "@49": "@etb_80011C94",
+    "@50": "@eti_80026D2C",
+    "@60": "@etb_80011C9C",
+    "@61": "@eti_80026D38"
   }
 }
