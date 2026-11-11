@@ -267,3 +267,8 @@ clMRAirShip converted in game/objview/fn_801869F8.cpp: four source units merged,
 Source: Codex worker r2_c17_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 clRBSatellite is a small deferred clMapEffectParts descendant: ctor, dtor, Update definitions in reverse target order emit all owned text/data/RTTI exactly. Its vtable symbol included four bytes of inter-unit alignment; correct size is 0x18. Existing ctor-only bridge for fn_8018E510.cpp hard-codes the TU filename, so this conversion retains that path as the merged owner without editing build logic.
+
+## r3_c7_20261111
+Source: Codex worker r3_c7_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+When expanding a converted TU backwards from an existing 4-aligned jump-table section to its 8-aligned class data, remove its obsolete DATA_ALIGN4_TUS opt-in. clMnCardT02 changed .data start 804EC044 -> 804EBFF0; retaining the override left the compiler vtable four bytes early despite 100% object comparisons. Restoring default MWLD alignment gave the exact DOL.
