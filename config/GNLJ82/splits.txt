@@ -11591,7 +11591,7 @@ game/FlowCardCheck_nm2.cpp:
 	.sdata      start:0x806D0650 end:0x806D0728
 
 game/autodata/sdata_806D0728.c:
-	.sdata      start:0x806D0728 end:0x806D09D0
+	.sdata      start:0x806D0728 end:0x806D09A8
 
 game/autodata/data_804EE520.c:
 	.data       start:0x804EE520 end:0x804EE540
@@ -12398,7 +12398,7 @@ game/ContinueSceneTick.cpp:
 	.data       start:0x804EEFBC end:0x804EEFE4
 
 game/autodata/data_804EEFE4.c:
-	.data       start:0x804EEFE4 end:0x804EF06C
+	.data       start:0x804EEFE4 end:0x804EF018
 
 game/ContinueScene.cpp:
 	extab       start:0x8001E638 end:0x8001E75C
@@ -12407,10 +12407,7 @@ game/ContinueScene.cpp:
 	.rodata     start:0x803F0860 end:0x803F08B4
 
 game/autodata/rodata_803F08B4.c:
-	.rodata     start:0x803F08B4 end:0x803F0A3C
-
-game/autodata/rodata_803F0A40.c:
-	.rodata     start:0x803F0A40 end:0x803F0AB0
+	.rodata     start:0x803F08B4 end:0x803F09C8
 
 game/ContinueScene_nm1.cpp:
 	extab       start:0x8001E75C end:0x8001E764
@@ -12430,7 +12427,15 @@ game/BattleContinueScene.cpp:
 	extab       start:0x8001E78C end:0x8001E958
 	extabindex  start:0x8002B700 end:0x8002B778
 	.text       start:0x8024E344 end:0x8024F400
-	.data       start:0x804EF06C end:0x804EF09C
+	.rodata     start:0x803F09C8 end:0x803F0A3A
+	.data       start:0x804EF018 end:0x804EF09C
+	.sdata      start:0x806D09A8 end:0x806D09C8
+
+game/autodata/sdata_806D09C8.c:
+	.sdata      start:0x806D09C8 end:0x806D09D0
+
+game/autodata/rodata_803F0A40.c:
+	.rodata     start:0x803F0A40 end:0x803F0AB0
 
 game/fn_8024F400.c:
 	.text       start:0x8024F400 end:0x8024F40C

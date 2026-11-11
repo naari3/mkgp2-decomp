@@ -272,3 +272,8 @@ clRBSatellite is a small deferred clMapEffectParts descendant: ctor, dtor, Updat
 Source: Codex worker r3_c7_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 When expanding a converted TU backwards from an existing 4-aligned jump-table section to its 8-aligned class data, remove its obsolete DATA_ALIGN4_TUS opt-in. clMnCardT02 changed .data start 804EC044 -> 804EBFF0; retaining the override left the compiler vtable four bytes early despite 100% object comparisons. Restoring default MWLD alignment gave the exact DOL.
+
+## r3_c20_20261111
+Source: Codex worker r3_c20_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+clRsContinueTaskBT converted in game/BattleContinueScene.cpp using canonical clMnCardClasses.h bases, deferred reverse definitions and explicit VHolder<Panel> dtor specialization; compiler vtable 804EF054, base lists, RTTI and name pool exact, clang OK, main.dol SHA1 unchanged. No new compiler rule found.
