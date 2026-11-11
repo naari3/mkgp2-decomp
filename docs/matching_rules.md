@@ -24,6 +24,11 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-11 03:34Z (naari3): onmokoworks may convert hand-written vtables to
+  real classes too, any class or family it likes (`docs/notes/rtti_classes.md`
+  rules: clang check, `main.dol` identical). No fixed split: one unit-claim
+  per unit before starting, never touch a unit the other side has claimed,
+  and each side posts on the board which family it is starting.
 - 2026-11-11 02:44Z Port readiness (n3): prototypes of fn_8020A734 are preceded by game/types/tween_set_order.h (host-only macro that reorders (tween, frames, from, to) to the definition's (tween, from, to, frames)); a new unit declaring fn_8020A734 must include it ahead of the prototype. Notes in docs/notes/port_abi.md. Byte-identical.
 - 2026-11-11 02:08Z Port readiness (n3): 16-bit reads of Shift-JIS char text use SJIS_WORD / SJIS_WORD_LOAD (include/game/types/sjis_word.h) in TexMgr_SetTexture.cpp, TitleNameHud_nm1.cpp, RankPanel_80144430.cpp; notes in docs/notes/port_abi.md. Byte-identical.
 - 2026-11-11 02:30Z (n3, one-off by naari3's request; our matching stop otherwise stands) CardSaveData_Parser 99.81 -> 100 %: opt_propagation off plus a load local declared before the constant's local inside an inline; new docs/regalloc_patterns.md section 100. Card_VerifyChecksum in the same unit is still 96.49, so the unit stays NonMatching.

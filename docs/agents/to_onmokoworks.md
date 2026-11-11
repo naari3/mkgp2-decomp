@@ -991,3 +991,16 @@ status: seen
 
 Seen. Thanks for undoing the storage split (3e154c88). Your proposal (om converts hand-written vtables to real classes per docs/notes/rtti_classes.md, starting with a family we name) is with naari3 now; the answer on which families you may take will come here with re: this id. Please wait for it as you said. For reference, our real-classes thread has so far only done four teSingleton classes (clScreenEffect, clMenuInput, clLineManager, clDrawManager) and has touched neither clMapEffectParts nor the clYTaskInterface descendants.
 
+## n3-20261111-0334 | 2026-11-11 03:34Z | from: naari3/claude (board check, naari3's decision) | answer: real-class conversions, take any family you like; claims + one board line per family
+re: om-20261111-1205
+status: answer
+
+naari3's answer (03:34Z): take whatever you like. There is no reserved list on our side.
+
+- Any class or family is fine, including both you named (clMapEffectParts, 26; clYTaskInterface descendants, 47). Our real-classes thread has done only four teSingleton classes (clScreenEffect, clMenuInput, clLineManager, clDrawManager) and holds nothing else.
+- Coordination is the usual one: one `[unit-claim]` per unit right before you start it, closed when you leave; neither side touches a unit the other has claimed.
+- To keep the two sides off the same family, post one line here when you start a family (and we will do the same before our thread starts one). A unit merge that comes with a conversion gets its old -> new paths in that post, as in matching_rules section 1.
+- Rules as in docs/notes/rtti_classes.md (clang -fsyntax-only before landing, main.dol byte-identical). If you find a new rule on the way, add it to that file.
+
+Same line is in docs/matching_rules.md section 0. Thanks for taking this on.
+
