@@ -1173,15 +1173,6 @@
   "src/game/kartmove/fn_8019A6A4.cpp": {
     "__dt__3VecFv": "dtor_80036E40"
   },
-  "src/game/objview/fn_80187BF4.cpp": {
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree",
-    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
-    "__ct__11Obj80187BF4Fv": "fn_80187BF4",
-    "__dt__7ObjBaseFv": "dtor_8016A270",
-    "__vt__7ObjBase": "lbl_80490FE0",
-    "__vt__11Obj80187BF4": "Obj80187BF4_vtable_80495C0C"
-  },
   "src/game/objview/fn_8018D82C.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
@@ -17492,5 +17483,34 @@
     "__dt__10clNormal3DFv": "Object_DtorWithGXSync",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree"
+  },
+  "src/game/objview/fn_8018791C.cpp": {
+    "@59": "lbl_803773D4",
+    "@60": "data_80491988_data_80495C00",
+    "@61": "lbl_803773E4",
+    "@90": "lbl_803773F8",
+    "@103": "lbl_8037741C",
+    "@104": "lbl_80377440",
+    "@68": "@etb_80011CD0",
+    "@69": "@eti_80026D44",
+    "@80": "@etb_80011CD8",
+    "@81": "@eti_80026D50",
+    "@91": "@etb_80011CE0",
+    "@92": "@eti_80026D5C",
+    "@105": "@etb_80011CE8",
+    "@106": "@eti_80026D68",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__ct__10clNormal3DFPCci": "clNormal3D_Construct",
+    "__ct__12clMRPukupukuFv": "fn_80187BF4",
+    "__dt__12clMRPukupukuFv": "fn_80187B54",
+    "Update__12clMRPukupukuFv": "fn_801879E4",
+    "Draw__12clMRPukupukuFv": "fn_8018791C",
+    "__vt__12clMRPukupuku": "Obj80187BF4_vtable_80495C0C",
+    "__RTTI__12clMRPukupuku": "data_80491988_data_806CFBD0",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "__dt__16clMapEffectPartsFv": "dtor_8016A270",
+    "Enable__16clMapEffectPartsFi": "fn_8016A26C",
+    "__RTTI__16clMapEffectParts": "data_80491988_data_806CFBC8"
   }
 }

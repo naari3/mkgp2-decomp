@@ -7336,13 +7336,13 @@ game/objview/fn_801869F8.cpp:
 	.sdata      start:0x806CFBA8 end:0x806CFBB8
 
 game/autodata/sdata_806CFBB8.c:
-	.sdata      start:0x806CFBB8 end:0x806CFBE8
+	.sdata      start:0x806CFBB8 end:0x806CFBC8
 
 game/autodata/data_80495BD8.c:
-	.data       start:0x80495BD8 end:0x80495DA8
+	.data       start:0x80495BD8 end:0x80495C00
 
 game/autodata/rodata_803772E0.c:
-	.rodata     start:0x803772E0 end:0x803776C8
+	.rodata     start:0x803772E0 end:0x80377368
 
 game/objview/fn_80187754.c:
 	extab       start:0x80011C84 end:0x80011C8C
@@ -7364,25 +7364,22 @@ game/objview/fn_80187878.cpp:
 	extabindex  start:0x80026D38 end:0x80026D44
 	.text       start:0x80187878 end:0x8018791C
 
-game/objview/fn_8018791C.c:
-	extab       start:0x80011CD0 end:0x80011CD8
-	extabindex  start:0x80026D44 end:0x80026D50
-	.text       start:0x8018791C end:0x801879E4
+game/objview/fn_8018791C.cpp:
+	extab       start:0x80011CD0 end:0x80011D1C
+	extabindex  start:0x80026D44 end:0x80026D74
+	.text       start:0x8018791C end:0x80187D2C
+	.rodata     start:0x80377368 end:0x80377450
+	.data       start:0x80495C00 end:0x80495C28
+	.sdata      start:0x806CFBC8 end:0x806CFBD8
 
-game/objview/fn_801879E4.c:
-	extab       start:0x80011CD8 end:0x80011CE0
-	extabindex  start:0x80026D50 end:0x80026D5C
-	.text       start:0x801879E4 end:0x80187B54
+game/autodata/sdata_806CFBD8.c:
+	.sdata      start:0x806CFBD8 end:0x806CFBE8
 
-game/objview/fn_80187B54.c:
-	extab       start:0x80011CE0 end:0x80011CE8
-	extabindex  start:0x80026D5C end:0x80026D68
-	.text       start:0x80187B54 end:0x80187BF4
+game/autodata/data_80495C28.c:
+	.data       start:0x80495C28 end:0x80495DA8
 
-game/objview/fn_80187BF4.cpp:
-	extab       start:0x80011CE8 end:0x80011D1C
-	extabindex  start:0x80026D68 end:0x80026D74
-	.text       start:0x80187BF4 end:0x80187D2C
+game/autodata/rodata_80377450.c:
+	.rodata     start:0x80377450 end:0x803776C8
 
 game/NokoNoko_Update.c:
 	extab       start:0x80011D1C end:0x80011D24
