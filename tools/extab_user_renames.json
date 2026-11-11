@@ -12765,16 +12765,6 @@
     "Init__12DigitListMidFiPCi": "fn_80247CFC",
     "__dt__10FlowFaderIFv": "fn_801F26C8"
   },
-  "src/game/HudModeCreate.cpp": {
-    "__ct__12GameModeBaseFv": "GameMode_BaseInit",
-    "__dt__12GameModeBaseFv": "dtor_8002CDF4",
-    "__ct__14HudModeDisplayFi": "fn_80218E24",
-    "__ct__7HudFlowFv": "fn_802487E0",
-    "__ct__12HudModeOtherFv": "fn_80248C10",
-    "__ct__11HudModeLastFv": "fn_80248FB0",
-    "__nw__FUl": "Alloc",
-    "__dl__FPv": "MemoryManager_TimedFree"
-  },
   "src/game/BattleSceneInit.cpp": {
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
@@ -18373,5 +18363,24 @@
     "__vt__13clFlashViewer": "lbl_8049B5D4",
     "__RTTI__13clFlashViewer": "lbl_806CFEA0",
     "__RTTI__11clJobRunner": "lbl_806CFE98"
+  },
+  "src/game/RaceHudTransition.cpp": {
+    "__ct__11clJobRunnerFv": "GameMode_BaseInit",
+    "__dt__11clJobRunnerFv": "dtor_8002CDF4",
+    "__ct__14HudModeDisplayFi": "fn_80218E24",
+    "__ct__7HudFlowFv": "fn_802487E0",
+    "__ct__12HudModeOtherFv": "fn_80248C10",
+    "__ct__11HudModeLastFv": "fn_80248FB0",
+    "__nw__FUl": "Alloc",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "__vt__8clResult": "lbl_804EEAEC",
+    "__RTTI__8clResult": "lbl_806D0880",
+    "__RTTI__11clJobRunner": "lbl_806D0878",
+    "__dt__8clResultFv": "fn_80248150",
+    "Update__8clResultFv": "fn_80248088",
+    "Draw__8clResultFv": "fn_80248028",
+    "@57": "lbl_803EF848",
+    "@59": "lbl_803EF854",
+    "@58": "lbl_804EEAE0"
   }
 }

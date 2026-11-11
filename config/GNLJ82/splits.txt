@@ -11707,7 +11707,7 @@ game/KartChoiceFinish.cpp:
 	.sdata      start:0x806D07B0 end:0x806D07C0
 
 game/autodata/sdata_806D07C0.c:
-	.sdata      start:0x806D07C0 end:0x806D0888
+	.sdata      start:0x806D07C0 end:0x806D0878
 
 game/ItemSelectAllowed.c:
 	extab       start:0x8001CAAC end:0x8001CAB4
@@ -11929,7 +11929,7 @@ game/autodata/sdata2_806DBE00.c:
 	.sdata2     start:0x806DBE00 end:0x806DC260
 
 game/autodata/rodata_803EEE58.c:
-	.rodata     start:0x803EEE58 end:0x803EF860
+	.rodata     start:0x803EEE58 end:0x803EF848
 
 game/fn_80241B84.c:
 	extab       start:0x8001CF80 end:0x8001CF88
@@ -12139,9 +12139,6 @@ game/RaceDigits.cpp:
 	.text       start:0x80246DE4 end:0x80247B8C
 	.data       start:0x804EEAC4 end:0x804EEAE0
 
-game/autodata/data_804EEAE0.c:
-	.data       start:0x804EEAE0 end:0x804EEB00
-
 game/RaceDigitListErase.cpp:
 	extab       start:0x8001DA34 end:0x8001DA3C
 	extabindex  start:0x8002B2EC end:0x8002B2F8
@@ -12167,19 +12164,12 @@ game/RaceDigitPositions.cpp:
 	.ctors      start:0x802E8960 end:0x802E8964
 
 game/RaceHudTransition.cpp:
-	extab       start:0x8001DA54 end:0x8001DA64
-	extabindex  start:0x8002B31C end:0x8002B334
-	.text       start:0x80248028 end:0x80248150
-
-game/HudModeDestroy.cpp:
-	extab       start:0x8001DA64 end:0x8001DA6C
-	extabindex  start:0x8002B334 end:0x8002B340
-	.text       start:0x80248150 end:0x80248248
-
-game/HudModeCreate.cpp:
-	extab       start:0x8001DA6C end:0x8001DAFC
-	extabindex  start:0x8002B340 end:0x8002B34C
-	.text       start:0x80248248 end:0x802483B4
+	extab       start:0x8001DA54 end:0x8001DAFC
+	extabindex  start:0x8002B31C end:0x8002B34C
+	.text       start:0x80248028 end:0x802483B4
+	.rodata     start:0x803EF848 end:0x803EF860
+	.data       start:0x804EEAE0 end:0x804EEB00
+	.sdata      start:0x806D0878 end:0x806D0888
 
 game/HudFlow.cpp:
 	extab       start:0x8001DAFC end:0x8001DB48
