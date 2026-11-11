@@ -54,9 +54,19 @@ static inline signed char ItemObject_GetGroundTypeAt(Vec3 pos, float *height, in
 {
     int flags;
 
+    /* See ItemObject_GetGroundTypeAt.c: the callee writes three floats. */
+#ifdef __MWERKS__
     if (!Terrain_GetGroundHeightWithPenetration(&pos, height, &hit, &flags, 10.0f)) {
         return 0;
     }
+#else
+    float normal[3];
+
+    (void)hit;
+    if (!Terrain_GetGroundHeightWithPenetration(&pos, height, (int *)normal, &flags, 10.0f)) {
+        return 0;
+    }
+#endif
     flags = Terrain_ApplyCup2FlagPatch(flags);
     return (signed char)Terrain_FlagsToTypeId(flags);
 }

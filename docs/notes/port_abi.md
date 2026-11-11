@@ -827,3 +827,38 @@ Limit of the search: a table whose packed bytes are all small (for example
 found from the values alone. Those can only be found from the reader, and a
 reader that takes the table through an untyped pointer in another table gives
 no type to follow.
+
+## Out-pointer arguments smaller than what the callee writes (request 43, 2026-11-11)
+
+`Terrain_GetGroundHeightWithPenetration` writes a three-float normal through
+its third argument when it is not null. `ItemObject_GetGroundTypeAt`
+(`ItemObject_GetGroundTypeAt.c`, and the inline copy in
+`ItemObjectManager_RenderImpl.c`) passes the address of its own third `int`
+parameter. Under MWCC the other eight bytes land in stack space nothing else
+uses. Under clang on x86 they overwrote the caller's saved ground height
+(item shadows ten times too large and black, item heights NaN).
+
+Both places now give the callee a `float normal[3]` under `#ifndef
+__MWERKS__`; the MWCC branch is the old text, objects unchanged.
+
+Other callers checked by hand: every non-null out-normal / out-position
+argument of `Terrain_GetGroundHeightWithPenetration`, `Terrain_GetGroundHeight`
+and `Terrain_RaycastWall` (and of `ItemObject_RaycastWallStub`) is a
+three-float vector (`KartController_Update.cpp`, `kartmove/fn_8019C15C.cpp`,
+`NokoNoko_Update.c`, `JumpDistanceMode_*.c`, `PhysicsState_WallCollisionCheck.cpp`,
+`AI_CalcRivalAvoidance.cpp`, `RivalRun.c`, `SuikaBallObj_UpdatePhysics.c`,
+`kartmove/KartMovement_CollisionUpdate.cpp`, `ItemHoming.c`, `ItemMotion.c`,
+`BombExplosion_UpdateShockwaveVfx.c`). The callers of
+`ItemObject_GetGroundTypeAt` pass 0 or a pointer as the third argument; the
+function never reads it.
+
+`tools/port_abi/param_address.py` lists calls that pass `&scalar` where the
+callee's definition (not the caller's own extern, which is often written to
+suit the caller) takes a pointer to another type. It is text based. On the
+tree at this commit it prints 71 lines: the two calls above (MWCC branch),
+46 `float` passed as `void *`, signedness differences, and the rest are
+local names that the tool confuses across functions of one file
+(`Item_AdvanceFallingDrop` wrappers that reorder arguments, `Scene_8014E0C4.cpp`
+iterators) or one-pointer struct returns (`RaceDigitLap.cpp`). Nothing else
+writes past its target. Not covered: addresses of struct members and of
+array elements.
