@@ -262,3 +262,8 @@ Added working-note paragraph on vtable symbol sizes including inter-unit alignme
 Source: Codex worker r2_c11_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 clMRAirShip converted in game/objview/fn_801869F8.cpp: four source units merged, deferred reverse definitions, canonical clMapEffectParts base, compiler RTTI and vtable 80495BBC, SHA-1 unchanged. A Vec3f snapshot uses copy initialization before declaring its delta local to preserve the original integer copy and stack layout; assigning the same POD later in C++ instead emitted scalar FP loads/stores. Assertion helpers use literals so strings pool after compiler RTTI names. No new general compiler rule was traced.
+
+## r2_c17_20261111
+Source: Codex worker r2_c17_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+clRBSatellite is a small deferred clMapEffectParts descendant: ctor, dtor, Update definitions in reverse target order emit all owned text/data/RTTI exactly. Its vtable symbol included four bytes of inter-unit alignment; correct size is 0x18. Existing ctor-only bridge for fn_8018E510.cpp hard-codes the TU filename, so this conversion retains that path as the merged owner without editing build logic.

@@ -13356,7 +13356,27 @@
   "src/game/objview/fn_8018E510.cpp": {
     "__ct__12ObjViewEntryFPv": "fn_8018E510",
     "__vt__7ObjBase": "lbl_80490FE0",
-    "__vt__12ObjViewEntry": "ObjViewEntry_vtable_80495E8C"
+    "__vt__12ObjViewEntry": "ObjViewEntry_vtable_80495E8C",
+    "__ct__13clRBSatelliteFP8HSD_JObj": "fn_8018E510",
+    "__dt__13clRBSatelliteFv": "fn_8018E4B4",
+    "Update__13clRBSatelliteFv": "fn_8018E37C",
+    "__vt__13clRBSatellite": "ObjViewEntry_vtable_80495E8C",
+    "__RTTI__13clRBSatellite": "data_80491988_data_806CFC38",
+    "__RTTI__16clMapEffectParts": "data_80491988_data_806CFC30",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "__dt__16clMapEffectPartsFv": "dtor_8016A270",
+    "Draw__16clMapEffectPartsFv": "fn_8016A2BC",
+    "Enable__16clMapEffectPartsFi": "fn_8016A26C",
+    "Update__16clMapEffectPartsFv": "fn_8016A2B8",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@51": "global:lbl_80378078",
+    "@53": "global:lbl_80378088",
+    "@78": "global:lbl_8037809C",
+    "@52": "global:data_80491988_data_80495E80",
+    "@79": "@etb_80011FB4",
+    "@80": "@eti_80026F9C",
+    "@85": "@etb_80011FBC",
+    "@86": "@eti_80026FA8"
   },
   "src/game/VolumeCalibration.cpp": {
     "Draw__5clCabFv": "VolumeCalibration_DrawOverlay",
