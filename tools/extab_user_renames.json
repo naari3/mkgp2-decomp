@@ -7211,12 +7211,6 @@
     "__ct__7Zone16AFPCvi": "fn_80123BB4",
     "__ct__10clNormal3DFPCvi": "clNormal3D_Construct"
   },
-  "src/game/mapeffect/Kiri16ACtor.cpp": {
-    "__ct__7Kiri16AFP12KiriJoint16A": "fn_8016A3D4",
-    "__vt__7Kiri16A": "Kiri16A_vtable_8049102C",
-    "__vt__10MapPart16A": "lbl_80490FE0",
-    "__dt__10MapPart16AFv": "dtor_8016A270"
-  },
   "src/game/clFlowCourse.cpp": {
     "__ct__12clFlowCourseFv": "clFlowCourse_Init",
     "__dt__12clFlowCourseFv": "clFlowCourse_Dtor",
@@ -17156,5 +17150,29 @@
   "src/game/PcbIdToIpAndModify.c": {
     "@24": "@etb_800082D8",
     "@25": "@eti_800211F4"
+  },
+  "src/game/Sound_8016A2C0.cpp": {
+    "__ct__13clDKFallSoundFP12KiriJoint16A": "fn_8016A3D4",
+    "__dt__13clDKFallSoundFv": "fn_8016A32C",
+    "Update__13clDKFallSoundFv": "fn_8016A2C0",
+    "__vt__13clDKFallSound": "Kiri16A_vtable_8049102C",
+    "__RTTI__13clDKFallSound": "data_80490FE0_data_806CF9F8",
+    "__RTTI__16clMapEffectParts": "data_80490FE0_data_806CF9F0",
+    "__vt__16clMapEffectParts": "lbl_80490FE0",
+    "__dt__16clMapEffectPartsFv": "dtor_8016A270",
+    "Draw__16clMapEffectPartsFv": "fn_8016A2BC",
+    "Enable__16clMapEffectPartsFi": "fn_8016A26C",
+    "__dl__FPv": "MemoryManager_TimedFree",
+    "@139": "lbl_8036C990",
+    "@141": "lbl_8036C9A0",
+    "@140": "sdata_806CF750_data_80491020",
+    "@155": "global:lbl_8036C9B4",
+    "@206": "global:lbl_8036C9D8",
+    "@146": "@etb_80010234",
+    "@147": "@eti_80026024",
+    "@156": "@etb_8001023C",
+    "@157": "@eti_80026030",
+    "@207": "@etb_80010244",
+    "@208": "@eti_8002603C"
   }
 }

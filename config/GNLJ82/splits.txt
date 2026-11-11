@@ -6087,7 +6087,7 @@ game/CSPartsResultTimeNum.c:
 	.sdata      start:0x806CF738 end:0x806CF750
 
 game/autodata/sdata_806CF750.c:
-	.sdata      start:0x806CF750 end:0x806CFAD0
+	.sdata      start:0x806CF750 end:0x806CF9F0
 
 game/autodata/data_8048EEE8.c:
 	.data       start:0x8048EEE8 end:0x8048F130
@@ -6428,7 +6428,7 @@ game/misc3d/fn_80167744.c:
 	.data       start:0x80490FB8 end:0x80490FDC
 
 game/autodata/data_80490FE0.c:
-	.data       start:0x80490FE0 end:0x80491098
+	.data       start:0x80490FE0 end:0x80491020
 
 game/misc3d/fn_801678FC.cpp:
 	extab       start:0x8000FFA8 end:0x8000FFC0
@@ -6447,7 +6447,7 @@ game/misc3d/fn_80167C60.cpp:
 	.rodata     start:0x8036BF90 end:0x8036C8B0
 
 game/autodata/rodata_8036C8B0.c:
-	.rodata     start:0x8036C8B0 end:0x8036C9FC
+	.rodata     start:0x8036C8B0 end:0x8036C990
 
 game/misc3d/fn_80167DDC.cpp:
 	extab       start:0x8000FFE0 end:0x8000FFF8
@@ -6584,14 +6584,18 @@ game/CourseMarker.cpp:
 	.text       start:0x80169E34 end:0x8016A2C0
 
 game/Sound_8016A2C0.cpp:
-	extab       start:0x80010234 end:0x80010244
-	extabindex  start:0x80026024 end:0x8002603C
-	.text       start:0x8016A2C0 end:0x8016A3D4
+	extab       start:0x80010234 end:0x80010260
+	extabindex  start:0x80026024 end:0x80026048
+	.text       start:0x8016A2C0 end:0x8016A654
+	.rodata     start:0x8036C990 end:0x8036C9FA
+	.data       start:0x80491020 end:0x80491048
+	.sdata      start:0x806CF9F0 end:0x806CFA00
 
-game/mapeffect/Kiri16ACtor.cpp:
-	extab       start:0x80010244 end:0x80010260
-	extabindex  start:0x8002603C end:0x80026048
-	.text       start:0x8016A3D4 end:0x8016A654
+game/autodata/sdata_806CFA00.c:
+	.sdata      start:0x806CFA00 end:0x806CFAD0
+
+game/autodata/data_80491048.c:
+	.data       start:0x80491048 end:0x80491098
 
 game/mapeffect/Jungle16ADraw.cpp:
 	extab       start:0x80010260 end:0x80010268
