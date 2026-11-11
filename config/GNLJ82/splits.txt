@@ -11614,10 +11614,10 @@ game/LapDispControls.cpp:
 	.sdata      start:0x806D07C0 end:0x806D07D0
 
 game/autodata/sdata_806D07D0.c:
-	.sdata      start:0x806D07D0 end:0x806D0878
+	.sdata      start:0x806D07D0 end:0x806D07E8
 
 game/autodata/data_804EE680.c:
-	.data       start:0x804EE680 end:0x804EE72C
+	.data       start:0x804EE680 end:0x804EE6D8
 
 game/TaskBucketsCast.cpp:
 	extab       start:0x8001CEE4 end:0x8001CEEC
@@ -11640,7 +11640,7 @@ game/autodata/sdata2_806DBE00.c:
 	.sdata2     start:0x806DBE00 end:0x806DC260
 
 game/autodata/rodata_803EEE58.c:
-	.rodata     start:0x803EEE58 end:0x803EF848
+	.rodata     start:0x803EEE58 end:0x803EF408
 
 game/fn_80241B84.c:
 	extab       start:0x8001CF80 end:0x8001CF88
@@ -11659,10 +11659,18 @@ game/CardCreditFlow.cpp:
 	extab       start:0x8001CF90 end:0x8001D09C
 	extabindex  start:0x8002B094 end:0x8002B10C
 	.text       start:0x80241C1C end:0x80242DE0
-	.data       start:0x804EE72C end:0x804EE760
+	.rodata     start:0x803EF408 end:0x803EF418
+	.data       start:0x804EE6D8 end:0x804EE760
+	.sdata      start:0x806D07E8 end:0x806D0808
+
+game/autodata/sdata_806D0808.c:
+	.sdata      start:0x806D0808 end:0x806D0878
 
 game/autodata/data_804EE760.c:
 	.data       start:0x804EE760 end:0x804EE7C8
+
+game/autodata/rodata_803EF418.c:
+	.rodata     start:0x803EF418 end:0x803EF848
 
 game/fn_80242DE0.c:
 	.text       start:0x80242DE0 end:0x80242DEC

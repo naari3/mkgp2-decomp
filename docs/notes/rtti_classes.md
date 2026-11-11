@@ -347,3 +347,8 @@ Added object/link observation on shared TA/Ghost RTTI-name pooling via approved 
 Source: Codex worker r7_c44_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 clEnemyFace/clEFace3D converted in EnemyFace_exact2.cpp + EnemyFace_nm4.cpp: four assigned EnemyFace units merged into exact2, deferred/noauto reverse definitions, canonical clCDispInterface unchanged. Existing extern: RTTI-name bridges retain names in the unassigned renderer pool; no need to absorb EnemyFace.cpp/exact5. Both vtables and owned RTTI/base-list compiler emitted; all ten functions/2960 B and five owned sections per TU 100%, clang OK, DOL SHA-1 exact. DATA_ALIGN4_TUS on nm4 preserves 804EE134. Existing-mechanism observation, no new compiler-source rule.
+
+## r7_c47_20261111
+Source: Codex worker r7_c47_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+clMnCardRenew: if carving all ancestor names would leave an 8-aligned autodata tail at 803EF454, the existing extern: string rename mechanism can leave the ancestor names in autodata and carve only the derived name (803EF408..418). Tail 803EF418 is 8 aligned; compiler still emits all RTTI records/base lists and the derived vtable. DATA_ALIGN4_TUS only pins .data and does not fix a .rodata tail. All sections, ten functions and full DOL SHA-1 exact.
