@@ -6919,12 +6919,6 @@ game/mapeffect/mapeffect.cpp:
 game/autodata/sdata_806CFB50.c:
 	.sdata      start:0x806CFB50 end:0x806CFBA4
 
-game/autodata/sdata_806CFBA8.c:
-	.sdata      start:0x806CFBA8 end:0x806CFCAC
-
-game/autodata/sdata_806CFCB0.c:
-	.sdata      start:0x806CFCB0 end:0x806CFDF0
-
 game/mapobject/DistanceSwitchUpdate.cpp:
 	extab       start:0x80011878 end:0x80011880
 	extabindex  start:0x800268B8 end:0x800268C4
@@ -7074,7 +7068,7 @@ game/miyazakiconsole/fn_8017F538.cpp:
 	.data       start:0x80491958 end:0x80491988
 
 game/autodata/data_80491988.c:
-	.data       start:0x80491988 end:0x80495F20
+	.data       start:0x80491988 end:0x80495BB0
 
 game/miyazakiconsole/fn_8017FAFC.cpp:
 	extab       start:0x80011A14 end:0x80011A1C
@@ -7362,25 +7356,21 @@ game/objview/fn_801869E0.c:
 	.text       start:0x801869E0 end:0x801869F8
 
 game/objview/fn_801869F8.cpp:
-	extab       start:0x80011C38 end:0x80011C40
-	extabindex  start:0x80026CE4 end:0x80026CF0
-	.text       start:0x801869F8 end:0x80187084
-
-game/objview/fn_80187084.c:
-	extab       start:0x80011C40 end:0x80011C48
-	extabindex  start:0x80026CF0 end:0x80026CFC
-	.text       start:0x80187084 end:0x80187370
-
-game/objview/fn_80187370.c:
-	extab       start:0x80011C48 end:0x80011C50
-	extabindex  start:0x80026CFC end:0x80026D08
-	.text       start:0x80187370 end:0x80187410
-
-game/objview/fn_80187410.cpp:
-	extab       start:0x80011C50 end:0x80011C84
-	extabindex  start:0x80026D08 end:0x80026D14
-	.text       start:0x80187410 end:0x80187754
+	extab       start:0x80011C38 end:0x80011C84
+	extabindex  start:0x80026CE4 end:0x80026D14
+	.text       start:0x801869F8 end:0x80187754
 	.rodata     start:0x80377030 end:0x803772DC
+	.data       start:0x80495BB0 end:0x80495BD8
+	.sdata      start:0x806CFBA8 end:0x806CFBB8
+
+game/autodata/sdata_806CFBB8.c:
+	.sdata      start:0x806CFBB8 end:0x806CFCAC
+
+game/autodata/sdata_806CFCB0.c:
+	.sdata      start:0x806CFCB0 end:0x806CFDF0
+
+game/autodata/data_80495BD8.c:
+	.data       start:0x80495BD8 end:0x80495F20
 
 game/autodata/rodata_803772E0.c:
 	.rodata     start:0x803772E0 end:0x803776C8

@@ -257,3 +257,8 @@ not mechanical.
 Source: Codex worker r1_c8_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
 
 Added working-note paragraph on vtable symbol sizes including inter-unit alignment, lens successful size correction and camera following-unit alignment blocker.
+
+## r2_c11_20261111
+Source: Codex worker r2_c11_20261111 (gpt-6.1-sol/medium) + coordinator acceptance (independent main build, DOL SHA-1 OK, actual main.elf ranges). Native gain: 0 fn / 0 B.
+
+clMRAirShip converted in game/objview/fn_801869F8.cpp: four source units merged, deferred reverse definitions, canonical clMapEffectParts base, compiler RTTI and vtable 80495BBC, SHA-1 unchanged. A Vec3f snapshot uses copy initialization before declaring its delta local to preserve the original integer copy and stack layout; assigning the same POD later in C++ instead emitted scalar FP loads/stores. Assertion helpers use literals so strings pool after compiler RTTI names. No new general compiler rule was traced.
