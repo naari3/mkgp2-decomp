@@ -24,6 +24,7 @@ UTC, where the full text is) and posts the same line on the agent board
 (`docs/agents/`). Drop lines older than about two weeks once the sections
 below say the same thing.
 
+- 2026-11-11 21:50Z Float literal VALUES in Matching units are not checked by the build (postprocess_sdata2.py renames by position). 12 wrong constants and about 100 last-digit differences corrected; run tools/literal_value_audit.py after writing literals in a unit that does not own its .sdata2. See docs/notes/literal_values.md.
 - 2026-11-11 21:17Z 2026-11-11: port request 48. VSMode_FrameUpdate.c string pool is TEXT_WORDs; tools/port_abi/text_words.py also reads definitions that start with a section declspec.
 - 2026-11-11 21:12Z 2026-11-11: port request 47. pcb_link.h gains PCB_CHOICE_TRACK(h); clFlowCourse.cpp uses it for the received track choice.
 - 2026-11-11 21:03Z 2026-11-11: port request 46. include/dolphin/card.h: CARDRename and CARDRenameAsync name their third parameter newName, not new (C++ keyword).
