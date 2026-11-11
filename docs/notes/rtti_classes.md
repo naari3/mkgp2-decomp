@@ -191,6 +191,62 @@ Two rules from it that hold in general:
   spell the padding as a member (`unsigned char pad[3];`), as clScreenEffect
   does with `align[2]`, so both compilers lay the derived class out alike.
 
+### Working notes for whoever converts the next ones
+
+Order of work that avoided rework in the five tries:
+
+1. `python3 tools/rtti_classes.py --class NAME` for the class and each base;
+   list the units between the first and the last function of the file.
+   Skip, for now, a class with a slot function in a NonMatching unit (the
+   build links the original object there, so nothing is verified) and a
+   file whose units need different compiler versions (clItemBoxManager:
+   GC/1.3.2 and GC/2.0 pieces).
+2. Write the merged unit, remove the old ones from `configure.py` and
+   `splits.txt`. Edit only the `Object(...)` line of your unit: a `sed`
+   over flag strings twice changed other units' lines. Check with
+   `git diff configure.py`.
+3. `python3 tools/autodata_carve.py SEC LO HI` for the vtables, base lists,
+   RTTI records and name strings, **before** adding those ranges to the new
+   unit in `splits.txt`. When another commit has retyped the same data unit
+   in between, redo the carve on the new version instead of merging by hand.
+4. `tools/extab_user_renames.json`: one block per unit, edited as text
+   (never `json.dump`: duplicate keys). Mangled names of the class
+   (`__dt__13clDrawManagerFv`, `__vt__...`, `__RTTI__...`; the number is the
+   length of the name, templates count whole, e.g.
+   `28teSingleton<13clDrawManager>`) map to the symbols.txt names. Drop all
+   `@N` keys of the old units, build the object, read the new `@N` of the
+   strings and base list with `objdump -t`, add them, then
+   `python3 tools/extab_renumber.py <src> --write`.
+5. Compare the object's symbol order (`nm -n`) with the target before
+   linking; a link takes minutes, a compile seconds. Text order, `.data`
+   order, `.rodata` order and extab order are four separate things to get
+   right, in that order of difficulty.
+6. `rm -f build/GNLJ82/main.dol && ninja` must print `main.dol: OK` and the
+   function count must not drop; `tools/nonmatching_check.py`; clang check;
+   regenerate `docs/notes/rtti_classes.tsv` (`rtti_classes.py --tsv`); one
+   line in matching_rules.md section 0 and one board note per landing.
+
+Things that are easy to get wrong:
+
+- A weak table of a header-only base (`clMapEffectParts`, the interface
+  classes) is emitted by every unit that needs it and the linker keeps one
+  copy per unit in this binary, so the same class has several vtable rows
+  in the tsv. Each belongs to the unit whose data it sits in; do not try to
+  merge them into one.
+- A function that is in the object but not in the target (weak
+  `ScopedTimer` destructor, an uncalled member) is fine as long as mwld
+  drops it; check the linked addresses, not the object size.
+- The unit's first `.data` object must be where the original file's was.
+  If the vtable is not 8-aligned, data of the same file precedes it and has
+  to move into the unit too.
+- Other units that name the vtable symbol (`extern void *X_vtable[]`,
+  stores of the vptr by hand in constructors written as C) keep linking,
+  because the symbol name is kept by the rename; converting those
+  constructors is part of the same class and should go in the same unit.
+- Open problem: mwld put one exception table entry 4 bytes late
+  (clTPLLoad, `docs/wip/real_classes/clTPLLoad.md`). If you see a 4-byte
+  shift that starts in extab, compare with that note before spending time.
+
 What this says about the other 345: each needs the unit that holds the
 class's first non-inline virtual function to own the class data, which often
 means merging units first, and the constructors and destructors written as
