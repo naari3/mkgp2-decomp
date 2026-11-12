@@ -2014,7 +2014,7 @@ config.libs = [
             Object(Matching, "game/ResultFx.c", mw_version="GC/2.6", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/ConfettiField.c", mw_version="GC/2.6", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/ResultFxScene.c", mw_version="GC/2.6", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
-            Object(Matching, "game/PodiumPose.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/PodiumPose.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-RTTI on", "-rostr"]),
             Object(Matching, "game/CSPartsResultRank.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-RTTI on", "-inline deferred", "-rostr"]),
             Object(Matching, "game/CSPartsResultStage.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-RTTI on", "-inline deferred", "-rostr"]),
             Object(Matching, "game/CSPartsResultTimeNum.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-RTTI on", "-inline deferred", "-rostr"]),

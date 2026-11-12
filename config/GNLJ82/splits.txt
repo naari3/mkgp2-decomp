@@ -6113,17 +6113,16 @@ game/PushPrompt.c:
 	.data       start:0x8048ED28 end:0x8048ED58
 	.sdata      start:0x806CF6E8 end:0x806CF6F8
 
-game/autodata/sdata_806CF6F8.c:
-	.sdata      start:0x806CF6F8 end:0x806CF708
-
 game/autodata/data_8048ED58.c:
-	.data       start:0x8048ED58 end:0x8048EE08
+	.data       start:0x8048ED58 end:0x8048EDD8
 
 game/PodiumPose.c:
 	extab       start:0x8000D838 end:0x8000D92C
 	extabindex  start:0x800250E8 end:0x80025148
 	.text       start:0x8014219C end:0x8014388C
 	.rodata     start:0x803608D0 end:0x80360C70
+	.data       start:0x8048EDD8 end:0x8048EE08
+	.sdata      start:0x806CF6F8 end:0x806CF708
 
 game/CSPartsResultRank.c:
 	extab       start:0x8000D92C end:0x8000DB00

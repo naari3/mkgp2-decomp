@@ -3,7 +3,8 @@ C_REGION_BEGIN
 /*
  * 0x8014219C..0x8014388C: podium pose effect. A camera fly-in over a stage
  * model with up to six posed character models (PoseChar). Vtable
- * WinPose_vtable_8048EDE4, base FxBase (lbl_8048EB44, see SpriteEffects.c). Two shared
+ * clCSPartsPlatform uses the canonical CSParts base. The compiler emits its
+ * vtable (WinPose_vtable_8048EDE4), base list and RTTI. Two shared
  * prop models (s_propA/s_propB) are reference-counted across PoseChars and
  * have their matrices copied from character joints each frame.
  */
@@ -224,7 +225,7 @@ static inline void InvWorldScale(JObj *jobj, Mtx m) {
 
 #include "game/types/FxData.h"
 
-#include "game/types/FxBase.h"
+#include "game/CSParts.h"
 
 /* .rodata 0x803608D0..0x80360C70 (TU-owned). The PoseChar ctor addresses the
  * scale table (+0x164), the joint-name format table (+0x2B4) and the two
@@ -285,12 +286,7 @@ extern const Vec3 PodiumPose_rodata_80360BC0[6] = {
     {0.0f, 13.0f, -28.0f},
 };
 extern const int PodiumPose_rodata_80360C08[5] = {40, 140, 0, 40, 10};
-extern const char lbl_80360C1C[0x12] = "clCSPartsPlatform";
-extern const char lbl_80360C30[0x12] = "clCSPartsInerface";
 }
-static const char sCeremonyFile[0x10] = "ceremony.dat";
-static const char sTrophyFile[0x10] = "trpy_hanyou.dat";
-static const char sFlowerFile[0xC] = "flower.dat";
 #pragma force_active reset
 
 struct PoseChar {
@@ -328,7 +324,7 @@ struct PoseChar {
     void Draw();
 };
 
-struct WinPose : FxBase {
+struct clCSPartsPlatform : clCSPartsInerface {
     clNormal3D *stage;
     Scene3D *cam;
     SceneModel *lights;
@@ -337,21 +333,32 @@ struct WinPose : FxBase {
     int state;
     unsigned char started;
 
-    virtual void m10();
-    WinPose(unsigned char setCam);
-    virtual ~WinPose();
+    clCSPartsPlatform(unsigned char setCam);
+    virtual ~clCSPartsPlatform();
     virtual void m0C();
     virtual void Update();
     virtual void m1C();
     int IsDone();
+    void PoolNames();
     unsigned char Spawn(int slot, int kind);
 };
 
-int WinPose::IsDone() {
+/* fakematch (pool order): this uncalled diagnostic member places RTTI names and
+ * resource filenames in the original shared string pool (clLineManager precedent). */
+extern "C" void DebugPrintf(const char *, ...);
+void clCSPartsPlatform::PoolNames() {
+    DebugPrintf("clCSPartsPlatform");
+    DebugPrintf("clCSPartsInerface");
+    DebugPrintf("ceremony.dat");
+    DebugPrintf("trpy_hanyou.dat");
+    DebugPrintf("flower.dat");
+}
+
+int clCSPartsPlatform::IsDone() {
     return (state == 5) ? 1 : 0;
 }
 
-void WinPose::m1C() {
+void clCSPartsPlatform::m1C() {
     JObj *root;
     JObj *front;
     JObj *back;
@@ -375,7 +382,7 @@ void WinPose::m1C() {
     }
 }
 
-void WinPose::Update() {
+void clCSPartsPlatform::Update() {
     PoseChar *c;
     int i;
     float t;
@@ -465,7 +472,7 @@ void WinPose::Update() {
 static inline int SlotMode(int slot) { return slot < 3 ? slot : -1; }
 static inline int SlotMode2(int slot) { int m = -1; if (slot < 3) m = slot; return m; }
 
-unsigned char WinPose::Spawn(int slot, int kind) {
+unsigned char clCSPartsPlatform::Spawn(int slot, int kind) {
     float scale;
     Vec3 pos;
     Vec3 rot;
@@ -509,7 +516,7 @@ unsigned char WinPose::Spawn(int slot, int kind) {
     return 1;
 }
 
-WinPose::~WinPose() {
+clCSPartsPlatform::~clCSPartsPlatform() {
     int i;
 
     Object_DtorWithGXSync(stage, 1);
@@ -522,7 +529,7 @@ WinPose::~WinPose() {
     }
 }
 
-WinPose::WinPose(unsigned char setCam) {
+clCSPartsPlatform::clCSPartsPlatform(unsigned char setCam) {
     started = 0;
     timer = 0;
     state = 0;
@@ -535,12 +542,12 @@ WinPose::WinPose(unsigned char setCam) {
     chars[3] = 0;
     chars[4] = 0;
     chars[5] = 0;
-    stage = new clNormal3D(sCeremonyFile, 0);
+    stage = new clNormal3D("ceremony.dat", 0);
     Object_JObjUpdate_be4(stage, 0x10);
     clNormal3D_SetFlags(stage, 0x40000000, 0);
     clNormal3D_SetScale(stage, 0, 0.0f, 1.0f, 0.0f, 0.0f);
-    cam = new Scene3D(sCeremonyFile);
-    lights = new SceneModel(sCeremonyFile, 1);
+    cam = new Scene3D("ceremony.dat");
+    lights = new SceneModel("ceremony.dat", 1);
     if (setCam == 1) {
         Vec3 v;
         v.x = PodiumPose_rodata_80360BC0[0].x;
@@ -640,8 +647,8 @@ PoseChar::PoseChar(int kind, int mode, Vec3 *pos, Vec3 *rot, float *scale) {
         s_propB = 0;
         s_jointA = 0;
         s_jointB = 0;
-        s_propA = new clNormal3D(sTrophyFile, 0);
-        s_propB = new clNormal3D(sFlowerFile, 0);
+        s_propA = new clNormal3D("trpy_hanyou.dat", 0);
+        s_propB = new clNormal3D("flower.dat", 0);
         if (s_propA) {
             s_jointA = Archive_GetRootJObj(s_propA);
         }
@@ -986,6 +993,6 @@ extern "C" asm void __ct__8PoseCharFiiP4Vec3P4Vec3Pf(void) { /* 0x80143450 size:
 }
 #endif
 
-void WinPose::m0C() {
+void clCSPartsPlatform::m0C() {
     started = 1;
 }
