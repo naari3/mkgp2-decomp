@@ -3,8 +3,10 @@ C_REGION_BEGIN
 /*
  * A small sprite animation object (resource 0x139F): two layers of the
  * same sprite are scaled and faded in, held, and scaled back out from a
- * frame timer. Three classes deep (vtables lbl_8048ECF8, lbl_8048ED10,
- * LogoAnim_data_8048ECE0, all in data), so the vptr stores are spelled out by hand.
+ * frame timer. clCSPartsGoal has a compiler-emitted vtable and RTTI;
+ * the canonical task interfaces keep their existing external base tables.
+ * Keep the strong base-destructor views at the tail. The canonical inline
+ * copies use the old weak-only bridges and are discarded by MWLD.
  *
  * The update keeps its seven scale/alpha temps at function scope, declared
  * in the order below: MWCC numbers locals in reverse declaration order and
@@ -54,44 +56,33 @@ extern void PreloadResource(int resId);
 extern void MemoryManager_TimedFree(void *p);
 }
 
-struct AnimBase {
-    void *volatile vptr;
-    int arg;
-    int f8;
-    int fc;
-    AnimBase(int a) {
-        vptr = lbl_8048ECF8;
-        arg = a;
-        f8 = 0;
-        fc = 0;
-    }
-    ~AnimBase() { vptr = lbl_8048ECF8; }
-};
-
-struct AnimMid : AnimBase {
-    AnimMid(int a) : AnimBase(a) { vptr = lbl_8048ED10; }
-    ~AnimMid() { vptr = lbl_8048ED10; }
-};
-
-struct LogoAnim : AnimMid {
+struct AnimBaseView { void *volatile vptr; int arg, f8, fc; };
+struct AnimMidView : AnimBaseView {};
+#include "game/types/size_t.h"
+void operator delete(void *);
+#include "game/types/clResultTask.h"
+struct clCSPartsGoal : clCTaskInterface {
     void *obj;
     int done;
     float t;
-    LogoAnim(void *o, int a);
-    ~LogoAnim();
+    virtual ~clCSPartsGoal();
+    virtual void Delete();
+    virtual void Update();
+    virtual void Draw();
+    clCSPartsGoal(void *o, int a);
 };
-
-extern "C" void fn_80141450(void) {
+extern "C++" void clCSPartsGoal::Draw() {
 }
 
-extern "C" void fn_80141454(LogoAnim *self) {
+extern "C++" void clCSPartsGoal::Update() {
+    clCSPartsGoal *self = this;
     float t;
     float a;
     float s;
     float splitY, splitT, splitSy, splitSx, outSx, outSy, outT;
 
     if (self->done) {
-        self->fc = 1;
+        self->fC = 1;
         return;
     }
     t = self->t;
@@ -148,12 +139,9 @@ extern "C" void fn_80141454(LogoAnim *self) {
 
 
 
-LogoAnim::~LogoAnim() {
-    vptr = LogoAnim_data_8048ECE0;
-}
+extern "C++" clCSPartsGoal::~clCSPartsGoal() {}
 
-LogoAnim::LogoAnim(void *o, int a) : AnimMid(a) {
-    vptr = LogoAnim_data_8048ECE0;
+extern "C++" clCSPartsGoal::clCSPartsGoal(void *o, int a) : clCTaskInterface(a) {
     obj = o;
     done = 0;
     t = 0.0f;
@@ -163,15 +151,11 @@ extern "C" void fn_8014196C(void) {
     PreloadResource(0x139F);
 }
 
-struct LogoAnimOwned {
-    virtual ~LogoAnimOwned();
-};
-
-extern "C" void fn_80141990(LogoAnimOwned *p) {
-    delete p;
+extern "C++" void clCSPartsGoal::Delete() {
+    delete this;
 }
 
-extern "C" AnimMid *dtor_801419C8(AnimMid *p, short flag) {
+extern "C" AnimMidView *dtor_801419C8(AnimMidView *p, short flag) {
     if (p) {
         p->vptr = lbl_8048ED10;
         if (p) {
@@ -184,7 +168,7 @@ extern "C" AnimMid *dtor_801419C8(AnimMid *p, short flag) {
     return p;
 }
 
-extern "C" AnimBase *fn_80141A24(AnimBase *p, short flag) {
+extern "C" AnimBaseView *fn_80141A24(AnimBaseView *p, short flag) {
     if (p) {
         p->vptr = lbl_8048ECF8;
         if (flag > 0) {

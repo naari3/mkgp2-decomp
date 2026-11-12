@@ -6007,7 +6007,7 @@ game/PreviewModel.c:
 	.sdata      start:0x806CF660 end:0x806CF668
 
 game/autodata/sdata_806CF668.c:
-	.sdata      start:0x806CF668 end:0x806CF6E8
+	.sdata      start:0x806CF668 end:0x806CF6D0
 
 game/autodata/data_8048EB18.c:
 	.data       start:0x8048EB18 end:0x8048EBEC
@@ -6043,22 +6043,25 @@ game/ResultFxScene.c:
 	.data       start:0x8048EC50 end:0x8048EC90
 
 game/autodata/data_8048EC90.c:
-	.data       start:0x8048EC90 end:0x8048ED28
+	.data       start:0x8048EC90 end:0x8048ECC0
 
 game/autodata/rodata_80360744.c:
 	.rodata     start:0x80360744 end:0x8036076C
-
-game/autodata/rodata_80360770.c:
-	.rodata     start:0x80360770 end:0x803607A8
 
 game/LogoAnim.c:
 	extab       start:0x8000D7AC end:0x8000D7DC
 	extabindex  start:0x8002504C end:0x80025094
 	.text       start:0x80141450 end:0x80141A6C
+	.rodata     start:0x80360770 end:0x803607A8
+	.data       start:0x8048ECC0 end:0x8048ECF8
+	.sdata      start:0x806CF6D0 end:0x806CF6E8
 	.sdata2     start:0x806D7900 end:0x806D7998
 
 game/autodata/sdata2_806D7998.c:
 	.sdata2     start:0x806D7998 end:0x806D9ED8
+
+game/autodata/data_8048ECF8.c:
+	.data       start:0x8048ECF8 end:0x8048ED28
 
 game/PushPrompt.c:
 	extab       start:0x8000D7DC end:0x8000D838
@@ -6103,17 +6106,19 @@ game/CSPartsResultTimeNum.c:
 	.data       start:0x8048EEA8 end:0x8048EEE8
 	.sdata      start:0x806CF738 end:0x806CF750
 
-game/autodata/sdata_806CF750.c:
-	.sdata      start:0x806CF750 end:0x806CF788
-
-game/autodata/data_8048EEE8.c:
-	.data       start:0x8048EEE8 end:0x8048EF78
-
 game/RankPanel_80144430.cpp:
 	extab       start:0x8000DBE4 end:0x8000DE5C
 	extabindex  start:0x800251D8 end:0x80025280
 	.text       start:0x80144430 end:0x80146160
 	.rodata     start:0x80361D60 end:0x80361ED0
+	.data       start:0x8048EEE8 end:0x8048EF14
+	.sdata      start:0x806CF750 end:0x806CF760
+
+game/autodata/sdata_806CF760.c:
+	.sdata      start:0x806CF760 end:0x806CF788
+
+game/autodata/data_8048EF14.c:
+	.data       start:0x8048EF14 end:0x8048EF78
 
 game/fn_80146160.c:
 	extab       start:0x8000DE5C end:0x8000DE64

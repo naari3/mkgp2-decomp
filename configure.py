@@ -1971,7 +1971,7 @@ config.libs = [
             Object(Matching, "game/OrthoCam.c", extab_padding=b"\x00\x00"),
             Object(Matching, "game/ZoneList.c", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on", "-RTTI on", "-rostr"], mw_version="GC/2.7"),
             Object(Matching, "game/ZoneList_Attract.cpp", extab_padding=b"", extra_cflags=["-use_lmw_stmw on", "-RTTI on", "-rostr"], mw_version="GC/2.7"),
-            Object(Matching, "game/LogoAnim.c", extab_padding=b"\x00\x00"),
+            Object(Matching, "game/LogoAnim.c", extab_padding=b"\x00\x00", extra_cflags=["-RTTI on", "-rostr"]),
             Object(Matching, "game/PushPrompt.c", extab_padding=b"\x00\x00", extra_cflags=["-RTTI on", "-rostr", "-inline deferred"]),
             Object(Matching, "game/ResultFx.c", mw_version="GC/2.6", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/ConfettiField.c", mw_version="GC/2.6", extab_padding=b"\x00\x00", extra_cflags=["-use_lmw_stmw on"]),
@@ -2082,7 +2082,7 @@ config.libs = [
             Object(Matching, "game/SceneList_80157940.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/fn_80157DE0.cpp", extab_padding=b"\x02\x55", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
             Object(Matching, "game/SceneList_80157EA8.cpp", extab_padding=b"", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-rostr", "-inline deferred,noauto"]),
-            Object(Matching, "game/RankPanel_80144430.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/2.6"),
+            Object(Matching, "game/RankPanel_80144430.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-rostr"], mw_version="GC/2.6"),
             Object(Matching, "game/RankPanelBase_801461B0.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-rostr", "-inline deferred"], mw_version="GC/2.6"),
             Object(Matching, "game/CourseObjects_801375D8.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], mw_version="GC/1.3"),
             Object(Matching, "game/CourseObjects_80138CE4.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),
@@ -3403,6 +3403,7 @@ def _inject_kartfx_chargeicon_data_alignment() -> None:
 # .comment section is dropped and .data alignment pinned to 4. Text/data bytes
 # and relocations stay native.
 DATA_ALIGN4_TUS = [
+    "game/autodata/data_8048EF14",
     "game/autodata/data_804E4BFC",
     "game/autodata/data_803F9C3C",
     "game/autodata/data_8048E34C",

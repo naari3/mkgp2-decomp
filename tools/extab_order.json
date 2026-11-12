@@ -1220,7 +1220,10 @@
     "fn_80145E14",
     "fn_80146000",
     "fn_801460D0",
-    "dtor_80082960"
+    "dtor_80082960",
+    "dtor_8013EB50",
+    "__dt__10PtrVecBaseFv",
+    "PrintTypeNames__18clCSPartsTARankingFv"
   ],
   "src/game/RankPanelBase_801461B0.cpp": [
     "fn_801461B0",

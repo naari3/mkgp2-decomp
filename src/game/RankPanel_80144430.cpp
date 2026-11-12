@@ -1,3 +1,4 @@
+#include "game/types/SpriteNodeInfo.h"
 #include "game/types/sjis_word.h"
 #include "game/types/size_t.h"
 #include "game/singleton.h"
@@ -5,7 +6,11 @@
 /* sdata symbols referenced from asm */
 extern unsigned char lbl_806D7B0C[1];
 /*
- * 0x80144430..0x80146160: time attack ranking panel and its entry vector.
+ * 0x80144430..0x80146160: clCSPartsTARanking and its entry vector.
+ * Single-declaration C++ linkage on the member definitions postpones inline
+ * destructor exports until the declaration after fn_80145E14. Keep the
+ * intervening declarations above the constructors: their order is visible
+ * in the retained cursor/vector destructor positions.
  */
 #pragma cplusplus on
 
@@ -91,12 +96,15 @@ struct PtrVecBase : PtrVecStorage {
     ~PtrVecBase() {}
 };
 struct EntryVec : PtrVecBase {
+    EntryVec() { cap = 0; size = 0; data = 0; }
     ~EntryVec() {}
     PanelItem **begin() { return data; }
     PanelItem **end() { return data + size; }
     void push_back(PanelItem *const &x);
 };
+struct Sprite;
 struct Cursor {
+    Cursor();
     SpriteObj *sprite;
     unsigned char on;
     unsigned char state;
@@ -105,6 +113,7 @@ struct Cursor {
 };
 struct CursorPtr {
     Cursor *p;
+    CursorPtr(Cursor *c) : p(c) {}
     Cursor *operator->() { return p; }
     ~CursorPtr() throw() {
         Cursor *c = p;
@@ -114,19 +123,8 @@ struct CursorPtr {
         }
     }
 };
-struct RankPanel {
-    char pad0[0x14];
-    void **vt14;
-    unsigned char visible;
-    char pad19[3];
-    float f1c;
-    int state;
-    unsigned char b24;
-    char pad25[3];
-    float xs[0x26];
-    EntryVec vec;
-    CursorPtr cursor;
-};
+struct clCSPartsTARanking;
+typedef clCSPartsTARanking RankPanel;
 struct Pair { char pad[0xc]; float a, b; };
 struct SpriteHolder { void **vt; void *sprite; };
 struct VecHolder { int pad0; int pad4; void *data; };
@@ -239,6 +237,36 @@ void fn_8019FF8C(Sprite *s, int id, struct SpriteNodeInfo *out);
 int isJapanese(void);
 }
 
+inline Cursor::Cursor() {
+    on = 0; state = 0; timer = 0;
+    sprite = (SpriteObj *)new Sprite(0x9e, 1, 394.0f, 394.0f, 1.0f, 1.0f, 0.0f, 0.0f);
+}
+#include "game/CSParts.h"
+struct clCSPartsTARanking : clCSPartsInerface {
+    unsigned char visible;
+    float f1c;
+    int state;
+    unsigned char b24;
+    float xs[0x26];
+    EntryVec vec;
+    CursorPtr cursor;
+    void PrintTypeNames();
+    virtual ~clCSPartsTARanking();
+    virtual void m0C();
+    virtual void m10();
+    virtual void Update();
+    virtual void Draw();
+    clCSPartsTARanking();
+    clCSPartsTARanking(int a, int b, int c);
+    void LoadColumns(Sprite *s) {
+        for (int i = 0; i < 0x26; i++) {
+            SpriteNodeInfo info;
+            fn_8019FF8C(s, RankPanel_80144430_rodata_80361D80[i], &info);
+            xs[i] = info.x;
+        }
+    }
+};
+
 /* .rodata 0x80361D60..0x80361ED0 is owned by this TU. */
 extern "C" {
 extern const short RankPanel_80144430_rodata_80361D60[8][2] = {
@@ -255,74 +283,19 @@ extern const float RankPanel_80144430_rodata_80361DCC[2][3] = {
     {960.0f, 320.0f, -320.0f},
     {1180.0f, 410.0f, -360.0f},
 };
-extern const char lbl_80361DE4[0x14] = "clCSPartsTARanking";
-extern const char lbl_80361DF8[0x14] = "clCSPartsInerface";
-extern const char lbl_80361E0C[0x1C] = "nsMenuUtil::clSpriteNode";
-extern const char lbl_80361E28[0x18] = "nsMenuUtil::clMenuNode";
 }
-#include "game/types/SpriteNodeInfo.h"
-struct RecCursor {
-    Sprite *sprite;
-    unsigned char on;
-    unsigned char state;
-    int timer;
-    RecCursor() {
-        on = 0;
-        state = 0;
-        timer = 0;
-        sprite = new Sprite(0x9e, 1, 394.0f, 394.0f, 1.0f, 1.0f, 0.0f, 0.0f);
-    }
-};
-struct RecCursorPtr {
-    RecCursor *p;
-    RecCursorPtr(RecCursor *c) : p(c) {}
-    ~RecCursorPtr() throw();
-};
-struct RecVec {
-    int cap;
-    int size;
-    void **data;
-    RecVec() : cap(0), size(0), data(0) {}
-    ~RecVec();
-};
-struct clCSPartsInerface {
-    int obj;
-    unsigned char active;
-    float x, y;
-    float alpha;
-    clCSPartsInerface() {
-        obj = 0;
-        active = 0;
-        x = lbl_806D7AE4;
-        y = lbl_806D7AE4;
-        alpha = lbl_806D7AF0;
-    }
-    virtual ~clCSPartsInerface();
-    virtual void m0C();
-    virtual void m10();
-    virtual void Update();
-    virtual void Draw();
-    virtual void m1C();
-};
-struct clCSPartsResultRecord : clCSPartsInerface {
-    unsigned char visible;
-    float f1c;
-    int state;
-    unsigned char b24;
-    float xs[0x26];
-    RecVec vec;
-    RecCursorPtr cursor;
-    virtual ~clCSPartsResultRecord();
-    clCSPartsResultRecord();
-    clCSPartsResultRecord(int a, int b, int c);
-    void LoadColumns(Sprite *s) {
-        for (int i = 0; i < 0x26; i++) {
-            SpriteNodeInfo info;
-            fn_8019FF8C(s, RankPanel_80144430_rodata_80361D80[i], &info);
-            xs[i] = info.x;
-        }
-    }
-};
+extern "C" void DebugPrintf(const char *, ...);
+/* fakematch: the stripped diagnostic seeds the RTTI-name literal pool.
+ * Natural: an unknown original diagnostic printed these class names. */
+void clCSPartsTARanking::PrintTypeNames() {
+    DebugPrintf("clCSPartsTARanking");
+    DebugPrintf("clCSPartsInerface");
+}
+extern "C" {
+extern const char lbl_80361E0C[0x19] = "nsMenuUtil::clSpriteNode";
+extern const char lbl_80361E28[0x17] = "nsMenuUtil::clMenuNode";
+}
+
 
 static inline void DrawItem(PanelItem *p)
 {
@@ -348,8 +321,8 @@ static inline void SetEntry(PanelEntry *e, float y)
 
 
 
-extern "C" void fn_80144430(RankPanel *self)
-{
+extern "C++" void clCSPartsTARanking::Draw() {
+    RankPanel *self = this;
     if (self->state != 0 && self->visible) {
         for (PanelItem **it = self->vec.data; it != self->vec.data + self->vec.size; it++) {
             DrawItem(*it);
@@ -384,8 +357,8 @@ static inline void PanelItem_Tick(PanelItem *p)
     }
 }
 
-extern "C" void fn_80144500(RankPanel *self)
-{
+extern "C++" void clCSPartsTARanking::Update() {
+    RankPanel *self = this;
     if (self->state != 0 && self->visible) {
         int row = IsCardValid() == 1 ? 0 : 1;
         switch (self->state) {
@@ -454,8 +427,8 @@ extern "C" void fn_80144500(RankPanel *self)
     }
 }
 
-extern "C" void fn_801449D4(RankPanel *self)
-{
+extern "C++" void clCSPartsTARanking::m10() {
+    RankPanel *self = this;
     self->state = 3;
     self->f1c = lbl_806D7AE4;
     PanelEntry *e;
@@ -472,25 +445,14 @@ extern "C" void fn_801449D4(RankPanel *self)
     }
 }
 
-extern "C" void fn_80144ADC(RankPanel *self)
-{
+extern "C++" void clCSPartsTARanking::m0C() {
+    RankPanel *self = this;
     self->state = 1;
     self->f1c = lbl_806D7AE4;
 }
 
-extern "C" RankPanel *fn_80144AF0(RankPanel *self, short flag)
-{
-    if (self) {
-        self->vt14 = (void **)clCSPartsResultRecord_vtable_8048EEF4;
-        for (PanelItem **it = self->vec.begin(); it != self->vec.end(); it++) {
-            delete *it;
-        }
-        self->cursor.~CursorPtr();
-        self->vec.~EntryVec();
-        if (self) self->vt14 = (void **)lbl_8048EB44;
-        if (flag > 0) MemoryManager_TimedFree(self);
-    }
-    return self;
+extern "C++" clCSPartsTARanking::~clCSPartsTARanking() {
+    for (PanelItem **it = vec.begin(); it != vec.end(); it++) { delete *it; }
 }
 
 extern "C" void PtrVec_InsertFill(EntryVec *v, PanelItem **pos, int n, PanelItem *const *val);
@@ -610,7 +572,36 @@ extern "C" void fn_801458A4(Pair *p)
     p->b = lbl_806D7AE4;
 }
 
-clCSPartsResultRecord::clCSPartsResultRecord() : visible(0), f1c(lbl_806D7AE4), state(0), b24(0), cursor(new RecCursor)
+struct ResCtrl {
+    int resId;
+    int field4;
+    int mode;
+    int fieldc;
+    unsigned char flag;
+    char pad11[3];
+    float x, y, z, width, height, field28, scaleX, scaleY;
+    unsigned int colors[4];
+    bool flipX;
+    bool flipY;
+    char pad46[2];
+    int tail[4];
+    ResCtrl();
+    ~ResCtrl() {}
+    void Show(float px, float py, float pz) {
+        flag = 1;
+        x = px;
+        y = py;
+        z = pz;
+    }
+    void SetColor(unsigned int c) {
+        colors[0] = c;
+        colors[1] = c;
+        colors[2] = c;
+        colors[3] = c;
+    }
+};
+
+extern "C++" clCSPartsTARanking::clCSPartsTARanking() : visible(0), f1c(0.0f), state(0), b24(0), cursor(new Cursor)
 {
     Sprite *s = new Sprite(0x1c5, 0, 0);
     LoadColumns(s);
@@ -626,7 +617,7 @@ clCSPartsResultRecord::clCSPartsResultRecord() : visible(0), f1c(lbl_806D7AE4), 
     delete s;
 }
 
-clCSPartsResultRecord::clCSPartsResultRecord(int, int, int) : visible(0), f1c(lbl_806D7AE4), state(0), b24(0), cursor(new RecCursor)
+extern "C++" clCSPartsTARanking::clCSPartsTARanking(int, int, int) : visible(0), f1c(0.0f), state(0), b24(0), cursor(new Cursor)
 {
     Sprite *s = new Sprite(0x1c5, 0, 0);
     LoadColumns(s);
@@ -669,34 +660,6 @@ extern "C" SpriteHolder *dtor_80145DB0(SpriteHolder *self, short flag)
     return self;
 }
 
-struct ResCtrl {
-    int resId;
-    int field4;
-    int mode;
-    int fieldc;
-    unsigned char flag;
-    char pad11[3];
-    float x, y, z, width, height, field28, scaleX, scaleY;
-    unsigned int colors[4];
-    bool flipX;
-    bool flipY;
-    char pad46[2];
-    int tail[4];
-    ResCtrl();
-    ~ResCtrl() {}
-    void Show(float px, float py, float pz) {
-        flag = 1;
-        x = px;
-        y = py;
-        z = pz;
-    }
-    void SetColor(unsigned int c) {
-        colors[0] = c;
-        colors[1] = c;
-        colors[2] = c;
-        colors[3] = c;
-    }
-};
 
 extern "C" void fn_80145E14(PanelIcon *self)
 {
@@ -724,40 +687,10 @@ extern "C" void fn_80145E14(PanelIcon *self)
     fn_8011FAFC(&rc, self->layer);
 }
 
-#include "game/types/SpriteBox.h"
-struct SpriteBoxPtr { SpriteBox *p; };
-
-/* deleting destructor of a sprite owner pointer: ~SpriteBoxPtr() throw() { delete p; } */
-extern "C" SpriteBoxPtr *dtor_80145F04(SpriteBoxPtr *self, short flag) throw()
-{
-    if (self) {
-        SpriteBox *box = self->p;
-        if (box) {
-            Sprite_Destroy(box->sprite, 1);
-            MemoryManager_TimedFree(box);
-        }
-        if (flag > 0) MemoryManager_TimedFree(self);
-    }
-    return self;
-}
-
-extern "C" VecHolder *dtor_80145F9C(VecHolder *self, short flag)
-{
-    if (self) {
-        if (self) {
-            if (self) {
-                if (self->data) MemoryManager_TimedFree(self->data);
-            }
-        }
-        if (flag > 0) MemoryManager_TimedFree(self);
-    }
-    return self;
-}
-
 extern "C" {
 unsigned long strlen(const char *s);
 char *strcpy(char *d, const char *s);
-extern const char lbl_80361E40[0x20] = "vector::at index out of range";
+extern const char lbl_80361E40[0x1E] = "vector::at index out of range";
 }
 
 struct ExcStrRef {
@@ -802,9 +735,9 @@ extern "C" struct PanelEntry **fn_80146000(struct EntryVec *v, unsigned long id)
 #pragma pop
 
 extern "C" {
-extern const char lbl_80361E98[0x14] = "std::out_of_range";
-extern const char lbl_80361EAC[0x10] = "std::exception";
-extern const char lbl_80361EBC[0x14] = "std::logic_error";
+extern const char lbl_80361E98[0x12] = "std::out_of_range";
+extern const char lbl_80361EAC[0xF] = "std::exception";
+extern const char lbl_80361EBC[0x11] = "std::logic_error";
 }
 
 struct ExcString { char *p; };
@@ -823,4 +756,3 @@ extern "C" ExcObj *fn_801460D0(ExcObj *self, short flag)
     }
     return self;
 }
-
