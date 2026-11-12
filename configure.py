@@ -813,7 +813,6 @@ config.libs = [
             Object(Matching, "game/fn_80174698.c"),
             Object(Matching, "game/fn_80253EB8.c"),
             Object(Matching, "game/fn_8021A7BC.c"),
-            Object(Matching, "game/fn_800D2BE0.c"),
             Object(Matching, "game/fn_80253F2C.c"),
             Object(Matching, "game/fn_80218D90.c"),
             Object(Matching, "game/PhysicsState_AccelInterpolate.c", extra_cflags=["-Cpp_exceptions on"]),
@@ -1212,7 +1211,7 @@ config.libs = [
             Object(Matching, "game/RaceScene_GetPerspFovyForCup.c"),  #g2
             Object(Matching, "game/GameMode_TitleSelect.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-rostr"]),  #g2
             Object(NonMatching, "game/RankLog.c", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"]),  #g2
-            Object(Matching, "game/DbgMenu.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on"], extab_padding=b""),  #g2
+            Object(Matching, "game/DbgMenu.cpp", extra_cflags=["-Cpp_exceptions on", "-use_lmw_stmw on", "-RTTI on", "-rostr"], extab_padding=b""),  #g2
             Object(NonMatching, "game/ShadowAreaMgr.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/EffectVfx13or14_MushroomDust_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2
             Object(Matching, "game/EffectVfx6D_KartSmokeSpark_Tick.c", extra_cflags=["-Cpp_exceptions on"]),  #g2

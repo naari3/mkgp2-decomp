@@ -46,3 +46,4 @@ game/autodata/sdata2_806D51BC
 
 game/autodata/data_804911F4
 game/autodata/rodata_8036D8F4
+game/autodata/sdata_806CF34C

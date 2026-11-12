@@ -10469,6 +10469,13 @@
     "Draw__19clCSSceneCoinMilageFv": "fn_80221104"
   },
   "src/game/DbgMenu.cpp": {
+    "@1470": "extern:lbl_8032D270",
+    "@1147": "jumptable_8041C9B0",
+    "__dt__13clHidaka_baseFv": "dtor_800D2B98",
+    "__vt__13clHidaka_base": "MenuSceneBase_vtable_8041C9D4",
+    "__RTTI__13clHidaka_base": "global:lbl_806CF344",
+    "Draw__13clHidaka_baseFv": "fn_800D2BE0",
+    "Update__13clHidaka_baseFv": "fn_800D2BE4",
     "DbgMenu_TickSubScene": "active:DbgMenu_TickSubScene",
     "DbgMenu_HandleInput": "active:DbgMenu_HandleInput",
     "__nw__FUl": "Alloc",

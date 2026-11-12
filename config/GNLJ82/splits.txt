@@ -3013,7 +3013,7 @@ game/clCGameDemoWC/Dtor.cpp:
 	.sdata      start:0x806CF2D0 end:0x806CF2F8
 
 game/autodata/sdata_806CF2F8.c:
-	.sdata      start:0x806CF2F8 end:0x806CF488
+	.sdata      start:0x806CF2F8 end:0x806CF330
 
 game/fn_800AE71C.c:
 	.text       start:0x800AE724 end:0x800AE854
@@ -4117,14 +4117,15 @@ game/DbgMenu_Dtor.c:
 game/DbgMenu.cpp:
 	extab       start:0x8000AC18 end:0x8000B0BC
 	extabindex  start:0x80023390 end:0x800236A8
-	.text       start:0x800CE54C end:0x800D2BE0
-	.data       start:0x8041C9B0 end:0x8041C9D4
+	.text       start:0x800CE54C end:0x800D2BEC
+	.data       start:0x8041C9B0 end:0x8041C9E8
+	.sdata      start:0x806CF330 end:0x806CF34C
 
-game/autodata/data_8041C9D4.c:
-	.data       start:0x8041C9D4 end:0x8041E8B0
+game/autodata/sdata_806CF34C.c:
+	.sdata      start:0x806CF34C end:0x806CF488
 
-game/fn_800D2BE0.c:
-	.text       start:0x800D2BE0 end:0x800D2BEC
+game/autodata/data_8041C9E8.c:
+	.data       start:0x8041C9E8 end:0x8041E8B0
 
 game/DbgScene_InitAnimSlotArray.c:
 	extab       start:0x8000B0BC end:0x8000B0C4

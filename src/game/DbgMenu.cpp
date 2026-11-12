@@ -1,7 +1,6 @@
-/* Debug menu and its test scenes (0x800CE54C..0x800D2BE0).
- * NonMatching: these are C++ classes whose vtables (.data 0x8041C99C..)
- * and new/delete extab actions belong to this TU. Retrofitted constructors
- * use native new/base cleanup; the remaining C views share the target layout. */
+/* Debug menu and its test scenes (0x800CE54C..0x800D2BEC).
+ * clHidaka_base owns its compiler-emitted vtable and RTTI. Other scene
+ * classes retain the existing external vtables and matched C views. */
 
 #include "game/types/size_t.h"
 class InputPlayer {
@@ -568,12 +567,13 @@ extern "C" int DbgMenu_HandleInput(DbgMenu *self)
 void *operator new(size_t);
 void operator delete(void *);
 
-// Undefined key methods keep the original external vtables authoritative.
-class MenuSceneBase {
-    virtual void Key();
+// The test scenes below retain external vtables through undefined key methods.
+class clHidaka_base {
 public:
-    MenuSceneBase() {}
-    virtual ~MenuSceneBase();
+    virtual int Update();
+    virtual void Draw();
+    virtual ~clHidaka_base();
+    clHidaka_base() {}
 };
 
 /* Base of the sprite viewer: out-of-line ctor (GameMode_BaseInit), no dtor. */
@@ -635,7 +635,7 @@ public:
     MenuItemModel(void *, int);
 };
 
-class SpriteTestScene : public MenuSceneBase {
+class SpriteTestScene : public clHidaka_base {
     virtual void Key2();
 public:
     SpriteTestScene() {
@@ -649,7 +649,7 @@ extern "C" SceneHdr *DbgScene01_SprMng2Test_Ctor(void)
     return (SceneHdr *)new SpriteTestScene;
 }
 
-class MapViewerScene : public MenuSceneBase {
+class MapViewerScene : public clHidaka_base {
     virtual void Key2();
     float x;
     float y;
@@ -667,7 +667,7 @@ extern "C" SceneF2 *DbgScene02_MapViewer_Ctor(void)
     return (SceneF2 *)new MapViewerScene;
 }
 
-class TplTestScene : public MenuSceneBase {
+class TplTestScene : public clHidaka_base {
     virtual void Key2();
     int w4;
     int w8;
@@ -736,7 +736,7 @@ inline void PaletteSet::NextColor(void)
         }                                                                                     \
     }
 
-class AnmTestScene : public MenuSceneBase {
+class AnmTestScene : public clHidaka_base {
     virtual void Key2();
 public:
     AnmTestScene() {
@@ -749,7 +749,7 @@ extern "C" SceneHdr *DbgScene04_AnmTest_Ctor(void)
     return (SceneHdr *)new AnmTestScene;
 }
 
-class ParticleTestScene : public MenuSceneBase {
+class ParticleTestScene : public clHidaka_base {
     virtual void Key2();
 public:
     ParticleTestScene();
@@ -760,7 +760,7 @@ extern "C" DbgScene *DbgScene05_TplTest2_Ctor(void)
     return (DbgScene *)new ParticleTestScene;
 }
 
-class PaletteTestScene : public MenuSceneBase {
+class PaletteTestScene : public clHidaka_base {
     virtual void Key2();
 public:
     PaletteTestScene() {
@@ -774,7 +774,7 @@ extern "C" SceneHdr *DbgScene06_SprMng2Test_Ctor(void)
     return (SceneHdr *)new PaletteTestScene;
 }
 
-class ScreenEffScene : public MenuSceneBase {
+class ScreenEffScene : public clHidaka_base {
     virtual void Key2();
 public:
     ScreenEffScene() {
@@ -795,7 +795,7 @@ extern "C" SceneHdr *DbgScene07_ScrEffTest_Ctor(void)
 }
 
 
-class AtrTestScene : public MenuSceneBase {
+class AtrTestScene : public clHidaka_base {
     virtual void Key2();
     char data[4];
 public:
@@ -823,7 +823,7 @@ extern "C" SceneWords *DbgScene09_Flash_Ctor(void)
 }
 
 
-class TitleTestScene : public MenuSceneBase {
+class TitleTestScene : public clHidaka_base {
     virtual void Key2();
     char data[16];
     void SetSpritePosition(int i, float x, float y) {
@@ -861,7 +861,7 @@ extern "C" SceneHdr *DbgScene11_Empty_Ctor(void)
     return p;
 }
 
-class PrizeTestScene : public MenuSceneBase {
+class PrizeTestScene : public clHidaka_base {
     virtual void Key2();
     char data[4];
 public:
@@ -891,7 +891,7 @@ static inline void SetupRaceDefaults(void)
     fn_80209AC4(1, 0);
 }
 
-class ItemTestScene : public MenuSceneBase {
+class ItemTestScene : public clHidaka_base {
     virtual void Key2();
     char data[12];
 public:
@@ -929,7 +929,7 @@ extern "C" SceneItem *DbgScene13_PrxTest2_Ctor(void)
     return (SceneItem *)new ItemTestScene;
 }
 
-class RaceStartScene : public MenuSceneBase {
+class RaceStartScene : public clHidaka_base {
     virtual void Key2();
     char data[4];
 public:
@@ -2272,13 +2272,17 @@ extern "C" void DbgScene_DrawTexturedQuad(PaletteSet *set, ResCtrl *r, int idx)
     QuadVtx(x, y + h, lbl_806D5884, lbl_806D5880);
 }
 
-extern "C" SceneHdr *dtor_800D2B98(SceneHdr *self, short flag)
-{
-    if (self != 0) {
-        self->vt = MenuSceneBase_vtable_8041C9D4;
-        if (flag > 0) {
-            MemoryManager_TimedFree(self);
-        }
-    }
-    return self;
+clHidaka_base::~clHidaka_base() {}
+
+void clHidaka_base::Draw() {}
+
+int clHidaka_base::Update() { return 0; }
+
+extern "C" {
+extern char lbl_8032D058[];
+extern char lbl_8032D04C[];
+extern char sdata_806CF1C0_data_8041C990[];
+int DbgMenu_HandleInput_data_806CF330 = 14;
+const char *data_8041A4F8_data_806CF334[2] = {lbl_8032D058, 0};
+void *data_8041A4F8_data_806CF33C[2] = {lbl_8032D04C, sdata_806CF1C0_data_8041C990};
 }
