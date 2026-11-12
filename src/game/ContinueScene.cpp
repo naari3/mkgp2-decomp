@@ -1,4 +1,4 @@
-#include "game/ContinueScene_private.h"
+#include "game/types/clRsContinueTask.h"
 /* --- owned .rodata 0x803F0860..0x803F08B4 (tools/own_data.py) --- */
 #pragma force_active on
 extern "C" const char ContinueScene_rodata_803F0860[84] = { 71, 80, 67, 111, 110, 116, 105, 110, 117, 101, 32, 58, 32, 37, 100, 44, 32, 105, 109, 97, 109, 117, 114, 97, 47, 82, 115, 67, 111, 110, 116, 105, 110, 117, 101, 48, 48, 46, 99, 112, 112, 32, 45, 32, 37, 100, 10, 0, 99, 108, 89, 84, 97, 115, 107, 77, 97, 110, 97, 103, 101, 114, 60, 99, 108, 77, 110, 84, 97, 115, 107, 73, 110, 116, 101, 114, 102, 97, 99, 101, 62, 0, 0, 0 };
@@ -34,7 +34,7 @@ inline void CoinCounter::Show() {
     fn_801D92D0(window, &param);
 }
 
-void ContinueScene::Confirm() {
+void clRsContinueTask::Confirm() {
     fn_801618CC(detail, 1, 0);
     fn_80161888(detail);
     fader.p->Step();
@@ -45,7 +45,7 @@ void ContinueScene::Confirm() {
     fn_8020AAD4(ItemDisplay_GetOrCreate());
 }
 
-void ContinueScene::Cancel() {
+void clRsContinueTask::Cancel() {
     fn_801618CC(detail, 0, 0);
     fader.p->Step();
     if (fader.p->Done()) {
@@ -54,7 +54,7 @@ void ContinueScene::Cancel() {
     }
 }
 
-void ContinueScene::Update() {
+void clRsContinueTask::Select() {
     bool noCred;
     InputState *in;
     bool active;
@@ -176,17 +176,17 @@ confirmed:
     fn_8020AAD4(ItemDisplay_GetOrCreate());
 }
 
-extern "C" void fn_8024DCCC(VObject *obj) {
-    delete obj;
+void clRsContinueTask::Finish() {
+    delete this;
 }
 
 #pragma dont_inline on
-extern "C" ContinueScene *fn_8024DD04(int id) {
-    return new ContinueScene(id);
+extern "C" clRsContinueTask *fn_8024DD04(int id) {
+    return new clRsContinueTask(id);
 }
 #pragma dont_inline reset
 
-ContinueScene::~ContinueScene() {
+clRsContinueTask::~clRsContinueTask() {
     CreditMgr_SetActiveSlot(0);
     delete counter;
     if (detail) {
@@ -194,8 +194,8 @@ ContinueScene::~ContinueScene() {
     }
 }
 
-ContinueScene::ContinueScene(int id)
-    : FlowScene(id), retries(0), coins(CreditMgr_GetCoinCount(0, -1)), noCredit(0), started(0),
+clRsContinueTask::clRsContinueTask(int id)
+    : clMnCardT0Interface(id), retries(0), coins(CreditMgr_GetCoinCount(0, -1)), noCredit(0), started(0),
       counter(0), detail(0), prompt(new CoinPrompt(0x74, 0x4A, 0x1874, 0x1875, 3)) {
     state = 0;
     timer = lbl_806D1AB8 + 1;

@@ -5048,6 +5048,44 @@
     "__RTTI__31clNodeManager<Pc,P10clNormal3D>": "cLNormal3DWrap_data_806CEFD0"
   },
   "src/game/ContinueScene.cpp": {
+    "@51": "@etb_8001E638",
+    "@52": "@eti_8002B670",
+    "@64": "@etb_8001E640",
+    "@65": "@eti_8002B67C",
+    "@175": "@etb_8001E648",
+    "@176": "@eti_8002B688",
+    "@185": "@etb_8001E664",
+    "@186": "@eti_8002B694",
+    "@193": "@etb_8001E66C",
+    "@194": "@eti_8002B6A0",
+    "@216": "@etb_8001E684",
+    "@217": "@eti_8002B6AC",
+    "@251": "@etb_8001E6AC",
+    "@252": "@eti_8002B6B8",
+    "@267": "@etb_8001E754",
+    "@268": "@eti_8002B6C4",
+    "@269": "extern:sdata_806D0728_rodata_803F08B4",
+    "@271": "extern:lbl_803F07D8",
+    "@272": "extern:lbl_803F07EC",
+    "@273": "extern:lbl_804EEF78",
+    "@274": "extern:lbl_803F07C4",
+    "@275": "extern:lbl_804EEF84",
+    "@270": "sdata_806D0728_data_804EEFE4",
+    "__ct__16clRsContinueTaskFi": "fn_8024DE38",
+    "__dt__16clRsContinueTaskFv": "fn_8024DD50",
+    "Select__16clRsContinueTaskFv": "fn_8024D874",
+    "Cancel__16clRsContinueTaskFv": "fn_8024D7F4",
+    "Confirm__16clRsContinueTaskFv": "fn_8024D764",
+    "Finish__16clRsContinueTaskFv": "fn_8024DCCC",
+    "Update__16clRsContinueTaskFv": "fn_8024D3D4",
+    "Draw__16clRsContinueTaskFv": "fn_8024D36C",
+    "__vt__16clRsContinueTask": "ContinueScene_vtable_804EF000",
+    "__ct__19clMnCardT0InterfaceFi": "fn_801FD41C",
+    "__dt__19clMnCardT0InterfaceFv": "dtor_801FD32C",
+    "__RTTI__16clRsContinueTask": "data_804EEFE4_data_806D09A0",
+    "__RTTI__16clYTaskInterface": "extern:lbl_806D0978",
+    "__RTTI__17clMnTaskInterface": "extern:lbl_806D0980",
+    "__RTTI__19clMnCardT0Interface": "extern:lbl_806D0988",
     "__ct__11CoinCounterFi": "fn_8024E2A4",
     "__dt__11CoinCounterFv": "fn_8024E244",
     "Show__11CoinCounterFv": "fn_8024E1DC",
@@ -12487,12 +12525,16 @@
     "__dt__10FlowFaderIFv": "fn_801F26C8"
   },
   "src/game/ContinueSceneTick.cpp": {
+    "Select__16clRsContinueTaskFv": "fn_8024D874",
+    "Cancel__16clRsContinueTaskFv": "fn_8024D7F4",
+    "Confirm__16clRsContinueTaskFv": "fn_8024D764",
+    "@128": "@etb_8001E61C",
+    "@129": "@eti_8002B664",
+    "@127": "jumptable_804EEFBC",
+    "Update__16clRsContinueTaskFv": "fn_8024D3D4",
     "__nw__FUl": "Alloc",
     "__dl__FPv": "MemoryManager_TimedFree",
-    "__ct__10ItemMsgWndFv": "fn_802325FC",
-    "@111": "jumptable_804EEFBC",
-    "@112": "@etb_8001E61C",
-    "@113": "@eti_8002B664"
+    "__ct__10ItemMsgWndFv": "fn_802325FC"
   },
   "src/game/FigureSlot_Tick.cpp": {
     "__ct__12FigureSpriteFiii": "Sprite_InitWithAnim",
@@ -19500,5 +19542,10 @@
     "@62": "@eti_8001F5EC",
     "@84": "@etb_80005948",
     "@85": "@eti_8001F5F8"
+  },
+  "src/game/ContinueSceneDraw.cpp": {
+    "@44": "@etb_8001E614",
+    "@45": "@eti_8002B658",
+    "Draw__16clRsContinueTaskFv": "fn_8024D36C"
   }
 }

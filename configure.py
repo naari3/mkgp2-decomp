@@ -3487,6 +3487,7 @@ DATA_ALIGN4_WEAK_TUS = [
     "game/mapobject/fn_8017CE1C",
     "game/fn_80244524",
     "game/SceneRoleTransitions",
+    "game/ContinueScene",
     "game/fn_802437AC",
     "game/KartPreview",
     "game/Scene_801622C8",
