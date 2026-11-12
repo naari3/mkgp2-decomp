@@ -1,5 +1,6 @@
 typedef struct MaterialNode { char pad[8]; void *material; } MaterialNode;
 #include "game/types/UV.h"
+#include "game/types/gx_data.h"
 typedef struct Wave { float speedU,speedV,scaleU,scaleV,ampU,ampV,freqU,freqV; MaterialNode *node; char pad24[0x10]; int count; unsigned short *indices; UV *output,*input; float phaseU,phaseV; } Wave;
 typedef struct Obj { void *vt,*model; Wave *wave; } Obj;
 
@@ -19,8 +20,8 @@ static inline void UpdateUV(Wave *w) {
     for (i=0;i<w->count;i++) {
         dst = &w->output[i];
         src = &w->input[w->indices[i]];
-        dst->u = w->ampU * fn_80186960(src->u * fu + w->phaseV) + src->u;
-        dst->v = w->ampV * LUT_Sin12Bit(src->v * fv + w->phaseV) + src->v;
+        GXDATA_SET_F32(&dst->u, w->ampU * fn_80186960(GXDATA_F32(&src->u) * fu + w->phaseV) + GXDATA_F32(&src->u));
+        GXDATA_SET_F32(&dst->v, w->ampV * LUT_Sin12Bit(GXDATA_F32(&src->v) * fv + w->phaseV) + GXDATA_F32(&src->v));
     }
 }
 

@@ -594,10 +594,19 @@ dlistutil_extract_private.h, go through include/game/types/gx_data.h:
 - `GXDATA_U16(p)`: the vertex count of a primitive (`p + 1`, also in
   `CmdSize` for command 0x10) and a 16-bit vertex index in a display list;
 - `GXDATA_SET_U16(p, v)`: `SetIndex` (fn_80182ED0.c, fn_801831F8.c);
-- `GXDATA_F32(p)`: the three position floats of a vertex.
+- `GXDATA_F32(p)`: the three position floats of a vertex;
+- `GXDATA_SET_F32(p, v)`: a float written into a vertex buffer the game
+  fills itself each frame.
 
 Plain loads and stores by default (objects unchanged); a port predefines them.
-8-bit indices need nothing. Outside dlistutil the game only hands these
+8-bit indices need nothing. Outside dlistutil two map effects of the Mario
+cup courses compute vertex buffers on the CPU and point the model's vertex
+description at them: clRipple (src/game/objview/fn_8018F1E0.c, positions
+blended between two meshes) and the sea's texture coordinate wave
+(src/game/objview/fn_8018FC24.c). Both read the model's buffer and write
+their own through the macros (2026-11-12; read raw on a little-endian host,
+the ripple meshes became screen-wide polygons flashing for single frames).
+Everything else only hands these
 buffers to GX (`GXSetArray`, `GXCallDisplayList` in GXChannel_*.c). The HSD
 library has one more CPU reader, the shape-animation path of
 src/sysdolphin/baselib/pobj.c (`get_shape_vertex_xyz`, `get_shape_normal_xyz`,

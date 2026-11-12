@@ -1,4 +1,5 @@
 #include "game/objview/morph18f_private.h"
+#include "game/types/gx_data.h"
 extern float LUT_Sin12Bit(float);
 extern void fn_80182578(void *,int);
 extern void DCFlushRange(void *,unsigned int);
@@ -12,7 +13,7 @@ static inline void BlendVector(MorphVec *dst, const MorphVec *b, const MorphVec 
     const float *to=(const float *)a;
     const float *from=(const float *)b;
     for (component=0;component<3;component++) {
-        out[component]=blend*(to[component]-from[component])+from[component];
+        GXDATA_SET_F32(&out[component],blend*(GXDATA_F32(&to[component])-GXDATA_F32(&from[component]))+GXDATA_F32(&from[component]));
     }
 }
 static inline void MorphBlend(MorphNode *n, int side, float blend) {
