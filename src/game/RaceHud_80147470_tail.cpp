@@ -658,6 +658,69 @@ struct ObjPair {
 
 #include "game/types/CountListFull.h"
 
+#include "game/types/clResultTask.h"
+
+inline PtrHolder::~PtrHolder() throw() { delete p; }
+inline HudResHolder::~HudResHolder() throw() { delete p; }
+
+
+class RecSprite : public VObj {
+public:
+    char pad4[0x1C];
+    RecSprite(const char *file, int flag);
+};
+
+struct RecFx {
+    char pad0[0x24];
+    RecFx();
+};
+
+class RecCounterCard : public RecordCounter {
+public:
+    char pad10[0x10];
+    RecCounterCard(int layer, int flag);
+    static RecordCounter *Create(int layer) {
+        return new RecCounterCard(layer, 0);
+    }
+};
+
+class RecCounterFree : public RecordCounter {
+public:
+    char pad10[0x4];
+    RecCounterFree(int layer, int flag);
+    static RecordCounter *Create(int layer) {
+        return new RecCounterFree(layer, 0);
+    }
+};
+
+class clCSResultChallenge : public clCTaskInterface {
+public:
+    unsigned char active;
+    int layer;
+    int state;
+    float t;
+    int mode;
+    PtrHolder m24;
+    PtrHolder m28;
+    float cx;
+    float cy;
+    char pad34[4];
+    float rot;
+    float rotSpeed;
+    Spark sparks[5];
+    RecFx *f90;
+    RecordCounter *counter;
+    HudResHolder step;
+    unsigned char glow;
+    clCSResultChallenge(int layer, unsigned char active, int mode, int id);
+    virtual ~clCSResultChallenge();
+    virtual void Delete();
+    virtual void Update();
+    virtual void Draw();
+    static clCSResultChallenge *CheckType(clYTaskInterface *);
+};
+
+
 extern "C" void fn_80147778(void) {
     lbl_8048EFB8[0] = 320.0f - lbl_80362620[0];
     lbl_8048EFB8[1] = 262.0f - lbl_80362620[1];
@@ -688,9 +751,10 @@ extern const TexIdPair RaceHud_80147470_rodata_80362790[8] = {
 static const unsigned short sRecordDigitTex[10] = {
     0x23E7, 0x23E9, 0x23EB, 0x23ED, 0x23EF, 0x23F1, 0x23F3, 0x23F5, 0x23F7, 0x23F9,
 };
-extern const char lbl_803627E4[] = "clCSResultChallenge";
-extern const char lbl_803627F8[] = "clYTaskInterface";
-extern const char lbl_8036280C[] = "clCTaskInterface";
+/* Fakematch: uncalled diagnostic reproduces the original RTTI-name pool order. */
+clCSResultChallenge *clCSResultChallenge::CheckType(clYTaskInterface *p) {
+    return dynamic_cast<clCSResultChallenge *>(p);
+}
 static const char sRecordCoinModel[] = "mario_coin.dat";
 static const char sRecordKiraModel[] = "k_kira13.dat";
 static const char sRecordParamFmt[] = "Param : %d, Coin : %d\n";
@@ -1053,44 +1117,44 @@ inline void HudResSet_Draw(HudResSet *res) {
     }
 }
 
-inline void Record_DrawSparks(StepHolder *self) {
+inline void Record_DrawSparks(clCSResultChallenge *self) {
     int i;
     for (i = 0; i < 5; i++) {
         if (self->sparks[i].life >= 0) {
             float a = lbl_806D7C38 - self->sparks[i].life / lbl_806D7C88;
-            fn_8013D660(self->m28, self->sparks[i].x, self->sparks[i].y);
-            fn_8013D4B0(self->m28, a);
+            fn_8013D660(((VObjC *)self->m28.p), self->sparks[i].x, self->sparks[i].y);
+            fn_8013D4B0(((VObjC *)self->m28.p), a);
             float sc = lbl_806D7C8C * a;
-            fn_8013D608(self->m28, sc, sc, sc);
-            self->m28->vC();
+            fn_8013D608(((VObjC *)self->m28.p), sc, sc, sc);
+            ((VObjC *)self->m28.p)->vC();
         }
     }
 }
 
 #pragma use_lmw_stmw on
-extern "C" void fn_80147EE8(StepHolder *self) {
+void clCSResultChallenge::Draw() {
     ResCtrl rc;
-    rc.SetColor(self->glow);
+    rc.SetColor(this->glow);
     rc.mode = 2;
     rc.SetSize(lbl_806D7C74, lbl_806D7C78);
     rc.Show(lbl_806D7C7C, lbl_806D7C80, lbl_806D7C38);
-    fn_8011FAFC(&rc, self->layer);
-    fn_8011F994(self->layer);
-    if (self->state == 0 && self->counter->Tick() == 1) {
-        self->counter->v14();
+    fn_8011FAFC(&rc, this->layer);
+    fn_8011F994(this->layer);
+    if (this->state == 0 && this->counter->Tick() == 1) {
+        this->counter->v14();
     }
-    if (IsCardValid() == 1 && self->active == 1) {
-        fn_8014017C(self->f90);
+    if (IsCardValid() == 1 && this->active == 1) {
+        fn_8014017C(this->f90);
     }
-    HudResSet_Draw(self->step);
-    fn_8013D660(self->m24, self->cx, self->cy);
-    fn_8013D570(self->m24, lbl_806D7C84 * self->rot);
-    self->m24->vC();
-    Record_DrawSparks(self);
+    HudResSet_Draw(this->step.p);
+    fn_8013D660(((VObjC *)this->m24.p), this->cx, this->cy);
+    fn_8013D570(((VObjC *)this->m24.p), lbl_806D7C84 * this->rot);
+    ((VObjC *)this->m24.p)->vC();
+    Record_DrawSparks(this);
 }
 #pragma use_lmw_stmw reset
 
-inline void Record_SpawnSpark(StepHolder *self) {
+inline void Record_SpawnSpark(clCSResultChallenge *self) {
     int i;
     for (i = 0; i < 5; i++) {
         if (self->sparks[i].life < 0) {
@@ -1103,191 +1167,99 @@ inline void Record_SpawnSpark(StepHolder *self) {
     }
 }
 
-extern "C" void fn_8014816C(StepHolder *self) {
+void clCSResultChallenge::Update() {
     int i;
-    switch (self->state) {
+    switch (this->state) {
     case 0:
-        if (self->counter->Idle() == 1) {
-            self->counter->Start();
+        if (this->counter->Idle() == 1) {
+            this->counter->Start();
         }
-        if (self->counter->count >= 2) {
-            self->t = lbl_806D7C2C;
-            self->state = 1;
-            if (g_cupId == 13 && self->active == 1) {
-                self->state = 3;
+        if (this->counter->count >= 2) {
+            this->t = lbl_806D7C2C;
+            this->state = 1;
+            if (g_cupId == 13 && this->active == 1) {
+                this->state = 3;
             }
             if (!IsCardValid()) {
-                self->state = 4;
+                this->state = 4;
             }
         }
         break;
     case 3:
-        if (self->t >= 160.0f) {
-            self->state = 1;
-            self->t = lbl_806D7C2C;
+        if (this->t >= 160.0f) {
+            this->state = 1;
+            this->t = lbl_806D7C2C;
         }
         break;
     case 1: {
-        float t = self->t;
+        float t = this->t;
         int frame = (int)t;
         if (t < 60.0f) {
-            self->cy = 550.0f * Sinf_LUT_Wrap(90.0f * (t / 60.0f)) + 200.0f;
-            self->rotSpeed = 30.0f;
+            this->cy = 550.0f * Sinf_LUT_Wrap(90.0f * (t / 60.0f)) + 200.0f;
+            this->rotSpeed = 30.0f;
             if ((frame & 3) == 0) {
-                Record_SpawnSpark(self);
+                Record_SpawnSpark(this);
             }
         } else if (t < 70.0f) {
             if ((frame & 3) == 0) {
-                Record_SpawnSpark(self);
+                Record_SpawnSpark(this);
             }
         } else if (t < 108.0f) {
-            self->rotSpeed -= lbl_806D7C6C;
+            this->rotSpeed -= lbl_806D7C6C;
         } else if (t < 138.0f) {
-            self->glow += 3;
+            this->glow += 3;
         } else {
-            self->t = lbl_806D7C2C;
-            self->state = 2;
+            this->t = lbl_806D7C2C;
+            this->state = 2;
         }
         break;
     }
     case 2:
-        fn_801478B0(self);
+        fn_801478B0((StepHolder *)this);
         break;
     case 4:
-        if (self->t >= 180.0f) {
-            self->t = lbl_806D7C2C;
-            self->state = 5;
+        if (this->t >= 180.0f) {
+            this->t = lbl_806D7C2C;
+            this->state = 5;
         }
         break;
     case 5:
-        self->done = 1;
+        this->fC = 1;
         return;
     }
-    self->rot += self->rotSpeed;
-    if (self->rot > 360.0f) {
-        self->rot -= 360.0f;
+    this->rot += this->rotSpeed;
+    if (this->rot > 360.0f) {
+        this->rot -= 360.0f;
     }
     for (i = 0; i < 5; i++) {
-        if (self->sparks[i].life >= 0) {
-            self->sparks[i].y += 4.0f;
-            if (++self->sparks[i].life > 10) {
-                self->sparks[i].life = -1;
+        if (this->sparks[i].life >= 0) {
+            this->sparks[i].y += 4.0f;
+            if (++this->sparks[i].life > 10) {
+                this->sparks[i].life = -1;
             }
         }
     }
-    if (self->active == 1) {
-        fn_80140344(self->f90);
+    if (this->active == 1) {
+        fn_80140344(this->f90);
     }
-    self->t += lbl_806D7C38;
+    this->t += lbl_806D7C38;
 }
 
-struct RecordPanel {
-    void *vt;
-    char pad4[0x20];
-    PtrHolder f24;
-    PtrHolder f28;
-    char pad2C[0x90 - 0x2C];
-    void *f90;
-    VObjC *f94;
-    HudResHolder f98;
-};
-
-extern "C" RecordPanel *fn_80148648(RecordPanel *self, short flag) {
-    if (self != 0) {
-        self->vt = RecordHud_vtable_8048F020;
-        fn_80140810(self->f90, 1);
-        self->f94->vC();
-        fn_801F8E54();
-        fn_80120A08(0x16D8);
-        fn_80120A08(0x14BA);
-        fn_80120A08(0x16D1);
-        fn_80120A08(0x16D2);
-        HudResHolder_Destroy(&self->f98, 0);
-        PtrHolder_Destroy(&self->f28, 0);
-        PtrHolder_Destroy(&self->f24, 0);
-        if (self != 0) {
-            self->vt = lbl_8048ED10;
-            if (self != 0) {
-                self->vt = lbl_8048ECF8;
-            }
-        }
-        if (flag > 0) {
-            MemoryManager_TimedFree(self);
-        }
-    }
-    return self;
+/* Single-declaration linkage delays weak holder exports until the final
+ * ordinary declaration, preserving their original tail positions. */
+extern "C++" clCSResultChallenge::~clCSResultChallenge() {
+    fn_80140810(f90, 1);
+    ((VObjC *)counter)->vC();
+    fn_801F8E54();
+    fn_80120A08(0x16D8);
+    fn_80120A08(0x14BA);
+    fn_80120A08(0x16D1);
+    fn_80120A08(0x16D2);
 }
-
-class HudRoot {
-public:
-    virtual ~HudRoot();
-    int id;
-    int f8;
-    int fC;
-    HudRoot(int i) : id(i), f8(0), fC(0) {}
-};
-
-class HudTask : public HudRoot {
-public:
-    HudTask(int i) : HudRoot(i) {}
-    virtual ~HudTask();
-};
-
-class RecSprite : public VObj {
-public:
-    char pad4[0x1C];
-    RecSprite(const char *file, int flag);
-};
-
-struct RecFx {
-    char pad0[0x24];
-    RecFx();
-};
-
-class RecCounterCard : public RecordCounter {
-public:
-    char pad10[0x10];
-    RecCounterCard(int layer, int flag);
-    static RecordCounter *Create(int layer) {
-        return new RecCounterCard(layer, 0);
-    }
-};
-
-class RecCounterFree : public RecordCounter {
-public:
-    char pad10[0x4];
-    RecCounterFree(int layer, int flag);
-    static RecordCounter *Create(int layer) {
-        return new RecCounterFree(layer, 0);
-    }
-};
-
-class RecordHud : public HudTask {
-public:
-    unsigned char active;
-    int layer;
-    int state;
-    float t;
-    int mode;
-    PtrHolder m24;
-    PtrHolder m28;
-    float cx;
-    float cy;
-    char pad34[4];
-    float rot;
-    float rotSpeed;
-    Spark sparks[5];
-    RecFx *f90;
-    RecordCounter *counter;
-    HudResHolder step;
-    unsigned char glow;
-    RecordHud(int layer, unsigned char active, int mode, int id);
-    virtual ~RecordHud();
-};
 
 #pragma use_lmw_stmw on
-RecordHud::RecordHud(int ly, unsigned char act, int md, int id)
-    : HudTask(id), active(act), layer(ly), state(0), t(lbl_806D7C2C), mode(md),
+extern "C++" clCSResultChallenge::clCSResultChallenge(int ly, unsigned char act, int md, int id)
+    : clCTaskInterface(id), active(act), layer(ly), state(0), t(lbl_806D7C2C), mode(md),
       m24(new RecSprite(sRecordCoinModel, 0)), m28(new RecSprite(sRecordKiraModel, 1)),
       f90(new RecFx), counter(0), step(new HudResSet(Clamp_Int(GetCoinCount(), 0, 15), md, ly)) {
     int i;
@@ -1809,8 +1781,8 @@ extern "C" void *dtor_8014917C(void *self, short flag) {
     return self;
 }
 
-extern "C" void fn_801491DC(VObj *p) {
-    delete p;
+extern "C++" void clCSResultChallenge::Delete() {
+    delete this;
 }
 
 extern "C" void *fn_80149214(void *t) {
@@ -1818,25 +1790,9 @@ extern "C" void *fn_80149214(void *t) {
     return t;
 }
 
-extern "C" HudResHolder *dtor_80149244(HudResHolder *self, short flag) throw() {
-    if (self != 0) {
-        delete self->p;
-        if (flag > 0) {
-            MemoryManager_TimedFree(self);
-        }
-    }
-    return self;
-}
 
-extern "C" PtrHolder *dtor_80149320(PtrHolder *self, short flag) throw() {
-    if (self != 0) {
-        delete self->p;
-        if (flag > 0) {
-            MemoryManager_TimedFree(self);
-        }
-    }
-    return self;
-}
+
+
 
 __declspec(section ".ctors") static void *const fn_80147778_ctor_ref = (void *)fn_80147778;
 

@@ -2077,7 +2077,7 @@ config.libs = [
             Object(Matching, "game/fn_8012BDF4.c"),
             Object(Matching, "game/SpriteHandle.cpp", mw_version="GC/2.6", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"]),
             Object(Matching, "game/Scene_8014E0C4.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
-            Object(Matching, "game/RaceHud_80147470_tail.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on"], mw_version="GC/2.6"),
+            Object(Matching, "game/RaceHud_80147470_tail.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-rostr"], mw_version="GC/2.6"),
             Object(Matching, "game/clCSResultGP.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-rostr"], mw_version="GC/2.6"),
             Object(Matching, "game/RaceHudResultTA.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-rostr", "-inline deferred"], mw_version="GC/2.6"),
             Object(Matching, "game/CSSceneGetTitle_8014ADB4.cpp", extab_padding=b"\x00\x00", extra_cflags=["-Cpp_exceptions on", "-RTTI on", "-inline deferred,noauto", "-rostr"]),

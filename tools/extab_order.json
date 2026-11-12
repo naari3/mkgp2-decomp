@@ -3605,7 +3605,10 @@
     "fn_80149214",
     "dtor_80149320",
     "dtor_800869D0",
-    "dtor_80082960"
+    "dtor_80082960",
+    "CheckType__19clCSResultChallengeFP16clYTaskInterface",
+    "dtor_801419C8",
+    "fn_80141A24"
   ],
   "src/game/fn_801F0CBC.cpp": {
     "extab": [
