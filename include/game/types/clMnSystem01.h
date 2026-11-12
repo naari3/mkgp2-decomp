@@ -15,7 +15,9 @@ struct clSceneInterface {
 struct clEzTopInterface : clSceneInterface {
     virtual void Destroy();
     int f08, f0C, f10, f14;
-    char pad18[0x30 - 0x18];
+    char pad18[0x28 - 0x18];
+    int f28;
+    int pad2C;
     int f30[3];
     int chara, pad40, mode, f48;
     char pad4C[0x5C - 0x4C];
