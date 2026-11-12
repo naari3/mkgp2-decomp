@@ -1066,6 +1066,14 @@ extern "C" const char CGameCoin_8012BF5C_rodata_80356730[0x418] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, 0x70, 0x00, 0x00, 0x43, 0x48, 0x00, 0x00,
     0x42, 0x8C, 0x00, 0x00, 0x42, 0x8C, 0x00, 0x00,
 };
+#ifdef NON_MATCHING
+static const unsigned int s_shellPathData[15] = {
+0xc29c0000, 0x0, 0xc3460000, 0x42580000, 0x0, 0xc3460000, 0x43988000, 0x0, 0x43a28000, 0xc3858000, 0x0, 0x439f0000, 0x4, 0x0, 0x0
+};
+static const float s_shellStart[3] = { 0.0f, 0.0f, 365.0f };
+static const float s_laneTargets[15] = { -70.5f, -55.0f, 70.5f, -43.5f, -55.0f, -4.0f, 0.0f, -55.0f, -4.0f, 40.0f, -55.0f, -5.5f, 68.5f, -55.0f, 72.0f };
+static const float s_laneYaw[5] = { 12.0f, 6.0f, 0.0f, -8.0f, -16.0f };
+#else
 static const unsigned int s_shellPathData[0x26] = {
     0xC29C0000, 0x00000000, 0xC3460000, 0x42580000, 0x00000000, 0xC3460000,
     0x43988000, 0x00000000, 0x43A28000, 0xC3858000, 0x00000000, 0x439F0000,
@@ -1075,6 +1083,7 @@ static const unsigned int s_shellPathData[0x26] = {
     0x42890000, 0xC25C0000, 0x42900000, 0x41400000, 0x40C00000, 0x00000000,
     0xC1000000, 0xC1800000,
 };
+#endif
 /* The course parameters used when the mini game has none (KPCourseData /
  * CoinCourseParams below). */
 static const struct KPDefaultCourse {
@@ -1086,12 +1095,19 @@ static const struct KPDefaultCourse {
     unsigned char pad11[3];
 } s_defaultCourse = { 120, 5.0f, 20, 120, 1, { 0, 0, 0 } };
 extern "C" const char lbl_80356BF4[12] = "clCGameKP";
+#ifdef NON_MATCHING
+extern "C" const char CGameCoin_8012BF5C_rodata_80356C00[12] = "clJobRunner";
+static const char s_hitNo[16] = "Hit No = %d\n";
+static const char s_startCoin[44] = "Start to KPCoin. Coin kind is %d.  %s - %d\n";
+static const char s_coinHpp[16] = "CGameCoin.hpp";
+#else
 extern "C" const unsigned int CGameCoin_8012BF5C_rodata_80356C00[0x16] = {
     TEXT_WORD('c', 'l', 'J', 'o'), TEXT_WORD('b', 'R', 'u', 'n'), TEXT_WORD('n', 'e', 'r', 0), TEXT_WORD('H', 'i', 't', ' '), TEXT_WORD('N', 'o', ' ', '='), TEXT_WORD(' ', '%', 'd', '\n'),
     0x00000000, TEXT_WORD('S', 't', 'a', 'r'), TEXT_WORD('t', ' ', 't', 'o'), TEXT_WORD(' ', 'K', 'P', 'C'), TEXT_WORD('o', 'i', 'n', '.'), TEXT_WORD(' ', 'C', 'o', 'i'),
     TEXT_WORD('n', ' ', 'k', 'i'), TEXT_WORD('n', 'd', ' ', 'i'), TEXT_WORD('s', ' ', '%', 'd'), TEXT_WORD('.', ' ', ' ', '%'), TEXT_WORD('s', ' ', '-', ' '), TEXT_WORD('%', 'd', '\n', 0),
     TEXT_WORD('C', 'G', 'a', 'm'), TEXT_WORD('e', 'C', 'o', 'i'), TEXT_WORD('n', '.', 'h', 'p'), TEXT_WORD('p', 0, 0, 0),
 };
+#endif
 extern "C" const char DefeatDemo_Update_rodata_80356C58[40] = "!(jobj->flags & JOBJ_USE_QUATERNION)";
 static const char s_lakituFile[20] = "jyugemu_start.dat";
 static const char s_shellFile[24] = "it_a_03_black_shell.dat";
@@ -4810,32 +4826,19 @@ extern "C" void CGameCoin_ProcessInput(CoinInput *s)
 }
 
 #ifdef NON_MATCHING
-/* Equivalent C++ for CGameCoin_Update (kept as asm in the matching build).
- * Written from the asm; field names past 0x80 are descriptive guesses. */
+#pragma push
+#pragma inline_max_size(10000)
+#pragma inline_max_total_size(100000)
+/* NON_MATCHING: equivalent C++ for CGameCoin_Update; native probe 99.21%.
+ * Remaining differences are register allocation. Field names past 0x80 are
+ * descriptive guesses. The matching build retains the original asm. */
 struct CoinCourseParams {
     int shellWait;             /* 0x00 */
     unsigned char pad4[0xC];
     unsigned char loseShellOnHit; /* 0x10 */
 };
 
-struct CGameCoinTail {         /* CGameCoin + 0x80 */
-    int demoFrame;             /* 0x80 */
-    CoinCourseParams *course;  /* 0x84 */
-    int lane;                  /* 0x88 */
-    int laneTarget;            /* 0x8C */
-    float laneT;               /* 0x90 */
-    float jumpT;               /* 0x94 */
-    float hitT;                /* 0x98 */
-    int shellWait;             /* 0x9C */
-    float yaw;                 /* 0xA0 */
-    void *spinA;               /* 0xA4 */
-    void *spinB;               /* 0xA8 */
-    void *spinC;               /* 0xAC */
-    CoinJObj *wheelA;          /* 0xB0 */
-    CoinJObj *wheelB;          /* 0xB4 */
-    float wheelAngleA;         /* 0xB8 */
-    float wheelAngleB;         /* 0xBC */
-};
+
 
 /* same vtable as CoinInputPlayer, with the slot at 0x28 typed */
 struct CoinUpdatePad {
@@ -4850,36 +4853,15 @@ struct CoinUpdatePad {
     virtual unsigned int Buttons(int mask);
 };
 
-#define COIN_STR_HIT_NO     ((const char *)CGameCoin_8012BF5C_rodata_80356C00 + 0x0C) /* "Hit No = %d\n" */
-#define COIN_STR_START_COIN ((const char *)CGameCoin_8012BF5C_rodata_80356C00 + 0x1C) /* "Start to KPCoin. Coin kind is %d.  %s - %d\n" */
-#define COIN_STR_HPP        ((const char *)CGameCoin_8012BF5C_rodata_80356C00 + 0x48) /* "CGameCoin.hpp" */
-#define COIN_SHELL_START    ((const float *)&s_shellPathData[15])
-#define COIN_LANE_TARGETS   ((const float *)&s_shellPathData[18]) /* 5 x Vec */
-#define COIN_LANE_YAW       ((const float *)&s_shellPathData[33]) /* 5 floats */
-
-static inline void CoinJObj_SetupMatrixNM(CoinJObj *jobj) {
-    unsigned int flags;
-    unsigned char clean;
-
-    if (jobj == 0) { /* HSD_JObjGetMtxPtr */
-        __assert(lbl_806D7174, 0x47C, lbl_806D717C);
-    }
-    if (jobj == 0) { /* HSD_JObjSetupMatrix */
-        __assert(lbl_806D7174, 0x25D, lbl_806D717C);
-    }
-    flags = jobj->flags;
-    clean = 0;
-    if (!(flags & 0x00800000) && (flags & 0x40)) {
-        clean = 1;
-    }
-    if (clean) {
-        HSD_JObjSetupMatrixSub(jobj);
-    }
-}
+#define COIN_STR_HIT_NO s_hitNo
+#define COIN_STR_START_COIN s_startCoin
+#define COIN_STR_HPP s_coinHpp
+#define COIN_SHELL_START s_shellStart
+#define COIN_LANE_TARGETS s_laneTargets
+#define COIN_LANE_YAW s_laneYaw
 
 static inline void CoinParticleManager_Spawn(CoinParticleManager *pm, int kind, const CoinVec &pos, float angle) {
     int idx;
-    CoinParticle *p;
 
     if (!IsCardValid()) {
         return;
@@ -4890,48 +4872,63 @@ static inline void CoinParticleManager_Spawn(CoinParticleManager *pm, int kind, 
     }
     SoundMgr_PlaySE(0xAB);
     idx = 0;
-    if (pm->particles[0].active == 0) {
-        idx = 0;
-    } else if (pm->particles[1].active == 0) {
-        idx = 1;
-    } else if (pm->particles[2].active == 0) {
-        idx = 2;
-    } else if (pm->particles[3].active == 0) {
-        idx = 3;
-    } else if (pm->particles[4].active == 0) {
-        idx = 4;
-    } else if (pm->particles[5].active == 0) {
-        idx = 5;
+    for (int i = 0; i < 6; i++) {
+        if (pm->particles[i].active == 0) {
+            idx = i;
+            break;
+        }
     }
-    p = &pm->particles[idx];
-    p->active = 1;
-    p->timer = 0;
-    p->alpha = 0.0f;
-    p->rotY = 0.0f;
-    p->pos[0] = pos.x;
-    p->pos[1] = pos.y;
-    p->pos[2] = pos.z;
-    p->vel[0] = 3.0f * Cosf_LUT_Wrap(angle);
-    p->vel[1] = 3.0f;
-    p->vel[2] = 3.0f * Sinf_LUT_Wrap(angle);
+    pm->particles[idx].active = 1;
+    pm->particles[idx].timer = 0;
+    pm->particles[idx].alpha = 0.0f;
+    pm->particles[idx].rotY = 0.0f;
+    pm->particles[idx].pos[0] = pos.x;
+    pm->particles[idx].pos[1] = pos.y;
+    pm->particles[idx].pos[2] = pos.z;
+    pm->particles[idx].vel[0] = 3.0f * Cosf_LUT_Wrap(angle);
+    pm->particles[idx].vel[1] = 3.0f;
+    pm->particles[idx].vel[2] = 3.0f * Sinf_LUT_Wrap(angle);
     switch (kind) {
     case 0:
-        p->vel[0] *= 0.9f;
-        p->vel[2] *= 0.9f;
+        pm->particles[idx].vel[0] *= 0.9f;
+        pm->particles[idx].vel[2] *= 0.9f;
         break;
     case 1:
-        p->vel[0] *= 1.45f;
-        p->vel[2] *= 1.45f;
-        p->vel[1] *= 0.73f;
+        pm->particles[idx].vel[0] *= 1.45f;
+        pm->particles[idx].vel[2] *= 1.45f;
+        pm->particles[idx].vel[1] *= 0.73f;
         break;
     case 2:
-        p->vel[0] *= 0.9f;
-        p->vel[2] *= 0.9f;
-        p->vel[1] *= 1.4f;
+        pm->particles[idx].vel[0] *= 0.9f;
+        pm->particles[idx].vel[2] *= 0.9f;
+        pm->particles[idx].vel[1] *= 1.4f;
         pm->trailCount = 10;
         break;
     }
 }
+
+static inline unsigned char CoinShell_IsReady(CoinShell *shell) {
+    if (shell->state == 3 && shell->t >= 60.0f) return 1;
+    return 0;
+}
+
+static inline unsigned char CoinShell_IsFlying(CoinShell *shell) {
+    if (shell->state == 4) return 1;
+    return 0;
+}
+
+static inline unsigned char CoinHitIsNear(int hit) {
+    unsigned char near = 1;
+    if (!(hit == 0 || hit == 1)) near = 0;
+    return near;
+}
+
+/* Copy the SDK vector as an aggregate, preserving its component bits. */
+#pragma cplusplus off
+static inline void CoinVec_Copy(struct CoinVec *dst, const struct CoinVec *src) {
+    *dst = *src;
+}
+#pragma cplusplus on
 
 static inline void CoinShell_Aim(CoinShell *ss, const float *target) {
     CoinVec *aim = (CoinVec *)((char *)ss + 0x50);
@@ -4942,38 +4939,102 @@ static inline void CoinShell_Aim(CoinShell *ss, const float *target) {
     fn_801734B0(ss->effect, aim);
 }
 
+static inline void CoinShell_UpdateAim(CoinShell *ss, const float *target) {
+    if (ss->state == 3) CoinShell_Aim(ss, target);
+}
+
+static inline void CoinShell_Arm(CoinShell *ss, const float *target) {
+    if (ss->state == 2) {
+        CoinShell_Aim(ss, target);
+        fn_8017351C(ss->effect);
+        ss->state = 3;
+        ss->t = 0.0f;
+        ss->alpha = 0.0f;
+        Shell_AttachToJoint(ss);
+    }
+}
+
+static inline unsigned char KoopaFireball_HitsPlayer(KoopaFireball *fb, const CoinVec &pos) {
+    CoinVec d;
+    float dy;
+    for (int i = 0; i < 64; i++) {
+        if (fb->flames[i].life < 0.0f) continue;
+        Vec3_Subtract((CoinVec *)&pos, &fb->flames[i].pos, &d);
+        d.y = 0.0f;
+        if (!(PSVECSquareMag(&d) < 400.0f)) continue;
+        dy = pos.y - d.y;
+        if (dy < 0.0f) dy = -dy;
+        if (dy < 5.0f) return 1;
+    }
+    return 0;
+}
+
+static inline void CoinShell_EndFlight(CoinShell *ss) {
+    if (ss->state == 4) {
+        ss->state = 5;
+        ss->t = 0.0f;
+        ss->alpha = 1.0f;
+        SoundMgr_PlaySE(0xC9);
+    }
+}
+
+static inline void CoinShell_LaunchFromJoint(CoinShell *ss) {
+    float m[3][4];
+    CoinJObj *j = ss->joint;
+    if (j != 0) {
+        CoinVec *aim = (CoinVec *)((char *)ss + 0x50);
+        CoinJObj_SetupMatrix(j);
+        PSMTXRotRad(ss->mtx, 'Y', 3.1415927f);
+        PSMTXScale(m, 1.0f, 1.0f, 1.0f);
+        PSMTXConcat(ss->mtx, m, ss->mtx);
+        ss->mtx[0][3] = 2.5f * ss->mtx[0][1] + j->mtx[0][3];
+        ss->mtx[1][3] = 2.5f * ss->mtx[1][1] + j->mtx[1][3];
+        ss->mtx[2][3] = 2.5f * ss->mtx[2][1] + j->mtx[2][3];
+        ss->vel.x = aim->x - ss->mtx[0][3];
+        ss->vel.y = aim->y - ss->mtx[1][3];
+        ss->vel.z = aim->z - ss->mtx[2][3];
+        Vec3_Normalize(&ss->vel, &ss->vel);
+    }
+}
+
+static inline void CoinShell_Launch(CoinShell *ss) {
+    if (CoinShell_IsReady(ss)) {
+        fn_80173500(ss->effect);
+        ss->state = 4;
+        ss->t = 0.0f;
+        ss->alpha = 1.0f;
+        ss->landed = 0;
+        CoinShell_LaunchFromJoint(ss);
+    }
+}
+
 static inline float CoinQuantize(float v) {
     return (float)(int)(10000.0f * v) / 10000.0f;
 }
 
 extern "C" int CGameCoin_Update(CGameCoin *self) { /* 0x8012C538 size:0x2164 */
-    CGameCoinTail *t = (CGameCoinTail *)self->pad80;
-    float (*kartMtx)[4] = (float (*)[4])self->pad18;
     void *bus;
     CoinUpdatePad *pad;
     CoinShell *ss;
-    CoinJObj *j;
     CoinVec pos;
-    CoinVec eye;
-    CoinVec at;
-    CoinVec eye2;
-    CoinVec at2;
     CoinVec side;
     CoinVec fwd;
+    CoinVec eye;
+    CoinVec at;
     CoinVec shellPos;
-    CoinVec d;
     CoinVec coinPos;
+    CoinVec eye2;
+    CoinVec at2;
     float tmp[3][4];
+    float spawnMtx[3][4];
     float steer;
     float accel;
     float brake;
     float steer2;
-    float dy;
     unsigned char busy;
     unsigned char hitFlame;
     int hit;
-    int kind;
-    int i;
+    bool kind;
     int n;
     int coins;
     int *divisor;
@@ -5005,7 +5066,7 @@ extern "C" int CGameCoin_Update(CGameCoin *self) { /* 0x8012C538 size:0x2164 */
         ItemEffectBus_SnapshotAndFullReset(bus);
         if (IsRaceStarted()) {
             busy = 0;
-            if (t->jumpT >= 0.0f || t->hitT >= 0.0f || t->lane != t->laneTarget) {
+            if (self->update.jumpT >= 0.0f || self->update.hitT >= 0.0f || self->update.lane != self->update.laneTarget) {
                 busy = 1;
             }
             brake = pad->Brake();
@@ -5018,22 +5079,22 @@ extern "C" int CGameCoin_Update(CGameCoin *self) { /* 0x8012C538 size:0x2164 */
             ss = (CoinShell *)self->shellSet;
             switch (ss->state) {
             case 0:
-                if (t->shellWait > 0) {
-                    t->shellWait--;
+                if (self->update.shellWait > 0) {
+                    self->update.shellWait--;
                 } else if (ss->state == 0) {
                     ss->state = 1;
                     ss->t = 0.0f;
                     ss->alpha = 1.0f;
                     PSMTXRotRad(ss->mtx, 'Y', -1.5707964f);
-                    PSMTXScale(tmp, 0.8f, 0.8f, 0.8f);
-                    PSMTXConcat(ss->mtx, tmp, ss->mtx);
+                    PSMTXScale(spawnMtx, 0.8f, 0.8f, 0.8f);
+                    PSMTXConcat(ss->mtx, spawnMtx, ss->mtx);
                     ss->mtx[0][3] = COIN_SHELL_START[0];
                     ss->mtx[1][3] = 50.0f + COIN_SHELL_START[1];
                     ss->mtx[2][3] = COIN_SHELL_START[2];
                 }
                 break;
             case 1:
-                if (ss->mtx[1][3] < 12.0f + kartMtx[1][3]) {
+                if (ss->mtx[1][3] < 12.0f + self->kartMtx[1][3]) {
                     if (ss->state == 1) {
                         ss->state = 2;
                         ss->t = 0.0f;
@@ -5043,64 +5104,22 @@ extern "C" int CGameCoin_Update(CGameCoin *self) { /* 0x8012C538 size:0x2164 */
                 break;
             case 2:
                 if (fn_8012BA38(self->m48)) {
-                    ss = (CoinShell *)self->shellSet;
-                    if (ss->state == 2) {
-                        CoinShell_Aim(ss, COIN_LANE_TARGETS + t->laneTarget * 3);
-                        fn_8017351C(ss->effect);
-                        ss->state = 3;
-                        ss->t = 0.0f;
-                        ss->alpha = 0.0f;
-                        j = ss->joint;
-                        if (j != 0) {
-                            CoinJObj_SetupMatrixNM(j);
-                            PSMTXCopy(j->mtx, ss->mtx);
-                            PSMTXRotRad(tmp, 'Z', -1.5707964f);
-                            PSMTXConcat(ss->mtx, tmp, ss->mtx);
-                            PSMTXScale(tmp, 1.0f, 1.0f, 1.0f);
-                            PSMTXConcat(ss->mtx, tmp, ss->mtx);
-                            ss->mtx[0][3] = 2.5f * ss->mtx[0][1] + j->mtx[0][3];
-                            ss->mtx[1][3] = 2.5f * ss->mtx[1][1] + j->mtx[1][3];
-                            ss->mtx[2][3] = 2.5f * ss->mtx[2][1] + j->mtx[2][3];
-                        }
-                    }
-                    t->shellWait = t->course->shellWait;
+                    CoinShell_Arm((CoinShell *)self->shellSet, COIN_LANE_TARGETS + self->update.laneTarget * 3);
+                    self->update.shellWait = self->update.course->shellWait;
                     fn_801699D8(0, 1);
                     fn_801699D8(1, 1);
                 }
                 break;
             case 3:
                 if (!busy) {
-                    if (ss->state == 3 && ss->t >= 60.0f
+                    if (CoinShell_IsReady(ss)
                         && Input_IsItemButtonPressed(pad->Buttons(0xE3FF))
                         && fn_8012B9AC(self->m48)) {
                         fn_801699D8(0, 0);
                         fn_801699D8(1, 0);
                         SetRumbleMode(0, 4, 0x1E);
                         SoundMgr_PlaySE(0x68);
-                        ss = (CoinShell *)self->shellSet;
-                        if (ss->state == 3 && ss->t >= 60.0f) {
-                            CoinVec *aim = (CoinVec *)((char *)ss + 0x50);
-
-                            fn_80173500(ss->effect);
-                            ss->state = 4;
-                            ss->t = 0.0f;
-                            ss->alpha = 1.0f;
-                            ss->landed = 0;
-                            j = ss->joint;
-                            if (j != 0) {
-                                CoinJObj_SetupMatrixNM(j);
-                                PSMTXRotRad(ss->mtx, 'Y', 3.1415927f);
-                                PSMTXScale(tmp, 1.0f, 1.0f, 1.0f);
-                                PSMTXConcat(ss->mtx, tmp, ss->mtx);
-                                ss->mtx[0][3] = 2.5f * ss->mtx[0][1] + j->mtx[0][3];
-                                ss->mtx[1][3] = 2.5f * ss->mtx[1][1] + j->mtx[1][3];
-                                ss->mtx[2][3] = 2.5f * ss->mtx[2][1] + j->mtx[2][3];
-                                ss->vel.x = aim->x - ss->mtx[0][3];
-                                ss->vel.y = aim->y - ss->mtx[1][3];
-                                ss->vel.z = aim->z - ss->mtx[2][3];
-                                Vec3_Normalize(&ss->vel, &ss->vel);
-                            }
-                        }
+                        CoinShell_Launch((CoinShell *)self->shellSet);
                         busy = 1;
                     }
                 }
@@ -5128,7 +5147,7 @@ extern "C" int CGameCoin_Update(CGameCoin *self) { /* 0x8012C538 size:0x2164 */
                     fn_8012BAC4(self->m48);
                     if (fn_8016DEF4(self->m70) < 4) {
                         DebugPrintf(COIN_STR_HIT_NO, hit);
-                        kind = (hit <= 1) ? 1 : 0;
+                        kind = CoinHitIsNear(hit);
                         CoinParticleManager_Spawn((CoinParticleManager *)self->particles, kind, shellPos, 30.0f);
                         CoinParticleManager_Spawn((CoinParticleManager *)self->particles, kind, shellPos, 0.0f);
                         CoinParticleManager_Spawn((CoinParticleManager *)self->particles, kind, shellPos, -30.0f);
@@ -5138,7 +5157,7 @@ extern "C" int CGameCoin_Update(CGameCoin *self) { /* 0x8012C538 size:0x2164 */
             }
 
             if (!busy && InputCmd_GetDetectedFlag(self->input)) {
-                t->jumpT = 0.0f;
+                self->update.jumpT = 0.0f;
                 TornadoEffect_SetFlagC0(self->effects);
                 SoundObj_PlaySE_Direct(self->audio, 0x56);
                 fn_8012BB58(self->m48);
@@ -5147,21 +5166,18 @@ extern "C" int CGameCoin_Update(CGameCoin *self) { /* 0x8012C538 size:0x2164 */
             if (!busy && SINGLETON_INSTANCE(g_pInputState) != 0) {
                 dir = ((CoinInput *)SINGLETON_INSTANCE(g_pInputState))->dir;
                 if (dir == 1) {
-                    if (t->lane < 4) {
-                        t->laneTarget = t->lane + 1;
-                        t->laneT = 0.0f;
+                    if (self->update.lane < 4) {
+                        self->update.laneTarget = self->update.lane + 1;
+                        self->update.laneT = 0.0f;
                     }
                 } else if (dir == -1) {
-                    if (t->lane > 0) {
-                        t->laneTarget = t->lane - 1;
-                        t->laneT = 0.0f;
+                    if (self->update.lane > 0) {
+                        self->update.laneTarget = self->update.lane - 1;
+                        self->update.laneT = 0.0f;
                     }
                 }
-                if (t->lane != t->laneTarget) {
-                    ss = (CoinShell *)self->shellSet;
-                    if (ss->state == 3) {
-                        CoinShell_Aim(ss, COIN_LANE_TARGETS + t->laneTarget * 3);
-                    }
+                if (self->update.lane != self->update.laneTarget) {
+                    CoinShell_UpdateAim((CoinShell *)self->shellSet, COIN_LANE_TARGETS + self->update.laneTarget * 3);
                     TornadoEffect_SetFlagC0(self->effects);
                     SoundObj_PlaySE_Direct(self->audio, 0x56);
                     fn_8012BB58(self->m48);
@@ -5169,65 +5185,47 @@ extern "C" int CGameCoin_Update(CGameCoin *self) { /* 0x8012C538 size:0x2164 */
             }
         }
 
-        if (t->jumpT >= 0.0f && self->demoMode == 0) {
-            t->jumpT += 1.0f;
-            if (t->jumpT < 30.0f) {
-                pos.y += 10.0f * LUT_Sin12Bit(6.0f * t->jumpT);
+        if (self->update.jumpT >= 0.0f && self->demoMode == 0) {
+            self->update.jumpT += 1.0f;
+            if (self->update.jumpT < 30.0f) {
+                pos.y += 10.0f * LUT_Sin12Bit(6.0f * self->update.jumpT);
             }
-            if (30.0f == t->jumpT) {
+            if (30.0f == self->update.jumpT) {
                 TornadoEffect_ClearFlagC0AndSetC4(self->effects, 0.5f);
                 SoundObj_PlaySE_Direct(self->audio, 0x57);
-            } else if (t->jumpT > 35.0f) {
-                t->jumpT = -1.0f;
+            } else if (self->update.jumpT > 35.0f) {
+                self->update.jumpT = -1.0f;
             }
         }
-        if (t->lane != t->laneTarget) {
-            t->laneT += 1.0f;
-            if (t->laneT < 15.0f) {
-                t->yaw = COIN_LANE_YAW[t->lane]
-                    + t->laneT * (COIN_LANE_YAW[t->laneTarget] - COIN_LANE_YAW[t->lane]) / 15.0f;
-                pos.y += 5.0f * LUT_Sin12Bit(12.0f * t->laneT);
+        if (self->update.lane != self->update.laneTarget) {
+            self->update.laneT += 1.0f;
+            if (self->update.laneT < 15.0f) {
+                self->update.yaw = COIN_LANE_YAW[self->update.lane]
+                    + self->update.laneT * (COIN_LANE_YAW[self->update.laneTarget] - COIN_LANE_YAW[self->update.lane]) / 15.0f;
+                pos.y += 5.0f * LUT_Sin12Bit(12.0f * self->update.laneT);
             } else {
-                t->yaw = COIN_LANE_YAW[t->laneTarget];
+                self->update.yaw = COIN_LANE_YAW[self->update.laneTarget];
             }
-            if (15.0f == t->laneT) {
+            if (15.0f == self->update.laneT) {
                 TornadoEffect_ClearFlagC0AndSetC4(self->effects, 0.2f);
                 SoundObj_PlaySE_Direct(self->audio, 0x57);
-            } else if (t->laneT > 20.0f) {
-                t->lane = t->laneTarget;
+            } else if (self->update.laneT > 20.0f) {
+                self->update.lane = self->update.laneTarget;
             }
         }
 
-        PSMTXScale(kartMtx, 1.0f, 1.0f, 1.0f);
-        PSMTXRotRad(tmp, 'Y', 0.017453292f * (180.0f + t->yaw));
-        PSMTXConcat(tmp, kartMtx, kartMtx);
+        PSMTXScale(self->kartMtx, 1.0f, 1.0f, 1.0f);
+        PSMTXRotRad(tmp, 'Y', 0.017453292f * (180.0f + self->update.yaw));
+        PSMTXConcat(tmp, self->kartMtx, self->kartMtx);
         PSMTXTrans(tmp, pos.x, pos.y, pos.z);
-        PSMTXConcat(tmp, kartMtx, kartMtx);
+        PSMTXConcat(tmp, self->kartMtx, self->kartMtx);
 
         BossKoopa_UpdateAnim(self->koopa);
         fb = self->koopa->fireball;
-        hitFlame = 0;
-        for (i = 0; i < 64; i++) {
-            if (fb->flames[i].life < 0.0f) {
-                continue;
-            }
-            Vec3_Subtract(&pos, &fb->flames[i].pos, &d);
-            d.y = 0.0f;
-            if (!(PSVECSquareMag(&d) < 400.0f)) {
-                continue;
-            }
-            dy = pos.y - d.y;
-            if (dy < 0.0f) {
-                dy = -dy;
-            }
-            if (dy < 5.0f) {
-                hitFlame = 1;
-                break;
-            }
-        }
+        hitFlame = KoopaFireball_HitsPlayer(fb, pos);
         if (hitFlame) {
             ss = (CoinShell *)self->shellSet;
-            if (ss->state == 3 && t->course->loseShellOnHit) {
+            if (ss->state == 3 && self->update.course->loseShellOnHit) {
                 fn_801699D8(0, 0);
                 fn_801699D8(1, 0);
                 ss = (CoinShell *)self->shellSet;
@@ -5239,24 +5237,22 @@ extern "C" int CGameCoin_Update(CGameCoin *self) { /* 0x8012C538 size:0x2164 */
                 fn_8012B924(self->m48);
             }
             ss = (CoinShell *)self->shellSet;
-            if (ss->state == 4) {
-                ss->state = 5;
-                ss->t = 0.0f;
-                ss->alpha = 1.0f;
-                SoundMgr_PlaySE(0xC9);
+            if (CoinShell_IsFlying(ss)) {
+                CoinShell_EndFlight(ss);
             }
             ItemEffectBus_ApplyItemEventSet(*(void **)((char *)self->driver + 0x304), 0x5F, 1);
             TornadoEffect_ApplyItemVisual_Secondary(self->effects, 0x5F, 1);
             SoundObj_PlaySE(self->audio, 0xC);
             fn_8012BD2C(self->m48);
-            t->hitT = 0.0f;
+            self->update.hitT = 0.0f;
         }
-        if (t->hitT >= 0.0f) {
-            t->hitT += 1.0f;
-            if (t->hitT > 60.0f) {
+        if (self->update.hitT >= 0.0f) {
+            float hitT = self->update.hitT + 1.0f;
+            self->update.hitT = hitT;
+            if (hitT > 60.0f) {
                 ItemEffectBus_ApplyItemEventClear(*(void **)((char *)self->driver + 0x304), 0x5F);
                 TornadoEffect_ApplyItemVisual_Primary(self->effects, 0x5F);
-                t->hitT = -1.0f;
+                self->update.hitT = -1.0f;
             }
         }
         RenderObj_ItemStateMachine_Timed(self->driver, 0, 0.0f, 0.0f);
@@ -5265,34 +5261,34 @@ extern "C" int CGameCoin_Update(CGameCoin *self) { /* 0x8012C538 size:0x2164 */
         fn_8012A71C(self->m48, -steer);
         ItemEffectBus_TickTornadoCooldown(*(void **)((char *)self->driver + 0x304));
 
-        eye.x = at.x = 0.0f;
-        eye.y = at.y = 0.0f;
-        eye.z = at.z = 370.0f;
-        side.x = kartMtx[0][1];
-        side.y = kartMtx[1][1];
-        side.z = kartMtx[2][1];
-        fwd.x = kartMtx[0][2];
-        fwd.y = kartMtx[1][2];
-        fwd.z = kartMtx[2][2];
+        at.x = eye.x = 0.0f;
+        at.y = eye.y = 0.0f;
+        at.z = eye.z = 370.0f;
+        side.x = self->kartMtx[0][1];
+        side.y = self->kartMtx[1][1];
+        side.z = self->kartMtx[2][1];
+        fwd.x = self->kartMtx[0][2];
+        fwd.y = self->kartMtx[1][2];
+        fwd.z = self->kartMtx[2][2];
         Vec3_Normalize(&side, &side);
         Vec3_Normalize(&fwd, &fwd);
         eye.x = eye.x - 40.0f * fwd.x;
         eye.y = eye.y - 40.0f * fwd.y;
         eye.z = eye.z - 40.0f * fwd.z;
-        eye.y = eye.y + 23.0f;
-        at.y = at.y + 17.3f;
+        eye.y += 23.0f;
+        at.y += 17.3f;
         CObj_LoadIntoGX(self->scene, &eye);
         CObj_ApplyViewport(self->scene, &at);
     } else if (self->defeated == 0) {
-        PSMTXScale(kartMtx, 1.0f, 1.0f, 1.0f);
+        PSMTXScale(self->kartMtx, 1.0f, 1.0f, 1.0f);
         PSMTXRotRad(tmp, 'Y', 3.1415927f);
-        PSMTXConcat(tmp, kartMtx, kartMtx);
+        PSMTXConcat(tmp, self->kartMtx, self->kartMtx);
         PSMTXTrans(tmp, pos.x, pos.y, pos.z);
-        PSMTXConcat(tmp, kartMtx, kartMtx);
+        PSMTXConcat(tmp, self->kartMtx, self->kartMtx);
         RenderObj_ItemStateMachine_Timed(self->driver, 0, 0.0f, 0.0f);
         TornadoEffect_Tick(self->effects, GetDisplayBufferIndex());
         fn_8012A71C(self->m48, 0.0f);
-        ChallengeGoalCamera_Update(self->goalCam, self->scene, kartMtx);
+        ChallengeGoalCamera_Update(self->goalCam, self->scene, self->kartMtx);
     }
 
     Fog_UpdateFromCourseScene3D();
@@ -5301,19 +5297,19 @@ extern "C" int CGameCoin_Update(CGameCoin *self) { /* 0x8012C538 size:0x2164 */
     self->particles->Begin(); /* vtable slot 0xC: the particle manager's update */
     fn_8016DA78(self->m70);
     fn_8016EC80(self->m74);
-    fn_80182B50(t->spinA, 0.0f, 0.002f);
-    fn_80182B50(t->spinB, 0.0f, -0.002f);
-    fn_80182B50(t->spinC, 0.0f, -0.002f);
-    t->wheelAngleA += 0.00087266444f;
-    if (t->wheelAngleA >= 6.283184f) {
-        t->wheelAngleA -= 6.283184f;
+    fn_80182B50(self->update.spinA, 0.0f, 0.002f);
+    fn_80182B50(self->update.spinB, 0.0f, -0.002f);
+    fn_80182B50(self->update.spinC, 0.0f, -0.002f);
+    self->update.wheelAngleA += 0.00087266444f;
+    if (self->update.wheelAngleA >= 6.283184f) {
+        self->update.wheelAngleA -= 6.283184f;
     }
-    t->wheelAngleB += 0.0005817763f;
-    if (t->wheelAngleB >= 6.283184f) {
-        t->wheelAngleB -= 6.283184f;
+    self->update.wheelAngleB += 0.0005817763f;
+    if (self->update.wheelAngleB >= 6.283184f) {
+        self->update.wheelAngleB -= 6.283184f;
     }
-    CoinJObj_SetRotationY(t->wheelA, t->wheelAngleA);
-    CoinJObj_SetRotationY(t->wheelB, t->wheelAngleB);
+    CoinJObj_SetRotationY(self->update.wheelA, self->update.wheelAngleA);
+    CoinJObj_SetRotationY(self->update.wheelB, self->update.wheelAngleB);
 
     if (IsRaceStarted() && self->demoMode == 0) {
         if (fn_8016DF50(self->m70)) {
@@ -5336,7 +5332,7 @@ extern "C" int CGameCoin_Update(CGameCoin *self) { /* 0x8012C538 size:0x2164 */
     TransitionEffect_Tick(SINGLETON_INSTANCE(lbl_806D109C));
 
     if (self->demoMode != 0) {
-        if (t->demoFrame == 0) {
+        if (self->update.demoFrame == 0) {
             coins = 0;
             n = fn_8016DEF4(self->m70);
             divisor = NokoNokoChallenge_GetCoinDivisor();
@@ -5374,8 +5370,8 @@ extern "C" int CGameCoin_Update(CGameCoin *self) { /* 0x8012C538 size:0x2164 */
         } else if (self->defeated) {
             DefeatDemo_Update(self->defeatDemo);
         }
-        t->demoFrame++;
-        if (t->demoFrame == 200 && self->defeated == 1) {
+        self->update.demoFrame++;
+        if (self->update.demoFrame == 200 && self->defeated == 1) {
             CObj_ApplyScissor(self->defeatDemo->scene, &coinPos);
             CoinParticleManager_Spawn((CoinParticleManager *)self->particles, 2, coinPos, 10.0f);
             CoinParticleManager_Spawn((CoinParticleManager *)self->particles, 2, coinPos, 25.0f);
@@ -5391,8 +5387,8 @@ extern "C" int CGameCoin_Update(CGameCoin *self) { /* 0x8012C538 size:0x2164 */
         CObj_LoadProjMatrix(self->scene, &eye);
         CObj_ApplyScissor(self->scene, &at);
         ItemObjectManager_Update();
-        at2 = at;
-        eye2 = eye;
+        CoinVec_Copy(&at2, &at);
+        CoinVec_Copy(&eye2, &eye);
         VfxSlotMgr_Update(&eye2, &at2);
     }
     if (g_weatherSystem != 0) {
@@ -5401,4 +5397,5 @@ extern "C" int CGameCoin_Update(CGameCoin *self) { /* 0x8012C538 size:0x2164 */
     RumbleUpdate();
     return -2;
 }
+#pragma pop
 #endif
