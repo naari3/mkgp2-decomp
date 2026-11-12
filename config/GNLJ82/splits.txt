@@ -671,7 +671,7 @@ game/Camera_Create.cpp:
 	.sdata      start:0x806CEDA8 end:0x806CEDB8
 
 game/autodata/sdata_806CEDB8.c:
-	.sdata      start:0x806CEDB8 end:0x806CEEB8
+	.sdata      start:0x806CEDB8 end:0x806CEE58
 
 game/autodata/data_803F5910.c:
 	.data       start:0x803F5910 end:0x803F5BF4
@@ -1463,7 +1463,7 @@ game/KartItemAudio_PlaySEByItemId.c:
 	.rodata     start:0x802EDC70 end:0x802EDD30
 
 game/autodata/rodata_802EDD30.c:
-	.rodata     start:0x802EDD30 end:0x802EDF20
+	.rodata     start:0x802EDD30 end:0x802EDDE4
 
 game/SoundObj_PlaySE.c:
 	extab       start:0x800076F8 end:0x80007700
@@ -1527,7 +1527,7 @@ game/EffectSteering.c:
 	.data       start:0x803F99E0 end:0x803F9B48
 
 game/autodata/data_803F9B48.c:
-	.data       start:0x803F9B48 end:0x803F9C60
+	.data       start:0x803F9B48 end:0x803F9C28
 
 game/EffectSteering_Dtor.cpp:
 	extab       start:0x800077E4 end:0x8000792C
@@ -1535,18 +1535,25 @@ game/EffectSteering_Dtor.cpp:
 	.text       start:0x8005C51C end:0x8005CA64
 
 game/EffectSteeringCtor.cpp:
-	extab       start:0x8000792C end:0x800079DC
-	extabindex  start:0x80020ABC end:0x80020AC8
-	.text       start:0x8005CA64 end:0x8005CCBC
-
-game/EffectSteering_Actions.cpp:
-	extab       start:0x800079DC end:0x80007B4C
-	extabindex  start:0x80020AC8 end:0x80020BA0
-	.text       start:0x8005CCBC end:0x8005D954
+	extab       start:0x8000792C end:0x80007B4C
+	extabindex  start:0x80020ABC end:0x80020BA0
+	.text       start:0x8005CA64 end:0x8005D954
+	.rodata     start:0x802EDDE4 end:0x802EDE00
+	.data       start:0x803F9C28 end:0x803F9C3C
+	.sdata      start:0x806CEE58 end:0x806CEE60
 	.sdata2     start:0x806D29A0 end:0x806D29A8
 
 game/autodata/sdata2_806D29A8.c:
 	.sdata2     start:0x806D29A8 end:0x806D2F34
+
+game/autodata/sdata_806CEE60.c:
+	.sdata      start:0x806CEE60 end:0x806CEEB8
+
+game/autodata/data_803F9C3C.c:
+	.data       start:0x803F9C3C end:0x803F9C60
+
+game/autodata/rodata_802EDE00.c:
+	.rodata     start:0x802EDE00 end:0x802EDF20
 
 game/clItemBoxResponder_DebrisArray_Dtor.c:
 	extab       start:0x80007B4C end:0x80007B54

@@ -3809,5 +3809,49 @@
     "fn_801F26C8",
     "dtor_801F4B10",
     "dtor_8007D0D4"
-  ]
+  ],
+  "src/game/EffectSteeringCtor.cpp": {
+    "extab": [
+      "EffectSteering_Ctor",
+      "dtor_8005D564",
+      "dtor_8005D5F4",
+      "dtor_8005D684",
+      "dtor_8005D714",
+      "dtor_8005D7A4",
+      "dtor_8005D834",
+      "dtor_8005D8C4",
+      "dtor_8005CCBC",
+      "ActionDelay_Step",
+      "ActionScale_Reset",
+      "ActionInputViscosity_Reset",
+      "ActionInputViscosity_Step",
+      "ActionShake_Step",
+      "ActionSplit_Step",
+      "ActionViscosity_Reset",
+      "ActionViscosity_Step",
+      "ActionVibrate_Step",
+      "ActionLock_Step"
+    ],
+    "extabindex": [
+      "EffectSteering_Ctor",
+      "dtor_8005CCBC",
+      "ActionDelay_Step",
+      "ActionScale_Reset",
+      "ActionInputViscosity_Reset",
+      "ActionInputViscosity_Step",
+      "ActionShake_Step",
+      "ActionSplit_Step",
+      "ActionViscosity_Reset",
+      "ActionViscosity_Step",
+      "ActionVibrate_Step",
+      "ActionLock_Step",
+      "dtor_8005D564",
+      "dtor_8005D5F4",
+      "dtor_8005D684",
+      "dtor_8005D714",
+      "dtor_8005D7A4",
+      "dtor_8005D834",
+      "dtor_8005D8C4"
+    ]
+  }
 }
