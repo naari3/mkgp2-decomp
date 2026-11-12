@@ -705,6 +705,7 @@ Changed, object files unchanged unless noted:
 | 3 arrays and 14 single words of Shift-JIS text in autodata/sdata2_806D3060.c, sdata2_806D5658.c, sdata2_806DB6E0.c | `unk32` / `unsigned int` | `unsigned char[]` |
 | `CourseScene_Load_data_803F5CE8` (CourseEnvironment.cpp) | kind/variant bytes as `(void *)0x1010000` | `(void *)TEXT_WORD(1, 1, 0, 0)` |
 | "name    : " in autodata/rodata_8039D9A4.c | raw words | `TEXT_WORD` |
+| `lbl_8041BC00` (autodata/data_8041A4F8.c), the effect model table | `char *[760]`, `mode` and `loop` as `(char *)0x1000000` | `EffectModelRow[152]`, both are bytes (2026-11-12: missed before because `byte_words.py` did not look at `char *` tables; on the PC every play-once effect, the swing of a thrown item for one, read mode 0 and never ended) |
 
 The image in KartItem_FlushRender.c held one word, 0x80606060, written as
 `&KartItem_FlushRender_bss_80606060`: pixels that happen to look like an

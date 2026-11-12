@@ -13,7 +13,7 @@ values.  The list is a starting point: each table needs its readers looked at.
 """
 import glob, re, sys
 
-DEF = re.compile(r'^((?:static\s+|const\s+|extern\s+)*)(void \*|const void \*|unsigned int|int|u32|s32|unsigned long|long|unk32)\s*(\w+)((?:\[[^\]]*\])+) = \{', re.M)
+DEF = re.compile(r'^((?:static\s+|const\s+|extern\s+)*)(void \*|const void \*|char \*|const char \*|unsigned int|int|u32|s32|unsigned long|long|unk32)\s*(\w+)((?:\[[^\]]*\])+) = \{', re.M)
 NUM = re.compile(r'(?<![\w.])(0[xX][0-9A-Fa-f]+)\b')
 FLOATTOP = set(range(0x38, 0x50)) | set(range(0xB8, 0xD0))
 
