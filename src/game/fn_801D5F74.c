@@ -1,4 +1,5 @@
 #include "game/fn_801D5F74Private.h"
+#include "game/types/shared_data.h"
 /* Shared player-card constant pool, 0x8039C718..0x8039D8C0. */
 const float lbl_8039C718[255] = {
     1.0f, 0.699999988079071f, 0.8999999761581421f, 0.0f, 0.0f, 500.0f, 66.66667175292969f, 1000.0f,
@@ -34,7 +35,7 @@ const float lbl_8039C718[255] = {
     83.33333587646484f, 0.0f, 0.0f, 500.0f, 83.33333587646484f, 1000.0f, 83.33333587646484f, 2000.0f,
     83.33333587646484f, 3000.0f, 83.33333587646484f, 4000.0f, 83.33333587646484f, 5000.0f, 83.33333587646484f,
 };
-static const int lbl_8039CB14[61] = {
+SHARED_STATIC const int lbl_8039CB14[61] = {
     57, 43, 45, 93, 92, 91, 46, 61,
     50, 78, 70, 74, 80, 8, 115, 113,
     60, 44, 62, 34, 27, 29, 105, 64,
@@ -44,10 +45,10 @@ static const int lbl_8039CB14[61] = {
     110, 105, 64, 82, 28, 25, 29, 49,
     26, 34, 35, 89, 27,
 };
-static const int lbl_8039CC08[5] = {
+SHARED_STATIC const int lbl_8039CC08[5] = {
     14, 4, 97, 39, 107,
 };
-static const int lbl_8039CC1C[44] = {
+SHARED_STATIC const int lbl_8039CC1C[44] = {
     256, 169, 172, 176, 173, 174, 175, 185,
     159, 160, 161, 178, 179, 168, 180, 192,
     181, 205, 177, 204, 163, 186, 187, 189,
@@ -55,16 +56,16 @@ static const int lbl_8039CC1C[44] = {
     170, 167, 197, 199, 200, 188, 196, 201,
     202, 194, 198, 94,
 };
-static const int lbl_8039CCCC[6] = {
+SHARED_STATIC const int lbl_8039CCCC[6] = {
     258, 252, 254, 253, 257, 254,
 };
-static const int lbl_8039CCE4[6] = {
+SHARED_STATIC const int lbl_8039CCE4[6] = {
     123, 124, 127, 128, 129, 126,
 };
-static const int lbl_8039CCFC[6] = {
+SHARED_STATIC const int lbl_8039CCFC[6] = {
     130, 131, 132, 134, 135, 133,
 };
-static const UnlockCategories lbl_8039CD14 = {
+SHARED_STATIC const UnlockCategories lbl_8039CD14 = {
     {63, 51, 58}, {
         {lbl_8039CB14, 61}, {lbl_8039CC1C, 44}, {lbl_8039CCE4, 6},
         {lbl_8039CCFC, 6}, {lbl_8039CC08, 5}, {lbl_8039CCCC, 6},
@@ -94,7 +95,7 @@ const UnlockRemap kItemUnlockRemap[3] = {
     {50, 1, 51},
     {57, 2, 58},
 };
-static const UnlockGrant kItemUnlockGrants[120] = {
+SHARED_STATIC const UnlockGrant kItemUnlockGrants[120] = {
     {36, 60, 49, -1, -1},
     {95, 67, 53, -1, -1},
     {96, 67, 53, -1, -1},
