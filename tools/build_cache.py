@@ -113,6 +113,63 @@ def cmd_restore():
     return 0
 
 
+STAMP = os.path.join("build", ".cache_commit")
+
+
+def cmd_ci_retime():
+    """CI (GitHub Actions cache): make ninja see exactly what changed.
+
+    build/ was restored from the cache of an earlier run and build/.cache_commit
+    names the commit that run built. Every tracked file goes to the old fixed
+    time, then the files whose content differs between that commit and the
+    checkout are touched. Without a usable stamp the cached build is deleted, so
+    the run is a full build. Nothing depends on commit dates.
+    """
+    os.chdir(ROOT)
+    sha = ""
+    try:
+        with open(STAMP) as f:
+            sha = f.read().strip()
+    except OSError:
+        pass
+    ok = bool(sha) and git("cat-file", "-e", sha + "^{commit}", check=False).returncode == 0
+    if ok:
+        r = git("diff", "--name-only", "-z", sha, check=False)
+        ok = r.returncode == 0
+    if not ok:
+        # keep build/msl_cw25 etc. out of this: only what the build cache step owns
+        for m in (os.path.join("build", "GNLJ82"), ".ninja_log", ".ninja_deps"):
+            subprocess.run(["rm", "-rf", m], check=True)
+        print(f"build_cache: no usable cached build (stamp {sha[:10] or 'missing'}); full build")
+        return 0
+    tracked = [p for p in git("ls-files", "-z").stdout.split("\0") if p]
+    set_old(tracked)
+    changed = [p for p in r.stdout.split("\0") if p]
+    now = time.time()
+    for p in changed:
+        if os.path.lexists(p):
+            os.utime(p, (now, now), follow_symlinks=False)
+    print(f"build_cache: cached build of {sha[:10]}, {len(changed)} files differ")
+    for p in changed[:50]:
+        print("  " + p)
+    return 0
+
+
+def cmd_ci_stamp():
+    """CI: record the commit the build directory now corresponds to."""
+    os.chdir(ROOT)
+    if git("status", "--porcelain", "--untracked-files=no").stdout.strip():
+        print("build_cache: tracked files modified; not stamping")
+        try:
+            os.remove(STAMP)
+        except OSError:
+            pass
+        return 1
+    with open(STAMP, "w") as f:
+        f.write(git("rev-parse", "HEAD").stdout.strip() + "\n")
+    return 0
+
+
 def cmd_save():
     os.chdir(ROOT)
     if git("status", "--porcelain", "--untracked-files=no").stdout.strip():
@@ -150,7 +207,8 @@ def cmd_save():
 
 def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else "list"
-    fn = {"restore": cmd_restore, "save": cmd_save, "list": cmd_list}.get(cmd)
+    fn = {"restore": cmd_restore, "save": cmd_save, "list": cmd_list,
+          "ci-retime": cmd_ci_retime, "ci-stamp": cmd_ci_stamp}.get(cmd)
     if fn is None:
         print(__doc__)
         return 2

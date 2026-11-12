@@ -55,6 +55,28 @@ After that, every push to `naari3/mkgp2-decomp` will:
 - On `main`, render `site/index.html` via `tools/gen_progress_page.py` and
   deploy it to GitHub Pages.
 
+## Build cache (incremental CI builds)
+
+CI keeps `build/` between runs (`actions/cache`) and rebuilds only what
+changed. `build/.cache_commit` names the commit the cached build was made
+from. After the restore, `python tools/build_cache.py ci-retime` sets every
+tracked file to a fixed old time and touches exactly the files whose content
+differs between that commit and the checkout (`git diff --name-only`), so ninja
+rebuilds those and whatever depends on them (headers through the compiler's
+depfiles, `configure.py`, the tool scripts). Commit dates play no part.
+
+- No stamp, or the stamped commit is not in the clone: the cached build is
+  deleted and the run is a full build.
+- The stamp is removed before ninja starts and written again only when the
+  build finished (`ci-stamp`); a failed job does not save its cache at all.
+- The cache key contains a hash of the compilers and binutils in the build
+  container, so a new container image starts from an empty cache.
+- To force a full build, bump `build2-` in the cache key in `build.yml`.
+- Checked 2026-11-12: an incremental build across 62 commits (418 files) and
+  one across 12 commits gave the same `report.json`, `main.dol` and the same
+  bytes for every object as a clean build of the same commit. Objects of units
+  that no longer exist stay in the cached `build/`; nothing reads them.
+
 ## decomp.dev integration
 
 decomp.dev ingests `report.json` via a GitHub App that listens to

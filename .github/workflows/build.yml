@@ -38,16 +38,27 @@ jobs:
       - name: Git config
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
-      - name: Restore timestamps
-        run: |
-          uv run https://raw.githubusercontent.com/MestreLion/git-tools/refs/tags/v2022.12/git-restore-mtime \
-              --merge --commit-time
-
       - name: Prepare
         run: cp -a /orig .
 
       - name: Test operational tooling
         run: python -m unittest discover -s tools -p 'test_operations.py' -v
+
+      # Incremental builds. The cache holds build/ of an earlier run plus
+      # build/.cache_commit, the commit that run built. A fresh checkout makes
+      # every source newer than the cached objects, so ninja would rebuild
+      # all of it (it did until 2026-11-12: the old "restore commit times"
+      # step had no effect). ci-retime instead sets all tracked files to a
+      # fixed old time and touches exactly the files whose content differs
+      # from that commit; ninja's own dependency data (headers, configure.py,
+      # tool scripts) decides what to rebuild. No stamp, or a commit this
+      # clone does not have: the cached build is deleted and the run is a
+      # full build. The key carries the compilers of the build container so a
+      # new container image starts from nothing.
+      - name: Toolchain id
+        id: toolchain
+        run: |
+          echo "id=$(find /compilers /binutils -type f -print0 | sort -z | xargs -0 cat | sha1sum | cut -c1-16)" >> "$GITHUB_OUTPUT"
 
       - name: Cache build
         uses: actions/cache@v5
@@ -56,8 +67,11 @@ jobs:
             build
             .ninja_deps
             .ninja_log
-          key: ${{ runner.os }}-${{ matrix.version }}-${{ github.sha }}
-          restore-keys: ${{ runner.os }}-${{ matrix.version }}-
+          key: build2-${{ runner.os }}-${{ matrix.version }}-${{ steps.toolchain.outputs.id }}-${{ github.sha }}
+          restore-keys: build2-${{ runner.os }}-${{ matrix.version }}-${{ steps.toolchain.outputs.id }}-
+
+      - name: Mark changed files for ninja
+        run: python tools/build_cache.py ci-retime
 
       # Tool binaries (dtk, objdiff-cli, sjiswrap, wibo) come from GitHub
       # Releases, whose asset CDN intermittently returns 504 for long
@@ -188,11 +202,14 @@ jobs:
 
       - name: Build
         run: |
+          # the stamp is only valid for a build that finished
+          rm -f build/.cache_commit
           python configure.py --map --version ${{ matrix.version }} \
               --binutils /binutils --compilers /compilers \
               --dtk ci-tools/dtk --objdiff ci-tools/objdiff-cli \
               --sjiswrap ci-tools/sjiswrap.exe --wrapper ci-tools/wibo
           ninja all_source progress build/${{ matrix.version }}/report.json
+          python tools/build_cache.py ci-stamp || echo "::warning::build cache not stamped; the next run is a full build"
 
       - name: Upload map
         uses: actions/upload-artifact@v6
